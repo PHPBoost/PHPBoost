@@ -29,8 +29,7 @@
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  * @package {@package}
  */
-interface FormElement
+interface FormElement extends HTMLElement
 {
-	function display();
 }
 ?>

@@ -29,7 +29,7 @@
  * @desc This class allows you to manage easily html tables.
  * @package {@package}
  */
-class HTMLTable extends HTMLElement
+class HTMLTable implements HTMLElement
 {
 	private $arg_id = 1;
 	private $nb_rows = 0;
@@ -38,7 +38,7 @@ class HTMLTable extends HTMLElement
 	/**
 	 * @var HTMLTableParameters
 	 */
-	private $parameters;
+	public $parameters;
 
 	/**
 	 * @var Template
@@ -53,12 +53,12 @@ class HTMLTable extends HTMLElement
 	/**
 	 * @var HTMLTableColumn[]
 	 */
-	private $columns;
+	private $columns = array();
 
 	/**
 	 * @var HTMLTableRow[]
 	 */
-	private $rows;
+	private $rows = array();
 
 	public function __construct(HTMLTableModel $model, $tpl_path = '')
 	{
@@ -66,6 +66,8 @@ class HTMLTable extends HTMLElement
 		{
 			$tpl_path = 'framework/builder/table/HTMLTable.tpl';
 		}
+		$model->set_html_table($this);
+
 		$this->tpl = new FileTemplate($tpl_path);
 		$this->model = $model;
 		$this->columns = $this->model->get_columns();
@@ -75,10 +77,8 @@ class HTMLTable extends HTMLElement
 	/**
 	 * @return Template
 	 */
-	public function export()
+	public function display()
 	{
-		$this->extract_parameters();
-		$this->get_rows();
 		$this->generate_filters_form();
 		$this->generate_table_structure();
 		$this->generate_headers();
@@ -89,11 +89,10 @@ class HTMLTable extends HTMLElement
 
 	private function extract_parameters()
 	{
-		$this->nb_rows = $this->model->get_number_of_matching_rows($this->parameters->get_filters());
 		$nb_rows_per_page = $this->get_nb_rows_per_page();
 		if ($nb_rows_per_page !== AbstractHTMLTableModel::NO_PAGINATION)
 		{
-			$last_page_number = ceil($this->nb_rows / $this->get_nb_rows_per_page());
+			$last_page_number = ceil($this->nb_rows / $nb_rows_per_page);
 			$this->page_number = max(1, min($this->parameters->get_page_number(), $last_page_number));
 		}
 		else
@@ -102,14 +101,15 @@ class HTMLTable extends HTMLElement
 		}
 	}
 
-	private function get_rows()
+	/**
+	 * @param $nb_rows
+	 * @param HTMLTableRow[] $rows
+	 */
+	public function set_rows($nb_rows, array $rows)
 	{
-		$this->rows = $this->model->get_rows(
-			$this->get_nb_rows_per_page(), 
-			$this->get_first_row_index(), 
-			$this->parameters->get_sorting_rule(), 
-			$this->parameters->get_filters()
-		);
+		$this->nb_rows = $nb_rows;
+		$this->extract_parameters();
+		$this->rows = $rows;
 	}
 
 	private function generate_filters_form()
@@ -238,10 +238,8 @@ class HTMLTable extends HTMLElement
 
 	private function add_css_vars(HTMLElement $element, array &$tpl_vars)
 	{
-		$tpl_vars['C_CSS_STYLE'] = $element->has_css_style();
-		$tpl_vars['CSS_STYLE'] = $element->get_css_style();
-		$tpl_vars['C_CSS_CLASSES'] = $element->has_css_classes();
-		$tpl_vars['CSS_CLASSES'] = implode(' ', $element->get_css_classes());
+		$tpl_vars['C_CSS_CLASS'] = $element->has_css_class();
+		$tpl_vars['CSS_CLASS'] = $element->get_css_class();
 	}
 
 	private function generate_stats()
@@ -265,7 +263,7 @@ class HTMLTable extends HTMLElement
 		$this->tpl->put('pagination', $pagination->export());
 	}
 
-	private function get_nb_rows_per_page()
+	public function get_nb_rows_per_page()
 	{
 		$nb_rows_per_page = $this->parameters->get_nb_items_per_page();
 		if ($nb_rows_per_page < 1)
@@ -275,7 +273,7 @@ class HTMLTable extends HTMLElement
 		return $nb_rows_per_page;
 	}
 
-	private function get_first_row_index()
+	public function get_first_row_index()
 	{
 		return ($this->page_number - 1) * $this->get_nb_rows_per_page();
 	}

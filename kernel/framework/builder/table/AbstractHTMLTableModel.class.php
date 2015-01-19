@@ -34,6 +34,11 @@ abstract class AbstractHTMLTableModel implements HTMLTableModel
 	const NO_PAGINATION = 0;
 	const DEFAULT_PAGINATION = 25;
 
+	/**
+	 * @var HTMLTable
+	 */
+	public $html_table;
+
 	private $id = 'table';
 	private $caption = '';
 	private $rows_per_page;
@@ -53,9 +58,16 @@ abstract class AbstractHTMLTableModel implements HTMLTableModel
 		{
 			$this->add_column($column);
 		}
+
+		$default_sorting_rule->set_is_default_sorting(true);
 		$this->default_sorting_rule = $default_sorting_rule;
 		$this->rows_per_page = $rows_per_page;
 		$this->set_nb_rows_options($this->nb_rows_options);
+	}
+
+	public function set_html_table(HTMLTable $html_table)
+	{
+		$this->html_table = $html_table;
 	}
 
 	/**

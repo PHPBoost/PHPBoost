@@ -36,7 +36,7 @@ class AdminNewsManageController extends AdminModuleController
 	{
 		$this->init();
 		
-		$this->build_view($request);
+		$this->build_table();
 		
 		return new AdminNewsDisplayResponse($this->view, $this->lang['news.management']);
 	}
@@ -44,73 +44,51 @@ class AdminNewsManageController extends AdminModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'news');
-		$this->view = new FileTemplate('news/AdminNewsManageController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view = new StringTemplate('# INCLUDE table #');
 	}
-	
-	private function build_view(HTTPRequestCustom $request)
+
+	private function build_table()
 	{
-		$mode = $request->get_getvalue('sort', 'desc');
-		$field = $request->get_getvalue('field', 'date');
+		$table_model = new SQLHTMLTableModel(NewsSetup::$news_table, array(
+			new HTMLTableColumn(''),
+			new HTMLTableColumn(LangLoader::get_message('form.name', 'common'), 'name'),
+			new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
+			new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),
+			new HTMLTableColumn(LangLoader::get_message('form.date.creation', 'common'), 'approbation_type'),
+			new HTMLTableColumn(LangLoader::get_message('status', 'common'), 'creation_date'),
+		), new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::ASC));
 		
-		$sort_mode = ($mode == 'asc') ? 'ASC' : 'DESC';
-		
-		switch ($field)
-		{
-			case 'category':
-				$sort_field = 'id_category';
-				break;
-			case 'author':
-				$sort_field = 'display_name';
-				break;
-			case 'name':
-				$sort_field = 'name';
-				break;
-			case 'status':
-				$sort_field = 'approbation_type';
-				break;
-			default:
-				$sort_field = 'creation_date';
-				break;
-		}
-		
-		$page = $request->get_getint('page', 1);
-		$pagination = $this->get_pagination($field, $mode, $page);
-		
-		$result = PersistenceContext::get_querier()->select('SELECT *
-		FROM '. NewsSetup::$news_table .' news
-		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = news.author_user_id
-		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
-		LIMIT :number_per_page OFFSET :start_limit',
-			array(
-				'number_per_page' => $pagination->get_number_items_per_page(),
-				'start_limit' => $pagination->get_display_from()
-		));
-		
-		while($row = $result->fetch())
+		$table = new HTMLTable($table_model);
+
+		$table_model->set_caption($this->lang['news.management']);
+
+        $results = array();
+		$result = $table_model->get_sql_results('news LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = news.author_user_id');
+		foreach ($result as $row)
 		{
 			$news = new News();
 			$news->set_properties($row);
-			
-			$this->view->assign_block_vars('news', $news->get_array_tpl_vars(NewsUrlBuilder::manage_news($field, $mode, $page)->relative()));
+			$category = $news->get_category();
+			$user = $news->get_author_user();
+
+			$edit_Link = new LinkHTMLElement(NewsUrlBuilder::edit_news($news->get_id(), SITE_REWRITED_SCRIPT), '', array('title' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
+			$delete_link = new LinkHTMLElement(NewsUrlBuilder::delete_news($news->get_id(), SITE_REWRITED_SCRIPT), '', array('title' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-delete');
+
+			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
+			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('color' => $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
+
+			$results[] = new HTMLTableRow(array(
+				new HTMLTableRowCell($edit_Link->display() . $delete_link->display()),
+				new HTMLTableRowCell(new LinkHTMLElement(NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name()), $news->get_name())),
+				new HTMLTableRowCell(new LinkHTMLElement(NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), $category->get_name())),
+				new HTMLTableRowCell($author),
+				new HTMLTableRowCell($news->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
+				new HTMLTableRowCell($news->get_status()),
+			));
 		}
-		$result->dispose();
-		
-		$this->view->put_all(array(
-			'C_PAGINATION' => $pagination->has_several_pages(),
-			'C_NEWS' => !$pagination->current_page_is_empty(),
-			'PAGINATION' => $pagination->display(),
-			'U_SORT_NAME_ASC' => NewsUrlBuilder::manage_news('name', 'asc', $page)->rel(),
-			'U_SORT_NAME_DESC' => NewsUrlBuilder::manage_news('name', 'desc', $page)->rel(),
-			'U_SORT_CATEGORY_ASC' => NewsUrlBuilder::manage_news('category', 'asc', $page)->rel(),
-			'U_SORT_CATEGORY_DESC' => NewsUrlBuilder::manage_news('category', 'desc', $page)->rel(),
-			'U_SORT_AUTHOR_ASC' => NewsUrlBuilder::manage_news('author', 'asc', $page)->rel(),
-			'U_SORT_AUTHOR_DESC' => NewsUrlBuilder::manage_news('author', 'desc', $page)->rel(),
-			'U_SORT_DATE_ASC' => NewsUrlBuilder::manage_news('date', 'asc', $page)->rel(),
-			'U_SORT_DATE_DESC' => NewsUrlBuilder::manage_news('date', 'desc', $page)->rel(),
-			'U_SORT_STATUS_ASC' => NewsUrlBuilder::manage_news('status', 'asc', $page)->rel(),
-			'U_SORT_STATUS_DESC' => NewsUrlBuilder::manage_news('status', 'desc', $page)->rel()
-		));
+		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
+
+		$this->view->put('table', $table->display());
 	}
 	
 	private function get_pagination($sort_field, $sort_mode, $page)

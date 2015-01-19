@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                             HTMLTableSortingRule.class.php
+ *                           BrHTMLElement.class.php
  *                            -------------------
- *   begin                : December 21, 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
+ *   begin                : January 19, 2015
+ *   copyright            : (C) 2015 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  ###################################################
  *
@@ -25,43 +25,15 @@
  ###################################################*/
 
 /**
- * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc This class allows you to manage easily html tables.
+ * 
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @package {@package}
  */
-class HTMLTableSortingRule
+class BrHTMLElement extends AbstractHTMLElement
 {
-	const ASC = '!';
-	const DESC = '-';
-
-	private $way;
-	private $sort_parameter;
-	private $is_default_sorting = false;
-
-	public function __construct($sort_parameter, $way)
+	public function display()
 	{
-		$this->way = $way;
-		$this->sort_parameter = $sort_parameter;
-	}
-
-	public function get_sort_parameter()
-	{
-		return $this->sort_parameter;
-	}
-
-	public function get_order_way()
-	{
-		return $this->way;
-	}
-
-	public function set_is_default_sorting($is_default_sorting)
-	{
-		$this->is_default_sorting = $is_default_sorting;
-	}
-
-	public function is_default_sorting()
-	{
-		return $this->is_default_sorting;
+		return '</br>';
 	}
 }
 ?>
