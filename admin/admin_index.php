@@ -143,7 +143,7 @@ while ($row = $result->fetch())
 		'USER' => !empty($login) ? $login : $LANG['guest'],
 		'USER_IP' => $row['ip'],
 		'WHERE' => '<a href="' . $row['location_script'] . '">' . (!empty($row['location_title']) ? stripslashes($row['location_title']) : $LANG['unknown']) . '</a>',
-		'TIME' => gmdate_format('date_format_long', $row['timestamp'])
+		'TIME' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)
 	));
 }
 $result->dispose();

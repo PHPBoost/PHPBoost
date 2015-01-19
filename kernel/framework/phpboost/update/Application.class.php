@@ -110,7 +110,7 @@ class Application
 		$pubdate = self::get_attribute($xml_desc, 'pubdate');
 		if (!empty($pubdate))
 		{
-			$this->pubdate = new Date(DATE_FROM_STRING, Timezone::SERVER_TIMEZONE, $pubdate, 'y/m/d');
+			$this->pubdate = new Date($pubdate);
 		}
 		else
 		{

@@ -243,7 +243,7 @@ class AdminMaintainController extends AdminController
 				$maintain_during = $this->form->get_value('maintain_during')->get_raw_value();
 				$this->maintenance_config->enable_maintenance();
 				$this->maintenance_config->set_unlimited_maintenance(false);
-				$this->maintenance_config->set_end_date(new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, time() + 5 + $maintain_during));
+				$this->maintenance_config->set_end_date(new Date(time() + 5 + $maintain_during, Timezone::SERVER_TIMEZONE));
 			break;
 			case 'until':
 				$this->maintenance_config->enable_maintenance();

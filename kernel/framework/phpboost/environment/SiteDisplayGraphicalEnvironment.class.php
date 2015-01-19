@@ -264,20 +264,20 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				}
 
 				//Calcul du format de la date
-				$seconds = gmdate_format('s', $end_timestamp, Timezone::SITE_TIMEZONE);
+				$seconds = Date::to_format($end_timestamp, 's', Timezone::SITE_TIMEZONE);
 				$array_release = array(
-				gmdate_format('Y', $end_timestamp, Timezone::SITE_TIMEZONE),
-				(gmdate_format('n', $end_timestamp, Timezone::SITE_TIMEZONE) - 1),
-				gmdate_format('j', $end_timestamp, Timezone::SITE_TIMEZONE),
-				gmdate_format('G', $end_timestamp, Timezone::SITE_TIMEZONE),
-				gmdate_format('i', $end_timestamp, Timezone::SITE_TIMEZONE),
+				Date::to_format($end_timestamp, 'Y', Timezone::SITE_TIMEZONE),
+				(Date::to_format($end_timestamp, 'n', Timezone::SITE_TIMEZONE) - 1),
+				Date::to_format($end_timestamp, 'j', Timezone::SITE_TIMEZONE),
+				Date::to_format($end_timestamp, 'G', Timezone::SITE_TIMEZONE),
+				Date::to_format($end_timestamp, 'i', Timezone::SITE_TIMEZONE),
 				($seconds < 10) ? trim($seconds, 0) : $seconds);
 
-				$seconds = gmdate_format('s', time(), Timezone::SITE_TIMEZONE);
+				$seconds = Date::to_format(time(), 's', Timezone::SITE_TIMEZONE);
 				$array_now = array(
-				gmdate_format('Y', time(), Timezone::SITE_TIMEZONE), (gmdate_format('n', time(),
-				Timezone::SITE_TIMEZONE) - 1), gmdate_format('j', time(), Timezone::SITE_TIMEZONE),
-				gmdate_format('G', time(), Timezone::SITE_TIMEZONE), gmdate_format('i', time(),
+				Date::to_format(time(), 'Y', Timezone::SITE_TIMEZONE), (Date::to_format(time(), 'n',
+				Timezone::SITE_TIMEZONE) - 1), Date::to_format(time(), 'j', Timezone::SITE_TIMEZONE),
+				Date::to_format(time(), 'G', Timezone::SITE_TIMEZONE), Date::to_format(time(), 'i',
 				Timezone::SITE_TIMEZONE), ($seconds < 10) ? trim($seconds, 0) : $seconds);
 			}
 			else //Délai indéterminé.

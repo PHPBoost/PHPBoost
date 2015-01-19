@@ -219,22 +219,22 @@ function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
  * @return string The formatted date
  * @see Date::format()
  */
-function gmdate_format($format, $timestamp = false, $timezone_system = 0)
+function Date::to_format($timestamp = false, $format, $timezone_system = 0)
 {
-	if (strpos($format, 'date_format') !== false) //Inutile de tout tester si ce n'est pas un formatage prédéfini.
+	if (strpos($format, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) !== false) //Inutile de tout tester si ce n'est pas un formatage prédéfini.
 	{
 		switch ($format)
 		{
-			case 'date_format':
+			case Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE:
 				$format = LangLoader::get_message('date_format_day_month_year_hour_minute', 'date-common');
 				break;
-			case 'date_format_tiny':
+			case Date::FORMAT_DAY_MONTH:
 				$format = LangLoader::get_message('date_format_day_month', 'date-common');
 				break;
-			case 'date_format_short':
+			case Date::FORMAT_DAY_MONTH_YEAR:
 				$format = LangLoader::get_message('date_format_day_month_year', 'date-common');
 				break;
-			case 'date_format_long':
+			case Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE:
 				$format = LangLoader::get_message('date_format_day_month_year_hour_minute', 'date-common');
 				break;
 		}
@@ -245,7 +245,7 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 		$timestamp = time();
 	}
 
-	$date = new Date(DATE_TIMESTAMP, $timezone_system, $timestamp);
+	$date = new Date($timestamp, $timezone_system);
 	return $date->format($format);
 }
 

@@ -122,7 +122,7 @@ class BugtrackerHistoryListController extends ModuleController
 					$new_value = $row['new_value'];
 			}
 			
-			$update_date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['update_date']);
+			$update_date = new Date($row['update_date'], Timezone::SERVER_TIMEZONE);
 			
 			$user = new User();
 			if (!empty($row['user_id']))

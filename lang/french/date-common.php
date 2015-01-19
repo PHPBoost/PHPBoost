@@ -29,7 +29,7 @@
  #                     French                       #
  ####################################################
 
-$lang['date_format'] = 'jj/mm/aaaa';
+$lang[Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE] = 'jj/mm/aaaa';
 $lang['date_format_day_month'] = 'd/m';
 $lang['date_format_day_month_year'] = 'd/m/Y';
 $lang['date_format_day_month_year_hour_minute'] = 'd/m/Y \à H\hi';

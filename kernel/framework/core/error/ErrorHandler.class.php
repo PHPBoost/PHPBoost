@@ -211,7 +211,7 @@ class ErrorHandler
 
 	private static function compute_error_log_string($error_msg, $error_stacktrace, $errno = 0)
 	{
-		return gmdate_format('Y-m-d H:i:s', time(), Timezone::SERVER_TIMEZONE) . "\n" .
+		return Date::to_format(time(), 'Y-m-d H:i:s', Timezone::SERVER_TIMEZONE) . "\n" .
 		$errno . "\n" .
 		self::clean_error_string($error_msg) . "\n" .
 		self::clean_error_string($error_stacktrace) . "\n";

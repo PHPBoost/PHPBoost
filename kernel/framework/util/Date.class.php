@@ -26,17 +26,6 @@
  *
  ###################################################*/
 
-define('DATE_TIMESTAMP', 		0);
-define('DATE_NOW', 				1);
-define('DATE_YEAR_MONTH_DAY', 	2);
-define('DATE_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND', 3);
-define('DATE_FROM_STRING', 		4);
-
-define('ISO_FORMAT', 	'Y-m-d');
-define('RFC3339_FORMAT', 	'Y-m-d\TH:i:s');
-
-define('TIMEZONE_AUTO', 		Timezone::USER_TIMEZONE);
-
 /**
  * @package {@package}
  * @desc This class allows you to handle easily some dates. A date is a day and an hour (year, month, day, hour, minutes, seconds).
@@ -50,6 +39,8 @@ define('TIMEZONE_AUTO', 		Timezone::USER_TIMEZONE);
  */
 class Date
 {
+	const DATE_NOW = 'now';
+
 	const FORMAT_TIMESTAMP = 0;
 	const FORMAT_DAY_MONTH = 1;
 	const FORMAT_DAY_MONTH_YEAR = 2;
@@ -76,8 +67,8 @@ class Date
 	 * </ul>
 	 * The first parameter determines how to initialize the date, here are the rules to use for the other parameters:
 	 * <ul>
-	 * 	<li>DATE_NOW will initialize the date to the current time.
-	 * $date = new Date(DATE_NOW); will build a date with the current date.</li>
+	 * 	<li>Date::DATE_NOW will initialize the date to the current time.
+	 * $date = new Date(Date::DATE_NOW); will build a date with the current date.</li>
 	 * 	<li>DATE_YEAR_MONTH_DAY if you want to build a date from a specified day (year, month, day). In this case the following parameters are:
 	 * 		<ul>
 	 * 			<li>int The year (for instance 2009)</li>
@@ -98,138 +89,26 @@ class Date
 	 * For instance $date = new Date(DATE_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND, 2009, 11, 09, 12, 34, 12);
 	 * 	</li>
 	 * 	<li>DATE_TIMESTAMP which builds a date from a UNIX timestamp.
-	 * For example $date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, time()); is equivalent to $date = new Date(DATE_NOW);</li>
+	 * For example $date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, time()); is equivalent to $date = new Date(Date::DATE_NOW);</li>
 	 * 	<li>DATE_FROM_STRING which decodes a date written in a string by matching a pattern you have to specify.
 	 * The pattern is easy to write: d for day, m for month and y for year and the separators have to be slashes only.
 	 * For instance, if your third parameter is '12/24/2009' and the fourth is 'm/d/y', it will be the december 24th of 2009.</li>
 	 * </ul>
 	 *
 	 */
-	public function __construct()
+	public function __construct($time = self::DATE_NOW, $referencial_timezone = Timezone::USER_TIMEZONE)
 	{
-		//Nombre d'arguments
-		$num_args = func_num_args();
+		$date_timezone = Timezone::get_timezone($referencial_timezone);
 
-		if ($num_args == 0)
+		if (preg_match('`^([0-9]+)$`i', $time))
 		{
-			$format = DATE_NOW;
+			$this->date_time = new DateTime();
+			$this->date_time->setTimezone($date_timezone);
+			$this->date_time->setTimestamp($time);
 		}
 		else
 		{
-			$format = func_get_arg(0);
-		}
-
-		if ($format != DATE_NOW)
-		{
-			// Fuseau horaire
-			if ($num_args >= 2)
-			{
-				$referencial_timezone = func_get_arg(1);
-			}
-			else
-			{
-				$referencial_timezone = Timezone::USER_TIMEZONE;
-			}
-
-			$date_timezone = Timezone::get_timezone($referencial_timezone);
-		}
-
-		switch ($format)
-		{
-			case DATE_NOW:
-				$this->date_time = new DateTime();
-				break;
-
-				// Année mois jour
-			case DATE_YEAR_MONTH_DAY:
-				if ($num_args >= 5)
-				{
-					$year 	= func_get_arg(2);
-					$month 	= func_get_arg(3);
-					$day 	= func_get_arg(4);
-					$this->date_time = new DateTime($year .'-'. $month .'-'. $day, $date_timezone);
-				}
-				else
-				{
-					$this->date_time = new DateTime();
-				}
-				break;
-
-				// Année mois jour heure minute seconde
-			case DATE_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND:
-				if ($num_args >= 7)
-				{
-					$year 		= func_get_arg(2);
-					$month 		= func_get_arg(3);
-					$day 		= func_get_arg(4);
-					$hour 		= func_get_arg(5);
-					$minute 	= func_get_arg(6);
-					$seconds 	= func_get_arg(7);
-					
-					$this->date_time = new DateTime($year .'-'. $month .'-'. $day .' '. $hour .':'. $minute .':'. $seconds, $date_timezone);
-				}
-				else
-				{
-					$this->date_time = new DateTime();
-				}
-				break;
-
-			case DATE_TIMESTAMP:
-				if ($num_args >= 3)
-				{
-					$this->date_time = new DateTime();
-					$this->date_time->setTimezone($date_timezone);
-					$this->date_time->setTimestamp(func_get_arg(2));
-				}
-				else
-				{
-					$this->date_time = new DateTime();
-				}
-				break;
-
-			case DATE_FROM_STRING:
-				if ($num_args < 4)
-				{
-					$this->date_time = new DateTime();
-					break;
-				}
-				list($month, $day, $year) = array(0, 0, 0);
-				$str 				= func_get_arg(2);
-				$date_format 		= func_get_arg(3);
-				$given_times 	= explode('/', $str);
-				$array_date 	 	= explode('/', $date_format);
-				for ($i = 0; $i < 3; $i++)
-				{
-					switch ($array_date[$i])
-					{
-						case 'd':
-							$day = (isset($given_times[$i])) ? NumberHelper::numeric($given_times[$i]) : 0;
-							break;
-
-						case 'm':
-							$month = (isset($given_times[$i])) ? NumberHelper::numeric($given_times[$i]) : 0;
-							break;
-
-						case 'y':
-						case 'Y':
-							$year = (isset($given_times[$i])) ? NumberHelper::numeric($given_times[$i]) : 0;
-							break;
-					}
-				}
-
-				//Vérification du format de la date.
-				if (self::check_date($month, $day, $year))
-				{
-					$this->date_time = new DateTime($year .'-'. $month .'-'. $day, $date_timezone);
-				}
-				else
-				{
-					$this->date_time = new DateTime();
-				}
-				break;
-
-			default:
-				$this->date_time = new DateTime();
+			$this->date_time = new DateTime($time, $date_timezone);
 		}
 	}
 
@@ -299,7 +178,7 @@ class Date
 				break;
 				
 			case self::FORMAT_RELATIVE:
-				$now = new Date(DATE_NOW, $referencial_timezone);
+				$now = new Date(Date::DATE_NOW, $referencial_timezone);
 				
 				if ($now->get_timestamp() > $this->get_timestamp())
 					$time_diff = $now->get_timestamp() - $this->get_timestamp();
@@ -361,13 +240,13 @@ class Date
 	 * @param $timezone The timezone in which you want this value
 	 * @return string The year
 	 */
-	public function get_year($timezone = TIMEZONE_AUTO)
+	public function get_year($timezone = Timezone::USER_TIMEZONE)
 	{
 		$this->compute_server_user_difference($timezone);
 		return $this->date_time->format('Y');
 	}
 
-	public function set_year($year, $referential_timezone = TIMEZONE_AUTO)
+	public function set_year($year, $referential_timezone = Timezone::USER_TIMEZONE)
 	{
 		$this->compute_server_user_difference($referential_timezone);
 		$this->date_time->setDate($year, $this->get_month(), $this->get_day());
@@ -378,13 +257,13 @@ class Date
 	 * @param $timezone The timezone in which you want this value
 	 * @return string The month
 	 */
-	public function get_month($timezone = TIMEZONE_AUTO)
+	public function get_month($timezone = Timezone::USER_TIMEZONE)
 	{
 		$this->compute_server_user_difference($timezone);
 		return $this->date_time->format('m');
 	}
 
-	public function set_month($month, $referential_timezone = TIMEZONE_AUTO)
+	public function set_month($month, $referential_timezone = Timezone::USER_TIMEZONE)
 	{
 		$this->compute_server_user_difference($referential_timezone);
 		$this->date_time->setDate($this->get_year(), $month, $this->get_day());
@@ -395,7 +274,7 @@ class Date
 	 * @param $timezone The timezone in which you want this value
 	 * @return string The week number
 	 */
-	public function get_week_number($referential_timezone = TIMEZONE_AUTO)
+	public function get_week_number($referential_timezone = Timezone::USER_TIMEZONE)
 	{
 		$this->compute_server_user_difference($referential_timezone);
 		return $this->date_time->format('W');
@@ -411,13 +290,13 @@ class Date
 	 * @param $timezone The timezone in which you want this value
 	 * @return string The day
 	 */
-	public function get_day($timezone = TIMEZONE_AUTO)
+	public function get_day($timezone = Timezone::USER_TIMEZONE)
 	{
 		$this->compute_server_user_difference($timezone);
 		return (int)$this->date_time->format('d');
 	}
 
-	public function set_day($day, $referential_timezone = TIMEZONE_AUTO)
+	public function set_day($day, $referential_timezone = Timezone::USER_TIMEZONE)
 	{
 		$this->compute_server_user_difference($referential_timezone);
 		$this->date_time->setDate($this->get_year(), $this->get_month(), $day);
@@ -428,7 +307,7 @@ class Date
 	 * @param $timezone The timezone in which you want this value
 	 * @return string The day of the year
 	 */
-	public function get_day_of_year($timezone = TIMEZONE_AUTO)
+	public function get_day_of_year($timezone = Timezone::USER_TIMEZONE)
 	{
 		$this->compute_server_user_difference($timezone);
 		return (int)$this->date_time->format('z');
@@ -444,13 +323,13 @@ class Date
 	 * @param $timezone The timezone in which you want this value
 	 * @return string The hours
 	 */
-	public function get_hours($timezone = TIMEZONE_AUTO)
+	public function get_hours($timezone = Timezone::USER_TIMEZONE)
 	{
 		$this->compute_server_user_difference($timezone);
 		return $this->date_time->format('H');
 	}
 
-	public function set_hours($hours, $referential_timezone = TIMEZONE_AUTO)
+	public function set_hours($hours, $referential_timezone = Timezone::USER_TIMEZONE)
 	{
 		$this->compute_server_user_difference($referential_timezone);
 		$this->date_time->setTime($hours, $this->get_minutes(), $this->get_seconds());
@@ -465,7 +344,7 @@ class Date
 		return $this->date_time->format('i');
 	}
 
-	public function set_minutes($minutes, $referential_timezone = TIMEZONE_AUTO)
+	public function set_minutes($minutes, $referential_timezone = Timezone::USER_TIMEZONE)
 	{
 		$this->compute_server_user_difference($referential_timezone);
 		$this->date_time->setTime($this->get_hours(), $minutes, $this->get_seconds());
@@ -480,7 +359,7 @@ class Date
 		return $this->date_time->format('s');
 	}
 
-	public function set_seconds($seconds, $referential_timezone = TIMEZONE_AUTO)
+	public function set_seconds($seconds, $referential_timezone = Timezone::USER_TIMEZONE)
 	{
 		$this->compute_server_user_difference($referential_timezone);
 		$this->date_time->setTime($this->get_hours(), $this->get_minutes(), $seconds);
@@ -564,6 +443,18 @@ class Date
 		return checkdate($month, $day, $year);
 	}
 
+	public static function to_format($time, $format = self::FORMAT_DAY_MONTH, $referencial_timezone = Timezone::USER_TIMEZONE)
+	{
+		$date = new Date($time, $referencial_timezone);
+		return $date->format($format);
+	}
+
+	public static function set_default_timezone()
+	{
+		$default = @date_default_timezone_get();
+        @date_default_timezone_set($default);
+	}
+
 	/**
 	 * @desc Computes the time difference between the server and the current user
 	 * @return int The time difference (in hours)
@@ -571,12 +462,6 @@ class Date
 	private function compute_server_user_difference($referencial_timezone = Timezone::SERVER_TIMEZONE)
 	{
 		$this->date_time->setTimezone(Timezone::get_timezone($referencial_timezone));
-	}
-		
-	public static function set_default_timezone()
-	{
-		$default = @date_default_timezone_get();
-        @date_default_timezone_set($default);
 	}
 	
 	private static function transform_date($date)

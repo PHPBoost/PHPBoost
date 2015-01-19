@@ -80,7 +80,7 @@ class WebFeedProvider implements FeedProvider
 				$item->set_link($link);
 				$item->set_guid($link);
 				$item->set_desc(FormatingHelper::second_parse($row['contents']));
-				$item->set_date(new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['creation_date']));
+				$item->set_date(new Date($row['creation_date'], Timezone::SERVER_TIMEZONE));
 				$item->set_image_url($row['partner_picture']);
 				$item->set_auth(WebService::get_categories_manager()->get_heritated_authorizations($row['id_category'], Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
 				$data->add_item($item);

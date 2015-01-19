@@ -67,7 +67,7 @@ if (!empty($_GET['stats_referer'])) //Recherche d'un membre pour envoyer le mp.
 						' . $trend_parameters['average'] . '
 					</td>
 					<td class="no-separator" style="width:96px;">
-						' . gmdate_format('date_format_short', $row['last_update']) . '
+						' . Date::to_format($row['last_update'], Date::FORMAT_DAY_MONTH_YEAR) . '
 					</td>
 					<td class="no-separator" style="width:95px;">
 						' . ($trend_parameters['picture'] ? '<i class="fa fa-trend-' . $trend_parameters['picture'] . '"></i> ' : '') . '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)
@@ -106,7 +106,7 @@ elseif (!empty($_GET['stats_keyword'])) //Recherche d'un membre pour envoyer le 
 						' . $trend_parameters['average'] . '
 					</td>
 					<td class="no-separator" style="width:96px;">
-						' . gmdate_format('date_format_short', $row['last_update']) . '
+						' . Date::to_format($row['last_update'], Date::FORMAT_DAY_MONTH_YEAR) . '
 					</td>
 					<td class="no-separator" style="width:95px;">
 						' . ($trend_parameters['picture'] ? '<i class="fa fa-trend-' . $trend_parameters['picture'] . '"></i> ' : '') . '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)

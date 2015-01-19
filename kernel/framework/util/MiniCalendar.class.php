@@ -132,7 +132,7 @@ class MiniCalendar
 	 */
 	public static function retrieve_date($calendar_name)
 	{
-		return new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(REQUEST, $calendar_name, '', TSTRING_UNCHANGE), LangLoader::get_message('date_format_day_month_year', 'date-common'));
+		return new Date(retrieve(REQUEST, $calendar_name, '', TSTRING_UNCHANGE));
 	}
 }
 ?>

@@ -216,7 +216,7 @@ else
 			'L_SUBMIT' => $LANG['submit']
 		));
 
-		$time = gmdate_format('Ym');
+		$time = Date::to_format(Date::DATE_NOW, 'Ym');
 		$current_year = substr($time, 0, 4);
 		$current_month = substr($time, 4, 2);
 
@@ -538,7 +538,7 @@ else
 	}
 	elseif ($pages || $pages_year) //Pages par jour classées par mois.
 	{
-		$time = gmdate_format('Ymj');
+		$time = Date::to_format(Date::DATE_NOW, 'Ymj');
 		$current_year = substr($time, 0, 4);
 		$current_month = substr($time, 4, 2);
 		$current_day = substr($time, 6, 2);
@@ -1006,7 +1006,7 @@ else
 				'NBR_LINKS' => $row['count'],
 				'TOTAL_VISIT' => $row['total_visit'],
 				'AVERAGE_VISIT' => $trend_parameters['average'],
-				'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
+				'LAST_UPDATE' => Date::to_format($row['last_update'], Date::FORMAT_DAY_MONTH_YEAR),
 				'TREND' => ($trend_parameters['picture'] ? '<i class="fa fa-trend-' . $trend_parameters['picture'] . '"></i> ' : '') . '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)'
 				));
 		}
@@ -1063,7 +1063,7 @@ else
 				'NBR_LINKS' => $row['count'],
 				'TOTAL_VISIT' => $row['total_visit'],
 				'AVERAGE_VISIT' => $trend_parameters['average'],
-				'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
+				'LAST_UPDATE' => Date::to_format($row['last_update'], Date::FORMAT_DAY_MONTH_YEAR),
 				'TREND' => ($trend_parameters['picture'] ? '<i class="fa fa-trend-' . $trend_parameters['picture'] . '"></i> ' : '') . '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)'
 				));
 		}

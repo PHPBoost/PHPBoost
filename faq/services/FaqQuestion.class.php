@@ -180,7 +180,7 @@ class FaqQuestion
 		$this->question = $properties['question'];
 		$this->rewrited_question = Url::encode_rewrite($properties['question']);
 		$this->answer = $properties['answer'];
-		$this->creation_date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $properties['creation_date']);
+		$this->creation_date = new Date($properties['creation_date'], Timezone::SERVER_TIMEZONE);
 		$this->approved = (bool)$properties['approved'];
 		
 		$user = new User();

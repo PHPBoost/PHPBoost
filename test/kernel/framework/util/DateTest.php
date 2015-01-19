@@ -7,7 +7,7 @@ class DateTest extends PHPBoostUnitTestCase
 		$date = new Date();
 		self::assertEquals(time(), $date->get_timestamp());
 
-		$date = new Date(DATE_NOW);
+		$date = new Date(Date::DATE_NOW);
 		self::assertEquals(time(), $date->get_timestamp());
 
 		$date = new Date(DATE_YEAR_MONTH_DAY, Timezone::SERVER_TIMEZONE, 2009, 10, 17);
