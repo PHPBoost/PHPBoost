@@ -36,7 +36,7 @@ class UserUsersListController extends AbstractController
 	{
 		$this->init();
 		$this->build_select_group_form();
-		$this->build_view($request);
+		$this->build_table();
 
 		return $this->build_response($this->view);
 	}
@@ -49,76 +49,40 @@ class UserUsersListController extends AbstractController
 		$this->groups_cache = GroupsCache::load();
 	}
 
-	private function build_view($request)
+	private function build_table()
 	{
-		$field = $request->get_value('field', 'registered');
-		$sort = $request->get_value('sort', 'top');
-		$page = $request->get_int('page', 1);
-		
-		$mode = ($sort == 'top') ? 'ASC' : 'DESC';
-		
-		switch ($field)
-		{
-			case 'registered' :
-				$field_bdd = 'm.registration_date';
-			break;
-			case 'connect' :
-				$field_bdd = 'm.last_connection_date';
-			break;
-			case 'messages' :
-				$field_bdd = 'm.posted_msg';
-			break;
-			case 'login' :
-				$field_bdd = 'm.display_name';
-			break;
-			default :
-				$field_bdd = 'm.registration_date';
-		}
-		
-		$pagination = $this->get_pagination($page, $field, $sort);
-		
-		$this->view->put_all(array(
-			'C_PAGINATION' => $pagination->has_several_pages(),
-			'SORT_LOGIN_TOP' => UserUrlBuilder::users('login' ,'top', $page)->rel(),
-			'SORT_LOGIN_BOTTOM' => UserUrlBuilder::users('login', 'bottom', $page)->rel(),
-			'SORT_REGISTERED_TOP' => UserUrlBuilder::users('registered', 'top'. $page)->rel(),
-			'SORT_REGISTERED_BOTTOM' => UserUrlBuilder::users('registered', 'bottom', $page)->rel(),
-			'SORT_MSG_TOP' => UserUrlBuilder::users('messages', 'top', $page)->rel(),
-			'SORT_MSG_BOTTOM' => UserUrlBuilder::users('messages', 'bottom', $page)->rel(),
-			'SORT_LAST_CONNECT_TOP' => UserUrlBuilder::users('connect', 'top', $page)->rel(),
-			'SORT_LAST_CONNECT_BOTTOM' => UserUrlBuilder::users('connect', 'bottom', $page)->rel(),
-			'PAGINATION' => $pagination->display()
-		));
-		
-		$result = PersistenceContext::get_querier()->select("SELECT m.user_id, m.display_name, m.email, m.show_email, m.registration_date, m.last_connection_date, m.level, m.groups, m.posted_msg, 
-		ia.approved
-		FROM " . DB_TABLE_MEMBER . " m
-		LEFT JOIN " . DB_TABLE_INTERNAL_AUTHENTICATION ." ia ON ia.user_id = m.user_id
-		ORDER BY ". $field_bdd ." ". $mode ."
-		LIMIT :number_items_per_page OFFSET :display_from", array(
-			'number_items_per_page' => $pagination->get_number_items_per_page(),
-			'display_from' => $pagination->get_display_from()
-		));
-		
-		while ($row = $result->fetch())
+		$table_model = new SQLHTMLTableModel(DB_TABLE_MEMBER, array(
+			new HTMLTableColumn($this->lang['display_name'], 'display_name'),
+			new HTMLTableColumn($this->lang['email'], 'email'),
+			new HTMLTableColumn($this->lang['registration_date'], 'registration_date'),
+			new HTMLTableColumn($this->lang['messages'], 'posted_msg'),
+			new HTMLTableColumn($this->lang['last_connection'], 'last_connection_date'),
+			new HTMLTableColumn($this->lang['private_message'], 'posted_msg')
+		), new HTMLTableSortingRule('m.user_id', HTMLTableSortingRule::ASC));
+
+		$table = new HTMLTable($table_model);
+
+        $results = array();
+		$result = $table_model->get_sql_results('m LEFT JOIN ' . DB_TABLE_INTERNAL_AUTHENTICATION .' ia ON ia.user_id = m.user_id');
+		foreach ($result as $row)
 		{
 			$posted_msg = !empty($row['posted_msg']) ? $row['posted_msg'] : '0';
 			$group_color = User::get_group_color($row['groups'], $row['level']);
-			
-			$this->view->assign_block_vars('member_list', array(
-				'C_MAIL' => $row['show_email'] == 1,
-				'C_GROUP_COLOR' => !empty($group_color),
-				'PSEUDO' => $row['display_name'],
-				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
-				'GROUP_COLOR' => $group_color,
-				'MAIL' => $row['email'],
-				'MSG' => $posted_msg,
-				'LAST_CONNECT' => !empty($row['last_connection_date']) ? gmdate_format('date_format_short', $row['last_connection_date']) : LangLoader::get_message('never', 'main'),
-				'DATE' => gmdate_format('date_format_short', $row['registration_date']),
-				'U_USER_ID' => UserUrlBuilder::profile($row['user_id'])->rel(),
-				'U_USER_PM' => UserUrlBuilder::personnal_message($row['user_id'])->rel()
+
+			$author = new LinkHTMLElement(UserUrlBuilder::profile($row['user_id']), $row['display_name'], (!empty($group_color) ? array('color' => $group_color) : array()), UserService::get_level_class($row['level']));
+
+			$results[] = new HTMLTableRow(array(
+				new HTMLTableRowCell($author),
+				new HTMLTableRowCell($row['show_email'] == 1 ? new LinkHTMLElement('mailto:' . $row['email'], $this->lang['email'], array(), 'basic-button smaller') : ''),
+				new HTMLTableRowCell(gmdate_format('date_format_short', $row['registration_date'])),
+				new HTMLTableRowCell($posted_msg),
+				new HTMLTableRowCell(!empty($row['last_connection_date']) ? gmdate_format('date_format_short', $row['last_connection_date']) : LangLoader::get_message('never', 'main')),
+				new HTMLTableRowCell(new LinkHTMLElement(UserUrlBuilder::personnal_message($row['user_id']), 'PM', array(), 'basic-button smaller')),
 			));
 		}
+		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
+
+		$this->view->put('table', $table->display());
 	}
 	
 	private function build_select_group_form()
