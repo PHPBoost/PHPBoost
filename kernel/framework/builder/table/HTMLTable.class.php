@@ -90,7 +90,7 @@ class HTMLTable implements HTMLElement
 	private function extract_parameters()
 	{
 		$nb_rows_per_page = $this->get_nb_rows_per_page();
-		if ($nb_rows_per_page !== AbstractHTMLTableModel::NO_PAGINATION)
+		if ($nb_rows_per_page !== HTMLTableModel::NO_PAGINATION)
 		{
 			$last_page_number = ceil($this->nb_rows / $nb_rows_per_page);
 			$this->page_number = max(1, min($this->parameters->get_page_number(), $last_page_number));
