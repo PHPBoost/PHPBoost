@@ -212,45 +212,6 @@ function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
 
 /**
  * @deprecated
- * @desc Formats a date according to a specific form.
- * @param string $format Formatting name (date_format, date_format_tiny, date_format_short, date_format_long)
- * @param int $timestamp Time to format (UNIX timestamp)
- * @param int $timezone_system Time zone (1 for the site time zone, 2 for the server time zone and 0 for the user timezone)
- * @return string The formatted date
- * @see Date::format()
- */
-function Date::to_format($timestamp = false, $format, $timezone_system = 0)
-{
-	if (strpos($format, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) !== false) //Inutile de tout tester si ce n'est pas un formatage prédéfini.
-	{
-		switch ($format)
-		{
-			case Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE:
-				$format = LangLoader::get_message('date_format_day_month_year_hour_minute', 'date-common');
-				break;
-			case Date::FORMAT_DAY_MONTH:
-				$format = LangLoader::get_message('date_format_day_month', 'date-common');
-				break;
-			case Date::FORMAT_DAY_MONTH_YEAR:
-				$format = LangLoader::get_message('date_format_day_month_year', 'date-common');
-				break;
-			case Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE:
-				$format = LangLoader::get_message('date_format_day_month_year_hour_minute', 'date-common');
-				break;
-		}
-	}
-
-	if ($timestamp === false)
-	{
-		$timestamp = time();
-	}
-
-	$date = new Date($timestamp, $timezone_system);
-	return $date->format($format);
-}
-
-/**
- * @deprecated
  * @desc Returns the current user's theme.
  * @return string The theme identifier (name of its folder).
  */
