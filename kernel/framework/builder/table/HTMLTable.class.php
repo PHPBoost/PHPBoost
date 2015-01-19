@@ -151,7 +151,7 @@ class HTMLTable implements HTMLElement
 		
 		$this->tpl->put_all(array(
 			'TABLE_ID' => $this->arg_id,
-			'C_PAGINATION_ACTIVATED' => $this->model->is_pagination_activated(),
+			'C_PAGINATION_ACTIVATED' => $this->is_pagination_activated(),
 			'NUMBER_OF_COLUMNS' => count($this->columns),
 			'C_CAPTION' => $this->model->has_caption(),
 			'CAPTION' => $this->model->get_caption(),
@@ -199,11 +199,17 @@ class HTMLTable implements HTMLElement
 
 	private function generate_rows_stats()
 	{
-		if ($this->model->is_pagination_activated())
+		$this->generate_stats();
+		
+		if ($this->is_pagination_activated())
 		{
-			$this->generate_stats();
 			$this->generate_pagination();
 		}
+	}
+
+	private function is_pagination_activated()
+	{
+		return $this->model->is_pagination_activated() && $this->get_nb_pages() > 1;
 	}
 
 	private function generate_rows()
@@ -257,10 +263,15 @@ class HTMLTable implements HTMLElement
 
 	private function generate_pagination()
 	{
-		$nb_pages =  ceil($this->nb_rows / $this->get_nb_rows_per_page());
+		$nb_pages =  $this->get_nb_pages();
 		$pagination = new Pagination($nb_pages, $this->page_number);
 		$pagination->set_url_builder_callback(array($this->parameters, 'get_pagination_url'));
 		$this->tpl->put('pagination', $pagination->export());
+	}
+
+	private function get_nb_pages()
+	{
+		return ceil($this->nb_rows / $this->get_nb_rows_per_page());
 	}
 
 	public function get_nb_rows_per_page()

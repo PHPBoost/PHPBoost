@@ -54,19 +54,9 @@ class NotationService
 		$notation_scale = $notation->get_notation_scale();
 		if (!empty($notation_scale))
 		{
-			$average_notes = $notation->get_average_notes();
-			$count_notes = $notation->get_number_notes();
-			
 			$template = new FileTemplate('framework/content/notation/notation.tpl');
-			$template->put_all(array(
-				'C_STATIC_DISPLAY' => true,
-				'C_NOTES' => $count_notes > 0 ? true : false,
-				'NUMBER_NOTES' => $notation->get_number_notes(),
-				'AVERAGE_NOTES' => $average_notes,
-				'NOTATION_SCALE' => $notation->get_notation_scale(),
-				'L_NO_NOTE' => LangLoader::get_message('no_note', 'common'),
-			));
-		
+
+			$average_notes = $notation->get_average_notes();
 			$int = intval($average_notes);
 			$decimal = floatval('0.' . substr($average_notes, strpos($average_notes, '.') + 1));
 
@@ -90,6 +80,17 @@ class NotationService
 					'STAR_FULL' => $star_full
 				));
 			}
+
+			$count_notes = $notation->get_number_notes();
+			$template->put_all(array(
+				'C_STATIC_DISPLAY' => true,
+				'C_NOTES' => $count_notes > 0 ? true : false,
+				'NUMBER_NOTES' => $notation->get_number_notes(),
+				'AVERAGE_NOTES' => $average_notes,
+				'NOTATION_SCALE' => $notation->get_notation_scale(),
+				'L_NO_NOTE' => LangLoader::get_message('no_note', 'common'),
+			));
+
 			return $template->render();
 		}
 		else
