@@ -14,8 +14,10 @@ NewsFormFieldSelectSources.prototype = {
 			jQuery('<div/>', {'id' : id}).appendTo('#input_fields_' + this.id_input);
 
 			jQuery('<input/> ', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{@form.source.name}'}).appendTo('#' + id);
+			jQuery('#field_name_' + id).after('&nbsp;');
 			
 			jQuery('<input/> ', {type : 'text', id : 'field_value_' + id, name : 'field_value_' + id, class : 'field-large', placeholder : '{@form.source.url}'}).appendTo('#' + id);
+			jQuery('#field_value_' + id).after('&nbsp;');
 			
 			jQuery('<a/> ', {href : 'javascript:NewsFormFieldSelectSources.delete_field('+ this.integer +');', id : 'delete_' + id, class : 'fa fa-delete'}).appendTo('#' + id);
 
