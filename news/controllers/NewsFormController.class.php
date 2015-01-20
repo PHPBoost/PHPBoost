@@ -346,7 +346,7 @@ class NewsFormController extends ModuleController
 	private function redirect(HTTPRequestCustom $request)
 	{
 		$news = $this->get_news();
-		$category = NewsService::get_categories_manager()->get_categories_cache()->get_category($news->get_id_cat());
+		$category = $news->get_category();
 
 		if ($news->get_id() === null && $this->is_contributor_member() && !$news->is_visible())
 		{
@@ -392,7 +392,7 @@ class NewsFormController extends ModuleController
 				if ($category->get_id() != Category::ROOT_CATEGORY)
 					$breadcrumb->add($category->get_name(), NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 			}
-			$category = NewsService::get_categories_manager()->get_categories_cache()->get_category($news->get_id_cat());
+			$category = $news->get_category();
 			$breadcrumb->add($this->get_news()->get_name(), NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->get_news()->get_id(), $this->get_news()->get_rewrited_name()));
 			$breadcrumb->add($this->lang['news.edit'], NewsUrlBuilder::edit_news($news->get_id(), $redirect));
 		}

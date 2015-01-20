@@ -211,7 +211,7 @@ class FaqQuestion
 	
 	public function get_array_tpl_vars($redirect = null)
 	{
-		$category = FaqService::get_categories_manager()->get_categories_cache()->get_category($this->id_category);
+		$category = $this->get_category();
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		

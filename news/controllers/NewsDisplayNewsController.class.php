@@ -77,7 +77,7 @@ class NewsDisplayNewsController extends ModuleController
 	{
 		$news = $this->get_news();
 		$news_config = NewsConfig::load();
-		$category = NewsService::get_categories_manager()->get_categories_cache()->get_category($news->get_id_cat());
+		$category = $news->get_category();
 		
 		$this->tpl->put_all(array_merge($news->get_array_tpl_vars(), array(
 			'C_COMMENTS_ENABLED' => $news_config->get_comments_enabled(),
@@ -230,7 +230,7 @@ class NewsDisplayNewsController extends ModuleController
 	
 	private function generate_response()
 	{
-		$category = NewsService::get_categories_manager()->get_categories_cache()->get_category($this->get_news()->get_id_cat());
+		$category = $this->get_news()->get_category();
 		$response = new SiteDisplayResponse($this->tpl);
 		
 		$graphical_environment = $response->get_graphical_environment();
