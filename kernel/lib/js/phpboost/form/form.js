@@ -231,7 +231,7 @@ FormField.prototype = {
 		this.formId = formId;
 	},
 	HTMLFieldExists : function() {
-		return jQuery('#' + this.getHTMLId()) != null;
+		return jQuery('#' + this.getHTMLId()).length > 0;
 	},
 	enable : function() {
 		if (this.HTMLFieldExists()) {
@@ -299,7 +299,7 @@ FormField.prototype = {
 			return;
 		}
 		
-		if (jQuery('#' + this.getHTMLId() + '_field') && jQuery('#onblurContainerResponse' + this.getHTMLId())) {
+		if (jQuery('#' + this.getHTMLId() + '_field').length && jQuery('#onblurContainerResponse' + this.getHTMLId()).length) {
 			
 			jQuery('#' + this.getHTMLId() + '_field').removeClass('constraint-status-right').addClass('constraint-status-error');
 			jQuery('#onblurMessageResponse' + this.getHTMLId()).html(message);
@@ -312,14 +312,14 @@ FormField.prototype = {
 			return;
 		}
 		
-		if (jQuery('#' + this.getHTMLId() + '_field') && jQuery('#onblurContainerResponse' + this.getHTMLId())) {
+		if (jQuery('#' + this.getHTMLId() + '_field').length && jQuery('#onblurContainerResponse' + this.getHTMLId()).length) {
 			
 			jQuery('#' + this.getHTMLId() + '_field').removeClass('constraint-status-error').addClass('constraint-status-right');
 			jQuery("#onblurMessageResponse" + this.getHTMLId()).fadeOut(200);
 		}
 	},
 	clearErrorMessage : function() {
-		if (jQuery('#' + this.getHTMLId() + '_field') && jQuery('#onblurContainerResponse' + this.getHTMLId())) {
+		if (jQuery('#' + this.getHTMLId() + '_field').length && jQuery('#onblurContainerResponse' + this.getHTMLId()).length) {
 
 			jQuery('#' + this.getHTMLId() + '_field').removeClass('constraint-status-right').addClass('constraint-status-error');
 			jQuery('#onblurMessageResponse' + this.getHTMLId()).html('');

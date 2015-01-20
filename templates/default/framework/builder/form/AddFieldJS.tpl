@@ -15,7 +15,7 @@ jQuery(document).ready(function() {
 		# END constraint #
 		return result;
 	}
-	if (jQuery("#${escape(HTML_ID)}") != null)
+	if (jQuery("#${escape(HTML_ID)}").length)
 	{
 		jQuery("#${escape(HTML_ID)}").blur(function() {
 			HTMLForms.get("${escape(FORM_ID)}").getField("${escape(ID)}").enableValidationMessage();
