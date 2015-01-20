@@ -236,7 +236,7 @@ class HTMLTable implements HTMLElement
 		$cell_values = array(
 			'VALUE' => $cell->get_value(),
 			'C_COLSPAN' => $cell->is_multi_column(),
-			'COLSPAN' => $cell->get_colspan(),
+			'COLSPAN' => $cell->get_colspan()
 		);
 		$this->add_css_vars($cell, $cell_values);
 		$this->tpl->assign_block_vars('row.cell', $cell_values);
@@ -244,8 +244,8 @@ class HTMLTable implements HTMLElement
 
 	private function add_css_vars(HTMLElement $element, array &$tpl_vars)
 	{
-		$tpl_vars['C_CSS_CLASS'] = $element->has_css_class();
-		$tpl_vars['CSS_CLASS'] = $element->get_css_class();
+		$tpl_vars['C_CSS_CLASSES'] = $element->has_css_class();
+		$tpl_vars['CSS_CLASSES'] = $element->get_css_class();
 	}
 
 	private function generate_stats()
