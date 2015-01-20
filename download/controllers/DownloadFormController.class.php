@@ -379,7 +379,7 @@ class DownloadFormController extends ModuleController
 	private function redirect(HTTPRequestCustom $request)
 	{
 		$downloadfile = $this->get_downloadfile();
-		$category = DownloadService::get_categories_manager()->get_categories_cache()->get_category($downloadfile->get_id_category());
+		$category = $downloadfile->get_category();
 		
 		if ($downloadfile->get_id() === null && $this->is_contributor_member() && !$downloadfile->is_visible())
 		{
@@ -425,7 +425,7 @@ class DownloadFormController extends ModuleController
 				if ($category->get_id() != Category::ROOT_CATEGORY)
 					$breadcrumb->add($category->get_name(), DownloadUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 			}
-			$category = DownloadService::get_categories_manager()->get_categories_cache()->get_category($downloadfile->get_id_category());
+			$category = $downloadfile->get_category();
 			$breadcrumb->add($downloadfile->get_name(), DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $downloadfile->get_id(), $downloadfile->get_rewrited_name()));
 			$breadcrumb->add($this->lang['download.edit'], DownloadUrlBuilder::edit($downloadfile->get_id(), $redirect));
 		}
