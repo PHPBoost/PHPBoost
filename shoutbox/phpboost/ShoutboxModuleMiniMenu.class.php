@@ -54,7 +54,6 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 			if ($config->is_shout_bbcode_enabled())
 			{
 				$smileys_cache = SmileysCache::load();
-				$max_smileys_number = 30; //Nombre de smileys maximim avant affichage d'un lien vers la popup.
 				$smileys_per_line = 5; //Smileys par ligne.
 				
 				$smileys_displayed_number = 0;
@@ -67,12 +66,6 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 						'URL' => TPL_PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley'],
 						'CODE' => addslashes($code_smile)
 					));
-					
-					if ($smileys_displayed_number == $max_smileys_number)
-					{
-						$tpl->put('C_BBCODE_SMILEY_MORE', true); //Lien vers tous les smiley!
-						break;
-					}
 				}
 				
 				
