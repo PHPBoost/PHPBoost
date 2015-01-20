@@ -68,6 +68,11 @@ class FaqQuestion
 		$this->id_category = $id_category;
 	}
 	
+	public function get_category()
+	{
+		return FaqService::get_categories_manager()->get_categories_cache()->get_category($this->id_category);
+	}
+	
 	public function get_q_order()
 	{
 		return $this->q_order;
