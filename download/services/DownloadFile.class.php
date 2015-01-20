@@ -93,6 +93,11 @@ class DownloadFile
 		$this->id_category = $id_category;
 	}
 	
+	public function get_category()
+	{
+		return DownloadService::get_categories_manager()->get_categories_cache()->get_category($this->id_category);
+	}
+	
 	public function get_name()
 	{
 		return $this->name;
@@ -441,7 +446,7 @@ class DownloadFile
 	
 	public function get_array_tpl_vars($redirect = null)
 	{
-		$category = DownloadService::get_categories_manager()->get_categories_cache()->get_category($this->id_category);
+		$category = $this->get_category();
 		$description = $this->get_real_short_contents();
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);

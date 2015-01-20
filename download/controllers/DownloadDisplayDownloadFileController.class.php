@@ -78,7 +78,7 @@ class DownloadDisplayDownloadFileController extends ModuleController
 	{
 		$config = DownloadConfig::load();
 		$downloadfile = $this->get_downloadfile();
-		$category = DownloadService::get_categories_manager()->get_categories_cache()->get_category($downloadfile->get_id_category());
+		$category = $downloadfile->get_category();
 		
 		$keywords = $downloadfile->get_keywords();
 		$has_keywords = count($keywords) > 0;
@@ -158,7 +158,7 @@ class DownloadDisplayDownloadFileController extends ModuleController
 	private function generate_response()
 	{
 		$downloadfile = $this->get_downloadfile();
-		$category = DownloadService::get_categories_manager()->get_categories_cache()->get_category($downloadfile->get_id_category());
+		$category = $downloadfile->get_category();
 		$response = new SiteDisplayResponse($this->tpl);
 		
 		$graphical_environment = $response->get_graphical_environment();
