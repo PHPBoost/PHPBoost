@@ -110,7 +110,7 @@ class AdminViewAllMembersController extends AdminController
 			'L_LAST_CONNECT' => $this->lang['last_connect'],
 			'L_REGISTERED' => $admin_lang['registered'],
 			'L_UPDATE' => $this->lang['update'],
-			'L_DELETE' => $this->lang['delete'],
+			'L_DELETE' => LangLoader::get_message('delete', 'common'),
 			'PAGINATION' => $pagination->display(),
 			'FORM' => $this->build_form()->display()
 		));
@@ -137,7 +137,7 @@ class AdminViewAllMembersController extends AdminController
 				'LEVEL' => UserService::get_level_lang($row['level']),
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'GROUP_COLOR' => $group_color,
-				'APPROBATION' => $row['approved'] == 0 ? $this->lang['no'] : $this->lang['yes'],
+				'APPROBATION' => $row['approved'] ? LangLoader::get_message('yes', 'common') : LangLoader::get_message('no', 'common'),
 				'MAIL' => $row['email'],
 				'LAST_CONNECT' => !empty($row['last_connection_date']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : $this->lang['never'],
 				'REGISTERED' => Date::to_format($row['registration_date'], Date::FORMAT_DAY_MONTH_YEAR),
