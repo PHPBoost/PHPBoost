@@ -40,7 +40,7 @@ class AdminFaqManageController extends AdminModuleController
 	{
 		$this->init();
 		
-		$this->build_view($request);
+		$this->build_table();
 		
 		return new AdminFaqDisplayResponse($this->view, $this->lang['faq.management']);
 	}
@@ -48,91 +48,51 @@ class AdminFaqManageController extends AdminModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'faq');
-		$this->view = new FileTemplate('faq/AdminFaqManageController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view = new StringTemplate('# INCLUDE table #');
 	}
 	
-	private function build_view(HTTPRequestCustom $request)
+	private function build_table()
 	{
-		$categories = FaqService::get_categories_manager()->get_categories_cache()->get_categories();
+		$table_model = new SQLHTMLTableModel(FaqSetup::$faq_table, array(
+				new HTMLTableColumn(''),
+				new HTMLTableColumn($this->lang['faq.form.question'], 'question'),
+				new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
+				new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),
+				new HTMLTableColumn(LangLoader::get_message('form.date.creation', 'common'), 'creation_date'),
+				new HTMLTableColumn(LangLoader::get_message('status.approved', 'common'), 'approved'),
+			), new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
 		
-		$mode = $request->get_getvalue('sort', 'desc');
-		$field = $request->get_getvalue('field', 'date');
+		$table = new HTMLTable($table_model);
 		
-		$sort_mode = ($mode == 'asc') ? 'ASC' : 'DESC';
+		$table_model->set_caption($this->lang['faq.management']);
 		
-		switch ($field)
-		{
-			case 'category':
-				$sort_field = 'id_category';
-				break;
-			case 'author':
-				$sort_field = 'display_name';
-				break;
-			case 'question':
-				$sort_field = 'question';
-				break;
-			case 'status':
-				$sort_field = 'approved';
-				break;
-			default:
-				$sort_field = 'creation_date';
-				break;
-		}
-		
-		$page = $request->get_getint('page', 1);
-		$pagination = $this->get_pagination($field, $mode, $page);
-		
-		$result = PersistenceContext::get_querier()->select('SELECT *
-		FROM '. FaqSetup::$faq_table .' faq
-		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = faq.author_user_id
-		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
-		LIMIT :number_per_page OFFSET :start_limit',
-			array(
-				'number_per_page' => $pagination->get_number_items_per_page(),
-				'start_limit' => $pagination->get_display_from()
-		));
-		
-		while($row = $result->fetch())
+		$results = array();
+		$result = $table_model->get_sql_results('faq LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = faq.author_user_id');
+		foreach ($result as $row)
 		{
 			$faq_question = new FaqQuestion();
 			$faq_question->set_properties($row);
-			
-			$this->view->assign_block_vars('questions', $faq_question->get_array_tpl_vars(FaqUrlBuilder::manage($field, $mode, $page)->relative()));
+			$category = $faq_question->get_category();
+			$user = $faq_question->get_author_user();
+
+			$edit_Link = new LinkHTMLElement(FaqUrlBuilder::edit($faq_question->get_id(), SITE_REWRITED_SCRIPT), '', array('title' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
+			$delete_link = new LinkHTMLElement(FaqUrlBuilder::delete($faq_question->get_id(), SITE_REWRITED_SCRIPT), '', array('title' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-delete');
+
+			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
+			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('color' => $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
+
+			$results[] = new HTMLTableRow(array(
+				new HTMLTableRowCell($edit_Link->display() . $delete_link->display()),
+				new HTMLTableRowCell(new LinkHTMLElement(FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $faq_question->get_id()), $faq_question->get_question())),
+				new HTMLTableRowCell(new LinkHTMLElement(FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), $category->get_name())),
+				new HTMLTableRowCell($author),
+				new HTMLTableRowCell($faq_question->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
+				new HTMLTableRowCell($faq_question->is_approved() ? LangLoader::get_message('yes', 'common') : LangLoader::get_message('no', 'common')),
+			));
 		}
-		$result->dispose();
-		
-		$this->view->put_all(array(
-			'C_PAGINATION' => $pagination->has_several_pages(),
-			'C_QUESTIONS' => !$pagination->current_page_is_empty(),
-			'PAGINATION' => $pagination->display(),
-			'U_SORT_QUESTION_ASC' => FaqUrlBuilder::manage('question', 'asc', $page)->rel(),
-			'U_SORT_QUESTION_DESC' => FaqUrlBuilder::manage('question', 'desc', $page)->rel(),
-			'U_SORT_CATEGORY_ASC' => FaqUrlBuilder::manage('category', 'asc', $page)->rel(),
-			'U_SORT_CATEGORY_DESC' => FaqUrlBuilder::manage('category', 'desc', $page)->rel(),
-			'U_SORT_AUTHOR_ASC' => FaqUrlBuilder::manage('author', 'asc', $page)->rel(),
-			'U_SORT_AUTHOR_DESC' => FaqUrlBuilder::manage('author', 'desc', $page)->rel(),
-			'U_SORT_DATE_ASC' => FaqUrlBuilder::manage('date', 'asc', $page)->rel(),
-			'U_SORT_DATE_DESC' => FaqUrlBuilder::manage('date', 'desc', $page)->rel(),
-			'U_SORT_STATUS_ASC' => FaqUrlBuilder::manage('status', 'asc', $page)->rel(),
-			'U_SORT_STATUS_DESC' => FaqUrlBuilder::manage('status', 'desc', $page)->rel()
-		));
-	}
-	
-	private function get_pagination($sort_field, $sort_mode, $page)
-	{
-		$faq_questions_number = FaqService::count();
-		
-		$pagination = new ModulePagination($page, $faq_questions_number, self::NUMBER_ITEMS_PER_PAGE);
-		$pagination->set_url(FaqUrlBuilder::manage($sort_field, $sort_mode, '%d'));
-		
-		if ($pagination->current_page_is_empty() && $page > 1)
-		{
-			$error_controller = PHPBoostErrors::unexisting_page();
-			DispatchManager::redirect($error_controller);
-		}
-		
-		return $pagination;
+		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
+
+		$this->view->put('table', $table->display());
 	}
 }
 ?>
