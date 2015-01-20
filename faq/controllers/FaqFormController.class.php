@@ -244,7 +244,7 @@ class FaqFormController extends ModuleController
 	private function redirect(HTTPRequestCustom $request)
 	{
 		$faq_question = $this->get_faq_question();
-		$category = FaqService::get_categories_manager()->get_categories_cache()->get_category($faq_question->get_id_category());
+		$category = $faq_question->get_category();
 		
 		if ($faq_question->get_id() === null && $this->is_contributor_member() && !$faq_question->is_approved())
 		{
@@ -290,7 +290,7 @@ class FaqFormController extends ModuleController
 				if ($category->get_id() != Category::ROOT_CATEGORY)
 					$breadcrumb->add($category->get_name(), FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 			}
-			$category = FaqService::get_categories_manager()->get_categories_cache()->get_category($faq_question->get_id_category());
+			$category = $faq_question->get_category();
 			$breadcrumb->add($faq_question->get_question(), FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $faq_question->get_id()));
 			$breadcrumb->add($this->lang['faq.edit'], FaqUrlBuilder::edit($faq_question->get_id(), $redirect));
 		}

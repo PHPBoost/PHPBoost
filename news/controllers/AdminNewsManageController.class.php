@@ -27,8 +27,6 @@
 
 class AdminNewsManageController extends AdminModuleController
 {
-	const NUMBER_ITEMS_PER_PAGE = 20;
-	
 	private $lang;
 	private $view;
 	
