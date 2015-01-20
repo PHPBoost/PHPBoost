@@ -936,6 +936,7 @@ textarea {
 
 .text-status-constraint {
 	position:absolute;
+	display: block;
 	z-index: 1;
 	padding: 6px 5px;
 	left: 5px;
@@ -954,7 +955,7 @@ input + .text-status-constraint {
 	top: 25px;
 }
 
-.text-status-constraint::before {
+.text-status-constraint:before {
 	content: " ";
 	position: absolute;
 	border-bottom: 9px solid rgba(230, 230, 230, 1);
@@ -964,7 +965,7 @@ input + .text-status-constraint {
 	top: -9px;
 }
 
-.text-status-constraint::after {
+.text-status-constraint:after {
 	content: " ";
 	position: absolute;
 	border-bottom: 8px solid rgba(250, 250, 250, 1);
