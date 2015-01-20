@@ -51,6 +51,7 @@ class Date
 	const FORMAT_DAY_MONTH_YEAR_TEXT = 7;
 	const FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT = 8;
 	const FORMAT_RELATIVE = 9;
+	const FORMAT_ISO_DAY_MONTH_YEAR = 10;
 
 	/**
 	 * @var DateTime Representation of date and time.
@@ -211,7 +212,10 @@ class Date
 					return $years . ' ' . ($years > 1 ? LangLoader::get_message('years', 'date-common') : LangLoader::get_message('year', 'date-common'));
 					
 				break;
-				
+			case self::FORMAT_ISO_DAY_MONTH_YEAR:
+				return $this->date_time->format('Y-m-d');
+				break;
+
 			default:
 				return '';
 		}

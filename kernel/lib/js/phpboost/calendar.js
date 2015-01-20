@@ -90,10 +90,3 @@ function xmlhttprequest_calendar(field, vars)
 		}
 	});
 }
-
-function check_mini_calendar_form(name)
-{
-	reg_exp = new RegExp("[0-9]{2}/[0-9]{2}/[0-9]{2,4}", "g");
-	form_id = association_name_id[name];
-	return document.getElementById(form_id).value.match(reg_exp);
-}
