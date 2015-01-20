@@ -31,13 +31,7 @@ jQuery(document).ready(function() {
 		});
 		# END event_hander #
 	}
-	else
-	{
-		field.getValue = function()
-		{
-			return "";
-		}
-	}
+
 	{JS_SPECIALIZATION_CODE}
 });
 -->

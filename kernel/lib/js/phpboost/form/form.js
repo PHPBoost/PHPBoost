@@ -274,6 +274,10 @@ FormField.prototype = {
 		return false;
 	},
 	getValue : function() {
+		if (!this.HTMLFieldExists()) {
+			alert(this.getHTMLId() + ' not exists, use get_js_specialization_code function in FormField and return field.getValue JS function contain the value');
+		}
+
 		var field = jQuery('#' + this.getHTMLId());
 		if (field.is(":checkbox")){
 			return field.prop("checked");

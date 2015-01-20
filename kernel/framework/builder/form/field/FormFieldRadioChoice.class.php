@@ -70,10 +70,11 @@ class FormFieldRadioChoice extends AbstractFormFieldChoice
 	}
 
 	protected function get_js_specialization_code()
-	{
-		return 'field.disabled = ' . ($this->is_disabled() ? 'true' : 'false') . ';' .
-			'field.disable = function() { this.disabled = true; }; field.enable = function() { this.disabled = false; };' .
-			'field.isDisabled = function() { return this.disabled; };';
-	}
+    {
+        return 'field.getValue = function()
+        {
+            return (jQuery("input[name='. $this->get_html_id() .']:checked").length > 0);
+        }';
+    }
 }
 ?>
