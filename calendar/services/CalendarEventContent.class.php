@@ -78,6 +78,11 @@ class CalendarEventContent
 		return $this->category_id;
 	}
 	
+	public function get_category()
+	{
+		return CalendarService::get_categories_manager()->get_categories_cache()->get_category($this->category_id);
+	}
+	
 	public function set_title($title)
 	{
 		$this->title = $title;

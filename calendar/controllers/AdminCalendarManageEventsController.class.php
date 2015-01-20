@@ -30,8 +30,6 @@
  */
 class AdminCalendarManageEventsController extends AdminModuleController
 {
-	const NUMBER_ITEMS_PER_PAGE = 20;
-	
 	private $lang;
 	private $view;
 	
@@ -39,7 +37,7 @@ class AdminCalendarManageEventsController extends AdminModuleController
 	{
 		$this->init();
 		
-		$this->build_view($request);
+		$this->build_table();
 		
 		return new AdminCalendarDisplayResponse($this->view, $this->lang['calendar.config.events.management']);
 	}
@@ -47,92 +45,58 @@ class AdminCalendarManageEventsController extends AdminModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'calendar');
-		$this->view = new FileTemplate('calendar/AdminCalendarManageEventsController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view = new StringTemplate('# INCLUDE table #');
 	}
 	
-	private function build_view(HTTPRequestCustom $request)
+	private function build_table()
 	{
-		$mode = $request->get_getvalue('sort', CalendarUrlBuilder::DEFAULT_SORT_MODE);
-		$field = $request->get_getvalue('field', CalendarUrlBuilder::DEFAULT_SORT_FIELD);
+		$table_model = new SQLHTMLTableModel(CalendarSetup::$calendar_events_table, array(
+			new HTMLTableColumn(''),
+			new HTMLTableColumn(LangLoader::get_message('form.title', 'common'), 'title'),
+			new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
+			new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),
+			new HTMLTableColumn(LangLoader::get_message('date', 'date-common'), 'start_date'),
+			new HTMLTableColumn($this->lang['calendar.titles.repetition']),
+			new HTMLTableColumn(LangLoader::get_message('status.approved', 'common'), 'approved'),
+		), new HTMLTableSortingRule('start_date', HTMLTableSortingRule::DESC));
 		
-		$sort_mode = ($mode == 'asc') ? 'ASC' : 'DESC';
+		$table = new HTMLTable($table_model);
 		
-		switch ($field)
-		{
-			case 'category':
-				$sort_field = 'id_category';
-				break;
-			case 'author':
-				$sort_field = 'display_name';
-				break;
-			case 'title':
-				$sort_field = 'title';
-				break;
-			case 'status':
-				$sort_field = 'approved';
-				break;
-			default:
-				$sort_field = 'start_date';
-				break;
-		}
+		$table_model->set_caption($this->lang['calendar.config.events.management']);
 		
-		$page = $request->get_getint('page', 1);
-		$pagination = $this->get_pagination($field, $mode, $page);
-		
-		$result = PersistenceContext::get_querier()->select("SELECT *
-		FROM " . CalendarSetup::$calendar_events_table . " event
-		LEFT JOIN " . CalendarSetup::$calendar_events_content_table . " event_content ON event_content.id = event.content_id
-		LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = event_content.author_id
-		WHERE parent_id = 0
-		ORDER BY " . $sort_field . " " . $sort_mode . "
-		LIMIT :number_items_per_page OFFSET :display_from",
-			array(
-				'number_items_per_page' => $pagination->get_number_items_per_page(),
-				'display_from' => $pagination->get_display_from()
-			)
+		$results = array();
+		$result = $table_model->get_sql_results('event
+			LEFT JOIN ' . CalendarSetup::$calendar_events_content_table . ' event_content ON event_content.id = event.content_id
+			LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = event_content.author_id'
 		);
-		
-		while($row = $result->fetch())
+		foreach ($result as $row)
 		{
 			$event = new CalendarEvent();
 			$event->set_properties($row);
+			$category = $event->get_content()->get_category();
+			$user = $event->get_content()->get_author_user();
+
+			$edit_Link = new LinkHTMLElement(CalendarUrlBuilder::edit_event(!$event->get_parent_id() ? $event->get_id() : $event->get_parent_id(), SITE_REWRITED_SCRIPT), '', array('title' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
+			$delete_link = new LinkHTMLElement(CalendarUrlBuilder::delete_event($event->get_id(), SITE_REWRITED_SCRIPT), '', array('title' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => !$event->belongs_to_a_serie() ? 'delete-element' : ''), 'fa fa-delete');
+
+			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
+			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('color' => $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
 			
-			$this->view->assign_block_vars('event', $event->get_array_tpl_vars(CalendarUrlBuilder::manage_events($field, $mode, $page)->relative()));
+			$br = new BrHTMLElement();
+			
+			$results[] = new HTMLTableRow(array(
+				new HTMLTableRowCell($edit_Link->display() . $delete_link->display()),
+				new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()), $event->get_content()->get_title()), 'left'),
+				new HTMLTableRowCell(new SpanHTMLElement($category->get_name(), array('style' => $category->get_id() != Category::ROOT_CATEGORY && $category->get_color() ? 'color:' . $category->get_color() : ''))),
+				new HTMLTableRowCell($author),
+				new HTMLTableRowCell(LangLoader::get_message('from_date', 'main') . ' ' . $event->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . $br->display() . LangLoader::get_message('to_date', 'main') . ' ' . $event->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
+				new HTMLTableRowCell($event->belongs_to_a_serie() ? $this->lang['calendar.labels.repeat.' . $event->get_content()->get_repeat_type()] . ' - ' . $event->get_content()->get_repeat_number() . ' ' . $this->lang['calendar.labels.repeat_times'] : LangLoader::get_message('no', 'common')),
+				new HTMLTableRowCell($event->get_content()->is_approved() ? LangLoader::get_message('yes', 'common') : LangLoader::get_message('no', 'common')),
+			));
 		}
-		$result->dispose();
-		
-		$this->view->put_all(array(
-			'C_PAGINATION' => $pagination->has_several_pages(),
-			'C_EVENTS' => $result->get_rows_count() > 0,
-			'PAGINATION' => $pagination->display(),
-			'U_SORT_TITLE_ASC' => CalendarUrlBuilder::manage_events('title/asc/'. $page)->rel(),
-			'U_SORT_TITLE_DESC' => CalendarUrlBuilder::manage_events('title/desc/'. $page)->rel(),
-			'U_SORT_CATEGORY_ASC' => CalendarUrlBuilder::manage_events('category/asc/'. $page)->rel(),
-			'U_SORT_CATEGORY_DESC' => CalendarUrlBuilder::manage_events('category/desc/'. $page)->rel(),
-			'U_SORT_AUTHOR_ASC' => CalendarUrlBuilder::manage_events('author/asc/'. $page)->rel(),
-			'U_SORT_AUTHOR_DESC' => CalendarUrlBuilder::manage_events('author/desc/'. $page)->rel(),
-			'U_SORT_DATE_ASC' => CalendarUrlBuilder::manage_events('date/asc/'. $page)->rel(),
-			'U_SORT_DATE_DESC' => CalendarUrlBuilder::manage_events('date/desc/'. $page)->rel(),
-			'U_SORT_STATUS_ASC' => CalendarUrlBuilder::manage_events('status/asc/'. $page)->rel(),
-			'U_SORT_STATUS_DESC' => CalendarUrlBuilder::manage_events('status/desc/'. $page)->rel()
-		));
-	}
-	
-	private function get_pagination($sort_field, $sort_mode, $page)
-	{
-		$events_number = PersistenceContext::get_querier()->count(CalendarSetup::$calendar_events_table);
-		
-		$pagination = new ModulePagination($page, $events_number, self::NUMBER_ITEMS_PER_PAGE);
-		$pagination->set_url(CalendarUrlBuilder::manage_events($sort_field, $sort_mode, '%d'));
-		
-		if ($pagination->current_page_is_empty() && $page > 1)
-		{
-			$error_controller = PHPBoostErrors::unexisting_page();
-			DispatchManager::redirect($error_controller);
-		}
-		
-		return $pagination;
+		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
+
+		$this->view->put('table', $table->display());
 	}
 }
 ?>

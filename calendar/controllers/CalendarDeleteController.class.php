@@ -184,7 +184,7 @@ class CalendarDeleteController extends ModuleController
 		
 		$event_content = $this->event->get_content();
 		
-		$category = CalendarService::get_categories_manager()->get_categories_cache()->get_category($event_content->get_category_id());
+		$category = $event_content->get_category();
 		$breadcrumb->add($event_content->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event_content->get_id(), $event_content->get_rewrited_title()));
 		
 		$breadcrumb->add($this->lang['calendar.titles.event_removal'], CalendarUrlBuilder::delete_event($this->event->get_id(), $redirect));
