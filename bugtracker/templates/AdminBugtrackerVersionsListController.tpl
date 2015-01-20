@@ -23,7 +23,7 @@ BugtrackerFormFieldVersions.prototype = {
 			
 			jQuery('<td/>', {id : 'td3_' + id}).appendTo('#tr_' + id);
 			
-			jQuery('<input/> ', {type : 'text', id : 'release_date_' + id, name : 'release_date_' + id, maxlength : 10, placeholder : ${escapejs(LangLoader::get_message(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE, 'date-common'))}}).appendTo('#td3_' + id).attr('size', '11');
+			jQuery('<input/> ', {type : 'text', id : 'release_date_' + id, name : 'release_date_' + id, maxlength : 10, placeholder : ${escapejs(LangLoader::get_message('date_format', 'date-common'))}}).appendTo('#td3_' + id).attr('size', '11');
 			jQuery('#release_date_' + id).after('&nbsp;');
 			
 			jQuery('<div/> ', {id : 'calendar' + id, style : 'position:absolute;z-index:100;display:none;'}).appendTo('#td3_' + id);
@@ -119,7 +119,7 @@ function display_default_version_radio(version_id)
 				<input type="text" maxlength="100" class="field-large" name="version{versions.ID}" value="{versions.NAME}" />
 			</td>
 			<td>
-				<input type="text" maxlength="10" size="11" id="release_date{versions.ID}" name="release_date{versions.ID}" value="{versions.RELEASE_DATE}" placeholder="${LangLoader::get_message(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE, 'date-common')}" />
+				<input type="text" maxlength="10" size="11" id="release_date{versions.ID}" name="release_date{versions.ID}" value="{versions.RELEASE_DATE}" placeholder="${LangLoader::get_message('date_format', 'date-common')}" />
 				<div style="position:absolute;z-index:100;display:none;" id="calendar{versions.ID}">
 					<div id="release_date{versions.ID}_date" class="calendar-block" onmouseover="hide_calendar({versions.ID}, 1);" onmouseout="hide_calendar({versions.ID}, 0);">
 					</div>
