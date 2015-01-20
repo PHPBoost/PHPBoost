@@ -78,7 +78,7 @@ class WebDisplayWebLinkController extends ModuleController
 	{
 		$config = WebConfig::load();
 		$weblink = $this->get_weblink();
-		$category = WebService::get_categories_manager()->get_categories_cache()->get_category($weblink->get_id_category());
+		$category = $weblink->get_category();
 		
 		$keywords = $weblink->get_keywords();
 		$has_keywords = count($keywords) > 0;
@@ -157,7 +157,7 @@ class WebDisplayWebLinkController extends ModuleController
 	private function generate_response()
 	{
 		$weblink = $this->get_weblink();
-		$category = WebService::get_categories_manager()->get_categories_cache()->get_category($weblink->get_id_category());
+		$category = $weblink->get_category();
 		$response = new SiteDisplayResponse($this->tpl);
 		
 		$graphical_environment = $response->get_graphical_environment();

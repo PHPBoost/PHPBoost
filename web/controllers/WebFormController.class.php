@@ -338,7 +338,7 @@ class WebFormController extends ModuleController
 	private function redirect(HTTPRequestCustom $request)
 	{
 		$weblink = $this->get_weblink();
-		$category = WebService::get_categories_manager()->get_categories_cache()->get_category($weblink->get_id_category());
+		$category = $weblink->get_category();
 		
 		if ($weblink->get_id() === null && $this->is_contributor_member() && !$weblink->is_visible())
 		{
@@ -384,7 +384,7 @@ class WebFormController extends ModuleController
 				if ($category->get_id() != Category::ROOT_CATEGORY)
 					$breadcrumb->add($category->get_name(), WebUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 			}
-			$category = WebService::get_categories_manager()->get_categories_cache()->get_category($weblink->get_id_category());
+			$category = $weblink->get_category();
 			$breadcrumb->add($weblink->get_name(), WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_name()));
 			$breadcrumb->add($this->lang['web.edit'], WebUrlBuilder::edit($weblink->get_id(), $redirect));
 		}
