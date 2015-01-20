@@ -67,7 +67,7 @@ class LastUseDateConfig extends AbstractConfigData
 	private function get_date_far_in_the_past()
 	{
 		$date = new Date();
-		$date->set_year($this->get_property('year') - 1);
+		$date->set_year($date->get_year() - 1);
 		return $date;
 	}
 

@@ -157,7 +157,7 @@ class HTMLTable implements HTMLElement
 			'CAPTION' => $this->model->get_caption(),
 			'U_TABLE_DEFAULT_OPIONS' => $this->parameters->get_default_table_url(),
 			'C_NB_ROWS_OPTIONS' => $has_nb_rows_options,
-			'HAS_ROWS' => !empty($this->rows)
+			'C_HAS_ROWS' => !empty($this->rows)
 		));
 
 		if ($has_nb_rows_options)

@@ -75,9 +75,9 @@
 			# END row.cell #
 		</tr>
 		# END row #
-		# IF NOT HAS_ROWS #
+		# IF NOT C_HAS_ROWS #
 		<tr> 
-			<td colspan="6">
+			<td colspan="{NUMBER_OF_COLUMNS}">
 				${LangLoader::get_message('no_item_now', 'common')}
 			</td>
 		</tr>
