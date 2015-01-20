@@ -13,4 +13,16 @@
 		# ENDIF #
 	</div>
 </div>
+
 # INCLUDE ADD_FIELD_JS #
+<script>
+<!--
+jQuery('#${escape(HTML_ID)}_hours, #${escape(HTML_ID)}_minutes').keyup(function(){
+	regex = new RegExp('^[0-9]{2}$', 'i');
+	if (!regex.test(this.value))
+	{
+		this.value = '';
+	}
+}); 
+-->
+</script>

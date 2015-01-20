@@ -110,7 +110,7 @@ class MiniCalendar
 		$template = new FileTemplate('framework/util/mini_calendar.tpl');
 
 		$template->put_all(array(
-			'DEFAULT_DATE' => !empty($this->date) ? $this->date->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
+			'DEFAULT_DATE' => !empty($this->date) ? $this->date->format(Date::FORMAT_ISO_DAY_MONTH_YEAR) : '',
 			'CALENDAR_ID' => $this->html_id,
 			'CALENDAR_NUMBER' => (string)$this->num_instance,
 			'DAY' => !empty($this->date) ? $this->date->get_day() : '',

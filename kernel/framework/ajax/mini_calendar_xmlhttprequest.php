@@ -103,26 +103,6 @@ if ($calendar_type == 'date')
 	{
 		$first_day = 7;
 	}
-		
-	//Prise en compte et conversion des formats de dates.
-	$format = '';
-	$array_date = explode('/', LangLoader::get_message('date_format_day_month_year', 'date-common'));
-	for ($i = 0; $i < 3; $i++)
-	{
-		switch ($array_date[$i])
-		{
-			case 'd':
-				$format .= "%1\$s";
-				break;
-			case 'm':
-				$format .= "%2\$s";
-				break;
-			case 'Y':
-				$format .= "%3\$s";
-				break;
-		}
-		$format .= ($i != 2) ? '/' : '';
-	}
 
 	//Génération du calendrier. 
    
@@ -133,8 +113,7 @@ if ($calendar_type == 'date')
 	{
 		if ($i >= $first_day && $i < $last_day)
 		{
-			$date = sprintf($format, (($j < 10 && substr($j, 0, 1) != 0) ? '0' . $j : $j), $month, $year);
-			
+			$date = StringVars::replace_vars(':year-:month-:day', array('year' => $year, 'month' => $month, 'day' => ($j < 10 && substr($j, 0, 1) != 0) ? '0' . $j : $j));
 			$class ='';
 			if ( (($i % 7) == 6) || (($i % 7) == 0)) 
 			{ 
