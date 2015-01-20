@@ -49,7 +49,7 @@ class MemberUserBornExtendedField extends AbstractMemberExtendedField
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 		
-		$value = $member_extended_field->get_value() ? new Date$member_extended_field->get_value()) : null;
+		$value = $member_extended_field->get_value() ? new Date($member_extended_field->get_value()) : null;
 		$fieldset->add_field(new FormFieldDate($member_extended_field->get_field_name(), $member_extended_field->get_name(), $value, 
 			array('description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required())
 		));
