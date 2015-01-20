@@ -132,10 +132,6 @@ function shoutbox_refresh_messages_box() {
 								# START smileys #
 									<a href="" onclick="insertbbcode('{smileys.CODE}', 'smile', 'shout-contents');return false;" class="bbcode-hover" title="{smileys.CODE}"><img src="{smileys.URL}" alt="{smileys.CODE}"></a># IF smileys.C_END_LINE #<br /># ENDIF #
 								# END smileys #
-								# IF C_BBCODE_SMILEY_MORE #
-									<br /><br />
-									<a href="" onclick="window.open('{PATH_TO_ROOT}/BBCode/formatting/smileys.php?field=shout-contents', '${LangLoader::get_message('smiley', 'main')}', 'height=550,width=650,resizable=yes,scrollbars=yes');return false;" title="${LangLoader::get_message('bb_smileys', 'common', 'BBCode')}" class="small">${LangLoader::get_message('all_smiley', 'main')}</a>
-								# ENDIF #
 							</div>
 						</div>
 					</li>
