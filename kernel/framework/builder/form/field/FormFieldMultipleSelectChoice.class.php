@@ -216,5 +216,13 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
         }
         return null;
     }
+
+    protected function get_js_specialization_code()
+    {
+        return 'field.getValue = function()
+        {
+            return jQuery("#'.$this->get_html_id().' :selected").length;
+        }';
+    }
 }
 ?>

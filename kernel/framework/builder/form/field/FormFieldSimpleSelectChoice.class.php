@@ -108,5 +108,13 @@ class FormFieldSimpleSelectChoice extends AbstractFormFieldChoice
     {
         return new FileTemplate('framework/builder/form/FormField.tpl');
     }
+
+    protected function get_js_specialization_code()
+    {
+        return 'field.getValue = function()
+        {
+            return jQuery("#'.$this->get_html_id().' :selected").length;
+        }';
+    }
 }
 ?>
