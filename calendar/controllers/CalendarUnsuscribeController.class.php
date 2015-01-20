@@ -46,7 +46,7 @@ class CalendarUnsuscribeController extends ModuleController
 				CalendarCurrentMonthEventsCache::invalidate();
 			}
 			
-			$category = CalendarService::get_categories_manager()->get_categories_cache()->get_category($this->event->get_content()->get_category_id());
+			$category = $this->event->get_content()->get_category();
 			
 			AppContext::get_response()->redirect($request->get_getvalue('redirect', CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event_id, $this->event->get_content()->get_rewrited_title())));
 		}

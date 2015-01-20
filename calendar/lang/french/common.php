@@ -49,7 +49,7 @@ $lang['calendar.titles.event_removal'] = 'Suppression de l\'événement';
 $lang['calendar.titles.events_of'] = 'Evénements du';
 $lang['calendar.titles.event'] = 'Evénement';
 $lang['calendar.titles.recurrence'] = 'Récurrence';
-$lang['calendar.titles.repetion'] = 'Répétition';
+$lang['calendar.titles.repetition'] = 'Répétition';
 $lang['calendar.pending'] = 'Evénements en attente';
 $lang['calendar.manage'] = 'Gérer les événements';
 

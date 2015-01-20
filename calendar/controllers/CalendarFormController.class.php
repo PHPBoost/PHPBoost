@@ -463,7 +463,7 @@ class CalendarFormController extends ModuleController
 	private function redirect(HTTPRequestCustom $request)
 	{
 		$event = $this->get_event();
-		$category = CalendarService::get_categories_manager()->get_categories_cache()->get_category($event->get_content()->get_category_id());
+		$category = $event->get_content()->get_category();
 		
 		if ($event->get_id() === null && $this->is_contributor_member() && !$event->get_content()->is_approved())
 		{
@@ -500,7 +500,7 @@ class CalendarFormController extends ModuleController
 		{
 			$graphical_environment->set_page_title($this->lang['calendar.titles.event_edition'], $this->lang['module_title']);
 			
-			$category = CalendarService::get_categories_manager()->get_categories_cache()->get_category($event->get_content()->get_category_id());
+			$category = $event->get_content()->get_category();
 			$breadcrumb->add($event->get_content()->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()));
 			
 			$breadcrumb->add($this->lang['calendar.titles.event_edition'], CalendarUrlBuilder::edit_event($event->get_id(), $redirect));

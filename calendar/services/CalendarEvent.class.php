@@ -160,7 +160,7 @@ class CalendarEvent
 	{
 		$lang = LangLoader::get('common', 'calendar');
 		
-		$category = CalendarService::get_categories_manager()->get_categories_cache()->get_category($this->content->get_category_id());
+		$category = $this->content->get_category();
 		$author = $this->content->get_author_user();
 		$author_group_color = User::get_group_color($author->get_groups(), $author->get_level(), true);
 		

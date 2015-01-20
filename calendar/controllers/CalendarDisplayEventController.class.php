@@ -76,7 +76,7 @@ class CalendarDisplayEventController extends ModuleController
 	private function build_view()
 	{
 		$event = $this->get_event();
-		$category = CalendarService::get_categories_manager()->get_categories_cache()->get_category($event->get_content()->get_category_id());
+		$category = $event->get_content()->get_category();
 		
 		$this->tpl->put_all(array_merge($event->get_array_tpl_vars(), array(
 			'NOT_VISIBLE_MESSAGE' => MessageHelper::display(LangLoader::get_message('element.not_visible', 'status-messages-common'), MessageHelper::WARNING)
@@ -126,7 +126,7 @@ class CalendarDisplayEventController extends ModuleController
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], CalendarUrlBuilder::home());
 		
-		$category = CalendarService::get_categories_manager()->get_categories_cache()->get_category($event->get_content()->get_category_id());
+		$category = $event->get_content()->get_category();
 		$breadcrumb->add($event->get_content()->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()));
 		
