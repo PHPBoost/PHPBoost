@@ -30,7 +30,6 @@ class UserUsersListController extends AbstractController
 	private $lang;
 	private $view;
 	private $groups_cache;
-	private $nbr_members_per_page = 25;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -58,11 +57,11 @@ class UserUsersListController extends AbstractController
 			new HTMLTableColumn($this->lang['messages'], 'posted_msg'),
 			new HTMLTableColumn($this->lang['last_connection'], 'last_connection_date'),
 			new HTMLTableColumn($this->lang['private_message'])
-		), new HTMLTableSortingRule('m.user_id', HTMLTableSortingRule::ASC));
+		), new HTMLTableSortingRule('display_name', HTMLTableSortingRule::ASC));
 
 		$table = new HTMLTable($table_model);
 
-        $results = array();
+		$results = array();
 		$result = $table_model->get_sql_results('m LEFT JOIN ' . DB_TABLE_INTERNAL_AUTHENTICATION .' ia ON ia.user_id = m.user_id');
 		foreach ($result as $row)
 		{
@@ -101,22 +100,6 @@ class UserUsersListController extends AbstractController
 			'C_ARE_GROUPS' => !empty($groups),
 			'SELECT_GROUP' => $form->display()
 		));
-	}
-	
-	private function get_pagination($page, $field, $sort)
-	{
-		$number_members = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER);
-		
-		$pagination = new ModulePagination($page, $number_members, $this->nbr_members_per_page);
-		$pagination->set_url(UserUrlBuilder::users($field, $sort, '%d'));
-		
-		if ($pagination->current_page_is_empty() && $page > 1)
-		{
-			$error_controller = PHPBoostErrors::unexisting_page();
-			DispatchManager::redirect($error_controller);
-		}
-		
-		return $pagination;
 	}
 	
 	private function build_select_groups()
