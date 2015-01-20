@@ -34,7 +34,7 @@ class HTMLTableRowCell extends AbstractHTMLElement
 	private $value;
 	private $colspan = 1;
 	
-	public function __construct($value, array $class = array())
+	public function __construct($value, $css_class = '')
 	{
 		if ($value instanceof HTMLElement)
 		{
@@ -42,7 +42,7 @@ class HTMLTableRowCell extends AbstractHTMLElement
 		}
 		
 		$this->value = $value;
-		$this->set_css_class($class);
+		$this->css_class = $css_class;
 	}
 	
 	public function get_value()
