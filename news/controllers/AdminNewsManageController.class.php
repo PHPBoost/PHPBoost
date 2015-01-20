@@ -56,7 +56,7 @@ class AdminNewsManageController extends AdminModuleController
 			new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),
 			new HTMLTableColumn(LangLoader::get_message('form.date.creation', 'common'), 'creation_date'),
 			new HTMLTableColumn(LangLoader::get_message('status', 'common'), 'approbation_type'),
-		), new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::ASC));
+		), new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
 		
 		$table = new HTMLTable($table_model);
 
@@ -89,22 +89,6 @@ class AdminNewsManageController extends AdminModuleController
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 
 		$this->view->put('table', $table->display());
-	}
-	
-	private function get_pagination($sort_field, $sort_mode, $page)
-	{
-		$news_number = PersistenceContext::get_querier()->count(NewsSetup::$news_table);
-		
-		$pagination = new ModulePagination($page, $news_number, self::NUMBER_ITEMS_PER_PAGE);
-		$pagination->set_url(NewsUrlBuilder::manage_news($sort_field, $sort_mode, '%d'));
-		
-		if ($pagination->current_page_is_empty() && $page > 1)
-		{
-			$error_controller = PHPBoostErrors::unexisting_page();
-			DispatchManager::redirect($error_controller);
-		}
-		
-		return $pagination;
 	}
 }
 ?>
