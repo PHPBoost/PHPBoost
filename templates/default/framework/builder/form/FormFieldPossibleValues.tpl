@@ -1,12 +1,12 @@
 <script>
 <!--
-var ContactFormFieldPossibleValues = function(){
+var FormFieldPossibleValues = function(){
 	this.integer = ${escapejs(NBR_FIELDS)};
 	this.id_input = ${escapejs(HTML_ID)};
 	this.max_input = ${escapejs(MAX_INPUT)};
 };
 
-ContactFormFieldPossibleValues.prototype = {
+FormFieldPossibleValues.prototype = {
 	add_field : function () {
 		if (this.integer <= this.max_input) {
 			var id = this.id_input + '_' + this.integer;
@@ -15,11 +15,11 @@ ContactFormFieldPossibleValues.prototype = {
 
 			jQuery('<input/> ', {type : 'checkbox', id : 'field_is_default_' + id, name : 'field_is_default_' + id, value : '1', 'style' : 'margin: 0 25px 0 25px;'}).appendTo('#' + id);
 			jQuery('#field_is_default_' + id).after('&nbsp;');
-			
+
 			jQuery('<input/> ', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{@field.name}'}).appendTo('#' + id);
 			jQuery('#field_name_' + id).after('&nbsp;');
 			
-			jQuery('<a/> ', {href : 'javascript:ContactFormFieldPossibleValues.delete_field('+ this.integer +');', id : 'delete_' + id, 'title' : "${LangLoader::get_message('delete', 'common')}", class : 'fa fa-delete'}).appendTo('#' + id);
+			jQuery('<a/> ', {href : 'javascript:FormFieldPossibleValues.delete_field('+ this.integer +');', id : 'delete_' + id, 'title' : "${LangLoader::get_message('delete', 'common')}", class : 'fa fa-delete'}).appendTo('#' + id);
 			
 			this.integer++;
 		}
@@ -35,7 +35,7 @@ ContactFormFieldPossibleValues.prototype = {
 	},
 };
 
-var ContactFormFieldPossibleValues = new ContactFormFieldPossibleValues();
+var FormFieldPossibleValues = new FormFieldPossibleValues();
 -->
 </script>
 
@@ -45,8 +45,8 @@ var ContactFormFieldPossibleValues = new ContactFormFieldPossibleValues();
 	<div id="${escape(HTML_ID)}_{fieldelements.ID}">
 		<input type="checkbox" name="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" id="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" value="1"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF # style="margin: 0 25px 0 25px;"/>
 		<input type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@field.name}"/>
-		<a href="javascript:ContactFormFieldPossibleValues.delete_field({fieldelements.ID});" id="delete_${escape(HTML_ID)}_{fieldelements.ID}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+		<a href="javascript:FormFieldPossibleValues.delete_field({fieldelements.ID});" id="delete_${escape(HTML_ID)}_{fieldelements.ID}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 	</div>
 # END fieldelements #
 </div>
-<a href="javascript:ContactFormFieldPossibleValues.add_field();" class="fa fa-plus" id="add_${escape(HTML_ID)}"></a>
+<a href="javascript:FormFieldPossibleValues.add_field();" class="fa fa-plus" id="add_${escape(HTML_ID)}"></a>
