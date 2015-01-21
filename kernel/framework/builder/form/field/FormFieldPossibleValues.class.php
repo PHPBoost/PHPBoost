@@ -100,10 +100,13 @@ class FormFieldPossibleValues extends AbstractFormField
 			if ($request->has_postparameter($field_name))
 			{
 				$field_is_default = 'field_is_default_' . $this->get_html_id() . '_' . $i;
-				$values[preg_replace('/\s+/', '', $request->get_poststring($field_name))] = array(
-					'is_default' => $request->get_postint($field_is_default, 0),
-					'title' => addslashes($request->get_poststring($field_name))
-				);
+				if ($request->get_poststring($field_name))
+				{
+					$values[preg_replace('/\s+/', '', $request->get_poststring($field_name))] = array(
+						'is_default'	=> $request->get_postint($field_is_default, 0),
+						'title'	=> addslashes($request->get_poststring($field_name))
+					);
+				}
 			}
 		}
 		$this->set_value($values);
