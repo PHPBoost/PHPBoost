@@ -400,7 +400,7 @@ class ArticlesFormController extends ModuleController
 	private function redirect(HTTPRequestCustom $request)
 	{
 		$article = $this->get_article();
-		$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($article->get_id_category());
+		$category = $article->get_category();
 
 		if ($article->get_id() === null && $this->is_contributor_member() && !$article->is_published())
 		{
