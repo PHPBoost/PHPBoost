@@ -92,7 +92,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$current_page = $request->get_getint('page', 1);
 		$comments_enabled = ArticlesConfig::load()->are_comments_enabled();
 		
-		$this->category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($this->article->get_id_category());
+		$this->category = $this->article->get_category();
 		
 		$article_contents = $this->article->get_contents();
 		

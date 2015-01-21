@@ -30,8 +30,6 @@
  */
 class AdminArticlesManageController extends AdminModuleController
 {
-	const NUMBER_ITEMS_PER_PAGE = 20;
-	
 	private $lang;
 	private $view;
 	
@@ -39,7 +37,7 @@ class AdminArticlesManageController extends AdminModuleController
 	{
 		$this->init();
 		
-		$this->build_view($request);
+		$this->build_table();
 		
 		return new AdminArticlesDisplayResponse($this->view, $this->lang['articles_management']);
 	}
@@ -47,92 +45,75 @@ class AdminArticlesManageController extends AdminModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'articles');
-		$this->view = new FileTemplate('articles/AdminArticlesManageController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view = new StringTemplate('# INCLUDE table #');
 	}
 	
-	private function build_view($request)
+	private function build_table()
 	{
-		$mode = $request->get_getvalue('sort', 'desc');
-		$field = $request->get_getvalue('field', 'date');
+		$table_model = new SQLHTMLTableModel(ArticlesSetup::$articles_table, array(
+			new HTMLTableColumn(''),
+			new HTMLTableColumn(LangLoader::get_message('form.title', 'common'), 'title'),
+			new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
+			new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),
+			new HTMLTableColumn(LangLoader::get_message('form.date.creation', 'common'), 'date_created'),
+			new HTMLTableColumn(LangLoader::get_message('status', 'common'), 'published'),
+		), new HTMLTableSortingRule('date_created', HTMLTableSortingRule::DESC));
 		
-		$sort_mode = ($mode == 'asc') ? 'asc' : 'desc';
+		$table = new HTMLTable($table_model);
 		
-		switch ($field)
-		{
-			case 'cat':
-				$sort_field = 'id_category';
-				break;
-			case 'author':
-				$sort_field = 'display_name';
-				break;
-			case 'title':
-				$sort_field = 'title';
-				break;
-			case 'status':
-				$sort_field = 'published';
-				break;
-			default:
-				$sort_field = 'date_created';
-				break;
-		}
+		$table_model->set_caption($this->lang['articles_management']);
 		
-		$page = $request->get_getint('page', 1);
-		$pagination = $this->get_pagination($field, $mode, $page);
-		
-		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, notes.average_notes, notes.number_notes, note.note
-		FROM '. ArticlesSetup::$articles_table . ' articles
-		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = articles.author_user_id
-		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = articles.id AND notes.module_name = \'articles\'
-		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = \'articles\' AND note.user_id = :user_id
-		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
-		LIMIT :number_per_page OFFSET :start_limit',
-			array(
-				'user_id' => AppContext::get_current_user()->get_id(),
-				'number_per_page' => $pagination->get_number_items_per_page(),
-				'start_limit' => $pagination->get_display_from()
-		));
-		
-		while($row = $result->fetch())
+		$results = array();
+		$result = $table_model->get_sql_results('articles
+			LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = articles.author_user_id
+			LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = articles.id AND notes.module_name = \'articles\'
+			LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = \'articles\' AND note.user_id = ' . AppContext::get_current_user()->get_id()
+		);
+		foreach ($result as $row)
 		{
 			$article = new Article();
 			$article->set_properties($row);
+			$category = $article->get_category();
+			$user = $article->get_author_user();
+
+			$edit_Link = new LinkHTMLElement(ArticlesUrlBuilder::edit_article($article->get_id(), SITE_REWRITED_SCRIPT), '', array('title' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
+			$delete_link = new LinkHTMLElement(ArticlesUrlBuilder::delete_article($article->get_id(), SITE_REWRITED_SCRIPT), '', array('title' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-delete');
+
+			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
+			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('color' => $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
 			
-			$this->view->assign_block_vars('articles', $article->get_tpl_vars(ArticlesUrlBuilder::manage_articles($field, $mode, $page)->relative()));
+			$br = new BrHTMLElement();
+			
+			$dates = '';
+			if ($article->get_publishing_start_date() != null && $article->get_publishing_end_date() != null)
+			{
+				$dates = LangLoader::get_message('form.date.start', 'common') . ' ' . $article->get_publishing_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . $br->display() . LangLoader::get_message('form.date.end', 'common') . ' ' . $article->get_publishing_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE);
+			}
+			else
+			{
+				if ($article->get_publishing_start_date() != null)
+					$dates = $article->get_publishing_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE);
+				else
+				{
+					if ($article->get_publishing_end_date() != null)
+						$dates = LangLoader::get_message('until', 'main') . ' ' . $article->get_publishing_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE);
+				}
+			}
+			
+			$start_and_end_dates = new SpanHTMLElement($dates, array(), 'smaller');
+			
+			$results[] = new HTMLTableRow(array(
+				new HTMLTableRowCell($edit_Link->display() . $delete_link->display()),
+				new HTMLTableRowCell(new LinkHTMLElement(ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title()), $article->get_title()), 'left'),
+				new HTMLTableRowCell(new LinkHTMLElement(ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), $category->get_name())),
+				new HTMLTableRowCell($author),
+				new HTMLTableRowCell($article->get_date_created()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
+				new HTMLTableRowCell($article->get_status() . $br->display() . ($dates ? $start_and_end_dates->display() : '')),
+			));
 		}
-		$result->dispose();
-		
-		$this->view->put_all(array(
-			'C_PAGINATION' => $pagination->has_several_pages(),
-			'C_ARTICLES' => $result->get_rows_count() > 0,
-			'PAGINATION' => $pagination->display(),
-			'U_SORT_TITLE_ASC' => ArticlesUrlBuilder::manage_articles('title', 'asc', $page)->rel(),
-			'U_SORT_TITLE_DESC' => ArticlesUrlBuilder::manage_articles('title', 'desc', $page)->rel(),
-			'U_SORT_CATEGORY_ASC' => ArticlesUrlBuilder::manage_articles('cat', 'asc', $page)->rel(),
-			'U_SORT_CATEGORY_DESC' => ArticlesUrlBuilder::manage_articles('cat', 'desc', $page)->rel(),
-			'U_SORT_AUTHOR_ASC' => ArticlesUrlBuilder::manage_articles('author', 'asc', $page)->rel(),
-			'U_SORT_AUTHOR_DESC' => ArticlesUrlBuilder::manage_articles('author', 'desc', $page)->rel(),
-			'U_SORT_DATE_ASC' => ArticlesUrlBuilder::manage_articles('date', 'asc', $page)->rel(),
-			'U_SORT_DATE_DESC' => ArticlesUrlBuilder::manage_articles('date', 'desc', $page)->rel(),
-			'U_SORT_STATUS_ASC' => ArticlesUrlBuilder::manage_articles('status', 'asc', $page)->rel(),
-			'U_SORT_STATUS_DESC' => ArticlesUrlBuilder::manage_articles('status', 'desc', $page)->rel()
-		));
-	}
-	
-	private function get_pagination($sort_field, $sort_mode, $page)
-	{
-		$articles_number = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table);
-		
-		$pagination = new ModulePagination($page, $articles_number, self::NUMBER_ITEMS_PER_PAGE);
-		$pagination->set_url(ArticlesUrlBuilder::manage_articles($sort_field, $sort_mode, '%d'));
-		
-		if ($pagination->current_page_is_empty() && $page > 1)
-		{
-			$error_controller = PHPBoostErrors::unexisting_page();
-			DispatchManager::redirect($error_controller);
-		}
-		
-		return $pagination;
+		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
+
+		$this->view->put('table', $table->display());
 	}
 }
 ?>

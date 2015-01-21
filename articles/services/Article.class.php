@@ -85,6 +85,11 @@ class Article
 	{
 		return $this->id_category;
 	}
+	
+	public function get_category()
+	{
+		return ArticlesService::get_categories_manager()->get_categories_cache()->get_category($this->id_category);
+	}
 
 	public function set_title($title)
 	{
@@ -429,7 +434,7 @@ class Article
 	
 	public function get_tpl_vars($redirect = null)
 	{
-		$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($this->get_id_category());
+		$category = $this->get_category();
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		
