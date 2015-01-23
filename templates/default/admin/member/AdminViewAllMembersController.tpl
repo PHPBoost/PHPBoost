@@ -50,7 +50,7 @@
 				<tr> 
 					<td> 
 						<a href="{member_list.EDIT_LINK}" title="{L_UPDATE}" class="fa fa-edit"></a>
-						<a href="{member_list.DELETE_LINK}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
+						<a # IF member_list.C_DELETABLE #href="{member_list.DELETE_LINK}"# ELSE #href="" onclick="return false;" style="opacity: 0.3; cursor: default;"# ENDIF # title="{L_DELETE}" class="fa fa-delete"# IF member_list.C_DELETABLE # data-confirmation="delete-element"# ENDIF #></a>
 					</td>
 					<td>
 						<a href="{member_list.U_PROFILE}" class="{member_list.LEVEL_CLASS}" # IF member_list.C_GROUP_COLOR # style="color:{member_list.GROUP_COLOR}" # ENDIF #>{member_list.DISPLAY_NAME}</a>
