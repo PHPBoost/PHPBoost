@@ -116,6 +116,8 @@ class AdminViewAllMembersController extends AdminController
 			'FORM' => $this->build_form()->display()
 		));
 		
+		$number_admins = UserService::count_admin_members();
+		
 		$result = PersistenceContext::get_querier()->select("SELECT user_id, login, user_mail, timestamp, last_connect, level, user_groups, user_aprob
 		FROM " . DB_TABLE_MEMBER . "
 		ORDER BY ". $field_bdd ." ". $mode ."
@@ -130,6 +132,7 @@ class AdminViewAllMembersController extends AdminController
 			
 			$this->view->assign_block_vars('member_list', array(
 				'C_GROUP_COLOR' => !empty($group_color),
+				'C_DELETABLE' => $row['level'] != User::ADMIN_LEVEL || ($row['level'] == User::ADMIN_LEVEL && $number_admins > 1),
 				'DELETE_LINK' => AdminMembersUrlBuilder::delete($row['user_id'])->rel(),
 				'EDIT_LINK' => AdminMembersUrlBuilder::edit($row['user_id'])->rel(),
 				'LOGIN' => $row['login'],
