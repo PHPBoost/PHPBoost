@@ -93,7 +93,7 @@ class InstallDBConfigController extends InstallController
 
 		$schema = new FormFieldTextEditor('schema', $this->lang['schema'], '',
 		array('description' => $this->lang['schema.explanation'], 'required' => $this->lang['db.required.schema']),
-		array(new FormFieldConstraintRegex('`^[a-z0-9_]+$`i')));
+		array(new FormFieldConstraintRegex('`^[a-z0-9_-]+$`i')));
 		$schema->add_event('change', '$FFS(\'overwriteFieldset\').disable()');
 		$fieldset_schema->add_field($schema);
 		$tables_prefix = new FormFieldTextEditor('tablesPrefix', $this->lang['schema.tablePrefix'], 'phpboost_',
