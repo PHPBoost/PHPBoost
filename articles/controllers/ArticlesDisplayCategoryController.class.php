@@ -144,7 +144,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 		) AS nbr_articles
 		FROM ' . ArticlesSetup::$articles_cats_table .' ac 
 		WHERE ac.id_parent = :id_category AND ac.id IN :authorized_categories
-		ORDER BY ac.id_parent',	array(
+		ORDER BY ac.id_parent, ac.c_order', array(
 			'timestamp_now' => $now->get_timestamp(),
 			'id_category' => $this->category->get_id(),
 			'authorized_categories' => $authorized_categories
