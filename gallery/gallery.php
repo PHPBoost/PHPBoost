@@ -96,6 +96,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 		DispatchManager::redirect($controller);
 	}
 	
+	$g_idcat = retrieve(POST, 'cat', 0);
 	if (!empty($g_idcat))
 	{
 		if (!isset($CAT_GALLERY[$g_idcat]) || $CAT_GALLERY[$g_idcat]['aprob'] == 0)
