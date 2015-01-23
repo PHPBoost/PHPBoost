@@ -77,7 +77,7 @@ class FaqDisplayCategoryController extends ModuleController
 		FROM ' . FaqSetup::$faq_cats_table .' faq_cats
 		WHERE faq_cats.id_parent = :id_category
 		AND faq_cats.id IN :authorized_categories
-		ORDER BY faq_cats.id_parent', array(
+		ORDER BY faq_cats.id_parent, faq_cats.c_order', array(
 			'id_category' => $this->category->get_id(),
 			'authorized_categories' => $authorized_categories
 		));

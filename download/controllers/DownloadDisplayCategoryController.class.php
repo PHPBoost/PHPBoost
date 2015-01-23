@@ -71,7 +71,7 @@ class DownloadDisplayCategoryController extends ModuleController
 		FROM ' . DownloadSetup::$download_cats_table .' download_cats
 		WHERE download_cats.id_parent = :id_category
 		AND download_cats.id IN :authorized_categories
-		ORDER BY download_cats.id_parent', array(
+		ORDER BY download_cats.id_parent, download_cats.c_order', array(
 			'timestamp_now' => $now->get_timestamp(),
 			'id_category' => $this->category->get_id(),
 			'authorized_categories' => $authorized_categories

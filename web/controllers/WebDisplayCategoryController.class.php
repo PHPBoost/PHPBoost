@@ -71,7 +71,7 @@ class WebDisplayCategoryController extends ModuleController
 		FROM ' . WebSetup::$web_cats_table .' web_cats
 		WHERE web_cats.id_parent = :id_category
 		AND web_cats.id IN :authorized_categories
-		ORDER BY web_cats.id_parent', array(
+		ORDER BY web_cats.id_parent, web_cats.c_order', array(
 			'timestamp_now' => $now->get_timestamp(),
 			'id_category' => $this->category->get_id(),
 			'authorized_categories' => $authorized_categories
