@@ -37,6 +37,7 @@ $lang['error.unknow'] = 'Inconnue';
 $lang['error.auth'] = 'Vous n\'avez pas le niveau requis !';
 $lang['error.page.forbidden'] = 'L\'accès à ce dossier est interdit !';
 $lang['error.page.unexist'] = 'La page que vous demandez n\'existe pas !';
+$lang['error.action.unauthorized'] = 'Action non autorisée !';
 $lang['error.module.uninstalled'] = 'Ce module n\'est pas installé !';
 $lang['error.module.unactivated'] = 'Ce module n\'est pas activé !';
 

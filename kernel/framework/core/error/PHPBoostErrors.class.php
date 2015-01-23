@@ -57,6 +57,13 @@ class PHPBoostErrors
 		return $controller;
     }
 
+	public static function unauthorized_action()
+	{
+		AppContext::get_response()->set_status_code(401);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('error.action.unauthorized', 'status-messages-common'));
+		return $controller;
+	}
+	
 	public static function user_in_read_only()
 	{
 		$lang = LangLoader::get('errors');

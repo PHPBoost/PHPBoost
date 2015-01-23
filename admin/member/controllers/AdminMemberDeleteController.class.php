@@ -30,18 +30,26 @@ class AdminMemberDeleteController extends AdminController
 	public function execute(HTTPRequestCustom $request)
 	{
 		$user_id = $request->get_int('id', null);
+		$user = UserService::get_user($user_id);
 		
-		$lang = LangLoader::get('status-messages-common');
-		try
+		if (!$user->is_admin() || ($user->is_admin() && UserService::count_admin_members() > 1))
 		{
-			UserService::delete_by_id($user_id);
+			try
+			{
+				UserService::delete_by_id($user_id);
+			}
+			catch (RowNotFoundException $ex) {
+				$error_controller = PHPBoostErrors::unexisting_element();
+				DispatchManager::redirect($error_controller);
+			}
+			
+			AppContext::get_response()->redirect(AdminMembersUrlBuilder::management());
 		}
-		catch (RowNotFoundException $ex) {
-			$error_controller = PHPBoostErrors::unexisting_element();
+		else
+		{
+			$error_controller = PHPBoostErrors::unauthorized_action();
 			DispatchManager::redirect($error_controller);
 		}
-		
-		AppContext::get_response()->redirect(AdminMembersUrlBuilder::management());
 	}
 }
 ?>

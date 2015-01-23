@@ -37,6 +37,7 @@ $lang['error.unknow'] = 'Unknow';
 $lang['error.auth'] = 'You don\'t have the required level!';
 $lang['error.page.forbidden'] = 'This folder access is forbidden!';
 $lang['error.page.unexist'] = 'This page doesn\'t exist!';
+$lang['error.action.unauthorized'] = 'Unauthorized action!';
 $lang['error.module.uninstalled'] = 'This module isn\'t installed!';
 $lang['error.module.unactivated'] = 'This module isn\'t activated!';
 
