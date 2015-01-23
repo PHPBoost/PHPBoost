@@ -28,6 +28,9 @@
 $lang['success'] = 'Succès';
 $lang['error'] = 'Erreur';
 
+//PHPBoost errors
+$lang['error.action.unauthorized'] = 'Action non autorisée !';
+
 //Process
 $lang['process.success'] = 'L\'opération s\'est déroulée avec succès';
 $lang['process.error'] = 'Une erreur s\'est produite lors de l\'opération';

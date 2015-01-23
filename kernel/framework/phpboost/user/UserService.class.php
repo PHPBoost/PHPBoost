@@ -216,5 +216,10 @@ class UserService
 				return '';
 		}
 	}
+	
+	public static function count_admin_members()
+	{
+		return self::$querier->count(DB_TABLE_MEMBER, 'WHERE level = :level', array('level' => User::ADMIN_LEVEL));
+	}
 }
 ?>

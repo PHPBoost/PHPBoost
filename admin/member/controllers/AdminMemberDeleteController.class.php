@@ -30,23 +30,31 @@ class AdminMemberDeleteController extends AdminController
 	public function execute(HTTPRequestCustom $request)
 	{
 		$user_id = $request->get_int('id', null);
+		$user = UserService::get_user('WHERE user_id = :user_id', array('user_id' => $user_id));
 		
-		$lang = LangLoader::get('status-messages-common');
-		try
+		if (!$user->is_admin() || ($user->is_admin() && UserService::count_admin_members() > 1))
 		{
-			UserService::delete_account('WHERE user_id=:user_id', array('user_id' => $user_id));
+			try
+			{
+				UserService::delete_account('WHERE user_id=:user_id', array('user_id' => $user_id));
+			}
+			catch (RowNotFoundException $ex) {
+				$error_controller = PHPBoostErrors::unexisting_element();
+				DispatchManager::redirect($error_controller);
+			}
+			
+			$upload = new Uploads();
+			$upload->Empty_folder_member($user_id);
+			
+			StatsCache::invalidate();
+			
+			AppContext::get_response()->redirect(AdminMembersUrlBuilder::management());
 		}
-		catch (RowNotFoundException $ex) {
-			$error_controller = PHPBoostErrors::unexisting_member();
+		else
+		{
+			$error_controller = PHPBoostErrors::unauthorized_action();
 			DispatchManager::redirect($error_controller);
 		}
-		
-		$upload = new Uploads();
-		$upload->Empty_folder_member($user_id);
-		
-		StatsCache::invalidate();
-		
-		AppContext::get_response()->redirect(AdminMembersUrlBuilder::management());
 	}
 }
 ?>
