@@ -1,3 +1,26 @@
+<script src="{PATH_TO_ROOT}/TinyMCE/templates/js/tinymce/tiny_mce_popup.js"></script>
+<script>
+var EmotionsDialog = {
+	init : function(ed) {
+		tinyMCEPopup.resizeToInnerSize();
+	},
+
+	insert : function(file, title) {
+		var ed = tinyMCEPopup.editor, dom = ed.dom;
+
+		tinyMCEPopup.execCommand('mceInsertContent', false, dom.createHTML('img', {
+			src : file,
+			alt : title,
+			title : title,
+			border : 0
+		}));
+
+		tinyMCEPopup.close();
+	}
+};
+
+tinyMCEPopup.onInit.add(EmotionsDialog.init, EmotionsDialog);
+</script>
 <table>
 	<thead>
 		<tr> 
