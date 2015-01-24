@@ -127,7 +127,10 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	private function unparse_smilies()
 	{
 		$this->content = preg_replace('`<img src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" class="smiley" />`i',
-		'<img class="smiley" style="vertical-align:middle" src="' . PATH_TO_ROOT . '/images/smileys/$1" alt="$2" />', $this->content);
+		'<img title="$2" src="../../../images/smileys/$1" alt="$2" border="0" />', $this->content);
+		
+		$this->content = preg_replace('`<img src="[\./]*/images/smileys/([^"]+)" title="([^"]+)" alt="([^"]+)" class="smiley" />`i',
+		'<img title="$2" src="../../../images/smileys/$1" alt="$3" border="0" />', $this->content);
 	}
 
 	/**

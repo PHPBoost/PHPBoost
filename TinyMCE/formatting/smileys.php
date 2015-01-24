@@ -40,14 +40,12 @@ $tpl_smileys = new FileTemplate('TinyMCE/smileys.tpl');
 
 //Chargement de la configuration.
 $smileys_cache = SmileysCache::load();
-$height_max = 50;
-$width_max = 50;
-$smile_by_line = 4;
+$smile_by_line = 9;
 
 $field = retrieve(GET, 'field', 'contents');
 $tpl_smileys->put_all(array(
 	'FIELD' => $field ,
-	'COLSPAN' => $smile_by_line + 1,
+	'COLSPAN' => $smile_by_line,
 	'L_SMILEY' => $LANG['smiley'],
 	'L_CLOSE' => $LANG['close'],
 	'L_REQUIRE_TEXT' => $LANG['require_text']
@@ -71,7 +69,7 @@ foreach($smileys_cache->get_smileys() as $code_smile => $infos)
     }
 
     $tpl_smileys->assign_block_vars('smiley', array(
-		'URL' => $infos['url_smiley'],
+		'URL' => Url::to_rel('/images/smileys/' . $infos['url_smiley']),
 		'IMG' => '<img src="' . Url::to_absolute('/images/smileys/' . $infos['url_smiley']) . '" alt="' . $code_smile . '" title="' . $code_smile . '" />',
 		'CODE' => addslashes($code_smile),
 		'TR_START' => $tr_start,
@@ -91,7 +89,5 @@ foreach($smileys_cache->get_smileys() as $code_smile => $infos)
     }
 }
 
-Environment::set_graphical_environment(new SiteDisplayFrameGraphicalEnvironment());
-Environment::display($tpl_smileys->render());
-Environment::destroy();
+$tpl_smileys->display();
 ?>

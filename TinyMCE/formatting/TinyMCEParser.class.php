@@ -530,8 +530,8 @@ class TinyMCEParser extends ContentFormattingParser
 	 */
 	private function parse_smilies()
 	{
-		$this->content = preg_replace('`&lt;img class="smiley" (?:style="vertical-align:middle" )?src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" [^/]*/&gt;`i',
-			'<img src="/images/smileys/$1" alt="$2" class="smiley" />', $this->content);
+		$this->content = preg_replace('`&lt;img title="([^"]+)" src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" border="0" /&gt;`i',
+			'<img src="/images/smileys/$2" title="$1" alt="$3" class="smiley" />', $this->content);
 
 		//Smilies
 		$smileys_cache = SmileysCache::load()->get_smileys();
