@@ -32,8 +32,11 @@ class NewslettersubscribeController extends ModuleController
 	private $form;
 	private $submit_button;
 	
+	private $email;
+	
 	public function execute(HTTPRequestCustom $request)
 	{
+		$this->check_authorizations();
 		$this->init();
 		$this->build_form();
 		
@@ -42,8 +45,10 @@ class NewslettersubscribeController extends ModuleController
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
-			$this->save();
-			$tpl->put('MSG', MessageHelper::display($this->lang['success-subscribe'], E_USER_SUCCESS, 4));
+			if ($this->save())
+				$tpl->put('MSG', MessageHelper::display($this->lang['success-subscribe'], E_USER_SUCCESS, 4));
+			else
+				$tpl->put('MSG', MessageHelper::display($this->lang['error-choose-stream'], E_USER_ERROR));
 		}
 		
 		$tpl->put('FORM', $this->form->display());
@@ -54,32 +59,41 @@ class NewslettersubscribeController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'newsletter');
+		
+		$mail_request = AppContext::get_request()->get_string('mail_newsletter', '');
+		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) && empty($mail_request))
+		{
+			$this->email = AppContext::get_current_user()->get_attribute('user_mail');
+		}
+		else
+		{
+			$this->email = $mail_request;
+		}
+	}
+	
+	private function check_authorizations()
+	{
+		if (!NewsletterAuthorizationsService::check_authorizations()->subscribe())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 	
 	private function build_form()
 	{
-		$mail_request = AppContext::get_request()->get_string('mail_newsletter', '');
-		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) && empty($mail_request))
-		{
-			$email = AppContext::get_current_user()->get_attribute('user_mail');
-		}
-		else
-		{
-			$email = $mail_request;
-		}
-		
 		$form = new HTMLForm('newsletter');
 		
 		$fieldset = new FormFieldsetHTML('subscribe.newsletter', $this->lang['subscribe.newsletter']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['subscribe.mail'], $email, array(
+		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['subscribe.mail'], $this->email, array(
 			'required' => true),
 			array(new FormFieldConstraintMailAddress())
 		));
 		
 		$newsletter_subscribe = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? NewsletterService::get_member_id_streams(AppContext::get_current_user()->get_id()) : array();
-		$fieldset->add_field(new FormFieldMultipleCheckbox('newsletter_choice', $this->lang['subscribe.newsletter_choice'], $newsletter_subscribe, $this->get_streams()));
+		$fieldset->add_field(new FormFieldMultipleCheckbox('newsletter_choice', '* ' . $this->lang['subscribe.newsletter_choice'], $newsletter_subscribe, $this->get_streams()));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -122,13 +136,21 @@ class NewslettersubscribeController extends ModuleController
 			$streams[] = $option->get_id();
 		}
 		
-		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
+		if (!empty($streams))
 		{
-			NewsletterService::update_subscriptions_member_registered($streams, AppContext::get_current_user()->get_id());
+			if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
+			{
+				NewsletterService::update_subscriptions_member_registered($streams, AppContext::get_current_user()->get_id());
+			}
+			else
+			{
+				NewsletterService::update_subscriptions_visitor($streams, $this->form->get_value('mail'));
+			}
+			return true;
 		}
 		else
 		{
-			NewsletterService::update_subscriptions_visitor($streams, $this->form->get_value('mail'));
+			return false;
 		}
 	}
 }

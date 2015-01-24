@@ -123,6 +123,7 @@ $lang['success-delete-subscriber'] = 'Vous avez supprimé la personne inscrite av
 $lang['success-edit-subscriber'] = 'Vous avez édité la personne inscrite avec succès';
 $lang['error-subscriber-not-existed'] = 'L\'incrit n\'existe pas';
 $lang['error-archive-not-existed'] = 'L\'archive n\'existe pas';
+$lang['error-choose-stream'] = 'Veuillez choisir au moins une newsletter';
 $lang['newsletter.success-add'] = 'La newsletter a bien été ajoutée et envoyée';
 $lang['newsletter.success-send-test'] = 'Le mail de test a bien été envoyé';
 
