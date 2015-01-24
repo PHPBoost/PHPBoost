@@ -40,8 +40,6 @@ $tpl_smileys = new FileTemplate('TinyMCE/smileys.tpl');
 
 //Chargement de la configuration.
 $smileys_cache = SmileysCache::load();
-$height_max = 50;
-$width_max = 50;
 $smile_by_line = 9;
 
 $field = retrieve(GET, 'field', 'contents');
