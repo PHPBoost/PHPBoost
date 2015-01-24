@@ -34,6 +34,7 @@ class NewslettersubscribeController extends ModuleController
 	
 	public function execute(HTTPRequestCustom $request)
 	{
+		$this->check_authorizations();
 		$this->init();
 		$this->build_form();
 		
@@ -54,6 +55,15 @@ class NewslettersubscribeController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'newsletter');
+	}
+	
+	private function check_authorizations()
+	{
+		if (!NewsletterAuthorizationsService::check_authorizations()->subscribe())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 	
 	private function build_form()
@@ -79,7 +89,9 @@ class NewslettersubscribeController extends ModuleController
 		));
 		
 		$newsletter_subscribe = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? NewsletterService::get_member_id_streams(AppContext::get_current_user()->get_id()) : array();
-		$fieldset->add_field(new FormFieldMultipleCheckbox('newsletter_choice', $this->lang['subscribe.newsletter_choice'], $newsletter_subscribe, $this->get_streams()));
+		$fieldset->add_field(new FormFieldMultipleCheckbox('newsletter_choice', $this->lang['subscribe.newsletter_choice'], $newsletter_subscribe, $this->get_streams(),
+			array('required' => true)
+		));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
