@@ -157,7 +157,7 @@ function shoutbox_refresh_messages_box() {
 		</form>
 		# ELSE #
 		<div class="spacer"></div>
-		<span class="warning">${LangLoader::get_message('e_unauthorized', 'errors')}</span>
+		<span class="warning">{@error.post.unauthorized}</span>
 		# ENDIF #
 		<a class="small" href="${relative_url(ShoutboxUrlBuilder::home())}" title="">{@archives}</a>
 	</div>

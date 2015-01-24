@@ -54,4 +54,5 @@ $lang['config.shout_bbcode_enabled'] = 'Afficher une mini barre BBcode avant le 
 $lang['config.validation_onkeypress_enter_enabled'] = 'Envoyer le message en appuyant sur la touche Entrée';
 
 $lang['error.message.delete'] = 'Erreur lors de la suppression du message';
+$lang['error.post.unauthorized'] = 'Vous n\'êtes pas autorisé à ajouter un message !';
 ?>
