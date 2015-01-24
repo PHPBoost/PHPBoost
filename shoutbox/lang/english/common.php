@@ -54,4 +54,5 @@ $lang['config.shout_bbcode_enabled'] = 'Display a small BBcode bar before the se
 $lang['config.validation_onkeypress_enter_enabled'] = 'Send message when pressing enter';
 
 $lang['error.message.delete'] = 'Error occurred while message deleting';
+$lang['error.post.unauthorized'] = 'You are not authorized to post a message!';
 ?>
