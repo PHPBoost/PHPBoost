@@ -270,7 +270,7 @@ elseif (!empty($id))
 	WHERE id_left NOT BETWEEN :id_left AND :id_right
 	ORDER BY id_left", array(
 		'id_left' => $CAT_FORUM[$idcat]['id_left'],
-		'id_left' => $CAT_FORUM[$idcat]['id_right']
+		'id_right' => $CAT_FORUM[$idcat]['id_right']
 	));
 	while ($row = $result->fetch())
 	{
