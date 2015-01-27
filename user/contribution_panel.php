@@ -339,7 +339,13 @@ else
 	foreach ($modules as $name => $module)
 	{
 		$contribution_interface = $module->get_configuration()->get_contribution_interface();
-		if (!empty($contribution_interface))
+		
+		$authorized = true;
+		$authorizations_class = ucfirst($module->get_id()) . 'AuthorizationsService';
+		if (class_exists($authorizations_class) && method_exists($authorizations_class, 'check_authorizations') && method_exists($authorizations_class, 'contribution') && !$authorizations_class::check_authorizations()->contribution())
+			$authorized = false;
+		
+		if (!empty($contribution_interface) && $authorized)
 		{
 			if ($i_module % NUMBER_OF_MODULES_PER_LINE == 0)
 			{
