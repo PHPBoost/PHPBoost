@@ -90,7 +90,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 	private function build_view(HTTPRequestCustom $request)
 	{
 		$current_page = $request->get_getint('page', 1);
-		$comments_enabled = ArticlesConfig::load()->are_comments_enabled();
+		$config = ArticlesConfig::load();
 		
 		$this->category = $this->article->get_category();
 		
@@ -120,7 +120,8 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$page_name = (isset($array_page[1][$current_page-1]) && $array_page[1][$current_page-1] != '&nbsp;') ? $array_page[1][($current_page-1)] : '';
 		
 		$this->tpl->put_all(array_merge($this->article->get_tpl_vars(), array(
-			'C_COMMENTS_ENABLED' => $comments_enabled,
+			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
+			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
 			'KERNEL_NOTATION' => NotationService::display_active_image($this->article->get_notation()),
 			'CONTENTS' => isset($article_contents_clean[$current_page-1]) ? FormatingHelper::second_parse($article_contents_clean[$current_page-1]) : '',
 			'PAGE_NAME' => $page_name,
@@ -130,7 +131,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$this->build_pages_pagination($current_page, $nbr_pages, $array_page);
 		
 		//Affichage commentaires
-		if ($comments_enabled)
+		if ($config->are_comments_enabled())
 		{
 			$comments_topic = new ArticlesCommentsTopic($this->article);
 			$comments_topic->set_id_in_module($this->article->get_id());

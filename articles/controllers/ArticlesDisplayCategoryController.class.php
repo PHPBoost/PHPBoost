@@ -65,6 +65,8 @@ class ArticlesDisplayCategoryController extends ModuleController
 	
 	private function build_articles_listing_view(Date $now, $field, $mode)
 	{
+		$config = ArticlesConfig::load();
+		
 		$sort_mode = ($mode == 'asc') ? 'ASC' : 'DESC';
 		switch ($field)
 		{
@@ -113,10 +115,11 @@ class ArticlesDisplayCategoryController extends ModuleController
 		)));
 		
 		$this->view->put_all(array(
-			'C_MOSAIC' => ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
-			'C_COMMENTS_ENABLED' => ArticlesConfig::load()->are_comments_enabled(),
+			'C_MOSAIC' => $config->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
+			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
+			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
 			'C_ARTICLES_FILTERS' => true,
-			'C_DISPLAY_CATS_ICON' => ArticlesConfig::load()->are_cats_icon_enabled(),
+			'C_DISPLAY_CATS_ICON' => $config->are_cats_icon_enabled(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_NO_ARTICLE_AVAILABLE' => $result->get_rows_count() == 0,
 			'PAGINATION' => $pagination->display(),
