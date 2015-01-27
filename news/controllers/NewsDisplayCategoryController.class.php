@@ -100,8 +100,27 @@ class NewsDisplayCategoryController extends ModuleController
 			$news->set_properties($row);
 			
 			$this->tpl->assign_block_vars('news', $news->get_array_tpl_vars(NewsUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $page)->relative()));
+			$this->build_sources_view($news);
 		}
 		$result->dispose();
+	}
+	
+	private function build_sources_view(News $news)
+	{
+		$sources = $news->get_sources();
+		$nbr_sources = count($sources);
+		$this->tpl->put('news.C_SOURCES', $nbr_sources > 0);
+		
+		$i = 1;
+		foreach ($sources as $name => $url)
+		{	
+			$this->tpl->assign_block_vars('news.sources', array(
+				'C_SEPARATOR' => $i < $nbr_sources,
+				'NAME' => $name,
+				'URL' => $url,
+			));
+			$i++;
+		}
 	}
 	
 	private function get_pagination($condition, $parameters, $page)

@@ -382,6 +382,8 @@ class News
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		$number_comments = CommentsService::get_number_comments('news', $this->id);
+		$sources = $this->get_sources();
+		$nbr_sources = count($sources);
 		
 		return array(
 			'C_VISIBLE' => $this->is_visible(),
@@ -389,7 +391,8 @@ class News
 			'C_DELETE' => $this->is_authorized_to_delete(),
 			'C_PICTURE' => $this->has_picture(),
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
-			'C_AUTHOR_DISPLAYED' => NewsConfig::load()->get_author_displayed(), 
+			'C_AUTHOR_DISPLAYED' => NewsConfig::load()->get_author_displayed(),
+			'C_SOURCES' => $nbr_sources > 0,
 
 			//News
 			'ID' => $this->id,
