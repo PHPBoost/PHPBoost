@@ -49,6 +49,18 @@
 					# IF news.C_PICTURE #<img itemprop="thumbnailUrl" src="{news.U_PICTURE}" alt="{news.NAME}" title="{news.NAME}" class="right" /># ENDIF #
 					<div itemprop="text"># IF C_DISPLAY_CONDENSED_CONTENT # {news.DESCRIPTION}... <a href="{news.U_LINK}">[${LangLoader::get_message('read-more', 'common')}]</a># ELSE # {news.CONTENTS} # ENDIF #</div>
 				</div>
+				
+				# IF news.C_SOURCES #
+				<div class="spacer">&nbsp;</div>
+				<aside>
+				<div id="news-sources-container">
+					<span>${LangLoader::get_message('form.sources', 'common')}</span> :
+					# START news.sources #
+					<a itemprop="isBasedOnUrl" href="{news.sources.URL}" class="small">{news.sources.NAME}</a># IF news.sources.C_SEPARATOR #, # ENDIF #
+					# END news.sources #
+				</div>
+				</aside>
+				# ENDIF #
 
 				<footer></footer>
 			</article>
