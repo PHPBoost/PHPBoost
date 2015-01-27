@@ -40,30 +40,55 @@ function forum_list_user_online($sql_condition)
 	{
 		$group_color = User::get_group_color($row['user_groups'], $row['level']);
 		switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
-		{ 		
+		{
 			case -1:
-			$status = 'visiteur';
 			$total_visit++;
-			break;			
+			break;
 			case 0:
-			$status = 'member';
 			$total_member++;
-			break;			
+			break;
 			case 1: 
-			$status = 'modo';
 			$total_modo++;
-			break;			
+			break;
 			case 2: 
-			$status = 'admin';
 			$total_admin++;
 			break;
 		} 
 		$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
-		$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'" class="' . $status . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : '';
+		$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'" class="' . UserService::get_level_class($row['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : '';
 	}
 	$Sql->query_close($result);
 	
-	return array($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_admin + $total_modo + $total_member + $total_visit);
+	$total = $total_admin + $total_modo + $total_member + $total_visit;
+	
+	if (empty($total))
+	{
+		$current_user = AppContext::get_current_user();
+		
+		if ($current_user->get_level() != User::VISITOR_LEVEL)
+		{
+			$group_color = User::get_group_color($current_user->get_groups(), $current_user->get_level());
+			switch ($current_user->get_level()) //Coloration du membre suivant son level d'autorisation. 
+			{
+				case 0:
+				$total_member++;
+				break;
+				case 1: 
+				$total_modo++;
+				break;
+				case 2: 
+				$total_admin++;
+				break;
+			} 
+			$users_list .= '<a href="'. UserUrlBuilder::profile($current_user->get_id())->rel() .'" class="' . UserService::get_level_class($current_user->get_level()) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $current_user->get_login() . '</a>';
+		}
+		else
+			$total_visit++;
+		
+		$total++;
+	}
+	
+	return array($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total);
 }
 
 //Liste des catégories du forum.
