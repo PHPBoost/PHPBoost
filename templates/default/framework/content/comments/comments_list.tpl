@@ -1,19 +1,21 @@
 # START comments #
 	<article id="com{comments.ID_COMMENT}" class="message" itemscope="itemscope" itemtype="http://schema.org/Comment">
-		<div class="message-user-infos">
-			<div class="message-pseudo">
-				# IF comments.C_VISITOR #
-					<span itemprop="author">{comments.PSEUDO}</span>
-				# ELSE #
-					<a itemprop="author" href="{comments.U_PROFILE}" class="{comments.LEVEL_CLASS}" # IF comments.C_GROUP_COLOR # style="color:{comments.GROUP_COLOR}" # ENDIF #>
-						{comments.PSEUDO}
-					</a>
-				# ENDIF #
-			</div>
-			<div class="message-level">{comments.L_LEVEL}</div>
-			# IF comments.C_AVATAR #<img src="{comments.U_AVATAR}" alt="" class="message-avatar" /># ENDIF #
-		</div>
 		<div class="message-container">
+
+			<div class="message-user-infos">
+				<div class="message-pseudo">
+					# IF comments.C_VISITOR #
+						<span itemprop="author">{comments.PSEUDO}</span>
+					# ELSE #
+						<a itemprop="author" href="{comments.U_PROFILE}" class="{comments.LEVEL_CLASS}" # IF comments.C_GROUP_COLOR # style="color:{comments.GROUP_COLOR}" # ENDIF #>
+							{comments.PSEUDO}
+						</a>
+					# ENDIF #
+				</div>
+				<div class="message-level">{comments.L_LEVEL}</div>
+				# IF comments.C_AVATAR #<img src="{comments.U_AVATAR}" alt="" class="message-avatar" /># ENDIF #
+			</div>
+
 			<div class="message-date">
 				<span class="actions">
 					<a itemprop="url" href="\#com{comments.ID_COMMENT}">\#{comments.ID_COMMENT}</a>
@@ -24,6 +26,7 @@
 				</span>
 				<span itemprop="datePublished" content="{comments.DATE_ISO8601}">{comments.DATE}</span>
 			</div>
+
 			<div class="message-message">
 				<div itemprop="text" class="message-content content">{comments.MESSAGE}</div>
 				# IF comments.C_VIEW_TOPIC #
@@ -41,6 +44,7 @@
 				</div>
 				 -->
 			</div>
+			
 		</div>
 	</article>
 # END comments #

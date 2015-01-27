@@ -428,14 +428,16 @@
 	</header>
 	<div class="content"><br />
 		<div id="com2" class="message" itemscope="itemscope" itemtype="http://schema.org/Comment">
-			<div class="message-user-infos">
-				<div class="message-pseudo">
-						<a itemprop="author" href="{PATH_TO_ROOT}/user/?url=/profile/1" class="admin">{@css.messages.login}</a>
-				</div>
-				<div class="message-level">{@css.messages.level}</div>
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" class="message-avatar" />
-			</div>
 			<div class="message-container">
+
+				<div class="message-user-infos">
+					<div class="message-pseudo">
+							<a itemprop="author" href="{PATH_TO_ROOT}/user/?url=/profile/1" class="admin">{@css.messages.login}</a>
+					</div>
+					<div class="message-level">{@css.messages.level}</div>
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" class="message-avatar" />
+				</div>
+
 				<div class="message-date">
 					<span class="actions">
 						<a itemprop="url" href="#com2">#2</a>
@@ -444,9 +446,11 @@
 					</span>
 					<span itemprop="datePublished" content="2013-09-05T15:37:01+00:00">{@css.messages.date}</span>
 				</div>
+
 				<div class="message-message">
 					<div itemprop="text" class="message-content" class="content">{@css.messages.content}</div>
 				</div>
+				
 			</div>
 		</div>
 	</div>
