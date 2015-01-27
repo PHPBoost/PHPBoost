@@ -1,7 +1,7 @@
 # IF NOT C_VISIBLE #
 	# INCLUDE NOT_VISIBLE_MESSAGE #
 # ENDIF #
-<article itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+<article id="module-web" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 	<header>
 		<h1>
 			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'common')}" class="fa fa-syndication"></a>

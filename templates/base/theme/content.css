@@ -381,6 +381,10 @@ ul.pagination-block-bis li a.next-page:hover {
 	font-size: 14px;
 }
 
+.infos {
+	margin-left: 20px;
+}
+
 /* -- Affichage des tableaux HTML --
 --------------------------------------*/
 table {
