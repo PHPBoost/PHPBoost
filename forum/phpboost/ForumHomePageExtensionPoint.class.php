@@ -43,7 +43,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $Cache, $LANG, $config,  $auth_write, $CAT_FORUM, $AUTH_READ_FORUM, $nbr_msg_not_read, $sid;
+		global $Cache, $LANG, $config, $CAT_FORUM, $AUTH_READ_FORUM, $nbr_msg_not_read, $sid;
 		
 		require_once(PATH_TO_ROOT . '/forum/forum_begin.php');
 		require_once(PATH_TO_ROOT . '/forum/forum_tools.php');
@@ -75,8 +75,8 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 		}
 		
 		$vars_tpl = array(	
-			'C_DISPLAY_UNREAD_DETAILS' => (AppContext::get_current_user()->get_id() !== -1) ? true : false,
-			'C_MODERATION_PANEL' => AppContext::get_current_user()->check_level(1) ? true : false,
+			'C_DISPLAY_UNREAD_DETAILS' => (AppContext::get_current_user()->get_id() !== -1),
+			'C_MODERATION_PANEL' => AppContext::get_current_user()->check_level(1),
 			'U_TOPIC_TRACK' => '<a class="small" href="'. PATH_TO_ROOT .'/forum/track.php' . $sid . '" title="' . $LANG['show_topic_track'] . '">' . $LANG['show_topic_track'] . '</a>',
 			'U_LAST_MSG_READ' => '<a class="small" href="'. PATH_TO_ROOT .'/forum/lastread.php' . $sid . '" title="' . $LANG['show_last_read'] . '">' . $LANG['show_last_read'] . '</a>',
 			'U_MSG_NOT_READ' => '<a class="small" href="'. PATH_TO_ROOT .'/forum/unread.php' . $sid  . '" title="' . $LANG['show_not_reads'] . '">' . $LANG['show_not_reads'] . (AppContext::get_current_user()->get_id() !== -1 ? ' (' . $nbr_msg_not_read . ')' : '') . '</a>',
