@@ -119,7 +119,7 @@ class AdminDownloadConfigController extends AdminModuleController
 		)));
 		
 		$fieldset->add_field(new FormFieldTextEditor('notation_scale', $this->admin_common_lang['config.notation_scale'], $this->config->get_notation_scale(), 
-			array('size' => 6, 'required' => true, 'hidden' => !$this->config->is_notation_enabled()),
+			array('maxlength' => 2, 'size' => 6, 'required' => true, 'hidden' => !$this->config->is_notation_enabled()),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'), new FormFieldConstraintIntegerRange(3, 20))
 		));
 		
