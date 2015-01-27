@@ -97,12 +97,28 @@ span.actions {
 }
 
 span.actions a {
-	font-size: 12px;
+	font-size: 1.2em;
+	margin-right: -0.31em;
+}
+
+header span.actions a {
+	font-size: 1.2rem;
 }
 
 .more {
 	font-size: 11px;
+	font-size: 1.1rem;
 	font-style: italic;
+}
+
+/* CSS applique aux écrans PC */
+@media ( min-width: 769px ) {
+	.more {
+		margin: 0 0.2em 2em 0.2em;
+	}
+}
+
+a.read-more {
 }
 
 /* --- Contenu --- */
@@ -495,6 +511,13 @@ table.formatter-table th.formatter-table-head p {
 	margin-bottom: 0px;
 }
 
+.col-smaller { width: 3em;  }
+.col-small   { width: 6em;  }
+.col-large   { width: 9em;  }
+.col-larger  { width: 12em; }
+.col-xlarge  { width: 15em; }
+
+
 /* --- mini tableaux --- */
 table.mini th,
 table.mini td {
@@ -704,8 +727,7 @@ form textarea:focus:valid{
 	color: #478948;
 }
 
-input.field-smaller {
-	width: 29px;  }
+input.field-smaller { width: 29px;  }
 input.field-small   { width: 77px;  }
 input.field-large   { width: 200px; }
 input.field-xlarge  { width: 300px; }
@@ -975,8 +997,8 @@ input + .text-status-constraint {
 	top: -8px;
 }
 
-.field-required:after,
-.picture-status-constraint:after {
+div[id*="text"].field-required:after,
+div[id*="text"].picture-status-constraint:after {
 	display: inline-block;
 	position: absolute;
 	font: normal normal normal 14px/1 FontAwesome;
@@ -987,7 +1009,7 @@ input + .text-status-constraint {
 	right: 4px;
 }
 
-.field-required:after {
+div[id*="text"].field-required:after {
 	content: "\f069";
 	color: #C43C35;
 	opacity: 0.6;
@@ -995,11 +1017,11 @@ input + .text-status-constraint {
 	top: 8px;
 }
 
-.form-element-date .field-required:after {
+.form-element-date div[id*="text"].field-required:after {
 	right: 22px;
 }
-.form-element-date .constraint-status-error .field-required:after,
-.form-element-date .constraint-status-right .field-required:after {
+.form-element-date .constraint-status-error div[id*="text"].field-required:after,
+.form-element-date .constraint-status-right div[id*="text"].field-required:after {
 	right: 20px;
 }
 
@@ -1007,13 +1029,13 @@ input + .text-status-constraint {
 	top: 45%;
 }
 
-.constraint-status-error .field-required:after,
-.constraint-status-right .field-required:after {
+.constraint-status-error div[id*="text"].field-required:after,
+.constraint-status-right div[id*="text"].field-required:after {
 	content: " ";
 }
 
-.constraint-status-error .picture-status-constraint:after,
-.constraint-status-right .picture-status-constraint:after {
+.constraint-status-error div[id*="text"].picture-status-constraint:after,
+.constraint-status-right div[id*="text"].picture-status-constraint:after {
 	opacity: 1;
 	font-size: 1.5rem;
 	top: 4px;
@@ -1024,13 +1046,14 @@ input + .text-status-constraint {
 	top: 40%;
 }
 
-.constraint-status-error .picture-status-constraint:after {
-	content: "\f056";
-	color: #C43C35;
-}
-.constraint-status-right .picture-status-constraint:after {
+.constraint-status-right div[id*="text"].picture-status-constraint:after {
 	content: "\f00c";
 	color: #57A957;
+}
+
+.constraint-status-error i.picture-status-constraint {
+	content: "\f056";
+	color: #C43C35;
 }
 
 /* --- Auto-completion --- */
@@ -1088,6 +1111,29 @@ div.form-autocompleter ul li {
 }
 
 /* Gestion des Categories */
+
+/* Sur le site */
+
+.cat-description {
+	margin: 10px 5px;
+}
+
+.subcat-container {
+}
+
+.subcat-element {
+	float: left;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.subcat-content {
+	display: inline-block;
+	margin: auto;
+}
+
+
+/* dans l'administation*/
 .sortable-block .sortable-element > .sortable-block {
 	margin-left: 30px;
 }
