@@ -1,4 +1,4 @@
-<div class="module-mini-container"# IF C_HORIZONTAL # style="width:auto;"# ENDIF #>
+<div id="module-mini-web" class="module-mini-container"# IF C_HORIZONTAL # style="width:auto;"# ENDIF #>
 	<div class="module-mini-top">
 		<h5 class="sub-title">{@partners}</h5>
 	</div>
@@ -8,7 +8,7 @@
 			# START partners #
 			<a href="{partners.U_VISIT}" title="{partners.NAME}">
 				# IF partners.C_HAS_PARTNER_PICTURE #
-				<img src="{partners.U_PARTNER_PICTURE}" alt="" itemprop="image" class="partner-picture-menu" />
+				<img src="{partners.U_PARTNER_PICTURE}" alt="" itemprop="image" class="partner-picture" />
 				# ELSE #
 				{partners.NAME}
 				# ENDIF #
