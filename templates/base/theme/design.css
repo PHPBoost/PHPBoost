@@ -93,6 +93,17 @@ div#global {
 	margin: 1.5em auto 0 auto;
 }
 
+
+aside#menu-left,
+aside#menu-right {
+    width: auto;
+}
+
+#main {
+   width: auto;
+}
+
+
 /* CSS applique aux écrans PC */
 @media ( min-width: 769px ) {
 
@@ -127,33 +138,6 @@ div#global {
 	}
 
 }
-
-/* CSS applique aux tablettes */
-@media ( max-width: 768px ) {
-
-   aside#menu-left,
-   aside#menu-right {
-    	float: none;
-    	width: auto;
-   }
-   #main {
-   		width: auto;
-   }
-}
-
-/* CSS applique aux smartphones */
-@media ( max-width: 480px ) {
-
-   aside#menu-left,
-   aside#menu-right {
-    	float: none;
-    	width: 100%;
-   }
-   #main {
-   		width: 100%;
-   }
-}
-
 
 /* -- Contenu de la page --
 --------------------------------------*/
