@@ -96,7 +96,7 @@ span.actions {
 	float: right;
 }
 
-span.actions a {
+header span.actions a {
 	font-size: 1.2em;
 	margin-right: -0.31em;
 }
@@ -1278,23 +1278,22 @@ div.form-autocompleter ul li {
 
 /* --- infos du message --- */
 .message-date {
-	margin-left: 10px;
+	margin-left: 150px;
 }
 
 .message-user-infos {
 	text-align: center;
-	width: 150px;
+	width: 120px;
 	float: left;
 }
 
 .message-container {
-	margin-left: 180px;
 }
 
 .message-message {
 	position: relative;
 	padding: 15px;
-	margin-top: 5px;
+	margin: 5px 0 0 140px;
 	border: 1px solid #D6DEE7;
 	color: #333333;
 	background: #ECEFFA;

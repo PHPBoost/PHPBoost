@@ -163,20 +163,22 @@
 			
 			# START pm.msg #
 				<article id="m{pm.msg.ID}" class="message">
-					<div class="message-user-infos">
-						<div class="message-pseudo">
-							# IF pm.msg.C_VISITOR #
-								<span>{pm.msg.PSEUDO}</span>
-							# ELSE #
-								<a href="{pm.msg.U_PROFILE}" class="{pm.msg.LEVEL_CLASS}" # IF pm.msg.C_GROUP_COLOR # style="color:{pm.msg.GROUP_COLOR}" # ENDIF #>
-									{pm.msg.PSEUDO}
-								</a>
-							# ENDIF #
-						</div>
-						<div class="message-level">{pm.msg.L_LEVEL}</div>
-						# IF pm.msg.C_AVATAR #<img src="{pm.msg.USER_AVATAR}" title="{pm.msg.USER_PSEUDO}" alt="" class="message-avatar" /># ENDIF #
-					</div>
 					<div class="message-container">
+
+						<div class="message-user-infos">
+							<div class="message-pseudo">
+								# IF pm.msg.C_VISITOR #
+									<span>{pm.msg.PSEUDO}</span>
+								# ELSE #
+									<a href="{pm.msg.U_PROFILE}" class="{pm.msg.LEVEL_CLASS}" # IF pm.msg.C_GROUP_COLOR # style="color:{pm.msg.GROUP_COLOR}" # ENDIF #>
+										{pm.msg.PSEUDO}
+									</a>
+								# ENDIF #
+							</div>
+							<div class="message-level">{pm.msg.L_LEVEL}</div>
+							# IF pm.msg.C_AVATAR #<img src="{pm.msg.USER_AVATAR}" title="{pm.msg.USER_PSEUDO}" alt="" class="message-avatar" /># ENDIF #
+						</div>
+
 						<div class="message-date">
 							<span class="actions">
 								<a href="#m{pm.msg.ID}">\#{pm.msg.ID}</a>
@@ -187,9 +189,11 @@
 							</span>
 							<span>{pm.msg.DATE}</span>
 						</div>
+
 						<div class="message-message">
 							<div class="message-content">{pm.msg.CONTENTS}</div>
 						</div>
+						
 					</div>
 				</article>
 			# END pm.msg #
