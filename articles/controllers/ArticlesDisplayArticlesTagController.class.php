@@ -75,6 +75,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 	private function build_view($request)
 	{
 		$now = new Date();
+		$config = ArticlesConfig::load();
 
 		$mode = $request->get_getstring('sort', 'desc');
 		$field = $request->get_getstring('field', 'date');
@@ -103,9 +104,10 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		}
 		
 		$this->view->put_all(array(
-			'C_MOSAIC' => ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
+			'C_MOSAIC' => $config->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
 			'C_ARTICLES_CAT' => false,
-			'C_COMMENTS_ENABLED' => ArticlesConfig::load()->are_comments_enabled(),
+			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
+			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
 			'C_ARTICLES_FILTERS' => true,
 		));
 		

@@ -36,6 +36,7 @@ class ArticlesConfig extends AbstractConfigData
 	const NUMBER_CHARACTER_TO_CUT = 'number_character_to_cut';
 
 	const CATS_ICON_ENABLED = 'cats_icon_enabled';
+	const NOTATION_ENABLED = 'notation_enabled';
 	const NOTATION_SCALE = 'notation_scale';
 	const COMMENTS_ENABLED = 'comments_enable'; 
 	const DATE_UPDATED_DISPLAYED = 'date_updated_displayed';
@@ -94,6 +95,21 @@ class ArticlesConfig extends AbstractConfigData
 	public function set_display_type($display_type)
 	{
 		$this->set_property(self::DISPLAY_TYPE, $display_type);
+	}
+	
+	public function enable_notation()
+	{
+		$this->set_property(self::NOTATION_ENABLED, true);
+	}
+	
+	public function disable_notation()
+	{
+		$this->set_property(self::NOTATION_ENABLED, false);
+	}
+	
+	public function is_notation_enabled()
+	{
+		return $this->get_property(self::NOTATION_ENABLED);
 	}
 	
 	public function get_notation_scale()
@@ -165,6 +181,7 @@ class ArticlesConfig extends AbstractConfigData
 			self::CATS_ICON_ENABLED => false,
 			self::COMMENTS_ENABLED => true,
 			self::DATE_UPDATED_DISPLAYED => false,
+			self::NOTATION_ENABLED => true,
 			self::NOTATION_SCALE => 5,
 			self::DISPLAY_TYPE => self::DISPLAY_MOSAIC,
 			self::AUTHORIZATIONS => array('r1' => 13, 'r0' => 5, 'r-1' => 1)

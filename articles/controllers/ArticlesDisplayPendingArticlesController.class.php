@@ -155,6 +155,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 			$this->view->put_all(array(
 				'C_ARTICLES_FILTERS' => true,
 				'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
+				'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
 				'C_PAGINATION' => $pagination->has_several_pages(),
 				'PAGINATION' => $pagination->display()
 			));
