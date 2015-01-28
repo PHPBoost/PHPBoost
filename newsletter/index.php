@@ -53,6 +53,7 @@ $url_controller_mappers = array(
 	//Archives
 	new UrlControllerMapper('NewsletterArchivesController', '`^/archives(?:/([0-9]+))?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('id_stream', 'field', 'sort', 'page')),
 	new UrlControllerMapper('NewsletterArchiveController', '`^/archive/([0-9]+)?/?$`', array('id')),
+	new UrlControllerMapper('NewsletterDeleteArchiveController', '`^/delete/([0-9]+)/([0-9]+)/?$`', array('id', 'id_stream')),
 	
 	new UrlControllerMapper('NewsletterHomeController', '`^(?:/([0-9]+))?/?$`', array('page')),
 );

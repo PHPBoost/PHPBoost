@@ -61,6 +61,7 @@ $lang['admin.newsletter-name-explain'] = 'Subject of email sent';
 $lang['admin.newsletter-authorizations'] = 'Authorizations';
 $lang['auth.read'] = 'Read authorizations';
 $lang['auth.archives-read'] = 'Archives read authorizations';
+$lang['auth.archives-moderation'] = 'Archives moderation authorizations';
 $lang['auth.subscribers-read'] = 'Subscribers read authorizations';
 $lang['auth.subscribers-moderation'] = 'Subscribers moderation authorizations';
 $lang['auth.subscribe'] = 'Authorizations to register for newsletters';

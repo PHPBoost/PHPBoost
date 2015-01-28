@@ -48,6 +48,15 @@ class NewsletterUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/add/' . $type);
 	}
+	
+	/**
+	 * @return Url
+	 */
+    public static function delete_newsletter($id, $id_stream, $redirect = null)
+	{
+		 $redirect = $redirect !== null ? 'redirect=' . $redirect . '&' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/delete/' . $id . '/' . $id_stream . '/?' . $redirect . 'token=' . AppContext::get_session()->get_token());
+	}
     
 	/**
 	 * @return Url

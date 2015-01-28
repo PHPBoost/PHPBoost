@@ -40,6 +40,7 @@ class NewsletterAuthorizationsService
 	const AUTH_MODERATION_SUBSCRIBERS = 8;
 	const AUTH_CREATE_NEWSLETTERS = 16;
 	const AUTH_READ_ARCHIVES = 32;
+	const AUTH_MODERATION_ARCHIVES = 64;
 	
 	public function __construct($id_stream = null)
 	{
@@ -154,6 +155,18 @@ class NewsletterAuthorizationsService
 		else
 		{
 			return $this->get_error(self::AUTH_READ_ARCHIVES);
+		}
+	}
+	
+	public function moderation_archives()
+	{
+		if ($this->is_error == false)
+		{
+			return $this->get_authorizations(self::AUTH_MODERATION_ARCHIVES);
+		}
+		else
+		{
+			return $this->get_error(self::AUTH_MODERATION_ARCHIVES);
 		}
 	}
 	

@@ -55,6 +55,11 @@ class NewsletterService
 		}
 	}
 	
+	public static function delete_newsletter($id)
+	{
+		NewsletterDAO::delete_archive($id);
+	}
+	
 	public static function display_newsletter($id_archive)
 	{
 		$row = PersistenceContext::get_querier()->select_single_row(NewsletterSetup::$newsletter_table_archives, array('*'), "WHERE id = '". $id_archive ."'");
