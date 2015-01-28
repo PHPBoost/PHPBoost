@@ -8,10 +8,10 @@
 			<span id="name" itemprop="name">{NAME}</span>
 			<span class="actions">
 				# IF C_EDIT #
-					<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
+					<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
 				# ENDIF #
 				# IF C_DELETE #
-					<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+					<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
 				# ENDIF #
 			</span>
 		</h1>
@@ -29,7 +29,7 @@
 			<div class="center">
 				# IF C_HAS_PARTNER_PICTURE #
 					<img src="{U_PARTNER_PICTURE}" alt="" itemprop="image" />
-					<div class="spacer">&nbsp;</div>
+					<div class="spacer"></div>
 				# ENDIF #
 				# IF C_VISIBLE #
 					<a href="{U_VISIT}" class="basic-button">
@@ -58,7 +58,7 @@
 			# ENDIF #
 			# IF C_VISIBLE #
 				# IF C_NOTATION_ENABLED #
-					<div class="spacer">&nbsp;</div>
+					<div class="spacer"></div>
 					<div class="center">{NOTATION}</div>
 				# ENDIF #
 			# ENDIF #

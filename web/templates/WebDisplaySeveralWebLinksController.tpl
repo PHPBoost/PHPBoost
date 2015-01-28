@@ -1,7 +1,7 @@
 <section id="module-web">
 	<header>
 		<h1>
-			<a href="${relative_url(SyndicationUrlBuilder::rss('web', ID_CAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('web', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
 			# IF C_PENDING #{@web.pending}# ELSE #{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
 		</h1>
 		
@@ -27,14 +27,14 @@
 		<div class="spacer"></div>
 	</div>
 	# ELSE #
-		# IF NOT C_CATEGORY_DISPLAYED_TABLE #<div class="spacer">&nbsp;</div># ENDIF #
+		# IF NOT C_CATEGORY_DISPLAYED_TABLE #<div class="spacer"></div># ENDIF #
 	# ENDIF #
 	
 	<div class="content">
 	# IF C_WEBLINKS #
 		# IF C_MORE_THAN_ONE_WEBLINK #
 			# INCLUDE SORT_FORM #
-			<div class="spacer">&nbsp;</div>
+			<div class="spacer"></div>
 		# ENDIF #
 		# IF C_CATEGORY_DISPLAYED_TABLE #
 			<table>
@@ -147,7 +147,7 @@
 							<div class="center">
 								# IF weblinks.C_HAS_PARTNER_PICTURE #
 									<img src="{weblinks.U_PARTNER_PICTURE}" alt="" itemprop="image" />
-									<div class="spacer">&nbsp;</div>
+									<div class="spacer"></div>
 								# ENDIF #
 								# IF weblinks.C_VISIBLE #
 									<a href="{weblinks.U_VISIT}" class="basic-button">
@@ -175,7 +175,7 @@
 								<span># IF weblinks.C_COMMENTS # {weblinks.NUMBER_COMMENTS} # ENDIF # {weblinks.L_COMMENTS}</span>
 							# ENDIF #
 							# IF C_NOTATION_ENABLED #
-								<div class="spacer">&nbsp;</div>
+								<div class="spacer"></div>
 								<div class="center">{weblinks.NOTATION}</div>
 							# ENDIF #
 						</div>
