@@ -48,6 +48,11 @@ class NewsletterDAO
 		
 		NewsletterStreamsCache::invalidate();
 	}
+
+	public static function delete_archive($id)
+	{
+		self::$db_querier->delete(NewsletterSetup::$newsletter_table_archives, 'WHERE id = :id', array('id' => $id));
+	}
 	
 	public static function insert_subscriptions_member_registered($user_id, Array $streams)
 	{

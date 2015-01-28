@@ -83,11 +83,14 @@ class NewsletterArchivesController extends ModuleController
 		
 		$pagination = $this->get_pagination($current_page, $nbr_archives, $field, $sort);
 		
+		$moderation_auth = NewsletterAuthorizationsService::id_stream($this->id_stream)->moderation_archives();
+		
 		$this->view->put_all(array(
+			'C_MODERATE' => $moderation_auth,
 			'C_ARCHIVES' => (float)$nbr_archives,
 			'C_SPECIFIC_STREAM' => !empty($this->id_stream),
 			'C_PAGINATION' => $pagination->has_several_pages(),
-			'NUMBER_COLUMN' => empty($this->id_stream) && !empty($nbr_archives) ? 4 : 3,
+			'NUMBER_COLUMN' => 3 + (int)(empty($this->id_stream) && !empty($nbr_archives)) + $moderation_auth,
 			'SORT_STREAM_TOP' => NewsletterUrlBuilder::archives($this->id_stream .'/stream/top/'. $current_page)->rel(),
 			'SORT_STREAM_BOTTOM' => NewsletterUrlBuilder::archives($this->id_stream .'/stream/bottom/'. $current_page)->rel(),
 			'SORT_SUBJECT_TOP' => NewsletterUrlBuilder::archives($this->id_stream .'/subject/top/'. $current_page)->rel(),
@@ -119,7 +122,8 @@ class NewsletterArchivesController extends ModuleController
 				'DATE' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR),
 				'NBR_SUBSCRIBERS' => $row['nbr_subscribers'],
 				'U_VIEW_STREAM' => NewsletterUrlBuilder::archives($stream->get_id())->rel(),
-				'U_VIEW_ARCHIVE' => NewsletterUrlBuilder::archive($row['id'])->rel()
+				'U_VIEW_ARCHIVE' => NewsletterUrlBuilder::archive($row['id'])->rel(),
+				'U_DELETE_ARCHIVE' => NewsletterUrlBuilder::delete_newsletter($row['id'], $stream->get_id(), NewsletterUrlBuilder::archives($this->id_stream . '/' . $field . '/' . $sort . '/' . $current_page)->relative())->rel()
 			));
 		}
 		$result->dispose();

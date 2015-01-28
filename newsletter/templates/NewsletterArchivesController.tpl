@@ -2,6 +2,9 @@
 	# IF C_ARCHIVES #
 	<thead>
 		<tr> 
+			# IF C_MODERATE #
+			<th></th>
+			# ENDIF #
 			# IF NOT C_SPECIFIC_STREAM #
 			<th>
 				<a href="{SORT_STREAM_TOP}" class="fa fa-table-sort-up"></a>
@@ -38,6 +41,11 @@
 	<tbody>
 		# START archives_list #
 			<tr>
+				# IF C_MODERATE #
+				<td>
+					<a href="{archives_list.U_DELETE_ARCHIVE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+				</td>
+				# ENDIF #
 				# IF NOT C_SPECIFIC_STREAM #
 				<td>
 					<a href="{archives_list.U_VIEW_STREAM}">{archives_list.STREAM_NAME}</a>
@@ -58,7 +66,7 @@
 	# ELSE #
 	<tbody>
 		<tr>
-			<td colspan="4">
+			<td>
 				<span class="text-strong">{@archives.not_archives}</span>
 			</td>
 		</tr>
