@@ -179,7 +179,7 @@ class AdministratorAlertService
 		while ($row = $result->fetch())
 		{
 			$alert = new AdministratorAlert();
-			$alert->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['current_status'], new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['creation_date']), $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
+			$alert->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['current_status'], new Date($row['creation_date'], Timezone::SERVER_TIMEZONE), $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
 			$array_result[] = $alert;
 		}
 		$result->dispose();

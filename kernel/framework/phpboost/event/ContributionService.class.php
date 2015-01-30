@@ -102,7 +102,7 @@ class ContributionService
 		{
 			$contri = new Contribution();
 			
-			$contri->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['module'], $row['current_status'], new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['creation_date']), new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['fixing_date']), unserialize($row['auth']), $row['poster_id'], $row['fixer_id'], $row['id_in_module'], $row['identifier'], $row['type'], $row['poster_login'], $row['fixer_login'], $row['poster_level'], $row['fixer_level'], $row['poster_groups'], $row['fixer_groups']);
+			$contri->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['module'], $row['current_status'], new Date($row['creation_date'], Timezone::SERVER_TIMEZONE), new Date($row['fixing_date'], Timezone::SERVER_TIMEZONE), unserialize($row['auth']), $row['poster_id'], $row['fixer_id'], $row['id_in_module'], $row['identifier'], $row['type'], $row['poster_login'], $row['fixer_login'], $row['poster_level'], $row['fixer_level'], $row['poster_groups'], $row['fixer_groups']);
 			$array_result[] = $contri;
 		}
 		$result->dispose();

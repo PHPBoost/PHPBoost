@@ -23,7 +23,7 @@ class DateTest extends PHPBoostUnitTestCase
 		self::assertEquals('9', $date->get_minutes());
 		self::assertEquals('24', $date->get_seconds());
 
-		$date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, 100000);
+		$date = new Date(100000, Timezone::SERVER_TIMEZONE);
 		self::assertEquals(100000, $date->get_timestamp());
 
 		$date = new Date(DATE_FROM_STRING, Timezone::SERVER_TIMEZONE, '10/17/2009', 'm/d/y');
