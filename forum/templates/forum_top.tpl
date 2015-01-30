@@ -98,28 +98,15 @@
 							# ENDIF #
 						</div>
 					</div>
-					<div style="float:right;text-align:right">
-						<form action="{PATH_TO_ROOT}/forum/search.php?token={TOKEN}" method="post">
-                            <div>
-                                <label><input type="text" size="14" id="search" name="search" placeholder="{L_SEARCH}..."></label>
-                                <button type="submit" name="valid_search" value="true"><i class="fa fa-search"></i></button><br/>
-                                <a href="{PATH_TO_ROOT}/forum/search.php" title="{L_ADVANCED_SEARCH}" class="small">{L_ADVANCED_SEARCH}</a>
-                                
-                                <input type="hidden" name="time" value="30000">
-                                <input type="hidden" name="where" value="contents">
-                                <input type="hidden" name="colorate_result" value="1">
-                            </div>
-						</form>
-					</div>	
-					<div class="spacer"></div>		
+					<div class="spacer"></div>
 				</div>
 			</div>
 			<div class="forum-links">
-				<div style="float:left;">
+				<div class="left">
 					&bull; <a href="index.php?">{L_FORUM_INDEX}</a>
 				</div>
 				# IF C_USER_CONNECTED #
-					<div style="float:right;">
+					<div class="right">
 						<i class="fa fa-msg-track"></i> {U_TOPIC_TRACK} &bull;
 						<i class="fa fa-lastview"></i> {U_LAST_MSG_READ} &bull;
 						<i class="fa fa-notread"></i> <span id="nbr_unread_topics">{U_MSG_NOT_READ}</span>

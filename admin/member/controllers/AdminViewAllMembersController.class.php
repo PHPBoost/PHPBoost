@@ -48,7 +48,7 @@ class AdminViewAllMembersController extends AdminController
 		$fieldset = new FormFieldsetHTML('search_member', $this->lang['search_member']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldAjaxSearchUserAutoComplete('member', $this->lang['pseudo'], '', array(
+		$fieldset->add_field(new FormFieldAjaxSearchUserAutoComplete('member', LangLoader::get_message('display_name', 'user-common'), '', array(
 			'size' => 25))
 		);
 		

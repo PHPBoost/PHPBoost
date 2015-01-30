@@ -22,7 +22,7 @@
 									<br />
 									<a href="{row.list_cats.U_CAT}">{row.list_cats.NAME}</a>
 									# IF C_ADMIN #
-									<a href="{row.list_cats.U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+									<a href="{row.list_cats.U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
 									# ENDIF #
 									# IF row.list_cats.NUM_MEDIA #
 									<div class="smaller">
@@ -69,8 +69,8 @@
 										# IF C_MODO #
 										<span class="actions">
 											<a href="{file.U_ADMIN_UNVISIBLE_MEDIA}" class="fa fa-eye-slash" title="{L_UNAPROBED}"></a>
-											<a href="{file.U_ADMIN_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
-											<a href="{file.U_ADMIN_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+											<a href="{file.U_ADMIN_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
+											<a href="{file.U_ADMIN_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 										</span>
 										# ENDIF #
 									</h1>
@@ -133,8 +133,8 @@
 						# ENDIF #
 						# IF C_MODO #
 							<a href="{U_UNVISIBLE_MEDIA}" class="fa fa-eye-slash" title="{L_UNAPROBED}"></a>
-							<a href="{U_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
-							<a href="{U_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+							<a href="{U_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
+							<a href="{U_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 						# ENDIF #
 					</span>
 				</h1>
