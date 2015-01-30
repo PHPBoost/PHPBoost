@@ -51,7 +51,7 @@ class NewsletterSubscribersListController extends ModuleController
 
 	private function build_form($request)
 	{
-		$field = $request->get_value('field', 'display_name');
+		$field = $request->get_value('field', 'pseudo');
 		$sort = $request->get_value('sort', 'top');
 		$current_page = $request->get_int('page', 1);
 		
@@ -73,7 +73,7 @@ class NewsletterSubscribersListController extends ModuleController
 		$nbr_subscribers = count(NewsletterService::list_subscribers_by_stream($this->stream->get_id()));
 		
 		$pagination = new ModulePagination($current_page, $nbr_subscribers, $this->nbr_subscribers_per_page);
-		$pagination->set_url(NewsletterUrlBuilder::subscribers($this->stream->get_id() .'/'. $field .'/'. $sort .'/%d'));
+		$pagination->set_url(NewsletterUrlBuilder::subscribers($this->stream->get_id(), $field, $sort, '%d'));
 
 		if ($pagination->current_page_is_empty() && $current_page > 1)
 		{
@@ -85,8 +85,8 @@ class NewsletterSubscribersListController extends ModuleController
 			'C_SUBSCRIBERS' => (float)$nbr_subscribers,
 			'C_SUBSCRIPTION' => NewsletterUrlBuilder::subscribe()->rel(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
-			'SORT_PSEUDO_TOP' => NewsletterUrlBuilder::subscribers($this->stream->get_id() .'/pseudo/top/'. $current_page)->rel(),
-			'SORT_PSEUDO_BOTTOM' => NewsletterUrlBuilder::subscribers($this->stream->get_id() .'/pseudo/bottom/'. $current_page)->rel(),
+			'SORT_PSEUDO_TOP' => NewsletterUrlBuilder::subscribers($this->stream->get_id(), 'pseudo', 'top', $current_page)->rel(),
+			'SORT_PSEUDO_BOTTOM' => NewsletterUrlBuilder::subscribers($this->stream->get_id(), 'pseudo', 'bottom', $current_page)->rel(),
 			'PAGINATION' => $pagination->display()
 		));
 

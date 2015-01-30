@@ -44,8 +44,8 @@ class NewsletterArchivesController extends ModuleController
 
 	private function build_form($request)
 	{
-		$field = $request->get_value('field', 'login');
-		$sort = $request->get_value('sort', 'top');
+		$field = $request->get_value('field', NewsletterUrlBuilder::DEFAULT_SORT_FIELD);
+		$sort = $request->get_value('sort', NewsletterUrlBuilder::DEFAULT_SORT_MODE);
 		$current_page = $request->get_int('page', 1);
 		$mode = ($sort == 'top') ? 'ASC' : 'DESC';
 		
@@ -91,14 +91,14 @@ class NewsletterArchivesController extends ModuleController
 			'C_SPECIFIC_STREAM' => !empty($this->id_stream),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'NUMBER_COLUMN' => 3 + (int)(empty($this->id_stream) && !empty($nbr_archives)) + $moderation_auth,
-			'SORT_STREAM_TOP' => NewsletterUrlBuilder::archives($this->id_stream .'/stream/top/'. $current_page)->rel(),
-			'SORT_STREAM_BOTTOM' => NewsletterUrlBuilder::archives($this->id_stream .'/stream/bottom/'. $current_page)->rel(),
-			'SORT_SUBJECT_TOP' => NewsletterUrlBuilder::archives($this->id_stream .'/subject/top/'. $current_page)->rel(),
-			'SORT_SUBJECT_BOTTOM' => NewsletterUrlBuilder::archives($this->id_stream .'/subject/bottom/'. $current_page)->rel(),
-			'SORT_DATE_TOP' => NewsletterUrlBuilder::archives($this->id_stream .'/date/top/'. $current_page)->rel(),
-			'SORT_DATE_BOTTOM' => NewsletterUrlBuilder::archives($this->id_stream .'/date/bottom/'. $current_page)->rel(),
-			'SORT_SUBSCRIBERS_TOP' => NewsletterUrlBuilder::archives($this->id_stream .'/subscribers/top/'. $current_page)->rel(),
-			'SORT_SUBSCRIBERS_BOTTOM' => NewsletterUrlBuilder::archives($this->id_stream .'/subscribers/bottom/'. $current_page)->rel(),
+			'SORT_STREAM_TOP' => NewsletterUrlBuilder::archives($this->id_stream, 'stream', 'top', $current_page)->rel(),
+			'SORT_STREAM_BOTTOM' => NewsletterUrlBuilder::archives($this->id_stream, 'stream', 'bottom', $current_page)->rel(),
+			'SORT_SUBJECT_TOP' => NewsletterUrlBuilder::archives($this->id_stream, 'subject', 'top', $current_page)->rel(),
+			'SORT_SUBJECT_BOTTOM' => NewsletterUrlBuilder::archives($this->id_stream, 'subject', 'bottom', $current_page)->rel(),
+			'SORT_DATE_TOP' => NewsletterUrlBuilder::archives($this->id_stream, 'date', 'top', $current_page)->rel(),
+			'SORT_DATE_BOTTOM' => NewsletterUrlBuilder::archives($this->id_stream, 'date', 'bottom', $current_page)->rel(),
+			'SORT_SUBSCRIBERS_TOP' => NewsletterUrlBuilder::archives($this->id_stream, 'subscribers', 'top', $current_page)->rel(),
+			'SORT_SUBSCRIBERS_BOTTOM' => NewsletterUrlBuilder::archives($this->id_stream, 'subscribers', 'bottom', $current_page)->rel(),
 			'PAGINATION' => $pagination->display()
 		));
 
@@ -123,7 +123,7 @@ class NewsletterArchivesController extends ModuleController
 				'NBR_SUBSCRIBERS' => $row['nbr_subscribers'],
 				'U_VIEW_STREAM' => NewsletterUrlBuilder::archives($stream->get_id())->rel(),
 				'U_VIEW_ARCHIVE' => NewsletterUrlBuilder::archive($row['id'])->rel(),
-				'U_DELETE_ARCHIVE' => NewsletterUrlBuilder::delete_newsletter($row['id'], $stream->get_id(), NewsletterUrlBuilder::archives($this->id_stream . '/' . $field . '/' . $sort . '/' . $current_page)->relative())->rel()
+				'U_DELETE_ARCHIVE' => NewsletterUrlBuilder::delete_newsletter($row['id'], $stream->get_id(), NewsletterUrlBuilder::archives($this->id_stream, $field, $sort, $current_page)->relative())->rel()
 			));
 		}
 		$result->dispose();
@@ -139,7 +139,7 @@ class NewsletterArchivesController extends ModuleController
 	private function get_pagination($current_page, $nbr_archives, $field, $sort)
 	{
 		$pagination = new ModulePagination($current_page, $nbr_archives, $this->nbr_archives_per_page);
-		$pagination->set_url(NewsletterUrlBuilder::archives($this->id_stream .'/'. $field .'/'. $sort .'/%d'));
+		$pagination->set_url(NewsletterUrlBuilder::archives($this->id_stream, $field, $sort, '%d'));
 
 		if ($pagination->current_page_is_empty() && $current_page > 1)
 		{
