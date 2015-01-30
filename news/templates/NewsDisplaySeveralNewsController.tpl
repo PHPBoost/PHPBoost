@@ -51,7 +51,7 @@
 				</div>
 				
 				# IF news.C_SOURCES #
-				<div class="spacer">&nbsp;</div>
+				<div class="spacer"></div>
 				<aside>
 				<div id="news-sources-container">
 					<span>${LangLoader::get_message('form.sources', 'common')}</span> :
