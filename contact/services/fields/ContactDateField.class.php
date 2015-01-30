@@ -47,7 +47,7 @@ class ContactDateField extends AbstractContactField
 	{
 		$field_name = $field->get_field_name();
 		if ($form->has_field($field_name))
-			return $form->get_value($field_name)->format(DATE_TIMESTAMP);
+			return $form->get_value($field_name)->format(Date::FORMAT_TIMESTAMP);
 		
 		return '';
 	}
