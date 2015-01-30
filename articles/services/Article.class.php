@@ -437,6 +437,8 @@ class Article
 		$category = $this->get_category();
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
+		$sources = $this->get_sources();
+		$nbr_sources = count($sources);
 		
 		return array(
 			//Conditions
@@ -451,6 +453,7 @@ class Article
 			'C_DATE_UPDATED' => $this->date_updated != null,
 			'C_AUTHOR_DISPLAYED' => $this->get_author_name_displayed(),
 			'C_NOTATION_ENABLED' => $this->get_notation_enabled(),
+			'C_SOURCES' => $nbr_sources > 0,
 			
 			//Articles
 			'TITLE' => $this->get_title(),

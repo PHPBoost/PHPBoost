@@ -155,8 +155,30 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			$this->build_keywords_view($article);
 			
 			$this->view->assign_block_vars('articles', $article->get_tpl_vars(ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $field, $mode, $page)->relative()));
+			$this->build_sources_view($article);
 		}
 		$result->dispose();
+	}
+	
+	private function build_sources_view(Article $article)
+	{
+		$sources = $article->get_sources();
+		$nbr_sources = count($sources);
+		if ($nbr_sources)
+		{
+			$this->tpl->put('articles.C_SOURCES', $nbr_sources > 0);
+			
+			$i = 1;
+			foreach ($sources as $name => $url)
+			{       
+				$this->tpl->assign_block_vars('articles.sources', array(
+					'C_SEPARATOR' => $i < $nbr_sources,
+					'NAME' => $name,
+					'URL' => $url,
+				));
+				$i++;
+			}
+		}
 	}
 	
 	private function build_keywords_view(Article $article)

@@ -21,7 +21,7 @@
 				# ELSE #
 				<ul>
 					# START cat_list #
-					<li><a itemprop="about" class="button_cat" href="{cat_list.U_CATEGORY}" title="{cat_list.CATEGORY_DESCRIPTION}">{cat_list.CATEGORY_NAME} ({cat_list.NBR_ARTICLES})</a></li>
+					<li><a itemprop="about" class="button-cat" href="{cat_list.U_CATEGORY}" title="{cat_list.CATEGORY_DESCRIPTION}">{cat_list.CATEGORY_NAME} ({cat_list.NBR_ARTICLES})</a></li>
 					# END cat_list #
 				</ul>
 				# ENDIF #
@@ -76,6 +76,18 @@
 						<span itemprop="text">{articles.DESCRIPTION}</span>
 					</div>
 
+					# IF articles.C_SOURCES #
+					<div class="spacer"></div>
+					<aside>
+					<div id="articles-sources-container">
+						<span>${LangLoader::get_message('form.sources', 'common')}</span> :
+						# START articles.sources #
+						<a itemprop="isBasedOnUrl" href="{articles.sources.URL}" class="small">{articles.sources.NAME}</a># IF articles.sources.C_SEPARATOR #, # ENDIF #
+						# END articles.sources #
+					</div>
+					</aside>
+					# ENDIF #
+					
 					<footer></footer>
 				</article>
 			# END articles #
