@@ -87,6 +87,11 @@ class AdminCalendarConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', LangLoader::get_message('config.comments_enabled', 'admin-common'), $this->config->are_comments_enabled()));
 		
+		$fieldset->add_field(new FormFieldColorPicker('event_color', $this->lang['calendar.config.event_color'], $this->config->get_event_color(),
+			array(),
+			array(new FormFieldConstraintRegex('`^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$`i'))
+		));
+		
 		$fieldset->add_field(new FormFieldCheckbox('members_birthday_enabled', $this->lang['calendar.config.members_birthday_enabled'], $this->config->is_members_birthday_enabled(),
 			array('events' => array('click' => '
 				if (HTMLForms.getField("members_birthday_enabled").getValue()) {
@@ -105,7 +110,8 @@ class AdminCalendarConfigController extends AdminModuleController
 		}
 		
 		$fieldset->add_field(new FormFieldColorPicker('birthday_color', $this->lang['calendar.config.birthday_color'], $this->config->get_birthday_color(),
-			array('hidden' => !$this->config->is_members_birthday_enabled())
+			array('hidden' => !$this->config->is_members_birthday_enabled()),
+			array(new FormFieldConstraintRegex('`^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$`i'))
 		));
 		
 		$common_lang = LangLoader::get('common');
@@ -140,6 +146,8 @@ class AdminCalendarConfigController extends AdminModuleController
 			$this->config->enable_comments();
 		else
 			$this->config->disable_comments();
+		
+		$this->config->set_event_color($this->form->get_value('event_color'));
 		
 		if ($this->form->get_value('members_birthday_enabled'))
 		{

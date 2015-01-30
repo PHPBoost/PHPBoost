@@ -79,6 +79,7 @@ $lang['calendar.labels.one_event'] = '1 event';
 $lang['calendar.labels.start_date'] = 'Start date';
 $lang['calendar.labels.end_date'] = 'End date';
 $lang['calendar.labels.contribution.explain'] = 'You are not authorized to create an event, however you can contribute by submitting one.';
+$lang['calendar.labels.birthday'] = 'Birthday';
 $lang['calendar.labels.birthday_title'] = 'Birthday of';
 $lang['calendar.labels.participants'] = 'Participants';
 $lang['calendar.labels.no_one'] = 'No one';
@@ -89,6 +90,7 @@ $lang['calendar.labels.unsuscribe'] = 'Unsuscribe';
 $lang['calendar.config.events.management'] = 'Events management';
 $lang['calendar.config.category.color'] = 'Color';
 $lang['calendar.config.items_number_per_page'] = 'Events number per page';
+$lang['calendar.config.event_color'] = 'Events color';
 $lang['calendar.config.members_birthday_enabled'] = 'Display members birthday';
 $lang['calendar.config.birthday_color'] = 'Birthday color';
 

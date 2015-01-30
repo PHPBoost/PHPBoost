@@ -80,6 +80,7 @@ $lang['calendar.labels.one_event'] = '1 événement';
 $lang['calendar.labels.start_date'] = 'Date de début';
 $lang['calendar.labels.end_date'] = 'Date de fin';
 $lang['calendar.labels.contribution.explain'] = 'Vous n\'êtes pas autorisé à créer un événement, cependant vous pouvez en proposer un.';
+$lang['calendar.labels.birthday'] = 'Anniversaire';
 $lang['calendar.labels.birthday_title'] = 'Anniversaire de';
 $lang['calendar.labels.participants'] = 'Participants';
 $lang['calendar.labels.no_one'] = 'Personne';
@@ -90,6 +91,7 @@ $lang['calendar.labels.unsuscribe'] = 'Se désinscrire';
 $lang['calendar.config.events.management'] = 'Gestion des événements';
 $lang['calendar.config.category.color'] = 'Couleur';
 $lang['calendar.config.items_number_per_page'] = 'Nombre d\'événements affichés par page';
+$lang['calendar.config.event_color'] = 'Couleur des événements';
 $lang['calendar.config.members_birthday_enabled'] = 'Afficher les anniversaires des membres';
 $lang['calendar.config.birthday_color'] = 'Couleur des anniversaires';
 

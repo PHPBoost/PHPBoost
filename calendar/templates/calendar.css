@@ -43,7 +43,7 @@ div.event-display-dates {
 	font-weight: normal;
 	padding: 4px;
 	float: right;
-	width: 175px;
+	width: 180px;
 }
 
 /* Particularité du tableau du calendrier */
@@ -58,7 +58,6 @@ div.event-display-dates {
 /* Couleur des différents évenements */
 table tbody tr td.calendar-none    { background: #FFFFFF; }
 table tbody tr td.calendar-today   { background: #B5E5B9; }
-table tbody tr td.calendar-event   { background: #DBE5EE; }
 table tbody tr td.calendar-other   { background: #F1F1F1; }
 table tbody tr td.calendar-weekend { background: #FFE3B6; }
 
@@ -104,4 +103,17 @@ table tbody tr th.column-title {
 #CalendarAjaxCalendarController_month_field,
 #CalendarAjaxCalendarController_year_field {
 	display: inline-block;
+}
+
+.legend-line {
+	padding: 0 0 8px 0;
+}
+
+.legend-color {
+	font-size: 2em;
+	vertical-align: -1px;
+}
+
+.legend {
+	padding-right: 20px;
 }
