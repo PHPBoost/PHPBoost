@@ -117,7 +117,6 @@ $lang['labels.fields.version_fixed'] = 'Fixed version';
 $lang['labels.fields.version_release_date'] = 'Release date';
 $lang['labels.page'] = 'Page';
 $lang['labels.color'] = 'Color';
-$lang['labels.number'] = 'Bugs number';
 $lang['labels.number_fixed'] = 'Corrected bugs number';
 $lang['labels.number_in_progress'] = 'Bugs being corrected number';
 $lang['labels.top_posters'] = 'Top posters';
@@ -137,8 +136,6 @@ $lang['labels.fix_bugs_per_version'] = 'Fixed bugs number per version';
 $lang['labels.not_yet_fixed'] = 'Not yet fixed';
 $lang['labels.alert_fix'] = 'Fix alert';
 $lang['labels.alert_delete'] = 'Delete alert';
-$lang['labels.matching_selected_filter'] = 'matching selected filter';
-$lang['labels.matching_selected_filters'] = 'matching selected filters';
 $lang['labels.save_filters'] = 'Save filters';
 $lang['labels.version_name'] = 'Version name';
 

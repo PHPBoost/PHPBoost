@@ -4,7 +4,7 @@
   google.setOnLoadCallback(drawChart);
   function drawChart() {
 	var status_chart_data = google.visualization.arrayToDataTable([
-	  ['{@labels.fields.status}', '{@labels.number}'],
+	  ['{@labels.fields.status}', ${TextHelper::to_js_string(LangLoader::get_message('items_number', 'common'))}],
 	  # START status #
 	  ['{status.NAME}',     {status.NUMBER}],
 	  # END status #
@@ -104,7 +104,7 @@
 						{@labels.login}
 					</th>
 					<th>
-						{@labels.number}
+						${LangLoader::get_message('items_number', 'common')}
 					</th>
 				</tr>
 			</thead>
