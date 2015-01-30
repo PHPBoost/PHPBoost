@@ -41,6 +41,7 @@ $LANG['require_pass'] = 'Veuillez entrer un mot de passe !';
 $LANG['require_rank'] = 'Veuillez entrer un rang !';
 $LANG['require_code'] = 'Veuillez entrer un code pour le smiley !';
 $LANG['require_subcat'] = 'Veuillez sélectionner une sous-catégorie !';
+$LANG['require_items_number'] = 'Veuillez entrer un nombre d\'éléments !';
 
 //Commun
 $LANG['user_ip'] = 'Adresse ip';

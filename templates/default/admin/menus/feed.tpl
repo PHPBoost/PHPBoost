@@ -1,14 +1,19 @@
 <script>
 <!--
 function CheckForm() {
-	if (document.getElementById('name').value == '') {
-		document.getElementById('name').select();
+	if (jQuery('#name').value == '') {
+		jQuery('#name').select();
 		window.alert({JL_REQUIRE_NAME});
 		return false;
 	}
-	if (document.getElementById('feed_url').options[0].selected || document.getElementById('feed_url').options[1].selected) {
-		document.getElementById('feed_url').select();
+	if (jQuery('#feed_url').options[0].selected || jQuery('#feed_url').options[1].selected) {
+		jQuery('#feed_url').select();
 		window.alert({JL_REQUIRE_FEED});
+		return false;
+	}
+	if (jQuery('#items_number').value == '' || jQuery('#items_number').value == 0) {
+		jQuery('#items_number').select();
+		window.alert({JL_REQUIRE_ITEMS_NUMBER});
 		return false;
 	}
 	return true;
@@ -61,15 +66,19 @@ function CheckForm() {
 						# ELSE #
                             <option value="1">{L_ENABLED}</option>
                             <option value="0" selected="selected">{L_DISABLED}</option>
-						# ENDIF #					
+						# ENDIF #
 					</select>
 				</label></div>
+			</div>
+			<div class="form-element">
+				<label for="items_number">* ${LangLoader::get_message('items_number', 'common')}</label>
+				<div class="form-field"><label><input type="text" size="5" name="items_number" id="items_number" value="{ITEMS_NUMBER}"></label></div>
 			</div>
 			<div class="form-element">
 				<label>{L_AUTHS}</label>
 				<div class="form-field">{AUTH_MENUS}</div>
 			</div>
-		</fieldset>		
+		</fieldset>
 	
 		# INCLUDE filters #
 	

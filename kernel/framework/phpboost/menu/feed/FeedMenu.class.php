@@ -106,7 +106,20 @@ class FeedMenu extends Menu
 	 * @param string $value the feed's name
 	 */
 	public function set_name($value) { $this->name = $value; }
-
+	
+	/**
+	* @return Return the number of elements displayed in the menu
+	*/
+	public function get_number()
+	{
+		return $this->number;
+	}
+	
+	/**
+	 * @param string $value the number of elements displayed in the menu
+	 */
+	public function set_number($value) { $this->number = $value; }
+	
 	public function display()
 	{
 		return Feed::get_parsed($this->module_id, $this->name, $this->category,
