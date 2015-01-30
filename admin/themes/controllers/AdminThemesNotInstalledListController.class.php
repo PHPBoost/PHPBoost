@@ -206,7 +206,17 @@ class AdminThemesNotInstalledListController extends AdminController
 							$uploaded_file = new File($archive);
 							$uploaded_file->delete();
 						}
-						$this->install_theme($uploaded_file->get_name_without_extension(), array('r-1' => 1, 'r0' => 1, 'r1' => 1));
+						
+						$theme_folder = new Folder($folder_phpboost_themes . '/' . $uploaded_file->get_name_without_extension());
+						if (!$theme_folder->exists())
+						{
+							$templates_folder = new Folder($folder_phpboost_themes);
+							$theme_id = $templates_folder->get_most_recent_folder();
+						}
+						else
+							$theme_id = $uploaded_file->get_name_without_extension();
+						
+						$this->install_theme($theme_id, array('r-1' => 1, 'r0' => 1, 'r1' => 1));
 					}
 					else
 					{

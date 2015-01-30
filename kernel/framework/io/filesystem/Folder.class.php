@@ -219,5 +219,37 @@ class Folder extends FileSystemElement
 			throw new IOException('The folder ' . $this->get_path() . ' couldn\'t been deleted');
 		}
 	}
+
+	/**
+	 * @desc Returns the date of the last modification of the folder.
+	 * @return int The UNIX timestamp corresponding to the last modification date.
+	 */
+	public function get_last_modification_date()
+	{
+		$folder_infos = stat($this->get_path());
+		return $folder_infos['mtime'];
+	}
+	
+	/**
+	 * @desc Returns the last modified folder name contained in this folder.
+	 * @return string The last modified folder name.
+	 */
+	function get_most_recent_folder()
+	{
+		$most_recent_folder_mtime = 0;
+		$most_recent_folder_name = '';
+		
+		foreach ($this->get_folders() as $folder)
+		{
+			$last_modified = $folder->get_last_modification_date();
+			if ($last_modified > $most_recent_folder_mtime)
+			{
+				$most_recent_folder_mtime = $last_modified;
+				$most_recent_folder_name = $folder->get_name();
+			}
+		}
+		
+		return $most_recent_folder_name;
+	}
 }
 ?>
