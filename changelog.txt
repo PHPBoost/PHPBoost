@@ -7,13 +7,12 @@
 [*] Suppression de l'ancienne classe SQL
 [*] Suppression de l'ancien système de Tpl
 [*] Suppression de la classe UserDisplayResponse
-[*] Passage de la configuration de la maintenance en MVC (simplification de l'interface)
 - Refonte de la balise Title HTML (création d'un format standardisé dans PHPBoost :
 	- Titre de la page - Nom de la section ou du module - Nom du site
 	- Titre de la page - Nom du site (dans le cas ou c'est une page sans module)
 	- Nom du site - Description du site (pour la page d'accueil)
 [*] Suppression des mots clés du site qui ne sont plus utilisés pour le référencement
-[*] Suppression de la clé de déverrouillage de l'administration.
+[*] Les modules auxquels l'utilisateur n'a pas le droit de contribuer ne sont plus affichés dans le panneau de contribution
 
 + Nouveau système de session et de connexion :
 	[*] Suppression du champ Pseudo, remplacé par Nom d'affichage
@@ -21,6 +20,11 @@
 	+ Connexion avec un compte Facebook (et d'autre) paramètrable dans l'administration
 	+ Possibilité de gérer ses types de connexion dans le profil
 	[*] Regroupement des fonctionnalités de l'édition du profil de l'admin dans l'édition d'un membre en front
+
+[b]Administration[/b]
+[*] Passage de la configuration de la maintenance en MVC (simplification de l'interface)
+[*] Suppression de la clé de déverrouillage de l'administration.
+[*] Possibilité de définir le nombre de flux affichés dans les menus de flux
 
 [b]Graphique[/b]
 [*] Refonte de l'affichage de la barre BBCode, amélioration de son ergonomie et suppression de la Pop-up "Tous les smileys"
@@ -31,6 +35,13 @@
 
 
 =================================== Modules =====================================
+
+[b]Articles[/b]
+[*] Possibilité de désactiver la notation
+[*] Affichage des sources lors de l'affichage des catégories d'articles
+
+[b]Calendrier[/b]
+[*] [color=red]Nouveauté :[/color] Ajout d'une légende sous le calendrier quand il y a des événements
 
 [b]Discussion[/b]
 [*] [color=red]Nouveauté :[/color] Passage du module en MVC
@@ -67,6 +78,12 @@
 [*] [color=red]Nouveauté :[/color] Possibilité d'activer/désactiver les commentaires et la notation globalement
 [*] [color=red]Nouveauté :[/color] Possibilité de choisir la date de parution des liens
 [*] Ajout des microdonnées pour améliorer le référencement
+
+[b]News[/b]
+[*] Affichage des sources lors de l'affichage des catégories de news
+
+[b]Newsletter[/b]
+[*] Ajout de la possibilité de supprimer une archive
 
 [b]Téléchargements[/b]
 [*] [color=red]Nouveauté :[/color] Passage du module en MVC
