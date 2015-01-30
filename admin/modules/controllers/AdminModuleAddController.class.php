@@ -170,8 +170,8 @@ class AdminModuleAddController extends AdminController
 	
 	private function upload_module()
 	{
-		$modules_folder = PATH_TO_ROOT . '/';
-		if (!is_writable($modules_folder))
+		$folder_phpboost_modules = PATH_TO_ROOT . '/';
+		if (!is_writable($folder_phpboost_modules))
 		{
 			$is_writable = @chmod($dir, 0755);
 		}
@@ -187,15 +187,15 @@ class AdminModuleAddController extends AdminController
 			{
 				if (!ModulesManager::is_module_installed($uploaded_file->get_name_without_extension()))
 				{
-					$upload = new Upload($modules_folder);
+					$upload = new Upload($folder_phpboost_modules);
 					$upload->disableContentCheck();
 					if ($upload->file('upload_module_file', '`([A-Za-z0-9-_]+)\.(gzip|zip)+$`i'))
 					{
-						$archive_path = $modules_folder . $upload->get_filename();
+						$archive_path = $folder_phpboost_modules . $upload->get_filename();
 						if ($upload->get_extension() == 'gzip')
 						{
 							include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pcltar.lib.php');
-							PclTarExtract($upload->get_filename(), $modules_folder);
+							PclTarExtract($upload->get_filename(), $folder_phpboost_modules);
 							
 							$file = new File($archive_path);
 							$file->delete();
@@ -204,12 +204,22 @@ class AdminModuleAddController extends AdminController
 						{
 							include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pclzip.lib.php');
 							$zip = new PclZip($archive_path);
-							$zip->extract(PCLZIP_OPT_PATH, $modules_folder, PCLZIP_OPT_SET_CHMOD, 0755);
+							$zip->extract(PCLZIP_OPT_PATH, $folder_phpboost_modules, PCLZIP_OPT_SET_CHMOD, 0755);
 							
 							$file = new File($archive_path);
 							$file->delete();
 						}
-						$this->install_module($uploaded_file->get_name_without_extension(), true);
+						
+						$module_folder = new Folder($folder_phpboost_modules . '/' . $uploaded_file->get_name_without_extension());
+						if (!$module_folder->exists())
+						{
+							$modules_folder = new Folder($folder_phpboost_modules);
+							$module_id = $modules_folder->get_most_recent_folder();
+						}
+						else
+							$module_id = $uploaded_file->get_name_without_extension();
+						
+						$this->install_module($module_id, true);
 					}
 					else
 					{

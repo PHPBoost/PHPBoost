@@ -196,7 +196,16 @@ class AdminLangsNotInstalledListController extends AdminController
 							$file->delete();
 						}
 						
-						$this->install_lang($uploaded_file->get_name_without_extension(), array('r-1' => 1, 'r0' => 1, 'r1' => 1));
+						$lang_folder = new Folder($folder_phpboost_langs . '/' . $uploaded_file->get_name_without_extension());
+						if (!$lang_folder->exists())
+						{
+							$langs_folder = new Folder($folder_phpboost_langs);
+							$lang_id = $langs_folder->get_most_recent_folder();
+						}
+						else
+							$lang_id = $uploaded_file->get_name_without_extension();
+						
+						$this->install_lang($lang_id, array('r-1' => 1, 'r0' => 1, 'r1' => 1));
 					}
 					else
 					{
