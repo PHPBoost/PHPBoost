@@ -31,12 +31,15 @@
  */
 class NewsletterUrlBuilder
 {
-    private static $dispatcher = '/newsletter';
+	const DEFAULT_SORT_FIELD = 'date';
+	const DEFAULT_SORT_MODE = 'bottom';
+
+	private static $dispatcher = '/newsletter';
 
 	/**
 	 * @return Url
 	 */
-    public static function configuration()
+	public static function configuration()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/config/');
 	}
@@ -44,7 +47,7 @@ class NewsletterUrlBuilder
 	/**
 	 * @return Url
 	 */
-    public static function add_newsletter($type = '')
+	public static function add_newsletter($type = '')
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/add/' . $type);
 	}
@@ -52,24 +55,24 @@ class NewsletterUrlBuilder
 	/**
 	 * @return Url
 	 */
-    public static function delete_newsletter($id, $id_stream, $redirect = null)
+	public static function delete_newsletter($id, $id_stream, $redirect = null)
 	{
 		 $redirect = $redirect !== null ? 'redirect=' . $redirect . '&' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/delete/' . $id . '/' . $id_stream . '/?' . $redirect . 'token=' . AppContext::get_session()->get_token());
-	}
-    
-	/**
-	 * @return Url
-	 */
-    public static function manage_streams($param = '')
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/streams/' . $param);
 	}
 	
 	/**
 	 * @return Url
 	 */
-    public static function add_stream()
+	public static function manage_streams()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/admin/streams/');
+	}
+	
+	/**
+	 * @return Url
+	 */
+	public static function add_stream()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/stream/add/');
 	}
@@ -77,7 +80,7 @@ class NewsletterUrlBuilder
 	/**
 	 * @return Url
 	 */
-    public static function edit_stream($id)
+	public static function edit_stream($id)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/stream/' . $id .'/edit/');
 	}
@@ -85,7 +88,7 @@ class NewsletterUrlBuilder
 	/**
 	 * @return Url
 	 */
-    public static function delete_stream($id)
+	public static function delete_stream($id)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/stream/' . $id .'/delete/');
 	}
@@ -93,15 +96,18 @@ class NewsletterUrlBuilder
 	/**
 	 * @return Url
 	 */
-    public static function subscribers($param = '')
+	public static function subscribers($id, $sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/subscribers/' . $param);
+		$page = $page !== 1 ? $page . '/': '';
+		$sort_field = $sort_field !== '' ? $sort_field . '/' : '';
+		$sort_mode = $sort_mode !== '' ? $sort_mode . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/subscribers/' . $id . '/' . $sort_field . $sort_mode . $page);
 	}
 
 	/**
 	 * @return Url
 	 */
-    public static function subscribe()
+	public static function subscribe()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/subscribe/');
 	}
@@ -109,7 +115,7 @@ class NewsletterUrlBuilder
 	/**
 	 * @return Url
 	 */
-    public static function unsubscribe()
+	public static function unsubscribe()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/unsubscribe/');
 	}
@@ -117,7 +123,7 @@ class NewsletterUrlBuilder
 	/**
 	 * @return Url
 	 */
-    public static function edit_subscriber($id)
+	public static function edit_subscriber($id)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/subscriber/' . $id . '/edit/');
 	}
@@ -125,7 +131,7 @@ class NewsletterUrlBuilder
 	/**
 	 * @return Url
 	 */
-    public static function delete_subscriber($id, $stream_id = null)
+	public static function delete_subscriber($id, $stream_id = null)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/subscriber/' . $id . '/delete/' . (!empty($stream_id) ? $stream_id : ''));
 	}
@@ -133,15 +139,19 @@ class NewsletterUrlBuilder
 	/**
 	 * @return Url
 	 */
-    public static function archives($param = '')
+	public static function archives($id_stream = '', $sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/archives/' . $param);
+		$id_stream = $id_stream !== '' ? $id_stream . '/': '';
+		$page = $page !== 1 ? $page . '/': '';
+		$sort_field = $sort_field !== '' ? $sort_field . '/' : '';
+		$sort_mode = $sort_mode !== '' ? $sort_mode . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/archives/' . $id_stream . $sort_field . $sort_mode . $page);
 	}
 
 	/**
 	 * @return Url
 	 */
-    public static function archive($id)
+	public static function archive($id)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/archive/' . $id);
 	}
@@ -149,8 +159,9 @@ class NewsletterUrlBuilder
 	/**
 	 * @return Url
 	 */
-    public static function home($page = '')
+	public static function home($page = 1)
 	{
+		$page = $page !== 1 ? $page . '/': '';
 		return DispatchManager::get_url(self::$dispatcher, '/' . $page);
 	}
 }
