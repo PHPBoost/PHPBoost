@@ -248,7 +248,7 @@ class CalendarService
 		(SELECT member_extended_fields.user_born AS start_date, member_extended_fields.user_born AS end_date, login AS title, 'BIRTHDAY' AS type, 0 AS id_category, '" . CalendarEventContent::YEARLY . "' AS repeat_type, 100 AS repeat_number
 		FROM " . DB_TABLE_MEMBER . " member
 		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " member_extended_fields ON member_extended_fields.user_id = member.user_id
-		WHERE member_extended_fields.user_born <> '' AND MONTH(FROM_UNIXTIME(member_extended_fields.user_born)) = :month)
+		WHERE member_extended_fields.user_born <> '' AND MONTH(FROM_UNIXTIME(member_extended_fields.user_born)) = :month AND :year > YEAR(FROM_UNIXTIME(member_extended_fields.user_born)))
 		UNION
 		" : "") . "(SELECT start_date, end_date, title, 'EVENT' AS type, id_category, repeat_type, repeat_number
 		FROM " . CalendarSetup::$calendar_events_table . " event
@@ -258,6 +258,7 @@ class CalendarService
 		AND id_category IN :authorized_categories)
 		ORDER BY start_date ASC", array(
 			'month' => $month,
+			'year' => $year,
 			'first_month_day' => mktime(0, 0, 0, $month, 1, $year),
 			'last_month_day' => mktime(23, 59, 59, $month, $month_days, $year),
 			'authorized_categories' => $authorized_categories
