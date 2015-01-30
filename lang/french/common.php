@@ -62,6 +62,7 @@ $lang['author'] = 'Auteur';
 $lang['size'] = 'Taille';
 $lang['unknown_size'] = 'Taille inconnue';
 
+$lang['items_number'] = 'Nombre d\'éléments';
 $lang['no_item_now'] = 'Aucun élément n\'est disponible pour le moment';
 
 //Position

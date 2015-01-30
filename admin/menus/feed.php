@@ -44,6 +44,7 @@ if ($action_post == 'save')
 
 	$menu_name = retrieve(POST, 'name', '', TSTRING_UNCHANGE);
 	$menu_url = retrieve(POST, 'feed_url', '', TSTRING_UNCHANGE);
+	$menu_items_number = retrieve(POST, 'items_number', 0, TSTRING_UNCHANGE);
 	$matches = array();
 	preg_match('`/rss/(.+)/([0-9]+)/(.+)/`', $menu_url, $matches);
 
@@ -54,10 +55,11 @@ if ($action_post == 'save')
 		$menu->set_module_id($matches[1]);
 		$menu->set_cat($matches[2]);
 		$menu->set_name($matches[3]);
+		$menu->set_number($menu_items_number);
 	}
 	else
 	{   // Add the new Menu
-		$menu = new FeedMenu($menu_name, $matches[1], $matches[2], $matches[3]);
+		$menu = new FeedMenu($menu_name, $matches[1], $matches[2], $matches[3], $menu_items_number);
 	}
 
 	if (!($menu instanceof FeedMenu))
@@ -91,6 +93,7 @@ $tpl->put_all(array(
 	'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 	'JL_REQUIRE_NAME' => TextHelper::to_js_string($LANG['require_name']),
 	'JL_REQUIRE_FEED' => TextHelper::to_js_string($LANG['choose_feed_in_list']),
+	'JL_REQUIRE_ITEMS_NUMBER' => TextHelper::to_js_string($LANG['require_items_number']),
 	'L_FEED' => $LANG['feed'],
 	'L_AVAILABLES_FEEDS' => $LANG['availables_feeds'],
 	'L_NAME' => $LANG['name'],
@@ -136,21 +139,23 @@ if ($edit)
 	$tpl->put_all(array(
 		'IDMENU' => $id,
 		'NAME' => $menu->get_title(),
+		'ITEMS_NUMBER' => $menu->get_number(),
 		'AUTH_MENUS' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, $menu->get_auth()),
-        'C_ENABLED' => $menu->is_enabled(),
-   	    'C_EDIT' => true,
+		'C_ENABLED' => $menu->is_enabled(),
+		'C_EDIT' => true,
 	));
 }
 else
 {
 	$tpl->put_all(array(
-   	    'C_NEW' => true,
-        'C_ENABLED' => true,
-        'AUTH_MENUS' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, array(), array(-1 => true, 0 => true, 1 => true, 2 => true))
+		'C_NEW' => true,
+		'C_ENABLED' => true,
+		'ITEMS_NUMBER' => 10,
+		'AUTH_MENUS' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, array(), array(-1 => true, 0 => true, 1 => true, 2 => true))
 	));
 	
-   // Create a new generic menu
-    $menu = new FeedMenu('', '', '');
+	// Create a new generic menu
+	$menu = new FeedMenu('', '', '');
 }
 
 function get_feeds($feed_cat, $module_id, $feed_type, $feed_url_edit = '', $level = 0)
