@@ -109,8 +109,27 @@ class NewsDisplayNewsTagController extends ModuleController
 				'L_COMMENTS' => CommentsService::get_number_and_lang_comments('news', $row['id']),
 				'NUMBER_COM' => !empty($row['number_comments']) ? $row['number_comments'] : 0
 			)));
+			$this->build_sources_view($news);
 		}
 		$result->dispose();
+	}
+	
+	private function build_sources_view(News $news)
+	{
+		$sources = $news->get_sources();
+		$nbr_sources = count($sources);
+		$this->tpl->put('news.C_SOURCES', $nbr_sources > 0);
+		
+		$i = 1;
+		foreach ($sources as $name => $url)
+		{	
+			$this->tpl->assign_block_vars('news.sources', array(
+				'C_SEPARATOR' => $i < $nbr_sources,
+				'NAME' => $name,
+				'URL' => $url,
+			));
+			$i++;
+		}
 	}
 	
 	private function get_keyword()
