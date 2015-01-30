@@ -117,7 +117,6 @@ $lang['labels.fields.version_fixed'] = 'Version corrigée';
 $lang['labels.fields.version_release_date'] = 'Date de parution';
 $lang['labels.page'] = 'Page';
 $lang['labels.color'] = 'Couleur';
-$lang['labels.number'] = 'Nombre de bugs';
 $lang['labels.number_fixed'] = 'Nombre de bugs corrigés';
 $lang['labels.number_in_progress'] = 'Nombre de bugs en cours de correction';
 $lang['labels.top_posters'] = 'Top posteurs';
@@ -137,8 +136,6 @@ $lang['labels.fix_bugs_per_version'] = 'Nombre de bugs corrigés par version';
 $lang['labels.not_yet_fixed'] = 'Pas encore corrigé';
 $lang['labels.alert_fix'] = 'Passer l\'alerte en réglé';
 $lang['labels.alert_delete'] = 'Supprimer l\'alerte';
-$lang['labels.matching_selected_filter'] = 'correspondants au filtre sélectionné';
-$lang['labels.matching_selected_filters'] = 'correspondants aux filtres sélectionnés';
 $lang['labels.save_filters'] = 'Sauvegarder les filtres';
 $lang['labels.version_name'] = 'Nom de la version';
 

@@ -63,7 +63,7 @@ function delete_filter(id) {
 	</thead>
 	<tfoot>
 		<tr>
-			<th colspan="{FILTERS_NUMBER}">{@labels.number} # IF C_FILTER #{@labels.matching_selected_filter} # ELSE ## IF C_FILTERS #{@labels.matching_selected_filters} # ENDIF ## ENDIF #: {BUGS_NUMBER}</th>
+			<th colspan="{FILTERS_NUMBER}">${LangLoader::get_message('items_number', 'common')} : {BUGS_NUMBER}</th>
 		</tr>
 	</tfoot>
 	<tbody>
