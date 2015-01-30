@@ -92,6 +92,11 @@
 							# ENDIF #
 							# END day #
 						</tr>
+						# IF C_DISPLAY_LEGEND #
+						<tr>
+							<td colspan="8" class="legend-line"># INCLUDE LEGEND #</td>
+						</tr>
+						# ENDIF #
 					</tbody>
 				</table>
 			</div>

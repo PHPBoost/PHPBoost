@@ -99,22 +99,10 @@ class CalendarAjaxCalendarController extends AbstractController
 			));
 		}
 		
-		$this->view->put_all(array(
-			'C_MINI_MODULE' => $this->is_mini_calendar(),
-			'DATE' => $array_l_month[$month - 1] . ' ' . $year,
-			'MINI_MODULE' => (int)$this->is_mini_calendar(),
-			'PREVIOUS_MONTH_TITLE' => ($month == 1) ? $array_l_month[11] . ' ' . ($year - 1) : $array_l_month[$month - 2] . ' ' . $year,
-			'PREVIOUS_YEAR' => $previous_year,
-			'PREVIOUS_MONTH' => $previous_month,
-			'NEXT_MONTH_TITLE' => ($month == 12) ? $array_l_month[0] . ' ' . ($year + 1) : $array_l_month[$month] . ' ' . $year,
-			'NEXT_YEAR' => $next_year,
-			'NEXT_MONTH' => $next_month,
-			'U_AJAX_CALENDAR' => CalendarUrlBuilder::ajax_month_calendar()->rel(),
-			'U_AJAX_EVENTS' => CalendarUrlBuilder::ajax_month_events()->rel()
-		));
-		
 		//Retrieve all the events of the selected month
 		$events = $month == date('n') && $year == date('Y') ? CalendarCurrentMonthEventsCache::load()->get_events() : CalendarService::get_all_current_month_events($month, $year, $month_days);
+		
+		$events_legends_list = array();
 		
 		foreach ($events as $event)
 		{
@@ -125,17 +113,58 @@ class CalendarAjaxCalendarController extends AbstractController
 			{
 				if (($event['type'] == 'EVENT' && $start_date->get_month() == $month && $start_date->get_year() == $year) || ($event['type'] == 'BIRTHDAY' && $start_date->get_month() == $month))
 				{
-					$title = isset($array_events[$j]['title']) ? $array_events[$j]['title']: '';
+					$title = isset($array_events[$j]['title']) ? $array_events[$j]['title'] : '';
 					$array_events[$j] = array(
 						'title' => $title . (!empty($title) ? '
 ' : '') . ($event['type'] != 'BIRTHDAY' ? ($j == $start_date->get_day() ? $start_date->get_hours() . 'h' . $start_date->get_minutes() . ' : ' : '') : LangLoader::get_message('calendar.labels.birthday_title', 'common', 'calendar') . ' ') . $event['title'],
 						'type' => $event['type'],
-						'color' => !empty($event['id_category']) ? $categories[$event['id_category']]->get_color() : '',
+						'color' => ($event['type'] == 'BIRTHDAY' ? $config->get_birthday_color() : ($event['id_category'] != Category::ROOT_CATEGORY && $categories[$event['id_category']]->get_color() ? $categories[$event['id_category']]->get_color() : $config->get_event_color())),
 						'id_category' => $event['id_category'],
 					);
+					
+					if ($event['type'] == 'BIRTHDAY')
+					{
+						$events_legends_list[$j] = array(
+							'name' => LangLoader::get_message('calendar.labels.birthday', 'common', 'calendar'),
+							'color' => $config->get_birthday_color()
+						);
+					}
+					else if ($event['type'] == 'EVENT' && $event['id_category'] == Category::ROOT_CATEGORY)
+					{
+						$events_legends_list[$j] = array(
+							'name' => LangLoader::get_message('calendar.titles.event', 'common', 'calendar'),
+							'color' => $config->get_event_color()
+						);
+					}
+					else
+					{
+						if (!isset($events_legends_list[$event['id_category']]))
+						{
+							$events_legends_list[$j] = array(
+								'name' => $categories[$event['id_category']]->get_name(),
+								'color' => $categories[$event['id_category']]->get_color()
+							);
+						}
+					}
 				}
 			}
 		}
+		
+		$this->view->put_all(array(
+			'C_MINI_MODULE' => $this->is_mini_calendar(),
+			'C_DISPLAY_LEGEND' => !empty($events_legends_list) && !$this->is_mini_calendar(),
+			'DATE' => $array_l_month[$month - 1] . ' ' . $year,
+			'MINI_MODULE' => (int)$this->is_mini_calendar(),
+			'PREVIOUS_MONTH_TITLE' => ($month == 1) ? $array_l_month[11] . ' ' . ($year - 1) : $array_l_month[$month - 2] . ' ' . $year,
+			'PREVIOUS_YEAR' => $previous_year,
+			'PREVIOUS_MONTH' => $previous_month,
+			'NEXT_MONTH_TITLE' => ($month == 12) ? $array_l_month[0] . ' ' . ($year + 1) : $array_l_month[$month] . ' ' . $year,
+			'NEXT_YEAR' => $next_year,
+			'NEXT_MONTH' => $next_month,
+			'LEGEND' => self::build_legend($events_legends_list),
+			'U_AJAX_CALENDAR' => CalendarUrlBuilder::ajax_month_calendar()->rel(),
+			'U_AJAX_EVENTS' => CalendarUrlBuilder::ajax_month_events()->rel()
+		));
 		
 		//First day of the month
 		$first_day = date('w', @mktime(1, 0, 0, $month, 1, $year)); 
@@ -165,7 +194,7 @@ class CalendarAjaxCalendarController extends AbstractController
 					{
 						$birthday_day = $array_events[$day]['type'] == 'BIRTHDAY';
 						$color = $array_events[$day]['color'];
-						$class = 'calendar-event';
+						$class = '';
 					}
 					else
 					{
@@ -196,12 +225,36 @@ class CalendarAjaxCalendarController extends AbstractController
 				'C_WEEK_LABEL' => ($i % 8) == 1,
 				'DAY' => $content,
 				'TITLE' => !empty($array_events[$today]) ? $array_events[$today]['title'] : '',
-				'COLOR' => !empty($color) ? $color : $config->get_birthday_color(),
+				'COLOR' => $color,
 				'CLASS' => $class,
 				'CHANGE_LINE' => (($i % 8) == 0 && $i != 56),
 				'U_DAY_EVENTS' => CalendarUrlBuilder::home($year, $month, $today, true)->rel()
 			));
 		}
+	}
+	
+	public static function build_legend($events_legends_list)
+	{
+		$legend_view = new FileTemplate('calendar/CalendarLegend.tpl');
+		
+		$displayed_color = array();
+		$number_elements = 0;
+		foreach ($events_legends_list as $legend)
+		{
+			$number_elements++;
+			
+			if (!in_array($legend['color'], $displayed_color))
+			{
+				$legend_view->assign_block_vars('legend', array(
+					'C_NEW_LINE' => $number_elements == 4,
+					'COLOR' => $legend['color'],
+					'NAME'  => $legend['name']
+				));
+				$displayed_color[] = $legend['color'];
+			}
+		}
+		
+		return $legend_view;
 	}
 	
 	private function init()
