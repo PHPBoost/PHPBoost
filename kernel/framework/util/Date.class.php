@@ -90,7 +90,7 @@ class Date
 	 * For instance $date = new Date(DATE_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND, 2009, 11, 09, 12, 34, 12);
 	 * 	</li>
 	 * 	<li>DATE_TIMESTAMP which builds a date from a UNIX timestamp.
-	 * For example $date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, time()); is equivalent to $date = new Date(Date::DATE_NOW);</li>
+	 * For example $date = new Date(time(), Timezone::SERVER_TIMEZONE); is equivalent to $date = new Date(Date::DATE_NOW);</li>
 	 * 	<li>DATE_FROM_STRING which decodes a date written in a string by matching a pattern you have to specify.
 	 * The pattern is easy to write: d for day, m for month and y for year and the separators have to be slashes only.
 	 * For instance, if your third parameter is '12/24/2009' and the fourth is 'm/d/y', it will be the december 24th of 2009.</li>

@@ -159,7 +159,7 @@ class AdminMaintainController extends AdminController
 	{
 		if ($this->maintain_type === null)
 		{
-			$maintenance_terminates_after_tomorrow = $this->maintenance_config->get_end_date()->is_posterior_to(new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, time() + 86400));
+			$maintenance_terminates_after_tomorrow = $this->maintenance_config->get_end_date()->is_posterior_to(new Date(time() + 86400, Timezone::SERVER_TIMEZONE));
 			
 			if ($this->maintenance_config->is_maintenance_enabled() && $this->maintenance_config->is_unlimited_maintenance())
 				$this->maintain_type = 'unlimited';
@@ -228,7 +228,7 @@ class AdminMaintainController extends AdminController
 		
 		if ($this->get_maintain_type() == 'until')
 		{
-			$maintain_until_date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $this->maintenance_config->get_end_date()->get_timestamp(Timezone::USER_TIMEZONE));
+			$maintain_until_date = new Date($this->maintenance_config->get_end_date()->get_timestamp(Timezone::USER_TIMEZONE), Timezone::SERVER_TIMEZONE);
 		}
 		
 		return $maintain_until_date;
