@@ -118,17 +118,20 @@ class NewsDisplayNewsTagController extends ModuleController
 	{
 		$sources = $news->get_sources();
 		$nbr_sources = count($sources);
-		$this->tpl->put('news.C_SOURCES', $nbr_sources > 0);
-		
-		$i = 1;
-		foreach ($sources as $name => $url)
-		{	
-			$this->tpl->assign_block_vars('news.sources', array(
-				'C_SEPARATOR' => $i < $nbr_sources,
-				'NAME' => $name,
-				'URL' => $url,
-			));
-			$i++;
+		if ($nbr_sources)
+		{
+			$this->tpl->put('news.C_SOURCES', $nbr_sources > 0);
+			
+			$i = 1;
+			foreach ($sources as $name => $url)
+			{	
+				$this->tpl->assign_block_vars('news.sources', array(
+					'C_SEPARATOR' => $i < $nbr_sources,
+					'NAME' => $name,
+					'URL' => $url,
+				));
+				$i++;
+			}
 		}
 	}
 	
