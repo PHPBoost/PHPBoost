@@ -105,9 +105,15 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
-		$fieldset->add_field(new FormFieldColorPicker('fixed_bug_color', $this->lang['config.fixed_bug_color_label'], $this->config->get_fixed_bug_color()));
+		$fieldset->add_field(new FormFieldColorPicker('fixed_bug_color', $this->lang['config.fixed_bug_color_label'], $this->config->get_fixed_bug_color(),
+			array(),
+			array(new FormFieldConstraintRegex('`^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$`i'))
+		));
 		
-		$fieldset->add_field(new FormFieldColorPicker('rejected_bug_color', $this->lang['config.rejected_bug_color_label'], $this->config->get_rejected_bug_color()));
+		$fieldset->add_field(new FormFieldColorPicker('rejected_bug_color', $this->lang['config.rejected_bug_color_label'], $this->config->get_rejected_bug_color(),
+			array(),
+			array(new FormFieldConstraintRegex('`^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$`i'))
+		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('roadmap_enabled', $this->lang['config.enable_roadmap'], $this->config->is_roadmap_enabled(),
 			array('description' => $this->lang['explain.roadmap'])

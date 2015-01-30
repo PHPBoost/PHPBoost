@@ -35,12 +35,12 @@ class BugtrackerFeedProvider implements FeedProvider
 		$list = new FeedsList();
 		
 		//unsolved bugs list
-		$unsolved = new FeedsCat('bugtracker', 0, LangLoader::get_message('titles.unsolved', 'common', 'bugtracker'));
-		$list->add_feed($unsolved, Feed::DEFAULT_FEED_NAME);
+		$cats_tree = new FeedsCat('bugtracker', 0, LangLoader::get_message('titles.unsolved', 'common', 'bugtracker'));
 		
 		//solved bugs list
-		$solved = new FeedsCat('bugtracker', 1, LangLoader::get_message('titles.solved', 'common', 'bugtracker'));
-		$list->add_feed($solved, Feed::DEFAULT_FEED_NAME);
+		$sub_tree = new FeedsCat('bugtracker', 1, LangLoader::get_message('titles.solved', 'common', 'bugtracker'));
+		$cats_tree->add_child($sub_tree);
+		$list->add_feed($cats_tree, Feed::DEFAULT_FEED_NAME);
 		
 		return $list;
 	}

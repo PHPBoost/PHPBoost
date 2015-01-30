@@ -137,8 +137,8 @@ class BugtrackerUrlBuilder
 		$version = $version !== 0 ? $version . '-' : '';
 		$version_name = $version_name !== null ? $version_name . '/' : '';
 		$status = $status !== null ? $status . '/' : '';
-		$sort_field = $sort_field !== self::DEFAULT_SORT_FIELD ? $sort_field . '/' : '';
-		$sort_mode = $sort_mode !== self::DEFAULT_SORT_MODE ? $sort_mode . '/' : '';
+		$sort_field = $sort_field !== '' ? $sort_field . '/' : '';
+		$sort_mode = $sort_mode !== '' ? $sort_mode . '/' : '';
 		$page = $page !== 1 ? $page . '/': '';
 		return DispatchManager::get_url(self::$dispatcher, '/roadmap/' . $version . $version_name . $status . $sort_field . $sort_mode . $page);
 	}
@@ -204,8 +204,8 @@ class BugtrackerUrlBuilder
 	 */
     public static function unsolved($sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1, $back_filter = null, $filter_id = 0)
 	{
-		$sort_field = $sort_field !== self::DEFAULT_SORT_FIELD ? $sort_field . '/' : '';
-		$sort_mode = $sort_mode !== self::DEFAULT_SORT_MODE ? $sort_mode . '/' : '';
+		$sort_field = $sort_field !== '' ? $sort_field . '/' : '';
+		$sort_mode = $sort_mode !== '' ? $sort_mode . '/' : '';
 		$page = $page !== 1 ? $page . '/' : '';
 		$back_filter = $back_filter !== null ? $back_filter . '/' : '';
 		$filter_id = $back_filter !== null && $filter_id !== 0 ? $filter_id . '/' : '';
@@ -228,8 +228,8 @@ class BugtrackerUrlBuilder
 	 */
     public static function solved($sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1, $back_filter = null, $filter_id = 0)
 	{
-		$sort_field = $sort_field !== self::DEFAULT_SORT_FIELD ? $sort_field . '/' : '';
-		$sort_mode = $sort_mode !== self::DEFAULT_SORT_MODE ? $sort_mode . '/' : '';
+		$sort_field = $sort_field !== '' ? $sort_field . '/' : '';
+		$sort_mode = $sort_mode !== '' ? $sort_mode . '/' : '';
 		$page = $page !== 1 ? $page . '/' : '';
 		$back_filter = $back_filter !== null ? $back_filter . '/' : '';
 		$filter_id = $back_filter !== null && $filter_id !== 0 ? $filter_id . '/' : '';
