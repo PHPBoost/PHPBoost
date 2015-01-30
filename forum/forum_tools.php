@@ -93,9 +93,7 @@ $vars_tpl = array(
 	'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 	'L_CONFIG' => $LANG['forum_config'],
 	'L_CONFIRM_READ_TOPICS' => $LANG['confirm_mark_as_read'],
-	'L_AUTH_ERROR' => LangLoader::get_message('error.auth', 'status-messages-common'),
-	'L_SEARCH' => $LANG['search'],
-	'L_ADVANCED_SEARCH' => $LANG['advanced_search']
+	'L_AUTH_ERROR' => LangLoader::get_message('error.auth', 'status-messages-common')
 );
 
 $tpl_top->put_all($vars_tpl);

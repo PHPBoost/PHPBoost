@@ -88,7 +88,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			{
 				if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM))
 				{
-					$Tpl->assign_block_vars('cats', array(
+					$tpl->assign_block_vars('cats', array(
 						'MARGIN' => ($key['level'] > 0) ? str_repeat('----------', $key['level']) : '----',
 						'ID' => $id,
 						'L_NAME' => $key['name'],

@@ -108,7 +108,6 @@ $LANG['contribution_alert_moderators_for_topics'] = 'thread not complying with t
 $LANG['title_forum'] = 'Forum';
 $LANG['title_topic'] = 'Threads';
 $LANG['title_post'] = 'Post';
-$LANG['title_search'] = 'Search';
 
 //Forum
 $LANG['forum_index'] = 'Index';
@@ -118,7 +117,6 @@ $LANG['subforum_s'] = 'Subforums';
 $LANG['topic'] = 'Thread';
 $LANG['topic_s'] = 'Threads';
 $LANG['author'] = 'Author';
-$LANG['advanced_search'] = 'Advanced search';
 $LANG['distributed'] = 'Distributed in';
 $LANG['mark_as_read'] = 'Mark all threads as read';
 $LANG['show_topic_track'] = 'Tracked threads';
@@ -171,11 +169,7 @@ $LANG['change_status_to_default'] = 'Set default status';
 $LANG['move_to'] = 'Move to...';
 
 //Recherche
-$LANG['search_forum'] = 'Search on the forum';
-$LANG['relevance'] = 'Relevance';
 $LANG['no_result'] = 'No result';
-$LANG['invalid_req'] = 'Invalid request';
-$LANG['keywords'] = 'Key Words (4 characters minimum)';
 $LANG['colorate_result'] = 'Color results';
 
 //Stats

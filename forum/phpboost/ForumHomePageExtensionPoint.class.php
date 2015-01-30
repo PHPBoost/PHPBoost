@@ -84,9 +84,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 			'L_CONFIG' => $LANG['forum_config'],
 			'L_CONFIRM_READ_TOPICS' => $LANG['confirm_mark_as_read'],
-			'L_AUTH_ERROR' => LangLoader::get_message('error.auth', 'status-messages-common'),
-			'L_SEARCH' => $LANG['search'],
-			'L_ADVANCED_SEARCH' => $LANG['advanced_search']
+			'L_AUTH_ERROR' => LangLoader::get_message('error.auth', 'status-messages-common')
 		);
 		
 		//Affichage des sous-catégories de la catégorie.
@@ -121,7 +119,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 
 		//On liste les catégories et sous-catégories.
 		$result = PersistenceContext::get_querier()->select("SELECT c.id AS cid, c.level, c.name, c.subname, c.url, c.nbr_msg, c.nbr_topic, c.status, c.last_topic_id, t.id AS tid,
-		t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.display_name, m.level as user_level, m.groups, v.last_view_id
+		t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.display_name as login, m.level as user_level, m.groups, v.last_view_id
 		FROM " . PREFIX . "forum_cats c
 		LEFT JOIN " . PREFIX . "forum_topics t ON t.id = c.last_topic_id
 		LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = :user_id AND v.idtopic = t.id
@@ -292,8 +290,6 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 			'C_TOTAL_POST' => true,
 			'U_ONCHANGE' => PATH_TO_ROOT ."/forum/" . url("index.php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
 			'U_ONCHANGE_CAT' => PATH_TO_ROOT ."/forum/" . url("/index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
-			'L_SEARCH' => $LANG['search'],
-			'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
 			'L_FORUM_INDEX' => $LANG['forum_index'],
 			'L_FORUM' => $LANG['forum'],
 			'L_TOPIC' => ($total_topic > 1) ? $LANG['topic_s'] : $LANG['topic'],

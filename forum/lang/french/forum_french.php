@@ -107,7 +107,6 @@ $LANG['contribution_alert_moderators_for_topics'] = 'Sujet non conforme : %s';
 $LANG['title_forum'] = 'Forum';
 $LANG['title_topic'] = 'Sujet';
 $LANG['title_post'] = 'Poster';
-$LANG['title_search'] = 'Chercher';
 
 //Forum
 $LANG['forum_index'] = 'Index';
@@ -117,7 +116,6 @@ $LANG['subforum_s'] = 'Sous-forums';
 $LANG['topic'] = 'Sujet';
 $LANG['topic_s'] = 'Sujets';
 $LANG['author'] = 'Auteur';
-$LANG['advanced_search'] = 'Recherche avancée';
 $LANG['distributed'] = 'Répartis en';
 $LANG['mark_as_read'] = 'Marquer comme lu';
 $LANG['show_topic_track'] = 'Sujets suivis';
@@ -170,11 +168,7 @@ $LANG['change_status_to_default'] = 'Mettre le statut par défaut';
 $LANG['move_to'] = 'Déplacer vers...';
 
 //Recherche
-$LANG['search_forum'] = 'Recherche sur le Forum';
-$LANG['relevance'] = 'Pertinence';
 $LANG['no_result'] = 'Aucun résultat';
-$LANG['invalid_req'] = 'Requête invalide';
-$LANG['keywords'] = 'Mots clés (4 caractères minimum)';
 $LANG['colorate_result'] = 'Colorer les résultats';
 
 //Stats

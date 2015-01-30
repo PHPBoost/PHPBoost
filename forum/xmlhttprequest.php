@@ -62,7 +62,7 @@ if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 		$contents = '';
 		//Requête pour compter le nombre de messages non lus.
 		$nbr_msg_not_read = 0;
-		$result = PersistenceContext::get_querier()->select("SELECT t.id AS tid, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.display_name, m.level as user_level, m.groups, v.last_view_id
+		$result = PersistenceContext::get_querier()->select("SELECT t.id AS tid, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.display_name as login, m.level as user_level, m.groups, v.last_view_id
 		FROM " . PREFIX . "forum_topics t
 		LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
 		LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = '" . AppContext::get_current_user()->get_id() . "'

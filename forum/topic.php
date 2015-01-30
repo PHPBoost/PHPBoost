@@ -202,7 +202,7 @@ $ranks_cache = ForumRanksCache::load()->get_ranks(); //Récupère les rangs en cac
 $quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 $i = 0;
 $j = 0;
-$result = PersistenceContext::get_querier()->select("SELECT msg.id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, m.user_id, m.groups, p.question, p.answers, p.voter_id, p.votes, p.type, m.display_name, m.level, m.email, m.show_email, m.registration_date AS registered, ext_field.user_avatar, m.posted_msg, ext_field.user_website, ext_field.user_sign, ext_field.user_msn, ext_field.user_yahoo, m.warning_percentage, m.delay_readonly, m.delay_banned, m2.display_name as login_edit, s.user_id AS connect, tr.id AS trackid, tr.pm as trackpm, tr.track AS track, tr.mail AS trackmail, msg.contents
+$result = PersistenceContext::get_querier()->select("SELECT msg.id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, m.user_id, p.question, p.answers, p.voter_id, p.votes, p.type, m.display_name as login, m.level, m.groups, m.email, m.show_email, m.registration_date AS registered, ext_field.user_avatar, m.posted_msg, ext_field.user_website, ext_field.user_sign, ext_field.user_msn, ext_field.user_yahoo, m.warning_percentage, m.delay_readonly, m.delay_banned, m2.display_name as login_edit, s.user_id AS connect, tr.id AS trackid, tr.pm as trackpm, tr.track AS track, tr.mail AS trackmail, msg.contents
 FROM " . PREFIX . "forum_msg msg
 LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = :idtopic
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
@@ -384,7 +384,7 @@ while ( $row = $result->fetch() )
 		'ID' => $row['id'],
 		'CLASS_COLOR' => ($j%2 == 0) ? '' : 2,
 		'FORUM_ONLINE_STATUT_USER' => !empty($row['connect']) ? 'online' : 'offline',
-		'FORUM_USER_LOGIN' => TextHelper::wordwrap_html($row['display_name'], 13),
+		'FORUM_USER_LOGIN' => TextHelper::wordwrap_html($row['login'], 13),
 		'FORUM_MSG_DATE' => $LANG['on'] . ' ' . Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 		'FORUM_MSG_CONTENTS' => FormatingHelper::second_parse($row['contents']),
 		'FORUM_USER_EDITOR_LOGIN' => $row['login_edit'],
@@ -403,7 +403,7 @@ while ( $row = $result->fetch() )
 		'USER_WARNING' => $row['warning_percentage'],
 		'L_FORUM_QUOTE_LAST_MSG' => ($quote_last_msg == 1 && $i == 0) ? $LANG['forum_quote_last_msg'] : '', //Reprise du dernier message de la page précédente.
 		'C_USER_ONLINE' => !empty($row['connect']),
-		'C_FORUM_USER_LOGIN' => !empty($row['display_name']),
+		'C_FORUM_USER_LOGIN' => !empty($row['login']),
 		'C_FORUM_MSG_EDIT' => $edit,
 		'C_FORUM_MSG_DEL' => $del,
 		'C_FORUM_MSG_DEL_MSG' => (!$first_message),

@@ -68,7 +68,7 @@ function forum_list_user_online($condition)
 		
 		if ($current_user->get_level() != User::VISITOR_LEVEL)
 		{
-			$group_color = User::get_group_color($current_user->get_groups(), $current_user->get_level());
+			$group_color = User::get_group_color($current_user->get_groups(), $current_user->get_level(), true);
 			switch ($current_user->get_level()) //Coloration du membre suivant son level d'autorisation. 
 			{
 				case 0:

@@ -68,8 +68,6 @@ $tpl = new FileTemplate('forum/forum_moderation_panel.tpl');
 
 $vars_tpl = array(
 	'FORUM_NAME' => $config->get_forum_name(),
-	'L_SEARCH' => $LANG['search'],
-	'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
 	'L_USERS_PUNISHMENT' => $LANG['punishment_management'],
 	'L_USERS_WARNING' => $LANG['warning_management'],
 	'L_ALERT_MANAGEMENT' => $LANG['alert_management'],
