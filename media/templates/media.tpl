@@ -81,9 +81,9 @@
 										{file.DESCRIPTION}
 										</div>
 									# ENDIF #
-									# IF A_BLOCK #
+									<div class="spacer">&nbsp;</div>
 									<div class="smaller">
-										{file.POSTER}
+										{L_BY} {file.POSTER}
 										<br />
 										{file.COUNT}
 										<br />
@@ -95,7 +95,6 @@
 										{L_NOTE} {file.NOTE}
 										# ENDIF #
 									</div>
-									# ENDIF #
 								</div>
 								<footer></footer>
 							</article>
