@@ -162,11 +162,11 @@ class Admin_forum
 		if ($confirm_delete) //Confirmation de suppression, on supprime dans la bdd et on rétabli l'arbre intervallaire.
 		{
 			$first_parent = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'id', 'WHERE id_left < :id_left AND id_right > :id_right ORDER BY id_left DESC', array('id_left' => $CAT_FORUM[$idcat]['id_left'], 'id_right' => $CAT_FORUM[$idcat]['id_right']));
-			$list_parent_cats = $this->get_parent_list($idcat); //Récupère la liste des parents de la catégorie.
+			$list_parent_cats = implode(',', $this->get_parent_list($idcat)); //Récupère la liste des parents de la catégorie.
 			
 			$nbr_del = $CAT_FORUM[$idcat]['id_right'] - $CAT_FORUM[$idcat]['id_left'] + 1;
 			if (!empty($list_parent_cats))
-				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right - '" . $nbr_del . "' WHERE id IN (" . $list_parent_cats . ")");
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right - " . $nbr_del . " WHERE id IN (" . $list_parent_cats . ")");
 
 			PersistenceContext::get_querier()->delete(PREFIX . 'forum_cats', 'WHERE id_left BETWEEN :id_left AND :id_right', array('id_left' => $CAT_FORUM[$idcat]['id_left'], 'id_right' => $CAT_FORUM[$idcat]['id_right']));
 			
@@ -334,13 +334,13 @@ class Admin_forum
 		if (!empty($list_parent_cats))
 			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right - '" . ( $nbr_cat*2) . "' WHERE id IN (" . $list_parent_cats . ")");
 		
-		//On r�duit la taille de l'arbre du nombre de forum supprim� � partir de la position de celui-ci.
+		//On r�duit la taille de l'arbre du nombre de forum supprié à partir de la position de celui-ci.
 		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left - '" . ($nbr_cat*2) . "', id_right = id_right - '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_FORUM[$id]['id_right'] . "'");
 		
 		########## Ajout ##########
-		if (!empty($to)) //Forum cible diff�rent de la racine.
+		if (!empty($to)) //Forum cible différent de la racine.
 		{
-			//On augmente la taille de l'arbre du nombre de forum supprim�s � partir de la position du forum cible.
+			//On augmente la taille de l'arbre du nombre de forum supprimés à partir de la position du forum cible.
 			$array_parents_cats = explode(', ', $list_parent_cats);
 			if ($CAT_FORUM[$id]['id_left'] > $CAT_FORUM[$to]['id_left'] && !in_array($to, $array_parents_cats)) //Direction forum source -> forum cible, et source non incluse dans la cible.
 			{	
@@ -379,21 +379,21 @@ class Admin_forum
 			//On modifie les bornes droites des parents de la cible.
 			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right + '" . ($nbr_cat*2) . "' WHERE " . $clause_parent_cats_to);
 			
-			//On met � jour le nouveau forum.
+			//On met à jour le nouveau forum.
 			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET level = level - '" . (($CAT_FORUM[$id]['level'] - $CAT_FORUM[$to]['level']) - 1) . "' WHERE id IN (" . $list_cats . ")");
 			
 			$Cache->Generate_module_file('forum');
 			$Cache->load('forum', RELOAD_CACHE); //Rechargement du cache
 			
-			$this->update_last_topic_id($id); //On met � jour l'id du dernier topic.
-			$this->update_last_topic_id($to); //On met � jour l'id du dernier topic.
+			$this->update_last_topic_id($id); //On met à jour l'id du dernier topic.
+			$this->update_last_topic_id($to); //On met à jour l'id du dernier topic.
 			
 			return true;
 		}
 		else //Racine
 		{
 			$max_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'MAX(id_right)', '');
-			//On replace les forums supprim�s virtuellement.
+			//On replace les forums supprimés virtuellement.
 			$array_sub_cats = explode(', ', $list_cats);
 			$z = 0;
 			$limit = $max_id + 1;
@@ -404,8 +404,8 @@ class Admin_forum
 				$id_right = $end - ($CAT_FORUM[$id]['id_right'] - $CAT_FORUM[$array_sub_cats[$z]]['id_right']);
 				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'");
 				$z++;
-			}		
-			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET level = level - '" . ($CAT_FORUM[$id]['level'] - $CAT_FORUM[$to]['level']) . "' WHERE id IN (" . $list_cats . ")");		
+			}
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET level = level - '" . ($CAT_FORUM[$id]['level'] - $CAT_FORUM[$to]['level']) . "' WHERE id IN (" . $list_cats . ")");
 		}
 		
 		$Cache->Generate_module_file('forum');
@@ -454,13 +454,13 @@ class Admin_forum
 		return $list_cats;
 	}
 	
-	//Met � jour chaque cat�gories quelque soit le niveau de profondeur de la cat�gorie source. Cas le plus favorable et courant seulement 3 requ�tes.
+	//Met à jour chaque catégorie quelque soit le niveau de profondeur de la catégorie source. Cas le plus favorable et courant seulement 3 requêtes.
 	function update_last_topic_id($idcat)
 	{
 		global $CAT_FORUM;
 		
 		$clause = "idcat = '" . $idcat . "'";
-		if (($CAT_FORUM[$idcat]['id_right'] - $CAT_FORUM[$idcat]['id_left']) > 1) //Sous forums pr�sents.
+		if (($CAT_FORUM[$idcat]['id_right'] - $CAT_FORUM[$idcat]['id_left']) > 1) //Sous forums présents.
 		{
 			//Sous forums du forum à mettre à jour.
 			$list_cats = '';
@@ -481,7 +481,7 @@ class Admin_forum
 		}
 		
 		//Récupération du timestamp du dernier message de la catégorie.
-		$last_timestamp = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'MAX(last_timestamp)', 'WHERE' . $clause);
+		$last_timestamp = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'MAX(last_timestamp)', 'WHERE ' . $clause);
 		$last_topic_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'id', 'WHERE last_timestamp = :timestamp', array('timestamp' => $last_timestamp));
 		if (!empty($last_topic_id))
 			PersistenceContext::get_querier()->update(PREFIX . 'forum_cats', array('last_topic_id' => $last_topic_id), 'WHERE id=:id', array('id' => $idcat));

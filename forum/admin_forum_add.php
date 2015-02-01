@@ -107,14 +107,14 @@ if (!empty($_POST['add'])) //Nouveau forum/catégorie.
 			}
 			$result->dispose();
 			$list_parent_cats = trim($list_parent_cats, ', ');
-						
+			
 			if (empty($list_parent_cats))
 				$clause_parent = $parent_category;
 			else
 				$clause_parent = $list_parent_cats;
 			
 			$id_left = $CAT_FORUM[$parent_category]['id_right'];
-			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right + 2 WHERE id " . (empty($list_parent_cats) ? "=" : "IN") . " :id_cat", array('id_cat' => $clause_parent));
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right + 2 WHERE id " . (empty($list_parent_cats) ? "= :id_cat" : "IN (:id_cat)"), array('id_cat' => $clause_parent));
 			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right + 2, id_left = id_left + 2 WHERE id_left > :id_left", array('id_left' => $id_left));
 			$level = $CAT_FORUM[$parent_category]['level'] + 1;
 
