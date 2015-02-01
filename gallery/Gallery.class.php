@@ -303,9 +303,9 @@ class Gallery
 			$result->dispose();
 			
 			if ($info_pics['aprob'])
-				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_aprob = nbr_pics_aprob - 1 WHERE id " . (empty($list_parent_cats_to) ? '= : id' : 'IN :ids_list'), array('id' => $info_pics['idcat'], 'ids_list' => $list_parent_cats_to));
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_aprob = nbr_pics_aprob - 1 WHERE id " . (empty($list_parent_cats_to) ? '= :id' : 'IN :ids_list'), array('id' => $info_pics['idcat'], 'ids_list' => $list_parent_cats_to));
 			else
-				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob - 1 WHERE id " . (empty($list_parent_cats_to) ? '= : id' : 'IN :ids_list'), array('id' => $info_pics['idcat'], 'ids_list' => $list_parent_cats_to));
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob - 1 WHERE id " . (empty($list_parent_cats_to) ? '= :id' : 'IN :ids_list'), array('id' => $info_pics['idcat'], 'ids_list' => $list_parent_cats_to));
 		}
 
 		//Suppression physique.
@@ -354,12 +354,12 @@ class Gallery
 		if ($aprob)
 		{
 			PersistenceContext::get_querier()->update(PREFIX . "gallery", array('aprob' => 0), 'WHERE id = :id', array('id' => $id_pics));
-			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob + 1, nbr_pics_aprob = nbr_pics_aprob - 1 WHERE id " . (empty($list_parent_cats_to) ? '= : id' : 'IN :ids_list'), array('id' => $idcat, 'ids_list' => $list_parent_cats_to));
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob + 1, nbr_pics_aprob = nbr_pics_aprob - 1 WHERE id " . (empty($list_parent_cats_to) ? '= :id' : 'IN :ids_list'), array('id' => $idcat, 'ids_list' => $list_parent_cats_to));
 		}
 		else
 		{
 			PersistenceContext::get_querier()->update(PREFIX . "gallery", array('aprob' => 1), 'WHERE id = :id', array('id' => $id_pics));
-			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob - 1, nbr_pics_aprob = nbr_pics_aprob + 1 WHERE id " . (empty($list_parent_cats_to) ? '= : id' : 'IN :ids_list'), array('id' => $idcat, 'ids_list' => $list_parent_cats_to));
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob - 1, nbr_pics_aprob = nbr_pics_aprob + 1 WHERE id " . (empty($list_parent_cats_to) ? '= :id' : 'IN :ids_list'), array('id' => $idcat, 'ids_list' => $list_parent_cats_to));
 		}
 		
 		return $aprob;
@@ -408,21 +408,16 @@ class Gallery
 		}
 		$result->dispose();
 		
-		if (empty($list_parent_cats_to))
-			$clause_parent_cats_to = " id = '" . $id_move . "'";
-		else
-			$clause_parent_cats_to = " id IN (" . $list_parent_cats_to . ")";
-		
 		$aprob = PersistenceContext::get_querier()->get_column_value(PREFIX . "gallery", 'aprob', "WHERE id = :id", array('id' => $id_pics));
 		if ($aprob)
 		{
-			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_aprob = nbr_pics_aprob - 1 WHERE id " . (empty($list_parent_cats) ? '= : id' : 'IN :ids_list'), array('id' => $idcat, 'ids_list' => $list_parent_cats));
-			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_aprob = nbr_pics_aprob + 1 WHERE id " . (empty($list_parent_cats_to) ? '= : id' : 'IN :ids_list'), array('id' => $id_move, 'ids_list' => $list_parent_cats_to));
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_aprob = nbr_pics_aprob - 1 WHERE id " . (empty($list_parent_cats) ? '= :id' : 'IN :ids_list'), array('id' => $idcat, 'ids_list' => $list_parent_cats));
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_aprob = nbr_pics_aprob + 1 WHERE id " . (empty($list_parent_cats_to) ? '= :id' : 'IN :ids_list'), array('id' => $id_move, 'ids_list' => $list_parent_cats_to));
 		}
 		else
 		{
-			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob - 1 WHERE id " . (empty($list_parent_cats) ? '= : id' : 'IN :ids_list'), array('id' => $idcat, 'ids_list' => $list_parent_cats));
-			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob + 1 WHERE id " . (empty($list_parent_cats_to) ? '= : id' : 'IN :ids_list'), array('id' => $id_move, 'ids_list' => $list_parent_cats_to));
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob - 1 WHERE id " . (empty($list_parent_cats) ? '= :id' : 'IN :ids_list'), array('id' => $idcat, 'ids_list' => $list_parent_cats));
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob + 1 WHERE id " . (empty($list_parent_cats_to) ? '= :id' : 'IN :ids_list'), array('id' => $id_move, 'ids_list' => $list_parent_cats_to));
 		}
 		
 		PersistenceContext::get_querier()->update(PREFIX . "gallery", array('idcat' => $id_move), 'WHERE id = :id', array('id' => $id_pics));

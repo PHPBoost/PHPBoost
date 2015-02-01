@@ -128,7 +128,7 @@ if (!empty($_POST['valid']) && !empty($id))
 			if (!empty($to)) //Galerie cible différent de la racine.
 			{
 				//On modifie les bornes droites et le nbr d'images des parents de la cible.
-				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET id_right = id_right + :new_number_cats, nbr_pics_aprob = nbr_pics_aprob + :number_pics_aprob, nbr_pics_unaprob = nbr_pics_unaprob + :number_pics_unaprob WHERE id " . (empty($list_parent_cats_to) ? '= : id' : 'IN :ids_list'), array('new_number_cats' => ($nbr_cat*2), 'number_pics_aprob' => NumberHelper::numeric($nbr_pics_aprob), 'number_pics_unaprob' => NumberHelper::numeric($nbr_pics_unaprob), 'id' => $to, 'ids_list' => $list_parent_cats_to));
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET id_right = id_right + :new_number_cats, nbr_pics_aprob = nbr_pics_aprob + :number_pics_aprob, nbr_pics_unaprob = nbr_pics_unaprob + :number_pics_unaprob WHERE id " . (empty($list_parent_cats_to) ? '= :id' : 'IN :ids_list'), array('new_number_cats' => ($nbr_cat*2), 'number_pics_aprob' => NumberHelper::numeric($nbr_pics_aprob), 'number_pics_unaprob' => NumberHelper::numeric($nbr_pics_unaprob), 'id' => $to, 'ids_list' => $list_parent_cats_to));
 				
 				//On augmente la taille de l'arbre du nombre de galeries supprimées à partir de la position de la galerie cible.
 				if ($CAT_GALLERY[$id]['id_left'] > $CAT_GALLERY[$to]['id_left'] ) //Direction galerie source -> galerie cible.
@@ -415,7 +415,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 						if (!empty($f_to)) //Galerie cible différent de la racine.
 						{
 							//On modifie les bornes droites et le nbr d'images des parents de la cible.
-							PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET id_right = id_right + :new_number_cats, nbr_pics_aprob = nbr_pics_aprob + :number_pics_aprob, nbr_pics_unaprob = nbr_pics_unaprob + :number_pics_unaprob WHERE id " . (empty($list_parent_cats_to) ? '= : id' : 'IN :ids_list'), array('new_number_cats' => ($nbr_sub_cat*2), 'number_pics_aprob' => NumberHelper::numeric($nbr_pics_aprob), 'number_pics_unaprob' => NumberHelper::numeric($nbr_pics_unaprob), 'id' => $to, 'ids_list' => $list_parent_cats_to));
+							PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET id_right = id_right + :new_number_cats, nbr_pics_aprob = nbr_pics_aprob + :number_pics_aprob, nbr_pics_unaprob = nbr_pics_unaprob + :number_pics_unaprob WHERE id " . (empty($list_parent_cats_to) ? '= :id' : 'IN :ids_list'), array('new_number_cats' => ($nbr_sub_cat*2), 'number_pics_aprob' => NumberHelper::numeric($nbr_pics_aprob), 'number_pics_unaprob' => NumberHelper::numeric($nbr_pics_unaprob), 'id' => $to, 'ids_list' => $list_parent_cats_to));
 							
 							//On augmente la taille de l'arbre du nombre de galeries supprimées à partir de la position de la galerie cible.
 							if ($CAT_GALLERY[$id]['id_left'] > $CAT_GALLERY[$to]['id_left'] ) //Direction galerie source -> galerie cible.
@@ -632,7 +632,7 @@ elseif (!empty($id) && !empty($move)) //Monter/descendre.
 		
 		########## Ajout ##########
 		//On modifie les bornes droites des parents de la cible.
-		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET id_right = id_right + :new_number_cats, nbr_pics_aprob = nbr_pics_aprob + :number_pics_aprob, nbr_pics_unaprob = nbr_pics_unaprob + :number_pics_unaprob WHERE id " . (empty($list_parent_cats_to) ? '= : id' : 'IN :ids_list'), array('new_number_cats' => ($nbr_cat*2), 'number_pics_aprob' => NumberHelper::numeric($nbr_pics_aprob), 'number_pics_unaprob' => NumberHelper::numeric($nbr_pics_unaprob), 'id' => $to, 'ids_list' => $list_parent_cats_to));
+		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET id_right = id_right + :new_number_cats, nbr_pics_aprob = nbr_pics_aprob + :number_pics_aprob, nbr_pics_unaprob = nbr_pics_unaprob + :number_pics_unaprob WHERE id " . (empty($list_parent_cats_to) ? '= :id' : 'IN :ids_list'), array('new_number_cats' => ($nbr_cat*2), 'number_pics_aprob' => NumberHelper::numeric($nbr_pics_aprob), 'number_pics_unaprob' => NumberHelper::numeric($nbr_pics_unaprob), 'id' => $to, 'ids_list' => $list_parent_cats_to));
 		
 		//On augmente la taille de l'arbre du nombre de galeries supprimées à partir de la position de la galerie cible.
 		if ($CAT_GALLERY[$id]['id_left'] > $CAT_GALLERY[$to]['id_left'] ) //Direction galerie source -> galerie cible.
@@ -664,7 +664,7 @@ elseif (!empty($id)) //Edition des catégories.
 	
 	$tpl = new FileTemplate('gallery/admin_gallery_cat_edit.tpl');
 	
-	$gallery_info = PersistenceContext::get_querier()->select_single_row(PREFIX . "gallery_cats", array("id_left", "id_right", "level", "name", "contents", "status", "aprob", "auth"), 'WHERE id=:id AND user_id <> -1', array('id' => $id));
+	$gallery_info = PersistenceContext::get_querier()->select_single_row(PREFIX . "gallery_cats", array("id_left", "id_right", "level", "name", "contents", "status", "aprob", "auth"), 'WHERE id=:id', array('id' => $id));
 	
 	if (!isset($CAT_GALLERY[$id]))
 		AppContext::get_response()->redirect('/gallery/admin_gallery_cat.php?error=unexist_cat');

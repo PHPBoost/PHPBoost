@@ -214,7 +214,7 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 				
 				########## Suppression ##########
 				//On supprime virtuellement (changement de signe des bornes) les enfants.
-				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET id_left = - id_left, id_right = - id_right WHERE id " . (empty($list_cats) ? '= : id' : 'IN :ids_list'), array('id' => $id, 'ids_list' => $list_cats));
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET id_left = - id_left, id_right = - id_right WHERE id " . (empty($list_cats) ? '= :id' : 'IN :ids_list'), array('id' => $id, 'ids_list' => $list_cats));
 				//On modifie les bornes droites des parents.
 				if (!empty($list_parent_cats))
 				{
@@ -226,7 +226,7 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 				
 				########## Ajout ##########
 				//On modifie les bornes droites des parents de la cible.
-				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET id_right = id_right + :new_number_cats, nbr_pics_aprob = nbr_pics_aprob + :number_pics_aprob, nbr_pics_unaprob = nbr_pics_unaprob + :number_pics_unaprob WHERE id " . (empty($list_parent_cats_to) ? '= : id' : 'IN :ids_list'), array('new_number_cats' => ($nbr_cat*2), 'number_pics_aprob' => $nbr_pics_aprob, 'number_pics_unaprob' => $nbr_pics_unaprob, 'id' => $to, 'ids_list' => $list_parent_cats_to));
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET id_right = id_right + :new_number_cats, nbr_pics_aprob = nbr_pics_aprob + :number_pics_aprob, nbr_pics_unaprob = nbr_pics_unaprob + :number_pics_unaprob WHERE id " . (empty($list_parent_cats_to) ? '= :id' : 'IN :ids_list'), array('new_number_cats' => ($nbr_cat*2), 'number_pics_aprob' => $nbr_pics_aprob, 'number_pics_unaprob' => $nbr_pics_unaprob, 'id' => $to, 'ids_list' => $list_parent_cats_to));
 				
 				//On augmente la taille de l'arbre du nombre de galeries supprimées à partir de la position de la galerie cible.
 				if ($CAT_GALLERY[$id]['id_left'] > $CAT_GALLERY[$to]['id_left'] ) //Direction galerie source -> galerie cible.

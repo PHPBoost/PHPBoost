@@ -227,7 +227,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			$result = $this->db_querier->select("SELECT gc.id, gc.name, gc.contents, gc.status, (gc.nbr_pics_aprob + gc.nbr_pics_unaprob) AS nbr_pics, gc.nbr_pics_unaprob, g.path
 			FROM " . PREFIX . "gallery_cats gc
 			LEFT JOIN " . PREFIX . "gallery g ON g.idcat = gc.id AND g.aprob = 1
-			WHERE " . (!empty($idcat) ? 'id_left > :id_left AND id_right < :id_right AND level = :level + 1' : 'level = 0') . " AND gc.aprob = 1 " . ($nbr_unauth_cats > 0 ? " AND gc.id NOT IN :ids_list" : '') . "
+			WHERE " . (!empty($g_idcat) ? 'id_left > :id_left AND id_right < :id_right AND level = :level + 1' : 'level = 0') . " AND gc.aprob = 1 " . ($nbr_unauth_cats > 0 ? " AND gc.id NOT IN :ids_list" : '') . "
 			GROUP BY gc.id
 			ORDER BY gc.id_left
 			LIMIT :number_items_per_page OFFSET :display_from", array(
