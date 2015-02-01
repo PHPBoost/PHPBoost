@@ -44,6 +44,8 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 	//Récupération du cache.
 	function get_cache()
 	{
+		global $MEDIA_LANG;
+		
 		require_once PATH_TO_ROOT . '/media/media_constant.php';
 
 		//Configuration
@@ -51,6 +53,7 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 		$config = array();
 		$config = unserialize($this->db_querier->get_column_value(DB_TABLE_CONFIGS, 'value', 'WHERE name = \'media\''));
 		$root_config = $config['root'];
+		$root_config['name'] = $MEDIA_LANG['media'];
 		unset($config['root']);
 
 		$string = 'global $MEDIA_CONFIG, $MEDIA_CATS;' . "\n\n" . '$MEDIA_CONFIG = $MEDIA_CATS = array();' . "\n\n";

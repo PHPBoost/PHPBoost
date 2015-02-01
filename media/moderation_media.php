@@ -36,6 +36,7 @@ if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL))
 
 require_once('media_begin.php');
 $media_categories = new MediaCats();
+$NUMBER_ELEMENTS_PER_PAGE = 25;
 
 $tpl = new FileTemplate('media/moderation_media.tpl');
 
@@ -173,7 +174,7 @@ else
 	
 	//On crée une pagination si le nombre de fichier est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
-	$pagination = new ModulePagination($page, $nbr_media, NUM_MODO_MEDIA);
+	$pagination = new ModulePagination($page, $nbr_media, $NUMBER_ELEMENTS_PER_PAGE);
 	$pagination->set_url(new Url('/media/moderation_media.php?p=%d'));
 
 	if ($pagination->current_page_is_empty() && $page > 1)

@@ -80,7 +80,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 					'WIDTH' => floor(100 / (float)$MEDIA_CONFIG['nbr_column']),
 					'SRC' => ($array['image'] == 'media.png' || $array['image'] == 'media_mini.png') ? PATH_TO_ROOT . '/media/' . $array['image'] : (!empty($array['image']) ? Url::to_rel($array['image']) : 'media_mini.png'),
 					'IMG_NAME' => addslashes($array['name']),
-					'NUM_MEDIA' => ($array['active'] & MEDIA_NBR) !== 0 ? sprintf(($array['num_media'] > 1 ? $MEDIA_LANG['num_medias'] : $MEDIA_LANG['num_media']), $array['num_media']) : '',
+					'NUM_MEDIA' => sprintf(($array['num_media'] > 1 ? $MEDIA_LANG['num_medias'] : $MEDIA_LANG['num_media']), $array['num_media']),
 					'U_CAT' => PATH_TO_ROOT . url('/media/media.php?cat=' . $id, '/media/media-0-' . $id . '+' . Url::encode_rewrite($array['name']) . '.php'),
 					'U_ADMIN_CAT' => PATH_TO_ROOT . url('/media/admin_media_cats.php?edit=' . $id)
 				));
@@ -170,11 +170,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 				'SELECTED_DESC' => $selected_fields['desc'],
 				'A_COM' => ($MEDIA_CATS[$id_cat]['active'] & MEDIA_DL_COM) !== 0,
 				'A_NOTE' => ($MEDIA_CATS[$id_cat]['active'] & MEDIA_DL_NOTE) !== 0,
-				'A_USER' => ($MEDIA_CATS[$id_cat]['active'] & MEDIA_DL_USER) !== 0,
-				'A_COUNTER' => ($MEDIA_CATS[$id_cat]['active'] & MEDIA_DL_COUNT) !== 0,
-				'A_DATE' => ($MEDIA_CATS[$id_cat]['active'] & MEDIA_DL_DATE) !== 0,
-				'A_DESC' => ($MEDIA_CATS[$id_cat]['active'] & MEDIA_DL_DESC) !== 0,
-				'A_BLOCK' => ($MEDIA_CATS[$id_cat]['active'] & (MEDIA_DL_DATE + MEDIA_DL_COUNT + MEDIA_DL_COM + MEDIA_DL_NOTE + MEDIA_DL_USER)) !== 0
+				'A_BLOCK' => ($MEDIA_CATS[$id_cat]['active'] & (MEDIA_DL_COM + MEDIA_DL_NOTE)) !== 0
 			));
 	
 			//On crée une pagination si le nombre de fichiers est trop important.

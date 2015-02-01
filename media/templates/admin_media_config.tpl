@@ -6,10 +6,6 @@
 				tinyMCE.triggerSave();
 			# ENDIF #
 			
-			if(document.getElementById('media_name').value == "") {
-				alert("{L_REQUIRE}{L_MODULE_NAME}");
-				return false;
-			}
 			if(document.getElementById('num_cols').value == "") {
 				alert("{L_REQUIRE}{L_NBR_COLS}");
 				return false;
@@ -41,12 +37,6 @@
 					<p class="center">{L_REQUIRE_FIELDS}</p>
 					<fieldset>
 						<legend>{L_CONFIG_GENERAL}</legend>
-						<div class="form-element">
-							<label for="media_name">* {L_MODULE_NAME} <span class="field-description">{L_MODULE_NAME_EXPLAIN}</span></label>
-							<div class="form-field">
-								<input type="text" size="65" maxlength="100" id="media_name" name="media_name" value="{MODULE_NAME}">
-							</div>
-						</div>
 						<div class="form-element-textarea">
 							<label for="contents" id="preview_description">{L_MODULE_DESC}</label>
 							{KERNEL_EDITOR}
@@ -96,34 +86,6 @@
 							<div class="form-field">
 								<label><input type="checkbox" name="activ[]" value="4" {NOTE_LIST}> {L_IN_LIST}</label>
 								<label><input type="checkbox" name="activ[]" value="8" {NOTE_MEDIA}> {L_IN_MEDIA}</label>
-							</div>
-						</div>
-						<div class="form-element">
-							<label for="activ_user">{L_DISPLAY_USER}</label>
-							<div class="form-field">
-								<label><input type="checkbox" name="activ[]" value="16" {USER_LIST}> {L_IN_LIST}</label>
-								<label><input type="checkbox" name="activ[]" value="32" {USER_MEDIA}> {L_IN_MEDIA}</label>
-							</div>
-						</div>
-						<div class="form-element">
-							<label for="activ_counter">{L_DISPLAY_COUNTER}</label>
-							<div class="form-field">
-								<label><input type="checkbox" name="activ[]" value="64" {COUNTER_LIST}> {L_IN_LIST}</label>
-								<label><input type="checkbox" name="activ[]" value="128" {COUNTER_MEDIA}> {L_IN_MEDIA}</label>
-							</div>
-						</div>
-						<div class="form-element">
-							<label for="activ_date">{L_DISPLAY_DATE}</label>
-							<div class="form-field">
-								<label><input type="checkbox" name="activ[]" value="256" {DATE_LIST}> {L_IN_LIST}</label>
-								<label><input type="checkbox" name="activ[]" value="512" {DATE_MEDIA}> {L_IN_MEDIA}</label>
-							</div>
-						</div>
-						<div class="form-element">
-							<label for="activ_desc">{L_DISPLAY_DESC}</label>
-							<div class="form-field">
-								<label><input type="checkbox" name="activ[]" value="1024" {DESC_LIST}> {L_IN_LIST}</label>
-								<label><input type="checkbox" name="activ[]" value="2048" {DESC_MEDIA}> {L_IN_MEDIA}</label>
 							</div>
 						</div>
 					</fieldset>

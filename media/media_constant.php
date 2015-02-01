@@ -46,18 +46,6 @@ define('MEDIA_DL_COM', 1); // Affiche au niveau de la liste des vidéos l'afficha
 define('MEDIA_DV_COM', 2); // Affiche au niveau de la vidéo l'affichage des commentaires.
 define('MEDIA_DL_NOTE', 4); // Affiche au niveau de la liste des vidéos l'affichage des notes.
 define('MEDIA_DV_NOTE', 8); // Affiche au niveau de la vidéo l'affichage des notes.
-define('MEDIA_DL_USER', 16); // Affiche au niveau de la liste des vidéos l'affichage du nom du posteur.
-define('MEDIA_DV_USER', 32); // Affiche au niveau de la vidéo l'affichage du nom du posteur.
-define('MEDIA_DL_COUNT', 64); // Affiche au niveau de la liste des vidéos l'affichage du compteur.
-define('MEDIA_DV_COUNT', 128); // Affiche au niveau de la vidéo l'affichage du compteur.
-define('MEDIA_DL_DATE', 256); // Affiche au niveau de la liste des vidéos l'affichage de la date d'ajout.
-define('MEDIA_DV_DATE', 512); // Affiche au niveau de la vidéo l'affichage de la date d'ajout.
-define('MEDIA_DL_DESC', 1024); // Affiche au niveau de la liste des vidéos l'affichage de la description de la vidéo.
-define('MEDIA_DV_DESC', 2048); // Affiche au niveau de la vidéo l'affichage de la date de la description de la vidéo.
-define('MEDIA_NBR', 4096); // Affiche le nombre de fichier dans la catégorie lors du listage des catégories.
-
-// Nombre de fichiers par page dans le panneau de modération.
-define('NUM_MODO_MEDIA', 25);
 
 // Type de fichier autorisés.
 $mime_type = array(

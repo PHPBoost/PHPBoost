@@ -76,29 +76,17 @@
 									</h1>
 								</header>
 								<div class="content">
-									# IF A_DESC #
 									# IF file.C_DESCRIPTION #
 										<div class="media-desc" style="margin-top:10px">
 										{file.DESCRIPTION}
 										</div>
 									# ENDIF #
-									# ELSE #
-										<br />
-									# ENDIF #
 									# IF A_BLOCK #
 									<div class="smaller">
-										# IF A_DATE #
-										{file.DATE}
-										<br />
-										# ENDIF #
-										# IF A_USER #
 										{file.POSTER}
 										<br />
-										# ENDIF #
-										# IF A_COUNTER #
 										{file.COUNT}
 										<br />
-										# ENDIF #
 										# IF A_COM #
 										{file.U_COM_LINK}
 										<br />
@@ -144,15 +132,9 @@
 				# IF C_DISPLAY #
 				<div class="options infos">
 					<h6>{L_MEDIA_INFOS}</h6>
-					# IF A_DATE #
 						<span class="text-strong">{L_DATE} : </span><span>{DATE}</span><br/>
-					# ENDIF #
-					# IF A_USER #
 						<span class="text-strong">{L_BY} : </span><span>{BY}</span><br/>
-					# ENDIF #
-					# IF A_COUNTER #
 						<span class="text-strong">{L_VIEWED} : </span><span>{HITS}</span><br/>
-					# ENDIF #
 					# IF A_NOTE #
 					<div class="center">
 						<span class="text-strong">{KERNEL_NOTATION}</span>
@@ -161,11 +143,9 @@
 				</div>
 				# ENDIF #
 				
-				# IF A_DESC #
 				<div class="media-desc">
 					{CONTENTS}
 				</div>
-				# ENDIF #
 				
 				<div class="media-content">
 					# INCLUDE media_format #
