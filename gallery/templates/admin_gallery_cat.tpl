@@ -250,7 +250,7 @@
 							<a href="gallery.php" class="gallery-link-cat">{L_ROOT}</a>
 							<div class="sortable-actions">
 								<div class="sortable-options">
-									<a href="admin_gallery_cat.php?root=1" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+									<a href="admin_gallery_cat.php?root=1" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
 								</div>
 							</div>
 						</div>
@@ -272,10 +272,10 @@
 									<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'down');" title="${LangLoader::get_message('position.move_down', 'common')}" class="fa fa-arrow-down"></a>
 								</div>
 								<div class="sortable-options">
-									<a href="admin_gallery_cat.php?id={list.ID}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+									<a href="admin_gallery_cat.php?id={list.ID}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
 								</div>
 								<div class="sortable-options">
-									<a href="admin_gallery_cat.php?del={list.ID}&amp;token={TOKEN}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+									<a href="admin_gallery_cat.php?del={list.ID}&amp;token={TOKEN}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 								</div>
 							</div>
 						</div>
