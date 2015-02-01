@@ -93,6 +93,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 			'C_CATEGORIES' => true,
 			'L_MODO_PANEL' => $LANG['modo_panel'],
 			'L_UNAPROBED' => $MEDIA_LANG['unaprobed_media_short'],
+			'L_BY' => $MEDIA_LANG['media_added_by'],
 			'TITLE' => $MEDIA_CATS[$id_cat]['name'],
 			'C_CAT' => ($id_cat <> 0),
 			'C_ADMIN' => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
@@ -169,8 +170,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 				'SELECTED_ASC' => $selected_fields['asc'],
 				'SELECTED_DESC' => $selected_fields['desc'],
 				'A_COM' => ($MEDIA_CATS[$id_cat]['active'] & MEDIA_DL_COM) !== 0,
-				'A_NOTE' => ($MEDIA_CATS[$id_cat]['active'] & MEDIA_DL_NOTE) !== 0,
-				'A_BLOCK' => ($MEDIA_CATS[$id_cat]['active'] & (MEDIA_DL_COM + MEDIA_DL_NOTE)) !== 0
+				'A_NOTE' => ($MEDIA_CATS[$id_cat]['active'] & MEDIA_DL_NOTE) !== 0
 			));
 	
 			//On crée une pagination si le nombre de fichiers est trop important.
