@@ -117,13 +117,9 @@ elseif ($id_media > 0)
 		'U_EDIT_MEDIA' => url('media_action.php?edit=' . $id_media),
 		'U_DELETE_MEDIA' => url('media_action.php?del=' . $id_media . '&amp;token=' . AppContext::get_session()->get_token()),
 		'U_POPUP_MEDIA' => url('media_popup.php?id=' . $id_media),
-		'C_DISPLAY' => (($MEDIA_CATS[$media['idcat']]['active'] & MEDIA_DV_DATE) !== 0 || ($MEDIA_CATS[$media['idcat']]['active'] & MEDIA_DV_USER) !== 0 || ($MEDIA_CATS[$media['idcat']]['active'] & MEDIA_DV_COUNT) !== 0 || ($MEDIA_CATS[$media['idcat']]['active'] & MEDIA_DV_NOTE) !== 0),
+		'C_DISPLAY' => ($MEDIA_CATS[$media['idcat']]['active'] & MEDIA_DV_NOTE) !== 0,
 		'A_COM' => ($MEDIA_CATS[$media['idcat']]['active'] & MEDIA_DV_COM) !== 0,
-		'A_NOTE' => ($MEDIA_CATS[$media['idcat']]['active'] & MEDIA_DV_NOTE) !== 0,
-		'A_USER' => ($MEDIA_CATS[$media['idcat']]['active'] & MEDIA_DV_USER) !== 0,
-		'A_COUNTER' => ($MEDIA_CATS[$media['idcat']]['active'] & MEDIA_DV_COUNT) !== 0,
-		'A_DATE' => ($MEDIA_CATS[$media['idcat']]['active'] & MEDIA_DV_DATE) !== 0,
-		'A_DESC' => ($MEDIA_CATS[$media['idcat']]['active'] & MEDIA_DV_DESC) !== 0,
+		'A_NOTE' => ($MEDIA_CATS[$media['idcat']]['active'] & MEDIA_DV_NOTE) !== 0
 	));
 	
 	if (empty($mime_type_tpl[$media['mime_type']]))
