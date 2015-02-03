@@ -192,7 +192,9 @@ class AdminThemesNotInstalledListController extends AdminController
 						if ($upload->get_extension() == 'gzip')
 						{
 							include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pcltar.lib.php');
-							PclTarExtract($upload->get_filename(), $folder_phpboost_themes);
+							$extracted = PclTarExtract($upload->get_filename(), $folder_phpboost_themes);
+							
+							$theme_id = !empty($extracted[0]) ? $extracted[0] : $uploaded_file->get_name_without_extension();
 							
 							$uploaded_file = new File($archive);
 							$uploaded_file->delete();
@@ -201,20 +203,13 @@ class AdminThemesNotInstalledListController extends AdminController
 						{
 							include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pclzip.lib.php');
 							$zip = new PclZip($archive);
-							$zip->extract(PCLZIP_OPT_PATH, $folder_phpboost_themes, PCLZIP_OPT_SET_CHMOD, 0755);
+							$extracted = $zip->extract(PCLZIP_OPT_PATH, $folder_phpboost_themes, PCLZIP_OPT_SET_CHMOD, 0755);
+							
+							$theme_id = !empty($extracted[0]) ? $extracted[0] : $uploaded_file->get_name_without_extension();
 							
 							$uploaded_file = new File($archive);
 							$uploaded_file->delete();
 						}
-						
-						$theme_folder = new Folder($folder_phpboost_themes . '/' . $uploaded_file->get_name_without_extension());
-						if (!$theme_folder->exists())
-						{
-							$templates_folder = new Folder($folder_phpboost_themes);
-							$theme_id = $templates_folder->get_most_recent_folder();
-						}
-						else
-							$theme_id = $uploaded_file->get_name_without_extension();
 						
 						$this->install_theme($theme_id, array('r-1' => 1, 'r0' => 1, 'r1' => 1));
 					}

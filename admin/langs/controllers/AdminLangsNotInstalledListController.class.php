@@ -181,7 +181,9 @@ class AdminLangsNotInstalledListController extends AdminController
 						if ($upload->get_extension() == 'gzip')
 						{
 							include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pcltar.lib.php');
-							PclTarExtract($upload->get_filename(), $folder_phpboost_langs);
+							$extracted = PclTarExtract($upload->get_filename(), $folder_phpboost_langs);
+							
+							$lang_id = !empty($extracted[0]) ? $extracted[0] : $uploaded_file->get_name_without_extension();
 							
 							$file = new File($archive);
 							$file->delete();
@@ -190,20 +192,13 @@ class AdminLangsNotInstalledListController extends AdminController
 						{
 							include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pclzip.lib.php');
 							$zip = new PclZip($archive);
-							$zip->extract(PCLZIP_OPT_PATH, $folder_phpboost_langs, PCLZIP_OPT_SET_CHMOD, 0755);
+							$extracted = $zip->extract(PCLZIP_OPT_PATH, $folder_phpboost_langs, PCLZIP_OPT_SET_CHMOD, 0755);
+							
+							$lang_id = !empty($extracted[0]) ? $extracted[0] : $uploaded_file->get_name_without_extension();
 							
 							$file = new File($archive);
 							$file->delete();
 						}
-						
-						$lang_folder = new Folder($folder_phpboost_langs . '/' . $uploaded_file->get_name_without_extension());
-						if (!$lang_folder->exists())
-						{
-							$langs_folder = new Folder($folder_phpboost_langs);
-							$lang_id = $langs_folder->get_most_recent_folder();
-						}
-						else
-							$lang_id = $uploaded_file->get_name_without_extension();
 						
 						$this->install_lang($lang_id, array('r-1' => 1, 'r0' => 1, 'r1' => 1));
 					}

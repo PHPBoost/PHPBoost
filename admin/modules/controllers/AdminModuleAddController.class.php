@@ -195,7 +195,9 @@ class AdminModuleAddController extends AdminController
 						if ($upload->get_extension() == 'gzip')
 						{
 							include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pcltar.lib.php');
-							PclTarExtract($upload->get_filename(), $folder_phpboost_modules);
+							$extracted = PclTarExtract($upload->get_filename(), $folder_phpboost_modules);
+							
+							$module_id = !empty($extracted[0]) ? $extracted[0] : $uploaded_file->get_name_without_extension();
 							
 							$file = new File($archive_path);
 							$file->delete();
@@ -204,20 +206,13 @@ class AdminModuleAddController extends AdminController
 						{
 							include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pclzip.lib.php');
 							$zip = new PclZip($archive_path);
-							$zip->extract(PCLZIP_OPT_PATH, $folder_phpboost_modules, PCLZIP_OPT_SET_CHMOD, 0755);
+							$extracted = $zip->extract(PCLZIP_OPT_PATH, $folder_phpboost_modules, PCLZIP_OPT_SET_CHMOD, 0755);
+							
+							$module_id = !empty($extracted[0]) ? $extracted[0] : $uploaded_file->get_name_without_extension();
 							
 							$file = new File($archive_path);
 							$file->delete();
 						}
-						
-						$module_folder = new Folder($folder_phpboost_modules . '/' . $uploaded_file->get_name_without_extension());
-						if (!$module_folder->exists())
-						{
-							$modules_folder = new Folder($folder_phpboost_modules);
-							$module_id = $modules_folder->get_most_recent_folder();
-						}
-						else
-							$module_id = $uploaded_file->get_name_without_extension();
 						
 						$this->install_module($module_id, true);
 					}

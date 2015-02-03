@@ -229,27 +229,5 @@ class Folder extends FileSystemElement
 		$folder_infos = stat($this->get_path());
 		return $folder_infos['mtime'];
 	}
-	
-	/**
-	 * @desc Returns the last modified folder name contained in this folder.
-	 * @return string The last modified folder name.
-	 */
-	function get_most_recent_folder()
-	{
-		$most_recent_folder_mtime = 0;
-		$most_recent_folder_name = '';
-		
-		foreach ($this->get_folders() as $folder)
-		{
-			$last_modified = $folder->get_last_modification_date();
-			if ($last_modified > $most_recent_folder_mtime)
-			{
-				$most_recent_folder_mtime = $last_modified;
-				$most_recent_folder_name = $folder->get_name();
-			}
-		}
-		
-		return $most_recent_folder_name;
-	}
 }
 ?>
