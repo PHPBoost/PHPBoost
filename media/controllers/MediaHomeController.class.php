@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                               admin_media_config.php
+ *                         MediaHomeController.class.php
  *                            -------------------
- *   begin                : March 03, 2008
- *   copyright         	  : (C) 2008 Gsgsd
- *   email                : gsetgsd@hotmail.fr
+ *   begin                : February 4, 2015
+ *   copyright            : (C) 2015 Julien BRISWALTER
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -25,20 +25,11 @@
  *
  ###################################################*/
 
-if ( !defined('PHPBOOST') ) 
+class MediaHomeController extends ModuleController
 {
-	exit;
+	public function execute(HTTPRequestCustom $request)
+	{
+		AppContext::get_response()->redirect('/media/media.php');
+	}
 }
-
-$menu_tpl = new FileTemplate('media/admin_media_menu.tpl');
-
-$menu_tpl->Assign_vars(array(
-	'L_MANAGEMENT_MEDIA' => $MEDIA_LANG['management_media'],
-	'L_CONFIGURATION' => $MEDIA_LANG['configuration'],
-	'L_MANAGEMENT_CAT' => $MEDIA_LANG['management_cat'],
-	'L_ADD_CAT' => $MEDIA_LANG['add_cat'],
-	'L_LIST_MEDIA' => $MEDIA_LANG['list_media'],
-	'L_ADD_MEDIA' => $MEDIA_LANG['add_media']
-));
-
 ?>

@@ -16,8 +16,8 @@
 						# START row #
 							# START row.list_cats #
 								<div style="float:left;width:{row.list_cats.WIDTH}%;text-align:center;margin:20px 0px;">
-									<a href="{row.list_cats.U_CAT}" title="{row.list_cats.IMG_NAME}">
-										<img src="{row.list_cats.SRC}" alt="{row.list_cats.IMG_NAME}" />
+									<a href="{row.list_cats.U_CAT}" title="{row.list_cats.NAME}">
+										<img src="{row.list_cats.SRC}" alt="{row.list_cats.NAME}" />
 									</a>
 									<br />
 									<a href="{row.list_cats.U_CAT}">{row.list_cats.NAME}</a>
@@ -87,11 +87,11 @@
 										<br />
 										{file.COUNT}
 										<br />
-										# IF A_COM #
+										# IF C_DISPLAY_COMMENTS #
 										{file.U_COM_LINK}
 										<br />
 										# ENDIF #
-										# IF A_NOTE #
+										# IF C_DISPLAY_NOTATION #
 										{L_NOTE} {file.NOTE}
 										# ENDIF #
 									</div>
@@ -101,8 +101,8 @@
 						# END file #
 					# ENDIF #
 	
-					# IF C_NO_FILE #
-						<div class="notice">{L_NO_FILE_THIS_CATEGORY}</div>
+					# IF C_DISPLAY_NO_FILE_MSG #
+						<div class="notice">${LangLoader::get_message('no_item_now', 'common')}</div>
 					# ENDIF #
 				</div>
 				<footer># IF C_PAGINATION #<span class="center"># INCLUDE PAGINATION #</span># ENDIF #</footer>
@@ -115,7 +115,7 @@
 				<h1>
 					{NAME} 
 					<span class="actions">
-						# IF A_COM #
+						# IF C_DISPLAY_COMMENTS #
 							<a href="{U_COM}"><i class="fa fa-comments-o"></i> {L_COM}</a>
 						# ENDIF #
 						# IF C_MODO #
@@ -128,19 +128,17 @@
 			</header>
 			<div class="content">
 			
-				# IF C_DISPLAY #
 				<div class="options infos">
 					<h6>{L_MEDIA_INFOS}</h6>
 						<span class="text-strong">{L_DATE} : </span><span>{DATE}</span><br/>
 						<span class="text-strong">{L_BY} : </span><span>{BY}</span><br/>
 						<span class="text-strong">{L_VIEWED} : </span><span>{HITS}</span><br/>
-					# IF A_NOTE #
+					# IF C_DISPLAY_NOTATION #
 					<div class="center">
 						<span class="text-strong">{KERNEL_NOTATION}</span>
 					</div>
 					# ENDIF #
 				</div>
-				# ENDIF #
 				
 				<div class="media-desc">
 					{CONTENTS}

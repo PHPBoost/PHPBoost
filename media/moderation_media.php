@@ -28,19 +28,18 @@
 
 require_once('../kernel/begin.php');
 
-if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL))
+if (!MediaAuthorizationsService::check_authorizations()->moderation())
 {
 	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
 }
 
 require_once('media_begin.php');
-$media_categories = new MediaCats();
 $NUMBER_ELEMENTS_PER_PAGE = 25;
 
 $tpl = new FileTemplate('media/moderation_media.tpl');
 
-$Bread_crumb->add($MEDIA_CATS[0]['name'], url('media.php'));
+$Bread_crumb->add(LangLoader::get_message('module_title', 'common', 'media'), url('media.php'));
 $Bread_crumb->add($LANG['modo_panel'], url('moderation_media.php'));
 
 define('TITLE', $LANG['modo_panel']);
@@ -110,9 +109,7 @@ if (!empty($_POST['submit']))
 		}
 
 		// Feeds Regeneration
-		
 		Feed::clear_cache('media');
-		$media_categories->recount_media_per_cat();
 
 		AppContext::get_response()->redirect(url('moderation_media.php'));
 	}
@@ -121,20 +118,12 @@ if (!empty($_POST['submit']))
 		AppContext::get_response()->redirect(url('moderation_media.php'));
 	}
 }
-elseif (!empty($_GET['recount']))
-{
-	// Feeds Regeneration
-	
-	Feed::clear_cache('media');
-	$media_categories->recount_media_per_cat();
-	
-	AppContext::get_response()->redirect(url('moderation_media.php'));	
-}
 else
 {
 	// Filtre pour le panneau de modération.
-	$array_cats = $js_array = array();
-
+	$js_array = array();
+	$authorized_categories = MediaService::get_authorized_categories(!empty($cat) ? $cat : Category::ROOT_CATEGORY);
+	
 	if (!empty($_POST['filter']))
 	{
 		$state = retrieve(POST, 'state', 'all', TSTRING);
@@ -157,20 +146,17 @@ else
 		{
 			$db_where = null;
 		}
-		
-		if ($sub_cats)
-		{
-			$media_categories->build_children_id_list($cat, $array_cats, RECURSIVE_EXPLORATION, ADD_THIS_CATEGORY_IN_LIST, MEDIA_AUTH_READ);
-		}
 	}
 	else
 	{
 		$cat = 0;
-		$db_where = $sub_cats = null;
-		$media_categories->build_children_id_list(0, $array_cats, RECURSIVE_EXPLORATION, ADD_THIS_CATEGORY_IN_LIST, MEDIA_AUTH_READ);
+		$db_where = null;
+		$sub_cats = true;
 	}
 	
-	$nbr_media = PersistenceContext::get_querier()->count(PREFIX . "media", 'WHERE ' . (!empty($array_cats) ? 'idcat IN :array_cats' : 'idcat = :idcat') . (is_null($db_where) ? '' : ' AND infos = :infos'), array('array_cats' => $array_cats, 'idcat' => (!empty($cat) ? $cat : 0), 'infos' => $db_where));
+	$nbr_media = PersistenceContext::get_querier()->count(PREFIX . "media", 'WHERE ' . ($sub_cats && !empty($authorized_categories) ? 'idcat IN :authorized_categories' : 'idcat = :idcat') . (is_null($db_where) ? '' : ' AND infos = :infos'), array('authorized_categories' => $authorized_categories, 'idcat' => (!empty($cat) ? $cat : 0), 'infos' => $db_where));
+	
+	$categories_cache = MediaService::get_categories_manager()->get_categories_cache();
 	
 	//On crée une pagination si le nombre de fichier est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
@@ -182,13 +168,14 @@ else
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-
-	$result = PersistenceContext::get_querier()->select("SELECT *
-		FROM " . PREFIX . "media
-		WHERE " . (!empty($array_cats) ? 'idcat IN :array_cats' : 'idcat = :idcat') . (is_null($db_where) ? '' : ' AND infos = :infos') . "
+	
+	$result = PersistenceContext::get_querier()->select("SELECT media.*, media_cats.name AS cat_name
+		FROM " . MediaSetup::$media_table . " media
+		LEFT JOIN " . MediaSetup::$media_cats_table . " media_cats ON media_cats.id = media.idcat
+		WHERE " . ($sub_cats && !empty($authorized_categories) ? 'idcat IN :authorized_categories' : 'idcat = :idcat') . (is_null($db_where) ? '' : ' AND infos = :infos') . "
 		ORDER BY infos ASC, timestamp DESC
 		LIMIT :number_items_per_page OFFSET :display_from", array(
-			'array_cats' => $array_cats,
+			'authorized_categories' => $authorized_categories,
 			'idcat' => (!empty($cat) ? $cat : 0),
 			'infos' => $db_where,
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
@@ -204,7 +191,7 @@ else
 			'NAME' => $row['name'],
 			'U_FILE' => url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $row['idcat'] . '+' . Url::encode_rewrite($row['name']) . '.php'),
 			'U_EDIT' => url('media_action.php?edit=' . $row['id']),
-			'CAT' => !empty($MEDIA_CATS[$row['idcat']]) ? $MEDIA_CATS[$row['idcat']]['name'] : $LANG['unknown'],
+			'CAT' => $categories_cache->category_exists($row['idcat']) ? $row['cat_name'] : $LANG['unknown'],
 			'U_CAT' => url('media.php?cat=' . $row['idcat']),
 			'COLOR' => $row['infos'] == MEDIA_STATUS_UNVISIBLE ? '#FFEE99' : ($row['infos'] == MEDIA_STATUS_APROBED ? '#CCFFCC' : '#FFCCCC'),
 			'SHOW' => $row['infos'] == MEDIA_STATUS_APROBED ? ' checked="checked"' : '',
@@ -213,7 +200,11 @@ else
 		));
 	}
 	$result->dispose();
-
+	
+	$search_category_children_options = new SearchCategoryChildrensOptions();
+	$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
+	$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
+	
 	$tpl->put_all(array(
 		'C_DISPLAY' => true,
 		'C_PAGINATION' => $pagination->has_several_pages(),
@@ -228,16 +219,14 @@ else
 		'L_FUNAPROBED' => $MEDIA_LANG['unaprobed'],
 		'SELECTED_UNAPROBED' => $db_where === MEDIA_STATUS_UNAPROBED ? ' selected="selected"' : '',
 		'L_CATEGORIES' => $MEDIA_LANG['from_cats'],
-		'CATEGORIES_TREE' => $media_categories->build_select_form($cat, 'idcat', 'idcat', 0, MEDIA_AUTH_READ, $MEDIA_CATS[$cat]['auth']),
+		'CATEGORIES_TREE' => MediaService::get_categories_manager()->get_select_categories_form_field('idcat', LangLoader::get_message('form.category', 'common'), $cat, $search_category_children_options)->display()->render(),
 		'L_INCLUDE_SUB_CATS' => $MEDIA_LANG['include_sub_cats'],
 		'SUB_CATS' => is_null($sub_cats) ? ' checked="checked"' : ($sub_cats ? ' checked="checked"' : ''),
 		'L_MODO_PANEL' => $LANG['modo_panel'],
 		'L_NAME' => $LANG['name'],
-		'L_CATEGORY' => $LANG['category'],
 		'L_VISIBLE' => $MEDIA_LANG['show_media_short'],
 		'L_UNVISIBLE' => $MEDIA_LANG['hide_media_short'],
 		'L_UNAPROBED' => $MEDIA_LANG['unaprobed_media_short'],
-		'L_DELETE' => LangLoader::get_message('delete', 'common'),
 		'C_NO_MODERATION' => $nbr_media > 0 ? 0 : 1,
 		'L_NO_MODERATION' => $MEDIA_LANG['no_media_moderate'],
 		'L_CONFIRM_DELETE_ALL' => str_replace('\'', '\\\'', $MEDIA_LANG['confirm_delete_media_all']),
@@ -248,8 +237,6 @@ else
 		'PAGINATION' => $pagination->display(),
 		'L_SUBMIT' => $LANG['submit'],
 		'L_RESET' => $LANG['reset'],
-		'C_ADMIN' => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
-		'L_RECOUNT_MEDIA' => $MEDIA_LANG['recount_per_cat'],
 		'JS_ARRAY' => '"' . implode('", "', $js_array) . '"'
 	));
 }

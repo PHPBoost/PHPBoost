@@ -31,29 +31,24 @@ if (defined('PHPBOOST') !== true)
 	exit;
 }
 
-$Cache->load('media');
 load_module_lang('media');
 
 $id_media = retrieve(GET, 'id', 0);
 $id_cat = retrieve(GET, 'cat', 0);
-$level = array('', ' class="modo"', ' class="admin"');
 
 require_once('media_constant.php');
 
 function bread_crumb($id)
 {
-	global $Bread_crumb, $MEDIA_CATS;
-
-	$id_parent = $MEDIA_CATS[$id]['id_parent'];
-	$Bread_crumb->add($MEDIA_CATS[$id]['name'], url('media.php?cat=' . $id, 'media-0-' . $id . '+' . Url::encode_rewrite($MEDIA_CATS[$id]['name']) . '.php'));
-
-	while ($id_parent >= 0)
+	global $Bread_crumb;
+	$Bread_crumb->add(LangLoader::get_message('module_title', 'common', 'media'), MediaUrlBuilder::home());
+	
+	$categories = array_reverse(MediaService::get_categories_manager()->get_parents($id, true));
+	foreach ($categories as $category)
 	{
-		$Bread_crumb->add($MEDIA_CATS[$id_parent]['name'], url('media.php?cat=' . $id_parent, 'media-0-' . $id_parent . '+' . Url::encode_rewrite($MEDIA_CATS[$id_parent]['name']) . '.php'));
-		$id_parent = $MEDIA_CATS[$id_parent]['id_parent'];
+		if ($category->get_id() != Category::ROOT_CATEGORY)
+			$Bread_crumb->add($category->get_name(), url('media.php?cat=' . $category->get_id(), 'media-0-' . $category->get_id() . '+' . $category->get_rewrited_name() . '.php'));
 	}
-
-	$Bread_crumb->reverse();
 }
 
 ?>

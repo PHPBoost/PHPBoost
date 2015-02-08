@@ -79,6 +79,10 @@
 [*] [color=red]Nouveauté :[/color] Possibilité de choisir la date de parution des liens
 [*] Ajout des microdonnées pour améliorer le référencement
 
+[b]Multimédia[/b]
+[*] Otimisation de la configuration
+[*] Passage au nouveau système de catégories
+
 [b]News[/b]
 [*] Affichage des sources lors de l'affichage des catégories de news
 

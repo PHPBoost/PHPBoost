@@ -30,11 +30,12 @@ require_once('../kernel/begin.php');
 require_once('media_begin.php');
 
 // Display caterories and media files.
-if (empty($id_media) && $id_cat >= 0)
+if (empty($id_media))
 {
 	bread_crumb($id_cat);
 	
-	define('TITLE', $MEDIA_CATS[$id_cat]['name']);
+	$category = MediaService::get_categories_manager()->get_categories_cache()->get_category($id_cat);
+	define('TITLE', $category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('module_title', 'common', 'media') : $category->get_name());
 
 	require_once('../kernel/header.php');
 		
@@ -49,6 +50,7 @@ if (empty($id_media) && $id_cat >= 0)
 elseif ($id_media > 0)
 {
 	$tpl = new FileTemplate('media/media.tpl');
+	$config = MediaConfig::load();
 	
 	$media = PersistenceContext::get_querier()->select_single_row_query("SELECT v.*, mb.display_name, mb.groups, mb.level, notes.average_notes, notes.number_notes, note.note
 	FROM " . PREFIX . "media AS v
@@ -66,7 +68,7 @@ elseif ($id_media > 0)
             $LANG['e_unexist_media']);
         DispatchManager::redirect($controller);
 	}
-	elseif (!AppContext::get_current_user()->check_auth($MEDIA_CATS[$media['idcat']]['auth'], MEDIA_AUTH_READ))
+	elseif (!MediaAuthorizationsService::check_authorizations($media['idcat'])->read())
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
         DispatchManager::redirect($error_controller);
@@ -83,7 +85,7 @@ elseif ($id_media > 0)
 
 	$notation = new Notation();
 	$notation->set_module_name('media');
-	$notation->set_notation_scale($MEDIA_CONFIG['note_max']);
+	$notation->set_notation_scale($config->get_notation_scale());
 	$notation->set_id_in_module($id_media);
 	$notation->set_number_notes($media['number_notes']);
 	$notation->set_average_notes($media['average_notes']);
@@ -94,7 +96,9 @@ elseif ($id_media > 0)
 	
 	$tpl->put_all(array(
 		'C_DISPLAY_MEDIA' => true,
-		'C_MODO' => AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL),
+		'C_MODO' => MediaAuthorizationsService::check_authorizations($media['idcat'])->moderation(),
+		'C_DISPLAY_NOTATION' => $config->is_notation_enabled(),
+		'C_DISPLAY_COMMENTS' => $config->are_comments_enabled(),
 		'ID_MEDIA' => $id_media,
 		'NAME' => $media['name'],
 		'CONTENTS' => FormatingHelper::second_parse($media['contents']),
@@ -116,10 +120,7 @@ elseif ($id_media > 0)
 		'U_UNVISIBLE_MEDIA' => url('media_action.php?unvisible=' . $id_media . '&amp;token=' . AppContext::get_session()->get_token()),
 		'U_EDIT_MEDIA' => url('media_action.php?edit=' . $id_media),
 		'U_DELETE_MEDIA' => url('media_action.php?del=' . $id_media . '&amp;token=' . AppContext::get_session()->get_token()),
-		'U_POPUP_MEDIA' => url('media_popup.php?id=' . $id_media),
-		'C_DISPLAY' => ($MEDIA_CATS[$media['idcat']]['active'] & MEDIA_DV_NOTE) !== 0,
-		'A_COM' => ($MEDIA_CATS[$media['idcat']]['active'] & MEDIA_DV_COM) !== 0,
-		'A_NOTE' => ($MEDIA_CATS[$media['idcat']]['active'] & MEDIA_DV_NOTE) !== 0
+		'U_POPUP_MEDIA' => url('media_popup.php?id=' . $id_media)
 	));
 	
 	if (empty($mime_type_tpl[$media['mime_type']]))

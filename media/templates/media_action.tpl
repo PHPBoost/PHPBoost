@@ -68,12 +68,7 @@
 						<label for="name">* {L_TITLE}</label>
 						<div class="form-field"><input type="text" size="50" maxlength="100" id="name" name="name" value="{NAME}"></div>
 					</div>
-					<div class="form-element">
-						<label for="idcat">{L_CATEGORY}</label>
-						<div class="form-field"><label>
-							{CATEGORIES_TREE}
-						</label></div>
-					</div>
+					{CATEGORIES_TREE}
 					<div class="form-element" id="width_dl">
 						<label for="width">{L_WIDTH}</label>
 						<div class="form-field"><input type="text" size="10" maxlength="4" id="width" name="width" value="{WIDTH}"></div>

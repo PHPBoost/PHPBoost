@@ -29,19 +29,9 @@
 class MediaSearchable extends AbstractSearchableExtensionPoint
 {
 	public function get_search_request($args)
-	/**
-	 *  Renvoie la requ�te de recherche
-	 */
 	{
-		global $Cache;
-		$Cache->load('media');
-		
+		$authorized_categories = MediaService::get_authorized_categories(Category::ROOT_CATEGORY);
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
-		$Cats = new MediaCats();
-		$auth_cats = array();
-		$Cats->build_children_id_list(0, $auth_cats);
-		
-		$auth_cats = !empty($auth_cats) ? " AND f.idcat IN (" . implode($auth_cats, ',') . ") " : '';
 		
 		$request = "SELECT " . $args['id_search'] . " AS id_search,
 			f.id AS id_content,
@@ -49,7 +39,8 @@ class MediaSearchable extends AbstractSearchableExtensionPoint
 			( 2 * FT_SEARCH_RELEVANCE(f.name, '" . $args['search'] . "') + FT_SEARCH_RELEVANCE(f.contents, '" . $args['search'] . "') ) / 3 * " . $weight . " AS relevance,
 			CONCAT('" . PATH_TO_ROOT . "/media/media.php?id=', f.id, '&amp;cat=', f.idcat) AS link
 			FROM " . PREFIX . "media f
-			WHERE ( FT_SEARCH(f.name, '" . $args['search'] . "') OR FT_SEARCH(f.contents, '" . $args['search'] . "') )" . $auth_cats . "
+			WHERE ( FT_SEARCH(f.name, '" . $args['search'] . "') OR FT_SEARCH(f.contents, '" . $args['search'] . "') )
+			AND idcat IN (" . implode(", ", $authorized_categories) . ")
 			ORDER BY relevance DESC
 			LIMIT " . MEDIA_MAX_SEARCH_RESULTS . " OFFSET 0";
 		
