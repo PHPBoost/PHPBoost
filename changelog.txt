@@ -80,7 +80,7 @@
 [*] Ajout des microdonnées pour améliorer le référencement
 
 [b]Multimédia[/b]
-[*] Otimisation de la configuration
+[*] Optimisation de la configuration
 [*] Passage au nouveau système de catégories
 
 [b]News[/b]
