@@ -59,43 +59,14 @@ class Date
 	private $date_time;
 
 	/**
-	 * @desc Builds and initializes a date. It admits a variable number of parameters depending on the value of the first one.
+	 * @desc Builds and initializes a date.
+	 * The first parameter is the date in a standardized format defined in the PHP documentation. To get the current date, use the Date::DATE_NOW
 	 * The second parameter allows us to chose what time referential we use to create the date:
 	 * <ul>
 	 * 	<li>Timezone::SERVER_TIMEZONE if that date comes from for example the database (dates must be stored under this referential).</li>
 	 * 	<li>Timezone::SITE_TIMEZONE if it's an entry coming from the site (nearly never used).</li>
 	 * 	<li>Timezone::USER_TIMEZONE if it's an entry coming from the user (it's own timezone will be used)</li>
 	 * </ul>
-	 * The first parameter determines how to initialize the date, here are the rules to use for the other parameters:
-	 * <ul>
-	 * 	<li>Date::DATE_NOW will initialize the date to the current time.
-	 * $date = new Date(Date::DATE_NOW); will build a date with the current date.</li>
-	 * 	<li>DATE_YEAR_MONTH_DAY if you want to build a date from a specified day (year, month, day). In this case the following parameters are:
-	 * 		<ul>
-	 * 			<li>int The year (for instance 2009)</li>
-	 * 			<li>int The month (for example 11)</li>
-	 * 			<li>int The day (for example 09)</li>
-	 * 		</ul>
-	 * For example, $date = new Date(DATE_YEAR_MONTH_DAY, Timezone::USER_TIMEZONE, 2009, 11, 09);
-	 * 	</li>
-	 * 	<li>DATE_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND if you want to build a date from a specified time. Here is the rule for the following parameters:
-	 * 		<ul>
-	 * 			<li>int The year (for instance 2009)</li>
-	 * 			<li>int The month (for instance 11)</li>
-	 * 			<li>int The day (for instance 09)</li>
-	 * 			<li>int The hour (for instance 12)</li>
-	 * 			<li>int The minutes (for instance 34)</li>
-	 * 			<li>int The seconds (for instance 12)</li>
-	 * 		</ul>
-	 * For instance $date = new Date(DATE_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND, 2009, 11, 09, 12, 34, 12);
-	 * 	</li>
-	 * 	<li>DATE_TIMESTAMP which builds a date from a UNIX timestamp.
-	 * For example $date = new Date(time(), Timezone::SERVER_TIMEZONE); is equivalent to $date = new Date(Date::DATE_NOW);</li>
-	 * 	<li>DATE_FROM_STRING which decodes a date written in a string by matching a pattern you have to specify.
-	 * The pattern is easy to write: d for day, m for month and y for year and the separators have to be slashes only.
-	 * For instance, if your third parameter is '12/24/2009' and the fourth is 'm/d/y', it will be the december 24th of 2009.</li>
-	 * </ul>
-	 *
 	 */
 	public function __construct($time = self::DATE_NOW, $referencial_timezone = Timezone::USER_TIMEZONE)
 	{
@@ -120,8 +91,14 @@ class Date
 	 * 	<li>Date::FORMAT_DAY_MONTH for a tiny formatting (only month and day)</li>
 	 * 	<li>Date::FORMAT_DAY_MONTH_YEAR for a short formatting (month, day, year)</li>
 	 * 	<li>Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE for a longer displaying (year, month, day, hour and minutes)</li>
-	 * 	<li>Date::DATE_RFC822_F to format according to what the RFC822 announces</li>
-	 * 	<li>Date::DATE_RFC3339_F to format according to what the RFC3339 announces</li>
+	 *  <li>Date::FORMAT_TIMESTAMP for a timestamp</li>
+	 * 	<li>Date::DATE_RFC822 to format according to what the RFC822 announces</li>
+	 * 	<li>Date::FORMAT_ISO8601 to format according to what the ISO8601 announces</li>
+	 * 	<li>Date::FORMAT_DAY_MONTH_YEAR_LONG</li>
+	 * 	<li>Date::FORMAT_DAY_MONTH_YEAR_TEXT</li>
+	 * 	<li>Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT</li>
+	 * 	<li>Date::FORMAT_RELATIVE</li>
+	 * 	<li>Date::FORMAT_ISO_DAY_MONTH_YEAR</li>
 	 * </ul>
 	 * @param int $referencial_timezone One of the following enumeration:
 	 * <ul>
