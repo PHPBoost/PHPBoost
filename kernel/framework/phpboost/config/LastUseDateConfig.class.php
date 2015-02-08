@@ -52,7 +52,7 @@ class LastUseDateConfig extends AbstractConfigData
 	{
 		try
 		{
-			$date = new Date();
+			$date = new Date(Date::DATE_NOW, Timezone::SITE_TIMEZONE);
 			$date->set_year($this->get_property('year'));
 			$date->set_month($this->get_property('month'));
 			$date->set_day($this->get_property('day'));
