@@ -32,56 +32,14 @@ define('MEDIA_MAX_SEARCH_RESULTS', 100);
 
 class MediaExtensionPointProvider extends ExtensionPointProvider
 {
-	private $db_querier;
-
-	## Public Methods ##
 	function __construct()
 	{
-		$this->db_querier = PersistenceContext::get_querier();
 		parent::__construct('media');
 	}
-
-	//Récupération du cache.
-	function get_cache()
+	
+	public function comments()
 	{
-		global $MEDIA_LANG;
-		
-		require_once PATH_TO_ROOT . '/media/media_constant.php';
-
-		//Configuration
-		$i = 0;
-		$config = array();
-		$config = unserialize($this->db_querier->get_column_value(DB_TABLE_CONFIGS, 'value', 'WHERE name = \'media\''));
-		$root_config = $config['root'];
-		$root_config['name'] = $MEDIA_LANG['media'];
-		unset($config['root']);
-
-		$string = 'global $MEDIA_CONFIG, $MEDIA_CATS;' . "\n\n" . '$MEDIA_CONFIG = $MEDIA_CATS = array();' . "\n\n";
-		$string .= '$MEDIA_CONFIG = ' . var_export($config, true) . ';' . "\n\n";
-
-		//List of categories and their own properties
-		$string .= '$MEDIA_CATS[0] = ' . var_export($root_config, true) . ';' . "\n\n";
-		$result = $this->db_querier->select("SELECT * FROM " . PREFIX . "media_cat ORDER BY id_parent, c_order ASC");
-
-		while ($row = $result->fetch())
-		{
-			$string .= '$MEDIA_CATS[' . $row['id'] . '] = ' . var_export(array(
-				'id_parent' => (int)$row['id_parent'],
-				'order' => (int)$row['c_order'],
-				'name' => $row['name'],
-				'desc' => $row['description'],
-				'visible' => (bool)$row['visible'],
-				'image' => $row['image'],
-				'num_media' => (int)$row['num_media'],
-				'mime_type' => (int)$row['mime_type'],
-				'active' => (int)$row['active'],
-				'auth' => (array)unserialize($row['auth'])
-			), true) . ';' . "\n\n";
-		}
-
-		$result->dispose();
-
-		return $string;
+		return new CommentsTopics(array(new MediaCommentsTopic()));
 	}
 	
 	public function css_files()
@@ -89,11 +47,6 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 		$module_css_files = new ModuleCssFiles();
 		$module_css_files->adding_running_module_displayed_file('media.css');
 		return $module_css_files;
-	}
-	
-	public function comments()
-	{
-		return new CommentsTopics(array(new MediaCommentsTopic()));
 	}
 	
 	public function feeds()
@@ -119,6 +72,11 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 	public function tree_links()
 	{
 		return new MediaTreeLinks();
+	}
+	
+	public function url_mappings()
+	{
+		return new UrlMappings(array(new DispatcherUrlMapping('/media/index.php')));
 	}
 }
 ?>

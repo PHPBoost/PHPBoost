@@ -27,8 +27,8 @@
 
 class MediaSetup extends DefaultModuleSetup
 {
-	private static $media_table;
-	private static $media_cats_table;
+	public static $media_table;
+	public static $media_cats_table;
 
 	/**
 	 * @var string[string] localized messages
@@ -38,7 +38,7 @@ class MediaSetup extends DefaultModuleSetup
 	public static function __static()
 	{
 		self::$media_table = PREFIX . 'media';
-		self::$media_cats_table = PREFIX . 'media_cat';
+		self::$media_cats_table = PREFIX . 'media_cats';
 	}
 
 	public function install()
@@ -51,6 +51,7 @@ class MediaSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_tables();
+		ConfigManager::delete('media', 'config');
 	}
 
 	private function drop_tables()
@@ -92,30 +93,29 @@ class MediaSetup extends DefaultModuleSetup
 
 	private function create_media_cats_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'id_parent' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'c_order' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'auth' => array('type' => 'text', 'length' => 65000),
-			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'visible' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'mime_type' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'active' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'description' => array('type' => 'text', 'length' => 65000),
-			'image' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'num_media' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id')
-		);
-		PersistenceContext::get_dbms_utils()->create_table(self::$media_cats_table, $fields, $options);
+		MediaCategory::create_categories_table(self::$media_cats_table);
 	}
 
 	private function insert_data()
 	{
-        $this->messages = LangLoader::get('install', 'media');
-		$this->insert_media_data();
+		$this->messages = LangLoader::get('install', 'media');
 		$this->insert_media_cats_data();
+		$this->insert_media_data();
+	}
+	
+	private function insert_media_cats_data()
+	{
+		PersistenceContext::get_querier()->insert(self::$media_cats_table, array(
+			'id' => 1,
+			'id_parent' => 0,
+			'c_order' => 1,
+			'auth' => '',
+			'rewrited_name' => Url::encode_rewrite($this->messages['media_name_cat']),
+			'name' => $this->messages['media_name_cat'],
+			'description' => $this->messages['media_contents_cat'],
+			'image' => $this->messages['media_icon_cat'],
+			'content_type' => 2
+		));
 	}
 
 	private function insert_media_data()
@@ -133,23 +133,6 @@ class MediaSetup extends DefaultModuleSetup
 			'width' => 640,
 			'height' => 438,
 			'counter' => 0,
-		));
-	}
-
-	private function insert_media_cats_data()
-	{
-		PersistenceContext::get_querier()->insert(self::$media_cats_table, array(
-			'id' => 1,
-			'id_parent' => 0,
-			'c_order' => 1,
-			'auth' => '',
-			'name' => $this->messages['media_name_cat'],
-			'visible' => 1,
-			'mime_type' => 2,
-			'active' => 7914,
-			'description' => $this->messages['media_contents_cat'],
-			'image' => $this->messages['media_icon_cat'],
-			'num_media' => 1
 		));
 	}
 }

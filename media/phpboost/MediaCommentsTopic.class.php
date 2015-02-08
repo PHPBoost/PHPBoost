@@ -34,22 +34,8 @@ class MediaCommentsTopic extends CommentsTopic
 	
 	public function get_authorizations()
 	{
-		global $MEDIA_CATS, $CONFIG_MEDIA;
-		
-		$cache = new Cache();
-		$cache->load($this->get_module_id());
-		
-		require_once(PATH_TO_ROOT .'/'. $this->get_module_id() . '/media_constant.php');
-		
-		$id_cat = $this->get_categorie_id();
-		
-		$cat_authorizations = $MEDIA_CATS[$id_cat]['auth'];
-		if (!is_array($cat_authorizations))
-		{
-			$cat_authorizations = $CONFIG_MEDIA['root']['auth'];
-		}
 		$authorizations = new CommentsAuthorizations();
-		$authorizations->set_authorized_access_module(AppContext::get_current_user()->check_auth($cat_authorizations, MEDIA_AUTH_READ));
+		$authorizations->set_authorized_access_module(MediaAuthorizationsService::check_authorizations($this->get_id_category())->read());
 		return $authorizations;
 	}
 	
@@ -58,12 +44,9 @@ class MediaCommentsTopic extends CommentsTopic
 		return true;
 	}
 
-	private function get_categorie_id()
+	private function get_id_category()
 	{
-		$columns = 'idcat';
-		$condition = 'WHERE id = :id_in_module';
-		$parameters = array('id_in_module' => $this->get_id_in_module());
-		return PersistenceContext::get_querier()->get_column_value(PREFIX . 'media', $columns, $condition, $parameters);
+		return PersistenceContext::get_querier()->get_column_value(MediaSetup::$media_table, 'idcat', 'WHERE id = :id', array('id' => $this->get_id_in_module()));
 	}
 }
 ?>

@@ -10,8 +10,6 @@
 							<option value="unvisible"{SELECTED_UNVISIBLE}>{L_FUNVISIBLE}</option>
 							<option value="unaprobed"{SELECTED_UNAPROBED}>{L_FUNAPROBED}</option>
 					</select>
-					&nbsp;{L_CATEGORIES}&nbsp;
-						{CATEGORIES_TREE}
 					&nbsp;{L_INCLUDE_SUB_CATS}&nbsp;
 					<input type="checkbox" name="sub_cats" value="1"{SUB_CATS}>
 				</div>
@@ -51,7 +49,7 @@
 								{L_NAME}
 							</th>
 							<th>
-								{L_CATEGORY}
+								${LangLoader::get_message('category', 'categories-common')}
 							</th>
 							<th onclick="check_all('visible');" onmouseover="pointer('visible');" id="visible">
 								{L_VISIBLE}
@@ -63,7 +61,7 @@
 								{L_UNAPROBED}
 							</th>
 							<th onclick="check_all('delete');" onmouseover="pointer('delete');" id="delete">
-								{L_DELETE}
+								${LangLoader::get_message('delete', 'common')}
 							</th>
 						</tr>
 					</thead>
@@ -135,13 +133,4 @@
 				<button type="reset" value="true">{L_RESET}</button>
 			</fieldset>
 		</form>
-		# IF C_ADMIN #
-		<div style="text-align:center; margin:20px 20px;">
-			<a href="moderation_media.php?recount=1" title="{L_RECOUNT_MEDIA}">
-				<i class="fa fa-refresh fa-2x"></i>
-			</a>
-			<br />
-			<a href="moderation_media.php?recount=1">{L_RECOUNT_MEDIA}</a>
-		</div>
-		# ENDIF #
 		# ENDIF #

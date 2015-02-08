@@ -26,26 +26,10 @@
  *
  ###################################################*/
 
-// Permissions des catégories.
-define('MEDIA_AUTH_READ', 1);
-define('MEDIA_AUTH_CONTRIBUTION', 2);
-define('MEDIA_AUTH_WRITE', 4);
-
-// Information mime type.
-define('MEDIA_TYPE_BOTH', 0);
-define('MEDIA_TYPE_MUSIC', 1);
-define('MEDIA_TYPE_VIDEO', 2);
-
-// Informtations sur les fichiers.
+// Informations sur les fichiers.
 define('MEDIA_STATUS_UNAPROBED', 0);
 define('MEDIA_STATUS_UNVISIBLE', 1);
 define('MEDIA_STATUS_APROBED', 2);
-
-// Paramètres d'affichage.
-define('MEDIA_DL_COM', 1); // Affiche au niveau de la liste des vidéos l'affichage des commentaires.
-define('MEDIA_DV_COM', 2); // Affiche au niveau de la vidéo l'affichage des commentaires.
-define('MEDIA_DL_NOTE', 4); // Affiche au niveau de la liste des vidéos l'affichage des notes.
-define('MEDIA_DV_NOTE', 8); // Affiche au niveau de la vidéo l'affichage des notes.
 
 // Type de fichier autorisés.
 $mime_type = array(
@@ -73,7 +57,8 @@ $host_ok = array(
 		'www.dailymotion.com',
 		'www.youtube.com',
 		'video.google.fr',
-		'www.wat.tv'
+		'www.wat.tv',
+		'www.ptithom.net'
 	),
 	'audio' => array(
 		'www.deezer.com',

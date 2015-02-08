@@ -35,9 +35,9 @@ if (AppContext::get_current_user()->is_readonly())
 	DispatchManager::redirect($controller);
 }
 
-$media_categories = new MediaCats();
-
 $tpl = new FileTemplate('media/media_action.tpl');
+
+$config = MediaConfig::load();
 
 $unvisible = retrieve(GET, 'unvisible', 0, TINTEGER);
 $add = retrieve(GET, 'add', 0, TINTEGER);
@@ -54,14 +54,13 @@ if ($unvisible > 0)
 	// Gestion des erreurs.
 	if (empty($media))
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
-            $LANG['e_unexist_media']);
-        DispatchManager::redirect($controller);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_unexist_media']);
+		DispatchManager::redirect($controller);
 	}
-	elseif (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL))
+	elseif (!MediaAuthorizationsService::check_authorizations($media['idcat'])->moderation())
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
-        DispatchManager::redirect($error_controller);
+		DispatchManager::redirect($error_controller);
 	}
 
 	bread_crumb($media['idcat']);
@@ -74,8 +73,6 @@ if ($unvisible > 0)
 
 	require_once('../kernel/header.php');
 
-	$media_categories->recount_media_per_cat($media['idcat']);
-
 	AppContext::get_response()->redirect('media' . url('.php?cat=' . $media['idcat'], '-0-' . $media['idcat'] . '.php'));
 }
 // Suppression d'un fichier.
@@ -87,14 +84,13 @@ elseif ($delete > 0)
 
 	if (empty($media))
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
-            $LANG['e_unexist_media']);
-        DispatchManager::redirect($controller);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_unexist_media']);
+		DispatchManager::redirect($controller);
 	}
-	elseif (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL))
+	elseif (!MediaAuthorizationsService::check_authorizations($media['idcat'])->moderation())
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
-        DispatchManager::redirect($error_controller);
+		DispatchManager::redirect($error_controller);
 	}
 
 	PersistenceContext::get_querier()->delete(PREFIX . 'media', 'WHERE id=:id', array('id' => $delete));
@@ -105,11 +101,10 @@ elseif ($delete > 0)
 	
 	// Feeds Regeneration
 	Feed::clear_cache('media');
-
-	$media_categories->recount_media_per_cat($media['idcat']);
-
+	
+	$category = MediaService::get_categories_manager()->get_categories_cache()->get_category($media['idcat']);
 	bread_crumb($media['idcat']);
-	$Bread_crumb->add($MEDIA_LANG['delete_media'], url('media.php?cat=' . $media['idcat'], 'media-0-' . $media['idcat'] . '+' . Url::encode_rewrite($MEDIA_CATS[$media['idcat']]['name']) . '.php'));
+	$Bread_crumb->add($MEDIA_LANG['delete_media'], url('media.php?cat=' . $media['idcat'], 'media-0-' . $media['idcat'] . '+' . $category->get_rewrited_name() . '.php'));
 
 	define('TITLE', $MEDIA_LANG['delete_media']);
 	require_once('../kernel/header.php');
@@ -126,7 +121,6 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 		'C_ADD_MEDIA' => true,
 		'U_TARGET' => url('media_action.php'),
 		'L_TITLE' => $MEDIA_LANG['media_name'],
-		'L_CATEGORY' => $MEDIA_LANG['media_category'],
 		'L_WIDTH' => $MEDIA_LANG['media_width'],
 		'L_HEIGHT' => $MEDIA_LANG['media_height'],
 		'L_U_MEDIA' => $MEDIA_LANG['media_url'],
@@ -146,35 +140,32 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 	));
 
 	// Construction du tableau des catégories musicales.
+	$categories = MediaService::get_categories_manager()->get_categories_cache()->get_categories();
 	$js_id_music = array();
-	foreach ($MEDIA_CATS as $key => $value)
+	foreach ($categories as $cat)
 	{
-		if ($value['mime_type'] == MEDIA_TYPE_MUSIC)
+		if ($cat->get_content_type() === MediaConfig::CONTENT_TYPE_MUSIC)
 		{
-			$js_id_music[] = $key;
+			$js_id_music[] = $cat->get_id();
 		}
 	}
-
+	
+	$search_category_children_options = new SearchCategoryChildrensOptions();
+	$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
+	$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
+	
 	// Édition.
-	if ($edit > 0 && ($media = PersistenceContext::get_querier()->select_single_row(PREFIX . 'media', array('*'), 'WHERE id=:id', array('id' => $edit))) && !empty($media) && AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL))
+	if ($edit > 0 && ($media = PersistenceContext::get_querier()->select_single_row(PREFIX . 'media', array('*'), 'WHERE id=:id', array('id' => $edit))) && !empty($media) && MediaAuthorizationsService::check_authorizations($media['idcat'])->moderation())
 	{
+		$category = MediaService::get_categories_manager()->get_categories_cache()->get_category($media['idcat']);
 		bread_crumb($media['idcat']);
 		
-		if (in_array($media['mime_type'], $mime_type['audio']))
-		{
-			$auth = MEDIA_TYPE_MUSIC;
-		}
-		else
-		{
-			$auth = MEDIA_TYPE_VIDEO;
-		}
-
 		$tpl->put_all(array(
 			'L_PAGE_TITLE' => $MEDIA_LANG['edit_media'],
 			'C_CONTRIBUTION' => 0,
 			'IDEDIT' => $media['id'],
 			'NAME' => $media['name'],
-			'CATEGORIES_TREE' => $media_categories->build_select_form($media['idcat'], 'idcat" onchange="hide_width_height ();', 'idcat', 0, MEDIA_AUTH_WRITE, $MEDIA_CATS[0]['auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
+			'CATEGORIES_TREE' => MediaService::get_categories_manager()->get_select_categories_form_field('idcat', LangLoader::get_message('form.category', 'common'), $category->get_id(), $search_category_children_options)->display()->render(),
 			'WIDTH' => $media['width'],
 			'HEIGHT' => $media['height'],
 			'U_MEDIA' => $media['url'],
@@ -182,11 +173,11 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 			'APPROVED' => ($media['infos'] & MEDIA_STATUS_APROBED) !== 0 ? ' checked="checked"' : '',
 			'C_APROB' => ($media['infos'] & MEDIA_STATUS_APROBED) === 0,
 			'JS_ID_MUSIC' => '"' . implode('", "', $js_id_music) . '"',
-			'C_MUSIC' => $auth == MEDIA_TYPE_MUSIC ? true : false
+			'C_MUSIC' => in_array($media['mime_type'], $mime_type['audio'])
 		));
 	}
 	// Ajout.
-	elseif (($write = AppContext::get_current_user()->check_auth($MEDIA_CATS[$add]['auth'], MEDIA_AUTH_WRITE)) || AppContext::get_current_user()->check_auth($MEDIA_CATS[$add]['auth'], MEDIA_AUTH_CONTRIBUTION))
+	elseif (($write = MediaAuthorizationsService::check_authorizations()->write()) || MediaAuthorizationsService::check_authorizations()->contribution())
 	{
 		bread_crumb($add);
 
@@ -199,7 +190,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 			'CONTRIBUTION_COUNTERPART_EDITOR' => $editor->display(),
 			'IDEDIT' => 0,
 			'NAME' => '',
-			'CATEGORIES_TREE' => $media_categories->build_select_form($add, 'idcat" onchange="hide_width_height ();', 'idcat', 0, ($write ? MEDIA_AUTH_WRITE : MEDIA_AUTH_CONTRIBUTION), $MEDIA_CATS[0]['auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
+			'CATEGORIES_TREE' => MediaService::get_categories_manager()->get_select_categories_form_field('idcat', LangLoader::get_message('form.category', 'common'), Category::ROOT_CATEGORY, $search_category_children_options)->display()->render(),
 			'WIDTH' => '425',
 			'HEIGHT' => '344',
 			'U_MEDIA' => 'http://',
@@ -207,13 +198,13 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 			'APPROVED' => 'checked="checked"',
 			'C_APROB' => false,
 			'JS_ID_MUSIC' => '"' . implode('", "', $js_id_music) . '"',
-			'C_MUSIC' => $MEDIA_CATS[$add]['mime_type'] == MEDIA_TYPE_MUSIC ? true : false
+			'C_MUSIC' => $config->is_root_category_content_type_music_and_video() || $config->is_root_category_content_type_music()
 		));
 	}
 	else
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
-        DispatchManager::redirect($error_controller);
+		DispatchManager::redirect($error_controller);
 	}
 
 	if (!empty($media))
@@ -234,23 +225,21 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 elseif (!empty($_POST['submit']))
 {
 	AppContext::get_session()->csrf_get_protect();
-
+	
 	$media = array(
 		'idedit' => retrieve(POST, 'idedit', 0, TINTEGER),
 		'name' => retrieve(POST, 'name', '', TSTRING),
 		'idcat' => retrieve(POST, 'idcat', 0, TINTEGER),
-		'width' => min(retrieve(POST, 'width', $MEDIA_CONFIG['width'], TINTEGER), $MEDIA_CONFIG['width']),
-		'height' => min(retrieve(POST, 'height', $MEDIA_CONFIG['height'], TINTEGER), $MEDIA_CONFIG['height']),
+		'width' => min(retrieve(POST, 'width', $config->get_max_video_width(), TINTEGER), $config->get_max_video_width()),
+		'height' => min(retrieve(POST, 'height', $config->get_max_video_height(), TINTEGER), $config->get_max_video_height()),
 		'url' => retrieve(POST, 'u_media', '', TSTRING),
 		'contents' => retrieve(POST, 'contents', '', TSTRING_UNCHANGE),
 		'approved' => retrieve(POST, 'approved', 0, TBOOL),
 		'contrib' => retrieve(POST, 'contrib', 0, TBOOL),
 		'counterpart' => retrieve(POST, 'counterpart', '', TSTRING_PARSE)
 	);
-
-	$auth_cat = !empty($MEDIA_CATS[$media['idcat']]['auth']) ? $MEDIA_CATS[$media['idcat']]['auth'] : $MEDIA_CATS[0]['auth'];
-	$media['idcat'] = !empty($MEDIA_CATS[$media['idcat']]) ? $media['idcat'] : 0;
-
+	
+	$category = MediaService::get_categories_manager()->get_categories_cache()->get_category($media['idcat']);
 	bread_crumb($media['idcat']);
 
 	if ($media['idedit'])
@@ -268,13 +257,13 @@ elseif (!empty($_POST['submit']))
 	require_once('../kernel/header.php');
 	
 	if (!empty($media['url']))
-	{			
-		if ($MEDIA_CATS[$media['idcat']]['mime_type'] == MEDIA_TYPE_MUSIC)
+	{
+		if ($category->get_content_type() == MediaConfig::CONTENT_TYPE_MUSIC)
 		{
 			$mime_type = $mime_type['audio'];
 			$host_ok = $host_ok['audio'];
 		}
-		elseif ($MEDIA_CATS[$media['idcat']]['mime_type'] == MEDIA_TYPE_VIDEO)
+		elseif ($category->get_content_type() == MediaConfig::CONTENT_TYPE_VIDEO)
 		{
 			$mime_type = $mime_type['video'];
 			$host_ok = $host_ok['video'];
@@ -295,9 +284,8 @@ elseif (!empty($_POST['submit']))
 			}
 			else
 			{
-				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
-                    $LANG['e_mime_disable_media']);
-                DispatchManager::redirect($controller);
+				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_mime_disable_media']);
+				DispatchManager::redirect($controller);
 			}
 		}
 		elseif (function_exists('get_headers') && ($headers = get_headers($media['url'], 1)) && !empty($headers['Content-Type']))
@@ -318,16 +306,14 @@ elseif (!empty($_POST['submit']))
 				
 				if (empty($media['mime_type']))
 				{
-					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
-                    $LANG['e_mime_disable_media']);
-                DispatchManager::redirect($controller);
+					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_mime_disable_media']);
+					DispatchManager::redirect($controller);
 				}
 			}
 			else
 			{
-				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
-                    $LANG['e_mime_disable_media']);
-                DispatchManager::redirect($controller);
+				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_mime_disable_media']);
+				DispatchManager::redirect($controller);
 			}
 		}
 		elseif (($url_parsed = parse_url($media['url'])) && in_array($url_parsed['host'], $host_ok) && in_array('application/x-shockwave-flash', $mime_type))
@@ -336,24 +322,20 @@ elseif (!empty($_POST['submit']))
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
-                $LANG['e_mime_unknow_media']);
-            DispatchManager::redirect($controller);
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_mime_unknow_media']);
+			DispatchManager::redirect($controller);
 		}
 	}
 	else
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
-            $LANG['e_link_empty_media']);
-        DispatchManager::redirect($controller);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_link_empty_media']);
+		DispatchManager::redirect($controller);
 	}
 
 	// Édition
-	if ($media['idedit'] && AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL))
+	if ($media['idedit'] && MediaAuthorizationsService::check_authorizations($media['idcat'])->moderation())
 	{
-		PersistenceContext::get_querier()->update(PREFIX . "media", array('idcat' => $media['idcat'], 'name' => $media['name'], 'url' => $media['url'], 'contents' => FormatingHelper::strparse($media['contents']), 'infos' => (AppContext::get_current_user()->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']), 'WHERE id = :id', array('id' => $media['idedit']));
-
-		$media_categories->recount_media_per_cat();
+		PersistenceContext::get_querier()->update(PREFIX . "media", array('idcat' => $media['idcat'], 'name' => $media['name'], 'url' => $media['url'], 'contents' => $media['contents'], 'infos' => (MediaAuthorizationsService::check_authorizations($media['idcat'])->write() ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']), 'WHERE id = :id', array('id' => $media['idedit']));
 
 		if ($media['approved'])
 		{
@@ -369,20 +351,17 @@ elseif (!empty($_POST['submit']))
 		}
 
 		// Feeds Regeneration
-		
 		Feed::clear_cache('media');
 
 		AppContext::get_response()->redirect('media' . url('.php?id=' . $media['idedit']));
 	}
 	// Ajout
-	elseif (!$media['idedit'] && (($auth_write = AppContext::get_current_user()->check_auth($auth_cat, MEDIA_AUTH_WRITE)) || AppContext::get_current_user()->check_auth($auth_cat, MEDIA_AUTH_CONTRIBUTION)))
+	elseif (!$media['idedit'] && (($auth_write = MediaAuthorizationsService::check_authorizations($media['idcat'])->write()) || MediaAuthorizationsService::check_authorizations($media['idcat'])->contribution()))
 	{
-		$result = PersistenceContext::get_querier()->insert(PREFIX . "media", array('idcat' => $media['idcat'], 'iduser' => AppContext::get_current_user()->get_id(), 'timestamp' => time(), 'name' => $media['name'], 'contents' => FormatingHelper::strparse($media['contents']), 'url' => $media['url'], 'mime_type' => $media['mime_type'], 'infos' => (AppContext::get_current_user()->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']));
+		$result = PersistenceContext::get_querier()->insert(PREFIX . "media", array('idcat' => $media['idcat'], 'iduser' => AppContext::get_current_user()->get_id(), 'timestamp' => time(), 'name' => $media['name'], 'contents' => FormatingHelper::strparse($media['contents']), 'url' => $media['url'], 'mime_type' => $media['mime_type'], 'infos' => (MediaAuthorizationsService::check_authorizations($media['idcat'])->write() ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']));
 
 		$new_id_media = $result->get_last_inserted_id();
-		$media_categories->recount_media_per_cat($media['idcat']);
 		// Feeds Regeneration
-		
 		Feed::clear_cache('media');
 
 		if (!$auth_write)
@@ -394,7 +373,12 @@ elseif (!empty($_POST['submit']))
 			$media_contribution->set_fixing_url('/media/media_action.php?edit=' . $new_id_media);
 			$media_contribution->set_poster_id(AppContext::get_current_user()->get_id());
 			$media_contribution->set_module('media');
-			$media_contribution->set_auth(Authorizations::capture_and_shift_bit_auth(Authorizations::merge_auth($MEDIA_CATS[0]['auth'], $media_categories->compute_heritated_auth($media['idcat'], MEDIA_AUTH_WRITE, Authorizations::AUTH_CHILD_PRIORITY), MEDIA_AUTH_WRITE, Authorizations::AUTH_CHILD_PRIORITY), MEDIA_AUTH_WRITE, Contribution::CONTRIBUTION_AUTH_BIT));
+			$media_contribution->set_auth(
+				Authorizations::capture_and_shift_bit_auth(
+					MediaService::get_categories_manager()->get_heritated_authorizations($media['idcat'], Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
+					Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
+				)
+			);
 
 			ContributionService::save_contribution($media_contribution);
 

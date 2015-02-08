@@ -32,7 +32,11 @@
 
 $lang = array(
 	'media_name' => 'Sauvegarde et restauration de sa base de données',
-	'media_contents' => 'Il est important de réaliser régulièrement des sauvegardes de sa base de données.<br /><br />Voici une petite vidéo vous montrant comment sauvegarder et restaurer sa base de donnée à l\'aide de l\'utilitaire de PHPBoost.<br /><br />Bonne visualisation !',
+	'media_contents' => 'Il est important de réaliser régulièrement des sauvegardes de sa base de données.<br />
+<br />
+Voici une petite vidéo vous montrant comment sauvegarder et restaurer sa base de donnée à l\'aide de l\'utilitaire de PHPBoost.<br />
+<br />
+Bonne visualisation !',
 	'media_url' => 'http://www.ptithom.net/documents/phpboost/videos/bdd/sauv_restau_bdd.flv', 
 	
     'media_name_cat' => 'Vidéos de PHPBoost',
