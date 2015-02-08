@@ -32,6 +32,7 @@
 			<span class="newsletter-title">{@newsletter}</span> 
 			<input type="text" name="mail_newsletter" maxlength="50" value="{USER_MAIL}" placeholder="${LangLoader::get_message('email', 'user-common')}">
 			<input type="hidden" name="subscribe" value="subscribe">
+			<input type="hidden" name="token" value="{TOKEN}">
 			<button type="submit" class="newsletter-submit"><i class="fa fa-envelope-o"></i></button>
 		</div>
 	</form>
