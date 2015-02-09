@@ -167,60 +167,75 @@ class AdminThemesNotInstalledListController extends AdminController
 	private function upload_theme()
 	{
 		$folder_phpboost_themes = PATH_TO_ROOT . '/templates/';
-
-        if (!is_writable($folder_phpboost_themes))
+		
+		if (!is_writable($folder_phpboost_themes))
 		{
-			$is_writable = @chmod($dir, 0777);
+			$is_writable = @chmod($folder_phpboost_themes, 0777);
 		}
 		else
 		{
 			$is_writable = true;
 		}
-        
+		
 		if ($is_writable)
 		{
 			$uploaded_file = $this->form->get_value('file');
 			if ($uploaded_file !== null)
 			{
-				if (!ThemesManager::get_theme_existed($uploaded_file->get_name_without_extension()))
+				$upload = new Upload($folder_phpboost_themes);
+				if ($upload->file('upload_theme_file', '`([A-Za-z0-9-_]+)\.(gzip|zip)+$`i'))
 				{
-					$upload = new Upload($folder_phpboost_themes);
-					if ($upload->file('upload_theme_file', '`([A-Za-z0-9-_]+)\.(gzip|zip)+$`i'))
+					$archive = $folder_phpboost_themes . $upload->get_filename();
+					
+					if ($upload->get_extension() == 'gzip')
 					{
-						$archive = $folder_phpboost_themes . $upload->get_filename();
-						
-						if ($upload->get_extension() == 'gzip')
-						{
-							include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pcltar.lib.php');
-							$extracted = PclTarExtract($upload->get_filename(), $folder_phpboost_themes);
-							
-							$theme_id = !empty($extracted[0]) ? $extracted[0] : $uploaded_file->get_name_without_extension();
-							
-							$uploaded_file = new File($archive);
-							$uploaded_file->delete();
-						}
-						else if ($upload->get_extension() == 'zip')
-						{
-							include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pclzip.lib.php');
-							$zip = new PclZip($archive);
-							$extracted = $zip->extract(PCLZIP_OPT_PATH, $folder_phpboost_themes, PCLZIP_OPT_SET_CHMOD, 0755);
-							
-							$theme_id = !empty($extracted[0]) ? $extracted[0] : $uploaded_file->get_name_without_extension();
-							
-							$uploaded_file = new File($archive);
-							$uploaded_file->delete();
-						}
-						
-						$this->install_theme($theme_id, array('r-1' => 1, 'r0' => 1, 'r1' => 1));
+						include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pcltar.lib.php');
+						$archive_content = PclTarList($upload->get_filename());
 					}
 					else
 					{
-						$this->view->put('MSG', MessageHelper::display($this->lang['themes.upload_invalid_format'], MessageHelper::NOTICE, 4));
+						include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pclzip.lib.php');
+						$zip = new PclZip($archive);
+						$archive_content = $zip->listContent();
 					}
+					
+					$archive_root_content = array();
+					foreach ($archive_content as $element)
+					{
+						if (substr($element['filename'], -1) == '/')
+							$element['filename'] = substr($element['filename'], 0, -1);
+						if (substr_count($element['filename'], '/') == 0)
+							$archive_root_content[] = array('filename' => $element['filename'], 'folder' => ((isset($element['folder']) && $element['folder'] == 1) || (isset($element['typeflag']) && $element['typeflag'] == 5)));
+					}
+					
+					if (count($archive_root_content) == 1 && $archive_root_content[0]['folder'])
+					{
+						$theme_id = $archive_root_content[0]['filename'];
+						if (!ThemesManager::get_theme_existed($theme_id))
+						{
+							if ($upload->get_extension() == 'gzip')
+								PclTarExtract($upload->get_filename(), $folder_phpboost_themes);
+							else
+								$zip->extract(PCLZIP_OPT_PATH, $folder_phpboost_themes, PCLZIP_OPT_SET_CHMOD, 0755);
+							
+							$this->install_theme($theme_id, array('r-1' => 1, 'r0' => 1, 'r1' => 1));
+						}
+						else
+						{
+							$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('element.already_exists', 'status-messages-common'), MessageHelper::NOTICE, 4));
+						}
+					}
+					else
+					{
+						$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('error.invalid_archive_content', 'status-messages-common'), MessageHelper::NOTICE, 4));
+					}
+					
+					$uploaded_file = new File($archive);
+					$uploaded_file->delete();
 				}
 				else
 				{
-					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('element.already_exists', 'status-messages-common'), MessageHelper::NOTICE, 4));
+					$this->view->put('MSG', MessageHelper::display($this->lang['themes.upload_invalid_format'], MessageHelper::NOTICE, 4));
 				}
 			}
 			else

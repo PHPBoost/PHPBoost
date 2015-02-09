@@ -40,6 +40,7 @@ $lang['error.page.unexist'] = 'This page doesn\'t exist!';
 $lang['error.action.unauthorized'] = 'Unauthorized action!';
 $lang['error.module.uninstalled'] = 'This module isn\'t installed!';
 $lang['error.module.unactivated'] = 'This module isn\'t activated!';
+$lang['error.invalid_archive_content'] = 'The content of the archive is invalid!';
 
 $lang['csrf_invalid_token'] = 'Invalid session token. Please retry because the operation has not been performed.';
 

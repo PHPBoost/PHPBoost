@@ -170,8 +170,8 @@ class AdminModuleAddController extends AdminController
 	
 	private function upload_module()
 	{
-		$folder_phpboost_modules = PATH_TO_ROOT . '/';
-		if (!is_writable($folder_phpboost_modules))
+		$modules_folder = PATH_TO_ROOT . '/';
+		if (!is_writable($modules_folder))
 		{
 			$is_writable = @chmod($dir, 0755);
 		}
@@ -185,45 +185,60 @@ class AdminModuleAddController extends AdminController
 			$uploaded_file = $this->form->get_value('file');
 			if ($uploaded_file !== null)
 			{
-				if (!ModulesManager::is_module_installed($uploaded_file->get_name_without_extension()))
+				$upload = new Upload($modules_folder);
+				if ($upload->file('upload_module_file', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 				{
-					$upload = new Upload($folder_phpboost_modules);
-					$upload->disableContentCheck();
-					if ($upload->file('upload_module_file', '`([A-Za-z0-9-_]+)\.(gzip|zip)+$`i'))
+					$archive = $modules_folder . $upload->get_filename();
+					
+					if ($upload->get_extension() == 'gzip')
 					{
-						$archive_path = $folder_phpboost_modules . $upload->get_filename();
-						if ($upload->get_extension() == 'gzip')
-						{
-							include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pcltar.lib.php');
-							$extracted = PclTarExtract($upload->get_filename(), $folder_phpboost_modules);
-							
-							$module_id = !empty($extracted[0]) ? $extracted[0] : $uploaded_file->get_name_without_extension();
-							
-							$file = new File($archive_path);
-							$file->delete();
-						}
-						else if ($upload->get_extension() == 'zip')
-						{
-							include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pclzip.lib.php');
-							$zip = new PclZip($archive_path);
-							$extracted = $zip->extract(PCLZIP_OPT_PATH, $folder_phpboost_modules, PCLZIP_OPT_SET_CHMOD, 0755);
-							
-							$module_id = !empty($extracted[0]) ? $extracted[0] : $uploaded_file->get_name_without_extension();
-							
-							$file = new File($archive_path);
-							$file->delete();
-						}
-						
-						$this->install_module($module_id, true);
+						include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pcltar.lib.php');
+						$archive_content = PclTarList($upload->get_filename());
 					}
 					else
 					{
-						$this->view->put('MSG', MessageHelper::display($this->lang['modules.upload_invalid_format'], MessageHelper::NOTICE, 4));
+						include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pclzip.lib.php');
+						$zip = new PclZip($archive);
+						$archive_content = $zip->listContent();
 					}
+					
+					$archive_root_content = array();
+					foreach ($archive_content as $element)
+					{
+						if (substr($element['filename'], -1) == '/')
+							$element['filename'] = substr($element['filename'], 0, -1);
+						if (substr_count($element['filename'], '/') == 0)
+							$archive_root_content[] = array('filename' => $element['filename'], 'folder' => ((isset($element['folder']) && $element['folder'] == 1) || (isset($element['typeflag']) && $element['typeflag'] == 5)));
+					}
+					
+					if (count($archive_root_content) == 1 && $archive_root_content[0]['folder'])
+					{
+						$module_id = $archive_root_content[0]['filename'];
+						if (!ModulesManager::is_module_installed($module_id))
+						{
+							if ($upload->get_extension() == 'gzip')
+								PclTarExtract($upload->get_filename(), $modules_folder);
+							else
+								$zip->extract(PCLZIP_OPT_PATH, $modules_folder, PCLZIP_OPT_SET_CHMOD, 0755);
+							
+							$this->install_module($module_id, true);
+						}
+						else
+						{
+							$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('element.already_exists', 'status-messages-common'), MessageHelper::NOTICE, 4));
+						}
+					}
+					else
+					{
+						$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('error.invalid_archive_content', 'status-messages-common'), MessageHelper::NOTICE, 4));
+					}
+					
+					$uploaded_file = new File($archive);
+					$uploaded_file->delete();
 				}
 				else
 				{
-					$this->view->put('MSG', MessageHelper::display($this->lang['modules.already_installed'], MessageHelper::NOTICE, 4));
+					$this->view->put('MSG', MessageHelper::display($this->lang['modules.upload_invalid_format'], MessageHelper::NOTICE, 4));
 				}
 			}
 			else
