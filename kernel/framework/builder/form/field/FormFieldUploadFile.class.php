@@ -32,39 +32,42 @@
  */
 class FormFieldUploadFile extends AbstractFormField
 {
-    /**
-     * @desc Constructs a FormFieldUploadFileTextEditor.
-     * @param string $id Field identifier
-     * @param string $label Field label
-     * @param string $value Default value
-     * @param string[] $field_options Map containing the options
-     * @param FormFieldConstraint[] $constraints The constraints checked during the validation
-     */
-    public function __construct($id, $label, $value, $field_options = array(), array $constraints = array())
-    {
-        parent::__construct($id, $label, $value, $field_options, $constraints);
-    }
+	/**
+	 * @desc Constructs a FormFieldUploadFileTextEditor.
+	 * @param string $id Field identifier
+	 * @param string $label Field label
+	 * @param string $value Default value
+	 * @param string[] $field_options Map containing the options
+	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
+	 */
+	public function __construct($id, $label, $value, $field_options = array(), array $constraints = array())
+	{
+		parent::__construct($id, $label, $value, $field_options, $constraints);
+	}
 
-    /**
-     * @return string The html code for the input.
-     */
-    public function display()
-    {
-        $template = $this->get_template_to_use();
-        
-        $this->assign_common_template_variables($template);
-        
-        $template->put_all(array(
-        	'C_AUTH_UPLOAD' => FileUploadConfig::load()->is_authorized_to_access_interface_files(),
+	/**
+	 * @return string The html code for the input.
+	 */
+	public function display()
+	{
+		$template = $this->get_template_to_use();
+		
+		$this->assign_common_template_variables($template);
+	   
+		$file = new File($this->get_value());
+		
+		$template->put_all(array(
+			'C_PREVIEW_HIDDEN' => !in_array($file->get_extension(), array('jpeg', 'jpg', 'gif', 'tiff', 'png')),
+			'C_AUTH_UPLOAD' => FileUploadConfig::load()->is_authorized_to_access_interface_files(),
 			'FILE_PATH' => Url::to_rel($this->get_value()),
-        ));
+		));
 
-        return $template;
-    }
+		return $template;
+	}
 
-    protected function get_default_template()
-    {
-        return new FileTemplate('framework/builder/form/FormFieldUploadFile.tpl');
-    }
+	protected function get_default_template()
+	{
+		return new FileTemplate('framework/builder/form/FormFieldUploadFile.tpl');
+	}
 }
 ?>

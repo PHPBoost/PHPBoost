@@ -18,13 +18,13 @@
 		<div class="text-status-constraint" style="display:none" id="onblurMessageResponse${escape(HTML_ID)}"></div>
 	</div>
 </div>
-<div id="${escape(HTML_ID)}_preview"# IF C_HIDDEN # style="display:none;" # ENDIF # class="form-element # IF C_HAS_FIELD_CLASS #{FIELD_CLASS}# ENDIF #">
+<div id="${escape(HTML_ID)}_preview"# IF C_PREVIEW_HIDDEN # style="display:none;"# ENDIF # class="form-element # IF C_HAS_FIELD_CLASS #{FIELD_CLASS}# ENDIF #">
 	<label for="${escape(HTML_ID)}_preview">
 		${LangLoader::get_message('form.picture.preview', 'common')}
 	</label>
 
 	<div class="form-field">
-		<img id="${escape(HTML_ID)}_preview_picture" src="{FILE_PATH}" alt="" style="vertical-align:top" />
+		<img id="${escape(HTML_ID)}_preview_picture" src="# IF NOT C_PREVIEW_HIDDEN #{FILE_PATH}# ENDIF #" alt="" style="vertical-align:top" />
 	</div>
 </div>
 
@@ -32,29 +32,39 @@
 
 <script>
 <!--
-jQuery("#" + ${escapejs(NAME)}).blur(function(){
-	jQuery.ajax({
-		url: PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/image/preview/',
-		type: "post",
-		dataType: "json",
-		data: {token:${escapejs(TOKEN)}, image:HTMLForms.getField(${escapejs(ID)}).getValue()},
-		beforeSend: function(){
-			jQuery('#${escape(HTML_ID)}_preview_picture').after('<i id="${escape(HTML_ID)}_preview_loading" class="fa fa-spinner fa-spin"></i>');
-		},
-		success: function(returnData){
-			jQuery('#${escape(HTML_ID)}_preview_picture').hide();
-			jQuery('#${escape(HTML_ID)}_preview_loading').remove();
 
-			if (returnData.url) {
-				jQuery('#${escape(HTML_ID)}_preview_picture').attr("src", returnData.url);
-				jQuery('#${escape(HTML_ID)}_preview_picture').css( "display", "inline");
-			} else {
+jQuery("#" + ${escapejs(NAME)}).blur(function(){
+	var fileName = HTMLForms.getField(${escapejs(ID)}).getValue();
+	var extension = fileName.substring(fileName.lastIndexOf('.')+1);
+	
+	if ((/^(jpg|jpeg|gif|tiff|png)$/i).test(extension)) {
+		jQuery('#${escape(HTML_ID)}_preview').show();
+		jQuery.ajax({
+			url: PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/image/preview/',
+			type: "post",
+			dataType: "json",
+			data: {token:${escapejs(TOKEN)}, image:HTMLForms.getField(${escapejs(ID)}).getValue()},
+			beforeSend: function(){
 				jQuery('#${escape(HTML_ID)}_preview_picture').hide();
+				jQuery('#${escape(HTML_ID)}_preview_picture').after('<i id="${escape(HTML_ID)}_preview_loading" class="fa fa-spinner fa-spin"></i>');
+			},
+			success: function(returnData){
+				jQuery('#${escape(HTML_ID)}_preview_loading').remove();
+
+				if (returnData.url) {
+					jQuery('#${escape(HTML_ID)}_preview_picture').attr("src", returnData.url);
+					jQuery('#${escape(HTML_ID)}_preview_picture').css( "display", "inline");
+				} else {
+					jQuery('#${escape(HTML_ID)}_preview_picture').hide();
+				}
+			},
+			error: function(e){
+				alert(e);
 			}
-		},
-		error: function(e){
-			alert(e);
-		}
-	});
+		});
+	} else {
+		jQuery('#${escape(HTML_ID)}_preview').hide();
+	}
 });
+-->
 </script>
