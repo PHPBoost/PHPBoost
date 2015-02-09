@@ -54,10 +54,10 @@ class FormFieldUploadFile extends AbstractFormField
 		
 		$this->assign_common_template_variables($template);
 	   
-		$file = new File($this->get_value());
+		$file_type = new FileType(new File($this->get_value()));
 		
 		$template->put_all(array(
-			'C_PREVIEW_HIDDEN' => !in_array($file->get_extension(), array('jpeg', 'jpg', 'gif', 'tiff', 'png')),
+			'C_PREVIEW_HIDDEN' => !$file_type->is_picture(),
 			'C_AUTH_UPLOAD' => FileUploadConfig::load()->is_authorized_to_access_interface_files(),
 			'FILE_PATH' => Url::to_rel($this->get_value()),
 		));
