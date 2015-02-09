@@ -60,7 +60,7 @@ class NewslettersubscribeController extends ModuleController
 	{
 		$this->lang = LangLoader::get('common', 'newsletter');
 		
-		$mail_request = AppContext::get_request()->get_string('mail_newsletter', '');
+		$mail_request = TextHelper::htmlspecialchars(AppContext::get_request()->get_string('mail_newsletter', ''));
 		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) && empty($mail_request))
 		{
 			$this->email = AppContext::get_current_user()->get_attribute('user_mail');
