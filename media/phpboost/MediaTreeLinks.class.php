@@ -49,7 +49,7 @@ class MediaTreeLinks implements ModuleTreeLinksExtensionPoint
 		
 		if (!AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		{
-			$tree->add_link(new ModuleLink($lang['media.actions.add'], MediaUrlBuilder::configuration(), MediaAuthorizationsService::check_authorizations()->write() || MediaAuthorizationsService::check_authorizations()->contribution()));
+			$tree->add_link(new ModuleLink($lang['media.actions.add'], MediaUrlBuilder::add(), MediaAuthorizationsService::check_authorizations()->write() || MediaAuthorizationsService::check_authorizations()->contribution()));
 		}
 		
 		return $tree;
