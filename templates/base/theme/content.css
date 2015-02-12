@@ -24,47 +24,31 @@ Contient les formulaires, les modules (et modules minis), messages.
 
 section,
 article {
-	width: 98%;
-	margin: 1em auto;
+	width: 100%;
+	margin: 0 auto;	
 	vertical-align: top;
 }
 
-div#main.main-with-left.main-with-right section .content {
-	padding: 0 5px;
-}
-
-div#main.main-with-left.main-with-right section .form-element,
-div#main.main-with-left.main-with-right section .form-element-textarea {
-	margin: 5px 0;
-}
-
-section header,
-article header {
-	margin: 0 0 1em 0;
-}
-
-
 /* CSS applique aux tablettes */
-@media ( max-width: 768px ) {
+@media ( min-width: 768px ) {
 	section,
 	article {
-		width: 100%;
-		margin: 0 auto;
-		vertical-align: top;
+		width: 98%;
+		margin: 1em auto;
 	}
 
 	div#main.main-with-left.main-with-right section .content {
-		padding: 0;
+		padding: 0 5px;
 	}
 
 	div#main.main-with-left.main-with-right section .form-element,
 	div#main.main-with-left.main-with-right section .form-element-textarea {
-		margin: 0;
+		margin: 5px 0;
 	}
 
 	section header,
 	article header {
-		margin: 0;
+		margin: 0 0 1em 0;
 	}
 }
 
