@@ -415,6 +415,7 @@ else
 	}
 	$result->dispose();
 
+	$now = new Date();
 	//Affichage des fichiers contenu dans le dossier
 	$result = PersistenceContext::get_querier()->select("SELECT up.id, up.name, up.path, up.size, up.type, up.timestamp, m.user_id
 	FROM " . DB_TABLE_UPLOAD . " up
@@ -466,6 +467,7 @@ else
 		$displayed_code = $is_bbcode_editor ? $bbcode : '/upload/' . $row['path'];
 		$inserted_code = !empty($parse) ? (!empty($no_path) ? $link : PATH_TO_ROOT . $link) : ($is_bbcode_editor ? addslashes($bbcode) : TextHelper::htmlentities($tinymce));
 		$tpl->assign_block_vars('files', array(
+			'C_RECENT_FILE' => $row['timestamp'] > ($now->get_timestamp() - (15 * 60)),  // Ficher ajouté il y a moins de 15 minutes
 			'ID' => $row['id'],
 			'IMG' => $get_img_mimetype['img'],
 			'URL' => PATH_TO_ROOT . $link,
