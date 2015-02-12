@@ -4,7 +4,7 @@
  * -----
  * Author: efi, Matthias Pospiech (matthias@pospiech.eu)
  * Copyright: (c) 2006 efi, Matthias Pospiech (matthias@pospiech.eu), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.11
  * Date Started: 2006/09/23
  *
  * LaTeX language file for GeSHi.
@@ -26,7 +26,7 @@
  * 2006/09/23 (1.0.0)
  *  -  First Release
  *
- * TO_DO
+ * TODO
  * -------------------------
  * *
  *
@@ -35,9 +35,9 @@
  *     This file is part of GeSHi.
  *
  *   GeSHi is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
  *
  *   GeSHi is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -61,13 +61,27 @@ $language_data = array (
     'ESCAPE_CHAR' => '',
     'KEYWORDS' => array(
         1 => array(
-            'appendix','backmatter','caption','captionabove','captionbelow',
-            'def','documentclass','edef','equation','flushleft','flushright',
-            'footnote','frontmatter','hline','include','input','item','label',
-            'let','listfiles','listoffigures','listoftables','mainmatter',
-            'makeatletter','makeatother','makebox','mbox','par','raggedleft',
-            'raggedright','raisebox','ref','rule','table','tableofcontents',
-            'textbf','textit','texttt','today'
+            'addlinespace','and','address','appendix','author','backmatter',
+            'bfseries','bibitem','bigskip','blindtext','caption','captionabove',
+            'captionbelow','cdot','centering','chapter','cite','color',
+            'colorbox','date','dedication','def','definecolor','documentclass',
+            'edef','else','email','emph','eqref','extratitle','fbox','fi',
+            'flushleft','flushright','footnote','frac','frontmatter',
+            'graphicspath','hfil','hfill','hfilll','hline','hspace','huge','ifx','include',
+            'includegraphics','infty','input','int','item','itemsep',
+            'KOMAoption','KOMAoptions','label','LaTeX','left','let','limits',
+            'listfiles','listoffigures','listoftables','lowertitleback',
+            'mainmatter','makeatletter','makeatother','makebox','makeindex',
+            'maketitle','mbox','mediumskip','newcommand','newenvironment',
+            'newpage','nocite','nonumber','pagestyle','par','paragraph',
+            'parbox','parident','parskip','partial','publishers','raggedleft',
+            'raggedright','raisebox','ref','renewcommand','renewenvironment',
+            'right','rule','section','setlength','sffamily','subject',
+            'subparagraph','subsection','subsubsection','subtitle','sum',
+            'table','tableofcontents','textbf','textcolor','textit',
+            'textnormal','textsuperscript','texttt','textwidth','thanks','title',
+            'titlehead','today','ttfamily','uppertitleback','urlstyle',
+            'usepackage','vfil','vfill','vfilll','vspace'
             )
         ),
     'SYMBOLS' => array(
@@ -79,7 +93,7 @@ $language_data = array (
         ),
     'STYLES' => array(
         'KEYWORDS' => array(
-            1 => 'color: #800000; font-weight: bold;',
+            1 => 'color: #800000;',
             ),
         'COMMENTS' => array(
             1 => 'color: #2C922C; font-style: italic;'
@@ -117,7 +131,7 @@ $language_data = array (
             )
         ),
     'URLS' => array(
-        1 => 'http://www.golatex.de/wiki/index.php?title=\\{FNAME}',
+        1 => 'http://www.golatex.de/wiki/index.php?title=%5C{FNAME}',
         ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(
@@ -133,7 +147,7 @@ $language_data = array (
             ),
         // [options]
         2 => array(
-            GESHI_SEARCH => "(?<=\[).+(?=\])",
+            GESHI_SEARCH => "(?<=\[).*(?=\])",
             GESHI_REPLACE => '\0',
             GESHI_MODIFIERS => 'Us',
             GESHI_BEFORE => '',
@@ -171,7 +185,7 @@ $language_data = array (
         8 => "\\\\(?:end|begin)(?=[^a-zA-Z])",
         // {parameters}
         9 => array(
-            GESHI_SEARCH => "(?<=\\{)(?!<\|!REG3XP5!>).*(?=\\})",
+            GESHI_SEARCH => "(?<=\\{)(?!<\|!REG3XP5!>).*?(?=\\})",
             GESHI_REPLACE => '\0',
             GESHI_MODIFIERS => 'Us',
             GESHI_BEFORE => '',
@@ -197,7 +211,7 @@ $language_data = array (
         ),
         'KEYWORDS' => array(
             'DISALLOWED_BEFORE' => "(?<=\\\\)",
-            'DISALLOWED_AFTER' => "(?=\b)(?!\w)"
+            'DISALLOWED_AFTER' => "(?![A-Za-z0-9])"
         ),
         'ENABLE_FLAGS' => array(
             'NUMBERS' => GESHI_NEVER,

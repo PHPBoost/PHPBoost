@@ -4,7 +4,7 @@
  * --------
  * Author: Benny Baumann (BenBE@geshi.org)
  * Copyright: (c) 2008 Benny Baumann (http://qbnz.com/highlighter/)
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.11
  * Date Started: 2008/10/02
  *
  * Prolog language file for GeSHi.
@@ -14,7 +14,7 @@
  * 2008/10/02 (1.0.8.1)
  *  -  First Release
  *
- * TO_DO (updated 2008/10/02)
+ * TODO (updated 2008/10/02)
  * -------------------------
  *
  *************************************************************************************
@@ -22,9 +22,9 @@
  *     This file is part of GeSHi.
  *
  *   GeSHi is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
  *
  *   GeSHi is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -130,7 +130,7 @@ $language_data = array (
         ),
     'REGEXPS' => array(
         //Variables
-        0 => "(?<![A-Z_])(?!(?:PIPE|SEMI)[^a-zA-Z0-9_])[A-Z_][a-zA-Z0-9_]*(?![a-zA-Z0-9_])"
+        0 => "(?<![a-zA-Z0-9_])(?!(?:PIPE|SEMI|DOT)[^a-zA-Z0-9_])[A-Z_][a-zA-Z0-9_]*(?![a-zA-Z0-9_])(?!\x7C)"
         ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(

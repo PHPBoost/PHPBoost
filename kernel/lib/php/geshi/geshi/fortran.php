@@ -4,7 +4,7 @@
  * -----------
  * Author: Cedric Arrabie (cedric.arrabie@univ-pau.fr)
  * Copyright: (C) 2006 Cetric Arrabie
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.11
  * Date Started: 2006/04/22
  *
  * Fortran language file for GeSHi.
@@ -16,7 +16,7 @@
  * 2006/04/20 (1.0.0)
  *   -  First Release
  *
- * TO_DO
+ * TODO
  * -------------------------
  *  -  Get a list of inbuilt functions to add (and explore fortran more
  *     to complete this rather bare language file)
@@ -26,9 +26,9 @@
  *     This file is part of GeSHi.
  *
  *   GeSHi is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
  *
  *   GeSHi is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of

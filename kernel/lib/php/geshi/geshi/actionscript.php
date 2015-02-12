@@ -4,7 +4,7 @@
  * ----------------
  * Author: Steffen Krause (Steffen.krause@muse.de)
  * Copyright: (c) 2004 Steffen Krause, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.11
  * Date Started: 2004/06/20
  *
  * Actionscript language file for GeSHi.
@@ -16,7 +16,7 @@
  * 2004/10/27 (1.0.0)
  *  -  First Release
  *
- * TO_DO (updated 2004/11/27)
+ * TODO (updated 2004/11/27)
  * -------------------------
  *
  *************************************************************************************
@@ -24,9 +24,9 @@
  *     This file is part of GeSHi.
  *
  *   GeSHi is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
  *
  *   GeSHi is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -48,7 +48,7 @@ $language_data = array (
     'ESCAPE_CHAR' => '\\',
     'KEYWORDS' => array(
         1 => array(
-            '#include', 'for', 'foreach', 'if', 'elseif', 'else', 'while', 'do', 'dowhile',
+            '#include', 'for', 'foreach', 'each', 'if', 'elseif', 'else', 'while', 'do', 'dowhile',
             'endwhile', 'endif', 'switch', 'case', 'endswitch', 'return', 'break', 'continue', 'in'
             ),
         2 => array(

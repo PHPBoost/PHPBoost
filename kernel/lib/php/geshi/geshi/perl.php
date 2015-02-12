@@ -4,7 +4,7 @@
  * --------
  * Author: Andreas Gohr (andi@splitbrain.org), Ben Keen (ben.keen@gmail.com)
  * Copyright: (c) 2004 Andreas Gohr, Ben Keen (http://www.benjaminkeen.org/), Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.11
  * Date Started: 2004/08/20
  *
  * Perl language file for GeSHi.
@@ -25,7 +25,7 @@
  * 2004/08/20 (1.0.0)
  *   -  First Release
  *
- * TO_DO (updated 2004/11/27)
+ * TODO (updated 2004/11/27)
  * -------------------------
  * * LABEL:
  * * string comparison operators
@@ -35,9 +35,9 @@
  *     This file is part of GeSHi.
  *
  *   GeSHi is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
  *
  *   GeSHi is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
