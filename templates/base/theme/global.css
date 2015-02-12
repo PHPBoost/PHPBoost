@@ -849,6 +849,10 @@ div#release {
 	height: 60px;
 }
 
+a.upload-recent-file {
+	color: #BA4B49;
+}
+
 /* --- Deplacement des fichiers --- */
 .upload-selected-cat {
 	background: #F5FBFF;
