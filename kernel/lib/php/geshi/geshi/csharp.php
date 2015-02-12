@@ -3,22 +3,27 @@
  * csharp.php
  * ----------
  * Author: Alan Juden (alan@judenware.org)
+ * Revised by: Michael Mol (mikemol@gmail.com)
  * Copyright: (c) 2004 Alan Juden, Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.11
  * Date Started: 2004/06/04
  *
  * C# language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2012/06/18 (1.0.8.11)
+ *  -  Added missing keywords (Christian Stelzmann)
+ * 2009/04/03 (1.0.8.6)
+ *  -  Added missing keywords identified by Rosetta Code users.
  * 2008/05/25 (1.0.7.22)
- *   -  Added highlighting of using and namespace directives as non-OOP
+ *  -  Added highlighting of using and namespace directives as non-OOP
  * 2005/01/05 (1.0.1)
  *  -  Used hardquote support for @"..." strings (Cliff Stanford)
  * 2004/11/27 (1.0.0)
  *  -  Initial release
  *
- * TO_DO (updated 2004/11/27)
+ * TODO (updated 2004/11/27)
  * -------------------------
  *
  *************************************************************************************
@@ -26,9 +31,9 @@
  *     This file is part of GeSHi.
  *
  *   GeSHi is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
  *
  *   GeSHi is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -52,18 +57,20 @@ $language_data = array (
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array("'", '"'),
     'HARDQUOTE' => array('@"', '"'),
-    'HARDESCAPE' => array('""'),
+    'HARDESCAPE' => array('"'),
+    'HARDCHAR' => '"',
     'ESCAPE_CHAR' => '\\',
     'KEYWORDS' => array(
         1 => array(
-            'as', 'auto', 'base', 'break', 'case', 'catch', 'const', 'continue',
+            'abstract', 'add', 'as', 'base', 'break', 'by', 'case', 'catch', 'const', 'continue',
             'default', 'do', 'else', 'event', 'explicit', 'extern', 'false',
-            'finally', 'fixed', 'for', 'foreach', 'goto', 'if', 'implicit',
-            'in', 'internal', 'lock', 'namespace', 'null', 'operator', 'out',
-            'override', 'params', 'partial', 'private', 'protected', 'public',
-            'readonly', 'ref', 'return', 'sealed', 'stackalloc', 'static',
-            'switch', 'this', 'throw', 'true', 'try', 'unsafe', 'using',
-            'virtual', 'void', 'while'
+            'finally', 'fixed', 'for', 'foreach', 'from', 'get', 'goto', 'group', 'if',
+            'implicit', 'in', 'into', 'internal', 'join', 'lock', 'namespace', 'null',
+            'operator', 'out', 'override', 'params', 'partial', 'private',
+            'protected', 'public', 'readonly', 'remove', 'ref', 'return', 'sealed',
+            'select', 'set', 'stackalloc', 'static', 'switch', 'this', 'throw', 'true',
+            'try', 'unsafe', 'using', 'var', 'value', 'virtual', 'volatile', 'where',
+            'while', 'yield'
             ),
         2 => array(
             '#elif', '#endif', '#endregion', '#else', '#error', '#define', '#if',
@@ -74,8 +81,8 @@ $language_data = array (
             ),
         4 => array(
             'bool', 'byte', 'char', 'class', 'decimal', 'delegate', 'double',
-            'enum', 'float', 'int', 'interface', 'long', 'object', 'sbyte',
-            'short', 'string', 'struct', 'uint', 'ulong', 'ushort'
+            'dynamic', 'enum', 'float', 'int', 'interface', 'long', 'object', 'sbyte',
+            'short', 'string', 'struct', 'uint', 'ulong', 'ushort', 'void'
             ),
         5 => array(
             'Microsoft.Win32',
@@ -168,7 +175,7 @@ $language_data = array (
         ),
     'SYMBOLS' => array(
         '+', '-', '*', '?', '=', '/', '%', '&', '>', '<', '^', '!', ':', ';',
-        '(', ')', '{', '}', '[', ']', '|'
+        '(', ')', '{', '}', '[', ']', '|', '.'
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
@@ -180,10 +187,10 @@ $language_data = array (
         ),
     'STYLES' => array(
         'KEYWORDS' => array(
-            1 => 'color: #0600FF;',
+            1 => 'color: #0600FF; font-weight: bold;',
             2 => 'color: #FF8000; font-weight: bold;',
             3 => 'color: #008000;',
-            4 => 'color: #FF0000;',
+            4 => 'color: #6666cc; font-weight: bold;',
             5 => 'color: #000000;'
             ),
         'COMMENTS' => array(
@@ -197,7 +204,7 @@ $language_data = array (
             'HARD' => 'color: #008080; font-weight: bold;'
             ),
         'BRACKETS' => array(
-            0 => 'color: #000000;'
+            0 => 'color: #008000;'
             ),
         'STRINGS' => array(
             0 => 'color: #666666;',
@@ -241,7 +248,7 @@ $language_data = array (
     'PARSER_CONTROL' => array(
         'KEYWORDS' => array(
             'DISALLOWED_BEFORE' => "(?<![a-zA-Z0-9\$_\|\#>|^])",
-            'DISALLOWED_AFTER' => "(?![a-zA-Z0-9_<\|%\\-])"
+            'DISALLOWED_AFTER' => "(?![a-zA-Z0-9_%\\-])"
         )
     )
 );

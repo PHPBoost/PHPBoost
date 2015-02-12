@@ -4,7 +4,7 @@
  * ----------
  * Author: Roberto Rossi (rsoftware@altervista.org)
  * Copyright: (c) 2004 Roberto Rossi (http://rsoftware.altervista.org), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.11
  * Date Started: 2004/08/30
  *
  * Python language file for GeSHi.
@@ -20,7 +20,7 @@
  * 2004/08/30 (1.0.0)
  *  -  First Release
  *
- * TO_DO (updated 2004/11/27)
+ * TODO (updated 2004/11/27)
  * -------------------------
  *
  *************************************************************************************
@@ -28,9 +28,9 @@
  *     This file is part of GeSHi.
  *
  *   GeSHi is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
  *
  *   GeSHi is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -49,8 +49,13 @@ $language_data = array (
     'COMMENT_MULTI' => array(),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     //Longest quotemarks ALWAYS first
-    'QUOTEMARKS' => array('"""', '"', "'"),
+    'QUOTEMARKS' => array('"""', "'''", '"', "'"),
     'ESCAPE_CHAR' => '\\',
+    'NUMBERS' =>
+        GESHI_NUMBER_INT_BASIC | GESHI_NUMBER_BIN_PREFIX_0B |
+        GESHI_NUMBER_OCT_PREFIX_0O | GESHI_NUMBER_HEX_PREFIX |
+        GESHI_NUMBER_FLT_NONSCI | GESHI_NUMBER_FLT_NONSCI_F |
+        GESHI_NUMBER_FLT_SCI_SHORT | GESHI_NUMBER_FLT_SCI_ZERO,
     'KEYWORDS' => array(
 
         /*
@@ -60,7 +65,7 @@ $language_data = array (
         1 => array(
             'and', 'del', 'for', 'is', 'raise', 'assert', 'elif', 'from', 'lambda', 'return', 'break',
             'else', 'global', 'not', 'try', 'class', 'except', 'if', 'or', 'while', 'continue', 'exec',
-            'import', 'pass', 'yield', 'def', 'finally', 'in', 'print', 'with', 'as'
+            'import', 'pass', 'yield', 'def', 'finally', 'in', 'print', 'with', 'as', 'nonlocal'
             ),
 
         /*
@@ -172,7 +177,9 @@ $language_data = array (
             )
         ),
     'SYMBOLS' => array(
-            '(', ')', '[', ']', '{', '}', '*', '&', '%', '!', ';', '<', '>', '?', '`'
+        '<', '>', '=', '!', '<=', '>=',             //·comparison·operators
+        '~', '@',                                   //·unary·operators
+        ';', ','                                    //·statement·separator
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,

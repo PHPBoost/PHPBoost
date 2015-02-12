@@ -4,7 +4,7 @@
  * --------
  * Author: Sean Hanna (smokingrope@gmail.com)
  * Copyright: (c) 2006 Sean Hanna
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.11
  * Date Started: 04/23/2006
  *
  * Standard Text File (No Syntax Highlighting).
@@ -19,7 +19,7 @@
  * - Documentation Cleaned Up
  * - First Release
  *
- * TO_DO (updated 04/27/2006)
+ * TODO (updated 04/27/2006)
  * -------------------------
  *
  *
@@ -28,9 +28,9 @@
  *     This file is part of GeSHi.
  *
  *   GeSHi is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
  *
  *   GeSHi is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of

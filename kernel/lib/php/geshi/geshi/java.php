@@ -4,7 +4,7 @@
  * --------
  * Author: Nigel McNie (nigel@geshi.org)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.11
  * Date Started: 2004/07/10
  *
  * Java language file for GeSHi.
@@ -26,7 +26,7 @@
  * 2004/07/14 (1.0.0)
  *   -  First Release
  *
- * TO_DO (updated 2004/11/27)
+ * TODO (updated 2004/11/27)
  * -------------------------
  * * Compact the class names like the first few have been
  *   and eliminate repeats
@@ -36,9 +36,9 @@
  *     This file is part of GeSHi.
  *
  *   GeSHi is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
  *
  *   GeSHi is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -964,7 +964,7 @@ $language_data = array (
     'URLS' => array(
         1 => '',
         2 => '',
-        3 => 'http://www.google.com/search?hl=en&amp;q=allinurl%3A{FNAMEL}+java.sun.com&amp;btnI=I%27m%20Feeling%20Lucky',
+        3 => 'http://www.google.com/search?hl=en&amp;q=allinurl%3Adocs.oracle.com+javase+docs+api+{FNAMEL}',
         4 => ''
         ),
     'OOLANG' => true,

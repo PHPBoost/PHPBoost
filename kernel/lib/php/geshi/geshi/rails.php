@@ -4,7 +4,7 @@
  * ---------
  * Author: Moises Deniz
  * Copyright: (c) 2005 Moises Deniz
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.11
  * Date Started: 2007/03/21
  *
  * Ruby (with Ruby on Rails Framework) language file for GeSHi.
@@ -14,9 +14,9 @@
  *   This file is part of GeSHi.
  *
  *   GeSHi is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
  *
  *   GeSHi is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of

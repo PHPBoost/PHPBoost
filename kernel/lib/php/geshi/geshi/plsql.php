@@ -4,7 +4,7 @@
  * -------
  * Author: Victor Engmark <victor.engmark@gmail.com>
  * Copyright: (c) 2006 Victor Engmark (http://l0b0.net/)
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.11
  * Date Started: 2006/10/26
  *
  * Oracle 9.2 PL/SQL language file for GeSHi.
@@ -15,7 +15,7 @@
  * 2006/10/27 (1.0.0)
  *    -    First Release
  *
- * TO_DO (updated 2006/10/27)
+ * TODO (updated 2006/10/27)
  * -------------------------
  * * Add < and > to brackets
  * * Remove symbols which are also comment delimiters / quote marks?
@@ -25,9 +25,9 @@
  *         This file is part of GeSHi.
  *
  *     GeSHi is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation; either version 2 of the License, or
+ *     (at your option) any later version.
  *
  *     GeSHi is distributed in the hope that it will be useful,
  *     but WITHOUT ANY WARRANTY; without even the implied warranty of

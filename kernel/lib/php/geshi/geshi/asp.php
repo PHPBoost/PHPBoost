@@ -4,7 +4,7 @@
  * --------
  * Author: Amit Gupta (http://blog.igeek.info/)
  * Copyright: (c) 2004 Amit Gupta (http://blog.igeek.info/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.11
  * Date Started: 2004/08/13
  *
  * ASP language file for GeSHi.
@@ -20,7 +20,7 @@
  * 2004/08/13 (1.0.0)
  *   -  First Release
  *
- * TO_DO (updated 2004/11/27)
+ * TODO (updated 2004/11/27)
  * -------------------------
  * * Include all the functions, keywords etc that I have missed
  *
@@ -29,9 +29,9 @@
  *     This file is part of GeSHi.
  *
  *   GeSHi is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
  *
  *   GeSHi is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -151,7 +151,7 @@ $language_data = array (
         2 => array(
             '<script language="javascript" runat="server">' => '</script>'
             ),
-        3 => "/(<%=?)(?:\"[^\"]*?\"|\/\*(?!\*\/).*?\*\/|.)*?(%>|\Z)/sm"
+        3 => "/(?P<start><%=?)(?:\"[^\"]*?\"|\/\*(?!\*\/).*?\*\/|.)*?(?P<end>%>|\Z)/sm"
         ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
         0 => true,
