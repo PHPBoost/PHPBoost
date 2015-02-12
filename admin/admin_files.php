@@ -432,6 +432,7 @@ else
 	
 	if (!$show_member) //Dossier membres.
 	{
+		$now = new Date();
 		if (!empty($folder_member) && empty($folder))
 		{
 			$result = PersistenceContext::get_querier()->select("SELECT up.id, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.display_name
@@ -487,6 +488,7 @@ else
 			}
 			
 			$template->assign_block_vars('files', array(
+				'C_RECENT_FILE' => $row['timestamp'] > ($now->get_timestamp() - (15 * 60)),  // Ficher ajouté il y a moins de 15 minutes
 				'ID' => $row['id'],
 				'IMG' => $get_img_mimetype['img'],
 				'URL' => $link,
