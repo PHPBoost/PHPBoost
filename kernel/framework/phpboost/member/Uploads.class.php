@@ -276,8 +276,16 @@ class Uploads
 	
 	//Récupération du répertoire courant (administration).
 	public static function get_admin_url($id_folder, $pwd, $member_link = '')
-	{		
-		$parent_folder = self::$db_querier->select_single_row(PREFIX . "upload_cat", array("id_parent", "name", "user_id"), 'WHERE id=:id', array('id' => $id_folder));
+	{
+		$parent_folder = array(
+			'id_parent' => '',
+			'name' => '',
+			'user_id' => ''
+		);
+		try {
+			$parent_folder = self::$db_querier->select_single_row(PREFIX . "upload_cat", array("id_parent", "name", "user_id"), 'WHERE id=:id', array('id' => $id_folder));
+		} catch (RowNotFoundException $e) {}
+		
 		if (!empty($parent_folder['id_parent']))
 		{	
 			$pwd .= self::get_admin_url($parent_folder['id_parent'], $pwd, $member_link);	
