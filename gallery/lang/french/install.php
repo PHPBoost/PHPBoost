@@ -30,6 +30,7 @@
  ####################################################
 
 $lang = array(
+    'gallery_example_element_name' => 'Logo PHPBoost',
     'gallery_cat_name' => 'Test',
     'gallery_cat_content' => 'Galerie de test',
 );

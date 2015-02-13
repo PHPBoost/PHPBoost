@@ -120,8 +120,8 @@ class GallerySetup extends DefaultModuleSetup
 		PersistenceContext::get_querier()->insert(self::$gallery_table, array(
 			'id' => 1,
 			'idcat' => 1,
-			'name' => 'PHPBoost!',
-			'path' => 'phpboost3.jpg',
+			'name' => $this->messages['gallery_example_element_name'],
+			'path' => 'phpboost-logo.png',
 			'width' => 320,
 			'height' => 264,
 			'weight' => 15614,

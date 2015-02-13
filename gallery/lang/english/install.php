@@ -30,6 +30,7 @@
  ####################################################
 
 $lang = array(
+    'gallery_example_element_name' => 'PHPBoost logo',
     'gallery_cat_name' => 'Test',
     'gallery_cat_content' => 'Demonstration of a Gallery Category',
 );
