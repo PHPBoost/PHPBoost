@@ -105,7 +105,7 @@ class GalleryFeedProvider implements FeedProvider
 
 	function get_feed_data_struct($idcat = 0, $name = '')
 	{
-		global $Cache,$LANG,$GALLERY_CAT,$GALLERY_LANG;
+		global $Cache,$LANG,$CAT_GALLERY,$GALLERY_LANG;
 
 		$querier = PersistenceContext::get_querier();
 		$config = GalleryConfig::load();
@@ -123,12 +123,12 @@ class GalleryFeedProvider implements FeedProvider
 		$data->set_lang($LANG['xml_lang']);
 		$data->set_auth_bit(GalleryAuthorizationsService::READ_AUTHORIZATIONS);
 
-        $req_cats = (($idcat > 0) && isset($GALLERY_CAT[$idcat])) ? ' AND c.id_left >= :cat_left AND id_right <= :cat_right' : '';
+        $req_cats = (($idcat > 0) && isset($CAT_GALLERY[$idcat])) ? ' AND c.id_left >= :cat_left AND id_right <= :cat_right' : '';
         $parameters = array('limit' => 2 * $config->get_pics_number_per_page());
         if ($idcat > 0)
         {
-        	$parameters['cat_left'] = $GALLERY_CAT[$idcat]['id_left'];
-            $parameters['cat_right'] = $GALLERY_CAT[$idcat]['id_right'];
+        	$parameters['cat_left'] = $CAT_GALLERY[$idcat]['id_left'];
+            $parameters['cat_right'] = $CAT_GALLERY[$idcat]['id_right'];
         }
         $req = 'SELECT g.*, gc.auth
 			FROM ' . PREFIX . 'gallery g
