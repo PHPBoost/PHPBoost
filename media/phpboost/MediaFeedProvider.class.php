@@ -37,10 +37,6 @@ class MediaFeedProvider implements FeedProvider
 	{
 		if (MediaService::get_categories_manager()->get_categories_cache()->category_exists($idcat))
 		{
-			$querier = PersistenceContext::get_querier();
-			global $LANG, $MEDIA_LANG;
-			load_module_lang('media');
-			
 			require_once(PATH_TO_ROOT . '/media/media_constant.php');
 			
 			$category = MediaService::get_categories_manager()->get_categories_cache()->get_category($idcat);
@@ -61,7 +57,7 @@ class MediaFeedProvider implements FeedProvider
 			$categories = MediaService::get_categories_manager()->get_childrens($idcat, new SearchCategoryChildrensOptions(), true);
 			$ids_categories = array_keys($categories);
 			
-			$results = $querier->select('SELECT media.*, cat.image
+			$results = PersistenceContext::get_querier()->select('SELECT media.*, cat.image
 				FROM ' . MediaSetup::$media_table . ' media
 				LEFT JOIN '. MediaSetup::$media_cats_table .' cat ON cat.id = media.idcat
 				WHERE media.idcat IN :ids_categories
