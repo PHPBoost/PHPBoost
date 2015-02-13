@@ -142,9 +142,16 @@ class Uploads
 	
 	//Renomme un dossier virtuel
 	public static function Rename_folder($id_folder, $name, $previous_name, $user_id, $admin = false)
-	{		
+	{
+		$info_folder = array(
+			'id_parent' => '',
+			'user_id' => ''
+		);
+		try {
+			$info_folder = self::$db_querier->select_single_row(PREFIX . "upload_cat", array("id_parent", "user_id"), 'WHERE id=:id', array('id' => $id_folder));
+		} catch (RowNotFoundException $e) {}
+		
 		//Vérification de l'unicité du nom du dossier.
-		$info_folder = self::$db_querier->select_single_row(PREFIX . "upload_cat", array("id_parent", "user_id"), 'WHERE id=:id', array('id' => $id_folder));
 		$check_folder = self::$db_querier->count(DB_TABLE_UPLOAD_CAT, 'WHERE id_parent = :id_parent AND name = :name AND id <> :id AND user_id = :user_id', array('id_parent' => $info_folder['id_parent'], 'name' => $name, 'id' => $id_folder, 'user_id' => $user_id));
 		if ($check_folder > 0 || preg_match('`/|\.|\\\|"|<|>|\||\?`', stripslashes($name)))
 			return '';
@@ -167,9 +174,16 @@ class Uploads
 	
 	//Renomme un fichier virtuel
 	public static function Rename_file($id_file, $name, $previous_name, $user_id, $admin = false)
-	{		
+	{
+		$info_cat = array(
+			'idcat' => '',
+			'user_id' => ''
+		);
+		try {
+			$info_cat = self::$db_querier->select_single_row(PREFIX . "upload", array("idcat", "user_id"), 'WHERE id=:id', array('id' => $id_file));
+		} catch (RowNotFoundException $e) {}
+		
 		//Vérification de l'unicité du nom du fichier.
-		$info_cat = self::$db_querier->select_single_row(PREFIX . "upload", array("idcat", "user_id"), 'WHERE id=:id', array('id' => $id_file));
 		$check_file = self::$db_querier->count(DB_TABLE_UPLOAD, 'WHERE idcat = :idcat AND name = :name AND id <> :id AND user_id = :user_id', array('idcat' => $info_cat['idcat'], 'name' => $name, 'id' => $id_file, 'user_id' => $user_id));
 		if ($check_file > 0 || preg_match('`/|\\\|"|<|>|\||\?`', stripslashes($name)))
 			return '/';
@@ -297,8 +311,15 @@ class Uploads
 	
 	//Récupération du répertoire courant.
 	public static function get_url($id_folder, $pwd, $popup)
-	{		
-		$parent_folder = self::$db_querier->select_single_row(PREFIX . "upload_cat", array("id_parent", "name"), 'WHERE id=:id AND user_id <> -1', array('id' => $id_folder));
+	{
+		$parent_folder = array(
+			'id_parent' => '',
+			'name' => ''
+		);
+		try {
+			$parent_folder = self::$db_querier->select_single_row(PREFIX . "upload_cat", array("id_parent", "name", "user_id"), 'WHERE id=:id', array('id' => $id_folder));
+		} catch (RowNotFoundException $e) {}
+		
 		if (!empty($parent_folder['id_parent']))
 		{	
 			$pwd .= self::get_url($parent_folder['id_parent'], $pwd, $popup);	
