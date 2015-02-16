@@ -66,7 +66,7 @@ class MenuService
 		$results = self::$querier->select_rows(DB_TABLE_MENUS, self::$columns, $fragment->get_query() . ' ORDER BY position ASC', $fragment->get_parameters());
 		foreach ($results as $row)
 		{
-			$menus[] = MenuService::initialize($row);
+			$menus[$row['id']] = MenuService::initialize($row);
 		}
 		return $menus;
 	}

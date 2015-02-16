@@ -69,7 +69,11 @@ function build_menu_tree()
 	var containerListLength = menusContainerList.length;
 	for(var i = 0; i < containerListLength; i++)
 	{
-		document.getElementById('menu_tree').value += Sortable.serialize(menusContainerList[i]);
+		$('<input>').attr({
+		    type: 'hidden',
+		    name: 'menu_tree_' + menusContainerList[i],
+		    value: JSON.stringify($("#"  + menusContainerList[i]).sortable("serialize").get())
+		}).appendTo('#form_menus');
 	}
 }
 function createSortableMenu() 
@@ -77,17 +81,12 @@ function createSortableMenu()
 	var containerListLength = menusContainerList.length;
 	for(var i = 0; i < containerListLength; i++)
 	{
-		Sortable.create(
-			menusContainerList[i], 
-			{
-				tag:'div',
-				containment:['mod_header','mod_subheader','mod_left','mod_right','mod_topcentral','mod_central','mod_bottomcentral','mod_topfooter','mod_footer'],
-				constraint:false,
-				scroll:window,
-				format:/^menu_([0-9]+)$/,
-				dropOnEmpty: true
-			}
-		);   
+		$("#" + menusContainerList[i]).sortable({
+			handle: '.fa-arrows',
+			group: 'menus',
+			containerSelector: '#mod_header, #mod_subheader, #mod_left, #mod_right, #mod_topcentral, #mod_central, #mod_bottomcentral, #mod_topfooter, #mod_footer',
+			itemSelector: 'div.menus-block-container'
+		});
 	}
 }
 -->
@@ -95,7 +94,7 @@ function createSortableMenu()
 
 
 <div id="admin-contents admin-contents-no-column">
-	<form action="menus.php?action=save" method="post" onsubmit="build_menu_tree();">
+	<form id="form_menus" action="menus.php?action=save" method="post" onsubmit="build_menu_tree();">
 		<table style="background: #F4F4F4; width: 99%; margin: auto; padding-bottom: 25px;">
 			<tr>
 				<td colspan="3" style="padding: 10px;">
@@ -395,6 +394,5 @@ function createSortableMenu()
 			<input type="hidden" name="theme" value="{NAME_THEME}">
 			<input type="hidden" name="token" value="{TOKEN}">
 		</div>
-		<input type="hidden" name="menu_tree" id="menu_tree" value="">
 	</form>
 </div>
