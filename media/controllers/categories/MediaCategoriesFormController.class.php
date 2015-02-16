@@ -66,7 +66,7 @@ class MediaCategoriesFormController extends AbstractRichCategoriesFormController
 	protected function set_properties()
 	{
 		parent::set_properties();
-		$this->get_category()->set_content_type($this->form->get_value('content_type'));
+		$this->get_category()->set_content_type($this->form->get_value('content_type')->get_raw_value());
 	}
 }
 ?>

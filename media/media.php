@@ -29,25 +29,8 @@
 require_once('../kernel/begin.php');
 require_once('media_begin.php');
 
-// Display caterories and media files.
-if (empty($id_media))
-{
-	bread_crumb($id_cat);
-	
-	$category = MediaService::get_categories_manager()->get_categories_cache()->get_category($id_cat);
-	define('TITLE', $category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('module_title', 'common', 'media') : $category->get_name());
-
-	require_once('../kernel/header.php');
-		
-	$modulesLoader = AppContext::get_extension_provider_service();
-	$module = $modulesLoader->get_provider('media');
-	if ($module->has_extension_point(HomePageExtensionPoint::EXTENSION_POINT))
-	{
-		echo $module->get_extension_point(HomePageExtensionPoint::EXTENSION_POINT)->get_home_page()->get_view()->display();
-	}
-}
 // Display the media file.
-elseif ($id_media > 0)
+if ($id_media > 0)
 {
 	$tpl = new FileTemplate('media/media.tpl');
 	$config = MediaConfig::load();

@@ -43,7 +43,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('MediaCategoriesFormController', '`^/admin/categories/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('MediaDeleteCategoryController', '`^/admin/categories/([0-9]+)/delete/?$`', array('id')),
 	
-	new UrlControllerMapper('MediaHomeController', '`^/?$`'),
+	new UrlControllerMapper('MediaDisplayCategoryController', '`^/?$`'),
 );
 DispatchManager::dispatch($url_controller_mappers);
 ?>
