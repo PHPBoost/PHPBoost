@@ -119,6 +119,7 @@ $blocks = array(
    Menu::BLOCK_POSITION__HEADER => 'mod_header',
    Menu::BLOCK_POSITION__SUB_HEADER => 'mod_subheader',
    Menu::BLOCK_POSITION__TOP_CENTRAL => 'mod_topcentral',
+   Menu::BLOCK_POSITION__NOT_ENABLED => 'mod_central',
    Menu::BLOCK_POSITION__BOTTOM_CENTRAL => 'mod_bottomcentral',
    Menu::BLOCK_POSITION__TOP_FOOTER => 'mod_topfooter',
    Menu::BLOCK_POSITION__FOOTER => 'mod_footer',
@@ -127,63 +128,37 @@ $blocks = array(
    Menu::BLOCK_POSITION__NOT_ENABLED => 'mod_main'
 );
 
+function save_position($block_position)
+{
+    $menus = MenuService::get_menu_list();
+
+    $menus_tree = json_decode(retrieve(POST, 'menu_tree_' . $blocks[$block_position], '', TNONE));
+    $menus_tree = $menus_tree[0];
+
+    foreach ($menus_tree as $position => $tree)
+    {
+        $id = $tree->id;
+        
+        if (array_key_exists($id, $menus))
+        {
+            $menu = $menus[$id];
+            $menu->set_block_position(($position + 1));
+            MenuService::move($menu, $block_position);
+        }
+    }
+}
+
 if ($action == 'save') //Save menus positions.
 {
-	// We build the array representing the tree
-    $menu_tree = array();
-    $reverse_menu_tree = array();
-    preg_match_all('`([a-z_]+)\[\]=([0-9]+)`', retrieve(POST, 'menu_tree', '', TSTRING_HTML), $matches);
-    if (is_array($matches[1]))
-    {
-    	foreach($matches[1] as $key => $container)
-	    {
-	    	$menu_tree[$matches[2][$key]] = $container;
-	    	$reverse_menu_tree[$container][] = $matches[2][$key];
-	    }
-    }
-    
-    //Update all menus.
-    $menu_list = array();
-    foreach ($menus_blocks as $block_id => $menus)
-	{
-		// For each block
-	    foreach ($menus as $menu)
-	    {
-			$menu_list[$menu->get_id()] = $menu;
-			$new_block = $menu_tree[$menu->get_id()];
-       		$enabled = $menu->is_enabled();
-
-       		if ($enabled && $new_block == 'mod_central') //Disable menu
-       		{
-       			MenuService::disable($menu);
-       		}
-       		elseif (!$enabled && $new_block !== 'mod_central') //Enable menu
-       		{
-       			MenuService::enable($menu);
-       		}
-
-       		if ($new_block != $blocks[$menu->get_block()]) //Move the menu if enabled
-       		{
-       			$new_block_id = array_search($new_block, $blocks);
-       			if ($new_block_id !== false)
-       			{
-       				MenuService::move($menu, $new_block_id);
-       			}
-       		}
-	    }
-	}
-	
-	//Sort the menus according to their new positions
-	$current_block_in_tree = '';
-	foreach ($reverse_menu_tree as $block_in_tree => $menus) //Retrieve position's menu in the sorted tree.
-	{
-		$block_position = 0;
-		foreach ($menus as $menu_id) 
-		{
-			MenuService::set_position($menu_list[$menu_id], $block_position);
-			$block_position++;
-		}
-	}
+    save_position(Menu::BLOCK_POSITION__HEADER);
+    save_position(Menu::BLOCK_POSITION__SUB_HEADER);
+    save_position(Menu::BLOCK_POSITION__TOP_CENTRAL);
+    save_position(Menu::BLOCK_POSITION__BOTTOM_CENTRAL);
+    save_position(Menu::BLOCK_POSITION__TOP_FOOTER);
+    save_position(Menu::BLOCK_POSITION__FOOTER);
+    save_position(Menu::BLOCK_POSITION__LEFT);
+    save_position(Menu::BLOCK_POSITION__RIGHT);
+    save_position(Menu::BLOCK_POSITION__NOT_ENABLED);
 
 	$columns_disabled = new ColumnsDisabled();
 	$columns_disabled->set_disable_header(!AppContext::get_request()->get_bool('header_enabled', false));

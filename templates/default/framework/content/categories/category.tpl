@@ -11,7 +11,7 @@ jQuery(document).ready(function() {
 });
 -->
 </script>
-<li id="cat_{ID}" class="sortable-element">
+<li id="cat_{ID}" class="sortable-element" data-id="{ID}">
 	<div class="sortable-title"> 
 		<a title="${LangLoader::get_message('move', 'admin')}" class="fa fa-arrows"></a>
 		<i class="fa fa-globe"></i>

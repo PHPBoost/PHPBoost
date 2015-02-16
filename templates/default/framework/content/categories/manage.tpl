@@ -1,13 +1,12 @@
 <script>
 <!--
 jQuery(document).ready(function() {
-	Sortable.destroy('categories'); 
-	Sortable.create('categories', {tree:true, dropOnEmpty: true});  
+	$("ul#categories").sortable({handle: '.fa-arrows'});
 });
 
 function serialize_sortable()
 {
-	jQuery('#tree').val(Sortable.serialize('categories'));
+	jQuery('#tree').val(JSON.stringify($("ul#categories").sortable("serialize").get()));
 }
 
 function move_category_up(parent_id, id) {

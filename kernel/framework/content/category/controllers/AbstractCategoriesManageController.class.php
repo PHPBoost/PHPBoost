@@ -101,15 +101,18 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 	{
 		if ($request->get_postvalue('submit', false))
 		{
-			parse_str($_POST['tree']);
-			
+			$categories = json_decode($request->get_postvalue('tree', false));
+			$categories = $categories[0];
+
 			foreach ($categories as $position => $tree)
 			{
-				$category = $this->get_categories_manager()->get_categories_cache()->get_category($tree['id']);
-				
+				$id = $tree->id;
+				$children = $tree->children[0];
+				$category = $this->get_categories_manager()->get_categories_cache()->get_category($id);
+
 				$this->get_categories_manager()->update_position($category, Category::ROOT_CATEGORY, ($position +1));
-				
-				$this->update_childrens_positions($tree, $category->get_id());
+
+				$this->update_childrens_positions($children, $category->get_id());
 			}
 			
 			AppContext::get_response()->redirect(str_replace(GeneralConfig::load()->get_site_path(), '', REWRITED_SCRIPT));
@@ -118,17 +121,19 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 	
 	private function update_childrens_positions($categories, $id_parent)
 	{
-		if (count($categories) > 1)
+		if (!empty($categories))
 		{
 			foreach ($categories as $position => $tree)
 			{
 				if (is_int($position))
 				{
-					$category = $this->get_categories_manager()->get_categories_cache()->get_category($tree['id']);
+					$id = $tree->id;
+					$children = $tree->children[0];
+					$category = $this->get_categories_manager()->get_categories_cache()->get_category($id);
 					
 					$this->get_categories_manager()->update_position($category, $id_parent, ($position +1));
 					
-					$this->update_childrens_positions($tree, $category->get_id());
+					$this->update_childrens_positions($children, $category->get_id());
 				}
 			}
 		}
