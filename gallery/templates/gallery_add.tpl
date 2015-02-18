@@ -1,5 +1,5 @@
 		<form action="{U_GALLERY_ACTION_ADD}" method="post" enctype="multipart/form-data">
-			<section>					
+			<section>
 				<header>
 					<h1><a href="gallery.php">{L_GALLERY}</a> &raquo; {U_GALLERY_CAT_LINKS}</h1>
 					<div style="float:right">
@@ -10,7 +10,7 @@
 					<div style="text-align:center">
 						# INCLUDE message_helper #
 		
-						# START image_up #								
+						# START image_up #
 						<strong>{image_up.L_SUCCESS_UPLOAD}</strong>
 						<br />
 						<strong>{image_up.NAME}</strong>
@@ -37,14 +37,11 @@
 						{L_WEIGHT_MAX}: {WEIGHT_MAX} {L_UNIT_KO}
 			
 						<br /><br />
-						<label>{L_CATEGORIES}: 
-						<select name="cat">
-							{CATEGORIES}
-						</select></label>
+						{CATEGORIES_TREE}
 						<br /><br />
 						<label>{L_NAME}: <input type="text" size="40" maxlength="50" name="name"></label>
 						<br /><br />
-						  					
+						
 						* <input type="file" name="gallery" size="30" class="file" /><br /><br>
 					</div>
 					<br />

@@ -72,14 +72,14 @@
 			<ul>
 				<li class="title-menu">{L_GALLERY_MANAGEMENT}</li>
 				<li>
-					<a href="admin_gallery_cat.php"><img src="gallery.png" alt="" /></a>
+					<a href="${relative_url(GalleryUrlBuilder::manage_categories())}"><img src="gallery.png" alt="" /></a>
 					<br />
-					<a href="admin_gallery_cat.php" class="quick-link">{L_GALLERY_CAT_MANAGEMENT}</a>
+					<a href="${relative_url(GalleryUrlBuilder::manage_categories())}" class="quick-link">{L_GALLERY_CAT_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_gallery_cat_add.php"><img src="gallery.png" alt="" /></a>
+					<a href="${relative_url(GalleryUrlBuilder::add_category())}"><img src="gallery.png" alt="" /></a>
 					<br />
-					<a href="admin_gallery_cat_add.php" class="quick-link">{L_GALLERY_CAT_ADD}</a>
+					<a href="${relative_url(GalleryUrlBuilder::add_category())}"" class="quick-link">{L_GALLERY_CAT_ADD}</a>
 				</li>
 				<li>
 					<a href="admin_gallery.php"><img src="gallery.png" alt="" /></a>
@@ -260,6 +260,23 @@
 					<div class="form-element">
 						<label for="moderator_max_pics_number">{L_MODERATOR_MAX_PICS_NUMBER} <span class="field-description">{L_MODERATOR_MAX_PICS_NUMBER_EXPLAIN}</span></label>
 						<div class="form-field"><input type="text" size="5" name="moderator_max_pics_number" id="moderator_max_pics_number" value="{MODERATOR_MAX_PICS_NUMBER}"></div>
+					</div>
+				</fieldset>
+				
+				<fieldset>
+					<legend>${LangLoader::get_message('authorizations', 'common')}</legend>
+					<p class="fieldset-description">${LangLoader::get_message('config.authorizations.explain', 'admin-common')}</p>
+					<div class="form-element">
+						<label>{L_AUTH_READ}</label>
+						<div class="form-field">{AUTH_READ}</div>
+					</div>
+					<div class="form-element">
+						<label>{L_AUTH_WRITE}</label>
+						<div class="form-field">{AUTH_WRITE}</div>
+					</div>
+					<div class="form-element">
+						<label>{L_AUTH_MODERATION}</label>
+						<div class="form-field">{AUTH_MODERATION}</div>
 					</div>
 				</fieldset>
 				

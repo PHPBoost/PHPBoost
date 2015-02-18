@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                               index.php
+ *                               AdminGalleryDisplayResponse.class.php
  *                            -------------------
- *   begin                : February 12, 2015
+ *   begin                : February 10, 2015
  *   copyright            : (C) 2015 Julien BRISWALTER
  *   email                : julienseth78@phpboost.com
  *
@@ -29,21 +29,24 @@
  * @author Julien BRISWALTER <julienseth78@phpboost.com>
  */
 
-define('PATH_TO_ROOT', '..');
-
-require_once PATH_TO_ROOT . '/kernel/init.php';
-
-$url_controller_mappers = array(
-	//Config
-	//new UrlControllerMapper('AdminGalleryConfigController', '`^/admin(?:/config)?/?$`'),
-	
-	//Categories
-	new UrlControllerMapper('GalleryCategoriesManageController', '`^/admin/categories/?$`'),
-	new UrlControllerMapper('GalleryCategoriesFormController', '`^/admin/categories/add/?$`'),
-	new UrlControllerMapper('GalleryCategoriesFormController', '`^/admin/categories/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('GalleryDeleteCategoryController', '`^/admin/categories/([0-9]+)/delete/?$`', array('id')),
-	
-	new UrlControllerMapper('GalleryDisplayCategoryController', '`^/?$`'),
-);
-DispatchManager::dispatch($url_controller_mappers);
+class AdminGalleryDisplayResponse extends AdminMenuDisplayResponse
+{
+	public function __construct($view, $title_page)
+	{
+		parent::__construct($view);
+		
+		$lang = LangLoader::get('common', 'gallery');
+		$picture = '/gallery/gallery.png';
+		$this->set_title($lang['module_title']);
+		
+		$this->add_link(LangLoader::get_message('categories.management', 'categories-common'), GalleryUrlBuilder::manage_categories(), $picture);
+		$this->add_link(LangLoader::get_message('category.add', 'categories-common'), GalleryUrlBuilder::add_category(), $picture);
+		$this->add_link($lang['gallery.management'], GalleryUrlBuilder::manage(), $picture);
+		$this->add_link($lang['gallery.actions.add'], GalleryUrlBuilder::add(), $picture);
+		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), GalleryUrlBuilder::configuration(), $picture);
+		
+		$env = $this->get_graphical_environment();
+		$env->set_page_title($title_page, $lang['module_title']);
+	}
+}
 ?>

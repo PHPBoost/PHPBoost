@@ -113,31 +113,16 @@ else
 	if (in_array($get_error, $array_error))
 		$tpl->put('message_helper', MessageHelper::display($LANG[$get_error], MessageHelper::WARNING));
 
-	//Création de la liste des catégories.
-	$cat_list = '<option value="0">' . $LANG['root'] . '</option>';
-	$cat_list_unselect = '<option value="0" selected="selected">' . $LANG['root'] . '</option>';
-	$result = PersistenceContext::get_querier()->select("SELECT id, level, name
-	FROM " . PREFIX . "gallery_cats
-	ORDER BY id_left");
-	while ($row = $result->fetch())
-	{
-		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
-		$selected = ($row['id'] == $idcat) ? ' selected="selected"' : '';
-		$cat_list .= '<option value="' . $row['id'] . '"' . $selected . '>' . $margin . ' ' . $row['name'] . '</option>';
-		$cat_list_unselect .= '<option value="' . $row['id'] . '">' . $margin . ' ' . $row['name'] . '</option>';
-	}
-	$result->dispose();
-
 	//Aficchage de la photo uploadée.
 	if (!empty($add_pic))
 	{
-		$CAT_GALLERY[0]['name'] = $LANG['root'];
-		$imageup = $db_querier->select_single_row(PREFIX . "gallery", array('idcat', 'name', 'path'), 'WHERE id = :id', array('id' => $add_pic));
+		$categories = GalleryService::get_categories_manager()->get_categories_cache()->get_categories();
+		$imageup = $db_querier->select_single_row(GallerySetup::$gallery_table, array('idcat', 'name', 'path'), 'WHERE id = :id', array('id' => $add_pic));
 		$tpl->assign_block_vars('image_up', array(
 			'NAME' => $imageup['name'],
 			'IMG' => '<a href="admin_gallery.php?cat=' . $imageup['idcat'] . '&amp;id=' . $add_pic . '#pics_max"><img src="pics/' . $imageup['path'] . '" alt="" /></a>',
 			'L_SUCCESS_UPLOAD' => $LANG['success_upload_img'],
-			'U_CAT' => '<a href="admin_gallery.php?cat=' . $imageup['idcat'] . '">' . $CAT_GALLERY[$imageup['idcat']]['name'] . '</a>'
+			'U_CAT' => '<a href="admin_gallery.php?cat=' . $imageup['idcat'] . '">' . $categories[$imageup['idcat']]->get_name() . '</a>'
 		));
 	}
 
@@ -146,12 +131,11 @@ else
 		'HEIGHT_MAX' => $config->get_max_height(),
 		'WEIGHT_MAX' => $config->get_max_weight(),
 		'AUTH_EXTENSION' => 'JPEG, GIF, PNG',
-		'CATEGORIES' => $cat_list,
 		'IMG_HEIGHT_MAX' => $config->get_mini_max_height()+10,
-		'L_GALLERY_MANAGEMENT' => $LANG['gallery_management'],
-		'L_GALLERY_PICS_ADD' => $LANG['gallery_pics_add'],
-		'L_GALLERY_CAT_MANAGEMENT' => $LANG['gallery_cats_management'],
-		'L_GALLERY_CAT_ADD' => $LANG['gallery_cats_add'],
+		'L_GALLERY_MANAGEMENT' => LangLoader::get_message('gallery.management', 'common', 'gallery'),
+		'L_GALLERY_PICS_ADD' => LangLoader::get_message('gallery.actions.add', 'common', 'gallery'),
+		'L_GALLERY_CAT_MANAGEMENT' => LangLoader::get_message('categories.management', 'categories-common'),
+		'L_GALLERY_CAT_ADD' => LangLoader::get_message('category.add', 'categories-common'),
 		'L_GALLERY_CONFIG' => $LANG['gallery_config'],
 		'L_ADD_IMG' => $LANG['add_pic'],
 		'L_WEIGHT_MAX' => $LANG['weight_max'],
@@ -159,7 +143,6 @@ else
 		'L_WIDTH_MAX' => $LANG['width_max'],
 		'L_UPLOAD_IMG' => $LANG['upload_pics'],
 		'L_AUTH_EXTENSION' => $LANG['auth_extension'],
-		'L_CATEGORY' => $LANG['category'],
 		'L_IMG_DISPO_GALLERY' => $LANG['img_dispo'],
 		'L_NAME' => $LANG['name'],
 		'L_UNIT_PX' => LangLoader::get_message('unit.pixels', 'common'),
@@ -167,7 +150,6 @@ else
 		'L_SELECT' => $LANG['select'],
 		'L_GLOBAL_CAT_SELECTION' => $LANG['global_cat_selection'],
 		'L_GLOBAL_CAT_SELECTION_EXPLAIN' => $LANG['global_cat_selection_explain'],
-		'L_CAT' => $LANG['category'],
 		'L_DELETE' => LangLoader::get_message('delete', 'common'),
 		'L_SUBMIT' => $LANG['submit'],
 		'L_NO_IMG' => $LANG['no_pics']
@@ -177,8 +159,6 @@ else
 	$dir = 'pics/';
 	if (is_dir($dir)) //Si le dossier existe
 	{
-
-
 		$array_pics = array();
 		$image_folder_path = new Folder('./pics/');
 		foreach ($image_folder_path->get_files('`.*\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $image)
@@ -187,7 +167,7 @@ else
 		if (is_array($array_pics))
 		{
 			$result = PersistenceContext::get_querier()->select("SELECT path
-			FROM " . PREFIX . "gallery");
+			FROM " . GallerySetup::$gallery_table);
 			while ($row = $result->fetch())
 			{
 				//On recherche les clées correspondante à celles trouvée dans la bdd.
@@ -203,14 +183,37 @@ else
 			$nbr_column_pics = !empty($nbr_column_pics) ? $nbr_column_pics : 1;
 			$column_width_pics = floor(100/$nbr_column_pics);
 			$selectbox_width = floor(100-(10*$nbr_column_pics));
-
+			
+			//Liste des catégories.
+			$search_category_children_options = new SearchCategoryChildrensOptions();
+			$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
+			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
+			$categories_tree = GalleryService::get_categories_manager()->get_select_categories_form_field('category', '', $idcat, $search_category_children_options);
+			$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
+			$method->setAccessible(true);
+			$categories_tree_options = $method->invoke($categories_tree);
+			$categories_list = '';
+			foreach ($categories_tree_options as $option)
+			{
+				$categories_list .= $option->display()->render();
+			}
+			
+			$root_categories_tree = GalleryService::get_categories_manager()->get_select_categories_form_field('root_cat', '', $idcat, $search_category_children_options);
+			$root_categories_tree_options = $method->invoke($root_categories_tree);
+			$root_categories_list = '';
+			foreach ($root_categories_tree_options as $option)
+			{
+				$root_categories_list .= $option->display()->render();
+			}
+			
 			$tpl->put_all(array(
 				'NBR_PICS' => $nbr_pics,
 				'COLUMN_WIDTH_PICS' => $column_width_pics,
 				'SELECTBOX_WIDTH' => $selectbox_width,
-				'CATEGORIES' => $cat_list
+				'CATEGORIES' => $categories_list,
+				'ROOT_CATEGORIES' => $root_categories_list,
 			));
-
+			
 			$j = 0;
 			foreach ($array_pics as  $key => $pics)
 			{
@@ -257,7 +260,17 @@ else
 				//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
 				if (!file_exists('pics/thumbnails/' . $pics) && file_exists('pics/' . $pics))
 					$Gallery->Resize_pics('pics/' . $pics); //Redimensionnement + création miniature
-
+				
+				$categories_tree = GalleryService::get_categories_manager()->get_select_categories_form_field($j . 'cat', '', Category::ROOT_CATEGORY, $search_category_children_options);
+				$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
+				$method->setAccessible(true);
+				$categories_tree_options = $method->invoke($categories_tree);
+				$categories_list = '';
+				foreach ($categories_tree_options as $option)
+				{
+					$categories_list .= $option->display()->render();
+				}
+				
 				$tpl->assign_block_vars('list', array(
 					'ID' => $j,
 					'THUMNAILS' => '<img src="pics/thumbnails/' .  $pics . '" alt="" />',
@@ -265,7 +278,7 @@ else
 					'UNIQ_NAME' => $pics,
 					'TR_START' => $tr_start,
 					'TR_END' => $tr_end,
-					'CATEGORIES' => $cat_list_unselect
+					'CATEGORIES' => $categories_list,
 				));
 			}
 

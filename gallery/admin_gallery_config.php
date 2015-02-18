@@ -86,6 +86,7 @@ if (!empty($_POST['valid']))
 	$config->set_scroll_type(retrieve(POST, 'scroll_type', GalleryConfig::VERTICAL_DYNAMIC_SCROLL));
 	$config->set_pics_number_in_mini(retrieve(POST, 'pics_number_in_mini', 8));
 	$config->set_mini_pics_speed(retrieve(POST, 'mini_pics_speed', 6));
+	$config->set_authorizations(Authorizations::build_auth_array_from_form(Category::READ_AUTHORIZATIONS, Category::WRITE_AUTHORIZATIONS, Category::MODERATION_AUTHORIZATIONS));
 	
 	GalleryConfig::save();
 	
@@ -96,23 +97,18 @@ if (!empty($_POST['valid']))
 }
 elseif (!empty($_POST['gallery_cache'])) //Suppression des miniatures.
 {
+	//Recréaction miniatures, et inscrustation du logo sur image.
 	$Gallery = new Gallery();
-
+	$Gallery->Clear_cache();
+	
 	$Cache->load('gallery');
-
-	$Gallery->Clear_cache(); //Recréaction miniatures, et inscrustation du logo sur image.
-	$Gallery->Count_cat_pics(); //Recompte le nombre d'images de chaque catégories
-
 	$Cache->Generate_module_file('gallery');
 
 	AppContext::get_response()->redirect('/gallery/admin_gallery_config.php');
 }
 else
 {
-	
 	$tpl = new FileTemplate('gallery/admin_gallery_config.tpl');
-
-	$Cache->load('gallery');
 
 	//Vitesse de défilement des miniatures.
 	$mini_pics_speed = '';
@@ -171,6 +167,12 @@ else
 		'RESIZE' => GalleryConfig::RESIZE,
 		'POPUP' => GalleryConfig::POPUP,
 		'FULL_SCREEN' => GalleryConfig::FULL_SCREEN,
+		'AUTH_READ' => Authorizations::generate_select(Category::READ_AUTHORIZATIONS, $config->get_authorizations()),
+		'AUTH_WRITE' => Authorizations::generate_select(Category::WRITE_AUTHORIZATIONS, $config->get_authorizations()),
+		'AUTH_MODERATION' => Authorizations::generate_select(Category::MODERATION_AUTHORIZATIONS, $config->get_authorizations()),
+		'L_AUTH_READ' => $LANG['auth_read'],
+		'L_AUTH_WRITE' => $LANG['auth_upload'],
+		'L_AUTH_MODERATION' => $LANG['auth_edit'],
 		'L_UNAUTH' => $LANG['unauthorized'],
 		'L_UNLIMITED' => $LANG['illimited'],
 		'L_REQUIRE_MINI_MAX_HEIGHT' => $LANG['require_height'],
@@ -182,10 +184,10 @@ else
 		'L_REQUIRE_ROW' => $LANG['require_row'],
 		'L_REQUIRE_IMG_P' => $LANG['require_img_p'],
 		'L_REQUIRE_QUALITY' => $LANG['require_quality'],
-		'L_GALLERY_MANAGEMENT' => $LANG['gallery_management'],
-		'L_GALLERY_PICS_ADD' => $LANG['gallery_pics_add'],
-		'L_GALLERY_CAT_MANAGEMENT' => $LANG['gallery_cats_management'],
-		'L_GALLERY_CAT_ADD' => $LANG['gallery_cats_add'],
+		'L_GALLERY_MANAGEMENT' => LangLoader::get_message('gallery.management', 'common', 'gallery'),
+		'L_GALLERY_PICS_ADD' => LangLoader::get_message('gallery.actions.add', 'common', 'gallery'),
+		'L_GALLERY_CAT_MANAGEMENT' => LangLoader::get_message('categories.management', 'categories-common'),
+		'L_GALLERY_CAT_ADD' => LangLoader::get_message('category.add', 'categories-common'),
 		'L_GALLERY_CONFIG' => $LANG['gallery_config'],
 		'L_CONFIG_CONFIG' => LangLoader::get_message('general-config', 'admin-config-common'),
 		'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),

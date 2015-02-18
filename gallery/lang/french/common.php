@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                               index.php
+ *                               common.php
  *                            -------------------
- *   begin                : February 12, 2015
+ *   begin                : February 10, 2015
  *   copyright            : (C) 2015 Julien BRISWALTER
  *   email                : julienseth78@phpboost.com
  *
@@ -25,25 +25,15 @@
  *
  ###################################################*/
 
- /**
- * @author Julien BRISWALTER <julienseth78@phpboost.com>
- */
 
-define('PATH_TO_ROOT', '..');
+ ####################################################
+ #						French						#
+ ####################################################
 
-require_once PATH_TO_ROOT . '/kernel/init.php';
+$lang['module_title'] = 'Galerie';
+$lang['module_config_title'] = 'Configuration du module galerie';
 
-$url_controller_mappers = array(
-	//Config
-	//new UrlControllerMapper('AdminGalleryConfigController', '`^/admin(?:/config)?/?$`'),
-	
-	//Categories
-	new UrlControllerMapper('GalleryCategoriesManageController', '`^/admin/categories/?$`'),
-	new UrlControllerMapper('GalleryCategoriesFormController', '`^/admin/categories/add/?$`'),
-	new UrlControllerMapper('GalleryCategoriesFormController', '`^/admin/categories/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('GalleryDeleteCategoryController', '`^/admin/categories/([0-9]+)/delete/?$`', array('id')),
-	
-	new UrlControllerMapper('GalleryDisplayCategoryController', '`^/?$`'),
-);
-DispatchManager::dispatch($url_controller_mappers);
+$lang['gallery.actions.add'] = 'Ajout d\'images';
+$lang['gallery.manage'] = 'Gérer les images';
+$lang['gallery.management'] = 'Gestion de la galerie';
 ?>

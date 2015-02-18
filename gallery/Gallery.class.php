@@ -249,117 +249,50 @@ class Gallery
 	//Insertion base de donnée
 	public function Add_pics($idcat, $name, $path, $user_id)
 	{
-		global $CAT_GALLERY;
-		
-		$CAT_GALLERY[0]['id_left'] = 0;
-		$CAT_GALLERY[0]['id_right'] = 0;
-		
-		//Parent de la catégorie cible
-		$list_parent_cats_to = array();
-		$result = PersistenceContext::get_querier()->select("SELECT id 
-		FROM " . PREFIX . "gallery_cats 
-		WHERE id_left <= :id_left AND id_right >= :id_right", array(
-			'id_left' => $CAT_GALLERY[$idcat]['id_left'],
-			'id_right' => $CAT_GALLERY[$idcat]['id_right']
-		));
-		while ($row = $result->fetch())
-		{
-			$list_parent_cats_to[] = $row['id'];
-		}
-		$result->dispose();
-		
-		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_aprob = nbr_pics_aprob + 1 WHERE id " . (empty($list_parent_cats_to) ? '=:id' : 'IN :ids_list'), array('id' => $idcat, 'ids_list' => $list_parent_cats_to));
-		
 		list($width, $height, $weight, $ext) = $this->Arg_pics('pics/' . $path);
-		$result = PersistenceContext::get_querier()->insert(PREFIX . "gallery", array('idcat' => $idcat, 'name' => $name, 'path' => $path, 'width' => $width, 'height' => $height, 'weight' => $weight, 'user_id' => $user_id, 'aprob' => 1, 'views' => 0, 'timestamp' => time()));
+		$result = PersistenceContext::get_querier()->insert(GallerySetup::$gallery_table, array('idcat' => $idcat, 'name' => $name, 'path' => $path, 'width' => $width, 'height' => $height, 'weight' => $weight, 'user_id' => $user_id, 'aprob' => 1, 'views' => 0, 'timestamp' => time()));
 		return $result->get_last_inserted_id();
 	}
 	
 	//Supprime une image
 	public function Del_pics($id_pics)
 	{
-		global $CAT_GALLERY;
-		
-		$CAT_GALLERY[0]['id_left'] = 0;
-		$CAT_GALLERY[0]['id_right'] = 0;
-		
-		$info_pics = PersistenceContext::get_querier()->select_single_row(PREFIX . "gallery", array('path', 'idcat', 'aprob'), "WHERE id = :id", array('id' => $id_pics));
+		$info_pics = PersistenceContext::get_querier()->select_single_row(GallerySetup::$gallery_table, array('path', 'idcat', 'aprob'), "WHERE id = :id", array('id' => $id_pics));
 		if (!empty($info_pics['path']))
 		{
 			PersistenceContext::get_querier()->delete(PREFIX . 'gallery', 'WHERE id=:id', array('id' => $id_pics));
 			
-			//Parent de la catégorie cible
-			$list_parent_cats_to = array();
-			$result = PersistenceContext::get_querier()->select("SELECT id 
-			FROM " . PREFIX . "gallery_cats 
-			WHERE id_left <= :id_left AND id_right >= :id_right", array(
-				'id_left' => $CAT_GALLERY[$idcat]['id_left'],
-				'id_right' => $CAT_GALLERY[$idcat]['id_right']
-			));
-			while ($row = $result->fetch())
-			{
-				$list_parent_cats_to[] = $row['id'];
-			}
-			$result->dispose();
+			//Suppression physique.
+			$file = new File(PATH_TO_ROOT . '/gallery/pics/' . $info_pics['path']);
+			$file->delete();
 			
-			if ($info_pics['aprob'])
-				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_aprob = nbr_pics_aprob - 1 WHERE id " . (empty($list_parent_cats_to) ? '= :id' : 'IN :ids_list'), array('id' => $info_pics['idcat'], 'ids_list' => $list_parent_cats_to));
-			else
-				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob - 1 WHERE id " . (empty($list_parent_cats_to) ? '= :id' : 'IN :ids_list'), array('id' => $info_pics['idcat'], 'ids_list' => $list_parent_cats_to));
+			$file = new File(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $info_pics['path']);
+			$file->delete();
+
+			NotationService::delete_notes_id_in_module('gallery', $id_pics);
+			
+			CommentsService::delete_comments_topic_module('gallery', $id_pics);
 		}
-
-		//Suppression physique.
-		$file = new File(PATH_TO_ROOT . '/gallery/pics/' . $info_pics['path']);
-		$file->delete();
-				
-		$file = new File(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $info_pics['path']);
-		$file->delete();
-
-		NotationService::delete_notes_id_in_module('gallery', $id_pics);
-		
-		CommentsService::delete_comments_topic_module('gallery', $id_pics);
 	}
 	
 	//Renomme une image.
 	public function Rename_pics($id_pics, $name, $previous_name)
 	{
-		PersistenceContext::get_querier()->update(PREFIX . "gallery", array('name' => $name), 'WHERE id = :id', array('id' => $id_pics));
+		PersistenceContext::get_querier()->update(GallerySetup::$gallery_table, array('name' => $name), 'WHERE id = :id', array('id' => $id_pics));
 		return stripslashes((strlen(TextHelper::html_entity_decode($name)) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($name), 0, 22)) . PATH_TO_ROOT . '.' : $name);
 	}
 	
 	//Approuve une image.
 	public function Aprob_pics($id_pics)
 	{
-		global $CAT_GALLERY;
-		
-		$CAT_GALLERY[0]['id_left'] = 0;
-		$CAT_GALLERY[0]['id_right'] = 0;
-		
-		$idcat = PersistenceContext::get_querier()->get_column_value(PREFIX . "gallery", 'idcat', "WHERE id = :id", array('id' => $id_pics));
-		//Parent de la catégorie cible
-		$list_parent_cats_to = array();
-		$result = PersistenceContext::get_querier()->select("SELECT id 
-		FROM " . PREFIX . "gallery_cats 
-		WHERE id_left <= :id_left AND id_right >= :id_right", array(
-			'id_left' => $CAT_GALLERY[$idcat]['id_left'],
-			'id_right' => $CAT_GALLERY[$idcat]['id_right']
-		));
-		while ($row = $result->fetch())
-		{
-			$list_parent_cats_to[] = $row['id'];
-		}
-		$result->dispose();
-		
-		$aprob = PersistenceContext::get_querier()->get_column_value(PREFIX . "gallery", 'aprob', "WHERE id = :id", array('id' => $id_pics));
+		$aprob = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'aprob', "WHERE id = :id", array('id' => $id_pics));
 		if ($aprob)
 		{
-			PersistenceContext::get_querier()->update(PREFIX . "gallery", array('aprob' => 0), 'WHERE id = :id', array('id' => $id_pics));
-			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob + 1, nbr_pics_aprob = nbr_pics_aprob - 1 WHERE id " . (empty($list_parent_cats_to) ? '= :id' : 'IN :ids_list'), array('id' => $idcat, 'ids_list' => $list_parent_cats_to));
+			PersistenceContext::get_querier()->update(GallerySetup::$gallery_table, array('aprob' => 0), 'WHERE id = :id', array('id' => $id_pics));
 		}
 		else
 		{
-			PersistenceContext::get_querier()->update(PREFIX . "gallery", array('aprob' => 1), 'WHERE id = :id', array('id' => $id_pics));
-			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob - 1, nbr_pics_aprob = nbr_pics_aprob + 1 WHERE id " . (empty($list_parent_cats_to) ? '= :id' : 'IN :ids_list'), array('id' => $idcat, 'ids_list' => $list_parent_cats_to));
+			PersistenceContext::get_querier()->update(GallerySetup::$gallery_table, array('aprob' => 1), 'WHERE id = :id', array('id' => $id_pics));
 		}
 		
 		return $aprob;
@@ -368,59 +301,7 @@ class Gallery
 	//Déplacement d'une image.
 	public function Move_pics($id_pics, $id_move)
 	{
-		global $CAT_GALLERY;
-		
-		//Racine.
-		$CAT_GALLERY[0]['id_left'] = 0;
-		$CAT_GALLERY[0]['id_right'] = 0;
-		
-		$idcat = PersistenceContext::get_querier()->get_column_value(PREFIX . "gallery", 'idcat', "WHERE id = :id", array('id' => $id_pics));
-		//Parent de la catégorie parente
-		$list_parent_cats = array();
-		$result = PersistenceContext::get_querier()->select("SELECT id 
-		FROM " . PREFIX . "gallery_cats 
-		WHERE id_left <= :id_left AND id_right >= :id_right", array(
-			'id_left' => $CAT_GALLERY[$idcat]['id_left'],
-			'id_right' => $CAT_GALLERY[$idcat]['id_right']
-		));
-		while ($row = $result->fetch())
-		{
-			$list_parent_cats[] = $row['id'];
-		}
-		$result->dispose();
-		
-		if (empty($list_parent_cats))
-			$clause_parent_cats = " id = '" . $idcat . "'";
-		else
-			$clause_parent_cats = " id IN (" . $list_parent_cats . ")";
-		
-		//Parent de la catégorie cible
-		$list_parent_cats_to = array();
-		$result = PersistenceContext::get_querier()->select("SELECT id 
-		FROM " . PREFIX . "gallery_cats 
-		WHERE id_left <= :id_left AND id_right >= :id_right", array(
-			'id_left' => $CAT_GALLERY[$id_move]['id_left'],
-			'id_right' => $CAT_GALLERY[$id_move]['id_right']
-		));
-		while ($row = $result->fetch())
-		{
-			$list_parent_cats_to[] = $row['id'];
-		}
-		$result->dispose();
-		
-		$aprob = PersistenceContext::get_querier()->get_column_value(PREFIX . "gallery", 'aprob', "WHERE id = :id", array('id' => $id_pics));
-		if ($aprob)
-		{
-			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_aprob = nbr_pics_aprob - 1 WHERE id " . (empty($list_parent_cats) ? '= :id' : 'IN :ids_list'), array('id' => $idcat, 'ids_list' => $list_parent_cats));
-			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_aprob = nbr_pics_aprob + 1 WHERE id " . (empty($list_parent_cats_to) ? '= :id' : 'IN :ids_list'), array('id' => $id_move, 'ids_list' => $list_parent_cats_to));
-		}
-		else
-		{
-			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob - 1 WHERE id " . (empty($list_parent_cats) ? '= :id' : 'IN :ids_list'), array('id' => $idcat, 'ids_list' => $list_parent_cats));
-			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob + 1 WHERE id " . (empty($list_parent_cats_to) ? '= :id' : 'IN :ids_list'), array('id' => $id_move, 'ids_list' => $list_parent_cats_to));
-		}
-		
-		PersistenceContext::get_querier()->update(PREFIX . "gallery", array('idcat' => $id_move), 'WHERE id = :id', array('id' => $id_pics));
+		PersistenceContext::get_querier()->update(GallerySetup::$gallery_table, array('idcat' => $id_move), 'WHERE id = :id', array('id' => $id_pics));
 	}
 	
 	//Vérifie si le membre peut uploader une image
@@ -463,7 +344,7 @@ class Gallery
 		{
 			list($width, $height, $type) = @getimagesize($path);
 			$weight = @filesize($path);
-			$weight = !empty($weight) ? $weight : 0;			
+			$weight = !empty($weight) ? $weight : 0;
 			
 			//On prepare les valeurs de remplacement, pour détérminer le type de l'image.
 			$array_type = array( 1 => 'gif', 2 => 'jpg', 3 => 'png', 4 => 'jpeg');
@@ -474,16 +355,15 @@ class Gallery
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
-                $LANG['e_no_getimagesize'], UserErrorController::FATAL);
-            DispatchManager::redirect($controller);
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_no_getimagesize'], UserErrorController::FATAL);
+			DispatchManager::redirect($controller);
 		}
 	}
-		
+	
 	//Compte le nombre d'images uploadée par un membre.
 	public function get_nbr_upload_pics($user_id)
 	{
-		return PersistenceContext::get_querier()->count(PREFIX . "gallery", 'WHERE user_id=:user_id', array('user_id' => $user_id));
+		return PersistenceContext::get_querier()->count(GallerySetup::$gallery_table, 'WHERE user_id=:user_id', array('user_id' => $user_id));
 	}
 	
 	//Calcul des dimensions avec respect des proportions.
@@ -541,55 +421,10 @@ class Gallery
 		return $header;
 	}
 	
-	//Recompte le nombre d'images de chaque catégories
-	public function Count_cat_pics()
-	{
-		global $CAT_GALLERY;
-		
-		$CAT_GALLERY[0]['id_left'] = 0;
-		$CAT_GALLERY[0]['id_right'] = 0;
-		
-		$info_cat = array();
-		$result = PersistenceContext::get_querier()->select("SELECT idcat, COUNT(*) as nbr_pics_aprob 
-		FROM " . PREFIX . "gallery 
-		WHERE aprob = 1 AND idcat > 0
-		GROUP BY idcat");
-		while ($row = $result->fetch())
-			$info_cat[$row['idcat']]['aprob'] = $row['nbr_pics_aprob'];
-		$result->dispose();
-		
-		$result = PersistenceContext::get_querier()->select("SELECT idcat, COUNT(*) as nbr_pics_unaprob 
-		FROM " . PREFIX . "gallery 
-		WHERE aprob = 0 AND idcat > 0
-		GROUP BY idcat");
-		while ($row = $result->fetch())
-			$info_cat[$row['idcat']]['unaprob'] = $row['nbr_pics_unaprob'];
-		$result->dispose();
-		
-		$result = PersistenceContext::get_querier()->select("SELECT id, id_left, id_right
-		FROM " . PREFIX . "gallery_cats");
-		while ($row = $result->fetch())
-		{
-			$nbr_pics_aprob = 0;
-			$nbr_pics_unaprob = 0;
-			foreach ($info_cat as $key => $value)
-			{
-				if ($CAT_GALLERY[$key]['id_left'] >= $row['id_left'] && $CAT_GALLERY[$key]['id_right'] <= $row['id_right'])
-				{
-					$nbr_pics_aprob += isset($info_cat[$key]['aprob']) ? $info_cat[$key]['aprob'] : 0;
-					$nbr_pics_unaprob += isset($info_cat[$key]['unaprob']) ? $info_cat[$key]['unaprob'] : 0; 
-				}
-			}
-			PersistenceContext::get_querier()->update(PREFIX . "gallery_cats", array('nbr_pics_aprob' => $nbr_pics_aprob, 'nbr_pics_unaprob' => $nbr_pics_unaprob), 'WHERE id = :id', array('id' => $row['id']));
-		}
-		$result->dispose();
-	}
-	
 	//Vidange des miniatures du FTP et de la bdd => régénérée plus tard lors des affichages..
 	public function Clear_cache()
 	{
 		//On recupère les dossier des thèmes contenu dans le dossier images/smiley.
-		
 		$thumb_folder_path = new Folder('./pics/thumbnails/');
 		foreach ($thumb_folder_path->get_files('`\.(png|jpg|jpeg|bmp|gif)$`i') as $thumbs)
 			$this->delete_file('./pics/thumbnails/' . $thumbs->get_name());
@@ -600,11 +435,11 @@ class Gallery
 	{
 		if (function_exists('unlink'))
 			return @unlink($path); //On supprime le fichier.
-		else //Fonction désactivée.	
-		{	
+		else //Fonction désactivée.
+		{
 			$this->error = 'e_delete_thumbnails';
 			return false;
-		}		
+		}
 	}
 	
 	//Création de l'image d'erreur
@@ -616,16 +451,16 @@ class Gallery
 		$width = ($width == 0) ? $config->get_mini_max_width() : $width;
 		$height = ($height == 0) ? $config->get_mini_max_height() : $height;
 			
-		$font = PATH_TO_ROOT . '/kernel/data/fonts/impact.ttf';		
+		$font = PATH_TO_ROOT . '/kernel/data/fonts/impact.ttf';
 		$font_size = 12;
 
 		$thumbnail = @imagecreate($width, $height);
-		if ($thumbnail === false)				
+		if ($thumbnail === false)
 			$this->error = 'e_unabled_create_pics';
 		$background = @imagecolorallocate($thumbnail, 255, 255, 255);
 		$text_color = @imagecolorallocate($thumbnail, 0, 0, 0);
 
-		//Centrage du texte.	
+		//Centrage du texte.
 		$array_size_ttf = imagettfbbox($font_size, 0, $font, $LANG['e_error_img']);
 		$text_width = abs($array_size_ttf[2] - $array_size_ttf[0]);
 		$text_height = abs($array_size_ttf[7] - $array_size_ttf[1]);
@@ -638,6 +473,5 @@ class Gallery
 	}
 	
 	public function get_error() { return $this->error; }
-	
 }
 ?>

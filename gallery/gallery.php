@@ -68,7 +68,7 @@ if (!empty($g_del)) //Suppression d'une image.
 	//Régénération du cache des photos aléatoires.
 	$Cache->Generate_module_file('gallery');
 
-	AppContext::get_response()->redirect('/gallery/gallery' . url('.php?cat=' . $g_idcat, '-' . $g_idcat . '.php', '&'));
+	AppContext::get_response()->redirect('/gallery/gallery' . url('.php?cat=' . $id_category, '-' . $id_category . '.php', '&'));
 }
 elseif (!empty($g_idpics) && $g_move) //Déplacement d'une image.
 {
@@ -96,17 +96,8 @@ elseif (isset($_FILES['gallery'])) //Upload
 		DispatchManager::redirect($controller);
 	}
 	
-	$g_idcat = retrieve(POST, 'cat', 0);
-	if (!empty($g_idcat))
-	{
-		if (!isset($CAT_GALLERY[$g_idcat]) || $CAT_GALLERY[$g_idcat]['aprob'] == 0)
-			AppContext::get_response()->redirect('/gallery/gallery' . url('.php?error=unexist_cat', '', '&'));
-	}
-	else //Racine.
-		$CAT_GALLERY[0]['auth'] = $config->get_authorizations();
-
 	//Niveau d'autorisation de la catégorie, accès en écriture.
-	if (!AppContext::get_current_user()->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::WRITE_AUTHORIZATIONS))
+	if (!GalleryAuthorizationsService::check_authorizations($id_category)->write())
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -114,7 +105,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 
 	//Niveau d'autorisation de la catégorie, accès en écriture.
 	if (!$Gallery->auth_upload_pics(AppContext::get_current_user()->get_id(), AppContext::get_current_user()->get_level()))
-		AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=upload_limit', '-' . $g_idcat . '.php?add=1&error=upload_limit', '&') . '#message_helper');
+		AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $id_category . '&error=upload_limit', '-' . $id_category . '.php?add=1&error=upload_limit', '&') . '#message_helper');
 
 	$dir = 'pics/';
 
@@ -127,24 +118,24 @@ elseif (isset($_FILES['gallery'])) //Upload
 	$Upload->file('gallery', '`([a-z0-9()_-])+\.(jpg|jpeg|gif|png)+$`i', Upload::UNIQ_NAME, $config->get_max_weight());
 	if ($Upload->get_error() != '') //Erreur, on arrête ici
 	{
-		AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($g_idcat,$Upload->get_error()) . '#message_helper');
+		AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($id_category,$Upload->get_error()) . '#message_helper');
 	}
 	else
 	{
 		$path = $dir . $Upload->get_filename();
 		$error = $Upload->check_img($config->get_max_width(), $config->get_max_height(), Upload::DELETE_ON_ERROR);
 		if (!empty($error)) //Erreur, on arrête ici
-			AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($g_idcat,$error) . '#message_helper');
+			AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($id_category,$error) . '#message_helper');
 		else
 		{
 			//Enregistrement de l'image dans la bdd.
 			$Gallery->Resize_pics($path);
 			if ($Gallery->get_error() != '')
-				AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($g_idcat,$Upload->get_error()) . '#message_helper');
+				AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($id_category,$Upload->get_error()) . '#message_helper');
 
 			$idpic = $Gallery->Add_pics($idcat_post, $name_post, $Upload->get_filename(), AppContext::get_current_user()->get_id());
 			if ($Gallery->get_error() != '')
-				AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($g_idcat,$Upload->get_error()) . '#message_helper');
+				AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($id_category,$Upload->get_error()) . '#message_helper');
 
 			//Régénération du cache des photos aléatoires.
 			$Cache->Generate_module_file('gallery');
@@ -161,50 +152,21 @@ elseif ($g_add)
 		DispatchManager::redirect($controller);
 	}
 	
+	$categories = GalleryService::get_categories_manager()->get_categories_cache()->get_categories();
 	$tpl = new FileTemplate('gallery/gallery_add.tpl');
 
-	if (!empty($g_idcat))
-	{
-		if (!isset($CAT_GALLERY[$g_idcat]) || $CAT_GALLERY[$g_idcat]['aprob'] == 0)
-			AppContext::get_response()->redirect('/gallery/gallery' . url('.php?error=unexist_cat', '', '&'));
-
-		$cat_links = '';
-		foreach ($CAT_GALLERY as $id => $array_info_cat)
-		{
-			if ($id > 0)
-			{
-				if ($CAT_GALLERY[$g_idcat]['id_left'] >= $array_info_cat['id_left'] && $CAT_GALLERY[$g_idcat]['id_right'] <= $array_info_cat['id_right'] && $array_info_cat['level'] <= $CAT_GALLERY[$g_idcat]['level'])
-					$cat_links .= ' <a href="' . GalleryUrlBuilder::get_link_cat($id) . '">' . $array_info_cat['name'] . '</a> &raquo;';
-			}
-		}
-	}
-	else //Racine.
-	{
-		$cat_links = '';
-		$CAT_GALLERY[0]['auth'] = $config->get_authorizations();
-		$CAT_GALLERY[0]['aprob'] = 1;
-		$CAT_GALLERY[0]['name'] = $LANG['root'];
-	}
-
 	//Niveau d'autorisation de la catégorie, accès en écriture.
-	if (!AppContext::get_current_user()->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::WRITE_AUTHORIZATIONS))
+	if (!GalleryAuthorizationsService::check_authorizations($id_category)->write())
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
-
-	$auth_cats = '<option value="0">' . $LANG['root'] . '</option>';
-	foreach ($CAT_GALLERY as $idcat => $key)
+	
+	$cat_links = '';
+	foreach ($categories as $category)
 	{
-		if ($idcat != 0  && $CAT_GALLERY[$idcat]['aprob'] == 1)
-		{
-			if (AppContext::get_current_user()->check_auth($CAT_GALLERY[$idcat]['auth'], GalleryAuthorizationsService::READ_AUTHORIZATIONS) && AppContext::get_current_user()->check_auth($CAT_GALLERY[$idcat]['auth'], GalleryAuthorizationsService::WRITE_AUTHORIZATIONS))
-			{
-				$margin = ($CAT_GALLERY[$idcat]['level'] > 0) ? str_repeat('--------', $CAT_GALLERY[$idcat]['level']) : '--';
-				$selected = ($idcat == $g_idcat) ? ' selected="selected"' : '';
-				$auth_cats .= '<option value="' . $idcat . '"' . $selected . '>' . $margin . ' ' . $CAT_GALLERY[$idcat]['name'] . '</option>';
-			}
-		}
+		if ($category->get_id() != Category::ROOT_CATEGORY && $category->get_id_parent() == $categories[$idcat]->get_id_parent())
+			$cat_links .= ' <a href="' . GalleryUrlBuilder::get_link_cat($category->get_id()) . '">' . $category->get_name() . '</a> &raquo;';
 	}
 
 	//Gestion erreur.
@@ -212,26 +174,25 @@ elseif ($g_add)
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_max_dimension', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_unsupported_format', 'e_unabled_create_pics', 'e_error_resize', 'e_no_graphic_support', 'e_unabled_incrust_logo', 'delete_thumbnails', 'upload_limit');
 	if (in_array($get_error, $array_error))
 		$tpl->put('message_helper', MessageHelper::display(LangLoader::get_message($get_error, 'errors'), MessageHelper::WARNING));
-	elseif ($get_error == 'unexist_cat')
-		$tpl->put('message_helper', MessageHelper::display(LangLoader::get_message('element.unexist', 'status-messages-common'), MessageHelper::NOTICE));
 
 	$module_data_path = $tpl->get_pictures_data_path();
-	$path_pics = PersistenceContext::get_querier()->get_column_value(PREFIX . "gallery", 'path', 'WHERE id = :id', array('id' => $g_idpics));
+	$path_pics = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'path', 'WHERE id = :id', array('id' => $g_idpics));
 
 	//Aficchage de la photo uploadée.
 	if (!empty($g_idpics))
 	{
-		$imageup = PersistenceContext::get_querier()->select_single_row(PREFIX . "gallery", array('idcat', 'name', 'path'), 'WHERE id = :id', array('id' => $g_idpics));
+		$imageup = PersistenceContext::get_querier()->select_single_row(GallerySetup::$gallery_table, array('idcat', 'name', 'path'), 'WHERE id = :id', array('id' => $g_idpics));
 		$tpl->assign_block_vars('image_up', array(
 			'NAME' => $imageup['name'],
 			'IMG' => '<a href="gallery.php?cat=' . $imageup['idcat'] . '&amp;id=' . $g_idpics . '#pics_max"><img src="pics/' . $imageup['path'] . '" alt="" /></a>',
 			'L_SUCCESS_UPLOAD' => $LANG['success_upload_img'],
-			'U_CAT' => '<a href="gallery.php?cat=' . $imageup['idcat'] . '">' . $CAT_GALLERY[$imageup['idcat']]['name'] . '</a>'
+			'U_CAT' => '<a href="gallery.php?cat=' . $imageup['idcat'] . '">' . $categories[$imageup['idcat']]->get_name() . '</a>'
 		));
 	}
 
 	//Affichage du quota d'image uploadée.
-	$quota = isset($CAT_GALLERY[$g_idcat]['auth']['r-1']) ? ($CAT_GALLERY[$g_idcat]['auth']['r-1'] != '3') : true;
+	$category_authorizations = GalleryService::get_categories_manager()->get_heritated_authorizations($id_category, Category::WRITE_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY);
+	$quota = isset($category_authorizations['r-1']) ? ($category_authorizations['r-1'] != '3') : true;
 	if ($quota)
 	{
 		switch (AppContext::get_current_user()->get_level())
@@ -251,11 +212,15 @@ elseif ($g_add)
 			'L_IMAGE_QUOTA' => sprintf($LANG['image_quota'], $nbr_upload_pics, $l_pics_quota)
 		));
 	}
-
+	
+	$search_category_children_options = new SearchCategoryChildrensOptions();
+	$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
+	$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
+	
 	$tpl->put_all(array(
-		'CAT_ID' => $g_idcat,
-		'GALLERY' => !empty($g_idcat) ? $CAT_GALLERY[$g_idcat]['name'] : $LANG['gallery'],
-		'CATEGORIES' => $auth_cats,
+		'CAT_ID' => $id_category,
+		'GALLERY' => !empty($id_category) ? $categories[$id_category]->get_name() : $LANG['gallery'],
+		'CATEGORIES_TREE' => GalleryService::get_categories_manager()->get_select_categories_form_field('cat', LangLoader::get_message('form.category', 'common'), $id_category, $search_category_children_options)->display()->render(),
 		'WIDTH_MAX' => $config->get_max_width(),
 		'HEIGHT_MAX' => $config->get_max_height(),
 		'WEIGHT_MAX' => $config->get_max_weight(),
@@ -273,7 +238,7 @@ elseif ($g_add)
 		'L_UNIT_KO' => LangLoader::get_message('unit.kilobytes', 'common'),
 		'L_UPLOAD' => $LANG['upload_img'],
 		'U_GALLERY_CAT_LINKS' => $cat_links,
-		'U_GALLERY_ACTION_ADD' => GalleryUrlBuilder::get_link_cat_add($g_idcat,null,AppContext::get_session()->get_token()),
+		'U_GALLERY_ACTION_ADD' => GalleryUrlBuilder::get_link_cat_add($id_category,null,AppContext::get_session()->get_token()),
 		'U_INDEX' => url('.php')
 	));
 

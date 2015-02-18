@@ -40,37 +40,15 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 	//Récupération du cache.
 	function get_cache()
 	{
-		global $LANG;
 		$config = GalleryConfig::load();
 		
-		$cat_gallery = 'global $CAT_GALLERY;' . "\n";
-		
-		//Racine
-		$cat_gallery .= '$CAT_GALLERY[0] = ' . var_export(array('name' => $LANG['root'], 'id_left' => 0, 'id_right' => 0, 'level' => -1, 'auth' => $config->get_authorizations()), true) . ';' . "\n\n";
-		
-		$result = $this->db_querier->select("SELECT id, id_left, id_right, level, name, aprob, auth
-		FROM " . PREFIX . "gallery_cats
-		ORDER BY id_left");
-		while ($row = $result->fetch())
-		{
-			$row['auth'] = empty($row['auth']) ? $config->get_authorizations() : unserialize(stripslashes($row['auth']));
-
-			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'id_left\'] = ' . var_export($row['id_left'], true) . ';' . "\n";
-			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'id_right\'] = ' . var_export($row['id_right'], true) . ';' . "\n";
-			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'level\'] = ' . var_export($row['level'], true) . ';' . "\n";
-			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'name\'] = ' . var_export($row['name'], true) . ';' . "\n";
-			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'aprob\'] = ' . var_export($row['aprob'], true) . ';' . "\n";
-			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'auth\'] = ' . var_export($row['auth'], true) . ';' . "\n";
-		}
-		$result->dispose();
-
-		$Gallery = new Gallery;
+		$Gallery = new Gallery();
 
 		$_array_random_pics = 'global $_array_random_pics;' . "\n" . '$_array_random_pics = array(';
 		$result = $this->db_querier->select("SELECT g.id, g.name, g.path, g.width, g.height, g.idcat, gc.auth
-		FROM " . PREFIX . "gallery g
-		LEFT JOIN " . PREFIX . "gallery_cats gc on gc.id = g.idcat
-		WHERE g.aprob = 1 AND (gc.aprob = 1 OR g.idcat = 0)
+		FROM " . GallerySetup::$gallery_table . " g
+		LEFT JOIN " . GallerySetup::$gallery_cats_table . " gc on gc.id = g.idcat
+		WHERE g.aprob = 1
 		ORDER BY RAND()
 		LIMIT 30");
 		while ($row = $result->fetch())
@@ -92,7 +70,7 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 		$result->dispose();
 		$_array_random_pics .= ');';
 
-		return $cat_gallery . "\n" . $_array_random_pics;
+		return $_array_random_pics;
 	}
 	
 	public function comments()
@@ -130,6 +108,11 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 	public function tree_links()
 	{
 		return new GalleryTreeLinks();
+	}
+	
+	public function url_mappings()
+	{
+		return new UrlMappings(array(new DispatcherUrlMapping('/gallery/index.php')));
 	}
 }
 ?>

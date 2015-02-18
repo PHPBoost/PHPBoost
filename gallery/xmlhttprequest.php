@@ -39,26 +39,18 @@ $config = GalleryConfig::load();
 //Notation.
 if (!empty($_GET['increment_view']))
 {
+	$categories = GalleryService::get_categories_manager()->get_categories_cache()->get_categories();
 	$g_idpics = retrieve(GET, 'id', 0);
 	$g_idcat = retrieve(GET, 'cat', 0);
-	if (empty($g_idpics))
+	if (empty($g_idpics) || (!empty($g_idcat) && !isset($categories[$idcat])))
 		exit;
-	elseif (!empty($g_idcat))
-	{
-		if (!isset($CAT_GALLERY[$g_idcat]) || $CAT_GALLERY[$g_idcat]['aprob'] == 0)
-			exit;
-	}
-	else //Racine.
-	{
-		$CAT_GALLERY[0]['auth'] = $config->get_authorizations();
-		$CAT_GALLERY[0]['aprob'] = 1;
-	}
+	
 	//Niveau d'autorisation de la catégorie
-	if (!AppContext::get_current_user()->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::READ_AUTHORIZATIONS))
+	if (!GalleryAuthorizationsService::check_authorizations($g_idcat)->read())
 		exit;
 
 	//Mise à jour du nombre de vues.
-	PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery SET views = views + 1 WHERE idcat = :idcat AND id = :id", array('idcat' => $g_idcat, 'id' => $g_idpics));
+	PersistenceContext::get_querier()->inject("UPDATE " . GallerySetup::$gallery_table . " SET views = views + 1 WHERE idcat = :idcat AND id = :id", array('idcat' => $g_idcat, 'id' => $g_idpics));
 }
 else
 {	
@@ -67,16 +59,10 @@ else
 	if (!empty($_GET['rename_pics'])) //Renomme une image.
 	{
 		$id_file = retrieve(POST, 'id_file', 0);
-		$id_cat = PersistenceContext::get_querier()->get_column_value(PREFIX . "gallery", 'idcat', 'WHERE id = :id', array('id' => $id_file));
+		$id_cat = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'idcat', 'WHERE id = :id', array('id' => $id_file));
 		
-		if (empty($id_cat))
+		if (GalleryAuthorizationsService::check_authorizations($id_cat)->moderation()) //Modo
 		{
-			$CAT_GALLERY[0]['auth'] = $config->get_authorizations();
-			$CAT_GALLERY[0]['aprob'] = 1;
-		}
-		
-		if (AppContext::get_current_user()->check_auth($CAT_GALLERY[$id_cat]['auth'], GalleryAuthorizationsService::MODERATION_AUTHORIZATIONS)) //Modo
-		{	
 			//Initialisation  de la class de gestion des fichiers.
 			include_once(PATH_TO_ROOT .'/gallery/Gallery.class.php');
 			$Gallery = new Gallery;
@@ -88,25 +74,16 @@ else
 				echo $Gallery->Rename_pics($id_file, $name, $previous_name);
 			else 
 				echo -1;
-				
 		}
 	}
 	elseif (!empty($_GET['aprob_pics']))
 	{
 		$id_file = retrieve(POST, 'id_file', 0);
-		$id_cat = PersistenceContext::get_querier()->get_column_value(PREFIX . "gallery", 'idcat', 'WHERE id = :id', array('id' => $id_file));
+		$id_cat = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'idcat', 'WHERE id = :id', array('id' => $id_file));
 		
-		if (empty($id_cat))
+		if (GalleryAuthorizationsService::check_authorizations($id_cat)->moderation()) //Modo
 		{
-			$CAT_GALLERY[0]['auth'] = $config->get_authorizations();
-			$CAT_GALLERY[0]['aprob'] = 1;
-		}
-		
-		if (AppContext::get_current_user()->check_auth($CAT_GALLERY[$id_cat]['auth'], GalleryAuthorizationsService::MODERATION_AUTHORIZATIONS)) //Modo
-		{
-			//Initialisation  de la class de gestion des fichiers.
-			include_once(PATH_TO_ROOT .'/gallery/Gallery.class.php');
-			$Gallery = new Gallery;
+			$Gallery = new Gallery();
 			
 			if (!empty($id_file))
 			{

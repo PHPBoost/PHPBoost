@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                               index.php
+ *                               GalleryCategoriesCache.class.php
  *                            -------------------
- *   begin                : February 12, 2015
+ *   begin                : February 10, 2015
  *   copyright            : (C) 2015 Julien BRISWALTER
  *   email                : julienseth78@phpboost.com
  *
@@ -29,21 +29,28 @@
  * @author Julien BRISWALTER <julienseth78@phpboost.com>
  */
 
-define('PATH_TO_ROOT', '..');
-
-require_once PATH_TO_ROOT . '/kernel/init.php';
-
-$url_controller_mappers = array(
-	//Config
-	//new UrlControllerMapper('AdminGalleryConfigController', '`^/admin(?:/config)?/?$`'),
+class GalleryCategoriesCache extends CategoriesCache
+{
+	public function get_table_name()
+	{
+		return GallerySetup::$gallery_cats_table;
+	}
 	
-	//Categories
-	new UrlControllerMapper('GalleryCategoriesManageController', '`^/admin/categories/?$`'),
-	new UrlControllerMapper('GalleryCategoriesFormController', '`^/admin/categories/add/?$`'),
-	new UrlControllerMapper('GalleryCategoriesFormController', '`^/admin/categories/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('GalleryDeleteCategoryController', '`^/admin/categories/([0-9]+)/delete/?$`', array('id')),
+	public function get_category_class()
+	{
+		return CategoriesManager::RICH_CATEGORY_CLASS;
+	}
 	
-	new UrlControllerMapper('GalleryDisplayCategoryController', '`^/?$`'),
-);
-DispatchManager::dispatch($url_controller_mappers);
+	public function get_module_identifier()
+	{
+		return 'gallery';
+	}
+	
+	public function get_root_category()
+	{
+		$root = new RichRootCategory();
+		$root->set_authorizations(GalleryConfig::load()->get_authorizations());
+		return $root;
+	}
+}
 ?>

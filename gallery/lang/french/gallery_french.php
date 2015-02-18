@@ -33,20 +33,11 @@
 
 //Admin
 $LANG['upload_pics'] = 'Uploader l\'image';
-$LANG['gallery_management'] = 'Gestion de la galerie';
-$LANG['gallery.manage'] = 'Gérer les images';
-$LANG['gallery_pics_add'] = 'Ajout d\'images';
-$LANG['gallery_cats_management'] = 'Gestion des catégories';
-$LANG['admin.categories.manage'] = 'Gérer les catégories';
-$LANG['gallery_cats_add'] = 'Ajouter une catégorie';
 $LANG['gallery_config'] = 'Configuration de la galerie';
-$LANG['cat_edit'] = 'Edition de la catégorie';
-$LANG['parent_category'] = 'Catégorie parente';
 $LANG['add_pic'] = 'Ajouter une image';
 $LANG['img_dispo'] = 'Images disponibles sur le serveur';
 $LANG['img_without_cat'] = 'Image(s) sans catégories';
 $LANG['total_img_cat'] = '%d image(s) dans cette catégorie !';
-$LANG['check_update'] = 'Sélectionnez les photos à modifier.';
 $LANG['height_max'] = 'Hauteur max photos';
 $LANG['height_max_explain'] = '640px par défaut';
 $LANG['width_max'] = 'Largeur max des photos';
@@ -94,8 +85,6 @@ $LANG['nbr_img_explain'] = 'Membres (illimité si invités autorisés)';
 $LANG['nbr_img_modo'] = 'Nombre de photos maximum';
 $LANG['nbr_img_modo_explain'] = 'Modérateurs';
 $LANG['explain_gallery_cache'] = 'Régénération des miniatures (définitif!)<br />Videz le cache en cas de modification des configurations des miniatures, et recompte le nombre d\'images par catégories.';
-$LANG['gallery_lock'] = 'Verrouillé';
-$LANG['gallery_unlock'] = 'Déverrouillé';
 $LANG['explain_pic'] = 'La galerie que vous désirez supprimer contient <strong>1</strong> image, voulez-vous la conserver en la transférant dans une autre galerie, ou bien la supprimer ?';
 $LANG['explain_pics'] = 'La galerie que vous désirez supprimer contient <strong>%d</strong> images, voulez-vous les conserver en les transférant dans une autre galerie, ou bien tout supprimer ?';
 $LANG['explain_subgallery'] = 'La galerie que vous désirez supprimer contient <strong>1</strong> sous-galerie, voulez-vous la conserver en la transférant dans une autre galerie, ou bien la supprimer ainsi que son contenu ?';
@@ -104,7 +93,6 @@ $LANG['keep_pics'] = 'Conserver le(s) image(s)';
 $LANG['keep_subgallery'] = 'Conserver la/les galerie(s)';
 $LANG['move_pics_to'] = 'Déplacer le(s) image(s) vers';
 $LANG['move_subgalleries_to'] = 'Déplacer la/les sous-galerie(s) vers';
-$LANG['cat_target'] = 'Catégorie cible';
 $LANG['del_all'] = 'Suppression complète';
 $LANG['del_gallery_contents'] = 'Supprimer la galerie "<strong>%s</strong>", ses <strong>sous-galeries</strong> et <strong>tout</strong> son contenu (Définitif)';
 $LANG['display_option'] = 'Options d\'affichage';
@@ -136,6 +124,7 @@ $LANG['horizontal_dynamic_scroll'] = 'Défilement dynamique horizontal';
 $LANG['column'] = 'Colonnes';
 $LANG['global_cat_selection'] = 'Catégorie de toutes les images sélectionnées';
 $LANG['global_cat_selection_explain'] = 'Permet de changer la catégorie de toutes les images sélectionnées d\'un coup';
+$LANG['select'] = 'Sélectionner';
 
 //Requis
 $LANG['require_height'] = 'Veuillez entrer une hauteur maximale pour les miniatures !';
@@ -172,7 +161,6 @@ $LANG['actual_note'] = 'Avis actuel';
 $LANG['give_note'] = 'Donner votre avis';
 $LANG['img_success'] = 'L\'image a bien été uploadée !';
 $LANG['img_format'] = 'Formats d\'image autorisés';
-$LANG['img_delete'] = 'Supprimer cette image';
 $LANG['random_img'] = 'Image aléatoire';
 $LANG['no_random_img'] = 'Aucune image';
 $LANG['dimension'] = 'Dimension';

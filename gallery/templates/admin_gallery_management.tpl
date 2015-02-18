@@ -93,12 +93,10 @@
 					document.getElementById('img' + id_file).innerHTML = '';
 					if( document.getElementById('img_aprob' + id_file) )
 					{
-						if(document.getElementById('img_aprob' + id_file).hasClassName('fa-eye')){
-							document.getElementById('img_aprob' + id_file).removeClassName('fa-eye');
-							document.getElementById('img_aprob' + id_file).addClassName('fa-eye-slash');
+						if(document.getElementById('img_aprob' + id_file).className == "fa fa-eye-slash"){
+							document.getElementById('img_aprob' + id_file).className = "fa fa-eye";
 						} else {
-							document.getElementById('img_aprob' + id_file).removeClassName('fa-eye-slash');
-							document.getElementById('img_aprob' + id_file).addClassName('fa-eye');
+							document.getElementById('img_aprob' + id_file).className = "fa fa-eye-slash";
 						}
 						document.getElementById('img_aprob' + id_file).title = '' + title_aprob;
 						document.getElementById('img_aprob' + id_file).alt = '' + title_aprob;
@@ -205,14 +203,14 @@
 			<ul>
 				<li class="title-menu">{L_GALLERY_MANAGEMENT}</li>
 				<li>
-					<a href="admin_gallery_cat.php"><img src="gallery.png" alt="" /></a>
+					<a href="${relative_url(GalleryUrlBuilder::manage_categories())}"><img src="gallery.png" alt="" /></a>
 					<br />
-					<a href="admin_gallery_cat.php" class="quick-link">{L_GALLERY_CAT_MANAGEMENT}</a>
+					<a href="${relative_url(GalleryUrlBuilder::manage_categories())}" class="quick-link">{L_GALLERY_CAT_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_gallery_cat_add.php"><img src="gallery.png" alt="" /></a>
+					<a href="${relative_url(GalleryUrlBuilder::add_category())}"><img src="gallery.png" alt="" /></a>
 					<br />
-					<a href="admin_gallery_cat_add.php" class="quick-link">{L_GALLERY_CAT_ADD}</a>
+					<a href="${relative_url(GalleryUrlBuilder::add_category())}"" class="quick-link">{L_GALLERY_CAT_ADD}</a>
 				</li>
 				<li>
 					<a href="admin_gallery.php"><img src="gallery.png" alt="" /></a>
@@ -273,9 +271,9 @@
 							<a href="admin_gallery.php?cat={cat.list.IDCAT}"># IF cat.list.C_IMG #{cat.list.IMG}# ENDIF #</a>
 							
 							<br />
-							<a href="admin_gallery.php?cat={cat.list.IDCAT}">{cat.list.CAT}</a> <a href="admin_gallery_cat.php?id={cat.list.IDCAT}" title="{L_EDIT}" class="fa fa-edit"></a> 
+							<a href="admin_gallery.php?cat={cat.list.IDCAT}">{cat.list.CAT}</a> {EDIT} 
 							<br />
-							{cat.list.LOCK} <span class="smaller">{cat.list.L_NBR_PICS}</span> 
+							<span class="smaller">{cat.list.L_NBR_PICS}</span> 
 						</td>
 					{cat.list.TR_END}
 					# END cat.list #

@@ -27,8 +27,8 @@
 
 class GallerySetup extends DefaultModuleSetup
 {
-	private static $gallery_table;
-	private static $gallery_cats_table;
+	public static $gallery_table;
+	public static $gallery_cats_table;
 
 	public static function __static()
 	{
@@ -86,33 +86,28 @@ class GallerySetup extends DefaultModuleSetup
 
 	private function create_gallery_cats_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'id_left' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'id_right' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'level' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'name' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'contents' => array('type' => 'text', 'length' => 65000),
-			'nbr_pics_aprob' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
-			'nbr_pics_unaprob' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
-			'status' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'aprob' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'auth' => array('type' => 'text', 'length' => 65000)
-		);
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array(
-				'id_left' => array('type' => 'key', 'fields' => 'id_left')
-			)
-		);
-		PersistenceContext::get_dbms_utils()->create_table(self::$gallery_cats_table, $fields, $options);
+		RichCategory::create_categories_table(self::$gallery_cats_table);
 	}
 	
 	private function insert_data()
 	{
 		$this->messages = LangLoader::get('install', 'gallery');
+		$this->insert_gallery_cats_data();
 		$this->insert_gallery_data();
-		$this->insert_gallery_cat_data();
+	}
+	
+	private function insert_gallery_cats_data()
+	{
+		PersistenceContext::get_querier()->insert(self::$gallery_cats_table, array(
+			'id' => 1,
+			'id_parent' => 0,
+			'c_order' => 1,
+			'auth' => '',
+			'rewrited_name' => Url::encode_rewrite($this->messages['default.cat.name']),
+			'name' => $this->messages['default.cat.name'],
+			'description' => $this->messages['default.cat.description'],
+			'image' => '/gallery/gallery.png'
+		));
 	}
 	
 	private function insert_gallery_data()
@@ -120,7 +115,7 @@ class GallerySetup extends DefaultModuleSetup
 		PersistenceContext::get_querier()->insert(self::$gallery_table, array(
 			'id' => 1,
 			'idcat' => 1,
-			'name' => $this->messages['gallery_example_element_name'],
+			'name' => $this->messages['default.gallerypicture.name'],
 			'path' => 'phpboost-logo.png',
 			'width' => 320,
 			'height' => 264,
@@ -129,23 +124,6 @@ class GallerySetup extends DefaultModuleSetup
 			'aprob' => 1,
 			'views' => 0,
 			'timestamp' => time()
-		));
-	}
-	
-	private function insert_gallery_cat_data()
-	{
-		PersistenceContext::get_querier()->insert(self::$gallery_cats_table, array(
-			'id' => 1,
-			'id_left' => 1,
-			'id_right' => 2,
-			'level' => 0,
-			'name' => $this->messages['gallery_cat_name'],
-			'contents' => $this->messages['gallery_cat_content'],
-			'nbr_pics_aprob' => 1,
-			'nbr_pics_unaprob' => 0,
-			'status' => 1,
-			'aprob' => 1,
-			'auth' => 'a:3:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:11;}',
 		));
 	}
 }

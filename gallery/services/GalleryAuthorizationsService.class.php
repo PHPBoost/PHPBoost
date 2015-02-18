@@ -27,34 +27,34 @@
 
 class GalleryAuthorizationsService
 {
-	const READ_AUTHORIZATIONS = 1;
-	const WRITE_AUTHORIZATIONS = 2;
-	const MODERATION_AUTHORIZATIONS = 8;
+	public $id_category;
 	
-	public static function check_authorizations()
+	public static function check_authorizations($id_category = Category::ROOT_CATEGORY)
 	{
 		$instance = new self();
+		$instance->id_category = $id_category;
 		return $instance;
 	}
 	
 	public function read()
 	{
-		return $this->get_authorizations(self::READ_AUTHORIZATIONS);
+		return $this->is_authorized(Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY);
 	}
 	
 	public function write()
 	{
-		return $this->get_authorizations(self::WRITE_AUTHORIZATIONS);
+		return $this->is_authorized(Category::WRITE_AUTHORIZATIONS);
 	}
 	
 	public function moderation()
 	{
-		return $this->get_authorizations(self::MODERATION_AUTHORIZATIONS);
+		return $this->is_authorized(Category::MODERATION_AUTHORIZATIONS);
 	}
 	
-	private function get_authorizations($bit)
+	private function is_authorized($bit, $mode = Authorizations::AUTH_CHILD_PRIORITY)
 	{
-		return AppContext::get_current_user()->check_auth(GalleryConfig::load()->get_authorizations(), $bit);
+		$auth = GalleryService::get_categories_manager()->get_heritated_authorizations($this->id_category, $bit, $mode);
+		return AppContext::get_current_user()->check_auth($auth, $bit);
 	}
 }
 ?>
