@@ -78,7 +78,11 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 			AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $folder . '&erroru=' . $Upload->get_error() . '#message_helper');
 		else //Insertion dans la bdd
 		{
-			$check_user_folder = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id=:id', array('id' => $folder));
+			$check_user_folder = 0;
+			try {
+				$check_user_folder = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id=:id', array('id' => $folder));
+			} catch (RowNotFoundException $e) {}
+			
 			$user_id = ($check_user_folder <= 0) ? -1 : AppContext::get_current_user()->get_id();
 			$user_id = max($user_id, $folder_member);
 			
