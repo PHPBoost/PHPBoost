@@ -96,12 +96,10 @@
 					document.getElementById('img' + id_file).innerHTML = '';
 					if( document.getElementById('img_aprob' + id_file) )
 					{
-						if(document.getElementById('img_aprob' + id_file).hasClassName('fa-eye')){
-							document.getElementById('img_aprob' + id_file).removeClassName('fa-eye');
-							document.getElementById('img_aprob' + id_file).addClassName('fa-eye-slash');
+						if(document.getElementById('img_aprob' + id_file).className == "fa fa-eye-slash"){
+							document.getElementById('img_aprob' + id_file).className = "fa fa-eye";
 						} else {
-							document.getElementById('img_aprob' + id_file).removeClassName('fa-eye-slash');
-							document.getElementById('img_aprob' + id_file).addClassName('fa-eye');
+							document.getElementById('img_aprob' + id_file).className = "fa fa-eye-slash";
 						}
 						document.getElementById('img_aprob' + id_file).title = '' + title_aprob;
 						document.getElementById('img_aprob' + id_file).alt = '' + title_aprob;
@@ -270,7 +268,7 @@
 			<header>
 				<h1>
 					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
-					{L_GALLERY} {U_GALLERY_CAT_LINKS}
+					{L_GALLERY}
 				</h1>
 			</header>
 			<div class="content">
@@ -294,7 +292,7 @@
 										<div class="spacer"></div>
 										<span class="smaller">{cat_list.DESC}</span> 
 										<div class="spacer"></div>
-										{cat_list.LOCK} <span class="smaller">{cat_list.L_NBR_PICS}</span>
+										<span class="smaller">{cat_list.L_NBR_PICS}</span>
 									</div>
 								</td>
 								{cat_list.CLOSE_TR}

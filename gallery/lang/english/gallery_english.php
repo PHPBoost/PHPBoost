@@ -33,20 +33,11 @@
 
 //Admin
 $LANG['upload_pics'] = 'Upload pictures';
-$LANG['gallery_management'] = 'Gallery management';
-$LANG['gallery.manage'] = 'Manage pictures';
-$LANG['gallery_cats_management'] = 'Category management';
-$LANG['admin.categories.manage'] = 'Manage categories';
-$LANG['gallery_pics_add'] = 'Add pics';
-$LANG['gallery_cats_add'] = 'Add category';
 $LANG['gallery_config'] = 'Gallery configuration';
-$LANG['cat_edit'] = 'Edit category';
-$LANG['parent_category'] = 'Parent category';
 $LANG['add_pic'] = 'Add picture';
 $LANG['img_dispo'] = 'Pictures available on the server';
 $LANG['img_without_cat'] = 'Picture(s) without categories';
 $LANG['total_img_cat'] = '%d picture(s) in this category';
-$LANG['check_update'] = 'Select the pictures to update';
 $LANG['height_max'] = 'Picture max height';
 $LANG['height_max_explain'] = '640px by default';
 $LANG['width_max'] = 'Picture max width';
@@ -94,8 +85,6 @@ $LANG['nbr_img_explain'] = 'Members (unlimited if guests are authorized)';
 $LANG['nbr_img_modo'] = 'Max number of pictures';
 $LANG['nbr_img_modo_explain'] = 'Moderator';
 $LANG['explain_gallery_cache'] = 'Regeneration of the thumbnails<br />Empties the cache in case of thumbnails configuration modification, and recount number of pictures in each categories.';
-$LANG['gallery_lock'] = 'Lock';
-$LANG['gallery_unlock'] = 'Unlock';
 $LANG['explain_pic'] = 'The gallery you wish to delete contains <strong>1</strong> picture, do you want to preserve it by transferring it in another gallery, or to delete this picture?';
 $LANG['explain_pics'] = 'The gallery you wish to delete contains <strong>%d</strong> pictures, do you want to preserve them by transferring them in another gallery, or to delete all pictures?';
 $LANG['explain_subgallery'] = 'The gallery you wish to delete contains <strong>1</strong> subgallery, do you want to preserve it by transferring it in another gallery, or to delete it and its contents?';
@@ -104,7 +93,6 @@ $LANG['keep_pics'] = 'Keep picture(s)';
 $LANG['keep_subgallery'] = 'Keep subgallery(ies)';
 $LANG['move_pics_to'] = 'Move picture(s) to';
 $LANG['move_subgalleries_to'] = 'Move subgallery(ies) to';
-$LANG['cat_target'] = 'Category target';
 $LANG['del_all'] = 'Complete delete';
 $LANG['del_gallery_contents'] = 'Delete gallery "<strong>%s</strong>", <strong>subgalleries</strong> and <strong>all</strong> their contents';
 $LANG['display_option'] = 'Display option';
@@ -136,6 +124,7 @@ $LANG['horizontal_dynamic_scroll'] = 'Horizontal dynamic scrolling';
 $LANG['column'] = 'Columns';
 $LANG['global_cat_selection'] = 'All selected pictures category';
 $LANG['global_cat_selection_explain'] = 'Allows to change all selected pictures category in one time';
+$LANG['select'] = 'Select';
 
 //Require
 $LANG['require_height'] = 'Please enter maximum height for the thumbnails!';
@@ -172,7 +161,6 @@ $LANG['actual_note'] = 'Current rating';
 $LANG['give_note'] = 'Give a rating';
 $LANG['img_success'] = 'The picture was successfully uploaded!';
 $LANG['img_format'] = 'Granted image\'s formats';
-$LANG['img_delete'] = 'Delete this picture';
 $LANG['random_img'] = 'Random picture';
 $LANG['no_random_img'] = 'No picture';
 $LANG['dimension'] = 'Dimension';

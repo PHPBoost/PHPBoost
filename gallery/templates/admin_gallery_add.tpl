@@ -2,14 +2,14 @@
 			<ul>
 				<li class="title-menu">{L_GALLERY_MANAGEMENT}</li>
 				<li>
-					<a href="admin_gallery_cat.php"><img src="gallery.png" alt="" /></a>
+					<a href="${relative_url(GalleryUrlBuilder::manage_categories())}"><img src="gallery.png" alt="" /></a>
 					<br />
-					<a href="admin_gallery_cat.php" class="quick-link">{L_GALLERY_CAT_MANAGEMENT}</a>
+					<a href="${relative_url(GalleryUrlBuilder::manage_categories())}" class="quick-link">{L_GALLERY_CAT_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_gallery_cat_add.php"><img src="gallery.png" alt="" /></a>
+					<a href="${relative_url(GalleryUrlBuilder::add_category())}"><img src="gallery.png" alt="" /></a>
 					<br />
-					<a href="admin_gallery_cat_add.php" class="quick-link">{L_GALLERY_CAT_ADD}</a>
+					<a href="${relative_url(GalleryUrlBuilder::add_category())}"" class="quick-link">{L_GALLERY_CAT_ADD}</a>
 				</li>
 				<li>
 					<a href="admin_gallery.php"><img src="gallery.png" alt="" /></a>
@@ -62,7 +62,7 @@
 					<div class="spacer">&nbsp;</div>
 					
 					<div class="form-element">
-						<label for="category">{L_CATEGORY}</label>
+						<label for="category">${LangLoader::get_message('form.category', 'common')}</label>
 						<div class="form-field">
 							<select name="idcat_post" id="category">
 								{CATEGORIES}
@@ -109,7 +109,7 @@
 										</div>
 										<div class="spacer">&nbsp;</div>
 										<div>
-											{L_CAT}
+											${LangLoader::get_message('form.category', 'common')}
 											<div class="spacer"></div>
 												<select name="{list.ID}cat" id="{list.ID}cat" style="max-width:100%;">
 													{list.CATEGORIES}
@@ -140,7 +140,7 @@
 						<label for="root_cat">{L_GLOBAL_CAT_SELECTION} <spa class="field-description">{L_GLOBAL_CAT_SELECTION_EXPLAIN}</span></span></label>
 						<div class="form-field">
 							<select name="root_cat" id="root_cat">
-								{CATEGORIES}
+								{ROOT_CATEGORIES}
 							</select>
 							<script>
 							jQuery('#root_cat').on('change', function() {
@@ -164,4 +164,3 @@
 				</fieldset>
 			</form>
 		</div>
-		

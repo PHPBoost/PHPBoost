@@ -34,34 +34,19 @@ class GalleryCommentsTopic extends CommentsTopic
 	
 	public function get_authorizations()
 	{
-		global $CAT_GALLERY;
-		
-		$cache = new Cache();
-		$cache->load($this->get_module_id());
-		
-		$id_cat = $this->get_categorie_id();
-		$cat_authorizations = $CAT_GALLERY[$id_cat]['auth'];
-
 		$authorizations = new CommentsAuthorizations();
-		$authorizations->set_authorized_access_module(AppContext::get_current_user()->check_auth($cat_authorizations, GalleryAuthorizationsService::READ_AUTHORIZATIONS));
+		$authorizations->set_authorized_access_module(GalleryAuthorizationsService::check_authorizations($this->get_id_category())->read());
 		return $authorizations;
 	}
 	
 	public function is_display()
 	{
-		$columns = 'aprob';
-		$condition = 'WHERE id = :id_in_module';
-		$parameters = array('id_in_module' => $this->get_id_in_module());
-		$aprobation = PersistenceContext::get_querier()->get_column_value(PREFIX . 'gallery', $columns, $condition, $parameters);
-		return $aprobation > 0 ? true : false;
+		return (bool)PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'aprob', 'WHERE id = :id', array('id' => $this->get_id_in_module()));
 	}
 
-	private function get_categorie_id()
+	private function get_id_category()
 	{
-		$columns = 'idcat';
-		$condition = 'WHERE id = :id_in_module';
-		$parameters = array('id_in_module' => $this->get_id_in_module());
-		return PersistenceContext::get_querier()->get_column_value(PREFIX . 'gallery', $columns, $condition, $parameters);
+		return PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'idcat', 'WHERE id = :id', array('id' => $this->get_id_in_module()));
 	}
 }
 ?>

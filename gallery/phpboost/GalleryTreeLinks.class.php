@@ -32,29 +32,24 @@ class GalleryTreeLinks implements ModuleTreeLinksExtensionPoint
 {
 	public function get_actions_tree_links()
 	{
-		global $LANG, $Cache, $CAT_GALLERY;
-		load_module_lang('gallery'); //Chargement de la langue du module.
-		$Cache->load('gallery');
-		$id_cat = AppContext::get_request()->get_getstring('cat', 0);
-		$current_user = AppContext::get_current_user();
-		
+		$lang = LangLoader::get('common', 'gallery');
 		$tree = new ModuleTreeLinks();
 		
-		$manage_categories_link = new AdminModuleLink($LANG['admin.categories.manage'], new Url('/gallery/admin_gallery_cat.php'));
-		$manage_categories_link->add_sub_link(new AdminModuleLink($LANG['admin.categories.manage'], new Url('/gallery/admin_gallery_cat.php')));
-		$manage_categories_link->add_sub_link(new AdminModuleLink($LANG['gallery_cats_add'], new Url('/gallery/admin_gallery_cat_add.php')));
+		$manage_categories_link = new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), GalleryUrlBuilder::manage_categories());
+		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), GalleryUrlBuilder::manage_categories()));
+		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('category.add', 'categories-common'), GalleryUrlBuilder::add_category()));
 		$tree->add_link($manage_categories_link);
 		
-		$manage_gallery_link = new AdminModuleLink($LANG['gallery.manage'], new Url('/gallery/admin_gallery.php'));
-		$manage_gallery_link->add_sub_link(new AdminModuleLink($LANG['gallery.manage'], new Url('/gallery/admin_gallery.php')));
-		$manage_gallery_link->add_sub_link(new AdminModuleLink($LANG['add_pic'], new Url('/gallery/admin_gallery_add.php')));
+		$manage_gallery_link = new AdminModuleLink($lang['gallery.manage'], GalleryUrlBuilder::manage());
+		$manage_gallery_link->add_sub_link(new AdminModuleLink($lang['gallery.manage'], GalleryUrlBuilder::manage()));
+		$manage_gallery_link->add_sub_link(new AdminModuleLink($lang['gallery.actions.add'], GalleryUrlBuilder::add(AppContext::get_request()->get_getstring('id_category', 0))));
 		$tree->add_link($manage_gallery_link);
 		
-		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), new Url('/gallery/admin_gallery_config.php')));
+		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin-common'), GalleryUrlBuilder::configuration()));
 		
 		if (!AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		{
-			$tree->add_link(new ModuleLink($LANG['add_pic'], GalleryUrlBuilder::get_link_cat_add($id_cat), $current_user->check_auth($CAT_GALLERY[$id_cat]['auth'], GalleryAuthorizationsService::WRITE_AUTHORIZATIONS)));
+			$tree->add_link(new ModuleLink($lang['gallery.actions.add'], GalleryUrlBuilder::add(AppContext::get_request()->get_getstring('id_category', 0)), GalleryAuthorizationsService::check_authorizations()->write()));
 		}
 		
 		return $tree;

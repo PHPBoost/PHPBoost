@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                               index.php
+ *                               GalleryCategoriesFormController.class.php
  *                            -------------------
- *   begin                : February 12, 2015
+ *   begin                : February 10, 2015
  *   copyright            : (C) 2015 Julien BRISWALTER
  *   email                : julienseth78@phpboost.com
  *
@@ -29,21 +29,26 @@
  * @author Julien BRISWALTER <julienseth78@phpboost.com>
  */
 
-define('PATH_TO_ROOT', '..');
-
-require_once PATH_TO_ROOT . '/kernel/init.php';
-
-$url_controller_mappers = array(
-	//Config
-	//new UrlControllerMapper('AdminGalleryConfigController', '`^/admin(?:/config)?/?$`'),
+class GalleryCategoriesFormController extends AbstractRichCategoriesFormController
+{
+	protected function generate_response(View $view)
+	{
+		return new AdminGalleryDisplayResponse($view, $this->get_title());
+	}
 	
-	//Categories
-	new UrlControllerMapper('GalleryCategoriesManageController', '`^/admin/categories/?$`'),
-	new UrlControllerMapper('GalleryCategoriesFormController', '`^/admin/categories/add/?$`'),
-	new UrlControllerMapper('GalleryCategoriesFormController', '`^/admin/categories/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('GalleryDeleteCategoryController', '`^/admin/categories/([0-9]+)/delete/?$`', array('id')),
+	protected function get_categories_manager()
+	{
+		return GalleryService::get_categories_manager();
+	}
 	
-	new UrlControllerMapper('GalleryDisplayCategoryController', '`^/?$`'),
-);
-DispatchManager::dispatch($url_controller_mappers);
+	protected function get_id_category()
+	{
+		return AppContext::get_request()->get_getint('id', 0);
+	}
+	
+	protected function get_categories_management_url()
+	{
+		return GalleryUrlBuilder::manage_categories();
+	}
+}
 ?>

@@ -31,31 +31,20 @@ require_once('../gallery/gallery_begin.php');
 require_once('../kernel/header_no_display.php');
 
 $g_idpics = retrieve(GET, 'id', 0);
-$g_idcat = retrieve(GET, 'cat', 0);
 
 if (!empty($g_idpics))
 {
-	if (!empty($g_idcat))
-	{
-		if (!isset($CAT_GALLERY[$g_idcat]) || $CAT_GALLERY[$g_idcat]['aprob'] == 0)
-			AppContext::get_response()->redirect('/gallery/gallery.php?error=unexist_cat');
-	}
-	else //Racine.
-	{
-		$CAT_GALLERY[0]['auth'] = GalleryConfig::load()->get_authorizations();
-		$CAT_GALLERY[0]['aprob'] = 1;
-	}
 	//Niveau d'autorisation de la catégorie
-	if (!AppContext::get_current_user()->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::READ_AUTHORIZATIONS))
+	if (!GalleryAuthorizationsService::check_authorizations($id_category)->read())
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 
 	//Mise à jour du nombre de vues.
-	PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery SET views = views + 1 WHERE idcat = :idcat AND id = :id", array('idcat' => $g_idcat, 'id' => $g_idpics));
+	PersistenceContext::get_querier()->inject("UPDATE " . GallerySetup::$gallery_table . " SET views = views + 1 WHERE idcat = :idcat AND id = :id", array('idcat' => $id_category, 'id' => $g_idpics));
 
-	$path = PersistenceContext::get_querier()->get_column_value(PREFIX . "gallery", 'path', 'WHERE idcat = :idcat AND id = :id' . (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL) ? '' : ' AND aprob = 1'), array('idcat' => $g_idcat, 'id' => $g_idpics));
+	$path = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'path', 'WHERE idcat = :idcat AND id = :id' . (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL) ? '' : ' AND aprob = 1'), array('idcat' => $id_category, 'id' => $g_idpics));
 	if (empty($path))
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();

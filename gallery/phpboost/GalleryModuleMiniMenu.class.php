@@ -36,7 +36,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
     {
     	if (GalleryAuthorizationsService::check_authorizations()->read())
 		{
-			global $Cache,  $CAT_GALLERY, $LANG, $_array_random_pics;
+			global $Cache, $LANG, $_array_random_pics;
 			$tpl = new FileTemplate('gallery/gallery_mini.tpl');
 			MenuService::assign_positions_conditions($tpl, $this->get_block());
 			
@@ -55,13 +55,11 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 				$gallery_mini = array();
 				shuffle($_array_random_pics); //On mélange les éléments du tableau.
 		
-				//Autorisations de la racine.
-				$CAT_GALLERY[0]['auth'] = $config->get_authorizations();
 				//Vérification des autorisations.
 				$break = 0;
 				foreach ($_array_random_pics as $array_pics_info)
 				{
-					if (AppContext::get_current_user()->check_auth($CAT_GALLERY[$array_pics_info['idcat']]['auth'], GalleryAuthorizationsService::READ_AUTHORIZATIONS))
+					if (GalleryAuthorizationsService::check_authorizations($array_pics_info['idcat'])->read())
 					{
 						$gallery_mini[] = $array_pics_info;
 						$break++;
@@ -75,8 +73,8 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 				{
 					$_array_random_pics = array();
 					$result = PersistenceContext::get_querier()->select("SELECT g.id, g.name, g.path, g.width, g.height, g.idcat, gc.auth
-					FROM " . PREFIX . "gallery g
-					LEFT JOIN " . PREFIX . "gallery_cats gc on gc.id = g.idcat
+					FROM " . GallerySetup::$gallery_table . " g
+					LEFT JOIN " . GallerySetup::$gallery_cats_table . " gc on gc.id = g.idcat
 					WHERE g.aprob = 1 AND gc.aprob = 1
 					ORDER BY RAND()
 					LIMIT " . $config->get_pics_number_in_mini());
@@ -89,7 +87,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 					$break = 0;
 					foreach ($_array_random_pics as $key => $array_pics_info)
 					{
-						if (AppContext::get_current_user()->check_auth($CAT_GALLERY[$array_pics_info['idcat']]['auth'], GalleryAuthorizationsService::READ_AUTHORIZATIONS))
+						if (GalleryAuthorizationsService::check_authorizations($array_pics_info['idcat'])->read())
 						{
 							$gallery_mini[] = $array_pics_info;
 							$break++;

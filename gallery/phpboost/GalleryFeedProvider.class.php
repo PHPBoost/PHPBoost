@@ -30,133 +30,59 @@ class GalleryFeedProvider implements FeedProvider
 {
 	function get_feeds_list()
 	{
-        global $LANG;
-
-        $categories = $this->get_cats_tree();
-        $cat_tree = new FeedsCat('gallery', 0, $LANG['root']);
-
-        $this->feeds_add_category($cat_tree, $categories);
-
-        $children = $cat_tree->get_children();
-        $feeds = new FeedsList();
-        if (count($children) > 0)
-        {
-            $feeds->add_feed($children[0], Feed::DEFAULT_FEED_NAME);
-        }
-        return $feeds;
-	}
-	
-	/**
-	 * @desc Returns an ordered tree with all categories informations
-	 * @return array[] an ordered tree with all categories informations
-	 */
-	protected function get_cats_tree()
-	{
-		global $LANG,$CAT_GALLERY,$Cache;
-		
-		$Cache->load('gallery');
-	  
-		$CAT_GALLERY = is_array($CAT_GALLERY) ? $CAT_GALLERY : array();
-
-		$ordered_cats = array();
-		foreach ($CAT_GALLERY as $id => $cat)
-		{   // Sort by id_left
-			$cat['id'] = $id;
-			$ordered_cats[(int)$cat['id_left']] = array('this' => $cat, 'children' => array());
-		}
-	  
-		$level = 0;
-		$cats_tree = array(array('this' => array('id' => 0, 'name' => $LANG['root']), 'children' => array()));
-		$parent =& $cats_tree[0]['children'];
-		$nb_cats = count($CAT_GALLERY);
-		foreach ($ordered_cats as $cat)
-		{
-			if (($cat['this']['level'] == $level + 1) && count($parent) > 0)
-			{   // The new parent is the previous cat
-				$parent =& $parent[count($parent) - 1]['children'];
-			}
-			elseif ($cat['this']['level'] < $level)
-			{   // Find the new parent (an ancestor)
-				$j = 0;
-				$parent =& $cats_tree[0]['children'];
-				while ($j < $cat['this']['level'])
-				{
-					$parent =& $parent[count($parent) - 1]['children'];
-					$j++;
-				}
-			}
-
-			// Add the current cat at the good level
-			$parent[] = $cat;
-			$level = $cat['this']['level'];
-		}
-		return $cats_tree[0];
-	}
-	
-	protected function feeds_add_category($cat_tree, $category)
-	{
-		$child = new FeedsCat('gallery', $category['this']['id'], $category['this']['name']);
-		foreach ($category['children'] as $sub_category)
-		{
-			$this->feeds_add_category($child, $sub_category);
-		}
-		$cat_tree->add_child($child);
+		return GalleryService::get_categories_manager()->get_feeds_categories_module()->get_feed_list();
 	}
 
 	function get_feed_data_struct($idcat = 0, $name = '')
 	{
-		global $Cache,$LANG,$CAT_GALLERY,$GALLERY_LANG;
-
-		$querier = PersistenceContext::get_querier();
-		$config = GalleryConfig::load();
-		
-		load_module_lang('gallery'); //Chargement de la langue du module.
-		$Cache->load('gallery');
-		
-		$data = new FeedData();
-
-		$data->set_title($GALLERY_LANG['xml_gallery_desc']);
-		$data->set_date(new Date());
-		$data->set_link(SyndicationUrlBuilder::rss('gallery', $idcat));
-		$data->set_host(HOST);
-		$data->set_desc($GALLERY_LANG['xml_gallery_desc']);
-		$data->set_lang($LANG['xml_lang']);
-		$data->set_auth_bit(GalleryAuthorizationsService::READ_AUTHORIZATIONS);
-
-        $req_cats = (($idcat > 0) && isset($CAT_GALLERY[$idcat])) ? ' AND c.id_left >= :cat_left AND id_right <= :cat_right' : '';
-        $parameters = array('limit' => 2 * $config->get_pics_number_per_page());
-        if ($idcat > 0)
-        {
-        	$parameters['cat_left'] = $CAT_GALLERY[$idcat]['id_left'];
-            $parameters['cat_right'] = $CAT_GALLERY[$idcat]['id_right'];
-        }
-        $req = 'SELECT g.*, gc.auth
-			FROM ' . PREFIX . 'gallery g
-			LEFT JOIN ' . PREFIX . 'gallery_cats gc ON gc.id = g.idcat
-			WHERE gc.aprob = 1 ' .
-				$req_cats . '
-			ORDER BY g.timestamp DESC LIMIT :limit OFFSET 0';
-        $results = $querier->select($req, $parameters);
-
-		// Generation of the feed's items
-		foreach ($results as $row)
+		if (GalleryService::get_categories_manager()->get_categories_cache()->category_exists($idcat))
 		{
-			$item = new FeedItem();
-
-			$link = TextHelper::htmlentities(GalleryUrlBuilder::get_link_item($row['idcat'], $row['id']));
-
-			$item->set_title($row['name']);
-			$item->set_link($link);
-			$item->set_guid($link);
-			$item->set_image_url(Url::to_rel('/gallery/pics/' . $row['path']));
-			$item->set_date(new Date($row['timestamp'], Timezone::SERVER_TIMEZONE));
-			$item->set_auth($row['idcat'] == 0 ? $config->get_authorizations() : unserialize($row['auth']));
-
-			$data->add_item($item);
+			$category = GalleryService::get_categories_manager()->get_categories_cache()->get_category($idcat);
+			$config = GalleryConfig::load();
+			
+			$site_name = GeneralConfig::load()->get_site_name();
+			$site_name = $idcat != Category::ROOT_CATEGORY ? $site_name . ' : ' . $category->get_name() : $site_name;
+			
+			$feed_module_name = LangLoader::get_message('module_title', 'common', 'gallery');
+			$data = new FeedData();
+			$data->set_title($feed_module_name . ' - ' . $site_name);
+			$data->set_date(new Date());
+			$data->set_link(SyndicationUrlBuilder::rss('gallery', $idcat));
+			$data->set_host(HOST);
+			$data->set_desc($feed_module_name . ' - ' . $site_name);
+			$data->set_lang(LangLoader::get_message('xml_lang', 'main'));
+			$data->set_auth_bit(Category::READ_AUTHORIZATIONS);
+			
+			$categories = GalleryService::get_categories_manager()->get_childrens($idcat, new SearchCategoryChildrensOptions(), true);
+			$ids_categories = array_keys($categories);
+			
+			$results = PersistenceContext::get_querier()->select('SELECT *
+				FROM ' . GallerySetup::$gallery_table . '
+				WHERE idcat IN :ids_categories
+				ORDER BY timestamp DESC
+				LIMIT :pics_number_per_page', array(
+					'ids_categories' => $ids_categories,
+					'pics_number_per_page' => $config->get_pics_number_per_page()
+			));
+			
+			foreach ($results as $row)
+			{
+				$link = TextHelper::htmlentities(GalleryUrlBuilder::get_link_item($row['idcat'], $row['id']));
+				
+				$item = new FeedItem();
+				$item->set_title($row['name']);
+				$item->set_link($link);
+				$item->set_guid($link);
+				$item->set_date(new Date($row['timestamp'], Timezone::SERVER_TIMEZONE));
+				$item->set_image_url(Url::to_rel('/gallery/pics/' . $row['path']));
+				$item->set_auth(GalleryService::get_categories_manager()->get_heritated_authorizations($row['idcat'], Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
+				
+				$data->add_item($item);
+			}
+			$results->dispose();
+			
+			return $data;
 		}
-		$results->dispose();
-
-		return $data;
 	}
 }
 ?>

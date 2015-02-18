@@ -61,6 +61,9 @@
 [*] [color=red]Nouveauté :[/color] Possibilité de réorganiser les questions dans les catégories en drag & drop pour les utilisateurs ayant le droit de modération
 [*] Ajout des microdonnées pour améliorer le référencement
 
+[b]Galerie[/b]
+[*] Passage au nouveau système de catégories
+
 [b]Liens Web[/b]
 [*] [color=red]Nouveauté :[/color] Passage du module en MVC
 [*] [color=red]Nouveauté :[/color] Mise en place du nouveau système de catégories
