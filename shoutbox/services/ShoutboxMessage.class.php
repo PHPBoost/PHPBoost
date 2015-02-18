@@ -111,7 +111,7 @@ class ShoutboxMessage
 		return array(
 			'id' => $this->get_id(),
 			'contents' => $this->get_contents(),
-			'login' => $this->get_login(),
+			'login' => TextHelper::htmlspecialchars($this->get_login()),
 			'user_id' => $this->get_author_user()->get_id(),
 			'timestamp' => $this->get_creation_date()->get_timestamp()
 		);
