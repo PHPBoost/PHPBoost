@@ -649,11 +649,17 @@ div.message-helper-small { width: 50%; }
 	margin: 0 25px 25px 25px;
 }
 
-.upload-address-bar-links a { margin-left: 10px; }
+.upload-address-bar-links a {
+	margin-left: 10px;
+}
 
-#empty-folder { width: 70%; }
+#empty-folder {
+	width: 70%;
+}
 
-.upload-elements-container { margin: 0 0 0 20px; }
+.upload-elements-container {
+	margin: 0 0 0 20px;
+}
 
 .upload-elements-file,
 .upload-elements-repertory {
@@ -661,7 +667,13 @@ div.message-helper-small { width: 50%; }
 	margin: 10px;
 }
 
-.upload-elements-repertory { height: 60px; }
+.upload-elements-repertory {
+	height: 60px;
+}
+
+a.upload-recent-file {
+	color: #BA4B49;
+}
 
 /* --- Deplacement des fichiers --- */
 .upload-selected-cat {
