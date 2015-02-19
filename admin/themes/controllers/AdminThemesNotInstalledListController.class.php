@@ -200,15 +200,25 @@ class AdminThemesNotInstalledListController extends AdminController
 					}
 					
 					$archive_root_content = array();
+					$required_files = array('config.ini', 'body.tpl', 'frame.tpl', 'theme/content.css', 'theme/design.css', 'theme/global.css');
 					foreach ($archive_content as $element)
 					{
 						if (substr($element['filename'], -1) == '/')
 							$element['filename'] = substr($element['filename'], 0, -1);
 						if (substr_count($element['filename'], '/') == 0)
 							$archive_root_content[] = array('filename' => $element['filename'], 'folder' => ((isset($element['folder']) && $element['folder'] == 1) || (isset($element['typeflag']) && $element['typeflag'] == 5)));
+						if (isset($archive_root_content[0]))
+						{
+							$name_in_archive = str_replace($archive_root_content[0]['filename'] . '/', '', $element['filename']);
+							
+							if (in_array($name_in_archive, $required_files))
+							{
+								unset($required_files[array_search($name_in_archive, $required_files)]);
+							}
+						}
 					}
 					
-					if (count($archive_root_content) == 1 && $archive_root_content[0]['folder'])
+					if (count($archive_root_content) == 1 && $archive_root_content[0]['folder'] && empty($required_files))
 					{
 						$theme_id = $archive_root_content[0]['filename'];
 						if (!ThemesManager::get_theme_existed($theme_id))
@@ -222,12 +232,12 @@ class AdminThemesNotInstalledListController extends AdminController
 						}
 						else
 						{
-							$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('element.already_exists', 'status-messages-common'), MessageHelper::NOTICE, 4));
+							$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('element.already_exists', 'status-messages-common'), MessageHelper::NOTICE));
 						}
 					}
 					else
 					{
-						$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('error.invalid_archive_content', 'status-messages-common'), MessageHelper::NOTICE, 4));
+						$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('error.invalid_archive_content', 'status-messages-common'), MessageHelper::NOTICE));
 					}
 					
 					$uploaded_file = new File($archive);
@@ -235,12 +245,12 @@ class AdminThemesNotInstalledListController extends AdminController
 				}
 				else
 				{
-					$this->view->put('MSG', MessageHelper::display($this->lang['themes.upload_invalid_format'], MessageHelper::NOTICE, 4));
+					$this->view->put('MSG', MessageHelper::display($this->lang['themes.upload_invalid_format'], MessageHelper::NOTICE));
 				}
 			}
 			else
 			{
-				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), MessageHelper::NOTICE, 4));
+				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), MessageHelper::NOTICE));
 			}
 		}
 	}
