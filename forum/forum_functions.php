@@ -130,7 +130,11 @@ function mark_topic_as_read($idtopic, $last_msg_id, $last_timestamp)
 	$max_time_msg = ($last_view_forum > $max_time) ? $last_view_forum : $max_time;
 	if (AppContext::get_current_user()->get_id() !== -1 && $last_timestamp >= $max_time_msg)
 	{
-		$check_view_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_view", 'last_view_id', 'WHERE user_id = :user_id AND idtopic = :idtopic', array('user_id' => AppContext::get_current_user()->get_id(), 'idtopic' => $idtopic));
+		$check_view_id = 0;
+		try {
+			$check_view_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_view", 'last_view_id', 'WHERE user_id = :user_id AND idtopic = :idtopic', array('user_id' => AppContext::get_current_user()->get_id(), 'idtopic' => $idtopic));
+		} catch (RowNotFoundException $e) {}
+		
 		if (!empty($check_view_id) && $check_view_id != $last_msg_id) 
 		{
 			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'");
