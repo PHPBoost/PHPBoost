@@ -91,7 +91,6 @@ class FaqDisplayCategoryController extends ModuleController
 				'C_MORE_THAN_ONE_QUESTION' => $row['questions_number'] > 1,
 				'CATEGORY_NAME' => $row['name'],
 				'CATEGORY_IMAGE' => $category_image->rel(),
-				'CATEGORY_DESCRIPTION' => FormatingHelper::second_parse($row['description']),
 				'QUESTIONS_NUMBER' => $row['questions_number'],
 				'U_CATEGORY' => FaqUrlBuilder::display_category($row['id'], $row['rewrited_name'])->rel()
 			));
