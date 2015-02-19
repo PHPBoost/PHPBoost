@@ -36,6 +36,16 @@ class FaqCategoriesCache extends CategoriesCache
 		return FaqSetup::$faq_cats_table;
 	}
 	
+	public function get_elements_table_name()
+	{
+		return FaqSetup::$faq_table;
+	}
+	
+	public function get_approved_elements_condition()
+	{
+		return 'WHERE approved = 1';
+	}
+	
 	public function get_category_class()
 	{
 		return CategoriesManager::RICH_CATEGORY_CLASS;

@@ -33,6 +33,7 @@ class Category
 	protected $order;
 	protected $auth = array();
 	protected $id_parent;
+	protected $number_elements = 0;
 	
 	const READ_AUTHORIZATIONS = 1;
 	const WRITE_AUTHORIZATIONS = 2;
@@ -119,6 +120,16 @@ class Category
 	public function set_id_parent($id_parent)
 	{
 		$this->id_parent = $id_parent;
+	}
+	
+	public function get_number_elements()
+	{
+		return $this->number_elements;
+	}
+	
+	public function set_number_elements($number_elements)
+	{
+		$this->number_elements = $number_elements;
 	}
 	
 	public function check_auth($bit)
