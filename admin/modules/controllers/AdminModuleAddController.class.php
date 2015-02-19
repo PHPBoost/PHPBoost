@@ -109,12 +109,12 @@ class AdminModuleAddController extends AdminController
 				'DESCRIPTION' => $configuration->get_description(),
 				'COMPATIBILITY' => $configuration->get_compatibility(),
 				'PHP_VERSION' => $configuration->get_php_version(),
-				'URL_REWRITE_RULES' => $configuration->get_url_rewrite_rules()		
+				'URL_REWRITE_RULES' => $configuration->get_url_rewrite_rules()
 			));
 		}
 		
 		$this->view->put_all(array(
-			'C_MODULES_AVAILABLE' => count($modules_not_installed) > 0 ? true : false,
+			'C_MODULES_AVAILABLE' => count($modules_not_installed) > 0,
 		));
 	}
 	
@@ -203,15 +203,25 @@ class AdminModuleAddController extends AdminController
 					}
 					
 					$archive_root_content = array();
+					$required_files = array('/config.ini', '/index.php');
 					foreach ($archive_content as $element)
 					{
 						if (substr($element['filename'], -1) == '/')
 							$element['filename'] = substr($element['filename'], 0, -1);
 						if (substr_count($element['filename'], '/') == 0)
 							$archive_root_content[] = array('filename' => $element['filename'], 'folder' => ((isset($element['folder']) && $element['folder'] == 1) || (isset($element['typeflag']) && $element['typeflag'] == 5)));
+						if (isset($archive_root_content[0]))
+						{
+							$name_in_archive = str_replace($archive_root_content[0]['filename'] . '/', '', $element['filename']);
+							
+							if (in_array($name_in_archive, $required_files))
+							{
+								unset($required_files[array_search($name_in_archive, $required_files)]);
+							}
+						}
 					}
 					
-					if (count($archive_root_content) == 1 && $archive_root_content[0]['folder'])
+					if (count($archive_root_content) == 1 && $archive_root_content[0]['folder'] && empty($required_files))
 					{
 						$module_id = $archive_root_content[0]['filename'];
 						if (!ModulesManager::is_module_installed($module_id))
@@ -225,12 +235,12 @@ class AdminModuleAddController extends AdminController
 						}
 						else
 						{
-							$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('element.already_exists', 'status-messages-common'), MessageHelper::NOTICE, 4));
+							$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('element.already_exists', 'status-messages-common'), MessageHelper::NOTICE));
 						}
 					}
 					else
 					{
-						$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('error.invalid_archive_content', 'status-messages-common'), MessageHelper::NOTICE, 4));
+						$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('error.invalid_archive_content', 'status-messages-common'), MessageHelper::NOTICE));
 					}
 					
 					$uploaded_file = new File($archive);
@@ -238,12 +248,12 @@ class AdminModuleAddController extends AdminController
 				}
 				else
 				{
-					$this->view->put('MSG', MessageHelper::display($this->lang['modules.upload_invalid_format'], MessageHelper::NOTICE, 4));
+					$this->view->put('MSG', MessageHelper::display($this->lang['modules.upload_invalid_format'], MessageHelper::NOTICE));
 				}
 			}
 			else
 			{
-				$this->view->put('MSG', MessageHelper::display($this->lang['modules.upload_error'], MessageHelper::NOTICE, 4));
+				$this->view->put('MSG', MessageHelper::display($this->lang['modules.upload_error'], MessageHelper::NOTICE));
 			}
 		}
 	}
