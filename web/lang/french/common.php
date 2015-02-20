@@ -45,6 +45,8 @@ $lang['visit'] = 'Visiter';
 $lang['visited_times'] = 'Visité :number_visits fois';
 $lang['visits_number'] = 'Nombre de visites';
 $lang['link_infos'] = 'Informations sur le lien';
+$lang['link'] = 'Lien';
+$lang['links'] = 'Liens';
 
 //config
 $lang['config.category_display_type'] = 'Affichage des informations dans les catégories';

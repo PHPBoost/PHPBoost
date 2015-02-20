@@ -83,6 +83,7 @@ class WebDisplayCategoryController extends ModuleController
 			$category_image = new Url($row['image']);
 			
 			$this->tpl->assign_block_vars('sub_categories_list', array(
+				'C_MORE_THAN_ONE_WEBLINK' => $row['weblinks_number'] > 1,
 				'CATEGORY_NAME' => $row['name'],
 				'CATEGORY_IMAGE' => $category_image->rel(),
 				'WEBLINKS_NUMBER' => $row['weblinks_number'],

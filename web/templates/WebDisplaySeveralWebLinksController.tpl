@@ -20,7 +20,9 @@
 			<div class="subcat-content">
 				<a itemprop="about" href="{sub_categories_list.U_CATEGORY}"><img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="" /></a>
 				<br />
-				<a itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME} ({sub_categories_list.WEBLINKS_NUMBER})</a>
+				<a itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
+				<br />
+				<span class="small">{sub_categories_list.WEBLINKS_NUMBER} # IF sub_categories_list.C_MORE_THAN_ONE_WEBLINK #${TextHelper::lowercase_first(LangLoader::get_message('links', 'common', 'web'))}# ELSE #${TextHelper::lowercase_first(LangLoader::get_message('link', 'common', 'web'))}# ENDIF #</span>
 			</div>
 		</div>
 		# END sub_categories_list #
