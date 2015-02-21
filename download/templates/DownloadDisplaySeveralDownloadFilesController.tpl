@@ -1,73 +1,76 @@
-<section>
+<section id="module-download">
 	<header>
 		<h1>
-			<a href="${relative_url(SyndicationUrlBuilder::rss('download', ID_CAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('download', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
 			# IF C_PENDING #{@download.pending}# ELSE #{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
 		</h1>
 		# IF C_CATEGORY_DESCRIPTION #
-			<div class="spacer">&nbsp;</div>
-			{CATEGORY_DESCRIPTION}
-		# ENDIF #
-		# IF C_SUB_CATEGORIES #
-		<div class="spacer">&nbsp;</div>
-		<hr />
-		<div class="spacer">&nbsp;</div>
-		<div class="cat">
-			<div class="subcat">
-				# START sub_categories_list #
-				<div class="sub-category" style="width:{CATS_COLUMNS_WIDTH}%;">
-					<a itemprop="about" href="{sub_categories_list.U_CATEGORY}"><img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="" /></a><br />
-					<a itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME} ({sub_categories_list.WEBLINKS_NUMBER})</a><br />
-				</div>
-				# END sub_categories_list #
+			<div class="cat-description">
+				{CATEGORY_DESCRIPTION}
 			</div>
-		</div>
-		<div class="spacer">&nbsp;</div>
-		<hr />
-		# ELSE #
-			# IF NOT C_CATEGORY_DISPLAYED_TABLE #<div class="spacer">&nbsp;</div># ENDIF #
 		# ENDIF #
 	</header>
+	
+	# IF C_SUB_CATEGORIES #
+	<div class="subcat-container">
+		# START sub_categories_list #
+		<div class="subcat-element" style="width:{CATS_COLUMNS_WIDTH}%;">
+			<div class="subcat-content">
+				<a itemprop="about" href="{sub_categories_list.U_CATEGORY}"><img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="" /></a>
+				<br />
+				<a itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
+				<br />
+				<span class="small">{sub_categories_list.DOWNLOADFILES_NUMBER} # IF sub_categories_list.C_MORE_THAN_ONE_DOWNLOADFILE #${TextHelper::lowercase_first(LangLoader::get_message('files', 'common', 'download'))}# ELSE #${TextHelper::lowercase_first(LangLoader::get_message('file', 'common', 'download'))}# ENDIF #</span>
+			</div>
+		</div>
+		# END sub_categories_list #
+		<div class="spacer"></div>
+	</div>
+	# ELSE #
+		# IF NOT C_CATEGORY_DISPLAYED_TABLE #<div class="spacer"></div># ENDIF #
+	# ENDIF #
+	
 	<div class="content">
 	# IF C_FILES #
 		# IF C_MORE_THAN_ONE_FILE #
 			# INCLUDE SORT_FORM #
-			<div class="spacer">&nbsp;</div>
+			<div class="spacer"></div>
 		# ENDIF #
 		# IF C_CATEGORY_DISPLAYED_TABLE #
 			<table>
 				<thead>
 					<tr>
+						# IF C_MODERATE #<th class="col-smaller"></th># ENDIF #
 						<th>${LangLoader::get_message('form.name', 'common')}</th>
-						<th>${LangLoader::get_message('form.keywords', 'common')}</th>
-						<th>${LangLoader::get_message('form.date.creation', 'common')}</th>
-						<th>{@downloads_number}</th>
-						# IF C_NOTATION_ENABLED #<th>${LangLoader::get_message('note', 'common')}</th># ENDIF #
-						# IF C_COMMENTS_ENABLED #<th>${LangLoader::get_message('comments', 'comments-common')}</th># ENDIF #
+						<th class="col-small">${LangLoader::get_message('form.keywords', 'common')}</th>
+						<th class="col-small">${LangLoader::get_message('form.date.creation', 'common')}</th>
+						<th class="col-small">{@downloads_number}</th>
+						# IF C_NOTATION_ENABLED #<th class="col-smaller">${LangLoader::get_message('note', 'common')}</th># ENDIF #
+						# IF C_COMMENTS_ENABLED #<th class="col-small">${LangLoader::get_message('comments', 'comments-common')}</th># ENDIF #
 					</tr>
 				</thead>
 				# IF C_PAGINATION #
 				<tfoot>
 					<tr>
-						<th colspan="{TABLE_COLSPAN}">
-							# INCLUDE PAGINATION #
-						</th>
+						<th colspan="{TABLE_COLSPAN}"># INCLUDE PAGINATION #</th>
 					</tr>
 				</tfoot>
 				# ENDIF #
 				<tbody>
 					# START downloadfiles #
 					<tr>
+						# IF C_MODERATE #
+						<td>
+							# IF downloadfiles.C_EDIT #
+								<a href="{downloadfiles.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+							# ENDIF #
+							# IF downloadfiles.C_DELETE #
+								<a href="{downloadfiles.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
+							# ENDIF #
+						</td>
+						# ENDIF #
 						<td>
 							<a href="{downloadfiles.U_LINK}" itemprop="name">{downloadfiles.NAME}</a>
-							<span class="float-right">
-								# IF downloadfiles.C_EDIT #
-									<a href="{downloadfiles.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
-								# ENDIF #
-								# IF downloadfiles.C_DELETE #
-									<a href="{downloadfiles.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
-								# ENDIF #
-							</span>
 						</td>
 						<td>
 							# IF downloadfiles.C_KEYWORDS #
@@ -103,15 +106,11 @@
 			<article # IF C_CATEGORY_DISPLAYED_SUMMARY #class="block" # ENDIF #itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 				<header>
 					<h1>
-						<a href="{downloadfiles.U_LINK}" itemprop="name">{downloadfiles.NAME}</a>
 						<span class="actions">
-							# IF downloadfiles.C_EDIT #
-								<a href="{downloadfiles.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
-							# ENDIF #
-							# IF downloadfiles.C_DELETE #
-								<a href="{downloadfiles.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
-							# ENDIF #
+							# IF downloadfiles.C_EDIT #<a href="{downloadfiles.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a># ENDIF #
+							# IF downloadfiles.C_DELETE #<a href="{downloadfiles.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a># ENDIF #
 						</span>
+						<a href="{downloadfiles.U_LINK}" itemprop="name">{downloadfiles.NAME}</a>
 					</h1>
 					
 					<meta itemprop="url" content="{downloadfiles.U_LINK}">
@@ -120,34 +119,38 @@
 					<meta itemprop="discussionUrl" content="{downloadfiles.U_COMMENTS}">
 					<meta itemprop="interactionCount" content="{downloadfiles.NUMBER_COMMENTS} UserComments">
 					# ENDIF #
-					
 				</header>
 				
-				<div class="content">
-					# IF C_CATEGORY_DISPLAYED_SUMMARY #
-						<div class="more">
-							<i class="fa fa-download" title="{downloadfiles.L_DOWNLOADED_TIMES}"></i>&nbsp;<span title="{downloadfiles.L_DOWNLOADED_TIMES}">{downloadfiles.NUMBER_DOWNLOADS}</span>
-							# IF C_COMMENTS_ENABLED #
-								&nbsp;|&nbsp;<i class="fa fa-comment" title="${LangLoader::get_message('comments', 'comments-common')}"></i># IF downloadfiles.C_COMMENTS # {downloadfiles.NUMBER_COMMENTS} # ENDIF # {downloadfiles.L_COMMENTS}
-							# ENDIF #
-							# IF downloadfiles.C_KEYWORDS #
-								&nbsp;|&nbsp;<i title="${LangLoader::get_message('form.keywords', 'common')}" class="fa fa-tags"></i> 
-								# START downloadfiles.keywords #
-									<a itemprop="keywords" href="{downloadfiles.keywords.URL}">{downloadfiles.keywords.NAME}</a># IF downloadfiles.keywords.C_SEPARATOR #, # ENDIF #
-								# END downloadfiles.keywords #
-							# ENDIF #
-							# IF C_NOTATION_ENABLED #
-								<span class="float-right">{downloadfiles.STATIC_NOTATION}</span>
-							# ENDIF #
-							<div class="spacer">&nbsp;</div>
-							<span>{downloadfiles.DESCRIPTION}# IF downloadfiles.C_READ_MORE #... <a href="{downloadfiles.U_LINK}">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #</span>
-						</div>
-					# ELSE #
+				# IF C_CATEGORY_DISPLAYED_SUMMARY #
+					<div class="more">
+						<i class="fa fa-download" title="{downloadfiles.L_DOWNLOADED_TIMES}"></i>
+						<span title="{downloadfiles.L_DOWNLOADED_TIMES}">{downloadfiles.NUMBER_DOWNLOADS}</span>
+						# IF C_COMMENTS_ENABLED #
+							| <i class="fa fa-comment" title="${LangLoader::get_message('comments', 'comments-common')}"></i>
+							# IF downloadfiles.C_COMMENTS # {downloadfiles.NUMBER_COMMENTS} # ENDIF # {downloadfiles.L_COMMENTS}
+						# ENDIF #
+						# IF downloadfiles.C_KEYWORDS #
+							| <i class="fa fa-tags" title="${LangLoader::get_message('form.keywords', 'common')}"></i> 
+							# START downloadfiles.keywords #
+								<a itemprop="keywords" href="{downloadfiles.keywords.URL}">{downloadfiles.keywords.NAME}</a>
+								# IF downloadfiles.keywords.C_SEPARATOR #, # ENDIF #
+							# END downloadfiles.keywords #
+						# ENDIF #
+						# IF C_NOTATION_ENABLED #
+							<span class="float-right">{downloadfiles.STATIC_NOTATION}</span>
+						# ENDIF #
+						<div class="spacer"></div>
+					</div>
+					<div class="content">
+						{downloadfiles.DESCRIPTION}# IF downloadfiles.C_READ_MORE #... <a href="{downloadfiles.U_LINK}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
+					</div>
+				# ELSE #
+					<div class="content">
 						<div class="options infos">
 							<div class="center">
 								# IF downloadfiles.C_PICTURE #
 									<img src="{downloadfiles.U_PICTURE}" alt="" itemprop="image" />
-									<div class="spacer">&nbsp;</div>
+									<div class="spacer"></div>
 								# ENDIF #
 								# IF downloadfiles.C_VISIBLE #
 									<a href="{downloadfiles.U_DOWNLOAD}" class="basic-button">
@@ -189,15 +192,15 @@
 							# ENDIF #
 							# IF downloadfiles.C_VISIBLE #
 								# IF C_NOTATION_ENABLED #
-									<div class="spacer">&nbsp;</div>
+									<div class="spacer"></div>
 									<div class="center">{downloadfiles.NOTATION}</div>
 								# ENDIF #
 							# ENDIF #
 						</div>
 						
 						<div itemprop="text">{downloadfiles.CONTENTS}</div>
-					# ENDIF #
-				</div>
+					</div>
+				# ENDIF #
 				
 				<footer></footer>
 			</article>

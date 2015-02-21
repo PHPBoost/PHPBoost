@@ -83,9 +83,10 @@ class DownloadDisplayCategoryController extends ModuleController
 			$category_image = new Url($row['image']);
 			
 			$this->tpl->assign_block_vars('sub_categories_list', array(
+				'C_MORE_THAN_ONE_DOWNLOADFILE' => $row['downloadfiles_number'] > 1,
 				'CATEGORY_NAME' => $row['name'],
 				'CATEGORY_IMAGE' => $category_image->rel(),
-				'WEBLINKS_NUMBER' => $row['downloadfiles_number'],
+				'DOWNLOADFILES_NUMBER' => $row['downloadfiles_number'],
 				'U_CATEGORY' => DownloadUrlBuilder::display_category($row['id'], $row['rewrited_name'])->rel()
 			));
 			
@@ -158,6 +159,7 @@ class DownloadDisplayCategoryController extends ModuleController
 			'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),
 			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
 			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
+			'C_MODERATE' => DownloadAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
 			'CATS_COLUMNS_WIDTH' => $cats_columns_width,

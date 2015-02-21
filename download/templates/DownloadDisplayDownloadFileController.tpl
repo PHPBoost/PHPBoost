@@ -1,17 +1,17 @@
 # IF NOT C_VISIBLE #
 	# INCLUDE NOT_VISIBLE_MESSAGE #
 # ENDIF #
-<article itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+<article id="module-download" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 	<header>
 		<h1>
-			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'common')}" class="fa fa-syndication"></a>
+			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
 			<span id="name" itemprop="name">{NAME}</span>
 			<span class="actions">
 				# IF C_EDIT #
-					<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
+					<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
 				# ENDIF #
 				# IF C_DELETE #
-					<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+					<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
 				# ENDIF #
 			</span>
 		</h1>
@@ -29,7 +29,7 @@
 			<div class="center">
 				# IF C_PICTURE #
 					<img src="{U_PICTURE}" alt="" itemprop="image" />
-					<div class="spacer">&nbsp;</div>
+					<div class="spacer"></div>
 				# ENDIF #
 				# IF C_VISIBLE #
 					<a href="{U_DOWNLOAD}" class="basic-button">
@@ -71,7 +71,7 @@
 			# ENDIF #
 			# IF C_VISIBLE #
 				# IF C_NOTATION_ENABLED #
-					<div class="spacer">&nbsp;</div>
+					<div class="spacer"></div>
 					<div class="center">{NOTATION}</div>
 				# ENDIF #
 			# ENDIF #
