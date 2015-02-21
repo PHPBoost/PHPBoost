@@ -35,7 +35,7 @@ if (empty($id_media))
 	bread_crumb($id_cat);
 	
 	$category = MediaService::get_categories_manager()->get_categories_cache()->get_category($id_cat);
-	define('TITLE', $category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('module_title', 'common', 'media') : $category->get_name());
+	define('TITLE', $category->get_name());
 
 	require_once('../kernel/header.php');
 		

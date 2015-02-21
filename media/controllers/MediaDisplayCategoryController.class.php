@@ -70,38 +70,36 @@ class MediaDisplayCategoryController extends ModuleController
 		$nbr_cat_displayed = 0;
 		while ($row = $result->fetch())
 		{
-			$nbr_cat_displayed++;
 			$category_image = new Url($row['image']);
 			
-			if ($nbr_cat_displayed % $config->get_columns_number_per_line() == 1)
-			{
-				$this->tpl->assign_block_vars('row', array());
-			}
-
-			$this->tpl->assign_block_vars('row.list_cats', array(
-				'ID' => $row['id'],
-				'NAME' => $row['name'],
-				'WIDTH' => floor(100 / (float)$config->get_columns_number_per_line()),
-				'SRC' => $category_image->rel(),
-				'NUM_MEDIA' => sprintf(($row['mediafiles_number'] > 1 ? $MEDIA_LANG['num_medias'] : $MEDIA_LANG['num_media']), $row['mediafiles_number']),
-				'U_CAT' => PATH_TO_ROOT . url('/media/media.php?cat=' . $row['id'], '/media/media-0-' . $row['id'] . '+' . $row['rewrited_name'] . '.php'),
-				'U_ADMIN_CAT' => PATH_TO_ROOT . url('/media/admin_media_cats.php?edit=' . $row['id'])
+			$this->tpl->assign_block_vars('sub_categories_list', array(
+				'CATEGORY_NAME' => $row['name'],
+				'CATEGORY_IMAGE' => $category_image->rel(),
+				'MEDIAFILES_NUMBER' => sprintf(($row['mediafiles_number'] > 1 ? $MEDIA_LANG['num_medias'] : $MEDIA_LANG['num_media']), $row['mediafiles_number']),
+				'U_CATEGORY' => MediaUrlBuilder::display_category($row['id'], $row['rewrited_name'])->rel()
 			));
+			
+			$nbr_cat_displayed++;
 		}
 		$result->dispose();
 		
+		$nbr_column_cats = ($nbr_cat_displayed > $config->get_columns_number_per_line()) ? $config->get_columns_number_per_line() : $nbr_cat_displayed;
+		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
+		$cats_columns_width = floor(100 / $nbr_column_cats);
+		
+		$category_description = FormatingHelper::second_parse($category->get_description());
+		
 		$this->tpl->put_all(array(
 			'C_CATEGORIES' => true,
-			'C_SUB_CATS' => $nbr_cat_displayed,
-			'C_ADMIN' => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
+			'C_ROOT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY,
+			'C_CATEGORY_DESCRIPTION' => $category_description,
+			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
 			'C_MODO' => MediaAuthorizationsService::check_authorizations($category->get_id())->moderation(),
-			'C_DESCRIPTION' => $category->get_description(),
-			'L_MODO_PANEL' => $LANG['modo_panel'],
 			'L_UNAPROBED' => $MEDIA_LANG['unaprobed_media_short'],
 			'L_BY' => $MEDIA_LANG['media_added_by'],
-			'TITLE' => $category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('module_title', 'common', 'media'): $category->get_name(),
-			'U_ADMIN_CAT' => PATH_TO_ROOT . '/media/admin_media_cats.php?edit=' . $category->get_id(),
-			'DESCRIPTION' => FormatingHelper::second_parse($category->get_description()),
+			'CATS_COLUMNS_WIDTH' => $cats_columns_width,
+			'CATEGORY_NAME' => $category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('module_title', 'common', 'media'): $category->get_name(),
+			'CATEGORY_DESCRIPTION' => $category_description,
 			'ID_CAT' => $category->get_id()
 		));
 	

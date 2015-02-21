@@ -2,40 +2,36 @@
 			<section>
 				<header>
 					<h1>
-						<a href="${relative_url(SyndicationUrlBuilder::rss('media', ID_CAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
-						{TITLE}
+						<a href="${relative_url(SyndicationUrlBuilder::rss('media', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
+						{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
 					</h1>
+					# IF C_CATEGORY_DESCRIPTION #
+						<div class="cat-description">
+							{CATEGORY_DESCRIPTION}
+						</div>
+					# ENDIF #
 				</header>
+				
+				# IF C_SUB_CATEGORIES #
+				<div class="subcat-container">
+					# START sub_categories_list #
+					<div class="subcat-element" style="width:{CATS_COLUMNS_WIDTH}%;">
+						<div class="subcat-content">
+							<a itemprop="about" href="{sub_categories_list.U_CATEGORY}"><img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="" /></a>
+							<br />
+							<a itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
+							<br />
+							<span class="small">{sub_categories_list.MEDIAFILES_NUMBER}</span>
+						</div>
+					</div>
+					# END sub_categories_list #
+					<div class="spacer"></div>
+				</div>
+				# ELSE #
+					<div class="spacer"></div>
+				# ENDIF #
+				
 				<div class="content">
-					# IF C_DESCRIPTION #
-						{DESCRIPTION}
-						<hr style="margin-top:25px;" />
-					# ENDIF #
-	
-					# IF C_SUB_CATS #
-						# START row #
-							# START row.list_cats #
-								<div style="float:left;width:{row.list_cats.WIDTH}%;text-align:center;margin:20px 0px;">
-									<a href="{row.list_cats.U_CAT}" title="{row.list_cats.NAME}">
-										<img src="{row.list_cats.SRC}" alt="{row.list_cats.NAME}" />
-									</a>
-									<br />
-									<a href="{row.list_cats.U_CAT}">{row.list_cats.NAME}</a>
-									# IF C_ADMIN #
-									<a href="{row.list_cats.U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
-									# ENDIF #
-									# IF row.list_cats.NUM_MEDIA #
-									<div class="smaller">
-										{row.list_cats.NUM_MEDIA}
-									</div>
-									# ENDIF #
-								</div>
-							# END row.list_cats #
-							<div class="spacer">&nbsp;</div>
-						# END row #
-						<hr />
-					# ENDIF #
-	
 					# IF C_FILES #
 						<div class="options" id="form">
 							<script>
