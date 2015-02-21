@@ -42,12 +42,12 @@
 			<table>
 				<thead>
 					<tr>
+						# IF C_MODERATE #<th class="col-smaller"></th># ENDIF #
 						<th>${LangLoader::get_message('form.name', 'common')}</th>
 						<th class="col-small">${LangLoader::get_message('form.keywords', 'common')}</th>
 						<th class="col-small">{@visits_number}</th>
 						# IF C_NOTATION_ENABLED #<th class="col-smaller">${LangLoader::get_message('note', 'common')}</th># ENDIF #
 						# IF C_COMMENTS_ENABLED #<th class="col-small">${LangLoader::get_message('comments', 'comments-common')}</th># ENDIF #
-						<th class="col-smaller">${LangLoader::get_message('edit', 'common')}</th>
 					</tr>
 				</thead>
 				# IF C_PAGINATION #
@@ -60,6 +60,16 @@
 				<tbody>
 					# START weblinks #
 					<tr>
+						# IF C_MODERATE #
+						<td>
+							# IF weblinks.C_EDIT #
+							<a href="{weblinks.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+							# ENDIF #
+							# IF weblinks.C_DELETE #
+							<a href="{weblinks.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
+							# ENDIF #
+						</td>
+						# ENDIF #
 						<td>
 							<a href="{weblinks.U_LINK}" itemprop="name">{weblinks.NAME}</a>
 						</td>
@@ -85,14 +95,6 @@
 							# IF weblinks.C_COMMENTS # {weblinks.NUMBER_COMMENTS} # ENDIF # {weblinks.L_COMMENTS}
 						</td>
 						# ENDIF #
-						<td>
-							# IF weblinks.C_EDIT #
-							<a href="{weblinks.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
-							# ENDIF #
-							# IF weblinks.C_DELETE #
-							<a href="{weblinks.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
-							# ENDIF #
-						</td>
 					</tr>
 					# END weblinks #
 				</tbody>
@@ -126,7 +128,7 @@
 							# IF weblinks.C_COMMENTS # {weblinks.NUMBER_COMMENTS} # ENDIF # {weblinks.L_COMMENTS}
 						# ENDIF #
 						# IF weblinks.C_KEYWORDS #
-							| <i title="${LangLoader::get_message('form.keywords', 'common')}" class="fa fa-tags"></i> 
+							| <i class="fa fa-tags" title="${LangLoader::get_message('form.keywords', 'common')}"></i> 
 							# START weblinks.keywords #
 								<a itemprop="keywords" href="{weblinks.keywords.URL}">{weblinks.keywords.NAME}</a>
 								# IF weblinks.keywords.C_SEPARATOR #, # ENDIF #
@@ -138,13 +140,10 @@
 						<div class="spacer"></div>
 					</div>
 					<div class="content">
-						{weblinks.DESCRIPTION}
-						# IF weblinks.C_READ_MORE #... 
-							<a href="{weblinks.U_LINK}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a>
-						# ENDIF #
+						{weblinks.DESCRIPTION}# IF weblinks.C_READ_MORE #... <a href="{weblinks.U_LINK}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
 					</div>
 				# ELSE #
-				<div class="content">
+					<div class="content">
 						<div class="options infos">
 							<div class="center">
 								# IF weblinks.C_HAS_PARTNER_PICTURE #
@@ -183,8 +182,8 @@
 						</div>
 						
 						<div itemprop="text">{weblinks.CONTENTS}</div>
-					# ENDIF #
 					</div>
+				# ENDIF #
 				
 				<footer></footer>
 			</article>
