@@ -155,6 +155,7 @@ class WebDisplayCategoryController extends ModuleController
 			'C_CATEGORY_DISPLAYED_TABLE' => $config->is_category_displayed_table(),
 			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
 			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
+			'C_MODERATE' => WebAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
 			'TABLE_COLSPAN' => 3 + (int)$config->are_comments_enabled() + (int)$config->is_notation_enabled(),
