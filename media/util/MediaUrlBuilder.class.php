@@ -78,7 +78,7 @@ class MediaUrlBuilder
 	 */
 	public static function manage()
 	{
-		return new Url('/media/moderation_media.php');
+		return new Url(PATH_TO_ROOT. '/media/moderation_media.php');
 	}
 	
 	/**
@@ -88,7 +88,7 @@ class MediaUrlBuilder
 	{
 		$category = $id > 0 ? $id . '-' . $rewrited_name .'/' : '';
 		$page = $page !== 1 ? '&p=' . $page : '';
-		return new Url('media/media.php?cat=' . $id . $page);
+		return new Url(PATH_TO_ROOT. '/media/media.php?cat=' . $id . $page);
 	}
 	
 	/**
@@ -96,7 +96,7 @@ class MediaUrlBuilder
 	 */
 	public static function add($id_category = null)
 	{
-		return new Url('/media/media_action.php');
+		return new Url(PATH_TO_ROOT. '/media/media_action.php');
 	}
 	
 	/**
