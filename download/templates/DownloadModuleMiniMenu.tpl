@@ -1,4 +1,4 @@
-<div class="module-mini-container"# IF C_HORIZONTAL # style="width:auto;"# ENDIF #>
+<div id="module-mini-download" class="module-mini-container"# IF C_HORIZONTAL # style="width:auto;"# ENDIF #>
 	<div class="module-mini-top">
 		<h5 class="sub-title"># IF C_SORT_BY_DATE #{@last_download_files}# ELSE #{@most_downloaded_files}# ENDIF #</h5>
 	</div>
@@ -10,11 +10,13 @@
 					<time datetime="{downloadfiles.DATE_ISO8601}">{downloadfiles.DATE}</time> - 
 					<a href="{downloadfiles.U_LINK}" title="{downloadfiles.NAME}">
 						{downloadfiles.NAME}
-					</a><br/>
+					</a>
+					<br/>
 				# ELSE #
 					<a href="{downloadfiles.U_LINK}" title="{downloadfiles.NAME}">
 						{downloadfiles.NAME}
-					</a><br/>
+					</a>
+					<br/>
 					# IF C_SORT_BY_NUMBER_DOWNLOADS #
 					<span class="smaller">{downloadfiles.L_DOWNLOADED_TIMES}</span><br/>
 					# ELSE #

@@ -46,6 +46,8 @@ $lang['download'] = 'Download';
 $lang['downloaded_times'] = 'Downloaded :number_visits times';
 $lang['downloads_number'] = 'Downloads number';
 $lang['file_infos'] = 'File informations';
+$lang['file'] = 'File';
+$lang['files'] = 'Files';
 
 //config
 $lang['config.category_display_type'] = 'Displayed informations in categories';

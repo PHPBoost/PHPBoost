@@ -46,6 +46,8 @@ $lang['download'] = 'Télécharger';
 $lang['downloaded_times'] = 'Téléchargé :number_downloads fois';
 $lang['downloads_number'] = 'Nombre de téléchargements';
 $lang['file_infos'] = 'Informations sur le fichier';
+$lang['file'] = 'Fichier';
+$lang['files'] = 'Fichiers';
 
 //config
 $lang['config.category_display_type'] = 'Affichage des informations dans les catégories';
