@@ -93,7 +93,6 @@ $LANG['keep_pics'] = 'Conserver le(s) image(s)';
 $LANG['keep_subgallery'] = 'Conserver la/les galerie(s)';
 $LANG['move_pics_to'] = 'Déplacer le(s) image(s) vers';
 $LANG['move_subgalleries_to'] = 'Déplacer la/les sous-galerie(s) vers';
-$LANG['del_all'] = 'Suppression complète';
 $LANG['del_gallery_contents'] = 'Supprimer la galerie "<strong>%s</strong>", ses <strong>sous-galeries</strong> et <strong>tout</strong> son contenu (Définitif)';
 $LANG['display_option'] = 'Options d\'affichage';
 $LANG['unauthorized'] = 'Non autorisé';
@@ -125,6 +124,8 @@ $LANG['column'] = 'Colonnes';
 $LANG['global_cat_selection'] = 'Catégorie de toutes les images sélectionnées';
 $LANG['global_cat_selection_explain'] = 'Permet de changer la catégorie de toutes les images sélectionnées d\'un coup';
 $LANG['select'] = 'Sélectionner';
+$LANG['select_all_pictures'] = 'Sélectionner toutes les images';
+$LANG['unselect_all_pictures'] = 'Désélectionner toutes les images';
 
 //Requis
 $LANG['require_height'] = 'Veuillez entrer une hauteur maximale pour les miniatures !';

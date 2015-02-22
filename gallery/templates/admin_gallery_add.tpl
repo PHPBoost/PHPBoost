@@ -1,3 +1,27 @@
+		# IF C_IMG #
+		<script>
+			function unselect_all_pictures() {
+				# START list #
+				jQuery('#' + '{list.ID}activ').prop('checked', false);
+				# END list #
+				jQuery('#change_all_pictures_selection_top').attr('onclick', "select_all_pictures();return false;");
+				jQuery('#change_all_pictures_selection_top').text("{L_SELECT_ALL_PICTURES}");
+				jQuery('#change_all_pictures_selection_bottom').attr('onclick', "select_all_pictures();return false;");
+				jQuery('#change_all_pictures_selection_bottom').text("{L_SELECT_ALL_PICTURES}");
+			};
+			
+			function select_all_pictures() {
+				# START list #
+				jQuery('#' + '{list.ID}activ').prop('checked', 'checked');
+				# END list #
+				jQuery('#change_all_pictures_selection_top').attr('onclick', "unselect_all_pictures();return false;");
+				jQuery('#change_all_pictures_selection_top').text("{L_UNSELECT_ALL_PICTURES}");
+				jQuery('#change_all_pictures_selection_bottom').attr('onclick', "unselect_all_pictures();return false;");
+				jQuery('#change_all_pictures_selection_bottom').text("{L_UNSELECT_ALL_PICTURES}");
+			};
+		</script>
+		# ENDIF #
+		
 		<div id="admin-quick-menu">
 			<ul>
 				<li class="title-menu">{L_GALLERY_MANAGEMENT}</li>
@@ -91,6 +115,7 @@
 					<legend>{L_IMG_DISPO_GALLERY}</legend>
 					
 					# IF C_IMG #
+					<div class="center"><a href="" onclick="unselect_all_pictures();return false;" id="change_all_pictures_selection_top" class="smaller">{L_UNSELECT_ALL_PICTURES}</a></div>
 					<table style="table-layout:fixed">
 						<tbody>
 							# START list #
@@ -117,7 +142,7 @@
 										</div>
 										<div class="spacer">&nbsp;</div>
 										<div class="right">
-											{L_SELECT} <input type="checkbox" checked="checked" name="{list.ID}activ" value="1">
+											{L_SELECT} <input type="checkbox" checked="checked" id="{list.ID}activ" name="{list.ID}activ" value="1">
 											<div class="spacer"></div>
 											{L_DELETE} <input type="checkbox" name="{list.ID}del" value="1">
 										</div>
@@ -133,6 +158,7 @@
 							# END end_td_pics #
 						</tbody>
 					</table>
+					<div class="center"><a href="" onclick="unselect_all_pictures();return false;" id="change_all_pictures_selection_bottom" class="smaller">{L_UNSELECT_ALL_PICTURES}</a></div>
 					
 					<div class="spacer">&nbsp;</div>
 					

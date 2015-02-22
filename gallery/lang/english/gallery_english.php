@@ -93,7 +93,6 @@ $LANG['keep_pics'] = 'Keep picture(s)';
 $LANG['keep_subgallery'] = 'Keep subgallery(ies)';
 $LANG['move_pics_to'] = 'Move picture(s) to';
 $LANG['move_subgalleries_to'] = 'Move subgallery(ies) to';
-$LANG['del_all'] = 'Complete delete';
 $LANG['del_gallery_contents'] = 'Delete gallery "<strong>%s</strong>", <strong>subgalleries</strong> and <strong>all</strong> their contents';
 $LANG['display_option'] = 'Display option';
 $LANG['unauthorized'] = 'Unauthorized';
@@ -125,6 +124,8 @@ $LANG['column'] = 'Columns';
 $LANG['global_cat_selection'] = 'All selected pictures category';
 $LANG['global_cat_selection_explain'] = 'Allows to change all selected pictures category in one time';
 $LANG['select'] = 'Select';
+$LANG['select_all_pictures'] = 'Select all pictures';
+$LANG['unselect_all_pictures'] = 'Unselect all pictures';
 
 //Require
 $LANG['require_height'] = 'Please enter maximum height for the thumbnails!';
