@@ -148,6 +148,8 @@ else
 		'L_UNIT_PX' => LangLoader::get_message('unit.pixels', 'common'),
 		'L_UNIT_KO' => LangLoader::get_message('unit.kilobytes', 'common'),
 		'L_SELECT' => $LANG['select'],
+		'L_SELECT_ALL_PICTURES' => $LANG['select_all_pictures'],
+		'L_UNSELECT_ALL_PICTURES' => $LANG['unselect_all_pictures'],
 		'L_GLOBAL_CAT_SELECTION' => $LANG['global_cat_selection'],
 		'L_GLOBAL_CAT_SELECTION_EXPLAIN' => $LANG['global_cat_selection_explain'],
 		'L_DELETE' => LangLoader::get_message('delete', 'common'),
