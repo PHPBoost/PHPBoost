@@ -1,4 +1,4 @@
-	{HEADER}
+	# IF POPUP #<style type="text/css">body {background:#FAFAFA;}</style># ENDIF #
 	<script>
 	<!--
 	function insert_popup(code) 
@@ -274,7 +274,7 @@
 	-->
 	</script>
 	
-	<section>
+	<section id="upload">
 		<header><h1>{L_FILES_ACTION}</h1></header>
 		<div class="content">
 			<div class="upload-address-bar">
@@ -336,7 +336,7 @@
 						<legend>{L_ADD_FILES}</legend>
 						<div class="form-element">
 							<div class="form-field" style="width:auto;">
-								<input type="file" name="upload_file" size="30" id="upload-file">					
+								<input type="file" name="upload_file" size="30" id="upload-file">
 								<input type="hidden" name="max_file_size" value="2000000">
 							</div>
 							<button type="submit" name="valid_up" value="true" class="submit">{L_UPLOAD}</button>
@@ -354,8 +354,11 @@
 				{L_DATA} : <strong>{TOTAL_SIZE}</strong>
 			</div>
 			<div class="spacer"></div>
+			# IF C_DISPLAY_CLOSE_BUTTON #
+			<fieldset class="fieldset-submit" style="width:96%;margin:auto;">
+				<legend>${LangLoader::get_message('close', 'main')}</legend>
+				<button type="reset" onclick="javascript:close_popup()" value="true">${LangLoader::get_message('close', 'main')}</button>
+			</fieldset>
+			# ENDIF #
 		</footer>
 	</section>
-		
-	{FOOTER}
-	

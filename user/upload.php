@@ -32,6 +32,7 @@ $popup = retrieve(GET, 'popup', '');
 $editor = retrieve(GET, 'edt', '');
 $parse = retrieve(GET, 'parse', '');
 $no_path = retrieve(GET, 'no_path', '');
+$display_close_button = false;
 
 if (!empty($popup)) //Popup.
 {
@@ -40,11 +41,7 @@ if (!empty($popup)) //Popup.
 	ob_start();
 	$field = retrieve(GET, 'fd', '');
 	
-	$header = '<style type="text/css">body {background:#FAFAFA;}</style>';
-	$footer = '<fieldset class="fieldset-submit" style="width:96%;margin:auto;">
-			<legend>' . $LANG['close'] . '</legend>
-			<button type="reset" onclick="javascript:close_popup()" value="true">' . $LANG['close'] . '</button>
-		</fieldset>';
+	$display_close_button = true;
 	$popup = '&popup=1&fd=' . $field . '&edt=' . $editor . '&parse='. $parse .'&no_path=' . $no_path;
 	$popup_noamp = '&popup=1&fd=' . $field . '&edt=' . $editor . '&parse='. $parse .'&no_path=' . $no_path;
 }
@@ -54,8 +51,6 @@ else //Affichage de l'interface de gestion.
 	$Bread_crumb->add($LANG['files_management'], UserUrlBuilder::upload_files_panel()->rel());
 	require_once('../kernel/header.php');
 	$field = '';
-	$header = '';
-	$footer = '';
 	$popup = '';
 	$popup_noamp = '';
 }
@@ -258,8 +253,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 	
 	$tpl->put_all(array(
 		'POPUP' => $popup,
-		'HEADER' => $header,
-		'FOOTER' => $footer,
+		'C_DISPLAY_CLOSE_BUTTON' => $display_close_button,
 		'FIELD' => $field,
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
 		'URL' => '' . trim(Uploads::get_url($folder, '', '&amp;' . $popup), '/'),
@@ -358,8 +352,7 @@ else
 
 	$tpl->put_all(array(
 		'POPUP' => $popup,
-		'HEADER' => $header,
-		'FOOTER' => $footer,
+		'C_DISPLAY_CLOSE_BUTTON' => $display_close_button,
 		'FIELD' => $field,
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
 		'USER_ID' => AppContext::get_current_user()->get_id(),
