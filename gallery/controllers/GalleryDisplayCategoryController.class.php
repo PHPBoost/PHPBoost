@@ -283,7 +283,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					$array_js = 'var array_pics = new Array();';
 					$result = $this->db_querier->select("SELECT g.id, g.idcat, g.path
 					FROM " . GallerySetup::$gallery_table . " g
-					WHERE g.idcat = :idat AND g.aprob = 1
+					WHERE g.idcat = :idcat AND g.aprob = 1
 					" . $g_sql_sort, array(
 						'idcat' => $category->get_id()
 					));
