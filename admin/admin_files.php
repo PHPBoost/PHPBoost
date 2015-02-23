@@ -86,14 +86,15 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 			$user_id = ($check_user_folder <= 0) ? -1 : AppContext::get_current_user()->get_id();
 			$user_id = max($user_id, $folder_member);
 			
-			PersistenceContext::get_querier()->insert(DB_TABLE_UPLOAD, array('idcat' => $folder, 'name' => $Upload->get_original_filename(), 'path' => $Upload->get_filename(), 'user_id' => $user_id, 'size' => $Upload->get_human_readable_size(), 'type' => $Upload->get_extension(), 'timestamp' => time()));
+			$result = PersistenceContext::get_querier()->insert(DB_TABLE_UPLOAD, array('idcat' => $folder, 'name' => $Upload->get_original_filename(), 'path' => $Upload->get_filename(), 'user_id' => $user_id, 'size' => $Upload->get_human_readable_size(), 'type' => $Upload->get_extension(), 'timestamp' => time()));
+			$id_file = $result->get_last_inserted_id();
 		}
 	}
 	else
 		$error = 'e_upload_failed_unwritable';
 	
-	$error = !empty($error) ? '&error=' . $error . '#message_helper' : '';
-	AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $folder . ($folder_member > 0 ? '&fm=' . $folder_member : '') . $error);
+	$anchor = !empty($error) ? '&error=' . $error . '#message_helper' : (!empty($id_file) ? '#fi1' . $id_file : '');
+	AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $folder . ($folder_member > 0 ? '&fm=' . $folder_member : '') . $anchor);
 }
 elseif (!empty($del_folder)) //Supprime un dossier.
 {

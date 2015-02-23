@@ -134,15 +134,16 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 			}
 			else //Insertion dans la bdd
 			{
-				PersistenceContext::get_querier()->insert(DB_TABLE_UPLOAD, array('idcat' => $folder, 'name' => $Upload->get_original_filename(), 'path' => $Upload->get_filename(), 'user_id' => AppContext::get_current_user()->get_id(), 'size' => $Upload->get_human_readable_size(), 'type' => $Upload->get_extension(), 'timestamp' => time()));
+				$result = PersistenceContext::get_querier()->insert(DB_TABLE_UPLOAD, array('idcat' => $folder, 'name' => $Upload->get_original_filename(), 'path' => $Upload->get_filename(), 'user_id' => AppContext::get_current_user()->get_id(), 'size' => $Upload->get_human_readable_size(), 'type' => $Upload->get_extension(), 'timestamp' => time()));
+				$id_file = $result->get_last_inserted_id();
 			}
 		}
 		else
 			$error = 'e_upload_failed_unwritable';
 	}
 	
-	$error = !empty($error) ? '&error=' . $error . '&' . $popup_noamp . '#message_helper' : '&' . $popup_noamp;
-	AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=' . $folder . $error, '', '&'));
+	$anchor = !empty($error) ? '&error=' . $error . '&' . $popup_noamp . '#message_helper' : '&' . $popup_noamp . (!empty($id_file) ? '#fi1' . $id_file : '');
+	AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=' . $folder . $anchor, '', '&'));
 }
 elseif (!empty($del_folder)) //Supprime un dossier.
 {
