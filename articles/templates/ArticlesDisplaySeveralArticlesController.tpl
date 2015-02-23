@@ -12,7 +12,7 @@
 				# IF C_DISPLAY_CATS_ICON #
 					# START cat_list #
 					<div style="float:left;text-align:center;width:{COLUMN_WIDTH_CAT}%;margin-bottom:20px;">
-					<a itemprop="about" href="{cat_list.U_CATEGORY}"><img itemprop="thumbnailUrl" src="../{cat_list.CATEGORY_IMAGE}" alt="{cat_list.CATEGORY_NAME}" /></a><br />
+					<a itemprop="about" href="{cat_list.U_CATEGORY}"><img itemprop="thumbnailUrl" src="{cat_list.CATEGORY_IMAGE}" alt="{cat_list.CATEGORY_NAME}" /></a><br />
 					<a itemprop="about" href="{cat_list.U_CATEGORY}">{cat_list.CATEGORY_NAME} ({cat_list.NBR_ARTICLES})</a>
 					<br />
 					<span class="small">{cat_list.CATEGORY_DESCRIPTION}</span>
