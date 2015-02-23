@@ -153,10 +153,12 @@ class ArticlesDisplayCategoryController extends ModuleController
 		$nbr_cat_displayed = 0;
 		while ($row = $result->fetch())
 		{	
+			$category_image = new Url($row['image']);
+			
 			$this->view->assign_block_vars('cat_list', array(
 				'ID_CATEGORY' => $row['id'],
 				'CATEGORY_NAME' => $row['name'],
-				'CATEGORY_IMAGE' => $row['image'],
+				'CATEGORY_IMAGE' => $category_image->rel(),
 				'CATEGORY_DESCRIPTION' => FormatingHelper::second_parse($row['description']),
 				'NBR_ARTICLES' => $row['nbr_articles'],
 				'U_CATEGORY' => ArticlesUrlBuilder::display_category($row['id'], $row['rewrited_name'])->rel()
