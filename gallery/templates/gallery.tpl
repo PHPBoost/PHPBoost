@@ -268,7 +268,7 @@
 			<header>
 				<h1>
 					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
-					{L_GALLERY}
+					{GALLERY}
 				</h1>
 			</header>
 			<div class="content">
@@ -312,7 +312,6 @@
 				
 				# IF C_GALLERY_PICS #
 				<article class="block">
-					<header><h1>{GALLERY}</h1></header>
 					<div class="content">
 						<p class="center" id="pics_max"></p>
 						
@@ -332,7 +331,7 @@
 								<span class="text-strong">{L_DIMENSION} : </span><span>{DIMENSION}</span><br/>
 								<span class="text-strong">{L_SIZE} : </span><span>{SIZE} {L_KB}</span><br/>
 								# IF C_COMMENTS_ENABLED #
-									{COM}<br/>
+									<a href="{U_COMMENTS}">{L_COMMENTS}</a><br />
 								# ENDIF #
 								<div class="center">
 									# IF C_NOTATION_ENABLED #
@@ -402,18 +401,29 @@
 							# ENDIF #
 							<tbody>
 							# START pics_list #
-								{pics_list.OPEN_TR}
+								# IF pics_list.C_OPEN_TR #<tr># ENDIF #
 								<td style="vertical-align:bottom;width:{COLUMN_WIDTH_PICS}%;padding:15px 0px;">
-									<div style="padding:0 5px;" id="pics{pics_list.ID}"><a class="small" href="{pics_list.U_DISPLAY}">{pics_list.IMG}</a>
+									<div style="padding:0 5px;" id="pics{pics_list.ID}">
+										<a class="small" href="{pics_list.U_DISPLAY}"><img src="{pics_list.U_PICTURE}" title="{pics_list.NAME}" alt="{pics_list.NAME}" class="gallery_image" /></a>
 									</div>
 									
 									<div class="spacer">&nbsp;</div>
 									
 									<div class="smaller">
-										{pics_list.NAME}
+										# IF C_PICTURE_NAME_DISPLAYED #<a class="small" href="{pics_list.U_PICTURE_LINK}"><span id="fi_{pics_list.ID}">{pics_list.SHORT_NAME}</span></a># ELSE #<span id="fi_{pics_list.ID}"></span># ENDIF # <span id="fi{pics_list.ID}"></span>
+										# IF C_AUTHOR_DISPLAYED #
+										<br />
 										{pics_list.POSTOR}
-										{pics_list.VIEWS}
-										{pics_list.COM}<br />
+										# ENDIF #
+										# IF C_VIEWS_COUNTER_ENABLED #
+										<br />
+										<span id="gv{pics_list.ID}">{pics_list.VIEWS}</span> <span id="gvl{pics_list.ID}">{pics_list.L_VIEWS}</span>
+										# ENDIF #
+										# IF C_COMMENTS_ENABLED #
+										<br />
+										<a href="{pics_list.U_COMMENTS}">{pics_list.L_COMMENTS}</a>
+										# ENDIF #
+										<br />
 										{pics_list.KERNEL_NOTATION}
 									</div>
 									
@@ -431,13 +441,13 @@
 										</div>
 										<a href="javascript:pics_display_block({pics_list.ID});" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);" class="fa fa-move" title="{L_MOVETO}"></a>
 										
-										<a id="img_aprob{pics_list.ID}" href="javascript:pics_aprob({pics_list.ID});" class="{pics_list.IMG_APROB}" title="{pics_list.L_APROB_IMG}"></a>
+										<a id="img_aprob{pics_list.ID}" href="javascript:pics_aprob({pics_list.ID});" class="# IF pics_list.C_IMG_APROB #fa fa-eye-slash# ELSE #fa fa-eye# ENDIF #" title="{pics_list.L_APROB_IMG}"></a>
 										&nbsp;<span id="img{ID}"></span>
 										# ENDIF #
 										<span id="img{pics_list.ID}"></span>
 									</div>
 								</td>
-								{pics_list.CLOSE_TR}
+								# IF pics_list.C_CLOSE_TR #</tr># ENDIF #
 							# END pics_list #
 							
 							# START end_table #

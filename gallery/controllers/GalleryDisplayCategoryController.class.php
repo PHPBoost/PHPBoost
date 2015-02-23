@@ -51,7 +51,7 @@ class GalleryDisplayCategoryController extends ModuleController
 	
 	private function build_view()
 	{
-		global $LANG;
+		global $LANG, $Bread_crumb;
 		
 		load_module_lang('gallery');
 		$g_idpics = retrieve(GET, 'id', 0);
@@ -120,7 +120,7 @@ class GalleryDisplayCategoryController extends ModuleController
 			'COLUMN_WIDTH_PICS' => $column_width_pics,
 			'CAT_ID' => $category->get_id(),
 			'DISPLAY_MODE' => $config->get_pics_enlargement_mode(),
-			'GALLERY' => $category->get_id() != Category::ROOT_CATEGORY ? $this->lang['module_title'] . ' : ' . $category->get_name() : $this->lang['module_title'],
+			'GALLERY' => $category->get_id() != Category::ROOT_CATEGORY ? $this->lang['module_title'] . ' - ' . $category->get_name() : $this->lang['module_title'],
 			'HEIGHT_MAX' => $config->get_mini_max_height(),
 			'WIDTH_MAX' => $column_width_pics,
 			'MODULE_DATA_PATH' => $module_data_path,
@@ -273,6 +273,8 @@ class GalleryDisplayCategoryController extends ModuleController
 					));
 				if (!empty($info_pics['id']))
 				{
+					$Bread_crumb->add(stripslashes($info_pics['name']), PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $info_pics['idcat'] . '&amp;id=' . $info_pics['id'], '-' . $info_pics['idcat'] . '-' . $info_pics['id'] . '.php'));
+					
 					//Affichage miniatures.
 					$id_previous = 0;
 					$id_next = 0;
@@ -378,7 +380,7 @@ class GalleryDisplayCategoryController extends ModuleController
 						'VIEWS' => ($info_pics['views'] + 1),
 						'DIMENSION' => $info_pics['width'] . ' x ' . $info_pics['height'],
 						'SIZE' => NumberHelper::round($info_pics['weight']/1024, 1),
-						'COM' => '<a href="'. GalleryUrlBuilder::get_link_item($info_pics['idcat'],$info_pics['id'],0,$g_sort) .'#comments_list">'. CommentsService::get_number_and_lang_comments('gallery', $info_pics['id']) . '</a>',
+						'L_COMMENTS' => CommentsService::get_number_and_lang_comments('gallery', $info_pics['id']),
 						'KERNEL_NOTATION' => $activ_note ? NotationService::display_active_image($notation) : '',
 						'COLSPAN' => ($config->get_columns_number() + 2),
 						'CAT' => $cat_list,
@@ -408,7 +410,8 @@ class GalleryDisplayCategoryController extends ModuleController
 						'U_PREVIOUS' => ($pos_pics > 0) ? '<a href="' . GalleryUrlBuilder::get_link_item($category->get_id(),$id_previous) . '#pics_max"><i class="fa fa-arrow-left fa-2x"></i></a> <a href="' . GalleryUrlBuilder::get_link_item($category->get_id(),$id_previous) . '#pics_max">' . $LANG['previous'] . '</a>' : '',
 						'U_NEXT' => ($pos_pics < ($i - 1)) ? '<a href="' . GalleryUrlBuilder::get_link_item($category->get_id(),$id_next) . '#pics_max">' . $LANG['next'] . '</a> <a href="' . GalleryUrlBuilder::get_link_item($category->get_id(),$id_next) . '#pics_max"><i class="fa fa-arrow-right fa-2x"></i></a>' : '',
 						'U_LEFT_THUMBNAILS' => (($pos_pics - $start_thumbnails) > 0) ? '<span id="display_left"><a href="javascript:display_thumbnails(\'left\')"><i class="fa fa-arrow-left fa-2x"></i></a></span>' : '<span id="display_left"></span>',
-						'U_RIGHT_THUMBNAILS' => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics) ? '<span id="display_right"><a href="javascript:display_thumbnails(\'right\')"><i class="fa fa-arrow-right fa-2x"></i></a></span>' : '<span id="display_right"></span>'
+						'U_RIGHT_THUMBNAILS' => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics) ? '<span id="display_right"><a href="javascript:display_thumbnails(\'right\')"><i class="fa fa-arrow-right fa-2x"></i></a></span>' : '<span id="display_right"></span>',
+						'U_COMMENTS' => GalleryUrlBuilder::get_link_item($info_pics['idcat'],$info_pics['id'],0,$g_sort) .'#comments_list'
 					));
 	
 					//Affichage de la liste des miniatures sous l'image.
@@ -458,6 +461,10 @@ class GalleryDisplayCategoryController extends ModuleController
 				
 				$this->tpl->put_all(array(
 					'C_GALLERY_MODO' => $is_modo,
+					'C_PICTURE_NAME_DISPLAYED' => $config->is_title_enabled(),
+					'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),
+					'C_VIEWS_COUNTER_ENABLED' => $config->is_views_counter_enabled(),
+					'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
 					'C_PAGINATION' => $pagination->has_several_pages(),
 					'PAGINATION' => $pagination->display(),
 					'L_EDIT' => LangLoader::get_message('edit', 'common'),
@@ -491,14 +498,13 @@ class GalleryDisplayCategoryController extends ModuleController
 					if ($config->get_pics_enlargement_mode() == GalleryConfig::FULL_SCREEN) //Ouverture en popup plein écran.
 					{
 						$display_link = PATH_TO_ROOT.'/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '" data-lightbox="1" onmousedown="increment_view(' . $row['id'] . ');" title="' . str_replace('"', '', stripslashes($row['name']));
-						$display_name = PATH_TO_ROOT.'/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '" data-lightbox="2" onmousedown="increment_view(' . $row['id'] . ');" title="' . str_replace('"', '', stripslashes($row['name']));
 					}
 					elseif ($config->get_pics_enlargement_mode() == GalleryConfig::POPUP) //Ouverture en popup simple.
-						$display_name = $display_link = 'javascript:increment_view(' . $row['id'] . ');display_pics_popup(\'' . PATH_TO_ROOT . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\')';
+						$display_link = 'javascript:increment_view(' . $row['id'] . ');display_pics_popup(\'' . PATH_TO_ROOT . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\')';
 					elseif ($config->get_pics_enlargement_mode() == GalleryConfig::RESIZE) //Ouverture en agrandissement simple.
-						$display_name = $display_link = 'javascript:increment_view(' . $row['id'] . ');display_pics(' . $row['id'] . ', \'' . PATH_TO_ROOT . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\')';
+						$display_link = 'javascript:increment_view(' . $row['id'] . ');display_pics(' . $row['id'] . ', \'' . PATH_TO_ROOT . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\')';
 					else //Ouverture nouvelle page.
-						$display_name = $display_link = url('gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], 'gallery-' . $row['idcat'] . '-' . $row['id'] . '.php') . '#pics_max';
+						$display_link = url('gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], 'gallery-' . $row['idcat'] . '-' . $row['id'] . '.php') . '#pics_max';
 					
 					//Liste des catégories.
 					$search_category_children_options = new SearchCategoryChildrensOptions();
@@ -528,25 +534,29 @@ class GalleryDisplayCategoryController extends ModuleController
 					
 					$html_protected_name = $row['name'];
 					$this->tpl->assign_block_vars('pics_list', array(
+						'C_IMG_APROB' => $row['aprob'] == 1,
+						'C_OPEN_TR' => is_int($j++/$nbr_column_pics),
+						'C_CLOSE_TR' => is_int($j/$nbr_column_pics),
 						'ID' => $row['id'],
 						'APROB' => $row['aprob'],
-						'IMG' => '<img src="'. PATH_TO_ROOT.'/gallery/pics/thumbnails/' . $row['path'] . '" alt="' . str_replace('"', '', stripslashes($row['name'])) . '" class="gallery_image" />',
 						'PATH' => $row['path'],
-						'NAME' => $config->is_title_enabled() ? '<a class="small" href="' . $display_name . '"><span id="fi_' . $row['id'] . '">' . TextHelper::wordwrap_html(stripslashes($row['name']), 22, ' ') . '</span></a> <span id="fi' . $row['id'] . '"></span>' : '<span id="fi_' . $row['id'] . '"></span></a> <span id="fi' . $row['id'] . '"></span>',
-						'POSTOR' => $config->is_author_displayed() ? '<br />' . $LANG['by'] . (!empty($row['display_name']) ? ' <a class="small '.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'">' . $row['display_name'] . '</a>' : ' ' . $LANG['guest']) : '',
-						'VIEWS' => $config->is_views_counter_enabled() ? '<br /><span id="gv' . $row['id'] . '">' . $row['views'] . '</span> <span id="gvl' . $row['id'] . '">' . ($row['views'] > 1 ? $LANG['views'] : $LANG['view']) . '</span>' : '',
-						'COM' => $config->are_comments_enabled() ? '<br /><a href="'. PATH_TO_ROOT .'/gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '.php?com=0') .'#comments_list">'. CommentsService::get_number_and_lang_comments('gallery', $row['id']) . '</a>' : '',
+						'NAME' => stripslashes($row['name']),
+						'SHORT_NAME' => TextHelper::wordwrap_html(stripslashes($row['name']), 22, ' '),
+						'POSTOR' => $LANG['by'] . (!empty($row['display_name']) ? ' <a class="small '.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'">' . $row['display_name'] . '</a>' : ' ' . $LANG['guest']),
+						'VIEWS' => $row['views'],
+						'L_VIEWS' => $row['views'] > 1 ? $LANG['views'] : $LANG['view'],
+						'L_COMMENTS' => CommentsService::get_number_and_lang_comments('gallery', $row['id']),
 						'KERNEL_NOTATION' => $config->is_notation_enabled() && $is_connected ? NotationService::display_active_image($notation) : NotationService::display_static_image($notation),
 						'CAT' => $cat_list,
 						'RENAME' => $html_protected_name,
 						'RENAME_CUT' => $html_protected_name,
-						'IMG_APROB' => ($row['aprob'] == 1) ? 'fa fa-eye-slash' : 'fa fa-eye',
-						'OPEN_TR' => is_int($j++/$nbr_column_pics) ? '<tr>' : '',
-						'CLOSE_TR' => is_int($j/$nbr_column_pics) ? '</tr>' : '',
 						'L_APROB_IMG' => ($row['aprob'] == 1) ? $LANG['unaprob'] : $LANG['aprob'],
+						'U_PICTURE_LINK' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php'),
+						'U_PICTURE' => PATH_TO_ROOT.'/gallery/pics/thumbnails/' . $row['path'],
 						'U_DEL' => url('gallery.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;cat=' . $category->get_id()),
 						'U_MOVE' => url('gallery.php?id=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value'),
-						'U_DISPLAY' => $display_link
+						'U_DISPLAY' => $display_link,
+						'U_COMMENTS' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '.php?com=0') . '#comments_list'
 					));
 				}
 				$result->dispose();
