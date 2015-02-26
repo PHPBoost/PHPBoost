@@ -89,6 +89,7 @@ if (!empty($_POST['valid']))
 	$config->set_authorizations(Authorizations::build_auth_array_from_form(Category::READ_AUTHORIZATIONS, Category::WRITE_AUTHORIZATIONS, Category::MODERATION_AUTHORIZATIONS));
 	
 	GalleryConfig::save();
+	GalleryService::get_categories_manager()->regenerate_cache();
 	
 	###### Régénération du cache de la gallery #######
 	$Cache->Generate_module_file('gallery');
