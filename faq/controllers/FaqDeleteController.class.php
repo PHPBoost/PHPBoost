@@ -50,7 +50,6 @@ class FaqDeleteController extends ModuleController
 		
 		Feed::clear_cache('faq');
 		FaqCache::invalidate();
-		FaqCategoriesCache::invalidate();
 	}
 	
 	private function get_faq_question(HTTPRequestCustom $request)

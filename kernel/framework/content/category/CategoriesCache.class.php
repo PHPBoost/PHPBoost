@@ -31,30 +31,16 @@ abstract class CategoriesCache implements CacheData
 	
 	public function synchronize()
 	{
-		$db_querier = PersistenceContext::get_querier();
-		
 		$categories_cache = self::get_class();
 		$category_class = $categories_cache->get_category_class();
 		
 		$root_category = $categories_cache->get_root_category();
 		$this->categories[Category::ROOT_CATEGORY] = $root_category;
-		$result = $db_querier->select_rows($categories_cache->get_table_name(), array('*'), 'ORDER BY id_parent, c_order');
+		$result = PersistenceContext::get_querier()->select_rows($categories_cache->get_table_name(), array('*'), 'ORDER BY id_parent, c_order');
 		while ($row = $result->fetch())
 		{
 			$category = new $category_class();
 			$category->set_properties($row);
-			
-			if ($categories_cache->get_elements_table_name() !== '')
-			{
-				$parameters = array_merge($categories_cache->get_approved_elements_parameters(), array(
-					'id_category' => $row['id']
-				));
-				$condition = ($categories_cache->get_approved_elements_condition() !== '' ? $categories_cache->get_approved_elements_condition() . ' AND ' : 'WHERE ') . $categories_cache->get_elements_table_id_category_field_name() . ' = :id_category';
-				
-				$number_elements = $db_querier->count($categories_cache->get_elements_table_name(), $condition, $parameters);
-				$category->set_number_elements($number_elements);
-				$this->categories[$row['id_parent']]->set_number_elements($this->categories[$row['id_parent']]->get_number_elements() + $number_elements);
-			}
 			
 			if ($category->auth_is_empty())
 			{
@@ -72,26 +58,6 @@ abstract class CategoriesCache implements CacheData
 	abstract public function get_module_identifier();
 	
 	abstract public function get_root_category();
-	
-	public function get_elements_table_name()
-	{
-		return '';
-	}
-	
-	public function get_elements_table_id_category_field_name()
-	{
-		return 'id_category';
-	}
-	
-	public function get_approved_elements_condition()
-	{
-		return '';
-	}
-	
-	public function get_approved_elements_parameters()
-	{
-		return array();
-	}
 	
 	public function get_categories()
 	{

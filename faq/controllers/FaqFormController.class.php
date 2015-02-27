@@ -204,7 +204,6 @@ class FaqFormController extends ModuleController
 		
 		Feed::clear_cache('faq');
 		FaqCache::invalidate();
-		FaqCategoriesCache::invalidate();
 	}
 	
 	private function contribution_actions(FaqQuestion $faq_question, $id)

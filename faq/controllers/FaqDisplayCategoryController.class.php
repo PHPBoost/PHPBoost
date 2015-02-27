@@ -67,25 +67,38 @@ class FaqDisplayCategoryController extends ModuleController
 	{
 		$config = FaqConfig::load();
 		$authorized_categories = FaqService::get_authorized_categories($this->get_category()->get_id());
-		$children_categories = FaqService::get_categories_manager()->get_categories_cache()->get_childrens($this->get_category()->get_id());
+		
+		//Children categories
+		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= faq_cats.id, faq_cats.*,
+		(SELECT COUNT(*) FROM ' . FaqSetup::$faq_table . ' faq
+		WHERE faq.approved = 1
+		AND faq.id_category = @id_cat
+		) AS questions_number
+		FROM ' . FaqSetup::$faq_cats_table .' faq_cats
+		WHERE faq_cats.id_parent = :id_category
+		AND faq_cats.id IN :authorized_categories
+		ORDER BY faq_cats.id_parent, faq_cats.c_order', array(
+			'id_category' => $this->category->get_id(),
+			'authorized_categories' => $authorized_categories
+		));
 		
 		$nbr_cat_displayed = 0;
-		foreach ($children_categories as $cat)
+		while ($row = $result->fetch())
 		{
-			if ($cat->get_id() != Category::ROOT_CATEGORY && in_array($cat->get_id(), $authorized_categories))
-			{
-				$this->tpl->assign_block_vars('sub_categories_list', array(
-					'C_CATEGORY_IMAGE' => !empty($row['image']),
-					'C_MORE_THAN_ONE_QUESTION' => $cat->get_number_elements() > 1,
-					'CATEGORY_NAME' => $cat->get_name(),
-					'CATEGORY_IMAGE' => $cat->get_image()->rel(),
-					'QUESTIONS_NUMBER' => $cat->get_number_elements(),
-					'U_CATEGORY' => FaqUrlBuilder::display_category($cat->get_id(), $cat->get_rewrited_name())->rel()
-				));
-				
-				$nbr_cat_displayed++;
-			}
+			$category_image = new Url($row['image']);
+			
+			$this->tpl->assign_block_vars('sub_categories_list', array(
+				'C_CATEGORY_IMAGE' => !empty($row['image']),
+				'C_MORE_THAN_ONE_QUESTION' => $row['questions_number'] > 1,
+				'CATEGORY_NAME' => $row['name'],
+				'CATEGORY_IMAGE' => $category_image->rel(),
+				'QUESTIONS_NUMBER' => $row['questions_number'],
+				'U_CATEGORY' => FaqUrlBuilder::display_category($row['id'], $row['rewrited_name'])->rel()
+			));
+			
+			$nbr_cat_displayed++;
 		}
+		$result->dispose();
 		
 		$nbr_column_cats = ($nbr_cat_displayed > $config->get_columns_number_per_line()) ? $config->get_columns_number_per_line() : $nbr_cat_displayed;
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
