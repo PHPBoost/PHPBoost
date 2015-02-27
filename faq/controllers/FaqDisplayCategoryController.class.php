@@ -75,6 +75,7 @@ class FaqDisplayCategoryController extends ModuleController
 			if ($cat->get_id() != Category::ROOT_CATEGORY && in_array($cat->get_id(), $authorized_categories))
 			{
 				$this->tpl->assign_block_vars('sub_categories_list', array(
+					'C_CATEGORY_IMAGE' => !empty($row['image']),
 					'C_MORE_THAN_ONE_QUESTION' => $cat->get_number_elements() > 1,
 					'CATEGORY_NAME' => $cat->get_name(),
 					'CATEGORY_IMAGE' => $cat->get_image()->rel(),

@@ -83,6 +83,7 @@ class DownloadDisplayCategoryController extends ModuleController
 			$category_image = new Url($row['image']);
 			
 			$this->tpl->assign_block_vars('sub_categories_list', array(
+				'C_CATEGORY_IMAGE' => !empty($row['image']),
 				'C_MORE_THAN_ONE_DOWNLOADFILE' => $row['downloadfiles_number'] > 1,
 				'CATEGORY_NAME' => $row['name'],
 				'CATEGORY_IMAGE' => $category_image->rel(),
