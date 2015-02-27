@@ -107,8 +107,55 @@ class GalleryDisplayCategoryController extends ModuleController
 		$module_data_path = $this->tpl->get_pictures_data_path();
 		$rewrite_title = Url::encode_rewrite($category->get_name());
 		
+		##### Catégorie disponibles #####
+		$nbr_cat_displayed = 0;
+		if ($total_cat > 0 && empty($g_idpics))
+		{
+			$this->tpl->put('C_GALLERY_CATS', true);
+			
+			$j = 0;
+			$result = $this->db_querier->select("SELECT @id_cat:= gallery_cats.id, gallery_cats.*,
+			(SELECT COUNT(*) FROM " . GallerySetup::$gallery_table . "
+			WHERE idcat = @id_cat AND aprob = 1
+			) AS nbr_pics,
+			(SELECT COUNT(*) FROM " . GallerySetup::$gallery_table . "
+			WHERE idcat = @id_cat AND aprob = 0
+			) AS nbr_pics_unaprob
+			FROM " . GallerySetup::$gallery_cats_table . " gallery_cats
+			WHERE gallery_cats.id_parent = :id_category
+			AND gallery_cats.id IN :authorized_categories
+			ORDER BY gallery_cats.id_parent, gallery_cats.c_order
+			LIMIT :number_items_per_page OFFSET :display_from", array(
+				'id_category' => $category->get_id(),
+				'authorized_categories' => $authorized_categories,
+				'number_items_per_page' => $pagination->get_number_items_per_page(),
+				'display_from' => $pagination->get_display_from()
+			));
+			
+			while ($row = $result->fetch())
+			{
+				$category_image = new Url($row['image']);
+				
+				$this->tpl->assign_block_vars('sub_categories_list', array(
+					'C_CATEGORY_IMAGE' => !empty($row['image']),
+					'CATEGORY_NAME' => $row['name'],
+					'CATEGORY_IMAGE' => $category_image->rel(),
+					'PICTURES_NUMBER' => sprintf($LANG['nbr_pics_info'], $row['nbr_pics']),
+					'U_CATEGORY' => GalleryUrlBuilder::get_link_cat($row['id'],$row['name'])
+				));
+				
+				$nbr_cat_displayed++;
+			}
+			$result->dispose();
+		}
+		
+		$category_description = FormatingHelper::second_parse($category->get_description());
+		
 		$this->tpl->put_all(array(
 			'C_PAGINATION' => $pagination->has_several_pages(),
+			'C_ROOT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY,
+			'C_CATEGORY_DESCRIPTION' => $category_description,
+			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
 			'ARRAY_JS' => '',
 			'NBR_PICS' => 0,
 			'MAX_START' => 0,
@@ -116,8 +163,9 @@ class GalleryDisplayCategoryController extends ModuleController
 			'END_THUMB' => 0,
 			'PAGINATION' => $pagination->display(),
 			'COLUMNS_NUMBER' => $nbr_column_pics,
-			'COLUMN_WIDTH_CATS' => $column_width_cats,
+			'CATS_COLUMNS_WIDTH' => $column_width_cats,
 			'COLUMN_WIDTH_PICS' => $column_width_pics,
+			'CATEGORY_DESCRIPTION' => $category_description,
 			'CAT_ID' => $category->get_id(),
 			'DISPLAY_MODE' => $config->get_pics_enlargement_mode(),
 			'GALLERY' => $category->get_id() != Category::ROOT_CATEGORY ? $this->lang['module_title'] . ' - ' . $category->get_name() : $this->lang['module_title'],
@@ -159,60 +207,6 @@ class GalleryDisplayCategoryController extends ModuleController
 			'L_NOTES' => LangLoader::get_message('notes', 'common'),
 			'L_COM' => $LANG['com_s']
 		));
-		
-		##### Catégorie disponibles #####
-		if ($total_cat > 0 && empty($g_idpics))
-		{
-			$this->tpl->put('C_GALLERY_CATS', true);
-			
-			$j = 0;
-			$result = $this->db_querier->select("SELECT @id_cat:= gallery_cats.id, gallery_cats.*, gallery.path,
-			(SELECT COUNT(*) FROM " . GallerySetup::$gallery_table . "
-			WHERE idcat = @id_cat AND aprob = 1
-			) AS nbr_pics,
-			(SELECT COUNT(*) FROM " . GallerySetup::$gallery_table . "
-			WHERE idcat = @id_cat AND aprob = 0
-			) AS nbr_pics_unaprob
-			FROM " . GallerySetup::$gallery_cats_table . " gallery_cats
-			LEFT JOIN " . GallerySetup::$gallery_table . " gallery ON gallery.idcat = gallery_cats.id
-			WHERE gallery_cats.id_parent = :id_category
-			AND gallery_cats.id IN :authorized_categories
-			ORDER BY gallery_cats.id_parent, gallery_cats.c_order
-			LIMIT :number_items_per_page OFFSET :display_from", array(
-				'id_category' => $category->get_id(),
-				'authorized_categories' => $authorized_categories,
-				'number_items_per_page' => $pagination->get_number_items_per_page(),
-				'display_from' => $pagination->get_display_from()
-			));
-			while ($row = $result->fetch())
-			{
-				//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
-				if (!file_exists('pics/thumbnails/' . $row['path']))
-					$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
-	
-				$this->tpl->assign_block_vars('cat_list', array(
-					'IDCAT' => $row['id'],
-					'CAT' => $row['name'],
-					'DESC' => $row['description'],
-					'IMG' => !empty($row['path']) ? '<img src="'. PATH_TO_ROOT.'/gallery/pics/thumbnails/' . $row['path'] . '" alt="" />' : '',
-					'EDIT' => $is_admin ? '<a href="' . GalleryUrlBuilder::edit_category($row['id'])->rel() . '" title="' . LangLoader::get_message('edit', 'common') . '" class="fa fa-edit"></a>' : '',
-					'OPEN_TR' => is_int($j++/$nbr_column_cats) ? '<tr>' : '',
-					'CLOSE_TR' => is_int($j/$nbr_column_cats) ? '</tr>' : '',
-					'L_NBR_PICS' => sprintf($LANG['nbr_pics_info'], $row['nbr_pics']),
-					'U_CAT' => GalleryUrlBuilder::get_link_cat($row['id'],$row['name'])
-				));
-			}
-			$result->dispose();
-	
-			//Création des cellules du tableau si besoin est.
-			while (!is_int($j/$nbr_column_cats))
-			{
-				$this->tpl->assign_block_vars('end_table_cats', array(
-					'TD_END' => '<td style="margin:15px 0px;width:' . $nbr_column_cats . '%">&nbsp;</td>',
-					'TR_END' => (is_int(++$j/$nbr_column_cats)) ? '</tr>' : ''
-				));
-			}
-		}
 	
 		##### Affichage des photos #####
 		if ($nbr_pics > 0)

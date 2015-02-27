@@ -269,47 +269,34 @@
 				<h1>
 					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
 					{GALLERY}
+					# IF C_CATEGORY_DESCRIPTION #
+						<div class="cat-description">
+							{CATEGORY_DESCRIPTION}
+						</div>
+					# ENDIF #
 				</h1>
 			</header>
-			<div class="content">
-				# IF C_GALLERY_CATS #
-				<section class="block">
-					<header><h1>{L_CATEGORIES}</h1></header>
-					<div class="content">
-						<table>
-							<tbody>
-								# START cat_list #
-								{cat_list.OPEN_TR}
-								<td style="vertical-align:bottom;width:{COLUMN_WIDTH_CATS}%;padding:15px 0px;">
-									<div style="padding:0 5px;">
-										<a href="{cat_list.U_CAT}">{cat_list.IMG}</a>
-									</div>
-									
-									<div class="spacer"></div>
-									
-									<div>
-										<span class="smaller"><a href="{cat_list.U_CAT}">{cat_list.CAT}</a></span> {cat_list.EDIT}
-										<div class="spacer"></div>
-										<span class="smaller">{cat_list.DESC}</span> 
-										<div class="spacer"></div>
-										<span class="smaller">{cat_list.L_NBR_PICS}</span>
-									</div>
-								</td>
-								{cat_list.CLOSE_TR}
-								# END cat_list #
-								
-								# START end_table_cats #
-									{end_table_cats.TD_END}
-								{end_table_cats.TR_END}
-								# END end_table_cats #
-							</tbody>
-						</table>
+			
+			# IF C_SUB_CATEGORIES #
+			<div class="subcat-container">
+				# START sub_categories_list #
+				<div class="subcat-element" style="width:{CATS_COLUMNS_WIDTH}%;">
+					<div class="subcat-content">
+						# IF sub_categories_list.C_CATEGORY_IMAGE #<a itemprop="about" href="{sub_categories_list.U_CATEGORY}"><img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="" /></a># ENDIF #
+						<br />
+						<a itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
+						<br />
+						<span class="small">{sub_categories_list.PICTURES_NUMBER}</span>
 					</div>
-					<footer></footer>
-				</section>
-				# ENDIF #
-				
-				
+				</div>
+				# END sub_categories_list #
+				<div class="spacer"></div>
+			</div>
+			# ELSE #
+				<div class="spacer"></div>
+			# ENDIF #
+			
+			<div class="content">
 				# IF C_GALLERY_PICS #
 				<article class="block">
 					<div class="content">
