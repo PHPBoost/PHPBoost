@@ -84,14 +84,14 @@ class AdminDownloadConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('items_number_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_items_number_per_page(), 
-			array('size' => 6, 'required' => true),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i')
-		)));
+			array('maxlength' => 2, 'size' => 3, 'required' => true),
+			array(new FormFieldConstraintIntegerRange(1, 50))
+		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('columns_number_per_line', $this->admin_common_lang['config.columns_number_per_line'], $this->config->get_columns_number_per_line(), 
-			array('size' => 6, 'required' => true),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i')
-		)));
+			array('maxlength' => 1, 'size' => 3, 'required' => true),
+			array(new FormFieldConstraintIntegerRange(1, 4))
+		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('category_display_type', $this->lang['config.category_display_type'], $this->config->get_category_display_type(),
 			array(
@@ -119,8 +119,8 @@ class AdminDownloadConfigController extends AdminModuleController
 		)));
 		
 		$fieldset->add_field(new FormFieldTextEditor('notation_scale', $this->admin_common_lang['config.notation_scale'], $this->config->get_notation_scale(), 
-			array('maxlength' => 2, 'size' => 6, 'required' => true, 'hidden' => !$this->config->is_notation_enabled()),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i'), new FormFieldConstraintIntegerRange(3, 20))
+			array('maxlength' => 2, 'size' => 3, 'required' => true, 'hidden' => !$this->config->is_notation_enabled()),
+			array(new FormFieldConstraintIntegerRange(3, 20))
 		));
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->lang['config.root_category_description'], $this->config->get_root_category_description(), 
@@ -145,9 +145,9 @@ class AdminDownloadConfigController extends AdminModuleController
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('files_number_in_menu', $this->lang['config.files_number_in_menu'], $this->config->get_files_number_in_menu(), 
-			array('size' => 6, 'required' => true),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i')
-		)));
+			array('maxlength' => 2, 'size' => 3, 'required' => true),
+			array(new FormFieldConstraintIntegerRange(1, 50))
+		));
 		
 		$common_lang = LangLoader::get('common');
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $common_lang['authorizations'],

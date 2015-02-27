@@ -85,8 +85,8 @@ class AdminShoutboxConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('items_number_per_page', $this->lang['config.items_number_per_page'], $this->config->get_items_number_per_page(),
-			array('maxlength' => 3, 'size' => 3, 'required' => true),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+			array('maxlength' => 2, 'size' => 3, 'required' => true),
+			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('max_messages_number_enabled', $this->lang['config.max_messages_number_enabled'], $this->config->is_max_messages_number_enabled(),
@@ -115,12 +115,12 @@ class AdminShoutboxConfigController extends AdminModuleController
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('max_links_number_per_message', $this->lang['config.max_links_number_per_message'], $this->config->get_max_links_number_per_message(),
-			array('maxlength' => 3, 'size' => 3, 'required' => true, 'hidden' => !$this->config->is_max_links_number_per_message_enabled()),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+			array('maxlength' => 2, 'size' => 3, 'required' => true, 'hidden' => !$this->config->is_max_links_number_per_message_enabled()),
+			array(new FormFieldConstraintIntegerRange(1, 20))
 		));
 		
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_formatting_tags', LangLoader::get_message('config.forbidden-tags', 'admin-common'), $this->config->get_forbidden_formatting_tags(),
-			$this->generate_forbidden_formatting_tags_option(), array('size' => 10)
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_formatting_tags', LangLoader::get_message('config.forbidden-tags', 'admin-common'), $this->config->get_forbidden_formatting_tags(), $this->generate_forbidden_formatting_tags_option(),
+			array('size' => 10)
 		));
 		
 		$fieldset = new FormFieldsetHTML('configuration', $this->lang['config.shoutbox_menu']);

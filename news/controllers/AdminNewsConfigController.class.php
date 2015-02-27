@@ -83,7 +83,8 @@ class AdminNewsConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('number_news_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_number_news_per_page(), 
-			array('size' => 6), array(new FormFieldConstraintIntegerRange(1, 50))
+			array('maxlength' => 2, 'size' => 3, 'required' => true),
+			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('number_columns_display_news', $this->lang['admin.config.number_columns_display_news'], $this->config->get_number_columns_display_news(),

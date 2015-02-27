@@ -84,14 +84,14 @@ class AdminMediaConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('items_number_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_items_number_per_page(), 
-			array('size' => 6, 'required' => true),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i')
-		)));
+			array('maxlength' => 2, 'size' => 3, 'required' => true),
+			array(new FormFieldConstraintIntegerRange(1, 50))
+		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('columns_number_per_line', $this->admin_common_lang['config.columns_number_per_line'], $this->config->get_columns_number_per_line(), 
-			array('size' => 6, 'required' => true),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i')
-		)));
+			array('maxlength' => 1, 'size' => 3, 'required' => true),
+			array(new FormFieldConstraintIntegerRange(1, 4))
+		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->admin_common_lang['config.author_displayed'], $this->config->is_author_displayed()));
 		
@@ -108,19 +108,19 @@ class AdminMediaConfigController extends AdminModuleController
 		)));
 		
 		$fieldset->add_field(new FormFieldTextEditor('notation_scale', $this->admin_common_lang['config.notation_scale'], $this->config->get_notation_scale(), 
-			array('maxlength' => 2, 'size' => 6, 'required' => true, 'hidden' => !$this->config->is_notation_enabled()),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i'), new FormFieldConstraintIntegerRange(3, 20))
+			array('maxlength' => 2, 'size' => 3, 'required' => true, 'hidden' => !$this->config->is_notation_enabled()),
+			array(new FormFieldConstraintIntegerRange(3, 20))
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('max_video_width', $this->lang['config.max_video_width'], $this->config->get_max_video_width(), 
-			array('size' => 6, 'required' => true),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i')
-		)));
+			array('maxlength' => 4, 'size' => 6, 'required' => true),
+			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('max_video_height', $this->lang['config.max_video_height'], $this->config->get_max_video_height(), 
-			array('size' => 6, 'required' => true),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i')
-		)));
+			array('maxlength' => 4, 'size' => 6, 'required' => true),
+			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+		));
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->lang['config.root_category_description'], $this->config->get_root_category_description(), 
 			array('rows' => 8, 'cols' => 47)
