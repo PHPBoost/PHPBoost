@@ -43,6 +43,15 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 		$i = 0;
 		$forum_cats = 'global $CAT_FORUM;' . "\n";
 		$forum_cats .= '$CAT_FORUM = array();' . "\n";
+		$forum_cats .= '$CAT_FORUM[\'0\'][\'id_left\'] = 0;' . "\n";
+		$forum_cats .= '$CAT_FORUM[\'0\'][\'id_right\'] = 0;' . "\n";
+		$forum_cats .= '$CAT_FORUM[\'0\'][\'id_parent\'] = 0;' . "\n";
+		$forum_cats .= '$CAT_FORUM[\'0\'][\'level\'] = 0;' . "\n";
+		$forum_cats .= '$CAT_FORUM[\'0\'][\'name\'] = \'' . LangLoader::get_message('root', 'main') . '\';' . "\n";
+		$forum_cats .= '$CAT_FORUM[\'0\'][\'status\'] = 1;' . "\n";
+		$forum_cats .= '$CAT_FORUM[\'0\'][\'aprob\'] = 1;' . "\n";
+		$forum_cats .= '$CAT_FORUM[\'0\'][\'url\'] = \'\';' . "\n";
+		$forum_cats .= '$CAT_FORUM[\'0\'][\'auth\'] = array();' . "\n";
 		$result = $db_querier->select("SELECT child.*, parent.id as id_parent
 		FROM " . PREFIX . "forum_cats child
 		LEFT JOIN " . PREFIX . "forum_cats parent ON child.id_left > parent.id_left AND child.id_right < parent.id_right
@@ -100,6 +109,11 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 	public function tree_links()
 	{
 		return new ForumTreeLinks();
+	}
+	
+	public function url_mappings()
+	{
+		return new UrlMappings(array(new DispatcherUrlMapping('/forum/index.php')));
 	}
 
 	public function user()

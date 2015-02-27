@@ -28,11 +28,6 @@
 if (defined('PHPBOOST') !== true)
     exit;
 
-//Configuration générale du forum
-define('FLOOD_FORUM', 0x01);
-define('EDIT_MARK_FORUM', 0x02);
-define('TRACK_TOPIC_FORUM', 0x04);
-
 //Configuration sur la catégorie.
 define('READ_CAT_FORUM', 0x01);
 define('WRITE_CAT_FORUM', 0x02);

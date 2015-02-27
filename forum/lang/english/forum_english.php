@@ -32,7 +32,6 @@
  ####################################################
 
 //Admin
-$LANG['admin.categories.manage'] = 'Manage categories';
 $LANG['parent_category'] = 'Parent category';
 $LANG['subcat'] = 'Subcategory';
 $LANG['url_explain'] = 'Transform the forum into weblink (http://...)';
@@ -51,41 +50,9 @@ $LANG['move_forums_to'] = 'Move subforum(s) to';
 $LANG['cat_target'] = 'Category target';
 $LANG['del_all'] = 'Delete all';
 $LANG['del_forum_contents'] = 'Delete the forum "<strong>%s</strong>", <strong>subforums</strong> and <strong>all</strong> its content <span class="smaller">(irreversible)</span>';
-$LANG['forum_config'] = 'Forum configuration';
 $LANG['forum_management'] = 'Forum management';
-$LANG['forum_name'] = 'Forum name';
-$LANG['nbr_topic_p'] = 'Number of topics per page';
-$LANG['nbr_topic_p_explain'] = 'Default 20';
-$LANG['nbr_msg_p'] = 'Number of posts per page';
-$LANG['nbr_msg_p_explain'] = 'Default 15';
-$LANG['time_new_msg'] = 'Number of days unread posts are stored';
-$LANG['time_new_msg_explain'] = 'Adjust according to the number of posts per day, default\'s 30 days';
-$LANG['topic_track_max'] = 'Topics subscriptions limit';
-$LANG['topic_track_max_explain'] = 'Default 40';
-$LANG['edit_mark'] = 'Display last edited time information';
-$LANG['forum_display_connexion'] = 'Display login form';
-$LANG['no_left_column'] = 'Hide left column while reading the forum';
-$LANG['no_right_column'] = 'Hide right column while reading the forum';
-$LANG['activ_display_msg'] = 'Activate title prefix';
-$LANG['display_msg'] = 'Prefix title';
-$LANG['explain_display_msg'] = 'Message explanation to members';
-$LANG['explain_display_msg_explain'] = 'If topic status\'s unsolved';
-$LANG['explain_display_msg_bis_explain'] = 'If topic status\'s solved';
-$LANG['icon_display_msg'] = 'Associated icon';
 $LANG['update_data_cached'] = 'Recount topics and posts';
-$LANG['explain_forum_groups'] = 'These configurations apply only on the forum';
-$LANG['forum_groups_config'] = 'Groups configs';
-$LANG['flood_auth'] = 'Allow flood';
-$LANG['edit_mark_auth'] = 'Hide last edited time information';
-$LANG['track_topic_auth'] = 'Deactivate topics subscription limit';
-$LANG['forum_read_feed'] = 'Read the topic';
-	
-//Require
-$LANG['require_topic_p'] = 'Please enter the number of topics per page !';
-$LANG['require_nbr_msg_p'] = 'Please enter the number of posts per page !';
-$LANG['require_time_new_msg'] = 'Please enter a duration for the sighting of new messages !';
-$LANG['require_topic_track_max'] = 'Please enter the topics subscriptions limit !';
-	
+
 //Error
 $LANG['e_topic_lock_forum'] = 'Locked topic, you can\'t post';
 $LANG['e_cat_lock_forum'] = 'Locked category, you can\'t post new topic/post';
@@ -267,9 +234,6 @@ $LANG['new_alerts_s'] = 'new alerts';
 $LANG['action'] = 'Action';
 
 //Ranks
-$LANG['rank_management'] = 'Ranks management';
-$LANG['ranks_manage'] = 'Manage ranks';
-$LANG['rank_add'] = 'Add a rank';
 $LANG['upload_rank'] = 'Upload icon rank';
 $LANG['explain_upload_img'] = 'JPG, GIF, PNG, BMP authorized';
 $LANG['rank'] = 'Rank';

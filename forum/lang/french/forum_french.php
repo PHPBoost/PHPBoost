@@ -31,7 +31,6 @@
  ####################################################
 
 //Admin
-$LANG['admin.categories.manage'] = 'Gérer les catégories';
 $LANG['parent_category'] = 'Catégorie parente';
 $LANG['subcat'] = 'Sous-catégorie';
 $LANG['url_explain'] = 'Transforme le forum en lien internet (http://...)';
@@ -50,40 +49,8 @@ $LANG['move_sub_forums_to'] = 'Déplacer le(s) sous-forum(s) vers';
 $LANG['cat_target'] = 'Catégorie cible';
 $LANG['del_all'] = 'Suppression complète';
 $LANG['del_forum_contents'] = 'Supprimer le forum "<strong>%s</strong>", ses <strong>sous-forums</strong> et <strong>tout</strong> son contenu <span class="smaller">(Définitif)</span>';
-$LANG['forum_config'] = 'Configuration du forum';
 $LANG['forum_management'] = 'Gestion du forum';
-$LANG['forum_name'] = 'Nom du forum';
-$LANG['nbr_topic_p'] = 'Nombre de sujets par page';
-$LANG['nbr_topic_p_explain'] = 'Par défaut 20';
-$LANG['nbr_msg_p'] = 'Nombre de messages par page';
-$LANG['nbr_msg_p_explain'] = 'Par défaut 15';
-$LANG['time_new_msg'] = 'Durée pour laquelle les messages lus par les membres sont stockés';
-$LANG['time_new_msg_explain'] = 'A régler suivant le nombre de messages par jour, par défaut 30 jours';
-$LANG['topic_track_max'] = 'Nombre maximum possible de sujets en favoris';
-$LANG['topic_track_max_explain'] = 'Par défaut 40';
-$LANG['edit_mark'] = 'Marqueurs d\'édition des messages';
-$LANG['forum_display_connexion'] = 'Afficher le formulaire de connexion';
-$LANG['no_left_column'] = 'Masquer les blocs de gauche du site sur le forum';
-$LANG['no_right_column'] = 'Masquer les blocs de droite du site sur le forum';
-$LANG['activ_display_msg'] = 'Activer le message devant le topic';
-$LANG['display_msg'] = 'Message devant le titre du topic';
-$LANG['explain_display_msg'] = 'Explication du message pour les membres';
-$LANG['explain_display_msg_explain'] = 'Si statut non changé';
-$LANG['explain_display_msg_bis_explain'] = 'Si statut changé';
-$LANG['icon_display_msg'] = 'Icône associée';
 $LANG['update_data_cached'] = 'Recompter le nombre de sujets et de messages';
-$LANG['explain_forum_groups'] = 'Ces configurations affectent uniquement le forum';
-$LANG['forum_groups_config'] = 'Configuration des groupes';
-$LANG['flood_auth'] = 'Droit de flooder';
-$LANG['edit_mark_auth'] = 'Désactivation du marqueur d\'édition des messages';
-$LANG['track_topic_auth'] = 'Désactivation de la limite de sujet suivis';
-$LANG['forum_read_feed'] = 'Lire le sujet';
-
-//Requis
-$LANG['require_topic_p'] = 'Veuillez entrer le nombre de sujets par page !';
-$LANG['require_nbr_msg_p'] = 'Veuillez entrer le nombre de messages par page !';
-$LANG['require_time_new_msg'] = 'Veuillez entrer une durée pour la vue des nouveaux messages !';
-$LANG['require_topic_track_max'] = 'Veuillez entrer le nombre maximum de sujet suivis !';
 
 //Erreurs
 $LANG['e_topic_lock_forum'] = 'Sujet verrouillé, vous ne pouvez pas poster de message';
@@ -266,11 +233,8 @@ $LANG['new_alerts_s'] = 'nouvelles alertes';
 $LANG['action'] = 'Action';
 
 //Ranks
-$LANG['rank_management'] = 'Gestion des rangs';
-$LANG['ranks_manage'] = 'Gérer les rangs';
 $LANG['upload_rank'] = 'Uploader une image de rang';
 $LANG['explain_upload_img'] = 'JPG, GIF, PNG, BMP autorisés';
-$LANG['rank_add'] = 'Ajouter un rang';
 $LANG['rank'] = 'Rang';
 $LANG['special_rank'] = 'Rang spécial';
 $LANG['rank_name'] = 'Nom du Rang';

@@ -146,7 +146,7 @@ class Forum
 		$config = ForumConfig::load();
 		
 		//Marqueur d'édition du message?
-		$edit_mark = (!AppContext::get_current_user()->check_auth(ForumConfig::load()->get_authorizations(), EDIT_MARK_FORUM)) ? ", timestamp_edit = '" . time() . "', user_id_edit = '" . AppContext::get_current_user()->get_id() . "'" : '';
+		$edit_mark = (!ForumAuthorizationsService::check_authorizations()->hide_edition_mark()) ? ", timestamp_edit = '" . time() . "', user_id_edit = '" . AppContext::get_current_user()->get_id() . "'" : '';
 		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_msg SET contents = '" . FormatingHelper::strparse($contents) . "'" . $edit_mark . " WHERE id = '" . $idmsg . "'");
 
 		$nbr_msg_before = PersistenceContext::get_querier()->count(PREFIX . "forum_msg", 'WHERE idtopic = :idtopic AND id < :id', array('idtopic' => $idtopic, 'id' => $idmsg));
@@ -295,7 +295,7 @@ class Forum
 			PersistenceContext::get_querier()->update(PREFIX . "forum_track", array('pm' => 1), 'WHERE idtopic = :idtopic AND user_id = :user_id', array('idtopic' => $idtopic , 'user_id' => AppContext::get_current_user()->get_id()));
 			
 		//Limite de sujets suivis?
-		if (!AppContext::get_current_user()->check_auth($config->get_authorizations(), TRACK_TOPIC_FORUM))
+		if (!ForumAuthorizationsService::check_authorizations()->unlimited_topics_tracking())
 		{
 			//Récupère l'id du topic le plus vieux autorisé par la limite de sujet suivis.
 			$tracked_topics_number = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as number
