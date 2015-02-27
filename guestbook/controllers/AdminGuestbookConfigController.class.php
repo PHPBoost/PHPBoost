@@ -83,13 +83,13 @@ class AdminGuestbookConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTML('config', $this->admin_common_lang['configuration']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('items_per_page', $this->admin_common_lang['config.items_number_per_page'], (int)$this->config->get_items_per_page(),
+		$fieldset->add_field(new FormFieldTextEditor('items_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_items_per_page(),
 			array('maxlength' => 2, 'size' => 3, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->admin_common_lang['config.forbidden-tags'], $this->config->get_forbidden_tags(),
-			$this->generate_forbidden_tags_option(), array('size' => 10)
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->admin_common_lang['config.forbidden-tags'], $this->config->get_forbidden_tags(), $this->generate_forbidden_tags_option(),
+			array('size' => 10)
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('max_links_number_per_message_enabled', $this->lang['admin.config.max_links_number_per_message_enabled'], $this->config->is_max_links_number_per_message_enabled(),
@@ -103,8 +103,8 @@ class AdminGuestbookConfigController extends AdminModuleController
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('max_links_number_per_message', $this->lang['admin.config.max_links'], $this->config->get_maximum_links_message(),
-			array('maxlength' => 3, 'size' => 3, 'required' => true, 'hidden' => !$this->config->is_max_links_number_per_message_enabled()),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+			array('maxlength' => 2, 'size' => 3, 'required' => true, 'hidden' => !$this->config->is_max_links_number_per_message_enabled()),
+			array(new FormFieldConstraintIntegerRange(1, 20))
 		));
 		
 		$common_lang = LangLoader::get('common');

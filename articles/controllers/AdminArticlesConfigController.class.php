@@ -84,11 +84,13 @@ class AdminArticlesConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('number_articles_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_number_articles_per_page(),
-			array('maxlength' => 3, 'size' => 4, 'required' => true), array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+			array('maxlength' => 2, 'size' => 3, 'required' => true),
+			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('number_categories_per_page', $this->lang['articles_configuration.number_categories_per_page'], $this->config->get_number_categories_per_page(),
-			array('maxlength' => 3, 'size' => 4, 'required' => true), array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+			array('maxlength' => 3, 'size' => 3, 'required' => true),
+			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('display_icon_cats', $this->lang['articles_configuration.display_icon_cats'], $this->config->are_cats_icon_enabled(), array(
@@ -101,9 +103,9 @@ class AdminArticlesConfigController extends AdminModuleController
 		))));
 		
 		$fieldset->add_field(new FormFieldTextEditor('number_cols_display_cats', $this->lang['articles_configuration.number_cols_display_cats'], $this->config->get_number_cols_display_cats(), 
-			array('maxlength' => 2, 'size' => 4, 'required' => true, 'hidden' => !$this->config->are_cats_icon_enabled()), 
-			array(new FormFieldConstraintIntegerRange(1, 10)
-		)));
+			array('maxlength' => 1, 'size' => 3, 'required' => true, 'hidden' => !$this->config->are_cats_icon_enabled()), 
+			array(new FormFieldConstraintIntegerRange(1, 4))
+		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('notation_enabled', $this->admin_common_lang['config.notation_enabled'], $this->config->is_notation_enabled(), array(
 			'events' => array('click' => '
@@ -111,16 +113,13 @@ class AdminArticlesConfigController extends AdminModuleController
 					HTMLForms.getField("notation_scale").enable();
 				} else {
 					HTMLForms.getField("notation_scale").disable();
-					if (HTMLForms.getField("sort_type").getValue() == \'' . DownloadFile::SORT_NOTATION . '\') {
-						HTMLForms.getField("sort_type").setValue(\'' . DownloadFile::SORT_NUMBER_DOWNLOADS . '\');
-					}
 				}'
 			)
 		)));
 		
 		$fieldset->add_field(new FormFieldTextEditor('notation_scale', $this->admin_common_lang['config.notation_scale'], $this->config->get_notation_scale(),
-			array('maxlength' => 2, 'size' => 4, 'required' => true, 'hidden' => !$this->config->is_notation_enabled()),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i'), new FormFieldConstraintIntegerRange(3, 20))
+			array('maxlength' => 2, 'size' => 3, 'required' => true, 'hidden' => !$this->config->is_notation_enabled()),
+			array(new FormFieldConstraintIntegerRange(3, 20))
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->admin_common_lang['config.comments_enabled'], $this->config->are_comments_enabled()));
@@ -134,8 +133,8 @@ class AdminArticlesConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldTextEditor('number_character_to_cut', $this->lang['articles_configuration.number_character_to_cut'], $this->config->get_number_character_to_cut(),  
 			array('maxlength' => 4, 'size' => 4, 'required' => true),
-			array(new FormFieldConstraintIntegerRange(20, 1000)
-		)));
+			array(new FormFieldConstraintIntegerRange(20, 1000))
+		));
 		
 		$common_lang = LangLoader::get('common');
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $common_lang['authorizations'],

@@ -83,9 +83,9 @@ class AdminFaqConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('columns_number_per_line', $this->admin_common_lang['config.columns_number_per_line'], $this->config->get_columns_number_per_line(), 
-			array('size' => 6, 'required' => true),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i')
-		)));
+			array('maxlength' => 1, 'size' => 3, 'required' => true),
+			array(new FormFieldConstraintIntegerRange(1, 4))
+		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->admin_common_lang['config.display_type'], $this->config->get_display_type(),
 			array(
