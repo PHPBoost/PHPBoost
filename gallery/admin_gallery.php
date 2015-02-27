@@ -149,7 +149,7 @@ else
 		));
 		
 		$i = 0;
-		$result = PersistenceContext::get_querier()->select("SELECT @id_cat:= gallery_cats.id, gallery_cats.*, gallery.path,
+		$result = PersistenceContext::get_querier()->select("SELECT @id_cat:= gallery_cats.id, gallery_cats.*,
 		(SELECT COUNT(*) FROM " . GallerySetup::$gallery_table . "
 		WHERE idcat = @id_cat AND aprob = 1
 		) AS nbr_pics,
@@ -157,7 +157,6 @@ else
 		WHERE idcat = @id_cat AND aprob = 0
 		) AS nbr_pics_unaprob
 		FROM " . GallerySetup::$gallery_cats_table . " gallery_cats
-		LEFT JOIN " . GallerySetup::$gallery_table . " gallery ON gallery.idcat = gallery_cats.id
 		WHERE gallery_cats.id_parent = :id_category
 		AND gallery_cats.id IN :authorized_categories
 		ORDER BY gallery_cats.id_parent, gallery_cats.c_order
@@ -177,16 +176,13 @@ else
 			$multiple_x = $i / $nbr_column_cats;
 			$tr_end = is_int($multiple_x) ? '</tr>' : '';
 
-			//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
-			if (!file_exists('pics/thumbnails/' . $row['path']))
-				$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
-
+			$category_image = new Url($row['image']);
+			
 			$tpl->assign_block_vars('cat.list', array(
-				'C_IMG' => !empty($row['path']),
+				'C_IMG' => !empty($row['image']),
 				'IDCAT' => $row['id'],
 				'CAT' => $row['name'],
-				'IMG' => '<img src="pics/thumbnails/' . $row['path'] . '" alt="" />',
-				'EDIT' => '<a href="' . GalleryUrlBuilder::edit_category($row['id'])->rel() . '" title="' . LangLoader::get_message('edit', 'common') . '" class="fa fa-edit"></a>',
+				'IMG' => $category_image->rel(),
 				'TR_START' => $tr_start,
 				'TR_END' => $tr_end,
 				'L_NBR_PICS' => sprintf($LANG['nbr_pics_info_admin'], $row['nbr_pics'], $row['nbr_pics_unaprob'])

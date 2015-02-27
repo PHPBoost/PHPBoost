@@ -268,10 +268,10 @@
 					# START cat.list #
 					{cat.list.TR_START}
 						<td style="vertical-align:bottom;width:{COLUMN_WIDTH_CATS}%;padding:15px 0px;">
-							<a href="admin_gallery.php?cat={cat.list.IDCAT}"># IF cat.list.C_IMG #{cat.list.IMG}# ENDIF #</a>
+							<a href="admin_gallery.php?cat={cat.list.IDCAT}"># IF cat.list.C_IMG #<img itemprop="thumbnailUrl" src="{cat.list.IMG}" alt="" /># ENDIF #</a>
 							
 							<br />
-							<a href="admin_gallery.php?cat={cat.list.IDCAT}">{cat.list.CAT}</a> {EDIT} 
+							<a href="admin_gallery.php?cat={cat.list.IDCAT}">{cat.list.CAT}</a>
 							<br />
 							<span class="smaller">{cat.list.L_NBR_PICS}</span> 
 						</td>
