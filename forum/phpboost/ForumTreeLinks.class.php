@@ -32,24 +32,22 @@ class ForumTreeLinks implements ModuleTreeLinksExtensionPoint
 {
 	public function get_actions_tree_links()
 	{
-		global $LANG;
-		load_module_lang('forum'); //Chargement de la langue du module.
-		
+		$lang = LangLoader::get('common', 'forum');
 		$tree = new ModuleTreeLinks();
 		
-		$manage_categories_link = new AdminModuleLink($LANG['admin.categories.manage'], new Url('/forum/admin_forum.php'));
-		$manage_categories_link->add_sub_link(new AdminModuleLink($LANG['admin.categories.manage'], new Url('/forum/admin_forum.php')));
-		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('cat_add', 'admin'), new Url('/forum/admin_forum_add.php')));
+		$manage_categories_link = new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), ForumUrlBuilder::manage_categories());
+		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), ForumUrlBuilder::manage_categories()));
+		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('category.add', 'categories-common'), ForumUrlBuilder::add_category()));
 		$tree->add_link($manage_categories_link);
 		
-		$manage_ranks_link = new AdminModuleLink($LANG['ranks_manage'], new Url('/forum/admin_ranks.php'));
-		$manage_ranks_link->add_sub_link(new AdminModuleLink($LANG['ranks_manage'], new Url('/forum/admin_ranks.php')));
-		$manage_ranks_link->add_sub_link(new AdminModuleLink($LANG['rank_add'], new Url('/forum/admin_ranks_add.php')));
+		$manage_ranks_link = new AdminModuleLink($lang['forum.manage_ranks'], ForumUrlBuilder::manage_ranks());
+		$manage_ranks_link->add_sub_link(new AdminModuleLink($lang['forum.manage_ranks'], ForumUrlBuilder::manage_ranks()));
+		$manage_ranks_link->add_sub_link(new AdminModuleLink($lang['forum.actions.add_rank'], ForumUrlBuilder::add_rank()));
 		$tree->add_link($manage_ranks_link);
 		
-		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), new Url('/forum/admin_forum_config.php')));
-		$tree->add_link(new AdminModuleLink($LANG['groups'], new Url('/forum/admin_forum_groups.php')));
-		$tree->add_link(new AdminModuleLink($LANG['moderation_panel'], new Url('/forum/moderation_forum.php')));
+		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin-common'), ForumUrlBuilder::configuration()));
+		
+		$tree->add_link(new AdminModuleLink(LangLoader::get_message('moderation_panel', 'main'), ForumUrlBuilder::moderation_panel()));
 		
 		return $tree;
 	}

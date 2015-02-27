@@ -61,6 +61,9 @@
 [*] [color=red]Nouveauté :[/color] Possibilité de réorganiser les questions dans les catégories en drag & drop pour les utilisateurs ayant le droit de modération
 [*] Ajout des microdonnées pour améliorer le référencement
 
+[b]Forum[/b]
+[*] Optimisation de la configuration
+
 [b]Galerie[/b]
 [*] Passage au nouveau système de catégories
 

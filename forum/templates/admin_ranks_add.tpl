@@ -40,16 +40,6 @@
 					<a href="admin_forum_add.php" class="quick-link">{L_ADD_CAT}</a>
 				</li>
 				<li>
-					<a href="admin_forum_config.php"><img src="forum.png" alt="" /></a>
-					<br />
-					<a href="admin_forum_config.php" class="quick-link">{L_FORUM_CONFIG}</a>
-				</li>
-				<li>
-					<a href="admin_forum_groups.php"><img src="forum.png" alt="" /></a>
-					<br />
-					<a href="admin_forum_groups.php" class="quick-link">{L_FORUM_GROUPS}</a>
-				</li>
-				<li>
 					<a href="admin_ranks.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/ranks.png" alt="" /></a>
 					<br />
 					<a href="admin_ranks.php" class="quick-link">{L_FORUM_RANKS_MANAGEMENT}</a>
@@ -59,6 +49,11 @@
 					<br />
 					<a href="admin_ranks_add.php" class="quick-link">{L_FORUM_ADD_RANKS}</a>
 				</li>
+				<li>
+					<a href="${relative_url(ForumUrlBuilder::configuration())}"><img src="forum.png" alt="" /></a>
+					<br />
+					<a href="${relative_url(ForumUrlBuilder::configuration())}" class="quick-link">${LangLoader::get_message('configuration', 'admin-common')}</a>
+				</li>
 			</ul>
 		</div>
 		
@@ -66,7 +61,7 @@
 		
 			# INCLUDE message_helper #
 			
-			<form action="admin_ranks_add.php?token={TOKEN}" method="post" enctype="multipart/form-data" class="fieldset-content">				
+			<form action="admin_ranks_add.php?token={TOKEN}" method="post" enctype="multipart/form-data" class="fieldset-content">
 				<fieldset>
 				<legend>{L_UPLOAD_RANKS}</legend>
 					<div class="form-element">

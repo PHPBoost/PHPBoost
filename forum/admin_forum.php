@@ -36,6 +36,7 @@ require_once('../forum/forum_begin.php');
 $id = retrieve(GET, 'id', 0);
 $del = retrieve(GET, 'del', 0);
 $move = retrieve(GET, 'move', '', TSTRING_UNCHANGE);
+$update_cached = retrieve(GET, 'upd', 0);
 
 //Si c'est confirm� on execute
 if (!empty($_POST['valid']) && !empty($id))
@@ -209,10 +210,8 @@ elseif (!empty($del)) //Suppression de la categorie/sous-categorie.
 					'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
 					'L_CAT_MANAGEMENT' => $LANG['cat_management'],
 					'L_ADD_CAT' => $LANG['cat_add'],
-					'L_FORUM_CONFIG' => $LANG['forum_config'],
-					'L_FORUM_GROUPS' => $LANG['forum_groups_config'],
-					'L_FORUM_RANKS_MANAGEMENT' => $LANG['rank_management'],
-					'L_FORUM_ADD_RANKS' => $LANG['rank_add'],
+					'L_FORUM_RANKS_MANAGEMENT' => LangLoader::get_message('forum.ranks_management', 'common', 'forum'),
+					'L_FORUM_ADD_RANKS' => LangLoader::get_message('forum.actions.add_rank', 'common', 'forum'),
 					'L_CAT_TARGET' => $LANG['cat_target'],
 					'L_DEL_ALL' => $LANG['del_all'],
 					'L_DEL_FORUM_CONTENTS' => sprintf($LANG['del_forum_contents'], $forum_name),
@@ -236,6 +235,36 @@ elseif (!empty($del)) //Suppression de la categorie/sous-categorie.
 	}
 	else
 		AppContext::get_response()->redirect(HOST . SCRIPT);
+}
+elseif ($update_cached) //Mise à jour des données stockées en cache dans la bdd.
+{
+	$result = PersistenceContext::get_querier()->select("SELECT id, id_left, id_right
+	FROM " . PREFIX . "forum_cats
+	WHERE level > 0");
+	while ($row = $result->fetch())
+	{
+		$cat_list = array($row['id']);
+		if (($row['id_right'] - $row['id_left']) > 1)
+		{
+			$result2 = PersistenceContext::get_querier()->select("SELECT id
+			FROM " . PREFIX . "forum_cats
+			WHERE id_left >= :id_left AND id_right <= :id_right", array(
+				'id_left' => $row['id_left'],
+				'id_right' => $row['id_right']
+			));
+			
+			while ($row2 = $result2->fetch())
+				$cat_list[] = $row2['id'];
+			
+			$result2->dispose();
+		}
+		
+		$info_cat = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array("COUNT(*) as nbr_topic", "SUM(nbr_msg) as nbr_msg"), "WHERE idcat IN :ids_list", array('ids_list' => $cat_list));
+		PersistenceContext::get_querier()->update(PREFIX . 'forum_cats', array('nbr_topic' => $info_cat['nbr_topic'], 'nbr_msg' => $info_cat['nbr_msg']), 'WHERE id=:id', array('id' => $row['id']));
+	}
+	$result->dispose();
+	
+	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
 elseif (!empty($id) && !empty($move)) //Monter/descendre.
 {
@@ -315,10 +344,8 @@ elseif (!empty($id))
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
 		'L_CAT_MANAGEMENT' => $LANG['cat_management'],
 		'L_ADD_CAT' => $LANG['cat_add'],
-		'L_FORUM_CONFIG' => $LANG['forum_config'],
-		'L_FORUM_GROUPS' => $LANG['forum_groups_config'],
-		'L_FORUM_RANKS_MANAGEMENT' => $LANG['rank_management'],
-		'L_FORUM_ADD_RANKS' => $LANG['rank_add'],
+		'L_FORUM_RANKS_MANAGEMENT' => LangLoader::get_message('forum.ranks_management', 'common', 'forum'),
+		'L_FORUM_ADD_RANKS' => LangLoader::get_message('forum.actions.add_rank', 'common', 'forum'),
 		'L_EDIT_CAT' => $LANG['cat_edit'],
 		'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 		'L_APROB' => $LANG['visible'],
@@ -357,10 +384,8 @@ else
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
 		'L_CAT_MANAGEMENT' => $LANG['cat_management'],
 		'L_ADD_CAT' => $LANG['cat_add'],
-		'L_FORUM_CONFIG' => $LANG['forum_config'],
-		'L_FORUM_GROUPS' => $LANG['forum_groups_config'],
-		'L_FORUM_RANKS_MANAGEMENT' => $LANG['rank_management'],
-		'L_FORUM_ADD_RANKS' => $LANG['rank_add'],
+		'L_FORUM_RANKS_MANAGEMENT' => LangLoader::get_message('forum.ranks_management', 'common', 'forum'),
+		'L_FORUM_ADD_RANKS' => LangLoader::get_message('forum.actions.add_rank', 'common', 'forum'),
 		'L_DELETE' => LangLoader::get_message('delete', 'common'),
 		'L_NAME' => $LANG['name'],
 		'L_DESC' => $LANG['description'],
@@ -380,7 +405,8 @@ else
 		'L_AUTH_EDIT' => $LANG['auth_edit'],
 		'L_EXPLAIN_SELECT_MULTIPLE' => $LANG['explain_select_multiple'],
 		'L_SELECT_ALL' => $LANG['select_all'],
-		'L_SELECT_NONE' => $LANG['select_none']
+		'L_SELECT_NONE' => $LANG['select_none'],
+		'L_UPDATE_DATA_CACHED' => $LANG['update_data_cached']
 	));
 
 	$max_cat = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'MAX(id_left)', '');

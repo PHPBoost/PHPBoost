@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                                index.php
+ *                         ForumHomeController.class.php
  *                            -------------------
- *   begin                : October 25, 2005
- *   copyright            : (C) 2005 Viarre Régis / Sautel Benoît
- *   email                : crowkait@phpboost.com / ben.popeye@phpboost.com
+ *   begin                : February 25, 2015
+ *   copyright            : (C) 2015 Julien BRISWALTER
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -25,15 +25,11 @@
  *
  ###################################################*/
 
-define('PATH_TO_ROOT', '..');
-
-require_once PATH_TO_ROOT . '/kernel/init.php';
-
-$url_controller_mappers = array(
-	//Config
-	new UrlControllerMapper('AdminForumConfigController', '`^/admin(?:/config)?/?$`'),
-	
-	new UrlControllerMapper('ForumHomeController', '`^/?$`'),
-);
-DispatchManager::dispatch($url_controller_mappers);
+class ForumHomeController extends ModuleController
+{
+	public function execute(HTTPRequestCustom $request)
+	{
+		AppContext::get_response()->redirect('/forum/forum.php');
+	}
+}
 ?>

@@ -32,13 +32,12 @@ require_once('../forum/forum_tools.php');
 $id_get = retrieve(GET, 'id', 0);
 
 //Vérification de l'existance de la catégorie.
-if (empty($id_get) || !isset($CAT_FORUM[$id_get]) || $CAT_FORUM[$id_get]['aprob'] == 0 || $CAT_FORUM[$id_get]['level'] == 0)
+if ($id_get != Category::ROOT_CATEGORY && (!isset($CAT_FORUM[$id_get]) || $CAT_FORUM[$id_get]['aprob'] == 0 || $CAT_FORUM[$id_get]['level'] == 0))
 {
-	$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
-        $LANG['e_unexist_cat_forum']);
-    DispatchManager::redirect($controller);
+	$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_unexist_cat_forum']);
+	DispatchManager::redirect($controller);
 }
-	
+
 //Vérification des autorisations d'accès.
 if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 {
@@ -56,7 +55,7 @@ if (!empty($CAT_FORUM[$id_get]['url']))
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
 foreach ($CAT_FORUM as $idcat => $array_info_cat)
 {
-	if ($CAT_FORUM[$id_get]['id_left'] > $array_info_cat['id_left'] && $CAT_FORUM[$id_get]['id_right'] < $array_info_cat['id_right'] && $array_info_cat['level'] < $CAT_FORUM[$id_get]['level'])
+	if ($id_get != Category::ROOT_CATEGORY && $CAT_FORUM[$id_get]['id_left'] > $array_info_cat['id_left'] && $CAT_FORUM[$id_get]['id_right'] < $array_info_cat['id_right'] && $array_info_cat['level'] < $CAT_FORUM[$id_get]['level'])
 		$Bread_crumb->add($array_info_cat['name'], ($array_info_cat['level'] == 0) ? url('index.php?id=' . $idcat, 'cat-' . $idcat . '+' . Url::encode_rewrite($array_info_cat['name']) . '.php') : 'forum' . url('.php?id=' . $idcat, '-' . $idcat . '+' . Url::encode_rewrite($array_info_cat['name']) . '.php'));
 }
 if (!empty($CAT_FORUM[$id_get]['name'])) //Nom de la catégorie courante.
@@ -417,7 +416,14 @@ if (!empty($id_get))
 	$tpl->display();
 }
 else
-	AppContext::get_response()->redirect('/forum/index.php');
+{
+	$modulesLoader = AppContext::get_extension_provider_service();
+	$module = $modulesLoader->get_provider('forum');
+	if ($module->has_extension_point(HomePageExtensionPoint::EXTENSION_POINT))
+	{
+		echo $module->get_extension_point(HomePageExtensionPoint::EXTENSION_POINT)->get_home_page()->get_view()->display();
+	}
+}
 
 include('../kernel/footer.php');
 ?>

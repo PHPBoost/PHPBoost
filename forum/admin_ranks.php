@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               admin_forum_config.php
+ *                               admin_ranks.php
  *                            -------------------
  *   begin                : October 30, 2005
  *   copyright            : (C) 2005 Viarre Régis
@@ -76,10 +76,8 @@ else //Sinon on rempli le formulaire
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
 		'L_CAT_MANAGEMENT' => $LANG['cat_management'],
 		'L_ADD_CAT' => $LANG['cat_add'],
-		'L_FORUM_CONFIG' => $LANG['forum_config'],
-		'L_FORUM_GROUPS' => $LANG['forum_groups_config'],
-		'L_FORUM_RANKS_MANAGEMENT' => $LANG['rank_management'],
-		'L_FORUM_ADD_RANKS' => $LANG['rank_add'],
+		'L_FORUM_RANKS_MANAGEMENT' => LangLoader::get_message('forum.ranks_management', 'common', 'forum'),
+		'L_FORUM_ADD_RANKS' => LangLoader::get_message('forum.actions.add_rank', 'common', 'forum'),
 		'L_RANK_NAME' => $LANG['rank_name'],
 		'L_NBR_MSG' => $LANG['nbr_msg'],
 		'L_IMG_ASSOC' => $LANG['img_assoc'],

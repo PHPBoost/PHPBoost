@@ -173,7 +173,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 				$delay_expire = time() - $delay_flood; //On calcul la fin du delai.
 
 				//Droit de flooder?.
-				if ($check_time >= $delay_expire && !AppContext::get_current_user()->check_auth($config->get_authorizations(), FLOOD_FORUM)) //Flood
+				if ($check_time >= $delay_expire && !ForumAuthorizationsService::check_authorizations()->flood()) //Flood
 					AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=flood_t&id=' . $id_get, '', '&') . '#message_helper');
 			}
 
@@ -424,7 +424,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 		{
 			$delay_expire = time() - ContentManagementConfig::load()->get_anti_flood_duration(); //On calcul la fin du delai.
 			//Droit de flooder?
-			if ($check_time >= $delay_expire && !AppContext::get_current_user()->check_auth($config->get_authorizations(), FLOOD_FORUM)) //Ok
+			if ($check_time >= $delay_expire && !ForumAuthorizationsService::check_authorizations()->flood()) //Ok
 				AppContext::get_response()->redirect( url(HOST . SCRIPT . '?error=flood&id=' . $id_get . '&idt=' . $idt_get, '', '&') . '#message_helper');
 		}
 
