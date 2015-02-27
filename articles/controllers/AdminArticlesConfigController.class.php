@@ -102,9 +102,14 @@ class AdminArticlesConfigController extends AdminModuleController
 			}'
 		))));
 		
-		$fieldset->add_field(new FormFieldTextEditor('number_cols_display_cats', $this->lang['articles_configuration.number_cols_display_cats'], $this->config->get_number_cols_display_cats(), 
-			array('maxlength' => 1, 'size' => 3, 'required' => true, 'hidden' => !$this->config->are_cats_icon_enabled()), 
-			array(new FormFieldConstraintIntegerRange(1, 4))
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('number_cols_display_cats', $this->lang['articles_configuration.number_cols_display_cats'], $this->config->get_number_cols_display_cats(),
+			array(
+				new FormFieldSelectChoiceOption('1', '1'),
+				new FormFieldSelectChoiceOption('2', '2'),
+				new FormFieldSelectChoiceOption('3', '3'),
+				new FormFieldSelectChoiceOption('4', '4')
+			),
+			array('hidden' => !$this->config->are_cats_icon_enabled())
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('notation_enabled', $this->admin_common_lang['config.notation_enabled'], $this->config->is_notation_enabled(), array(
@@ -168,13 +173,13 @@ class AdminArticlesConfigController extends AdminModuleController
 		if ($this->form->get_value('display_icon_cats'))
 		{
 			$this->config->enable_cats_icon();
+			$this->config->set_number_cols_display_cats($this->form->get_value('number_cols_display_cats')->get_raw_value());
 		}
 		else
 		{
 			$this->config->disable_cats_icon();
 		}
 		
-		$this->config->set_number_cols_display_cats($this->form->get_value('number_cols_display_cats', $this->config->get_number_cols_display_cats()));
 		$this->config->set_number_categories_per_page($this->form->get_value('number_categories_per_page'));
 		$this->config->set_number_character_to_cut($this->form->get_value('number_character_to_cut', $this->config->get_number_character_to_cut()));
 

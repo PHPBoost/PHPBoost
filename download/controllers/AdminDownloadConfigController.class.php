@@ -88,9 +88,13 @@ class AdminDownloadConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('columns_number_per_line', $this->admin_common_lang['config.columns_number_per_line'], $this->config->get_columns_number_per_line(), 
-			array('maxlength' => 1, 'size' => 3, 'required' => true),
-			array(new FormFieldConstraintIntegerRange(1, 4))
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('columns_number_per_line', $this->admin_common_lang['config.columns_number_per_line'], $this->config->get_columns_number_per_line(),
+			array(
+				new FormFieldSelectChoiceOption('1', '1'),
+				new FormFieldSelectChoiceOption('2', '2'),
+				new FormFieldSelectChoiceOption('3', '3'),
+				new FormFieldSelectChoiceOption('4', '4')
+			)
 		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('category_display_type', $this->lang['config.category_display_type'], $this->config->get_category_display_type(),
@@ -175,7 +179,7 @@ class AdminDownloadConfigController extends AdminModuleController
 	private function save()
 	{
 		$this->config->set_items_number_per_page($this->form->get_value('items_number_per_page'));
-		$this->config->set_columns_number_per_line($this->form->get_value('columns_number_per_line'));
+		$this->config->set_columns_number_per_line($this->form->get_value('columns_number_per_line')->get_raw_value());
 		$this->config->set_category_display_type($this->form->get_value('category_display_type')->get_raw_value());
 		
 		if ($this->form->get_value('author_displayed'))
