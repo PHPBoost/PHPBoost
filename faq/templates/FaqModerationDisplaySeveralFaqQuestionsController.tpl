@@ -7,27 +7,21 @@ var FaqQuestions = function(id){
 };
 
 FaqQuestions.prototype = {
-	create_sortable : function() {
-		Sortable.create(this.id, {
-			tag:'li',
-			only:'sortable-element'
-		});
-	},
-	destroy_sortable : function() {
-		Sortable.destroy(this.id); 
+	init_sortable : function() {
+		jQuery("ul#questions_list").sortable({handle: '.fa-arrows'});
 	},
 	serialize_sortable : function() {
-		$('position').value = Sortable.serialize(this.id);
+		jQuery('#tree').val(JSON.stringify($("ul#questions_list").sortable("serialize").get()));
 	},
 	get_sortable_sequence : function() {
-		return Sortable.sequence(this.id);
+		return jQuery(this.id).sortable("toArray");
 	},
 	set_sortable_sequence : function(sequence) {
-		Sortable.setSequence(this.id, sequence);
+		//Sortable.setSequence(this.id, sequence);
 	},
 	change_reposition_pictures : function() {
-		sequence = Sortable.sequence(this.id);
-		
+		sequence = this.get_sortable_sequence();
+		console.log(sequence);
 		$('move_up_' + sequence[0]).style.display = "none";
 		$('move_down_' + sequence[0]).style.display = "inline";
 		
@@ -40,7 +34,7 @@ FaqQuestions.prototype = {
 		$('move_down_' + sequence[sequence.length - 1]).style.display = "none";
 	},
 	hide_first_reposition_picture : function() {
-		sequence = Sortable.sequence(this.id);
+		sequence = this.get_sortable_sequence();
 		
 		$('move_up_' + sequence[0]).style.display = "none";
 		$('move_down_' + sequence[0]).style.display = "none";
@@ -51,8 +45,8 @@ var FaqQuestion = function(id, faq_questions){
 	this.id = id;
 	this.FaqQuestions = faq_questions;
 	
-	if (FaqQuestions.questions_number > 1)
-		FaqQuestions.change_reposition_pictures();
+	//if (FaqQuestions.questions_number > 1)
+		//FaqQuestions.change_reposition_pictures();
 };
 
 FaqQuestion.prototype = {
@@ -71,13 +65,12 @@ FaqQuestion.prototype = {
 						elementToDelete.parentNode.removeChild(elementToDelete);
 						# ENDIF #
 						
-						FaqQuestions.destroy_sortable();
-						FaqQuestions.create_sortable();
+						FaqQuestions.init_sortable();
 						FaqQuestions.questions_number--;
 						
-						if (FaqQuestions.questions_number > 1)
-							FaqQuestions.change_reposition_pictures();
-						else {
+						//if (FaqQuestions.questions_number > 1)
+						//	FaqQuestions.change_reposition_pictures();
+						//else {
 							if (FaqQuestions.questions_number == 1) {
 								FaqQuestions.hide_first_reposition_picture();
 								$('position_update_button').style.display = "none";
@@ -88,7 +81,7 @@ FaqQuestion.prototype = {
 								# ENDIF #
 								$('no_item_message').style.display = "inline";
 							}
-						}
+						//}
 					}
 				}
 			});
@@ -136,8 +129,7 @@ FaqQuestion.prototype = {
 
 var FaqQuestions = new FaqQuestions('questions_list');
 jQuery(document).ready(function() {
-	FaqQuestions.destroy_sortable();
-	FaqQuestions.create_sortable();
+	FaqQuestions.init_sortable();
 });
 -->
 </script>
@@ -183,16 +175,16 @@ jQuery(document).ready(function() {
 		<!--
 			function show_answer(id_question)
 			{
-				if ($('q' + id_question)) {
-					if( $('a' + id_question).style.display == "none" )
+				if (jQuery("#question" + id_question)) {
+					if(jQuery("#answer" + id_question).style.display == "none")
 					{
-						jQuery("#a" + id_question).fadeIn();
-						$('q' + id_question).className="fa fa-caret-down"
+						jQuery("#answer" + id_question).fadeIn();
+						jQuery("#question" + id_question).class = "fa fa-caret-down";
 					}
 					else
 					{
-						jQuery("#a" + id_question).fadeOut();
-						$('q' + id_question).className="fa fa-caret-right"
+						jQuery("#answer" + id_question).fadeOut();
+						jQuery("#question" + id_question).class = "fa fa-caret-right";
 					}
 				}
 			}
@@ -224,16 +216,16 @@ jQuery(document).ready(function() {
 			<fieldset id="questions_management">
 				<ul id="questions_list" class="sortable-block">
 					# START questions #
-					<li class="sortable-element" id="list_{questions.ID}">
+					<li class="sortable-element" id="list_{questions.ID}" data-id="{questions.ID}">
 						<div class="sortable-title">
 							<a title="${LangLoader::get_message('move', 'admin')}" class="fa fa-arrows"></a>
 							<span>
 								# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
-								<a href="" id="q{questions.ID}" onclick="show_answer({questions.ID});return false;" title="" class="fa fa-caret-right"></a>
+								<a href="" id="question{questions.ID}" onclick="show_answer({questions.ID});return false;" title="" class="fa fa-caret-right"></a>
 								<a href="" onclick="show_answer({questions.ID});return false;" title="">{questions.QUESTION}</a>
 								# ELSE #
 								<i class="fa fa-caret-right"></i>
-								<span id="q{questions.ID}">{questions.QUESTION}</span>
+								<span id="question{questions.ID}">{questions.QUESTION}</span>
 								# ENDIF #
 							</span>
 							<div class="sortable-actions">
@@ -254,7 +246,7 @@ jQuery(document).ready(function() {
 							</div>
 						</div>
 						<div>
-							<div id="a{questions.ID}" class="blockquote"# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN # style="display: none;"# ENDIF #>
+							<div id="answer{questions.ID}" class="blockquote"# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN # style="display: none;"# ENDIF #>
 								<div itemprop="text">{questions.ANSWER}</div>
 							</div>
 						</div>
@@ -271,15 +263,15 @@ jQuery(document).ready(function() {
 						
 						if (FaqQuestions.questions_number > 1) {
 							jQuery('#list_{questions.ID}').on('mouseup',function(){
-								FaqQuestions.change_reposition_pictures();
+								//FaqQuestions.change_reposition_pictures();
 							});
 							
 							jQuery('#move_up_{questions.ID}').on('click',function(){
-								faq_question.move_up();
+								//faq_question.move_up();
 							});
 							
 							jQuery('#move_down_{questions.ID}').on('click',function(){
-								faq_question.move_down();
+								//faq_question.move_down();
 							});
 						}
 					});
@@ -292,7 +284,7 @@ jQuery(document).ready(function() {
 			<fieldset class="fieldset-submit" id="position_update_button">
 				<button type="submit" name="submit" value="true" class="submit">${LangLoader::get_message('position.update', 'common')}</button>
 				<input type="hidden" name="token" value="{TOKEN}">
-				<input type="hidden" name="position" id="position" value="">
+				<input type="hidden" name="tree" id="tree" value="">
 			</fieldset>
 			# ENDIF #
 		</form>
