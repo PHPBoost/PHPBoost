@@ -174,12 +174,11 @@ class FaqDisplayCategoryController extends ModuleController
 	
 	private function update_position(HTTPRequestCustom $request)
 	{
-		$value = '&' . $request->get_value('position', array());
-		$array = @explode('&questions_list[]=', $value);
-		foreach($array as $position => $id)
+		$questions_list = json_decode($request->get_postvalue('tree', false));
+		$questions_list = $questions_list[0];
+		foreach($questions_list as $position => $tree)
 		{
-			if ($position > 0)
-				FaqService::update_position($id, $position);
+			FaqService::update_position($tree->id, $position);
 		}
 	}
 	
