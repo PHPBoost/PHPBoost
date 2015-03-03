@@ -125,44 +125,44 @@ jQuery(document).ready(function() {
 						</div>
 					</div>
 					<div class="spacer"></div>
+					<script>
+					<!--
+					jQuery(document).ready(function() {
+						var contact_field = new ContactField({fields_list.ID}, ContactFields);
+						
+						jQuery("#list_{fields_list.ID}").on('mouseout',function(){
+							ContactFields.change_reposition_pictures();
+						});
+						
+						# IF fields_list.C_DELETE #
+						jQuery("#delete_{fields_list.ID}").on('click',function(){
+							contact_field.delete_fields();
+						});
+						# ENDIF #
+						
+						# IF NOT fields_list.C_READONLY #
+						jQuery("#change_display_{fields_list.ID}").on('click',function(){
+							contact_field.change_display();
+						});
+						# ENDIF #
+						
+						# IF C_MORE_THAN_ONE_FIELD #
+						jQuery("#move_up_{fields_list.ID}").on('click',function(){
+							var li = jQuery(this).closest('li');
+							li.insertBefore( li.prev() );
+							ContactFields.change_reposition_pictures();
+						});
+						
+						jQuery("#move_down_{fields_list.ID}").on('click',function(){
+							var li = jQuery(this).closest('li');
+							li.insertAfter( li.next() );
+							ContactFields.change_reposition_pictures();
+						});
+						# ENDIF #
+					});
+					-->
+					</script>
 				</li>
-				<script>
-				<!--
-				jQuery(document).ready(function() {
-					var contact_field = new ContactField({fields_list.ID}, ContactFields);
-					
-					jQuery("#list_{fields_list.ID}").on('mouseout',function(){
-						ContactFields.change_reposition_pictures();
-					});
-					
-					# IF fields_list.C_DELETE #
-					jQuery("#delete_{fields_list.ID}").on('click',function(){
-						contact_field.delete_fields();
-					});
-					# ENDIF #
-					
-					# IF NOT fields_list.C_READONLY #
-					jQuery("#change_display_{fields_list.ID}").on('click',function(){
-						contact_field.change_display();
-					});
-					# ENDIF #
-					
-					# IF C_MORE_THAN_ONE_FIELD #
-					jQuery("#move_up_{fields_list.ID}").on('click',function(){
-						var li = jQuery(this).closest('li');
-						li.insertBefore( li.prev() );
-						ContactFields.change_reposition_pictures();
-					});
-					
-					jQuery("#move_down_{fields_list.ID}").on('click',function(){
-						var li = jQuery(this).closest('li');
-						li.insertAfter( li.next() );
-						ContactFields.change_reposition_pictures();
-					});
-					# ENDIF #
-				});
-				-->
-				</script>
 			# END fields_list #
 		</ul>
 	</fieldset>
