@@ -57,6 +57,11 @@ class ContactUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/admin/fields/delete/');
 	}
 	
+	public static function change_display()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/admin/fields/change_display/');
+	}
+	
 	public static function manage_fields()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/fields/');

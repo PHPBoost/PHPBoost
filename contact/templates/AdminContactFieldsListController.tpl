@@ -5,51 +5,35 @@ var ContactFields = function(id){
 };
 
 ContactFields.prototype = {
-	create_sortable : function() {
-		Sortable.create(this.id, {
-			tag:'li',
-			only:'sortable-element'
-		});
-	},
-	destroy_sortable : function() {
-		Sortable.destroy(this.id); 
+	init_sortable : function() {
+		jQuery("ul#fields_list").sortable({handle: '.fa-arrows'});
 	},
 	serialize_sortable : function() {
-		jQuery('#position').val(Sortable.serialize(this.id));
+		jQuery('#tree').val(JSON.stringify(this.get_sortable_sequence()));
 	},
 	get_sortable_sequence : function() {
-		return Sortable.sequence(this.id);
-	},
-	set_sortable_sequence : function(sequence) {
-		Sortable.setSequence(this.id, sequence);
+		var sequence = jQuery("ul#fields_list").sortable("serialize").get();
+		return sequence[0];
 	},
 	change_reposition_pictures : function() {
-		sequence = Sortable.sequence(this.id);
+		sequence = this.get_sortable_sequence();
 		
-		jQuery('#move_up_' + sequence[0])[0].style.display = "none";
-		jQuery('#move_down_' + sequence[0])[0].style.display = "inline";
+		jQuery("#move_up_" + sequence[0].id).hide();
+		jQuery("#move_down_" + sequence[0].id).show();
 		
 		for (var j = 1 ; j < sequence.length - 1 ; j++) {
-			jQuery('#move_up_' + sequence[j])[0].style.display = "inline";
-			jQuery('#move_down_' + sequence[j])[0].style.display = "inline";
+			jQuery("#move_up_" + sequence[j].id).show();
+			jQuery("#move_down_" + sequence[j].id).show();
 		}
 		
-		jQuery('#move_up_' + sequence[sequence.length - 1])[0].style.display = "inline";
-		jQuery('#move_down_' + sequence[sequence.length - 1])[0].style.display = "none";
+		jQuery("#move_up_" + sequence[sequence.length - 1].id).show();
+		jQuery("#move_down_" + sequence[sequence.length - 1].id).hide();
 	}
 };
 
-var ContactField = function(id, display, contact_fields){
+var ContactField = function(id, contact_fields){
 	this.id = id;
-	this.more_is_opened = false;
 	this.ContactFields = contact_fields;
-	if (display == 1) {
-		this.is_not_displayed = false;
-	}
-	else {
-		this.is_not_displayed = true;
-	}
-	this.change_display_picture();
 	
 	# IF C_MORE_THAN_ONE_FIELD #
 	this.ContactFields.change_reposition_pictures();
@@ -78,84 +62,33 @@ ContactField.prototype = {
 			});
 		}
 	},
-	move_up : function() {
-		var sequence = ContactFields.get_sortable_sequence();
-		var reordered = false;
-		
-		if (sequence.length > 1)
-			for (var j = 1 ; j < sequence.length ; j++) {
-				if (sequence[j].length > 0 && sequence[j] == this.id) {
-					var temp = sequence[j-1];
-					sequence[j-1] = this.id;
-					sequence[j] = temp;
-					reordered = true;
-				}
-			}
-		
-		if (reordered) {
-			ContactFields.set_sortable_sequence(sequence);
-			ContactFields.change_reposition_pictures();
-		}
-	},
-	move_down : function() {
-		var sequence = ContactFields.get_sortable_sequence();
-		var reordered = false;
-		
-		if (sequence.length > 1)
-			for (var j = 0 ; j < sequence.length - 1 ; j++) {
-				if (sequence[j].length > 0 && sequence[j] == this.id) {
-					var temp = sequence[j+1];
-					sequence[j+1] = this.id;
-					sequence[j] = temp;
-					reordered = true;
-				}
-			}
-		
-		if (reordered) {
-			ContactFields.set_sortable_sequence(sequence);
-			ContactFields.change_reposition_pictures();
-		}
-	},
 	change_display : function() {
-		display = this.is_not_displayed;
-		
+		jQuery("#change_display_" + this.id).toggleClass("fa fa-spin fa-spinner");
 		jQuery.ajax({
-			url: '{REWRITED_SCRIPT}',
+			url: '${relative_url(ContactUrlBuilder::change_display())}',
 			type: "post",
-			data: {'id' : this.id, 'token' : '{TOKEN}', 'display': !display},
-			success: function(){
-
+			data: {'id' : this.id, 'token' : '{TOKEN}'},
+			success: function(returnData){
+				if (returnData.id > 0) {console.log(returnData.display);
+					if (returnData.display == 1) {
+						jQuery("#change_display_" + returnData.id).toggleClass("fa fa-eye");
+						jQuery("#change_display_" + returnData.id).title = "{@field.display}";
+					} else {
+						jQuery("#change_display_" + returnData.id).toggleClass("fa fa-eye-slash");
+						jQuery("#change_display_" + returnData.id).title = "{@field.not_display}";
+					}
+				}
 			},
 			error: function(e){
 				alert(e);
 			}
 		});
-
-		//Move in success ajax event
-		this.change_display_picture();
-	},
-	change_display_picture : function() {
-		if ($('change_display_' + this.id)) {
-			if (this.is_not_displayed == false) {
-				$('change_display_' + this.id).className = "fa fa-eye";
-				$('change_display_' + this.id).title = "{@field.display}";
-				$('change_display_' + this.id).alt = "{@field.display}";
-				this.is_not_displayed = true;
-			}
-			else {
-				$('change_display_' + this.id).className = "fa fa-eye-slash";
-				$('change_display_' + this.id).title = "{@field.not_display}";
-				$('change_display_' + this.id).alt = "{@field.not_display}";
-				this.is_not_displayed = false;
-			}
-		}
-	},
+	}
 };
 
 var ContactFields = new ContactFields('fields_list');
 jQuery(document).ready(function() {
-	ContactFields.destroy_sortable();
-	ContactFields.create_sortable();
+	ContactFields.init_sortable();
 });
 -->
 </script>
@@ -165,7 +98,7 @@ jQuery(document).ready(function() {
 	<legend>${LangLoader::get_message('admin.fields.manage', 'common', 'contact')}</legend>
 		<ul id="fields_list" class="sortable-block">
 			# START fields_list #
-				<li class="sortable-element" id="list_{fields_list.ID}">
+				<li class="sortable-element" id="list_{fields_list.ID}" data-id="{fields_list.ID}">
 					<div class="sortable-title">
 						<a title="${LangLoader::get_message('move', 'admin')}" class="fa fa-arrows"></a>
 						<i class="fa fa-globe"></i>
@@ -187,7 +120,7 @@ jQuery(document).ready(function() {
 								# IF fields_list.C_DELETE #<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete_{fields_list.ID}" class="fa fa-delete"></a># ELSE #&nbsp;# ENDIF #
 							</div>
 							<div class="sortable-options">
-							# IF NOT fields_list.C_READONLY #<a href="" onclick="return false;" id="change_display_{fields_list.ID}" class="fa fa-eye"></a># ELSE #&nbsp;# ENDIF #
+							# IF NOT fields_list.C_READONLY #<a href="" onclick="return false;" id="change_display_{fields_list.ID}" # IF fields_list.C_DISPLAY #class="fa fa-eye" title="{@field.display}"# ELSE #class="fa fa-eye-slash" title="{@field.not_display}"# ENDIF #></a># ELSE #&nbsp;# ENDIF #
 							</div>
 						</div>
 					</div>
@@ -196,31 +129,35 @@ jQuery(document).ready(function() {
 				<script>
 				<!--
 				jQuery(document).ready(function() {
-					var contact_field = new ContactField({fields_list.ID}, '{fields_list.C_DISPLAY}', ContactFields);
+					var contact_field = new ContactField({fields_list.ID}, ContactFields);
 					
-					jQuery('#list_{fields_list.ID}').on('mouseup',function(){
+					jQuery("#list_{fields_list.ID}").on('mouseout',function(){
 						ContactFields.change_reposition_pictures();
 					});
 					
 					# IF fields_list.C_DELETE #
-					jQuery('#delete_{fields_list.ID}').on('click',function(){
+					jQuery("#delete_{fields_list.ID}").on('click',function(){
 						contact_field.delete_fields();
 					});
 					# ENDIF #
 					
 					# IF NOT fields_list.C_READONLY #
-					jQuery('#change_display_{fields_list.ID}').on('click',function(){
+					jQuery("#change_display_{fields_list.ID}").on('click',function(){
 						contact_field.change_display();
 					});
 					# ENDIF #
 					
 					# IF C_MORE_THAN_ONE_FIELD #
-					jQuery('#move_up_{fields_list.ID}').on('click',function(){
-						contact_field.move_up();
+					jQuery("#move_up_{fields_list.ID}").on('click',function(){
+						var li = jQuery(this).closest('li');
+						li.insertBefore( li.prev() );
+						ContactFields.change_reposition_pictures();
 					});
 					
-					jQuery('#move_down_{fields_list.ID}').on('click',function(){
-						contact_field.move_down();
+					jQuery("#move_down_{fields_list.ID}").on('click',function(){
+						var li = jQuery(this).closest('li');
+						li.insertAfter( li.next() );
+						ContactFields.change_reposition_pictures();
 					});
 					# ENDIF #
 				});
@@ -233,7 +170,7 @@ jQuery(document).ready(function() {
 	<fieldset class="fieldset-submit">
 		<button type="submit" name="submit" value="true" class="submit">${LangLoader::get_message('position.update', 'common')}</button>
 		<input type="hidden" name="token" value="{TOKEN}">
-		<input type="hidden" name="position" id="position" value="">
+		<input type="hidden" name="tree" id="tree" value="">
 	</fieldset>
 	# ENDIF #
 </form>
