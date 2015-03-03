@@ -35,6 +35,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('AdminContactFieldFormController', '`^/admin/fields/add/?$`'),
 	new UrlControllerMapper('AdminContactFieldFormController', '`^/admin/fields/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('ContactAjaxDeleteFieldController', '`^/admin/fields/delete/?$`'),
+	new UrlControllerMapper('ContactAjaxChangeFieldDisplayController', '`^/admin/fields/change_display/?$`'),
 	new UrlControllerMapper('ContactAjaxCheckFieldNameController', '`^/admin/fields/check_name/?$`'),
 	
 	//Config

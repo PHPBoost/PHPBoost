@@ -77,24 +77,6 @@ class AdminContactFieldsListController extends AdminModuleController
 		{
 			$this->update_position($request);
 		}
-		$this->change_display($request);
-	}
-	
-	private function change_display(HTTPRequestCustom $request)
-	{
-		$id = $request->get_value('id', 0);
-		
-		if ($id !== 0)
-		{
-			$fields = $this->config->get_fields();
-			if ($request->get_bool('display', true))
-				$fields[$id]['displayed'] = 1;
-			else
-				$fields[$id]['displayed'] = 0;
-			$this->config->set_fields($fields);
-			
-			ContactConfig::save();
-		}
 	}
 	
 	private function update_position(HTTPRequestCustom $request)
@@ -102,12 +84,10 @@ class AdminContactFieldsListController extends AdminModuleController
 		$fields = $this->config->get_fields();
 		$sorted_fields = array();
 		
-		$value = '&' . $request->get_value('position', array());
-		$array = @explode('&fields_list[]=', $value);
-		foreach($array as $position => $id)
+		$fields_list = json_decode($request->get_postvalue('tree', false));
+		foreach($fields_list as $position => $tree)
 		{
-			if ($position > 0)
-				$sorted_fields[$position] = $fields[$id];
+			$sorted_fields[$position] = $fields[$tree->id];
 		}
 		$this->config->set_fields($sorted_fields);
 		
