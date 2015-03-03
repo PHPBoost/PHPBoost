@@ -81,6 +81,9 @@ FaqQuestion.prototype = {
 							}
 						}
 					}
+				},
+				error: function(e){
+					alert(e);
 				}
 			});
 		}
@@ -222,17 +225,17 @@ jQuery(document).ready(function() {
 						});
 						
 						if (FaqQuestions.questions_number > 1) {
-							jQuery('#list_{questions.ID}').on('mouseup',function(){
-								FaqQuestions.change_reposition_pictures();
-							});
-							jQuery('#move_down_{questions.ID}').on('click',function(){
-								var parent = jQuery('#list_{questions.ID}');
-								parent.insertAfter(parent.next());
+							jQuery('#list_{questions.ID}').on('mouseout',function(){
 								FaqQuestions.change_reposition_pictures();
 							});
 							jQuery('#move_up_{questions.ID}').on('click',function(){
-								var parent = jQuery('#list_{questions.ID}');
-								parent.insertBefore(parent.prev());
+								var li = jQuery(this).closest('li');
+								li.insertBefore( li.prev() );
+								FaqQuestions.change_reposition_pictures();
+							});
+							jQuery('#move_down_{questions.ID}').on('click',function(){
+								var li = jQuery(this).closest('li');
+								li.insertAfter( li.next() );
 								FaqQuestions.change_reposition_pictures();
 							});
 						}
