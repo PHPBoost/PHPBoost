@@ -56,11 +56,11 @@ FaqQuestion.prototype = {
 				parameters: {'id' : this.id, 'token' : '{TOKEN}'},
 				onComplete: function(response) {
 					if(response.readyState == 4 && response.status == 200 && response.responseJSON.code > 0) {
-						var elementToDelete = $('list_' + response.responseJSON.code);
-						elementToDelete.parentNode.removeChild(elementToDelete);
+						var elementToDelete = jQuery("#list_" + response.responseJSON.code);
+						elementToDelete.remove();
 						# IF NOT C_DISPLAY_TYPE_ANSWERS_HIDDEN #
-						var elementToDelete = $('title_question_' + response.responseJSON.code);
-						elementToDelete.parentNode.removeChild(elementToDelete);
+						var elementToDelete = jQuery("#title_question_" + response.responseJSON.code);
+						elementToDelete.remove();
 						# ENDIF #
 						
 						FaqQuestions.init_sortable();
