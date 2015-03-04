@@ -33,8 +33,8 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('AdminExtendedFieldsMemberListController', '`^/extended-fields(?:/list)?/?$`'),
 	new UrlControllerMapper('AdminExtendedFieldMemberAddController', '`^/extended-fields/add/?$`'),
 	new UrlControllerMapper('AdminExtendedFieldMemberEditController', '`^/extended-fields/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('AdminExtendedFieldMemberDeleteController', '`^/extended-fields/delete?/?$`'),
-	new UrlControllerMapper('AdminExtendedFieldMemberRepositionController', '`^/extended-fields/position/([0-9]+)/([a-z]+)/?$`', array('id', 'type')),
+	new UrlControllerMapper('AdminExtendedFieldMemberDeleteController', '`^/extended-fields/delete/?$`'),
+	new UrlControllerMapper('AdminExtendedFieldChangeFieldDisplayController', '`^/extended-fields/change_display/?$`'),
 	
 	new UrlControllerMapper('AdminMemberAddController', '`^/add/?$`'),
 	new UrlControllerMapper('AdminMemberConfigController', '`^/config/?$`'),

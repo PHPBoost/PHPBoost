@@ -77,25 +77,7 @@ class AdminExtendedFieldsMemberListController extends AdminController
 		{
 			$this->update_position($request);
 		}
-		$this->change_display($request);
 		ExtendedFieldsCache::invalidate();
-	}
-	
-	private function change_display($request)
-	{
-		$id = $request->get_value('id', 0);
-		$display = $request->get_bool('display', true);
-		if ($id !== 0)
-		{
-			PersistenceContext::get_querier()->inject(
-				"UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET 
-				display = :display
-				WHERE id = :id"
-				, array(
-					'display' => (int)$display,
-					'id' => $id,
-			));
-		}
 	}
 	
 	private function update_position($request)
