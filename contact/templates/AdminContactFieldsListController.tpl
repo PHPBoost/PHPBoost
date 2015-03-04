@@ -41,7 +41,7 @@ var ContactField = function(id, contact_fields){
 };
 
 ContactField.prototype = {
-	delete_fields : function() {
+	delete : function() {
 		if (confirm(${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))}))
 		{
 			jQuery.ajax({
@@ -50,10 +50,9 @@ ContactField.prototype = {
 				data: {'id' : this.id, 'token' : '{TOKEN}'},
 				success: function(returnData){
 					if (returnData.code > 0) {
-						var elementToDelete = $('list_' + returnData.code);
-						elementToDelete.parentNode.removeChild(elementToDelete);
-						ContactFields.destroy_sortable();
-						ContactFields.create_sortable();
+						var elementToDelete = jQuery("#list_" + returnData.code);
+						elementToDelete.remove();
+						ContactFields.init_sortable();
 					}
 				},
 				error: function(e){
@@ -63,19 +62,21 @@ ContactField.prototype = {
 		}
 	},
 	change_display : function() {
-		jQuery("#change_display_" + this.id).toggleClass("fa fa-spin fa-spinner");
+		jQuery("#change_display_" + this.id).removeClass("fa-eye").removeClass("fa-eye-slash");
+		jQuery("#change_display_" + this.id).addClass("fa-spin").addClass("fa-spinner");
 		jQuery.ajax({
 			url: '${relative_url(ContactUrlBuilder::change_display())}',
 			type: "post",
 			data: {'id' : this.id, 'token' : '{TOKEN}'},
 			success: function(returnData){
-				if (returnData.id > 0) {console.log(returnData.display);
-					if (returnData.display == 1) {
-						jQuery("#change_display_" + returnData.id).toggleClass("fa fa-eye");
-						jQuery("#change_display_" + returnData.id).title = "{@field.display}";
+				if (returnData.id > 0) {
+					jQuery("#change_display_" + returnData.id).removeClass("fa-spinner").removeClass("fa-spin");
+					if (returnData.display) {
+						jQuery("#change_display_" + returnData.id).addClass("fa-eye");
+						jQuery("#change_display_" + returnData.id).prop('title', "{@field.display}");
 					} else {
-						jQuery("#change_display_" + returnData.id).toggleClass("fa fa-eye-slash");
-						jQuery("#change_display_" + returnData.id).title = "{@field.not_display}";
+						jQuery("#change_display_" + returnData.id).addClass("fa-eye-slash");
+						jQuery("#change_display_" + returnData.id).prop('title', "{@field.not_display}");
 					}
 				}
 			},
@@ -136,7 +137,7 @@ jQuery(document).ready(function() {
 						
 						# IF fields_list.C_DELETE #
 						jQuery("#delete_{fields_list.ID}").on('click',function(){
-							contact_field.delete_fields();
+							contact_field.delete();
 						});
 						# ENDIF #
 						

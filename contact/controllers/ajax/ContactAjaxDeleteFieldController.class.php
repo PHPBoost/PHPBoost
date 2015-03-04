@@ -47,9 +47,9 @@ class ContactAjaxDeleteFieldController extends AbstractController
 					$new_fields_list = array();
 					
 					$position = 1;
-					foreach ($fields as $key => $field)
+					foreach ($fields as $key => $f)
 					{
-						$new_fields_list[$position] = $field;
+						$new_fields_list[$position] = $f;
 						$position++;
 					}
 					
