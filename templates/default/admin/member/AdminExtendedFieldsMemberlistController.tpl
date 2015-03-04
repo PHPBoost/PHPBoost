@@ -49,7 +49,7 @@ var ExtendedField = function(id, display, extended_fields){
 };
 
 ExtendedField.prototype = {
-	delete_fields : function() {
+	delete : function() {
 		if (confirm(${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))}))
 		{
 			jQuery.ajax({
@@ -57,19 +57,20 @@ ExtendedField.prototype = {
 				type: "post",
 				data: {'id' : this.id, 'token' : '{TOKEN}'},
 				success: function(returnData){
-					if (returnData == 0)
+					if (returnData.code > 0)
 					{
+						var elementToDelete = jQuery("#list_" + returnData.code);
+						elementToDelete.remove();
+						ExtendedFields.init_sortable();
 						jQuery('#no_field').hide();
+					} else {
+						jQuery('#no_field').show();
 					}
 				},
 				error: function(e){
 					alert(e);
 				}
 			});
-			
-			var elementToDelete = $('list_' + this.id);
-			elementToDelete.parentNode.removeChild(elementToDelete);
-			ExtendedFields.init_sortable();
 		}
 	},
 	change_display : function() {
@@ -155,7 +156,7 @@ jQuery(document).ready(function() {
 						
 						# IF NOT list_extended_fields.C_FREEZE #
 						jQuery('#delete_{list_extended_fields.ID}').on('click',function(){
-							extended_field.delete_fields();
+							extended_field.delete();
 						});
 						# ENDIF #
 						
