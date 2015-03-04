@@ -48,7 +48,7 @@ var FaqQuestion = function(id, faq_questions){
 };
 
 FaqQuestion.prototype = {
-	delete_question : function() {
+	delete : function() {
 		if (confirm(${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))}))
 		{
 			new Ajax.Request('${relative_url(FaqUrlBuilder::ajax_delete())}', {
@@ -220,7 +220,7 @@ jQuery(document).ready(function() {
 							var faq_question = new FaqQuestion({questions.ID}, FaqQuestions);
 							
 							jQuery('#delete_{questions.ID}').on('click',function(){
-								faq_question.delete_question();
+								faq_question.delete();
 							});
 							
 							if (FaqQuestions.questions_number > 1) {
