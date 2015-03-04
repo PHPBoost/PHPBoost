@@ -5,38 +5,29 @@ var ExtendedFields = function(id){
 };
 
 ExtendedFields.prototype = {
-	create_sortable : function() {
-		Sortable.create(this.id, {
-			tag:'li',
-			only:'sortable-element'
-		});
+	init_sortable : function() {
+		jQuery("ul#lists").sortable({handle: '.fa-arrows'});
 	},
-	destroy_sortable : function() {
-		Sortable.destroy(this.id); 
-	},
-	
 	serialize_sortable : function() {
-		$('position').value = Sortable.serialize(this.id);
+		jQuery('#tree').val(JSON.stringify(this.get_sortable_sequence()));
 	},
 	get_sortable_sequence : function() {
-		return Sortable.sequence(this.id);
-	},
-	set_sortable_sequence : function(sequence) {
-		Sortable.setSequence(this.id, sequence);
+		var sequence = jQuery("ul#lists").sortable("serialize").get();
+		return sequence[0];
 	},
 	change_reposition_pictures : function() {
-		sequence = Sortable.sequence(this.id);
+		sequence = this.get_sortable_sequence();
 		
-		$('move_up_' + sequence[0]).style.display = "none";
-		$('move_down_' + sequence[0]).style.display = "inline";
+		jQuery("#move_up_" + sequence[0].id).hide();
+		jQuery("#move_down_" + sequence[0].id).show();
 		
 		for (var j = 1 ; j < sequence.length - 1 ; j++) {
-			$('move_up_' + sequence[j]).style.display = "inline";
-			$('move_down_' + sequence[j]).style.display = "inline";
+			jQuery("#move_up_" + sequence[j].id).show();
+			jQuery("#move_down_" + sequence[j].id).show();
 		}
 		
-		$('move_up_' + sequence[sequence.length - 1]).style.display = "inline";
-		$('move_down_' + sequence[sequence.length - 1]).style.display = "none";
+		jQuery("#move_up_" + sequence[sequence.length - 1].id).show();
+		jQuery("#move_down_" + sequence[sequence.length - 1].id).hide();
 	}
 };
 
@@ -78,46 +69,7 @@ ExtendedField.prototype = {
 			
 			var elementToDelete = $('list_' + this.id);
 			elementToDelete.parentNode.removeChild(elementToDelete);
-			ExtendedFields.destroy_sortable();
-			ExtendedFields.create_sortable();
-		}
-	},
-	move_up : function() {
-		var sequence = ExtendedFields.get_sortable_sequence();
-		var reordered = false;
-		
-		if (sequence.length > 1)
-			for (var j = 1 ; j < sequence.length ; j++) {
-				if (sequence[j].length > 0 && sequence[j] == this.id) {
-					var temp = sequence[j-1];
-					sequence[j-1] = this.id;
-					sequence[j] = temp;
-					reordered = true;
-				}
-			}
-		
-		if (reordered) {
-			ExtendedFields.set_sortable_sequence(sequence);
-			ExtendedFields.change_reposition_pictures();
-		}
-	},
-	move_down : function() {
-		var sequence = ExtendedFields.get_sortable_sequence();
-		var reordered = false;
-		
-		if (sequence.length > 1)
-			for (var j = 0 ; j < sequence.length - 1 ; j++) {
-				if (sequence[j].length > 0 && sequence[j] == this.id) {
-					var temp = sequence[j+1];
-					sequence[j+1] = this.id;
-					sequence[j] = temp;
-					reordered = true;
-				}
-			}
-		
-		if (reordered) {
-			ExtendedFields.set_sortable_sequence(sequence);
-			ExtendedFields.change_reposition_pictures();
+			ExtendedFields.init_sortable();
 		}
 	},
 	change_display : function() {
@@ -141,13 +93,11 @@ ExtendedField.prototype = {
 		if (this.is_not_displayed == false) {
 			$('change_display_' + this.id).className = "fa fa-eye";
 			$('change_display_' + this.id).title = "{@field.display}";
-			$('change_display_' + this.id).alt = "{@field.display}";
 			this.is_not_displayed = true;
 		}
 		else {
 			$('change_display_' + this.id).className = "fa fa-eye-slash";
 			$('change_display_' + this.id).title = "{@field.not_display}";
-			$('change_display_' + this.id).alt = "{@field.not_display}";
 			this.is_not_displayed = false;
 		}
 	},
@@ -155,8 +105,7 @@ ExtendedField.prototype = {
 
 var ExtendedFields = new ExtendedFields('lists');
 jQuery(document).ready(function() {
-	ExtendedFields.destroy_sortable();
-	ExtendedFields.create_sortable();
+	ExtendedFields.init_sortable();
 });
 -->
 </script>
@@ -166,7 +115,7 @@ jQuery(document).ready(function() {
 	<legend>{@fields.management}</legend>
 		<ul id="lists" class="sortable-block">
 			# START list_extended_fields #
-				<li class="sortable-element" id="list_{list_extended_fields.ID}">
+				<li class="sortable-element" id="list_{list_extended_fields.ID}" data-id="{list_extended_fields.ID}">
 					<div class="sortable-title">
 						<a title="${LangLoader::get_message('move', 'admin')}" class="fa fa-arrows"></a>
 						<i class="fa fa-globe"></i>
@@ -195,38 +144,42 @@ jQuery(document).ready(function() {
 						</div>
 					</div>
 					<div class="spacer"></div>
+					<script>
+					<!--
+					jQuery(document).ready(function() {
+						var extended_field = new ExtendedField({list_extended_fields.ID}, '{list_extended_fields.C_DISPLAY}', ExtendedFields);
+						
+						jQuery('#list_{list_extended_fields.ID}').on('mouseout',function(){
+							ExtendedFields.change_reposition_pictures();
+						});
+						
+						# IF NOT list_extended_fields.C_FREEZE #
+						jQuery('#delete_{list_extended_fields.ID}').on('click',function(){
+							extended_field.delete_fields();
+						});
+						# ENDIF #
+						
+						jQuery('#change_display_{list_extended_fields.ID}').on('click',function(){
+							extended_field.change_display();
+						});
+						
+						# IF C_MORE_THAN_ONE_FIELD #
+						jQuery('#move_up_{list_extended_fields.ID}').on('click',function(){
+							var li = jQuery(this).closest('li');
+							li.insertBefore( li.prev() );
+							ExtendedFields.change_reposition_pictures();
+						});
+						
+						jQuery('#move_down_{list_extended_fields.ID}').on('click',function(){
+							var li = jQuery(this).closest('li');
+							li.insertAfter( li.next() );
+							ExtendedFields.change_reposition_pictures();
+						});
+						# ENDIF #
+					});
+					-->
+					</script>
 				</li>
-				<script>
-				<!--
-				jQuery(document).ready(function() {
-					var extended_field = new ExtendedField({list_extended_fields.ID}, '{list_extended_fields.C_DISPLAY}', ExtendedFields);
-					
-					jQuery('#list_{list_extended_fields.ID}').on('mouseup',function(){
-						ExtendedFields.change_reposition_pictures();
-					});
-					
-					# IF NOT list_extended_fields.C_FREEZE #
-					jQuery('#delete_{list_extended_fields.ID}').on('click',function(){
-						extended_field.delete_fields();
-					});
-					# ENDIF #
-					
-					jQuery('#change_display_{list_extended_fields.ID}').on('click',function(){
-						extended_field.change_display();
-					});
-					
-					# IF C_MORE_THAN_ONE_FIELD #
-					jQuery('#move_up_{list_extended_fields.ID}').on('click',function(){
-						extended_field.move_up();
-					});
-					
-					jQuery('#move_down_{list_extended_fields.ID}').on('click',function(){
-						extended_field.move_down();
-					});
-					# ENDIF #
-				});
-				-->
-				</script>
 			# END list_extended_fields #
 		</ul>
 		<div id="no_field" class="center"# IF C_FIELDS # style="display:none;"# ENDIF #>${LangLoader::get_message('no_item_now', 'common')}</div>
@@ -235,7 +188,7 @@ jQuery(document).ready(function() {
 	<fieldset class="fieldset-submit">
 		<button type="submit" class="submit" name="submit" value="true">${LangLoader::get_message('position.update', 'common')}</button>
 		<input type="hidden" name="token" value="{TOKEN}">
-		<input type="hidden" name="position" id="position" value="">
+		<input type="hidden" name="tree" id="tree" value="">
 	</fieldset>
 	# ENDIF #
 </form>

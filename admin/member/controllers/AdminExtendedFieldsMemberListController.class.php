@@ -100,21 +100,17 @@ class AdminExtendedFieldsMemberListController extends AdminController
 	
 	private function update_position($request)
 	{
-		$value = '&' . $request->get_value('position', array());
-		$array = @explode('&lists[]=', $value);
-		foreach($array as $position => $id)
+		$fields_list = json_decode($request->get_postvalue('tree', false));
+		foreach($fields_list as $position => $tree)
 		{
-			if ($position > 0)
-			{
-				PersistenceContext::get_querier()->inject(
-					"UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET 
-					position = :position
-					WHERE id = :id"
-					, array(
-						'position' => $position,
-						'id' => $id,
-				));
-			}
+			PersistenceContext::get_querier()->inject(
+				"UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET 
+				position = :position
+				WHERE id = :id"
+				, array(
+					'position' => $position,
+					'id' => $tree->id,
+			));
 		}
 	}
 }
