@@ -52,13 +52,21 @@ class AdminExtendedFieldsUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/extended-fields/' . $id. '/edit/');
 	}
-		
+	
 	/*
 	 * @ return Url
 	 */
 	public static function delete()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/extended-fields/delete/');
+	}
+	
+	/*
+	 * @ return Url
+	 */
+	public static function change_display()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/extended-fields/change_display/');
 	}
 }
 ?>

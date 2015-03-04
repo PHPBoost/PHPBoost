@@ -35,13 +35,6 @@ var ExtendedField = function(id, display, extended_fields){
 	this.id = id;
 	this.more_is_opened = false;
 	this.ExtendedFields = extended_fields;
-	if (display == 1) {
-		this.is_not_displayed = false;
-	}
-	else {
-		this.is_not_displayed = true;
-	}
-	this.change_display_picture();
 	
 	# IF C_MORE_THAN_ONE_FIELD #
 	this.ExtendedFields.change_reposition_pictures();
@@ -74,34 +67,34 @@ ExtendedField.prototype = {
 		}
 	},
 	change_display : function() {
-		display = this.is_not_displayed;
-		
+		if (jQuery("#change_display_" + this.id).hasClass("fa-eye")) {
+			display = false;
+		} else {
+			display = true;
+		}
+		jQuery("#change_display_" + this.id).removeClass("fa-eye").removeClass("fa-eye-slash");
+		jQuery("#change_display_" + this.id).addClass("fa-spin").addClass("fa-spinner");
 		jQuery.ajax({
-			url: '{REWRITED_SCRIPT}',
+			url: '${relative_url(AdminExtendedFieldsUrlBuilder::change_display())}',
 			type: "post",
-			data: {'id' : this.id, 'token' : '{TOKEN}', 'display': !display},
-			success: function(){
-
+			data: {'id' : this.id, 'token' : '{TOKEN}', 'display': display},
+			success: function(returnData){
+				if (returnData.id > 0) {
+					jQuery("#change_display_" + returnData.id).removeClass("fa-spinner").removeClass("fa-spin");
+					if (returnData.display) {
+						jQuery("#change_display_" + returnData.id).addClass("fa-eye");
+						jQuery("#change_display_" + returnData.id).prop('title', "{@field.display}");
+					} else {
+						jQuery("#change_display_" + returnData.id).addClass("fa-eye-slash");
+						jQuery("#change_display_" + returnData.id).prop('title', "{@field.not_display}");
+					}
+				}
 			},
 			error: function(e){
 				alert(e);
 			}
 		});
-		
-		this.change_display_picture();
-	},
-	change_display_picture : function() {
-		if (this.is_not_displayed == false) {
-			$('change_display_' + this.id).className = "fa fa-eye";
-			$('change_display_' + this.id).title = "{@field.display}";
-			this.is_not_displayed = true;
-		}
-		else {
-			$('change_display_' + this.id).className = "fa fa-eye-slash";
-			$('change_display_' + this.id).title = "{@field.not_display}";
-			this.is_not_displayed = false;
-		}
-	},
+	}
 };
 
 var ExtendedFields = new ExtendedFields('lists');
@@ -141,7 +134,7 @@ jQuery(document).ready(function() {
 								&nbsp;
 								# ENDIF #
 							</div>
-							<a href="" onclick="return false;" id="change_display_{list_extended_fields.ID}" class="fa fa-eye"></a>
+							<a href="" onclick="return false;" id="change_display_{list_extended_fields.ID}" # IF list_extended_fields.C_DISPLAY #class="fa fa-eye" title="{@field.display}"# ELSE #class="fa fa-eye-slash" title="{@field.not_display}"# ENDIF #></a>
 						</div>
 					</div>
 					<div class="spacer"></div>
