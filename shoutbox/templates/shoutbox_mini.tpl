@@ -2,10 +2,6 @@
 		<!--
 		function XMLHttpRequest_shoutmsg()
 		{
-			# IF C_BBCODE_TINYMCE_MODE #
-				tinyMCE.triggerSave();
-			# ENDIF #
-			
 			var pseudo = document.getElementById("shout_pseudo").value;
 			var contents = document.getElementById("shout_contents").value;
 
