@@ -31,6 +31,18 @@
 
 class GalleryCategoriesFormController extends AbstractRichCategoriesFormController
 {
+	/**
+	 * @return AuthorizationsSettings
+	 */
+	public function get_authorizations_settings()
+	{
+		return new AuthorizationsSettings(array(
+			new ActionAuthorization($this->common_lang['authorizations.read'], Category::READ_AUTHORIZATIONS),
+			new ActionAuthorization($this->common_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
+			new ActionAuthorization($this->common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
+		));
+	}
+	
 	protected function generate_response(View $view)
 	{
 		return new AdminGalleryDisplayResponse($view, $this->get_title());
