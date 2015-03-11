@@ -14,7 +14,7 @@
 # ENDIF #
 
 # IF C_NEXT_MENU #
-	<li class="sortable-element" id="menu_element_{ID}">
+	<li class="sortable-element" id="menu_element_{ID}" data-id="{ID}">
 		<div class="sortable-title">
 			<i class="fa fa-arrows" title="${LangLoader::get_message('move', 'admin')}"></i>&nbsp;
 			<i class="fa fa-folder fa-2x" style="cursor:move"></i>&nbsp;
@@ -25,7 +25,7 @@
 				<img src="{REL_IMG}" id="menu_element_{ID}_image_preview"/>
 			</div>
 			<div class="sortable-actions">
-				<a href="" class="fa fa-plus" title="{L_MORE}" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});return false;"></a>
+				<a href="" class="fa fa-cog" title="{L_MORE}" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});return false;"></a>
 				<a href="" class="fa fa-delete" title="{L_DELETE}" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');return false;"></a>
 			</div>
 		</div>
@@ -51,7 +51,7 @@
 # ENDIF #
 
 # IF C_LINK #
-    <li class="sortable-element" id="menu_element_{ID}">
+    <li class="sortable-element" id="menu_element_{ID}" data-id="{ID}">
    		<div class="sortable-title">
 			<i class="fa fa-arrows" title="${LangLoader::get_message('move', 'admin')}"></i>
    			<i class="fa fa-globe"></i>
@@ -62,7 +62,7 @@
 				<img src="{REL_IMG}" id="menu_element_{ID}_image_preview"/>
 			</div>
 			<div class="sortable-actions">
-				<a href="" class="fa fa-plus" title="{L_MORE}" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});return false;"></a>
+				<a href="" class="fa fa-cog" title="{L_MORE}" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});return false;"></a>
 				<a href="" class="fa fa-delete" title="{L_DELETE}" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');return false;"></a>
 			</div>
 		</div>
