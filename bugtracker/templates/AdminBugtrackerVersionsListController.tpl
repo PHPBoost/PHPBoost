@@ -63,12 +63,12 @@ var BugtrackerFormFieldVersions = new BugtrackerFormFieldVersions();
 
 function display_default_version_radio(version_id)
 {
-	if (document.getElementById('detected_in' + version_id).checked)
+	if (jQuery('#detected_in' + version_id).prop('checked'))
 		jQuery('#default_version' + version_id).show();
 	else
 	{
+		jQuery('#default_version' + version_id).prop('checked', false);
 		jQuery('#default_version' + version_id).hide();
-		document.getElementById('default_version' + version_id).checked = "";
 	}
 }
 -->
