@@ -167,7 +167,7 @@ $tpl = new FileTemplate('admin/menus/links.tpl');
 $tpl->put_all(array(
 	'L_NAME' => $LANG['name'],
 	'L_URL' => $LANG['url'],
-	'L_IMAGE' => $LANG['img'],
+	'L_IMAGE' => LangLoader::get_message('form.picture', 'common'),
 	'L_STATUS' => $LANG['status'],
 	'L_AUTHS' => $LANG['auths'],
 	'L_ENABLED' => LangLoader::get_message('enabled', 'common'),
@@ -194,7 +194,7 @@ $tpl->put_all(array(
     'JL_PROPERTIES' => TextHelper::to_js_string($LANG['properties']),
     'JL_NAME' => TextHelper::to_js_string($LANG['name']),
     'JL_URL' => TextHelper::to_js_string($LANG['url']),
-    'JL_IMAGE' => TextHelper::to_js_string($LANG['img']),
+    'JL_IMAGE' => TextHelper::to_js_string(LangLoader::get_message('form.picture', 'common')),
     'JL_DELETE_ELEMENT' => TextHelper::to_js_string(LangLoader::get_message('confirm.delete', 'status-messages-common')),
     'JL_MORE' => TextHelper::to_js_string($LANG['more_details']),
     'JL_DELETE' => TextHelper::to_js_string(LangLoader::get_message('delete', 'common')),
@@ -218,7 +218,7 @@ $array_location = array(
 $edit_menu_tpl = new FileTemplate('admin/menus/menu_edition.tpl');
 $edit_menu_tpl->put_all(array(
     'L_NAME' => $LANG['name'],
-    'L_IMAGE' => $LANG['img'],
+    'L_IMAGE' => LangLoader::get_message('form.picture', 'common'),
     'L_URL' => $LANG['url'],
     'L_PROPERTIES' => $LANG['properties'],
     'L_AUTHORIZATIONS' => $LANG['authorizations'],
