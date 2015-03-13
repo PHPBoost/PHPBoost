@@ -69,10 +69,11 @@ function build_menu_tree()
 	var containerListLength = menusContainerList.length;
 	for(var i = 0; i < containerListLength; i++)
 	{
-		$('<input>').attr({
-		    type: 'hidden',
-		    name: 'menu_tree_' + menusContainerList[i],
-		    value: JSON.stringify($("#"  + menusContainerList[i]).sortable("serialize").get())
+		var sequence = jQuery('#' + menusContainerList[i]).sortable("serialize").get();
+		jQuery('<input/>').attr({
+			type: 'hidden',
+			name: 'menu_tree_' + menusContainerList[i],
+			value: JSON.stringify(sequence[0])
 		}).appendTo('#form_menus');
 	}
 }
@@ -81,7 +82,7 @@ function createSortableMenu()
 	var containerListLength = menusContainerList.length;
 	for(var i = 0; i < containerListLength; i++)
 	{
-		$("#" + menusContainerList[i]).sortable({
+		jQuery('#' + menusContainerList[i]).sortable({
 			handle: '.fa-arrows',
 			group: 'menus',
 			containerSelector: '#mod_header, #mod_subheader, #mod_left, #mod_right, #mod_topcentral, #mod_central, #mod_bottomcentral, #mod_topfooter, #mod_footer',
