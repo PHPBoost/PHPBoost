@@ -133,7 +133,7 @@ class LinksMenu extends LinksMenuElement
         // Children assignment
         foreach ($this->elements as $element)
         {   // We use a new Tpl to avoid overwrite issues
-            $tpl->assign_block_vars('elements', array('DISPLAY' => $element->display($original_tpl, $mode)));
+            $tpl->assign_block_vars('elements', array('DISPLAY' => $element->display(clone $original_tpl, $mode)));
         }
 
         // Menu assignment
