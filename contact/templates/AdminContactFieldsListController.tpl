@@ -17,17 +17,19 @@ ContactFields.prototype = {
 	},
 	change_reposition_pictures : function() {
 		sequence = this.get_sortable_sequence();
-		
-		jQuery("#move_up_" + sequence[0].id).hide();
-		jQuery("#move_down_" + sequence[0].id).show();
-		
-		for (var j = 1 ; j < sequence.length - 1 ; j++) {
-			jQuery("#move_up_" + sequence[j].id).show();
-			jQuery("#move_down_" + sequence[j].id).show();
+		var length = sequence.length;
+		for(var i = 0; i < length; i++)
+		{
+			if (jQuery('#list_' + sequence[i].id).is(':first-child'))
+				jQuery("#move-up-" + sequence[i].id).hide();
+			else
+				jQuery("#move-up-" + sequence[i].id).show();
+			
+			if (jQuery('#list_' + sequence[i].id).is(':last-child'))
+				jQuery("#move-down-" + sequence[i].id).hide();
+			else
+				jQuery("#move-down-" + sequence[i].id).show();
 		}
-		
-		jQuery("#move_up_" + sequence[sequence.length - 1].id).show();
-		jQuery("#move_down_" + sequence[sequence.length - 1].id).hide();
 	}
 };
 
@@ -62,21 +64,21 @@ ContactField.prototype = {
 		}
 	},
 	change_display : function() {
-		jQuery("#change_display_" + this.id).removeClass("fa-eye").removeClass("fa-eye-slash");
-		jQuery("#change_display_" + this.id).addClass("fa-spin").addClass("fa-spinner");
+		jQuery("#change-display-" + this.id).removeClass("fa-eye").removeClass("fa-eye-slash");
+		jQuery("#change-display-" + this.id).addClass("fa-spin").addClass("fa-spinner");
 		jQuery.ajax({
 			url: '${relative_url(ContactUrlBuilder::change_display())}',
 			type: "post",
 			data: {'id' : this.id, 'token' : '{TOKEN}'},
 			success: function(returnData){
 				if (returnData.id > 0) {
-					jQuery("#change_display_" + returnData.id).removeClass("fa-spinner").removeClass("fa-spin");
+					jQuery("#change-display-" + returnData.id).removeClass("fa-spinner").removeClass("fa-spin");
 					if (returnData.display) {
-						jQuery("#change_display_" + returnData.id).addClass("fa-eye");
-						jQuery("#change_display_" + returnData.id).prop('title', "{@field.display}");
+						jQuery("#change-display-" + returnData.id).addClass("fa-eye");
+						jQuery("#change-display-" + returnData.id).prop('title', "{@field.display}");
 					} else {
-						jQuery("#change_display_" + returnData.id).addClass("fa-eye-slash");
-						jQuery("#change_display_" + returnData.id).prop('title', "{@field.not_display}");
+						jQuery("#change-display-" + returnData.id).addClass("fa-eye-slash");
+						jQuery("#change-display-" + returnData.id).prop('title', "{@field.not_display}");
 					}
 				}
 			},
@@ -108,10 +110,10 @@ jQuery(document).ready(function() {
 							{@field.required} : <span class="text-strong"># IF fields_list.C_REQUIRED #${LangLoader::get_message('yes', 'common')}# ELSE #${LangLoader::get_message('no', 'common')}# ENDIF #</span>
 							# IF C_MORE_THAN_ONE_FIELD #
 							<div class="sortable-options">
-								<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move_up_{fields_list.ID}" onclick="return false;" class="fa fa-arrow-up"></a>
+								<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{fields_list.ID}" onclick="return false;" class="fa fa-arrow-up"></a>
 							</div>
 							<div class="sortable-options">
-								<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move_down_{fields_list.ID}" onclick="return false;" class="fa fa-arrow-down"></a>
+								<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{fields_list.ID}" onclick="return false;" class="fa fa-arrow-down"></a>
 							</div>
 							# ENDIF #
 							<div class="sortable-options">
@@ -121,7 +123,7 @@ jQuery(document).ready(function() {
 								# IF fields_list.C_DELETE #<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete_{fields_list.ID}" class="fa fa-delete"></a># ELSE #&nbsp;# ENDIF #
 							</div>
 							<div class="sortable-options">
-							# IF NOT fields_list.C_READONLY #<a href="" onclick="return false;" id="change_display_{fields_list.ID}" # IF fields_list.C_DISPLAY #class="fa fa-eye" title="{@field.display}"# ELSE #class="fa fa-eye-slash" title="{@field.not_display}"# ENDIF #></a># ELSE #&nbsp;# ENDIF #
+							# IF NOT fields_list.C_READONLY #<a href="" onclick="return false;" id="change-display-{fields_list.ID}" # IF fields_list.C_DISPLAY #class="fa fa-eye" title="{@field.display}"# ELSE #class="fa fa-eye-slash" title="{@field.not_display}"# ENDIF #></a># ELSE #&nbsp;# ENDIF #
 							</div>
 						</div>
 					</div>
@@ -142,19 +144,19 @@ jQuery(document).ready(function() {
 						# ENDIF #
 						
 						# IF NOT fields_list.C_READONLY #
-						jQuery("#change_display_{fields_list.ID}").on('click',function(){
+						jQuery("#change-display-{fields_list.ID}").on('click',function(){
 							contact_field.change_display();
 						});
 						# ENDIF #
 						
 						# IF C_MORE_THAN_ONE_FIELD #
-						jQuery("#move_up_{fields_list.ID}").on('click',function(){
+						jQuery("#move-up-{fields_list.ID}").on('click',function(){
 							var li = jQuery(this).closest('li');
 							li.insertBefore( li.prev() );
 							ContactFields.change_reposition_pictures();
 						});
 						
-						jQuery("#move_down_{fields_list.ID}").on('click',function(){
+						jQuery("#move-down-{fields_list.ID}").on('click',function(){
 							var li = jQuery(this).closest('li');
 							li.insertAfter( li.next() );
 							ContactFields.change_reposition_pictures();
