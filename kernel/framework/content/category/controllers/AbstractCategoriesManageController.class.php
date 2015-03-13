@@ -37,9 +37,9 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 	
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->update_positions($request);
-		
 		$this->init();
+		
+		$this->update_positions($request);
 		
 		$this->build_view();
 		
@@ -113,8 +113,7 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 
 				$this->update_childrens_positions($children, $category->get_id());
 			}
-			
-			AppContext::get_response()->redirect(str_replace(GeneralConfig::load()->get_site_path(), '', REWRITED_SCRIPT));
+			$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.position.update', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 	}
 	
