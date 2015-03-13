@@ -28,9 +28,9 @@ function toggleProperties(id) {
 	}
 }
 
-var authForm = '';//{JS_AUTH_FORM};
+var authForm = {J_AUTH_FORM};
 function getAuthForm(id) {
-	authForm.replace(/##UID##/g, id);
+	return authForm.replace(/##UID##/g, id);
 }
 
 function addSubElement(menu_element_id) {
@@ -68,8 +68,7 @@ function addSubElement(menu_element_id) {
 	jQuery('<legend/>').text({JL_PROPERTIES}).appendTo('#menu_element_' + id + '_properties');
 	jQuery('<div/>', {id : 'menu_element_' + id + '_authorizations', class : 'form-element'}).appendTo('#menu_element_' + id + '_properties');
 	jQuery('<label/>', {for : 'menu_element_' + id + '_auth_div'}).text({JL_AUTHORIZATIONS} + ' ').appendTo('#menu_element_' + id + '_authorizations');
-	jQuery('<div/>', {id : 'menu_element_' + id + '_auth_div', class : 'form-field'}).appendTo('#menu_element_' + id + '_authorizations');
-	jQuery('#menu_element_' + id + '_auth_div').append(getAuthForm(id));
+	jQuery('<div/> ', {class : 'form-field'}).html(getAuthForm(id)).appendTo('#menu_element_' + id + '_authorizations');
 	
 	jQuery('#menu_element_' + id).fadeIn();
 	initSortableMenu();
@@ -110,8 +109,7 @@ function addSubMenu(menu_element_id) {
 	jQuery('<legend/>').text({JL_PROPERTIES}).appendTo('#menu_element_' + id + '_properties');
 	jQuery('<div/>', {id : 'menu_element_' + id + '_authorizations', class : 'form-element'}).appendTo('#menu_element_' + id + '_properties');
 	jQuery('<label/>', {for : 'menu_element_' + id + '_auth_div'}).text({JL_AUTHORIZATIONS} + ' ').appendTo('#menu_element_' + id + '_authorizations');
-	jQuery('<div/> ', {id : 'menu_element_' + id + '_auth_div', class : 'form-field'}).appendTo('#menu_element_' + id + '_authorizations');
-	jQuery('#menu_element_' + id + '_auth_div').append(getAuthForm(id));
+	jQuery('<div/> ', {class : 'form-field'}).html(getAuthForm(id)).appendTo('#menu_element_' + id + '_authorizations');
 	
 	jQuery('<hr/>').appendTo('#menu_element_' + id);
 	jQuery('<ul/>', {id : 'menu_element_' + id + '_list', class : 'sortable-block'}).appendTo('#menu_element_' + id);
