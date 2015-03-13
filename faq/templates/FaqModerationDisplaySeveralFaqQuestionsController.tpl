@@ -19,23 +19,19 @@ FaqQuestions.prototype = {
 	},
 	change_reposition_pictures : function() {
 		sequence = this.get_sortable_sequence();
-		
-		jQuery("#move_up_" + sequence[0].id).hide();
-		jQuery("#move_down_" + sequence[0].id).show();
-		
-		for (var j = 1 ; j < sequence.length - 1 ; j++) {
-			jQuery("#move_up_" + sequence[j].id).show();
-			jQuery("#move_down_" + sequence[j].id).show();
+		var length = sequence.length;
+		for(var i = 0; i < length; i++)
+		{
+			if (jQuery('#list_' + sequence[i].id).is(':first-child'))
+				jQuery("#move-up-" + sequence[i].id).hide();
+			else
+				jQuery("#move-up-" + sequence[i].id).show();
+			
+			if (jQuery('#list_' + sequence[i].id).is(':last-child'))
+				jQuery("#move-down-" + sequence[i].id).hide();
+			else
+				jQuery("#move-down-" + sequence[i].id).show();
 		}
-		
-		jQuery("#move_up_" + sequence[sequence.length - 1].id).show();
-		jQuery("#move_down_" + sequence[sequence.length - 1].id).hide();
-	},
-	hide_first_reposition_picture : function() {
-		sequence = this.get_sortable_sequence();
-		
-		jQuery("#move_up_" + sequence[0].id).hide();
-		jQuery("#move_down_" + sequence[0].id).hide();
 	}
 };
 
@@ -51,34 +47,31 @@ FaqQuestion.prototype = {
 	delete : function() {
 		if (confirm(${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))}))
 		{
-			new Ajax.Request('${relative_url(FaqUrlBuilder::ajax_delete())}', {
-				method:'post',
-				parameters: {'id' : this.id, 'token' : '{TOKEN}'},
-				onComplete: function(response) {
-					if(response.readyState == 4 && response.status == 200 && response.responseJSON.code > 0) {
-						var elementToDelete = jQuery("#list_" + response.responseJSON.code);
+			jQuery.ajax({
+				url: '${relative_url(FaqUrlBuilder::ajax_delete())}',
+				type: "post",
+				data: {'id' : this.id, 'token' : '{TOKEN}'},
+				success: function(returnData) {
+					if(returnData.code > 0) {
+						var elementToDelete = jQuery("#list_" + returnData.code);
 						elementToDelete.remove();
 						# IF NOT C_DISPLAY_TYPE_ANSWERS_HIDDEN #
-						var elementToDelete = jQuery("#title_question_" + response.responseJSON.code);
+						var elementToDelete = jQuery("#title_question_" + returnData.code);
 						elementToDelete.remove();
 						# ENDIF #
 						
 						FaqQuestions.init_sortable();
 						FaqQuestions.questions_number--;
 						
-						if (FaqQuestions.questions_number > 1)
-							FaqQuestions.change_reposition_pictures();
-						else {
-							if (FaqQuestions.questions_number == 1) {
-								FaqQuestions.hide_first_reposition_picture();
-								jQuery("#position_update_button").hide();
-							} else {
-								jQuery("#position_update_form").hide();
-								# IF NOT C_DISPLAY_TYPE_ANSWERS_HIDDEN #
-								jQuery("#questions_titles_list").hide();
-								# ENDIF #
-								jQuery("#no_item_message").show();
-							}
+						FaqQuestions.change_reposition_pictures();
+						if (FaqQuestions.questions_number == 1) {
+							jQuery("#position_update_button").hide();
+						} else if (FaqQuestions.questions_number == 0) {
+							jQuery("#position_update_form").hide();
+							# IF NOT C_DISPLAY_TYPE_ANSWERS_HIDDEN #
+							jQuery("#questions_titles_list").hide();
+							# ENDIF #
+							jQuery("#no_item_message").show();
 						}
 					}
 				},
@@ -194,10 +187,10 @@ jQuery(document).ready(function() {
 							<div class="sortable-actions">
 								# IF C_MORE_THAN_ONE_QUESTION #
 								<div class="sortable-options">
-									<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move_up_{questions.ID}" onclick="return false;" class="fa fa-arrow-up"></a>
+									<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{questions.ID}" onclick="return false;" class="fa fa-arrow-up"></a>
 								</div>
 								<div class="sortable-options">
-									<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move_down_{questions.ID}" onclick="return false;" class="fa fa-arrow-down"></a>
+									<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{questions.ID}" onclick="return false;" class="fa fa-arrow-down"></a>
 								</div>
 								# ENDIF #
 								<div class="sortable-options">
@@ -227,12 +220,12 @@ jQuery(document).ready(function() {
 								jQuery('#list_{questions.ID}').on('mouseout',function(){
 									FaqQuestions.change_reposition_pictures();
 								});
-								jQuery('#move_up_{questions.ID}').on('click',function(){
+								jQuery('#move-up-{questions.ID}').on('click',function(){
 									var li = jQuery(this).closest('li');
 									li.insertBefore( li.prev() );
 									FaqQuestions.change_reposition_pictures();
 								});
-								jQuery('#move_down_{questions.ID}').on('click',function(){
+								jQuery('#move-down-{questions.ID}').on('click',function(){
 									var li = jQuery(this).closest('li');
 									li.insertAfter( li.next() );
 									FaqQuestions.change_reposition_pictures();
