@@ -1,50 +1,47 @@
 <script>
 <!--
 jQuery(document).ready(function() {
-	$("ul#categories").sortable({handle: '.fa-arrows'});
+	jQuery('ul#categories').sortable({handle: '.fa-arrows'});
+	change_reposition_pictures();
 });
 
 function serialize_sortable()
 {
-	jQuery('#tree').val(JSON.stringify($("ul#categories").sortable("serialize").get()));
+	jQuery('#tree').val(JSON.stringify(get_sortable_sequence()));
 }
 
-function move_category_up(parent_id, id) {
-	var childs = jQuery('#' + parent_id)[0].childNodes;
-	var cat_id = 0;
-	var previous_id = 0;
-	
-	for (index = 0; index < childs.length; index++) {
-		if (childs[index].id == id) {
-			cat_id = index;
+function get_sortable_sequence()
+{
+	var sequence = jQuery('ul#categories').sortable('serialize').get();
+	return sequence[0];
+}
+
+function change_children_reposition_pictures(list)
+{
+	var length = list.length;
+	for(var i = 0; i < length; i++)
+	{
+		if (jQuery('#cat_' + list[i].id).is(':first-child'))
+			jQuery("#move-up-" + list[i].id).hide();
+		else
+			jQuery("#move-up-" + list[i].id).show();
+		
+		if (jQuery('#cat_' + list[i].id).is(':last-child'))
+			jQuery("#move-down-" + list[i].id).hide();
+		else
+			jQuery("#move-down-" + list[i].id).show();
+		
+		if (typeof list[i].children !== 'undefined')
+		{
+			var children = list[i].children[0];
+			change_children_reposition_pictures(children);
 		}
-		if (childs[index].id != '' && cat_id == 0) {
-			previous_id = index;
-		}
-	}
-	
-	if (cat_id > 0 || previous_id > 0) {
-		jQuery('#' + parent_id)[0].insertBefore(childs[cat_id], childs[previous_id]);
 	}
 }
 
-function move_category_down(parent_id, id){
-	var childs = jQuery('#' + parent_id)[0].childNodes;
-	var cat_id = 0;
-	var previous_id = 0;
-	
-	for (index = 0; index < childs.length; index++) {
-		if (childs[index].id != '' && cat_id > 0 && previous_id == 0) {
-			previous_id = index;
-		}
-		if (childs[index].id == id) {
-			cat_id = index;
-		}
-	}
-	
-	if (cat_id > 0 || previous_id > 0) {
-		jQuery('#' + parent_id)[0].insertBefore(childs[previous_id], childs[cat_id]);
-	}
+function change_reposition_pictures()
+{
+	change_children_reposition_pictures(get_sortable_sequence())
 }
 -->
 </script>
