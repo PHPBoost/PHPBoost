@@ -1,16 +1,3 @@
-<script>
-<!--
-jQuery(document).ready(function() {
-	jQuery('#move-up-{ID}').on('click',function(){
-		move_category_up(jQuery('#cat_{ID}').parent().attr('id'), jQuery('#cat_{ID}').attr('id'));
-	});
-	
-	jQuery('#move-down-{ID}').on('click',function(){
-		move_category_down(jQuery('#cat_{ID}').parent().attr('id'), jQuery('#cat_{ID}').attr('id'));
-	});
-});
--->
-</script>
 <li id="cat_{ID}" class="sortable-element" data-id="{ID}">
 	<div class="sortable-title"> 
 		<a title="${LangLoader::get_message('move', 'admin')}" class="fa fa-arrows"></a>
@@ -33,7 +20,28 @@ jQuery(document).ready(function() {
 		</div>
 	</div>
 	<div class="spacer"></div>
-	
+	<script>
+	<!--
+	jQuery(document).ready(function() {
+		jQuery("#cat_{ID}").on('mouseout',function(){
+			change_reposition_pictures();
+		});
+		
+		jQuery("#move-up-{ID}").on('click',function(){
+			var li = jQuery(this).closest('li');
+			li.insertBefore( li.prev() );
+			change_reposition_pictures();
+		});
+		
+		jQuery("#move-down-{ID}").on('click',function(){
+			var li = jQuery(this).closest('li');
+			li.insertAfter( li.next() );
+			change_reposition_pictures();
+		});
+	});
+	-->
+	</script>
+
 	<ul id="subcat_{ID}" class="sortable-block">
 		# START childrens #
 			{childrens.child}
