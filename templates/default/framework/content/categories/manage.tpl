@@ -45,6 +45,7 @@ function change_reposition_pictures()
 }
 -->
 </script>
+# INCLUDE MSG #
 <form action="{REWRITED_SCRIPT}" method="post" onsubmit="serialize_sortable();">
 	<fieldset>
 		<legend>{FIELDSET_TITLE}</legend>

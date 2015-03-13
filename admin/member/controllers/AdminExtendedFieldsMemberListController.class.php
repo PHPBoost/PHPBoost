@@ -76,6 +76,7 @@ class AdminExtendedFieldsMemberListController extends AdminController
 		if ($request->get_value('submit', false))
 		{
 			$this->update_position($request);
+			$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.position.update', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 		ExtendedFieldsCache::invalidate();
 	}
