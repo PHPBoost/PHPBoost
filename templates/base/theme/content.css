@@ -1122,6 +1122,12 @@ div.form-autocompleter ul li {
 
 
 /* dans l'administation*/
+.dragged {
+  position: absolute;
+  opacity: 0.5;
+  z-index: 2000;
+}
+
 .sortable-block .sortable-element > .sortable-block {
 	margin-left: 30px;
 }
@@ -1139,24 +1145,31 @@ div.form-autocompleter ul li {
 	border: 1px solid #D6DEE7;
 	padding: 0;
 	position: relative;
-	margin: 10px 6px;
+	margin-bottom: 6px;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+	transition: box-shadow 0.2s;
+	display: table;
+	width: 100%;
 }
 
 .sortable-block .sortable-element:hover {
 	border: 1px solid #d0d8e1;
-	cursor: move;
+	
 	box-shadow: 0px 0px 5px #EAEAEA;
 }
 
 .sortable-block .sortable-title {
 	background-image: linear-gradient(bottom, #FFFFFF 50%, #FAFAFA 100%);
-	padding: 10px 5px 5px 10px;
-	font-size: 1em;
-	font-weight: bold;
+	padding: 8px 5px 5px 10px;
 }
 
 .sortable-block .sortable-title:hover {
 	background-image: linear-gradient(bottom, #FFFFFF 25%, #F2F5F8 100%);
+}
+
+.sortable-block .sortable-title span {
+	font-size: 1.5em;
+	font-weight: bold;
 }
 
 .sortable-block .sortable-title span.cat-desc {
@@ -1176,18 +1189,12 @@ div.form-autocompleter ul li {
 .sortable-block .sortable-actions {
 	float: right;
 	padding: 3px 3px;
+	opacity: 0.5;
+	transition: opacity 0.2s;
 }
 
-.sortable-block .sortable-options {
-	width: 15px;
-	display: inline-block;
-	padding: 0 2px;
-	text-align: left;
-}
-
-.sortable-block .sortable-options.preview {
-	width: 16px;
-	padding: 0;
+.sortable-element:hover .sortable-actions {
+	opacity: 1;
 }
 
 .sortable-block .sortable-element hr {
@@ -1204,6 +1211,20 @@ div.form-autocompleter ul li {
 .sortable-block .sortable-element:hover label,
 .sortable-block .sortable-element .fa: not(.fa-arrows):hover {
 	cursor: pointer;
+}
+
+.sortable-element .sortable-element-selector {
+	display: table-cell;
+	width: 10px;
+	height: auto;
+	background: #D6DEE7;
+	opacity: 0;
+	transition: opacity 1s;
+	cursor: move;
+}
+
+.sortable-element:hover .sortable-element-selector {
+	opacity: 0.6;
 }
 
 

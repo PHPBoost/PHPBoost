@@ -6,8 +6,11 @@
 	margin-bottom: 20px;
 }
 
-/* Surcharge de la classe options */
-.options { margin-left: 20px; }
+.faq-answer-container {
+	height: auto;
+	padding: 10px 5px 10px 0px;
+}
 
-/* Surcharge de la classe blockquote */
-.blockquote { margin-bottom: 30px; }
+.faq-answer-container > div {
+	line-height: 1.32em;
+}
