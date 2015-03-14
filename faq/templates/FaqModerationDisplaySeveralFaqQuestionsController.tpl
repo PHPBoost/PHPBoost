@@ -173,8 +173,10 @@ jQuery(document).ready(function() {
 				<ul id="questions_list" class="sortable-block">
 					# START questions #
 					<li class="sortable-element" id="list_{questions.ID}" data-id="{questions.ID}">
+						<div class="sortable-element-selector">
+							<a title="${LangLoader::get_message('move', 'admin')}" class=""></a>
+						</div>
 						<div class="sortable-title">
-							<a title="${LangLoader::get_message('move', 'admin')}" class="fa fa-arrows"></a>
 							<span>
 								# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
 								<a href="" id="question{questions.ID}" onclick="show_answer({questions.ID});return false;" title="" class="fa fa-caret-right"></a>
@@ -186,23 +188,14 @@ jQuery(document).ready(function() {
 							</span>
 							<div class="sortable-actions">
 								# IF C_MORE_THAN_ONE_QUESTION #
-								<div class="sortable-options">
-									<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{questions.ID}" onclick="return false;" class="fa fa-arrow-up"></a>
-								</div>
-								<div class="sortable-options">
-									<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{questions.ID}" onclick="return false;" class="fa fa-arrow-down"></a>
-								</div>
+								<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{questions.ID}" onclick="return false;"><i class="fa fa-arrow-up"></i></a>
+								<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{questions.ID}" onclick="return false;"><i class="fa fa-arrow-down"></i></a>
 								# ENDIF #
-								<div class="sortable-options">
-									<a href="{questions.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
-								</div>
-								<div class="sortable-options">
-									<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete_{questions.ID}" class="fa fa-delete"></a>
-								</div>
+								<a href="{questions.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+								<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete_{questions.ID}"><i class="fa fa-delete"></i></a>
 							</div>
-						</div>
-						<div>
-							<div id="answer{questions.ID}" class="blockquote"# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN # style="display: none;"# ENDIF #>
+
+							<div id="answer{questions.ID}" class="faq-answer-container"# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN # style="display: none;"# ENDIF #>
 								<div itemprop="text">{questions.ANSWER}</div>
 							</div>
 						</div>
