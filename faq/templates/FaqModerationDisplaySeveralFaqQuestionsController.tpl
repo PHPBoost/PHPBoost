@@ -8,7 +8,7 @@ var FaqQuestions = function(id){
 
 FaqQuestions.prototype = {
 	init_sortable : function() {
-		jQuery("ul#questions_list").sortable({handle: '.fa-arrows'});
+		jQuery("ul#questions_list").sortable({handle: '.sortable-element'});
 	},
 	serialize_sortable : function() {
 		jQuery('#tree').val(JSON.stringify(this.get_sortable_sequence()));
@@ -135,12 +135,12 @@ jQuery(document).ready(function() {
 					if(jQuery("#answer" + id_question).css('display') == 'none')
 					{
 						jQuery("#answer" + id_question).fadeIn();
-						jQuery("#question" + id_question).class = "fa fa-caret-down";
+						jQuery("#question" + id_question).removeClass('fa-caret-right').addClass('fa-caret-down');
 					}
 					else
 					{
 						jQuery("#answer" + id_question).fadeOut();
-						jQuery("#question" + id_question).class = "fa fa-caret-right";
+						jQuery("#question" + id_question).removeClass('fa-caret-down').addClass('fa-caret-right');
 					}
 				}
 			}
@@ -173,9 +173,7 @@ jQuery(document).ready(function() {
 				<ul id="questions_list" class="sortable-block">
 					# START questions #
 					<li class="sortable-element" id="list_{questions.ID}" data-id="{questions.ID}">
-						<div class="sortable-element-selector">
-							<a title="${LangLoader::get_message('move', 'admin')}" class=""></a>
-						</div>
+						<div class="sortable-element-selector"></div>
 						<div class="sortable-title">
 							<span>
 								# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
