@@ -1122,12 +1122,6 @@ div.form-autocompleter ul li {
 
 
 /* dans l'administation*/
-.dragged {
-  position: absolute;
-  opacity: 0.5;
-  z-index: 2000;
-}
-
 .sortable-block .sortable-element > .sortable-block {
 	margin-left: 30px;
 }
@@ -1138,6 +1132,7 @@ div.form-autocompleter ul li {
 	margin: 0;
 	padding: 0;
 	min-height: 24px;
+	position: relative;
 }
 
 .sortable-block .sortable-element {
@@ -1154,17 +1149,33 @@ div.form-autocompleter ul li {
 
 .sortable-block .sortable-element:hover {
 	border: 1px solid #d0d8e1;
-	
 	box-shadow: 0px 0px 5px #EAEAEA;
 }
 
+.sortable-block .sortable-element .sortable-element-selector {
+	display: table-cell;
+	width: 10px;
+	background: #D6DEE7;
+	opacity: 0;
+	transition: opacity 1s;
+	cursor: move;
+}
+
+.sortable-block .sortable-element:hover .sortable-actions {
+	opacity: 1;
+}
+
+.sortable-block .sortable-element:hover .sortable-element-selector {
+	opacity: 0.6;
+}
+
 .sortable-block .sortable-title {
-	background-image: linear-gradient(bottom, #FFFFFF 50%, #FAFAFA 100%);
+	background-image: linear-gradient(to bottom, #FFFFFF 50%, #FAFAFA 100%);
 	padding: 8px 5px 5px 10px;
 }
 
 .sortable-block .sortable-title:hover {
-	background-image: linear-gradient(bottom, #FFFFFF 25%, #F2F5F8 100%);
+	background-image: linear-gradient(to bottom, #FFFFFF 25%, #F2F5F8 100%);
 }
 
 .sortable-block .sortable-title span {
@@ -1193,10 +1204,6 @@ div.form-autocompleter ul li {
 	transition: opacity 0.2s;
 }
 
-.sortable-element:hover .sortable-actions {
-	opacity: 1;
-}
-
 .sortable-block .sortable-element hr {
 	background-color: #999999;
 	margin-top: 5px;
@@ -1209,21 +1216,25 @@ div.form-autocompleter ul li {
 
 .sortable-block .sortable-actions img,
 .sortable-block .sortable-element:hover label,
-.sortable-block .sortable-element .fa: not(.fa-arrows):hover {
+.sortable-block .sortable-element .fa:hover {
 	cursor: pointer;
 }
 
-.sortable-element .sortable-element-selector {
-	display: table-cell;
-	width: 10px;
-	height: auto;
-	background: #D6DEE7;
-	opacity: 0;
-	transition: opacity 1s;
-	cursor: move;
+.dragged {
+	position: absolute;
+	opacity: 0.9;
+	z-index: 2000;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
 }
 
-.sortable-element:hover .sortable-element-selector {
+.sortable-block .placeholder {
+	margin: 10px 0px;
+	padding-top: 5px;
+	height: 30px;
+	border: 1px dashed #CCCCCC;
+	border-radius: 5px;
+	text-align: center;
+	color: #CCCCCC;
 	opacity: 0.6;
 }
 

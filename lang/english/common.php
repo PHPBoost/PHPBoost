@@ -70,6 +70,7 @@ $lang['position'] = 'Position';
 $lang['position.move_up'] = 'Move up';
 $lang['position.move_down'] = 'Move down';
 $lang['position.update'] = 'Change positions';
+$lang['position.drop_here'] = 'Drop here';
 
 //Constraint
 $lang['constraint.required'] = 'Required';
