@@ -8,13 +8,13 @@ var FaqQuestions = function(id){
 
 FaqQuestions.prototype = {
 	init_sortable : function() {
-		jQuery("ul#questions_list").sortable({handle: '.sortable-element'});
+		jQuery("ul#questions-list").sortable({handle: '.sortable-element'});
 	},
 	serialize_sortable : function() {
 		jQuery('#tree').val(JSON.stringify(this.get_sortable_sequence()));
 	},
 	get_sortable_sequence : function() {
-		var sequence = jQuery("ul#questions_list").sortable("serialize").get();
+		var sequence = jQuery("ul#questions-list").sortable("serialize").get();
 		return sequence[0];
 	},
 	change_reposition_pictures : function() {
@@ -22,12 +22,12 @@ FaqQuestions.prototype = {
 		var length = sequence.length;
 		for(var i = 0; i < length; i++)
 		{
-			if (jQuery('#list_' + sequence[i].id).is(':first-child'))
+			if (jQuery('#list-' + sequence[i].id).is(':first-child'))
 				jQuery("#move-up-" + sequence[i].id).hide();
 			else
 				jQuery("#move-up-" + sequence[i].id).show();
 			
-			if (jQuery('#list_' + sequence[i].id).is(':last-child'))
+			if (jQuery('#list-' + sequence[i].id).is(':last-child'))
 				jQuery("#move-down-" + sequence[i].id).hide();
 			else
 				jQuery("#move-down-" + sequence[i].id).show();
@@ -53,10 +53,10 @@ FaqQuestion.prototype = {
 				data: {'id' : this.id, 'token' : '{TOKEN}'},
 				success: function(returnData) {
 					if(returnData.code > 0) {
-						var elementToDelete = jQuery("#list_" + returnData.code);
+						var elementToDelete = jQuery("#list-" + returnData.code);
 						elementToDelete.remove();
 						# IF NOT C_DISPLAY_TYPE_ANSWERS_HIDDEN #
-						var elementToDelete = jQuery("#title_question_" + returnData.code);
+						var elementToDelete = jQuery("#title-question-" + returnData.code);
 						elementToDelete.remove();
 						# ENDIF #
 						
@@ -65,13 +65,13 @@ FaqQuestion.prototype = {
 						
 						FaqQuestions.change_reposition_pictures();
 						if (FaqQuestions.questions_number == 1) {
-							jQuery("#position_update_button").hide();
+							jQuery("#position-update-button").hide();
 						} else if (FaqQuestions.questions_number == 0) {
-							jQuery("#position_update_form").hide();
+							jQuery("#position-update-form").hide();
 							# IF NOT C_DISPLAY_TYPE_ANSWERS_HIDDEN #
-							jQuery("#questions_titles_list").hide();
+							jQuery("#questions-titles-list").hide();
 							# ENDIF #
-							jQuery("#no_item_message").show();
+							jQuery("#no-item-message").show();
 						}
 					}
 				},
@@ -83,7 +83,7 @@ FaqQuestion.prototype = {
 	}
 };
 
-var FaqQuestions = new FaqQuestions('questions_list');
+var FaqQuestions = new FaqQuestions('questions-list');
 jQuery(document).ready(function() {
 	FaqQuestions.init_sortable();
 });
@@ -156,10 +156,10 @@ jQuery(document).ready(function() {
 		-->
 		</script>
 		# ELSE #
-		<div id="questions_titles_list">
+		<div id="questions-titles-list">
 			<ol>
 			# START questions #
-				<li id="title_question_{questions.ID}">
+				<li id="title-question-{questions.ID}">
 					<a href="#q{questions.ID}">{questions.QUESTION}</a>
 				</li>
 			# END questions #
@@ -168,11 +168,11 @@ jQuery(document).ready(function() {
 		</div>
 		# ENDIF #
 		
-		<form action="{REWRITED_SCRIPT}" method="post" id="position_update_form" onsubmit="FaqQuestions.serialize_sortable();">
-			<fieldset id="questions_management">
-				<ul id="questions_list" class="sortable-block">
+		<form action="{REWRITED_SCRIPT}" method="post" id="position-update-form" onsubmit="FaqQuestions.serialize_sortable();">
+			<fieldset id="questions-management">
+				<ul id="questions-list" class="sortable-block">
 					# START questions #
-					<li class="sortable-element" id="list_{questions.ID}" data-id="{questions.ID}">
+					<li class="sortable-element" id="list-{questions.ID}" data-id="{questions.ID}">
 						<div class="sortable-element-selector"></div>
 						<div class="sortable-title">
 							<span>
@@ -190,9 +190,8 @@ jQuery(document).ready(function() {
 								<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{questions.ID}" onclick="return false;"><i class="fa fa-arrow-down"></i></a>
 								# ENDIF #
 								<a href="{questions.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
-								<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete_{questions.ID}"><i class="fa fa-delete"></i></a>
+								<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete-{questions.ID}"><i class="fa fa-delete"></i></a>
 							</div>
-
 							<div id="answer{questions.ID}" class="faq-answer-container"# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN # style="display: none;"# ENDIF #>
 								<div itemprop="text">{questions.ANSWER}</div>
 							</div>
@@ -203,12 +202,12 @@ jQuery(document).ready(function() {
 						jQuery(document).ready(function() {
 							var faq_question = new FaqQuestion({questions.ID}, FaqQuestions);
 							
-							jQuery('#delete_{questions.ID}').on('click',function(){
+							jQuery('#delete-{questions.ID}').on('click',function(){
 								faq_question.delete();
 							});
 							
 							if (FaqQuestions.questions_number > 1) {
-								jQuery('#list_{questions.ID}').on('mouseout',function(){
+								jQuery('#list-{questions.ID}').on('mouseout',function(){
 									FaqQuestions.change_reposition_pictures();
 								});
 								jQuery('#move-up-{questions.ID}').on('click',function(){
@@ -230,7 +229,7 @@ jQuery(document).ready(function() {
 				</ul>
 			</fieldset>
 			# IF C_MORE_THAN_ONE_QUESTION #
-			<fieldset class="fieldset-submit" id="position_update_button">
+			<fieldset class="fieldset-submit" id="position-update-button">
 				<button type="submit" name="submit" value="true" class="submit">${LangLoader::get_message('position.update', 'common')}</button>
 				<input type="hidden" name="token" value="{TOKEN}">
 				<input type="hidden" name="tree" id="tree" value="">
@@ -239,7 +238,7 @@ jQuery(document).ready(function() {
 		</form>
 	# ENDIF #
 	# IF NOT C_ROOT_CATEGORY #
-		<div id="no_item_message"# IF C_QUESTIONS # style="display: none;"# ENDIF #>
+		<div id="no-item-message"# IF C_QUESTIONS # style="display: none;"# ENDIF #>
 			<div class="center">
 				${LangLoader::get_message('no_item_now', 'common')}
 			</div>
