@@ -10,10 +10,7 @@ FaqQuestions.prototype = {
 	init_sortable : function() {
 		jQuery("ul#questions-list").sortable({
 			handle: '.sortable-element',
-			placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>',
-			start: function (e, ui) { 
-				ui.placeholder.html(ui.item.html());
-			}
+			placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>'
 		});
 	},
 	serialize_sortable : function() {
