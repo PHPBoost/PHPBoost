@@ -8,7 +8,13 @@ var FaqQuestions = function(id){
 
 FaqQuestions.prototype = {
 	init_sortable : function() {
-		jQuery("ul#questions-list").sortable({handle: '.sortable-element'});
+		jQuery("ul#questions-list").sortable({
+			handle: '.sortable-element',
+			placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>',
+			start: function (e, ui) { 
+				ui.placeholder.html(ui.item.html());
+			}
+		});
 	},
 	serialize_sortable : function() {
 		jQuery('#tree').val(JSON.stringify(this.get_sortable_sequence()));

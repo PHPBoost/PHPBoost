@@ -1227,7 +1227,7 @@ div.form-autocompleter ul li {
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
 }
 
-.sortable-block .placeholder {
+.sortable-block .dropzone {
 	margin: 10px 0px;
 	padding-top: 5px;
 	height: 30px;
