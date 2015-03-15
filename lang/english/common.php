@@ -67,6 +67,7 @@ $lang['no_item_now'] = 'No item is available for the moment';
 
 //Position
 $lang['position'] = 'Position';
+$lang['position.move'] = 'Move';
 $lang['position.move_up'] = 'Move up';
 $lang['position.move_down'] = 'Move down';
 $lang['position.update'] = 'Change positions';
