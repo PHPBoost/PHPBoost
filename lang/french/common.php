@@ -67,6 +67,7 @@ $lang['no_item_now'] = 'Aucun élément n\'est disponible pour le moment';
 
 //Position
 $lang['position'] = 'Position';
+$lang['position.move'] = 'Déplacer';
 $lang['position.move_up'] = 'Monter';
 $lang['position.move_down'] = 'Descendre';
 $lang['position.update'] = 'Valider les positions';

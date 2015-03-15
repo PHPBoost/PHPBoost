@@ -176,7 +176,7 @@ jQuery(document).ready(function() {
 				<ul id="questions-list" class="sortable-block">
 					# START questions #
 					<li class="sortable-element" id="list-{questions.ID}" data-id="{questions.ID}">
-						<div class="sortable-element-selector"></div>
+						<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
 						<div class="sortable-title">
 							<span>
 								# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
