@@ -56,10 +56,7 @@ class FaqDisplayCategoryController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'faq');
-		if (FaqAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation())
-			$this->tpl = new FileTemplate('faq/FaqModerationDisplaySeveralFaqQuestionsController.tpl');
-		else
-			$this->tpl = new FileTemplate('faq/FaqDisplaySeveralFaqQuestionsController.tpl');
+		$this->tpl = new FileTemplate('faq/FaqDisplaySeveralFaqQuestionsController.tpl');
 		$this->tpl->add_lang($this->lang);
 	}
 	
@@ -123,6 +120,7 @@ class FaqDisplayCategoryController extends ModuleController
 			'C_QUESTIONS' => $result->get_rows_count() > 0,
 			'C_MORE_THAN_ONE_QUESTION' => $result->get_rows_count() > 1,
 			'C_DISPLAY_TYPE_ANSWERS_HIDDEN' => $config->is_display_type_answers_hidden(),
+			'C_MODERATION' => FaqAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'CATS_COLUMNS_WIDTH' => $cats_columns_width,
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),
