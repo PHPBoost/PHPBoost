@@ -1,13 +1,13 @@
-<section>
+<section id="module-guestbook">
 	<header>
 		<h1>{@module_title}</h1>
 	</header>
 	<div class="content">
 		# INCLUDE FORM #
-		
+
 		# IF C_PAGINATION #
 			<div class="center"># INCLUDE PAGINATION #</div>
-			<div class="spacer">&nbsp;</div>
+			<div class="spacer"></div>
 		# ENDIF #
 		# IF C_NO_MESSAGE #
 			<div class="notice message-helper-small center">${LangLoader::get_message('no_item_now', 'common')}</div>
@@ -36,14 +36,14 @@
 							# END user_groups #
 						# ENDIF #
 					</div>
-				
+
 					<div class="message-date">
 						<span class="actions">
 							# IF messages.C_EDIT #
-							<a href="{messages.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
+							<a href="{messages.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
 							# ENDIF #
 							# IF messages.C_DELETE #
-							<a href="{messages.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+							<a href="{messages.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
 							# ENDIF #
 						</span>
 						<a href="{messages.U_ANCHOR}"><i class="fa fa-hand-o-right"></i></a> ${LangLoader::get_message('on', 'main')} {messages.DATE}
@@ -52,7 +52,7 @@
 					<div class="message-message">
 						<div class="message-content">{messages.CONTENTS}</div>
 					</div>
-
+					
 				</div>
 			</article>
 		# END messages #

@@ -13,32 +13,30 @@ function shoutbox_add_message()
 			dataType: "json",
 			data: {'pseudo' : pseudo, 'contents' : contents, 'token' : '{TOKEN}'},
 			beforeSend: function(){
-				jQuery('#shoutbox-refresh').addClass('fa-spinner fa-spin')
+				jQuery('#shoutbox-refresh').html('<i class="fa fa-spin fa-spinner"></i>');
 			},
 			success: function(returnData){
-				var code = returnData.code;
-
-				if(code > 0) {
+				if(returnData.code > 0) {
 					shoutbox_refresh_messages_box();
 					jQuery('#shout-contents').val('');
 				} else {
-					switch(code)
+					switch(returnData.code)
 					{
 						case -1:
-							alert("${LangLoader::get_message('e_flood', 'errors')}");
+							alert(${escapejs(LangLoader::get_message('e_flood', 'errors'))});
 						break;
 						case -2:
 							alert("{L_ALERT_LINK_FLOOD}");
 						break;
 						case -3:
-							alert("returnData${LangLoader::get_message('e_incomplete', 'errors')}");
+							alert(${escapejs(LangLoader::get_message('e_incomplete', 'errors'))});
 						break;
 						case -4:
-							alert("${LangLoader::get_message('error.auth', 'status-messages-common')}");
+							alert(${escapejs(LangLoader::get_message('error.auth', 'status-messages-common'))});
 						break;
 					}
 				}
-				jQuery('#shoutbox-refresh').removeClass('fa-spinner fa-spin').addClass('fa-refresh');
+				jQuery('#shoutbox-refresh').html('<i class="fa fa-refresh"></i>');
 			},
 			error: function(e){
 				alert(e);
@@ -60,7 +58,7 @@ function shoutbox_delete_message(id_message)
 			dataType: "json",
 			data: {'id' : id_message, 'token' : '{TOKEN}'},
 			beforeSend: function(){
-				jQuery('#shoutbox-refresh').addClass('fa-spinner fa-spin');
+				jQuery('#shoutbox-refresh').html('<i class="fa fa-spin fa-spinner"></i>');
 			},
 			success: function(returnData){
 				var code = returnData.code;
@@ -70,7 +68,7 @@ function shoutbox_delete_message(id_message)
 				} else {
 					alert("{@error.message.delete}");
 				}
-				jQuery('#shoutbox-refresh').removeClass('fa-spinner fa-spin').addClass('fa-refresh');
+				jQuery('#shoutbox-refresh').html('<i class="fa fa-refresh"></i>');
 			},
 			error: function(e){
 				alert(e);
@@ -86,15 +84,12 @@ function shoutbox_refresh_messages_box() {
 		dataType: "html",
 		data: {'token' : '{TOKEN}'},
 		beforeSend: function(){
-			jQuery('#shoutbox-refresh').addClass('fa-spinner fa-spin');
+			jQuery('#shoutbox-refresh').html('<i class="fa fa-spin fa-spinner"></i>');
 		},
 		success: function(returnData){
 			jQuery('#shoutbox-messages-container').html(returnData);
 
-			jQuery('#shoutbox-refresh').removeClass('fa-spinner fa-spin').addClass('fa-refresh');
-		},
-		error: function(e){
-			alert(e);
+			jQuery('#shoutbox-refresh').html('<i class="fa fa-refresh"></i>');
 		}
 	});
 }
@@ -152,7 +147,7 @@ function shoutbox_refresh_messages_box() {
 			# ENDIF #
 			<p class="shout-spacing">
 				<button onclick="shoutbox_add_message();" type="button">${LangLoader::get_message('submit', 'main')}</button>
-				<a href="" onclick="shoutbox_refresh_messages_box();return false;" class="fa fa-refresh" id="shoutbox-refresh" title="${LangLoader::get_message('refresh', 'main')}"></a>
+				<a href="" onclick="shoutbox_refresh_messages_box();return false;" id="shoutbox-refresh" title="${LangLoader::get_message('refresh', 'main')}"><i class="fa fa-refresh"></i></a>
 			</p>
 		</form>
 		# ELSE #
