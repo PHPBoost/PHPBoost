@@ -6,7 +6,10 @@ var ContactFields = function(id){
 
 ContactFields.prototype = {
 	init_sortable : function() {
-		jQuery("ul#fields_list").sortable({handle: '.fa-arrows'});
+		jQuery("ul#fields_list").sortable({
+			handle: '.sortable-selector',
+			placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>'
+		});
 	},
 	serialize_sortable : function() {
 		jQuery('#tree').val(JSON.stringify(this.get_sortable_sequence()));
@@ -64,21 +67,17 @@ ContactField.prototype = {
 		}
 	},
 	change_display : function() {
-		jQuery("#change-display-" + this.id).removeClass("fa-eye").removeClass("fa-eye-slash");
-		jQuery("#change-display-" + this.id).addClass("fa-spin").addClass("fa-spinner");
+		jQuery("#change-display-" + this.id).html('<i class="fa fa-spin fa-spinner"></i>');
 		jQuery.ajax({
 			url: '${relative_url(ContactUrlBuilder::change_display())}',
 			type: "post",
 			data: {'id' : this.id, 'token' : '{TOKEN}'},
 			success: function(returnData){
 				if (returnData.id > 0) {
-					jQuery("#change-display-" + returnData.id).removeClass("fa-spinner").removeClass("fa-spin");
 					if (returnData.display) {
-						jQuery("#change-display-" + returnData.id).addClass("fa-eye");
-						jQuery("#change-display-" + returnData.id).prop('title', "{@field.display}");
+						jQuery("#change-display-" + returnData.id).html('<i class="fa fa-eye" title="{@field.display}"></i>');
 					} else {
-						jQuery("#change-display-" + returnData.id).addClass("fa-eye-slash");
-						jQuery("#change-display-" + returnData.id).prop('title', "{@field.not_display}");
+						jQuery("#change-display-" + returnData.id).html('<i class="fa fa-eye-slash" title="{@field.not_display}"></i>');
 					}
 				}
 			},
@@ -92,6 +91,9 @@ ContactField.prototype = {
 var ContactFields = new ContactFields('fields_list');
 jQuery(document).ready(function() {
 	ContactFields.init_sortable();
+	jQuery('li.sortable-element').on('mouseout',function(){
+		ContactFields.change_reposition_pictures();
+	});
 });
 -->
 </script>
@@ -102,28 +104,28 @@ jQuery(document).ready(function() {
 		<ul id="fields_list" class="sortable-block">
 			# START fields_list #
 				<li class="sortable-element" id="list_{fields_list.ID}" data-id="{fields_list.ID}">
+					<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
 					<div class="sortable-title">
-						<a title="${LangLoader::get_message('move', 'admin')}" class="fa fa-arrows"></a>
 						<i class="fa fa-globe"></i>
 						<span class="text-strong">{fields_list.NAME}</span>
 						<div class="sortable-actions">
 							{@field.required} : <span class="text-strong"># IF fields_list.C_REQUIRED #${LangLoader::get_message('yes', 'common')}# ELSE #${LangLoader::get_message('no', 'common')}# ENDIF #</span>
 							# IF C_MORE_THAN_ONE_FIELD #
 							<div class="sortable-options">
-								<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{fields_list.ID}" onclick="return false;" class="fa fa-arrow-up"></a>
+								<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{fields_list.ID}" onclick="return false;"><i class="fa fa-arrow-up"></i></a>
 							</div>
 							<div class="sortable-options">
-								<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{fields_list.ID}" onclick="return false;" class="fa fa-arrow-down"></a>
+								<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{fields_list.ID}" onclick="return false;"><i class="fa fa-arrow-down"></i></a>
 							</div>
 							# ENDIF #
 							<div class="sortable-options">
-								<a href="{fields_list.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
+								<a href="{fields_list.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
 							</div>
 							<div class="sortable-options">
-								# IF fields_list.C_DELETE #<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete_{fields_list.ID}" class="fa fa-delete"></a># ELSE #&nbsp;# ENDIF #
+								# IF fields_list.C_DELETE #<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete-{fields_list.ID}"><i class="fa fa-delete"></i></a># ELSE #&nbsp;# ENDIF #
 							</div>
 							<div class="sortable-options">
-							# IF NOT fields_list.C_READONLY #<a href="" onclick="return false;" id="change-display-{fields_list.ID}" # IF fields_list.C_DISPLAY #class="fa fa-eye" title="{@field.display}"# ELSE #class="fa fa-eye-slash" title="{@field.not_display}"# ENDIF #></a># ELSE #&nbsp;# ENDIF #
+							# IF NOT fields_list.C_READONLY #<a href="" onclick="return false;" id="change-display-{fields_list.ID}"><i # IF fields_list.C_DISPLAY #class="fa fa-eye" title="{@field.display}"# ELSE #class="fa fa-eye-slash" title="{@field.not_display}"# ENDIF #></i></a># ELSE #&nbsp;# ENDIF #
 							</div>
 						</div>
 					</div>
@@ -133,12 +135,8 @@ jQuery(document).ready(function() {
 					jQuery(document).ready(function() {
 						var contact_field = new ContactField({fields_list.ID}, ContactFields);
 						
-						jQuery("#list_{fields_list.ID}").on('mouseout',function(){
-							ContactFields.change_reposition_pictures();
-						});
-						
 						# IF fields_list.C_DELETE #
-						jQuery("#delete_{fields_list.ID}").on('click',function(){
+						jQuery("#delete-{fields_list.ID}").on('click',function(){
 							contact_field.delete();
 						});
 						# ENDIF #
