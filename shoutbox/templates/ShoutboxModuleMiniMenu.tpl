@@ -81,15 +81,18 @@ function shoutbox_refresh_messages_box() {
 	jQuery.ajax({
 		url: '${relative_url(ShoutboxUrlBuilder::ajax_refresh())}',
 		type: "post",
-		dataType: "html",
+		dataType: "json",
 		data: {'token' : '{TOKEN}'},
 		beforeSend: function(){
 			jQuery('#shoutbox-refresh').html('<i class="fa fa-spin fa-spinner"></i>');
 		},
 		success: function(returnData){
-			jQuery('#shoutbox-messages-container').html(returnData);
+			jQuery('#shoutbox-messages-container').html(returnData.messages);
 
 			jQuery('#shoutbox-refresh').html('<i class="fa fa-refresh"></i>');
+		},
+		error: function(e){
+			alert(e);
 		}
 	});
 }
@@ -153,6 +156,9 @@ function shoutbox_refresh_messages_box() {
 		# ELSE #
 		<div class="spacer"></div>
 		<span class="warning">{@error.post.unauthorized}</span>
+		<p class="shout-spacing">
+			<a href="" onclick="shoutbox_refresh_messages_box();return false;" id="shoutbox-refresh" title="${LangLoader::get_message('refresh', 'main')}"><i class="fa fa-refresh"></i></a>
+		</p>
 		# ENDIF #
 		<a class="small" href="${relative_url(ShoutboxUrlBuilder::home())}" title="">{@archives}</a>
 	</div>
