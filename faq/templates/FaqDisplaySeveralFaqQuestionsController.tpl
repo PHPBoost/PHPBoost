@@ -54,6 +54,7 @@ FaqQuestion.prototype = {
 			jQuery.ajax({
 				url: '${relative_url(FaqUrlBuilder::ajax_delete())}',
 				type: "post",
+				dataType: "json",
 				data: {'id' : this.id, 'token' : '{TOKEN}'},
 				success: function(returnData) {
 					if(returnData.code > 0) {
@@ -104,6 +105,7 @@ function delete_question(id_question)
 		jQuery.ajax({
 			url: '${relative_url(FaqUrlBuilder::ajax_delete())}',
 			type: "post",
+			dataType: "json",
 			data: {'id' : id_question, 'token' : '{TOKEN}'},
 			success: function(returnData) {
 				if(returnData.code > 0) {

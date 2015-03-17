@@ -52,6 +52,7 @@ ContactField.prototype = {
 			jQuery.ajax({
 				url: '${relative_url(ContactUrlBuilder::delete_field())}',
 				type: "post",
+				dataType: "json",
 				data: {'id' : this.id, 'token' : '{TOKEN}'},
 				success: function(returnData){
 					if (returnData.code > 0) {
@@ -71,6 +72,7 @@ ContactField.prototype = {
 		jQuery.ajax({
 			url: '${relative_url(ContactUrlBuilder::change_display())}',
 			type: "post",
+			dataType: "json",
 			data: {'id' : this.id, 'token' : '{TOKEN}'},
 			success: function(returnData){
 				if (returnData.id > 0) {
