@@ -34,14 +34,10 @@ class AdminExtendedFieldChangeFieldDisplayController extends AbstractController
 		
 		if ($id !== 0)
 		{
-			PersistenceContext::get_querier()->inject(
-				"UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET 
-				display = :display
-				WHERE id = :id"
-				, array(
-					'display' => (int)$display,
-					'id' => $id,
+			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, array('display' => (int)$display), 'WHERE id = :id', array(
+				'id' => $id
 			));
+			ExtendedFieldsCache::invalidate();
 		}
 		
 		return new JSONResponse(array('id' => $id, 'display' => (int)$display));

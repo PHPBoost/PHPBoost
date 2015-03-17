@@ -53,6 +53,7 @@ ExtendedField.prototype = {
 			jQuery.ajax({
 				url: '${relative_url(AdminExtendedFieldsUrlBuilder::delete())}',
 				type: "post",
+				dataType: "json",
 				data: {'id' : this.id, 'token' : '{TOKEN}'},
 				success: function(returnData){
 					if (returnData.code > 0)
@@ -81,6 +82,7 @@ ExtendedField.prototype = {
 		jQuery.ajax({
 			url: '${relative_url(AdminExtendedFieldsUrlBuilder::change_display())}',
 			type: "post",
+			dataType: "json",
 			data: {'id' : this.id, 'token' : '{TOKEN}', 'display': display},
 			success: function(returnData){
 				if (returnData.id > 0) {
