@@ -55,7 +55,8 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 	
 	private function build_view()
 	{
-		$categories = $this->get_categories_manager()->get_categories_cache()->get_categories();
+		$categories_cache = $this->get_categories_manager()->get_categories_cache()->get_class();
+		$categories = $categories_cache::load()->get_categories();
 		
 		$number_categories = count($categories);
 		

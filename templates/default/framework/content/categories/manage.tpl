@@ -1,8 +1,14 @@
 <script>
 <!--
 jQuery(document).ready(function() {
-	jQuery('ul#categories').sortable({handle: '.fa-arrows'});
+	jQuery('ul#categories').sortable({
+		handle: '.sortable-selector',
+		placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>'
+	});
 	change_reposition_pictures();
+	jQuery('li.sortable-element').on('mouseout',function(){
+		change_reposition_pictures();
+	});
 });
 
 function serialize_sortable()
@@ -41,7 +47,7 @@ function change_children_reposition_pictures(list)
 
 function change_reposition_pictures()
 {
-	change_children_reposition_pictures(get_sortable_sequence())
+	change_children_reposition_pictures(get_sortable_sequence());
 }
 -->
 </script>
