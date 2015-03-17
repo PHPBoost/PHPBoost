@@ -6,7 +6,7 @@
 		<p class="center">
 		# IF C_QUESTION #
 			<a href="{U_LINK}"><img src="{PATH_TO_ROOT}/faq/faq.png" alt="" itemprop="image" /></a>
-			<br />
+			<div class="spacer"></div>
 			<a href="{U_LINK}" class="small">{QUESTION}</a>
 		# ELSE #
 		${LangLoader::get_message('no_item_now', 'common')}
