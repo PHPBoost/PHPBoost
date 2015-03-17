@@ -23,12 +23,12 @@ ExtendedFields.prototype = {
 		var length = sequence.length;
 		for(var i = 0; i < length; i++)
 		{
-			if (jQuery('#list_' + sequence[i].id).is(':first-child'))
+			if (jQuery('#list-' + sequence[i].id).is(':first-child'))
 				jQuery("#move-up-" + sequence[i].id).hide();
 			else
 				jQuery("#move-up-" + sequence[i].id).show();
 			
-			if (jQuery('#list_' + sequence[i].id).is(':last-child'))
+			if (jQuery('#list-' + sequence[i].id).is(':last-child'))
 				jQuery("#move-down-" + sequence[i].id).hide();
 			else
 				jQuery("#move-down-" + sequence[i].id).show();
@@ -57,7 +57,7 @@ ExtendedField.prototype = {
 				success: function(returnData){
 					if (returnData.code > 0)
 					{
-						var elementToDelete = jQuery("#list_" + returnData.code);
+						var elementToDelete = jQuery("#list-" + returnData.code);
 						elementToDelete.remove();
 						ExtendedFields.init_sortable();
 						jQuery('#no_field').hide();
@@ -113,7 +113,7 @@ jQuery(document).ready(function() {
 	<legend>{@fields.management}</legend>
 		<ul id="lists" class="sortable-block">
 			# START list_extended_fields #
-				<li class="sortable-element" id="list_{list_extended_fields.ID}" data-id="{list_extended_fields.ID}">
+				<li class="sortable-element" id="list-{list_extended_fields.ID}" data-id="{list_extended_fields.ID}">
 					<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
 					<div class="sortable-title">
 						<i class="fa fa-globe"></i>

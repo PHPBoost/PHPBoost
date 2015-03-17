@@ -23,12 +23,12 @@ ContactFields.prototype = {
 		var length = sequence.length;
 		for(var i = 0; i < length; i++)
 		{
-			if (jQuery('#list_' + sequence[i].id).is(':first-child'))
+			if (jQuery('#list-' + sequence[i].id).is(':first-child'))
 				jQuery("#move-up-" + sequence[i].id).hide();
 			else
 				jQuery("#move-up-" + sequence[i].id).show();
 			
-			if (jQuery('#list_' + sequence[i].id).is(':last-child'))
+			if (jQuery('#list-' + sequence[i].id).is(':last-child'))
 				jQuery("#move-down-" + sequence[i].id).hide();
 			else
 				jQuery("#move-down-" + sequence[i].id).show();
@@ -55,7 +55,7 @@ ContactField.prototype = {
 				data: {'id' : this.id, 'token' : '{TOKEN}'},
 				success: function(returnData){
 					if (returnData.code > 0) {
-						var elementToDelete = jQuery("#list_" + returnData.code);
+						var elementToDelete = jQuery("#list-" + returnData.code);
 						elementToDelete.remove();
 						ContactFields.init_sortable();
 					}
@@ -103,7 +103,7 @@ jQuery(document).ready(function() {
 	<legend>${LangLoader::get_message('admin.fields.manage', 'common', 'contact')}</legend>
 		<ul id="fields_list" class="sortable-block">
 			# START fields_list #
-				<li class="sortable-element" id="list_{fields_list.ID}" data-id="{fields_list.ID}">
+				<li class="sortable-element" id="list-{fields_list.ID}" data-id="{fields_list.ID}">
 					<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
 					<div class="sortable-title">
 						<i class="fa fa-globe"></i>
