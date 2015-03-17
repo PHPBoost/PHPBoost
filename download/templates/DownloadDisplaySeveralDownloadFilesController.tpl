@@ -40,7 +40,7 @@
 			<table>
 				<thead>
 					<tr>
-						# IF C_MODERATE #<th class="col-smaller"></th># ENDIF #
+						# IF C_MODERATION #<th class="col-smaller"></th># ENDIF #
 						<th>${LangLoader::get_message('form.name', 'common')}</th>
 						<th class="col-small">${LangLoader::get_message('form.keywords', 'common')}</th>
 						<th class="col-small">${LangLoader::get_message('form.date.creation', 'common')}</th>
@@ -59,7 +59,7 @@
 				<tbody>
 					# START downloadfiles #
 					<tr>
-						# IF C_MODERATE #
+						# IF C_MODERATION #
 						<td>
 							# IF downloadfiles.C_EDIT #
 								<a href="{downloadfiles.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
