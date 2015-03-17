@@ -106,27 +106,16 @@ jQuery(document).ready(function() {
 				<li class="sortable-element" id="list-{fields_list.ID}" data-id="{fields_list.ID}">
 					<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
 					<div class="sortable-title">
-						<i class="fa fa-globe"></i>
-						<span class="text-strong">{fields_list.NAME}</span>
+						{fields_list.NAME}
 						<div class="sortable-actions">
-							{@field.required} : <span class="text-strong"># IF fields_list.C_REQUIRED #${LangLoader::get_message('yes', 'common')}# ELSE #${LangLoader::get_message('no', 'common')}# ENDIF #</span>
+							{@field.required} : # IF fields_list.C_REQUIRED #${LangLoader::get_message('yes', 'common')}# ELSE #${LangLoader::get_message('no', 'common')}# ENDIF #
 							# IF C_MORE_THAN_ONE_FIELD #
-							<div class="sortable-options">
-								<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{fields_list.ID}" onclick="return false;"><i class="fa fa-arrow-up"></i></a>
-							</div>
-							<div class="sortable-options">
-								<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{fields_list.ID}" onclick="return false;"><i class="fa fa-arrow-down"></i></a>
-							</div>
+							<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{fields_list.ID}" onclick="return false;"><i class="fa fa-arrow-up"></i></a>
+							<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{fields_list.ID}" onclick="return false;"><i class="fa fa-arrow-down"></i></a>
 							# ENDIF #
-							<div class="sortable-options">
-								<a href="{fields_list.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
-							</div>
-							<div class="sortable-options">
-								# IF fields_list.C_DELETE #<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete-{fields_list.ID}"><i class="fa fa-delete"></i></a># ELSE #&nbsp;# ENDIF #
-							</div>
-							<div class="sortable-options">
+							<a href="{fields_list.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+							# IF fields_list.C_DELETE #<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete-{fields_list.ID}"><i class="fa fa-delete"></i></a># ELSE #&nbsp;# ENDIF #
 							# IF NOT fields_list.C_READONLY #<a href="" onclick="return false;" id="change-display-{fields_list.ID}"><i # IF fields_list.C_DISPLAY #class="fa fa-eye" title="{@field.display}"# ELSE #class="fa fa-eye-slash" title="{@field.not_display}"# ENDIF #></i></a># ELSE #&nbsp;# ENDIF #
-							</div>
 						</div>
 					</div>
 					<div class="spacer"></div>

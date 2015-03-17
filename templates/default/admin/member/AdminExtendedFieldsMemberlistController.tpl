@@ -116,28 +116,19 @@ jQuery(document).ready(function() {
 				<li class="sortable-element" id="list-{list_extended_fields.ID}" data-id="{list_extended_fields.ID}">
 					<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
 					<div class="sortable-title">
-						<i class="fa fa-globe"></i>
-						<span class="text-strong">{list_extended_fields.NAME}</span>
+						{list_extended_fields.NAME}
 						<div class="sortable-actions">
-							{@field.required} : <span class="text-strong"># IF list_extended_fields.C_REQUIRED #${LangLoader::get_message('yes', 'common')}# ELSE #${LangLoader::get_message('no', 'common')}# ENDIF #</span>
+							{@field.required} : # IF list_extended_fields.C_REQUIRED #${LangLoader::get_message('yes', 'common')}# ELSE #${LangLoader::get_message('no', 'common')}# ENDIF #
 							# IF C_MORE_THAN_ONE_FIELD #
-							<div class="sortable-options">
-								<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{list_extended_fields.ID}" onclick="return false;"><i class="fa fa-arrow-up"></i></a>
-							</div>
-							<div class="sortable-options">
-								<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{list_extended_fields.ID}" onclick="return false;"><i class="fa fa-arrow-down"></i></a>
-							</div>
+							<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{list_extended_fields.ID}" onclick="return false;"><i class="fa fa-arrow-up"></i></a>
+							<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{list_extended_fields.ID}" onclick="return false;"><i class="fa fa-arrow-down"></i></a>
 							# ENDIF #
-							<div class="sortable-options">
-								<a href="{list_extended_fields.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
-							</div>
-							<div class="sortable-options">
-								# IF NOT list_extended_fields.C_FREEZE #
-								<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete-{list_extended_fields.ID}"><i class="fa fa-delete"></i></a>
-								# ELSE #
-								&nbsp;
-								# ENDIF #
-							</div>
+							<a href="{list_extended_fields.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+							# IF NOT list_extended_fields.C_FREEZE #
+							<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete-{list_extended_fields.ID}"><i class="fa fa-delete"></i></a>
+							# ELSE #
+							&nbsp;
+							# ENDIF #
 							<a href="" onclick="return false;" id="change-display-{list_extended_fields.ID}"><i # IF list_extended_fields.C_DISPLAY #class="fa fa-eye" title="{@field.display}"# ELSE #class="fa fa-eye-slash" title="{@field.not_display}"# ENDIF #></i></a>
 						</div>
 					</div>
