@@ -92,7 +92,7 @@ function shoutbox_refresh_messages_box() {
 			jQuery('#shoutbox-refresh').html('<i class="fa fa-refresh"></i>');
 		},
 		error: function(e){
-			alert(e);
+			jQuery('#shoutbox-refresh').html('<i class="fa fa-refresh"></i>');
 		}
 	});
 }
