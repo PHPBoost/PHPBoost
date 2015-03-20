@@ -8,33 +8,27 @@
 	function ContactFieldExistValidator(message, field_id)
 	{
 		var field = HTMLForms.getField('name');
+		var result = '';
+		
 		if (field)
 		{
 			var value = field.getValue();
-			var error = '';
-
+			
 			jQuery.ajax({
 				url: '${relative_url(ContactUrlBuilder::check_field_name())}',
 				type: "post",
-				async : false,
-				data: {id : field_id, name : value},
+				dataType: "json",
+				data: {'id' : field_id, 'name' : value, 'token' : '{TOKEN}'},
 				success: function(returnData){
-					if (returnData == 1)
-					{
-						error = message;
-					}
-					else
-					{
-						error = '';
-					}
+					if (returnData.result == 1)
+						result = message;
 				},
 				error: function(e){
 					alert(e);
 				}
 			});
-			return error;
 		}
-		return '';
+		return result;
 	}
 -->
 </script>

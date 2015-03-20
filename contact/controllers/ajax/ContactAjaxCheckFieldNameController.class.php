@@ -27,16 +27,7 @@
 
 class ContactAjaxCheckFieldNameController extends AbstractController
 {
-	private $view;
-	
 	public function execute(HTTPRequestCustom $request)
-	{
-		$this->init();
-		$this->build_view($request);
-		return new SiteNodisplayResponse($this->view);
-	}
-	
-	private function build_view(HTTPRequestCustom $request)
 	{
 		$id = $request->get_value('id', 0);
 		$name = $request->get_value('name', '');
@@ -60,12 +51,7 @@ class ContactAjaxCheckFieldNameController extends AbstractController
 			}
 		}
 		
-		$this->view->put('RESULT', $result);
-	}
-	
-	private function init()
-	{
-		$this->view = new StringTemplate('{RESULT}');
+		return new JSONResponse(array('result' => $result));
 	}
 }
 ?>
