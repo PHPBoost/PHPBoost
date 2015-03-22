@@ -279,14 +279,13 @@ class AdminContactFieldFormController extends AdminModuleController
 					HTMLForms.getField("' .$name_field_disable. '").disable();';
 					if ($name_field_disable == 'regex')
 					{
-						$event .= 'HTMLForms.getField("regex").disable();
-						HTMLForms.getField("regex_type").disable();';
+						$event .= 'HTMLForms.getField("regex_type").disable();';
 					}
-					$event .= '} else {	HTMLForms.getField("' .$name_field_disable. '").enable();';
+					$event .= '} else {
+					HTMLForms.getField("' .$name_field_disable. '").enable();';
 					if ($name_field_disable == 'regex')
 					{
-						$event .= 'HTMLForms.getField("regex").disable();
-						HTMLForms.getField("regex_type").enable();';
+						$event .= 'HTMLForms.getField("regex_type").enable();';
 					}
 					$event .= '}';
 			}
