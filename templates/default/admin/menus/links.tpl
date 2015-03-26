@@ -3,7 +3,10 @@
 var idMax = {ID_MAX};
 
 function initSortableMenu() {
-	jQuery("ul#menu_element_{ID}_list").sortable({handle: '.fa-arrows'}); 
+	jQuery("ul#menu_element_{ID}_list").sortable({
+		handle: '.sortable-selector',
+		placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>'
+	}); 
 }
 
 function get_sortable_sequence() {
@@ -19,12 +22,12 @@ function toggleProperties(id) {
 	if (jQuery("#menu_element_" + id + "_properties").is(':hidden'))
 	{   //Si les propriétés sont repliées, on les affiche
 		jQuery("#menu_element_" + id + "_properties").fadeIn();
-		jQuery("#menu_element_" + id + "_more_image").removeClass("fa-cog").addClass("fa-minus");
+		jQuery("#menu_element_" + id + "_more_image").html('<i class="fa fa-minus"></i>');
 	}
 	else
 	{   //Sinon, on les cache
 		jQuery("#menu_element_" + id + "_properties").fadeOut();
-		jQuery("#menu_element_" + id + "_more_image").removeClass("fa-minus").addClass("fa-cog");
+		jQuery("#menu_element_" + id + "_more_image").html('<i class="fa fa-cog"></i>');
 	}
 }
 
@@ -36,10 +39,9 @@ function getAuthForm(id) {
 function addSubElement(menu_element_id) {
 	var id = idMax++;
 	
-	jQuery('<li/>', {id : 'menu_element_' + id, 'data-id' : id, class : 'sortable-element', style : 'display:none;'}).appendTo('#' + menu_element_id + '_list');
+	jQuery('<li/>', {id : 'menu_element_' + id, 'data-id' : id, class : 'sortable-element'}).appendTo('#' + menu_element_id + '_list');
+	jQuery('<div/>', {class : 'sortable-selector', title : ${escapejs(LangLoader::get_message('position.move', 'common'))}}).appendTo('#menu_element_' + id);
 	jQuery('<div/>', {id : 'menu_title_' + id, class : 'sortable-title'}).appendTo('#menu_element_' + id);
-	jQuery('<i/>', {class : 'fa fa-arrows', title : ${escapejs(LangLoader::get_message('move', 'admin'))}}).appendTo('#menu_title_' + id);
-	jQuery('#menu_title_' + id).append(' ');
 	
 	jQuery('<i/>', {class : 'fa fa-globe'}).appendTo('#menu_title_' + id);
 	jQuery('#menu_title_' + id).append(' ');
@@ -58,9 +60,9 @@ function addSubElement(menu_element_id) {
 	jQuery('<img/>', {id : 'menu_element_' + id + '_image_preview'}).appendTo('#menu_element_' + id + '_image_preview_div');
 	
 	jQuery('<div/>', {id : 'menu_element_' + id + '_actions', class : 'sortable-actions'}).appendTo('#menu_title_' + id);
-	jQuery('<a/>', {id : 'menu_element_' + id + '_more_image', class : 'fa fa-cog', title : {JL_MORE}, onclick: 'toggleProperties(' + id + ');return false;'}).appendTo('#menu_element_' + id + '_actions');
+	jQuery('<a/>', {id : 'menu_element_' + id + '_more_image', title : {JL_MORE}, onclick: 'toggleProperties(' + id + ');return false;'}).html('<i class="fa fa-cog"></i>').appendTo('#menu_element_' + id + '_actions');
 	jQuery('#menu_element_' + id + '_actions').append(' ');
-	jQuery('<a/>', {id : 'menu_element_' + id + '_delete_image', class : 'fa fa-delete', title : {JL_DELETE}, onclick: 'deleteElement(\'menu_element_' + id + '\');return false;'}).appendTo('#menu_element_' + id + '_actions');
+	jQuery('<a/>', {id : 'menu_element_' + id + '_delete_image', title : {JL_DELETE}, onclick: 'deleteElement(\'menu_element_' + id + '\');return false;'}).html('<i class="fa fa-delete"></i>').appendTo('#menu_element_' + id + '_actions');
 	
 	jQuery('<div/>', {class : 'spacer'}).appendTo('#menu_element_' + id);
 	
@@ -70,17 +72,15 @@ function addSubElement(menu_element_id) {
 	jQuery('<label/>', {for : 'menu_element_' + id + '_auth_div'}).text({JL_AUTHORIZATIONS} + ' ').appendTo('#menu_element_' + id + '_authorizations');
 	jQuery('<div/> ', {class : 'form-field'}).html(getAuthForm(id)).appendTo('#menu_element_' + id + '_authorizations');
 	
-	jQuery('#menu_element_' + id).fadeIn();
 	initSortableMenu();
 }
 
 function addSubMenu(menu_element_id) {
 	var id = idMax++;
 	
-	jQuery('<li/>', {id : 'menu_element_' + id, 'data-id' : id, class : 'sortable-element', style : 'display:none;'}).appendTo('#' + menu_element_id + '_list');
+	jQuery('<li/>', {id : 'menu_element_' + id, 'data-id' : id, class : 'sortable-element'}).appendTo('#' + menu_element_id + '_list');
+	jQuery('<div/>', {class : 'sortable-selector', title : ${escapejs(LangLoader::get_message('position.move', 'common'))}}).appendTo('#menu_element_' + id);
 	jQuery('<div/>', {id : 'menu_title_' + id, class : 'sortable-title'}).appendTo('#menu_element_' + id);
-	jQuery('<i/>', {class : 'fa fa-arrows', title : ${escapejs(LangLoader::get_message('move', 'admin'))}}).appendTo('#menu_title_' + id);
-	jQuery('#menu_title_' + id).append(' ');
 	
 	jQuery('<i/>', {class : 'fa fa-folder'}).appendTo('#menu_title_' + id);
 	jQuery('#menu_title_' + id).append(' ');
@@ -99,9 +99,9 @@ function addSubMenu(menu_element_id) {
 	jQuery('<img/>', {id : 'menu_element_' + id + '_image_preview'}).appendTo('#menu_element_' + id + '_image_preview_div');
 	
 	jQuery('<div/>', {id : 'menu_element_' + id + '_actions', class : 'sortable-actions'}).appendTo('#menu_title_' + id);
-	jQuery('<a/>', {id : 'menu_element_' + id + '_more_image', class : 'fa fa-cog', title : {JL_MORE}, onclick: 'toggleProperties(' + id + ');return false;'}).appendTo('#menu_element_' + id + '_actions');
+	jQuery('<a/>', {id : 'menu_element_' + id + '_more_image', title : {JL_MORE}, onclick: 'toggleProperties(' + id + ');return false;'}).html('<i class="fa fa-cog"></i>').appendTo('#menu_element_' + id + '_actions');
 	jQuery('#menu_element_' + id + '_actions').append(' ');
-	jQuery('<a/>', {id : 'menu_element_' + id + '_delete_image', class : 'fa fa-delete', title : {JL_DELETE}, onclick: 'deleteElement(\'menu_element_' + id + '\');return false;'}).appendTo('#menu_element_' + id + '_actions');
+	jQuery('<a/>', {id : 'menu_element_' + id + '_delete_image', title : {JL_DELETE}, onclick: 'deleteElement(\'menu_element_' + id + '\');return false;'}).html('<i class="fa fa-delete"></i>').appendTo('#menu_element_' + id + '_actions');
 	
 	jQuery('<div/>', {class : 'spacer'}).appendTo('#menu_element_' + id);
 	
@@ -120,7 +120,6 @@ function addSubMenu(menu_element_id) {
 	
 	jQuery('<button/>', {type : 'button', id : 'menu_element_' + id + '_add_sub_menu', name : 'menu_element_' + id + '_add_sub_menu', value : {JL_ADD_SUB_MENU}, onclick : 'addSubMenu(\'menu_element_' + id + '\');'}).text({JL_ADD_SUB_MENU}).appendTo('#menu_element_' + id + '_buttons');
 	
-	jQuery('#menu_element_' + id).fadeIn();
 	addSubElement('menu_element_' + id);
 }
 
@@ -128,8 +127,7 @@ function deleteElement(element_id)
 {
 	if (confirm({JL_DELETE_ELEMENT}))
 	{
-		var elementToDelete = document.getElementById(element_id);
-		elementToDelete.remove();
+		jQuery('#' + element_id).remove();
 		initSortableMenu();
 	}
 }
