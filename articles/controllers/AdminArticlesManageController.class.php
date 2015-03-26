@@ -65,9 +65,9 @@ class AdminArticlesManageController extends AdminModuleController
 		
 		$results = array();
 		$result = $table_model->get_sql_results('articles
-			LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = articles.author_user_id
 			LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = articles.id AND notes.module_name = \'articles\'
-			LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = \'articles\' AND note.user_id = ' . AppContext::get_current_user()->get_id()
+			LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = \'articles\' AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
+			LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = articles.author_user_id'
 		);
 		foreach ($result as $row)
 		{
@@ -76,7 +76,7 @@ class AdminArticlesManageController extends AdminModuleController
 			$category = $article->get_category();
 			$user = $article->get_author_user();
 
-			$edit_Link = new LinkHTMLElement(ArticlesUrlBuilder::edit_article($article->get_id(), SITE_REWRITED_SCRIPT), '', array('title' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
+			$edit_link = new LinkHTMLElement(ArticlesUrlBuilder::edit_article($article->get_id(), SITE_REWRITED_SCRIPT), '', array('title' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
 			$delete_link = new LinkHTMLElement(ArticlesUrlBuilder::delete_article($article->get_id(), SITE_REWRITED_SCRIPT), '', array('title' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-delete');
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
@@ -103,7 +103,7 @@ class AdminArticlesManageController extends AdminModuleController
 			$start_and_end_dates = new SpanHTMLElement($dates, array(), 'smaller');
 			
 			$results[] = new HTMLTableRow(array(
-				new HTMLTableRowCell($edit_Link->display() . $delete_link->display()),
+				new HTMLTableRowCell($edit_link->display() . $delete_link->display()),
 				new HTMLTableRowCell(new LinkHTMLElement(ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title()), $article->get_title()), 'left'),
 				new HTMLTableRowCell(new LinkHTMLElement(ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), $category->get_name())),
 				new HTMLTableRowCell($author),

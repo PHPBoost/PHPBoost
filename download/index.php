@@ -36,7 +36,7 @@ require_once PATH_TO_ROOT . '/kernel/init.php';
 $url_controller_mappers = array(
 	//Config
 	new UrlControllerMapper('AdminDownloadConfigController', '`^/admin(?:/config)?/?$`'),
-	new UrlControllerMapper('AdminDownloadManageController', '`^/admin/manage(?:/([a-z_-]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
+	new UrlControllerMapper('AdminDownloadManageController', '`^/admin/manage/?$`'),
 	
 	//Categories
 	new UrlControllerMapper('DownloadCategoriesManageController', '`^/admin/categories/?$`'),

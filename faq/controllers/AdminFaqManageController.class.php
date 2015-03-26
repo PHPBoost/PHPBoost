@@ -65,7 +65,7 @@ class AdminFaqManageController extends AdminModuleController
 		$table_model->set_caption($this->lang['faq.management']);
 		
 		$results = array();
-		$result = $table_model->get_sql_results('faq LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = faq.author_user_id');
+		$result = $table_model->get_sql_results('faq LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = faq.author_user_id');
 		foreach ($result as $row)
 		{
 			$faq_question = new FaqQuestion();
@@ -73,14 +73,14 @@ class AdminFaqManageController extends AdminModuleController
 			$category = $faq_question->get_category();
 			$user = $faq_question->get_author_user();
 
-			$edit_Link = new LinkHTMLElement(FaqUrlBuilder::edit($faq_question->get_id(), SITE_REWRITED_SCRIPT), '', array('title' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
+			$edit_link = new LinkHTMLElement(FaqUrlBuilder::edit($faq_question->get_id(), SITE_REWRITED_SCRIPT), '', array('title' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
 			$delete_link = new LinkHTMLElement(FaqUrlBuilder::delete($faq_question->get_id(), SITE_REWRITED_SCRIPT), '', array('title' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-delete');
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('color' => $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
 
 			$results[] = new HTMLTableRow(array(
-				new HTMLTableRowCell($edit_Link->display() . $delete_link->display()),
+				new HTMLTableRowCell($edit_link->display() . $delete_link->display()),
 				new HTMLTableRowCell(new LinkHTMLElement(FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $faq_question->get_id()), $faq_question->get_question()), 'left'),
 				new HTMLTableRowCell(new LinkHTMLElement(FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), $category->get_name())),
 				new HTMLTableRowCell($author),
