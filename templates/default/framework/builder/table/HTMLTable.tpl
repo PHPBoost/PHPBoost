@@ -31,6 +31,7 @@
 		</tr>
 	</thead>
 	
+	# IF C_HAS_ROWS #
 	<tfoot>
 	    <tr>
 	      	<th colspan="{NUMBER_OF_COLUMNS}">
@@ -59,7 +60,8 @@
 			</th>
 	    </tr>
     </tfoot>
-    
+    # ENDIF #
+	
 	<tbody>
 		# START row #
 		<tr
