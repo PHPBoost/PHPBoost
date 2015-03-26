@@ -32,7 +32,7 @@ require_once PATH_TO_ROOT . '/kernel/init.php';
 $url_controller_mappers = array(
 	//Admin
 	new UrlControllerMapper('AdminNewsConfigController', '`^/admin(?:/config)?/?$`'),
-	new UrlControllerMapper('AdminNewsManageController', '`^/admin/manage(?:/([a-z_-]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
+	new UrlControllerMapper('AdminNewsManageController', '`^/admin/manage/?$`'),
 	
 	//Categories
 	new UrlControllerMapper('NewsCategoriesManageController', '`^/admin/categories/?$`'),

@@ -36,7 +36,7 @@ require_once PATH_TO_ROOT . '/kernel/init.php';
 $url_controller_mappers = array(
 	//Config
 	new UrlControllerMapper('AdminFaqConfigController', '`^/admin(?:/config)?/?$`'),
-	new UrlControllerMapper('AdminFaqManageController', '`^/admin/manage(?:/([a-z_-]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
+	new UrlControllerMapper('AdminFaqManageController', '`^/admin/manage/?$`'),
 	
 	//Categories
 	new UrlControllerMapper('FaqCategoriesManageController', '`^/admin/categories/?$`'),

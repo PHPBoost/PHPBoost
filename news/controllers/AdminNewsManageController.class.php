@@ -61,7 +61,7 @@ class AdminNewsManageController extends AdminModuleController
 		$table_model->set_caption($this->lang['news.management']);
 
         $results = array();
-		$result = $table_model->get_sql_results('news LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = news.author_user_id');
+		$result = $table_model->get_sql_results('news LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = news.author_user_id');
 		foreach ($result as $row)
 		{
 			$news = new News();
@@ -69,14 +69,14 @@ class AdminNewsManageController extends AdminModuleController
 			$category = $news->get_category();
 			$user = $news->get_author_user();
 
-			$edit_Link = new LinkHTMLElement(NewsUrlBuilder::edit_news($news->get_id(), SITE_REWRITED_SCRIPT), '', array('title' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
+			$edit_link = new LinkHTMLElement(NewsUrlBuilder::edit_news($news->get_id(), SITE_REWRITED_SCRIPT), '', array('title' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
 			$delete_link = new LinkHTMLElement(NewsUrlBuilder::delete_news($news->get_id(), SITE_REWRITED_SCRIPT), '', array('title' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-delete');
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('color' => $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
 
 			$results[] = new HTMLTableRow(array(
-				new HTMLTableRowCell($edit_Link->display() . $delete_link->display()),
+				new HTMLTableRowCell($edit_link->display() . $delete_link->display()),
 				new HTMLTableRowCell(new LinkHTMLElement(NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name()), $news->get_name()), 'left'),
 				new HTMLTableRowCell(new LinkHTMLElement(NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), $category->get_name())),
 				new HTMLTableRowCell($author),

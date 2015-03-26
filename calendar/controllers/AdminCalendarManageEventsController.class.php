@@ -76,7 +76,7 @@ class AdminCalendarManageEventsController extends AdminModuleController
 			$category = $event->get_content()->get_category();
 			$user = $event->get_content()->get_author_user();
 
-			$edit_Link = new LinkHTMLElement(CalendarUrlBuilder::edit_event(!$event->get_parent_id() ? $event->get_id() : $event->get_parent_id(), SITE_REWRITED_SCRIPT), '', array('title' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
+			$edit_link = new LinkHTMLElement(CalendarUrlBuilder::edit_event(!$event->get_parent_id() ? $event->get_id() : $event->get_parent_id(), SITE_REWRITED_SCRIPT), '', array('title' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
 			$delete_link = new LinkHTMLElement(CalendarUrlBuilder::delete_event($event->get_id(), SITE_REWRITED_SCRIPT), '', array('title' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => !$event->belongs_to_a_serie() ? 'delete-element' : ''), 'fa fa-delete');
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
@@ -85,7 +85,7 @@ class AdminCalendarManageEventsController extends AdminModuleController
 			$br = new BrHTMLElement();
 			
 			$results[] = new HTMLTableRow(array(
-				new HTMLTableRowCell($edit_Link->display() . $delete_link->display()),
+				new HTMLTableRowCell($edit_link->display() . $delete_link->display()),
 				new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()), $event->get_content()->get_title()), 'left'),
 				new HTMLTableRowCell(new SpanHTMLElement($category->get_name(), array('style' => $category->get_id() != Category::ROOT_CATEGORY && $category->get_color() ? 'color:' . $category->get_color() : ''))),
 				new HTMLTableRowCell($author),

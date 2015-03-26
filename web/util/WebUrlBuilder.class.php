@@ -79,12 +79,9 @@ class WebUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function manage($sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1)
+	public static function manage()
 	{
-		$page = $page !== 1 ? $page . '/' : '';
-		$sort_field = $sort_field !== self::DEFAULT_SORT_FIELD ? $sort_field . '/' : '';
-		$sort_mode = $sort_mode !== self::DEFAULT_SORT_MODE ? $sort_mode . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/admin/manage/' . $sort_field . $sort_mode . $page);
+		return DispatchManager::get_url(self::$dispatcher, '/admin/manage/');
 	}
 	
 	/**

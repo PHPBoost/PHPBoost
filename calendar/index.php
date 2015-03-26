@@ -37,7 +37,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('CalendarDeleteCategoryController', '`^/admin/categories/([0-9]+)/delete/?$`', array('id')),
 	
 	//Admin
-	new UrlControllerMapper('AdminCalendarManageEventsController', '`^/admin/manage(?:/([a-z_-]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
+	new UrlControllerMapper('AdminCalendarManageEventsController', '`^/admin/manage/?$`'),
 	new UrlControllerMapper('AdminCalendarConfigController', '`^/admin(?:/config)?/?$`'),
 	
 	//Display events
