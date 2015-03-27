@@ -376,9 +376,9 @@ class NewsFormController extends ModuleController
 		if ($this->get_news()->get_id() === null)
 		{
 			$graphical_environment->set_page_title($this->lang['news.add'], $this->lang['news']);
-			$breadcrumb->add($this->lang['news.add'], NewsUrlBuilder::add_news());
+			$breadcrumb->add($this->lang['news.add'], NewsUrlBuilder::add_news($news->get_id_cat()));
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['news.add']);
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::add_news());
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::add_news($news->get_id_cat()));
 		}
 		else
 		{
@@ -386,14 +386,14 @@ class NewsFormController extends ModuleController
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['news.edit']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::edit_news($news->get_id(), $redirect));
 			
-			$categories = array_reverse(NewsService::get_categories_manager()->get_parents($this->get_news()->get_id_cat(), true));
+			$categories = array_reverse(NewsService::get_categories_manager()->get_parents($news->get_id_cat(), true));
 			foreach ($categories as $id => $category)
 			{
 				if ($category->get_id() != Category::ROOT_CATEGORY)
 					$breadcrumb->add($category->get_name(), NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 			}
 			$category = $news->get_category();
-			$breadcrumb->add($this->get_news()->get_name(), NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->get_news()->get_id(), $this->get_news()->get_rewrited_name()));
+			$breadcrumb->add($news->get_name(), NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name()));
 			$breadcrumb->add($this->lang['news.edit'], NewsUrlBuilder::edit_news($news->get_id(), $redirect));
 		}
 		

@@ -368,9 +368,9 @@ class WebFormController extends ModuleController
 		if ($weblink->get_id() === null)
 		{
 			$graphical_environment->set_page_title($this->lang['web.add']);
-			$breadcrumb->add($this->lang['web.add'], WebUrlBuilder::add());
+			$breadcrumb->add($this->lang['web.add'], WebUrlBuilder::add($weblink->get_id_category()));
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['web.add'], $this->lang['module_title']);
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::add());
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::add($weblink->get_id_category()));
 		}
 		else
 		{
