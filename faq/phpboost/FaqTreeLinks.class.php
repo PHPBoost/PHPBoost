@@ -43,14 +43,14 @@ class FaqTreeLinks implements ModuleTreeLinksExtensionPoint
 		
 		$manage_link = new AdminModuleLink($lang['faq.manage'], FaqUrlBuilder::manage());
 		$manage_link->add_sub_link(new AdminModuleLink($lang['faq.manage'], FaqUrlBuilder::manage()));
-		$manage_link->add_sub_link(new AdminModuleLink($lang['faq.actions.add'], FaqUrlBuilder::add(AppContext::get_request()->get_getstring('id_category', 0))));
+		$manage_link->add_sub_link(new AdminModuleLink($lang['faq.actions.add'], FaqUrlBuilder::add(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY))));
 		$tree->add_link($manage_link);
 		
 		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin-common'), FaqUrlBuilder::configuration()));
 		
 		if (!AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		{
-			$tree->add_link(new ModuleLink($lang['faq.actions.add'], FaqUrlBuilder::add(AppContext::get_request()->get_getstring('id_category', 0)), FaqAuthorizationsService::check_authorizations()->write() || FaqAuthorizationsService::check_authorizations()->contribution()));
+			$tree->add_link(new ModuleLink($lang['faq.actions.add'], FaqUrlBuilder::add(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY)), FaqAuthorizationsService::check_authorizations()->write() || FaqAuthorizationsService::check_authorizations()->contribution()));
 		}
 		
 		$tree->add_link(new ModuleLink($lang['faq.pending'], FaqUrlBuilder::display_pending(), FaqAuthorizationsService::check_authorizations()->write() || FaqAuthorizationsService::check_authorizations()->contribution() || FaqAuthorizationsService::check_authorizations()->moderation()));

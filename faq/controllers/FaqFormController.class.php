@@ -275,9 +275,9 @@ class FaqFormController extends ModuleController
 		if ($faq_question->get_id() === null)
 		{
 			$graphical_environment->set_page_title($this->lang['faq.add'], $this->lang['module_title']);
-			$breadcrumb->add($this->lang['faq.add'], FaqUrlBuilder::add());
+			$breadcrumb->add($this->lang['faq.add'], FaqUrlBuilder::add($faq_question->get_id_category()));
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['faq.add']);
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::add());
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::add($faq_question->get_id_category()));
 		}
 		else
 		{
