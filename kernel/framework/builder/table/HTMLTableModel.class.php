@@ -46,6 +46,7 @@ class HTMLTableModel
 	private $default_sorting_rule;
 	private $allowed_sort_parameters = array();
 	private $filters = array();
+	private $display_footer = true;
 
 	/**
 	 * @var HTMLTableColumn[]
@@ -73,6 +74,14 @@ class HTMLTableModel
 	/**
 	 * {@inheritdoc}
 	 */
+	public function has_id()
+	{
+		return !empty($this->id);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
 	public function get_id()
 	{
 		return $this->id;
@@ -92,6 +101,14 @@ class HTMLTableModel
 	public function get_caption()
 	{
 		return $this->caption;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function is_footer_displayed()
+	{
+		return $this->display_footer == true;
 	}
 
 	/**
@@ -185,6 +202,11 @@ class HTMLTableModel
 	public function set_caption($caption)
 	{
 		$this->caption = $caption;
+	}
+
+	public function hide_footer()
+	{
+		$this->display_footer = false;
 	}
 
 	public function set_nb_rows_options(array $nb_rows_options)

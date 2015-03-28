@@ -32,6 +32,7 @@
 abstract class AbstractHTMLElement implements HTMLElement
 {
 	protected $css_class = '';
+	protected $id = '';
 	
 	public function has_css_class()
 	{
@@ -51,6 +52,21 @@ abstract class AbstractHTMLElement implements HTMLElement
 	public function add_css_class($class)
 	{
 		$this->css_class .= ' ' . $class;
+	}
+	
+	public function has_id()
+	{
+		return !empty($this->id);
+	}
+	
+	public function get_id()
+	{
+		return $this->id;
+	}
+	
+	public function set_id($id)
+	{
+		$this->id = $id;
 	}
 
 	public function display(){}

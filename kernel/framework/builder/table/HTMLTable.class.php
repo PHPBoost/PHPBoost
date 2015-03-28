@@ -153,11 +153,14 @@ class HTMLTable implements HTMLElement
 			'TABLE_ID' => $this->arg_id,
 			'C_PAGINATION_ACTIVATED' => $this->is_pagination_activated(),
 			'NUMBER_OF_COLUMNS' => count($this->columns),
+			'C_ID' => $this->model->has_id(),
+			'ID' => $this->model->get_id(),
 			'C_CAPTION' => $this->model->has_caption(),
 			'CAPTION' => $this->model->get_caption(),
 			'U_TABLE_DEFAULT_OPIONS' => $this->parameters->get_default_table_url(),
 			'C_NB_ROWS_OPTIONS' => $has_nb_rows_options,
-			'C_HAS_ROWS' => !empty($this->rows)
+			'C_HAS_ROWS' => !empty($this->rows),
+			'C_DISPLAY_FOOTER' => $this->model->is_footer_displayed() && !empty($this->rows)
 		));
 
 		if ($has_nb_rows_options)
@@ -224,6 +227,7 @@ class HTMLTable implements HTMLElement
 	{
 		$row_values = array();
 		$this->add_css_vars($row, $row_values);
+		$this->add_id_vars($row, $row_values);
 		$this->tpl->assign_block_vars('row', $row_values);
 		foreach ($row->get_cells() as $cell)
 		{
@@ -239,6 +243,7 @@ class HTMLTable implements HTMLElement
 			'COLSPAN' => $cell->get_colspan()
 		);
 		$this->add_css_vars($cell, $cell_values);
+		$this->add_id_vars($cell, $cell_values);
 		$this->tpl->assign_block_vars('row.cell', $cell_values);
 	}
 
@@ -246,6 +251,12 @@ class HTMLTable implements HTMLElement
 	{
 		$tpl_vars['C_CSS_CLASSES'] = $element->has_css_class();
 		$tpl_vars['CSS_CLASSES'] = $element->get_css_class();
+	}
+
+	private function add_id_vars(HTMLElement $element, array &$tpl_vars)
+	{
+		$tpl_vars['C_ID'] = $element->has_id();
+		$tpl_vars['ID'] = $element->get_id();
 	}
 
 	private function generate_stats()
