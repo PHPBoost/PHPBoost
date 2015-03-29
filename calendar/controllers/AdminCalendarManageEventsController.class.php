@@ -63,6 +63,7 @@ class AdminCalendarManageEventsController extends AdminModuleController
 		$table = new HTMLTable($table_model);
 		
 		$table_model->set_caption($this->lang['calendar.config.events.management']);
+		$table_model->add_permanent_filter('parent_id = 0');
 		
 		$results = array();
 		$result = $table_model->get_sql_results('event

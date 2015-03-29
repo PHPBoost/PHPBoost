@@ -42,7 +42,7 @@ class SQLHTMLTableModel extends HTMLTableModel
 
 	public function get_number_of_matching_rows()
 	{
-		return PersistenceContext::get_querier()->count($this->table, $this->get_filtered_clause($this->html_table->parameters->get_filters()), $this->parameters);
+		return PersistenceContext::get_querier()->count($this->table, $this->get_filtered_clause($this->html_table->parameters->get_filters(), $this->get_permanent_filters()), $this->parameters);
 	}
 
 	public function get_sql_results($sql_join = false)
@@ -51,10 +51,11 @@ class SQLHTMLTableModel extends HTMLTableModel
 		$offset = $this->html_table->get_first_row_index();
 		$sorting_rule = $this->html_table->parameters->get_sorting_rule();
 		$filters = $this->html_table->parameters->get_filters();
+		$permanent_filters = $this->get_permanent_filters();
 
 		$query = 'SELECT * ';
 		$query .= $this->get_sql_from($sql_join);
-		$query .= $this->get_filtered_clause($filters);
+		$query .= $this->get_filtered_clause($filters, $permanent_filters);
 		$query .= $this->get_order_clause($sorting_rule);
 		$query .= $limit !== HTMLTableModel::NO_PAGINATION ? ' LIMIT ' . $limit . ' OFFSET ' . $offset : '';
 
@@ -70,7 +71,7 @@ class SQLHTMLTableModel extends HTMLTableModel
 		return 'FROM ' . $this->table;
 	}
 
-	private function get_filtered_clause(array $filters)
+	private function get_filtered_clause(array $filters, array $permanent_filters)
 	{
 		$this->parameters = array();
 		$clause = ' WHERE 1';
@@ -84,6 +85,10 @@ class SQLHTMLTableModel extends HTMLTableModel
 				$sql_filters[] = $query_fragment->get_query();
 			}
 			$clause .= ' AND ' . implode(' AND ', $sql_filters);
+		}
+		if (!empty($permanent_filters))
+		{
+			$clause .= ' AND ' . implode(' AND ', $permanent_filters);
 		}
 		return $clause;
 	}
