@@ -56,8 +56,7 @@ ContactField.prototype = {
 				data: {'id' : this.id, 'token' : '{TOKEN}'},
 				success: function(returnData){
 					if (returnData.code > 0) {
-						var elementToDelete = jQuery("#list-" + returnData.code);
-						elementToDelete.remove();
+						jQuery("#list-" + returnData.code).remove();
 						ContactFields.init_sortable();
 					}
 				},
