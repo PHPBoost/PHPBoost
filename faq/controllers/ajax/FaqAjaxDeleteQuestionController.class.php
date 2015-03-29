@@ -41,7 +41,7 @@ class FaqAjaxDeleteQuestionController extends AbstractController
 		else
 			$code = -1;
 		
-		return new JSONResponse(array('code' => $code));
+		return new JSONResponse(array('code' => $code, 'questions_number' => ($code > 0 ? FaqQervice::count() : 0)));
 	}
 	
 	private function delete_question()

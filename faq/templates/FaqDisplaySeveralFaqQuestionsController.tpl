@@ -58,11 +58,9 @@ FaqQuestion.prototype = {
 				data: {'id' : this.id, 'token' : '{TOKEN}'},
 				success: function(returnData) {
 					if(returnData.code > 0) {
-						var elementToDelete = jQuery("#list-" + returnData.code);
-						elementToDelete.remove();
+						jQuery("#list-" + returnData.code).remove();
 						# IF NOT C_DISPLAY_TYPE_ANSWERS_HIDDEN #
-						var elementToDelete = jQuery("#title-question-" + returnData.code);
-						elementToDelete.remove();
+						jQuery("#title-question-" + returnData.code).remove();
 						# ENDIF #
 						
 						FaqQuestions.init_sortable();
@@ -109,16 +107,12 @@ function delete_question(id_question)
 			data: {'id' : id_question, 'token' : '{TOKEN}'},
 			success: function(returnData) {
 				if(returnData.code > 0) {
-					var elementToDelete = jQuery("#question-" + returnData.code);
-					elementToDelete.remove();
+					jQuery("#question-" + returnData.code).remove();
 					# IF NOT C_DISPLAY_TYPE_ANSWERS_HIDDEN #
-					var elementToDelete = jQuery("#title-question-" + returnData.code);
-					elementToDelete.remove();
+					jQuery("#title-question-" + returnData.code).remove();
 					# ENDIF #
 					
-					this.questions_number--;
-					
-					if (this.questions_number == 0) {
+					if (returnData.questions_number == 0) {
 						# IF NOT C_DISPLAY_TYPE_ANSWERS_HIDDEN #
 						jQuery("#questions-titles-list").hide();
 						# ENDIF #
@@ -303,16 +297,7 @@ jQuery(document).ready(function() {
 						<a href="{questions.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
 						# ENDIF #
 						# IF questions.C_DELETE #
-						<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete-{questions.ID}"><i class="fa fa-delete"></i></a>
-						<script>
-						<!--
-						jQuery(document).ready(function() {
-							jQuery('#delete-{questions.ID}').on('click',function(){
-								delete_question({questions.ID});
-							});
-						});
-						-->
-						</script>
+						<a href="" onclick="delete_question({questions.ID});return false;" title="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-delete"></i></a>
 						# ENDIF #
 					</span>
 					
