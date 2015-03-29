@@ -46,6 +46,7 @@ class HTMLTableModel
 	private $default_sorting_rule;
 	private $allowed_sort_parameters = array();
 	private $filters = array();
+	private $permanent_filters = array();
 	private $display_footer = true;
 
 	/**
@@ -194,6 +195,22 @@ class HTMLTableModel
 		return $this->filters;
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_permanent_filter($id)
+	{
+		return $this->permanent_filters[$id];
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_permanent_filters()
+	{
+		return $this->permanent_filters;
+	}
+
 	public function set_id($id)
 	{
 		$this->id = $id;
@@ -226,6 +243,11 @@ class HTMLTableModel
 	public function add_filter(HTMLTableFilter $filter)
 	{
 		$this->filters[$filter->get_id()] = $filter;
+	}
+
+	public function add_permanent_filter($filter)
+	{
+		$this->permanent_filters[] = $filter;
 	}
 
 	private function add_column(HTMLTableColumn $column)
