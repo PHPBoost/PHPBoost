@@ -109,7 +109,6 @@
 [b]Galerie:[/b]
 - Voir les images plus vues/mieux notées, affichage sur l'ensemble de la galerie et non sur une catégorie.
 - Possibilité de télécharger l'image.
-- [color=red]Nouveauté:[/color] Gestion des catégories infinies, droits de lecture/ecriture sur les catégories.
 - [color=red]Nouveauté:[/color] Possibilité de redimensionnement automatique des images dans la galerie, avec prévisualisation du rendu.
 - [color=red]Nouveauté:[/color] Approbation des photos envoyées par les membres/invités, alerte envoyée à l'administrateur.
 - [color=red]Nouveauté:[/color] Galerie privée pour les membres.
