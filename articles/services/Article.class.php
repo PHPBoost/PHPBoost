@@ -135,7 +135,7 @@ class Article
 	{
 		if ($this->get_description_enabled())
 		{
-			return substr(@strip_tags($this->description, '<br>'), 0, ArticlesConfig::load()->get_number_character_to_cut());
+			return FormatingHelper::second_parse($this->description);
 		}
 		else
 		{

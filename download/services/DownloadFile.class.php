@@ -170,7 +170,7 @@ class DownloadFile
 	{
 		if ($this->is_short_contents_enabled())
 		{
-			return $this->short_contents;
+			return FormatingHelper::second_parse($this->short_contents);
 		}
 		return substr(@strip_tags($this->contents, '<br>'), 0, DownloadConfig::NUMBER_CARACTERS_BEFORE_CUT);
 	}
