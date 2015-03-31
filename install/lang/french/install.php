@@ -77,7 +77,7 @@ $lang = array(
 //licence
 	'step.license.title' => 'Licence',
 	'step.license.agreement' => 'Acceptation des termes de la licence',
-	'step.license.require.agreement' => '<p>Vous devez accepter les termes de la licence GNU/GPL pour installer PHPBoost.</p><p>Vous trouverez une traduction non officielle de cette licence en français <img src="../images/stats/countries/fr.png" alt="Français" /> <a href="http://www.linux-france.org/article/these/gpl.html">ici</a>.</p>',
+	'step.license.require.agreement' => '<p>Vous devez accepter les termes de la licence GNU/GPL pour installer PHPBoost.</p><p>Vous trouverez une traduction non officielle de cette licence en français <img src="../images/stats/countries/fr.png" alt="Français" /> <a href="http://org.rodage.com/gpl-3.0.fr.txt">ici</a>.</p>',
 	'step.license.terms.title' => 'Termes de la licence',
 	'step.license.please_agree' => 'J\'ai pris connaissance des termes de la licence et je les accepte',
 	'step.license.submit.alert' => 'Vous devez accepter la licence en cochant le formulaire associé pour pouvoir continuer !',
@@ -97,7 +97,7 @@ $lang = array(
 	'server.urlRewriting' => 'URL Rewriting',
 	'server.urlRewriting.explanation' => 'Réécriture des adresses des pages qui les rend plus lisibles et plus propices au référencement sur les moteurs de recherche',
 	'folders.chmod' => 'Autorisations des dossiers',
-	'folders.chmod.check' => '<span style="font-weight:bold;color:red;">Obligatoire :</span> PHPBoost nécessite que certains dossiers soient inscriptibles. Si votre serveur le permet, leurs autorisations sont changées de façon automatique. Cependant certains serveurs empêchent la modification automatique des autorisations, il faut donc faire la manipulation manuellement, pour cela voir la <a href="http://www.phpboost.com/wiki/changer-le-chmod-d-un-dossier" title="Documentation PHPBoost : Changer le chmod">documentation PHPBoost</a> ou contactez votre hébergeur.',
+	'folders.chmod.check' => '<span style="font-weight:bold;color:red;">Obligatoire :</span> PHPBoost nécessite que certains dossiers soient inscriptibles. Si votre serveur le permet, leurs autorisations sont changées de façon automatique. Cependant certains serveurs empêchent la modification automatique des autorisations, il faut donc faire la manipulation manuellement, pour cela contactez votre hébergeur.',
 	'folders.chmod.refresh' => 'Revérifier les dossiers',
 	'folder.exists' => 'Existant',
 	'folder.doesNotExist' => 'Inexistant',
