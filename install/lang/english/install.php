@@ -96,7 +96,7 @@ $lang = array(
 	'server.urlRewriting' => 'URL Rewriting',
 	'server.urlRewriting.explanation' => 'Not only does it rewrite URLs, but it helps a lot with search engine robots.',
 	'folders.chmod' => 'Directories permissions',
-	'folders.chmod.check' => '<span style="font-weight:bold;color:red;">Required:</span> PHPBoost needs to change permissions of several directories to make them writable. If your hosting company allows it, it will be done automatically. However, you might need to do it by yourself to make the installation work. If you don\'t know how to change permissions of a directory, you can find help in our <a href="http://www.phpboost.net/wiki/change-the-chmod-of-a-directory" title="PHPBoost documentation : chmod">PHPBoost documentation</a> or on your host website.',
+	'folders.chmod.check' => '<span style="font-weight:bold;color:red;">Required:</span> PHPBoost needs to change permissions of several directories to make them writable. If your hosting company allows it, it will be done automatically. However, you might need to do it by yourself to make the installation work. If you don\'t know how to change permissions of a directory, you can find help on your host website.',
 	'folders.chmod.refresh' => 'Double-check directories permissions',
 	'folder.exists' => 'Found',
 	'folder.doesNotExist' => 'Not found',
