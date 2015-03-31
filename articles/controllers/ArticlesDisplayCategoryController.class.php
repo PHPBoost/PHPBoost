@@ -136,6 +136,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 	
 	private function build_categories_listing_view(Date $now)
 	{
+		$config =  ArticlesConfig::load();
 		$authorized_categories = ArticlesService::get_authorized_categories($this->get_category()->get_id());
 		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= ac.id, ac.id, ac.name, ac.description, ac.image, ac.rewrited_name,
 		(SELECT COUNT(*) FROM '. ArticlesSetup::$articles_table .' articles 
@@ -144,15 +145,17 @@ class ArticlesDisplayCategoryController extends ModuleController
 		) AS nbr_articles
 		FROM ' . ArticlesSetup::$articles_cats_table .' ac 
 		WHERE ac.id_parent = :id_category AND ac.id IN :authorized_categories
-		ORDER BY ac.id_parent, ac.c_order', array(
+		ORDER BY ac.id_parent, ac.c_order
+		LIMIT :number_items_per_page', array(
 			'timestamp_now' => $now->get_timestamp(),
 			'id_category' => $this->category->get_id(),
-			'authorized_categories' => $authorized_categories
+			'authorized_categories' => $authorized_categories,
+			'number_items_per_page' => $config->get_number_categories_per_page()
 		));
 		
 		$nbr_cat_displayed = 0;
 		while ($row = $result->fetch())
-		{	
+		{
 			$category_image = new Url($row['image']);
 			
 			$this->view->assign_block_vars('cat_list', array(
@@ -171,7 +174,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 		}
 		$result->dispose();
                 
-		$nbr_column_cats = ($nbr_cat_displayed > ArticlesConfig::load()->get_number_cols_display_cats()) ? ArticlesConfig::load()->get_number_cols_display_cats() : $nbr_cat_displayed;
+		$nbr_column_cats = ($nbr_cat_displayed > $config->get_number_cols_display_cats()) ? $config->get_number_cols_display_cats() : $nbr_cat_displayed;
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 		$column_width_cats = floor(100/$nbr_column_cats);
 		
