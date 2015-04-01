@@ -31,6 +31,7 @@
 
 $lang['configuration'] = 'Configuration';
 $lang['config.items_number_per_page'] = 'Nombre d\'éléments affichés par page';
+$lang['config.categories_number_per_page'] = 'Nombre de catégories maximum affichées par page';
 $lang['config.columns_number_per_line'] = 'Nombre de catégories affichées par ligne';
 $lang['config.author_displayed'] = 'Afficher le nom de l\'auteur';
 $lang['config.comments_enabled'] = 'Activer les commentaires';

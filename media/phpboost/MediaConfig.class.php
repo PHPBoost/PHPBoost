@@ -32,6 +32,7 @@
 class MediaConfig extends AbstractConfigData
 {
 	const ITEMS_NUMBER_PER_PAGE = 'items_number_per_page';
+	const CATEGORIES_NUMBER_PER_PAGE = 'categories_number_per_page';
 	const COLUMNS_NUMBER_PER_LINE = 'columns_number_per_line';
 	const AUTHOR_DISPLAYED = 'author_displayed';
 	const COMMENTS_ENABLED = 'comments_enabled';
@@ -55,6 +56,16 @@ class MediaConfig extends AbstractConfigData
 	public function set_items_number_per_page($value)
 	{
 		$this->set_property(self::ITEMS_NUMBER_PER_PAGE, $value);
+	}
+	
+	public function get_categories_number_per_page()
+	{
+		return $this->get_property(self::CATEGORIES_NUMBER_PER_PAGE);
+	}
+	
+	public function set_categories_number_per_page($value) 
+	{
+		$this->set_property(self::CATEGORIES_NUMBER_PER_PAGE, $value);
 	}
 	
 	public function get_columns_number_per_line()
@@ -194,6 +205,7 @@ class MediaConfig extends AbstractConfigData
 	{
 		return array(
 			self::ITEMS_NUMBER_PER_PAGE => 25,
+			self::CATEGORIES_NUMBER_PER_PAGE => 10,
 			self::COLUMNS_NUMBER_PER_LINE => 2,
 			self::AUTHOR_DISPLAYED => true,
 			self::COMMENTS_ENABLED => true,

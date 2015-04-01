@@ -53,6 +53,25 @@ class MediaDisplayCategoryController extends ModuleController
 		$category = $this->get_category();
 		$authorized_categories = MediaService::get_authorized_categories($category->get_id());
 		
+		//Contenu de la catégorie
+		$page = AppContext::get_request()->get_getint('p', 1);
+		$subcategories_page = AppContext::get_request()->get_getint('subcategories_page', 1);
+		$get_sort = retrieve(GET, 'sort', '');
+		$get_mode = retrieve(GET, 'mode', '');
+		$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
+		$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
+		
+		//On crée une pagination si le nombre de sous-catégories est trop important.
+		$subcategories_number = count(MediaService::get_categories_manager()->get_categories_cache()->get_childrens($category->get_id()));
+		$pagination = new ModulePagination($subcategories_page, $subcategories_number, $config->get_categories_number_per_page());
+		$pagination->set_url(new Url('/media/media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $category->get_id() . '&amp;p=' . $page . '&amp;subcategories_page=%d'));
+
+		if ($pagination->current_page_is_empty() && $subcategories_page > 1)
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+		
 		//Children categories
 		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= media_cats.id, media_cats.*,
 		(SELECT COUNT(*) FROM '. MediaSetup::$media_table .' media
@@ -62,9 +81,12 @@ class MediaDisplayCategoryController extends ModuleController
 		FROM ' . MediaSetup::$media_cats_table .' media_cats
 		WHERE media_cats.id_parent = :id_category
 		AND media_cats.id IN :authorized_categories
-		ORDER BY media_cats.id_parent, media_cats.c_order', array(
+		ORDER BY media_cats.id_parent, media_cats.c_order
+		LIMIT :number_items_per_page OFFSET :display_from', array(
 			'id_category' => $category->get_id(),
-			'authorized_categories' => $authorized_categories
+			'authorized_categories' => $authorized_categories,
+			'number_items_per_page' => $pagination->get_number_items_per_page(),
+			'display_from' => $pagination->get_display_from()
 		));
 		
 		$nbr_cat_displayed = 0;
@@ -96,19 +118,16 @@ class MediaDisplayCategoryController extends ModuleController
 			'C_CATEGORY_DESCRIPTION' => $category_description,
 			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
 			'C_MODO' => MediaAuthorizationsService::check_authorizations($category->get_id())->moderation(),
+			'C_SUBCATEGORIES_PAGINATION' => $pagination->has_several_pages(),
+			'SUBCATEGORIES_PAGINATION' => $pagination->display(),
 			'L_UNAPROBED' => $MEDIA_LANG['unaprobed_media_short'],
 			'L_BY' => $MEDIA_LANG['media_added_by'],
 			'CATS_COLUMNS_WIDTH' => $cats_columns_width,
-			'CATEGORY_NAME' => $category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('module_title', 'common', 'media'): $category->get_name(),
+			'CATEGORY_NAME' => $category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('module_title', 'common', 'media') : $category->get_name(),
 			'CATEGORY_DESCRIPTION' => $category_description,
 			'ID_CAT' => $category->get_id()
 		));
-	
-		//Contenu de la catégorie
-		$get_sort = retrieve(GET, 'sort', '');
-		$get_mode = retrieve(GET, 'mode', '');
-		$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
-		$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
+		
 		$selected_fields = array('alpha' => '', 'date' => '', 'nbr' => '', 'note' => '', 'com' => '', 'asc' => '', 'desc' => '');
 
 		switch ($get_sort)
@@ -172,10 +191,9 @@ class MediaDisplayCategoryController extends ModuleController
 		);
 		
 		//On crée une pagination si le nombre de fichiers est trop important.
-		$page = AppContext::get_request()->get_getint('p', 1);
 		$mediafiles_number = MediaService::count($condition, $parameters);
 		$pagination = new ModulePagination($page, $mediafiles_number, $config->get_items_number_per_page());
-		$pagination->set_url(new Url('/media/media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $category->get_id() . '&amp;p=%d'));
+		$pagination->set_url(new Url('/media/media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $category->get_id() . '&amp;p=%d&amp;subcategories_page=' . $subcategories_page));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
 		{
