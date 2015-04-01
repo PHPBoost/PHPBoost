@@ -45,6 +45,9 @@
 				<div class="connect-register">
 					# IF C_USER_REGISTER #
 					<a class="small" href="${relative_url(UserUrlBuilder::registration())}"><i class="fa fa-ticket"></i> {L_REGISTER}</a>
+					<br />
+					<a class="social-connect fb" href="${relative_url(UserUrlBuilder::connect('fb'))}" title="${LangLoader::get_message('facebook-connect', 'user-common')}"><i class="fa fa-facebook-square biggest"></i></a>
+					<a class="social-connect google" href="${relative_url(UserUrlBuilder::connect('google'))}" title="${LangLoader::get_message('google-connect', 'user-common')}"><i class="fa fa-google-plus-square biggest"></i></a>
 					# ENDIF #
 					<br />
 					<a class="small" href="${relative_url(UserUrlBuilder::forget_password())}"><i class="fa fa-question-circle"></i> {L_FORGOT_PASS}</a>
@@ -98,19 +101,24 @@
 	# IF C_USER_NOTCONNECTED #
 	<div id="connect-menu">
 		<div class="horizontal-fieldset">
-			<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();">
-				<input type="text" id="login" name="login" placeholder="{L_PSEUDO}" class="connect_form" maxlength="25">
-				<input type="password" id="password" name="password" class="connect_form" placeholder="{L_PASSWORD}" maxlength="30">
-				<input checked="checked" type="checkbox" name="autoconnect">
-				<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}">
-				<button type="submit" name="authenticate" value="internal" class="submit">{L_CONNECT}</button>
-			</form>
-			# IF C_USER_REGISTER #
-			<form action="${relative_url(UserUrlBuilder::registration())}" method="post">
-				<button type="submit" name="register" value="true" class="submit">{L_REGISTER}</button>
-			</form>
-			# ENDIF #
-			<a href="${relative_url(UserUrlBuilder::connect('fb'))}"><i class="fa fa-facebook-square biggest"></i></a>
+			<a href="#" class="fa fa-sign-in js-menu-button" onClick="open_submenu('connect-menu');"></a>
+			<div class="connect-content">
+				<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();">
+					<input type="text" id="login" name="login" placeholder="{L_PSEUDO}" class="connect_form">
+					<input type="password" id="password" name="password" class="connect_form" placeholder="{L_PASSWORD}">
+					<input checked="checked" type="checkbox" name="autoconnect">
+					<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}">
+					<button type="submit" name="authenticate" value="internal" class="submit">{L_CONNECT}</button>
+				</form>
+				# IF C_USER_REGISTER #
+				<form action="${relative_url(UserUrlBuilder::registration())}" method="post">
+					<button type="submit" name="register" value="true" class="submit">{L_REGISTER}</button>
+				</form>
+				<a class="social-connect fb" href="${relative_url(UserUrlBuilder::connect('fb'))}" title="${LangLoader::get_message('facebook-connect', 'user-common')}"><i class="fa fa-facebook-square biggest"></i><span>&nbsp; ${LangLoader::get_message('facebook-connect', 'user-common')}</span></a>
+				<a class="social-connect google" href="${relative_url(UserUrlBuilder::connect('google'))}" title="${LangLoader::get_message('google-connect', 'user-common')}"><i class="fa fa-google-plus-square biggest"></i><span>&nbsp; ${LangLoader::get_message('google-connect', 'user-common')}</span></a>
+				# ENDIF #
+				<a class="small" href="${relative_url(UserUrlBuilder::forget_password())}"><i class="fa fa-question-circle fa-2x"></i> {L_FORGOT_PASS}</a>
+			</div>
 		</div>
 	</div>
 	# ELSE #
