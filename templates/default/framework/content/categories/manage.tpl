@@ -27,12 +27,12 @@ function change_children_reposition_pictures(list)
 	var length = list.length;
 	for(var i = 0; i < length; i++)
 	{
-		if (jQuery('#cat_' + list[i].id).is(':first-child'))
+		if (jQuery('#cat-' + list[i].id).is(':first-child'))
 			jQuery("#move-up-" + list[i].id).hide();
 		else
 			jQuery("#move-up-" + list[i].id).show();
 		
-		if (jQuery('#cat_' + list[i].id).is(':last-child'))
+		if (jQuery('#cat-' + list[i].id).is(':last-child'))
 			jQuery("#move-down-" + list[i].id).hide();
 		else
 			jQuery("#move-down-" + list[i].id).show();
