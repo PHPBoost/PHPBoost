@@ -47,7 +47,7 @@ $lang['hidden'] = 'Hidden';
 $lang['yes'] = 'Yes';
 $lang['no'] = 'No';
 
-$lang['none'] = 'Aucun';
+$lang['none'] = 'None';
 
 $lang['add'] = 'Add';
 $lang['delete'] = 'Delete';
@@ -64,6 +64,9 @@ $lang['unknown_size'] = 'Unknown size';
 
 $lang['items_number'] = 'Items number';
 $lang['no_item_now'] = 'No item is available for the moment';
+
+$lang['filters'] = 'Filters';
+$lang['table_footer_stats'] = ':start to :end of :total elements';
 
 //Position
 $lang['position'] = 'Position';
