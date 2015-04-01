@@ -55,10 +55,10 @@
 				{streams_list.DESCRIPTION}
 			</td>
 			<td>
-				# IF streams_list.C_VIEW_ARCHIVES #<a href="{streams_list.U_VIEW_ARCHIVES}">{@newsletter.view_archives}</a># ELSE #{@newsletter.not_level}# ENDIF #
+				# IF streams_list.C_VIEW_ARCHIVES #<a href="{streams_list.U_VIEW_ARCHIVES}">{@newsletter.view_archives}</a># ELSE #${LangLoader::get_message('error.auth', 'status-messages-common')}# ENDIF #
 			</td>
 			<td>
-				# IF streams_list.C_VIEW_SUBSCRIBERS #<a href="{streams_list.U_VIEW_SUBSCRIBERS}">{@newsletter.view_subscribers}</a># ELSE #{@newsletter.not_level}# ENDIF #
+				# IF streams_list.C_VIEW_SUBSCRIBERS #<a href="{streams_list.U_VIEW_SUBSCRIBERS}">{@newsletter.view_subscribers}</a># ELSE #${LangLoader::get_message('error.auth', 'status-messages-common')}# ENDIF #
 			</td>
 		</tr>
 		# END streams_list #
