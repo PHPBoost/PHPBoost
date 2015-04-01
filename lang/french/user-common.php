@@ -175,6 +175,8 @@ Mot de passe : :password
 
 :accounts_validation_explain
 
+A bientôt sur :host
+
 :signature';
 
 $lang['agreement'] = 'Règlement';
