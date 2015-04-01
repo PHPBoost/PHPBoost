@@ -57,13 +57,15 @@ class ArticlesDisplayCategoryController extends ModuleController
 		$request = AppContext::get_request();
 		$mode = $request->get_getstring('sort', ArticlesUrlBuilder::DEFAULT_SORT_MODE);
 		$field = $request->get_getstring('field', ArticlesUrlBuilder::DEFAULT_SORT_FIELD);
+		$page = AppContext::get_request()->get_getint('page', 1);
+		$subcategories_page = AppContext::get_request()->get_getint('subcategories_page', 1);
 		
-		$this->build_categories_listing_view($now);
-		$this->build_articles_listing_view($now, $field, $mode);
+		$this->build_categories_listing_view($now, $field, $mode, $page, $subcategories_page);
+		$this->build_articles_listing_view($now, $field, $mode, $page, $subcategories_page);
 		$this->build_sorting_form($field, $mode);
 	}
 	
-	private function build_articles_listing_view(Date $now, $field, $mode)
+	private function build_articles_listing_view(Date $now, $field, $mode, $page, $subcategories_page)
 	{
 		$config = ArticlesConfig::load();
 		
@@ -97,8 +99,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 			'timestamp_now' => $now->get_timestamp()
 		);
 		
-		$page = AppContext::get_request()->get_getint('page', 1);
-		$pagination = $this->get_pagination($condition, $parameters, $field, $mode, $page);
+		$pagination = $this->get_pagination($condition, $parameters, $field, $mode, $page, $subcategories_page);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, com.number_comments, notes.average_notes, notes.number_notes, note.note
 		FROM ' . ArticlesSetup::$articles_table . ' articles
@@ -160,10 +161,14 @@ class ArticlesDisplayCategoryController extends ModuleController
 		}
 	}
 	
-	private function build_categories_listing_view(Date $now)
+	private function build_categories_listing_view(Date $now, $field, $mode, $page, $subcategories_page)
 	{
 		$config =  ArticlesConfig::load();
 		$authorized_categories = ArticlesService::get_authorized_categories($this->get_category()->get_id());
+		
+		$subcategories_number = count(ArticlesService::get_categories_manager()->get_categories_cache()->get_childrens($this->category->get_id()));
+		$pagination = $this->get_subcategories_pagination($subcategories_number, $config->get_number_categories_per_page(), $field, $mode, $page, $subcategories_page);
+		
 		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= ac.id, ac.id, ac.name, ac.description, ac.image, ac.rewrited_name,
 		(SELECT COUNT(*) FROM '. ArticlesSetup::$articles_table .' articles 
 		WHERE articles.id_category = @id_cat
@@ -172,11 +177,12 @@ class ArticlesDisplayCategoryController extends ModuleController
 		FROM ' . ArticlesSetup::$articles_cats_table .' ac 
 		WHERE ac.id_parent = :id_category AND ac.id IN :authorized_categories
 		ORDER BY ac.id_parent, ac.c_order
-		LIMIT :number_items_per_page', array(
+		LIMIT :number_items_per_page OFFSET :display_from', array(
 			'timestamp_now' => $now->get_timestamp(),
 			'id_category' => $this->category->get_id(),
 			'authorized_categories' => $authorized_categories,
-			'number_items_per_page' => $config->get_number_categories_per_page()
+			'number_items_per_page' => $pagination->get_number_items_per_page(),
+			'display_from' => $pagination->get_display_from()
 		));
 		
 		$nbr_cat_displayed = 0;
@@ -204,7 +210,12 @@ class ArticlesDisplayCategoryController extends ModuleController
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 		$column_width_cats = floor(100/$nbr_column_cats);
 		
-		$this->view->put_all(array('C_ARTICLES_CAT' => $nbr_cat_displayed > 0, 'COLUMN_WIDTH_CAT' => $column_width_cats));
+		$this->view->put_all(array(
+			'C_ARTICLES_CAT' => $nbr_cat_displayed > 0,
+			'C_SUBCATEGORIES_PAGINATION' => $pagination->has_several_pages(),
+			'SUBCATEGORIES_PAGINATION' => $pagination->display(),
+			'COLUMN_WIDTH_CAT' => $column_width_cats
+		));
 	}
 	
 	private function build_sorting_form($field, $mode)
@@ -280,19 +291,33 @@ class ArticlesDisplayCategoryController extends ModuleController
 		}
 	}
 	
-	private function get_pagination($condition, $parameters, $field, $mode, $page)
+	private function get_pagination($condition, $parameters, $field, $mode, $page, $subcategories_page)
 	{
 		$number_articles = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, $condition, $parameters);
 		
 		$pagination = new ModulePagination($page, $number_articles, (int)ArticlesConfig::load()->get_number_articles_per_page());
-		$pagination->set_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), $field, $mode, '%d'));
+		$pagination->set_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), $field, $mode, '%d', $subcategories_page));
 		
 		if ($pagination->current_page_is_empty() && $page > 1)
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
 		}
+		
+		return $pagination;
+	}
 	
+	private function get_subcategories_pagination($subcategories_number, $number_categories_per_page, $field, $mode, $page, $subcategories_page)
+	{
+		$pagination = new ModulePagination($subcategories_page, $subcategories_number, (int)$number_categories_per_page);
+		$pagination->set_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), $field, $mode, $page, '%d'));
+		
+		if ($pagination->current_page_is_empty() && $subcategories_page > 1)
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+		
 		return $pagination;
 	}
 	
