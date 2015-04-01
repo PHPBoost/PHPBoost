@@ -29,7 +29,7 @@ include_once PATH_TO_ROOT . '/kernel/lib/php/phpmailer/class.phpmailer.php';
 
 abstract class AbstractPHPMailerMailService implements MailService
 {
-	private static $regex = '(?:[a-z0-9_!#$%&\'*+/=?^|~-]\.?){0,63}[a-z0-9_!#$%&\'*+/=?^|~-]+@(?:[a-z0-9_-]{2,}\.)+([a-z0-9_-]{2,}\.)*[a-z]{2,4}';
+	private static $regex = '(?:[a-z0-9_!#$%&\'*+/=?^|~-]\.?){0,63}[a-z0-9_!#$%&\'*+/=?^|~-]+@(?:[a-z0-9_-]{2,}\.)+([a-z0-9_-]{2,}\.)*[a-z]{2,}';
 
 	/**
 	 * @var PHPMailer
