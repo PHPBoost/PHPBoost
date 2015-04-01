@@ -69,7 +69,7 @@ abstract class CategoriesCache implements CacheData
 		$childrens = array();
 		foreach ($this->categories as $id => $category)
 		{
-			if ($category->get_id_parent() == $id_category)
+			if ($category->get_id_parent() == $id_category && $category->get_id() != Category::ROOT_CATEGORY)
 			{
 				$childrens[$id] = $category;
 			}
