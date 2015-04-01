@@ -65,6 +65,9 @@ $lang['unknown_size'] = 'Taille inconnue';
 $lang['items_number'] = 'Nombre d\'éléments';
 $lang['no_item_now'] = 'Aucun élément n\'est disponible pour le moment';
 
+$lang['filters'] = 'Filtres';
+$lang['table_footer_stats'] = 'Eléments :start à :end sur :total';
+
 //Position
 $lang['position'] = 'Position';
 $lang['position.move'] = 'Déplacer';

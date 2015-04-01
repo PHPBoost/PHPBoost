@@ -120,7 +120,7 @@ class HTMLTable implements HTMLElement
 		{
 			$form = new HTMLForm('filters_form_' . $this->arg_id, '#');
 			$fieldset = new FormFieldsetHorizontal('filters');
-			$fieldset->set_description(LangLoader::get_class_message('filters', __CLASS__));
+			$fieldset->set_description(LangLoader::get_message('filters', 'common'));
 			$form->add_fieldset($fieldset);
 
 			foreach ($filters as $filter)
@@ -262,7 +262,7 @@ class HTMLTable implements HTMLElement
 	private function generate_stats()
 	{
 		$end = $this->get_first_row_index() + count($this->rows);
-		$elements = StringVars::replace_vars(LangLoader::get_class_message('footer_stats', __CLASS__), array(
+		$elements = StringVars::replace_vars(LangLoader::get_message('table_footer_stats', 'common'), array(
 			'start' => $this->get_first_row_index() + 1,
 			'end' => $end,
 			'total' => $this->nb_rows
