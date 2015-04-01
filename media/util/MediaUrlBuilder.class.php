@@ -84,11 +84,12 @@ class MediaUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function display_category($id, $rewrited_name, $page = 1)
+	public static function display_category($id, $rewrited_name, $page = 1, $subcategories_page = 1)
 	{
 		$category = $id > 0 ? $id . '-' . $rewrited_name .'/' : '';
-		$page = $page !== 1 ? '&p=' . $page : '';
-		return new Url(PATH_TO_ROOT. '/media/media.php?cat=' . $id . $page);
+		$page = $page !== 1 || $subcategories_page !== 1 ? '&p=' . $page : '';
+		$subcategories_page = $subcategories_page !== 1 ? '&subcategories_page=' . $subcategories_page : '';
+		return new Url(PATH_TO_ROOT. '/media/media.php?cat=' . $id . $page . $subcategories_page);
 	}
 	
 	/**

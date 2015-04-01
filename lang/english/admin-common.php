@@ -31,6 +31,7 @@
 
 $lang['configuration'] = 'Configuration';
 $lang['config.items_number_per_page'] = 'Items number per page';
+$lang['config.categories_number_per_page'] = 'Categories number per page';
 $lang['config.columns_number_per_line'] = 'Categories number per line';
 $lang['config.author_displayed'] = 'Display author\'s name';
 $lang['config.comments_enabled'] = 'Enable comments';
