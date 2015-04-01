@@ -31,7 +31,8 @@ class UserRegistrationService
 	{
 		$lang = LangLoader::get('user-common');
 		$user_accounts_config = UserAccountsConfig::load();
-		$site_name = GeneralConfig::load()->get_site_name();
+		$general_config = GeneralConfig::load();
+		$site_name = $general_config->get_site_name();
 		$subject = StringVars::replace_vars($lang['registration.subject-mail'], array('site_name' => $site_name));
 
 		switch ($user_accounts_config->get_member_accounts_validation_method())
@@ -40,6 +41,7 @@ class UserRegistrationService
 				$parameters = array(
 					'pseudo' => $pseudo,
 					'site_name' => $site_name,
+					'host' => $general_config->get_site_url(),
 					'login' => $login,
 					'password' => $password,
 					'accounts_validation_explain' => $lang['registration.email.automatic-validation'],
@@ -52,6 +54,7 @@ class UserRegistrationService
 				$parameters = array(
 					'pseudo' => $pseudo,
 					'site_name' => $site_name,
+					'host' => $general_config->get_site_url(),
 					'login' => $login,
 					'password' => $password,
 					'accounts_validation_explain' => 
@@ -77,6 +80,7 @@ class UserRegistrationService
 				$parameters = array(
 					'pseudo' => $pseudo,
 					'site_name' => $site_name,
+					'host' => $general_config->get_site_url(),
 					'login' => $login,
 					'password' => $password,
 					'accounts_validation_explain' => $lang['registration.email.administrator-validation'],

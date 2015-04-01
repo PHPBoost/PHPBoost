@@ -174,6 +174,8 @@ Password : :password
 
 :accounts_validation_explain
 
+See you on :host
+
 :signature';
 
 $lang['agreement'] = 'Agreement';
