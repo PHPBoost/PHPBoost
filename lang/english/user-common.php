@@ -98,6 +98,9 @@ $lang['banned'] = 'Banned';
 $lang['connection'] = 'Connect';
 $lang['autoconnect'] = 'Auto connect';
 $lang['disconnect'] = 'Disconnect';
+$lang['facebook-connect'] = 'Connect with Facebook';
+$lang['google-connect'] = 'Connect with Google+';
+$lang['twitter-connect'] = 'Connect with Twitter';
 
 $lang['internal_connection'] = 'Internal connection';
 $lang['fb_connection'] = 'Facebook connection';
