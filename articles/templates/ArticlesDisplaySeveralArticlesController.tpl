@@ -27,6 +27,7 @@
 				# ENDIF #
 			</div>
 		</div>
+		# IF C_SUBCATEGORIES_PAGINATION #<span class="center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
 		<div class="spacer">&nbsp;</div>
 		<hr />
 		# ENDIF #
