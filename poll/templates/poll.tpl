@@ -58,22 +58,28 @@
 							</div>
 							# ENDIF #
 							
-							# START result #
-							<div>
-								<h6>{result.ANSWERS} - ({result.NBRVOTE} {L_VOTE})</h6>
-								<div class="progressbar-container" title="{result.PERCENT}%">
-									<div class="progressbar-infos">{result.PERCENT}%</div>
-									<div class="progressbar" style="width:{result.PERCENT}%;"></div>
-									
-								</div>
-								<br/>
-							</div>
-							# END result #
-							<div>
-								# IF NOT C_POLL_QUESTION #<span class="smaller" style="float:left;">{VOTES} {L_VOTE}</span># ENDIF #
-								<span class="smaller" style="float:right;">{L_ON} : {DATE} </span>
-								&nbsp;
-							</div>
+							# IF C_POLL_RESULTS #
+								# IF C_DISPLAY_RESULTS #
+									# START result #
+									<div>
+										<h6>{result.ANSWERS} - ({result.NBRVOTE} {L_VOTE})</h6>
+										<div class="progressbar-container" title="{result.PERCENT}%">
+											<div class="progressbar-infos">{result.PERCENT}%</div>
+											<div class="progressbar" style="width:{result.PERCENT}%;"></div>
+											
+										</div>
+										<br/>
+									</div>
+									# END result #
+									<div>
+										<span class="smaller" style="float:left;">{VOTES} {L_VOTE}</span>
+										<span class="smaller" style="float:right;">{L_ON} : {DATE} </span>
+										&nbsp;
+									</div>
+								# ELSE #
+									<div class="notice"># IF C_NO_VOTE #{L_NO_VOTE}# ELSE #{L_RESULTS_NOT_DISPLAYED_YET}# ENDIF #</div>
+								# ENDIF #
+							# ENDIF #
 						</div>
 						<footer></footer>
 					</article>

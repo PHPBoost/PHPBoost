@@ -131,7 +131,7 @@
 							<div onclick="document.getElementById('start_end_date').checked = true;">
 								<label>
 									<input type="radio" value="2" name="visible" id="start_end_date" {VISIBLE_WAITING}>
-									<input type="text" size="8" maxlength="8" id="start" name="start" value="{START}"> 
+									<input type="text" size="10" maxlength="10" id="start" name="start" value="{START}"> 
 									<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar1">
 										<div id="start_date" class="calendar-block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">
 										</div>
@@ -140,7 +140,7 @@
 									
 									{L_UNTIL}&nbsp;
 									
-									<input type="text" size="8" maxlength="8" id="end" name="end" value="{END}"> 
+									<input type="text" size="10" maxlength="10" id="end" name="end" value="{END}"> 
 									<div style="position:relative;z-index:100;top:6px;margin-left:155px;float:left;display:none;" id="calendar2">
 										<div id="end_date" class="calendar-block" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);">
 										</div>
@@ -155,7 +155,7 @@
 					<div class="form-element" class="overflow_visible">
 						<label for="current_date">* {L_POLL_DATE}</label>
 						<div class="form-field"><label>
-							<input type="text" size="8" maxlength="8" id="current_date" name="current_date" value="{CURRENT_DATE}"> 
+							<input type="text" size="10" maxlength="10" id="current_date" name="current_date" value="{CURRENT_DATE}"> 
 							<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar3">
 								<div id="current" class="calendar-block" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);">
 								</div>

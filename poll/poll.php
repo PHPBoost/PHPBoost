@@ -36,7 +36,7 @@ $now = new Date();
 
 if (!empty($poll_id))
 {
-	$poll = PersistenceContext::get_querier()->select_single_row(PREFIX . 'poll', array('id', 'question', 'votes', 'answers', 'type', 'timestamp'), 'WHERE id=:id AND archive = 0 AND visible = 1 AND start <= :timestamp AND (end >= :timestamp OR end = 0)', array('id' => $poll_id, 'timestamp' => $now->get_timestamp()));
+	$poll = PersistenceContext::get_querier()->select_single_row(PREFIX . 'poll', array('id', 'question', 'votes', 'answers', 'type', 'timestamp', 'end'), 'WHERE id=:id AND archive = 0 AND visible = 1 AND start <= :timestamp AND (end >= :timestamp OR end = 0)', array('id' => $poll_id, 'timestamp' => $now->get_timestamp()));
 	
 	//Pas de sondage trouvé => erreur.
 	if (empty($poll['id']))
@@ -121,7 +121,7 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 		$check_answer = false;
 		$array_votes = explode('|', $poll['votes']);
 		if ($poll['type'] == '1') //Réponse unique.
-		{	
+		{
 			$id_answer = retrieve(POST, 'radio', -1);
 			if (isset($array_votes[$id_answer]))
 			{
@@ -134,7 +134,7 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 			//On boucle pour vérifier toutes les réponses du sondage.
 			$nbr_answer = count($array_votes);
 			for ($i = 0; $i < $nbr_answer; $i++)
-			{	
+			{
 				if (isset($_POST[$i]))
 				{
 					$array_votes[$i]++;
@@ -167,7 +167,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 	$check_bdd = false;
 	if (Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $poll_config->get_authorizations(), PollAuthorizationsService::WRITE_AUTHORIZATIONS)) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
 	{
-		//Injection de l'adresse ip du visiteur dans la bdd.	
+		//Injection de l'adresse ip du visiteur dans la bdd.
 		$ip = PersistenceContext::get_querier()->count(PREFIX . "poll_ip", 'WHERE ip = :ip AND idpoll = :id', array('ip' => AppContext::get_request()->get_ip_address(), 'id' => $poll['id']));
 		if (!empty($ip))
 			$check_bdd = true;
@@ -200,27 +200,37 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 	
 	//Si le cookie existe, ou l'ip est connue on redirige vers les resulats, sinon on prend en compte le vote.
 	$array_cookie = array();
-    if (AppContext::get_request()->has_cookieparameter($config_cookie_name))
-    {
-    	$array_cookie = explode('/', AppContext::get_request()->get_cookie($config_cookie_name));
-    }
+	if (AppContext::get_request()->has_cookieparameter($config_cookie_name))
+	{
+		$array_cookie = explode('/', AppContext::get_request()->get_cookie($config_cookie_name));
+	}
 	if ($show_result || in_array($poll['id'], $array_cookie) === true || $check_bdd) //Résultats
-	{		
+	{
 		$array_answer = explode('|', $poll['answers']);
 		$array_vote = explode('|', $poll['votes']);
+		$poll_creation_date = new Date($poll['timestamp'], Timezone::SERVER_TIMEZONE);
+		$poll_end_date = new Date($poll['end'], Timezone::SERVER_TIMEZONE);
+		
+		$is_admin = AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
+		$results_displayed = $poll_config->are_results_displayed_before_polls_end() && !empty($poll['end']) ? $now->get_timestamp() > $poll_end_date->get_timestamp : true;
 		
 		$sum_vote = array_sum($array_vote);
 		$tpl->put_all(array(
 			'C_POLL_VIEW' => true,
-			'C_IS_ADMIN' => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
+			'C_POLL_RESULTS' => true,
+			'C_IS_ADMIN' => $is_admin,
+			'C_DISPLAY_RESULTS' => $is_admin || ($results_displayed && (!empty($nbr_votes) || !empty($ip))),
+			'C_NO_VOTE' => !$is_admin && (empty($nbr_votes) && empty($ip)),
 			'IDPOLL' => $poll['id'],
 			'QUESTION' => $poll['question'],
-			'DATE' => Date::to_format($poll['timestamp'], Date::FORMAT_DAY_MONTH_YEAR),
+			'DATE' => $poll_creation_date->format(Date::FORMAT_DAY_MONTH_YEAR),
 			'VOTES' => $sum_vote,
 			'L_POLL' => $LANG['poll'],
 			'L_BACK_POLL' => $LANG['poll_back'],
 			'L_VOTE' => (($sum_vote > 1 ) ? $LANG['poll_vote_s'] : $LANG['poll_vote']),
 			'L_ON' => $LANG['on'],
+			'L_NO_VOTE' => $LANG['e_no_vote'],
+			'L_RESULTS_NOT_DISPLAYED_YET' => StringVars::replace_vars($LANG['e_results_not_displayed_yet'], array('end_date' => $poll_end_date->format(Date::FORMAT_DAY_MONTH_YEAR))),
 			'L_EDIT' => LangLoader::get_message('edit', 'common'),
 			'L_DELETE' => LangLoader::get_message('delete', 'common')
 		));
@@ -232,7 +242,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 			$tpl->assign_block_vars('result', array(
 				'ANSWERS' => $answer, 
 				'NBRVOTE' => (int)$nbrvote,
-				'WIDTH' => NumberHelper::round(($nbrvote * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.					
+				'WIDTH' => NumberHelper::round(($nbrvote * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.
 				'PERCENT' => NumberHelper::round(($nbrvote * 100 / $sum_vote), 1)
 			));
 		}
@@ -247,7 +257,6 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 			'C_IS_ADMIN' => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
 			'IDPOLL' => $poll['id'],
 			'QUESTION' => $poll['question'],
-			'DATE' => Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR),
 			'VOTES' => 0,
 			'ID_R' => url('.php?id=' . $poll['id'] . '&amp;r=1', '-' . $poll['id'] . '-1.php'),
 			'QUESTION' => $poll['question'],
@@ -268,7 +277,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 		if ($poll['type'] == '1')
 		{
 			foreach ($array_answer as $answer)
-			{						
+			{
 				$tpl->assign_block_vars('radio', array(
 					'NAME' => $z,
 					'TYPE' => 'radio',
@@ -276,20 +285,19 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 				));
 				$z++;
 			}
-		}	
+		}
 		elseif ($poll['type'] == '0') 
 		{
-			
 			foreach ($array_answer as $answer)
-			{						
+			{
 				$tpl->assign_block_vars('checkbox', array(
 					'NAME' => $z,
 					'TYPE' => 'checkbox',
 					'ANSWERS' => $answer
 				));
-				$z++;	
+				$z++;
 			}
-		}		
+		}
 		$tpl->display();
 	}
 }

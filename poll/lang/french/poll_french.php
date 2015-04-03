@@ -48,11 +48,14 @@ $LANG['displayed_in_mini_module_list'] = 'Mini-sondage';
 $LANG['displayed_in_mini_module_list_explain'] = 'Affichage aléatoire si plus d\'un sondage sélectionné';
 $LANG['cookie_name'] = 'Nom du cookie';
 $LANG['cookie_lenght'] = 'Durée de validité du cookie';
+$LANG['display_results_before_polls_end'] = 'Afficher les résultats avant la fin des sondages';
 $LANG['admin.authorizations'] = 'Autorisations';
 $LANG['admin.authorizations.read'] = 'Autorisation d\'afficher les sondages';
 $LANG['admin.authorizations.write'] = 'Rang pour pouvoir voter';
 $LANG['poll_date'] = 'Date du sondage';
 $LANG['poll_date_explain'] = '(jj/mm/aa) Laisser vide pour mettre la date d\'aujourd\'hui';
+$LANG['immediate'] = 'Immédiate';
+$LANG['release_date'] = 'Date de parution';
 
 //Requis
 $LANG['require_poll_entry'] = 'Veuillez entrer un nombre d\'entrées pour le sondage !';
@@ -65,6 +68,8 @@ $LANG['e_unexist_poll'] = 'Le sondage que vous avez demandé n\'existe pas';
 $LANG['e_no_poll'] = 'Aucun sondage disponible';
 $LANG['e_already_vote'] = 'Vous avez déjà voté';
 $LANG['e_unauth_poll'] = 'Vous n\'êtes pas autorisé à voter !';
+$LANG['e_no_vote'] = 'Veuillez répondre au sondage avant de pouvoir visualiser les résultats !';
+$LANG['e_results_not_displayed_yet'] = 'Les résultats seront disponibles à la fin du sondage le :end_date';
 
 //polls
 $LANG['poll'] = 'Sondages';
