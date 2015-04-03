@@ -50,7 +50,7 @@ if ($del && !empty($id)) //Suppresion poll
 	PersistenceContext::get_querier()->delete(PREFIX . 'poll', 'WHERE id=:id', array('id' => $id));
 	
 	###### Régénération du cache si le sondage fait parti de la liste des sondages affichés dans le mini-module #######
-	if (in_array($id, $config_displayed_in_mini_module_list))		
+	if (in_array($id, $config_displayed_in_mini_module_list))
 	{
 		$displayed_in_mini_module_list = $config_displayed_in_mini_module_list;
 		unset($displayed_in_mini_module_list[array_search($id, $displayed_in_mini_module_list)]);
@@ -76,7 +76,7 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 	$start = retrieve(POST, 'start', '', TSTRING_UNCHANGE);
 	$end = retrieve(POST, 'end', '', TSTRING_UNCHANGE);
 	$hour = retrieve(POST, 'hour', '', TSTRING_UNCHANGE);
-	$min = retrieve(POST, 'min', '', TSTRING_UNCHANGE);	
+	$min = retrieve(POST, 'min', '', TSTRING_UNCHANGE);
 	$get_visible = retrieve(POST, 'visible', 0);
 	
 	//On verifie les conditions!
@@ -88,9 +88,9 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 		$start_timestamp = $start_date->get_timestamp();
 		$end_timestamp = $end_date->get_timestamp();
 		
-		$visible = 1;		
+		$visible = 1;
 		if ($get_visible == 2)
-		{	
+		{
 			if ($start_timestamp > time())
 				$visible = 2;
 			elseif ($start_timestamp == 0)
@@ -129,7 +129,7 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 		for ($i = 0; $i < 20; $i++)
 		{
 			if (!empty($_POST['a'.$i]))
-			{				
+			{
 				$answers .= str_replace('|', '', retrieve(POST, 'a'.$i, '')) . '|';
 				$votes .= str_replace('|', '', retrieve(POST, 'v'.$i, 0)) . '|';
 				$check_nbr_answer++;
@@ -152,7 +152,7 @@ elseif (!empty($id))
 
 	$tpl->put_all(array(
 		'IDPOLL' => $row['id'],
-		'QUESTIONS' => $row['question'],	
+		'QUESTIONS' => $row['question'],
 		'TYPE_UNIQUE' => ($row['type'] == '1') ? 'checked="checked"' : '',
 		'TYPE_MULTIPLE' => ($row['type'] == '0') ? 'checked="checked"' : '',
 		'ARCHIVES_ENABLED' => ($row['archive'] == '1') ? 'checked="checked"' : '',
@@ -187,7 +187,6 @@ elseif (!empty($id))
 		'L_ANSWERS' => $LANG['answers'],
 		'L_SINGLE' => $LANG['single'],
 		'L_MULTIPLE' => $LANG['multiple'],
-		'L_ARCHIVED' => $LANG['archived'],
 		'L_YES' => LangLoader::get_message('yes', 'common'),
 		'L_NO' => LangLoader::get_message('no', 'common'),
 		'L_NUMBER_VOTE' => $LANG['number_vote'],
@@ -210,7 +209,7 @@ elseif (!empty($id))
 	$array_answer = explode('|', $row['answers']);
 	$array_vote = explode('|', $row['votes']);
 	
-	$sum_vote = array_sum($array_vote);	
+	$sum_vote = array_sum($array_vote);
 	$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //Empêche la division par 0.
 	
 	//Liste des choix des sondages => 20 maxi

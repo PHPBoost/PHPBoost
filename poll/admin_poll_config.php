@@ -27,7 +27,7 @@
 
 require_once('../admin/admin_begin.php');
 load_module_lang('poll'); //Chargement de la langue du module.
-define('TITLE', $LANG['administration']);
+define('TITLE', $LANG['configuration']);
 require_once('../admin/admin_header.php');
 $poll_config = PollConfig::load();
 
@@ -37,7 +37,12 @@ if (!empty($_POST['valid']))
 	$poll_config->set_displayed_in_mini_module_list(!empty($_POST['displayed_in_mini_module_list']) ? $_POST['displayed_in_mini_module_list'] : array());
 	$poll_config->set_cookie_name(retrieve(POST, 'cookie_name', 'poll', TSTRING_UNCHANGE));
 	$poll_config->set_cookie_lenght(!empty($_POST['cookie_lenght']) ? NumberHelper::numeric($_POST['cookie_lenght']) : 30);
-
+	
+	if (retrieve(POST, 'display_results_before_polls_end', false))
+		$poll_config->display_results_before_polls_end();
+	else
+		$poll_config->hide_results_before_polls_end();
+	
 	PollConfig::save();
 	
 	###### Régénération du cache des sondages #######
@@ -45,8 +50,8 @@ if (!empty($_POST['valid']))
 	
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT); 	
 }
-else	
-{		
+else
+{
 	$tpl = new FileTemplate('poll/admin_poll_config.tpl');
 
 	$Cache->load('poll');
@@ -70,6 +75,7 @@ else
 	$tpl->put_all(array(
 		'COOKIE_NAME' => $poll_config->get_cookie_name(),
 		'COOKIE_LENGHT' => $poll_config->get_cookie_lenght(),
+		'C_DISPLAY_RESULTS_BEFORE_POLLS_END' => $poll_config->are_results_displayed_before_polls_end(),
 		'POLL_LIST' => $poll_list,
 		'NBR_POLL' => $i,
 		'READ_AUTHORIZATION' => Authorizations::generate_select(PollAuthorizationsService::READ_AUTHORIZATIONS, $poll_config->get_authorizations()),
@@ -86,6 +92,7 @@ else
 		'L_WRITE_AUTHORIZATION' => $LANG['admin.authorizations.write'],
 		'L_COOKIE_NAME' => $LANG['cookie_name'],
 		'L_COOKIE_LENGHT' => $LANG['cookie_lenght'],
+		'L_DISPLAY_RESULTS_BEFORE_POLLS_END' => $LANG['display_results_before_polls_end'],
 		'L_SELECT_ALL' => $LANG['select_all'],
 		'L_SELECT_NONE' => $LANG['select_none'],
 		'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),

@@ -120,7 +120,6 @@ else
 		'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 		'L_QUESTION' => $LANG['question'],
 		'L_ANSWERS_TYPE' => $LANG['answer_type'],
-		'L_ARCHIVED' => $LANG['archived'],
 		'L_YES' => LangLoader::get_message('yes', 'common'),
 		'L_NO' => LangLoader::get_message('no', 'common'),
 		'L_SINGLE' => $LANG['single'],

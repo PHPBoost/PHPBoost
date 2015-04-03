@@ -61,7 +61,7 @@
 							<a class="small" href="javascript:select_displayed_polls_in_mini('displayed_in_mini_module_list', true);">{L_SELECT_ALL}</a>/<a class="small" href="javascript:select_displayed_polls_in_mini('displayed_in_mini_module_list', false);">{L_SELECT_NONE}</a>
 						</label></div>
 					</div>
-				</fieldset>	
+				</fieldset>
 				<fieldset>
 					<legend>{L_POLL_CONFIG_ADVANCED}</legend>
 					<div class="form-element">
@@ -71,6 +71,10 @@
 					<div class="form-element">
 						<label for="cookie_lenght">* {L_COOKIE_LENGHT}</label>
 						<div class="form-field"><input type="text" maxlength="11" size="6" name="cookie_lenght" id="cookie_lenght" value="{COOKIE_LENGHT}"> {L_DAYS}</div>
+					</div>
+					<div class="form-element">
+						<label for="display_results_before_polls_end">{L_DISPLAY_RESULTS_BEFORE_POLLS_END}</label>
+						<div class="form-field"><input type="checkbox" name="display_results_before_polls_end"# IF C_DISPLAY_RESULTS_BEFORE_POLLS_END # checked="checked"# ENDIF #></div>
 					</div>
 				</fieldset>
 				<fieldset>
@@ -97,8 +101,8 @@
 				<fieldset class="fieldset-submit">
 					<legend>{L_UPDATE}</legend>
 					<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button>
-					<button type="reset" value="true">{L_RESET}</button>				
-				</fieldset>	
+					<button type="reset" value="true">{L_RESET}</button>
+				</fieldset>
 			</form>
 		</div>
 		

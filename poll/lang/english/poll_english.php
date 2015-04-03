@@ -49,11 +49,14 @@ $LANG['displayed_in_mini_module_list'] = 'Mini-poll';
 $LANG['displayed_in_mini_module_list_explain'] = 'Random display if more than one poll is selected';
 $LANG['cookie_name'] = 'Cookie name';
 $LANG['cookie_lenght'] = 'Cookie life length';
+$LANG['display_results_before_polls_end'] = 'Display results before polls end';
 $LANG['admin.authorizations'] = 'Permissions';
 $LANG['admin.authorizations.read'] = 'Permission to display polls';
 $LANG['admin.authorizations.write'] = 'Permission to vote';
 $LANG['poll_date'] = 'Poll date';
 $LANG['poll_date_explain'] = '(dd/mm/yy) Leave empty to use today\'s date';
+$LANG['immediate'] = 'Immediate';
+$LANG['release_date'] = 'Release date';
 
 //Requis
 $LANG['require_poll_entry'] = 'Please enter a number of entries for the poll!';
@@ -65,7 +68,9 @@ $LANG['require_answer_type'] = 'Please enter the type of response of the poll!';
 $LANG['e_unexist_poll'] = 'This poll doesn\'t exist';
 $LANG['e_no_poll'] = 'No poll available';
 $LANG['e_already_vote'] = 'You have already voted';
-$LANG['e_unauth_poll'] = 'You aren\'t authorized to vote !';
+$LANG['e_unauth_poll'] = 'You aren\'t authorized to vote!';
+$LANG['e_no_vote'] = 'Please answer the poll before displaying the results!';
+$LANG['e_results_not_displayed_yet'] = 'Results will be available at the end of the poll on :end_date';
  
 //Poll
 $LANG['poll'] = 'Polls';
