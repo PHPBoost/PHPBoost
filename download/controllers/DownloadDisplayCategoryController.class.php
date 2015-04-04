@@ -64,14 +64,20 @@ class DownloadDisplayCategoryController extends ModuleController
 		
 		//Children categories
 		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= download_cats.id, download_cats.*,
-		(SELECT COUNT(*) FROM '. DownloadSetup::$download_table .' download
-		WHERE download.id_category = @id_cat
-		AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))
+		(SELECT COUNT(*) FROM ' . DownloadSetup::$download_table . '
+			WHERE id_category IN (
+				(SELECT id FROM ' . DownloadSetup::$download_cats_table . ' WHERE id_parent = @id_cat), 
+				(SELECT childs.id FROM ' . DownloadSetup::$download_cats_table . ' parents
+				INNER JOIN ' . DownloadSetup::$download_cats_table . ' childs ON parents.id = childs.id_parent
+				WHERE parents.id_parent = @id_cat),
+				@id_cat
+			)
+			AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))
 		) AS downloadfiles_number
-		FROM ' . DownloadSetup::$download_cats_table .' download_cats
-		WHERE download_cats.id_parent = :id_category
-		AND download_cats.id IN :authorized_categories
-		ORDER BY download_cats.id_parent, download_cats.c_order', array(
+		FROM ' . DownloadSetup::$download_cats_table . ' download_cats
+		WHERE id_parent = :id_category
+		AND id IN :authorized_categories
+		ORDER BY id_parent, c_order', array(
 			'timestamp_now' => $now->get_timestamp(),
 			'id_category' => $this->category->get_id(),
 			'authorized_categories' => $authorized_categories

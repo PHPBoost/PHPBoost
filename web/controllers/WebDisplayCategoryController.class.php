@@ -64,14 +64,20 @@ class WebDisplayCategoryController extends ModuleController
 		
 		//Children categories
 		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= web_cats.id, web_cats.*,
-		(SELECT COUNT(*) FROM '. WebSetup::$web_table .' web
-		WHERE web.id_category = @id_cat
-		AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))
+		(SELECT COUNT(*) FROM ' . WebSetup::$web_table . '
+			WHERE id_category IN (
+				(SELECT id FROM ' . WebSetup::$web_cats_table . ' WHERE id_parent = @id_cat), 
+				(SELECT childs.id FROM ' . WebSetup::$web_cats_table . ' parents
+				INNER JOIN ' . WebSetup::$web_cats_table . ' childs ON parents.id = childs.id_parent
+				WHERE parents.id_parent = @id_cat),
+				@id_cat
+			)
+			AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))
 		) AS weblinks_number
-		FROM ' . WebSetup::$web_cats_table .' web_cats
-		WHERE web_cats.id_parent = :id_category
-		AND web_cats.id IN :authorized_categories
-		ORDER BY web_cats.id_parent, web_cats.c_order', array(
+		FROM ' . WebSetup::$web_cats_table . ' web_cats
+		WHERE id_parent = :id_category
+		AND id IN :authorized_categories
+		ORDER BY id_parent, c_order', array(
 			'timestamp_now' => $now->get_timestamp(),
 			'id_category' => $this->category->get_id(),
 			'authorized_categories' => $authorized_categories

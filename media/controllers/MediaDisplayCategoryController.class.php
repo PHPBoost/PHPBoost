@@ -74,16 +74,23 @@ class MediaDisplayCategoryController extends ModuleController
 		
 		//Children categories
 		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= media_cats.id, media_cats.*,
-		(SELECT COUNT(*) FROM '. MediaSetup::$media_table .' media
-		WHERE media.idcat = @id_cat
-		AND infos = 2
+		(SELECT COUNT(*) FROM ' . MediaSetup::$media_table . '
+			WHERE id_category IN (
+				(SELECT id FROM ' . MediaSetup::$media_cats_table . ' WHERE id_parent = @id_cat), 
+				(SELECT childs.id FROM ' . MediaSetup::$media_cats_table . ' parents
+				INNER JOIN ' . MediaSetup::$media_cats_table . ' childs ON parents.id = childs.id_parent
+				WHERE parents.id_parent = @id_cat),
+				@id_cat
+			)
+			AND infos = :status
 		) AS mediafiles_number
 		FROM ' . MediaSetup::$media_cats_table .' media_cats
-		WHERE media_cats.id_parent = :id_category
-		AND media_cats.id IN :authorized_categories
-		ORDER BY media_cats.id_parent, media_cats.c_order
+		WHERE id_parent = :id_category
+		AND id IN :authorized_categories
+		ORDER BY id_parent, c_order
 		LIMIT :number_items_per_page OFFSET :display_from', array(
 			'id_category' => $category->get_id(),
+			'status' => MEDIA_STATUS_APROBED,
 			'authorized_categories' => $authorized_categories,
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
@@ -184,10 +191,10 @@ class MediaDisplayCategoryController extends ModuleController
 			'SELECTED_DESC' => $selected_fields['desc']
 		));
 		
-		$condition = 'WHERE idcat = :idcat AND infos = :infos';
+		$condition = 'WHERE idcat = :idcat AND infos = :status';
 		$parameters = array(
 			'idcat' => $category->get_id(),
-			'infos' => MEDIA_STATUS_APROBED
+			'status' => MEDIA_STATUS_APROBED
 		);
 		
 		//On crée une pagination si le nombre de fichiers est trop important.

@@ -169,14 +169,20 @@ class ArticlesDisplayCategoryController extends ModuleController
 		$subcategories_number = count(ArticlesService::get_categories_manager()->get_categories_cache()->get_childrens($this->category->get_id()));
 		$pagination = $this->get_subcategories_pagination($subcategories_number, $config->get_number_categories_per_page(), $field, $mode, $page, $subcategories_page);
 		
-		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= ac.id, ac.id, ac.name, ac.description, ac.image, ac.rewrited_name,
-		(SELECT COUNT(*) FROM '. ArticlesSetup::$articles_table .' articles 
-		WHERE articles.id_category = @id_cat
-		AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
-		) AS nbr_articles
-		FROM ' . ArticlesSetup::$articles_cats_table .' ac 
-		WHERE ac.id_parent = :id_category AND ac.id IN :authorized_categories
-		ORDER BY ac.id_parent, ac.c_order
+		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= id, articles_cats.*,
+		(SELECT COUNT(*) FROM ' . ArticlesSetup::$articles_table . '
+			WHERE id_category IN (
+				(SELECT id FROM ' . ArticlesSetup::$articles_cats_table . ' WHERE id_parent = @id_cat), 
+				(SELECT childs.id FROM ' . ArticlesSetup::$articles_cats_table . ' parents
+				INNER JOIN ' . ArticlesSetup::$articles_cats_table . ' childs ON parents.id = childs.id_parent
+				WHERE parents.id_parent = @id_cat),
+				@id_cat
+			)
+			AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
+		) AS articles_number
+		FROM ' . ArticlesSetup::$articles_cats_table . ' articles_cats
+		WHERE id_parent = :id_category AND id IN :authorized_categories
+		ORDER BY id_parent, c_order
 		LIMIT :number_items_per_page OFFSET :display_from', array(
 			'timestamp_now' => $now->get_timestamp(),
 			'id_category' => $this->category->get_id(),
@@ -195,7 +201,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 				'CATEGORY_NAME' => $row['name'],
 				'CATEGORY_IMAGE' => $category_image->rel(),
 				'CATEGORY_DESCRIPTION' => FormatingHelper::second_parse($row['description']),
-				'NBR_ARTICLES' => $row['nbr_articles'],
+				'NBR_ARTICLES' => $row['articles_number'],
 				'U_CATEGORY' => ArticlesUrlBuilder::display_category($row['id'], $row['rewrited_name'])->rel()
 			));
                         
