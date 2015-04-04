@@ -149,18 +149,32 @@ else
 		));
 		
 		$i = 0;
-		$result = PersistenceContext::get_querier()->select("SELECT @id_cat:= gallery_cats.id, gallery_cats.*,
-		(SELECT COUNT(*) FROM " . GallerySetup::$gallery_table . "
-		WHERE idcat = @id_cat AND aprob = 1
+		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= gallery_cats.id, gallery_cats.*,
+		(SELECT COUNT(*) FROM ' . GallerySetup::$gallery_table . '
+			WHERE idcat IN (
+				(SELECT id FROM ' . GallerySetup::$gallery_cats_table . ' WHERE id_parent = @id_cat), 
+				(SELECT childs.id FROM ' . GallerySetup::$gallery_cats_table . ' parents
+				INNER JOIN ' . GallerySetup::$gallery_cats_table . ' childs ON parents.id = childs.id_parent
+				WHERE parents.id_parent = @id_cat),
+				@id_cat
+			)
+			AND aprob = 1
 		) AS nbr_pics,
-		(SELECT COUNT(*) FROM " . GallerySetup::$gallery_table . "
-		WHERE idcat = @id_cat AND aprob = 0
-		) AS nbr_pics_unaprob
-		FROM " . GallerySetup::$gallery_cats_table . " gallery_cats
-		WHERE gallery_cats.id_parent = :id_category
-		AND gallery_cats.id IN :authorized_categories
-		ORDER BY gallery_cats.id_parent, gallery_cats.c_order
-		LIMIT :number_items_per_page OFFSET :display_from", array(
+		(SELECT COUNT(*) FROM ' . GallerySetup::$gallery_table . '
+			WHERE idcat IN (
+				(SELECT id FROM ' . GallerySetup::$gallery_cats_table . ' WHERE id_parent = @id_cat), 
+				(SELECT childs.id FROM ' . GallerySetup::$gallery_cats_table . ' parents
+				INNER JOIN ' . GallerySetup::$gallery_cats_table . ' childs ON parents.id = childs.id_parent
+				WHERE parents.id_parent = @id_cat),
+				@id_cat
+			)
+			AND aprob = 0
+		) AS nbr_pics_unaprob,
+		FROM ' . GallerySetup::$gallery_cats_table . ' gallery_cats
+		WHERE id_parent = :id_category
+		AND id IN :authorized_categories
+		ORDER BY id_parent, c_order
+		LIMIT :number_items_per_page OFFSET :display_from', array(
 			'id_category' => $id_category,
 			'authorized_categories' => $authorized_categories,
 			'number_items_per_page' => $pagination->get_number_items_per_page(),

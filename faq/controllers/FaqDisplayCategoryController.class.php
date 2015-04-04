@@ -67,14 +67,20 @@ class FaqDisplayCategoryController extends ModuleController
 		
 		//Children categories
 		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= faq_cats.id, faq_cats.*,
-		(SELECT COUNT(*) FROM ' . FaqSetup::$faq_table . ' faq
-		WHERE faq.approved = 1
-		AND faq.id_category = @id_cat
+		(SELECT COUNT(*) FROM ' . FaqSetup::$faq_table . '
+			WHERE id_category IN (
+				(SELECT id FROM ' . FaqSetup::$faq_cats_table . ' WHERE id_parent = @id_cat), 
+				(SELECT childs.id FROM ' . FaqSetup::$faq_cats_table . ' parents
+				INNER JOIN ' . FaqSetup::$faq_cats_table . ' childs ON parents.id = childs.id_parent
+				WHERE parents.id_parent = @id_cat),
+				@id_cat
+			)
+			AND approved = 1
 		) AS questions_number
-		FROM ' . FaqSetup::$faq_cats_table .' faq_cats
-		WHERE faq_cats.id_parent = :id_category
-		AND faq_cats.id IN :authorized_categories
-		ORDER BY faq_cats.id_parent, faq_cats.c_order', array(
+		FROM ' . FaqSetup::$faq_cats_table . ' faq_cats
+		WHERE id_parent = :id_category
+		AND id IN :authorized_categories
+		ORDER BY id_parent, c_order', array(
 			'id_category' => $this->category->get_id(),
 			'authorized_categories' => $authorized_categories
 		));
