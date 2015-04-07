@@ -48,7 +48,6 @@
 ###################################### PHPBoost 4.2 ##################################
 
 [b]Structure et fonctionnement:[/b]
-+ [color=red]Nouveauté:[/color] Générateur automatique de tableaux avec gestion de la pagination, filtres, tris.
 + Nettoyage des variables de langues
 
 [b]Graphique[/b]
@@ -75,7 +74,6 @@
 - Refonte du système d'événement et intégration d'un système de notification
 - Filtres d'exclusion pour les menus
 - Stocker les dates sous un format ISO en BDD plutôt qu'en timestamp
-- Voir pour comptabiliser correctement le nombre d'élement dans les catégories s'il y a des sous catégories dedans (http://www.phpboost.com/bugtracker/detail/1182-videos-non-comptabilisees-sur-les-sous-categories)
 
 [b]Upload[/b]
 - Refonte de l'interface et du fonctionnement de l'interface d'upload, ajout d'API, ... 

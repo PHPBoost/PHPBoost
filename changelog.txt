@@ -13,6 +13,7 @@
 	- Nom du site - Description du site (pour la page d'accueil)
 [*] Suppression des mots clés du site qui ne sont plus utilisés pour le référencement
 [*] Les modules auxquels l'utilisateur n'a pas le droit de contribuer ne sont plus affichés dans le panneau de contribution
+[*] [color=red]Nouveauté:[/color] Générateur automatique de tableaux avec gestion de la pagination, filtres, tris.
 
 + Nouveau système de session et de connexion :
 	[*] Suppression du champ Pseudo, remplacé par Nom d'affichage
