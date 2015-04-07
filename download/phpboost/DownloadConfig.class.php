@@ -32,6 +32,7 @@
 class DownloadConfig extends AbstractConfigData
 {
 	const ITEMS_NUMBER_PER_PAGE = 'items_number_per_page';
+	const CATEGORIES_NUMBER_PER_PAGE = 'categories_number_per_page';
 	const COLUMNS_NUMBER_PER_LINE = 'columns_number_per_line';
 	const CATEGORY_DISPLAY_TYPE = 'category_display_type';
 	const AUTHOR_DISPLAYED = 'author_displayed';
@@ -57,6 +58,16 @@ class DownloadConfig extends AbstractConfigData
 	public function set_items_number_per_page($value)
 	{
 		$this->set_property(self::ITEMS_NUMBER_PER_PAGE, $value);
+	}
+	
+	public function get_categories_number_per_page()
+	{
+		return $this->get_property(self::CATEGORIES_NUMBER_PER_PAGE);
+	}
+	
+	public function set_categories_number_per_page($number) 
+	{
+		$this->set_property(self::CATEGORIES_NUMBER_PER_PAGE, $number);
 	}
 	
 	public function get_columns_number_per_line()
@@ -201,6 +212,7 @@ class DownloadConfig extends AbstractConfigData
 	{
 		return array(
 			self::ITEMS_NUMBER_PER_PAGE => 15,
+			self::CATEGORIES_NUMBER_PER_PAGE => 10,
 			self::COLUMNS_NUMBER_PER_LINE => 3,
 			self::CATEGORY_DISPLAY_TYPE => self::DISPLAY_SUMMARY,
 			self::AUTHOR_DISPLAYED => true,
