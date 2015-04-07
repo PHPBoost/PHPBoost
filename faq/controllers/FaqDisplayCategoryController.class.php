@@ -69,11 +69,11 @@ class FaqDisplayCategoryController extends ModuleController
 		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= faq_cats.id, faq_cats.*,
 		(SELECT COUNT(*) FROM ' . FaqSetup::$faq_table . '
 			WHERE id_category IN (
+				@id_cat,
 				(SELECT id FROM ' . FaqSetup::$faq_cats_table . ' WHERE id_parent = @id_cat), 
 				(SELECT childs.id FROM ' . FaqSetup::$faq_cats_table . ' parents
 				INNER JOIN ' . FaqSetup::$faq_cats_table . ' childs ON parents.id = childs.id_parent
-				WHERE parents.id_parent = @id_cat),
-				@id_cat
+				WHERE parents.id_parent = @id_cat)
 			)
 			AND approved = 1
 		) AS questions_number

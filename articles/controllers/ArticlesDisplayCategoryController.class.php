@@ -172,11 +172,11 @@ class ArticlesDisplayCategoryController extends ModuleController
 		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= id, articles_cats.*,
 		(SELECT COUNT(*) FROM ' . ArticlesSetup::$articles_table . '
 			WHERE id_category IN (
+				@id_cat,
 				(SELECT id FROM ' . ArticlesSetup::$articles_cats_table . ' WHERE id_parent = @id_cat), 
 				(SELECT childs.id FROM ' . ArticlesSetup::$articles_cats_table . ' parents
 				INNER JOIN ' . ArticlesSetup::$articles_cats_table . ' childs ON parents.id = childs.id_parent
-				WHERE parents.id_parent = @id_cat),
-				@id_cat
+				WHERE parents.id_parent = @id_cat)
 			)
 			AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
 		) AS articles_number
