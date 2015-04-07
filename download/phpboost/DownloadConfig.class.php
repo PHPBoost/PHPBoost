@@ -65,9 +65,9 @@ class DownloadConfig extends AbstractConfigData
 		return $this->get_property(self::CATEGORIES_NUMBER_PER_PAGE);
 	}
 	
-	public function set_categories_number_per_page($number) 
+	public function set_categories_number_per_page($value) 
 	{
-		$this->set_property(self::CATEGORIES_NUMBER_PER_PAGE, $number);
+		$this->set_property(self::CATEGORIES_NUMBER_PER_PAGE, $value);
 	}
 	
 	public function get_columns_number_per_line()
