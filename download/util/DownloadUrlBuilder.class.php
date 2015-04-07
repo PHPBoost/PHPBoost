@@ -57,7 +57,7 @@ class DownloadUrlBuilder
 	 */
 	public static function edit_category($id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/'. $id .'/edit/');
+		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/' . $id . '/edit/');
 	}
 	
 	/**
@@ -65,7 +65,7 @@ class DownloadUrlBuilder
 	 */
 	public static function delete_category($id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/'. $id .'/delete/');
+		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/' . $id . '/delete/');
 	}
 	
 	/**
@@ -89,7 +89,7 @@ class DownloadUrlBuilder
 	 */
 	public static function display_category($id, $rewrited_name, $sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1, $subcategories_page = 1)
 	{
-		$category = $id > 0 ? $id . '-' . $rewrited_name .'/' : '';
+		$category = $id > 0 ? $id . '-' . $rewrited_name . '/' : '';
 		$page = $page !== 1 || $subcategories_page !== 1 ? $page . '/' : '';
 		$subcategories_page = $subcategories_page !== 1 ? $subcategories_page . '/' : '';
 		$sort_field = $sort_field !== self::DEFAULT_SORT_FIELD ? $sort_field . '/' : '';
@@ -102,7 +102,7 @@ class DownloadUrlBuilder
 	 */
 	public static function display_tag($rewrited_name, $sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1)
 	{
-		$page = $page !== 1 ? $page . '/': '';
+		$page = $page !== 1 ? $page . '/' : '';
 		$sort_field = $sort_field !== self::DEFAULT_SORT_FIELD ? $sort_field . '/' : '';
 		$sort_mode = $sort_mode !== self::DEFAULT_SORT_MODE ? $sort_mode . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/tag/' . $rewrited_name . '/' . $sort_field . $sort_mode . $page);
@@ -113,7 +113,7 @@ class DownloadUrlBuilder
 	 */
 	public static function display_pending($sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1)
 	{
-		$page = $page !== 1 ? $page . '/': '';
+		$page = $page !== 1 ? $page . '/' : '';
 		$sort_field = $sort_field !== self::DEFAULT_SORT_FIELD ? $sort_field . '/' : '';
 		$sort_mode = $sort_mode !== self::DEFAULT_SORT_MODE ? $sort_mode . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/pending/' . $sort_field . $sort_mode . $page);
@@ -124,7 +124,7 @@ class DownloadUrlBuilder
 	 */
 	public static function add($id_category = null)
 	{
-		$id_category = !empty($id_category) ? $id_category . '/': '';
+		$id_category = !empty($id_category) ? $id_category . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/add/' . $id_category);
 	}
 	
