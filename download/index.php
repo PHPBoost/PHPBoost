@@ -57,7 +57,7 @@ $url_controller_mappers = array(
 	
 	new UrlControllerMapper('DownloadFileController', '`^/download/([0-9]+)/?$`', array('id')),
 	new UrlControllerMapper('DownloadDeadLinkController', '`^/dead_link/([0-9]+)/?$`', array('id')),
-	new UrlControllerMapper('DownloadDisplayCategoryController', '`^(?:/([0-9]+)-([a-z0-9-_]+))?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('id_category', 'rewrited_name', 'field', 'sort', 'page'))
+	new UrlControllerMapper('DownloadDisplayCategoryController', '`^(?:/([0-9]+)-([a-z0-9-_]+))?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?([0-9]+)?/?$`', array('id_category', 'rewrited_name', 'field', 'sort', 'page', 'subcategories_page'))
 );
 DispatchManager::dispatch($url_controller_mappers);
 ?>

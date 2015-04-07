@@ -61,6 +61,11 @@ class DownloadDisplayCategoryController extends ModuleController
 		$authorized_categories = DownloadService::get_authorized_categories($this->get_category()->get_id());
 		$mode = $request->get_getstring('sort', DownloadUrlBuilder::DEFAULT_SORT_MODE);
 		$field = $request->get_getstring('field', DownloadUrlBuilder::DEFAULT_SORT_FIELD);
+		$page = AppContext::get_request()->get_getint('page', 1);
+		$subcategories_page = AppContext::get_request()->get_getint('subcategories_page', 1);
+		
+		$subcategories_number = count(DownloadService::get_categories_manager()->get_categories_cache()->get_childrens($this->get_category()->get_id()));
+		$pagination = $this->get_subcategories_pagination($subcategories_number, $config->get_categories_number_per_page(), $field, $mode, $page, $subcategories_page);
 		
 		//Children categories
 		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= download_cats.id, download_cats.*,
@@ -77,10 +82,13 @@ class DownloadDisplayCategoryController extends ModuleController
 		FROM ' . DownloadSetup::$download_cats_table . ' download_cats
 		WHERE id_parent = :id_category
 		AND id IN :authorized_categories
-		ORDER BY id_parent, c_order', array(
+		ORDER BY id_parent, c_order
+		LIMIT :number_items_per_page OFFSET :display_from', array(
 			'timestamp_now' => $now->get_timestamp(),
 			'id_category' => $this->category->get_id(),
-			'authorized_categories' => $authorized_categories
+			'authorized_categories' => $authorized_categories,
+			'number_items_per_page' => $pagination->get_number_items_per_page(),
+			'display_from' => $pagination->get_display_from()
 		));
 		
 		$nbr_cat_displayed = 0;
@@ -105,6 +113,16 @@ class DownloadDisplayCategoryController extends ModuleController
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 		$cats_columns_width = floor(100 / $nbr_column_cats);
 		
+		$this->tpl->put_all(array(
+			'C_CATEGORY' => true,
+			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
+			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
+			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
+			'C_SUBCATEGORIES_PAGINATION' => $pagination->has_several_pages(),
+			'SUBCATEGORIES_PAGINATION' => $pagination->display(),
+			'CATS_COLUMNS_WIDTH' => $cats_columns_width
+		));
+		
 		$condition = 'WHERE id_category = :id_category
 		AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))';
 		$parameters = array(
@@ -112,8 +130,7 @@ class DownloadDisplayCategoryController extends ModuleController
 			'timestamp_now' => $now->get_timestamp()
 		);
 		
-		$page = AppContext::get_request()->get_getint('page', 1);
-		$pagination = $this->get_pagination($condition, $parameters, $field, $mode, $page);
+		$pagination = $this->get_pagination($condition, $parameters, $field, $mode, $page, $subcategories_page);
 		
 		$sort_mode = ($mode == 'asc') ? 'ASC' : 'DESC';
 		switch ($field)
@@ -155,10 +172,6 @@ class DownloadDisplayCategoryController extends ModuleController
 		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
 		
 		$this->tpl->put_all(array(
-			'C_CATEGORY' => true,
-			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
-			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
-			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
 			'C_FILES' => $result->get_rows_count() > 0,
 			'C_MORE_THAN_ONE_FILE' => $result->get_rows_count() > 1,
 			'C_CATEGORY_DISPLAYED_SUMMARY' => $config->is_category_displayed_summary(),
@@ -169,7 +182,6 @@ class DownloadDisplayCategoryController extends ModuleController
 			'C_MODERATION' => DownloadAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
-			'CATS_COLUMNS_WIDTH' => $cats_columns_width,
 			'TABLE_COLSPAN' => 4 + (int)$config->are_comments_enabled() + (int)$config->is_notation_enabled(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),
@@ -229,14 +241,28 @@ class DownloadDisplayCategoryController extends ModuleController
 		$this->tpl->put('SORT_FORM', $form->display());
 	}
 	
-	private function get_pagination($condition, $parameters, $field, $mode, $page)
+	private function get_pagination($condition, $parameters, $field, $mode, $page, $subcategories_page)
 	{
 		$downloadfiles_number = DownloadService::count($condition, $parameters);
 		
 		$pagination = new ModulePagination($page, $downloadfiles_number, (int)DownloadConfig::load()->get_items_number_per_page());
-		$pagination->set_url(DownloadUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $field, $mode, '%d'));
+		$pagination->set_url(DownloadUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $field, $mode, '%d', $subcategories_page));
 		
 		if ($pagination->current_page_is_empty() && $page > 1)
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+		
+		return $pagination;
+	}
+	
+	private function get_subcategories_pagination($subcategories_number, $categories_number_per_page, $field, $mode, $page, $subcategories_page)
+	{
+		$pagination = new ModulePagination($subcategories_page, $subcategories_number, (int)$categories_number_per_page);
+		$pagination->set_url(DownloadUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $field, $mode, $page, '%d'));
+		
+		if ($pagination->current_page_is_empty() && $subcategories_page > 1)
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
