@@ -76,11 +76,11 @@ class MediaDisplayCategoryController extends ModuleController
 		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= media_cats.id, media_cats.*,
 		(SELECT COUNT(*) FROM ' . MediaSetup::$media_table . '
 			WHERE id_category IN (
+				@id_cat,
 				(SELECT id FROM ' . MediaSetup::$media_cats_table . ' WHERE id_parent = @id_cat), 
 				(SELECT childs.id FROM ' . MediaSetup::$media_cats_table . ' parents
 				INNER JOIN ' . MediaSetup::$media_cats_table . ' childs ON parents.id = childs.id_parent
-				WHERE parents.id_parent = @id_cat),
-				@id_cat
+				WHERE parents.id_parent = @id_cat)
 			)
 			AND infos = :status
 		) AS mediafiles_number

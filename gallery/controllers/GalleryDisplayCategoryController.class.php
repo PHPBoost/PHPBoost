@@ -117,11 +117,11 @@ class GalleryDisplayCategoryController extends ModuleController
 			$result = $this->db_querier->select('SELECT @id_cat:= gallery_cats.id, gallery_cats.*,
 			(SELECT COUNT(*) FROM ' . GallerySetup::$gallery_table . '
 				WHERE idcat IN (
+					@id_cat,
 					(SELECT id FROM ' . GallerySetup::$gallery_cats_table . ' WHERE id_parent = @id_cat), 
 					(SELECT childs.id FROM ' . GallerySetup::$gallery_cats_table . ' parents
 					INNER JOIN ' . GallerySetup::$gallery_cats_table . ' childs ON parents.id = childs.id_parent
-					WHERE parents.id_parent = @id_cat),
-					@id_cat
+					WHERE parents.id_parent = @id_cat)
 				)
 				AND aprob = 1
 			) AS nbr_pics
