@@ -1,4 +1,4 @@
-<section>
+<section id="module-contact">
 	<header>
 		<h1>{@module_title}</h1>
 	</header>
