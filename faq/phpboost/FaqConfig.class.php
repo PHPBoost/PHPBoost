@@ -31,6 +31,7 @@
 
 class FaqConfig extends AbstractConfigData
 {
+	const CATEGORIES_NUMBER_PER_PAGE = 'categories_number_per_page';
 	const COLUMNS_NUMBER_PER_LINE = 'columns_number_per_line';
 	const DISPLAY_TYPE = 'display_type';
 	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
@@ -38,6 +39,16 @@ class FaqConfig extends AbstractConfigData
 	
 	const DISPLAY_TYPE_ANSWERS_HIDDEN = 'display_type_answers_hidden';
 	const DISPLAY_TYPE_ALL_ANSWERS = 'display_type_all_answers';
+	
+	public function get_categories_number_per_page()
+	{
+		return $this->get_property(self::CATEGORIES_NUMBER_PER_PAGE);
+	}
+	
+	public function set_categories_number_per_page($value) 
+	{
+		$this->set_property(self::CATEGORIES_NUMBER_PER_PAGE, $value);
+	}
 	
 	public function get_columns_number_per_line()
 	{
@@ -90,6 +101,7 @@ class FaqConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
+			self::CATEGORIES_NUMBER_PER_PAGE => 10,
 			self::COLUMNS_NUMBER_PER_LINE => 4,
 			self::DISPLAY_TYPE => self::DISPLAY_TYPE_ANSWERS_HIDDEN,
 			self::ROOT_CATEGORY_DESCRIPTION => LangLoader::get_message('root_category_description', 'config', 'faq'),

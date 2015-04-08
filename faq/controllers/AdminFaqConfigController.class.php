@@ -82,6 +82,11 @@ class AdminFaqConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTML('config', $this->admin_common_lang['configuration']);
 		$form->add_fieldset($fieldset);
 		
+		$fieldset->add_field(new FormFieldTextEditor('categories_number_per_page', $this->admin_common_lang['config.categories_number_per_page'], $this->config->get_categories_number_per_page(),
+			array('maxlength' => 2, 'size' => 3, 'required' => true),
+			array(new FormFieldConstraintIntegerRange(1, 50))
+		));
+		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('columns_number_per_line', $this->admin_common_lang['config.columns_number_per_line'], $this->config->get_columns_number_per_line(),
 			array(
 				new FormFieldSelectChoiceOption('1', '1'),
@@ -127,6 +132,7 @@ class AdminFaqConfigController extends AdminModuleController
 	
 	private function save()
 	{
+		$this->config->set_categories_number_per_page($this->form->get_value('categories_number_per_page'));
 		$this->config->set_columns_number_per_line($this->form->get_value('columns_number_per_line')->get_raw_value());
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
 		$this->config->set_root_category_description($this->form->get_value('root_category_description'));
