@@ -109,7 +109,7 @@ class HTMLTableModel
 	 */
 	public function is_footer_displayed()
 	{
-		return $this->display_footer == true;
+		return $this->display_footer;
 	}
 
 	/**
