@@ -64,6 +64,10 @@ class FaqDisplayCategoryController extends ModuleController
 	{
 		$config = FaqConfig::load();
 		$authorized_categories = FaqService::get_authorized_categories($this->get_category()->get_id());
+		$subcategories_page = AppContext::get_request()->get_getint('subcategories_page', 1);
+		
+		$subcategories_number = count(FaqService::get_categories_manager()->get_categories_cache()->get_childrens($this->get_category()->get_id()));
+		$pagination = $this->get_subcategories_pagination($subcategories_number, $config->get_categories_number_per_page(), $subcategories_page);
 		
 		//Children categories
 		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= faq_cats.id, faq_cats.*,
@@ -80,9 +84,12 @@ class FaqDisplayCategoryController extends ModuleController
 		FROM ' . FaqSetup::$faq_cats_table . ' faq_cats
 		WHERE id_parent = :id_category
 		AND id IN :authorized_categories
-		ORDER BY id_parent, c_order', array(
+		ORDER BY id_parent, c_order
+		LIMIT :number_items_per_page OFFSET :display_from', array(
 			'id_category' => $this->category->get_id(),
-			'authorized_categories' => $authorized_categories
+			'authorized_categories' => $authorized_categories,
+			'number_items_per_page' => $pagination->get_number_items_per_page(),
+			'display_from' => $pagination->get_display_from()
 		));
 		
 		$nbr_cat_displayed = 0;
@@ -127,6 +134,8 @@ class FaqDisplayCategoryController extends ModuleController
 			'C_MORE_THAN_ONE_QUESTION' => $result->get_rows_count() > 1,
 			'C_DISPLAY_TYPE_ANSWERS_HIDDEN' => $config->is_display_type_answers_hidden(),
 			'C_MODERATION' => FaqAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
+			'C_SUBCATEGORIES_PAGINATION' => $pagination->has_several_pages(),
+			'SUBCATEGORIES_PAGINATION' => $pagination->display(),
 			'CATS_COLUMNS_WIDTH' => $cats_columns_width,
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),
@@ -142,6 +151,20 @@ class FaqDisplayCategoryController extends ModuleController
 			$this->tpl->assign_block_vars('questions', $faq_question->get_array_tpl_vars());
 		}
 		$result->dispose();
+	}
+	
+	private function get_subcategories_pagination($subcategories_number, $categories_number_per_page, $subcategories_page)
+	{
+		$pagination = new ModulePagination($subcategories_page, $subcategories_number, (int)$categories_number_per_page);
+		$pagination->set_url(FaqUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), '%d'));
+		
+		if ($pagination->current_page_is_empty() && $subcategories_page > 1)
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+		
+		return $pagination;
 	}
 	
 	private function get_category()

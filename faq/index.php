@@ -52,7 +52,7 @@ $url_controller_mappers = array(
 	
 	new UrlControllerMapper('FaqDisplayPendingFaqQuestionsController', '`^/pending(?:/([a-z]+))?/?([a-z]+)?/?$`', array('field', 'sort')),
 	
-	new UrlControllerMapper('FaqDisplayCategoryController', '`^(?:/([0-9]+)-([a-z0-9-_]+))?/?$`', array('id_category', 'rewrited_name')),
+	new UrlControllerMapper('FaqDisplayCategoryController', '`^(?:/([0-9]+)-([a-z0-9-_]+))?/?([0-9]+)?/?$`', array('id_category', 'rewrited_name', 'subcategories_page')),
 	
 );
 DispatchManager::dispatch($url_controller_mappers);

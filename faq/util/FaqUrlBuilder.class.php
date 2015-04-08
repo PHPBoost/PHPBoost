@@ -57,7 +57,7 @@ class FaqUrlBuilder
 	 */
 	public static function edit_category($id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/'. $id .'/edit/');
+		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/' . $id . '/edit/');
 	}
 	
 	/**
@@ -65,7 +65,7 @@ class FaqUrlBuilder
 	 */
 	public static function delete_category($id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/'. $id .'/delete/');
+		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/' . $id . '/delete/');
 	}
 	
 	/**
@@ -87,10 +87,11 @@ class FaqUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function display_category($id, $rewrited_name)
+	public static function display_category($id, $rewrited_name, $subcategories_page = 1)
 	{
-		$category = $id > 0 ? $id . '-' . $rewrited_name .'/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/' . $category);
+		$category = $id > 0 ? $id . '-' . $rewrited_name . '/' : '';
+		$subcategories_page = $subcategories_page !== 1 ? $subcategories_page . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/' . $category . $subcategories_page);
 	}
 	
 	/**
@@ -108,7 +109,7 @@ class FaqUrlBuilder
 	 */
 	public static function add($id_category = null)
 	{
-		$id_category = !empty($id_category) ? $id_category . '/': '';
+		$id_category = !empty($id_category) ? $id_category . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/add/' . $id_category);
 	}
 	
