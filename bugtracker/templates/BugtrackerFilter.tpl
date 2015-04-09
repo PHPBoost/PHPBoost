@@ -93,7 +93,7 @@ function delete_filter(id) {
 			# ENDIF #
 			# IF C_DISPLAY_SAVE_BUTTON #
 			<td class="no-separator">
-				<a href="{LINK_FILTER_SAVE}" title="{@labels.save_filters}" class="fa fa-save"></a>
+				<a href="{LINK_FILTER_SAVE}" title="{@labels.save_filters}"><i class="fa fa-save"></i></a>
 			</td>
 			# ENDIF #
 		</tr>
@@ -101,7 +101,7 @@ function delete_filter(id) {
 		# START filters #
 		<tr id="filter{filters.ID}">
 			<td colspan="{FILTERS_NUMBER}">
-				<a href="" title="${LangLoader::get_message('delete', 'common')}" id="delete_{filters.ID}" onclick="return false;" class="fa fa-delete"></a> <a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
+				<a href="" title="${LangLoader::get_message('delete', 'common')}" id="delete_{filters.ID}" onclick="return false;"><i class="fa fa-delete"></i></a> <a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
 			</td>
 		</tr>
 		<script>

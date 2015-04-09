@@ -5,7 +5,7 @@
 				{@labels.default}
 			</th>
 			<th>
-				${LangLoader::get_message('name', 'main')}
+				${LangLoader::get_message('form.name', 'common')}
 			</th>
 		</tr>
 	</thead>

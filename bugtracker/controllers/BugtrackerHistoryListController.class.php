@@ -56,7 +56,7 @@ class BugtrackerHistoryListController extends ModuleController
 		
 		$history_lines_number = BugtrackerService::count_history($this->bug->get_id());
 		$pagination = $this->get_pagination($history_lines_number, $current_page);
-		$main_lang = LangLoader::get('main');
+		$common_lang = LangLoader::get('common');
 		
 		$this->view->put_all(array(
 			'C_PAGINATION'	=> $pagination->has_several_pages(),
@@ -113,8 +113,8 @@ class BugtrackerHistoryListController extends ModuleController
 					break;
 				
 				case 'reproductible': 
-					$old_value = ($row['old_value'] ) ? $main_lang['yes'] : $main_lang['no'];
-					$new_value = ($row['new_value'] == true) ? $main_lang['yes'] : $main_lang['no'];
+					$old_value = ($row['old_value']) ? $common_lang['yes'] : $common_lang['no'];
+					$new_value = ($row['new_value']) ? $common_lang['yes'] : $common_lang['no'];
 					break;
 				
 				default:
@@ -161,7 +161,6 @@ class BugtrackerHistoryListController extends ModuleController
 			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['error.e_unexist_bug']);
 			DispatchManager::redirect($controller);
 		}
-		
 		
 		$this->view = new FileTemplate('bugtracker/BugtrackerHistoryListController.tpl');
 		$this->view->add_lang($this->lang);

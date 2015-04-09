@@ -430,7 +430,7 @@ class BugtrackerFormController extends ModuleController
 			$display_versions = count($versions) > 1;
 			$status_list = $this->config->get_status_list();
 			
-			$main_lang = LangLoader::get('main');
+			$common_lang = LangLoader::get('common');
 			
 			$title = $this->form->get_value('title', $old_values->get_title());
 			
@@ -508,7 +508,7 @@ class BugtrackerFormController extends ModuleController
 							break;
 						
 						case 'reproductible': 
-							$new_value = $n_values[$field] ? $main_lang['yes'] : $main_lang['no'];
+							$new_value = $n_values[$field] ? $common_lang['yes'] : $common_lang['no'];
 							break;
 						
 						default:

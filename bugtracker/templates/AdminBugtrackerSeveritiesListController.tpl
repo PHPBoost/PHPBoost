@@ -40,7 +40,7 @@ function severity_bbcode_color(field)
 				{@labels.color}
 			</th>
 			<th>
-				${LangLoader::get_message('name', 'main')}
+				${LangLoader::get_message('form.name', 'common')}
 			</th>
 		</tr>
 	</thead>

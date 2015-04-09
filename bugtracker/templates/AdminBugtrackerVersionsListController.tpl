@@ -19,18 +19,18 @@ BugtrackerFormFieldVersions.prototype = {
 			
 			jQuery('<td/>', {id : 'td2_' + id}).appendTo('#tr_' + id);
 			
-			jQuery('<input/> ', {type : 'text', id : 'version_' + id, name : 'version_' + id, class : 'field-large', maxlength : 100, placeholder : ${escapejs(LangLoader::get_message('name', 'main'))}}).appendTo('#td2_' + id);
+			jQuery('<input/> ', {type : 'text', id : 'version_' + id, name : 'version_' + id, class : 'field-large', maxlength : 100, placeholder : ${escapejs(LangLoader::get_message('form.name', 'common'))}}).appendTo('#td2_' + id);
 			
 			jQuery('<td/>', {id : 'td3_' + id}).appendTo('#tr_' + id);
 			
 			jQuery('<input/> ', {type : 'text', id : 'release_date_' + id, name : 'release_date_' + id, maxlength : 10, placeholder : ${escapejs(LangLoader::get_message('date_format', 'date-common'))}}).appendTo('#td3_' + id).attr('size', '11');
-			jQuery('#release_date_' + id).after('&nbsp;');
+			jQuery('#release_date_' + id).after(' ');
 			
 			jQuery('<div/> ', {id : 'calendar' + id, style : 'position:absolute;z-index:100;display:none;'}).appendTo('#td3_' + id);
 			
 			jQuery('<div/> ', {id : 'release_date' + id + '_date', class : 'calendar-block', onmouseover : 'hide_calendar(' + id + ', 1);', onmouseout : 'hide_calendar(' + id + ', 0);'}).appendTo('#calendar' + id);
 			
-			jQuery('<a/> ', {style : 'cursor:pointer;', class : 'fa fa-calendar', onclick : "xmlhttprequest_calendar('release_date" + id + "_date', '?input_field=release_date_" + id + "&amp;field=release_date" + id + "_date&amp;d={DAY}&amp;m={MONTH}&amp;y={YEAR}');display_calendar(" + id + ");", onmouseover : 'hide_calendar(' + id + ', 1);', onmouseout : 'hide_calendar(' + id + ', 0);'}).appendTo('#td3_' + id);
+			jQuery('<a/> ', {style : 'cursor:pointer;', onclick : "xmlhttprequest_calendar('release_date" + id + "_date', '?input_field=release_date_" + id + "&amp;field=release_date" + id + "_date&amp;d={DAY}&amp;m={MONTH}&amp;y={YEAR}');display_calendar(" + id + ");", onmouseover : 'hide_calendar(' + id + ', 1);', onmouseout : 'hide_calendar(' + id + ', 0);'}).html('<i class="fa fa-calendar"></i>').appendTo('#td3_' + id);
 			
 			jQuery('<td/>', {id : 'td4_' + id}).appendTo('#tr_' + id);
 			
@@ -38,24 +38,26 @@ BugtrackerFormFieldVersions.prototype = {
 			
 			jQuery('<td/>', {id : 'td5_' + id}).appendTo('#tr_' + id);
 			
-			jQuery('<a/> ', {id : 'delete_' + id, href : 'javascript:BugtrackerFormFieldVersions.delete_version(' + id + ');', title : ${escapejs(LangLoader::get_message('delete', 'common'))}, class: 'fa fa-delete'}).appendTo('#td5_' + id);
+			jQuery('<a/> ', {id : 'delete_' + id, href : 'javascript:BugtrackerFormFieldVersions.delete_version(' + id + ');', title : ${escapejs(LangLoader::get_message('delete', 'common'))}}).html('<i class="fa fa-delete"></i>').appendTo('#td5_' + id);
 			
 			this.integer++;
 		}
 		if (this.integer == this.max_input) {
-			jQuery('#add_version').hide();
+			jQuery('#add-version').hide();
 		}
 		if (this.integer) {
-			jQuery('#no_version').hide();
+			jQuery('#no-version').hide();
 		}
 	},
 	delete_version : function (id) {
 		jQuery('#tr_' + id).remove();
 		this.integer--;
-		if (this.integer == 1)
-			jQuery('#no_version').hide();
+		if (this.integer >= 1)
+			jQuery('#no-version').show();
+		else
+			jQuery('#no-version').show();
 		
-		jQuery('#add_version').show();
+		jQuery('#add-version').show();
 	}
 };
 
@@ -97,7 +99,7 @@ function display_default_version_radio(version_id)
 	<tfoot>
 		<tr>
 			<th>
-				<a href="javascript:BugtrackerFormFieldVersions.add_version();" class="fa fa-plus" title="{@titles.add_version}" id="add_version"></a>
+				<a href="javascript:BugtrackerFormFieldVersions.add_version();" title="{@titles.add_version}" id="add-version"><i class="fa fa-plus"></i></a>
 			</th>
 			<th colspan="4" class="right">
 				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete"></i> {@labels.del_default_value}</a># ENDIF #
@@ -105,7 +107,7 @@ function display_default_version_radio(version_id)
 		</tr>
 	</tfoot>
 	<tbody id="versions_list">
-		<tr id="no_version"# IF C_VERSIONS # style="display:none;"# ENDIF #>
+		<tr id="no-version"# IF C_VERSIONS # style="display:none;"# ENDIF #>
 			<td colspan="5">
 				${LangLoader::get_message('no_item_now', 'common')}
 			</td>
@@ -124,13 +126,13 @@ function display_default_version_radio(version_id)
 					<div id="release_date{versions.ID}_date" class="calendar-block" onmouseover="hide_calendar({versions.ID}, 1);" onmouseout="hide_calendar({versions.ID}, 0);">
 					</div>
 				</div>
-				<a onclick="xmlhttprequest_calendar('release_date{versions.ID}_date', '?input_field=release_date{versions.ID}&amp;field=release_date{versions.ID}_date&amp;d={versions.DAY}&amp;m={versions.MONTH}&amp;y={versions.YEAR}');display_calendar({versions.ID});" onmouseover="hide_calendar({versions.ID}, 1);" onmouseout="hide_calendar({versions.ID}, 0);" style="cursor:pointer;" class="fa fa-calendar"></a>
+				<a onclick="xmlhttprequest_calendar('release_date{versions.ID}_date', '?input_field=release_date{versions.ID}&amp;field=release_date{versions.ID}_date&amp;d={versions.DAY}&amp;m={versions.MONTH}&amp;y={versions.YEAR}');display_calendar({versions.ID});" onmouseover="hide_calendar({versions.ID}, 1);" onmouseout="hide_calendar({versions.ID}, 0);" style="cursor:pointer;"><i class="fa fa-calendar"></i></a>
 			</td> 
 			<td>
 				<input type="checkbox" id="detected_in{versions.ID}" name="detected_in{versions.ID}" onclick="javascript:display_default_version_radio('{versions.ID}');"# IF versions.C_DETECTED_IN # checked="checked"# ENDIF # />
 			</td> 
 			<td>
-				<a href="{versions.LINK_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+				<a href="{versions.LINK_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
 			</td>
 		</tr>
 		# END versions #
