@@ -18,28 +18,30 @@ BugtrackerFormFieldCategories.prototype = {
 			
 			jQuery('<td/>', {id : 'td2_' + id}).appendTo('#tr_' + id);
 			
-			jQuery('<input/> ', {type : 'text', id : 'category_' + id, name : 'category_' + id, class : 'field-large', maxlength : 100, placeholder : ${escapejs(LangLoader::get_message('name', 'main'))}}).appendTo('#td2_' + id);
+			jQuery('<input/> ', {type : 'text', id : 'category_' + id, name : 'category_' + id, class : 'field-large', maxlength : 100, placeholder : ${escapejs(LangLoader::get_message('form.name', 'common'))}}).appendTo('#td2_' + id);
 			
 			jQuery('<td/>', {id : 'td3_' + id}).appendTo('#tr_' + id);
 			
-			jQuery('<a/> ', {id : 'delete_' + id, href : 'javascript:BugtrackerFormFieldCategories.delete_category(' + id + ');', title : ${escapejs(LangLoader::get_message('delete', 'common'))}, class: 'fa fa-delete'}).appendTo('#td3_' + id);
+			jQuery('<a/> ', {id : 'delete_' + id, href : 'javascript:BugtrackerFormFieldCategories.delete_category(' + id + ');', title : ${escapejs(LangLoader::get_message('delete', 'common'))}}).html('<i class="fa fa-delete"></i>').appendTo('#td3_' + id);
 			
 			this.integer++;
 		}
 		if (this.integer == this.max_input) {
-			jQuery('#add_category').hide();
+			jQuery('#add-category').hide();
 		}
 		if (this.integer) {
-			jQuery('#no_category').hide();
+			jQuery('#no-category').hide();
 		}
 	},
-	delete_type : function (id) {
+	delete_category : function (id) {
 		jQuery('#tr_' + id).remove();
 		this.integer--;
-		if (this.integer == 1)
-			jQuery('#no_category').hide();
+		if (this.integer >= 1)
+			jQuery('#no-category').hide();
+		else
+			jQuery('#no-category').show();
 		
-		jQuery('#add_category').show();
+		jQuery('#add-category').show();
 	},
 };
 
@@ -54,7 +56,7 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 				{@labels.default}
 			</th>
 			<th>
-				${LangLoader::get_message('name', 'main')}
+				${LangLoader::get_message('form.name', 'common')}
 			</th>
 			<th class="small-column">
 				${LangLoader::get_message('delete', 'common')}
@@ -64,7 +66,7 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 	<tfoot>
 		<tr>
 			<th>
-				<a href="javascript:BugtrackerFormFieldCategories.add_category();" class="fa fa-plus" title="{@titles.add_category}" id="add_category"></a>
+				<a href="javascript:BugtrackerFormFieldCategories.add_category();" title="{@titles.add_category}" id="add-category"><i class="fa fa-plus"></i></a>
 			</th>
 			<th colspan="2" class="right">
 				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete"></i> {@labels.del_default_value}</a># ENDIF #
@@ -72,7 +74,7 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 		</tr>
 	</tfoot>
 	<tbody id="categories_list">
-		<tr id="no_category"# IF C_CATEGORIES # style="display:none;"# ENDIF #>
+		<tr id="no-category"# IF C_CATEGORIES # style="display:none;"# ENDIF #>
 			<td colspan="3">
 				${LangLoader::get_message('no_item_now', 'common')}
 			</td>
@@ -86,7 +88,7 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 				<input type="text" maxlength="100" class="field-large" name="category{categories.ID}" value="{categories.NAME}" />
 			</td>
 			<td>
-				<a href="{categories.LINK_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+				<a href="{categories.LINK_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
 			</td>
 		</tr>
 		# END categories #
