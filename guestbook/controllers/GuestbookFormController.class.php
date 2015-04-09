@@ -89,7 +89,6 @@ class GuestbookFormController extends ModuleController
 	private function build_form()
 	{
 		$config = GuestbookConfig::load();
-		$main_lang = LangLoader::get('main');
 		
 		$formatter = AppContext::get_content_formatting_service()->get_default_factory();
 		$formatter->set_forbidden_tags($config->get_forbidden_tags());
@@ -101,12 +100,12 @@ class GuestbookFormController extends ModuleController
 		
 		if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 		{
-			$fieldset->add_field(new FormFieldTextEditor('pseudo', $main_lang['pseudo'], $this->get_message()->get_login(), array(
+			$fieldset->add_field(new FormFieldTextEditor('pseudo', LangLoader::get_message('form.name', 'common'), $this->get_message()->get_login(), array(
 				'required' => true, 'maxlength' => 25)
 			));
 		}
 		
-		$fieldset->add_field(new FormFieldRichTextEditor('contents',  $main_lang['message'], $this->get_message()->get_contents(), 
+		$fieldset->add_field(new FormFieldRichTextEditor('contents',  LangLoader::get_message('message', 'main'), $this->get_message()->get_contents(), 
 			array('formatter' => $formatter, 'rows' => 10, 'cols' => 47, 'required' => true), 
 			array(
 				new FormFieldConstraintMaxLinks($config->get_maximum_links_message(), true),

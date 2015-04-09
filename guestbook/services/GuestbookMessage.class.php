@@ -139,7 +139,7 @@ class GuestbookMessage
 		$this->creation_date = new Date();
 		
 		if (!$current_user->check_level(User::MEMBER_LEVEL))
-			$this->login = LangLoader::get_message('guest', 'main');
+			$this->login = LangLoader::get_message('visitor', 'user-common');
 		else
 			$this->login = $current_user->get_display_name();
 	}
