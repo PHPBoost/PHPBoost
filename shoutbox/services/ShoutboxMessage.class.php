@@ -141,7 +141,7 @@ class ShoutboxMessage
 		$this->set_author_user($current_user);
 		
 		if (!$current_user->check_level(User::MEMBER_LEVEL))
-			$this->login = LangLoader::get_message('guest', 'main');
+			$this->login = LangLoader::get_message('visitor', 'user-common');
 		else
 			$this->login = $current_user->get_display_name();
 	}
