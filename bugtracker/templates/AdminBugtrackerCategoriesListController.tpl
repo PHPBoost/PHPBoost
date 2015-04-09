@@ -38,7 +38,7 @@ var BugtrackerFormFieldCategories = Class.create({
 			$('no_category').hide();
 		}
 	},
-	delete_type : function (id) {
+	delete_category : function (id) {
 		$('tr_' + id).remove();
 		this.integer--;
 		if (this.integer == 1)
