@@ -1,9 +1,9 @@
 # INCLUDE MSG #
 
-<section>
+<section id="module-calendar">
 	<header>
 		<h1>
-			<a href="${relative_url(SyndicationUrlBuilder::rss('calendar'))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('calendar'))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
 			{@module_title}
 		</h1>
 	</header>

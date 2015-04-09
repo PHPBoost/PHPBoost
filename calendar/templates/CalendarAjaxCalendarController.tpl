@@ -55,10 +55,10 @@
 		<div class="calendar-container">
 			<div class="calendar-top-container">
 				<div class="calendar-top-l">
-					<a class="fa fa-angle-double-left" onclick="ChangeMonth(${escapejs(PREVIOUS_YEAR)}, ${escapejs(PREVIOUS_MONTH)});" title="{PREVIOUS_MONTH_TITLE}"></a>
+					<a onclick="ChangeMonth(${escapejs(PREVIOUS_YEAR)}, ${escapejs(PREVIOUS_MONTH)});" title="{PREVIOUS_MONTH_TITLE}"><i class="fa fa-angle-double-left"></i></a>
 				</div>
 				<div class="calendar-top-r">
-					<a class="fa fa-angle-double-right" onclick="ChangeMonth(${escapejs(NEXT_YEAR)}, ${escapejs(NEXT_MONTH)});" title="{NEXT_MONTH_TITLE}"></a>
+					<a onclick="ChangeMonth(${escapejs(NEXT_YEAR)}, ${escapejs(NEXT_MONTH)});" title="{NEXT_MONTH_TITLE}"><i class="fa fa-angle-double-right"></i></a>
 				</div>
 				<div class="calendar-top-content">
 					<h5>{DATE}</h5>
