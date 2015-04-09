@@ -1,7 +1,7 @@
 <section id="module-news">
 	<header>
 		<h1>
-			<a href="${relative_url(SyndicationUrlBuilder::rss('news', ID_CAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('news', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
 			# IF C_PENDING_NEWS #{@news.pending}# ELSE #{@news}# ENDIF #
 		</h1>
 	</header>
@@ -18,10 +18,10 @@
 						<a href="{news.U_LINK}"><span itemprop="name">{news.NAME}</span></a>
 						<span class="actions">
 							# IF news.C_EDIT #
-								<a href="{news.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
+								<a href="{news.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
 							# ENDIF #
 							# IF news.C_DELETE #
-								<a href="{news.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+								<a href="{news.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
 							# ENDIF #
 						</span>
 					</h1>
