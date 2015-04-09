@@ -14,24 +14,24 @@ NewsFormFieldSelectSources.prototype = {
 			jQuery('<div/>', {'id' : id}).appendTo('#input_fields_' + this.id_input);
 
 			jQuery('<input/> ', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{@form.source.name}'}).appendTo('#' + id);
-			jQuery('#field_name_' + id).after('&nbsp;');
+			jQuery('#' + id).append(' ');
 			
 			jQuery('<input/> ', {type : 'text', id : 'field_value_' + id, name : 'field_value_' + id, class : 'field-large', placeholder : '{@form.source.url}'}).appendTo('#' + id);
-			jQuery('#field_value_' + id).after('&nbsp;');
+			jQuery('#' + id).append(' ');
 			
-			jQuery('<a/> ', {href : 'javascript:NewsFormFieldSelectSources.delete_field('+ this.integer +');', id : 'delete_' + id, class : 'fa fa-delete'}).appendTo('#' + id);
+			jQuery('<a/> ', {href : 'javascript:NewsFormFieldSelectSources.delete_field('+ this.integer +');'}).html('<i class="fa fa-delete"></i>').appendTo('#' + id);
 
 			this.integer++;
 		}
 		if (this.integer == this.max_input) {
-			jQuery('#add_' + this.id_input).hide();
+			jQuery('#add-' + this.id_input).hide();
 		}
 	},
 	delete_field : function (id) {
 		var id = this.id_input + '_' + id;
 		jQuery('#' + id).remove();
 		this.integer--;
-		jQuery('#add_' + this.id_input).show();
+		jQuery('#add-' + this.id_input).show();
 	}
 };
 
@@ -44,8 +44,8 @@ var NewsFormFieldSelectSources = new NewsFormFieldSelectSources();
 	<div id="${escape(ID)}_{fieldelements.ID}">
 		<input type="text" name="field_name_${escape(ID)}_{fieldelements.ID}" id="field_name_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@form.source.name}"/>
 		<input type="text" name="field_value_${escape(ID)}_{fieldelements.ID}" id="field_value_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.VALUE}" placeholder="{@form.source.url}" class="field-large"/>
-		<a href="javascript:NewsFormFieldSelectSources.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" class="fa fa-delete" data-confirmation="delete-element"></a>
+		<a href="javascript:NewsFormFieldSelectSources.delete_field({fieldelements.ID});" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
 	</div>
 # END fieldelements #
 </div>
-<a href="javascript:NewsFormFieldSelectSources.add_field();" class="fa fa-plus" id="add_${escape(ID)}"></a> 
+<a href="javascript:NewsFormFieldSelectSources.add_field();" id="add-${escape(ID)}"><i class="fa fa-plus"></i></a> 
