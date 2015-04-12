@@ -14,5 +14,10 @@
 
 				this.onclick = function () { return confirm(message); }
 			});
+			
+			jQuery(document).ready(function() {
+				jQuery('a[data-lightbox^=formatter]').attr('data-rel', 'lightcase:collection');
+				jQuery('a[data-rel^=lightcase]').lightcase();
+			});
 		-->
 		</script>
