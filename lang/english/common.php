@@ -32,6 +32,7 @@
 $lang['by'] = 'By';
 $lang['the'] = 'The';
 $lang['in'] = 'In';
+$lang['of'] = 'Of';
 $lang['read-more'] = 'Read more';
 
 $lang['enable'] = 'Enable';
@@ -67,6 +68,12 @@ $lang['no_item_now'] = 'No item is available for the moment';
 
 $lang['filters'] = 'Filters';
 $lang['table_footer_stats'] = ':start to :end of :total elements';
+
+//Multimedia
+$lang['previous'] = 'Previous';
+$lang['next'] = 'Next';
+$lang['play'] = 'Play';
+$lang['pause'] = 'Pause';
 
 //Position
 $lang['position'] = 'Position';

@@ -30,6 +30,7 @@
 [b]Graphique[/b]
 [*] Refonte de l'affichage de la barre BBCode, amélioration de son ergonomie et suppression de la Pop-up "Tous les smileys"
 [*] Mise à jour de la librairie d'icônes Font-Awesome
+[*] Intégration de Lightcase (lightbox responsive)
 
 [*] Suppression du lecteur DewPlayer et utilisation de la balise audio HTML5
 [*] Suppression du module PHPBoostCaptcha du projet PHPBoost (il ne sera plus maintenu)
