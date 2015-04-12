@@ -266,3 +266,10 @@ table.table-fixed {
 	-moz-animation: blink 1.5s ease-in-out infinite;
 	-webkit-animation: blink 1.5s ease-in-out infinite;
 }
+
+/* Lightbox 
+--------------------------------------*/
+#lightcase-nav a {
+	text-decoration: none;
+}
+
