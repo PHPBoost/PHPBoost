@@ -137,40 +137,40 @@ class TextHelper
 		addcslashes($string, '"')) . $bounds;
 	}
 	
-	public static function htmlspecialchars($string, $flags = null)
+	public static function htmlspecialchars($string, $flags = null, $encoding = 'ISO-8859-1', $double_encode = true)
 	{
 		if ($flags === null)
 		{
-			return htmlspecialchars($string, ENT_COMPAT, 'ISO-8859-1');
+			$flags = ENT_COMPAT | ENT_HTML401;
 		}
-		return htmlspecialchars($string, $flags, 'ISO-8859-1');
+		return htmlspecialchars($string, $flags, $encoding, $double_encode);
 	}
 	
 	public static function htmlspecialchars_decode($string, $flags = null)
 	{
 		if ($flags === null)
 		{
-			return htmlspecialchars_decode($string, ENT_COMPAT);
+			$flags = ENT_COMPAT | ENT_HTML401;
 		}
 		return htmlspecialchars_decode($string, $flags);
 	}
 	
-	public static function htmlentities($string, $flags = null)
+	public static function htmlentities($string, $flags = null, $encoding = 'ISO-8859-1', $double_encode = true)
 	{
 		if ($flags === null)
 		{
-			return htmlentities($string, ENT_COMPAT, 'ISO-8859-1');
+			$flags = ENT_COMPAT | ENT_HTML401;
 		}
-		return htmlentities($string, $flags, 'ISO-8859-1');
+		return htmlentities($string, $flags, $encoding, $double_encode);
 	}
 	
-	public static function html_entity_decode($string, $flags = null)
+	public static function html_entity_decode($string, $flags = null, $encoding = 'ISO-8859-1')
 	{
 		if ($flags === null)
 		{
-			return html_entity_decode($string, ENT_COMPAT, 'ISO-8859-1');
+			$flags = ENT_COMPAT | ENT_HTML401;
 		}
-		return html_entity_decode($string, $flags, 'ISO-8859-1');
+		return html_entity_decode($string, $flags, $encoding);
 	}
 	
 	public static function lowercase_first($string)
