@@ -133,8 +133,8 @@ class AdminViewAllMembersController extends AdminController
 			$this->view->assign_block_vars('member_list', array(
 				'C_GROUP_COLOR' => !empty($group_color),
 				'C_DELETABLE' => $row['level'] != User::ADMIN_LEVEL || ($row['level'] == User::ADMIN_LEVEL && $number_admins > 1),
-				'DELETE_LINK' => AdminMembersUrlBuilder::delete($row['user_id'])->rel(),
-				'EDIT_LINK' => UserUrlBuilder::edit_profile($row['user_id'])->rel(),
+				'DELETE_LINK' => AdminMembersUrlBuilder::delete($row['user_id'], SITE_REWRITED_SCRIPT)->rel(),
+				'EDIT_LINK' => UserUrlBuilder::edit_profile($row['user_id'], SITE_REWRITED_SCRIPT)->rel(),
 				'DISPLAY_NAME' => $row['display_name'],
 				'LEVEL' => UserService::get_level_lang($row['level']),
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),

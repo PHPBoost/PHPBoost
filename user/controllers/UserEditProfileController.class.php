@@ -76,7 +76,7 @@ class UserEditProfileController extends AbstractController
 			{
 				$authentication_method = AuthenticationService::get_authentication_method($associate_type);
 				AuthenticationService::associate($authentication_method, $user_id);
-				AppContext::get_response()->redirect(UserUrlBuilder::edit_profile($user_id));
+				AppContext::get_response()->redirect(UserUrlBuilder::edit_profile($user_id, $request->get_getvalue('redirect', null)));
 			}
 		}
 
@@ -87,7 +87,7 @@ class UserEditProfileController extends AbstractController
 			{
 				$authentication_method = AuthenticationService::get_authentication_method($dissociate_type);
 				AuthenticationService::dissociate($authentication_method, $user_id);
-				AppContext::get_response()->redirect(UserUrlBuilder::edit_profile($user_id));
+				AppContext::get_response()->redirect(UserUrlBuilder::edit_profile($user_id, $request->get_getvalue('redirect', null)));
 			}
 		}
 		
@@ -95,7 +95,7 @@ class UserEditProfileController extends AbstractController
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
-			$this->save();
+			$this->save($request);
 		}
 		
 		$this->tpl->put('FORM', $this->form->display());
@@ -244,7 +244,7 @@ class UserEditProfileController extends AbstractController
 		$this->form = $form;
 	}
 	
-	private function save()
+	private function save(HTTPRequestCustom $request)
 	{
 		$has_error = false;
 		
@@ -388,7 +388,7 @@ class UserEditProfileController extends AbstractController
 		
 		if (!$has_error)
 		{
-			AppContext::get_response()->redirect(UserUrlBuilder::edit_profile($user_id));
+			AppContext::get_response()->redirect($request->get_getvalue('redirect', UserUrlBuilder::edit_profile($user_id)));
 		}
 	}
 

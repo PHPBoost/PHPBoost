@@ -43,7 +43,7 @@ class AdminMemberDeleteController extends AdminController
 				DispatchManager::redirect($error_controller);
 			}
 			
-			AppContext::get_response()->redirect(AdminMembersUrlBuilder::management());
+			AppContext::get_response()->redirect($request->get_getvalue('redirect', AdminMembersUrlBuilder::management()));
 		}
 		else
 		{

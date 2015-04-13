@@ -95,14 +95,15 @@ class UserUrlBuilder
 		return new Url(self::$dispatcher . '/upload_popup.php');
 	}
 	
-	public static function edit_profile($user_id = '')
+	public static function edit_profile($user_id = 0, $redirect = null)
 	{
 		if (empty($user_id))
 		{
 			$user_id = AppContext::get_current_user()->get_id();
 		}
-
-		return DispatchManager::get_url(self::$dispatcher, '/profile/'. $user_id .'/edit/');
+		$redirect = $redirect !== null ? '?redirect=' . $redirect : '';
+		
+		return DispatchManager::get_url(self::$dispatcher, '/profile/'. $user_id .'/edit/' . $redirect);
 	}
 	
 	public static function users($field = '', $sort = '', $page = '')
