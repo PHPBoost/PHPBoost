@@ -42,7 +42,7 @@ class SQLHTMLTableModel extends HTMLTableModel
 
 	public function get_number_of_matching_rows()
 	{
-		return PersistenceContext::get_querier()->count($this->table, $this->get_filtered_clause($this->get_filters()) . $this->get_permanent_filtered_clause($this->get_permanent_filters()), $this->parameters);
+		return PersistenceContext::get_querier()->count($this->table, $this->get_filtered_clause($this->html_table->parameters->get_filters()) . $this->get_permanent_filtered_clause($this->get_permanent_filters()), $this->parameters);
 	}
 
 	public function get_sql_results($sql_join = false)
@@ -50,7 +50,7 @@ class SQLHTMLTableModel extends HTMLTableModel
 		$limit = $this->html_table->get_nb_rows_per_page();
 		$offset = $this->html_table->get_first_row_index();
 		$sorting_rule = $this->html_table->parameters->get_sorting_rule();
-		$filters = $this->get_filters();
+		$filters = $this->html_table->parameters->get_filters();
 		$permanent_filters = $this->get_permanent_filters();
 
 		$query = 'SELECT * ';
