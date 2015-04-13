@@ -273,3 +273,10 @@ table.table-fixed {
 	text-decoration: none;
 }
 
+#lightcase-nav a:hover > span {
+	display: block;
+	margin: 0.6em 0px 0px 0px;
+	font-size: 0.3em;
+	text-indent: 0;
+	word-wrap: normal;
+}
