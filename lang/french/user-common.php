@@ -193,6 +193,13 @@ $lang['extended-field.field.date-birth-explain'] = 'De type JJ/MM/AAAA';
 
 $lang['extended-field.field.avatar'] = 'Avatar';
 $lang['extended-field.field.avatar-explain'] = '';
+$lang['extended-field.field.avatar.current_avatar'] = 'Avatar actuel';
+$lang['extended-field.field.avatar.upload_avatar'] = 'Uploader un avatar';
+$lang['extended-field.field.avatar.upload_avatar-explain'] = 'Avatar directement hébergé sur le serveur';
+$lang['extended-field.field.avatar.link'] = 'Lien avatar';
+$lang['extended-field.field.avatar.link-explain'] = 'Adresse directe de l\'avatar';
+$lang['extended-field.field.avatar.delete'] = 'Supprimer l\'avatar courant';
+$lang['extended-field.field.avatar.no_avatar'] = 'Aucun avatar';
 
 $lang['extended-field.field.website'] = 'Site web';
 $lang['extended-field.field.website-explain'] = 'Veuillez renseigner un site web valide (ex : http://www.phpboost.com)';

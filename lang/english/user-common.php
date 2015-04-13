@@ -192,6 +192,13 @@ $lang['extended-field.field.date-birth-explain'] = 'MM/DD/YYYY';
 
 $lang['extended-field.field.avatar'] = 'Avatar';
 $lang['extended-field.field.avatar-explain'] = '';
+$lang['extended-field.field.avatar.current_avatar'] = 'Current avatar';
+$lang['extended-field.field.avatar.upload_avatar'] = 'Upload an avatar';
+$lang['extended-field.field.avatar.upload_avatar-explain'] = 'Avatar on the server';
+$lang['extended-field.field.avatar.link'] = 'Avatar link';
+$lang['extended-field.field.avatar.link-explain'] = 'Url of the avatar';
+$lang['extended-field.field.avatar.delete'] = 'Delete current avatar';
+$lang['extended-field.field.avatar.no_avatar'] = 'No avatar';
 
 $lang['extended-field.field.website'] = 'Website';
 $lang['extended-field.field.website-explain'] = 'Please enter a valid url (ex : http://www.phpboost.com)';

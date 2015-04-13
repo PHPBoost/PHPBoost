@@ -199,7 +199,6 @@ $LANG['sex'] = 'Sex';
 $LANG['male'] = 'Male';
 $LANG['female'] = 'Female';
 $LANG['contact'] = 'Contact';
-$LANG['no_avatar'] = 'No avatar';
 $LANG['registered'] = 'Signed up';
 $LANG['registered_s'] = 'Signed up';
 $LANG['registered_on'] = 'Signed up since';
