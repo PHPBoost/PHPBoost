@@ -133,6 +133,7 @@ $LANG['require_height_max'] = 'Veuillez entrer une hauteur maximale pour les pho
 $LANG['require_width_max'] = 'Veuillez entrer une largeur maximale pour les photos !';
 $LANG['require_width'] = 'Veuillez entrer une largeur maximale pour les miniatures !';
 $LANG['require_weight_max'] = 'Veuillez entrez un poids maximum pour la photo !';
+$LANG['require_cat_p'] = 'Veuillez entrer le nombre de catégories par page !';
 $LANG['require_row'] = 'Veuillez entrer un nombre de colonne(s) pour la galerie !';
 $LANG['require_img_p'] = 'Veuillez entrer le nombre de photos par page !';
 $LANG['require_quality'] = 'Veuillez entrer une qualité pour les miniatures !';

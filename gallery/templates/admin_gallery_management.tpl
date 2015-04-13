@@ -285,6 +285,7 @@
 					</tbody>
 				</table>
 				<div class="spacer">&nbsp;</div>
+				# IF C_SUBCATEGORIES_PAGINATION #<span class="center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
 				# END cat #
 				
 				# START pics.pics_max #
@@ -459,14 +460,16 @@
 					</table>
 					# ENDIF #
 					
-					# IF NOT pics.C_PICTURES #
-					<div class="notice">
-						{L_TOTAL_IMG}
-					</div>
-					# ELSE #
-					<p style="text-align:center" class="smaller">
-						{L_TOTAL_IMG}
-					</p>
+					# IF C_DISPLAY_NO_PICTURES_MESSAGE #
+						# IF NOT C_PICTURES #
+						<div class="notice">
+							{L_TOTAL_IMG}
+						</div>
+						# ELSE #
+						<p style="text-align:center" class="smaller">
+							{L_TOTAL_IMG}
+						</p>
+						# ENDIF #
 					# ENDIF #
 				</div>
 				

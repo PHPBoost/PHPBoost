@@ -82,7 +82,7 @@ class GalleryDisplayCategoryController extends ModuleController
 		
 		//On crée une pagination si le nombre de catégories est trop important.
 		$page = AppContext::get_request()->get_getint('p', 1);
-		$pagination = new ModulePagination($page, $total_cat, $config->get_pics_number_per_page());
+		$pagination = new ModulePagination($page, $total_cat, $config->get_categories_number_per_page());
 		$pagination->set_url(new Url('/gallery/gallery.php?p=%d&amp;cat=' . $category->get_id() . '&amp;id=' . $g_idpics . '&amp;' . $g_sort));
 		
 		if ($pagination->current_page_is_empty() && $page > 1)
@@ -156,16 +156,16 @@ class GalleryDisplayCategoryController extends ModuleController
 		$category_description = FormatingHelper::second_parse($category->get_description());
 		
 		$this->tpl->put_all(array(
-			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_ROOT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY,
 			'C_CATEGORY_DESCRIPTION' => $category_description,
 			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
+			'C_SUBCATEGORIES_PAGINATION' => $pagination->has_several_pages(),
+			'SUBCATEGORIES_PAGINATION' => $pagination->display(),
 			'ARRAY_JS' => '',
 			'NBR_PICS' => 0,
 			'MAX_START' => 0,
 			'START_THUMB' => 0,
 			'END_THUMB' => 0,
-			'PAGINATION' => $pagination->display(),
 			'COLUMNS_NUMBER' => $nbr_column_pics,
 			'CATS_COLUMNS_WIDTH' => $column_width_cats,
 			'COLUMN_WIDTH_PICS' => $column_width_pics,

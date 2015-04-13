@@ -133,6 +133,7 @@ $LANG['require_height_max'] = 'Please enter maximum height for the pictures!';
 $LANG['require_width_max'] = 'Please enter maximum width for the pictures!';
 $LANG['require_width'] = 'Please enter maximum width for the thumbnails!';
 $LANG['require_weight_max'] = 'Please enter maximum weight for the pictures!';
+$LANG['require_cat_p'] = 'Please enter the number of categories per page!';
 $LANG['require_row'] = 'Please enter the number of columns for the gallery!';
 $LANG['require_img_p'] = 'Please enter the number of pictures per page!';
 $LANG['require_quality'] = 'Please enter the thumbtails quality!';

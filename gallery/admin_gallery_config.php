@@ -51,6 +51,7 @@ if (!empty($_POST['valid']))
 	$config->set_logo_transparency(retrieve(POST, 'logo_transparency', 40));
 	$config->set_logo_horizontal_distance(retrieve(POST, 'logo_horizontal_distance', 5));
 	$config->set_logo_vertical_distance(retrieve(POST, 'logo_vertical_distance', 5));
+	$config->set_categories_number_per_page(retrieve(POST, 'categories_number_per_page', 10));
 	$config->set_columns_number(retrieve(POST, 'columns_number', 4));
 	$config->set_pics_number_per_page(retrieve(POST, 'pics_number_per_page', 16));
 	if (retrieve(POST, 'notation_scale', 5) != $config->get_notation_scale())
@@ -156,6 +157,7 @@ else
 		'LOGO_TRANSPARENCY' => $config->get_logo_transparency(),
 		'LOGO_HORIZONTAL_DISTANCE' => $config->get_logo_horizontal_distance(),
 		'LOGO_VERTICAL_DISTANCE' => $config->get_logo_vertical_distance(),
+		'CATEGORIES_NUMBER_PER_PAGE' => $config->get_categories_number_per_page(),
 		'COLUMNS_NUMBER' => $config->get_columns_number(),
 		'PICS_NUMBER_PER_PAGE' => $config->get_pics_number_per_page(),
 		'NOTATION_SCALE' => $config->get_notation_scale(),
@@ -182,6 +184,7 @@ else
 		'L_REQUIRE_MAX_WIDTH' => $LANG['require_width_max'],
 		'L_REQUIRE_MAX_WEIGHT' => $LANG['require_weight_max'],
 		'L_REQUIRE_NOTATION_SCALE' => $LANG['require_notation_scale'],
+		'L_REQUIRE_CAT_P' => $LANG['require_cat_p'],
 		'L_REQUIRE_ROW' => $LANG['require_row'],
 		'L_REQUIRE_IMG_P' => $LANG['require_img_p'],
 		'L_REQUIRE_QUALITY' => $LANG['require_quality'],

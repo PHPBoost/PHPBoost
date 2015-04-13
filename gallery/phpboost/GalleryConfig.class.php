@@ -38,6 +38,7 @@ class GalleryConfig extends AbstractConfigData
 	const LOGO_TRANSPARENCY = 'logo_transparency';
 	const LOGO_HORIZONTAL_DISTANCE = 'logo_horizontal_distance';
 	const LOGO_VERTICAL_DISTANCE = 'logo_vertical_distance';
+	const CATEGORIES_NUMBER_PER_PAGE = 'categories_number_per_page';
 	const COLUMNS_NUMBER = 'columns_number';
 	const PICS_NUMBER_PER_PAGE = 'pics_number_per_page';
 	const NOTATION_SCALE = 'notation_scale';
@@ -180,6 +181,16 @@ class GalleryConfig extends AbstractConfigData
 	public function set_logo_vertical_distance($value) 
 	{
 		$this->set_property(self::LOGO_VERTICAL_DISTANCE, $value);
+	}
+	
+	public function get_categories_number_per_page()
+	{
+		return $this->get_property(self::CATEGORIES_NUMBER_PER_PAGE);
+	}
+	
+	public function set_categories_number_per_page($value) 
+	{
+		$this->set_property(self::CATEGORIES_NUMBER_PER_PAGE, $value);
 	}
 	
 	public function get_columns_number()
@@ -386,6 +397,7 @@ class GalleryConfig extends AbstractConfigData
 			self::LOGO_TRANSPARENCY => 40,
 			self::LOGO_HORIZONTAL_DISTANCE => 5,
 			self::LOGO_VERTICAL_DISTANCE => 5,
+			self::CATEGORIES_NUMBER_PER_PAGE => 10,
 			self::COLUMNS_NUMBER => 4,
 			self::PICS_NUMBER_PER_PAGE => 16,
 			self::NOTATION_SCALE => 5,
