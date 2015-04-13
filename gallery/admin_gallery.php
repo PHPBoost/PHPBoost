@@ -85,11 +85,11 @@ else
 	$authorized_categories = GalleryService::get_authorized_categories($id_category);
 	
 	$nbr_pics = PersistenceContext::get_querier()->count(GallerySetup::$gallery_table, 'WHERE idcat=:idcat', array('idcat' => $id_category));
-	$total_cat = $id_category == Category::ROOT_CATEGORY ? count($categories) - 1 : count($categories);
+	$total_cat = count($categories);
 	
 	//On crée une pagination si le nombre de catégories est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
-	$pagination = new ModulePagination($page, $total_cat, $config->get_pics_number_per_page());
+	$pagination = new ModulePagination($page, $total_cat, $config->get_categories_number_per_page());
 	$pagination->set_url(new Url('/gallery/admin_gallery.php?p=%d'));
 	
 	if ($pagination->current_page_is_empty() && $page > 1)
@@ -109,8 +109,10 @@ else
 	$column_width_pics = floor(100/$nbr_column_pics);
 	
 	$tpl->put_all(array(
-		'C_PAGINATION' => $pagination->has_several_pages(),
-		'PAGINATION' => $pagination->display(),
+		'C_DISPLAY_NO_PICTURES_MESSAGE' => $category->get_id() != Category::ROOT_CATEGORY,
+		'C_PICTURES' => $nbr_pics > 0,
+		'C_SUBCATEGORIES_PAGINATION' => $pagination->has_several_pages(),
+		'SUBCATEGORIES_PAGINATION' => $pagination->display(),
 		'COLUMN_WIDTH_CAT' => $column_width_cats,
 		'COLUMN_WIDTH_PICS' => $column_width_pics,
 		'COLSPAN' => $config->get_columns_number(),
@@ -169,7 +171,7 @@ else
 				WHERE parents.id_parent = @id_cat)
 			)
 			AND aprob = 0
-		) AS nbr_pics_unaprob,
+		) AS nbr_pics_unaprob
 		FROM ' . GallerySetup::$gallery_cats_table . ' gallery_cats
 		WHERE id_parent = :id_category
 		AND id IN :authorized_categories
@@ -217,7 +219,6 @@ else
 
 	##### Affichage des photos #####
 	$tpl->assign_block_vars('pics', array(
-		'C_PICTURES' => $nbr_pics > 0,
 		'C_PICS_MAX' => $nbr_pics == 0 || !empty($idpics),
 		'EDIT' => !empty($id_category) ? '<a href="' . GalleryUrlBuilder::edit_category($id_category)->rel() . '" title="' . LangLoader::get_message('edit', 'common') . '" class="fa fa-edit"></a>' : '',
 		'PICS_MAX' => '<img src="show_pics.php?id=' . $idpics . '&amp;cat=' . $id_category . '" alt="" / >'

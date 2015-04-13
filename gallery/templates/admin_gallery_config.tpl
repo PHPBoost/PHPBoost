@@ -49,6 +49,10 @@
 				alert("{L_REQUIRE_QUALITY}");
 				return false;
 			}
+			if(document.getElementById('categories_number_per_page').value == "") {
+				alert("{L_REQUIRE_CAT_P}");
+				return false;
+			}
 			if(document.getElementById('columns_number').value == "") {
 				alert("{L_REQUIRE_ROW}");
 				return false;
@@ -127,6 +131,10 @@
 					<div class="form-element">
 						<label for="quality">* {L_QUALITY_THUMB} <span class="field-description">{L_QUALITY_THUMB_EXPLAIN}</span></label>
 						<div class="form-field"><input type="text" size="3" id="quality" name="quality" value="{QUALITY}"> %</div>
+					</div>
+					<div class="form-element">
+						<label for="categories_number_per_page">* ${LangLoader::get_message('config.categories_number_per_page', 'admin-common')}</label>
+						<div class="form-field"><input type="text" size="6" maxlength="6" id="categories_number_per_page" name="categories_number_per_page" value="{CATEGORIES_NUMBER_PER_PAGE}"></div>
 					</div>
 					<div class="form-element">
 						<label for="columns_number">* {L_COLUMNS_NUMBER} <span class="field-description">{L_COLUMNS_NUMBER_EXPLAIN}</span></label>

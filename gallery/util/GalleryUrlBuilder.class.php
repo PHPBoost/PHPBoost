@@ -35,7 +35,7 @@ class GalleryUrlBuilder
 	 */
 	public static function configuration()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/config');
+		return new Url('/gallery/admin_gallery_config.php');
 	}
 	
 	/**

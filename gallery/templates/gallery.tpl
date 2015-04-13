@@ -292,6 +292,7 @@
 				# END sub_categories_list #
 				<div class="spacer"></div>
 			</div>
+			# IF C_SUBCATEGORIES_PAGINATION #<span class="center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
 			# ELSE #
 				<div class="spacer"></div>
 			# ENDIF #
