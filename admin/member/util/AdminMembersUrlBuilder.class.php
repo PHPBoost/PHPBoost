@@ -48,9 +48,10 @@ class AdminMembersUrlBuilder
 	/*
 	 * @ return Url
 	 */
-	public static function delete($id)
+	public static function delete($id, $redirect = null)
 	{
-		return DispatchManager::get_url(self::$dispatcher, $id. '/delete/');
+		$redirect = $redirect !== null ? '?redirect=' . $redirect : '';
+		return DispatchManager::get_url(self::$dispatcher, $id. '/delete/' . $redirect);
 	}
 	
 	/*
