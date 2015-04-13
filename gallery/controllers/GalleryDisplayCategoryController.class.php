@@ -78,7 +78,7 @@ class GalleryDisplayCategoryController extends ModuleController
 		$Gallery = new Gallery();
 		
 		$nbr_pics = $this->db_querier->count(GallerySetup::$gallery_table, 'WHERE idcat=:idcat AND aprob = 1', array('idcat' => $category->get_id()));
-		$total_cat = $category->get_id() == Category::ROOT_CATEGORY ? count($categories) - 1 : count($categories);
+		$total_cat = count($categories);
 		
 		//On crée une pagination si le nombre de catégories est trop important.
 		$page = AppContext::get_request()->get_getint('p', 1);

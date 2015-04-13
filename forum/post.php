@@ -400,7 +400,8 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 	{
 		if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
-
+		
+		$topic = array('idcat' => '', 'title' => '', 'nbr_msg' => '', 'last_user_id' => '', 'status' => '');
 		try {
 			$topic = PersistenceContext::get_querier()->select_rows(PREFIX . 'forum_topics', array('idcat', 'title', 'nbr_msg', 'last_user_id', 'status'), 'WHERE id=:id', array('id' => $idt_get));
 		} catch (RowNotFoundException $e) {
@@ -668,7 +669,11 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 				}
 
 				//Récupération des infos du sondage associé si il existe
-				$poll = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_poll', array('question', 'answers', 'votes', 'type'), 'WHERE idtopic=:id', array('id' => $idt_get));
+				$poll = array('question' => '', 'answers' => '', 'votes' => '', 'type' => '');
+				try {
+					$poll = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_poll', array('question', 'answers', 'votes', 'type'), 'WHERE idtopic=:id', array('id' => $idt_get));
+				} catch (RowNotFoundException $e) {}
+				
 				$array_answer = explode('|', $poll['answers']);
 				$array_votes = explode('|', $poll['votes']);
 
