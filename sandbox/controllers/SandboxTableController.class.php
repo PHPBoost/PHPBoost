@@ -56,8 +56,6 @@ class SandboxTableController extends ModuleController
 			new HTMLTableColumn('derniere connexion'),
 			new HTMLTableColumn('messagerie')
 		), new HTMLTableSortingRule('user_id', HTMLTableSortingRule::ASC));
-		
-		$html_table = new HTMLTable($table);
 
 		$table->set_caption('Liste des membres');
 		$table->set_id('t42');
@@ -78,6 +76,8 @@ class SandboxTableController extends ModuleController
         $table->add_filter(new HTMLTableGreaterThanOrEqualsToSQLFilter('user_id', 'filter13', 'id >='));
         $table->add_filter(new HTMLTableLessThanOrEqualsToSQLFilter('user_id', 'filter14', 'id <='));
         $table->add_filter(new HTMLTableEqualsToSQLFilter('user_id', 'filter15', 'id ='));
+		
+		$html_table = new HTMLTable($table);
 
         $results = array();
 		$result = $table->get_sql_results();
