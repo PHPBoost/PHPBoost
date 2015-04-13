@@ -75,7 +75,7 @@ class MediaDisplayCategoryController extends ModuleController
 		//Children categories
 		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= media_cats.id, media_cats.*,
 		(SELECT COUNT(*) FROM ' . MediaSetup::$media_table . '
-			WHERE id_category IN (
+			WHERE idcat IN (
 				@id_cat,
 				(SELECT id FROM ' . MediaSetup::$media_cats_table . ' WHERE id_parent = @id_cat), 
 				(SELECT childs.id FROM ' . MediaSetup::$media_cats_table . ' parents

@@ -59,6 +59,7 @@ $LANG['max_link_explain'] = 'Set to -1 for no limit';
 $LANG['generate'] = 'Generate';
 $LANG['or_direct_path'] = 'Or direct path';
 $LANG['unknow_bot'] = 'Unknown bot';
+$LANG['version'] = 'Version';
 
 //Index
 $LANG['update_available'] = 'Update available';
