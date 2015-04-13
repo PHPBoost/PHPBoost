@@ -53,7 +53,6 @@ $lang['config.category_display_type'] = 'Affichage des informations dans les cat
 $lang['config.category_display_type.display_summary'] = 'Résumé';
 $lang['config.category_display_type.display_all_content'] = 'Tout le contenu';
 $lang['config.category_display_type.display_table'] = 'Tableau';
-$lang['config.root_category_description'] = 'Description de la racine des liens web';
 $lang['config.partners_menu'] = 'Menu partenaires';
 $lang['config.sort_type'] = 'Ordre d\'affichage des partenaires';
 $lang['config.sort_type.visits'] = 'Nombre de visites';

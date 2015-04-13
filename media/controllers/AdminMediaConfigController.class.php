@@ -131,7 +131,7 @@ class AdminMediaConfigController extends AdminModuleController
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
-		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->lang['config.root_category_description'], $this->config->get_root_category_description(), 
+		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->admin_common_lang['config.root_category_description'], $this->config->get_root_category_description(), 
 			array('rows' => 8, 'cols' => 47)
 		));
 		

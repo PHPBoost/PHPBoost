@@ -42,6 +42,7 @@ $lang['config.display_type'] = 'Type d\'affichage';
 $lang['config.display_type.block'] = 'Affichage en bloc';
 $lang['config.display_type.list'] = 'Affichage en liste';
 $lang['config.display_type.inline'] = 'Affichage en ligne';
+$lang['config.root_category_description'] = 'Description de la catégorie racine';
 
 $lang['config.authorizations.explain'] = 'Autorisations globales du module. Vous pouvez changer ces autorisations localement sur chaque catégorie.';
 ?>
