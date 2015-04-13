@@ -52,6 +52,7 @@ $lang['articles_configuration.display_type'] = 'Type d\'affichage des articles';
 $lang['articles_configuration.display_type.mosaic'] = 'Mosaïque';
 $lang['articles_configuration.display_type.list'] = 'Liste';
 $lang['articles_configuration.display_type.block'] = 'Liste sans image';
+$lang['articles_configuration.root_category_description'] = 'Description de la racine des articles';
 
 //Form
 $lang['articles.form.description'] = 'Description (maximum :number caractères)';

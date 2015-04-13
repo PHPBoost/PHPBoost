@@ -40,6 +40,7 @@ class ArticlesConfig extends AbstractConfigData
 	const NOTATION_SCALE = 'notation_scale';
 	const COMMENTS_ENABLED = 'comments_enable'; 
 	const DATE_UPDATED_DISPLAYED = 'date_updated_displayed';
+	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
         
 	const DISPLAY_TYPE = 'display_type';
 	const DISPLAY_MOSAIC = 'mosaic';
@@ -161,6 +162,16 @@ class ArticlesConfig extends AbstractConfigData
 		$this->set_property(self::DATE_UPDATED_DISPLAYED, $date_updated_displayed);
 	}
 	
+	public function get_root_category_description()
+	{
+		return $this->get_property(self::ROOT_CATEGORY_DESCRIPTION);
+	}
+	
+	public function set_root_category_description($value)
+	{
+		$this->set_property(self::ROOT_CATEGORY_DESCRIPTION, $value);
+	}
+	
 	public function get_authorizations()
 	{
 		return $this->get_property(self::AUTHORIZATIONS);
@@ -184,6 +195,7 @@ class ArticlesConfig extends AbstractConfigData
 			self::NOTATION_ENABLED => true,
 			self::NOTATION_SCALE => 5,
 			self::DISPLAY_TYPE => self::DISPLAY_MOSAIC,
+			self::ROOT_CATEGORY_DESCRIPTION => LangLoader::get_message('root_category_description', 'config', 'articles'),
 			self::AUTHORIZATIONS => array('r1' => 13, 'r0' => 5, 'r-1' => 1)
 		);
 	}
