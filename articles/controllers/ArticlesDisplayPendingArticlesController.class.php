@@ -146,6 +146,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$this->build_form($field, $mode);
 		
 		$this->view->put_all(array(
+			'C_PENDING' => true,
 			'C_MOSAIC' => $config->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
 			'C_NO_ARTICLE_AVAILABLE' => $nbr_articles_pending == 0
 		));
@@ -231,7 +232,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$pagination = new ModulePagination($page, $number_articles, (int)ArticlesConfig::load()->get_number_articles_per_page());
 		$pagination->set_url(ArticlesUrlBuilder::display_pending_articles($field, $mode, '/%d'));
 		
-		if ($pagination->current_page_is_empty() && $current_page > 1)
+		if ($pagination->current_page_is_empty() && $page > 1)
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);

@@ -2,36 +2,35 @@
 	<header>
 		<h1>
 			<a href="${relative_url(SyndicationUrlBuilder::rss('articles', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
-			${@articles}
+			# IF C_PENDING #{@articles.pending_articles}# ELSE #{@articles}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
 		</h1>
-		# IF C_ARTICLES_CAT #
-		<div class="cat">
-			<div class="subcat">
-				${LangLoader::get_message('sub_categories', 'categories-common')} :
-				<br /><br />
-				# IF C_DISPLAY_CATS_ICON #
-					# START cat_list #
-					<div style="float:left;text-align:center;width:{COLUMN_WIDTH_CAT}%;margin-bottom:20px;">
-					<a itemprop="about" href="{cat_list.U_CATEGORY}"><img itemprop="thumbnailUrl" src="{cat_list.CATEGORY_IMAGE}" alt="{cat_list.CATEGORY_NAME}" /></a><br />
-					<a itemprop="about" href="{cat_list.U_CATEGORY}">{cat_list.CATEGORY_NAME} ({cat_list.NBR_ARTICLES})</a>
-					<br />
-					<span class="small">{cat_list.CATEGORY_DESCRIPTION}</span>
-					</div>
-					# END cat_list #
-				# ELSE #
-				<ul>
-					# START cat_list #
-					<li><a itemprop="about" class="button-cat" href="{cat_list.U_CATEGORY}" title="{cat_list.CATEGORY_DESCRIPTION}">{cat_list.CATEGORY_NAME} ({cat_list.NBR_ARTICLES})</a></li>
-					# END cat_list #
-				</ul>
-				# ENDIF #
+		# IF C_CATEGORY_DESCRIPTION #
+			<div class="cat-description">
+				{CATEGORY_DESCRIPTION}
 			</div>
-		</div>
-		# IF C_SUBCATEGORIES_PAGINATION #<span class="center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
-		<div class="spacer">&nbsp;</div>
-		<hr />
 		# ENDIF #
 	</header>
+	
+	# IF C_SUB_CATEGORIES #
+	<div class="subcat-container">
+		# START sub_categories_list #
+		<div class="subcat-element" style="width:{CATS_COLUMNS_WIDTH}%;">
+			<div class="subcat-content">
+				# IF C_DISPLAY_CATS_ICON #
+				# IF sub_categories_list.C_CATEGORY_IMAGE #<a itemprop="about" href="{sub_categories_list.U_CATEGORY}"><img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="" /></a># ENDIF #
+				<br />
+				# ENDIF #
+				<a itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
+				<br />
+				<span class="small">{sub_categories_list.ARTICLES_NUMBER} # IF sub_categories_list.C_MORE_THAN_ONE_ARTICLE #${TextHelper::lowercase_first(LangLoader::get_message('articles', 'common', 'articles'))}# ELSE #${TextHelper::lowercase_first(LangLoader::get_message('article', 'common', 'articles'))}# ENDIF #</span>
+			</div>
+		</div>
+		# END sub_categories_list #
+		<div class="spacer"></div>
+	</div>
+	# IF C_SUBCATEGORIES_PAGINATION #<span class="center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
+	# ENDIF #
+	
 	# IF C_NO_ARTICLE_AVAILABLE #
 	<div class="center">
 		${LangLoader::get_message('no_item_now', 'common')}
