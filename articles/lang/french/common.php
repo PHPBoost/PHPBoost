@@ -31,14 +31,13 @@
 
 //Titles
 $lang['articles'] = 'Articles';
+$lang['article'] = 'Article';
 $lang['module_config_title'] = 'Configuration des articles';
 $lang['articles_management'] = 'Gestion des articles';
 $lang['articles.add'] = 'Ajouter un article';
 $lang['articles.edit'] = 'Modification d\'un article';
-$lang['articles.nbr_articles_category'] = ':number article(s) dans la catégorie';
 $lang['articles.feed_name'] = 'Derniers articles';
 $lang['articles.pending_articles'] = 'Articles en attente';
-$lang['articles.nbr_articles.pending'] = ':number article(s) en attente';
 $lang['articles.published_articles'] = 'Articles publiés';
 $lang['articles.select_page'] = 'Sélectionnez une page';
 $lang['articles.summary'] = 'Sommaire :';

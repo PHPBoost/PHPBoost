@@ -115,6 +115,8 @@ class ArticlesDisplayCategoryController extends ModuleController
 			'display_from' => $pagination->get_display_from()
 		)));
 		
+		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
+		
 		$this->view->put_all(array(
 			'C_MOSAIC' => $config->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
 			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
@@ -123,8 +125,12 @@ class ArticlesDisplayCategoryController extends ModuleController
 			'C_DISPLAY_CATS_ICON' => $config->are_cats_icon_enabled(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_NO_ARTICLE_AVAILABLE' => $result->get_rows_count() == 0,
+			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
 			'PAGINATION' => $pagination->display(),
-			'ID_CAT' => $this->category->get_id()
+			'ID_CAT' => $this->get_category()->get_id(),
+			'CATEGORY_NAME' => $this->get_category()->get_name(),
+			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),
+			'CATEGORY_DESCRIPTION' => $category_description
 		));
 
 		while($row = $result->fetch())
@@ -196,15 +202,15 @@ class ArticlesDisplayCategoryController extends ModuleController
 		{
 			$category_image = new Url($row['image']);
 			
-			$this->view->assign_block_vars('cat_list', array(
-				'ID_CATEGORY' => $row['id'],
+			$this->view->assign_block_vars('sub_categories_list', array(
+				'C_CATEGORY_IMAGE' => !empty($row['image']),
+				'C_MORE_THAN_ONE_ARTICLE' => $row['articles_number'] > 1,
 				'CATEGORY_NAME' => $row['name'],
 				'CATEGORY_IMAGE' => $category_image->rel(),
-				'CATEGORY_DESCRIPTION' => FormatingHelper::second_parse($row['description']),
-				'NBR_ARTICLES' => $row['articles_number'],
+				'ARTICLES_NUMBER' => $row['articles_number'],
 				'U_CATEGORY' => ArticlesUrlBuilder::display_category($row['id'], $row['rewrited_name'])->rel()
 			));
-                        
+			
 			if (!empty($row['id']))
 			{
 				$nbr_cat_displayed++;
@@ -214,13 +220,15 @@ class ArticlesDisplayCategoryController extends ModuleController
 		
 		$nbr_column_cats = ($nbr_cat_displayed > $config->get_number_cols_display_cats()) ? $config->get_number_cols_display_cats() : $nbr_cat_displayed;
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
-		$column_width_cats = floor(100/$nbr_column_cats);
+		$cats_columns_width = floor(100 / $nbr_column_cats);
 		
 		$this->view->put_all(array(
-			'C_ARTICLES_CAT' => $nbr_cat_displayed > 0,
+			'C_CATEGORY' => true,
+			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
+			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
 			'C_SUBCATEGORIES_PAGINATION' => $pagination->has_several_pages(),
 			'SUBCATEGORIES_PAGINATION' => $pagination->display(),
-			'COLUMN_WIDTH_CAT' => $column_width_cats
+			'CATS_COLUMNS_WIDTH' => $cats_columns_width
 		));
 	}
 	
