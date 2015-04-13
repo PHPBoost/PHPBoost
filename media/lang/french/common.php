@@ -45,6 +45,5 @@ $lang['content_type.video'] = 'Vidéo';
 //config
 $lang['config.max_video_width'] = 'Largeur maximale d\'une vidéo';
 $lang['config.max_video_height'] = 'Hauteur maximale d\'une vidéo';
-$lang['config.root_category_description'] = 'Description de la racine des fichiers multimédia';
 $lang['config.root_category_content_type'] = 'Types de fichiers autorisés dans la racine des fichiers multimédia';
 ?>

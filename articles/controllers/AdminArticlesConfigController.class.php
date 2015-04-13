@@ -141,7 +141,7 @@ class AdminArticlesConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(20, 1000))
 		));
 		
-		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->lang['articles_configuration.root_category_description'], $this->config->get_root_category_description(), 
+		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->admin_common_lang['config.root_category_description'], $this->config->get_root_category_description(), 
 			array('rows' => 8, 'cols' => 47)
 		));
 		

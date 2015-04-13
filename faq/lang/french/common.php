@@ -46,7 +46,6 @@ $lang['faq.questions'] = 'Questions';
 //config
 $lang['config.display_type.answers_hidden'] = 'Cliquer sur les questions pour afficher les réponses';
 $lang['config.display_type.display_all_answers'] = 'Afficher toutes les réponses';
-$lang['config.root_category_description'] = 'Description de la racine de la FAQ';
 
 //SEO
 $lang['faq.seo.description.pending'] = 'Toutes les questions en attente.';
