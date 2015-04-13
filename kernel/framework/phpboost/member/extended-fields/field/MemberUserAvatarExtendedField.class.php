@@ -30,6 +30,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 	public function __construct()
 	{
 		parent::__construct();
+		$this->lang = LangLoader::get('user-common');
 		$this->set_disable_fields_configuration(array('regex', 'possible_values', 'default_value', 'description'));
 		$this->set_name(LangLoader::get_message('type.avatar','admin-user-common'));
 		$this->field_used_once = true;
@@ -42,12 +43,12 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 
 		if (UserAccountsConfig::load()->is_avatar_upload_enabled())
 		{
-			$fieldset->add_field(new FormFieldFilePicker('upload_avatar', $this->lang['upload_avatar'],
-				array('description' => LangLoader::get_message('upload_avatar_where', 'main'))
+			$fieldset->add_field(new FormFieldFilePicker('upload_avatar', $this->lang['extended-field.field.avatar.upload_avatar'],
+				array('description' => $this->lang['extended-field.field.avatar.upload_avatar-explain'])
 			));
 		}
-		$fieldset->add_field(new FormFieldTextEditor('link_avatar', $this->lang['avatar_link'], '', 
-			array('description' => $this->lang['avatar_link_where'], 'required' =>(bool)$member_extended_field->get_required())
+		$fieldset->add_field(new FormFieldTextEditor('link_avatar', $this->lang['extended-field.field.avatar.link'], '', 
+			array('description' => $this->lang['extended-field.field.avatar.link-explain'], 'required' =>(bool)$member_extended_field->get_required())
 		));
 	}
 	
@@ -56,20 +57,20 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		$fieldset = $member_extended_field->get_fieldset();
 		
 		$value = $member_extended_field->get_value();
-		$image = !empty($value) ? '<img src="'. Url::to_rel($value) .'" alt="" title="" />' : $this->lang['no_avatar'];
-		$fieldset->add_field(new FormFieldFree('current_avatar', $this->lang['current_avatar'], $image));
+		$image = !empty($value) ? '<img src="'. Url::to_rel($value) .'" alt="" title="" />' : $this->lang['extended-field.field.avatar.no_avatar'];
+		$fieldset->add_field(new FormFieldFree('current_avatar', $this->lang['extended-field.field.avatar.current_avatar'], $image));
 		
 		if (UserAccountsConfig::load()->is_avatar_upload_enabled())
 		{
-			$fieldset->add_field(new FormFieldFilePicker('upload_avatar', $this->lang['upload_avatar'],
-				array('description' => $this->lang['upload_avatar_where'])
+			$fieldset->add_field(new FormFieldFilePicker('upload_avatar', $this->lang['extended-field.field.avatar.upload_avatar'],
+				array('description' => $this->lang['extended-field.field.avatar.upload_avatar-explain'])
 			));
 		}
 		
-		$fieldset->add_field(new FormFieldTextEditor('link_avatar', $this->lang['avatar_link'], '', 
-			array('description' => $this->lang['avatar_link_where'], 'required' =>(bool)$member_extended_field->get_required())
+		$fieldset->add_field(new FormFieldTextEditor('link_avatar', $this->lang['extended-field.field.avatar.link'], '', 
+			array('description' => $this->lang['extended-field.field.avatar.link-explain'], 'required' =>(bool)$member_extended_field->get_required())
 		));
-		$fieldset->add_field(new FormFieldCheckbox('delete_avatar', $this->lang['avatar_del'], FormFieldCheckbox::UNCHECKED));
+		$fieldset->add_field(new FormFieldCheckbox('delete_avatar', $this->lang['extended-field.field.avatar.delete'], FormFieldCheckbox::UNCHECKED));
 	}
 	
 	public function display_field_profile(MemberExtendedField $member_extended_field)
@@ -88,7 +89,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		}
 		else
 		{
-			$avatar = LangLoader::get_message('no_avatar', 'main');
+			$avatar = $this->lang['extended-field.field.avatar.no_avatar'];
 		}
 		
 		if (!empty($avatar))
