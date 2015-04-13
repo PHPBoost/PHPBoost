@@ -42,7 +42,7 @@ class SQLHTMLTableModel extends HTMLTableModel
 
 	public function get_number_of_matching_rows()
 	{
-		return PersistenceContext::get_querier()->count($this->table, $this->get_filtered_clause($this->html_table->parameters->get_filters()) . $this->get_permanent_filtered_clause($this->get_permanent_filters()), $this->parameters);
+		return PersistenceContext::get_querier()->count($this->table, $this->get_filtered_clause($this->get_filters()) . $this->get_permanent_filtered_clause($this->get_permanent_filters()), $this->parameters);
 	}
 
 	public function get_sql_results($sql_join = false)
@@ -50,7 +50,7 @@ class SQLHTMLTableModel extends HTMLTableModel
 		$limit = $this->html_table->get_nb_rows_per_page();
 		$offset = $this->html_table->get_first_row_index();
 		$sorting_rule = $this->html_table->parameters->get_sorting_rule();
-		$filters = $this->html_table->parameters->get_filters();
+		$filters = $this->get_filters();
 		$permanent_filters = $this->get_permanent_filters();
 
 		$query = 'SELECT * ';
@@ -83,9 +83,10 @@ class SQLHTMLTableModel extends HTMLTableModel
 			{
 				$query_fragment = $filter->get_sql();
 				$query_fragment->add_parameters_to_map($this->parameters);
-				$sql_filters[] = $query_fragment->get_query();
+				if (!empty($query_fragment->get_query()))
+					$sql_filters[] = $query_fragment->get_query();
 			}
-			$clause .= ' AND ' . implode(' AND ', $sql_filters);
+			$clause .= !empty($sql_filters) ? ' AND ' . implode(' AND ', $sql_filters) : '';
 		}
 		return $clause;
 	}
