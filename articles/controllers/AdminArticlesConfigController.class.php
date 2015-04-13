@@ -141,6 +141,10 @@ class AdminArticlesConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(20, 1000))
 		));
 		
+		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->lang['articles_configuration.root_category_description'], $this->config->get_root_category_description(), 
+			array('rows' => 8, 'cols' => 47)
+		));
+		
 		$common_lang = LangLoader::get('common');
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $common_lang['authorizations'],
 			array('description' => $this->admin_common_lang['config.authorizations.explain'])
@@ -203,6 +207,7 @@ class AdminArticlesConfigController extends AdminModuleController
 		}
 		
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
+		$this->config->set_root_category_description($this->form->get_value('root_category_description'));
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		
 		ArticlesConfig::save();

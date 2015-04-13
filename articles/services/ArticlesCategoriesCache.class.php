@@ -49,10 +49,7 @@ class ArticlesCategoriesCache extends CategoriesCache
 	{
 		$root = new RichRootCategory();
 		$root->set_authorizations(ArticlesConfig::load()->get_authorizations());
-		$root->set_description(
-				StringVars::replace_vars(LangLoader::get_message('articles.seo.description.root', 'common', 'articles'),
-				array('site' => GeneralConfig::load()->get_site_name()
-		)));
+		$root->set_description(ArticlesConfig::load()->get_root_category_description());
 		return $root;
 	}
 }
