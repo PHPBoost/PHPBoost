@@ -92,5 +92,6 @@
 				</article>
 			# END articles #
 	# ENDIF #
+		<div class="spacer">&nbsp;</div>
 	<footer># IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #</footer>
 </section>
