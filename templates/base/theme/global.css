@@ -62,8 +62,8 @@ h4.formatter-title {
 .calendar-block {
 	position: absolute;
 	border: 1px solid #999999;
-	bottom: 10px;
-	left: 10px;
+	top: 2px;
+	left: 17px;
 	z-index: 10;
 	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 	border-radius: 3px;
