@@ -32,6 +32,7 @@ $popup = retrieve(GET, 'popup', '');
 $editor = retrieve(GET, 'edt', '');
 $parse = retrieve(GET, 'parse', '');
 $no_path = retrieve(GET, 'no_path', '');
+$close_button = retrieve(GET, 'close_button', '');
 $display_close_button = false;
 
 if (!empty($popup)) //Popup.
@@ -41,7 +42,7 @@ if (!empty($popup)) //Popup.
 	ob_start();
 	$field = retrieve(GET, 'fd', '');
 	
-	$display_close_button = true;
+	$display_close_button = $close_button != '0';
 	$popup = '&popup=1&fd=' . $field . '&edt=' . $editor . '&parse='. $parse .'&no_path=' . $no_path;
 	$popup_noamp = '&popup=1&fd=' . $field . '&edt=' . $editor . '&parse='. $parse .'&no_path=' . $no_path;
 }
