@@ -70,7 +70,9 @@ class NewsletterSubscribersListController extends ModuleController
 				$field_bdd = 'display_name';
 		}
 		
-		$nbr_subscribers = count(NewsletterService::list_subscribers_by_stream($this->stream->get_id()));
+		$subscribers_list = NewsletterService::list_subscribers_by_stream($this->stream->get_id());
+		
+		$nbr_subscribers = count($subscribers_list);
 		
 		$pagination = new ModulePagination($current_page, $nbr_subscribers, $this->nbr_subscribers_per_page);
 		$pagination->set_url(NewsletterUrlBuilder::subscribers($this->stream->get_id(), $field, $sort, '%d'));
@@ -93,9 +95,11 @@ class NewsletterSubscribersListController extends ModuleController
 		$result = PersistenceContext::get_querier()->select("SELECT subscribers.id, subscribers.user_id, subscribers.mail, member.display_name, member.email
 		FROM " . NewsletterSetup::$newsletter_table_subscribers . " subscribers
 		LEFT JOIN " . DB_TABLE_MEMBER . " member ON subscribers.user_id = member.user_id
+		WHERE subscribers.id IN :ids_list
 		ORDER BY ". $field_bdd ." ". $mode ."
 		LIMIT :number_items_per_page OFFSET :display_from",
 			array(
+				'ids_list' => array_keys($subscribers_list),
 				'number_items_per_page' => $pagination->get_number_items_per_page(),
 				'display_from' => $pagination->get_display_from()
 			)
@@ -103,18 +107,15 @@ class NewsletterSubscribersListController extends ModuleController
 		
 		while ($row = $result->fetch())
 		{
-			if (array_key_exists($row['id'], NewsletterService::list_subscribers_by_stream($this->stream->get_id())))
-			{
-				$pseudo = $row['user_id'] > 0 ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'">'. $row['display_name'] .'</a>' : LangLoader::get_message('visitor', 'user-common');
-				$this->view->assign_block_vars('subscribers_list', array(
-					'C_AUTH_MODO' => NewsletterAuthorizationsService::id_stream($this->stream->get_id())->moderation_subscribers(),
-					'C_EDIT' => $row['user_id'] == User::VISITOR_LEVEL,
-					'U_EDIT' => $row['user_id'] == User::VISITOR_LEVEL ? NewsletterUrlBuilder::edit_subscriber($row['id'])->rel() : '',
-					'U_DELETE' => NewsletterUrlBuilder::delete_subscriber($row['id'], $this->stream->get_id())->rel(),
-					'PSEUDO' => $pseudo,
-					'MAIL' => $row['user_id'] > 0 ? $row['email'] : $row['mail']
-				));
-			}
+			$pseudo = $row['user_id'] > 0 ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'">'. $row['display_name'] .'</a>' : LangLoader::get_message('visitor', 'user-common');
+			$this->view->assign_block_vars('subscribers_list', array(
+				'C_AUTH_MODO' => NewsletterAuthorizationsService::id_stream($this->stream->get_id())->moderation_subscribers(),
+				'C_EDIT' => $row['user_id'] == User::VISITOR_LEVEL,
+				'U_EDIT' => $row['user_id'] == User::VISITOR_LEVEL ? NewsletterUrlBuilder::edit_subscriber($row['id'])->rel() : '',
+				'U_DELETE' => NewsletterUrlBuilder::delete_subscriber($row['id'], $this->stream->get_id())->rel(),
+				'PSEUDO' => $pseudo,
+				'MAIL' => $row['user_id'] > 0 ? $row['email'] : $row['mail']
+			));
 		}
 		$result->dispose();
 	}

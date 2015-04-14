@@ -131,11 +131,10 @@ class NewsletterService
 	{
 		$list_subscribers = array();
 		
-		$result = PersistenceContext::get_querier()->select("SELECT 
-		subscribtion.stream_id, subscribtion.subscriber_id, subscriber.id, subscriber.user_id, subscriber.mail
-		FROM " . NewsletterSetup::$newsletter_table_subscriptions . " subscribtion
-		LEFT JOIN " . NewsletterSetup::$newsletter_table_subscribers . " subscriber ON subscribtion.subscriber_id = subscriber.id
-		WHERE subscribtion.stream_id = :stream_id
+		$result = PersistenceContext::get_querier()->select("SELECT subscription.stream_id, subscription.subscriber_id, subscriber.id, subscriber.user_id, subscriber.mail
+		FROM " . NewsletterSetup::$newsletter_table_subscriptions . " subscription
+		LEFT JOIN " . NewsletterSetup::$newsletter_table_subscribers . " subscriber ON subscription.subscriber_id = subscriber.id
+		WHERE subscription.stream_id = :stream_id
 		",
 			array(
 				'stream_id' => $stream_id
