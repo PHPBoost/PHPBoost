@@ -127,10 +127,10 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	private function unparse_smilies()
 	{
 		$this->content = preg_replace('`<img src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" class="smiley" />`i',
-		'<img title="$2" src="../../../images/smileys/$1" alt="$2" border="0" />', $this->content);
+		'<img title="$2" src="../images/smileys/$1" alt="" />', $this->content);
 		
 		$this->content = preg_replace('`<img src="[\./]*/images/smileys/([^"]+)" title="([^"]+)" alt="([^"]+)" class="smiley" />`i',
-		'<img title="$2" src="../../../images/smileys/$1" alt="$3" border="0" />', $this->content);
+		'<img title="$2" src="../images/smileys/$1" alt" />', $this->content);
 	}
 
 	/**
@@ -178,7 +178,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 				$this->content = preg_replace('`<ul( style="[^"]+")? class="formatter-ul">`i', "<ul$1>", $this->content);
 				$this->content = preg_replace('`<ol( style="[^"]+")? class="formatter-ol">`i', "<ol$1>", $this->content);
 			}
-
+			
 			//Trait horizontal
 			$this->content = str_replace('<hr class="formatter-hr" />', '<hr />', $this->content);
 

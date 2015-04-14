@@ -28,10 +28,10 @@
 class TinyMCEExtensionPointProvider extends ExtensionPointProvider
 {
    public function __construct()
-    {
-        parent::__construct('TinyMCE');
-    }
-    
+	{
+		parent::__construct('TinyMCE');
+	}
+	
 	public function content_formatting()
 	{
 		return new TinyMCEContentFormattingExtensionPoint();

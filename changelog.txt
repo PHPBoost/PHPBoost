@@ -108,3 +108,6 @@
 [*] [color=red]Nouveauté :[/color] Menu pour afficher la liste des fichiers les plus téléchargés (possibilité de les classer par note, nombre de téléchargements, date d'ajout depuis la configuration)
 [*] [color=red]Nouveauté :[/color] Possibilité d'activer/désactiver les commentaires, la notation et l'affichage de l'auteur globalement
 [*] Ajout des microdonnées pour améliorer le référencement
+
+[b]TinyMCE[/b]
+[*] Mise à jour du module (TinyMCE version 4.1.9)

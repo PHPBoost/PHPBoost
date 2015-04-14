@@ -7,9 +7,9 @@ function XMLHttpRequest_preview(field)
 	if( XMLHttpRequest_preview.arguments.length == 0 )
 		field = ${escapejs(FIELD)};
 
-	var contents = jQuery('#' + field).val();
+	var contents = tinymce.activeEditor.getContent();
 	var preview_field = 'xmlhttprequest-preview' + field;
-
+	
 	if( contents != "" )
 	{
 		if(!displayed[field])
@@ -25,7 +25,7 @@ function XMLHttpRequest_preview(field)
 			data: {
 				token: '{TOKEN}',
 				path_to_root: '{PHP_PATH_TO_ROOT}',
-				editor: 'BBCode',
+				editor: 'TinyMCE',
 				page_path: '{PAGE_PATH}',
 				contents: contents,
 				ftags: '{FORBIDDEN_TAGS}'
@@ -43,10 +43,12 @@ function XMLHttpRequest_preview(field)
 	else
 		alert("{L_REQUIRE_TEXT}");
 }
-		
-function insertTinyMceContent(textAreaId, content)
+
+function insertTinyMceContent(content)
 {
-	tinyMCE.get(textAreaId).execCommand('mceInsertContent', false, content, {skip_undo : 1});
+	var ed = tinymce.activeEditor;
+	ed.insertContent(content);
+	ed.windowManager.close();
 }
 
 -->
@@ -59,32 +61,52 @@ function insertTinyMceContent(textAreaId, content)
 <div style="display:none;" class="xmlhttprequest-preview" id="xmlhttprequest-preview{FIELD}"></div>
 
 # IF NOT C_NOT_JS_INCLUDED #
-	<script src="{PATH_TO_ROOT}/TinyMCE/templates/js/tinymce/tiny_mce.js"></script>
+	<script src="{PATH_TO_ROOT}/TinyMCE/templates/js/tinymce/tinymce.min.js"></script>
 # ENDIF #
-	
+
 <script>
 <!--
-tinyMCE.init({
-	mode : "exact",
-	elements : "{FIELD}", 
-	theme : "advanced",
-	language : "fr",
-	theme_advanced_buttons1 : "{THEME_ADVANCED_BUTTONS1}", 
-	theme_advanced_buttons2 : "{THEME_ADVANCED_BUTTONS2}", 
-	theme_advanced_buttons3 : "{THEME_ADVANCED_BUTTONS3}",
-	theme_advanced_toolbar_location : "top", 
-	theme_advanced_toolbar_align : "center", 
-	theme_advanced_statusbar_location : "bottom",
-	plugins : "table,searchreplace,inlinepopups,fullscreen,emotions",
-	extended_valid_elements : "font[face|size|color|style],span[class|align|style],a[href|name]",
-	theme_advanced_resize_horizontal : false, 
-	theme_advanced_resizing : true
+var field = "{FIELD}";
+tinymce.init({
+	selector : "textarea#" + field,
+	language : "{LANGUAGE}",
+	plugins: [
+		"advlist autolink autosave link image lists charmap hr anchor",
+		"searchreplace wordcount visualblocks visualchars fullscreen insertdatetime media",
+		"table contextmenu directionality smileys textcolor paste textcolor colorpicker textpattern"
+	],
+	external_plugins: {"nanospell": '{PATH_TO_ROOT}/TinyMCE/templates/js/tinymce/plugins/nanospell/plugin.js'},
+	nanospell_server: "php",
+	nanospell_dictionary: "en,fr",
+	
+	# IF C_TOOLBAR1 #toolbar1: "{TOOLBAR1}",# ENDIF #
+	# IF C_TOOLBAR2 #toolbar2: "{TOOLBAR2}",# ENDIF #
+	# IF C_TOOLBAR3 #toolbar3: "{TOOLBAR3}",# ENDIF #
+
+	menubar: false,
+	toolbar_items_size: 'small',
+	setup : function(ed) {
+		ed.addButton('insertfile', {
+			icon: 'browse',
+			onclick: function (field_name) {
+				ed.windowManager.open({ 
+					title: '',         
+					url: '{PATH_TO_ROOT}/user/upload.php?popup=1&amp;close_button=0&amp;fd=' + field_name + '&amp;edt=TinyMCE',
+					width: 720,
+					height: 500,            
+				}); 
+			},
+			tooltip: 'Insert file'
+		});
+	},
+
+	smileys: [
+		# START smiley #
+			# IF smiley.C_NEW_ROW #[# ENDIF #
+				{ shortcut: '{smiley.CODE}', url: '{smiley.URL}', title: '{smiley.CODE}' }# IF NOT smiley.C_LAST_OF_THE_ROW #,# ENDIF #
+			# IF smiley.C_END_ROW #]# IF NOT smiley.C_LAST_ROW #,# ENDIF ## ENDIF #
+		# END smiley #
+	]
 });
 -->
 </script>
-
-# IF C_UPLOAD_MANAGEMENT #
-<div style="width: 94%; margin: 5px auto; text-align: center;">
-	{L_BB_UPLOAD} : <a style="font-size: 10px;" title="{L_BB_UPLOAD}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd={IDENTIFIER}&amp;edt=TinyMCE', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-upload fa-2x"></i></a>
-</div>
-# ENDIF #
