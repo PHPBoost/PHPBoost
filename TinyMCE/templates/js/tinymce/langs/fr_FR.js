@@ -197,5 +197,6 @@ tinymce.addI18n('fr_FR',{
 "Tools": "Outils",
 "View": "Voir",
 "Table": "Tableau",
-"Format": "Format"
+"Format": "Format",
+"Spellcheck As You Type": "Dictionnaire"
 });
