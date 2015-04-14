@@ -63,7 +63,7 @@ class KeywordsManager
 				}
 				else
 				{
-					$id_keyword = $this->db_querier->get_column_value(DB_TABLE_KEYWORDS, 'id', 'WHERE rewrited_name=:rewrited_name', array('rewrited_name' => TextHelper::htmlspecialchars(Url::encode_rewrite($keyword))));
+					$id_keyword = $this->db_querier->get_column_value(DB_TABLE_KEYWORDS, 'id', 'WHERE name=:name OR rewrited_name=:rewrited_name', array('name' => TextHelper::htmlspecialchars($keyword), 'rewrited_name' => TextHelper::htmlspecialchars(Url::encode_rewrite($keyword))));
 				}
 				$this->db_querier->insert(DB_TABLE_KEYWORDS_RELATIONS, array('module_id' => $this->module_id, 'id_in_module' => $id_in_module, 'id_keyword' => $id_keyword));
 			}
@@ -84,7 +84,8 @@ class KeywordsManager
 		$result = $this->db_querier->select('SELECT relation.id_in_module, relation.id_keyword, keyword.*
 			FROM '. DB_TABLE_KEYWORDS_RELATIONS .' relation
 			LEFT JOIN '. DB_TABLE_KEYWORDS .' keyword ON keyword.id = relation.id_keyword
-			WHERE relation.module_id = :module_id AND relation.id_in_module = :id_in_module', array(
+			WHERE relation.module_id = :module_id AND relation.id_in_module = :id_in_module
+			ORDER BY relation.id_keyword', array(
 				'module_id' => $this->module_id,
 				'id_in_module' => $id_in_module,
 		));
@@ -110,7 +111,7 @@ class KeywordsManager
 
 	private function exists($name)
 	{
-		return $this->db_querier->row_exists(DB_TABLE_KEYWORDS, 'WHERE rewrited_name=:rewrited_name', array('rewrited_name' => TextHelper::htmlspecialchars(Url::encode_rewrite($name))));
+		return $this->db_querier->row_exists(DB_TABLE_KEYWORDS, 'WHERE name=:name OR rewrited_name=:rewrited_name', array('name' => TextHelper::htmlspecialchars($name), 'rewrited_name' => TextHelper::htmlspecialchars(Url::encode_rewrite($name))));
 	}
 }
 ?>
