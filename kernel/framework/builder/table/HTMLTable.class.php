@@ -133,7 +133,7 @@ class HTMLTable implements HTMLElement
 			}
 
 			$submit_function = str_replace('-', '_', 'submit_filters_' . $this->arg_id);
-            $form->add_button(new FormButtonButton(LangLoader::get_message('apply_filters', 'common'), 'return ' . $submit_function . '()', 'submit'));
+            $form->add_button(new FormButtonButton(LangLoader::get_message('apply', 'common'), 'return ' . $submit_function . '()', 'submit'));
 
 			$this->tpl->put_all(array(
 				'C_FILTERS' => $has_filters,

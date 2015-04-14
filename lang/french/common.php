@@ -54,6 +54,7 @@ $lang['none'] = 'Aucun';
 $lang['add'] = 'Ajouter';
 $lang['delete'] = 'Supprimer';
 $lang['edit'] = 'Editer';
+$lang['apply'] = 'Appliquer';
 
 $lang['syndication'] = 'Syndication';
 $lang['syndication.rss'] = 'RSS';
@@ -68,7 +69,6 @@ $lang['items_number'] = 'Nombre d\'éléments';
 $lang['no_item_now'] = 'Aucun élément n\'est disponible pour le moment';
 
 $lang['filters'] = 'Filtres';
-$lang['apply_filters'] = 'Appliquer les filtres';
 $lang['table_footer_stats'] = 'Eléments :start à :end sur :total';
 
 //Multimedia
