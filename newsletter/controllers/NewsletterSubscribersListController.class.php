@@ -72,7 +72,7 @@ class NewsletterSubscribersListController extends ModuleController
 		
 		$subscribers_list = NewsletterService::list_subscribers_by_stream($this->stream->get_id());
 		
-		$nbr_subscribers = count(subscribers_list);
+		$nbr_subscribers = count($subscribers_list);
 		
 		$pagination = new ModulePagination($current_page, $nbr_subscribers, $this->nbr_subscribers_per_page);
 		$pagination->set_url(NewsletterUrlBuilder::subscribers($this->stream->get_id() .'/'. $field .'/'. $sort .'/%d'));
