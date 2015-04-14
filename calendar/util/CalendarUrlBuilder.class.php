@@ -175,6 +175,15 @@ class CalendarUrlBuilder
 	/**
 	 * @return Url
 	 */
+	public static function events_list()
+	{
+		$now = new Date();
+		return DispatchManager::get_url(self::$dispatcher, '/events_list/?table=,filters:{filter1:' . $now->format(Date::FORMAT_DAY_MONTH_YEAR) . '}');
+	}
+	
+	/**
+	 * @return Url
+	 */
 	public static function home($year = null, $month = null, $day = null, $calendar_anchor = false)
 	{
 		$year = $year !== null ? $year . '/' : '';

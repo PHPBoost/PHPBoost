@@ -51,6 +51,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('CalendarUnsuscribeController', '`^/([0-9]+)/unsuscribe/?$`', array('event_id')),
 	
 	new UrlControllerMapper('CalendarDisplayPendingEventsController', '`^/pending/?$`'),
+	new UrlControllerMapper('CalendarEventsListController', '`^/events_list/?$`'),
 	
 	//Display calendar
 	new UrlControllerMapper('CalendarAjaxCalendarController', '`^/ajax_month_calendar/([0-9]+)?/?([0-9]+)?/?(\d{0,1})?/?$`', array('calendar_ajax_year', 'calendar_ajax_month', 'calendar_mini')),

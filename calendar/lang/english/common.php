@@ -51,6 +51,7 @@ $lang['calendar.titles.event'] = 'Event';
 $lang['calendar.titles.repetition'] = 'Repetition';
 $lang['calendar.pending'] = 'Pending events';
 $lang['calendar.manage'] = 'Manage events';
+$lang['calendar.events_list'] = 'Events list';
 
 //Labels
 $lang['calendar.labels.location'] = 'Location';

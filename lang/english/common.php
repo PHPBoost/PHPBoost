@@ -68,6 +68,9 @@ $lang['unknown_size'] = 'Unknown size';
 $lang['items_number'] = 'Items number';
 $lang['no_item_now'] = 'No item is available for the moment';
 
+$lang['maximum'] = 'Maximum';
+$lang['minimum'] = 'Minimum';
+
 $lang['filters'] = 'Filters';
 $lang['table_footer_stats'] = ':start to :end of :total elements';
 
