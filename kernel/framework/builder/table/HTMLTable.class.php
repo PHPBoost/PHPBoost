@@ -59,6 +59,8 @@ class HTMLTable implements HTMLElement
 	 * @var HTMLTableRow[]
 	 */
 	private $rows = array();
+	
+	private $filters_fieldset_class = 'FormFieldsetHorizontal';
 
 	public function __construct(HTMLTableModel $model, $tpl_path = '')
 	{
@@ -112,6 +114,16 @@ class HTMLTable implements HTMLElement
 		$this->rows = $rows;
 	}
 
+	public function set_filters_fieldset_class_HTML()
+	{
+		$this->filters_fieldset_class = 'FormFieldsetHTML';
+	}
+
+	public function set_filters_fieldset_class_vertical()
+	{
+		$this->filters_fieldset_class = 'FormFieldsetVertical';
+	}
+
 	private function generate_filters_form()
 	{
 		$filters = $this->model->get_filters();
@@ -119,7 +131,8 @@ class HTMLTable implements HTMLElement
 		if ($filters)
 		{
 			$form = new HTMLForm('filters_form_' . $this->arg_id, '#');
-			$fieldset = new FormFieldsetHorizontal('filters');
+			$filters_fieldset_class = $this->filters_fieldset_class;
+			$fieldset = new $filters_fieldset_class('filters');
 			$fieldset->set_description(LangLoader::get_message('filters', 'common'));
 			$form->add_fieldset($fieldset);
 
