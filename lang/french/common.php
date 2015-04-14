@@ -48,6 +48,7 @@ $lang['hidden'] = 'Caché';
 $lang['yes'] = 'Oui';
 $lang['no'] = 'Non';
 
+$lang['all'] = 'Tous';
 $lang['none'] = 'Aucun';
 
 $lang['add'] = 'Ajouter';
@@ -67,6 +68,7 @@ $lang['items_number'] = 'Nombre d\'éléments';
 $lang['no_item_now'] = 'Aucun élément n\'est disponible pour le moment';
 
 $lang['filters'] = 'Filtres';
+$lang['apply_filters'] = 'Appliquer les filtres';
 $lang['table_footer_stats'] = 'Eléments :start à :end sur :total';
 
 //Multimedia

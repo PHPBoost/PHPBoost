@@ -48,6 +48,7 @@ $lang['hidden'] = 'Hidden';
 $lang['yes'] = 'Yes';
 $lang['no'] = 'No';
 
+$lang['all'] = 'All';
 $lang['none'] = 'None';
 
 $lang['add'] = 'Add';
@@ -67,6 +68,7 @@ $lang['items_number'] = 'Items number';
 $lang['no_item_now'] = 'No item is available for the moment';
 
 $lang['filters'] = 'Filters';
+$lang['apply_filters'] = 'Apply filters';
 $lang['table_footer_stats'] = ':start to :end of :total elements';
 
 //Multimedia

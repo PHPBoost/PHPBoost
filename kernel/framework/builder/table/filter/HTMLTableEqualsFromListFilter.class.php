@@ -37,7 +37,7 @@ abstract class HTMLTableEqualsFromListFilter extends AbstractHTMLTableFilter
 	public function __construct($name, $label, array $allowed_values)
 	{
 		$this->allowed_values = array_keys($allowed_values);
-		$default_value = new FormFieldSelectChoiceOption('tous', '');
+		$default_value = new FormFieldSelectChoiceOption(LangLoader::get_message('all', 'common'), '');
 		$this->options = array($default_value);
 		foreach ($allowed_values as $option_value => $option_label)
 		{
