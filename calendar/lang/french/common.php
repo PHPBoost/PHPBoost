@@ -52,6 +52,7 @@ $lang['calendar.titles.recurrence'] = 'Récurrence';
 $lang['calendar.titles.repetition'] = 'Répétition';
 $lang['calendar.pending'] = 'Evénements en attente';
 $lang['calendar.manage'] = 'Gérer les événements';
+$lang['calendar.events_list'] = 'Liste des événements';
 
 //Labels
 $lang['calendar.labels.location'] = 'Adresse';
