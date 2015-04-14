@@ -34,6 +34,7 @@ class CommentsService
 {	
 	private static $user;
 	private static $lang;
+	private static $common_lang;
 	private static $comments_lang;
 	private static $comments_cache;
 	private static $template;
@@ -42,6 +43,7 @@ class CommentsService
 	{
 		self::$user = AppContext::get_current_user();
 		self::$lang = LangLoader::get('main');
+		self::$common_lang = LangLoader::get('common');
 		self::$comments_lang = LangLoader::get('comments-common');
 		self::$comments_cache = CommentsCache::load();
 		self::$template = new FileTemplate('framework/content/comments/comments.tpl');
@@ -285,8 +287,8 @@ class CommentsService
 				));
 				
 				$template->put_all(array(
-					'L_UPDATE' => self::$lang['update'],
-					'L_DELETE' => self::$lang['delete'],
+					'L_UPDATE' => self::$common_lang['edit'],
+					'L_DELETE' => self::$common_lang['delete'],
 				));
 			}
 			$result->dispose();
