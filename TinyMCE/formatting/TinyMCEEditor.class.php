@@ -33,80 +33,107 @@
 class TinyMCEEditor extends ContentEditor
 {
 	private static $js_included = false;
-    private $array_tags = array('align1' => 'justifyleft', 'align2' => 'justifycenter', 'align3' => 'justifyright', 'align4' => 'justifyfull', '|1' => '|', 'title' => 'formatselect', '|2' => '|', 'list1' => 'bullist', 'list2' => 'numlist', '|3' => '|', 'indent1' => 'outdent', 'indent2' => 'indent', '|4' => '|', 'quote' => 'blockquote', 'line' => 'hr', '|5' => '|', '_cut' => 'cut', '_copy' => 'copy', '_paste' => 'paste', '|6' => '|', '_undo' => 'undo', '_redo' => 'redo');
-    private $array_tags2 = array('b' => 'bold', 'i' => 'italic', 'u' => 'underline', 's' => 'strikethrough', '|1' => '|', 'color1' => 'forecolor', 'color2' => 'backcolor', '|1' => '|', '|2' => '|', 'size' => 'fontsizeselect', 'font' => 'fontselect', '|3' => '|', 'sub' => 'sub', 'sup' => 'sup', '|4' => '|', 'url1' => 'link', 'url2' => 'unlink', '|5' => '|', 'img' => 'image');
-    private $array_tags3 = array('emotions' => 'emotions', 'table' => 'tablecontrols',  '|2' => '|', 'image', 'anchor' => 'anchor', '_charmap' => 'charmap', '3|' => '|', '_cleanup' => 'cleanup', '_removeformat' => 'removeformat', '|4' => '|', '_search' => 'search', '_replace' => 'replace', '|5' => '|', '_fullscreen' => 'fullscreen');
+	private $array_tags = array('align1' => 'alignleft', 'align2' => 'aligncenter', 'align3' => 'alignright', 'align4' => 'alignjustify', '|1' => '|', 'title' => 'formatselect', '|2' => '|', 'list1' => 'bullist', 'list2' => 'numlist', '|3' => '|', 'indent1' => 'outdent', 'indent2' => 'indent', '|4' => '|', 'quote' => 'blockquote', 'line' => 'hr', '|5' => '|', '_cut' => 'cut', '_copy' => 'copy', '_paste' => 'paste', '|6' => '|', '_undo' => 'undo', '_redo' => 'redo');
+	private $array_tags2 = array('b' => 'bold', 'i' => 'italic', 'u' => 'underline', 's' => 'strikethrough', '|1' => '|', 'color1' => 'forecolor', 'color2' => 'backcolor', '|2' => '|', 'size' => 'fontsizeselect', 'font' => 'fontselect', '|3' => '|', 'sub' => 'subscript', 'sup' => 'supscript', '|4' => '|', 'visualchars' => 'visualchars', 'visualblocks' => 'visualblocks');
+	private $array_tags3 = array('emotions' => 'smileys', 'table' => 'table', 'insertdatetime' => 'insertdatetime', '|1' => '|', 'url1' => 'link', 'url2' => 'unlink', '|2' => '|', 'img' => 'image', 'movie' => 'media', 'insertfile' => 'insertfile', '|3' => '|', 'nanospell' => 'nanospell', '|4' => '|', 'anchor' => 'anchor', '_charmap' => 'charmap', '5|' => '|', '_removeformat' => 'removeformat', '|6' => '|', '_search' => 'searchreplace', '|6' => '|', '_fullscreen' => 'fullscreen');
+	
+	public function __construct()
+	{
+		parent::__construct();
+	}
+	
+	public function get_template()
+	{
+		if (!is_object($this->template) || !($this->template instanceof Template))
+		{
+			$this->template = new FileTemplate('TinyMCE/tinymce_editor.tpl');
+		}
+		return $this->template;
+	}
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-    
- 	public function get_template()
-    {
-        if (!is_object($this->template) || !($this->template instanceof Template))
-        {
-            $this->template = new FileTemplate('TinyMCE/tinymce_editor.tpl');
-        }
-        return $this->template;
-    }
-
-  	/**
+	/**
 	 * @desc Display the editor
 	 * @return string Formated editor.
 	 */
-    public function display()
-    {
-        global $LANG;
+	public function display()
+	{
+		$template = $this->get_template();
 
-        $template = $this->get_template();
-
-        $template->put_all(array(
-        	'PAGE_PATH' => $_SERVER['PHP_SELF'],
-			'C_UPLOAD_MANAGEMENT' => AppContext::get_current_user()->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), FileUploadConfig::AUTH_FILES_BIT),
-        	'C_NOT_JS_INCLUDED' => self::$js_included,
+		list($toolbar1, $toolbar2, $toolbar3) = array('', '', '');
+		foreach ($this->array_tags as $tag => $tinymce_tag) //Balises autorisées.
+		{
+			$tag = preg_replace('`[0-9]`', '', $tag);
+			if (!in_array($tag, $this->forbidden_tags))
+			{
+				$toolbar1 .= $tinymce_tag . ',';
+			}
+		}
+		foreach ($this->array_tags2 as $tag => $tinymce_tag) //Balises autorisées.
+		{
+			$tag = preg_replace('`[0-9]`', '', $tag);
+			if (!in_array($tag, $this->forbidden_tags))
+			{
+				if ($tag != 'insertfile' || ($tag == 'insertfile' && AppContext::get_current_user()->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), FileUploadConfig::AUTH_FILES_BIT)))
+				$toolbar2 .= $tinymce_tag . ',';
+			}
+		}
+		foreach ($this->array_tags3 as $tag => $tinymce_tag) //Balises autorisées.
+		{
+			$tag = preg_replace('`[0-9]`', '', $tag);
+			if (!in_array($tag, $this->forbidden_tags))
+			{
+				$toolbar3 .= $tinymce_tag . ',';
+			}
+		}
+		
+		$language = substr(AppContext::get_current_user()->get_locale(), 0, 2);
+		switch ($language) {
+			case 'fr' : $language = 'fr_FR';
+						break;
+						
+			case 'en' : $language = 'en_GB';
+						break;
+						
+			default :	break;
+		}
+		
+		$template->put_all(array(
+			'C_NOT_JS_INCLUDED' => self::$js_included,
+			'PAGE_PATH' => $_SERVER['PHP_SELF'],
 			'FIELD' => $this->identifier,
 			'FORBIDDEN_TAGS' => implode(',', $this->forbidden_tags),
-			'IDENTIFIER' => $this->identifier,
-			'L_REQUIRE_TEXT' => $LANG['require_text'],
-			'L_BB_UPLOAD' => LangLoader::get_message('bb_upload',  'editor-common')
-        ));
+			'L_REQUIRE_TEXT' => LangLoader::get_message('require_text', 'main'),
+			'C_TOOLBAR1' => !empty($toolbar1),
+			'C_TOOLBAR2' => !empty($toolbar2),
+			'C_TOOLBAR3' => !empty($toolbar3),
+			'TOOLBAR1' => preg_replace('`\|(,\|)+`', '|', trim($toolbar1, ',')),
+			'TOOLBAR2' => preg_replace('`\|(,\|)+`', '|', trim($toolbar2, ',')),
+			'TOOLBAR3' => preg_replace('`\|(,\|)+`', '|', trim($toolbar3, ',')),
+			'LANGUAGE' => $language
+		));
+		
+		self::$js_included = true;
 
-        self::$js_included = true;
+		//Chargement des smileys.
+		$smileys = SmileysCache::load()->get_smileys();
+		$smile_by_line = 9;
+		
+		$nbr_smile = count($smileys);
+		$j = 1;
+		foreach($smileys as $code_smile => $infos)
+		{
+			$template->assign_block_vars('smiley', array(
+				'C_NEW_ROW' => is_int(($j -1) / $smile_by_line),
+				'C_LAST_OF_THE_ROW' => is_int($j / $smile_by_line),
+				'C_END_ROW' => is_int($j / $smile_by_line) || $nbr_smile == $j,
+				'C_LAST_ROW' => $nbr_smile == $j,
+				'URL' => Url::to_rel('/images/smileys/' . $infos['url_smiley']),
+				'CODE' => addslashes($code_smile)
+			));
+			$j++;
+		}
 
-        list($theme_advanced_buttons1, $theme_advanced_buttons2, $theme_advanced_buttons3) = array('', '', '');
-        foreach ($this->array_tags as $tag => $tinymce_tag) //Balises autorisées.
-        {
-            $tag = preg_replace('`[0-9]`', '', $tag);
-            //bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,sub,sup,charmap,|,undo,redo,|,image,link,unlink,anchor
-            if (!in_array($tag, $this->forbidden_tags))
-            {
-                $theme_advanced_buttons1 .= $tinymce_tag . ',';
-            }
-        }
-        foreach ($this->array_tags2 as $tag => $tinymce_tag) //Balises autorisées.
-        {
-            $tag = preg_replace('`[0-9]`', '', $tag);
-            if (!in_array($tag, $this->forbidden_tags))
-            {
-                $theme_advanced_buttons2 .= $tinymce_tag . ',';
-            }
-        }
-        foreach ($this->array_tags3 as $tag => $tinymce_tag) //Balises autorisées.
-        {
-            $tag = preg_replace('`[0-9]`', '', $tag);
-            if (!in_array($tag, $this->forbidden_tags))
-            {
-                $theme_advanced_buttons3 .= $tinymce_tag . ',';
-            }
-        }
-        $template->put_all(array(
-			'THEME_ADVANCED_BUTTONS1' => preg_replace('`\|(,\|)+`', '|', trim($theme_advanced_buttons1, ',')),
-			'THEME_ADVANCED_BUTTONS2' => preg_replace('`\|(,\|)+`', '|', trim($theme_advanced_buttons2, ',')),
-			'THEME_ADVANCED_BUTTONS3' => preg_replace('`\|(,\|)+`', '|', trim($theme_advanced_buttons3, ','))
-        ));
-
-        return $template->render();
-    }
+		return $template->render();
+	}
 }
 ?>

@@ -4,7 +4,7 @@
 	function insert_popup(code) 
 	{
 		# IF C_BBCODE_TINYMCE_MODE #
-		opener.insertTinyMceContent("{FIELD}", code); //insertion pour tinymce.
+		window.parent.insertTinyMceContent(code); //insertion pour tinymce.
 		# ELSE #
 		
 		var textarea = opener.document.getElementById("{FIELD}");

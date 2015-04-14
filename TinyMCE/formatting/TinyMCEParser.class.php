@@ -397,7 +397,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//Anchor tag
 		if (!in_array('anchor', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;a(?: class="[^"]+")?(?: title="[^"]+" )? name="([^"]+)"&gt;(.*)&lt;/a&gt;`isU');
+			array_push($array_preg, '`&lt;a(?: class="[^"]+")?(?: title="[^"]+" )?(?: name="[^"]+" )? id="([^"]+)"&gt;(.*)&lt;/a&gt;`isU');
 			array_push($array_preg_replace, '<span id="$1">$2</span>');
 		}
 		//Title tag
@@ -422,6 +422,13 @@ class TinyMCEParser extends ContentFormattingParser
 			array_push($array_preg, '`&lt;object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" width="([^"]+)%?" height="([^"]+)%?"&gt;&lt;param name="movie" value="([^"]+)"(.*)&lt;/object&gt;`isU');
 			array_push($array_preg_replace, '[[MEDIA]]insertSwfPlayer(\'$3\', $1, $2);[[/MEDIA]]');
 		}
+		
+		//Youtube tag
+		if (!in_array('movie', $this->forbidden_tags))
+		{
+			array_push($array_preg, '`&lt;iframe src="https://www.youtube.com/embed/([^"]+)" width="([^"]+)%?" height="([^"]+)%?" frameborder="0" allowfullscreen="([^"]+)"&gt;&lt;/iframe&gt;`isU');
+			array_push($array_preg_replace, '[[MEDIA]]insertYoutubePlayer(\'"https://www.youtube.com/embed/$1\', $2, $3);[[/MEDIA]]');
+		}
 
 		//Replacement
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
@@ -439,7 +446,7 @@ class TinyMCEParser extends ContentFormattingParser
 
 		//Tags which are useless
 		$array_str = array(
-		'&lt;address&gt;', '&lt;/address&gt;', '&lt;caption&gt;', '&lt;/caption&gt;', '&lt;tbody&gt;', '&lt;/tbody&gt;', '&lt;thead&gt;', '&lt;/thead&gt;'
+		'&lt;address&gt;', '&lt;/address&gt;', '&lt;caption&gt;', '&lt;/caption&gt;', '&lt;tbody&gt;', '&lt;/tbody&gt;', '&lt;thead&gt;', '&lt;/thead&gt;', '&lt;!DOCTYPE html&gt;', '&lt;html&gt;', '&lt;head&gt;', '&lt;/head&gt;', '&lt;body&gt;', '&lt;/body&gt;', '&lt;/html&gt;'
 		);
 
 		$this->content = str_replace($array_str, '', $this->content);
@@ -530,8 +537,8 @@ class TinyMCEParser extends ContentFormattingParser
 	 */
 	private function parse_smilies()
 	{
-		$this->content = preg_replace('`&lt;img title="([^"]+)" src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" border="0" /&gt;`i',
-			'<img src="/images/smileys/$2" title="$1" alt="$3" class="smiley" />', $this->content);
+		$this->content = preg_replace('`&lt;img title="([^"]+)" src="[\./]*/images/smileys/([^"]+)" alt="" /&gt;`i',
+			'<img src="/images/smileys/$2" title="$1" alt="$1" class="smiley" />', $this->content);
 
 		//Smilies
 		$smileys_cache = SmileysCache::load()->get_smileys();
