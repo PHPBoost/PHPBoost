@@ -175,10 +175,11 @@ class CalendarUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function events_list()
+	public static function events_list($year = null, $month = null, $day = null)
 	{
 		$now = new Date();
-		return DispatchManager::get_url(self::$dispatcher, '/events_list/?table=,filters:{filter1:' . $now->format(Date::FORMAT_DAY_MONTH_YEAR) . '}');
+		$date = $year !== null && $month !== null && $day !== null ? sprintf("%04d", $year) . '-' . sprintf("%02d", $month) . '-' . sprintf("%02d", $day) : $now->format(Date::FORMAT_DAY_MONTH_YEAR);
+		return DispatchManager::get_url(self::$dispatcher, '/events_list/?table=,filters:{filter1:' . $date . '}');
 	}
 	
 	/**
