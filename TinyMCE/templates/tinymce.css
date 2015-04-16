@@ -1,6 +1,4 @@
-div.mce-edit-area { width: 100%; }
-div.mce-statusbar { width: 100%; }
-div.mce-path { display: none; }
+div.mce-edit-area, div.mce-statusbar { width: 100%; }
 label.mce-wordcount { position: relative; }
 div.mce-window-head { padding: 20px 15px; }
 .form-element-textarea .form-field-textarea div { float: none; }

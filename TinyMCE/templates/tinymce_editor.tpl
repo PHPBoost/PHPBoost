@@ -73,7 +73,7 @@ tinymce.init({
 	plugins: [
 		"advlist autolink autosave link image lists charmap hr anchor",
 		"searchreplace wordcount visualblocks visualchars fullscreen insertdatetime media",
-		"table contextmenu directionality smileys textcolor paste textcolor colorpicker textpattern"
+		"table contextmenu directionality smileys paste textcolor colorpicker textpattern"
 	],
 	external_plugins: {"nanospell": '{PATH_TO_ROOT}/TinyMCE/templates/js/tinymce/plugins/nanospell/plugin.js'},
 	nanospell_server: "php",
