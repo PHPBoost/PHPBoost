@@ -76,12 +76,12 @@ class UserViewProfileController extends AbstractController
 
 		$fieldset->add_field(new FormFieldFree('pseudo', $this->lang['pseudo'], $this->user_informations['login']));
 		
-		$fieldset->add_field(new FormFieldFree('level', $this->lang['level'], $this->get_level_lang($this->user_informations)));
+		$fieldset->add_field(new FormFieldFree('level', $this->lang['level'], '<a class="' . UserService::get_level_class($this->user_informations['level']) . '">' . $this->get_level_lang($this->user_informations) . '</a>'));
 
 		$fieldset->add_field(new FormFieldFree('groups', $this->lang['groups'], $this->build_groups($this->user_informations['user_groups'])));
 		$fieldset->add_field(new FormFieldFree('registered_on', $this->lang['registration_date'], gmdate_format('date_format_short', $this->user_informations['timestamp'])));
 		$fieldset->add_field(new FormFieldFree('nbr_msg', $this->lang['number-messages'], $this->user_informations['user_msg'] . '<br>' . '<a href="' . UserUrlBuilder::messages($user_id)->rel() . '">'. $this->lang['messages'] .'</a>'));
-		$fieldset->add_field(new FormFieldFree('last_connect', $this->lang['last_connection'], gmdate_format('date_format_short', $this->user_informations['last_connect'])));
+		$fieldset->add_field(new FormFieldFree('last_connect', $this->lang['last_connection'], !empty($this->user_informations['last_connect']) ? gmdate_format('date_format_short', $this->user_informations['last_connect']) : LangLoader::get_message('never', 'main')));
 		
 		if (AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT) && $this->user_informations['user_show_mail'])
 		{
