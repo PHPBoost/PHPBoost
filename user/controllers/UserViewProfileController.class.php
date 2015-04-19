@@ -75,7 +75,7 @@ class UserViewProfileController extends AbstractController
 
 		$fieldset->add_field(new FormFieldFree('display_name', $this->lang['display_name'], $this->user_infos['display_name']));
 
-		$fieldset->add_field(new FormFieldFree('level', $this->lang['level'], $this->get_level_lang()));
+		$fieldset->add_field(new FormFieldFree('level', $this->lang['level'], '<a class="' . UserService::get_level_class($this->user_infos['level']) . '">' . $this->get_level_lang() . '</a>'));
 
 		$fieldset->add_field(new FormFieldFree('groups', $this->lang['groups'], $this->build_groups($this->user_infos['groups'])));
 		
@@ -84,8 +84,8 @@ class UserViewProfileController extends AbstractController
 		
 		$fieldset->add_field(new FormFieldFree('nbr_msg', $this->lang['number-messages'], $this->user_infos['posted_msg'] . '<br>' . '<a href="' . UserUrlBuilder::messages($user_id)->rel() . '">'. $this->lang['messages'] .'</a>'));
 		
-		$last_connection_date = new Date($this->user_infos['last_connection_date']);
-		$fieldset->add_field(new FormFieldFree('last_connect', $this->lang['last_connection'], $last_connection_date ? $last_connection_date->format(Date::FORMAT_DAY_MONTH_YEAR) : ''));
+		$last_connection_date = !empty($this->user_infos['last_connection_date']) ? Date::to_format($this->user_infos['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('never', 'main');
+		$fieldset->add_field(new FormFieldFree('last_connect', $this->lang['last_connection'], $last_connection_date));
 
 		if (AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT) && $this->user_infos['show_email'])
 		{
