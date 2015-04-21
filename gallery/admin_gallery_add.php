@@ -117,7 +117,7 @@ else
 	if (!empty($add_pic))
 	{
 		$categories = GalleryService::get_categories_manager()->get_categories_cache()->get_categories();
-		$imageup = $db_querier->select_single_row(GallerySetup::$gallery_table, array('idcat', 'name', 'path'), 'WHERE id = :id', array('id' => $add_pic));
+		$imageup = PersistenceContext::get_querier()->select_single_row(GallerySetup::$gallery_table, array('idcat', 'name', 'path'), 'WHERE id = :id', array('id' => $add_pic));
 		$tpl->assign_block_vars('image_up', array(
 			'NAME' => $imageup['name'],
 			'IMG' => '<a href="admin_gallery.php?cat=' . $imageup['idcat'] . '&amp;id=' . $add_pic . '#pics_max"><img src="pics/' . $imageup['path'] . '" alt="" /></a>',
