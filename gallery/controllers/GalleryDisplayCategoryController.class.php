@@ -371,7 +371,6 @@ class GalleryDisplayCategoryController extends ModuleController
 						'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
 						'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
 						'ID' => $info_pics['id'],
-						'IMG_MAX' => '<img src="' . PATH_TO_ROOT . '/gallery/show_pics' . url('.php?id=' . $g_idpics . '&amp;cat=' . $category->get_id()) . '" alt="" />',
 						'NAME' => '<span id="fi_' . $info_pics['id'] . '">' . stripslashes($info_pics['name']) . '</span> <span id="fi' . $info_pics['id'] . '"></span>',
 						'POSTOR' => '<a class="small ' . UserService::get_level_class($info_pics['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($info_pics['user_id'])->rel() .'">' . $info_pics['display_name'] . '</a>',
 						'DATE' => Date::to_format($info_pics['timestamp'], Date::FORMAT_DAY_MONTH_YEAR),
@@ -409,7 +408,8 @@ class GalleryDisplayCategoryController extends ModuleController
 						'U_NEXT' => ($pos_pics < ($i - 1)) ? '<a href="' . GalleryUrlBuilder::get_link_item($category->get_id(),$id_next) . '#pics_max">' . $LANG['next'] . '</a> <a href="' . GalleryUrlBuilder::get_link_item($category->get_id(),$id_next) . '#pics_max"><i class="fa fa-arrow-right fa-2x"></i></a>' : '',
 						'U_LEFT_THUMBNAILS' => (($pos_pics - $start_thumbnails) > 0) ? '<span id="display_left"><a href="javascript:display_thumbnails(\'left\')"><i class="fa fa-arrow-left fa-2x"></i></a></span>' : '<span id="display_left"></span>',
 						'U_RIGHT_THUMBNAILS' => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics) ? '<span id="display_right"><a href="javascript:display_thumbnails(\'right\')"><i class="fa fa-arrow-right fa-2x"></i></a></span>' : '<span id="display_right"></span>',
-						'U_COMMENTS' => GalleryUrlBuilder::get_link_item($info_pics['idcat'],$info_pics['id'],0,$g_sort) .'#comments_list'
+						'U_COMMENTS' => GalleryUrlBuilder::get_link_item($info_pics['idcat'],$info_pics['id'],0,$g_sort) .'#comments_list',
+						'U_IMG_MAX' => PATH_TO_ROOT . '/gallery/show_pics' . url('.php?id=' . $g_idpics . '&amp;cat=' . $category->get_id())
 					));
 	
 					//Affichage de la liste des miniatures sous l'image.
@@ -495,7 +495,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					//Affichage de l'image en grand.
 					if ($config->get_pics_enlargement_mode() == GalleryConfig::FULL_SCREEN) //Ouverture en popup plein écran.
 					{
-						$display_link = PATH_TO_ROOT.'/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '" data-lightbox="1" onmousedown="increment_view(' . $row['id'] . ');" title="' . str_replace('"', '', stripslashes($row['name']));
+						$display_link = PATH_TO_ROOT.'/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '" data-lightbox="formatter" onmousedown="increment_view(' . $row['id'] . ');" title="' . str_replace('"', '', stripslashes($row['name']));
 					}
 					elseif ($config->get_pics_enlargement_mode() == GalleryConfig::POPUP) //Ouverture en popup simple.
 						$display_link = 'javascript:increment_view(' . $row['id'] . ');display_pics_popup(\'' . PATH_TO_ROOT . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\')';

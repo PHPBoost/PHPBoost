@@ -269,12 +269,12 @@
 				<h1>
 					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
 					{GALLERY}
-					# IF C_CATEGORY_DESCRIPTION #
-						<div class="cat-description">
-							{CATEGORY_DESCRIPTION}
-						</div>
-					# ENDIF #
 				</h1>
+				# IF C_CATEGORY_DESCRIPTION #
+					<div class="cat-description">
+						{CATEGORY_DESCRIPTION}
+					</div>
+				# ENDIF #
 			</header>
 			
 			# IF C_SUB_CATEGORIES #
@@ -304,7 +304,8 @@
 						<p class="center" id="pics_max"></p>
 						
 						# IF C_GALLERY_PICS_MAX #
-							<div class="options">
+							<p style="text-align:center;padding:15px 0px;overflow:auto;"><a href="{U_IMG_MAX}" data-lightbox="formatter"><img src="{U_IMG_MAX}" alt="" /></a></p>
+							<div class="options" style="float:none;">
 								<h6>{L_INFORMATIONS}</h6>
 								# IF C_TITLE_ENABLED #
 									<span class="text-strong">{L_NAME} : </span><span>{NAME}</span><br/> 
@@ -344,7 +345,6 @@
 									# ENDIF #
 								</div>
 							</div>
-							<p style="text-align:center;padding:15px 0px;overflow:auto;">{IMG_MAX}</p>
 							<div style="margin:auto;width:640px;height:32px;padding:0;">
 								<span style="float:left">&nbsp;&nbsp;&nbsp;{U_PREVIOUS}</span>
 								<span style="float:right">{U_NEXT}&nbsp;&nbsp;&nbsp;</span>
@@ -392,7 +392,7 @@
 								# IF pics_list.C_OPEN_TR #<tr># ENDIF #
 								<td style="vertical-align:bottom;width:{COLUMN_WIDTH_PICS}%;padding:15px 0px;">
 									<div style="padding:0 5px;" id="pics{pics_list.ID}">
-										<a class="small" href="{pics_list.U_DISPLAY}"><img src="{pics_list.U_PICTURE}" title="{pics_list.NAME}" alt="{pics_list.NAME}" class="gallery_image" /></a>
+										<a class="small" href="{pics_list.U_DISPLAY}" data-lightbox="formatter"><img src="{pics_list.U_PICTURE}" title="{pics_list.NAME}" alt="{pics_list.NAME}" class="gallery_image" /></a>
 									</div>
 									
 									<div class="spacer">&nbsp;</div>
