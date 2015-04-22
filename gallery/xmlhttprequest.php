@@ -42,7 +42,7 @@ if (!empty($_GET['increment_view']))
 	$categories = GalleryService::get_categories_manager()->get_categories_cache()->get_categories();
 	$g_idpics = retrieve(GET, 'id', 0);
 	$g_idcat = retrieve(GET, 'cat', 0);
-	if (empty($g_idpics) || (!empty($g_idcat) && !isset($categories[$idcat])))
+	if (empty($g_idpics) || (!empty($g_idcat) && !isset($categories[$g_idcat])))
 		exit;
 	
 	//Niveau d'autorisation de la catégorie
