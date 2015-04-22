@@ -27,8 +27,8 @@
 			<ul>
 				<li class="connect-login"><a href='/user/?url=/connect'>{L_CONNECT}</a>
 					<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();" class="sub-menu">
-						<input type="text" id="login" name="login" value="{L_PSEUDO}" class="connect-form" onfocus="if( this.value == '{L_PSEUDO}' ) this.value = '';" maxlength="25">
-						<input type="password" id="password" name="password" class="connect-form" value="******" onfocus="if( this.value == '******' ) this.value = '';" maxlength="30">
+						<input type="text" id="login" name="login" class="connect-form" placeholder="{L_PSEUDO}" maxlength="25">
+						<input type="password" id="password" name="password" class="connect-form" placeholder="{L_PASSWORD}" maxlength="30">
 						<input checked="checked" type="checkbox" name="auto">
 						<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}">
 						<button type="submit" name="connect" value="true" class="submit">{L_CONNECT}</button>
@@ -72,7 +72,7 @@
 						</li>
 						# ENDIF #	
 						<li>
-							<i class="fa fa-file-text# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION # blink# ENDIF #"></i>
+							<i class="fa fa-file-text# IF C_UNREAD_CONTRIBUTION # blink# ENDIF #"></i>
 							<a href="${relative_url(UserUrlBuilder::contribution_panel())}" class="small"> {L_CONTRIBUTION_PANEL}# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION # ({NUMBER_UNREAD_CONTRIBUTIONS})# ENDIF #</a>
 						</li>
 	
