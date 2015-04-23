@@ -268,7 +268,7 @@
 					</div>
 					
 					<div class="upload-elements-container">
-						<legend>Contenu du répertoire</legend>
+						<legend>{L_FOLDER_CONTENT}</legend>
 	
 						# IF C_EMPTY_FOLDER #
 							<div id="empty-folder" class="notice">{L_EMPTY_FOLDER}</div>
