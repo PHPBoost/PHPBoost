@@ -241,6 +241,7 @@ $LANG['data'] = 'Total data';
 $LANG['folders'] = 'Folders';
 $LANG['folders_up'] = 'Parent folder';
 $LANG['folder_new'] = 'New folder';
+$LANG['folder_content'] = 'Folder content';
 $LANG['empty_member_folder'] = 'Empty folder?';
 $LANG['del_folder'] = 'Delete folder?';
 $LANG['empty'] = 'Empty';

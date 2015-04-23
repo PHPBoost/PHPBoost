@@ -44,7 +44,7 @@
 	<div id="connect-menu">
 		<div class="horizontal-fieldset">
 			<ul>
-				# IF NUMBER_TOTAL_ALERT #	
+				# IF NUMBER_TOTAL_ALERT #
 				<li class="connect-login connect-alert"><a href="${relative_url(UserUrlBuilder::home_profile())}">{L_PRIVATE_PROFIL}</a> <span style="font-size:11px;margin-right:12px;">({NUMBER_TOTAL_ALERT})</span> 
 				# ELSE #
 				<li class="connect-login"><a href="${relative_url(UserUrlBuilder::home_profile())}">{L_PRIVATE_PROFIL}</a>
@@ -70,7 +70,7 @@
 							<i class="fa fa-legal"></i>
 							<a href="${relative_url(UserUrlBuilder::moderation_panel())}" class="small"> {L_MODO_PANEL}</a>
 						</li>
-						# ENDIF #	
+						# ENDIF #
 						<li>
 							<i class="fa fa-file-text# IF C_UNREAD_CONTRIBUTION # blink# ENDIF #"></i>
 							<a href="${relative_url(UserUrlBuilder::contribution_panel())}" class="small"> {L_CONTRIBUTION_PANEL}# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION # ({NUMBER_UNREAD_CONTRIBUTIONS})# ENDIF #</a>
@@ -84,6 +84,6 @@
 			</ul>
 		</div>
 	</div>
-	<div class="connect-welcome">Bienvenue, <a href="{U_USER_PROFILE}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a></div>
+	<div class="connect-welcome">${LangLoader::get_message('welcome', 'user-common')}, <a href="{U_USER_PROFILE}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a></div>
 	# ENDIF #
 # ENDIF #

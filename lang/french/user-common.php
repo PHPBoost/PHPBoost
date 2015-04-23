@@ -36,6 +36,7 @@ $lang['profile_of'] = 'Profil de :name';
 $lang['profile.edit'] = 'Edition du profil';
 $lang['messages'] = 'Messages de l\'utilisateur';
 $lang['maintain'] = 'Maintenance';
+$lang['welcome'] = 'Bienvenue';
 
 $lang['members-list'] = 'Liste des membres';
 $lang['member-management'] = 'Gestion du membre';
