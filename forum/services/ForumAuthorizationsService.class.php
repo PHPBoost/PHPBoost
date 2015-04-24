@@ -39,17 +39,17 @@ class ForumAuthorizationsService
 	
 	public function flood()
 	{
-		return $this->get_authorizations(self::MODERATION_AUTHORIZATIONS);
+		return $this->get_authorizations(self::FLOOD_AUTHORIZATIONS);
 	}
 	
 	public function hide_edition_mark()
 	{
-		return $this->get_authorizations(self::MODERATION_AUTHORIZATIONS);
+		return $this->get_authorizations(self::HIDE_EDITION_MARK_AUTHORIZATIONS);
 	}
 	
 	public function unlimited_topics_tracking()
 	{
-		return $this->get_authorizations(self::MODERATION_AUTHORIZATIONS);
+		return $this->get_authorizations(self::UNLIMITED_TOPICS_TRACKING_AUTHORIZATIONS);
 	}
 	
 	private function get_authorizations($bit)
