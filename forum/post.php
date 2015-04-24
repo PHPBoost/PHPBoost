@@ -94,11 +94,14 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 		try {
-			$topic = PersistenceContext::get_querier()->select_rows(PREFIX . 'forum_topics', array('idcat', 'title', 'subtitle'), 'WHERE id=:id', array('id' => $idt_get));
+			$topic = PersistenceContext::get_querier()->select_single_row_query('SELECT idcat, title, subtitle
+			FROM ' . PREFIX . 'forum_topics
+			WHERE id=:id', array(
+				'id' => $idt_get
+			));
 		} catch (RowNotFoundException $e) {
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
-                $LANG['e_unexist_topic_forum']);
-            DispatchManager::redirect($controller);
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_unexist_topic_forum']);
+			DispatchManager::redirect($controller);
 		}
 
 		$tpl = new FileTemplate('forum/forum_edit_msg.tpl');
@@ -401,13 +404,15 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 		if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 		
-		$topic = array('idcat' => '', 'title' => '', 'nbr_msg' => '', 'last_user_id' => '', 'status' => '');
 		try {
-			$topic = PersistenceContext::get_querier()->select_rows(PREFIX . 'forum_topics', array('idcat', 'title', 'nbr_msg', 'last_user_id', 'status'), 'WHERE id=:id', array('id' => $idt_get));
+			$topic = PersistenceContext::get_querier()->select_single_row_query('SELECT idcat, title, nbr_msg, last_user_id, status
+			FROM ' . PREFIX . 'forum_topics
+			WHERE id=:id', array(
+				'id' => $idt_get
+			));
 		} catch (RowNotFoundException $e) {
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
-                $LANG['e_topic_lock_forum']);
-            DispatchManager::redirect($controller);
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_topic_lock_forum']);
+			DispatchManager::redirect($controller);
 		}
 
 		$is_modo = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);

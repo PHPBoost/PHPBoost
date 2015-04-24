@@ -116,9 +116,10 @@ elseif (retrieve(GET, 'del', false)) //Suppression d'un message.
 
 	$idm_get = retrieve(GET, 'idm', '');
 	//Info sur le message.
-	$msg = PersistenceContext::get_querier()->select_rows(PREFIX . 'forum_msg', array('user_id', 'idtopic'), 'WHERE id=:id', array('id' => $idm_get));
+	$msg = PersistenceContext::get_querier()->select_single_row_query('SELECT user_id, idtopic FROM ' . PREFIX . 'forum_msg WHERE id=:id', array('id' => $idm_get));
 	//On va chercher les infos sur le topic
-	$topic = PersistenceContext::get_querier()->select_rows(PREFIX . 'forum_topics', array('id', 'user_id', 'idcat', 'first_msg_id', 'last_msg_id', 'last_timestamp'), 'WHERE id=:id', array('id' => $msg['idtopic']));
+	$topic = PersistenceContext::get_querier()->select_single_row_query('SELECT id, user_id, idcat, first_msg_id, last_msg_id, last_timestamp FROM ' . PREFIX . 'forum_topics WHERE id=:id', array('id' => $msg['idtopic']));
+	
 	if (!empty($msg['idtopic']) && $topic['first_msg_id'] != $idm_get) //Suppression d'un message.
 	{
 		if (!empty($topic['idcat']) && (AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) || AppContext::get_current_user()->get_id() == $msg['user_id'])) //Autorisé à supprimer?
@@ -186,7 +187,8 @@ elseif (!empty($msg_d))
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
 	//Vérification de l'appartenance du sujet au membres, ou modo.
-	$topic = PersistenceContext::get_querier()->select_rows(PREFIX . 'forum_topics', array("idcat", "user_id", "display_msg"), 'WHERE id=:id', array('id' => $msg_d));
+	$topic = PersistenceContext::get_querier()->select_single_row_query('SELECT idcat, user_id, display_msg FROM ' . PREFIX . 'forum_topics WHERE id=:id', array('id' => $msg_d));
+	
 	if ((!empty($topic['user_id']) && AppContext::get_current_user()->get_id() == $topic['user_id']) || AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM))
 	{
 		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET display_msg = 1 - display_msg WHERE id = :id", array('id' => $msg_d));

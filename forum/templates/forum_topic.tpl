@@ -318,17 +318,20 @@
 		# IF C_AUTH_POST #
 		<div class="forum-post-form">
 			<form action="post{U_FORUM_ACTION_POST}" method="post" onsubmit="return check_form_msg();">
-				<div>
-					<div style="font-size:10px;text-align:center;"><label for="contents">{L_RESPOND}</label></div>
+				<div class="form-element-textarea">
+					<label for="contents">{L_RESPOND}</label>
 					{KERNEL_EDITOR}
-					<label><textarea rows="15" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
-					<fieldset class="fieldset-submit" style="padding-top:17px;margin-bottom:0px;">
-						<legend>{L_SUBMIT}</legend>
-						<button type="submit" name="valid" value="true" class="submit">{L_SUBMIT}</button>
-						<button type="button" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
-						<button type="reset" value="true">{L_RESET}</button>
-					</fieldset>
+					<div class="form-field-textarea">
+						<textarea id="contents" name="contents" rows="15" cols="40">{CONTENTS}</textarea>
+					</div>
 				</div>
+				
+				<fieldset class="fieldset-submit" style="padding-top:17px;margin-bottom:0px;">
+					<legend>{L_SUBMIT}</legend>
+					<button type="submit" name="valid" value="true" class="submit">{L_SUBMIT}</button>
+					<button type="button" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
+					<button type="reset" value="true">{L_RESET}</button>
+				</fieldset>
 			</form>
         </div>
 		# ENDIF #
