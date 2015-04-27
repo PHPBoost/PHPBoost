@@ -322,6 +322,7 @@ $LANG['data'] = 'Total des données';
 $LANG['folders'] = 'Répertoires';
 $LANG['folders_up'] = 'Répertoire parent';
 $LANG['folder_new'] = 'Nouveau dossier';
+$LANG['folder_content'] = 'Contenu du répertoire';
 $LANG['empty_folder'] = 'Ce dossier est vide';
 $LANG['empty_member_folder'] = 'Vider ce dossier ?';
 $LANG['del_folder'] = 'Supprimer ce dossier ?';
