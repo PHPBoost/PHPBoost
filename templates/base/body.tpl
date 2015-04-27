@@ -8,18 +8,22 @@
 					<span id="site-slogan">{SITE_SLOGAN}</span>
 				</div>
 			</div>
+			<div id="top-header-content">
 			# IF C_MENUS_HEADER_CONTENT #
 				# START menus_header #
 				{menus_header.MENU}
 				# END menus_header #
 			# ENDIF #
+			</div>
 		</div>
 		<div id="sub-header">
-		# IF C_MENUS_SUB_HEADER_CONTENT #
-			# START menus_sub_header #
-			{menus_sub_header.MENU}
-			# END menus_sub_header #
-		# ENDIF #
+			<div id="sub-header-content">
+			# IF C_MENUS_SUB_HEADER_CONTENT #
+				# START menus_sub_header #
+				{menus_sub_header.MENU}
+				# END menus_sub_header #
+			# ENDIF #
+			</div>
 		</div>
 		<div class="spacer"></div>
 	</header>
@@ -77,7 +81,7 @@
 			</div>
 
 			# IF C_MENUS_BOTTOM_CENTRAL_CONTENT #
-	        <div id="bottom-content">
+			<div id="bottom-content">
 				# START menus_bottom_central #
 				{menus_bottom_central.MENU}
 				# END menus_bottom_central #
