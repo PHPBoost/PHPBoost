@@ -332,6 +332,7 @@ else
 		'L_FOLDERS' => $LANG['folders'],
 		'L_ROOT' => $LANG['root'],
 		'L_FOLDER_NEW' => $LANG['folder_new'],
+		'L_FOLDER_CONTENT' => $LANG['folder_content'],
 		'L_FOLDER_UP' => $LANG['folders_up'],
 		'L_FILES' => $LANG['files'],
 		'L_DELETE' => $LANG['delete'],

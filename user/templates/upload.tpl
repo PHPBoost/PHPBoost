@@ -293,7 +293,7 @@
 				</a>
 			</div>
 			
-			<legend>Contenu du répertoire</legend>
+			<legend>{L_FOLDER_CONTENT}</legend>
 			
 			<div class="upload-elements-container" id="new-folder">
 			
