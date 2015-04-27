@@ -16,7 +16,7 @@ body {
 	position: relative;
 	height: auto;
 	min-height: 100%;
-	background: #E8EDF3 url(images/body.png) repeat-x;
+	background: #E8EDF3 ;
 	color: #555555;
 	font-size: 1.3em;
 	font-family: "Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
@@ -32,18 +32,33 @@ body {
 /* -- En-tete de page - Header --
 --------------------------------------*/
 header#header {
-	max-width: 1024px;
-	margin: auto;
+	background: #366393;
 }
 
 /* --- Partie superieure du header --- */
+
 div#top-header {
-	height: 139px;
+	min-height: 139px;
+	max-width: 1024px;
+	margin: auto;
+	overflow: hidden;
+}
+
+div#top-header-content{
+	float: right;
 }
 
 /* --- Partie inferieur du header --- */
 div#sub-header {
-	height: 35px;
+	min-height: 35px;
+	background: #353535;
+	overflow: hidden;
+	border-top: 1px solid #8B9193;
+}
+
+div#sub-header-content{
+	max-width: 1024px;
+	margin: auto;
 }
 
 /* --- Logo et Nom du site web --- */
@@ -56,7 +71,8 @@ div#site-infos {
 div#site-logo {
 	float: left;
 	margin: 0 1em 0 0;
-	background: url('images/logo.png') no-repeat;
+	background: url('images/logo.png') no-repeat center center;
+	background-size: cover;
 	width: 90px;
 	height: 90px;
 }
@@ -64,6 +80,7 @@ div#site-logo {
 div#site-name-container {
 	margin: 1em 0 0 0;
 	overflow: hidden;
+	float: left;
 }
 
 a#site-name {
@@ -73,7 +90,6 @@ a#site-name {
 	line-height: 1em;
 	letter-spacing: 0.02em;
 	text-decoration: none;
-	white-space: nowrap;
 	text-shadow: 0 0 0 rgb(0,0,0), 1px 0 0 rgb(-255,-255,-255), 2px 0 0.1px rgba(0,0,0,0.1), 2px 0 0.1px rgba(0,0,0,0.2), 0 0 1px rgba(0,0,0,.1);
 }
 
@@ -91,8 +107,8 @@ span#site-slogan {
 div#global {
 	max-width: 1024px;
 	margin: 1.5em auto 0 auto;
+	padding: 0 10px;
 }
-
 
 aside#menu-left,
 aside#menu-right {
