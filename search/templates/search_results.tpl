@@ -59,7 +59,7 @@
 			    jQuery('#' + blocName + '_' + page).fadeIn();
 			    
 			    // Mise à jour de la pagination
-			    $(blocPagin).innerHTML = pagin;
+			    jQuery('#' + blocPagin).innerHTML = pagin;
 			}
 
 			const RESULTS = 'results_';
