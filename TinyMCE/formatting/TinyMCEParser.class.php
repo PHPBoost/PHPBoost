@@ -458,9 +458,9 @@ class TinyMCEParser extends ContentFormattingParser
 			//On doit repasser plusieurs fois pour que ça soit pris en compte (comportement un peu bizarre)
 			//Par mesure de sécurité on s'arrête à 10
 			$nbr_size_parsing = 0;
-			while (preg_match('`&lt;span style="font-size: ([a-z-]+);"&gt;(.+)&lt;/span&gt;`isU', $this->content) && $nbr_size_parsing++ < 10)
+			while (preg_match('`&lt;span style="font-size: ([0-9a-z-]+);"&gt;(.+)&lt;/span&gt;`isU', $this->content) && $nbr_size_parsing++ < 10)
 			{
-				$this->content = preg_replace_callback('`&lt;span style="font-size: ([a-z-]+);"&gt;(.+)&lt;/span&gt;`isU', array($this, 'parse_size_tag'), $this->content);
+				$this->content = preg_replace_callback('`&lt;span style="font-size: ([0-9a-z-]+);"&gt;(.+)&lt;/span&gt;`isU', array($this, 'parse_size_tag'), $this->content);
 			}
 		}
 
@@ -659,7 +659,7 @@ class TinyMCEParser extends ContentFormattingParser
 		
 		if (!in_array('feed', $this->forbidden_tags))
 		{
-			$this->parse_feed_tag();			
+			$this->parse_feed_tag();
 		}
 	}
 
@@ -748,25 +748,25 @@ class TinyMCEParser extends ContentFormattingParser
 		//We retrieve the size (in pt)
 		switch ($matches[1])
 		{
-			case 'xx-small':
+			case '8pt':
 				$size = 8;
 				break;
-			case 'x-small':
+			case '10pt':
 				$size = 10;
 				break;
-			case 'small':
+			case '12pt':
 				$size = 12;
 				break;
-			case 'medium':
+			case '14pt':
 				$size = 14;
 				break;
-			case 'large':
+			case '18pt':
 				$size = 18;
 				break;
-			case 'x-large':
+			case '24pt':
 				$size = 24;
 				break;
-			case 'xx-large':
+			case '36pt':
 				$size = 36;
 				break;
 			default:
