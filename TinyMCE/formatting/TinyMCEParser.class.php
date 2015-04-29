@@ -707,7 +707,7 @@ class TinyMCEParser extends ContentFormattingParser
 	private function parse_img($matches)
 	{
 		$alt = !empty($matches[3]) ? $matches[3] : '';
-		$style = !empty($matches[1]) ? ' style="' . $matches[1] . '"' : '';
+		$style = !empty($matches[1]) ? ' style="' . $matches[1] : '';
 		foreach (explode('" ', $matches[4] . ' ') as $raw_property)
 		{
 			$exp = explode('="', $raw_property);
@@ -716,6 +716,8 @@ class TinyMCEParser extends ContentFormattingParser
 				continue;
 			}
 			$value = trim($exp[1]);
+			$style .= in_array(trim($exp[0]), array('style', 'width', 'height')) && empty($style) ? ' style="' : '';
+			
 			switch (trim($exp[0]))
 			{
 				case 'style':
@@ -731,7 +733,8 @@ class TinyMCEParser extends ContentFormattingParser
 					break;
 			}
 		}
-	 	return '<img src="' . $matches[2] . '" alt="' . $alt . '"' . $class . $style .' />';
+		$style .= !empty($style) ? '"' : '';
+	 	return '<img src="' . $matches[2] . '" alt="' . $alt . '"' . $style .' />';
 	}
 
 	/**

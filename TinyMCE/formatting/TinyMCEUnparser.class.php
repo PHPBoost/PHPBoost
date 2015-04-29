@@ -195,7 +195,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			$this->content = preg_replace_callback('`<span style="font-family: ([ a-z0-9,_-]+);">(.*)</span>`isU', array($this, 'unparse_font'), $this->content );
 			
 			//Image
-			$this->content = preg_replace_callback('`<img src="([^"]+)" alt=""(?: style="([^"]*)")? />`isU', array($this, 'unparse_img'), $this->content );
+			$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)")?(?: style="([^"]*)")? />`isU', array($this, 'unparse_img'), $this->content );
 			
 			// Feed
 			$this->content = preg_replace('`\[\[FEED([^\]]*)\]\](.+)\[\[/FEED\]\]`U', '[feed$1]$2[/feed]', $this->content);
@@ -335,10 +335,11 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	
 	private function unparse_img($matches)
 	{
+		$alt = !empty($matches[2]) ? $matches[2] : '';
 		$style = '';
 		$params = '';
-		if (isset($matches[2])) {
-			foreach (explode(';', $matches[2]) as $style_att)
+		if (isset($matches[3])) {
+			foreach (explode(';', $matches[3]) as $style_att)
 			{
 				$exp = explode(':', $style_att);
 				if (count($exp) < 2)
@@ -365,7 +366,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 				$style = ' style="' . $style . '"';
 			}
 		}
-		return '<img' . $style . ' src="' . $matches[1] . '" alt="" ' . $params . '/>';
+		return '<img' . $style . ' src="' . $matches[1] . '" alt="' . $alt . '" ' . $params . '/>';
 	}
 
 	/**
