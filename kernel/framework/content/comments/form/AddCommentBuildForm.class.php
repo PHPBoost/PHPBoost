@@ -33,6 +33,7 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 {
 	private $user;
 	private $lang;
+	private $common_lang;
 	private $comments_lang;
 	private $comments_configuration;
 	private $module_id;
@@ -64,6 +65,7 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 		$this->comments_topic = $comments_topic;
 		$this->user = AppContext::get_current_user();
 		$this->lang = LangLoader::get('main');
+		$this->common_lang = LangLoader::get('common');
 		$this->comments_lang = LangLoader::get('comments-common');
 		$this->comments_configuration = CommentsConfig::load();
 	}
@@ -76,7 +78,7 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 		
 		if (!$this->user->check_level(User::MEMBER_LEVEL))
 		{
-			$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['pseudo'], $this->lang['guest'], array('maxlength' => 25)));
+			$fieldset->add_field(new FormFieldTextEditor('name', $this->common_lang['form.name'], $this->common_lang['visitor'], array('maxlength' => 25)));
 		}
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('message', $this->lang['message'], '', array(
