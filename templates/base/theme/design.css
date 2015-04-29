@@ -52,7 +52,6 @@ div#top-header-content{
 div#sub-header {
 	min-height: 35px;
 	background: #353535;
-	overflow: hidden;
 	border-top: 1px solid #8B9193;
 }
 
@@ -191,7 +190,7 @@ footer#footer {
 
 footer#footer .footer-content {
 	margin: 0 auto 0 auto;
-	width: 1024px;
+	max-width: 1024px;
 	padding: 1.5em 0;
 	border-bottom: 2px groove #444444;
 }
