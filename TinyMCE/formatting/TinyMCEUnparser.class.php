@@ -409,25 +409,25 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		switch ((int)$matches[1])
 		{
 			case 8:
-				$size = 'xx-small';
+				$size = '8pt';
 				break;
 			case 10:
-				$size = 'x-small';
+				$size = '10pt';
 				break;
 			case 12:
-				$size = 'small';
+				$size = '12pt';
 				break;
 			case 14:
-				$size = 'medium';
+				$size = '14pt';
 				break;
 			case 18:
-				$size = 'large';
+				$size = '18pt';
 				break;
 			case 24:
-				$size = 'x-large';
+				$size = '24pt';
 				break;
 			case 36:
-				$size = 'xx-large';
+				$size = '36pt';
 				break;
 			default:
 				$size = '';
