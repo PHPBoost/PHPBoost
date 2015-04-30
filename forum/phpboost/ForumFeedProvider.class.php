@@ -65,7 +65,7 @@ class ForumFeedProvider implements FeedProvider
 		$data->set_host(HOST);
 		$data->set_desc($LANG['xml_forum_desc']);
 		$data->set_lang($LANG['xml_lang']);
-		$data->set_auth_bit(READ_CAT_FORUM);
+		$data->set_auth_bit(ForumAuthorizationsService::READ_AUTHORIZATIONS);
 
 		$req_cats = (($idcat > 0) && isset($CAT_FORUM[$idcat])) ? ' AND c.id_left >= :forum_cats_left AND id_right <= :forum_cats_right' : '';
 		$parameters = array('limit' => 2 * $config->get_number_messages_per_page());

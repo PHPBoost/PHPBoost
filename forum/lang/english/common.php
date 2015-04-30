@@ -56,6 +56,7 @@ $lang['config.message_before_topic_title_icon_displayed'] = 'Display associated 
 $lang['config.message_before_topic_title_icon_displayed.explain'] = '<i class="fa fa-msg-display"></i> / <i class="fa fa-msg-not-display"></i>';
 
 //authorizations
+$lang['authorizations.read_topics_content'] = 'Display topics content authorization';
 $lang['authorizations.flood'] = 'Flood authorization';
 $lang['authorizations.hide_edition_mark'] = 'Hide last edited time information';
 $lang['authorizations.unlimited_topics_tracking'] = 'Deactivate topics subscription limit';

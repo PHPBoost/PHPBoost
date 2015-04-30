@@ -240,7 +240,7 @@ class ForumConfig extends AbstractConfigData
 			self::MESSAGE_WHEN_TOPIC_IS_UNSOLVED => LangLoader::get_message('default.message_when_topic_is_unsolved', 'config', 'forum'),
 			self::MESSAGE_WHEN_TOPIC_IS_SOLVED => LangLoader::get_message('default.message_when_topic_is_solved', 'config', 'forum'),
 			self::MESSAGE_BEFORE_TOPIC_TITLE_ICON_DISPLAYED => true,
-			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 3, 'r1' => 11)
+			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 131, 'r1' => 135)
 		);
 	}
 	

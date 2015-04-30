@@ -27,14 +27,33 @@
 
 class ForumAuthorizationsService
 {
+	const READ_AUTHORIZATIONS = 1;
+	const WRITE_AUTHORIZATIONS = 2;
+	const MODERATION_AUTHORIZATIONS = 4;
 	const FLOOD_AUTHORIZATIONS = 16;
 	const HIDE_EDITION_MARK_AUTHORIZATIONS = 32;
 	const UNLIMITED_TOPICS_TRACKING_AUTHORIZATIONS = 64;
+	const READ_TOPICS_CONTENT_AUTHORIZATIONS = 128;
 	
 	public static function check_authorizations()
 	{
 		$instance = new self();
 		return $instance;
+	}
+	
+	public function read()
+	{
+		return $this->get_authorizations(self::READ_AUTHORIZATIONS);
+	}
+	
+	public function write()
+	{
+		return $this->get_authorizations(self::WRITE_AUTHORIZATIONS);
+	}
+	
+	public function moderation()
+	{
+		return $this->get_authorizations(self::MODERATION_AUTHORIZATIONS);
 	}
 	
 	public function flood()
@@ -50,6 +69,11 @@ class ForumAuthorizationsService
 	public function unlimited_topics_tracking()
 	{
 		return $this->get_authorizations(self::UNLIMITED_TOPICS_TRACKING_AUTHORIZATIONS);
+	}
+	
+	public function read_topics_content()
+	{
+		return $this->get_authorizations(self::READ_TOPICS_CONTENT_AUTHORIZATIONS);
 	}
 	
 	private function get_authorizations($bit)

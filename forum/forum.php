@@ -39,7 +39,7 @@ if ($id_get != Category::ROOT_CATEGORY && (!isset($CAT_FORUM[$id_get]) || $CAT_F
 }
 
 //Vérification des autorisations d'accès.
-if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
+if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::READ_AUTHORIZATIONS))
 {
 	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
@@ -202,7 +202,7 @@ if (!empty($id_get))
 	}
 		
 	//On vérifie si l'utilisateur a les droits d'écritures.
-	$check_group_write_auth = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM);
+	$check_group_write_auth = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::WRITE_AUTHORIZATIONS);
 	$locked_cat = ($CAT_FORUM[$id_get]['status'] == 1 || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) ? false : true;
 	if (!$check_group_write_auth)
 	{
@@ -244,7 +244,7 @@ if (!empty($id_get))
 	}
 	
 	//Si l'utilisateur a les droits d'édition.	
-	$check_group_edit_auth = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
+	$check_group_edit_auth = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS);
 
 	$vars_tpl = array(
 		'C_PAGINATION' => $pagination->has_several_pages(),

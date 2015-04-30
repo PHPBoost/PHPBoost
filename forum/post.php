@@ -68,7 +68,7 @@ $editor = AppContext::get_content_formatting_service()->get_default_editor();
 $editor->set_identifier('contents');
 	
 //Niveau d'autorisation de la catégorie
-if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
+if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::READ_AUTHORIZATIONS))
 {
 	$Forumfct = new Forum();
 
@@ -90,7 +90,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 
 	if ($previs) //Prévisualisation des messages
 	{
-		if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
+		if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::WRITE_AUTHORIZATIONSM))
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 		try {
@@ -151,7 +151,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 		if ($post_topic && !empty($id_get))
 		{
 			$is_modo = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
-			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
+			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::WRITE_AUTHORIZATIONS))
 				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 			if ($is_modo)
@@ -217,7 +217,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 		}
 		elseif (!empty($preview_topic) && !empty($id_get))
 		{
-			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
+			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::WRITE_AUTHORIZATIONS))
 				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 			$tpl = new FileTemplate('forum/forum_post.tpl');
@@ -325,7 +325,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 		}
 		else
 		{
-			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
+			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::WRITE_AUTHORIZATIONS))
 				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 			$tpl = new FileTemplate('forum/forum_post.tpl');
@@ -401,7 +401,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 	}
 	elseif ($new_get === 'n_msg' && empty($error_get)) //Nouveau message
 	{
-		if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
+		if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::WRITE_AUTHORIZATIONS))
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 		
 		try {
@@ -458,7 +458,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 	}
 	elseif ($new_get === 'msg' && empty($error_get)) //Edition d'un message/topic.
 	{
-		if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
+		if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::WRITE_AUTHORIZATIONS))
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 		$id_m = retrieve(GET, 'idm', 0);

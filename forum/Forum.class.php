@@ -468,7 +468,7 @@ class Forum
 		//We shift the authorization bit to the one with which the contribution class works, Contribution::CONTRIBUTION_AUTH_BIT
 		Authorizations::capture_and_shift_bit_auth(
 		$CAT_FORUM[$topic_infos['idcat']]['auth'],
-		EDIT_CAT_FORUM, Contribution::CONTRIBUTION_AUTH_BIT
+		ForumAuthorizationsService::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
 		)
 		);
 

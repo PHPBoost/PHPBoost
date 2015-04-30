@@ -50,7 +50,7 @@ if (is_array($CAT_FORUM))
 {
 	foreach ($CAT_FORUM as $idcat => $value)
 	{
-		if (AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM))
+		if (AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS))
 		{
 			$check_auth_by_group = true;
 			break;
@@ -152,7 +152,7 @@ if ($action == 'alert') //Gestion des alertes
 		$auth_cats = array();
 		foreach ($CAT_FORUM as $idcat => $key)
 		{
-			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM))
+			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS))
 				$auth_cats[] = $idcat;
 		}
 
@@ -208,7 +208,7 @@ if ($action == 'alert') //Gestion des alertes
 		$auth_cats = array();
 		foreach ($CAT_FORUM as $idcat => $key)
 		{
-			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM))
+			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS))
 				$auth_cats[] = $idcat;
 		}
 		
