@@ -69,6 +69,7 @@
 [b]Forum[/b]
 [*] Optimisation de la configuration
 [*] Affichage automatique des champs du profil de type email ou site web dans les informations de l'utilisateur dans les topics
+[*] Possibilité de cacher le détail des messages des topics aux visiteurs tout en leur laissant accès à la liste des topics
 
 [b]Galerie[/b]
 [*] Passage au nouveau système de catégories

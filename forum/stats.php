@@ -80,7 +80,7 @@ if (is_array($CAT_FORUM))
 {
 	foreach ($CAT_FORUM as $idcat => $key)
 	{
-		if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM))
+		if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], ForumAuthorizationsService::READ_AUTHORIZATIONS))
 			$auth_cats[] = $idcat;
 	}
 }

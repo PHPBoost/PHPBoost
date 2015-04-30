@@ -87,7 +87,7 @@ if (!empty($_POST['add'])) //Nouveau forum/catégorie.
 		$status = 1;
 	
 	//Génération du tableau des droits.
-	$array_auth_all = Authorizations::build_auth_array_from_form(READ_CAT_FORUM, WRITE_CAT_FORUM, EDIT_CAT_FORUM);
+	$array_auth_all = Authorizations::build_auth_array_from_form(ForumAuthorizationsService::READ_AUTHORIZATIONS, ForumAuthorizationsService::WRITE_AUTHORIZATIONS, ForumAuthorizationsService::MODERATION_AUTHORIZATIONS);
 
 	if (!empty($name))
 	{
@@ -160,9 +160,9 @@ else
 	
 	$tpl->put_all(array(
 		'CATEGORIES' => $forums,
-		'AUTH_READ' => Authorizations::generate_select(READ_CAT_FORUM, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
-		'AUTH_WRITE' => Authorizations::generate_select(WRITE_CAT_FORUM, array(), array(0 => true, 1 => true, 2 => true)),
-		'AUTH_EDIT' => Authorizations::generate_select(EDIT_CAT_FORUM, array(), array(1 => true, 2 => true)),
+		'AUTH_READ' => Authorizations::generate_select(ForumAuthorizationsService::READ_AUTHORIZATIONS, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
+		'AUTH_WRITE' => Authorizations::generate_select(ForumAuthorizationsService::WRITE_AUTHORIZATIONS, array(), array(0 => true, 1 => true, 2 => true)),
+		'AUTH_EDIT' => Authorizations::generate_select(ForumAuthorizationsService::MODERATION_AUTHORIZATIONS, array(), array(1 => true, 2 => true)),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
 		'L_CAT_MANAGEMENT' => $LANG['cat_management'],

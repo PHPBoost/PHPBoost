@@ -66,7 +66,7 @@ if (!empty($idm_get) && $del) //Suppression d'un message/topic.
 	//Si on veut supprimer le premier message, alors son rippe le topic entier (admin et modo seulement).
 	if (!empty($msg['idtopic']) && $topic['first_msg_id'] == $idm_get)
 	{
-		if (!empty($msg['idtopic']) && (AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) || AppContext::get_current_user()->get_id() == $topic['user_id'])) //Autorisé à supprimer?
+		if (!empty($msg['idtopic']) && (AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS) || AppContext::get_current_user()->get_id() == $topic['user_id'])) //Autorisé à supprimer?
 		{
 			$Forumfct->Del_topic($msg['idtopic']); //Suppresion du topic.
 		}
@@ -80,7 +80,7 @@ if (!empty($idm_get) && $del) //Suppression d'un message/topic.
 	}
 	elseif (!empty($msg['idtopic']) && $topic['first_msg_id'] != $idm_get) //Suppression d'un message.
 	{
-		if (!empty($topic['idcat']) && (AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) || AppContext::get_current_user()->get_id() == $msg['user_id'])) //Autorisé à supprimer?
+		if (!empty($topic['idcat']) && (AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS) || AppContext::get_current_user()->get_id() == $msg['user_id'])) //Autorisé à supprimer?
 		{
 			list($nbr_msg, $previous_msg_id) = $Forumfct->Del_msg($idm_get, $msg['idtopic'], $topic['idcat'], $topic['first_msg_id'], $topic['last_msg_id'], $topic['last_timestamp'], $msg['user_id']);
 		}
@@ -116,7 +116,7 @@ elseif (!empty($idt_get))
 	//On va chercher les infos sur le topic
 	$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status'), 'WHERE id=:id', array('id' => $idt_get));
 
-	if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], READ_CAT_FORUM))
+	if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], ForumAuthorizationsService::READ_AUTHORIZATIONS))
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
@@ -131,7 +131,7 @@ elseif (!empty($idt_get))
 	{
 		//Vérification de l'appartenance du sujet au membres, ou modo.
 		$check_mbr = PersistenceContext::get_querier()->get_column_value(PREFIX . 'forum_topics', 'user_id', 'WHERE id=:id', array('id' => $idt_get));
-		if ((!empty($check_mbr) && AppContext::get_current_user()->get_id() == $check_mbr) || AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM))
+		if ((!empty($check_mbr) && AppContext::get_current_user()->get_id() == $check_mbr) || AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS))
 		{
 			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET display_msg = 1 - display_msg WHERE id = '" . $idt_get . "'");
 
@@ -179,7 +179,7 @@ elseif (!empty($idt_get))
 	elseif (!empty($lock_get))
 	{
 		//Si l'utilisateur a le droit de déplacer le topic, ou le verrouiller.
-		if (AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM))
+		if (AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS))
 		{
 			if ($lock_get === 'true') //Verrouillage du topic.
 			{

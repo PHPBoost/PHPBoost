@@ -28,11 +28,6 @@
 if (defined('PHPBOOST') !== true)
     exit;
 
-//Configuration sur la catégorie.
-define('READ_CAT_FORUM', 0x01);
-define('WRITE_CAT_FORUM', 0x02);
-define('EDIT_CAT_FORUM', 0x04);
-
 //Historique.
 define('H_DELETE_MSG', 'delete_msg'); //Suppression d'un message.
 define('H_DELETE_TOPIC', 'delete_topic'); //Suppression d'un sujet.

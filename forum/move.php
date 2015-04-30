@@ -46,7 +46,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 	$tpl = new FileTemplate('forum/forum_move.tpl');
 
 	$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('idcat', 'title'), 'WHERE id=:id', array('id' => $id_get));
-	if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM)) //Accès en édition
+	if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS)) //Accès en édition
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -59,7 +59,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 	{
 		foreach ($CAT_FORUM as $idcat => $key)
 		{
-			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM))
+			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], ForumAuthorizationsService::READ_AUTHORIZATIONS))
 				$auth_cats[] = $idcat;
 		}
 	}
@@ -179,7 +179,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	{
 		foreach ($CAT_FORUM as $idcat => $key)
 		{
-			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM))
+			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], ForumAuthorizationsService::READ_AUTHORIZATIONS))
 				$auth_cats[] = $idcat;
 		}
 	}

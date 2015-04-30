@@ -122,7 +122,7 @@ elseif (retrieve(GET, 'del', false)) //Suppression d'un message.
 	
 	if (!empty($msg['idtopic']) && $topic['first_msg_id'] != $idm_get) //Suppression d'un message.
 	{
-		if (!empty($topic['idcat']) && (AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) || AppContext::get_current_user()->get_id() == $msg['user_id'])) //Autorisé à supprimer?
+		if (!empty($topic['idcat']) && (AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS) || AppContext::get_current_user()->get_id() == $msg['user_id'])) //Autorisé à supprimer?
 		{
 			list($nbr_msg, $previous_msg_id) = $Forumfct->Del_msg($idm_get, $msg['idtopic'], $topic['idcat'], $topic['first_msg_id'], $topic['last_msg_id'], $topic['last_timestamp'], $msg['user_id']); //Suppression du message.
 			if ($nbr_msg === false && $previous_msg_id === false) //Echec de la suppression.
@@ -189,7 +189,7 @@ elseif (!empty($msg_d))
 	//Vérification de l'appartenance du sujet au membres, ou modo.
 	$topic = PersistenceContext::get_querier()->select_single_row_query('SELECT idcat, user_id, display_msg FROM ' . PREFIX . 'forum_topics WHERE id=:id', array('id' => $msg_d));
 	
-	if ((!empty($topic['user_id']) && AppContext::get_current_user()->get_id() == $topic['user_id']) || AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM))
+	if ((!empty($topic['user_id']) && AppContext::get_current_user()->get_id() == $topic['user_id']) || AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS))
 	{
 		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET display_msg = 1 - display_msg WHERE id = :id", array('id' => $msg_d));
 		echo ($topic['display_msg']) ? 2 : 1;

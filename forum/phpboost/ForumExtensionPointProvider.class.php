@@ -51,7 +51,7 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 		$forum_cats .= '$CAT_FORUM[\'0\'][\'status\'] = 1;' . "\n";
 		$forum_cats .= '$CAT_FORUM[\'0\'][\'aprob\'] = 1;' . "\n";
 		$forum_cats .= '$CAT_FORUM[\'0\'][\'url\'] = \'\';' . "\n";
-		$forum_cats .= '$CAT_FORUM[\'0\'][\'auth\'] = array();' . "\n";
+		$forum_cats .= '$CAT_FORUM[\'0\'][\'auth\'] = ' . var_export(ForumConfig::load()->get_authorizations(), true) . ';' . "\n";
 		$result = $db_querier->select("SELECT child.*, parent.id as id_parent
 		FROM " . PREFIX . "forum_cats child
 		LEFT JOIN " . PREFIX . "forum_cats parent ON child.id_left > parent.id_left AND child.id_right < parent.id_right

@@ -69,7 +69,7 @@ if (!empty($_POST['change_cat']))
 	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_cat_title . '.php', '&'));
 	
 //Autorisation en lecture.
-if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], READ_CAT_FORUM))
+if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], ForumAuthorizationsService::READ_AUTHORIZATIONS) || !ForumAuthorizationsService::check_authorizations()->read_topics_content())
 {
 	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
@@ -524,7 +524,7 @@ if ($topic['status'] == '0' && !$check_group_edit_auth)
 		'L_ERROR_AUTH_WRITE' => $LANG['e_topic_lock_forum']
 	));
 }	
-elseif (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], WRITE_CAT_FORUM)) //On vérifie si l'utilisateur a les droits d'écritures.
+elseif (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], ForumAuthorizationsService::WRITE_AUTHORIZATIONS)) //On vérifie si l'utilisateur a les droits d'écritures.
 {
 	$tpl->put_all(array(
 		'C_ERROR_AUTH_WRITE' => true,

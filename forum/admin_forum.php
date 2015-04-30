@@ -92,7 +92,7 @@ if (!empty($_POST['valid']) && !empty($id))
 	}
 
 	//Generation du tableau des droits.
-	$array_auth_all = Authorizations::build_auth_array_from_form(READ_CAT_FORUM, WRITE_CAT_FORUM, EDIT_CAT_FORUM);
+	$array_auth_all = Authorizations::build_auth_array_from_form(ForumAuthorizationsService::READ_AUTHORIZATIONS, ForumAuthorizationsService::WRITE_AUTHORIZATIONS, ForumAuthorizationsService::MODERATION_AUTHORIZATIONS);
 	if (!empty($name))
 	{
 		PersistenceContext::get_querier()->update(PREFIX . "forum_cats", array('name' => $name, 'subname' => $subname, 'url' => $url, 'status' => $status, 'aprob' => $aprob, 'auth' => serialize($array_auth_all)), 'WHERE id = :id', array('id' => $id));
@@ -336,9 +336,9 @@ elseif (!empty($id))
 		'UNCHECKED_APROB' => ($forum_info['aprob'] == 0) ? 'checked="checked"' : '',
 		'CHECKED_STATUS' => ($forum_info['status'] == 1) ? 'checked="checked"' : '',
 		'UNCHECKED_STATUS' => ($forum_info['status'] == 0) ? 'checked="checked"' : '',
-		'AUTH_READ' => Authorizations::generate_select(READ_CAT_FORUM, $array_auth),
-		'AUTH_WRITE' => $is_root ? Authorizations::generate_select(WRITE_CAT_FORUM, $array_auth) : Authorizations::generate_select(WRITE_CAT_FORUM, $array_auth, array(), GROUP_DEFAULT_IDSELECT, GROUP_DISABLE_SELECT),
-		'AUTH_EDIT' => $is_root ? Authorizations::generate_select(EDIT_CAT_FORUM, $array_auth) : Authorizations::generate_select(EDIT_CAT_FORUM, $array_auth, array(), GROUP_DEFAULT_IDSELECT, GROUP_DISABLE_SELECT),
+		'AUTH_READ' => Authorizations::generate_select(ForumAuthorizationsService::READ_AUTHORIZATIONS, $array_auth),
+		'AUTH_WRITE' => $is_root ? Authorizations::generate_select(ForumAuthorizationsService::WRITE_AUTHORIZATIONS, $array_auth) : Authorizations::generate_select(ForumAuthorizationsService::WRITE_AUTHORIZATIONS, $array_auth, array(), GROUP_DEFAULT_IDSELECT, GROUP_DISABLE_SELECT),
+		'AUTH_EDIT' => $is_root ? Authorizations::generate_select(ForumAuthorizationsService::MODERATION_AUTHORIZATIONS, $array_auth) : Authorizations::generate_select(ForumAuthorizationsService::MODERATION_AUTHORIZATIONS, $array_auth, array(), GROUP_DEFAULT_IDSELECT, GROUP_DISABLE_SELECT),
 		'DISABLED' => $is_root ? '0' : '1',
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
