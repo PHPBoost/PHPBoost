@@ -44,7 +44,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 	 */
 	public function __construct()
 	{
-		$this->lang = LangLoader::get('main');
+		$this->lang = LangLoader::get('user-common');
 		$this->field_used_once = false;
 		$this->field_used_phpboost_config = false;
 		$this->name = 'ExtendedField';
@@ -75,7 +75,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 		$value = $member_extended_field->get_value();
-		if ($value !== null)
+		if (!empty($value))
 		{
 			$fieldset->add_field(new FormFieldFree($member_extended_field->get_field_name(), $member_extended_field->get_name(), $value));
 		}
