@@ -268,14 +268,17 @@
 						</div>
 					</div>
 				</div>
-			</div>	
-			<div class="msg-sign{msg.CLASS_COLOR}">				
+			</div>
+			<div class="msg-sign{msg.CLASS_COLOR}">
 				<div class="msg-sign-overflow">
 					{msg.USER_SIGN}
-				</div>			
+				</div>
 				<hr />
 				<span style="float:left;">
-					{msg.USER_PM} {msg.USER_MAIL} {msg.USER_MSN} {msg.USER_YAHOO} {msg.USER_WEB}
+					{msg.USER_PM} {msg.USER_MAIL}
+					# START msg.ext_fields #
+						{msg.ext_fields.BUTTON}
+					# END msg.ext_fields #
 				</span>
 				<span style="float:right;font-size:10px;">
 					&nbsp;
@@ -285,8 +288,8 @@
 					<a href="moderation_forum{msg.U_FORUM_PUNISHEMENT}" title="{L_PUNISHEMENT_MANAGEMENT}" class="fa fa-lock"></a>
 					# ENDIF #
 				</span>&nbsp;
-			</div>	
-		</div>	
+			</div>
+		</div>
 		# END msg #
 		<div class="module-position">
 			<div class="module-bottom-l"></div>

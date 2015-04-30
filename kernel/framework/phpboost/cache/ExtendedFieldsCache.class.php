@@ -97,6 +97,21 @@ class ExtendedFieldsCache implements CacheData
 		
 		return $field;
 	}
+
+	public function get_websites_or_emails_extended_field_field_types()
+	{
+		$list = array();
+		
+		foreach ($this->extended_fields as $id => $field_options)
+		{
+			if ($field_options['regex'] == 4 || $field_options['regex'] == 5)
+			{
+				$list[] = $field_options['field_name'];
+			}
+		}
+		
+		return $list;
+	}
 	
 	/**
 	 * Loads and returns the extended_fields cached data.
