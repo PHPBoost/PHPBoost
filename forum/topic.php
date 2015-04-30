@@ -197,12 +197,20 @@ $vars_tpl = array(
 //Création du tableau des rangs.
 $array_ranks = array(-1 => $LANG['guest_s'], 0 => $LANG['member_s'], 1 => $LANG['modo_s'], 2 => $LANG['admin_s']);
 
+$extended_fields_cache = ExtendedFieldsCache::load();
+$displayed_extended_fields = $extended_fields_cache->get_websites_or_emails_extended_field_field_types();
+$extended_fields_to_recover_list = '';
+foreach ($displayed_extended_fields as $field_type)
+{
+	$extended_fields_to_recover_list .= 'ext_field.' . $field_type . ', ';
+}
+
 list($track, $track_pm, $track_mail, $poll_done) = array(false, false, false, false);
 $ranks_cache = ForumRanksCache::load()->get_ranks(); //Récupère les rangs en cache.
 $quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 $i = 0;
 $j = 0;
-$result = PersistenceContext::get_querier()->select("SELECT msg.id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, m.user_id, p.question, p.answers, p.voter_id, p.votes, p.type, m.display_name as login, m.level, m.groups, m.email, m.show_email, m.registration_date AS registered, ext_field.user_avatar, m.posted_msg, ext_field.user_website, ext_field.user_sign, ext_field.user_msn, ext_field.user_yahoo, m.warning_percentage, m.delay_readonly, m.delay_banned, m2.display_name as login_edit, s.user_id AS connect, tr.id AS trackid, tr.pm as trackpm, tr.track AS track, tr.mail AS trackmail, msg.contents
+$result = PersistenceContext::get_querier()->select("SELECT msg.id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, m.user_id, p.question, p.answers, p.voter_id, p.votes, p.type, m.display_name as login, m.level, m.groups, m.email, m.show_email, m.registration_date AS registered, ext_field.user_avatar, m.posted_msg, ext_field.user_sign, " . $extended_fields_to_recover_list . "m.warning_percentage, m.delay_readonly, m.delay_banned, m2.display_name as login_edit, s.user_id AS connect, tr.id AS trackid, tr.pm as trackpm, tr.track AS track, tr.mail AS trackmail, msg.contents
 FROM " . PREFIX . "forum_msg msg
 LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = :idtopic
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
@@ -266,7 +274,7 @@ while ( $row = $result->fetch() )
 				$tpl->assign_block_vars('poll_result', array(
 					'ANSWERS' => $answer, 
 					'NBRVOTE' => $array_vote[$key],
-					'WIDTH' => NumberHelper::round(($array_vote[$key] * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.					
+					'WIDTH' => NumberHelper::round(($array_vote[$key] * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.
 					'PERCENT' => NumberHelper::round(($array_vote[$key] * 100 / $sum_vote), 1)
 				));
 			}
@@ -294,20 +302,20 @@ while ( $row = $result->fetch() )
 			elseif ($row['type'] == 1) 
 			{
 				foreach ($array_answer as $answer)
-				{						
+				{
 					$tpl->assign_block_vars('poll_checkbox', array(
 						'NAME' => 'forumpoll' . $z,
 						'TYPE' => 'checkbox',
 						'ANSWERS' => $answer
 					));
-					$z++;	
+					$z++;
 				}
 			}
 		}
-		$poll_done = true;	
+		$poll_done = true;
 	}
 	
-	//Rang de l'utilisateur.			
+	//Rang de l'utilisateur.
 	$user_rank = ($row['level'] === '0') ? $LANG['member'] : $LANG['guest'];
 	$user_group = $user_rank;
 	$user_rank_icon = '';
@@ -362,7 +370,7 @@ while ( $row = $result->fetch() )
 
 	$user_accounts_config = UserAccountsConfig::load();
 	
-	//Avatar			
+	//Avatar
 	if (empty($row['user_avatar'])) 
 		$user_avatar = ($user_accounts_config->is_default_avatar_enabled() == '1') ? '<img src="../templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name() . '" alt="" />' : '';
 	else
@@ -371,14 +379,10 @@ while ( $row = $result->fetch() )
 	//Affichage du nombre de message.
 	if ($row['posted_msg'] >= 1)
 		$posted_msg = '<a href="'. UserUrlBuilder::messages($row['user_id'])->rel() . '" class="small">' . $LANG['message_s'] . '</a>: ' . $row['posted_msg'];
-	else		
-		$posted_msg = (!$is_guest) ? '<a href="../forum/membermsg' . url('.php?id=' . $row['user_id'], '') . '" class="small">' . $LANG['message'] . '</a>: 0' : $LANG['message'] . ': 0';		
+	else
+		$posted_msg = (!$is_guest) ? '<a href="../forum/membermsg' . url('.php?id=' . $row['user_id'], '') . '" class="small">' . $LANG['message'] . '</a>: 0' : $LANG['message'] . ': 0';
 	
-	$extended_fields_cache = ExtendedFieldsCache::load();
-	$user_msn_field = $extended_fields_cache->get_extended_field_by_field_name('user_msn');
-	$user_yahoo_field = $extended_fields_cache->get_extended_field_by_field_name('user_yahoo');
 	$user_sign_field = $extended_fields_cache->get_extended_field_by_field_name('user_sign');
-	$user_website_field = $extended_fields_cache->get_extended_field_by_field_name('user_website');
 	
 	$tpl->assign_block_vars('msg', array(
 		'ID' => $row['id'],
@@ -395,11 +399,8 @@ while ( $row = $result->fetch() )
 		'USER_GROUP' => $user_groups,
 		'USER_DATE' => (!$is_guest) ? $LANG['registered_on'] . ': ' . Date::to_format($row['registered'], Date::FORMAT_DAY_MONTH_YEAR) : '',
 		'USER_MSG' => (!$is_guest) ? $posted_msg : '',
-		'USER_MAIL' => ( !empty($row['email']) && ($row['show_email'] == '1' ) ) ? '<a href="mailto:' . $row['email'] . '" class="basic-button smaller">Mail</a>' : '',			
-		'USER_MSN' => (!empty($row['user_msn']) && !empty($user_msn_field) && $user_msn_field['display']) ? '<a href="mailto:' . $row['user_msn'] . '" class="basic-button smaller">MSN</a>' : '',
-		'USER_YAHOO' => (!empty($row['user_yahoo']) && !empty($user_yahoo_field) && $user_yahoo_field['display']) ? '<a href="mailto:' . $row['user_yahoo'] . '" class="basic-button smaller">Yahoo</a>' : '',
+		'USER_MAIL' => ( !empty($row['email']) && ($row['show_email'] == '1' ) ) ? '<a href="mailto:' . $row['email'] . '" class="basic-button smaller">Mail</a>' : '',
 		'USER_SIGN' => (!empty($row['user_sign']) && !empty($user_sign_field) && $user_sign_field['display']) ? '____________________<br />' . FormatingHelper::second_parse($row['user_sign']) : '',
-		'USER_WEB' => (!empty($row['user_website']) && !empty($user_website_field) && $user_website_field['display']) ? '<a href="' . $row['user_website'] . '" class="basic-button smaller">Web</a>' : '',
 		'USER_WARNING' => $row['warning_percentage'],
 		'L_FORUM_QUOTE_LAST_MSG' => ($quote_last_msg == 1 && $i == 0) ? $LANG['forum_quote_last_msg'] : '', //Reprise du dernier message de la page précédente.
 		'C_USER_ONLINE' => !empty($row['connect']),
@@ -423,12 +424,45 @@ while ( $row = $result->fetch() )
 		'USER_PM' => !$is_guest && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? '<a href="'. UserUrlBuilder::personnal_message($row['user_id'])->rel() . '" class="basic-button smaller">MP</a>' : '',
 	));
 	
+	foreach ($displayed_extended_fields as $field_type)
+	{
+		$field = $extended_fields_cache->get_extended_field_by_field_name($field_type);
+		
+		if (!empty($row[$field_type]) && !empty($field) && $field['display'])
+		{
+			$button = '';
+			
+			if ($field['regex'] == 4)
+			{
+				foreach (MemberShortTextExtendedField::$brands_pictures_list as $id => $parameters)
+				{
+					if (strstr($row[$field_type], $id))
+						$button = '<a href="mailto:' . $row[$field_type] . '" class="basic-button smaller"><i class="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
+				}
+			}
+			else if ($field['regex'] == 5)
+			{
+				$button = '<a href="' . $row[$field_type] . '" class="basic-button smaller">' . LangLoader::get_message('regex.website', 'admin-user-common') . '</a>';
+				
+				foreach (MemberShortTextExtendedField::$brands_pictures_list as $id => $parameters)
+				{
+					if (strstr($row[$field_type], $id))
+						$button = '<a href="' . $row[$field_type] . '" class="basic-button smaller"><i class="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
+				}
+			}
+			
+			$tpl->assign_block_vars('msg.ext_fields', array(
+				'BUTTON' => $button
+			));
+		}
+	}
+	
 	//Marqueur de suivis du sujet.
 	if (!empty($row['trackid'])) 
-	{	
-		$track = ($row['track']) ? true : false;
-		$track_pm = ($row['trackpm']) ? true : false;
-		$track_mail = ($row['trackmail']) ? true : false;
+	{
+		$track = ($row['track']);
+		$track_pm = ($row['trackpm']);
+		$track_mail = ($row['trackmail']);
 	}
 	$j++;
 	$i++;
