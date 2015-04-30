@@ -77,7 +77,7 @@ tinymce.init({
 	],
 	external_plugins: {"nanospell": '{PATH_TO_ROOT}/TinyMCE/templates/js/tinymce/plugins/nanospell/plugin.js'},
 	nanospell_server: "php",
-	nanospell_dictionary: "en,fr",
+	nanospell_dictionary: "fr, en",
 	
 	# IF C_TOOLBAR1 #toolbar1: "{TOOLBAR1}",# ENDIF #
 	# IF C_TOOLBAR2 #toolbar2: "{TOOLBAR2}",# ENDIF #
@@ -85,6 +85,8 @@ tinymce.init({
 
 	menubar: false,
 	toolbar_items_size: 'small',
+	advlist_number_styles: 'default',
+    advlist_bullet_styles: 'default',
 	setup : function(ed) {
 		ed.addButton('insertfile', {
 			icon: 'browse',
