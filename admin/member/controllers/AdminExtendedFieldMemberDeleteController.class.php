@@ -31,6 +31,7 @@ class AdminExtendedFieldMemberDeleteController extends AdminController
 	{
 		$id = $request->get_int('id', null);
 		
+		$code = -1;
 		if ($id !== null)
 		{
 			$extended_field = new ExtendedField();
@@ -39,14 +40,10 @@ class AdminExtendedFieldMemberDeleteController extends AdminController
 			if ($exist_field)
 			{
 				ExtendedFieldsService::delete_by_id($id);
-				
-				return true;
-			}
-			else
-			{
-				return false;
+				$code = $id;
 			}
 		}
+		return new JSONResponse(array('code' => $code));
 	}
 }
 
