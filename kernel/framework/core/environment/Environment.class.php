@@ -230,6 +230,8 @@ class Environment
 
 		self::remove_old_unactivated_member_accounts();
 
+		self::clear_feed_cache();
+
 		self::check_updates();
 	}
 
@@ -276,6 +278,11 @@ class Environment
 	private static function remove_old_unactivated_member_accounts()
 	{
 		UserService::remove_old_unactivated_member_accounts();
+	}
+
+	private static function clear_feed_cache()
+	{
+		Feed::clear_cache();
 	}
 
 	private static function check_updates()
