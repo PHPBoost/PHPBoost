@@ -367,8 +367,15 @@ class TinyMCEParser extends ContentFormattingParser
 		if (!in_array('url', $this->forbidden_tags))
 		{
 
-			array_push($array_preg, '`&lt;a(?: title="([^"]+)")? href="(' . Url::get_wellformness_regex() . ')"(?: target="([^"]+)")?&gt;(.+)&lt;/a&gt;`isU');
-			array_push($array_preg_replace, '<a title="$1" href="$2" target="$3">$4</a>');
+			array_push($array_preg, '`&lt;a(?: title="([^"]+)")? href="(' . Url::get_wellformness_regex() . ')"&gt;(.+)&lt;/a&gt;`isU');
+			array_push($array_preg_replace, '<a title="$1" href="$2">$3</a>');
+		}
+		//Link tag with target
+		if (!in_array('url', $this->forbidden_tags))
+		{
+
+			array_push($array_preg, '`&lt;a(?: title="([^"]+)")? href="(' . Url::get_wellformness_regex() . ')" target="_blank"&gt;(.+)&lt;/a&gt;`isU');
+			array_push($array_preg_replace, '<a title="$1" href="$2" target="_blank">$3</a>');
 		}
 		//Sub tag
 		if (!in_array('sub', $this->forbidden_tags))
