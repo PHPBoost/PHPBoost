@@ -123,7 +123,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 elseif (!empty($id_post)) //Déplacement du topic
 {
 	$idcat = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'idcat', 'WHERE id = :id', array('id' => $id_post));
-	if (AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM)) //Accès en édition
+	if (AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS)) //Accès en édition
 	{
 		$to = retrieve(POST, 'to', $idcat); //Catégorie cible.
 		$level = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'level', 'WHERE id = :id', array('id' => $to));
@@ -157,7 +157,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	$msg = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', array('idtopic', 'contents'), 'WHERE id=:id', array('id' => $idm));
 	$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('idcat', 'title'), 'WHERE id=:id', array('id' => $msg['idtopic']));
 
-	if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM)) //Accès en édition
+	if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS)) //Accès en édition
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -356,7 +356,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 	$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('idcat', 'title', 'last_user_id', 'last_msg_id', 'last_timestamp'), 'WHERE id=:id', array('id' => $msg['idtopic']));
 	$to = retrieve(POST, 'to', 0); //Catégorie cible.
 
-	if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM)) //Accès en édition
+	if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS)) //Accès en édition
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
