@@ -150,7 +150,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 			'timestamp_now' => $now->get_timestamp(),
 			'id_category' => $this->category->get_id(),
 			'authorized_categories' => $authorized_categories,
-			'number_items_per_page' => $config->get_number_categories_per_page()
+			'number_items_per_page' => (int)$config->get_number_categories_per_page()
 		));
 		
 		$nbr_cat_displayed = 0;
