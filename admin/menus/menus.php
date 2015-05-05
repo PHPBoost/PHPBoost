@@ -107,7 +107,7 @@ if (!empty($id))
 	}
 
 	MenuService::generate_cache();
-	AppContext::get_response()->redirect('menus.php#m' . $id);
+	AppContext::get_response()->redirect('menus.php' . ($action != 'delete' ? '#m' . $id : ''));
 }
 
 // Try to find out new mini-modules and delete old ones
@@ -147,7 +147,7 @@ function save_position($block_position)
 		{
 			$menu = $menus[$id];
 			$menu->set_block_position(($position + 1));
-			MenuService::move($menu, $block_position);
+			MenuService::move($menu, $block_position, $menu->get_block_position());
 		}
 	}
 }

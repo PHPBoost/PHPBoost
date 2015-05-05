@@ -5,7 +5,7 @@
 		<span id="m{IDMENU}"></span>
 		<h5 class="menus-block-title">{NAME}</h5>
 		
-		<i title="${LangLoader::get_message('move', 'admin')}" class="fa fa-arrows"></i>
+		<a href="" class="menus-block-move-cursor" title="${LangLoader::get_message('move', 'admin')}" onclick="return false;"><i class="fa fa-arrows"></i></a>
 		# IF C_EDIT #
 			<a href="{U_EDIT}" title="{L_EDIT}" class="fa fa-edit"></a>
 		# ENDIF #

@@ -66,7 +66,7 @@ class MenuService
 		$results = self::$querier->select_rows(DB_TABLE_MENUS, self::$columns, $fragment->get_query() . ' ORDER BY position ASC', $fragment->get_parameters());
 		foreach ($results as $row)
 		{
-			$menus[$row['id']] = MenuService::initialize($row);
+			$menus[$row['id']] = self::initialize($row);
 		}
 		return $menus;
 	}
@@ -77,17 +77,17 @@ class MenuService
 	 */
 	public static function get_menus_map()
 	{
-		$menus = MenuService::initialize_menus_map();
+		$menus = self::initialize_menus_map();
 		$results = self::$querier->select_rows(DB_TABLE_MENUS, self::$columns, 'ORDER BY position ASC');
 		foreach ($results as $row)
 		{
 			if ($row['enabled'] != Menu::MENU_ENABLED)
 			{
-				$menus[Menu::BLOCK_POSITION__NOT_ENABLED][] = MenuService::initialize($row);
+				$menus[Menu::BLOCK_POSITION__NOT_ENABLED][] = self::initialize($row);
 			}
 			else
 			{
-				$menus[$row['block']][] = MenuService::initialize($row);
+				$menus[$row['block']][] = self::initialize($row);
 			}
 		}
 		return $menus;
@@ -103,7 +103,7 @@ class MenuService
 		try
 		{
 			$result = self::$querier->select_single_row(DB_TABLE_MENUS, self::$columns, 'WHERE id=:id', array('id' => $id));
-			return MenuService::initialize($result);
+			return self::initialize($result);
 		} catch (RowNotFoundException $ex)
 		{
 			return null;
@@ -155,9 +155,9 @@ class MenuService
 	{
 		if (!is_object($menu))
 		{
-			$menu = MenuService::load($menu);
+			$menu = self::load($menu);
 		}
-		MenuService::disable($menu);
+		self::disable($menu);
 		self::$querier->delete(DB_TABLE_MENUS, 'WHERE id=:id', array('id' => $menu->get_id()));
 	}
 
@@ -168,7 +168,7 @@ class MenuService
 	public static function enable(Menu $menu)
 	{
 		// Commputes the new Menu position and save it
-		MenuService::move($menu, $menu->get_block());
+		self::move($menu, $menu->get_block());
 	}
 
 	/**
@@ -178,16 +178,17 @@ class MenuService
 	public static function disable(Menu $menu)
 	{
 		// Commputes menus positions of the previous block and save the current menu
-		MenuService::move($menu, Menu::BLOCK_POSITION__NOT_ENABLED);
+		self::move($menu, Menu::BLOCK_POSITION__NOT_ENABLED);
 	}
 
 	/**
 	 * @desc Move a menu into a block and save it. Enable or disable it according to the destination block
 	 * @param Menu $menu the menu to move
 	 * @param int $block the destination block
+	 * @param int $position the destination block position
 	 * @param bool $save if true, save also the menu
 	 */
-	public static function move(Menu $menu, $block, $save = true)
+	public static function move(Menu $menu, $block, $position = 0, $save = true)
 	{
 		if ($menu->get_id() > 0 && $menu->is_enabled())
 		{   // Updates the previous block position counter
@@ -206,13 +207,16 @@ class MenuService
 			$menu->set_block($block);
 
 			// Computes the new block position for the menu
-			$position_query = self::get_next_position($menu->get_block());
-			$menu->set_block_position($position_query);
+			if (empty($position))
+			{
+				$position_query = self::get_next_position($menu->get_block());
+				$menu->set_block_position($position_query);
+			}
 		}
 
 		if ($save)
 		{
-			MenuService::save($menu);
+			self::save($menu);
 		}
 	}
 
@@ -227,7 +231,7 @@ class MenuService
 		{   
 			// Updating the current menu
 			$menu->set_block_position($block_position);
-			MenuService::save($menu);
+			self::save($menu);
 		}
 	}
 	
@@ -280,7 +284,7 @@ class MenuService
             
             // Updating the current menu
             $menu->set_block_position($new_block_position);
-            MenuService::save($menu);
+            self::save($menu);
         }
 	}
 	
@@ -290,16 +294,16 @@ class MenuService
 	 */
 	public static function enable_all($enable = true)
 	{
-		$menus = MenuService::get_menu_list();
+		$menus = self::get_menu_list();
 		foreach($menus as $menu)
 		{
 			if ($enable === true)
 			{
-				MenuService::enable($menu);
+				self::enable($menu);
 			}
 			else
 			{
-				MenuService::disable($menu);
+				self::disable($menu);
 			}
 		}
 	}
@@ -359,7 +363,7 @@ class MenuService
 		$results = self::$querier->select_rows(DB_TABLE_MENUS, self::$columns, $conditions, $parameters);
 		foreach ($results as $row)
 		{
-			MenuService::delete(MenuService::initialize($row));
+			self::delete(self::initialize($row));
 		}
 	}
 
@@ -394,7 +398,7 @@ class MenuService
 				}
 				else
 				{
-					MenuService::delete($row['id']);
+					self::delete($row['id']);
 				}
 			}
 		}
@@ -423,12 +427,12 @@ class MenuService
 	 */
 	public static function delete_module_feeds_menus($module_id)
 	{
-		$feeds_menus = MenuService::get_menu_list(FeedMenu::FEED_MENU__CLASS);
+		$feeds_menus = self::get_menu_list(FeedMenu::FEED_MENU__CLASS);
 		foreach($feeds_menus as $feed_menu)
 		{
 			if ($module_id == $feed_menu->get_module_id())
 			{
-				MenuService::delete($feed_menu);
+				self::delete($feed_menu);
 			}
 		}
 	}

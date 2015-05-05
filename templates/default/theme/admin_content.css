@@ -843,14 +843,12 @@ div.container-block-absolute > div {
 	margin: -1px 0px 0px 0px;
 }
 .menus-block-container {
-	width: 190px;
 	margin: 0px;
 	margin-bottom: 6px;
 	padding: 5px;
 	padding-bottom: 7px;
 	background: #d1d1d1;
 	border: 1px solid #8F8F8F;
-	cursor: move;
 	border-radius: 3px;
 	overflow: auto;
 }
@@ -861,6 +859,8 @@ div.container-block-absolute > div {
 	font-size: 14px;
 	color: #515C68;
 }
+
+.menus-block-move-cursor { cursor: move; }
 
 .menus-block-move {
 	float: right;
