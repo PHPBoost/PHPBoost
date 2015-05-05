@@ -146,8 +146,8 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			"`<h2 class=\"formatter-title\">(.*)</h2>(?:[\s]*<br />){0,}`isU",
 			"`<br /><h3 class=\"formatter-title\">(.*)</h3><br />\s*`isU",
 			"`<br /><h4 class=\"formatter-title\">(.*)</h4><br />\s*`isU",
-			'`<span style="color:([^;]+);">(.+)</span>`isU',
 			'`<span style="background-color:([^;]+);">(.+)</span>`isU',
+			'`<span style="color:([^;]+);">(.+)</span>`isU',
 			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU'
 			);
 			$array_preg_replace = array(
@@ -157,8 +157,8 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			"<h2>$1</h2>",
 			"<h3>$1</h3>",
 			"<h4>$1</h4>",
+			'<span style="background-color: $1;">$2</span>',
 			'<span style="color: $1;">$2</span>',
-		    '<span style="background-color: $1;">$2</span>',
 			"<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"$2\" height=\"$3\"><param name=\"movie\" value=\"$1\" /><param name=\"quality\" value=\"high\" /><param name=\"menu\" value=\"false\" /><param name=\"wmode\" value=\"\" /><embed src=\"$1\" wmode=\"\" quality=\"high\" menu=\"false\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"$2\" height=\"$3\"></embed></object>"
 			);
 
