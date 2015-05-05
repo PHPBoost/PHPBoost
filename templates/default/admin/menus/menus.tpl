@@ -245,9 +245,9 @@ function createSortableMenu()
 								</div>
 								
 								<div id="mod_central">
-									# START mod_main #
-										{mod_main.MENU}
-									# END mod_main #
+									# START mod_central #
+										{mod_central.MENU}
+									# END mod_central #
 									<div class="spacer"></div>
 									<div id="menu-spacer5" class="menu-spacer"></div>
 									<div class="spacer">&nbsp;</div>

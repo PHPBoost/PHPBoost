@@ -75,10 +75,10 @@ if ($action_post == 'save')
     //Filters
     MenuAdminService::set_retrieved_filters($menu);
 	
-	MenuService::save($menu);
+	MenuService::move($menu, $menu->get_block());
 	MenuService::generate_cache();
 
-	AppContext::get_response()->redirect('menus.php#m' . $id_post);
+	AppContext::get_response()->redirect('menus.php#m' . $menu->get_id());
 }
 
 // Display the Menu administration
