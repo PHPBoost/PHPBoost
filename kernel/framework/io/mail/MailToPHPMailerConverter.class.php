@@ -57,8 +57,17 @@ class MailToPHPMailerConverter
 			$this->mailer->AddAddress($recipient, $name);
 		}
 
-		// TODO cc
-		// TODO bcc
+		// cc
+		foreach ($this->mail_to_send->get_cc_recipients() as $recipient => $name)
+		{
+			$this->mailer->AddCC($recipient, $name);
+		}
+		
+		// bcc
+		foreach ($this->mail_to_send->get_bcc_recipients() as $recipient => $name)
+		{
+			$this->mailer->AddBCC($recipient, $name);
+		}
 
 		// from
 		$this->mailer->SetFrom($this->mail_to_send->get_sender_mail(), $this->mail_to_send->get_sender_name());

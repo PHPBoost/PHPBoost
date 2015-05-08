@@ -67,6 +67,16 @@ class Mail
 	var $recipients = array();
 
 	/**
+	 * @var string[] Cc recipients of the mail. If they are more than one, a comma separates their addresses.
+	 */
+	var $cc_recipients = array();
+
+	/**
+	 * @var string[] Bcc recipients of the mail. If they are more than one, a comma separates their addresses.
+	 */
+	var $bcc_recipients = array();
+
+	/**
 	 * @var string Tells whether the content contains HTML code
 	 */
 	var $is_html = false;
@@ -116,6 +126,42 @@ class Mail
 		$this->recipients = array();
 	}
 
+	/**
+	 * @desc Adds a cc recipient to the list
+	 * @param string $address The address to which the mail must be sent
+	 * @param string $name Name of the recipient (facultative)
+	 */
+	public function add_cc_recipient($address, $name = '')
+	{
+		if (self::check_mail($address))
+		{
+			$this->cc_recipients[$address] = $name;
+		}
+	}
+
+	public function clear_cc_recipients()
+	{
+		$this->cc_recipients = array();
+	}
+
+	/**
+	 * @desc Adds a bcc recipient to the list
+	 * @param string $address The address to which the mail must be sent
+	 * @param string $name Name of the recipient (facultative)
+	 */
+	public function add_bcc_recipient($address, $name = '')
+	{
+		if (self::check_mail($address))
+		{
+			$this->bcc_recipients[$address] = $name;
+		}
+	}
+
+	public function clear_bcc_recipients()
+	{
+		$this->bcc_recipients = array();
+	}
+
 	private static function check_mail($mail)
 	{
 		return AppContext::get_mail_service()->is_mail_valid($mail);
@@ -128,6 +174,24 @@ class Mail
 	public function get_recipients()
 	{
 		return $this->recipients;
+	}
+
+	/**
+	 * @desc Returns a map associating email addresses to the corresponding names (can be empty).
+	 * @return string[string]
+	 */
+	public function get_cc_recipients()
+	{
+		return $this->cc_recipients;
+	}
+
+	/**
+	 * @desc Returns a map associating email addresses to the corresponding names (can be empty).
+	 * @return string[string]
+	 */
+	public function get_bcc_recipients()
+	{
+		return $this->bcc_recipients;
 	}
 
 	/**
