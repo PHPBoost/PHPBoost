@@ -37,25 +37,25 @@ class BBCodeNewsletterMail extends AbstractNewsletterMail
 	
 	public function send_mail($subscribers, $sender, $subject, $contents)
 	{
-		$mail = new Mail();
-		$mail->set_sender($sender);
-		$mail->set_is_html(true);
-		$mail->set_subject($subject);
-		
 		$mail_contents = '<html><head><title>' . $subject . '</title></head><body>';
 		$mail_contents .= $this->parse_contents($contents). $this->add_unsubscribe_link();
 		$mail_contents .= '</body></html>';
 		
-		$mail->set_content($mail_contents);
-
 		foreach ($subscribers as $values)
 		{
+			$mail = new Mail();
+			$mail->set_sender($sender);
+			$mail->set_is_html(true);
+			$mail->set_subject($subject);
+			
+			$mail->set_content($mail_contents);
+			
 			$mail_subscriber = !empty($values['mail']) ? $values['mail'] : NewsletterDAO::get_mail_for_member($values['user_id']);
 			$mail->add_recipient($mail_subscriber);
+			
+			//TODO gestion des erreurs
+			AppContext::get_mail_service()->try_to_send($mail);
 		}
-
-		//TODO gestion des erreurs
-		AppContext::get_mail_service()->try_to_send($mail);
 	}
 	
 	public function display_mail($subject, $contents)

@@ -32,21 +32,23 @@ class HTMLNewsletterMail extends AbstractNewsletterMail
 {
 	public function send_mail($subscribers, $sender, $subject, $contents)
 	{
-		$mail = new Mail();
-		$mail->set_sender($sender);
-		$mail->set_is_html(true);
-		$mail->set_subject($subject);
 		$contents = $this->parse_contents($contents) . $this->add_unsubscribe_link();
-		$mail->set_content($contents);
-
+		
 		foreach ($subscribers as $values)
 		{
+			$mail = new Mail();
+			$mail->set_sender($sender);
+			$mail->set_is_html(true);
+			$mail->set_subject($subject);
+			
+			$mail->set_content($contents);
+			
 			$mail_subscriber = !empty($values['mail']) ? $values['mail'] : NewsletterDAO::get_mail_for_member($values['user_id']);
 			$mail->add_recipient($mail_subscriber);
+			
+			//TODO gestion des erreurs
+			AppContext::get_mail_service()->try_to_send($mail);
 		}
-
-		//TODO gestion des erreurs
-		AppContext::get_mail_service()->try_to_send($mail);
 	}
 	
 	public function display_mail($subject, $contents)
