@@ -46,8 +46,9 @@ class NewsletterHomeController extends ModuleController
 	{
 		$pagination = $this->get_pagination();
 		
-		$result = PersistenceContext::get_querier()->select('SELECT *
-		FROM ' . NewsletterSetup::$newsletter_table_streams . '
+		$result = PersistenceContext::get_querier()->select('SELECT @id_stream:= id, newsletter_streams.*,
+		(SELECT COUNT(*) FROM ' . NewsletterSetup::$newsletter_table_subscriptions . ' WHERE stream_id = @id_stream) AS subscribers_number
+		FROM ' . NewsletterSetup::$newsletter_table_streams . ' newsletter_streams
 		LIMIT :number_items_per_page OFFSET :display_from',
 			array(
 				'number_items_per_page' => $pagination->get_number_items_per_page(),
@@ -64,6 +65,7 @@ class NewsletterHomeController extends ModuleController
 					'IMAGE' => Url::to_rel($row['image']),
 					'NAME' => $row['name'],
 					'DESCRIPTION' => $row['description'],
+					'SUBSCRIBERS_NUMBER' => $row['subscribers_number'],
 					'U_VIEW_ARCHIVES' => NewsletterUrlBuilder::archives($row['id'])->absolute(),
 					'U_VIEW_SUBSCRIBERS' => NewsletterUrlBuilder::subscribers($row['id'])->absolute(),
 				));
