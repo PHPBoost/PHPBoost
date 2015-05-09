@@ -86,6 +86,8 @@ class UserService
 	
 	public static function delete_by_id($user_id)
 	{
+		MemberExtendedFieldsService::delete_user_fields($user_id);
+		
 		$condition = 'WHERE user_id=:user_id';
 		$parameters = array('user_id' => $user_id);
 		self::$querier->delete(DB_TABLE_MEMBER, $condition, $parameters);

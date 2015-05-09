@@ -108,14 +108,19 @@ class NewsletterSubscribersListController extends ModuleController
 		while ($row = $result->fetch())
 		{
 			$pseudo = $row['user_id'] > 0 ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'">'. $row['display_name'] .'</a>' : LangLoader::get_message('visitor', 'user-common');
-			$this->view->assign_block_vars('subscribers_list', array(
-				'C_AUTH_MODO' => NewsletterAuthorizationsService::id_stream($this->stream->get_id())->moderation_subscribers(),
-				'C_EDIT' => $row['user_id'] == User::VISITOR_LEVEL,
-				'U_EDIT' => $row['user_id'] == User::VISITOR_LEVEL ? NewsletterUrlBuilder::edit_subscriber($row['id'])->rel() : '',
-				'U_DELETE' => NewsletterUrlBuilder::delete_subscriber($row['id'], $this->stream->get_id())->rel(),
-				'PSEUDO' => $pseudo,
-				'MAIL' => $row['user_id'] > 0 ? $row['email'] : $row['mail']
-			));
+			$mail = $row['user_id'] > 0 ? $row['email'] : $row['mail'];
+			
+			if (!empty($mail))
+			{
+				$this->view->assign_block_vars('subscribers_list', array(
+					'C_AUTH_MODO' => NewsletterAuthorizationsService::id_stream($this->stream->get_id())->moderation_subscribers(),
+					'C_EDIT' => $row['user_id'] == User::VISITOR_LEVEL,
+					'U_EDIT' => $row['user_id'] == User::VISITOR_LEVEL ? NewsletterUrlBuilder::edit_subscriber($row['id'])->rel() : '',
+					'U_DELETE' => NewsletterUrlBuilder::delete_subscriber($row['id'], $this->stream->get_id())->rel(),
+					'PSEUDO' => $pseudo,
+					'MAIL' => $mail
+				));
+			}
 		}
 		$result->dispose();
 	}

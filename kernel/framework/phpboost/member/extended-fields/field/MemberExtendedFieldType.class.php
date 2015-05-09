@@ -50,6 +50,12 @@ interface MemberExtendedFieldType
 	public function display_field_profile(MemberExtendedField $member_extended_field);
 	
 	/**
+	 * @desc This function delete the field when the member is deleted
+	 * @param instance of MemberExtendedField $member_extended_field.
+	 */
+	public function delete_field(MemberExtendedField $member_extended_field);
+	
+	/**
 	 * @desc This function returned value form fields
 	 * @param instance of HTMLForm $form and instance of MemberExtendedField $member_extended_field.
 	 */

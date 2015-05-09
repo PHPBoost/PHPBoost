@@ -68,6 +68,11 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 		return;
 	}
 	
+	public function delete_field(MemberExtendedField $member_extended_field)
+	{
+		return;
+	}
+	
 	/**
 	 * {@inheritdoc}
 	 */

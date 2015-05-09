@@ -47,7 +47,12 @@ class NewsletterHomeController extends ModuleController
 		$pagination = $this->get_pagination();
 		
 		$result = PersistenceContext::get_querier()->select('SELECT @id_stream:= id, newsletter_streams.*,
-		(SELECT COUNT(*) FROM ' . NewsletterSetup::$newsletter_table_subscriptions . ' WHERE stream_id = @id_stream) AS subscribers_number
+			(SELECT COUNT(*)
+			FROM ' . NewsletterSetup::$newsletter_table_subscriptions . ' subscriptions
+			LEFT JOIN ' . NewsletterSetup::$newsletter_table_subscribers . ' subscribers ON subscriptions.subscriber_id = subscribers.id
+			LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON subscribers.user_id = member.user_id
+			WHERE (subscribers.mail <> \'\' OR member.email <> \'\') AND subscriptions.stream_id = @id_stream
+			) AS subscribers_number
 		FROM ' . NewsletterSetup::$newsletter_table_streams . ' newsletter_streams
 		LIMIT :number_items_per_page OFFSET :display_from',
 			array(

@@ -194,7 +194,13 @@ class NewsletterDAO
 	
 	public static function get_mail_for_member($user_id)
 	{
-		return self::$db_querier->get_column_value(DB_TABLE_MEMBER, 'email', "WHERE user_id = '". $user_id ."'");
+		$mail = '';
+		
+		try {
+			$mail = self::$db_querier->get_column_value(DB_TABLE_MEMBER, 'email', "WHERE user_id = '". $user_id ."'");
+		} catch (Exception $e) { }
+		
+		return $mail;
 	}
 }
 ?>

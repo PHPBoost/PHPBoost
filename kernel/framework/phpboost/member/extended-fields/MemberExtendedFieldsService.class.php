@@ -188,6 +188,28 @@ class MemberExtendedFieldsService
 		}
 		$result->dispose();
 	}
+
+	/**
+	 * @desc This function deletes the extended fields of the user
+	 * @param int $user_id id of the user.
+	 */
+	public static function delete_user_fields($user_id)
+	{
+		$result = PersistenceContext::get_querier()->select("SELECT exc.name, exc.description, exc.field_type, exc.required, exc.field_name, exc.possible_values, exc.default_value, exc.auth, exc.regex, ex.*
+		FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " exc
+		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = :user_id", array(
+			'user_id' => $user_id
+		));
+		while ($extended_field = $result->fetch())
+		{
+			$value = !empty($extended_field[$extended_field['field_name']]) ? $extended_field[$extended_field['field_name']] : $extended_field['default_value'];
+			$extended_field['value'] = $value;
+			$member_extended_field = new MemberExtendedField();
+			$member_extended_field->set_user_id($user_id);
+			$member_extended_field->set_properties($extended_field);
+			$member_extended_field->get_instance()->delete_field($member_extended_field);
+		}
+	}
 	
 	/**
 	 * @desc This public function return the data sent by the user depending field_name

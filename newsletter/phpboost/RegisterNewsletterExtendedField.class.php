@@ -58,6 +58,11 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 		}
 	}
 	
+	public function delete_field(MemberExtendedField $member_extended_field)
+	{
+		NewsletterService::unsubscriber_all_streams_member($member_extended_field->get_user_id());
+	}
+	
 	public function display_field_profile(MemberExtendedField $member_extended_field)
 	{
 		//The field is not displayed in the member profile
