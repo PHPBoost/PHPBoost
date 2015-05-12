@@ -150,7 +150,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], Foru
 	{
 		if ($post_topic && !empty($id_get))
 		{
-			$is_modo = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
+			$is_modo = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS);
 			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::WRITE_AUTHORIZATIONS))
 				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
@@ -229,7 +229,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], Foru
 			$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 			$question = retrieve(POST, 'question', '', TSTRING_UNCHANGE);
 
-			$is_modo = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
+			$is_modo = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS);
 			$type = retrieve(POST, 'type', 0);
 
 			if (!$is_modo)
@@ -332,7 +332,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], Foru
 			$tpl_top = new FileTemplate('forum/forum_top.tpl');
 			$tpl_bottom = new FileTemplate('forum/forum_bottom.tpl');
 
-			if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM))
+			if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS))
 			{
 				$tpl->put_all(array(
 					'C_FORUM_POST_TYPE' => true,
@@ -405,7 +405,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], Foru
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 		
 		try {
-			$topic = PersistenceContext::get_querier()->select_single_row_query('SELECT idcat, title, nbr_msg, last_user_id, status
+			$topic = PersistenceContext::get_querier()->select_single_row_query('SELECT idcat, title, nbr_msg, last_user_id, last_msg_id, status
 			FROM ' . PREFIX . 'forum_topics
 			WHERE id=:id', array(
 				'id' => $idt_get
@@ -415,7 +415,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], Foru
 			DispatchManager::redirect($controller);
 		}
 
-		$is_modo = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
+		$is_modo = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS);
 		//Catégorie verrouillée?
 		$check_status = $CAT_FORUM[$id_get]['status'];
 		//Déverrouillé pour admin et modo dans tous les cas
@@ -473,7 +473,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], Foru
             DispatchManager::redirect($controller);
 		}
 
-		$is_modo = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
+		$is_modo = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS);
 
 		//Edition du topic complet
 		if ($id_first == $id_m)
@@ -531,7 +531,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], Foru
 						elseif ($check_poll == 0) //Ajout du sondage.
 							$Forumfct->Add_poll($idt_get, $question, $answers, $nbr_votes, $poll_type);
 					}
-					elseif ($del_poll && AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM)) //Suppression du sondage, admin et modo seulement biensûr...
+					elseif ($del_poll && AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS)) //Suppression du sondage, admin et modo seulement biensûr...
 						$Forumfct->Del_poll($idt_get);
 
 					//Redirection après post.
@@ -926,7 +926,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], Foru
 			$tpl_top = new FileTemplate('forum/forum_top.tpl');
 			$tpl_bottom = new FileTemplate('forum/forum_bottom.tpl');
 
-			if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM))
+			if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS))
 			{
 				$tpl->put_all(array(
 					'C_FORUM_POST_TYPE' => true,

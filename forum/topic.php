@@ -87,7 +87,7 @@ $TmpTemplate = new FileTemplate('forum/forum_generic_results.tpl');
 $module_data_path = $TmpTemplate->get_pictures_data_path();
 
 //Si l'utilisateur a le droit de déplacer le topic, ou le verrouiller.	
-$check_group_edit_auth = AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM);
+$check_group_edit_auth = AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS);
 if ($check_group_edit_auth)
 {
 	$tpl->put_all(array(
