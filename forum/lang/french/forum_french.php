@@ -104,6 +104,7 @@ $LANG['forum_move_subject'] = 'Déplacer le sujet';
 $LANG['forum_quote_last_msg'] = 'Reprise du message précédent';
 $LANG['edit_message'] = 'Editer Message';
 $LANG['edit_by'] = 'Edité par';
+$LANG['edit_on'] = 'Edité le';
 $LANG['no_message'] = 'Pas de message';
 $LANG['group'] = 'Groupe';
 $LANG['cut_topic'] = 'Scinder le sujet à partir de ce message';

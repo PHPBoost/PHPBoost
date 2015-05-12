@@ -112,6 +112,10 @@ class AdminForumConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldCheckbox('edit_mark_enabled', $this->lang['config.edit_mark_enabled'], $this->config->is_edit_mark_enabled()));
 		
+		$fieldset->add_field(new FormFieldCheckbox('multiple_posts_allowed', $this->lang['config.multiple_posts_allowed'], $this->config->are_multiple_posts_allowed(),
+			array('description' => $this->lang['config.multiple_posts_allowed.explain'])
+		));
+		
 		$fieldset->add_field(new FormFieldCheckbox('connexion_form_displayed', $this->lang['config.connexion_form_displayed'], $this->config->is_connexion_form_displayed()));
 		
 		$fieldset->add_field(new FormFieldCheckbox('left_column_disabled', $this->lang['config.left_column_disabled'], $this->config->is_left_column_disabled()));
@@ -186,6 +190,11 @@ class AdminForumConfigController extends AdminModuleController
 			$this->config->enable_edit_mark();
 		else
 			$this->config->disable_edit_mark();
+		
+		if ($this->form->get_value('multiple_posts_allowed'))
+			$this->config->allow_multiple_posts();
+		else
+			$this->config->forbid_multiple_posts();
 		
 		if ($this->form->get_value('connexion_form_displayed'))
 			$this->config->display_connexion_form();

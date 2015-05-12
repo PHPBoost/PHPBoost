@@ -33,6 +33,7 @@ class ForumConfig extends AbstractConfigData
 	const READ_MESSAGES_STORAGE_DURATION = 'read_messages_storage_duration';
 	const MAX_TOPIC_NUMBER_IN_FAVORITE = 'max_topic_number_in_favorite';
 	const EDIT_MARK_ENABLED = 'edit_mark_enabled';
+	const MULTIPLE_POSTS_ALLOWED = 'multiple_posts_allowed';
 	const CONNEXION_FORM_DISPLAYED = 'connexion_form_displayed';
 	const LEFT_COLUMN_DISABLED = 'left_column_disabled';
 	const RIGHT_COLUMN_DISABLED = 'right_column_disabled';
@@ -106,6 +107,21 @@ class ForumConfig extends AbstractConfigData
 	public function is_edit_mark_enabled()
 	{
 		return $this->get_property(self::EDIT_MARK_ENABLED);
+	}
+	
+	public function allow_multiple_posts()
+	{
+		$this->set_property(self::MULTIPLE_POSTS_ALLOWED, true);
+	}
+	
+	public function forbid_multiple_posts()
+	{
+		$this->set_property(self::MULTIPLE_POSTS_ALLOWED, false);
+	}
+	
+	public function are_multiple_posts_allowed()
+	{
+		return $this->get_property(self::MULTIPLE_POSTS_ALLOWED);
 	}
 	
 	public function display_connexion_form()
@@ -232,6 +248,7 @@ class ForumConfig extends AbstractConfigData
 			self::READ_MESSAGES_STORAGE_DURATION => 30,
 			self::MAX_TOPIC_NUMBER_IN_FAVORITE => 40,
 			self::EDIT_MARK_ENABLED => true,
+			self::MULTIPLE_POSTS_ALLOWED => true,
 			self::CONNEXION_FORM_DISPLAYED => false,
 			self::LEFT_COLUMN_DISABLED => false,
 			self::RIGHT_COLUMN_DISABLED => false,

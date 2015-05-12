@@ -105,6 +105,7 @@ $LANG['forum_move_subject'] = 'Move thread';
 $LANG['forum_quote_last_msg'] = 'Repost of the preceding message ';
 $LANG['edit_message'] = 'Edit Message';
 $LANG['edit_by'] = 'Edit by';
+$LANG['edit_on'] = 'Edit on';
 $LANG['no_message'] = 'No message';
 $LANG['group'] = 'Group';
 $LANG['cut_topic'] = 'Divide this thread starting from this message';

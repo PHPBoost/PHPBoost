@@ -445,7 +445,23 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], Foru
 				$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 				$last_page = ($last_page > 1) ? '&pt=' . $last_page : '';
 
-				$last_msg_id = $Forumfct->Add_msg($idt_get, $topic['idcat'], $contents, $topic['title'], $last_page, $last_page_rewrite);
+				if (!$config->are_multiple_posts_allowed() && $topic['last_user_id'] == AppContext::get_current_user()->get_id())
+				{
+					$last_page = ceil( $topic['nbr_msg'] / $config->get_number_messages_per_page() );
+					$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
+					$last_page = ($last_page > 1) ? '&pt=' . $last_page : '';
+					
+					$last_message_content = PersistenceContext::get_querier()->get_column_value(PREFIX . 'forum_msg', 'contents', 'WHERE id = :id', array('id' => $topic['last_msg_id']));
+					
+					$now = new Date();
+					
+					$new_content = FormatingHelper::second_parse($last_message_content) . '<br /><br />-------------------------------------------<br /><em>' . $LANG['edit_on'] . ' ' . $now->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) . '</em><br /><br />' . $contents;
+					
+					$Forumfct->Update_msg($idt_get, $topic['last_msg_id'], $new_content, $topic['last_user_id']); //Mise à jour du topic.
+					$last_msg_id = $topic['last_msg_id'];
+				}
+				else
+					$last_msg_id = $Forumfct->Add_msg($idt_get, $topic['idcat'], $contents, $topic['title'], $last_page, $last_page_rewrite);
 
 				//Redirection après post.
 				AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $idt_get . $last_page, '-' . $idt_get . $last_page_rewrite . '.php', '&') . '#m' . $last_msg_id);
