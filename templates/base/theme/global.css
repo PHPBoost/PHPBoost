@@ -109,7 +109,6 @@ h4.formatter-title {
 	background: none;
 	box-shadow: none;
 }
-}
 
 .calendar-block .date-select-month {
 	width: 87px;
@@ -419,7 +418,7 @@ li.small-block .fa-stack { height: 2.34em; }
 	top: -99999em;
 	opacity: 0;
 	margin: 0 !important;
-	transition: opacity .2s ease-in-out,top 0 ease-in 0.2s;
+	transition: opacity .2s ease-in-out,top 0s ease-in 0.2s;
 	padding: 5px 0;
 	color: #333333;
 	font-size: 11px;

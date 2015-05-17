@@ -2,59 +2,51 @@
 		admin_design.css
 Contient les conteneur, fortement dépendant du design.
 --------------------------------------*/ 
-
-html, body{ height: 100%; }
+html {
+	font-size: 100%;
+	font-size: 10px;
+}
 
 body {
-	background: #E8EDF3 url(images/body.png) repeat-x;
-	font-size: 13px;
+	position: relative;
+	height: auto;
+	min-height: 100%;
+	background: #E8EDF3 ;
+	color: #555555;
+	font-size: 1.3em;
 	font-family: "Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
-	color: #3F5164;
 }
 
 div#global {
-	width: 1000px;
-	margin: auto;
-	min-height: 95%;
 }
 
 /* ##### Entête de la page ###### */
 header#header-admin-container {
-	height: 174px;
-	width: 980px;
-	margin: auto;
+	background: #366393;
 }
 
 div#header-admin { 
-	height: 139px;
-	display: flex;
-	display: -webkit-flex;
-	display: -ms-flex;
-	display: -ms-flexbox; /* IE10 */
+	min-height: 139px;
+	max-width: 1024px;
+	margin: auto;
+	overflow: hidden;
 }
 
 div#site-logo {
-	margin-right: 20px;
-	background: url('images/logo.png') no-repeat;
+	float: left;
+	margin: 0 1em 0 0;
+	background: url('images/logo.png') no-repeat center center;
+	background-size: cover;
 	width: 90px;
+	height: 90px;
 }
 
 div#site-infos {
-	display: flex;
-	display: -webkit-flex;
-	display: -ms-flex;
-	display: -ms-flexbox; /* IE10 */
-	max-width: 940px;
-	padding: 20px 20px 0px 20px;
+	margin: 1.5em 1.5em 0 1.5em;
 }
 
 div#site-name-container {
-	margin-top: 10px;
-	flex: 1 1 auto;
-	-webkit-flex: 1 1 auto;
-	-ms-flex: 1 1 auto;
-	-ms-flexbox: 1 1 auto; /* IE10 */
-	height: 108px;
+	padding-top: 1em;
 	overflow: hidden;
 }
 
@@ -66,7 +58,6 @@ a#site-name {
 	text-shadow: 0px 0px 0 rgb(0,0,0), 1px 0px 0 rgb(-255,-255,-255),2px 0px 1px rgba(0,0,0,0.1),2px 0px 1px rgba(0,0,0,0.2),0px 0px 1px rgba(0,0,0,.1);
 	letter-spacing: 1.1pt;
 	text-decoration: none;
-	white-space: nowrap;
 }
 
 span#site-slogan {
@@ -75,19 +66,27 @@ span#site-slogan {
 	font-size: 12px;
 	padding: 4px 0px 0px 4px;
 	letter-spacing: 1.5pt;
+	margin-bottom: 10px;
 }
 
 div#sub-header-admin {
-	height: 29px;
-	padding-top: 6px;
+	min-height: 29px;
+	background: #353535;
+	border-top: 1px solid #bebebe;
+}
+
+div#sub-header-admin-content {
+	max-width: 1024px;
+	margin: auto;
+	line-height: 29px;
 }
 
 div#sub-header-admin .dynamic-menu {
 	width: auto;
 	height: 35px;
-	margin-top: -2px;
 	padding-left: 15px;
 	float: left;
+	vertical-align: middle;
 }
 
 div#sub-header-admin .dynamic-menu h5 {
@@ -98,6 +97,7 @@ div#sub-header-admin .dynamic-menu h5 {
 	font-weight: normal;
 	border-radius: 4px 4px 0 0;
 	margin-right: 0;
+	line-height: 25px;
 }
 
 div#sub-header-admin .dynamic-menu > ul > li:hover {
@@ -109,7 +109,14 @@ div#sub-header-admin .dynamic-menu > ul > li:hover h5 {
 	background: #FFFFFF;
 }
 
-div#sub-header-admin .dynamic-menu > ul > li > ul {	border-radius: 0 4px 4px 4px; }
+div#sub-header-admin .dynamic-menu > ul > li > ul {border-radius: 0 4px 4px 4px; }
+
+div#sub-header-admin .dynamic-menu li a,
+div#sub-header-admin .dynamic-menu li span,
+div#sub-header-admin .dynamic-menu li li a,
+div#sub-header-admin .dynamic-menu li li span {
+	font-size: 100%;
+}
 
 /* Liens vers les menus étendus */
 div#admin-extend-link {
@@ -130,9 +137,9 @@ div#admin-extend-link:hover a { color: #444444; }
 
 /* Conteneur principal */
 div#admin-main {
-	margin: 0;
-	padding: 0;
-	margin-top: 10px;
+	max-width: 1024px;
+	padding: 0 0 42px 0;
+	margin: 10px auto 0;
 }
 
 /* Conteneurs */
@@ -229,7 +236,9 @@ footer#footer {
 	text-align: right;
 	border-top: #336397 2px solid;
 	background: #212121;
-	min-width: 1000px;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
 }
 
 footer#footer span { color: #FFFFFF; font-size: 10px; }

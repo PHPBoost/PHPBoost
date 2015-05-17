@@ -1,4 +1,3 @@
-	<div id="global">
 		<header id="header-admin-container">
 			<div id="header-admin">
 				<div id="site-infos">
@@ -10,17 +9,20 @@
 				</div>
 			</div>
 			<div id="sub-header-admin">
-				<nav class="dynamic-menu">
-					# INCLUDE subheader_menu #
-				</nav>
-				<div id="admin-extend-link">
-					<a href="{PATH_TO_ROOT}/admin/admin_extend.php">
-						<i class="fa fa-plus"></i> {L_EXTEND_MENU}
-					</a>
+				<div id="sub-header-admin-content">
+					<nav class="dynamic-menu">
+						# INCLUDE subheader_menu #
+					</nav>
+					<div id="admin-extend-link">
+						<a href="{PATH_TO_ROOT}/admin/admin_extend.php">
+							<i class="fa fa-plus"></i> {L_EXTEND_MENU}
+						</a>
+					</div>
+					<div class="spacer"></div>
 				</div>
-				<div class="spacer"></div>
 			</div>
 		</header>
+	<div id="global">
 		
 		<div id="admin-main">
 			{CONTENT}

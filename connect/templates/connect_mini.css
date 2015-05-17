@@ -31,7 +31,7 @@ ul.connect-content {
 	display: inline-block;
 	margin-right: 10px;
 }
-#connect-menu div.horizontal-fieldset ul.connect-content li::last-child {
+#connect-menu div.horizontal-fieldset ul.connect-content li:last-child {
 	margin-right: 0px;
 }
 

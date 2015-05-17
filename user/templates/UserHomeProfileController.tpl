@@ -36,7 +36,7 @@
 			</li>
 			# ENDIF #
 			# IF IS_ADMIN #
-			<li class="small-block" style="flex: 1 1 219px;">
+			<li class="small-block">
 				<a href="{PATH_TO_ROOT}/admin/">
 					# IF C_UNREAD_ALERT #
 					<span class="fa fa-stack">
@@ -60,7 +60,7 @@
 				</a>
 			</li>
 			# ENDIF #
-			<li class="small-block" style="flex: 1 1 165px;">
+			<li class="small-block">
 				<a href="{U_CONTRIBUTION_PANEL}">
 					# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION #
 					<span class="fa fa-stack">
