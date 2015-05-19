@@ -64,7 +64,7 @@ abstract class AbstractPHPMailerMailService implements MailService
 		}
 	}
 
-	public function send_from_properties($mail_to, $mail_subject, $mail_content, $mail_from = '', $sender_name = 'admin')
+	public function send_from_properties($mail_to, $mail_subject, $mail_content, $mail_from = '', $sender_name = Mail::SENDER_ADMIN)
 	{
 		// Initialization of the mail properties
 		$mail = new Mail();

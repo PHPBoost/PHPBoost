@@ -71,7 +71,7 @@ class MailToPHPMailerConverter
 
 		// from
 		$this->mailer->SetFrom($this->mail_to_send->get_sender_mail(), $this->mail_to_send->get_sender_name());
-		$this->mailer->AddReplyTo($this->mail_to_send->get_sender_mail(), $this->mail_to_send->get_sender_name());
+		$this->mailer->AddReplyTo($this->mail_to_send->get_reply_to_mail() ? $this->mail_to_send->get_reply_to_mail() : $this->mail_to_send->get_sender_mail(), $this->mail_to_send->get_reply_to_name() ? $this->mail_to_send->get_reply_to_name() : $this->mail_to_send->get_sender_name());
 
 		$this->mailer->Subject = $this->mail_to_send->get_subject();
 

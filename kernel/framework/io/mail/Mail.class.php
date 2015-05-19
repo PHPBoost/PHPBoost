@@ -57,6 +57,16 @@ class Mail
 	var $sender_name = '';
 
 	/**
+	 * @var string Address of the mail to reply to.
+	 */
+	var $reply_to_mail = '';
+
+	/**
+	 * @var string The reply to mail sender name.
+	 */
+	var $reply_to_name = '';
+
+	/**
 	 * @var The mail headers.
 	 */
 	var $headers = '';
@@ -106,6 +116,25 @@ class Mail
 		$this->sender_name = str_replace('"', '', $site_name . ' - ' . $sender_name);
 
 		$this->sender_mail = $sender;
+	}
+
+	/**
+	 * @desc Sets the mail to reply to.
+	 * @param string $reply_to The mail address to reply to.
+	 * @param string $reply_to_name SENDER_ADMIN constante if the mail is sent by the administrator, SENDER_USER constante for user or string for other name
+	 */
+	public function set_reply_to($reply_to, $reply_to_name = self::SENDER_ADMIN)
+	{
+		$site_name = GeneralConfig::load()->get_site_name();
+		
+		if ($reply_to_name == self::SENDER_ADMIN || $reply_to_name == self::SENDER_USER)
+		{
+			$reply_to_name = $reply_to_name == self::SENDER_ADMIN ? LangLoader::get_message('administrator', 'user-common') : LangLoader::get_message('user', 'user-common');
+		}
+		
+		$this->reply_to_name = str_replace('"', '', $site_name . ' - ' . $reply_to_name);
+
+		$this->reply_to_mail = $reply_to;
 	}
 
 	/**
@@ -237,6 +266,24 @@ class Mail
 	public function get_sender_name()
 	{
 		return $this->sender_name;
+	}
+
+	/**
+	 * @desc Returns the mail address to reply to.
+	 * @return string the reply to mail address
+	 */
+	public function get_reply_to_mail()
+	{
+		return $this->reply_to_mail;
+	}
+
+	/**
+	 * @desc Returns the reply to mail sender's name.
+	 * @return string The reply to mail sender's name.
+	 */
+	public function get_reply_to_name()
+	{
+		return $this->reply_to_name;
 	}
 
 	/**
