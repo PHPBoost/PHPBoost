@@ -19,7 +19,7 @@
 				{@avatar}
 			</th>
 			<th>
-				{@pseudo}
+				{@display_name}
 			</th>
 			<th>
 				{@level}
