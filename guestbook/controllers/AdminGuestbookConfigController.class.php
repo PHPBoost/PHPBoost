@@ -83,8 +83,8 @@ class AdminGuestbookConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTML('config', $this->admin_common_lang['configuration']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('items_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_items_per_page(),
-			array('maxlength' => 2, 'size' => 3, 'required' => true),
+		$fieldset->add_field(new FormFieldNumber('items_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_items_per_page(),
+			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
@@ -102,8 +102,8 @@ class AdminGuestbookConfigController extends AdminModuleController
 			)
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('max_links_number_per_message', $this->lang['admin.config.max_links'], $this->config->get_maximum_links_message(),
-			array('maxlength' => 2, 'size' => 3, 'required' => true, 'hidden' => !$this->config->is_max_links_number_per_message_enabled()),
+		$fieldset->add_field(new FormFieldNumber('max_links_number_per_message', $this->lang['admin.config.max_links'], $this->config->get_maximum_links_message(),
+			array('min' => 1, 'max' => 20, 'required' => true, 'hidden' => !$this->config->is_max_links_number_per_message_enabled()),
 			array(new FormFieldConstraintIntegerRange(1, 20))
 		));
 		

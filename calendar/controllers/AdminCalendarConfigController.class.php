@@ -80,8 +80,8 @@ class AdminCalendarConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTML('configuration_fieldset', LangLoader::get_message('configuration', 'admin-common'));
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('items_number_per_page', $this->lang['calendar.config.items_number_per_page'], $this->config->get_items_number_per_page(), 
-			array('size' => 2, 'maxlength' => 2, 'required' => true),
+		$fieldset->add_field(new FormFieldNumber('items_number_per_page', $this->lang['calendar.config.items_number_per_page'], $this->config->get_items_number_per_page(), 
+			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		

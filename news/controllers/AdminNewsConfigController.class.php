@@ -82,18 +82,14 @@ class AdminNewsConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTML('config', $this->admin_common_lang['configuration']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('number_news_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_number_news_per_page(), 
-			array('maxlength' => 2, 'size' => 3, 'required' => true),
+		$fieldset->add_field(new FormFieldNumber('number_news_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_number_news_per_page(), 
+			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('number_columns_display_news', $this->lang['admin.config.number_columns_display_news'], $this->config->get_number_columns_display_news(),
-			array(
-				new FormFieldSelectChoiceOption('1', '1'),
-				new FormFieldSelectChoiceOption('2', '2'),
-				new FormFieldSelectChoiceOption('3', '3'),
-				new FormFieldSelectChoiceOption('4', '4'),
-			)
+		$fieldset->add_field(new FormFieldNumber('number_columns_display_news', $this->lang['admin.config.number_columns_display_news'], $this->config->get_number_columns_display_news(), 
+			array('min' => 1, 'max' => 4, 'required' => true),
+			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('display_condensed', $this->lang['admin.config.display_condensed'], $this->config->get_display_condensed_enabled(), array(
@@ -105,8 +101,8 @@ class AdminNewsConfigController extends AdminModuleController
 			}'
 		))));
 		
-		$fieldset->add_field(new FormFieldTextEditor('number_character_to_cut', $this->lang['admin.config.number_character_to_cut'], $this->config->get_number_character_to_cut(), 
-			array('maxlength' => 4, 'size' => 4, 'required' => true, 'hidden' => !$this->config->get_display_condensed_enabled()), 
+		$fieldset->add_field(new FormFieldNumber('number_character_to_cut', $this->lang['admin.config.number_character_to_cut'], $this->config->get_number_character_to_cut(), 
+			array('min' => 20, 'max' => 1000, 'required' => true, 'hidden' => !$this->config->get_display_condensed_enabled()), 
 			array(new FormFieldConstraintIntegerRange(20, 1000)
 		)));
 		

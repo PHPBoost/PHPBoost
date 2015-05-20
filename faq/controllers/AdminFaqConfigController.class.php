@@ -82,18 +82,14 @@ class AdminFaqConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTML('config', $this->admin_common_lang['configuration']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('categories_number_per_page', $this->admin_common_lang['config.categories_number_per_page'], $this->config->get_categories_number_per_page(),
-			array('maxlength' => 2, 'size' => 3, 'required' => true),
+		$fieldset->add_field(new FormFieldNumber('categories_number_per_page', $this->admin_common_lang['config.categories_number_per_page'], $this->config->get_categories_number_per_page(),
+			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('columns_number_per_line', $this->admin_common_lang['config.columns_number_per_line'], $this->config->get_columns_number_per_line(),
-			array(
-				new FormFieldSelectChoiceOption('1', '1'),
-				new FormFieldSelectChoiceOption('2', '2'),
-				new FormFieldSelectChoiceOption('3', '3'),
-				new FormFieldSelectChoiceOption('4', '4')
-			)
+		$fieldset->add_field(new FormFieldNumber('columns_number_per_line', $this->admin_common_lang['config.columns_number_per_line'], $this->config->get_columns_number_per_line(),
+			array('min' => 1, 'max' => 4, 'required' => true),
+			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->admin_common_lang['config.display_type'], $this->config->get_display_type(),

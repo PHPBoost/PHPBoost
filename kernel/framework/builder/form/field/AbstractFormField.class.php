@@ -82,6 +82,10 @@ abstract class AbstractFormField implements FormField
 	/**
 	 * @var string
 	 */
+	protected $pattern = '';
+	/**
+	 * @var string
+	 */
 	protected $validation_error_message = '';
 	/**
 	 * @var FormFieldConstraint[]
@@ -375,6 +379,10 @@ abstract class AbstractFormField implements FormField
 					$this->set_hidden($value);
 					unset($field_options['hidden']);
 					break;
+				case 'pattern':
+					$this->set_pattern($value);
+					unset($field_options['pattern']);
+					break;
 				case 'required':
 					if (is_string($value))
 					{
@@ -455,7 +463,9 @@ abstract class AbstractFormField implements FormField
 			'C_HAS_LABEL' => !empty($description) || $this->get_label() != '',
 			'C_DISABLED' => $this->is_disabled(),
 			'C_READONLY' => $this->is_readonly(),
-			'C_HIDDEN' => $this->is_hidden()
+			'C_HIDDEN' => $this->is_hidden(),
+			'C_PATTERN' => $this->has_pattern(),
+			'PATTERN' => $this->pattern
 		));
 	}
 
@@ -534,6 +544,16 @@ abstract class AbstractFormField implements FormField
 	public function set_hidden($hidden)
 	{
 		$this->hidden = $hidden;
+	}
+	
+	public function has_pattern()
+	{
+		return $this->pattern;
+	}
+	
+	public function set_pattern($pattern)
+	{
+		$this->pattern = $pattern;
 	}
 
 	public function set_template(Template $template)
