@@ -30,7 +30,7 @@
  */
 class FormFieldColorPicker extends AbstractFormField
 {
-	private static $tpl_src = '<input type="color" name="${escape(NAME)}" id="${escape(HTML_ID)}" value="${escape(VALUE)}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_HIDDEN # style="display:none;" # ENDIF #>';
+	private static $tpl_src = '<input type="color" name="${escape(NAME)}" id="${escape(HTML_ID)}" value="${escape(VALUE)}" pattern="#[a-f0-9]{6}" placeholder="#000000" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_HIDDEN # style="display:none;" # ENDIF #>';
 	
 	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
 	{
