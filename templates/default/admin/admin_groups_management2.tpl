@@ -48,33 +48,6 @@
 			else
 				alert("{L_REQUIRE_LOGIN}");
 		}
-
-		function insert_color(color)
-		{
-			document.getElementById("color_group").value = color.replace(/#/g, '');
-		}
-		function bbcode_color()
-		{
-			var i;
-			var br;
-			var contents;
-			var color = new Array(
-			'#000000', '#433026', '#333300', '#003300', '#003366', '#000080', '#333399', '#333333',
-			'#800000', '#FFA500', '#808000', '#008000', '#008080', '#0000FF', '#666699', '#808080',
-			'#FF0000', '#FF9900', '#99CC00', '#339966', '#33CCCC', '#3366FF', '#800080', '#ACA899',
-			'#FFC0CB', '#FFCC00', '#FFFF00', '#00FF00', '#00FFFF', '#00CCFF', '#993366', '#C0C0C0',
-			'#FF99CC', '#FFCC99', '#FFFF99', '#CCFFCC', '#CCFFFF', '#CC99FF', '#E3007B', '#FFFFFF');							
-			
-			contents = '<table><tr>';
-			for(i = 0; i < 40; i++)
-			{
-				br = (i+1) % 8;
-				br = (br == 0 && i != 0 && i < 39) ? '</tr><tr>' : '';
-				contents += '<td><a style="background:' + color[i] + ';" onclick="javascript:insert_color(\'' + color[i] + '\');"></a></td>' + br;
-			}
-			document.getElementById("color_group_list").innerHTML = contents + '</tr></table>';
-		}
-		-->
 		</script>
 
 		<div id="admin-quick-menu">
@@ -124,14 +97,10 @@
 							<label><input type="text" size="3" name="data_group_limit" id="data_group_limit" value="{DATA_GROUP_LIMIT}"> {L_MB}</label>
 						</div>
 					</div>
-					<div class="form-element" class="overflow_visible">
-						<label for="color_group">{L_COLOR_GROUP} <span class="field-description">{L_COLOR_GROUP_EXPLAIN}</span></label>
-						<div class="form-field">#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}">
-							<a href="javascript:bbcode_color();bb_display_block('1', '');" onmouseout="bb_hide_block('1', '', 0);" class="bbcode-hover" title="{L_BB_COLOR}"><img src="{PATH_TO_ROOT}/templates/default/images/color.png" alt="" class="valign-middle" /></a>	
-							<div class="color-picker" style="display:none;" id="bb-block1">
-								<div id="color_group_list" class="bbcode-block" onmouseover="bb_hide_block('1', '', 1);" onmouseout="bb_hide_block('1', '', 0);">
-								</div>
-							</div>
+					<div class="form-element">
+						<label for="color_group">{L_COLOR_GROUP}</label>
+						<div class="form-field">
+							<label><input type="color" name="color_group" id="color_group" value="{COLOR_GROUP}"></label>
 						</div>
 					</div>
 					<div class="form-element">
@@ -266,14 +235,10 @@
 							<label><input type="text" size="3" name="data_group_limit" id="data_group_limit" value="5"> {L_MB}</label>
 						</div>
 					</div>
-					<div class="form-element" class="overflow_visible">
-						<label for="color_group">{L_COLOR_GROUP} <span class="field-description">{L_COLOR_GROUP_EXPLAIN}</span></label>
-						<div class="form-field">#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}">
-							<a href="javascript:bbcode_color();bb_display_block('1', '');" onmouseout="bb_hide_block('1', '', 0);" class="bbcode-hover" title="{L_BB_COLOR}"><img src="{PATH_TO_ROOT}/templates/default/images/color.png" alt="" class="valign-middle" /></a>	
-							<div class="color-picker" style="display:none;" id="bb-block1">
-								<div id="color_group_list" class="bbcode-block" onmouseover="bb_hide_block('1', '', 1);" onmouseout="bb_hide_block('1', '', 0);">
-								</div>
-							</div>
+					<div class="form-element">
+						<label for="color_group">{L_COLOR_GROUP}</label>
+						<div class="form-field">
+							<label><input type="color" name="color_group" id="color_group" value="{COLOR_GROUP}"></label>
 						</div>
 					</div>
 					<div class="form-element">

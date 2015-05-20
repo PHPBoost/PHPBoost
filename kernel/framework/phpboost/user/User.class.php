@@ -247,7 +247,7 @@ class User
 			if ($groups_cache->group_exists($idgroup))
 			{
 				$group = $groups_cache->get_group($idgroup);
-				$group_color = (!empty($group['color']) && $level == 0) ? '#' . $group['color'] : '';
+				$group_color = (!empty($group['color']) && $level == 0) ? (substr($group['color'], 0, 1) != '#' ? '#' : '') . $group['color'] : '';
 			}
 		}
 		return $group_color;
