@@ -75,13 +75,13 @@ class AdminOnlineConfigController extends AdminModuleController
 		$fieldset_config = new FormFieldsetHTML('configuration', LangLoader::get_message('configuration', 'admin-common'));
 		$form->add_fieldset($fieldset_config);
 		
-		$fieldset_config->add_field(new FormFieldTextEditor('number_member_displayed', $this->lang['admin.nbr-displayed'], $this->config->get_number_member_displayed(), array(
-			'size' => 3, 'maxlength' => 3, 'required' => true),
+		$fieldset_config->add_field(new FormFieldNumber('number_member_displayed', $this->lang['admin.nbr-displayed'], $this->config->get_number_member_displayed(),
+			array('min' => 1, 'max' => 100, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 100))
 		));
 		
-		$fieldset_config->add_field(new FormFieldTextEditor('number_members_per_page', $this->lang['admin.nbr-members-per-page'], $this->config->get_number_members_per_page(), array(
-			'size' => 2, 'maxlength' => 2, 'required' => true),
+		$fieldset_config->add_field(new FormFieldNumber('number_members_per_page', $this->lang['admin.nbr-members-per-page'], $this->config->get_number_members_per_page(),
+			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		

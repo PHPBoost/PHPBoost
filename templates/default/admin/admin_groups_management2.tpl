@@ -100,7 +100,7 @@
 					<div class="form-element">
 						<label for="color_group">{L_COLOR_GROUP}</label>
 						<div class="form-field">
-							<label><input type="color" name="color_group" id="color_group" value="{COLOR_GROUP}" pattern="#[a-f0-9]{6}" placeholder="#000000"></label>
+							<label><input type="color" name="color_group" id="color_group" value="{COLOR_GROUP}" pattern="#[A-Fa-f0-9]{6}" placeholder="#000000"></label>
 						</div>
 					</div>
 					<div class="form-element">
@@ -238,7 +238,7 @@
 					<div class="form-element">
 						<label for="color_group">{L_COLOR_GROUP}</label>
 						<div class="form-field">
-							<label><input type="color" name="color_group" id="color_group" value="{COLOR_GROUP}" pattern="#[a-f0-9]{6}" placeholder="#000000"></label>
+							<label><input type="color" name="color_group" id="color_group" value="{COLOR_GROUP}" pattern="#[A-Fa-f0-9]{6}" placeholder="#000000"></label>
 						</div>
 					</div>
 					<div class="form-element">

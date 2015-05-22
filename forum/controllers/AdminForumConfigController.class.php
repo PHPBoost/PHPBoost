@@ -90,24 +90,24 @@ class AdminForumConfigController extends AdminModuleController
 			array('maxlength' => 255, 'required' => true)
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('number_topics_per_page', $this->lang['config.number_topics_per_page'], $this->config->get_number_topics_per_page(), 
-			array('maxlength' => 2, 'size' => 3, 'required' => true),
+		$fieldset->add_field(new FormFieldNumber('number_topics_per_page', $this->lang['config.number_topics_per_page'], $this->config->get_number_topics_per_page(), 
+			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('number_messages_per_page', $this->lang['config.number_messages_per_page'], $this->config->get_number_messages_per_page(), 
-			array('maxlength' => 2, 'size' => 3, 'required' => true),
+		$fieldset->add_field(new FormFieldNumber('number_messages_per_page', $this->lang['config.number_messages_per_page'], $this->config->get_number_messages_per_page(), 
+			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('read_messages_storage_duration', $this->lang['config.read_messages_storage_duration'], $this->config->get_read_messages_storage_duration(), 
-			array('maxlength' => 3, 'size' => 3, 'required' => true, 'description' => $this->lang['config.read_messages_storage_duration.explain']),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+		$fieldset->add_field(new FormFieldNumber('read_messages_storage_duration', $this->lang['config.read_messages_storage_duration'], $this->config->get_read_messages_storage_duration(), 
+			array('min' => 1, 'max' => 365, 'required' => true, 'description' => $this->lang['config.read_messages_storage_duration.explain']),
+			array(new FormFieldConstraintIntegerRange(1, 365))
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('max_topic_number_in_favorite', $this->lang['config.max_topic_number_in_favorite'], $this->config->get_max_topic_number_in_favorite(), 
-			array('maxlength' => 3, 'size' => 3, 'required' => true),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+		$fieldset->add_field(new FormFieldNumber('max_topic_number_in_favorite', $this->lang['config.max_topic_number_in_favorite'], $this->config->get_max_topic_number_in_favorite(), 
+			array('min' => 1, 'max' => 500, 'required' => true),
+			array(new FormFieldConstraintIntegerRange(1, 500))
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('edit_mark_enabled', $this->lang['config.edit_mark_enabled'], $this->config->is_edit_mark_enabled()));

@@ -84,8 +84,8 @@ class AdminShoutboxConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTML('configuration', LangLoader::get_message('configuration', 'admin-common'));
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('items_number_per_page', $this->lang['config.items_number_per_page'], $this->config->get_items_number_per_page(),
-			array('maxlength' => 2, 'size' => 3, 'required' => true),
+		$fieldset->add_field(new FormFieldNumber('items_number_per_page', $this->lang['config.items_number_per_page'], $this->config->get_items_number_per_page(),
+			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
@@ -99,9 +99,9 @@ class AdminShoutboxConfigController extends AdminModuleController
 			)
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('max_messages_number', $this->lang['config.max_messages_number'], $this->config->get_max_messages_number(),
-			array('maxlength' => 3, 'size' => 3, 'required' => true, 'hidden' => !$this->config->is_max_messages_number_enabled()),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+		$fieldset->add_field(new FormFieldNumber('max_messages_number', $this->lang['config.max_messages_number'], $this->config->get_max_messages_number(),
+			array('min' => 5, 'max' => 1000, 'required' => true, 'hidden' => !$this->config->is_max_messages_number_enabled()),
+			array(new FormFieldConstraintIntegerRange(5, 1000))
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('max_links_number_per_message_enabled', $this->lang['config.max_links_number_per_message_enabled'], $this->config->is_max_links_number_per_message_enabled(),
@@ -114,8 +114,8 @@ class AdminShoutboxConfigController extends AdminModuleController
 			)
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('max_links_number_per_message', $this->lang['config.max_links_number_per_message'], $this->config->get_max_links_number_per_message(),
-			array('maxlength' => 2, 'size' => 3, 'required' => true, 'hidden' => !$this->config->is_max_links_number_per_message_enabled()),
+		$fieldset->add_field(new FormFieldNumber('max_links_number_per_message', $this->lang['config.max_links_number_per_message'], $this->config->get_max_links_number_per_message(),
+			array('min' => 1, 'max' => 20, 'required' => true, 'hidden' => !$this->config->is_max_links_number_per_message_enabled()),
 			array(new FormFieldConstraintIntegerRange(1, 20))
 		));
 		
@@ -153,9 +153,9 @@ class AdminShoutboxConfigController extends AdminModuleController
 			)
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('shout_max_messages_number', $this->lang['config.shout_max_messages_number'], $this->config->get_shout_max_messages_number(),
-			array('maxlength' => 3, 'size' => 3, 'required' => true, 'hidden' => !$this->config->is_shout_max_messages_number_enabled()),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+		$fieldset->add_field(new FormFieldNumber('shout_max_messages_number', $this->lang['config.shout_max_messages_number'], $this->config->get_shout_max_messages_number(),
+			array('min' => 5, 'max' => 1000, 'required' => true, 'hidden' => !$this->config->is_shout_max_messages_number_enabled()),
+			array(new FormFieldConstraintIntegerRange(5, 1000))
 		));
 		
 		if (ModulesManager::is_module_installed('BBCode'))
