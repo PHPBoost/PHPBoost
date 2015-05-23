@@ -103,7 +103,7 @@ $LANG['system_report'] = 'Rapport système';
 $LANG['server'] = 'Serveur';
 $LANG['php_version'] = 'Version de PHP';
 $LANG['dbms_version'] = 'Version du SGBD';
-$LANG['dg_library'] = 'Librairie GD';
+$LANG['gd_library'] = 'Librairie GD';
 $LANG['url_rewriting'] = 'Réécriture des URL';
 $LANG['phpboost_config'] = 'Configuration de PHPBoost';
 $LANG['kernel_version'] = 'Version du noyau';
@@ -119,6 +119,7 @@ $LANG['explain_archive_upload'] = 'L\'archive uploadée doit être au format zip o
 //Gestion des fichiers
 $LANG['auth_files'] = 'Autorisation requise pour l\'activation de l\'interface de fichiers';
 $LANG['size_limit'] = 'Taille maximale des uploads autorisés aux membres';
+$LANG['size_limit_explain'] = 'En Mo';
 $LANG['bandwidth_protect'] = 'Protection de la bande passante';
 $LANG['bandwidth_protect_explain'] = 'Interdiction d\'accès aux fichiers du répertoire upload depuis un autre serveur';
 $LANG['auth_extensions'] = 'Extensions autorisées';

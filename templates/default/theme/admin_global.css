@@ -321,6 +321,12 @@ ul, ol {
 	transition: width .6s ease;
 }
 
+/* --- Rapport système --- */
+.system-report {
+	font-family: Courier new;
+	width: 53em;
+}
+
 /* --- Le systeme de notation --- */
 .static-notation, .notation { display: inline-block; }
 .static-notation .star, .notation .star { color: #E3CF7A; font-size: 14px; padding-right: 5px; text-decoration: none; }

@@ -76,10 +76,10 @@
 					<li><a href="${relative_url(AdminErrorsUrlBuilder::list_404_errors())}">{L_404_ERRORS}</a></li>
 				</ul>
 			</li><li class="extend">
-				<a href="{PATH_TO_ROOT}/admin/admin_system_report.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/server_mini.png"/> {L_SERVER}</a>
+				<a href="${relative_url(AdminServerUrlBuilder::system_report())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/server_mini.png"/> {L_SERVER}</a>
 				<ul>
-					<li><a href="{PATH_TO_ROOT}/admin/admin_phpinfo.php">{L_PHPINFO}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/admin_system_report.php">{L_SYSTEM_REPORT}</a></li>
+					<li><a href="${relative_url(AdminServerUrlBuilder::phpinfo())}">{L_PHPINFO}</a></li>
+					<li><a href="${relative_url(AdminServerUrlBuilder::system_report())}">{L_SYSTEM_REPORT}</a></li>
 				</ul>
 			</li>
 			# IF C_ADMIN_LINKS_3 #
@@ -141,7 +141,7 @@
 				<a href="{PATH_TO_ROOT}/admin/admin_files.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/files_mini.png"/> {L_FILES}</a>
 				<ul>
 					<li><a href="{PATH_TO_ROOT}/admin/admin_files.php">{L_MANAGEMENT}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/admin_files_config.php">{L_CONFIGURATION}</a></li>
+					<li><a href="${relative_url(AdminFilesUrlBuilder::configuration())}">{L_CONFIGURATION}</a></li>
 				</ul>
 			</li>
 			<li class="extend">

@@ -78,9 +78,9 @@
 					<a href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}">{L_ERRORS}</a>
 				</td>
 				<td class="no-separator" style="width:20%;">
-					<a href="{PATH_TO_ROOT}/admin/admin_system_report.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/server.png" alt="" /></a>
+					<a href="${relative_url(AdminServerUrlBuilder::system_report())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/server.png" alt="" /></a>
 					<br />
-					<a href="{PATH_TO_ROOT}/admin/admin_system_report.php">{L_SERVER}</a>
+					<a href="${relative_url(AdminServerUrlBuilder::system_report())}">{L_SERVER}</a>
 				</td>
 			</tr>
 			<tr class="center">

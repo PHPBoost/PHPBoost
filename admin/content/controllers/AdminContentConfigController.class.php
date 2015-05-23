@@ -97,21 +97,18 @@ class AdminContentConfigController extends AdminController
 		$fieldset = new FormFieldsetHTML('post-management', $this->lang['content.config.post-management']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('max_pm_number', $this->lang['content.config.max-pm-number'], $this->user_accounts_config->get_max_private_messages_number(), array(
-			'maxlength' => 4, 'size' => 4, 'required' => true, 'description' => $this->lang['content.config.max-pm-number-explain']),
-			array(new FormFieldConstraintRegex('`^([0-9]+)$`i', '`^([0-9]+)$`i', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
+		$fieldset->add_field(new FormFieldNumber('max_pm_number', $this->lang['content.config.max-pm-number'], $this->user_accounts_config->get_max_private_messages_number(),
+			array('required' => true, 'description' => $this->lang['content.config.max-pm-number-explain']),
+			array(new FormFieldConstraintRegex('`^([0-9]+)$`i', '', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
 		));
 		
-		$fieldset->add_field(new FormFieldRadioChoice('anti_flood_enabled', $this->lang['content.config.anti-flood-enabled'], $this->content_management_config->is_anti_flood_enabled(),
-			array(
-				new FormFieldRadioChoiceOption(LangLoader::get_message('enabled', 'common'), '1'),
-				new FormFieldRadioChoiceOption(LangLoader::get_message('disabled', 'common'), '0')
-			), array('description' => $this->lang['content.config.anti-flood-enabled-explain'])
+		$fieldset->add_field(new FormFieldCheckbox('anti_flood_enabled', $this->lang['content.config.anti-flood-enabled'], $this->content_management_config->is_anti_flood_enabled(),
+			array('description' => $this->lang['content.config.anti-flood-enabled-explain'])
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('delay_flood', $this->lang['content.config.delay-flood'], $this->content_management_config->get_anti_flood_duration(), array(
-			'maxlength' => 4, 'size' => 4, 'required' => true, 'description' => $this->lang['content.config.delay-flood-explain']),
-			array(new FormFieldConstraintRegex('`^([0-9]+)$`i', '`^([0-9]+)$`i', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
+		$fieldset->add_field(new FormFieldNumber('delay_flood', $this->lang['content.config.delay-flood'], $this->content_management_config->get_anti_flood_duration(), array(
+			'required' => true, 'description' => $this->lang['content.config.delay-flood-explain']),
+			array(new FormFieldConstraintRegex('`^([0-9]+)$`i', '', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
 		));
 		
 		$fieldset = new FormFieldsetHTML('captcha', $this->lang['content.config.captcha']);
@@ -140,7 +137,11 @@ class AdminContentConfigController extends AdminController
 	 	$this->content_formatting_config->set_forbidden_tags($forbidden_tags);
 		ContentFormattingConfig::save();
 		
-		$this->content_management_config->set_anti_flood_enabled($this->form->get_value('anti_flood_enabled')->get_raw_value());
+		if ($this->form->get_value('anti_flood_enabled'))
+			$this->content_management_config->set_anti_flood_enabled(true);
+		else
+			$this->content_management_config->set_anti_flood_enabled(false);
+		
 		$this->content_management_config->set_anti_flood_duration($this->form->get_value('delay_flood'));
 		$this->content_management_config->set_used_captcha_module($this->form->get_value('captcha_used')->get_raw_value());
 		ContentManagementConfig::save();

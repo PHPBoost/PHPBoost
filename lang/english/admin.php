@@ -102,7 +102,7 @@ $LANG['system_report'] = 'System report';
 $LANG['server'] = 'Server';
 $LANG['php_version'] = 'PHP version';
 $LANG['dbms_version'] = 'DBMS version';
-$LANG['dg_library'] = 'GD Library';
+$LANG['gd_library'] = 'GD Library';
 $LANG['url_rewriting'] = 'URL rewriting';
 $LANG['phpboost_config'] = 'PHPBoost configuration';
 $LANG['kernel_version'] = 'Kernel version';
@@ -118,6 +118,7 @@ $LANG['explain_archive_upload'] = 'Archive file must be ZIP or GZIP format';
 //Gestion des fichiers
 $LANG['auth_files'] = 'Authorization required for file interface activation';
 $LANG['size_limit'] = 'Upload size limit';
+$LANG['size_limit_explain'] = 'In MB';
 $LANG['bandwidth_protect'] = 'Bandwidth protection';
 $LANG['bandwidth_protect_explain'] = 'Access forbidden for external websites to upload folder contents';
 $LANG['auth_extensions'] = 'Authorized extensions';

@@ -38,7 +38,7 @@ class HTMLTableSortingRule
 	private $sort_parameter;
 	private $is_default_sorting = false;
 
-	public function __construct($sort_parameter, $way)
+	public function __construct($sort_parameter, $way = self::ASC)
 	{
 		$this->way = $way;
 		$this->sort_parameter = $sort_parameter;

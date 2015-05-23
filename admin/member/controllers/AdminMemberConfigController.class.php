@@ -89,33 +89,33 @@ class AdminMemberConfigController extends AdminController
 			), array('hidden' => !$this->user_account_config->is_registration_enabled())
 		));
 
-		$fieldset->add_field(new FormFieldTextEditor('unactivated_accounts_timeout', $this->lang['members.config.unactivated-accounts-timeout'], (string)$this->user_account_config->get_unactivated_accounts_timeout(), array(
-			'maxlength' => 4, 'size' => 4,'description' => $this->lang['members.config.unactivated-accounts-timeout-explain']),
-		array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+		$fieldset->add_field(new FormFieldNumber('unactivated_accounts_timeout', $this->lang['members.config.unactivated-accounts-timeout'], (int)$this->user_account_config->get_unactivated_accounts_timeout(),
+			array('description' => $this->lang['members.config.unactivated-accounts-timeout-explain']),
+			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
 		$fieldset = new FormFieldsetHTML('avatar_management', $this->lang['members.config.avatars-management']);
 		$form->add_fieldset($fieldset);
-				
+		
 		$fieldset->add_field(new FormFieldCheckbox('upload_avatar_server', $this->lang['members.config.upload-avatar-server-authorization'], $this->user_account_config->is_avatar_upload_enabled()));
 		
 		$fieldset->add_field(new FormFieldCheckbox('activation_resize_avatar', $this->lang['members.config.activation-resize-avatar'], $this->user_account_config->is_avatar_auto_resizing_enabled(),
 			array('description' => $this->lang['members.activation-resize-avatar-explain'])
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('maximal_width_avatar', $this->lang['members.config.maximal-width-avatar'], $this->user_account_config->get_max_avatar_width(), array(
-			'maxlength' => 4, 'size' => 4,'description' => $this->lang['members.config.maximal-width-avatar-explain']),
+		$fieldset->add_field(new FormFieldNumber('maximal_width_avatar', $this->lang['members.config.maximal-width-avatar'], $this->user_account_config->get_max_avatar_width(),
+			array('description' => $this->lang['members.config.maximal-width-avatar-explain']),
 		array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('maximal_height_avatar', $this->lang['members.config.maximal-height-avatar'], $this->user_account_config->get_max_avatar_height(), array(
-			'maxlength' => 4, 'size' => 4,'description' => $this->lang['members.config.maximal-height-avatar-explain']),
-		array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+		$fieldset->add_field(new FormFieldNumber('maximal_height_avatar', $this->lang['members.config.maximal-height-avatar'], $this->user_account_config->get_max_avatar_height(),
+			array('description' => $this->lang['members.config.maximal-height-avatar-explain']),
+			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('maximal_weight_avatar', $this->lang['members.config.maximal-weight-avatar'], $this->user_account_config->get_max_avatar_weight(), array(
-			'maxlength' => 4, 'size' => 4,'description' => $this->lang['members.config.maximal-weight-avatar-explain']),
-		array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+		$fieldset->add_field(new FormFieldNumber('maximal_weight_avatar', $this->lang['members.config.maximal-weight-avatar'], $this->user_account_config->get_max_avatar_weight(),
+			array('description' => $this->lang['members.config.maximal-weight-avatar-explain']),
+			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('default_avatar_activation', $this->lang['members.config.default-avatar-activation'], $this->user_account_config->is_default_avatar_enabled(),
