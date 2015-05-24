@@ -72,8 +72,8 @@ class DownloadDisplayCategoryController extends ModuleController
 		(SELECT COUNT(*) FROM ' . DownloadSetup::$download_table . '
 			WHERE id_category IN (
 				@id_cat,
-				(SELECT id FROM ' . DownloadSetup::$download_cats_table . ' WHERE id_parent = @id_cat), 
-				(SELECT childs.id FROM ' . DownloadSetup::$download_cats_table . ' parents
+				(SELECT GROUP_CONCAT(id SEPARATOR \',\') FROM ' . DownloadSetup::$download_cats_table . ' WHERE id_parent = @id_cat), 
+				(SELECT GROUP_CONCAT(childs.id SEPARATOR \',\') FROM ' . DownloadSetup::$download_cats_table . ' parents
 				INNER JOIN ' . DownloadSetup::$download_cats_table . ' childs ON parents.id = childs.id_parent
 				WHERE parents.id_parent = @id_cat)
 			)

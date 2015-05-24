@@ -77,8 +77,8 @@ class MediaDisplayCategoryController extends ModuleController
 		(SELECT COUNT(*) FROM ' . MediaSetup::$media_table . '
 			WHERE idcat IN (
 				@id_cat,
-				(SELECT id FROM ' . MediaSetup::$media_cats_table . ' WHERE id_parent = @id_cat), 
-				(SELECT childs.id FROM ' . MediaSetup::$media_cats_table . ' parents
+				(SELECT GROUP_CONCAT(id SEPARATOR \',\') FROM ' . MediaSetup::$media_cats_table . ' WHERE id_parent = @id_cat), 
+				(SELECT GROUP_CONCAT(childs.id SEPARATOR \',\') FROM ' . MediaSetup::$media_cats_table . ' parents
 				INNER JOIN ' . MediaSetup::$media_cats_table . ' childs ON parents.id = childs.id_parent
 				WHERE parents.id_parent = @id_cat)
 			)

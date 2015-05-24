@@ -118,8 +118,8 @@ class GalleryDisplayCategoryController extends ModuleController
 			(SELECT COUNT(*) FROM ' . GallerySetup::$gallery_table . '
 				WHERE idcat IN (
 					@id_cat,
-					(SELECT id FROM ' . GallerySetup::$gallery_cats_table . ' WHERE id_parent = @id_cat), 
-					(SELECT childs.id FROM ' . GallerySetup::$gallery_cats_table . ' parents
+					(SELECT GROUP_CONCAT(id SEPARATOR \',\') FROM ' . GallerySetup::$gallery_cats_table . ' WHERE id_parent = @id_cat), 
+					(SELECT GROUP_CONCAT(childs.id SEPARATOR \',\') FROM ' . GallerySetup::$gallery_cats_table . ' parents
 					INNER JOIN ' . GallerySetup::$gallery_cats_table . ' childs ON parents.id = childs.id_parent
 					WHERE parents.id_parent = @id_cat)
 				)

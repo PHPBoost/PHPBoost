@@ -72,8 +72,8 @@ class WebDisplayCategoryController extends ModuleController
 		(SELECT COUNT(*) FROM ' . WebSetup::$web_table . '
 			WHERE id_category IN (
 				@id_cat,
-				(SELECT id FROM ' . WebSetup::$web_cats_table . ' WHERE id_parent = @id_cat), 
-				(SELECT childs.id FROM ' . WebSetup::$web_cats_table . ' parents
+				(SELECT GROUP_CONCAT(id SEPARATOR \',\') FROM ' . WebSetup::$web_cats_table . ' WHERE id_parent = @id_cat), 
+				(SELECT GROUP_CONCAT(childs.id SEPARATOR \',\') FROM ' . WebSetup::$web_cats_table . ' parents
 				INNER JOIN ' . WebSetup::$web_cats_table . ' childs ON parents.id = childs.id_parent
 				WHERE parents.id_parent = @id_cat)
 			)
