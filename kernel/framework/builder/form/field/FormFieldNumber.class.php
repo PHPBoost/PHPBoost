@@ -31,7 +31,7 @@
  */
 class FormFieldNumber extends AbstractFormField
 {
-	private $min = 0;
+	private $min = null;
 	private $max = 0;
 	private $step = 0;
 	private static $tpl_src = '<input type="number"# IF C_MIN # min="{MIN}"# ENDIF ## IF C_MAX # max="{MAX}"# ENDIF ## IF C_STEP # step="{STEP}"# ENDIF # name="${escape(NAME)}" id="${escape(HTML_ID)}" value="{VALUE}"
@@ -65,7 +65,7 @@ class FormFieldNumber extends AbstractFormField
 		$field = new StringTemplate(self::$tpl_src);
 
 		$field->put_all(array(
-			'C_MIN' => $this->min != 0,
+			'C_MIN' => $this->min !== null,
 			'MIN' => $this->min,
 			'C_MAX' => $this->max != 0,
 			'MAX' => $this->max,

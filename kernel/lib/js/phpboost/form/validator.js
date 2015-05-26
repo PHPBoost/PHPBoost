@@ -9,6 +9,7 @@ function integerIntervalValidator(value, lbound, rbound)
 	}
 	return true;
 }
+
 function lengthIntervalValidator(value, lbound, rbound)
 {
 	var value = value.length;
@@ -18,13 +19,14 @@ function lengthIntervalValidator(value, lbound, rbound)
 	}
 	return true;
 }
+
 function nonEmptyFormFieldValidator(field_id, message)
 {
 	var field = HTMLForms.getField(field_id);
 	if (field)
 	{
 		var value = field.getValue();
-		if (value == null || value == '' || value == false)
+		if (value != 0 && (value == null || value == '' || value == false))
 		{
 			return message;
 		}
