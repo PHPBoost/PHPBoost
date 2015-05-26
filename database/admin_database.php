@@ -288,7 +288,7 @@ elseif ($action == 'restore')
 			{
 				if (strpos($file, '.sql') !== false)
 				{
-					$filelist[filemtime($dir . '/' . $file)] = array('file_name' => $file, 'weight' => NumberHelper::round(filesize($dir . '/' . $file)/1048576, 1) . ' Mo', 'file_date' => Date::to_format(filemtime($dir . '/' . $file, Date::FORMAT_DAY_MONTH_YEAR)));
+					$filelist[filemtime($dir . '/' . $file)] = array('file_name' => $file, 'weight' => NumberHelper::round(filesize($dir . '/' . $file)/1048576, 1) . ' Mo', 'file_date' => Date::to_format(filemtime($dir . '/' . $file), Date::FORMAT_DAY_MONTH_YEAR));
 					$i++;
 				}
 			}
