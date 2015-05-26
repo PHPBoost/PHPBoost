@@ -36,6 +36,11 @@
 					<a href="${relative_url(AdminConfigUrlBuilder::general_config())}">{L_CONFIGURATION}</a>
 				</td>
 				<td class="no-separator" style="width:20%;">
+					<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/modules.png" alt="" /></a>
+					<br />
+					<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}">{L_MODULES}</a>
+				</td>
+				<td class="no-separator" style="width:20%;">
 					<a href="${relative_url(AdminThemeUrlBuilder::list_installed_theme())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/themes.png" alt="" /></a>
 					<br />
 					<a href="${relative_url(AdminThemeUrlBuilder::list_installed_theme())}">{L_THEME}</a>
@@ -44,11 +49,6 @@
 					<a href="${relative_url(AdminLangsUrlBuilder::list_installed_langs())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/languages.png" alt="" /></a>
 					<br />
 					<a href="${relative_url(AdminLangsUrlBuilder::list_installed_langs())}">{L_LANG}</a>
-				</td>
-				<td class="no-separator" style="width:20%;">
-					<a href="{PATH_TO_ROOT}/admin/admin_smileys.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/smileys.png" alt="" /></a>
-					<br />
-					<a href="{PATH_TO_ROOT}/admin/admin_smileys.php">{L_SMILEY}</a>
 				</td>
 				<td class="no-separator" style="width:20%;">
 					<a href="{PATH_TO_ROOT}/admin/admin_alerts.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/administrator_alert.png" alt="" /></a>
@@ -104,14 +104,19 @@
 			</tr>
 			<tr class="center">
 				<td class="no-separator" style="width:20%;">
+					<a href="{PATH_TO_ROOT}/admin/menus/"><img src="{PATH_TO_ROOT}/templates/default/images/admin/menus.png" alt="" /></a>
+					<br />
+					<a href="{PATH_TO_ROOT}/admin/menus/">{L_SITE_MENU}</a>
+				</td>
+				<td class="no-separator" style="width:20%;">
 					<a href="${relative_url(AdminContentUrlBuilder::content_configuration())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/content.png" alt="" /></a>
 					<br />
 					<a href="${relative_url(AdminContentUrlBuilder::content_configuration())}">{L_CONTENT_CONFIG}</a>
 				</td>
 				<td class="no-separator" style="width:20%;">
-					<a href="{PATH_TO_ROOT}/admin/menus/"><img src="{PATH_TO_ROOT}/templates/default/images/admin/menus.png" alt="" /></a>
+					<a href="${relative_url(AdminSmileysUrlBuilder::management())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/smileys.png" alt="" /></a>
 					<br />
-					<a href="{PATH_TO_ROOT}/admin/menus/">{L_SITE_MENU}</a>
+					<a href="${relative_url(AdminSmileysUrlBuilder::management())}">{L_SMILEY}</a>
 				</td>
 				<td class="no-separator" style="width:20%;">
 					<a href="{PATH_TO_ROOT}/admin/admin_files.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/files.png" alt="" /></a>
@@ -122,11 +127,6 @@
 					<a href="${relative_url(UserUrlBuilder::comments())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/com.png" alt="" /></a>
 					<br />
 					<a href="${relative_url(UserUrlBuilder::comments())}">{L_COM}</a>
-				</td>
-				<td class="no-separator" style="width:20%;">
-					<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/modules.png" alt="" /></a>
-					<br />
-					<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}">{L_MODULES}</a>
 				</td>
 			</tr>
 		</tbody>

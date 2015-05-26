@@ -152,10 +152,10 @@
 				</ul>
 			</li>
 			<li class="extend">
-				<a href="{PATH_TO_ROOT}/admin/admin_smileys.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/smileys_mini.png"/> {L_SMILEY}</a>
+				<a href="${relative_url(AdminSmileysUrlBuilder::management())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/smileys_mini.png"/> {L_SMILEY}</a>
 				<ul>
-					<li><a href="{PATH_TO_ROOT}/admin/admin_smileys.php">{L_MANAGEMENT}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/admin_smileys_add.php">{L_ADD}</a></li>
+					<li><a href="${relative_url(AdminSmileysUrlBuilder::management())}">{L_MANAGEMENT}</a></li>
+					<li><a href="${relative_url(AdminSmileysUrlBuilder::add())}">{L_ADD}</a></li>
 				</ul>
 			</li>
 			# IF C_ADMIN_LINKS_5 #

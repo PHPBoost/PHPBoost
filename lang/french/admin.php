@@ -189,6 +189,7 @@ $LANG['smiley_code'] = 'Code du smiley (ex : :D)';
 $LANG['smiley_available'] = 'Smileys disponibles';
 $LANG['edit_smiley'] = 'Edition des smileys';
 $LANG['smiley_management'] = 'Gestion des smileys';
+$LANG['smiley_add_success'] = 'Le smiley a été ajouté';
 
 //Gestion membre
 $LANG['search_member'] = 'Rechercher un membre';

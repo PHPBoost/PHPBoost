@@ -190,6 +190,7 @@ $LANG['smiley_code'] = 'Smiley code (ex: :D)';
 $LANG['smiley_available'] = 'Available smileys';
 $LANG['edit_smiley'] = 'Edit smileys';
 $LANG['smiley_management'] = 'Smiley management';
+$LANG['smiley_add_success'] = 'The smiley has been successfully add';
 
 //Gestion membre
 $LANG['search_member'] = 'Search a member';

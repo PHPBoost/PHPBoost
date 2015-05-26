@@ -31,90 +31,111 @@
  */
 abstract class AbstractFormFieldChoice extends AbstractFormField
 {
-    /**
-     * @var FormFieldEnumOption[]
-     */
-    private $options = array();
+	/**
+	 * @var FormFieldEnumOption[]
+	 */
+	private $options = array();
 
-    /**
-     * @desc Constructs a FormFieldRadio.
-     * @param string $id Field id
-     * @param string $label Field label
-     * @param FormFieldEnumOption Default value
-     * @param FormFieldEnumOption[] $options Enumeration of the possible values
-     * @param string[] $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
-     * @param FormFieldConstraint List of the constraints
-     */
-    public function __construct($id, $label, $value, array $options, array $field_options = array(), array $constraints = array())
-    {
-        foreach ($options as $option)
-        {
-            $this->add_option($option);
-        }
-        parent::__construct($id, $label, $value, $field_options, $constraints);
-        $this->set_value($value);
-    }
+	/**
+	 * @desc Constructs a FormFieldChoice.
+	 * @param string $id Field id
+	 * @param string $label Field label
+	 * @param FormFieldEnumOption Default value
+	 * @param FormFieldEnumOption[] $options Enumeration of the possible values
+	 * @param string[] $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
+	 * @param FormFieldConstraint List of the constraints
+	 */
+	public function __construct($id, $label, $value, array $options, array $field_options = array(), array $constraints = array())
+	{
+		foreach ($options as $option)
+		{
+			$this->add_option($option);
+		}
+		parent::__construct($id, $label, $value, $field_options, $constraints);
+		$this->set_value($value);
+	}
 
-    /**
-     * @return FormFieldEnumOption[]
-     */
-    protected function get_options()
-    {
-        return $this->options;
-    }
+	/**
+	 * @return FormFieldEnumOption[]
+	 */
+	protected function get_options()
+	{
+		return $this->options;
+	}
 
-    /**
-     * @desc Adds an option for the radio field.
-     * @param FormFieldEnumOption option The new option.
-     */
-    protected function add_option(FormFieldEnumOption $option)
-    {
-        $option->set_field($this);
-        $this->options[] = $option;
-    }
+	/**
+	 * @desc Adds an option for the field.
+	 * @param FormFieldEnumOption option The new option.
+	 */
+	protected function add_option(FormFieldEnumOption $option)
+	{
+		$option->set_field($this);
+		$this->options[] = $option;
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function retrieve_value()
-    {
-        $request = AppContext::get_request();
-        if ($request->has_parameter($this->get_html_id()))
-        {
-            $raw_value = $request->get_value($this->get_html_id());
-            $option = $this->get_option($raw_value);
-            if ($option !== null)
-            {
-                $this->set_value($option);
-            }
-        }
-    }
+	/**
+	 * @desc Sets the options of the field.
+	 * @param Array options The list of options.
+	 */
+	public function set_options(Array $options)
+	{
+		$this->clear_options();
+		foreach ($options as $option)
+		{
+			if ($option instanceof FormFieldEnumOption)
+			{
+				$this->add_option($option);
+			}
+		}
+	}
+	
+	protected function clear_options()
+	{
+		$this->options = array();
+	}
 
-    protected function get_option($raw_option)
-    {
-        foreach ($this->options as $option)
-        {
-            if ($option->get_raw_value() == $raw_option)
-            {
-                return $option;
-            }
-        }
-        return null;
-    }
-    
-    /**
+	/**
 	 * {@inheritdoc}
 	 */
-    public function set_value($value)
-    {
-    	if (is_object($value))
-    	{
-    		parent::set_value($value);
-    	}
-    	else
-    	{
+	public function retrieve_value()
+	{
+		$request = AppContext::get_request();
+		if ($request->has_parameter($this->get_html_id()))
+		{
+			$raw_value = $request->get_value($this->get_html_id());
+			$option = $this->get_option($raw_value);
+			if ($option !== null)
+			{
+				$this->set_value($option);
+			}
+		}
+	}
+
+	protected function get_option($raw_option)
+	{
+		foreach ($this->options as $option)
+		{
+			if ($option->get_raw_value() == $raw_option)
+			{
+				return $option;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function set_value($value)
+	{
+		if (is_object($value))
+		{
+			parent::set_value($value);
+		}
+		else
+		{
 			parent::set_value($this->get_option($value));
-    	}
-    }
+		}
+	}
 }
 ?>
