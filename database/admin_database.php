@@ -288,7 +288,7 @@ elseif ($action == 'restore')
 			{
 				if (strpos($file, '.sql') !== false)
 				{
-					$filelist[filemtime($dir . '/' . $file)] = array('file_name' => $file, 'weight' => NumberHelper::round(filesize($dir . '/' . $file)/1048576, 1) . ' Mo', 'file_date' => Date::to_format(filemtime($dir . '/' . $file), Date::FORMAT_DAY_MONTH_YEAR));
+					$filelist[filemtime($dir . '/' . $file)] = array('file_name' => $file, 'weight' => NumberHelper::round(filesize($dir . '/' . $file)/1048576, 1) . ' ' . LangLoader::get_message('unit.megabytes', 'common'), 'file_date' => Date::to_format(filemtime($dir . '/' . $file), Date::FORMAT_DAY_MONTH_YEAR));
 					$i++;
 				}
 			}
@@ -416,8 +416,8 @@ else
 		{	
 			$free = NumberHelper::round($table_info['data_free']/1024, 1);
 			$data = NumberHelper::round(($table_info['data_length'] + $table_info['index_length'])/1024, 1);
-			$free = ($free > 1024) ? NumberHelper::round($free/1024, 1) . ' MB' : $free . ' kB';
-			$data = ($data > 1024) ? NumberHelper::round($data/1024, 1) . ' MB' : $data . ' kB';
+			$free = ($free > 1024) ? NumberHelper::round($free/1024, 1) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : $free . ' ' . LangLoader::get_message('unit.kilobytes', 'common');
+			$data = ($data > 1024) ? NumberHelper::round($data/1024, 1) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : $data . ' ' . LangLoader::get_message('unit.kilobytes', 'common');
 			
 			$tpl->assign_block_vars('table_list', array(
 				'TABLE_NAME' => $table_info['name'],
@@ -437,8 +437,8 @@ else
 		
 		$nbr_free = NumberHelper::round($nbr_free/1024, 1);
 		$nbr_data = NumberHelper::round($nbr_data/1024, 1);
-		$nbr_free = ($nbr_free > 1024) ? NumberHelper::round($nbr_free/1024, 1) . ' Mo' : $nbr_free . ' Ko';
-		$nbr_data = ($nbr_data > 1024) ? NumberHelper::round($nbr_data/1024, 1) . ' Mo' : $nbr_data . ' Ko';
+		$nbr_free = ($nbr_free > 1024) ? NumberHelper::round($nbr_free/1024, 1) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : $nbr_free . ' ' . LangLoader::get_message('unit.kilobytes', 'common');
+		$nbr_data = ($nbr_data > 1024) ? NumberHelper::round($nbr_data/1024, 1) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : $nbr_data . ' ' . LangLoader::get_message('unit.kilobytes', 'common');
 		
 		$tpl->put_all(array(
 			'C_DATABASE_INDEX' => true,
