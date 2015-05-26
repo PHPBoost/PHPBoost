@@ -7,6 +7,7 @@ kernel/db/config.php
 images/avatars/*
 images/maths/*
 images/customization/*
+images/smileys/*
 gallery/pics/*
 stats/cache/*
 upload/*
