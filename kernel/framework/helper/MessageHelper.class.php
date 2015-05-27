@@ -38,7 +38,7 @@ class MessageHelper
 	const ERROR = 'error';
 	const QUESTION = 'question';
 	
-	public static function display($content, $type, $timeout = 0)
+	public static function display($content, $type, $timeout = 0, $display_small = false)
 	{
 		$tpl = new FileTemplate('framework/helper/message.tpl');
 		
@@ -68,7 +68,7 @@ class MessageHelper
 		
 		$tpl->put_all(array(
 			'ID' => KeyGenerator::generate_key(4),
-			'MESSAGE_CSS_CLASS' => $css_class,
+			'MESSAGE_CSS_CLASS' => $css_class . ($display_small ? ' message-helper-small' : ''),
 			'MESSAGE_IMG' => $image,
 			'MESSAGE_CONTENT' => $content,
 			'C_TIMEOUT' => $timeout > 0,

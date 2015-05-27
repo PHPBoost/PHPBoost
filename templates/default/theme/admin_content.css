@@ -312,6 +312,12 @@ table.formatter-table th.formatter-table-head a:hover { color: #FFFFFF; }
 
 table.formatter-table th.formatter-table-head p { margin-bottom: 0px; }
 
+.col-smaller { width: 3em;  }
+.col-small   { width: 6em;  }
+.col-large   { width: 9em;  }
+.col-larger  { width: 12em; }
+.col-xlarge  { width: 15em; }
+
 /* Mini tableaux */
 table.mini th, table.mini td {
 	padding: 3px 1px;

@@ -48,7 +48,7 @@ class SQLHTMLTableModel extends HTMLTableModel
 	public function get_sql_results($sql_join = false)
 	{
 		$limit = $this->html_table->get_nb_rows_per_page();
-		$offset = $this->html_table->get_first_row_index();
+		$offset = ($this->html_table->parameters->get_page_number() - 1) * $limit;
 		$sorting_rule = $this->html_table->parameters->get_sorting_rule();
 		$filters = $this->html_table->parameters->get_filters();
 		$permanent_filters = $this->get_permanent_filters();

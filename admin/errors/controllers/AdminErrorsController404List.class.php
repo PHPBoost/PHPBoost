@@ -27,16 +27,23 @@
 
 class AdminErrorsController404List extends AdminController
 {
-	const NUMBER_ITEMS_PER_PAGE = 20;
-	
+	/**
+	 * @var HTMLForm
+	 */
+	private $form;
+	/**
+	 * @var FormButtonSubmit
+	 */
+	private $submit_button;
+
 	private $view;
 	private $lang;
-
+	
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		
-		$this->build_view($request);
+		$this->build_table();
 		
 		return new AdminErrorsDisplayResponse($this->view, $this->lang['404_list']);
 	}
@@ -44,62 +51,61 @@ class AdminErrorsController404List extends AdminController
 	private function init()
 	{
 		$this->lang = LangLoader::get('admin-errors-common');
-		
-		$this->view = new FileTemplate('admin/errors/AdminErrorsController404List.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM # # INCLUDE table #');
 	}
 
-	private function build_view(HTTPRequestCustom $request)
+	private function build_table()
 	{
-		$page = $request->get_getint('page', 1);
-		$pagination = $this->get_pagination($page);
+		$table_model = new SQLHTMLTableModel(PREFIX . 'errors_404', array(
+			new HTMLTableColumn($this->lang['404_error_requested_url']),
+			new HTMLTableColumn($this->lang['404_error_from_url']),
+			new HTMLTableColumn($this->lang['404_error_times'], 'times', 'col-small'),
+			new HTMLTableColumn(LangLoader::get_message('delete', 'common'), '', 'col-small')
+		), new HTMLTableSortingRule('times', HTMLTableSortingRule::DESC));
 		
-		$result = PersistenceContext::get_querier()->select("SELECT *
-		FROM " . PREFIX . "errors_404
-		ORDER BY times DESC
-		LIMIT :number_items_per_page OFFSET :display_from",
-			array(
-				'number_items_per_page' => $pagination->get_number_items_per_page(),
-				'display_from' => $pagination->get_display_from()
-			)
-		);
+		$table = new HTMLTable($table_model);
+		$table->set_css_class('table-fixed');
 		
-		$nb_errors = 0;
+		$table_model->set_caption($this->lang['404_list']);
 		
-		while($row = $result->fetch())
+		$results = array();
+		$result = $table_model->get_sql_results();
+		foreach ($result as $row)
 		{
-			$this->view->assign_block_vars('errors', array(
-				'REQUESTED_URL' => $row['requested_url'],
-				'FROM_URL' => $row['from_url'],
-				'TIMES' => $row['times'],
-				'U_DELETE' => AdminErrorsUrlBuilder::delete_404_error($row['id'])->rel(),
+			$delete_link = new LinkHTMLElement(AdminErrorsUrlBuilder::delete_404_error($row['id']), '', array('title' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-delete');
+
+			$results[] = new HTMLTableRow(array(
+				new HTMLTableRowCell(new LinkHTMLElement($row['requested_url'], $row['requested_url'], array('title' => $this->lang['404_error_requested_url']))),
+				new HTMLTableRowCell(new LinkHTMLElement($row['from_url'], $row['from_url'], array('title' => $this->lang['404_error_from_url']))),
+				new HTMLTableRowCell($row['times']),
+				new HTMLTableRowCell($delete_link->display())
 			));
-			$nb_errors++;
 		}
-		$result->dispose();
-		
-		$this->view->put_all(array(
-			'C_ERRORS' => $nb_errors,
-			'C_PAGINATION' => $pagination->has_several_pages(),
-			'PAGINATION' => $pagination->display(),
-			'U_CLEAR_404_ERRORS' => AdminErrorsUrlBuilder::clear_404_errors()->rel()
-		));
+		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
+
+		if ($table_model->get_number_of_matching_rows())
+		{
+			$this->build_form();
+
+			$this->view->put('FORM', $this->form->display());
+
+			$this->view->put('table', $table->display());
+		}
+		else
+			$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('no_item_now', 'common'), MessageHelper::SUCCESS, 0, true));
 	}
 	
-	private function get_pagination($page)
+	private function build_form()
 	{
-		$errors_number = PersistenceContext::get_querier()->count(PREFIX . 'errors_404');
+		$form = new HTMLForm(__CLASS__, AdminErrorsUrlBuilder::clear_404_errors()->rel(), false);
 		
-		$pagination = new ModulePagination($page, $errors_number, self::NUMBER_ITEMS_PER_PAGE);
-		$pagination->set_url(AdminErrorsUrlBuilder::list_404_errors('%d'));
+		$fieldset = new FormFieldsetHTML('clear_errors', $this->lang['clear_list']);
+		$form->add_fieldset($fieldset);
+
+		$this->submit_button = new FormButtonSubmit($this->lang['clear_list'], 'clear', '', 'submit', $this->lang['logged_errors_clear_confirmation']);
+		$form->add_button($this->submit_button);
 		
-		if ($pagination->current_page_is_empty() && $page > 1)
-		{
-			$error_controller = PHPBoostErrors::unexisting_page();
-			DispatchManager::redirect($error_controller);
-		}
-		
-		return $pagination;
+		$this->form = $form;
 	}
 }
 ?>

@@ -33,13 +33,13 @@ class AdminLoggedErrorsControllerList extends AdminController
 	private $view;
 	private $lang;
 	
-	private $number_errors_per_page = 15;
+	const NUMBER_ITEMS_PER_PAGE = 15;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		
-		$this->build_view();
+		$this->build_table();
 		
 		return new AdminErrorsDisplayResponse($this->view, $this->lang['logged_errors']);
 	}
@@ -47,21 +47,82 @@ class AdminLoggedErrorsControllerList extends AdminController
 	private function init()
 	{
 		$this->lang = LangLoader::get('admin-errors-common');
-		
-		$this->view = new FileTemplate('admin/errors/AdminLoggedErrorsControllerList.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM # # INCLUDE table #');
 	}
 
-	private function build_view()
+	private function build_table()
 	{
-		$file_path = PATH_TO_ROOT .'/cache/error.log';
+		$errors = $this->get_errors_list();
+		
+		$types = array(
+			'question' => 'error.unknow',
+			'notice' => 'error.notice',
+			'warning' => 'error.warning',
+			'error' => 'error.fatal' 
+		);
+		
+		$table_model = new HTMLTableModel(array(
+			new HTMLTableColumn(LangLoader::get_message('description', 'main')),
+			new HTMLTableColumn(LangLoader::get_message('date', 'date-common'), '', 'col-large')
+		), new HTMLTableSortingRule(''), self::NUMBER_ITEMS_PER_PAGE);
+		
+		$table = new HTMLTable($table_model);
+		$table->set_css_class('table-fixed');
+		
+		$table_model->set_caption($this->lang['logged_errors_list']);
+		
+		$br = new BrHTMLElement();
+		
+		$results = array();
+		foreach ($errors as $error)
+		{
+			$error_class = new SpanHTMLElement(LangLoader::get_message($types[$error['errclass']], 'status-messages-common') . ' : ', array(), 'text-strong');
+			$error_stacktrace = new SpanHTMLElement(strip_tags($error['errstacktrace'], '<br>'), array(), 'text-italic');
+			
+			$error_message = $error_class->display() . strip_tags($error['errmsg'], '<br>') . $br->display() . $br->display() . $br->display() . $error_stacktrace->display();
+			
+			$results[] = new HTMLTableRow(array(
+				new HTMLTableRowCell(new DivHTMLElement($error_message, array(), $error['errclass'])),
+				new HTMLTableRowCell($error['errdate'])
+			));
+		}
+		$results_number = count($results);
+		$table->set_rows($results_number, $results);
+		
+		if ($results_number)
+		{
+			$this->view->put_all(array(
+				'FORM' => $this->build_form()->display(),
+				'table' => $table->display()
+			));
+		}
+		else
+			$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('no_item_now', 'common'), MessageHelper::SUCCESS, 0, true));
+	}
+	
+	private function build_form()
+	{
+		$form = new HTMLForm(__CLASS__, AdminErrorsUrlBuilder::clear_logged_errors()->rel(), false);
+		
+		$fieldset = new FormFieldsetHTML('clear_errors', $this->lang['clear_list']);
+		$form->add_fieldset($fieldset);
+
+		$submit_button = new FormButtonSubmit($this->lang['clear_list'], 'clear', '', 'submit', $this->lang['logged_errors_clear_confirmation']);
+		$form->add_button($submit_button);
+		
+		return $form;
+	}
+
+	private function get_errors_list()
+	{
+		$array_errinfo = array();
+		$file_path = PATH_TO_ROOT . '/cache/error.log';
 		
 		if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lecture
 		{
 			$handle = @fopen($file_path, 'r');
 			if ($handle) 
 			{
-				$array_errinfo = array();
 				$i = 1;
 				while (!feof($handle)) 
 				{
@@ -91,58 +152,10 @@ class AdminLoggedErrorsControllerList extends AdminController
 					$i++;
 				}
 				@fclose($handle);
-				
-				$types = array(
-					'question' => 'error.unknow',
-					'notice' => 'error.notice',
-					'warning' => 'error.warning',
-					'error' => 'error.fatal' 
-				);
-				
-				//Tri en sens inverse car enregistrement à la suite dans le fichier de log
-				$array_errinfo = array_reverse($array_errinfo);
-				
-				$page = AppContext::get_request()->get_getint('page', 1);
-				$pagination = $this->get_pagination($page, count($array_errinfo));
-				
-				$nb_errors = 0;
-				for ($i = (($page - 1) * $this->number_errors_per_page) ; $i < ($page * $this->number_errors_per_page) ; $i++)
-				{
-					if (isset($array_errinfo[$i]))
-					{
-						$this->view->assign_block_vars('errors', array(
-							'DATE' => $array_errinfo[$i]['errdate'],
-							'CLASS' => $array_errinfo[$i]['errclass'],
-							'ERROR_TYPE' => LangLoader::get_message($types[$array_errinfo[$i]['errclass']], 'status-messages-common'),
-							'ERROR_MESSAGE' => strip_tags($array_errinfo[$i]['errmsg'], '<br>'),
-							'ERROR_STACKTRACE' => strip_tags($array_errinfo[$i]['errstacktrace'], '<br>')
-						));
-						$nb_errors++;
-					}
-				}
-				
-				$this->view->put_all(array(
-					'C_ERRORS' => $nb_errors,
-					'C_PAGINATION' => $pagination->has_several_pages(),
-					'PAGINATION' => $pagination->display(),
-					'U_CLEAR_LOGGED_ERRORS' => AdminErrorsUrlBuilder::clear_logged_errors()->rel()
-				));
 			}
 		}
-	}
-	
-	private function get_pagination($page, $errors_number)
-	{
-		$pagination = new ModulePagination($page, $errors_number, $this->number_errors_per_page);
-		$pagination->set_url(AdminErrorsUrlBuilder::logged_errors('%d'));
 		
-		if ($pagination->current_page_is_empty() && $page > 1)
-		{
-			$error_controller = PHPBoostErrors::unexisting_page();
-			DispatchManager::redirect($error_controller);
-		}
-		
-		return $pagination;
+		return array_reverse($array_errinfo); //Tri en sens inverse car enregistrement à la suite dans le fichier de log
 	}
 }
 ?>

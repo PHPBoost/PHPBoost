@@ -29,7 +29,7 @@
  * @desc This class allows you to manage easily html tables.
  * @package {@package}
  */
-class HTMLTable implements HTMLElement
+class HTMLTable extends AbstractHTMLElement
 {
 	private $arg_id = 1;
 	private $nb_rows = 0;
@@ -165,6 +165,10 @@ class HTMLTable implements HTMLElement
 			'TABLE_ID' => $this->arg_id,
 			'C_PAGINATION_ACTIVATED' => $this->is_pagination_activated(),
 			'NUMBER_OF_COLUMNS' => count($this->columns),
+			'C_CSS_CLASSES' => $this->has_css_class(),
+			'CSS_CLASSES' => $this->get_css_class(),
+			'C_CSS_STYLE' => $this->has_css_style(),
+			'CSS_STYLE' => $this->get_css_style(),
 			'C_ID' => $this->model->has_id(),
 			'ID' => $this->model->get_id(),
 			'C_CAPTION' => $this->model->has_caption(),
@@ -229,9 +233,27 @@ class HTMLTable implements HTMLElement
 
 	private function generate_rows()
 	{
-		foreach ($this->rows as $row)
+		$row_number = 0;
+		$last_displayed_row = ($this->get_first_row_index() + $this->get_nb_rows_per_page());
+		if ($this->is_pagination_activated() && !($this->model instanceof SQLHTMLTableModel))
 		{
-			$this->generate_row($row);
+			foreach ($this->rows as $row)
+			{
+				$row_number++;
+				if ($row_number >= $this->get_first_row_index() && $row_number < $last_displayed_row)
+				{
+					$this->generate_row($row);
+				}
+				else if ($row_number >= $last_displayed_row)
+					break;
+			}
+		}
+		else
+		{
+			foreach ($this->rows as $row)
+			{
+				$this->generate_row($row);
+			}
 		}
 	}
 
@@ -241,6 +263,7 @@ class HTMLTable implements HTMLElement
 		$this->add_css_vars($row, $row_values);
 		$this->add_id_vars($row, $row_values);
 		$this->tpl->assign_block_vars('row', $row_values);
+		
 		foreach ($row->get_cells() as $cell)
 		{
 			$this->generate_cell($cell);
@@ -263,6 +286,8 @@ class HTMLTable implements HTMLElement
 	{
 		$tpl_vars['C_CSS_CLASSES'] = $element->has_css_class();
 		$tpl_vars['CSS_CLASSES'] = $element->get_css_class();
+		$tpl_vars['C_CSS_STYLE'] = $element->has_css_style();
+		$tpl_vars['CSS_STYLE'] = $element->get_css_style();
 	}
 
 	private function add_id_vars(HTMLElement $element, array &$tpl_vars)
@@ -273,10 +298,10 @@ class HTMLTable implements HTMLElement
 
 	private function generate_stats()
 	{
-		$end = $this->get_first_row_index() + count($this->rows);
+		$end = $this->get_first_row_index() + $this->get_nb_rows_per_page();
 		$elements = StringVars::replace_vars(LangLoader::get_message('table_footer_stats', 'common'), array(
 			'start' => $this->get_first_row_index() + 1,
-			'end' => $end,
+			'end' => $end > $this->nb_rows ? $this->nb_rows : $end,
 			'total' => $this->nb_rows
 		));
 		$this->tpl->put_all(array(
@@ -286,7 +311,7 @@ class HTMLTable implements HTMLElement
 
 	private function generate_pagination()
 	{
-		$nb_pages =  $this->get_nb_pages();
+		$nb_pages = $this->get_nb_pages();
 		$pagination = new Pagination($nb_pages, $this->page_number);
 		$pagination->set_url_builder_callback(array($this->parameters, 'get_pagination_url'));
 		$this->tpl->put('pagination', $pagination->export());

@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                        FormButtonSubmitCssImg.class.php
+ *                           DivHTMLElement.class.php
  *                            -------------------
- *   begin                : May 08, 2014
- *   copyright            : (C) 2014 Julien BRISWALTER
+ *   begin                : May 26, 2015
+ *   copyright            : (C) 2015 Julien BRISWALTER
  *   email                : julienseth78@phpboost.com
  *
  ###################################################
@@ -25,16 +25,41 @@
  ###################################################*/
 
 /**
- *
+ * 
  * @author Julien BRISWALTER <julienseth78@phpboost.com>
  * @package {@package}
  */
-class FormButtonSubmitCssImg extends FormButtonSubmit
+class DivHTMLElement extends AbstractHTMLElement
 {
-    public function __construct($value, $css_class_image, $name, $onclick_action = '', $data_confirmation = '')
-    {
-    	$new_value = '<i class="' . $css_class_image . '" title="' . $value . '"></i>';
-    	parent::__construct($new_value, $name, $onclick_action, 'image', $data_confirmation);
-    }
+	private $content;
+	private $attributs = array();
+
+	public function __construct($content, $attributs = array(), $css_class = '')
+	{
+		$this->content = $content;
+		$this->attributs = $attributs;
+		$this->css_class = $css_class;
+	}
+
+	public function display()
+	{
+		$tpl = new StringTemplate('<div # IF C_HAS_CSS_CLASSES #class="{CSS_CLASSES}"# ENDIF ## START attributs # {attributs.TYPE}="{attributs.VALUE}"# END attributs #>{CONTENT}</div>');
+
+		$tpl->put_all(array(
+			'C_HAS_CSS_CLASSES' => $this->has_css_class(),
+			'CSS_CLASSES' => $this->get_css_class(),
+			'CONTENT' => $this->content
+		));
+
+		foreach ($this->attributs as $type => $value)
+		{
+			$tpl->assign_block_vars('attributs', array(
+				'TYPE' => $type, 
+				'VALUE' => $value
+			));
+		}
+
+		return $tpl->render();
+	}
 }
 ?>

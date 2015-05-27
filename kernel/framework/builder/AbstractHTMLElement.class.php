@@ -32,7 +32,28 @@
 abstract class AbstractHTMLElement implements HTMLElement
 {
 	protected $css_class = '';
+	protected $css_style = '';
 	protected $id = '';
+	
+	public function has_css_style()
+	{
+		return !empty($this->css_style);
+	}
+	
+	public function get_css_style()
+	{
+		return $this->css_style;
+	}
+	
+	public function set_css_style($style)
+	{
+		$this->css_style = $style;
+	}
+
+	public function add_css_style($style)
+	{
+		$this->css_style .= ' ' . $style;
+	}
 	
 	public function has_css_class()
 	{
