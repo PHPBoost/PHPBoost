@@ -94,7 +94,7 @@ function display_description(id){
 				</td>
 				<td class="input-radio">
 					<label><input type="radio" name="activated-{modules_activated.ID}" value="1" # IF modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> ${LangLoader::get_message('yes', 'common')}</label>
-					<label><input type="radio" name="activated-{modules_activated.ID}" value="0" # IF NOT modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> ${LangLoader::get_message('yes', 'common')}</label>
+					<label><input type="radio" name="activated-{modules_activated.ID}" value="0" # IF NOT modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> ${LangLoader::get_message('no', 'common')}</label>
 				</td>
 				<td>
 					<button type="submit" class="submit" name="delete-{modules_activated.ID}" value="true">${LangLoader::get_message('delete', 'common')}</button>
