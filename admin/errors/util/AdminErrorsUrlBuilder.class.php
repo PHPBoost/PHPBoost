@@ -36,10 +36,9 @@ class AdminErrorsUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function list_404_errors($page = 1)
+	public static function list_404_errors()
 	{
-		$page = $page !== 1 ? $page . '/': '';
-		return DispatchManager::get_url(self::$dispatcher, '/404/list/' . $page);
+		return DispatchManager::get_url(self::$dispatcher, '/404/list/');
 	}
 
 	/**
@@ -61,9 +60,9 @@ class AdminErrorsUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function logged_errors($page = null)
+	public static function logged_errors()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/list/' . $page);
+		return DispatchManager::get_url(self::$dispatcher, '/list/');
 	}
 
 	/**

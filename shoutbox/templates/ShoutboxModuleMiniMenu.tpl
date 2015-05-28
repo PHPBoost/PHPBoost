@@ -134,16 +134,16 @@ function shoutbox_refresh_messages_box() {
 						</div>
 					</li>
 					<li class="bbcode-elements">
-						<a href="" class="fa bbcode-icon-bold# IF C_BOLD_DISABLED # shout-bbcode-icon-disabled# ENDIF #" onclick="# IF NOT C_BOLD_DISABLED #insertbbcode('[b]', '[/b]', 'shout-contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_bold', 'common', 'BBCode')}"></a>
+						<a href="" class="fa bbcode-icon-bold# IF C_BOLD_DISABLED # icon-disabled# ENDIF #" onclick="# IF NOT C_BOLD_DISABLED #insertbbcode('[b]', '[/b]', 'shout-contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_bold', 'common', 'BBCode')}"></a>
 					</li>
 					<li class="bbcode-elements">
-						<a href="" class="fa bbcode-icon-italic# IF C_ITALIC_DISABLED # shout-bbcode-icon-disabled# ENDIF #" onclick="# IF NOT C_ITALIC_DISABLED #insertbbcode('[i]', '[/i]', 'shout-contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_italic', 'common', 'BBCode')}"></a>
+						<a href="" class="fa bbcode-icon-italic# IF C_ITALIC_DISABLED # icon-disabled# ENDIF #" onclick="# IF NOT C_ITALIC_DISABLED #insertbbcode('[i]', '[/i]', 'shout-contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_italic', 'common', 'BBCode')}"></a>
 					</li>
 					<li class="bbcode-elements">
-						<a href="" class="fa bbcode-icon-underline# IF C_UNDERLINE_DISABLED # shout-bbcode-icon-disabled# ENDIF #" onclick="# IF NOT C_UNDERLINE_DISABLED #insertbbcode('[u]', '[/u]', 'shout-contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_underline', 'common', 'BBCode')}"></a>
+						<a href="" class="fa bbcode-icon-underline# IF C_UNDERLINE_DISABLED # icon-disabled# ENDIF #" onclick="# IF NOT C_UNDERLINE_DISABLED #insertbbcode('[u]', '[/u]', 'shout-contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_underline', 'common', 'BBCode')}"></a>
 					</li>
 					<li class="bbcode-elements">
-						<a href="" class="fa bbcode-icon-strike# IF C_STRIKE_DISABLED # shout-bbcode-icon-disabled# ENDIF #" onclick="# IF NOT C_STRIKE_DISABLED #insertbbcode('[s]', '[/s]', 'shout-contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_strike', 'common', 'BBCode')}"></a>
+						<a href="" class="fa bbcode-icon-strike# IF C_STRIKE_DISABLED # icon-disabled# ENDIF #" onclick="# IF NOT C_STRIKE_DISABLED #insertbbcode('[s]', '[/s]', 'shout-contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_strike', 'common', 'BBCode')}"></a>
 					</li>
 				</ul>
 			</div>

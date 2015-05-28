@@ -32,9 +32,9 @@ class AdminMembersUrlBuilder
 	/*
 	 * @ return Url
 	*/
-	public static function management($params = '')
+	public static function management()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/management/' . $params);
+		return DispatchManager::get_url(self::$dispatcher, '/management/');
 	}
 	
 	/*

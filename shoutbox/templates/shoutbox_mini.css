@@ -11,10 +11,6 @@
 	padding-left: 1.5em;
 }
 
-.shoutbox-message-pseudo {
-	font-style: italic;
-}
-
 .shout-spacing {
 	margin: 0 0 10px 0;
 }
@@ -23,11 +19,6 @@
 #module-mini-shoutbox textarea:valid {
 	border-color: #CCCCCC;
 	width: 90%;
-}
-
-.shout-bbcode-icon-disabled {
-	opacity: 0.3;
-	cursor: default;
 }
 
 #shoutbox-bbcode-container ul {

@@ -150,6 +150,12 @@ img.left, img.right {
 	vertical-align: middle;
 }
 
+/* Icones */
+.icon-disabled {
+	opacity: 0.3;
+	cursor: default;
+}
+
 /* Fieldsets */
 div.vertical-fieldset,
 div.horizontal-fieldset {
