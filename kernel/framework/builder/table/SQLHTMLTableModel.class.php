@@ -83,7 +83,7 @@ class SQLHTMLTableModel extends HTMLTableModel
 			{
 				$query_fragment = $filter->get_sql();
 				$query_fragment->add_parameters_to_map($this->parameters);
-				if (!empty($query_fragment->get_query()))
+				if ($query_fragment->get_query())
 					$sql_filters[] = $query_fragment->get_query();
 			}
 			$clause .= !empty($sql_filters) ? ' AND ' . implode(' AND ', $sql_filters) : '';

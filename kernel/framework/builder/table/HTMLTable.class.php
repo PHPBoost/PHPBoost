@@ -301,7 +301,7 @@ class HTMLTable extends AbstractHTMLElement
 		$end = $this->get_first_row_index() + $this->get_nb_rows_per_page();
 		$elements = StringVars::replace_vars(LangLoader::get_message('table_footer_stats', 'common'), array(
 			'start' => $this->get_first_row_index() + 1,
-			'end' => $end > $this->nb_rows ? $this->nb_rows : $end,
+			'end' => $end > $this->nb_rows || $this->get_nb_rows_per_page() == HTMLTableModel::NO_PAGINATION ? $this->nb_rows : $end,
 			'total' => $this->nb_rows
 		));
 		$this->tpl->put_all(array(
