@@ -21,8 +21,8 @@ function display_description(id){
 			<tr>
 				<th>{@modules.name}</th>
 				<th>{@modules.description}</th>
-				<th>{@modules.activated_module}</th>
-				<th>{@modules.delete}</th>
+				<th>${LangLoader::get_message('enabled', 'common')}</th>
+				<th>${LangLoader::get_message('delete', 'common')}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -49,11 +49,11 @@ function display_description(id){
 					<div class="center"><a href="" onclick="javascript:display_description('{modules_not_activated.ID}'); return false;" class="fa fa-plus" id="picture_desc{modules_not_activated.ID}"></a></div>
 				</td>
 				<td class="input-radio">
-					<label><input type="radio" name="activated-{modules_not_activated.ID}" value="1" # IF modules_not_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.yes}</label>
-					<label><input type="radio" name="activated-{modules_not_activated.ID}" value="0" # IF NOT modules_not_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.no}</label>
+					<label><input type="radio" name="activated-{modules_not_activated.ID}" value="1" # IF modules_not_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> ${LangLoader::get_message('yes', 'common')}</label>
+					<label><input type="radio" name="activated-{modules_not_activated.ID}" value="0" # IF NOT modules_not_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> ${LangLoader::get_message('no', 'common')}</label>
 				</td>
 				<td>
-					<button type="submit" class="submit" name="delete-{modules_not_activated.ID}" value="true">{@modules.delete}</button>
+					<button type="submit" class="submit" name="delete-{modules_not_activated.ID}" value="true">${LangLoader::get_message('delete', 'common')}</button>
 				</td>
 			</tr>
 			# END modules_not_activated #
