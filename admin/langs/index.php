@@ -30,7 +30,7 @@ defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
-	new UrlControllerMapper('AdminLangsInstalledListController', '`^(?:/installed)?/?$`'),
+	new UrlControllerMapper('AdminLangsInstalledListController', '`^/(?:installed/?)?$`'),
 	new UrlControllerMapper('AdminLangsNotInstalledListController', '`^/install/?$`'),
 	new UrlControllerMapper('AdminUninstallLangController', '`^/([a-z]+)/uninstall/?$`', array('id')),
 );

@@ -25,36 +25,62 @@
  *
  ###################################################*/
 
-class AdminCSSCacheController extends AbstractAdminFormPageController
+class AdminCSSCacheController extends AdminController
 {
+	/**
+	 * @var HTMLForm
+	 */
+	private $form;
+	/**
+	 * @var FormButtonSubmit
+	 */
+	private $submit_button;
+	
 	private $lang;
 
-	public function __construct()
+	public function execute(HTTPRequestCustom $request)
+	{
+		$this->init();
+		
+		$this->build_form();
+		
+		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$tpl->add_lang($this->lang);
+		
+		if ($this->submit_button->has_been_submited() && $this->form->validate())
+		{
+			$this->handle_submit();
+			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+		}
+		
+		$tpl->put('FORM', $this->form->display());
+		
+		return new AdminCacheMenuDisplayResponse($tpl, $this->lang['css_cache']);
+	}
+	
+	private function init()
 	{
 		$this->lang = LangLoader::get('admin-cache-common');
-		parent::__construct(LangLoader::get_message('process.success', 'status-messages-common'));
 	}
 
-	protected function create_form()
+	protected function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
+		
 		$fieldset = new FormFieldsetHTML('css_cache', $this->lang['css_cache']);
 		$form->add_fieldset($fieldset);
+		
 		$fieldset->add_field(new FormFieldHTML('explain', $this->lang['explain_css_cache']));
-		$button = new FormButtonSubmit($this->lang['clear_cache'], 'button');
-		$this->set_submit_button($button);
-		$form->add_button($button);
-		$this->set_form($form);
+		
+		$this->submit_button = new FormButtonSubmit($this->lang['clear_cache'], 'button');
+		$form->add_button($this->submit_button);
+		
+		$this->form = $form;
 	}
 
 	protected function handle_submit()
 	{
 		AppContext::get_cache_service()->clear_css_cache();
-	}
-
-	protected function generate_response(View $view)
-	{
-		return new AdminCacheMenuDisplayResponse($view, $this->lang['css_cache']);
 	}
 }
 ?>

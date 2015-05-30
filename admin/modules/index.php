@@ -30,7 +30,7 @@ defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
-	new UrlControllerMapper('AdminModulesManagementController', '`^(?:/installed)?/?$`'),
+	new UrlControllerMapper('AdminModulesManagementController', '`^/(?:installed/?)?$`'),
 	new UrlControllerMapper('AdminModuleAddController', '`^/add/?$`'),
 	new UrlControllerMapper('AdminModuleUpdateController', '`^/update(?:/([A-Za-z0-9_-]+))?/?$`', array('id_module')),
 	new UrlControllerMapper('AdminModuleDeleteController', '`^/delete(?:/([A-Za-z0-9_-]+))?/?$`', array('id_module'))

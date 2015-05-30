@@ -39,8 +39,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('AdminMemberAddController', '`^/add/?$`'),
 	new UrlControllerMapper('AdminMemberConfigController', '`^/config/?$`'),
 	new UrlControllerMapper('AdminMemberDeleteController', '`^/([0-9]+)/delete/?$`', array('id')),
-	new UrlControllerMapper('AdminViewAllMembersController', '`^/management/?$`'),
-	new UrlControllerMapper('AdminViewAllMembersController'),
+	new UrlControllerMapper('AdminViewAllMembersController', '`^/(?:management/?)?$`')
 );
 DispatchManager::dispatch($url_controller_mappers);
 ?>

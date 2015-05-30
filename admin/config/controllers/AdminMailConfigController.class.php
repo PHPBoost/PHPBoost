@@ -25,25 +25,47 @@
  *
  ###################################################*/
 
-class AdminMailConfigController extends AbstractAdminFormPageController
+class AdminMailConfigController extends AdminController
 {
-	private $lang;
-
 	/**
-	 * @var MailServiceConfig
+	 * @var HTMLForm
 	 */
-	private $config;
-	
+	private $form;
+	/**
+	 * @var FormButtonSubmit
+	 */
 	private $submit_button;
 	
-	public function __construct()
+	private $lang;
+	private $config;
+
+	public function execute(HTTPRequestCustom $request)
+	{
+		$this->init();
+		
+		$this->build_form();
+		
+		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$tpl->add_lang($this->lang);
+		
+		if ($this->submit_button->has_been_submited() && $this->form->validate())
+		{
+			$this->save();
+			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+		}
+		
+		$tpl->put('FORM', $this->form->display());
+		
+		return new AdminCacheMenuDisplayResponse($tpl, $this->lang['mail-config']);
+	}
+	
+	private function init()
 	{
 		$this->lang = LangLoader::get('admin-config-common');
-		parent::__construct(LangLoader::get_message('message.success.config', 'status-messages-common'));
 		$this->config = MailServiceConfig::load();
 	}
 
-	protected function create_form()
+	protected function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
 
@@ -98,53 +120,42 @@ class AdminMailConfigController extends AbstractAdminFormPageController
 				$default_protocol_option = $none_protocol_option;
 		}
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('smtp_protocol', $this->lang['mail-config.smtp_secure_protocol'], $default_protocol_option, array($none_protocol_option, $tls_protocol_option, $ssl_protocol_option), array('disabled' => !$smtp_enabled)));
-
+		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
-		$this->set_form($form);
-		$this->set_submit_button($this->submit_button);
+		$form->add_button(new FormButtonReset());
+		
+		$this->form = $form;
 	}
 
-	private function get_multi_mail_regex()
+	protected function save()
 	{
-		$simple_regex = AppContext::get_mail_service()->get_mail_checking_raw_regex();
-		return '`^' . $simple_regex . '(?:,' . $simple_regex . ')*$`i';
-	}
+		$this->config->set_default_mail_sender($this->form->get_value('default_mail_sender'));
+		$this->config->set_administrators_mails(explode(',', $this->form->get_value('admin_addresses')));
+		$this->config->set_mail_signature($this->form->get_value('mail_signature'));
 
-	protected function handle_submit()
-	{
-		$form = $this->get_form();
-		$config = $this->config;
-
-		$config->set_default_mail_sender($form->get_value('default_mail_sender'));
-		$config->set_administrators_mails(explode(',', $form->get_value('admin_addresses')));
-		$config->set_mail_signature($form->get_value('mail_signature'));
-
-		if ($form->get_value('use_smtp'))
+		if ($this->form->get_value('use_smtp'))
 		{
-			$config->enable_smtp();
+			$this->config->enable_smtp();
 
-			$config->set_smtp_host($form->get_value('smtp_host'));
-			$config->set_smtp_port($form->get_value('smtp_port'));
-			$config->set_smtp_login($form->get_value('smtp_login'));
-			$config->set_smtp_password($form->get_value('smtp_password'));
-			$config->set_smtp_protocol($form->get_value('smtp_protocol')->get_raw_value());
+			$this->config->set_smtp_host($this->form->get_value('smtp_host'));
+			$this->config->set_smtp_port($this->form->get_value('smtp_port'));
+			$this->config->set_smtp_login($this->form->get_value('smtp_login'));
+			$this->config->set_smtp_password($this->form->get_value('smtp_password'));
+			$this->config->set_smtp_protocol($this->form->get_value('smtp_protocol')->get_raw_value());
 		}
 		else
 		{
-			$config->disable_smtp();
+			$this->config->disable_smtp();
 		}
 
 		MailServiceConfig::save();
 	}
-
-	protected function generate_response(View $view)
+	
+	private function get_multi_mail_regex()
 	{
-		if ($this->submit_button->has_been_submited() && $this->get_form()->validate())
-		{
-			$this->create_form();
-		}
-		return new AdminConfigDisplayResponse($view, $this->lang['mail-config']);
+		$simple_regex = AppContext::get_mail_service()->get_mail_checking_raw_regex();
+		return '`^' . $simple_regex . '(?:,' . $simple_regex . ')*$`i';
 	}
 }
 ?>

@@ -30,7 +30,7 @@ defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
-	new UrlControllerMapper('AdminSmileysListController', '`^/(?:management)?/?$`'),
+	new UrlControllerMapper('AdminSmileysListController', '`^/(?:management/?)?$`'),
 	new UrlControllerMapper('AdminSmileysFormController', '`^/add/?$`'),
 	new UrlControllerMapper('AdminSmileysFormController', '`^/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('AdminSmileysDeleteController', '`^/([0-9]+)/delete/?$`', array('id'))

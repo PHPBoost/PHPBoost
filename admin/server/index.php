@@ -31,7 +31,7 @@ require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
 	new UrlControllerMapper('AdminServerPHPInfoController', '`^/phpinfo/?$`'),
-	new UrlControllerMapper('AdminServerSystemReportController', '`^(?:/report)?/?$`')
+	new UrlControllerMapper('AdminServerSystemReportController', '`^/(?:report/?)?$`')
 );
 DispatchManager::dispatch($url_controller_mappers);
 ?>
