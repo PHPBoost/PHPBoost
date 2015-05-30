@@ -83,9 +83,7 @@ class GalleryUrlBuilder
 	 */
 	public static function display_category($id, $rewrited_name, $page = 1)
 	{
-		$category = $id > 0 ? $id . '-' . $rewrited_name .'/' : '';
-		$page = $page !== 1 ? '&p=' . $page : '';
-		return new Url('gallery/gallery.php?cat=' . $id . $page);
+		return new Url('/gallery/gallery' . url('.php?cat=' . $id . ($page !== 1 ? '&p=' . $page : ''), '-' . $id . '+' . $rewrited_name . ($page !== 1 ? '-' . $page : '') . '.php'));
 	}
 	
 	/**
