@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class GallerySitemapExtensionPoint implements SitemapExtensionPoint
+class GallerySitemapExtensionPoint extends SitemapCategoriesModule
 {
 	public function __construct()
 	{
