@@ -1,29 +1,5 @@
 		<script>
 		<!--
-		function change_upload_level( level ) 
-		{
-			if( level == -1 )
-			{
-				document.getElementById('limit_member').innerHTML = '{L_UNLIMITED}';
-				document.getElementById('limit_modo').innerHTML = '{L_UNLIMITED}';
-			}
-			else if( level == 1 )
-			{
-				document.getElementById('limit_member').innerHTML = '{L_UNAUTH}';
-				document.getElementById('limit_modo').innerHTML = '<input type="text" size="5" name="limit_modo" value="{LIMIT_MODO}">';
-			}
-			else if( level == 2 )
-			{
-				document.getElementById('limit_member').innerHTML = '{L_UNAUTH}';
-				document.getElementById('limit_modo').innerHTML = '{L_UNAUTH}';
-			}
-			else
-			{
-				document.getElementById('limit_member').innerHTML = '<input type="text" size="5" name="limit_member" value="{LIMIT_USER}">';
-				document.getElementById('limit_modo').innerHTML = '<input type="text" size="5" name="limit_modo" value="{LIMIT_MODO}">';
-			}
-		}
-		
 		function check_form(){
 			if(document.getElementById('max_height').value == "") {
 				alert("{L_REQUIRE_MAX_HEIGHT}");
@@ -61,14 +37,13 @@
 				alert("{L_REQUIRE_IMG_P}");
 				return false;
 			}
-			if(document.getElementById('notation_scale').value == "" || document.getElementById('notation_scale').value == "0") {
+			if(document.getElementById('notation_scale').value == "" || document.getElementById('notation_scale').value < 3 || document.getElementById('notation_scale').value > 20) {
 				alert("{L_REQUIRE_NOTATION_SCALE}");
 				return false;
 			}
 			
 			return true;
 		}
-
 		-->
 		</script>
 
@@ -110,39 +85,39 @@
 					<legend>{L_CONFIG_CONFIG}</legend>
 					<div class="form-element">
 						<label for="max_width">* {L_MAX_WIDTH} <span class="field-description">{L_MAX_WIDTH_EXPLAIN}</span></label>
-						<div class="form-field"><input type="text" size="5" id="max_width" name="max_width" value="{MAX_WIDTH}"> {L_UNIT_PX}</div>
+						<div class="form-field"><input type="number" min="1" id="max_width" name="max_width" value="{MAX_WIDTH}"> {L_UNIT_PX}</div>
 					</div>
 					<div class="form-element">
 						<label for="max_height">* {L_MAX_HEIGHT} <span class="field-description">{L_MAX_HEIGHT_EXPLAIN}</span></label>
-						<div class="form-field"><input type="text" size="5" id="max_height" name="max_height" value="{MAX_HEIGHT}"> {L_UNIT_PX}</div>
+						<div class="form-field"><input type="number" min="1" id="max_height" name="max_height" value="{MAX_HEIGHT}"> {L_UNIT_PX}</div>
 					</div>
 					<div class="form-element">
 						<label for="mini_max_height">* {L_MINI_MAX_HEIGHT} <span class="field-description">{L_MINI_MAX_HEIGHT_EXPLAIN}</span></label>
-						<div class="form-field"><input type="text" size="5" id="mini_max_height" name="mini_max_height" value="{MINI_MAX_HEIGHT}"> {L_UNIT_PX}</div>
+						<div class="form-field"><input type="number" min="1" id="mini_max_height" name="mini_max_height" value="{MINI_MAX_HEIGHT}"> {L_UNIT_PX}</div>
 					</div>
 					<div class="form-element">
 						<label for="mini_max_width">* {L_MINI_MAX_WIDTH} <span class="field-description">{L_MINI_MAX_WIDTH_EXPLAIN}</span></label>
-						<div class="form-field"><input type="text" size="5" id="mini_max_width" name="mini_max_width" value="{MINI_MAX_WIDTH}"> {L_UNIT_PX}</div>
+						<div class="form-field"><input type="number" min="1" id="mini_max_width" name="mini_max_width" value="{MINI_MAX_WIDTH}"> {L_UNIT_PX}</div>
 					</div>
 					<div class="form-element">
 						<label for="max_weight">* {L_MAX_WEIGHT} <span class="field-description">{L_MAX_WEIGHT_EXPLAIN}</span></label>
-						<div class="form-field"><input type="text" size="6" id="max_weight" name="max_weight" value="{MAX_WEIGHT}"> {L_UNIT_KO}</div>
+						<div class="form-field"><input type="number" min="1" id="max_weight" name="max_weight" value="{MAX_WEIGHT}"> {L_UNIT_KO}</div>
 					</div>
 					<div class="form-element">
 						<label for="quality">* {L_QUALITY_THUMB} <span class="field-description">{L_QUALITY_THUMB_EXPLAIN}</span></label>
-						<div class="form-field"><input type="text" size="3" id="quality" name="quality" value="{QUALITY}"> %</div>
+						<div class="form-field"><input type="number" min="1" max="100" id="quality" name="quality" value="{QUALITY}"> %</div>
 					</div>
 					<div class="form-element">
 						<label for="categories_number_per_page">* ${LangLoader::get_message('config.categories_number_per_page', 'admin-common')}</label>
-						<div class="form-field"><input type="text" size="6" maxlength="6" id="categories_number_per_page" name="categories_number_per_page" value="{CATEGORIES_NUMBER_PER_PAGE}"></div>
+						<div class="form-field"><input type="number" min="1" max="50" id="categories_number_per_page" name="categories_number_per_page" value="{CATEGORIES_NUMBER_PER_PAGE}"></div>
 					</div>
 					<div class="form-element">
 						<label for="columns_number">* {L_COLUMNS_NUMBER} <span class="field-description">{L_COLUMNS_NUMBER_EXPLAIN}</span></label>
-						<div class="form-field"><input type="text" size="1" maxlength="1" id="columns_number" name="columns_number" value="{COLUMNS_NUMBER}"> {L_COLUMN}</div>
+						<div class="form-field"><input type="number" min="1" max="4" id="columns_number" name="columns_number" value="{COLUMNS_NUMBER}"> {L_COLUMN}</div>
 					</div>
 					<div class="form-element">
 						<label for="pics_number_per_page">* {L_PICS_NUMBER_PER_PAGE}</label>
-						<div class="form-field"><input type="text" size="6" maxlength="6" id="pics_number_per_page" name="pics_number_per_page" value="{PICS_NUMBER_PER_PAGE}"></div>
+						<div class="form-field"><input type="number" min="1" max="100" id="pics_number_per_page" name="pics_number_per_page" value="{PICS_NUMBER_PER_PAGE}"></div>
 					</div>
 				</fieldset>
 				
@@ -201,7 +176,7 @@
 					</div>
 					<div class="form-element">
 						<label for="notation_scale">* {L_NOTATION_SCALE} <span class="field-description">{L_NOTATION_SCALE_EXPLAIN}</span></label>
-						<div class="form-field"><label><input type="text" size="3" name="notation_scale" id="notation_scale" value="{NOTATION_SCALE}"></label></div>
+						<div class="form-field"><label><input type="number" min="3" max="20" name="notation_scale" id="notation_scale" value="{NOTATION_SCALE}"></label></div>
 					</div>
 				</fieldset>
 				
@@ -218,7 +193,7 @@
 					</div>
 					<div class="form-element">
 						<label for="pics_number_in_mini">{L_PICS_NUMBER_IN_MINI}</label>
-						<div class="form-field"><label><input type="text" size="3" name="pics_number_in_mini" id="pics_number_in_mini" value="{PICS_NUMBER_IN_MINI}"> </label></div>
+						<div class="form-field"><label><input type="number" min="1" name="pics_number_in_mini" id="pics_number_in_mini" value="{PICS_NUMBER_IN_MINI}"> </label></div>
 					</div>
 					<div class="form-element">
 						<label for="mini_pics_speed">{L_MINI_PICS_SPEED} <span class="field-description">{L_MINI_PICS_SPEED_EXPLAIN}</span></label>
@@ -247,15 +222,15 @@
 					</div>
 					<div class="form-element">
 						<label for="logo_transparency">{L_LOGO_TRANSPARENCY} <span class="field-description">{L_LOGO_TRANSPARENCY_EXPLAIN}</span></label>
-						<div class="form-field"><input type="text" size="3" name="logo_transparency" id="logo_transparency" value="{LOGO_TRANSPARENCY}"> %</div>
+						<div class="form-field"><input type="number" min="1" max="100" name="logo_transparency" id="logo_transparency" value="{LOGO_TRANSPARENCY}"> %</div>
 					</div>
 					<div class="form-element">
 						<label for="logo_horizontal_distance">{L_WIDTH_BOTTOM_RIGHT} <span class="field-description">{L_WIDTH_BOTTOM_RIGHT_EXPLAIN}</span></label>
-						<div class="form-field"><input type="text" size="5" name="logo_horizontal_distance" id="logo_horizontal_distance" value="{LOGO_HORIZONTAL_DISTANCE}"> {L_UNIT_PX}</div>
+						<div class="form-field"><input type="number" min="1" name="logo_horizontal_distance" id="logo_horizontal_distance" value="{LOGO_HORIZONTAL_DISTANCE}"> {L_UNIT_PX}</div>
 					</div>
 					<div class="form-element">
 						<label for="logo_vertical_distance">{L_HEIGHT_BOTTOM_RIGHT} <span class="field-description">{L_HEIGHT_BOTTOM_RIGHT_EXPLAIN}</span></label>
-						<div class="form-field"><input type="text" size="5" name="logo_vertical_distance" id="logo_vertical_distance" value="{LOGO_VERTICAL_DISTANCE}"> {L_UNIT_PX}</div>
+						<div class="form-field"><input type="number" min="1" name="logo_vertical_distance" id="logo_vertical_distance" value="{LOGO_VERTICAL_DISTANCE}"> {L_UNIT_PX}</div>
 					</div>
 				</fieldset>
 				
@@ -263,11 +238,11 @@
 					<legend>{L_UPLOAD_PICS}</legend>
 					<div class="form-element">
 						<label for="member_max_pics_number">{L_MEMBER_MAX_PICS_NUMBER} <span class="field-description">{L_MEMBER_MAX_PICS_NUMBER_EXPLAIN}</span></label>
-						<div class="form-field"><input type="text" size="5" name="member_max_pics_number" id="member_max_pics_number" value="{MEMBER_MAX_PICS_NUMBER}"></div>
+						<div class="form-field"><input type="number" min="0" name="member_max_pics_number" id="member_max_pics_number" value="{MEMBER_MAX_PICS_NUMBER}"></div>
 					</div>
 					<div class="form-element">
 						<label for="moderator_max_pics_number">{L_MODERATOR_MAX_PICS_NUMBER} <span class="field-description">{L_MODERATOR_MAX_PICS_NUMBER_EXPLAIN}</span></label>
-						<div class="form-field"><input type="text" size="5" name="moderator_max_pics_number" id="moderator_max_pics_number" value="{MODERATOR_MAX_PICS_NUMBER}"></div>
+						<div class="form-field"><input type="number" min="0" name="moderator_max_pics_number" id="moderator_max_pics_number" value="{MODERATOR_MAX_PICS_NUMBER}"></div>
 					</div>
 				</fieldset>
 				
@@ -294,7 +269,6 @@
 					<button type="reset" value="true">{L_RESET}</button>
 				</fieldset>
 			</form>
-
 			<form action="admin_gallery_config.php?token={TOKEN}" name="form" method="post" class="fieldset-content">
 				<fieldset>
 					<legend>{L_CACHE}</legend>
@@ -307,4 +281,3 @@
 				</fieldset>
 			</form>
 		</div>
-		
