@@ -56,7 +56,7 @@ class AdminMailConfigController extends AdminController
 		
 		$tpl->put('FORM', $this->form->display());
 		
-		return new AdminCacheMenuDisplayResponse($tpl, $this->lang['mail-config']);
+		return new AdminConfigDisplayResponse($tpl, $this->lang['mail-config']);
 	}
 	
 	private function init()
