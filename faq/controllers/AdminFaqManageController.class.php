@@ -52,13 +52,13 @@ class AdminFaqManageController extends AdminModuleController
 	private function build_table()
 	{
 		$table_model = new SQLHTMLTableModel(FaqSetup::$faq_table, array(
-				new HTMLTableColumn(''),
-				new HTMLTableColumn($this->lang['faq.form.question'], 'question'),
-				new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
-				new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),
-				new HTMLTableColumn(LangLoader::get_message('form.date.creation', 'common'), 'creation_date'),
-				new HTMLTableColumn(LangLoader::get_message('status.approved', 'common'), 'approved'),
-			), new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
+			new HTMLTableColumn($this->lang['faq.form.question'], 'question'),
+			new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
+			new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),
+			new HTMLTableColumn(LangLoader::get_message('form.date.creation', 'common'), 'creation_date'),
+			new HTMLTableColumn(LangLoader::get_message('status.approved', 'common'), 'approved'),
+			new HTMLTableColumn('')
+		), new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
 		
 		$table = new HTMLTable($table_model);
 		
@@ -80,12 +80,12 @@ class AdminFaqManageController extends AdminModuleController
 			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('color' => $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
 
 			$results[] = new HTMLTableRow(array(
-				new HTMLTableRowCell($edit_link->display() . $delete_link->display()),
 				new HTMLTableRowCell(new LinkHTMLElement(FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $faq_question->get_id()), $faq_question->get_question()), 'left'),
 				new HTMLTableRowCell(new LinkHTMLElement(FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), $category->get_name())),
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell($faq_question->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
 				new HTMLTableRowCell($faq_question->is_approved() ? LangLoader::get_message('yes', 'common') : LangLoader::get_message('no', 'common')),
+				new HTMLTableRowCell($edit_link->display() . $delete_link->display())
 			));
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);

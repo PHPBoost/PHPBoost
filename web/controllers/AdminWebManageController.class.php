@@ -52,13 +52,13 @@ class AdminWebManageController extends AdminModuleController
 	private function build_table()
 	{
 		$table_model = new SQLHTMLTableModel(WebSetup::$web_table, array(
-				new HTMLTableColumn(''),
-				new HTMLTableColumn(LangLoader::get_message('form.name', 'common'), 'name'),
-				new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
-				new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),
-				new HTMLTableColumn(LangLoader::get_message('form.date.creation', 'common'), 'creation_date'),
-				new HTMLTableColumn(LangLoader::get_message('status', 'common'), 'approbation_type'),
-			), new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
+			new HTMLTableColumn(LangLoader::get_message('form.name', 'common'), 'name'),
+			new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
+			new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),
+			new HTMLTableColumn(LangLoader::get_message('form.date.creation', 'common'), 'creation_date'),
+			new HTMLTableColumn(LangLoader::get_message('status', 'common'), 'approbation_type'),
+			new HTMLTableColumn('')
+		), new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
 		
 		$table = new HTMLTable($table_model);
 		
@@ -85,12 +85,12 @@ class AdminWebManageController extends AdminModuleController
 			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('color' => $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
 
 			$results[] = new HTMLTableRow(array(
-				new HTMLTableRowCell($edit_link->display() . $delete_link->display()),
 				new HTMLTableRowCell(new LinkHTMLElement(WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_name()), $weblink->get_name()), 'left'),
 				new HTMLTableRowCell(new LinkHTMLElement(WebUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), $category->get_name())),
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell($weblink->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
 				new HTMLTableRowCell($weblink->get_status()),
+				new HTMLTableRowCell($edit_link->display() . $delete_link->display())
 			));
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);

@@ -53,12 +53,12 @@ class CalendarEventsListController extends ModuleController
 	private function build_table()
 	{
 		$table_model = new SQLHTMLTableModel(CalendarSetup::$calendar_events_table, array(
-			new HTMLTableColumn(''),
 			new HTMLTableColumn(LangLoader::get_message('form.title', 'common'), 'title'),
 			new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
 			new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),
 			new HTMLTableColumn(LangLoader::get_message('date', 'date-common'), 'start_date'),
-			new HTMLTableColumn($this->lang['calendar.titles.repetition'])
+			new HTMLTableColumn($this->lang['calendar.titles.repetition']),
+			new HTMLTableColumn('')
 		), new HTMLTableSortingRule('start_date', HTMLTableSortingRule::ASC));
 		
 		$table_model->set_caption($this->lang['calendar.events_list']);
@@ -91,12 +91,12 @@ class CalendarEventsListController extends ModuleController
 			$br = new BrHTMLElement();
 			
 			$results[] = new HTMLTableRow(array(
-				new HTMLTableRowCell($edit_link->display() . $delete_link->display()),
 				new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()), $event->get_content()->get_title()), 'left'),
 				new HTMLTableRowCell(new SpanHTMLElement($category->get_name(), array('style' => $category->get_id() != Category::ROOT_CATEGORY && $category->get_color() ? 'color:' . $category->get_color() : ''))),
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell(LangLoader::get_message('from_date', 'main') . ' ' . $event->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . $br->display() . LangLoader::get_message('to_date', 'main') . ' ' . $event->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
-				new HTMLTableRowCell($event->belongs_to_a_serie() ? $this->lang['calendar.labels.repeat.' . $event->get_content()->get_repeat_type()] . ' - ' . $event->get_content()->get_repeat_number() . ' ' . $this->lang['calendar.labels.repeat_times'] : LangLoader::get_message('no', 'common'))
+				new HTMLTableRowCell($event->belongs_to_a_serie() ? $this->lang['calendar.labels.repeat.' . $event->get_content()->get_repeat_type()] . ' - ' . $event->get_content()->get_repeat_number() . ' ' . $this->lang['calendar.labels.repeat_times'] : LangLoader::get_message('no', 'common')),
+				new HTMLTableRowCell($edit_link->display() . $delete_link->display())
 			));
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);

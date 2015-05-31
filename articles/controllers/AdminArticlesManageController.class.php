@@ -51,12 +51,12 @@ class AdminArticlesManageController extends AdminModuleController
 	private function build_table()
 	{
 		$table_model = new SQLHTMLTableModel(ArticlesSetup::$articles_table, array(
-			new HTMLTableColumn(''),
 			new HTMLTableColumn(LangLoader::get_message('form.title', 'common'), 'title'),
 			new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
 			new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),
 			new HTMLTableColumn(LangLoader::get_message('form.date.creation', 'common'), 'date_created'),
 			new HTMLTableColumn(LangLoader::get_message('status', 'common'), 'published'),
+			new HTMLTableColumn('')
 		), new HTMLTableSortingRule('date_created', HTMLTableSortingRule::DESC));
 		
 		$table = new HTMLTable($table_model);
@@ -103,12 +103,12 @@ class AdminArticlesManageController extends AdminModuleController
 			$start_and_end_dates = new SpanHTMLElement($dates, array(), 'smaller');
 			
 			$results[] = new HTMLTableRow(array(
-				new HTMLTableRowCell($edit_link->display() . $delete_link->display()),
 				new HTMLTableRowCell(new LinkHTMLElement(ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title()), $article->get_title()), 'left'),
 				new HTMLTableRowCell(new LinkHTMLElement(ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), $category->get_name())),
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell($article->get_date_created()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
 				new HTMLTableRowCell($article->get_status() . $br->display() . ($dates ? $start_and_end_dates->display() : '')),
+				new HTMLTableRowCell($edit_link->display() . $delete_link->display())
 			));
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);

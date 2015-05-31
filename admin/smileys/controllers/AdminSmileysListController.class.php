@@ -48,9 +48,9 @@ class AdminSmileysListController extends AdminController
 	private function build_table()
 	{
 		$table_model = new HTMLTableModel(array(
-			new HTMLTableColumn(''),
 			new HTMLTableColumn($this->lang['smiley']),
-			new HTMLTableColumn(LangLoader::get_message('code', 'main'))
+			new HTMLTableColumn(LangLoader::get_message('code', 'main')),
+			new HTMLTableColumn('')
 		), new HTMLTableSortingRule(''), HTMLTableModel::NO_PAGINATION);
 		
 		$table = new HTMLTable($table_model);
@@ -65,9 +65,9 @@ class AdminSmileysListController extends AdminController
 			$delete_link = new LinkHTMLElement(AdminSmileysUrlBuilder::delete($row['idsmiley']), '', array('title' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-delete');
 			
 			$results[] = new HTMLTableRow(array(
-				new HTMLTableRowCell($edit_link->display() . $delete_link->display()),
 				new HTMLTableRowCell(new ImgHTMLElement(Url::to_rel('/images/smileys/') . $row['url_smiley'], array('id' => 'smiley-' . $row['idsmiley'] . '-img', 'alt' => ''))),
-				new HTMLTableRowCell($code)
+				new HTMLTableRowCell($code),
+				new HTMLTableRowCell($edit_link->display() . $delete_link->display())
 			));
 		}
 		$table->set_rows(count($results), $results);

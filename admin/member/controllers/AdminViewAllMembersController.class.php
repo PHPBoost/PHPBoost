@@ -63,13 +63,13 @@ class AdminViewAllMembersController extends AdminController
 		$number_admins = UserService::count_admin_members();
 		
 		$table_model = new SQLHTMLTableModel(DB_TABLE_MEMBER, array(
-			new HTMLTableColumn(''),
 			new HTMLTableColumn($this->lang['display_name'], 'display_name'),
 			new HTMLTableColumn($this->lang['level'], 'level'),
 			new HTMLTableColumn($this->lang['email']),
 			new HTMLTableColumn($this->lang['registration_date'], 'registration_date'),
 			new HTMLTableColumn($this->lang['last_connection'], 'last_connection_date'),
-			new HTMLTableColumn($this->lang['approbation'], 'approved')
+			new HTMLTableColumn($this->lang['approbation'], 'approved'),
+			new HTMLTableColumn('')
 		), new HTMLTableSortingRule('display_name', HTMLTableSortingRule::ASC));
 		
 		$table = new HTMLTable($table_model);
@@ -92,13 +92,13 @@ class AdminViewAllMembersController extends AdminController
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 			
 			$results[] = new HTMLTableRow(array(
-				new HTMLTableRowCell($edit_link->display() . $delete_link->display()),
 				new HTMLTableRowCell(new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('color' => $user_group_color) : array()), UserService::get_level_class($user->get_level()))),
 				new HTMLTableRowCell(UserService::get_level_lang($user->get_level())),
 				new HTMLTableRowCell(new LinkHTMLElement('mailto:' . $user->get_email(), $this->lang['email'], array(), 'basic-button smaller')),
 				new HTMLTableRowCell(Date::to_format($row['registration_date'], Date::FORMAT_DAY_MONTH_YEAR)),
 				new HTMLTableRowCell(!empty($row['last_connection_date']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('never', 'main')),
 				new HTMLTableRowCell($row['approved'] ? LangLoader::get_message('yes', 'common') : LangLoader::get_message('no', 'common')),
+				new HTMLTableRowCell($edit_link->display() . $delete_link->display())
 			));
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
