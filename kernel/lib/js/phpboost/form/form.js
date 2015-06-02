@@ -355,3 +355,7 @@ FormField.prototype = {
 		return '';
 	}
 };
+
+jQuery(document).on('keypress', 'input[type="number"]', function (event) {
+    return (((event.which > 47) && (event.which < 58)) || (event.which == 13));
+});
