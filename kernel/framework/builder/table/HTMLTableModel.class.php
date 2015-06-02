@@ -39,7 +39,7 @@ class HTMLTableModel
 	 */
 	public $html_table;
 
-	private $id = 'table';
+	private $id;
 	private $caption = '';
 	private $rows_per_page;
 	private $nb_rows_options = array(10, 25, 100);
@@ -54,7 +54,7 @@ class HTMLTableModel
 	 */
 	private $columns;
 
-	public function __construct(array $columns, HTMLTableSortingRule $default_sorting_rule, $rows_per_page = self::DEFAULT_PAGINATION)
+	public function __construct($id, array $columns, HTMLTableSortingRule $default_sorting_rule, $rows_per_page = self::DEFAULT_PAGINATION)
 	{
 		foreach ($columns as $column)
 		{
@@ -65,6 +65,7 @@ class HTMLTableModel
 		$this->default_sorting_rule = $default_sorting_rule;
 		$this->rows_per_page = $rows_per_page;
 		$this->set_nb_rows_options($this->nb_rows_options);
+		$this->id = $id;
 	}
 
 	public function set_html_table(HTMLTable $html_table)

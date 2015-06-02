@@ -61,13 +61,12 @@ class AdminLoggedErrorsControllerList extends AdminController
 			'error' => 'error.fatal' 
 		);
 		
-		$table_model = new HTMLTableModel(array(
-			new HTMLTableColumn(LangLoader::get_message('description', 'main')),
-			new HTMLTableColumn(LangLoader::get_message('date', 'date-common'), '', 'col-large')
+		$table_model = new HTMLTableModel(__CLASS__, array(
+			new HTMLTableColumn(LangLoader::get_message('date', 'date-common'), '', 'col-large'),
+			new HTMLTableColumn(LangLoader::get_message('description', 'main'))
 		), new HTMLTableSortingRule(''), self::NUMBER_ITEMS_PER_PAGE);
 		
-		$table = new HTMLTable($table_model);
-		$table->set_css_class('table-fixed');
+		$table = new HTMLTable($table_model, 'table-fixed');
 		
 		$table_model->set_caption($this->lang['logged_errors_list']);
 		
@@ -82,8 +81,8 @@ class AdminLoggedErrorsControllerList extends AdminController
 			$error_message = $error_class->display() . strip_tags($error['errmsg'], '<br>') . $br->display() . $br->display() . $br->display() . $error_stacktrace->display();
 			
 			$results[] = new HTMLTableRow(array(
-				new HTMLTableRowCell(new DivHTMLElement($error_message, array(), $error['errclass'])),
-				new HTMLTableRowCell($error['errdate'])
+				new HTMLTableRowCell($error['errdate']),
+				new HTMLTableRowCell(new DivHTMLElement($error_message, array(), $error['errclass']))
 			));
 		}
 		$results_number = count($results);

@@ -34,10 +34,10 @@ class SQLHTMLTableModel extends HTMLTableModel
 	protected $table;
 	protected $parameters;
 
-	public function __construct($table, array $columns, HTMLTableSortingRule $default_sorting_rule, $rows_per_page = self::DEFAULT_PAGINATION)
+	public function __construct($table, $id, array $columns, HTMLTableSortingRule $default_sorting_rule, $rows_per_page = self::DEFAULT_PAGINATION)
 	{
 		$this->table = $table;
-		parent::__construct($columns, $default_sorting_rule, $rows_per_page);
+		parent::__construct($id, $columns, $default_sorting_rule, $rows_per_page);
 	}
 
 	public function get_number_of_matching_rows()

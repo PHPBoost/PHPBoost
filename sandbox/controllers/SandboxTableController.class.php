@@ -48,7 +48,7 @@ class SandboxTableController extends ModuleController
 	
 	private function build_table()
 	{
-		$table = new SQLHTMLTableModel(DB_TABLE_MEMBER, array(
+		$table = new SQLHTMLTableModel(DB_TABLE_MEMBER, __CLASS__, array(
 			new HTMLTableColumn('pseudo', 'display_name'),
 			new HTMLTableColumn('email'),
 			new HTMLTableColumn('inscrit le', 'registration_date'),
@@ -58,8 +58,7 @@ class SandboxTableController extends ModuleController
 		), new HTMLTableSortingRule('user_id', HTMLTableSortingRule::ASC));
 
 		$table->set_caption('Liste des membres');
-		$table->set_id('t42');
-
+		
 		$options = array('horn' => 'Horn', 'coucou' => 'Coucou', 'teston' => 'teston');
 		$table->add_filter(new HTMLTableEqualsFromListSQLFilter('display_name', 'filter1', 'login Equals', $options));
         $table->add_filter(new HTMLTableBeginsWithTextSQLFilter('display_name', 'filter2', 'login Begins with (regex)', '`^(?!%).+$`'));

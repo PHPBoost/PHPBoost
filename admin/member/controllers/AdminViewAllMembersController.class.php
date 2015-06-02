@@ -62,7 +62,7 @@ class AdminViewAllMembersController extends AdminController
 	{
 		$number_admins = UserService::count_admin_members();
 		
-		$table_model = new SQLHTMLTableModel(DB_TABLE_MEMBER, array(
+		$table_model = new SQLHTMLTableModel(DB_TABLE_MEMBER, __CLASS__, array(
 			new HTMLTableColumn($this->lang['display_name'], 'display_name'),
 			new HTMLTableColumn($this->lang['level'], 'level'),
 			new HTMLTableColumn($this->lang['email']),

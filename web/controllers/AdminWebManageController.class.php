@@ -51,7 +51,7 @@ class AdminWebManageController extends AdminModuleController
 	
 	private function build_table()
 	{
-		$table_model = new SQLHTMLTableModel(WebSetup::$web_table, array(
+		$table_model = new SQLHTMLTableModel(WebSetup::$web_table, __CLASS__, array(
 			new HTMLTableColumn(LangLoader::get_message('form.name', 'common'), 'name'),
 			new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
 			new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),
