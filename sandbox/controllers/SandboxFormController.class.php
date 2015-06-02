@@ -229,6 +229,9 @@ class SandboxFormController extends ModuleController
 
 		// COLOR PICKER
 		$fieldset2->add_field(new FormFieldColorPicker('color', 'Couleur', '#CC99FF'));
+
+		// SEARCH
+		$fieldset2->add_field(new FormFieldSearch('search', 'Recherche', ''));
 		
 		// FILE PICKER
 		$fieldset2->add_field(new FormFieldFilePicker('file', 'Fichier'));

@@ -86,6 +86,10 @@ abstract class AbstractFormField implements FormField
 	/**
 	 * @var string
 	 */
+	protected $placeholder = '';
+	/**
+	 * @var string
+	 */
 	protected $validation_error_message = '';
 	/**
 	 * @var FormFieldConstraint[]
@@ -383,6 +387,10 @@ abstract class AbstractFormField implements FormField
 					$this->set_pattern($value);
 					unset($field_options['pattern']);
 					break;
+				case 'placeholder':
+					$this->set_placeholder($value);
+					unset($field_options['placeholder']);
+					break;
 				case 'required':
 					if (is_string($value))
 					{
@@ -465,7 +473,9 @@ abstract class AbstractFormField implements FormField
 			'C_READONLY' => $this->is_readonly(),
 			'C_HIDDEN' => $this->is_hidden(),
 			'C_PATTERN' => $this->has_pattern(),
-			'PATTERN' => $this->pattern
+			'PATTERN' => $this->pattern,
+			'C_PLACEHOLDER' => $this->has_placeholder(),
+			'PLACEHOLDER' => $this->placeholder
 		));
 	}
 
@@ -554,6 +564,16 @@ abstract class AbstractFormField implements FormField
 	public function set_pattern($pattern)
 	{
 		$this->pattern = $pattern;
+	}
+	
+	public function has_placeholder()
+	{
+		return $this->placeholder;
+	}
+	
+	public function set_placeholder($placeholder)
+	{
+		$this->placeholder = $placeholder;
 	}
 
 	public function set_template(Template $template)
