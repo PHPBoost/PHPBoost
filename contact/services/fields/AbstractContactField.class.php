@@ -78,7 +78,7 @@ abstract class AbstractContactField implements ContactFieldType
 					return new FormFieldConstraintRegex('`^[a-zA-Z0-9]+$`i');
 					break;
 				case 7:
-					return new FormFieldConstraintRegex('`^[a-zA-Zàáâãäåçèéêëìíîïğòóôõöùúûüıÿ-]+$`i');
+					return new FormFieldConstraintRegex('`^[a-zA-ZÃ Ã¡Ã¢Ã£Ã¤Ã¥Ã§Ã¨Ã©ÃªÃ«Ã¬Ã­Ã®Ã¯Ã°Ã²Ã³Ã´ÃµÃ¶Ã¹ÃºÃ»Ã¼Ã½Ã¿-]+$`i');
 					break;
 			}
 		}
