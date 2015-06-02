@@ -58,7 +58,7 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 					'ID' => $i,
 					'NAME' => stripslashes($options['title']),
 					'IS_DEFAULT' => (int)$options['is_default'],
-					'EMAIL' => $i > 0 ? stripslashes($options['email']) : implode(';', MailServiceConfig::load()->get_administrators_mails())
+					'EMAIL' => $i > 0 ? stripslashes($options['email']) : implode(',', MailServiceConfig::load()->get_administrators_mails())
 				));
 				$i++;
 			}
