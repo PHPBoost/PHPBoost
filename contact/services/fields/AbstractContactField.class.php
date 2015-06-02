@@ -71,20 +71,11 @@ abstract class AbstractContactField implements ContactFieldType
 		{
 			switch ($value)
 			{
-				case 1:
-					return new FormFieldConstraintRegex('`^[0-9]+$`i');
-					break;
 				case 2:
 					return new FormFieldConstraintRegex('`^[a-zA-Z]+$`i');
 					break;
 				case 3:
 					return new FormFieldConstraintRegex('`^[a-zA-Z0-9]+$`i');
-					break;
-				case 4:
-					return new FormFieldConstraintMailAddress();
-					break;
-				case 5:
-					return new FormFieldConstraintUrl();
 					break;
 				case 7:
 					return new FormFieldConstraintRegex('`^[a-zA-Zабвгдезийклмнопртуфхцщъыьэя-]+$`i');

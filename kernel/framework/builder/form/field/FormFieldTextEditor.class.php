@@ -31,9 +31,10 @@
  */
 class FormFieldTextEditor extends AbstractFormField
 {
-	private $size = 30;
-	private $maxlength = 255;
-	private static $tpl_src = '<input type="text" size="{SIZE}" maxlength="{MAX_LENGTH}" name="${escape(NAME)}" id="${escape(HTML_ID)}" value="{VALUE}"
+	protected $type = 'text';
+	protected $size = 30;
+	protected $maxlength = 255;
+	protected static $tpl_src = '<input type="{TYPE}" size="{SIZE}" maxlength="{MAX_LENGTH}" name="${escape(NAME)}" id="${escape(HTML_ID)}" value="{VALUE}"
 	class="# IF C_READONLY #low-opacity # ENDIF #${escape(CLASS)}" # IF C_PATTERN # pattern="{PATTERN}" # ENDIF # # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_READONLY # readonly="readonly" # ENDIF #>';
 
 	/**
@@ -69,10 +70,13 @@ class FormFieldTextEditor extends AbstractFormField
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_id(),
 			'HTML_ID' => $this->get_html_id(),
+			'TYPE' => $this->type,
 			'VALUE' => $this->get_value(),
 			'CLASS' => $this->get_css_class(),
 			'C_DISABLED' => $this->is_disabled(),
-			'C_READONLY' => $this->is_readonly()
+			'C_READONLY' => $this->is_readonly(),
+			'C_PATTERN' => $this->has_pattern(),
+			'PATTERN' => $this->pattern
 		));
 
 		$this->assign_common_template_variables($template);

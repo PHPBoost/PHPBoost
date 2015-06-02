@@ -127,14 +127,14 @@ class UserEditProfileController extends AbstractController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('display_name', $this->lang['display_name'], $this->user->get_display_name(), array('description'=> $this->lang['display_name.explain'], 'required' => true),
-			array(new FormFieldConstraintLengthRange(3, 20))
+			array(new FormFieldConstraintLengthRange(3, 25))
 		));	
 
-		$fieldset->add_field(new FormFieldTextEditor('email', $this->lang['email'], $this->user->get_email(), array(
-			'required' => true, 'description' => LangLoader::get_message('valid', 'main')),
-			array(new FormFieldConstraintMailAddress(), new FormFieldConstraintMailExist($this->user->get_id()))
+		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['email'], $this->user->get_email(),
+			array('required' => true),
+			array(new FormFieldConstraintMailExist($this->user->get_id()))
 		));
-				
+		
 		$fieldset->add_field(new FormFieldCheckbox('user_hide_mail', $this->lang['email.hide'], !$this->user->get_show_email()));
 
 		$fieldset->add_field(new FormFieldCheckbox('delete_account', $this->lang['delete-account'], FormFieldCheckbox::UNCHECKED));

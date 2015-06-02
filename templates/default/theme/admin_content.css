@@ -464,7 +464,7 @@ legend {
 	border-bottom: 1px solid #DDDDDD;
 }
 
-input[type=text], input[type=password], textarea, input[type=file], select {
+input[type=text], input[type=email], input[type=url], input[type=number], input[type=color], input[type=tel], input[type=search], input[type=password], textarea, input[type=file], select {
 	padding: 4px 6px;
 	color: #555555;
 	background-color: #FFFFFF;
@@ -473,13 +473,13 @@ input[type=text], input[type=password], textarea, input[type=file], select {
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
 }
 
-input[type=text]:hover, input[type=password]:hover, textarea:hover, input[type=file]:hover, select:hover {
+input[type=text]:hover, input[type=email]:hover, input[type=url]:hover, input[type=number]:hover, input[type=color]:hover, input[type=tel]:hover, input[type=search]:hover, input[type=password]:hover, textarea:hover, input[type=file]:hover, select:hover {
 	color: #333333;
 	border: 1px solid #BBBBBB;
 	background-color: #FFFFFF;
 }
 
-input[type=text]:focus, input[type=password]:focus, textarea:focus, input[type=file]:focus, select:focus {
+input[type=text]:focus, input[type=email]:focus, input[type=url]:focus, input[type=number]:focus, input[type=color]:focus, input[type=tel]:focus, input[type=search]:focus, input[type=password]:focus, textarea:focus, input[type=file]:focus, select:focus {
 	color: #222222;
 	border-color: #BBBBBB;
 	outline: 0;

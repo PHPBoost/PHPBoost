@@ -37,10 +37,35 @@ class ContactShortTextField extends AbstractContactField
 	public function display_field(ContactField $field)
 	{
 		$fieldset = $field->get_fieldset();
+		$regex = $field->get_regex();
 		
-		$fieldset->add_field(new FormFieldTextEditor($field->get_field_name(), $field->get_name(), $field->get_default_value(), array(
+		switch ($regex)
+		{
+			case 1:
+				$field_class = 'FormFieldNumber';
+				$display_constraint = false;
+				break;
+			case 4:
+				$field_class = 'FormFieldMailEditor';
+				$display_constraint = false;
+				break;
+			case 5:
+				$field_class = 'FormFieldUrlEditor';
+				$display_constraint = false;
+				break;
+			case 8:
+				$field_class = 'FormFieldTelEditor';
+				$display_constraint = false;
+				break;
+			default:
+				$field_class = 'FormFieldTextEditor';
+				$display_constraint = true;
+				break;
+		}
+		
+		$fieldset->add_field(new $field_class($field->get_field_name(), $field->get_name(), $field->get_default_value(), array(
 			'required' => (bool)$field->is_required(), 'description' => $field->get_description()),
-			array($this->constraint($field->get_regex()))
+			($display_constraint ? array($this->constraint($regex)) : array())
 		));
 	}
 }

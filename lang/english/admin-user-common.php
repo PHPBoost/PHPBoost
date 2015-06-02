@@ -129,5 +129,6 @@ $lang['regex.figures-letters'] = 'Numbers and letters';
 $lang['regex.word'] = 'Word';
 $lang['regex.website'] = 'Website';
 $lang['regex.mail'] = 'Mail';
+$lang['regex.phone-number'] = 'Phone number';
 $lang['regex.personnal-regex'] = 'Custom regular expression';
 ?>

@@ -58,21 +58,69 @@ class MemberShortTextExtendedField extends AbstractMemberExtendedField
 	public function display_field_create(MemberExtendedField $member_extended_field)
 	{
 		$fieldset = $member_extended_field->get_fieldset();
+		$regex = $member_extended_field->get_regex();
 		
-		$fieldset->add_field(new FormFieldTextEditor($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_default_value(), array(
+		switch ($regex)
+		{
+			case 1:
+				$field_class = 'FormFieldNumber';
+				$display_constraint = false;
+				break;
+			case 4:
+				$field_class = 'FormFieldMailEditor';
+				$display_constraint = false;
+				break;
+			case 5:
+				$field_class = 'FormFieldUrlEditor';
+				$display_constraint = false;
+				break;
+			case 8:
+				$field_class = 'FormFieldTelEditor';
+				$display_constraint = false;
+				break;
+			default:
+				$field_class = 'FormFieldTextEditor';
+				$display_constraint = true;
+		}
+		
+		$fieldset->add_field(new $field_class($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_default_value(), array(
 			'required' => (bool)$member_extended_field->get_required(), 'description' => $member_extended_field->get_description()),
-			array($this->constraint($member_extended_field->get_regex()))
+			($display_constraint ? array($this->constraint($regex)) : array())
 		));
 	}
 	
 	public function display_field_update(MemberExtendedField $member_extended_field)
 	{
 		$fieldset = $member_extended_field->get_fieldset();
+		$regex = $member_extended_field->get_regex();
 		
-		$fieldset->add_field(new FormFieldTextEditor($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_value(), array(
+		switch ($regex)
+		{
+			case 1:
+				$field_class = 'FormFieldNumber';
+				$display_constraint = false;
+				break;
+			case 4:
+				$field_class = 'FormFieldMailEditor';
+				$display_constraint = false;
+				break;
+			case 5:
+				$field_class = 'FormFieldUrlEditor';
+				$display_constraint = false;
+				break;
+			case 8:
+				$field_class = 'FormFieldTelEditor';
+				$display_constraint = false;
+				break;
+			default:
+				$field_class = 'FormFieldTextEditor';
+				$display_constraint = true;
+		}
+		
+		$fieldset->add_field(new $field_class($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_value(), array(
 			'required' => (bool)$member_extended_field->get_required(), 'description' => $member_extended_field->get_description()),
-			array($this->constraint($member_extended_field->get_regex())
-		)));
+			($display_constraint ? array($this->constraint($regex)) : array())
+		));
 	}
  
 	public function display_field_profile(MemberExtendedField $member_extended_field)

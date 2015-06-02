@@ -670,6 +670,12 @@ legend {
 
 /* --- Elements de saisie --- */
 input[type=text],
+input[type=email],
+input[type=url],
+input[type=number],
+input[type=color],
+input[type=tel],
+input[type=search],
 input[type=password],
 input[type=file],
 textarea,
@@ -682,6 +688,12 @@ select {
 	padding: 4px 18px 4px 6px;
 }
 input[type=text]:hover,
+input[type=email]:hover,
+input[type=url]:hover,
+input[type=number]:hover,
+input[type=color]:hover,
+input[type=tel]:hover,
+input[type=search]:hover,
 input[type=password]:hover,
 input[type=file]:hover,
 textarea:hover,
@@ -691,6 +703,12 @@ select:hover {
 	background-color: #FFFFFF;
 }
 input[type=text]:focus,
+input[type=email]:focus,
+input[type=url]:focus,
+input[type=number]:focus,
+input[type=color]:focus,
+input[type=tel]:focus,
+input[type=search]:focus,
 input[type=password]:focus,
 input[type=file]:focus,
 textarea:focus,

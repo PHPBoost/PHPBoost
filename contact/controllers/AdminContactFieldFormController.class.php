@@ -257,6 +257,7 @@ class AdminContactFieldFormController extends AdminModuleController
 			new FormFieldSelectChoiceOption($this->admin_user_common_lang['regex.word'], 7),
 			new FormFieldSelectChoiceOption($this->admin_user_common_lang['regex.mail'], 4),
 			new FormFieldSelectChoiceOption($this->admin_user_common_lang['regex.website'], 5),
+			new FormFieldSelectChoiceOption($this->admin_user_common_lang['regex.phone-number'], 8),
 			new FormFieldSelectChoiceOption($this->admin_user_common_lang['regex.personnal-regex'], 6),
 		);
 	}

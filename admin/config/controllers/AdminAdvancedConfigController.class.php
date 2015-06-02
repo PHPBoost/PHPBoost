@@ -77,9 +77,8 @@ class AdminAdvancedConfigController extends AdminController
 		$fieldset = new FormFieldsetHTML('advanced-config', $this->lang['advanced-config']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('site_url', $this->lang['advanced-config.site_url'], $this->general_config->get_site_url(), array(
-			'description' => $this->lang['advanced-config.site_url-explain'], 'size' => 25, 'required' => true),
-			array(new FormFieldConstraintUrl())
+		$fieldset->add_field(new FormFieldUrlEditor('site_url', $this->lang['advanced-config.site_url'], $this->general_config->get_site_url(), array(
+			'description' => $this->lang['advanced-config.site_url-explain'], 'size' => 25, 'required' => true)
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('site_path', $this->lang['advanced-config.site_path'], $this->general_config->get_site_path(),

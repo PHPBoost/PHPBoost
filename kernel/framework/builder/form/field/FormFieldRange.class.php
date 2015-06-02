@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                             FormFieldNumber.class.php
+ *                             FormFieldRange.class.php
  *                            -------------------
- *   begin                : May 20, 2015
+ *   begin                : June 1, 2015
  *   copyright            : (C) 2015 Julien BRISWALTER
  *   email                : julienseth78@phpboost.com
  *
@@ -26,26 +26,21 @@
 
 /**
  * @author Julien BRISWALTER <julienseth78@phpboost.com>
- * @desc This class manage number fields.
+ * @desc This class manages a range of numbers (slider).
  * @package {@package}
  */
-class FormFieldNumber extends AbstractFormField
+class FormFieldRange extends FormFieldNumber
 {
-	protected $type = 'number';
-	protected $min = null;
-	protected $max = 0;
-	protected $step = 0;
-	protected $pattern = '[0-9]*';
-	protected static $tpl_src = '<input type="{TYPE}"# IF C_MIN # min="{MIN}"# ENDIF ## IF C_MAX # max="{MAX}"# ENDIF ## IF C_STEP # step="{STEP}"# ENDIF # name="${escape(NAME)}" id="${escape(HTML_ID)}" value="{VALUE}"
-	class="# IF C_READONLY #low-opacity # ENDIF #${escape(CLASS)}" # IF C_PATTERN # pattern="{PATTERN}" # ENDIF # # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_READONLY # readonly="readonly" # ENDIF #>';
-
+	protected $type = 'range';
 	/**
-	 * @desc Constructs a FormFieldTextEditor.
-	 * It has these options in addition to the AbstractFormField ones:
-	 * <ul>
-	 * 	<li>size: The size (width) of the HTML field</li>
-	 * 	<li>maxlength: The maximum length for the field</li>
-	 * </ul>
+	 * @var boolean
+	 */
+	private $vertical = false;
+	protected static $tpl_src = '<input type="{TYPE}"# IF C_MIN # min="{MIN}"# ENDIF ## IF C_MAX # max="{MAX}"# ENDIF ## IF C_STEP # step="{STEP}"# ENDIF # name="${escape(NAME)}" id="${escape(HTML_ID)}" value="{VALUE}"
+	class="# IF C_READONLY #low-opacity # ENDIF #${escape(CLASS)}" # IF C_VERTICAL # orient="vertical" style="width: 20px; height: 200px; -webkit-appearance: slider-vertical; writing-mode: bt-lr;"# ENDIF # # IF C_PATTERN # pattern="{PATTERN}" # ENDIF # # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_READONLY # readonly="readonly" # ENDIF #>';
+	
+	/**
+	 * @desc Constructs a FormFieldRange.
 	 * @param string $id Field identifier
 	 * @param string $label Field label
 	 * @param string $value Default value
@@ -83,7 +78,8 @@ class FormFieldNumber extends AbstractFormField
 			'C_READONLY' => $this->is_readonly(),
 			'C_DISABLED' => $this->is_disabled(),
 			'C_PATTERN' => $this->has_pattern(),
-			'PATTERN' => $this->pattern
+			'PATTERN' => $this->pattern,
+			'C_VERTICAL' => $this->is_vertical()
 		));
 
 		$this->assign_common_template_variables($template);
@@ -102,26 +98,31 @@ class FormFieldNumber extends AbstractFormField
 			$attribute = strtolower($attribute);
 			switch ($attribute)
 			{
-				case 'min':
-					$this->min = $value;
-					unset($field_options['min']);
-					break;
-				case 'max':
-					$this->max = $value;
-					unset($field_options['max']);
-					break;
-				case 'step':
-					$this->step = $value;
-					unset($field_options['step']);
+				case 'vertical':
+					$this->vertical = (bool)$value;
+					unset($field_options['vertical']);
 					break;
 			}
 		}
 		parent::compute_options($field_options);
 	}
 
-	protected function get_default_template()
+	/**
+	 * @desc Tells whether the slider is vertical
+	 * @return true if it is, false otherwise
+	 */
+	public function is_vertical()
 	{
-		return new FileTemplate('framework/builder/form/FormField.tpl');
+		return $this->vertical;
+	}
+
+	/**
+	 * @desc Changes the fact that the field is vertical or not.
+	 * @param bool $vertical true if it's vertical, false otherwise
+	 */
+	public function set_vertical($vertical)
+	{
+		$this->vertical = $vertical;
 	}
 }
 ?>

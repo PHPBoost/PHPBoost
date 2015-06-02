@@ -85,9 +85,8 @@ class NewsletterEditSubscriberController extends ModuleController
 		$fieldset = new FormFieldsetHTML('edit-subscriber', $this->lang['subscriber.edit']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['subscribe.mail'], $row['mail'], array(
-			'required' => true),
-			array(new FormFieldConstraintMailAddress())
+		$fieldset->add_field(new FormFieldMailEditor('mail', $this->lang['subscribe.mail'], $row['mail'],
+			array('required' => true)
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();

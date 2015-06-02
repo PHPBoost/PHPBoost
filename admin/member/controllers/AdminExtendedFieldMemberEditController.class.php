@@ -127,6 +127,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 				new FormFieldSelectChoiceOption($this->lang['regex.word'], '7'),
 				new FormFieldSelectChoiceOption($this->lang['regex.mail'], '4'),
 				new FormFieldSelectChoiceOption($this->lang['regex.website'], '5'),
+				new FormFieldSelectChoiceOption($this->lang['regex.phone-number'], '8'),
 				new FormFieldSelectChoiceOption($this->lang['regex.personnal-regex'], '6'),
 			),
 			array('description' => $this->lang['field.regex-explain'], 'events' => array('change' => '

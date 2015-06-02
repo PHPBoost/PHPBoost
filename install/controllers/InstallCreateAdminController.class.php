@@ -77,9 +77,7 @@ class InstallCreateAdminController extends InstallController
 		$fieldset->add_field($repeatPassword);
 		$this->form->add_constraint(new FormConstraintFieldsEquality($password, $repeatPassword, $this->lang['admin.passwords.mismatch']));
 
-		$email = new FormFieldTextEditor('email', $this->lang['admin.email'], '', array('required' => $this->lang['admin.email.required']));
-		$email->add_constraint(new FormFieldConstraintMailAddress($this->lang['admin.email.invalid']));
-		$fieldset->add_field($email);
+		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['admin.email'], '', array('required' => true)));
 		$createSession = new FormFieldCheckbox('createSession', $this->lang['admin.connectAfterInstall'], true);
 		$fieldset->add_field($createSession);
 		$autoconnect = new FormFieldCheckbox('autoconnect', $this->lang['admin.autoconnect'], true);

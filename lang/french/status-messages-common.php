@@ -71,6 +71,7 @@ $lang['form.explain_required_fields'] = 'Les champs marqués * sont obligatoires 
 $lang['form.doesnt_match_regex'] = 'La valeur saisie n\'est pas au bon format';
 $lang['form.doesnt_match_url_regex'] = 'La valeur saisie doit être une url valide';
 $lang['form.doesnt_match_mail_regex'] = 'La valeur saisie doit être un mail valide';
+$lang['form.doesnt_match_tel_regex'] = 'La valeur saisie doit être un numéro de téléphone valide';
 $lang['form.doesnt_match_number_regex'] = 'La valeur saisie doit être un nombre';
 $lang['form.doesnt_match_length_intervall'] = 'La valeur saisie ne respecte par la longueur définie';
 $lang['form.doesnt_match_integer_intervall'] = 'La valeur saisie ne respecte pas l\'intervalle définie (:lower_bound <= valeur <= :upper_bound)';

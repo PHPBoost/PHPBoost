@@ -77,12 +77,12 @@ class UserRegistrationController extends AbstractController
 		$fieldset->add_field(new FormFieldHTML('validation_method', $this->get_accounts_validation_method_explain()));
 		
 		$fieldset->add_field(new FormFieldTextEditor('display_name', $this->lang['display_name'], '', array('description'=> $this->lang['display_name.explain'], 'required' => true),
-			array(new FormFieldConstraintLengthRange(3, 20))
+			array(new FormFieldConstraintLengthRange(3, 25))
 		));	
 
-		$fieldset->add_field(new FormFieldTextEditor('email', $this->lang['email'], '', array(
-			'description' => LangLoader::get_message('valid', 'main'), 'required' => true),
-			array(new FormFieldConstraintMailAddress(), new FormFieldConstraintMailExist())
+		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['email'], '',
+			array('required' => true),
+			array(new FormFieldConstraintMailExist())
 		));
 
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '', array(

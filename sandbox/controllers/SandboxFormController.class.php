@@ -104,22 +104,31 @@ class SandboxFormController extends ModuleController
 			array(new FormFieldConstraintRegex('`^[a-z0-9_ ]+$`i'))
 		));
 		$fieldset->add_field(new FormFieldTextEditor('textdisabled', 'Champ désactivé', '', array(
-				'maxlength' => 25, 'description' => 'désactivé', 'disabled' => true)
+			'maxlength' => 25, 'description' => 'désactivé', 'disabled' => true)
 		));
-		$fieldset->add_field(new FormFieldTextEditor('siteweb', 'Site web', 'http://www.phpboost.com/index.php', array(
-			'description' => 'Url valide'),
-			array(new FormFieldConstraintUrl())
+		$fieldset->add_field(new FormFieldUrlEditor('siteweb', 'Site web', 'http://www.phpboost.com/index.php', array(
+			'description' => 'Url valide')
 		));
-		$fieldset->add_field(new FormFieldTextEditor('mail', 'Mail', 'team.hein@phpboost.com', array(
-			'description' => 'Mail valide'),
-			array(new FormFieldConstraintMailAddress())
+		$fieldset->add_field(new FormFieldMailEditor('mail', 'Mail', 'team.hein@phpboost.com', array(
+			'description' => 'Mail valide')
+		));
+		$fieldset->add_field(new FormFieldMailEditor('mail_multiple', 'Mail multiple', 'team.hein@phpboost.com, test@phpboost.com', array(
+			'description' => 'Mails valides, séparés par une virgule', 'multiple' => true)
+		));
+		$fieldset->add_field(new FormFieldTelEditor('tel', 'Numéro de téléphone', '0123456789', array(
+			'description' => 'Numéro de téléphone valide')
 		));
 		$fieldset->add_field(new FormFieldTextEditor('text2', 'Champ texte2', 'toto2', array(
 			'maxlength' => 25, 'description' => 'Champs requis', 'required' => true)
 		));
-		$fieldset->add_field(new FormFieldTextEditor('age', 'Age', '20', array(
-			'maxlength' => 25, 'description' => 'Intervalle 10 à 100'),
+		$fieldset->add_field(new FormFieldNumber('age', 'Age', 20, array(
+			'min' => 10, 'max' => 100, 'description' => 'Intervalle 10 à 100'),
 			array(new FormFieldConstraintIntegerRange(10, 100))
+		));
+
+		// RANGE
+		$fieldset->add_field($password = new FormFieldRange('range', 'Longueur', 4, array(
+			'min' => 1, 'max' => 10, 'description' => 'Slider horizontal')
 		));
 
 		// PASSWORD
@@ -196,7 +205,7 @@ class SandboxFormController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldTimezone('timezone', 'TimeZone', 'UTC+0'));
 		
-		$fieldset->add_field(new FormFieldAjaxSearchUserAutoComplete('user_completition', 'auto completition', ''));
+		//$fieldset->add_field(new FormFieldAjaxSearchUserAutoComplete('user_completition', 'auto completition', ''));
 		
 		$fieldset->add_element(new FormButtonButton('Envoyer'));
 

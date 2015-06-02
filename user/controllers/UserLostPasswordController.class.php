@@ -61,13 +61,13 @@ class UserLostPasswordController extends AbstractController
 		$fieldset = new FormFieldsetHTML('fieldset', $this->lang['forget-password']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('email', $this->lang['email'], '', array('required' => true),
-			array(new FormFieldConstraintMailAddress())
+		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['email'], '',
+			array('required' => true)
 		));
-			
+		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
-			
+		
 		$this->form = $form;
 	}
 	
