@@ -127,7 +127,7 @@ class GuestbookConfig extends AbstractConfigData
 	{
 		return array(
 			self::ITEMS_PER_PAGE => 10,
-			self::FORBIDDEN_TAGS => array('swf', 'movie', 'sound', 'code', 'math', 'mail', 'html', 'feed'),
+			self::FORBIDDEN_TAGS => array('swf', 'movie', 'sound', 'code', 'math', 'mail', 'html', 'feed', 'youtube'),
 			self::MAX_LINKS_NUMBER_PER_MESSAGE_ENABLED => false,
 			self::MAXIMUM_LINKS_MESSAGE => 1,
 			self::AUTHORIZATIONS => array('r-1' => 3, 'r0' => 3, 'r1' => 7)
