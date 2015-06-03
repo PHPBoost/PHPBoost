@@ -357,5 +357,19 @@ FormField.prototype = {
 };
 
 jQuery(document).on('keypress', 'input[type="number"]', function (event) {
-    return (((event.which > 47) && (event.which < 58)) || (event.which == 13));
+	return (event.ctrlKey || event.altKey || 
+	// numbers   
+	event.keyCode >= 48 && event.keyCode <= 57 ||
+	// Numeric keypad
+	event.keyCode >= 96 && event.keyCode <= 105 ||
+	// Backspace and Tab and Enter
+	event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 13 ||
+	// Decimal point and Comma and Period
+	event.keyCode == 110 || event.keyCode == 188 || event.keyCode == 190 ||
+	// Home and End
+	event.keyCode == 35 || event.keyCode == 36 ||
+	// left and right arrows
+	event.keyCode == 37 || event.keyCode == 39 ||
+	// Del and Ins
+	event.keyCode == 46 || event.keyCode == 45);
 });

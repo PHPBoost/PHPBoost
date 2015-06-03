@@ -136,9 +136,8 @@ class AdminShoutboxConfigController extends AdminModuleController
 			)
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('refresh_delay', $this->lang['config.refresh_delay'], $this->config->get_refresh_delay()/60000,
-			array('maxlength' => 4, 'size' => 3, 'description' => $this->lang['config.refresh_delay.explain'], 'required' => true, 'hidden' => !$this->config->is_automatic_refresh_enabled()),
-			array(new FormFieldConstraintRegex('`^[0-9]+$|^[0-9]+\.[0-9]+?$`i'))
+		$fieldset->add_field(new FormFieldDecimalNumber('refresh_delay', $this->lang['config.refresh_delay'], $this->config->get_refresh_delay() / 60000,
+			array('min' => 0, 'step' => 0.5, 'description' => $this->lang['config.refresh_delay.explain'], 'required' => true, 'hidden' => !$this->config->is_automatic_refresh_enabled())
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('date_displayed', $this->lang['config.date_displayed'], $this->config->is_date_displayed()));
