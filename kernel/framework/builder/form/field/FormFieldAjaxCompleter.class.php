@@ -31,52 +31,50 @@
  */
 class FormFieldAjaxCompleter extends FormFieldTextEditor
 {
-	private $size = 30;
-    private $maxlength = 255;
 	private $method = 'post';
 	private $file;
 	private $name_parameter = 'value';
-	private static $tpl_src = '<input type="text" size="{SIZE}" maxlength="{MAX_LENGTH}" name="${escape(NAME)}" id="${escape(HTML_ID)}" value="${escape(VALUE)}"
+	protected static $tpl_src = '<input type="text" size="{SIZE}" maxlength="{MAX_LENGTH}" name="${escape(NAME)}" id="${escape(HTML_ID)}" value="${escape(VALUE)}"
 	class="${escape(CLASS)}" # IF C_DISABLED # disabled="disabled" # ENDIF # autocomplete="off" onfocus="javascript:load_autocompleter_{HTML_ID}();" /><div id="${escape(HTML_ID)}_completer" class="form-autocompleter"></div>
-	<script>function load_autocompleter_{HTML_ID}() { new Ajax.Autocompleter(${escapejs(HTML_ID)}, "${escape(HTML_ID)}_completer", ${escapejs(FILE)}, { method: ${escapejs(METHOD)}, paramName: ${escapejs(NAME_PARAMETER)}});}</script>';	
+	<script>function load_autocompleter_{HTML_ID}() { new Ajax.Autocompleter(${escapejs(HTML_ID)}, "${escape(HTML_ID)}_completer", ${escapejs(FILE)}, { method: ${escapejs(METHOD)}, paramName: ${escapejs(NAME_PARAMETER)}});}</script>';
 
 	
-    /**
-     * @desc Constructs a FormFieldAjaxCompleter.
-     * It has these options in addition to the AbstractFormField ones:
-     * <ul>
-     * 	<li>size: the number of size of the field</li>
-     * 	<li>maxlength: the number of maxlength of the field</li>
+	/**
+	 * @desc Constructs a FormFieldAjaxCompleter.
+	 * It has these options in addition to the AbstractFormField ones:
+	 * <ul>
+	 * 	<li>size: the number of size of the field</li>
+	 * 	<li>maxlength: the number of maxlength of the field</li>
 	 *  <li>method: the string method send request : post or get</li>
 	 *  <li>file: the string file url</li>
 	 *  <li>parameter: the string parameter name variable send for request</li>
-     * </ul>
-     * @param string $id Field identifier
-     * @param string $label Field label
-     * @param string $value Default value
-     * @param string[] $field_options Map containing the options
-     * @param FormFieldConstraint[] $constraints The constraints checked during the validation
-     */
-    public function __construct($id, $label, $value, $field_options = array(), array $constraints = array())
-    {
-        parent::__construct($id, $label, $value, $field_options, $constraints);
-    }
+	 * </ul>
+	 * @param string $id Field identifier
+	 * @param string $label Field label
+	 * @param string $value Default value
+	 * @param string[] $field_options Map containing the options
+	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
+	 */
+	public function __construct($id, $label, $value, $field_options = array(), array $constraints = array())
+	{
+		parent::__construct($id, $label, $value, $field_options, $constraints);
+	}
 
-    /**
-     * @return string The html code for the input.
-     */
-    public function display()
-    {
-        $template = $this->get_template_to_use();
+	/**
+	 * @return string The html code for the input.
+	 */
+	public function display()
+	{
+		$template = $this->get_template_to_use();
 
-        $field = new StringTemplate(self::$tpl_src);
+		$field = new StringTemplate(self::$tpl_src);
 
 		if (empty($this->file))
 		{
 			throw new Exception('Add file options containing file url');
 		}
 		
-        $field->put_all(array(
+		$field->put_all(array(
 			'SIZE' => $this->size,
 			'MAX_LENGTH' => $this->maxlength,
 			'NAME' => $this->get_html_id(),
@@ -88,47 +86,39 @@ class FormFieldAjaxCompleter extends FormFieldTextEditor
 			'VALUE' => $this->get_value(),
 			'CLASS' => $this->get_css_class(),
 			'C_DISABLED' => $this->is_disabled()
-        ));
+		));
 
-        $this->assign_common_template_variables($template);
+		$this->assign_common_template_variables($template);
 
-        $template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', array(
 			'ELEMENT' => $field->render()
-        ));
+		));
 
-        return $template;
-    }
+		return $template;
+	}
 
-    protected function compute_options(array &$field_options)
-    {
-        foreach ($field_options as $attribute => $value)
-        {
-            $attribute = strtolower($attribute);
-            switch ($attribute)
-            {
-				case 'size':
-                    $this->size = $value;
-                    unset($field_options['size']);
-                    break;
-                case 'maxlength':
-                    $this->maxlength = $value;
-                    unset($field_options['maxlength']);
-                    break;
+	protected function compute_options(array &$field_options)
+	{
+		foreach ($field_options as $attribute => $value)
+		{
+			$attribute = strtolower($attribute);
+			switch ($attribute)
+			{
 				case 'method' :
-                    $this->method = $value;
-                    unset($field_options['method']);
-                    break;
+					$this->method = $value;
+					unset($field_options['method']);
+					break;
 				case 'file' :
-                    $this->file = $value;
-                    unset($field_options['file']);
-                    break;
+					$this->file = $value;
+					unset($field_options['file']);
+					break;
 				case 'name_parameter' :
-                    $this->name_parameter = $value;
-                    unset($field_options['name_parameter']);
-                    break;
-            }
-        }
-        parent::compute_options($field_options);
-    }
+					$this->name_parameter = $value;
+					unset($field_options['name_parameter']);
+					break;
+			}
+		}
+		parent::compute_options($field_options);
+	}
 }
 ?>
