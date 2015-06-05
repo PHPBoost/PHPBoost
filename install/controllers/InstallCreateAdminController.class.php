@@ -52,6 +52,7 @@ class InstallCreateAdminController extends InstallController
 			$this->form->get_value('login'), $this->form->get_value('password'),
 			$this->form->get_value('email'), $this->form->get_value('createSession'),
 			$this->form->get_value('autoconnect'));
+			HtaccessFileCache::regenerate();
 			AppContext::get_response()->redirect(InstallUrlBuilder::finish());
 		}
 		return $this->create_response();
