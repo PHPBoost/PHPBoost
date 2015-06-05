@@ -74,7 +74,7 @@ class AdminMailConfigController extends AdminController
 
 		$fieldset->add_field(new FormFieldMailEditor('default_mail_sender', $this->lang['mail-config.default_mail_sender'], $this->config->get_default_mail_sender(), array('required' => true, 'description' => $this->lang['mail-config.default_mail_sender_explain'])));
 
-		$fieldset->add_field(new FormFieldTextEditor('admin_addresses', $this->lang['mail-config.administrators_mails'], implode(',', $this->config->get_administrators_mails()), array('required' => true, 'multiple' => true, 'description' => $this->lang['mail-config.administrators_mails_explain'])));
+		$fieldset->add_field(new FormFieldMailEditor('admin_addresses', $this->lang['mail-config.administrators_mails'], implode(',', $this->config->get_administrators_mails()), array('required' => true, 'multiple' => true, 'description' => $this->lang['mail-config.administrators_mails_explain'])));
 
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('mail_signature', $this->lang['mail-config.mail_signature'], $this->config->get_mail_signature(), array('description' => $this->lang['mail-config.mail_signature_explain'])));
 
