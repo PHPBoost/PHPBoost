@@ -81,7 +81,7 @@ class DataStoreFactory
 	
 	public static function is_apc_enabled()
 	{
-		if (self::$apc_enabled === null)
+		if (self::$apc_available !== null && self::$apc_enabled === null)
 		{
 			$file = new File(PATH_TO_ROOT . '/cache/apc.php');
 			if ($file->exists())
