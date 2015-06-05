@@ -1003,8 +1003,8 @@ input + .text-status-constraint {
 	top: -8px;
 }
 
-div[id*="text"].field-required:after,
-div[id*="text"].picture-status-constraint:after {
+div.field-required:after,
+div.picture-status-constraint:after {
 	display: inline-block;
 	position: absolute;
 	font: normal normal normal 14px/1 FontAwesome;
@@ -1015,7 +1015,7 @@ div[id*="text"].picture-status-constraint:after {
 	right: 4px;
 }
 
-div[id*="text"].field-required:after {
+div.field-required:after {
 	content: "\f069";
 	color: #C43C35;
 	opacity: 0.6;
@@ -1023,11 +1023,12 @@ div[id*="text"].field-required:after {
 	top: 8px;
 }
 
-.form-element-date div[id*="text"].field-required:after {
+.form-element-date div.field-required:after {
 	right: 22px;
 }
-.form-element-date .constraint-status-error div[id*="text"].field-required:after,
-.form-element-date .constraint-status-right div[id*="text"].field-required:after {
+
+.form-element-date .constraint-status-error div.field-required:after,
+.form-element-date .constraint-status-right div.field-required:after {
 	right: 20px;
 }
 
@@ -1035,24 +1036,27 @@ div[id*="text"].field-required:after {
 	top: 45%;
 }
 
-.constraint-status-error div[id*="text"].field-required:after,
-.constraint-status-right div[id*="text"].field-required:after {
+.constraint-status-right div.field-required:after {
 	content: " ";
 }
 
-.constraint-status-error div[id*="text"].picture-status-constraint:after,
-.constraint-status-right div[id*="text"].picture-status-constraint:after {
+.constraint-status-right div.picture-status-constraint:after {
 	opacity: 1;
 	font-size: 1.5rem;
 	top: 4px;
 }
 
-.constraint-status-error .form-field-textarea.picture-status-constraint:after,
-.constraint-status-right .form-field-textarea.picture-status-constraint:after {
+.constraint-status-error .form-field-textarea .picture-status-constraint:after,
+.constraint-status-right .form-field-textarea .picture-status-constraint:after {
 	top: 40%;
 }
 
-.constraint-status-right div[id*="text"].picture-status-constraint:after {
+.form-element-upload-file .field-required:after {
+	right: 42px;
+	top: 25%;
+}
+
+.constraint-status-right div.picture-status-constraint:after {
 	content: "\f00c";
 	color: #57A957;
 }

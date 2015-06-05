@@ -26,7 +26,7 @@ function nonEmptyFormFieldValidator(field_id, message)
 	if (field)
 	{
 		var value = field.getValue();
-		if (value != 0 && (value == null || value == '' || value == false))
+		if (value == null || value == '' || value == false)
 		{
 			return message;
 		}

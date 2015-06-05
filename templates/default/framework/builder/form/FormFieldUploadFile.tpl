@@ -1,4 +1,4 @@
-<div id="${escape(HTML_ID)}_field"# IF C_HIDDEN # style="display:none;" # ENDIF # class="form-element # IF C_HAS_FIELD_CLASS #{FIELD_CLASS}# ENDIF #">
+<div id="${escape(HTML_ID)}_field"# IF C_HIDDEN # style="display:none;" # ENDIF # class="form-element form-element-upload-file # IF C_REQUIRED_AND_HAS_VALUE # constraint-status-right # ENDIF # # IF C_HAS_FIELD_CLASS #{FIELD_CLASS}# ENDIF #">
 	# IF C_HAS_LABEL #
 		<label for="${escape(HTML_ID)}">
 			{LABEL}
@@ -8,14 +8,12 @@
 		</label>
 	# ENDIF #
 
-	<div class="form-field">
+	<div id="onblurContainerResponse${escape(HTML_ID)}" class="form-field form-field-upload-file picture-status-constraint# IF C_REQUIRED # field-required # ENDIF #">
 		<input type="text" name="${escape(NAME)}" id="${escape(HTML_ID)}" value="{VALUE}" class="field-xlarge ${escape(CLASS)}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_READONLY #readonly="readonly"# ENDIF #/>
 		# IF C_AUTH_UPLOAD #
 			<a title="${LangLoader::get_message('files_management', 'main')}" href="#" class="fa fa-cloud-upload fa-2x" onclick="jQuery('#' + ${escapejs(HTML_ID)}).val('');window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=${escape(NAME)}&amp;parse=true&amp;no_path=true', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"></a>
 		# ENDIF #
-		# IF C_REQUIRED #<i class="fa picture-field-required"></i># ENDIF #
-		<i class="fa picture-status-constraint" id="onblurContainerResponse${escape(HTML_ID)}"></i>
-		<div class="text-status-constraint" style="display:none" id="onblurMessageResponse${escape(HTML_ID)}"></div>
+		<span class="text-status-constraint" style="display:none" id="onblurMessageResponse${escape(HTML_ID)}"></span>
 	</div>
 </div>
 <div id="${escape(HTML_ID)}_preview"# IF C_PREVIEW_HIDDEN # style="display:none;"# ENDIF # class="form-element # IF C_HAS_FIELD_CLASS #{FIELD_CLASS}# ENDIF #">

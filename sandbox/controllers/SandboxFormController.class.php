@@ -119,7 +119,10 @@ class SandboxFormController extends ModuleController
 			'description' => 'Numéro de téléphone valide')
 		));
 		$fieldset->add_field(new FormFieldTextEditor('text2', 'Champ texte2', 'toto2', array(
-			'maxlength' => 25, 'description' => 'Champs requis', 'required' => true)
+			'maxlength' => 25, 'description' => 'Champs requis rempli', 'required' => true)
+		));
+		$fieldset->add_field(new FormFieldTextEditor('text3', 'Champ texte3', '', array(
+			'maxlength' => 25, 'description' => 'Champs requis vide', 'required' => true)
 		));
 		$fieldset->add_field(new FormFieldNumber('age', 'Age', 20, array(
 			'min' => 10, 'max' => 100, 'description' => 'Intervalle 10 à 100'),
@@ -151,13 +154,13 @@ class SandboxFormController extends ModuleController
 		
 		// MULTI LINE TEXT
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('multi_line_text', 'Champ texte multi lignes', 'toto',
-				array('rows' => 6, 'cols' => 47, 'description' => 'Description')
+				array('rows' => 6, 'cols' => 47, 'description' => 'Description', 'required' => true)
 		));
 
 		// RICH TEXT
 		$fieldset->add_field(new FormFieldRichTextEditor('rich_text', 'Champ texte riche dans éditeur', 'toto <strong>tata</strong>'));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('rich_text_wysiwyg', 'Champ texte riche avec éditeur', 'toto <strong>tata</strong>', array('formatter' => AppContext::get_content_formatting_service()->create_factory('tinymce'))));
+		$fieldset->add_field(new FormFieldRichTextEditor('rich_text_wysiwyg', 'Champ texte riche avec éditeur', 'toto <strong>tata</strong>', array('formatter' => AppContext::get_content_formatting_service()->create_factory('tinymce'), 'required' => true)));
 
 		//Checkbox
 		$fieldset->add_field(new FormFieldMultipleCheckbox('multiple_check_box', 'Plusieurs checkbox', 
@@ -241,6 +244,9 @@ class SandboxFormController extends ModuleController
 		
 		// MULTIPLE FILE PICKER
 		$fieldset2->add_field(new FormFieldMultipleFilePicker('multiple_files', 'Plusieurs Fichiers'));
+		
+		// UPLOAD FILE
+		$fieldset2->add_field(new FormFieldUploadFile('upload_file', 'Lien vers un fichier', '', array('required' => true)));
 
 		// AUTH
 		$fieldset3 = new FormFieldsetHTML('fieldset3', 'Autorisations');
