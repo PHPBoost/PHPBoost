@@ -89,6 +89,7 @@ class DispatchManager
 			if (strpos($url, '?') !== false)
 			{
 				$exploded = explode('?', $url, 2);
+				$exploded[1] = str_replace('?', '&', $exploded[1]);
 				return new Url($dispatcher . '?' . Dispatcher::URL_PARAM_NAME .
 				    '=/' . $exploded[0] . '&' . $exploded[1]);
 			}
