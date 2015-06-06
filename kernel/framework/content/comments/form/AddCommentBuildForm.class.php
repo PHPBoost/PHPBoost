@@ -78,7 +78,7 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 		
 		if (!$this->user->check_level(User::MEMBER_LEVEL))
 		{
-			$fieldset->add_field(new FormFieldTextEditor('name', $this->common_lang['form.name'], $this->common_lang['visitor'], array('maxlength' => 25)));
+			$fieldset->add_field(new FormFieldTextEditor('name', $this->common_lang['form.name'], LangLoader::get_message('visitor', 'user-common'), array('maxlength' => 25)));
 		}
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('message', $this->lang['message'], '', array(
