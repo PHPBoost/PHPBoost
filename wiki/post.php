@@ -186,10 +186,15 @@ if (!empty($contents)) //On enregistre un article
 
 if ($id_edit > 0)//On édite
 {
-	$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . "wiki_articles", array('*'), 'WHERE id = :id', array('id' => $id_edit));
+	try {
+		$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . "wiki_articles", array('*'), 'WHERE id = :id', array('id' => $id_edit));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	//Autorisations
-	$general_auth = empty($article_infos['auth']) ? true : false;
+	$general_auth = empty($article_infos['auth']);
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 	if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_EDIT)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_EDIT))))
 	{

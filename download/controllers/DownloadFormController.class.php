@@ -270,18 +270,18 @@ class DownloadFormController extends ModuleController
 		if ($file->exists())
 		{
 			$file_size = $file->get_file_size();
-		}
-		
-		if (empty($file_size))
-		{
-			stream_context_set_default(array(
-				'http' => array(
-					'method' => 'HEAD'
-				)
-			));
-			$file_headers = get_headers($file->get_path(), true);
-			if (is_array($file_headers) && $file_headers['Content-Length'])
-				$file_size = $file_headers['Content-Length'];
+			
+			if (empty($file_size))
+			{
+				stream_context_set_default(array(
+					'http' => array(
+						'method' => 'HEAD'
+					)
+				));
+				$file_headers = get_headers($file->get_path(), true);
+				if (is_array($file_headers) && $file_headers['Content-Length'])
+					$file_size = $file_headers['Content-Length'];
+			}
 		}
 		
 		$downloadfile->set_size($file_size);

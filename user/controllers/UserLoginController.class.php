@@ -75,7 +75,13 @@ class UserLoginController extends AbstractController
 			}
 			else
 			{
-				$authentication = AuthenticationService::get_authentication_method($authenticate_type);
+				try {
+					$authentication = AuthenticationService::get_authentication_method($authenticate_type);
+				} catch (Exception $e) {
+					$error_controller = PHPBoostErrors::unexisting_page();
+					DispatchManager::redirect($error_controller);
+				}
+				
 				$this->authenticate($authentication, true);
 			}
 		}
