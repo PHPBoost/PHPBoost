@@ -31,8 +31,6 @@
  */
 class InstallDisplayResponse extends AbstractResponse
 {
-	const INSTALL_DEFAULT_LANGUAGE = 'french';
-
 	private $lang;
 
 	private $distribution_lang;
@@ -87,7 +85,9 @@ class InstallDisplayResponse extends AbstractResponse
 
 	private function add_language_bar()
 	{
-		$lang = AppContext::get_request()->get_string('lang', self::INSTALL_DEFAULT_LANGUAGE);
+		$lang = TextHelper::htmlspecialchars(AppContext::get_request()->get_string('lang', InstallController::DEFAULT_LOCALE));
+		$lang = in_array($lang, InstallationServices::get_available_langs()) ? $lang : InstallController::DEFAULT_LOCALE;
+		
 		$lang_dir = new Folder(PATH_TO_ROOT . '/lang');
 		$langs = array();
 		foreach ($lang_dir->get_folders('`^[a-z_-]+$`i') as $folder)

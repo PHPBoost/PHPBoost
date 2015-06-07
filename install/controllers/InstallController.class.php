@@ -33,7 +33,8 @@ abstract class InstallController extends AbstractController
 
 	protected function load_lang(HTTPRequestCustom $request)
 	{
-		$locale = TextHelper::htmlspecialchars($request->get_string('lang', InstallController::DEFAULT_LOCALE));
+		$locale = TextHelper::htmlspecialchars($request->get_string('lang', self::DEFAULT_LOCALE));
+		$locale = in_array($locale, InstallationServices::get_available_langs()) ? $locale : self::DEFAULT_LOCALE;
 		LangLoader::set_locale($locale);
 		InstallUrlBuilder::set_locale($locale);
 		$this->lang = LangLoader::get('install', 'install');

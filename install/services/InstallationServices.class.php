@@ -61,6 +61,20 @@ class InstallationServices
         $this->load_distribution_configuration();
 	}
 
+	public static function get_available_langs()
+	{
+		$langs_folder = new Folder(PATH_TO_ROOT . '/install/lang');
+		$langs_list = $langs_folder->get_folders();
+		
+		$available_langs = array();
+		foreach ($langs_list as $lang)
+		{
+			$available_langs[] = $lang->get_name();
+		}
+		
+		return $available_langs;
+	}
+	
 	public function is_already_installed()
 	{
 		$tables_list = PersistenceContext::get_dbms_utils()->list_tables();
