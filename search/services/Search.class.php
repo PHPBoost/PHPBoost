@@ -76,7 +76,7 @@ class Search
 		// Lists old results to delete
 		$nbIdsToDelete = 0;
 		$idsToDelete = array();
-		$idsToDelete = $this->db_querier->select('SELECT id_search
+		$result = $this->db_querier->select('SELECT id_search
 		FROM ' . SearchSetup::$search_index_table . '
 		WHERE last_search_use <= :time OR times_used >= :times_used', array(
 			'time' => (time() - (CACHE_TIME * 60)),
