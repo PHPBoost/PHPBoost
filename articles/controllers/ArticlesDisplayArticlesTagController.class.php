@@ -166,12 +166,12 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		$nbr_sources = count($sources);
 		if ($nbr_sources)
 		{
-			$this->tpl->put('articles.C_SOURCES', $nbr_sources > 0);
+			$this->view->put('articles.C_SOURCES', $nbr_sources > 0);
 			
 			$i = 1;
 			foreach ($sources as $name => $url)
 			{       
-				$this->tpl->assign_block_vars('articles.sources', array(
+				$this->view->assign_block_vars('articles.sources', array(
 					'C_SEPARATOR' => $i < $nbr_sources,
 					'NAME' => $name,
 					'URL' => $url,
