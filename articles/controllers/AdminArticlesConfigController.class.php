@@ -172,7 +172,7 @@ class AdminArticlesConfigController extends AdminModuleController
 		if ($this->form->get_value('display_icon_cats'))
 		{
 			$this->config->enable_cats_icon();
-			$this->config->set_number_cols_display_cats($this->form->get_value('number_cols_display_cats')->get_raw_value());
+			$this->config->set_number_cols_display_cats($this->form->get_value('number_cols_display_cats'));
 		}
 		else
 		{

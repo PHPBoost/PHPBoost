@@ -166,7 +166,7 @@ class AdminMediaConfigController extends AdminModuleController
 	{
 		$this->config->set_items_number_per_page($this->form->get_value('items_number_per_page'));
 		$this->config->set_categories_number_per_page($this->form->get_value('categories_number_per_page'));
-		$this->config->set_columns_number_per_line($this->form->get_value('columns_number_per_line')->get_raw_value());
+		$this->config->set_columns_number_per_line($this->form->get_value('columns_number_per_line'));
 		
 		if ($this->form->get_value('author_displayed'))
 			$this->config->display_author();

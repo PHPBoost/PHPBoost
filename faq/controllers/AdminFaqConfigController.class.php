@@ -129,7 +129,7 @@ class AdminFaqConfigController extends AdminModuleController
 	private function save()
 	{
 		$this->config->set_categories_number_per_page($this->form->get_value('categories_number_per_page'));
-		$this->config->set_columns_number_per_line($this->form->get_value('columns_number_per_line')->get_raw_value());
+		$this->config->set_columns_number_per_line($this->form->get_value('columns_number_per_line'));
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
 		$this->config->set_root_category_description($this->form->get_value('root_category_description'));
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
