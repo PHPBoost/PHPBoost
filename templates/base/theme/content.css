@@ -725,26 +725,16 @@ input[type=color] {
 
 form input:focus:invalid,
 form textarea:focus:invalid,
-form .constraint-status-right input:invalid {
-	border-color: rgba(196, 60, 43, 0.3);
-	box-shadow: 0 0 3px rgba(196, 60, 43, 0.1);
-	color: #C43C35;
-}
-
-form .constraint-status-right textarea:invalid {
+form .constraint-status-right input,
+form .constraint-status-right textarea {
 	border-color: rgba(196, 60, 43, 0.3);
 	box-shadow: 0 0 3px rgba(196, 60, 43, 0.1);
 }
 
 form input:focus:valid,
 form textarea:focus:valid,
-form .constraint-status-right input:valid {
-	border-color: rgba(71, 137, 72, 0.3);
-	box-shadow: 0 0 5px rgba(71, 137, 72, 0.1);
-	color: #478948;
-}
-
-form .constraint-status-right textarea:valid {
+form .constraint-status-right input,
+form .constraint-status-right textarea {
 	border-color: rgba(71, 137, 72, 0.3);
 	box-shadow: 0 0 5px rgba(71, 137, 72, 0.1);
 }
