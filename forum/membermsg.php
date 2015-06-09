@@ -89,8 +89,8 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		'user_id' => $view_msg,
 		'timestamp' => (time() - SessionsConfig::load()->get_active_session_duration()),
 		'auth_cats' => $auth_cats,
-		'number_items_per_page' => $pagination->get_number_items_per_page() + $quote_last_msg,
-		'display_from' => $pagination->get_display_from() - $quote_last_msg
+		'number_items_per_page' => $pagination->get_number_items_per_page(),
+		'display_from' => $pagination->get_display_from()
 	));
 	while ($row = $result->fetch())
 	{

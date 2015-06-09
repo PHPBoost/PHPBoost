@@ -76,13 +76,13 @@ class Search
 		// Lists old results to delete
 		$nbIdsToDelete = 0;
 		$idsToDelete = array();
-		$result = $this->db_querier->select('SELECT id_search
+		$request = $this->db_querier->select('SELECT id_search
 		FROM ' . SearchSetup::$search_index_table . '
 		WHERE last_search_use <= :time OR times_used >= :times_used', array(
 			'time' => (time() - (CACHE_TIME * 60)),
 			'times_used' => CACHE_TIMES_USED
 		));
-		while ($row = $result->fetch())
+		while ($row = $request->fetch())
 		{
 			$idsToDelete[] = $row['id_search'];
 			$nbIdsToDelete++;
