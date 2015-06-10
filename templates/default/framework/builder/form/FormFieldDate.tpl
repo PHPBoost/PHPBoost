@@ -8,21 +8,10 @@
 		<span class="text-status-constraint" style="display:none" id="onblurMessageResponse${escape(HTML_ID)}"></span>
 		# IF C_HOUR #
 		{L_AT}
-		<input type="text" size="2" id="${escape(HTML_ID)}_hours" name="${escape(HTML_ID)}_hours" value="{HOURS}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_READONLY # readonly="readonly" # ENDIF #/> {L_H}
-		<input type="text" size="2" id="${escape(HTML_ID)}_minutes" name="${escape(HTML_ID)}_minutes" value="{MINUTES}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_READONLY # readonly="readonly" # ENDIF #/>
+		<input type="number" min="0" max="23" id="${escape(HTML_ID)}_hours" name="${escape(HTML_ID)}_hours" value="{HOURS}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_READONLY # readonly="readonly" # ENDIF #/> {L_H}
+		<input type="number" min="0" step="5" max="59" id="${escape(HTML_ID)}_minutes" name="${escape(HTML_ID)}_minutes" value="{MINUTES}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_READONLY # readonly="readonly" # ENDIF #/>
 		# ENDIF #
 	</div>
 </div>
 
 # INCLUDE ADD_FIELD_JS #
-<script>
-<!--
-jQuery('#${escape(HTML_ID)}_hours, #${escape(HTML_ID)}_minutes').keyup(function(){
-	regex = new RegExp('^[0-9]{2}$', 'i');
-	if (!regex.test(this.value))
-	{
-		this.value = '';
-	}
-}); 
--->
-</script>
