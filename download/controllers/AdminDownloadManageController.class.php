@@ -69,7 +69,8 @@ class AdminDownloadManageController extends AdminModuleController
 			LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = download.id AND com.module_id = \'download\'
 			LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = download.id AND notes.module_name = \'download\'
 			LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = download.id AND note.module_name = \'download\' AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
-			LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = download.author_user_id'
+			LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = download.author_user_id',
+			array('*', 'download.id')
 		);
 		foreach ($result as $row)
 		{

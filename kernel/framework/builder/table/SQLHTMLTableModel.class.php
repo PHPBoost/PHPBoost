@@ -45,7 +45,7 @@ class SQLHTMLTableModel extends HTMLTableModel
 		return PersistenceContext::get_querier()->count($this->table, $this->get_filtered_clause($this->html_table->parameters->get_filters()) . $this->get_permanent_filtered_clause($this->get_permanent_filters()), $this->parameters);
 	}
 
-	public function get_sql_results($sql_join = false)
+	public function get_sql_results($sql_join = false, $select = array('*'))
 	{
 		$limit = $this->html_table->get_nb_rows_per_page();
 		$offset = ($this->html_table->parameters->get_page_number() - 1) * $limit;
@@ -53,7 +53,7 @@ class SQLHTMLTableModel extends HTMLTableModel
 		$filters = $this->html_table->parameters->get_filters();
 		$permanent_filters = $this->get_permanent_filters();
 
-		$query = 'SELECT * ';
+		$query = 'SELECT ' . implode(', ', $select) . ' ';
 		$query .= $this->get_sql_from($sql_join);
 		$query .= $this->get_filtered_clause($filters);
 		$query .= $this->get_permanent_filtered_clause($permanent_filters);
