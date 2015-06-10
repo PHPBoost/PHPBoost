@@ -36,11 +36,7 @@ class AdminSitemapController extends AdminModuleController
 	 * @var FormButtonDefaultSubmit
 	 */
 	private $submit_button;
-	/**
-	 * @return View
-	 */
-	private $view;
-
+	
 	public function __construct()
 	{
 		$this->lang = LangLoader::get('common', 'sitemap');
@@ -49,14 +45,20 @@ class AdminSitemapController extends AdminModuleController
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->build_form();
-
+		
+		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$tpl->add_lang($this->lang);
+		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->handle_form();
 			$this->form->get_field_by_id('file_life_time')->set_hidden(!SitemapXMLFileService::is_xml_file_generation_enabled());
+			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
-
-		return $this->build_response($this->form->display());
+		
+		$tpl->put('FORM', $this->form->display());
+		
+		return $this->build_response($tpl);
 	}
 
 	private function build_form()
@@ -68,8 +70,8 @@ class AdminSitemapController extends AdminModuleController
 		$fieldset->add_field(new FormFieldCheckbox('enable_sitemap_xml', $this->lang['auto_generate_xml_file'], SitemapXMLFileService::is_xml_file_generation_enabled() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED,
 			array('events' => array('click' => 'if ($FF("enable_sitemap_xml").getValue()) { $FF("file_life_time").enable(); } else { $FF("file_life_time").disable(); }'))));
 
-		$fieldset->add_field(new FormFieldTextEditor('file_life_time', $this->lang['xml_file_life_time'], SitemapXMLFileService::get_life_time(),
-			array('required' => true, 'size' => 2, 'maxlength' => 2, 'description' => $this->lang['xml_file_life_time_explain'], 'hidden' => !SitemapXMLFileService::is_xml_file_generation_enabled()),
+		$fieldset->add_field(new FormFieldNumber('file_life_time', $this->lang['xml_file_life_time'], SitemapXMLFileService::get_life_time(),
+			array('required' => true, 'min' => 0, 'description' => $this->lang['xml_file_life_time_explain'], 'hidden' => !SitemapXMLFileService::is_xml_file_generation_enabled()),
 			array(new FormFieldConstraintIntegerRange(1, 50))));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
