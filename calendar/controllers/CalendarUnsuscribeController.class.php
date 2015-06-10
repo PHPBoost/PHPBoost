@@ -48,7 +48,7 @@ class CalendarUnsuscribeController extends ModuleController
 			
 			$category = $this->event->get_content()->get_category();
 			
-			AppContext::get_response()->redirect($request->get_getvalue('redirect', CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event_id, $this->event->get_content()->get_rewrited_title())));
+			AppContext::get_response()->redirect($request->get_url_referrer() ? $request->get_url_referrer() : CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event_id, $this->event->get_content()->get_rewrited_title()));
 		}
 		else
 		{

@@ -76,7 +76,7 @@ class UserEditProfileController extends AbstractController
 			{
 				$authentication_method = AuthenticationService::get_authentication_method($associate_type);
 				AuthenticationService::associate($authentication_method, $user_id);
-				AppContext::get_response()->redirect(UserUrlBuilder::edit_profile($user_id, $request->get_getvalue('redirect', null)));
+				AppContext::get_response()->redirect(UserUrlBuilder::edit_profile($user_id));
 			}
 		}
 
@@ -87,7 +87,7 @@ class UserEditProfileController extends AbstractController
 			{
 				$authentication_method = AuthenticationService::get_authentication_method($dissociate_type);
 				AuthenticationService::dissociate($authentication_method, $user_id);
-				AppContext::get_response()->redirect(UserUrlBuilder::edit_profile($user_id, $request->get_getvalue('redirect', null)));
+				AppContext::get_response()->redirect(UserUrlBuilder::edit_profile($user_id));
 			}
 		}
 		
@@ -388,7 +388,7 @@ class UserEditProfileController extends AbstractController
 		
 		if (!$has_error)
 		{
-			AppContext::get_response()->redirect($request->get_getvalue('redirect', UserUrlBuilder::edit_profile($user_id)));
+			AppContext::get_response()->redirect($request->get_url_referrer() ? $request->get_url_referrer() : UserUrlBuilder::edit_profile($user_id));
 		}
 	}
 

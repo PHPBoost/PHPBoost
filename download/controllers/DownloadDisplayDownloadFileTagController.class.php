@@ -134,7 +134,7 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 			$keywords = $downloadfile->get_keywords();
 			$has_keywords = count($keywords) > 0;
 			
-			$this->tpl->assign_block_vars('downloadfiles', array_merge($downloadfile->get_array_tpl_vars(DownloadUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $field, $mode, $page)->relative()), array(
+			$this->tpl->assign_block_vars('downloadfiles', array_merge($downloadfile->get_array_tpl_vars(), array(
 				'C_KEYWORDS' => $has_keywords
 			)));
 			

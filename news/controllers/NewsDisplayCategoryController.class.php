@@ -99,7 +99,7 @@ class NewsDisplayCategoryController extends ModuleController
 			$news = new News();
 			$news->set_properties($row);
 			
-			$this->tpl->assign_block_vars('news', $news->get_array_tpl_vars(NewsUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $page)->relative()));
+			$this->tpl->assign_block_vars('news', $news->get_array_tpl_vars());
 			$this->build_sources_view($news);
 		}
 		$result->dispose();

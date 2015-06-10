@@ -140,7 +140,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 			
 			$this->build_keywords_view($article);
 			
-			$this->view->assign_block_vars('articles', $article->get_tpl_vars(ArticlesUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $field, $mode, $page)->relative()));
+			$this->view->assign_block_vars('articles', $article->get_tpl_vars());
 			$this->build_sources_view($article);
 		}
 		$result->dispose();

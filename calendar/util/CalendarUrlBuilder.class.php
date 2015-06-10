@@ -123,37 +123,33 @@ class CalendarUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function edit_event($id, $redirect = null)
+	public static function edit_event($id)
 	{
-		$redirect = $redirect !== null ? '?redirect=' . $redirect : '';
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/edit/' . $redirect);
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/edit/');
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function delete_event($id, $redirect = null)
+	public static function delete_event($id)
 	{
-		$redirect = $redirect !== null ? 'redirect=' . $redirect . '&' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/?' . $redirect . 'token=' . AppContext::get_session()->get_token());
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/?' . 'token=' . AppContext::get_session()->get_token());
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function suscribe_event($id, $redirect = null)
+	public static function suscribe_event($id)
 	{
-		$redirect = $redirect !== null ? '?redirect=' . $redirect : '';
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/suscribe/' . $redirect);
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/suscribe/');
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function unsuscribe_event($id, $redirect = null)
+	public static function unsuscribe_event($id)
 	{
-		$redirect = $redirect !== null ? '?redirect=' . $redirect : '';
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/unsuscribe/' . $redirect);
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/unsuscribe/');
 	}
 	
 	/**

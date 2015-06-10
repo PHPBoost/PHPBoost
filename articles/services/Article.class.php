@@ -432,7 +432,7 @@ class Article
 		$this->end_date_enabled = false;
 	}
 	
-	public function get_tpl_vars($redirect = null)
+	public function get_tpl_vars()
 	{
 		$category = $this->get_category();
 		$user = $this->get_author_user();
@@ -488,8 +488,8 @@ class Article
 			'U_AUTHOR' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
 			'U_CATEGORY' => ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
 			'U_ARTICLE' => ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->rel(),
-			'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($this->id, $redirect, AppContext::get_request()->get_getint('page', 1))->rel(),
-			'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($this->id, ($redirect ? $redirect : AppContext::get_request()->get_url_referrer()))->rel(),
+			'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($this->id, AppContext::get_request()->get_getint('page', 1))->rel(),
+			'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($this->id)->rel(),
 			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($category->get_id())->rel(),
 			'U_PRINT_ARTICLE' => ArticlesUrlBuilder::print_article($this->get_id(), $this->get_rewrited_title())->rel()
 		);

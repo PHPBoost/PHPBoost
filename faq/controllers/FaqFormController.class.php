@@ -51,7 +51,7 @@ class FaqFormController extends ModuleController
 		
 		$this->check_authorizations();
 		
-		$this->build_form();
+		$this->build_form($request);
 		
 		$tpl = new StringTemplate('# INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
@@ -59,7 +59,7 @@ class FaqFormController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->redirect($request);
+			$this->redirect();
 		}
 		
 		$tpl->put('FORM', $this->form->display());
@@ -73,7 +73,7 @@ class FaqFormController extends ModuleController
 		$this->common_lang = LangLoader::get('common');
 	}
 	
-	private function build_form()
+	private function build_form(HTTPRequestCustom $request)
 	{
 		$form = new HTMLForm(__CLASS__);
 		
@@ -95,6 +95,8 @@ class FaqFormController extends ModuleController
 		}
 		
 		$this->build_contribution_fieldset($form);
+		
+		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -242,7 +244,7 @@ class FaqFormController extends ModuleController
 		$faq_question->set_id($id);
 	}
 	
-	private function redirect(HTTPRequestCustom $request)
+	private function redirect()
 	{
 		$faq_question = $this->get_faq_question();
 		$category = $faq_question->get_category();
@@ -253,18 +255,17 @@ class FaqFormController extends ModuleController
 		}
 		elseif ($faq_question->is_approved())
 		{
-			AppContext::get_response()->redirect($request->get_getvalue('redirect', FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $faq_question->get_id())));
+			AppContext::get_response()->redirect($this->form->get_value('referrer') ? $this->form->get_value('referrer') : FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $faq_question->get_id()));
 		}
 		else
 		{
-			AppContext::get_response()->redirect($request->get_getvalue('redirect', FaqUrlBuilder::display_pending()));
+			AppContext::get_response()->redirect($this->form->get_value('referrer') ? $this->form->get_value('referrer') : FaqUrlBuilder::display_pending());
 		}
 	}
 	
 	private function generate_response(View $tpl)
 	{
 		$faq_question = $this->get_faq_question();
-		$redirect = AppContext::get_request()->get_getvalue('redirect', '');
 		
 		$response = new SiteDisplayResponse($tpl);
 		$graphical_environment = $response->get_graphical_environment();
@@ -283,7 +284,7 @@ class FaqFormController extends ModuleController
 		{
 			$graphical_environment->set_page_title($this->lang['faq.edit'], $this->lang['module_title']);
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['faq.edit']);
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::edit($faq_question->get_id(), $redirect));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::edit($faq_question->get_id()));
 			
 			$categories = array_reverse(FaqService::get_categories_manager()->get_parents($faq_question->get_id_category(), true));
 			foreach ($categories as $id => $category)
@@ -293,7 +294,7 @@ class FaqFormController extends ModuleController
 			}
 			$category = $faq_question->get_category();
 			$breadcrumb->add($faq_question->get_question(), FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $faq_question->get_id()));
-			$breadcrumb->add($this->lang['faq.edit'], FaqUrlBuilder::edit($faq_question->get_id(), $redirect));
+			$breadcrumb->add($this->lang['faq.edit'], FaqUrlBuilder::edit($faq_question->get_id()));
 		}
 		
 		return $response;

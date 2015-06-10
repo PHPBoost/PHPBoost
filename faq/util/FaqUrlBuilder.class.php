@@ -116,19 +116,17 @@ class FaqUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function edit($id, $redirect = null)
+	public static function edit($id)
 	{
-		$redirect = $redirect !== null ? '?redirect=' . $redirect : '';
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/edit/' . $redirect);
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/edit/');
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function delete($id, $redirect = null)
+	public static function delete($id)
 	{
-		$redirect = $redirect !== null ? 'redirect=' . $redirect . '&' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/?' . $redirect . 'token=' . AppContext::get_session()->get_token());
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/?' . 'token=' . AppContext::get_session()->get_token());
 	}
 	
 	/**
@@ -136,7 +134,7 @@ class FaqUrlBuilder
 	 */
 	public static function display($id_category, $rewrited_name_category, $id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/#q' . $id);
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/#question' . $id);
 	}
 	
 	/**

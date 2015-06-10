@@ -93,7 +93,7 @@ class FaqDisplayPendingFaqQuestionsController extends ModuleController
 			$faq_question = new FaqQuestion();
 			$faq_question->set_properties($row);
 			
-			$this->tpl->assign_block_vars('questions', $faq_question->get_array_tpl_vars(FaqUrlBuilder::display_pending()->relative()));
+			$this->tpl->assign_block_vars('questions', $faq_question->get_array_tpl_vars());
 		}
 		$result->dispose();
 		$this->build_sorting_form($field, $mode);

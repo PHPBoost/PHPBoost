@@ -168,13 +168,11 @@ class CalendarDeleteController extends ModuleController
 	
 	private function redirect(HTTPRequestCustom $request)
 	{
-		AppContext::get_response()->redirect($request->get_getvalue('redirect', CalendarUrlBuilder::home($this->event->get_start_date()->get_year(), $this->event->get_start_date()->get_month())));
+		AppContext::get_response()->redirect($request->get_url_referrer() ? $request->get_url_referrer() : CalendarUrlBuilder::home($this->event->get_start_date()->get_year(), $this->event->get_start_date()->get_month()));
 	}
 	
 	private function generate_response(View $tpl)
 	{
-		$redirect = AppContext::get_request()->get_getvalue('redirect', '');
-		
 		$response = new SiteDisplayResponse($tpl);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['calendar.titles.event_removal'], $this->lang['module_title']);
@@ -187,8 +185,8 @@ class CalendarDeleteController extends ModuleController
 		$category = $event_content->get_category();
 		$breadcrumb->add($event_content->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event_content->get_id(), $event_content->get_rewrited_title()));
 		
-		$breadcrumb->add($this->lang['calendar.titles.event_removal'], CalendarUrlBuilder::delete_event($this->event->get_id(), $redirect));
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::delete_event($this->event->get_id(), $redirect));
+		$breadcrumb->add($this->lang['calendar.titles.event_removal'], CalendarUrlBuilder::delete_event($this->event->get_id()));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::delete_event($this->event->get_id()));
 		
 		return $response;
 	}

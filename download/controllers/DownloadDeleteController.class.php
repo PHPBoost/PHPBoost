@@ -52,7 +52,7 @@ class DownloadDeleteController extends ModuleController
 		Feed::clear_cache('download');
 		DownloadCache::invalidate();
 		
-		AppContext::get_response()->redirect($request->get_getvalue('redirect', DownloadUrlBuilder::home()));
+		AppContext::get_response()->redirect($request->get_url_referrer() ? $request->get_url_referrer() : DownloadUrlBuilder::home());
 	}
 	
 	private function get_downloadfile(HTTPRequestCustom $request)

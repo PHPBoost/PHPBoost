@@ -47,7 +47,7 @@ class NewsFormController extends ModuleController
 		
 		$this->check_authorizations();
 		
-		$this->build_form();
+		$this->build_form($request);
 		
 		$tpl = new StringTemplate('# INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
@@ -55,7 +55,7 @@ class NewsFormController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->redirect($request);
+			$this->redirect();
 		}
 		
 		$tpl->put('FORM', $this->form->display());
@@ -69,7 +69,7 @@ class NewsFormController extends ModuleController
 		$this->common_lang = LangLoader::get('common');
 	}
 	
-	private function build_form()
+	private function build_form(HTTPRequestCustom $request)
 	{
 		$form = new HTMLForm(__CLASS__);
 		
@@ -166,6 +166,8 @@ class NewsFormController extends ModuleController
 		}
 		
 		$this->build_contribution_fieldset($form);
+		
+		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -343,7 +345,7 @@ class NewsFormController extends ModuleController
 		$news->set_id($id_news);
 	}
 	
-	private function redirect(HTTPRequestCustom $request)
+	private function redirect()
 	{
 		$news = $this->get_news();
 		$category = $news->get_category();
@@ -354,18 +356,17 @@ class NewsFormController extends ModuleController
 		}
 		elseif ($news->is_visible())
 		{
-			AppContext::get_response()->redirect($request->get_getvalue('redirect', NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name())));
+			AppContext::get_response()->redirect($this->form->get_value('referrer') ? $this->form->get_value('referrer') : NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name()));
 		}
 		else
 		{
-			AppContext::get_response()->redirect($request->get_getvalue('redirect', NewsUrlBuilder::display_pending_news()));
+			AppContext::get_response()->redirect($this->form->get_value('referrer') ? $this->form->get_value('referrer') : NewsUrlBuilder::display_pending_news());
 		}
 	}
 	
 	private function generate_response(View $tpl)
 	{
 		$news = $this->get_news();
-		$redirect = AppContext::get_request()->get_getvalue('redirect', '');
 		
 		$response = new SiteDisplayResponse($tpl);
 		$graphical_environment = $response->get_graphical_environment();
@@ -384,7 +385,7 @@ class NewsFormController extends ModuleController
 		{
 			$graphical_environment->set_page_title($this->lang['news.edit'], $this->lang['news']);
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['news.edit']);
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::edit_news($news->get_id(), $redirect));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::edit_news($news->get_id()));
 			
 			$categories = array_reverse(NewsService::get_categories_manager()->get_parents($news->get_id_cat(), true));
 			foreach ($categories as $id => $category)
@@ -394,7 +395,7 @@ class NewsFormController extends ModuleController
 			}
 			$category = $news->get_category();
 			$breadcrumb->add($news->get_name(), NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name()));
-			$breadcrumb->add($this->lang['news.edit'], NewsUrlBuilder::edit_news($news->get_id(), $redirect));
+			$breadcrumb->add($this->lang['news.edit'], NewsUrlBuilder::edit_news($news->get_id()));
 		}
 		
 		return $response;

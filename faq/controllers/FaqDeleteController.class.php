@@ -40,7 +40,7 @@ class FaqDeleteController extends ModuleController
 		
 		$this->delete_question($question);
 		
-		AppContext::get_response()->redirect($request->get_getvalue('redirect', FaqUrlBuilder::home()));
+		AppContext::get_response()->redirect($request->get_url_referrer() ? $request->get_url_referrer() : FaqUrlBuilder::home());
 	}
 	
 	private function delete_question(FaqQuestion $question)

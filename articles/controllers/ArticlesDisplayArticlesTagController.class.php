@@ -154,7 +154,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			
 			$this->build_keywords_view($article);
 			
-			$this->view->assign_block_vars('articles', $article->get_tpl_vars(ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $field, $mode, $page)->relative()));
+			$this->view->assign_block_vars('articles', $article->get_tpl_vars());
 			$this->build_sources_view($article);
 		}
 		$result->dispose();

@@ -125,7 +125,7 @@ class CalendarAjaxEventsController extends AbstractController
 				if (isset($participants[$event->get_id()]))
 					$event->set_participants($participants[$event->get_id()]);
 				
-				$this->view->assign_block_vars('event', $event->get_array_tpl_vars(CalendarUrlBuilder::home($year, $month, $day)->relative()));
+				$this->view->assign_block_vars('event', $event->get_array_tpl_vars());
 				
 				$participants_number = count($event->get_participants());
 				$i = 0;

@@ -94,7 +94,7 @@ class CalendarDisplayPendingEventsController extends ModuleController
 			$event = new CalendarEvent();
 			$event->set_properties($row);
 			
-			$this->events_view->assign_block_vars('event', $event->get_array_tpl_vars(CalendarUrlBuilder::display_pending_events($page)->relative()));
+			$this->events_view->assign_block_vars('event', $event->get_array_tpl_vars());
 		}
 		$result->dispose();
 		

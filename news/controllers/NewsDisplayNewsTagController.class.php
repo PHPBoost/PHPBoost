@@ -105,7 +105,7 @@ class NewsDisplayNewsTagController extends ModuleController
 			$news = new News();
 			$news->set_properties($row);
 			
-			$this->tpl->assign_block_vars('news', array_merge($news->get_array_tpl_vars(NewsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $page)->relative()), array(
+			$this->tpl->assign_block_vars('news', array_merge($news->get_array_tpl_vars(), array(
 				'L_COMMENTS' => CommentsService::get_number_and_lang_comments('news', $row['id']),
 				'NUMBER_COM' => !empty($row['number_comments']) ? $row['number_comments'] : 0
 			)));

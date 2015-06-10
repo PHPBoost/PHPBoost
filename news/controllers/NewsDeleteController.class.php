@@ -57,7 +57,7 @@ class NewsDeleteController extends ModuleController
 		
 		Feed::clear_cache('news');
 		
-		AppContext::get_response()->redirect($request->get_getvalue('redirect', NewsUrlBuilder::home()));
+		AppContext::get_response()->redirect($request->get_url_referrer() ? $request->get_url_referrer() : NewsUrlBuilder::home());
 	}
 	
 	private function get_news(HTTPRequestCustom $request)

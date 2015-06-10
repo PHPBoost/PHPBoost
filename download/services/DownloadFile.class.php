@@ -444,7 +444,7 @@ class DownloadFile
 		$this->end_date_enabled = false;
 	}
 	
-	public function get_array_tpl_vars($redirect = null)
+	public function get_array_tpl_vars()
 	{
 		$category = $this->get_category();
 		$description = $this->get_real_short_contents();
@@ -500,8 +500,8 @@ class DownloadFile
 			'U_DOWNLOAD' => DownloadUrlBuilder::download($this->id)->rel(),
 			'U_DEADLINK' => DownloadUrlBuilder::dead_link($this->id)->rel(),
 			'U_CATEGORY' => DownloadUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
-			'U_EDIT' => DownloadUrlBuilder::edit($this->id, $redirect)->rel(),
-			'U_DELETE' => DownloadUrlBuilder::delete($this->id, ($redirect ? $redirect : AppContext::get_request()->get_url_referrer()))->rel(),
+			'U_EDIT' => DownloadUrlBuilder::edit($this->id)->rel(),
+			'U_DELETE' => DownloadUrlBuilder::delete($this->id)->rel(),
 			'U_PICTURE' => $this->get_picture()->rel(),
 			'U_COMMENTS' => DownloadUrlBuilder::display_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->rel()
 		);

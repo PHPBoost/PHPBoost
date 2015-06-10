@@ -100,7 +100,7 @@ class NewsDisplayPendingNewsController extends ModuleController
 			$news = new News();
 			$news->set_properties($row);
 			
-			$this->tpl->assign_block_vars('news', $news->get_array_tpl_vars(NewsUrlBuilder::display_pending_news($page)->relative()));
+			$this->tpl->assign_block_vars('news', $news->get_array_tpl_vars());
 			$this->build_sources_view($news);
 		}
 		$result->dispose();

@@ -192,7 +192,7 @@ class WebDisplayCategoryController extends ModuleController
 			$keywords = $weblink->get_keywords();
 			$has_keywords = count($keywords) > 0;
 			
-			$this->tpl->assign_block_vars('weblinks', array_merge($weblink->get_array_tpl_vars(WebUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $field, $mode, $page)->relative()), array(
+			$this->tpl->assign_block_vars('weblinks', array_merge($weblink->get_array_tpl_vars(), array(
 				'C_KEYWORDS' => $has_keywords
 			)));
 			

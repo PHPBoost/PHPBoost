@@ -376,7 +376,7 @@ class News
 		$this->end_date_enabled = false;
 	}
 	
-	public function get_array_tpl_vars($redirect = null)
+	public function get_array_tpl_vars()
 	{
 		$category = $this->get_category();
 		$user = $this->get_author_user();
@@ -421,8 +421,8 @@ class News
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
 			'U_LINK' => NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->rel(),
 			'U_CATEGORY' => NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
-			'U_EDIT' => NewsUrlBuilder::edit_news($this->id, $redirect)->rel(),
-			'U_DELETE' => NewsUrlBuilder::delete_news($this->id, ($redirect ? $redirect : AppContext::get_request()->get_url_referrer()))->rel(),
+			'U_EDIT' => NewsUrlBuilder::edit_news($this->id)->rel(),
+			'U_DELETE' => NewsUrlBuilder::delete_news($this->id)->rel(),
 			'U_PICTURE' => $this->get_picture()->rel(),
 			'U_COMMENTS' => NewsUrlBuilder::display_comments_news($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->rel()
 		);

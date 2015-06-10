@@ -49,7 +49,7 @@ class CalendarFormController extends ModuleController
 		
 		$this->check_authorizations();
 		
-		$this->build_form();
+		$this->build_form($request);
 		
 		$tpl = new StringTemplate('# INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
@@ -57,7 +57,7 @@ class CalendarFormController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->redirect($request);
+			$this->redirect();
 		}
 		
 		$tpl->put('FORM', $this->form->display());
@@ -70,7 +70,7 @@ class CalendarFormController extends ModuleController
 		$this->lang = LangLoader::get('common', 'calendar');
 	}
 	
-	private function build_form()
+	private function build_form(HTTPRequestCustom $request)
 	{
 		$common_lang = LangLoader::get('common');
 		$event_content = $this->get_event()->get_content();
@@ -161,6 +161,8 @@ class CalendarFormController extends ModuleController
 		}
 		
 		$this->build_contribution_fieldset($form);
+		
+		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -460,7 +462,7 @@ class CalendarFormController extends ModuleController
 		$event->set_id($id_event);
 	}
 	
-	private function redirect(HTTPRequestCustom $request)
+	private function redirect()
 	{
 		$event = $this->get_event();
 		$category = $event->get_content()->get_category();
@@ -471,18 +473,17 @@ class CalendarFormController extends ModuleController
 		}
 		elseif ($event->get_content()->is_approved())
 		{
-			AppContext::get_response()->redirect($request->get_getvalue('redirect', CalendarUrlBuilder::home($event->get_start_date()->get_year(), $event->get_start_date()->get_month(), $event->get_start_date()->get_day() , true)));
+			AppContext::get_response()->redirect($this->form->get_value('referrer') ? $this->form->get_value('referrer') : CalendarUrlBuilder::home($event->get_start_date()->get_year(), $event->get_start_date()->get_month(), $event->get_start_date()->get_day() , true));
 		}
 		else
 		{
-			AppContext::get_response()->redirect($request->get_getvalue('redirect', CalendarUrlBuilder::display_pending_events()));
+			AppContext::get_response()->redirect($this->form->get_value('referrer') ? $this->form->get_value('referrer') : CalendarUrlBuilder::display_pending_events());
 		}
 	}
 	
 	private function generate_response(View $tpl)
 	{
 		$event = $this->get_event();
-		$redirect = AppContext::get_request()->get_getvalue('redirect', '');
 		
 		$response = new SiteDisplayResponse($tpl);
 		$graphical_environment = $response->get_graphical_environment();
@@ -503,8 +504,8 @@ class CalendarFormController extends ModuleController
 			$category = $event->get_content()->get_category();
 			$breadcrumb->add($event->get_content()->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()));
 			
-			$breadcrumb->add($this->lang['calendar.titles.event_edition'], CalendarUrlBuilder::edit_event($event->get_id(), $redirect));
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::edit_event($event->get_id(), $redirect));
+			$breadcrumb->add($this->lang['calendar.titles.event_edition'], CalendarUrlBuilder::edit_event($event->get_id()));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::edit_event($event->get_id()));
 		}
 		
 		return $response;

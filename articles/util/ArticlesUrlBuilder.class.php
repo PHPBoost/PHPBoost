@@ -90,17 +90,15 @@ class ArticlesUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/add/' . $id_category);
 	}
 	
-	public static function edit_article($id, $redirect = null, $page = 1)
+	public static function edit_article($id, $page = 1)
 	{
-		$redirect = $redirect !== null ? '?redirect=' . $redirect : '';
 		$page = $page !== 1 ? $page . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/edit/' . $page . $redirect);
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/edit/' . $page);
 	}
 	
-	public static function delete_article($id, $redirect = null)
+	public static function delete_article($id)
 	{
-		$redirect = $redirect !== null ? 'redirect=' . $redirect . '&' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/?' . $redirect . 'token=' . AppContext::get_session()->get_token());
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/?' . 'token=' . AppContext::get_session()->get_token());
 	}
 	
 	public static function display_article($id_category, $rewrited_name_category, $id_article, $rewrited_title, $page = 1)

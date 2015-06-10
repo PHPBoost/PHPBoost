@@ -46,7 +46,7 @@ class ArticlesFormController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->redirect($request);
+			$this->redirect();
 		}
 		
 		$this->tpl->put('FORM', $this->form->display());
@@ -180,6 +180,8 @@ class ArticlesFormController extends ModuleController
 		}
 
 		$this->build_contribution_fieldset($form);
+		
+		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -397,7 +399,7 @@ class ArticlesFormController extends ModuleController
 		$article->set_id($id_article);
 	}
 	
-	private function redirect(HTTPRequestCustom $request)
+	private function redirect()
 	{
 		$article = $this->get_article();
 		$category = $article->get_category();
@@ -408,18 +410,17 @@ class ArticlesFormController extends ModuleController
 		}
 		elseif ($article->is_published())
 		{
-			AppContext::get_response()->redirect($request->get_getvalue('redirect', ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title(), AppContext::get_request()->get_getint('page', 1))));
+			AppContext::get_response()->redirect($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title(), AppContext::get_request()->get_getint('page', 1)));
 		}
 		else
 		{
-			AppContext::get_response()->redirect($request->get_getvalue('redirect', ArticlesUrlBuilder::display_pending_articles()));
+			AppContext::get_response()->redirect($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ArticlesUrlBuilder::display_pending_articles());
 		}
 	}
 
 	private function build_response(View $tpl)
 	{
 		$article = $this->get_article();
-		$redirect = AppContext::get_request()->get_getvalue('redirect', '');
 		
 		$response = new SiteDisplayResponse($tpl);
 		$graphical_environment = $response->get_graphical_environment();
@@ -444,10 +445,10 @@ class ArticlesFormController extends ModuleController
 			}
 			$breadcrumb->add($article->get_title(), ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title()));
 
-			$breadcrumb->add($this->lang['articles.edit'], ArticlesUrlBuilder::edit_article($article->get_id(), $redirect));
+			$breadcrumb->add($this->lang['articles.edit'], ArticlesUrlBuilder::edit_article($article->get_id()));
 			$graphical_environment->set_page_title($this->lang['articles.edit'], $this->lang['articles']);
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['articles.edit']);
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::edit_article($article->get_id(), $redirect));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::edit_article($article->get_id()));
 		}
 
 		return $response;
