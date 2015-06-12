@@ -77,6 +77,7 @@
 						# END link_bread_crumb #
 					</ol>
 				</nav>
+				# INCLUDE KERNEL_MESSAGE #
 				{CONTENT}
 			</div>
 

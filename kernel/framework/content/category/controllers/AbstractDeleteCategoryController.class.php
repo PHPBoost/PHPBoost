@@ -57,8 +57,9 @@ abstract class AbstractDeleteCategoryController extends AdminModuleController
 		$childrens = $this->get_category_childrens($category);
 		if (empty($childrens) && !$this->get_category_items_exists($category))
 		{
+			$category_name = $this->get_category()->get_name();
 			$this->get_categories_manager()->delete($this->get_category()->get_id());
-			AppContext::get_response()->redirect($this->get_categories_management_url());
+			AppContext::get_response()->redirect($this->get_categories_management_url(), StringVars::replace_vars($this->lang['category.message.success.delete'], array('name' => $category_name)));
 		}
 	
 		$this->build_form();
@@ -67,6 +68,7 @@ abstract class AbstractDeleteCategoryController extends AdminModuleController
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
+			$category_name = $this->get_category()->get_name();
 			if ($this->form->get_value('delete_category_and_content'))
 			{
 				$this->get_categories_manager()->delete($this->get_category()->get_id());
@@ -88,7 +90,7 @@ abstract class AbstractDeleteCategoryController extends AdminModuleController
 				
 				$this->get_categories_manager()->delete($this->get_category()->get_id());
 			}
-			AppContext::get_response()->redirect($this->get_categories_management_url());
+			AppContext::get_response()->redirect($this->get_categories_management_url(), StringVars::replace_vars($this->lang['category.message.success.delete'], array('name' => $category_name)));
 		}
 		
 		$tpl->put('FORM', $this->form->display());

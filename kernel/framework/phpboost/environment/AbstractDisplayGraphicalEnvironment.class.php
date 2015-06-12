@@ -84,5 +84,24 @@
 		
 		self::set_page_localization($this->get_page_title());
 	}
+	
+	protected function display_kernel_message(View $template)
+	{
+		$request = AppContext::get_request();
+		if ($request->has_cookieparameter('message'))
+		{
+			$message = $request->get_cookie('message');
+			$message_type = $request->has_cookieparameter('message_type') ? $request->get_cookie('message_type') : MessageHelper::SUCCESS;
+			$message_duration = $request->has_cookieparameter('message_duration') ? $request->get_cookie('message_duration') : 5;
+			
+			if (!empty($message))
+				$template->put('KERNEL_MESSAGE', MessageHelper::display($message, $message_type, $message_duration));
+			
+			$response = AppContext::get_response();
+			$response->delete_cookie('message');
+			$response->delete_cookie('message_type');
+			$response->delete_cookie('message_duration');
+		}
+	}
 }
 ?>

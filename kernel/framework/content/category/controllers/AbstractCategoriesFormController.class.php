@@ -48,11 +48,12 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 	 * @var Category
 	 */
 	private $category;
+	private $is_new_category;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
-		$this->build_form();
+		$this->build_form($request);
 		
 		$tpl = new StringTemplate('# INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
@@ -61,7 +62,7 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 		{
 			$this->set_properties();
 			$this->save();
-			AppContext::get_response()->redirect($this->get_categories_management_url());
+			AppContext::get_response()->redirect($this->form->get_value('referrer') ? $this->form->get_value('referrer') : $this->get_categories_management_url(), StringVars::replace_vars($this->is_new_category ? $this->lang['category.message.success.add'] : $this->lang['category.message.success.edit'], array('name' => $this->get_category()->get_name())));
 		}
 		
 		$tpl->put('FORM', $this->form->display());
@@ -75,7 +76,7 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 		$this->common_lang = LangLoader::get('common');
 	}
 	
-	private function build_form()
+	private function build_form(HTTPRequestCustom $request)
 	{
 		$form = new HTMLForm(__CLASS__);
 		
@@ -125,6 +126,8 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings, array('hidden' => ($this->get_category()->auth_is_empty() || $this->get_category()->auth_is_equals($root_auth))));
 		$auth_settings->build_from_auth_array($this->get_category()->get_authorizations());
 		$fieldset_authorizations->add_field($auth_setter);
+		
+		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -190,6 +193,7 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 			else
 			{
 				$category_class = $this->get_categories_manager()->get_categories_cache()->get_category_class();
+				$this->is_new_category = true;
 				$this->category =  new $category_class();
 				$this->category->set_authorizations($this->get_categories_manager()->get_categories_cache()->get_root_category()->get_authorizations());
 			}

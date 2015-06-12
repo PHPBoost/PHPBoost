@@ -75,6 +75,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'L_PHPBOOST_RIGHT' => self::$main_lang['phpboost_right'],
 		));
 		
+		$this->display_kernel_message($template);
 		$this->display_counter($template);
 		$this->display_menus($template);
 		$this->get_breadcrumb()->display($template);

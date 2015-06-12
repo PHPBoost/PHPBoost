@@ -25,6 +25,7 @@
 	<div id="global">
 		
 		<div id="admin-main">
+			# INCLUDE KERNEL_MESSAGE #
 			{CONTENT}
 		</div>
 	</div>

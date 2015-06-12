@@ -110,13 +110,20 @@ class HTTPResponseCustom
 	 * @desc Redirects the user to the URL and stops purely the script execution (database deconnexion...).
 	 * @param string $url URL at which you want to redirect the user.
 	 */
-	public function redirect($url)
+	public function redirect($url, $message = '', $message_type = MessageHelper::SUCCESS, $message_duration = 5)
 	{
 		if (!($url instanceof Url))
 		{
 			$url = new Url($url);
 		}
 		$url = $url->rel();
+		
+		if (!empty($message))
+		{
+			$this->set_cookie(new HTTPCookie('message', $message, time() + 3600));
+			$this->set_cookie(new HTTPCookie('message_type', $message_type, time() + 3600));
+			$this->set_cookie(new HTTPCookie('message_duration', $message_duration, time() + 3600));
+		}
 
 		header('Location:' . $url);
 		exit;

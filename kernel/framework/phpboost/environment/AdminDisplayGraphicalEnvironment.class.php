@@ -69,6 +69,8 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'L_POWERED_BY' => self::$lang['powered_by'],
 			'L_PHPBOOST_RIGHT' => self::$lang['phpboost_right'],
 		));
+		
+		$this->display_kernel_message($template);
 	
 		if (GraphicalEnvironmentConfig::load()->is_page_bench_enabled())
 		{
