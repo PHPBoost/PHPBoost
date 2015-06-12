@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             FormFieldDecimalNumber.class.php
+ *                             FormFieldDecimalNumberEditor.class.php
  *                            -------------------
  *   begin                : June 1, 2015
  *   copyright            : (C) 2015 Julien BRISWALTER
@@ -29,10 +29,10 @@
  * @desc This class manages a decimal number.
  * @package {@package}
  */
-class FormFieldDecimalNumber extends FormFieldNumber
+class FormFieldDecimalNumberEditor extends FormFieldNumber
 {
 	/**
-	 * @desc Constructs a FormFieldDecimalNumber.
+	 * @desc Constructs a FormFieldDecimalNumberEditor.
 	 * @param string $id Field identifier
 	 * @param string $label Field label
 	 * @param string $value Default value

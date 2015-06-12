@@ -80,7 +80,7 @@ class AdminFilesConfigController extends AdminController
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$fieldset->add_field($auth_setter);
 		
-		$fieldset->add_field(new FormFieldDecimalNumber('size_limit', $this->lang['size_limit'], NumberHelper::round($this->file_upload_config->get_maximum_size_upload() / 1024, 2),
+		$fieldset->add_field(new FormFieldDecimalNumberEditor('size_limit', $this->lang['size_limit'], NumberHelper::round($this->file_upload_config->get_maximum_size_upload() / 1024, 2),
 			array('min' => 0, 'step' => 0.05, 'description' => $this->lang['size_limit_explain'], 'required' => true)
 		));
 		

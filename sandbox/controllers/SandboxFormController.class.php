@@ -128,7 +128,7 @@ class SandboxFormController extends ModuleController
 			'min' => 10, 'max' => 100, 'description' => 'Intervalle 10 à 100'),
 			array(new FormFieldConstraintIntegerRange(10, 100))
 		));
-		$fieldset->add_field(new FormFieldDecimalNumber('decimal', 'Nombre décimal', 5.5, array(
+		$fieldset->add_field(new FormFieldDecimalNumberEditor('decimal', 'Nombre décimal', 5.5, array(
 			'min' => 0, 'step' => 0.1)
 		));
 
