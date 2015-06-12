@@ -357,9 +357,15 @@ FormField.prototype = {
 };
 
 jQuery(document).ready(function() {
+	//Validation delete on input or textarea focus
+	jQuery('input,textarea').focus(function() {
+		jQuery(this).parent().parent().removeClass('constraint-status-error').removeClass('constraint-status-right');
+	});
+	
+	//Allow only valid characters in number inputs
 	jQuery('input[type="number"]').keyup(function() {
-		var testValPattern = new RegExp("^[0-9]+([\.|,][0-9]{1,2})?$");
-		var testCaretPattern = new RegExp("^[0-9\.]$");
+		var testValPattern = new RegExp("^[0-9]+([\.|,]([0-9]{1,2})?)?$");
+		var testCaretPattern = new RegExp("^[0-9\.,]$");
 		
 		var val = jQuery(this).val();
 		
@@ -368,6 +374,7 @@ jQuery(document).ready(function() {
 		}
 	});
 	
+	//Allow only valid characters in tel inputs
 	jQuery('input[type="tel"]').keyup(function() {
 		var testValPattern = new RegExp("^(\\\+[0-9]+( |-)?|0)?[0-9]( |-)?([0-9]{2}( |-)?){4}$");
 		var testCaretPattern = new RegExp("^[0-9-\+ ]$");
