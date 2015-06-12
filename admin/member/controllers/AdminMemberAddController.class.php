@@ -68,8 +68,8 @@ class AdminMemberAddController extends AdminController
 		$fieldset = new FormFieldsetHTML('add_member', LangLoader::get_message('members.add-member', 'admin-user-common'));
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('display_name', $this->lang['display_name'], '', array('size' => 25, 'required' => true),
-			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists())
+		$fieldset->add_field(new FormFieldTextEditor('display_name', $this->lang['display_name'], '', array('maxlength' => 100, 'required' => true),
+			array(new FormFieldConstraintLengthRange(3, 100), new FormFieldConstraintPHPBoostAuthLoginExists())
 		));
 		
 		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['email'], '',
@@ -77,9 +77,22 @@ class AdminMemberAddController extends AdminController
 			array(new FormFieldConstraintMailExist())
 		));
 		
-		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '', array('required' => true)));
+		$fieldset->add_field(new FormFieldCheckbox('custom_login', $this->lang['login.custom'], false, array('events' => array('click' => '
+			if (HTMLForms.getField("custom_login").getValue()) { HTMLForms.getField("login").enable(); } else { HTMLForms.getField("login").disable();}'))));
+
+		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['login'], '', array('required' => true, 'hidden' => true),
+			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists())
+		));
+
+		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '',
+			array('required' => true),
+			array(new FormFieldConstraintLengthRange(6, 50))
+		));
 		
-		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '', array('required' => true)));
+		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '',
+			array('required' => true),
+			array(new FormFieldConstraintLengthRange(6, 50))
+		));
 		
 		$fieldset->add_field(new FormFieldRanksSelect('rank', $this->lang['rank'], FormFieldRanksSelect::MEMBER));
 		
@@ -97,7 +110,14 @@ class AdminMemberAddController extends AdminController
 		$user->set_display_name($this->form->get_value('display_name'));
 		$user->set_level($this->form->get_value('rank')->get_raw_value());
 		$user->set_email($this->form->get_value('email'));
-		$auth_method = new PHPBoostAuthenticationMethod($this->form->get_value('email'), $this->form->get_value('password'));
+		
+		$login = $this->form->get_value('email');
+		if ($this->form->get_value('custom_login', false))
+		{
+			$login = $this->form->get_value('login');
+		}
+		
+		$auth_method = new PHPBoostAuthenticationMethod($login, $this->form->get_value('password'));
 		UserService::create($user, $auth_method);
 	}
 }

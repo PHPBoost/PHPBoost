@@ -47,9 +47,15 @@ class InstallCreateAdminController extends InstallController
 		$this->build_form();
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
+			$login = $this->form->get_value('email');
+			if ($this->form->get_value('custom_login', false))
+			{
+				$login = $this->form->get_value('login');
+			}
+			
 			$installation_services = new InstallationServices();
 			$installation_services->create_admin(
-			$this->form->get_value('login'), $this->form->get_value('password'),
+			$login, $this->form->get_value('password'),
 			$this->form->get_value('email'), $this->form->get_value('createSession'),
 			$this->form->get_value('autoconnect'));
 			HtaccessFileCache::regenerate();
@@ -65,18 +71,29 @@ class InstallCreateAdminController extends InstallController
 		$fieldset = new FormFieldsetHTML('adminAccount', $this->lang['admin.account']);
 		$this->form->add_fieldset($fieldset);
 
-		$login = new FormFieldTextEditor('login', $this->lang['admin.login'], '',
-		array('description' => $this->lang['admin.login.explanation'], 'required' => $this->lang['admin.login.required'], 'maxlength' => 64));
-		$login->add_constraint(new FormFieldConstraintLengthRange(3, 64, $this->lang['admin.login.length']));
+		$login = new FormFieldTextEditor('display_name', LangLoader::get_message('display_name', 'user-common'), '',
+		array('required' => true, 'maxlength' => 100));
+		$login->add_constraint(new FormFieldConstraintLengthRange(3, 100, $this->lang['admin.login.length']));
 		$fieldset->add_field($login);
-		$password = new FormFieldPasswordEditor('password', $this->lang['admin.password'], '',
-		array('description' => $this->lang['admin.password.explanation'], 'required' => $this->lang['admin.password.required'], 'maxlength' => 64));
-		$password->add_constraint(new FormFieldConstraintLengthRange(6, 64, $this->lang['admin.password.length']));
-		$fieldset->add_field($password);
-		$repeatPassword = new FormFieldPasswordEditor('repeatPassword', $this->lang['admin.password.repeat'], '',
-		array('required' => $this->lang['admin.confirmPassword.required']));
-		$fieldset->add_field($repeatPassword);
-		$this->form->add_constraint(new FormConstraintFieldsEquality($password, $repeatPassword, $this->lang['admin.passwords.mismatch']));
+		
+		$fieldset->add_field(new FormFieldCheckbox('custom_login', LangLoader::get_message('login.custom', 'user-common'), false, array('description'=> LangLoader::get_message('login.custom.explain', 'user-common'), 'events' => array('click' => '
+			if (HTMLForms.getField("custom_login").getValue()) { HTMLForms.getField("login").enable(); } else { HTMLForms.getField("login").disable();}'))));
+
+		$fieldset->add_field(new FormFieldTextEditor('login', LangLoader::get_message('login', 'user-common'), '', array('required' => true, 'hidden' => true),
+			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists())
+		));
+		
+		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['admin.password'], '',
+			array('description' => $this->lang['admin.password.explanation'], 'required' => true, 'maxlength' => 50),
+			array(new FormFieldConstraintLengthRange(6, 50, $this->lang['admin.password.length']))
+		));
+		
+		$fieldset->add_field($repeatPassword = new FormFieldPasswordEditor('repeatPassword', $this->lang['admin.password.repeat'], '',
+			array('required' => true, 'maxlength' => 50),
+			array(new FormFieldConstraintLengthRange(6, 50))
+		));
+		
+		$this->form->add_constraint(new FormConstraintFieldsEquality($password, $repeatPassword));
 
 		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['admin.email'], '', array('required' => true)));
 		$createSession = new FormFieldCheckbox('createSession', $this->lang['admin.connectAfterInstall'], true);

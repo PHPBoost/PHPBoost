@@ -126,8 +126,9 @@ class UserEditProfileController extends AbstractController
 		$fieldset = new FormFieldsetHTML('edit_profile', $this->lang['profile.edit']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('display_name', $this->lang['display_name'], $this->user->get_display_name(), array('description'=> $this->lang['display_name.explain'], 'required' => true),
-			array(new FormFieldConstraintLengthRange(3, 25))
+		$fieldset->add_field(new FormFieldTextEditor('display_name', $this->lang['display_name'], $this->user->get_display_name(),
+			array('maxlength' => 100, 'description'=> $this->lang['display_name.explain'], 'required' => true),
+			array(new FormFieldConstraintLengthRange(3, 100))
 		));	
 
 		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['email'], $this->user->get_email(),
@@ -179,12 +180,14 @@ class UserEditProfileController extends AbstractController
 			'description' => $this->lang['password.old.explain'], 'hidden' => $more_than_one_authentication_type))
 		);
 
-		$connect_fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '', array(
-			'description' => $this->lang['password.explain'], 'hidden' => $more_than_one_authentication_type),
-			array(new FormFieldConstraintLengthRange(6, 12))
+		$connect_fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '',
+			array('description' => $this->lang['password.explain'], 'hidden' => $more_than_one_authentication_type),
+			array(new FormFieldConstraintLengthRange(6, 50))
 		));
-		$connect_fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '', array('hidden' => $more_than_one_authentication_type),
-			array(new FormFieldConstraintLengthRange(6, 12))
+		
+		$connect_fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '',
+			array('hidden' => $more_than_one_authentication_type),
+			array(new FormFieldConstraintLengthRange(6, 50))
 		));
 
 		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
