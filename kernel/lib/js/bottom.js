@@ -130,7 +130,7 @@ function XMLHttpRequest_search_members(searchid, theme, insert_mode, alert_empty
 	if( login != "" )
 	{
 		if (jQuery('#search_img' + searchid))
-			jQuery('#search_img' + searchid).text('<i class="fa fa-spinner fa-spin"></i>');
+			jQuery('#search_img' + searchid).append('<i class="fa fa-spinner fa-spin"></i>');
 
 		jQuery.ajax({
 			url: PATH_TO_ROOT + '/kernel/framework/ajax/member_xmlhttprequest.php?token=' + TOKEN + '&' + insert_mode + '=1',
@@ -139,15 +139,15 @@ function XMLHttpRequest_search_members(searchid, theme, insert_mode, alert_empty
 			data: {'login': login, 'divid' : searchid},
 			success: function(returnData){
 				if (jQuery('#search_img' + searchid))
-					jQuery('#search_img' + searchid).text('');
+					jQuery('#search_img' + searchid).children("i").remove();
 
 				if (jQuery("#xmlhttprequest-result-search" + searchid))
 					jQuery("#xmlhttprequest-result-search" + searchid).html(returnData);
 
-				jQuery('#xmlhttprequest-result-search').fadeIn();
+				jQuery("#xmlhttprequest-result-search" + searchid).fadeIn();
 			},
 			error: function(e){
-				alert(e);
+				jQuery('#search_img' + searchid).children("i").remove();
 			}
 		});
 	}	

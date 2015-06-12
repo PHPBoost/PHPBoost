@@ -31,20 +31,23 @@
 			var login = jQuery('#login').val();
 			if( login != "" )
 			{
+				jQuery('#search_img').append('<i class="fa fa-spinner fa-spin"></i>');
+
 				jQuery.ajax({
 					url: '{PATH_TO_ROOT}/kernel/framework/ajax/member_xmlhttprequest.php?token={TOKEN}&insert_member=1',
 					type: "post",
 					dataType: "html",
 					data: {'login': login},
 					success: function(returnData){
+						jQuery('#search_img').children("i").remove();
 						jQuery('#xmlhttprequest-result-search').html(returnData);
 						jQuery('#xmlhttprequest-result-search').fadeIn();
 					},
 					error: function(e){
-						alert(e);
+						jQuery('#search_img').children("i").remove();
 					}
 				});
-			}	
+			}
 			else
 				alert("{L_REQUIRE_LOGIN}");
 		}
@@ -135,6 +138,7 @@
 						<div class="form-field">
 							<input type="text" size="20" maxlength="25" id="login" value="{LOGIN}" name="login_mbr"> 
 							<button onclick="XMLHttpRequest_search();" type="button">{L_SEARCH}</button>
+							<span id="search_img"></span>
 							<div id="xmlhttprequest-result-search" style="display:none;" class="xmlhttprequest-result-search"></div>
 						</div>
 					</div>
