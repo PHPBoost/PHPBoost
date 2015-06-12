@@ -3,7 +3,7 @@
 		<h1>{@profile}</h1>
 	</header>
 	<div class="content" >
-		<p style="text-align:center;" class="text-strong">${LangLoader::get_message('welcome', 'user-common')} {PSEUDO}</p>
+		<p class="center text-strong">${LangLoader::get_message('welcome', 'user-common')} {PSEUDO}</p>
 		
 		<ul id="profile-container">
 			<li class="small-block">
@@ -76,6 +76,7 @@
 				</a>
 			</li>
 		</ul>
+		<div class="spacer">&nbsp;</div>
 		{MSG_MBR}
 	</div>
 	<footer></footer>
