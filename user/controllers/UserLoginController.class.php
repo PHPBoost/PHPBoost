@@ -109,18 +109,18 @@ class UserLoginController extends AbstractController
 	
 	private function init_vars_template()
 	{
+		$maintain_config = MaintenanceConfig::load();
 		$this->view->put_all(array(
 			'C_REGISTRATION_ENABLED' => UserAccountsConfig::load()->is_registration_enabled(),
-			'C_USER_LOGIN' => $this->login_type == self::USER_LOGIN,
+			'C_USER_LOGIN' => $this->login_type == self::USER_LOGIN && !$maintain_config->is_under_maintenance(),
 			'C_ADMIN_LOGIN' => $this->login_type == self::ADMIN_LOGIN,
 			'U_REGISTER' => UserUrlBuilder::registration()->rel(),
 			'U_FORGET_PASSWORD' => UserUrlBuilder::forget_password()->rel(),
 			'L_FORGET_PASSWORD' => $this->lang['forget-password'],
 			'LOGIN_FORM' => $this->form->display(),
 		));
-
-		$maintain_config = MaintenanceConfig::load();
-		if (MaintenanceConfig::load()->is_under_maintenance())
+		
+		if ($maintain_config->is_under_maintenance())
 		{
 			$this->init_maintain_delay($maintain_config);
 

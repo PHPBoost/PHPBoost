@@ -1,7 +1,7 @@
 # IF C_USER_LOGIN #
 	# INCLUDE ERROR_MESSAGE #
 	# INCLUDE LOGIN_FORM #
-	<div style="text-align:center;">
+	<div class="center">
 		# IF C_REGISTRATION_ENABLED # 
 		<a href="{U_REGISTER}"><i class="fa fa-ticket"></i> {@registration}</a><br />
 		# ENDIF #
@@ -11,18 +11,18 @@
 
 	<div id="global">
 		# IF C_MAINTAIN #
-			<div id="maintain" style="text-align:center;">
+			<div id="maintain" class="center">
 				{L_MAINTAIN}
-							
+				
 				# IF C_DISPLAY_DELAY #
 				<div class="delay">
 					${LangLoader::get_message('maintain_delay', 'main')}
 					<div id="release">${LangLoader::get_message('loading', 'main')}...</div>
 				</div>
-							
+				
 				<script>
 				<!--
-				var release_timeout_seconds = 0;	
+				var release_timeout_seconds = 0;
 				function release(year, month, day, hour, minute, second)
 				{
 					if(document.getElementById('release'))
@@ -37,8 +37,8 @@
 						release_time = (end.getTime() - now.getTime())/1000;
 						if( release_time <= 0 )
 						{
-							document.location.reload();					
-							release_time = '0';					
+							document.location.reload();
+							release_time = '0';
 						}
 						else
 							timeout = setTimeout('release('+year+', '+month+', '+day+', '+hour+', '+minute+', '+second+')', 1000);
@@ -61,11 +61,11 @@
 				release({MAINTAIN_RELEASE_FORMAT});
 				-->
 				</script>
-				# ENDIF #	
+				# ENDIF #
 			</div>
 
-			<p style="text-align:center;margin-bottom:40px;">
-				<a href="#" id="connect" onclick="javascript:document.getElementById('loginForm').style.display='block';">${LangLoader::get_message('connect', 'user-common')}</a>
+			<p class="center" style="margin-bottom:40px;">
+				<a href="#" id="connect" onclick="javascript:document.getElementById('loginForm').style.display='block';">${LangLoader::get_message('connection', 'user-common')}</a>
 			</p>
 
 			<style>
@@ -93,7 +93,7 @@
 			margin: 0;
 			padding: 0;
 		}
-			
+		
 		div#global {
 			padding:20px;
 			border-spacing: 1px;
