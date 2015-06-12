@@ -209,8 +209,10 @@
 		<span id="quote"></span>
 		<form action="pm{post_pm.U_PM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" style="width:80%;margin:auto">
 			<legend>{L_RESPOND}</legend>
-			{KERNEL_EDITOR}
-			<textarea rows="15" cols="66" id="contents" name="contents">{post_pm.CONTENTS}</textarea>
+			<div class="form-element-textarea">
+				{KERNEL_EDITOR}
+				<textarea rows="25" cols="66" id="contents" name="contents">{post_pm.CONTENTS}</textarea>
+			</div>
 			<div class="center">
 				<button type="submit" name="pm" value="true" class="submit">{L_SUBMIT}</button>
 				<button type="button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
@@ -222,7 +224,7 @@
 
 		# START edit_pm #
 		<form action="pm{edit_pm.U_ACTION_EDIT}" method="post" onsubmit="return check_form_convers();">
-			<section>					
+			<section>
 				<header>
 					<h1>&bull; {edit_pm.U_USER_VIEW} &raquo; {edit_pm.U_PM_BOX}</h1>
 				</header>
