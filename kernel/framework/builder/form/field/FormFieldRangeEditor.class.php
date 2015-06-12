@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             FormFieldRange.class.php
+ *                             FormFieldRangeEditor.class.php
  *                            -------------------
  *   begin                : June 1, 2015
  *   copyright            : (C) 2015 Julien BRISWALTER
@@ -29,7 +29,7 @@
  * @desc This class manages a range of numbers (slider).
  * @package {@package}
  */
-class FormFieldRange extends FormFieldNumberEditor
+class FormFieldRangeEditor extends FormFieldNumberEditor
 {
 	protected $type = 'range';
 	/**

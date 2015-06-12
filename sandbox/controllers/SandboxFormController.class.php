@@ -133,7 +133,7 @@ class SandboxFormController extends ModuleController
 		));
 
 		// RANGE
-		$fieldset->add_field($password = new FormFieldRange('range', 'Longueur', 4, array(
+		$fieldset->add_field($password = new FormFieldRangeEditor('range', 'Longueur', 4, array(
 			'min' => 1, 'max' => 10, 'description' => 'Slider horizontal')
 		));
 
