@@ -360,6 +360,7 @@ jQuery(document).ready(function() {
 	//Validation delete on input or textarea focus
 	jQuery('input,textarea').focus(function() {
 		jQuery(this).parent().parent().removeClass('constraint-status-error').removeClass('constraint-status-right');
+		jQuery(this).parent().children('.text-status-constraint').hide();
 	});
 	
 	//Allow only valid characters in number inputs
