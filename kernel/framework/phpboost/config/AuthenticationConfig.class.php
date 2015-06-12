@@ -30,11 +30,28 @@
  */
 class AuthenticationConfig extends AbstractConfigData
 {
+	const FB_AUTH_ENABLED = 'fb_auth_enabled';
 	const FB_APP_ID = 'fb_app_id';
 	const FB_APP_KEY = 'fb_app_key';
 
+	const GOOGLE_AUTH_ENABLED = 'google_auth_enabled';
 	const GOOGLE_CLIENT_ID = 'google_client_id';
 	const GOOGLE_CLIENT_SECRET = 'google_client_secret';
+	
+	public function enable_fb_auth()
+	{
+		$this->set_property(self::FB_AUTH_ENABLED, true);
+	}
+	
+	public function disable_fb_auth()
+	{
+		$this->set_property(self::FB_AUTH_ENABLED, false);
+	}
+	
+	public function is_fb_auth_enabled()
+	{
+		return $this->get_property(self::FB_AUTH_ENABLED);
+	}
 	
 	public function get_fb_app_id()
 	{
@@ -54,6 +71,21 @@ class AuthenticationConfig extends AbstractConfigData
 	public function set_fb_app_key($fb_app_key)
 	{
 		$this->set_property(self::FB_APP_KEY, $fb_app_key);
+	}
+	
+	public function enable_google_auth()
+	{
+		$this->set_property(self::GOOGLE_AUTH_ENABLED, true);
+	}
+	
+	public function disable_google_auth()
+	{
+		$this->set_property(self::GOOGLE_AUTH_ENABLED, false);
+	}
+	
+	public function is_google_auth_enabled()
+	{
+		return $this->get_property(self::GOOGLE_AUTH_ENABLED);
 	}
 
 	public function get_google_client_id()
@@ -79,11 +111,13 @@ class AuthenticationConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::FB_APP_ID => '837719939581007',
-			self::FB_APP_KEY => '86eff183d82a1e225cda0a535f5a137f',
+			self::FB_AUTH_ENABLED => false,
+			self::FB_APP_ID => '',
+			self::FB_APP_KEY => '',
 
-			self::GOOGLE_CLIENT_ID => '462204354956-ptmg37rgn8667svsjvt4u1a6rl8gmvl0.apps.googleusercontent.com',
-			self::GOOGLE_CLIENT_SECRET => '3_EUnKTz_ip44QaE4A675wNx',
+			self::GOOGLE_AUTH_ENABLED => false,
+			self::GOOGLE_CLIENT_ID => '',
+			self::GOOGLE_CLIENT_SECRET => '',
 		);
 	}
 
@@ -93,7 +127,7 @@ class AuthenticationConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'kernel', 'authentification-config');
+		return ConfigManager::load(__CLASS__, 'kernel', 'authentication-config');
 	}
 
 	/**
@@ -101,7 +135,7 @@ class AuthenticationConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('kernel', self::load(), 'authentification-config');
+		ConfigManager::save('kernel', self::load(), 'authentication-config');
 	}
 }
 ?>

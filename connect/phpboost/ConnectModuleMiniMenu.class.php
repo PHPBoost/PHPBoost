@@ -118,8 +118,12 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    }
 	    else
 	    {
+			$authentication_config = AuthenticationConfig::load();
+			
 	    	$tpl->put_all(array(
-	    		'C_USER_REGISTER' => (bool)UserAccountsConfig::load()->is_registration_enabled(),
+	    		'C_USER_REGISTER' => UserAccountsConfig::load()->is_registration_enabled(),
+	    		'C_FB_AUTH_ENABLED' => $authentication_config->is_fb_auth_enabled(),
+	    		'C_GOOGLE_AUTH_ENABLED' => $authentication_config->is_google_auth_enabled(),
 	    		'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
 				'L_REQUIRE_PASSWORD' => $LANG['require_password'],
 				'L_CONNECT' => LangLoader::get_message('connection', 'user-common'),

@@ -118,7 +118,7 @@ class UserEditProfileController extends AbstractController
 	
 	private function build_form()
 	{
-		$auth_types = AuthenticationService::get_activated_types_authentication();
+		$activated_auth_types = AuthenticationService::get_activated_types_authentication();
 		
 		$form = new HTMLForm(__CLASS__);
 		$this->member_extended_fields_service = new MemberExtendedFieldsService($form);
@@ -153,56 +153,65 @@ class UserEditProfileController extends AbstractController
 
 		$connect_fieldset = new FormFieldsetHTML('connect', $this->lang['connection']);
 		$form->add_fieldset($connect_fieldset);
-
+		
+		$more_than_one_authentication_type = count($activated_auth_types) > 1;
 		$has_custom_login = $this->user->get_email() !== $this->internal_auth_infos['login'];
-		if (in_array(PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD, $this->user_auth_types))
+		if ($more_than_one_authentication_type)
 		{
-			$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['internal_connection'] . ' <i class="fa fa-success"></i>', '<a onclick="javascript:HTMLForms.getField(\'custom_login\').enable();'. ($has_custom_login ? 'HTMLForms.getField(\'login\').enable();' : '') .'HTMLForms.getField(\'password\').enable();HTMLForms.getField(\'password_bis\').enable();HTMLForms.getField(\'old_password\').enable();">'. LangLoader::get_message('edit', 'common') .'</a>'));
-		}
-		else
-		{
-			$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['internal_connection'] . ' <i class="fa fa-error"></i>', '<a onclick="javascript:HTMLForms.getField(\'custom_login\').enable();HTMLForms.getField(\'password\').enable();HTMLForms.getField(\'password_bis\').enable();">Créer une authentification interne</a>'));
+			if (in_array(PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD, $this->user_auth_types))
+			{
+				$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['internal_connection'] . ' <i class="fa fa-success"></i>', '<a onclick="javascript:HTMLForms.getField(\'custom_login\').enable();'. ($has_custom_login ? 'HTMLForms.getField(\'login\').enable();' : '') .'HTMLForms.getField(\'password\').enable();HTMLForms.getField(\'password_bis\').enable();HTMLForms.getField(\'old_password\').enable();">'. LangLoader::get_message('edit', 'common') .'</a>'));
+			}
+			else
+			{
+				$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['internal_connection'] . ' <i class="fa fa-error"></i>', '<a onclick="javascript:HTMLForms.getField(\'custom_login\').enable();HTMLForms.getField(\'password\').enable();HTMLForms.getField(\'password_bis\').enable();">Créer une authentification interne</a>'));
+			}
 		}
 
-		$connect_fieldset->add_field(new FormFieldCheckbox('custom_login', $this->lang['login.custom'], $has_custom_login, array('description'=> $this->lang['login.custom.explain'], 'hidden' => true, 'events' => array('click' => '
+		$connect_fieldset->add_field(new FormFieldCheckbox('custom_login', $this->lang['login.custom'], $has_custom_login, array('description'=> $this->lang['login.custom.explain'], 'hidden' => $more_than_one_authentication_type, 'events' => array('click' => '
 			if (HTMLForms.getField("custom_login").getValue()) { HTMLForms.getField("login").enable(); } else { HTMLForms.getField("login").disable();}'))));
 
-		$connect_fieldset->add_field(new FormFieldTextEditor('login', $this->lang['login'], ($has_custom_login ? $this->internal_auth_infos['login'] : ''), array('required' => true, 'hidden' => true),
+		$connect_fieldset->add_field(new FormFieldTextEditor('login', $this->lang['login'], ($has_custom_login ? $this->internal_auth_infos['login'] : ''), array('required' => true, 'hidden' => $more_than_one_authentication_type || !$has_custom_login),
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists($this->user->get_id()))
 		));
 
 		$connect_fieldset->add_field(new FormFieldPasswordEditor('old_password', $this->lang['password.old'], '', array(
-			'description' => $this->lang['password.old.explain'], 'hidden' => true))
+			'description' => $this->lang['password.old.explain'], 'hidden' => $more_than_one_authentication_type))
 		);
 
 		$connect_fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '', array(
-			'description' => $this->lang['password.explain'], 'hidden' => true),
+			'description' => $this->lang['password.explain'], 'hidden' => $more_than_one_authentication_type),
 			array(new FormFieldConstraintLengthRange(6, 12))
 		));
-		$connect_fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '', array('hidden' => true),
+		$connect_fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '', array('hidden' => $more_than_one_authentication_type),
 			array(new FormFieldConstraintLengthRange(6, 12))
 		));
 
 		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
 
-		if (in_array(FacebookAuthenticationMethod::AUTHENTICATION_METHOD, $this->user_auth_types))
+		if (in_array(FacebookAuthenticationMethod::AUTHENTICATION_METHOD, $activated_auth_types))
 		{
-			$connect_fieldset->add_field(new FormFieldFree('fb_auth', $this->lang['fb_connection'] . ' <i class="fa fa-success"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), null, 'dissociate', 'fb')->absolute() . '">' . $this->lang['dissociate_account'] . '</a>'));
+			if (in_array(FacebookAuthenticationMethod::AUTHENTICATION_METHOD, $this->user_auth_types))
+			{
+				$connect_fieldset->add_field(new FormFieldFree('fb_auth', $this->lang['fb_connection'] . ' <i class="fa fa-success"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), null, 'dissociate', 'fb')->absolute() . '">' . $this->lang['dissociate_account'] . '</a>'));
+			}
+			else
+			{
+				$connect_fieldset->add_field(new FormFieldFree('fb_auth', $this->lang['fb_connection'] . ' <i class="fa fa-error"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), null, 'associate', 'fb')->absolute() . '">' . $this->lang['associate_account'] . '</a>'));
+			}
 		}
-		else
+		
+		if (in_array(GoogleAuthenticationMethod::AUTHENTICATION_METHOD, $activated_auth_types))
 		{
-			$connect_fieldset->add_field(new FormFieldFree('fb_auth', $this->lang['fb_connection'] . ' <i class="fa fa-error"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), null, 'associate', 'fb')->absolute() . '">' . $this->lang['associate_account'] . '</a>'));
+			if (in_array(GoogleAuthenticationMethod::AUTHENTICATION_METHOD, $this->user_auth_types))
+			{
+				$connect_fieldset->add_field(new FormFieldFree('google_auth', $this->lang['google_connection'] . ' <i class="fa fa-success"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), null, 'dissociate', 'google')->absolute() . '">' . $this->lang['dissociate_account'] . '</a>'));
+			}
+			else
+			{
+				$connect_fieldset->add_field(new FormFieldFree('google_auth', $this->lang['google_connection'] . ' <i class="fa fa-error"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), null, 'associate', 'google')->absolute() . '">' . $this->lang['associate_account'] . '</a>'));
+			}
 		}
-
-		if (in_array(GoogleAuthenticationMethod::AUTHENTICATION_METHOD, $this->user_auth_types))
-		{
-			$connect_fieldset->add_field(new FormFieldFree('google_auth', $this->lang['google_connection'] . ' <i class="fa fa-success"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), null, 'dissociate', 'google')->absolute() . '">' . $this->lang['dissociate_account'] . '</a>'));
-		}
-		else
-		{
-			$connect_fieldset->add_field(new FormFieldFree('google_auth', $this->lang['google_connection'] . ' <i class="fa fa-error"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), null, 'associate', 'google')->absolute() . '">' . $this->lang['associate_account'] . '</a>'));
-		}
-
 
 		$options_fieldset = new FormFieldsetHTML('options', LangLoader::get_message('options', 'main'));
 		$form->add_fieldset($options_fieldset);

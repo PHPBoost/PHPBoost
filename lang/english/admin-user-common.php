@@ -59,6 +59,17 @@ $lang['members.config.authorization-read-member-profile'] = 'Here you define the
 $lang['members.config.welcome-message'] = 'Message to all members';
 $lang['members.config.welcome-message-content'] = 'Welcome message displayed in the panel member';
 
+//Authentication Configuration
+$lang['members.config-authentication'] = 'Authentication configuration';
+$lang['authentication.config.fb-auth-enabled'] = 'Enable Facebook authentication';
+$lang['authentication.config.fb-auth-enabled-explain'] = 'Go to <a href="https://developers.facebook.com">https://developers.facebook.com</a> to create your id';
+$lang['authentication.config.fb-app-id'] = 'Facebook App ID';
+$lang['authentication.config.fb-app-key'] = 'Facebook App Secret';
+$lang['authentication.config.google-auth-enabled'] = 'Enable Google authentication';
+$lang['authentication.config.google-auth-enabled-explain'] = 'Go to <a href="https://console.developers.google.com/project">https://console.developers.google.com/project</a> to create your id';
+$lang['authentication.config.google-client-id'] = 'Google Client ID';
+$lang['authentication.config.google-client-secret'] = 'Google Client Secret';
+
 //Other fieldset configuration title
 $lang['members.config.avatars-management'] = 'Avatars management';
 $lang['members.config.authorization'] = 'Authorizations';

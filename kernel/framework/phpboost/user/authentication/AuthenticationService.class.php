@@ -90,10 +90,17 @@ class AuthenticationService
 
 	public static function get_activated_types_authentication()
 	{
-		$types[] = PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD; 
-
-		$types[] = FacebookAuthenticationMethod::AUTHENTICATION_METHOD;
-		$types[] = GoogleAuthenticationMethod::AUTHENTICATION_METHOD;
+		$authentication_config = AuthenticationConfig::load();
+		
+		$types = array(PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD); 
+		
+		if ($authentication_config->is_fb_auth_enabled())
+			$types[] = FacebookAuthenticationMethod::AUTHENTICATION_METHOD;
+		
+		if ($authentication_config->is_google_auth_enabled())
+			$types[] = GoogleAuthenticationMethod::AUTHENTICATION_METHOD;
+		
+		return $types;
 	}
 
 	public static function get_authentication_method($method_identifier)

@@ -44,10 +44,14 @@
 				</form>
 				<div class="connect-register">
 					# IF C_USER_REGISTER #
-					<a class="small" href="${relative_url(UserUrlBuilder::registration())}"><i class="fa fa-ticket"></i> {L_REGISTER}</a>
-					<br />
-					<a class="social-connect fb" href="${relative_url(UserUrlBuilder::connect('fb'))}" title="${LangLoader::get_message('facebook-connect', 'user-common')}"><i class="fa fa-facebook-square biggest"></i></a>
-					<a class="social-connect google" href="${relative_url(UserUrlBuilder::connect('google'))}" title="${LangLoader::get_message('google-connect', 'user-common')}"><i class="fa fa-google-plus-square biggest"></i></a>
+						<a class="small" href="${relative_url(UserUrlBuilder::registration())}"><i class="fa fa-ticket"></i> {L_REGISTER}</a>
+						<br />
+						# IF C_FB_AUTH_ENABLED #
+						<a class="social-connect fb" href="${relative_url(UserUrlBuilder::connect('fb'))}" title="${LangLoader::get_message('facebook-connect', 'user-common')}"><i class="fa fa-facebook-square biggest"></i></a>
+						# IF C_GOOGLE_AUTH_ENABLED #
+						# ENDIF #
+						<a class="social-connect google" href="${relative_url(UserUrlBuilder::connect('google'))}" title="${LangLoader::get_message('google-connect', 'user-common')}"><i class="fa fa-google-plus-square biggest"></i></a>
+						# ENDIF #
 					# ENDIF #
 					<br />
 					<a class="small" href="${relative_url(UserUrlBuilder::forget_password())}"><i class="fa fa-question-circle"></i> {L_FORGOT_PASS}</a>
@@ -111,13 +115,17 @@
 					<button type="submit" name="authenticate" value="internal" class="submit">{L_CONNECT}</button>
 				</form>
 				# IF C_USER_REGISTER #
-				<form action="${relative_url(UserUrlBuilder::registration())}" method="post">
-					<button type="submit" name="register" value="true" class="submit">{L_REGISTER}</button>
-				</form>
-				<a class="social-connect fb" href="${relative_url(UserUrlBuilder::connect('fb'))}" title="${LangLoader::get_message('facebook-connect', 'user-common')}"><i class="fa fa-facebook-square biggest"></i><span>&nbsp; ${LangLoader::get_message('facebook-connect', 'user-common')}</span></a>
-				<a class="social-connect google" href="${relative_url(UserUrlBuilder::connect('google'))}" title="${LangLoader::get_message('google-connect', 'user-common')}"><i class="fa fa-google-plus-square biggest"></i><span>&nbsp; ${LangLoader::get_message('google-connect', 'user-common')}</span></a>
+					<form action="${relative_url(UserUrlBuilder::registration())}" method="post">
+						<button type="submit" name="register" value="true" class="submit">{L_REGISTER}</button>
+					</form>
+					# IF C_FB_AUTH_ENABLED #
+					<a class="social-connect fb" href="${relative_url(UserUrlBuilder::connect('fb'))}" title="${LangLoader::get_message('facebook-connect', 'user-common')}"><i class="fa fa-facebook-square biggest"></i><span>&nbsp; ${LangLoader::get_message('facebook-connect', 'user-common')}</span></a>
+					# ENDIF #
+					# IF C_GOOGLE_AUTH_ENABLED #
+					<a class="social-connect google" href="${relative_url(UserUrlBuilder::connect('google'))}" title="${LangLoader::get_message('google-connect', 'user-common')}"><i class="fa fa-google-plus-square biggest"></i><span>&nbsp; ${LangLoader::get_message('google-connect', 'user-common')}</span></a>
+					# ENDIF #
 				# ENDIF #
-				<a class="small" href="${relative_url(UserUrlBuilder::forget_password())}"><i class="fa fa-question-circle fa-2x"></i> {L_FORGOT_PASS}</a>
+				<a class="small" href="${relative_url(UserUrlBuilder::forget_password())}">{L_FORGOT_PASS}</a>
 			</div>
 		</div>
 	</div>
