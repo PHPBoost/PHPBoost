@@ -129,20 +129,28 @@ elseif (!empty($del_file)) //Suppression d'un fichier
 elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
-
-	$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id=:id', array('id' => $move_folder));
-	$move_list_parent = array();
-	$result = PersistenceContext::get_querier()->select("SELECT id, id_parent, name
-	FROM " . PREFIX . "upload_cat
-	WHERE user_id = :user_id
-	ORDER BY id", array(
-		'user_id' => $user_id
-	));
-	while ($row = $result->fetch())
-		$move_list_parent[$row['id']] = $row['id_parent'];
 	
-	$result->dispose();
-
+	$user_id = 0;
+	try {
+		$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id=:id', array('id' => $move_folder));
+	} catch (RowNotFoundException $e) {}
+	
+	$move_list_parent = array();
+	
+	if ($user_id)
+	{
+		$result = PersistenceContext::get_querier()->select("SELECT id, id_parent, name
+		FROM " . PREFIX . "upload_cat
+		WHERE user_id = :user_id
+		ORDER BY id", array(
+			'user_id' => $user_id
+		));
+		while ($row = $result->fetch())
+			$move_list_parent[$row['id']] = $row['id_parent'];
+		
+		$result->dispose();
+	}
+	
 	$array_child_folder = array();
 	Uploads::Find_subfolder($move_list_parent, $move_folder, $array_child_folder);
 	$array_child_folder[] = $move_folder;
@@ -515,7 +523,11 @@ else
 	}
 	
 
+	$total_size = 0;
+	try {
 	$total_size = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD, 'SUM(size)', '');
+	} catch (RowNotFoundException $e) {}
+	
 	$template->put_all(array(
 		'TOTAL_SIZE' => ($total_size > 1024) ? NumberHelper::round($total_size/1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($total_size, 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
 		'TOTAL_FOLDER_SIZE' => ($total_folder_size > 1024) ? NumberHelper::round($total_folder_size/1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($total_folder_size, 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),

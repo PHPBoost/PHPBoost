@@ -89,7 +89,11 @@ elseif (!empty($_POST['valid']) && $add_post) //ajout  du groupe.
 }
 elseif (!empty($idgroup) && $del_group) //Suppression du groupe.
 {	
-	$array_members = explode('|', PersistenceContext::get_querier()->get_column_value(DB_TABLE_GROUP, 'members', 'WHERE id=:id', array('id' => $idgroup)));
+	$array_members = array();
+	try {
+		$array_members = explode('|', PersistenceContext::get_querier()->get_column_value(DB_TABLE_GROUP, 'members', 'WHERE id=:id', array('id' => $idgroup)));
+	} catch (RowNotFoundException $e) {}
+	
 	foreach ($array_members as $key => $user_id)
 	{
 		GroupsService::remove_member($user_id, $idgroup); //Mise à jour des membres étant dans le groupe supprimé.
@@ -106,7 +110,11 @@ elseif (!empty($idgroup) && $add_mbr) //Ajout du membre au groupe.
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	$login = retrieve(POST, 'login_mbr', '');
-	$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name=:login', array('login' => $login));
+	$user_id = 0;
+	try {
+		$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name=:login', array('login' => $login));
+	} catch (RowNotFoundException $e) {}
+	
 	if (!empty($user_id))
 	{
 		if (GroupsService::add_member($user_id, $idgroup)) //Succès.
@@ -230,7 +238,10 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 		));
 		
 		//Liste des membres du groupe.
-		$members = PersistenceContext::get_querier()->get_column_value(DB_TABLE_GROUP, 'members', 'WHERE id=:id', array('id' => NumberHelper::numeric($group['id'])));
+		$members = '';
+		try {
+			$members = PersistenceContext::get_querier()->get_column_value(DB_TABLE_GROUP, 'members', 'WHERE id=:id', array('id' => NumberHelper::numeric($group['id'])));
+		} catch (RowNotFoundException $e) {}
 		
 		$number_member = 0;
 		if (!empty($members))

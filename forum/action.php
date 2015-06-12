@@ -130,7 +130,11 @@ elseif (!empty($idt_get))
 	if ($msg_d)
 	{
 		//Vérification de l'appartenance du sujet au membres, ou modo.
-		$check_mbr = PersistenceContext::get_querier()->get_column_value(PREFIX . 'forum_topics', 'user_id', 'WHERE id=:id', array('id' => $idt_get));
+		$check_mbr = 0;
+		try {
+			$check_mbr = PersistenceContext::get_querier()->get_column_value(PREFIX . 'forum_topics', 'user_id', 'WHERE id=:id', array('id' => $idt_get));
+		} catch (RowNotFoundException $e) {}
+		
 		if ((!empty($check_mbr) && AppContext::get_current_user()->get_id() == $check_mbr) || AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS))
 		{
 			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET display_msg = 1 - display_msg WHERE id = '" . $idt_get . "'");

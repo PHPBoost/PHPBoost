@@ -164,7 +164,11 @@ class GroupsService
 		self::$db_querier->update(DB_TABLE_MEMBER, array('groups' => implode('|', $user_groups)), 'WHERE user_id = :user_id', array('user_id' => $user_id));
 		
 		//Suppression dans la table des groupes.
-		$members_group = self::$db_querier->get_column_value(DB_TABLE_GROUP, 'members', 'WHERE id = :id', array('id' => $idgroup));
+		$members_group = '';
+		try {
+			$members_group = self::$db_querier->get_column_value(DB_TABLE_GROUP, 'members', 'WHERE id = :id', array('id' => $idgroup));
+		} catch (RowNotFoundException $e) {}
+		
 		$members_group = explode('|', $members_group);
 		
 		unset($members_group[array_search($user_id, $members_group)]);

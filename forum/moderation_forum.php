@@ -325,7 +325,10 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		if (retrieve(POST, 'search_member', false))
 		{
 			$login = retrieve(POST, 'login_mbr', '');
-			$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :login', array('login' => '%' . $login .'%'));
+			$user_id = 0;
+			try {
+				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :login', array('login' => '%' . $login .'%'));
+			} catch (RowNotFoundException $e) {}
 
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=punish&id=' . $user_id, '', '&'));
@@ -519,7 +522,11 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		if (retrieve(POST, 'search_member', false))
 		{
 			$login = retrieve(POST, 'login_member', '');
-			$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :login', array('login' => '%' . $login .'%'));
+			$user_id = 0;
+			try {
+				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :login', array('login' => '%' . $login .'%'));
+			} catch (RowNotFoundException $e) {}
+			
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=warning&id=' . $user_id, '', '&'));
 			else

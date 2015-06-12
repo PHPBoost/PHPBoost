@@ -64,13 +64,20 @@ class Forum
 		if (!$new_topic)
 		{
 			//Message précédent ce nouveau message.
-			$previous_msg_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'MAX(id)', 'WHERE idtopic = :idtopic AND id < :id', array('idtopic' => $idtopic, 'id' => $last_msg_id));
-
+			$previous_msg_id = 0;
+			try {
+				$previous_msg_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'MAX(id)', 'WHERE idtopic = :idtopic AND id < :id', array('idtopic' => $idtopic, 'id' => $last_msg_id));
+			} catch (RowNotFoundException $e) {}
+			
 			$title_subject = TextHelper::html_entity_decode($title);
-			$title_subject_pm = '<a href="' . HOST . DIR . '/forum/topic' . url('.php?id=' . $idtopic . $last_page, '-' . $idtopic . $last_page_rewrite . '.php') . '#m' . $previous_msg_id . '">' . $title_subject . '</a>';
+			$title_subject_pm = '<a href="' . HOST . DIR . '/forum/topic' . url('.php?id=' . $idtopic . $last_page, '-' . $idtopic . $last_page_rewrite . '.php') . $previous_msg_id ? '#m' . $previous_msg_id : '' . '">' . $title_subject . '</a>';
 			if (AppContext::get_current_user()->get_id() > 0)
 			{
-				$pseudo = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id = :id', array('id' => AppContext::get_current_user()->get_id()));
+				$pseudo = '';
+				try {
+					$pseudo = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id = :id', array('id' => AppContext::get_current_user()->get_id()));
+				} catch (RowNotFoundException $e) {}
+				
 				$pseudo_pm = '<a href="'. UserUrlBuilder::profile(AppContext::get_current_user()->get_id())->rel() .'">' . $pseudo . '</a>';
 			}
 			else
@@ -78,7 +85,7 @@ class Forum
 				$pseudo = $LANG['guest'];
 				$pseudo_pm = $LANG['guest'];
 			}
-			$next_msg_link = '/forum/topic' . url('.php?id=' . $idtopic . $last_page, '-' . $idtopic . $last_page_rewrite . '.php') . '#m' . $previous_msg_id;
+			$next_msg_link = '/forum/topic' . url('.php?id=' . $idtopic . $last_page, '-' . $idtopic . $last_page_rewrite . '.php') . $previous_msg_id ? '#m' . $previous_msg_id : '';
 			$preview_contents = substr($contents, 0, 300);
 
 
@@ -194,8 +201,11 @@ class Forum
 			//On retranche d'un messages la catégorie concernée.
 			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET nbr_msg = nbr_msg - 1 WHERE id_left <= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat]['level'] . "'");
 			//Récupération du message précédent celui supprimé afin de rediriger vers la bonne ancre.
-			$previous_msg_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg" , 'id', 'WHERE idtopic = :idtopic AND id < :id ORDER BY timestamp DESC', array('idtopic' => $idtopic, 'id' => $idmsg));
-
+			$previous_msg_id = 0;
+			try {
+				$previous_msg_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg" , 'id', 'WHERE idtopic = :idtopic AND id < :id ORDER BY timestamp DESC', array('idtopic' => $idtopic, 'id' => $idmsg));
+			} catch (RowNotFoundException $e) {}
+			
 			if ($last_msg_id == $idmsg) //On met à jour le dernier message posté dans la liste des topics.
 			{
 				//On cherche les infos à propos de l'avant dernier message afin de mettre la table forum_topics à jour.
@@ -535,7 +545,10 @@ class Forum
 	function Update_poll($idtopic, $question, $answers, $type)
 	{
 		//Vérification => vérifie si il n'y a pas de nouvelle réponses à ajouter.
-		$previous_votes = explode('|', PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_poll", 'votes', 'WHERE idtopic = :idtopic', array('idtopic' => $idtopic)));
+		$previous_votes = array();
+		try {
+			$previous_votes = explode('|', PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_poll", 'votes', 'WHERE idtopic = :idtopic', array('idtopic' => $idtopic)));
+		} catch (RowNotFoundException $e) {}
 
 		$votes = array();
 		foreach ($answers as $key => $answer_value) //Récupération des votes précédents.
@@ -626,15 +639,26 @@ class Forum
 		}
 
 		//Récupération du timestamp du dernier message de la catégorie.
-		$last_timestamp = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'MAX(last_timestamp)', 'WHERE ' . $clause);
-		$last_topic_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'id', 'WHERE last_timestamp = :timestamp', array('timestamp' => $last_timestamp));
+		$last_timestamp = 0;
+		try {
+			$last_timestamp = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'MAX(last_timestamp)', 'WHERE ' . $clause);
+		} catch (RowNotFoundException $e) {}
+		
+		$last_topic_id = 0;
+		try {
+			$last_topic_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'id', 'WHERE last_timestamp = :timestamp', array('timestamp' => $last_timestamp));
+		} catch (RowNotFoundException $e) {}
+		
 		PersistenceContext::get_querier()->update(PREFIX . "forum_cats", array('last_topic_id' => (int)$last_topic_id ), 'WHERE id = :id', array('id' => $idcat));
 		
 		if ($CAT_FORUM[$idcat]['level'] > 1) //Appel recursif si sous-forum.
 		{
 			//Recherche de l'id du forum parent.
-			$idcat_parent = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'id', 'WHERE id_left < :id_left AND id_right > :id_right AND level = :level', array('id_left' => $CAT_FORUM[$idcat]['id_left'], 'id_right' => $CAT_FORUM[$idcat]['id_right'], 'level' => ($CAT_FORUM[$idcat]['level'] - 1)));
-
+			$idcat_parent = 0;
+			try {
+				$idcat_parent = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'id', 'WHERE id_left < :id_left AND id_right > :id_right AND level = :level', array('id_left' => $CAT_FORUM[$idcat]['id_left'], 'id_right' => $CAT_FORUM[$idcat]['id_right'], 'level' => ($CAT_FORUM[$idcat]['level'] - 1)));
+			} catch (RowNotFoundException $e) {}
+			
 			$this->Update_last_topic_id($idcat_parent); //Appel recursif.
 		}
 	}
