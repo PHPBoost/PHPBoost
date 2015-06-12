@@ -31,7 +31,7 @@
  */
 class FormFieldConstraintTel extends FormFieldConstraintRegex
 {
-	private static $regex = '`^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$`i';
+	private static $regex = '^(\\\+[0-9]+( |-)?|0)?[0-9]( |-)?([0-9]{2}( |-)?){4}$';
 	
 	public function __construct($error_message = '')
 	{
@@ -43,14 +43,9 @@ class FormFieldConstraintTel extends FormFieldConstraintRegex
 		
 		parent::__construct(
 			self::$regex, 
-			self::$regex, 
+			TextHelper::to_js_string(self::$regex), 
 			$error_message
 		);
-	}
-
-	public function get_tel_checking_regex()
-	{
-		return self::$regex;
 	}
 }
 

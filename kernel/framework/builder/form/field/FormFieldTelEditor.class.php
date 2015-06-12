@@ -43,9 +43,7 @@ class FormFieldTelEditor extends FormFieldTextEditor
 	 */
 	public function __construct($id, $label, $value, $field_options = array(), array $constraints = array())
 	{
-		$constraint_tel = new FormFieldConstraintTel();
-		$constraints[] = $constraint_tel;
-		$this->pattern = $constraint_tel->get_tel_checking_regex();
+		$constraints[] = new FormFieldConstraintTel();
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
 }

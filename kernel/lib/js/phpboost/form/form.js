@@ -356,20 +356,27 @@ FormField.prototype = {
 	}
 };
 
-jQuery(document).on('keypress', 'input[type="number"],input[type="tel"]', function (event) {
-	return (event.ctrlKey || event.altKey || 
-	// numbers   
-	event.keyCode >= 48 && event.keyCode <= 57 ||
-	// Numeric keypad
-	event.keyCode >= 96 && event.keyCode <= 105 ||
-	// Plus and Backspace and Tab and Enter
-	event.keyCode == 107 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 13 ||
-	// Decimal point and Comma and Period
-	event.keyCode == 110 || event.keyCode == 188 || event.keyCode == 190 ||
-	// Home and End
-	event.keyCode == 35 || event.keyCode == 36 ||
-	// left and right arrows
-	event.keyCode == 37 || event.keyCode == 39 ||
-	// Del and Ins
-	event.keyCode == 46 || event.keyCode == 45);
+jQuery(document).ready(function() {
+	jQuery('input[type="number"]').keyup(function() {
+		var testValPattern = new RegExp("^[0-9]+([\.|,][0-9]{1,2})?$");
+		var testCaretPattern = new RegExp("^[0-9\.]$");
+		
+		var val = jQuery(this).val();
+		
+		if (!testCaretPattern.test(val.charAt(val.length - 1)) || !testValPattern.test(val)) {
+			jQuery(this).val(val.slice(0, -1));
+		}
+	});
+	
+	jQuery('input[type="tel"]').keyup(function() {
+		var testValPattern = new RegExp("^(\\\+[0-9]+( |-)?|0)?[0-9]( |-)?([0-9]{2}( |-)?){4}$");
+		var testCaretPattern = new RegExp("^[0-9-\+ ]$");
+		
+		var val = jQuery(this).val();
+		var index = this.selectionStart - 1;
+		
+		if (!testCaretPattern.test(val.charAt(index)) || !testValPattern.test(val)) {
+			jQuery(this).val(val.substr(0, (index)) + val.substr(index + 1));
+		}
+	});
 });
