@@ -129,15 +129,7 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 
 	public function get_onblur_validations()
 	{
-		// This is a patch for TinyMCE, it shouldn't be there but it's difficult not to process it here
-		if ($this->formatter instanceof TinyMCEContentFormattingExtensionPoint)
-		{
-			return 'tinyMCE.triggerSave(); ' . parent::get_onblur_validations();
-		}
-		else
-		{
-			return parent::get_onblur_validations();
-		}
+		return parent::get_onblur_validations();
 	}
 
 	/**
