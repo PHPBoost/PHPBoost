@@ -85,14 +85,16 @@ class AdminMemberAddController extends AdminController
 		));
 
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '',
-			array('required' => true),
+			array('required' => true, 'maxlength' => 50),
 			array(new FormFieldConstraintLengthRange(6, 50))
 		));
 		
 		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '',
-			array('required' => true),
+			array('required' => true, 'maxlength' => 50),
 			array(new FormFieldConstraintLengthRange(6, 50))
 		));
+		
+		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
 		
 		$fieldset->add_field(new FormFieldRanksSelect('rank', $this->lang['rank'], FormFieldRanksSelect::MEMBER));
 		
