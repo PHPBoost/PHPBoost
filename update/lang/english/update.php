@@ -60,11 +60,11 @@ $lang = array(
 	'step.introduction.explanation' => '<p>Thank you to have trusted PHPBoost to build your website.</p>
 <p>To install PHPBoost you need to have some informations about your hosting which would be provided by your hoster. The installation is absolutely automatic, il should take only a few minutes. Click on the right arrow to start the installation process.</p>',
 	'step.introduction.maintenance_notice' => '<div class="notice">Your site will automatically be placed in maintenance. Consider disabling maintenance when you have verified that everything works properly.</div>',
-	'step.introduction.team_signature' => '<p>Cordially, the PHPBoost Team.</p>',
+	'step.introduction.team_signature' => '<p>Best regards, the PHPBoost team.</p>',
 
 //Configuration du serveur
 	'step.server.title' => 'Looking up server configuration...',
-	'step.server.explanation' => '<p>Before starting update, we need to establish the compatibility between PHPBoost and your server. If you have any problems, feel free to ask your questions in our <a href="http://www.phpboost.org/forum/index.php">Support Forums</a>.</p>
+	'step.server.explanation' => '<p>Before starting update, we need to establish the compatibility between PHPBoost and your server. If you have any problems, feel free to ask your questions in our <a href="http://www.phpboost.org/forum/">Support Forums</a>.</p>
 <div class="notice">It is very important that each required fields are checked, otherwise you might have trouble using the software.</div>',
 	'php.version' => 'PHP version',
 	'php.version.check' => 'PHP higher than :min_php_version',
@@ -76,7 +76,7 @@ $lang = array(
 	'server.urlRewriting' => 'URL Rewriting',
 	'server.urlRewriting.explanation' => 'Not only does it rewrite URLs, but it helps a lot with search engine robots.',
 	'folders.chmod' => 'Directories permissions',
-	'folders.chmod.check' => '<span style="font-weight:bold;color:red;">Required:</span> PHPBoost needs to change permissions of several directories to make them writable. If your hosting company allows it, it will be done automatically. However, you might need to do it by yourself to make the installation work. If you don\'t know how to change permissions of a directory, you can find help in our <a href="http://www.phpboost.net/wiki/change-the-chmod-of-a-directory" title="PHPBoost documentation : chmod">PHPBoost documentation</a> or on your host website.',
+	'folders.chmod.check' => '<span style="font-weight:bold;color:red;">Required:</span> PHPBoost needs to change permissions of several directories to make them writable. If your hosting company allows it, it will be done automatically. However, you might need to do it by yourself to make the installation work. If you don\'t know how to change permissions of a directory, you can find help on your host website.',
 	'folders.chmod.refresh' => 'Double-check directories permissions',
 	'folder.exists' => 'Found',
 	'folder.doesNotExist' => 'Not found',
@@ -119,36 +119,36 @@ $lang = array(
 //Execute update
 	'step.execute.title' => 'Execute update',
 	'step.execute.message' => 'Site update',
-	'step.execute.explanation' => 'This step will convert your site PHPBoost 4.0 to 4.1 PHPBoost.
+	'step.execute.explanation' => 'This step will convert your site PHPBoost 4.1 to 4.2 PHPBoost.
 	<br /><br />
-	Warning this step is irreversible, as a precaution please backup your data first !',
+	Be careful, this step is irreversible, as a precaution please backup your data first !',
 	
 	'finish.message' => '<fieldset>
 							<legend>PHPBoost is now updated and ready to run !</legend>
 							<p class="success">The update of PHPBoost has been powered successfully. The PHPBoost Team thanks you for using its software and is proud to count you among its users.</p>
-							<p>Keep yourself informed about the evolution of PHPBoost by visiting our website, <a href="http://www.phpboost.org">www.phpboost.org</a>. You will be warned in the administration panel when updates are available. We strongly recommend to keep your website up to date so you can take advantage of the latest features and correct any flaws or errors.</p>
-							<p class="warning">For security reasons we also recommand you to delete the installation folder and all its contents, hackers could manage to run the installation script and you could lose data !</p>
-							<p>Don\'t forget the <a href="http://www.phpboost.org/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="http://www.phpboost.org/faq/faq.php"><acronym title="Frequently Asked Questions">FAQ</acronym></a>.</p>
-							<p>If you have any problem please go to the <a href="http://www.phpboost.org/forum/">support forum of PHPBoost</a>.</p>
+							<p>Keep yourself informed about the evolution of PHPBoost by visiting our website, <a href="http://www.phpboost.com">www.phpboost.com</a>. You will be warned in the administration panel when updates are available. We strongly recommend to keep your website up to date so you can take advantage of the latest features and correct any flaws or errors.</p>
+							<p class="warning">For security reasons we also recommand you to delete the <b>install</b> and <b>update</b> folders and all their contents, hackers could manage to run the installation script and you could lose data !</p>
+							<p>Don\'t forget the <a href="http://www.phpboost.com/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="http://www.phpboost.com/faq/"><acronym title="Frequently Asked Questions">FAQ</acronym></a>.</p>
+							<p>If you have any problem please go to the <a href="http://www.phpboost.com/forum/">support forum of PHPBoost</a>.</p>
 						</fieldset>
 						<fieldset>
 							<legend>Thanks</legend>
 							<h2>Members</h2>
-							<p>Thanks to all the members of the community who cheer us on daily and contribute to the software quality by reporting bugs and suggestion improvements, which allows to lead to a stable and powerful version 4.1.</p>
-							<p>Thanks to the members of our teams and particulary to <strong>soupaloignon</strong> for communication team, <strong>aiglobulles</strong>, <strong>55 Escape</strong> and <strong>Micman</strong> for the documentation writing, <strong>ElenWii</strong>, <strong>Teki</strong> and <strong>babsolune</strong> for the graphics, <strong>julienseth78</strong> and <strong>DaaX</strong> for the modules development and <strong>benflovideo</strong> for the moderation of the community.</p>
+							<p>Thanks to all the members of the community who cheer us on daily and contribute to the software quality by reporting bugs and suggestion improvements, which allows to lead to a stable and powerful version CMS.</p>
+							<p>Thanks to the members of our teams and particulary to <strong>soupaloignon</strong> for communication team, <strong>aiglobulles</strong>, <strong>55 Escape</strong> and <strong>Micman</strong> for the documentation writing, <strong>ElenWii</strong> and <strong>babsolune</strong> for the graphics and <strong>benflovideo</strong> for the moderation of the community.</p>
 							<h2>Other projects</h2>
 							<p>PHPBoost uses different tools allowing it to enlarge its features panel enough implying the development time rising. Most of these tools are under GNU/GPL license.</p>
 							<ul>
-								<li><a href="http://notepad-plus.sourceforge.net">Notepad++</a> : Very powerful text editor used for the whole development, thanks a lot !</li>
-								<li><a href="http://www.eclipse.org/pdt/">Eclipse <acronym title="PHP Development Tools">PDT</acronym></a> : Eclipse based PHP <acronym title="Integrated Development Environment">IDE</acronym> (development tool).</li>
+								<li><a href="https://notepad-plus-plus.org">Notepad++</a> and <a href="http://www.sublimetext.com">Sublime Text</a> : Very powerful text editors used for the whole development, thanks a lot !</li>
 								<li><a href="http://tango.freedesktop.org/Tango_Desktop_Project">Tango Desktop Project</a> : Icon set used in the whole interface.</li>
 								<li><a href="http://www.phpconcept.net/pclzip/">PCLZIP by PHPConcept</a> : PHP library which manage work with zip files.</li>
-								<li><a href="http://www.xm1math.net/phpmathpublisher/index_fr.html">PHPMathPublisher</a> : Functions which permit us to interpret LaTeX language and export it to pictures viewable by a web browser.</li>
-								<li><a href="http://tinymce.moxiecode.com/">TinyMCE</a> : TinyMCE is a <acronym title="What You See Is What You Get">WYSIWYG</acronym> editor which allows users to see their text formatting in real time.</li>
+								<li><a href="http://www.xm1math.net/phpmathpublisher/">PHPMathPublisher</a> : Functions which permit us to interpret LaTeX language and export it to pictures viewable by a web browser.</li>
+								<li><a href="http://www.tinymce.com">TinyMCE</a> : TinyMCE is a <acronym title="What You See Is What You Get">WYSIWYG</acronym> editor which allows users to see their text formatting in real time.</li>
 								<li><a href="http://qbnz.com/highlighter/">GeSHi</a> : Generic Syntax Highlighter used to highlight the source code of many programming languages.</li>
-								<li><a href="http://script.aculo.us/">script.aculo.us</a> : Javascript and <acronym title="Asynchronous Javascript And XML">AJAX</acronym> Framework</li>
+								<li><a href="http://jquery.com">jQuery</a> : Javascript and <acronym title="Asynchronous Javascript And XML">AJAX</acronym> Framework</li>
 								<li><a href="http://flowplayer.org">Flowplayer</a> : flash video reader</li>
 								<li><a href="http://fontawesome.io">Font Awesome</a> : icons librairy</li>
+                                <li><a href="http://cornel.bopp-art.com/lightcase/">Lightcase.js</a> : responsive Lightbox</li>
 							</ul>
 						</fieldset>
 						<fieldset>

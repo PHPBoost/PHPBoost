@@ -49,7 +49,7 @@ $lang = array(
 	'installation.progression' => 'Installation progression',
 	'appendices' => 'Appendices',
 	'documentation' => 'Documentation',
-	'documentation.link' => 'http://www.phpboost.org/wiki/install-phpboost',
+	'documentation.link' => 'http://www.phpboost.com/wiki/install-phpboost',
 	'installation.restart' => 'Restart the installation',
 	'installation.confirmRestart' => 'Are you sure you want to restart the installation ?',
 	'language.change' => 'Change language',
@@ -84,7 +84,7 @@ $lang = array(
 
 // Server setup
 	'step.server.title' => 'Looking up server configuration...',
-	'step.server.explanation' => '<p>Before starting installation, we need to establish the compatibility between PHPBoost and your server. If you have any problems, feel free to ask your questions in our <a href="http://www.phpboost.org/forum/index.php">Support Forums</a>.</p>
+	'step.server.explanation' => '<p>Before starting installation, we need to establish the compatibility between PHPBoost and your server. If you have any problems, feel free to ask your questions in our <a href="http://www.phpboost.com/forum/">Support Forums</a>.</p>
 <div class="notice">It is very important that each required fields are checked, otherwise you might have trouble using the software.</div>',
 	'php.version' => 'PHP version',
 	'php.version.check' => 'PHP higher than :min_php_version',
@@ -187,7 +187,7 @@ $lang = array(
 	'admin.created.email.object' => 'PHPBoost : message to be preserved',
 	'admin.created.email.unlockCode' => 'Dear %s,
 
-First of all, thank you for powering your website with PHPBoost software, we hope you will be satisfied. If you have any problems ask your questions on the PHPBoost support forum : http://www.phpboost.org/forum/index.php
+First of all, thank you for powering your website with PHPBoost software, we hope you will be satisfied. If you have any problems ask your questions on the PHPBoost support forum : http://www.phpboost.com/forum/
 
 Here is your login and password (don\'t lose them, you will need them to setup your website) :
 
@@ -202,29 +202,29 @@ The PHPBoost Team.',
 	'finish.message' => '<fieldset>
                             <legend>PHPBoost is now installed and ready to run !</legend>
                             <p class="success">The installation of PHPBoost has been powered successfully. The PHPBoost Team thanks you for using its software and is proud to count you among its users.</p>
-                            <p>Keep yourself informed about the evolution of PHPBoost by visiting our website, <a href="http://www.phpboost.org">www.phpboost.org</a>. You will be warned in the administration panel when updates are available. We strongly recommend to keep your website up to date so you can take advantage of the latest features and correct any flaws or errors.</p>
-                            <p class="warning">For security reasons we also recommand you to delete the installation and update folders and all their contents. Hackers could manage to run the installation or the update script and you could lose data !</p>
-                            <p>Don\'t forget to consult the <a href="http://www.phpboost.org/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="http://www.phpboost.org/faq/faq.php"><acronym title="Frequently Asked Questions">FAQ</acronym></a>.</p>
-                            <p>If you have any problem please go to the <a href="http://www.phpboost.org/forum/">support forum of PHPBoost</a>.</p>
+                            <p>Keep yourself informed about the evolution of PHPBoost by visiting our website, <a href="http://www.phpboost.com">www.phpboost.com</a>. You will be warned in the administration panel when updates are available. We strongly recommend to keep your website up to date so you can take advantage of the latest features and correct any flaws or errors.</p>
+                            <p class="warning">For security reasons we also recommand you to delete the <b>install</b> folder and all its content. Hackers could manage to run the installation or the update script and you could lose data !</p>
+                            <p>Don\'t forget to consult the <a href="http://www.phpboost.com/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="http://www.phpboost.com/faq/"><acronym title="Frequently Asked Questions">FAQ</acronym></a>.</p>
+                            <p>If you have any problem please go to the <a href="http://www.phpboost.com/forum/">support forum of PHPBoost</a>.</p>
                         </fieldset>
                         <fieldset>
                             <legend>Thanks</legend>
                             <h2>Members</h2>
-                            <p>Thanks to all the members of the community who cheer us on daily and contribute to the software quality by reporting bugs and suggestion improvements, which allows to lead to a stable and powerful version 4.1.</p>
-                            <p>Thanks to the members of our teams and particulary to <strong>soupaloignon</strong> for communication team, <strong>aiglobulles</strong>, <strong>55 Escape</strong> and <strong>Micman</strong> for the documentation writing, <strong>ElenWii</strong>, <strong>Teki</strong> and <strong>babsolune</strong> for the graphics, <strong>julienseth78</strong> and <strong>DaaX</strong> for the modules development and <strong>benflovideo</strong> for the moderation of the community.</p>
+                            <p>Thanks to all the members of the community who cheer us on daily and contribute to the software quality by reporting bugs and suggestion improvements, which allows to lead to a stable and powerful CMS.</p>
+                            <p>Thanks to the members of our teams and particulary to <strong>soupaloignon</strong> for communication team, <strong>aiglobulles</strong>, <strong>55 Escape</strong> and <strong>Micman</strong> for the documentation writing, <strong>ElenWii</strong> and <strong>babsolune</strong> for the graphics and <strong>benflovideo</strong> for the moderation of the community.</p>
                             <h2>Other projects</h2>
                             <p>PHPBoost uses different tools allowing it to enlarge its features panel enough implying the development time rising. Most of these tools are under GNU/GPL license.</p>
                             <ul>
-                                <li><a href="http://notepad-plus.sourceforge.net">Notepad++</a> : Very powerful text editor used for the whole development, thanks a lot !</li>
-                                <li><a href="http://www.eclipse.org/pdt/">Eclipse <acronym title="PHP Development Tools">PDT</acronym></a> : Eclipse based PHP <acronym title="Integrated Development Environment">IDE</acronym> (development tool).</li>
+                                <li><a href="https://notepad-plus-plus.org">Notepad++</a> and <a href="http://www.sublimetext.com">Sublime Text</a> : Very powerful text editors used for the whole development, thanks a lot !</li>
                                 <li><a href="http://tango.freedesktop.org/Tango_Desktop_Project">Tango Desktop Project</a> : Icon set used in the whole interface.</li>
                                 <li><a href="http://www.phpconcept.net/pclzip/">PCLZIP by PHPConcept</a> : PHP library which manage work with zip files.</li>
-                                <li><a href="http://www.xm1math.net/phpmathpublisher/index_fr.html">PHPMathPublisher</a> : Functions which permit us to interpret LaTeX language and export it to pictures viewable by a web browser.</li>
-                                <li><a href="http://tinymce.moxiecode.com/">TinyMCE</a> : TinyMCE is a <acronym title="What You See Is What You Get">WYSIWYG</acronym> editor which allows users to see their text formatting in real time.</li>
+                                <li><a href="http://www.xm1math.net/phpmathpublisher/">PHPMathPublisher</a> : Functions which permit us to interpret LaTeX language and export it to pictures viewable by a web browser.</li>
+                                <li><a href="http://www.tinymce.com">TinyMCE</a> : TinyMCE is a <acronym title="What You See Is What You Get">WYSIWYG</acronym> editor which allows users to see their text formatting in real time.</li>
                                 <li><a href="http://qbnz.com/highlighter/">GeSHi</a> : Generic Syntax Highlighter used to highlight the source code of many programming languages.</li>
-                                <li><a href="http://script.aculo.us/">script.aculo.us</a> : Javascript and <acronym title="Asynchronous Javascript And XML">AJAX</acronym> Framework</li>
+                                <li><a href="http://jquery.com">jQuery</a> : Javascript and <acronym title="Asynchronous Javascript And XML">AJAX</acronym> Framework</li>
                                 <li><a href="http://flowplayer.org">Flowplayer</a> : flash video reader</li>
                                 <li><a href="http://fontawesome.io">Font Awesome</a> : icons librairy</li>
+                                <li><a href="http://cornel.bopp-art.com/lightcase/">Lightcase.js</a> : responsive Lightbox</li>
                             </ul>
                         </fieldset>
                         <fieldset>
