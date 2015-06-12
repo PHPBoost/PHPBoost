@@ -39,13 +39,7 @@ class ContactModuleUpdateVersion extends ModuleUpdateVersion
 	
 	private function delete_old_files()
 	{
-		$file = new File(Url::to_rel('/' . $this->module_id . '/controllers/AdminContactController.class.php'));
-		$file->delete();
-		$file = new File(Url::to_rel('/' . $this->module_id . '/lang/english/' . $this->module_id . '_common.php'));
-		$file->delete();
-		$file = new File(Url::to_rel('/' . $this->module_id . '/lang/french/' . $this->module_id . '_common.php'));
-		$file->delete();
-		$file = new File(Url::to_rel('/' . $this->module_id . '/phpboost/ContactModuleHomePage.class.php'));
+		$file = new File(Url::to_rel('/' . $this->module_id . '/services/ContactFieldsFactory.class.php'));
 		$file->delete();
 	}
 }
