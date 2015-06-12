@@ -85,7 +85,7 @@ if ($read)
 	}
 	$result->dispose();
 	
-	PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('user_pm' => $nbr_waiting_pm), 'WHERE user_id = :id', array('id' => AppContext::get_current_user()->get_id()));
+	PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('unread_pm' => $nbr_waiting_pm), 'WHERE user_id = :id', array('id' => AppContext::get_current_user()->get_id()));
 	
 	AppContext::get_response()->redirect(UserUrlBuilder::personnal_message());
 }
@@ -544,8 +544,8 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	
 	if ($convers['user_view_pm'] > 0 && $convers['last_user_id'] != AppContext::get_current_user()->get_id()) //Membre n'ayant pas encore lu la conversation.
 	{
-		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('user_pm' => 'user_pm - ' . (int)$convers['user_view_pm']), 'WHERE user_id = :id', array('id' => AppContext::get_current_user()->get_id()));
-		PersistenceContext::get_querier()->update(DB_TABLE_PM_TOPIC, array('user_view_pm' => 0), 'WHERE idid', array('id' => $pm_id_get));
+		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('unread_pm' => 'unread_pm - ' . (int)$convers['user_view_pm']), 'WHERE user_id = :id', array('id' => AppContext::get_current_user()->get_id()));
+		PersistenceContext::get_querier()->update(DB_TABLE_PM_TOPIC, array('user_view_pm' => 0), 'WHERE id = :id', array('id' => $pm_id_get));
 		PersistenceContext::get_querier()->update(DB_TABLE_PM_MSG, array('view_status' => 1), 'WHERE idconvers = :id AND user_id <> :user_id', array('id' => $convers['id'], 'user_id' => AppContext::get_current_user()->get_id()));
 	}
 	
