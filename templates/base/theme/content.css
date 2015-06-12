@@ -1030,12 +1030,12 @@ div.field-required:after {
 }
 
 .form-element-date div.field-required:after {
-	right: 22px;
+	right: 12px;
 }
 
 .form-element-date .constraint-status-error div.field-required:after,
 .form-element-date .constraint-status-right div.field-required:after {
-	right: 20px;
+	right: 10px;
 }
 
 .form-field-textarea.field-required:after {
