@@ -125,12 +125,12 @@ class AdminAdvancedConfigController extends AdminController
 			array(new FormFieldConstraintRegex('`^[A-Za-z0-9]+$`i', '', $this->lang['advanced-config.cookie-name.style-wrong']))
 		));
 		
-		$sessions_config_fieldset->add_field(new FormFieldNumber('session_duration', $this->lang['advanced-config.cookie-duration'], $this->sessions_config->get_session_duration(), array(
+		$sessions_config_fieldset->add_field(new FormFieldNumberEditor('session_duration', $this->lang['advanced-config.cookie-duration'], $this->sessions_config->get_session_duration(), array(
 			'description' => $this->lang['advanced-config.cookie-duration.explain'], 'required' => true),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i', '', $this->lang['advanced-config.integer-required']))
 		));
 		
-		$sessions_config_fieldset->add_field(new FormFieldNumber('active_session_duration', $this->lang['advanced-config.active-session-duration'], $this->sessions_config->get_active_session_duration(), array(
+		$sessions_config_fieldset->add_field(new FormFieldNumberEditor('active_session_duration', $this->lang['advanced-config.active-session-duration'], $this->sessions_config->get_active_session_duration(), array(
 			'description' => $this->lang['advanced-config.active-session-duration.explain'], 'required' => true),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i', '', $this->lang['advanced-config.integer-required']))
 		));

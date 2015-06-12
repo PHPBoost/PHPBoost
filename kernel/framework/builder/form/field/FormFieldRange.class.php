@@ -29,7 +29,7 @@
  * @desc This class manages a range of numbers (slider).
  * @package {@package}
  */
-class FormFieldRange extends FormFieldNumber
+class FormFieldRange extends FormFieldNumberEditor
 {
 	protected $type = 'range';
 	/**

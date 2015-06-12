@@ -124,7 +124,7 @@ class SandboxFormController extends ModuleController
 		$fieldset->add_field(new FormFieldTextEditor('text3', 'Champ texte3', '', array(
 			'maxlength' => 25, 'description' => 'Champs requis vide', 'required' => true)
 		));
-		$fieldset->add_field(new FormFieldNumber('age', 'Age', 20, array(
+		$fieldset->add_field(new FormFieldNumberEditor('age', 'Age', 20, array(
 			'min' => 10, 'max' => 100, 'description' => 'Intervalle 10 à 100'),
 			array(new FormFieldConstraintIntegerRange(10, 100))
 		));

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             FormFieldNumber.class.php
+ *                             FormFieldNumberEditor.class.php
  *                            -------------------
  *   begin                : May 20, 2015
  *   copyright            : (C) 2015 Julien BRISWALTER
@@ -29,7 +29,7 @@
  * @desc This class manage number fields.
  * @package {@package}
  */
-class FormFieldNumber extends AbstractFormField
+class FormFieldNumberEditor extends AbstractFormField
 {
 	protected $type = 'number';
 	protected $min = null;

@@ -84,7 +84,7 @@ class AdminShoutboxConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTML('configuration', LangLoader::get_message('configuration', 'admin-common'));
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldNumber('items_number_per_page', $this->lang['config.items_number_per_page'], $this->config->get_items_number_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_number_per_page', $this->lang['config.items_number_per_page'], $this->config->get_items_number_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
@@ -99,7 +99,7 @@ class AdminShoutboxConfigController extends AdminModuleController
 			)
 		));
 		
-		$fieldset->add_field(new FormFieldNumber('max_messages_number', $this->lang['config.max_messages_number'], $this->config->get_max_messages_number(),
+		$fieldset->add_field(new FormFieldNumberEditor('max_messages_number', $this->lang['config.max_messages_number'], $this->config->get_max_messages_number(),
 			array('min' => 5, 'max' => 1000, 'required' => true, 'hidden' => !$this->config->is_max_messages_number_enabled()),
 			array(new FormFieldConstraintIntegerRange(5, 1000))
 		));
@@ -114,7 +114,7 @@ class AdminShoutboxConfigController extends AdminModuleController
 			)
 		));
 		
-		$fieldset->add_field(new FormFieldNumber('max_links_number_per_message', $this->lang['config.max_links_number_per_message'], $this->config->get_max_links_number_per_message(),
+		$fieldset->add_field(new FormFieldNumberEditor('max_links_number_per_message', $this->lang['config.max_links_number_per_message'], $this->config->get_max_links_number_per_message(),
 			array('min' => 1, 'max' => 20, 'required' => true, 'hidden' => !$this->config->is_max_links_number_per_message_enabled()),
 			array(new FormFieldConstraintIntegerRange(1, 20))
 		));
@@ -152,7 +152,7 @@ class AdminShoutboxConfigController extends AdminModuleController
 			)
 		));
 		
-		$fieldset->add_field(new FormFieldNumber('shout_max_messages_number', $this->lang['config.shout_max_messages_number'], $this->config->get_shout_max_messages_number(),
+		$fieldset->add_field(new FormFieldNumberEditor('shout_max_messages_number', $this->lang['config.shout_max_messages_number'], $this->config->get_shout_max_messages_number(),
 			array('min' => 5, 'max' => 1000, 'required' => true, 'hidden' => !$this->config->is_shout_max_messages_number_enabled()),
 			array(new FormFieldConstraintIntegerRange(5, 1000))
 		));

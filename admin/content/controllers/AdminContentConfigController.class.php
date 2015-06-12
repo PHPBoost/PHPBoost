@@ -97,7 +97,7 @@ class AdminContentConfigController extends AdminController
 		$fieldset = new FormFieldsetHTML('post-management', $this->lang['content.config.post-management']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldNumber('max_pm_number', $this->lang['content.config.max-pm-number'], $this->user_accounts_config->get_max_private_messages_number(),
+		$fieldset->add_field(new FormFieldNumberEditor('max_pm_number', $this->lang['content.config.max-pm-number'], $this->user_accounts_config->get_max_private_messages_number(),
 			array('required' => true, 'description' => $this->lang['content.config.max-pm-number-explain']),
 			array(new FormFieldConstraintRegex('`^([0-9]+)$`i', '', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
 		));
@@ -106,7 +106,7 @@ class AdminContentConfigController extends AdminController
 			array('description' => $this->lang['content.config.anti-flood-enabled-explain'])
 		));
 		
-		$fieldset->add_field(new FormFieldNumber('delay_flood', $this->lang['content.config.delay-flood'], $this->content_management_config->get_anti_flood_duration(), array(
+		$fieldset->add_field(new FormFieldNumberEditor('delay_flood', $this->lang['content.config.delay-flood'], $this->content_management_config->get_anti_flood_duration(), array(
 			'required' => true, 'description' => $this->lang['content.config.delay-flood-explain']),
 			array(new FormFieldConstraintRegex('`^([0-9]+)$`i', '', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
 		));

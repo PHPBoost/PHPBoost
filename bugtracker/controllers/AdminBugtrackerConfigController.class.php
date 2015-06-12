@@ -100,7 +100,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTML('config', LangLoader::get_message('configuration', 'admin-common'));
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldNumber('items_per_page', LangLoader::get_message('config.items_number_per_page', 'admin-common'), (int)$this->config->get_items_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', LangLoader::get_message('config.items_number_per_page', 'admin-common'), (int)$this->config->get_items_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
@@ -146,7 +146,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		
 		foreach ($this->config->get_status_list() as $key => $value)
 		{
-			$fieldset->add_field(new FormFieldNumber($key, $this->lang['config.status.' . $key], $value, array(
+			$fieldset->add_field(new FormFieldNumberEditor($key, $this->lang['config.status.' . $key], $value, array(
 				'min' => 0, 'max' => 100, 'step' => 10, 'required' => true, 'hidden' => !$this->config->is_progress_bar_displayed()),
 				array(new FormFieldConstraintIntegerRange(0, 100))
 			));
@@ -203,7 +203,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 				}')
 		)));
 		
-		$fieldset->add_field(new FormFieldNumber('stats_top_posters_number', $this->lang['config.stats_top_posters_number'], (int)$this->config->get_stats_top_posters_number(), array(
+		$fieldset->add_field(new FormFieldNumberEditor('stats_top_posters_number', $this->lang['config.stats_top_posters_number'], (int)$this->config->get_stats_top_posters_number(), array(
 			'min' => 1, 'required' => true, 'hidden' => !$this->config->are_stats_top_posters_enabled()),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));

@@ -29,7 +29,7 @@
  * @desc This class manages a decimal number.
  * @package {@package}
  */
-class FormFieldDecimalNumberEditor extends FormFieldNumber
+class FormFieldDecimalNumberEditor extends FormFieldNumberEditor
 {
 	/**
 	 * @desc Constructs a FormFieldDecimalNumberEditor.

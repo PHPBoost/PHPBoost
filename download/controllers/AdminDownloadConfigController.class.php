@@ -83,17 +83,17 @@ class AdminDownloadConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTML('config', $this->admin_common_lang['configuration']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldNumber('items_number_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_items_number_per_page(), 
+		$fieldset->add_field(new FormFieldNumberEditor('items_number_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_items_number_per_page(), 
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
-		$fieldset->add_field(new FormFieldNumber('categories_number_per_page', $this->admin_common_lang['config.categories_number_per_page'], $this->config->get_categories_number_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('categories_number_per_page', $this->admin_common_lang['config.categories_number_per_page'], $this->config->get_categories_number_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
-		$fieldset->add_field(new FormFieldNumber('columns_number_per_line', $this->admin_common_lang['config.columns_number_per_line'], $this->config->get_columns_number_per_line(),
+		$fieldset->add_field(new FormFieldNumberEditor('columns_number_per_line', $this->admin_common_lang['config.columns_number_per_line'], $this->config->get_columns_number_per_line(),
 			array('min' => 1, 'max' => 4, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
@@ -123,7 +123,7 @@ class AdminDownloadConfigController extends AdminModuleController
 			)
 		)));
 		
-		$fieldset->add_field(new FormFieldNumber('notation_scale', $this->admin_common_lang['config.notation_scale'], $this->config->get_notation_scale(), 
+		$fieldset->add_field(new FormFieldNumberEditor('notation_scale', $this->admin_common_lang['config.notation_scale'], $this->config->get_notation_scale(), 
 			array('min' => 3, 'max' => 20, 'required' => true, 'hidden' => !$this->config->is_notation_enabled()),
 			array(new FormFieldConstraintIntegerRange(3, 20))
 		));
@@ -149,7 +149,7 @@ class AdminDownloadConfigController extends AdminModuleController
 			))
 		));
 		
-		$fieldset->add_field(new FormFieldNumber('files_number_in_menu', $this->lang['config.files_number_in_menu'], $this->config->get_files_number_in_menu(), 
+		$fieldset->add_field(new FormFieldNumberEditor('files_number_in_menu', $this->lang['config.files_number_in_menu'], $this->config->get_files_number_in_menu(), 
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));

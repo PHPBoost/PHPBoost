@@ -98,7 +98,7 @@ class AdminMailConfigController extends AdminController
 
 		$fieldset->add_field(new FormFieldTextEditor('smtp_host', $this->lang['mail-config.smtp_host'], $this->config->get_smtp_host(), array('required' => true, 'disabled' => !$smtp_enabled), array(new FormFieldConstraintRegex('`^[a-z0-9-]+(?:\.[a-z0-9-]+)*$`i'))));
 		
-		$fieldset->add_field(new FormFieldNumber('smtp_port', $this->lang['mail-config.smtp_port'], $this->config->get_smtp_port(), array('min' => 1, 'max' => 65535, 'disabled' => !$smtp_enabled), array(new FormFieldConstraintIntegerRange(0, 65535))));
+		$fieldset->add_field(new FormFieldNumberEditor('smtp_port', $this->lang['mail-config.smtp_port'], $this->config->get_smtp_port(), array('min' => 1, 'max' => 65535, 'disabled' => !$smtp_enabled), array(new FormFieldConstraintIntegerRange(0, 65535))));
 		
 		$fieldset->add_field(new FormFieldTextEditor('smtp_login', $this->lang['mail-config.smtp_login'], $this->config->get_smtp_login(), array('disabled' => !$smtp_enabled), array()));
 		

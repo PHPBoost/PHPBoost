@@ -63,7 +63,7 @@ class MemberShortTextExtendedField extends AbstractMemberExtendedField
 		switch ($regex)
 		{
 			case 1:
-				$field_class = 'FormFieldNumber';
+				$field_class = 'FormFieldNumberEditor';
 				$display_constraint = false;
 				break;
 			case 4:
@@ -97,7 +97,7 @@ class MemberShortTextExtendedField extends AbstractMemberExtendedField
 		switch ($regex)
 		{
 			case 1:
-				$field_class = 'FormFieldNumber';
+				$field_class = 'FormFieldNumberEditor';
 				$display_constraint = false;
 				break;
 			case 4:

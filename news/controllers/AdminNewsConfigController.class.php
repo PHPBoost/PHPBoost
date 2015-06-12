@@ -82,12 +82,12 @@ class AdminNewsConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTML('config', $this->admin_common_lang['configuration']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldNumber('number_news_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_number_news_per_page(), 
+		$fieldset->add_field(new FormFieldNumberEditor('number_news_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_number_news_per_page(), 
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
-		$fieldset->add_field(new FormFieldNumber('number_columns_display_news', $this->lang['admin.config.number_columns_display_news'], $this->config->get_number_columns_display_news(), 
+		$fieldset->add_field(new FormFieldNumberEditor('number_columns_display_news', $this->lang['admin.config.number_columns_display_news'], $this->config->get_number_columns_display_news(), 
 			array('min' => 1, 'max' => 4, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
@@ -101,7 +101,7 @@ class AdminNewsConfigController extends AdminModuleController
 			}'
 		))));
 		
-		$fieldset->add_field(new FormFieldNumber('number_character_to_cut', $this->lang['admin.config.number_character_to_cut'], $this->config->get_number_character_to_cut(), 
+		$fieldset->add_field(new FormFieldNumberEditor('number_character_to_cut', $this->lang['admin.config.number_character_to_cut'], $this->config->get_number_character_to_cut(), 
 			array('min' => 20, 'max' => 1000, 'required' => true, 'hidden' => !$this->config->get_display_condensed_enabled()), 
 			array(new FormFieldConstraintIntegerRange(20, 1000)
 		)));

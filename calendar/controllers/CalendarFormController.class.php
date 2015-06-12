@@ -109,7 +109,7 @@ class CalendarFormController extends ModuleController
 			}'))
 		));
 		
-		$fieldset->add_field(new FormFieldNumber('repeat_number', $this->lang['calendar.labels.repeat_number'], $event_content->get_repeat_number(),
+		$fieldset->add_field(new FormFieldNumberEditor('repeat_number', $this->lang['calendar.labels.repeat_number'], $event_content->get_repeat_number(),
 			array('min' => 1, 'max' => 150, 'hidden' => $event_content->get_repeat_type() == CalendarEventContent::NEVER),
 			array(new FormFieldConstraintIntegerRange(1, 150))
 		));
@@ -129,7 +129,7 @@ class CalendarFormController extends ModuleController
 			}'
 		))));
 		
-		$fieldset->add_field(new FormFieldNumber('max_registered_members', $this->lang['calendar.labels.max_registered_members'], $event_content->get_max_registered_members(),
+		$fieldset->add_field(new FormFieldNumberEditor('max_registered_members', $this->lang['calendar.labels.max_registered_members'], $event_content->get_max_registered_members(),
 			array('description' => $this->lang['calendar.labels.max_registered_members.explain'], 'hidden' => !$event_content->is_registration_authorized()),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
