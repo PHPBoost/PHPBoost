@@ -117,7 +117,7 @@ class WebFormController extends ModuleController
 			)
 		)));
 		
-		$other_fieldset->add_field(new FormFieldUploadFile('partner_picture', $this->lang['web.form.partner_picture'], $this->get_weblink()->get_partner_picture()->relative(), array(
+		$other_fieldset->add_field(new FormFieldUploadPictureFile('partner_picture', $this->lang['web.form.partner_picture'], $this->get_weblink()->get_partner_picture()->relative(), array(
 			'hidden' => !$this->get_weblink()->is_partner()
 		)));
 		

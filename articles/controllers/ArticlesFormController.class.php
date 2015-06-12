@@ -126,7 +126,7 @@ class ArticlesFormController extends ModuleController
 
 		$other_fieldset->add_field(new FormFieldCheckbox('notation_enabled', LangLoader::get_message('config.notation_enabled', 'admin-common'), $this->get_article()->get_notation_enabled()));
 		
-		$other_fieldset->add_field(new FormFieldUploadFile('picture', $this->common_lang['form.picture'], $this->get_article()->get_picture()->relative()));
+		$other_fieldset->add_field(new FormFieldUploadPictureFile('picture', $this->common_lang['form.picture'], $this->get_article()->get_picture()->relative()));
 
 		$other_fieldset->add_field(ArticlesService::get_keywords_manager()->get_form_field($this->get_article()->get_id(), 'keywords', $this->common_lang['form.keywords'],  
 			array('description' => $this->common_lang['form.keywords.description'])

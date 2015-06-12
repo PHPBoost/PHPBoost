@@ -247,6 +247,9 @@ class SandboxFormController extends ModuleController
 		
 		// UPLOAD FILE
 		$fieldset2->add_field(new FormFieldUploadFile('upload_file', 'Lien vers un fichier', '', array('required' => true)));
+		
+		// UPLOAD PICTURE FILE
+		$fieldset2->add_field(new FormFieldUploadPictureFile('upload_picture_file', 'Lien vers une image', '', array('required' => true)));
 
 		// AUTH
 		$fieldset3 = new FormFieldsetHTML('fieldset3', 'Autorisations');

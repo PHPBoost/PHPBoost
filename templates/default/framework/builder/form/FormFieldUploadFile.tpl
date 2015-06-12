@@ -35,7 +35,7 @@ jQuery("#" + ${escapejs(NAME)}).blur(function(){
 	var fileName = HTMLForms.getField(${escapejs(ID)}).getValue();
 	var extension = fileName.substring(fileName.lastIndexOf('.')+1);
 	
-	if ((/^(jpg|jpeg|gif|tiff|png)$/i).test(extension)) {
+	if ((/^(png|gif|jpg|jpeg|tiff|ico|svg)$/i).test(extension)) {
 		jQuery('#${escape(HTML_ID)}_preview').show();
 		jQuery.ajax({
 			url: PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/image/preview/',
@@ -51,13 +51,14 @@ jQuery("#" + ${escapejs(NAME)}).blur(function(){
 
 				if (returnData.url) {
 					jQuery('#${escape(HTML_ID)}_preview_picture').attr("src", returnData.url);
-					jQuery('#${escape(HTML_ID)}_preview_picture').css( "display", "inline");
+					jQuery('#${escape(HTML_ID)}_preview_picture').show();
 				} else {
-					jQuery('#${escape(HTML_ID)}_preview_picture').hide();
+					jQuery('#${escape(HTML_ID)}_preview').hide();
 				}
 			},
 			error: function(e){
-				alert(e);
+				jQuery('#${escape(HTML_ID)}_preview_loading').remove();
+				jQuery('#${escape(HTML_ID)}_preview').hide();
 			}
 		});
 	} else {

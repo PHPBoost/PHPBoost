@@ -33,7 +33,7 @@
 class FormFieldUploadFile extends AbstractFormField
 {
 	/**
-	 * @desc Constructs a FormFieldUploadFileTextEditor.
+	 * @desc Constructs a FormFieldUploadFile.
 	 * @param string $id Field identifier
 	 * @param string $label Field label
 	 * @param string $value Default value
