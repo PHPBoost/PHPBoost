@@ -68,7 +68,8 @@ class AdminMemberAddController extends AdminController
 		$fieldset = new FormFieldsetHTML('add_member', LangLoader::get_message('members.add-member', 'admin-user-common'));
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('display_name', $this->lang['display_name'], '', array('maxlength' => 100, 'required' => true),
+		$fieldset->add_field(new FormFieldTextEditor('display_name', $this->lang['display_name'], '',
+			array('maxlength' => 100, 'required' => true),
 			array(new FormFieldConstraintLengthRange(3, 100), new FormFieldConstraintPHPBoostAuthLoginExists())
 		));
 		
@@ -80,7 +81,8 @@ class AdminMemberAddController extends AdminController
 		$fieldset->add_field(new FormFieldCheckbox('custom_login', $this->lang['login.custom'], false, array('events' => array('click' => '
 			if (HTMLForms.getField("custom_login").getValue()) { HTMLForms.getField("login").enable(); } else { HTMLForms.getField("login").disable();}'))));
 
-		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['login'], '', array('required' => true, 'hidden' => true),
+		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['login'], '',
+			array('required' => true, 'hidden' => true, 'maxlength' => 25),
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists())
 		));
 

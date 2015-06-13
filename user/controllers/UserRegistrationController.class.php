@@ -76,22 +76,14 @@ class UserRegistrationController extends AbstractController
 		
 		$fieldset->add_field(new FormFieldHTML('validation_method', $this->get_accounts_validation_method_explain()));
 		
-		$fieldset->add_field(new FormFieldTextEditor('display_name', $this->lang['display_name'], '', array('description'=> $this->lang['display_name.explain'], 'required' => true),
-			array(new FormFieldConstraintLengthRange(3, 25))
-		));	
+		$fieldset->add_field(new FormFieldTextEditor('display_name', $this->lang['display_name'], '',
+			array('description'=> $this->lang['display_name.explain'], 'required' => true, 'maxlength' => 100),
+			array(new FormFieldConstraintLengthRange(3, 100))
+		));
 
 		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['email'], '',
 			array('required' => true),
 			array(new FormFieldConstraintMailExist())
-		));
-
-		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '', array(
-			'description' => $this->lang['password.explain'], 'required' => true),
-			array(new FormFieldConstraintLengthRange(6, 12))
-		));
-		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '', array(
-			'required' => true),
-			array(new FormFieldConstraintLengthRange(6, 12))
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('user_hide_mail', $this->lang['email.hide'], FormFieldCheckbox::CHECKED));
@@ -104,8 +96,18 @@ class UserRegistrationController extends AbstractController
 			}'
 		))));
 
-		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['login'], '', array('hidden' => true),
+		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['login'], '',
+			array('hidden' => true, 'maxlength' => 25),
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists())
+		));
+
+		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '',
+			array('description' => $this->lang['password.explain'], 'required' => true, 'maxlength' => 500),
+			array(new FormFieldConstraintLengthRange(6, 50))
+		));
+		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '',
+			array('required' => true, 'maxlength' => 500),
+			array(new FormFieldConstraintLengthRange(6, 50))
 		));
 		
 		$options_fieldset = new FormFieldsetHTML('options', LangLoader::get_message('options', 'main'));
@@ -205,11 +207,11 @@ class UserRegistrationController extends AbstractController
 			$has_error = true;
 			$this->tpl->put('MSG', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
 		}
-			
+		
 		if (!$has_error)
 		{
 			UserRegistrationService::send_email_confirmation($user_id, $user->get_email(), $this->form->get_value('display_name'), $login, $this->form->get_value('password'), $registration_pass);
-				
+			
 			$this->confirm_registration($user_id);
 		}
 	}

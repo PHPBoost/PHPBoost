@@ -129,7 +129,7 @@ class UserEditProfileController extends AbstractController
 		$fieldset->add_field(new FormFieldTextEditor('display_name', $this->lang['display_name'], $this->user->get_display_name(),
 			array('maxlength' => 100, 'description'=> $this->lang['display_name.explain'], 'required' => true),
 			array(new FormFieldConstraintLengthRange(3, 100))
-		));	
+		));
 
 		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['email'], $this->user->get_email(),
 			array('required' => true),
@@ -172,7 +172,8 @@ class UserEditProfileController extends AbstractController
 		$connect_fieldset->add_field(new FormFieldCheckbox('custom_login', $this->lang['login.custom'], $has_custom_login, array('description'=> $this->lang['login.custom.explain'], 'hidden' => $more_than_one_authentication_type, 'events' => array('click' => '
 			if (HTMLForms.getField("custom_login").getValue()) { HTMLForms.getField("login").enable(); } else { HTMLForms.getField("login").disable();}'))));
 
-		$connect_fieldset->add_field(new FormFieldTextEditor('login', $this->lang['login'], ($has_custom_login ? $this->internal_auth_infos['login'] : ''), array('required' => true, 'hidden' => $more_than_one_authentication_type || !$has_custom_login),
+		$connect_fieldset->add_field(new FormFieldTextEditor('login', $this->lang['login'], ($has_custom_login ? $this->internal_auth_infos['login'] : ''),
+			array('required' => true, 'hidden' => $more_than_one_authentication_type || !$has_custom_login, 'maxlength' => 25),
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists($this->user->get_id()))
 		));
 
@@ -181,12 +182,12 @@ class UserEditProfileController extends AbstractController
 		);
 
 		$connect_fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '',
-			array('description' => $this->lang['password.explain'], 'hidden' => $more_than_one_authentication_type),
+			array('description' => $this->lang['password.explain'], 'hidden' => $more_than_one_authentication_type, 'maxlength' => 50),
 			array(new FormFieldConstraintLengthRange(6, 50))
 		));
 		
 		$connect_fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '',
-			array('hidden' => $more_than_one_authentication_type),
+			array('hidden' => $more_than_one_authentication_type, 'maxlength' => 50),
 			array(new FormFieldConstraintLengthRange(6, 50))
 		));
 

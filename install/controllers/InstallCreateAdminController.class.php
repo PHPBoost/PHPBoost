@@ -71,15 +71,18 @@ class InstallCreateAdminController extends InstallController
 		$fieldset = new FormFieldsetHTML('adminAccount', $this->lang['admin.account']);
 		$this->form->add_fieldset($fieldset);
 
-		$login = new FormFieldTextEditor('display_name', LangLoader::get_message('display_name', 'user-common'), '',
-		array('required' => true, 'maxlength' => 100));
-		$login->add_constraint(new FormFieldConstraintLengthRange(3, 100, $this->lang['admin.login.length']));
-		$fieldset->add_field($login);
+		$fieldset->add_field(new FormFieldTextEditor('display_name', LangLoader::get_message('display_name', 'user-common'), '',
+			array('required' => true, 'maxlength' => 100),
+			array(new FormFieldConstraintLengthRange(3, 100, $this->lang['admin.login.length']))
+		));
+		
+		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['admin.email'], '', array('required' => true)));
 		
 		$fieldset->add_field(new FormFieldCheckbox('custom_login', LangLoader::get_message('login.custom', 'user-common'), false, array('description'=> LangLoader::get_message('login.custom.explain', 'user-common'), 'events' => array('click' => '
 			if (HTMLForms.getField("custom_login").getValue()) { HTMLForms.getField("login").enable(); } else { HTMLForms.getField("login").disable();}'))));
 
-		$fieldset->add_field(new FormFieldTextEditor('login', LangLoader::get_message('login', 'user-common'), '', array('required' => true, 'hidden' => true),
+		$fieldset->add_field(new FormFieldTextEditor('login', LangLoader::get_message('login', 'user-common'), '',
+			array('required' => true, 'hidden' => true, 'maxlength' => 25),
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists())
 		));
 		
@@ -95,11 +98,9 @@ class InstallCreateAdminController extends InstallController
 		
 		$this->form->add_constraint(new FormConstraintFieldsEquality($password, $repeatPassword));
 
-		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['admin.email'], '', array('required' => true)));
-		$createSession = new FormFieldCheckbox('createSession', $this->lang['admin.connectAfterInstall'], true);
-		$fieldset->add_field($createSession);
-		$autoconnect = new FormFieldCheckbox('autoconnect', $this->lang['admin.autoconnect'], true);
-		$fieldset->add_field($autoconnect);
+		$fieldset->add_field(new FormFieldCheckbox('createSession', $this->lang['admin.connectAfterInstall'], true));
+		
+		$fieldset->add_field(new FormFieldCheckbox('autoconnect', $this->lang['admin.autoconnect'], true));
 
 		$action_fieldset = new FormFieldsetSubmit('actions');
 		$back = new FormButtonLinkCssImg($this->lang['step.previous'], InstallUrlBuilder::website(), 'fa fa-arrow-left');
