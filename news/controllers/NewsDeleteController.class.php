@@ -57,7 +57,7 @@ class NewsDeleteController extends ModuleController
 		
 		Feed::clear_cache('news');
 		
-		AppContext::get_response()->redirect($request->get_url_referrer() ? $request->get_url_referrer() : NewsUrlBuilder::home());
+		AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : NewsUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('news.message.success.delete', 'common', 'news'), array('name' => $news->get_name())));
 	}
 	
 	private function get_news(HTTPRequestCustom $request)

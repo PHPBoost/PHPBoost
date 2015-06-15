@@ -58,7 +58,7 @@ class ArticlesDeleteController extends ModuleController
 		
 		Feed::clear_cache('articles');
 		
-		AppContext::get_response()->redirect($request->get_url_referrer() ? $request->get_url_referrer() : ArticlesUrlBuilder::home());
+		AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : ArticlesUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('articles.message.success.delete', 'common', 'articles'), array('title' => $article->get_title())));
 	}
 	
 	private function get_article(HTTPRequestCustom $request)

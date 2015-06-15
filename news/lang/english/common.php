@@ -57,4 +57,9 @@ $lang['admin.config.news_suggestions_enabled'] = 'Enable suggestions display';
 
 //Feed name
 $lang['feed.name'] = 'News';
+
+//Messages
+$lang['news.message.success.add'] = 'The news <b>:name</b> has been added';
+$lang['news.message.success.edit'] = 'The news <b>:name</b> has been modified';
+$lang['news.message.success.delete'] = 'The news <b>:name</b> has been deleted';
 ?>

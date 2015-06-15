@@ -69,4 +69,8 @@ $lang['articles.seo.description.root'] = 'Tous les articles du site :site.';
 $lang['articles.seo.description.tag'] = 'Tous les articles sur le sujet :subject.';
 $lang['articles.seo.description.pending'] = 'Tous les articles en attente.';
 
+//Messages
+$lang['articles.message.success.add'] = 'L\'article <b>:title</b> a été ajouté';
+$lang['articles.message.success.edit'] = 'L\'article <b>:title</b> a été modifié';
+$lang['articles.message.success.delete'] = 'L\'article <b>:title</b> a été supprimé';
 ?>

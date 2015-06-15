@@ -57,4 +57,9 @@ $lang['admin.config.news_suggestions_enabled'] = 'Activer l\'affichage des sugge
 
 //Feed name
 $lang['feed.name'] = 'Actualités';
+
+//Messages
+$lang['news.message.success.add'] = 'La news <b>:name</b> a été ajoutée';
+$lang['news.message.success.edit'] = 'La news <b>:name</b> a été modifiée';
+$lang['news.message.success.delete'] = 'La news <b>:name</b> a été supprimée';
 ?>

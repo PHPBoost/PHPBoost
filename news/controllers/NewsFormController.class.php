@@ -40,6 +40,7 @@ class NewsFormController extends ModuleController
 	private $common_lang;
 	
 	private $news;
+	private $is_new_news;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -209,6 +210,7 @@ class NewsFormController extends ModuleController
 			}
 			else
 			{
+				$this->is_new_news = true;
 				$this->news = new News();
 				$this->news->init_default_properties(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY));
 			}
@@ -356,11 +358,11 @@ class NewsFormController extends ModuleController
 		}
 		elseif ($news->is_visible())
 		{
-			AppContext::get_response()->redirect($this->form->get_value('referrer') ? $this->form->get_value('referrer') : NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name()));
+			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name())), StringVars::replace_vars($this->is_new_news ? $this->lang['news.message.success.add'] : $this->lang['news.message.success.edit'], array('name' => $news->get_name())));
 		}
 		else
 		{
-			AppContext::get_response()->redirect($this->form->get_value('referrer') ? $this->form->get_value('referrer') : NewsUrlBuilder::display_pending_news());
+			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : NewsUrlBuilder::display_pending_news()), StringVars::replace_vars($this->is_new_news ? $this->lang['news.message.success.add'] : $this->lang['news.message.success.edit'], array('name' => $news->get_name())));
 		}
 	}
 	
