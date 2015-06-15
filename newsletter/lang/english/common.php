@@ -114,6 +114,11 @@ $lang['newsletter.view_subscribers'] = 'View record';
 $lang['newsletter.title'] = 'Title of the newsletter';
 $lang['newsletter.contents'] = 'Content';
 
+//Messages
+$lang['stream.message.success.add'] = 'The stream <b>:name</b> has been added';
+$lang['stream.message.success.edit'] = 'The stream <b>:name</b> has been modified';
+$lang['stream.message.success.delete'] = 'The stream <b>:name</b> has been deleted';
+
 //Errors
 $lang['admin.stream-not-existed'] = 'The requested stream does not exist';
 $lang['error-subscriber-not-existed'] = 'This registrant is not exist';

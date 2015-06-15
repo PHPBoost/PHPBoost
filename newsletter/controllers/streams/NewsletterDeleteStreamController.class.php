@@ -59,5 +59,10 @@ class NewsletterDeleteStreamController extends AbstractDeleteCategoryController
 	{
 		return LangLoader::get_message('stream.delete.description', 'common', 'newsletter');
 	}
+	
+	protected function get_success_message()
+	{
+		return LangLoader::get_message('stream.message.success.delete', 'common', 'newsletter');
+	}
 }
 ?>

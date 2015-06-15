@@ -48,7 +48,7 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 	 * @var Category
 	 */
 	private $category;
-	private $is_new_category;
+	protected $is_new_category;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -62,7 +62,7 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 		{
 			$this->set_properties();
 			$this->save();
-			AppContext::get_response()->redirect($this->form->get_value('referrer') ? $this->form->get_value('referrer') : $this->get_categories_management_url(), StringVars::replace_vars($this->is_new_category ? $this->lang['category.message.success.add'] : $this->lang['category.message.success.edit'], array('name' => $this->get_category()->get_name())));
+			AppContext::get_response()->redirect($this->form->get_value('referrer') ? $this->form->get_value('referrer') : $this->get_categories_management_url(), StringVars::replace_vars($this->get_success_message(), array('name' => $this->get_category()->get_name())));
 		}
 		
 		$tpl->put('FORM', $this->form->display());
@@ -220,6 +220,14 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 	protected function get_title()
 	{
 		return $this->get_id_category() == 0 ? $this->lang['category.add'] : $this->lang['category.edit'];
+	}
+	
+	/**
+	 * @return string the appropriate success message
+	 */
+	protected function get_success_message()
+	{
+		return $this->is_new_category ? $this->lang['category.message.success.add'] : $this->lang['category.message.success.edit'];
 	}
 	
 	/**

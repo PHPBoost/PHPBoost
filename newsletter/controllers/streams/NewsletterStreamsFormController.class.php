@@ -55,6 +55,11 @@ class NewsletterStreamsFormController extends AbstractRichCategoriesFormControll
 		return $this->get_id_category() == 0 ? LangLoader::get_message('stream.add', 'common', 'newsletter') : LangLoader::get_message('stream.edit', 'common', 'newsletter');
 	}
 	
+	protected function get_success_message()
+	{
+		return $this->is_new_category ? LangLoader::get_message('stream.message.success.add', 'common', 'newsletter') : LangLoader::get_message('stream.message.success.edit', 'common', 'newsletter');
+	}
+	
 	/**
 	 * @return AuthorizationsSettings
 	 */

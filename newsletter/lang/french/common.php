@@ -114,6 +114,11 @@ $lang['newsletter.view_subscribers'] = 'Voir les inscrits';
 $lang['newsletter.title'] = 'Titre de la newsletter';
 $lang['newsletter.contents'] = 'Contenu';
 
+//Messages
+$lang['stream.message.success.add'] = 'Le flux <b>:name</b> a été ajouté';
+$lang['stream.message.success.edit'] = 'Le flux <b>:name</b> a été modifié';
+$lang['stream.message.success.delete'] = 'Le flux <b>:name</b> a été supprimé';
+
 //Errors
 $lang['admin.stream-not-existed'] = 'Le flux demandé n\'existe pas';
 $lang['error-subscriber-not-existed'] = 'L\'incrit n\'existe pas';

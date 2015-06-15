@@ -59,7 +59,7 @@ abstract class AbstractDeleteCategoryController extends AdminModuleController
 		{
 			$category_name = $this->get_category()->get_name();
 			$this->get_categories_manager()->delete($this->get_category()->get_id());
-			AppContext::get_response()->redirect($this->get_categories_management_url(), StringVars::replace_vars($this->lang['category.message.success.delete'], array('name' => $category_name)));
+			AppContext::get_response()->redirect($this->get_categories_management_url(), StringVars::replace_vars($this->get_success_message(), array('name' => $category_name)));
 		}
 	
 		$this->build_form();
@@ -90,7 +90,7 @@ abstract class AbstractDeleteCategoryController extends AdminModuleController
 				
 				$this->get_categories_manager()->delete($this->get_category()->get_id());
 			}
-			AppContext::get_response()->redirect($this->get_categories_management_url(), StringVars::replace_vars($this->lang['category.message.success.delete'], array('name' => $category_name)));
+			AppContext::get_response()->redirect($this->get_categories_management_url(), StringVars::replace_vars($this->get_success_message(), array('name' => $category_name)));
 		}
 		
 		$tpl->put('FORM', $this->form->display());
@@ -173,6 +173,14 @@ abstract class AbstractDeleteCategoryController extends AdminModuleController
 	protected function get_description()
 	{
 		return $this->lang['delete.description'];
+	}
+	
+	/**
+	 * @return string delete success message
+	 */
+	protected function get_success_message()
+	{
+		return $this->lang['category.message.success.delete'];
 	}
 	
 	/**
