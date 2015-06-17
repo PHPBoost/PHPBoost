@@ -259,8 +259,6 @@ class BugtrackerRoadmapListController extends ModuleController
 		$versions = array_reverse($this->config->get_versions(), true);
 		
 		$request = AppContext::get_request();
-		$success = $request->get_value('success', '');
-		$bug_id = $request->get_int('id', 0);
 		$roadmap_id_version = $request->get_value('id_version', key($versions));
 		$roadmap_version = $request->get_value('version', Url::encode_rewrite($versions[key($versions)]['name']));
 		$roadmap_status = $request->get_value('status', 'all');
@@ -270,18 +268,6 @@ class BugtrackerRoadmapListController extends ModuleController
 		$page = $request->get_int('page', 1);
 		
 		$body_view = BugtrackerViews::build_body_view($view, 'roadmap');
-		
-		//Success messages
-		switch ($success)
-		{
-			case 'add':
-				$errstr = StringVars::replace_vars($this->lang['success.add'], array('id' => $bug_id));
-				break;
-			default:
-				$errstr = '';
-		}
-		if (!empty($errstr))
-			$body_view->put('MSG', MessageHelper::display($errstr, MessageHelper::SUCCESS, 5));
 		
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();

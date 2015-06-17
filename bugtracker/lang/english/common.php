@@ -281,4 +281,5 @@ $lang['success.rejected'] = 'The bug has been rejected';
 $lang['success.reopen'] = 'The bug has been reopen';
 $lang['success.assigned'] = 'The bug has been assigned';
 $lang['success.pending'] = 'The bug has been put on hold';
+$lang['success.add.filter'] = 'The filter has been added';
 ?>

@@ -44,6 +44,7 @@ class BugtrackerFormController extends ModuleController
 	private $bug;
 	private $config;
 	private $current_user;
+	private $is_new_bug;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -51,7 +52,7 @@ class BugtrackerFormController extends ModuleController
 		
 		$this->check_authorizations();
 		
-		$this->build_form();
+		$this->build_form($request);
 		
 		$tpl = new StringTemplate('# INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
@@ -73,7 +74,7 @@ class BugtrackerFormController extends ModuleController
 		$this->config = BugtrackerConfig::load();
 	}
 	
-	private function build_form()
+	private function build_form(HTTPRequestCustom $request)
 	{
 		$common_lang = LangLoader::get('common');
 		$bug = $this->get_bug();
@@ -213,6 +214,8 @@ class BugtrackerFormController extends ModuleController
 			'rows' => 15, 'hidden' => !$bug->is_reproductible())
 		));
 		
+		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
+		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
@@ -237,6 +240,7 @@ class BugtrackerFormController extends ModuleController
 			}
 			else
 			{
+				$this->is_new_bug = true;
 				$this->bug = new Bug();
 				$this->bug->init_default_properties();
 			}
@@ -293,13 +297,13 @@ class BugtrackerFormController extends ModuleController
 				$bug->set_reproduction_method($this->form->get_value('reproduction_method'));
 			
 			//Bug creation
-			$id = BugtrackerService::add($bug);
+			$bug->set_id(BugtrackerService::add($bug));
 			
 			if ($this->config->are_admin_alerts_enabled() && in_array($bug->get_severity(), $this->config->get_admin_alerts_levels()))
 			{
 				$alert = new AdministratorAlert();
 				$alert->set_entitled('[' . $this->lang['module_title'] . '] ' . $bug->get_title());
-				$alert->set_fixing_url(BugtrackerUrlBuilder::detail($id . '-' . $bug->get_rewrited_title())->relative());
+				$alert->set_fixing_url(BugtrackerUrlBuilder::detail($bug->get_id() . '-' . $bug->get_rewrited_title())->relative());
 				
 				switch ($bug->get_priority())
 				{
@@ -411,7 +415,7 @@ class BugtrackerFormController extends ModuleController
 				}
 				
 				$alert->set_priority($alert_priority);
-				$alert->set_id_in_module($id);
+				$alert->set_id_in_module($bug->get_id());
 				$alert->set_type('bugtracker');
 				AdministratorAlertService::save_alert($alert);
 			}
@@ -544,52 +548,7 @@ class BugtrackerFormController extends ModuleController
 		Feed::clear_cache('bugtracker');
 		BugtrackerStatsCache::invalidate();
 		
-		if ($bug->get_id() === null)
-		{
-			$redirect = BugtrackerUrlBuilder::unsolved_success('add', $id);
-		}
-		else
-		{
-			$request = AppContext::get_request();
-			
-			$back_page = $request->get_value('back_page', '');
-			$page = $request->get_int('page', 1);
-			$back_filter = $request->get_value('back_filter', '');
-			$filter_id = $request->get_value('filter_id', '');
-			
-			if ($modification)
-			{
-				switch ($back_page)
-				{
-					case 'detail' :
-						$redirect = BugtrackerUrlBuilder::detail_success('edit', $bug->get_id());
-						break;
-					case 'solved' :
-						$redirect = BugtrackerUrlBuilder::solved_success('edit', $bug->get_id(), $page, $back_filter, $filter_id);
-						break;
-					default :
-						$redirect = BugtrackerUrlBuilder::unsolved_success('edit', $bug->get_id(), $page, $back_filter, $filter_id);
-						break;
-				}
-			}
-			else
-			{
-				switch ($back_page)
-				{
-					case 'detail' :
-						$redirect = BugtrackerUrlBuilder::detail($bug->get_id() . '-' . $bug->get_rewrited_title());
-						break;
-					case 'solved' :
-						$redirect = BugtrackerUrlBuilder::solved(BugtrackerUrlBuilder::DEFAULT_SORT_FIELD, BugtrackerUrlBuilder::DEFAULT_SORT_MODE, $page, $back_filter, $filter_id);
-						break;
-					default :
-						$redirect = BugtrackerUrlBuilder::unsolved(BugtrackerUrlBuilder::DEFAULT_SORT_FIELD, BugtrackerUrlBuilder::DEFAULT_SORT_MODE, $page, $back_filter, $filter_id);
-						break;
-				}
-			}
-		}
-		
-		AppContext::get_response()->redirect($redirect);
+		AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : BugtrackerUrlBuilder::unsolved()), StringVars::replace_vars($this->is_new_bug ? $this->lang['success.add'] : $this->lang['success.edit'], array('id' => $bug->get_id())));
 	}
 	
 	private function generate_response(View $tpl)
@@ -611,23 +570,16 @@ class BugtrackerFormController extends ModuleController
 		}
 		else
 		{
-			$request = AppContext::get_request();
-			
-			$back_page = $request->get_value('back_page', '');
-			$page = $request->get_int('page', 1);
-			$back_filter = $request->get_value('back_filter', '');
-			$filter_id = $request->get_value('filter_id', '');
-			
 			$body_view = BugtrackerViews::build_body_view($tpl, 'edit', $bug->get_id());
 			
 			$response = new SiteDisplayResponse($body_view);
 			$graphical_environment = $response->get_graphical_environment();
 			$graphical_environment->set_page_title($this->lang['titles.edit'] . ' #' . $bug->get_id(), $this->lang['module_title']);
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::edit($bug->get_id(), $back_page));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::edit($bug->get_id()));
 			
 			$breadcrumb = $graphical_environment->get_breadcrumb();
 			$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
-			$breadcrumb->add($this->lang['titles.edit'] . ' #' . $bug->get_id(), BugtrackerUrlBuilder::edit($bug->get_id(), $back_page, $page, $back_filter, $filter_id));
+			$breadcrumb->add($this->lang['titles.edit'] . ' #' . $bug->get_id(), BugtrackerUrlBuilder::edit($bug->get_id()));
 		}
 		
 		return $response;

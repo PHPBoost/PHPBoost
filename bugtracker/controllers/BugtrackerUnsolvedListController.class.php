@@ -208,8 +208,6 @@ class BugtrackerUnsolvedListController extends ModuleController
 	private function build_response(View $view)
 	{
 		$request = AppContext::get_request();
-		$success = $request->get_value('success', '');
-		$bug_id = $request->get_int('id', 0);
 		
 		$field = $request->get_value('field', 'date');
 		$sort = $request->get_value('sort', 'desc');
@@ -218,24 +216,6 @@ class BugtrackerUnsolvedListController extends ModuleController
 		$filter_id = $request->get_value('filter_id', '');
 		
 		$body_view = BugtrackerViews::build_body_view($view, 'unsolved');
-		
-		//Success messages
-		switch ($success)
-		{
-			case 'add':
-				$errstr = StringVars::replace_vars($this->lang['success.add'], array('id' => $bug_id));
-				break;
-			case 'edit':
-				$errstr = StringVars::replace_vars($this->lang['success.edit'], array('id' => $bug_id));
-				break;
-			case 'delete':
-				$errstr = StringVars::replace_vars($this->lang['success.delete'], array('id' => $bug_id));
-				break;
-			default:
-				$errstr = '';
-		}
-		if (!empty($errstr))
-			$body_view->put('MSG', MessageHelper::display($errstr, MessageHelper::SUCCESS, 5));
 		
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();

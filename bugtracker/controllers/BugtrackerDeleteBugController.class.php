@@ -48,31 +48,12 @@ class BugtrackerDeleteBugController extends ModuleController
 		
 		$this->check_authorizations();
 		
-		$this->build_form();
+		$this->build_form($request);
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			
-			$back_page = $request->get_value('back_page', '');
-			$page = $request->get_int('page', 1);
-			$back_filter = $request->get_value('back_filter', '');
-			$filter_id = $request->get_int('filter_id', 0);
-			
-			switch ($back_page)
-			{
-				case 'detail' :
-					$redirect = BugtrackerUrlBuilder::detail_success('delete', $this->bug->get_id());
-					break;
-				case 'solved' :
-					$redirect = BugtrackerUrlBuilder::solved_success('delete', $this->bug->get_id(), $page, $back_filter, $filter_id);
-					break;
-				default :
-					$redirect = BugtrackerUrlBuilder::unsolved_success('delete', $this->bug->get_id(), $page, $back_filter, $filter_id);
-					break;
-			}
-			
-			AppContext::get_response()->redirect($redirect);
+			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : BugtrackerUrlBuilder::unsolved()), StringVars::replace_vars(LangLoader::get_message('success.delete', 'common', 'bugtracker'), array('id' => $this->bug->get_id())));
 		}
 		
 		$this->view->put('FORM', $this->form->display());
@@ -106,12 +87,12 @@ class BugtrackerDeleteBugController extends ModuleController
 		}
 		if (AppContext::get_current_user()->is_readonly())
 		{
-			$controller = PHPBoostErrors::user_in_read_only();
-			DispatchManager::redirect($controller);
+			$error_controller = PHPBoostErrors::user_in_read_only();
+			DispatchManager::redirect($error_controller);
 		}
 	}
 	
-	private function build_form()
+	private function build_form(HTTPRequestCustom $request)
 	{
 		$form = new HTMLForm(__CLASS__);
 		
@@ -121,6 +102,8 @@ class BugtrackerDeleteBugController extends ModuleController
 		$fieldset->add_field(new FormFieldRichTextEditor('comments_message', LangLoader::get_message('comment', 'comments-common'), '', array(
 			'description' => $this->lang['explain.delete_comment'], 'hidden' => !$this->config->are_pm_enabled() || !$this->config->are_pm_delete_enabled()
 		)));
+		
+		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -167,13 +150,6 @@ class BugtrackerDeleteBugController extends ModuleController
 	
 	private function build_response(View $view)
 	{
-		$request = AppContext::get_request();
-		
-		$back_page = $request->get_value('back_page', '');
-		$page = $request->get_int('page', 1);
-		$back_filter = $request->get_value('back_filter', '');
-		$filter_id = $request->get_value('filter_id', '');
-		
 		$body_view = BugtrackerViews::build_body_view($view, 'delete', $this->bug->get_id());
 		
 		$response = new SiteDisplayResponse($body_view);
@@ -183,7 +159,7 @@ class BugtrackerDeleteBugController extends ModuleController
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
-		$breadcrumb->add($this->lang['titles.delete'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::delete($this->bug->get_id(), $back_page, $page, $back_filter, $filter_id));
+		$breadcrumb->add($this->lang['titles.delete'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::delete($this->bug->get_id()));
 		
 		return $response;
 	}

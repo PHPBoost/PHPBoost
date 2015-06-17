@@ -30,30 +30,19 @@ class BugtrackerAddFilterController extends ModuleController
 	public function execute(HTTPRequestCustom $request)
 	{
 		$id = $request->get_int('id', 0);
-		$page = $request->get_int('page', 1);
-		$back_page = $request->get_value('back_page', '');
-		$back_filter = $request->get_value('back_filter', '');
+		$page = $request->get_value('page', '');
+		$filter = $request->get_value('filter', '');
 		$filter_id = $request->get_value('filter_id', '');
 		
 		//Add filter
 		BugtrackerService::add_filter(array(
 			'user_id'		=> AppContext::get_current_user()->get_id(),
-			'page'			=> $back_page,
-			'filters'		=> $back_filter,
+			'page'			=> $page,
+			'filters'		=> $filter,
 			'filters_ids'	=> $filter_id
 		));
 		
-		switch ($back_page)
-		{
-			case 'solved' :
-				$redirect = BugtrackerUrlBuilder::solved(BugtrackerUrlBuilder::DEFAULT_SORT_FIELD, BugtrackerUrlBuilder::DEFAULT_SORT_MODE, $page, $back_filter, $filter_id);
-				break;
-			default :
-				$redirect = BugtrackerUrlBuilder::unsolved(BugtrackerUrlBuilder::DEFAULT_SORT_FIELD, BugtrackerUrlBuilder::DEFAULT_SORT_MODE, $page, $back_filter, $filter_id);
-				break;
-		}
-		
-		AppContext::get_response()->redirect($redirect);
+		AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : BugtrackerUrlBuilder::unsolved()), LangLoader::get_message('success.add.filter', 'common', 'bugtracker'));
 	}
 }
 ?>

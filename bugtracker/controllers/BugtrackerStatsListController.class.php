@@ -131,31 +131,16 @@ class BugtrackerStatsListController extends ModuleController
 	
 	private function build_response(View $view)
 	{
-		$request = AppContext::get_request();
-		$success = $request->get_value('success', '');
-		$bug_id = $request->get_int('id', 0);
-		
 		$body_view = BugtrackerViews::build_body_view($view, 'stats');
-		
-		switch ($success)
-		{
-			case 'add':
-				$errstr = StringVars::replace_vars($this->lang['success.add'], array('id' => $bug_id));
-				break;
-			default:
-				$errstr = '';
-		}
-		if (!empty($errstr))
-			$body_view->put('MSG', MessageHelper::display($errstr, MessageHelper::SUCCESS, 5));
 		
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['titles.stats'], $this->lang['module_title']);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::stats($bug_id));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::stats());
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
-		$breadcrumb->add($this->lang['titles.stats'], BugtrackerUrlBuilder::stats($bug_id));
+		$breadcrumb->add($this->lang['titles.stats'], BugtrackerUrlBuilder::stats());
 		
 		return $response;
 	}

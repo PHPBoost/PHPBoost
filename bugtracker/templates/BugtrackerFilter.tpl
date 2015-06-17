@@ -9,9 +9,8 @@ function delete_filter(id) {
 			async: false,
 			data: {'id' : id, 'token' : '{TOKEN}'},
 			success: function(returnData){
-				if (returnData > 0) {
-					var elementToDelete = jQuery('#filter' + id)[0];
-					elementToDelete.parentNode.removeChild(elementToDelete);
+				if (returnData.code > 0) {
+					jQuery("#filter" + returnData.code).remove();
 				}
 			},
 			error: function(e){
@@ -20,12 +19,16 @@ function delete_filter(id) {
 		});
 	}
 }
+
+function toggle_filters_table() {
+	jQuery("#table_filters").fadeToggle();
+}
 -->
 </script>
 <menu class="dynamic-menu">
 	<ul>
 		<li>
-			<a href="" onclick="jQuery("#" + table_filters).fadeToggle(); return false;"><i class="fa fa-filter"></i> {L_FILTERS}</a> 
+			<a href="" onclick="toggle_filters_table(); return false;"><i class="fa fa-filter"></i> {L_FILTERS}</a> 
 		</li>
 	</ul>
 </menu>
@@ -101,18 +104,9 @@ function delete_filter(id) {
 		# START filters #
 		<tr id="filter{filters.ID}">
 			<td colspan="{FILTERS_NUMBER}">
-				<a href="" title="${LangLoader::get_message('delete', 'common')}" id="delete_{filters.ID}" onclick="return false;"><i class="fa fa-delete"></i></a> <a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
+				<a href="" title="${LangLoader::get_message('delete', 'common')}" onclick="delete_filter('{filters.ID}'); return false;"><i class="fa fa-delete"></i></a> <a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
 			</td>
 		</tr>
-		<script>
-		<!--
-		jQuery(document).ready(function() {
-			jQuery('#delete_{filters.ID}').on('click',function(){
-				delete_filter('{filters.ID}');
-			});
-		});
-		-->
-		</script>
 		# END filters #
 		# ENDIF #
 	</tbody>

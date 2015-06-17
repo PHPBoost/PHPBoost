@@ -27,31 +27,19 @@
 
 class BugtrackerAjaxDeleteFilterController extends AbstractController
 {
-	private $view;
-	
 	public function execute(HTTPRequestCustom $request)
-	{
-		$this->init();
-		$this->build_view($request);
-		return new SiteNodisplayResponse($this->view);
-	}
-	
-	private function build_view(HTTPRequestCustom $request)
 	{
 		$id = $request->get_int('id', 0);
 		
+		$code = -1;
 		if (!empty($id))
 		{
 			//Delete filter
 			BugtrackerService::delete_filter("WHERE id=:id", array('id' => $id));
+			$code = $id;
 		}
 		
-		$this->view->put('RESULT', $id);
-	}
-	
-	private function init()
-	{
-		$this->view = new StringTemplate('{RESULT}');
+		return new JSONResponse(array('code' => $code));
 	}
 }
 ?>

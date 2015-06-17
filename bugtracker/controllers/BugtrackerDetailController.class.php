@@ -113,28 +113,7 @@ class BugtrackerDetailController extends ModuleController
 	
 	private function build_response(View $view)
 	{
-		$request = AppContext::get_request();
-		$success = $request->get_value('success', '');
-		
 		$body_view = BugtrackerViews::build_body_view($view, 'detail', $this->bug->get_id());
-		
-		//Success messages
-		switch ($success)
-		{
-			case 'add':
-				$errstr = StringVars::replace_vars($this->lang['success.add'], array('id' => $this->bug->get_id()));
-				break;
-			case 'edit':
-				$errstr = StringVars::replace_vars($this->lang['success.edit'], array('id' => $this->bug->get_id()));
-				break;
-			case 'delete':
-				$errstr = StringVars::replace_vars($this->lang['success.delete'], array('id' => $this->bug->get_id()));
-				break;
-			default:
-				$errstr = '';
-		}
-		if (!empty($errstr))
-			$body_view->put('MSG', MessageHelper::display($errstr, MessageHelper::SUCCESS, 5));
 		
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();
