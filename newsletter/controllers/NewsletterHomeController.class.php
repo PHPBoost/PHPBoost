@@ -71,8 +71,8 @@ class NewsletterHomeController extends ModuleController
 					'NAME' => $row['name'],
 					'DESCRIPTION' => $row['description'],
 					'SUBSCRIBERS_NUMBER' => $row['subscribers_number'],
-					'U_VIEW_ARCHIVES' => NewsletterUrlBuilder::archives($row['id'])->absolute(),
-					'U_VIEW_SUBSCRIBERS' => NewsletterUrlBuilder::subscribers($row['id'])->absolute(),
+					'U_VIEW_ARCHIVES' => NewsletterUrlBuilder::archives($row['id'], $row['rewrited_name'])->absolute(),
+					'U_VIEW_SUBSCRIBERS' => NewsletterUrlBuilder::subscribers($row['id'], $row['rewrited_name'])->absolute(),
 				));
 			}
 		}

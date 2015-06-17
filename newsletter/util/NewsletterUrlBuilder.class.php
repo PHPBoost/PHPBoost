@@ -96,12 +96,13 @@ class NewsletterUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function subscribers($id, $sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1)
+	public static function subscribers($id_stream = 0, $rewrited_name = '', $sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1)
 	{
+		$stream = $id_stream > 0 ? $id_stream . '-' . $rewrited_name . '/' : '';
 		$page = $page !== 1 ? $page . '/': '';
-		$sort_field = $sort_field !== '' ? $sort_field . '/' : '';
-		$sort_mode = $sort_mode !== '' ? $sort_mode . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/subscribers/' . $id . '/' . $sort_field . $sort_mode . $page);
+		$sort_field = ($sort_field !== self::DEFAULT_SORT_FIELD && $sort_field !== '') || $sort_mode !== self::DEFAULT_SORT_MODE ? $sort_field . '/' : '';
+		$sort_mode = $sort_mode !== self::DEFAULT_SORT_MODE && $sort_mode !== '' ? $sort_mode . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/subscribers/' . $stream . $sort_field . $sort_mode . $page);
 	}
 
 	/**
@@ -139,13 +140,13 @@ class NewsletterUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function archives($id_stream = '', $sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1)
+	public static function archives($id_stream = 0, $rewrited_name = '', $sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1)
 	{
-		$id_stream = $id_stream !== '' ? $id_stream . '/': '';
+		$stream = $id_stream > 0 ? $id_stream . '-' . $rewrited_name . '/' : '';
 		$page = $page !== 1 ? $page . '/': '';
-		$sort_field = $sort_field !== '' ? $sort_field . '/' : '';
-		$sort_mode = $sort_mode !== '' ? $sort_mode . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/archives/' . $id_stream . $sort_field . $sort_mode . $page);
+		$sort_field = ($sort_field !== self::DEFAULT_SORT_FIELD && $sort_field !== '') || $sort_mode !== self::DEFAULT_SORT_MODE ? $sort_field . '/' : '';
+		$sort_mode = $sort_mode !== self::DEFAULT_SORT_MODE && $sort_mode !== '' ? $sort_mode . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/archives/' . $stream . $sort_field . $sort_mode . $page);
 	}
 
 	/**

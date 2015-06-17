@@ -34,7 +34,7 @@ class NewsletterSitemapExtensionPoint extends SitemapCategoriesModule
 	
 	protected function get_category_url(Category $category)
 	{
-		return NewsletterUrlBuilder::archives($category->get_id());
+		return NewsletterUrlBuilder::archives($category->get_id(), $category->get_rewrited_name());
 	}
 }
 ?>
