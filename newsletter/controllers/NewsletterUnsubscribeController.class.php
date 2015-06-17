@@ -106,7 +106,10 @@ class NewsletterUnSubscribeController extends ModuleController
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
 		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->rel());
 		$breadcrumb->add($this->lang['unsubscribe.newsletter'], NewsletterUrlBuilder::unsubscribe()->rel());
-		$response->get_graphical_environment()->set_page_title($this->lang['unsubscribe.newsletter'], $this->lang['newsletter']);
+		
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->lang['unsubscribe.newsletter'], $this->lang['newsletter']);
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsletterUrlBuilder::unsubscribe());
 		
 		return $response;
 	}

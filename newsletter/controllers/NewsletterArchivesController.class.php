@@ -167,7 +167,10 @@ class NewsletterArchivesController extends ModuleController
 			$breadcrumb->add($stream->get_name(), NewsletterUrlBuilder::archives($this->stream->get_id(), $this->stream->get_rewrited_name())->rel());
 		}
 		
-		$response->get_graphical_environment()->set_page_title($this->lang['archives.list'], $this->lang['newsletter']);
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->lang['archives.list'], $this->lang['newsletter']);
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsletterUrlBuilder::archives($this->stream->get_id(), $this->stream->get_rewrited_name()));
+		
 		return $response;
 	}
 }

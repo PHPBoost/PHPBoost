@@ -115,7 +115,11 @@ class NewsletterEditSubscriberController extends ModuleController
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
 		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->rel());
 		$breadcrumb->add($this->lang['subscriber.edit'], '');
-		$response->get_graphical_environment()->set_page_title($this->lang['subscriber.edit'], $this->lang['newsletter']);
+		
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->lang['subscriber.edit'], $this->lang['newsletter']);
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsletterUrlBuilder::edit_subscriber($request->get_getint('id', 0)));
+		
 		return $response;
 	}
 	

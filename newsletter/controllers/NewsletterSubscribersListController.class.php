@@ -146,7 +146,11 @@ class NewsletterSubscribersListController extends ModuleController
 		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->rel());
 		$name_page = $this->lang['newsletter.subscribers'] . ' : ' . $this->stream->get_name();
 		$breadcrumb->add($name_page, NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name())->rel());
-		$response->get_graphical_environment()->set_page_title($name_page, $this->lang['newsletter']);
+		
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($name_page, $this->lang['newsletter']);
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name()));
+		
 		return $response;
 	}
 }
