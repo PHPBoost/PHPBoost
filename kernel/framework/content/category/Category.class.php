@@ -31,6 +31,7 @@ class Category
 	protected $name;
 	protected $rewrited_name;
 	protected $order;
+	protected $special_authorizations = false;
 	protected $auth = array();
 	protected $id_parent;
 	
@@ -91,6 +92,16 @@ class Category
 		$this->order++;
 	}
 	
+	public function has_special_authorizations()
+	{
+		return $this->special_authorizations;
+	}
+	
+	public function set_special_authorizations($special_authorizations)
+	{
+		$this->special_authorizations = (bool)$special_authorizations;
+	}
+	
 	public function get_authorizations()
 	{
 		return $this->auth;
@@ -133,6 +144,7 @@ class Category
 			'name' => TextHelper::htmlspecialchars($this->get_name()),
 			'rewrited_name' => TextHelper::htmlspecialchars($this->get_rewrited_name()),
 			'c_order' => $this->get_order(),
+			'special_authorizations' => (int)$this->has_special_authorizations(),
 			'auth' => !$this->auth_is_empty() ? serialize($this->get_authorizations()) : '',
 			'id_parent' => $this->get_id_parent()
 		);
@@ -144,6 +156,7 @@ class Category
 		$this->set_name($properties['name']);
 		$this->set_rewrited_name($properties['rewrited_name']);
 		$this->set_order($properties['c_order']);
+		$this->set_special_authorizations($properties['special_authorizations']);
 		$this->set_authorizations(!empty($properties['auth']) ? unserialize($properties['auth']) : array());
 		$this->set_id_parent($properties['id_parent']);
 	}
@@ -155,6 +168,7 @@ class Category
 			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
 			'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
 			'c_order' => array('type' => 'integer', 'length' => 11, 'unsigned' => 1, 'notnull' => 1, 'default' => 0),
+			'special_authorizations' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'auth' => array('type' => 'text', 'length' => 65000),
 			'id_parent' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 		);

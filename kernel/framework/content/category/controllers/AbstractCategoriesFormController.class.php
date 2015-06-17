@@ -113,17 +113,17 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 		
 		$root_auth = $this->get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY)->get_authorizations();
 		
-		$fieldset_authorizations->add_field(new FormFieldCheckbox('special_authorizations', $this->common_lang['authorizations'], (!$this->get_category()->auth_is_empty() && !$this->get_category()->auth_is_equals($root_auth)), 
+		$fieldset_authorizations->add_field(new FormFieldCheckbox('special_authorizations', $this->common_lang['authorizations'], !$this->get_category()->auth_is_equals($root_auth), 
 		array('description' => $this->lang['category.form.authorizations.description'], 'events' => array('click' => '
 		if (HTMLForms.getField("special_authorizations").getValue()) {
 			jQuery("#' . __CLASS__ . '_authorizations").show();
 		} else { 
-			jQuery("' . __CLASS__ . '_authorizations").hide();
+			jQuery("#' . __CLASS__ . '_authorizations").hide();
 		}')
 		)));
 		
 		$auth_settings = $this->get_authorizations_settings();
-		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings, array('hidden' => ($this->get_category()->auth_is_empty() || $this->get_category()->auth_is_equals($root_auth))));
+		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings, array('hidden' => $this->get_category()->auth_is_equals($root_auth)));
 		$auth_settings->build_from_auth_array($this->get_category()->get_authorizations());
 		$fieldset_authorizations->add_field($auth_setter);
 		
@@ -143,8 +143,19 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 		$rewrited_name = $this->form->get_value('personalize_rewrited_name') && !empty($rewrited_name) ? $rewrited_name : Url::encode_rewrite($this->get_category()->get_name());
 		$this->get_category()->set_rewrited_name($rewrited_name);
 		$this->get_category()->set_id_parent($this->form->get_value('id_parent')->get_raw_value());
-		$authorizations = $this->form->get_value('special_authorizations') ? $this->form->get_value('authorizations')->build_auth_array() : array();
-		$this->get_category()->set_authorizations($authorizations);
+		
+		if ($this->form->get_value('special_authorizations'))
+		{
+			$this->get_category()->set_special_authorizations(true);
+			$autorizations = $this->form->get_value('authorizations')->build_auth_array();
+		}
+		else
+		{
+			$this->get_category()->set_special_authorizations(false);
+			$autorizations = array();
+		}
+		
+		$this->get_category()->set_authorizations($autorizations);
 	}
 	
 	private function build_fieldset_options(HTMLForm $form)

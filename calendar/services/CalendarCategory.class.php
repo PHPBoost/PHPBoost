@@ -57,6 +57,7 @@ class CalendarCategory extends Category
 			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
 			'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
 			'c_order' => array('type' => 'integer', 'length' => 11, 'unsigned' => 1, 'notnull' => 1, 'default' => 0),
+			'special_authorizations' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'auth' => array('type' => 'text', 'length' => 65000),
 			'id_parent' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'color' => array('type' => 'string', 'length' => 250, 'default' => "''"),
