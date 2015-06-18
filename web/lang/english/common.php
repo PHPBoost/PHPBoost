@@ -69,4 +69,9 @@ $lang['web.form.contribution.explain'] = 'You are not authorized to create a new
 //form
 $lang['web.form.partner'] = 'Partner site';
 $lang['web.form.partner_picture'] = 'Partner banner';
+
+//Messages
+$lang['web.message.success.add'] = 'The link <b>:name</b> has been added';
+$lang['web.message.success.edit'] = 'The link <b>:name</b> has been modified';
+$lang['web.message.success.delete'] = 'The link <b>:name</b> has been deleted';
 ?>

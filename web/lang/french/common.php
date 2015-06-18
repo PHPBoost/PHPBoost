@@ -69,4 +69,9 @@ $lang['web.form.contribution.explain'] = 'Vous n\'êtes pas autorisé à ajouter un
 //form
 $lang['web.form.partner'] = 'Site partenaire';
 $lang['web.form.partner_picture'] = 'Bannière du partenaire';
+
+//Messages
+$lang['web.message.success.add'] = 'Le lien <b>:name</b> a été ajouté';
+$lang['web.message.success.edit'] = 'Le lien <b>:name</b> a été modifié';
+$lang['web.message.success.delete'] = 'Le lien <b>:name</b> a été supprimé';
 ?>

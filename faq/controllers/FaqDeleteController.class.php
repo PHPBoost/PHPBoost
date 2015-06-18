@@ -40,7 +40,7 @@ class FaqDeleteController extends ModuleController
 		
 		$this->delete_question($question);
 		
-		AppContext::get_response()->redirect($request->get_url_referrer() ? $request->get_url_referrer() : FaqUrlBuilder::home());
+		AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : FaqUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('faq.message.success.delete', 'common', 'faq'), array('question' => $question->get_question())));
 	}
 	
 	private function delete_question(FaqQuestion $question)

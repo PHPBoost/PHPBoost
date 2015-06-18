@@ -56,4 +56,9 @@ $lang['faq.form.contribution.explain'] = 'You are not authorized to create a new
 //form
 $lang['faq.form.question'] = 'Question';
 $lang['faq.form.answer'] = 'Answer';
+
+//Messages
+$lang['faq.message.success.add'] = 'The question <b>:question</b> has been added';
+$lang['faq.message.success.edit'] = 'The question <b>:question</b> has been modified';
+$lang['faq.message.success.delete'] = 'The question <b>:question</b> has been deleted';
 ?>

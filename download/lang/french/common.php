@@ -70,4 +70,9 @@ $lang['download.form.contribution.explain'] = 'Vous n\'êtes pas autorisé à ajout
 $lang['download.form.reset_number_downloads'] = 'Réinitialiser le nombre de téléchargements';
 $lang['download.form.author_display_name_enabled'] = 'Personnaliser le nom de l\'auteur';
 $lang['download.form.author_display_name'] = 'Nom de l\'auteur';
+
+//Messages
+$lang['download.message.success.add'] = 'Le fichier <b>:name</b> a été ajouté';
+$lang['download.message.success.edit'] = 'Le fichier <b>:name</b> a été modifié';
+$lang['download.message.success.delete'] = 'Le fichier <b>:name</b> a été supprimé';
 ?>

@@ -56,4 +56,9 @@ $lang['faq.form.contribution.explain'] = 'Vous n\'êtes pas autorisé à ajouter un
 //form
 $lang['faq.form.question'] = 'Question';
 $lang['faq.form.answer'] = 'Réponse';
+
+//Messages
+$lang['faq.message.success.add'] = 'La question <b>:question</b> a été ajoutée';
+$lang['faq.message.success.edit'] = 'La question <b>:question</b> a été modifiée';
+$lang['faq.message.success.delete'] = 'La question <b>:question</b> a été supprimée';
 ?>

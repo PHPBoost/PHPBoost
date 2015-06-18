@@ -46,6 +46,7 @@ class DownloadFormController extends ModuleController
 	private $config;
 	
 	private $downloadfile;
+	private $is_new_downloadfile;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -217,6 +218,7 @@ class DownloadFormController extends ModuleController
 			}
 			else
 			{
+				$this->is_new_downloadfile = true;
 				$this->downloadfile = new DownloadFile();
 				$this->downloadfile->init_default_properties(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY));
 			}
@@ -389,11 +391,11 @@ class DownloadFormController extends ModuleController
 		}
 		elseif ($downloadfile->is_visible())
 		{
-			AppContext::get_response()->redirect($this->form->get_value('referrer') ? $this->form->get_value('referrer') : DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $downloadfile->get_id(), $downloadfile->get_rewrited_name()));
+			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $downloadfile->get_id(), $downloadfile->get_rewrited_name())), StringVars::replace_vars($this->is_new_downloadfile ? $this->lang['download.message.success.add'] : $this->lang['download.message.success.edit'], array('name' => $downloadfile->get_name())));
 		}
 		else
 		{
-			AppContext::get_response()->redirect($this->form->get_value('referrer') ? $this->form->get_value('referrer') : DownloadUrlBuilder::display_pending());
+			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : DownloadUrlBuilder::display_pending()), StringVars::replace_vars($this->is_new_downloadfile ? $this->lang['download.message.success.add'] : $this->lang['download.message.success.edit'], array('name' => $downloadfile->get_name())));
 		}
 	}
 	
