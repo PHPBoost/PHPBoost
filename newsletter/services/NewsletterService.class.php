@@ -55,7 +55,7 @@ class NewsletterService
 		}
 	}
 	
-	public static function delete_newsletter($id)
+	public static function delete_archive($id)
 	{
 		NewsletterDAO::delete_archive($id);
 	}

@@ -55,15 +55,6 @@ class NewsletterUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function delete_newsletter($id, $id_stream, $redirect = null)
-	{
-		 $redirect = $redirect !== null ? 'redirect=' . $redirect . '&' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/delete/' . $id . '/' . $id_stream . '/?' . $redirect . 'token=' . AppContext::get_session()->get_token());
-	}
-	
-	/**
-	 * @return Url
-	 */
 	public static function manage_streams()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/streams/');
@@ -155,6 +146,14 @@ class NewsletterUrlBuilder
 	public static function archive($id)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/archive/' . $id);
+	}
+	
+	/**
+	 * @return Url
+	 */
+	public static function delete_archive($id, $id_stream)
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/delete/' . $id . '/' . $id_stream . '/?token=' . AppContext::get_session()->get_token());
 	}
 	
 	/**

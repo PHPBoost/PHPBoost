@@ -124,6 +124,8 @@ $lang['admin.stream-not-existed'] = 'The requested stream does not exist';
 $lang['error-subscriber-not-existed'] = 'This registrant is not exist';
 $lang['error-archive-not-existed'] = 'This archive does not exist';
 $lang['newsletter.success-send-test'] = 'The test email has been sent';
+$lang['newsletter.message.success.add'] = 'The newsletter has been sent';
+$lang['newsletter.message.success.delete'] = 'The archive has been deleted';
 
 //Register extended field
 $lang['extended_fields.newsletter.name'] = 'Subscribe to newsletters';

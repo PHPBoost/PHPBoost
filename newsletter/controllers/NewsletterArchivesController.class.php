@@ -124,7 +124,7 @@ class NewsletterArchivesController extends ModuleController
 				'NBR_SUBSCRIBERS' => $row['nbr_subscribers'],
 				'U_VIEW_STREAM' => NewsletterUrlBuilder::archives($stream->get_id(), $this->stream->get_rewrited_name())->rel(),
 				'U_VIEW_ARCHIVE' => NewsletterUrlBuilder::archive($row['id'])->rel(),
-				'U_DELETE_ARCHIVE' => NewsletterUrlBuilder::delete_newsletter($row['id'], $stream->get_id(), NewsletterUrlBuilder::archives($this->stream->get_id(), $this->stream->get_rewrited_name(), $field, $sort, $current_page)->relative())->rel()
+				'U_DELETE_ARCHIVE' => NewsletterUrlBuilder::delete_archive($row['id'], $stream->get_id())->rel()
 			));
 		}
 		$result->dispose();

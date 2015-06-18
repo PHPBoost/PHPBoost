@@ -32,8 +32,6 @@ class NewsletterDeleteArchiveController extends ModuleController
 		$id = $request->get_int('id', 0);
 		$id_stream = $request->get_int('id_stream', 0);
 		
-		$db_querier = PersistenceContext::get_querier();
-
 		if ($this->archive_exist($id) || $id_stream !== 0 && $id !== 0)
 		{
 			if (!NewsletterAuthorizationsService::id_stream($id_stream)->moderation_subscribers())
@@ -41,9 +39,9 @@ class NewsletterDeleteArchiveController extends ModuleController
 				NewsletterAuthorizationsService::get_errors()->moderation_archives();
 			}
 			
-			NewsletterService::delete_newsletter($id);
+			NewsletterService::delete_archive($id);
 			
-			AppContext::get_response()->redirect($request->get_getvalue('redirect', NewsletterUrlBuilder::archives($id_stream)));
+			AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : NewsletterUrlBuilder::archives($id_stream)), LangLoader::get_message('newsletter.message.success.delete', 'common', 'newsletter'));
 		}
 		else
 		{

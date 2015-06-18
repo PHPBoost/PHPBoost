@@ -124,6 +124,8 @@ $lang['admin.stream-not-existed'] = 'Le flux demandé n\'existe pas';
 $lang['error-subscriber-not-existed'] = 'L\'incrit n\'existe pas';
 $lang['error-archive-not-existed'] = 'L\'archive n\'existe pas';
 $lang['newsletter.success-send-test'] = 'Le mail de test a bien été envoyé';
+$lang['newsletter.message.success.add'] = 'La newsletter a été envoyée';
+$lang['newsletter.message.success.delete'] = 'L\'archive a été supprimée';
 
 //Register extended field
 $lang['extended_fields.newsletter.name'] = 'Newsletter(s) souscrite(s)';
