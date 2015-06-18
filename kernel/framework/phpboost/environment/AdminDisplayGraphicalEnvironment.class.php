@@ -70,8 +70,6 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'L_PHPBOOST_RIGHT' => self::$lang['phpboost_right'],
 		));
 		
-		$this->display_kernel_message($template);
-	
 		if (GraphicalEnvironmentConfig::load()->is_page_bench_enabled())
 		{
 			$template->put_all(array(

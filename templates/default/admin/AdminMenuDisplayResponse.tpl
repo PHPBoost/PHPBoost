@@ -10,5 +10,6 @@
     </ul>
 </div>
 <div id="admin-contents">
+	# INCLUDE KERNEL_MESSAGE #
 	# INCLUDE content #
 </div>
