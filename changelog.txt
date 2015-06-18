@@ -15,11 +15,11 @@
 [*] Les modules auxquels l'utilisateur n'a pas le droit de contribuer ne sont plus affichés dans le panneau de contribution
 [*] [color=red]Nouveauté:[/color] Générateur automatique de tableaux avec gestion de la pagination, filtres, tris.
 
-+ Nouveau système de session et de connexion :
+[*] Nouveau système de session et de connexion :
 	[*] Suppression du champ Pseudo, remplacé par Nom d'affichage
 	[*] Connexion interne avec l'adresse email ou un login que l'on peut choisir
-	+ Connexion avec un compte Facebook (et d'autre) paramètrable dans l'administration
-	+ Possibilité de gérer ses types de connexion dans le profil
+	[*] Connexion avec un compte Facebook et/ou Google paramétrable dans l'administration
+	[*] Possibilité de gérer ses types de connexion dans le profil
 	[*] Regroupement des fonctionnalités de l'édition du profil de l'admin dans l'édition d'un membre en front
 
 [b]Administration[/b]
@@ -46,6 +46,7 @@
 [*] Affichage des sources lors de l'affichage des catégories d'articles
 
 [b]Calendrier[/b]
+[*] [color=red]Nouveauté :[/color] Tableau permettant de lister les événements avec possibilité de filtrer par date
 [*] [color=red]Nouveauté :[/color] Ajout d'une légende sous le calendrier quand il y a des événements
 
 [b]Discussion[/b]
