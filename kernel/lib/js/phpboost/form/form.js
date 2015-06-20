@@ -357,8 +357,8 @@ FormField.prototype = {
 };
 
 jQuery(document).ready(function() {
-	//Validation delete on input or textarea focus
-	jQuery('input,textarea').focus(function() {
+	//Validation delete on input or textarea or select focus
+	jQuery('input,textarea,select').focus(function() {
 		jQuery(this).parent().parent().removeClass('constraint-status-error').removeClass('constraint-status-right');
 		jQuery(this).parent().children('.text-status-constraint').hide();
 	});
