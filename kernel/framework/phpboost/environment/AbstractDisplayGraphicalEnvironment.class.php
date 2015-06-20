@@ -85,23 +85,35 @@
 		self::set_page_localization($this->get_page_title());
 	}
 	
-	protected function display_kernel_message(View $template)
+	protected function retrieve_kernel_message()
 	{
+		$kernel_message = array(
+			'message' => '',
+			'message_type' => MessageHelper::SUCCESS,
+			'message_duration' => 5
+		);
+		
 		$request = AppContext::get_request();
 		if ($request->has_cookieparameter('message'))
 		{
-			$message = $request->get_cookie('message');
-			$message_type = $request->has_cookieparameter('message_type') ? $request->get_cookie('message_type') : MessageHelper::SUCCESS;
-			$message_duration = $request->has_cookieparameter('message_duration') ? $request->get_cookie('message_duration') : 5;
-			
-			if (!empty($message))
-				$template->put('KERNEL_MESSAGE', MessageHelper::display($message, $message_type, $message_duration));
+			$kernel_message['message'] = $request->get_cookie('message');
+			$kernel_message['message_type'] = $request->has_cookieparameter('message_type') ? $request->get_cookie('message_type') : $kernel_message['message_type'];
+			$kernel_message['message_duration'] = $request->has_cookieparameter('message_duration') ? $request->get_cookie('message_duration') : $kernel_message['message_duration'];
 			
 			$response = AppContext::get_response();
 			$response->delete_cookie('message');
 			$response->delete_cookie('message_type');
 			$response->delete_cookie('message_duration');
 		}
+		
+		return $kernel_message;
+	}
+	
+	public function display_kernel_message(View $template)
+	{
+		$kernel_message = $this->retrieve_kernel_message();
+		if (!empty($kernel_message['message']))
+			$template->put('KERNEL_MESSAGE', MessageHelper::display($kernel_message['message'], $kernel_message['message_type'], $kernel_message['message_duration']));
 	}
 }
 ?>

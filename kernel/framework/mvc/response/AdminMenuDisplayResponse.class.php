@@ -43,7 +43,7 @@ class AdminMenuDisplayResponse extends AbstractResponse
 		$env = new AdminDisplayGraphicalEnvironment();
 		$this->full_view = new FileTemplate('admin/AdminMenuDisplayResponse.tpl');
 		$this->full_view->put('content', $view);
-		$this->display_kernel_message($this->full_view);
+		$env->display_kernel_message($this->full_view);
 		parent::__construct($env , $this->full_view);
 	}
 
@@ -65,25 +65,6 @@ class AdminMenuDisplayResponse extends AbstractResponse
 	{
 		$this->full_view->put('links', $this->links);
 		parent::send();
-	}
-	
-	protected function display_kernel_message(View $template)
-	{
-		$request = AppContext::get_request();
-		if ($request->has_cookieparameter('message'))
-		{
-			$message = $request->get_cookie('message');
-			$message_type = $request->has_cookieparameter('message_type') ? $request->get_cookie('message_type') : MessageHelper::SUCCESS;
-			$message_duration = $request->has_cookieparameter('message_duration') ? $request->get_cookie('message_duration') : 5;
-			
-			if (!empty($message))
-				$template->put('KERNEL_MESSAGE', MessageHelper::display($message, $message_type, $message_duration));
-			
-			$response = AppContext::get_response();
-			$response->delete_cookie('message');
-			$response->delete_cookie('message_type');
-			$response->delete_cookie('message_duration');
-		}
 	}
 }
 ?>
