@@ -974,6 +974,7 @@ textarea {
 	z-index: 1;
 	padding: 6px 5px;
 	left: 5px;
+	width: 200%;
 
 	background: #FEFEFE;
 	border: 1px solid #EAEAEA;
@@ -1033,12 +1034,22 @@ div.field-required:after {
 	right: 12px;
 }
 
+.form-field-select.field-required:after {
+	right: -10px;
+}
+
+.constraint-status-right .form-field-select:after {
+	right: -20px;
+}
+
 .form-element-date .constraint-status-error div.field-required:after,
 .form-element-date .constraint-status-right div.field-required:after {
 	right: 10px;
 }
 
-.form-field-textarea.field-required:after {
+.form-field-textarea.field-required:after,
+.constraint-status-right .form-field-textarea.field-required:after,
+.constraint-status-right .form-field-textarea.field-required:after {
 	top: 45%;
 }
 
