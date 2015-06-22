@@ -45,6 +45,7 @@ class FormFieldUrlEditor extends FormFieldTextEditor
 	{
 		$constraints[] = new FormFieldConstraintUrl();
 		parent::__construct($id, $label, $value, $field_options, $constraints);
+		$this->set_css_form_field_class('form-field-url');
 	}
 }
 ?>

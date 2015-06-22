@@ -78,6 +78,10 @@ abstract class AbstractFormField implements FormField
 	/**
 	 * @var string
 	 */
+	protected $css_form_field_class = '';
+	/**
+	 * @var string
+	 */
 	protected $required = false;
 	/**
 	 * @var string
@@ -375,6 +379,10 @@ abstract class AbstractFormField implements FormField
 					$this->set_css_field_class($value);
 					unset($field_options['field_class']);
 					break;
+				case 'form_field_class':
+					$this->set_css_form_field_class($value);
+					unset($field_options['form_field_class']);
+					break;
 				case 'events':
 					$this->events = $value;
 					unset($field_options['events']);
@@ -467,6 +475,8 @@ abstract class AbstractFormField implements FormField
 			'CLASS' => $this->get_css_class(),
 			'FIELD_CLASS' => $this->get_css_field_class(),
 			'C_HAS_FIELD_CLASS' => $this->get_css_field_class() != '',
+			'FORM_FIELD_CLASS' => $this->get_css_form_field_class(),
+			'C_HAS_FORM_FIELD_CLASS' => $this->get_css_form_field_class() != '',
 			'FORM_ID' => $this->form_id,
 			'FIELDSET_ID' => $this->fieldset_id,
 			'C_HAS_LABEL' => !empty($description) || $this->get_label() != '',
@@ -515,6 +525,17 @@ abstract class AbstractFormField implements FormField
 	protected function set_css_field_class($css_field_class)
 	{
 		$this->css_field_class = $css_field_class;
+	}
+	
+	protected function get_css_form_field_class()
+	{
+		return $this->css_form_field_class;
+	}
+	
+	
+	protected function set_css_form_field_class($css_form_field_class)
+	{
+		$this->css_form_field_class = $css_form_field_class;
 	}
 
 	public function is_disabled()

@@ -39,6 +39,7 @@ class FormFieldFree extends AbstractFormField
 	public function __construct($id, $label, $value, array $properties = array())
 	{
 		parent::__construct($id, $label, $value, $properties);
+		$this->set_css_form_field_class('form-field-free');
 	}
 
 	public function display()

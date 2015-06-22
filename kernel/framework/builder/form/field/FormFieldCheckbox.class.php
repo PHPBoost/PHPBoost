@@ -31,83 +31,84 @@
  */
 class FormFieldCheckbox extends AbstractFormField
 {
-    const CHECKED = true;
-    const UNCHECKED = false;
+	const CHECKED = true;
+	const UNCHECKED = false;
 
-    /**
-     * @desc Constructs a FormFieldCheckbox.
-     * @param string $id Field identifier
-     * @param string $label Field label
-     * @param bool $checked FormFieldCheckbox::CHECKED if it's checked by default or FormFieldCheckbox::UNCHECKED if not checked.
-     * @param string[] $field_options Map containing the options
-     * @param FormFieldConstraint[] $constraints The constraints checked during the validation
-     */
-    public function __construct($id, $label, $checked = self::UNCHECKED, array $field_options = array(), array $constraints = array())
-    {
-        parent::__construct($id, $label, $checked, $field_options, $constraints);
-    }
+	/**
+	 * @desc Constructs a FormFieldCheckbox.
+	 * @param string $id Field identifier
+	 * @param string $label Field label
+	 * @param bool $checked FormFieldCheckbox::CHECKED if it's checked by default or FormFieldCheckbox::UNCHECKED if not checked.
+	 * @param string[] $field_options Map containing the options
+	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
+	 */
+	public function __construct($id, $label, $checked = self::UNCHECKED, array $field_options = array(), array $constraints = array())
+	{
+		parent::__construct($id, $label, $checked, $field_options, $constraints);
+		$this->set_css_form_field_class('form-field-checkbox');
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function display()
-    {
-        $template = $this->get_template_to_use();
+	/**
+	 * {@inheritdoc}
+	 */
+	public function display()
+	{
+		$template = $this->get_template_to_use();
 
-        $this->assign_common_template_variables($template);
+		$this->assign_common_template_variables($template);
 
-        $template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', array(
 			'ELEMENT' => $this->generate_html_code()->render()
-        ));
+		));
 
-        return $template;
-    }
+		return $template;
+	}
 
-    /**
-     * Tells whether the checkbox is checked
-     * @return bool
-     */
-    public function is_checked()
-    {
-        return $this->get_value() == self::CHECKED;
-    }
+	/**
+	 * Tells whether the checkbox is checked
+	 * @return bool
+	 */
+	public function is_checked()
+	{
+		return $this->get_value() == self::CHECKED;
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function retrieve_value()
-    {
-        $request = AppContext::get_request();
-        if ($request->has_parameter($this->get_html_id()))
-        {
-            $this->set_value($request->get_value($this->get_html_id()) == 'on' ? true : false);
-        }
-        else
-        {
-            $this->set_value(false);
-        }
-    }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function retrieve_value()
+	{
+		$request = AppContext::get_request();
+		if ($request->has_parameter($this->get_html_id()))
+		{
+			$this->set_value($request->get_value($this->get_html_id()) == 'on' ? true : false);
+		}
+		else
+		{
+			$this->set_value(false);
+		}
+	}
 
-    private function generate_html_code()
-    {
-        $tpl_src = '<input type="checkbox" name="${escape(NAME)}" id="${escape(HTML_ID)}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_CHECKED # checked="checked" # ENDIF # # IF C_READONLY # readonly="readonly" # ENDIF #/>';
+	private function generate_html_code()
+	{
+		$tpl_src = '<input type="checkbox" name="${escape(NAME)}" id="${escape(HTML_ID)}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_CHECKED # checked="checked" # ENDIF # # IF C_READONLY # readonly="readonly" # ENDIF #/>';
 
-        $tpl = new StringTemplate($tpl_src);
-        $tpl->put_all(array(
+		$tpl = new StringTemplate($tpl_src);
+		$tpl->put_all(array(
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_id(),
 			'HTML_ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->is_disabled(),
-        	'C_READONLY' => $this->is_readonly(),
+			'C_READONLY' => $this->is_readonly(),
 			'C_CHECKED' => $this->is_checked()
-        ));
+		));
 
-        return $tpl;
-    }
+		return $tpl;
+	}
 
-    protected function get_default_template()
-    {
-        return new FileTemplate('framework/builder/form/FormField.tpl');
-    }
+	protected function get_default_template()
+	{
+		return new FileTemplate('framework/builder/form/FormField.tpl');
+	}
 }
 ?>

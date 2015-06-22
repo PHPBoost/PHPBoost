@@ -46,7 +46,8 @@ class FormFieldFilePicker extends AbstractFormField
 
     public function __construct($id, $label, array $field_options = array(), array $constraints = array())
     {
-        parent::__construct($id, $label, null, $field_options, $constraints);
+		parent::__construct($id, $label, null, $field_options, $constraints);
+        $this->set_css_form_field_class('form-field-file');
     }
 
     /**
