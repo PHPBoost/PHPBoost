@@ -51,7 +51,9 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 	public function __construct($id, $label, array $selected_options, array $available_options, array $field_options = array(), array $constraints = array())
 	{
 		parent::__construct($id, $label, $selected_options, $field_options, $constraints);
-		
+
+		$this->set_css_form_field_class('form-field-multi-select');
+
 		foreach ($available_options as $option)
 		{
 			$this->add_option($option);

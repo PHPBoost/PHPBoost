@@ -974,7 +974,7 @@ textarea {
 	z-index: 1;
 	padding: 6px 5px;
 	left: 5px;
-	width: 200%;
+	min-width: 20em;
 
 	background: #FEFEFE;
 	border: 1px solid #EAEAEA;
@@ -1030,8 +1030,11 @@ div.field-required:after {
 	top: 8px;
 }
 
-.form-element-date div.field-required:after {
-	right: 12px;
+.form-field-date.field-required:after {
+	right: 24px;
+}
+.form-field-datetime.field-required:after {
+	right: 6px;
 }
 
 .form-field-select.field-required:after {
@@ -1070,7 +1073,7 @@ div.field-required:after {
 
 .form-element-upload-file .field-required:after {
 	right: 42px;
-	top: 25%;
+	top: 40%;
 }
 
 .constraint-status-right div.picture-status-constraint:after {
@@ -1081,6 +1084,21 @@ div.field-required:after {
 .constraint-status-error i.picture-status-constraint {
 	content: "\f056";
 	color: #C43C35;
+}
+
+.form-field-multi-select.field-required:after {
+	display: none;
+}
+
+.constraint-status-right .form-field-multi-select select {
+	border-color: rgba(71, 137, 72, 0.3);
+	box-shadow: 0 0 5px rgba(71, 137, 72, 0.1);
+}
+
+.form-field-radio.field-required:after,
+.form-field-multiple-checkbox.field-required:after {
+	top: 3px;
+	right: 0px;
 }
 
 /* --- Auto-completion --- */
