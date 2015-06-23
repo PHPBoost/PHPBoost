@@ -87,7 +87,7 @@ class SessionsConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::COOKIE_NAME => 'session',
+			self::COOKIE_NAME => Url::encode_rewrite(GeneralConfig::load()->get_site_name()) . '-session',
 			self::SESSION_DURATION => 3600,
 			self::ACTIVE_SESSION_DURATION => 300,
 			self::AUTOCONNECT_DURATION => 3600 * 24 * 30
