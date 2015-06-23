@@ -57,7 +57,6 @@ class SandboxFormController extends ModuleController
 					'AGE' => $form->get_value('age'),
 					'MULTI_LINE_TEXT' => $form->get_value('multi_line_text'),
 					'RICH_TEXT' => $form->get_value('rich_text'),
-					'RICH_TEXT_WYSIWYG' => $form->get_value('rich_text_wysiwyg'),
 					'RADIO' => $form->get_value('radio')->get_label(),
 					'CHECKBOX' => var_export($form->get_value('checkbox'), true),
 					'SELECT' => $form->get_value('select')->get_label(),
@@ -121,8 +120,12 @@ class SandboxFormController extends ModuleController
 		$fieldset->add_field(new FormFieldTextEditor('text2', 'Champ texte2', 'toto2', array(
 			'maxlength' => 25, 'description' => 'Champs requis rempli', 'required' => true)
 		));
-		$fieldset->add_field(new FormFieldTextEditor('text3', 'Champ texte3', '', array(
+		$fieldset->add_field(new FormFieldTextEditor('text3', 'Champ requis', '', array(
 			'maxlength' => 25, 'description' => 'Champs requis vide', 'required' => true)
+		));
+		$fieldset->add_field(new FormFieldNumberEditor('number', 'Nombre requis', 20, array(
+			'min' => 0, 'max' => 1000, 'description' => 'Intervalle 0 à 1000', 'required' => true),
+			array(new FormFieldConstraintIntegerRange(0, 1000))
 		));
 		$fieldset->add_field(new FormFieldNumberEditor('age', 'Age', 20, array(
 			'min' => 10, 'max' => 100, 'description' => 'Intervalle 10 à 100'),
@@ -158,35 +161,37 @@ class SandboxFormController extends ModuleController
 		));
 
 		// RICH TEXT
-		$fieldset->add_field(new FormFieldRichTextEditor('rich_text', 'Champ texte riche dans éditeur', 'toto <strong>tata</strong>'));
-
-		$fieldset->add_field(new FormFieldRichTextEditor('rich_text_wysiwyg', 'Champ texte riche avec éditeur', 'toto <strong>tata</strong>', array('formatter' => AppContext::get_content_formatting_service()->create_factory('tinymce'), 'required' => true)));
+		$fieldset->add_field(new FormFieldRichTextEditor('rich_text', 'Champ texte riche dans éditeur', 'toto <strong>tata</strong>',
+			array('required' => true)
+		));
 
 		//Checkbox
-		$fieldset->add_field(new FormFieldMultipleCheckbox('multiple_check_box', 'Plusieurs checkbox', 
-		array(), 
+		$fieldset->add_field(new FormFieldMultipleCheckbox('multiple_check_box', 'Plusieurs checkbox', array(), 
 			array(
 				new FormFieldMultipleCheckboxOption('meet', 'la viande'), 
 				new FormFieldMultipleCheckboxOption('fish', 'le poisson')
-			)
+			),
+			array('required' => true)
 		));
 		
 		// RADIO
 		$default_option = new FormFieldRadioChoiceOption('Choix 1', '1');
-		$fieldset->add_field(new FormFieldRadioChoice('radio', 'Choix énumération', $default_option,
+		$fieldset->add_field(new FormFieldRadioChoice('radio', 'Choix énumération', '',
 			array(
 				$default_option,
 				new FormFieldRadioChoiceOption('Choix 2', '2')
-			)));
+			),
+			array('required' => true)
+		));
 
 		// CHECKBOX
 		$fieldset->add_field(new FormFieldCheckbox('checkbox', 'Case à cocher', FormFieldCheckbox::CHECKED));
 
 		// SELECT
-		$default_select_option = new FormFieldSelectChoiceOption('Choix 1', '1');
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('select', 'Liste déroulante', $default_select_option,
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('select', 'Liste déroulante', '',
 			array(
-				$default_select_option,
+				new FormFieldSelectChoiceOption('', ''),
+				new FormFieldSelectChoiceOption('Choix 1', '1'),
 				new FormFieldSelectChoiceOption('Choix 2', '2'),
 				new FormFieldSelectChoiceOption('Choix 3', '3'),
 				new FormFieldSelectChoiceGroupOption('Groupe 1', array(
@@ -196,9 +201,10 @@ class SandboxFormController extends ModuleController
 				new FormFieldSelectChoiceGroupOption('Groupe 2', array(
 					new FormFieldSelectChoiceOption('Choix 6', '6'),
 					new FormFieldSelectChoiceOption('Choix 7', '7'),
-				)
-			)
-		)));
+				))
+			),
+			array('required' => true)
+		));
 		
 		// SELECT MULTIPLE
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('multiple_select', 'Liste déroulante multiple', array('1', '2'),
@@ -206,7 +212,8 @@ class SandboxFormController extends ModuleController
 				new FormFieldSelectChoiceOption('Choix 1', '1'),
 				new FormFieldSelectChoiceOption('Choix 2', '2'),
 				new FormFieldSelectChoiceOption('Choix 3', '3')
-			)
+			),
+			array('required' => true)
 		));
 		
 		$fieldset->add_field(new FormFieldTimezone('timezone', 'TimeZone', 'UTC+0'));
@@ -228,10 +235,14 @@ class SandboxFormController extends ModuleController
 		$fieldset2->add_field(new FormFieldFree('free', 'Champ libre', 'Valeur champ libre', array()));
 
 		// DATE
-		$fieldset2->add_field(new FormFieldDate('date', 'Date', new Date()));
+		$fieldset2->add_field(new FormFieldDate('date', 'Date', null,
+			array('required' => true)
+		));
 
 		// DATE TIME
-		$fieldset2->add_field(new FormFieldDateTime('date_time', 'Heure', new Date()));
+		$fieldset2->add_field(new FormFieldDateTime('date_time', 'Heure', null,
+			array('required' => true)
+		));
 
 		// COLOR PICKER
 		$fieldset2->add_field(new FormFieldColorPicker('color', 'Couleur', '#CC99FF'));
@@ -270,7 +281,7 @@ class SandboxFormController extends ModuleController
 		$horizontal_fieldset = new FormFieldsetHorizontal('fieldset5');
 		$horizontal_fieldset->set_description('Ceci est ma description');
 		$form->add_fieldset($horizontal_fieldset);
-		$horizontal_fieldset->add_field(new FormFieldTextEditor('texthor', 'Texte', 'fieldset séparé'));
+		$horizontal_fieldset->add_field(new FormFieldTextEditor('texthor', 'Texte', 'fieldset séparé', array('required' => true)));
 		$horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert', 'A cocher', FormFieldCheckbox::CHECKED));
 
 		// BUTTONS

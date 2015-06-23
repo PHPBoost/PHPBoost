@@ -15,8 +15,6 @@
 	<br />
 	<strong>RICH_TEXT :</strong> {RICH_TEXT}
 	<br />
-	<strong>RICH_TEXT_WYSIWYG :</strong> {RICH_TEXT_WYSIWYG}
-	<br />
 	<strong>RADIO :</strong> {RADIO}
 	<br />
 	<strong>CHECKBOX :</strong> {CHECKBOX}
