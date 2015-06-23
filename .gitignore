@@ -1,4 +1,5 @@
 cache/*
+robots.txt
 sitemap.xml
 kernel/db/config.php
 *.swp

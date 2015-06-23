@@ -94,6 +94,9 @@ $lang = array(
 	'advanced-config.htaccess-manual-content' => 'Contenu du fichier .htaccess',
 	'advanced-config.htaccess-manual-content.explain' => 'Vous pouvez dans ce champ mettre les instructions que vous souhaitez intégrer au fichier .htaccess qui se trouve à la racine du site, par exemple pour forcer une configuration du serveur web Apache.',
 
+	'advanced-config.robots-content' => 'Contenu du fichier robots.txt',
+	'advanced-config.robots-content.explain' => 'Vous pouvez dans ce champ mettre les instructions que vous souhaitez intégrer au fichier robots.txt qui se trouve à la racine du site, par exemple pour empêcher les robots d\'indexer certaines parties du site.',
+
 	'advanced-config.sessions-config' => 'Connexion utilisateurs',
 	'advanced-config.cookie-name' => 'Nom du cookie des sessions',
 	'advanced-config.cookie-name.style-wrong' => 'Le nom du cookie doit obligatoirement être une suite de lettres et de chiffres',

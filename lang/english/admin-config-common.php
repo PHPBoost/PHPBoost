@@ -97,6 +97,10 @@ $lang = array(
 	'advanced-config.htaccess-manual-content.explain' => 'In this field you can put the instructions you would like to integrate into the .htaccess file 
 		which is at the root of the website. For instance, you can force special settings on your Apache web server.',
 
+	'advanced-config.robots-content' => 'Content of the robots.txt file',
+	'advanced-config.robots-content.explain' => 'In this field you can put the instructions you would like to integrate into the robots.txt file 
+		which is at the root of the website. For instance, you can prevent robots from index some parts of the website.',
+
 	'advanced-config.sessions-config' => 'Users connection',
 	'advanced-config.cookie-name' => 'Sessions cookie name',
 	'advanced-config.cookie-name.style-wrong' => 'Cookie name must be alphanumeric (letters and numbers)',

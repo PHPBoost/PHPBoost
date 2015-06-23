@@ -23,8 +23,9 @@
 	[*] Regroupement des fonctionnalités de l'édition du profil de l'admin dans l'édition d'un membre en front
 
 [b]Administration[/b]
-[*] Passage de la configuration de la maintenance en MVC (simplification de l'interface)
-[*] Suppression de la clé de déverrouillage de l'administration.
+[*] Passage de la configuration de la maintenance, des smileys et des fichiers en MVC (simplification de l'interface)
+[*] Possibilité de définir le contenu du fichier robots.txt dans la configuration avancée
+[*] Suppression de la clé de déverrouillage de l'administration
 [*] Possibilité de définir le nombre de flux affichés dans les menus de flux
 
 [b]Profil[/b]

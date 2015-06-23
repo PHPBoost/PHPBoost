@@ -117,6 +117,15 @@ class AdminAdvancedConfigController extends AdminController
 			array('rows' => 7, 'description' => $this->lang['advanced-config.htaccess-manual-content.explain'])
 		));
 		
+		$robots_file = new File(PATH_TO_ROOT . '/robots.txt');
+		$robots_content = $robots_file->exists() ? $robots_file->read() : '';
+		$robots_content_fieldset = new FormFieldsetHTML('robots_content', $this->lang['advanced-config.robots-content']);
+		$form->add_fieldset($robots_content_fieldset);
+		
+		$robots_content_fieldset->add_field(new FormFieldMultiLineTextEditor('robots_content', $this->lang['advanced-config.robots-content'], $robots_content,
+			array('rows' => 7, 'description' => $this->lang['advanced-config.robots-content.explain'])
+		));
+		
 		$sessions_config_fieldset = new FormFieldsetHTML('sessions_config', $this->lang['advanced-config.sessions-config']);
 		$form->add_fieldset($sessions_config_fieldset);
 		
@@ -195,6 +204,9 @@ class AdminAdvancedConfigController extends AdminController
 		}
 		
 		$this->server_environment_config->set_htaccess_manual_content($this->form->get_value('htaccess_manual_content'));
+		
+		$robots_file = new File(PATH_TO_ROOT . '/robots.txt');
+		$robots_file->write($this->form->get_value('robots_content'));
 		
 		if (!$this->form->field_is_disabled('output_gziping_enabled'))
 		{
