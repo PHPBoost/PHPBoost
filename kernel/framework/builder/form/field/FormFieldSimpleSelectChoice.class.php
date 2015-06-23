@@ -35,6 +35,8 @@
  */
 class FormFieldSimpleSelectChoice extends AbstractFormFieldChoice
 {
+	private $default_value;
+	
 	/**
 	 * @desc Constructs a FormFieldSimpleSelectChoice.
 	 * @param string $id Field id
@@ -46,6 +48,7 @@ class FormFieldSimpleSelectChoice extends AbstractFormFieldChoice
 	 */
 	public function __construct($id, $label, $value, array $options, array $field_options = array(), array $constraints = array())
 	{
+		$this->default_value = $value;
 		parent::__construct($id, $label, $value, $options, $field_options, $constraints);
 		$this->set_css_form_field_class('form-field-select');
 	}
@@ -104,10 +107,25 @@ class FormFieldSimpleSelectChoice extends AbstractFormFieldChoice
 		}
 		return null;
 	}
+	
+	protected function assign_common_template_variables(Template $template)
+	{
+		parent::assign_common_template_variables($template);
+		$template->put('C_REQUIRED_AND_HAS_VALUE', $this->is_required() && $this->default_value);
+	}
 
 	protected function get_default_template()
 	{
 		return new FileTemplate('framework/builder/form/FormField.tpl');
+	}
+
+	protected function get_js_specialization_code()
+	{
+		return ($this->is_required() ? '
+		jQuery("#'. $this->get_html_id() .'_field").change(function() {
+			HTMLForms.get("' . $this->get_form_id() . '").getField("'. $this->get_id() . '").enableValidationMessage();
+			HTMLForms.get("' . $this->get_form_id() . '").getField("'. $this->get_id() . '").liveValidate();
+		});' : '');
 	}
 }
 ?>

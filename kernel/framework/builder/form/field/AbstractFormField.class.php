@@ -163,6 +163,14 @@ abstract class AbstractFormField implements FormField
 	/**
 	 * {@inheritdoc}
 	 */
+	public function get_form_id()
+	{
+		return $this->form_id;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
 	public function set_form_id($form_id)
 	{
 		$this->form_id = $form_id;

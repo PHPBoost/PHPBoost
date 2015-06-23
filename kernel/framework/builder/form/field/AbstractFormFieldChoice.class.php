@@ -31,7 +31,6 @@
  */
 abstract class AbstractFormFieldChoice extends AbstractFormField
 {
-	private $default_value;
 	/**
 	 * @var FormFieldEnumOption[]
 	 */
@@ -53,7 +52,6 @@ abstract class AbstractFormFieldChoice extends AbstractFormField
 			$this->add_option($option);
 		}
 		parent::__construct($id, $label, $value, $field_options, $constraints);
-		$this->default_value = $value;
 		$this->set_value($value);
 	}
 
@@ -138,12 +136,6 @@ abstract class AbstractFormFieldChoice extends AbstractFormField
 		{
 			parent::set_value($this->get_option($value));
 		}
-	}
-	
-	protected function assign_common_template_variables(Template $template)
-	{
-		parent::assign_common_template_variables($template);
-		$template->put('C_REQUIRED_AND_HAS_VALUE', $this->is_required() && $this->default_value);
 	}
 }
 ?>

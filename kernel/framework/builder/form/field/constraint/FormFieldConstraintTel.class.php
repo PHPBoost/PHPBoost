@@ -42,7 +42,7 @@ class FormFieldConstraintTel extends FormFieldConstraintRegex
 		$this->set_validation_error_message($error_message);
 		
 		parent::__construct(
-			self::$regex, 
+			'/' . self::$regex . '/', 
 			TextHelper::to_js_string(self::$regex), 
 			$error_message
 		);
