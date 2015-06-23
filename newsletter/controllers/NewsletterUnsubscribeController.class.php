@@ -79,9 +79,9 @@ class NewsletterUnSubscribeController extends ModuleController
 		$fieldset->add_field(new FormFieldCheckbox('delete_all_streams', $this->lang['newsletter.delete_all_streams'], FormFieldCheckbox::UNCHECKED, 
 		array('events' => array('click' => '
 		if (HTMLForms.getField("delete_all_streams").getValue()) {
-			HTMLForms.getField("newsletter_choice").disable();
+			HTMLForms.getField("choice").disable();
 		} else { 
-			HTMLForms.getField("newsletter_choice").enable();
+			HTMLForms.getField("choice").enable();
 		}')
 		)));
 
