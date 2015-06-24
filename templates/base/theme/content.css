@@ -1033,16 +1033,29 @@ div.field-required:after {
 .form-field-date.field-required:after {
 	right: 24px;
 }
+
 .form-field-datetime.field-required:after {
 	right: 6px;
 }
 
-.form-field-select.field-required:after {
+.form-field-select.field-required:after,
+.form-field-number.field-required:after,
+.form-field-decimal.field-required:after,
+.form-field-datetime.field-required:after {
 	right: -10px;
 }
 
-.constraint-status-right .form-field-select:after {
-	right: -20px;
+.constraint-status-right .form-field-select:after,
+.constraint-status-right .form-field-number:after,
+.constraint-status-right .form-field-decimal:after,
+.constraint-statuts-right .form-field-datetime:after {
+	right: -20px;	
+}
+
+.form-field-number input,
+.form-field-decimal input,
+.form-field-datetime input {
+	padding-right: 2px;
 }
 
 .form-element-date .constraint-status-error div.field-required:after,
