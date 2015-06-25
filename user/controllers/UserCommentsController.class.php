@@ -246,7 +246,7 @@ class UserCommentsController extends AbstractController
 		}
 		else
 		{
-			$breadcrumb->add(LangLoader::get_message('users', 'user-common'), UserUrlBuilder::users()->rel());
+			$breadcrumb->add(LangLoader::get_message('users', 'user-common'), UserUrlBuilder::home()->rel());
 			$breadcrumb->add($this->lang['comments'], UserUrlBuilder::comments()->rel());
 		}
 

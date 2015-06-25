@@ -43,7 +43,7 @@ class AdminMemberDeleteController extends AdminController
 				DispatchManager::redirect($error_controller);
 			}
 			
-			AppContext::get_response()->redirect($request->get_url_referrer() ? $request->get_url_referrer() : AdminMembersUrlBuilder::management());
+			AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : AdminMembersUrlBuilder::management()), StringVars::replace_vars(LangLoader::get_message('user.message.success.delete', 'user-common'), array('name' => $user->get_display_name())));
 		}
 		else
 		{

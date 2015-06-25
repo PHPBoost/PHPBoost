@@ -183,6 +183,11 @@ $lang['agreement'] = 'Agreement';
 $lang['agreement.agree'] = 'I agree this agreement';
 $lang['agreement.agree.required'] = 'You must agree for registration';
 
+//Messages
+$lang['user.message.success.add'] = 'The user <b>:name</b> has been added';
+$lang['user.message.success.edit'] = 'The profile has been modified';
+$lang['user.message.success.delete'] = 'The user <b>:name</b> has been deleted';
+
 ############## Extended Field ##############
 
 $lang['extended-field.field.sex'] = 'Sex';

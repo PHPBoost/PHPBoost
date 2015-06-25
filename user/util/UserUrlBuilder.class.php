@@ -95,26 +95,20 @@ class UserUrlBuilder
 		return new Url(self::$dispatcher . '/upload_popup.php');
 	}
 	
-	public static function edit_profile($user_id = 0, $redirect = null, $action = null, $authentication_method = null)
+	public static function edit_profile($user_id = 0, $action = null, $authentication_method = null)
 	{
 		if (empty($user_id))
 		{
 			$user_id = AppContext::get_current_user()->get_id();
 		}
-		$redirect = $redirect !== null ? '?redirect=' . $redirect : '';
 		$action = $action !== null && $authentication_method !== null ? '?' . $action . '=' . $authentication_method : '';
 		
-		return DispatchManager::get_url(self::$dispatcher, '/profile/'. $user_id .'/edit/' . $redirect . $action);
+		return DispatchManager::get_url(self::$dispatcher, '/profile/'. $user_id .'/edit/' . $action);
 	}
 	
-	public static function users($field = '', $sort = '', $page = '')
-	{
-		return DispatchManager::get_url(self::$dispatcher, $field . '/' . $sort . '/' . $page);
-	}
-
 	public static function home()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '');
+		return DispatchManager::get_url(self::$dispatcher, '/');
 	}
 	
 	public static function error_403()

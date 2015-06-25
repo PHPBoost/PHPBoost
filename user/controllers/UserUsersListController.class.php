@@ -121,7 +121,7 @@ class UserUsersListController extends AbstractController
 		$graphical_environment->set_page_title($this->lang['users']);
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['users'], UserUrlBuilder::users()->rel());
+		$breadcrumb->add($this->lang['users'], UserUrlBuilder::home()->rel());
 		
 		return $response;
 	}

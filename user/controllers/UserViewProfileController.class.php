@@ -145,7 +145,7 @@ class UserViewProfileController extends AbstractController
 		$graphical_environment->set_page_title(StringVars::replace_vars($this->lang['profile_of'], array('name' => $this->user_infos['display_name']), $this->lang['user']));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['user'], UserUrlBuilder::users()->rel());
+		$breadcrumb->add($this->lang['user'], UserUrlBuilder::home()->rel());
 		$breadcrumb->add(StringVars::replace_vars($this->lang['profile_of'], array('name' => $this->user_infos['display_name'])), UserUrlBuilder::profile($user_id)->rel());
 		
 		return $response;

@@ -78,7 +78,7 @@ class UserLostPasswordController extends AbstractController
 		$graphical_environment->set_page_title($this->lang['forget-password'], $this->lang['user']);
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['user'], UserUrlBuilder::users()->rel());
+		$breadcrumb->add($this->lang['user'], UserUrlBuilder::home()->rel());
 		$breadcrumb->add($this->lang['forget-password'], UserUrlBuilder::forget_password()->rel());
 		
 		return $response;

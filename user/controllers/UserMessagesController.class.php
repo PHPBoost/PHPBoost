@@ -39,7 +39,7 @@ class UserMessagesController extends AbstractController
 
 		if (empty($user_id))
 		{
-			AppContext::get_response()->redirect(UserUrlBuilder::users());
+			AppContext::get_response()->redirect(UserUrlBuilder::home());
 		}
 		
 		try {
@@ -88,7 +88,7 @@ class UserMessagesController extends AbstractController
 		$graphical_environment->set_page_title($title);
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['user'], UserUrlBuilder::users()->rel());
+		$breadcrumb->add($this->lang['user'], UserUrlBuilder::home()->rel());
 		$breadcrumb->add($title, UserUrlBuilder::messages($this->user->get_id())->rel());
 		
 		return $response;

@@ -197,11 +197,11 @@ class UserEditProfileController extends AbstractController
 		{
 			if (in_array(FacebookAuthenticationMethod::AUTHENTICATION_METHOD, $this->user_auth_types))
 			{
-				$connect_fieldset->add_field(new FormFieldFree('fb_auth', $this->lang['fb_connection'] . ' <i class="fa fa-success"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), null, 'dissociate', 'fb')->absolute() . '">' . $this->lang['dissociate_account'] . '</a>'));
+				$connect_fieldset->add_field(new FormFieldFree('fb_auth', $this->lang['fb_connection'] . ' <i class="fa fa-success"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), 'dissociate', 'fb')->absolute() . '">' . $this->lang['dissociate_account'] . '</a>'));
 			}
 			else
 			{
-				$connect_fieldset->add_field(new FormFieldFree('fb_auth', $this->lang['fb_connection'] . ' <i class="fa fa-error"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), null, 'associate', 'fb')->absolute() . '">' . $this->lang['associate_account'] . '</a>'));
+				$connect_fieldset->add_field(new FormFieldFree('fb_auth', $this->lang['fb_connection'] . ' <i class="fa fa-error"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), 'associate', 'fb')->absolute() . '">' . $this->lang['associate_account'] . '</a>'));
 			}
 		}
 		
@@ -209,11 +209,11 @@ class UserEditProfileController extends AbstractController
 		{
 			if (in_array(GoogleAuthenticationMethod::AUTHENTICATION_METHOD, $this->user_auth_types))
 			{
-				$connect_fieldset->add_field(new FormFieldFree('google_auth', $this->lang['google_connection'] . ' <i class="fa fa-success"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), null, 'dissociate', 'google')->absolute() . '">' . $this->lang['dissociate_account'] . '</a>'));
+				$connect_fieldset->add_field(new FormFieldFree('google_auth', $this->lang['google_connection'] . ' <i class="fa fa-success"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), 'dissociate', 'google')->absolute() . '">' . $this->lang['dissociate_account'] . '</a>'));
 			}
 			else
 			{
-				$connect_fieldset->add_field(new FormFieldFree('google_auth', $this->lang['google_connection'] . ' <i class="fa fa-error"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), null, 'associate', 'google')->absolute() . '">' . $this->lang['associate_account'] . '</a>'));
+				$connect_fieldset->add_field(new FormFieldFree('google_auth', $this->lang['google_connection'] . ' <i class="fa fa-error"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), 'associate', 'google')->absolute() . '">' . $this->lang['associate_account'] . '</a>'));
 			}
 		}
 
@@ -401,7 +401,7 @@ class UserEditProfileController extends AbstractController
 		
 		if (!$has_error)
 		{
-			AppContext::get_response()->redirect($request->get_url_referrer() ? $request->get_url_referrer() : UserUrlBuilder::edit_profile($user_id));
+			AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : UserUrlBuilder::edit_profile($user_id)), $this->lang['user.message.success.edit']);
 		}
 	}
 
@@ -412,7 +412,7 @@ class UserEditProfileController extends AbstractController
 		$graphical_environment->set_page_title($this->lang['profile.edit'], $this->lang['user']);
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['user'], UserUrlBuilder::users()->rel());
+		$breadcrumb->add($this->lang['user'], UserUrlBuilder::home()->rel());
 		$breadcrumb->add($this->lang['profile.edit'], UserUrlBuilder::edit_profile($this->user->get_id())->rel());
 		
 		return $response;

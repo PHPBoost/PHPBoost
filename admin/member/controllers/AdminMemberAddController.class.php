@@ -40,15 +40,15 @@ class AdminMemberAddController extends AdminController
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
-		$this->build_form();
+		$this->build_form($request);
 
 		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
-			$this->save();
-			AppContext::get_response()->redirect(AdminMembersUrlBuilder::management());
+			$display_name = $this->save();
+			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : AdminMembersUrlBuilder::management()), StringVars::replace_vars($this->lang['user.message.success.add'], array('name' => $display_name)));
 		}
 
 		$tpl->put('FORM', $this->form->display());
@@ -61,7 +61,7 @@ class AdminMemberAddController extends AdminController
 		$this->lang = LangLoader::get('user-common');
 	}
 
-	private function build_form()
+	private function build_form(HTTPRequestCustom $request)
 	{
 		$form = new HTMLForm(__CLASS__);
 		
@@ -100,6 +100,8 @@ class AdminMemberAddController extends AdminController
 		
 		$fieldset->add_field(new FormFieldRanksSelect('rank', $this->lang['rank'], FormFieldRanksSelect::MEMBER));
 		
+		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
+		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
 		$form->add_button($this->submit_button);
@@ -123,6 +125,8 @@ class AdminMemberAddController extends AdminController
 		
 		$auth_method = new PHPBoostAuthenticationMethod($login, $this->form->get_value('password'));
 		UserService::create($user, $auth_method);
+		
+		return $user->get_display_name();
 	}
 }
 ?>
