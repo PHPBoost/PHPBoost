@@ -73,7 +73,7 @@
 
 					<div class="content">
 						# IF articles.C_HAS_PICTURE #<img itemprop="thumbnailUrl" src="{articles.PICTURE}" alt="{articles.TITLE}" class="left"/># ENDIF #
-						<span itemprop="text">{articles.DESCRIPTION}</span>
+						<span itemprop="text">{articles.DESCRIPTION}# IF articles.C_READ_MORE #... <a href="{articles.U_ARTICLE}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #</span>
 					</div>
 
 					# IF articles.C_SOURCES #

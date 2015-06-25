@@ -435,6 +435,7 @@ class Article
 	public function get_tpl_vars()
 	{
 		$category = $this->get_category();
+		$description = $this->get_real_description();
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		$sources = $this->get_sources();
@@ -453,6 +454,7 @@ class Article
 			'C_DATE_UPDATED' => $this->date_updated != null,
 			'C_AUTHOR_DISPLAYED' => $this->get_author_name_displayed(),
 			'C_NOTATION_ENABLED' => $this->get_notation_enabled(),
+			'C_READ_MORE' => strlen($description) >= ArticlesConfig::load()->get_number_character_to_cut(),
 			'C_SOURCES' => $nbr_sources > 0,
 			
 			//Articles
@@ -472,7 +474,7 @@ class Article
 			'NOTE' => $this->get_notation()->get_number_notes() > 0 ? NotationService::display_static_image($this->get_notation()) : '&nbsp;',
 			'C_AUTHOR_EXIST' => $user->get_id() !== User::VISITOR_LEVEL,
 			'PSEUDO' => $user->get_display_name(),
-			'DESCRIPTION' => $this->get_real_description(),
+			'DESCRIPTION' => $description,
 			'PICTURE' => $this->get_picture()->rel(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,
