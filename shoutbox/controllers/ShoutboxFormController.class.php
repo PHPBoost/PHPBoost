@@ -44,6 +44,7 @@ class ShoutboxFormController extends ModuleController
 	private $view;
 	
 	private $message;
+	private $is_new_message;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -51,12 +52,12 @@ class ShoutboxFormController extends ModuleController
 		
 		$this->check_authorizations();
 		
-		$this->build_form();
+		$this->build_form($request);
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$id = $this->save();
-			AppContext::get_response()->redirect($request->get_getvalue('redirect', ShoutboxUrlBuilder::home(1, $id)));
+			AppContext::get_response()->redirect(ShoutboxUrlBuilder::home($this->is_new_message ? 1 : $this->form->get_value('page'), $id));
 		}
 		
 		$this->view->put('FORM', $this->form->display());
@@ -68,11 +69,12 @@ class ShoutboxFormController extends ModuleController
 	{
 		$object = new self();
 		$object->init();
-		$object->build_form();
+		$object->check_authorizations();
+		$object->build_form(AppContext::get_request());
 		if ($object->submit_button->has_been_submited() && $object->form->validate())
 		{
 			$id = $object->save();
-			AppContext::get_response()->redirect(AppContext::get_request()->get_getvalue('redirect', ShoutboxUrlBuilder::home(1, $id)));
+			AppContext::get_response()->redirect(ShoutboxUrlBuilder::home($object->is_new_message ? 1 : $object->form->get_value('page'), $id));
 		}
 		$object->view->put('FORM', ShoutboxAuthorizationsService::check_authorizations()->write() && !AppContext::get_current_user()->is_readonly() ? $object->form->display() : '');
 		return $object->view;
@@ -85,7 +87,7 @@ class ShoutboxFormController extends ModuleController
 		$this->view->add_lang($this->lang);
 	}
 	
-	private function build_form()
+	private function build_form(HTTPRequestCustom $request)
 	{
 		$config = ShoutboxConfig::load();
 		
@@ -94,7 +96,7 @@ class ShoutboxFormController extends ModuleController
 		
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('message', $this->message === null ? $this->lang['shoutbox.add'] : $this->lang['shoutbox.edit']);
+		$fieldset = new FormFieldsetHTML('message', $this->is_new_message ? $this->lang['shoutbox.add'] : $this->lang['shoutbox.edit']);
 		$form->add_fieldset($fieldset);
 		
 		if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
@@ -111,6 +113,8 @@ class ShoutboxFormController extends ModuleController
 				new FormFieldConstraintAntiFlood(ShoutboxService::get_last_message_timestamp_from_user($this->get_message()->get_author_user()->get_id())
 			))
 		));
+		
+		$fieldset->add_field(new FormFieldHidden('page', $request->get_getint('page', 1)));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -135,6 +139,7 @@ class ShoutboxFormController extends ModuleController
 			}
 			else
 			{
+				$this->is_new_message = true;
 				$this->message = new ShoutboxMessage();
 				$this->message->init_default_properties();
 			}
@@ -195,7 +200,6 @@ class ShoutboxFormController extends ModuleController
 	{
 		$message = $this->get_message();
 		$page = AppContext::get_request()->get_getint('page', 1);
-		$redirect = AppContext::get_request()->get_getvalue('redirect', ShoutboxUrlBuilder::home()->relative());
 		
 		$response = new SiteDisplayResponse($tpl);
 		$graphical_environment = $response->get_graphical_environment();
@@ -212,8 +216,8 @@ class ShoutboxFormController extends ModuleController
 		else
 		{
 			$graphical_environment->set_page_title($this->lang['shoutbox.edit'], $this->lang['module_title']);
-			$breadcrumb->add($this->lang['shoutbox.edit'], ShoutboxUrlBuilder::edit($message->get_id(), $redirect));
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(ShoutboxUrlBuilder::edit($message->get_id(), $redirect));
+			$breadcrumb->add($this->lang['shoutbox.edit'], ShoutboxUrlBuilder::edit($message->get_id(), $page));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(ShoutboxUrlBuilder::edit($message->get_id(), $page));
 		}
 		
 		return $response;

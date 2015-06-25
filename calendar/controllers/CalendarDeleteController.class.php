@@ -47,7 +47,7 @@ class CalendarDeleteController extends ModuleController
 	{
 		AppContext::get_session()->csrf_get_protect();
 		
-		$this->init($request);
+		$this->init();
 		
 		$this->get_event($request);
 		
@@ -57,7 +57,7 @@ class CalendarDeleteController extends ModuleController
 		$tpl->add_lang($this->lang);
 		
 		if ($this->event->belongs_to_a_serie())
-			$this->build_form();
+			$this->build_form($request);
 		
 		if (($this->event->belongs_to_a_serie() && $this->submit_button->has_been_submited() && $this->form->validate()) || !$this->event->belongs_to_a_serie())
 		{
@@ -70,12 +70,12 @@ class CalendarDeleteController extends ModuleController
 		return $this->generate_response($tpl);
 	}
 	
-	private function init(HTTPRequestCustom $request)
+	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'calendar');
 	}
 	
-	private function build_form()
+	private function build_form(HTTPRequestCustom $request)
 	{
 		$form = new HTMLForm(__CLASS__);
 		
@@ -88,6 +88,8 @@ class CalendarDeleteController extends ModuleController
 				new FormFieldRadioChoiceOption($this->lang['calendar.titles.delete_all_events_of_the_serie'], 1)
 			)
 		));
+		
+		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -168,7 +170,10 @@ class CalendarDeleteController extends ModuleController
 	
 	private function redirect(HTTPRequestCustom $request)
 	{
-		AppContext::get_response()->redirect($request->get_url_referrer() ? $request->get_url_referrer() : CalendarUrlBuilder::home($this->event->get_start_date()->get_year(), $this->event->get_start_date()->get_month()));
+		if ($this->event->belongs_to_a_serie())
+			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : CalendarUrlBuilder::home($this->event->get_start_date()->get_year(), $this->event->get_start_date()->get_month())), StringVars::replace_vars($this->lang['calendar.message.success.delete'], array('title' => $this->event->get_content()->get_title())));
+		else
+			AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : CalendarUrlBuilder::home($this->event->get_start_date()->get_year(), $this->event->get_start_date()->get_month())), StringVars::replace_vars($this->lang['calendar.message.success.delete'], array('title' => $this->event->get_content()->get_title())));
 	}
 	
 	private function generate_response(View $tpl)

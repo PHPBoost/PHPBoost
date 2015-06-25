@@ -42,4 +42,6 @@ $lang['admin.config.max_links_number_per_message_enabled'] = 'Limiter le nombre 
 $lang['admin.config.max_links'] = 'Nombre de liens maximum dans le message';
 $lang['admin.authorizations.read']  = 'Autorisation d\'afficher le livre d\'or';
 
+//Messages
+$lang['guestbook.message.success.delete'] = 'Le message a été supprimé';
 ?>

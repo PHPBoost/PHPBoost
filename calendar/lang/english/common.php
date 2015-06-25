@@ -105,6 +105,11 @@ $lang['calendar.seo.description.pending'] = 'All pending events.';
 //Feed name
 $lang['calendar.feed.name'] = 'Events';
 
+//Messages
+$lang['calendar.message.success.add'] = 'The event <b>:title</b> has been added';
+$lang['calendar.message.success.edit'] = 'The event <b>:title</b> has been modified';
+$lang['calendar.message.success.delete'] = 'The event <b>:title</b> has been deleted';
+
 //Errors
 $lang['calendar.error.e_invalid_date'] = 'Invalid date';
 $lang['calendar.error.e_invalid_start_date'] = 'Invalid start date';

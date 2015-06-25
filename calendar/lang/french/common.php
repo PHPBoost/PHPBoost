@@ -106,6 +106,11 @@ $lang['calendar.seo.description.pending'] = 'Tous les événements en attente.';
 //Feed name
 $lang['calendar.feed.name'] = 'Evénements';
 
+//Messages
+$lang['calendar.message.success.add'] = 'L\'événement <b>:title</b> a été ajouté';
+$lang['calendar.message.success.edit'] = 'L\'événement <b>:title</b> a été modifié';
+$lang['calendar.message.success.delete'] = 'L\'événement <b>:title</b> a été supprimé';
+
 //Erreurs
 $lang['calendar.error.e_invalid_date'] = 'La date entrée est invalide';
 $lang['calendar.error.e_invalid_start_date'] = 'La date de début entrée est invalide';

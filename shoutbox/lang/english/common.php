@@ -53,6 +53,10 @@ $lang['config.shout_max_messages_number'] = 'Maximum number of message to displa
 $lang['config.shout_bbcode_enabled'] = 'Display a small BBcode bar before the send button';
 $lang['config.validation_onkeypress_enter_enabled'] = 'Send message when pressing enter';
 
+//Messages
+$lang['shoutbox.message.success.delete'] = 'The message has been deleted';
+
+//Errors
 $lang['error.message.delete'] = 'Error occurred while message deleting';
 $lang['error.post.unauthorized'] = 'You are not authorized to post a message!';
 ?>

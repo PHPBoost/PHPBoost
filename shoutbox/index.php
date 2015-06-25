@@ -40,7 +40,7 @@ $url_controller_mappers = array(
 	
 	//Archives
 	new UrlControllerMapper('ShoutboxFormController', '`^/add/?$`'),
-	new UrlControllerMapper('ShoutboxFormController', '`^/([0-9]+)/edit/?$`', array('id')),
+	new UrlControllerMapper('ShoutboxFormController', '`^/([0-9]+)/edit/?([0-9]+)?/?$`', array('id', 'page')),
 	new UrlControllerMapper('ShoutboxDeleteController', '`^/([0-9]+)/delete/?$`', array('id')),
 	new UrlControllerMapper('ShoutboxHomeController', '`^(?:/([0-9]+))?/?$`', array('page'))
 );

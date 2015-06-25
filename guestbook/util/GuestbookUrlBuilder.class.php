@@ -61,19 +61,18 @@ class GuestbookUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function edit($id, $redirect = null)
+	public static function edit($id, $page = 1)
 	{
-		$redirect = $redirect !== null ? '?redirect=' . $redirect : '';
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/edit/' . $redirect);
+		$page = $page !== 1 ? $page : '';
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/edit/' . $page);
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function delete($id, $redirect = null)
+	public static function delete($id)
 	{
-		$redirect = $redirect !== null ? 'redirect=' . $redirect . '&' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/?' . $redirect . 'token=' . AppContext::get_session()->get_token());
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/?token=' . AppContext::get_session()->get_token());
 	}
 }
 ?>

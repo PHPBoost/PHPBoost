@@ -168,8 +168,8 @@ class ShoutboxMessage
 			
 			'U_ANCHOR' => ShoutboxUrlBuilder::home($page, $this->id)->rel(),
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
-			'U_EDIT' => ShoutboxUrlBuilder::edit($this->id, ShoutboxUrlBuilder::home($page, $this->id)->relative())->rel(),
-			'U_DELETE' => ShoutboxUrlBuilder::delete($this->id, ShoutboxUrlBuilder::home($page)->relative())->rel()
+			'U_EDIT' => ShoutboxUrlBuilder::edit($this->id, $page)->rel(),
+			'U_DELETE' => ShoutboxUrlBuilder::delete($this->id)->rel()
 		);
 	}
 }

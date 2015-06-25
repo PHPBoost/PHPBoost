@@ -166,8 +166,8 @@ class GuestbookMessage
 			
 			'U_ANCHOR' => GuestbookUrlBuilder::home($page, $this->id)->rel(),
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
-			'U_EDIT' => GuestbookUrlBuilder::edit($this->id, GuestbookUrlBuilder::home($page, $this->id)->relative())->rel(),
-			'U_DELETE' => GuestbookUrlBuilder::delete($this->id, GuestbookUrlBuilder::home($page)->relative())->rel()
+			'U_EDIT' => GuestbookUrlBuilder::edit($this->id, $page)->rel(),
+			'U_DELETE' => GuestbookUrlBuilder::delete($this->id)->rel()
 		);
 	}
 }

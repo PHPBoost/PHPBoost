@@ -53,6 +53,10 @@ $lang['config.shout_max_messages_number'] = 'Nombre de messages maximum à affich
 $lang['config.shout_bbcode_enabled'] = 'Afficher une mini barre BBcode avant le bouton Envoyer';
 $lang['config.validation_onkeypress_enter_enabled'] = 'Envoyer le message en appuyant sur la touche Entrée';
 
+//Messages
+$lang['shoutbox.message.success.delete'] = 'Le message a été supprimé';
+
+//Errors
 $lang['error.message.delete'] = 'Erreur lors de la suppression du message';
 $lang['error.post.unauthorized'] = 'Vous n\'êtes pas autorisé à ajouter un message !';
 ?>

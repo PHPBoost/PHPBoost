@@ -42,6 +42,7 @@ class CalendarFormController extends ModuleController
 	private $lang;
 	
 	private $event;
+	private $is_new_event;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -205,6 +206,7 @@ class CalendarFormController extends ModuleController
 			}
 			else
 			{
+				$this->is_new_event = true;
 				$this->event = new CalendarEvent();
 				$this->event->init_default_properties($request->get_getint('year', date('Y')), $request->get_getint('month', date('n')), $request->get_getint('day', date('j')));
 				
@@ -473,11 +475,11 @@ class CalendarFormController extends ModuleController
 		}
 		elseif ($event->get_content()->is_approved())
 		{
-			AppContext::get_response()->redirect($this->form->get_value('referrer') ? $this->form->get_value('referrer') : CalendarUrlBuilder::home($event->get_start_date()->get_year(), $event->get_start_date()->get_month(), $event->get_start_date()->get_day() , true));
+			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : CalendarUrlBuilder::home($event->get_start_date()->get_year(), $event->get_start_date()->get_month(), $event->get_start_date()->get_day() , true)), StringVars::replace_vars($this->is_new_event ? $this->lang['calendar.message.success.add'] : $this->lang['calendar.message.success.edit'], array('title' => $event->get_content()->get_title())));
 		}
 		else
 		{
-			AppContext::get_response()->redirect($this->form->get_value('referrer') ? $this->form->get_value('referrer') : CalendarUrlBuilder::display_pending_events());
+			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : CalendarUrlBuilder::display_pending_events()), StringVars::replace_vars($this->is_new_event ? $this->lang['calendar.message.success.add'] : $this->lang['calendar.message.success.edit'], array('title' => $event->get_content()->get_title())));
 		}
 	}
 	
