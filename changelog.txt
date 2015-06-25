@@ -101,6 +101,7 @@
 
 [b]News[/b]
 [*] Affichage des sources lors de l'affichage des catégories de news
+[*] Possibilité de récupérer la date de création d'une news avec le jour, le mois et l'année séparés dans le template pour plus de personnalisation
 
 [b]Newsletter[/b]
 [*] Ajout de la possibilité de supprimer une archive
