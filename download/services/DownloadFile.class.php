@@ -172,7 +172,7 @@ class DownloadFile
 		{
 			return FormatingHelper::second_parse($this->short_contents);
 		}
-		return substr(@strip_tags($this->contents, '<br>'), 0, DownloadConfig::NUMBER_CARACTERS_BEFORE_CUT);
+		return substr(@strip_tags($this->contents, '<br><br/>'), 0, DownloadConfig::NUMBER_CARACTERS_BEFORE_CUT);
 	}
 	
 	public function get_approbation_type()
@@ -447,6 +447,7 @@ class DownloadFile
 	public function get_array_tpl_vars()
 	{
 		$category = $this->get_category();
+		$contents = FormatingHelper::second_parse($this->contents);
 		$description = $this->get_real_short_contents();
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
@@ -456,7 +457,7 @@ class DownloadFile
 			'C_VISIBLE' => $this->is_visible(),
 			'C_EDIT' => $this->is_authorized_to_edit(),
 			'C_DELETE' => $this->is_authorized_to_delete(),
-			'C_READ_MORE' => strlen($description) >= DownloadConfig::NUMBER_CARACTERS_BEFORE_CUT,
+			'C_READ_MORE' => !$this->is_short_contents_enabled() && $description != $contents && strlen($description) >= DownloadConfig::NUMBER_CARACTERS_BEFORE_CUT,
 			'C_SIZE' => !empty($this->size),
 			'C_PICTURE' => $this->has_picture(),
 			'C_CUSTOM_AUTHOR_DISPLAY_NAME' => $this->is_author_display_name_enabled(),
@@ -467,7 +468,7 @@ class DownloadFile
 			'ID' => $this->id,
 			'NAME' => $this->name,
 			'SIZE' => $this->formated_size,
-			'CONTENTS' => FormatingHelper::second_parse($this->contents),
+			'CONTENTS' => $contents,
 			'DESCRIPTION' => $description,
 			'DATE' => $this->creation_date->format(Date::FORMAT_DAY_MONTH_YEAR),
 			'DATE_ISO8601' => $this->creation_date->format(Date::FORMAT_ISO8601),

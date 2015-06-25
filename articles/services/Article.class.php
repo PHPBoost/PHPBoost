@@ -140,7 +140,7 @@ class Article
 		else
 		{
 			$clean_contents = preg_split('`\[page\].+\[/page\](.*)`Us', $this->contents, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-			return substr(@strip_tags($clean_contents[0], '<br>'), 0, ArticlesConfig::load()->get_number_character_to_cut());
+			return substr(@strip_tags($clean_contents[0], '<br><br/>'), 0, ArticlesConfig::load()->get_number_character_to_cut());
 		}
 	}
 	
@@ -454,7 +454,7 @@ class Article
 			'C_DATE_UPDATED' => $this->date_updated != null,
 			'C_AUTHOR_DISPLAYED' => $this->get_author_name_displayed(),
 			'C_NOTATION_ENABLED' => $this->get_notation_enabled(),
-			'C_READ_MORE' => strlen($description) >= ArticlesConfig::load()->get_number_character_to_cut(),
+			'C_READ_MORE' => !$this->get_description_enabled() && $description != FormatingHelper::second_parse($this->contents) && strlen($description) >= ArticlesConfig::load()->get_number_character_to_cut(),
 			'C_SOURCES' => $nbr_sources > 0,
 			
 			//Articles

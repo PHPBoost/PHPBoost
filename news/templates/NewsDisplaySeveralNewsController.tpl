@@ -47,7 +47,7 @@
 
 				<div class="content">
 					# IF news.C_PICTURE #<img itemprop="thumbnailUrl" src="{news.U_PICTURE}" alt="{news.NAME}" title="{news.NAME}" class="right" /># ENDIF #
-					<div itemprop="text"># IF C_DISPLAY_CONDENSED_CONTENT # {news.DESCRIPTION}... <a href="{news.U_LINK}">[${LangLoader::get_message('read-more', 'common')}]</a># ELSE # {news.CONTENTS} # ENDIF #</div>
+					<div itemprop="text"># IF C_DISPLAY_CONDENSED_CONTENT # {news.DESCRIPTION}# IF news.C_READ_MORE #... <a href="{news.U_LINK}">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF ## ELSE # {news.CONTENTS} # ENDIF #</div>
 				</div>
 				
 				# IF news.C_SOURCES #

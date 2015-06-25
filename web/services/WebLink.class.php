@@ -155,7 +155,7 @@ class WebLink
 		{
 			return FormatingHelper::second_parse($this->short_contents);
 		}
-		return substr(@strip_tags($this->contents, '<br>'), 0, WebConfig::NUMBER_CARACTERS_BEFORE_CUT);
+		return substr(@strip_tags($this->contents, '<br><br/>'), 0, WebConfig::NUMBER_CARACTERS_BEFORE_CUT);
 	}
 	
 	public function get_approbation_type()
@@ -400,6 +400,7 @@ class WebLink
 	public function get_array_tpl_vars()
 	{
 		$category = $this->get_category();
+		$contents = FormatingHelper::second_parse($this->contents);
 		$description = $this->get_real_short_contents();
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
@@ -409,7 +410,7 @@ class WebLink
 			'C_VISIBLE' => $this->is_visible(),
 			'C_EDIT' => $this->is_authorized_to_edit(),
 			'C_DELETE' => $this->is_authorized_to_delete(),
-			'C_READ_MORE' => strlen($description) >= WebConfig::NUMBER_CARACTERS_BEFORE_CUT,
+			'C_READ_MORE' => !$this->is_short_contents_enabled() && $description != $contents && strlen($description) >= WebConfig::NUMBER_CARACTERS_BEFORE_CUT,
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			'C_IS_PARTNER' => $this->is_partner(),
 			'C_HAS_PARTNER_PICTURE' => $this->has_partner_picture(),
@@ -418,7 +419,7 @@ class WebLink
 			'ID' => $this->id,
 			'NAME' => $this->name,
 			'URL' => $this->url->absolute(),
-			'CONTENTS' => FormatingHelper::second_parse($this->contents),
+			'CONTENTS' => $contents,
 			'DESCRIPTION' => $description,
 			'DATE' => $this->creation_date->format(Date::FORMAT_DAY_MONTH_YEAR),
 			'DATE_ISO8601' => $this->creation_date->format(Date::FORMAT_ISO8601),

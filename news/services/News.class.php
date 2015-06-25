@@ -133,7 +133,7 @@ class News
 		{
 			return FormatingHelper::second_parse($this->short_contents);
 		}
-		return substr(@strip_tags($this->contents, '<br>'), 0, NewsConfig::load()->get_number_character_to_cut());
+		return substr(@strip_tags($this->contents, '<br><br/>'), 0, NewsConfig::load()->get_number_character_to_cut());
 	}
 		
 	public function get_short_contents_enabled()
@@ -378,7 +378,10 @@ class News
 	
 	public function get_array_tpl_vars()
 	{
+		$news_config = NewsConfig::load();
 		$category = $this->get_category();
+		$contents = FormatingHelper::second_parse($this->contents);
+		$description = $this->get_real_short_contents();
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		$number_comments = CommentsService::get_number_comments('news', $this->id);
@@ -391,14 +394,15 @@ class News
 			'C_DELETE' => $this->is_authorized_to_delete(),
 			'C_PICTURE' => $this->has_picture(),
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
-			'C_AUTHOR_DISPLAYED' => NewsConfig::load()->get_author_displayed(),
+			'C_AUTHOR_DISPLAYED' => $news_config->get_author_displayed(),
+			'C_READ_MORE' => !$this->get_short_contents_enabled() && $description != $contents && strlen($description) >= $news_config->get_number_character_to_cut(),
 			'C_SOURCES' => $nbr_sources > 0,
 
 			//News
 			'ID' => $this->id,
 			'NAME' => $this->name,
-			'CONTENTS' => FormatingHelper::second_parse($this->contents),
-			'DESCRIPTION' => $this->get_real_short_contents(),
+			'CONTENTS' => $contents,
+			'DESCRIPTION' => $description,
 			'DATE' => $this->creation_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT),
 			'DATE_ISO8601' => $this->creation_date->format(Date::FORMAT_ISO8601),
 			'STATUS' => $this->get_status(),
