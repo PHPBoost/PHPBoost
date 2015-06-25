@@ -113,15 +113,6 @@ class DownloadDisplayCategoryController extends ModuleController
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 		$cats_columns_width = floor(100 / $nbr_column_cats);
 		
-		$this->tpl->put_all(array(
-			'C_CATEGORY' => true,
-			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
-			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
-			'C_SUBCATEGORIES_PAGINATION' => $pagination->has_several_pages(),
-			'SUBCATEGORIES_PAGINATION' => $pagination->display(),
-			'CATS_COLUMNS_WIDTH' => $cats_columns_width
-		));
-		
 		$condition = 'WHERE id_category = :id_category
 		AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))';
 		$parameters = array(
@@ -181,6 +172,12 @@ class DownloadDisplayCategoryController extends ModuleController
 			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
 			'C_MODERATION' => DownloadAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
+			'C_CATEGORY' => true,
+			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
+			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
+			'C_SUBCATEGORIES_PAGINATION' => $pagination->has_several_pages(),
+			'SUBCATEGORIES_PAGINATION' => $pagination->display(),
+			'CATS_COLUMNS_WIDTH' => $cats_columns_width,
 			'PAGINATION' => $pagination->display(),
 			'TABLE_COLSPAN' => 4 + (int)$config->are_comments_enabled() + (int)$config->is_notation_enabled(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),

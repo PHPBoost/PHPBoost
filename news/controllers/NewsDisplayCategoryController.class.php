@@ -85,11 +85,13 @@ class NewsDisplayCategoryController extends ModuleController
 			'C_DISPLAY_LIST_TYPE' => $news_config->get_display_type() == NewsConfig::DISPLAY_LIST,
 			'C_DISPLAY_CONDENSED_CONTENT' => $news_config->get_display_condensed_enabled(),
 			'C_COMMENTS_ENABLED' => $news_config->get_comments_enabled(),
+			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
+			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			
 			'C_NEWS_NO_AVAILABLE' => $result->get_rows_count() == 0,
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
-		
+			
 			'C_SEVERAL_COLUMNS' => $number_columns_display_news > 1,
 			'NUMBER_COLUMNS' => $number_columns_display_news
 		));
@@ -115,7 +117,7 @@ class NewsDisplayCategoryController extends ModuleController
 			
 			$i = 1;
 			foreach ($sources as $name => $url)
-			{	
+			{
 				$this->tpl->assign_block_vars('news.sources', array(
 					'C_SEPARATOR' => $i < $nbr_sources,
 					'NAME' => $name,

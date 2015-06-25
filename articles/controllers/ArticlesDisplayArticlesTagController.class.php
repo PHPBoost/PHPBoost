@@ -79,7 +79,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 
 		$mode = $request->get_getstring('sort', 'desc');
 		$field = $request->get_getstring('field', 'date');
-			
+		
 		$sort_mode = ($mode == 'asc') ? 'ASC' : 'DESC';
 		switch ($field)
 		{
@@ -102,14 +102,6 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 				$sort_field = 'date_created';
 				break;
 		}
-		
-		$this->view->put_all(array(
-			'C_MOSAIC' => $config->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
-			'C_ARTICLES_CAT' => false,
-			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
-			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
-			'C_ARTICLES_FILTERS' => true,
-		));
 		
 		$authorized_categories = ArticlesService::get_authorized_categories(Category::ROOT_CATEGORY);
 		
@@ -145,6 +137,12 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
 			'C_NO_ARTICLE_AVAILABLE' => $result->get_rows_count() == 0,
+			'C_MOSAIC' => $config->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
+			'C_ARTICLES_CAT' => false,
+			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
+			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
+			'C_ARTICLES_FILTERS' => true,
+			'CATEGORY_NAME' => $this->get_keyword()->get_name()
 		));
 		
 		while ($row = $result->fetch())
