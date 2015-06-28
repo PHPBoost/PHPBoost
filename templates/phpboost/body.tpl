@@ -172,11 +172,11 @@
 		
 		<div class="footer-infos">
 			<span>
-				{L_POWERED_BY} <a href="http://www.phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {L_PHPBOOST_RIGHT}
+				{L_POWERED_BY} <a href="http://www.phpboost.com" title="PHPBoost">PHPBoost</a> {L_PHPBOOST_RIGHT}
 			</span>	
 			# IF C_DISPLAY_BENCH #
 			<span>
-				&nbsp;|&nbsp;		
+				&nbsp;|&nbsp;
 				{L_ACHIEVED} {BENCH}{L_UNIT_SECOND} - {REQ} {L_REQ} - {MEMORY_USED}
 			</span>	
 			# ENDIF #
