@@ -67,7 +67,7 @@ class DataStoreFactory
 	{
 		if (self::$apc_available === null)
 		{
-			if (function_exists('apc_cache_info'))
+			if (function_exists('apc_cache_info') && (extension_loaded('apc') || extension_loaded('apcu')) && ini_get('apc.enabled'))
 			{
 				self::$apc_available = true;
 			}
@@ -87,7 +87,7 @@ class DataStoreFactory
 			if ($file->exists())
 			{
 				include $file->get_path();
-				if ((extension_loaded('apc') || extension_loaded('apcu')) && ini_get('apc.enabled') && isset($enable_apc))
+				if (isset($enable_apc))
 				{
 					return $enable_apc;
 				}
