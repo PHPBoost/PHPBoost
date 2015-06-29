@@ -93,7 +93,7 @@
 								<a class="small" href="${relative_url(UserUrlBuilder::connect())}"><i class="fa fa-sign-in"></i> {L_CONNECT}</a> <span style="color:#000000;">&bull;</span> <a class="small" href="${relative_url(UserUrlBuilder::registration())}"><i class="fa fa-ticket"></i> {L_REGISTER}</a>
 								# ENDIF #
 								# IF C_USER_CONNECTED #
-									<a class="small" href="?disconnect=true&amp;token={TOKEN}"><i class="fa fa-sign-out"></i> {L_DISCONNECT}</a> 
+									<a class="small" href="${relative_url(UserUrlBuilder::disconnect())}"><i class="fa fa-sign-out"></i> {L_DISCONNECT}</a> 
 								# ENDIF #
 							# ENDIF #
 						</div>
