@@ -57,13 +57,15 @@ interface TemplateData
 	 * <ul>
 	 * 	<li>THEME the theme used by the current user</li>
 	 * 	<li>LANG the lang used by the current user</li>
-	 * 	<li>C_USER_CONNECTED tells whether the user is connected (member, moderator or administrator)</li>
-	 * 	<li>C_USER_NOTCONNECTED is the negation of C_USER_CONNECTED</li>
+	 * 	<li>IS_USER_CONNECTED tells whether the user is connected (member, moderator or administrator)</li>
+	 * 	<li>IS_ADMIN tells whether the user is administrator</li>
+	 * 	<li>IS_MODERATOR tells whether the user is moderator</li>
 	 * 	<li>PATH_TO_ROOT is the path which starts from the domain root (in HTTP context) and goes to the PHPBoost
 	 * root. For instance if PHPBoost is installed at www.example.com/directory/, its value will be /directory.</li>
 	 * 	<li>PHP_PATH_TO_ROOT is the server side path, it's the path which goes to the PHPBoost's root.</li>
 	 * 	<li>TOKEN is the CSRF protection token. It's to use in the critical actions to show that the user really
 	 * intended doing the action</li>
+	 * 	<li>REWRITED_SCRIPT the current url</li>
 	 * </ul>
 	 */
 	function auto_load_frequent_vars();
