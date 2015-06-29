@@ -30,7 +30,7 @@
  #						English						#
  ####################################################
 
-$lang['wiki_name'] = 'Wiki PHPBoost';
+$lang['wiki_name'] = 'Wiki ' . GeneralConfig::load()->get_site_name();
 $lang['index_text'] = 'Welcome on the wiki module!<br /><br />
 Here are some tips for a good start with this module :<br /><br />
 <ul class="formatter-ul">
