@@ -46,15 +46,13 @@ if (!empty($_POST['valid']))
 	PollConfig::save();
 	
 	###### Régénération du cache des sondages #######
-	$Cache->Generate_module_file('poll');
+	PollMiniMenuCache::invalidate();
 	
-	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT); 	
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 else
 {
 	$tpl = new FileTemplate('poll/admin_poll_config.tpl');
-
-	$Cache->load('poll');
 	
 	$config_authorizations = $poll_config->get_authorizations();
 	

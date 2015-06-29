@@ -31,42 +31,6 @@ class PollExtensionPointProvider extends ExtensionPointProvider
 	{
 		parent::__construct('poll');
 	}
-	
-	//Récupération du cache.
-	function get_cache()
-	{
-		$poll_config = PollConfig::load();
-		
-		//Liste des sondages affichés dans le mini module
-		$config_displayed_in_mini_module_list = $poll_config->get_displayed_in_mini_module_list();
-		
-		$_array_poll = '';
-		if (!empty($config_displayed_in_mini_module_list) && is_array($config_displayed_in_mini_module_list))
-		{
-			foreach ($config_displayed_in_mini_module_list as $key => $idpoll)
-			{
-				$poll = PersistenceContext::get_querier()->select_single_row(PREFIX . 'poll', array('id', 'question', 'votes', 'answers', 'type'), 'WHERE id = :id AND archive = 0 AND visible = 1', array('id' => $idpoll));
-				if (!empty($poll['id'])) //Sondage existant.
-				{
-					$array_answer = explode('|', $poll['answers']);
-					$array_vote = explode('|', $poll['votes']);
-
-					$total_vote = array_sum($array_vote);
-					$total_vote = ($total_vote == 0) ? 1 : $total_vote; //Empêche la division par 0.
-
-					$array_votes = array_combine($array_answer, $array_vote);
-					foreach ($array_votes as $answer => $nbrvote)
-						$array_votes[$answer] = NumberHelper::round(($nbrvote * 100 / $total_vote), 1);
-
-					$_array_poll .= $key . ' => array(\'id\' => ' . var_export($poll['id'], true) . ', \'question\' => ' . var_export($poll['question'], true) . ', \'votes\' => ' . var_export($array_votes, true) . ', \'total\' => ' . var_export($total_vote, true) . ', \'type\' => ' . var_export($poll['type'], true) . '),' . "\n";
-				}
-			}
-		}
-
-		$code = 'global $_array_poll;' . "\n\n" . '$_array_poll = array(' . $_array_poll . ');';
-
-		return $code;
-	}
 
 	public function home_page()
 	{

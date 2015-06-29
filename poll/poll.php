@@ -148,7 +148,7 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 			PersistenceContext::get_querier()->update(PREFIX . "poll", array('votes' => implode('|', $array_votes)), 'WHERE id = :id', array('id' => $poll['id']));
 			
 			if (in_array($poll['id'], $config_displayed_in_mini_module_list) ) //Vote effectué du mini poll => mise à jour du cache du mini poll.
-				$Cache->Generate_module_file('poll');
+				PollMiniMenuCache::invalidate();
 				
 			//Tout s'est bien déroulé, on redirige vers la page des resultats.
 			AppContext::get_response()->redirect(PATH_TO_ROOT . '/poll/poll' . url('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'));

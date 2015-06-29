@@ -27,8 +27,8 @@
 
 class PollSetup extends DefaultModuleSetup
 {
-	private static $poll_table;
-	private static $poll_ip_table;
+	public static $poll_table;
+	public static $poll_ip_table;
 
 	public static function __static()
 	{

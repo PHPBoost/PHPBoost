@@ -44,8 +44,6 @@ if ($del && !empty($id)) //Suppresion poll
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
-	$Cache->load('poll');
-	
 	//On supprime des tables config et reponses des polls.
 	PersistenceContext::get_querier()->delete(PREFIX . 'poll', 'WHERE id=:id', array('id' => $id));
 	
@@ -59,15 +57,13 @@ if ($del && !empty($id)) //Suppresion poll
 		
 		PollConfig::save();
 		
-		$Cache->Generate_module_file('poll');
+		PollMiniMenuCache::invalidate();
 	}
 	AppContext::get_response()->redirect('/poll/admin_poll.php');
 }
 elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
-	
-	$Cache->load('poll');
 	
 	$question = retrieve(POST, 'question', '');
 	$type = retrieve(POST, 'type', 0);

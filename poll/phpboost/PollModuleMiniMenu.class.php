@@ -27,36 +27,37 @@
 
 class PollModuleMiniMenu extends ModuleMiniMenu
 {    
-    public function get_default_block()
-    {
-    	return self::BLOCK_POSITION__RIGHT;
-    }
-    
+	public function get_default_block()
+	{
+		return self::BLOCK_POSITION__RIGHT;
+	}
+	
 	public function admin_display()
-    {
-        return '';
-    }
+	{
+		return '';
+	}
 
 	public function display($tpl = false)
-    {
-		global $Cache, $LANG, $_array_poll;
-	    $Cache->load('poll'); //Mini sondages en cache => $_array_poll.
+	{
+		global $LANG;
 		$poll_config = PollConfig::load();
 		$config_cookie_name = $poll_config->get_cookie_name();
 		
-	    if (!empty($_array_poll) && $_array_poll != array() && !Url::is_current_url('/poll/') && PollAuthorizationsService::check_authorizations()->read())
-	    {
-	    	//Chargement de la langue du module.
-	    	load_module_lang('poll');
-			$rand = array_rand($_array_poll);
-			if (array_key_exists($rand, $_array_poll))
+		$polls = PollMiniMenuCache::load()->get_polls();
+		
+		if (!empty($polls) && !Url::is_current_url('/poll/') && PollAuthorizationsService::check_authorizations()->read())
+		{
+			//Chargement de la langue du module.
+			load_module_lang('poll');
+			$rand = array_rand($polls);
+			if (array_key_exists($rand, $polls))
 			{
-				$poll_mini = $_array_poll[$rand]; //Sondage aléatoire.
-	
+				$poll_mini = $polls[$rand]; //Sondage aléatoire.
+				
 				$tpl = new FileTemplate('poll/poll_mini.tpl');
-	
+				
 				MenuService::assign_positions_conditions($tpl, $this->get_block());
-	
+				
 				#####################Résultats######################
 				//Si le cookie existe, on redirige vers les resulats, sinon on prend en compte le vote (vérification par ip plus tard).
 				$array_cookie = array();
@@ -132,8 +133,8 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 				return $tpl->render();
 			}
 			 return '';
-	    }
-	    return '';
-    }
+		}
+		return '';
+	}
 }
 ?>
