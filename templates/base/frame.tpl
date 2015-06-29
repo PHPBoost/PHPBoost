@@ -4,7 +4,7 @@
 		<title>{TITLE}</title>
 		<meta charset="iso-8859-1" />
 		# IF C_DESCRIPTION #<meta name="description" content="{SITE_DESCRIPTION}" /># ENDIF #
-		<meta name="generator" content="PHPBoost {PHPBOOST_VERSION}" />
+		<meta name="generator" content="PHPBoost" />
 		# IF C_CANONICAL_URL #<link rel="canonical" href="{U_CANONICAL}" /># ENDIF #
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
