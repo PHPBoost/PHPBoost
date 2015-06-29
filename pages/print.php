@@ -33,8 +33,6 @@ require_once('pages_defines.php');
 $encoded_title = retrieve(GET, 'title', '', TSTRING);
 $pages_config = PagesConfig::load();
 
-$Cache->load('pages');
-
 if (!empty($encoded_title)) //Si on connait son titre
 {
 	$page_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'pages', array('id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'redirect', 'contents'), 'WHERE encoded_title = :encoded_title', array('encoded_title' => $encoded_title));

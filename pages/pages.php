@@ -35,6 +35,7 @@ include_once('pages_functions.php');
 
 //Configuration des authorisations
 $config_authorizations = $pages_config->get_authorizations();
+$categories_cache = PagesCategoriesCache::load();
 
 $db_querier = PersistenceContext::get_querier();
 
@@ -61,11 +62,12 @@ if (!empty($encoded_title)) //Si on connait son titre
 	$id = $page_infos['id_cat'];
 	while ($id > 0)
 	{
-		//Si on a les droits de lecture sur la catégorie, on l'affiche	
-		if (empty($_PAGES_CATS[$id]['auth']) || AppContext::get_current_user()->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE))
-			$Bread_crumb->add($_PAGES_CATS[$id]['name'],
-				PagesUrlBuilder::get_link_item(Url::encode_rewrite($_PAGES_CATS[$id]['name'])));
-		$id = (int)$_PAGES_CATS[$id]['id_parent'];
+		$cat = $categories_cache->get_category($id);
+		//Si on a les droits de lecture sur la catégorie, on l'affiche
+		if ($cat['auth'] || AppContext::get_current_user()->check_auth($cat['auth'], READ_PAGE))
+			$Bread_crumb->add($cat['title'],
+				PagesUrlBuilder::get_link_item(Url::encode_rewrite($cat['title'])));
+		$id = (int)$cat['id_parent'];
 	}	
 	if (AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))
 		$Bread_crumb->add($LANG['pages'], url('pages.php'));
@@ -89,9 +91,10 @@ elseif ($id_com > 0)
 	$id = $page_infos['id_cat'];
 	while ($id > 0)
 	{
-		$Bread_crumb->add($_PAGES_CATS[$id]['name'],
-			PagesUrlBuilder::get_link_item(Url::encode_rewrite($_PAGES_CATS[$id]['name'])));
-		$id = (int)$_PAGES_CATS[$id]['id_parent'];
+		$cat = $categories_cache->get_category($id);
+		$Bread_crumb->add($cat['title'],
+			PagesUrlBuilder::get_link_item(Url::encode_rewrite($cat['title'])));
+		$id = (int)$cat['id_parent'];
 	}
 	if (AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))
 		$Bread_crumb->add($LANG['pages'], url('pages.php'));

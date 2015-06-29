@@ -52,6 +52,8 @@ $del_article = retrieve(GET, 'del', 0);
 //Configuration des authorisations
 $config_authorizations = $pages_config->get_authorizations();
 
+$categories = PagesCategoriesCache::load()->get_categories();
+
 //Variable d'erreur
 $error = '';
 if ($id_edit > 0)
@@ -67,8 +69,8 @@ if ($id_edit > 0)
 	$id = $page_infos['id_cat'];
 	while ($id > 0)
 	{
-		$Bread_crumb->add($_PAGES_CATS[$id]['name'], url('pages.php?title=' . Url::encode_rewrite($_PAGES_CATS[$id]['name']), Url::encode_rewrite($_PAGES_CATS[$id]['name'])));
-		$id = (int)$_PAGES_CATS[$id]['id_parent'];
+		$Bread_crumb->add($categories[$id]['title'], url('pages.php?title=' . Url::encode_rewrite($categories[$id]['title']), Url::encode_rewrite($categories[$id]['title'])));
+		$id = (int)$categories[$id]['id_parent'];
 	}
 	if (AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))
 		$Bread_crumb->add($LANG['pages'], url('pages.php'));
@@ -135,7 +137,7 @@ if (!empty($contents))
 				//On met à jour la table
 				PersistenceContext::get_querier()->update(PREFIX . 'pages', array('contents' => pages_parse($contents), 'count_hits' => $count_hits, 'activ_com' => $enable_com, 'auth' => $page_auth, 'display_print_link' => $display_print_link), 'WHERE id = :id', array('id' => $id_edit));
 				//Régénération du cache
-				$Cache->Generate_module_file('pages');
+				PagesCategoriesCache::invalidate();
 				//On redirige vers la page mise à jour
 				AppContext::get_response()->redirect('/pages/' . url('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title'], '&'));
 			}
@@ -161,7 +163,7 @@ if (!empty($contents))
 					$last_id_pages_cat = $result->get_last_inserted_id();
 					PersistenceContext::get_querier()->update(PREFIX . 'pages', array('id_cat' => $last_id_pages_cat), 'WHERE id = :id', array('id' => $last_id_page));
 					//Régénération du cache
-					$Cache->Generate_module_file('pages');
+					PagesCategoriesCache::invalidate();
 				}
 				//On redirige vers la page mise à jour
 				AppContext::get_response()->redirect('/pages/' . url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
@@ -228,7 +230,7 @@ if ($id_edit > 0)
 	//Génération de l'arborescence des catégories
 	$cats = array();
 	//numéro de la catégorie de la page ou de la catégorie
-	$id_cat_display = $page_infos['is_cat'] == 1 ? $_PAGES_CATS[$page_infos['id_cat']]['id_parent'] : $page_infos['id_cat'];
+	$id_cat_display = $page_infos['is_cat'] == 1 ? $categories[$page_infos['id_cat']]['id_parent'] : $page_infos['id_cat'];
 	$cat_list = display_cat_explorer($id_cat_display, $cats, 1);
 	
 	$tpl->put_all(array(

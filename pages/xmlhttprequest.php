@@ -6,7 +6,7 @@ require_once('../pages/pages_begin.php');
 require_once('../kernel/header_no_display.php');
 
 $id_cat = retrieve(POST, 'id_cat', 0);
-$select_cat = !empty($_GET['select_cat']) ? true : false;
+$select_cat = !empty($_GET['select_cat']);
 $selected_cat = retrieve(POST, 'selected_cat', 0);
 $display_select_link = !empty($_GET['display_select_link']) ? 1 : 0;
 $open_cat = retrieve(POST, 'open_cat', 0);
@@ -14,6 +14,8 @@ $root = !empty($_GET['root']) ? 1 : 0;
 
 //Configuration des authorisations
 $config_authorizations = $pages_config->get_authorizations();
+
+$categories = PagesCategoriesCache::load()->get_categories();
 
 //Listage des répertoires dont le répertoire parent est connu
 if ($id_cat != 0)
@@ -52,12 +54,11 @@ elseif ($select_cat && empty($open_cat) && $root == 0)
 	if ($selected_cat > 0)
 	{
 		$localisation = array();
-		$Cache->load('pages');
 		$id = $selected_cat; //Premier id
 		do
 		{
-			$localisation[] = $_PAGES_CATS[$id]['name'];
-			$id = (int)$_PAGES_CATS[$id]['id_parent'];
+			$localisation[] = $categories[$id]['title'];
+			$id = (int)$categories[$id]['id_parent'];
 		}	
 		while ($id > 0);
 		$localisation = array_reverse($localisation);
@@ -74,16 +75,16 @@ elseif (!empty($open_cat) || $root == 1)
 	$open_cat = $root == 1 ? 0 : $open_cat;
 	$return = '<ul>';
 	//Liste des catégories dans cette catégorie
-	foreach ($_PAGES_CATS as $key => $value)
+	foreach ($categories as $key => $cat)
 	{
-		if ($value['id_parent'] == $open_cat)
+		if ($cat['id_parent'] == $open_cat)
 		{
 			//Autorisation particulière ?
-			$special_auth = !empty($value['auth']);
+			$special_auth = !empty($cat['auth']);
 			//Vérification de l'autorisation d'éditer la page
-			if (($special_auth && AppContext::get_current_user()->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)))
+			if (($special_auth && AppContext::get_current_user()->check_auth($cat['auth'], READ_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)))
 			{
-				$return .= '<li><a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);"><i class="fa fa-folder"></i>' . $value['name'] . '</a></li>';
+				$return .= '<li><a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $cat['id_parent'] . ', 0);"><i class="fa fa-folder"></i>' . $cat['title'] . '</a></li>';
 			}
 		}
 	}

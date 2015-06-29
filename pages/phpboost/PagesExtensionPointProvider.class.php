@@ -25,69 +25,11 @@
  *
  ###################################################*/
  
-define('PAGES_MAX_SEARCH_RESULTS', 100);
-
 class PagesExtensionPointProvider extends ExtensionPointProvider
 {
 	public function __construct() //Constructeur de la classe
 	{
 		parent::__construct('pages');
-	}
-	
-	//Récupération du cache.
-	public function get_cache()
-	{
-		$pages_config = PagesConfig::load();
-		
-		//Catégories des pages
-		$code = 'global $_PAGES_CATS;' . "\n";
-		$code .= '$_PAGES_CATS = array();' . "\n\n";
-
-		$result = PersistenceContext::get_querier()->select("SELECT c.id, c.id_parent, c.id_page, p.title, p.auth
-		FROM " . PREFIX . "pages_cats c
-		LEFT JOIN " . PREFIX . "pages p ON p.id = c.id_page
-		ORDER BY p.title");
-		while ($row = $result->fetch())
-		{
-			$code .= '$_PAGES_CATS[' . $row['id'] . '] = ' .
-			var_export(array(
-			'id' => $row['id'],
-			'id_parent' => !empty($row['id_parent']) ? $row['id_parent'] : '0',
-			'name' => $row['title'],
-			'auth' => unserialize($row['auth'])
-			), true)
-			. ';' . "\n";
-		}
-		$result->dispose();
-		
-		return $code;
-	}
-
-	public static function _build_pages_cat_children($cats_tree, $cats, $id_parent = 0)
-	{
-		$i = 1;
-		$nb_cats = count($cats);
-		$children = array();
-		while ($i <= $nb_cats)
-		{
-			if ($cats[$i]['id_parent'] == $id_parent)
-			{
-				$id = $cats[$i]['id'];
-				$feeds_cat = new FeedsCat('pages', $id, $cats[$i]['name']);
-
-				// Decrease the complexity
-				unset($cats[$i]);
-				$cats = array_merge($cats); // re-index the array
-				$nb_cats = count($cats);
-
-				self::_build_pages_cat_children($feeds_cat, $cats, $id);
-				$cats_tree->add_child($feeds_cat);
-			}
-			else
-			{
-				$i++;
-			}
-		}
 	}
 	
 	public function comments()

@@ -30,17 +30,18 @@ if (defined('PHPBOOST') !== true)	exit;
 //Catégories (affichage si on connait la catégorie et qu'on veut reformer l'arborescence)
 function display_cat_explorer($id, &$cats, $display_select_link = 1)
 {
-	global $_PAGES_CATS;
-		
+	$categories_cache = PagesCategoriesCache::load();
+	
 	if ($id > 0)
 	{
 		$id_cat = $id;
 		//On remonte l'arborescence des catégories afin de savoir quelle catégorie développer
 		do
 		{
-			$cats[] = (int)$_PAGES_CATS[$id_cat]['id_parent'];
-			$id_cat = (int)$_PAGES_CATS[$id_cat]['id_parent'];
-		}	
+			$cat = $categories_cat->get_category($id);
+			$cats[] = (int)$cat['id_parent'];
+			$id_cat = (int)$cat['id_parent'];
+		}
 		while ($id_cat > 0);
 	}
 	
@@ -67,17 +68,15 @@ function display_cat_explorer($id, &$cats, $display_select_link = 1)
 //Fonction récursive pour l'affichage des catégories
 function show_cat_contents($id_cat, $cats, $id, $display_select_link)
 {
-	global $_PAGES_CATS;
-	
 	$line = '';
-	foreach ($_PAGES_CATS as $key => $value)
+	foreach (PagesCategoriesCache::load()->get_categories() as $key => $cat)
 	{
 		//Si la catégorie appartient à la catégorie explorée
-		if ($value['id_parent']  == $id_cat)
+		if ($cat['id_parent']  == $id_cat)
 		{
 			if (in_array($key, $cats)) //Si cette catégorie contient notre catégorie, on l'explore
 			{
-				$line .= '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="fa fa-minus-square-o" id="img2_' . $key . '"></i><i class="fa fa-folder-open" id="img_' . $key . '"></i></a><a id="class_' . $key . '" class="' . ($key == $id ? 'selected' : '') . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . $value['name'] . '</a><span id="cat_' . $key . '">
+				$line .= '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="fa fa-minus-square-o" id="img2_' . $key . '"></i><i class="fa fa-folder-open" id="img_' . $key . '"></i></a><a id="class_' . $key . '" class="' . ($key == $id ? 'selected' : '') . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . $cat['title'] . '</a><span id="cat_' . $key . '">
 				<ul>'
 				. show_cat_contents($key, $cats, $id, $display_select_link) . '</ul></span></li>';
 			}
@@ -87,9 +86,9 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link)
 				$sub_cats_number = PersistenceContext::get_querier()->count(PREFIX . "pages_cats", 'WHERE id_parent=:id_parent', array('id_parent' => $key));
 				//Si cette catégorie contient des sous catégories, on propose de voir son contenu
 				if ($sub_cats_number > 0)
-					$line .= '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="fa fa-plus-square-o" id="img2_' . $key . '"></i><i class="fa fa-folder" id="img_' . $key . '"></i></a><a class="' . ($key == $id ? 'selected' : '') . '" id="class_' . $key . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . $value['name'] . '</a><span id="cat_' . $key . '"></span></li>';
+					$line .= '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="fa fa-plus-square-o" id="img2_' . $key . '"></i><i class="fa fa-folder" id="img_' . $key . '"></i></a><a class="' . ($key == $id ? 'selected' : '') . '" id="class_' . $key . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . $cat['title'] . '</a><span id="cat_' . $key . '"></span></li>';
 				else //Sinon on n'affiche pas le "+"
-					$line .= '<li class="sub"><a id="class_' . $key . '" class="' . ($key == $id ? 'selected' : '') . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');"><i class="fa fa-folder"></i>' . $value['name'] . '</a></li>';
+					$line .= '<li class="sub"><a id="class_' . $key . '" class="' . ($key == $id ? 'selected' : '') . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');"><i class="fa fa-folder"></i>' . $cat['title'] . '</a></li>';
 			}
 		}
 	}
@@ -99,9 +98,8 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link)
 //Fonction qui détermine toutes les sous-catégories d'une catégorie (récursive)
 function pages_find_subcats(&$array, $id_cat)
 {
-	global $_PAGES_CATS;
 	//On parcourt les catégories et on détermine les catégories filles
-	foreach ($_PAGES_CATS as $key => $value)
+	foreach (PagesCategoriesCache::load()->get_categories() as $key => $cat)
 	{
 		if ($value['id_parent'] == $id_cat)
 		{
@@ -144,6 +142,37 @@ function link_unparse($contents)
 {
 	$contents = is_array($contents) ? $contents[0] : $contents;
 	return preg_replace('`<a href="/pages/([a-z0-9+#-]+)">(.*)</a>`sU', "[link=$1]$2[/link]", $contents);
+}
+
+function build_pages_cat_children($cats_tree, $cats, $id_parent = 0)
+{
+	if (!empty($cats))
+	{
+		$keys = array_keys($cats);
+		$i = $keys[0];
+		$nb_cats = count($cats);
+		$children = array();
+		while ($i < $nb_cats)
+		{
+			if ($cats[$i]['id_parent'] == $id_parent)
+			{
+				$id = $cats[$i]['id'];
+				$feeds_cat = new FeedsCat('pages', $id, $cats[$i]['title']);
+
+				// Decrease the complexity
+				unset($cats[$i]);
+				$cats = array_merge($cats); // re-index the array
+				$nb_cats = count($cats);
+
+				build_pages_cat_children($feeds_cat, $cats, $id);
+				$cats_tree->add_child($feeds_cat);
+			}
+			else
+			{
+				$i++;
+			}
+		}
+	}
 }
 
 ?>

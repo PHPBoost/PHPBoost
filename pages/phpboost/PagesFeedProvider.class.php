@@ -30,28 +30,21 @@ class PagesFeedProvider implements FeedProvider
 {
 	function get_feeds_list()
 	{
-		global $LANG, $Cache,$_PAGES_CATS;
-		if (!isset($_PAGES_CATS))
-			$Cache->load('pages');
+		global $LANG;
+		
+		require_once(PATH_TO_ROOT.'/pages/pages_functions.php');
 		
 		$cats_tree = new FeedsCat('pages', 0, $LANG['root']);
 
-		PagesExtensionPointProvider::_build_pages_cat_children($cats_tree, $_PAGES_CATS);
+		build_pages_cat_children($cats_tree, PagesCategoriesCache::load()->get_categories());
 		$feeds = new FeedsList();
 		$feeds->add_feed($cats_tree, Feed::DEFAULT_FEED_NAME);
 		return $feeds;
-		
-		global $Cache,$_PAGES_CATS;
-		if (!isset($_PAGES_CATS))
-			$Cache->load('pages');
-		$cat = new DeprecatedCategoriesManager('pages_cats', 'pages', $_PAGES_CATS);
-		$list = $cat->get_feeds_list();
-		return $list;
 	}
 
 	function get_feed_data_struct($idcat = 0, $name = '')
 	{
-		global $Cache,$LANG,$_PAGES_CAT;
+		global $LANG;
 		
 		$querier = PersistenceContext::get_querier();
 		$pages_config = PagesConfig::load();
@@ -59,8 +52,7 @@ class PagesFeedProvider implements FeedProvider
 		if (!defined('READ_PAGE'))
 			require_once(PATH_TO_ROOT.'/pages/pages_defines.php');
 		load_module_lang('pages');
-		$Cache->load('pages');
-
+		
 		$data = new FeedData();
 
 		$data->set_title($LANG['pages_rss_desc']);

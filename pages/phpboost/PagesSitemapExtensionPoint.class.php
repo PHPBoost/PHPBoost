@@ -39,12 +39,13 @@ class PagesSitemapExtensionPoint implements SitemapExtensionPoint
 
 	private function get_module_map($auth_mode)
 	{
-		global $_PAGES_CATS, $LANG,  $Cache;
-
+		global $LANG;
+		
 		include(PATH_TO_ROOT.'/pages/pages_defines.php');
 		load_module_lang('pages');
-		$Cache->load('pages');
 		$pages_config = PagesConfig::load();
+		$categories_cache = PagesCategoriesCache::load();
+		$categories = $categories_cache->get_categories();
 		
 		//Configuration des authorisations
 		$config_authorizations = $pages_config->get_authorizations();
@@ -53,14 +54,14 @@ class PagesSitemapExtensionPoint implements SitemapExtensionPoint
 		$module_map = new ModuleMap($pages_link, 'pages');
 
 		$id_cat = 0;
-		$keys = array_keys($_PAGES_CATS);
-		$num_cats = count($_PAGES_CATS);
+		$keys = array_keys($categories);
+		$num_cats = $categories_cache->get_number_categories();
 		$properties = array();
 
 		for ($j = 0; $j < $num_cats; $j++)
 		{
 			$id = $keys[$j];
-			$properties = $_PAGES_CATS[$id];
+			$properties = $categories[$id];
 			if ($auth_mode == Sitemap::AUTH_PUBLIC)
 			{
 				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $config_authorizations, READ_PAGE);
@@ -83,26 +84,28 @@ class PagesSitemapExtensionPoint implements SitemapExtensionPoint
 
 	private function create_module_map_sections($id_cat, $auth_mode)
 	{
-		global $_PAGES_CATS, $LANG;
+		global $LANG;
 		
 		$pages_config = PagesConfig::load();
+		$categories_cache = PagesCategoriesCache::load();
+		$categories = $categories_cache->get_categories();
 		
 		//Configuration des authorisations
 		$config_authorizations = $pages_config->get_authorizations();
 		
-		$this_category = new SitemapLink($_PAGES_CATS[$id_cat]['name'], new Url('/pages/' . url('pages.php?title='.Url::encode_rewrite($_PAGES_CATS[$id_cat]['name']), Url::encode_rewrite($_PAGES_CATS[$id_cat]['name']))));
-			
+		$this_category = new SitemapLink($categories[$id_cat]['title'], new Url('/pages/' . url('pages.php?title='.Url::encode_rewrite($categories[$id_cat]['title']), Url::encode_rewrite($categories[$id_cat]['title']))));
+		
 		$category = new SitemapSection($this_category);
 
 		$i = 0;
 
-		$keys = array_keys($_PAGES_CATS);
-		$num_cats = count($_PAGES_CATS);
+		$keys = array_keys($categories);
+		$num_cats = $categories_cache->get_number_categories();
 		$properties = array();
 		for ($j = 0; $j < $num_cats; $j++)
 		{
 			$id = $keys[$j];
-			$properties = $_PAGES_CATS[$id];
+			$properties = $categories[$id];
 			if ($auth_mode == Sitemap::AUTH_PUBLIC)
 			{
 				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $config_authorizations, READ_PAGE);

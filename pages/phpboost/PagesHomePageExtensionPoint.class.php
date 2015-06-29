@@ -43,7 +43,7 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $Cache, $Bread_crumb, $_PAGES_CATS, $PAGES_LANG, $LANG, $pages;
+		global $Bread_crumb, $LANG, $pages;
 		
 		$pages_config = PagesConfig::load();
 		
@@ -66,18 +66,16 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 		
 		//Liste des dossiers de la racine
 		$root = '';
-		if (!empty($_PAGES_CATS)) {
-			foreach ($_PAGES_CATS as $key => $value)
+		foreach (PagesCategoriesCache::load()->get_categories() as $key => $cat)
+		{
+			if ($cat['id_parent'] == 0)
 			{
-				if ($value['id_parent'] == 0)
+				//Autorisation particulière ?
+				$special_auth = !empty($cat['auth']);
+				//Vérification de l'autorisation d'éditer la page
+				if (($special_auth && AppContext::get_current_user()->check_auth($cat['auth'], READ_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)))
 				{
-					//Autorisation particulière ?
-					$special_auth = !empty($value['auth']);
-					//Vérification de l'autorisation d'éditer la page
-					if (($special_auth && AppContext::get_current_user()->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)))
-					{
-						$root .= '<li><a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);"><i class="fa fa-folder"></i>' . $value['name'] . '</a></li>';
-					}
+					$root .= '<li><a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $cat['id_parent'] . ', 0);"><i class="fa fa-folder"></i>' . $cat['title'] . '</a></li>';
 				}
 			}
 		}

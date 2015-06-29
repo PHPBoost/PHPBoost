@@ -43,7 +43,7 @@ if (!empty($_POST['update']))  //Mise à jour
 	PagesConfig::save();
 	
 	###### Régénération du cache #######
-	$Cache->Generate_module_file('pages');
+	PagesCategoriesCache::invalidate();
 	
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }

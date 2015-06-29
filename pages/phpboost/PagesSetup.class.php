@@ -27,8 +27,8 @@
 
 class PagesSetup extends DefaultModuleSetup
 {
-	private static $pages_table;
-	private static $pages_cats_table;
+	public static $pages_table;
+	public static $pages_cats_table;
 	/**
 	 * @var string[string] localized messages
 	 */

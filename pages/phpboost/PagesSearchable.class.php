@@ -36,22 +36,18 @@ class PagesSearchable extends AbstractSearchableExtensionPoint
 		$search = $args['search'];
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
 		
-		global $_PAGES_CATS,  $Cache;
 		require_once(PATH_TO_ROOT . '/pages/pages_defines.php');
-		$Cache->load('pages');
+		$categories = PagesCategoriesCache::load()->get_categories();
 		
-		$auth_cats = '';
-		if (is_array($_PAGES_CATS))
+		$unauth_cats = '';
+		if (!AppContext::get_current_user()->check_auth(PagesConfig::load()->get_authorizations(), READ_PAGE))
+			$unauth_cats .= '0,';
+		foreach ($categories as $id => $cat)
 		{
-			if (isset($_PAGES_CATS['auth']) && !AppContext::get_current_user()->check_auth($_PAGES_CATS['auth'], READ_PAGE))
-				$auth_cats .= '0,';
-			foreach ($_PAGES_CATS as $id => $key)
-			{
-				if (!AppContext::get_current_user()->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE))
-					$auth_cats .= $id.',';
-			}
+			if (!AppContext::get_current_user()->check_auth($cat['auth'], READ_PAGE))
+				$unauth_cats .= $id.',';
 		}
-		$auth_cats = !empty($auth_cats) ? " AND p.id_cat NOT IN (" . trim($auth_cats, ',') . ")" : '';
+		$unauth_cats = !empty($unauth_cats) ? " AND p.id_cat NOT IN (" . trim($unauth_cats, ',') . ")" : '';
 		
 		$results = array();
 		$result = PersistenceContext::get_querier()->select("SELECT ".
@@ -62,7 +58,7 @@ class PagesSearchable extends AbstractSearchableExtensionPoint
 		CONCAT('" . PATH_TO_ROOT . "/pages/pages.php?title=',p.encoded_title) AS `link`,
 		p.auth AS `auth`
 		FROM " . PREFIX . "pages p
-		WHERE ( FT_SEARCH(title, '".$args['search']."') OR FT_SEARCH(contents, '".$args['search']."') )".$auth_cats . "
+		WHERE ( FT_SEARCH(title, '".$args['search']."') OR FT_SEARCH(contents, '".$args['search']."') )".$unauth_cats . "
 		LIMIT 100 OFFSET 0");
 
 		while ($row = $result->fetch())

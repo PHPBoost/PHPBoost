@@ -52,6 +52,8 @@ $db_querier = PersistenceContext::get_querier();
 //Configuration des authorisations
 $config_authorizations = $pages_config->get_authorizations();
 
+$categories = PagesCategoriesCache::load()->get_categories();
+
 if (!empty($new_title) && $id_rename_post > 0)
 {
 	$page_infos = $db_querier->select_single_row(PREFIX . 'pages', array('id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat'), 'WHERE id = :id', array('id' => $id_rename_post));
@@ -169,12 +171,12 @@ elseif ($del_cat_post > 0 && $report_cat >= 0)
 		$db_querier->delete(PREFIX . 'pages_cats', 'WHERE id=:id', array('id' => $id_to_delete));
 		
 		CommentsService::delete_comments_topic_module('pages', $id_to_delete);
-		$Cache->Generate_module_file('pages');
+		PagesCategoriesCache::invalidate();
 		
 		//On redirige soit vers l'article parent soit vers la catégorie
-		if (array_key_exists($page_infos['id_cat'], $_PAGES_CATS) && $_PAGES_CATS[$page_infos['id_cat']]['id_parent'] > 0)
+		if (array_key_exists($page_infos['id_cat'], $categories) && $categories[$categories['id_cat']]['id_parent'] > 0)
 		{
-			$title = $_PAGES_CATS[$_PAGES_CATS[$page_infos['id_cat']]['id_parent']]['name'];
+			$title = $categories[$categories[$page_infos['id_cat']]['id_parent']]['title'];
 			AppContext::get_response()->redirect('/pages/' . url('pages.php?title=' . Url::encode_rewrite($title), Url::encode_rewrite($title), '&'));
 		}
 		else
@@ -188,11 +190,11 @@ elseif ($del_cat_post > 0 && $report_cat >= 0)
 		
 		$db_querier->update(PREFIX . 'pages', array('id_cat' => $report_cat), 'WHERE id_cat = :id', array('id' => $page_infos['id_cat'] ));
 		$db_querier->update(PREFIX . 'pages_cats', array('id_parent' => $report_cat), 'WHERE id_parent = :id', array('id' => $page_infos['id_cat'] ));
-		$Cache->Generate_module_file('pages');
+		PagesCategoriesCache::invalidate();
 		
-		if (array_key_exists($report_cat, $_PAGES_CATS))
+		if (array_key_exists($report_cat, $categories))
 		{
-			$title = $_PAGES_CATS[$report_cat]['name'];
+			$title = $categories[$report_cat]['title'];
 			AppContext::get_response()->redirect('/pages/' . url('pages.php?title=' . Url::encode_rewrite($title), Url::encode_rewrite($title), '&'));
 		}
 		else
@@ -223,9 +225,9 @@ if ($id_page > 0)
 	$id = $page_infos['id_cat'];
 	while ($id > 0)
 	{
-	if (empty($_PAGES_CATS[$id]['auth']) || AppContext::get_current_user()->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE))
-		$Bread_crumb->add($_PAGES_CATS[$id]['name'], url('pages.php?title=' . Url::encode_rewrite($_PAGES_CATS[$id]['name']), Url::encode_rewrite($_PAGES_CATS[$id]['name'])));
-		$id = (int)$_PAGES_CATS[$id]['id_parent'];
+		if (empty($categories[$id]['auth']) || AppContext::get_current_user()->check_auth($categories[$id]['auth'], READ_PAGE))
+			$Bread_crumb->add($categories[$id]['title'], url('pages.php?title=' . Url::encode_rewrite($categories[$id]['title']), Url::encode_rewrite($categories[$id]['title'])));
+			$id = (int)$categories[$id]['id_parent'];
 	}
 	if (AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))
 		$Bread_crumb->add($LANG['pages'], url('pages.php'));
@@ -259,11 +261,11 @@ if ($del_cat > 0)
 	$i = 1;
 	foreach ($cats as $key => $value)
 	{
-		$current_cat .= $_PAGES_CATS[$value]['name'] . (($i < $nbr_cats) ? ' / ' : '');
+		$current_cat .= $categories[$value]['title'] . (($i < $nbr_cats) ? ' / ' : '');
 		$i++;
 	}
 	if ($page_infos['id_cat'] > 0)
-		$current_cat .= ($nbr_cats > 0 ? ' / ' : '') . $_PAGES_CATS[$page_infos['id_cat']]['name'];
+		$current_cat .= ($nbr_cats > 0 ? ' / ' : '') . $categories[$page_infos['id_cat']]['title'];
 	else
 		$current_cat = $LANG['pages_no_selected_cat'];
 	
