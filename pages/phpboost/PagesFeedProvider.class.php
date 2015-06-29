@@ -30,6 +30,17 @@ class PagesFeedProvider implements FeedProvider
 {
 	function get_feeds_list()
 	{
+		global $LANG, $Cache,$_PAGES_CATS;
+		if (!isset($_PAGES_CATS))
+			$Cache->load('pages');
+		
+		$cats_tree = new FeedsCat('pages', 0, $LANG['root']);
+
+		PagesExtensionPointProvider::_build_pages_cat_children($cats_tree, $_PAGES_CATS);
+		$feeds = new FeedsList();
+		$feeds->add_feed($cats_tree, Feed::DEFAULT_FEED_NAME);
+		return $feeds;
+		
 		global $Cache,$_PAGES_CATS;
 		if (!isset($_PAGES_CATS))
 			$Cache->load('pages');
