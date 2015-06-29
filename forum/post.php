@@ -442,9 +442,14 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					
 					$now = new Date();
 					
-					$new_content = FormatingHelper::second_parse($last_message_content) . '<br /><br />-------------------------------------------<br /><em>' . $LANG['edit_on'] . ' ' . $now->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) . '</em><br /><br />' . $contents;
+					$new_content = FormatingHelper::second_parse($last_message_content) . '
+
+-------------------------------------------
+<em>' . $LANG['edit_on'] . ' ' . $now->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) . '</em>
+
+' . FormatingHelper::second_parse($contents);
 					
-					$Forumfct->Update_msg($idt_get, $topic['last_msg_id'], $new_content, $topic['last_user_id']); //Mise à jour du topic.
+					$Forumfct->Update_msg($idt_get, $topic['last_msg_id'], FormatingHelper::unparse($new_content), $topic['last_user_id']); //Mise à jour du topic.
 					$last_msg_id = $topic['last_msg_id'];
 				}
 				else
