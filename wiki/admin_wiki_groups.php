@@ -31,7 +31,6 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
 include_once('../wiki/wiki_auth.php');
-$Cache->load('wiki');
 
 $config = WikiConfig::load();
 
@@ -43,13 +42,13 @@ if (!empty($_POST['valid']))
 	
 	WikiConfig::save();
 	
-	###### Regénération du cache des catégories (liste déroulante dans le forum) #######
-	$Cache->Generate_module_file('wiki');
+	###### Regénération du cache des catégories #######
+	WikiCategoriesCache::invalidate();
 
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
-else	
-{		
+else
+{
 	$tpl = new FileTemplate('wiki/admin_wiki_groups.tpl');
 	
 	$tpl->put_all(array(

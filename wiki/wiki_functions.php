@@ -160,25 +160,25 @@ function wiki_display_menu($menu_list)
 }
 
 //Catégories (affichage si on connait la catégorie et qu'on veut reformer l'arborescence)
-function display_cat_explorer($id, &$cats, $display_select_link = 1)
+function display_wiki_cat_explorer($id, &$cats, $display_select_link = 1)
 {
-	global $_WIKI_CATS;
-		
+	$categories = WikiCategoriesCache::load()->get_categories();
+	
 	if ($id > 0)
 	{
 		$id_cat = $id;
 		//On remonte l'arborescence des catégories afin de savoir quelle catégorie développer
 		do
 		{
-			$cats[] = (int)$_WIKI_CATS[$id_cat]['id_parent'];
-			$id_cat = (int)$_WIKI_CATS[$id_cat]['id_parent'];
+			$cats[] = (int)$categories[$id_cat]['id_parent'];
+			$id_cat = (int)$categories[$id_cat]['id_parent'];
 		}	
 		while ($id_cat > 0);
 	}
 	
 
 	//Maintenant qu'on connait l'arborescence on part du début
-	$cats_list = '<ul class="no-list">' . show_cat_contents(0, $cats, $id, $display_select_link) . '</ul>';
+	$cats_list = '<ul class="no-list">' . show_wiki_cat_contents(0, $cats, $id, $display_select_link) . '</ul>';
 	
 	//On liste les catégories ouvertes pour la fonction javascript
 	$opened_cats_list = '';
@@ -196,21 +196,19 @@ function display_cat_explorer($id, &$cats, $display_select_link = 1)
 }
 
 //Fonction récursive pour l'affichage des catégories
-function show_cat_contents($id_cat, $cats, $id, $display_select_link)
+function show_wiki_cat_contents($id_cat, $cats, $id, $display_select_link)
 {
-	global $_WIKI_CATS;
-	
 	$line = '';
-	foreach ($_WIKI_CATS as $key => $value)
+	foreach (WikiCategoriesCache::load()->get_categories() as $key => $cat)
 	{
 		//Si la catégorie appartient à la catégorie explorée
-		if ($value['id_parent']  == $id_cat)
+		if ($cat['id_parent']  == $id_cat)
 		{
 			if (in_array($key, $cats)) //Si cette catégorie contient notre catégorie, on l'explore
 			{
-				$line .= '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="fa fa-minus-square-o" id="img2_' . $key . '"></i><i class="fa fa-folder-open" id="img_' . $key . '"></i></a><a id="class_' . $key . '" class="' . ($key == $id ? 'selected' : '') . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . $value['name'] . '</a><span id="cat_' . $key . '">
+				$line .= '<li class="sub"><a class="parent" href="javascript:show_wiki_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="fa fa-minus-square-o" id="img2_' . $key . '"></i><i class="fa fa-folder-open" id="img_' . $key . '"></i></a><a id="class_' . $key . '" class="' . ($key == $id ? 'selected' : '') . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . $cat['title'] . '</a><span id="cat_' . $key . '">
 				<ul class="no-list">'
-				. show_cat_contents($key, $cats, $id, $display_select_link) . '</ul></span></li>';
+				. show_wiki_cat_contents($key, $cats, $id, $display_select_link) . '</ul></span></li>';
 			}
 			else
 			{
@@ -218,9 +216,9 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link)
 				$sub_cats_number = PersistenceContext::get_querier()->count(PREFIX . "wiki_cats", 'WHERE id_parent = :id', array('id' => $key));
 				//Si cette catégorie contient des sous catégories, on propose de voir son contenu
 				if ($sub_cats_number > 0)
-					$line .= '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="fa fa-plus-square-o" id="img2_' . $key . '"></i><i class="fa fa-folder" id="img_' . $key . '"></i></a><a id="class_' . $key . '" class="' . ($key == $id ? 'selected' : '') . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . $value['name'] . '</a><span id="cat_' . $key . '"></span></li>';
+					$line .= '<li class="sub"><a class="parent" href="javascript:show_wiki_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="fa fa-plus-square-o" id="img2_' . $key . '"></i><i class="fa fa-folder" id="img_' . $key . '"></i></a><a id="class_' . $key . '" class="' . ($key == $id ? 'selected' : '') . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . $cat['title'] . '</a><span id="cat_' . $key . '"></span></li>';
 				else //Sinon on n'affiche pas le "+"
-					$line .= '<li class="sub"><a id="class_' . $key . '" class="' . ($key == $id ? 'selected' : '') . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');"><i class="fa fa-folder"></i>' . $value['name'] . '</a></li>';
+					$line .= '<li class="sub"><a id="class_' . $key . '" class="' . ($key == $id ? 'selected' : '') . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');"><i class="fa fa-folder"></i>' . $cat['title'] . '</a></li>';
 			}
 		}
 	}
@@ -230,9 +228,8 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link)
 //Fonction qui détermine toutes les sous-catégories d'une catégorie (récursive)
 function wiki_find_subcats(&$array, $id_cat)
 {
-	global $_WIKI_CATS;
 	//On parcourt les catégories et on détermine les catégories filles
-	foreach ($_WIKI_CATS as $key => $value)
+	foreach (WikiCategoriesCache::load()->get_categories() as $key => $value)
 	{
 		if ($value['id_parent'] == $id_cat)
 		{
@@ -243,4 +240,33 @@ function wiki_find_subcats(&$array, $id_cat)
 	}
 }
 
+function build_wiki_cat_children($cats_tree, $cats, $id_parent = 0)
+{
+	if (!empty($cats))
+	{
+		$i = 0;
+		$nb_cats = count($cats);
+		$children = array();
+		while ($i <= $nb_cats)
+		{
+			if (isset($cats[$i]) && $cats[$i]['id_parent'] == $id_parent)
+			{
+				$id = $cats[$i]['id'];
+				$feeds_cat = new FeedsCat('wiki', $id, $cats[$i]['title']);
+
+				// Decrease the complexity
+				unset($cats[$i]);
+				$cats = array_merge($cats); // re-index the array
+				$nb_cats = count($cats);
+
+				build_wiki_cat_children($feeds_cat, $cats, $id);
+				$cats_tree->add_child($feeds_cat);
+			}
+			else
+			{
+				$i++;
+			}
+		}
+	}
+}
 ?>

@@ -30,21 +30,13 @@ class WikiFeedProvider implements FeedProvider
 {
 	public function get_feeds_list()
 	{
-		$querier = PersistenceContext::get_querier();
 		global $LANG;
+		
+		require_once(PATH_TO_ROOT.'/wiki/wiki_functions.php');
+		
 		$cats_tree = new FeedsCat('wiki', 0, $LANG['root']);
-
-		$results = $querier->select("SELECT c.id, c.id_parent, a.title
-            FROM " . PREFIX . "wiki_cats c, " . PREFIX . "wiki_articles a
-            WHERE c.article_id = a.id");
-		$cats = array();
-		foreach ($results as $row)
-		{
-			$cats[] = $row;
-		}
-		$results->dispose();
-
-		WikiExtensionPointProvider::_build_wiki_cat_children($cats_tree, $cats);
+		$categories = WikiCategoriesCache::load()->get_categories();
+		build_wiki_cat_children($cats_tree, array_values($categories));
 		$feeds = new FeedsList();
 		$feeds->add_feed($cats_tree, Feed::DEFAULT_FEED_NAME);
 		return $feeds;
@@ -53,15 +45,16 @@ class WikiFeedProvider implements FeedProvider
 	public function get_feed_data_struct($idcat = 0, $name = '')
 	{
 		$querier = PersistenceContext::get_querier();
-		global $Cache, $LANG, $_WIKI_CATS;
+		global $LANG;
 
 		load_module_lang('wiki');
-		$Cache->load('wiki');
+		
+		$categories = WikiCategoriesCache::load()->get_categories();
 		$config = WikiConfig::load();
 		$parameters = array('limit' => 20);
-		if (($idcat > 0) && array_key_exists($idcat, $_WIKI_CATS))//Catégorie
+		if (($idcat > 0) && array_key_exists($idcat, $categories))//Catégorie
 		{
-			$desc = sprintf($LANG['wiki_rss_cat'], $_WIKI_CATS[$idcat]['name']);
+			$desc = sprintf($LANG['wiki_rss_cat'], $categories[$idcat]['title']);
 			$where = 'AND a.id_cat = :idcat';
 			$parameters['idcat'] = $idcat;
 		}
@@ -79,9 +72,6 @@ class WikiFeedProvider implements FeedProvider
 		$data->set_host(HOST);
 		$data->set_desc($desc);
 		$data->set_lang($LANG['xml_lang']);
-
-		// Load the new's config
-		$Cache->load('wiki');
 
 		// Last news
 		$results = $querier->select('SELECT a.title, a.encoded_title, c.content, c.timestamp

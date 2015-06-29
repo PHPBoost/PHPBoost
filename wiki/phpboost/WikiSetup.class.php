@@ -27,10 +27,10 @@
 
 class WikiSetup extends DefaultModuleSetup
 {
-	private static $wiki_articles_table;
-	private static $wiki_cats_table;
-	private static $wiki_contents_table;
-	private static $wiki_favorites_table;
+	public static $wiki_articles_table;
+	public static $wiki_cats_table;
+	public static $wiki_contents_table;
+	public static $wiki_favorites_table;
 
 	public static function __static()
 	{

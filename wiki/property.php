@@ -31,7 +31,6 @@ load_module_lang('wiki');
 $config = WikiConfig::load();
 
 require_once('../wiki/wiki_auth.php');
-$Cache->load('wiki');
 
 $random = retrieve(GET, 'random', false);
 $id_auth = retrieve(GET, 'auth', 0);
@@ -42,6 +41,8 @@ $redirect = retrieve(GET, 'redirect', 0);
 $create_redirection = retrieve(GET, 'create_redirection', 0);
 $idcom = retrieve(GET, 'idcom', 0);
 $del_article = retrieve(GET, 'del', 0);
+
+$categories = WikiCategoriesCache::load()->get_categories();
 
 if ($id_auth > 0) //Autorisations de l'article
 {
@@ -220,7 +221,7 @@ elseif ($wiki_status > 0)
 elseif ($move > 0) //On déplace l'article
 {
 	$cats = array();
-	$cat_list = display_cat_explorer($article_infos['id_cat'], $cats, 1);
+	$cat_list = display_wiki_cat_explorer($article_infos['id_cat'], $cats, 1);
 	$cats = array_reverse($cats);
 	if (array_key_exists(0, $cats))
 		unset($cats[0]);
@@ -229,11 +230,11 @@ elseif ($move > 0) //On déplace l'article
 	$i = 1;
 	foreach ($cats as $key => $value)
 	{
-		$current_cat .= $_WIKI_CATS[$value]['name'] . (($i < $nbr_cats) ? ' / ' : '');
+		$current_cat .= $categories[$value]['title'] . (($i < $nbr_cats) ? ' / ' : '');
 		$i++;
 	}
 	if ($article_infos['id_cat'] > 0)
-		$current_cat .= ($nbr_cats > 0 ? ' / ' : '') . $_WIKI_CATS[$article_infos['id_cat']]['name'];
+		$current_cat .= ($nbr_cats > 0 ? ' / ' : '') . $categories[$article_infos['id_cat']]['title'];
 		else
 			$current_cat = $LANG['wiki_no_selected_cat'];
 			
@@ -347,7 +348,7 @@ elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
 	else //Catégorie
 	{
 		$cats = array();
-		$cat_list = display_cat_explorer($article_infos['id_cat'], $cats);
+		$cat_list = display_wiki_cat_explorer($article_infos['id_cat'], $cats);
 		$cats = array_reverse($cats);
 		if (array_key_exists(0, $cats))
 			unset($cats[0]);
@@ -356,11 +357,11 @@ elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
 		$i = 1;
 		foreach ($cats as $key => $value)
 		{
-			$current_cat .= $_WIKI_CATS[$value]['name'] . (($i < $nbr_cats) ? ' / ' : '');
+			$current_cat .= $categories[$value]['title'] . (($i < $nbr_cats) ? ' / ' : '');
 			$i++;
 		}
 		if ($article_infos['id_cat'] > 0)
-			$current_cat .= ($nbr_cats > 0 ? ' / ' : '') . $_WIKI_CATS[$article_infos['id_cat']]['name'];
+			$current_cat .= ($nbr_cats > 0 ? ' / ' : '') . $categories[$article_infos['id_cat']]['title'];
 		else
 			$current_cat = $LANG['wiki_no_selected_cat'];
 				

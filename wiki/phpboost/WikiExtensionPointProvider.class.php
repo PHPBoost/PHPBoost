@@ -31,51 +31,6 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 	{
 		parent::__construct('wiki');
 	}
-
-	public function get_cache()
-	{
-		//Catégories du wiki
-		$config = 'global $_WIKI_CATS;' . "\n";
-		$config .= '$_WIKI_CATS = array();' . "\n";
-		$result = PersistenceContext::get_querier()->select("SELECT c.id, c.id_parent, c.article_id, a.title, a.encoded_title
-			FROM " . PREFIX . "wiki_cats c
-			LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.article_id
-			ORDER BY a.title");
-		while ($row = $result->fetch())
-		{
-			$config .= '$_WIKI_CATS[\'' . $row['id'] . '\'] = array(\'id_parent\' => ' . ( !empty($row['id_parent']) ? $row['id_parent'] : '0') . ', \'name\' => ' . var_export($row['title'], true) . ', \'encoded_title\' => ' . var_export($row['encoded_title'], true) . ');' . "\n";
-		}
-		$result->dispose();
-		
-		return $config;
-	}
-
-	public static function _build_wiki_cat_children($cats_tree, $cats, $id_parent = 0)
-	{
-		$i = 0;
-		$nb_cats = count($cats);
-		$children = array();
-		while ($i < $nb_cats)
-		{
-			if ($cats[$i]['id_parent'] == $id_parent)
-			{
-				$id = $cats[$i]['id'];
-				$feeds_cat = new FeedsCat('wiki', $id, $cats[$i]['title']);
-
-				// Decrease the complexity
-				unset($cats[$i]);
-				$cats = array_merge($cats); // re-index the array
-				$nb_cats = count($cats);
-
-				self::_build_wiki_cat_children($feeds_cat, $cats, $id);
-				$cats_tree->add_child($feeds_cat);
-			}
-			else
-			{
-				$i++;
-			}
-		}
-	}
 	
 	public function comments()
 	{

@@ -2,7 +2,7 @@
 		var cat_status = new Array();
 
 		//AJAX: fonction d'interaction avec le serveur
-		function show_cat_contents(id_cat, display_select_link)
+		function show_wiki_cat_contents(id_cat, display_select_link)
 		{
 			var xhr_object = null;
 			var data = null;

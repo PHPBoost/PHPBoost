@@ -28,12 +28,12 @@
 if (defined('PHPBOOST') !== true)	exit;
 
 require_once(PATH_TO_ROOT .'/wiki/wiki_auth.php');
-$Cache->load('wiki');
 $config = WikiConfig::load();
+$categories = WikiCategoriesCache::load()->get_categories();
 
 switch ($bread_crumb_key)
 {
-	case 'wiki':			
+	case 'wiki':
 		if (!empty($id_contents))
 			$Bread_crumb->add($LANG['wiki_history'], '');
 		if (!empty($article_infos['title']))
@@ -42,13 +42,13 @@ switch ($bread_crumb_key)
 				$Bread_crumb->add($article_infos['title'], url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
 			$id_cat = (int)$article_infos['id_cat'];
 		}
-		if (!empty($id_cat)  && is_array($_WIKI_CATS)) //Catégories infinies
+		if (!empty($id_cat)  && is_array($categories)) //Catégories infinies
 		{
 			$id = $id_cat; //Premier id
 			do
 			{
-				$Bread_crumb->add($_WIKI_CATS[$id]['name'], url('wiki.php?title=' . $_WIKI_CATS[$id]['encoded_title'], $_WIKI_CATS[$id]['encoded_title']));
-				$id = (int)$_WIKI_CATS[$id]['id_parent'];
+				$Bread_crumb->add($categories[$id]['title'], url('wiki.php?title=' . $categories[$id]['encoded_title'], $categories[$id]['encoded_title']));
+				$id = (int)$categories[$id]['id_parent'];
 			}	
 			while ($id > 0);
 		}
@@ -62,19 +62,18 @@ switch ($bread_crumb_key)
 				$Bread_crumb->add($article_infos['title'], url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
 		break;
 	case 'wiki_history_article':
-		$Cache->load('wiki');
 		$Bread_crumb->add($LANG['wiki_history'], url('history.php?id=' . $id_article));
 		$Bread_crumb->add($article_infos['title'], url('wiki.php?title=' . $article_infos['encoded_title']), $article_infos['encoded_title']);
 
 		$id_cat = (int)$article_infos['id_cat'];
-		if (!empty($id_cat)  && is_array($_WIKI_CATS)) //Catégories infinies
+		if (!empty($id_cat)  && is_array($categories)) //Catégories infinies
 		{
 			$id = $id_cat; //Premier id
 			do
 			{
-				$Bread_crumb->add($_WIKI_CATS[$id]['name'], url('wiki.php?title=' . $_WIKI_CATS[$id]['encoded_title'], $_WIKI_CATS[$id]['encoded_title']));
-				$id = (int)$_WIKI_CATS[$id]['id_parent'];
-			}	
+				$Bread_crumb->add($categories[$id]['title'], url('wiki.php?title=' . $categories[$id]['encoded_title'], $categories[$id]['encoded_title']));
+				$id = (int)$categories[$id]['id_parent'];
+			}
 			while ($id > 0);
 		}
 		$Bread_crumb->add(($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']), url('wiki.php'));
@@ -85,7 +84,6 @@ switch ($bread_crumb_key)
 		$Bread_crumb->add($LANG['wiki_contribuate'], '');
 		break;
 	case 'wiki_property':
-		$Cache->load('wiki');
 		if ($id_auth > 0)
 			$Bread_crumb->add($LANG['wiki_auth_management'], url('property.php?auth=' . $article_infos['id']));
 		elseif ($wiki_status > 0)
@@ -107,14 +105,14 @@ switch ($bread_crumb_key)
 			$Bread_crumb->add($article_infos['title'], url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
 			
 		$id_cat = !empty($article_infos['id_cat']) ? (int)$article_infos['id_cat'] : 0;
-		if ($id_cat > 0 && is_array($_WIKI_CATS)) //Catégories infinies
+		if ($id_cat > 0 && is_array($categories)) //Catégories infinies
 		{
 			$id = $id_cat;
 			do
 			{
-				$Bread_crumb->add($_WIKI_CATS[$id]['name'], url('wiki.php?title=' . $_WIKI_CATS[$id]['encoded_title'], $_WIKI_CATS[$id]['encoded_title']));
-				$id = (int)$_WIKI_CATS[$id]['id_parent'];
-			}	
+				$Bread_crumb->add($categories[$id]['title'], url('wiki.php?title=' . $categories[$id]['encoded_title'], $categories[$id]['encoded_title']));
+				$id = (int)$categories[$id]['id_parent'];
+			}
 			while ($id > 0);
 		}
 		$Bread_crumb->add(($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']), url('wiki.php'));

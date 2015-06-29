@@ -204,13 +204,13 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 		));
 		
 		$i = 0;
-		foreach ($_WIKI_CATS as $key => $value)
+		foreach (WikiCategoriesCache::load()->get_categories() as $key => $cat)
 		{
-			if ($value['id_parent'] == $id_cat)
+			if ($cat['id_parent'] == $id_cat)
 			{
 				$tpl->assign_block_vars('cat.list_cats', array(
-					'NAME' => $value['name'],
-					'U_CAT' => url('wiki.php?title=' . $value['encoded_title'], $value['encoded_title'])
+					'NAME' => $cat['title'],
+					'U_CAT' => url('wiki.php?title=' . $cat['encoded_title'], $cat['encoded_title'])
 				));
 				$i++;
 			}

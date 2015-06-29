@@ -43,7 +43,7 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $Cache, $Bread_crumb, $_WIKI_CATS, $LANG, $encoded_title, $id_article, $article_infos, $id_cat;
+		global $Bread_crumb, $LANG, $encoded_title, $id_article, $article_infos, $id_cat;
 
 		load_module_lang('wiki');
 		include_once(PATH_TO_ROOT . '/wiki/wiki_functions.php');
@@ -96,14 +96,14 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_CATS' => $LANG['wiki_cats_list']
 			));
 			$i = 0;
-			foreach ($_WIKI_CATS as $id => $infos)
+			foreach (WikiCategoriesCache::load()->get_categories() as $id => $cat)
 			{
 				//Si c'est une catégorie mère
-				if ($infos['id_parent'] == 0)
+				if ($cat['id_parent'] == 0)
 				{
 					$tpl->assign_block_vars('cat_list.list', array(
-						'CAT' => $infos['name'],
-						'U_CAT' => url('wiki.php?title=' . $infos['encoded_title'], $infos['encoded_title'])
+						'CAT' => $cat['title'],
+						'U_CAT' => url('wiki.php?title=' . $cat['encoded_title'], $cat['encoded_title'])
 					));
 					$i++;
 				}

@@ -39,23 +39,25 @@ class WikiSitemapExtensionPoint implements SitemapExtensionPoint
 
 	private function get_module_map($auth_mode)
 	{
-		global $_WIKI_CATS, $LANG,  $Cache;
+		global $LANG;
 		
 		load_module_lang('wiki');
-		$Cache->load('wiki');
+		
+		$categories_cache = WikiCategoriesCache::load();
+		$categories = $categories_cache->get_categories();
 		
 		$wiki_link = new SitemapLink($LANG['wiki'], new Url('/wiki/wiki.php'), Sitemap::FREQ_DEFAULT, Sitemap::PRIORITY_LOW);
 		$module_map = new ModuleMap($wiki_link, 'wiki');
 		
 		$id_cat = 0;
-	    $keys = array_keys($_WIKI_CATS);
-		$num_cats = count($_WIKI_CATS);
+	    $keys = array_keys($categories);
+		$num_cats = $categories_cache->get_number_categories();
 		$properties = array();
 		
 		for ($j = 0; $j < $num_cats; $j++)
 		{
 			$id = $keys[$j];
-			$properties = $_WIKI_CATS[$id];
+			$properties = $categories[$id];
 			if ($id != 0 && $properties['id_parent'] == $id_cat)
 			{
 				$module_map->add($this->create_module_map_sections($id, $auth_mode));
@@ -67,21 +69,24 @@ class WikiSitemapExtensionPoint implements SitemapExtensionPoint
 
 	private function create_module_map_sections($id_cat, $auth_mode)
 	{
-		global $_WIKI_CATS, $LANG;
+		global $LANG;
 		
-		$this_category = new SitemapLink($_WIKI_CATS[$id_cat]['name'], new Url('/wiki/' . url('wiki.php?title='.$_WIKI_CATS[$id_cat]['encoded_title'], $_WIKI_CATS[$id_cat]['encoded_title'])));
-			
+		$categories_cache = WikiCategoriesCache::load();
+		$categories = $categories_cache->get_categories();
+		
+		$this_category = new SitemapLink($categories[$id_cat]['title'], new Url('/wiki/' . url('wiki.php?title='.$categories[$id_cat]['encoded_title'], $categories[$id_cat]['encoded_title'])));
+		
 		$category = new SitemapSection($this_category);
 		
 		$i = 0;
 		
-		$keys = array_keys($_WIKI_CATS);
-		$num_cats = count($_WIKI_CATS);
+		$keys = array_keys($categories);
+		$num_cats = $categories_cache->get_number_categories();
 		$properties = array();
 		for ($j = 0; $j < $num_cats; $j++)
 		{
 			$id = $keys[$j];
-			$properties = $_WIKI_CATS[$id];
+			$properties = $categories[$id];
 			if ($id != 0 && $properties['id_parent'] == $id_cat)
 			{
 				$category->add($this->create_module_map_sections($id, $auth_mode));

@@ -43,12 +43,11 @@ $template = new FileTemplate('wiki/explorer.tpl');
 $module_data_path = $template->get_pictures_data_path();
 
 //Contenu de la racine:
-$Cache->load('wiki');
 $root = '';
-foreach ($_WIKI_CATS as $key => $value)
+foreach (WikiCategoriesCache::load()->get_categories() as $key => $cat)
 {
-	if ($value['id_parent'] == 0)
-		$root .= '<li><a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);"><i class="fa fa-folder"></i>' . $value['name'] . '</a></li>';
+	if ($cat['id_parent'] == 0)
+		$root .= '<li><a href="javascript:open_cat(' . $key . '); show_wiki_cat_contents(' . $cat['id_parent'] . ', 0);"><i class="fa fa-folder"></i>' . $cat['title'] . '</a></li>';
 }
 $result = PersistenceContext::get_querier()->select("SELECT title, id, encoded_title
 	FROM " . PREFIX . "wiki_articles a
@@ -82,7 +81,7 @@ while ($row = $result->fetch())
 	if ($sub_cats_number > 0)
 	{	
 		$template->assign_block_vars('list', array(
-			'DIRECTORY' => '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><i class="fa fa-plus-square-o" id="img2_' . $row['id'] . '"></i><i class="fa fa-folder" id ="img_' . $row['id'] . '"></i></a><a id="class_' . $row['id'] . '" href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>'
+			'DIRECTORY' => '<li class="sub"><a class="parent" href="javascript:show_wiki_cat_contents(' . $row['id'] . ', 0);"><i class="fa fa-plus-square-o" id="img2_' . $row['id'] . '"></i><i class="fa fa-folder" id ="img_' . $row['id'] . '"></i></a><a id="class_' . $row['id'] . '" href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>'
 		));
 	}
 	else

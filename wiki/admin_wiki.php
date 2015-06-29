@@ -32,7 +32,6 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 include_once('../wiki/wiki_functions.php');
 
-$Cache->load('wiki');
 $config = WikiConfig::load();
 
 $index_text = stripslashes(wiki_parse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED)));
@@ -53,10 +52,8 @@ if (!empty($_POST['update']))  //Mise à jour
 	WikiConfig::save();
 	
 	//Régénération du cache
-	$Cache->Generate_module_file('wiki');	
+	WikiCategoriesCache::invalidate();
 }
-
-$Cache->load('wiki');
 
 $tpl = new FileTemplate('wiki/admin_wiki.tpl');
 

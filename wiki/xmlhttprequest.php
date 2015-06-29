@@ -27,11 +27,13 @@ AppContext::get_session()->no_session_location(); //Permet de ne pas mettre jour
 require_once('../kernel/header_no_display.php');
 
 $id_cat = retrieve(POST, 'id_cat', 0);
-$select_cat = !empty($_GET['select_cat']) ? true : false;
+$select_cat = !empty($_GET['select_cat']);
 $selected_cat = retrieve(POST, 'selected_cat', 0);
 $display_select_link = !empty($_GET['display_select_link']) ? 1 : 0;
 $open_cat = retrieve(POST, 'open_cat', 0);
 $root = !empty($_GET['root']) ? 1 : 0;
+
+$categories = WikiCategoriesCache::load()->get_categories();
 
 //Listage des répertoires dont le répertoire parent est connu
 if ($id_cat != 0)
@@ -51,7 +53,7 @@ if ($id_cat != 0)
 		$sub_cats_number = PersistenceContext::get_querier()->count(PREFIX . "wiki_cats", 'WHERE id_parent = :id', array('id' => $row['id']));
 		//Si cette catégorie contient des sous catégories, on propose de voir son contenu
 		if ($sub_cats_number > 0)
-			echo '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="fa fa-plus-square-o" id="img2_' . $row['id'] . '"></i><i class="fa fa-folder" id ="img_' . $row['id'] . '"></i></a><a id="class_' . $row['id'] . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>';
+			echo '<li class="sub"><a class="parent" href="javascript:show_wiki_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="fa fa-plus-square-o" id="img2_' . $row['id'] . '"></i><i class="fa fa-folder" id ="img_' . $row['id'] . '"></i></a><a id="class_' . $row['id'] . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>';
 		else //Sinon on n'affiche pas le "+"
 			echo '<li class="sub"><a id="class_' . $row['id'] . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');"><i class="fa fa-folder"></i></span>' . $row['title'] . '</a></li>';
 	}
@@ -64,13 +66,12 @@ elseif ($select_cat && empty($open_cat) && $root == 0)
 	if ($selected_cat > 0)
 	{
 		$localisation = array();
-		$Cache->load('wiki');
 		$id = $selected_cat; //Permier id
 		do
 		{
-			$localisation[] = $_WIKI_CATS[$id]['name'];
-			$id = (int)$_WIKI_CATS[$id]['id_parent'];
-		}	
+			$localisation[] = $categories[$id]['title'];
+			$id = (int)$categories[$id]['id_parent'];
+		}
 		while ($id > 0);
 		$localisation = array_reverse($localisation);
 		echo implode(' / ', $localisation);
@@ -86,11 +87,10 @@ elseif (!empty($open_cat) || $root == 1)
 	$open_cat = $root == 1 ? 0 : $open_cat;
 	$return = '<ul class="no-list">';
 	//Liste des catégories dans cette catégorie
-	$Cache->load('wiki');
-	foreach ($_WIKI_CATS as $key => $value)
+	foreach ($categories as $key => $cat)
 	{
-		if ($value['id_parent'] == $open_cat)
-			$return .= '<li><a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);"><i class="fa fa-folder"></i>' . $value['name'] . '</a></li>';
+		if ($cat['id_parent'] == $open_cat)
+			$return .= '<li><a href="javascript:open_cat(' . $key . '); show_wiki_cat_contents(' . $cat['id_parent'] . ', 0);"><i class="fa fa-folder"></i>' . $cat['title'] . '</a></li>';
 	}
 	$result = PersistenceContext::get_querier()->select("SELECT title, id, encoded_title
 	FROM " . PREFIX . "wiki_articles a

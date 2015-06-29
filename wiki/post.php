@@ -58,6 +58,8 @@ $id_edit = $id_edit > 0 ? $id_edit : $id_edit_get;
 
 require_once('../kernel/header.php'); 
 
+$categories = WikiCategoriesCache::load()->get_categories();
+
 //Variable d'erreur
 $error = '';
 
@@ -166,17 +168,16 @@ if (!empty($contents)) //On enregistre un article
 					$result = PersistenceContext::get_querier()->insert(PREFIX . "wiki_cats", array('id_parent' => $new_id_cat, 'article_id' => $id_article));
 					//on récupère l'id de la dernière catégorie créée
 					$id_created_cat = $result->get_last_inserted_id();
-					PersistenceContext::get_querier()->update(PREFIX . "wiki_articles", array('id_contents' => $shout_contents, 'id_cat' => $id_created_cat), 'WHERE id = :id', array('id' => $id_article));
+					PersistenceContext::get_querier()->update(PREFIX . "wiki_articles", array('id_contents' => $id_contents, 'id_cat' => $id_created_cat), 'WHERE id = :id', array('id' => $id_article));
 					//On régénère le cache
-					$Cache->Generate_module_file('wiki');
+					WikiCategoriesCache::invalidate();
 				}
 				else
-					PersistenceContext::get_querier()->update(PREFIX . "wiki_articles", array('id_contents' => $shout_contents), 'WHERE id = :id', array('id' => $id_article));
+					PersistenceContext::get_querier()->update(PREFIX . "wiki_articles", array('id_contents' => $id_contents), 'WHERE id = :id', array('id' => $id_article));
 				
-                // Feeds Regeneration
-                
-                Feed::clear_cache('wiki');
-                
+				// Feeds Regeneration
+				Feed::clear_cache('wiki');
+				
 				$redirect = PersistenceContext::get_querier()->get_column_value(PREFIX . "wiki_articles", 'encoded_title', 'WHERE id = :id', array('id' => $id_article));
 				AppContext::get_response()->redirect(url('wiki.php?title=' . $redirect, $redirect, '' , '&'));
 			}
@@ -202,7 +203,13 @@ if ($id_edit > 0)//On édite
 		DispatchManager::redirect($error_controller);
 	} 
 	
-	$article_contents = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_contents', array('*'), 'WHERE id_contents = :id', array('id' => $article_infos['id_contents']));
+	try {
+		$article_contents = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_contents', array('*'), 'WHERE id_contents = :id', array('id' => $article_infos['id_contents']));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+	
 	$contents = $article_contents['content'];
 	if (!empty($article_contents['menu'])) //On reforme les paragraphes
 	{
@@ -236,13 +243,13 @@ else
 	}
 	
 	if (!empty($encoded_title))
-		$tpl->put('message_helper', MessageHelper::display($LANG['wiki_article_does_not_exist'], MessageHelper::WARNING));	
+		$tpl->put('message_helper', MessageHelper::display($LANG['wiki_article_does_not_exist'], MessageHelper::WARNING));
 	
-	if ($id_cat > 0 && array_key_exists($id_cat, $_WIKI_CATS)) //Catégorie préselectionnée
+	if ($id_cat > 0 && array_key_exists($id_cat, $categories)) //Catégorie préselectionnée
 	{
 		$tpl->assign_block_vars('create', array());
 		$cats = array();
-		$cat_list = display_cat_explorer($id_cat, $cats, 1);
+		$cat_list = display_wiki_cat_explorer($id_cat, $cats, 1);
 		$cats = array_reverse($cats);
 		if (array_key_exists(0, $cats))
 			unset($cats[0]);
@@ -251,10 +258,10 @@ else
 		$i = 1;
 		foreach ($cats as $key => $value)
 		{
-			$current_cat .= $_WIKI_CATS[$value]['name'] . (($i < $nbr_cats) ? ' / ' : '');
+			$current_cat .= $categories[$value]['title'] . (($i < $nbr_cats) ? ' / ' : '');
 			$i++;
 		}
-		$current_cat .= ($nbr_cats > 0 ? ' / ' : '') . $_WIKI_CATS[$id_cat]['name'];
+		$current_cat .= ($nbr_cats > 0 ? ' / ' : '') . $categories[$id_cat]['title'];
 		$tpl->put_all(array(
 			'SELECTED_CAT' => $id_cat,
 			'CAT_0' => '',
@@ -278,7 +285,7 @@ else
 			if ($sub_cats_number > 0)
 			{	
 				$tpl->assign_block_vars('create.list', array(
-					'DIRECTORY' => '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $row['id'] . ', 1);"><i class="fa fa-plus-square-o" id="img2_' . $row['id'] . '"></i><i class="fa fa-folder" id ="img_' . $row['id'] . '"></i></a><a id="class_' . $row['id'] . '" href="javascript:select_cat(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>'
+					'DIRECTORY' => '<li class="sub"><a class="parent" href="javascript:show_wiki_cat_contents(' . $row['id'] . ', 1);"><i class="fa fa-plus-square-o" id="img2_' . $row['id'] . '"></i><i class="fa fa-folder" id ="img_' . $row['id'] . '"></i></a><a id="class_' . $row['id'] . '" href="javascript:select_cat(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>'
 				));
 			}
 			else

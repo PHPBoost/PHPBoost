@@ -32,7 +32,6 @@ load_module_lang('wiki');
 $config = WikiConfig::load();
 
 require('../wiki/wiki_auth.php');
-$Cache->load('wiki');
 
 $id_auth = retrieve(POST, 'id_auth', 0);
 $id_status = retrieve(POST, 'id_status', 0);
@@ -55,6 +54,8 @@ $report_cat = retrieve(POST, 'report_cat', 0);
 $remove_action = retrieve(POST, 'action', ''); //Action à faire lors de la suppression
 
 $db_querier = PersistenceContext::get_querier();
+
+$categories = WikiCategoriesCache::load()->get_categories();
 
 if ($id_auth > 0)
 {
@@ -135,10 +136,10 @@ elseif ($move > 0) //Déplacement d'un article
 	
 	if ($article_infos['is_cat'] == 0)//Article: il ne peut pas y avoir de problème
 	{
-		if (array_key_exists($new_cat, $_WIKI_CATS) || $new_cat == 0)//Si la nouvelle catégorie existe
+		if (array_key_exists($new_cat, $categories) || $new_cat == 0)//Si la nouvelle catégorie existe
 		{
 			$db_querier->update(PREFIX . "wiki_articles", array('id_cat' => $new_cat), 'WHERE id = :id', array('id' => $move));
-			$Cache->Generate_module_file('wiki');
+			WikiCategoriesCache::invalidate();
 		}
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
@@ -153,7 +154,7 @@ elseif ($move > 0) //Déplacement d'un article
 		if (!in_array($new_cat, $sub_cats)) //Si l'ancienne catégorie ne contient pas la nouvelle (sinon boucle infinie)
 		{
 			$db_querier->update(PREFIX . "wiki_cats", array('id_parent' => $new_cat), 'WHERE id = :id', array('id' => $article_infos['id_cat']));
-			$Cache->Generate_module_file('wiki');
+			WikiCategoriesCache::invalidate();
 			//on redirige vers l'article
 			AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 		}
@@ -183,7 +184,7 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 	{
 		$db_querier->update(PREFIX . "wiki_articles", array('title' => $new_title), 'WHERE id = :id', array('id' => $id_to_rename));
 		
-		$Cache->Generate_module_file('wiki');
+		WikiCategoriesCache::invalidate();
 		Feed::clear_cache('wiki');
 		
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
@@ -209,7 +210,7 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 			{
 				$db_querier->update(PREFIX . "wiki_cats", array('article_id' => $new_id_article), 'WHERE id = :id', array('id' => $article_infos['id_cat']));
 			}
-			$Cache->Generate_module_file('wiki');
+			WikiCategoriesCache::invalidate();
     		 // Feeds Regeneration
              Feed::clear_cache('wiki');
 		   AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($new_title), Url::encode_rewrite($new_title), '&'));
@@ -219,7 +220,7 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 			$db_querier->update(PREFIX . "wiki_articles", array('title' => $new_title, 'encoded_title' => Url::encode_rewrite($new_title)), 'WHERE id = :id', array('id' => $id_to_rename));
 			
             //Cache Regeneration
-            $Cache->Generate_module_file('wiki');
+            WikiCategoriesCache::invalidate();
             Feed::clear_cache('wiki');
             
             AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($new_title), Url::encode_rewrite($new_title), '&'));
@@ -353,8 +354,8 @@ elseif ($del_article > 0) //Suppression d'un article
      
      Feed::clear_cache('wiki');
 	
-	if (array_key_exists($article_infos['id_cat'], $_WIKI_CATS))//Si elle  a une catégorie parente
-		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($_WIKI_CATS[$article_infos['id_cat']]['name']), Url::encode_rewrite($_WIKI_CATS[$article_infos['id_cat']]['name']), '&'));
+	if (array_key_exists($article_infos['id_cat'], $categories))//Si elle  a une catégorie parente
+		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($categories[$article_infos['id_cat']]['title']), Url::encode_rewrite($categories[$article_infos['id_cat']]['title']), '&'));
 	else
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php', '', '&'));
 }
@@ -384,7 +385,7 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 	if ($remove_action == 'move_all') //Vérifications préliminaires si on va tout supprimer
 	{	
 		//Si la nouvelle catégorie n'est pas une catégorie
-		if (!array_key_exists($report_cat, $_WIKI_CATS) && $report_cat > 0)
+		if (!array_key_exists($report_cat, $categories) && $report_cat > 0)
 			AppContext::get_response()->redirect('/wiki/' . url('property.php?del=' . $del_to_remove . '&error=e_not_a_cat#message_helper', '', '&'));
 			
 		//Si on ne la déplace pas dans une de ses catégories filles
@@ -419,16 +420,16 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 			$db_querier->delete(PREFIX . 'wiki_articles', 'WHERE id_cat=:id', array('id' => $id));
 			$db_querier->delete(PREFIX . 'wiki_cats', 'WHERE id=:id', array('id' => $id));
 		}
-		$Cache->Generate_module_file('wiki');
+		WikiCategoriesCache::invalidate();
 
 		// Feeds Regeneration
         
         Feed::clear_cache('wiki');
 		
 		//On redirige soit vers l'article parent soit vers la catégorie
-		if (array_key_exists($article_infos['id_cat'], $_WIKI_CATS) && $_WIKI_CATS[$article_infos['id_cat']]['id_parent'] > 0)
+		if (array_key_exists($article_infos['id_cat'], $categories) && $categories[$article_infos['id_cat']]['id_parent'] > 0)
 		{
-			$title = $_WIKI_CATS[$_WIKI_CATS[$article_infos['id_cat']]['id_parent']]['name'];
+			$title = $categories[$categories[$article_infos['id_cat']]['id_parent']]['title'];
 			AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($title), Url::encode_rewrite($title), '&'));
 		}
 		else
@@ -438,11 +439,11 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 	{
 		$db_querier->update(PREFIX . "wiki_articles", array('id_cat' => $report_cat), 'WHERE id_cat = :id', array('id' => $article_infos['id_cat']));
 		$db_querier->update(PREFIX . "wiki_cats", array('id_parent' => $report_cat), 'WHERE id_parent = :id', array('id' => $article_infos['id_cat']));
-		$Cache->Generate_module_file('wiki');
+		WikiCategoriesCache::invalidate();
 		
-		if (array_key_exists($report_cat, $_WIKI_CATS))
+		if (array_key_exists($report_cat, $categories))
 		{
-			$title = $_WIKI_CATS[$report_cat]['name'];
+			$title = $categories[$report_cat]['title'];
 			AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($title), Url::encode_rewrite($title), '&'));
 		}
 		else
