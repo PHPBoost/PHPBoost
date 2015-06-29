@@ -30,7 +30,7 @@ if (defined('PHPBOOST') !== true)	exit;
 //Catégories (affichage si on connait la catégorie et qu'on veut reformer l'arborescence)
 function display_cat_explorer($id, &$cats, $display_select_link = 1)
 {
-	$categories_cache = PagesCategoriesCache::load();
+	$categories = PagesCategoriesCache::load()->get_categories();
 	
 	if ($id > 0)
 	{
@@ -38,9 +38,8 @@ function display_cat_explorer($id, &$cats, $display_select_link = 1)
 		//On remonte l'arborescence des catégories afin de savoir quelle catégorie développer
 		do
 		{
-			$cat = $categories_cat->get_category($id);
-			$cats[] = (int)$cat['id_parent'];
-			$id_cat = (int)$cat['id_parent'];
+			$cats[] = (int)$categories[$id_cat]['id_parent'];
+			$id_cat = (int)$categories[$id_cat]['id_parent'];
 		}
 		while ($id_cat > 0);
 	}

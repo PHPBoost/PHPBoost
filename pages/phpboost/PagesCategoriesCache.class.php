@@ -40,8 +40,6 @@ class PagesCategoriesCache implements CacheData
 	{
 		$this->categories = array();
 		
-		$config = PagesConfig::load();
-		
 		$result = PersistenceContext::get_querier()->select("SELECT c.id, c.id_parent, c.id_page, p.title, p.auth
 		FROM " . PagesSetup::$pages_cats_table . " c
 		LEFT JOIN " . PagesSetup::$pages_table . " p ON p.id = c.id_page

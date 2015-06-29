@@ -65,7 +65,6 @@ if ($id_edit > 0)
 {
 	$page_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'pages', array('id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', 'display_print_link'), 'WHERE id = :id', array('id' => $id_edit));
 	$Bread_crumb->add(TITLE, url('post.php?id=' . $id_edit));
-	$Bread_crumb->add($page_infos['title'], url('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
 	$id = $page_infos['id_cat'];
 	while ($id > 0)
 	{

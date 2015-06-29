@@ -87,7 +87,6 @@ elseif ($id_com > 0)
 	$result->dispose();
 	define('TITLE', sprintf($LANG['pages_page_com'], $page_infos['title']));
 	$Bread_crumb->add($LANG['pages_com'], PagesUrlBuilder::get_link_item_com($id_com));
-	$Bread_crumb->add($page_infos['title'], PagesUrlBuilder::get_link_item($page_infos['encoded_title']));
 	$id = $page_infos['id_cat'];
 	while ($id > 0)
 	{
