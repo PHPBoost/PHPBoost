@@ -221,7 +221,6 @@ if ($id_page > 0)
 		$Bread_crumb->add($LANG['pages_delete_cat'], url('action.php?del_cat=' . $id_redirection));
 	else
 		$Bread_crumb->add($LANG['pages_rename'], url('action.php?rename=' . $id_rename));
-	//$Bread_crumb->add($page_infos['title'], url('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
 	$id = $page_infos['id_cat'];
 	while ($id > 0)
 	{
