@@ -57,11 +57,7 @@ class WebCache implements CacheData
 		
 		while ($row = $result->fetch())
 		{
-			$this->partners_weblinks[] = array(
-				'id' => $row['id'],
-				'name' => $row['name'],
-				'partner_picture' => $row['partner_picture']
-			);
+			$this->partners_weblinks[$row['id']] = $row;
 		}
 	}
 	

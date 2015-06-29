@@ -56,7 +56,7 @@ class DownloadCache implements CacheData
 		
 		while ($row = $result->fetch())
 		{
-			$this->downloadfiles[] = $row;
+			$this->downloadfiles[$row['id']] = $row;
 		}
 	}
 	
