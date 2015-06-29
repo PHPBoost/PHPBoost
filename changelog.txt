@@ -69,13 +69,14 @@
 [*] Ajout des microdonnées pour améliorer le référencement
 
 [b]Forum[/b]
+[*] [color=red]Nouveauté :[/color] Mise en place du nouveau système de catégories
 [*] Optimisation de la configuration
 [*] Affichage automatique des champs du profil de type email ou site web dans les informations de l'utilisateur dans les topics
 [*] Possibilité de cacher le détail des messages des topics aux visiteurs tout en leur laissant accès à la liste des topics
 [*] Possibilité d'empêcher le double post (le nouveau message d'un utilisateur est ajouté au dernier s'il est le dernier à avoir posté dans le topic)
 
 [b]Galerie[/b]
-[*] Passage au nouveau système de catégories
+[*] [color=red]Nouveauté :[/color] Mise en place du nouveau système de catégories
 
 [b]Liens Web[/b]
 [*] [color=red]Nouveauté :[/color] Passage du module en MVC
@@ -96,8 +97,8 @@
 [*] Ajout des microdonnées pour améliorer le référencement
 
 [b]Multimédia[/b]
+[*] [color=red]Nouveauté :[/color] Mise en place du nouveau système de catégories
 [*] Optimisation de la configuration
-[*] Passage au nouveau système de catégories
 
 [b]News[/b]
 [*] Affichage des sources lors de l'affichage des catégories de news

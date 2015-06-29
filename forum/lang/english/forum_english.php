@@ -57,7 +57,6 @@ $LANG['update_data_cached'] = 'Recount topics and posts';
 $LANG['e_topic_lock_forum'] = 'Locked topic, you can\'t post';
 $LANG['e_cat_lock_forum'] = 'Locked category, you can\'t post new topic/post';
 $LANG['e_unexist_topic_forum'] = 'This topic doesn\'t exist';
-$LANG['e_unexist_cat_forum'] = 'This category doesn\'t exist';
 $LANG['e_unable_cut_forum'] = 'You can\'t split this topic from this post';
 $LANG['e_cat_write'] = 'You aren\'t allowed to write in this category';
 

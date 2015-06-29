@@ -46,7 +46,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 	$tpl = new FileTemplate('forum/forum_move.tpl');
 
 	$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('idcat', 'title'), 'WHERE id=:id', array('id' => $id_get));
-	if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS)) //Accès en édition
+	if (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation()) //Accès en édition
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -54,30 +54,32 @@ if (!empty($id_get)) //Déplacement du sujet.
 
 	$cat = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_cats', array('id', 'name'), 'WHERE id=:id', array('id' => $topic['idcat']));
 
-	$auth_cats = array();
-	if (is_array($CAT_FORUM))
+	//Listing des catégories disponibles, sauf celle qui va être supprimée.
+	$search_category_children_options = new SearchCategoryChildrensOptions();
+	$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
+	$categories_tree = ForumService::get_categories_manager()->get_select_categories_form_field('cats', '', Category::ROOT_CATEGORY, $search_category_children_options);
+	$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
+	$method->setAccessible(true);
+	$categories_tree_options = $method->invoke($categories_tree);
+	$cat_list = '';
+	$number_options = $categories_tree_options;
+	foreach ($categories_tree_options as $option)
 	{
-		foreach ($CAT_FORUM as $idcat => $key)
+		if ($option->get_raw_value() != $topic['idcat'])
 		{
-			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], ForumAuthorizationsService::READ_AUTHORIZATIONS))
-				$auth_cats[] = $idcat;
+			if (!$option->get_raw_value())
+			{
+				$option->set_label($LANG['root']);
+				$cat_list .= $option->display()->render();
+			}
+			else
+			{
+				$option_cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
+				if (!$option_cat->get_url() && $number_options)
+					$cat_list .= $option->display()->render();
+			}
 		}
 	}
-
-	//Listing des catégories disponibles, sauf celle qui va être supprimée.
-	$cat_forum = '<option value="0" checked="checked">' . $LANG['root'] . '</option>';
-	$result = PersistenceContext::get_querier()->select("SELECT id, name, level
-	FROM " . PREFIX . "forum_cats
-	WHERE url = '' " . (!empty($auth_cats) ? "AND id NOT IN :auth_cats" : '') . "
-	ORDER BY id_left", array(
-		'auth_cats' => $auth_cats
-	));
-	while ($row = $result->fetch())
-	{
-		$disabled = ($row['id'] == $topic['idcat']) ? ' disabled="disabled"' : '';
-		$cat_forum .= ($row['level'] > 0) ? '<option value="' . $row['id'] . '"' . $disabled . '>' . str_repeat('--------', $row['level']) . ' ' . $row['name'] . '</option>' : '<option value="' . $row['id'] . '" disabled="disabled">-- ' . $row['name'] . '</option>';
-	}
-	$result->dispose();
 
 	//Listes les utilisateurs en lignes.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '" ."/forum/%'");
@@ -101,7 +103,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 		'ID' => $id_get,
 		'TITLE' => $topic['title'],
 		'U_MOVE' => url('.php?token=' . AppContext::get_session()->get_token()),
-		'CATEGORIES' => $cat_forum,
+		'CATEGORIES' => $cat_list,
 		'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $cat['id'], '-' . $cat['id'] . '.php') . '">' . $cat['name'] . '</a>',
 		'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $topic['title'] . '</a>',
 		'L_SELECT_SUBCAT' => $LANG['require_subcat'],
@@ -123,11 +125,11 @@ if (!empty($id_get)) //Déplacement du sujet.
 elseif (!empty($id_post)) //Déplacement du topic
 {
 	$idcat = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'idcat', 'WHERE id = :id', array('id' => $id_post));
-	if (AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS)) //Accès en édition
+	if (ForumAuthorizationsService::check_authorizations($idcat)->moderation()) //Accès en édition
 	{
 		$to = retrieve(POST, 'to', $idcat); //Catégorie cible.
-		$level = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'level', 'WHERE id = :id', array('id' => $to));
-		if (!empty($to) && $level > 0 && $idcat != $to)
+		$category_to = ForumService::get_categories_manager()->get_categories_cache()->get_category($to);
+		if (!empty($to) && $category_to->get_id_parent() != Category::ROOT_CATEGORY && $idcat != $to)
 		{
 			//Instanciation de la class du forum.
 			$Forumfct = new Forum();
@@ -157,7 +159,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	$msg = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', array('idtopic', 'contents'), 'WHERE id=:id', array('id' => $idm));
 	$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('idcat', 'title'), 'WHERE id=:id', array('id' => $msg['idtopic']));
 
-	if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS)) //Accès en édition
+	if (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation()) //Accès en édition
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -174,36 +176,39 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	$cat = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_cats', array('id', 'name'), 'WHERE id=:id', array('id' => $topic['idcat']));
 	$to = retrieve(POST, 'to', $cat['id']); //Catégorie cible.
 
-	$auth_cats = array();
-	if (is_array($CAT_FORUM))
+	//Listing des catégories disponibles, sauf celle qui va être supprimée.
+	$search_category_children_options = new SearchCategoryChildrensOptions();
+	$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
+	$categories_tree = ForumService::get_categories_manager()->get_select_categories_form_field('cats', '', Category::ROOT_CATEGORY, $search_category_children_options);
+	$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
+	$method->setAccessible(true);
+	$categories_tree_options = $method->invoke($categories_tree);
+	$cat_list = '';
+	$number_options = $categories_tree_options;
+	foreach ($categories_tree_options as $option)
 	{
-		foreach ($CAT_FORUM as $idcat => $key)
+		if ($option->get_raw_value() != $topic['idcat'])
 		{
-			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], ForumAuthorizationsService::READ_AUTHORIZATIONS))
-				$auth_cats[] = $idcat;
+			if (!$option->get_raw_value())
+			{
+				$option->set_label($LANG['root']);
+				$cat_list .= $option->display()->render();
+			}
+			else
+			{
+				$option_cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
+				if (!$option_cat->get_url() && $number_options)
+					$cat_list .= $option->display()->render();
+			}
 		}
 	}
-
-	//Listing des catégories disponibles, sauf celle qui va être supprimée.
-	$cat_forum = '<option value="0" checked="checked">' . $LANG['root'] . '</option>';
-	$result = PersistenceContext::get_querier()->select("SELECT id, name, level
-	FROM " . PREFIX . "forum_cats
-	WHERE url = '' " . (!empty($auth_cats) ? "AND id NOT IN :auth_cats" : '') . "
-	ORDER BY id_left", array(
-		'auth_cats' => $auth_cats
-	));
-	while ($row = $result->fetch())
-	{
-		$cat_forum .= ($row['level'] > 0) ? '<option value="' . $row['id'] . '">' . str_repeat('--------', $row['level']) . ' ' . $row['name'] . '</option>' : '<option value="' . $row['id'] . '" disabled="disabled">-- ' . $row['name'] . '</option>';
-	}
-	$result->dispose();
 
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$editor->set_identifier('contents');
 		
 	$vars_tpl = array(
 		'C_FORUM_CUT_CAT' => true,
-		'CATEGORIES' => $cat_forum,
+		'CATEGORIES' => $cat_list,
 		'KERNEL_EDITOR' => $editor->display(),
 		'FORUM_NAME' => $config->get_forum_name() . ' : ' . $LANG['cut_topic'],
 		'IDTOPIC' => 0,
@@ -356,7 +361,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 	$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('idcat', 'title', 'last_user_id', 'last_msg_id', 'last_timestamp'), 'WHERE id=:id', array('id' => $msg['idtopic']));
 	$to = retrieve(POST, 'to', 0); //Catégorie cible.
 
-	if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS)) //Accès en édition
+	if (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation()) //Accès en édition
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -370,9 +375,9 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
             $LANG['e_unable_cut_forum']);
         DispatchManager::redirect($controller);
 	}
-
-	$level = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'level', 'WHERE id = :id', array('id' => $to));
-	if (!empty($to) && $level > 0)
+	
+	$category_to = ForumService::get_categories_manager()->get_categories_cache()->get_category($to);
+	if (!empty($to) && $category_to->get_id_parent() != Category::ROOT_CATEGORY)
 	{
 		$title = retrieve(POST, 'title', '');
 		$subtitle = retrieve(POST, 'desc', '');

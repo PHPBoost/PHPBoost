@@ -31,24 +31,24 @@
  ####################################################
 
 $lang = array(
-    'default.category.name' => 'Catégorie de test',
-	'default.category.subname' => 'Catégorie de test',
-    'default.board.name' => 'Forum de test',
-	'default.board.subname' => 'Forum de test',
+	'default.category.name' => 'Catégorie de test',
+	'default.category.description' => 'Catégorie de test',
+	'default.board.name' => 'Forum de test',
+	'default.board.description' => 'Forum de test',
 	'sample.thread.title' => 'Test',
 	'sample.thread.subtitle' => 'Sujet de test',
 	'sample.thread.message.content' => 'Message de test sur le forum PHPBoost',
 
 	'rank.admin' => 'Administrateur',
-    'rank.modo' => 'Modérateur',
-    'rank.inactiv' => 'Boosteur Inactif',
-    'rank.fronde' => 'Booster Fronde',
-    'rank.minigun' => 'Booster Minigun',
-    'rank.fuzil' => 'Booster Fuzil',
-    'rank.bazooka' => 'Booster Bazooka',
-    'rank.roquette' => 'Booster Roquette',
-    'rank.mortier' => 'Booster Mortier',
-    'rank.missile' => 'Booster Missile',
-    'rank.fusee' => 'Booster Fusée',
+	'rank.modo' => 'Modérateur',
+	'rank.inactiv' => 'Boosteur Inactif',
+	'rank.fronde' => 'Booster Fronde',
+	'rank.minigun' => 'Booster Minigun',
+	'rank.fuzil' => 'Booster Fuzil',
+	'rank.bazooka' => 'Booster Bazooka',
+	'rank.roquette' => 'Booster Roquette',
+	'rank.mortier' => 'Booster Mortier',
+	'rank.missile' => 'Booster Missile',
+	'rank.fusee' => 'Booster Fusée',
 );
 ?>

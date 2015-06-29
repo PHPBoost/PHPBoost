@@ -28,9 +28,10 @@
 if (defined('PHPBOOST') !== true)
     exit;
 
-require_once(PATH_TO_ROOT . '/forum/forum_init_auth_cats.php');
+load_module_lang('forum'); //Chargement de la langue du module.
 
 $config = ForumConfig::load();
+require_once(PATH_TO_ROOT . '/forum/forum_defines.php');
 
 //Supprime les menus suivant configuration du site.
 $columns_disabled = ThemesManager::get_theme(get_utheme())->get_columns_disabled();

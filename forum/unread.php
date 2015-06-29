@@ -50,26 +50,17 @@ $idcat_unread = retrieve(GET, 'cat', 0);
 $max_time_msg = forum_limit_time_msg();
 
 //Vérification des autorisations.
-$auth_cats = array();
-if (is_array($CAT_FORUM))
-{
-	foreach ($CAT_FORUM as $idcat => $key)
-	{
-		if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], ForumAuthorizationsService::READ_AUTHORIZATIONS) || !$CAT_FORUM[$idcat]['aprob'])
-			$auth_cats[] = $idcat;
-	}
-}
+$authorized_categories = ForumService::get_authorized_categories(Category::ROOT_CATEGORY);
 
 $row = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as nbr_topics
 FROM " . PREFIX . "forum_topics t
 LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
 LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = :user_id
-WHERE " . (!empty($idcat_unread) ? "(c.id_left >= :id_left AND c.id_right <= :id_right) AND " : '') . "t.last_timestamp >= :max_time_msg AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . (!empty($auth_cats) ? " AND c.id NOT IN :auth_cats" : ''), array(
+WHERE " . (!empty($idcat_unread) ? "c.id_parent = :id AND " : '') . "t.last_timestamp >= :max_time_msg AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) AND c.id IN :authorized_categories", array(
 	'user_id' => AppContext::get_current_user()->get_id(),
-	'id_left' => !empty($idcat_unread) ? $CAT_FORUM[$idcat_unread]['id_left'] : '',
-	'id_right' => !empty($idcat_unread) ? $CAT_FORUM[$idcat_unread]['id_right'] : '',
+	'id' => $idcat_unread,
 	'max_time_msg' => $max_time_msg,
-	'auth_cats' => $auth_cats,
+	'authorized_categories' => $authorized_categories,
 ));
 $nbr_topics  = $row['nbr_topics'];
 
@@ -93,14 +84,13 @@ LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = t.id
 LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id AND tr.user_id = :user_id
 LEFT JOIN " . DB_TABLE_MEMBER . " m1 ON m1.user_id = t.user_id
 LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = t.last_user_id
-WHERE " . (!empty($idcat_unread) ? "(c.id_left >= :id_left AND c.id_right <= :id_right) AND " : '') . "t.last_timestamp >= :max_time_msg AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . (!empty($auth_cats) ? " AND c.id NOT IN :auth_cats" : '') . "
+WHERE " . (!empty($idcat_unread) ? "c.id_parent = :id AND  " : '') . "t.last_timestamp >= :max_time_msg AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) AND c.id IN :authorized_categories
 ORDER BY t.last_timestamp DESC
 LIMIT :number_items_per_page OFFSET :display_from", array(
 	'user_id' => AppContext::get_current_user()->get_id(),
-	'id_left' => !empty($idcat_unread) ? $CAT_FORUM[$idcat_unread]['id_left'] : '',
-	'id_right' => !empty($idcat_unread) ? $CAT_FORUM[$idcat_unread]['id_right'] : '',
+	'id' => $idcat_unread,
 	'max_time_msg' => $max_time_msg,
-	'auth_cats' => $auth_cats,
+	'authorized_categories' => $authorized_categories,
 	'number_items_per_page' => $pagination->get_number_items_per_page(),
 	'display_from' => $pagination->get_display_from()
 ));
@@ -183,6 +173,25 @@ $l_topic = ($nbr_topics > 1) ? $LANG['topic_s'] : $LANG['topic'];
 //Listes les utilisateurs en lignes.
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" ."/forum/unread.php%'");
 
+//Liste des catégories.
+$search_category_children_options = new SearchCategoryChildrensOptions();
+$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
+$categories_tree = ForumService::get_categories_manager()->get_select_categories_form_field('cats', '', $idcat_unread, $search_category_children_options);
+$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
+$method->setAccessible(true);
+$categories_tree_options = $method->invoke($categories_tree);
+$cat_list = '';
+$number_options = $categories_tree_options;
+foreach ($categories_tree_options as $option)
+{
+	if ($option->get_raw_value())
+	{
+		$cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
+		if (!$cat->get_url() && $number_options)
+			$cat_list .= $option->display()->render();
+	}
+}
+
 $vars_tpl = array(
 	'TOTAL_ONLINE' => $total_online,
 	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
@@ -190,7 +199,7 @@ $vars_tpl = array(
 	'MODO' => $total_modo,
 	'MEMBER' => $total_member,
 	'GUEST' => $total_visit,
-	'SELECT_CAT' => forum_list_cat(0, 0), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
+	'SELECT_CAT' => $cat_list, //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 	'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
 	'L_ADMIN' => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
 	'L_MODO' => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],

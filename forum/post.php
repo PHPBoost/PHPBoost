@@ -32,27 +32,33 @@ require_once('../forum/forum_tools.php');
 $id_get = retrieve(GET, 'id', 0);
 
 //Existance de la catégorie.
-if (!isset($CAT_FORUM[$id_get]) || $CAT_FORUM[$id_get]['aprob'] == 0 || $CAT_FORUM[$id_get]['level'] == 0)
+if ($id_get != Category::ROOT_CATEGORY && !ForumService::get_categories_manager()->get_categories_cache()->category_exists($id_get))
 {
-	$controller = PHPBoostErrors::unexisting_element();
-    DispatchManager::redirect($controller);
+	$controller = PHPBoostErrors::unexisting_category();
+	DispatchManager::redirect($controller);
 }
 
 if (AppContext::get_current_user()->get_delay_readonly() > time()) //Lecture seule.
 {
 	$controller = PHPBoostErrors::user_in_read_only();
-    DispatchManager::redirect($controller);
+	DispatchManager::redirect($controller);
+}
+
+try {
+	$category = ForumService::get_categories_manager()->get_categories_cache()->get_category($id_get);
+} catch (CategoryNotFoundException $e) {
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
 }
 
 //Récupération de la barre d'arborescence.
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
-foreach ($CAT_FORUM as $idcat => $array_info_cat)
+$categories = array_reverse(ForumService::get_categories_manager()->get_parents($id_get, true));
+foreach ($categories as $id => $cat)
 {
-	if ($CAT_FORUM[$id_get]['id_left'] > $array_info_cat['id_left'] && $CAT_FORUM[$id_get]['id_right'] < $array_info_cat['id_right'] && $array_info_cat['level'] < $CAT_FORUM[$id_get]['level'])
-		$Bread_crumb->add($array_info_cat['name'], ($array_info_cat['level'] == 0) ? url('index.php?id=' . $idcat, 'cat-' . $idcat . '+' . Url::encode_rewrite($array_info_cat['name']) . '.php') : 'forum' . url('.php?id=' . $idcat, '-' . $idcat . '+' . Url::encode_rewrite($array_info_cat['name']) . '.php'));
+	if ($cat->get_id() != Category::ROOT_CATEGORY)
+		$Bread_crumb->add($cat->get_name(), 'forum' . url('.php?id=' . $cat->get_id(), '-' . $cat->get_id() . '+' . $cat->get_rewrited_name() . '.php'));
 }
-if (!empty($CAT_FORUM[$id_get]['name'])) //Nom de la catégorie courante.
-	$Bread_crumb->add($CAT_FORUM[$id_get]['name'], 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '+' . Url::encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php'));
 $Bread_crumb->add($LANG['title_post'], '');
 define('TITLE', $LANG['title_forum']);
 require_once('../kernel/header.php');
@@ -68,7 +74,7 @@ $editor = AppContext::get_content_formatting_service()->get_default_editor();
 $editor->set_identifier('contents');
 	
 //Niveau d'autorisation de la catégorie
-if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::READ_AUTHORIZATIONS))
+if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 {
 	$Forumfct = new Forum();
 
@@ -90,7 +96,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], Foru
 
 	if ($previs) //Prévisualisation des messages
 	{
-		if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::WRITE_AUTHORIZATIONSM))
+		if (!ForumAuthorizationsService::check_authorizations($id_get)->write())
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 		try {
@@ -150,8 +156,8 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], Foru
 	{
 		if ($post_topic && !empty($id_get))
 		{
-			$is_modo = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS);
-			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::WRITE_AUTHORIZATIONS))
+			$is_modo = ForumAuthorizationsService::check_authorizations($id_get)->moderation();
+			if (!ForumAuthorizationsService::check_authorizations($id_get)->write())
 				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 			if ($is_modo)
@@ -159,18 +165,12 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], Foru
 			else
 				$type = 0;
 
-			//Verrouillé?
-			$check_status = $CAT_FORUM[$id_get]['status'];
-			//Déverrouillé pour admin et modo dans tous les cas
-			if ($is_modo)
-				$check_status = 1;
-
 			$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 			$title = retrieve(POST, 'title', '');
 			$subtitle = retrieve(POST, 'desc', '');
 
 			//Mod anti Flood
-			if ($check_time !== false && $check_status != 0)
+			if ($check_time !== false)
 			{
 				$delay_flood = ContentManagementConfig::load()->get_anti_flood_duration(); //On recupère le delai de flood.
 				$delay_expire = time() - $delay_flood; //On calcul la fin du delai.
@@ -180,44 +180,39 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], Foru
 					AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=flood_t&id=' . $id_get, '', '&') . '#message_helper');
 			}
 
-			if ($check_status == 1)
+			if (!empty($contents) && !empty($title)) //Insertion nouveau topic.
 			{
-				if (!empty($contents) && !empty($title)) //Insertion nouveau topic.
+				list($last_topic_id, $last_msg_id) = $Forumfct->Add_topic($id_get, $title, $subtitle, $contents, $type); //Insertion nouveau topic.
+
+				//Ajout d'un sondage en plus du topic.
+				$question = retrieve(POST, 'question', '');
+				if (!empty($question))
 				{
-					list($last_topic_id, $last_msg_id) = $Forumfct->Add_topic($id_get, $title, $subtitle, $contents, $type); //Insertion nouveau topic.
+					$poll_type = retrieve(POST, 'poll_type', 0);
+					$poll_type = ($poll_type == 0 || $poll_type == 1) ? $poll_type : 0;
 
-					//Ajout d'un sondage en plus du topic.
-					$question = retrieve(POST, 'question', '');
-					if (!empty($question))
+					$answers = array();
+					$nbr_votes = 0;
+					for ($i = 0; $i < 20; $i++)
 					{
-						$poll_type = retrieve(POST, 'poll_type', 0);
-						$poll_type = ($poll_type == 0 || $poll_type == 1) ? $poll_type : 0;
-
-						$answers = array();
-						$nbr_votes = 0;
-						for ($i = 0; $i < 20; $i++)
+						$answer = str_replace('|', '', retrieve(POST, 'a'.$i, ''));
+						if (!empty($answer))
 						{
-							$answer = str_replace('|', '', retrieve(POST, 'a'.$i, ''));
-							if (!empty($answer))
-							{
-								$answers[$i] = $answer;
-								$nbr_votes++;
-							}
+							$answers[$i] = $answer;
+							$nbr_votes++;
 						}
-						$Forumfct->Add_poll($last_topic_id, $question, $answers, $nbr_votes, $poll_type); //Ajout du sondage.
 					}
-
-					AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $last_topic_id, '-' . $last_topic_id . '.php', '&') . '#m' . $last_msg_id);
+					$Forumfct->Add_poll($last_topic_id, $question, $answers, $nbr_votes, $poll_type); //Ajout du sondage.
 				}
-				else
-					AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=incomplete_t&id=' . $id_get, '', '&') . '#message_helper');
+
+				AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $last_topic_id, '-' . $last_topic_id . '.php', '&') . '#m' . $last_msg_id);
 			}
-			else //Verrouillé
-				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_locked&id=' . $id_get, '', '&') . '#message_helper');
+			else
+				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=incomplete_t&id=' . $id_get, '', '&') . '#message_helper');
 		}
 		elseif (!empty($preview_topic) && !empty($id_get))
 		{
-			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::WRITE_AUTHORIZATIONS))
+			if (!ForumAuthorizationsService::check_authorizations($id_get)->write())
 				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 			$tpl = new FileTemplate('forum/forum_post.tpl');
@@ -229,7 +224,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], Foru
 			$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 			$question = retrieve(POST, 'question', '', TSTRING_UNCHANGE);
 
-			$is_modo = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS);
+			$is_modo = ForumAuthorizationsService::check_authorizations($id_get)->moderation();
 			$type = retrieve(POST, 'type', 0);
 
 			if (!$is_modo)
@@ -325,14 +320,14 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], Foru
 		}
 		else
 		{
-			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::WRITE_AUTHORIZATIONS))
+			if (!ForumAuthorizationsService::check_authorizations($id_get)->write())
 				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 			$tpl = new FileTemplate('forum/forum_post.tpl');
 			$tpl_top = new FileTemplate('forum/forum_top.tpl');
 			$tpl_bottom = new FileTemplate('forum/forum_bottom.tpl');
 
-			if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS))
+			if (ForumAuthorizationsService::check_authorizations($id_get)->moderation())
 			{
 				$tpl->put_all(array(
 					'C_FORUM_POST_TYPE' => true,
@@ -401,7 +396,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], Foru
 	}
 	elseif ($new_get === 'n_msg' && empty($error_get)) //Nouveau message
 	{
-		if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::WRITE_AUTHORIZATIONS))
+		if (!ForumAuthorizationsService::check_authorizations($id_get)->write())
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 		
 		try {
@@ -415,15 +410,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], Foru
 			DispatchManager::redirect($controller);
 		}
 
-		$is_modo = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS);
-		//Catégorie verrouillée?
-		$check_status = $CAT_FORUM[$id_get]['status'];
-		//Déverrouillé pour admin et modo dans tous les cas
-		if ($is_modo)
-			$check_status = 1;
-
-		if ($check_status == 0) //Verrouillée
-			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_locked&id=' . $id_get, '', '&') . '#message_helper');
+		$is_modo = ForumAuthorizationsService::check_authorizations($id_get)->moderation();
 
 		//Mod anti Flood
 		if ($check_time !== false)
@@ -474,7 +461,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], Foru
 	}
 	elseif ($new_get === 'msg' && empty($error_get)) //Edition d'un message/topic.
 	{
-		if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::WRITE_AUTHORIZATIONS))
+		if (!ForumAuthorizationsService::check_authorizations($id_get)->write())
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 		$id_m = retrieve(GET, 'idm', 0);
@@ -489,7 +476,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], Foru
             DispatchManager::redirect($controller);
 		}
 
-		$is_modo = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS);
+		$is_modo = ForumAuthorizationsService::check_authorizations($id_get)->moderation();
 
 		//Edition du topic complet
 		if ($id_first == $id_m)
@@ -547,7 +534,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], Foru
 						elseif ($check_poll == 0) //Ajout du sondage.
 							$Forumfct->Add_poll($idt_get, $question, $answers, $nbr_votes, $poll_type);
 					}
-					elseif ($del_poll && AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS)) //Suppression du sondage, admin et modo seulement biensûr...
+					elseif ($del_poll && ForumAuthorizationsService::check_authorizations($id_get)->moderation()) //Suppression du sondage, admin et modo seulement biensûr...
 						$Forumfct->Del_poll($idt_get);
 
 					//Redirection après post.
@@ -629,7 +616,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], Foru
 					'C_DELETE_POLL' => ($is_modo) ? true : false, //Suppression d'un sondage => modo uniquement.
 					'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 19) ? true : false,
 					'U_ACTION' => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m . '&amp;token=' . AppContext::get_session()->get_token()),
-					'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
+					'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $category->get_name() . '</a>',
 					'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . $title . '</a>',
 					'L_ACTION' => $LANG['forum_edit_subject'],
 					'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
@@ -755,7 +742,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], Foru
 					'C_DELETE_POLL' => ($is_modo) ? true : false, //Suppression d'un sondage => modo uniquement.
 					'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 19) ? true : false,
 					'U_ACTION' => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m . '&amp;token=' . AppContext::get_session()->get_token()),
-					'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
+					'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $category->get_name() . '</a>',
 					'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . $topic['title'] . '</a>',
 					'L_ACTION' => $LANG['forum_edit_subject'],
 					'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
@@ -857,7 +844,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], Foru
 					'CONTENTS' => FormatingHelper::unparse(stripslashes($contents)),
 					'KERNEL_EDITOR' => $editor->display(),
 					'U_ACTION' => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m . '&amp;token=' . AppContext::get_session()->get_token()),
-					'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
+					'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $category->get_name() . '</a>',
 					'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . $topic['title'] . '</a>',
 					'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 					'L_REQUIRE_TEXT' => $LANG['require_text'],
@@ -923,7 +910,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], Foru
 				'DESC' => $topic['subtitle'],
 				'KERNEL_EDITOR' => $editor->display(),
 				'U_ACTION' => 'post.php' . url('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
-				'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
+				'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $category->get_name() . '</a>',
 				'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . $topic['title'] . '</a>',
 				'L_ACTION' => $LANG['respond'],
 				'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
@@ -942,7 +929,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], Foru
 			$tpl_top = new FileTemplate('forum/forum_top.tpl');
 			$tpl_bottom = new FileTemplate('forum/forum_bottom.tpl');
 
-			if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS))
+			if (ForumAuthorizationsService::check_authorizations($id_get)->moderation())
 			{
 				$tpl->put_all(array(
 					'C_FORUM_POST_TYPE' => true,
@@ -1000,7 +987,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], Foru
 				'NBR_POLL_FIELD' => $nbr_poll_field,
 				'C_ADD_POLL_FIELD' => true,
 				'U_ACTION' => 'post.php' . url('?new=topic&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
-				'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
+				'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $category->get_name() . '</a>',
 				'U_TITLE_T' => '<a href="post' . url('.php?new=topic&amp;id=' . $id_get) . '" class="basic-button">' . $LANG['post_new_subject'] . '</a>',
 				'L_ACTION' => $LANG['forum_new_subject'],
 				'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),

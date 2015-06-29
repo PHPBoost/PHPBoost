@@ -30,33 +30,15 @@ class ForumFeedProvider implements FeedProvider
 {
 	public function get_feeds_list()
 	{
-		global $LANG;
-		$feed = array();
-		$forum = new Forum();
-		$categories = $forum->get_cats_tree();
-		$cat_tree = new FeedsCat('forum', 0, $LANG['root']);
-
-		$this->feeds_add_category($cat_tree, $categories);
-
-		$children = $cat_tree->get_children();
-		$feeds = new FeedsList();
-		if (count($children) > 0)
-		{
-			$feeds->add_feed($children[0], Feed::DEFAULT_FEED_NAME);
-		}
-		return $feeds;
+		return ForumService::get_categories_manager()->get_feeds_categories_module()->get_feed_list();
 	}
 
 	public function get_feed_data_struct($idcat = 0, $name = '')
 	{
-		$querier = PersistenceContext::get_querier();
 		$config = ForumConfig::load();
+		$category = ForumService::get_categories_manager()->get_categories_cache()->get_category($idcat);
 
-		global $Cache, $LANG, $CAT_FORUM;
-
-		$_idcat = $idcat;
-		require_once(PATH_TO_ROOT . '/forum/forum_init_auth_cats.php');
-		$idcat = $_idcat;   // Because <$idcat> is overwritten in /forum/forum_init_auth_cats.php
+		global $LANG;
 
 		$data = new FeedData();
 		$data->set_title($LANG['xml_forum_desc']);
@@ -64,23 +46,20 @@ class ForumFeedProvider implements FeedProvider
 		$data->set_link(DispatchManager::get_url('/syndication', '/rss/forum/'. $idcat . '/'));
 		$data->set_host(HOST);
 		$data->set_desc($LANG['xml_forum_desc']);
-		$data->set_lang($LANG['xml_lang']);
-		$data->set_auth_bit(ForumAuthorizationsService::READ_AUTHORIZATIONS);
-
-		$req_cats = (($idcat > 0) && isset($CAT_FORUM[$idcat])) ? ' AND c.id_left >= :forum_cats_left AND id_right <= :forum_cats_right' : '';
-		$parameters = array('limit' => 2 * $config->get_number_messages_per_page());
-		if ($idcat > 0)
-		{
-			$parameters['forum_cats_left'] = $CAT_FORUM[$idcat]['id_left'];
-			$parameters['forum_cats_right'] = $CAT_FORUM[$idcat]['id_right'];
-		}
-		$req = 'SELECT t.id, t.title, t.last_timestamp, t.last_msg_id, t.display_msg, t.nbr_msg AS t_nbr_msg, msg.id mid, msg.contents, c.auth
-		FROM ' . PREFIX . 'forum_topics t
-		LEFT JOIN ' . PREFIX . 'forum_cats c ON c.id = t.idcat
-		LEFT JOIN ' . PREFIX . 'forum_msg msg ON msg.id = t.last_msg_id
-		WHERE c.level != 0 AND c.aprob = 1 ' . $req_cats . '
-		ORDER BY t.last_timestamp DESC LIMIT :limit OFFSET 0';
-		$results = $querier->select($req, $parameters);
+		$data->set_lang(LangLoader::get_message('xml_lang', 'main'));
+		$data->set_auth_bit(Category::READ_AUTHORIZATIONS);
+		
+		$categories = ForumService::get_categories_manager()->get_childrens($idcat, new SearchCategoryChildrensOptions(), true);
+		$ids_categories = array_keys($categories);
+		
+		$results = PersistenceContext::get_querier()->select('SELECT t.id, t.idcat, t.title, t.last_timestamp, t.last_msg_id, t.display_msg, t.nbr_msg AS t_nbr_msg, msg.id mid, msg.contents
+			FROM ' . PREFIX . 'forum_topics t
+			LEFT JOIN ' . PREFIX . 'forum_msg msg ON msg.id = t.last_msg_id
+			WHERE t.idcat IN :ids_categories
+			ORDER BY t.last_timestamp DESC LIMIT :limit OFFSET 0', array(
+				'ids_categories' => $ids_categories,
+				'limit' => 2 * $config->get_number_messages_per_page()
+		));
 
 		foreach ($results as $row)
 		{
@@ -105,7 +84,7 @@ class ForumFeedProvider implements FeedProvider
 			$item->set_guid($link);
 			$item->set_desc(FormatingHelper::second_parse($row['contents']));
 			$item->set_date(new Date($row['last_timestamp'], Timezone::SERVER_TIMEZONE));
-			$item->set_auth(unserialize($row['auth']));
+			$item->set_auth(ForumService::get_categories_manager()->get_heritated_authorizations($row['idcat'], Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
 
 			$data->add_item($item);
 		}

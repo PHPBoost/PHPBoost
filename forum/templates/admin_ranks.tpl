@@ -12,14 +12,14 @@
 			<ul>
 				<li class="title-menu">{L_FORUM_MANAGEMENT}</li>
 				<li>
-					<a href="admin_forum.php"><img src="forum.png" alt="" /></a>
+					<a href="${relative_url(ForumUrlBuilder::manage_categories())}"><img src="forum.png" alt="" /></a>
 					<br />
-					<a href="admin_forum.php" class="quick-link">{L_CAT_MANAGEMENT}</a>
+					<a href="${relative_url(ForumUrlBuilder::manage_categories())}" class="quick-link">{L_CAT_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_forum_add.php"><img src="forum.png" alt="" /></a>
+					<a href="${relative_url(ForumUrlBuilder::add_category())}"><img src="forum.png" alt="" /></a>
 					<br />
-					<a href="admin_forum_add.php" class="quick-link">{L_ADD_CAT}</a>
+					<a href="${relative_url(ForumUrlBuilder::add_category())}" class="quick-link">{L_ADD_CAT}</a>
 				</li>
 				<li>
 					<a href="admin_ranks.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/ranks.png" alt="" /></a>

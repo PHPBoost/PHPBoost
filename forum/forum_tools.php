@@ -32,7 +32,7 @@ if (defined('PHPBOOST') !== true)
 $tpl_top = new FileTemplate('forum/forum_top.tpl');
 $tpl_bottom = new FileTemplate('forum/forum_bottom.tpl');
 
-$is_guest = (AppContext::get_current_user()->get_id() !== -1) ? false : true;
+$is_guest = AppContext::get_current_user()->get_id() == -1;
 $nbr_msg_not_read = 0;
 if (!$is_guest)
 {
@@ -40,15 +40,7 @@ if (!$is_guest)
 	$max_time_msg = forum_limit_time_msg();
 	
 	//Vérification des autorisations.
-	$unauth_cats = array();
-	if (is_array($AUTH_READ_FORUM))
-	{
-		foreach ($AUTH_READ_FORUM as $idcat => $auth)
-		{
-			if (!$auth)
-				$unauth_cats[] = $idcat;
-		}
-	}
+	$authorized_categories = ForumService::get_authorized_categories(Category::ROOT_CATEGORY);
 
 	//Si on est sur un topic, on le supprime dans la requête => si ce topic n'était pas lu il ne sera plus dans la liste car désormais lu.
 	$clause_topic = '';
@@ -63,8 +55,8 @@ if (!$is_guest)
 	FROM " . PREFIX . "forum_topics t
 	LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
 	LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = :user_id
-	WHERE t.last_timestamp >= :last_timestamp AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL)" . $clause_topic . (!empty($unauth_cats) ? " AND c.id NOT IN :unauth_cats" : ''), array(
-		'unauth_cats' => $unauth_cats,
+	WHERE t.last_timestamp >= :last_timestamp AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL)" . $clause_topic . " AND c.id IN :authorized_categories", array(
+		'authorized_categories' => $authorized_categories,
 		'last_timestamp' => $max_time_msg,
 		'user_id' => AppContext::get_current_user()->get_id()
 	));
@@ -74,7 +66,7 @@ if (!$is_guest)
 //Formulaire de connexion sur le forum.
 if ($config->is_connexion_form_displayed())
 {
-	$vars_tpl = array(	
+	$vars_tpl = array(
 		'C_FORUM_CONNEXION' => true,
 		'L_CONNECT' => LangLoader::get_message('connect', 'user-common'),
 		'L_DISCONNECT' => LangLoader::get_message('disconnect', 'user-common'),
@@ -83,12 +75,12 @@ if ($config->is_connexion_form_displayed())
 	);
 }
 
-$vars_tpl = array(	
-	'C_DISPLAY_UNREAD_DETAILS' => (AppContext::get_current_user()->get_id() !== -1) ? true : false,
-	'C_MODERATION_PANEL' => AppContext::get_current_user()->check_level(1) ? true : false,
+$vars_tpl = array(
+	'C_DISPLAY_UNREAD_DETAILS' => !$is_guest,
+	'C_MODERATION_PANEL' => AppContext::get_current_user()->check_level(1),
 	'U_TOPIC_TRACK' => '<a class="small" href="../forum/track.php" title="' . $LANG['show_topic_track'] . '">' . $LANG['show_topic_track'] . '</a>',
 	'U_LAST_MSG_READ' => '<a class="small" href="../forum/lastread.php" title="' . $LANG['show_last_read'] . '">' . $LANG['show_last_read'] . '</a>',
-	'U_MSG_NOT_READ' => '<a class="small" href="../forum/unread.php" title="' . $LANG['show_not_reads'] . '">' . $LANG['show_not_reads'] . (AppContext::get_current_user()->get_id() !== -1 ? ' (' . $nbr_msg_not_read . ')' : '') . '</a>',
+	'U_MSG_NOT_READ' => '<a class="small" href="../forum/unread.php" title="' . $LANG['show_not_reads'] . '">' . $LANG['show_not_reads'] . (!$is_guest ? ' (' . $nbr_msg_not_read . ')' : '') . '</a>',
 	'U_MSG_SET_VIEW' => '<a class="small" href="../forum/action' . url('.php?read=1', '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
 	'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 	'L_CONFIRM_READ_TOPICS' => $LANG['confirm_mark_as_read'],
@@ -97,5 +89,5 @@ $vars_tpl = array(
 
 $tpl_top->put_all($vars_tpl);
 $tpl_bottom->put_all($vars_tpl);
-	
+
 ?>

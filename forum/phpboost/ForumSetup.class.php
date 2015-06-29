@@ -27,15 +27,15 @@
 
 class ForumSetup extends DefaultModuleSetup
 {
-	private static $forum_alerts_table;
-	private static $forum_cats_table;
-	private static $forum_history_table;
-	private static $forum_message_table;
-	private static $forum_poll_table;
-	private static $forum_topics_table;
-	private static $forum_track_table;
-	private static $forum_view_table;
-	private static $forum_ranks_table;
+	public static $forum_alerts_table;
+	public static $forum_cats_table;
+	public static $forum_history_table;
+	public static $forum_message_table;
+	public static $forum_poll_table;
+	public static $forum_topics_table;
+	public static $forum_track_table;
+	public static $forum_view_table;
+	public static $forum_ranks_table;
 
 	private static $member_extended_field_last_view_forum_column = 'last_view_forum';
 
@@ -74,6 +74,7 @@ class ForumSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_tables();
+		ConfigManager::delete('forum', 'config');
 		$this->delete_member_extended_field();
 	}
 
@@ -127,27 +128,7 @@ class ForumSetup extends DefaultModuleSetup
 
 	private function create_forum_cats_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'id_left' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'id_right' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'level' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'name' => array('type' => 'string', 'length' => 100, 'notnull' => 1),
-			'subname' => array('type' => 'string', 'length' => 150, 'notnull' => 1),
-			'nbr_topic' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
-			'nbr_msg' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
-			'last_topic_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'status' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'aprob' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'auth' => array('type' => 'text', 'length' => 65000),
-			'url' => array('type' => 'text', 'length' => 2048)
-		);
-		$options = array(
-			'primary' => array('id'),
-			'last_topic_id' => array('type' => 'key', 'fields' => 'last_topic_id'),
-			'id_left' => array('type' => 'key', 'fields' => 'id_left')
-		);
-		PersistenceContext::get_dbms_utils()->create_table(self::$forum_cats_table, $fields, $options);
+		ForumCategory::create_categories_table(self::$forum_cats_table);
 	}
 
 	private function create_forum_history_table()
@@ -183,7 +164,7 @@ class ForumSetup extends DefaultModuleSetup
 			'primary' => array('id'),
 			'indexes' => array(
 				'idtopic' => array('type' => 'key', 'fields' => 'idtopic'),
-				'contenu' => array('type' => 'fulltext', 'fields' => 'contents')			
+				'contenu' => array('type' => 'fulltext', 'fields' => 'contents')
 		));
 		PersistenceContext::get_dbms_utils()->create_table(self::$forum_message_table, $fields, $options);
 	}
@@ -364,33 +345,25 @@ class ForumSetup extends DefaultModuleSetup
 	{
 		$this->querier->insert(self::$forum_cats_table, array(
 			'id' => 1,
-			'id_left' => 1,
-			'id_right' => 4,
-			'level' => 0,
 			'name' => $this->messages['default.category.name'],
-			'subname' => $this->messages['default.category.subname'],
-			'nbr_topic' => 1,
-			'nbr_msg' => 1,
-			'last_topic_id' => 1,
-			'status' => 1,
-			'aprob' => 1,
+			'rewrited_name' => Url::encode_rewrite($this->messages['default.category.name']),
+			'description' => $this->messages['default.category.description'],
+			'c_order' => 1,
 			'auth' => 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:7;}',
+			'id_parent' => 0,
+			'last_topic_id' => 1,
 			'url' => ''
 		));
 
 		$this->querier->insert(self::$forum_cats_table, array(
 			'id' => 2,
-			'id_left' => 2,
-			'id_right' => 3,
-			'level' => 1,
 			'name' => $this->messages['default.board.name'],
-			'subname' => $this->messages['default.board.subname'],
-			'nbr_topic' => 1,
-			'nbr_msg' => 1,
-			'last_topic_id' => 1,
-			'status' => 1,
-			'aprob' => 1,
+			'rewrited_name' => Url::encode_rewrite($this->messages['default.board.name']),
+			'description' => $this->messages['default.board.description'],
+			'c_order' => 1,
 			'auth' => 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:3;s:2:"r1";i:7;s:2:"r2";i:7;}',
+			'id_parent' => 1,
+			'last_topic_id' => 1,
 			'url' => ''
 		));
 	}

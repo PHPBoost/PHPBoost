@@ -1,12 +1,12 @@
 <?php
 /*##################################################
- *                          forum_init_auth_cats.php
+ *                              ForumCategoriesManageController.class.php
  *                            -------------------
- *   begin                : June 22, 2008
- *   copyright            : (C) 2008 LoÃ¯c Rouchon
- *   email                : loic.rouchon@phpboost.com
+ *   begin                : May 15, 2015
+ *   copyright            : (C) 2015 Julien BRISWALTER
+ *   email                : julienseth78@phpboost.com
  *
- *
+ *  
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
@@ -25,26 +25,26 @@
  *
  ###################################################*/
 
-load_module_lang('forum'); //Chargement de la langue du module.
-require_once(PATH_TO_ROOT . '/forum/forum_defines.php');
-
-$Cache->load('forum');
-
-//Vérification des autorisations sur toutes les catégories.
-$AUTH_READ_FORUM = array();
-if (is_array($CAT_FORUM))
+class ForumCategoriesManageController extends AbstractCategoriesManageController
 {
-    foreach ($CAT_FORUM as $idcat => $key)
-    {
-		if ($idcat != Category::ROOT_CATEGORY)
-		{
-			$parent_approved = $CAT_FORUM[$idcat]['id_parent'] > 0 ? $CAT_FORUM[$CAT_FORUM[$idcat]['id_parent']]['aprob'] : true;
-			if (AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], ForumAuthorizationsService::READ_AUTHORIZATIONS) && $CAT_FORUM[$idcat]['aprob'] && $parent_approved)
-				$AUTH_READ_FORUM[$idcat] = true;
-			else
-				$AUTH_READ_FORUM[$idcat] = false;
-		}
-    }
-}
+	protected function generate_response(View $view)
+	{
+		return new AdminForumDisplayResponse($view, $this->get_title());
+	}
 
+	protected function get_categories_manager()
+	{
+		return ForumService::get_categories_manager();
+	}
+
+	protected function get_edit_category_url(Category $category)
+	{
+		return ForumUrlBuilder::edit_category($category->get_id());
+	}
+
+	protected function get_delete_category_url(Category $category)
+	{
+		return ForumUrlBuilder::delete_category($category->get_id());
+	}
+}
 ?>

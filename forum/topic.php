@@ -41,27 +41,33 @@ if (empty($topic['id']))
     DispatchManager::redirect($controller);
 }
 //Existance de la catégorie.
-if (!isset($CAT_FORUM[$topic['idcat']]) || $CAT_FORUM[$topic['idcat']]['aprob'] == 0 || $CAT_FORUM[$topic['idcat']]['level'] == 0)
+if ($topic['idcat'] != Category::ROOT_CATEGORY && !ForumService::get_categories_manager()->get_categories_cache()->category_exists($topic['idcat']))
 {
-	$controller = PHPBoostErrors::unexisting_element();
-    DispatchManager::redirect($controller);
+	$controller = PHPBoostErrors::unexisting_category();
+	DispatchManager::redirect($controller);
+}
+
+try {
+	$category = ForumService::get_categories_manager()->get_categories_cache()->get_category($topic['idcat']);
+} catch (CategoryNotFoundException $e) {
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
 }
 
 //Récupération de la barre d'arborescence.
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
-foreach ($CAT_FORUM as $idcat => $array_info_cat)
+$categories = array_reverse(ForumService::get_categories_manager()->get_parents($topic['idcat'], true));
+foreach ($categories as $id => $cat)
 {
-	if ($CAT_FORUM[$topic['idcat']]['id_left'] > $array_info_cat['id_left'] && $CAT_FORUM[$topic['idcat']]['id_right'] < $array_info_cat['id_right'] && $array_info_cat['level'] < $CAT_FORUM[$topic['idcat']]['level'])
-		$Bread_crumb->add($array_info_cat['name'], ($array_info_cat['level'] == 0) ? url('index.php?id=' . $idcat, 'cat-' . $idcat . '+' . Url::encode_rewrite($array_info_cat['name']) . '.php') : 'forum' . url('.php?id=' . $idcat, '-' . $idcat . '+' . Url::encode_rewrite($array_info_cat['name']) . '.php'));
+	if ($cat->get_id() != Category::ROOT_CATEGORY)
+		$Bread_crumb->add($cat->get_name(), 'forum' . url('.php?id=' . $cat->get_id(), '-' . $cat->get_id() . '+' . $cat->get_rewrited_name() . '.php'));
 }
-if (!empty($CAT_FORUM[$topic['idcat']]['name'])) //Nom de la catégorie courante.
-	$Bread_crumb->add($CAT_FORUM[$topic['idcat']]['name'], 'forum' . url('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '+' . Url::encode_rewrite($CAT_FORUM[$topic['idcat']]['name']) . '.php'));
 $Bread_crumb->add($topic['title'], '');
 
 define('TITLE', $topic['title']);
 require_once('../kernel/header.php'); 
 
-$rewrited_cat_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($CAT_FORUM[$topic['idcat']]['name']) : ''; //On encode l'url pour un éventuel rewriting.
+$rewrited_cat_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . $category->get_rewrited_name() : ''; //On encode l'url pour un éventuel rewriting.
 $rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : ''; //On encode l'url pour un éventuel rewriting.
 
 //Redirection changement de catégorie.
@@ -69,13 +75,13 @@ if (!empty($_POST['change_cat']))
 	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_cat_title . '.php', '&'));
 	
 //Autorisation en lecture.
-if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], ForumAuthorizationsService::READ_AUTHORIZATIONS) || !ForumAuthorizationsService::check_authorizations()->read_topics_content())
+if (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->read() || !ForumAuthorizationsService::check_authorizations()->read_topics_content())
 {
 	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
 }
 
-if (!empty($CAT_FORUM[$topic['idcat']]['url']))
+if ($category->get_url())
 {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
@@ -87,12 +93,12 @@ $TmpTemplate = new FileTemplate('forum/forum_generic_results.tpl');
 $module_data_path = $TmpTemplate->get_pictures_data_path();
 
 //Si l'utilisateur a le droit de déplacer le topic, ou le verrouiller.	
-$check_group_edit_auth = AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS);
+$check_group_edit_auth = ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation();
 if ($check_group_edit_auth)
 {
 	$tpl->put_all(array(
 		'C_FORUM_MODERATOR' => true,
-		'C_FORUM_LOCK_TOPIC' => ($topic['status'] == '1') ? true : false,
+		'C_FORUM_LOCK_TOPIC' => ($topic['status'] == '1'),
 		'U_TOPIC_LOCK' => url('.php?id=' . $id_get . '&amp;lock=true&amp;token=' . AppContext::get_session()->get_token()),
 		'U_TOPIC_UNLOCK' => url('.php?id=' . $id_get . '&amp;lock=false&amp;token=' . AppContext::get_session()->get_token()),
 		'U_TOPIC_MOVE' => url('.php?id=' . $id_get),
@@ -472,6 +478,25 @@ $result->dispose();
 //Listes les utilisateurs en lignes.
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" . url('/forum/topic.php?id=' . $id_get, '/forum/topic-' . $id_get) ."%'");
 
+//Liste des catégories.
+$search_category_children_options = new SearchCategoryChildrensOptions();
+$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
+$categories_tree = ForumService::get_categories_manager()->get_select_categories_form_field('cats', '', $topic['idcat'], $search_category_children_options);
+$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
+$method->setAccessible(true);
+$categories_tree_options = $method->invoke($categories_tree);
+$cat_list = '';
+$number_options = $categories_tree_options;
+foreach ($categories_tree_options as $option)
+{
+	if ($option->get_raw_value())
+	{
+		$cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
+		if (!$cat->get_url() && $number_options)
+			$cat_list .= $option->display()->render();
+	}
+}
+
 $vars_tpl = array_merge($vars_tpl, array(
 	'TOTAL_ONLINE' => $total_online,
 	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
@@ -479,7 +504,7 @@ $vars_tpl = array_merge($vars_tpl, array(
 	'MODO' => $total_modo,
 	'MEMBER' => $total_member,
 	'GUEST' => $total_visit,
-	'SELECT_CAT' => forum_list_cat($topic['idcat'], $CAT_FORUM[$topic['idcat']]['level']), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
+	'SELECT_CAT' => $cat_list, //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 	'U_SUSCRIBE' => ($track === false) ? url('.php?t=' . $id_get) : url('.php?ut=' . $id_get),
 	'U_SUSCRIBE_PM' => url('.php?token=' . AppContext::get_session()->get_token() . '&amp;' . ($track_pm ? 'utp' : 'tp') . '=' . $id_get),
 	'U_SUSCRIBE_MAIL' => url('.php?token=' . AppContext::get_session()->get_token() . '&amp;' . ($track_mail ? 'utm' : 'tm') . '=' . $id_get),
@@ -524,7 +549,7 @@ if ($topic['status'] == '0' && !$check_group_edit_auth)
 		'L_ERROR_AUTH_WRITE' => $LANG['e_topic_lock_forum']
 	));
 }	
-elseif (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], ForumAuthorizationsService::WRITE_AUTHORIZATIONS)) //On vérifie si l'utilisateur a les droits d'écritures.
+elseif (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->write()) //On vérifie si l'utilisateur a les droits d'écritures.
 {
 	$tpl->put_all(array(
 		'C_ERROR_AUTH_WRITE' => true,

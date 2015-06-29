@@ -27,9 +27,6 @@
 
 class ForumAuthorizationsService
 {
-	const READ_AUTHORIZATIONS = 1;
-	const WRITE_AUTHORIZATIONS = 2;
-	const MODERATION_AUTHORIZATIONS = 4;
 	const FLOOD_AUTHORIZATIONS = 16;
 	const HIDE_EDITION_MARK_AUTHORIZATIONS = 32;
 	const UNLIMITED_TOPICS_TRACKING_AUTHORIZATIONS = 64;
@@ -43,17 +40,17 @@ class ForumAuthorizationsService
 	
 	public function read()
 	{
-		return $this->get_authorizations(self::READ_AUTHORIZATIONS);
+		return $this->get_authorizations(Category::READ_AUTHORIZATIONS);
 	}
 	
 	public function write()
 	{
-		return $this->get_authorizations(self::WRITE_AUTHORIZATIONS);
+		return $this->get_authorizations(Category::WRITE_AUTHORIZATIONS);
 	}
 	
 	public function moderation()
 	{
-		return $this->get_authorizations(self::MODERATION_AUTHORIZATIONS);
+		return $this->get_authorizations(Category::MODERATION_AUTHORIZATIONS);
 	}
 	
 	public function flood()

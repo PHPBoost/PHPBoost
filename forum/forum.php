@@ -32,20 +32,27 @@ require_once('../forum/forum_tools.php');
 $id_get = retrieve(GET, 'id', 0);
 
 //Vérification de l'existance de la catégorie.
-if ($id_get != Category::ROOT_CATEGORY && (!isset($CAT_FORUM[$id_get]) || $CAT_FORUM[$id_get]['aprob'] == 0 || $CAT_FORUM[$id_get]['level'] == 0))
+if ($id_get != Category::ROOT_CATEGORY && !ForumService::get_categories_manager()->get_categories_cache()->category_exists($id_get))
 {
-	$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_unexist_cat_forum']);
-	DispatchManager::redirect($controller);
+	$controller = PHPBoostErrors::unexisting_category();
+    DispatchManager::redirect($controller);
 }
 
 //Vérification des autorisations d'accès.
-if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::READ_AUTHORIZATIONS))
+if (!ForumAuthorizationsService::check_authorizations($id_get)->read())
 {
 	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
 }
 
-if (!empty($CAT_FORUM[$id_get]['url']))
+try {
+	$category = ForumService::get_categories_manager()->get_categories_cache()->get_category($id_get);
+} catch (CategoryNotFoundException $e) {
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
+
+if ($category->get_url())
 {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
@@ -53,168 +60,173 @@ if (!empty($CAT_FORUM[$id_get]['url']))
 
 //Récupération de la barre d'arborescence.
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
-foreach ($CAT_FORUM as $idcat => $array_info_cat)
+$categories = array_reverse(ForumService::get_categories_manager()->get_parents($id_get, true));
+foreach ($categories as $id => $cat)
 {
-	if ($id_get != Category::ROOT_CATEGORY && $CAT_FORUM[$id_get]['id_left'] > $array_info_cat['id_left'] && $CAT_FORUM[$id_get]['id_right'] < $array_info_cat['id_right'] && $array_info_cat['level'] < $CAT_FORUM[$id_get]['level'])
-		$Bread_crumb->add($array_info_cat['name'], ($array_info_cat['level'] == 0) ? url('index.php?id=' . $idcat, 'cat-' . $idcat . '+' . Url::encode_rewrite($array_info_cat['name']) . '.php') : 'forum' . url('.php?id=' . $idcat, '-' . $idcat . '+' . Url::encode_rewrite($array_info_cat['name']) . '.php'));
+	if ($cat->get_id() != Category::ROOT_CATEGORY)
+		$Bread_crumb->add($cat->get_name(), 'forum' . url('.php?id=' . $cat->get_id(), '-' . $cat->get_id() . '+' . $cat->get_rewrited_name() . '.php'));
 }
-if (!empty($CAT_FORUM[$id_get]['name'])) //Nom de la catégorie courante.
-	$Bread_crumb->add($CAT_FORUM[$id_get]['name'], $CAT_FORUM[$id_get]['url']);
-if (!empty($id_get))
-	define('TITLE', $CAT_FORUM[$id_get]['name']);
-else
-	define('TITLE', $LANG['title_forum']);	
-require_once('../kernel/header.php'); 
 
-//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
-$rewrited_title = (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !empty($CAT_FORUM[$id_get]['name'])) ? '+' . Url::encode_rewrite($CAT_FORUM[$id_get]['name']) : '';
+if (!empty($id_get))
+	define('TITLE', $category->get_name());
+else
+	define('TITLE', $LANG['title_forum']);
+require_once('../kernel/header.php'); 
 
 //Redirection changement de catégorie.
 $change_cat = retrieve(POST, 'change_cat', '');
 if (!empty($change_cat))
-	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . $rewrited_title . '.php', '&'));
+	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . '+' . $category->get_rewrited_name() . '.php', '&'));
 	
 if (!empty($id_get))
 {
 	$tpl = new FileTemplate('forum/forum_forum.tpl');
 
-	//Invité?	
-	$is_guest = (AppContext::get_current_user()->get_id() !== -1) ? false : true;
+	//Invité?
+	$is_guest = AppContext::get_current_user()->get_id() == -1;
 	
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
 	$max_time_msg = forum_limit_time_msg();
 	
 	//Affichage des sous forums s'il y en a.
-	if (($CAT_FORUM[$id_get]['id_right'] - $CAT_FORUM[$id_get]['id_left']) > 1) //Intervalle > 1 => sous forum présent.
+	if (ForumService::get_categories_manager()->get_categories_cache()->get_childrens($id_get))
 	{
 		$tpl->put_all(array(
 			'C_FORUM_SUB_CATS' => true
 		));
 		
 		//Vérification des autorisations.
-		$unauth_cats = array();
-		if (is_array($AUTH_READ_FORUM))
-		{
-			foreach ($AUTH_READ_FORUM as $idcat => $auth)
-			{
-				if ($auth === false)
-					$unauth_cats[] = $idcat;
-			}
-		}
+		$authorized_categories = ForumService::get_authorized_categories($id_get);
 		
 		//On liste les sous-catégories.
-		$result = PersistenceContext::get_querier()->select("SELECT c.id AS cid, c.name, c.subname, c.url, c.nbr_topic, c.nbr_msg, c.status, t.id AS tid, 
-		t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.display_name, m.level AS user_level, m.groups, v.last_view_id 
-		FROM " . PREFIX . "forum_cats c
-		LEFT JOIN " . PREFIX . "forum_topics t ON t.id = c.last_topic_id
-		LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = :user_id AND v.idtopic = t.id
-		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = t.last_user_id
-		WHERE c.aprob = 1 AND c.id_left > :id_left AND c.id_right < :id_right AND c.level = :level + 1  " . (!empty($unauth_cats) ? " AND c.id NOT IN :unauth_cats" : '') . "
-		ORDER BY c.id_left ASC", array(
+		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= c.id, c.id AS cid, c.id_parent, c.name, c.rewrited_name, c.description as subname, c.url, c.last_topic_id, t.id AS tid, t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, t.status, m.user_id, m.display_name, m.level AS user_level, m.groups, v.last_view_id,
+		(SELECT COUNT(*) FROM ' . ForumSetup::$forum_topics_table . '
+			WHERE idcat IN (
+				@id_cat,
+				(SELECT GROUP_CONCAT(id SEPARATOR \',\') FROM ' . ForumSetup::$forum_cats_table . ' WHERE id_parent = @id_cat), 
+				(SELECT GROUP_CONCAT(childs.id SEPARATOR \',\') FROM ' . ForumSetup::$forum_cats_table . ' parents
+				INNER JOIN ' . ForumSetup::$forum_cats_table . ' childs ON parents.id = childs.id_parent
+				WHERE parents.id_parent = @id_cat)
+			)
+		) AS nbr_topic,
+		(SELECT COUNT(*) FROM ' . ForumSetup::$forum_message_table . '
+			WHERE idtopic IN (
+				(SELECT GROUP_CONCAT(id SEPARATOR \',\') FROM ' . ForumSetup::$forum_topics_table . ' WHERE idcat = @id_cat), 
+				(SELECT GROUP_CONCAT(t.id SEPARATOR \',\') FROM ' . ForumSetup::$forum_topics_table . ' t LEFT JOIN ' . ForumSetup::$forum_cats_table . ' c ON t.idcat = c.id WHERE id_parent = @id_cat)
+			)
+		) AS nbr_msg
+		FROM ' . ForumSetup::$forum_cats_table . ' c
+		LEFT JOIN ' . ForumSetup::$forum_topics_table . ' t ON t.id = c.last_topic_id
+		LEFT JOIN ' . ForumSetup::$forum_view_table . ' v ON v.user_id = :user_id AND v.idtopic = t.id
+		LEFT JOIN ' . DB_TABLE_MEMBER . ' m ON m.user_id = t.last_user_id
+		WHERE c.id_parent = :id_parent AND c.id IN :authorized_categories
+		ORDER BY c.id_parent, c.c_order', array(
 			'user_id' => AppContext::get_current_user()->get_id(),
-			'id_left' => $CAT_FORUM[$id_get]['id_left'],
-			'id_right' => $CAT_FORUM[$id_get]['id_right'],
-			'level' => $CAT_FORUM[$id_get]['level'],
-			'unauth_cats' => $unauth_cats,
+			'id_parent' => $category->get_id_parent(),
+			'authorized_categories' => $authorized_categories
 		));
+		
+		$categories = array();
 		while ($row = $result->fetch())
 		{
-			if ($row['nbr_msg'] !== '0')
+			$categories[] = $row;
+		}
+		$result->dispose();
+		$sorted_categories = parentChildSort('cid', 'id_parent', $categories);
+		
+		$display_sub_cats = false;
+		$is_sub_forum = array();
+		foreach ($sorted_categories as $row)
+		{
+			if (in_array($row['id_parent'], $is_sub_forum))
+				$is_sub_forum[] = $row['cid'];
+			
+			if (!in_array($row['cid'], $is_sub_forum))
 			{
-				//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
-				if (!empty($row['last_view_id'])) //Calcul de la page du last_view_id réalisé dans topic.php
+				if ($row['nbr_msg'] !== '0')
 				{
-					$last_msg_id = $row['last_view_id']; 
-					$last_page = 'idm=' . $row['last_view_id'] . '&amp;';
-					$last_page_rewrite = '-0-' . $row['last_view_id'];
+					//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
+					if (!empty($row['last_view_id'])) //Calcul de la page du last_view_id réalisé dans topic.php
+					{
+						$last_msg_id = $row['last_view_id']; 
+						$last_page = 'idm=' . $row['last_view_id'] . '&amp;';
+						$last_page_rewrite = '-0-' . $row['last_view_id'];
+					}
+					else
+					{
+						$last_msg_id = $row['last_msg_id']; 
+						$last_page = ceil($row['t_nbr_msg'] / $config->get_number_messages_per_page());
+						$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
+						$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';
+					}
+					
+					$last_topic_title = (($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '') . ' ' . ucfirst($row['title']);
+					$last_topic_title = (strlen(TextHelper::html_entity_decode($last_topic_title)) > 20) ? TextHelper::substr_html($last_topic_title, 0, 20) . '...' : $last_topic_title;
+					
+					$group_color = User::get_group_color($row['groups'], $row['user_level']);
+					
+					$last = '<a href="topic' . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title'])  . '.php') . '" class="small">' . ucfirst($last_topic_title) . '</a><br />
+					<a href="topic' . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id . '" title=""><i class="fa fa-hand-o-right"></i></a> ' . $LANG['on'] . ' ' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />
+					' . $LANG['by'] . (!empty($row['login']) ? ' <a href="'. UserUrlBuilder::profile($row['last_user_id'])->rel() .'" class="small '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 13) . '</a>' : ' ' . $LANG['guest']);
 				}
 				else
 				{
-					$last_msg_id = $row['last_msg_id']; 
-					$last_page = ceil($row['t_nbr_msg'] / $config->get_number_messages_per_page());
-					$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
-					$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';					
-				}		
-							
-				$last_topic_title = (($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '') . ' ' . ucfirst($row['title']);
-				$last_topic_title = (strlen(TextHelper::html_entity_decode($last_topic_title)) > 20) ? TextHelper::substr_html($last_topic_title, 0, 20) . '...' : $last_topic_title;
-				
-				$group_color = User::get_group_color($row['groups'], $row['user_level']);
-				
-				$last = '<a href="topic' . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title'])  . '.php') . '" class="small">' . ucfirst($last_topic_title) . '</a><br />
-				<a href="topic' . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id . '" title=""><i class="fa fa-hand-o-right"></i></a> ' . $LANG['on'] . ' ' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />
-				' . $LANG['by'] . (!empty($row['login']) ? ' <a href="'. UserUrlBuilder::profile($row['last_user_id'])->rel() .'" class="small '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 13) . '</a>' : ' ' . $LANG['guest']);
-			}
-			else
-			{
-				$row['last_timestamp'] = '';
-				$last = '<br />' . $LANG['no_message'] . '<br /><br />';
-			}
-
-			//Vérirication de l'existance de sous forums.
-			$subforums = '';
-			if ($CAT_FORUM[$row['cid']]['id_right'] - $CAT_FORUM[$row['cid']]['id_left'] > 1)
-			{		
-				foreach ($CAT_FORUM as $idcat => $key) //Listage des sous forums.
-				{
-					if ($CAT_FORUM[$idcat]['id_left'] > $CAT_FORUM[$row['cid']]['id_left'] && $CAT_FORUM[$idcat]['id_right'] < $CAT_FORUM[$row['cid']]['id_right'])
-					{
-						if ($CAT_FORUM[$idcat]['level'] == ($CAT_FORUM[$row['cid']]['level'] + 1))
-						{
-							if ($AUTH_READ_FORUM[$row['cid']]) //Autorisation en lecture.
-							{
-								$link = !empty($CAT_FORUM[$idcat]['url']) ? '<a href="' . $CAT_FORUM[$idcat]['url'] . '" class="small">' : '<a href="forum' . url('.php?id=' . $idcat, '-' . $idcat . '+' . Url::encode_rewrite($CAT_FORUM[$idcat]['name']) . '.php') . '" class="small">';
-								$subforums .= !empty($subforums) ? ', ' . $link . $CAT_FORUM[$idcat]['name'] . '</a>' : $link . $CAT_FORUM[$idcat]['name'] . '</a>';		
-							}
-						}	
-					}
-				}	
-				$subforums = '<strong>' . $LANG['subforum_s'] . '</strong>: ' . $subforums;
-			}
-			
-			//Vérifications des topics Lu/non Lus.
-			$img_announce = 'fa-announce';
-			$blink = false;
-			if (!$is_guest)
-			{
-				if ($row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg) //Nouveau message (non lu).
-				{
-					$img_announce =  $img_announce . '-new'; //Image affiché aux visiteurs.
-					$blink = true;
+					$row['last_timestamp'] = '';
+					$last = '<br />' . $LANG['no_message'] . '<br /><br />';
 				}
+
+				//Vérirication de l'existance de sous forums.
+				$subforums = '';
+				$children = ForumService::get_categories_manager()->get_categories_cache()->get_childrens($row['cid']);
+				if ($children)
+				{
+					foreach ($children as $id => $child) //Listage des sous forums.
+					{
+						if ($child->get_id_parent() == $row['cid'] && ForumAuthorizationsService::check_authorizations($child->get_id())->read()) //Sous forum distant d'un niveau au plus.
+						{
+							$is_sub_forum[] = $child->get_id();
+							$link = $child->get_url() ? '<a href="' . $child->get_url() . '" class="small">' : '<a href="forum' . url('.php?id=' . $child->get_id(), '-' . $child->get_id() . '+' . $child->get_rewrited_name() . '.php') . '" class="small">';
+							$subforums .= !empty($subforums) ? ', ' . $link . $child->get_name() . '</a>' : $link . $child->get_name() . '</a>';
+						}
+					}
+					$subforums = '<strong>' . $LANG['subforum_s'] . '</strong>: ' . $subforums;
+				}
+				
+				//Vérifications des topics Lu/non Lus.
+				$img_announce = 'fa-announce';
+				$blink = false;
+				if (!$is_guest)
+				{
+					if ($row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg) //Nouveau message (non lu).
+					{
+						$img_announce =  $img_announce . '-new'; //Image affiché aux visiteurs.
+						$blink = true;
+					}
+				}
+				$img_announce .= ($row['status'] == '0') ? '-lock' : '';
+				
+				$tpl->assign_block_vars('subcats', array(
+					'C_BLINK' => $blink,
+					'IMG_ANNOUNCE' => $img_announce,
+					'NAME' => $row['name'],
+					'DESC' => $row['subname'],
+					'SUBFORUMS' => !empty($subforums) && !empty($row['subname']) ? '<br />' . $subforums : $subforums,
+					'NBR_TOPIC' => $row['nbr_topic'],
+					'NBR_MSG' => $row['nbr_msg'],
+					'U_FORUM_URL' => $row['url'],
+					'U_FORUM_VARS' => url('.php?id=' . $row['cid'], '-' . $row['cid'] . '+' . $row['rewrited_name'] . '.php'),
+					'U_LAST_TOPIC' => $last
+				));
 			}
-			$img_announce .= ($row['status'] == '0') ? '-lock' : '';
-			
-			$tpl->assign_block_vars('subcats', array(
-				'C_BLINK' => $blink,
-				'IMG_ANNOUNCE' => $img_announce,
-				'NAME' => $row['name'],
-				'DESC' => $row['subname'],
-				'SUBFORUMS' => !empty($subforums) && !empty($row['subname']) ? '<br />' . $subforums : $subforums,
-				'NBR_TOPIC' => $row['nbr_topic'],
-				'NBR_MSG' => $row['nbr_msg'],
-				'U_FORUM_URL' => $row['url'],
-				'U_FORUM_VARS' => url('.php?id=' . $row['cid'], '-' . $row['cid'] . '+' . Url::encode_rewrite($row['name']) . '.php'),
-				'U_LAST_TOPIC' => $last
-			));
 		}
-		$result->dispose();
 	}
-		
+	
 	//On vérifie si l'utilisateur a les droits d'écritures.
-	$check_group_write_auth = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::WRITE_AUTHORIZATIONS);
-	$locked_cat = ($CAT_FORUM[$id_get]['status'] == 1 || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) ? false : true;
+	$check_group_write_auth = ForumAuthorizationsService::check_authorizations($id_get)->write();
 	if (!$check_group_write_auth)
 	{
 		$tpl->assign_block_vars('error_auth_write', array(
 			'L_ERROR_AUTH_WRITE' => $LANG['e_cat_write']
-		));
-	}
-	//Catégorie verrouillée?
-	elseif ($locked_cat)
-	{
-		$tpl->assign_block_vars('error_auth_write', array(
-			'L_ERROR_AUTH_WRITE' => $LANG['e_cat_lock_forum']
 		));
 	}
 	
@@ -243,8 +255,8 @@ if (!empty($id_get))
 		$i++;
 	}
 	
-	//Si l'utilisateur a les droits d'édition.	
-	$check_group_edit_auth = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS);
+	//Si l'utilisateur a les droits d'édition.
+	$check_group_edit_auth = ForumAuthorizationsService::check_authorizations($id_get)->moderation();
 
 	$vars_tpl = array(
 		'C_PAGINATION' => $pagination->has_several_pages(),
@@ -253,11 +265,11 @@ if (!empty($id_get))
 		'IDCAT' => $id_get,
 		//'C_MASS_MODO_CHECK' => $check_group_edit_auth ? true : false,
 		'C_MASS_MODO_CHECK' => false,
-		'C_POST_NEW_SUBJECT' => ($check_group_write_auth && !$locked_cat),
+		'C_POST_NEW_SUBJECT' => $check_group_write_auth,
 		'U_MSG_SET_VIEW' => '<a class="small" href="../forum/action' . url('.php?read=1&amp;f=' . $id_get, '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
-		'U_CHANGE_CAT'=> 'forum' . url('.php?id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token(), '-' . $id_get . $rewrited_title . '.php?token=' . AppContext::get_session()->get_token()),
+		'U_CHANGE_CAT'=> 'forum' . url('.php?id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token(), '-' . $id_get . '+' . $category->get_rewrited_name() . '.php?token=' . AppContext::get_session()->get_token()),
 		'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
-		'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),		
+		'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
 		'U_FORUM_CAT' => $forum_cats,
 		'U_POST_NEW_SUBJECT' => 'post' . url('.php?new=topic&amp;id=' . $id_get, ''),
 		'L_FORUM_INDEX' => $LANG['forum_index'],
@@ -389,6 +401,25 @@ if (!empty($id_get))
 	//Listes les utilisateurs en lignes.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" . url('/forum/forum.php?id=' . $id_get, '/forum/forum-' . $id_get) . "%'");
 
+	//Liste des catégories.
+	$search_category_children_options = new SearchCategoryChildrensOptions();
+	$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
+	$categories_tree = ForumService::get_categories_manager()->get_select_categories_form_field('cats', '', $id_get, $search_category_children_options);
+	$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
+	$method->setAccessible(true);
+	$categories_tree_options = $method->invoke($categories_tree);
+	$cat_list = '';
+	$number_options = $categories_tree_options;
+	foreach ($categories_tree_options as $option)
+	{
+		if ($option->get_raw_value())
+		{
+			$cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
+			if (!$cat->get_url() && $number_options)
+				$cat_list .= $option->display()->render();
+		}
+	}
+
 	$vars_tpl = array_merge($vars_tpl, array(
 		'TOTAL_ONLINE' => $total_online,
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
@@ -396,7 +427,7 @@ if (!empty($id_get))
 		'MODO' => $total_modo,
 		'MEMBER' => $total_member,
 		'GUEST' => $total_visit,
-		'SELECT_CAT' => forum_list_cat($id_get, $CAT_FORUM[$id_get]['level']), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
+		'SELECT_CAT' => $cat_list, //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 		'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
 		'L_ADMIN' => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
 		'L_MODO' => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],

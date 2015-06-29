@@ -40,19 +40,13 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	
 	$tpl = new FileTemplate('forum/forum_membermsg.tpl');
 	
-	$auth_cats = array();
-	foreach ($CAT_FORUM as $idcat => $key)
-	{
-		if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], ForumAuthorizationsService::READ_AUTHORIZATIONS))
-			$auth_cats[] = $idcat;
-	}
+	$authorized_categories = ForumService::get_authorized_categories(Category::ROOT_CATEGORY);
 	
 	$row = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as nbr_msg
 	FROM " . PREFIX . "forum_msg msg
 	LEFT JOIN " . PREFIX . "forum_topics t ON msg.idtopic = t.id
-	JOIN " . PREFIX . "forum_cats c ON t.idcat = c.id AND c.aprob = 1" . (!empty($auth_cats) ? " AND c.id NOT IN :auth_cats" : '') . "
-	WHERE msg.user_id = :user_id", array(
-		'auth_cats' => $auth_cats,
+	WHERE msg.user_id = :user_id AND t.idcat IN :authorized_categories", array(
+		'authorized_categories' => $authorized_categories,
 		'user_id' => $view_msg
 	));
 	$nbr_msg = $row['nbr_msg'];
@@ -79,16 +73,15 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	$result = PersistenceContext::get_querier()->select("SELECT msg.id, msg.user_id, msg.idtopic, msg.timestamp, msg.timestamp_edit, m.groups, t.title, t.status, t.idcat, c.name, m.display_name, m.level, m.email, m.show_email, m.registration_date AS registered, m.posted_msg, m.warning_percentage, m.delay_banned, s.user_id AS connect, msg.contents
 	FROM " . PREFIX . "forum_msg msg
 	LEFT JOIN " . PREFIX . "forum_topics t ON msg.idtopic = t.id
-	JOIN " . PREFIX . "forum_cats c ON t.idcat = c.id AND c.aprob = 1
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = :user_id
 	LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.timestamp > :timestamp
-	WHERE msg.user_id = :id" . (!empty($auth_cats) ? " AND c.id NOT IN :auth_cats" : '') . "
+	WHERE msg.user_id = :id AND t.idcat IN :authorized_categories
 	ORDER BY msg.id DESC
 	LIMIT :number_items_per_page OFFSET :display_from", array(
 		'id' => $view_msg,
 		'user_id' => $view_msg,
 		'timestamp' => (time() - SessionsConfig::load()->get_active_session_duration()),
-		'auth_cats' => $auth_cats,
+		'authorized_categories' => $authorized_categories,
 		'number_items_per_page' => $pagination->get_number_items_per_page(),
 		'display_from' => $pagination->get_display_from()
 	));

@@ -48,16 +48,7 @@ if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 		$max_time_msg = forum_limit_time_msg();
 
 		//Vérification des autorisations.
-		$unauth_cats = '';
-		if (is_array($AUTH_READ_FORUM))
-		{
-			foreach ($AUTH_READ_FORUM as $idcat => $auth)
-			{
-				if (!$auth)
-					$unauth_cats .= $idcat . ',';
-			}
-			$unauth_cats = !empty($unauth_cats) ? " AND c.id NOT IN (" . trim($unauth_cats, ',') . ")" : '';
-		}
+		$authorized_categories = ForumService::get_authorized_categories($id_get);
 
 		$contents = '';
 		//Requête pour compter le nombre de messages non lus.
@@ -67,8 +58,10 @@ if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 		LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
 		LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = '" . AppContext::get_current_user()->get_id() . "'
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = t.last_user_id
-		WHERE t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL)" . $unauth_cats . "
-		ORDER BY t.last_timestamp DESC");
+		WHERE t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) AND c.id IN :authorized_categories
+		ORDER BY t.last_timestamp DESC", array(
+			'authorized_categories' => $authorized_categories
+		));
 		while ($row = $result->fetch())
 		{
 			//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
@@ -122,7 +115,7 @@ elseif (retrieve(GET, 'del', false)) //Suppression d'un message.
 	
 	if (!empty($msg['idtopic']) && $topic['first_msg_id'] != $idm_get) //Suppression d'un message.
 	{
-		if (!empty($topic['idcat']) && (AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS) || AppContext::get_current_user()->get_id() == $msg['user_id'])) //Autorisé à supprimer?
+		if (!empty($topic['idcat']) && (ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation() || AppContext::get_current_user()->get_id() == $msg['user_id'])) //Autorisé à supprimer?
 		{
 			list($nbr_msg, $previous_msg_id) = $Forumfct->Del_msg($idm_get, $msg['idtopic'], $topic['idcat'], $topic['first_msg_id'], $topic['last_msg_id'], $topic['last_timestamp'], $msg['user_id']); //Suppression du message.
 			if ($nbr_msg === false && $previous_msg_id === false) //Echec de la suppression.
@@ -189,7 +182,7 @@ elseif (!empty($msg_d))
 	//Vérification de l'appartenance du sujet au membres, ou modo.
 	$topic = PersistenceContext::get_querier()->select_single_row_query('SELECT idcat, user_id, display_msg FROM ' . PREFIX . 'forum_topics WHERE id=:id', array('id' => $msg_d));
 	
-	if ((!empty($topic['user_id']) && AppContext::get_current_user()->get_id() == $topic['user_id']) || AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS))
+	if ((!empty($topic['user_id']) && AppContext::get_current_user()->get_id() == $topic['user_id']) || ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation())
 	{
 		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET display_msg = 1 - display_msg WHERE id = :id", array('id' => $msg_d));
 		echo ($topic['display_msg']) ? 2 : 1;

@@ -27,6 +27,8 @@
 
 class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 {
+	private $category;
+	
 	public function get_home_page()
 	{
 		return new DefaultHomePage($this->get_title(), $this->get_view());
@@ -43,18 +45,10 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $Cache, $LANG, $config, $CAT_FORUM, $AUTH_READ_FORUM, $nbr_msg_not_read, $sid;
+		global $LANG, $config, $nbr_msg_not_read, $sid, $id_get;
 		
 		require_once(PATH_TO_ROOT . '/forum/forum_begin.php');
 		require_once(PATH_TO_ROOT . '/forum/forum_tools.php');
-		
-		$id_get = retrieve(GET, 'id', 0);
-		
-		if (!isset($CAT_FORUM[$id_get]) && !empty($id_get))
-		{
-			$controller = PHPBoostErrors::unexisting_element();
-    		DispatchManager::redirect($controller);
-		}
 
 		$tpl = new FileTemplate('forum/forum_index.tpl');
 		$tpl_top = new FileTemplate('forum/forum_top.tpl');
@@ -74,7 +68,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 			$tpl_bottom->put_all($display_connexion);
 		}
 		
-		$vars_tpl = array(	
+		$vars_tpl = array(
 			'C_DISPLAY_UNREAD_DETAILS' => (AppContext::get_current_user()->get_id() !== -1),
 			'C_MODERATION_PANEL' => AppContext::get_current_user()->check_level(1),
 			'U_TOPIC_TRACK' => '<a class="small" href="'. PATH_TO_ROOT .'/forum/track.php' . $sid . '" title="' . $LANG['show_topic_track'] . '">' . $LANG['show_topic_track'] . '</a>',
@@ -87,78 +81,88 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 		);
 		
 		//Affichage des sous-catégories de la catégorie.
-		$display_sub_cat = ' AND c.level BETWEEN 0 AND 1';
 		$display_cat = !empty($id_get);
-		if ($display_cat)
-		{
-			$intervall = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_cats', array("id_left", "id_right", "level"), 'WHERE id=:id', array('id' => $id_get));
-			$display_sub_cat = ' AND c.id_left > \'' . $intervall['id_left'] . '\'
-		   AND c.id_right < \'' . $intervall['id_right'] . '\'
-		   AND c.level = \'' . $intervall['level'] . '\' + 1';
-		}
-
+		
 		//Vérification des autorisations.
-		$unauth_cats = array();
-		if (is_array($AUTH_READ_FORUM))
-		{
-			foreach ($AUTH_READ_FORUM as $idcat => $auth)
-			{
-				if ($auth === false)
-					$unauth_cats[] = $idcat;
-			}
-		}
-
+		$authorized_categories = ForumService::get_authorized_categories($id_get);
+		
 		//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
 		$max_time_msg = forum_limit_time_msg();
 
-		$is_guest = (AppContext::get_current_user()->get_id() !== -1) ? false : true;
+		$is_guest = AppContext::get_current_user()->get_id() == -1;
 		$total_topic = 0;
 		$total_msg = 0;
 		$i = 0;
 
 		//On liste les catégories et sous-catégories.
-		$result = PersistenceContext::get_querier()->select("SELECT c.id AS cid, c.level, c.name, c.subname, c.url, c.nbr_msg, c.nbr_topic, c.status, c.last_topic_id, t.id AS tid,
-		t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.display_name as login, m.level as user_level, m.groups, v.last_view_id
-		FROM " . PREFIX . "forum_cats c
-		LEFT JOIN " . PREFIX . "forum_topics t ON t.id = c.last_topic_id
-		LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = :user_id AND v.idtopic = t.id
-		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = t.last_user_id
-		WHERE c.aprob = 1 " . $display_sub_cat . (!empty($unauth_cats) ? " AND c.id NOT IN :unauth_cats" : '') . "
-		ORDER BY c.id_left", array(
+		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= c.id, c.id AS cid, c.id_parent, c.name, c.rewrited_name, c.description as subname, c.url, c.last_topic_id, t.id AS tid, t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, t.status, m.user_id, m.display_name as login, m.level as user_level, m.groups, v.last_view_id,
+		(SELECT COUNT(*) FROM ' . ForumSetup::$forum_topics_table . '
+			WHERE idcat IN (
+				@id_cat,
+				(SELECT GROUP_CONCAT(id SEPARATOR \',\') FROM ' . ForumSetup::$forum_cats_table . ' WHERE id_parent = @id_cat), 
+				(SELECT GROUP_CONCAT(childs.id SEPARATOR \',\') FROM ' . ForumSetup::$forum_cats_table . ' parents
+				INNER JOIN ' . ForumSetup::$forum_cats_table . ' childs ON parents.id = childs.id_parent
+				WHERE parents.id_parent = @id_cat)
+			)
+		) AS nbr_topic,
+		(SELECT COUNT(*) FROM ' . ForumSetup::$forum_message_table . '
+			WHERE idtopic IN (
+				(SELECT GROUP_CONCAT(id SEPARATOR \',\') FROM ' . ForumSetup::$forum_topics_table . ' WHERE idcat = @id_cat), 
+				(SELECT GROUP_CONCAT(t.id SEPARATOR \',\') FROM ' . ForumSetup::$forum_topics_table . ' t LEFT JOIN ' . ForumSetup::$forum_cats_table . ' c ON t.idcat = c.id WHERE id_parent = @id_cat)
+			)
+		) AS nbr_msg
+		FROM ' . ForumSetup::$forum_cats_table . ' c
+		LEFT JOIN ' . ForumSetup::$forum_topics_table . ' t ON t.id = c.last_topic_id
+		LEFT JOIN ' . ForumSetup::$forum_view_table . ' v ON v.user_id = :user_id AND v.idtopic = t.id
+		LEFT JOIN ' . DB_TABLE_MEMBER . ' m ON m.user_id = t.last_user_id
+		WHERE c.id IN :authorized_categories
+		ORDER BY c.id_parent, c.c_order', array(
 			'user_id' => AppContext::get_current_user()->get_id(),
-			'unauth_cats' => $unauth_cats,
+			'authorized_categories' => $authorized_categories
 		));
-		$display_sub_cats = false;
+		
+		$categories = array();
 		while ($row = $result->fetch())
 		{
-			
+			$categories[] = $row;
+		}
+		$result->dispose();
+		$sorted_categories = parentChildSort('cid', 'id_parent', $categories);
+		
+		$display_sub_cats = false;
+		$is_sub_forum = array();
+		foreach ($sorted_categories as $row)
+		{
 			$tpl->assign_block_vars('forums_list', array());
-			if ($CAT_FORUM[$row['cid']]['level'] == 0 && $i > 0 && $display_sub_cats) //Fermeture de la catégorie racine.
+			if ($row['id_parent'] == Category::ROOT_CATEGORY && $i > 0 && $display_sub_cats) //Fermeture de la catégorie racine.
 			{
 				$tpl->assign_block_vars('forums_list.endcats', array(
 				));
 			}
 			$i++;
 
-			if ($row['level'] === '0') //Si c'est une catégorie
+			if ($row['id_parent'] == Category::ROOT_CATEGORY) //Si c'est une catégorie
 			{
 				$tpl->assign_block_vars('forums_list.cats', array(
 					'IDCAT' => $row['cid'],
 					'NAME' => $row['name'],
-					'U_FORUM_VARS' => PATH_TO_ROOT . '/forum/' . url('index.php?id=' . $row['cid'], 'cat-' . $row['cid'] . '+' . Url::encode_rewrite($row['name']) . '.php')
+					'U_FORUM_VARS' => PATH_TO_ROOT . '/forum/' . url('index.php?id=' . $row['cid'], 'cat-' . $row['cid'] . '+' . $row['rewrited_name'] . '.php')
 				));
-				$display_sub_cats = (bool)$row['status'];
+				$display_sub_cats = true;
 			}
 			else //On liste les sous-catégories
 			{
-				if ($display_sub_cats || !empty($id_get))
+				if (in_array($row['id_parent'], $is_sub_forum))
+					$is_sub_forum[] = $row['cid'];
+				
+				if (($display_sub_cats || !empty($id_get)) && !in_array($row['cid'], $is_sub_forum))
 				{
 					if ($display_cat) //Affichage des forums d'une catégorie, ajout de la catégorie.
 					{
 						$tpl->assign_block_vars('forums_list.cats', array(
 							'IDCAT' => $id_get,
-							'NAME' => $CAT_FORUM[$id_get]['name'],
-							'U_FORUM_VARS' => PATH_TO_ROOT . '/forum/' . url('index.php?id=' . $id_get, 'cat-' . $id_get . '+' . Url::encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php')
+							'NAME' => $row['name'],
+							'U_FORUM_VARS' => PATH_TO_ROOT . '/forum/' . url('index.php?id=' . $id_get, 'cat-' . $id_get . '+' . $row['rewrited_name'] . '.php')
 						));
 						$display_cat = false;
 					}
@@ -169,20 +173,17 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 						'C_FORUM_CHILD_CAT' => true,
 						'C_END_S_CATS' => false
 					));
-					if ($CAT_FORUM[$row['cid']]['id_right'] - $CAT_FORUM[$row['cid']]['id_left'] > 1)
+					
+					$children = ForumService::get_categories_manager()->get_categories_cache()->get_childrens($row['cid']);
+					if ($children)
 					{
-						foreach ($CAT_FORUM as $idcat => $key) //Listage des sous forums.
+						foreach ($children as $id => $child) //Listage des sous forums.
 						{
-							if ($CAT_FORUM[$idcat]['id_left'] > $CAT_FORUM[$row['cid']]['id_left'] && $CAT_FORUM[$idcat]['id_right'] < $CAT_FORUM[$row['cid']]['id_right'])
+							if ($child->get_id_parent() == $row['cid'] && ForumAuthorizationsService::check_authorizations($child->get_id())->read()) //Sous forum distant d'un niveau au plus.
 							{
-								if ($CAT_FORUM[$idcat]['level'] == ($CAT_FORUM[$row['cid']]['level'] + 1)) //Sous forum distant d'un niveau au plus.
-								{
-									if ($AUTH_READ_FORUM[$row['cid']]) //Autorisation en lecture.
-									{
-										$link = !empty($CAT_FORUM[$idcat]['url']) ? '<a href="' . $CAT_FORUM[$idcat]['url'] . '" class="small">' : '<a href="forum' . url('.php?id=' . $idcat, '-' . $idcat . '+' . Url::encode_rewrite($CAT_FORUM[$idcat]['name']) . '.php') . '" class="small">';
-										$subforums .= !empty($subforums) ? ', ' . $link . $CAT_FORUM[$idcat]['name'] . '</a>' : $link . $CAT_FORUM[$idcat]['name'] . '</a>';
-									}
-								}
+								$is_sub_forum[] = $child->get_id();
+								$link = $child->get_url() ? '<a href="' . $child->get_url() . '" class="small">' : '<a href="forum' . url('.php?id=' . $child->get_id(), '-' . $child->get_id() . '+' . $child->get_rewrited_name() . '.php') . '" class="small">';
+								$subforums .= !empty($subforums) ? ', ' . $link . $child->get_name() . '</a>' : $link . $child->get_name() . '</a>';
 							}
 						}
 						$subforums = '<strong>' . $LANG['subforum_s'] . '</strong>: ' . $subforums;
@@ -245,13 +246,13 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 						'NBR_TOPIC' => $row['nbr_topic'],
 						'NBR_MSG' => $row['nbr_msg'],
 						'U_FORUM_URL' => $row['url'],
-						'U_FORUM_VARS' => PATH_TO_ROOT .'/forum/' . url('forum.php?id=' . $row['cid'], 'forum-' . $row['cid'] . '+' . Url::encode_rewrite($row['name']) . '.php'),
+						'U_FORUM_VARS' => PATH_TO_ROOT .'/forum/' . url('forum.php?id=' . $row['cid'], 'forum-' . $row['cid'] . '+' . $row['rewrited_name'] . '.php'),
 						'U_LAST_TOPIC' => $last
 					));
 				}
 			}
 		}
-		$result->dispose();
+		
 		if ($i > 0) //Fermeture de la catégorie racine.
 		{
 			$tpl->assign_block_vars('forums_list', array(
@@ -270,9 +271,28 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 			$where = "AND s.location_script LIKE '%". $site_path ."/forum/%'";
 			if (!empty($id_get))
 			{
-				$where = "AND s.location_script LIKE '%". $site_path . url('/forum/index.php?id=' . $id_get, '/forum/cat-' . $id_get . '+' . Url::encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php') ."'";
+				$where = "AND s.location_script LIKE '%". $site_path . url('/forum/index.php?id=' . $id_get, '/forum/cat-' . $id_get . '+' . $category->get_rewrite_name() . '.php') ."'";
 			}
 			list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online($where);
+		}
+		
+		//Liste des catégories.
+		$search_category_children_options = new SearchCategoryChildrensOptions();
+		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
+		$categories_tree = ForumService::get_categories_manager()->get_select_categories_form_field('cats', '', $id_get, $search_category_children_options);
+		$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
+		$method->setAccessible(true);
+		$categories_tree_options = $method->invoke($categories_tree);
+		$cat_list = '';
+		$number_options = $categories_tree_options;
+		foreach ($categories_tree_options as $option)
+		{
+			if ($option->get_raw_value())
+			{
+				$cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
+				if (!$cat->get_url() && $number_options)
+					$cat_list .= $option->display()->render();
+			}
 		}
 		
 		$vars_tpl = array_merge($vars_tpl, array(
@@ -285,7 +305,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 			'MODO' => $total_modo,
 			'MEMBER' => $total_member,
 			'GUEST' => $total_visit,
-			'SELECT_CAT' => !empty($id_get) ? forum_list_cat($id_get, 0) : '', //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
+			'SELECT_CAT' => !empty($id_get) ? $cat_list : '', //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 			'C_TOTAL_POST' => true,
 			'U_ONCHANGE' => PATH_TO_ROOT ."/forum/" . url("index.php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
 			'U_ONCHANGE_CAT' => PATH_TO_ROOT ."/forum/" . url("/index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),

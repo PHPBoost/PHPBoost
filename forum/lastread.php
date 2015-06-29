@@ -105,7 +105,7 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 		$img_announce .= ($row['type'] == '2') ? '-top' : '';
 		$img_announce .= ($row['status'] == '0' && $row['type'] == '0') ? '-lock' : '';
 		
-		//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.		
+		//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
 		if (!empty($row['last_view_id'])) //Calcul de la page du last_view_id réalisé dans topic.php
 		{
 			$last_msg_id = $row['last_view_id']; 
@@ -171,6 +171,25 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 	
 	//Listes les utilisateurs en lignes.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" ."/forum/lastread.php%'");
+	
+	//Liste des catégories.
+	$search_category_children_options = new SearchCategoryChildrensOptions();
+	$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
+	$categories_tree = ForumService::get_categories_manager()->get_select_categories_form_field('cats', '', Category::ROOT_CATEGORY, $search_category_children_options);
+	$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
+	$method->setAccessible(true);
+	$categories_tree_options = $method->invoke($categories_tree);
+	$cat_list = '';
+	$number_options = $categories_tree_options;
+	foreach ($categories_tree_options as $option)
+	{
+		if ($option->get_raw_value())
+		{
+			$cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
+			if (!$cat->get_url() && $number_options)
+				$cat_list .= $option->display()->render();
+		}
+	}
 
 	$vars_tpl = array(
 		'TOTAL_ONLINE' => $total_online,
@@ -179,7 +198,7 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 		'MODO' => $total_modo,
 		'MEMBER' => $total_member,
 		'GUEST' => $total_visit,
-		'SELECT_CAT' => forum_list_cat(0, 0), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
+		'SELECT_CAT' => $cat_list, //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 		'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
 		'L_ADMIN' => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
 		'L_MODO' => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],

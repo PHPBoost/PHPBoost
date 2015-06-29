@@ -92,25 +92,6 @@ function forum_list_user_online($condition)
 	return array($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total);
 }
 
-//Liste des catégories du forum.
-function forum_list_cat($id_select, $level)
-{
-	global $CAT_FORUM, $AUTH_READ_FORUM;
-	
-	$select = '';
-	foreach ($CAT_FORUM as $idcat => $array_cat)
-	{
-		$selected = '';
-		if ($id_select == $idcat && $array_cat['level'] == $level)
-			$selected = ' selected="selected"';
-		
-		$margin = ($array_cat['level'] > 0) ? str_repeat('------', $array_cat['level']) : '';
-		$select .= isset($AUTH_READ_FORUM[$idcat]) && empty($CAT_FORUM[$idcat]['url']) ? '<option value="' . $idcat . '"' . $selected . '>' . $margin . ' ' . $array_cat['name'] . '</option>' : '';
-	}
-	
-	return $select;
-}
-
 //Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
 function forum_limit_time_msg()
 {
@@ -164,18 +145,22 @@ function forum_generate_feeds()
     Feed::clear_cache('forum');
 }
 
-//Coloration de l'item recherché en dehors des balises html.
-function token_colorate($matches)
-{
-    static $open_tag = 0;
-    static $close_tag = 0;
-    
-    $open_tag += substr_count($matches[1], '<');
-    $close_tag += substr_count($matches[1], '>');
-    
-    if ($open_tag == $close_tag)
-        return $matches[1] . '<span class="forum-search-word">' . $matches[2] . '</span>' . $matches[3];
-    else
-        return $matches[0];
+function parentChildSort($idField, $parentField, $els, $parentID = 0, &$result = array(), &$depth = 0){
+	foreach ($els as $key => $value)
+	{
+		if ($value[$parentField] == $parentID)
+		{
+			$value['depth'] = $depth;
+			array_push($result, $value);
+			unset($els[$key]);
+			$oldParent = $parentID; 
+			$parentID = $value[$idField];
+			$depth++;
+			parentChildSort($idField,$parentField, $els, $parentID, $result, $depth);
+			$parentID = $oldParent;
+			$depth--;
+		}
+	}
+	return $result;
 }
 ?>

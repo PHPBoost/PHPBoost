@@ -17,9 +17,7 @@
     <div class="form-field"><label>
         <select name="ForumIdcat" id="ForumIdcat" class="search-field">
             <option value="-1" {IS_ALL_CATS_SELECTED}>{L_ALL_CATS}</option>
-            # START cats #
-                <option value="{cats.ID}" {cats.IS_SELECTED}>{cats.MARGIN} {cats.L_NAME}</option>
-            # END cats #
+            {CATS}
         </select>
     </label></div>
 </div>

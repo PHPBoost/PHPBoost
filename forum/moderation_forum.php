@@ -46,15 +46,13 @@ require_once('../kernel/header.php');
 
 //Au moins modérateur sur une catégorie du forum, ou modérateur global.
 $check_auth_by_group = false;
-if (is_array($CAT_FORUM))
+
+foreach (ForumService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY) as $idcat => $cat)
 {
-	foreach ($CAT_FORUM as $idcat => $value)
+	if (ForumAuthorizationsService::check_authorizations($idcat)->moderation())
 	{
-		if (AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS))
-		{
-			$check_auth_by_group = true;
-			break;
-		}
+		$check_auth_by_group = true;
+		break;
 	}
 }
 
@@ -79,13 +77,10 @@ if (!empty($id_topic_get))
 {
 	//On va chercher les infos sur le topic
 	$topic = !empty($id_topic_get) ? PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('idcat', 'title'), 'WHERE id=:id', array('id' => $id_topic_get)) : '';
-
-	//Informations sur la catégorie du topic, en cache $CAT_FORUM variable globale.
-	$CAT_FORUM[$topic['idcat']]['secure'] = '2';
-	$Cache->load('forum');
-
+	
+	$category = ForumService::get_categories_manager()->get_categories_cache()->get_category($topic['idcat']);
 	//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
-	$rewrited_cat_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($CAT_FORUM[$topic['idcat']]['name']) : '';
+	$rewrited_cat_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . $category->get_rewrited_name() : '';
 	//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
 	$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : '';
 
@@ -149,12 +144,7 @@ if ($action == 'alert') //Gestion des alertes
 		));
 
 		//Vérification des autorisations.
-		$auth_cats = array();
-		foreach ($CAT_FORUM as $idcat => $key)
-		{
-			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS))
-				$auth_cats[] = $idcat;
-		}
+		$authorized_categories = ForumService::get_authorized_categories(Category::ROOT_CATEGORY);
 
 		$i = 0;
 		$result = PersistenceContext::get_querier()->select("SELECT ta.id, ta.title, ta.timestamp, ta.status, ta.user_id, ta.idtopic, ta.idmodo, m2.display_name AS login_modo, m2.level AS modo_level, m2.groups AS modo_groups, m.display_name, m.level AS user_level, m.groups, t.title AS topic_title, c.id AS cid
@@ -163,9 +153,9 @@ if ($action == 'alert') //Gestion des alertes
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = ta.user_id
 		LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = ta.idmodo
 		LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
-		" . (!empty($auth_cats) ? " WHERE c.id NOT IN :auth_cats" : '') . "
+		WHERE c.id IN :authorized_categories
 		ORDER BY ta.status ASC, ta.timestamp DESC", array(
-			'auth_cats' => $auth_cats
+			'authorized_categories' => $authorized_categories
 		));
 		while ($row = $result->fetch())
 		{
@@ -205,12 +195,7 @@ if ($action == 'alert') //Gestion des alertes
 	else //On affiche les informations sur une alerte
 	{
 		//Vérification des autorisations.
-		$auth_cats = array();
-		foreach ($CAT_FORUM as $idcat => $key)
-		{
-			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS))
-				$auth_cats[] = $idcat;
-		}
+		$authorized_categories = ForumService::get_authorized_categories(Category::ROOT_CATEGORY);
 		
 		$result = PersistenceContext::get_querier()->select("
 		SELECT ta.id, ta.title, ta.timestamp, ta.status, ta.user_id, ta.idtopic, ta.idmodo, m2.display_name AS login_modo, m2.level AS modo_level, m2.groups AS modo_groups, m.display_name, m.level AS user_level, m.groups, t.title AS topic_title, t.idcat, c.id AS cid, ta.contents
@@ -219,14 +204,15 @@ if ($action == 'alert') //Gestion des alertes
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = ta.user_id
 		LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = ta.idmodo
 		LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
-		WHERE ta.id = :id" . (!empty($auth_cats) ? " AND c.id NOT IN :auth_cats" : ''), array(
+		WHERE ta.id = :id AND c.id IN :authorized_categories", array(
 			'id' => $id_get,
-			'auth_cats' => $auth_cats
+			'authorized_categories' => $authorized_categories
 		));
 		$row = $result->fetch();
 		$result->dispose();
 		if (!empty($row))
 		{
+			$category = ForumService::get_categories_manager()->get_categories_cache()->get_category($row['idcat']);
 			//Le sujet n'existe plus, on vire l'alerte.
 			if (empty($row['idcat']))
 			{
@@ -255,7 +241,7 @@ if ($action == 'alert') //Gestion des alertes
 				'STATUS' => $status,
 				'LOGIN' => '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'" class=" '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>',
 				'TIME' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-				'CAT' => '<a href="forum' . url('.php?id=' . $row['idcat'], '-' . $row['idcat'] . '+' . Url::encode_rewrite($CAT_FORUM[$row['idcat']]['name']) . '.php') . '">' . $CAT_FORUM[$row['idcat']]['name'] . '</a>',
+				'CAT' => '<a href="forum' . url('.php?id=' . $row['idcat'], '-' . $row['idcat'] . '+' . $category->get_rewrited_name() . '.php') . '">' . $category->get_name() . '</a>',
 				'C_FORUM_ALERT_LIST' => true,
 				'U_CHANGE_STATUS' => ($row['status'] == '0') ? 'moderation_forum.php' . url('?action=alert&amp;id=' . $id_get . '&amp;new_status=1&amp;token=' . AppContext::get_session()->get_token()) : 'moderation_forum.php' . url('?action=alert&amp;id=' . $id_get . '&amp;new_status=0&amp;token=' . AppContext::get_session()->get_token()),
 				'L_CHANGE_STATUS' => ($row['status'] == '0') ? $LANG['change_status_to_1'] : $LANG['change_status_to_0'],
@@ -290,7 +276,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		//Modérateur ne peux avertir l'admin (logique non?).
 		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)))
 		{
-			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('user_readonly' => $readonly), ' WHERE user_id = :user_id', array('user_id' => $info_mbr['user_id']));
+			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('delay_readonly' => $readonly), ' WHERE user_id = :user_id', array('user_id' => $info_mbr['user_id']));
 
 			//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
 			if ($info_mbr['user_id'] != AppContext::get_current_user()->get_id())
@@ -349,10 +335,10 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		));
 
 		$i = 0;
-		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, groups, user_readonly
+		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, groups, delay_readonly
 		FROM " . PREFIX . "member
-		WHERE user_readonly > :timestamp_now
-		ORDER BY user_readonly", array(
+		WHERE delay_readonly > :timestamp_now
+		ORDER BY delay_readonly", array(
 			'timestamp_now' => time()
 		));
 		while ($row = $result->fetch())
@@ -384,7 +370,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('login', 'level', 'groups', 'user_readonly'), 'WHERE user_id=:id', array('id' => $id_get));
+		$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('login', 'level', 'groups', 'delay_readonly'), 'WHERE user_id=:id', array('id' => $id_get));
 
 		//Durée de la sanction.
 		$date_lang = LangLoader::get('date-common');
@@ -474,7 +460,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		{
 			if ($new_warning_level < 100) //Ne peux pas mettre des avertissements supérieurs à 100.
 			{
-				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('user_warning' => $new_warning_level), ' WHERE user_id = :user_id', array('user_id' => $info_mbr['user_id']));
+				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('warning_percentage' => $new_warning_level), ' WHERE user_id = :user_id', array('user_id' => $info_mbr['user_id']));
 				
 				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
 				if ($info_mbr['user_id'] != AppContext::get_current_user()->get_id())
@@ -491,7 +477,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			}
 			elseif ($new_warning_level == 100) //Ban => on supprime sa session et on le banni (pas besoin d'envoyer de pm :p).
 			{
-				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('user_warning' => 100), ' WHERE user_id = :user_id', array('user_id' => $info_mbr['user_id']));
+				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('warning_percentage' => 100), ' WHERE user_id = :user_id', array('user_id' => $info_mbr['user_id']));
 				PersistenceContext::get_querier()->delete(DB_TABLE_SESSIONS, 'WHERE user_id=:id', array('id' => $info_mbr['user_id']));
 				
 				//Insertion de l'action dans l'historique.
@@ -547,8 +533,8 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		$i = 0;
 		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, groups, warning_percentage
 		FROM " . PREFIX . "member
-		WHERE user_warning > 0
-		ORDER BY user_warning");
+		WHERE warning_percentage > 0
+		ORDER BY warning_percentage");
 		while ($row = $result->fetch())
 		{
 			$group_color = User::get_group_color($row['groups'], $row['level']);
@@ -578,7 +564,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('login', 'level', 'groups', 'user_readonly'), 'WHERE user_id=:id', array('id' => $id_get));
+		$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('login', 'level', 'groups', 'delay_readonly'), 'WHERE user_id=:id', array('id' => $id_get));
 
 		$select = '';
 		$j = 0;
@@ -697,6 +683,25 @@ else //Panneau de modération
 //Listes les utilisateurs en lignes.
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" ."/forum/moderation_forum.php%'");
 
+//Liste des catégories.
+$search_category_children_options = new SearchCategoryChildrensOptions();
+$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
+$categories_tree = ForumService::get_categories_manager()->get_select_categories_form_field('cats', '', Category::ROOT_CATEGORY, $search_category_children_options);
+$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
+$method->setAccessible(true);
+$categories_tree_options = $method->invoke($categories_tree);
+$cat_list = '';
+$number_options = $categories_tree_options;
+foreach ($categories_tree_options as $option)
+{
+	if ($option->get_raw_value())
+	{
+		$cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
+		if (!$cat->get_url() && $number_options)
+			$cat_list .= $option->display()->render();
+	}
+}
+
 $vars_tpl = array_merge($vars_tpl, array(
 	'TOTAL_ONLINE' => $total_online,
 	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
@@ -704,7 +709,7 @@ $vars_tpl = array_merge($vars_tpl, array(
 	'MODO' => $total_modo,
 	'MEMBER' => $total_member,
 	'GUEST' => $total_visit,
-	'SELECT_CAT' => forum_list_cat(0, 0), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
+	'SELECT_CAT' => $cat_list, //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 	'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
 	'L_ADMIN' => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
 	'L_MODO' => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],

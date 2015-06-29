@@ -159,9 +159,9 @@ class AdminForumConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset_authorizations);
 		
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($common_lang['authorizations.read'], ForumAuthorizationsService::READ_AUTHORIZATIONS),
-			new ActionAuthorization($common_lang['authorizations.write'], ForumAuthorizationsService::WRITE_AUTHORIZATIONS),
-			new ActionAuthorization($common_lang['authorizations.moderation'], ForumAuthorizationsService::MODERATION_AUTHORIZATIONS),
+			new ActionAuthorization($common_lang['authorizations.read'], Category::READ_AUTHORIZATIONS),
+			new ActionAuthorization($common_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
+			new ActionAuthorization($common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['authorizations.read_topics_content'], ForumAuthorizationsService::READ_TOPICS_CONTENT_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['authorizations.flood'], ForumAuthorizationsService::FLOOD_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['authorizations.hide_edition_mark'], ForumAuthorizationsService::HIDE_EDITION_MARK_AUTHORIZATIONS),

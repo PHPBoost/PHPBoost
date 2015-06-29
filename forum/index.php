@@ -33,6 +33,12 @@ $url_controller_mappers = array(
 	//Config
 	new UrlControllerMapper('AdminForumConfigController', '`^/admin(?:/config)?/?$`'),
 	
+	//Categories
+	new UrlControllerMapper('ForumCategoriesManageController', '`^/admin/categories/?$`'),
+	new UrlControllerMapper('ForumCategoriesFormController', '`^/admin/categories/add/?$`'),
+	new UrlControllerMapper('ForumCategoriesFormController', '`^/admin/categories/([0-9]+)/edit/?$`', array('id')),
+	new UrlControllerMapper('ForumDeleteCategoryController', '`^/admin/categories/([0-9]+)/delete/?$`', array('id')),
+	
 	new UrlControllerMapper('ForumHomeController', '`^/?$`'),
 );
 DispatchManager::dispatch($url_controller_mappers);

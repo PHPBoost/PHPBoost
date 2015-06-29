@@ -40,21 +40,38 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 	 *  Renvoie le formulaire de recherche du forum
 	 */
 	{
-		global $Cache, $CAT_FORUM, $LANG;
+		global $LANG;
 
 		$tpl = new FileTemplate('forum/forum_search_form.tpl');
 
 		require_once(PATH_TO_ROOT . '/forum/forum_functions.php');
 		require_once(PATH_TO_ROOT . '/forum/forum_defines.php');
 		load_module_lang('forum'); //Chargement de la langue du module.
-		$Cache->load('forum');
 
 		$search = $args['search'];
 		$idcat = !empty($args['ForumIdcat']) ? NumberHelper::numeric($args['ForumIdcat']) : -1;
 		$time = !empty($args['ForumTime']) ? NumberHelper::numeric($args['ForumTime']) : 0;
 		$where = !empty($args['ForumWhere']) ? TextHelper::strprotect($args['ForumWhere']) : 'all';
 		$colorate_result = !empty($args['ForumColorate_result']);
-
+		
+		//Liste des catégories.
+		$search_category_children_options = new SearchCategoryChildrensOptions();
+		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
+		$categories_tree = ForumService::get_categories_manager()->get_select_categories_form_field('cats', '', $idcat, $search_category_children_options);
+		$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
+		$method->setAccessible(true);
+		$categories_tree_options = $method->invoke($categories_tree);
+		$cat_list = '';
+		foreach ($categories_tree_options as $option)
+		{
+			if ($option->get_raw_value())
+			{
+				$cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
+				if (!$cat->get_url() && $number_options)
+					$cat_list .= $option->display()->render();
+			}
+		}
+		
 		$date_lang = LangLoader::get('date-common');
 		$tpl->put_all(Array(
 			'L_DATE' => $date_lang['date'],
@@ -81,22 +98,8 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			'L_CATEGORY' => $LANG['category'],
 			'L_ALL_CATS' => $LANG['all'],
 			'IS_ALL_CATS_SELECTED' => ($idcat == '-1') ? ' selected="selected"' : '',
+			'CATS' => $cat_list,
 		));
-		if (is_array($CAT_FORUM))
-		{
-			foreach ($CAT_FORUM as $id => $key)
-			{
-				if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id]['auth'], ForumAuthorizationsService::READ_AUTHORIZATIONS))
-				{
-					$tpl->assign_block_vars('cats', array(
-						'MARGIN' => ($key['level'] > 0) ? str_repeat('----------', $key['level']) : '----',
-						'ID' => $id,
-						'L_NAME' => $key['name'],
-						'IS_SELECTED' => ($id == $idcat) ? ' selected="selected"' : ''
-						));
-				}
-			}
-		}
 		return $tpl->render();
 	}
 
@@ -113,27 +116,16 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 	 *  Renvoie la requête de recherche dans le forum
 	 */
 	{
-		global $CAT_FORUM,  $Cache;
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
-		$Cache->load('forum');
 
 		$search = $args['search'];
 		$idcat = !empty($args['ForumIdcat']) ? NumberHelper::numeric($args['ForumIdcat']) : -1;
 		$time = (!empty($args['ForumTime']) ? NumberHelper::numeric($args['ForumTime']) : 30000) * 3600 * 24;
 		$where = !empty($args['ForumWhere']) ? TextHelper::strprotect($args['ForumWhere']) : 'all';
-		$colorate_result = !empty($args['ForumColorate_result']) ? true : false;
+		$colorate_result = !empty($args['ForumColorate_result']);
 
 		require_once(PATH_TO_ROOT . '/forum/forum_defines.php');
-		$auth_cats = '';
-		if (is_array($CAT_FORUM))
-		{
-			foreach ($CAT_FORUM as $id => $key)
-			{
-				if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id]['auth'], ForumAuthorizationsService::READ_AUTHORIZATIONS))
-				$auth_cats .= $id.',';
-			}
-		}
-		$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
+		$authorized_categories = ForumService::get_authorized_categories(Category::ROOT_CATEGORY);
 
 		if ($where == 'all')         // All
 			return "SELECT ".
@@ -144,9 +136,9 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 				CONCAT('" . PATH_TO_ROOT . "/forum/topic.php?id=', t.id, '#m', msg.id) AS `link`
 			FROM " . PREFIX . "forum_msg msg
 			JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
-			JOIN " . PREFIX . "forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
+			JOIN " . PREFIX . "forum_cats c ON c.id_parent != 0 AND c.id = t.idcat
 			WHERE ( FT_SEARCH(t.title, '" . $search."') OR FT_SEARCH(msg.contents, '" . $search."') ) AND msg.timestamp > '" . (time() - $time) . "'
-			".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." " . $auth_cats."
+			" . ($idcat > 0 ? " AND c.id = " . $idcat : '') . " AND c.id IN " . $authorized_categories . "
 			GROUP BY t.id
 			ORDER BY relevance DESC
 			LIMIT " . FORUM_MAX_SEARCH_RESULTS;
@@ -160,9 +152,9 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 				CONCAT('" . PATH_TO_ROOT . "/forum/topic.php?id=', t.id, '#m', msg.id) AS `link`
 			FROM " . PREFIX . "forum_msg msg
 			JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
-			JOIN " . PREFIX . "forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
+			JOIN " . PREFIX . "forum_cats c ON c.id_parent != 0 AND c.id = t.idcat
 			WHERE FT_SEARCH(msg.contents, '" . $search."') AND msg.timestamp > '" . (time() - $time) . "'
-			".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." " . $auth_cats."
+			" . ($idcat > 0 ? " AND c.id = " . $idcat : '') . " AND c.id IN " . $authorized_categories . "
 			GROUP BY t.id
 			LIMIT " . FORUM_MAX_SEARCH_RESULTS;
 		else                                         // Title only
@@ -174,9 +166,9 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 				CONCAT('" . PATH_TO_ROOT . "/forum/topic.php?id=', t.id, '#m', msg.id) AS `link`
 			FROM " . PREFIX . "forum_msg msg
 			JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
-			JOIN " . PREFIX . "forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
+			JOIN " . PREFIX . "forum_cats c ON c.id_parent != 0 AND c.id = t.idcat
 			WHERE FT_SEARCH(t.title, '" . $search."') AND msg.timestamp > '" . (time() - $time) . "'
-			".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." " . $auth_cats."
+			" . ($idcat > 0 ? " AND c.id = " . $idcat : '') . " AND c.id IN " . $authorized_categories . "
 			GROUP BY t.id
 			LIMIT " . FORUM_MAX_SEARCH_RESULTS;
 	}

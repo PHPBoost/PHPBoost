@@ -39,7 +39,7 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 	/**
 	 * @var FormButtonSubmit
 	 */
-	private $submit_button;
+	protected $submit_button;
 	
 	protected $lang;
 	protected $common_lang;
@@ -76,7 +76,7 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 		$this->common_lang = LangLoader::get('common');
 	}
 	
-	private function build_form(HTTPRequestCustom $request)
+	protected function build_form(HTTPRequestCustom $request)
 	{
 		$form = new HTMLForm(__CLASS__);
 		
@@ -142,7 +142,10 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 		$rewrited_name = $this->form->get_value('rewrited_name', '');
 		$rewrited_name = $this->form->get_value('personalize_rewrited_name') && !empty($rewrited_name) ? $rewrited_name : Url::encode_rewrite($this->get_category()->get_name());
 		$this->get_category()->set_rewrited_name($rewrited_name);
-		$this->get_category()->set_id_parent($this->form->get_value('id_parent')->get_raw_value());
+		if ($this->form->get_value('id_parent'))
+			$this->get_category()->set_id_parent($this->form->get_value('id_parent')->get_raw_value());
+		else
+			$this->get_category()->set_id_parent(Category::ROOT_CATEGORY);
 		
 		if ($this->form->get_value('special_authorizations'))
 		{
