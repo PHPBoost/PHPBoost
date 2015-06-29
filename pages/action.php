@@ -251,7 +251,7 @@ if ($del_cat > 0)
 		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 	
 	$cats = array();
-	$cat_list = display_cat_explorer($page_infos['id_cat'], $cats);
+	$cat_list = display_pages_cat_explorer($page_infos['id_cat'], $cats);
 	$cats = array_reverse($cats);
 	if (array_key_exists(0, $cats))
 		unset($cats[0]);

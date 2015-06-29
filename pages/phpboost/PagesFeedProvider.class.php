@@ -35,8 +35,8 @@ class PagesFeedProvider implements FeedProvider
 		require_once(PATH_TO_ROOT.'/pages/pages_functions.php');
 		
 		$cats_tree = new FeedsCat('pages', 0, $LANG['root']);
-
-		build_pages_cat_children($cats_tree, PagesCategoriesCache::load()->get_categories());
+		$categories = PagesCategoriesCache::load()->get_categories();
+		build_pages_cat_children($cats_tree, array_values($categories));
 		$feeds = new FeedsList();
 		$feeds->add_feed($cats_tree, Feed::DEFAULT_FEED_NAME);
 		return $feeds;

@@ -230,7 +230,7 @@ if ($id_edit > 0)
 	$cats = array();
 	//numéro de la catégorie de la page ou de la catégorie
 	$id_cat_display = $page_infos['is_cat'] == 1 ? $categories[$page_infos['id_cat']]['id_parent'] : $page_infos['id_cat'];
-	$cat_list = display_cat_explorer($id_cat_display, $cats, 1);
+	$cat_list = display_pages_cat_explorer($id_cat_display, $cats, 1);
 	
 	$tpl->put_all(array(
 		'CONTENTS' => !empty($error) ? stripslashes($contents) : pages_unparse($page_infos['contents']),
@@ -271,7 +271,7 @@ else
 	
 	//Génération de l'arborescence des catégories
 	$cats = array();
-	$cat_list = display_cat_explorer(0, $cats, 1);
+	$cat_list = display_pages_cat_explorer(0, $cats, 1);
 	$current_cat = $LANG['pages_root'];
 	
 	$tpl->put_all(array(

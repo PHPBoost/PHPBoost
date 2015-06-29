@@ -77,8 +77,8 @@ class PagesCategoriesCache implements CacheData
 	}
 	
 	/**
-	 * Loads and returns the pages cached data.
-	 * @return PagesCache The cached data
+	 * Loads and returns the pages categories cached data.
+	 * @return PagesCategoriesCache The cached data
 	 */
 	public static function load()
 	{
@@ -86,7 +86,7 @@ class PagesCategoriesCache implements CacheData
 	}
 	
 	/**
-	 * Invalidates the current pages cached data.
+	 * Invalidates the current pages categories cached data.
 	 */
 	public static function invalidate()
 	{
