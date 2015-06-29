@@ -21,19 +21,15 @@
 				# ENDIF #
 				<div class="spacer"></div>
 			</div>
+			# IF C_FORUM_CONNEXION #
+				# IF C_USER_NOTCONNECTED #
+				<div class="forum-title">
+					<a class="small" href="${relative_url(UserUrlBuilder::connect())}"><i class="fa fa-sign-in"></i> {L_CONNECT}</a> <span style="color:#000000;">&bull;</span> <a class="small" href="${relative_url(UserUrlBuilder::registration())}"><i class="fa fa-ticket"></i> {L_REGISTER}</a>
+				</div>
+				# ENDIF #
+			# ENDIF #
 			
 			<div class="forum-online">
-				# IF C_FORUM_CONNEXION #
-					# IF C_USER_NOTCONNECTED #
-					<form action="" method="post">
-						<p style="margin-bottom:8px;" class="smaller"><label>{L_PSEUDO} <input size="15" type="text" name="login" maxlength="25"></label>
-						<label>{L_PASSWORD}	<input size="15" type="password" name="password" maxlength="30"></label>
-						&nbsp;| <label>{L_AUTOCONNECT} <input type="checkbox" name="auto" checked="checked"></label>
-						&nbsp;| <button type="submit" name="connect" value="true" class="submit">{L_CONNECT}</button></p>
-					</form>
-					# ENDIF #
-				# ENDIF #
-					
 				# IF USERS_ONLINE #
 				<span style="float:left;">
 					{TOTAL_ONLINE} {L_USER} {L_ONLINE} : {ADMIN} {L_ADMIN}, {MODO} {L_MODO}, {MEMBER} {L_MEMBER} {L_AND} {GUEST} {L_GUEST}

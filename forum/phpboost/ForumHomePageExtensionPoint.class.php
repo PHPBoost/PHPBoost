@@ -56,7 +56,10 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 		
 		if ($config->is_connexion_form_displayed())
 		{
-			$display_connexion = array(	
+			$is_connected = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL);
+			$display_connexion = array(
+				'C_USER_CONNECTED' => $is_connected,
+				'C_USER_NOTCONNECTED' => !$is_connected,
 				'C_FORUM_CONNEXION' => true,
 				'L_CONNECT' => LangLoader::get_message('connection', 'user-common'),
 				'L_DISCONNECT' => LangLoader::get_message('disconnect', 'user-common'),

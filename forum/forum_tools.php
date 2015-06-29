@@ -66,13 +66,18 @@ if (!$is_guest)
 //Formulaire de connexion sur le forum.
 if ($config->is_connexion_form_displayed())
 {
-	$vars_tpl = array(
+	$is_connected = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL);
+	$display_connexion = array(
+		'C_USER_CONNECTED' => $is_connected,
+		'C_USER_NOTCONNECTED' => !$is_connected,
 		'C_FORUM_CONNEXION' => true,
 		'L_CONNECT' => LangLoader::get_message('connection', 'user-common'),
 		'L_DISCONNECT' => LangLoader::get_message('disconnect', 'user-common'),
 		'L_AUTOCONNECT' => LangLoader::get_message('autoconnect', 'user-common'),
 		'L_REGISTER' => LangLoader::get_message('register', 'user-common')
 	);
+	$tpl_top->put_all($display_connexion);
+	$tpl_bottom->put_all($display_connexion);
 }
 
 $vars_tpl = array(
