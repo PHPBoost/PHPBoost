@@ -186,40 +186,41 @@ function get_feeds_children(Array $children, $module_id, $feed_type, $feed_url_e
 }
 
 $feeds_modules = AppContext::get_extension_provider_service()->get_providers(FeedProvider::EXTENSION_POINT);
-ksort($feeds_modules);
 
-foreach ($feeds_modules as $module)
+foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as $id => $module)
 {
-	$list = $module->get_extension_point(FeedProvider::EXTENSION_POINT);
-	$list = $list->get_feeds_list();
-	
-	foreach ($list->get_feeds_list() as $feed_type => $object)
+	if (array_key_exists($module->get_id(), $feeds_modules))
 	{
-		$urls = get_feeds($object, $module->get_id(), $feed_type, $feed_url);
+		$list = $feeds_modules[$module->get_id()]->get_extension_point(FeedProvider::EXTENSION_POINT);
+		$list = $list->get_feeds_list();
 		
-		$root[0] = array(
-			'name' => $object->get_category_name(),
-			'url' => $object->get_url($feed_type),
-			'level' => 0,
-			'feed_name' => null,
-			'selected' => $feed_url == $object->get_url($feed_type)
-		);
+		foreach ($list->get_feeds_list() as $feed_type => $object)
+		{
+			$urls = get_feeds($object, $module->get_id(), $feed_type, $feed_url);
+			
+			$root[0] = array(
+				'name' => $object->get_category_name(),
+				'url' => $object->get_url($feed_type),
+				'level' => 0,
+				'feed_name' => null,
+				'selected' => $feed_url == $object->get_url($feed_type)
+			);
+		}
+		
+		$urls = array_merge($root, $urls);
+		$tpl->assign_block_vars('modules', array('NAME' => ucfirst($module->get_configuration()->get_name())));
+		
+		foreach ($urls as $url)
+		{
+			$tpl->assign_block_vars('modules.feeds_urls', array(
+				'URL' => $url['url'],
+				'NAME' => $url['name'],
+				'SPACE' => str_repeat('--', $url['level']),
+				'FEED_NAME' => $url['feed_name'] != 'master' ? $url['feed_name'] : null,
+				'SELECTED' => $url['selected'] ? ' selected="selected"' : ''
+			));
+		}
 	}
-	
-	$urls = array_merge($root, $urls);
-	$tpl->assign_block_vars('modules', array('NAME' => ucfirst($module->get_id())));
-	
-	foreach ($urls as $url)
-	{
-		$tpl->assign_block_vars('modules.feeds_urls', array(
-			'URL' => $url['url'],
-			'NAME' => $url['name'],
-			'SPACE' => str_repeat('--', $url['level']),
-			'FEED_NAME' => $url['feed_name'] != 'master' ? $url['feed_name'] : null,
-			'SELECTED' => $url['selected'] ? ' selected="selected"' : ''
-		));
-	}
-
 }
 
 $locations = '';
