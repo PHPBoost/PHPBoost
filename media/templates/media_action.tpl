@@ -3,10 +3,6 @@
 		<!--
 		function check_form ()
 		{
-			# IF C_BBCODE_TINYMCE_MODE #
-				tinyMCE.triggerSave();
-			# ENDIF #
-			
 			if (document.getElementById('name').value == "")
 			{
 				alert ("{L_REQUIRE_NAME}");

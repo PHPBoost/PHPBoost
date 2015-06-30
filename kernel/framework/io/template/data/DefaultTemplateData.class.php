@@ -67,9 +67,7 @@ class DefaultTemplateData implements TemplateData
 			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 			'PHP_PATH_TO_ROOT' => PATH_TO_ROOT,
 			'TOKEN' => !empty($session) ? $session->get_token() : '',
-			'REWRITED_SCRIPT' => REWRITED_SCRIPT,
-		// @deprecated
-			'C_BBCODE_TINYMCE_MODE' => AppContext::get_current_user()->get_editor() == 'TinyMCE'
+			'REWRITED_SCRIPT' => REWRITED_SCRIPT
 		));
 	}
 

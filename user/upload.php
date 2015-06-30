@@ -354,6 +354,7 @@ else
 
 	$tpl->put_all(array(
 		'POPUP' => $popup,
+		'C_TINYMCE_EDITOR' => AppContext::get_current_user()->get_editor() == 'TinyMCE',
 		'C_DISPLAY_CLOSE_BUTTON' => $display_close_button,
 		'FIELD' => $field,
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',

@@ -1,10 +1,6 @@
 		<script>
 		<!--
 		function check_form_convers(){
-			# IF C_BBCODE_TINYMCE_MODE #
-				tinyMCE.triggerSave();
-			# ENDIF #
-			
 			if(document.getElementById('login').value == "") {
 				alert("{L_REQUIRE_RECIPIENT}");
 				return false;

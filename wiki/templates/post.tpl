@@ -4,10 +4,6 @@
 			var selected_cat = {SELECTED_CAT};
 			function check_form_post(){
 				
-				# IF C_BBCODE_TINYMCE_MODE #
-				tinyMCE.triggerSave();
-				# ENDIF #
-				
 				if(document.getElementById('title').value == "") {
 					alert("{L_ALERT_TITLE}");
 					return false;
