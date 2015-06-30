@@ -13,13 +13,6 @@
 	width: 100%;
 }
 
-/* CSS applique uniquement aux écrans PC */
-@media ( min-width: 769px ) {
-	.bbcode-containers {
-		width: 90%;
-	}
-}
-
 /* CSS ne s'applique pas aux écrans PC */
 @media ( max-width: 550px ) {
 	.bbcode-containers ul {

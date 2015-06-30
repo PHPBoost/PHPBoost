@@ -867,17 +867,10 @@ textarea {
 	resize: vertical;
 }
 
-.form-element-textarea textarea {
-	width: 100%;
-}
-
-.form-element-textarea .form-field-textarea {
-	display: block;
-}
-
-.form-element-textarea .form-field-textarea div {
-	float: left;
-}
+.form-element-textarea { width: 98%; }
+.form-element-textarea textarea { width: 100%; }
+.form-element-textarea .form-field-textarea { display: block; }
+.form-element-textarea .form-field-textarea div { float: left; }
 
 .form-element-preview {
 	text-align: center;
