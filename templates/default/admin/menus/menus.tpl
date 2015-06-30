@@ -85,6 +85,7 @@ function createSortableMenu()
 		jQuery('#' + menusContainerList[i]).sortable({
 			handle: '.fa-arrows',
 			group: 'menus',
+			placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>',
 			containerSelector: '#mod_header, #mod_subheader, #mod_left, #mod_right, #mod_topcentral, #mod_central, #mod_bottomcentral, #mod_topfooter, #mod_footer',
 			itemSelector: 'div.menus-block-container'
 		});

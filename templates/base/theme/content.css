@@ -1285,14 +1285,14 @@ div.form-autocompleter ul li {
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
 }
 
-.sortable-block .dropzone {
+.dropzone {
 	margin: 10px 0px;
 	padding-top: 5px;
 	height: 30px;
-	border: 1px dashed #CCCCCC;
+	border: 1px dashed #AAAAAA;
 	border-radius: 5px;
 	text-align: center;
-	color: #CCCCCC;
+	color: #AAAAAA;
 	opacity: 0.6;
 }
 
