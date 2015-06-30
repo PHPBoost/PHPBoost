@@ -201,7 +201,11 @@ else
 	elseif ($visit || $visit_year) //Visites par jour classées par mois.
 	{
 		//On affiche les visiteurs totaux et du jour
-		$compteur = $db_querier->select_single_row(DB_TABLE_VISIT_COUNTER, array('ip AS nbr_ip', 'total'), 'WHERE id=1');
+		$compteur = array('nbr_ip' => 0, 'total' => 0);
+		try {
+			$compteur = $db_querier->select_single_row(DB_TABLE_VISIT_COUNTER, array('ip AS nbr_ip', 'total'), 'WHERE id = :id', array('id' => 1));
+		} catch (RowNotFoundException $e) {}
+		
 		$compteur_total = !empty($compteur['nbr_ip']) ? $compteur['nbr_ip'] : '1';
 		$compteur_day = !empty($compteur['total']) ? $compteur['total'] : '1';
 
@@ -236,7 +240,10 @@ else
 			$previous_year = $visit_year - 1;
 
 			//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
-			$info = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(nbr) as max_month', 'SUM(nbr) as sum_month', 'COUNT(DISTINCT(stats_month)) as nbr_month'), 'WHERE stats_year=:year GROUP BY stats_year', array('year' => $visit_year));
+			$info = array('max_month' => 0, 'sum_month' => 0, 'nbr_month' => 0);
+			try {
+				$info = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(nbr) as max_month', 'SUM(nbr) as sum_month', 'COUNT(DISTINCT(stats_month)) as nbr_month'), 'WHERE stats_year=:year GROUP BY stats_year', array('year' => $visit_year));
+			} catch (RowNotFoundException $e) {}
 			
 			$tpl->put_all(array(
 				'C_STATS_VISIT' => true,
@@ -253,7 +260,11 @@ else
 			));
 
 			//Année maximale
-			$info_year = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
+			$info_year = array('max_year' => 0, 'min_year' => 0);
+			try {
+				$info_year = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
+			} catch (RowNotFoundException $e) {}
+			
 			$years = '';
 			for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
 			{
@@ -377,8 +388,11 @@ else
 			$previous_year = ($month > 1) ? $year : $year - 1;
 
 			//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
-			$info = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(nbr) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(nbr) as sum_nbr', 'AVG(nbr) as avg_nbr'), 'WHERE stats_year=:year AND stats_month=:month GROUP BY stats_month', array('year' => $year, 'month' => $month));
-				
+			$info = array('max_nbr' => 0, 'min_day' => 0, 'sum_nbr' => 0, 'avg_nbr' => 0);
+			try {
+				$info = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(nbr) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(nbr) as sum_nbr', 'AVG(nbr) as avg_nbr'), 'WHERE stats_year=:year AND stats_month=:month GROUP BY stats_month', array('year' => $year, 'month' => $month));
+			} catch (RowNotFoundException $e) {}
+			
 			$tpl->put_all(array(
 				'C_STATS_VISIT' => true,
 				'TYPE' => 'visit',
@@ -403,7 +417,10 @@ else
 				}
 
 				//Année maximale
-				$info_year = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
+				$info_year = array('max_year' => 0, 'min_year' => 0);
+				try {
+					$info_year = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
+				} catch (RowNotFoundException $e) {}
 
 				$years = '';
 				for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
@@ -562,8 +579,10 @@ else
 		}
 
 		//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
-		$info = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(pages) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(pages) as sum_nbr', 'AVG(pages) as avg_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month', 'pages'), $condition, array('year' => $year, 'month' => $month, 'day' => $day));
-
+		$info = array('max_nbr' => 0, 'min_day' => 0, 'sum_nbr' => 0, 'avg_nbr' => 0);
+		try {
+			$info = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(pages) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(pages) as sum_nbr', 'AVG(pages) as avg_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month', 'pages'), $condition, array('year' => $year, 'month' => $month, 'day' => $day));
+		} catch (RowNotFoundException $e) {}
 		
 		//On affiche les visiteurs totaux et du jour
 		$compteur_total = $db_querier->get_column_value(StatsSetup::$stats_table, 'SUM(pages)', '');
@@ -591,7 +610,13 @@ else
 			//Années précédente et suivante
 			$next_year = $pages_year + 1;
 			$previous_year = $pages_year - 1;
-				
+			
+			//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
+			$info = array('max_nbr' => 0, 'sum_nbr' => 0, 'nbr_month' => 0);
+			try {
+				$info = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(pages) as max_nbr', 'SUM(pages) as sum_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month'), 'WHERE stats_year = :year AND pages_detail <> \'\' GROUP BY stats_year', array('year' => $pages_year));
+			} catch (RowNotFoundException $e) {}
+			
 			$tpl->put_all(array(
 				'C_STATS_VISIT' => true,
 				'TYPE' => 'pages',
@@ -607,7 +632,10 @@ else
 			));
 
 			//Année maximale
-			$info_year = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
+			$info_year = array('max_year' => 0, 'min_year' => 0);
+			try {
+				$info_year = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
+			} catch (RowNotFoundException $e) {}
 			
 			$years = '';
 			for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
@@ -762,7 +790,10 @@ else
 				}
 
 				//Année maximale
-				$info_year = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
+				$info_year = array('max_year' => 0, 'min_year' => 0);
+				try {
+					$info_year = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
+				} catch (RowNotFoundException $e) {}
 			
 				$years = '';
 				for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
@@ -834,7 +865,10 @@ else
 				}
 
 				//Année maximale
-				$info_year = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
+				$info_year = array('max_year' => 0, 'min_year' => 0);
+				try {
+					$info_year = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
+				} catch (RowNotFoundException $e) {}
 			
 				$years = '';
 				for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
