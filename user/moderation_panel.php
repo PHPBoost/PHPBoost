@@ -57,6 +57,7 @@ if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL)) //Si il
 $moderation_panel_template = new FileTemplate('user/moderation_panel.tpl');	
 
 $moderation_panel_template->put_all(array(
+	'C_TINYMCE_EDITOR' => AppContext::get_current_user()->get_editor() == 'TinyMCE',
 	'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 	'L_PUNISHMENT' => $LANG['punishment'],
 	'L_WARNING' => $LANG['warning'],

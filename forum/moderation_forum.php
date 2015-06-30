@@ -65,6 +65,7 @@ if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL) && $chec
 $tpl = new FileTemplate('forum/forum_moderation_panel.tpl');
 
 $vars_tpl = array(
+	'C_TINYMCE_EDITOR' => AppContext::get_current_user()->get_editor() == 'TinyMCE',
 	'FORUM_NAME' => $config->get_forum_name(),
 	'L_USERS_PUNISHMENT' => $LANG['punishment_management'],
 	'L_USERS_WARNING' => $LANG['warning_management'],
@@ -174,7 +175,7 @@ if ($action == 'alert') //Gestion des alertes
 				'EDIT' => '<a href="moderation_forum' . url('.php?action=alert&amp;id=' . $row['id']) . '" class="fa fa-edit"></a>',
 				'TOPIC' => '<a href="topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '+' . Url::encode_rewrite($row['topic_title']) . '.php') . '">' . $row['topic_title'] . '</a>',
 				'STATUS' => $status,
-				'LOGIN' => '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'" class=" '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>',
+				'LOGIN' => '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'" class=" '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>',
 				'TIME' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 				'BACKGROUND_COLOR' => $row['status'] == 1 ? 'background-color:#82c2a7;' : 'background-color:#e59f09;',
 				'ID' => $row['id']
@@ -239,7 +240,7 @@ if ($action == 'alert') //Gestion des alertes
 				'TOPIC' => '<a href="topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '+' . Url::encode_rewrite($row['topic_title']) . '.php') . '">' . $row['topic_title'] . '</a>',
 				'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 				'STATUS' => $status,
-				'LOGIN' => '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'" class=" '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>',
+				'LOGIN' => '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'" class=" '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>',
 				'TIME' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 				'CAT' => '<a href="forum' . url('.php?id=' . $row['idcat'], '-' . $row['idcat'] . '+' . $category->get_rewrited_name() . '.php') . '">' . $category->get_name() . '</a>',
 				'C_FORUM_ALERT_LIST' => true,
@@ -370,7 +371,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('login', 'level', 'groups', 'delay_readonly'), 'WHERE user_id=:id', array('id' => $id_get));
+		$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'groups', 'delay_readonly'), 'WHERE user_id=:id', array('id' => $id_get));
 
 		//Durée de la sanction.
 		$date_lang = LangLoader::get('date-common');
@@ -412,7 +413,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			'C_FORUM_USER_INFO' => true,
 			'KERNEL_EDITOR' => $editor->display(),
 			'ALTERNATIVE_PM' => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $LANG['user_readonly_changed']) : str_replace('%date%', '1 ' . LangLoader::get_message('minute', 'date-common'), $LANG['user_readonly_changed']),
-			'LOGIN' => '<a href="'. UserUrlBuilder::profile($id_get)->rel() .'" class="'.UserService::get_level_class($member['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $member['login'] . '</a>',
+			'LOGIN' => '<a href="'. UserUrlBuilder::profile($id_get)->rel() .'" class="'.UserService::get_level_class($member['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $member['display_name'] . '</a>',
 			'INFO' => $array_sanction[$key_sanction],
 			'SELECT' => $select,
 			'REPLACE_VALUE' => 'replace_value = parseInt(replace_value);'. "\n" .
@@ -564,7 +565,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('login', 'level', 'groups', 'delay_readonly'), 'WHERE user_id=:id', array('id' => $id_get));
+		$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'groups', 'delay_readonly'), 'WHERE user_id=:id', array('id' => $id_get));
 
 		$select = '';
 		$j = 0;
@@ -585,7 +586,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			'C_FORUM_USER_INFO' => true,
 			'KERNEL_EDITOR' => $editor->display(),
 			'ALTERNATIVE_PM' => str_replace('%level%', $member['warning_percentage'], $LANG['user_warning_level_changed']),
-			'LOGIN' => '<a href="'. UserUrlBuilder::profile($id_get)->rel() .'" class="'.UserService::get_level_class($member['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $member['login'] . '</a>',
+			'LOGIN' => '<a href="'. UserUrlBuilder::profile($id_get)->rel() .'" class="'.UserService::get_level_class($member['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $member['display_name'] . '</a>',
 			'INFO' => $LANG['user_warning_level'] . ': ' . $member['warning_percentage'] . '%',
 			'SELECT' => $select,
 			'REPLACE_VALUE' => 'contents = contents.replace(regex, \' \' + replace_value + \'%\');' . "\n" . 'document.getElementById(\'action_info\').innerHTML = \'' . addslashes($LANG['user_warning_level']) . ': \' + replace_value + \'%\';',
@@ -660,7 +661,7 @@ else //Panneau de modération
 		
 		$tpl->assign_block_vars('action_list', array(
 			'C_GROUP_COLOR' => !empty($group_color),
-			'LOGIN' => !empty($row['login']) ? $row['login'] : $LANG['guest'],
+			'LOGIN' => !empty($row['display_name']) ? $row['display_name'] : $LANG['guest'],
 			'LEVEL_CLASS' => UserService::get_level_class($row['user_level']),
 			'GROUP_COLOR' => $group_color,
 			'DATE' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),

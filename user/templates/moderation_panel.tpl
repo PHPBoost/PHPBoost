@@ -120,13 +120,11 @@
 				<!--
 				function change_textarea_level(replace_value, regex)
 				{
-					# IF C_BBCODE_TINYMCE_MODE #  tinyMCE.activeEditor.save(); # ENDIF #
-					
 					var contents = document.getElementById('action_contents').value;
-					{REPLACE_VALUE}		
-					document.getElementById('action_contents').value = contents;	
+					{REPLACE_VALUE}
+					document.getElementById('action_contents').value = contents;
 					
-					# IF C_BBCODE_TINYMCE_MODE #  tinyMCE.getInstanceById('action_contents').getBody().innerHTML = contents;  # ENDIF #
+					# IF C_TINYMCE_EDITOR # setTinyMceContent(contents); # ENDIF #
 				}
 				-->
 				</script>

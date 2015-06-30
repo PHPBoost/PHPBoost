@@ -51,6 +51,11 @@ function insertTinyMceContent(content)
 	ed.windowManager.close();
 }
 
+function setTinyMceContent(content)
+{
+	tinymce.activeEditor.setContent(content);
+}
+
 -->
 </script>
 <div style="position:relative;display:none;" id="loading_preview{FIELD}">
