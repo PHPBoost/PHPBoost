@@ -35,8 +35,6 @@ $config = GalleryConfig::load();
 //Si c'est confirmé on execute
 if (!empty($_POST['valid']))
 {
-	$Cache->load('gallery');
-	
 	$config->set_mini_max_width(retrieve(POST, 'mini_max_width', 150));
 	$config->set_mini_max_height(retrieve(POST, 'mini_max_height', 150));
 	$config->set_max_width(retrieve(POST, 'max_width', 800));
@@ -93,7 +91,7 @@ if (!empty($_POST['valid']))
 	GalleryService::get_categories_manager()->regenerate_cache();
 	
 	###### Régénération du cache de la gallery #######
-	$Cache->Generate_module_file('gallery');
+	GalleryMiniMenuCache::invalidate();
 	
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
@@ -103,8 +101,7 @@ elseif (!empty($_POST['gallery_cache'])) //Suppression des miniatures.
 	$Gallery = new Gallery();
 	$Gallery->Clear_cache();
 	
-	$Cache->load('gallery');
-	$Cache->Generate_module_file('gallery');
+	GalleryMiniMenuCache::invalidate();
 
 	AppContext::get_response()->redirect('/gallery/admin_gallery_config.php');
 }

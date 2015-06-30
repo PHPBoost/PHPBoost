@@ -36,28 +36,29 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
     {
     	if (GalleryAuthorizationsService::check_authorizations()->read())
 		{
-			global $Cache, $LANG, $_array_random_pics;
+			global $LANG;
 			$tpl = new FileTemplate('gallery/gallery_mini.tpl');
 			MenuService::assign_positions_conditions($tpl, $this->get_block());
 			
 			//Chargement de la langue du module.
 			load_module_lang('gallery');
-			$Cache->load('gallery'); //Requête des configuration générales (gallery), $CONFIG_ALBUM variable globale.
 			$config = GalleryConfig::load();
+			
+			$array_random_pics = GalleryMiniMenuCache::load()->get_pictures();
 			
 			$i = 0;
 			
 			//Affichage des miniatures disponibles
 			$array_pics_mini = 'var array_pics_mini = new Array();' . "\n";
 			list($nbr_pics, $sum_height, $sum_width, $scoll_mode, $height_max, $width_max) = array(0, 0, 0, 0, 142, 142);
-			if (isset($_array_random_pics) && $_array_random_pics !== array())
+			if (isset($array_random_pics) && $array_random_pics !== array())
 			{
 				$gallery_mini = array();
-				shuffle($_array_random_pics); //On mélange les éléments du tableau.
+				shuffle($array_random_pics); //On mélange les éléments du tableau.
 		
 				//Vérification des autorisations.
 				$break = 0;
-				foreach ($_array_random_pics as $array_pics_info)
+				foreach ($array_random_pics as $array_pics_info)
 				{
 					if (GalleryAuthorizationsService::check_authorizations($array_pics_info['idcat'])->read())
 					{
@@ -71,7 +72,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 				//Aucune photo ne correspond, on fait une requête pour vérifier.
 				if (count($gallery_mini) == 0)
 				{
-					$_array_random_pics = array();
+					$array_random_pics = array();
 					$result = PersistenceContext::get_querier()->select("SELECT g.id, g.name, g.path, g.width, g.height, g.idcat, gc.auth
 					FROM " . GallerySetup::$gallery_table . " g
 					LEFT JOIN " . GallerySetup::$gallery_cats_table . " gc on gc.id = g.idcat
@@ -80,12 +81,12 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 					LIMIT " . $config->get_pics_number_in_mini());
 					while($row = $result->fetch())
 					{
-						$_array_random_pics[] = $row;
+						$array_random_pics[] = $row;
 					}
 		
 					//Vérification des autorisations.
 					$break = 0;
-					foreach ($_array_random_pics as $key => $array_pics_info)
+					foreach ($array_random_pics as $key => $array_pics_info)
 					{
 						if (GalleryAuthorizationsService::check_authorizations($array_pics_info['idcat'])->read())
 						{

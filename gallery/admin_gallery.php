@@ -39,8 +39,6 @@ $move = !empty($_GET['move']) ? NumberHelper::numeric($_GET['move']) : 0;
 $Gallery = new Gallery();
 $config = GalleryConfig::load();
 
-$Cache->load('gallery');
-
 if (!empty($idpics) && isset($_GET['move'])) //Déplacement d'une image.
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
@@ -48,7 +46,7 @@ if (!empty($idpics) && isset($_GET['move'])) //Déplacement d'une image.
 	$Gallery->Move_pics($idpics, $move);
 
 	//Régénération du cache des photos aléatoires.
-	$Cache->Generate_module_file('gallery');
+	GalleryMiniMenuCache::invalidate();
 
 	AppContext::get_response()->redirect('/gallery/admin_gallery.php?cat=' . $move);
 }
@@ -59,7 +57,7 @@ elseif (!empty($del)) //Suppression d'une image.
 	$Gallery->Del_pics($del);
 
 	//Régénération du cache des photos aléatoires.
-	$Cache->Generate_module_file('gallery');
+	GalleryMiniMenuCache::invalidate();
 
 	AppContext::get_response()->redirect('/gallery/admin_gallery.php?cat=' . $id_category);
 }

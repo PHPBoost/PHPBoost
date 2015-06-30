@@ -66,7 +66,7 @@ if (!empty($g_del)) //Suppression d'une image.
 	$Gallery->Del_pics($g_del);
 
 	//Régénération du cache des photos aléatoires.
-	$Cache->Generate_module_file('gallery');
+	GalleryMiniMenuCache::invalidate();
 
 	AppContext::get_response()->redirect('/gallery/gallery' . url('.php?cat=' . $id_category, '-' . $id_category . '.php', '&'));
 }
@@ -84,7 +84,7 @@ elseif (!empty($g_idpics) && $g_move) //Déplacement d'une image.
 	$Gallery->Move_pics($g_idpics, $g_move);
 
 	//Régénération du cache des photos aléatoires.
-	$Cache->Generate_module_file('gallery');
+	GalleryMiniMenuCache::invalidate();
 
 	AppContext::get_response()->redirect('/gallery/gallery' . url('.php?cat=' . $g_move, '-' . $g_move . '.php', '&'));
 }
@@ -138,7 +138,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 				AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($id_category,$Upload->get_error()) . '#message_helper');
 
 			//Régénération du cache des photos aléatoires.
-			$Cache->Generate_module_file('gallery');
+			GalleryMiniMenuCache::invalidate();
 		}
 	}
 

@@ -29,48 +29,9 @@ if (defined('PHPBOOST') !== true) exit;
 
 class GalleryExtensionPointProvider extends ExtensionPointProvider
 {
-	private $db_querier;
-
 	public function __construct()
 	{
-		$this->db_querier = PersistenceContext::get_querier();
 		parent::__construct('gallery');
-	}
-
-	//Récupération du cache.
-	function get_cache()
-	{
-		$config = GalleryConfig::load();
-		
-		$Gallery = new Gallery();
-
-		$_array_random_pics = 'global $_array_random_pics;' . "\n" . '$_array_random_pics = array(';
-		$result = $this->db_querier->select("SELECT g.id, g.name, g.path, g.width, g.height, g.idcat, gc.auth
-		FROM " . GallerySetup::$gallery_table . " g
-		LEFT JOIN " . GallerySetup::$gallery_cats_table . " gc on gc.id = g.idcat
-		WHERE g.aprob = 1
-		ORDER BY RAND()
-		LIMIT 30");
-		while ($row = $result->fetch())
-		{
-			$row['auth'] = ($row['idcat'] == 0) ? $config->get_authorizations() : unserialize(stripslashes($row['auth']));
-
-			//Calcul des dimensions avec respect des proportions.
-			list($width, $height) = $Gallery->get_resize_properties($row['width'], $row['height']);
-
-			$_array_random_pics .= 'array(' . "\n" .
-			'\'id\' => ' . var_export($row['id'], true) . ',' . "\n" .
-			'\'name\' => ' . var_export($row['name'], true) . ',' . "\n" .
-			'\'path\' => ' . var_export($row['path'], true) . ',' . "\n" .
-			'\'width\' => ' . var_export($width, true) . ',' . "\n" .
-			'\'height\' => ' . var_export($height, true) . ',' . "\n" .
-			'\'idcat\' => ' . var_export($row['idcat'], true) . ',' . "\n" .
-			'\'auth\' => ' . var_export($row['auth'], true) . '),' . "\n";
-		}
-		$result->dispose();
-		$_array_random_pics .= ');';
-
-		return $_array_random_pics;
 	}
 	
 	public function comments()

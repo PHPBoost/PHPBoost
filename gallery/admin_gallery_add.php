@@ -31,7 +31,6 @@ load_module_lang('gallery'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$Cache->load('gallery');
 $Gallery = new Gallery();
 $config = GalleryConfig::load();
 
@@ -69,7 +68,7 @@ if (isset($_FILES['gallery']) && isset($_POST['idcat_post'])) //Upload
 				AppContext::get_response()->redirect('/gallery/admin_gallery_add.php?error=' . $Gallery->get_error() . ($idcat_post ? '&cat=' . $idcat_post : '') . '#message_helper');
 
 			//Régénération du cache des photos aléatoires.
-			$Cache->Generate_module_file('gallery');
+			GalleryMiniMenuCache::invalidate();
 		}
 	}
 
@@ -99,7 +98,7 @@ elseif (!empty($_POST['valid']) && !empty($nbr_pics_post)) //Ajout massif d'imag
 	}
 
 	//Régénération du cache des photos aléatoires.
-	$Cache->Generate_module_file('gallery');
+	GalleryMiniMenuCache::invalidate();
 
 	AppContext::get_response()->redirect('/gallery/admin_gallery_add.php');
 }

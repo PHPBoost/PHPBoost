@@ -89,7 +89,7 @@ else
 			{
 				echo $Gallery->Aprob_pics($id_file);
 				//Régénération du cache des photos aléatoires.
-				$Cache->Generate_module_file('gallery');
+				GalleryMiniMenuCache::invalidate();
 			}
 			else 
 				echo 0;
