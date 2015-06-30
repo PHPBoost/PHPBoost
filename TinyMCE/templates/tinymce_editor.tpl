@@ -91,6 +91,17 @@ tinymce.init({
 	menubar: false,
 	advlist_number_styles: 'default',
 	advlist_bullet_styles: 'default',
+	content_css: [
+		"{PATH_TO_ROOT}/kernel/lib/css/font-awesome/css/font-awesome.css",
+		"{PATH_TO_ROOT}/templates/{THEME}/theme/global.css"
+	],
+    style_formats: [
+		{title: ${escapejs(LangLoader::get_message('success', 'status-messages-common'))}, inline: 'span', classes: 'success'},
+		{title: ${escapejs(LangLoader::get_message('error.question', 'status-messages-common'))}, inline: 'span', classes: 'question'},
+		{title: ${escapejs(LangLoader::get_message('error.notice', 'status-messages-common'))}, inline: 'span', classes: 'notice'},
+		{title: ${escapejs(LangLoader::get_message('error.warning', 'status-messages-common'))}, inline: 'span', classes: 'warning'},
+		{title: ${escapejs(LangLoader::get_message('error', 'status-messages-common'))}, inline: 'span', classes: 'error'}
+	],
 	setup : function(ed) {
 		ed.addButton('insertfile', {
 			icon: 'browse',

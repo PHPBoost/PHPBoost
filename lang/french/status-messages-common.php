@@ -31,6 +31,7 @@ $lang['error'] = 'Erreur';
 $lang['error.fatal'] = 'Fatale';
 $lang['error.notice'] = 'Suggestion';
 $lang['error.warning'] = 'Avertissement';
+$lang['error.question'] = 'Question';
 $lang['error.unknow'] = 'Inconnue';
 
 //PHPBoost errors

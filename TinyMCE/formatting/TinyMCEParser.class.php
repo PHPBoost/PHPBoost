@@ -421,6 +421,12 @@ class TinyMCEParser extends ContentFormattingParser
 			array_push($array_preg, '`&lt;h4[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h4&gt;`isU');
 			array_push($array_preg_replace, "\n" . '<br /><h4 class="formatter-title">$1</h4><br />' . "\n<br />");
 		}
+		//Style tag
+		if (!in_array('style', $this->forbidden_tags))
+		{
+			array_push($array_preg, '`&lt;span class="(success|question|notice|warning|error)"&gt;(.+)&lt;/span&gt;`isU');
+			array_push($array_preg_replace, '<span class="$1">$2</span>');
+		}
 		//Flash tag
 		if (!in_array('swf', $this->forbidden_tags))
 		{
