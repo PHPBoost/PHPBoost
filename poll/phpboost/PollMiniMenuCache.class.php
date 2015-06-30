@@ -61,6 +61,7 @@ class PollMiniMenuCache implements CacheData
 			$row['total'] = $number_votes;
 			$this->polls[$row['id']] = $row;
 		}
+		$result->dispose();
 	}
 	
 	public function get_polls()

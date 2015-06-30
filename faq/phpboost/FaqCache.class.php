@@ -56,6 +56,7 @@ class FaqCache implements CacheData
 				'question' => $row['question']
 			);
 		}
+		$result->dispose();
 	}
 	
 	public function get_questions()

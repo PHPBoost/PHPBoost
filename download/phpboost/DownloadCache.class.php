@@ -58,6 +58,7 @@ class DownloadCache implements CacheData
 		{
 			$this->downloadfiles[$row['id']] = $row;
 		}
+		$result->dispose();
 	}
 	
 	public function get_downloadfiles()
@@ -90,7 +91,7 @@ class DownloadCache implements CacheData
 	 */
 	public static function load()
 	{
-		return CacheManager::load(__CLASS__, 'module', 'download');
+		return CacheManager::load(__CLASS__, 'download', 'minimenu');
 	}
 	
 	/**
@@ -98,7 +99,7 @@ class DownloadCache implements CacheData
 	 */
 	public static function invalidate()
 	{
-		CacheManager::invalidate('module', 'download');
+		CacheManager::invalidate('download', 'minimenu');
 	}
 }
 ?>

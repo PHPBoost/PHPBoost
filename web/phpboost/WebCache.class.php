@@ -59,6 +59,7 @@ class WebCache implements CacheData
 		{
 			$this->partners_weblinks[$row['id']] = $row;
 		}
+		$result->dispose();
 	}
 	
 	public function get_partners_weblinks()
@@ -91,7 +92,7 @@ class WebCache implements CacheData
 	 */
 	public static function load()
 	{
-		return CacheManager::load(__CLASS__, 'module', 'web');
+		return CacheManager::load(__CLASS__, 'web', 'minimenu');
 	}
 	
 	/**
@@ -99,7 +100,7 @@ class WebCache implements CacheData
 	 */
 	public static function invalidate()
 	{
-		CacheManager::invalidate('module', 'web');
+		CacheManager::invalidate('web', 'minimenu');
 	}
 }
 ?>
