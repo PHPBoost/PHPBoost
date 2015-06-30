@@ -198,5 +198,13 @@ tinymce.addI18n('fr_FR',{
 "View": "Voir",
 "Table": "Tableau",
 "Format": "Format",
-"Spellcheck As You Type": "Dictionnaire"
+"Spellcheck As You Type": "Dictionnaire",
+"Rotate counterclockwise": "Pivoter \u00e0 gauche de 90\u00b0",
+"Rotate clockwise": "Pivoter \u00e0 droite de 90\u00b0",
+"Flip vertically": "Retourner verticalement",
+"Flip horizontally": "Retourner horizontalement",
+"Edit image": "Modifier l'image",
+"Image options": "Options de l'image",
+"Apply": "Appliquer",
+"Back": "Retour"
 });

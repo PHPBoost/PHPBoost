@@ -78,7 +78,7 @@ tinymce.init({
 	plugins: [
 		"advlist autolink autosave link image lists charmap hr anchor",
 		"searchreplace wordcount visualblocks visualchars fullscreen insertdatetime media",
-		"table contextmenu directionality smileys paste textcolor colorpicker textpattern"
+		"table contextmenu directionality smileys paste textcolor colorpicker textpattern imagetools"
 	],
 	external_plugins: {"nanospell": '{PATH_TO_ROOT}/TinyMCE/templates/js/tinymce/plugins/nanospell/plugin.js'},
 	nanospell_server: "php",
@@ -89,9 +89,8 @@ tinymce.init({
 	# IF C_TOOLBAR3 #toolbar3: "{TOOLBAR3}",# ENDIF #
 
 	menubar: false,
-	toolbar_items_size: 'small',
 	advlist_number_styles: 'default',
-    advlist_bullet_styles: 'default',
+	advlist_bullet_styles: 'default',
 	setup : function(ed) {
 		ed.addButton('insertfile', {
 			icon: 'browse',

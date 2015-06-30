@@ -400,8 +400,10 @@ class TinyMCEParser extends ContentFormattingParser
 		//Anchor tag
 		if (!in_array('anchor', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;a(?: class="[^"]+")?(?: title="[^"]+" )?(?: name="[^"]+" )? id="([^"]+)"&gt;(.*)&lt;/a&gt;`isU');
-			array_push($array_preg_replace, '<span id="$1">$2</span>');
+			array_push($array_preg, '`&lt;a id="([^"]+)" class="mce-item-anchor"?&gt;&lt;/a&gt;`isU');
+			array_push($array_preg_replace, '<span id="$1" class="anchor"></span>');
+			array_push($array_preg, '`&lt;a(?: class="[^"]+")?(?: title="[^"]+")?(?: name="[^"]+")? id="([^"]+)"&gt;(.*)&lt;/a&gt;`isU');
+			array_push($array_preg_replace, '<span id="$1" class="anchor">$2</span>');
 		}
 		//Title tag
 		if (!in_array('title', $this->forbidden_tags))

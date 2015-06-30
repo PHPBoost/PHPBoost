@@ -442,12 +442,19 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					
 					$now = new Date();
 					
-					$new_content = FormatingHelper::second_parse($last_message_content) . '
+					if (AppContext::get_current_user()->get_editor() == 'TinyMCE')
+					{
+						$new_content = FormatingHelper::second_parse($last_message_content) . '<br /><br />-------------------------------------------<br /><em>' . $LANG['edit_on'] . ' ' . $now->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) . '</em><br /><br />' . FormatingHelper::second_parse($contents);
+					}
+					else
+					{
+						$new_content = FormatingHelper::second_parse($last_message_content) . '
 
 -------------------------------------------
 <em>' . $LANG['edit_on'] . ' ' . $now->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) . '</em>
 
 ' . FormatingHelper::second_parse($contents);
+					}
 					
 					$Forumfct->Update_msg($idt_get, $topic['last_msg_id'], FormatingHelper::unparse($new_content), $topic['last_user_id']); //Mise à jour du topic.
 					$last_msg_id = $topic['last_msg_id'];
@@ -471,14 +478,20 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
 		$id_m = retrieve(GET, 'idm', 0);
 		$update = retrieve(GET, 'update', false);
+		
 		$id_first = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'MIN(id)', 'WHERE idtopic = :idtopic', array('idtopic' => $idt_get));
-		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('title', 'subtitle', 'type', 'user_id', 'display_msg'), 'WHERE id=:id', array('id' => $idt_get));
-
+		
 		if (empty($id_get) || empty($id_first)) //Topic/message inexistant.
 		{
-            $controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
-                $LANG['e_unexist_topic_forum']);
-            DispatchManager::redirect($controller);
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_unexist_topic_forum']);
+			DispatchManager::redirect($controller);
+		}
+		
+		try {
+			$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('title', 'subtitle', 'type', 'user_id', 'display_msg'), 'WHERE id=:id', array('id' => $idt_get));
+		} catch (RowNotFoundException $e) {
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_unexist_topic_forum']);
+			DispatchManager::redirect($controller);
 		}
 
 		$is_modo = ForumAuthorizationsService::check_authorizations($id_get)->moderation();

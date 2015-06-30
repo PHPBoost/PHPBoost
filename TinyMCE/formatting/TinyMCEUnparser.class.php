@@ -141,6 +141,8 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		//Preg_replace.
 		$array_preg = array(
 			'`<p style="text-align:(left|center|right|justify)">(.*)</p>`isU',
+			'`<span id="([a-z0-9_-]+)"></span>`isU',
+			'`<span id="([a-z0-9_-]+)" class="anchor"></span>`isU',
 			'`<span id="([a-z0-9_-]+)">(.*)</span>`isU',
 			"`<h1 class=\"formatter-title\">(.*)</h1>(?:[\s]*<br />){0,}`isU",
 			"`<h2 class=\"formatter-title\">(.*)</h2>(?:[\s]*<br />){0,}`isU",
@@ -152,6 +154,8 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			);
 			$array_preg_replace = array(
 			"<p style=\"text-align: $1;\">$2</p>",
+			"<a id=\"$1\"></a>",
+			"<a id=\"$1\"></a>",
 			"<a title=\"$1\" name=\"$1\">$2</a>",
 			"<h1>$1</h1>",
 			"<h2>$1</h2>",

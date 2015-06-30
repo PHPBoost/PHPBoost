@@ -857,7 +857,7 @@ select[readonly=readonly]:focus {
 /* --- Textarea --- */
 .form-field-textarea {
 	display: inline;
-	width: 90%;
+	width: 100%;
 	position: relative;
 	margin: 5px auto;
 }
