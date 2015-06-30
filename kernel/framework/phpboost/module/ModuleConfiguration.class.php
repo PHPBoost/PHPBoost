@@ -167,7 +167,7 @@ class ModuleConfiguration
 		$this->check_parse_ini_file($desc, $desc_ini_file);
 		$this->name = $desc['name'];
 		$this->description = $desc['desc'];
-		$this->admin_links = !empty($desc['admin_links']) ? self::parse_ini_array($desc['admin_links']) : array();
+		$this->admin_links = !empty($desc['admin_links']) ? $this->parse_ini_array($desc['admin_links']) : array();
 	}
 
 	private function check_parse_ini_file($parse_result, $ini_file)
@@ -185,9 +185,8 @@ class ModuleConfiguration
 	 * @param string $links_format Serialized array
 	 * @return string[] The unserialized array.
 	 */
-	public static function parse_ini_array($links_format)
+	private function parse_ini_array($links_format)
 	{
-		// TODO remove the public visibility when migration to new config files will be done
 		$links_format = preg_replace('` ?=> ?`', '=', $links_format);
 		$links_format = preg_replace(' ?, ?', ',', $links_format) . ' ';
 		list($key, $value, $open, $cursor, $check_value, $admin_links) = array('', '', '', 0, false, array());

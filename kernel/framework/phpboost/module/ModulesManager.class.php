@@ -204,24 +204,6 @@ class ModulesManager
 
 		self::execute_module_installation($module_identifier);
 
-		// @deprecated
-		//Insertion de la configuration du module.
-		$config = get_ini_config(PATH_TO_ROOT . '/' . $module_identifier . '/lang/', get_ulang()); //Récupération des infos de config.
-
-		if (!empty($config))
-		{
-			$querier = PersistenceContext::get_querier();
-			$check_config = $querier->count(DB_TABLE_CONFIGS, 'WHERE name=:module_id', array('module_id' => $module_identifier));
-			if (empty($check_config))
-			{
-				$querier->insert(DB_TABLE_CONFIGS, array('name' => $module_identifier, 'value' => $config));
-			}
-			else
-			{
-				return self::CONFIG_CONFLICT;
-			}
-		}
-
 		ModulesConfig::load()->add_module($module);
 		ModulesConfig::save();
 		
@@ -262,36 +244,17 @@ class ModulesManager
 			$error = self::execute_module_uninstallation($module_id);
 			if ($error === null)
 			{
-				// @deprecated
-				//Récupération des infos de config.
-				$info_module = load_ini_file(PATH_TO_ROOT . '/' . $module_id . '/lang/', get_ulang());
-	
 				ContributionService::delete_contribution_module($module_id);
-	
+				
 				NotationService::delete_notes_module($module_id);
-	
+				
 				CommentsService::delete_comments_module($module_id);
-	
-				PersistenceContext::get_querier()->inject("DELETE FROM ".DB_TABLE_CONFIGS." 
-						WHERE name = :name", array('name' => $module_id));
-	
-				$dir_db_module = get_ulang();
-				$dir = PATH_TO_ROOT . '/' . $module_id . '/db';
-	
-				if (!file_exists($dir . '/' . $dir_db_module) && file_exists($dir))
-				{
-					//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
-					$folder_path = new Folder($dir);
-					foreach ($folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $dir)
-					{
-						$dir_db_module = $dir->get_name();
-						break;
-					}
-				}
-	
+				
+				PersistenceContext::get_querier()->delete(DB_TABLE_CONFIGS, "WHERE name = :name", array('name' => $module_id));
+				
 				//Régénération des feeds.
 				Feed::clear_cache($module_id);
-	
+				
 				try {
 					if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
 					{
@@ -299,13 +262,13 @@ class ModulesManager
 					}
 				} catch (IOException $ex) {
 				}
-	
+				
 				MenuService::delete_mini_module($module_id);
 				MenuService::delete_module_feeds_menus($module_id);
-	
+				
 				ModulesConfig::load()->remove_module_by_id($module_id);
 				ModulesConfig::save();
-	
+				
 				//Module home page ?
 				$general_config = GeneralConfig::load();
 				$module_home_page_selected = $general_config->get_module_home_page();

@@ -58,7 +58,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	{
 		$template = new FileTemplate('body.tpl');
 		
-		$theme = ThemesManager::get_theme(get_utheme());
+		$theme = ThemesManager::get_theme(AppContext::get_current_user()->get_theme());
 		$customize_interface = $theme->get_customize_interface();
 		$header_logo_path = $customize_interface->get_header_logo_path();
 		
@@ -95,7 +95,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		
 		if (GraphicalEnvironmentConfig::load()->get_display_theme_author())
 		{
-			$theme_configuration = ThemesManager::get_theme(get_utheme())->get_configuration();
+			$theme_configuration = ThemesManager::get_theme(AppContext::get_current_user()->get_theme())->get_configuration();
 			$template->put_all(array(
 				'C_DISPLAY_AUTHOR_THEME' => true,
 				'L_THEME' => self::$main_lang['theme'],
@@ -161,7 +161,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	protected function display_menus(Template $template)
 	{
 		$menus = MenusCache::load()->get_menus();
-		$columns_disabled = ThemesManager::get_theme(get_utheme())->get_columns_disabled();
+		$columns_disabled = ThemesManager::get_theme(AppContext::get_current_user()->get_theme())->get_columns_disabled();
 		foreach ($menus as $cached_menu)
 		{
 			$menu = $cached_menu->get_menu();

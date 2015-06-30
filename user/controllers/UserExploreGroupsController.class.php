@@ -81,7 +81,7 @@ class UserExploreGroupsController extends AbstractController
 				if (!empty($user))
 				{
 					//Avatar
-					$user_avatar = !empty($user['user_avatar']) ? Url::to_rel($user['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
+					$user_avatar = !empty($user['user_avatar']) ? Url::to_rel($user['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
 					
 					$group_color = User::get_group_color($user['groups'], $user['level']);
 					$this->view->assign_block_vars('members_list', array(

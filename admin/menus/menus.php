@@ -33,7 +33,7 @@ require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
 $id = retrieve(GET, 'id', 0);
 $switchtheme = retrieve(GET, 'theme', '');
-$name_theme = !empty($switchtheme) ? $switchtheme : get_utheme();
+$name_theme = !empty($switchtheme) ? $switchtheme : AppContext::get_current_user()->get_theme();
 $theme_post = retrieve(POST, 'theme', '');
 
 $action = retrieve(GET, 'action', '');
@@ -253,7 +253,7 @@ foreach ($menus_blocks as $block_id => $menus)
 foreach(ThemesManager::get_activated_themes_map() as $theme => $properties)
 {
 	$configuration = $properties->get_configuration();
-	$selected = (empty($name_theme) ? get_utheme() == $theme : $name_theme == $theme) ? ' selected="selected"' : '';
+	$selected = (empty($name_theme) ? AppContext::get_current_user()->get_theme() == $theme : $name_theme == $theme) ? ' selected="selected"' : '';
 	$tpl->assign_block_vars('themes', array(
 		'NAME' => $configuration->get_name(),
 		'IDNAME' => $theme,

@@ -142,7 +142,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 		}
 	}
 
-	AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_item_add($idcat_post,$idpic));
+	AppContext::get_response()->redirect(Url::to_absolute('/gallery/gallery' . url('.php?add=1&cat=' . $idcat_post . '&id=' . $idpic, '-' . $idcat_post . '-' . $idpic . '.php?add=1', '&')));
 }
 elseif ($g_add)
 {

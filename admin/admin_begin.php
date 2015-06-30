@@ -30,7 +30,7 @@ if (!defined('PATH_TO_ROOT'))
 
 require_once(PATH_TO_ROOT . '/kernel/begin.php');
 
-require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php');
+require_once(PATH_TO_ROOT . '/lang/' . AppContext::get_current_user()->get_locale() . '/admin.php');
 
 if (!AppContext::get_current_user()->is_admin())
 {

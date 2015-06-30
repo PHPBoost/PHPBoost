@@ -18,16 +18,6 @@ class FunctionsIncTest extends PHPBoostUnitTestCase {
 		self::assertTrue(is_int($ret) AND $ret == 0);
 	}
 	
-	function test_get_utheme()
-	{
-		// TODO(__METHOD__);
-	}
-	
-	function test_get_ulang()
-	{
-		// TODO(__METHOD__);
-	}
-	
 	function test_display_editor()
 	{
         // TODO(__METHOD__);
@@ -50,15 +40,6 @@ class FunctionsIncTest extends PHPBoostUnitTestCase {
 		// TODO(__METHOD__);
 	}
 	
-	function test_parse_ini_array()
-	{
-		// TODO(__METHOD__);
-	}
-	
-	function test_get_ini_config()
-	{
-		// TODO(__METHOD__);
-	}
 	function test_find_require_dir()
 	{
 		// TODO(__METHOD__);

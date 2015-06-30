@@ -50,7 +50,7 @@ class CSSCacheManager
 			}
 			else
 			{
-				$files = str_replace('{THEME}', get_utheme(), $files);
+				$files = str_replace('{THEME}', AppContext::get_current_user()->get_theme(), $files);
 				$cache_file_location = '/cache/css/css-cache-'. md5($files) .'.css';
 				$files = explode(';', $files);
 			}

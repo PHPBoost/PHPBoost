@@ -54,7 +54,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$template = new FileTemplate('admin/body.tpl');
 		$template->add_lang(self::$lang);
 
-		$theme = ThemesManager::get_theme(get_utheme());
+		$theme = ThemesManager::get_theme(AppContext::get_current_user()->get_theme());
 		$customize_interface = $theme->get_customize_interface();
 		$header_logo_path = $customize_interface->get_header_logo_path();
 		
@@ -86,7 +86,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		
 		if (GraphicalEnvironmentConfig::load()->get_display_theme_author())
 		{
-			$theme_configuration = ThemesManager::get_theme(get_utheme())->get_configuration();
+			$theme_configuration = ThemesManager::get_theme(AppContext::get_current_user()->get_theme())->get_configuration();
 			$template->put_all(array(
 				'C_DISPLAY_AUTHOR_THEME' => true,
 				'L_THEME' => self::$lang['theme'],

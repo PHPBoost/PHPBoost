@@ -54,9 +54,10 @@ class AdminServerSystemReportController extends AdminController
 		$picture_yes = '<i class="fa fa-success fa-2x" title="' . LangLoader::get_message('yes', 'common') . '"></i>';
 		$picture_no = '<i class="fa fa-error fa-2x" title="' . LangLoader::get_message('no', 'common') . '"></i>';
 		$picture_unknown = '<i class="fa fa-question fa-2x" title="' . LangLoader::get_message('unknown', 'main') . '"></i>';
-
-		$lang_ini_file = load_ini_file(PATH_TO_ROOT .'/lang/', get_ulang());
-		$template_ini_file = @parse_ini_file(PATH_TO_ROOT .'/templates/' . get_utheme() . '/lang/' . get_ulang() . '/desc.ini');
+		
+		$user = AppContext::get_current_user();
+		$lang_ini_file = load_ini_file(PATH_TO_ROOT .'/lang/', $user->get_locale());
+		$template_ini_file = @parse_ini_file(PATH_TO_ROOT .'/templates/' . $user->get_theme() . '/lang/' . $user->get_locale() . '/desc.ini');
 		$editors = AppContext::get_content_formatting_service()->get_available_editors();
 		$default_editor = $editors[ContentFormattingConfig::load()->get_default_editor()];
 		$server_configuration = new ServerConfiguration();

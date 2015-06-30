@@ -80,7 +80,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		$value = $member_extended_field->get_value();
 		if (empty($value) && $user_accounts_config->is_default_avatar_enabled())
 		{
-			$avatar = '<img src="'. Url::to_rel('/templates/'. get_utheme() .'/images/'. $user_accounts_config->get_default_avatar_name()) .'" alt="" title="" />';
+			$avatar = '<img src="'. Url::to_rel('/templates/'. AppContext::get_current_user()->get_theme() .'/images/'. $user_accounts_config->get_default_avatar_name()) .'" alt="" title="" />';
 		}
 		elseif (!empty($value))
 		{

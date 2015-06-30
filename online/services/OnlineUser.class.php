@@ -68,7 +68,7 @@ class OnlineUser extends User
 		
 		if (empty($avatar))
 		{
-			$this->avatar = $user_accounts_config->is_default_avatar_enabled() ? PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name() : '';
+			$this->avatar = $user_accounts_config->is_default_avatar_enabled() ? PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  $user_accounts_config->get_default_avatar_name() : '';
 		}
 		else
 			$this->avatar = $avatar;

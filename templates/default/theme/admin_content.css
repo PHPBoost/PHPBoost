@@ -340,9 +340,6 @@ table tfoot nav.pagination a span.current-page {
 
 td.input-radio { width: 60px; }
 
-/* Deprecated */
-.row-disabled { background: #E1E1E1 !important; }
-
 /* Boutons
 ------------------------------------ */
 /* Normal */

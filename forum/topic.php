@@ -348,11 +348,12 @@ while ( $row = $result->fetch() )
 			}
 		}
 	}
-
+	
+	$theme = AppContext::get_current_user()->get_theme();
 	//Image associée au rang.
-	if (file_exists(TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/modules/forum/images/ranks/' . $user_rank_icon))
+	if (file_exists(TPL_PATH_TO_ROOT . '/templates/' . $theme . '/modules/forum/images/ranks/' . $user_rank_icon))
 	{
-		$rank_img = TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/modules/forum/images/ranks/' . $user_rank_icon;
+		$rank_img = TPL_PATH_TO_ROOT . '/templates/' . $theme . '/modules/forum/images/ranks/' . $user_rank_icon;
 	}
 	else
 	{
@@ -360,7 +361,7 @@ while ( $row = $result->fetch() )
 	}
 	$user_assoc_img = !empty($user_rank_icon) ? '<img src="' . $rank_img . '" alt="" />' : '';
 	
-	//Affichage des groupes du membre.		
+	//Affichage des groupes du membre.
 	if (!empty($row['groups'])) 
 	{	
 		$user_groups = '';
@@ -378,7 +379,7 @@ while ( $row = $result->fetch() )
 	
 	//Avatar
 	if (empty($row['user_avatar'])) 
-		$user_avatar = ($user_accounts_config->is_default_avatar_enabled() == '1') ? '<img src="../templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name() . '" alt="" />' : '';
+		$user_avatar = ($user_accounts_config->is_default_avatar_enabled() == '1') ? '<img src="../templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  $user_accounts_config->get_default_avatar_name() . '" alt="" />' : '';
 	else
 		$user_avatar = '<img src="' . Url::to_rel($row['user_avatar']) . '" alt=""	/>';
 		

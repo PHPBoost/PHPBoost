@@ -170,7 +170,7 @@ class FileTemplateLoader implements TemplateLoader
 		$this->filename = trim(substr($this->filepath, strrpos($this->filepath, '/')));
 
 		$this->default_templates_folder = PATH_TO_ROOT . '/templates/default/';
-		$this->theme_templates_folder = PATH_TO_ROOT . '/templates/' . get_utheme() . '/';
+		$this->theme_templates_folder = PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/';
 
 		if (empty($this->module) || in_array($this->module, array('admin', 'framework') ))
 		{   // Kernel - Templates priority order

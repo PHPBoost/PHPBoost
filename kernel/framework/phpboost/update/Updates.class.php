@@ -63,9 +63,10 @@ class Updates
 	{
 		if (ServerConfiguration::get_phpversion() > self::PHP_MIN_VERSION_UPDATES)
 		{
+			$user_locale = AppContext::get_current_user()->get_locale();
 			if ($checks & CHECK_KERNEL)
 			{   // Add the kernel to the check list
-				$this->apps[] = new Application('kernel', get_ulang(), Application::KERNEL_TYPE, Environment::get_phpboost_version(), Updates::PHPBOOST_OFFICIAL_REPOSITORY);
+				$this->apps[] = new Application('kernel', $user_locale, Application::KERNEL_TYPE, Environment::get_phpboost_version(), Updates::PHPBOOST_OFFICIAL_REPOSITORY);
 			}
 
 			if ($checks & CHECK_MODULES)
@@ -74,7 +75,7 @@ class Updates
 				foreach ($activated_modules as $module)
 				{
 					$this->apps[] = new Application($module->get_id(),
-					get_ulang(), Application::MODULE_TYPE,
+					$user_locale, Application::MODULE_TYPE,
 					$module->get_configuration()->get_version(), $module->get_configuration()->get_repository());
 				}
 			}
@@ -82,13 +83,13 @@ class Updates
 			if ($checks & CHECK_THEMES)
 			{
 				// Add Themes
-			   $activated_themes = ThemesManager::get_activated_themes_map();
+				$activated_themes = ThemesManager::get_activated_themes_map();
 				foreach ($activated_themes as $id => $value)
 				{
 					$repository = $value->get_configuration()->get_repository();
 					if (!empty($repository))
 					{
-						$this->apps[] = new Application($id, get_ulang(), Application::TEMPLATE_TYPE, $value->get_configuration()->get_version(), $repository);
+						$this->apps[] = new Application($id, $user_locale, Application::TEMPLATE_TYPE, $value->get_configuration()->get_version(), $repository);
 					}
 				}
 			}
@@ -139,7 +140,7 @@ class Updates
 		if (AdministratorAlertService::find_by_identifier($identifier, 'updates', 'kernel') === null)
 		{
 			$alert = new AdministratorAlert();
-			require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php');
+			require_once(PATH_TO_ROOT . '/lang/' . AppContext::get_current_user()->get_locale() . '/admin.php');
 			
 			if ($app->get_type() == Application::KERNEL_TYPE)
 				$alert->set_entitled(sprintf(LangLoader::get_message('kernel_update_available', 'admin'), $app->get_version()));

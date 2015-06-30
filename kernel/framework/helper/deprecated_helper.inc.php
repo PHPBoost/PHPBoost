@@ -176,62 +176,6 @@ function url($url, $mod_rewrite = '', $ampersand = '&amp;')
 	}
 }
 
-
-/**
- * @deprecated
- * @desc Returns the config field of a module configuration file.
- * In fact, this field contains the default module configuration in which we can find some " characters. To solve the problem,
- * this field is considered as a comment and when we want to retrieve its value, we have to call this method which returns its value.
- * @param string $dir_path Path in which is the file (stop just before the lang folder)
- * @param string $require_dir Lang folder in which must be the file
- * @param string $ini_name Config file name
- * @return string The config field value.
- */
-function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
-{
-	// TODO remove this function
-	$dir = find_require_dir($dir_path, $require_dir, false);
-
-	$module_config_file = new File($dir_path . $dir . '/desc.ini');
-	$module_config_text = $module_config_file->read();
-
-	//Maintenant qu'on a le contenu du fichier, on tente d'extraire la dernière ligne qui est commentée car sa syntaxe est incorrecte
-	$result = array();
-
-	//Si on détecte le bon motif, on le renvoie
-	if (preg_match('`;config="(.*)"\s*$`s', $module_config_text, $result))
-	{
-		return str_replace('\n', "\r\n", $result[1]);
-	}
-	//Sinon, on renvoie une chaîne vide
-	else
-	{
-		return '';
-	}
-}
-
-/**
- * @deprecated
- * @desc Returns the current user's theme.
- * @return string The theme identifier (name of its folder).
- */
-function get_utheme()
-{
-	$user = AppContext::get_current_user();
-	return $user->get_theme();
-}
-
-/**
- * @deprecated
- * @desc Returns the current user's language.
- * @return string The lang identifier (name of its folder).
- */
-function get_ulang()
-{
-	$user = AppContext::get_current_user();
-	return $user->get_locale();
-}
-
 /**
  * @deprecated
  * @desc Loads a module lang file. It will load alone the file corresponding to the user lang, but if it doesn't exist, another lang will be choosen.
@@ -244,12 +188,13 @@ function load_module_lang($module_name, $path = PATH_TO_ROOT)
 {
 	global $LANG;
 
-	$file = $path . '/' . $module_name . '/lang/' . get_ulang() . '/' . $module_name . '_' . get_ulang() . '.php';
+	$user_locale = AppContext::get_current_user()->get_locale();
+	$file = $path . '/' . $module_name . '/lang/' . $user_locale . '/' . $module_name . '_' . $user_locale . '.php';
 	$result = include_once $file;
 
 	if (!$result)
 	{
-		$lang = find_require_dir(PATH_TO_ROOT . '/' . $module_name . '/lang/', get_ulang(), false);
+		$lang = find_require_dir(PATH_TO_ROOT . '/' . $module_name . '/lang/', $user_locale, false);
 		$file2 = PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php';
 		$result2 = include_once $file2;
 

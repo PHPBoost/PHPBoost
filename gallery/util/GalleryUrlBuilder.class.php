@@ -111,14 +111,6 @@ class GalleryUrlBuilder
 			'-'.$idcat.'-'.$id.'.php'.(isset($com)?'?com='.$com:'').(isset($sort)?'&sort='.$sort:'')));
 	}
 	
-	public static function get_link_item_add($idcat, $id)
-	{
-		return Url::to_absolute('/gallery/gallery'.url(
-			'.php?add=1&cat='.$idcat.'&id='.$id,
-			'-'.$idcat.'-'.$id.'.php?add=1',
-			'&'));
-	}
-	
 	public static function get_link_cat($id, $name = null)
 	{
 		if (!empty($name))

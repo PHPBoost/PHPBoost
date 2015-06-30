@@ -339,12 +339,4 @@ $LANG['sql_req'] = ' Requests';
 $LANG['achieved'] = 'Achieved in';
 
 $LANG['forbidden_tags'] = 'Forbidden formatting types';
-
-//@deprecated
-//gestion des catégories
-$LANG['cats_managment_could_not_be_moved'] = 'An error occurred, the category couldn\'t be moved';
-$LANG['cats_managment_visibility_could_not_be_changed'] = 'An error occurred, the visibility of the category couldn\'t be changed.';
-$LANG['cats_managment_no_category_existing'] = 'No category existing';
-$LANG['cats_management_hide_cat'] = 'Make category unvisible';
-$LANG['cats_management_show_cat'] = 'Make category visible';
 ?>

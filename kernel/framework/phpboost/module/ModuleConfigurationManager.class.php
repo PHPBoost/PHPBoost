@@ -80,7 +80,7 @@ class ModuleConfigurationManager
 	{
 		$desc_ini_folder = PATH_TO_ROOT . '/' . $module_id . '/lang/';
 
-		$desc_ini_file = $desc_ini_folder . get_ulang() . '/desc.ini';
+		$desc_ini_file = $desc_ini_folder . AppContext::get_current_user()->get_locale() . '/desc.ini';
 		if (file_exists($desc_ini_file))
 		{
 			return $desc_ini_file;

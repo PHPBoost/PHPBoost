@@ -34,7 +34,7 @@ $config = ForumConfig::load();
 require_once(PATH_TO_ROOT . '/forum/forum_defines.php');
 
 //Supprime les menus suivant configuration du site.
-$columns_disabled = ThemesManager::get_theme(get_utheme())->get_columns_disabled();
+$columns_disabled = ThemesManager::get_theme(AppContext::get_current_user()->get_theme())->get_columns_disabled();
 if ($config->is_left_column_disabled()) 
 	$columns_disabled->set_disable_left_columns(true);
 if ($config->is_right_column_disabled()) 

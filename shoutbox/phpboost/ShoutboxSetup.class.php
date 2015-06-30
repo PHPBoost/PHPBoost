@@ -67,7 +67,7 @@ class ShoutboxSetup extends DefaultModuleSetup
 	}
 
 	private function create_shoutbox_table()
-	{//TODO : update : supprimer colonne level
+	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'login' => array('type' => 'string', 'length' => 150, 'default' => "''"),
