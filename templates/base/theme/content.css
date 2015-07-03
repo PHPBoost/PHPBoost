@@ -1033,6 +1033,11 @@ div.field-required:after {
 	right: -10px;
 }
 
+.form-field-checkbox.field-required:after {
+	right: -10px;
+	top: 4px;
+}
+
 .constraint-status-right .form-field-select:after,
 .constraint-status-right .form-field-number:after,
 .constraint-status-right .form-field-decimal:after,
@@ -1069,11 +1074,6 @@ div.field-required:after {
 
 .constraint-status-error .form-field-textarea .picture-status-constraint:after,
 .constraint-status-right .form-field-textarea .picture-status-constraint:after {
-	top: 40%;
-}
-
-.form-element-upload-file .field-required:after {
-	right: 42px;
 	top: 40%;
 }
 
