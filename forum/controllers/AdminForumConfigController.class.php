@@ -229,6 +229,7 @@ class AdminForumConfigController extends AdminModuleController
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		
 		ForumConfig::save();
+		ForumService::get_categories_manager()->regenerate_cache();
 	}
 }
 ?>
