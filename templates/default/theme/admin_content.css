@@ -912,12 +912,6 @@ div.container-block-absolute > div {
 }
 #container-header { padding-top: 10px; }
 
-#container-central .menus-block-container {
-	margin: 5px;
-	margin-top: 0px;
-	float: left
-}
-
 #container-leftmenu { width: 226px; }
 
 #container-rightmenu { width: 226px; }
