@@ -40,7 +40,7 @@ class FaqSearchable extends AbstractSearchableExtensionPoint
 			f.id AS id_content,
 			f.question AS title,
 			( 2 * FT_SEARCH_RELEVANCE(f.question, '" . $args['search'] . "') + FT_SEARCH_RELEVANCE(f.answer, '" . $args['search'] . "' )) / 3 * " . $weight . " AS relevance,
-			CONCAT('" . PATH_TO_ROOT . "/faq/index.php?url=/', id_category, '-', cat.rewrited_name, '/#', f.rewrited_question) AS link
+			CONCAT('" . PATH_TO_ROOT . "/faq/index.php?url=/', id_category, '-', cat.rewrited_name, '/#question', f.id) AS link
 			FROM " . FaqSetup::$faq_table . " f
 			LEFT JOIN ". FaqSetup::$faq_cats_table ." cat ON f.id_category = cat.id
 			WHERE ( FT_SEARCH(f.question, '" . $args['search'] . "') OR FT_SEARCH(f.answer, '" . $args['search'] . "') )

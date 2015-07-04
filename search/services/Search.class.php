@@ -76,18 +76,18 @@ class Search
 		// Lists old results to delete
 		$nbIdsToDelete = 0;
 		$idsToDelete = array();
-		$request = $this->db_querier->select('SELECT id_search
+		$result = $this->db_querier->select('SELECT id_search
 		FROM ' . SearchSetup::$search_index_table . '
 		WHERE last_search_use <= :time OR times_used >= :times_used', array(
 			'time' => (time() - (CACHE_TIME * 60)),
 			'times_used' => CACHE_TIMES_USED
 		));
-		while ($row = $request->fetch())
+		while ($row = $result->fetch())
 		{
 			$idsToDelete[] = $row['id_search'];
 			$nbIdsToDelete++;
 		}
-		$request->dispose();
+		$result->dispose();
 
 		// Deletes old results
 		if ($nbIdsToDelete > 0)
@@ -101,7 +101,7 @@ class Search
 		if ($this->search != '')
 		{
 			// Checks cache results meta-inf
-			$request = $this->db_querier->select("SELECT id_search, module
+			$result = $this->db_querier->select("SELECT id_search, module
 			FROM " . SearchSetup::$search_index_table . "
 			WHERE search=:search AND id_user=:id_user" . ($this->modules_conditions != '' ? " AND " . $this->modules_conditions : ''), array(
 				'search' => $this->search,
@@ -112,7 +112,7 @@ class Search
 				array_push($this->cache, $row['module']);
 				$this->id_search[$row['module']] = $row['id_search'];
 			}
-			$request->dispose();
+			$result->dispose();
 
 			// Updates cache results meta-inf
 			if (count($this->id_search) > 0)
@@ -154,7 +154,7 @@ class Search
 				}
 
 				// Checks and retrieves cache meta-informations
-				$request = $this->db_querier->select("SELECT id_search, module
+				$result = $this->db_querier->select("SELECT id_search, module
 				FROM " . SearchSetup::$search_index_table . "
 				WHERE search=:search AND id_user=:id_user" . ($this->modules_conditions != '' ? " AND " . $this->modules_conditions : ''), array(
 					'search' => $this->search,
@@ -164,7 +164,7 @@ class Search
 				{   // Ajout des résultats s'ils font partie de la liste des modules à traiter
 					$this->id_search[$row['module']] = $row['id_search'];
 				}
-				$request->dispose();
+				$result->dispose();
 			}
 		}
 	}
@@ -195,13 +195,13 @@ class Search
 		}
 
 		// Retrieves results
-		$request = $this->db_querier->select($reqResults);
-		while ($result = $result->fetch())
+		$result = $this->db_querier->select($reqResults);
+		while ($row = $result->fetch())
 		{
-			$results[] = $result;
+			$results[] = $row;
 		}
 		$nbResults = $result->get_rows_count();
-		$request->dispose();
+		$result->dispose();
 
 		return $nbResults;
 	}
@@ -254,14 +254,14 @@ class Search
 		}
 
 		// Executes search
-		$request = $this->db_querier->select($reqResults);
-		while ($result = $result->fetch())
+		$result = $this->db_querier->select($reqResults);
+		while ($row = $result->fetch())
 		{
-			$results[] = $result;
+			$results[] = $row;
 		}
 		$nbResults = $result->get_rows_count();
 
-		$request->dispose();
+		$result->dispose();
 
 		return $nbResults;
 	}
@@ -322,7 +322,7 @@ class Search
 
 			if (!empty($reqSEARCH))
 			{   // Inserts results
-				$request = $this->db_querier->select($reqSEARCH);
+				$result = $this->db_querier->select($reqSEARCH);
 				while ($row = $result->fetch())
 				{
 					if ($nbReqInsert > 0)

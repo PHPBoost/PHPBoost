@@ -62,7 +62,6 @@ if (!empty($id_get)) //Déplacement du sujet.
 	$method->setAccessible(true);
 	$categories_tree_options = $method->invoke($categories_tree);
 	$cat_list = '';
-	$number_options = $categories_tree_options;
 	foreach ($categories_tree_options as $option)
 	{
 		if ($option->get_raw_value() != $topic['idcat'])
@@ -75,7 +74,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 			else
 			{
 				$option_cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
-				if (!$option_cat->get_url() && $number_options)
+				if (!$option_cat->get_url())
 					$cat_list .= $option->display()->render();
 			}
 		}
@@ -184,7 +183,6 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	$method->setAccessible(true);
 	$categories_tree_options = $method->invoke($categories_tree);
 	$cat_list = '';
-	$number_options = $categories_tree_options;
 	foreach ($categories_tree_options as $option)
 	{
 		if ($option->get_raw_value() != $topic['idcat'])
@@ -197,7 +195,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 			else
 			{
 				$option_cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
-				if (!$option_cat->get_url() && $number_options)
+				if (!$option_cat->get_url())
 					$cat_list .= $option->display()->render();
 			}
 		}

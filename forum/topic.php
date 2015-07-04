@@ -487,13 +487,12 @@ $method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 $method->setAccessible(true);
 $categories_tree_options = $method->invoke($categories_tree);
 $cat_list = '';
-$number_options = $categories_tree_options;
 foreach ($categories_tree_options as $option)
 {
 	if ($option->get_raw_value())
 	{
 		$cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
-		if (!$cat->get_url() && $number_options)
+		if (!$cat->get_url())
 			$cat_list .= $option->display()->render();
 	}
 }

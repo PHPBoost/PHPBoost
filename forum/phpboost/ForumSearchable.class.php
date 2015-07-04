@@ -67,7 +67,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			if ($option->get_raw_value())
 			{
 				$cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
-				if (!$cat->get_url() && $number_options)
+				if (!$cat->get_url())
 					$cat_list .= $option->display()->render();
 			}
 		}
@@ -138,7 +138,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
 			JOIN " . PREFIX . "forum_cats c ON c.id_parent != 0 AND c.id = t.idcat
 			WHERE ( FT_SEARCH(t.title, '" . $search."') OR FT_SEARCH(msg.contents, '" . $search."') ) AND msg.timestamp > '" . (time() - $time) . "'
-			" . ($idcat > 0 ? " AND c.id = " . $idcat : '') . " AND c.id IN " . $authorized_categories . "
+			" . ($idcat > 0 ? " AND c.id = " . $idcat : '') . " AND c.id IN (" . implode(',', $authorized_categories) . ")
 			GROUP BY t.id
 			ORDER BY relevance DESC
 			LIMIT " . FORUM_MAX_SEARCH_RESULTS;
@@ -154,7 +154,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
 			JOIN " . PREFIX . "forum_cats c ON c.id_parent != 0 AND c.id = t.idcat
 			WHERE FT_SEARCH(msg.contents, '" . $search."') AND msg.timestamp > '" . (time() - $time) . "'
-			" . ($idcat > 0 ? " AND c.id = " . $idcat : '') . " AND c.id IN " . $authorized_categories . "
+			" . ($idcat > 0 ? " AND c.id = " . $idcat : '') . " AND c.id IN (" . implode(',', $authorized_categories) . ")
 			GROUP BY t.id
 			LIMIT " . FORUM_MAX_SEARCH_RESULTS;
 		else                                         // Title only
@@ -168,7 +168,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
 			JOIN " . PREFIX . "forum_cats c ON c.id_parent != 0 AND c.id = t.idcat
 			WHERE FT_SEARCH(t.title, '" . $search."') AND msg.timestamp > '" . (time() - $time) . "'
-			" . ($idcat > 0 ? " AND c.id = " . $idcat : '') . " AND c.id IN " . $authorized_categories . "
+			" . ($idcat > 0 ? " AND c.id = " . $idcat : '') . " AND c.id IN (" . implode(',', $authorized_categories) . ")
 			GROUP BY t.id
 			LIMIT " . FORUM_MAX_SEARCH_RESULTS;
 	}
