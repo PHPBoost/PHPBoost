@@ -28,34 +28,24 @@ class AjaxUserAutoCompleteController extends AbstractController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
-		$tpl = new StringTemplate('<ul> # IF C_RESULTS ## START results # <li><a class="{results.USER_LEVEL_CLASS}" # IF results.C_USER_GROUP_COLOR # style="color:{results.USER_GROUP_COLOR}" # ENDIF #>{results.NAME}</a></li> # END results ## ELSE # <li>{L_NO_RESULT}</li># ENDIF # </ul>');
+		$suggestions = array();
  
-		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, groups FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE '" . $request->get_value('value', '') . "%'",
-			array(), SelectQueryResult::FETCH_ASSOC);
- 
-		$nb_results = 0;
-		
-		while($row = $result->fetch())
-		{
-			$user_group_color = User::get_group_color($row['groups'], $row['level']);
+		try {
+			$result = PersistenceContext::get_querier()->select("SELECT display_name, level, groups FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE '" . $request->get_value('value', '') . "%'");
 			
-			$tpl->assign_block_vars('results', array(
-				'C_USER_GROUP_COLOR' => !empty($user_group_color),
-				'NAME' => $row['display_name'],
-				'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
-				'USER_GROUP_COLOR' => $user_group_color
-			));
-			
-			$nb_results++;
+			while($row = $result->fetch())
+			{
+				$user_group_color = User::get_group_color($row['groups'], $row['level']);
+				
+				$profile_link = new LinkHTMLElement('', $row['display_name'], array('onclick' => 'return false;', 'style' => (!empty($user_group_color) ? 'color:' . $user_group_color : '')), UserService::get_level_class($row['level']));
+				
+				$suggestions[] = $profile_link->display();
+			}
+			$result->dispose();
+		} catch (Exception $e) {
 		}
-		$result->dispose();
 		
-		$tpl->put_all(array(
-			'C_RESULTS' => $nb_results,
-			'L_NO_RESULT' => LangLoader::get_message('no_result', 'main')
-		));
- 
-		return new SiteNodisplayResponse($tpl);
+		return new JSONResponse(array('suggestions' => $suggestions));
 	}
 }
 ?>

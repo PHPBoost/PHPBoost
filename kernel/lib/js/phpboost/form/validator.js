@@ -163,9 +163,9 @@ function UserExistValidator(field_id, message)
 				url: PATH_TO_ROOT + "/kernel/framework/ajax/user_xmlhttprequest.php",
 				type: "post",
 				async : false,
-				data: {login : value, token : TOKEN},
+				data: {display_name : value, token : TOKEN},
 				success: function(returnData){
-					if (returnData == 1)
+					if (returnData != 1)
 					{
 						error = message;
 					}

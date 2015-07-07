@@ -319,7 +319,7 @@ FormField.prototype = {
 		if (jQuery('#' + this.getHTMLId() + '_field').length && jQuery('#onblurContainerResponse' + this.getHTMLId()).length) {
 			
 			jQuery('#' + this.getHTMLId() + '_field').removeClass('constraint-status-error').addClass('constraint-status-right');
-			jQuery("#onblurMessageResponse" + this.getHTMLId()).fadeOut(200);
+			jQuery("#onblurMessageResponse" + this.getHTMLId()).hide();
 		}
 	},
 	clearErrorMessage : function() {

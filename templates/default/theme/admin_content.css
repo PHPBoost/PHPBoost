@@ -586,25 +586,28 @@ textarea {
 	margin-left: 5px;
 }
 
-/* Auto-completion */
-div.form-autocompleter-container { position: relative; }
-
-div.form-autocompleter {
-	position: absolute;
-	top: -999999em;
-	padding: 5px 0;
-	color: #333;
-	font-size: 11px;
-	background: #FFFFFF;
-	border-radius: 3px;
-	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-	border: 1px solid #AAA;
-	z-index: 102;
+/* --- Auto-completion --- */
+.autocomplete-suggestions {
+	border: 1px solid #999;
+	background: #FFF;
+	overflow: auto;
 }
 
-div.form-autocompleter ul { margin: 0px; padding: 0px; max-height: 20em; overflow: auto; }
-div.form-autocompleter ul li.selected { background-color: #F0F0F0; }
-div.form-autocompleter ul li { list-style-type: none; display: block; margin: 0; padding: 5px 15px; cursor: pointer; }
+.autocomplete-suggestions strong {
+	font-weight: normal;
+	color: #3399FF;
+}
+
+.autocomplete-suggestion {
+	padding: 2px 5px;
+	white-space: nowrap;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+.autocomplete-selected { background: #F0F0F0; }
+.autocomplete-no-suggestion { text-align: center; }
+
 
 /* A reprendre */
 .field-button {

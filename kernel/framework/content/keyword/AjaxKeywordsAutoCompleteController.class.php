@@ -31,21 +31,20 @@ class AjaxKeywordsAutoCompleteController extends AbstractController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
-		$tpl = new StringTemplate('<ul> # START results # <li>{results.NAME}</li> # END results # </ul>');
+		$suggestions = array();
  
 		try {
-			$result = PersistenceContext::get_querier()->select("SELECT name, rewrited_name FROM " . DB_TABLE_KEYWORDS . " WHERE name LIKE '" . $request->get_value('value', '') . "%'",
-				array(), SelectQueryResult::FETCH_ASSOC);
-	 
+			$result = PersistenceContext::get_querier()->select("SELECT name, rewrited_name FROM " . DB_TABLE_KEYWORDS . " WHERE name LIKE '" . $request->get_value('value', '') . "%'");
+			
 			while($row = $result->fetch())
 			{
-				$tpl->assign_block_vars('results', array('NAME' => $row['name']));
+				$suggestions[] = $row['name'];
 			}
 			$result->dispose();
 		} catch (Exception $e) {
 		}
- 
-		return new SiteNodisplayResponse($tpl);
+		
+		return new JSONResponse(array('suggestions' => $suggestions));
 	}
 }
 ?>

@@ -31,6 +31,10 @@
  */
 class FormFieldAjaxSearchUserAutoComplete extends FormFieldAjaxCompleter
 {
+	// Input not filled on click on suggestions
+	protected $preserve_input = 'true';
+	
+	
 	 /**
 	 * @desc Constructs a FormFieldAjaxCompleter.
 	 * It has these options in addition to the AbstractFormField ones:

@@ -28,56 +28,43 @@ class AjaxSearchUserAutoCompleteController extends AbstractController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
-		$lang = LangLoader::get('main');
-		
-		$tpl = new StringTemplate('<ul>
-		# IF C_RESULTS #
-			# START results #
-			<li onclick="window.location.href=${escapejs(results.U_PROFILE)};">
-				# IF IS_ADMIN #
-				<a href="{results.U_EDIT}" title="{L_EDIT}" class="fa fa-edit"></a>&nbsp;
-				<a href="{results.U_DELETE}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>&nbsp;
-				# ENDIF #
-				<a class="{results.USER_LEVEL_CLASS}" href="{results.U_PROFILE}" # IF results.C_USER_GROUP_COLOR # style="color:{results.USER_GROUP_COLOR}" # ENDIF #>{results.NAME}</a>
-			</li>
-			# END results #
-		# ELSE #
-			<li>{L_NO_RESULT}</li>
-		# ENDIF #
-		</ul>');
-		
-		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, groups FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE '" . $request->get_value('value', '') . "%'",
-			array(), SelectQueryResult::FETCH_ASSOC);
-		
-		$nb_results = 0;
-		
-		while($row = $result->fetch())
-		{
-			$user_group_color = User::get_group_color($row['groups'], $row['level']);
+		$lang = LangLoader::get('common');
+		$is_admin = AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
+		$number_admins = UserService::count_admin_members();
+		$suggestions = array();
+ 
+		try {
+			$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, groups FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE '" . $request->get_value('value', '') . "%'");
 			
-			$tpl->assign_block_vars('results', array(
-				'C_USER_GROUP_COLOR' => !empty($user_group_color),
-				'NAME' => $row['display_name'],
-				'LEVEL' => $row['level'],
-				'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
-				'USER_GROUP_COLOR' => $user_group_color,
-				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
-				'U_DELETE' => AdminMembersUrlBuilder::delete($row['user_id'])->rel(),
-				'U_EDIT' => UserUrlBuilder::edit_profile($row['user_id'])->rel()
-			));
-			
-			$nb_results++;
+			while($row = $result->fetch())
+			{
+				$user_group_color = User::get_group_color($row['groups'], $row['level']);
+				
+				$suggestion = '';
+				
+				if ($is_admin)
+				{
+					$edit_link = new LinkHTMLElement(UserUrlBuilder::edit_profile($row['user_id']), '', array('title' => $lang['edit']), 'fa fa-edit');
+					
+					if ($row['level'] != User::ADMIN_LEVEL || ($row['level'] == User::ADMIN_LEVEL && $number_admins > 1))
+						$delete_link = new LinkHTMLElement(AdminMembersUrlBuilder::delete($row['user_id']), '', array('title' => $lang['delete'], 'data-confirmation' => 'delete-element'), 'fa fa-delete');
+					else
+						$delete_link = new LinkHTMLElement('', '', array('title' => $lang['delete'], 'onclick' => 'return false;'), 'fa fa-delete icon-disabled');
+					
+					$suggestion .= $edit_link->display() . '&nbsp;' . $delete_link->display() . '&nbsp;';
+				}
+				
+				$profile_link = new LinkHTMLElement(UserUrlBuilder::profile($row['user_id'])->rel(), $row['display_name'], array('style' => (!empty($user_group_color) ? 'color:' . $user_group_color : '')), UserService::get_level_class($row['level']));
+				
+				$suggestion .= $profile_link->display();
+				
+				$suggestions[] = $suggestion;
+			}
+			$result->dispose();
+		} catch (Exception $e) {
 		}
-		$result->dispose();
 		
-		$tpl->put_all(array(
-			'C_RESULTS' => $nb_results,
-			'L_EDIT' => $lang['edit'],
-			'L_DELETE' => $lang['delete'],
-			'L_NO_RESULT' => $lang['no_result']
-		));
-		
-		return new SiteNodisplayResponse($tpl);
+		return new JSONResponse(array('suggestions' => $suggestions));
 	}
 }
 ?>

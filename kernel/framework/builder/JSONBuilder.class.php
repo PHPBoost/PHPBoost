@@ -36,7 +36,7 @@ class JSONBuilder
 		return self::build_array($object);
 	}
 
-	private static function build_array(array $array)
+	private static function build_array(array $array, $subarray = false)
 	{
 		$values = array();
 		$is_map = self::is_map($array);
@@ -51,14 +51,14 @@ class JSONBuilder
 				$values[] = self::build_element($value);
 			}
 		}
-		return '{' . implode(',', $values) . '}';
+		return ($subarray ? '[' : '{') . implode(',', $values) . ($subarray ? ']' : '}');
 	}
 
 	private static function build_element($object)
 	{
 		if (is_array($object))
 		{
-			return self::build_array($object);
+			return self::build_array($object, true);
 		}
 		return self::build_raw_value($object);
 	}

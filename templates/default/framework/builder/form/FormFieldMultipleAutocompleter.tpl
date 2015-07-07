@@ -15,9 +15,6 @@ FormFieldMultipleAutocompleter.prototype.add_field = function () {
 		jQuery('<input/>', {'type': 'text', 'id': 'field_' + id, 'name': 'field_' + id, 'onfocus': 'javascript:FormFieldMultipleAutocompleter.load_autocompleter(\'' + id + '\');', 'autocomplete': 'off'}).attr('size', ${escapejs(SIZE)}).appendTo('#' + id);
 		jQuery('#' + id).append(' ');
 		
-		jQuery('<div/>', {'id': 'field_' + id + '_completer', 'class': 'form-autocompleter'}).appendTo('#' + id);
-		jQuery('#' + id).append(' ');
-
 		this.load_autocompleter('field_' + id);
 		
 		jQuery('<a/>', {href : 'javascript:FormFieldMultipleAutocompleter.delete_field('+ this.integer +');'}).html('<i class="fa fa-delete"></i>').appendTo('#menu_element_' + id + '_actions');
@@ -37,9 +34,12 @@ FormFieldMultipleAutocompleter.prototype.delete_field = function (id) {
 };
 
 FormFieldMultipleAutocompleter.prototype.load_autocompleter = function (id) {
-	// TODO : Completer
-	//new Ajax.Autocompleter(id, id + '_completer', 
-	//${escapejs(FILE)}, {method: ${escapejs(METHOD)}, parameters: "token={TOKEN}", paramName: ${escapejs(NAME_PARAMETER)}});
+	jQuery('#' + id).autocomplete({
+		serviceUrl: ${escapejs(FILE)},
+		paramName: ${escapejs(NAME_PARAMETER)},
+		params: {'token': ${escapejs(TOKEN)}},
+		minChars: 2
+	});
 };
 
 var FormFieldMultipleAutocompleter = new FormFieldMultipleAutocompleter();
@@ -50,7 +50,6 @@ var FormFieldMultipleAutocompleter = new FormFieldMultipleAutocompleter();
 # START fieldelements #
 	<div id="${escape(HTML_ID)}_{fieldelements.ID}" class="form-autocompleter-container">
 		<input type="text" name="field_${escape(HTML_ID)}_{fieldelements.ID}" id="field_${escape(HTML_ID)}_{fieldelements.ID}" onfocus="javascript:FormFieldMultipleAutocompleter.load_autocompleter('field_${escape(HTML_ID)}_{fieldelements.ID}');" value="{fieldelements.VALUE}" size="{SIZE}" autocomplete="off"/>
-		<div id="field_${escape(HTML_ID)}_{fieldelements.ID}_completer" class="form-autocompleter"></div>
 		<a href="javascript:FormFieldMultipleAutocompleter.delete_field({fieldelements.ID});" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
 	</div>
 # END fieldelements #
