@@ -14,7 +14,7 @@
 				url: '${relative_url(BugtrackerUrlBuilder::check_status_changed())}',
 				type: "post",
 				async: false,
-				data: {id : bug_id, status : value, old_status : bug_status},
+				data: {id : bug_id, status : value, old_status : bug_status, token : '{TOKEN}'},
 				success: function(returnData){
 					if (returnData == 1)
 					{
