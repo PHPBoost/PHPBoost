@@ -46,14 +46,14 @@ class QuestionCaptchaFormFieldQuestions extends AbstractFormField
 		
 		$this->assign_common_template_variables($template);
 		
-		$i = 0;
+		$i = 1;
 		foreach ($this->get_value() as $id => $options)
 		{
 			$tpl->assign_block_vars('fieldelements', array(
 				'ID' => $i,
 				'LABEL' => $options['label'],
 				'ANSWERS' => $options['answers'],
-				'C_DELETE' => $i > 0
+				'C_DELETE' => $i > 1
 			));
 			$i++;
 		}
@@ -78,7 +78,7 @@ class QuestionCaptchaFormFieldQuestions extends AbstractFormField
 		$request = AppContext::get_request();
 		$values = array();
 		
-		for ($i = 0; $i < $this->max_input; $i++)
+		for ($i = 1; $i <= $this->max_input; $i++)
 		{
 			$field_label_id = 'field_label_' . $this->get_html_id() . '_' . $i;
 			if ($request->has_postparameter($field_label_id))
@@ -88,7 +88,7 @@ class QuestionCaptchaFormFieldQuestions extends AbstractFormField
 				$field_answers = $request->get_poststring($field_answers_id);
 				
 				if (!empty($field_label) && !empty($field_answers))
-					$values[] = array(
+					$values[$i] = array(
 						'label' => TextHelper::htmlspecialchars($field_label),
 						'answers' => TextHelper::htmlspecialchars($field_answers)
 					);
