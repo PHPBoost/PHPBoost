@@ -1043,6 +1043,11 @@ div.field-required:after {
 	top: 4px;
 }
 
+.form-field-upload-file.field-required:after {
+	right: 45px;
+	top: 10px;
+}
+
 .constraint-status-right .form-field-select:after,
 .constraint-status-right .form-field-number:after,
 .constraint-status-right .form-field-decimal:after,
