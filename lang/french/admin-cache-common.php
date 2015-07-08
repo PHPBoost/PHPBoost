@@ -45,10 +45,11 @@ $lang['explain_syndication_cache'] = '<p>PHPBoost met en cache l\'ensemble des f
 $lang['cache_configuration'] = 'Configuration du cache';
 $lang['php_cache'] = 'Accélérateur PHP';
 $lang['explain_php_cache'] = '<p>Il existe des modules complémentaires à PHP permettant d\'améliorer nettement la vitesse d\'exécution des applications PHP.
-A l\'heure actuelle, PHPBoost supporte <acronym title="Advanced PHP Cache">APC</acronym> qui est le système de cache additionnel qui s\'impose comme la référence en la matière.</p>
-<p>Par défaut le cache est enregistré dans le système de fichier (arborescence de fichiers du serveur) dans le dossier /cache. Un système tel que APC permet de stocker ces données directement en mémoire centrale (RAM) qui propose des temps d\'accès incomparablement plus faibles.</p>';
-$lang['enable_apc'] = 'Activer le cache d\'APC';
-$lang['apc_available'] = 'Disponibilité de l\'extension APC';
+A l\'heure actuelle, PHPBoost supporte <acronym title="Advanced PHP Cache">APCu</acronym> qui est le système de cache additionnel qui s\'impose comme la référence en la matière.</p>
+<p>Par défaut le cache est enregistré dans le système de fichier (arborescence de fichiers du serveur) dans le dossier /cache. Un système tel que APCu permet de stocker ces données directement en mémoire centrale (RAM) qui propose des temps d\'accès incomparablement plus faibles.</p>';
+$lang['enable_apc'] = 'Activer le cache d\'APCu';
+$lang['apc_available'] = 'Disponibilité de l\'extension APCu';
+$lang['apcu_cache'] = 'Cache APCu';
 $lang['explain_apc_available'] = 'L\'extension est disponible sur un nombre assez restreint de serveurs. Si elle n\'est pas disponible, vous ne pouvez malheureusement pas profiter des gains de performances qu\'elle permet d\'obtenir.';
 $lang['css_cache'] = 'Cache CSS';
 $lang['explain_css_cache'] = '<p>PHPBoost met en cache l\'ensemble des fichiers CSS fournis par les thèmes et modules. 

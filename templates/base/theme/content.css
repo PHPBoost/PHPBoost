@@ -785,6 +785,11 @@ input.field-xlarge  { width: 300px; }
 	position: relative;
 }
 
+.form-field-free-large {
+	width: 100%;
+	max-width: none;
+}
+
 /* --- Label pour les checkbox et radio --- */
 .form-field label {
 	margin: 0 10px 0 0;

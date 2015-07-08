@@ -45,12 +45,13 @@ In fact, at the first time a feed is asked, it\'s fecthed in the data base and c
 $lang['cache_configuration'] = 'Cache configuration';
 $lang['php_cache'] = 'PHP accelerator';
 $lang['explain_php_cache'] = '<p>Some additional PHP modules enable to improve dramatically the execution time of PHP applications.
-PHP supports <acronym title="Advanced PHP Cache">APC</acronym> which is the cache system which is becoming the reference one.</p>
+PHP supports <acronym title="Advanced PHP Cache">APCu</acronym> which is the cache system which is becoming the reference one.</p>
 <p>By default, cache data are stored on the filesystem (in the files tree) but that kind of module allows to store directly in the server\'s central memory (RAM) which is far faster.</p>';
-$lang['enable_apc'] = 'Enable APC cache';
-$lang['apc_available'] = 'Availability of the APC extension';
+$lang['enable_apc'] = 'Enable APCu cache';
+$lang['apc_available'] = 'Availability of the APCu extension';
+$lang['apcu_cache'] = 'APCu Cache';
 $lang['explain_apc_available'] = 'The extension is available on a few servers. If it\'s not available, you cannot benefit from the performance improvement.';
-$lang['css_cache'] = 'Cache CSS';
+$lang['css_cache'] = 'CSS Cache';
 $lang['explain_css_cache'] = '<p>PHPBoost caches all the CSS files provided by the themes and modules. 
 Normally, the display site, a set of css files are going to be loaded. The cache CSS meanwhile, will first optimize files and then create a single CSS file hash.</p>
 <p>Via this page in the administration of PHPBoost, you can clear the cache so as to force CSS to recreate PHPBoost CSS files optimized.</p>';

@@ -24,6 +24,7 @@
 
 [b]Administration[/b]
 [*] Passage de la configuration de la maintenance, des smileys et des fichiers en MVC (simplification de l'interface)
+[*] Refonte de la partie Rapport système avec ajout de différentes informations concernant les options APC et une partie avec des conseils
 [*] Possibilité de définir le contenu du fichier robots.txt dans la configuration avancée
 [*] Suppression de la clé de déverrouillage de l'administration
 [*] Possibilité de définir le nombre de flux affichés dans les menus de flux

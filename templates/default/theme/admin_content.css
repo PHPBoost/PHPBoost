@@ -500,6 +500,11 @@ input.field-xlarge { width: 300px; }
 	max-width: 600px;
 }
 
+.form-field-free-large {
+	width: 100%;
+	max-width: none;
+}
+
 .module-mini-container .form-field {
 	display: block;
 	width: 100%;

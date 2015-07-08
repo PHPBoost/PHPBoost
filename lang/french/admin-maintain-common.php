@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           admin-contents-common.php
+ *                           admin-maintain-common.php
  *                            -------------------
  *   begin                : September 15, 2014
  *   copyright            : (C) 2014 Julien BRISWALTER

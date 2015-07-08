@@ -1,14 +1,4 @@
-﻿###################################### PHPBoost 4.1 ##################################
-
-## AUTRES ##
-
-
-#################################################################################
-
-
-
-
-#################################################################################
+﻿#################################################################################
 ##                                   KEVIN                                     ##
 #################################################################################
 
@@ -18,18 +8,6 @@
 ------------------------------------ MODULES -----------------------------------
 
 #################################################################################
-
-
-
-
-#################################################################################
-##                                   PATRICK                                   ##
-#################################################################################
-
------------------------------------- MODULES -----------------------------------
-
-#################################################################################
-
 
 
 
@@ -90,8 +68,11 @@
 [b]Script de migration[/b]
 - Vérification automatique de la présence de la nouvelle version par le noyau, et redirection vers le script d'update
 
-[b]Administration[/b]
-- Refonte de la partie Rapport système avec ajout de différentes informations concernant la sécurité, les options APC, des conseils, etc...
+[b]Sécurité[/b]
+- Expiration des comptes utilisateur
+- possibilité de forcer un membre/tous les membres à changer leur mot de passe à la prochaine connexion
+- loguer ce qui est fait dans l'administration
+- possibilité de générer un mot de passe automatiquement lors de l'ajout d'un utilisateur via l'administration (+ envoi par mail)
 
 [b]Messages privés[/b]
 - Possibilité d'envoyer des messages privés à tous les membres d'un groupe ou à tous les membres pour l'administrateur.
