@@ -261,7 +261,7 @@ else
 		'L_QUESTION' => $LANG['question'],
 		'L_POLLS' => $LANG['polls'],
 		'L_DATE' => LangLoader::get_message('date', 'date-common'),
-		'L_PSEUDO' => LangLoader::get_message('display_name', 'user-common'),
+		'L_PSEUDO' => LangLoader::get_message('author', 'common'),
 		'L_APROB' => $LANG['aprob'],
 		'L_UPDATE' => $LANG['update']
 	)); 
