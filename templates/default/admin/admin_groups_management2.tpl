@@ -26,30 +26,20 @@
 			else
 				document.getElementById('img_group_change').style.display = 'none';
 		}
-		function XMLHttpRequest_search()
-		{
-			var login = jQuery('#login').val();
-			if( login != "" )
-			{
-				jQuery('#search_img').append('<i class="fa fa-spinner fa-spin"></i>');
-
-				jQuery.ajax({
-					url: '{PATH_TO_ROOT}/kernel/framework/ajax/member_xmlhttprequest.php?token={TOKEN}&insert_member=1',
-					type: "post",
-					dataType: "html",
-					data: {'login': login},
-					success: function(returnData){
-						jQuery('#search_img').children("i").remove();
-						jQuery('#xmlhttprequest-result-search').html(returnData);
-						jQuery('#xmlhttprequest-result-search').fadeIn();
-					},
-					error: function(e){
-						jQuery('#search_img').children("i").remove();
-					}
-				});
-			}
-			else
-				alert("{L_REQUIRE_LOGIN}");
+		
+		function load_autocompleter() {
+			jQuery("#login").autocomplete({
+				serviceUrl: "{PATH_TO_ROOT}/kernel/framework/ajax/dispatcher.php?url=/users_autocomplete&token={TOKEN}",
+				paramName: 'value',
+				showNoSuggestionNotice: true,
+				noSuggestionNotice: ${escapejs(LangLoader::get_message('no_result', 'main'))},
+				onSelect: function (suggestion) {
+					jQuery("#login").val(jQuery(suggestion.value).html());
+				},
+				formatResult: function (suggestion, currentValue) { 
+					return suggestion.value;
+				}
+			});
 		}
 		</script>
 
@@ -136,10 +126,7 @@
 					<div class="form-element">
 						<label for="login">* {L_PSEUDO}</label>
 						<div class="form-field">
-							<input type="text" size="20" maxlength="25" id="login" value="{LOGIN}" name="login_mbr"> 
-							<button onclick="XMLHttpRequest_search();" type="button">{L_SEARCH}</button>
-							<span id="search_img"></span>
-							<div id="xmlhttprequest-result-search" style="display:none;" class="xmlhttprequest-result-search"></div>
+							<input type="text" maxlength="25" name="login_mbr" id="login" value="{LOGIN}" autocomplete="off" onfocus="javascript:load_autocompleter();" />
 						</div>
 					</div>
 				</fieldset>

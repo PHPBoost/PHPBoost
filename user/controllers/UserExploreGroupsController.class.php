@@ -71,11 +71,10 @@ class UserExploreGroupsController extends AbstractController
 			if (!empty($user_id))
 			{
 				$user = PersistenceContext::get_querier()->select('SELECT 
-					member.display_name, member.level, member.groups, member.warning_percentage, member.delay_banned,
-					ext_field.user_avatar
+					member.display_name, member.level, member.groups, member.warning_percentage, member.delay_banned, ext_field.user_avatar
 					FROM ' . DB_TABLE_MEMBER . ' member
 					LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' ext_field ON ext_field.user_id = member.user_id
-					WHERE user_aprob = 1 AND member.user_id = :user_id
+					WHERE member.user_id = :user_id
 				', array('user_id' => $user_id))->fetch();
 
 				if (!empty($user))
@@ -87,7 +86,7 @@ class UserExploreGroupsController extends AbstractController
 					$this->view->assign_block_vars('members_list', array(
 						'C_AVATAR' => $user['user_avatar'] || ($user_accounts_config->is_default_avatar_enabled()),
 						'C_GROUP_COLOR' => !empty($group_color),
-						'PSEUDO' => $user['login'],
+						'PSEUDO' => $user['display_name'],
 						'LEVEL' => ($user['warning_percentage'] < '100' || (time() - $user['delay_banned']) < 0) ? UserService::get_level_lang($user['level']) : $this->lang['banned'],
 						'LEVEL_CLASS' => UserService::get_level_class($user['level']),
 						'GROUP_COLOR' => $group_color,

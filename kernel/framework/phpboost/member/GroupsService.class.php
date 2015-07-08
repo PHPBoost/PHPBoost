@@ -58,7 +58,7 @@ class GroupsService
 		if (!in_array($idgroup, $user_groups)) //Le membre n'appartient pas déjà au groupe.
 		{
 			array_push($user_groups, $idgroup);
-			self::$db_querier->update(DB_TABLE_MEMBER, array('groups' => implode('|', $user_groups)), 'WHERE user_id = :user_id', array('user_id' => $user_id));
+			self::$db_querier->update(DB_TABLE_MEMBER, array('groups' => (trim(implode('|', $user_groups), '|'))), 'WHERE user_id = :user_id', array('user_id' => $user_id));
 		}
 		else
 		{
@@ -71,7 +71,7 @@ class GroupsService
 		if (!in_array($user_id, $group_members)) //Le membre n'appartient pas déjà au groupe.
 		{
 			array_push($group_members, $user_id);
-			self::$db_querier->update(DB_TABLE_GROUP, array('members' => implode('|', $group_members)), 'WHERE id = :id', array('id' => $idgroup));
+			self::$db_querier->update(DB_TABLE_GROUP, array('members' => (trim(implode('|', $group_members), '|'))), 'WHERE id = :id', array('id' => $idgroup));
 		}
 		else
 		{

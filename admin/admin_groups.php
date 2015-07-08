@@ -33,9 +33,9 @@ $idgroup = retrieve(GET, 'id', 0);
 $idgroup_post = retrieve(POST, 'id', 0);
 $add = retrieve(GET, 'add', 0);
 $add_post = retrieve(POST, 'add', 0);
-$del_group = !empty($_GET['del']) ? true : false;
-$add_mbr = !empty($_POST['add_mbr']) ? true : false;
-$del_mbr = !empty($_GET['del_mbr']) ? true : false;
+$del_group = !empty($_GET['del']);
+$add_mbr = !empty($_POST['add_mbr']);
+$del_mbr = !empty($_GET['del_mbr']);
 $user_id = retrieve(GET, 'user_id', 0);
 
 $_NBR_ELEMENTS_PER_PAGE = 25;
@@ -196,7 +196,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 			$selected = ($file == $group['img']) ? ' selected="selected"' : '';
 			$img_groups .= '<option value="' . $file . '"' . $selected . '>' . $file . '</option>';
 		}
-		$array_group = unserialize($group['auth']);
+		$array_group = unserialize(stripslashes($group['auth']));
 			
 		$template->put_all(array(
 			'NAME' => $group['name'],
@@ -246,10 +246,10 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 		$number_member = 0;
 		if (!empty($members))
 		{
-			$members = explode('|', $members);
+			$members = str_replace('|', ',', $members);
 			$result = PersistenceContext::get_querier()->select('SELECT user_id, display_name, level, groups
 				FROM ' . DB_TABLE_MEMBER . '
-				WHERE user_id IN (' . implode(',', $members) . ')');
+				WHERE user_id IN (' . $members . ')');
 			
 			while ($row = $result->fetch())
 			{
