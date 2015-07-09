@@ -7,9 +7,9 @@ Environment::load_imports();
 Environment::load_static_constants();
 
 AppContext::set_request(new HTTPRequestCustom());
-AppContext::init_session();
-AppContext::get_session()->load();
-AppContext::get_session()->act();
+Session::gc();
+$session_data = Session::start();
+AppContext::set_session($session_data);
 AppContext::init_current_user();
 require_once(PATH_TO_ROOT . '/test/PHPUnit/Framework.php');
 

@@ -573,6 +573,10 @@ class TinyMCEParser extends ContentFormattingParser
 		global $LANG;
 
 		$array_preg = array(
+			'b' => '`\[b\](.+)\[/b\]`isU',
+			'i' => '`\[i\](.+)\[/i\]`isU',
+			'u' => '`\[u\](.+)\[/u\]`isU',
+			's' => '`\[s\](.+)\[/s\]`isU',
 			'pre' => '`\[pre\](.+)\[/pre\]`isU',
 			'float' => '`\[float=(left|right)\](.+)\[/float\]`isU',
 			'acronym' => '`\[acronym=([^\n[\]<]+)\](.*)\[/acronym\]`isU',
@@ -587,6 +591,10 @@ class TinyMCEParser extends ContentFormattingParser
 		);
 
 		$array_preg_replace = array(
+			'b' => "<strong>$1</strong>",
+			'i' => "<em>$1</em>",
+			'u' => "<span style=\"text-decoration: underline;\">$1</span>",
+			's' => "<strike>$1</strike>",
 			'pre' => "<pre>$1</pre>",
 			'float' => "<p class=\"float-$1\">$2</p>",
 			'acronym' => "<abbr title=\"$1\">$2</abbr>",

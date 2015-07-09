@@ -120,8 +120,8 @@ function shoutbox_refresh_messages_box() {
 			<br />
 			# IF C_VERTICAL #<label for="shout-contents"><span class="small">${LangLoader::get_message('message', 'main')}</span></label># ENDIF #
 			<textarea id="shout-contents" name="shout-contents"# IF C_VALIDATE_ONKEYPRESS_ENTER # onkeypress="if(event.keyCode==13){shoutbox_add_message();}"# ENDIF # rows="# IF C_VERTICAL #4# ELSE #2# ENDIF #" cols="16"></textarea>
-			# IF C_DISPLAY_SHOUT_BBCODE #
 			<div id="shoutbox-bbcode-container" class="shout-spacing">
+				# IF C_DISPLAY_SHOUT_BBCODE #
 				<ul>
 					<li class="bbcode-elements">
 						<a href="javascript:bb_display_block('1', 'shout-contents');" onmouseover="bb_hide_block('1', 'shout-contents', 1);" onmouseout="bb_hide_block('1', 'shout-contents', 0);" class="fa bbcode-icon-smileys" title="${LangLoader::get_message('bb_smileys', 'common', 'BBCode')}"></a>
@@ -146,8 +146,8 @@ function shoutbox_refresh_messages_box() {
 						<a href="" class="fa bbcode-icon-strike# IF C_STRIKE_DISABLED # icon-disabled# ENDIF #" onclick="# IF NOT C_STRIKE_DISABLED #insertbbcode('[s]', '[/s]', 'shout-contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_strike', 'common', 'BBCode')}"></a>
 					</li>
 				</ul>
+				# ENDIF #
 			</div>
-			# ENDIF #
 			<p class="shout-spacing">
 				<button onclick="shoutbox_add_message();" type="button">${LangLoader::get_message('submit', 'main')}</button>
 				<a href="" onclick="shoutbox_refresh_messages_box();return false;" id="shoutbox-refresh" title="${LangLoader::get_message('refresh', 'main')}"><i class="fa fa-refresh"></i></a>
