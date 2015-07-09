@@ -56,7 +56,7 @@ $LANG['e_php_version_conflict'] = 'Version PHP inadaptée';
 $LANG['e_phpboost_version_conflict'] = 'Version de PHPBoost inadaptée';
 
 //Cache
-$LANG['e_cache_modules'] = 'Cache -> La génération du fichier de cache des modules a échouée !';
+$LANG['e_cache_modules'] = 'Cache -> La génération du fichier de cache des modules a échoué !';
 
 //Upload
 $LANG['e_upload_max_dimension'] = 'Dimensions maximales du fichier dépassées';
