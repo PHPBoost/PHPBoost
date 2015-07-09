@@ -353,7 +353,7 @@ class DownloadFormController extends ModuleController
 				$contribution = new Contribution();
 				$contribution->set_id_in_module($id);
 				$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
-				$contribution->set_entitled(StringVars::replace_vars(LangLoader::get_message('contribution.entitled', 'user-common'), array('module_name' => $this->lang['module_title'], 'name' => $downloadfile->get_name())));
+				$contribution->set_entitled($downloadfile->get_name());
 				$contribution->set_fixing_url(DownloadUrlBuilder::edit($id)->relative());
 				$contribution->set_poster_id(AppContext::get_current_user()->get_id());
 				$contribution->set_module('download');
