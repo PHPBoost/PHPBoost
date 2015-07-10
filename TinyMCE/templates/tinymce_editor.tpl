@@ -91,6 +91,7 @@ tinymce.init({
 	menubar: false,
 	advlist_number_styles: 'default',
 	advlist_bullet_styles: 'default',
+	fontsize_formats: '5pt 10pt 15pt 20pt 25pt 30pt 35pt 40pt 45pt',
 	content_css: [
 		"{PATH_TO_ROOT}/kernel/lib/css/font-awesome/css/font-awesome.css",
 		"{PATH_TO_ROOT}/templates/{THEME}/theme/global.css"

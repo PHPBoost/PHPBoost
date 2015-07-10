@@ -37,6 +37,26 @@
  */
 class TinyMCEUnparser extends ContentFormattingUnparser
 {
+	private static $fonts_array = array(
+		'andale mono' => '\'andale mono\', monospace',
+		'arial' => 'arial, helvetica, sans-serif',
+		'arial black' => '\'arial black\', sans-serif',
+		'book antiqua' => '\'book antiqua\', palatino, serif',
+		'comic sans ms' => '\'comic sans ms\', sans-serif',
+		'courier new' => '\'courier new\', courier, monospace',
+		'georgia' => 'georgia, palatino, serif',
+		'helvetica' => 'helvetica, arial, sans-serif',
+		'impact' => 'impact, sans-serif',
+		'symbol' => 'symbol',
+		'tahoma' => 'tahoma, arial, helvetica, sans-serif',
+		'terminal' => 'terminal, monaco, monospace',
+		'times new roman' => '\'times new roman\', times, serif',
+		'trebuchet ms' => '\'trebuchet ms\', geneva, sans-serif',
+		'verdana' => 'verdana, geneva, sans-serif',
+		'webdings' => 'webdings',
+		'wingdings' => 'wingdings, \'zapf dingbats\''
+	);
+	
 	/**
 	 * @desc Builds a TinyMCEUnparser object
 	 */
@@ -380,21 +400,14 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	 */
 	private function unparse_font($matches)
 	{
-		static $fonts_array = array(
-			'geneva' => 'trebuchet ms,geneva',
-			'optima' => 'comic sans ms,sans-serif',
-			'arial' => 'arial,helvetica,sans-serif',
-			'courier new' => 'courier new,courier'
-			);
-
-			if (!empty($fonts_array[$matches[1]]))
-			{
-				return '<span style="font-family: ' . $fonts_array[$matches[1]] . ';">' . $matches[2] . '</span>';
-			}
-			else
-			{
-				return $matches[2];
-			}
+		if (!empty(self::$fonts_array[$matches[1]]))
+		{
+			return '<span style="font-family: ' . self::$fonts_array[$matches[1]] . ';">' . $matches[2] . '</span>';
+		}
+		else
+		{
+			return $matches[2];
+		}
 	}
 
 	/**
@@ -411,26 +424,32 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		//We retrieve the size (in pt)
 		switch ((int)$matches[1])
 		{
-			case 8:
-				$size = '8pt';
+			case 5:
+				$size = '5pt';
 				break;
 			case 10:
 				$size = '10pt';
 				break;
-			case 12:
-				$size = '12pt';
+			case 15:
+				$size = '15pt';
 				break;
-			case 14:
-				$size = '14pt';
+			case 20:
+				$size = '20pt';
 				break;
-			case 18:
-				$size = '18pt';
+			case 25:
+				$size = '25pt';
 				break;
-			case 24:
-				$size = '24pt';
+			case 30:
+				$size = '30pt';
 				break;
-			case 36:
-				$size = '36pt';
+			case 35:
+				$size = '35pt';
+				break;
+			case 40:
+				$size = '40pt';
+				break;
+			case 45:
+				$size = '45pt';
 				break;
 			default:
 				$size = '';

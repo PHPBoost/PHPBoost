@@ -37,23 +37,23 @@
 class TinyMCEParser extends ContentFormattingParser
 {
 	private static $fonts_array = array(
-	'trebuchet ms,geneva' => 'geneva',
-	'comic sans ms,sans-serif' => 'optima',
-	'andale mono,times' => 'times',
-	'arial,helvetica,sans-serif' => 'arial',
-	'arial black,avant garde' => 'arial',
-	'book antiqua,palatino' => 'optima',
-	'courier new,courier' => 'courier new',
-	'georgia,palatino' => 'optima',
-	'helvetica' => 'arial',
-	'impact,chicago' => 'arial',
-	'symbol' => 'times',
-	'tahoma,arial,helvetica,sans-serif' => 'arial',
-	'terminal,monaco' => 'courier new',
-	'times new roman,times' => 'times',
-	'verdana,geneva' => 'arial',
-	'webdings' => 'times',
-	'wingdings,zapf dingbats' => 'times'
+	'\'andale mono\', monospace' => 'andale mono',
+	'arial, helvetica, sans-serif' => 'arial',
+	'\'arial black\', sans-serif' => 'arial black',
+	'\'book antiqua\', palatino, serif' => 'book antiqua',
+	'\'comic sans ms\', sans-serif' => 'comic sans ms',
+	'\'courier new\', courier, monospace' => 'courier new',
+	'georgia, palatino, serif' => 'georgia',
+	'helvetica, arial, sans-serif' => 'helvetica',
+	'impact, sans-serif' => 'impact',
+	'symbol' => 'symbol',
+	'tahoma, arial, helvetica, sans-serif' => 'tahoma',
+	'terminal, monaco, monospace' => 'terminal',
+	'\'times new roman\', times, serif' => 'times new roman',
+	'\'trebuchet ms\', geneva, sans-serif' => 'trebuchet ms',
+	'verdana, geneva, sans-serif' => 'verdana',
+	'webdings' => 'webdings',
+	'wingdings, \'zapf dingbats\'' => 'wingdings'
 	);
 
 	/**
@@ -469,9 +469,9 @@ class TinyMCEParser extends ContentFormattingParser
 			//On doit repasser plusieurs fois pour que ça soit pris en compte (comportement un peu bizarre)
 			//Par mesure de sécurité on s'arrête à 10
 			$nbr_size_parsing = 0;
-			while (preg_match('`&lt;span style="font-size: ([0-9a-z-]+);"&gt;(.+)&lt;/span&gt;`isU', $this->content) && $nbr_size_parsing++ < 10)
+			while (preg_match('`&lt;span style="(.*)font-size: ([0-9a-z-]+);(.*)"&gt;(.+)&lt;/span&gt;`isU', $this->content) && $nbr_size_parsing++ < 10)
 			{
-				$this->content = preg_replace_callback('`&lt;span style="font-size: ([0-9a-z-]+);"&gt;(.+)&lt;/span&gt;`isU', array($this, 'parse_size_tag'), $this->content);
+				$this->content = preg_replace_callback('`&lt;span style="(.*)font-size: ([0-9a-z-]+);(.*)"&gt;(.+)&lt;/span&gt;`isU', array($this, 'parse_size_tag'), $this->content);
 			}
 		}
 
@@ -506,9 +506,9 @@ class TinyMCEParser extends ContentFormattingParser
 			//Tant qu'il existe des occurences de cette balise à travailler, on les traite
 			//Sécurité : on traite au maximum 10 fois pour éviter les boucles infinies éventuelles
 			$nbr_font_parsing = 0;
-			while (preg_match('`&lt;span style="font-family: ([a-z, 0-9-]+);"(?: mce_style="font-family: [^"]+")?&gt;(.*)&lt;/span&gt;`isU', $this->content) && $nbr_font_parsing++ < 10)
+			while (preg_match('`&lt;span style="(.*)font-family: (.*);(.*)"&gt;(.*)&lt;/span&gt;`isU', $this->content) && $nbr_font_parsing++ < 10)
 			{
-				$this->content = preg_replace_callback('`&lt;span style="font-family: ([a-z, 0-9-]+);"(?: mce_style="font-family: [^"]+")?&gt;(.*)&lt;/span&gt;`isU', array($this, 'parse_font_tag'), $this->content );
+				$this->content = preg_replace_callback('`&lt;span style="(.*)font-family: (.*);(.*)"&gt;(.*)&lt;/span&gt;`isU', array($this, 'parse_font_tag'), $this->content );
 			}
 		}
 	}
@@ -768,28 +768,34 @@ class TinyMCEParser extends ContentFormattingParser
 	{
 		$size = 0;
 		//We retrieve the size (in pt)
-		switch ($matches[1])
+		switch ($matches[2])
 		{
-			case '8pt':
-				$size = 8;
+			case '5pt':
+				$size = 5;
 				break;
 			case '10pt':
 				$size = 10;
 				break;
-			case '12pt':
-				$size = 12;
+			case '15pt':
+				$size = 15;
 				break;
-			case '14pt':
-				$size = 14;
+			case '20pt':
+				$size = 20;
 				break;
-			case '18pt':
-				$size = 18;
+			case '25pt':
+				$size = 25;
 				break;
-			case '24pt':
-				$size = 24;
+			case '30pt':
+				$size = 30;
 				break;
-			case '36pt':
-				$size = 36;
+			case '35pt':
+				$size = 35;
+				break;
+			case '40pt':
+				$size = 40;
+				break;
+			case '45pt':
+				$size = 45;
 				break;
 			default:
 				$size = 0;
@@ -797,7 +803,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//If the size is known, we put the HTML code and convert the size into pixels
 		if ($size > 0)
 		{
-			return '<span style="font-size: ' . $size . 'px;">' . $matches[2] . '</span>';
+			return '<span style="font-size: ' . $size . 'px;">' . $matches[4] . '</span>';
 		}
 		else
 		{
@@ -814,13 +820,13 @@ class TinyMCEParser extends ContentFormattingParser
 	 */
 	private function parse_font_tag($matches)
 	{
-		if (!empty(self::$fonts_array[$matches[1]]))
+		if (!empty(self::$fonts_array[$matches[2]]))
 		{
-			return '<span style="font-family: ' . self::$fonts_array[$matches[1]] . ';">' . $matches[2] . '</span>';
+			return '<span style="font-family: ' . self::$fonts_array[$matches[2]] . ';">' . $matches[4] . '</span>';
 		}
 		else
 		{
-			return $matches[2];
+			return $matches[4];
 		}
 	}
 
