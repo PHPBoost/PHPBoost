@@ -38,6 +38,7 @@ $lang['bb_link'] = 'Ajouter un lien : [url]lien[/url], ou [url=lien]nom du lien[
 $lang['bb_picture'] = 'Ajouter une image : [img]url image[/img]';
 $lang['bb_lightbox'] = 'Ajouter une image avec un effet lightbox : [lightbox=url image][img]url image réduite[/img][/lightbox]';
 $lang['bb_size'] = 'Taille du texte (X entre 0 - 49) : [size=X]texte de taille X[/size]';
+$lang['bb_font'] = 'Police : [font=X]texte en police X[/font]';
 $lang['bb_color'] = 'Couleur du texte : [color=X]texte de couleur X[/color]';
 $lang['bb_quote'] = 'Faire une citation [quote=pseudo]texte[/quote]';
 $lang['bb_left'] = 'Positionner à gauche : [align=left]objet à gauche[/align]';
@@ -66,7 +67,7 @@ $lang['bb_sub'] = 'Indice [sub]texte[/sub]';
 $lang['bb_anchor'] = 'Ancre vers un endroit de la page [anchor=x]texte[/anchor]';
 $lang['bb_sound'] = 'Son [sound]adresse du son[/sound]';
 $lang['bb_movie'] = 'Vidéo [movie=largeur,hauteur]adresse du fichier[/movie]';
-$lang['bb_youtube'] = 'Ajouter une vidéo youtube : [youtube]url youtube[/youtube]';
+$lang['bb_youtube'] = 'Ajouter une vidéo youtube : [youtube=largeur,hauteur]url youtube[/youtube]';
 $lang['bb_help'] = 'Aide BBcode';
 $lang['bb_upload'] = 'Attacher un fichier';
 $lang['bb_url_prompt'] = 'Adresse du lien ?';

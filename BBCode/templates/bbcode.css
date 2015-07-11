@@ -267,6 +267,7 @@ li.bbcode-elements a,
 .bbcode-icon-list:before        { content: "\f03a"; }
 .bbcode-icon-color:before       { content: "\f043"; }
 .bbcode-icon-size:before        { content: "\f034"; }
+.bbcode-icon-font:before        { content: "\f031"; }
 .bbcode-icon-minus:before       { content: "\f068"; }
 .bbcode-icon-plus:before        { content: "\f067"; }
 .bbcode-icon-more:before        { content: "\f0dc"; }

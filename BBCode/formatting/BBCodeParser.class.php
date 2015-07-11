@@ -173,7 +173,7 @@ class BBCodeParser extends ContentFormattingParser
 			'color' => '`\[color=((?:white|black|red|green|blue|yellow|purple|orange|maroon|pink)|(?:#[0-9a-f]{6}))\](.+)\[/color\]`isU',
 			'bgcolor' => '`\[bgcolor=((?:white|black|red|green|blue|yellow|purple|orange|maroon|pink)|(?:#[0-9a-f]{6}))\](.+)\[/bgcolor\]`isU',
 			'size' => '`\[size=([1-9]|(?:[1-4][0-9]))\](.+)\[/size\]`isU',
-			'font' => '`\[font=(arial|times|courier(?: new)?|impact|geneva|optima)\](.+)\[/font\]`isU',
+			'font' => '`\[font=(andale mono|arial(?: black)?|book antiqua|comic sans ms|courier(?: new)?|georgia|helvetica|impact|symbol|tahoma|terminal|times new roman|trebuchet ms|verdana|webdings|wingdings)\](.+)\[/font\]`isU',
 			'pre' => '`\[pre\](.+)\[/pre\]`isU',
 			'align' => '`\[align=(left|center|right|justify)\](.+)\[/align\]`isU',
 			'float' => '`\[float=(left|right)\](.+)\[/float\]`isU',

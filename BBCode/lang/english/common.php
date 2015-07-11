@@ -38,6 +38,7 @@ $lang['bb_link'] = 'Add a weblink: [url]link[/url], or [url=link]name of the lin
 $lang['bb_picture'] = 'Add a picture: [img]url picture[/img]';
 $lang['bb_lightbox'] = 'Add a picture with lightbox effect: [lightbox=url picture][img]url mini-picture[/img][/lightbox]';
 $lang['bb_size'] = 'Text size (X between 0 - 49): [size=X]text on size X[/size]';
+$lang['bb_font'] = 'Text font : [font=X]text in font X[/font]';
 $lang['bb_color'] = 'Text color: [color=X]text on X color[/color]';
 $lang['bb_quote'] = 'Quote [quote=pseudo]text[/quote]';
 $lang['bb_left'] = 'Align left: [align=left]object on left[/align]';
@@ -66,7 +67,7 @@ $lang['bb_sub'] = 'Sub [sub]text[/sub]';
 $lang['bb_anchor'] = 'Anchor somewhere in the page [anchor=x]text[/anchor]';
 $lang['bb_sound'] = 'Sound [sound]url sound[/sound]';
 $lang['bb_movie'] = 'Movie [movie=width,height]url movie[/movie]';
-$lang['bb_youtube'] = 'Insert youtube vidéo : [youtube]url youtube[/youtube]';
+$lang['bb_youtube'] = 'Insert youtube vidéo : [youtube=width,height]url youtube[/youtube]';
 $lang['bb_help'] = 'BBcode help';
 $lang['bb_upload'] = 'Attach files';
 $lang['bb_url_prompt'] = 'Link address?';

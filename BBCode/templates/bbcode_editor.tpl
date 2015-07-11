@@ -57,7 +57,7 @@ function XMLHttpRequest_preview(field)
 
 		<ul class="bbcode-container">
 			<li class="bbcode-elements">
-				<a href="javascript:bb_display_block('1', '{FIELD}');" onmouseover="bb_hide_block('1', '{FIELD}', 1);" onmouseout="bb_hide_block('1', '{FIELD}', 0);" class="bbcode-hover" title="{L_BB_SMILEYS}">
+				<a href="" onclick="bb_display_block('1', '{FIELD}');return false;" onmouseover="bb_hide_block('1', '{FIELD}', 1);" onmouseout="bb_hide_block('1', '{FIELD}', 0);" class="bbcode-hover" title="{L_BB_SMILEYS}">
 					<i class="fa bbcode-icon-smileys" {AUTH_SMILEYS}></i>
 				</a>
 				<div class="bbcode-block-container" style="display:none;" id="bb-block1{FIELD}">
@@ -88,7 +88,7 @@ function XMLHttpRequest_preview(field)
 			</li>
 
 			<li class="bbcode-elements">
-				<a href="javascript:{DISABLED_COLOR}bbcode_color('{FIELD}');{DISABLED_COLOR}bb_display_block('5', '{FIELD}');" onmouseout="{DISABLED_COLOR}bb_hide_block('5', '{FIELD}', 0);" title="{L_BB_COLOR}">
+				<a href="" onclick="{DISABLED_COLOR}bbcode_color('{FIELD}');bb_display_block('5', '{FIELD}');return false;" onmouseout="{DISABLED_COLOR}bb_hide_block('5', '{FIELD}', 0);" title="{L_BB_COLOR}">
 					<i class="fa bbcode-icon-color" {AUTH_COLOR}></i>
 				</a>
 				<div class="bbcode-block-container color-picker" style="display:none;" id="bb-block5{FIELD}">
@@ -98,20 +98,47 @@ function XMLHttpRequest_preview(field)
 			</li>
 			
 			<li class="bbcode-elements">
-				<a href="javascript:{DISABLED_SIZE}bb_display_block('6', '{FIELD}');" onmouseout="{DISABLED_SIZE}bb_hide_block('6', '{FIELD}', 0);" class="bbcode-hover" title="{L_BB_SIZE}">
+				<a href="" onclick="{DISABLED_SIZE}bb_display_block('6', '{FIELD}');return false;" onmouseout="{DISABLED_SIZE}bb_hide_block('6', '{FIELD}', 0);" class="bbcode-hover" title="{L_BB_SIZE}">
 					<i class="fa bbcode-icon-size" {AUTH_SIZE}></i>
 				</a>
 				<div class="bbcode-block-container" style="display:none;" id="bb-block6{FIELD}">
 					<ul id="bbcolor{FIELD}" class="bbcode-block bbcode-block-list" style="width: 40px;" onmouseover="bb_hide_block('6', '{FIELD}', 1);" onmouseout="bb_hide_block('6', '{FIELD}', 0);">
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=5]', '[/size]', '{FIELD}'); return false;" title="{L_SIZE}"> 05 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=10]', '[/size]', '{FIELD}');return false;" title="{L_SIZE}"> 10 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=15]', '[/size]', '{FIELD}');return false;" title="{L_SIZE}"> 15 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=20]', '[/size]', '{FIELD}');return false;" title="{L_SIZE}"> 20 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=25]', '[/size]', '{FIELD}');return false;" title="{L_SIZE}"> 25 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=30]', '[/size]', '{FIELD}');return false;" title="{L_SIZE}"> 30 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=35]', '[/size]', '{FIELD}');return false;" title="{L_SIZE}"> 35 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=40]', '[/size]', '{FIELD}');return false;" title="{L_SIZE}"> 40 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=45]', '[/size]', '{FIELD}');return false;" title="{L_SIZE}"> 45 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=5]', '[/size]', '{FIELD}'); return false;" title="{L_SIZE} 05"> 05 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=10]', '[/size]', '{FIELD}');return false;" title="{L_SIZE} 10"> 10 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=15]', '[/size]', '{FIELD}');return false;" title="{L_SIZE} 15"> 15 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=20]', '[/size]', '{FIELD}');return false;" title="{L_SIZE} 20"> 20 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=25]', '[/size]', '{FIELD}');return false;" title="{L_SIZE} 25"> 25 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=30]', '[/size]', '{FIELD}');return false;" title="{L_SIZE} 30"> 30 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=35]', '[/size]', '{FIELD}');return false;" title="{L_SIZE} 35"> 35 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=40]', '[/size]', '{FIELD}');return false;" title="{L_SIZE} 40"> 40 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=45]', '[/size]', '{FIELD}');return false;" title="{L_SIZE} 45"> 45 </a></li>
+					</ul>
+				</div>
+			</li>
+			
+			<li class="bbcode-elements">
+				<a href="" onclick="{DISABLED_FONT}bb_display_block('10', '{FIELD}');return false;" onmouseout="{DISABLED_FONT}bb_hide_block('10', '{FIELD}', 0);" class="bbcode-hover" title="{L_BB_FONT}">
+					<i class="fa bbcode-icon-font" {AUTH_FONT}></i>
+				</a>
+				<div class="bbcode-block-container" style="display:none;" id="bb-block10{FIELD}">
+					<ul id="bbcolor{FIELD}" class="bbcode-block bbcode-block-list" style="width: 110px;" onmouseover="bb_hide_block('10', '{FIELD}', 1);" onmouseout="bb_hide_block('10', '{FIELD}', 0);">
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=andale mono]', '[/font]', '{FIELD}'); return false;" title="{L_FONT} Andale Mono"> <span style="font-family: andale mono;">Andale Mono</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=arial]', '[/font]', '{FIELD}'); return false;" title="{L_FONT} Arial"> <span style="font-family: arial;">Arial</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=arial black]', '[/font]', '{FIELD}'); return false;" title="{L_FONT} Arial Black"> <span style="font-family: arial black;">Arial Black</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=book antiqua]', '[/font]', '{FIELD}'); return false;" title="{L_FONT} Book Antiqua"> <span style="font-family: book antiqua;">Book Antiqua</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=comic sans ms]', '[/font]', '{FIELD}'); return false;" title="{L_FONT} Comic Sans MS"> <span style="font-family: comic sans ms;">Comic Sans MS</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=courier new]', '[/font]', '{FIELD}'); return false;" title="{L_FONT} Courier New"> <span style="font-family: courier new;">Courier New</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=georgia]', '[/font]', '{FIELD}'); return false;" title="{L_FONT} Georgia"> <span style="font-family: georgia;">Georgia</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=helvetica]', '[/font]', '{FIELD}'); return false;" title="{L_FONT} Helvetica"> <span style="font-family: helvetica;">Helvetica</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=impact]', '[/font]', '{FIELD}'); return false;" title="{L_FONT} Impact"> <span style="font-family: impact;">Impact</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=symbol]', '[/font]', '{FIELD}'); return false;" title="{L_FONT} Symbol"> <span style="font-family: symbol;">Symbol</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=tahoma]', '[/font]', '{FIELD}'); return false;" title="{L_FONT} Tahoma"> <span style="font-family: tahoma;">Tahoma</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=terminal]', '[/font]', '{FIELD}'); return false;" title="{L_FONT} Terminal"> <span style="font-family: terminal;">Terminal</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=times new roman]', '[/font]', '{FIELD}'); return false;" title="{L_FONT} Times New Roman"> <span style="font-family: times new roman;">Times New Roman</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=trebuchet ms]', '[/font]', '{FIELD}'); return false;" title="{L_FONT} Trebuchet MS"> <span style="font-family: trebuchet ms;">Trebuchet MS</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=verdana]', '[/font]', '{FIELD}'); return false;" title="{L_FONT} Verdana"> <span style="font-family: verdana;">Verdana</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=webdings]', '[/font]', '{FIELD}'); return false;" title="{L_FONT} Webdings"> Webdings </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=wingdings]', '[/font]', '{FIELD}'); return false;" title="{L_FONT} Wingdings"> Wingdings </a></li>
 					</ul>
 				</div>
 			</li>
@@ -119,21 +146,21 @@ function XMLHttpRequest_preview(field)
 			<li class="bbcode-elements bbcode-separator"></li>
 
 			<li class="bbcode-elements">
-				<a href="javascript:{DISABLED_TITLE}bb_display_block('2', '{FIELD}');" onmouseout="{DISABLED_TITLE}bb_hide_block('2', '{FIELD}', 0);" class="bbcode-hover" title="{L_BB_TITLE}">
+				<a href="" onclick="{DISABLED_TITLE}bb_display_block('2', '{FIELD}');return false;" onmouseout="{DISABLED_TITLE}bb_hide_block('2', '{FIELD}', 0);" class="bbcode-hover" title="{L_BB_TITLE}">
 					<i class="fa bbcode-icon-title" {AUTH_TITLE}></i>
 				</a>
 				<div class="bbcode-block-container" style="display:none;" id="bb-block2{FIELD}">
 					<ul id="bbcolor{FIELD}" class="bbcode-block bbcode-block-list" style="width: 70px;" onmouseover="bb_hide_block('2', '{FIELD}', 1);" onmouseout="bb_hide_block('2', '{FIELD}', 0);">
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=1]', '[/title]', '{FIELD}'); return false;" title="{L_TITLE}"> {L_TITLE} 1 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=2]', '[/title]', '{FIELD}'); return false;" title="{L_TITLE}"> {L_TITLE} 2 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=3]', '[/title]', '{FIELD}'); return false;" title="{L_TITLE}"> {L_TITLE} 3 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=4]', '[/title]', '{FIELD}'); return false;" title="{L_TITLE}"> {L_TITLE} 4 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=1]', '[/title]', '{FIELD}'); return false;" title="{L_TITLE} 1"> {L_TITLE} 1 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=2]', '[/title]', '{FIELD}'); return false;" title="{L_TITLE} 2"> {L_TITLE} 2 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=3]', '[/title]', '{FIELD}'); return false;" title="{L_TITLE} 3"> {L_TITLE} 3 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=4]', '[/title]', '{FIELD}'); return false;" title="{L_TITLE} 4"> {L_TITLE} 4 </a></li>
 					</ul>
 				</div>
 			</li>
 
 			<li class="bbcode-elements">
-				<a href="javascript:{DISABLED_LIST}bb_display_block('9', '{FIELD}');" onmouseout="{DISABLED_LIST}bb_hide_block('9', '{FIELD}', 0);" class="bbcode-hover" title="{L_BB_LIST}">
+				<a href="" onclick="{DISABLED_LIST}bb_display_block('9', '{FIELD}');return false;" onmouseout="{DISABLED_LIST}bb_hide_block('9', '{FIELD}', 0);" class="bbcode-hover" title="{L_BB_LIST}">
 					<i class="fa bbcode-icon-list" {AUTH_LIST}></i>
 				</a>
 				<div class="bbcode-block-container" style="display:none;" id="bb-block9{FIELD}">
@@ -151,7 +178,7 @@ function XMLHttpRequest_preview(field)
 							</div>
 						</div>
 						<div class="bbcode-form-element-text">
-							<a class="small" href="javascript:bbcode_list('{FIELD}');">
+							<a class="small" href="" onclick="{DISABLED_LIST}bbcode_list('{FIELD}');return false;">
 								<i class="fa bbcode-icon-list valign-middle" title="{L_BB_LIST}"></i> {L_INSERT_LIST}
 							</a>
 						</div>
@@ -162,13 +189,13 @@ function XMLHttpRequest_preview(field)
 			<li class="bbcode-elements bbcode-separator"></li>
 
 			<li class="bbcode-elements">
-				<a href="javascript:{DISABLED_BLOCK}bb_display_block('3', '{FIELD}');" onmouseout="{DISABLED_BLOCK}bb_hide_block('3', '{FIELD}', 0);" class="bbcode-hover" title="{L_BB_CONTAINER}">
+				<a href="" onclick="{DISABLED_BLOCK}bb_display_block('3', '{FIELD}');return false;" onmouseout="{DISABLED_BLOCK}bb_hide_block('3', '{FIELD}', 0);" class="bbcode-hover" title="{L_BB_CONTAINER}">
 					<i class="fa bbcode-icon-subtitle" {AUTH_BLOCK}></i>
 				</a>
 				<div class="bbcode-block-container" style="display:none;" id="bb-block3{FIELD}">
 					<ul id="bbcolor{FIELD}" class="bbcode-block bbcode-block-list" style="width: 100px;" onmouseover="bb_hide_block('3', '{FIELD}', 1);" onmouseout="bb_hide_block('3', '{FIELD}', 0);">
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[block]', '[/block]', '{FIELD}'); return false;" title="{L_CONTAINER}"> {L_BLOCK} </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[fieldset]', '[/fieldset]', '{FIELD}'); return false;" title="{L_CONTAINER}"> {L_FIELDSET} </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[block]', '[/block]', '{FIELD}'); return false;" title="{L_CONTAINER} {L_BLOCK}"> {L_BLOCK} </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[fieldset]', '[/fieldset]', '{FIELD}'); return false;" title="{L_CONTAINER} {L_FIELDSET}"> {L_FIELDSET} </a></li>
 					</ul>
 				</div>
 			</li>
@@ -182,7 +209,7 @@ function XMLHttpRequest_preview(field)
 			</li>
 
 			<li class="bbcode-elements">
-				<a href="javascript:{DISABLED_STYLE}bb_display_block('4', '{FIELD}');" onmouseout="{DISABLED_STYLE}bb_hide_block('4', '{FIELD}', 0);" class="bbcode-hover" title="{L_BB_STYLE}">
+				<a href="" onclick="{DISABLED_STYLE}bb_display_block('4', '{FIELD}');return false;" onmouseout="{DISABLED_STYLE}bb_hide_block('4', '{FIELD}', 0);" class="bbcode-hover" title="{L_BB_STYLE}">
 					<i class="fa bbcode-icon-style" {AUTH_STYLE}></i>
 				</a>
 				<div class="bbcode-block-container" style="display:none;" id="bb-block4{FIELD}">
@@ -255,7 +282,7 @@ function XMLHttpRequest_preview(field)
 			</li>
 
 			<li class="bbcode-elements">
-				<a href="javascript:{DISABLED_TABLE}bb_display_block('7', '{FIELD}');" onmouseover="{DISABLED_TABLE}bb_hide_block('7', '{FIELD}', 1);" class="bbcode-hover" title="{L_BB_TABLE}">
+				<a href="" onclick="{DISABLED_TABLE}bb_display_block('7', '{FIELD}');return false;" onmouseover="{DISABLED_TABLE}bb_hide_block('7', '{FIELD}', 1);" class="bbcode-hover" title="{L_BB_TABLE}">
 					<i class="fa bbcode-icon-table" {AUTH_TABLE}></i>
 				</a>
 				<div class="bbcode-block-container" style="display:none;" id="bb-block7{FIELD}">
@@ -279,7 +306,7 @@ function XMLHttpRequest_preview(field)
 							</div>
 						</div>
 						<div class="bbcode-form-element-text">
-							<a class="small" href="javascript:{DISABLED_TABLE}bbcode_table('{FIELD}', '{L_TABLE_HEAD}');">
+							<a class="small" href="" onclick="{DISABLED_TABLE}bbcode_table('{FIELD}', '{L_TABLE_HEAD}');return false;">
 								<i class="fa bbcode-icon-table" title="{L_BB_TABLE}"></i> {L_INSERT_TABLE}
 							</a>
 						</div>
@@ -320,7 +347,7 @@ function XMLHttpRequest_preview(field)
 			<li class="bbcode-elements bbcode-separator"></li>
 
 			<li class="bbcode-elements">
-				<a href="javascript:{DISABLED_CODE}bb_display_block('8', '{FIELD}');" onmouseout="{DISABLED_CODE}bb_hide_block('8', '{FIELD}', 0);" class="bbcode-hover" title="{L_BB_CODE}">
+				<a href="" onclick="{DISABLED_CODE}bb_display_block('8', '{FIELD}');return false;" onmouseout="{DISABLED_CODE}bb_hide_block('8', '{FIELD}', 0);" class="bbcode-hover" title="{L_BB_CODE}">
 					<i class="fa bbcode-icon-code" {AUTH_CODE}></i>
 				</a>
 				<div class="bbcode-block-container" style="display:none;" id="bb-block8{FIELD}">
@@ -332,33 +359,34 @@ function XMLHttpRequest_preview(field)
 							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=xml]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} xml">Xml</a></li>
 
 							<li class="bbcode-code-title"><span>{L_PHPBOOST_LANGUAGES}</span></li>
-							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=bbcode]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} text">BBCode</a></li>
-							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=tpl]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} sql">Template</a></li>
+							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=bbcode]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} bbcode">BBCode</a></li>
+							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=tpl]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} template">Template</a></li>
 
 							<li class="bbcode-code-title"><span>{L_SCRIPT}</span></li>
-							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=php]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} text">PHP</a></li>
-							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=asp]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} sql">Asp</a></li>
-							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=python]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} xml">Python</a></li>
+							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=php]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} php">PHP</a></li>
+							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=asp]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} asp">Asp</a></li>
+							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=python]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} python">Python</a></li>
 							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=pearl]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} text">Pearl</a></li>
-							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=ruby]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} sql">Ruby</a></li>
-							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=bash]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} xml">Bash</a></li>
+							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=ruby]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} ruby">Ruby</a></li>
+							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=bash]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} bash">Bash</a></li>
 
 							<li class="bbcode-code-title"><span>{L_WEB}</span></li>
-							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=html]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} text">Html</a></li>
-							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=css]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} sql">Css</a></li>
-							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=javascript]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} xml">Javascript</a></li>
+							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=html]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} html">Html</a></li>
+							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=css]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} css">Css</a></li>
+							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=javascript]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} javascript">Javascript</a></li>
 
 							<li class="bbcode-code-title"><span>{L_PROG}</span></li>
-							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=c]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} text">C</a></li>
-							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=cpp]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} sql">C++</a></li>
-							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=c#]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} xml">C#</a></li>
-							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=d]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} text">D</a></li>
-							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=java]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} sql">Java</a></li>
-							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=pascal]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} xml">Pascal</a></li>
-							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=delphi]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} xml">Delphi</a></li>
-							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=fortran]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} text">Fortran</a></li>
-							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=vb]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} sql">Vb</a></li>
-							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=asm]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} xml">Asm</a></li>
+							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=c]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} c">C</a></li>
+							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=cpp]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} c++">C++</a></li>
+							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=c#]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} c#">C#</a></li>
+							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=d]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} d">D</a></li>
+							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=go]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} go">Go</a></li>
+							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=java]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} java">Java</a></li>
+							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=pascal]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} pascal">Pascal</a></li>
+							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=delphi]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} delphi">Delphi</a></li>
+							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=fortran]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} fortran">Fortran</a></li>
+							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=vb]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} vb">Vb</a></li>
+							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=asm]', '[/code]', '{FIELD}'); return false;" title="{L_CODE} asm">Asm</a></li>
 						</ul>
 					</div>
 				</div>

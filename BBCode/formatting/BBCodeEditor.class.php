@@ -89,6 +89,7 @@ class BBCodeEditor extends ContentEditor
 			'L_BB_HIDE' => $bbcode_lang['bb_hide'],
 			'L_BB_COLOR' => $bbcode_lang['bb_color'],
 			'L_BB_SIZE' => $bbcode_lang['bb_size'],
+			'L_BB_FONT' => $bbcode_lang['bb_font'],
 			'L_BB_SMALL' => $bbcode_lang['bb_small'],
 			'L_BB_LARGE' => $bbcode_lang['bb_large'],
 			'L_BB_LEFT' => $bbcode_lang['bb_left'],
@@ -125,6 +126,7 @@ class BBCodeEditor extends ContentEditor
 			'L_ERROR' => LangLoader::get_message('error', 'status-messages-common'),
 			'L_SUCCESS' => $LANG['success'],
 			'L_SIZE' => LangLoader::get_message('format_size', 'editor-common'),
+			'L_FONT' => LangLoader::get_message('format_font', 'editor-common'),
 			'L_CODE' => $bbcode_lang['bb_code'],
 			'L_TEXT' => $bbcode_lang['bb_text'],
 			'L_SCRIPT' => $bbcode_lang['bb_script'],
@@ -147,7 +149,7 @@ class BBCodeEditor extends ContentEditor
 
 			$template->put_all(array(
 				'AUTH_' . strtoupper($forbidden_tag) => 'style="opacity:0.3;filter:alpha(opacity=30);cursor:default;"',
-				'DISABLED_' . strtoupper($forbidden_tag) => 'true'
+				'DISABLED_' . strtoupper($forbidden_tag) => 'return false;'
 			));
 		}
 
