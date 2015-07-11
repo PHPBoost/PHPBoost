@@ -274,7 +274,7 @@ abstract class ContentFormattingParser extends AbstractParser
                 elseif ($i % 3 == 2)
                 {
                     //Enregistrement dans le tableau du contenu des tags à isoler
-                    $this->array_tags[$tag][] = '[' . $tag . $split_code[$i - 1] . ']' . $split_code[$i] . '[/' . $tag . ']';
+                    $this->array_tags[$tag][] = '[' . $tag . $split_code[$i - 1] . ']' . str_replace('<br />', "\n", $split_code[$i]) . '[/' . $tag . ']';
                 }
             }
         }

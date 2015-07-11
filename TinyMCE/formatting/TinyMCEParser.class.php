@@ -362,7 +362,6 @@ class TinyMCEParser extends ContentFormattingParser
 		//Link tag
 		if (!in_array('url', $this->forbidden_tags))
 		{
-
 			array_push($array_preg, '`&lt;a(?: title="([^"]+)")? href="(' . Url::get_wellformness_regex() . ')"&gt;(.+)&lt;/a&gt;`isU');
 			array_push($array_preg_replace, '<a title="$1" href="$2">$3</a>');
 		}
@@ -390,6 +389,21 @@ class TinyMCEParser extends ContentFormattingParser
 		{
 			array_push($array_preg, '`&lt;pre&gt;(.+)(<br />[\s]*)*&lt;/pre&gt;`isU');
 			array_push($array_preg_replace, '<pre>$1</pre>');
+		}
+		//Youtube tag
+		if (!in_array('youtube', $this->forbidden_tags))
+		{
+			$this->content = preg_replace_callback('`&lt;video(?: style="([^"]+)")?(?: controls="([^"]+)")? width="([^"]+)" height="([^"]+)"(?: controls="([^"]+)")?&gt;\s?&lt;source src="https://www.youtube.com/(.*)" /&gt;&lt;/video&gt;`is', array($this, 'parse_youtube_tag'), $this->content);
+		}
+		//Flash tag
+		if (!in_array('swf', $this->forbidden_tags))
+		{
+			$this->content = preg_replace_callback('`&lt;video(?: style="([^"]+)")?(?: controls="([^"]+)")? width="([^"]+)" height="([^"]+)"(?: controls="([^"]+)")?&gt;\s?&lt;source src="(.*).flv" /&gt;&lt;/video&gt;`is', array($this, 'parse_swf_tag'), $this->content);
+		}
+		//Movie tag
+		if (!in_array('movie', $this->forbidden_tags))
+		{
+			$this->content = preg_replace_callback('`&lt;video(?: style="([^"]+)")?(?: controls="([^"]+)")? width="([^"]+)" height="([^"]+)"(?: controls="([^"]+)")?&gt;\s?&lt;source src="(.*)" /&gt;&lt;/video&gt;`is', array($this, 'parse_movie_tag'), $this->content);
 		}
 		//Align tag
 		if (!in_array('align', $this->forbidden_tags))
@@ -421,24 +435,12 @@ class TinyMCEParser extends ContentFormattingParser
 			array_push($array_preg, '`&lt;h4[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h4&gt;`isU');
 			array_push($array_preg_replace, "\n" . '<br /><h4 class="formatter-title">$1</h4><br />' . "\n<br />");
 		}
+		
 		//Style tag
 		if (!in_array('style', $this->forbidden_tags))
 		{
 			array_push($array_preg, '`&lt;span class="(success|question|notice|warning|error)"&gt;(.+)&lt;/span&gt;`isU');
 			array_push($array_preg_replace, '<span class="$1">$2</span>');
-		}
-		//Flash tag
-		if (!in_array('swf', $this->forbidden_tags))
-		{
-			array_push($array_preg, '`&lt;object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" width="([^"]+)%?" height="([^"]+)%?"&gt;&lt;param name="movie" value="([^"]+)"(.*)&lt;/object&gt;`isU');
-			array_push($array_preg_replace, '[[MEDIA]]insertSwfPlayer(\'$3\', $1, $2);[[/MEDIA]]');
-		}
-		
-		//Youtube tag
-		if (!in_array('movie', $this->forbidden_tags))
-		{
-			array_push($array_preg, '`&lt;iframe src="https://www.youtube.com/embed/([^"]+)" width="([^"]+)%?" height="([^"]+)%?" frameborder="0" allowfullscreen="([^"]+)"&gt;&lt;/iframe&gt;`isU');
-			array_push($array_preg_replace, '[[MEDIA]]insertYoutubePlayer(\'"https://www.youtube.com/embed/$1\', $2, $3);[[/MEDIA]]');
 		}
 
 		//Replacement
@@ -581,13 +583,14 @@ class TinyMCEParser extends ContentFormattingParser
 			'float' => '`\[float=(left|right)\](.+)\[/float\]`isU',
 			'acronym' => '`\[acronym=([^\n[\]<]+)\](.*)\[/acronym\]`isU',
 			'style' => '`\[style=(success|question|notice|warning|error)\](.+)\[/style\]`isU',
-            'swf' => '`\[swf=([0-9]{1,3}),([0-9]{1,3})\]([a-z0-9_+.:?/=#%@&;,-]*)\[/swf\]`iU',
+			'swf' => '`\[swf=([0-9]{1,3}),([0-9]{1,3})\]([a-z0-9_+.:?/=#%@&;,-]*)\[/swf\]`iU',
 			'movie' => '`\[movie=([0-9]{1,3}),([0-9]{1,3})\]([a-z0-9_+.:?/=#%@&;,-]*)\[/movie\]`iU',
-            'sound' => '`\[sound\]([a-z0-9_+.:?/=#%@&;,-]*)\[/sound\]`iU',
+			'sound' => '`\[sound\]([a-z0-9_+.:?/=#%@&;,-]*)\[/sound\]`iU',
 			'math' => '`\[math\](.+)\[/math\]`iU',
-            'url' => '`(\s+)(' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ')(\s|<+)`isU',
-            'url2' => '`(\s+)(www\.' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_NOT_USED) . ')(\s|<+)`isU',
+			'url' => '`(\s+)(' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ')(\s|<+)`isU',
+			'url2' => '`(\s+)(www\.' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_NOT_USED) . ')(\s|<+)`isU',
 			'mail' => '`(\s+)([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})(\s+)`i',
+			'lightbox' => '`\[lightbox=((?!javascript:)' . Url::get_wellformness_regex() . ')\]([^\n\r\t\f]+)\[/lightbox\]`isU',
 		);
 
 		$array_preg_replace = array(
@@ -606,6 +609,7 @@ class TinyMCEParser extends ContentFormattingParser
 			'url' => "$1<a href=\"$2\">$2</a>$3",
 			'url2' => "$1<a href=\"http://$2\">$2</a>$3",
 			'mail' => "$1<a href=\"mailto:$2\">$2</a>$3",
+			'lightbox' => '<a href="$1" data-lightbox="formatter">$2</a>',
 		);
 
 		//Suppression des remplacements des balises interdites.
@@ -723,6 +727,81 @@ class TinyMCEParser extends ContentFormattingParser
 		}
 	}
 	
+	private function parse_youtube_tag($matches)
+	{
+		$video = '[[MEDIA]]insertYoutubePlayer(\'https://www.youtube.com/' . $matches[6] . '\', ' . $matches[3] . ', ' . $matches[4] . ');[[/MEDIA]]';
+		if (!empty($matches[1]))
+		{
+			$style = trim($matches[1]);
+			switch ($style)
+			{
+				case 'float: left;':
+					$style = 'class="float-left"';
+					break;
+				case 'float: right;':
+					$style = 'class="float-right"';
+					break;
+				case 'display: block; margin-left: auto; margin-right: auto;':
+					$style = 'style="text-align:center"';
+					break;
+				default:
+					break;
+			}
+			$video = '<p ' . $style . '>' . $video . '</p>';
+		}
+		return $video;
+	}
+	
+	private function parse_swf_tag($matches)
+	{
+		$video = '[[MEDIA]]insertSwfPlayer(\'' . $matches[6] . '.flv\', ' . $matches[3] . ', ' . $matches[4] . ');[[/MEDIA]]';
+		if (!empty($matches[1]))
+		{
+			$style = trim($matches[1]);
+			switch ($style)
+			{
+				case 'float: left;':
+					$style = 'class="float-left"';
+					break;
+				case 'float: right;':
+					$style = 'class="float-right"';
+					break;
+				case 'display: block; margin-left: auto; margin-right: auto;':
+					$style = 'style="text-align:center"';
+					break;
+				default:
+					break;
+			}
+			$video = '<p ' . $style . '>' . $video . '</p>';
+		}
+		return $video;
+	}
+	
+	private function parse_movie_tag($matches)
+	{
+		$video = '[[MEDIA]]insertMoviePlayer(\'' . $matches[6] . '\', ' . $matches[3] . ', ' . $matches[4] . ');[[/MEDIA]]';
+		if (!empty($matches[1]))
+		{
+			$style = trim($matches[1]);
+			switch ($style)
+			{
+				case 'float: left;':
+					$style = 'class="float-left"';
+					break;
+				case 'float: right;':
+					$style = 'class="float-right"';
+					break;
+				case 'display: block; margin-left: auto; margin-right: auto;':
+					$style = 'style="text-align:center"';
+					break;
+				default:
+					break;
+			}
+			$video = '<p ' . $style . '>' . $video . '</p>';
+		}
+		return $video;
+	}
+	
 	private function parse_img($matches)
 	{
 		$alt = !empty($matches[3]) ? $matches[3] : '';
@@ -753,7 +832,7 @@ class TinyMCEParser extends ContentFormattingParser
 			}
 		}
 		$style .= !empty($style) ? '"' : '';
-	 	return '<img src="' . $matches[2] . '" alt="' . $alt . '"' . $style .' />';
+		return '<img src="' . $matches[2] . '" alt="' . $alt . '"' . $style .' />';
 	}
 
 	/**
@@ -853,42 +932,42 @@ class TinyMCEParser extends ContentFormattingParser
 		$this->content = preg_replace(
 			array(
 				'`^(\s|(?:<br />))*`i',
-	            '`(\s|(?:<br />))*$`i',
-	            '`<br />\s*(<h3[^>]*>.*</h3>)`iUs',
-	            '`(<h3[^>]*>.*</h3>)\s*<br />`iUs',
-	            '`(<h3[^>]*>.*)\s*<br />\s*(</h3>)`iUs',
+				'`(\s|(?:<br />))*$`i',
+				'`<br />\s*(<h3[^>]*>.*</h3>)`iUs',
+				'`(<h3[^>]*>.*</h3>)\s*<br />`iUs',
+				'`(<h3[^>]*>.*)\s*<br />\s*(</h3>)`iUs',
 				// We delete the spaces which are at the begening of the line (inserted by TinyMCE to indent the HTML code)
-	        	"`(\n<br />)[\s]*`"
-	        ),
-	        array(
-	            '',
-	            '',
-	            '$1',
-	            "$1\n",
-	            "$1$2",
-	        	'$1'
-	        ),
-	        $this->content
-        );
-         
-        $this->content = str_replace(
-        	array("\n", "\r", '<br />'),
-        	array(' ', ' ', "\n<br />"),
-        	$this->content
-        );
-         
-        //We delete all remaining HTML tags which are not recognized by the parser
-        $this->content = preg_replace(
-        	array(
-        		'`&lt;(?:p|span|div)[^&]*&gt;`is',
-                '`&lt;/(?:p|span|div)*&gt;`is'
-            ),
-            array(
-                '',
-                ''
-            ),
-                $this->content
-        );
+				"`(\n<br />)[\s]*`"
+			),
+			array(
+				'',
+				'',
+				'$1',
+				"$1\n",
+				"$1$2",
+				'$1'
+			),
+			$this->content
+		);
+		 
+		$this->content = str_replace(
+			array("\n", "\r", '<br />'),
+			array(' ', ' ', "\n<br />"),
+			$this->content
+		);
+		 
+		//We delete all remaining HTML tags which are not recognized by the parser
+		$this->content = preg_replace(
+			array(
+				'`&lt;(?:p|span|div)[^&]*&gt;`is',
+				'`&lt;/(?:p|span|div)*&gt;`is'
+			),
+			array(
+				'',
+				''
+			),
+				$this->content
+		);
 	}
 }
 ?>

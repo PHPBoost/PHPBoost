@@ -231,55 +231,80 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	private function unparse_bbcode_tags()
 	{
 		$array_preg = array(
-			'`<p class="float-(left|right)">(.*)</p>`isU',
 			'`<abbr title="([^"]+)">(.*)</abbr>`isU',
 			'`<a href="mailto:(.*)">(.*)</a>`isU',
 			'`<audio controls><source src="(.*)" /></audio>`isU',
 			'`\[\[MEDIA\]\]insertSoundPlayer\(\'([^\']+)\'\);\[\[/MEDIA\]\]`sU',
+			'`<p class="float-(left|right)"><object type="application/x-shockwave-flash" data="(?:\.\.)?/(?:kernel|includes)/data/movieplayer\.swf" width="([^"]+)" height="([^"]+)">(?:\s|(?:<br />))*<param name="FlashVars" value="flv=(.+)&width=[0-9]+&height=[0-9]+" />.*</object></p>`isU',
+			'`<p style="text-align:center"><object type="application/x-shockwave-flash" data="(?:\.\.)?/(?:kernel|includes)/data/movieplayer\.swf" width="([^"]+)" height="([^"]+)">(?:\s|(?:<br />))*<param name="FlashVars" value="flv=(.+)&width=[0-9]+&height=[0-9]+" />.*</object></p>`isU',
 			'`<object type="application/x-shockwave-flash" data="(?:\.\.)?/(?:kernel|includes)/data/movieplayer\.swf" width="([^"]+)" height="([^"]+)">(?:\s|(?:<br />))*<param name="FlashVars" value="flv=(.+)&width=[0-9]+&height=[0-9]+" />.*</object>`isU',
+			'`<p class="float-(left|right)">\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]</p>`sU',
+			'`<p style="text-align:center">\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]</p>`sU',
 			'`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`sU',
+			'`<p class="float-(left|right)"><object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object></p>`isU',
+			'`<p style="text-align:center"><object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object></p>`isU',
 			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
+			'`<p class="float-(left|right)">\[\[MEDIA\]\]insertSwfPlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]</p>`sU',
+			'`<p style="text-align:center">\[\[MEDIA\]\]insertSwfPlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]</p>`sU',
 			'`\[\[MEDIA\]\]insertSwfPlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`sU',
+			'`<p class="float-(left|right)">\[\[MEDIA\]\]insertYoutubePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]</p>`sU',
+			'`<p style="text-align:center">\[\[MEDIA\]\]insertYoutubePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]</p>`sU',
+			'`\[\[MEDIA\]\]insertYoutubePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`sU',
 			'`<!-- START HTML -->' . "\n" . '(.+)' . "\n" . '<!-- END HTML -->`isU',
-			'`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU'
-			);
+			'`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU',
+			'`<p class="float-(left|right)">(.*)</p>`isU',
+			'`<a href="([^"]+)" data-lightbox="formatter">(.*)</a>`isU'
+		);
 
-			$array_preg_replace = array(
-			"[float=$1]$2[/float]",
+		$array_preg_replace = array(
 			"[acronym=$1]$2[/acronym]",
 			"[mail=$1]$2[/mail]",
 			"[sound]$1[/sound]",
 			"[sound]$1[/sound]",
-			"[movie=$1,$2]$3[/movie]",
-			"[movie=$2,$3]$1[/movie]",
-			"[swf=$2,$3]$1[/swf]",
-			"[swf=$2,$3]$1[/swf]",
+			//
+			"<video style=\"float: $1;\" width=\"$2\" height=\"$3\" controls=\"controls\"><source src=\"$4\" /></video>",
+			"<video style=\"display: block; margin-left: auto; margin-right: auto;\" width=\"$1\" height=\"$2\" controls=\"controls\"><source src=\"$3\" /></video>",
+			"<video width=\"$2\" height=\"$3\" controls=\"controls\"><source src=\"$4\" /></video>",
+			"<video style=\"float: $1;\" width=\"$3\" height=\"$4\" controls=\"controls\"><source src=\"$2\" /></video>",
+			"<video style=\"display: block; margin-left: auto; margin-right: auto;\" width=\"$2\" height=\"$3\" controls=\"controls\"><source src=\"$1\" /></video>",
+			"<video width=\"$2\" height=\"$3\" controls=\"controls\"><source src=\"$1\" /></video>",
+			"<video style=\"float: $1;\" width=\"$3\" height=\"$4\" controls=\"controls\"><source src=\"$2\" /></video>",
+			"<video style=\"display: block; margin-left: auto; margin-right: auto;\" width=\"$2\" height=\"$3\" controls=\"controls\"><source src=\"$1\" /></video>",
+			"<video width=\"$2\" height=\"$3\" controls=\"controls\"><source src=\"$1\" /></video>",
+			"<video style=\"float: $1;\" width=\"$3\" height=\"$4\" controls=\"controls\"><source src=\"$2\" /></video>",
+			"<video style=\"display: block; margin-left: auto; margin-right: auto;\" width=\"$2\" height=\"$3\" controls=\"controls\"><source src=\"$1\" /></video>",
+			"<video width=\"$2\" height=\"$3\" controls=\"controls\"><source src=\"$1\" /></video>",
+			"<video style=\"float: $1;\" width=\"$3\" height=\"$4\" controls=\"controls\"><source src=\"$2\" /></video>",
+			"<video style=\"display: block; margin-left: auto; margin-right: auto;\" width=\"$2\" height=\"$3\" controls=\"controls\"><source src=\"$1\" /></video>",
+			"<video width=\"$2\" height=\"$3\" controls=\"controls\"><source src=\"$1\" /></video>",
 			"[html]$1[/html]",
-			"[math]$1[/math]"
-			);
+			"[math]$1[/math]",
+			"[float=$1]$2[/float]",
+			"[lightbox=$1]$2[/lightbox]"
+		);
 
-			$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
+		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 
-			##Remplacement des balises imbriquées
+		##Remplacement des balises imbriquées
 
-			//Texte caché
-			$this->_parse_imbricated('<span class="formatter-hide">', '`<span class="formatter-hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
+		//Texte caché
+		$this->_parse_imbricated('<span class="formatter-hide">', '`<span class="formatter-hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
 
-			//Bloc HTML
-			$this->_parse_imbricated('<div class="formatter-block"', '`<div class="formatter-block">(.+)</div>`sU', '[block]$1[/block]', $this->content);
-			$this->_parse_imbricated('<div class="formatter-block" style=', '`<div class="formatter-block" style="([^"]+)">(.+)</div>`sU', '[block style="$1"]$2[/block]', $this->content);
+		//Bloc HTML
+		$this->_parse_imbricated('<div class="formatter-block"', '`<div class="formatter-block">(.+)</div>`sU', '[block]$1[/block]', $this->content);
+		$this->_parse_imbricated('<div class="formatter-block" style=', '`<div class="formatter-block" style="([^"]+)">(.+)</div>`sU', '[block style="$1"]$2[/block]', $this->content);
 
-			//Bloc de formulaire
-			while (preg_match('`<fieldset class="formatter-fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', $this->content))
-			{
-				$this->content = preg_replace_callback('`<fieldset class="formatter-fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', array($this, 'unparse_fieldset'), $this->content);
-			}
+		//Bloc de formulaire
+		while (preg_match('`<fieldset class="formatter-fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', $this->content))
+		{
+			$this->content = preg_replace_callback('`<fieldset class="formatter-fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', array($this, 'unparse_fieldset'), $this->content);
+		}
 
-			//Liens Wikipédia
-			$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link">(.*)</a>`sU', array($this, 'unparse_wikipedia_link'), $this->content);
+		//Liens Wikipédia
+		$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link">(.*)</a>`sU', array($this, 'unparse_wikipedia_link'), $this->content);
 
-			//Hide
-			$this->_parse_imbricated('<span class="formatter-hide">', '`<span class="formatter-hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
+		//Hide
+		$this->_parse_imbricated('<span class="formatter-hide">', '`<span class="formatter-hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
 	}
 
 	/**
