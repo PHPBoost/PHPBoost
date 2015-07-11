@@ -84,6 +84,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '" ."/forum/%'");
 
 	$vars_tpl = array(
+		'C_USER_CONNECTED' => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 		'TOTAL_ONLINE' => $total_online,
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 		'ADMIN' => $total_admin,
@@ -97,7 +98,6 @@ if (!empty($id_get)) //Déplacement du sujet.
 		'L_GUEST' => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
 		'L_AND' => $LANG['and'],
 		'L_ONLINE' => strtolower($LANG['online']),
-	
 		'FORUM_NAME' => $config->get_forum_name() . ' : ' . $LANG['move_topic'],
 		'ID' => $id_get,
 		'TITLE' => $topic['title'],
@@ -329,6 +329,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '" ."/forum/%'");
 
 	$vars_tpl = array_merge($vars_tpl, array(
+		'C_USER_CONNECTED' => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 		'TOTAL_ONLINE' => $total_online,
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 		'ADMIN' => $total_admin,

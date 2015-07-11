@@ -703,6 +703,7 @@ foreach ($categories_tree_options as $option)
 }
 
 $vars_tpl = array_merge($vars_tpl, array(
+	'C_USER_CONNECTED' => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 	'TOTAL_ONLINE' => $total_online,
 	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 	'ADMIN' => $total_admin,

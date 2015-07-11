@@ -73,6 +73,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	$result = PersistenceContext::get_querier()->select("SELECT msg.id, msg.user_id, msg.idtopic, msg.timestamp, msg.timestamp_edit, m.groups, t.title, t.status, t.idcat, c.name, m.display_name, m.level, m.email, m.show_email, m.registration_date AS registered, m.posted_msg, m.warning_percentage, m.delay_banned, s.user_id AS connect, msg.contents
 	FROM " . PREFIX . "forum_msg msg
 	LEFT JOIN " . PREFIX . "forum_topics t ON msg.idtopic = t.id
+	LEFT JOIN " . ForumSetup::$forum_cats_table . " c ON c.id = t.idcat
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = :user_id
 	LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.timestamp > :timestamp
 	WHERE msg.user_id = :id AND t.idcat IN :authorized_categories
@@ -119,12 +120,15 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" ."/forum/membermsg.php%'");
 
 	$vars_tpl = array(
+		'C_USER_CONNECTED' => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 		'TOTAL_ONLINE' => $total_online,
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 		'ADMIN' => $total_admin,
 		'MODO' => $total_modo,
 		'MEMBER' => $total_member,
 		'GUEST' => $total_visit,
+		'FORUM_NAME' => $config->get_forum_name() . ' : ' . $LANG['show_member_msg'],
+		'L_FORUM_INDEX' => $LANG['forum_index'],
 		'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
 		'L_ADMIN' => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
 		'L_MODO' => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],

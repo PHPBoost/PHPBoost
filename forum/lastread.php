@@ -191,6 +191,7 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 	}
 
 	$vars_tpl = array(
+		'C_USER_CONNECTED' => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 		'TOTAL_ONLINE' => $total_online,
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 		'ADMIN' => $total_admin,
@@ -205,7 +206,6 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 		'L_GUEST' => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
 		'L_AND' => $LANG['and'],
 		'L_ONLINE' => strtolower($LANG['online']),
-	
 		'C_PAGINATION' => $pagination->has_several_pages(),
 		'FORUM_NAME' => $config->get_forum_name(),
 		'PAGINATION' => $pagination->display(),
