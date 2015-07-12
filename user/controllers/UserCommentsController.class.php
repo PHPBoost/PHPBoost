@@ -41,7 +41,7 @@ class UserCommentsController extends AbstractController
 		if (!empty($user_id))
 		{
 			try {
-				$this->user = UserService::get_user('WHERE user_id=:user_id', array('user_id' => $user_id));
+				$this->user = UserService::get_user($user_id);
 			} catch (Exception $e) {
 				$error_controller = PHPBoostErrors::unexisting_element();
 				DispatchManager::redirect($error_controller);
@@ -234,7 +234,7 @@ class UserCommentsController extends AbstractController
 	{
 		$response = new SiteDisplayResponse($this->tpl);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['comments'], $this->lang['users']);
+		$graphical_environment->set_page_title($this->lang['comments']);
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 

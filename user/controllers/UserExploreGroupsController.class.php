@@ -171,7 +171,7 @@ class UserExploreGroupsController extends AbstractController
 		$graphical_environment->set_page_title($this->lang['groups'], $this->lang['user']);
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['user'], UserUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['users'], UserUrlBuilder::home()->rel());
 		$breadcrumb->add($this->lang['groups'], UserUrlBuilder::groups()->rel());
 		
 		return $response;

@@ -68,7 +68,7 @@ class UserUsersListController extends AbstractController
 			$posted_msg = !empty($row['posted_msg']) ? $row['posted_msg'] : '0';
 			$group_color = User::get_group_color($row['groups'], $row['level']);
 
-			$author = new LinkHTMLElement(UserUrlBuilder::profile($row['user_id']), $row['display_name'], (!empty($group_color) ? array('color' => $group_color) : array()), UserService::get_level_class($row['level']));
+			$author = new LinkHTMLElement(UserUrlBuilder::profile($row['user_id']), $row['display_name'], (!empty($group_color) ? array('style' => 'color: ' . $group_color) : array()), UserService::get_level_class($row['level']));
 
 			$results[] = new HTMLTableRow(array(
 				new HTMLTableRowCell($author),
