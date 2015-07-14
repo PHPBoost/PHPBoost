@@ -77,7 +77,11 @@ class UserRegistrationController extends AbstractController
 		$fieldset->add_field(new FormFieldHTML('validation_method', $this->get_accounts_validation_method_explain()));
 		
 		$fieldset->add_field(new FormFieldTextEditor('display_name', $this->lang['display_name'], '',
-			array('description'=> $this->lang['display_name.explain'], 'required' => true, 'maxlength' => 100),
+			array('description'=> $this->lang['display_name.explain'], 'required' => true, 'maxlength' => 100, 'events' => array('blur' => '
+				if (!HTMLForms.getField("custom_login").getValue()) {
+					HTMLForms.getField("login").setValue(HTMLForms.getField("display_name").getValue().replace(/\s/g, \'\'));
+				}')
+			),
 			array(new FormFieldConstraintLengthRange(3, 100))
 		));
 
@@ -88,13 +92,15 @@ class UserRegistrationController extends AbstractController
 		
 		$fieldset->add_field(new FormFieldCheckbox('user_hide_mail', $this->lang['email.hide'], FormFieldCheckbox::CHECKED));
 
-		$fieldset->add_field(new FormFieldCheckbox('custom_login', $this->lang['login.custom'], false, array('description'=> $this->lang['login.custom.explain'], 'events' => array('click' => '
-			if (HTMLForms.getField("custom_login").getValue()) {
-				HTMLForms.getField("login").enable();
-			} else { 
-				HTMLForms.getField("login").disable();
-			}'
-		))));
+		$fieldset->add_field(new FormFieldCheckbox('custom_login', $this->lang['login.custom'], false,
+			array('description'=> $this->lang['login.custom.explain'], 'events' => array('click' => '
+				if (HTMLForms.getField("custom_login").getValue()) {
+					HTMLForms.getField("login").enable();
+				} else { 
+					HTMLForms.getField("login").disable();
+				}')
+			)
+		));
 
 		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['login'], '',
 			array('hidden' => true, 'maxlength' => 25),

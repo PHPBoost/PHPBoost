@@ -127,7 +127,11 @@ class UserEditProfileController extends AbstractController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('display_name', $this->lang['display_name'], $this->user->get_display_name(),
-			array('maxlength' => 100, 'description'=> $this->lang['display_name.explain'], 'required' => true),
+			array('maxlength' => 100, 'description'=> $this->lang['display_name.explain'], 'required' => true, 'events' => array('blur' => '
+				if (!HTMLForms.getField("custom_login").getValue()) {
+					HTMLForms.getField("login").setValue(HTMLForms.getField("display_name").getValue().replace(/\s/g, \'\'));
+				}')
+			),
 			array(new FormFieldConstraintLengthRange(3, 100))
 		));
 
@@ -169,10 +173,17 @@ class UserEditProfileController extends AbstractController
 			}
 		}
 
-		$connect_fieldset->add_field(new FormFieldCheckbox('custom_login', $this->lang['login.custom'], $has_custom_login, array('description'=> $this->lang['login.custom.explain'], 'hidden' => $more_than_one_authentication_type, 'events' => array('click' => '
-			if (HTMLForms.getField("custom_login").getValue()) { HTMLForms.getField("login").enable(); } else { HTMLForms.getField("login").disable();}'))));
+		$connect_fieldset->add_field(new FormFieldCheckbox('custom_login', $this->lang['login.custom'], $has_custom_login,
+			array('description'=> $this->lang['login.custom.explain'], 'hidden' => $more_than_one_authentication_type, 'events' => array('click' => '
+				if (HTMLForms.getField("custom_login").getValue()) {
+					HTMLForms.getField("login").enable();
+				} else {
+					HTMLForms.getField("login").disable();
+				}')
+			)
+		));
 
-		$connect_fieldset->add_field(new FormFieldTextEditor('login', $this->lang['login'], ($has_custom_login ? $this->internal_auth_infos['login'] : ''),
+		$connect_fieldset->add_field(new FormFieldTextEditor('login', $this->lang['login'], ($has_custom_login ? $this->internal_auth_infos['login'] : preg_replace('/\s+/', '', $this->user->get_display_name())),
 			array('required' => true, 'hidden' => $more_than_one_authentication_type || !$has_custom_login, 'maxlength' => 25),
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists($this->user->get_id()))
 		));

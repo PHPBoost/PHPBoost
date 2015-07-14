@@ -69,7 +69,11 @@ class AdminMemberAddController extends AdminController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('display_name', $this->lang['display_name'], '',
-			array('maxlength' => 100, 'required' => true),
+			array('maxlength' => 100, 'required' => true, 'events' => array('blur' => '
+				if (!HTMLForms.getField("custom_login").getValue()) {
+					HTMLForms.getField("login").setValue(HTMLForms.getField("display_name").getValue().replace(/\s/g, \'\'));
+				}')
+			),
 			array(new FormFieldConstraintLengthRange(3, 100), new FormFieldConstraintPHPBoostAuthLoginExists())
 		));
 		
@@ -78,8 +82,15 @@ class AdminMemberAddController extends AdminController
 			array(new FormFieldConstraintMailExist())
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('custom_login', $this->lang['login.custom'], false, array('events' => array('click' => '
-			if (HTMLForms.getField("custom_login").getValue()) { HTMLForms.getField("login").enable(); } else { HTMLForms.getField("login").disable();}'))));
+		$fieldset->add_field(new FormFieldCheckbox('custom_login', $this->lang['login.custom'], false,
+			array('events' => array('click' => '
+				if (HTMLForms.getField("custom_login").getValue()) {
+					HTMLForms.getField("login").enable();
+				} else {
+					HTMLForms.getField("login").disable();
+				}')
+			)
+		));
 
 		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['login'], '',
 			array('required' => true, 'hidden' => true, 'maxlength' => 25),

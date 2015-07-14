@@ -72,14 +72,25 @@ class InstallCreateAdminController extends InstallController
 		$this->form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('display_name', LangLoader::get_message('display_name', 'user-common'), '',
-			array('required' => true, 'maxlength' => 100),
+			array('required' => true, 'maxlength' => 100, 'events' => array('blur' => '
+				if (!HTMLForms.getField("custom_login").getValue()) {
+					HTMLForms.getField("login").setValue(HTMLForms.getField("display_name").getValue().replace(/\s/g, \'\'));
+				}')
+			),
 			array(new FormFieldConstraintLengthRange(3, 100, $this->lang['admin.login.length']))
 		));
 		
 		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['admin.email'], '', array('required' => true)));
 		
-		$fieldset->add_field(new FormFieldCheckbox('custom_login', LangLoader::get_message('login.custom', 'user-common'), false, array('description'=> LangLoader::get_message('login.custom.explain', 'user-common'), 'events' => array('click' => '
-			if (HTMLForms.getField("custom_login").getValue()) { HTMLForms.getField("login").enable(); } else { HTMLForms.getField("login").disable();}'))));
+		$fieldset->add_field(new FormFieldCheckbox('custom_login', LangLoader::get_message('login.custom', 'user-common'), false,
+			array('description'=> LangLoader::get_message('login.custom.explain', 'user-common'), 'events' => array('click' => '
+				if (HTMLForms.getField("custom_login").getValue()) {
+					HTMLForms.getField("login").enable();
+				} else {
+					HTMLForms.getField("login").disable();
+				}')
+			)
+		));
 
 		$fieldset->add_field(new FormFieldTextEditor('login', LangLoader::get_message('login', 'user-common'), '',
 			array('required' => true, 'hidden' => true, 'maxlength' => 25),
