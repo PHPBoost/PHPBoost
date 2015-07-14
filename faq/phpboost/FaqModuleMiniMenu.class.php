@@ -60,19 +60,22 @@ class FaqModuleMiniMenu extends ModuleMiniMenu
 			
 			$categories = array_intersect($faq_cache->get_categories(), $authorized_categories);
 			
-			$id_category = $categories[array_rand($categories)];
-			$category_questions = $faq_cache->get_category_questions($id_category);
-			$random_question = $category_questions[array_rand($category_questions)];
-			
-			if (!empty($random_question))
+			if (!empty($categories))
 			{
-				$category = FaqService::get_categories_manager()->get_categories_cache()->get_category($id_category);
+				$id_category = $categories[array_rand($categories)];
+				$category_questions = $faq_cache->get_category_questions($id_category);
+				$random_question = $category_questions[array_rand($category_questions)];
 				
-				$tpl->put_all(array(
-					'C_QUESTION' => true,
-					'QUESTION' => $random_question['question'],
-					'U_LINK' => FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $random_question['id'])->rel()
-				));
+				if (!empty($random_question))
+				{
+					$category = FaqService::get_categories_manager()->get_categories_cache()->get_category($id_category);
+					
+					$tpl->put_all(array(
+						'C_QUESTION' => true,
+						'QUESTION' => $random_question['question'],
+						'U_LINK' => FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $random_question['id'])->rel()
+					));
+				}
 			}
 			
 			return $tpl->render();
