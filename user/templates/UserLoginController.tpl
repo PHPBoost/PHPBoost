@@ -64,15 +64,17 @@
 				# ENDIF #
 			</div>
 
+			# IF NOT C_HAS_ERROR #
 			<p class="center" style="margin-bottom:40px;">
 				<a href="#" id="connect" onclick="javascript:document.getElementById('loginForm').style.display='block';">${LangLoader::get_message('connection', 'user-common')}</a>
 			</p>
-
+			
 			<style>
 			<!--
 				form#loginForm, form#loginForm.fieldset-content p { display:none; }
 			-->
 			</style>
+			# ENDIF #
 		# ENDIF #
 
 		# INCLUDE ERROR_MESSAGE #

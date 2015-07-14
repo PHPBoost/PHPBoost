@@ -39,6 +39,9 @@ class UserLoginController extends AbstractController
 	private $fieldset;
 	private $submit_button;
 
+	private $has_error;
+	private $maintain_config;
+	
 	public function __construct($login_type = self::USER_LOGIN)
 	{
 		$this->login_type = $login_type;
@@ -60,7 +63,13 @@ class UserLoginController extends AbstractController
 		
 		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 		{
-			AppContext::get_response()->redirect(Environment::get_home_page());
+			if (!$this->maintain_config->is_under_maintenance() || ($this->maintain_config->is_under_maintenance() && $this->maintain_config->is_authorized_in_maintenance()))
+			{
+				if ($this->request->get_value('redirect', ''))
+					AppContext::get_response()->redirect($this->get_redirect_url());
+				else
+					AppContext::get_response()->redirect(Environment::get_home_page());
+			}
 		}
 
 		$authenticate_type = $this->request->get_value('authenticate', false);
@@ -105,28 +114,29 @@ class UserLoginController extends AbstractController
 		$this->view = new FileTemplate('user/UserLoginController.tpl');
 		$this->lang = LangLoader::get('user-common');
 		$this->view->add_lang($this->lang);
+		$this->maintain_config = MaintenanceConfig::load();
 	}
 	
 	private function init_vars_template()
 	{
-		$maintain_config = MaintenanceConfig::load();
 		$this->view->put_all(array(
 			'C_REGISTRATION_ENABLED' => UserAccountsConfig::load()->is_registration_enabled(),
-			'C_USER_LOGIN' => $this->login_type == self::USER_LOGIN && !$maintain_config->is_under_maintenance(),
+			'C_USER_LOGIN' => $this->login_type == self::USER_LOGIN && !$this->maintain_config->is_under_maintenance(),
 			'C_ADMIN_LOGIN' => $this->login_type == self::ADMIN_LOGIN,
+			'C_HAS_ERROR' => $this->has_error,
 			'U_REGISTER' => UserUrlBuilder::registration()->rel(),
 			'U_FORGET_PASSWORD' => UserUrlBuilder::forget_password()->rel(),
 			'L_FORGET_PASSWORD' => $this->lang['forget-password'],
 			'LOGIN_FORM' => $this->form->display(),
 		));
 		
-		if ($maintain_config->is_under_maintenance())
+		if ($this->maintain_config->is_under_maintenance())
 		{
-			$this->init_maintain_delay($maintain_config);
+			$this->init_maintain_delay();
 
 			$this->view->put_all(array(
 				'C_MAINTAIN' => true,
-				'L_MAINTAIN' => FormatingHelper::second_parse($maintain_config->get_message()),
+				'L_MAINTAIN' => FormatingHelper::second_parse($this->maintain_config->get_message()),
 			));
 		}
 	}
@@ -141,21 +151,33 @@ class UserLoginController extends AbstractController
 	{
 		$user_id = AuthenticationService::authenticate($authentication, $autoconnect);
 		
-		if ($user_id)
+		$current_user = CurrentUser::from_session();
+		
+		if ($user_id && $this->maintain_config->is_under_maintenance() && !$current_user->check_auth($this->maintain_config->get_auth(), 1))
 		{
-			AppContext::get_response()->redirect($this->get_redirect_url());
+			$session = AppContext::get_session();
+			Session::delete($session);
+			$this->view->put('ERROR_MESSAGE', MessageHelper::display(LangLoader::get_message('user.not_authorized_during_maintain', 'status-messages-common'), MessageHelper::NOTICE));
+			$this->has_error = true;
 		}
-
-		if ($authentication->has_error())
+		else
 		{
-			$error = new FormFieldLabel(MessageHelper::display($authentication->get_error_msg(), MessageHelper::NOTICE)->render());
-			$this->fieldset->add_field($error);
+			if ($user_id)
+			{
+				AppContext::get_response()->redirect($this->get_redirect_url());
+			}
+
+			if ($authentication->has_error())
+			{
+				$this->view->put('ERROR_MESSAGE', MessageHelper::display($authentication->get_error_msg(), MessageHelper::NOTICE));
+				$this->has_error = true;
+			}
 		}
 	}
 
 	private function build_view()
 	{
-		if (MaintenanceConfig::load()->is_under_maintenance() || $this->login_type == self::ADMIN_LOGIN)
+		if ($this->maintain_config->is_under_maintenance() || $this->login_type == self::ADMIN_LOGIN)
 		{
 			$response = new SiteDisplayFrameResponse($this->view);
 			$graphical_environment = $response->get_graphical_environment();
@@ -196,30 +218,27 @@ class UserLoginController extends AbstractController
 	private function build_target()
 	{
 		$redirect_url = $this->request->get_value('redirect', '/');
+		$redirect = $redirect_url !== '/' ? '?redirect=' . str_replace('%2F', '/', urlencode($redirect_url)) : '';
 
 		if ($this->login_type == self::ADMIN_LOGIN)
 		{
-			 return DispatchManager::get_url('/admin/admin_index.php', '?redirect=' . urlencode($redirect_url));
+			 return DispatchManager::get_url('/admin/admin_index.php', $redirect);
 		}
-		else
-		{
-		}	return DispatchManager::get_url('/user/index.php', '/login?redirect=' . urlencode($redirect_url));
+		return DispatchManager::get_url('/user/index.php', '/login' . $redirect);
 	}
 
 	private function get_redirect_url()
 	{
-		$redirect = $this->request->get_value('redirect', '/');
-		$redirect = $redirect !== '/' ? HOST . $redirect : $redirect;
-		return new Url($redirect);
+		return new Url($this->request->get_value('redirect', '/'));
 	}
 
-	private function init_maintain_delay($maintain_config)
+	private function init_maintain_delay()
 	{
 		$date_lang = LangLoader::get('date-common');
 		$array_time = array(0 => '-1', 1 => '0', 2 => '60', 3 => '300', 4 => '900', 5 => '1800', 6 => '3600', 7 => '7200', 8 => '86400', 9 => '172800', 10 => '604800'); 
 		$array_delay = array(0 => LangLoader::get_message('unspecified', 'main'), 1 => '', 2 => '1 ' . $date_lang['minute'], 3 => '5 ' . $date_lang['minutes'], 4 => '15 ' . $date_lang['minutes'], 5 => '30 ' . $date_lang['minutes'], 6 => '1 ' . $date_lang['hour'], 7 => '2 ' . $date_lang['hours'], 8 => '1 ' . $date_lang['day'], 9 => '2 ' . $date_lang['days'], 10 => '1 ' . $date_lang['week']);
 		
-		if (!$maintain_config->is_unlimited_maintenance())
+		if (!$this->maintain_config->is_unlimited_maintenance())
 		{
 			$key = 0;
 			$current_time = time();
@@ -235,15 +254,9 @@ class UserLoginController extends AbstractController
 			}
 			
 			//Calcul du format de la date
-			$seconds = Date::to_format($end_timestamp, 's', Timezone::SITE_TIMEZONE);
-			$array_release = array(
-			Date::to_format($end_timestamp, 'Y', Timezone::SITE_TIMEZONE), (Date::to_format($end_timestamp, 'n', Timezone::SITE_TIMEZONE) - 1), Date::to_format($end_timestamp, 'j', Timezone::SITE_TIMEZONE), 
-			Date::to_format($end_timestamp, 'G', Timezone::SITE_TIMEZONE), Date::to_format($end_timestamp, 'i', Timezone::SITE_TIMEZONE), ($seconds < 10) ? trim($seconds, 0) : $seconds );
+			$array_release = array(Date::to_format($end_timestamp, 'Y', Timezone::SITE_TIMEZONE), (Date::to_format($end_timestamp, 'n', Timezone::SITE_TIMEZONE) - 1), Date::to_format($end_timestamp, 'j', Timezone::SITE_TIMEZONE), Date::to_format($end_timestamp, 'G', Timezone::SITE_TIMEZONE), Date::to_format($end_timestamp, 'i', Timezone::SITE_TIMEZONE), Date::to_format($end_timestamp, 's', Timezone::SITE_TIMEZONE));
 		
-			$seconds = Date::to_format(time(), 's', Timezone::SITE_TIMEZONE);
-		    $array_now = array(
-		    Date::to_format(time(), 'Y', Timezone::SITE_TIMEZONE), (Date::to_format(time(), 'n', Timezone::SITE_TIMEZONE) - 1), Date::to_format(time(), 'j', Timezone::SITE_TIMEZONE),
-		    Date::to_format(time(), 'G', Timezone::SITE_TIMEZONE), Date::to_format(time(), 'i', Timezone::SITE_TIMEZONE), ($seconds < 10) ? trim($seconds, 0) : $seconds);
+			$array_now = array(Date::to_format(time(), 'Y', Timezone::SITE_TIMEZONE), (Date::to_format(time(), 'n', Timezone::SITE_TIMEZONE) - 1), Date::to_format(time(), 'j', Timezone::SITE_TIMEZONE), Date::to_format(time(), 'G', Timezone::SITE_TIMEZONE), Date::to_format(time(), 'i', Timezone::SITE_TIMEZONE), Date::to_format(time(), 's', Timezone::SITE_TIMEZONE));
 		}
 		else
 		{
@@ -257,7 +270,7 @@ class UserLoginController extends AbstractController
 			'MAINTAIN_RELEASE_FORMAT' => implode(',', $array_release)
 		));
 		
-		if ($maintain_config->get_display_duration() && !$maintain_config->is_unlimited_maintenance())
+		if ($this->maintain_config->get_display_duration() && !$this->maintain_config->is_unlimited_maintenance())
 		{
 			$this->view->put_all(array(
 				'C_DISPLAY_DELAY' => true,

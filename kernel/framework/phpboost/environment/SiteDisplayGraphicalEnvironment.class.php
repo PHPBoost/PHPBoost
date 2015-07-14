@@ -265,21 +265,19 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				}
 
 				//Calcul du format de la date
-				$seconds = Date::to_format($end_timestamp, 's', Timezone::SITE_TIMEZONE);
 				$array_release = array(
 				Date::to_format($end_timestamp, 'Y', Timezone::SITE_TIMEZONE),
 				(Date::to_format($end_timestamp, 'n', Timezone::SITE_TIMEZONE) - 1),
 				Date::to_format($end_timestamp, 'j', Timezone::SITE_TIMEZONE),
 				Date::to_format($end_timestamp, 'G', Timezone::SITE_TIMEZONE),
 				Date::to_format($end_timestamp, 'i', Timezone::SITE_TIMEZONE),
-				($seconds < 10) ? trim($seconds, 0) : $seconds);
+				Date::to_format($end_timestamp, 's', Timezone::SITE_TIMEZONE));
 
-				$seconds = Date::to_format(time(), 's', Timezone::SITE_TIMEZONE);
 				$array_now = array(
 				Date::to_format(time(), 'Y', Timezone::SITE_TIMEZONE), (Date::to_format(time(), 'n',
 				Timezone::SITE_TIMEZONE) - 1), Date::to_format(time(), 'j', Timezone::SITE_TIMEZONE),
 				Date::to_format(time(), 'G', Timezone::SITE_TIMEZONE), Date::to_format(time(), 'i',
-				Timezone::SITE_TIMEZONE), ($seconds < 10) ? trim($seconds, 0) : $seconds);
+				Timezone::SITE_TIMEZONE), Date::to_format(time(), 's', Timezone::SITE_TIMEZONE));
 			}
 			else //Délai indéterminé.
 			{
