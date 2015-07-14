@@ -45,7 +45,7 @@ In fact, at the first time a feed is asked, it\'s fecthed in the data base and c
 $lang['cache_configuration'] = 'Cache configuration';
 $lang['php_cache'] = 'PHP accelerator';
 $lang['explain_php_cache'] = '<p>Some additional PHP modules enable to improve dramatically the execution time of PHP applications.
-PHP supports <acronym title="Advanced PHP Cache">APCu</acronym> which is the cache system which is becoming the reference one.</p>
+PHP supports <acronym title="Alternative PHP Cache">APCu</acronym> which is a cache system to improve pages loading duration.</p>
 <p>By default, cache data are stored on the filesystem (in the files tree) but that kind of module allows to store directly in the server\'s central memory (RAM) which is far faster.</p>';
 $lang['enable_apc'] = 'Enable APCu cache';
 $lang['apc_available'] = 'Availability of the APCu extension';
