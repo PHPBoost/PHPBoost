@@ -46,10 +46,6 @@ class ShoutboxHomeController extends ModuleController
 	
 	private function build_view()
 	{
-		$this->init();
-		
-		$this->check_authorizations();
-		
 		$user_accounts_config = UserAccountsConfig::load();
 		$messages_number = ShoutboxService::count();
 		$page = AppContext::get_request()->get_getint('page', 1);
@@ -163,8 +159,8 @@ class ShoutboxHomeController extends ModuleController
 	public static function get_view()
 	{
 		$object = new self();
-		$object->init();
 		$object->check_authorizations();
+		$object->init();
 		$object->build_view();
 		return $object->view;
 	}

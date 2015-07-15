@@ -235,7 +235,7 @@ class ShoutboxConfig extends AbstractConfigData
 				'indent', 'pre', 'table', 'swf', 'movie',
 				'sound', 'code', 'math', 'anchor', 'acronym',
 				'block', 'fieldset', 'mail', 'line', 'wikipedia',
-				'html', 'feed', 'youtube', 'lightbox'
+				'html', 'feed', 'youtube', 'lightbox', 'charmap', 'insertdatetime'
 			),
 			self::AUTOMATIC_REFRESH_ENABLED => true,
 			self::REFRESH_DELAY => 60000,

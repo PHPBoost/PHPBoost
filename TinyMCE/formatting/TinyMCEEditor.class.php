@@ -33,9 +33,9 @@
 class TinyMCEEditor extends ContentEditor
 {
 	private static $js_included = false;
-	private $array_tags = array('align1' => 'alignleft', 'align2' => 'aligncenter', 'align3' => 'alignright', 'align4' => 'alignjustify', '|1' => '|', 'title' => 'formatselect', 'style' => 'styleselect', '|2' => '|', 'list1' => 'bullist', 'list2' => 'numlist', '|3' => '|', 'indent1' => 'outdent', 'indent2' => 'indent', 'quote' => 'blockquote', '|4' => '|', '_cut' => 'cut', '_copy' => 'copy', '_paste' => 'paste');
-	private $array_tags2 = array('_undo' => 'undo', '_redo' => 'redo', '|1' => '|', 'b' => 'bold', 'i' => 'italic', 'u' => 'underline', 's' => 'strikethrough', '|2' => '|', 'color1' => 'forecolor', 'color2' => 'backcolor', '|3' => '|', 'size' => 'fontsizeselect', 'font' => 'fontselect', '|4' => '|', 'sub' => 'subscript', 'sup' => 'superscript', 'line' => 'hr');
-	private $array_tags3 = array('emotions' => 'smileys', 'table' => 'table', 'insertdatetime' => 'insertdatetime', '|1' => '|', 'url1' => 'link', 'url2' => 'unlink', '|2' => '|', 'img' => 'image', 'movie' => 'media', 'insertfile' => 'insertfile', '|3' => '|', 'nanospell' => 'nanospell', '|4' => '|', 'anchor' => 'anchor', '_charmap' => 'charmap', '5|' => '|', '_removeformat' => 'removeformat', '|6' => '|', 'visualchars' => 'visualchars', 'visualblocks' => 'visualblocks', '|7' => '|', '_search' => 'searchreplace', '|8' => '|', '_fullscreen' => 'fullscreen');
+	private $array_tags = array('align1' => 'alignleft', 'align2' => 'aligncenter', 'align3' => 'alignright', 'align4' => 'alignjustify', '|1' => '|', 'title' => 'formatselect', 'style' => 'styleselect', '|2' => '|', 'list1' => 'bullist', 'list2' => 'numlist', '|3' => '|', 'indent1' => 'outdent', 'indent2' => 'indent', 'quote' => 'blockquote', '|4' => '|', 'cut' => 'cut', 'copy' => 'copy', 'paste' => 'paste');
+	private $array_tags2 = array('undo' => 'undo', 'redo' => 'redo', '|1' => '|', 'b' => 'bold', 'i' => 'italic', 'u' => 'underline', 's' => 'strikethrough', '|2' => '|', 'color1' => 'forecolor', 'color2' => 'backcolor', '|3' => '|', 'size' => 'fontsizeselect', 'font' => 'fontselect', '|4' => '|', 'sub' => 'subscript', 'sup' => 'superscript', 'line' => 'hr');
+	private $array_tags3 = array('emotions' => 'smileys', 'table' => 'table', 'insertdatetime' => 'insertdatetime', '|1' => '|', 'url1' => 'link', 'url2' => 'unlink', '|2' => '|', 'img' => 'image', 'movie' => 'media', 'insertfile' => 'insertfile', '|3' => '|', 'nanospell' => 'nanospell', '|4' => '|', 'anchor' => 'anchor', 'charmap' => 'charmap', '5|' => '|', 'removeformat' => 'removeformat', '|6' => '|', 'visualchars' => 'visualchars', 'visualblocks' => 'visualblocks', '|7' => '|', '_search' => 'searchreplace', '|8' => '|', '_fullscreen' => 'fullscreen');
 	
 	public function __construct()
 	{
@@ -58,7 +58,8 @@ class TinyMCEEditor extends ContentEditor
 	public function display()
 	{
 		$template = $this->get_template();
-
+		
+		$displayed_icons_number = 0;
 		list($toolbar1, $toolbar2, $toolbar3) = array('', '', '');
 		foreach ($this->array_tags as $tag => $tinymce_tag) //Balises autorisées.
 		{
@@ -66,6 +67,8 @@ class TinyMCEEditor extends ContentEditor
 			if (!in_array($tag, $this->forbidden_tags))
 			{
 				$toolbar1 .= $tinymce_tag . ',';
+				
+				$displayed_icons_number++;
 			}
 		}
 		foreach ($this->array_tags2 as $tag => $tinymce_tag) //Balises autorisées.
@@ -73,8 +76,12 @@ class TinyMCEEditor extends ContentEditor
 			$tag = preg_replace('`[0-9]`', '', $tag);
 			if (!in_array($tag, $this->forbidden_tags))
 			{
-				if ($tag != 'insertfile' || ($tag == 'insertfile' && AppContext::get_current_user()->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), FileUploadConfig::AUTH_FILES_BIT)))
-				$toolbar2 .= $tinymce_tag . ',';
+				if ($displayed_icons_number < 18)
+					$toolbar1 .= $tinymce_tag . ',';
+				else
+					$toolbar2 .= $tinymce_tag . ',';
+				
+				$displayed_icons_number++;
 			}
 		}
 		foreach ($this->array_tags3 as $tag => $tinymce_tag) //Balises autorisées.
@@ -82,7 +89,17 @@ class TinyMCEEditor extends ContentEditor
 			$tag = preg_replace('`[0-9]`', '', $tag);
 			if (!in_array($tag, $this->forbidden_tags))
 			{
-				$toolbar3 .= $tinymce_tag . ',';
+				if ($tag != 'insertfile' || ($tag == 'insertfile' && AppContext::get_current_user()->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), FileUploadConfig::AUTH_FILES_BIT)))
+				{
+					if ($displayed_icons_number < 25)
+						$toolbar1 .= $tinymce_tag . ',';
+					else if ($displayed_icons_number < 35)
+						$toolbar2 .= $tinymce_tag . ',';
+					else
+						$toolbar3 .= $tinymce_tag . ',';
+					
+					$displayed_icons_number++;
+				}
 			}
 		}
 		

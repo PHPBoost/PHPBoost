@@ -70,6 +70,8 @@ $lang['format_html'] = 'HTML code';
 $lang['format_feed'] = 'Feed';
 $lang['format_youtube'] = 'Youtube';
 $lang['format_lightbox'] = 'LightBox';
+$lang['format_charmap'] = 'Special chars';
+$lang['format_insertdatetime'] = 'Insert date/time';
 
 //Errors
 $lang['is_default_editor'] = 'The editor you want to uninstall or disable is set by default, you must select another default editor first';

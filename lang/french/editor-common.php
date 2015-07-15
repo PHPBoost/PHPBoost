@@ -70,6 +70,8 @@ $lang['format_html'] = 'Code HTML';
 $lang['format_feed'] = 'Flux';
 $lang['format_youtube'] = 'Youtube';
 $lang['format_lightbox'] = 'LightBox';
+$lang['format_charmap'] = 'Caractères spéciaux';
+$lang['format_insertdatetime'] = 'Insérer date/heure';
 
 //Errors
 $lang['is_default_editor'] = 'L\'éditeur que vous souhaitez désinstaller ou désactiver est défini par défaut, veuillez d\'abord sélectionner un autre éditeur par défaut';
