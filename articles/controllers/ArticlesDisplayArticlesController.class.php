@@ -254,7 +254,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		switch ($article->get_publishing_state()) 
 		{
 			case Article::PUBLISHED_NOW:
-				if (!ArticlesAuthorizationsService::check_authorizations()->read() && $not_authorized)
+				if (!ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->read() && $not_authorized)
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 		   			DispatchManager::redirect($error_controller);
