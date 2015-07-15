@@ -79,6 +79,9 @@
 [b]Galerie[/b]
 [*] [color=red]Nouveauté :[/color] Mise en place du nouveau système de catégories
 
+[b]Installation[/b]
+[*] Activation automatique du cache APCu si celui-ci est disponible sur le serveur
+
 [b]Liens Web[/b]
 [*] [color=red]Nouveauté :[/color] Passage du module en MVC
 [*] [color=red]Nouveauté :[/color] Mise en place du nouveau système de catégories

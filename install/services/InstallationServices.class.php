@@ -228,6 +228,11 @@ class InstallationServices
 			$server_environment_config->set_output_gziping_enabled(true);
 		}
 		
+		if (DataStoreFactory::is_apc_available())
+		{
+			DataStoreFactory::set_apc_enabled(true);
+		}
+		
 		ServerEnvironmentConfig::save();
 	}
 
