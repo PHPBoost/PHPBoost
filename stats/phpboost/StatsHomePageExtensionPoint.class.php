@@ -561,19 +561,20 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 
 			$day = retrieve(GET, 'd', (int)$current_day);
 			$month = retrieve(GET, 'm', (int)$current_month);
+			
 			if ($pages_year)
 			{
+				$condition = 'WHERE stats_year=:year AND pages_detail <> \'\' GROUP BY stats_month';
 				$year = $pages_year;
-				$clause = '';
 			}
 			elseif (retrieve(GET, 'd', false))
 			{
-				$clause = " AND stats_month = :month AND stats_day = :day";
+				$condition = 'WHERE stats_year=:year AND stats_month=:month AND stats_day=:day AND pages_detail <> \'\' GROUP BY stats_month';
 				$year = retrieve(GET, 'y', (int)$current_year);
 			}
 			else
 			{
-				$clause = " AND stats_month = :month";
+				$condition = 'WHERE stats_year=:year AND stats_month=:month AND pages_detail <> \'\' GROUP BY stats_month';
 				$year = retrieve(GET, 'y', (int)$current_year);
 			}
 			

@@ -115,7 +115,8 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 					'L_MODO_PANEL' => $LANG['modo_panel'],
 					'L_PRIVATE_PROFIL' => $LANG['my_private_profile'],
 					'L_DISCONNECT' => LangLoader::get_message('disconnect', 'user-common'),
-					'L_CONTRIBUTION_PANEL' => $LANG['contribution_panel']
+					'L_CONTRIBUTION_PANEL' => $LANG['contribution_panel'],
+					'SITE_REWRITED_SCRIPT' => SITE_REWRITED_SCRIPT
 				));
 			}
 			else

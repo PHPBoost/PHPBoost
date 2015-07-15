@@ -108,7 +108,7 @@ ${resources('update/update')}
 	
 	<div id="footer">
 		<span>
-			{@poweredBy} <a style="font-size:10px" href="http://www.phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {@phpboost.rights}
+			{@poweredBy} <a style="font-size:10px" href="http://www.phpboost.com" title="PHPBoost">PHPBoost</a> {@phpboost.rights}
 		</span>
 	</div>
 	<script src="{PATH_TO_ROOT}/kernel/lib/js/bottom.js"></script>

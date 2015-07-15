@@ -34,7 +34,7 @@ $lang = array();
 
 $lang['default.category.name'] = 'First category';
 $lang['default.category.description'] = 'Demonstration of an article';
-$lang['default.article.name'] = 'Items begin with the module';
+$lang['default.article.title'] = 'How to begin with the articles module';
 $lang['default.article.description'] = '';
 $lang['default.article.contents'] = 'This brief article will give you some simple tips to take control of this module.<br /> 
 <br /> 
