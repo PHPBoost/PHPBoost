@@ -178,7 +178,8 @@ class WebDisplayCategoryController extends ModuleController
 			'TABLE_COLSPAN' => 3 + (int)$config->are_comments_enabled() + (int)$config->is_notation_enabled(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),
-			'CATEGORY_DESCRIPTION' => $category_description
+			'CATEGORY_DESCRIPTION' => $category_description,
+			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? WebUrlBuilder::configuration()->rel() : WebUrlBuilder::edit_category($this->get_category()->get_id())->rel()
 		));
 		
 		while ($row = $result->fetch())

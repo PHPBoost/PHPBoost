@@ -87,6 +87,7 @@ class NewsDisplayCategoryController extends ModuleController
 			'C_COMMENTS_ENABLED' => $news_config->get_comments_enabled(),
 			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
+			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? NewsUrlBuilder::configuration()->rel() : NewsUrlBuilder::edit_category($this->get_category()->get_id())->rel(),
 			
 			'C_NEWS_NO_AVAILABLE' => $result->get_rows_count() == 0,
 			'C_PAGINATION' => $pagination->has_several_pages(),

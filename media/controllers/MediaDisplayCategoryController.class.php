@@ -132,6 +132,7 @@ class MediaDisplayCategoryController extends ModuleController
 			'CATS_COLUMNS_WIDTH' => $cats_columns_width,
 			'CATEGORY_NAME' => $category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('module_title', 'common', 'media') : $category->get_name(),
 			'CATEGORY_DESCRIPTION' => $category_description,
+			'U_EDIT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY ? MediaUrlBuilder::configuration()->rel() : MediaUrlBuilder::edit_category($category->get_id())->rel(),
 			'ID_CAT' => $category->get_id()
 		));
 		

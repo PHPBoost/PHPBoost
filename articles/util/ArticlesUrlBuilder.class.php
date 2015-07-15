@@ -44,6 +44,7 @@ class ArticlesUrlBuilder
 	{
 		return SyndicationUrlBuilder::rss('articles', $id);
 	}
+	
 	public static function add_category()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/add/');
@@ -79,7 +80,7 @@ class ArticlesUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/print/' . $id_article . '-' .$rewrited_title . '/');
 	}
 	
-	public static function articles_configuration()
+	public static function configuration()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/config/');
 	}

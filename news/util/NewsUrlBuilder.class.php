@@ -35,7 +35,7 @@ class NewsUrlBuilder
 	
 	private static $dispatcher = '/news';
 	
-	public static function config()
+	public static function configuration()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/config/');
 	}

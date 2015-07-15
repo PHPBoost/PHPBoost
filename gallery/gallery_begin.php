@@ -57,5 +57,6 @@ foreach ($parent_categories as $cat)
 }
 
 define('TITLE', $module_title . ($category->get_id() != Category::ROOT_CATEGORY ? ' - ' . $category->get_name() : ''));
-$Bread_crumb->add($category->get_name(), url('gallery.php?cat=' . $category->get_id(), 'gallery-' . $category->get_id() . '.php'));
+if ($category->get_id() != Category::ROOT_CATEGORY)
+	$Bread_crumb->add($category->get_name(), url('gallery.php?cat=' . $category->get_id(), 'gallery-' . $category->get_id() . '.php'));
 ?>

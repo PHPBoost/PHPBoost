@@ -140,6 +140,7 @@ class FaqDisplayCategoryController extends ModuleController
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),
 			'CATEGORY_DESCRIPTION' => $category_description,
+			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? FaqUrlBuilder::configuration()->rel() : FaqUrlBuilder::edit_category($this->get_category()->get_id())->rel(),
 			'QUESTIONS_NUMBER' => $result->get_rows_count()
 		));
 		
