@@ -75,7 +75,9 @@
 					<label for="contents">* {L_CONTENTS}</label>
 					# INCLUDE post_js_tools #
 					{KERNEL_EDITOR}
-					<textarea rows="25" cols="66" id="contents" name="contents">{CONTENTS}</textarea>
+					<div class="form-field-textarea">
+						<textarea rows="25" cols="66" id="contents" name="contents">{CONTENTS}</textarea>
+					</div>
 				</div>
 				# IF C_VERIF_CODE #
 				<div class="form-element">
