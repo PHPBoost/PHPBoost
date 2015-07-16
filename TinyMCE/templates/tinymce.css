@@ -2,3 +2,4 @@ div.mce-edit-area, div.mce-statusbar { width: 100%; }
 label.mce-wordcount { position: relative; }
 div.mce-window-head { padding: 20px 15px; }
 .form-element-textarea .form-field-textarea div { float: none; }
+.form-field-textarea { width: 99%; }
