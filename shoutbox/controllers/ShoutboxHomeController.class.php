@@ -102,9 +102,17 @@ class ShoutboxHomeController extends ModuleController
 		$this->view->put_all(array(
 			'C_NO_MESSAGE' => $result->get_rows_count() == 0,
 			'C_PAGINATION' => $messages_number > ShoutboxConfig::load()->get_items_number_per_page(),
-			'PAGINATION' => $pagination->display(),
-			'FORM' => ShoutboxFormController::get_view()
+			'PAGINATION' => $pagination->display()
 		));
+		
+		if (ShoutboxAuthorizationsService::check_authorizations()->write() && !AppContext::get_current_user()->is_readonly())
+		{
+			$this->view->put('FORM', ShoutboxFormController::get_view());
+		}
+		else
+		{
+			$this->view->put('MSG', MessageHelper::display($this->lang['error.post.unauthorized'], MessageHelper::WARNING));
+		}
 		
 		return $this->view;
 	}

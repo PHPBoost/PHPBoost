@@ -3,6 +3,7 @@
 		<h1>{@module_title}</h1>
 	</header>
 	<div class="content">
+		# INCLUDE MSG #
 		# INCLUDE FORM #
 
 		# IF C_PAGINATION #

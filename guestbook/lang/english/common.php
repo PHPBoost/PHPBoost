@@ -44,4 +44,7 @@ $lang['admin.authorizations.read']  = 'Permission to display the guestbook';
 
 //Messages
 $lang['guestbook.message.success.delete'] = 'The message has been deleted';
+
+//Errors
+$lang['error.post.unauthorized'] = 'You are not authorized to post a message!';
 ?>

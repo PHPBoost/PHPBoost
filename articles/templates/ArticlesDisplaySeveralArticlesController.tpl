@@ -32,9 +32,11 @@
 	# ENDIF #
 	
 	# IF C_NO_ARTICLE_AVAILABLE #
-	<div class="center">
-		${LangLoader::get_message('no_item_now', 'common')}
-	</div>
+		# IF NOT C_ROOT_CATEGORY #
+		<div class="center">
+			${LangLoader::get_message('no_item_now', 'common')}
+		</div>
+		# ENDIF #
 	# ELSE #
 		# IF C_ARTICLES_FILTERS #
 			# INCLUDE FORM #

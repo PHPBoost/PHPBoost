@@ -1,7 +1,5 @@
 #connect-menu div.horizontal-fieldset {
 	padding: 2px 8px 2px 2px;
-	z-index: 1000;/* for chrome to pass over a.fa */
-	position: relative;/* for chrome to pass over a.fa */
 }
 
 #connect-menu div.vertical-fieldset,

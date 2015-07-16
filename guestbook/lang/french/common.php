@@ -44,4 +44,7 @@ $lang['admin.authorizations.read']  = 'Autorisation d\'afficher le livre d\'or';
 
 //Messages
 $lang['guestbook.message.success.delete'] = 'Le message a été supprimé';
+
+//Errors
+$lang['error.post.unauthorized'] = 'Vous n\'êtes pas autorisé à ajouter un message !';
 ?>
