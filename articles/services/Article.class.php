@@ -228,10 +228,7 @@ class Article
 	public function is_published()
 	{
 		$now = new Date();
-		return $this->get_publishing_state() == self::PUBLISHED_NOW || 
-			($this->get_publishing_state() == self::PUBLISHED_DATE 
-			&& $this->get_publishing_start_date()->is_anterior_to($now) 
-			&& ($this->end_date_enabled ? $this->get_publishing_end_date()->is_posterior_to($now) : true));
+		return ArticlesAuthorizationsService::check_authorizations($this->id_category)->read() && ($this->get_publishing_state() == self::PUBLISHED_NOW || ($this->get_publishing_state() == self::PUBLISHED_DATE && $this->get_publishing_start_date()->is_anterior_to($now) && ($this->end_date_enabled ? $this->get_publishing_end_date()->is_posterior_to($now) : true)));
 	}
 	
 	public function set_publishing_start_date(Date $publishing_start_date)
