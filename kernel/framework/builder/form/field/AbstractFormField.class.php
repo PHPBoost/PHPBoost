@@ -477,7 +477,7 @@ abstract class AbstractFormField implements FormField
 			'DESCRIPTION' => $description,
 			'C_DESCRIPTION' => !empty($description),
 			'C_REQUIRED' => $this->is_required(),
-			'C_REQUIRED_AND_HAS_VALUE' => $this->is_required() && $this->get_value(),
+			'C_REQUIRED_AND_HAS_VALUE' => $this->is_required() && ($this->get_value() == '0' || $this->get_value()),
 			'VALUE' => $this->get_value(),
 			'C_HAS_CONSTRAINTS' => $this->has_constraints(),
 			'CLASS' => $this->get_css_class(),

@@ -48,15 +48,15 @@ class FormFieldConstraintNotEmpty extends AbstractFormFieldConstraint
 		$this->set_validation_error_message(StringVars::replace_vars($this->error_message, array('name' => strtolower($field->get_label()))));
 		
 		if ($value instanceof FormFieldEnumOption) {
-	    	return $value->get_raw_value() !== null && $value->get_raw_value() != '';
+			return $value->get_raw_value() !== null && $value->get_raw_value() != '';
 		}
 		
-        return $value !== null && $value != '';
+		return $value == 0 || ($value !== null && $value != '');
 	}
 
 	public function get_js_validation(FormField $field)
 	{
-		return 'nonEmptyFormFieldValidator(' . TextHelper::to_js_string($field->get_id()) .
+		return 'notEmptyFormFieldValidator(' . TextHelper::to_js_string($field->get_id()) .
 			', ' . TextHelper::to_js_string(StringVars::replace_vars($this->error_message, array('name' => strtolower($field->get_label())))) .')';
 	}
 }
