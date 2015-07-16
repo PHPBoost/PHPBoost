@@ -154,7 +154,7 @@ class News
 	public function is_visible()
 	{
 		$now = new Date();
-		return $this->get_approbation_type() == News::APPROVAL_NOW || ($this->get_approbation_type() == News::APPROVAL_DATE && $this->get_start_date()->is_anterior_to($now) && ($this->end_date_enabled ? $this->get_end_date()->is_posterior_to($now) : true));
+		return NewsAuthorizationsService::check_authorizations($this->id_cat)->read() && ($this->get_approbation_type() == News::APPROVAL_NOW || ($this->get_approbation_type() == News::APPROVAL_DATE && $this->get_start_date()->is_anterior_to($now) && ($this->end_date_enabled ? $this->get_end_date()->is_posterior_to($now) : true)));
 	}
 	
 	public function get_status()
