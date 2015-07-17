@@ -666,6 +666,11 @@ textarea {
 	resize: vertical;
 }
 
+textarea#writing_pad_content {
+	height: 264px;
+	width: 100%;
+}
+
 .form-element-textarea { width: 98%; }
 .form-element-textarea textarea { width: 100%; }
 .form-element-textarea .form-field-textarea { display: block; }
