@@ -95,16 +95,20 @@
 		}
 
 		function insert_link()
-		{	
+		{
 			var link_name = prompt(enter_text, title_link);
-            if( link_name == "" )
-            {
-                    alert(enter_text);
-                    return false;
-            }
-            
-            insertbbcode('[link=' + url_encode_rewrite(link_name) + ']', '[/link]', 'contents');
+			if( link_name == "" )
+			{
+				alert(enter_text);
+				return false;
+			}
+			
+			if (tinymce_editor)
+				insertTinyMceContent('[link=' + url_encode_rewrite(link_name) + '][/link]'); //insertion pour tinymce.
+			else
+				insertbbcode('[link=' + url_encode_rewrite(link_name) + ']', '[/link]', 'contents');
 		}
+		
 		function url_encode_rewrite(link_name)
 		{
 			link_name = link_name.toLowerCase(link_name);
@@ -121,6 +125,7 @@
 			link_name = link_name.replace(/([-]{2,})/g, '-');
 			return link_name.replace(/(^\s*)|(\s*$)/g,'').replace(/(^-)|(-$)/g,'');
 		}
+		
 		function insert_paragraph(level)
 		{
 			var string = '-';
@@ -139,11 +144,15 @@
 			
 			var title = prompt(enter_paragraph_name, title_paragraph);
 			
-			if( close_balise != "" && title != null && title != enter_paragraph_name )
-				textarea.value += "\n" + open_balise + " " + title + " " + close_balise + "\n";
-				
-			textarea.focus();
-			textarea.scrollTop = scroll;
+			if (tinymce_editor) {
+				insertTinyMceContent('<br/>' + open_balise + ' ' + title + ' ' + close_balise + '<br/>'); //insertion pour tinymce.
+			} else {
+				if( close_balise != "" && title != null && title != enter_paragraph_name )
+					textarea.value += "\n" + open_balise + " " + title + " " + close_balise + "\n";
+					
+				textarea.focus();
+				textarea.scrollTop = scroll;
+			}
 			return;
 		}
 
@@ -166,24 +175,28 @@
 			
 			var title = selection != "" ? selection : prompt(enter_paragraph_name, title_paragraph);
 			
-			if( title != null )
-			{
-				if( close_balise != "" && selection == "" )
+			if (tinymce_editor) {
+				insertTinyMceContent('<br/>' + open_balise + ' ' + title + ' ' + close_balise + '<br/>'); //insertion pour tinymce.
+			} else {
+				if( title != null )
 				{
-					target.value = string_start + "\n" + open_balise + " " + title + " " + close_balise + "\n" + string_end;
-					target.setSelectionRange(string_start.length + (open_balise.length + 2), target.value.length - string_end.length - (close_balise.length+2));
-					target.focus();
+					if( close_balise != "" && selection == "" )
+					{
+						target.value = string_start + "\n" + open_balise + " " + title + " " + close_balise + "\n" + string_end;
+						target.setSelectionRange(string_start.length + (open_balise.length + 2), target.value.length - string_end.length - (close_balise.length+2));
+						target.focus();
+					}
+					else
+					{
+						target.value = string_start + "\n" + open_balise + ' ' + selection + ' ' + close_balise + "\n" + string_end;
+						target.setSelectionRange(string_start.length + (open_balise.length + 2), target.value.length - string_end.length - (close_balise.length+2));
+						target.focus();
+					}
 				}
-				else
-				{
-					target.value = string_start + "\n" + open_balise + ' ' + selection + ' ' + close_balise + "\n" + string_end;
-					target.setSelectionRange(string_start.length + (open_balise.length + 2), target.value.length - string_end.length - (close_balise.length+2));
-					target.focus();
-				}
+				
+				target.scrollTop = scroll; //Remet à la bonne position le textarea.
 			}
 			
-			target.scrollTop = scroll; //Remet à la bonne position le textarea.
-
 			return;
 		}
 
@@ -197,16 +210,20 @@
 			
 			var title = selection != "" ? selection : prompt(enter_paragraph_name, title_paragraph);
 
-			if( title != null )
-			{
-				if( close_balise != "" && selection == "" )
-					document.selection.createRange().text = "\n" + open_balise + " " + title + " " + close_balise + "\n";
-				else
-					document.selection.createRange().text = "\n" + open_balise + ' ' + selection + ' ' + close_balise + "\n";		
+			if (tinymce_editor) {
+				insertTinyMceContent('<br/>' + open_balise + ' ' + title + ' ' + close_balise + '<br/>'); //insertion pour tinymce.
+			} else {
+				if( title != null )
+				{
+					if( close_balise != "" && selection == "" )
+						document.selection.createRange().text = "\n" + open_balise + " " + title + " " + close_balise + "\n";
+					else
+						document.selection.createRange().text = "\n" + open_balise + ' ' + selection + ' ' + close_balise + "\n";
+				}
+				
+				target.scrollTop = scroll; //Remet à la bonne position le textarea.
+				selText = '';
 			}
-			
-			target.scrollTop = scroll; //Remet à la bonne position le textarea.
-			selText = '';
 			
 			return;
 		}

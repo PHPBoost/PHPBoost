@@ -1,5 +1,6 @@
 		<script>
 		<!--
+			var tinymce_editor = {C_TINYMCE_EDITOR};
 			var enter_text = "{L_PLEASE_ENTER_A_TITLE}";
 			var title_link = "{L_TITLE_LINK}";
 			var enter_paragraph_name = "{L_PARAGRAPH_NAME}";

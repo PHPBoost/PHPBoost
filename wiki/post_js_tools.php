@@ -31,6 +31,7 @@ if (defined('PHPBOOST') !== true) exit;
 $jstools_tpl = new FileTemplate('wiki/wiki_js_tools.tpl');
 
 $jstools_tpl->put_all(array(
+	'C_TINYMCE_EDITOR' => (int)(AppContext::get_current_user()->get_editor() == 'TinyMCE'),
 	'L_PLEASE_ENTER_A_TITLE' => $LANG['wiki_please_enter_a_link_name'],
 	'L_INSERT_LINK' => $LANG['wiki_insert_a_link'],
 	'L_INSERT' => $LANG['wiki_insert_link'],
