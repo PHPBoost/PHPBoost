@@ -257,11 +257,17 @@ class FaqFormController extends ModuleController
 		}
 		elseif ($faq_question->is_approved())
 		{
-			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $faq_question->get_id())), StringVars::replace_vars($this->is_new_faq_question ? $this->lang['faq.message.success.add'] : $this->lang['faq.message.success.edit'], array('question' => $faq_question->get_question())));
+			if ($this->is_new_faq_question)
+				AppContext::get_response()->redirect(FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $faq_question->get_id()), StringVars::replace_vars($this->lang['faq.message.success.add'], array('question' => $faq_question->get_question())));
+			else
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $faq_question->get_id())), StringVars::replace_vars($this->lang['faq.message.success.edit'], array('question' => $faq_question->get_question())));
 		}
 		else
 		{
-			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : FaqUrlBuilder::display_pending()), StringVars::replace_vars($this->is_new_faq_question ? $this->lang['faq.message.success.add'] : $this->lang['faq.message.success.edit'], array('question' => $faq_question->get_question())));
+			if ($this->is_new_faq_question)
+				AppContext::get_response()->redirect(FaqUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['faq.message.success.add'], array('question' => $faq_question->get_question())));
+			else
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : FaqUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['faq.message.success.edit'], array('question' => $faq_question->get_question())));
 		}
 	}
 	

@@ -191,7 +191,7 @@
 			# END weblinks #
 		# ENDIF #
 	# ELSE #
-		# IF NOT C_ROOT_CATEGORY #
+		# IF NOT C_HIDE_NO_ITEM_MESSAGE #
 		<div class="center">
 			${LangLoader::get_message('no_item_now', 'common')}
 		</div>

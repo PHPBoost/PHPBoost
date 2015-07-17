@@ -128,6 +128,7 @@ class FaqDisplayCategoryController extends ModuleController
 		$this->tpl->put_all(array(
 			'C_CATEGORY' => true,
 			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
+			'C_HIDE_NO_ITEM_MESSAGE' => $this->get_category()->get_id() == Category::ROOT_CATEGORY && ($nbr_cat_displayed != 0 || !empty($category_description)),
 			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
 			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
 			'C_QUESTIONS' => $result->get_rows_count() > 0,

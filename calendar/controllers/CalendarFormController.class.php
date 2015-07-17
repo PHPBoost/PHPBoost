@@ -475,11 +475,17 @@ class CalendarFormController extends ModuleController
 		}
 		elseif ($event->get_content()->is_approved())
 		{
-			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : CalendarUrlBuilder::home($event->get_start_date()->get_year(), $event->get_start_date()->get_month(), $event->get_start_date()->get_day() , true)), StringVars::replace_vars($this->is_new_event ? $this->lang['calendar.message.success.add'] : $this->lang['calendar.message.success.edit'], array('title' => $event->get_content()->get_title())));
+			if ($this->is_new_event)
+				AppContext::get_response()->redirect(CalendarUrlBuilder::home($event->get_start_date()->get_year(), $event->get_start_date()->get_month(), $event->get_start_date()->get_day() , true), StringVars::replace_vars($this->lang['calendar.message.success.add'], array('title' => $event->get_content()->get_title())));
+			else
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : CalendarUrlBuilder::home($event->get_start_date()->get_year(), $event->get_start_date()->get_month(), $event->get_start_date()->get_day() , true)), StringVars::replace_vars($this->lang['calendar.message.success.edit'], array('title' => $event->get_content()->get_title())));
 		}
 		else
 		{
-			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : CalendarUrlBuilder::display_pending_events()), StringVars::replace_vars($this->is_new_event ? $this->lang['calendar.message.success.add'] : $this->lang['calendar.message.success.edit'], array('title' => $event->get_content()->get_title())));
+			if ($this->is_new_event)
+				AppContext::get_response()->redirect(CalendarUrlBuilder::display_pending_events(), StringVars::replace_vars($this->lang['calendar.message.success.add'], array('title' => $event->get_content()->get_title())));
+			else
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : CalendarUrlBuilder::display_pending_events()), StringVars::replace_vars($this->lang['calendar.message.success.edit'], array('title' => $event->get_content()->get_title())));
 		}
 	}
 	

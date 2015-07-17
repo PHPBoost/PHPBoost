@@ -316,7 +316,7 @@ jQuery(document).ready(function() {
 			# END questions #
 		# ENDIF #
 	# ENDIF #
-	# IF NOT C_ROOT_CATEGORY #
+	# IF NOT C_HIDE_NO_ITEM_MESSAGE #
 		<div id="no-item-message"# IF C_QUESTIONS # style="display: none;"# ENDIF #>
 			<div class="center">
 				${LangLoader::get_message('no_item_now', 'common')}

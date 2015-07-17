@@ -350,11 +350,17 @@ class WebFormController extends ModuleController
 		}
 		elseif ($weblink->is_visible())
 		{
-			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_name())), StringVars::replace_vars($this->is_new_weblink ? $this->lang['web.message.success.add'] : $this->lang['web.message.success.edit'], array('name' => $weblink->get_name())));
+			if ($this->is_new_weblink)
+				AppContext::get_response()->redirect(WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_name()), StringVars::replace_vars($this->lang['web.message.success.add'], array('name' => $weblink->get_name())));
+			else
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_name())), StringVars::replace_vars($this->lang['web.message.success.edit'], array('name' => $weblink->get_name())));
 		}
 		else
 		{
-			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : WebUrlBuilder::display_pending()), StringVars::replace_vars($this->is_new_weblink ? $this->lang['web.message.success.add'] : $this->lang['web.message.success.edit'], array('name' => $weblink->get_name())));
+			if ($this->is_new_weblink)
+				AppContext::get_response()->redirect(WebUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['web.message.success.add'], array('name' => $weblink->get_name())));
+			else
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : WebUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['web.message.success.edit'], array('name' => $weblink->get_name())));
 		}
 	}
 	

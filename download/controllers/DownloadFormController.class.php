@@ -391,11 +391,17 @@ class DownloadFormController extends ModuleController
 		}
 		elseif ($downloadfile->is_visible())
 		{
-			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $downloadfile->get_id(), $downloadfile->get_rewrited_name())), StringVars::replace_vars($this->is_new_downloadfile ? $this->lang['download.message.success.add'] : $this->lang['download.message.success.edit'], array('name' => $downloadfile->get_name())));
+			if ($this->is_new_downloadfile)
+				AppContext::get_response()->redirect(DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $downloadfile->get_id(), $downloadfile->get_rewrited_name()), StringVars::replace_vars($this->lang['download.message.success.add'], array('name' => $downloadfile->get_name())));
+			else
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $downloadfile->get_id(), $downloadfile->get_rewrited_name())), StringVars::replace_vars($this->lang['download.message.success.edit'], array('name' => $downloadfile->get_name())));
 		}
 		else
 		{
-			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : DownloadUrlBuilder::display_pending()), StringVars::replace_vars($this->is_new_downloadfile ? $this->lang['download.message.success.add'] : $this->lang['download.message.success.edit'], array('name' => $downloadfile->get_name())));
+			if ($this->is_new_downloadfile)
+				AppContext::get_response()->redirect(DownloadUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['download.message.success.add'], array('name' => $downloadfile->get_name())));
+			else
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : DownloadUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['download.message.success.edit'], array('name' => $downloadfile->get_name())));
 		}
 	}
 	

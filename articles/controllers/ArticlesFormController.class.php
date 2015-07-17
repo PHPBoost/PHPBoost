@@ -421,11 +421,17 @@ class ArticlesFormController extends ModuleController
 		}
 		elseif ($article->is_published())
 		{
-			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title(), AppContext::get_request()->get_getint('page', 1))), StringVars::replace_vars($this->is_new_article ? $this->lang['articles.message.success.add'] : $this->lang['articles.message.success.edit'], array('title' => $article->get_title())));
+			if ($this->is_new_article)
+				AppContext::get_response()->redirect(ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title(), AppContext::get_request()->get_getint('page', 1)), StringVars::replace_vars($this->lang['articles.message.success.add'], array('title' => $article->get_title())));
+			else
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title(), AppContext::get_request()->get_getint('page', 1))), StringVars::replace_vars($this->lang['articles.message.success.edit'], array('title' => $article->get_title())));
 		}
 		else
 		{
-			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ArticlesUrlBuilder::display_pending_articles()), StringVars::replace_vars($this->is_new_article ? $this->lang['articles.message.success.add'] : $this->lang['articles.message.success.edit'], array('title' => $article->get_title())));
+			if ($this->is_new_article)
+				AppContext::get_response()->redirect(ArticlesUrlBuilder::display_pending_articles(), StringVars::replace_vars($this->lang['articles.message.success.add'], array('title' => $article->get_title())));
+			else
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ArticlesUrlBuilder::display_pending_articles()), StringVars::replace_vars($this->lang['articles.message.success.edit'], array('title' => $article->get_title())));
 		}
 	}
 

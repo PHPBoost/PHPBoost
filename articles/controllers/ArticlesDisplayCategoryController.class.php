@@ -115,8 +115,6 @@ class ArticlesDisplayCategoryController extends ModuleController
 			'display_from' => $pagination->get_display_from()
 		)));
 		
-		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
-		
 		$this->view->put_all(array(
 			'C_MOSAIC' => $config->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
 			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
@@ -125,12 +123,8 @@ class ArticlesDisplayCategoryController extends ModuleController
 			'C_DISPLAY_CATS_ICON' => $config->are_cats_icon_enabled(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_NO_ARTICLE_AVAILABLE' => $result->get_rows_count() == 0,
-			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
 			'PAGINATION' => $pagination->display(),
 			'ID_CAT' => $this->get_category()->get_id(),
-			'CATEGORY_NAME' => $this->get_category()->get_name(),
-			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),
-			'CATEGORY_DESCRIPTION' => $category_description,
 			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? ArticlesUrlBuilder::configuration()->rel() : ArticlesUrlBuilder::edit_category($this->get_category()->get_id())->rel()
 		));
 
@@ -223,11 +217,18 @@ class ArticlesDisplayCategoryController extends ModuleController
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 		$cats_columns_width = floor(100 / $nbr_column_cats);
 		
+		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
+		
 		$this->view->put_all(array(
 			'C_CATEGORY' => true,
 			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
+			'C_HIDE_NO_ITEM_MESSAGE' => $this->get_category()->get_id() == Category::ROOT_CATEGORY && ($nbr_cat_displayed != 0 || !empty($category_description)),
+			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
 			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
 			'C_SUBCATEGORIES_PAGINATION' => $pagination->has_several_pages(),
+			'CATEGORY_NAME' => $this->get_category()->get_name(),
+			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),
+			'CATEGORY_DESCRIPTION' => $category_description,
 			'SUBCATEGORIES_PAGINATION' => $pagination->display(),
 			'CATS_COLUMNS_WIDTH' => $cats_columns_width
 		));
