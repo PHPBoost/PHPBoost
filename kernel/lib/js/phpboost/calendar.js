@@ -69,8 +69,10 @@ function hide_calendar(id, stop)
 //Insertion de la date.
 function insert_date(field, date) 
 {
-	if (document.getElementById(field))
+	if (document.getElementById(field)) {
 		document.getElementById(field).value = date;
+		jQuery('#' + field).focus();
+	}
 }
 
 //Fonction Ajax d'affichage du calendrier.

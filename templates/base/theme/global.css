@@ -71,7 +71,7 @@ h4.formatter-title {
 
 .calendar-block .date-picker {
 	margin: 0;
-	width: 172px;
+	width: 178px;
 	table-layout: fixed;
 }
 
@@ -98,7 +98,7 @@ h4.formatter-title {
 
 .calendar-block .date-select-content {
 	margin: auto;
-	width: 144px;
+	width: 150px;
 }
 
 .calendar-block .date-select-content select,

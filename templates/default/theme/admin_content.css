@@ -656,7 +656,7 @@ select[readonly=readonly]:focus {
 /* --- Textarea --- */
 .form-field-textarea {
 	display: inline;
-	width: 100%;
+	width: 99%;
 	position: relative;
 	margin: 5px auto;
 }
@@ -831,15 +831,14 @@ div.field-required:after {
 	right: 24px;
 }
 
-.form-field-datetime.field-required:after {
-	right: 6px;
-}
-
 .form-field-select.field-required:after,
 .form-field-number.field-required:after,
-.form-field-decimal.field-required:after,
-.form-field-datetime.field-required:after {
+.form-field-decimal.field-required:after {
 	right: -10px;
+}
+
+.form-field-datetime.field-required:after {
+	right: -15px;
 }
 
 .form-field-checkbox.field-required:after {
@@ -854,9 +853,12 @@ div.field-required:after {
 
 .constraint-status-right .form-field-select:after,
 .constraint-status-right .form-field-number:after,
-.constraint-status-right .form-field-decimal:after,
+.constraint-status-right .form-field-decimal:after {
+	right: -20px;
+}
+
 .constraint-statuts-right .form-field-datetime:after {
-	right: -20px;	
+	right: -22px;
 }
 
 .form-field-number input,
