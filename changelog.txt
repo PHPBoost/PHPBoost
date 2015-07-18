@@ -32,6 +32,9 @@
 [b]Profil[/b]
 [*] Lors de l'affichage du profil un champ texte court de type email ou site web est automatiquement affiché sous forme de bouton avec une icône pour certaines marques
 
+[b]Sécurité[/b]
+[*] Possibilité de choisir la longueur minimale des mots de passe pour les comptes internes dans la configuration des membres
+
 [b]Graphique[/b]
 [*] Refonte de l'affichage de la barre BBCode, amélioration de son ergonomie et suppression de la Pop-up "Tous les smileys"
 [*] Mise à jour de la librairie d'icônes Font-Awesome
@@ -46,6 +49,9 @@
 [b]Articles[/b]
 [*] Possibilité de désactiver la notation
 [*] Affichage des sources lors de l'affichage des catégories d'articles
+
+[b]BBCode[/b]
+[*] Possibilité de choisir la police d'écriture
 
 [b]Calendrier[/b]
 [*] [color=red]Nouveauté :[/color] Tableau permettant de lister les événements avec possibilité de filtrer par date

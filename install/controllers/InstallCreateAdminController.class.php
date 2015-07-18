@@ -66,6 +66,7 @@ class InstallCreateAdminController extends InstallController
 
 	private function build_form()
 	{
+		$security_config = SecurityConfig::load();
 		$this->form = new HTMLForm('adminForm', '', false);
 		
 		$fieldset = new FormFieldsetHTML('adminAccount', $this->lang['admin.account']);
@@ -98,13 +99,13 @@ class InstallCreateAdminController extends InstallController
 		));
 		
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['admin.password'], '',
-			array('description' => $this->lang['admin.password.explanation'], 'required' => true, 'maxlength' => 50),
-			array(new FormFieldConstraintLengthRange(6, 50, $this->lang['admin.password.length']))
+			array('description' => StringVars::replace_vars($this->lang['admin.password.explanation'], array('number' => $security_config->get_internal_password_min_length())), 'required' => true),
+			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length(), StringVars::replace_vars($this->lang['admin.password.length'], array('number' => $security_config->get_internal_password_min_length()))))
 		));
 		
 		$fieldset->add_field($repeatPassword = new FormFieldPasswordEditor('repeatPassword', $this->lang['admin.password.repeat'], '',
-			array('required' => true, 'maxlength' => 50),
-			array(new FormFieldConstraintLengthRange(6, 50))
+			array('required' => true),
+			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
 		));
 		
 		$this->form->add_constraint(new FormConstraintFieldsEquality($password, $repeatPassword));

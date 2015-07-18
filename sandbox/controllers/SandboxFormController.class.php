@@ -89,6 +89,7 @@ class SandboxFormController extends ModuleController
 	
 	private function build_form()
 	{
+		$security_config = SecurityConfig::load();
 		$form = new HTMLForm('sandboxForm');
 
 		// FIELDSET
@@ -142,12 +143,12 @@ class SandboxFormController extends ModuleController
 
 		// PASSWORD
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', 'Mot de passe', 'aaaaaa', array(
-			'maxlength' => 25, 'description' => 'Minimum 6, max 12'),
-			array(new FormFieldConstraintLengthRange(6, 12))
+			'description' => 'Minimum ' . $security_config->get_internal_password_min_length() . ' caractères'),
+			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
 		));
 		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', 'Confirmation du mot de passe', 'aaaaaa', array(
-			'maxlength' => 25, 'description' => 'Minimum 6, max 12'),
-			array(new FormFieldConstraintLengthRange(6, 12))
+			'description' => 'Minimum ' . $security_config->get_internal_password_min_length() . ' caractères'),
+			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
 		));
 	   
 		// SHORT MULTI LINE TEXT

@@ -59,6 +59,10 @@ $lang['members.config.authorization-read-member-profile'] = 'Vous définissez ici
 $lang['members.config.welcome-message'] = 'Message à tous les membres';
 $lang['members.config.welcome-message-content'] = 'Message de bienvenue affiché dans le profil du membre';
 
+//Security Configuration
+$lang['members.config-security'] = 'Sécurité';
+$lang['security.config.internal-password-min-length'] = 'Longueur minimale des mots de passe';
+
 //Authentication Configuration
 $lang['members.config-authentication'] = 'Configuration des moyens d\'authentification';
 $lang['authentication.config.fb-auth-enabled'] = 'Activer l\'authentification via Facebook';

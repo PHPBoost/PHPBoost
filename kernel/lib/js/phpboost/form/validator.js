@@ -10,10 +10,52 @@ function integerIntervalValidator(value, lbound, rbound)
 	return true;
 }
 
+function integerMinValidator(value, lbound)
+{
+	var prev_value = value;
+	var value = parseInt(value);
+	if (value != prev_value || value < lbound)
+	{
+		return false;
+	}
+	return true;
+}
+
+function integerMaxValidator(value, rbound)
+{
+	var prev_value = value;
+	var value = parseInt(value);
+	if (value != prev_value || value > rbound)
+	{
+		return false;
+	}
+	return true;
+}
+
 function lengthIntervalValidator(value, lbound, rbound)
 {
 	var value = value.length;
 	if (value < lbound || value > rbound)
+	{
+		return false;
+	}
+	return true;
+}
+
+function lengthMinValidator(value, lbound)
+{
+	var value = value.length;
+	if (value < lbound)
+	{
+		return false;
+	}
+	return true;
+}
+
+function lengthMaxValidator(value, rbound)
+{
+	var value = value.length;
+	if (value > rbound)
 	{
 		return false;
 	}
@@ -70,7 +112,41 @@ function integerIntervalFormFieldValidator(field_id, lbound, rbound, message)
 	return '';
 }
 
-function lengthFormFieldValidator(field_id, lbound, rbound, message)
+function integerMinFormFieldValidator(field_id, lbound, message)
+{
+	var field = HTMLForms.getField(field_id);
+	if (field)
+	{
+		var value = field.getValue();
+		if (value !== '')
+		{
+			if (!integerMinValidator(value, lbound))
+			{
+				return message;
+			}
+		}
+	}
+	return '';
+}
+
+function integerMaxFormFieldValidator(field_id, rbound, message)
+{
+	var field = HTMLForms.getField(field_id);
+	if (field)
+	{
+		var value = field.getValue();
+		if (value !== '')
+		{
+			if (!integerMaxValidator(value, rbound))
+			{
+				return message;
+			}
+		}
+	}
+	return '';
+}
+
+function lengthIntervalFormFieldValidator(field_id, lbound, rbound, message)
 {
 	var field = HTMLForms.getField(field_id);
 	if (field)
@@ -79,6 +155,40 @@ function lengthFormFieldValidator(field_id, lbound, rbound, message)
 		if (value !== '')
 		{
 			if (!lengthIntervalValidator(value, lbound, rbound))
+			{
+				return message;
+			}
+		}
+	}
+	return '';
+}
+
+function lengthMinFormFieldValidator(field_id, lbound, message)
+{
+	var field = HTMLForms.getField(field_id);
+	if (field)
+	{
+		var value = field.getValue();
+		if (value !== '')
+		{
+			if (!lengthMinValidator(value, lbound))
+			{
+				return message;
+			}
+		}
+	}
+	return '';
+}
+
+function lengthMaxFormFieldValidator(field_id, rbound, message)
+{
+	var field = HTMLForms.getField(field_id);
+	if (field)
+	{
+		var value = field.getValue();
+		if (value !== '')
+		{
+			if (!lengthMaxValidator(value, rbound))
 			{
 				return message;
 			}

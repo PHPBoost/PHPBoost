@@ -75,8 +75,12 @@ $lang['form.doesnt_match_mail_regex'] = 'The entered value has to be a valid mai
 $lang['form.doesnt_match_tel_regex'] = 'The entered value has to be a valid phone number';
 $lang['form.doesnt_match_number_regex'] = 'The value entered must be a number';
 $lang['form.doesnt_match_picture_file_regex'] = 'The value entered must correspond to a picture';
-$lang['form.doesnt_match_length_intervall'] = 'The entered value does not fit the specified length';
+$lang['form.doesnt_match_length_intervall'] = 'The entered value does not fit the specified length (:lower_bound <= value <= :upper_bound)';
+$lang['form.doesnt_match_length_min'] = 'The entered value must be at least :lower_bound characters';
+$lang['form.doesnt_match_length_max'] = 'The entered value must be max :upper_bound characters';
 $lang['form.doesnt_match_integer_intervall'] = 'The entered value does not fit the specified interval (:lower_bound <= value <= :upper_bound)';
+$lang['form.doesnt_match_integer_min'] = 'The entered value must be superior or equal to :lower_bound';
+$lang['form.doesnt_match_integer_max'] = 'The entered value must be inferior or equal to :upper_bound';
 $lang['form.has_to_be_filled'] = 'The field ":name" has to be filled';
 $lang['form.validation_error'] = 'Please correct the form errors';
 $lang['form.fields_must_be_equal'] = 'Fields ":field1" and ":field2" must be equal';

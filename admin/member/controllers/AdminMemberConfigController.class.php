@@ -38,6 +38,7 @@ class AdminMemberConfigController extends AdminController
 	private $submit_button;
 	
 	private $user_account_config;
+	private $security_config;
 	private $authentication_config;
 	
 	public function execute(HTTPRequestCustom $request)
@@ -68,6 +69,7 @@ class AdminMemberConfigController extends AdminController
 	{
 		$this->lang = LangLoader::get('admin-user-common');
 		$this->user_account_config = UserAccountsConfig::load();
+		$this->security_config = SecurityConfig::load();
 		$this->authentication_config = AuthenticationConfig::load();
 	}
 
@@ -98,6 +100,14 @@ class AdminMemberConfigController extends AdminController
 		$fieldset->add_field(new FormFieldNumberEditor('unactivated_accounts_timeout', $this->lang['members.config.unactivated-accounts-timeout'], (int)$this->user_account_config->get_unactivated_accounts_timeout(),
 			array('description' => $this->lang['members.config.unactivated-accounts-timeout-explain']),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+		));
+
+		$fieldset = new FormFieldsetHTML('security_config', $this->lang['members.config-security']);
+		$form->add_fieldset($fieldset);
+		
+		$fieldset->add_field(new FormFieldNumberEditor('internal_password_min_length', $this->lang['security.config.internal-password-min-length'], $this->security_config->get_internal_password_min_length(),
+			array('min' => 6, 'max' => 30),
+			array(new FormFieldConstraintRegex('`^[0-9]+$`i'), new FormFieldConstraintIntegerRange(6, 30))
 		));
 
 		$fieldset = new FormFieldsetHTML('authentication_config', $this->lang['members.config-authentication']);
@@ -154,7 +164,7 @@ class AdminMemberConfigController extends AdminController
 		
 		$fieldset->add_field(new FormFieldNumberEditor('maximal_width_avatar', $this->lang['members.config.maximal-width-avatar'], $this->user_account_config->get_max_avatar_width(),
 			array('description' => $this->lang['members.config.maximal-width-avatar-explain']),
-		array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
 		$fieldset->add_field(new FormFieldNumberEditor('maximal_height_avatar', $this->lang['members.config.maximal-height-avatar'], $this->user_account_config->get_max_avatar_height(),
@@ -217,6 +227,9 @@ class AdminMemberConfigController extends AdminController
 		{
 			$this->user_account_config->set_member_accounts_validation_method($this->form->get_value('type_activation_members')->get_raw_value());
 		}
+		
+		$this->security_config->set_internal_password_min_length($this->form->get_value('internal_password_min_length'));
+		SecurityConfig::save();
 		
 		if ($this->form->get_value('fb_auth_enabled'))
 		{

@@ -135,7 +135,7 @@ class MaintenanceConfig extends AbstractConfigData
 	
 	public function is_authorized_in_maintenance()
 	{
-		return AppContext::get_current_user()->check_auth($this->get_auth(), 1);
+		return AppContext::get_current_user()->check_auth($this->get_auth(), self::ACCESS_WHEN_MAINTAIN_ENABLED_AUTHORIZATIONS);
 	}
 	
 

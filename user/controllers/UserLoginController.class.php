@@ -153,7 +153,7 @@ class UserLoginController extends AbstractController
 		
 		$current_user = CurrentUser::from_session();
 		
-		if ($user_id && $this->maintain_config->is_under_maintenance() && !$current_user->check_auth($this->maintain_config->get_auth(), 1))
+		if ($user_id && $this->maintain_config->is_under_maintenance() && !$current_user->check_auth($this->maintain_config->get_auth(), MaintenanceConfig::ACCESS_WHEN_MAINTAIN_ENABLED_AUTHORIZATIONS))
 		{
 			$session = AppContext::get_session();
 			Session::delete($session);

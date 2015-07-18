@@ -118,6 +118,7 @@ class UserEditProfileController extends AbstractController
 	
 	private function build_form()
 	{
+		$security_config = SecurityConfig::load();
 		$activated_auth_types = AuthenticationService::get_activated_types_authentication();
 		
 		$form = new HTMLForm(__CLASS__);
@@ -193,13 +194,13 @@ class UserEditProfileController extends AbstractController
 		);
 
 		$connect_fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '',
-			array('description' => $this->lang['password.explain'], 'hidden' => $more_than_one_authentication_type, 'maxlength' => 50),
-			array(new FormFieldConstraintLengthRange(6, 50))
+			array('description' => StringVars::replace_vars($this->lang['password.explain'], array('number' => $security_config->get_internal_password_min_length())), 'hidden' => $more_than_one_authentication_type),
+			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
 		));
 		
 		$connect_fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '',
-			array('hidden' => $more_than_one_authentication_type, 'maxlength' => 50),
-			array(new FormFieldConstraintLengthRange(6, 50))
+			array('hidden' => $more_than_one_authentication_type),
+			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
 		));
 
 		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));

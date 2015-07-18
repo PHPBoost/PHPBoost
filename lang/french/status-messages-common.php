@@ -75,8 +75,12 @@ $lang['form.doesnt_match_mail_regex'] = 'La valeur saisie doit être un mail vali
 $lang['form.doesnt_match_tel_regex'] = 'La valeur saisie doit être un numéro de téléphone valide';
 $lang['form.doesnt_match_number_regex'] = 'La valeur saisie doit être un nombre';
 $lang['form.doesnt_match_picture_file_regex'] = 'La valeur saisie doit correspondre à une image';
-$lang['form.doesnt_match_length_intervall'] = 'La valeur saisie ne respecte par la longueur définie';
+$lang['form.doesnt_match_length_intervall'] = 'La valeur saisie ne respecte par la longueur définie (:lower_bound <= valeur <= :upper_bound)';
+$lang['form.doesnt_match_length_min'] = 'La valeur saisie doit faire au moins :lower_bound caractères';
+$lang['form.doesnt_match_length_max'] = 'La valeur saisie doit faire au maximum :upper_bound caractères';
 $lang['form.doesnt_match_integer_intervall'] = 'La valeur saisie ne respecte pas l\'intervalle définie (:lower_bound <= valeur <= :upper_bound)';
+$lang['form.doesnt_match_integer_min'] = 'La valeur saisie doit être supérieure ou égale à :lower_bound';
+$lang['form.doesnt_match_integer_max'] = 'La valeur saisie doit être inférieure ou égale à :upper_bound';
 $lang['form.has_to_be_filled'] = 'Le champ ":name" doit être renseigné';
 $lang['form.validation_error'] = 'Veuillez corriger les erreurs du formulaire';
 $lang['form.fields_must_be_equal'] = 'Les champs ":field1" et ":field2" doivent être égaux';

@@ -64,25 +64,26 @@ class UserChangeLostPasswordController extends AbstractController
 	
 	private function build_form()
 	{
+		$security_config = SecurityConfig::load();
 		$form = new HTMLForm(__CLASS__);
 		
 		$fieldset = new FormFieldsetHTML('fieldset', $this->lang['change-password']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password.new'], '', array(
-			'description' => $this->lang['password.explain'], 'required' => true),
-			array(new FormFieldConstraintLength(6))
+		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password.new'], '',
+			array('description' => StringVars::replace_vars($this->lang['password.explain'], array('number' => $security_config->get_internal_password_min_length())), 'required' => true, 'maxlength' => 500),
+			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
 		));
-			
-		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '', array(
-			'required' => true),
-			array(new FormFieldConstraintLength(6))
+		
+		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '',
+			array('required' => true, 'maxlength' => 500),
+			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
 		));
-			
+		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
-			
+		
 		$this->form = $form;
 	}
 

@@ -49,7 +49,6 @@ class FormConstraintFieldsEquality implements FormConstraint
 		$this->first_field = $first_field;
 		$this->second_field = $second_field;
 
-		$this->first_field->add_form_constraint($this);
 		$this->second_field->add_form_constraint($this);
 	}
 

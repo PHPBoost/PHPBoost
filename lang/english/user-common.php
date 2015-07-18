@@ -59,14 +59,14 @@ and possibly discuss with the validators if their choice is not straightforward.
 $lang['display_name'] = 'Display name';
 $lang['display_name.explain'] = 'Display name on each item you add.';
 $lang['login'] = 'Login';
-$lang['login.custom'] = 'Choice a login';
+$lang['login.custom'] = 'Choose a login';
 $lang['login.custom.explain'] = 'Default, you must log in with your email address.';
 $lang['password'] = 'Password';
 $lang['password.new'] = 'New password';
 $lang['password.old'] = 'Old password';
 $lang['password.old.explain'] = 'Complete only if amended';
 $lang['password.confirm'] = 'Confirm the password';
-$lang['password.explain'] = 'Minimum length of password: 6 characters';
+$lang['password.explain'] = 'Minimum length of password: :number characters';
 $lang['email'] = 'Email';
 $lang['email.hide'] = 'Hide email';
 $lang['theme'] = 'Theme';

@@ -63,6 +63,7 @@ class AdminMemberAddController extends AdminController
 
 	private function build_form(HTTPRequestCustom $request)
 	{
+		$security_config = SecurityConfig::load();
 		$form = new HTMLForm(__CLASS__);
 		
 		$fieldset = new FormFieldsetHTML('add_member', LangLoader::get_message('members.add-member', 'admin-user-common'));
@@ -98,13 +99,13 @@ class AdminMemberAddController extends AdminController
 		));
 
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '',
-			array('required' => true, 'maxlength' => 50),
-			array(new FormFieldConstraintLengthRange(6, 50))
+			array('required' => true),
+			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
 		));
 		
 		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '',
-			array('required' => true, 'maxlength' => 50),
-			array(new FormFieldConstraintLengthRange(6, 50))
+			array('required' => true),
+			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
 		));
 		
 		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
