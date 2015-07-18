@@ -82,15 +82,14 @@ function wiki_explode_menu(&$content)
 	$list = array();
 	
 	//We read the text line by line
-	$i = 0;
-	while ($i < $num_lines)
+	foreach ($lines as $id => &$line)
 	{
 		for ($level = 2; $level <= $max_level_expected; $level++)
 		{
 			$matches = array();
 			
 			//If the line contains a title
-			if (preg_match('`^\s*[\-]{' . $level . '}[\s]+(.+)[\s]+[\-]{' . $level . '}(?:<br />)?\s*$`', $lines[$i], $matches))
+			if (preg_match('`^(?:<br />)?\s*[\-]{' . $level . '}[\s]+(.+)[\s]+[\-]{' . $level . '}(?:<br />)?\s*$`', $line, $matches))
 			{
 				$title_name = strip_tags(TextHelper::html_entity_decode($matches[1]));
 				
@@ -101,10 +100,9 @@ function wiki_explode_menu(&$content)
 				
 				//Réinsertion
 				$class_level = $level - 1;
-				$lines[$i] = '<h' . $class_level . ' class="wiki_paragraph' .  $class_level . '" id="paragraph_' . Url::encode_rewrite($title_name) . '">' . TextHelper::htmlspecialchars($title_name) .'</h' . $class_level . '><br />' . "\n";
+				$line = '<h' . $class_level . ' class="wiki_paragraph' .  $class_level . '" id="paragraph_' . Url::encode_rewrite($title_name) . '">' . TextHelper::htmlspecialchars($title_name) .'</h' . $class_level . '><br />' . "\n";
 			}
 		}
-		$i++;
 	}
 	
 	$content = implode("\n", $lines);

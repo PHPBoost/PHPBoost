@@ -217,7 +217,7 @@ if ($id_edit > 0)//On édite
 		for ($i = 1; $i <= 5; $i++)
 		{
 			$string_regex .= '-';
-			$contents = preg_replace('`[\r\n]+<(?:div|h[1-5]) class="wiki_paragraph' .  $i . '" id=".+">(.+)</(?:div|h[1-5])><br />[\r\n]+`sU', "\n" . $string_regex . ' $1 '. $string_regex, "\n" . $contents . "\n");
+			$contents = preg_replace('`[\r\n]+<(?:div|h[1-5]) class="wiki_paragraph' .  $i . '" id=".+">(.+)</(?:div|h[1-5])><br />[\r\n]+`sU', (AppContext::get_current_user()->get_editor() == 'TinyMCE' ? '<br />' : "\n") . $string_regex . ' $1 '. $string_regex . (AppContext::get_current_user()->get_editor() == 'TinyMCE' ? '<br/>' : ''), "\n" . $contents . "\n");
 		}
 		$contents = trim($contents);
 	}
@@ -321,7 +321,8 @@ $tpl->put_all(array(
 	'IS_CAT' => $is_cat,
 	'ID_CAT' => $id_cat,
 	'VERIF_CODE' => $captcha->display(),
-	'ARTICLE_TITLE' => !empty($encoded_title) ? $encoded_title : stripslashes($title),'L_TITLE_FIELD' => $LANG['title'],
+	'ARTICLE_TITLE' => ($id_edit == 0 ? (!empty($encoded_title) ? $encoded_title : stripslashes($title)) : $article_infos['title']),
+	'L_TITLE_FIELD' => $LANG['title'],
 	'TARGET' => url('post.php' . ($is_cat == 1 ? '?type=cat&amp;token=' . AppContext::get_session()->get_token() : '?token=' . AppContext::get_session()->get_token())),
 	'L_CONTENTS' => $LANG['wiki_contents'],
 	'L_ALERT_CONTENTS' => $LANG['require_text'],

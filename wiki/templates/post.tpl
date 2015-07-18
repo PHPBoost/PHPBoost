@@ -20,7 +20,7 @@
 		# START preview #
 		<article>
 			<header>
-				<h1>{L_PREVIEWING}: {preview.TITLE}</h1>
+				<h1>{L_PREVIEWING}: {preview.TITLE}{ARTICLE_TITLE}</h1>
 			</header>
 			<div class="content" id="preview">
 				# START preview.menu #
@@ -45,15 +45,15 @@
 				# START create #
 				<div class="form-element">
 					<label for="title">* {L_TITLE_FIELD}</label>
-					<div class="form-field"><label><input type="text" id="title" name="title" size="70" maxlength="250" value="{ARTICLE_TITLE}"></label></div>					
+					<div class="form-field"><label><input type="text" id="title" name="title" size="70" maxlength="250" value="{ARTICLE_TITLE}"></label></div>
 				</div>
 				<div class="form-element">
 					<label for="selected_cat">{L_CURRENT_CAT}</label>
 					<div class="form-field">
 						<input type="hidden" name="id_cat" id="id_cat" value="{ID_CAT}"/>
 						<div id="selected_cat">{CURRENT_CAT}</div>
-					</div>					
-				</div>		
+					</div>
+				</div>
 				<div class="form-element">
 					<label>{L_CAT}</label>
 					<div class="explorer inline">

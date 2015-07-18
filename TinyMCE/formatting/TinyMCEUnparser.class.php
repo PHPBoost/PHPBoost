@@ -73,7 +73,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	{
 		//The URL must be absolute otherwise TinyMCE won't be able to display  images for instance.
 		$this->content = Url::html_convert_root_relative2relative($this->content, $this->path_to_root);
-
+		
 		//Extracting HTML and code tags
 		$this->unparse_html(self::PICK_UP);
 		$this->unparse_code(self::PICK_UP);
@@ -101,44 +101,43 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			//Replacing <br /> by a paragraph
 			$this->content = preg_replace(
 			array(
-    		    '`(<h3[^>]*>.*</h3>)\s*`iUs',
-    		    '`\s*<br />\s*`i',
-                '`<p>\s*</p>`i',
-    		    '`\s*</p>`i',
-        		'`<p>\s*`i',
-        		'`<p>&nbsp;</p>\s*<p>(<h4[^>]*>.*</h4>)</p>\s*<p>&nbsp;</p>`iUs'
-        		),
-        		array(
-    		    "</p>\n$1\n<p>",
-        		"</p>\n<p>",
-        		'<p>&nbsp;</p>',
-        		'</p>',
-    		    '<p>',
-    		    '<br />$1<br />'
-    		    ),
-    		'<p>' . $this->content . '</p>'
-    		);
+				'`(<h3[^>]*>.*</h3>)\s*`iUs',
+				'`<p>\s*</p>`i',
+				'`\s*</p>`i',
+				'`<p>\s*`i',
+				'`<p>&nbsp;</p>\s*<p>(<h4[^>]*>.*</h4>)</p>\s*<p>&nbsp;</p>`iUs',
+				),
+				array(
+				"</p>\n$1\n<p>",
+				'<p>&nbsp;</p>',
+				'</p>',
+				'<p>',
+				'<br />$1<br />',
+				),
+			'<p>' . $this->content . '</p>'
+			);
 			
-    		//Unparsing tags unsupported by TinyMCE, those are in BBCode
-    		$this->unparse_bbcode_tags();
-    		//Unparsing tags supported by TinyMCE
-    		$this->unparse_tinymce_formatting();
+			//Unparsing tags unsupported by TinyMCE, those are in BBCode
+			$this->unparse_bbcode_tags();
+			//Unparsing tags supported by TinyMCE
+			$this->unparse_tinymce_formatting();
 
-    		$this->content = TextHelper::htmlspecialchars($this->content);
-    		 
-    		//If we don't protect the HTML code inserted into the tags code and HTML TinyMCE will parse it!
-    		if (!empty($this->array_tags['html_unparse']))
-    		{
-    			$this->array_tags['html_unparse'] = array_map(array('TinyMCEUnparser', 'clear_html_and_code_tag'), $this->array_tags['html_unparse']);
-    		}
-    		if (!empty($this->array_tags['code_unparse']))
-    		{
-    			$this->array_tags['code_unparse'] = array_map(array($this, 'clear_html_and_code_tag'), $this->array_tags['code_unparse']);
-    		}
+			$this->content = TextHelper::htmlspecialchars($this->content);
+			
+			//echo $this->content;
+			//If we don't protect the HTML code inserted into the tags code and HTML TinyMCE will parse it!
+			if (!empty($this->array_tags['html_unparse']))
+			{
+				$this->array_tags['html_unparse'] = array_map(array('TinyMCEUnparser', 'clear_html_and_code_tag'), $this->array_tags['html_unparse']);
+			}
+			if (!empty($this->array_tags['code_unparse']))
+			{
+				$this->array_tags['code_unparse'] = array_map(array($this, 'clear_html_and_code_tag'), $this->array_tags['code_unparse']);
+			}
 
-    		//reimplanting html and code tags
-    		$this->unparse_code(self::REIMPLANT);
-    		$this->unparse_html(self::REIMPLANT);
+			//reimplanting html and code tags
+			$this->unparse_code(self::REIMPLANT);
+			$this->unparse_html(self::REIMPLANT);
 	}
 
 	/**
