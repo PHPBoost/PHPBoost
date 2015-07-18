@@ -1,3 +1,25 @@
+# IF C_HOUR #
+<script>
+<!--
+jQuery(document).ready(function() {
+	if (jQuery("#${escape(HTML_ID)}_hours").length)
+	{
+		jQuery("#${escape(HTML_ID)}_hours").blur(function() {
+			HTMLForms.get("${escape(FORM_ID)}").getField("${escape(ID)}").enableValidationMessage();
+			HTMLForms.get("${escape(FORM_ID)}").getField("${escape(ID)}").liveValidate();
+		});
+	}
+	if (jQuery("#${escape(HTML_ID)}_minutes").length)
+	{
+		jQuery("#${escape(HTML_ID)}_minutes").blur(function() {
+			HTMLForms.get("${escape(FORM_ID)}").getField("${escape(ID)}").enableValidationMessage();
+			HTMLForms.get("${escape(FORM_ID)}").getField("${escape(ID)}").liveValidate();
+		});
+	}
+});
+-->
+</script>
+# ENDIF #
 <div id="${escape(HTML_ID)}_field" # IF C_HIDDEN # style="display:none;" # ENDIF # class="form-element form-element-date # IF C_REQUIRED_AND_HAS_VALUE # constraint-status-right # ENDIF #">
 	<label for="${escape(HTML_ID)}">
 		{LABEL}
