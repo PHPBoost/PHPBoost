@@ -249,7 +249,7 @@
 				<fieldset>
 					<legend>${LangLoader::get_message('authorizations', 'common')}</legend>
 					<p class="fieldset-description">${LangLoader::get_message('config.authorizations.explain', 'admin-common')}</p>
-					<div class="form-element">
+					<div class="form-element form-element-auth">
 						<label>{L_AUTH_READ}</label>
 						<div class="form-field">{AUTH_READ}</div>
 					</div>
