@@ -682,7 +682,7 @@ textarea#writing_pad_content {
 }
 
 .form-element-auth .form-field {
-	display: block;
+	display: inline-block;
 	margin: 2px 0px 0px 0px;
 }
 
@@ -695,13 +695,26 @@ textarea#writing_pad_content {
 	font-style: italic;
 }
 
+.advanced-auth-group select {
+	max-width: 153px;
+	overflow-x: auto;
+	padding-right: 5px;
+}
+
+.advanced-auth-select select {
+	max-width: 132px;
+	word-wrap: normal;
+	overflow-x: auto;
+	padding-right: 5px;
+}
+
 .advanced-auth-select {
 	margin-left:5px;
 }
 
 .advanced-auth-input {
 	margin-left: 5px;
-	width: 150px;
+	width: 144px;
 }
 
 .advanced-auth-input input {
