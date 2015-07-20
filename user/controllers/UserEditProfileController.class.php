@@ -133,7 +133,7 @@ class UserEditProfileController extends AbstractController
 					HTMLForms.getField("login").setValue(HTMLForms.getField("display_name").getValue().replace(/\s/g, \'\'));
 				}')
 			),
-			array(new FormFieldConstraintLengthRange(3, 100))
+			array(new FormFieldConstraintLengthRange(3, 100), new FormFieldConstraintDisplayNameExists($this->user->get_id()))
 		));
 
 		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['email'], $this->user->get_email(),

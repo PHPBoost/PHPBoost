@@ -75,7 +75,7 @@ class AdminMemberAddController extends AdminController
 					HTMLForms.getField("login").setValue(HTMLForms.getField("display_name").getValue().replace(/\s/g, \'\'));
 				}')
 			),
-			array(new FormFieldConstraintLengthRange(3, 100), new FormFieldConstraintPHPBoostAuthLoginExists())
+			array(new FormFieldConstraintLengthRange(3, 100), new FormFieldConstraintDisplayNameExists())
 		));
 		
 		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['email'], '',

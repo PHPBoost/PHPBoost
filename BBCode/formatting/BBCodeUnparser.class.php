@@ -121,7 +121,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			'`<span id="([a-z0-9_-]+)">(.*)</span>`isU',
 			'`<abbr title="([^"]+)">(.*)</abbr>`isU',
 			'`<a href="mailto:(.*)">(.*)</a>`isU',
-			'`<a(?: title="([^"]+)")? href="([^"]+)"(?: target="([^"]+)")?>(.*)</a>`isU',
+			'`<a(?: title="([^"]+)?")? href="([^"]+)"(?: target="([^"]+)")?>(.*)</a>`isU',
 			'`<h1 class="formatter-title">(.*)</h1>`isU',
 			'`<h2 class="formatter-title">(.*)</h2>`isU',
 			'`<h3 class="formatter-title">(.*)</h3>`isU',

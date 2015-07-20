@@ -86,9 +86,6 @@ function xmlhttprequest_calendar(field, vars)
 		data: {},
 		success: function(returnData){
 			jQuery('#' + field).html(returnData).fadeIn();
-		},
-		error: function(e){
-			alert(e);
 		}
 	});
 }

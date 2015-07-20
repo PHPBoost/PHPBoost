@@ -242,7 +242,7 @@
 	# ENDIF #
 	
 	# IF C_EDIT_CONTRIBUTION #
-	<section>			
+	<section>
 		<header>
 			<h1>{ENTITLED}</h1>
 		</header>
@@ -259,7 +259,9 @@
 					<div class="form-element-textarea">
 						<label for="contents">{L_DESCRIPTION}</label>
 						{EDITOR}
-						<textarea rows="15" cols="66" id="contents" name="contents">{DESCRIPTION}</textarea>
+						<div class="form-field-textarea"">
+							<textarea rows="15" cols="66" id="contents" name="contents">{DESCRIPTION}</textarea>
+						</div>
 					</div>
 					<div class="form-element">
 						<label for="status">{L_STATUS}</label>

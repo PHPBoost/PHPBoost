@@ -39,5 +39,5 @@ Une catégorie et un fichier ont été créés pour vous montrer comment fonctionne c
 	<li class="formatter-li"> Pour créer des catégories, <a href="' . MediaUrlBuilder::add_category()->relative() . '">cliquez ici</a> </li>
 	<li class="formatter-li"> Pour créer des fichiers multimédias, <a href="' . MediaUrlBuilder::add()->relative() . '">cliquez ici</a></li>
 </ul>
-<br />Pour en savoir plus, n\'hésitez pas à consulter la documentation du module sur le site de <a href="www.phpboost.com">PHPBoost</a>.';
+<br />Pour en savoir plus, n\'hésitez pas à consulter la documentation du module sur le site de <a href="http://www.phpboost.com">PHPBoost</a>.';
 ?>

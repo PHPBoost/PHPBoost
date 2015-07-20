@@ -754,8 +754,8 @@ else
 			//Mois précédent et suivant
 			$check_day = $day < $array_month[$month-1];
 			$next_day = $check_day ? $day + 1 : 1;
-			$next_month = ($check_day && $month < 12) ? $month + 1 : $month;
-			$next_year = ($month < 12) ? $year : $year + 1;
+			$next_month = (!$check_day && $month < 12) ? $month + 1 : $month;
+			$next_year = (!$check_day && $month == 12) ? $year + 1 : $year;
 			$previous_day = ($day > 1) ? $day - 1 : $array_month[$month-1];
 			$previous_month = ($month > 1) ? ($day == 1 ? $month - 1 : $month) : 12;
 			$previous_year = ($month > 1) ? $year : $year - 1;
@@ -765,10 +765,10 @@ else
 				'TYPE' => 'pages',
 				'VISIT_TOTAL' => $compteur_total,
 				'VISIT_DAY' => $compteur_day,
-				'SUM_NBR' => !empty($info['pages']) ? $info['pages'] : 0,
+				'SUM_NBR' => !empty($info['sum_nbr']) ? $info['sum_nbr'] : 0,
 				'MONTH' => $array_l_months[$month - 1],
 				'MAX_NBR' => $info['max_nbr'],
-				'MOY_NBR' => NumberHelper::round($info['pages']/24, 1),
+				'MOY_NBR' => NumberHelper::round($info['avg_nbr'], 1),
 				'U_NEXT_LINK' => url('.php?d=' . $next_day . '&amp;m=' . $next_month . '&amp;y=' . $next_year . '&amp;pages=1'),
 				'U_PREVIOUS_LINK' => url('.php?d=' . $previous_day . '&amp;m=' . $previous_month . '&amp;y=' . $previous_year . '&amp;pages=1'),
 				'U_YEAR' => '<a href="admin_stats' . url('.php?pages_year=' . $year) . '#stats">' . $year . '</a>',
@@ -794,7 +794,7 @@ else
 				try {
 					$info_year = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
 				} catch (RowNotFoundException $e) {}
-			
+				
 				$years = '';
 				for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
 				{
@@ -803,10 +803,13 @@ else
 				}
 
 				$tpl->put_all(array(
-				'STATS_DAY' => $days,
-				'STATS_MONTH' => $months,
-				'STATS_YEAR' => $years,
-				'GRAPH_RESULT' => '<img src="display_stats.php?pages_day=1&amp;year=' . $year . '&amp;month=' . $month . '&amp;day=' . $day . '" alt="" />'
+					'C_STATS_DAY' => true,
+					'C_STATS_MONTH' => true,
+					'C_STATS_YEAR' => true,
+					'STATS_DAY' => $days,
+					'STATS_MONTH' => $months,
+					'STATS_YEAR' => $years,
+					'GRAPH_RESULT' => '<img src="display_stats.php?pages_day=1&amp;year=' . $year . '&amp;month=' . $month . '&amp;day=' . $day . '" alt="" />'
 				));
 
 				//On fait la liste des visites journalières

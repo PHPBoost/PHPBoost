@@ -83,9 +83,6 @@ Note.prototype = {
 						object.change_picture_status(note);
 						object.change_nbr_note();
 					}
-				},
-				error: function(e){
-					alert(e);
 				}
 			});
 		}

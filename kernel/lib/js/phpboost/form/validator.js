@@ -197,6 +197,31 @@ function lengthMaxFormFieldValidator(field_id, rbound, message)
 	return '';
 }
 
+function DisplayNameExistValidator(field_id, message, user_id)
+{
+	var field = HTMLForms.getField(field_id);
+	if (field)
+	{
+		var value = field.getValue();
+		var error = '';
+
+		jQuery.ajax({
+			url: PATH_TO_ROOT + "/kernel/framework/ajax/user_xmlhttprequest.php",
+			type: "post",
+			async: false,
+			data: {display_name : value, user_id : user_id, token : TOKEN},
+			success: function(returnData){
+				if (returnData == 1)
+				{
+					error = message;
+				}
+			}
+		});
+		return error;
+	}
+	return '';
+}
+
 function LoginExistValidator(field_id, message, user_id)
 {
 	var field = HTMLForms.getField(field_id);
@@ -208,20 +233,13 @@ function LoginExistValidator(field_id, message, user_id)
 		jQuery.ajax({
 			url: PATH_TO_ROOT + "/kernel/framework/ajax/user_xmlhttprequest.php",
 			type: "post",
-			async : false,
+			async: false,
 			data: {login : value, user_id : user_id, token : TOKEN},
 			success: function(returnData){
 				if (returnData == 1)
 				{
 					error = message;
 				}
-				else
-				{
-					error = '';
-				}
-			},
-			error: function(e){
-				alert(e);
 			}
 		});
 		return error;
@@ -240,20 +258,13 @@ function MailExistValidator(field_id, message, user_id)
 		jQuery.ajax({
 			url: PATH_TO_ROOT + "/kernel/framework/ajax/user_xmlhttprequest.php",
 			type: "post",
-			async : false,
+			async: false,
 			data: {mail : value, user_id : user_id, token : TOKEN},
 			success: function(returnData){
 				if (returnData == 1)
 				{
 					error = message;
 				}
-				else
-				{
-					error = '';
-				}
-			},
-			error: function(e){
-				alert(e);
 			}
 		});
 		return error;
@@ -273,20 +284,13 @@ function UserExistValidator(field_id, message)
 			jQuery.ajax({
 				url: PATH_TO_ROOT + "/kernel/framework/ajax/user_xmlhttprequest.php",
 				type: "post",
-				async : false,
+				async: false,
 				data: {display_name : value, token : TOKEN},
 				success: function(returnData){
 					if (returnData != 1)
 					{
 						error = message;
 					}
-					else
-					{
-						error = '';
-					}
-				},
-				error: function(e){
-					alert(e);
 				}
 			});
 		}

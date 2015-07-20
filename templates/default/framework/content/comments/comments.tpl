@@ -9,9 +9,6 @@ function refresh_comments() {
 		success: function(returnData){
 			jQuery("#comments_list").append(returnData);
 			jQuery('#refresh_comments').remove();
-		},
-		error: function(e){
-			alert(e);
 		}
 	});
 }

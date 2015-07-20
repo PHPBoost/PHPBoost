@@ -52,283 +52,286 @@ $Stats = new ImagesStats();
 $array_stats = array('other' => 0);
 if ($get_visit_month)
 {
-    $year = !empty($_GET['year']) ? NumberHelper::numeric($_GET['year']) : date('Y');
-    $month = !empty($_GET['month']) ? NumberHelper::numeric($_GET['month']) : '1';
+	$year = !empty($_GET['year']) ? NumberHelper::numeric($_GET['year']) : date('Y');
+	$month = !empty($_GET['month']) ? NumberHelper::numeric($_GET['month']) : '1';
 
-    $array_stats = array();
-    $result = PersistenceContext::get_querier()->select("SELECT nbr, stats_day
+	$array_stats = array();
+	$result = PersistenceContext::get_querier()->select("SELECT nbr, stats_day
 	FROM " . StatsSetup::$stats_table . "
 	WHERE stats_year = :year AND stats_month = :month
 	ORDER BY stats_day", array(
 		'year' => $year,
 		'month' => $month
 	));
-    while ($row = $result->fetch())
-    {
-        $array_stats[$row['stats_day']] = $row['nbr'];
-    }
-    $result->dispose();
+	while ($row = $result->fetch())
+	{
+		$array_stats[$row['stats_day']] = $row['nbr'];
+	}
+	$result->dispose();
 
-    //Nombre de jours pour chaque mois (gestion des années bissextiles)
-    $bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
-    //Complément des jours manquant.
-    $array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
-    for ($i = 1; $i <= $array_month[$month - 1]; $i++)
-    {
-        if (!isset($array_stats[$i]))
-        {
-            $array_stats[$i] = 0;
-        }
-    }
-    $Stats->load_data($array_stats, 'histogram', 5);
-    //Tracé de l'histogramme.
-    $Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('days', 'date-common'), $LANG['guest_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
+	//Nombre de jours pour chaque mois (gestion des années bissextiles)
+	$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
+	//Complément des jours manquant.
+	$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
+	for ($i = 1; $i <= $array_month[$month - 1]; $i++)
+	{
+		if (!isset($array_stats[$i]))
+		{
+			$array_stats[$i] = 0;
+		}
+	}
+	$Stats->load_data($array_stats, 'histogram', 5);
+	//Tracé de l'histogramme.
+	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('days', 'date-common'), $LANG['guest_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
 }
 elseif ($get_visit_year)
 {
-    $year = !empty($_GET['year']) ? NumberHelper::numeric($_GET['year']) : '';
+	$year = !empty($_GET['year']) ? NumberHelper::numeric($_GET['year']) : '';
 
-    $array_stats = array();
-    $result = PersistenceContext::get_querier()->select("SELECT SUM(nbr) as total, stats_month
+	$array_stats = array();
+	$result = PersistenceContext::get_querier()->select("SELECT SUM(nbr) as total, stats_month
 	FROM " . StatsSetup::$stats_table . "
 	WHERE stats_year = :year
 	GROUP BY stats_month
 	ORDER BY stats_month", array(
 		'year' => $year
 	));
-    while ($row = $result->fetch())
-    {
-        $array_stats[$row['stats_month']] = $row['total'];
-    }
-    $result->dispose();
+	while ($row = $result->fetch())
+	{
+		$array_stats[$row['stats_month']] = $row['total'];
+	}
+	$result->dispose();
 
-    //Complément des mois manquant
-    for ($i = 1; $i <= 12; $i++)
-    {
-        if (!isset($array_stats[$i]))
-        {
-            $array_stats[$i] = 0;
-        }
-    }
-    $Stats->load_data($array_stats, 'histogram', 5);
-    //Tracé de l'histogramme.
-    $Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('month', 'date-common'), $LANG['guest_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
+	//Complément des mois manquant
+	for ($i = 1; $i <= 12; $i++)
+	{
+		if (!isset($array_stats[$i]))
+		{
+			$array_stats[$i] = 0;
+		}
+	}
+	$Stats->load_data($array_stats, 'histogram', 5);
+	//Tracé de l'histogramme.
+	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('month', 'date-common'), $LANG['guest_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
 }
 elseif ($get_pages_day)
 {
-    $year = !empty($_GET['year']) ? NumberHelper::numeric($_GET['year']) : '';
-    $month = !empty($_GET['month']) ? NumberHelper::numeric($_GET['month']) : '1';
-    $day = !empty($_GET['day']) ? NumberHelper::numeric($_GET['day']) : '1';
+	$year = !empty($_GET['year']) ? NumberHelper::numeric($_GET['year']) : '';
+	$month = !empty($_GET['month']) ? NumberHelper::numeric($_GET['month']) : '1';
+	$day = !empty($_GET['day']) ? NumberHelper::numeric($_GET['day']) : '1';
 
-    $array_stats = array();
-    $pages_details = unserialize((string)PersistenceContext::get_querier()->get_column_value(StatsSetup::$stats_table, 'pages_detail', 'WHERE stats_year = :year AND stats_month = :month AND stats_day = :day', array('year' => $year, 'month' => $month, 'day' => $day)));
-    if (is_array($pages_details))
-    {
-        foreach ($pages_details as $hour => $pages)
-        {
-            $array_stats[$hour] = $pages;
-        }
-    }
+	$array_stats = $pages_details = array();
+	try {
+		$pages_details = unserialize((string)PersistenceContext::get_querier()->get_column_value(StatsSetup::$stats_table, 'pages_detail', 'WHERE stats_year = :year AND stats_month = :month AND stats_day = :day', array('year' => $year, 'month' => $month, 'day' => $day)));
+	} catch (RowNotFoundException $e) {}
+	
+	if (is_array($pages_details))
+	{
+		foreach ($pages_details as $hour => $pages)
+		{
+			$array_stats[$hour] = $pages;
+		}
+	}
 
-    //Complément des heures manquantes.
-    for ($i = 0; $i <= 23; $i++)
-    {
-        if (!isset($array_stats[$i]))
-        {
-            $array_stats[$i] = 0;
-        }
-    }
-    $Stats->load_data($array_stats, 'histogram', 5);
-    //Tracé de l'histogramme.
-    $Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('hours', 'date-common'), $LANG['page_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
+	//Complément des heures manquantes.
+	for ($i = 0; $i <= 23; $i++)
+	{
+		if (!isset($array_stats[$i]))
+		{
+			$array_stats[$i] = 0;
+		}
+	}
+	$Stats->load_data($array_stats, 'histogram', 5);
+	//Tracé de l'histogramme.
+	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('hours', 'date-common'), $LANG['page_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
 }
 elseif ($get_pages_month)
 {
-    $year = !empty($_GET['year']) ? NumberHelper::numeric($_GET['year']) : date('Y');
-    $month = !empty($_GET['month']) ? NumberHelper::numeric($_GET['month']) : '1';
+	$year = !empty($_GET['year']) ? NumberHelper::numeric($_GET['year']) : date('Y');
+	$month = !empty($_GET['month']) ? NumberHelper::numeric($_GET['month']) : '1';
 
-    $array_stats = array();
-    $result = PersistenceContext::get_querier()->select("SELECT pages, stats_day
+	$array_stats = array();
+	$result = PersistenceContext::get_querier()->select("SELECT pages, stats_day
 	FROM " . StatsSetup::$stats_table . "
 	WHERE stats_year = :year AND stats_month = :month
 	ORDER BY stats_day", array(
 		'year' => $year,
 		'month' => $month
 	));
-    while ($row = $result->fetch())
-    {
-        $array_stats[$row['stats_day']] = $row['pages'];
-    }
-    $result->dispose();
+	while ($row = $result->fetch())
+	{
+		$array_stats[$row['stats_day']] = $row['pages'];
+	}
+	$result->dispose();
 
-    //Nombre de jours pour chaque mois (gestion des années bissextiles)
-    $bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
-    //Complément des jours manquant.
-    $array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
-    for ($i = 1; $i <= $array_month[$month - 1]; $i++)
-    {
-        if (!isset($array_stats[$i]))
-        {
-            $array_stats[$i] = 0;
-        }
-    }
-    $Stats->load_data($array_stats, 'histogram', 5);
-    //Tracé de l'histogramme.
-    $Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('days', 'date-common'), $LANG['page_s']), NO_DRAW_LEGEND, NO_DRAW_VALUES, 8);
+	//Nombre de jours pour chaque mois (gestion des années bissextiles)
+	$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
+	//Complément des jours manquant.
+	$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
+	for ($i = 1; $i <= $array_month[$month - 1]; $i++)
+	{
+		if (!isset($array_stats[$i]))
+		{
+			$array_stats[$i] = 0;
+		}
+	}
+	$Stats->load_data($array_stats, 'histogram', 5);
+	//Tracé de l'histogramme.
+	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('days', 'date-common'), $LANG['page_s']), NO_DRAW_LEGEND, NO_DRAW_VALUES, 8);
 }
 elseif ($get_pages_year)
 {
-    $year = !empty($_GET['year']) ? NumberHelper::numeric($_GET['year']) : '';
+	$year = !empty($_GET['year']) ? NumberHelper::numeric($_GET['year']) : '';
 
-    $array_stats = array();
-    $result = PersistenceContext::get_querier()->select("SELECT SUM(pages) as total, stats_month
+	$array_stats = array();
+	$result = PersistenceContext::get_querier()->select("SELECT SUM(pages) as total, stats_month
 	FROM " . StatsSetup::$stats_table . "
 	WHERE stats_year = :year
 	GROUP BY stats_month
 	ORDER BY stats_month", array(
 		'year' => $year
 	));
-    while ($row = $result->fetch())
-    {
-        $array_stats[$row['stats_month']] = $row['total'];
-    }
-    $result->dispose();
+	while ($row = $result->fetch())
+	{
+		$array_stats[$row['stats_month']] = $row['total'];
+	}
+	$result->dispose();
 
-    //Complément des mois manquant
-    for ($i = 1; $i <= 12; $i++)
-    {
-        if (!isset($array_stats[$i]))
-        {
-            $array_stats[$i] = 0;
-        }
-    }
-    $Stats->load_data($array_stats, 'histogram', 5);
-    //Tracé de l'histogramme.
-    $Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('month', 'date-common'), $LANG['page_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
+	//Complément des mois manquant
+	for ($i = 1; $i <= 12; $i++)
+	{
+		if (!isset($array_stats[$i]))
+		{
+			$array_stats[$i] = 0;
+		}
+	}
+	$Stats->load_data($array_stats, 'histogram', 5);
+	//Tracé de l'histogramme.
+	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('month', 'date-common'), $LANG['page_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
 }
 elseif ($get_brw) //Navigateurs.
 {
-    $array_stats = array();
-    $percent_other = 0;
-    foreach (StatsSaver::retrieve_stats('browsers') as $name => $value)
-    {
-        if (isset($stats_array_browsers[$name]) && $name != 'other')
-        {
-            $array_stats[$stats_array_browsers[$name][0]] = $value;
-        }
-        else
-        {
-            $percent_other += $value;
-        }
-    }
-    if ($percent_other > 0)
-    {
-        $array_stats[$stats_array_browsers['other'][0]] = $percent_other;
-    }
+	$array_stats = array();
+	$percent_other = 0;
+	foreach (StatsSaver::retrieve_stats('browsers') as $name => $value)
+	{
+		if (isset($stats_array_browsers[$name]) && $name != 'other')
+		{
+			$array_stats[$stats_array_browsers[$name][0]] = $value;
+		}
+		else
+		{
+			$percent_other += $value;
+		}
+	}
+	if ($percent_other > 0)
+	{
+		$array_stats[$stats_array_browsers['other'][0]] = $percent_other;
+	}
 
-    $Stats->load_data($array_stats, 'ellipse', 5);
-    $Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/browsers.png');
+	$Stats->load_data($array_stats, 'ellipse', 5);
+	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/browsers.png');
 }
 elseif ($get_os)
 {
-    $array_stats = array();
-    $percent_other = 0;
-    foreach (StatsSaver::retrieve_stats('os') as $name => $value)
-    {
-        if (isset($stats_array_os[$name]) && $name != 'other')
-        {
-            $array_stats[$stats_array_os[$name][0]] = $value;
-        }
-        else
-        {
-            $percent_other += $value;
-        }
-    }
-    if ($percent_other > 0)
-    {
-        $array_stats[$stats_array_os['other'][0]] = $percent_other;
-    }
+	$array_stats = array();
+	$percent_other = 0;
+	foreach (StatsSaver::retrieve_stats('os') as $name => $value)
+	{
+		if (isset($stats_array_os[$name]) && $name != 'other')
+		{
+			$array_stats[$stats_array_os[$name][0]] = $value;
+		}
+		else
+		{
+			$percent_other += $value;
+		}
+	}
+	if ($percent_other > 0)
+	{
+		$array_stats[$stats_array_os['other'][0]] = $percent_other;
+	}
 
-    $Stats->load_data($array_stats, 'ellipse', 5);
-    $Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/os.png');
+	$Stats->load_data($array_stats, 'ellipse', 5);
+	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/os.png');
 }
 elseif ($get_lang)
 {
 	$array_stats = array();
-    $percent_other = 0;
-    foreach (StatsSaver::retrieve_stats('lang') as $name => $value)
-    {
-        foreach ($stats_array_lang as $regex => $array_country)
-        {
-            if (preg_match('`' . $regex . '`', $name))
-            {
-                if ($name != 'other')
-                {
-                    $array_stats[$array_country[0]] = $value;
-                }
-                else
-                {
-                    $percent_other += $value;
-                }
-                break;
-            }
-        }
-    }
-    if ($percent_other > 0)
-    {
-        $array_stats[$stats_array_lang['other'][0]] = $percent_other;
-    }
+	$percent_other = 0;
+	foreach (StatsSaver::retrieve_stats('lang') as $name => $value)
+	{
+		foreach ($stats_array_lang as $regex => $array_country)
+		{
+			if (preg_match('`' . $regex . '`', $name))
+			{
+				if ($name != 'other')
+				{
+					$array_stats[$array_country[0]] = $value;
+				}
+				else
+				{
+					$percent_other += $value;
+				}
+				break;
+			}
+		}
+	}
+	if ($percent_other > 0)
+	{
+		$array_stats[$stats_array_lang['other'][0]] = $percent_other;
+	}
 
-    $Stats->load_data($array_stats, 'ellipse', 5);
-    $Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/lang.png');
+	$Stats->load_data($array_stats, 'ellipse', 5);
+	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/lang.png');
 }
 elseif ($get_theme)
 {
-    include_once(PATH_TO_ROOT . '/kernel/begin.php');
-    define('TITLE', '');
-    include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
+	include_once(PATH_TO_ROOT . '/kernel/begin.php');
+	define('TITLE', '');
+	include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
-    $stats_array = array();
+	$stats_array = array();
 	foreach (ThemesManager::get_activated_themes_map() as $id => $theme)
 	{
 		$stats_array[$id] = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE theme = '" . $id . "'");
 	}
 
-    $Stats->load_data($stats_array, 'ellipse', 5);
-    $Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/theme.png');
+	$Stats->load_data($stats_array, 'ellipse', 5);
+	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/theme.png');
 }
 elseif ($get_sex)
 {
-    include_once(PATH_TO_ROOT . '/kernel/begin.php');
-    define('TITLE', '');
-    include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
+	include_once(PATH_TO_ROOT . '/kernel/begin.php');
+	define('TITLE', '');
+	include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
-    $array_stats = array();
-    $result = PersistenceContext::get_querier()->select("SELECT member.user_id, count(ext_field.user_sex) as compt, ext_field.user_sex
+	$array_stats = array();
+	$result = PersistenceContext::get_querier()->select("SELECT member.user_id, count(ext_field.user_sex) as compt, ext_field.user_sex
 	FROM " . PREFIX . "member member
 	LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = member.user_id
 	GROUP BY ext_field.user_sex
 	ORDER BY compt");
-    while ($row = $result->fetch())
-    {
-        switch ($row['user_sex'])
-        {
-            case 0:
-                $name = $LANG['unknown'];
-                break;
-            case 1:
-                $name = $LANG['male'];
-                break;
-            case 2:
-                $name = $LANG['female'];
-                break;
-        }
-        $array_stats[$name] = $row['compt'];
-    }
-    $result->dispose();
+	while ($row = $result->fetch())
+	{
+		switch ($row['user_sex'])
+		{
+			case 0:
+				$name = $LANG['unknown'];
+				break;
+			case 1:
+				$name = $LANG['male'];
+				break;
+			case 2:
+				$name = $LANG['female'];
+				break;
+		}
+		$array_stats[$name] = $row['compt'];
+	}
+	$result->dispose();
 
-    $Stats->load_data($array_stats, 'ellipse', 5);
-    $Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/sex.png');
+	$Stats->load_data($array_stats, 'ellipse', 5);
+	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/sex.png');
 }
 elseif ($get_bot)
 {
@@ -365,8 +368,8 @@ elseif ($get_bot)
 			}
 		}
 	}
-    $Stats->load_data($stats_array, 'ellipse', 5);
-    $Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/bot.png');
+	$Stats->load_data($stats_array, 'ellipse', 5);
+	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/bot.png');
 }
 
 ?>

@@ -79,7 +79,8 @@ class NewsletterArchivesController extends ModuleController
 				$field_bdd = 'timestamp';
 		}
 		
-		$stream_condition = empty($this->stream->get_id()) ? "" : "WHERE stream_id = '". $this->stream->get_id() ."'";
+		$stream_id = $this->stream->get_id();
+		$stream_condition = $stream_id ? "WHERE stream_id = '" . $stream_id . "'" : "";
 		$nbr_archives = PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_archives, $stream_condition);
 		
 		$pagination = $this->get_pagination($current_page, $nbr_archives, $field, $sort);
@@ -89,9 +90,9 @@ class NewsletterArchivesController extends ModuleController
 		$this->view->put_all(array(
 			'C_MODERATE' => $moderation_auth,
 			'C_ARCHIVES' => (float)$nbr_archives,
-			'C_SPECIFIC_STREAM' => !empty($this->stream->get_id()),
+			'C_SPECIFIC_STREAM' => $stream_id,
 			'C_PAGINATION' => $pagination->has_several_pages(),
-			'NUMBER_COLUMN' => 3 + (int)(empty($this->stream->get_id()) && !empty($nbr_archives)) + $moderation_auth,
+			'NUMBER_COLUMN' => 3 + (int)(empty($stream_id) && !empty($nbr_archives)) + $moderation_auth,
 			'SORT_STREAM_TOP' => NewsletterUrlBuilder::archives($this->stream->get_id(), $this->stream->get_rewrited_name(), 'stream', 'top', $current_page)->rel(),
 			'SORT_STREAM_BOTTOM' => NewsletterUrlBuilder::archives($this->stream->get_id(), $this->stream->get_rewrited_name(), 'stream', 'bottom', $current_page)->rel(),
 			'SORT_SUBJECT_TOP' => NewsletterUrlBuilder::archives($this->stream->get_id(), $this->stream->get_rewrited_name(), 'subject', 'top', $current_page)->rel(),

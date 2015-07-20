@@ -19,11 +19,11 @@
 				if( disabled )
 				{
 					disabled = false;
-					document.getElementById("own_auth_display").style.display = 'block';
+					jQuery("#own_auth_display").show();
 				}
 				else
 				{
-					document.getElementById("own_auth_display").style.display = 'none';
+					jQuery("#own_auth_display").hide();
 					disabled = true;
 				}
 			}
@@ -43,20 +43,22 @@
 			<footer></footer>
 		</article>
 		# END previewing #
-			
-		<form action="{TARGET}" method="post"  onsubmit="return check_form_post();" class="fieldset-content">
+		
+		<form action="{TARGET}" method="post" onsubmit="return check_form_post();" class="fieldset-content">
 			<fieldset>
 				<legend>{L_TITLE_POST}</legend>
 				# START create #
 				<div class="form-element">
 					<label for="title">* {L_TITLE_FIELD}</label>
-					<div class="form-field"><label><input type="text" id="title" name="title" size="70" maxlength="250" value="{PAGE_TITLE}"></label></div>					
+					<div class="form-field"><label><input type="text" id="title" name="title" size="70" maxlength="250" value="{PAGE_TITLE}"></label></div>
 				</div>
 				# END create #
 				<div class="form-element-textarea">
 					<label for="contents">* {L_CONTENTS}</label>
 					{KERNEL_EDITOR}
-					<textarea rows="25" cols="66" id="contents" name="contents">{CONTENTS}</textarea>
+					<div class="form-field-textarea"">
+						<textarea rows="25" cols="66" id="contents" name="contents">{CONTENTS}</textarea>
+					</div>
 				</div>
 			</fieldset>	
 			
@@ -64,7 +66,7 @@
 				<legend>{L_PATH}</legend>
 				<div class="form-element">
 					<label for="is_cat">{L_IS_CAT}</label>
-					<div class="form-field"><label><input type="checkbox" name="is_cat" id="is_cat" {CHECK_IS_CAT}></label></div>					
+					<div class="form-field"><label><input type="checkbox" name="is_cat" id="is_cat" {CHECK_IS_CAT}></label></div>
 				</div>
 				<div class="form-element">
 					<label>{L_CAT}</label>
@@ -78,7 +80,7 @@
 								</ul>
 							</div>
 						</div>
-					</div>				
+					</div>
 				</div>
 			</fieldset>
 			
@@ -86,15 +88,15 @@
 				<legend>{L_PROPERTIES}</legend>
 				<div class="form-element">
 					<label for="count_hits">{L_COUNT_HITS}</label>
-					<div class="form-field"><label><input type="checkbox" id="count_hits" name="count_hits" {COUNT_HITS_CHECKED}></label></div>					
+					<div class="form-field"><label><input type="checkbox" id="count_hits" name="count_hits" {COUNT_HITS_CHECKED}></label></div>
 				</div>
 				<div class="form-element">
 					<label for="comments_activated">{L_COMMENTS_ACTIVATED}</label>
-					<div class="form-field"><label><input type="checkbox" id="comments_activated" name="comments_activated" {COMMENTS_ACTIVATED_CHECKED}></label></div>					
+					<div class="form-field"><label><input type="checkbox" id="comments_activated" name="comments_activated" {COMMENTS_ACTIVATED_CHECKED}></label></div>
 				</div>
 				<div class="form-element">
 					<label for="display_print_link">{L_DISPLAY_PRINT_LINK}</label>
-					<div class="form-field"><label><input type="checkbox" id="display_print_link" name="display_print_link" {DISPLAY_PRINT_LINK_CHECKED}></label></div>					
+					<div class="form-field"><label><input type="checkbox" id="display_print_link" name="display_print_link" {DISPLAY_PRINT_LINK_CHECKED}></label></div>
 				</div>
 			</fieldset>
 			
@@ -102,20 +104,20 @@
 				<legend>{L_AUTH}</legend>
 				<div class="form-element">
 					<label for="own_auth">{L_OWN_AUTH}</label>
-					<div class="form-field"><label><input type="checkbox" name="own_auth" id="own_auth" onclick="disable_own_auth();" {OWN_AUTH_CHECKED}></label></div>					
+					<div class="form-field"><label><input type="checkbox" name="own_auth" id="own_auth" onclick="disable_own_auth();" {OWN_AUTH_CHECKED}></label></div>
 				</div>
 				<span id="own_auth_display" style="{DISPLAY}">
 					<div class="form-element">
 						<label>{L_READ_PAGE}</label>
-						<div class="form-field">{SELECT_READ_PAGE}</div>					
+						<div class="form-field">{SELECT_READ_PAGE}</div>
 					</div>
 					<div class="form-element">
 						<label>{L_EDIT_PAGE}</label>
-						<div class="form-field">{SELECT_EDIT_PAGE}</div>					
+						<div class="form-field">{SELECT_EDIT_PAGE}</div>
 					</div>
 					<div class="form-element">
 						<label>{L_READ_COM}</label>
-						<div class="form-field">{SELECT_READ_COM}</div>					
+						<div class="form-field">{SELECT_READ_COM}</div>
 					</div>
 				</span>
 			</fieldset>

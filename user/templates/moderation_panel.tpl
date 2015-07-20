@@ -49,12 +49,9 @@
 								success: function(returnData){
 									jQuery('#xmlhttprequest-result-search').html(returnData);
 									jQuery('#xmlhttprequest-result-search').fadeIn();
-								},
-								error: function(e){
-									alert(e);
 								}
 							});
-						}	
+						}
 						else
 							alert("{L_REQUIRE_LOGIN}");
 					}
@@ -67,7 +64,7 @@
 						<div class="form-element">
 							<label for="login">{L_SEARCH_USER} <span class="field-description">{L_JOKER}</span></label>
 							<div class="form-field">
-								<input type="text" size="20" maxlength="25" id="login" value="" name="login">						
+								<input type="text" size="20" maxlength="25" id="login" value="" name="login">
 								<button onclick="XMLHttpRequest_search(this.form);" type="button">{L_SEARCH}</button>
 								<div id="xmlhttprequest-result-search" style="display:none;" class="xmlhttprequest-result-search"></div>
 							</div>
