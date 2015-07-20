@@ -54,6 +54,7 @@ ExtendedField.prototype = {
 				url: '${relative_url(AdminExtendedFieldsUrlBuilder::delete())}',
 				type: "post",
 				dataType: "json",
+				async: false,
 				data: {'id' : this.id, 'token' : '{TOKEN}'},
 				success: function(returnData){
 					if (returnData.code > 0)
@@ -64,9 +65,6 @@ ExtendedField.prototype = {
 					} else {
 						jQuery('#no_field').show();
 					}
-				},
-				error: function(e){
-					alert(e);
 				}
 			});
 		}
@@ -91,9 +89,6 @@ ExtendedField.prototype = {
 						jQuery("#change-display-" + returnData.id).html('<i class="fa fa-eye-slash" title="{@field.not_display}"></i>');
 					}
 				}
-			},
-			error: function(e){
-				alert(e);
 			}
 		});
 	}

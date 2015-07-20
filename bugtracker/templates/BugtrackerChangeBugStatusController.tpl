@@ -20,13 +20,6 @@
 					{
 						error = message;
 					}
-					else
-					{
-						error = '';
-					}
-				},
-				error: function(e){
-					alert(e);
 				}
 			});
 			return error;

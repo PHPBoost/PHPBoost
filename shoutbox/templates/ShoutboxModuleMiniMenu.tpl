@@ -39,7 +39,7 @@ function shoutbox_add_message()
 				jQuery('#shoutbox-refresh').html('<i class="fa fa-refresh"></i>');
 			},
 			error: function(e){
-				alert(e);
+				alert(${escapejs(LangLoader::get_message('csrf_invalid_token', 'status-messages-common'))});
 			}
 		});
 	} else {
@@ -71,7 +71,7 @@ function shoutbox_delete_message(id_message)
 				jQuery('#shoutbox-refresh').html('<i class="fa fa-refresh"></i>');
 			},
 			error: function(e){
-				alert(e);
+				alert(${escapejs(LangLoader::get_message('csrf_invalid_token', 'status-messages-common'))});
 			}
 		});
 	}

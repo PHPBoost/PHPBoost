@@ -49,8 +49,9 @@ $LANG['e_upload_already_exist'] = 'File already exists, overwrite is not allowed
 $LANG['e_max_data_reach'] = 'Max size reached, delete old files';
 
 //Members
+$LANG['e_display_name_auth'] = 'The entered display name is already used!';
 $LANG['e_pseudo_auth'] = 'The entered username is already used!';
-$LANG['e_mail_auth'] = 'The entered e-mail is already used!';
+$LANG['e_mail_auth'] = 'The entered e-mail address is already used!';
 $LANG['e_member_ban'] = 'You have been banned! You can retry to connect in';
 $LANG['e_member_ban_w'] = 'You have been banned for your behaviour! Contact the administator if you think it\'s an error.';
 $LANG['e_unactiv_member'] = 'Your account has not been activated yet!';

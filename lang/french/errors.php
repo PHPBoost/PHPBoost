@@ -48,8 +48,9 @@ $LANG['e_upload_already_exist'] = 'Le fichier existe déjà, écrasement non autori
 $LANG['e_max_data_reach'] = 'Taille maximale atteinte, supprimez d\'anciens fichiers';
 
 //Membres
+$LANG['e_display_name_auth'] = 'Le nom d\'affichage entré est déjà utilisé !';
 $LANG['e_pseudo_auth'] = 'Le pseudo entré est déjà utilisé !';
-$LANG['e_mail_auth'] = 'Le mail entré est déjà utilisé !';
+$LANG['e_mail_auth'] = 'L\'adresse email entrée est déjà utilisée !';
 $LANG['e_member_ban'] = 'Vous avez été banni! Vous pourrez vous reconnecter dans';
 $LANG['e_member_ban_w'] = 'Vous avez été banni pour un comportement abusif! Contactez l\'administrateur s\'il s\'agit d\'une erreur.';
 $LANG['e_unactiv_member'] = 'Votre compte n\'a pas encore été activé !';

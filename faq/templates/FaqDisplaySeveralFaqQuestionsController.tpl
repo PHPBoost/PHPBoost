@@ -77,9 +77,6 @@ FaqQuestion.prototype = {
 							jQuery("#no-item-message").show();
 						}
 					}
-				},
-				error: function(e){
-					alert(e);
 				}
 			});
 		}
@@ -119,9 +116,6 @@ function delete_question(id_question)
 						jQuery("#no-item-message").show();
 					}
 				}
-			},
-			error: function(e){
-				alert(e);
 			}
 		});
 	}

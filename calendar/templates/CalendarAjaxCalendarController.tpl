@@ -6,9 +6,6 @@
 					url: ${escapejs(U_AJAX_CALENDAR)} + year + '/' + month + '/' + {MINI_MODULE},
 					success: function(returnData){
 						jQuery('#calendar').html(returnData);
-					},
-					error: function(e){
-						alert(e);
 					}
 				});
 
@@ -17,9 +14,6 @@
 					url: ${escapejs(U_AJAX_EVENTS)} + year + '/' + month,
 					success: function(returnData){
 						jQuery('#events').html(returnData);
-					},
-					error: function(e){
-						alert(e);
 					}
 				});
 				# ENDIF #

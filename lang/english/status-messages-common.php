@@ -43,7 +43,7 @@ $lang['error.module.uninstalled'] = 'This module isn\'t installed!';
 $lang['error.module.unactivated'] = 'This module isn\'t activated!';
 $lang['error.invalid_archive_content'] = 'The content of the archive is invalid!';
 
-$lang['csrf_invalid_token'] = 'Invalid session token. Please retry because the operation has not been performed.';
+$lang['csrf_invalid_token'] = 'Invalid session token. Please try to reload the page because the operation has not been performed.';
 
 //Element
 $lang['element.already_exists'] = 'The item already exists.';

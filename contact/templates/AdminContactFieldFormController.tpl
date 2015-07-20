@@ -18,13 +18,11 @@
 				url: '${relative_url(ContactUrlBuilder::check_field_name())}',
 				type: "post",
 				dataType: "json",
+				async: false,
 				data: {'id' : field_id, 'name' : value, 'token' : '{TOKEN}'},
 				success: function(returnData){
 					if (returnData.result == 1)
 						result = message;
-				},
-				error: function(e){
-					alert(e);
 				}
 			});
 		}

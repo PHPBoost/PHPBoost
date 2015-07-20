@@ -2,19 +2,14 @@
 <!--
 function delete_filter(id) {
 	if (confirm(${escapejs(@actions.confirm.del_filter)})) {
-
 		jQuery.ajax({
 			url: '${relative_url(BugtrackerUrlBuilder::delete_filter())}',
 			type: "post",
-			async: false,
 			data: {'id' : id, 'token' : '{TOKEN}'},
 			success: function(returnData){
 				if (returnData.code > 0) {
 					jQuery("#filter" + returnData.code).remove();
 				}
-			},
-			error: function(e){
-				alert(e);
 			}
 		});
 	}

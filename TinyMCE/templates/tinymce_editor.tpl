@@ -34,9 +34,6 @@ function XMLHttpRequest_preview(field)
 				jQuery('#' + preview_field).html(returnData);
 
 				jQuery('#loading_preview' + field).hide();
-			},
-			error: function(e){
-				alert(e);
 			}
 		});
 	}

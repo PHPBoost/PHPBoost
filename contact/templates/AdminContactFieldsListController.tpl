@@ -59,9 +59,6 @@ ContactField.prototype = {
 						jQuery("#list-" + returnData.code).remove();
 						ContactFields.init_sortable();
 					}
-				},
-				error: function(e){
-					alert(e);
 				}
 			});
 		}
@@ -81,9 +78,6 @@ ContactField.prototype = {
 						jQuery("#change-display-" + returnData.id).html('<i class="fa fa-eye-slash" title="{@field.not_display}"></i>');
 					}
 				}
-			},
-			error: function(e){
-				alert(e);
 			}
 		});
 	}
