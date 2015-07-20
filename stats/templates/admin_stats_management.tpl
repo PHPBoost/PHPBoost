@@ -260,7 +260,7 @@
 				<tbody>
 					<tr>
 						<td>
-							<div style="width:50%;text-align:center;margin:auto">
+							<div style="width:60%;text-align:center;margin:auto">
 								<p class="text-strong">{L_TOTAL}: {VISIT_TOTAL} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L_TODAY}: {VISIT_DAY}</p>
 								<a class="fa fa-arrow-left" href="admin_stats{U_PREVIOUS_LINK}#stats"></a>&nbsp;&nbsp;&nbsp;&nbsp;
 								# IF C_STATS_DAY #
