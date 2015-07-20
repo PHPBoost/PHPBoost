@@ -35,7 +35,9 @@ function CheckForm() {
 			<div class="form-element-textarea">
 				<label for="contents" id="preview_description">* {L_CONTENT}</label>
 				{KERNEL_EDITOR}
-				<textarea rows="15" cols="5" id="contents" name="contents">{CONTENTS}</textarea>
+				<div class="form-field-textarea"">
+					<textarea rows="15" id="contents" name="contents">{CONTENTS}</textarea>
+				</div>
 				<div class="center"><button type="button" class="small" onclick="XMLHttpRequest_preview(); return false;" value="true">{L_PREVIEW}</button></div>
 			</div>
 			<div class="form-element">

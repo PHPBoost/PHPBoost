@@ -144,7 +144,9 @@
 							<div class="form-element-textarea">
 								<label for="contents">* {L_MESSAGE}</label>
 								{KERNEL_EDITOR}
-								<textarea rows="25" cols="47" id="contents" name="contents">{CONTENTS}</textarea>
+								<div class="form-field-textarea"">
+									<textarea rows="25" cols="47" id="contents" name="contents">{CONTENTS}</textarea>
+								</div>
 							</div>
 							# IF C_FORUM_POST_TYPE #
 							<div class="form-element">

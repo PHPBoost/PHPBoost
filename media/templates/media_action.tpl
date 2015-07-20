@@ -32,20 +32,20 @@
 			if (id_music.length > 0)
 				if (in_array (document.getElementById('idcat').value, id_music))
 				{
-					document.getElementById('width_dl').style.display = 'none';
-					document.getElementById('height_dl').style.display = 'none';
+					jQuery('#width_dl').hide();
+					jQuery('#height_dl').hide();
 				}
 				else
 				{
-					document.getElementById('width_dl').style.display = 'block';
-					document.getElementById('height_dl').style.display = 'block';
+					jQuery('#width_dl').show();
+					jQuery('#height_dl').show();
 				}
 		}
 		
 		# IF C_MUSIC #
 		window.onload = function () {
-			document.getElementById('width_dl').style.display = 'none';
-			document.getElementById('height_dl').style.display = 'none';
+			jQuery('#width_dl').hide();
+			jQuery('#height_dl').hide();
 		};
 		# ENDIF #
 		-->
@@ -80,7 +80,9 @@
 					<div class="form-element-textarea">
 						<label for="contents" id="preview_content">{L_CONTENTS}</label>
 						{KERNEL_EDITOR}
-						<textarea rows="10" cols="90" id="contents" name="contents">{DESCRIPTION}</textarea>
+						<div class="form-field-textarea"">
+							<textarea rows="10" cols="90" id="contents" name="contents">{DESCRIPTION}</textarea>
+						</div>
 					</div>
 					# IF C_APROB #
 					<div class="form-element">
@@ -98,7 +100,9 @@
 					<div class="form-element-textarea">
 						<label>{L_CONTRIBUTION_COUNTERPART} <p class="field-description">{L_CONTRIBUTION_COUNTERPART_EXPLAIN}</p></label>
 						{CONTRIBUTION_COUNTERPART_EDITOR}
-						<textarea rows="20" cols="40" id="counterpart" name="counterpart">{CONTRIBUTION_COUNTERPART}</textarea>
+						<div class="form-field-textarea"">
+							<textarea rows="20" cols="40" id="counterpart" name="counterpart">{CONTRIBUTION_COUNTERPART}</textarea>
+						</div>
 					</div>
 				</fieldset>
 				# ENDIF #

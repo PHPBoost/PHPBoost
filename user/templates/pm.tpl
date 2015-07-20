@@ -207,7 +207,9 @@
 			<legend>{L_RESPOND}</legend>
 			<div class="form-element-textarea">
 				{KERNEL_EDITOR}
-				<textarea rows="25" cols="66" id="contents" name="contents">{post_pm.CONTENTS}</textarea>
+				<div class="form-field-textarea"">
+					<textarea rows="25" cols="66" id="contents" name="contents">{post_pm.CONTENTS}</textarea>
+				</div>
 			</div>
 			<div class="center">
 				<button type="submit" name="pm" value="true" class="submit">{L_SUBMIT}</button>
@@ -238,16 +240,18 @@
 							<div class="form-element-textarea">
 								<label for="contents">* {L_MESSAGE}</label>
 								{KERNEL_EDITOR}
-								<textarea rows="25" cols="66" id="contents" name="contents">{edit_pm.CONTENTS}</textarea>
+								<div class="form-field-textarea"">
+									<textarea rows="25" cols="66" id="contents" name="contents">{edit_pm.CONTENTS}</textarea>
+								</div>
 							</div>
 						</fieldset>
 						
 						<div class="center">
-							<button type="submit" name="{SUBMIT_NAME}" value="{L_SUBMIT}" class="submit">{L_SUBMIT}</button>	
-							<button type="button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>											
+							<button type="submit" name="{SUBMIT_NAME}" value="{L_SUBMIT}" class="submit">{L_SUBMIT}</button>
+							<button type="button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
 							<button type="reset" value="true">{L_RESET}</button>
-						</div>	
-					</div>	
+						</div>
+					</div>
 				</div>
 				<footer></footer>
 			</section>
@@ -255,7 +259,7 @@
 		# END edit_pm #
 
 
-		# START post_convers #		
+		# START post_convers #
 		<form action="pm{post_convers.U_ACTION_CONVERS}" method="post" onsubmit="return check_form_convers();">
 			<section>					
 				<header>
@@ -291,7 +295,9 @@
 							<div class="form-element-textarea">
 								<label for="contents">* {L_MESSAGE}</label>
 								{KERNEL_EDITOR}
-								<textarea rows="25" cols="66" id="contents" name="contents">{CONTENTS}</textarea>
+								<div class="form-field-textarea"">
+									<textarea rows="25" cols="66" id="contents" name="contents">{CONTENTS}</textarea>
+								</div>
 							</div>
 						</fieldset>
 						
