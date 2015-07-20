@@ -794,6 +794,7 @@ div.field-required:after {
 	top: 10px;
 }
 
+.constraint-status-right .form-field-color:after,
 .constraint-status-right .form-field-select:after,
 .constraint-status-right .form-field-number:after,
 .constraint-status-right .form-field-decimal:after {
