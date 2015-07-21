@@ -62,7 +62,10 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 		{
 			$this->set_properties();
 			$this->save();
-			AppContext::get_response()->redirect($this->form->get_value('referrer') ? $this->form->get_value('referrer') : $this->get_categories_management_url(), StringVars::replace_vars($this->get_success_message(), array('name' => $this->get_category()->get_name())));
+			if ($this->is_new_category)
+				AppContext::get_response()->redirect($this->get_categories_management_url(), StringVars::replace_vars($this->get_success_message(), array('name' => $this->get_category()->get_name())));
+			else
+				AppContext::get_response()->redirect($this->form->get_value('referrer') ? $this->form->get_value('referrer') : $this->get_categories_management_url(), StringVars::replace_vars($this->get_success_message(), array('name' => $this->get_category()->get_name())));
 		}
 		
 		$tpl->put('FORM', $this->form->display());
