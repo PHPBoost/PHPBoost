@@ -385,7 +385,7 @@ class DownloadFormController extends ModuleController
 		$downloadfile = $this->get_downloadfile();
 		$category = $downloadfile->get_category();
 		
-		if ($downloadfile->get_id() === null && $this->is_contributor_member() && !$downloadfile->is_visible())
+		if ($this->is_new_downloadfile && $this->is_contributor_member() && !$downloadfile->is_visible())
 		{
 			DispatchManager::redirect(new UserContributionSuccessController());
 		}

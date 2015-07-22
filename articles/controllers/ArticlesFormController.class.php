@@ -415,7 +415,7 @@ class ArticlesFormController extends ModuleController
 		$article = $this->get_article();
 		$category = $article->get_category();
 
-		if ($article->get_id() === null && $this->is_contributor_member() && !$article->is_published())
+		if ($this->is_new_article && $this->is_contributor_member() && !$article->is_published())
 		{
 			DispatchManager::redirect(new UserContributionSuccessController());
 		}

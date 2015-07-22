@@ -251,7 +251,7 @@ class FaqFormController extends ModuleController
 		$faq_question = $this->get_faq_question();
 		$category = $faq_question->get_category();
 		
-		if ($faq_question->get_id() === null && $this->is_contributor_member() && !$faq_question->is_approved())
+		if ($this->is_new_faq_question && $this->is_contributor_member() && !$faq_question->is_approved())
 		{
 			DispatchManager::redirect(new UserContributionSuccessController());
 		}

@@ -352,7 +352,7 @@ class NewsFormController extends ModuleController
 		$news = $this->get_news();
 		$category = $news->get_category();
 
-		if ($news->get_id() === null && $this->is_contributor_member() && !$news->is_visible())
+		if ($this->is_new_news && $this->is_contributor_member() && !$news->is_visible())
 		{
 			DispatchManager::redirect(new UserContributionSuccessController());
 		}

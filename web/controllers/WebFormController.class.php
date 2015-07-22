@@ -344,7 +344,7 @@ class WebFormController extends ModuleController
 		$weblink = $this->get_weblink();
 		$category = $weblink->get_category();
 		
-		if ($weblink->get_id() === null && $this->is_contributor_member() && !$weblink->is_visible())
+		if ($this->is_new_weblink && $this->is_contributor_member() && !$weblink->is_visible())
 		{
 			DispatchManager::redirect(new UserContributionSuccessController());
 		}

@@ -469,7 +469,7 @@ class CalendarFormController extends ModuleController
 		$event = $this->get_event();
 		$category = $event->get_content()->get_category();
 		
-		if ($event->get_id() === null && $this->is_contributor_member() && !$event->get_content()->is_approved())
+		if ($this->is_new_event && $this->is_contributor_member() && !$event->get_content()->is_approved())
 		{
 			DispatchManager::redirect(new UserContributionSuccessController());
 		}
