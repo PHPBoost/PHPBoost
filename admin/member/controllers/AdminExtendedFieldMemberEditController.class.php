@@ -52,7 +52,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		if ($exist_field)
 		{
 			$this->extended_field = ExtendedFieldsCache::load()->get_extended_field($id);
-			$this->build_form();
+			$this->build_form($request);
 		}
 		else
 		{
@@ -75,15 +75,15 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
-			$this->save($id);
+			$extended_field = $this->save($id);
 			$error = ExtendedFieldsService::get_error();
 			if (!empty($error))
 			{
-				$this->tpl->put('MSG', MessageHelper::display($error, MessageHelper::NOTICE, 6));
+				$this->tpl->put('MSG', MessageHelper::display($error, MessageHelper::ERROR, 5));
 			}
 			else
 			{
-				$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 6));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : AdminExtendedFieldsUrlBuilder::fields_list()), StringVars::replace_vars($this->lang['message.success.edit'], array('name' => $extended_field->get_name())));
 			}
 		}
 
@@ -97,7 +97,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$this->lang = LangLoader::get('admin-user-common');
 	}
 	
-	private function build_form()
+	private function build_form(HTTPRequestCustom $request)
 	{
 		$form = new HTMLForm(__CLASS__);
 		
@@ -163,7 +163,9 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$auth_settings->build_from_auth_array($auth);
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$fieldset->add_field($auth_setter);
-
+		
+		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
+		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
@@ -213,6 +215,8 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$extended_field->set_authorization($this->form->get_value('authorizations', $extended_field->get_authorization())->build_auth_array());
 
 		ExtendedFieldsService::update($extended_field);
+		
+		return $extended_field;
 	}
 
 	private function get_array_select_type()

@@ -77,6 +77,8 @@ $lang['field.possible_values.recipient'] = 'Destinataire(s)';
 $lang['field.possible_values.recipient.explain'] = 'Le mail sera envoyé au(x) destinataire(s) sélectionné(s) si le champ destinataire n\'est pas affiché';
 
 //Messages
+$lang['message.success.add'] = 'Le champ <b>:name</b> a été ajouté';
+$lang['message.success.edit'] = 'Le champ <b>:name</b> a été modifié';
 $lang['message.field_name_already_used'] = 'Le nom du champ entré est déjà utilisé !';
 $lang['message.success_mail'] = 'Votre message a été envoyé avec succès.';
 $lang['message.acknowledgment'] = 'Un message de confirmation vous a été envoyé par mail.';

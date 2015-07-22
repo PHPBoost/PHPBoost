@@ -146,4 +146,8 @@ $lang['regex.website'] = 'Site web';
 $lang['regex.mail'] = 'Mail';
 $lang['regex.phone-number'] = 'Numéro de téléphone';
 $lang['regex.personnal-regex'] = 'Expression régulière personnalisée';
+
+//Messages
+$lang['message.success.add'] = 'Le champ du profil <b>:name</b> a été ajouté';
+$lang['message.success.edit'] = 'Le champ du profil <b>:name</b> a été modifié';
 ?>

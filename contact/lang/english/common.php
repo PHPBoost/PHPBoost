@@ -77,6 +77,8 @@ $lang['field.possible_values.recipient'] = 'Recipient(s)';
 $lang['field.possible_values.recipient.explain'] = 'The mail will ve sent to the selected recipient(s) if the recipients field is not displayed';
 
 //Messages
+$lang['message.success.add'] = 'The field <b>:name</b> has been added';
+$lang['message.success.edit'] = 'The field <b>:name</b> has been modified';
 $lang['message.field_name_already_used'] = 'The entered field name is already used!';
 $lang['message.success_mail'] = 'Thank you, your e-mail has been sent successfully.';
 $lang['message.acknowledgment'] = 'You should receive a confirmation email in a few minutes.';

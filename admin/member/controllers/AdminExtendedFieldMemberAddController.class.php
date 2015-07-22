@@ -58,15 +58,15 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
-			$this->save();
+			$extended_field = $this->save();
 			$error = ExtendedFieldsService::get_error();
 			if (!empty($error))
 			{
-				$this->tpl->put('MSG', MessageHelper::display($error, MessageHelper::NOTICE, 6));
+				$this->tpl->put('MSG', MessageHelper::display($error, MessageHelper::ERROR, 5));
 			}
 			else
 			{
-				$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 6));
+				AppContext::get_response()->redirect(AdminExtendedFieldsUrlBuilder::fields_list(), StringVars::replace_vars($this->lang['message.success.add'], array('name' => $extended_field->get_name())));
 			}
 		}
 
@@ -178,6 +178,8 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		$extended_field->set_is_not_installer(true);
 
 		ExtendedFieldsService::add($extended_field);
+		
+		return $extended_field;
 	}
 
 	private function get_array_select_type()

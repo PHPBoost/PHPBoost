@@ -44,12 +44,13 @@ class AdminContactFieldFormController extends AdminModuleController
 	
 	private $field;
 	private $id;
+	private $is_new_field;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init($request);
 		
-		$this->build_form();
+		$this->build_form($request);
 		
 		$this->tpl = new FileTemplate('contact/AdminContactFieldFormController.tpl');
 		$this->tpl->add_lang($this->lang);
@@ -57,7 +58,10 @@ class AdminContactFieldFormController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			AppContext::get_response()->redirect(ContactUrlBuilder::manage_fields());
+			if ($this->is_new_field)
+				AppContext::get_response()->redirect(ContactUrlBuilder::manage_fields(), StringVars::replace_vars($this->lang['message.success.add'], array('name' => $this->get_field()->get_name())));
+			else
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ContactUrlBuilder::manage_fields()), StringVars::replace_vars($this->lang['message.success.edit'], array('name' => $this->get_field()->get_name())));
 		}
 		
 		$this->tpl->put('FORM', $this->form->display());
@@ -76,7 +80,7 @@ class AdminContactFieldFormController extends AdminModuleController
 		$this->id = $request->get_getint('id', 0);
 	}
 	
-	private function build_form()
+	private function build_form(HTTPRequestCustom $request)
 	{
 		$field = $this->get_field();
 		
@@ -152,6 +156,8 @@ class AdminContactFieldFormController extends AdminModuleController
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings, array('hidden' => $field->is_readonly()));
 		$fieldset->add_field($auth_setter);
 		
+		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
+		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
@@ -172,6 +178,8 @@ class AdminContactFieldFormController extends AdminModuleController
 				$properties = $fields[$this->id];
 				$this->field->set_properties($properties);
 			}
+			else
+				$this->is_new_field = true;
 		}
 		return $this->field;
 	}
