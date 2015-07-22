@@ -56,9 +56,10 @@ class FormFieldCheckbox extends AbstractFormField
 		$template = $this->get_template_to_use();
 
 		$this->assign_common_template_variables($template);
-
-		$template->assign_block_vars('fieldelements', array(
-			'ELEMENT' => $this->generate_html_code()->render()
+		
+		$template->put_all(array(
+			'C_REQUIRED_AND_HAS_VALUE' => $this->is_required() && $this->get_value(),
+			'C_CHECKED' => $this->is_checked()
 		));
 
 		return $template;
@@ -81,7 +82,7 @@ class FormFieldCheckbox extends AbstractFormField
 		$request = AppContext::get_request();
 		if ($request->has_parameter($this->get_html_id()))
 		{
-			$this->set_value($request->get_value($this->get_html_id()) == 'on' ? true : false);
+			$this->set_value($request->get_value($this->get_html_id()) == 'on');
 		}
 		else
 		{
@@ -89,26 +90,9 @@ class FormFieldCheckbox extends AbstractFormField
 		}
 	}
 
-	private function generate_html_code()
-	{
-		$tpl_src = '<input type="checkbox" name="${escape(NAME)}" id="${escape(HTML_ID)}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_CHECKED # checked="checked" # ENDIF # # IF C_READONLY # readonly="readonly" # ENDIF #/>';
-
-		$tpl = new StringTemplate($tpl_src);
-		$tpl->put_all(array(
-			'NAME' => $this->get_html_id(),
-			'ID' => $this->get_id(),
-			'HTML_ID' => $this->get_html_id(),
-			'C_DISABLED' => $this->is_disabled(),
-			'C_READONLY' => $this->is_readonly(),
-			'C_CHECKED' => $this->is_checked()
-		));
-
-		return $tpl;
-	}
-
 	protected function get_default_template()
 	{
-		return new FileTemplate('framework/builder/form/FormField.tpl');
+		return new FileTemplate('framework/builder/form/FormFieldCheckbox.tpl');
 	}
 }
 ?>

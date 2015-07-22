@@ -855,8 +855,8 @@ div.field-required:after {
 }
 
 .form-field-checkbox.field-required:after {
-	right: -10px;
-	top: 4px;
+	right: -20px;
+	top: 0;
 }
 
 .form-field-upload-file.field-required:after {
@@ -869,6 +869,10 @@ div.field-required:after {
 .constraint-status-right .form-field-number:after,
 .constraint-status-right .form-field-decimal:after {
 	right: -20px;
+}
+
+.constraint-statuts-right .form-field-checkbox:after {
+	top: 4px;
 }
 
 .constraint-statuts-right .form-field-datetime:after {
@@ -894,6 +898,10 @@ div.field-required:after {
 
 .constraint-status-right div.field-required:after {
 	content: " ";
+}
+
+.constraint-status-right div.form-field-checkbox.picture-status-constraint:after {
+	top: 0;
 }
 
 .constraint-status-right div.picture-status-constraint:after {
@@ -929,7 +937,7 @@ div.field-required:after {
 .form-field-radio.field-required:after,
 .form-field-multiple-checkbox.field-required:after {
 	top: 3px;
-	right: 0px;
+	right: -6px;
 }
 
 /* --- Auto-completion --- */

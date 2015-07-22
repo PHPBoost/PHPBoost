@@ -21,10 +21,15 @@ jQuery(document).ready(function() {
 </script>
 # ENDIF #
 <div id="${escape(HTML_ID)}_field" # IF C_HIDDEN # style="display:none;" # ENDIF # class="form-element form-element-date # IF C_REQUIRED_AND_HAS_VALUE # constraint-status-right # ENDIF #">
-	<label for="${escape(HTML_ID)}">
-		{LABEL}
-		# IF DESCRIPTION #<span class="field-description">{DESCRIPTION}</span> # ENDIF #
-	</label>
+	# IF C_HAS_LABEL #
+		<label for="${escape(HTML_ID)}">
+			{LABEL}
+			# IF C_DESCRIPTION #
+			<span class="field-description">{DESCRIPTION}</span>
+			# ENDIF #
+		</label>
+	# ENDIF #
+	
 	<div id="onblurContainerResponse${escape(HTML_ID)}" class="form-field# IF C_HAS_FORM_FIELD_CLASS # {FORM_FIELD_CLASS}# ENDIF # picture-status-constraint# IF C_REQUIRED # field-required # ENDIF #">
 		{CALENDAR}
 		<span class="text-status-constraint" style="display:none" id="onblurMessageResponse${escape(HTML_ID)}"></span>
