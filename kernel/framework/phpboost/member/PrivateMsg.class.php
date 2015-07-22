@@ -135,6 +135,7 @@ class PrivateMsg
 		//Mise à jour du compteur de mp du destinataire.
 		self::$db_querier->inject("UPDATE " . DB_TABLE_MEMBER . " SET unread_pm = unread_pm + 1 WHERE user_id = '" . $pm_to . "'");
 		
+		SessionData::recheck_cached_data_from_user_id($pm_to);
 		return $pm_msg_id;
 	}
 	
@@ -176,6 +177,7 @@ class PrivateMsg
 			else //Mise à jour du statut de la conversation, afin de ne plus l'afficher au membre ayant décidé de la supprimer.
 				self::$db_querier->update(DB_TABLE_PM_TOPIC, array('user_convers_status' => 2), 'WHERE id = :id', array('id' => $pm_idconvers));
 		}
+		SessionData::recheck_cached_data_from_user_id($pm_userid);
 	}
 	
 	/**
@@ -202,6 +204,7 @@ class PrivateMsg
 			//Mise à jour du compteur de mp du destinataire.
 			self::$db_querier->inject("UPDATE " . DB_TABLE_MEMBER . " SET unread_pm = unread_pm - 1 WHERE user_id = '" . $pm_to . "'");
 		}
+		SessionData::recheck_cached_data_from_user_id($pm_to);
 		
 		return $pm_max_id;
 	}

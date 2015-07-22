@@ -92,6 +92,7 @@ if ($action == 'punish')
 		{
 			MemberSanctionManager::remove_write_permissions($id_get, $readonly, MemberSanctionManager::NO_SEND_CONFIRMATION, str_replace('%date', Date::to_format($readonly, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE), $readonly_contents));
 		}
+		SessionData::recheck_cached_data_from_user_id($user_id);
 		
 		AppContext::get_response()->redirect(HOST . DIR . url('/user/moderation_panel.php?action=punish', '', '&'));
 	}
@@ -260,6 +261,7 @@ else if ($action == 'warning')
 				{
 					MemberSanctionManager::caution($id_get, $new_warning_level, MemberSanctionManager::NO_SEND_CONFIRMATION, $warning_contents);
 				}
+				SessionData::recheck_cached_data_from_user_id($user_id);
 			}
 		}
 		
@@ -385,7 +387,8 @@ else
 		{
 			MemberSanctionManager::remove_write_permissions($id_get, 90, MemberSanctionManager::NO_SEND_CONFIRMATION);
 		}
-	
+		SessionData::recheck_cached_data_from_user_id($user_id);
+		
 		AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('ban'));
 	}
 	

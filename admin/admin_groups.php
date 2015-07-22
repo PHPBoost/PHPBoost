@@ -120,6 +120,7 @@ elseif (!empty($idgroup) && $add_mbr) //Ajout du membre au groupe.
 		if (GroupsService::add_member($user_id, $idgroup)) //Succès.
 		{
 			GroupsCache::invalidate();
+			SessionData::recheck_cached_data_from_user_id($user_id);
 			AppContext::get_response()->redirect('/admin/admin_groups.php?id=' . $idgroup . '#add');
 		}
 		else
@@ -138,6 +139,7 @@ elseif ($del_mbr && !empty($user_id) && !empty($idgroup)) //Suppression du membr
 	
 	GroupsService::remove_member($user_id, $idgroup);
 	GroupsCache::invalidate();
+	SessionData::recheck_cached_data_from_user_id($user_id);
 	AppContext::get_response()->redirect('/admin/admin_groups.php?id=' . $idgroup . '#add');
 }
 elseif (!empty($_FILES['upload_groups']['name'])) //Upload
@@ -356,15 +358,17 @@ else //Liste des groupes.
 	));
 	  
   
-	$result = PersistenceContext::get_querier()->select("SELECT id, name, img
+	$result = PersistenceContext::get_querier()->select("SELECT id, name, img, color
 	FROM " . DB_TABLE_GROUP . "
 	ORDER BY name");
 	while ($row = $result->fetch())
 	{
 		$template->assign_block_vars('group', array(
+			'C_GROUP_COLOR' => !empty($row['color']),
 			'U_USER_GROUP' => UserUrlBuilder::group($row['id'])->rel(),
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
+			'GROUP_COLOR' => '#' . $row['color'],
 			'IMAGE' => !empty($row['img']) ? '<img src="'. PATH_TO_ROOT .'/images/group/' . $row['img'] . '" alt="" />' : ''
 		));
 	}

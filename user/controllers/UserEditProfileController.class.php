@@ -382,9 +382,9 @@ class UserEditProfileController extends AbstractController
 				$user_warning = $this->form->get_value('user_warning')->get_raw_value();
 				if (!empty($user_warning) && $user_warning != $this->user->get_warning_percentage())
 				{
-					MemberSanctionManager::caution($user_id, $user_warning, MemberSanctionManager::SEND_MP, str_replace('%level%', $user_warning, $this->main_lang['user_warning_level_changed']));
+					MemberSanctionManager::caution($user_id, $user_warning, MemberSanctionManager::SEND_MP, str_replace('%level%', $user_warning, LangLoader::get_message('user_warning_level_changed', 'main')));
 				}
-				elseif ($user_warning != $this->user->get_warning_percentage())
+				elseif (empty($user_warning))
 				{
 					MemberSanctionManager::cancel_caution($user_id);
 				}
@@ -392,9 +392,9 @@ class UserEditProfileController extends AbstractController
 				$user_readonly = $this->form->get_value('user_readonly')->get_raw_value();
 				if (!empty($user_readonly) && $user_readonly != $this->user->get_delay_readonly())
 				{
-					MemberSanctionManager::remove_write_permissions($user_id, time() + $user_readonly, MemberSanctionManager::SEND_MP, str_replace('%date%', $this->form->get_value('user_readonly')->get_label(), $this->main_lang['user_readonly_changed']));
+					MemberSanctionManager::remove_write_permissions($user_id, time() + $user_readonly, MemberSanctionManager::SEND_MP, str_replace('%date%', $this->form->get_value('user_readonly')->get_label(), LangLoader::get_message('user_readonly_changed', 'main')));
 				}
-				elseif ($user_readonly != $this->user->get_delay_readonly())
+				elseif (empty($user_readonly))
 				{
 					MemberSanctionManager::restore_write_permissions($user_id);
 				}
@@ -409,6 +409,7 @@ class UserEditProfileController extends AbstractController
 					MemberSanctionManager::cancel_banishment($user_id);
 				}
 			}
+			SessionData::recheck_cached_data_from_user_id($user_id);
 		}
 		
 		if (!$has_error)

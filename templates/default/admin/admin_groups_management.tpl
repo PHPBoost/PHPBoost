@@ -46,7 +46,7 @@
 						# START group #
 						<tr> 
 							<td>
-								<a href="{group.U_USER_GROUP}">{group.NAME}</a>
+								<a href="{group.U_USER_GROUP}"# IF group.C_GROUP_COLOR # style="color:{group.GROUP_COLOR}" # ENDIF #>{group.NAME}</a>
 							</td>
 							<td>
 								{group.IMAGE}

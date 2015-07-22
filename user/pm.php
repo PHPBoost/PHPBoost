@@ -87,6 +87,9 @@ if ($read)
 	
 	PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('unread_pm' => $nbr_waiting_pm), 'WHERE user_id = :id', array('id' => AppContext::get_current_user()->get_id()));
 	
+	if ($nbr_waiting_pm != $nbr_pm)
+		SessionData::recheck_cached_data_from_user_id(AppContext::get_current_user()->get_id());
+	
 	AppContext::get_response()->redirect(UserUrlBuilder::personnal_message());
 }
 
@@ -345,6 +348,8 @@ elseif ($pm_del_convers) //Suppression de conversation.
 	}
 	$result->dispose();
 	
+	SessionData::recheck_cached_data_from_user_id(AppContext::get_current_user()->get_id());
+	
 	AppContext::get_response()->redirect('/user/pm' . url('.php?pm=' . AppContext::get_current_user()->get_id(), '-' . AppContext::get_current_user()->get_id() . '.php', '&'));
 }
 elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne la pas encore lu.
@@ -547,6 +552,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('unread_pm' => 'unread_pm - ' . (int)$convers['user_view_pm']), 'WHERE user_id = :id', array('id' => AppContext::get_current_user()->get_id()));
 		PersistenceContext::get_querier()->update(DB_TABLE_PM_TOPIC, array('user_view_pm' => 0), 'WHERE id = :id', array('id' => $pm_id_get));
 		PersistenceContext::get_querier()->update(DB_TABLE_PM_MSG, array('view_status' => 1), 'WHERE idconvers = :id AND user_id <> :user_id', array('id' => $convers['id'], 'user_id' => AppContext::get_current_user()->get_id()));
+		SessionData::recheck_cached_data_from_user_id(AppContext::get_current_user()->get_id());
 	}
 	
 	//On crée une pagination si le nombre de MP est trop important.

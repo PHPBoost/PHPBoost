@@ -37,7 +37,7 @@ class CurrentUser extends User
 		return new self(AppContext::get_session());
 	}
 	
-	private $groups_auth;
+	private $groups_auth = array();
 	
 	public function __construct(SessionData $session)
 	{
