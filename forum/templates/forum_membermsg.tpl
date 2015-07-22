@@ -31,6 +31,12 @@
 				</div>
 				<div class="msg-contents-container">
 					<div class="msg-info-mbr">
+						<p class="center">{list.USER_RANK}</p>
+						<p class="center">{list.USER_IMG_ASSOC}</p>
+						<p class="center">{list.USER_AVATAR}</p>
+						<p class="center">{list.USER_GROUP}</p>
+						{list.USER_DATE}<br />
+						{list.USER_MSG}<br />
 					</div>
 					<div class="msg-contents">
 						<div class="msg-contents-overflow">
@@ -38,6 +44,26 @@
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="msg-sign{list.CLASS_COLOR}">
+				<div class="msg-sign-overflow">
+					{list.USER_SIGN}
+				</div>
+				<hr />
+				<span style="float:left;">
+					{list.USER_PM} {list.USER_MAIL}
+					# START list.ext_fields #
+						{list.ext_fields.BUTTON}
+					# END list.ext_fields #
+				</span>
+				<span style="float:right;font-size:10px;">
+					&nbsp;
+					# IF list.C_FORUM_MODERATOR # 
+					{list.USER_WARNING}%
+					<a href="moderation_forum{list.U_FORUM_WARNING}" title="{L_WARNING_MANAGEMENT}" class="fa fa-warning"></a>
+					<a href="moderation_forum{list.U_FORUM_PUNISHEMENT}" title="{L_PUNISHEMENT_MANAGEMENT}" class="fa fa-lock"></a>
+					# ENDIF #
+				</span>&nbsp;
 			</div>
 		</div>
 		# END list #

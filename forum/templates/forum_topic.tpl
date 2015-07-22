@@ -238,10 +238,10 @@
 				</div>
 				<div class="msg-contents-container">
 					<div class="msg-info-mbr">
-						<p style="text-align:center;">{msg.USER_RANK}</p>
-						<p style="text-align:center;">{msg.USER_IMG_ASSOC}</p>
-						<p style="text-align:center;">{msg.USER_AVATAR}</p>
-						<p style="text-align:center;">{msg.USER_GROUP}</p>	
+						<p class="center">{msg.USER_RANK}</p>
+						<p class="center">{msg.USER_IMG_ASSOC}</p>
+						<p class="center">{msg.USER_AVATAR}</p>
+						<p class="center">{msg.USER_GROUP}</p>
 						{msg.USER_DATE}<br />
 						{msg.USER_MSG}<br />
 					</div>
