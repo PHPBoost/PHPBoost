@@ -345,7 +345,7 @@ FormField.prototype = {
 			var errorMessage = this.doValidate();
 			if (errorMessage != "") {
 				this.enableValidationMessage();
-				this.displayErrorMessage(errorMessage);
+				this.displayErrorMessage('<i class="fa fa-forbidden"></i> ' + errorMessage);
 			} 
 			return errorMessage;
 		}
@@ -377,13 +377,12 @@ jQuery(document).ready(function() {
 	
 	//Allow only valid characters in tel inputs
 	jQuery('input[type="tel"]').keyup(function() {
-		var testValPattern = new RegExp("^(\\\+[0-9]+( |-)?|0)?[0-9]( |-)?([0-9]{2}( |-)?){4}$");
 		var testCaretPattern = new RegExp("^[0-9-\+ ]$");
 		
 		var val = jQuery(this).val();
 		var index = this.selectionStart - 1;
 		
-		if (!testCaretPattern.test(val.charAt(index)) || !testValPattern.test(val)) {
+		if (!testCaretPattern.test(val.charAt(index))) {
 			jQuery(this).val(val.substr(0, (index)) + val.substr(index + 1));
 		}
 	});
