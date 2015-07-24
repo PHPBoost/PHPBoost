@@ -76,6 +76,22 @@ class ForumUrlBuilder
 	/**
 	 * @return Url
 	 */
+	public static function display_category($id, $rewrited_name)
+	{
+		return new Url('/forum/' . url('index.php?id=' . $id, 'cat-' . $id . '+' . $rewrited_name . '.php'));
+	}
+	
+	/**
+	 * @return Url
+	 */
+	public static function display_forum($id, $rewrited_name)
+	{
+		return new Url('/forum/' . url('forum.php?id=' . $id, 'forum-' . $id . '+' . $rewrited_name . '.php'));
+	}
+	
+	/**
+	 * @return Url
+	 */
 	public static function manage_ranks()
 	{
 		return new Url('/forum/admin_ranks.php');

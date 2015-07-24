@@ -84,6 +84,7 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 				$category_view->add_lang($this->lang);
 				$category_view->put_all(array(
 					'C_DESCRIPTION' => !empty($description),
+					'U_DISPLAY' => $this->get_display_category_url($category)->rel(),
 					'U_EDIT' => $this->get_edit_category_url($category)->rel(),
 					'U_DELETE' => $this->get_delete_category_url($category)->rel(),
 					'ID' => $id,
@@ -156,6 +157,12 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 	 * @return CategoriesManager
 	 */
 	abstract protected function get_categories_manager();
+	
+	/**
+	 * @param int $category Category
+	 * @return Url
+	 */
+	abstract protected function get_display_category_url(Category $category);
 	
 	/**
 	 * @param int $category Category

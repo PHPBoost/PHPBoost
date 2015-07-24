@@ -41,6 +41,11 @@ class DownloadCategoriesManageController extends AbstractCategoriesManageControl
 		return DownloadService::get_categories_manager();
 	}
 	
+	protected function get_display_category_url(Category $category)
+	{
+		return DownloadUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name());
+	}
+	
 	protected function get_edit_category_url(Category $category)
 	{
 		return DownloadUrlBuilder::edit_category($category->get_id());

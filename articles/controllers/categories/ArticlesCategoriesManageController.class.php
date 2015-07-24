@@ -37,6 +37,11 @@ class ArticlesCategoriesManageController extends AbstractCategoriesManageControl
 		return ArticlesService::get_categories_manager();
 	}
 	
+	protected function get_display_category_url(Category $category)
+	{
+		return ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name());
+	}
+	
 	protected function get_edit_category_url(Category $category)
 	{
 		return ArticlesUrlBuilder::edit_category($category->get_id());

@@ -2,7 +2,7 @@
 	<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
 	<div class="sortable-title"> 
 		<i class="fa fa-globe"></i>
-		{NAME}
+		<a href="{U_DISPLAY}" title="{NAME}">{NAME}</a>
 		# IF C_DESCRIPTION #<span class="cat-desc"> | {DESCRIPTION}</span># ENDIF #
 		<div class="sortable-actions">
 			<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{ID}" onclick="return false;"><i class="fa fa-arrow-up"></i></a>

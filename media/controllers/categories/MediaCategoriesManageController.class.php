@@ -41,6 +41,11 @@ class MediaCategoriesManageController extends AbstractCategoriesManageController
 		return MediaService::get_categories_manager();
 	}
 	
+	protected function get_display_category_url(Category $category)
+	{
+		return MediaUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name());
+	}
+	
 	protected function get_edit_category_url(Category $category)
 	{
 		return MediaUrlBuilder::edit_category($category->get_id());

@@ -36,6 +36,26 @@ class ForumCategoriesManageController extends AbstractCategoriesManageController
 	{
 		return ForumService::get_categories_manager();
 	}
+	
+	protected function get_display_category_url(Category $category)
+	{
+		switch ($category->get_type())
+		{
+			case ForumCategory::TYPE_URL :
+				$url = new Url($category->get_url());
+				break;
+			
+			case ForumCategory::TYPE_FORUM :
+				$url = ForumUrlBuilder::display_forum($category->get_id(), $category->get_rewrited_name());
+				break;
+			
+			default :
+				$url = ForumUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name());
+				break;
+		}
+		
+		return $url;
+	}
 
 	protected function get_edit_category_url(Category $category)
 	{

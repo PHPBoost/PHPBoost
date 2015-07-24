@@ -64,7 +64,12 @@ $categories = array_reverse(ForumService::get_categories_manager()->get_parents(
 foreach ($categories as $id => $cat)
 {
 	if ($cat->get_id() != Category::ROOT_CATEGORY)
-		$Bread_crumb->add($cat->get_name(), 'forum' . url('.php?id=' . $cat->get_id(), '-' . $cat->get_id() . '+' . $cat->get_rewrited_name() . '.php'));
+	{
+		if ($cat->get_type() == ForumCategory::TYPE_FORUM)
+			$Bread_crumb->add($cat->get_name(), 'forum' . url('.php?id=' . $cat->get_id(), '-' . $cat->get_id() . '+' . $cat->get_rewrited_name() . '.php'));
+		else
+			$Bread_crumb->add($cat->get_name(), url('index.php?id=' . $cat->get_id(), 'cat-' . $cat->get_id() . '+' . $cat->get_rewrited_name() . '.php'));
+	}
 }
 
 if (!empty($id_get))

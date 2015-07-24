@@ -149,7 +149,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 				$tpl->assign_block_vars('forums_list.cats', array(
 					'IDCAT' => $row['cid'],
 					'NAME' => $row['name'],
-					'U_FORUM_VARS' => PATH_TO_ROOT . '/forum/' . url('index.php?id=' . $row['cid'], 'cat-' . $row['cid'] . '+' . $row['rewrited_name'] . '.php')
+					'U_FORUM_VARS' => ForumUrlBuilder::display_category($row['cid'], $row['rewrited_name'])->rel()
 				));
 				$display_sub_cats = true;
 			}
@@ -249,7 +249,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 						'NBR_TOPIC' => $row['nbr_topic'],
 						'NBR_MSG' => $row['nbr_msg'],
 						'U_FORUM_URL' => $row['url'],
-						'U_FORUM_VARS' => PATH_TO_ROOT .'/forum/' . url('forum.php?id=' . $row['cid'], 'forum-' . $row['cid'] . '+' . $row['rewrited_name'] . '.php'),
+						'U_FORUM_VARS' => ForumUrlBuilder::display_forum($row['cid'], $row['rewrited_name'])->rel(),
 						'U_LAST_TOPIC' => $last
 					));
 				}

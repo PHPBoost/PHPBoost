@@ -41,6 +41,11 @@ class FaqCategoriesManageController extends AbstractCategoriesManageController
 		return FaqService::get_categories_manager();
 	}
 	
+	protected function get_display_category_url(Category $category)
+	{
+		return FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name());
+	}
+	
 	protected function get_edit_category_url(Category $category)
 	{
 		return FaqUrlBuilder::edit_category($category->get_id());
