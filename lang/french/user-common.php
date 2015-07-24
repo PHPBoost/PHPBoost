@@ -194,7 +194,7 @@ $lang['extended-field.field.sex'] = 'Sexe';
 $lang['extended-field.field.sex-explain'] = '';
 
 $lang['extended-field.field.date-birth'] = 'Date de naissance';
-$lang['extended-field.field.date-birth-explain'] = 'De type JJ/MM/AAAA';
+$lang['extended-field.field.date-birth-explain'] = '';
 
 $lang['extended-field.field.avatar'] = 'Avatar';
 $lang['extended-field.field.avatar-explain'] = '';
