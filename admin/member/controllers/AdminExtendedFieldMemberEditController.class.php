@@ -148,8 +148,8 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		
 		$fieldset->add_field(new FormFieldPossibleValues('possible_values', $this->lang['field.possible-values'], $this->extended_field['possible_values']));
 		
-		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('default_value', $this->lang['field.default-value'], $this->extended_field['default_value'], array(
-			'width' => 60, 'rows' => 4)
+		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('default_value', $this->lang['field.default-value'], $this->extended_field['default_value'],
+			array('rows' => 4)
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('display', $this->lang['field.display'], (int)$this->extended_field['display']));
