@@ -206,9 +206,6 @@ $lang['extended-field.field.avatar.link-explain'] = 'Adresse directe de l\'avata
 $lang['extended-field.field.avatar.delete'] = 'Supprimer l\'avatar courant';
 $lang['extended-field.field.avatar.no_avatar'] = 'Aucun avatar';
 
-$lang['extended-field.field.website'] = 'Site web';
-$lang['extended-field.field.website-explain'] = 'Veuillez renseigner un site web valide (ex : http://www.phpboost.com)';
-
 $lang['extended-field.field.location'] = 'Localisation';
 $lang['extended-field.field.location-explain'] = '';
 
@@ -218,15 +215,6 @@ $lang['extended-field.field.job-explain'] = '';
 $lang['extended-field.field.entertainement'] = 'Loisirs';
 $lang['extended-field.field.entertainement-explain'] = '';
 
-$lang['extended-field.field.signing'] = 'Signature';
-$lang['extended-field.field.signing-explain'] = 'Apparaît sous chacun de vos messages';
-
 $lang['extended-field.field.biography'] = 'Biographie';
 $lang['extended-field.field.biography-explain'] = '';
-
-$lang['extended-field.field.msn'] = 'MSN';
-$lang['extended-field.field.msn-explain'] = '';
-
-$lang['extended-field.field.yahoo'] = 'Yahoo';
-$lang['extended-field.field.yahoo-explain'] = '';
 ?>

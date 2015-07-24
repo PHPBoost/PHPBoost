@@ -57,6 +57,16 @@ $lang['config.message_when_topic_is_solved'] = 'Message devant le titre du topic
 $lang['config.message_before_topic_title_icon_displayed'] = 'Afficher l\'icône associée';
 $lang['config.message_before_topic_title_icon_displayed.explain'] = '<i class="fa fa-msg-display"></i> / <i class="fa fa-msg-not-display"></i>';
 
+//Extended Field
+$lang['extended-field.field.website'] = 'Site web';
+$lang['extended-field.field.website-explain'] = 'Veuillez renseigner un site web valide (ex : http://www.phpboost.com)';
+
+$lang['extended-field.field.skype'] = 'Skype';
+$lang['extended-field.field.skype-explain'] = '';
+
+$lang['extended-field.field.signing'] = 'Signature';
+$lang['extended-field.field.signing-explain'] = 'Apparaît sous chacun de vos messages';
+
 //authorizations
 $lang['authorizations.read_topics_content'] = 'Autorisation d\'afficher le contenu des topics';
 $lang['authorizations.flood'] = 'Autorisation de flooder';

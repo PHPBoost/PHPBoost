@@ -268,8 +268,7 @@ class ForumSetup extends DefaultModuleSetup
 	{
 		ExtendedFieldsService::delete_by_field_name(self::$member_extended_field_last_view_forum_column);
 		ExtendedFieldsService::delete_by_field_name('user_website');
-		ExtendedFieldsService::delete_by_field_name('user_msn');
-		ExtendedFieldsService::delete_by_field_name('user_yahoo');
+		ExtendedFieldsService::delete_by_field_name('user_skype');
 		ExtendedFieldsService::delete_by_field_name('user_sign');
 	}
 
@@ -285,6 +284,8 @@ class ForumSetup extends DefaultModuleSetup
 
 	private function create_member_extended_field()
 	{
+		$lang = LangLoader::get('common', 'forum');
+		
 		$extended_field = new ExtendedField();
 		$extended_field->set_name(self::$member_extended_field_last_view_forum_column);
 		$extended_field->set_field_name(self::$member_extended_field_last_view_forum_column);
@@ -293,7 +294,6 @@ class ForumSetup extends DefaultModuleSetup
 		ExtendedFieldsService::add($extended_field);
 		
 		//Website
-		$lang = LangLoader::get('user-common');
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['extended-field.field.website']);
 		$extended_field->set_field_name('user_website');
@@ -305,23 +305,11 @@ class ForumSetup extends DefaultModuleSetup
 		$extended_field->set_regex(5);
 		ExtendedFieldsService::add($extended_field);
 		
-		//MSN
+		//Skype
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['extended-field.field.msn']);
-		$extended_field->set_field_name('user_msn');
-		$extended_field->set_description($lang['extended-field.field.msn-explain']);
-		$extended_field->set_field_type('MemberShortTextExtendedField');
-		$extended_field->set_is_required(false);
-		$extended_field->set_display(false);
-		$extended_field->set_is_freeze(true);
-		$extended_field->set_regex(4);
-		ExtendedFieldsService::add($extended_field);
-		
-		//Yahoo
-		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['extended-field.field.yahoo']);
-		$extended_field->set_field_name('user_yahoo');
-		$extended_field->set_description($lang['extended-field.field.yahoo-explain']);
+		$extended_field->set_name($lang['extended-field.field.skype']);
+		$extended_field->set_field_name('user_skype');
+		$extended_field->set_description($lang['extended-field.field.skype-explain']);
 		$extended_field->set_field_type('MemberShortTextExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(false);
@@ -349,7 +337,7 @@ class ForumSetup extends DefaultModuleSetup
 			'rewrited_name' => Url::encode_rewrite($this->messages['default.category.name']),
 			'description' => $this->messages['default.category.description'],
 			'c_order' => 1,
-			'auth' => 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:7;}',
+			'auth' => '',
 			'id_parent' => 0,
 			'last_topic_id' => 1,
 			'url' => ''
@@ -361,7 +349,7 @@ class ForumSetup extends DefaultModuleSetup
 			'rewrited_name' => Url::encode_rewrite($this->messages['default.board.name']),
 			'description' => $this->messages['default.board.description'],
 			'c_order' => 1,
-			'auth' => 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:3;s:2:"r1";i:7;s:2:"r2";i:7;}',
+			'auth' => '',
 			'id_parent' => 1,
 			'last_topic_id' => 1,
 			'url' => ''
