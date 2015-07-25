@@ -224,7 +224,7 @@ class Url
 		$url = preg_replace('`([^a-z0-9]|[\s])`', '-', $url);
 		$url = preg_replace('`[-]{2,}`', '-', $url);
 		$url = trim($url, ' -');
-
+		
 		return $url;
 	}
 
