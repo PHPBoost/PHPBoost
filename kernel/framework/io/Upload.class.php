@@ -239,7 +239,7 @@ class Upload
 	{
 		$string = strtolower($string);
 		$string = strtr($string, ' éèêàâùüûïîôç', '-eeeaauuuiioc');
-		$string = preg_replace('`([^a-z0-9]|[\s])`', '_', $string);
+		$string = preg_replace('`([^a-z0-9-]|[\s])`', '_', $string);
 		$string = preg_replace('`[_]{2,}`', '_', $string);
 		$string = trim($string, ' _');
 		
