@@ -108,6 +108,9 @@ $lang = array(
 	
 	'advanced-config.miscellaneous' => 'Divers',
 	'advanced-config.output-gziping-enabled' => 'Activation de la compression des pages, ceci accélère la vitesse d\'affichage',
+	'advanced-config.database-tables-optimization-enabled' => 'Activer l\'optimisation automatique des tables de la base de données',
+	'advanced-config.database-tables-optimization-day' => 'Jour de l\'optimisation',
+	'advanced-config.database-tables-optimization-day.explain' => 'Optimisation exécutée dans la nuit',
 	'advanced-config.debug-mode' => 'Mode Debug',
 	'advanced-config.debug-mode.explain' => 'Ce mode est particulièrement utile pour les développeurs car les erreurs sont affichées explicitement. Il est déconseillé d\'utiliser ce mode sur un site en production.',
 	'advanced-config.debug-mode.type' => 'Sélection du mode debug',

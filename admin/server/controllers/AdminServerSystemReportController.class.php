@@ -130,7 +130,8 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 		if (ServerConfiguration::get_phpversion() < '5.6')
 			$fieldset->add_field(new FormFieldFree('upgrade_php_version', '', MessageHelper::display($this->lang['advises.upgrade_php_version'], MessageHelper::NOTICE)->render()));
 		
-		$fieldset->add_field(new FormFieldFree('optimize_database_tables', '', MessageHelper::display($this->lang['advises.optimize_database_tables'], MessageHelper::SUCCESS)->render()));
+		if (!$server_environment_config->is_database_tables_optimization_enabled())
+			$fieldset->add_field(new FormFieldFree('optimize_database_tables', '', MessageHelper::display($this->lang['advises.optimize_database_tables'], MessageHelper::SUCCESS)->render()));
 		
 		$fieldset = new FormFieldsetHTML('report', $this->admin_lang['server']);
 		$form->add_fieldset($fieldset);

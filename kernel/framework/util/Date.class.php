@@ -284,6 +284,17 @@ class Date
 	}
 	
 	/**
+	 * @desc Returns the day of the week (0 for sunday to 6 for saturday)
+	 * @param $timezone The timezone in which you want this value
+	 * @return string The day of the year
+	 */
+	public function get_day_of_week($timezone = Timezone::USER_TIMEZONE)
+	{
+		$this->compute_server_user_difference($timezone);
+		return (int)$this->date_time->format('w');
+	}
+	
+	/**
 	 * @desc Returns the day of the year
 	 * @param $timezone The timezone in which you want this value
 	 * @return string The day of the year

@@ -33,21 +33,23 @@ class ServerEnvironmentConfig extends AbstractConfigData
 	const URL_REWRITING_ENABLED = 'url_rewriting_enabled';
 	const HTACCESS_MANUAL_CONTENT = 'htaccess_manual_content';
 	const OUTPUT_GZIPING_ENABLED = 'output_gziping_enabled';
+	const DATABASE_TABLES_OPTIMIZATION_ENABLED = 'database_tables_optimization_enabled';
+	const DATABASE_TABLES_OPTIMIZATION_DAY = 'database_tables_optimization_day';
 
 	public function is_url_rewriting_enabled()
 	{
 		return $this->get_property(self::URL_REWRITING_ENABLED);
 	}
 	
+	public function set_url_rewriting_enabled($enabled)
+	{
+		$this->set_property(self::URL_REWRITING_ENABLED, $enabled);
+	}
+
 	private function htaccess_exists()
 	{
 		$file = new File(PATH_TO_ROOT . '/.htaccess');
 		return $file->exists();
-	}
-
-	public function set_url_rewriting_enabled($enabled)
-	{
-		$this->set_property(self::URL_REWRITING_ENABLED, $enabled);
 	}
 
 	public function get_htaccess_manual_content()
@@ -70,12 +72,34 @@ class ServerEnvironmentConfig extends AbstractConfigData
 		$this->set_property(self::OUTPUT_GZIPING_ENABLED, $enabled);
 	}
 
+	public function is_database_tables_optimization_enabled()
+	{
+		return $this->get_property(self::DATABASE_TABLES_OPTIMIZATION_ENABLED);
+	}
+
+	public function set_database_tables_optimization_enabled($enabled)
+	{
+		$this->set_property(self::DATABASE_TABLES_OPTIMIZATION_ENABLED, $enabled);
+	}
+
+	public function get_database_tables_optimization_day()
+	{
+		return $this->get_property(self::DATABASE_TABLES_OPTIMIZATION_DAY);
+	}
+
+	public function set_database_tables_optimization_day($day)
+	{
+		$this->set_property(self::DATABASE_TABLES_OPTIMIZATION_DAY, $day);
+	}
+
 	public function get_default_values()
 	{
 		return array(
 			self::URL_REWRITING_ENABLED => false,
 			self::HTACCESS_MANUAL_CONTENT => '',
 			self::OUTPUT_GZIPING_ENABLED => false,
+			self::DATABASE_TABLES_OPTIMIZATION_ENABLED => true,
+			self::DATABASE_TABLES_OPTIMIZATION_DAY => 0
 		);
 	}
 

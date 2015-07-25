@@ -216,11 +216,11 @@ class Environment
 			$last_use_config->set_last_use_date($current_date);
 			LastUseDateConfig::save();
 
-			self::perform_changeday();
+			self::perform_changeday($current_date);
 		}
 	}
 
-	private static function perform_changeday()
+	private static function perform_changeday(Date $current_date)
 	{
 		self::clear_all_temporary_cache_files();
 
@@ -229,6 +229,8 @@ class Environment
 		self::update_visit_counter_table();
 
 		self::remove_old_unactivated_member_accounts();
+
+		self::optimize_database_tables($current_date);
 
 		self::clear_feed_cache();
 
@@ -278,6 +280,16 @@ class Environment
 	private static function remove_old_unactivated_member_accounts()
 	{
 		UserService::remove_old_unactivated_member_accounts();
+	}
+
+	private static function optimize_database_tables(Date $current_date)
+	{
+		$server_environment_config = ServerEnvironmentConfig::load();
+		if ($server_environment_config->is_database_tables_optimization_enabled())
+		{
+			if ($server_environment_config->get_database_tables_optimization_day() == 7 || $server_environment_config->get_database_tables_optimization_day() == $current_date->get_day_of_week())
+				PersistenceContext::get_dbms_utils()->optimize(PersistenceContext::get_dbms_utils()->list_tables());
+		}
 	}
 
 	private static function clear_feed_cache()

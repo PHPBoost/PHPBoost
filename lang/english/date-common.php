@@ -42,6 +42,7 @@ $lang['unit.seconds'] = 's';
 
 $lang['date'] = 'Date';
 $lang['today'] = 'Today';
+$lang['everyday'] = 'Everyday';
 
 $lang['january'] = 'January';
 $lang['february'] = 'February';
