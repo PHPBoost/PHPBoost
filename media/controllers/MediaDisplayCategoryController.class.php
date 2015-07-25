@@ -47,7 +47,7 @@ class MediaDisplayCategoryController extends ModuleController
 	{
 		global $LANG, $MEDIA_LANG;
 		
-		require_once('media_constant.php');
+		require_once(PATH_TO_ROOT . '/media/media_constant.php');
 		load_module_lang('media');
 		$config = MediaConfig::load();
 		$category = $this->get_category();

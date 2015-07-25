@@ -38,10 +38,8 @@ Voici une petite vidéo vous montrant comment sauvegarder et restaurer sa base de
 <br />
 Bonne visualisation !',
 	'media_url' => 'http://www.ptithom.net/documents/phpboost/videos/bdd/sauv_restau_bdd.flv', 
-	
-    'media_name_cat' => 'Vidéos de PHPBoost',
-    'media_contents_cat' => 'Cette catégorie contient des tutoriels vidéos afin de vous montrer certaines actions dont vous pourriez avoir besoin durant l\'utilisation de PHPBoost. Ces vidéos sont en streaming.',
-	'media_icon_cat' => PATH_TO_ROOT . '/media/templates/images/video.png'
+	'media_name_cat' => 'Vidéos',
+	'media_contents_cat' => 'Cette catégorie contient des tutoriels vidéos afin de vous montrer certaines actions dont vous pourriez avoir besoin durant l\'utilisation de PHPBoost. Ces vidéos sont en streaming.'
 );
 
 ?>

@@ -31,13 +31,15 @@
  ####################################################
 
 $lang = array(
-	'media_name' => 'First video file',
-	'media_contents' => 'Demonstration of a video file.',
+	'media_name' => 'Save and restore database',
+	'media_contents' => 'It is important to save the database frequently.<br />
+<br />
+Here is a short video to show you how to proceed to save and restore the database with PHPBoost tools.<br />
+<br />
+Nice video !',
 	'media_url' => 'http://www.ptithom.net/documents/phpboost/videos/bdd/sauv_restau_bdd.flv', 
-	
-    'media_name_cat' => 'First video category',
-    'media_contents_cat' => 'This category contains video files.',
-	'media_icon_cat' => PATH_TO_ROOT . '/media/templates/images/video.png'
+	'media_name_cat' => 'Videos',
+	'media_contents_cat' => 'This category contains video files.',
 );
 
 ?>

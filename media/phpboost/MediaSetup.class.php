@@ -113,7 +113,7 @@ class MediaSetup extends DefaultModuleSetup
 			'rewrited_name' => Url::encode_rewrite($this->messages['media_name_cat']),
 			'name' => $this->messages['media_name_cat'],
 			'description' => $this->messages['media_contents_cat'],
-			'image' => $this->messages['media_icon_cat'],
+			'image' => '/media/templates/images/video.png',
 			'content_type' => 2
 		));
 	}

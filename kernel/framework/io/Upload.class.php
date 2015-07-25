@@ -238,7 +238,7 @@ class Upload
 	private static function clean_filename($string)
 	{
 		$string = strtolower($string);
-		$string = strtr($string, ' יטךאגשüûןמפח', '-eeeaauuuiioc');
+		$string = strtr($string, ' אבגדהוחטיךכלםמןנעףפץצשתûü‎ÿ', '-aaaaaaceeeeiiiioooooouuuuyy');
 		$string = preg_replace('`([^a-z0-9-]|[\s])`', '_', $string);
 		$string = preg_replace('`[_]{2,}`', '_', $string);
 		$string = trim($string, ' _');
