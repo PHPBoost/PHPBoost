@@ -3,7 +3,7 @@
  *                              upload.class.php
  *                            -------------------
  *   begin                : January 27, 2007
- *   copyright            : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Régis VIARRE <crowkait@phpboost.com
+ * @author RÃ©gis VIARRE <crowkait@phpboost.com
  * @desc This class provides you methods to upload easily files to the ftp.
  * @package {@package}
  */
@@ -74,11 +74,11 @@ class Upload
 		{
 			if (($this->size/1024) <= $weight_max)
 			{
-				//Récupération des infos sur le fichier à traiter.
+				//RÃ©cupÃ©ration des infos sur le fichier Ã  traiter.
 				$this->generate_file_info($uniq_name);
 				if ($this->check_file_path($regexp))
 				{
-					if (!$check_exist || !file_exists($this->base_directory . $this->filename)) //Autorisation d'écraser le fichier?
+					if (!$check_exist || !file_exists($this->base_directory . $this->filename)) //Autorisation d'Ã©craser le fichier?
 					{
 						$this->error = self::error_manager($file['error']);
 						if (empty($this->error))
@@ -182,9 +182,9 @@ class Upload
 	{
 		if (!empty($regexp))
 		{
-			//Valide, sinon supprimé
+			//Valide, sinon supprimÃ©
 			if (preg_match($regexp, $this->original_filename) && strpos($this->original_filename, '.php') === false
-				 && strpos($this->original_filename, '.phtml') === false) {//Valide, sinon supprimé
+				 && strpos($this->original_filename, '.phtml') === false) {//Valide, sinon supprimÃ©
 				return true;
 			}
 			return false;
@@ -238,7 +238,7 @@ class Upload
 	private static function clean_filename($string)
 	{
 		$string = strtolower($string);
-		$string = strtr($string, ' àáâãäåçèéêëìíîïğòóôõöùúûüıÿ', '-aaaaaaceeeeiiiioooooouuuuyy');
+		$string = strtr($string, ' Ã Ã¡Ã¢Ã£Ã¤Ã¥Ã§Ã¨Ã©ÃªÃ«Ã¬Ã­Ã®Ã¯Ã°Ã²Ã³Ã´ÃµÃ¶Ã¹ÃºÃ»Ã¼Ã½Ã¿', '-aaaaaaceeeeiiiioooooouuuuyy');
 		$string = preg_replace('`([^a-z0-9-]|[\s])`', '_', $string);
 		$string = preg_replace('`[_]{2,}`', '_', $string);
 		$string = trim($string, ' _');
