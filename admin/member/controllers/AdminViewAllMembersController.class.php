@@ -46,7 +46,7 @@ class AdminViewAllMembersController extends AdminController
 	
 	private function build_form()
 	{
-		$form = new HTMLForm(__CLASS__);
+		$form = new HTMLForm(__CLASS__ . '_search_member');
 		
 		$fieldset = new FormFieldsetHTML('search_member', LangLoader::get_message('search_member', 'main'));
 		$form->add_fieldset($fieldset);
