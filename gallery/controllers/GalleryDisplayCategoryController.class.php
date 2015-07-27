@@ -493,15 +493,22 @@ class GalleryDisplayCategoryController extends ModuleController
 					if (!file_exists(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path']))
 						$Gallery->Resize_pics(PATH_TO_ROOT . '/gallery/pics/' . $row['path']); //Redimensionnement + création miniature
 					
+					$onclick = '';
 					//Affichage de l'image en grand.
 					if ($config->get_pics_enlargement_mode() == GalleryConfig::FULL_SCREEN) //Ouverture en popup plein écran.
 					{
 						$display_link = PATH_TO_ROOT. '/gallery/pics/' . $row['path'] . '" data-lightbox="formatter" onmousedown="increment_view(' . $row['id'] . ');" title="' . str_replace('"', '', stripslashes($row['name']));
 					}
 					elseif ($config->get_pics_enlargement_mode() == GalleryConfig::POPUP) //Ouverture en popup simple.
-						$display_link = 'javascript:increment_view(' . $row['id'] . ');display_pics_popup(\'' . PATH_TO_ROOT . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\')';
+					{
+						$onclick = 'increment_view(' . $row['id'] . ');display_pics_popup(\'' . PATH_TO_ROOT . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\');return false;';
+						$display_link = '';
+					}
 					elseif ($config->get_pics_enlargement_mode() == GalleryConfig::RESIZE) //Ouverture en agrandissement simple.
-						$display_link = 'javascript:increment_view(' . $row['id'] . ');display_pics(' . $row['id'] . ', \'' . PATH_TO_ROOT . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\')';
+					{
+						$onclick = 'increment_view(' . $row['id'] . ');display_pics(' . $row['id'] . ', \'' . PATH_TO_ROOT . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\');return false;';
+						$display_link = '';
+					}
 					else //Ouverture nouvelle page.
 						$display_link = url('gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], 'gallery-' . $row['idcat'] . '-' . $row['id'] . '.php') . '#pics_max';
 					
@@ -547,6 +554,7 @@ class GalleryDisplayCategoryController extends ModuleController
 						'L_COMMENTS' => CommentsService::get_number_and_lang_comments('gallery', $row['id']),
 						'KERNEL_NOTATION' => $config->is_notation_enabled() && $is_connected ? NotationService::display_active_image($notation) : NotationService::display_static_image($notation),
 						'CAT' => $cat_list,
+						'ONCLICK' => $onclick,
 						'RENAME' => $html_protected_name,
 						'RENAME_CUT' => $html_protected_name,
 						'L_APROB_IMG' => ($row['aprob'] == 1) ? $LANG['unaprob'] : $LANG['aprob'],

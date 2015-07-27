@@ -392,7 +392,7 @@
 								# IF pics_list.C_OPEN_TR #<tr># ENDIF #
 								<td style="vertical-align:bottom;width:{COLUMN_WIDTH_PICS}%;padding:15px 0px;">
 									<div style="padding:0 5px;" id="pics{pics_list.ID}">
-										<a class="small" href="{pics_list.U_DISPLAY}" data-lightbox="formatter"><img src="{pics_list.U_PICTURE}" title="{pics_list.NAME}" alt="{pics_list.NAME}" class="gallery_image" /></a>
+										<a class="small" href="{pics_list.U_DISPLAY}" onclick="{pics_list.ONCLICK}" # IF NOT pics_list.ONCLICK # data-lightbox="formatter"# ENDIF #><img src="{pics_list.U_PICTURE}" title="{pics_list.NAME}" alt="{pics_list.NAME}" class="gallery_image" /></a>
 									</div>
 									
 									<div class="spacer">&nbsp;</div>
