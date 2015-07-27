@@ -74,6 +74,7 @@ class CalendarFormController extends ModuleController
 	private function build_form(HTTPRequestCustom $request)
 	{
 		$common_lang = LangLoader::get('common');
+		$date_lang = LangLoader::get('date-common');
 		$event_content = $this->get_event()->get_content();
 		
 		$form = new HTMLForm(__CLASS__);
@@ -97,10 +98,10 @@ class CalendarFormController extends ModuleController
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('repeat_type', $this->lang['calendar.labels.repeat_type'], $event_content->get_repeat_type(),
 			array(
 				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.never'], CalendarEventContent::NEVER),
-				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.daily'], CalendarEventContent::DAILY),
-				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.weekly'], CalendarEventContent::WEEKLY),
-				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.monthly'], CalendarEventContent::MONTHLY),
-				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.yearly'], CalendarEventContent::YEARLY),
+				new FormFieldSelectChoiceOption($date_lang['every_day'], CalendarEventContent::DAILY),
+				new FormFieldSelectChoiceOption($date_lang['every_week'], CalendarEventContent::WEEKLY),
+				new FormFieldSelectChoiceOption($date_lang['every_month'], CalendarEventContent::MONTHLY),
+				new FormFieldSelectChoiceOption($date_lang['every_year'], CalendarEventContent::YEARLY),
 			),
 			array('events' => array('change' => '
 			if (HTMLForms.getField("repeat_type").getValue() != "' . CalendarEventContent::NEVER . '") {

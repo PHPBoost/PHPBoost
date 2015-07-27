@@ -179,7 +179,7 @@ class AdminAdvancedConfigController extends AdminController
 				new FormFieldSelectChoiceOption($date_lang['thursday'], 4),
 				new FormFieldSelectChoiceOption($date_lang['friday'], 5),
 				new FormFieldSelectChoiceOption($date_lang['saturday'], 6),
-				new FormFieldSelectChoiceOption($date_lang['everyday'], 7)
+				new FormFieldSelectChoiceOption($date_lang['every_month'], 7)
 			), 
 			array('description' => $this->lang['advanced-config.database-tables-optimization-day.explain'], 'hidden' => !$this->server_environment_config->is_database_tables_optimization_enabled())
 		));
