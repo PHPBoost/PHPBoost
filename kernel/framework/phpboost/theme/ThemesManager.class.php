@@ -115,7 +115,7 @@ class ThemesManager
 		}
 		else
 		{
-			self::$error = LangLoader::get_message('themes.already_exist', 'admin-themes-common');
+			self::$error = LangLoader::get_message('element.already_exists', 'status-messages-common');
 		}
 	}
 	

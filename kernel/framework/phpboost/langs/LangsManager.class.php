@@ -100,7 +100,7 @@ class LangsManager
 		}
 		else
 		{
-			self::$error = LangLoader::get_message('langs.already_exist', 'admin-langs-common');
+			self::$error = LangLoader::get_message('element.already_exists', 'status-messages-common');
 		}
 	}
 	
