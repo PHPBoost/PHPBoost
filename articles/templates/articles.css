@@ -26,3 +26,5 @@
     float: right;
     width: 33%;
 }
+
+#module-articles .small-block { min-height: 410px; }
