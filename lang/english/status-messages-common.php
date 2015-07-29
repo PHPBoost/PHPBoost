@@ -36,6 +36,7 @@ $lang['error.unknow'] = 'Unknow';
 
 //PHPBoost errors
 $lang['error.auth'] = 'You don\'t have the required level!';
+$lang['error.auth.guest'] = 'Protected content. Please suscribe or connect to access this page.';
 $lang['error.page.forbidden'] = 'This folder access is forbidden!';
 $lang['error.page.unexist'] = 'This page doesn\'t exist!';
 $lang['error.action.unauthorized'] = 'Unauthorized action!';

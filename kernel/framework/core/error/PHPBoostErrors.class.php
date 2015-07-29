@@ -32,7 +32,7 @@ class PHPBoostErrors
 	public static function user_not_authorized()
 	{
 		AppContext::get_response()->set_status_code(401);
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('error.auth', 'status-messages-common'));
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? LangLoader::get_message('error.auth', 'status-messages-common') : LangLoader::get_message('error.auth.guest', 'status-messages-common'));
 		return $controller;
 	}
 	

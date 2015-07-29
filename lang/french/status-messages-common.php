@@ -36,6 +36,7 @@ $lang['error.unknow'] = 'Inconnue';
 
 //PHPBoost errors
 $lang['error.auth'] = 'Vous n\'avez pas le niveau requis !';
+$lang['error.auth.guest'] = 'Le contenu de cette page est protégé. Veuillez vous inscrire ou vous connecter sur le site pour y accéder.';
 $lang['error.page.forbidden'] = 'L\'accès à ce dossier est interdit !';
 $lang['error.page.unexist'] = 'La page que vous demandez n\'existe pas !';
 $lang['error.action.unauthorized'] = 'Action non autorisée !';
