@@ -102,7 +102,7 @@ class OnlineConfig extends AbstractConfigData
 			self::DISPLAY_ORDER => self::LEVEL_AND_SESSION_TIME_DISPLAY_ORDER,
 			self::NUMBER_MEMBER_DISPLAYED => 4,
 			self::NUMBER_MEMBERS_PER_PAGE => 20,
-			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 1, 'r1' => 1)
+			self::AUTHORIZATIONS => array('r0' => 1, 'r1' => 1)
 		);
 	}
 	

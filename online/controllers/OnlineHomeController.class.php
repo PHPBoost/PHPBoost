@@ -48,7 +48,7 @@ class OnlineHomeController extends ModuleController
 		$number_users_online = OnlineService::get_number_users_connected('WHERE user_id <> -1 AND timestamp > :time', array('time' => $active_sessions_start_time));
 		$pagination = $this->get_pagination($number_users_online);
 		
-		$users = OnlineService::get_online_users('WHERE s.timestamp > :time
+		$users = OnlineService::get_online_users('WHERE s.user_id <> -1 AND s.timestamp > :time
 		ORDER BY '. $this->config->get_display_order_request() .'
 		LIMIT :number_items_per_page OFFSET :display_from',
 			array(
@@ -89,7 +89,7 @@ class OnlineHomeController extends ModuleController
 		
 		$this->view->put_all(array(
 			'C_PAGINATION' => $pagination->has_several_pages(),
-			'C_USERS' => $number_users_online,
+			'C_USERS' => count($users),
 			'PAGINATION' => $pagination->display()
 		));
 		
@@ -146,8 +146,8 @@ class OnlineHomeController extends ModuleController
 	public static function get_view()
 	{
 		$object = new self();
-		$object->init();
 		$object->check_authorizations();
+		$object->init();
 		$object->build_view();
 		return $object->view;
 	}

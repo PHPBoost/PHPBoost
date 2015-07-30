@@ -57,7 +57,7 @@ class OnlineService
 			$user = new OnlineUser();
 			$user->set_id($row['user_id']);
 			$user->set_display_name($row['display_name']);
-			$user->set_level($row['level']);
+			$user->set_level($row['user_id'] != User::VISITOR_LEVEL ? $row['level'] : User::VISITOR_LEVEL);
 			$user->set_groups(explode('|', $row['groups']));
 			$user->set_last_update(new Date($row['timestamp'], Timezone::SERVER_TIMEZONE));
 			$user->set_location_script($row['location_script']);
