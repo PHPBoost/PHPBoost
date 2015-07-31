@@ -34,6 +34,7 @@ class NewsConfig extends AbstractConfigData
 	const NUMBER_COLUMNS_DISPLAY_NEWS = 'number_columns_display_news';
 	
 	const DISPLAY_CONDENSED_ENABLED = 'display_condensed_enabled';
+	const DESCRIPTIONS_DISPLAYED_TO_GUESTS = 'descriptions_displayed_to_guests';
 	const NUMBER_CHARACTER_TO_CUT = 'number_character_to_cut';
 	
 	const COMMENTS_ENABLED = 'comments_enabled';
@@ -74,6 +75,21 @@ class NewsConfig extends AbstractConfigData
 	public function set_display_condensed_enabled($display_condensed_enabled)
 	{
 		$this->set_property(self::DISPLAY_CONDENSED_ENABLED, $display_condensed_enabled);
+	}
+	
+	public function display_descriptions_to_guests()
+	{
+		$this->set_property(self::DESCRIPTIONS_DISPLAYED_TO_GUESTS, true);
+	}
+	
+	public function hide_descriptions_to_guests()
+	{
+		$this->set_property(self::DESCRIPTIONS_DISPLAYED_TO_GUESTS, false);
+	}
+	
+	public function are_descriptions_displayed_to_guests()
+	{
+		return $this->get_property(self::DESCRIPTIONS_DISPLAYED_TO_GUESTS);
 	}
 	
 	public function get_number_character_to_cut()
@@ -145,6 +161,7 @@ class NewsConfig extends AbstractConfigData
 			self::NUMBER_NEWS_PER_PAGE => 10,
 			self::NUMBER_COLUMNS_DISPLAY_NEWS => 1,
 			self::DISPLAY_CONDENSED_ENABLED => false,
+			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,
 			self::NUMBER_CHARACTER_TO_CUT => 250,
 			self::COMMENTS_ENABLED => true,
 			self::NEWS_SUGGESTIONS_ENABLED => true,

@@ -35,6 +35,7 @@ class WebConfig extends AbstractConfigData
 	const CATEGORIES_NUMBER_PER_PAGE = 'categories_number_per_page';
 	const COLUMNS_NUMBER_PER_LINE = 'columns_number_per_line';
 	const CATEGORY_DISPLAY_TYPE = 'category_display_type';
+	const DESCRIPTIONS_DISPLAYED_TO_GUESTS = 'descriptions_displayed_to_guests';
 	const COMMENTS_ENABLED = 'comments_enabled';
 	const NOTATION_ENABLED = 'notation_enabled';
 	const NOTATION_SCALE = 'notation_scale';
@@ -98,6 +99,21 @@ class WebConfig extends AbstractConfigData
 	public function is_category_displayed_table()
 	{
 		return $this->get_property(self::CATEGORY_DISPLAY_TYPE) == self::DISPLAY_TABLE;
+	}
+	
+	public function display_descriptions_to_guests()
+	{
+		$this->set_property(self::DESCRIPTIONS_DISPLAYED_TO_GUESTS, true);
+	}
+	
+	public function hide_descriptions_to_guests()
+	{
+		$this->set_property(self::DESCRIPTIONS_DISPLAYED_TO_GUESTS, false);
+	}
+	
+	public function are_descriptions_displayed_to_guests()
+	{
+		return $this->get_property(self::DESCRIPTIONS_DISPLAYED_TO_GUESTS);
 	}
 	
 	public function enable_comments()
@@ -200,6 +216,7 @@ class WebConfig extends AbstractConfigData
 			self::CATEGORIES_NUMBER_PER_PAGE => 10,
 			self::COLUMNS_NUMBER_PER_LINE => 3,
 			self::CATEGORY_DISPLAY_TYPE => self::DISPLAY_SUMMARY,
+			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,
 			self::COMMENTS_ENABLED => true,
 			self::NOTATION_ENABLED => true,
 			self::NOTATION_SCALE => 5,

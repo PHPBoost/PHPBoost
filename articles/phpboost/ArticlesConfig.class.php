@@ -36,6 +36,7 @@ class ArticlesConfig extends AbstractConfigData
 	const NUMBER_CHARACTER_TO_CUT = 'number_character_to_cut';
 
 	const CATS_ICON_ENABLED = 'cats_icon_enabled';
+	const DESCRIPTIONS_DISPLAYED_TO_GUESTS = 'descriptions_displayed_to_guests';
 	const NOTATION_ENABLED = 'notation_enabled';
 	const NOTATION_SCALE = 'notation_scale';
 	const COMMENTS_ENABLED = 'comments_enable'; 
@@ -96,6 +97,21 @@ class ArticlesConfig extends AbstractConfigData
 	public function set_display_type($display_type)
 	{
 		$this->set_property(self::DISPLAY_TYPE, $display_type);
+	}
+	
+	public function display_descriptions_to_guests()
+	{
+		$this->set_property(self::DESCRIPTIONS_DISPLAYED_TO_GUESTS, true);
+	}
+	
+	public function hide_descriptions_to_guests()
+	{
+		$this->set_property(self::DESCRIPTIONS_DISPLAYED_TO_GUESTS, false);
+	}
+	
+	public function are_descriptions_displayed_to_guests()
+	{
+		return $this->get_property(self::DESCRIPTIONS_DISPLAYED_TO_GUESTS);
 	}
 	
 	public function enable_notation()
@@ -190,6 +206,7 @@ class ArticlesConfig extends AbstractConfigData
 			self::NUMBER_COLS_DISPLAY_CATS => 2,
 			self::NUMBER_CHARACTER_TO_CUT => 128,
 			self::CATS_ICON_ENABLED => false,
+			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,
 			self::COMMENTS_ENABLED => true,
 			self::DATE_UPDATED_DISPLAYED => false,
 			self::NOTATION_ENABLED => true,

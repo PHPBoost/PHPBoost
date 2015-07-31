@@ -59,6 +59,7 @@ class AdminNewsConfigController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
+			$this->form->get_field_by_id('display_descriptions_to_guests')->set_hidden(!$this->config->get_display_condensed_enabled());
 			$this->form->get_field_by_id('number_character_to_cut')->set_hidden(!$this->config->get_display_condensed_enabled());
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
@@ -95,11 +96,17 @@ class AdminNewsConfigController extends AdminModuleController
 		$fieldset->add_field(new FormFieldCheckbox('display_condensed', $this->lang['admin.config.display_condensed'], $this->config->get_display_condensed_enabled(), array(
 		'events' => array('click' => '
 			if (HTMLForms.getField("display_condensed").getValue()) {
+				HTMLForms.getField("display_descriptions_to_guests").enable();
 				HTMLForms.getField("number_character_to_cut").enable();
-			} else { 
+			} else {
+				HTMLForms.getField("display_descriptions_to_guests").disable();
 				HTMLForms.getField("number_character_to_cut").disable();
 			}'
 		))));
+		
+		$fieldset->add_field(new FormFieldCheckbox('display_descriptions_to_guests', $this->lang['admin.config.display_descriptions_to_guests'], $this->config->are_descriptions_displayed_to_guests(),
+			array('hidden' => !$this->config->get_display_condensed_enabled())
+		));
 		
 		$fieldset->add_field(new FormFieldNumberEditor('number_character_to_cut', $this->lang['admin.config.number_character_to_cut'], $this->config->get_number_character_to_cut(), 
 			array('min' => 20, 'max' => 1000, 'required' => true, 'hidden' => !$this->config->get_display_condensed_enabled()), 
@@ -147,6 +154,19 @@ class AdminNewsConfigController extends AdminModuleController
 		$this->config->set_number_news_per_page($this->form->get_value('number_news_per_page'));
 		$this->config->set_number_columns_display_news($this->form->get_value('number_columns_display_news'));
 		$this->config->set_display_condensed_enabled($this->form->get_value('display_condensed'));
+		
+		if ($this->config->get_display_condensed_enabled())
+		{
+			if ($this->form->get_value('display_descriptions_to_guests'))
+			{
+				$this->config->display_descriptions_to_guests();
+			}
+			else
+			{
+				$this->config->hide_descriptions_to_guests();
+			}
+		}
+		
 		$this->config->set_number_character_to_cut($this->form->get_value('number_character_to_cut', $this->config->get_number_character_to_cut()));
 		$this->config->set_comments_enabled($this->form->get_value('comments_enabled'));
 		$this->config->set_news_suggestions_enabled($this->form->get_value('news_suggestions_enabled'));

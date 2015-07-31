@@ -54,6 +54,7 @@ $lang['config.category_display_type'] = 'Displayed informations in categories';
 $lang['config.category_display_type.display_summary'] = 'Summary';
 $lang['config.category_display_type.display_all_content'] = 'All content';
 $lang['config.category_display_type.display_table'] = 'Table';
+$lang['config.display_descriptions_to_guests'] = 'Display summary files to guests if they don\'t have read authorization';
 $lang['config.downloaded_files_menu'] = 'Downloaded files menu';
 $lang['config.sort_type'] = 'Files display order';
 $lang['config.sort_type.explain'] = 'Descending mode';

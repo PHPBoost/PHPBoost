@@ -72,6 +72,11 @@ class NewsService
 	{
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
+		
+		if (AppContext::get_current_user()->is_guest())
+			$search_category_children_options->set_allow_only_member_level_authorizations(NewsConfig::load()->are_descriptions_displayed_to_guests());
+		
+		
 		$categories = self::get_categories_manager()->get_childrens($current_id_category, $search_category_children_options, true);
 		return array_keys($categories);
 	}

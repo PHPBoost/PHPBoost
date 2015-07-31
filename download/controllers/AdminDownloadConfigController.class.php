@@ -60,6 +60,7 @@ class AdminDownloadConfigController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
+			$this->form->get_field_by_id('display_descriptions_to_guests')->set_hidden($this->config->get_category_display_type() == DownloadConfig::DISPLAY_ALL_CONTENT);
 			$this->form->get_field_by_id('notation_scale')->set_hidden(!$this->config->is_notation_enabled());
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
@@ -103,7 +104,18 @@ class AdminDownloadConfigController extends AdminModuleController
 				new FormFieldSelectChoiceOption($this->lang['config.category_display_type.display_summary'], DownloadConfig::DISPLAY_SUMMARY),
 				new FormFieldSelectChoiceOption($this->lang['config.category_display_type.display_all_content'], DownloadConfig::DISPLAY_ALL_CONTENT),
 				new FormFieldSelectChoiceOption($this->lang['config.category_display_type.display_table'], DownloadConfig::DISPLAY_TABLE)
-			)
+			),
+			array('events' => array('click' => '
+				if (HTMLForms.getField("category_display_type").getValue() != \'' . DownloadConfig::DISPLAY_ALL_CONTENT . '\') {
+					HTMLForms.getField("display_descriptions_to_guests").enable();
+				} else {
+					HTMLForms.getField("display_descriptions_to_guests").disable();
+				}'
+			))
+		));
+		
+		$fieldset->add_field(new FormFieldCheckbox('display_descriptions_to_guests', $this->lang['config.display_descriptions_to_guests'], $this->config->are_descriptions_displayed_to_guests(),
+			array('hidden' => $this->config->get_category_display_type() == DownloadConfig::DISPLAY_ALL_CONTENT)
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->admin_common_lang['config.author_displayed'], $this->config->is_author_displayed()));
@@ -183,6 +195,18 @@ class AdminDownloadConfigController extends AdminModuleController
 		$this->config->set_categories_number_per_page($this->form->get_value('categories_number_per_page'));
 		$this->config->set_columns_number_per_line($this->form->get_value('columns_number_per_line'));
 		$this->config->set_category_display_type($this->form->get_value('category_display_type')->get_raw_value());
+		
+		if ($this->config->get_category_display_type() != DownloadConfig::DISPLAY_ALL_CONTENT)
+		{
+			if ($this->form->get_value('display_descriptions_to_guests'))
+			{
+				$this->config->display_descriptions_to_guests();
+			}
+			else
+			{
+				$this->config->hide_descriptions_to_guests();
+			}
+		}
 		
 		if ($this->form->get_value('author_displayed'))
 			$this->config->display_author();

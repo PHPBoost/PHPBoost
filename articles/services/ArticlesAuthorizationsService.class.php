@@ -38,10 +38,10 @@ class ArticlesAuthorizationsService
 		$instance->id_category = $id_category;
 		return $instance;
 	}
-		
+	
 	public function read()
 	{
-		return $this->is_authorized(Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY);
+		return $this->is_authorized(Category::READ_AUTHORIZATIONS);
 	}
 	
 	public function contribution()

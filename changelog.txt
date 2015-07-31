@@ -49,6 +49,7 @@
 
 [b]Articles[/b]
 [*] Possibilité de désactiver la notation
+[*] Possibilité d'acéder aux condensés d'articles pour les visiteurs même si une catégorie est réservée aux membres
 [*] Affichage des sources lors de l'affichage des catégories d'articles
 
 [b]BBCode[/b]
@@ -105,6 +106,7 @@
 [*] [color=red]Nouveauté :[/color] Menu pour afficher la liste des partenaires (possibilité de les classer par note, nombre de visites, nombre de commentaires depuis la configuration)
 [*] [color=red]Nouveauté :[/color] Possibilité d'activer/désactiver les commentaires et la notation globalement
 [*] [color=red]Nouveauté :[/color] Possibilité de choisir la date de parution des liens
+[*] Possibilité d'acéder aux descriptions pour les visiteurs même si une catégorie est réservée aux membres
 [*] Ajout des microdonnées pour améliorer le référencement
 
 [b]Multimédia[/b]
@@ -113,6 +115,7 @@
 
 [b]News[/b]
 [*] Affichage des sources lors de l'affichage des catégories de news
+[*] Possibilité d'acéder aux condensés de news pour les visiteurs même si une catégorie est réservée aux membres
 [*] Possibilité de récupérer la date de création d'une news avec le jour, le mois et l'année séparés dans le template pour plus de personnalisation
 
 [b]Newsletter[/b]
@@ -128,6 +131,7 @@
 [*] [color=red]Nouveauté :[/color] Calcul automatique de la taille des fichiers
 [*] [color=red]Nouveauté :[/color] Menu pour afficher la liste des fichiers les plus téléchargés (possibilité de les classer par note, nombre de téléchargements, date d'ajout depuis la configuration)
 [*] [color=red]Nouveauté :[/color] Possibilité d'activer/désactiver les commentaires, la notation et l'affichage de l'auteur globalement
+[*] Possibilité d'acéder aux descriptions des fichiers pour les visiteurs même si une catégorie est réservée aux membres
 [*] Ajout des microdonnées pour améliorer le référencement
 
 [b]TinyMCE[/b]

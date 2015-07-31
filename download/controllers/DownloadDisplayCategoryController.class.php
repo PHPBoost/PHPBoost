@@ -33,14 +33,15 @@ class DownloadDisplayCategoryController extends ModuleController
 {
 	private $lang;
 	private $tpl;
+	private $config;
 	
 	private $category;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->check_authorizations();
-		
 		$this->init();
+		
+		$this->check_authorizations();
 		
 		$this->build_view($request);
 		
@@ -52,12 +53,12 @@ class DownloadDisplayCategoryController extends ModuleController
 		$this->lang = LangLoader::get('common', 'download');
 		$this->tpl = new FileTemplate('download/DownloadDisplaySeveralDownloadFilesController.tpl');
 		$this->tpl->add_lang($this->lang);
+		$this->config = DownloadConfig::load();
 	}
 	
 	private function build_view(HTTPRequestCustom $request)
 	{
 		$now = new Date();
-		$config = DownloadConfig::load();
 		$authorized_categories = DownloadService::get_authorized_categories($this->get_category()->get_id());
 		$mode = $request->get_getstring('sort', DownloadUrlBuilder::DEFAULT_SORT_MODE);
 		$field = $request->get_getstring('field', DownloadUrlBuilder::DEFAULT_SORT_FIELD);
@@ -65,7 +66,7 @@ class DownloadDisplayCategoryController extends ModuleController
 		$subcategories_page = AppContext::get_request()->get_getint('subcategories_page', 1);
 		
 		$subcategories_number = count(DownloadService::get_categories_manager()->get_categories_cache()->get_childrens($this->get_category()->get_id()));
-		$pagination = $this->get_subcategories_pagination($subcategories_number, $config->get_categories_number_per_page(), $field, $mode, $page, $subcategories_page);
+		$pagination = $this->get_subcategories_pagination($subcategories_number, $this->config->get_categories_number_per_page(), $field, $mode, $page, $subcategories_page);
 		
 		//Children categories
 		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= download_cats.id, download_cats.*,
@@ -109,7 +110,7 @@ class DownloadDisplayCategoryController extends ModuleController
 		}
 		$result->dispose();
 		
-		$nbr_column_cats = ($nbr_cat_displayed > $config->get_columns_number_per_line()) ? $config->get_columns_number_per_line() : $nbr_cat_displayed;
+		$nbr_column_cats = ($nbr_cat_displayed > $this->config->get_columns_number_per_line()) ? $this->config->get_columns_number_per_line() : $nbr_cat_displayed;
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 		$cats_columns_width = floor(100 / $nbr_column_cats);
 		
@@ -164,12 +165,12 @@ class DownloadDisplayCategoryController extends ModuleController
 		$this->tpl->put_all(array(
 			'C_FILES' => $result->get_rows_count() > 0,
 			'C_MORE_THAN_ONE_FILE' => $result->get_rows_count() > 1,
-			'C_CATEGORY_DISPLAYED_SUMMARY' => $config->is_category_displayed_summary(),
-			'C_CATEGORY_DISPLAYED_TABLE' => $config->is_category_displayed_table(),
+			'C_CATEGORY_DISPLAYED_SUMMARY' => $this->config->is_category_displayed_summary(),
+			'C_CATEGORY_DISPLAYED_TABLE' => $this->config->is_category_displayed_table(),
 			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
-			'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),
-			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
-			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
+			'C_AUTHOR_DISPLAYED' => $this->config->is_author_displayed(),
+			'C_COMMENTS_ENABLED' => $this->config->are_comments_enabled(),
+			'C_NOTATION_ENABLED' => $this->config->is_notation_enabled(),
 			'C_MODERATION' => DownloadAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_CATEGORY' => true,
@@ -180,7 +181,7 @@ class DownloadDisplayCategoryController extends ModuleController
 			'SUBCATEGORIES_PAGINATION' => $pagination->display(),
 			'CATS_COLUMNS_WIDTH' => $cats_columns_width,
 			'PAGINATION' => $pagination->display(),
-			'TABLE_COLSPAN' => 4 + (int)$config->are_comments_enabled() + (int)$config->is_notation_enabled(),
+			'TABLE_COLSPAN' => 4 + (int)$this->config->are_comments_enabled() + (int)$this->config->is_notation_enabled(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),
 			'CATEGORY_DESCRIPTION' => $category_description,
@@ -310,11 +311,21 @@ class DownloadDisplayCategoryController extends ModuleController
 	
 	private function check_authorizations()
 	{
-		$id_category = $this->get_category()->get_id();
-		if (!DownloadAuthorizationsService::check_authorizations($id_category)->read())
+		if (AppContext::get_current_user()->is_guest())
 		{
-			$error_controller = PHPBoostErrors::user_not_authorized();
-			DispatchManager::redirect($error_controller);
+			if (($this->config->are_descriptions_displayed_to_guests() && !Authorizations::check_auth(RANK_TYPE, User::MEMBER_LEVEL, $this->get_category()->get_authorizations(), Category::READ_AUTHORIZATIONS) || $this->config->get_category_display_type() == DownloadConfig::DISPLAY_ALL_CONTENT) || (!$this->config->are_descriptions_displayed_to_guests() && !DownloadAuthorizationsService::check_authorizations($this->get_category()->get_id())->read()))
+			{
+				$error_controller = PHPBoostErrors::user_not_authorized();
+				DispatchManager::redirect($error_controller);
+			}
+		}
+		else
+		{
+			if (!DownloadAuthorizationsService::check_authorizations($this->get_category()->get_id())->read())
+			{
+				$error_controller = PHPBoostErrors::user_not_authorized();
+				DispatchManager::redirect($error_controller);
+			}
 		}
 	}
 	
@@ -343,8 +354,8 @@ class DownloadDisplayCategoryController extends ModuleController
 	public static function get_view()
 	{
 		$object = new self();
-		$object->check_authorizations();
 		$object->init();
+		$object->check_authorizations();
 		$object->build_view();
 		return $object->tpl;
 	}

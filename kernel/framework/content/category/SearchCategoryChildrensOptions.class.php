@@ -38,6 +38,7 @@ class SearchCategoryChildrensOptions
 	private $excluded_categories_ids = array();
 	private $excluded_categories_recursive = true;
 	private $enable_recursive_exploration = true;
+	private $allow_only_member_level_authorizations = false;
 	
 	public function add_authorizations_bits($authorizations_bits)
 	{
@@ -61,7 +62,7 @@ class SearchCategoryChildrensOptions
 			$authorized_bits = array();
 			foreach ($this->authorizations_bits as $bit)
 			{
-				if ($category->check_auth($bit))
+				if (($this->allow_only_member_level_authorizations && Authorizations::check_auth(RANK_TYPE, User::MEMBER_LEVEL, $category->get_authorizations(), $bit)) || $category->check_auth($bit))
 					$authorized_bits[] = $bit;
 			}
 			
@@ -120,6 +121,11 @@ class SearchCategoryChildrensOptions
 	public function is_enabled_recursive_exploration()
 	{
 		return $this->enable_recursive_exploration;
+	}
+	
+	public function set_allow_only_member_level_authorizations($allow_only_member_level_authorizations)
+	{
+		$this->allow_only_member_level_authorizations = $allow_only_member_level_authorizations;
 	}
 }
 ?>

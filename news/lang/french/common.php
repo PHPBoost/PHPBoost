@@ -52,6 +52,7 @@ $lang['news.form.contribution.explain'] = 'Vous n\'êtes pas autorisé à créer une
 //Administration
 $lang['admin.config.number_columns_display_news'] = 'Nombre de colonnes pour afficher les news';
 $lang['admin.config.display_condensed'] = 'Afficher le condensé de la news et non la news entière';
+$lang['admin.config.display_descriptions_to_guests'] = 'Afficher le condensé des news aux visiteurs s\'ils n\'ont pas l\'autorisation de lecture';
 $lang['admin.config.number_character_to_cut'] = 'Nombre de caractères pour couper la news';
 $lang['admin.config.news_suggestions_enabled'] = 'Activer l\'affichage des suggestions';
 

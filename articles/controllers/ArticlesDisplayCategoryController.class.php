@@ -31,13 +31,14 @@
 class ArticlesDisplayCategoryController extends ModuleController
 {
 	private $lang;
+	private $config;
 	private $category;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->check_authorizations();
-		
 		$this->init();
+		
+		$this->check_authorizations();
 		
 		$this->build_view();
 		
@@ -49,6 +50,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 		$this->lang = LangLoader::get('common', 'articles');
 		$this->view = new FileTemplate('articles/ArticlesDisplaySeveralArticlesController.tpl');
 		$this->view->add_lang($this->lang);
+		$this->config = ArticlesConfig::load();
 	}
 	
 	private function build_view()
@@ -67,8 +69,6 @@ class ArticlesDisplayCategoryController extends ModuleController
 	
 	private function build_articles_listing_view(Date $now, $field, $mode, $page, $subcategories_page)
 	{
-		$config = ArticlesConfig::load();
-		
 		$sort_mode = ($mode == 'asc') ? 'ASC' : 'DESC';
 		switch ($field)
 		{
@@ -116,11 +116,11 @@ class ArticlesDisplayCategoryController extends ModuleController
 		)));
 		
 		$this->view->put_all(array(
-			'C_MOSAIC' => $config->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
-			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
-			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
+			'C_MOSAIC' => $this->config->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
+			'C_COMMENTS_ENABLED' => $this->config->are_comments_enabled(),
+			'C_NOTATION_ENABLED' => $this->config->is_notation_enabled(),
 			'C_ARTICLES_FILTERS' => true,
-			'C_DISPLAY_CATS_ICON' => $config->are_cats_icon_enabled(),
+			'C_DISPLAY_CATS_ICON' => $this->config->are_cats_icon_enabled(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_NO_ARTICLE_AVAILABLE' => $result->get_rows_count() == 0,
 			'PAGINATION' => $pagination->display(),
@@ -164,11 +164,10 @@ class ArticlesDisplayCategoryController extends ModuleController
 	
 	private function build_categories_listing_view(Date $now, $field, $mode, $page, $subcategories_page)
 	{
-		$config =  ArticlesConfig::load();
 		$authorized_categories = ArticlesService::get_authorized_categories($this->get_category()->get_id());
 		
 		$subcategories_number = count(ArticlesService::get_categories_manager()->get_categories_cache()->get_childrens($this->category->get_id()));
-		$pagination = $this->get_subcategories_pagination($subcategories_number, $config->get_number_categories_per_page(), $field, $mode, $page, $subcategories_page);
+		$pagination = $this->get_subcategories_pagination($subcategories_number, $this->config->get_number_categories_per_page(), $field, $mode, $page, $subcategories_page);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= id, articles_cats.*,
 		(SELECT COUNT(*) FROM ' . ArticlesSetup::$articles_table . '
@@ -213,7 +212,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 		}
 		$result->dispose();
 		
-		$nbr_column_cats = ($nbr_cat_displayed > $config->get_number_cols_display_cats()) ? $config->get_number_cols_display_cats() : $nbr_cat_displayed;
+		$nbr_column_cats = ($nbr_cat_displayed > $this->config->get_number_cols_display_cats()) ? $this->config->get_number_cols_display_cats() : $nbr_cat_displayed;
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 		$cats_columns_width = floor(100 / $nbr_column_cats);
 		
@@ -339,10 +338,21 @@ class ArticlesDisplayCategoryController extends ModuleController
 	
 	private function check_authorizations()
 	{
-		if (!ArticlesAuthorizationsService::check_authorizations($this->get_category()->get_id())->read())
+		if (AppContext::get_current_user()->is_guest())
 		{
-			$error_controller = PHPBoostErrors::user_not_authorized();
-			DispatchManager::redirect($error_controller);
+			if (($this->config->are_descriptions_displayed_to_guests() && !Authorizations::check_auth(RANK_TYPE, User::MEMBER_LEVEL, $this->get_category()->get_authorizations(), Category::READ_AUTHORIZATIONS)) || (!$this->config->are_descriptions_displayed_to_guests() && !ArticlesAuthorizationsService::check_authorizations($this->get_category()->get_id())->read()))
+			{
+				$error_controller = PHPBoostErrors::user_not_authorized();
+				DispatchManager::redirect($error_controller);
+			}
+		}
+		else
+		{
+			if (!ArticlesAuthorizationsService::check_authorizations($this->get_category()->get_id())->read())
+			{
+				$error_controller = PHPBoostErrors::user_not_authorized();
+				DispatchManager::redirect($error_controller);
+			}
 		}
 	}
 	

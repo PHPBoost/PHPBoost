@@ -46,7 +46,7 @@
 						<th class="col-small">${LangLoader::get_message('form.keywords', 'common')}</th>
 						<th class="col-small">${LangLoader::get_message('form.date.creation', 'common')}</th>
 						<th class="col-small">{@downloads_number}</th>
-						# IF C_NOTATION_ENABLED #<th class="col-smaller">${LangLoader::get_message('note', 'common')}</th># ENDIF #
+						# IF C_NOTATION_ENABLED #<th>${LangLoader::get_message('note', 'common')}</th># ENDIF #
 						# IF C_COMMENTS_ENABLED #<th class="col-small">${LangLoader::get_message('comments', 'comments-common')}</th># ENDIF #
 					</tr>
 				</thead>

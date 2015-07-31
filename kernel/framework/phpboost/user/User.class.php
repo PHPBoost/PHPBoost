@@ -79,6 +79,11 @@ class User
 		return $this->level;
 	}
 	
+	public function is_guest()
+	{
+		return $this->level == self::VISITOR_LEVEL;
+	}
+	
 	public function is_admin()
 	{
 		return $this->level == self::ADMIN_LEVEL;

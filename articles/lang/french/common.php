@@ -52,6 +52,7 @@ $lang['articles_configuration.display_type'] = 'Type d\'affichage des articles';
 $lang['articles_configuration.display_type.mosaic'] = 'Mosaïque';
 $lang['articles_configuration.display_type.list'] = 'Liste';
 $lang['articles_configuration.display_type.block'] = 'Liste sans image';
+$lang['articles_configuration.display_descriptions_to_guests'] = 'Afficher le condensé des articles aux visiteurs s\'ils n\'ont pas l\'autorisation de lecture';
 
 //Form
 $lang['articles.form.description'] = 'Description (maximum :number caractères)';

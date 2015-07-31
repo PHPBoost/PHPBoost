@@ -52,6 +52,7 @@ $lang['news.form.contribution.explain'] = 'You are not authorized to create a ne
 //Administration
 $lang['admin.config.number_columns_display_news'] = 'Number columns to display news';
 $lang['admin.config.display_condensed'] = 'Display the condensed news instead of the all news';
+$lang['admin.config.display_descriptions_to_guests'] = 'Display condensed news to guests if they don\'t have read authorization';
 $lang['admin.config.number_character_to_cut'] = 'Caracters number to cut the news';
 $lang['admin.config.news_suggestions_enabled'] = 'Enable suggestions display';
 

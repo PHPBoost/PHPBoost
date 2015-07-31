@@ -32,14 +32,15 @@ class NewsDisplayCategoryController extends ModuleController
 {
 	private $lang;
 	private $tpl;
+	private $config;
 	
 	private $category;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->check_authorizations();
-		
 		$this->init();
+		
+		$this->check_authorizations();
 		
 		$this->build_view();
 		
@@ -51,13 +52,13 @@ class NewsDisplayCategoryController extends ModuleController
 		$this->lang = LangLoader::get('common', 'news');
 		$this->tpl = new FileTemplate('news/NewsDisplaySeveralNewsController.tpl');
 		$this->tpl->add_lang($this->lang);
+		$this->config = NewsConfig::load();
 	}
 	
 	private function build_view()
 	{
 		$now = new Date();
 		$authorized_categories = NewsService::get_authorized_categories($this->get_category()->get_id());
-		$news_config = NewsConfig::load();
 		
 		$condition = 'WHERE id_category IN :authorized_categories
 		AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))';
@@ -79,12 +80,12 @@ class NewsDisplayCategoryController extends ModuleController
 			'display_from' => $pagination->get_display_from()
 		)));
 		
-		$number_columns_display_news = $news_config->get_number_columns_display_news();
+		$number_columns_display_news = $this->config->get_number_columns_display_news();
 		$this->tpl->put_all(array(
-			'C_DISPLAY_BLOCK_TYPE' => $news_config->get_display_type() == NewsConfig::DISPLAY_BLOCK,
-			'C_DISPLAY_LIST_TYPE' => $news_config->get_display_type() == NewsConfig::DISPLAY_LIST,
-			'C_DISPLAY_CONDENSED_CONTENT' => $news_config->get_display_condensed_enabled(),
-			'C_COMMENTS_ENABLED' => $news_config->get_comments_enabled(),
+			'C_DISPLAY_BLOCK_TYPE' => $this->config->get_display_type() == NewsConfig::DISPLAY_BLOCK,
+			'C_DISPLAY_LIST_TYPE' => $this->config->get_display_type() == NewsConfig::DISPLAY_LIST,
+			'C_DISPLAY_CONDENSED_CONTENT' => $this->config->get_display_condensed_enabled(),
+			'C_COMMENTS_ENABLED' => $this->config->get_comments_enabled(),
 			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? NewsUrlBuilder::configuration()->rel() : NewsUrlBuilder::edit_category($this->get_category()->get_id())->rel(),
@@ -169,11 +170,21 @@ class NewsDisplayCategoryController extends ModuleController
 	
 	private function check_authorizations()
 	{
-		$id_cat = $this->get_category()->get_id();
-		if (!NewsAuthorizationsService::check_authorizations($id_cat)->read())
+		if (AppContext::get_current_user()->is_guest())
 		{
-			$error_controller = PHPBoostErrors::user_not_authorized();
-			DispatchManager::redirect($error_controller);
+			if (($this->config->are_descriptions_displayed_to_guests() && !Authorizations::check_auth(RANK_TYPE, User::MEMBER_LEVEL, $this->get_category()->get_authorizations(), Category::READ_AUTHORIZATIONS) || !$this->config->get_display_condensed_enabled()) || (!$this->config->are_descriptions_displayed_to_guests() && !NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->read()))
+			{
+				$error_controller = PHPBoostErrors::user_not_authorized();
+				DispatchManager::redirect($error_controller);
+			}
+		}
+		else
+		{
+			if (!NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->read())
+			{
+				$error_controller = PHPBoostErrors::user_not_authorized();
+				DispatchManager::redirect($error_controller);
+			}
 		}
 	}
 	

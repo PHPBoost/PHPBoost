@@ -136,6 +136,8 @@ class AdminArticlesConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(20, 1000))
 		));
 		
+		$fieldset->add_field(new FormFieldCheckbox('display_descriptions_to_guests', $this->lang['articles_configuration.display_descriptions_to_guests'], $this->config->are_descriptions_displayed_to_guests()));
+		
 		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->admin_common_lang['config.root_category_description'], $this->config->get_root_category_description(), 
 			array('rows' => 8, 'cols' => 47)
 		));
@@ -199,6 +201,15 @@ class AdminArticlesConfigController extends AdminModuleController
 		else
 		{
 			$this->config->disable_comments();
+		}
+		
+		if ($this->form->get_value('display_descriptions_to_guests'))
+		{
+			$this->config->display_descriptions_to_guests();
+		}
+		else
+		{
+			$this->config->hide_descriptions_to_guests();
 		}
 		
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());

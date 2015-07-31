@@ -42,7 +42,7 @@ class NewsDisplayNewsController extends ModuleController
 		$this->init();
 		
 		$this->build_view();
-					
+		
 		return $this->generate_response();
 	}
 	
