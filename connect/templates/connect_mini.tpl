@@ -12,7 +12,7 @@
 		{
 			alert("{L_REQUIRE_PASSWORD}");
 			return false;
-		   }
+		}
 	}
 	-->
 	</script>
@@ -105,7 +105,7 @@
 	# IF C_USER_NOTCONNECTED #
 	<div id="connect-menu">
 		<div class="horizontal-fieldset">
-			<a href="#" class="fa fa-sign-in js-menu-button" onClick="open_submenu('connect-menu');"></a>
+			<a href="" class="js-menu-button" onclick="open_submenu('connect-menu');return false;" title="{L_CONNECT}"><i class="fa fa-sign-in"></i> {L_CONNECT}</a>
 			<div class="connect-content">
 				<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();">
 					<input type="text" id="login" name="login" placeholder="{L_PSEUDO}" class="connect_form">
@@ -132,7 +132,7 @@
 	# ELSE #
 	<div id="connect-menu">
 		<div class="horizontal-fieldset">
-			<a href="#" class="fa fa-bars js-menu-button" onClick="open_submenu('connect-menu');"></a>
+			<a href="" class="js-menu-button" onclick="open_submenu('connect-menu');return false;" title="{L_PROFIL}"><i class="fa fa-bars"></i> {L_PROFIL}</a>
 			<ul class="connect-content">
 				<li>
 					<i class="fa fa-user"></i>

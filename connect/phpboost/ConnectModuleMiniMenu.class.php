@@ -110,7 +110,6 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 					'U_AVATAR_IMG' => Url::to_rel($user_avatar),
 					'L_NBR_PM' => ($user->get_unread_pm() > 0 ? ($user->get_unread_pm() . ' ' . (($user->get_unread_pm() > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['private_messaging']),
 					'L_PROFIL' => LangLoader::get_message('profile', 'user-common'),
-					'L_MY_PROFIL' => $LANG['my_private_profile'],
 					'L_ADMIN_PANEL' => $LANG['admin_panel'],
 					'L_MODO_PANEL' => $LANG['modo_panel'],
 					'L_PRIVATE_PROFIL' => $LANG['my_private_profile'],

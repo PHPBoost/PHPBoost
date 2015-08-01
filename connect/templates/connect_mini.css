@@ -91,14 +91,10 @@ div.connect-register i {
 	.js-menu-button {
 		display: inline-block;
 		padding: 5px 10px 5px 10px;
-		height: 31px;
 	}
 	
-	#connect-menu div.horizontal-fieldset div.connect-content{
-		width: 100%;
-	}
-	
-	#connect-menu div.horizontal-fieldset form {
+	#connect-menu div.horizontal-fieldset div.connect-content,
+	#connect-menu div.horizontal-fieldset form{
 		width: 100%;
 		text-align: center;
 	}
@@ -109,6 +105,7 @@ div.connect-register i {
 
 	#connect-menu .horizontal-fieldset a {
 		color: #DEDEDE;
+		text-decoration: none;
 	}
 
 	#connect-menu .horizontal-fieldset a.social-connect {
@@ -149,6 +146,7 @@ div.connect-register i {
 		opacity: 1;
 		width: auto;
 		left: 0%;
+		z-index: 200;
 		transition: left 0.5s, visibility 0.5s, opacity 0.5s;
 	}
 
