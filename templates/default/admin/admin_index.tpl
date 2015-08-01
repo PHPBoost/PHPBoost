@@ -33,7 +33,7 @@
 			<div style="width:49%;float:left;">
 				<table>
 					<thead>
-						<tr> 
+						<tr>
 							<th colspan="4">
 								{L_ADMIN_ALERTS}
 							</th>
@@ -43,11 +43,11 @@
 						<tr> 
 							<td>
 								# IF C_UNREAD_ALERTS #
-									<div class="warning" style="width:auto;">{L_UNREAD_ALERT}</div>
+									<div class="warning">{L_UNREAD_ALERT}</div>
 								# ELSE #
-									<div class="success" style="width:auto;">{L_NO_UNREAD_ALERT}</div>
+									<div class="success">{L_NO_UNREAD_ALERT}</div>
 								# ENDIF #
-								<div style="text-align:center;">
+								<div class="center">
 									<a href="admin_alerts.php">{L_DISPLAY_ALL_ALERTS}</a>
 								</div>
 							</td>
@@ -65,18 +65,20 @@
 					<tbody>
 						<tr> 
 							<td>
-								<div style="height:140px;width:352px;overflow:auto;margin:auto;">
-									# START comments_list #	
+								<div style="height:140px;overflow:auto;">
+									# START comments_list #
 									<div style="margin-bottom:10px;">
 										<a href="{comments_list.U_LINK}"><i class="fa fa-hand-o-right"></i></a> <span class="smaller">{L_BY} {comments_list.U_PSEUDO}</span>
 										<p class="smaller">{comments_list.CONTENT}</p>
-									</div>	
+									</div>
 									# END comments_list #
 									# IF C_NO_COM #
-									<p style="text-align:center;margin:0px;margin-top:50px;"><em>{L_NO_COMMENT}</em></p>
+									<p style="margin:0px;margin-top:50px;"><em>{L_NO_COMMENT}</em></p>
 									# ENDIF #
 								</div>
-								<p style="text-align:center;margin:0;margin-top:6px;"><a class="small" href="${relative_url(UserUrlBuilder::comments())}">{L_VIEW_ALL_COMMENTS}</a></p>
+								<div style="margin-top:6px;">
+									<a href="${relative_url(UserUrlBuilder::comments())}">{L_VIEW_ALL_COMMENTS}</a>
+								</div>
 							</td>
 						</tr>
 					</tbody>
@@ -97,7 +99,7 @@
 								<td>
 									<div class="block-contents">
 										<textarea id="writing_pad_content" name="writing_pad_content" cols="45" rows="10">{WRITING_PAD_CONTENT}</textarea> 
-										<p style="text-align:center;margin:0;margin-top:8px;">
+										<p style="margin:0;margin-top:8px;">
 											<button type="submit" class="submit" name="writingpad" value="true">{L_UPDATE}</button>
 											<button type="reset" value="true">{L_RESET}</button>
 										</p>
@@ -111,6 +113,7 @@
 			</div>
 			
 			<div style="clear:right;"></div>
+			# INCLUDE ADVISES #
 			<table>
 				<caption>{L_USER_ONLINE}</caption>
 				<thead>
@@ -143,7 +146,7 @@
 						</td>
 						<td>
 							{user.TIME}
-						</td>					
+						</td>
 					</tr>
 					# END user #
 				</tbody>

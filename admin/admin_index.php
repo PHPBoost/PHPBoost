@@ -72,6 +72,10 @@ while ($row = $result->fetch())
 }
 $result->dispose();
 
+//Advises
+$advises_form = new HTMLForm('advises_list', '', false);
+AdminServerSystemReportController::get_advises($advises_form);
+
 $tpl->put_all(array(
 	'WRITING_PAD_CONTENT' => WritingPadConfig::load()->get_content(),
 	'C_NO_COM' => $i == 0,
@@ -98,9 +102,9 @@ $tpl->put_all(array(
 	'L_WEBSITE_UPDATES' => $LANG['website_updates'],
 	'L_BY' => $LANG['by'],
 	'L_UPDATE' => $LANG['update'],
-	'L_RESET' => $LANG['reset']
+	'L_RESET' => $LANG['reset'],
+	'ADVISES' => $advises_form->display()
 ));
-
 
 
 //Liste des personnes en lignes.

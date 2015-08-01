@@ -27,7 +27,6 @@
 
 class AdminServerSystemReportController extends AdminController
 {
-	private $lang;
 	private $admin_lang;
 	private $form;
 	private $tpl;
@@ -45,7 +44,6 @@ class AdminServerSystemReportController extends AdminController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-server-common');
 		$this->admin_lang = LangLoader::get('admin');
 		$this->tpl = new StringTemplate('# INCLUDE FORM #');
 		$this->tpl->add_lang($this->admin_lang);
@@ -67,18 +65,6 @@ class AdminServerSystemReportController extends AdminController
 		$server_environment_config = ServerEnvironmentConfig::load();
 		$sessions_config = SessionsConfig::load();
 		$maintenance_config = MaintenanceConfig::load();
-		
-		$url_rewriting_available = false;
-		$url_rewriting_known = true;
-
-		try
-		{
-			$url_rewriting_available = $server_configuration->has_url_rewriting();
-		}
-		catch (UnsupportedOperationException $ex)
-		{
-			$url_rewriting_known = false;
-		}
 
 		$summerization =
 "---------------------------------System report---------------------------------
@@ -87,7 +73,7 @@ SERVER CONFIGURATION-----------------------------------------------------------
 php version              : " . ServerConfiguration::get_phpversion() . "
 dbms version             : " . PersistenceContext::get_dbms_utils()->get_dbms_version() . "
 gd library               : " . (int)$server_configuration->has_gd_library() . "
-url rewriting            : " . ($url_rewriting_known ? (int) $url_rewriting_available : 'N/A') . "
+url rewriting            : " . $server_configuration->has_url_rewriting() . "
 apcu cache               : " . (int) DataStoreFactory::is_apc_available() . "
 PHPBOOST CONFIGURATION---------------------------------------------------------
 phpboost version         : " . Environment::get_phpboost_version() . "
@@ -107,31 +93,8 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 ";
 
 		$form = new HTMLForm('system-report', '', false);
-		$fieldset = new FormFieldsetHTML('advises', $this->lang['advises']);
-		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldFree('modules_management', '', MessageHelper::display($this->lang['advises.modules_management'], MessageHelper::SUCCESS)->render()));
-		
-		if ($maintenance_config->is_under_maintenance())
-			$fieldset->add_field(new FormFieldFree('check_modules_authorizations', '', MessageHelper::display($this->lang['advises.check_modules_authorizations'], MessageHelper::SUCCESS)->render()));
-		
-		if (!strstr($general_config->get_site_url(), 'localhost') && !strstr($general_config->get_site_url(), '127.0.0.1') && !$maintenance_config->is_under_maintenance() && Debug::is_debug_mode_enabled())
-			$fieldset->add_field(new FormFieldFree('disable_debug_mode', '', MessageHelper::display($this->lang['advises.disable_debug_mode'], MessageHelper::WARNING)->render()));
-		
-		if ($url_rewriting_available && !$server_environment_config->is_url_rewriting_enabled())
-			$fieldset->add_field(new FormFieldFree('enable_url_rewriting', '', MessageHelper::display($this->lang['advises.enable_url_rewriting'], MessageHelper::NOTICE)->render()));
-		
-		if (function_exists('ob_gzhandler') && @extension_loaded('zlib') && !$server_environment_config->is_output_gziping_enabled())
-			$fieldset->add_field(new FormFieldFree('enable_output_gz', '', MessageHelper::display($this->lang['advises.enable_output_gz'], MessageHelper::NOTICE)->render()));
-		
-		if (DataStoreFactory::is_apc_available() && !DataStoreFactory::is_apc_enabled())
-			$fieldset->add_field(new FormFieldFree('enable_apcu_cache', '', MessageHelper::display($this->lang['advises.enable_apcu_cache'], MessageHelper::NOTICE)->render()));
-		
-		if (ServerConfiguration::get_phpversion() < '5.6')
-			$fieldset->add_field(new FormFieldFree('upgrade_php_version', '', MessageHelper::display($this->lang['advises.upgrade_php_version'], MessageHelper::NOTICE)->render()));
-		
-		if (!$server_environment_config->is_database_tables_optimization_enabled())
-			$fieldset->add_field(new FormFieldFree('optimize_database_tables', '', MessageHelper::display($this->lang['advises.optimize_database_tables'], MessageHelper::SUCCESS)->render()));
+		$this->get_advises($form);
 		
 		$fieldset = new FormFieldsetHTML('report', $this->admin_lang['server']);
 		$form->add_fieldset($fieldset);
@@ -139,7 +102,7 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 		$fieldset->add_field(new FormFieldFree('php_version', $this->admin_lang['php_version'], ServerConfiguration::get_phpversion()));
 		$fieldset->add_field(new FormFieldFree('dbms_version', $this->admin_lang['dbms_version'], PersistenceContext::get_dbms_utils()->get_dbms_version()));
 		$fieldset->add_field(new FormFieldFree('gd_library', $this->admin_lang['gd_library'], $server_configuration->has_gd_library() ? $picture_yes : $picture_no));
-		$fieldset->add_field(new FormFieldFree('url_rewriting', $this->admin_lang['url_rewriting'], $url_rewriting_known ? ($url_rewriting_available ? $picture_yes : $picture_no) : $picture_unknown));
+		$fieldset->add_field(new FormFieldFree('url_rewriting', $this->admin_lang['url_rewriting'], $server_configuration->has_url_rewriting() ? $picture_yes : $picture_no));
 		$fieldset->add_field(new FormFieldFree('apcu_cache', LangLoader::get_message('apcu_cache', 'admin-cache-common'), DataStoreFactory::is_apc_available() ? $picture_yes : $picture_no));
 
 		$fieldset = new FormFieldsetHTML('report', $this->admin_lang['phpboost_config']);
@@ -179,6 +142,46 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 		));
 		
 		$this->form = $form;
+	}
+	
+	public static function get_advises(HTMLForm $html_form)
+	{
+		$lang = LangLoader::get('admin-server-common');
+		
+		$server_configuration = new ServerConfiguration();
+		$maintenance_config = MaintenanceConfig::load();
+		$general_config = GeneralConfig::load();
+		$server_environment_config = ServerEnvironmentConfig::load();
+		
+		$fieldset = new FormFieldsetHTML('advises', $lang['advises']);
+		
+		$fieldset->add_field(new FormFieldFree('modules_management', '', MessageHelper::display($lang['advises.modules_management'], MessageHelper::SUCCESS)->render()));
+		
+		if ($maintenance_config->is_under_maintenance())
+			$fieldset->add_field(new FormFieldFree('check_modules_authorizations', '', MessageHelper::display($lang['advises.check_modules_authorizations'], MessageHelper::SUCCESS)->render()));
+		
+		if (!strstr($general_config->get_site_url(), 'localhost') && !strstr($general_config->get_site_url(), '127.0.0.1') && !$maintenance_config->is_under_maintenance() && Debug::is_debug_mode_enabled())
+			$fieldset->add_field(new FormFieldFree('disable_debug_mode', '', MessageHelper::display($lang['advises.disable_debug_mode'], MessageHelper::WARNING)->render()));
+		
+		if ($server_configuration->has_url_rewriting() && !$server_environment_config->is_url_rewriting_enabled())
+			$fieldset->add_field(new FormFieldFree('enable_url_rewriting', '', MessageHelper::display($lang['advises.enable_url_rewriting'], MessageHelper::NOTICE)->render()));
+		
+		if (function_exists('ob_gzhandler') && @extension_loaded('zlib') && !$server_environment_config->is_output_gziping_enabled())
+			$fieldset->add_field(new FormFieldFree('enable_output_gz', '', MessageHelper::display($lang['advises.enable_output_gz'], MessageHelper::NOTICE)->render()));
+		
+		if (DataStoreFactory::is_apc_available() && !DataStoreFactory::is_apc_enabled())
+			$fieldset->add_field(new FormFieldFree('enable_apcu_cache', '', MessageHelper::display($lang['advises.enable_apcu_cache'], MessageHelper::NOTICE)->render()));
+		
+		if (ServerConfiguration::get_phpversion() < '5.6')
+			$fieldset->add_field(new FormFieldFree('upgrade_php_version', '', MessageHelper::display($lang['advises.upgrade_php_version'], MessageHelper::NOTICE)->render()));
+		
+		$fieldset->add_field(new FormFieldFree('save_database', '', MessageHelper::display($lang['advises.save_database'], MessageHelper::SUCCESS)->render()));
+		
+		if (!$server_environment_config->is_database_tables_optimization_enabled())
+			$fieldset->add_field(new FormFieldFree('optimize_database_tables', '', MessageHelper::display($lang['advises.optimize_database_tables'], MessageHelper::SUCCESS)->render()));
+		
+		if (count($fieldset->get_fields()))
+			$html_form->add_fieldset($fieldset);
 	}
 }
 ?>

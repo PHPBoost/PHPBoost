@@ -37,5 +37,6 @@ $lang['advises.enable_url_rewriting'] = '<a href="' . AdminConfigUrlBuilder::adv
 $lang['advises.enable_output_gz'] = '<a href="' . AdminConfigUrlBuilder::advanced_config()->rel() . '">Enable Output pages compression</a> to gain performance.';
 $lang['advises.enable_apcu_cache'] = '<a href="' . AdminCacheUrlBuilder::configuration()->rel() . '">Enable APCu cache</a> to allow loading the cache in RAM on the server and not on the hard-drive and win a performance advantage.';
 $lang['advises.upgrade_php_version'] = 'Upgrade your PHP version in 5.6 (last stable release) if your host allows it.';
+$lang['advises.save_database'] = 'Save your database frequently.';
 $lang['advises.optimize_database_tables'] = '<a href="' . AdminConfigUrlBuilder::advanced_config()->rel() . '">Enable auto tables optimization</a> or optimize occasionally your tables in the module <strong>Database</strong> (if it is installed) or in your database management tool to recover the wasted base space.';
 ?>
