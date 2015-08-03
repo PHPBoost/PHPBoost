@@ -85,7 +85,7 @@
 			<div class="forum-title-r"></div>
 			<div class="forum-title">
 				<div>
-					<div style="float:left;">
+					<div class="float-left">
 						<h2>{FORUM_NAME}</h2>
 						<div>
 							# IF C_FORUM_CONNEXION #

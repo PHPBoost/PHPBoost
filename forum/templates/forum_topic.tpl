@@ -130,7 +130,7 @@
 				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
 				&bull; {U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
 				
-				<span style="float:right;">
+				<span class="float-right">
 					# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
 					
 					# IF C_FORUM_MODERATOR #
@@ -211,8 +211,8 @@
 							<em>{L_GUEST}</em>
 						# ENDIF #
 					</div>
-					<span style="float:left;"><a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" title=""><i class="fa fa-hand-o-right"></i></a> {msg.FORUM_MSG_DATE}</span>
-					<span style="float:right;"><a href="topic{msg.U_VARS_QUOTE}" title="{L_QUOTE}"><i class="fa fa-quote-right"></i></a>
+					<span class="float-left"><a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" title=""><i class="fa fa-hand-o-right"></i></a> {msg.FORUM_MSG_DATE}</span>
+					<span class="float-right"><a href="topic{msg.U_VARS_QUOTE}" title="{L_QUOTE}"><i class="fa fa-quote-right"></i></a>
 					# IF msg.C_FORUM_MSG_EDIT # 
 					<a href="post{msg.U_FORUM_MSG_EDIT}" title="{L_EDIT}" class="fa fa-edit"></a>
 					# ENDIF #
@@ -270,13 +270,13 @@
 					{msg.USER_SIGN}
 				</div>
 				<hr />
-				<span style="float:left;">
+				<span class="float-left">
 					{msg.USER_PM} {msg.USER_MAIL}
 					# START msg.ext_fields #
 						{msg.ext_fields.BUTTON}
 					# END msg.ext_fields #
 				</span>
-				<span style="float:right;font-size:10px;">
+				<span class="float-right">
 					&nbsp;
 					# IF msg.C_FORUM_MODERATOR # 
 					{msg.USER_WARNING}%
@@ -294,7 +294,7 @@
 				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
 				&bull; {U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title2">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
 				
-				<span style="float:right;">
+				<span class="float-right">
 					# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
 					
 					# IF C_FORUM_MODERATOR #

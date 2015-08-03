@@ -19,7 +19,7 @@
 					&nbsp;&nbsp;<a href="{forums_list.cats.U_FORUM_VARS}" class="forum-link-cat">{forums_list.cats.NAME}</a>
 				</span>
 				# IF C_DISPLAY_UNREAD_DETAILS #
-				<span style="float:right">
+				<span class="float-right">
 					<a href="{PATH_TO_ROOT}/forum/unread.php?cat={forums_list.cats.IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><i class="fa fa-notread"></i></a>
 				</span>
 				# ENDIF #

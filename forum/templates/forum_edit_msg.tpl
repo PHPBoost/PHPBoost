@@ -14,7 +14,7 @@
 		<div class="module-position">
 			<div class="module-top-l"></div>
 			<div class="module-top-r"></div>
-			<div class="module-top"><a href="index.php">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span style="font-weight:normal"><em>{DESC}</em></span></div>
+			<div class="module-top"><a href="index.php">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span><em>{DESC}</em></span></div>
 			<div class="module-contents">
 				<form action="{U_ACTION}" method="post" onsubmit="return check_form_post();">
 					# INCLUDE message_helper #
@@ -24,16 +24,16 @@
 						<div class="module-top-l"></div>
 						<div class="module-top-r"></div>
 						<div class="module-top">
-							<span style="float:left;">{L_PREVIEW}</span>
-							<span style="float:right;"></span>&nbsp;
+							<span class="float-left">{L_PREVIEW}</span>
+							<span class="float-right"></span>&nbsp;
 						</div>
 					</div>
 					<div class="msg-position">
 						<div class="msg-container">
 							<div class="msg-pseudo-mbr"></div>
 							<div class="msg-top-row">
-								<div style="float:left;"><i class="fa fa-hand-o-right"></i> {DATE}</div>
-								<div style="float:right;"><i class="fa fa-quote-right"></i></div>
+								<div class="float-left"><i class="fa fa-hand-o-right"></i> {DATE}</div>
+								<div class="float-right"><i class="fa fa-quote-right"></i></div>
 							</div>
 							<div class="msg-contents-container">
 								<div class="msg-info-mbr">
@@ -47,10 +47,10 @@
 						</div>
 						<div class="msg-sign">
 							<hr />
-							<span style="float:left;">
+							<span class="float-left">
 								<span class="basic-button smaller">MP</span>
 							</span>
-							<span style="float:right;font-size:10px;">
+							<span class="float-right">
 							</span>&nbsp;
 						</div>
 					</div>
@@ -82,12 +82,12 @@
 							<button onclick="XMLHttpRequest_preview();" type="button">{L_PREVIEW}</button>
 							<button type="reset" value="true">{L_RESET}</button>
 						</fieldset>
-					</div>		
+					</div>
 				</form>
 			</div>
 			<div class="module-bottom-l"></div>
 			<div class="module-bottom-r"></div>
-			<div class="module-bottom"><a href="index.php">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span style="font-weight:normal"><em>{DESC}</em></span></div>
+			<div class="module-bottom"><a href="index.php">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span><em>{DESC}</em></span></div>
 		</div>
 		
 		# INCLUDE forum_bottom #

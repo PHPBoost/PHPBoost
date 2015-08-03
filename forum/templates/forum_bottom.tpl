@@ -1,10 +1,10 @@
 		<div id="forum-bottom">
 			<div class="forum-links">
-				<div style="float:left;">
+				<div class="float-left">
 					&bull; <a href="index.php">{L_FORUM_INDEX}</a> 
 				</div>
 				# IF C_USER_CONNECTED #
-					<div style="float:right;">
+					<div class="float-right">
 						<i class="fa fa-msg-track"></i> {U_TOPIC_TRACK} &bull;
 						<i class="fa fa-lastview"></i> {U_LAST_MSG_READ} &bull;
 						<i class="fa fa-notread"></i> <span id="nbr_unread_topics2">{U_MSG_NOT_READ}</span>
@@ -31,7 +31,7 @@
 			
 			<div class="forum-online">
 				# IF USERS_ONLINE #
-				<span style="float:left;">
+				<span class="float-left">
 					{TOTAL_ONLINE} {L_USER} {L_ONLINE} : {ADMIN} {L_ADMIN}, {MODO} {L_MODO}, {MEMBER} {L_MEMBER} {L_AND} {GUEST} {L_GUEST}
 					<br />
 					{L_USER} {L_ONLINE} : {USERS_ONLINE}
@@ -69,10 +69,10 @@
 			
 				# IF C_TOTAL_POST #
 				<div style="margin-top:6px;">
-					<span style="float:left;">
+					<span class="float-left">
 						{L_TOTAL_POST}: <strong>{NBR_MSG}</strong> {L_MESSAGE} {L_DISTRIBUTED} <strong>{NBR_TOPIC}</strong> {L_TOPIC}
 					</span>
-					<span style="float:right;">
+					<span class="float-right">
 						<a href="{PATH_TO_ROOT}/forum/stats.php"><i class="fa fa-bar-chart-o"></i> {L_STATS}</a>
 					</span>
 					<div class="spacer"></div>

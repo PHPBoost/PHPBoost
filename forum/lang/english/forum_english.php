@@ -32,24 +32,6 @@
  ####################################################
 
 //Admin
-$LANG['parent_category'] = 'Parent category';
-$LANG['subcat'] = 'Subcategory';
-$LANG['url_explain'] = 'Transform the forum into weblink (http://...)';
-$LANG['lock'] = 'Lock';
-$LANG['unlock'] = 'Unlock';
-$LANG['cat_edit'] = 'Edit category';
-$LANG['del_cat'] = 'Subcategory suppression tool';
-$LANG['explain_topic'] = 'The forum you wish to delete contains <strong>1</strong> post, do you want to preserve it by moving it in another forum, or delete this post?';
-$LANG['explain_topics'] = 'The forum you wish to delete contains <strong>%d</strong> posts, do you want to preserve them by transferring them to another forum, or delete all posts?';
-$LANG['explain_subcat'] = 'The forum you wish to delete contains <strong>1</strong> subforum, do you want to preserve it by transferring it to another forum, or delete it and its content?';
-$LANG['explain_subcats'] = 'The forum you wish to delete contains <strong>%d</strong> subforums, do you want to preserve them by transferring them in another forum, or delete all those subforums and their contents?';
-$LANG['keep_topic'] = 'Keep post(s)';
-$LANG['keep_subforum'] = 'Keep subforum(s)';
-$LANG['move_topics_to'] = 'Move post(s) to';
-$LANG['move_forums_to'] = 'Move subforum(s) to';
-$LANG['cat_target'] = 'Category target';
-$LANG['del_all'] = 'Delete all';
-$LANG['del_forum_contents'] = 'Delete the forum "<strong>%s</strong>", <strong>subforums</strong> and <strong>all</strong> its content <span class="smaller">(irreversible)</span>';
 $LANG['forum_management'] = 'Forum management';
 $LANG['update_data_cached'] = 'Recount topics and posts';
 

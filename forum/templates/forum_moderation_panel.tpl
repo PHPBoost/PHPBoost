@@ -45,7 +45,7 @@
 							{L_HISTORY}
 						</caption>
 						<thead>
-							<tr style="text-align:center;font-weight: bold;width: 150px">
+							<tr>
 								<th>
 									{L_MODO}
 								</th>
@@ -62,9 +62,9 @@
 						</thead>
 						<tfoot>
 							<tr>
-								<th colspan="4" style="text-align:center;">
+								<th colspan="4">
 									# IF C_FORUM_ADMIN #
-									<span style="float:left"><button type="submit" name="valid" value="true" class="submit">{L_DELETE}</button></span> 
+									<span class="float-left"><button type="submit" name="valid" value="true" class="submit">{L_DELETE}</button></span> 
 									# ENDIF #
 									# IF C_DISPLAY_LINK_MORE_ACTION #
 									<a href="moderation_forum{U_MORE_ACTION}">{L_MORE_ACTION}</a>
@@ -74,7 +74,7 @@
 						</tfoot>
 						<tbody>
 						# START action_list # 
-						<tr style="text-align:center;">
+						<tr>
 							<td style="width: 150px">
 								<a href="{action_list.U_USER_PROFILE}" class="{action_list.LEVEL_CLASS}" # IF action_list.C_GROUP_COLOR # style="color:{action_list.GROUP_COLOR}" # ENDIF #>{action_list.LOGIN}</a>
 							</td>
@@ -90,7 +90,7 @@
 						</tr>
 						# END action_list #
 						# IF C_FORUM_NO_ACTION #
-						<tr style="text-align:center;">
+						<tr>
 							<td colspan="4">
 								{L_NO_ACTION}
 							</td>
@@ -135,22 +135,22 @@
 						<tbody>
 							# START alert_list #
 							<tr>
-								<td style="text-align:center;width:25px;">
+								<td style="width:25px;">
 									<input type="checkbox" name="{alert_list.ID}">
 								</td>
-								<td style="text-align:center;width:20%;">
+								<td style="width:20%;">
 									{alert_list.TITLE} {alert_list.EDIT}
 								</td>
-								<td style="text-align:center;width:20%;">
+								<td style="width:20%;">
 									{alert_list.TOPIC}
 								</td>
-								<td style="text-align:center;width:100px;{alert_list.BACKGROUND_COLOR}">
+								<td style="width:100px;{alert_list.BACKGROUND_COLOR}">
 									{alert_list.STATUS}
 								</td>
-								<td style="text-align:center;width:70px;">
+								<td style="width:70px;">
 									{alert_list.LOGIN}
 								</td>
-								<td style="text-align:center;width:70px;">
+								<td style="width:70px;">
 									{alert_list.TIME}
 								</td>
 							</tr>
@@ -158,7 +158,7 @@
 							
 							# IF C_FORUM_NO_ALERT #
 							<tr>
-								<td colspan="6" style="text-align:center;">
+								<td colspan="6">
 									{L_NO_ALERT}
 								</td>
 							</tr>
@@ -173,7 +173,7 @@
 				<table>
 					<thead>
 						<tr>
-							<th colspan="2" style="text-align:center;">
+							<th colspan="2">
 								{TOPIC}
 							</th>
 						</tr>
@@ -208,7 +208,7 @@
 							<td>{TIME}</td>
 						</tr>
 					</tbody>
-				</table>	
+				</table>
 
 				<form action="{U_CHANGE_STATUS}" method="post">
 					<fieldset class="fieldset-submit" style="padding-top:25px;">
@@ -229,10 +229,8 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td style="text-align:center;" colspan="2">
-								<br /><br />
+							<td colspan="2">
 								{L_NO_ALERT}
-								<br /><br />
 							</td>
 						</tr>
 					</tbody>
@@ -286,7 +284,7 @@
 				<table>
 					<tr>
 						<td>
-							<span style="float:left;">
+							<span class="float-left">
 								{L_SEARCH_USER}: <input type="text" size="20" maxlength="25" id="login" name="login">
 								<span id="search_img"></span>
 							</span>
@@ -316,16 +314,16 @@
 					<tbody>
 						# START user_list #
 						<tr>
-							<td style="text-align:center;width:25%;">
+							<td style="width:25%;">
 								<a href="{user_list.U_PROFILE}" class="{user_list.LEVEL_CLASS}" # IF user_list.C_GROUP_COLOR # style="color:{user_list.GROUP_COLOR}" # ENDIF #>{user_list.LOGIN}</a>
 							</td>
-							<td style="text-align:center;width:25%;">
+							<td style="width:25%;">
 								{user_list.INFO}
 							</td>
-							<td style="text-align:center;width:25%;">
+							<td style="width:25%;">
 								{user_list.U_ACTION_USER}
 							</td>
-							<td style="text-align:center;width:25%;">
+							<td style="width:25%;">
 								<a href="{user_list.U_PM}" class="basic-button smaller">MP</a>
 							</td>
 						</tr>
@@ -333,7 +331,7 @@
 						
 						# IF C_FORUM_NO_USER #
 						<tr>
-							<td style="text-align:center;" colspan="4">
+							<td colspan="4">
 								{L_NO_USER}
 							</td>
 						</tr>
@@ -407,7 +405,7 @@
 			</div>
 			<div class="module-bottom-r"></div>	
 			<div class="module-bottom-l"></div>
-			<div class="module-bottom text-strong">
+			<div class="module-bottom">
 				&bull; <a href="index.php">{FORUM_NAME}</a> &raquo; <a href="moderation_forum.php">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}
 			</div>
 		</div>

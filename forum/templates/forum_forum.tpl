@@ -78,7 +78,7 @@
 				# IF C_POST_NEW_SUBJECT #
 					&raquo; <a href="{U_POST_NEW_SUBJECT}" class="basic-button">{L_POST_NEW_SUBJECT}</a>
 				# ENDIF #
-				<span style="float:right;">
+				<span class="float-right">
 					# IF IDCAT #
 					<a href="unread.php?cat={IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><i class="fa fa-notread"></i></a>
 					# ENDIF #
@@ -99,7 +99,7 @@
 					<tfoot>
 						<tr>
 							<th colspan="7">
-								<div style="float:left;">
+								<div class="float-left">
 									<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a> &bull; {U_FORUM_CAT}
 									# IF C_POST_NEW_SUBJECT #
 										&raquo; <a href="{U_POST_NEW_SUBJECT}" class="basic-button">{L_POST_NEW_SUBJECT}</a>

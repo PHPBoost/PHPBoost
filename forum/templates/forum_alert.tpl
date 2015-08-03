@@ -3,7 +3,7 @@
 		<div class="module-position">
 			<div class="module-top-l"></div>
 			<div class="module-top-r"></div>
-			<div class="module-top">&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span style="font-weight:normal"><em>{DESC}</em></span> &raquo; <a href="">{L_ALERT}</a></div>
+			<div class="module-top">&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span><em>{DESC}</em></span> &raquo; <a href="">{L_ALERT}</a></div>
 			<div class="module-contents">
 
 			# START alert_form #
@@ -45,7 +45,7 @@
 					<fieldset class="fieldset-submit">
 							<button type="submit" name="edit_msg" value="true" class="submit">{L_SUBMIT}</button>
 							<button onclick="XMLHttpRequest_preview();" type="button">{L_PREVIEW}</button>
-							<button type="reset" value="true">{L_RESET}</button>								
+							<button type="reset" value="true">{L_RESET}</button>
 					</fieldset>
 				</form>
 				<br />
@@ -55,7 +55,7 @@
 				# START alert_confirm #
 				<fieldset>
 					<legend>{L_ALERT}</legend>
-					<div style="text-align:center;">
+					<div class="center">
 						<br /><br />
 						{alert_confirm.MSG}
 						<br /><br />
@@ -64,9 +64,9 @@
 				</fieldset>
 				# END alert_confirm #
 			</div>
-			<div class="module-bottom-l"></div>		
+			<div class="module-bottom-l"></div>
 			<div class="module-bottom-r"></div>
-			<div class="module-bottom">&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span style="font-weight:normal"><em>{DESC}</em></span> &raquo; <a href="">{L_ALERT}</a></div>
+			<div class="module-bottom">&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span><em>{DESC}</em></span> &raquo; <a href="">{L_ALERT}</a></div>
 		</div>
 		
 		# INCLUDE forum_bottom #

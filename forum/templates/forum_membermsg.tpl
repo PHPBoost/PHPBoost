@@ -20,10 +20,10 @@
 					<div class="msg-pseudo-mbr">
 						{list.USER_ONLINE} # IF NOT list.C_GUEST #<a class="forum-link-pseudo {list.LEVEL_CLASS}" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}" # ENDIF # href="{list.U_USER_PROFILE}">{list.USER_PSEUDO}</a># ELSE # {list.USER_PSEUDO} # ENDIF #
 					</div>
-					<span style="float:left;">
+					<span class="float-left">
 						&nbsp;&nbsp;<span id="m{list.ID}"></span><a href="{PATH_TO_ROOT}/forum/topic{list.U_VARS_ANCRE}#m{list.ID}" title=""><i class="fa fa-hand-o-right"></i></a> {list.DATE}
 					</span>
-					<span style="float:right;">
+					<span class="float-right">
 						{list.U_FORUM_CAT} &raquo; {list.U_TITLE_T}
 						<a href="#go_top"><i class="fa fa-arrow-up"></i></a> 
 						<a href="#go_bottom"><i class="fa fa-arrow-down"></i></a>
@@ -50,13 +50,13 @@
 					{list.USER_SIGN}
 				</div>
 				<hr />
-				<span style="float:left;">
+				<span class="float-left">
 					{list.USER_PM} {list.USER_MAIL}
 					# START list.ext_fields #
 						{list.ext_fields.BUTTON}
 					# END list.ext_fields #
 				</span>
-				<span style="float:right;font-size:10px;">
+				<span class="float-right">
 					&nbsp;
 					# IF list.C_FORUM_MODERATOR # 
 					{list.USER_WARNING}%

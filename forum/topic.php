@@ -506,7 +506,7 @@ $vars_tpl = array_merge($vars_tpl, array(
 	'MEMBER' => $total_member,
 	'GUEST' => $total_visit,
 	'SELECT_CAT' => $cat_list, //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
-	'U_SUSCRIBE' => ($track === false) ? url('.php?t=' . $id_get) : url('.php?ut=' . $id_get),
+	'U_SUSCRIBE' => ($track) ? url('.php?ut=' . $id_get) : url('.php?t=' . $id_get),
 	'U_SUSCRIBE_PM' => url('.php?token=' . AppContext::get_session()->get_token() . '&amp;' . ($track_pm ? 'utp' : 'tp') . '=' . $id_get),
 	'U_SUSCRIBE_MAIL' => url('.php?token=' . AppContext::get_session()->get_token() . '&amp;' . ($track_mail ? 'utm' : 'tm') . '=' . $id_get),
 	'IS_TRACK' => $track ? 'true' : 'false',
@@ -514,9 +514,9 @@ $vars_tpl = array_merge($vars_tpl, array(
 	'IS_TRACK_MAIL' => $track_mail ? 'true' : 'false',
 	'IS_CHANGE' => $topic['display_msg'] ? 'true' : 'false',
 	'U_ALERT' => url('.php?id=' . $id_get),
-	'L_TRACK_DEFAULT' => ($track === false) ? $LANG['track_topic'] : $LANG['untrack_topic'],
-	'L_SUSCRIBE_DEFAULT' => ($track_mail === false) ? $LANG['track_topic_mail'] : $LANG['untrack_topic_mail'],
-	'L_SUSCRIBE_PM_DEFAULT' => ($track_pm === false) ? $LANG['track_topic_pm'] : $LANG['untrack_topic_pm'],
+	'L_TRACK_DEFAULT' => ($track) ? $LANG['untrack_topic'] : $LANG['track_topic'],
+	'L_SUSCRIBE_DEFAULT' => ($track_mail) ? $LANG['untrack_topic_mail'] : $LANG['track_topic_mail'],
+	'L_SUSCRIBE_PM_DEFAULT' => ($track_pm) ? $LANG['untrack_topic_pm'] : $LANG['track_topic_pm'],
 	'L_TRACK' => $LANG['track_topic'],
 	'L_UNTRACK' => $LANG['untrack_topic'],
 	'L_SUSCRIBE_PM' => $LANG['track_topic_pm'],
@@ -566,7 +566,7 @@ else
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$editor->set_identifier('contents');
 	
-	$tpl->put_all(array(
+	$vars_tpl = array_merge($vars_tpl, array(
 		'C_AUTH_POST' => true,
 		'CONTENTS' => $contents,
 		'KERNEL_EDITOR' => $editor->display(),
@@ -595,10 +595,10 @@ else
 $tpl->put_all($vars_tpl);
 $tpl_top->put_all($vars_tpl);
 $tpl_bottom->put_all($vars_tpl);
-	
+
 $tpl->put('forum_top', $tpl_top);
 $tpl->put('forum_bottom', $tpl_bottom);
-	
+
 $tpl->display();
 
 include('../kernel/footer.php');

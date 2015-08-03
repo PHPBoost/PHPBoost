@@ -31,24 +31,6 @@
  ####################################################
 
 //Admin
-$LANG['parent_category'] = 'Catégorie parente';
-$LANG['subcat'] = 'Sous-catégorie';
-$LANG['url_explain'] = 'Transforme le forum en lien internet (http://...)';
-$LANG['lock'] = 'Verrouillé';
-$LANG['unlock'] = 'Déverrouillé';
-$LANG['cat_edit'] = 'Editer une catégorie';
-$LANG['del_cat'] = 'Outil de suppression de sous-catégorie';
-$LANG['explain_topic'] = 'Le forum que vous désirez supprimer contient <strong>1</strong> sujet, voulez-vous le conserver en le transférant dans un autre forum, ou bien le supprimer ?';
-$LANG['explain_topics'] = 'Le forum que vous désirez supprimer contient <strong>%d</strong> sujets, voulez-vous les conserver en les transférant dans un autre forum, ou bien tout supprimer ?';
-$LANG['explain_subcat'] = 'Le forum que vous désirez supprimer contient <strong>1</strong> sous-forum, voulez-vous le conserver en le transférant dans un autre forum, ou bien le supprimer ainsi que son contenu ?';
-$LANG['explain_subcats'] = 'Le forum que vous désirez supprimer contient <strong>%d</strong> sous-forums, voulez-vous les conserver en les transférant dans un autre forum, ou bien les supprimer ainsi que leur contenu ?';
-$LANG['keep_topic'] = 'Conserver le(s) sujet(s)';
-$LANG['keep_subforum'] = 'Conserver le(s) sous-forum(s)';
-$LANG['move_topics_to'] = 'Déplacer le(s) sujet(s) vers';
-$LANG['move_sub_forums_to'] = 'Déplacer le(s) sous-forum(s) vers';
-$LANG['cat_target'] = 'Catégorie cible';
-$LANG['del_all'] = 'Suppression complète';
-$LANG['del_forum_contents'] = 'Supprimer le forum "<strong>%s</strong>", ses <strong>sous-forums</strong> et <strong>tout</strong> son contenu <span class="smaller">(Définitif)</span>';
 $LANG['forum_management'] = 'Gestion du forum';
 $LANG['update_data_cached'] = 'Recompter le nombre de sujets et de messages';
 

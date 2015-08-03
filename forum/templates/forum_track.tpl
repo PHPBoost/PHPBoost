@@ -100,7 +100,7 @@
 			<div class="module-bottom-l"></div>
 			<div class="module-bottom-r"></div>
 			<div class="module-bottom">
-				<span style="float:left;" class="text-strong">
+				<span class="float-left">
 					&bull; {U_FORUM_CAT}
 				</span>
 				# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span><div class="spacer"></div># ENDIF #
