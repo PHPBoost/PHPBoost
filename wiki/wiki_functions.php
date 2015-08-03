@@ -35,12 +35,12 @@ function wiki_parse($var)
 	//On force le langage de formatage à BBCode
 	$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
 	$parser = $content_manager->get_parser();
-		
-    $parser->set_content($var);
-    $parser->parse();
 	
-    //Parse la balise link
-	return preg_replace('`\[link=([a-z0-9+#-_]+)\](.+)\[/link\]`isU', '<a href="/wiki/$1">$2</a>', addslashes($parser->get_content()));
+	$parser->set_content($var);
+	$parser->parse();
+	
+	//Parse la balise link
+	return preg_replace('`\[link=([a-z0-9+#-_]+)\](.+)\[/link\]`isU', '<a href="/wiki/$1">$2</a>', $parser->get_content());
 }
 
 //Retour au BBCode en tenant compte de [link]
