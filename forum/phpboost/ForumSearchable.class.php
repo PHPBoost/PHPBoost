@@ -52,7 +52,6 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		$idcat = !empty($args['ForumIdcat']) ? NumberHelper::numeric($args['ForumIdcat']) : -1;
 		$time = !empty($args['ForumTime']) ? NumberHelper::numeric($args['ForumTime']) : 0;
 		$where = !empty($args['ForumWhere']) ? TextHelper::strprotect($args['ForumWhere']) : 'all';
-		$colorate_result = !empty($args['ForumColorate_result']);
 		
 		//Liste des catégories.
 		$search_category_children_options = new SearchCategoryChildrensOptions();
@@ -93,8 +92,6 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			'IS_TITLE_CHECKED' => $where == 'title' ? ' checked="checked"' : '' ,
 			'IS_CONTENTS_CHECKED' => $where == 'contents' ? ' checked="checked"' : '' ,
 			'IS_ALL_CHECKED' => $where == 'all' ? ' checked="checked"' : '' ,
-			'L_COLORATE_RESULTS' => $LANG['colorate_result'],
-			'IS_COLORATION_CHECKED' => $colorate_result ? 'checked="checked"' : '',
 			'L_CATEGORY' => $LANG['category'],
 			'L_ALL_CATS' => $LANG['all'],
 			'IS_ALL_CATS_SELECTED' => ($idcat == '-1') ? ' selected="selected"' : '',
@@ -108,7 +105,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 	 *  Renvoie la liste des arguments de la méthode <get_search_args>
 	 */
 	{
-		return Array('ForumTime', 'ForumIdcat', 'ForumWhere', 'ForumColorate_result');
+		return Array('ForumTime', 'ForumIdcat', 'ForumWhere');
 	}
 
 	public function get_search_request($args)
@@ -122,7 +119,6 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		$idcat = !empty($args['ForumIdcat']) ? NumberHelper::numeric($args['ForumIdcat']) : -1;
 		$time = (!empty($args['ForumTime']) ? NumberHelper::numeric($args['ForumTime']) : 30000) * 3600 * 24;
 		$where = !empty($args['ForumWhere']) ? TextHelper::strprotect($args['ForumWhere']) : 'all';
-		$colorate_result = !empty($args['ForumColorate_result']);
 
 		require_once(PATH_TO_ROOT . '/forum/forum_defines.php');
 		$authorized_categories = ForumService::get_authorized_categories(Category::ROOT_CATEGORY);
@@ -210,12 +206,12 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		WHERE msg.id IN (".implode(',', $ids).")
 		GROUP BY t.id";
 
-		$request_results = $this->db_querier->select($request);
+		$result = $this->db_querier->select($request);
 		while ($row = $result->fetch())
 		{
 			$results_data[] = $row;
 		}
-		$request_results->dispose();
+		$result->dispose();
 
 		return $results_data;
 	}

@@ -29,9 +29,3 @@
         <label><input type="radio" name="ForumWhere" value="all" {IS_ALL_CHECKED}/> {L_TITLE} / {L_CONTENTS}</label>
     </div>
 </div>
-<div class="form-element">
-    <label for="ForumColorate_result">{L_COLORATE_RESULTS}</label>
-    <div class="form-field">
-        <label><input type="checkbox" name="ForumColorate_result" id="ForumColorate_result" value="1" {IS_COLORATION_CHECKED}/></label>
-    </div>
-</div>

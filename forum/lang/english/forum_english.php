@@ -119,7 +119,6 @@ $LANG['move_to'] = 'Move to...';
 
 //Recherche
 $LANG['no_result'] = 'No result';
-$LANG['colorate_result'] = 'Color results';
 
 //Stats
 $LANG['stats'] = 'Statistics';

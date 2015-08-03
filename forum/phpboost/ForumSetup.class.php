@@ -164,7 +164,7 @@ class ForumSetup extends DefaultModuleSetup
 			'primary' => array('id'),
 			'indexes' => array(
 				'idtopic' => array('type' => 'key', 'fields' => 'idtopic'),
-				'contenu' => array('type' => 'fulltext', 'fields' => 'contents')
+				'contents' => array('type' => 'fulltext', 'fields' => 'contents')
 		));
 		PersistenceContext::get_dbms_utils()->create_table(self::$forum_message_table, $fields, $options);
 	}
