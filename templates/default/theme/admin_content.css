@@ -340,6 +340,17 @@ table tfoot nav.pagination a span.current-page {
 
 td.input-radio { width: 60px; }
 
+/* --- Affichage des tableaux responsive sur les petits écrans --- */
+
+@media ( max-width: 770px ) {
+	table thead th,
+	table tbody td,
+	table tfoot tr th {
+		padding: 4px;
+		font-size: .9em;
+	}
+}
+
 /* Boutons
 ------------------------------------ */
 /* Normal */

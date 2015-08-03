@@ -530,6 +530,17 @@ table tfoot nav.pagination a span.current-page {
 	text-decoration: none;
 }
 
+/* --- Affichage des tableaux responsive sur les petits écrans --- */
+
+@media ( max-width: 770px ) {
+	table thead th,
+	table tbody td,
+	table tfoot tr th {
+		padding: 4px;
+		font-size: .9em;
+	}
+}
+
 /* -- Boutons et class boutons --
 ------------------------------------ */
 /* --- Normal --- */

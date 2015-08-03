@@ -59,30 +59,33 @@ a.forum-link-pseudo:hover {
 	margin: 9px;
 	border-bottom: 1px solid #CCC;
 }
+
 .forum-notread { /* Message non lus */
 	background: #5D7C94;
 	padding: 4px;
 	font-size: 10px;
 	color: #366393;
 }
+
 /* Barre des textes relatifs aux colonnes */
-td.forum-text-column {	
+td.forum-text-column {
 	height: 20px;
 	font-size: 11px;
 }
+
 /* Case des liens sous-catégories */
-td.forum-sous-cat-img { width: 30px; }
+td.forum-sub-cat-img { width: 30px; }
 
-td.forum-sous-cat { text-align: left; }
+td.forum-sub-cat { text-align: left; }
 
-td.forum-sous-cat + td.forum-sous-cat { padding: 6px; }
+td.forum-sub-cat + td.forum-sub-cat { padding: 6px; }
 
 /* Case compteur message/topic */
-td.forum-sous-cat-compteur { width: 60px; }
+td.forum-sub-cat-compteur { width: 60px; }
 
 /* Case compteur dernier topic/dernier message */
-td.forum-sous-cat-last {
-	width: 150px;
+td.forum-sub-cat-last {
+	max-width: 15%;
 	font-size: 10px;
 }
 
@@ -93,7 +96,7 @@ td.forum-sous-cat-last {
 	margin-top: 15px;
 }
 /* Cadre des liens: alerter les modérateurs et suivre le sujet */
-.forum-action {	
+.forum-action {
 	margin-top: 5px;
 	text-align: center;
 }
@@ -114,20 +117,13 @@ a.forum-link-cat { font-weight: bold; }
 	float: left;
 	text-align: right;
 	clear: both;
-	padding: 5px;	
+	padding: 5px;
 }
 .forum-online-select {
 	min-width: 160px;
-	max-width: 530px;	
+	max-width: 530px;
 }
 
-/* Fond des catégories dans l'administration */
-.forum-cat-admin {
-	width: 100%;
-	height: 20px;
-	margin-bottom: 2px;
-	padding: 4px 0px;
-}
 /* Contenu */
 .forum-contents {
 	padding: 0px;
@@ -143,15 +139,15 @@ a.forum-mbrmsg-links { color: #FFFFFF; } /* Couleur des liens pour les messages 
 
 .forum-search-word {
 	background: yellow;
-	color: black;	
+	color: black;
 }
 
 .pagin-forum { float: right; }
 
 /* Module */
 .module-position {
-    width: 98%;
-    margin: auto;
+	width: 98%;
+	margin: auto;
 	float: none;
 }
 
@@ -174,9 +170,11 @@ a.forum-mbrmsg-links { color: #FFFFFF; } /* Couleur des liens pour les messages 
 .module-bottom-r {}
 .module-bottom {
 	padding: 8px;
+	margin-top: 10px;
 	background: #EEEEEE;
 	border: 1px solid #DDDDDD;
 	border-radius: 3px;
+	min-height: 33px;
 }
 .module-bottom a:not(.*button) {
 	color: #334455;
@@ -200,9 +198,9 @@ a.msg-link-pseudo:hover { color: #F2FBFF; }
 
 /* Conteneur des messages */
 .msg-position { 
-    width: 96%;
-    margin: 5px auto;
-    background: #F0F3FF;
+	width: 96%;
+	margin: 5px auto;
+	background: #F0F3FF;
 	border: 1px solid #D1D4DF;
 }
 
@@ -246,38 +244,38 @@ a.msg-link-pseudo:hover { color: #F2FBFF; }
 
 /* Pseudo du membre */
 .msg-pseudo-mbr {
-    width: 127px;
-    padding: 2px 4px;
-    float: left;
-    margin-right: 0px !important;
-    margin-left: -127px !important;
-    margin-top: -4px;
+	width: 127px;
+	padding: 2px 4px;
+	float: left;
+	margin-right: 0px !important;
+	margin-left: -127px !important;
+	margin-top: -4px;
 }
 
 /* Case au dessus du message, indique la date et les boutons d'administration */
 .msg-top-row {
 	height: auto;
-    min-height: 26px;
-    background: #4D4C50;
-    font-size: 11px;
-    color: #E8EAEB;
-    border: 1px solid #444444;
-    padding: 4px 5px 0px 130px;
-    overflow: hidden !important;
+	min-height: 26px;
+	background: #4D4C50;
+	font-size: 11px;
+	color: #E8EAEB;
+	border: 1px solid #444444;
+	padding: 4px 5px 0px 130px;
+	overflow: hidden !important;
 }
 
 .msg-top-row a { color: #E8EAEB; }
 
 .msg-info-mbr { /* Case des informations du membre */
-    background: #F0F3FF;
-    width: 136px;
-    padding: 4px;
-    float: left;
-    font-size: 10px;
-    border-right: 1px dotted #C4CED6;
+	background: #F0F3FF;
+	width: 136px;
+	padding: 4px;
+	float: left;
+	font-size: 10px;
+	border-right: 1px dotted #C4CED6;
 }
 
-.msg-info-mbr img {	max-width: 120px; }
+.msg-info-mbr img { max-width: 120px; }
 
 /* Case contenant l'ensemble du message, infos membre + contenu */
 .msg-contents-container { background: #F0F3FF; }
@@ -285,10 +283,10 @@ a.msg-link-pseudo:hover { color: #F2FBFF; }
 /* Case du message */
 .msg-contents, 
 .msg-contents2 { 
-    margin-left: 135px;
-    background: #FCFCFD;
-    padding: 0px 5px;
-    border-left: 1px dotted #C4CED6;
+	margin-left: 135px;
+	background: #FCFCFD;
+	padding: 0px 5px;
+	border-left: 1px dotted #C4CED6;
 }
 
 /* Case du message => Couleur alternative */
@@ -296,22 +294,22 @@ a.msg-link-pseudo:hover { color: #F2FBFF; }
 
 /* Case du contents du message, évite que les images trop grandes soient déformées */
 .msg-contents-overflow {
-    width: 99%;
-    height: auto;
-    min-height: 80px;
-    overflow: auto;
-    padding: 10px 0px;
-    word-wrap: break-word;
+	width: 99%;
+	height: auto;
+	min-height: 80px;
+	overflow: auto;
+	padding: 10px 0px;
+	word-wrap: break-word;
 }
 
 /* Signature du membre */
 .msg-sign,
 .msg-sign2 { 
-   	background: #FCFCFD;
-    padding: 4px;
-    font-size: 11px;
-    margin-left: 135px;
-    border-left: 1px dotted #C4CED6;
+	background: #FCFCFD;
+	padding: 4px;
+	font-size: 11px;
+	margin-left: 135px;
+	border-left: 1px dotted #C4CED6;
 }
 
 /* Signature du membre => Couleur alternative */
@@ -319,18 +317,18 @@ a.msg-link-pseudo:hover { color: #F2FBFF; }
 
 /* Signature du membre, fixe la hauteur maximale */
 .msg-sign-overflow { 
-    height: auto !important;
-    width: 99%;
-    max-height: 80px;
-    max-width: 99%;
-    overflow: hidden;
+	height: auto !important;
+	width: 99%;
+	max-height: 80px;
+	max-width: 99%;
+	overflow: hidden;
 }
 
 .msg-bottom {
-    height: 23px;
-    padding: 6px 6px 0px 6px;
-    border: none;
-    background: none;
+	height: 23px;
+	padding: 6px 6px 0px 6px;
+	border: none;
+	background: none;
 }
 
 .fa-announce:before,

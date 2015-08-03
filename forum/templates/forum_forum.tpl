@@ -21,7 +21,7 @@
 								<th class="forum-text-column" colspan="2">{L_FORUM}</th>
 								<th class="forum-text-column">{L_TOPIC}</th>
 								<th class="forum-text-column">{L_MESSAGE}</th>
-								<th class="forum-text-column">{L_LAST_MESSAGE}</th>
+								<th class="forum-text-column" style="width:150px;">{L_LAST_MESSAGE}</th>
 							</tr>
 						</thead>
 						<tfoot>
@@ -34,31 +34,31 @@
 				# START subcats #
 							<tr>
 								# IF subcats.U_FORUM_URL #
-								<td class="forum-sous-cat" style="width:40px;text-align:center;">
+								<td class="forum-sub-cat" style="width:40px;">
 									<i class="fa fa-globe fa-2x"></i>
 								</td>
-								<td class="forum-sous-cat" style="min-width:150px;border-right:none" colspan="4">
+								<td class="forum-sub-cat" style="border-right:none" colspan="4">
 									<a href="{subcats.U_FORUM_URL}">{subcats.NAME}</a>
 									<br />
 									<span class="smaller">{subcats.DESC}</span>
 								</td>
 								# ELSE #
-								<td class="forum-sous-cat" style="width:40px;text-align:center;">
+								<td class="forum-sub-cat" style="width:40px;">
 									<i class="fa # IF subcats.C_BLINK #blink # ENDIF #{subcats.IMG_ANNOUNCE}"></i>
 								</td>
-								<td class="forum-sous-cat" style="min-width:150px;">
+								<td class="forum-sub-cat">
 									<a href="forum{subcats.U_FORUM_VARS}">{subcats.NAME}</a>
 									<br />
 									<span class="smaller">{subcats.DESC}</span>
 									<span class="smaller">{subcats.SUBFORUMS}</span>
 								</td>
-								<td class="forum-sous-cat-compteur">
+								<td class="forum-sub-cat-compteur">
 									{subcats.NBR_TOPIC}
 								</td>
-								<td class="forum-sous-cat-compteur">
+								<td class="forum-sub-cat-compteur">
 									{subcats.NBR_MSG}
 								</td>
-								<td class="forum-sous-cat-last">
+								<td class="forum-sub-cat-last">
 									{subcats.U_LAST_TOPIC}
 								</td>
 								# ENDIF #
@@ -93,7 +93,7 @@
 							<th class="forum-text-column">{L_AUTHOR}</th>
 							<th class="forum-text-column">{L_ANSWERS}</th>
 							<th class="forum-text-column">{L_VIEW}</th>
-							<th class="forum-text-column">{L_LAST_MESSAGE}</th>
+							<th class="forum-text-column" style="width:150px;">{L_LAST_MESSAGE}</th>
 						</tr>
 					</thead>
 					<tfoot>
@@ -111,7 +111,7 @@
 					</tfoot>
 					# IF C_NO_MSG_NOT_READ #
 					<tr>
-						<td colspan="7" class="forum-sous-cat" style="text-align:center;">
+						<td colspan="7">
 							<strong>{L_MSG_NOT_READ}</strong>
 						</td>
 					</tr>
@@ -120,38 +120,38 @@
 					# START topics #
 					<tr>
 						# IF C_MASS_MODO_CHECK #
-						<td class="forum-sous-cat" style="width:25px;text-align:center;">
+						<td class="forum-sub-cat" style="width:25px;">
 							<input type="checkbox" name="ck{topics.ID}">
 						</td>
 						# ENDIF #
-						<td class="forum-sous-cat" style="width:40px;text-align:center;">
+						<td class="forum-sub-cat" style="width:40px;">
 							# IF NOT topics.C_HOT_TOPIC #
 							<i class="fa {topics.IMG_ANNOUNCE}"></i>
 							# ELSE #
 							<i class="fa # IF topics.C_BLINK #blink # ENDIF #{topics.IMG_ANNOUNCE}-hot"></i>
 							# ENDIF #
 						</td>
-						<td class="forum-sous-cat" style="width:35px;text-align:center;">
+						<td class="forum-sub-cat" style="width:35px;">
 							# IF topics.C_DISPLAY_MSG #<i class="fa fa-msg-display"></i># ENDIF #
 							# IF topics.C_IMG_POLL #<i class="fa fa-tasks" title="{L_POLL}"></i># ENDIF #
 							# IF topics.C_IMG_TRACK #<i class="fa fa-msg-track"></i># ENDIF #
 						</td>
-						<td class="forum-sous-cat" style="min-width:115px;">
+						<td class="forum-sub-cat">
 							# IF topics.C_PAGINATION #<span class="pagin-forum"># INCLUDE topics.PAGINATION #</span># ENDIF #
 							{topics.ANCRE} <strong>{topics.TYPE}</strong> <a href="topic{topics.U_TOPIC_VARS}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
 							<br />
 							<span class="smaller">{topics.DESC}</span>
 						</td>
-						<td class="forum-sous-cat-compteur" style="width:100px;">
+						<td class="forum-sub-cat-compteur" style="width:100px;">
 							{topics.AUTHOR}
 						</td>
-						<td class="forum-sous-cat-compteur">
+						<td class="forum-sub-cat-compteur">
 							{topics.MSG}
 						</td>
-						<td class="forum-sous-cat-compteur">
+						<td class="forum-sub-cat-compteur">
 							{topics.VUS}
 						</td>
-						<td class="forum-sous-cat-last">
+						<td class="forum-sub-cat-last">
 							{topics.U_LAST_MSG}
 						</td>
 					</tr>
@@ -159,7 +159,7 @@
 
 					# IF C_NO_TOPICS #
 					<tr>
-						<td colspan="7" class="forum-sous-cat" style="text-align:center;">
+						<td colspan="7">
 							<strong>{L_NO_TOPICS}</strong>
 						</td>
 					</tr>

@@ -42,7 +42,7 @@
 						<tbody>
 							# IF C_NO_TRACKED_TOPICS #
 							<tr>
-								<td colspan="10" class="forum-sous-cat" style="text-align:center;">
+								<td colspan="10">
 									<strong>{L_NO_TRACKED_TOPICS}</strong>
 								</td>
 							</tr>
@@ -50,48 +50,48 @@
 	
 							# START topics #
 							<tr>
-								<td class="forum-sous-cat" style="width:40px;text-align:center;">
+								<td class="forum-sub-cat" style="width:40px;">
 									# IF NOT topics.C_HOT_TOPIC # 
 									<i class="fa {topics.IMG_ANNOUNCE}"></i>
 									# ELSE #
 									<i class="fa # IF topics.C_BLINK #blink # ENDIF #{topics.IMG_ANNOUNCE}-hot"></i>
 									# ENDIF #
 								</td>
-								<td class="forum-sous-cat" style="width:35px;text-align:center;">
+								<td class="forum-sub-cat" style="width:35px;">
 									{topics.DISPLAY_MSG} {topics.TRACK} # IF C_POLL #<i class="fa fa-tasks"></i># ENDIF #
 								</td>
-								<td class="forum-sous-cat">
+								<td class="forum-sub-cat">
 									# IF topics.C_PAGINATION #<span class="pagin-forum"># INCLUDE topics.PAGINATION #</span># ENDIF #
 									{topics.ANCRE} <strong>{topics.TYPE}</strong> <a href="topic{topics.U_TOPIC_VARS}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
 									<br />
 									<span class="smaller">{topics.DESC}</span>
 								</td>
-								<td class="forum-sous-cat-compteur" style="width:100px;">
+								<td class="forum-sub-cat-compteur" style="width:100px;">
 									{topics.AUTHOR}
 								</td>
-								<td class="forum-sous-cat-compteur">
+								<td class="forum-sub-cat-compteur">
 									{topics.MSG}
 								</td>
-								<td class="forum-sous-cat-compteur">
+								<td class="forum-sub-cat-compteur">
 									{topics.VUS}
 								</td>
-								<td class="forum-sous-cat-compteur" style="width:40px;text-align:center;">
+								<td class="forum-sub-cat-compteur" style="width:40px;">
 									<input type="checkbox" id="p{topics.INCR}" name="p{topics.ID}" {topics.CHECKED_PM}>
 								</td>
-								<td class="forum-sous-cat-compteur" style="width:50px;text-align:center;">
+								<td class="forum-sub-cat-compteur" style="width:50px;">
 									<input type="checkbox" id="m{topics.INCR}" name="m{topics.ID}" {topics.CHECKED_MAIL}>
 								</td>
-								<td class="forum-sous-cat-compteur" style="width:85px;text-align:center;">
+								<td class="forum-sub-cat-compteur" style="width:85px;">
 									<input type="checkbox" id="d{topics.INCR}" name="d{topics.ID}">
 								</td>
-								<td class="forum-sous-cat-last">
+								<td class="forum-sub-cat-last">
 									{topics.U_LAST_MSG}
 								</td>
 							</tr>
 							# END topics #
 						</tbody>
 					</table>
-					<div style="margin:10px;text-align:center"><button type="submit" name="valid" value="true" class="submit">{L_SUBMIT}</button></div>
+					<div class="center"><button type="submit" name="valid" value="true" class="submit">{L_SUBMIT}</button></div>
 				</div>
 			</div>
 		</form>

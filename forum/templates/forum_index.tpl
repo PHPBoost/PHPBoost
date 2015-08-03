@@ -31,7 +31,7 @@
 							<th class="forum-text-column" colspan="2">{L_FORUM}</th>
 							<th class="forum-text-column">{L_TOPIC}</th>
 							<th class="forum-text-column">{L_MESSAGE}</th>
-							<th class="forum-text-column">{L_LAST_MESSAGE}</th>
+							<th class="forum-text-column" style="width:150px;">{L_LAST_MESSAGE}</th>
 						</tr>
 					</thead>
 					<tfoot>
@@ -45,31 +45,31 @@
 		# START forums_list.subcats #
 						<tr>
 							# IF forums_list.subcats.U_FORUM_URL #
-							<td class="forum-sous-cat-img">
+							<td class="forum-sub-cat-img">
 								<i class="fa fa-globe"></i>
 							</td>
-							<td class="forum-sous-cat" colspan="4">
+							<td class="forum-sub-cat" colspan="4">
 								<a href="{forums_list.subcats.U_FORUM_URL}">{forums_list.subcats.NAME}</a>
 								<br />
 								<span class="smaller">{forums_list.subcats.DESC}</span>
 							</td>
 							# ELSE #
-							<td class="forum-sous-cat-img">
+							<td class="forum-sub-cat-img">
 								<i class="fa # IF forums_list.subcats.C_BLINK #blink # ENDIF #{forums_list.subcats.IMG_ANNOUNCE}"></i>
 							</td>
-							<td class="forum-sous-cat" style="min-width:150px;">
+							<td class="forum-sub-cat">
 								<a href="{forums_list.subcats.U_FORUM_VARS}">{forums_list.subcats.NAME}</a>
 								<br />
 								<span class="smaller">{forums_list.subcats.DESC}</span>
 								<span class="smaller">{forums_list.subcats.SUBFORUMS}</span>
 							</td>
-							<td class="forum-sous-cat-compteur">
+							<td class="forum-sub-cat-compteur">
 								{forums_list.subcats.NBR_TOPIC}
 							</td>
-							<td class="forum-sous-cat-compteur">
+							<td class="forum-sub-cat-compteur">
 								{forums_list.subcats.NBR_MSG}
 							</td>
-							<td class="forum-sous-cat-last">
+							<td class="forum-sub-cat-last">
 								{forums_list.subcats.U_LAST_TOPIC}
 							</td>
 							# ENDIF #
