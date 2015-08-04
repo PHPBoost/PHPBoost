@@ -130,6 +130,11 @@ class HTTPRequestCustom
 		return $this->get_var($_REQUEST, self::string, $varname, $default_value);
 	}
 
+	public function get_array($varname, $default_value = array())
+	{
+		return $this->get_var($_REQUEST, self::t_array, $varname, $default_value);
+	}
+
 	public function get_cookie($varname, $default_value = null)
 	{
 		return $this->get_var($_COOKIE, self::string, $varname, $default_value);
