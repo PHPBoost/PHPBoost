@@ -41,9 +41,9 @@ class ArticlesSearchable extends AbstractSearchableExtensionPoint
 			articles.title AS title,
 			(2 * FT_SEARCH_RELEVANCE(articles.title, '" . $args['search'] . "') + (FT_SEARCH_RELEVANCE(articles.contents, '" . $args['search'] . "') +
 			FT_SEARCH_RELEVANCE(articles.description, '" . $args['search'] . "')) / 2 ) / 3 * " . $weight . " AS relevance,
-			CONCAT('" . PATH_TO_ROOT . "/articles/index.php?url=/', id_category, '-', cat.rewrited_name, '/', articles.id, '-', articles.rewrited_title) AS link
+			CONCAT('" . PATH_TO_ROOT . "/articles/index.php?url=/', id_category, '-', IF(id_category != 0, cat.rewrited_name, 'root'), '/', articles.id, '-', articles.rewrited_title) AS link
 			FROM " . ArticlesSetup::$articles_table . " articles
-			LEFT JOIN ". ArticlesSetup::$articles_cats_table ." cat ON articles.id_category = cat.id
+			LEFT JOIN ". ArticlesSetup::$articles_cats_table ." cat ON cat.id = articles.id_category
 			WHERE ( FT_SEARCH(articles.title, '" . $args['search'] . "') OR FT_SEARCH(articles.contents, '" . $args['search'] . "') OR FT_SEARCH_RELEVANCE(articles.description, '" . $args['search'] . "') )
 			AND id_category IN(" . implode(", ", $authorized_categories) . ")
 			AND (published = 1 OR (published = 2 AND publishing_start_date < '" . $now->get_timestamp() . "' AND (publishing_end_date > '" . $now->get_timestamp() . "' OR publishing_end_date = 0)))

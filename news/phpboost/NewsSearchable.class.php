@@ -41,7 +41,7 @@ class NewsSearchable extends AbstractSearchableExtensionPoint
 			n.name AS title,
 			( 2 * FT_SEARCH_RELEVANCE(n.name, '" . $args['search'] . "') + (FT_SEARCH_RELEVANCE(n.contents, '" . $args['search'] . "') +
 			FT_SEARCH_RELEVANCE(n.short_contents, '" . $args['search'] . "')) / 2 ) / 3 * " . $weight . " AS relevance,
-			CONCAT('" . PATH_TO_ROOT . "/news/index.php?url=/', id_category, '-', cat.rewrited_name, '/', n.id, '-', n.rewrited_name) AS link
+			CONCAT('" . PATH_TO_ROOT . "/news/index.php?url=/', id_category, '-', IF(id_category != 0, cat.rewrited_name, 'root'), '/', n.id, '-', n.rewrited_name) AS link
 			FROM " . NewsSetup::$news_table . " n
 			LEFT JOIN ". NewsSetup::$news_cats_table ." cat ON n.id_category = cat.id
 			WHERE ( FT_SEARCH(n.name, '" . $args['search'] . "') OR FT_SEARCH(n.contents, '" . $args['search'] . "') OR FT_SEARCH_RELEVANCE(n.short_contents, '" . $args['search'] . "') )
