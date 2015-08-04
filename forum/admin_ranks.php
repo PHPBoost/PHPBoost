@@ -31,7 +31,10 @@ load_module_lang('forum'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$get_id = retrieve(GET, 'id', 0);	
+$request = AppContext::get_request();
+
+$get_id = $request->get_getint('id', 0);
+$del = $request->get_getint('del', 0);
 
 //Si c'est confirmé on execute
 if (!empty($_POST['valid']))
@@ -52,10 +55,10 @@ if (!empty($_POST['valid']))
 	$result->dispose();
 
 	ForumRanksCache::invalidate();
-		
-	AppContext::get_response()->redirect(HOST . SCRIPT);	
+	
+	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
-elseif (!empty($_GET['del']) && !empty($get_id)) //Suppression du rang.
+elseif (!empty($del) && !empty($get_id)) //Suppression du rang.
 {
 	//On supprime dans la bdd.
 	PersistenceContext::get_querier()->delete(PREFIX . 'forum_ranks', 'WHERE id=:id', array('id' => $get_id));
@@ -63,10 +66,10 @@ elseif (!empty($_GET['del']) && !empty($get_id)) //Suppression du rang.
 	###### Régénération du cache des rangs #######
 	ForumRanksCache::invalidate();
 	
-	AppContext::get_response()->redirect(HOST . SCRIPT); 	
+	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
-else //Sinon on rempli le formulaire	 
-{	
+else //Sinon on rempli le formulaire
+{
 	$template = new FileTemplate('forum/admin_ranks.tpl');
 
 	$template->put_all(array(
@@ -95,12 +98,12 @@ else //Sinon on rempli le formulaire
 	{
 		$file = $image->get_name();
 		$rank_options_array[] = $file;
-	}	
+	}
 	
 	$ranks_cache = ForumRanksCache::load()->get_ranks();
 	
 	foreach($ranks_cache as $msg => $row)
-	{				
+	{
 		if ($row['special'] == 0)
 			$del = '<a href="admin_ranks.php?del=1&amp;id=' . $row['id'] . '" class="fa fa-delete" data-confirmation="delete-element"></a>';
 		else
@@ -108,7 +111,7 @@ else //Sinon on rempli le formulaire
 
 		$rank_options = '<option value="">--</option>';
 		foreach ($rank_options_array as $icon)
-		{			
+		{
 			$selected = ($icon == $row['icon']) ? ' selected="selected"' : '';
 			$rank_options .= '<option value="' . $icon . '"' . $selected . '>' . $icon . '</option>';
 		}

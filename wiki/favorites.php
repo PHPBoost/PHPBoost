@@ -86,7 +86,8 @@ else
 	$tpl = new FileTemplate('wiki/favorites.tpl');
 	
 	//Gestion des erreurs
-	$error = !empty($_GET['error']) ? TextHelper::strprotect($_GET['error']) : '';
+	$error = AppContext::get_request()->get_getvalue('error', '');
+	$error = !empty($error) ? TextHelper::strprotect($error) : '';
 	if ($error == 'e_no_favorite')
 		$errstr = $LANG['wiki_article_is_not_a_favorite'];
 	elseif ($error == 'e_already_favorite')

@@ -36,8 +36,10 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
 //--------------------------------------------------------------------- Params
-$clearOutCache = !empty($_GET['clear']);
-$weighting = retrieve(GET, 'weighting', false);
+$request = AppContext::get_request();
+
+$clearOutCache = $request->get_getvalue('clear', '');
+$weighting = $request->get_getvalue('weighting', '');
 
 //Si c'est confirmé on execute
 if (!empty($_POST['valid']))

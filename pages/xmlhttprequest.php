@@ -5,12 +5,14 @@ AppContext::get_session()->no_session_location(); //Permet de ne pas mettre jour
 require_once('../pages/pages_begin.php');
 require_once('../kernel/header_no_display.php');
 
-$id_cat = retrieve(POST, 'id_cat', 0);
-$select_cat = !empty($_GET['select_cat']);
-$selected_cat = retrieve(POST, 'selected_cat', 0);
-$display_select_link = !empty($_GET['display_select_link']) ? 1 : 0;
-$open_cat = retrieve(POST, 'open_cat', 0);
-$root = !empty($_GET['root']) ? 1 : 0;
+$request = AppContext::get_request();
+
+$id_cat = $request->get_postint('id_cat', 0);
+$select_cat = $request->get_getint('select_cat', 0);
+$selected_cat = $request->get_postint('selected_cat', 0);
+$display_select_link = $request->get_getint('display_select_link', 0);
+$open_cat = $request->get_postint('open_cat', 0);
+$root = $request->get_getint('root', 0);
 
 //Configuration des authorisations
 $config_authorizations = $pages_config->get_authorizations();

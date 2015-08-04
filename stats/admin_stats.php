@@ -30,6 +30,8 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 load_module_lang('stats'); //Chargement de la langue du module.
 
+$request = AppContext::get_request();
+
 if (!empty($_POST['valid']))
 {
 	$stats_config = StatsConfig::load();
@@ -45,19 +47,19 @@ else
 	$db_querier = PersistenceContext::get_querier();
 	
 	$tpl = new FileTemplate('stats/admin_stats_management.tpl');
-
-	$visit = !empty($_GET['visit']) ? true : false;
-	$visit_year = retrieve(GET, 'year', 0);
-	$pages = !empty($_GET['pages']) ? true : false;
-	$pages_year = retrieve(GET, 'pages_year', 0);
-	$members = !empty($_GET['members']) ? true : false;
-	$referer = !empty($_GET['referer']) ? true : false;
-	$keyword = !empty($_GET['keyword']) ? true : false;
-	$browser = !empty($_GET['browser']) ? true : false;
-	$os = !empty($_GET['os']) ? true : false;
-	$all = !empty($_GET['all']) ? true : false;
-	$user_lang = !empty($_GET['lang']) ? true : false;
-	$bot = !empty($_GET['bot']) ? true : false;
+	
+	$visit = $request->get_getint('visit', 0);
+	$visit_year = $request->get_getint('visit_year', 0);
+	$pages = $request->get_getint('pages', 0);
+	$pages_year = $request->get_getint('pages_year', 0);
+	$members = $request->get_getint('members', 0);
+	$referer = $request->get_getint('referer', 0);
+	$keyword = $request->get_getint('keyword', 0);
+	$browser = $request->get_getint('browser', 0);
+	$os = $request->get_getint('os', 0);
+	$all = $request->get_getint('all', 0);
+	$user_lang = $request->get_getint('lang', 0);
+	$bot = $request->get_getint('bot', 0);
 
 	if (!empty($_POST['erase'])) //Suppression de robots.txt
 	{
@@ -567,7 +569,7 @@ else
 			$condition = 'WHERE stats_year=:year AND pages_detail <> \'\' GROUP BY stats_month';
 			$year = $pages_year;
 		}
-		elseif (isset($_GET['d']))
+		elseif ($day)
 		{
 			$condition = 'WHERE stats_year=:year AND stats_month=:month AND stats_day=:day AND pages_detail <> \'\' GROUP BY stats_month';
 			$year = retrieve(GET, 'y', (int)$current_year);
@@ -745,7 +747,7 @@ else
 				}
 			}
 		}
-		elseif (isset($_GET['d']) )
+		elseif ($day)
 		{
 			//Nombre de jours pour chaque mois (gestion des années bissextiles)
 			$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;

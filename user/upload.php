@@ -100,7 +100,7 @@ if (!empty($parent_folder)) //Changement de dossier
 }
 elseif ($home_folder) //Retour à la racine.
 	AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?' . $popup_noamp, '', '&'));
-elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'un fichier.
+elseif (!empty($_FILES['upload_file']['name']) && AppContext::get_request()->has_getparameter('i')) //Ajout d'un fichier.
 {
 	$error = '';
 	//Autorisation d'upload aux groupes.

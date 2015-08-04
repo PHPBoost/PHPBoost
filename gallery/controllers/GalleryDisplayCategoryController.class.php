@@ -427,7 +427,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					}
 	
 					//Commentaires
-					if (isset($_GET['com']))
+					if (AppContext::get_request()->get_getint('com', 0))
 					{
 						if ($config->are_comments_enabled())
 						{

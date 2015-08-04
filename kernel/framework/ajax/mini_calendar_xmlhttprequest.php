@@ -36,11 +36,17 @@ AppContext::get_session()->no_session_location(); //Ne réactualise pas l'emplace
 define('TITLE', '');
 include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
+$request = AppContext::get_request();
+
+$date = $request->get_getvalue('date', '');
+$field = $request->get_getvalue('field', '');
+$input_field = $request->get_getvalue('input_field', '');
+$input_date = $request->get_getvalue('input_date', '');
+
 //Vide par défaut => Type date.
-$calendar_type = !empty($_GET['date']) ? 'timestamp' : 'date';
-$field = !empty($_GET['field']) ? trim($_GET['field']) : 'calendar';
-$input_field = !empty($_GET['input_field']) ? trim($_GET['input_field']) : '';
-$lyear = !empty($_GET['lyear']) ? '&amp;lyear=1' : '';
+$calendar_type = !empty($date) ? 'timestamp' : 'date';
+$field = !empty($field) ? trim($field) : 'calendar';
+$lyear = !empty($request->get_getint('lyear', 0)) ? '&amp;lyear=1' : '';
 
 $date_lang = LangLoader::get('date-common');
 $tpl = new FileTemplate('framework/util/mini_calendar_response.tpl');
@@ -50,10 +56,10 @@ $tpl->add_lang($date_lang);;
 if ($calendar_type == 'date')
 {
 	$now = new Date();
-	$year = !empty($_GET['y']) ? NumberHelper::numeric($_GET['y']) : $now->get_year();
-	$month = !empty($_GET['m']) ? NumberHelper::numeric($_GET['m']) : $now->get_month();
-	$day = !empty($_GET['d']) ? NumberHelper::numeric($_GET['d']) : $now->get_day();
-	$input_date = !empty($_GET['input_date']) ? trim($_GET['input_date']) : $day . '/' . $month . '/' . $year;
+	$year = $request->get_getint('y', $now->get_year());
+	$month = $request->get_getint('m', $now->get_month());
+	$day = $request->get_getint('d', $now->get_day());
+	$input_date = !empty($input_date) ? trim($input_date) : $day . '/' . $month . '/' . $year;
 	
 	$selected = explode('/', $input_date);
 	$selected_day = NumberHelper::numeric($selected[0]);

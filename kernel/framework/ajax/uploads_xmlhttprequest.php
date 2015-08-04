@@ -38,8 +38,13 @@ include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 //Initialisation  de la class de gestion des fichiers.
 
 $user = AppContext::get_current_user();
+$request = AppContext::get_request();
 
-if (!empty($_GET['new_folder'])) //Ajout d'un dossier dans la gestion des fichiers.
+$new_folder = $request->get_getint('new_folder', 0);
+$rename_folder = $request->get_getint('rename_folder', 0);
+$rename_file = $request->get_getint('rename_file', 0);
+
+if (!empty($new_folder)) //Ajout d'un dossier dans la gestion des fichiers.
 {
     $id_parent = !empty($_POST['id_parent']) ? NumberHelper::numeric($_POST['id_parent']) : '0';
     $user_id = !empty($_POST['user_id']) ? NumberHelper::numeric($_POST['user_id']) : $user->get_id();
@@ -61,7 +66,7 @@ if (!empty($_GET['new_folder'])) //Ajout d'un dossier dans la gestion des fichie
         echo Uploads::Add_folder($id_parent, $user->get_id(), $name);
     }
 }
-elseif (!empty($_GET['rename_folder'])) //Renomme un dossier dans la gestion des fichiers.
+elseif (!empty($rename_folder)) //Renomme un dossier dans la gestion des fichiers.
 {
     $id_folder = !empty($_POST['id_folder']) ? NumberHelper::numeric($_POST['id_folder']) : '0';
     $name = !empty($_POST['name']) ? TextHelper::strprotect(utf8_decode($_POST['name'])) : '';
@@ -89,7 +94,7 @@ elseif (!empty($_GET['rename_folder'])) //Renomme un dossier dans la gestion des
     else
     echo 0;
 }
-elseif (!empty($_GET['rename_file'])) //Renomme un fichier d'un dossier dans la gestion des fichiers.
+elseif (!empty($rename_file)) //Renomme un fichier d'un dossier dans la gestion des fichiers.
 {
     $id_file = !empty($_POST['id_file']) ? NumberHelper::numeric($_POST['id_file']) : '0';
     $user_id = !empty($_POST['user_id']) ? NumberHelper::numeric($_POST['user_id']) : $user->get_id();

@@ -32,14 +32,15 @@ $Bread_crumb->add($config->get_forum_name(), 'index.php');
 define('TITLE', $LANG['title_forum']);
 require_once('../kernel/header.php');
 
-//Variables $_GET.
-$id_get = retrieve(GET, 'id', 0); //Id du topic à déplacer.
-$id_post = retrieve(POST, 'id', 0); //Id du topic à déplacer.
-$id_get_msg = retrieve(GET, 'idm', 0); //Id du message à partir duquel il faut scinder le topic.
-$id_post_msg = retrieve(POST, 'idm', 0); //Id du message à partir duquel il faut scinder le topic.
-$error_get = retrieve(GET, 'error', ''); //Gestion des erreurs.
-$post_topic = retrieve(POST, 'post_topic', ''); //Création du topic scindé.
-$preview_topic = retrieve(POST, 'prw_t', ''); //Prévisualisation du topic scindé.
+$request = AppContext::get_request();
+
+$id_get = $request->get_getint('id', 0); //Id du topic à déplacer.
+$id_post = $request->get_postint('id', 0); //Id du topic à déplacer.
+$id_get_msg = $request->get_getint('idm', 0); //Id du message à partir duquel il faut scinder le topic.
+$id_post_msg = $request->get_postint('idm', 0); //Id du message à partir duquel il faut scinder le topic.
+$error_get = $request->get_getvalue('error', '');  //Gestion des erreurs.
+$post_topic = $request->get_postvalue('post_topic', ''); //Création du topic scindé.
+$preview_topic = $request->get_postvalue('prw_t', ''); //Prévisualisation du topic scindé.
 
 if (!empty($id_get)) //Déplacement du sujet.
 {

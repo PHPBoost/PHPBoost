@@ -39,9 +39,14 @@ include_once(PATH_TO_ROOT . '/stats/stats_functions.php');
 
 $db_querier = PersistenceContext::get_querier();
 
-if (!empty($_GET['stats_referer'])) //Recherche d'un membre pour envoyer le mp.
+$request = AppContext::get_request();
+
+$stats_referer = $request->get_getint('stats_referer', 0);
+$stats_keyword = $request->get_getint('stats_keyword', 0);
+
+if (!empty($stats_referer)) //Recherche d'un membre pour envoyer le mp.
 {
-	$idurl = !empty($_GET['id']) ? NumberHelper::numeric($_GET['id']) : '';
+	$idurl = $request->get_getint('id', 0);
 	$url = $db_querier->get_column_value(StatsSetup::$stats_referer_table, 'url', 'WHERE id = :id', array('id' => $idurl));
 	
 	$result = $db_querier->select("SELECT url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
@@ -78,9 +83,9 @@ if (!empty($_GET['stats_referer'])) //Recherche d'un membre pour envoyer le mp.
 	}
 	$result->dispose();
 }
-elseif (!empty($_GET['stats_keyword'])) //Recherche d'un membre pour envoyer le mp.
+elseif (!empty($stats_keyword)) //Recherche d'un membre pour envoyer le mp.
 {
-	$idkeyword = !empty($_GET['id']) ? NumberHelper::numeric($_GET['id']) : '';
+	$idkeyword = $request->get_getint('id', 0);
 	$keyword = $db_querier->get_column_value(StatsSetup::$stats_referer_table, 'relative_url', 'WHERE id = :id', array('id' => $idkeyword));
 	
 	$result = $db_querier->select("SELECT url, total_visit, today_visit, yesterday_visit, nbr_day, last_update

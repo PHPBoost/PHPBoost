@@ -50,14 +50,20 @@ load_module_lang('database'); //Chargement de la langue du module.
 define('TITLE', $LANG['database_management']);
 require_once('../admin/admin_header.php');
 
-$repair = !empty($_POST['repair']) ? true : false;
-$optimize = !empty($_POST['optimize']) ? true : false;
-$tables_backup = !empty($_POST['backup']) ? true : false;
-$table = retrieve(GET, 'table', '');
-$action = retrieve(GET, 'action', '');
+$request = AppContext::get_request();
+
+$repair = $request->get_postvalue('repair', false);
+$optimize = $request->get_postvalue('optimize', false);
+$tables_backup = $request->get_postvalue('backup', false);
+$query = $request->get_getint('query', 0);
+$del = $request->get_getvalue('del', '');
+$file = $request->get_getvalue('file', '');
+$error = $request->get_getvalue('error', '');
+$table = $request->get_getvalue('table', '');
+$action = $request->get_getvalue('action', '');
 
 if ($action == 'backup_table' && !empty($table)) //Sauvegarde pour une table unique.
-{	
+{
 	$tables_backup = true;
 	$_POST['table_' . $table] = 'on';
 }
@@ -79,9 +85,8 @@ $tpl->put_all(array(
 	'L_DB_TOOLS' => $LANG['db_tools']
 ));
 
-if (!empty($_GET['query']))
+if (!empty($query))
 {
-	
 	$query = retrieve(POST, 'query', '', TSTRING_UNCHANGE);
 
 	$tpl->put_all(array(
@@ -164,11 +169,11 @@ if (!empty($_GET['query']))
 elseif ($action == 'restore')
 {
 	//Suppression d'un fichier
-	if (!empty($_GET['del']))
+	if (!empty($del))
 	{
 		AppContext::get_session()->csrf_get_protect(); //Protection csrf
 		
-		$file = TextHelper::strprotect($_GET['del']);
+		$file = TextHelper::strprotect($del);
 		$file_path = PATH_TO_ROOT .'/cache/backup/' . $file;
 		//Si le fichier existe
 		if (preg_match('`[^/]+\.sql$`', $file) && is_file($file_path))
@@ -184,11 +189,11 @@ elseif ($action == 'restore')
 	
 	$post_file = isset($_FILES['file_sql']) ? $_FILES['file_sql'] : '';
 	
-	if (!empty($_GET['file'])) //Restauration d'un fichier sur le ftp
+	if (!empty($file)) //Restauration d'un fichier sur le ftp
 	{
 		AppContext::get_session()->csrf_get_protect(); //Protection csrf
 		
-		$file = TextHelper::strprotect($_GET['file']);
+		$file = TextHelper::strprotect($file);
 		$file_path = PATH_TO_ROOT .'/cache/backup/' . $file;
 		if (preg_match('`[^/]+\.sql$`', $file) && is_file($file_path))
 		{
@@ -243,9 +248,9 @@ elseif ($action == 'restore')
 		'L_DATE' => LangLoader::get_message('date', 'date-common')
 	));
 	
-	if (!empty($_GET['error']))
+	if (!empty($error))
 	{
-		switch ($_GET['error'])
+		switch ($error)
 		{
 			case 'success' :
 				$tpl->put('message_helper', MessageHelper::display($LANG['db_restore_success'], MessageHelper::SUCCESS));
@@ -402,10 +407,10 @@ else
 			}
 		}
 		
-		if (!empty($_GET['error']))
+		if (!empty($error))
 		{
-			if (trim($_GET['error']) == 'backup_success' && !empty($_GET['file']))
-				$tpl->put('message_helper', MessageHelper::display(sprintf($LANG['db_backup_success'], $_GET['file'], $_GET['file']), MessageHelper::SUCCESS));
+			if (trim($error) == 'backup_success' && !empty($file))
+				$tpl->put('message_helper', MessageHelper::display(sprintf($LANG['db_backup_success'], $file, $file), MessageHelper::SUCCESS));
 		}
 		
 		//liste des tables

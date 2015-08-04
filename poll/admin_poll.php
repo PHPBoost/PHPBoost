@@ -30,10 +30,12 @@ load_module_lang('poll'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
+$request = AppContext::get_request();
+
 //On recupère les variables.
-$id = retrieve(GET, 'id', 0);
-$id_post = retrieve(POST, 'id', 0);
-$del = !empty($_GET['delete']) ? true : false;
+$id = $request->get_getint('id', 0);
+$id_post = $request->get_postint('id', 0);
+$del = $request->get_getint('del', 0);
 
 $poll_config = PollConfig::load();
 

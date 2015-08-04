@@ -80,30 +80,32 @@ define('USE_DEFAULT_IF_EMPTY', 1);
 function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $flags = 0)
 {
 	$var = null;
+	$request = AppContext::get_request();
+	
 	switch ($var_type)
 	{
 		case GET:
-			if (isset($_GET[$var_name]))
+			if ($request->has_getparameter($var_name))
 			{
-				$var = $_GET[$var_name];
+				$var = $request->get_getvalue($var_name);
 			}
 			break;
 		case POST:
-			if (isset($_POST[$var_name]))
+			if ($request->has_postparameter($var_name))
 			{
-				$var = $_POST[$var_name];
+				$var = $request->get_postvalue($var_name);
 			}
 			break;
 		case REQUEST:
-			if (isset($_REQUEST[$var_name]))
+			if ($request->has_parameter($var_name))
 			{
-				$var = $_REQUEST[$var_name];
+				$var = $request->get_value($var_name);
 			}
 			break;
 		case COOKIE:
-			if (isset($_COOKIE[$var_name]))
+			if ($request->has_cookieparameter($var_name))
 			{
-				$var = $_COOKIE[$var_name];
+				$var = $request->get_cookie($var_name);
 			}
 			break;
 		case FILES:

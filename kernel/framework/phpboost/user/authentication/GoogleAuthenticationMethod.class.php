@@ -143,16 +143,18 @@ class GoogleAuthenticationMethod extends AuthenticationMethod
 
 	private function get_google_user_data()
 	{
-		if (isset($_REQUEST['reset'])) 
+		$request = AppContext::get_request();
+		
+		if ($request->has_parameter('reset')) 
 		{
 			unset($_SESSION['token']);
 			$this->google_client->revokeToken();
 			AppContext::get_response()->redirect($this->google_client->getRedirectUri());
 		}
 
-		if (isset($_GET['code'])) 
+		if ($request->has_getparameter('code')) 
 		{
-			$this->google_client->authenticate($_GET['code']);
+			$this->google_client->authenticate($request->get_getvalue('code'));
 			$_SESSION['token'] = $this->google_client->getAccessToken();
 			AppContext::get_response()->redirect($this->google_client->getRedirectUri());
 		}

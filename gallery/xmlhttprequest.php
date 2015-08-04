@@ -35,13 +35,19 @@ if (AppContext::get_current_user()->is_readonly())
 	exit;
 
 $config = GalleryConfig::load();
+$request = AppContext::get_request();
+
+$increment_view = $request->get_getint('increment_view', 0);
+$rename_pics = $request->get_getint('rename_pics', 0);
+$aprob_pics = $request->get_getint('aprob_pics', 0);
+$id_file = $request->get_postint('id_file', 0);
 
 //Notation.
-if (!empty($_GET['increment_view']))
+if (!empty($increment_view))
 {
 	$categories = GalleryService::get_categories_manager()->get_categories_cache()->get_categories();
-	$g_idpics = retrieve(GET, 'id', 0);
-	$g_idcat = retrieve(GET, 'cat', 0);
+	$g_idpics = $request->get_getint('id', 0);
+	$g_idcat = $request->get_getint('cat', 0);
 	if (empty($g_idpics) || (!empty($g_idcat) && !isset($categories[$g_idcat])))
 		exit;
 	
@@ -53,12 +59,11 @@ if (!empty($_GET['increment_view']))
 	PersistenceContext::get_querier()->inject("UPDATE " . GallerySetup::$gallery_table . " SET views = views + 1 WHERE idcat = :idcat AND id = :id", array('idcat' => $g_idcat, 'id' => $g_idpics));
 }
 else
-{	
+{
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
-	if (!empty($_GET['rename_pics'])) //Renomme une image.
+	if (!empty($rename_pics)) //Renomme une image.
 	{
-		$id_file = retrieve(POST, 'id_file', 0);
 		$id_cat = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'idcat', 'WHERE id = :id', array('id' => $id_file));
 		
 		if (GalleryAuthorizationsService::check_authorizations($id_cat)->moderation()) //Modo
@@ -76,9 +81,8 @@ else
 				echo -1;
 		}
 	}
-	elseif (!empty($_GET['aprob_pics']))
+	elseif (!empty($aprob_pics))
 	{
-		$id_file = retrieve(POST, 'id_file', 0);
 		$id_cat = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'idcat', 'WHERE id = :id', array('id' => $id_file));
 		
 		if (GalleryAuthorizationsService::check_authorizations($id_cat)->moderation()) //Modo

@@ -114,7 +114,7 @@ elseif ($redirect > 0 || $create_redirection > 0)//Redirection
 		DispatchManager::redirect($error_controller);
 	} 
 }
-elseif (isset($_GET['com']) && $idcom > 0)
+elseif (AppContext::get_request()->has_getparameter('com') && $idcom > 0)
 {
 	$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $id_com));
 	define('TITLE', $LANG['wiki_article_com']);
@@ -327,7 +327,7 @@ elseif ($create_redirection > 0) //Création d'une redirection
 	if (!empty($errstr))
 		$tpl->put('message_helper', MessageHelper::display($errstr, MessageHelper::WARNING));
 }
-elseif (isset($_GET['com']) && $idcom > 0) //Affichage des commentaires
+elseif (AppContext::get_request()->has_getparameter('com') && $idcom > 0) //Affichage des commentaires
 {
 	$comments_topic = new WikiCommentsTopic();
 	$comments_topic->set_id_in_module($idcom);

@@ -29,10 +29,12 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$id_get = retrieve(GET, 'id', 0);
-$quote_get = retrieve(GET, 'quote', 0);	
+$request = AppContext::get_request();
 
-//On va chercher les infos sur le topic	
+$id_get = $request->get_getint('id', 0);
+$quote_get = $request->get_getint('quote', 0);
+
+//On va chercher les infos sur le topic
 $topic = !empty($id_get) ? PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id', 'user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'), 'WHERE id=:id', array('id' => $id_get)) : '';
 //Existance du topic.
 if (empty($topic['id']))
@@ -120,9 +122,9 @@ else
 
 //Message(s) dans le topic non lu ( non prise en compte des topics trop vieux (x semaine) ou déjà lus).
 mark_topic_as_read($id_get, $topic['last_msg_id'], $topic['last_timestamp']);
-	
+
 //Gestion de la page si redirection vers le dernier message lu.
-$idm = retrieve(GET, 'idm', 0);
+$idm = $request->get_getvalue('idm', 0);
 if (!empty($idm))
 {
 	//Calcul de la page sur laquelle se situe le message.
@@ -130,7 +132,7 @@ if (!empty($idm))
 	
 	//Dernier message de la page? Redirection vers la page suivante pour prendre en compte la reprise du message précédent.
 	if (is_int(($nbr_msg_before + 1) / $config->get_number_messages_per_page())) 
-	{	
+	{
 		//On redirige vers la page suivante, seulement si ce n'est pas la dernière.
 		if ($topic['nbr_msg'] != ($nbr_msg_before + 1))
 			$nbr_msg_before++;
@@ -266,8 +268,8 @@ while ( $row = $result->fetch() )
 			'L_RESULT' => $LANG['poll_result']
 		));
 		
-		$array_voter = explode('|', $row['voter_id']);			
-		if (in_array(AppContext::get_current_user()->get_id(), $array_voter) || !empty($_GET['r']) || AppContext::get_current_user()->get_id() === -1) //Déjà voté.
+		$array_voter = explode('|', $row['voter_id']);
+		if (in_array(AppContext::get_current_user()->get_id(), $array_voter) || !empty($request->get_getvalue('r', 0)) || AppContext::get_current_user()->get_id() === -1) //Déjà voté.
 		{
 			$array_answer = explode('|', $row['answers']);
 			$array_vote = explode('|', $row['votes']);
@@ -296,7 +298,7 @@ while ( $row = $result->fetch() )
 			if ($row['type'] == 0)
 			{
 				foreach ($array_answer as $answer)
-				{						
+				{
 					$tpl->assign_block_vars('poll_radio', array(
 						'NAME' => $z,
 						'TYPE' => 'radio',
@@ -304,7 +306,7 @@ while ( $row = $result->fetch() )
 					));
 					$z++;
 				}
-			}	
+			}
 			elseif ($row['type'] == 1) 
 			{
 				foreach ($array_answer as $answer)

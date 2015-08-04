@@ -34,12 +34,14 @@ require_once('../admin/admin_header.php');
 $Gallery = new Gallery();
 $config = GalleryConfig::load();
 
-$idcat = !empty($_GET['cat']) ? NumberHelper::numeric($_GET['cat']) : 0;
-$idcat_post = !empty($_POST['idcat_post']) ? NumberHelper::numeric($_POST['idcat_post']) : 0;
-$add_pic = !empty($_GET['add']) ? NumberHelper::numeric($_GET['add']) : 0;
-$nbr_pics_post = !empty($_POST['nbr_pics']) ? NumberHelper::numeric($_POST['nbr_pics']) : 0;
+$request = AppContext::get_request();
 
-if (isset($_FILES['gallery']) && isset($_POST['idcat_post'])) //Upload
+$idcat = $request->get_getint('cat', 0);
+$idcat_post = $request->get_postint('idcat_post', 0);
+$add_pic = $request->get_getint('add', 0);
+$nbr_pics_post = $request->get_postint('nbr_pics', 0);
+
+if (isset($_FILES['gallery']) && $idcat_post) //Upload
 {
 	$dir = 'pics/';
 	$Upload = new Upload($dir);
@@ -107,7 +109,7 @@ else
 	$tpl = new FileTemplate('gallery/admin_gallery_add.tpl');
 
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
+	$get_error = $request->get_getvalue('error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_max_dimension', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_unsupported_format', 'e_unabled_create_pics', 'e_error_resize', 'e_no_graphic_support', 'e_unabled_incrust_logo', 'delete_thumbnails');
 	if (in_array($get_error, $array_error))
 		$tpl->put('message_helper', MessageHelper::display($LANG[$get_error], MessageHelper::WARNING));

@@ -29,24 +29,23 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-//Initialisation  de la class de gestion des fichiers.
+$request = AppContext::get_request();
 
-
-$folder = retrieve(GET, 'f', 0);
-$folder_member = retrieve(GET, 'fm', 0);
-$parent_folder = retrieve(GET, 'fup', 0);
-$home_folder = !empty($_GET['root']) ? true : false;
-$del_folder = retrieve(GET, 'delf', 0);
-$empty_folder = retrieve(GET, 'eptf', 0);
-$del_file = retrieve(GET, 'del', 0);
-$get_error = retrieve(GET, 'error', '');
-$get_l_error = retrieve(GET, 'erroru', '');
-$show_member = !empty($_GET['showm']) ? true : false;
-$move_folder = retrieve(GET, 'movefd', 0);
-$move_file = retrieve(GET, 'movefi', 0);
+$folder = $request->get_getint('f', 0);
+$folder_member = $request->get_getint('fm', 0);
+$parent_folder = $request->get_getint('fup', 0);
+$home_folder = $request->get_getvalue('root', false);
+$del_folder = $request->get_getint('delf', 0);
+$empty_folder = $request->get_getint('eptf', 0);
+$del_file = $request->get_getint('del', 0);
+$get_error = $request->get_getvalue('error', '');
+$get_l_error = $request->get_getvalue('erroru', '');
+$show_member = $request->get_getvalue('showm', false);
+$move_folder = $request->get_getint('movefd', 0);
+$move_file = $request->get_getint('movefi', 0);
 $to = retrieve(POST, 'new_cat', -1);
 
-if (isset($_GET['fup'])) //Changement de dossier
+if ($parent_folder) //Changement de dossier
 {
 	$parent_folder = PersistenceContext::get_querier()->select_single_row(PREFIX . 'upload_cat', array('id_parent', 'user_id'), 'WHERE id=:id', array('id' => $parent_folder));
 	
@@ -59,7 +58,7 @@ if (isset($_GET['fup'])) //Changement de dossier
 }
 elseif ($home_folder) //Retour à la racine.
 	AppContext::get_response()->redirect('/admin/admin_files.php');
-elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'un fichier.
+elseif (!empty($_FILES['upload_file']['name']) && $folder) //Ajout d'un fichier.
 {
 	//Si le dossier n'est pas en écriture on tente un CHMOD 777
 	@clearstatcache();

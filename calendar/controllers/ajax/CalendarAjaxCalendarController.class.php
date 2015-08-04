@@ -55,7 +55,7 @@ class CalendarAjaxCalendarController extends AbstractController
 	
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
+		$this->init($request);
 		$this->build_view($request);
 		return new SiteNodisplayResponse($this->view);
 	}
@@ -257,20 +257,20 @@ class CalendarAjaxCalendarController extends AbstractController
 		return $legend_view;
 	}
 	
-	private function init()
+	private function init(HTTPRequestCustom $request)
 	{
 		$this->lang = LangLoader::get('date-common');
 		$this->view = new FileTemplate('calendar/CalendarAjaxCalendarController.tpl');
 		$this->view->add_lang($this->lang);
 		
-		if (in_array('calendar_mini', array_keys($_GET)) && $_GET['calendar_mini'] == 1)
+		if ($request->has_getparameter('calendar_mini') && $request->get_getvalue('calendar_mini') == 1)
 			$this->set_mini_calendar();
 	}
 	
 	public static function get_view($is_mini = false, $year = 0, $month = 0)
 	{
 		$object = new self();
-		$object->init();
+		$object->init(AppContext::get_request());
 		if ($is_mini)
 			$object->set_mini_calendar();
 		if ($year)

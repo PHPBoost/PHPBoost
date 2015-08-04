@@ -38,6 +38,13 @@ class HTTPRequestCustom
 	const string = 0x03;
 	const t_array = 0x04;
 	const none = 0x05;
+	
+	private $_get_parameters_array;
+	
+	public function __construct()
+	{
+		$this->_get_parameters_array = self::sanitize_html($_GET);
+	}
 
 	public function is_post_method()
 	{
@@ -56,7 +63,7 @@ class HTTPRequestCustom
 
 	public function has_getparameter($parameter)
 	{
-		return $this->has_rawparameter($parameter, $_GET);
+		return $this->has_rawparameter($parameter, $this->_get_parameters_array);
 	}
 
 	public function has_postparameter($parameter)
@@ -76,14 +83,14 @@ class HTTPRequestCustom
 
 	public function set_value($varname, $value)
 	{
-		$this->set_rawvalue($varname, $value, $_GET);
+		$this->set_rawvalue($varname, $value, $this->_get_parameters_array);
 		$this->set_rawvalue($varname, $value, $_POST);
 		$this->set_rawvalue($varname, $value, $_REQUEST);
 	}
 
 	public function set_getvalue($varname, $value)
 	{
-		$this->set_rawvalue($varname, $value, $_GET);
+		$this->set_rawvalue($varname, $value, $this->_get_parameters_array);
 		$this->set_rawvalue($varname, $value, $_REQUEST);
 	}
 
@@ -128,7 +135,7 @@ class HTTPRequestCustom
 		return $this->get_var($_COOKIE, self::string, $varname, $default_value);
 	}
 
-	public function get_array($varname, $default_value = array())
+	public function _get_parameters_array($varname, $default_value = array())
 	{
 		return $this->get_var($_REQUEST, self::t_array, $varname, $default_value);
 	}
@@ -154,32 +161,32 @@ class HTTPRequestCustom
 
 	public function get_getvalue($varname, $default_value = null)
 	{
-		return $this->get_var($_GET, self::none, $varname, $default_value);
+		return $this->get_var($this->_get_parameters_array, self::none, $varname, $default_value);
 	}
 
 	public function get_getbool($varname, $default_value = null)
 	{
-		return $this->get_var($_GET, self::bool, $varname, $default_value);
+		return $this->get_var($this->_get_parameters_array, self::bool, $varname, $default_value);
 	}
 
 	public function get_getint($varname, $default_value = null)
 	{
-		return $this->get_var($_GET, self::int, $varname, $default_value);
+		return $this->get_var($this->_get_parameters_array, self::int, $varname, $default_value);
 	}
 
 	public function get_getfloat($varname, $default_value = null)
 	{
-		return $this->get_var($_GET, self::float, $varname, $default_value);
+		return $this->get_var($this->_get_parameters_array, self::float, $varname, $default_value);
 	}
 
 	public function get_getstring($varname, $default_value = null)
 	{
-		return $this->get_var($_GET, self::string, $varname, $default_value);
+		return $this->get_var($this->_get_parameters_array, self::string, $varname, $default_value);
 	}
 
 	public function get_getarray($varname, $default_value = array())
 	{
-		return $this->get_var($_GET, self::t_array, $varname, $default_value);
+		return $this->get_var($this->_get_parameters_array, self::t_array, $varname, $default_value);
 	}
 
 	public function get_postvalue($varname, $default_value = null)
@@ -298,11 +305,23 @@ class HTTPRequestCustom
 		return str_replace(array("\r\n", "\r"), "\n", $value);
 	}
 
+	private static function sanitize_html(Array $array)
+	{
+		$proper_array = array();
+		
+		foreach ($array as $key => $value)
+		{
+			$proper_array[$key] = TextHelper::htmlspecialchars($value);
+		}
+		
+		return $proper_array;
+	}
+
 	private function get_raw_array(array $array, array $default_value)
 	{
 		if (!is_array($array))
 		{
-			return $default_value;	
+			return $default_value;
 		}
 		foreach ($array as &$item)
 		{

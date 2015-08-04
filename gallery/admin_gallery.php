@@ -31,15 +31,17 @@ load_module_lang('gallery'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$id_category = AppContext::get_request()->get_getint('cat', 0);
-$idpics = !empty($_GET['id']) ? NumberHelper::numeric($_GET['id']) : 0;
-$del = !empty($_GET['del']) ? NumberHelper::numeric($_GET['del']) : 0;
-$move = !empty($_GET['move']) ? NumberHelper::numeric($_GET['move']) : 0;
+$request = AppContext::get_request();
+
+$id_category = $request->get_getint('cat', 0);
+$idpics = $request->get_getint('id', 0);
+$del = $request->get_getint('del', 0);
+$move = $request->get_getint('move', 0);
 
 $Gallery = new Gallery();
 $config = GalleryConfig::load();
 
-if (!empty($idpics) && isset($_GET['move'])) //Déplacement d'une image.
+if (!empty($idpics) && $move) //Déplacement d'une image.
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 

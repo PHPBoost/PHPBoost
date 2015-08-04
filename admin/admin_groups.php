@@ -29,14 +29,16 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$idgroup = retrieve(GET, 'id', 0);
-$idgroup_post = retrieve(POST, 'id', 0);
-$add = retrieve(GET, 'add', 0);
-$add_post = retrieve(POST, 'add', 0);
-$del_group = !empty($_GET['del']);
-$add_mbr = !empty($_POST['add_mbr']);
-$del_mbr = !empty($_GET['del_mbr']);
-$user_id = retrieve(GET, 'user_id', 0);
+$request = AppContext::get_request();
+
+$idgroup = $request->get_getint('id', 0);
+$idgroup_post = $request->get_postint('id', 0);
+$add = $request->get_getint('add', 0);
+$add_post = $request->get_postint('add', 0);
+$del_group = $request->get_getint('del', 0);
+$add_mbr = $request->get_postvalue('add_mbr', false);
+$del_mbr = $request->get_getint('del_mbr', 0);
+$user_id = $request->get_getint('user_id', 0);
 
 $_NBR_ELEMENTS_PER_PAGE = 25;
 
