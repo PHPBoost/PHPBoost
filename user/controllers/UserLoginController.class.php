@@ -202,15 +202,18 @@ class UserLoginController extends AbstractController
 		$this->form->set_css_class('fieldset-content');
 
 		$this->fieldset = new FormFieldsetHTML('loginFieldset', $this->lang['connection']);
-		$login = new FormFieldTextEditor('login', $this->lang['login'], '', array('description' => $this->lang['login.explain'], 'required' => true));
-		$this->fieldset->add_field($login);
-		$password = new FormFieldPasswordEditor('password', $this->lang['password'], '', array('required' => true));
-		$this->fieldset->add_field($password);
-		$autoconnect = new FormFieldCheckbox('autoconnect', $this->lang['autoconnect'], true);
-		$this->fieldset->add_field($autoconnect);
-
 		$this->form->add_fieldset($this->fieldset);
-
+		
+		$this->fieldset->add_field(new FormFieldTextEditor('login', $this->lang['login'], '',
+			array('description' => $this->lang['login.explain'], 'required' => true)
+		));
+		
+		$this->fieldset->add_field(new FormFieldPasswordEditor('password', $this->lang['password'], '',
+			array('required' => true)
+		));
+		
+		$this->fieldset->add_field(new FormFieldCheckbox('autoconnect', $this->lang['autoconnect'], true));
+		
 		$this->submit_button = new FormButtonSubmit($this->lang['connection'], 'authenticate');
 		$this->form->add_button($this->submit_button);
 	}

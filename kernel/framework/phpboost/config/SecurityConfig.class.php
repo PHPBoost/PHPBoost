@@ -31,6 +31,11 @@
 class SecurityConfig extends AbstractConfigData
 {
 	const INTERNAL_PASSWORD_MIN_LENGTH = 'internal_password_min_length';
+	const INTERNAL_PASSWORD_STRENGTH = 'internal_password_strength';
+	
+	const PASSWORD_STRENGTH_WEAK = 'weak';
+	const PASSWORD_STRENGTH_MEDIUM = 'medium';
+	const PASSWORD_STRENGTH_STRONG = 'strong';
 	
 	public function get_internal_password_min_length()
 	{
@@ -41,6 +46,16 @@ class SecurityConfig extends AbstractConfigData
 	{
 		$this->set_property(self::INTERNAL_PASSWORD_MIN_LENGTH, $value);
 	}
+	
+	public function get_internal_password_strength()
+	{
+		return $this->get_property(self::INTERNAL_PASSWORD_STRENGTH);
+	}
+
+	public function set_internal_password_strength($value)
+	{
+		$this->set_property(self::INTERNAL_PASSWORD_STRENGTH, $value);
+	}
 
 	/**
 	 * {@inheritdoc}
@@ -48,7 +63,8 @@ class SecurityConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::INTERNAL_PASSWORD_MIN_LENGTH => 6
+			self::INTERNAL_PASSWORD_MIN_LENGTH => 6,
+			self::INTERNAL_PASSWORD_STRENGTH => self::PASSWORD_STRENGTH_WEAK
 		);
 	}
 

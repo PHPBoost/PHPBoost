@@ -82,6 +82,8 @@ $lang['form.doesnt_match_length_max'] = 'La valeur saisie doit faire au maximum 
 $lang['form.doesnt_match_integer_intervall'] = 'La valeur saisie ne respecte pas l\'intervalle définie (:lower_bound <= valeur <= :upper_bound)';
 $lang['form.doesnt_match_integer_min'] = 'La valeur saisie doit être supérieure ou égale à :lower_bound';
 $lang['form.doesnt_match_integer_max'] = 'La valeur saisie doit être inférieure ou égale à :upper_bound';
+$lang['form.doesnt_match_medium_password_regex'] = 'Le mot de passe doit comporter au moins une minuscule et une majuscule ou une minuscule et un chiffre';
+$lang['form.doesnt_match_strong_password_regex'] = 'Le mot de passe doit comporter au moins une minuscule, une majuscule et un chiffre';
 $lang['form.has_to_be_filled'] = 'Le champ ":name" doit être renseigné';
 $lang['form.validation_error'] = 'Veuillez corriger les erreurs du formulaire';
 $lang['form.fields_must_be_equal'] = 'Les champs ":field1" et ":field2" doivent être égaux';

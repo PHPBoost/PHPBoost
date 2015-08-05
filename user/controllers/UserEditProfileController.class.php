@@ -195,12 +195,12 @@ class UserEditProfileController extends AbstractController
 
 		$connect_fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '',
 			array('description' => StringVars::replace_vars($this->lang['password.explain'], array('number' => $security_config->get_internal_password_min_length())), 'hidden' => $more_than_one_authentication_type),
-			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
+			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));
 		
 		$connect_fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '',
 			array('hidden' => $more_than_one_authentication_type),
-			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
+			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));
 
 		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));

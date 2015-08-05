@@ -100,12 +100,12 @@ class AdminMemberAddController extends AdminController
 
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '',
 			array('required' => true),
-			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
+			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));
 		
 		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '',
 			array('required' => true),
-			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
+			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));
 		
 		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));

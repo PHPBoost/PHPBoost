@@ -115,7 +115,7 @@ class WikiConfig extends AbstractConfigData
 			self::DISPLAY_CATEGORIES_ON_INDEX => false,
 			self::HITS_COUNTER => true,
 			self::INDEX_TEXT => LangLoader::get_message('index_text', 'config', 'wiki'),
-			self::AUTHORIZATIONS => array('r-1' => 1041, 'r0' => 1299, 'r1' => 4095, 'r1' => 4095),
+			self::AUTHORIZATIONS => array('r-1' => 1041, 'r0' => 1299, 'r1' => 4095),
 		);
 	}
 	

@@ -109,6 +109,14 @@ class AdminMemberConfigController extends AdminController
 			array('min' => 6, 'max' => 30),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'), new FormFieldConstraintIntegerRange(6, 30))
 		));
+		
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('internal_password_strength', $this->lang['security.config.internal-password-strength'], $this->security_config->get_internal_password_strength(),
+			array(
+				new FormFieldSelectChoiceOption($this->lang['security.config.internal-password-strength.weak'], SecurityConfig::PASSWORD_STRENGTH_WEAK),
+				new FormFieldSelectChoiceOption($this->lang['security.config.internal-password-strength.medium'], SecurityConfig::PASSWORD_STRENGTH_MEDIUM),
+				new FormFieldSelectChoiceOption($this->lang['security.config.internal-password-strength.strong'], SecurityConfig::PASSWORD_STRENGTH_STRONG)
+			)
+		));
 
 		$fieldset = new FormFieldsetHTML('authentication_config', $this->lang['members.config-authentication']);
 		$form->add_fieldset($fieldset);
@@ -229,6 +237,7 @@ class AdminMemberConfigController extends AdminController
 		}
 		
 		$this->security_config->set_internal_password_min_length($this->form->get_value('internal_password_min_length'));
+		$this->security_config->set_internal_password_strength($this->form->get_value('internal_password_strength')->get_raw_value());
 		SecurityConfig::save();
 		
 		if ($this->form->get_value('fb_auth_enabled'))

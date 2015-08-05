@@ -62,6 +62,10 @@ $lang['members.config.welcome-message-content'] = 'Message de bienvenue affiché 
 //Security Configuration
 $lang['members.config-security'] = 'Sécurité';
 $lang['security.config.internal-password-min-length'] = 'Longueur minimale des mots de passe';
+$lang['security.config.internal-password-strength'] = 'Complexité des mots de passe';
+$lang['security.config.internal-password-strength.weak'] = 'Faible';
+$lang['security.config.internal-password-strength.medium'] = 'Moyenne (lettres et chiffres)';
+$lang['security.config.internal-password-strength.strong'] = 'Forte (minuscules, majuscules et chiffres)';
 
 //Authentication Configuration
 $lang['members.config-authentication'] = 'Configuration des moyens d\'authentification';
