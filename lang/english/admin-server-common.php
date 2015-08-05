@@ -39,4 +39,5 @@ $lang['advises.enable_apcu_cache'] = '<a href="' . AdminCacheUrlBuilder::configu
 $lang['advises.upgrade_php_version'] = 'Upgrade your PHP version in 5.6 (last stable release) if your host allows it.';
 $lang['advises.save_database'] = 'Save your database frequently.';
 $lang['advises.optimize_database_tables'] = '<a href="' . AdminConfigUrlBuilder::advanced_config()->rel() . '">Enable auto tables optimization</a> or optimize occasionally your tables in the module <strong>Database</strong> (if it is installed) or in your database management tool to recover the wasted base space.';
+$lang['advises.password_security'] = 'Increase strength and length of passwords in <a href="' . AdminMembersUrlBuilder::configuration()->rel() . '">members configuration</a> to strengthen security.';
 ?>

@@ -152,6 +152,7 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 		$maintenance_config = MaintenanceConfig::load();
 		$general_config = GeneralConfig::load();
 		$server_environment_config = ServerEnvironmentConfig::load();
+		$security_config = SecurityConfig::load();
 		
 		$fieldset = new FormFieldsetHTML('advises', $lang['advises']);
 		
@@ -179,6 +180,9 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 		
 		if (!$server_environment_config->is_database_tables_optimization_enabled())
 			$fieldset->add_field(new FormFieldFree('optimize_database_tables', '', MessageHelper::display($lang['advises.optimize_database_tables'], MessageHelper::SUCCESS)->render()));
+		
+		if ($security_config->get_internal_password_min_length() == 6 && $security_config->get_internal_password_strength() == SecurityConfig::PASSWORD_STRENGTH_WEAK && !$security_config->are_login_and_email_forbidden_in_password())
+			$fieldset->add_field(new FormFieldFree('password_security', '', MessageHelper::display($lang['advises.password_security'], MessageHelper::NOTICE)->render()));
 		
 		if (count($fieldset->get_fields()))
 			$html_form->add_fieldset($fieldset);
