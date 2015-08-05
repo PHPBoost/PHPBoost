@@ -52,7 +52,6 @@ $MEDIA_LANG = array(
 // media_action.php
 'contribution_counterpart' => 'Contribution counterpart',
 'contribution_counterpart_explain' => 'Explain why you want to submit your file. This field is not required but it can help the validators who will take care of your contribution.',
-'contribution_entitled' => '[Multimedia] %s',
 'contribute_media' => 'Contribute a multimedia file',
 'add_media' => 'Add a multimedia file',
 'delete_media' => 'Delete a multimedia file',

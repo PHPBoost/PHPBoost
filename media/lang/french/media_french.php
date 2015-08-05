@@ -51,7 +51,6 @@ $MEDIA_LANG = array(
 // media_action.php
 'contribution_counterpart' => 'Complément de contribution',
 'contribution_counterpart_explain' => 'Expliquez les raisons de votre contribution (pourquoi vous souhaitez proposer ce fichier). Ce champ est facultatif.',
-'contribution_entitled' => '[Multimédia] %s',
 'contribute_media' => 'Proposer un fichier multimédia',
 'add_media' => 'Ajouter un fichier multimédia',
 'delete_media' => 'Supprimer un fichier multimédia',
