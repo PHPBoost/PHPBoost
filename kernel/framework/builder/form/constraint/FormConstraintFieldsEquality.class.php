@@ -32,7 +32,13 @@
 class FormConstraintFieldsEquality implements FormConstraint
 {
 	private $js_message;
+	/**
+	 * @var FormField
+	 */
 	private $first_field;
+	/**
+	 * @var FormField
+	 */
 	private $second_field;
 
 	public function __construct(FormField $first_field, FormField $second_field, $js_message = '')

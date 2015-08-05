@@ -117,6 +117,8 @@ class AdminMemberConfigController extends AdminController
 				new FormFieldSelectChoiceOption($this->lang['security.config.internal-password-strength.strong'], SecurityConfig::PASSWORD_STRENGTH_STRONG)
 			)
 		));
+		
+		$fieldset->add_field(new FormFieldCheckbox('login_and_email_forbidden_in_password', $this->lang['security.config.login-and-email-forbidden-in-password'], $this->security_config->are_login_and_email_forbidden_in_password()));
 
 		$fieldset = new FormFieldsetHTML('authentication_config', $this->lang['members.config-authentication']);
 		$form->add_fieldset($fieldset);
@@ -238,6 +240,12 @@ class AdminMemberConfigController extends AdminController
 		
 		$this->security_config->set_internal_password_min_length($this->form->get_value('internal_password_min_length'));
 		$this->security_config->set_internal_password_strength($this->form->get_value('internal_password_strength')->get_raw_value());
+		
+		if ($this->form->get_value('login_and_email_forbidden_in_password'))
+			$this->security_config->forbid_login_and_email_in_password();
+		else
+			$this->security_config->allow_login_and_email_in_password();
+		
 		SecurityConfig::save();
 		
 		if ($this->form->get_value('fb_auth_enabled'))

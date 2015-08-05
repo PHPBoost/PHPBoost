@@ -78,7 +78,7 @@ class AdminMemberAddController extends AdminController
 			array(new FormFieldConstraintLengthRange(3, 100), new FormFieldConstraintDisplayNameExists())
 		));
 		
-		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['email'], '',
+		$fieldset->add_field($email = new FormFieldMailEditor('email', $this->lang['email'], '',
 			array('required' => true),
 			array(new FormFieldConstraintMailExist())
 		));
@@ -93,7 +93,7 @@ class AdminMemberAddController extends AdminController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['login'], '',
+		$fieldset->add_field($login = new FormFieldTextEditor('login', $this->lang['login'], '',
 			array('required' => true, 'hidden' => true, 'maxlength' => 25),
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists())
 		));
@@ -109,6 +109,12 @@ class AdminMemberAddController extends AdminController
 		));
 		
 		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
+		
+		if ($security_config->are_login_and_email_forbidden_in_password())
+		{
+			$form->add_constraint(new FormConstraintFieldsInequality($email, $password));
+			$form->add_constraint(new FormConstraintFieldsInequality($login, $password));
+		}
 		
 		$fieldset->add_field(new FormFieldRanksSelect('rank', $this->lang['rank'], FormFieldRanksSelect::MEMBER));
 		

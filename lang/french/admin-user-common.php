@@ -66,6 +66,7 @@ $lang['security.config.internal-password-strength'] = 'Complexité des mots de pa
 $lang['security.config.internal-password-strength.weak'] = 'Faible';
 $lang['security.config.internal-password-strength.medium'] = 'Moyenne (lettres et chiffres)';
 $lang['security.config.internal-password-strength.strong'] = 'Forte (minuscules, majuscules et chiffres)';
+$lang['security.config.login-and-email-forbidden-in-password'] = 'Interdire l\'adresse email et l\'identifiant de connexion dans le mot de passe';
 
 //Authentication Configuration
 $lang['members.config-authentication'] = 'Configuration des moyens d\'authentification';

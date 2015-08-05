@@ -136,7 +136,7 @@ class UserEditProfileController extends AbstractController
 			array(new FormFieldConstraintLengthRange(3, 100), new FormFieldConstraintDisplayNameExists($this->user->get_id()))
 		));
 
-		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['email'], $this->user->get_email(),
+		$fieldset->add_field($email = new FormFieldMailEditor('email', $this->lang['email'], $this->user->get_email(),
 			array('required' => true),
 			array(new FormFieldConstraintMailExist($this->user->get_id()))
 		));
@@ -184,7 +184,7 @@ class UserEditProfileController extends AbstractController
 			)
 		));
 
-		$connect_fieldset->add_field(new FormFieldTextEditor('login', $this->lang['login'], ($has_custom_login ? $this->internal_auth_infos['login'] : preg_replace('/\s+/', '', $this->user->get_display_name())),
+		$connect_fieldset->add_field($login = new FormFieldTextEditor('login', $this->lang['login'], ($has_custom_login ? $this->internal_auth_infos['login'] : preg_replace('/\s+/', '', $this->user->get_display_name())),
 			array('required' => true, 'hidden' => $more_than_one_authentication_type || !$has_custom_login, 'maxlength' => 25),
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists($this->user->get_id()))
 		));
@@ -204,6 +204,12 @@ class UserEditProfileController extends AbstractController
 		));
 
 		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
+		
+		if ($security_config->are_login_and_email_forbidden_in_password())
+		{
+			$form->add_constraint(new FormConstraintFieldsInequality($email, $password));
+			$form->add_constraint(new FormConstraintFieldsInequality($login, $password));
+		}
 
 		if (in_array(FacebookAuthenticationMethod::AUTHENTICATION_METHOD, $activated_auth_types))
 		{

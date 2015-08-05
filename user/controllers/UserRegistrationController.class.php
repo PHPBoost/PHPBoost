@@ -86,7 +86,7 @@ class UserRegistrationController extends AbstractController
 			array(new FormFieldConstraintLengthRange(3, 100), new FormFieldConstraintDisplayNameExists())
 		));
 
-		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['email'], '',
+		$fieldset->add_field($email = new FormFieldMailEditor('email', $this->lang['email'], '',
 			array('required' => true),
 			array(new FormFieldConstraintMailExist())
 		));
@@ -103,7 +103,7 @@ class UserRegistrationController extends AbstractController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['login'], '',
+		$fieldset->add_field($login = new FormFieldTextEditor('login', $this->lang['login'], '',
 			array('hidden' => true, 'maxlength' => 25),
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists())
 		));
@@ -116,6 +116,14 @@ class UserRegistrationController extends AbstractController
 			array('required' => true, 'maxlength' => 500),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));
+		
+		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
+		
+		if ($security_config->are_login_and_email_forbidden_in_password())
+		{
+			$form->add_constraint(new FormConstraintFieldsInequality($email, $password));
+			$form->add_constraint(new FormConstraintFieldsInequality($login, $password));
+		}
 		
 		$options_fieldset = new FormFieldsetHTML('options', LangLoader::get_message('options', 'main'));
 		$form->add_fieldset($options_fieldset);
@@ -152,10 +160,9 @@ class UserRegistrationController extends AbstractController
 				FormFieldCheckbox::UNCHECKED, 
 				array('required' => $this->lang['agreement.agree.required'])
 			));
-    	}
-    	
+		}
+		
 		$this->submit_button = new FormButtonDefaultSubmit();
-		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
 

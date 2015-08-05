@@ -51,6 +51,7 @@ class FormConstraintFieldsInequality implements FormConstraint
 		{
 			$this->js_message = LangLoader::get_message('form.fields_must_not_be_equal', 'status-messages-common');
 		}
+		
 		$this->first_field = $first_field;
 		$this->second_field = $second_field;
 
@@ -63,7 +64,10 @@ class FormConstraintFieldsInequality implements FormConstraint
 		$second_value = $this->second_field->get_value();
 		if ($first_value !== null && $second_value !== null)
 		{
-			return $first_value != $second_value;
+			if ($first_value != $second_value)
+			{
+				return true;
+			}
 		}
 		return false;
 	}
