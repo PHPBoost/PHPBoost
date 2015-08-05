@@ -72,12 +72,12 @@ class UserChangeLostPasswordController extends AbstractController
 		
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password.new'], '',
 			array('description' => StringVars::replace_vars($this->lang['password.explain'], array('number' => $security_config->get_internal_password_min_length())), 'required' => true, 'maxlength' => 500),
-			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
+			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));
 		
 		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '',
 			array('required' => true, 'maxlength' => 500),
-			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
+			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
