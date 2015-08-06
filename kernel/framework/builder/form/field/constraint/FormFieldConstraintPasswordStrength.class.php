@@ -32,11 +32,11 @@
 class FormFieldConstraintPasswordStrength extends FormFieldConstraintRegex
 {
 	// Must be at least 6 characters
-	private static $weak_strength_regex = '^(?=.{6,}).*$';
+	private static $weak_strength_regex = '/^(?=.{6,}).*$/';
 	// Must containt at least upper case letters and lower case letters or soit lower case letters and digits
-	private static $medium_strength_regex = '^(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$';
+	private static $medium_strength_regex = '/^(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$/';
 	// Must containt at least upper case letters, lower case letters and digits
-	private static $strong_strength_regex = '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\*]).*$';
+	private static $strong_strength_regex = '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\*]).*$/';
 	
 	public function __construct($error_message = '')
 	{
@@ -61,7 +61,7 @@ class FormFieldConstraintPasswordStrength extends FormFieldConstraintRegex
 		
 		parent::__construct(
 			$regex, 
-			TextHelper::to_js_string($regex), 
+			$regex, 
 			$error_message
 		);
 	}
