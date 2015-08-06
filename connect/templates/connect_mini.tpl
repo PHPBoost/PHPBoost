@@ -112,6 +112,7 @@
 					<input type="password" id="password" name="password" class="connect_form" placeholder="{L_PASSWORD}">
 					<input checked="checked" type="checkbox" name="autoconnect">
 					<input type="hidden" name="redirect" value="{SITE_REWRITED_SCRIPT}">
+					<input type="hidden" name="token" value="{TOKEN}">
 					<button type="submit" name="authenticate" value="internal" class="submit">{L_CONNECT}</button>
 				</form>
 				# IF C_USER_REGISTER #

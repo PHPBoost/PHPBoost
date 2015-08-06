@@ -150,6 +150,7 @@ function shoutbox_refresh_messages_box() {
 			</div>
 			<p class="shout-spacing">
 				<button onclick="shoutbox_add_message();" type="button">${LangLoader::get_message('submit', 'main')}</button>
+				<input type="hidden" name="token" value="{TOKEN}">
 				<a href="" onclick="shoutbox_refresh_messages_box();return false;" id="shoutbox-refresh" title="${LangLoader::get_message('refresh', 'main')}"><i class="fa fa-refresh"></i></a>
 			</p>
 		</form>

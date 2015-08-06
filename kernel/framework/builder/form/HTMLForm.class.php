@@ -90,13 +90,16 @@ class HTMLForm implements HTMLElement
 	 * @param string $target The url where the form sends data
 	 * @param bool $enable_captcha_protection True if the CAPTCHA is enabled
 	 */
-	public function __construct($html_id, $target = '', $enable_captcha_protection = true)
+	public function __construct($html_id, $target = '', $enable_captcha_protection = true, $enable_csrf_protection = true)
 	{
 		$this->set_html_id($html_id);
 		$this->set_target($target);
 		
 		if ($enable_captcha_protection)
 			$this->add_catpcha_protection(); //Add captcha protection for visitor
+		
+		if ($enable_csrf_protection)
+			$this->add_csrf_protection();  //Add CSRF protection
 		
 		self::$instance_id++;
 	}

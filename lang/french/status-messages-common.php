@@ -44,7 +44,7 @@ $lang['error.module.uninstalled'] = 'Ce module n\'est pas installé !';
 $lang['error.module.unactivated'] = 'Ce module n\'est pas activé !';
 $lang['error.invalid_archive_content'] = 'Le contenu de l\'archive est incorrect !';
 
-$lang['csrf_invalid_token'] = 'Jeton de session invalide. Veuillez réessayer de recharger la page car l\'opération n\'a pas pu être effectuée.';
+$lang['csrf_invalid_token'] = 'Jeton de session invalide. Veuillez essayer de recharger la page car l\'opération n\'a pas pu être effectuée.';
 
 //Element
 $lang['element.already_exists'] = 'L\'élément existe déjà.';

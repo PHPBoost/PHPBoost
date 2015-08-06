@@ -101,9 +101,13 @@ class HTTPResponseCustom
 		$this->set_header('Content-type', 'text/html; charset=iso-8859-1');
 		$this->set_header('Expires', 'Mon, 1 Dec 2003 01:00:00 GMT');
 		$this->set_header('Last-Modified', gmdate("D, d M Y H:i:s") . " GMT");
-		$this->set_header('Cache-Control', 'no-store, no-cache, must-revalidate');
-		$this->set_header('Cache-Control', 'post-check=0, pre-check=0');
+		$this->set_header('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
 		$this->set_header('Pragma', 'no-cache');
+		$this->set_header('X-Frame-Options', 'sameorigin');
+		$this->set_header('Strict-Transport-Security', 'max-age=16070400; includeSubDomains');
+		$this->set_header('X-Content-Type-Options', 'nosniff');
+		$this->set_header('X-XSS-Protection', '1; mode=block');
+		$this->set_header('X-Permitted-Cross-Domain-Policies', 'master-only');
 	}
 
 	/**

@@ -40,10 +40,12 @@ class HTTPRequestCustom
 	const none = 0x05;
 	
 	private $_get_parameters_array;
+	private $_post_parameters_array;
 	
 	public function __construct()
 	{
 		$this->_get_parameters_array = self::sanitize_html($_GET);
+		$this->_post_parameters_array = self::sanitize_html($_POST);
 	}
 
 	public function is_post_method()
@@ -68,7 +70,7 @@ class HTTPRequestCustom
 
 	public function has_postparameter($parameter)
 	{
-		return $this->has_rawparameter($parameter, $_POST);
+		return $this->has_rawparameter($parameter, $this->_post_parameters_array);
 	}
 
 	public function has_cookieparameter($parameter)
@@ -84,7 +86,7 @@ class HTTPRequestCustom
 	public function set_value($varname, $value)
 	{
 		$this->set_rawvalue($varname, $value, $this->_get_parameters_array);
-		$this->set_rawvalue($varname, $value, $_POST);
+		$this->set_rawvalue($varname, $value, $this->_post_parameters_array);
 		$this->set_rawvalue($varname, $value, $_REQUEST);
 	}
 
@@ -96,7 +98,7 @@ class HTTPRequestCustom
 
 	public function set_postvalue($varname, $value)
 	{
-		$this->set_rawvalue($varname, $value, $_POST);
+		$this->set_rawvalue($varname, $value, $this->_post_parameters_array);
 		$this->set_rawvalue($varname, $value, $_REQUEST);
 	}
 
@@ -196,32 +198,32 @@ class HTTPRequestCustom
 
 	public function get_postvalue($varname, $default_value = null)
 	{
-		return $this->get_var($_POST, self::none, $varname, $default_value);
+		return $this->get_var($this->_post_parameters_array, self::none, $varname, $default_value);
 	}
 
 	public function get_postbool($varname, $default_value = null)
 	{
-		return $this->get_var($_POST, self::bool, $varname, $default_value);
+		return $this->get_var($this->_post_parameters_array, self::bool, $varname, $default_value);
 	}
 
 	public function get_postint($varname, $default_value = null)
 	{
-		return $this->get_var($_POST, self::int, $varname, $default_value);
+		return $this->get_var($this->_post_parameters_array, self::int, $varname, $default_value);
 	}
 
 	public function get_postfloat($varname, $default_value = null)
 	{
-		return $this->get_var($_POST, self::float, $varname, $default_value);
+		return $this->get_var($this->_post_parameters_array, self::float, $varname, $default_value);
 	}
 
 	public function get_poststring($varname, $default_value = null)
 	{
-		return $this->get_var($_POST, self::string, $varname, $default_value);
+		return $this->get_var($this->_post_parameters_array, self::string, $varname, $default_value);
 	}
 
 	public function get_postarray($varname, $default_value = array())
 	{
-		return $this->get_var($_POST, self::t_array, $varname, $default_value);
+		return $this->get_var($this->_post_parameters_array, self::t_array, $varname, $default_value);
 	}
 
 	private function get_var($mode, $type, $varname, $default_value)
