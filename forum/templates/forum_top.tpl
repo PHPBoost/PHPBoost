@@ -102,7 +102,7 @@
 				</div>
 			</div>
 			<div class="forum-links">
-				<div class="left">
+				<div class="float-left">
 					&bull; <a href="index.php?">{L_FORUM_INDEX}</a>
 				</div>
 				# IF C_USER_CONNECTED #

@@ -4,7 +4,7 @@
 					&bull; <a href="index.php">{L_FORUM_INDEX}</a> 
 				</div>
 				# IF C_USER_CONNECTED #
-					<div class="float-right">
+					<div class="right">
 						<i class="fa fa-msg-track"></i> {U_TOPIC_TRACK} &bull;
 						<i class="fa fa-lastview"></i> {U_LAST_MSG_READ} &bull;
 						<i class="fa fa-notread"></i> <span id="nbr_unread_topics2">{U_MSG_NOT_READ}</span>
