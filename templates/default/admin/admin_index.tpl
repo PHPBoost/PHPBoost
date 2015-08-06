@@ -113,6 +113,7 @@
 			</div>
 			
 			<div style="clear:right;"></div>
+			<div style="clear:both;"></div>
 			# INCLUDE ADVISES #
 			<table>
 				<caption>{L_USER_ONLINE}</caption>
