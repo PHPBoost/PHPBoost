@@ -53,6 +53,7 @@ class AdminMemberConfigController extends AdminController
 		{
 			$this->save();
 			$this->form->get_field_by_id('type_activation_members')->set_hidden(!$this->user_account_config->is_registration_enabled());
+			$this->form->get_field_by_id('unactivated_accounts_timeout')->set_hidden(!$this->user_account_config->is_registration_enabled() || $this->user_account_config->get_member_accounts_validation_method() == UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION);
 			$this->form->get_field_by_id('fb_app_id')->set_hidden(!$this->authentication_config->is_fb_auth_enabled());
 			$this->form->get_field_by_id('fb_app_key')->set_hidden(!$this->authentication_config->is_fb_auth_enabled());
 			$this->form->get_field_by_id('google_client_id')->set_hidden(!$this->authentication_config->is_google_auth_enabled());
@@ -82,23 +83,34 @@ class AdminMemberConfigController extends AdminController
 		
 		$fieldset->add_field(new FormFieldCheckbox('members_activation', $this->lang['members.config.registration-activation'], $this->user_account_config->is_registration_enabled(), 
 		array('events' => array('change' => '
-				if (HTMLForms.getField("members_activation").getValue()) { 
-					HTMLForms.getField("type_activation_members").enable(); 
+				if (HTMLForms.getField("members_activation").getValue()) {
+					HTMLForms.getField("type_activation_members").enable();
+					if (HTMLForms.getField("type_activation_members").getValue() != ' . UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION . ') {
+						HTMLForms.getField("unactivated_accounts_timeout").enable();
+					}
 				} else { 
-					HTMLForms.getField("type_activation_members").disable(); 
-				}'
-		))));
+					HTMLForms.getField("type_activation_members").disable();
+					HTMLForms.getField("unactivated_accounts_timeout").disable();
+				}')
+			)
+		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('type_activation_members', $this->lang['members.config.type-activation'], (string)$this->user_account_config->get_member_accounts_validation_method(),
 			array(
 				new FormFieldSelectChoiceOption($this->lang['members.config.type-activation.auto'], UserAccountsConfig::AUTOMATIC_USER_ACCOUNTS_VALIDATION),
 				new FormFieldSelectChoiceOption($this->lang['members.config.type-activation.mail'], UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION),
 				new FormFieldSelectChoiceOption($this->lang['members.config.type-activation.admin'], UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION)
-			), array('hidden' => !$this->user_account_config->is_registration_enabled())
+			), array('hidden' => !$this->user_account_config->is_registration_enabled(), 'events' => array('change' => '
+				if (HTMLForms.getField("type_activation_members").getValue() != ' . UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION . ') {
+					HTMLForms.getField("unactivated_accounts_timeout").enable();
+				} else { 
+					HTMLForms.getField("unactivated_accounts_timeout").disable();
+				}')
+			)
 		));
 		
 		$fieldset->add_field(new FormFieldNumberEditor('unactivated_accounts_timeout', $this->lang['members.config.unactivated-accounts-timeout'], (int)$this->user_account_config->get_unactivated_accounts_timeout(),
-			array('description' => $this->lang['members.config.unactivated-accounts-timeout-explain']),
+			array('min' => 1, 'max' => 365, 'description' => $this->lang['members.config.unactivated-accounts-timeout-explain'], 'hidden' => !$this->user_account_config->is_registration_enabled() || $this->user_account_config->get_member_accounts_validation_method() == UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 
@@ -237,6 +249,11 @@ class AdminMemberConfigController extends AdminController
 		{
 			$this->user_account_config->set_member_accounts_validation_method($this->form->get_value('type_activation_members')->get_raw_value());
 		}
+
+		if (!$this->form->field_is_disabled('unactivated_accounts_timeout'))
+		{
+			$this->user_account_config->set_unactivated_accounts_timeout($this->form->get_value('unactivated_accounts_timeout'));
+		}
 		
 		$this->security_config->set_internal_password_min_length($this->form->get_value('internal_password_min_length'));
 		$this->security_config->set_internal_password_strength($this->form->get_value('internal_password_strength')->get_raw_value());
@@ -269,7 +286,6 @@ class AdminMemberConfigController extends AdminController
 		AuthenticationConfig::save();
 		
 		$this->user_account_config->set_avatar_upload_enabled($this->form->get_value('upload_avatar_server'));
-		$this->user_account_config->set_unactivated_accounts_timeout($this->form->get_value('unactivated_accounts_timeout'));
 		$this->user_account_config->set_default_avatar_name_enabled($this->form->get_value('default_avatar_activation'));
 		$this->user_account_config->set_avatar_auto_resizing_enabled($this->form->get_value('activation_resize_avatar'));
 		$this->user_account_config->set_default_avatar_name($this->form->get_value('default_avatar_link'));
