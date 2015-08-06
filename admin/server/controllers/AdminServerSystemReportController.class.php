@@ -53,11 +53,9 @@ class AdminServerSystemReportController extends AdminController
 	{
 		$picture_yes = '<i class="fa fa-success fa-2x" title="' . LangLoader::get_message('yes', 'common') . '"></i>';
 		$picture_no = '<i class="fa fa-error fa-2x" title="' . LangLoader::get_message('no', 'common') . '"></i>';
-		$picture_unknown = '<i class="fa fa-question fa-2x" title="' . LangLoader::get_message('unknown', 'main') . '"></i>';
 		
-		$user = AppContext::get_current_user();
-		$lang_ini_file = load_ini_file(PATH_TO_ROOT .'/lang/', $user->get_locale());
-		$template_ini_file = @parse_ini_file(PATH_TO_ROOT .'/templates/' . $user->get_theme() . '/lang/' . $user->get_locale() . '/desc.ini');
+		$default_lang_config = LangsManager::get_lang(LangsManager::get_default_lang())->get_configuration();
+		$default_theme_config = ThemesManager::get_theme(ThemesManager::get_default_theme())->get_configuration();
 		$editors = AppContext::get_content_formatting_service()->get_available_editors();
 		$default_editor = $editors[ContentFormattingConfig::load()->get_default_editor()];
 		$server_configuration = new ServerConfiguration();
@@ -79,8 +77,8 @@ PHPBOOST CONFIGURATION---------------------------------------------------------
 phpboost version         : " . Environment::get_phpboost_version() . "
 server url               : " . $general_config->get_site_url() . "
 site path                : " . $general_config->get_site_path()  . "
-default theme            : " . $template_ini_file['name'] . "
-default language         : " . $lang_ini_file['name'] . "
+default theme            : " . $default_theme_config->get_name() . " (" . LangLoader::get_message('version', 'admin') . " " . $default_theme_config->get_version() . ")
+default language         : " . $default_lang_config->get_name() . "
 default editor           : " . $default_editor . "
 home page                : " . Environment::get_home_page() . "
 url rewriting            : " . (int)$server_environment_config->is_url_rewriting_enabled() . "
@@ -111,8 +109,8 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 		$fieldset->add_field(new FormFieldFree('kernel_version', $this->admin_lang['kernel_version'], Environment::get_phpboost_version()));
 		$fieldset->add_field(new FormFieldFree('site_url', LangLoader::get_message('advanced-config.site_url', 'admin-config-common'), $general_config->get_site_url()));
 		$fieldset->add_field(new FormFieldFree('site_path', LangLoader::get_message('advanced-config.site_path', 'admin-config-common'), $general_config->get_site_path()));
-		$fieldset->add_field(new FormFieldFree('default_theme', LangLoader::get_message('general-config.default_theme', 'admin-config-common'), $template_ini_file['name']));
-		$fieldset->add_field(new FormFieldFree('default_language', LangLoader::get_message('general-config.default_language', 'admin-config-common'), $lang_ini_file['name']));
+		$fieldset->add_field(new FormFieldFree('default_theme', LangLoader::get_message('general-config.default_theme', 'admin-config-common'), $default_theme_config->get_name() . " (" . LangLoader::get_message('version', 'admin') . " " . $default_theme_config->get_version() . ")"));
+		$fieldset->add_field(new FormFieldFree('default_language', LangLoader::get_message('general-config.default_language', 'admin-config-common'), $default_lang_config->get_name()));
 		$fieldset->add_field(new FormFieldFree('default_editor', LangLoader::get_message('content.config.default-formatting-language', 'admin-contents-common'), $default_editor));
 		$fieldset->add_field(new FormFieldFree('start_page', LangLoader::get_message('general-config.start_page', 'admin-config-common'), Environment::get_home_page()));
 		$fieldset->add_field(new FormFieldFree('phpboost_url_rewriting', $this->admin_lang['url_rewriting'], $server_environment_config->is_url_rewriting_enabled() ? $picture_yes : $picture_no));
