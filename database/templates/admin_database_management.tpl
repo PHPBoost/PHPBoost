@@ -58,6 +58,7 @@
 							<br /><br />
 							<input type="file" class="file" name="file_sql">
 							<input type="hidden" name="max_file_size" value="10485760">
+							<input type="hidden" name="token" value="{TOKEN}">
 							<br /><br />
 							<div class="center"><button type="submit" name="" value="true" class="submit">{L_RESTORE_NOW}</button></div>
 						</div>
@@ -172,6 +173,7 @@
 								<button type="submit" name="backup" value="true" class="submit">{L_BACKUP}</button>
 							</li>
 						</ul>
+						<input type="hidden" name="token" value="{TOKEN}">
 					</div>
 					<footer></footer>
 				</section>
@@ -268,6 +270,7 @@
 								<label><input type="radio" name="backup_type" value="data"/> {L_BACKUP_DATA}</label>
 								<br /><br />
 								<button type="submit" name="" value="true" class="submit">{L_BACKUP}</button>
+								<input type="hidden" name="token" value="{TOKEN}">
 							</td>
 						</tr>
 					</tbody>
@@ -325,6 +328,7 @@
 								</fieldset>
 								<fieldset class="fieldset-submit" style="margin:0">
 									<button type="submit" name="submit" value="true" class="submit">{L_EXECUTE}</button>
+									<input type="hidden" name="token" value="{TOKEN}">
 								</fieldset>
 							</div>
 							<footer></footer>

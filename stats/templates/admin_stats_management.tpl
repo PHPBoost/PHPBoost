@@ -279,6 +279,7 @@
 								</select>
 								# ENDIF #
 								<input type="hidden" name="{TYPE}" value="1">
+								<input type="hidden" name="token" value="{TOKEN}">
 								<button type="submit" name="date" value="true" class="submit">{L_SUBMIT}</button>
 								&nbsp;&nbsp;&nbsp;&nbsp;
 								<a class="fa fa-arrow-right" href="admin_stats{U_NEXT_LINK}#stats"></a>
@@ -758,6 +759,7 @@
 			<br /><br />
 			<fieldset class="fieldset-submit">
 				<legend>{L_ERASE_RAPPORT}</legend>
+				<input type="hidden" name="token" value="{TOKEN}">
 				<button type="submit" name="erase" value="true" class="submit">{L_ERASE_RAPPORT}</button> 
 			</fieldset>
 		</form>
@@ -782,6 +784,7 @@
 				</fieldset>
 				
 				<fieldset class="fieldset-submit">
+					<input type="hidden" name="token" value="{TOKEN}">
 					<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button>
 					<button type="reset" value="true">{L_RESET}</button>
 				</fieldset>

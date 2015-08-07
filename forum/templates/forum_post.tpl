@@ -208,6 +208,7 @@
 						<fieldset class="fieldset-submit">
 						<legend>{L_SUBMIT}</legend>
 							<input type="hidden" name="idm" value="{IDM}">
+							<input type="hidden" name="token" value="{TOKEN}">
 							<button type="submit" name="post_topic" value="true" class="submit">{L_SUBMIT}</button>
 							<button onclick="XMLHttpRequest_preview();" type="button">{L_PREVIEW}</button>
 							<button type="reset" value="true">{L_RESET}</button>

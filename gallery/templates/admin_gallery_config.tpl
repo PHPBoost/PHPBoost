@@ -277,6 +277,7 @@
 				</fieldset>
 				<fieldset class="fieldset-submit">
 					<legend>{L_EMPTY}</legend>
+					<input type="hidden" name="token" value="{TOKEN}">
 					<button type="submit" name="gallery_cache" value="true" class="submit">{L_EMPTY}</button>
 				</fieldset>
 			</form>

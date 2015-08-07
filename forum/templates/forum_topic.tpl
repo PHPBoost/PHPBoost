@@ -190,6 +190,7 @@
 					# IF C_POLL_QUESTION #
 					<fieldset class="fieldset-submit">
 						<legend>{L_VOTE}</legend>
+						<input type="hidden" name="token" value="{TOKEN}">
 						<button type="submit" name="valid_forum_poll" value="true" class="submit">{L_VOTE}</button><br />
 						<a class="small" href="topic{U_POLL_RESULT}">{L_RESULT}</a>
 					</fieldset>
@@ -327,6 +328,7 @@
 				
 				<fieldset class="fieldset-submit" style="padding-top:17px;margin-bottom:0px;">
 					<legend>{L_SUBMIT}</legend>
+					<input type="hidden" name="token" value="{TOKEN}">
 					<button type="submit" name="valid" value="true" class="submit">{L_SUBMIT}</button>
 					<button type="button" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
 					<button type="reset" value="true">{L_RESET}</button>

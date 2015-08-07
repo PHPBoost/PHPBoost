@@ -105,6 +105,7 @@
 	</fieldset>
 	<fieldset class="fieldset-submit">
 		<legend>{L_SUBMIT}</legend>
+		<input type="hidden" name="token" value="{TOKEN}">
 		<button type="submit" name="" value="true" class="submit">{L_SUBMIT}</button>
 	</fieldset>
 </form>
@@ -127,6 +128,7 @@
 	
 	<fieldset class="fieldset-submit">
 		<legend>{L_SUBMIT}</legend>
+		<input type="hidden" name="token" value="{TOKEN}">
 		<button type="submit" name="" value="true" class="submit">{L_SUBMIT}</button>
 	</fieldset>
 </form>
@@ -166,6 +168,7 @@
 	
 	<fieldset class="fieldset-submit">
 		<legend>{L_SUBMIT}</legend>
+		<input type="hidden" name="token" value="{TOKEN}">
 		<input type="hidden" name="del_cat" value="{remove.ID_ARTICLE}">
 		<button type="submit" value="true" class="submit">{L_SUBMIT}</button>
 	</fieldset>

@@ -91,7 +91,10 @@
 							# END topics #
 						</tbody>
 					</table>
-					<div class="center"><button type="submit" name="valid" value="true" class="submit">{L_SUBMIT}</button></div>
+					<div class="center">
+						<input type="hidden" name="token" value="{TOKEN}">
+						<button type="submit" name="valid" value="true" class="submit">{L_SUBMIT}</button>
+					</div>
 				</div>
 			</div>
 		</form>

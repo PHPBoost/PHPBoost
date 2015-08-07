@@ -118,6 +118,7 @@
 				# IF C_USER_REGISTER #
 					<form action="${relative_url(UserUrlBuilder::registration())}" method="post">
 						<button type="submit" name="register" value="true" class="submit">{L_REGISTER}</button>
+						<input type="hidden" name="token" value="{TOKEN}">
 					</form>
 					# IF C_FB_AUTH_ENABLED #
 					<a class="social-connect fb" href="${relative_url(UserUrlBuilder::connect('fb'))}" title="${LangLoader::get_message('facebook-connect', 'user-common')}"><i class="fa fa-facebook-square biggest"></i><span>&nbsp; ${LangLoader::get_message('facebook-connect', 'user-common')}</span></a>

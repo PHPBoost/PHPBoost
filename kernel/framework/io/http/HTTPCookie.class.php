@@ -38,7 +38,7 @@ class HTTPCookie
 	private $expiration_date;
 	private $path = '/';
 	private $domain = '';
-	private $secure = true;
+	private $secure = false;
 	private $httponly = true;
 	
 	public function __construct($name, $value, $timestamp = null)

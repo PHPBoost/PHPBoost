@@ -318,7 +318,10 @@ class HTTPRequestCustom
 		
 		foreach ($array as $key => $value)
 		{
-			$proper_array[$key] = TextHelper::htmlspecialchars($value);
+			if (is_array($value))
+				$proper_array[$key] = self::sanitize_html($value);
+			else
+				$proper_array[$key] = TextHelper::htmlspecialchars($value);
 		}
 		
 		return $proper_array;

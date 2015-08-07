@@ -281,6 +281,7 @@
 								</select>
 								# ENDIF #
 								<input type="hidden" name="{TYPE}" value="1">
+								<input type="hidden" name="token" value="{TOKEN}">
 								<button type="submit" name="date" value="true" class="submit">{L_SUBMIT}</button>
 								&nbsp;&nbsp;&nbsp;&nbsp;
 								<a class="fa fa-arrow-right" href="stats{U_NEXT_LINK}#stats"></a>

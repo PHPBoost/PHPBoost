@@ -342,6 +342,7 @@
 								</fieldset>
 								<fieldset class="fieldset-submit" style="margin:0">
 									<button type="submit" name="submit" value="true" class="submit">{L_EXECUTE}</button>
+									<input type="hidden" name="token" value="{TOKEN}">
 								</fieldset>
 							</div>
 							<footer></footer>
@@ -440,6 +441,7 @@
 				<fieldset class="fieldset-submit" style="margin:0">
 					<legend>{L_EXECUTE}</legend>
 					<button type="submit" name="submit" value="true" class="submit">{L_EXECUTE}</button>
+					<input type="hidden" name="token" value="{TOKEN}">
 				</fieldset>
 			</form>
 			# ENDIF #

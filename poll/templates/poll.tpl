@@ -52,6 +52,7 @@
 								
 								<p class="center">
 									<button name="valid_poll" type="submit" value="{L_VOTE}">{L_VOTE}</button>
+									<input type="hidden" name="token" value="{TOKEN}">
 									<br />
 									<a class="small" href="{PATH_TO_ROOT}/poll/poll{U_POLL_RESULT}">{L_RESULT}</a>
 								</p>

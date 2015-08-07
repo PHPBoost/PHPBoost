@@ -106,6 +106,7 @@
 				<fieldset class="fieldset-submit">
 					<legend>{L_UPLOAD_IMG}</legend>
 					<input type="hidden" name="max_file_size" value="2000000">
+					<input type="hidden" name="token" value="{TOKEN}">
 					<button type="submit" name="" value="true" class="submit">{L_UPLOAD_IMG}</button>
 				</fieldset>
 			</form>
@@ -183,6 +184,7 @@
 				<fieldset class="fieldset-submit">
 					<legend>{L_SUBMIT}</legend>
 					<input type="hidden" name="nbr_pics" value="{NBR_PICS}">
+					<input type="hidden" name="token" value="{TOKEN}">
 					<button type="submit" name="valid" value="true" class="submit">{L_SUBMIT}</button>
 				# ELSE #
 					<div class="notice">{L_NO_IMG}</div>

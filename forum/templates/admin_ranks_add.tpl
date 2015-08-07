@@ -75,6 +75,7 @@
 				<fieldset class="fieldset-submit">
 					<legend>{L_UPLOAD}</legend>
 					<button type="submit" name="upload" value="true" class="submit">{L_UPLOAD}</button>
+					<input type="hidden" name="token" value="{TOKEN}">
 				</fieldset>
 			</form>
 
@@ -104,6 +105,7 @@
 				<fieldset class="fieldset-submit">
 					<legend>{L_UPDATE}</legend>
 					<input type="hidden" name="idc" value="{NEXT_ID}">
+					<input type="hidden" name="token" value="{TOKEN}">
 					<button type="submit" name="add" value="true" class="submit">{L_ADD}</button>
 					<button type="reset" value="true">{L_RESET}</button>
 				</fieldset>

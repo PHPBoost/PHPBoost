@@ -88,6 +88,7 @@
 					<legend>{L_UPDATE}</legend>
 					<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button>
 					<button type="reset" value="true">{L_RESET}</button>
+					<input type="hidden" name="token" value="{TOKEN}">
 				</fieldset>
 			</form>
 		</div>

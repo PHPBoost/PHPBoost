@@ -89,7 +89,7 @@
 						<tfoot>
 							<tr>
 								<th colspan="6">
-									<div style="float:left;">&nbsp;<input type="checkbox" id="validc" onclick="check_convers(this.checked, 'd');" /> &nbsp;<button type="submit" name="valid" value="true" class="submit">{L_DELETE}</button></div>
+									<div style="float:left;">&nbsp;<input type="checkbox" id="validc" onclick="check_convers(this.checked, 'd');" /> &nbsp;<input type="hidden" name="token" value="{TOKEN}"><button type="submit" name="valid" value="true" class="submit">{L_DELETE}</button></div>
 									# IF convers.C_PAGINATION #<div class="float-right"># INCLUDE convers.PAGINATION #</div># ENDIF #
 								</th>
 							</tr>
@@ -115,10 +115,10 @@
 								<td class="smaller">
 									{convers.list.U_LAST_MSG}
 								</td>
-							</tr>	
+							</tr>
 							# END convers.list #
 									
-							# START convers.no_pm #	
+							# START convers.no_pm #
 							<tr>
 								<td colspan="6">
 									<span class="text-strong">{convers.no_pm.L_NO_PM}</span>
@@ -126,18 +126,18 @@
 							</tr>
 							# END convers.no_pm #
 						</tbody>
-					</table>					
+					</table>
 					<br />
 					<table>
-						<tr> 		
+						<tr>
 							<td style="width:33%;"> 
 								<i class="fa fa-envelope message-announce"></i> {L_READ} 
 							</td>
 							<td style="width:34%;" class="no-separator">  
-								<i class="fa fa-envelope message-announce-track"></i> {L_TRACK}		
+								<i class="fa fa-envelope message-announce-track"></i> {L_TRACK}
 							</td>
 							<td style="width:33%;" class="no-separator">  
-								<i class="fa fa-envelope message-announce-new"></i> {L_NOT_READ}		
+								<i class="fa fa-envelope message-announce-new"></i> {L_NOT_READ}
 							</td>
 						</tr>
 					</table>
@@ -212,6 +212,7 @@
 				</div>
 			</div>
 			<div class="center">
+				<input type="hidden" name="token" value="{TOKEN}">
 				<button type="submit" name="pm" value="true" class="submit">{L_SUBMIT}</button>
 				<button type="button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
 				<button type="reset" value="true">{L_RESET}</button>
@@ -247,6 +248,7 @@
 						</fieldset>
 						
 						<div class="center">
+							<input type="hidden" name="token" value="{TOKEN}">
 							<button type="submit" name="{SUBMIT_NAME}" value="{L_SUBMIT}" class="submit">{L_SUBMIT}</button>
 							<button type="button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
 							<button type="reset" value="true">{L_RESET}</button>
@@ -261,7 +263,7 @@
 
 		# START post_convers #
 		<form action="pm{post_convers.U_ACTION_CONVERS}" method="post" onsubmit="return check_form_convers();">
-			<section>					
+			<section>
 				<header>
 					<h1>{post_convers.U_PM_BOX}</h1>
 				</header>
@@ -302,10 +304,11 @@
 						</fieldset>
 						
 						<div class="center">
+							<input type="hidden" name="token" value="{TOKEN}">
 							<button type="submit" name="convers" value="true" class="submit">{L_SUBMIT}</button>
 							<button type="button" name="prw_convers" id="prw_convers_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
 							<button type="reset" value="true">{L_RESET}</button>
-						</div>	
+						</div>
 					</div>
 				</div>
 				<footer></footer>

@@ -65,6 +65,7 @@
 							<label for="login">{L_SEARCH_USER} <span class="field-description">{L_JOKER}</span></label>
 							<div class="form-field">
 								<input type="text" size="20" maxlength="25" id="login" value="" name="login">
+								<input type="hidden" name="token" value="{TOKEN}">
 								<button onclick="XMLHttpRequest_search(this.form);" type="button">{L_SEARCH}</button>
 								<div id="xmlhttprequest-result-search" style="display:none;" class="xmlhttprequest-result-search"></div>
 							</div>
@@ -74,7 +75,7 @@
 				
 				<table>
 					<thead>
-						<tr>			
+						<tr>
 							<th>{L_LOGIN}</th>
 							<th>{L_INFO}</th>
 							<th>{L_ACTION_USER}</th>
@@ -153,19 +154,20 @@
 								<span id="action_info">{INFO}</span>
 								<select name="new_info" onchange="change_textarea_level(this.options[this.selectedIndex].value, {REGEX})">
 									{SELECT}
-								</select>	
+								</select>
 							</div>
 						</div>
-					</fieldset>	
+					</fieldset>
 					
 					<fieldset class="fieldset-submit">
 						<legend></legend>
+						<input type="hidden" name="token" value="{TOKEN}">
 						<button type="submit" name="valid_user" value="true" class="submit">{L_CHANGE_INFO}</button>
 					</fieldset>
 				</form>
 				# ENDIF #
 				
-				# IF C_MODO_PANEL_USER_BAN #					
+				# IF C_MODO_PANEL_USER_BAN #
 				<form action="{U_ACTION_INFO}" method="post">
 					<fieldset>
 						<legend>{L_ACTION_INFO}</legend>
@@ -185,10 +187,10 @@
 						<div class="form-element">
 							<label>{L_DELAY_BAN}</label>
 							<div class="form-field">
-								<select name="user_ban">					
-								# START select_ban #	
+								<select name="user_ban">
+								# START select_ban #
 									{select_ban.TIME}
-								# END select_ban #						
+								# END select_ban #
 								</select>
 							</div>
 						</div>
@@ -196,6 +198,7 @@
 					
 					<fieldset class="fieldset-submit">
 						<legend></legend>
+						<input type="hidden" name="token" value="{TOKEN}">
 						<button type="submit" name="valid_user" value="true" class="submit">{L_BAN}</button>
 					</fieldset>
 				</form>

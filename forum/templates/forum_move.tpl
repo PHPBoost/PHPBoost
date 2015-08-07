@@ -33,11 +33,12 @@
 					<fieldset class="fieldset-submit">
 						<legend>{L_SUBMIT}</legend>
 						<input type="hidden" name="id" value="{ID}">
-						<button type="submit" name="submit" value="true" class="submit">{L_SUBMIT}</button>			
-					</fieldset>	
+						<input type="hidden" name="token" value="{TOKEN}">
+						<button type="submit" name="submit" value="true" class="submit">{L_SUBMIT}</button>
+					</fieldset>
 				</form>
 			</div>
-			<div class="module-bottom-l"></div>		
+			<div class="module-bottom-l"></div>
 			<div class="module-bottom-r"></div>
 			<div class="module-bottom">&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T}</div>
 		</div>
