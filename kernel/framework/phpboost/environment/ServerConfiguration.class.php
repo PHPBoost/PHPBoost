@@ -71,7 +71,7 @@ class ServerConfiguration
 		{
 			return in_array(self::$mod_rewrite, apache_get_modules());
 		}
-		return getenv('HTTP_MOD_REWRITE') == 'On';
+		throw new UnsupportedOperationException('can\'t check url rewriting availabilty');
 	}
 }
 ?>
