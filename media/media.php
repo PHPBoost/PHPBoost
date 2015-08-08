@@ -142,7 +142,7 @@ elseif ($id_media > 0)
 	$tpl->put('media_format', $media_tpl);
 	
 	//Affichage commentaires.
-	if (AppContext::get_request()->get_getint('com', 0))
+	if (AppContext::get_request()->get_getint('com', 0) == 0)
 	{
 		$comments_topic = new MediaCommentsTopic();
 		$comments_topic->set_id_in_module($id_media);

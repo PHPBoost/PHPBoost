@@ -427,19 +427,11 @@ class GalleryDisplayCategoryController extends ModuleController
 					}
 	
 					//Commentaires
-					if (AppContext::get_request()->get_getint('com', 0))
+					if (AppContext::get_request()->get_getint('com', 0) == 0 && $config->are_comments_enabled())
 					{
-						if ($config->are_comments_enabled())
-						{
-							$this->tpl->put_all(array(
-								'COMMENTS' => CommentsService::display($comments_topic)->render()
-							));
-						}
-						else
-						{
-							$error_controller = PHPBoostErrors::user_not_authorized();
-							DispatchManager::redirect($error_controller);
-						}
+						$this->tpl->put_all(array(
+							'COMMENTS' => CommentsService::display($comments_topic)->render()
+						));
 					}
 				}
 			}
