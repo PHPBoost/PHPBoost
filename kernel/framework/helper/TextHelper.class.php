@@ -141,7 +141,7 @@ class TextHelper
 	{
 		if ($flags === null)
 		{
-			$flags = ENT_COMPAT | ENT_HTML401;
+			$flags = ENT_COMPAT;
 		}
 		return htmlspecialchars($string, $flags, $encoding, $double_encode);
 	}
@@ -150,7 +150,7 @@ class TextHelper
 	{
 		if ($flags === null)
 		{
-			$flags = ENT_COMPAT | ENT_HTML401;
+			$flags = ENT_COMPAT;
 		}
 		return htmlspecialchars_decode($string, $flags);
 	}
@@ -159,7 +159,7 @@ class TextHelper
 	{
 		if ($flags === null)
 		{
-			$flags = ENT_COMPAT | ENT_HTML401;
+			$flags = ENT_COMPAT;
 		}
 		return htmlentities($string, $flags, $encoding, $double_encode);
 	}
@@ -168,7 +168,7 @@ class TextHelper
 	{
 		if ($flags === null)
 		{
-			$flags = ENT_COMPAT | ENT_HTML401;
+			$flags = ENT_COMPAT;
 		}
 		return html_entity_decode($string, $flags, $encoding);
 	}
