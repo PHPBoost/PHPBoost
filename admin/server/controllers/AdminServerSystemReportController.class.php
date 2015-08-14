@@ -190,10 +190,6 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 		
 		if (DataStoreFactory::is_apc_available() && !DataStoreFactory::is_apc_enabled())
 			$fieldset->add_field(new FormFieldFree('enable_apcu_cache', '', MessageHelper::display($lang['advises.enable_apcu_cache'], MessageHelper::NOTICE)->render()));
-		
-		if (ServerConfiguration::get_phpversion() < '5.6')
-			$fieldset->add_field(new FormFieldFree('upgrade_php_version', '', MessageHelper::display($lang['advises.upgrade_php_version'], MessageHelper::NOTICE)->render()));
-		
 		$fieldset->add_field(new FormFieldFree('save_database', '', MessageHelper::display($lang['advises.save_database'], MessageHelper::SUCCESS)->render()));
 		
 		if (!$server_environment_config->is_database_tables_optimization_enabled())
@@ -201,6 +197,9 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 		
 		if ($security_config->get_internal_password_min_length() == 6 && $security_config->get_internal_password_strength() == SecurityConfig::PASSWORD_STRENGTH_WEAK && !$security_config->are_login_and_email_forbidden_in_password())
 			$fieldset->add_field(new FormFieldFree('password_security', '', MessageHelper::display($lang['advises.password_security'], MessageHelper::NOTICE)->render()));
+		
+		if (ServerConfiguration::get_phpversion() < '5.6')
+			$fieldset->add_field(new FormFieldFree('upgrade_php_version', '', MessageHelper::display($lang['advises.upgrade_php_version'], MessageHelper::NOTICE)->render()));
 		
 		if (count($fieldset->get_fields()))
 			$html_form->add_fieldset($fieldset);
