@@ -165,6 +165,13 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 		$server_environment_config = ServerEnvironmentConfig::load();
 		$security_config = SecurityConfig::load();
 		
+		$url_rewriting_available = false;
+		try
+		{
+			$url_rewriting_available = $server_configuration->has_url_rewriting();
+		}
+		catch (UnsupportedOperationException $ex) {}
+		
 		$fieldset = new FormFieldsetHTML('advises', $lang['advises']);
 		
 		$fieldset->add_field(new FormFieldFree('modules_management', '', MessageHelper::display($lang['advises.modules_management'], MessageHelper::SUCCESS)->render()));
@@ -175,7 +182,7 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 		if (!strstr($general_config->get_site_url(), 'localhost') && !strstr($general_config->get_site_url(), '127.0.0.1') && !$maintenance_config->is_under_maintenance() && Debug::is_debug_mode_enabled())
 			$fieldset->add_field(new FormFieldFree('disable_debug_mode', '', MessageHelper::display($lang['advises.disable_debug_mode'], MessageHelper::WARNING)->render()));
 		
-		if ($server_configuration->has_url_rewriting() && !$server_environment_config->is_url_rewriting_enabled())
+		if ($url_rewriting_available && !$server_environment_config->is_url_rewriting_enabled())
 			$fieldset->add_field(new FormFieldFree('enable_url_rewriting', '', MessageHelper::display($lang['advises.enable_url_rewriting'], MessageHelper::NOTICE)->render()));
 		
 		if (function_exists('ob_gzhandler') && @extension_loaded('zlib') && !$server_environment_config->is_output_gziping_enabled())
