@@ -52,6 +52,7 @@
 - Refonte du système d'événement et intégration d'un système de notification
 - Filtres d'exclusion pour les menus
 - Stocker les dates sous un format ISO en BDD plutôt qu'en timestamp
+- Stocker les données en UTF-8 dans la base et changer le charset en utf-8 à l'affichage
 
 [b]Upload[/b]
 - Refonte de l'interface et du fonctionnement de l'interface d'upload, ajout d'API, ... 

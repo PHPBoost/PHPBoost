@@ -2,7 +2,7 @@
 <html lang="{L_XML_LANGUAGE}">
 	<head>
 		<title>{TITLE}</title>
-		<meta charset=iso-8859-1" />
+		<meta charset=windows-1252" />
 
 		<!-- Theme CSS -->
 		# IF C_CSS_CACHE_ENABLED #
