@@ -261,7 +261,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 			'ID_R' => url('.php?id=' . $poll['id'] . '&amp;r=1', '-' . $poll['id'] . '-1.php'),
 			'QUESTION' => $poll['question'],
 			'DATE' => Date::to_format($poll['timestamp'], Date::FORMAT_DAY_MONTH_YEAR),
-			'U_POLL_ACTION' => url('.php?id=' . $poll['id'] . '&amp;token=' . AppContext::get_session()->get_token(), '-' . $poll['id'] . '.php?token=' . AppContext::get_session()->get_token()),
+			'U_POLL_ACTION' => url('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'),
 			'U_POLL_RESULT' => url('.php?id=' . $poll['id'] . '&amp;r=1', '-' . $poll['id'] . '-1.php'),
 			'L_POLL' => $LANG['poll'],
 			'L_BACK_POLL' => $LANG['poll_back'],

@@ -23,7 +23,7 @@
 				-->
 				</script>
 				
-				<form method="post" action="alert.php?token={TOKEN}" onsubmit="javascript:return check_form_alert();">
+				<form method="post" action="alert.php" onsubmit="javascript:return check_form_alert();">
 					<fieldset>
 						<legend>{L_ALERT}</legend>
 						

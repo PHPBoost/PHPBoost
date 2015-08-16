@@ -44,7 +44,7 @@
 		</article>
 		# END previewing #
 		
-		<form action="{TARGET}" method="post" onsubmit="return check_form_post();" class="fieldset-content">
+		<form action="post.php" method="post" onsubmit="return check_form_post();" class="fieldset-content">
 			<fieldset>
 				<legend>{L_TITLE_POST}</legend>
 				# START create #

@@ -146,10 +146,10 @@ function XMLHttpRequest_search_members(searchid, theme, insert_mode, alert_empty
 			jQuery('#search_img' + searchid).append('<i class="fa fa-spinner fa-spin"></i>');
 
 		jQuery.ajax({
-			url: PATH_TO_ROOT + '/kernel/framework/ajax/member_xmlhttprequest.php?token=' + TOKEN + '&' + insert_mode + '=1',
+			url: PATH_TO_ROOT + '/kernel/framework/ajax/member_xmlhttprequest.php?' + insert_mode + '=1',
 			type: "post",
 			dataType: "html",
-			data: {'login': login, 'divid' : searchid},
+			data: {'login': login, 'divid' : searchid, 'token' : TOKEN},
 			success: function(returnData){
 				if (jQuery('#search_img' + searchid))
 					jQuery('#search_img' + searchid).children("i").remove();

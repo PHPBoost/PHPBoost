@@ -44,11 +44,12 @@
 								{SELECT_CAT}
 							</select>
 						</div>
+						<input type="hidden" name="token" value="{TOKEN}">
 					</form>
 					# ENDIF #
 						
 					# IF C_MASS_MODO_CHECK #
-					<form action="action.php?token={TOKEN}">
+					<form action="action.php">
 						<div>
 							{L_FOR_SELECTION}: 
 							<select name="massive_action_type">
@@ -60,6 +61,7 @@
 								<option value="del">{L_DELETE}</option>
 							</select>
 							<button type="submit" value="true" name="valid" class="submit">{L_GO}</button>
+							<input type="hidden" name="token" value="{TOKEN}">
 						</div>
 					</form>
 					# ENDIF #

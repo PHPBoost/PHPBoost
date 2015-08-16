@@ -57,7 +57,7 @@
 		<div id="admin-contents">
 			# INCLUDE message_helper #
 			
-			<form action="admin_poll.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset-content">
+			<form action="admin_poll.php" method="post" onsubmit="return check_form();" class="fieldset-content">
 				<p class="center">{L_REQUIRE}</p>
 				<fieldset>
 					<legend>{L_POLL_MANAGEMENT}</legend>

@@ -57,7 +57,7 @@
 			
 			# INCLUDE message_helper #
 			
-			<form action="admin_gallery_add.php?token={TOKEN}" method="post" enctype="multipart/form-data" class="fieldset-content">
+			<form action="admin_gallery_add.php" method="post" enctype="multipart/form-data" class="fieldset-content">
 				<fieldset>
 					<legend>{L_ADD_IMG}</legend>
 					# START image_up #
@@ -111,7 +111,7 @@
 				</fieldset>
 			</form>
 			
-			<form action="admin_gallery_add.php?token={TOKEN}" method="post">
+			<form action="admin_gallery_add.php" method="post">
 				<fieldset>
 					<legend>{L_IMG_DISPO_GALLERY}</legend>
 					

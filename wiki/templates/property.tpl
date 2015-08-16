@@ -1,5 +1,5 @@
 		# START auth #
-		<form action="action.php?token={TOKEN}" method="post" class="fieldset-content">
+		<form action="action.php" method="post" class="fieldset-content">
 			<fieldset>
 				<legend>{auth.L_TITLE}</legend>
 				<p style="text-align:center">
@@ -109,7 +109,7 @@
 		-->
 		</script>
 
-		<form action="action.php?token={TOKEN}" method="post" class="fieldset-content">
+		<form action="action.php" method="post" class="fieldset-content">
 			<fieldset>
 				<legend>{status.L_TITLE}</legend>
 				
@@ -162,7 +162,7 @@
 
 		# INCLUDE message_helper #
 		
-		<form action="action.php?token={TOKEN}" method="post" onsubmit="return check_form_post();" class="fieldset-content">
+		<form action="action.php" method="post" onsubmit="return check_form_post();" class="fieldset-content">
 			<fieldset>
 				<legend>{move.L_TITLE}</legend>
 				<div class="form-element">
@@ -209,7 +209,7 @@
 		</script>
 		# INCLUDE message_helper #
 		
-		<form action="action.php?token={TOKEN}" method="post" onsubmit="return check_form_post();" class="fieldset-content">
+		<form action="action.php" method="post" onsubmit="return check_form_post();" class="fieldset-content">
 			<fieldset>
 				<legend>{rename.L_TITLE}</legend>
 				<p style="text-align:center;">
@@ -293,7 +293,7 @@
 		</script>
 		# INCLUDE message_helper #
 		
-		<form action="action.php?token={TOKEN}" method="post" onsubmit="return check_form_post();" class="fieldset-content">
+		<form action="action.php" method="post" onsubmit="return check_form_post();" class="fieldset-content">
 			<fieldset>
 				<legend>{create.L_TITLE}</legend>
 				<div class="form-element">
@@ -322,7 +322,7 @@
 
 		# INCLUDE message_helper #
 				
-		<form action="action.php?token={TOKEN}" method="post" onsubmit="return confirm('{L_ALERT_REMOVING_CAT}');" class="fieldset-content">
+		<form action="action.php" method="post" onsubmit="return confirm('{L_ALERT_REMOVING_CAT}');" class="fieldset-content">
 			<fieldset>
 				<legend>{remove.L_TITLE}</legend>
 				<div class="form-element">

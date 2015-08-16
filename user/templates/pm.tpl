@@ -262,12 +262,12 @@
 
 
 		# START post_convers #
-		<form action="pm{post_convers.U_ACTION_CONVERS}" method="post" onsubmit="return check_form_convers();">
+		<form action="pm.php" method="post" onsubmit="return check_form_convers();">
 			<section>
 				<header>
 					<h1>{post_convers.U_PM_BOX}</h1>
 				</header>
-				<div class="content">	
+				<div class="content">
 					# INCLUDE message_helper #
 					
 					<div class="fieldset-content">

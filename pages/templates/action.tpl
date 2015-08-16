@@ -87,7 +87,7 @@
 
 # START rename #
 # INCLUDE message_helper #
-<form action="{TARGET}" method="post" class="fieldset-content">
+<form action="action.php" method="post" class="fieldset-content">
 	<fieldset>
 		<legend>{L_TITLE}</legend>
 		<p>{L_EXPLAIN_RENAME}</p>
@@ -114,7 +114,7 @@
 
 # START new #
 # INCLUDE message_helper #
-<form action="{TARGET}" method="post" class="fieldset-content">
+<form action="action.php" method="post" class="fieldset-content">
 	<fieldset>
 		<legend>{L_TITLE}</legend>
 		<div class="form-element">
@@ -145,7 +145,7 @@
 <script src="{PATH_TO_ROOT}/pages/templates/js/pages.js"></script>
 
 # INCLUDE message_helper #
-<form action="action.php?token={TOKEN}" method="post" onsubmit="return confirm('{L_ALERT_REMOVING_CAT}');" class="fieldset-content">
+<form action="action.php" method="post" onsubmit="return confirm('{L_ALERT_REMOVING_CAT}');" class="fieldset-content">
 	<fieldset>
 		<legend>{L_TITLE}</legend>
 		<div class="form-element">

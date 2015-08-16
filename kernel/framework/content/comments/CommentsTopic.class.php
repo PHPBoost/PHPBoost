@@ -108,6 +108,11 @@ class CommentsTopic
 		$this->url = $url;
 	}
 	
+	public function get_url()
+	{
+		return $this->url->rel();
+	}
+	
 	public function get_path()
 	{
 		return $this->url->relative();

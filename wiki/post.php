@@ -323,7 +323,7 @@ $tpl->put_all(array(
 	'VERIF_CODE' => $captcha->display(),
 	'ARTICLE_TITLE' => ($id_edit == 0 ? (!empty($encoded_title) ? $encoded_title : stripslashes($title)) : $article_infos['title']),
 	'L_TITLE_FIELD' => $LANG['title'],
-	'TARGET' => url('post.php' . ($is_cat == 1 ? '?type=cat&amp;token=' . AppContext::get_session()->get_token() : '?token=' . AppContext::get_session()->get_token())),
+	'TARGET' => url('post.php' . ($is_cat == 1 ? '?type=cat' : '')),
 	'L_CONTENTS' => $LANG['wiki_contents'],
 	'L_ALERT_CONTENTS' => $LANG['require_text'],
 	'L_ALERT_TITLE' => $LANG['require_title'],

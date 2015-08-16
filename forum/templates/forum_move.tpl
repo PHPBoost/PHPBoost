@@ -17,7 +17,7 @@
 			<div class="module-top-r"></div>
 			<div class="module-top">&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T}</div>
 			<div class="module-contents">
-				<form method="post" action="move{U_MOVE}" onsubmit="javascript:return check_form_move();" class="fieldset-content">
+				<form method="post" action="move.php" onsubmit="javascript:return check_form_move();" class="fieldset-content">
 					<fieldset>
 						<legend>{L_MOVE_SUBJECT} : {TITLE}</legend>
 						<div class="form-element">

@@ -245,8 +245,7 @@ elseif ($id_update > 0)
 		'L_ENTITLED' => $LANG['contribution_entitled'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_PREVIEW' => $LANG['preview'],
-		'L_RESET' => $LANG['reset'],
-		'U_TARGET' => url('contribution_panel.php?token=' . AppContext::get_session()->get_token())
+		'L_RESET' => $LANG['reset']
 	));
 }
 else

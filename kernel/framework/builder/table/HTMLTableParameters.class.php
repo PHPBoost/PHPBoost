@@ -115,7 +115,7 @@ class HTMLTableParameters
 	public function get_js_submit_url()
 	{
 		$default_options = array();
-		$params_to_remove = array('page', 'filters');
+		$params_to_remove = array('page', 'filters', 'sort');
 		return $this->url_parameters->get_url($default_options, $params_to_remove);
 	}
 

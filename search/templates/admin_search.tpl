@@ -36,7 +36,7 @@
 
 		<div id="admin-contents">
 			# IF NOT C_WEIGHTING #
-			<form action="admin_search.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset-content">
+			<form action="admin_search.php" method="post" onsubmit="return check_form_conf();" class="fieldset-content">
 				<p class="center">{L_REQUIRE}</p>
 				<fieldset>
 					<legend>{L_SEARCH_CONFIG}</legend>

@@ -53,7 +53,7 @@
 			
 			# INCLUDE message_helper #
 			
-			<form action="admin_poll_add.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset-content">
+			<form action="admin_poll_add.php" method="post" onsubmit="return check_form();" class="fieldset-content">
 				<p class="center">{L_REQUIRE}</p>
 				<fieldset>
 					<legend>{L_POLL_ADD}</legend>

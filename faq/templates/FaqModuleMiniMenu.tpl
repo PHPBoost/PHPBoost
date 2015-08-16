@@ -3,7 +3,6 @@
 		<h5 class="sub-title">{@faq.random_question}</h5>
 	</div>
 	<div class="module-mini-contents">
-		<p class="center">
 		# IF C_QUESTION #
 			<a href="{U_LINK}"><img src="{PATH_TO_ROOT}/faq/faq.png" alt="" itemprop="image" /></a>
 			<div class="spacer"></div>
@@ -11,7 +10,6 @@
 		# ELSE #
 		${LangLoader::get_message('no_item_now', 'common')}
 		# ENDIF #
-		</p>
 	</div>
 	<div class="module-mini-bottom">
 	</div>

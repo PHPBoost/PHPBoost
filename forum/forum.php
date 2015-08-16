@@ -272,7 +272,7 @@ if (!empty($id_get))
 		'C_MASS_MODO_CHECK' => false,
 		'C_POST_NEW_SUBJECT' => $check_group_write_auth,
 		'U_MSG_SET_VIEW' => '<a class="small" href="../forum/action' . url('.php?read=1&amp;f=' . $id_get, '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
-		'U_CHANGE_CAT'=> 'forum' . url('.php?id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token(), '-' . $id_get . '+' . $category->get_rewrited_name() . '.php?token=' . AppContext::get_session()->get_token()),
+		'U_CHANGE_CAT'=> 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '+' . $category->get_rewrited_name() . '.php'),
 		'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
 		'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
 		'U_FORUM_CAT' => $forum_cats,

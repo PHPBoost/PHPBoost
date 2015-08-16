@@ -39,13 +39,15 @@ class HTTPRequestCustom
 	const t_array = 0x04;
 	const none = 0x05;
 	
-	private $_get_parameters_array;
-	private $_post_parameters_array;
+	private $_request;
+	private $_get;
+	private $_post;
 	
 	public function __construct()
 	{
-		$this->_get_parameters_array = self::sanitize_html($_GET);
-		$this->_post_parameters_array = self::sanitize_html($_POST);
+		$this->_request = self::sanitize_html($_REQUEST);
+		$this->_get = self::sanitize_html($_GET);
+		$this->_post = self::sanitize_html($_POST);
 	}
 
 	public function is_post_method()
@@ -60,17 +62,17 @@ class HTTPRequestCustom
 
 	public function has_parameter($parameter)
 	{
-		return $this->has_rawparameter($parameter, $_REQUEST);
+		return $this->has_rawparameter($parameter, $this->_request);
 	}
 
 	public function has_getparameter($parameter)
 	{
-		return $this->has_rawparameter($parameter, $this->_get_parameters_array);
+		return $this->has_rawparameter($parameter, $this->_get);
 	}
 
 	public function has_postparameter($parameter)
 	{
-		return $this->has_rawparameter($parameter, $this->_post_parameters_array);
+		return $this->has_rawparameter($parameter, $this->_post);
 	}
 
 	public function has_cookieparameter($parameter)
@@ -85,21 +87,21 @@ class HTTPRequestCustom
 
 	public function set_value($varname, $value)
 	{
-		$this->set_rawvalue($varname, $value, $this->_get_parameters_array);
-		$this->set_rawvalue($varname, $value, $this->_post_parameters_array);
-		$this->set_rawvalue($varname, $value, $_REQUEST);
+		$this->set_rawvalue($varname, $value, $this->_get);
+		$this->set_rawvalue($varname, $value, $this->_post);
+		$this->set_rawvalue($varname, $value, $this->_request);
 	}
 
 	public function set_getvalue($varname, $value)
 	{
-		$this->set_rawvalue($varname, $value, $this->_get_parameters_array);
-		$this->set_rawvalue($varname, $value, $_REQUEST);
+		$this->set_rawvalue($varname, $value, $this->_get);
+		$this->set_rawvalue($varname, $value, $this->_request);
 	}
 
 	public function set_postvalue($varname, $value)
 	{
-		$this->set_rawvalue($varname, $value, $this->_post_parameters_array);
-		$this->set_rawvalue($varname, $value, $_REQUEST);
+		$this->set_rawvalue($varname, $value, $this->_post);
+		$this->set_rawvalue($varname, $value, $this->_request);
 	}
 
 	private function set_rawvalue($varname, $value, &$array)
@@ -109,32 +111,32 @@ class HTTPRequestCustom
 
 	public function get_value($varname, $default_value = null)
 	{
-		return $this->get_var($_REQUEST, self::none, $varname, $default_value);
+		return $this->get_var($this->_request, self::none, $varname, $default_value);
 	}
 
 	public function get_bool($varname, $default_value = null)
 	{
-		return $this->get_var($_REQUEST, self::bool, $varname, $default_value);
+		return $this->get_var($this->_request, self::bool, $varname, $default_value);
 	}
 
 	public function get_int($varname, $default_value = null)
 	{
-		return $this->get_var($_REQUEST, self::int, $varname, $default_value);
+		return $this->get_var($this->_request, self::int, $varname, $default_value);
 	}
 
 	public function get_float($varname, $default_value = null)
 	{
-		return $this->get_var($_REQUEST, self::float, $varname, $default_value);
+		return $this->get_var($this->_request, self::float, $varname, $default_value);
 	}
 
 	public function get_string($varname, $default_value = null)
 	{
-		return $this->get_var($_REQUEST, self::string, $varname, $default_value);
+		return $this->get_var($this->_request, self::string, $varname, $default_value);
 	}
 
 	public function get_array($varname, $default_value = array())
 	{
-		return $this->get_var($_REQUEST, self::t_array, $varname, $default_value);
+		return $this->get_var($this->_request, self::t_array, $varname, $default_value);
 	}
 
 	public function get_cookie($varname, $default_value = null)
@@ -144,7 +146,7 @@ class HTTPRequestCustom
 
 	public function _get_parameters_array($varname, $default_value = array())
 	{
-		return $this->get_var($_REQUEST, self::t_array, $varname, $default_value);
+		return $this->get_var($this->_request, self::t_array, $varname, $default_value);
 	}
 
 	/**
@@ -168,62 +170,62 @@ class HTTPRequestCustom
 
 	public function get_getvalue($varname, $default_value = null)
 	{
-		return $this->get_var($this->_get_parameters_array, self::none, $varname, $default_value);
+		return $this->get_var($this->_get, self::none, $varname, $default_value);
 	}
 
 	public function get_getbool($varname, $default_value = null)
 	{
-		return $this->get_var($this->_get_parameters_array, self::bool, $varname, $default_value);
+		return $this->get_var($this->_get, self::bool, $varname, $default_value);
 	}
 
 	public function get_getint($varname, $default_value = null)
 	{
-		return $this->get_var($this->_get_parameters_array, self::int, $varname, $default_value);
+		return $this->get_var($this->_get, self::int, $varname, $default_value);
 	}
 
 	public function get_getfloat($varname, $default_value = null)
 	{
-		return $this->get_var($this->_get_parameters_array, self::float, $varname, $default_value);
+		return $this->get_var($this->_get, self::float, $varname, $default_value);
 	}
 
 	public function get_getstring($varname, $default_value = null)
 	{
-		return $this->get_var($this->_get_parameters_array, self::string, $varname, $default_value);
+		return $this->get_var($this->_get, self::string, $varname, $default_value);
 	}
 
 	public function get_getarray($varname, $default_value = array())
 	{
-		return $this->get_var($this->_get_parameters_array, self::t_array, $varname, $default_value);
+		return $this->get_var($this->_get, self::t_array, $varname, $default_value);
 	}
 
 	public function get_postvalue($varname, $default_value = null)
 	{
-		return $this->get_var($this->_post_parameters_array, self::none, $varname, $default_value);
+		return $this->get_var($this->_post, self::none, $varname, $default_value);
 	}
 
 	public function get_postbool($varname, $default_value = null)
 	{
-		return $this->get_var($this->_post_parameters_array, self::bool, $varname, $default_value);
+		return $this->get_var($this->_post, self::bool, $varname, $default_value);
 	}
 
 	public function get_postint($varname, $default_value = null)
 	{
-		return $this->get_var($this->_post_parameters_array, self::int, $varname, $default_value);
+		return $this->get_var($this->_post, self::int, $varname, $default_value);
 	}
 
 	public function get_postfloat($varname, $default_value = null)
 	{
-		return $this->get_var($this->_post_parameters_array, self::float, $varname, $default_value);
+		return $this->get_var($this->_post, self::float, $varname, $default_value);
 	}
 
 	public function get_poststring($varname, $default_value = null)
 	{
-		return $this->get_var($this->_post_parameters_array, self::string, $varname, $default_value);
+		return $this->get_var($this->_post, self::string, $varname, $default_value);
 	}
 
 	public function get_postarray($varname, $default_value = array())
 	{
-		return $this->get_var($this->_post_parameters_array, self::t_array, $varname, $default_value);
+		return $this->get_var($this->_post, self::t_array, $varname, $default_value);
 	}
 
 	private function get_var($mode, $type, $varname, $default_value)
@@ -389,7 +391,7 @@ class HTTPRequestCustom
 			}
 		}
 
-		if (preg_match('`^[a-z0-9:.]{7,}$`', $ip))
+		if (preg_match('`^((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))$|^((([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((b((25[0-5])|(1d{2})|(2[0-4]d)|(d{1,2}))b).){3}(b((25[0-5])|(1d{2})|(2[0-4]d)|(d{1,2}))b))|(([0-9A-Fa-f]{1,4}:){0,5}:((b((25[0-5])|(1d{2})|(2[0-4]d)|(d{1,2}))b).){3}(b((25[0-5])|(1d{2})|(2[0-4]d)|(d{1,2}))b))|(::([0-9A-Fa-f]{1,4}:){0,5}((b((25[0-5])|(1d{2})|(2[0-4]d)|(d{1,2}))b).){3}(b((25[0-5])|(1d{2})|(2[0-4]d)|(d{1,2}))b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))$`', $ip))
 		{
 			return $ip;
 		}

@@ -97,7 +97,7 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 					));
 	
 					$tpl->assign_block_vars('question', array(
-						'ID' => url('.php?id=' . $poll_mini['id'] . '&amp;token=' . AppContext::get_session()->get_token(), '-' . $poll_mini['id'] . '.php?token=' . AppContext::get_session()->get_token()),
+						'ID' => url('.php?id=' . $poll_mini['id'], '-' . $poll_mini['id'] . '.php'),
 						'QUESTION' => $poll_mini['question']
 					));
 	

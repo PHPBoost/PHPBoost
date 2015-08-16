@@ -326,8 +326,7 @@ $tpl->put_all(array(
 	'L_ROOT' => $LANG['pages_root'],
 	'L_PREVIEWING' => $LANG['pages_previewing'],
 	'L_CONTENTS_PART' => $LANG['pages_contents_part'],
-	'L_SUBMIT' => $id_edit > 0 ? $LANG['update'] : $LANG['submit'],
-	'TARGET' => url('post.php?token=' . AppContext::get_session()->get_token())
+	'L_SUBMIT' => $id_edit > 0 ? $LANG['update'] : $LANG['submit']
 ));
 
 $tpl->display();

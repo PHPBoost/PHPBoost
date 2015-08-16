@@ -40,7 +40,7 @@
 		</div>
 		
 		<div id="admin-contents">
-			<form action="admin_ranks.php?token={TOKEN}" method="post">
+			<form action="admin_ranks.php" method="post">
 				<fieldset>
 					<legend>{L_FORUM_RANKS_MANAGEMENT}</legend>
 					<table>

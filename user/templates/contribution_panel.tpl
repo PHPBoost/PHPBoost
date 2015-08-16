@@ -247,7 +247,7 @@
 			<h1>{ENTITLED}</h1>
 		</header>
 		<div class="content">
-			<form action="{U_TARGET}" method="post">
+			<form action="contribution_panel.php" method="post">
 				<fieldset>
 					<legend>{L_CONTRIBUTION}</legend>
 					<div class="form-element">

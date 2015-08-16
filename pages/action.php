@@ -303,7 +303,6 @@ elseif ($id_rename > 0)
 	$tpl->put_all(array(
 		'ID_RENAME' => $id_rename,
 		'L_SUBMIT' => $LANG['submit'],
-		'TARGET' => url('action.php?token=' . AppContext::get_session()->get_token()),
 		'L_TITLE' => sprintf($LANG['pages_rename_page'], $page_infos['title']),
 		'L_NEW_TITLE' => $LANG['pages_new_title'],
 		'L_CREATE_REDIRECTION' => $LANG['pages_create_redirection'],
@@ -323,7 +322,6 @@ elseif ($id_new > 0)
 {
 	$tpl->put_all(array(
 		'ID_NEW' => $id_new,
-		'TARGET' => url('action.php?token=' . AppContext::get_session()->get_token()),
 		'L_TITLE' => sprintf($LANG['pages_creation_redirection_title'], $page_infos['title']),
 		'L_REDIRECTION_NAME' => $LANG['pages_new_title'],
 		'L_CREATE_REDIRECTION' => $LANG['pages_create_redirection'],

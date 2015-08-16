@@ -69,12 +69,11 @@ $Bread_crumb->add($topic['title'], '');
 define('TITLE', $topic['title']);
 require_once('../kernel/header.php'); 
 
-$rewrited_cat_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . $category->get_rewrited_name() : ''; //On encode l'url pour un éventuel rewriting.
 $rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : ''; //On encode l'url pour un éventuel rewriting.
 
 //Redirection changement de catégorie.
 if (!empty($_POST['change_cat']))
-	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_cat_title . '.php', '&'));
+	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . '+' . $category->get_rewrited_name() . '.php', '&'));
 	
 //Autorisation en lecture.
 if (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->read() || !ForumAuthorizationsService::check_authorizations()->read_topics_content())
@@ -179,9 +178,9 @@ $vars_tpl = array(
 	'TITLE_T' => ucfirst($topic['title']),
 	'DISPLAY_MSG' => (($config->is_message_before_topic_title_displayed() && $topic['display_msg']) ? $config->get_message_before_topic_title() . ' ' : '') ,
 	'U_MSG_SET_VIEW' => '<a class="small" href="../forum/action' . url('.php?read=1&amp;f=' . $topic['idcat'], '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
-	'U_CHANGE_CAT'=> 'topic' . url('.php?id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token(), '-' . $id_get . $rewrited_cat_title . '.php?token=' . AppContext::get_session()->get_token()),
-	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),		
-	'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),		
+	'U_CHANGE_CAT'=> 'topic' . url('.php?id=' . $id_get, '-' . $id_get . '+' . $category->get_rewrited_name() . '.php'),
+	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
+	'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
 	'U_FORUM_CAT' => !empty($forum_cats) ? $forum_cats . ' &raquo;' : '',
 	'U_TITLE_T' => 'topic' . url('.php?id=' . $id_get, '-' . $id_get . $rewrited_title . '.php'),
 	'L_REQUIRE_MESSAGE' => $LANG['require_text'],

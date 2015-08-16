@@ -146,7 +146,6 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != AppContext::get_current_
 	$login = !empty($pm_get) ? PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id = :id', array('id' => $pm_get)) : '';
 	
 	$tpl->assign_block_vars('post_convers', array(
-		'U_ACTION_CONVERS' => url('.php?token=' . AppContext::get_session()->get_token()),
 		'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>',
 		'U_USER_VIEW' => '<a href="' . UserUrlBuilder::personnal_message(AppContext::get_current_user()->get_id())->rel() . '">' . $LANG['member_area'] . '</a>',
 		'LOGIN' => $login
@@ -207,7 +206,6 @@ elseif (!empty($_POST['prw_convers']) && empty($mp_edit)) //Prévisualisation de 
 	));
 	
 	$tpl->assign_block_vars('post_convers', array(
-		'U_ACTION_CONVERS' => url('.php?token=' . AppContext::get_session()->get_token()),
 		'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>',
 		'U_USER_VIEW' => '<a href="' . MemberUrlBuilder::profile(AppContext::get_current_user()->get_id())->rel() . '">' . $LANG['member_area'] . '</a>',
 		'LOGIN' => !empty($_POST['login']) ? stripslashes($_POST['login']) : '',
@@ -674,7 +672,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		
 		$tpl->assign_block_vars('post_pm', array(
 			'CONTENTS' => $contents,
-			'U_PM_ACTION_POST' => url('.php?id=' . $pm_id_get . '&amp;token=' . AppContext::get_session()->get_token(), '-0-' . $pm_id_get . '.php?token=' . AppContext::get_session()->get_token())
+			'U_PM_ACTION_POST' => url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get . '.php')
 		));
 		
 		//Gestion des erreurs
@@ -879,7 +877,7 @@ else //Liste des conversation, dans la boite du membre.
 			'TITLE' => $row['title'],
 			'MSG' => ($row['nbr_msg'] - 1),
 			'U_PARTICIPANTS' => (($row['user_convers_status'] != 0) ? '<strike>' . $participants . '</strike>' : $participants),
-			'U_CONVERS'	=> url('.php?id=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token(), '-0-' . $row['id'] . '.php?token=' . AppContext::get_session()->get_token()),
+			'U_CONVERS'	=> url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php'),
 			'U_AUTHOR' => $LANG['by'] . ' ' . $author,
 			'U_LAST_MSG' => $last_msg
 		));

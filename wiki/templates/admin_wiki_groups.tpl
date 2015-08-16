@@ -15,7 +15,7 @@
 		</div>
 
 		<div id="admin-contents">
-			<form action="admin_wiki_groups.php?token={TOKEN}" method="post">
+			<form action="admin_wiki_groups.php" method="post">
 				<fieldset>
 					<legend>
 						{L_WIKI_GROUPS}

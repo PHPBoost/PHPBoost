@@ -65,7 +65,8 @@ class UrlSerializedParameter
 		$query_args = array();
 		foreach ($this->query_args as $query_arg => $value)
 		{
-			$query_args[] = $query_arg . '=' . $value;
+			if ($value == strip_tags($value)) // Check if value doesn't contain HTML (XSS protextion)
+				$query_args[] = $query_arg . '=' . $value;
 		}
 		$query_args[] = $this->arg_id . '=' . UrlSerializedParameterEncoder::encode($url_params);
 		return '?' . implode('&', $query_args);

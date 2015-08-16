@@ -79,7 +79,7 @@
 		</div>
 		
 		<div id="admin-contents">
-			<form action="admin_gallery_config.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset-content">
+			<form action="admin_gallery_config.php" method="post" onsubmit="return check_form();" class="fieldset-content">
 				<p class="center">{L_REQUIRE}</p>
 				<fieldset>
 					<legend>{L_CONFIG_CONFIG}</legend>
@@ -265,11 +265,12 @@
 				
 				<fieldset class="fieldset-submit">
 				<legend>{L_UPDATE}</legend>
+					<input type="hidden" name="token" value="{TOKEN}">
 					<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button>
 					<button type="reset" value="true">{L_RESET}</button>
 				</fieldset>
 			</form>
-			<form action="admin_gallery_config.php?token={TOKEN}" name="form" method="post" class="fieldset-content">
+			<form action="admin_gallery_config.php" name="form" method="post" class="fieldset-content">
 				<fieldset>
 					<legend>{L_CACHE}</legend>
 					<img src="{PATH_TO_ROOT}/templates/default/images/admin/cache.png" alt="" style="float:left;padding:6px;" />
