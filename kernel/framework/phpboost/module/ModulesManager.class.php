@@ -402,8 +402,8 @@ class ModulesManager
 					$default_editor = ContentFormattingConfig::load()->get_default_editor();
 					if ($default_editor !== $module_id)
 					{
-						PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('user_editor' => $default_editor), 
-							'WHERE user_editor=:old_user_editor', array('old_user_editor' => 'bbcode'
+						PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('editor' => $default_editor), 
+							'WHERE editor=:old_editor', array('old_editor' => 'bbcode'
 						));
 					}
 					else
