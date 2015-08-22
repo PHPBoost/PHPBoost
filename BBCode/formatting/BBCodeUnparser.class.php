@@ -91,6 +91,12 @@ class BBCodeUnparser extends ContentFormattingUnparser
 				$smiley_code[] = $code;
 			}
 			$this->content = preg_replace($smiley_img_url, $smiley_code, $this->content);
+			foreach ($smileys_cache as $code => $infos)
+			{
+				$smiley_img_url[] = '`<img class="smiley" title="' . preg_quote($code) . '"(.*) />`sU';
+				$smiley_code[] = $code;
+			}
+			$this->content = preg_replace($smiley_img_url, $smiley_code, $this->content);
 		}
 	}
 
