@@ -552,6 +552,8 @@ class TinyMCEParser extends ContentFormattingParser
 	{
 		$this->content = preg_replace('`&lt;img title="([^"]+)" src="[\./]*/images/smileys/([^"]+)" alt="" /&gt;`i',
 			'<img src="/images/smileys/$2" title="$1" alt="$1" class="smiley" />', $this->content);
+		$this->content = preg_replace('`&lt;img class="smiley" src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" /&gt;`i',
+			'<img src="/images/smileys/$1" title="$2" alt="$2" class="smiley" />', $this->content);
 
 		//Smilies
 		$smileys_cache = SmileysCache::load()->get_smileys();
