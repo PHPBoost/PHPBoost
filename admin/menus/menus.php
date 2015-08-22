@@ -137,7 +137,7 @@ function save_position($block_position)
 {
 	$menus = MenuService::get_menu_list();
 
-	$menus_tree = json_decode(AppContext::get_request()->get_postvalue('menu_tree_' . get_block($block_position), false));
+	$menus_tree = json_decode(TextHelper::html_entity_decode(AppContext::get_request()->get_value('menu_tree_' . get_block($block_position))));
 
 	foreach ($menus_tree as $position => $tree)
 	{

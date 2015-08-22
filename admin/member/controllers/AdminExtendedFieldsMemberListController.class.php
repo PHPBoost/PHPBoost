@@ -83,7 +83,7 @@ class AdminExtendedFieldsMemberListController extends AdminController
 	
 	private function update_position($request)
 	{
-		$fields_list = json_decode($request->get_postvalue('tree', false));
+		$fields_list = json_decode(TextHelper::html_entity_decode($request->get_value('tree')));
 		foreach($fields_list as $position => $tree)
 		{
 			PersistenceContext::get_querier()->inject(

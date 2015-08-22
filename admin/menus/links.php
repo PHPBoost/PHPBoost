@@ -97,7 +97,7 @@ if ($action == 'save')
 	}
 	
 	$menu_tree = array('id' => $menu_uid);
-	$links_list = json_decode(AppContext::get_request()->get_postvalue('menu_tree', false));
+	$links_list = json_decode(TextHelper::html_entity_decode(AppContext::get_request()->get_value('menu_tree')));
 	
 	foreach($links_list as $position => $tree)
 	{

@@ -85,7 +85,7 @@ class AdminContactFieldsListController extends AdminModuleController
 		$fields = $this->config->get_fields();
 		$sorted_fields = array();
 		
-		$fields_list = json_decode($request->get_postvalue('tree', false));
+		$fields_list = json_decode(TextHelper::html_entity_decode($request->get_value('tree')));
 		foreach($fields_list as $position => $tree)
 		{
 			$sorted_fields[$position + 1] = $fields[$tree->id];

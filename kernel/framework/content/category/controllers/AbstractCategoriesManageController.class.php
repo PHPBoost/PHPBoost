@@ -103,7 +103,7 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 	{
 		if ($request->get_postvalue('submit', false))
 		{
-			$categories = json_decode($request->get_postvalue('tree', false));
+			$categories = json_decode(TextHelper::html_entity_decode($request->get_value('tree')));
 
 			foreach ($categories as $position => $tree)
 			{
