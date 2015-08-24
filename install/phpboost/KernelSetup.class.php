@@ -577,7 +577,20 @@ class KernelSetup
 	private function insert_data()
 	{
 		$this->messages = LangLoader::get('install', 'install');
+		$this->insert_visit_counter_data();
 		$this->insert_smileys_data();
+	}
+	
+	private function insert_visit_counter_data()
+	{
+		$now = new Date();
+		
+		self::$db_querier->insert(self::$visit_counter_table, array(
+			'id' => 1,
+			'ip' => '',
+			'time' => $now->format(Date::FORMAT_ISO_DAY_MONTH_YEAR),
+			'total' => 0
+		));
 	}
 
 	private function insert_smileys_data()
