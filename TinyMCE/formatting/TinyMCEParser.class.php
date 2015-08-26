@@ -70,6 +70,8 @@ class TinyMCEParser extends ContentFormattingParser
 	 */
 	public function parse()
 	{
+		$this->content = TextHelper::htmlspecialchars_decode($this->content);
+		
 		//On supprime d'abord toutes les occurences de balises CODE que nous réinjecterons à la fin pour ne pas y toucher
 		if (!in_array('code', $this->forbidden_tags))
 		{
@@ -550,7 +552,7 @@ class TinyMCEParser extends ContentFormattingParser
 	 */
 	private function parse_smilies()
 	{
-		$this->content = preg_replace('`&lt;img title="([^"]+)" src="[\./]*/images/smileys/([^"]+)" alt="" /&gt;`i',
+		$this->content = preg_replace('`&lt;img(?: class="smiley")? title="([^"]+)" src="[\./]*/images/smileys/([^"]+)"(?: alt="([^"]+)")? /&gt;`i',
 			'<img src="/images/smileys/$2" title="$1" alt="$1" class="smiley" />', $this->content);
 		$this->content = preg_replace('`&lt;img class="smiley" src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" /&gt;`i',
 			'<img src="/images/smileys/$1" title="$2" alt="$2" class="smiley" />', $this->content);

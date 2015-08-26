@@ -388,6 +388,9 @@ class ForumSetup extends DefaultModuleSetup
 			'timestamp_edit' => 0,
 			'user_id_edit' => 0
 		));
+		
+		//Mise à jour du nombre de messages du membre.
+		$this->querier->inject("UPDATE " . DB_TABLE_MEMBER . " SET posted_msg = posted_msg + 1 WHERE user_id = '1'");
 	}
 	
 	private function insert_forum_ranks_data()
