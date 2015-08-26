@@ -48,14 +48,14 @@
 		$css_files = array_merge(ModulesCssFilesService::get_css_files_always_displayed(), ModulesCssFilesService::get_css_files_running_module_displayed());
 		if ($css_cache_config->is_enabled())
 		{
-			$html_code = '<link rel="stylesheet" href="' . CSSCacheManager::get_css_path($css_files) . '" type="text/css" media="screen, print, handheld" />';
+			$html_code = '<link rel="stylesheet" href="' . CSSCacheManager::get_css_path($css_files) . '" type="text/css" media="screen, print" />';
 		}
 		else
 		{
 			$html_code = '';
 			foreach ($css_files as $file)
 			{
-				$html_code .= '<link rel="stylesheet" href="' . Url::to_rel($file) .	'" type="text/css" media="screen, print, handheld" />';
+				$html_code .= '<link rel="stylesheet" href="' . Url::to_rel($file) . '" type="text/css" media="screen, print" />';
 			}
 		}
 		return $html_code;
