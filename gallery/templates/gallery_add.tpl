@@ -21,7 +21,7 @@
 						<br /><br />
 						# END image_up #
 						
-						# START image_quota #	
+						# START image_quota #
 						<div style="width:50%;margin:auto">
 							<strong>{image_quota.L_IMAGE_QUOTA}</strong>
 						</div>
@@ -39,10 +39,10 @@
 						<br /><br />
 						{CATEGORIES_TREE}
 						<br /><br />
-						<label>{L_NAME}: <input type="text" size="40" maxlength="50" name="name"></label>
+						<label>{L_NAME}: <input type="text" maxlength="50" name="name"></label>
 						<br /><br />
 						
-						* <input type="file" name="gallery" size="30" class="file" /><br /><br>
+						* <input type="file" name="gallery" class="file" /><br /><br />
 					</div>
 					<br />
 					<fieldset class="fieldset-submit">

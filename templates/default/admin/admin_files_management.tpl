@@ -280,7 +280,7 @@
 									<a href="admin_files.php{folder.U_FOLDER}"><i class="fa # IF folder.C_MEMBER_FOLDER #fa-users# ELSE #fa-folder# ENDIF # fa-2x"></i></a>
 									<span id="f{folder.ID}"><a href="admin_files.php{folder.U_FOLDER}" class="com">{folder.NAME}</a></span><br />
 									{folder.RENAME_FOLDER}
-									<a href="admin_files.php?{folder.DEL_TYPE}={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{FOLDERM_ID}" title="{folder.L_TYPE_DEL_FOLDER}" data-confirmation="# IF folder.C_MEMBER_FOLDER #{L_CONFIRM_EMPTY_FOLDER}# ELSE #delete-element# ENDIF #"><i class="fa fa-delete"></i></a>			
+									<a href="admin_files.php?{folder.DEL_TYPE}={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{FOLDERM_ID}" title="{folder.L_TYPE_DEL_FOLDER}" data-confirmation="# IF folder.C_MEMBER_FOLDER #{L_CONFIRM_EMPTY_FOLDER}# ELSE #delete-element# ENDIF #"><i class="fa fa-delete"></i></a>
 									# IF folder.C_TYPEFOLDER #<a href="admin_files{folder.U_MOVE}" title="{L_MOVETO}"><i class="fa fa-move"></i></a># ENDIF #
 									<span id="img{folder.ID}"></span>
 								</div>	
@@ -312,7 +312,7 @@
 								<legend>{L_ADD_FILES}</legend>
 								<div class="form-element">
 									<div class="form-field" style="width:auto;">
-										<input type="file" name="upload_file" size="30" id="upload-file">					
+										<input type="file" name="upload_file" id="upload-file">
 										<input type="hidden" name="max_file_size" value="2000000">
 									</div>
 									<button type="submit" class="submit" name="valid_up" value="true">{L_UPLOAD}</button>

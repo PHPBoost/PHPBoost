@@ -94,7 +94,7 @@
 		<div class="form-element">
 			<label for="new_title">{L_NEW_TITLE}</label>
 			<div class="form-field">
-				<input type="text" id="new_title" name="new_title" value="{FORMER_TITLE}" size="60" maxlength="250">
+				<input type="text" id="new_title" name="new_title" value="{FORMER_TITLE}" maxlength="250" class="field-large">
 			</div>
 		</div>
 		<div class="form-element">
@@ -120,7 +120,7 @@
 		<div class="form-element">
 			<label for="redirection_name">{L_REDIRECTION_NAME}</label>
 			<div class="form-field">
-				<input type="text" name="redirection_name" id="redirection_name" size="60" maxlength="250">
+				<input type="text" name="redirection_name" id="redirection_name" maxlength="250" class="field-large">
 			</div>
 		</div>
 		<input type="hidden" name="id_new" value="{ID_NEW}">

@@ -66,11 +66,11 @@
 					<legend>{L_POLL_CONFIG_ADVANCED}</legend>
 					<div class="form-element">
 						<label for="cookie_name">* {L_COOKIE_NAME}</label>
-						<div class="form-field"><input type="text" maxlength="25" size="25" name="cookie_name" id="cookie_name" value="{COOKIE_NAME}"></div>
+						<div class="form-field"><input type="text" maxlength="25" name="cookie_name" id="cookie_name" value="{COOKIE_NAME}"></div>
 					</div>
 					<div class="form-element">
 						<label for="cookie_lenght">* {L_COOKIE_LENGHT}</label>
-						<div class="form-field"><input type="text" maxlength="11" size="6" name="cookie_lenght" id="cookie_lenght" value="{COOKIE_LENGHT}"> {L_DAYS}</div>
+						<div class="form-field"><input type="number" min="1" max="3650" name="cookie_lenght" id="cookie_lenght" value="{COOKIE_LENGHT}"> {L_DAYS}</div>
 					</div>
 					<div class="form-element">
 						<label for="display_results_before_polls_end">{L_DISPLAY_RESULTS_BEFORE_POLLS_END}</label>

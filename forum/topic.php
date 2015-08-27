@@ -268,7 +268,7 @@ while ( $row = $result->fetch() )
 		));
 		
 		$array_voter = explode('|', $row['voter_id']);
-		if (in_array(AppContext::get_current_user()->get_id(), $array_voter) || !empty($request->get_getvalue('r', 0)) || AppContext::get_current_user()->get_id() === -1) //Déjà voté.
+		if (in_array(AppContext::get_current_user()->get_id(), $array_voter) || $request->get_getvalue('r', 0) || AppContext::get_current_user()->get_id() === -1) //Déjà voté.
 		{
 			$array_answer = explode('|', $row['answers']);
 			$array_vote = explode('|', $row['votes']);

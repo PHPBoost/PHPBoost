@@ -13,7 +13,7 @@
 					# START modules #
 					'<option value="{modules.ID}">{modules.ID}</option>' +
 					# END modules #
-					'</select> / <input type="text" name="f' + new_id + '" id="f' + new_id + '" value="" size="25">' +
+					'</select> / <input type="text" name="f' + new_id + '" id="f' + new_id + '" value="">' +
 					' &nbsp;<a href="javascript:delete_filter(' + new_id + ');" class="fa fa-delete"></a>' +
 					'</p><span id="add_filter' + new_id + '"></span>';
 			}
@@ -42,7 +42,7 @@
 							<option value="{filters.modules.ID}"{filters.modules.SELECTED}>{filters.modules.ID}</option>
 							# END filters.modules #
 						</select>
-						/ <input type="text" name="f{filters.ID}" id="f{filters.ID}" value="{filters.FILTER}" size="25">
+						/ <input type="text" name="f{filters.ID}" id="f{filters.ID}" value="{filters.FILTER}">
 						&nbsp;<a href="javascript:delete_filter({filters.ID});" class="fa fa-delete"></a>
 					</p>
 					# END filters #

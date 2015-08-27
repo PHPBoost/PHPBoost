@@ -45,7 +45,7 @@
 				# START create #
 				<div class="form-element">
 					<label for="title">* {L_TITLE_FIELD}</label>
-					<div class="form-field"><label><input type="text" id="title" name="title" size="70" maxlength="250" value="{ARTICLE_TITLE}"></label></div>
+					<div class="form-field"><label><input type="text" id="title" name="title" maxlength="250" class="field-large" value="{ARTICLE_TITLE}"></label></div>
 				</div>
 				<div class="form-element">
 					<label for="selected_cat">{L_CURRENT_CAT}</label>
@@ -76,7 +76,7 @@
 					# INCLUDE post_js_tools #
 					{KERNEL_EDITOR}
 					<div class="form-field-textarea">
-						<textarea rows="25" cols="66" id="contents" name="contents">{CONTENTS}</textarea>
+						<textarea rows="25" id="contents" name="contents">{CONTENTS}</textarea>
 					</div>
 				</div>
 				# IF C_VERIF_CODE #

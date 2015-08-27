@@ -19,9 +19,9 @@
 			var i2 = i + 1;
 
 			if( document.getElementById('a'+i) )
-				document.getElementById('a'+i).innerHTML = '<label><input type="text" size="40" name="a'+i+'" value="" /></label><br /><span id="a'+i2+'"></span>';
+				document.getElementById('a'+i).innerHTML = '<label><input type="text" name="a'+i+'" value="" /></label><br /><span id="a'+i2+'"></span>';
 			if( document.getElementById('v'+i) )
-				document.getElementById('v'+i).innerHTML = '<label><input type="text" size="3" name="v'+i+'" value="" /></label><br /><span id="v'+i2+'"></span>';
+				document.getElementById('v'+i).innerHTML = '<label><input type="number" min="0" max="1000" name="v'+i+'" value="" /></label><br /><span id="v'+i2+'"></span>';
 			if( document.getElementById('s'+i) )
 				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<span id="s'+i2+'"><a href="javascript:add_field('+i2+', '+i_max+')"><i class="fa fa-plus"></i></a></span>' : '';
 		}
@@ -59,7 +59,7 @@
 					<legend>{L_POLL_ADD}</legend>
 					<div class="form-element">
 						<label for="question">* {L_QUESTION}</label>
-						<div class="form-field"><input type="text" size="40" maxlength="100" id="question" name="question"></div>
+						<div class="form-field"><input type="text" maxlength="100" id="question" name="question"></div>
 					</div>
 					<div class="form-element">
 						<label for="type">* {L_ANSWERS_TYPE}</label>
@@ -90,19 +90,19 @@
 									</tr>
 									<tr>
 										<td class="no-separator">
-											<label><input type="text" size="40" name="a0" id="a0" value="{ANSWER0}" /></label><br />
-											<label><input type="text" size="40" name="a1" value="{ANSWER1}" /></label><br />
-											<label><input type="text" size="40" name="a2" value="{ANSWER2}" /></label><br />
-											<label><input type="text" size="40" name="a3" value="{ANSWER3}" /></label><br />
-											<label><input type="text" size="40" name="a4" value="{ANSWER4}" /></label><br />
+											<label><input type="text" name="a0" id="a0" value="{ANSWER0}" /></label><br />
+											<label><input type="text" name="a1" value="{ANSWER1}" /></label><br />
+											<label><input type="text" name="a2" value="{ANSWER2}" /></label><br />
+											<label><input type="text" name="a3" value="{ANSWER3}" /></label><br />
+											<label><input type="text" name="a4" value="{ANSWER4}" /></label><br />
 											<span id="a5"></span>
 										</td>
 										<td class="no-separator">
-											<label><input type="text" size="3" name="v0" value="{VOTES0}" /> {PERCENT0}</label><br />
-											<label><input type="text" size="3" name="v1" value="{VOTES1}" /> {PERCENT1}</label><br />
-											<label><input type="text" size="3" name="v2" value="{VOTES2}" /> {PERCENT2}</label><br />
-											<label><input type="text" size="3" name="v3" value="{VOTES3}" /> {PERCENT3}</label><br />
-											<label><input type="text" size="3" name="v4" value="{VOTES4}" /> {PERCENT4}</label><br />
+											<label><input type="number" min="0" max="1000" name="v0" value="{VOTES0}" /> {PERCENT0}</label><br />
+											<label><input type="number" min="0" max="1000" name="v1" value="{VOTES1}" /> {PERCENT1}</label><br />
+											<label><input type="number" min="0" max="1000" name="v2" value="{VOTES2}" /> {PERCENT2}</label><br />
+											<label><input type="number" min="0" max="1000" name="v3" value="{VOTES3}" /> {PERCENT3}</label><br />
+											<label><input type="number" min="0" max="1000" name="v4" value="{VOTES4}" /> {PERCENT4}</label><br />
 											<span id="v5"></span>
 										</td>
 									</tr>
@@ -125,7 +125,7 @@
 							<div onclick="document.getElementById('start_end_date').checked = true;">
 								<label>
 									<input type="radio" value="2" name="visible" id="start_end_date" {VISIBLE_WAITING}>
-									<input type="text" size="10" maxlength="10" id="start" name="start" value="{START}"> 
+									<input type="text" size="11" maxlength="10" id="start" name="start" value="{START}"> 
 									<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar1">
 										<div id="start_date" class="calendar-block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">
 										</div>
@@ -134,7 +134,7 @@
 									
 									{L_UNTIL}&nbsp;
 									
-									<input type="text" size="10" maxlength="10" id="end" name="end" value="{END}"> 
+									<input type="text" size="11" maxlength="10" id="end" name="end" value="{END}"> 
 									<div style="position:relative;z-index:100;top:6px;margin-left:155px;float:left;display:none;" id="calendar2">
 										<div id="end_date" class="calendar-block" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);">
 										</div>
@@ -149,7 +149,7 @@
 					<div class="form-element" class="overflow_visible">
 						<label for="current_date">* {L_POLL_DATE}</label>
 						<div class="form-field"><label>
-							<input type="text" size="10" maxlength="10" id="current_date" name="current_date" value="{CURRENT_DATE}"> 
+							<input type="text" size="11" maxlength="10" id="current_date" name="current_date" value="{CURRENT_DATE}"> 
 							<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar3">
 								<div id="current" class="calendar-block" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);">
 								</div>

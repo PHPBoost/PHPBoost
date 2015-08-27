@@ -253,14 +253,14 @@
 					<div class="form-element">
 						<label for="entitled">{L_ENTITLED}</label>
 						<div class="form-field">
-							<input type="text" name="entitled" id="entitled" value="{ENTITLED}" size="40">
+							<input type="text" name="entitled" id="entitled" value="{ENTITLED}">
 						</div>
 					</div>
 					<div class="form-element-textarea">
 						<label for="contents">{L_DESCRIPTION}</label>
 						{EDITOR}
 						<div class="form-field-textarea"">
-							<textarea rows="15" cols="66" id="contents" name="contents">{DESCRIPTION}</textarea>
+							<textarea rows="15" id="contents" name="contents">{DESCRIPTION}</textarea>
 						</div>
 					</div>
 					<div class="form-element">

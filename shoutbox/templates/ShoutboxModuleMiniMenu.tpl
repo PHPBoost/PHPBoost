@@ -113,9 +113,9 @@ function shoutbox_refresh_messages_box() {
 			# IF NOT C_MEMBER #
 			<div class="spacer"></div>
 			<label for="shout-pseudo"><span class="small">${LangLoader::get_message('form.name', 'common')}</span></label>
-			<input size="16" maxlength="25" type="text" name="shout-pseudo" id="shout-pseudo" value="${LangLoader::get_message('visitor', 'user-common')}">
+			<input maxlength="25" type="text" name="shout-pseudo" id="shout-pseudo" value="${LangLoader::get_message('visitor', 'user-common')}">
 			# ELSE #
-			<input size="16" maxlength="25" type="hidden" name="shout-pseudo" id="shout-pseudo" value="{SHOUTBOX_PSEUDO}">
+			<input type="hidden" name="shout-pseudo" id="shout-pseudo" value="{SHOUTBOX_PSEUDO}">
 			# ENDIF #
 			<br />
 			# IF C_VERTICAL #<label for="shout-contents"><span class="small">${LangLoader::get_message('message', 'main')}</span></label># ENDIF #

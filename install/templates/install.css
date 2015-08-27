@@ -676,13 +676,6 @@ textarea {
 	}
 }
 
-/* CSS applique aux tablettes */
-@media ( max-width: 768px ) {
-	.form-field-textarea {
-		width: 100%;
-	}
-}
-
 /* CSS applique aux smartphones */
 @media ( max-width: 480px ) {
 	.form-element-auth .form-field .advanced-auth-input {

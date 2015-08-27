@@ -95,11 +95,11 @@
 					</div>
 					<div class="form-element">
 						<label for="name">{L_NAME}</label>
-						<div class="form-field"><label><input type="text" size="40" maxlength="50" name="name" id="name"></label></div>
+						<div class="form-field"><label><input type="text" maxlength="50" name="name" id="name"></label></div>
 					</div>
 					<div class="form-element">
 						<label for="gallery">{L_UPLOAD_IMG}</label>
-						<div class="form-field"><label><input type="file" name="gallery" id="gallery" size="30" class="file"></label></div>
+						<div class="form-field"><label><input type="file" name="gallery" id="gallery" class="file"></label></div>
 					</div>
 				</fieldset>
 				

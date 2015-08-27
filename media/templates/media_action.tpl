@@ -62,20 +62,20 @@
 					<legend>{L_PAGE_TITLE}</legend>
 					<div class="form-element">
 						<label for="name">* {L_TITLE}</label>
-						<div class="form-field"><input type="text" size="50" maxlength="100" id="name" name="name" value="{NAME}"></div>
+						<div class="form-field"><input type="text" maxlength="100" class="field-large" id="name" name="name" value="{NAME}"></div>
 					</div>
 					{CATEGORIES_TREE}
 					<div class="form-element" id="width_dl">
 						<label for="width">{L_WIDTH}</label>
-						<div class="form-field"><input type="text" size="10" maxlength="4" id="width" name="width" value="{WIDTH}"></div>
+						<div class="form-field"><input type="number" min="10" max="5000" maxlength="4" id="width" name="width" value="{WIDTH}"></div>
 					</div>
 					<div class="form-element" id="height_dl">
 						<label for="height">{L_HEIGHT}</label>
-						<div class="form-field"><input type="text" size="10" maxlength="4" id="height" name="height" value="{HEIGHT}"></div>
+						<div class="form-field"><input type="number" min="10" max="5000" id="height" name="height" value="{HEIGHT}"></div>
 					</div>
 					<div class="form-element">
 						<label for="u_media">* {L_U_MEDIA}</label>
-						<div class="form-field"><input type="text" size="50" maxlength="500" id="u_media" name="u_media" value="{U_MEDIA}"></div>
+						<div class="form-field"><input type="text" maxlength="500" class="field-large" id="u_media" name="u_media" value="{U_MEDIA}"></div>
 					</div>
 					<div class="form-element-textarea">
 						<label for="contents" id="preview_content">{L_CONTENTS}</label>

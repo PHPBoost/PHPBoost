@@ -235,14 +235,14 @@
 							# START edit_pm.title #
 							<div class="form-element">
 								<label for="title">* {L_TITLE}</label>
-								<div class="form-field"><label><input type="text" size="50" maxlength="100" id="title" name="title" value="{edit_pm.title.TITLE}"></label></div>
+								<div class="form-field"><label><input type="text" maxlength="100" id="title" name="title" value="{edit_pm.title.TITLE}"></label></div>
 							</div>
 							# END edit_pm.title #
 							<div class="form-element-textarea">
 								<label for="contents">* {L_MESSAGE}</label>
 								{KERNEL_EDITOR}
 								<div class="form-field-textarea"">
-									<textarea rows="25" cols="66" id="contents" name="contents">{edit_pm.CONTENTS}</textarea>
+									<textarea rows="25" id="contents" name="contents">{edit_pm.CONTENTS}</textarea>
 								</div>
 							</div>
 						</fieldset>
@@ -279,7 +279,7 @@
 								<label for="login">* {L_RECIPIENT}</label>
 								<div class="form-field">
 									<label>
-										<input type="text" size="20" maxlength="25" id="login" name="login" value="{post_convers.LOGIN}">
+										<input type="text" maxlength="25" id="login" name="login" value="{post_convers.LOGIN}">
 										<button type="button" value="{L_SEARCH}" onclick="XMLHttpRequest_search_members('', '{THEME}', 'insert_member', '{L_REQUIRE_RECIPIENT}');">{L_SEARCH}</button>
 										<span id="search_img"></span>
 									</label>
@@ -288,17 +288,17 @@
 										{post_convers.user_id_dest.search.RESULT}
 									# END post_convers.user_id_dest.search #
 								</div>
-							</div>		
+							</div>
 							# END post_convers.user_id_dest #
 							<div class="form-element">
 								<label for="title">* {L_TITLE}</label>
-								<div class="form-field"><label><input type="text" size="50" maxlength="100" id="title" name="title" value="{post_convers.TITLE}"></label></div>
+								<div class="form-field"><label><input type="text" maxlength="100" id="title" name="title" value="{post_convers.TITLE}"></label></div>
 							</div>
 							<div class="form-element-textarea">
 								<label for="contents">* {L_MESSAGE}</label>
 								{KERNEL_EDITOR}
 								<div class="form-field-textarea"">
-									<textarea rows="25" cols="66" id="contents" name="contents">{CONTENTS}</textarea>
+									<textarea rows="25" id="contents" name="contents">{CONTENTS}</textarea>
 								</div>
 							</div>
 						</fieldset>

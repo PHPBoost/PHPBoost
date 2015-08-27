@@ -68,7 +68,7 @@
 						<label for="upload_ranks">{L_UPLOAD_RANKS}</label><br />{L_UPLOAD_FORMAT}
 						<div class="form-field"><label>
 							<input type="hidden" name="max_file_size" value="2000000">
-							<input type="file" id="upload_ranks" name="upload_ranks" size="30" class="file">
+							<input type="file" id="upload_ranks" name="upload_ranks" class="file">
 						</label></div>
 					</div>
 				</fieldset>
@@ -85,11 +85,11 @@
 					<legend>{L_ADD_RANKS}</legend>
 					<div class="form-element">
 						<label for="name">* {L_RANK_NAME}</label>
-						<div class="form-field"><label><input type="text" maxlength="30" size="20" id="name" name="name"></label></div>
+						<div class="form-field"><label><input type="text" maxlength="30" id="name" name="name"></label></div>
 					</div>
 					<div class="form-element">
 						<label for="msg">* {L_NBR_MSG}</label>
-						<div class="form-field"><label><input type="text" maxlength="6" size="6" id="msg" name="msg"></label></div>
+						<div class="form-field"><label><input type="number" min="0" id="msg" name="msg"></label></div>
 					</div>
 					<div class="form-element">
 						<label for="icon">{L_IMG_ASSOC}</label>

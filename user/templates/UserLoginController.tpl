@@ -87,6 +87,8 @@
 			width: 450px;
 		}
 		
+		form#loginForm { max-width: 100%; }
+		
 		html { height: 100%; }
 		
 		body {

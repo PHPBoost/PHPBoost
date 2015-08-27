@@ -32,4 +32,16 @@
 	border-radius: 0 0 0 4px;
 }
 
-#recaptcha_image { width: 285px !important; height: 54px !important; }
+#recaptcha_image {
+	width: 100% !important;
+	height: auto !important;
+	max-width: 100%;
+}
+
+@media ( max-width: 480px ) {
+	#recaptcha_image {
+		width: 95% !important;
+		height: auto !important;
+		max-width: 100%;
+	}
+}

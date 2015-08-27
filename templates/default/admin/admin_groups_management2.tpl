@@ -68,7 +68,7 @@
 					<div class="form-element">
 						<label for="name">* {L_NAME}</label>
 						<div class="form-field">
-							<label><input type="text" size="25" id="name" name="name" value="{NAME}"></label>
+							<label><input type="text" id="name" name="name" value="{NAME}"></label>
 						</div>
 					</div>
 					<div class="form-element">
@@ -81,7 +81,7 @@
 					<div class="form-element">
 						<label for="pm_group_limit">{L_PM_GROUP_LIMIT} <span>{L_PM_GROUP_LIMIT_EXPLAIN}</span></label>
 						<div class="form-field">
-							<label><input type="text" size="3" name="pm_group_limit" id="pm_group_limit" value="{PM_GROUP_LIMIT}"></label>
+							<label><input type="number" min="-1" max="100000" name="pm_group_limit" id="pm_group_limit" value="{PM_GROUP_LIMIT}"></label>
 						</div>
 					</div>
 					<div class="form-element">
@@ -186,7 +186,7 @@
 						<label for="upload_groups">{L_UPLOAD_GROUPS} <span class="field-description">{L_UPLOAD_FORMAT}</span></label>
 						<div class="form-field"><label>
 							<input type="hidden" name="max_file_size" value="2000000">
-							<input type="file" id="upload_groups" name="upload_groups" size="30" class="file">
+							<input type="file" id="upload_groups" name="upload_groups" class="file">
 						</label></div>
 					</div>
 				</fieldset>
@@ -204,7 +204,7 @@
 					<div class="form-element">
 						<label for="name">* {L_NAME}</label>
 						<div class="form-field">
-							<label><input type="text" maxlength="25" size="25" id="name" name="name" value=""></label>
+							<label><input type="text" maxlength="25" id="name" name="name" value=""></label>
 						</div>
 					</div>
 					<div class="form-element">
@@ -217,7 +217,7 @@
 					<div class="form-element">
 						<label for="pm_group_limit">{L_PM_GROUP_LIMIT} <span class="field-description">{L_PM_GROUP_LIMIT_EXPLAIN}</span></label>
 						<div class="form-field">
-							<label><input type="text" size="3" name="pm_group_limit" id="pm_group_limit" value="75"></label>
+							<label><input type="number" min="-1" max="100000" name="pm_group_limit" id="pm_group_limit" value="75"></label>
 						</div>
 					</div>
 					<div class="form-element">

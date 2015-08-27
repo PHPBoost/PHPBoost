@@ -218,7 +218,7 @@
 					</div>
 					<div class="form-element">
 						<label for="logo">{L_LOGO_URL} <span class="field-description">{L_LOGO_URL_EXPLAIN}</span></label>
-						<div class="form-field"><input type="text" size="25" name="logo" id="logo" value="{LOGO}"></div>
+						<div class="form-field"><input type="text" name="logo" id="logo" value="{LOGO}"></div>
 					</div>
 					<div class="form-element">
 						<label for="logo_transparency">{L_LOGO_TRANSPARENCY} <span class="field-description">{L_LOGO_TRANSPARENCY_EXPLAIN}</span></label>

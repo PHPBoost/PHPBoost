@@ -285,7 +285,7 @@
 					<tr>
 						<td>
 							<span class="float-left">
-								{L_SEARCH_USER}: <input type="text" size="20" maxlength="25" id="login" name="login">
+								{L_SEARCH_USER}: <input type="text" maxlength="25" id="login" name="login">
 								<span id="search_img"></span>
 							</span>
 							<span style="float:left;margin-left:5px;">
