@@ -48,7 +48,7 @@
 					<div class="form-field"><label><input type="text" id="title" name="title" maxlength="250" class="field-large" value="{ARTICLE_TITLE}"></label></div>
 				</div>
 				<div class="form-element">
-					<label for="selected_cat">{L_CURRENT_CAT}</label>
+					<label>{L_CURRENT_CAT}</label>
 					<div class="form-field">
 						<input type="hidden" name="id_cat" id="id_cat" value="{ID_CAT}"/>
 						<div id="selected_cat">{CURRENT_CAT}</div>
@@ -81,11 +81,24 @@
 				</div>
 				# IF C_VERIF_CODE #
 				<div class="form-element">
-					<label for="verif_code">* ${LangLoader::get_message('form.captcha', 'common')}</label>
+					<label for="captcha">* ${LangLoader::get_message('form.captcha', 'common')}</label>
 					<div class="form-field">
 						{VERIF_CODE}
 					</div>
 				</div>
+				<script>
+				<!--
+				jQuery(document).ready(function() {
+					jQuery('.submit').click(function()
+					{
+						if(!jQuery('#captcha').val()) {
+							alert(${escapejs(LangLoader::get_message('captcha.validation_error', 'status-messages-common'))});
+							return false;
+						}
+					});
+				});
+				-->
+				</script>
 				# ENDIF #
 				
 			</fieldset>
@@ -94,7 +107,7 @@
 				<input type="hidden" name="is_cat" value="{IS_CAT}">
 				<input type="hidden" name="id_edit" value="{ID_EDIT}">
 				<input type="hidden" name="token" value="{TOKEN}">
-				<button type="submit" class="submit" class="submit">{L_SUBMIT}</button>
+				<button type="submit" class="submit">{L_SUBMIT}</button>
 				<button type="submit" name="preview" value="preview">{L_PREVIEW}</button>
 				<button type="reset">{L_RESET}</button>
 			</fieldset>
