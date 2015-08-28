@@ -71,6 +71,7 @@ $lang['captcha.last_installed'] = 'Last captcha, you can not delete or disable i
 //Form
 $lang['form.explain_required_fields'] = 'The fields marked with a * are required !';
 $lang['form.doesnt_match_regex'] = 'The entered value does not fit the proper format';
+$lang['form.doesnt_match_date_regex'] = 'The entered value has to be a valid date';
 $lang['form.doesnt_match_url_regex'] = 'The entered value has to be a valid url';
 $lang['form.doesnt_match_mail_regex'] = 'The entered value has to be a valid mail';
 $lang['form.doesnt_match_tel_regex'] = 'The entered value has to be a valid phone number';

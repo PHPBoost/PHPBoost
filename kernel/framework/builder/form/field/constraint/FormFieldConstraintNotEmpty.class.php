@@ -51,6 +51,10 @@ class FormFieldConstraintNotEmpty extends AbstractFormFieldConstraint
 			return $value->get_raw_value() !== null && $value->get_raw_value() != '';
 		}
 		
+		if ($value instanceof Date) {
+			return $value->format(Date::FORMAT_ISO_DAY_MONTH_YEAR) !== null && $value->format(Date::FORMAT_ISO_DAY_MONTH_YEAR) != '';
+		}
+		
 		return $value == 0 || ($value !== null && $value != '');
 	}
 

@@ -363,6 +363,18 @@ jQuery(document).ready(function() {
 		jQuery(this).parent().children('.text-status-constraint').hide();
 	});
 	
+	//Allow only valid characters in date inputs
+	jQuery('input[class="input-date"]').keyup(function() {
+		var testCaretPattern = new RegExp("^[0-9-]$");
+		
+		var val = jQuery(this).val();
+		var index = this.selectionStart - 1;
+		
+		if (!testCaretPattern.test(val.charAt(index))) {
+			jQuery(this).val(val.substr(0, (index)) + val.substr(index + 1));
+		}
+	});
+	
 	//Allow only valid characters in number inputs
 	jQuery('input[type="number"]').keyup(function() {
 		var testValPattern = new RegExp("^[0-9]+([\.|,]([0-9]{1,2})?)?$");

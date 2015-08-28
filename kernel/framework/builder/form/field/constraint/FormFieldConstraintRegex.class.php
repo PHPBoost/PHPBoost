@@ -69,8 +69,13 @@ class FormFieldConstraintRegex extends AbstractFormFieldConstraint
 	{
 		$value = $field->get_value();
 		$is_required = $field->is_required();
+		
+		if ($value instanceof Date) {
+			$value = $value->format(Date::FORMAT_ISO_DAY_MONTH_YEAR);
+		}
+		
 		if (!empty($value) || $is_required)
-		{	
+		{
 			return preg_match($this->php_regex, $value) > 0;
 		}
 		return true;
