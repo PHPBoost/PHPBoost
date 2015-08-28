@@ -65,8 +65,8 @@ class CalendarAjaxCalendarController extends AbstractController
 		$config = CalendarConfig::load();
 		$categories = CalendarService::get_categories_manager()->get_categories_cache()->get_categories();
 		
-		$year = $this->year ? $this->year : $request->get_int('calendar_ajax_year', date('Y'));
-		$month = $this->month ? $this->month : $request->get_int('calendar_ajax_month', date('n'));
+		$year = $this->year ? $this->year : min($request->get_int('calendar_ajax_year', date('Y')), 2037);
+		$month = $this->month ? $this->month : min($request->get_int('calendar_ajax_month', date('n')), 12);
 		$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 		
 		$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
