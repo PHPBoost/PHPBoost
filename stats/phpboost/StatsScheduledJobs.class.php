@@ -29,17 +29,25 @@ class StatsScheduledJobs extends AbstractScheduledJobExtensionPoint
 {
 	public function on_changeday(Date $yesterday, Date $today)
 	{
-		$result = PersistenceContext::get_querier()->insert(StatsSetup::$stats_table, array(
-			'stats_year' => $yesterday->get_year(Timezone::SERVER_TIMEZONE),
-			'stats_month' => $yesterday->get_month(Timezone::SERVER_TIMEZONE),
-			'stats_day' => $yesterday->get_day(Timezone::SERVER_TIMEZONE),
-			'nbr' => 0, 
-			'pages' => 0, 
-			'pages_detail' => ''
-		));
+		try {
+			$result = PersistenceContext::get_querier()->insert(StatsSetup::$stats_table, array(
+				'stats_year' => $yesterday->get_year(Timezone::SERVER_TIMEZONE),
+				'stats_month' => $yesterday->get_month(Timezone::SERVER_TIMEZONE),
+				'stats_day' => $yesterday->get_day(Timezone::SERVER_TIMEZONE),
+				'nbr' => 0, 
+				'pages' => 0, 
+				'pages_detail' => ''
+			));
 
-		//We retrieve the id we just come to create
-		$last_stats = $result->get_last_inserted_id();
+			//We retrieve the id we just come to create
+			$last_stats = $result->get_last_inserted_id();
+		} catch (MySQLQuerierException $e) {
+			$last_stats = PersistenceContext::get_querier()->get_column_value(StatsSetup::$stats_table, 'id', 'WHERE stats_year = :stats_year AND stats_month = :stats_month AND stats_day = :stats_day', array(
+				'stats_year' => $yesterday->get_year(Timezone::SERVER_TIMEZONE),
+				'stats_month' => $yesterday->get_month(Timezone::SERVER_TIMEZONE),
+				'stats_day' => $yesterday->get_day(Timezone::SERVER_TIMEZONE)
+			));
+		}
 
 		PersistenceContext::get_querier()->inject("UPDATE " . StatsSetup::$stats_referer_table . " SET yesterday_visit = today_visit, today_visit = 0, nbr_day = nbr_day + 1");
 		
