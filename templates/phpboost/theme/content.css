@@ -490,7 +490,7 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus, input[type=f
 input.field-smaller { width: 29px; }
 input.field-small {  width: 77px; }
 input.field-large { width: 200px; }
-input.field-xlarge { width: 300px; }
+input.field-xlarge { width: 250px; }
 
 /* Element du formulaire (englobe le label et l'input d'un champ) */
 .form-element, .form-element-textarea {
