@@ -84,6 +84,8 @@ class HTMLForm implements HTMLElement
 	 */
 	private $template = null;
 	
+	private $enable_captcha_protection;
+	
 	/**
 	 * @desc Constructs a HTMLForm object
 	 * @param string $html_id The HTML name of the form
@@ -92,10 +94,11 @@ class HTMLForm implements HTMLElement
 	 */
 	public function __construct($html_id, $target = '', $enable_captcha_protection = true)
 	{
+		$this->enable_captcha_protection = $enable_captcha_protection;
 		$this->set_html_id($html_id);
 		$this->set_target($target);
 		
-		if ($enable_captcha_protection)
+		if ($this->enable_captcha_protection)
 			$this->add_catpcha_protection(); //Add captcha protection for visitor
 		
 		self::$instance_id++;
@@ -232,7 +235,8 @@ class HTMLForm implements HTMLElement
 	 */
 	public function display()
 	{
-		$this->move_captcha_protection_in_last_position();
+		if ($this->enable_captcha_protection)
+			$this->move_captcha_protection_in_last_position();
 		
 		$template = $this->get_template_to_use();
 
