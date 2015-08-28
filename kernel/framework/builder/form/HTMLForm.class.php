@@ -90,7 +90,7 @@ class HTMLForm implements HTMLElement
 	 * @param string $target The url where the form sends data
 	 * @param bool $enable_captcha_protection True if the CAPTCHA is enabled
 	 */
-	public function __construct($html_id, $target = '', $enable_captcha_protection = true, $enable_csrf_protection = true)
+	public function __construct($html_id, $target = '', $enable_captcha_protection = true)
 	{
 		$this->set_html_id($html_id);
 		$this->set_target($target);
@@ -98,18 +98,7 @@ class HTMLForm implements HTMLElement
 		if ($enable_captcha_protection)
 			$this->add_catpcha_protection(); //Add captcha protection for visitor
 		
-		if ($enable_csrf_protection)
-			$this->add_csrf_protection();  //Add CSRF protection
-		
 		self::$instance_id++;
-	}
-	
-	private function add_csrf_protection()
-	{
-		$csrf_protection_field = new FormFieldCSRFToken();
-		$csrf_protection_fieldset = new FormFieldsetHidden('csrf_protection');
-		$csrf_protection_fieldset->add_field($csrf_protection_field);
-		$this->add_fieldset($csrf_protection_fieldset);
 	}
 	
 	private function add_catpcha_protection()
@@ -122,8 +111,6 @@ class HTMLForm implements HTMLElement
 	public function move_captcha_protection_in_last_position()
 	{
 		try {
-			$fieldset = $this->get_fieldset_by_id('captcha_fieldset');
-			
 			$this->fieldsets[] = $this->fieldsets[0];
 			unset($this->fieldsets[0]);
 		} catch (FormBuilderException $e) {
