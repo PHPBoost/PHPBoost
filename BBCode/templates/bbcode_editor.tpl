@@ -98,7 +98,7 @@ function XMLHttpRequest_preview(field)
 					<i class="fa bbcode-icon-size" {AUTH_SIZE}></i>
 				</a>
 				<div class="bbcode-block-container" style="display:none;" id="bb-block6{FIELD}">
-					<ul id="bbcolor{FIELD}" class="bbcode-block bbcode-block-list" style="width: 40px;" onmouseover="bb_hide_block('6', '{FIELD}', 1);" onmouseout="bb_hide_block('6', '{FIELD}', 0);">
+					<ul class="bbcode-block bbcode-block-list" style="width: 40px;" onmouseover="bb_hide_block('6', '{FIELD}', 1);" onmouseout="bb_hide_block('6', '{FIELD}', 0);">
 						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=5]', '[/size]', '{FIELD}'); return false;" title="{L_SIZE} 05"> 05 </a></li>
 						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=10]', '[/size]', '{FIELD}');return false;" title="{L_SIZE} 10"> 10 </a></li>
 						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=15]', '[/size]', '{FIELD}');return false;" title="{L_SIZE} 15"> 15 </a></li>
@@ -117,7 +117,7 @@ function XMLHttpRequest_preview(field)
 					<i class="fa bbcode-icon-font" {AUTH_FONT}></i>
 				</a>
 				<div class="bbcode-block-container" style="display:none;" id="bb-block10{FIELD}">
-					<ul id="bbcolor{FIELD}" class="bbcode-block bbcode-block-list" style="width: 110px;" onmouseover="bb_hide_block('10', '{FIELD}', 1);" onmouseout="bb_hide_block('10', '{FIELD}', 0);">
+					<ul class="bbcode-block bbcode-block-list" style="width: 120px;" onmouseover="bb_hide_block('10', '{FIELD}', 1);" onmouseout="bb_hide_block('10', '{FIELD}', 0);">
 						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=andale mono]', '[/font]', '{FIELD}'); return false;" title="{L_FONT} Andale Mono"> <span style="font-family: andale mono;">Andale Mono</span> </a></li>
 						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=arial]', '[/font]', '{FIELD}'); return false;" title="{L_FONT} Arial"> <span style="font-family: arial;">Arial</span> </a></li>
 						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=arial black]', '[/font]', '{FIELD}'); return false;" title="{L_FONT} Arial Black"> <span style="font-family: arial black;">Arial Black</span> </a></li>
@@ -146,7 +146,7 @@ function XMLHttpRequest_preview(field)
 					<i class="fa bbcode-icon-title" {AUTH_TITLE}></i>
 				</a>
 				<div class="bbcode-block-container" style="display:none;" id="bb-block2{FIELD}">
-					<ul id="bbcolor{FIELD}" class="bbcode-block bbcode-block-list" style="width: 70px;" onmouseover="bb_hide_block('2', '{FIELD}', 1);" onmouseout="bb_hide_block('2', '{FIELD}', 0);">
+					<ul class="bbcode-block bbcode-block-list" style="width: 70px;" onmouseover="bb_hide_block('2', '{FIELD}', 1);" onmouseout="bb_hide_block('2', '{FIELD}', 0);">
 						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=1]', '[/title]', '{FIELD}'); return false;" title="{L_TITLE} 1"> {L_TITLE} 1 </a></li>
 						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=2]', '[/title]', '{FIELD}'); return false;" title="{L_TITLE} 2"> {L_TITLE} 2 </a></li>
 						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=3]', '[/title]', '{FIELD}'); return false;" title="{L_TITLE} 3"> {L_TITLE} 3 </a></li>
@@ -189,7 +189,7 @@ function XMLHttpRequest_preview(field)
 					<i class="fa bbcode-icon-subtitle" {AUTH_BLOCK}></i>
 				</a>
 				<div class="bbcode-block-container" style="display:none;" id="bb-block3{FIELD}">
-					<ul id="bbcolor{FIELD}" class="bbcode-block bbcode-block-list" style="width: 100px;" onmouseover="bb_hide_block('3', '{FIELD}', 1);" onmouseout="bb_hide_block('3', '{FIELD}', 0);">
+					<ul class="bbcode-block bbcode-block-list" style="width: 100px;" onmouseover="bb_hide_block('3', '{FIELD}', 1);" onmouseout="bb_hide_block('3', '{FIELD}', 0);">
 						<li><a href="" onclick="{DISABLED_B}insertbbcode('[block]', '[/block]', '{FIELD}'); return false;" title="{L_CONTAINER} {L_BLOCK}"> {L_BLOCK} </a></li>
 						<li><a href="" onclick="{DISABLED_B}insertbbcode('[fieldset]', '[/fieldset]', '{FIELD}'); return false;" title="{L_CONTAINER} {L_FIELDSET}"> {L_FIELDSET} </a></li>
 					</ul>
@@ -209,7 +209,7 @@ function XMLHttpRequest_preview(field)
 					<i class="fa bbcode-icon-style" {AUTH_STYLE}></i>
 				</a>
 				<div class="bbcode-block-container" style="display:none;" id="bb-block4{FIELD}">
-					<ul id="bbcolor{FIELD}" class="bbcode-block bbcode-block-list" style="width: 110px;" onmouseover="bb_hide_block('4', '{FIELD}', 1);" onmouseout="bb_hide_block('4', '{FIELD}', 0);">
+					<ul class="bbcode-block bbcode-block-list" style="width: 110px;" onmouseover="bb_hide_block('4', '{FIELD}', 1);" onmouseout="bb_hide_block('4', '{FIELD}', 0);">
 						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=success] ', '[/style]', '{FIELD}'); return false;" title="{L_SUCCESS} "> {L_SUCCESS}  </a></li>
 						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=question]', '[/style]', '{FIELD}'); return false;" title="{L_QUESTION}"> {L_QUESTION} </a></li>
 						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=notice]  ', '[/style]', '{FIELD}'); return false;" title="{L_NOTICE}  "> {L_NOTICE}   </a></li>
