@@ -148,6 +148,8 @@ class ContactController extends ModuleController
 			$this->config->set_last_tracking_number($tracking_number);
 			ContactConfig::save();
 			
+			$subject = '[' . $tracking_number . '] ' . $subject;
+			
 			$display_message_title = true;
 		}
 		
