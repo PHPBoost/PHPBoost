@@ -38,14 +38,12 @@ class ForumFeedProvider implements FeedProvider
 		$config = ForumConfig::load();
 		$category = ForumService::get_categories_manager()->get_categories_cache()->get_category($idcat);
 
-		global $LANG;
-
 		$data = new FeedData();
-		$data->set_title($LANG['xml_forum_desc']);
+		$data->set_title(LangLoader::get_message('xml_forum_desc', 'common', 'forum'));
 		$data->set_date(new Date());
 		$data->set_link(DispatchManager::get_url('/syndication', '/rss/forum/'. $idcat . '/'));
 		$data->set_host(HOST);
-		$data->set_desc($LANG['xml_forum_desc']);
+		$data->set_desc(LangLoader::get_message('xml_forum_desc', 'common', 'forum'));
 		$data->set_lang(LangLoader::get_message('xml_lang', 'main'));
 		$data->set_auth_bit(Category::READ_AUTHORIZATIONS);
 		

@@ -37,6 +37,8 @@ $lang['forum.actions.add_rank'] = 'Add a rank';
 $lang['forum.manage_ranks'] = 'Manage ranks';
 $lang['forum.ranks_management'] = 'Ranks management';
 
+$lang['xml_forum_desc'] = 'Last forum thread';
+
 //config
 $lang['config.forum_name'] = 'Forum name';
 $lang['config.number_topics_per_page'] = 'Number of topics per page';
