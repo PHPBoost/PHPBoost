@@ -45,3 +45,5 @@
 		max-width: 100%;
 	}
 }
+
+#recaptcha_image img { width: 100%; }
