@@ -78,8 +78,8 @@ class AdminAdvancedConfigController extends AdminController
 		$fieldset = new FormFieldsetHTML('advanced-config', $this->lang['advanced-config']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldUrlEditor('site_url', $this->lang['advanced-config.site_url'], $this->general_config->get_site_url(), array(
-			'description' => $this->lang['advanced-config.site_url-explain'], 'size' => 25, 'required' => true)
+		$fieldset->add_field(new FormFieldUrlEditor('site_url', $this->lang['advanced-config.site_url'], $this->general_config->get_site_url(),
+			array('description' => $this->lang['advanced-config.site_url-explain'], 'required' => true)
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('site_path', $this->lang['advanced-config.site_path'], $this->general_config->get_site_path(),
@@ -87,7 +87,8 @@ class AdminAdvancedConfigController extends AdminController
 		));
 		
 		$fieldset->add_field(new FormFieldTimezone('site_timezone', $this->lang['advanced-config.site_timezone'], $this->general_config->get_site_timezone(),
-		array('description' => $this->lang['advanced-config.site_timezone-explain'])));
+			array('description' => $this->lang['advanced-config.site_timezone-explain'])
+		));
 		
 		$url_rewriting_fieldset = new FormFieldsetHTML('url_rewriting', $this->lang['advanced-config.url-rewriting']);
 		$form->add_fieldset($url_rewriting_fieldset);
@@ -95,8 +96,7 @@ class AdminAdvancedConfigController extends AdminController
 		$url_rewriting_fieldset->set_description($this->lang['advanced-config.url-rewriting.explain']);
 		
 		$server_configuration = new ServerConfiguration();
-		try 
-		{
+		try {
 			if ($server_configuration->has_url_rewriting())
 			{
 				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(), array('description' => $this->lang['advanced-config.config.available'])));
@@ -105,9 +105,7 @@ class AdminAdvancedConfigController extends AdminController
 			{
 				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], FormFieldCheckbox::UNCHECKED, array('disabled' => true, 'description' => $this->lang['advanced-config.config.not-available'])));
 			}
-		} 
-		catch (UnsupportedOperationException $ex) 
-		{
+		} catch (UnsupportedOperationException $ex) {
 			$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(), array('description' => $this->lang['advanced-config.config.unknown'])));
  		}
 		
@@ -130,18 +128,18 @@ class AdminAdvancedConfigController extends AdminController
 		$sessions_config_fieldset = new FormFieldsetHTML('sessions_config', $this->lang['advanced-config.sessions-config']);
 		$form->add_fieldset($sessions_config_fieldset);
 		
-		$sessions_config_fieldset->add_field(new FormFieldTextEditor('cookie_name', $this->lang['advanced-config.cookie-name'], $this->sessions_config->get_cookie_name(), array(
-			'size' => 25, 'required' => true),
+		$sessions_config_fieldset->add_field(new FormFieldTextEditor('cookie_name', $this->lang['advanced-config.cookie-name'], $this->sessions_config->get_cookie_name(),
+			array('required' => true),
 			array(new FormFieldConstraintRegex('`^[A-Za-z0-9]+$`i', '', $this->lang['advanced-config.cookie-name.style-wrong']))
 		));
 		
-		$sessions_config_fieldset->add_field(new FormFieldNumberEditor('session_duration', $this->lang['advanced-config.cookie-duration'], $this->sessions_config->get_session_duration(), array(
-			'description' => $this->lang['advanced-config.cookie-duration.explain'], 'required' => true),
+		$sessions_config_fieldset->add_field(new FormFieldNumberEditor('session_duration', $this->lang['advanced-config.cookie-duration'], $this->sessions_config->get_session_duration(),
+			array('description' => $this->lang['advanced-config.cookie-duration.explain'], 'required' => true),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i', '', $this->lang['advanced-config.integer-required']))
 		));
 		
-		$sessions_config_fieldset->add_field(new FormFieldNumberEditor('active_session_duration', $this->lang['advanced-config.active-session-duration'], $this->sessions_config->get_active_session_duration(), array(
-			'description' => $this->lang['advanced-config.active-session-duration.explain'], 'required' => true),
+		$sessions_config_fieldset->add_field(new FormFieldNumberEditor('active_session_duration', $this->lang['advanced-config.active-session-duration'], $this->sessions_config->get_active_session_duration(),
+			array('description' => $this->lang['advanced-config.active-session-duration.explain'], 'required' => true),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i', '', $this->lang['advanced-config.integer-required']))
 		));
 		
@@ -150,13 +148,15 @@ class AdminAdvancedConfigController extends AdminController
 		
 		if (function_exists('ob_gzhandler') && @extension_loaded('zlib'))
 		{
-			$miscellaneous_fieldset->add_field(new FormFieldCheckbox('output_gziping_enabled', $this->lang['advanced-config.output-gziping-enabled'], $this->server_environment_config->is_output_gziping_enabled(), 
-			array('description' => $this->lang['advanced-config.config.available'])));
+			$miscellaneous_fieldset->add_field(new FormFieldCheckbox('output_gziping_enabled', $this->lang['advanced-config.output-gziping-enabled'], $this->server_environment_config->is_output_gziping_enabled(),
+				array('description' => $this->lang['advanced-config.config.available'])
+			));
 		}
 		else
 		{
 			$miscellaneous_fieldset->add_field(new FormFieldCheckbox('output_gziping_enabled', $this->lang['advanced-config.output-gziping-enabled'], FormFieldCheckbox::UNCHECKED, 
-			array('description' => $this->lang['advanced-config.config.not-available'], 'disabled' => true)));
+				array('description' => $this->lang['advanced-config.config.not-available'], 'disabled' => true)
+			));
 		}
 		
 		$miscellaneous_fieldset->add_field(new FormFieldCheckbox('database_tables_optimization_enabled', $this->lang['advanced-config.database-tables-optimization-enabled'], $this->server_environment_config->is_database_tables_optimization_enabled(), 
