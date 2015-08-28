@@ -56,7 +56,12 @@ $categories = PagesCategoriesCache::load()->get_categories();
 
 if (!empty($new_title) && $id_rename_post > 0)
 {
-	$page_infos = $db_querier->select_single_row(PREFIX . 'pages', array('id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat'), 'WHERE id = :id', array('id' => $id_rename_post));
+	try {
+		$page_infos = $db_querier->select_single_row(PREFIX . 'pages', array('id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat'), 'WHERE id = :id', array('id' => $id_rename_post));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
@@ -93,7 +98,12 @@ if (!empty($new_title) && $id_rename_post > 0)
 //on poste une redirection
 elseif (!empty($redirection_name) && $id_new_post > 0)
 {
-	$page_infos = $db_querier->select_single_row(PREFIX . 'pages', array('id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat'), 'WHERE id = :id', array('id' => $id_new_post));
+	try {
+		$page_infos = $db_querier->select_single_row(PREFIX . 'pages', array('id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat'), 'WHERE id = :id', array('id' => $id_new_post));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
@@ -117,10 +127,15 @@ elseif (!empty($redirection_name) && $id_new_post > 0)
 //Suppression des redirections
 elseif ($del_redirection > 0)
 {
-    //Vérification de la validité du jeton
-    AppContext::get_session()->csrf_get_protect();
-    
-	$page_infos = $db_querier->select_single_row(PREFIX . 'pages', array('id', 'title', 'encoded_title', 'redirect'), 'WHERE id = :id', array('id' => $del_redirection));
+	//Vérification de la validité du jeton
+	AppContext::get_session()->csrf_get_protect();
+
+	try {
+		$page_infos = $db_querier->select_single_row(PREFIX . 'pages', array('id', 'title', 'encoded_title', 'redirect'), 'WHERE id = :id', array('id' => $del_redirection));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
@@ -139,7 +154,12 @@ elseif ($del_redirection > 0)
 elseif ($del_cat_post > 0 && $report_cat >= 0)
 {
 	$remove_action = ($remove_action == 'move_all') ? 'move_all' : 'remove_all';
-	$page_infos = $db_querier->select_single_row(PREFIX . 'pages', array('encoded_title', 'id_cat', 'auth'), 'WHERE id = :id', array('id' => $del_cat_post));
+	try {
+		$page_infos = $db_querier->select_single_row(PREFIX . 'pages', array('encoded_title', 'id_cat', 'auth'), 'WHERE id = :id', array('id' => $del_cat_post));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	$general_auth = empty($page_infos['auth']) ? true : false;
 	$array_auth = !empty($page_infos['auth']) ? unserialize($page_infos['auth']) : array();
@@ -204,7 +224,12 @@ elseif ($del_cat_post > 0 && $report_cat >= 0)
 
 if ($id_page > 0)
 {
-	$page_infos = $db_querier->select_single_row(PREFIX . 'pages', array('id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat'), 'WHERE id = :id', array('id' => $id_page));
+	try {
+		$page_infos = $db_querier->select_single_row(PREFIX . 'pages', array('id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat'), 'WHERE id = :id', array('id' => $id_page));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
@@ -241,7 +266,12 @@ $tpl = new FileTemplate('pages/action.tpl');
 
 if ($del_cat > 0)
 {
-	$page_infos = $db_querier->select_single_row(PREFIX . 'pages', array('id', 'title', 'encoded_title', 'auth', 'id_cat', 'redirect'), 'WHERE id = :id', array('id' => $del_cat));
+	try {
+		$page_infos = $db_querier->select_single_row(PREFIX . 'pages', array('id', 'title', 'encoded_title', 'auth', 'id_cat', 'redirect'), 'WHERE id = :id', array('id' => $del_cat));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);

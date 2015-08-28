@@ -58,11 +58,21 @@ if (!empty($idm_get) && $del) //Suppression d'un message/topic.
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
 	//Info sur le message.
-	$msg = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', array('user_id', 'idtopic'), 'WHERE id=:id', array('id' => $idm_get));
-
+	try {
+		$msg = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', array('user_id', 'idtopic'), 'WHERE id=:id', array('id' => $idm_get));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_element();
+		DispatchManager::redirect($error_controller);
+	}
+	
 	//On va chercher les infos sur le topic
-	$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('user_id', 'idcat', 'first_msg_id', 'last_msg_id', 'last_timestamp'), 'WHERE id=:id', array('id' => $msg['idtopic']));
-
+	try {
+		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('user_id', 'idcat', 'first_msg_id', 'last_msg_id', 'last_timestamp'), 'WHERE id=:id', array('id' => $msg['idtopic']));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_element();
+		DispatchManager::redirect($error_controller);
+	}
+	
 	//Si on veut supprimer le premier message, alors son rippe le topic entier (admin et modo seulement).
 	if (!empty($msg['idtopic']) && $topic['first_msg_id'] == $idm_get)
 	{
@@ -114,8 +124,13 @@ elseif (!empty($idt_get))
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
 	//On va chercher les infos sur le topic
-	$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status'), 'WHERE id=:id', array('id' => $idt_get));
-
+	try {
+		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status'), 'WHERE id=:id', array('id' => $idt_get));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_element();
+		DispatchManager::redirect($error_controller);
+	}
+	
 	if (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->read())
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
@@ -157,8 +172,13 @@ elseif (!empty($idt_get))
 	}
 	elseif ($poll && AppContext::get_current_user()->get_id() !== -1) //Enregistrement vote du sondage
 	{
-		$info_poll = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_poll', array('voter_id', 'votes', 'type'), 'WHERE idtopic=:id', array('id' => $idt_get));
-
+		try {
+			$info_poll = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_poll', array('voter_id', 'votes', 'type'), 'WHERE idtopic=:id', array('id' => $idt_get));
+		} catch (RowNotFoundException $e) {
+			$error_controller = PHPBoostErrors::unexisting_element();
+			DispatchManager::redirect($error_controller);
+		}
+		
 		//Si l'utilisateur n'est pas dans le champ on prend en compte le vote.
 		$voter_id = explode('|', $info_poll['voter_id']);
 		if (!in_array(AppContext::get_current_user()->get_id(), $voter_id))

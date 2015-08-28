@@ -63,7 +63,13 @@ else
 	
 if ($id_edit > 0)
 {
-	$page_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'pages', array('id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', 'display_print_link'), 'WHERE id = :id', array('id' => $id_edit));
+	try {
+		$page_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'pages', array('id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', 'display_print_link'), 'WHERE id = :id', array('id' => $id_edit));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+	
 	$Bread_crumb->add(TITLE, url('post.php?id=' . $id_edit));
 	$id = $page_infos['id_cat'];
 	while ($id > 0)
@@ -98,7 +104,12 @@ if (!empty($contents))
 		//Edition d'une page
 		if ($id_edit > 0)
 		{
-			$page_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'pages', array('id', 'title', 'contents', 'auth', 'encoded_title', 'is_cat', 'id_cat', 'display_print_link'), 'WHERE id = :id', array('id' => $id_edit));
+			try {
+				$page_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'pages', array('id', 'title', 'contents', 'auth', 'encoded_title', 'is_cat', 'id_cat', 'display_print_link'), 'WHERE id = :id', array('id' => $id_edit));
+			} catch (RowNotFoundException $e) {
+				$error_controller = PHPBoostErrors::unexisting_page();
+				DispatchManager::redirect($error_controller);
+			}
 			
 			//Autorisation particulière ?
 			$special_auth = !empty($page_infos['auth']);
@@ -183,7 +194,12 @@ elseif ($del_article > 0)
     //Vérification de la validité du jeton
     AppContext::get_session()->csrf_get_protect();
     
-	$page_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'pages', array('id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', 'display_print_link'), 'WHERE id = :id', array('id' => $del_article));
+	try {
+		$page_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'pages', array('id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', 'display_print_link'), 'WHERE id = :id', array('id' => $del_article));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);

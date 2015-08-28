@@ -35,7 +35,12 @@ $pages_config = PagesConfig::load();
 
 if (!empty($encoded_title)) //Si on connait son titre
 {
-	$page_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'pages', array('id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'redirect', 'contents'), 'WHERE encoded_title = :encoded_title', array('encoded_title' => $encoded_title));
+	try {
+		$page_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'pages', array('id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'redirect', 'contents'), 'WHERE encoded_title = :encoded_title', array('encoded_title' => $encoded_title));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	$num_rows =!empty($page_infos['title']) ? 1 : 0;
 	
@@ -43,7 +48,12 @@ if (!empty($encoded_title)) //Si on connait son titre
 	{
 		$redirect_title = $page_infos['title'];
 		$redirect_id = $page_infos['id'];
-		$page_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'pages', array('id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'redirect', 'contents'), 'WHERE id = :id', array('id' => $page_infos['redirect']));
+		try {
+			$page_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'pages', array('id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'redirect', 'contents'), 'WHERE id = :id', array('id' => $page_infos['redirect']));
+		} catch (RowNotFoundException $e) {
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 	else
 		$redirect_title = '';

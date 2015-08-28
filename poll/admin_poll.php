@@ -146,8 +146,13 @@ elseif (!empty($id))
 {
 	$tpl = new FileTemplate('poll/admin_poll_management2.tpl');
 
-	$row = PersistenceContext::get_querier()->select_single_row(PREFIX . 'poll', array('*'), 'WHERE id=:id', array('id' => $id));
-
+	try {
+		$row = PersistenceContext::get_querier()->select_single_row(PREFIX . 'poll', array('*'), 'WHERE id=:id', array('id' => $id));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+	
 	$tpl->put_all(array(
 		'IDPOLL' => $row['id'],
 		'QUESTIONS' => $row['question'],

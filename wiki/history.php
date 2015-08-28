@@ -37,7 +37,12 @@ define('TITLE' , $LANG['wiki_history']);
 
 if (!empty($id_article))
 {
-	$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('title', 'auth', 'encoded_title', 'id_cat'), 'WHERE id = :id', array('id' => $id_article));
+	try {
+		$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('title', 'auth', 'encoded_title', 'id_cat'), 'WHERE id = :id', array('id' => $id_article));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 }
 
 $bread_crumb_key = !empty($id_article) ? 'wiki_history_article' : 'wiki_history';

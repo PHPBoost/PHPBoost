@@ -47,7 +47,13 @@ $remove_favorite = retrieve(GET, 'del', 0);
 if ($add_favorite > 0)//Ajout d'un favori
 {
 	//on vérifie que l'article existe
-	$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . "wiki_articles", array('encoded_title'), 'WHERE id = :id', array('id' => $add_favorite));
+	try {
+		$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . "wiki_articles", array('encoded_title'), 'WHERE id = :id', array('id' => $add_favorite));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+	
 	if (empty($article_infos['encoded_title'])) //L'article n'existe pas
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php', '', '&'));
 	//On regarde que le sujet n'est pas en favoris
@@ -66,7 +72,13 @@ elseif ($remove_favorite > 0)
     AppContext::get_session()->csrf_get_protect();
     
 	//on vérifie que l'article existe
-	$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . "wiki_articles", array('encoded_title'), 'WHERE id = :id', array('id' => $remove_favorite));
+	try {
+		$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . "wiki_articles", array('encoded_title'), 'WHERE id = :id', array('id' => $remove_favorite));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+	
 	if (empty($article_infos['encoded_title'])) //L'article n'existe pas
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php', '', '&'));
 		

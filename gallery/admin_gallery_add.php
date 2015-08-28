@@ -118,7 +118,14 @@ else
 	if (!empty($add_pic))
 	{
 		$categories = GalleryService::get_categories_manager()->get_categories_cache()->get_categories();
-		$imageup = PersistenceContext::get_querier()->select_single_row(GallerySetup::$gallery_table, array('idcat', 'name', 'path'), 'WHERE id = :id', array('id' => $add_pic));
+		
+		try {
+			$imageup = PersistenceContext::get_querier()->select_single_row(GallerySetup::$gallery_table, array('idcat', 'name', 'path'), 'WHERE id = :id', array('id' => $add_pic));
+		} catch (RowNotFoundException $e) {
+			$error_controller = PHPBoostErrors::unexisting_element();
+			DispatchManager::redirect($error_controller);
+		}
+		
 		$tpl->assign_block_vars('image_up', array(
 			'NAME' => $imageup['name'],
 			'IMG' => '<a href="admin_gallery.php?cat=' . $imageup['idcat'] . '&amp;id=' . $add_pic . '#pics_max"><img src="pics/' . $imageup['path'] . '" alt="" /></a>',

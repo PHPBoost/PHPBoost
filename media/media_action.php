@@ -49,8 +49,13 @@ if ($unvisible > 0)
 {
 	AppContext::get_session()->csrf_get_protect();
 
-	$media = PersistenceContext::get_querier()->select_single_row(PREFIX . 'media', array('*'), 'WHERE id=:id', array('id' => $unvisible));
-
+	try {
+		$media = PersistenceContext::get_querier()->select_single_row(PREFIX . 'media', array('*'), 'WHERE id=:id', array('id' => $unvisible));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+	
 	// Gestion des erreurs.
 	if (empty($media))
 	{
@@ -80,8 +85,13 @@ elseif ($delete > 0)
 {
 	AppContext::get_session()->csrf_get_protect();
 
-	$media = PersistenceContext::get_querier()->select_single_row(PREFIX . 'media', array('*'), 'WHERE id=:id', array('id' => $delete));
-
+	try {
+		$media = PersistenceContext::get_querier()->select_single_row(PREFIX . 'media', array('*'), 'WHERE id=:id', array('id' => $delete));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+	
 	if (empty($media))
 	{
 		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_unexist_media']);
@@ -155,8 +165,15 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 	$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
 	
 	// Édition.
-	if ($edit > 0 && ($media = PersistenceContext::get_querier()->select_single_row(PREFIX . 'media', array('*'), 'WHERE id=:id', array('id' => $edit))) && !empty($media) && MediaAuthorizationsService::check_authorizations($media['idcat'])->moderation())
+	if ($edit > 0 && !empty($media) && MediaAuthorizationsService::check_authorizations($media['idcat'])->moderation())
 	{
+		try {
+			$media = PersistenceContext::get_querier()->select_single_row(PREFIX . 'media', array('*'), 'WHERE id=:id', array('id' => $edit));
+		} catch (RowNotFoundException $e) {
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+		
 		$category = MediaService::get_categories_manager()->get_categories_cache()->get_category($media['idcat']);
 		bread_crumb($media['idcat']);
 		

@@ -36,17 +36,14 @@ $now = new Date();
 
 if (!empty($poll_id))
 {
-	$poll = PersistenceContext::get_querier()->select_single_row(PREFIX . 'poll', array('id', 'question', 'votes', 'answers', 'type', 'timestamp', 'end'), 'WHERE id=:id AND archive = 0 AND visible = 1 AND start <= :timestamp AND (end >= :timestamp OR end = 0)', array('id' => $poll_id, 'timestamp' => $now->get_timestamp()));
-	
-	//Pas de sondage trouvé => erreur.
-	if (empty($poll['id']))
-	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
-            $LANG['e_unexist_poll']);
-        DispatchManager::redirect($controller);
+	try {
+		$poll = PersistenceContext::get_querier()->select_single_row(PREFIX . 'poll', array('id', 'question', 'votes', 'answers', 'type', 'timestamp', 'end'), 'WHERE id=:id AND archive = 0 AND visible = 1 AND start <= :timestamp AND (end >= :timestamp OR end = 0)', array('id' => $poll_id, 'timestamp' => $now->get_timestamp()));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
 	}
-}	
-	
+}
+
 $archives = retrieve(GET, 'archives', false); //On vérifie si on est sur les archives
 $show_result = retrieve(GET, 'r', false); //Affichage des résultats.
 $now = new Date(Date::DATE_NOW, Timezone::USER_TIMEZONE);

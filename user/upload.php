@@ -87,7 +87,13 @@ if (!empty($parent_folder)) //Changement de dossier
 	if (empty($parent_folder))
 		AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=0&' . $popup_noamp, '', '&'));
 	
-	$info_folder = PersistenceContext::get_querier()->select_single_row(DB_TABLE_UPLOAD_CAT, array('id_parent', 'user_id'), 'WHERE id = :id', array('id' => $parent_folder));
+	try {
+		$info_folder = PersistenceContext::get_querier()->select_single_row(DB_TABLE_UPLOAD_CAT, array('id_parent', 'user_id'), 'WHERE id = :id', array('id' => $parent_folder));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_element();
+		DispatchManager::redirect($error_controller);
+	}
+	
 	if ($info_folder['id_parent'] != 0 || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 	{
 		if ($parent_folder['user_id'] == -1)
@@ -224,7 +230,13 @@ elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
-	$file_infos = PersistenceContext::get_querier()->select_single_row(DB_TABLE_UPLOAD, array('id_cat', 'user_id'), 'WHERE id = :id', array('id' => $move_file));
+	try {
+		$file_infos = PersistenceContext::get_querier()->select_single_row(DB_TABLE_UPLOAD, array('id_cat', 'user_id'), 'WHERE id = :id', array('id' => $move_file));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_element();
+		DispatchManager::redirect($error_controller);
+	}
+	
 	$id_cat = $file_infos['idcat'];
 	$file_owner = $file_infos['user_id'];
 	//Si le fichier nous appartient alors on peut en faire ce que l'on veut
@@ -278,7 +290,13 @@ elseif (!empty($move_folder) || !empty($move_file))
 	//Affichage du dossier/fichier à déplacer
 	if ($is_folder)
 	{
-		$folder_info = PersistenceContext::get_querier()->select_single_row(DB_TABLE_UPLOAD_CAT, array('name', 'id_parent'), 'WHERE id = :id', array('id' => $move_folder));
+		try {
+			$folder_info = PersistenceContext::get_querier()->select_single_row(DB_TABLE_UPLOAD_CAT, array('name', 'id_parent'), 'WHERE id = :id', array('id' => $move_folder));
+		} catch (RowNotFoundException $e) {
+			$error_controller = PHPBoostErrors::unexisting_element();
+			DispatchManager::redirect($error_controller);
+		}
+		
 		$name = $folder_info['name'];
 		$id_cat = $folder_info['id_parent'];
 		$tpl->assign_block_vars('folder', array(
@@ -293,7 +311,13 @@ elseif (!empty($move_folder) || !empty($move_file))
 	}
 	else
 	{
-		$info_move = PersistenceContext::get_querier()->select_single_row(DB_TABLE_UPLOAD, array('path', 'name', 'type', 'size', 'idcat'), 'WHERE id = :id', array('id' => $move_file));
+		try {
+			$info_move = PersistenceContext::get_querier()->select_single_row(DB_TABLE_UPLOAD, array('path', 'name', 'type', 'size', 'idcat'), 'WHERE id = :id', array('id' => $move_file));
+		} catch (RowNotFoundException $e) {
+			$error_controller = PHPBoostErrors::unexisting_element();
+			DispatchManager::redirect($error_controller);
+		}
+		
 		$get_img_mimetype = Uploads::get_img_mimetype($info_move['type']);
 		$size_img = '';
 		$display_real_img = false;

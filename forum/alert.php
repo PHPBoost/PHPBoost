@@ -32,7 +32,13 @@ require_once('../forum/forum_tools.php');
 $alert = retrieve(GET, 'id', 0);
 $alert_post = retrieve(POST, 'id', 0);
 $topic_id = !empty($alert) ? $alert : $alert_post;
-$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('idcat', 'title', 'subtitle'), 'WHERE id = :id', array('id' => $topic_id));
+
+try {
+	$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('idcat', 'title', 'subtitle'), 'WHERE id = :id', array('id' => $topic_id));
+} catch (RowNotFoundException $e) {
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
 
 $category = ForumService::get_categories_manager()->get_categories_cache()->get_category($topic['idcat']);
 

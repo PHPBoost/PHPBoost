@@ -263,7 +263,12 @@ elseif (!empty($_POST['pm']) && !empty($pm_id_get) && empty($pm_edit) && empty($
 		//user_view_pm => nombre de messages non lu par l'un des 2 participants.
 		
 		//On récupère les info de la conversation.
-		$convers = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_TOPIC, array('user_id', 'user_id_dest', 'user_convers_status', 'nbr_msg', 'user_view_pm', 'last_user_id'), 'WHERE id = :id', array('id' => $pm_id_get));
+		try {
+			$convers = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_TOPIC, array('user_id', 'user_id_dest', 'user_convers_status', 'nbr_msg', 'user_view_pm', 'last_user_id'), 'WHERE id = :id', array('id' => $pm_id_get));
+		} catch (RowNotFoundException $e) {
+			$error_controller = PHPBoostErrors::unexisting_element();
+			DispatchManager::redirect($error_controller);
+		}
 		
 		//Récupération de l'id du destinataire.
 		$user_id_dest = ($convers['user_id_dest'] == AppContext::get_current_user()->get_id()) ? $convers['user_id'] : $convers['user_id_dest'];
@@ -354,12 +359,23 @@ elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne l
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
-	$pm = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_MSG, array('idconvers', 'contents', 'view_status'), 'WHERE id = :id AND user_id = :user_id', array('id' => $pm_del, 'user_id' => AppContext::get_current_user()->get_id()));
+	try {
+		$pm = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_MSG, array('idconvers', 'contents', 'view_status'), 'WHERE id = :id AND user_id = :user_id', array('id' => $pm_del, 'user_id' => AppContext::get_current_user()->get_id()));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_element();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	if (!empty($pm['idconvers'])) //Permet de vérifier si le message appartient bien au membre.
 	{
 		//On récupère les info de la conversation.
-		$convers = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_TOPIC, array('title', 'user_id', 'user_id_dest', 'last_msg_id'), 'WHERE id = :id', array('id' => $pm['idconvers']));
+		try {
+			$convers = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_TOPIC, array('title', 'user_id', 'user_id_dest', 'last_msg_id'), 'WHERE id = :id', array('id' => $pm['idconvers']));
+		} catch (RowNotFoundException $e) {
+			$error_controller = PHPBoostErrors::unexisting_element();
+			DispatchManager::redirect($error_controller);
+		}
+		
 		if ($pm_del == $convers['last_msg_id']) //On édite uniquement le dernier message.
 		{
 			if ($convers['user_id'] == AppContext::get_current_user()->get_id()) //Expediteur.
@@ -413,11 +429,22 @@ elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne l
 }
 elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la pas encore lu.
 {
-	$pm = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_MSG, array('idconvers', 'contents', 'view_status'), 'WHERE id = :id AND user_id = :user_id', array('id' => $pm_edit, 'user_id' => AppContext::get_current_user()->get_id()));
+	try {
+		$pm = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_MSG, array('idconvers', 'contents', 'view_status'), 'WHERE id = :id AND user_id = :user_id', array('id' => $pm_edit, 'user_id' => AppContext::get_current_user()->get_id()));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_element();
+		DispatchManager::redirect($error_controller);
+	}
+	
 	if (!empty($pm['idconvers'])) //Permet de vérifier si le message appartient bien au membre.
 	{
 		//On récupère les info de la conversation.
-		$convers = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_TOPIC, array('title', 'user_id', 'user_id_dest'), 'WHERE id = :id', array('id' => $pm['idconvers']));
+		try {
+			$convers = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_TOPIC, array('title', 'user_id', 'user_id_dest'), 'WHERE id = :id', array('id' => $pm['idconvers']));
+		} catch (RowNotFoundException $e) {
+			$error_controller = PHPBoostErrors::unexisting_element();
+			DispatchManager::redirect($error_controller);
+		}
 		
 		$view = false;
 		if ($pm['view_status'] == '1') //Le membre a déjà lu le message => échec.
@@ -536,7 +563,12 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	$tpl = new FileTemplate('user/pm.tpl');
 	
 	//On récupère les info de la conversation.
-	$convers = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_TOPIC, array('id', 'title', 'user_id', 'user_id_dest', 'nbr_msg', 'last_msg_id', 'last_user_id', 'user_view_pm'), 'WHERE id = :id AND :user_id IN (user_id, user_id_dest)', array('id' => $pm_id_get, 'user_id' => AppContext::get_current_user()->get_id()));
+	try {
+		$convers = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_TOPIC, array('id', 'title', 'user_id', 'user_id_dest', 'nbr_msg', 'last_msg_id', 'last_user_id', 'user_view_pm'), 'WHERE id = :id AND :user_id IN (user_id, user_id_dest)', array('id' => $pm_id_get, 'user_id' => AppContext::get_current_user()->get_id()));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_element();
+		DispatchManager::redirect($error_controller);
+	}
 
 	//Vérification des autorisations.
 	if (empty($convers['id']) || ($convers['user_id'] != AppContext::get_current_user()->get_id() && $convers['user_id_dest'] != AppContext::get_current_user()->get_id()))
@@ -656,7 +688,13 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	//Récupération du message quoté.
 	if (!empty($quote_get))
 	{
-		$quote_msg = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_MSG, array('user_id', 'contents'), 'WHERE id = :id', array('id' => $quote_get));
+		try {
+			$quote_msg = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_MSG, array('user_id', 'contents'), 'WHERE id = :id', array('id' => $quote_get));
+		} catch (RowNotFoundException $e) {
+			$error_controller = PHPBoostErrors::unexisting_element();
+			DispatchManager::redirect($error_controller);
+		}
+		
 		$pseudo = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id = :id', array('id' => $quote_msg['user_id']));
 		
 		$contents = '[quote=' . $pseudo . ']' . FormatingHelper::unparse($quote_msg['contents']) . '[/quote]';

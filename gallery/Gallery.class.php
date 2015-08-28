@@ -257,7 +257,13 @@ class Gallery
 	//Supprime une image
 	public function Del_pics($id_pics)
 	{
-		$info_pics = PersistenceContext::get_querier()->select_single_row(GallerySetup::$gallery_table, array('path', 'idcat', 'aprob'), "WHERE id = :id", array('id' => $id_pics));
+		try {
+			$info_pics = PersistenceContext::get_querier()->select_single_row(GallerySetup::$gallery_table, array('path', 'idcat', 'aprob'), "WHERE id = :id", array('id' => $id_pics));
+		} catch (RowNotFoundException $e) {
+			$error_controller = PHPBoostErrors::unexisting_element();
+			DispatchManager::redirect($error_controller);
+		}
+		
 		if (!empty($info_pics['path']))
 		{
 			PersistenceContext::get_querier()->delete(PREFIX . 'gallery', 'WHERE id=:id', array('id' => $id_pics));

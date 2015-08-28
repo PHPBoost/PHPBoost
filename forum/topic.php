@@ -35,13 +35,13 @@ $id_get = $request->get_getint('id', 0);
 $quote_get = $request->get_getint('quote', 0);
 
 //On va chercher les infos sur le topic
-$topic = !empty($id_get) ? PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id', 'user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'), 'WHERE id=:id', array('id' => $id_get)) : '';
-//Existance du topic.
-if (empty($topic['id']))
-{
-	$controller = PHPBoostErrors::unexisting_page();
-    DispatchManager::redirect($controller);
+try {
+	$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id', 'user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'), 'WHERE id=:id', array('id' => $id_get));
+} catch (RowNotFoundException $e) {
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
 }
+
 //Existance de la catégorie.
 if ($topic['idcat'] != Category::ROOT_CATEGORY && !ForumService::get_categories_manager()->get_categories_cache()->category_exists($topic['idcat']))
 {
@@ -538,7 +538,13 @@ $vars_tpl = array_merge($vars_tpl, array(
 $contents = '';
 if (!empty($quote_get))
 {
-	$quote_msg = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', array('user_id', 'contents'), 'WHERE id=:id', array('id' => $quote_get));
+	try {
+		$quote_msg = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', array('user_id', 'contents'), 'WHERE id=:id', array('id' => $quote_get));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_element();
+		DispatchManager::redirect($error_controller);
+	}
+	
 	$pseudo = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id=:id', array('id' => $quote_msg['user_id']));
 	$contents = '[quote=' . $pseudo . ']' . FormatingHelper::unparse($quote_msg['contents']) . '[/quote]';
 }

@@ -490,8 +490,8 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		try {
 			$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('title', 'subtitle', 'type', 'user_id', 'display_msg'), 'WHERE id=:id', array('id' => $idt_get));
 		} catch (RowNotFoundException $e) {
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_unexist_topic_forum']);
-			DispatchManager::redirect($controller);
+			$error_controller = PHPBoostErrors::unexisting_element();
+			DispatchManager::redirect($error_controller);
 		}
 
 		$is_modo = ForumAuthorizationsService::check_authorizations($id_get)->moderation();
@@ -698,7 +698,10 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				$poll = array('question' => '', 'answers' => '', 'votes' => '', 'type' => '');
 				try {
 					$poll = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_poll', array('question', 'answers', 'votes', 'type'), 'WHERE idtopic=:id', array('id' => $idt_get));
-				} catch (RowNotFoundException $e) {}
+				} catch (RowNotFoundException $e) {
+					$error_controller = PHPBoostErrors::unexisting_element();
+					DispatchManager::redirect($error_controller);
+				}
 				
 				$array_answer = explode('|', $poll['answers']);
 				$array_votes = explode('|', $poll['votes']);
@@ -889,7 +892,12 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 	{
 		if (!empty($id_get) && !empty($idt_get) && ($error_get === 'flood' || $error_get === 'incomplete' || $error_get === 'locked'))
 		{
-			$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('idcat', 'title', 'subtitle'), 'WHERE id=:id', array('id' => $idt_get));
+			try {
+				$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('idcat', 'title', 'subtitle'), 'WHERE id=:id', array('id' => $idt_get));
+			} catch (RowNotFoundException $e) {
+				$error_controller = PHPBoostErrors::unexisting_element();
+				DispatchManager::redirect($error_controller);
+			}
 			if (empty($topic['idcat'])) //Topic inexistant.
 			{
 				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 

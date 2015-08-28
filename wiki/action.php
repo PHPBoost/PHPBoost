@@ -101,7 +101,13 @@ if ($id_change_status > 0)
 	else
 		$id_status = 0;
 		
-	$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('encoded_title', 'auth'), 'WHERE id = :id', array('id' => $id_change_status));
+	try {
+		$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('encoded_title', 'auth'), 'WHERE id = :id', array('id' => $id_change_status));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+	
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 	
@@ -121,7 +127,13 @@ if ($id_change_status > 0)
 }
 elseif ($move > 0) //Déplacement d'un article
 {
-	$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('is_cat', 'encoded_title', 'id_cat', 'auth'), 'WHERE id = :id', array('id' => $move));
+	try {
+		$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('is_cat', 'encoded_title', 'id_cat', 'auth'), 'WHERE id = :id', array('id' => $move));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+	
 	if ( empty($article_infos['encoded_title']))//Ce n'est pas un article ou une catégorie
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php', '', '&'));
 		
@@ -164,8 +176,13 @@ elseif ($move > 0) //Déplacement d'un article
 }
 elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 {
-	$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('*'), 'WHERE id = :id', array('id' => $id_to_rename));
-		
+	try {
+		$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('*'), 'WHERE id = :id', array('id' => $id_to_rename));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+	
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
@@ -211,31 +228,36 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 				$db_querier->update(PREFIX . "wiki_cats", array('article_id' => $new_id_article), 'WHERE id = :id', array('id' => $article_infos['id_cat']));
 			}
 			WikiCategoriesCache::invalidate();
-    		 // Feeds Regeneration
-             Feed::clear_cache('wiki');
+			 // Feeds Regeneration
+			 Feed::clear_cache('wiki');
 		   AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($new_title), Url::encode_rewrite($new_title), '&'));
 		}
 		else //On met à jour l'article
 		{
 			$db_querier->update(PREFIX . "wiki_articles", array('title' => $new_title, 'encoded_title' => Url::encode_rewrite($new_title)), 'WHERE id = :id', array('id' => $id_to_rename));
 			
-            //Cache Regeneration
-            WikiCategoriesCache::invalidate();
-            Feed::clear_cache('wiki');
-            
-            AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($new_title), Url::encode_rewrite($new_title), '&'));
+			//Cache Regeneration
+			WikiCategoriesCache::invalidate();
+			Feed::clear_cache('wiki');
+			
+			AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($new_title), Url::encode_rewrite($new_title), '&'));
 		}
 	}
 }
 elseif ($del_redirection > 0)//Supprimer une redirection
 {
-    //Vérification de la validité du jeton
-    AppContext::get_session()->csrf_get_protect();
-    
+	//Vérification de la validité du jeton
+	AppContext::get_session()->csrf_get_protect();
+	
 	$is_redirection = $db_querier->get_column_value(PREFIX . "wiki_articles", 'redirect', 'WHERE id = :id', array('id' => $del_redirection));
 	if ($is_redirection > 0)
 	{
-		$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('encoded_title', 'auth'), 'WHERE id = :id', array('id' => $is_redirection));
+		try {
+			$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('encoded_title', 'auth'), 'WHERE id = :id', array('id' => $is_redirection));
+		} catch (RowNotFoundException $e) {
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
 		
 		$general_auth = empty($article_infos['auth']) ? true : false;
 		$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
@@ -252,7 +274,12 @@ elseif ($del_redirection > 0)//Supprimer une redirection
 }
 elseif ($create_redirection > 0 && !empty($redirection_title))
 {
-	$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('*'), 'WHERE id = :id', array('id' => $create_redirection));
+	try {
+		$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('*'), 'WHERE id = :id', array('id' => $create_redirection));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
@@ -284,7 +311,12 @@ elseif (!empty($restore)) //on restaure un ancien article
 	if (!empty($id_article))
 	{
 		//On récupère l'ancien id du contenu
-		$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('id_contents', 'encoded_title', 'auth'), 'WHERE id = :id', array('id' => $id_article));
+		try {
+			$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('id_contents', 'encoded_title', 'auth'), 'WHERE id = :id', array('id' => $id_article));
+		} catch (RowNotFoundException $e) {
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
 		
 		$general_auth = empty($article_infos['auth']) ? true : false;
 		$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
@@ -308,11 +340,22 @@ elseif (!empty($restore)) //on restaure un ancien article
 //Suppression d'une archive
 elseif ($del_archive > 0)
 {
-    //Vérification de la validité du jeton
-    AppContext::get_session()->csrf_get_protect();
-    
-	$contents_infos = $db_querier->select_single_row(PREFIX . "wiki_contents", array('activ', 'id_article'), 'WHERE id_contents = :id', array('id' => $del_archive));
-	$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('encoded_title', 'auth'), 'WHERE id = :id', array('id' => $contents_infos['id_article']));
+	//Vérification de la validité du jeton
+	AppContext::get_session()->csrf_get_protect();
+	
+	try {
+		$contents_infos = $db_querier->select_single_row(PREFIX . "wiki_contents", array('activ', 'id_article'), 'WHERE id_contents = :id', array('id' => $del_archive));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+	
+	try {
+		$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('encoded_title', 'auth'), 'WHERE id = :id', array('id' => $contents_infos['id_article']));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	$general_auth = empty($article_infos['auth']);
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
@@ -330,10 +373,15 @@ elseif ($del_archive > 0)
 }
 elseif ($del_article > 0) //Suppression d'un article
 {
-    //Vérification de la validité du jeton
-    AppContext::get_session()->csrf_get_protect();
-    
-	$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('auth', 'encoded_title', 'id_cat'), 'WHERE id = :id', array('id' => $del_article));
+	//Vérification de la validité du jeton
+	AppContext::get_session()->csrf_get_protect();
+	
+	try {
+		$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('auth', 'encoded_title', 'id_cat'), 'WHERE id = :id', array('id' => $del_article));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
@@ -351,8 +399,8 @@ elseif ($del_article > 0) //Suppression d'un article
 	CommentsService::delete_comments_topic_module('wiki', $del_article);
 
 	 // Feeds Regeneration
-     
-     Feed::clear_cache('wiki');
+	 
+	 Feed::clear_cache('wiki');
 	
 	if (array_key_exists($article_infos['id_cat'], $categories))//Si elle  a une catégorie parente
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($categories[$article_infos['id_cat']]['title']), Url::encode_rewrite($categories[$article_infos['id_cat']]['title']), '&'));
@@ -363,7 +411,12 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 {
 	$remove_action = ($remove_action == 'move_all') ? 'move_all' : 'remove_all';
 	
-	$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('encoded_title', 'id_cat', 'auth'), 'WHERE id = :id', array('id' => $del_to_remove));
+	try {
+		$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('encoded_title', 'id_cat', 'auth'), 'WHERE id = :id', array('id' => $del_to_remove));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
@@ -423,8 +476,8 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 		WikiCategoriesCache::invalidate();
 
 		// Feeds Regeneration
-        
-        Feed::clear_cache('wiki');
+		
+		Feed::clear_cache('wiki');
 		
 		//On redirige soit vers l'article parent soit vers la catégorie
 		if (array_key_exists($article_infos['id_cat'], $categories) && $categories[$article_infos['id_cat']]['id_parent'] > 0)

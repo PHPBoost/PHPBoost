@@ -47,7 +47,13 @@ $categories = WikiCategoriesCache::load()->get_categories();
 if ($id_auth > 0) //Autorisations de l'article
 {
 	define('TITLE', $LANG['wiki_auth_management']);
-	$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('id', 'title', 'encoded_title', 'auth', 'is_cat', 'id_cat'), 'WHERE id = :id', array('id' => $id_auth));
+	
+	try {
+		$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('id', 'title', 'encoded_title', 'auth', 'is_cat', 'id_cat'), 'WHERE id = :id', array('id' => $id_auth));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	if (!AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_RESTRICTION))
 	{
@@ -58,7 +64,13 @@ if ($id_auth > 0) //Autorisations de l'article
 elseif ($wiki_status > 0)//On s'intéresse au statut de l'article
 {
 	define('TITLE', $LANG['wiki_status_management']);
-	$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $wiki_status));
+	
+	try {
+		$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $wiki_status));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
@@ -72,7 +84,13 @@ elseif ($wiki_status > 0)//On s'intéresse au statut de l'article
 elseif ($move > 0) //Déplacement d'article
 {
 	define('TITLE', $LANG['wiki_moving_article']);
-	$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $move));
+	
+	try {
+		$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $move));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
@@ -86,7 +104,13 @@ elseif ($move > 0) //Déplacement d'article
 elseif ($rename > 0) //Renommer l'article
 {
 	define('TITLE', $LANG['wiki_renaming_article']);
-	$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $rename));
+	
+	try {
+		$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $rename));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
@@ -100,9 +124,24 @@ elseif ($rename > 0) //Renommer l'article
 elseif ($redirect > 0 || $create_redirection > 0)//Redirection
 {
 	if ($redirect > 0)
-		$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $redirect));
+	{
+		try {
+			$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $redirect));
+		} catch (RowNotFoundException $e) {
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+	}
 	else
-		$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $create_redirection));
+	{
+		try {
+			$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $create_redirection));
+		} catch (RowNotFoundException $e) {
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+	}
+	
 	define('TITLE', $LANG['wiki_redirections_management']);
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
@@ -116,7 +155,13 @@ elseif ($redirect > 0 || $create_redirection > 0)//Redirection
 }
 elseif (AppContext::get_request()->has_getparameter('com') && $idcom > 0)
 {
-	$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $id_com));
+	try {
+		$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $id_com));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+	
 	define('TITLE', $LANG['wiki_article_com']);
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
@@ -129,7 +174,13 @@ elseif (AppContext::get_request()->has_getparameter('com') && $idcom > 0)
 }
 elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
 {
-	$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $del_article));
+	try {
+		$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $del_article));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+	
 	define('TITLE', $LANG['wiki_remove_cat']);
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;

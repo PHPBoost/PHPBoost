@@ -176,7 +176,12 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 {
 	$template = new FileTemplate('admin/admin_groups_management2.tpl');
 	
-	$group = PersistenceContext::get_querier()->select_single_row(DB_TABLE_GROUP, array('id', 'name', 'img', 'color', 'auth', 'members'), 'WHERE id=:id', array('id' => $idgroup));
+	try {
+		$group = PersistenceContext::get_querier()->select_single_row(DB_TABLE_GROUP, array('id', 'name', 'img', 'color', 'auth', 'members'), 'WHERE id=:id', array('id' => $idgroup));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	if (!empty($group['id']))
 	{
