@@ -510,7 +510,7 @@ else
 				'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
 				'BBCODE' => '<input readonly="readonly" type="text" onclick="select_div(\'text_' . $row['id'] . '\');" id="text_' . $row['id'] . '" style="margin-top:2px;cursor:pointer;" value="' . $bbcode . '">',
 				'SIZE' => ($row['size'] > 1024) ? NumberHelper::round($row['size']/1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($row['size'], 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
-				'LIGHTBOX' => !empty($size_img) ? ' data-lightbox="1"' : '',
+				'LIGHTBOX' => !empty($size_img) ? ' data-lightbox="1" data-rel="lightcase:collection"' : '',
 				'U_MOVE' => '.php?movefi=' . $row['id'] . '&amp;f=' . $folder . '&amp;fm=' . $row['user_id']
 				
 			));

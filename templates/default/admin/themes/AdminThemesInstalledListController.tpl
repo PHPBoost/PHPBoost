@@ -24,13 +24,13 @@
 						<span class="text-strong">{themes_installed.NAME}</span> <em>({themes_installed.VERSION})</em>
 						<br /><br />
 						# IF themes_installed.C_PICTURES #
-							<a href="{themes_installed.MAIN_PICTURE}" data-lightbox="{themes_installed.ID}" title="{themes_installed.NAME}">
+							<a href="{themes_installed.MAIN_PICTURE}" data-lightbox="{themes_installed.ID}" data-rel="lightcase:collection" title="{themes_installed.NAME}">
 								<img src="{themes_installed.MAIN_PICTURE}" alt="{themes_installed.NAME}" style="vertical-align:top; max-height:180px;" />
 								<br/>
 								{@themes.view_real_preview}
 							</a>
 							# START themes_installed.pictures #
-								<a href="{themes_installed.pictures.URL}" data-lightbox="{themes_installed.ID}" title="{themes_installed.NAME}"></a>
+								<a href="{themes_installed.pictures.URL}" data-lightbox="{themes_installed.ID}" data-rel="lightcase:collection" title="{themes_installed.NAME}"></a>
 							# END themes_installed.pictures #
 						# ENDIF #
 						
