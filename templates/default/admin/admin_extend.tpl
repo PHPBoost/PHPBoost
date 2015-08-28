@@ -12,9 +12,9 @@
 			<a href="{PATH_TO_ROOT}/admin/admin_index.php" class="quick-link">{L_INDEX_ADMIN}</a>
 		</li>
 		<li>
-			<a href="{PATH_TO_ROOT}/admin/admin_index.php?disconnect=true&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/home.png" alt="" /></a>
+			<a href="${relative_url(UserUrlBuilder::disconnect())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/home.png" alt="" /></a>
 			<br />
-			<a href="{PATH_TO_ROOT}/admin/admin_index.php?disconnect=true&amp;token={TOKEN}" class="quick-link">{L_DISCONNECT}</a>
+			<a href="${relative_url(UserUrlBuilder::disconnect())}" class="quick-link">{L_DISCONNECT}</a>
 		</li>
 	</ul>
 </div>
