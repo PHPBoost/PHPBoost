@@ -181,7 +181,7 @@ class UserLoginController extends AbstractController
 		{
 			$response = new SiteDisplayFrameResponse($this->view);
 			$graphical_environment = $response->get_graphical_environment();
-			$graphical_environment->set_page_title(($this->login_type == self::ADMIN_LOGIN ? LangLoader::get_message('administration', 'admin') : LangLoader::get_message('title_maintain', 'main')), $this->lang['user']);
+			$graphical_environment->set_page_title(($this->login_type == self::ADMIN_LOGIN ? LangLoader::get_message('administration', 'admin') : LangLoader::get_message('title_maintain', 'main')));
 			return $response;
 		}
 		else

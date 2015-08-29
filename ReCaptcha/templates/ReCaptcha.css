@@ -33,17 +33,9 @@
 }
 
 #recaptcha_image {
-	width: 100% !important;
+	width: 96% !important;
 	height: auto !important;
 	max-width: 100%;
-}
-
-@media ( max-width: 480px ) {
-	#recaptcha_image {
-		width: 95% !important;
-		height: auto !important;
-		max-width: 100%;
-	}
 }
 
 #recaptcha_image img { width: 100%; }

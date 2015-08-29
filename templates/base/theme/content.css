@@ -1485,3 +1485,11 @@ ul#profile-container li {
 	padding: 10px;
 	text-align: center;
 }
+
+
+/* -- Maintenance --
+--------------------------------------*/
+
+#maintain { margin: 10px 0px; }
+
+div.delay { margin: 20px 0px; }

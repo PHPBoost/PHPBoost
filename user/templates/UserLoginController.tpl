@@ -85,11 +85,8 @@
 		.fieldset-content {
 			margin: 0px auto;
 			width: 450px;
+			max-width: 100%;
 		}
-		
-		form#loginForm { max-width: 100%; }
-		
-		html { height: 100%; }
 		
 		body {
 			background: #E8EDF3;
@@ -99,19 +96,20 @@
 		}
 		
 		div#global {
-			padding:20px;
+			padding: 20px;
 			border-spacing: 1px;
 			border: 1px #bebebe solid;
 			background: #ffffff;
-			min-height:0;
-			position:relative;
-			top:30%
+			min-height: 0;
+			position: relative;
+			top: 30%
 		}
-
-		#maintain { margin:10px 0px; }
 		
-		div.delay { margin:20px 0px; }
-		
+		@media ( max-width: 780px ) {
+			div#global {
+				top: 15%
+			}
+		}
 		-->
 		</style>
 	</div>
