@@ -2078,3 +2078,30 @@
 .fa-trend-down:before { /* copie caret-down */
 	content: "\f0d7";
 }
+.fa-upload-audio:before { /* copie fa-file-audio-o */
+	content: "\f1c7";
+}
+.fa-upload-exec:before { /* copie fa-cog */
+	content: "\f013";
+}
+.fa-upload-html:before { /* copie fa-html5 */
+	content: "\f13b";
+}
+.fa-upload-pdf:before { /* copie fa-file-pdf-o */
+	content: "\f1c1";
+}
+.fa-upload-picture:before { /* copie fa-file-picture-o*/
+	content: "\f1c5";
+}
+.fa-upload-script:before { /* copie fa-fa-code-o */
+	content: "\f1c9";
+}
+.fa-upload-text:before { /* copie fa-file-text-o */
+	content: "\f0f6";
+}
+.fa-upload-video:before { /* copie fa-file-video-o */
+	content: "\f1c8";
+}
+.fa-upload-zip:before { /* copie fa-file-zip-o */
+	content: "\f1c6";
+}
