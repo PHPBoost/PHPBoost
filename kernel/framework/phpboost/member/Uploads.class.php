@@ -347,46 +347,46 @@ class Uploads
 			case 'gif':
 			case 'bmp':
 			case 'svg':
-			$img = 'picture.png';
+			$img = 'fa-upload-picture';
 			$filetype = sprintf(LangLoader::get_message('image_type', 'main'), strtoupper($type));
 			break;
 			//Archives
 			case 'rar':
 			case 'gz':
 			case 'zip':
-			$img = 'zip.png';
+			$img = 'fa-upload-zip';
 			$filetype = sprintf(LangLoader::get_message('zip_type', 'main'), strtoupper($type));
 			break;
 			//Pdf
 			case 'pdf':
-			$img = 'pdf.png';
+			$img = 'fa-upload-pdf';
 			$filetype = LangLoader::get_message('adobe_pdf', 'main');
 			break;
 			//Son
 			case 'wav':
 			case 'mp3':
-			$img = 'audio.png';
+			$img = 'fa-upload-audio';
 			$filetype = sprintf(LangLoader::get_message('audio_type', 'main'), strtoupper($type));
 			break;
 			//Sripts
 			case 'html':
-			$img = 'html.png';
+			$img = 'fa-upload-html';
 			break;
 			case 'js':
 			case 'php':
-			$img = 'script.png';
+			$img = 'fa-upload-script';
 			break;
 			//Vidéos
 			case 'wmv':
 			case 'avi':
-			$img = 'video.png';
+			$img = 'fa-upload-video';
 			break;
 			//Executables
 			case 'exe':
-			$img = 'exec.png';
+			$img = 'fa-upload-exec';
 			break;
 			default:
-			$img = 'text.png';
+			$img = 'fa-upload-text';
 			$filetype = sprintf(LangLoader::get_message('document_type', 'main'), strtoupper($type));
 		}
 		

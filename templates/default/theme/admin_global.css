@@ -718,6 +718,10 @@ div.message-helper-small { width: 50%; }
 	margin: 10px;
 }
 
+.upload-elements-file i {
+	margin-left: 40%;
+}
+
 .upload-elements-repertory {
 	height: 60px;
 }

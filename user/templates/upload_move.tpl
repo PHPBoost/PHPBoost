@@ -28,7 +28,8 @@
 							# IF file.C_DISPLAY_REAL_IMG #
 								<img src="{PATH_TO_ROOT}/upload/{file.FILE_ICON}" alt="" style="width:100px;height:auto;" />
 							# ELSE #
-								<img src="{PATH_TO_ROOT}/templates/default/images/upload/{file.FILE_ICON}" alt="" />
+								<i class="fa fa-2x {file.FILE_ICON}"></i>
+								<div class="spacer"></div>
 							# ENDIF #
 							{file.NAME}
 							<span class="smaller">{file.FILETYPE}</span><br />

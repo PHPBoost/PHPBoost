@@ -289,7 +289,8 @@
 	
 							# START files #	
 							<div class="upload-elements-file">
-								<img src="{PATH_TO_ROOT}/templates/default/images/upload/{files.IMG}" alt=""/>
+								<span class="center"><i class="fa fa-2x {files.IMG}"></i></span>
+								<div class="spacer"></div>
 								<a class="com # IF files.C_RECENT_FILE #upload-recent-file# END IF #" href="{files.URL}"{files.LIGHTBOX}id="fi1{files.ID}">{files.NAME}</a><span id="fi{files.ID}"></span><br />
 								{files.BBCODE}<br />
 								<span class="text-strong">{files.FILETYPE}</span><br />
