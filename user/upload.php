@@ -106,7 +106,7 @@ if (!empty($parent_folder)) //Changement de dossier
 }
 elseif ($home_folder) //Retour à la racine.
 	AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?' . $popup_noamp, '', '&'));
-elseif (!empty($_FILES['upload_file']['name']) && AppContext::get_request()->has_getparameter('i')) //Ajout d'un fichier.
+elseif (!empty($_FILES['upload_file']['name']) && AppContext::get_request()->has_getparameter('f')) //Ajout d'un fichier.
 {
 	$error = '';
 	//Autorisation d'upload aux groupes.
@@ -120,9 +120,9 @@ elseif (!empty($_FILES['upload_file']['name']) && AppContext::get_request()->has
 	{
 		//Si le dossier n'est pas en écriture on tente un CHMOD 777
 		@clearstatcache();
-		$dir = '../upload/';
+		$dir = PATH_TO_ROOT . '/upload/';
 		if (!is_writable($dir))
-			$is_writable = (@chmod($dir, 0777)) ? true : false;
+			$is_writable = (@chmod($dir, 0777));
 		
 		@clearstatcache();
 		if (is_writable($dir)) //Dossier en écriture, upload possible

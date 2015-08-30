@@ -67,9 +67,9 @@ elseif (!empty($_FILES['upload_file']['name']) && $folder) //Ajout d'un fichier.
 {
 	//Si le dossier n'est pas en écriture on tente un CHMOD 777
 	@clearstatcache();
-	$dir = PATH_TO_ROOT .'/upload/';
+	$dir = PATH_TO_ROOT . '/upload/';
 	if (!is_writable($dir))
-		$is_writable = (@chmod($dir, 0777)) ? true : false;
+		$is_writable = (@chmod($dir, 0777));
 	
 	@clearstatcache();
 	$error = '';

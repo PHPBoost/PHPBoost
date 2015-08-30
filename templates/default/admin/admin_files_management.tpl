@@ -23,13 +23,13 @@
 				
 			if( !hide_folder )
 			{
-				document.getElementById('new-folder').innerHTML += '<div class="upload-elements-repertory" id="new-folder' + divid + '"><i class="fa fa-folder fa-2x"></i> <input type="text" name="folder-name" id="folder-name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + divid + ');"></div>';
+				document.getElementById('new-folder').innerHTML += '<div class="upload-elements-repertory" id="new-folder' + divid + '"><i class="fa fa-folder"></i> <input type="text" name="folder-name" id="folder-name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + divid + ');"></div>';
 				document.getElementById('folder-name').focus();
 			}
 			else
 			{
 				document.getElementById('new-folder' + (divid - 1)).style.display = 'block';
-				document.getElementById('new-folder' + (divid - 1)).innerHTML = '<div class="upload-elements-repertory" id="new-folder' + divid + '"><i class="fa fa-folder fa-2x"></i> <input type="text" name="folder-name" id="folder-name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + (divid-1) + ');"></div>';
+				document.getElementById('new-folder' + (divid - 1)).innerHTML = '<div class="upload-elements-repertory" id="new-folder' + divid + '"><i class="fa fa-folder"></i> <input type="text" name="folder-name" id="folder-name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + (divid-1) + ');"></div>';
 				document.getElementById('folder-name').focus();
 				this.divid--;
 				hide_folder = false;
@@ -49,10 +49,10 @@
 			var regex = /\/|\.|\\|\||\?|<|>|\"/;
 
 			document.getElementById('img' + id_folder).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
-			if( name != '' && regex.test(name) ) //interdiction des caract�res sp�ciaux dans le nom.
+			if( name != '' && regex.test(name) ) //interdiction des caracteres speciaux dans le nom.
 			{
 				alert("{L_FOLDER_FORBIDDEN_CHARS}");
-				document.getElementById('f' + id_folder).innerHTML = '<a class="com" href="admin_files.php?f=' + id_folder + '">' + previous_cut_name + '</a>';
+				document.getElementById('f' + id_folder).innerHTML = '<a href="admin_files.php?f=' + id_folder + '">' + previous_cut_name + '</a>';
 				document.getElementById('img' + id_folder).innerHTML = '';
 			}
 			else if( name != '' )
@@ -65,13 +65,13 @@
 					{
 						if( xhr_object.responseText != "" )
 						{
-							document.getElementById('f' + id_folder).innerHTML = '<a class="com" href="admin_files.php?f=' + id_folder + '">' + name + '</a>';
+							document.getElementById('f' + id_folder).innerHTML = '<a href="admin_files.php?f=' + id_folder + '">' + name + '</a>';
 							document.getElementById('fhref' + id_folder).innerHTML = '<a href="javascript:display_rename_folder(\'' + id_folder + '\', \'' + xhr_object.responseText.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="fa fa-edit"></a>';
 						}
 						else
 						{	
 							alert("{L_FOLDER_ALREADY_EXIST}");
-							document.getElementById('f' + id_folder).innerHTML = '<a class="com" href="admin_files.php?f=' + id_folder + '">' + previous_cut_name + '</a>';
+							document.getElementById('f' + id_folder).innerHTML = '<a href="admin_files.php?f=' + id_folder + '">' + previous_cut_name + '</a>';
 						}
 						document.getElementById('img' + id_folder).innerHTML = '';
 					}
@@ -103,7 +103,7 @@
 					{
 						if( xhr_object.responseText > 0 )
 						{
-							document.getElementById('new-folder' + divid).innerHTML = '<a href="admin_files.php?f=' + xhr_object.responseText + '"><i class="fa fa-folder fa-2x"></i></a> <span id="f' + xhr_object.responseText + '"><a href="admin_files.php?f=' + xhr_object.responseText + '" class="com">' + name + '</a></span><br /><span id="fhref' + xhr_object.responseText + '"><span id="fihref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="fa fa-edit"></a></span></span> <a href="admin_files.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}" class="fa fa-delete" data-confirmation="delete-element"></a> <a href="admin_files.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;fm=' + user_id + '" title="{L_MOVETO}" class="fa fa-move"></a> <span id="img' + xhr_object.responseText + '"></span>';
+							document.getElementById('new-folder' + divid).innerHTML = '<a href="admin_files.php?f=' + xhr_object.responseText + '"><i class="fa fa-folder"></i></a> <span id="f' + xhr_object.responseText + '"><a href="admin_files.php?f=' + xhr_object.responseText + '">' + name + '</a></span><br /><span id="fhref' + xhr_object.responseText + '"><span id="fihref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="fa fa-edit"></a></span></span> <a href="admin_files.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}" class="fa fa-delete" data-confirmation="delete-element"></a> <a href="admin_files.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;fm=' + user_id + '" title="{L_MOVETO}" class="fa fa-move"></a> <span id="img' + xhr_object.responseText + '"></span>';
 							var total_folder = document.getElementById('total-folder').innerHTML;
 							total_folder++;
 							document.getElementById('total-folder').innerHTML = total_folder;
@@ -277,8 +277,8 @@
 						# ELSE #
 							# START folder #
 								<div class="upload-elements-repertory">
-									<a href="admin_files.php{folder.U_FOLDER}"><i class="fa # IF folder.C_MEMBER_FOLDER #fa-users# ELSE #fa-folder# ENDIF # fa-2x"></i></a>
-									<span id="f{folder.ID}"><a href="admin_files.php{folder.U_FOLDER}" class="com">{folder.NAME}</a></span><br />
+									<a href="admin_files.php{folder.U_FOLDER}"><i class="fa # IF folder.C_MEMBER_FOLDER #fa-users# ELSE #fa-folder# ENDIF #"></i></a>
+									<span id="f{folder.ID}"><a href="admin_files.php{folder.U_FOLDER}">{folder.NAME}</a></span><br />
 									{folder.RENAME_FOLDER}
 									<a href="admin_files.php?{folder.DEL_TYPE}={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{FOLDERM_ID}" title="{folder.L_TYPE_DEL_FOLDER}" data-confirmation="# IF folder.C_MEMBER_FOLDER #{L_CONFIRM_EMPTY_FOLDER}# ELSE #delete-element# ENDIF #"><i class="fa fa-delete"></i></a>
 									# IF folder.C_TYPEFOLDER #<a href="admin_files{folder.U_MOVE}" title="{L_MOVETO}"><i class="fa fa-move"></i></a># ENDIF #
@@ -289,9 +289,8 @@
 	
 							# START files #	
 							<div class="upload-elements-file">
-								<span class="center"><i class="fa fa-2x {files.IMG}"></i></span>
-								<div class="spacer"></div>
-								<a class="com # IF files.C_RECENT_FILE #upload-recent-file# END IF #" href="{files.URL}"{files.LIGHTBOX}id="fi1{files.ID}">{files.NAME}</a><span id="fi{files.ID}"></span><br />
+								<i class="fa {files.IMG}"></i>
+								<a class="# IF files.C_RECENT_FILE #upload-recent-file# END IF #" href="{files.URL}"{files.LIGHTBOX}id="fi1{files.ID}">{files.NAME}</a><span id="fi{files.ID}"></span><br />
 								{files.BBCODE}<br />
 								<span class="text-strong">{files.FILETYPE}</span><br />
 								<span class="text-strong">{files.SIZE}</span><br />

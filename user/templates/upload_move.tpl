@@ -19,8 +19,8 @@
 				<div class="upload-elements-container">
 					# START folder #
 						<div style="float:left;width:33%;text-align:center;">
-							<i class="fa fa-folder fa-2x"></i> {folder.NAME}
-						</div>	
+							<i class="fa fa-folder"></i> {folder.NAME}
+						</div>
 					# END folder #
 							
 					# START file #
@@ -28,8 +28,7 @@
 							# IF file.C_DISPLAY_REAL_IMG #
 								<img src="{PATH_TO_ROOT}/upload/{file.FILE_ICON}" alt="" style="width:100px;height:auto;" />
 							# ELSE #
-								<i class="fa fa-2x {file.FILE_ICON}"></i>
-								<div class="spacer"></div>
+								<i class="fa {file.FILE_ICON}"></i>
 							# ENDIF #
 							{file.NAME}
 							<span class="smaller">{file.FILETYPE}</span><br />
