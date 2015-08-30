@@ -47,7 +47,7 @@
 							<div style="float:left;width:33%;text-align:center;">
 								<strong>{L_MOVE_TO}</strong>
 								<br />
-								<i class="fa fa-arrow-right fa-2x"></i>
+								<i class="fa fa-arrow-right"></i>
 							</div>
 							<div style="float:left;width:33%;text-align:center;">
 									<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/upload.js"></script>

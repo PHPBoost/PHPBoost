@@ -231,7 +231,7 @@ elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	try {
-		$file_infos = PersistenceContext::get_querier()->select_single_row(DB_TABLE_UPLOAD, array('id_cat', 'user_id'), 'WHERE id = :id', array('id' => $move_file));
+		$file_infos = PersistenceContext::get_querier()->select_single_row(DB_TABLE_UPLOAD, array('idcat', 'user_id'), 'WHERE id = :id', array('id' => $move_file));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
@@ -270,7 +270,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 		'C_DISPLAY_CLOSE_BUTTON' => $display_close_button,
 		'FIELD' => $field,
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
-		'URL' => '' . trim(Uploads::get_url($folder, '', '&amp;' . $popup), '/'),
+		'URL' => Uploads::get_url($folder, '', '&amp;' . $popup),
 		'L_FILES_MANAGEMENT' => $LANG['files_management'],
 		'L_MOVE_TO' => $LANG['moveto'],
 		'L_ROOT' => $LANG['root'],
