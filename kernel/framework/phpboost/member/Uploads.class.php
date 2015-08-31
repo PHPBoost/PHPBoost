@@ -343,50 +343,91 @@ class Uploads
 		{
 			//Images
 			case 'jpg':
+			case 'jpeg':
 			case 'png':
 			case 'gif':
 			case 'bmp':
 			case 'svg':
-			$img = 'fa-upload-picture';
+			case 'nef':
+			case 'raw':
+			case 'ico':
+			case 'tif':
+			$img = 'fa-upload-picture fa-2x';
 			$filetype = sprintf(LangLoader::get_message('image_type', 'main'), strtoupper($type));
 			break;
 			//Archives
 			case 'rar':
 			case 'gz':
 			case 'zip':
-			$img = 'fa-upload-zip';
+			case '7z':
+			$img = 'fa-upload-zip fa-2x';
 			$filetype = sprintf(LangLoader::get_message('zip_type', 'main'), strtoupper($type));
 			break;
 			//Pdf
 			case 'pdf':
-			$img = 'fa-upload-pdf';
+			$img = 'fa-upload-pdf fa-2x';
 			$filetype = LangLoader::get_message('adobe_pdf', 'main');
 			break;
 			//Son
 			case 'wav':
+			case 'midi':
+			case 'ogg':
 			case 'mp3':
-			$img = 'fa-upload-audio';
+			$img = 'fa-upload-audio fa-2x';
 			$filetype = sprintf(LangLoader::get_message('audio_type', 'main'), strtoupper($type));
 			break;
 			//Sripts
 			case 'html':
-			$img = 'fa-upload-html';
+			$img = 'fa-upload-html fa-2x';
 			break;
 			case 'js':
 			case 'php':
-			$img = 'fa-upload-script';
+			case 'swf':
+			$img = 'fa-upload-script fa-2x';
 			break;
 			//Vidéos
 			case 'wmv':
 			case 'avi':
-			$img = 'fa-upload-video';
+			case 'mp4':
+			case 'mkv':
+			case 'mpg':
+			case 'flv':
+			case 'mpeg':
+			case 'mov':
+			$img = 'fa-upload-video fa-2x';
 			break;
 			//Executables
 			case 'exe':
-			$img = 'fa-upload-exec';
+			$img = 'fa-upload-exec fa-2x';
 			break;
+			//Text
+			case 'txt':
+			case 'csv':
+			$img = 'fa-upload-text fa-2x';
+			break;
+			//Office
+			case 'xls':
+			case 'xlsx':
+			case 'xlsm':
+			case 'gsheet':
+			case 'ods':
+			$img = 'fa-upload-sheet fa-2x';
+			break;
+			case 'doc':
+			case 'docx':
+			case 'gdoc':
+			case 'odt':
+			$img = 'fa-upload-doc fa-2x';
+			break;
+			case 'ppt':
+			case 'pptx':
+			case 'gslides':
+			case 'odp':
+			$img = 'fa-upload-slide fa-2x';
+			break;
+			//Default
 			default:
-			$img = 'fa-upload-text';
+			$img = 'fa-upload-other fa-2x';
 			$filetype = sprintf(LangLoader::get_message('document_type', 'main'), strtoupper($type));
 		}
 		

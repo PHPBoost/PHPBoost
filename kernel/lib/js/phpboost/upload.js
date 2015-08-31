@@ -50,7 +50,7 @@ function show_cat_contents(id_cat, display_select_link)
 		else
 		{
 			document.getElementById("cat_" + id_cat).style.display = 'none';
-			document.getElementById("img_" + id_cat).className = 'fa fa-folder';
+			document.getElementById("img_" + id_cat).className = 'fa fa-folder fa-2x';
 			if( document.getElementById("img2_" + id_cat) )
 				document.getElementById("img2_" + id_cat).className = 'fa fa-plus-square-o';
 			cat_status[id_cat] = 0;

@@ -27,7 +27,7 @@
 						<div class="upload-elements-container">
 							# START folder #
 								<div style="float:left;width:33%;text-align:center;">
-									<i class="fa fa-folder"></i> {folder.NAME}
+									<i class="fa fa-folder fa-2x"></i> {folder.NAME}
 								</div>
 							# END folder #
 							
