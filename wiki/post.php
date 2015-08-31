@@ -41,8 +41,8 @@ define('TITLE', $LANG['wiki_contribuate']);
 $bread_crumb_key = 'wiki_post';
 require_once('../wiki/wiki_bread_crumb.php');
 
-$is_cat = retrieve(POST, 'is_cat', false) ? 1 : 0;
-$is_cat_get = (retrieve(GET, 'type', '') == 'cat') ? 1 : 0;
+$is_cat = (int)retrieve(POST, 'is_cat', false);
+$is_cat_get = (int)(retrieve(GET, 'type', '') == 'cat');
 $is_cat = $is_cat > 0 ? $is_cat : $is_cat_get;
 $id_edit = retrieve(POST, 'id_edit', 0);
 $title = retrieve(POST, 'title', '');
@@ -52,7 +52,7 @@ $contents_preview = TextHelper::htmlspecialchars(retrieve(POST, 'contents', '', 
 $id_cat = retrieve(GET, 'id_parent', 0);
 $new_id_cat = retrieve(POST, 'id_cat', 0);
 $id_cat = $id_cat > 0 ? $id_cat : $new_id_cat;
-$preview = !empty($_POST['preview']) ? true : false;
+$preview = retrieve(POST, 'preview', false);
 $id_edit_get = retrieve(GET, 'id', 0);
 $id_edit = $id_edit > 0 ? $id_edit : $id_edit_get;
 
@@ -81,15 +81,27 @@ if (!empty($contents)) //On enregistre un article
 	
 	if ($preview)//Prévisualisation
 	{
-		$tpl->assign_block_vars('preview', array(
-			'CONTENTS' => FormatingHelper::second_parse(wiki_no_rewrite(stripslashes($contents))),
-			'TITLE' => stripslashes($title)
-		));
-		if (!empty($menu))
+		if (!$captcha->is_valid() && !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 		{
-			$tpl->assign_block_vars('preview.menu', array(
-				'MENU' => $menu
+			$error_controller = new UserErrorController(
+				LangLoader::get_message('error', 'status-messages-common'),
+				LangLoader::get_message('captcha.validation_error', 'status-messages-common'),
+				UserErrorController::NOTICE
+			);
+			DispatchManager::redirect($error_controller);
+		}
+		else
+		{
+			$tpl->assign_block_vars('preview', array(
+				'CONTENTS' => FormatingHelper::second_parse(wiki_no_rewrite(stripslashes($contents))),
+				'TITLE' => stripslashes($title)
 			));
+			if (!empty($menu))
+			{
+				$tpl->assign_block_vars('preview.menu', array(
+					'MENU' => $menu
+				));
+			}
 		}
 	}
 	else //Sinon on poste

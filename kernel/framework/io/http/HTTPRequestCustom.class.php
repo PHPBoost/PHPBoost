@@ -305,6 +305,9 @@ class HTTPRequestCustom
 
 	private function get_raw_string($value)
 	{
+		if (is_array($value))
+			$value = implode(',', $value);
+		
 		$value = self::sanitize($value);
 		return (string) $value;
 	}

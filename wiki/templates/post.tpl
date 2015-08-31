@@ -89,7 +89,7 @@
 				<script>
 				<!--
 				jQuery(document).ready(function() {
-					jQuery('.submit').click(function()
+					jQuery('button[name="submit"],button[name="preview"]').click(function()
 					{
 						if(!jQuery('#captcha').val()) {
 							alert(${escapejs(LangLoader::get_message('captcha.validation_error', 'status-messages-common'))});
@@ -107,7 +107,7 @@
 				<input type="hidden" name="is_cat" value="{IS_CAT}">
 				<input type="hidden" name="id_edit" value="{ID_EDIT}">
 				<input type="hidden" name="token" value="{TOKEN}">
-				<button type="submit" class="submit">{L_SUBMIT}</button>
+				<button type="submit" name="submit" class="submit">{L_SUBMIT}</button>
 				<button type="submit" name="preview" value="preview">{L_PREVIEW}</button>
 				<button type="reset">{L_RESET}</button>
 			</fieldset>
