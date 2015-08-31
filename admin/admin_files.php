@@ -207,7 +207,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 	if ($show_member)
 		$url = Uploads::get_admin_url($folder, '/<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>');
 	elseif (!empty($folder_member) || !empty($folder_info['user_id']))
-		$url = Uploads::get_admin_url($folder, '', '<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>/<a href="admin_files.php?fm=' . $folder_info['user_id'] . '">' . $folder_info['login'] . '</a>/');
+		$url = Uploads::get_admin_url($folder, '', '<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>/<a href="admin_files.php?fm=' . $folder_info['user_id'] . '">' . $folder_info['display_name'] . '</a>/');
 	elseif (empty($folder))
 		$url = '/';	
 	else
@@ -261,7 +261,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 	else
 	{
 		try {
-			$info_move = PersistenceContext::get_querier()->select_single_row(PREFIX . 'upload_cat', array('path', 'name', 'type', 'size', 'idcat'), 'WHERE id=:id', array('id' => $move_file));
+			$info_move = PersistenceContext::get_querier()->select_single_row(PREFIX . 'upload', array('path', 'name', 'type', 'size', 'idcat'), 'WHERE id=:id', array('id' => $move_file));
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);

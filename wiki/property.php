@@ -156,7 +156,7 @@ elseif ($redirect > 0 || $create_redirection > 0)//Redirection
 elseif (AppContext::get_request()->has_getparameter('com') && $idcom > 0)
 {
 	try {
-		$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $id_com));
+		$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $idcom));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);

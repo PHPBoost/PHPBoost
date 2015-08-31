@@ -210,8 +210,7 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 		//Si on ne déplace pas le dossier dans un de ses fils ou dans lui même
 		if (!in_array($to, $sub_cats))
 		{
-			$new_folder_owner = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $to));
-			if ($new_folder_owner == AppContext::get_current_user()->get_id() || $to == 0)
+			if (AppContext::get_current_user()->get_id() || $to == 0)
 			{
 				PersistenceContext::get_querier()->update(DB_TABLE_UPLOAD_CAT, array('id_parent' => $to), 'WHERE id = :id', array('id' => $move_folder));
 				AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=' . $to . '&' . $popup_noamp, '', '&'));
@@ -242,9 +241,8 @@ elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
 	//Si le fichier nous appartient alors on peut en faire ce que l'on veut
 	if ($file_owner == AppContext::get_current_user()->get_id())
 	{
-		$new_folder_owner = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $to));
 		//Si le dossier de destination nous appartient
-		if ($new_folder_owner == AppContext::get_current_user()->get_id() || $to == 0)
+		if (AppContext::get_current_user()->get_id() || $to == 0)
 		{
 			PersistenceContext::get_querier()->update(DB_TABLE_UPLOAD, array('idcat' => $to), 'WHERE id = :id', array('id' => $move_file));
 			AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=' . $to . '&' . $popup_noamp, '', '&'));

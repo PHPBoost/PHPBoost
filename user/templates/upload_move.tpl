@@ -12,7 +12,7 @@
 		<header><h1>{L_FILES_MANAGEMENT}</h1></header>
 		<div class="content">
 			<div class="upload-address-bar">
-				<a href="admin_files.php"><i class="fa fa-home"></i> {L_ROOT}</a>{URL}
+				<a href="upload.php?root=1{POPUP}"><i class="fa fa-home"></i> {L_ROOT}</a>{URL}
 			</div>
 			# INCLUDE message_helper #
 			<form action="{TARGET}" method="post">
