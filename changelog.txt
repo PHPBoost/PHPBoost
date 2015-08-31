@@ -137,4 +137,4 @@
 [*] Ajout des microdonnées pour améliorer le référencement
 
 [b]TinyMCE[/b]
-[*] Mise à jour du module (TinyMCE version 4.2.1)
+[*] Mise à jour du module (TinyMCE version 4.2.5)
