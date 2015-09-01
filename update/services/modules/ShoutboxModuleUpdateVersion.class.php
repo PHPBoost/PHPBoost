@@ -43,12 +43,35 @@ class ShoutboxModuleUpdateVersion extends ModuleUpdateVersion
 		
 		if (in_array(PREFIX . 'shoutbox', $tables))
 		{
-			$result = $this->querier->select('SELECT id, contents FROM ' . PREFIX . 'shoutbox');
-			while ($row = $result->fetch())
-			{
-				$this->querier->update(PREFIX . 'shoutbox', array('contents' => stripslashes($row['contents'])), 'WHERE id=:id', array('id' => $row['id']));
-			}
+			$columns = $this->db_utils->desc_table(PREFIX . 'shoutbox');
+			
+			if (isset($columns['level']))
+				$this->db_utils->drop_column(PREFIX . 'shoutbox', 'level');
 		}
+		
+		$this->delete_old_files();
+	}
+	
+	private function delete_old_files()
+	{
+		$file = new File(Url::to_rel('/' . $this->module_id . '/lang/english/' . $this->module_id . '_english.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/lang/french/' . $this->module_id . '_french.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/admin_shoutbox.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/shoutbox.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/shoutbox_begin.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/xmlhttprequest.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/admin_shoutbox_config.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/shoutbox.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/shoutbox_mini.tpl'));
+		$file->delete();
 	}
 }
 ?>

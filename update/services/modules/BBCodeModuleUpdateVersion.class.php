@@ -39,9 +39,11 @@ class BBCodeModuleUpdateVersion extends ModuleUpdateVersion
 	
 	private function delete_old_files()
 	{
-		$file = new File(Url::to_rel('/' . $this->module_id . '/index.php'));
+		$file = new File(Url::to_rel('/' . $this->module_id . '/formatting/smileys.php'));
 		$file->delete();
-		$file = new File(Url::to_rel('/' . $this->module_id . '/formatting/BBCodeHighlighter.class.php'));
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/smileys.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/wikipedia_icon.png'));
 		$file->delete();
 	}
 }

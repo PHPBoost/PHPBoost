@@ -39,12 +39,69 @@ class TinyMCEModuleUpdateVersion extends ModuleUpdateVersion
 	
 	private function delete_old_files()
 	{
-		$file = new File(Url::to_rel('/' . $this->module_id . '/formatting/smileys_tinymce.php'));
+		$file = new File(Url::to_rel('/' . $this->module_id . '/formatting/smileys.php'));
 		$file->delete();
-		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/smileys_tinymce.tpl'));
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/smileys.tpl'));
 		$file->delete();
-		$file = new File(Url::to_rel('/' . $this->module_id . '/index.php'));
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/js/tinymce/langs/en.js'));
 		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/js/tinymce/langs/fr.js'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/js/tinymce/plugins/fullscreen/editor_plugin.js'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/js/tinymce/plugins/fullscreen/editor_plugin_src.js'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/js/tinymce/plugins/fullscreen/fullscreen.htm'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/js/tinymce/plugins/searchreplace/editor_plugin.js'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/js/tinymce/plugins/searchreplace/editor_plugin_src.js'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/js/tinymce/plugins/searchreplace/searchreplace.htm'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/js/tinymce/plugins/table/cell.htm'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/js/tinymce/plugins/table/editor_plugin.js'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/js/tinymce/plugins/table/editor_plugin_src.js'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/js/tinymce/plugins/table/merge_cells.htm'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/js/tinymce/plugins/table/row.htm'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/js/tinymce/plugins/table/table.htm'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/js/tinymce/tiny_mce.js'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/js/tinymce/tiny_mce_popup.js'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/js/tinymce/tiny_mce_src.js'));
+		$file->delete();
+		
+		$folder = new Folder(Url::to_rel('/' . $this->module_id . '/templates/js/tinymce/plugins/emotions'));
+		if ($folder->exists())
+			$folder->delete();
+		$folder = new Folder(Url::to_rel('/' . $this->module_id . '/templates/js/tinymce/plugins/inlinepopups'));
+		if ($folder->exists())
+			$folder->delete();
+		$folder = new Folder(Url::to_rel('/' . $this->module_id . '/templates/js/tinymce/plugins/searchreplace/js'));
+		if ($folder->exists())
+			$folder->delete();
+		$folder = new Folder(Url::to_rel('/' . $this->module_id . '/templates/js/tinymce/plugins/searchreplace/langs'));
+		if ($folder->exists())
+			$folder->delete();
+		$folder = new Folder(Url::to_rel('/' . $this->module_id . '/templates/js/tinymce/plugins/table/js'));
+		if ($folder->exists())
+			$folder->delete();
+		$folder = new Folder(Url::to_rel('/' . $this->module_id . '/templates/js/tinymce/plugins/table/langs'));
+		if ($folder->exists())
+			$folder->delete();
+		$folder = new Folder(Url::to_rel('/' . $this->module_id . '/templates/js/tinymce/themes/advanced'));
+		if ($folder->exists())
+			$folder->delete();
+		$folder = new Folder(Url::to_rel('/' . $this->module_id . '/templates/js/tinymce/utils'));
+		if ($folder->exists())
+			$folder->delete();
 	}
 }
 ?>

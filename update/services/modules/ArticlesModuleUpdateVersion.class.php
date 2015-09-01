@@ -27,14 +27,41 @@
 
 class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 {
+	private $querier;
+	private $db_utils;
+	
 	public function __construct()
 	{
 		parent::__construct('articles');
+		$this->querier = PersistenceContext::get_querier();
+		$this->db_utils = PersistenceContext::get_dbms_utils();
 	}
 	
 	public function execute()
 	{
+		$tables = $this->db_utils->list_tables(true);
+		
+		if (in_array(PREFIX . 'articles_cats', $tables))
+			$this->update_cats_table();
+		
 		$this->delete_old_files();
+	}
+	
+	private function update_cats_table()
+	{
+		$columns = $this->db_utils->desc_table(PREFIX . 'articles_cats');
+		
+		if (!isset($columns['special_authorizations']))
+			$this->db_utils->add_column(PREFIX . 'articles_cats', 'special_authorizations', array('type' => 'boolean', 'notnull' => 1, 'default' => 0));
+		
+		$result = $this->querier->select_rows(PREFIX . 'articles_cats', array('id', 'auth'));
+		while ($row = $result->fetch())
+		{
+			$this->querier->update(PREFIX . 'articles_cats', array(
+				'special_authorizations' => (int)!empty($row['auth'])
+			), 'WHERE id = :id', array('id' => $row['id']));
+		}
+		$result->dispose();
 	}
 	
 	private function delete_old_files()
