@@ -64,7 +64,7 @@ $lang = array(
 
 //Configuration du serveur
 	'step.server.title' => 'Looking up server configuration...',
-	'step.server.explanation' => '<p>Before starting update, we need to establish the compatibility between PHPBoost and your server. If you have any problems, feel free to ask your questions in our <a href="http://www.phpboost.org/forum/">Support Forums</a>.</p>
+	'step.server.explanation' => '<p>Before starting update, we need to establish the compatibility between PHPBoost and your server. If you have any problems, feel free to ask your questions in our <a href="http://www.phpboost.com/forum/">Support Forums</a>.</p>
 <div class="notice">It is very important that each required fields are checked, otherwise you might have trouble using the software.</div>',
 	'php.version' => 'PHP version',
 	'php.version.check' => 'PHP higher than :min_php_version',

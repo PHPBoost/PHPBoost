@@ -39,5 +39,5 @@ Voici quelques conseils pour bien débuter sur ce module.<br />
 <li class="formatter-li">Pour créer des articles, rendez vous <a href="/wiki/post.php">ici</a></li>
 </ul><br /><br />
 Pour personnaliser l\'accueil de ce module, <a href="/wiki/admin_wiki.php">cliquez ici</a><br /><br />
-Pour en savoir plus, n\'hésitez pas à consulter la documentation du module sur le site de <a href="http://www.phpboost.com">PHPBoost</a>.';
+Pour en savoir plus, n\'hésitez pas à consulter la documentation du module sur le site de <a href="http://www.phpboost.com/forum/">PHPBoost</a>.';
 ?>
