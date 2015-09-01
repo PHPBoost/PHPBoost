@@ -237,7 +237,7 @@ class FaqDisplayCategoryController extends ModuleController
 		$object = new self();
 		$object->check_authorizations();
 		$object->init();
-		$object->build_view();
+		$object->build_view(AppContext::get_request());
 		return $object->tpl;
 	}
 }

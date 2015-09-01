@@ -350,7 +350,7 @@ class WebDisplayCategoryController extends ModuleController
 		$object = new self();
 		$object->init();
 		$object->check_authorizations();
-		$object->build_view();
+		$object->build_view(AppContext::get_request());
 		return $object->tpl;
 	}
 }
