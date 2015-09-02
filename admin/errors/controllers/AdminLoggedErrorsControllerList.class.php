@@ -101,7 +101,7 @@ class AdminLoggedErrorsControllerList extends AdminController
 	
 	private function build_form()
 	{
-		$form = new HTMLForm(__CLASS__, AdminErrorsUrlBuilder::clear_logged_errors()->rel(), false);
+		$form = new HTMLForm(__CLASS__ . '_clear_form', AdminErrorsUrlBuilder::clear_logged_errors()->rel(), false);
 		
 		$fieldset = new FormFieldsetHTML('clear_errors', $this->lang['clear_list']);
 		$form->add_fieldset($fieldset);
