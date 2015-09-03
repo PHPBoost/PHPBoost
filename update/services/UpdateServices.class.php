@@ -38,8 +38,20 @@ class UpdateServices
 	private static $configuration_pattern = '`ConfigUpdateVersion\.class\.php$`';
 	private static $module_pattern = '`ModuleUpdateVersion\.class\.php$`';
 	
+	private static $new_kernel_version = '4.2';
+	
 	/**
-	 * @var File
+	 * @var DBMSUtils
+	 */
+	private static $db_utils;
+	
+	/**
+	 * @var DBQuerier
+	 */
+	private static $db_querier;
+	
+	/**
+	 * @var Token
 	 */
 	private $token;
 	
@@ -58,16 +70,21 @@ class UpdateServices
 		$this->token = new File(PATH_TO_ROOT . '/cache/.update_token');
 		$this->update_followed_file = new File(PATH_TO_ROOT . '/update/update_followed.txt');
 		$this->update_followed_file->delete();
+		
+		self::$db_utils = PersistenceContext::get_dbms_utils();
+		self::$db_querier = PersistenceContext::get_querier();
+		
 		if (!empty($locale))
 		{
 			LangLoader::set_locale($locale);
 		}
+		
 		$this->messages = LangLoader::get('update', 'update');
 	}
 	
 	public function is_already_installed($tables_prefix)
 	{
-		$tables_list = PersistenceContext::get_dbms_utils()->list_tables();
+		$tables_list = self::$db_utils->list_tables();
 		return in_array($tables_prefix . 'member', $tables_list) || in_array($tables_prefix . 'configs', $tables_list);
 	}
 	
@@ -141,7 +158,7 @@ class UpdateServices
 		}
 		catch (UnexistingDatabaseException $exception)
 		{
-			PersistenceContext::get_dbms_utils()->create_database($database);
+			self::$db_utils->create_database($database);
 			PersistenceContext::close_db_connection();
 			$connection = DBFactory::new_db_connection();
 			$connection->connect($db_connection_data);
@@ -163,10 +180,10 @@ class UpdateServices
 	{
 		$db_config_content = '<?php' . "\n" .
 			'$db_connection_data = ' . var_export($db_connection_data, true) . ";\n\n" .
-            'defined(\'PREFIX\') or define(\'PREFIX\' , \'' . $tables_prefix . '\');'. "\n" .
-            'defined(\'PHPBOOST_INSTALLED\') or define(\'PHPBOOST_INSTALLED\', true);' . "\n" .
-            'require_once PATH_TO_ROOT . \'/kernel/db/tables.php\';' . "\n" .
-        '?>';
+			'defined(\'PREFIX\') or define(\'PREFIX\' , \'' . $tables_prefix . '\');'. "\n" .
+			'defined(\'PHPBOOST_INSTALLED\') or define(\'PHPBOOST_INSTALLED\', true);' . "\n" .
+			'require_once PATH_TO_ROOT . \'/kernel/db/tables.php\';' . "\n" .
+		'?>';
 
 		$db_config_file = new File(PATH_TO_ROOT . '/kernel/db/config.php');
 		$db_config_file->write($db_config_content);
@@ -181,26 +198,16 @@ class UpdateServices
 		
 		Environment::try_to_increase_max_execution_time();
 		
+		// Mise en maintenance du site s'il ne l'est pas déjà
 		$this->put_site_under_maintenance();
 		
+		// Suppression des fichiers qui ne sont plus présent dans la nouvelle version pour éviter les conflits
 		$this->delete_old_files();
 		
-		// TODO : gérer les anciens menus
-		
-		//On désinstalle les thèmes
-		foreach (ThemesManager::get_installed_themes_map() as $id => $theme)
-		{
-			ThemesManager::uninstall($id);
-		}
-		
-		ThemesManager::install('base');
-		
-		$user_accounts_config = UserAccountsConfig::load();
-		$user_accounts_config->set_default_theme('base');
-		UserAccountsConfig::save();
+		// TODO : gérer les anciens menus + loguer leur nom dans update followed
 		
 		// Suppression du captcha PHPBoostCaptcha
-		ModulesManager::uninstall_module('PHPBoostCaptcha', true)
+		ModulesManager::uninstall_module('PHPBoostCaptcha', true);
 		
 		$content_management_config = ContentManagementConfig::load();
 		if ($content_management_config->get_used_captcha_module() == 'PHPBoostCaptcha')
@@ -208,69 +215,25 @@ class UpdateServices
 			$content_management_config->set_used_captcha_module('ReCaptcha');
 			ContentManagementConfig::save();
 		}
-
-		$tables = PersistenceContext::get_dbms_utils()->list_tables(true);
 		
-		if (!in_array(PREFIX . 'keywords', $tables))
-		{
-			$fields = array(
-				'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-				'name' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
-				'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
-			);
-			$options = array(
-				'primary' => array('id'),
-				'indexes' => array(
-					'name' => array('type' => 'unique', 'fields' => 'name',
-					'rewrited_name' => array('type' => 'unique', 'fields' => 'rewrited_name')
-			)));
-			PersistenceContext::get_dbms_utils()->create_table(PREFIX . 'keywords', $fields, $options);
-		}
+		// Mise à jour des tables du noyau
+		$this->update_kernel_tables();
 		
-		if (!in_array(PREFIX . 'keywords_relations', $tables))
-		{
-			$fields = array(
-				'id_in_module' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-				'module_id' => array('type' => 'string', 'length' => 25, 'default' => "''"),
-				'id_keyword' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			);
-			PersistenceContext::get_dbms_utils()->create_table(PREFIX . 'keywords_relations', $fields);
-		}
+		// Mise à jour de la version du noyau
+		$this->update_kernel_version();
 		
-		PersistenceContext::get_querier()->inject('ALTER TABLE '. DB_TABLE_UPLOAD .' CHANGE size size DOUBLE');
-		
-		$columns = PersistenceContext::get_dbms_utils()->desc_table(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST);
-		if (!isset($columns['default_value']))
-			PersistenceContext::get_querier()->inject('ALTER TABLE '. DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST .' CHANGE default_values default_value TEXT');
-				
-		if (!in_array(PREFIX . 'forum_ranks', $tables))
-			PersistenceContext::get_querier()->inject('RENAME TABLE '. PREFIX .'ranks' .' TO '. PREFIX .'forum_ranks');
-		
-		PersistenceContext::get_dbms_utils()->truncate(PREFIX .'smileys');
-		
-		$modules_config = ModulesConfig::load();
-		foreach (ModulesManager::get_installed_modules_map() as $id => $module)
-		{
-			if (ModulesManager::module_is_upgradable($id))
-				$module->set_installed_version('4.2');
-			elseif (version_compare($module->get_configuration()->get_version(), '4.2') == -1)
-				$module->set_activated(false);
-				
-			$modules_config->update($module);
-		}
-		ModulesConfig::save();
-
+		// Mise à jour des modules
 		$this->update_modules();
 		
-		$this->update_content();
+		// Mise à jour des thèmes
+		$this->update_themes();
 		
-		$general_config = GeneralConfig::load();
-		$general_config->set_phpboost_major_version('4.2');
-		GeneralConfig::save();
+		// Mise à jour des langues
+		$this->update_langs();
 		
+		// Fin de la mise à jour : régénération du cache
 		$this->delete_update_token();
 		$this->generate_cache();
-		
 		HtaccessFileCache::regenerate();
 	}
 	
@@ -286,10 +249,168 @@ class UpdateServices
 		}
 	}
 	
-	public function update_modules()
+	private function update_kernel_tables()
 	{
-		$update_module_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/modules/', self::$module_pattern);
-		foreach ($update_module_class as $class_name)
+		// Création des nouvelles tables pour l'authentification
+		$tables = self::$db_utils->list_tables(true);
+		
+		if (!in_array(PREFIX . 'authentication_method', $tables))
+		{
+			$fields = array(
+				'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1),
+				'method' => array('type' => 'string', 'length' => 32, 'default' => "''"),
+				'identifier' => array('type' => 'string', 'length' => 128, 'default' => "''"),
+				'data' => array('type' => 'text', 'length' => 65000)
+			);
+
+			$options = array(
+				'indexes' => array(
+					'method' => array('type' => 'unique', 'fields' => array('method', 'identifier'))
+			));
+			self::$db_utils->create_table(PREFIX . 'authentication_method', $fields, $options);
+		}
+		
+		if (!in_array(PREFIX . 'internal_authentication', $tables))
+		{
+			$fields = array(
+				'user_id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
+				'login' => array('type' => 'string', 'length' => 255, 'default' => "''"),
+				'password' => array('type' => 'string', 'length' => 64, 'default' => "''"),
+				'registration_pass' => array('type' => 'string', 'length' => 30, 'notnull' => 1, 'default' => 0),
+				'change_password_pass' => array('type' => 'string', 'length' => 64, 'notnull' => 1, 'default' => "''"),
+				'connection_attemps' => array('type' => 'boolean', 'length' => 4, 'notnull' => 1, 'default' => 0),
+				'last_connection' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+				'approved' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0)
+			);
+
+			$options = array(
+				'primary' => array('user_id'),
+				'indexes' => array('login' => array('type' => 'unique', 'fields' => 'login'))
+			);
+			self::$db_utils->create_table(PREFIX . 'internal_authentication', $fields, $options);
+		}
+		
+		// Insertions des mots de passe des membres actuels dans la nouvelle table
+		$result = $this->querier->select_rows(PREFIX . 'member', array('user_id', 'login', 'password', 'approbation_pass', 'change_password_pass', 'last_connect', 'user_aprob'));
+		while ($row = $result->fetch())
+		{
+			$this->querier->insert(PREFIX . 'authentication_method', array(
+				'user_id' => $row['user_id'],
+				'method' => PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD,
+				'identifier' => $row['user_id']
+			));
+			
+			$this->querier->insert(PREFIX . 'internal_authentication', array(
+				'user_id' => $row['user_id'],
+				'login' => $row['login'],
+				'password' => $row['password'],
+				'registration_pass' => $row['approbation_pass'],
+				'change_password_pass' => $row['change_password_pass'],
+				'connection_attemps' => 0,
+				'last_connection' => $row['last_connect'],
+				'approved' => $row['user_aprob']
+			));
+		}
+		$result->dispose();
+		
+		// Modification de la table member
+		$columns = self::$db_utils->desc_table(PREFIX . 'member');
+		
+		$rows_change = array(
+			'login' => 'display_name VARCHAR(255)',
+			'timestamp' => 'registration_date INT(11)',
+			'user_groups' => 'groups TEXT',
+			'user_lang' => 'locale VARCHAR(25)',
+			'user_theme' => 'theme VARCHAR(50)',
+			'user_mail' => 'email VARCHAR(50)',
+			'user_show_mail' => 'show_email INT(4)',
+			'user_editor' => 'editor VARCHAR(15)',
+			'user_timezone' => 'timezone VARCHAR(50)',
+			'user_msg' => 'posted_msg INT(6)',
+			'user_pm' => 'unread_pm INT(6)',
+			'user_warning' => 'warning_percentage INT(6)',
+			'user_readonly' => 'delay_readonly INT(11)',
+			'user_ban' => 'delay_banned INT(11)',
+			'last_connect' => 'last_connection_date INT(11)',
+		);
+		
+		foreach ($rows_change as $old_name => $new_name)
+		{
+			if (isset($columns[$old_name]))
+				self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member CHANGE ' . $old_name . ' ' . $new_name);
+		}
+		
+		if (isset($columns['password']))
+			self::$db_utils->drop_column(PREFIX . 'member', 'password');
+		if (isset($columns['test_connect']))
+			self::$db_utils->drop_column(PREFIX . 'member', 'test_connect');
+		if (isset($columns['approbation_pass']))
+			self::$db_utils->drop_column(PREFIX . 'member', 'approbation_pass');
+		if (isset($columns['change_password_pass']))
+			self::$db_utils->drop_column(PREFIX . 'member', 'change_password_pass');
+		if (isset($columns['user_aprob']))
+			self::$db_utils->drop_column(PREFIX . 'member', 'user_aprob');
+		
+		if (!isset($columns['autoconnect_key']))
+			self::$db_utils->add_column(PREFIX . 'member', 'autoconnect_key', array('type' => 'string', 'length' => 64, 'default' => "''"));
+		
+		self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member DROP UNIQUE KEY `login`');
+		self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member DROP KEY `user_id`');
+		self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member ADD UNIQUE KEY `display_name` (`display_name`)');
+		self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member ADD UNIQUE KEY `email` (`email`)');
+		
+		// Modification de la table sessions
+		$columns = self::$db_utils->desc_table(PREFIX . 'sessions');
+		
+		$rows_change = array(
+			'session_ip' => 'ip VARCHAR(64)',
+			'session_time' => 'timestamp INT(11)',
+			'session_script' => 'location_script VARCHAR(100)',
+			'session_script_title' => 'location_title VARCHAR(100)',
+			'modules_parameters' => 'cached_data TEXT'
+		);
+		
+		foreach ($rows_change as $old_name => $new_name)
+		{
+			if (isset($columns[$old_name]))
+				self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'sessions CHANGE ' . $old_name . ' ' . $new_name);
+		}
+		
+		if (isset($columns['level']))
+			self::$db_utils->drop_column(PREFIX . 'sessions', 'level');
+		if (isset($columns['session_script_get']))
+			self::$db_utils->drop_column(PREFIX . 'sessions', 'session_script_get');
+		if (isset($columns['session_flag']))
+			self::$db_utils->drop_column(PREFIX . 'sessions', 'session_flag');
+		if (isset($columns['user_theme']))
+			self::$db_utils->drop_column(PREFIX . 'sessions', 'user_theme');
+		if (isset($columns['user_lang']))
+			self::$db_utils->drop_column(PREFIX . 'sessions', 'user_lang');
+		
+		if (!isset($columns['data']))
+			self::$db_utils->add_column(PREFIX . 'sessions', 'data', array('type' => 'text', 'length' => 65000));
+		
+		self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'sessions DROP KEY `user_id`');
+		self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'sessions ADD KEY `user_id` (`user_id`)');
+		self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'sessions ADD KEY `timestamp` (`timestamp`)');
+	}
+	
+	public function update_kernel_version()
+	{
+		$general_config = GeneralConfig::load();
+		$general_config->set_phpboost_major_version(self::$new_kernel_version);
+		GeneralConfig::save();
+	}
+	
+	// TODO : Update configurations (pour modules forum et media, faire comme pour la 4.0)
+	
+	
+	public function update_configurations()
+	{
+		$configs_kernel_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/kernel/config/', self::$configuration_pattern);
+		
+		$configs_class = array_merge($configs_module_class, $configs_kernel_class);
+		foreach ($configs_class as $class_name)
 		{
 			try {
 				$object = new $class_name();
@@ -300,102 +421,119 @@ class UpdateServices
 				$success = false;
 				$message = $e->getMessage();
 			}
-			$this->add_error_to_file('module ' . $object->get_module_id(), $success, $message);
+			$this->add_error_to_file($object->get_config_name() . '_config', $success, $message);
 		}
 	}
-	
-	public function update_content()
+	public function update_modules()
 	{
-		include PATH_TO_ROOT . '/kernel/db/config.php';
-		
-		$result = PersistenceContext::get_querier()->select('SELECT TABLE_NAME, COLUMN_NAME FROM information_schema.COLUMNS WHERE
-		TABLE_SCHEMA = :table_name
-		AND TABLE_NAME LIKE \'%'. PREFIX .'%\'
-		AND COLUMN_NAME	IN :column_name
-		AND DATA_TYPE IN :data_type', array(
-			'table_name' => $db_connection_data['database'],
-			'column_name' => array('description', 'content', 'contents', 'message', 'answer'),
-			'data_type' => array('mediumtext','text')
-		));
-		
-		foreach ($result as $row)
+		$modules_config = ModulesConfig::load();
+		foreach (ModulesManager::get_installed_modules_map() as $id => $module)
 		{
-			PersistenceContext::get_querier()->select('
-			UPDATE '. $row['TABLE_NAME'] .' SET 
-			'. $row['COLUMN_NAME'] .' = 
+			if (ModulesManager::module_is_upgradable($id))
+				$module->set_installed_version($module->get_configuration()->get_version());
+			else
+			{
+				$module->set_activated(false);
+				$this->add_information_to_file('module ' . $id, 'has been disabled because : incompatible with new version');
+			}
 			
-			replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
-			replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
-			replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
-			
-			replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
-			replace(replace(replace(replace(replace(replace(replace(
-			
-			'. $row['COLUMN_NAME'] .', 
+			$modules_config->update($module);
+		}
+		ModulesConfig::save();
 		
-			\'../images/smileys/\', \'/images/smileys/\'),
-			\'/images/smileys/waw.gif\', \'/images/smileys/straight.png\'), 
-			\'/images/smileys/siffle.gif\', \'/images/smileys/whistle.png\'), 
-			\'/images/smileys/sourire.gif\', \'/images/smileys/smile.png\'),
-			\'/images/smileys/lol.gif\', \'/images/smileys/laugh.png\'),
-			\'/images/smileys/rire.gif\', \'/images/smileys/laugh.png\'),
-			\'/images/smileys/tirelangue.gif\', \'/images/smileys/tongue.png\'),
-			\'/images/smileys/malheureux.gif\', \'/images/smileys/sad.png\'),
-			\'/images/smileys/clindoeil.gif\', \'/images/smileys/wink.png\'),
-			\'/images/smileys/heink.gif\', \'/images/smileys/what.png\'),
-			\'/images/smileys/heureux.gif\', \'/images/smileys/grin.png\'),
-			\'/images/smileys/incertain.gif\', \'/images/smileys/straight.png\'),
-			\'/images/smileys/content.gif\', \'/images/smileys/happy.png\'),
-			\'/images/smileys/pinch.gif\', \'/images/smileys/gne.png\'),
-			\'/images/smileys/top.gif\', \'/images/smileys/top.png\'),
-			\'/images/smileys/clap.gif\', \'/images/smileys/top.png\'),
-			\'/images/smileys/hehe.gif\', \'/images/smileys/devil.png\'),
-			\'/images/smileys/angry.gif\', \'/images/smileys/angry.png\'),
-			\'/images/smileys/snif.gif\', \'/images/smileys/cry.png\'),
-			\'/images/smileys/nex.gif\', \'/images/smileys/crazy.png\'),
-			\'/images/smileys/star.gif\', \'/images/smileys/cool.png\'),
-			\'/images/smileys/nuit.gif\', \'/images/smileys/night.png\'),
-			\'/images/smileys/berk.gif\', \'/images/smileys/vomit.png\'),
-			\'/images/smileys/colere.gif\', \'/images/smileys/unhappy.png\'),
-			\'/images/smileys/love.gif\', \'/images/smileys/love.png\'),
-			\'/images/smileys/doute.gif\', \'/images/smileys/confused.png\'),
-			\'/images/smileys/mat.gif\', \'/images/smileys/drooling.png\'),
-			\'/images/smileys/miam.gif\', \'/images/smileys/cake.png\'),
-			\'/images/smileys/plus1.gif\', \'/images/smileys/top.png\'),
-			\'/images/smileys/lu.gif\', \'/images/smileys/hello.png\'),
-			
-			\'class="bb_table"\', \'class="formatter-table"\'),
-			\'class="bb_table_row"\', \'class="formatter-table-row"\'),
-			\'class="bb_table_head"\', \'class="formatter-table-head"\'),
-			\'class="bb_table_col"\', \'class="formatter-table-col"\'),
-			\'class="bb_li"\', \'class="formatter-li"\'),
-			\'class="bb_ul"\', \'class="formatter-ul"\'),
-			\'class="bb_ol"\', \'class="formatter-ol"\'),
-			
-			\'class="text_blockquote"\', \'class="formatter-blockquote"\'),
-			\'class="text_hide"\', \'class="formatter-hide"\'),
-			\'class="bb_block"\', \'class="formatter-block"\'),
-			\'class="bb_fieldset"\', \'class="formatter-fieldset"\'),
-			\'class="wikipedia_link"\', \'class="wikipedia-link"\'),
-			\'class="float_\', \'class="float-\'),
-			
-			\'class="title1\', \'class="formatter-title\'),
-			\'class="title2\', \'class="formatter-title\'),
-			\'class="stitle1\', \'class="formatter-title\'),
-			\'class="stitle2\', \'class="formatter-title\')
-			');
+		$configs_module_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/modules/config/', self::$configuration_pattern, 'config');
+		$update_module_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/modules/', self::$module_pattern, 'module');
+		
+		$classes_list = array_merge($configs_module_class, $update_module_class);
+		foreach ($classes_list as $class)
+		{
+			try {
+				$object = new $class['name']();
+				$object->execute();
+				$success = true;
+				$message = '';
+			} catch (Exception $e) {
+				$success = false;
+				$message = $e->getMessage();
+			}
+			$this->add_error_to_file($class['type'] . ' ' . $object->get_module_id(), $success, $message);
 		}
 	}
 	
-	private function get_class($directory, $pattern)
+	public function update_themes()
 	{
-		$class = array();
+		$themes_config = ThemesConfig::load();
+		$active_themes_number = 0;
+		foreach (ThemesManager::get_installed_themes_map() as $id => $theme)
+		{
+			if ($theme->get_configuration()->get_compatibility() == self::$new_kernel_version)
+			{
+				$theme->set_installed_version($theme->get_configuration()->get_version());
+				$active_themes_number++;
+			}
+			else
+			{
+				ThemesManager::uninstall($id);
+				$this->add_information_to_file('theme ' . $id, 'has been uninstalled because : incompatible with new version');
+			}
+			
+			$themes_config->update($theme);
+		}
+		ThemesConfig::save();
+		
+		if (empty($active_themes_number))
+		{
+			ThemesManager::install('base');
+			
+			$user_accounts_config = UserAccountsConfig::load();
+			$user_accounts_config->set_default_theme('base');
+			UserAccountsConfig::save();
+		}
+	}
+	
+	public function update_langs()
+	{
+		$langs_config = LangsConfig::load();
+		$active_langs_number = 0;
+		foreach (LangsManager::get_installed_langs_map() as $id => $lang)
+		{
+			if ($lang->get_configuration()->get_compatibility() == self::$new_kernel_version)
+			{
+				$lang->set_installed_version($lang->get_configuration()->get_version());
+				$active_langs_number++;
+			}
+			else
+			{
+				LangsManager::uninstall($id);
+				$this->add_information_to_file('lang ' . $id, 'has been uninstalled because : incompatible with new version');
+			}
+			
+			$langs_config->update($lang);
+		}
+		LangsConfig::save();
+		
+		if (empty($active_langs_number))
+		{
+			LangsManager::install('french');
+			
+			$user_accounts_config = UserAccountsConfig::load();
+			$user_accounts_config->set_default_lang('french');
+			UserAccountsConfig::save();
+		}
+	}
+	
+	private function get_class($directory, $pattern, $type)
+	{
+		$classes = array();
 		$folder = new Folder($directory);
 		foreach ($folder->get_files($pattern) as $file)
 		{
-			$class[] = $file->get_name_without_extension();
+			$classes[] = array(
+				'name' => $file->get_name_without_extension(),
+				'type' => $type
+			);
 		}
-		return $class;
+		return $classes;
 	}
 	
 	private function generate_cache()
@@ -408,6 +546,11 @@ class UpdateServices
 	{
 		$success_message = $success ? 'Ok !' : 'Error :';
 		$this->update_followed_file->append($step_name.' '.$success_message.' '. $message. "\r\n");
+	}
+	
+	private function add_information_to_file($step_name, $message)
+	{
+		$this->update_followed_file->append($step_name.' '. $message. "\r\n");
 	}
 	
 	public function generate_update_token()
@@ -494,7 +637,55 @@ class UpdateServices
 	
 	private function delete_old_files_kernel()
 	{
-		// TODO
+		$file = new File(Url::to_rel('/kernel/cli/environment/AdminSession.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/cli/environment/CLISession.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/builder/form/field/constraint/FormFieldConstraintLength.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/builder/form/field/constraint/FormFieldConstraintLoginExist.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/builder/table/AbstractHTMLTableModel.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/content/DeprecatedCategoriesManager.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/content/notation/NotationDAO.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/content/notation/NotationScaleIsEmptyException.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/core/environment/DeprecatedEnvironment.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/db/Sql.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/db/SqlParameterExtractor.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/io/image/GDNotAvailableException.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/io/image/MimeTypeNotSupportedException.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/io/optimization/cache/CSSCacheManager.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/io/template/DeprecatedTemplate.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/phpboost/member/Session.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/phpboost/member/extended-fields/MemberExtendedFieldsDAO.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/phpboost/member/extended-fields/MemberExtendedFieldsFactory.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/phpboost/menu/MenuFilter.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/phpboost/user/UserAuthentification.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/util/unusual_functions.inc.php'));
+		$file->delete();
+		
+		$folder = new Folder(Url::to_rel('/kernel/framework/phpboost/deprecated'));
+		if ($folder->exists())
+			$folder->delete();
+		$folder = new Folder(Url::to_rel('/kernel/framework/phpboost/menu/mini'));
+		if ($folder->exists())
+			$folder->delete();
 	}
 	
 	private function delete_old_files_lang()
@@ -513,12 +704,70 @@ class UpdateServices
 	
 	private function delete_old_files_templates()
 	{
-		// TODO
+		$file = new File(Url::to_rel('/templates/base/theme/images/body.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/admin/AdminLoginController.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/admin/admin_files_config.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/admin/admin_maintain.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/admin/admin_phpinfo.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/admin/admin_smileys_add.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/admin/admin_smileys_management.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/admin/admin_smileys_management2.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/admin/admin_system_report.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/admin/member/AdminViewAllMembersController.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/framework/builder/form/FormFieldColorPicker.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/framework/content/categories.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/framework/content/categories_select_form.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/framework/content/category.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/framework/content/syndication/images/add2netvibes.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/framework/content/syndication/images/addatom.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/framework/content/syndication/images/addrss.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/images/color.png'));
+		$file->delete();
+		
+		$folder = new Folder(Url::to_rel('/templates/default/admin/errors'));
+		if ($folder->exists())
+			$folder->delete();
+		$folder = new Folder(Url::to_rel('/templates/default/images/lightbox'));
+		if ($folder->exists())
+			$folder->delete();
+		$folder = new Folder(Url::to_rel('/templates/default/images/upload'));
+		if ($folder->exists())
+			$folder->delete();
 	}
 	
 	private function delete_old_files_user()
 	{
-		// TODO
+		$file = new File(Url::to_rel('/user/controllers/UserErrorCSRFController.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/user/controllers/UserMaintainController.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/user/phpboost/EventsCommentsTopic.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/user/phpboost/EventsExtensionPointProvider.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/user/services/UserLostPasswordService.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/user/templates/UserMaintainController.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/user/util/UserDisplayResponse.class.php'));
+		$file->delete();
 	}
 }
 ?>

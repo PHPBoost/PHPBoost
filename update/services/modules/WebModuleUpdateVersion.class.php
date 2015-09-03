@@ -68,8 +68,8 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 				$this->querier->inject('ALTER TABLE ' . PREFIX . 'web CHANGE ' . $old_name . ' ' . $new_name);
 		}
 		
-		if (!isset($columns['rewrited_title']))
-			$this->db_utils->add_column(PREFIX . 'web', 'rewrited_title', array('type' => 'string', 'length' => 255, 'default' => "''"));
+		if (!isset($columns['rewrited_name']))
+			$this->db_utils->add_column(PREFIX . 'web', 'rewrited_name', array('type' => 'string', 'length' => 255, 'default' => "''"));
 		if (!isset($columns['short_contents']))
 			$this->db_utils->add_column(PREFIX . 'web', 'short_contents', array('type' => 'text', 'length' => 65000));
 		if (!isset($columns['start_date']))
@@ -95,6 +95,7 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 				'author_user_id' => 1
 			), 'WHERE id = :id', array('id' => $row['id']));
 		}
+		$result->dispose();
 	}
 	
 	private function update_cats_table()
@@ -138,9 +139,12 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 		{
 			$this->querier->update(PREFIX . 'web_cats', array(
 				'rewrited_name' => Url::encode_rewrite($row['name']),
-				'id_parent' => 0
+				'id_parent' => 0,
+				'c_order' => 0,
+				'special_authorizations' => 0
 			), 'WHERE id = :id', array('id' => $row['id']));
 		}
+		$result->dispose();
 	}
 	
 	private function delete_old_files()

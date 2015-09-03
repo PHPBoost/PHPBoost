@@ -75,6 +75,7 @@ class MediaModuleUpdateVersion extends ModuleUpdateVersion
 				'special_authorizations' => (int)!empty($row['auth'])
 			), 'WHERE id = :id', array('id' => $row['id']));
 		}
+		$result->dispose();
 	}
 	
 	private function delete_old_files()

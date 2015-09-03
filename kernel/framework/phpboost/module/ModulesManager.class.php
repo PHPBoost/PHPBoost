@@ -364,18 +364,14 @@ class ModulesManager
 			if (self::is_module_installed($module_identifier))
 			{
 				$module = self::get_module($module_identifier);
-				$configuration = $module->get_configuration();
 				
-				$new_version = $configuration->get_version();
-				$installed_version = $module->get_installed_version();
-				
-				if (version_compare($installed_version, $new_version) == -1)
+				if (version_compare($module->get_installed_version(), $module->get_configuration()->get_version()) == -1 && $module->get_configuration()->get_compatibility() == GeneralConfig::load()->get_phpboost_major_version())
 				{
 					return true;
 				}
-				return false;
 			}
 		}
+		return false;
 	}
 	
 	public static function update_module($module_id, $activated)
