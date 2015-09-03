@@ -16,6 +16,8 @@
 		
 		<div id="admin-contents">
 			# IF C_DATABASE_INDEX #
+			
+			# INCLUDE message_helper #
 
 			<form method="post" action="admin_database.php?action=restore&amp;token={TOKEN}" enctype="multipart/form-data" name="upload_file">
 			
@@ -67,7 +69,6 @@
 				</div>
 				<footer></footer>
 			</section>
-				# INCLUDE message_helper #
 			</form>
 
 			<form action="{TARGET}" method="post">
@@ -385,6 +386,7 @@
 			# ENDIF #
 
 			# IF C_DATABASE_FILES #
+				# INCLUDE message_helper #
 				<table>
 					<caption>{L_LIST_FILES}</caption>
 					<thead>
@@ -420,7 +422,6 @@
 						# END file #
 						<tr class="center">
 							<td colspan="4">
-								# INCLUDE message_helper #
 								{L_INFO}
 							</td>
 						</tr>
