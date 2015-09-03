@@ -1,7 +1,7 @@
 		# IF C_ADD_MEDIA #
 		<script>
 		<!--
-		function check_form ()
+		function check_form()
 		{
 			if (document.getElementById('name').value == "")
 			{
@@ -16,7 +16,7 @@
 			return true;
 		}
 	
-		function in_array (needle, haystack)
+		function in_array(needle, haystack)
 		{
 			for (var i=0; i < haystack.length; i++)	
 				if (haystack[i] == needle)
@@ -25,12 +25,12 @@
 			return false;
 		}
 		
-		function hide_width_height ()
+		function hide_width_height()
 		{
 			var id_music = new Array({JS_ID_MUSIC});
 
 			if (id_music.length > 0)
-				if (in_array (document.getElementById('idcat').value, id_music))
+				if (in_array(document.getElementById('_idcat').value, id_music))
 				{
 					jQuery('#width_dl').hide();
 					jQuery('#height_dl').hide();
@@ -42,12 +42,15 @@
 				}
 		}
 		
-		# IF C_MUSIC #
-		window.onload = function () {
+		jQuery(document).ready(function() {
+			# IF C_MUSIC #
 			jQuery('#width_dl').hide();
 			jQuery('#height_dl').hide();
-		};
-		# ENDIF #
+			# ENDIF #
+			jQuery('#_id_cat').change(function() {
+				hide_width_height();
+			});
+		});
 		-->
 		</script>
 

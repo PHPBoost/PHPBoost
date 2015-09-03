@@ -140,6 +140,7 @@
 				<div class="media-desc">
 					{CONTENTS}
 				</div>
+				<div class="spacer"></div>
 				
 				<div class="media-content">
 					# INCLUDE media_format #

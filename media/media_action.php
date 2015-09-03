@@ -154,7 +154,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 	$js_id_music = array();
 	foreach ($categories as $cat)
 	{
-		if ($cat->get_content_type() === MediaConfig::CONTENT_TYPE_MUSIC)
+		if ($cat->get_content_type() == MediaConfig::CONTENT_TYPE_MUSIC)
 		{
 			$js_id_music[] = $cat->get_id();
 		}
@@ -164,13 +164,21 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 	$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 	$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
 	
+	$media = '';
+	
 	// Édition.
-	if ($edit > 0 && !empty($media) && MediaAuthorizationsService::check_authorizations($media['idcat'])->moderation())
+	if ($edit > 0)
 	{
 		try {
 			$media = PersistenceContext::get_querier()->select_single_row(PREFIX . 'media', array('*'), 'WHERE id=:id', array('id' => $edit));
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+		
+		if (!MediaAuthorizationsService::check_authorizations($media['idcat'])->moderation())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
 		
@@ -215,7 +223,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 			'APPROVED' => 'checked="checked"',
 			'C_APROB' => false,
 			'JS_ID_MUSIC' => '"' . implode('", "', $js_id_music) . '"',
-			'C_MUSIC' => $config->is_root_category_content_type_music_and_video() || $config->is_root_category_content_type_music()
+			'C_MUSIC' => $config->is_root_category_content_type_music()
 		));
 	}
 	else
