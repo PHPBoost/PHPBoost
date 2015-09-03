@@ -67,11 +67,8 @@ class UpdateEnvironment extends Environment
 
 	private static function init_admin_role()
 	{
-		$user = new AdminUser();
-		$user->set_theme('base');
-		$user->set_locale(LangLoader::get_locale());
-		AppContext::set_current_user($user);
-		AppContext::set_session(new AdminSession());
+		AppContext::set_session(new AdminSessionData());
+		AppContext::set_current_user(new AdminUser());
 	}
 
 	public static function destroy()

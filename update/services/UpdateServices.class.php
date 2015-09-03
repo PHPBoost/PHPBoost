@@ -290,31 +290,34 @@ class UpdateServices
 			self::$db_utils->create_table(PREFIX . 'internal_authentication', $fields, $options);
 		}
 		
-		// Insertions des mots de passe des membres actuels dans la nouvelle table
-		$result = $this->querier->select_rows(PREFIX . 'member', array('user_id', 'login', 'password', 'approbation_pass', 'change_password_pass', 'last_connect', 'user_aprob'));
-		while ($row = $result->fetch())
-		{
-			$this->querier->insert(PREFIX . 'authentication_method', array(
-				'user_id' => $row['user_id'],
-				'method' => PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD,
-				'identifier' => $row['user_id']
-			));
-			
-			$this->querier->insert(PREFIX . 'internal_authentication', array(
-				'user_id' => $row['user_id'],
-				'login' => $row['login'],
-				'password' => $row['password'],
-				'registration_pass' => $row['approbation_pass'],
-				'change_password_pass' => $row['change_password_pass'],
-				'connection_attemps' => 0,
-				'last_connection' => $row['last_connect'],
-				'approved' => $row['user_aprob']
-			));
-		}
-		$result->dispose();
-		
 		// Modification de la table member
 		$columns = self::$db_utils->desc_table(PREFIX . 'member');
+		
+		// Insertions des mots de passe des membres actuels dans la nouvelle table
+		if (isset($columns['login']))
+		{
+			$result = self::$db_querier->select_rows(PREFIX . 'member', array('user_id', 'login', 'password', 'approbation_pass', 'change_password_pass', 'last_connect', 'user_aprob'));
+			while ($row = $result->fetch())
+			{
+				self::$db_querier->insert(PREFIX . 'authentication_method', array(
+					'user_id' => $row['user_id'],
+					'method' => PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD,
+					'identifier' => $row['user_id']
+				));
+				
+				self::$db_querier->insert(PREFIX . 'internal_authentication', array(
+					'user_id' => $row['user_id'],
+					'login' => $row['login'],
+					'password' => $row['password'],
+					'registration_pass' => $row['approbation_pass'],
+					'change_password_pass' => $row['change_password_pass'],
+					'connection_attemps' => 0,
+					'last_connection' => $row['last_connect'],
+					'approved' => $row['user_aprob']
+				));
+			}
+			$result->dispose();
+		}
 		
 		$rows_change = array(
 			'login' => 'display_name VARCHAR(255)',
@@ -354,10 +357,14 @@ class UpdateServices
 		if (!isset($columns['autoconnect_key']))
 			self::$db_utils->add_column(PREFIX . 'member', 'autoconnect_key', array('type' => 'string', 'length' => 64, 'default' => "''"));
 		
-		self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member DROP UNIQUE KEY `login`');
-		self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member DROP KEY `user_id`');
-		self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member ADD UNIQUE KEY `display_name` (`display_name`)');
-		self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member ADD UNIQUE KEY `email` (`email`)');
+		if (isset($columns['login']))
+			self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member DROP KEY `user_id`');
+		if (isset($columns['login']) && $columns['login']['key'])
+			self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member DROP KEY `login`');
+		if ((isset($columns['display_name']) && !$columns['display_name']['key']) || !isset($columns['display_name']))
+			self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member ADD UNIQUE KEY `display_name` (`display_name`)');
+		if ((isset($columns['email']) && !$columns['email']['key']) || !isset($columns['email']))
+			self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member ADD UNIQUE KEY `email` (`email`)');
 		
 		// Modification de la table sessions
 		$columns = self::$db_utils->desc_table(PREFIX . 'sessions');
@@ -392,7 +399,8 @@ class UpdateServices
 		
 		self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'sessions DROP KEY `user_id`');
 		self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'sessions ADD KEY `user_id` (`user_id`)');
-		self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'sessions ADD KEY `timestamp` (`timestamp`)');
+		if ((isset($columns['timestamp']) && !$columns['timestamp']['key']) || !isset($columns['timestamp']))
+			self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'sessions ADD KEY `timestamp` (`timestamp`)');
 	}
 	
 	public function update_kernel_version()
@@ -402,28 +410,6 @@ class UpdateServices
 		GeneralConfig::save();
 	}
 	
-	// TODO : Update configurations (pour modules forum et media, faire comme pour la 4.0)
-	
-	
-	public function update_configurations()
-	{
-		$configs_kernel_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/kernel/config/', self::$configuration_pattern);
-		
-		$configs_class = array_merge($configs_module_class, $configs_kernel_class);
-		foreach ($configs_class as $class_name)
-		{
-			try {
-				$object = new $class_name();
-				$object->execute();
-				$success = true;
-				$message = '';
-			} catch (Exception $e) {
-				$success = false;
-				$message = $e->getMessage();
-			}
-			$this->add_error_to_file($object->get_config_name() . '_config', $success, $message);
-		}
-	}
 	public function update_modules()
 	{
 		$modules_config = ModulesConfig::load();
@@ -433,8 +419,11 @@ class UpdateServices
 				$module->set_installed_version($module->get_configuration()->get_version());
 			else
 			{
-				$module->set_activated(false);
-				$this->add_information_to_file('module ' . $id, 'has been disabled because : incompatible with new version');
+				if ($module->get_configuration()->get_compatibility() != self::$new_kernel_version)
+				{
+					$module->set_activated(false);
+					$this->add_information_to_file('module ' . $id, 'has been disabled because : incompatible with new version');
+				}
 			}
 			
 			$modules_config->update($module);
@@ -462,13 +451,11 @@ class UpdateServices
 	
 	public function update_themes()
 	{
-		$themes_config = ThemesConfig::load();
 		$active_themes_number = 0;
 		foreach (ThemesManager::get_installed_themes_map() as $id => $theme)
 		{
 			if ($theme->get_configuration()->get_compatibility() == self::$new_kernel_version)
 			{
-				$theme->set_installed_version($theme->get_configuration()->get_version());
 				$active_themes_number++;
 			}
 			else
@@ -476,10 +463,7 @@ class UpdateServices
 				ThemesManager::uninstall($id);
 				$this->add_information_to_file('theme ' . $id, 'has been uninstalled because : incompatible with new version');
 			}
-			
-			$themes_config->update($theme);
 		}
-		ThemesConfig::save();
 		
 		if (empty($active_themes_number))
 		{
@@ -493,13 +477,11 @@ class UpdateServices
 	
 	public function update_langs()
 	{
-		$langs_config = LangsConfig::load();
 		$active_langs_number = 0;
 		foreach (LangsManager::get_installed_langs_map() as $id => $lang)
 		{
 			if ($lang->get_configuration()->get_compatibility() == self::$new_kernel_version)
 			{
-				$lang->set_installed_version($lang->get_configuration()->get_version());
 				$active_langs_number++;
 			}
 			else
@@ -507,10 +489,7 @@ class UpdateServices
 				LangsManager::uninstall($id);
 				$this->add_information_to_file('lang ' . $id, 'has been uninstalled because : incompatible with new version');
 			}
-			
-			$langs_config->update($lang);
 		}
-		LangsConfig::save();
 		
 		if (empty($active_langs_number))
 		{

@@ -311,7 +311,7 @@ class SessionData
 
 	public function get_cached_data($key, $default = null)
 	{
-		if (array_key_exists($key, $this->cached_data))
+		if (is_array($this->cached_data) && array_key_exists($key, $this->cached_data))
 		{
 			return $this->cached_data[$key];
 		}

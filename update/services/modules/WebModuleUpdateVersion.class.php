@@ -59,7 +59,7 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 			'url' => 'url VARCHAR(255)',
 			'compt' => 'number_views INT(11)',
 			'aprob' => 'approbation_type INT(11)',
-			'timestamp' => 'creation_date INT(11)',
+			'timestamp' => 'creation_date INT(11)'
 		);
 		
 		foreach ($rows_change as $old_name => $new_name)
@@ -83,9 +83,17 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 		if (!isset($columns['partner_picture']))
 			$this->db_utils->add_column(PREFIX . 'web', 'partner_picture', array('type' => 'string', 'length' => 255, 'default' => "''"));
 		
-		$this->querier->inject('ALTER TABLE ' . PREFIX . 'web ADD FULLTEXT KEY `title` (`name`)');
-		$this->querier->inject('ALTER TABLE ' . PREFIX . 'web ADD FULLTEXT KEY `contents` (`contents`)');
-		$this->querier->inject('ALTER TABLE ' . PREFIX . 'web ADD FULLTEXT KEY `short_contents` (`short_contents`)');
+		if (isset($columns['idcat']))
+		{
+			$this->querier->inject('ALTER TABLE ' . PREFIX . 'web DROP KEY `idcat`');
+			$this->querier->inject('ALTER TABLE ' . PREFIX . 'web ADD KEY `id_category` (`id_category`)');
+		}
+		if ((isset($columns['title']) && !$columns['title']['key']) || !isset($columns['name']))
+			$this->querier->inject('ALTER TABLE ' . PREFIX . 'web ADD FULLTEXT KEY `title` (`name`)');
+		if ((isset($columns['contents']) && !$columns['contents']['key']) || !isset($columns['contents']))
+			$this->querier->inject('ALTER TABLE ' . PREFIX . 'web ADD FULLTEXT KEY `contents` (`contents`)');
+		if ((isset($columns['short_contents']) && !$columns['short_contents']['key']) || !isset($columns['short_contents']))
+			$this->querier->inject('ALTER TABLE ' . PREFIX . 'web ADD FULLTEXT KEY `short_contents` (`short_contents`)');
 		
 		$result = $this->querier->select_rows(PREFIX . 'web', array('id', 'name'));
 		while ($row = $result->fetch())
@@ -134,14 +142,15 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 		if (!isset($columns['id_parent']))
 			$this->db_utils->add_column(PREFIX . 'web_cats', 'id_parent', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
 		
-		$result = $this->querier->select_rows(PREFIX . 'web_cats', array('id', 'name'));
+		$result = $this->querier->select_rows(PREFIX . 'web_cats', array('id', 'name', 'image'));
 		while ($row = $result->fetch())
 		{
 			$this->querier->update(PREFIX . 'web_cats', array(
 				'rewrited_name' => Url::encode_rewrite($row['name']),
 				'id_parent' => 0,
 				'c_order' => 0,
-				'special_authorizations' => 0
+				'special_authorizations' => 0,
+				'image' => $row['image'] == 'web.png' ? '/web/web.png' : $row['image']
 			), 'WHERE id = :id', array('id' => $row['id']));
 		}
 		$result->dispose();
