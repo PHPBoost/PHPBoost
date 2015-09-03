@@ -59,7 +59,7 @@
 							{L_RESTORE_FROM_UPLOADED_FILE}
 							<br /><br />
 							<input type="file" class="file" name="file_sql">
-							<input type="hidden" name="max_file_size" value="10485760">
+							<input type="hidden" name="max_file_size" value="500000000">
 							<input type="hidden" name="token" value="{TOKEN}">
 							<br /><br />
 							<div class="center"><button type="submit" name="" value="true" class="submit">{L_RESTORE_NOW}</button></div>
