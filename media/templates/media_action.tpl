@@ -30,7 +30,7 @@
 			var id_music = new Array({JS_ID_MUSIC});
 
 			if (id_music.length > 0)
-				if (in_array(document.getElementById('_idcat').value, id_music))
+				if (in_array(jQuery('#idcat').val(), id_music))
 				{
 					jQuery('#width_dl').hide();
 					jQuery('#height_dl').hide();
@@ -47,7 +47,7 @@
 			jQuery('#width_dl').hide();
 			jQuery('#height_dl').hide();
 			# ENDIF #
-			jQuery('#_id_cat').change(function() {
+			jQuery('#idcat').change(function() {
 				hide_width_height();
 			});
 		});
@@ -67,7 +67,14 @@
 						<label for="name">* {L_TITLE}</label>
 						<div class="form-field"><input type="text" maxlength="100" class="field-large" id="name" name="name" value="{NAME}"></div>
 					</div>
-					{CATEGORIES_TREE}
+					<div class="form-element">
+						<label for="category">${LangLoader::get_message('form.category', 'common')}</label>
+						<div class="form-field">
+							<select name="idcat" id="idcat">
+								{CATEGORIES}
+							</select>
+						</div>
+					</div>
 					<div class="form-element" id="width_dl">
 						<label for="width">{L_WIDTH}</label>
 						<div class="form-field"><input type="number" min="10" max="5000" maxlength="4" id="width" name="width" value="{WIDTH}"></div>

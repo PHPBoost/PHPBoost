@@ -182,15 +182,24 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 			DispatchManager::redirect($error_controller);
 		}
 		
-		$category = MediaService::get_categories_manager()->get_categories_cache()->get_category($media['idcat']);
 		bread_crumb($media['idcat']);
+		
+		$categories_tree = MediaService::get_categories_manager()->get_select_categories_form_field('idcat', '', $media['idcat'], $search_category_children_options);
+		$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
+		$method->setAccessible(true);
+		$categories_tree_options = $method->invoke($categories_tree);
+		$categories_list = '';
+		foreach ($categories_tree_options as $option)
+		{
+			$categories_list .= $option->display()->render();
+		}
 		
 		$tpl->put_all(array(
 			'L_PAGE_TITLE' => $MEDIA_LANG['edit_media'],
 			'C_CONTRIBUTION' => 0,
 			'IDEDIT' => $media['id'],
 			'NAME' => $media['name'],
-			'CATEGORIES_TREE' => MediaService::get_categories_manager()->get_select_categories_form_field('idcat', LangLoader::get_message('form.category', 'common'), $category->get_id(), $search_category_children_options)->display()->render(),
+			'CATEGORIES' => $categories_list,
 			'WIDTH' => $media['width'],
 			'HEIGHT' => $media['height'],
 			'U_MEDIA' => $media['url'],
@@ -208,14 +217,24 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 
 		$editor = AppContext::get_content_formatting_service()->get_default_editor();
 		$editor->set_identifier('counterpart');
-	
+		
+		$categories_tree = MediaService::get_categories_manager()->get_select_categories_form_field('idcat', '', Category::ROOT_CATEGORY, $search_category_children_options);
+		$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
+		$method->setAccessible(true);
+		$categories_tree_options = $method->invoke($categories_tree);
+		$categories_list = '';
+		foreach ($categories_tree_options as $option)
+		{
+			$categories_list .= $option->display()->render();
+		}
+		
 		$tpl->put_all(array(
 			'L_PAGE_TITLE' => $write ? $MEDIA_LANG['add_media'] : $MEDIA_LANG['contribute_media'],
 			'C_CONTRIBUTION' => !$write,
 			'CONTRIBUTION_COUNTERPART_EDITOR' => $editor->display(),
 			'IDEDIT' => 0,
 			'NAME' => '',
-			'CATEGORIES_TREE' => MediaService::get_categories_manager()->get_select_categories_form_field('idcat', LangLoader::get_message('form.category', 'common'), Category::ROOT_CATEGORY, $search_category_children_options)->display()->render(),
+			'CATEGORIES' => $categories_list,
 			'WIDTH' => '425',
 			'HEIGHT' => '344',
 			'U_MEDIA' => 'http://',
