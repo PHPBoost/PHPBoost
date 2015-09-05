@@ -66,7 +66,7 @@ class DownloadDisplayCategoryController extends ModuleController
 		$subcategories_page = AppContext::get_request()->get_getint('subcategories_page', 1);
 		
 		$subcategories_number = count(DownloadService::get_categories_manager()->get_categories_cache()->get_childrens($this->get_category()->get_id()));
-		$pagination = $this->get_subcategories_pagination($subcategories_number, $this->config->get_categories_number_per_page(), $field, $mode, $page, $subcategories_page);
+		$subcategories_pagination = $this->get_subcategories_pagination($subcategories_number, $this->config->get_categories_number_per_page(), $field, $mode, $page, $subcategories_page);
 		
 		//Children categories
 		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= download_cats.id, download_cats.*,
@@ -88,8 +88,8 @@ class DownloadDisplayCategoryController extends ModuleController
 			'timestamp_now' => $now->get_timestamp(),
 			'id_category' => $this->category->get_id(),
 			'authorized_categories' => $authorized_categories,
-			'number_items_per_page' => $pagination->get_number_items_per_page(),
-			'display_from' => $pagination->get_display_from()
+			'number_items_per_page' => $subcategories_pagination->get_number_items_per_page(),
+			'display_from' => $subcategories_pagination->get_display_from()
 		));
 		
 		$nbr_cat_displayed = 0;
@@ -177,8 +177,8 @@ class DownloadDisplayCategoryController extends ModuleController
 			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
 			'C_HIDE_NO_ITEM_MESSAGE' => $this->get_category()->get_id() == Category::ROOT_CATEGORY && ($nbr_cat_displayed != 0 || !empty($category_description)),
 			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
-			'C_SUBCATEGORIES_PAGINATION' => $pagination->has_several_pages(),
-			'SUBCATEGORIES_PAGINATION' => $pagination->display(),
+			'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
+			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
 			'CATS_COLUMNS_WIDTH' => $cats_columns_width,
 			'PAGINATION' => $pagination->display(),
 			'TABLE_COLSPAN' => 4 + (int)$this->config->are_comments_enabled() + (int)$this->config->is_notation_enabled(),
@@ -357,6 +357,7 @@ class DownloadDisplayCategoryController extends ModuleController
 		$object->init();
 		$object->check_authorizations();
 		$object->build_view(AppContext::get_request());
+		$object->build_view();
 		return $object->tpl;
 	}
 }
