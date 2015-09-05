@@ -55,12 +55,11 @@ class GoogleAuthenticationMethod extends AuthenticationMethod
 	{
 		$this->querier = PersistenceContext::get_querier();
 		$auth_config = AuthenticationConfig::load();
-		$general_config = GeneralConfig::load();
 
 		$this->google_client = new Google_Client();
 		$this->google_client->setClientId($auth_config->get_google_client_id());
 		$this->google_client->setClientSecret($auth_config->get_google_client_secret());
-		$this->google_client->setRedirectUri($general_config->get_site_url() . $_SERVER['REQUEST_URI']);
+		$this->google_client->setRedirectUri(AppContext::get_request()->get_site_url() . $_SERVER['REQUEST_URI']);
 		$this->google_client->setScopes(array(
               'https://www.googleapis.com/auth/userinfo.profile',
               'https://www.googleapis.com/auth/userinfo.email',

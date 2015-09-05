@@ -143,7 +143,7 @@ class Environment
 		$general_config = GeneralConfig::load();
 		$site_path = $general_config->get_site_path();
 		define('DIR', $site_path);
-		define('HOST', $general_config->get_site_url());
+		define('HOST', AppContext::get_request()->get_site_url());
 		define('TPL_PATH_TO_ROOT', DIR);
 
 		//Path from the site root

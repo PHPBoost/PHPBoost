@@ -51,7 +51,9 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		//Isolement du code source et du code HTML qui ne sera pas protégé
 		$this->unparse_html(self::PICK_UP);
 		$this->unparse_code(self::PICK_UP);
-
+		
+		$this->content = TextHelper::html_entity_decode($this->content);
+		
 		//Smilies
 		$this->unparse_smilies();
 
@@ -87,7 +89,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			//Création du tableau de remplacement
 			foreach ($smileys_cache as $code => $infos)
 			{
-				$smiley_img_url[] = '`<img src="(\.\.)?/images/smileys/' . preg_quote($infos['url_smiley']) . '(.*) />`sU';
+				$smiley_img_url[] = '`<img src="([^"]+)?/images/smileys/' . preg_quote($infos['url_smiley']) . '(.*) />`sU';
 				$smiley_code[] = $code;
 			}
 			$this->content = preg_replace($smiley_img_url, $smiley_code, $this->content);

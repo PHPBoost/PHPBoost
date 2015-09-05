@@ -59,7 +59,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	 */
 	public function parse()
 	{
-		$this->content = TextHelper::htmlspecialchars_decode($this->content);
+		$this->content = TextHelper::html_entity_decode($this->content);
 	}
 
 	/**

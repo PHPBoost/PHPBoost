@@ -351,6 +351,21 @@ class HTTPRequestCustom
 		return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 	}
 
+	private function get_http_host()
+	{
+		return (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST');
+	}
+
+	public function get_is_localhost()
+	{
+		return self::get_http_host() == 'localhost' || self::get_http_host() == '127.0.0.1' || self::get_http_host() == '::1';
+	}
+
+	public function get_site_url()
+	{
+		return 'http' . (isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off' ? 's' : '') . '://' . self::get_http_host();
+	}
+
 	public function get_user_agent()
 	{
 		return isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';

@@ -77,8 +77,11 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 			{
 				$description = '';
 				if (method_exists($category, 'get_description'))
-					$description = $category->get_description();
-					
+				{
+					$description = FormatingHelper::second_parse($category->get_description());
+					$description = strlen($description) > 250 ? substr(@strip_tags($description, '<br><br/>'), 0, 250) . '...' : $description;
+				}
+				
 				$description_exists = method_exists($category, 'get_description');
 				$category_view = new FileTemplate('default/framework/content/categories/category.tpl');
 				$category_view->add_lang($this->lang);

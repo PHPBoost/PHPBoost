@@ -71,13 +71,18 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	 */
 	public function parse()
 	{
+		$this->content = TextHelper::html_entity_decode($this->content);
+		
 		//The URL must be absolute otherwise TinyMCE won't be able to display  images for instance.
 		$this->content = Url::html_convert_root_relative2absolute($this->content, $this->path_to_root);
 		
 		//Extracting HTML and code tags
 		$this->unparse_html(self::PICK_UP);
 		$this->unparse_code(self::PICK_UP);
-
+		
+		//Smilies
+		$this->unparse_smilies();
+		
 		//Remplacement des caractères de word
 		$array_str = array(
 			"\t", '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '€', '‚', 'ƒ',
@@ -135,6 +140,18 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			//reimplanting html and code tags
 			$this->unparse_code(self::REIMPLANT);
 			$this->unparse_html(self::REIMPLANT);
+	}
+	
+	/**
+	 * @desc Replaces the image code for smilies by the text code
+	 */
+	private function unparse_smilies()
+	{
+		$this->content = preg_replace('`<img src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" class="smiley" />`i',
+		'<img title="$2" src="' . PATH_TO_ROOT . '/images/smileys/$1" alt="$2" border="0" />', $this->content);
+		
+		$this->content = preg_replace('`<img src="[\./]*/images/smileys/([^"]+)" title="([^"]+)" alt="([^"]+)" class="smiley" />`i',
+		'<img title="$2" src="' . PATH_TO_ROOT . '/images/smileys/$1" alt="$3" border="0" />', $this->content);
 	}
 
 	/**

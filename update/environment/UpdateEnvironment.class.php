@@ -52,7 +52,7 @@ class UpdateEnvironment extends Environment
 
 	public static function load_dynamic_constants()
 	{
-		define('HOST', 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST')));
+		define('HOST', Appcontext::get_request()->get_site_url());
 		$server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
 		define('FILE', $server_path);
 		define('DIR', str_replace('/update/', '', $server_path));

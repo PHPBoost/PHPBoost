@@ -70,7 +70,7 @@ class TinyMCEParser extends ContentFormattingParser
 	 */
 	public function parse()
 	{
-		$this->content = TextHelper::htmlspecialchars_decode($this->content);
+		$this->content = TextHelper::html_entity_decode($this->content);
 		
 		//On supprime d'abord toutes les occurences de balises CODE que nous réinjecterons à la fin pour ne pas y toucher
 		if (!in_array('code', $this->forbidden_tags))
@@ -836,6 +836,7 @@ class TinyMCEParser extends ContentFormattingParser
 			}
 		}
 		$style .= !empty($style) ? '"' : '';
+		
 		return '<img src="' . $matches[2] . '" alt="' . $alt . '"' . $style .' />';
 	}
 

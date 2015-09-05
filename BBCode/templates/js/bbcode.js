@@ -90,7 +90,7 @@ function netscape_sel(target, open_balise, close_balise)
 	{
 		target.value = string_start + selection + ' ' + open_balise + ' ' + string_end;	
 		target.setSelectionRange(string_start.length + open_balise.length + 2, target.value.length - string_end.length);	
-		target.focus();		
+		target.focus();
 	}
 	else
 	{
@@ -145,10 +145,10 @@ function insertbbcode(open_balise, close_balise, field)
 
 //Insertion dans le champs des codes de type select.
 function insertbbcode_select(id_select, close_balise, field)
-{			
+{
 	var select = document.getElementById(id_select + field);
 	
-	if( select.value != '' )				
+	if( select.value != '' )
 		insertbbcode('[' + id_select + '=' + select.value + ']', close_balise, field);
 	
 	//On remet la valeur par défaut.
@@ -159,10 +159,10 @@ function insertbbcode_select(id_select, close_balise, field)
 
 //Insertion dans le champs des codes de type select.
 function insertbbcode_select2(id_select, field)
-{			
+{
 	var select = document.getElementById(id_select + field);
 	
-	if( select.value != '' )				
+	if( select.value != '' )
 		insertbbcode('[' + select.value + ']', '[/' + select.value + ']', field);
 	
 	//On remet la valeur par défaut.
@@ -201,7 +201,7 @@ function set_bbcode_preference(divID)
 {
 	if( getCookie('hide-bbcode') == 0 )
 	{
-		document.getElementById(divID).style.display = 'none';
+		jQuery('#' + divID).hide();
 		var parent = jQuery('#' + divID).closest('.bbcode')[0];
 		parent.className = 'bbcode';
 	}
@@ -213,13 +213,13 @@ function show_bbcode_div(divID, hide)
 	var div = document.getElementById(divID);
 	var parent = jQuery('#' + divID).closest('.bbcode')[0];
 	if( div.style.display == 'none' )
-	{	
+	{
 		parent.className = 'bbcode expand';
 		sendCookie('hide-bbcode', 1); //On envoi le cookie pour se souvenir du choix de l'utilisateur.
 		jQuery("#" + divID).fadeIn(300);
 	}
 	else
-	{	
+	{
 		jQuery("#" + divID).fadeOut(300, function(){
 			parent.className = 'bbcode';
 			sendCookie('hide-bbcode', 0); //On envoi le cookie pour se souvenir du choix de l'utilisateur.
@@ -227,7 +227,7 @@ function show_bbcode_div(divID, hide)
 	}
 }
 
-function bbcode_color(field)
+function bbcode_color(divID, field)
 {
 	var i;
 	var br;
@@ -244,7 +244,7 @@ function bbcode_color(field)
 	{
 		br = (i+1) % 8;
 		br = (br == 0 && i != 0 && i < 39) ? '</tr><tr>' : '';
-		contents += '<td><a style="background:' + color[i] + ';"onclick="insertbbcode(\'[color=' + color[i] + ']\', \'[/color]\', \'' + field + '\');"></a></td>' + br;								
+		contents += '<td><a href="" style="background:' + color[i] + ';" onclick="insertbbcode(\'[color=' + color[i] + ']\', \'[/color]\', \'' + field + '\');bb_hide_block(\'' + divID + '\', \'' + field + '\', 0);return false;"></a></td>' + br;
 	}
 	document.getElementById("bbcolor" + field).innerHTML = contents + '</tr></table>';
 }
@@ -268,7 +268,7 @@ function bbcode_table(field, head_name)
 			for(var j = 0; j < cols; j++)
 				code += '\t\t[col][/col]\n';
 			code += '\t[/row]\n';
-		}				
+		}
 		code += '[/table]';
 		
 		insertbbcode(code.substring(0, pointor), code.substring(pointor, code.length), field);

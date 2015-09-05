@@ -77,7 +77,8 @@ class ContentSecondParser extends AbstractParser
 		}
 		
 		$this->parse_feed_tag();
-
+		
+		$this->content = TextHelper::html_entity_decode($this->content);
 		$this->content = Url::html_convert_root_relative2absolute($this->content, $this->path_to_root, $this->page_path);
 	}
 

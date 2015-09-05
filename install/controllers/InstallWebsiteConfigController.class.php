@@ -98,7 +98,7 @@ class InstallWebsiteConfigController extends InstallController
 
 	private function current_server_host()
 	{
-		return 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST'));
+		return Appcontext::get_request()->get_site_url();
 	}
 
 	private function current_server_path()

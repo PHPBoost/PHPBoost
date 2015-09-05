@@ -231,7 +231,7 @@ function flowPlayerDisplay(id)
 	);
 }
 
-var delay = 1000; //Délai après lequel le bloc est automatiquement masqué, après le départ de la souris.
+var delay = 300; //Délai après lequel le bloc est automatiquement masqué, après le départ de la souris.
 var timeout;
 var displayed = false;
 var previous_bblock;

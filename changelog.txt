@@ -14,6 +14,7 @@
 [*] Suppression des mots clés du site qui ne sont plus utilisés pour le référencement
 [*] Les modules auxquels l'utilisateur n'a pas le droit de contribuer ne sont plus affichés dans le panneau de contribution
 [*] [color=red]Nouveauté:[/color] Générateur automatique de tableaux avec gestion de la pagination, filtres, tris.
+[*] [color=red]Nouveauté:[/color] Possibilité de mettre en place un site complètement en HTTPS
 
 [*] Nouveau système de session et de connexion :
 	[*] Suppression du champ Pseudo, remplacé par Nom d'affichage

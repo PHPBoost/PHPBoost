@@ -259,8 +259,7 @@ class Url
 	 */
 	public static function get_absolute_root()
 	{
-		$general_config = GeneralConfig::load();
-		return trim($general_config->get_site_url() . $general_config->get_site_path(), '/');
+		return trim(AppContext::get_request()->get_site_url() . GeneralConfig::load()->get_site_path(), '/');
 	}
 
 	/**

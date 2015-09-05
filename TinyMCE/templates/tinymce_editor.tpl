@@ -10,6 +10,9 @@ function XMLHttpRequest_preview(field)
 	var contents = tinymce.activeEditor.getContent();
 	var preview_field = 'xmlhttprequest-preview' + field;
 	
+	if( contents == "" )
+		contents = jQuery('#' + field).val();
+	
 	if( contents != "" )
 	{
 		if(!displayed[field])
