@@ -29,7 +29,7 @@ class CLIRestoreDBCommand implements CLICommand
 {
 	public function short_description()
 	{
-		return 'Dump database';
+		return 'Restore database';
 	}
 
 	public function help(array $args)

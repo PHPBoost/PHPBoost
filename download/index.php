@@ -48,7 +48,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('DownloadFormController', '`^/add/?([0-9]+)?/?$`', array('id_category')),
 	new UrlControllerMapper('DownloadFormController', '`^/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('DownloadDeleteController', '`^/([0-9]+)/delete/?$`', array('id')),
-	new UrlControllerMapper('DownloadDisplayDownloadFileController', '`^/([0-9]+)-([a-z0-9-_]+)/([0-9]+)-([a-z0-9-_]+)?/?$`', array('id_category', 'rewrited_name_category', 'id', 'rewrited_title')),
+	new UrlControllerMapper('DownloadDisplayDownloadFileController', '`^/([0-9]+)-([a-z0-9-_]+)/([0-9]+)-([a-z0-9-_]+)?/?$`', array('id_category', 'rewrited_name_category', 'id', 'rewrited_name')),
 	
 	//Keywords
 	new UrlControllerMapper('DownloadDisplayDownloadFileTagController', '`^/tag/([a-z0-9-_]+)?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('tag', 'field', 'sort', 'page')),
