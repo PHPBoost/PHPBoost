@@ -239,7 +239,7 @@ class ModulesManager
 	 */
 	public static function uninstall_module($module_id, $drop_files = false)
 	{
-		if (!empty($module_id))
+		if (!empty($module_id) && self::is_module_installed($module_id))
 		{
 			$error = self::execute_module_uninstallation($module_id);
 			if ($error === null)
