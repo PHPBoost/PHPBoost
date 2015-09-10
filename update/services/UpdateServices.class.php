@@ -32,13 +32,14 @@ class UpdateServices
 	const UNEXISTING_DATABASE = 2;
 	const UNKNOWN_ERROR = 3;
 	
+	// New version number
+	const NEW_KERNEL_VERSION = '4.2';
+	
 	private static $token_file_content = '1';
 	
 	private static $directory = '/update/services';
 	private static $configuration_pattern = '`ConfigUpdateVersion\.class\.php$`';
 	private static $module_pattern = '`ModuleUpdateVersion\.class\.php$`';
-	
-	private static $new_kernel_version = '4.2';
 	
 	/**
 	 * @var DBMSUtils
@@ -231,6 +232,9 @@ class UpdateServices
 		// Mise à jour des langues
 		$this->update_langs();
 		
+		// installation du module UrlUpdater pour la réécriture des Url des modules mis à jour
+		ModulesManager::install_module('UrlUpdater');
+		
 		// Fin de la mise à jour : régénération du cache
 		$this->delete_update_token();
 		$this->generate_cache();
@@ -254,8 +258,12 @@ class UpdateServices
 		// Création des nouvelles tables pour l'authentification
 		$tables = self::$db_utils->list_tables(true);
 		
-		if (!in_array(PREFIX . 'authentication_method', $tables))
+		// Modification de la table member
+		$columns = self::$db_utils->desc_table(PREFIX . 'member');
+		
+		if (!in_array(PREFIX . 'authentication_method', $tables) || isset($columns['login']))
 		{
+			self::$db_utils->drop(array(PREFIX . 'authentication_method'));
 			$fields = array(
 				'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1),
 				'method' => array('type' => 'string', 'length' => 32, 'default' => "''"),
@@ -270,8 +278,9 @@ class UpdateServices
 			self::$db_utils->create_table(PREFIX . 'authentication_method', $fields, $options);
 		}
 		
-		if (!in_array(PREFIX . 'internal_authentication', $tables))
+		if (!in_array(PREFIX . 'internal_authentication', $tables) || isset($columns['login']))
 		{
+			self::$db_utils->drop(array(PREFIX . 'internal_authentication'));
 			$fields = array(
 				'user_id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 				'login' => array('type' => 'string', 'length' => 255, 'default' => "''"),
@@ -289,9 +298,6 @@ class UpdateServices
 			);
 			self::$db_utils->create_table(PREFIX . 'internal_authentication', $fields, $options);
 		}
-		
-		// Modification de la table member
-		$columns = self::$db_utils->desc_table(PREFIX . 'member');
 		
 		// Insertions des mots de passe des membres actuels dans la nouvelle table
 		if (isset($columns['login']))
@@ -359,8 +365,6 @@ class UpdateServices
 		
 		if (isset($columns['login']))
 			self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member DROP KEY `user_id`');
-		if (isset($columns['login']) && $columns['login']['key'])
-			self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member DROP KEY `login`');
 		if ((isset($columns['display_name']) && !$columns['display_name']['key']) || !isset($columns['display_name']))
 			self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member ADD UNIQUE KEY `display_name` (`display_name`)');
 		if ((isset($columns['email']) && !$columns['email']['key']) || !isset($columns['email']))
@@ -406,20 +410,20 @@ class UpdateServices
 	public function update_kernel_version()
 	{
 		$general_config = GeneralConfig::load();
-		$general_config->set_phpboost_major_version(self::$new_kernel_version);
+		$general_config->set_phpboost_major_version(self::NEW_KERNEL_VERSION);
 		GeneralConfig::save();
 	}
 	
 	public function update_modules()
 	{
 		$modules_config = ModulesConfig::load();
-		foreach (ModulesManager::get_installed_modules_map() as $id => $module)
+		foreach ($modules_config->get_modules() as $id => $module)
 		{
 			if (ModulesManager::module_is_upgradable($id))
 				$module->set_installed_version($module->get_configuration()->get_version());
 			else
 			{
-				if ($module->get_configuration()->get_compatibility() != self::$new_kernel_version)
+				if ($module->get_configuration()->get_compatibility() != self::NEW_KERNEL_VERSION)
 				{
 					$module->set_activated(false);
 					$this->add_information_to_file('module ' . $id, 'has been disabled because : incompatible with new version');
@@ -454,7 +458,7 @@ class UpdateServices
 		$active_themes_number = 0;
 		foreach (ThemesManager::get_installed_themes_map() as $id => $theme)
 		{
-			if ($theme->get_configuration()->get_compatibility() == self::$new_kernel_version)
+			if ($theme->get_configuration()->get_compatibility() == self::NEW_KERNEL_VERSION)
 			{
 				$active_themes_number++;
 			}
@@ -480,7 +484,7 @@ class UpdateServices
 		$active_langs_number = 0;
 		foreach (LangsManager::get_installed_langs_map() as $id => $lang)
 		{
-			if ($lang->get_configuration()->get_compatibility() == self::$new_kernel_version)
+			if ($lang->get_configuration()->get_compatibility() == self::NEW_KERNEL_VERSION)
 			{
 				$active_langs_number++;
 			}

@@ -119,7 +119,7 @@ $lang = array(
 //Execute update
 	'step.execute.title' => 'Exécuter la mise à jour',
 	'step.execute.message' => 'Mise à jour du site',
-	'step.execute.explanation' => 'Cette étape va convertir votre site PHPBoost 4.1 vers PHPBoost 4.2.
+	'step.execute.explanation' => 'Cette étape va convertir votre site PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' vers PHPBoost ' . UpdateServices::NEW_KERNEL_VERSION . '.
 	<br /><br />
 	Attention cette étape est irréversible, veuillez par précaution sauvegarder votre base de données au préalable !',
 	
