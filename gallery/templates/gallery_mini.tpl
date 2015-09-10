@@ -19,8 +19,17 @@
 					</div>
 				</div>
 				<script type="text/javascript">
-					var nbr_element = jQuery('#mini-gallery-slideshow li').length;
-					jQuery('#mini-gallery-slideshow').css('width', nbr_element * 150);
+					jQuery(document).ready(function() {
+                        var nbr_element = jQuery('#mini-gallery-slideshow li').length;
+                        jQuery('#mini-gallery-slideshow').css('min-width', (nbr_element * 150) + 'px');
+                        jQuery('#mini-gallery-slideshow li').css('min-height', jQuery('#mini-gallery-slideshow').outerHeight() + 'px');
+
+                        setInterval(function(){
+                            jQuery("#mini-gallery-slideshow").animate({marginLeft:-150},1000,function(){
+                                jQuery(this).css({marginLeft:0}).find("li:last").after(jQuery(this).find("li:first"));
+                            })
+                        }, 5000);
+                    });
 				</script>
 				<a class="small" href="{PATH_TO_ROOT}/gallery/gallery.php">{L_GALLERY}</a>
 			</div>
