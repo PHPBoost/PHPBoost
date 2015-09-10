@@ -72,6 +72,7 @@ class Environment
 
 	public static function try_init()
 	{
+		self::redirect_to_update_script_if_needed();
 		self::init_output_bufferization();
 		self::fit_to_php_configuration();
 		self::init_services();
@@ -145,9 +146,6 @@ class Environment
 		define('DIR', $site_path);
 		define('HOST', AppContext::get_request()->get_site_url());
 		define('TPL_PATH_TO_ROOT', DIR);
-
-		//Path from the site root
-		define('SITE_REWRITED_SCRIPT', 	substr($_SERVER['REQUEST_URI'], strlen($site_path)));
 	}
 
 	public static function init_session()
@@ -366,6 +364,19 @@ class Environment
 		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 		{
 			AppContext::get_session()->csrf_post_protect();
+		}
+	}
+
+	/**
+	 * @desc Redirect to update script when it is present and not installed.
+	 */
+	private static function redirect_to_update_script_if_needed()
+	{
+		$folder = new Folder(PATH_TO_ROOT . '/update');
+		if ($folder->exists() && !AppContext::get_request()->get_is_localhost() && version_compare(GeneralConfig::load()->get_phpboost_major_version(), UpdateServices::NEW_KERNEL_VERSION, '<'))
+		{
+			self::load_dynamic_constants();
+			AppContext::get_response()->redirect(new Url(HOST . DIR . '/update'));
 		}
 	}
 

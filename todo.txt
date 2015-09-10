@@ -63,11 +63,7 @@
 - Téléchargement des fichiers en AJAX avec barre de progression
 
 [b]Installateur[/b]
-- Ajout d'une option pour supprimer le dossier à la fin de l'installation
 - Possibilité de choisir les modules, thèmes et langues à installer
-
-[b]Script de migration[/b]
-- Vérification automatique de la présence de la nouvelle version par le noyau, et redirection vers le script d'update
 
 [b]Sécurité[/b]
 - Expiration des comptes utilisateur

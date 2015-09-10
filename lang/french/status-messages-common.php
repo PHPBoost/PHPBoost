@@ -63,6 +63,9 @@ $lang['confirm.delete'] = 'Voulez-vous vraiment supprimer cet élément ?';
 $lang['message.success.config'] = 'La configuration a été modifiée';
 $lang['message.success.position.update'] = 'Les éléments ont été repositionnés';
 
+$lang['message.delete_install_and_update_folders'] = 'Par mesure de sécurité nous vous conseillons fortement de supprimer les dossiers <b>install</b> et <b>update</b> et tout ce qu\'ils contiennent, des personnes mal intentionnées pourraient relancer le script d\'installation et écraser certaines de vos données !';
+$lang['message.delete_install_or_update_folders'] = 'Par mesure de sécurité nous vous conseillons fortement de supprimer le dossier <b>:folder</b> et tout ce qu\'il contient, des personnes mal intentionnées pourraient relancer le script d\'installation et écraser certaines de vos données !';
+
 //Captcha
 $lang['captcha.validation_error'] = 'Le champ de vérification visuel n\'a pas été saisi correctement !';
 $lang['captcha.is_default'] = 'Le captcha que vous souhaitez désinstaller ou désactiver est défini sur le site, veuillez d\'abord sélectionner un autre captcha dans la configuration du contenu.';

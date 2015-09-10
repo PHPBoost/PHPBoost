@@ -63,6 +63,9 @@ $lang['confirm.delete'] = 'Do you really want to delete this item ?';
 $lang['message.success.config'] = 'The configuration has been modified';
 $lang['message.success.position.update'] = 'The position of the items has been updated';
 
+$lang['message.delete_install_and_update_folders'] = 'For security reasons we recommand you to delete the <b>install</b> and <b>update</b> folders and all their contents, hackers could manage to run the installation script and you could lose data !';
+$lang['message.delete_install_or_update_folders'] = 'For security reasons we recommand you to delete the <b>:folder</b> folder and all its contents, hackers could manage to run the installation script and you could lose data !';
+
 //Captcha
 $lang['captcha.validation_error'] = 'The visual confirmation field has not been properly filled!';
 $lang['captcha.is_default'] = 'The captcha you want to uninstall or disable is set on your site, you must select another captcha in the content management first.';

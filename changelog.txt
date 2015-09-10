@@ -15,6 +15,7 @@
 [*] Les modules auxquels l'utilisateur n'a pas le droit de contribuer ne sont plus affichés dans le panneau de contribution
 [*] [color=red]Nouveauté:[/color] Générateur automatique de tableaux avec gestion de la pagination, filtres, tris.
 [*] [color=red]Nouveauté:[/color] Possibilité de mettre en place un site complètement en HTTPS
+[*] [color=red]Nouveauté:[/color] Message d'avertissement affiché aux administrateurs si les dossiers install ou update sont présent avec possibilité de les supprimer via un bouton (sauf pour une installation locale)
 
 [*] Nouveau système de session et de connexion :
 	[*] Suppression du champ Pseudo, remplacé par Nom d'affichage
@@ -139,3 +140,6 @@
 
 [b]TinyMCE[/b]
 [*] Mise à jour du module (TinyMCE version 4.2.5)
+
+[b]Script de migration[/b]
+- Vérification automatique de la présence de la nouvelle version par le noyau, et redirection vers le script d'update

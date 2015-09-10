@@ -32,7 +32,7 @@
  */
 class HTTPResponseCustom
 {
-	const PROTOCOL = 'HTTP/1.0';
+	const PROTOCOL = 'HTTP/1.1';
 
 	private static $status_list = array(
  	    '101' => 'Switching Protocols',
