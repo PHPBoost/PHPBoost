@@ -114,8 +114,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 					'L_MODO_PANEL' => $LANG['modo_panel'],
 					'L_PRIVATE_PROFIL' => $LANG['my_private_profile'],
 					'L_DISCONNECT' => LangLoader::get_message('disconnect', 'user-common'),
-					'L_CONTRIBUTION_PANEL' => $LANG['contribution_panel'],
-					'SITE_REWRITED_SCRIPT' => SITE_REWRITED_SCRIPT
+					'L_CONTRIBUTION_PANEL' => $LANG['contribution_panel']
 				));
 			}
 			else
@@ -135,7 +134,8 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 					'L_AUTOCONNECT' => LangLoader::get_message('autoconnect', 'user-common'),
 					'L_FORGOT_PASS' => LangLoader::get_message('forget-password', 'user-common'),
 					'L_REGISTER' => LangLoader::get_message('register', 'user-common'),
-					'U_CONNECT' => UserUrlBuilder::connect()->rel()
+					'U_CONNECT' => UserUrlBuilder::connect()->rel(),
+					'SITE_REWRITED_SCRIPT' => substr(REWRITED_SCRIPT, strlen(GeneralConfig::load()->get_site_path()))
 				));
 			}
 		
