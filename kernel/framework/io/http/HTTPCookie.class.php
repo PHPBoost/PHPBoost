@@ -46,6 +46,9 @@ class HTTPCookie
 		$this->name = $name;
 		$this->value = stripslashes($value);
 		
+		if (AppContext::get_request()->get_is_https())
+			$this->set_secure(true);
+		
 		$site_path = GeneralConfig::load()->get_site_path();
 		if (!empty($site_path))
 		{
@@ -105,7 +108,7 @@ class HTTPCookie
 	 */
 	public function set_secure($secure)
 	{
-		$this->secure = $secure;
+		$this->secure = (bool)$secure;
 	}
 	
 	/**
@@ -118,7 +121,7 @@ class HTTPCookie
 	 */
 	public function set_httponly($httponly)
 	{
-		$this->httponly = $httponly;
+		$this->httponly = (bool)$httponly;
 	}
 	
 	public function get_name()
