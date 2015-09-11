@@ -109,16 +109,26 @@ elseif (isset($_FILES['gallery'])) //Upload
 
 	$dir = 'pics/';
 
-	$Upload = new Upload($dir);
-
-	$idpic = 0;
-	$idcat_post = retrieve(POST, 'cat', '');
-	$name_post = retrieve(POST, 'name', '', TSTRING_AS_RECEIVED);
-
-	$Upload->file('gallery', '`([a-z0-9()_-])+\.(jpg|jpeg|gif|png)+$`i', Upload::UNIQ_NAME, $config->get_max_weight());
-	if ($Upload->get_error() != '') //Erreur, on arrête ici
+	$authorized_pictures_extensions = FileUploadConfig::load()->get_picture_authorized_extensions();
+	$error = '';
+	
+	if (!empty($authorized_pictures_extensions))
 	{
-		AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($id_category,$Upload->get_error()) . '#message_helper');
+		$Upload = new Upload($dir);
+
+		$idpic = 0;
+		$idcat_post = retrieve(POST, 'cat', '');
+		$name_post = retrieve(POST, 'name', '', TSTRING_AS_RECEIVED);
+
+		if (!$Upload->file('gallery', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`i', Upload::UNIQ_NAME, $config->get_max_weight()))
+			$error = $Upload->get_error();
+	}
+	else
+		$error = 'e_upload_invalid_format';
+		
+	if ($error != '') //Erreur, on arrête ici
+	{
+		AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($id_category, $error) . '#message_helper');
 	}
 	else
 	{

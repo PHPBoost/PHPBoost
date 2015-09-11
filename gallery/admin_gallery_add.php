@@ -44,13 +44,23 @@ $nbr_pics_post = $request->get_postint('nbr_pics', 0);
 if (isset($_FILES['gallery']) && $idcat_post) //Upload
 {
 	$dir = 'pics/';
-	$Upload = new Upload($dir);
-	$Upload->disableContentCheck();
+	$authorized_pictures_extensions = FileUploadConfig::load()->get_picture_authorized_extensions();
+	$error = '';
+	
+	if (!empty($authorized_pictures_extensions))
+	{
+		$Upload = new Upload($dir);
+		$Upload->disableContentCheck();
 
-	$idpic = 0;
-	$Upload->file('gallery', '`([a-z0-9()_-])+\.(jpg|jpeg|gif|png)+$`i', Upload::UNIQ_NAME, $config->get_max_weight());
-	if ($Upload->get_error() != '') //Erreur, on arrête ici
-		AppContext::get_response()->redirect('/gallery/admin_gallery_add.php?error=' . $Upload->get_error() . ($idcat_post ? '&cat=' . $idcat_post : '') . '#message_helper');
+		$idpic = 0;
+		if (!$Upload->file('gallery', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`i', Upload::UNIQ_NAME, $config->get_max_weight()))
+			$error = $Upload->get_error();
+	}
+	else
+		$error = 'e_upload_invalid_format';
+	
+	if ($error != '') //Erreur, on arrête ici
+		AppContext::get_response()->redirect('/gallery/admin_gallery_add.php?error=' . $error . ($idcat_post ? '&cat=' . $idcat_post : '') . '#message_helper');
 	else
 	{
 		$path = $dir . $Upload->get_filename();

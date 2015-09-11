@@ -62,19 +62,26 @@ elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 	$error = '';
 	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
-		$Upload = new Upload($dir);
-		$Upload->disableContentCheck();
-		if (!$Upload->file('upload_ranks', '`([a-z0-9_ -])+\.(jpg|gif|png|bmp)+$`i'))
-			$error = $Upload->get_error();
+		$authorized_pictures_extensions = FileUploadConfig::load()->get_picture_authorized_extensions();
+		
+		if (!empty($authorized_pictures_extensions))
+		{
+			$Upload = new Upload($dir);
+			$Upload->disableContentCheck();
+			if (!$Upload->file('upload_ranks', '`([a-z0-9_ -])+\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`i'))
+				$error = $Upload->get_error();
+		}
+		else
+			$error = 'e_upload_invalid_format';
 	}
 	else
 		$error = 'e_upload_failed_unwritable';
 	
 	$error = !empty($error) ? '?error=' . $error : '';
-	AppContext::get_response()->redirect(HOST . SCRIPT . $error);	
+	AppContext::get_response()->redirect(HOST . SCRIPT . $error);
 }
-else //Sinon on rempli le formulaire	 
-{	
+else //Sinon on rempli le formulaire
+{
 	$template = new FileTemplate('forum/admin_ranks_add.tpl');
 
 	//Gestion erreur.
