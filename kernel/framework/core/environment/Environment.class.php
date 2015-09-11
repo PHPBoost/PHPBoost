@@ -360,11 +360,8 @@ class Environment
 
 	public static function csrf_protect_post_requests()
 	{
-		// Verify that the user really wanted to do this POST (only for the registered ones)
-		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
-		{
-			AppContext::get_session()->csrf_post_protect();
-		}
+		// Verify that the user really wanted to do this POST
+		AppContext::get_session()->csrf_post_protect();
 	}
 
 	/**

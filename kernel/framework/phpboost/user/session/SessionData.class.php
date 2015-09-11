@@ -444,13 +444,8 @@ class SessionData
 	}
 
 	/**
-	 * @desc Check the session against CSRF attacks by POST. Checks that POSTs are done from
-	 * this site. 2 different cases are accepted but the first is safer:
-	 * <ul>
-	 *      <li>The request contains a parameter whose name is token and value is the value of the token of the current session.</li>
-	 *      <li>If the token isn't in the request, we analyse the HTTP referer to be sure that the request comes from the current site and not from another which can be suspect</li>
-	 * </ul>
-	 * If the request doesn't match any of these two cases, this method will consider that it's a CSRF attack.
+	 * @desc Check the session against CSRF attacks by POST. Checks that POSTs are done with the token of the current session.
+	 * If the token of the request doesn't match the token of the current session, this method will consider that it's a CSRF attack.
 	 */
 	public function csrf_post_protect()
 	{
@@ -459,8 +454,8 @@ class SessionData
 	}
 
 	/**
-	 * @desc Check the session against CSRF attacks by GET. Checks that GETs are done from
-	 * this site with a correct token.
+	 * @desc Check the session against CSRF attacks by GET. Checks that GETs are done with the token of the current session.
+	 * If the token of the request doesn't match the token of the current session, this method will consider that it's a CSRF attack.
 	 */
 	public function csrf_get_protect()
 	{
