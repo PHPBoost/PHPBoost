@@ -54,6 +54,7 @@ class KernelSetup
 	private static $pm_topic_table;
 	private static $sessions_table;
 	private static $internal_authentication_table;
+	private static $internal_authentication_failures_table;
 	private static $authentication_method_table;
 	private static $smileys_table;
 	private static $upload_table;
@@ -83,6 +84,7 @@ class KernelSetup
 		self::$pm_topic_table = PREFIX . 'pm_topic';
 		self::$sessions_table = PREFIX . 'sessions';
 		self::$internal_authentication_table = PREFIX . 'internal_authentication';
+		self::$internal_authentication_failures_table = PREFIX . 'internal_authentication_failures';
 		self::$authentication_method_table = PREFIX . 'authentication_method';
 		self::$smileys_table = PREFIX . 'smileys';
 		self::$upload_table = PREFIX . 'upload';
@@ -118,6 +120,7 @@ class KernelSetup
 			self::$pm_topic_table,
 			self::$sessions_table,
 			self::$internal_authentication_table,
+			self::$internal_authentication_failures_table,
 			self::$authentication_method_table,
 			self::$smileys_table,
 			self::$upload_table,
@@ -146,6 +149,7 @@ class KernelSetup
 		$this->create_pm_topic_table();
 		$this->create_sessions_table();
 		$this->create_internal_authentication_table();
+		$this->create_internal_authentication_failures_table();
 		$this->create_authentication_method_table();
 		$this->create_smileys_table();
 		$this->create_upload_table();
@@ -473,7 +477,7 @@ class KernelSetup
 	{
 		$fields = array(
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'session_id' => array('type' => 'string', 'length' =>64, 'default' => "''"),
+			'session_id' => array('type' => 'string', 'length' => 64, 'default' => "''"),
 			'token' => array('type' => 'string', 'length' => 64, 'notnull' => 1),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'ip' => array('type' => 'string', 'length' => 64, 'default' => "''"),
@@ -510,6 +514,22 @@ class KernelSetup
 			'indexes' => array('login' => array('type' => 'unique', 'fields' => 'login'))
 		);
 		self::$db_utils->create_table(self::$internal_authentication_table, $fields, $options);
+	}
+	
+	private function create_internal_authentication_failures_table()
+	{
+		$fields = array(
+			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
+			'session_id' => array('type' => 'string', 'length' => 64, 'default' => "''"),
+			'login' => array('type' => 'string', 'length' => 255, 'default' => "''"),
+			'connection_attemps' => array('type' => 'boolean', 'length' => 4, 'notnull' => 1, 'default' => 0),
+			'last_connection' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+		);
+		$options = array(
+			'primary' => array('id'),
+			'indexes' => array('session_id' => array('type' => 'key', 'fields' => 'session_id'))
+		);
+		self::$db_utils->create_table(self::$internal_authentication_failures_table, $fields, $options);
 	}
 
 	private function create_authentication_method_table()

@@ -36,204 +36,6 @@ class SessionData
 	private static $KEY_USER_ID = 'user_id';
 	private static $KEY_SESSION_ID = 'session_id';
 
-	public static function admin_session()
-	{
-		return new SessionData(1, null);
-	}
-
-	/**
-	 * @desc
-	 */
-	public static function gc()
-	{
-		PersistenceContext::get_querier()->delete(DB_TABLE_SESSIONS, 'WHERE timestamp < :now', array('now' => time() - SessionsConfig::load()->get_session_duration()));
-	}
-
-	/**
-	 * @desc
-	 * @return SessionData
-	 */
-	public static function create_visitor()
-	{
-		return self::create_from_user_id(Session::VISITOR_SESSION_ID);
-	}
-
-	/**
-	 * @desc
-	 * @param int $user_id
-	 * @return SessionData
-	 */
-	public static function create_from_user_id($user_id)
-	{
-		$data = null;
-		if ($user_id != Session::VISITOR_SESSION_ID && self::session_exists($user_id))
-		{
-			$data = self::use_existing_session($user_id);
-		}
-		else
-		{
-			$data = new SessionData($user_id, KeyGenerator::generate_key(64));
-			$data->token = KeyGenerator::generate_key(16);
-			$data->timestamp = time();
-			$data->ip = AppContext::get_request()->get_ip_address();
-			self::fill_user_cached_data($data);
-			$data->create();
-
-			self::add_in_visit_counter();
-		}
-		return $data;
-	}
-
-	public static function add_in_visit_counter()
-	{
-		$ip_address = AppContext::get_request()->get_ip_address();
-		$has_already_visited = PersistenceContext::get_querier()->row_exists(DB_TABLE_VISIT_COUNTER, 'WHERE ip=:ip', array('ip' => $ip_address));
-		$is_robot = Robots::is_robot();
-		
-		if (!$has_already_visited && !$is_robot)
-		{
-			$now = new Date(Date::DATE_NOW, Timezone::SITE_TIMEZONE);
-			$time = $now->format('Y-m-d', Timezone::SITE_TIMEZONE);
-
-			PersistenceContext::get_querier()->inject("UPDATE " . DB_TABLE_VISIT_COUNTER . " SET ip = ip + 1, time=:time, total = total + 1 WHERE id = 1", array('time' => $time));
-			PersistenceContext::get_querier()->insert(DB_TABLE_VISIT_COUNTER, array('ip' => $ip_address, 'time' => $time, 'total' => 0));
-		}
-		
-		$jobs = AppContext::get_extension_provider_service()->get_extension_point(ScheduledJobExtensionPoint::EXTENSION_POINT);
-		foreach ($jobs as $job)
-		{
-			$job->on_new_session(!$has_already_visited, $is_robot);
-		}
-	}
-
-	public static function update_location($title_page)
-	{
-		$data = AppContext::get_session();
-		
-		if ($data->no_session_location)
-			$columns = array('timestamp' => $data->timestamp);
-		else
-			$columns = array('timestamp' => $data->timestamp, 'location_title' => $title_page, 'location_script' => REWRITED_SCRIPT);
-			
-		$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
-		$parameters = array('user_id' => $data->user_id, 'session_id' => $data->session_id);
-		PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
-		return $data;
-	}
-	
-	public static function recheck_cached_data_from_user_id($user_id)
-	{
-		if ($user_id != Session::VISITOR_SESSION_ID && self::session_exists($user_id))
-		{
-			$data = self::get_existing_session($user_id);
-			$data->recheck_cached_data();
-		}
-	}
-
-	/**
-	 * @desc
-	 * @param int $user_id
-	 * @return SessionData
-	 */
-	private static function session_exists($user_id)
-	{
-		$condition = 'WHERE user_id=:user_id';
-		$parameters = array('user_id' => $user_id);
-		return PersistenceContext::get_querier()->row_exists(DB_TABLE_SESSIONS, $condition, $parameters);
-	}
-
-	/**
-	 * @desc
-	 * @param int $user_id
-	 * @return SessionData
-	 */
-	private static function use_existing_session($user_id)
-	{
-		self::update_existing_session($user_id);
-		$data = self::get_existing_session($user_id);
-		$data->create_cookie();
-		return $data;
-	}
-	
-	private static function get_existing_session($user_id)
-	{
-		$parameters = array('user_id' => $user_id);
-		$condition = 'WHERE user_id=:user_id';
-		$columns = array('session_id', 'token', 'timestamp', 'ip', 'location_script', 'location_title', 'data', 'cached_data');
-		$row = PersistenceContext::get_querier()->select_single_row(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
-		return self::init_from_row($user_id, $row['session_id'], $row);
-	}
-
-	private static function update_existing_session($user_id)
-	{
-		$columns = array(
-			'timestamp' => time() + SessionsConfig::load()->get_session_duration(),
-			'ip' => AppContext::get_request()->get_ip_address()
-		);
-		$parameters = array('user_id' => $user_id);
-		$condition = 'WHERE user_id=:user_id';
-		PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
-	}
-
-	/**
-	 * @desc
-	 * @param string $cookie_content
-	 * @return SessionData
-	 */
-	public static function from_cookie($cookie_content)
-	{
-		$values = @unserialize($cookie_content);
-		if ($values === false || empty($values[self::$KEY_USER_ID]) || empty($values[self::$KEY_SESSION_ID]))
-		{
-			throw new UnexpectedValueException('invalid session data cookie content: "' . $cookie_content . '"');
-		}
-		try
-		{
-			$user_id = $values[self::$KEY_USER_ID];
-			$session_id = $values[self::$KEY_SESSION_ID];
-			$columns = array('token', 'timestamp', 'ip', 'location_script', 'location_title', 'data', 'cached_data');
-			$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
-			$parameters = array('user_id' => $user_id, 'session_id' => $session_id);
-			$row = PersistenceContext::get_querier()->select_single_row(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
-			$data = self::init_from_row($user_id, $session_id, $row);
-			$data->timestamp = time();
-			return $data;
-		}
-		catch (RowNotFoundException $ex)
-		{
-			throw new SessionNotFoundException($user_id, $session_id);
-		}
-	}
-
-	private static function init_from_row($user_id, $session_id, array $row)
-	{
-		$data = new SessionData($user_id, $session_id);
-		$data->token = $row['token'];
-		$data->timestamp = $row['timestamp'];
-		$data->ip = $row['ip'];
-		$data->location_script = $row['location_script'];
-		$data->location_title = $row['location_title'];
-		$data->cached_data = unserialize($row['cached_data']);
-		$data->data = unserialize($row['data']);
-		return $data;
-	}
-
-	private static function fill_user_cached_data(SessionData $data)
-	{
-		$columns = array('display_name', 'level', 'email', 'show_email', 'locale', 'theme', 'timezone', 'editor',
-			'unread_pm', 'posted_msg', 'registration_date', 'last_connection_date', 'groups', 'warning_percentage', 'delay_banned', 'delay_readonly');
-		$condition = 'WHERE user_id=:user_id';
-		$parameters = array('user_id' => $data->user_id);
-		try
-		{
-			$data->cached_data = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, $columns, $condition, $parameters);
-		}
-		catch (RowNotFoundException $ex)
-		{
-			$data->cached_data = User::get_visitor_properties(self::DEFAULT_VISITOR_DISPLAY_NAME);
-		}
-	}
-
 	protected $user_id;
 	protected $session_id;
 	protected $token;
@@ -443,6 +245,204 @@ class SessionData
 		$this->no_session_location = true;
 	}
 
+	public static function admin_session()
+	{
+		return new SessionData(1, null);
+	}
+
+	/**
+	 * @desc
+	 */
+	public static function gc()
+	{
+		PersistenceContext::get_querier()->delete(DB_TABLE_SESSIONS, 'WHERE timestamp < :now', array('now' => time() - SessionsConfig::load()->get_session_duration()));
+	}
+
+	/**
+	 * @desc
+	 * @return SessionData
+	 */
+	public static function create_visitor()
+	{
+		return self::create_from_user_id(Session::VISITOR_SESSION_ID);
+	}
+
+	/**
+	 * @desc
+	 * @param int $user_id
+	 * @return SessionData
+	 */
+	public static function create_from_user_id($user_id)
+	{
+		$data = null;
+		if ($user_id != Session::VISITOR_SESSION_ID && self::session_exists($user_id))
+		{
+			$data = self::use_existing_session($user_id);
+		}
+		else
+		{
+			$data = new SessionData($user_id, KeyGenerator::generate_key(64));
+			$data->token = KeyGenerator::generate_key(16);
+			$data->timestamp = time();
+			$data->ip = AppContext::get_request()->get_ip_address();
+			self::fill_user_cached_data($data);
+			$data->create();
+
+			self::add_in_visit_counter();
+		}
+		return $data;
+	}
+
+	public static function add_in_visit_counter()
+	{
+		$ip_address = AppContext::get_request()->get_ip_address();
+		$has_already_visited = PersistenceContext::get_querier()->row_exists(DB_TABLE_VISIT_COUNTER, 'WHERE ip=:ip', array('ip' => $ip_address));
+		$is_robot = Robots::is_robot();
+		
+		if (!$has_already_visited && !$is_robot)
+		{
+			$now = new Date(Date::DATE_NOW, Timezone::SITE_TIMEZONE);
+			$time = $now->format('Y-m-d', Timezone::SITE_TIMEZONE);
+
+			PersistenceContext::get_querier()->inject("UPDATE " . DB_TABLE_VISIT_COUNTER . " SET ip = ip + 1, time=:time, total = total + 1 WHERE id = 1", array('time' => $time));
+			PersistenceContext::get_querier()->insert(DB_TABLE_VISIT_COUNTER, array('ip' => $ip_address, 'time' => $time, 'total' => 0));
+		}
+		
+		$jobs = AppContext::get_extension_provider_service()->get_extension_point(ScheduledJobExtensionPoint::EXTENSION_POINT);
+		foreach ($jobs as $job)
+		{
+			$job->on_new_session(!$has_already_visited, $is_robot);
+		}
+	}
+
+	public static function update_location($title_page)
+	{
+		$data = AppContext::get_session();
+		
+		if ($data->no_session_location)
+			$columns = array('timestamp' => $data->timestamp);
+		else
+			$columns = array('timestamp' => $data->timestamp, 'location_title' => $title_page, 'location_script' => REWRITED_SCRIPT);
+			
+		$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
+		$parameters = array('user_id' => $data->user_id, 'session_id' => $data->session_id);
+		PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
+		return $data;
+	}
+	
+	public static function recheck_cached_data_from_user_id($user_id)
+	{
+		if ($user_id != Session::VISITOR_SESSION_ID && self::session_exists($user_id))
+		{
+			$data = self::get_existing_session($user_id);
+			$data->recheck_cached_data();
+		}
+	}
+
+	/**
+	 * @desc
+	 * @param int $user_id
+	 * @return SessionData
+	 */
+	private static function session_exists($user_id)
+	{
+		$condition = 'WHERE user_id=:user_id';
+		$parameters = array('user_id' => $user_id);
+		return PersistenceContext::get_querier()->row_exists(DB_TABLE_SESSIONS, $condition, $parameters);
+	}
+
+	/**
+	 * @desc
+	 * @param int $user_id
+	 * @return SessionData
+	 */
+	private static function use_existing_session($user_id)
+	{
+		self::update_existing_session($user_id);
+		$data = self::get_existing_session($user_id);
+		$data->create_cookie();
+		return $data;
+	}
+	
+	private static function get_existing_session($user_id)
+	{
+		$parameters = array('user_id' => $user_id);
+		$condition = 'WHERE user_id=:user_id';
+		$columns = array('session_id', 'token', 'timestamp', 'ip', 'location_script', 'location_title', 'data', 'cached_data');
+		$row = PersistenceContext::get_querier()->select_single_row(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
+		return self::init_from_row($user_id, $row['session_id'], $row);
+	}
+
+	private static function update_existing_session($user_id)
+	{
+		$columns = array(
+			'timestamp' => time() + SessionsConfig::load()->get_session_duration(),
+			'ip' => AppContext::get_request()->get_ip_address()
+		);
+		$parameters = array('user_id' => $user_id);
+		$condition = 'WHERE user_id=:user_id';
+		PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
+	}
+
+	/**
+	 * @desc
+	 * @param string $cookie_content
+	 * @return SessionData
+	 */
+	public static function from_cookie($cookie_content)
+	{
+		$values = @unserialize($cookie_content);
+		if ($values === false || empty($values[self::$KEY_USER_ID]) || empty($values[self::$KEY_SESSION_ID]))
+		{
+			throw new UnexpectedValueException('invalid session data cookie content: "' . $cookie_content . '"');
+		}
+		try
+		{
+			$user_id = $values[self::$KEY_USER_ID];
+			$session_id = $values[self::$KEY_SESSION_ID];
+			$columns = array('token', 'timestamp', 'ip', 'location_script', 'location_title', 'data', 'cached_data');
+			$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
+			$parameters = array('user_id' => $user_id, 'session_id' => $session_id);
+			$row = PersistenceContext::get_querier()->select_single_row(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
+			$data = self::init_from_row($user_id, $session_id, $row);
+			$data->timestamp = time();
+			return $data;
+		}
+		catch (RowNotFoundException $ex)
+		{
+			throw new SessionNotFoundException($user_id, $session_id);
+		}
+	}
+
+	private static function init_from_row($user_id, $session_id, array $row)
+	{
+		$data = new SessionData($user_id, $session_id);
+		$data->token = $row['token'];
+		$data->timestamp = $row['timestamp'];
+		$data->ip = $row['ip'];
+		$data->location_script = $row['location_script'];
+		$data->location_title = $row['location_title'];
+		$data->cached_data = unserialize($row['cached_data']);
+		$data->data = unserialize($row['data']);
+		return $data;
+	}
+
+	private static function fill_user_cached_data(SessionData $data)
+	{
+		$columns = array('display_name', 'level', 'email', 'show_email', 'locale', 'theme', 'timezone', 'editor',
+			'unread_pm', 'posted_msg', 'registration_date', 'last_connection_date', 'groups', 'warning_percentage', 'delay_banned', 'delay_readonly');
+		$condition = 'WHERE user_id=:user_id';
+		$parameters = array('user_id' => $data->user_id);
+		try
+		{
+			$data->cached_data = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, $columns, $condition, $parameters);
+		}
+		catch (RowNotFoundException $ex)
+		{
+			$data->cached_data = User::get_visitor_properties(self::DEFAULT_VISITOR_DISPLAY_NAME);
+		}
+	}
+
 	/**
 	 * @desc Check the session against CSRF attacks by POST. Checks that POSTs are done from
 	 * this site. 2 different cases are accepted but the first is safer:
@@ -454,7 +454,7 @@ class SessionData
 	 */
 	public function csrf_post_protect()
 	{
-		if (!empty($_POST))
+		if (AppContext::get_request()->is_post_method())
 			$this->check_csrf_attack();
 	}
 
@@ -469,7 +469,8 @@ class SessionData
 
 	private function check_csrf_attack()
 	{
-		if (AppContext::get_request()->get_value('token') !== $this->get_token())
+		$request = AppContext::get_request();
+		if (!$request->has_parameter('token') || $request->get_value('token') !== $this->get_token())
 		{
 			DispatchManager::redirect(PHPBoostErrors::CSRF());
 		}

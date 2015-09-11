@@ -23,6 +23,7 @@ define('DB_TABLE_PM_MSG', PREFIX . 'pm_msg');
 define('DB_TABLE_PM_TOPIC', PREFIX . 'pm_topic');
 define('DB_TABLE_SESSIONS', PREFIX . 'sessions');
 define('DB_TABLE_INTERNAL_AUTHENTICATION', PREFIX . 'internal_authentication');
+define('DB_TABLE_INTERNAL_AUTHENTICATION_FAILURES', PREFIX . 'internal_authentication_failures');
 define('DB_TABLE_AUTHENTICATION_METHOD', PREFIX . 'authentication_method');
 define('DB_TABLE_SMILEYS', PREFIX . 'smileys');
 define('DB_TABLE_UPLOAD', PREFIX . 'upload');
