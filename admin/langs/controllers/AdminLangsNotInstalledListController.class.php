@@ -173,11 +173,11 @@ class AdminLangsNotInstalledListController extends AdminController
 			if ($uploaded_file !== null)
 			{
 				$upload = new Upload($folder_phpboost_langs);
-				if ($upload->file('upload_lang_file', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
+				if ($upload->file('upload_lang_file', '`([a-z0-9()_-])+\.(gz|zip)+$`i'))
 				{
 					$archive = $folder_phpboost_langs . $upload->get_filename();
 					
-					if ($upload->get_extension() == 'gzip')
+					if ($upload->get_extension() == 'gz')
 					{
 						include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pcltar.lib.php');
 						$archive_content = PclTarList($upload->get_filename());
@@ -213,7 +213,7 @@ class AdminLangsNotInstalledListController extends AdminController
 						$lang_id = $archive_root_content[0]['filename'];
 						if (!LangsManager::get_lang_existed($lang_id))
 						{
-							if ($upload->get_extension() == 'gzip')
+							if ($upload->get_extension() == 'gz')
 								PclTarExtract($upload->get_filename(), $folder_phpboost_langs);
 							else
 								$zip->extract(PCLZIP_OPT_PATH, $folder_phpboost_langs, PCLZIP_OPT_SET_CHMOD, 0755);

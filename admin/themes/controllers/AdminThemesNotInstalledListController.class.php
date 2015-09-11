@@ -183,11 +183,11 @@ class AdminThemesNotInstalledListController extends AdminController
 			if ($uploaded_file !== null)
 			{
 				$upload = new Upload($folder_phpboost_themes);
-				if ($upload->file('upload_theme_file', '`([A-Za-z0-9-_]+)\.(gzip|zip)+$`i'))
+				if ($upload->file('upload_theme_file', '`([A-Za-z0-9-_]+)\.(gz|zip)+$`i'))
 				{
 					$archive = $folder_phpboost_themes . $upload->get_filename();
 					
-					if ($upload->get_extension() == 'gzip')
+					if ($upload->get_extension() == 'gz')
 					{
 						include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pcltar.lib.php');
 						$archive_content = PclTarList($upload->get_filename());
@@ -223,7 +223,7 @@ class AdminThemesNotInstalledListController extends AdminController
 						$theme_id = $archive_root_content[0]['filename'];
 						if (!ThemesManager::get_theme_existed($theme_id))
 						{
-							if ($upload->get_extension() == 'gzip')
+							if ($upload->get_extension() == 'gz')
 								PclTarExtract($upload->get_filename(), $folder_phpboost_themes);
 							else
 								$zip->extract(PCLZIP_OPT_PATH, $folder_phpboost_themes, PCLZIP_OPT_SET_CHMOD, 0755);

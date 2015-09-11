@@ -159,10 +159,10 @@ class AdminModuleUpdateController extends AdminController
 				{
 					$upload = new Upload($modules_folder);
 					$upload->disableContentCheck();
-					if ($upload->file('upload_module_file', '`([A-Za-z0-9-_]+)\.(gzip|zip)+$`i', false, 100000000, false))
+					if ($upload->file('upload_module_file', '`([A-Za-z0-9-_]+)\.(gz|zip)+$`i', false, 100000000, false))
 					{
 						$archive_path = $modules_folder . $upload->get_filename();
-						if ($upload->get_extension() == 'gzip')
+						if ($upload->get_extension() == 'gz')
 						{
 							include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pcltar.lib.php');
 							PclTarExtract($upload->get_filename(), $modules_folder);
