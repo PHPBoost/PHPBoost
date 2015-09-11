@@ -40,11 +40,12 @@ class FormFieldNumberEditor extends AbstractFormField
 	class="# IF C_READONLY #low-opacity # ENDIF #${escape(CLASS)}" # IF C_PLACEHOLDER # placeholder="{PLACEHOLDER}" # ENDIF # # IF C_PATTERN # pattern="{PATTERN}" # ENDIF # # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_READONLY # readonly="readonly" # ENDIF #>';
 
 	/**
-	 * @desc Constructs a FormFieldTextEditor.
+	 * @desc Constructs a FormFieldNumberEditor.
 	 * It has these options in addition to the AbstractFormField ones:
 	 * <ul>
-	 * 	<li>size: The size (width) of the HTML field</li>
-	 * 	<li>maxlength: The maximum length for the field</li>
+	 * 	<li>size: The min value of the HTML field</li>
+	 * 	<li>size: The max value of the HTML field</li>
+	 * 	<li>size: The step of the value of the HTML field</li>
 	 * </ul>
 	 * @param string $id Field identifier
 	 * @param string $label Field label

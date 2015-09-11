@@ -111,6 +111,14 @@ class FormFieldTextEditor extends AbstractFormField
 		parent::compute_options($field_options);
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_value()
+	{
+		return substr($this->value, 0, $this->maxlength);
+	}
+
 	protected function get_default_template()
 	{
 		return new FileTemplate('framework/builder/form/FormField.tpl');
