@@ -74,7 +74,6 @@ class BBCodeUnparser extends ContentFormattingUnparser
 
 		$this->unparse_code(self::REIMPLANT);
 		$this->unparse_html(self::REIMPLANT);
-		$this->content = TextHelper::html_entity_decode($this->content);
 	}
 
 	/**

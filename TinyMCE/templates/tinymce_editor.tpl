@@ -92,6 +92,7 @@ tinymce.init({
 	advlist_number_styles: 'default',
 	advlist_bullet_styles: 'default',
 	fontsize_formats: '5pt 10pt 15pt 20pt 25pt 30pt 35pt 40pt 45pt',
+	convert_urls: false,
 	media_alt_source: false,
 	media_poster: false,
 	content_css: [

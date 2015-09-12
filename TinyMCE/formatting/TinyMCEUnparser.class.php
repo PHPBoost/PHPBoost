@@ -71,7 +71,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	 */
 	public function parse()
 	{
-		//The URL must be absolute otherwise TinyMCE won't be able to display  images for instance.
+		//The URL must be absolute otherwise TinyMCE won't be able to display images for instance.
 		$this->content = Url::html_convert_root_relative2absolute($this->content, $this->path_to_root);
 		
 		//Extracting HTML and code tags
@@ -122,8 +122,6 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		//Unparsing tags supported by TinyMCE
 		$this->unparse_tinymce_formatting();
 
-		$this->content = TextHelper::htmlspecialchars($this->content);
-		
 		//If we don't protect the HTML code inserted into the tags code and HTML TinyMCE will parse it!
 		if (!empty($this->array_tags['html_unparse']))
 		{
@@ -137,7 +135,6 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		//reimplanting html and code tags
 		$this->unparse_code(self::REIMPLANT);
 		$this->unparse_html(self::REIMPLANT);
-		$this->content = TextHelper::html_entity_decode($this->content);
 	}
 	
 	/**

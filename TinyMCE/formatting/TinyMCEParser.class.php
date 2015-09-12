@@ -116,7 +116,7 @@ class TinyMCEParser extends ContentFormattingParser
 		}
 
 		parent::parse();
-
+		
 		//On réinsère les fragments de code qui ont été prélevés pour ne pas les considérer
 		if (!empty($this->array_tags['code']))
 		{
@@ -318,7 +318,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//Replacement
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 
-		//On supprime tous les retours à la ligne ajoutï¿½s par TinyMCE (seuls les nouveaux paragraphes (<p>) compteront)
+		//On supprime tous les retours à la ligne ajoutés par TinyMCE (seuls les nouveaux paragraphes (<p>) compteront)
 		$this->content = str_replace('\r\n', '\n', $this->content);
 		$this->content = preg_replace('`\s*\n+\s*`isU', "\n", $this->content);
 
@@ -366,6 +366,8 @@ class TinyMCEParser extends ContentFormattingParser
 		{
 			array_push($array_preg, '`&lt;a(?: title="([^"]+)")? href="(' . Url::get_wellformness_regex() . ')"&gt;(.+)&lt;/a&gt;`isU');
 			array_push($array_preg_replace, '<a title="$1" href="$2">$3</a>');
+			array_push($array_preg, '`&lt;a title="" href="(' . Url::get_wellformness_regex() . ')"&gt;(.+)&lt;/a&gt;`isU');
+			array_push($array_preg_replace, '<a title="" href="$1">$2</a>');
 		}
 		//Link tag with target
 		if (!in_array('url', $this->forbidden_tags))
@@ -552,10 +554,12 @@ class TinyMCEParser extends ContentFormattingParser
 	 */
 	private function parse_smilies()
 	{
-		$this->content = preg_replace('`&lt;img(?: class="smiley")? title="([^"]+)" src="[\./]*/images/smileys/([^"]+)"(?: alt="([^"]+)")? /&gt;`i',
-			'<img src="/images/smileys/$2" title="$1" alt="$1" class="smiley" />', $this->content);
-		$this->content = preg_replace('`&lt;img class="smiley" src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" /&gt;`i',
-			'<img src="/images/smileys/$1" title="$2" alt="$2" class="smiley" />', $this->content);
+		$this->content = preg_replace('`&lt;img(?: class="smiley")? title="([^"]+)" src="(.+)/images/smileys/([^"]+)" alt="" /&gt;`i',
+			'<img src="/images/smileys/$3" title="$1" alt="$1" class="smiley" />', $this->content);
+		$this->content = preg_replace('`&lt;img(?: class="smiley")? title="([^"]+)" src="(.+)/images/smileys/([^"]+)"(?: alt="([^"]+)")? /&gt;`i',
+			'<img src="/images/smileys/$3" title="$1" alt="$1" class="smiley" />', $this->content);
+		$this->content = preg_replace('`&lt;img class="smiley" src="(.+)/images/smileys/([^"]+)" alt="([^"]+)" /&gt;`i',
+			'<img src="/images/smileys/$2" title="$3" alt="$3" class="smiley" />', $this->content);
 
 		//Smilies
 		$smileys_cache = SmileysCache::load()->get_smileys();
