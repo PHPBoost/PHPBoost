@@ -209,6 +209,9 @@ class UpdateServices
 		
 		// Suppression du captcha PHPBoostCaptcha
 		ModulesManager::uninstall_module('PHPBoostCaptcha', true);
+		$folder = new Folder(Url::to_rel('/PHPBoostCaptcha'));
+		if ($folder->exists())
+			$folder->delete();
 		
 		$content_management_config = ContentManagementConfig::load();
 		if ($content_management_config->get_used_captcha_module() == 'PHPBoostCaptcha')
