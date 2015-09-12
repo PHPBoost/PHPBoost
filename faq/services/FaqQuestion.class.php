@@ -169,7 +169,7 @@ class FaqQuestion
 			'id' => $this->get_id(),
 			'id_category' => $this->get_id_category(),
 			'q_order' => $this->get_q_order(),
-			'question' => TextHelper::htmlspecialchars($this->get_question()),
+			'question' => $this->get_question(),
 			'answer' => $this->get_answer(),
 			'creation_date' => $this->get_creation_date()->get_timestamp(),
 			'author_user_id' => $this->get_author_user()->get_id(),

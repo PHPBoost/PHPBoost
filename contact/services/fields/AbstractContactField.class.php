@@ -59,7 +59,7 @@ abstract class AbstractContactField implements ContactFieldType
 	public function get_value(HTMLForm $form, ContactField $field)
 	{
 		$field_name = $field->get_field_name();
-		return TextHelper::htmlspecialchars($form->get_value($field_name, ''));
+		return $form->get_value($field_name, '');
 	}
 	
 	/**

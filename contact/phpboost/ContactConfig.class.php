@@ -213,9 +213,9 @@ class ContactConfig extends AbstractConfigData
 		$lang = LangLoader::get('config', 'contact');
 		
 		$field = new ContactField();
-		$field->set_name(TextHelper::htmlspecialchars($lang['mail_address']));
+		$field->set_name($lang['mail_address']);
 		$field->set_field_name('f_sender_mail');
-		$field->set_description(TextHelper::htmlspecialchars($lang['mail_address_explain']));
+		$field->set_description($lang['mail_address_explain']);
 		$field->set_field_type('ContactShortTextField');
 		$field->set_regex(4);
 		$field->readonly();
@@ -225,16 +225,16 @@ class ContactConfig extends AbstractConfigData
 		$fields[1] = $field->get_properties();
 		
 		$field = new ContactField();
-		$field->set_name(TextHelper::htmlspecialchars($lang['contact_subject']));
+		$field->set_name($lang['contact_subject']);
 		$field->set_field_name('f_subject');
-		$field->set_description(TextHelper::htmlspecialchars($lang['contact_subject_explain']));
+		$field->set_description($lang['contact_subject_explain']);
 		$field->set_field_type('ContactShortTextField');
 		$field->not_deletable();
 		
 		$fields[2] = $field->get_properties();
 		
 		$field = new ContactField();
-		$field->set_name(TextHelper::htmlspecialchars($lang['contact_recipients']));
+		$field->set_name($lang['contact_recipients']);
 		$field->set_field_name('f_recipients');
 		$field->set_field_type('ContactSimpleSelectField');
 		$field->set_possible_values(array('admins' => array('is_default' => true, 'title' => $lang['contact_recipients_admins'], 'email' => '')));
@@ -244,7 +244,7 @@ class ContactConfig extends AbstractConfigData
 		$fields[3] = $field->get_properties();
 		
 		$field = new ContactField();
-		$field->set_name(TextHelper::htmlspecialchars($lang['message']));
+		$field->set_name($lang['message']);
 		$field->set_field_name('f_message');
 		$field->set_field_type('ContactHalfLongTextField');
 		$field->readonly();

@@ -308,8 +308,8 @@ class News
 		return array(
 			'id' => $this->get_id(),
 			'id_category' => $this->get_id_cat(),
-			'name' => TextHelper::htmlspecialchars($this->get_name()),
-			'rewrited_name' => TextHelper::htmlspecialchars($this->get_rewrited_name()),
+			'name' => $this->get_name(),
+			'rewrited_name' => $this->get_rewrited_name(),
 			'contents' => $this->get_contents(),
 			'short_contents' => $this->get_short_contents(),
 			'approbation_type' => $this->get_approbation_type(),
@@ -319,7 +319,7 @@ class News
 			'creation_date' => $this->get_creation_date()->get_timestamp(),
 			'updated_date' => $this->get_updated_date() !== null ? $this->get_updated_date()->get_timestamp() : '',
 			'author_user_id' => $this->get_author_user()->get_id(),
-			'picture_url' => TextHelper::htmlspecialchars($this->get_picture()->relative()),
+			'picture_url' => $this->get_picture()->relative(),
 			'sources' => serialize($this->get_sources())
 		);
 	}

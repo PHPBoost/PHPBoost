@@ -352,9 +352,9 @@ class DownloadFile
 		return array(
 			'id' => $this->get_id(),
 			'id_category' => $this->get_id_category(),
-			'name' => TextHelper::htmlspecialchars($this->get_name()),
-			'rewrited_name' => TextHelper::htmlspecialchars($this->get_rewrited_name()),
-			'url' => TextHelper::htmlspecialchars($this->get_url()->relative()),
+			'name' => $this->get_name(),
+			'rewrited_name' => $this->get_rewrited_name(),
+			'url' => $this->get_url()->relative(),
 			'size' => $this->get_size(),
 			'contents' => $this->get_contents(),
 			'short_contents' => $this->get_short_contents(),
@@ -366,7 +366,7 @@ class DownloadFile
 			'author_display_name' => $this->get_author_display_name(),
 			'author_user_id' => $this->get_author_user()->get_id(),
 			'number_downloads' => $this->get_number_downloads(),
-			'picture_url' => TextHelper::htmlspecialchars($this->get_picture()->relative())
+			'picture_url' => $this->get_picture()->relative()
 		);
 	}
 	

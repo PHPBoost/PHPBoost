@@ -192,8 +192,8 @@ class AdminContactFieldFormController extends AdminModuleController
 		if ($field->is_deletable())
 			$field->set_field_name(ContactField::rewrite_field_name($this->form->get_value('name')));
 		
-		$field->set_name(TextHelper::htmlspecialchars($this->form->get_value('name')));
-		$field->set_description(TextHelper::htmlspecialchars($this->form->get_value('description')));
+		$field->set_name($this->form->get_value('name'));
+		$field->set_description($this->form->get_value('description'));
 		
 		if (!$this->form->field_is_disabled('field_type'))
 			$field->set_field_type($this->form->get_value('field_type')->get_raw_value());
