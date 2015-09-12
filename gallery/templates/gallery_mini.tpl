@@ -21,6 +21,7 @@
 				<script type="text/javascript">
 					jQuery(document).ready(function() {
                         var nbr_element = jQuery('#mini-gallery-slideshow li').length;
+                        jQuery('#mini-gallery-slideshow').css('visibility', 'visible');
                         # IF C_VERTICAL_SCROLL #
                             jQuery('#mini-gallery-slideshow').css('min-width', (nbr_element * 150) + 'px');
                         # ENDIF #
