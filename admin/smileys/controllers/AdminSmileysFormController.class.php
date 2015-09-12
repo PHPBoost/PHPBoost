@@ -108,9 +108,16 @@ class AdminSmileysFormController extends AdminController
 			$uploaded_file = $this->upload_form->get_value('file');
 			if ($uploaded_file !== null)
 			{
+				$authorized_pictures_extensions = FileUploadConfig::load()->get_picture_authorized_extensions();
+				
+				if (empty($authorized_pictures_extensions))
+				{
+					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_upload_invalid_format', 'errors'), MessageHelper::NOTICE));
+				}
+				
 				$upload = new Upload($this->smileys_path);
 				
-				if ($upload->file('upload_smiley_file', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i'))
+				if ($upload->file('upload_smiley_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`i'))
 				{
 					// TODO : gérer les archives de smileys (possibilité d'uploader un zip + case à cocher si on veut créer directement chaque smiley avec :nom_du_smiley comme code)
 				}

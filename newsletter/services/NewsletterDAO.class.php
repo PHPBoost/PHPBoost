@@ -38,7 +38,7 @@ class NewsletterDAO
 	{
 		$columns = array(
 			'stream_id' => $stream_id,
-			'subject' => TextHelper::htmlspecialchars($subject),
+			'subject' => $subject,
 			'contents' => $contents,
 			'timestamp' => time(),
 			'language_type' => $language_type,

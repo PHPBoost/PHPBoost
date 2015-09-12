@@ -158,19 +158,25 @@ elseif (!empty($_FILES['upload_groups']['name'])) //Upload
 	$error = '';
 	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
+		$authorized_pictures_extensions = FileUploadConfig::load()->get_picture_authorized_extensions();
 		
-		$Upload = new Upload($dir);
-		$Upload->disableContentCheck();
-		if (!$Upload->file('upload_groups', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i'))
+		if (!empty($authorized_pictures_extensions))
 		{
-			$error = $Upload->get_error();
+			$Upload = new Upload($dir);
+			$Upload->disableContentCheck();
+			if (!$Upload->file('upload_groups', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`i'))
+			{
+				$error = $Upload->get_error();
+			}
 		}
+		else
+			$error = 'e_upload_invalid_format';
 	}
 	else
 		$error = 'e_upload_failed_unwritable';
 	
 	$error = !empty($error) ? '&error=' . $error : '';
-	AppContext::get_response()->redirect(HOST . SCRIPT . '?add=1' . $error);	
+	AppContext::get_response()->redirect(HOST . SCRIPT . '?add=1' . $error);
 }
 elseif (!empty($idgroup)) //Interface d'édition du groupe.
 {

@@ -81,6 +81,20 @@ class FileUploadConfig extends AbstractConfigData
 		$this->set_property(self::AUTHORIZED_EXTENSIONS, $array);
 	}
 	
+	public function get_authorized_picture_extensions()
+	{
+		$pictures_extensions = array('jpg', 'jpeg', 'bmp', 'gif', 'png');
+		$authorized_pictures_extensions = array();
+		
+		foreach ($pictures_extensions as $extension)
+		{
+			if (in_array($extension, $this->get_authorized_extensions()))
+				$authorized_pictures_extensions[] = $extension;
+		}
+		
+		return $authorized_pictures_extensions;
+	}
+	
 	public function get_default_values()
 	{
 		return array(
@@ -92,8 +106,8 @@ class FileUploadConfig extends AbstractConfigData
 				'rar', 'zip', 'gz', '7z',
 				'txt', 'doc', 'docx', 'pdf', 'ppt', 'xls', 'odt', 'odp', 'ods', 'odg', 'odc', 'odf', 'odb', 'xcf', 'csv',
 				'flv', 'mp3','ogg', 'mpg', 'mov','swf', 'wav', 'wmv', 'midi', 'mng', 'qt', 'mp4', 'mkv',
-				'ttf', 'tex', 'rtf', 'psd', 'iso'		
-			)			
+				'ttf', 'tex', 'rtf', 'psd', 'iso'
+			)
 		);
 	}
 

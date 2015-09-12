@@ -318,9 +318,9 @@ class WebLink
 		return array(
 			'id' => $this->get_id(),
 			'id_category' => $this->get_id_category(),
-			'name' => TextHelper::htmlspecialchars($this->get_name()),
-			'rewrited_name' => TextHelper::htmlspecialchars($this->get_rewrited_name()),
-			'url' => TextHelper::htmlspecialchars($this->get_url()->absolute()),
+			'name' => $this->get_name(),
+			'rewrited_name' => $this->get_rewrited_name(),
+			'url' => $this->get_url()->absolute(),
 			'contents' => $this->get_contents(),
 			'short_contents' => $this->get_short_contents(),
 			'approbation_type' => $this->get_approbation_type(),
@@ -330,7 +330,7 @@ class WebLink
 			'author_user_id' => $this->get_author_user()->get_id(),
 			'number_views' => $this->get_number_views(),
 			'partner' => (int)$this->is_partner(),
-			'partner_picture' => TextHelper::htmlspecialchars($this->get_partner_picture()->relative())
+			'partner_picture' => $this->get_partner_picture()->relative()
 		);
 	}
 	

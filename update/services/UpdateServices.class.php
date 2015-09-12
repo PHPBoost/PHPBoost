@@ -209,6 +209,9 @@ class UpdateServices
 		
 		// Suppression du captcha PHPBoostCaptcha
 		ModulesManager::uninstall_module('PHPBoostCaptcha', true);
+		$folder = new Folder(Url::to_rel('/PHPBoostCaptcha'));
+		if ($folder->exists())
+			$folder->delete();
 		
 		$content_management_config = ContentManagementConfig::load();
 		if ($content_management_config->get_used_captcha_module() == 'PHPBoostCaptcha')
@@ -297,6 +300,23 @@ class UpdateServices
 				'indexes' => array('login' => array('type' => 'unique', 'fields' => 'login'))
 			);
 			self::$db_utils->create_table(PREFIX . 'internal_authentication', $fields, $options);
+		}
+		
+		if (!in_array(PREFIX . 'internal_authentication_failures', $tables) || isset($columns['login']))
+		{
+			self::$db_utils->drop(array(PREFIX . 'internal_authentication_failures'));
+			$fields = array(
+				'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
+				'session_id' => array('type' => 'string', 'length' => 64, 'default' => "''"),
+				'login' => array('type' => 'string', 'length' => 255, 'default' => "''"),
+				'connection_attemps' => array('type' => 'boolean', 'length' => 4, 'notnull' => 1, 'default' => 0),
+				'last_connection' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			);
+			$options = array(
+				'primary' => array('id'),
+				'indexes' => array('session_id' => array('type' => 'key', 'fields' => 'session_id'))
+			);
+			self::$db_utils->create_table(PREFIX . 'internal_authentication_failures', $fields, $options);
 		}
 		
 		// Insertions des mots de passe des membres actuels dans la nouvelle table

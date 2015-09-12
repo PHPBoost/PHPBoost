@@ -102,7 +102,7 @@ class CLIHtaccessRewritingCommand implements CLICommand
 	
 	private function success_message()
 	{
-		CLIOutput::writeln('sucess');
+		CLIOutput::writeln('success');
 	}
 }
 ?>

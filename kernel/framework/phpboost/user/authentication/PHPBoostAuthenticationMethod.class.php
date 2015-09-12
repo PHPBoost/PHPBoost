@@ -108,10 +108,10 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 	public function dissociate($user_id)
 	{
 		try {
-            $this->querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id AND method=:method', array(
-            	'user_id' => $user_id,
-          		'method' => self::AUTHENTICATION_METHOD
-          	));
+			$this->querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id AND method=:method', array(
+				'user_id' => $user_id,
+				'method' => self::AUTHENTICATION_METHOD
+			));
 		} catch (SQLQuerierException $ex) {
 			throw new IllegalArgumentException('User Id ' . $user_id .
 				' is already dissociated with an authentication method [' . $ex->getMessage() . ']');
@@ -124,21 +124,47 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 	 */
 	public function authenticate()
 	{
-		try
-		{
-			return $this->try2authenticate();
-		}
-		catch (RowNotFoundException $ex) { 
-			$this->error_msg = LangLoader::get_message('user.not_exists', 'status-messages-common');
-		}
+		return $this->try2authenticate();
 	}
-
+	
 	private function try2authenticate()
 	{
-		$user_id = $this->find_user_id_by_username();
-		$this->check_max_authorized_attempts();
-		$match = $this->check_user_password($user_id);
-		$this->update_user_info($user_id);
+		$user_id = 0;
+		try
+		{
+			$user_id = $this->find_user_id_by_username();
+		}
+		catch (RowNotFoundException $ex) { }
+		
+		if (!empty($user_id))
+		{
+			$this->check_max_authorized_attempts();
+			$match = $this->check_user_password($user_id);
+			$this->update_user_info($user_id);
+		}
+		else
+		{
+			$failure_id = 0;
+			try
+			{
+				$failure_id = $this->find_failure_login_tried_id_by_username();
+			}
+			catch (RowNotFoundException $ex) { }
+			
+			$this->check_max_authorized_attempts();
+			
+			$this->connection_attempts++;
+			$this->last_connection_date = time();
+			
+			$this->delete_too_old_failure_attemps();
+			
+			if (!empty($failure_id))
+				$this->update_failure_info($failure_id);
+			else
+				$this->insert_failure_info();
+			
+			$match = false;
+		}
 		
 		$remaining_attempts = $this->get_remaining_attemps();
 		if ($remaining_attempts > 0)
@@ -257,7 +283,7 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 			$parameters = array('registration_pass' => $registration_pass);
 			return PersistenceContext::get_querier()->get_column_value(DB_TABLE_INTERNAL_AUTHENTICATION, 'user_id', $condition, $parameters);
 		} catch (RowNotFoundException $e) {
-			return false;	
+			return false;
 		}
 	}
 
@@ -268,8 +294,48 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 			$parameters = array('change_password_pass' => $change_password_pass);
 			return PersistenceContext::get_querier()->get_column_value(DB_TABLE_INTERNAL_AUTHENTICATION, 'user_id', $condition, $parameters);
 		} catch (RowNotFoundException $e) {
-			return false;	
+			return false;
 		}
+	}
+	
+	private function delete_too_old_failure_attemps()
+	{
+		$condition = 'WHERE last_connection < :reset_delay';
+		$parameters = array('reset_delay' => time() - self::$MAX_AUTHORIZED_ATTEMPTS_RESET_DELAY);
+		$this->querier->delete(DB_TABLE_INTERNAL_AUTHENTICATION_FAILURES, $condition, $parameters);
+	}
+	
+	private function find_failure_login_tried_id_by_username()
+	{
+		$columns = array('id', 'last_connection', 'connection_attemps');
+		$condition = 'WHERE login=:login AND session_id=:session_id';
+		$parameters = array('login' => $this->login, 'session_id' => AppContext::get_session()->get_session_id());
+		$row = $this->querier->select_single_row(DB_TABLE_INTERNAL_AUTHENTICATION_FAILURES, $columns, $condition, $parameters);
+		$this->connection_attempts = $row['connection_attemps'];
+		$this->last_connection_date = $row['last_connection'];
+		return $row['id'];
+	}
+	
+	private function insert_failure_info()
+	{
+		$columns = array(
+			'session_id' => AppContext::get_session()->get_session_id(),
+			'login' => $this->login,
+			'last_connection' => $this->last_connection_date,
+			'connection_attemps' => $this->connection_attempts,
+		);
+		$this->querier->insert(DB_TABLE_INTERNAL_AUTHENTICATION_FAILURES, $columns);
+	}
+	
+	private function update_failure_info($failure_id)
+	{
+		$columns = array(
+			'last_connection' => $this->last_connection_date,
+			'connection_attemps' => $this->connection_attempts
+		);
+		$condition = 'WHERE id=:id';
+		$parameters = array('id' => $failure_id);
+		$this->querier->update(DB_TABLE_INTERNAL_AUTHENTICATION_FAILURES, $columns, $condition, $parameters);
 	}
 }
 ?>

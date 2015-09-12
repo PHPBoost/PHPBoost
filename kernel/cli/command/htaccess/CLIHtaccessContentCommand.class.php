@@ -54,7 +54,7 @@ class CLIHtaccessContentCommand implements CLICommand
 			$server_environment_config->set_htaccess_manual_content($content);
 			ServerEnvironmentConfig::save();
 			$this->regenerate_htaccess_file();
-			CLIOutput::writeln('sucess');		
+			CLIOutput::writeln('success');
 		}
 		else
 		{
