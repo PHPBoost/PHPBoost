@@ -89,7 +89,7 @@
 				<script>
 				<!--
 				jQuery(document).ready(function() {
-					jQuery('button[name="submit"],button[name="preview"]').click(function()
+					jQuery('button[name="submit"]').click(function()
 					{
 						if(!jQuery('#captcha').val()) {
 							alert(${escapejs(LangLoader::get_message('captcha.validation_error', 'status-messages-common'))});
