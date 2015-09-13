@@ -22,14 +22,14 @@
 					jQuery(document).ready(function() {
                         var nbr_element = jQuery('#mini-gallery-slideshow li').length;
                         jQuery('#mini-gallery-slideshow').css('visibility', 'visible');
-                        # IF C_VERTICAL_SCROLL #
+                        # IF C_HORIZONTAL_SCROLL #
                             jQuery('#mini-gallery-slideshow').css('min-width', (nbr_element * 150) + 'px');
                         # ENDIF #
 
                         # IF NOT C_FADE #
                         setInterval(function(){
-                            jQuery("#mini-gallery-slideshow").animate({# IF C_VERTICAL_SCROLL #marginLeft# ELSE # marginTop # ENDIF #:-150},1000,function(){
-                                jQuery(this).css({# IF C_VERTICAL_SCROLL #marginLeft# ELSE # marginTop # ENDIF #:0}).find("li:last").after(jQuery(this).find("li:first"));
+                            jQuery("#mini-gallery-slideshow").animate({# IF C_HORIZONTAL_SCROLL #marginLeft# ELSE # marginTop # ENDIF #:-150},1000,function(){
+                                jQuery(this).css({# IF C_HORIZONTAL_SCROLL #marginLeft# ELSE # marginTop # ENDIF #:0}).find("li:last").after(jQuery(this).find("li:first"));
                             })
                         }, {SCROLL_DELAY});
                         # ELSE #

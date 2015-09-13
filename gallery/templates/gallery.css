@@ -24,7 +24,7 @@
     float: right;
 }
 
-#mini-gallery-slideshow.vertical li { display: block; }
-#mini-gallery-slideshow.horizontal li { display: inline-block; }
+#mini-gallery-slideshow.horizontal li { display: block; }
+#mini-gallery-slideshow.vertical li { display: inline-block; }
 #mini-gallery-slideshow.fade li { display: none;}
 #mini-gallery-slideshow.fade ul:first-child { display: block;}
