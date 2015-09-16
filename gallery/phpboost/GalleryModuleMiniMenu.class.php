@@ -54,9 +54,9 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 			if (isset($array_random_pics) && $array_random_pics !== array())
 			{
 				$gallery_mini = array();
-				shuffle($array_random_pics); //On mélange les éléments du tableau.
+				shuffle($array_random_pics); //On mï¿½lange les ï¿½lï¿½ments du tableau.
 		
-				//Vérification des autorisations.
+				//Vï¿½rification des autorisations.
 				$break = 0;
 				foreach ($array_random_pics as $array_pics_info)
 				{
@@ -69,7 +69,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 						break;
 				}
 		
-				//Aucune photo ne correspond, on fait une requête pour vérifier.
+				//Aucune photo ne correspond, on fait une requï¿½te pour vï¿½rifier.
 				if (count($gallery_mini) == 0)
 				{
 					$array_random_pics = array();
@@ -84,7 +84,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 						$array_random_pics[] = $row;
 					}
 		
-					//Vérification des autorisations.
+					//Vï¿½rification des autorisations.
 					$break = 0;
 					foreach ($array_random_pics as $key => $array_pics_info)
 					{
@@ -123,11 +123,11 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 		
 				foreach ($gallery_mini as $key => $row)
 				{
-					//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
+					//Si la miniature n'existe pas (cache vidï¿½) on regï¿½nï¿½re la miniature ï¿½ partir de l'image en taille rï¿½elle.
 					if (!is_file(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path']))
-						$Gallery->Resize_pics(PATH_TO_ROOT . '/gallery/pics/' . $row['path']); //Redimensionnement + création miniature
+						$Gallery->Resize_pics(PATH_TO_ROOT . '/gallery/pics/' . $row['path']); //Redimensionnement + crï¿½ation miniature
 		
-					// On recupère la hauteur et la largeur de l'image.
+					// On recupï¿½re la hauteur et la largeur de l'image.
 					if ($row['width'] == 0 || $row['height'] == 0)
 						list($row['width'], $row['height']) = @getimagesize(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path']);
 					if ($row['width'] == 0 || $row['height'] == 0)
@@ -160,7 +160,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 				'WIDTH_DIV' => $config->get_mini_max_width(),
 				'SUM_WIDTH' => $sum_width + 30,
 				'HIDDEN_WIDTH' => ($config->get_mini_max_width() * 3) + 30,
-				'SCROLL_DELAY' => 0.2 * (11 - $config->get_mini_pics_speed()),
+				'SCROLL_DELAY' => $config->get_mini_pics_speed()*1000,
 				'L_RANDOM_PICS' => $LANG['random_img'],
 				'L_NO_RANDOM_PICS' => ($i == 0) ? '<br /><span class="smaller"><em>' . $LANG['no_random_img']  . '</em></span><br />' : '',
 				'L_GALLERY' => $LANG['gallery']
