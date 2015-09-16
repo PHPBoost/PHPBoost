@@ -31,12 +31,16 @@ define('TITLE', $LANG['configuration']);
 require_once('../admin/admin_header.php');
 $poll_config = PollConfig::load();
 
-if (!empty($_POST['valid']))
+$request = AppContext::get_request();
+
+$valid = $request->get_postvalue('valid', false);
+
+if ($valid)
 {
 	$poll_config->set_authorizations(Authorizations::build_auth_array_from_form(PollAuthorizationsService::READ_AUTHORIZATIONS, PollAuthorizationsService::WRITE_AUTHORIZATIONS));
-	$poll_config->set_displayed_in_mini_module_list(!empty($_POST['displayed_in_mini_module_list']) ? $_POST['displayed_in_mini_module_list'] : array());
+	$poll_config->set_displayed_in_mini_module_list(retrieve(POST, 'displayed_in_mini_module_list', array()));
 	$poll_config->set_cookie_name(retrieve(POST, 'cookie_name', 'poll', TSTRING_UNCHANGE));
-	$poll_config->set_cookie_lenght(!empty($_POST['cookie_lenght']) ? NumberHelper::numeric($_POST['cookie_lenght']) : 30);
+	$poll_config->set_cookie_lenght(retrieve(POST, 'cookie_lenght', 30));
 	
 	if (retrieve(POST, 'display_results_before_polls_end', false))
 		$poll_config->display_results_before_polls_end();

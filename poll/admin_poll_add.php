@@ -30,7 +30,11 @@ load_module_lang('poll'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-if (!empty($_POST['valid']))
+$request = AppContext::get_request();
+
+$valid = $request->get_postvalue('valid', false);
+
+if ($valid)
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
@@ -43,6 +47,7 @@ if (!empty($_POST['valid']))
 	$hour = retrieve(POST, 'hour', '', TSTRING_UNCHANGE);
 	$min = retrieve(POST, 'min', '', TSTRING_UNCHANGE);	
 	$get_visible = retrieve(POST, 'visible', 0);
+	$poll_type = retrieve(POST, 'poll_type', 0);
 	
 	//On verifie les conditions!
 	if (!empty($question))
@@ -53,9 +58,9 @@ if (!empty($_POST['valid']))
 		$start_timestamp = $start_date->get_timestamp();
 		$end_timestamp = $end_date->get_timestamp();
 		
-		$visible = 1;		
+		$visible = 1;
 		if ($get_visible == 2)
-		{		
+		{
 			if ($start_timestamp > time())
 				$visible = 2;
 			elseif ($start_timestamp == 0)
@@ -87,13 +92,13 @@ if (!empty($_POST['valid']))
 		else //Ajout des heures et minutes
 			$timestamp = time();
 			
-		$poll_type = (isset($_POST['poll_type']) && ($_POST['poll_type'] == 0 || $_POST['poll_type'] == 1)) ? NumberHelper::numeric($_POST['poll_type']) : '0';
+		$poll_type = NumberHelper::numeric($poll_type);
 		$answers = '';
 		$votes = '';
 		for ($i = 0; $i < 20; $i++)
-		{	
-			if (!empty($_POST['a'.$i]))
-			{				
+		{
+			if ($request->has_postparameter('a'.$i))
+			{
 				$answers .= str_replace('|', '', retrieve(POST, 'a'.$i, '')) . '|';
 				$votes .= str_replace('|', '', retrieve(POST, 'v'.$i, 0)) . '|';
 			}
@@ -134,7 +139,7 @@ else
 		'L_POLL_DATE' => $LANG['poll_date'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_RESET' => $LANG['reset']
-	));					 
+	));
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');

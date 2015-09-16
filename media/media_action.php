@@ -38,6 +38,9 @@ if (AppContext::get_current_user()->is_readonly())
 $tpl = new FileTemplate('media/media_action.tpl');
 
 $config = MediaConfig::load();
+$request = AppContext::get_request();
+
+$submit = $request->get_postvalue('submit', false);
 
 $unvisible = retrieve(GET, 'unvisible', 0, TINTEGER);
 $add = retrieve(GET, 'add', 0, TINTEGER);
@@ -122,7 +125,7 @@ elseif ($delete > 0)
 	AppContext::get_response()->redirect('media' . url('.php?cat=' . $media['idcat'], '-' . $media['idcat'] . '.php'));
 }
 // Formulaire d'ajout ou d'édition.
-elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
+elseif ($add >= 0 && !$submit || $edit > 0)
 {
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$editor->set_identifier('contents');
@@ -266,7 +269,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 	require_once('../kernel/header.php');
 }
 // Traitement du formulaire.
-elseif (!empty($_POST['submit']))
+elseif ($submit)
 {
 	AppContext::get_session()->csrf_get_protect();
 	

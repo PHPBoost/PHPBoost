@@ -36,6 +36,7 @@ $request = AppContext::get_request();
 $id = $request->get_getint('id', 0);
 $id_post = $request->get_postint('id', 0);
 $del = $request->get_getint('del', 0);
+$valid = $request->get_postvalue('valid', false);
 
 $poll_config = PollConfig::load();
 
@@ -63,7 +64,7 @@ if ($del && !empty($id)) //Suppresion poll
 	}
 	AppContext::get_response()->redirect('/poll/admin_poll.php');
 }
-elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
+elseif ($valid && !empty($id_post)) //inject
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
@@ -126,7 +127,7 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 		$check_nbr_answer = 0;
 		for ($i = 0; $i < 20; $i++)
 		{
-			if (!empty($_POST['a'.$i]))
+			if ($request->has_postparameter('a'.$i))
 			{
 				$answers .= str_replace('|', '', retrieve(POST, 'a'.$i, '')) . '|';
 				$votes .= str_replace('|', '', retrieve(POST, 'v'.$i, 0)) . '|';

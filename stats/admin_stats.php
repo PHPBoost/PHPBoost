@@ -32,7 +32,9 @@ load_module_lang('stats'); //Chargement de la langue du module.
 
 $request = AppContext::get_request();
 
-if (!empty($_POST['valid']))
+$valid = $request->get_postvalue('valid', false);
+
+if ($valid)
 {
 	$stats_config = StatsConfig::load();
 	$stats_config->set_authorizations(Authorizations::build_auth_array_from_form(StatsAuthorizationsService::READ_AUTHORIZATIONS));
@@ -60,8 +62,9 @@ else
 	$all = $request->get_getint('all', 0);
 	$user_lang = $request->get_getint('lang', 0);
 	$bot = $request->get_getint('bot', 0);
+	$erase = $request->get_postvalue('erase', false);
 
-	if (!empty($_POST['erase'])) //Suppression de robots.txt
+	if ($erase) //Suppression de robots.txt
 	{
 		$file = new File('../stats/cache/robots.txt');
 		try

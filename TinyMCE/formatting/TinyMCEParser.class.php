@@ -364,16 +364,16 @@ class TinyMCEParser extends ContentFormattingParser
 		//Link tag
 		if (!in_array('url', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;a(?: title="([^"]+)")? href="(' . Url::get_wellformness_regex() . ')"&gt;(.+)&lt;/a&gt;`isU');
+			array_push($array_preg, '`&lt;a(?: title="([^"]+)")? href="(' . Url::get_wellformness_regex() . ')"&gt;(.+)&lt;/a&gt;`sU');
 			array_push($array_preg_replace, '<a title="$1" href="$2">$3</a>');
-			array_push($array_preg, '`&lt;a title="" href="(' . Url::get_wellformness_regex() . ')"&gt;(.+)&lt;/a&gt;`isU');
+			array_push($array_preg, '`&lt;a title="" href="(' . Url::get_wellformness_regex() . ')"&gt;(.+)&lt;/a&gt;`sU');
 			array_push($array_preg_replace, '<a title="" href="$1">$2</a>');
 		}
 		//Link tag with target
 		if (!in_array('url', $this->forbidden_tags))
 		{
 
-			array_push($array_preg, '`&lt;a(?: title="([^"]+)")? href="(' . Url::get_wellformness_regex() . ')" target="_blank"&gt;(.+)&lt;/a&gt;`isU');
+			array_push($array_preg, '`&lt;a(?: title="([^"]+)")? href="(' . Url::get_wellformness_regex() . ')" target="_blank"&gt;(.+)&lt;/a&gt;`sU');
 			array_push($array_preg_replace, '<a title="$1" href="$2" target="_blank">$3</a>');
 		}
 		//Sub tag
@@ -595,8 +595,8 @@ class TinyMCEParser extends ContentFormattingParser
 			'movie' => '`\[movie=([0-9]{1,3}),([0-9]{1,3})\]([a-z0-9_+.:?/=#%@&;,-]*)\[/movie\]`iU',
 			'sound' => '`\[sound\]([a-z0-9_+.:?/=#%@&;,-]*)\[/sound\]`iU',
 			'math' => '`\[math\](.+)\[/math\]`iU',
-			'url' => '`(\s+)(' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ')(\s|<+)`isU',
-			'url2' => '`(\s+)(www\.' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_NOT_USED) . ')(\s|<+)`isU',
+			'url' => '`(\s+)(' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ')(\s|<+)`sU',
+			'url2' => '`(\s+)(www\.' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_NOT_USED) . ')(\s|<+)`sU',
 			'mail' => '`(\s+)([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})(\s+)`i',
 			'lightbox' => '`\[lightbox=((?!javascript:)' . Url::get_wellformness_regex() . ')\]([^\n\r\t\f]+)\[/lightbox\]`isU',
 		);

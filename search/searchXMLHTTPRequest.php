@@ -31,6 +31,7 @@ AppContext::get_session()->no_session_location(); //Permet de ne pas mettre jour
 load_module_lang('search');
 
 //--------------------------------------------------------------------- Params
+$request = AppContext::get_request();
 
 $search_txt = retrieve(POST, 'q', '');
 $module_id = strtolower(retrieve(POST, 'moduleName', ''));
@@ -74,8 +75,8 @@ if (($id_search >= 0) && ($module_id != ''))
 				// Ils sont sécurisés à l'intérieur de chaque module.
 				foreach ($form_module_args as $arg)
 				{
-					if ( isset($_POST[$arg]) )
-						$modules_args[$id][$arg] = $_POST[$arg];
+					if ($request->has_postparameter($arg))
+						$modules_args[$id][$arg] = $request->get_postvalue($arg);
 				}
 			}
 		}

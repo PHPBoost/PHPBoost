@@ -33,17 +33,22 @@ require_once('../admin/admin_header.php');
 include_once('../wiki/wiki_functions.php');
 
 $config = WikiConfig::load();
+$request = AppContext::get_request();
+
+$update = $request->get_postvalue('update', false);
+$display_categories_on_index = $request->get_postvalue('display_categories_on_index', false);
+$hits_counter = $request->get_postvalue('hits_counter', false);
 
 $index_text = stripslashes(wiki_parse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED)));
-if (!empty($_POST['update']))  //Mise à jour
+if ($update) //Mise à jour
 {
 	$config->set_wiki_name(TextHelper::strprotect(retrieve(POST, 'wiki_name', $LANG['wiki'], TSTRING_AS_RECEIVED), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE));
 	$config->set_number_articles_on_index(retrieve(POST, 'number_articles_on_index', 0));
-	if ($_POST['display_categories_on_index'])
+	if ($display_categories_on_index)
 		$config->display_categories_on_index();
 	else
 		$config->hide_categories_on_index();
-	if (isset($_POST['hits_counter']))
+	if ($hits_counter)
 		$config->enable_hits_counter();
 	else
 		$config->disable_hits_counter();

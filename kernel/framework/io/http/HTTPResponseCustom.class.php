@@ -139,16 +139,7 @@ class HTTPResponseCustom
 	 */
 	public function set_cookie(HTTPCookie $cookie)
 	{
-		if (version_compare(phpversion(), '5.2.0', '<') == -1)
-		{
-			setcookie($cookie->get_name(), $cookie->get_value(), $cookie->get_expiration_date(), $cookie->get_path(),
-			$cookie->get_domain(), $cookie->get_secure());
-		}
-		else
-		{
-			setcookie($cookie->get_name(), $cookie->get_value(), $cookie->get_expiration_date(), $cookie->get_path(),
-			$cookie->get_domain(), $cookie->get_secure(), $cookie->get_httponly());
-		}
+		setcookie($cookie->get_name(), $cookie->get_value(), $cookie->get_expiration_date(), $cookie->get_path(), $cookie->get_domain(), $cookie->get_secure());
 	}
 	
 	/**

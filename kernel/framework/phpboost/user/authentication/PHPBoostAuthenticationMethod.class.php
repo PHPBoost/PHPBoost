@@ -124,7 +124,10 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 	 */
 	public function authenticate()
 	{
-		return $this->try2authenticate();
+		if ($this->login)
+			return $this->try2authenticate();
+		
+		return false;
 	}
 	
 	private function try2authenticate()

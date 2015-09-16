@@ -32,6 +32,9 @@ $Bread_crumb->add($LANG['moderation_panel'], UserUrlBuilder::moderation_panel()-
 
 $action = retrieve(GET, 'action', 'warning', TSTRING_UNCHANGE);
 $id_get = retrieve(GET, 'id', 0);
+$valid_user = retrieve(POST, 'valid_user', false);
+$search_member = retrieve(POST, 'search_member', false);
+
 switch ($action)
 {
 	case 'ban':
@@ -79,7 +82,7 @@ if ($action == 'punish')
 	$readonly = retrieve(POST, 'new_info', 0);
 	$readonly = $readonly > 0 ? (time() + $readonly) : 0;
 	$readonly_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
-	if (!empty($id_get) && !empty($_POST['valid_user'])) //On met à  jour le niveau d'avertissement
+	if (!empty($id_get) && $valid_user) //On met à  jour le niveau d'avertissement
 	{
 		if ($id_get != AppContext::get_current_user()->get_id())
 		{
@@ -108,7 +111,7 @@ if ($action == 'punish')
 	
 	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
 	{
-		if (!empty($_POST['search_member']))
+		if ($search_member)
 		{
 			$login = retrieve(POST, 'login_mbr', '');
 			$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :name', array('name' => '%' . $login . '%'));
@@ -116,8 +119,8 @@ if ($action == 'punish')
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('punish', $user_id));
 			else
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('punish'));
-		}	
-				
+		}
+		
 		$moderation_panel_template->put_all(array(
 			'C_MODO_PANEL_USER_LIST' => true,
 			'L_PM' => $LANG['user_contact_pm'],
@@ -241,14 +244,14 @@ if ($action == 'punish')
 			'L_LOGIN' => LangLoader::get_message('display_name', 'user-common'),
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_CHANGE_INFO' => $LANG['submit']
-		));		
+		));
 	}
 }
 else if ($action == 'warning')
 {
 	$new_warning_level = retrieve(POST, 'new_info', 0);
 	$warning_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
-	if ($new_warning_level >= 0 && $new_warning_level <= 100 && isset($_POST['new_info']) && !empty($id_get) && !empty($_POST['valid_user'])) //On met à  jour le niveau d'avertissement
+	if ($new_warning_level >= 0 && $new_warning_level <= 100 && AppContext::get_request()->has_postparameter('new_info') && !empty($id_get) && $valid_user) //On met à  jour le niveau d'avertissement
 	{
 		try {
 			$info_mbr = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id', 'level', 'email'), 'WHERE user_id=:id', array('id' => $id_get));
@@ -289,7 +292,7 @@ else if ($action == 'warning')
 	
 	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
 	{
-		if (!empty($_POST['search_member']))
+		if ($search_member)
 		{
 			$login = retrieve(POST, 'login_mbr', '');
 			$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :name', array('name' => '%' . $login . '%'));
@@ -392,7 +395,7 @@ else
 {
 	$user_ban = retrieve(POST, 'user_ban', '', TSTRING_UNCHANGE);
 	$user_ban = $user_ban > 0 ? (time() + $user_ban) : 0;
-	if (!empty($_POST['valid_user']) && !empty($id_get)) //On banni le membre
+	if ($valid_user && !empty($id_get)) //On banni le membre
 	{
 		try {
 			$info_mbr = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id', 'display_name', 'warning_percentage', 'email'), 'WHERE user_id=:id', array('id' => $id_get));
@@ -423,7 +426,7 @@ else
 	
 	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
 	{
-		if (!empty($_POST['search_member']))
+		if ($search_member)
 		{
 			$login = retrieve(POST, 'login_mbr', '');
 			$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :name', array('name' => '%' . $login . '%'));

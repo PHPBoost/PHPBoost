@@ -32,6 +32,10 @@ require_once('../kernel/header.php');
 $poll = array();
 $poll_id = retrieve(GET, 'id', 0);
 
+$request = AppContext::get_request();
+
+$valid = $request->get_postvalue('valid_poll', false);
+
 $now = new Date();
 
 if (!empty($poll_id))
@@ -53,7 +57,7 @@ $config_cookie_name = $poll_config->get_cookie_name();
 $config_cookie_lenght = $poll_config->get_cookie_lenght_in_seconds();
 $config_displayed_in_mini_module_list = $poll_config->get_displayed_in_mini_module_list();
 
-if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
+if ($valid && !empty($poll['id']) && !$archives)
 {
 	if (AppContext::get_current_user()->is_readonly())
 	{
@@ -81,7 +85,7 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 			}
 		}
 		else //Génération d'un cookie.
-		{	
+		{
 			$check_cookie = false;
 			AppContext::get_response()->set_cookie(new HTTPCookie($config_cookie_name, $poll['id'], time() + $config_cookie_lenght));
 		}
@@ -132,7 +136,7 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 			$nbr_answer = count($array_votes);
 			for ($i = 0; $i < $nbr_answer; $i++)
 			{
-				if (isset($_POST[$i]))
+				if ($request->has_postparameter($i))
 				{
 					$array_votes[$i]++;
 					$check_answer = true;

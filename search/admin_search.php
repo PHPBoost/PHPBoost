@@ -40,9 +40,10 @@ $request = AppContext::get_request();
 
 $clearOutCache = $request->get_getvalue('clear', '');
 $weighting = $request->get_getvalue('weighting', '');
+$valid = $request->get_postvalue('valid', false);
 
 //Si c'est confirmé on execute
-if (!empty($_POST['valid']))
+if ($valid)
 {
 	if (!$weighting)
 	{

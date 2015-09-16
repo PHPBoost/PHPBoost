@@ -46,6 +46,7 @@ $id_page = $id_page > 0 ? $id_page : $del_cat;
 $del_cat_post = retrieve(GET, 'del_cat', 0);
 $report_cat = retrieve(GET, 'report_cat', 0);
 $remove_action = retrieve(POST, 'action', ''); //Action à faire lors de la suppression
+$create_redirection = retrieve(POST, 'create_redirection', false);
 
 $db_querier = PersistenceContext::get_querier();
 
@@ -77,7 +78,7 @@ if (!empty($new_title) && $id_rename_post > 0)
 	if ($num_rows_same_title == 0 && $encoded_title != $page_infos['encoded_title'])
 	{
 		//On doit créer une redirection automatique
-		if (!empty($_POST['create_redirection']))
+		if ($create_redirection)
 		{
 			$db_querier->update(PREFIX . 'pages', array('title' => $new_title, 'encoded_title' => $encoded_title), 'WHERE id = :id', array('id' => $id_rename_post));
 			$db_querier->insert(PREFIX . 'pages', array('title' => $page_infos['title'], 'encoded_title' => $page_infos['encoded_title'], 'redirect' => $id_rename_post));

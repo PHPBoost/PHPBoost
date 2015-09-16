@@ -33,9 +33,12 @@ require_once('../admin/admin_header.php');
 include_once('../wiki/wiki_auth.php');
 
 $config = WikiConfig::load();
+$request = AppContext::get_request();
+
+$valid = $request->get_postvalue('valid', false);
 
 //Si c'est confirmé on execute
-if (!empty($_POST['valid']))
+if ($valid)
 {
 	//Génération du tableau des droits.
 	$config->set_authorizations(Authorizations::build_auth_array_from_form(WIKI_CREATE_ARTICLE, WIKI_CREATE_CAT, WIKI_RESTORE_ARCHIVE, WIKI_DELETE_ARCHIVE, WIKI_EDIT, WIKI_DELETE, WIKI_RENAME, WIKI_REDIRECT, WIKI_MOVE, WIKI_STATUS, WIKI_COM, WIKI_RESTRICTION));

@@ -40,13 +40,13 @@ $id_edit_post = retrieve(POST, 'id_edit', 0);
 $id_edit = $id_edit > 0 ? $id_edit : $id_edit_post;
 $title = retrieve(POST, 'title', '');
 $contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
-$count_hits = !empty($_POST['count_hits']) ? 1 : 0;
-$enable_com = !empty($_POST['comments_activated']) ? 1 : 0;
-$own_auth = !empty($_POST['own_auth']);
-$is_cat = !empty($_POST['is_cat']) ? 1 : 0;
+$count_hits = retrieve(POST, 'count_hits', false);
+$enable_com = retrieve(POST, 'comments_activated', false);
+$own_auth = retrieve(POST, 'own_auth', '');
+$is_cat = retrieve(POST, 'is_cat', false);
 $id_cat = retrieve(POST, 'id_cat', 0);
-$display_print_link = !empty($_POST['display_print_link']) ? 1 : 0;
-$preview = !empty($_POST['preview']);
+$display_print_link = retrieve(POST, 'display_print_link', false);
+$preview = retrieve(POST, 'preview', false);
 $del_article = retrieve(GET, 'del', 0);
 
 //Configuration des authorisations

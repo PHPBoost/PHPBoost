@@ -41,11 +41,15 @@ $tpl = new FileTemplate('media/moderation_media.tpl');
 
 $Bread_crumb->add(LangLoader::get_message('module_title', 'common', 'media'), url('media.php'));
 $Bread_crumb->add($LANG['modo_panel'], url('moderation_media.php'));
+$request = AppContext::get_request();
+
+$submit = $request->get_postvalue('submit', false);
+$filter = $request->get_postvalue('filter', false);
 
 define('TITLE', $LANG['modo_panel']);
 require_once('../kernel/header.php');
 
-if (!empty($_POST['submit']))
+if ($submit)
 {
 	AppContext::get_session()->csrf_get_protect();
 
@@ -124,7 +128,7 @@ else
 	$js_array = array();
 	$authorized_categories = MediaService::get_authorized_categories(!empty($cat) ? $cat : Category::ROOT_CATEGORY);
 	
-	if (!empty($_POST['filter']))
+	if ($filter)
 	{
 		$state = retrieve(POST, 'state', 'all', TSTRING);
 		$cat = retrieve(POST, 'idcat', 0, TINTEGER);

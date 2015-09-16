@@ -34,7 +34,11 @@ require_once('../admin/admin_header.php');
 include_once('pages_begin.php');
 include_once('pages_functions.php');
 
-if (!empty($_POST['update']))  //Mise à jour
+$request = AppContext::get_request();
+
+$update = $request->get_postvalue('update', false);
+
+if ($update)  //Mise à jour
 {
 	$pages_config->set_authorizations(Authorizations::build_auth_array_from_form(READ_PAGE, EDIT_PAGE, READ_COM));
 	$pages_config->set_count_hits_activated(retrieve(POST, 'count_hits', false));

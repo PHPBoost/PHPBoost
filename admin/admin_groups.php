@@ -39,10 +39,12 @@ $del_group = $request->get_getint('del', 0);
 $add_mbr = $request->get_postvalue('add_mbr', false);
 $del_mbr = $request->get_getint('del_mbr', 0);
 $user_id = $request->get_getint('user_id', 0);
+$valid = $request->get_postvalue('valid', false);
+$data_group_limit = $request->get_postvalue('data_group_limit', '');
 
 $_NBR_ELEMENTS_PER_PAGE = 25;
 
-if (!empty($_POST['valid']) && !empty($idgroup_post)) //Modification du groupe.
+if ($valid && !empty($idgroup_post)) //Modification du groupe.
 {
 	$name = retrieve(POST, 'name', '');
 	$img = retrieve(POST, 'img', '');
@@ -50,7 +52,7 @@ if (!empty($_POST['valid']) && !empty($idgroup_post)) //Modification du groupe.
 	$pm_group_limit = retrieve(POST, 'pm_group_limit', 75);
 	$color_group = retrieve(POST, 'color_group', '');
 	$color_group = substr($color_group, 0, 1) == '#' ? substr($color_group, 1) : $color_group;
-	$data_group_limit = isset($_POST['data_group_limit']) ? NumberHelper::numeric($_POST['data_group_limit'], 'float') * 1024 : '5120';
+	$data_group_limit = $data_group_limit ? NumberHelper::numeric($data_group_limit, 'float') * 1024 : '5120';
 		
 	$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);
 	PersistenceContext::get_querier()->update(DB_TABLE_GROUP, array('name' => $name, 'img' => $img, 'color' => $color_group, 'auth' => serialize($group_auth)), 'WHERE id = :id', array('id' => $idgroup_post));
@@ -59,7 +61,7 @@ if (!empty($_POST['valid']) && !empty($idgroup_post)) //Modification du groupe.
 	
 	AppContext::get_response()->redirect('/admin/admin_groups.php?id=' . $idgroup_post);
 }
-elseif (!empty($_POST['valid']) && $add_post) //ajout  du groupe.
+elseif ($valid && $add_post) //ajout  du groupe.
 {
 	$name = retrieve(POST, 'name', '');
 	$img = retrieve(POST, 'img', '');
@@ -67,7 +69,7 @@ elseif (!empty($_POST['valid']) && $add_post) //ajout  du groupe.
 	$pm_group_limit = retrieve(POST, 'pm_group_limit', 75);
 	$color_group = retrieve(POST, 'color_group', '');
 	$color_group = substr($color_group, 0, 1) == '#' ? substr($color_group, 1) : $color_group;
-	$data_group_limit = isset($_POST['data_group_limit']) ? NumberHelper::numeric($_POST['data_group_limit'], 'float') * 1024 : '5120';
+	$data_group_limit = $data_group_limit ? NumberHelper::numeric($data_group_limit, 'float') * 1024 : '5120';
 	
 	if (!empty($name))
 	{

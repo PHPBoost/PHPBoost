@@ -56,6 +56,9 @@ $remove_action = retrieve(POST, 'action', ''); //Action à faire lors de la suppr
 $db_querier = PersistenceContext::get_querier();
 
 $categories = WikiCategoriesCache::load()->get_categories();
+$request = AppContext::get_request();
+
+$default = $request->get_postvalue('default', false);
 
 if ($id_auth > 0)
 {
@@ -70,8 +73,8 @@ if ($id_auth > 0)
 	{
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php', '', '&'));
 	}
-		
-	if (!empty($_POST['default'])) //Configuration par défaut
+	
+	if ($default) //Configuration par défaut
 	{
 		$db_querier->update(PREFIX . "wiki_articles", array('auth' => ''), 'WHERE id = :id', array('id' => $id_auth));
 	}

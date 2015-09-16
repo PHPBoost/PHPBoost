@@ -38,7 +38,8 @@ if (!SearchAuthorizationsService::check_authorizations()->read())
 $tpl = new FileTemplate('search/search_forms.tpl');
 
 //--------------------------------------------------------------------- Params
-// A protéger impérativement;
+$request = AppContext::get_request();
+
 $search = retrieve(REQUEST, 'q', '');
 $unsecure_search = stripslashes(retrieve(REQUEST, 'q', ''));
 $search_in = retrieve(POST, 'search_in', 'all');
@@ -118,9 +119,9 @@ foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as
 						{   // 'search' non sécurisé
 							$modules_args[$module->get_id()]['search'] = $search;
 						}
-						elseif (isset($_POST[$arg]))
+						elseif ($request->has_postparameter($arg))
 						{   // Argument non sécurisé (sécurisé par le module en question)
-							$modules_args[$module->get_id()][$arg] = $_POST[$arg];
+							$modules_args[$module->get_id()][$arg] = $request->get_postvalue($arg);
 						}
 					}
 				}
