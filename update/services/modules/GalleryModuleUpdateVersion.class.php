@@ -164,6 +164,10 @@ class GalleryModuleUpdateVersion extends ModuleUpdateVersion
 		$file->delete();
 		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/admin_gallery_cat_edit2.tpl'));
 		$file->delete();
+		
+		$folder = new Folder(Url::to_rel('/' . $this->module_id . '/templates/js'));
+		if ($folder->exists())
+			$folder->delete();
 	}
 }
 ?>

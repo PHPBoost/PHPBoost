@@ -54,9 +54,9 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 			if (isset($array_random_pics) && $array_random_pics !== array())
 			{
 				$gallery_mini = array();
-				shuffle($array_random_pics); //On mï¿½lange les ï¿½lï¿½ments du tableau.
+				shuffle($array_random_pics); //On mélange les éléments du tableau.
 		
-				//Vï¿½rification des autorisations.
+				//Vérification des autorisations.
 				$break = 0;
 				foreach ($array_random_pics as $array_pics_info)
 				{
@@ -69,7 +69,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 						break;
 				}
 		
-				//Aucune photo ne correspond, on fait une requï¿½te pour vï¿½rifier.
+				//Aucune photo ne correspond, on fait une requête pour vérifier.
 				if (count($gallery_mini) == 0)
 				{
 					$array_random_pics = array();
@@ -84,7 +84,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 						$array_random_pics[] = $row;
 					}
 		
-					//Vï¿½rification des autorisations.
+					//Vérification des autorisations.
 					$break = 0;
 					foreach ($array_random_pics as $key => $array_pics_info)
 					{
@@ -123,11 +123,11 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 		
 				foreach ($gallery_mini as $key => $row)
 				{
-					//Si la miniature n'existe pas (cache vidï¿½) on regï¿½nï¿½re la miniature ï¿½ partir de l'image en taille rï¿½elle.
+					//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
 					if (!is_file(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path']))
-						$Gallery->Resize_pics(PATH_TO_ROOT . '/gallery/pics/' . $row['path']); //Redimensionnement + crï¿½ation miniature
+						$Gallery->Resize_pics(PATH_TO_ROOT . '/gallery/pics/' . $row['path']); //Redimensionnement + création miniature
 		
-					// On recupï¿½re la hauteur et la largeur de l'image.
+					// On recupère la hauteur et la largeur de l'image.
 					if ($row['width'] == 0 || $row['height'] == 0)
 						list($row['width'], $row['height']) = @getimagesize(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path']);
 					if ($row['width'] == 0 || $row['height'] == 0)
