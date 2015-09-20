@@ -32,8 +32,13 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 $config = GalleryConfig::load();
 
+$request = AppContext::get_request();
+
+$valid = $request->get_postvalue('valid', false);
+$gallery_cache = $request->get_postvalue('gallery_cache', false);
+
 //Si c'est confirmé on execute
-if (!empty($_POST['valid']))
+if ($valid)
 {
 	$config->set_mini_max_width(retrieve(POST, 'mini_max_width', 150));
 	$config->set_mini_max_height(retrieve(POST, 'mini_max_height', 150));
@@ -95,7 +100,7 @@ if (!empty($_POST['valid']))
 	
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
-elseif (!empty($_POST['gallery_cache'])) //Suppression des miniatures.
+elseif ($gallery_cache) //Suppression des miniatures.
 {
 	//Recréaction miniatures, et inscrustation du logo sur image.
 	$Gallery = new Gallery();

@@ -34,11 +34,15 @@ $Bread_crumb->add($LANG['show_not_reads'], '');
 define('TITLE', $LANG['show_not_reads']);
 require_once('../kernel/header.php'); 
 
+$request = AppContext::get_request();
+
+$change_cat = $request->get_postint('change_cat', 0);
+
 //Redirection changement de catégorie.
-if (!empty($_POST['change_cat']))
-	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_title . '.php', '&'));
+if ($change_cat)
+	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . $rewrited_title . '.php', '&'));
 if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Réservé aux membres.
-{	
+{
 	AppContext::get_response()->redirect(UserUrlBuilder::connect()); 
 }
 

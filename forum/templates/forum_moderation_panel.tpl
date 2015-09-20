@@ -136,7 +136,7 @@
 							# START alert_list #
 							<tr>
 								<td style="width:25px;">
-									<input type="checkbox" name="{alert_list.ID}">
+									<input type="checkbox" name="a{alert_list.ID}">
 								</td>
 								<td style="width:20%;">
 									{alert_list.TITLE} {alert_list.EDIT}

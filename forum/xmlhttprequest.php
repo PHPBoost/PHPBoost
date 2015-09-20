@@ -190,7 +190,7 @@ elseif (!empty($msg_d))
 }
 elseif (retrieve(GET, 'warning_moderation_panel', false) || retrieve(GET, 'punish_moderation_panel', false)) //Recherche d'un membre
 {
-	$login = !empty($_POST['login']) ? TextHelper::strprotect(utf8_decode($_POST['login'])) : '';
+	$login = TextHelper::strprotect(utf8_decode(AppContext::get_request()->get_postvalue('login', '')));
 	$login = str_replace('*', '%', $login);
 	if (!empty($login))
 	{

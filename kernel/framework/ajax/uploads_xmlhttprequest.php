@@ -44,84 +44,80 @@ $new_folder = $request->get_getint('new_folder', 0);
 $rename_folder = $request->get_getint('rename_folder', 0);
 $rename_file = $request->get_getint('rename_file', 0);
 
+$user_id = $request->get_postint('user_id', $user->get_id());
+$name = TextHelper::strprotect(utf8_decode($request->get_postvalue('name', '')));
+$previous_name = TextHelper::strprotect(utf8_decode($request->get_postvalue('previous_name', '')));
+
 if (!empty($new_folder)) //Ajout d'un dossier dans la gestion des fichiers.
 {
-    $id_parent = !empty($_POST['id_parent']) ? NumberHelper::numeric($_POST['id_parent']) : '0';
-    $user_id = !empty($_POST['user_id']) ? NumberHelper::numeric($_POST['user_id']) : $user->get_id();
-    $name = !empty($_POST['name']) ? TextHelper::strprotect(utf8_decode($_POST['name'])) : '';
+	$id_parent = $request->get_postint('id_parent', 0);
 
-    if (!empty($user_id) && $user->get_id() != $user_id)
-    {
-        if ($user->check_level(User::ADMIN_LEVEL))
-        {
-            echo Uploads::Add_folder($id_parent, $user_id, $name);
-        }
-        else
-        {
-            echo Uploads::Add_folder($id_parent, $user->get_id(), $name);
-        }
-    }
-    else
-    {
-        echo Uploads::Add_folder($id_parent, $user->get_id(), $name);
-    }
+	if (!empty($user_id) && $user->get_id() != $user_id)
+	{
+		if ($user->check_level(User::ADMIN_LEVEL))
+		{
+			echo Uploads::Add_folder($id_parent, $user_id, $name);
+		}
+		else
+		{
+			echo Uploads::Add_folder($id_parent, $user->get_id(), $name);
+		}
+	}
+	else
+	{
+		echo Uploads::Add_folder($id_parent, $user->get_id(), $name);
+	}
 }
 elseif (!empty($rename_folder)) //Renomme un dossier dans la gestion des fichiers.
 {
-    $id_folder = !empty($_POST['id_folder']) ? NumberHelper::numeric($_POST['id_folder']) : '0';
-    $name = !empty($_POST['name']) ? TextHelper::strprotect(utf8_decode($_POST['name'])) : '';
-    $user_id = !empty($_POST['user_id']) ? NumberHelper::numeric($_POST['user_id']) : $user->get_id();
-    $previous_name = !empty($_POST['previous_name']) ? TextHelper::strprotect(utf8_decode($_POST['previous_name'])) : '';
+	$id_folder = $request->get_postint('id_folder', 0);
 
-    if (!empty($id_folder) && !empty($name))
-    {
-        if ($user->get_id() != $user_id)
-        {
-            if ($user->check_level(User::ADMIN_LEVEL))
-            {
-                echo Uploads::Rename_folder($id_folder, $name, $previous_name, $user_id, Uploads::ADMIN_NO_CHECK);
-            }
-            else
-            {
-                echo Uploads::Rename_folder($id_folder, $name, $previous_name, $user->get_id(), Uploads::ADMIN_NO_CHECK);
-            }
-        }
-        else
-        {
-            echo Uploads::Rename_folder($id_folder, $name, $previous_name, $user->get_id());
-        }
-    }
-    else
-    echo 0;
+	if (!empty($id_folder) && !empty($name))
+	{
+		if ($user->get_id() != $user_id)
+		{
+			if ($user->check_level(User::ADMIN_LEVEL))
+			{
+				echo Uploads::Rename_folder($id_folder, $name, $previous_name, $user_id, Uploads::ADMIN_NO_CHECK);
+			}
+			else
+			{
+				echo Uploads::Rename_folder($id_folder, $name, $previous_name, $user->get_id(), Uploads::ADMIN_NO_CHECK);
+			}
+		}
+		else
+		{
+			echo Uploads::Rename_folder($id_folder, $name, $previous_name, $user->get_id());
+		}
+	}
+	else
+	echo 0;
 }
 elseif (!empty($rename_file)) //Renomme un fichier d'un dossier dans la gestion des fichiers.
 {
-    $id_file = !empty($_POST['id_file']) ? NumberHelper::numeric($_POST['id_file']) : '0';
-    $user_id = !empty($_POST['user_id']) ? NumberHelper::numeric($_POST['user_id']) : $user->get_id();
-    $name = !empty($_POST['name']) ? TextHelper::strprotect(utf8_decode($_POST['name'])) : '';
-    $previous_name = !empty($_POST['previous_name']) ? TextHelper::strprotect(utf8_decode($_POST['previous_name'])) : '';
+	$id_file = $request->get_postint('id_file', 0);
 
-    if (!empty($id_file) && !empty($name))
-    {
-        if ($user->get_id() != $user_id)
-        {
-            if ($user->check_level(User::ADMIN_LEVEL))
-            {
-                echo Uploads::Rename_file($id_file, $name, $previous_name, $user_id, Uploads::ADMIN_NO_CHECK);
-            }
-            else
-            {
-                echo Uploads::Rename_file($id_file, $name, $previous_name, $user->get_id(), Uploads::ADMIN_NO_CHECK);
-            }
-        }
-        else
-        {
-            echo Uploads::Rename_file($id_file, $name, $previous_name, $user->get_id());
-        }
-    }
-    else
-    {
-        echo 0;
-    }
+	if (!empty($id_file) && !empty($name))
+	{
+		if ($user->get_id() != $user_id)
+		{
+			if ($user->check_level(User::ADMIN_LEVEL))
+			{
+				echo Uploads::Rename_file($id_file, $name, $previous_name, $user_id, Uploads::ADMIN_NO_CHECK);
+			}
+			else
+			{
+				echo Uploads::Rename_file($id_file, $name, $previous_name, $user->get_id(), Uploads::ADMIN_NO_CHECK);
+			}
+		}
+		else
+		{
+			echo Uploads::Rename_file($id_file, $name, $previous_name, $user->get_id());
+		}
+	}
+	else
+	{
+		echo 0;
+	}
 }
 ?>

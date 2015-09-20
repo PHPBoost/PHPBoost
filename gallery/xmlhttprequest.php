@@ -71,9 +71,9 @@ else
 			//Initialisation  de la class de gestion des fichiers.
 			include_once(PATH_TO_ROOT .'/gallery/Gallery.class.php');
 			$Gallery = new Gallery;
-
-			$name = !empty($_POST['name']) ? TextHelper::strprotect(utf8_decode($_POST['name'])) : '';
-			$previous_name = !empty($_POST['previous_name']) ? TextHelper::strprotect(utf8_decode($_POST['previous_name'])) : '';
+			
+			$name = TextHelper::strprotect(utf8_decode($request->get_postvalue('name', '')));
+			$previous_name = TextHelper::strprotect(utf8_decode($request->get_postvalue('previous_name', '')));
 			
 			if (!empty($id_file))
 				echo $Gallery->Rename_pics($id_file, $name, $previous_name);

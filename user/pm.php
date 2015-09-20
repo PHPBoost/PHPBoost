@@ -38,6 +38,8 @@ if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 	DispatchManager::redirect($error_controller);
 }
 
+$request = AppContext::get_request();
+
 $pm_get = retrieve(GET, 'pm', 0);
 $pm_id_get = retrieve(GET, 'id', 0);
 $pm_del_convers = retrieve(GET, 'del_convers', false);
@@ -47,6 +49,11 @@ $post = retrieve(GET, 'post', false);
 $pm_edit = retrieve(GET, 'edit', 0);
 $pm_del = retrieve(GET, 'del', 0);
 $read = retrieve(GET, 'read', false);
+$convers = retrieve(POST, 'convers', false);
+$prw_convers = retrieve(POST, 'prw_convers', false);
+$prw = retrieve(POST, 'prw', false);
+$pm_post = retrieve(POST, 'pm', false);
+$edit_pm = retrieve(POST, 'edit_pm', false);
 
 $editor = AppContext::get_content_formatting_service()->get_default_editor();
 $editor->set_identifier('contents');
@@ -93,7 +100,6 @@ if ($read)
 	AppContext::get_response()->redirect(UserUrlBuilder::personnal_message());
 }
 
-$convers = retrieve(POST, 'convers', false);
 if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 {
 	$title = retrieve(POST, 'title', '');
@@ -185,8 +191,12 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != AppContext::get_current_
 	
 	$tpl->display();
 }
-elseif (!empty($_POST['prw_convers']) && empty($mp_edit)) //Prévisualisation de la conversation.
+elseif ($prw_convers && empty($mp_edit)) //Prévisualisation de la conversation.
 {
+	$title = retrieve(POST, 'title', '');
+	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+	$login = retrieve(POST, 'login', '');
+	
 	$tpl = new FileTemplate('user/pm.tpl');
 	
 	$tpl->put_all(array(
@@ -208,14 +218,14 @@ elseif (!empty($_POST['prw_convers']) && empty($mp_edit)) //Prévisualisation de 
 	$tpl->assign_block_vars('post_convers', array(
 		'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>',
 		'U_USER_VIEW' => '<a href="' . MemberUrlBuilder::profile(AppContext::get_current_user()->get_id())->rel() . '">' . $LANG['member_area'] . '</a>',
-		'LOGIN' => !empty($_POST['login']) ? stripslashes($_POST['login']) : '',
-		'TITLE' => !empty($_POST['title']) ? stripslashes($_POST['title']) : '',
-		'CONTENTS' => !empty($_POST['contents']) ? stripslashes($_POST['contents']) : ''
+		'LOGIN' => $login,
+		'TITLE' => $title,
+		'CONTENTS' => $contents
 	));
 	
 	$tpl->assign_block_vars('post_convers.show_convers', array(
 		'DATE' => Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-		'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($_POST['contents'])))
+		'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents)))
 	));
 	
 	$tpl->assign_block_vars('post_convers.user_id_dest', array(
@@ -223,8 +233,10 @@ elseif (!empty($_POST['prw_convers']) && empty($mp_edit)) //Prévisualisation de 
 	
 	$tpl->display();
 }
-elseif (!empty($_POST['prw']) && empty($pm_edit) && empty($pm_del)) //Prévisualisation du message.
+elseif ($prw && empty($pm_edit) && empty($pm_del)) //Prévisualisation du message.
 {
+	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+	
 	//On récupère les info de la conversation.
 	$convers_title = PersistenceContext::get_querier()->get_column_value(DB_TABLE_PM_TOPIC, 'title', 'WHERE id = :id', array('id' => $pm_id_get));
 	
@@ -242,20 +254,20 @@ elseif (!empty($_POST['prw']) && empty($pm_edit) && empty($pm_del)) //Prévisuali
 	
 	$tpl->assign_block_vars('show_pm', array(
 		'DATE' => Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-		'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($_POST['contents']))),
+		'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents))),
 		'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>',
 		'U_TITLE_CONVERS' => '<a href="pm' . url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get .'.php') . '">' . $convers_title . '</a>',
 		'U_USER_VIEW' => '<a href="' . UserUrlBuilder::profile(AppContext::get_current_user()->get_id())->rel() . '">' . $LANG['member_area'] . '</a>',
 	));
 	
 	$tpl->assign_block_vars('post_pm', array(
-		'CONTENTS' => !empty($_POST['contents']) ? stripslashes($_POST['contents']) : '',
+		'CONTENTS' => $contents,
 		'U_PM_ACTION_POST' => url('.php?id=' . $pm_id_get . '&amp;token=' . AppContext::get_session()->get_token())
 	));
 	
 	$tpl->display();
 }
-elseif (!empty($_POST['pm']) && !empty($pm_id_get) && empty($pm_edit) && empty($pm_del)) //Envoi de messages.
+elseif ($pm_post && !empty($pm_id_get) && empty($pm_edit) && empty($pm_del)) //Envoi de messages.
 {
 	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 	if (!empty($contents))
@@ -327,7 +339,7 @@ elseif ($pm_del_convers) //Suppression de conversation.
 	
 	while ($row = $result->fetch())
 	{
-		$del_convers = isset($_POST[$row['id']]) ? trim($_POST[$row['id']]) : '';
+		$del_convers = $request->has_postparameter($row['id']) ? trim($request->get_postvalue($row['id'])) : '';
 		if ($del_convers == 'on')
 		{
 			$del_convers = false;
@@ -448,18 +460,18 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 		
 		$view = false;
 		if ($pm['view_status'] == '1') //Le membre a déjà lu le message => échec.
-				$view = true;
+			$view = true;
 			
 		//Le destinataire n'a pas lu le message => on peut éditer.
 		if ($view === false)
 		{
 			$id_first = PersistenceContext::get_querier()->get_column_value(DB_TABLE_PM_MSG, 'MIN(id)', 'WHERE idconvers = :id', array('id' => $pm['idconvers']));
-			if (!empty($_POST['convers']) XOR !empty($_POST['edit_pm']))
+			if ($convers XOR $edit_pm)
 			{
 				$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
 				$title = retrieve(POST, 'title', '');
 				
-				if (!empty($_POST['edit_pm']) && !empty($contents))
+				if ($edit_pm && !empty($contents))
 				{
 					if ($pm_edit > $id_first) //Maj du message.
 						PersistenceContext::get_querier()->update(DB_TABLE_PM_MSG, array('contents' => $contents, 'timestamp' => time()), 'WHERE id = :id', array('id' => $pm_edit));
@@ -469,7 +481,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 						DispatchManager::redirect($error_controller);
 					}
 				}
-				elseif (!empty($_POST['convers']) && !empty($title)) //Maj de la conversation, si il s'agit du premier message.
+				elseif ($convers && !empty($title)) //Maj de la conversation, si il s'agit du premier message.
 				{
 					if ($pm_edit == $id_first)
 					{
@@ -512,17 +524,17 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 				$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
 				
 				$tpl->assign_block_vars('edit_pm', array(
-					'CONTENTS' => (!empty($_POST['prw_convers']) XOR !empty($_POST['prw'])) ? $contents : FormatingHelper::unparse($pm['contents']),
+					'CONTENTS' => ($prw_convers XOR $prw) ? $contents : FormatingHelper::unparse($pm['contents']),
 					'U_ACTION_EDIT' => url('.php?edit=' . $pm_edit . '&amp;token=' . AppContext::get_session()->get_token()),
 					'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>',
 					'U_USER_VIEW' => '<a href="' . UserUrlBuilder::profile(AppContext::get_current_user()->get_id())->rel() . '">' . $LANG['member_area'] . '</a>'
 				));
 				
-				if (!empty($_POST['prw_convers']) XOR !empty($_POST['prw']))
+				if ($prw_convers XOR $prw)
 				{
 					$tpl->assign_block_vars('edit_pm.show_pm', array(
 						'DATE' => Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-						'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($_POST['contents']))),
+						'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents))),
 					));
 				}
 
@@ -534,7 +546,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 					));
 					
 					$tpl->assign_block_vars('edit_pm.title', array(
-						'TITLE' => (!empty($_POST['prw_convers']) XOR !empty($_POST['prw']) ) ? $title : $convers['title']
+						'TITLE' => ($prw_convers XOR $prw) ? $title : $convers['title']
 					));
 				}
 				else

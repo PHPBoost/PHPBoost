@@ -59,19 +59,18 @@ $query = $request->get_getint('query', 0);
 $del = $request->get_getvalue('del', '');
 $file = $request->get_getvalue('file', '');
 $error = $request->get_getvalue('error', '');
-$table = $request->get_getvalue('table', '');
+$get_table = $request->get_getvalue('table', '');
 $action = $request->get_getvalue('action', '');
 
-if ($action == 'backup_table' && !empty($table)) //Sauvegarde pour une table unique.
+if ($action == 'backup_table' && !empty($get_table)) //Sauvegarde pour une table unique.
 {
 	$tables_backup = true;
-	$_POST['table_' . $table] = 'on';
 }
 
 $tpl = new FileTemplate('database/admin_database_management.tpl');
 
 $tpl->put_all(array(
-	'TABLE_NAME' => $table,
+	'TABLE_NAME' => $get_table,
 	'L_CONFIRM_DELETE_TABLE' => $LANG['db_confirm_delete_table'],
 	'L_CONFIRM_TRUNCATE_TABLE' => $LANG['db_confirm_truncate_table'],
 	'L_DATABASE_MANAGEMENT' => $LANG['database_management'],
@@ -332,13 +331,13 @@ else
 	//Sauvegarde
 	if ($action == 'backup')
 	{
-		$backup_type = (!empty($_POST['backup_type']) && $_POST['backup_type'] != 'all') ? ($_POST['backup_type'] == 'data' ? DBMSUtils::DUMP_DATA : DBMSUtils::DUMP_STRUCTURE) : DBMSUtils::DUMP_STRUCTURE_AND_DATA;
+		$backup_type = ($request->has_postparameter('backup_type') && $request->get_postvalue('backup_type') != 'all') ? ($request->get_postvalue('backup_type') == 'data' ? DBMSUtils::DUMP_DATA : DBMSUtils::DUMP_STRUCTURE) : DBMSUtils::DUMP_STRUCTURE_AND_DATA;
 		
-		if (!isset($_POST['table_list']) || count($_POST['table_list']) == 0)
+		$selected_tables = $request->get_postarray('table_list');
+		
+		if (empty($selected_tables))
 			AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?error=empty_list'));
 
-		$selected_tables = $_POST['table_list'];
-		
 		$file_name = 'backup_' . PersistenceContext::get_dbms_utils()->get_database_name() . '_' . str_replace('/', '-', Date::to_format(Date::DATE_NOW, 'y-m-d-H-i-s')) . '.sql';
 		$file_path = PATH_TO_ROOT . '/cache/backup/' . $file_name;
 
@@ -370,7 +369,7 @@ else
 		$i = 0;
 		foreach ($tables as $table)
 		{
-			if (!empty($_POST['table_' . $table]) && $_POST['table_' . $table] == 'on')
+			if (($table == $get_table) || ($request->has_postparameter('table_' . $table) && $request->get_postvalue('table_' . $table) == 'on'))
 				$selected_tables[] = $table;
 			
 			$tpl->assign_block_vars('table_list', array(
@@ -389,7 +388,7 @@ else
 			$selected_tables = array();
 			foreach (PersistenceContext::get_dbms_utils()->list_tables() as $table_name)
 			{
-				if (!empty($_POST['table_' . $table_name]) && $_POST['table_' . $table_name] == 'on')
+				if ($request->has_postparameter('table_' . $table_name) && $request->get_postvalue('table_' . $table_name) == 'on')
 					$selected_tables[] = $table_name;
 			}
 			if (!empty($selected_tables))

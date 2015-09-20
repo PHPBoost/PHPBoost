@@ -31,8 +31,12 @@ load_module_lang('forum'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
+$request = AppContext::get_request();
+
+$add = $request->get_postvalue('add', false);
+
 //Ajout du rang.
-if (!empty($_POST['add']))
+if ($add)
 {
 	$name = retrieve(POST, 'name', '');
 	$msg = retrieve(POST, 'msg', 0);    

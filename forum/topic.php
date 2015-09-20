@@ -34,6 +34,8 @@ $request = AppContext::get_request();
 $id_get = $request->get_getint('id', 0);
 $quote_get = $request->get_getint('quote', 0);
 
+$change_cat = $request->get_postint('change_cat', 0);
+
 //On va chercher les infos sur le topic
 try {
 	$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id', 'user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'), 'WHERE id=:id', array('id' => $id_get));
@@ -72,8 +74,8 @@ require_once('../kernel/header.php');
 $rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : ''; //On encode l'url pour un éventuel rewriting.
 
 //Redirection changement de catégorie.
-if (!empty($_POST['change_cat']))
-	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . '+' . $category->get_rewrited_name() . '.php', '&'));
+if ($change_cat)
+	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . '+' . $category->get_rewrited_name() . '.php', '&'));
 	
 //Autorisation en lecture.
 if (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->read() || !ForumAuthorizationsService::check_authorizations()->read_topics_content())

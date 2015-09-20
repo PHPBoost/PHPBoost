@@ -36,8 +36,10 @@ $request = AppContext::get_request();
 $get_id = $request->get_getint('id', 0);
 $del = $request->get_getint('del', 0);
 
+$valid = $request->get_postvalue('valid', false);
+
 //Si c'est confirmé on execute
-if (!empty($_POST['valid']))
+if ($valid)
 {
 	$result = PersistenceContext::get_querier()->select("SELECT id, special 
 	FROM " . PREFIX . "forum_ranks");

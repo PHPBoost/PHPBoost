@@ -47,7 +47,6 @@ $untrack_pm = retrieve(GET, 'utp', '');
 $track_mail = retrieve(GET, 'tm', '');
 $untrack_mail = retrieve(GET, 'utm', '');
 
-//Variable $_POST
 $poll = retrieve(POST, 'valid_forum_poll', false); //Sondage forum.
 $massive_action_type = retrieve(POST, 'action_type', ''); //Opération de masse.
 

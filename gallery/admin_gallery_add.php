@@ -41,6 +41,8 @@ $idcat_post = $request->get_postint('idcat_post', 0);
 $add_pic = $request->get_getint('add', 0);
 $nbr_pics_post = $request->get_postint('nbr_pics', 0);
 
+$valid = $request->get_postvalue('valid', false);
+
 if (isset($_FILES['gallery']) && $idcat_post) //Upload
 {
 	$dir = 'pics/';
@@ -74,7 +76,7 @@ if (isset($_FILES['gallery']) && $idcat_post) //Upload
 			if ($Gallery->get_error() != '')
 				AppContext::get_response()->redirect('/gallery/admin_gallery_add.php?error=' . $Gallery->get_error() . ($idcat_post ? '&cat=' . $idcat_post : '') . '#message_helper');
 
-			$name = !empty($_POST['name']) ? TextHelper::strprotect($_POST['name']) : '';
+			$name = TextHelper::strprotect($request->get_postvalue('name', ''));
 			$idpic = $Gallery->Add_pics($idcat_post, $name, $Upload->get_filename(), AppContext::get_current_user()->get_id());
 			if ($Gallery->get_error() != '')
 				AppContext::get_response()->redirect('/gallery/admin_gallery_add.php?error=' . $Gallery->get_error() . ($idcat_post ? '&cat=' . $idcat_post : '') . '#message_helper');
@@ -86,17 +88,17 @@ if (isset($_FILES['gallery']) && $idcat_post) //Upload
 
 	AppContext::get_response()->redirect('/gallery/admin_gallery_add.php?add=' . $idpic . ($idcat_post ? '&cat=' . $idcat_post : ''));
 }
-elseif (!empty($_POST['valid']) && !empty($nbr_pics_post)) //Ajout massif d'images par ftp.
+elseif ($valid && !empty($nbr_pics_post)) //Ajout massif d'images par ftp.
 {
 	for ($i = 1; $i <= $nbr_pics_post; $i++)
 	{
-		$activ = !empty($_POST[$i . 'activ']) ? trim($_POST[$i . 'activ']) : '';
-		$uniq = !empty($_POST[$i . 'uniq']) ? TextHelper::strprotect($_POST[$i . 'uniq']) : '';
+		$activ = trim($request->get_postvalue($i . 'activ', ''));
+		$uniq = trim($request->get_postvalue($i . 'uniq', ''));
 		if ($activ && !empty($uniq)) //Sélectionné.
 		{
-			$name = !empty($_POST[$i . 'name']) ? TextHelper::strprotect($_POST[$i . 'name']) : 0;
-			$cat = !empty($_POST[$i . 'cat']) ? NumberHelper::numeric($_POST[$i . 'cat']) : 0;
-			$del = !empty($_POST[$i . 'del']) ? NumberHelper::numeric($_POST[$i . 'del']) : 0;
+			$name = TextHelper::strprotect($request->get_postvalue($i . 'name', ''));
+			$cat = NumberHelper::numeric($request->get_postint($i . 'cat', 0));
+			$del = NumberHelper::numeric($request->get_postint($i . 'del', 0));
 
 			if ($del)
 			{

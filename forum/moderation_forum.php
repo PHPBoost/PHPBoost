@@ -104,11 +104,15 @@ if ($action == 'alert') //Gestion des alertes
 		if (!empty($get_del))
 		{
 			$hist = false;
-			foreach ($_POST as $id_alert => $checked)
+			$result = PersistenceContext::get_querier()->select("SELECT id
+			FROM " . PREFIX . "forum_alerts");
+			
+			while ($row = $result->fetch())
 			{
-				if ($checked = 'on' && is_numeric($id_alert))
-					$Forumfct->Del_alert_topic($id_alert);
+				if ($request->has_postparameter('a' . $row['id']) && $request->get_postvalue('a' . $row['id']) == 'on' && is_numeric($row['id']))
+					$Forumfct->Del_alert_topic($row['id']);
 			}
+			$result->dispose();
 		}
 		else
 		{

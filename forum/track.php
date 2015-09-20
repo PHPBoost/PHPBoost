@@ -36,13 +36,18 @@ require_once('../kernel/header.php');
 
 $page = retrieve(GET, 'p', 1);
 
+$request = AppContext::get_request();
+
+$change_cat = $request->get_postint('change_cat', 0);
+$valid = $request->get_postvalue('valid', false);
+
 //Redirection changement de catégorie.
-if (!empty($_POST['change_cat']))
-	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_title . '.php', '&'));
+if ($change_cat)
+	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . $rewrited_title . '.php', '&'));
 if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Réservé aux membres.
 	AppContext::get_response()->redirect(UserUrlBuilder::connect());
 	
-if (!empty($_POST['valid']))
+if ($valid)
 {
 	$result = PersistenceContext::get_querier()->select('SELECT t.id, tr.pm, tr.mail
 	FROM ' . PREFIX . 'forum_topics t
@@ -50,13 +55,13 @@ if (!empty($_POST['valid']))
 	WHERE tr.user_id =:user_id', array('user_id' => AppContext::get_current_user()->get_id()));
 	while ($row = $result->fetch())
 	{
-		$pm = (isset($_POST['p' . $row['id']]) && $_POST['p' . $row['id']] == 'on') ? 1 : 0;
+		$pm = ($request->has_postparameter('p' . $row['id']) && $request->get_postvalue('p' . $row['id']) == 'on') ? 1 : 0;
 		if ($row['pm'] != $pm)
 			PersistenceContext::get_querier()->update(PREFIX . 'forum_track', array('pm' => $pm), 'WHERE idtopic =:id', array('id' => $row['id']));
-		$mail = (isset($_POST['m' . $row['id']]) && $_POST['m' . $row['id']] == 'on') ? 1 : 0;
+		$mail = ($request->has_postparameter('m' . $row['id']) && $request->get_postvalue('m' . $row['id']) == 'on') ? 1 : 0;
 		if ($row['mail'] != $mail)
 			PersistenceContext::get_querier()->update(PREFIX . 'forum_track', array('mail' => $mail), 'WHERE idtopic =:id', array('id' => $row['id']));
-		$del = (isset($_POST['d' . $row['id']]) && $_POST['d' . $row['id']] == 'on') ? true : false;
+		$del = ($request->has_postparameter('d' . $row['id']) && $request->get_postvalue('d' . $row['id']) == 'on') ? true : false;
 		if ($del)
 			PersistenceContext::get_querier()->delete(PREFIX . 'forum_track', 'WHERE idtopic=:id', array('id' => $row['id']));
 	}
