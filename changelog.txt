@@ -125,6 +125,9 @@
 [b]Newsletter[/b]
 [*] Ajout de la possibilité de supprimer une archive
 
+[b]ReCaptcha[/b]
+[*] Ajout d'une page de configuration pour entrer les identifiants permettant de mettre en place ReCaptcha v2
+
 [b]Téléchargements[/b]
 [*] [color=red]Nouveauté :[/color] Passage du module en MVC
 [*] [color=red]Nouveauté :[/color] Mise en place du nouveau système de catégories
@@ -142,4 +145,4 @@
 [*] Mise à jour du module (TinyMCE version 4.2.5)
 
 [b]Script de migration[/b]
-- Vérification automatique de la présence de la nouvelle version par le noyau, et redirection vers le script d'update
+[*] Vérification automatique de la présence de la nouvelle version par le noyau, et redirection vers le script d'update

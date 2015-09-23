@@ -35,4 +35,9 @@ $lang['refresh_captcha'] = 'Changer le code';
 $lang['image_captcha'] = 'Obtenir une image';
 $lang['audio_captcha'] = 'Obtenir un test audio';
 $lang['captcha_help'] = 'Aide';
+
+$lang['config.title'] = 'Configuration de ReCaptcha';
+$lang['config.recaptcha-explain'] = 'Si vous souhaitez utiliser ReCaptcha v2, rendez-vous sur <a href="' . ReCaptcha::$_signupUrl . '">' . ReCaptcha::$_signupUrl . '</a> pour créer vos identifiants. Si les identifiants ne sont pas remplis, l\'ancienne version de ReCaptcha sera utilisée.';
+$lang['config.site_key'] = 'Clé du site';
+$lang['config.secret_key'] = 'Clé secrète';
 ?>

@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                    ReCaptchaExtensionPointProvider.class.php
+ *                           index.php
  *                            -------------------
- *   begin                : February 27, 2012
- *   copyright            : (C) 2013 Kévin MASSY
- *   email                : kevin.massy@phpboost.com
+ *   begin                : September 18, 2015
+ *   copyright            : (C) 2015 Julien BRISWALTER
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -25,28 +25,10 @@
  *
  ###################################################*/
 
-class ReCaptchaExtensionPointProvider extends ExtensionPointProvider
-{
-	public function __construct()
-	{
-		parent::__construct('ReCaptcha');
-	}
-	
-	public function captcha()
-	{
-		return new ReCaptcha();
-	}
-	
-	public function css_files()
-	{
-		$module_css_files = new ModuleCssFiles();
-		$module_css_files->adding_always_displayed_file('ReCaptcha.css');
-		return $module_css_files;
-	}
-	
-	public function url_mappings()
-	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/ReCaptcha/index.php')));
-	}
-}
+define('PATH_TO_ROOT', '..');
+
+require_once PATH_TO_ROOT . '/kernel/init.php';
+
+$url_controller_mappers = array(new UrlControllerMapper('AdminReCaptchaConfig', '`^/admin(?:/config)?/?$`'));
+DispatchManager::dispatch($url_controller_mappers);
 ?>

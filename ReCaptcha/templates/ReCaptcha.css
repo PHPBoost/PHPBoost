@@ -39,3 +39,8 @@
 }
 
 #recaptcha_image img { width: 100%; }
+
+@media ( max-width: 768px ) {
+	.g-recaptcha div { width: 100% !important; }
+	.g-recaptcha iframe { max-width: 100%; }
+}

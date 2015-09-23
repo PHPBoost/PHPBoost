@@ -1,3 +1,8 @@
+# IF C_RECAPTCHA_V2 #
+<div id="{HTML_ID}" class="g-recaptcha" data-sitekey="{SITE_KEY}"></div>
+
+<script src='https://www.google.com/recaptcha/api.js' async defer></script>
+# ELSE #
 <div id="recaptcha-widget" style="display:none">
 	<div id="recaptcha_response_field" style="display:none;"></div>
 	<div id="recaptcha-container">
@@ -16,8 +21,8 @@
 <script>
 var RecaptchaOptions = {
 	theme : 'custom',
-	lang : '{LANG}',
 	custom_theme_widget: 'recaptcha-widget'
 };
 </script>
-<script src="http://www.google.com/recaptcha/api/challenge?k={PUBLIC_KEY}"></script>
+<script src="http://www.google.com/recaptcha/api/challenge?k={SITE_KEY}"></script>
+# ENDIF #

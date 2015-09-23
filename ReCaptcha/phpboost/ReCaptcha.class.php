@@ -27,32 +27,59 @@
 
 class ReCaptcha extends Captcha
 {
-	const PUBLIC_KEY = '6LdrD9YSAAAAAAfoC2bRYQ-xT0PT7AAjWb6kc8cd';
-	const PRIVATE_KEY = '6LdrD9YSAAAAAJloXTYNKbaMgBaLPvfMoWncKWkc';
-
+	const DEFAULT_SITE_KEY = '6LdrD9YSAAAAAAfoC2bRYQ-xT0PT7AAjWb6kc8cd';
+	const DEFAULT_SECRET_KEY = '6LdrD9YSAAAAAJloXTYNKbaMgBaLPvfMoWncKWkc';
+	
+	public static $_signupUrl = "https://www.google.com/recaptcha/admin";
+	private static $_siteVerifyUrl = "https://www.google.com/recaptcha/api/siteverify";
+	
 	private $recaptcha_response;
+	private $recaptcha_error;
 	private $lang;
+	private $config;
+	private $is_recaptcha_v2;
 	
 	public function __construct()
 	{
-		require_once(PATH_TO_ROOT . '/ReCaptcha/lib/recaptchalib.php');	
+		require_once(PATH_TO_ROOT . '/ReCaptcha/lib/recaptchalib.php');
+		$this->config = ReCaptchaConfig::load();
+		$this->is_recaptcha_v2 = $this->config->get_site_key() && $this->config->get_secret_key();
 	}
 	
 	public function get_name()
 	{
 		return 'ReCaptcha';
 	}
-		
+	
 	public function is_available()
 	{
-		return @fsockopen(RECAPTCHA_VERIFY_SERVER, 80) !== false;
+		return @fsockopen("www.google.com", 80) !== false;
 	}
 	
 	public function is_valid()
 	{
-		$this->recaptcha_response = recaptcha_check_answer(self::PRIVATE_KEY, $_SERVER["REMOTE_ADDR"], AppContext::get_request()->get_postvalue('recaptcha_challenge_field', ''), AppContext::get_request()->get_postvalue($this->get_html_id(), ''));
-		
-		return $this->recaptcha_response->is_valid;
+		if ($this->is_recaptcha_v2)
+		{
+			$request = AppContext::get_request();
+			
+			if ($request->has_postparameter('g-recaptcha-response'))
+			{
+				$response = @file_get_contents(self::$_siteVerifyUrl . "?secret=" . $this->config->get_secret_key() . "&response=" . $request->get_postvalue('g-recaptcha-response', '') . "&remoteip=" . $_SERVER['REMOTE_ADDR']);
+				$response = json_decode($response, true);
+				
+				if ($response['success'] === true)
+					return true;
+				else
+					$this->recaptcha_error = isset($response['error-codes'][0]) ? $response['error-codes'][0] : null;
+			}
+		}
+		else
+		{
+			$this->recaptcha_response = recaptcha_check_answer(self::DEFAULT_SECRET_KEY, $_SERVER["REMOTE_ADDR"], AppContext::get_request()->get_postvalue('recaptcha_challenge_field', ''), AppContext::get_request()->get_postvalue($this->get_html_id(), ''));
+			
+			return $this->recaptcha_response->is_valid;
+		}
+		return false;
 	}
 	
 	public function display()
@@ -61,7 +88,8 @@ class ReCaptcha extends Captcha
 		$this->lang = LangLoader::get('common', 'ReCaptcha');
 		$tpl->add_lang($this->lang);
 		$tpl->put_all(array(
-			'PUBLIC_KEY' => self::PUBLIC_KEY,
+			'C_RECAPTCHA_V2' => $this->is_recaptcha_v2,
+			'SITE_KEY' => $this->is_recaptcha_v2 ? $this->config->get_site_key() : self::DEFAULT_SITE_KEY,
 			'HTML_ID' => $this->get_html_id()
 		));
 		return $tpl->render();
@@ -69,7 +97,11 @@ class ReCaptcha extends Captcha
 	
 	public function get_error()
 	{
-		if ($this->recaptcha_response !== null)
+		if ($this->recaptcha_error !== null)
+		{
+			return $this->recaptcha_error;
+		}
+		else if ($this->recaptcha_response !== null)
 		{
 			return $this->recaptcha_response->error;
 		}
