@@ -40,12 +40,12 @@ $id_edit_post = retrieve(POST, 'id_edit', 0);
 $id_edit = $id_edit > 0 ? $id_edit : $id_edit_post;
 $title = retrieve(POST, 'title', '');
 $contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
-$count_hits = retrieve(POST, 'count_hits', false);
-$enable_com = retrieve(POST, 'comments_activated', false);
+$count_hits = retrieve(POST, 'count_hits', 0);
+$enable_com = retrieve(POST, 'comments_activated', 0);
 $own_auth = retrieve(POST, 'own_auth', '');
-$is_cat = retrieve(POST, 'is_cat', false);
+$is_cat = retrieve(POST, 'is_cat', 0);
 $id_cat = retrieve(POST, 'id_cat', 0);
-$display_print_link = retrieve(POST, 'display_print_link', false);
+$display_print_link = retrieve(POST, 'display_print_link', 0);
 $preview = retrieve(POST, 'preview', false);
 $del_article = retrieve(GET, 'del', 0);
 
