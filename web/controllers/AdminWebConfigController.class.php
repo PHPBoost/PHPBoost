@@ -149,7 +149,8 @@ class AdminWebConfigController extends AdminModuleController
 				new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.best_note', 'common'), WebLink::SORT_NOTATION),
 				new FormFieldSelectChoiceOption($this->lang['config.sort_type.visits'], WebLink::SORT_NUMBER_VISITS),
 				new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.number_comments', 'common'), WebLink::SORT_NUMBER_COMMENTS)
-			)
+			),
+			array('description' => $this->lang['config.sort_type.explain'])
 		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', $this->lang['config.sort_mode'], $this->config->get_sort_mode(),

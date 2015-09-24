@@ -82,6 +82,8 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 			$this->db_utils->add_column(PREFIX . 'web', 'partner', array('type' => 'boolean', 'notnull' => 1, 'default' => 0));
 		if (!isset($columns['partner_picture']))
 			$this->db_utils->add_column(PREFIX . 'web', 'partner_picture', array('type' => 'string', 'length' => 255, 'default' => "''"));
+		if (!isset($columns['privileged_partner']))
+			$this->db_utils->add_column(PREFIX . 'web', 'privileged_partner' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0));
 		
 		if (isset($columns['idcat']))
 		{

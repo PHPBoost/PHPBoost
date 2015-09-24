@@ -49,6 +49,7 @@ class WebLink
 	private $number_views;
 	private $partner;
 	private $partner_picture;
+	private $privileged_partner;
 	
 	private $notation;
 	private $keywords;
@@ -274,6 +275,16 @@ class WebLink
 		return !empty($picture);
 	}
 	
+	public function is_privileged_partner()
+	{
+		return $this->privileged_partner;
+	}
+	
+	public function set_privileged_partner($privileged_partner)
+	{
+		$this->privileged_partner = $privileged_partner;
+	}
+	
 	public function get_notation()
 	{
 		return $this->notation;
@@ -330,7 +341,8 @@ class WebLink
 			'author_user_id' => $this->get_author_user()->get_id(),
 			'number_views' => $this->get_number_views(),
 			'partner' => (int)$this->is_partner(),
-			'partner_picture' => $this->get_partner_picture()->relative()
+			'partner_picture' => $this->get_partner_picture()->relative(),
+			'privileged_partner' => (int)$this->is_privileged_partner()
 		);
 	}
 	
@@ -351,6 +363,7 @@ class WebLink
 		$this->number_views = $properties['number_views'];
 		$this->partner = (bool)$properties['partner'];
 		$this->partner_picture = new Url($properties['partner_picture']);
+		$this->privileged_partner = (bool)$properties['privileged_partner'];
 		
 		$user = new User();
 		if (!empty($properties['user_id']))
@@ -414,6 +427,7 @@ class WebLink
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			'C_IS_PARTNER' => $this->is_partner(),
 			'C_HAS_PARTNER_PICTURE' => $this->has_partner_picture(),
+			'C_IS_PRIVILEGED_PARTNER' => $this->is_privileged_partner(),
 			
 			//Weblink
 			'ID' => $this->id,

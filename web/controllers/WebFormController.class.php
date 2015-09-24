@@ -112,14 +112,20 @@ class WebFormController extends ModuleController
 			'events' => array('click' => '
 				if (HTMLForms.getField("partner").getValue()) {
 					HTMLForms.getField("partner_picture").enable();
+					HTMLForms.getField("privileged_partner").enable();
 				} else {
 					HTMLForms.getField("partner_picture").disable();
+					HTMLForms.getField("privileged_partner").disable();
 				}'
 			)
 		)));
 		
 		$other_fieldset->add_field(new FormFieldUploadPictureFile('partner_picture', $this->lang['web.form.partner_picture'], $this->get_weblink()->get_partner_picture()->relative(), array(
 			'hidden' => !$this->get_weblink()->is_partner()
+		)));
+		
+		$other_fieldset->add_field(new FormFieldCheckbox('privileged_partner', $this->lang['web.form.privileged_partner'], $this->get_weblink()->is_privileged_partner(), array(
+			'description' => $this->lang['web.form.privileged_partner.explain'], 'hidden' => !$this->get_weblink()->is_partner()
 		)));
 		
 		$other_fieldset->add_field(WebService::get_keywords_manager()->get_form_field($this->get_weblink()->get_id(), 'keywords', $this->common_lang['form.keywords'], array('description' => $this->common_lang['form.keywords.description'])));
@@ -255,6 +261,7 @@ class WebFormController extends ModuleController
 		$weblink->set_short_contents(($this->form->get_value('short_contents_enabled') ? $this->form->get_value('short_contents') : ''));
 		$weblink->set_partner($this->form->get_value('partner'));
 		$weblink->set_partner_picture(new Url($this->form->get_value('partner_picture')));
+		$weblink->set_privileged_partner($this->form->get_value('privileged_partner'));
 		
 		if ($this->is_contributor_member())
 		{

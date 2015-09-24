@@ -56,6 +56,7 @@ $lang['config.category_display_type.display_table'] = 'Table';
 $lang['config.display_descriptions_to_guests'] = 'Display summary to guests if they don\'t have read authorization';
 $lang['config.partners_menu'] = 'Partners menu';
 $lang['config.sort_type'] = 'Partners display order';
+$lang['config.sort_type.explain'] = 'Privileged partners are always displayed on top';
 $lang['config.sort_type.visits'] = 'Visits number';
 $lang['config.sort_mode'] = 'Mode';
 $lang['config.partners_number_in_menu'] = 'Max partners displayed number';
@@ -70,6 +71,8 @@ $lang['web.form.contribution.explain'] = 'You are not authorized to create a new
 //form
 $lang['web.form.partner'] = 'Partner site';
 $lang['web.form.partner_picture'] = 'Partner banner';
+$lang['web.form.privileged_partner'] = 'Privileged partner';
+$lang['web.form.privileged_partner.explain'] = 'Displayed on top';
 
 //Messages
 $lang['web.message.success.add'] = 'The link <b>:name</b> has been added';
