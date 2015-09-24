@@ -212,7 +212,7 @@ class AdminModuleAddController extends AdminController
 							$archive_root_content[] = array('filename' => $element['filename'], 'folder' => ((isset($element['folder']) && $element['folder'] == 1) || (isset($element['typeflag']) && $element['typeflag'] == 5)));
 						if (isset($archive_root_content[0]))
 						{
-							$name_in_archive = str_replace($archive_root_content[0]['filename'] . '/', '', $element['filename']);
+							$name_in_archive = str_replace($archive_root_content[0]['filename'] . '/', '/', $element['filename']);
 							
 							if (in_array($name_in_archive, $required_files))
 							{
