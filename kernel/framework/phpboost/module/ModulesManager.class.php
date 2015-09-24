@@ -381,7 +381,7 @@ class ModulesManager
 		{
 			MenuService::delete_mini_module($module_id);
 			MenuService::delete_module_feeds_menus($module_id);
-				
+			
 			$general_config = GeneralConfig::load();
 			$module_home_page_selected = $general_config->get_module_home_page();
 			if ($module_home_page_selected == $module_id)
@@ -408,6 +408,13 @@ class ModulesManager
 				else
 					$error = LangLoader::get_message('last_editor_installed', 'editor-common');
 			}
+		}
+		else
+		{
+			$module = self::get_module($module_id);
+			
+			if ($module->get_configuration()->get_compatibility() != GeneralConfig::load()->get_phpboost_major_version())
+				$error = LangLoader::get_message('modules.not_compatible', 'admin-modules-common');
 		}
 
 		if (empty($error))

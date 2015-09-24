@@ -65,6 +65,7 @@ $lang['modules.upload_error'] = 'An error occured in the upload';
 $lang['modules.module_not_upgradable'] = 'The module cannot be updated';
 $lang['modules.updates_available'] = 'Module updates available';
 $lang['modules.config_conflict'] = 'Conflict with module configuration, impossible to install!';
+$lang['modules.not_compatible'] = 'This module is not compatible with the actual version of PHPBoost. Please verify new version availability on <a href="http://www.phpboost.com/download">PHPBoost website</a>.';
 
 //Delete module
 $lang['modules.drop_files'] = 'Delete all the module\'s files';
