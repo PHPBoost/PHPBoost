@@ -86,6 +86,9 @@ class BugtrackerFeedProvider implements FeedProvider
 			$description = FormatingHelper::second_parse($bug->get_contents());
 			$description .= '<br /><br />' . $lang['labels.fields.reproductible'] . ' : ' . ($bug->is_reproductible() ? LangLoader::get_message('yes', 'common') : LangLoader::get_message('no', 'common'));
 			
+			if ($bug->is_reproductible())
+				$description .= '<br />' . FormatingHelper::second_parse($bug->get_reproduction_method()) . '<br />';
+			
 			if ($types)
 				$description .= '<br />' . $lang['labels.fields.type'] . ' : ' . (isset($types[$bug->get_type()]) ? stripslashes($types[$bug->get_type()]) : $lang['notice.none']);
 			if ($categories)
