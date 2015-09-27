@@ -1,13 +1,17 @@
 # IF C_DISPLAY #
-<menu id="actions-links-menu" class="dynamic-menu right">
+<menu id="cssmenu-{ID}" class="cssmenu cssmenu-right cssmenu-actions-links">
 	<ul>
-		<li><a><i class="fa fa-cog"></i></a>
-			<ul>
-				# START element #
-					# INCLUDE element.ELEMENT #
-				# END element #
-			</ul>
-		</li>
+		# START element #
+			# INCLUDE element.ELEMENT #
+		# END element #
 	</ul>
 </menu>
+<script type="text/javascript">
+    $("#cssmenu-${escape(ID)}").menumaker({
+        title: "{TITLE}",
+        format: "multitoggle",
+        breakpoint: 980,
+        actionlink: true
+    });
+</script>
 # ENDIF #

@@ -12,7 +12,7 @@
 				</h3>
 			</div>
 			<div class="module-mini-contents">
-				<nav id="cssmenu-{ID_VAR}" class="cssmenu cssmenu-vertical cssmenu-left">
+				<nav id="cssmenu-{ID}" class="cssmenu cssmenu-vertical cssmenu-left">
 					# IF C_HAS_CHILD #
 						<ul># START elements #{elements.DISPLAY}# END elements #</ul>
 					# ENDIF #
@@ -21,7 +21,7 @@
 			<div class="module-mini-bottom"></div>
 		</div>
         <script type="text/javascript">
-            $("#cssmenu-${escape(ID_VAR)}").menumaker({
+            $("#cssmenu-${escape(ID)}").menumaker({
                 title: "{TITLE}",
                 format: "multitoggle",
                 breakpoint: 980
