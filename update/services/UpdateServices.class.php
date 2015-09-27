@@ -205,17 +205,11 @@ class UpdateServices
 		// Suppression des fichiers qui ne sont plus présent dans la nouvelle version pour éviter les conflits
 		$this->delete_old_files();
 		
-		// TODO : gérer les anciens menus + loguer leur nom dans update followed
-		
 		// Suppression du captcha PHPBoostCaptcha
-		ModulesManager::uninstall_module('PHPBoostCaptcha', true);
+		$this->delete_phpboostcaptcha();
 		
-		$content_management_config = ContentManagementConfig::load();
-		if ($content_management_config->get_used_captcha_module() == 'PHPBoostCaptcha')
-		{
-			$content_management_config->set_used_captcha_module('ReCaptcha');
-			ContentManagementConfig::save();
-		}
+		// Désinstallation des anciens menus (dans /menus)
+		$this->delete_old_menus();
 		
 		// Mise à jour des tables du noyau
 		$this->update_kernel_tables();
@@ -251,6 +245,43 @@ class UpdateServices
 			$maintenance_config->set_unlimited_maintenance(true);
 			MaintenanceConfig::save();
 		}
+	}
+	
+	private function delete_old_menus()
+	{
+		$menus_folder = new Folder(Url::to_rel('/menus'));
+		if ($menus_folder->exists())
+		{
+			foreach ($menus_folder->get_folders() as $menu)
+			{
+				$menu_id = 0;
+				try {
+					$menu_id = self::$db_querier->get_column_value(DB_TABLE_MENUS, 'id', 'WHERE title LIKE :title', array('title' => $menu->get_name() . '%'));
+				} catch (RowNotFoundException $e) {}
+				
+				if (!empty($menu_id))
+				{
+					self::$db_querier->delete(DB_TABLE_MENUS, 'WHERE id = :id', array('id' => $menu_id));
+					$this->add_information_to_file('menu ' . $menu->get_name(), 'has been uninstalled because : incompatible with new version');
+				}
+			}
+		}
+	}
+	
+	private function delete_phpboostcaptcha()
+	{
+		$module_id = 'PHPBoostCaptcha';
+		self::$db_querier->delete(DB_TABLE_CONFIGS, "WHERE name = :name", array('name' => $module_id));
+		ModulesConfig::load()->remove_module_by_id($module_id);
+		ModulesConfig::save();
+		
+		$folder = new Folder(Url::to_rel('/' . $module_id));
+		if ($folder->exists())
+			$folder->delete();
+		
+		$tables = self::$db_utils->list_tables(true);
+		if (in_array(PREFIX . 'verif_code', $tables))
+			self::$db_utils->drop(array(PREFIX . 'verif_code'));
 	}
 	
 	private function update_kernel_tables()
@@ -437,7 +468,10 @@ class UpdateServices
 		foreach ($modules_config->get_modules() as $id => $module)
 		{
 			if (ModulesManager::module_is_upgradable($id))
+			{
+				ModulesManager::upgrade_module($id);
 				$module->set_installed_version($module->get_configuration()->get_version());
+			}
 			else
 			{
 				if ($module->get_configuration()->get_compatibility() != self::NEW_KERNEL_VERSION)
@@ -737,6 +771,8 @@ class UpdateServices
 		$file = new File(Url::to_rel('/templates/default/framework/content/syndication/images/addatom.png'));
 		$file->delete();
 		$file = new File(Url::to_rel('/templates/default/framework/content/syndication/images/addrss.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/framework/menus/links/tree.tpl'));
 		$file->delete();
 		$file = new File(Url::to_rel('/templates/default/images/color.png'));
 		$file->delete();
