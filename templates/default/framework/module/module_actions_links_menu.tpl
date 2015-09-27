@@ -1,5 +1,5 @@
 # IF C_DISPLAY #
-<menu id="cssmenu-{ID}" class="cssmenu cssmenu-right cssmenu-actions-links">
+<menu id="cssmenu-{ID}" class="cssmenu cssmenu-right cssmenu-treelinks">
 	<ul>
 		# START element #
 			# INCLUDE element.ELEMENT #
