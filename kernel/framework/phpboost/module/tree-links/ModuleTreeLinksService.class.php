@@ -32,15 +32,19 @@ class ModuleTreeLinksService
 {
 	public static function display_actions_menu()
 	{
-		$tree_links = self::get_tree_links(Environment::get_running_module_name());
+		$module_name = Environment::get_running_module_name();
+		$tree_links = self::get_tree_links($module_name);
 		if ($tree_links !== null)
 		{
 			$actions_tree_links = $tree_links->get_actions_tree_links();
 			
 			$tpl = new FileTemplate('framework/module/module_actions_links_menu.tpl');
-			$tpl->put('C_DISPLAY', $actions_tree_links->has_visible_links());
+			$tpl->put_all(array(
+				'C_DISPLAY' => $actions_tree_links->has_visible_links(),
+				'ID' => $module_name
+			));
 			
-			$module = ModulesManager::get_module(Environment::get_running_module_name());
+			$module = ModulesManager::get_module($module_name);
 			$home_page = $module->get_configuration()->get_home_page();
 			if (!empty($home_page))
 			{

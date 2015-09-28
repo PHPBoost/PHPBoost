@@ -6,12 +6,12 @@
 		# END element #
 	</ul>
 </menu>
-<script type="text/javascript">
-    $("#cssmenu-${escape(ID)}").menumaker({
-        title: "{TITLE}",
-        format: "multitoggle",
-        breakpoint: 980,
-        actionlink: true
-    });
+<script>
+	jQuery("#cssmenu-${escape(ID)}").menumaker({
+		title: "{TITLE}",
+		format: "multitoggle",
+		breakpoint: 980,
+		actionlink: true
+	});
 </script>
 # ENDIF #
