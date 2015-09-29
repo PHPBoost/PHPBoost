@@ -531,27 +531,19 @@ a.upload-recent-file {
 .cssmenu ul li,
 .cssmenu ul li a,
 .cssmenu #menu-button {
-	margin: 0;
-	padding: 0;
-	border: 0;
 	list-style: none;
 	line-height: 1;
 	display: block;
 	position: relative;
-	box-sizing: border-box;
 }
 .cssmenu:after,
 .cssmenu > ul:after {
-	content: ".";
+	content: "";
 	display: block;
 	clear: both;
 	visibility: hidden;
 	line-height: 0;
 	height: 0;
-}
-.cssmenu-actionslinks {
-	float: right;
-	margin: 0 5px 5px 5px;
 }
 
 #menu-left .cssmenu { margin-right: -9px; }
@@ -624,10 +616,10 @@ a.upload-recent-file {
 }
 
 @media (min-width: 768px) {
-	.cssmenu > ul > li.has-sub > a:after  { top: 22px; }
-	.cssmenu > ul > li.has-sub > a:before { top: 19px; }
-	.cssmenu-vertical > ul > li.has-sub > a:after  { top: 11px; }
-	.cssmenu-vertical > ul > li.has-sub > a:before { top: 8px;  }
+	.cssmenu > ul > li.has-sub > a:after  			{ top: 22px; }
+	.cssmenu > ul > li.has-sub > a:before 			{ top: 19px; }
+	.cssmenu-vertical > ul > li.has-sub > a:after  	{ top: 11px; }
+	.cssmenu-vertical > ul > li.has-sub > a:before 	{ top: 8px;  }
 }
 
 .cssmenu a img {
@@ -647,26 +639,11 @@ a.upload-recent-file {
 }
 
 /* Position des sous menu */
-.cssmenu li:hover > ul {
-	left: auto;
-}
-
-.cssmenu.cssmenu-left li:hover > ul {
-	left: 100%;
-	top: 0;
-}
-.cssmenu.cssmenu-right li:hover > ul {
-	right: 100%;
-	top: 0;
-}
-.cssmenu.cssmenu-actionslinks li:hover > ul {
-	top: 100%;
-	right: 0;
-}
-.cssmenu.cssmenu-actionslinks ul li:hover > ul {
-	top: 0;
-	right: 100%;
-}
+.cssmenu li:hover > ul 							{ left: auto ; 			  }
+.cssmenu.cssmenu-left li:hover > ul 			{ left: 100% ; top: 0;    }
+.cssmenu.cssmenu-right li:hover > ul 			{ right: 100%; top: 0;    }
+.cssmenu.cssmenu-actionslinks li:hover > ul 	{ right: 0   ; top: 100%; }
+.cssmenu.cssmenu-actionslinks ul li:hover > ul 	{ right: 100%; top: 0;    }
 
 .cssmenu li:hover > ul > li {
 	height: auto;
@@ -688,36 +665,39 @@ a.upload-recent-file {
 
 /* Personnalisation de la couleur des liens */
 /* Niveau 1 */
-header .cssmenu > ul > li > a { color: #DDDDDD; }
-#menu-left .cssmenu > ul > li > a,
-#menu-right .cssmenu > ul > li > a { color: #444444; }
-.cssmenu-actionslinks > ul > li > a { color: #666666; }
+header .cssmenu > ul > li > a 			{ color: #DDDDDD; }
+#menu-left .cssmenu > ul > li > a 		{ color: #444444; }
+#menu-right .cssmenu > ul > li > a 		{ color: #444444; }
+.cssmenu-actionslinks > ul > li > a 	{ color: #666666; }
 
-header .cssmenu li:hover > a { color: #FFFFFF; }
-#menu-left .cssmenu li:hover > a,
-#menu-right .cssmenu li:hover > a { color: #666666; }
+header .cssmenu li:hover > a 			{ color: #FFFFFF; }
+#menu-left .cssmenu li:hover > a 		{ color: #666666; }
+#menu-right .cssmenu li:hover > a 		{ color: #666666; }
 
 /* Niveau 2 */
-.cssmenu ul ul li a { color: #DDDDDD; }
-.cssmenu-actionslinks li ul li a { color: #666666; }
 
-.cssmenu-actionslinks li:hover > a { background: #DDDDDD; }
-header .cssmenu ul ul li a { background: #333333; }
+.cssmenu ul ul li a 			    	{ color: #DDDDDD; }
+#menu-left .cssmenu ul ul li a  		{ color: #333333; }
+#menu-right .cssmenu ul ul li a 		{ color: #333333; }
+.cssmenu-actionslinks li ul li a    	{ color: #666666; }
 
-#menu-left .cssmenu ul ul li a,
-#menu-right .cssmenu ul ul li a {
-	color: #333333;
-	background: #FFFFFF;
+.cssmenu ul ul li:hover a 		    	{ color: #333333; }
+header .cssmenu ul ul li:hover > a 		{ color: #FFFFFF; }
+header .cssmenu ul ul li a:hover 		{ color: #FFFFFF; }
+#menu-left .cssmenu ul ul li:hover > a 	{ color: #555555; }
+#menu-left .cssmenu ul ul li a:hover 	{ color: #555555; }
+#menu-right .cssmenu ul ul li:hover > a { color: #555555; }
+#menu-right .cssmenu ul ul li a:hover 	{ color: #555555; }
+.cssmenu-actionslinks li:hover > a 		{ color: #333333; }
+
+/* Personnalisation de la couleur de fonds des liens */
+/* Niveau 2 */
+header .cssmenu ul ul li a 					{ background: #333333; }
+#menu-left .cssmenu ul ul li a  			{ background: #FFFFFF; }
+#menu-right .cssmenu ul ul li a 			{ background: #FFFFFF; }
+@media (min-width: 768px) {
+	.cssmenu-actionslinks li:hover > a 		{ background: #DDDDDD; }
 }
-
-header .cssmenu ul ul li:hover > a,
-header .cssmenu ul ul li a:hover { color: #FFFFFF; }
-
-#menu-left .cssmenu ul ul li:hover > a,
-#menu-left .cssmenu ul ul li a:hover,
-#menu-right .cssmenu ul ul li:hover > a,
-#menu-right .cssmenu ul ul li a:hover { color: #555555; }
-
 .cssmenu-actionslinks ul li:hover > a:after { background: #FEFEFE; }
 
 /* Indicateur de sous-Menu */
@@ -780,16 +760,19 @@ header .cssmenu ul ul li a:hover { color: #FFFFFF; }
 		width: 100%;
 		border-top: 1px solid rgba(120, 120, 120, 0.2);
 	}
+
+	.cssmenu-actionslinks ul li {
+		border: none;
+	}
 	.cssmenu ul ul li,
 	.cssmenu li:hover > ul > li {
 		height: auto;
 	}
-	.cssmenu.cssmenu-right li:hover > ul {
-		right: 0;
-	}
-	.cssmenu.cssmenu-left li:hover > ul {
-		left: 0;
-	}
+	
+	.cssmenu li:hover > ul 					{ left: 0;  }
+	.cssmenu.cssmenu-right li:hover > ul 	{ right: 0; }
+	.cssmenu.cssmenu-left li:hover > ul 	{ left: 0;  }
+
 	.cssmenu ul li a,
 	.cssmenu ul ul li a {
 		width: 100%;
@@ -883,13 +866,16 @@ header .cssmenu ul ul li a:hover { color: #FFFFFF; }
 		width: 46px;
 		cursor: pointer;
 	}
-	.cssmenu .submenu-button.submenu-opened {
-		background: #262626;
+	.cssmenu-actionslinks .submenu-button {
+		height: 21px;
+		width: 21px;
+		border: none;
 	}
-	#menu-left .cssmenu .submenu-button.submenu-opened,
-	#menu-right .cssmenu .submenu-button.submenu-opened {
-		background: rgba(120, 120, 120, 0.2);
-	}
+	.cssmenu .submenu-button.submenu-opened 				{ background: #262626; }
+	.cssmenu-actionslinks .submenu-button.submenu-opened 	{ background: #DDDDDD; }
+	#menu-left .cssmenu .submenu-button.submenu-opened 		{ background: rgba(120, 120, 120, 0.2); }
+	#menu-right .cssmenu .submenu-button.submenu-opened 	{ background: rgba(120, 120, 120, 0.2); }
+	
 	.cssmenu ul ul .submenu-button {
 		height: 34px;
 		width: 34px;
@@ -903,6 +889,10 @@ header .cssmenu ul ul li a:hover { color: #FFFFFF; }
 		display: block;
 		background: #DDDDDD;
 		content: '';
+	}
+	.cssmenu-actionslinks .submenu-button:after {
+		top: 9px;
+		right: 7px;
 	}
 	.cssmenu ul ul .submenu-button:after {
 		top: 15px;
@@ -921,6 +911,11 @@ header .cssmenu ul ul li a:hover { color: #FFFFFF; }
 		background: #DDDDDD;
 		content: '';
 	}
+	.cssmenu-actionslinks .submenu-button:before {
+		top: 6px;
+		right: 10px;
+	}
+
 	.cssmenu ul ul .submenu-button:before {
 		top: 12px;
 		right: 16px;
@@ -941,7 +936,12 @@ header .cssmenu ul ul li a:hover { color: #FFFFFF; }
 
 /* Bouton du Menu d'Action en mode Desktop */
 @media (min-width: 768px) {
-	
+
+	.cssmenu-actionslinks {
+		float: right;
+		margin: 0 5px 5px 5px;
+	}
+
 	.cssmenu-actionslinks #menu-button {
 		float: right;
 		position: relative;
