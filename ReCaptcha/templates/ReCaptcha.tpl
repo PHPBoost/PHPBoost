@@ -21,6 +21,7 @@
 <script>
 var RecaptchaOptions = {
 	theme : 'custom',
+	lang : '{LANG}',
 	custom_theme_widget: 'recaptcha-widget'
 };
 </script>

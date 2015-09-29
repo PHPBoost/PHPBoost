@@ -38,7 +38,53 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 	{
 		$db_querier = PersistenceContext::get_querier();
 		
-		//Download
+		$phpboost_4_1_release_date = new Date('2014-07-15');
+		
+		if (GeneralConfig::load()->get_site_install_date()->is_anterior_to($phpboost_4_1_release_date))
+		{
+			// Articles
+			if (class_exists('ArticlesService'))
+			{
+				$this->urls_mappings[] = new UrlMapping('^articles/articles.php$', '/articles/', 'L,R=301');
+				
+				$categories = ArticlesService::get_categories_manager()->get_categories_cache()->get_categories();
+				
+				foreach ($categories as $id => $category)
+				{
+					$this->urls_mappings[] = new UrlMapping('^articles/articles-' . $id . '\+([^.]*).php$', '/articles/' . $id . '-' . $category->get_rewrited_name() . '/', 'L,R=301');
+					$this->urls_mappings[] = new UrlMapping('^articles/articles-' . $id . '-([0-9]*)\+([^.]*).php$', '/articles/' . $id . '-' . $category->get_rewrited_name() . '/$1-$2/', 'L,R=301');
+				}
+			}
+			
+			// Calendar
+			if (class_exists('CalendarService'))
+			{
+				$this->urls_mappings[] = new UrlMapping('^calendar/calendar$', '/calendar/', 'L,R=301');
+				$this->urls_mappings[] = new UrlMapping('^calendar/calendar-([0-9]+)-([0-9]+)-([0-9]+)-?([0-9]*).php$', '/calendar/$3-$2-$1/', 'L,R=301');
+			}
+			
+			// Guestbook
+			if (class_exists('GuestbookService'))
+			{
+				$this->urls_mappings[] = new UrlMapping('^guestbook/guestbook.php$', '/guestbook/', 'L,R=301');
+			}
+			
+			// News
+			if (class_exists('NewsService'))
+			{
+				$this->urls_mappings[] = new UrlMapping('^news/news.php$', '/news/', 'L,R=301');
+				
+				$categories = NewsService::get_categories_manager()->get_categories_cache()->get_categories();
+				
+				foreach ($categories as $id => $category)
+				{
+					$this->urls_mappings[] = new UrlMapping('^news/news-' . $id . '\+([^.]*).php$', '/news/' . $id . '-' . $category->get_rewrited_name() . '/', 'L,R=301');
+					$this->urls_mappings[] = new UrlMapping('^news/news-' . $id . '-([0-9]*)\+([^.]*).php$', '/news/' . $id . '-' . $category->get_rewrited_name() . '/$1-$2/', 'L,R=301');
+				}
+			}
+		}
+		
+		// Download
 		if (class_exists('DownloadService'))
 		{
 			$this->urls_mappings[] = new UrlMapping('^download/download\.php$', '/download/', 'L,R=301');
@@ -63,7 +109,7 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 			}
 		}
 		
-		//FAQ
+		// FAQ
 		if (class_exists('FaqService'))
 		{
 			$this->urls_mappings[] = new UrlMapping('^faq/faq\.php$', '/faq/', 'L,R=301');
@@ -76,13 +122,13 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 			}
 		}
 		
-		//FAQ
+		// Shoutbox
 		if (class_exists('ShoutboxService'))
 		{
 			$this->urls_mappings[] = new UrlMapping('^shoutbox/shoutbox\.php$', '/shoutbox/', 'L,R=301');
 		}
 		
-		//Web
+		// Web
 		if (class_exists('WebService'))
 		{
 			$this->urls_mappings[] = new UrlMapping('^web/web\.php$', '/web/', 'L,R=301');
