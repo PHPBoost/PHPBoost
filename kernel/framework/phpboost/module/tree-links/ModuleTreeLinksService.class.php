@@ -41,7 +41,8 @@ class ModuleTreeLinksService
 			$tpl = new FileTemplate('framework/module/module_actions_links_menu.tpl');
 			$tpl->put_all(array(
 				'C_DISPLAY' => $actions_tree_links->has_visible_links(),
-				'ID' => $module_name
+				'ID' => $module_name,
+				'TITLE' => LangLoader::get_message('content.menus.actions', 'admin-links-common'),
 			));
 			
 			$module = ModulesManager::get_module($module_name);

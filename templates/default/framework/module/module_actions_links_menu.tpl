@@ -1,5 +1,5 @@
 # IF C_DISPLAY #
-<menu id="cssmenu-{ID}" class="cssmenu cssmenu-right cssmenu-treelinks">
+<menu id="cssmenu-{ID}" class="cssmenu cssmenu-right cssmenu-actionslinks">
 	<ul>
 		# START element #
 			# INCLUDE element.ELEMENT #
@@ -8,7 +8,7 @@
 </menu>
 <script>
 	jQuery("#cssmenu-${escape(ID)}").menumaker({
-		title: "{TITLE}",
+		title: "{TITLE} {ID}",
 		format: "multitoggle",
 		breakpoint: 980,
 		actionlink: true

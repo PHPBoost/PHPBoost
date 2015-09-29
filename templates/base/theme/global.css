@@ -549,7 +549,7 @@ a.upload-recent-file {
 	line-height: 0;
 	height: 0;
 }
-.cssmenu-treelinks {
+.cssmenu-actionslinks {
 	float: right;
 	margin: 0 5px 5px 5px;
 }
@@ -581,11 +581,12 @@ a.upload-recent-file {
 	text-decoration: none;
 }
 
-.cssmenu-treelinks ul li a,
-.cssmenu-treelinks ul li ul li a {
+.cssmenu-actionslinks ul li a,
+.cssmenu-actionslinks ul li ul li a {
 	padding: 5px;
 	font-weight: normal;
 	font-size: 11px;
+	border: none;
 }
 
 .cssmenu > ul > li.has-sub > a {
@@ -658,11 +659,11 @@ a.upload-recent-file {
 	right: 100%;
 	top: 0;
 }
-.cssmenu.cssmenu-treelinks li:hover > ul {
+.cssmenu.cssmenu-actionslinks li:hover > ul {
 	top: 100%;
 	right: 0;
 }
-.cssmenu.cssmenu-treelinks ul li:hover > ul {
+.cssmenu.cssmenu-actionslinks ul li:hover > ul {
 	top: 0;
 	right: 100%;
 }
@@ -690,7 +691,7 @@ a.upload-recent-file {
 header .cssmenu > ul > li > a { color: #DDDDDD; }
 #menu-left .cssmenu > ul > li > a,
 #menu-right .cssmenu > ul > li > a { color: #444444; }
-.cssmenu-treelinks > ul > li > a { color: #666666; }
+.cssmenu-actionslinks > ul > li > a { color: #666666; }
 
 header .cssmenu li:hover > a { color: #FFFFFF; }
 #menu-left .cssmenu li:hover > a,
@@ -698,9 +699,9 @@ header .cssmenu li:hover > a { color: #FFFFFF; }
 
 /* Niveau 2 */
 .cssmenu ul ul li a { color: #DDDDDD; }
-.cssmenu-treelinks li ul li a { color: #666666; }
+.cssmenu-actionslinks li ul li a { color: #666666; }
 
-.cssmenu-treelinks li:hover > a { background: #DDDDDD; }
+.cssmenu-actionslinks li:hover > a { background: #DDDDDD; }
 header .cssmenu ul ul li a { background: #333333; }
 
 #menu-left .cssmenu ul ul li a,
@@ -717,7 +718,7 @@ header .cssmenu ul ul li a:hover { color: #FFFFFF; }
 #menu-right .cssmenu ul ul li:hover > a,
 #menu-right .cssmenu ul ul li a:hover { color: #555555; }
 
-.cssmenu-treelinks ul li:hover > a:after { background: #FEFEFE; }
+.cssmenu-actionslinks ul li:hover > a:after { background: #FEFEFE; }
 
 /* Indicateur de sous-Menu */
 @media (min-width: 768px) {
@@ -758,8 +759,8 @@ header .cssmenu ul ul li a:hover { color: #FFFFFF; }
 	transition: all .25s ease;
 }
 
-.cssmenu-treelinks ul li.has-sub a:after  { top: 9px; }
-.cssmenu-treelinks ul li.has-sub a:before { top: 6px; }
+.cssmenu-actionslinks ul li.has-sub a:after  { top: 9px; }
+.cssmenu-actionslinks ul li.has-sub a:before { top: 6px; }
 
 .cssmenu ul ul > li.has-sub:hover > a:before {
 	top: 17px;
@@ -941,24 +942,24 @@ header .cssmenu ul ul li a:hover { color: #FFFFFF; }
 /* Bouton du Menu d'Action en mode Desktop */
 @media (min-width: 768px) {
 	
-	.cssmenu-treelinks #menu-button {
+	.cssmenu-actionslinks #menu-button {
 		float: right;
 		position: relative;
 	}
 
-	.cssmenu-treelinks #menu-button + ul {
+	.cssmenu-actionslinks #menu-button + ul {
 		display: none;
 	}
 
-	.cssmenu-treelinks #menu-button:hover + ul,
-	.cssmenu-treelinks #menu-button + ul:hover {
+	.cssmenu-actionslinks #menu-button:hover + ul,
+	.cssmenu-actionslinks #menu-button + ul:hover {
 		display: block;
 	}
 
-	.cssmenu-treelinks ul {
+	.cssmenu-actionslinks ul {
 		position: absolute;
 		right: 0;
-		top: 21px;
+		top: 23px;
 	    padding: 5px 0;
 	    width: 170px;
 	    font-size: 11px;
@@ -969,7 +970,7 @@ header .cssmenu ul ul li a:hover { color: #FFFFFF; }
 	    z-index: 10;
 	}
 
-	.cssmenu-treelinks #menu-button {
+	.cssmenu-actionslinks #menu-button {
 	    display: inline-block;
 	    font-family: FontAwesome;
 	    font-style: normal;
@@ -985,10 +986,11 @@ header .cssmenu ul ul li a:hover { color: #FFFFFF; }
 	    border-radius: 4px;
 	    cursor: pointer;
 	    text-align: center;
-	    padding: 2px 8px 2px 8px;
+	    padding: 4px 12px 4px 12px;
+	    font-size: 0;
 	}
-	.cssmenu-treelinks #menu-button:before {
-		font-size: 1.167em;
+	.cssmenu-actionslinks #menu-button:before {
+		font-size: 1.3rem;
 		content: "\f013";
 	}
 }

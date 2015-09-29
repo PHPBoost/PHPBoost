@@ -83,6 +83,7 @@ $lang['content.menus'] = 'Menus';
 $lang['content.menus.links'] = 'Menu de liens';
 $lang['content.menus.content'] = 'Menu de contenu';
 $lang['content.menus.feed'] = 'Menu de flux';
+$lang['content.menus.actions'] = 'Menu d\'actions du module';
 
 $lang['content.files'] = 'Fichiers';
 $lang['content.comments'] = 'Commentaires';
