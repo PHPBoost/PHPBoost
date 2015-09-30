@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                          CalendarExtensionPointProvider.class.php
+ *                         DatabaseHomeController.class.php
  *                            -------------------
- *   begin                : July 7, 2008
- *   copyright            : (C) 2008 Régis Viarre
- *   email                : crowkait@phpboost.com
+ *   begin                : September 30, 2015
+ *   copyright            : (C) 2015 Julien BRISWALTER
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -25,26 +25,11 @@
  *
  ###################################################*/
 
-class DatabaseExtensionPointProvider extends ExtensionPointProvider
+class DatabaseHomeController extends ModuleController
 {
-	function __construct()
+	public function execute(HTTPRequestCustom $request)
 	{
-		parent::__construct('database');
-	}
-
-	public function commands()
-	{
-		return new CLICommandsList(array('dump' => 'CLIDumpCommand', 'restoredb' => 'CLIRestoreDBCommand'));
-	}
-	
-	public function tree_links()
-	{
-		return new DatabaseTreeLinks();
-	}
-	
-	public function url_mappings()
-	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/database/index.php')));
+		AppContext::get_response()->redirect('/database/admin_database.php');
 	}
 }
 ?>

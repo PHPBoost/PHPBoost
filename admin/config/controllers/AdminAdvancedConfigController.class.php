@@ -48,7 +48,6 @@ class AdminAdvancedConfigController extends AdminController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->form->get_field_by_id('database_tables_optimization_day')->set_hidden(!$this->server_environment_config->is_database_tables_optimization_enabled());
 			$this->form->get_field_by_id('debug_mode_type')->set_hidden(!Debug::is_debug_mode_enabled());
 			$this->form->get_field_by_id('display_database_query_enabled')->set_hidden(!Debug::is_debug_mode_enabled());
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
@@ -159,31 +158,6 @@ class AdminAdvancedConfigController extends AdminController
 			));
 		}
 		
-		$miscellaneous_fieldset->add_field(new FormFieldCheckbox('database_tables_optimization_enabled', $this->lang['advanced-config.database-tables-optimization-enabled'], $this->server_environment_config->is_database_tables_optimization_enabled(), 
-			array('events' => array('change' => '
-				if (HTMLForms.getField("database_tables_optimization_enabled").getValue()) { 
-					HTMLForms.getField("database_tables_optimization_day").enable();
-				} else { 
-					HTMLForms.getField("database_tables_optimization_day").disable();
-				}')
-			)
-		));
-		
-		$date_lang = LangLoader::get('date-common');
-		$miscellaneous_fieldset->add_field(new FormFieldSimpleSelectChoice('database_tables_optimization_day', $this->lang['advanced-config.database-tables-optimization-day'], $this->server_environment_config->get_database_tables_optimization_day(),
-			array(
-				new FormFieldSelectChoiceOption($date_lang['sunday'], 0),
-				new FormFieldSelectChoiceOption($date_lang['monday'], 1),
-				new FormFieldSelectChoiceOption($date_lang['tuesday'], 2),
-				new FormFieldSelectChoiceOption($date_lang['wednesday'], 3),
-				new FormFieldSelectChoiceOption($date_lang['thursday'], 4),
-				new FormFieldSelectChoiceOption($date_lang['friday'], 5),
-				new FormFieldSelectChoiceOption($date_lang['saturday'], 6),
-				new FormFieldSelectChoiceOption($date_lang['every_month'], 7)
-			), 
-			array('description' => $this->lang['advanced-config.database-tables-optimization-day.explain'], 'hidden' => !$this->server_environment_config->is_database_tables_optimization_enabled())
-		));
-		
 		$miscellaneous_fieldset->add_field(new FormFieldCheckbox('debug_mode_enabled', $this->lang['advanced-config.debug-mode'], Debug::is_debug_mode_enabled(), 
 		array('description' => $this->lang['advanced-config.debug-mode.explain'], 'events' => array('change' => '
 				if (HTMLForms.getField("debug_mode_enabled").getValue()) { 
@@ -237,13 +211,6 @@ class AdminAdvancedConfigController extends AdminController
 		if (!$this->form->field_is_disabled('output_gziping_enabled'))
 		{
 			$this->server_environment_config->set_output_gziping_enabled($this->form->get_value('output_gziping_enabled'));
-		}
-		
-		$this->server_environment_config->set_database_tables_optimization_enabled($this->form->get_value('database_tables_optimization_enabled'));
-		
-		if (!$this->form->field_is_disabled('database_tables_optimization_day'))
-		{
-			$this->server_environment_config->set_database_tables_optimization_day($this->form->get_value('database_tables_optimization_day')->get_raw_value());
 		}
 		
 		ServerEnvironmentConfig::save();

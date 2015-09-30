@@ -31,7 +31,7 @@
  ####################################################
 
 $lang['module_title'] = 'Forum';
-$lang['module_config_title'] = 'Configuration du module forum';
+$lang['module_config_title'] = 'Forum module configuration';
 
 $lang['forum.actions.add_rank'] = 'Add a rank';
 $lang['forum.manage_ranks'] = 'Manage ranks';

@@ -1,15 +1,20 @@
 		<div id="admin-quick-menu">
-				<ul>
-					<li class="title-menu">{L_DATABASE_MANAGEMENT}</li>
+			<ul>
+				<li class="title-menu">{L_DATABASE_MANAGEMENT}</li>
 				<li>
-					<a href="admin_database.php"><img src="database.png" alt="" /></a>
+					<a href="${relative_url(DatabaseUrlBuilder::database_management())}"><img src="database.png" alt="" /></a>
 					<br />
-					<a href="admin_database.php" class="quick-link">{L_DB_TOOLS}</a>
+					<a href="${relative_url(DatabaseUrlBuilder::database_management())}" class="quick-link">{L_DB_TOOLS}</a>
 				</li>
 				<li>
-					<a href="admin_database.php?query=1"><img src="database.png" alt="" /></a>
+					<a href="${relative_url(DatabaseUrlBuilder::db_sql_queries())}"><img src="database.png" alt="" /></a>
 					<br />
-					<a href="admin_database.php?query=1" class="quick-link">{L_QUERY}</a>
+					<a href="${relative_url(DatabaseUrlBuilder::db_sql_queries())}" class="quick-link">{L_QUERY}</a>
+				</li>
+				<li>
+					<a href="${relative_url(DatabaseUrlBuilder::configuration())}"><img src="database.png" alt="" /></a>
+					<br />
+					<a href="${relative_url(DatabaseUrlBuilder::configuration())}" class="quick-link">${LangLoader::get_message('configuration', 'admin-common')}</a>
 				</li>
 			</ul>
 		</div>

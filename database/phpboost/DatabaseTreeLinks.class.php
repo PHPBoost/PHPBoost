@@ -32,13 +32,12 @@ class DatabaseTreeLinks implements ModuleTreeLinksExtensionPoint
 {
 	public function get_actions_tree_links()
 	{
-		global $LANG;
-		load_module_lang('database'); //Chargement de la langue du module.
-		
+		$lang = LangLoader::get('common', 'database');
 		$tree = new ModuleTreeLinks();
 		
-		$tree->add_link(new AdminModuleLink($LANG['database_management'], new Url('/database/admin_database.php')));
-		$tree->add_link(new AdminModuleLink($LANG['db_sql_queries'], new Url('/database/admin_database.php?query=1')));
+		$tree->add_link(new AdminModuleLink($lang['database.actions.database_management'], DatabaseUrlBuilder::database_management()));
+		$tree->add_link(new AdminModuleLink($lang['database.actions.db_sql_queries'], DatabaseUrlBuilder::db_sql_queries()));
+		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin-common'), DatabaseUrlBuilder::configuration()));
 		
 		return $tree;
 	}

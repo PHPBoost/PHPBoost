@@ -282,18 +282,21 @@ class Environment
 
 	private static function optimize_database_tables(Date $current_date)
 	{
-		$server_environment_config = ServerEnvironmentConfig::load();
-		if ($server_environment_config->is_database_tables_optimization_enabled())
+		if (ModulesManager::is_module_installed('database'))
 		{
-			if (($server_environment_config->get_database_tables_optimization_day() == 7 && $current_date->get_day() == 1) || $server_environment_config->get_database_tables_optimization_day() == $current_date->get_day_of_week())
+			$database_config = DatabaseConfig::load();
+			if ($database_config->is_database_tables_optimization_enabled())
 			{
-				$tables_to_optimize = array();
-				foreach (PersistenceContext::get_dbms_utils()->list_and_desc_tables(true) as $key => $table_info)
+				if (($database_config->get_database_tables_optimization_day() == 7 && $current_date->get_day() == 1) || $database_config->get_database_tables_optimization_day() == $current_date->get_day_of_week())
 				{
-					if (NumberHelper::round($table_info['data_free']/1024, 1) != 0)
-						$tables_to_optimize[] = $key;
+					$tables_to_optimize = array();
+					foreach (PersistenceContext::get_dbms_utils()->list_and_desc_tables(true) as $key => $table_info)
+					{
+						if (NumberHelper::round($table_info['data_free']/1024, 1) != 0)
+							$tables_to_optimize[] = $key;
+					}
+					PersistenceContext::get_dbms_utils()->optimize($tables_to_optimize);
 				}
-				PersistenceContext::get_dbms_utils()->optimize($tables_to_optimize);
 			}
 		}
 	}
