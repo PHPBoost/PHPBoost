@@ -546,6 +546,7 @@ a.upload-recent-file {
 	height: 0;
 }
 
+
 #menu-left .cssmenu { margin-right: -9px; }
 #menu-right .cssmenu { margin-left: -9px; }
 
@@ -586,6 +587,8 @@ a.upload-recent-file {
 }
 
 @media (min-width: 768px) {
+	#cssmenu-galleryfilter ul { width: 130px; }
+
 	.cssmenu-vertical > ul > li > a {
 		padding: 5px 17px 5px 6px;
 	}
@@ -681,13 +684,10 @@ header .cssmenu li:hover > a 			{ color: #FFFFFF; }
 #menu-right .cssmenu ul ul li a 		{ color: #333333; }
 .cssmenu-actionslinks li ul li a    	{ color: #666666; }
 
-.cssmenu ul ul li:hover a 		    	{ color: #333333; }
+.cssmenu ul ul li:hover > a		    	{ color: #333333; }
 header .cssmenu ul ul li:hover > a 		{ color: #FFFFFF; }
-header .cssmenu ul ul li a:hover 		{ color: #FFFFFF; }
 #menu-left .cssmenu ul ul li:hover > a 	{ color: #555555; }
-#menu-left .cssmenu ul ul li a:hover 	{ color: #555555; }
 #menu-right .cssmenu ul ul li:hover > a { color: #555555; }
-#menu-right .cssmenu ul ul li a:hover 	{ color: #555555; }
 .cssmenu-actionslinks li:hover > a 		{ color: #333333; }
 
 /* Personnalisation de la couleur de fonds des liens */
@@ -752,6 +752,10 @@ header .cssmenu ul ul li a 					{ background: #333333; }
 	.cssmenu {
 		width: 100%;
 	}
+	.cssmenu-actionslinks {
+		margin: 0 0 20px 0;
+	}
+
 	.cssmenu ul {
 		width: 100%;
 		display: none;
@@ -781,10 +785,12 @@ header .cssmenu ul ul li a 					{ background: #333333; }
 	.cssmenu > ul > li {
 		float: none;
 	}
-	.cssmenu ul ul li a {
+	.cssmenu ul ul li a,
+	.cssmenu-actionslinks ul li ul li a {
 		padding-left: 25px;
 	}
-	.cssmenu ul ul ul li a {
+	.cssmenu ul ul ul li a,
+	.cssmenu-actionslinks ul li ul li ul li a  {
 		padding-left: 35px;
 	}
 	.cssmenu ul ul li a {
@@ -848,12 +854,13 @@ header .cssmenu ul ul li a 					{ background: #333333; }
 	}
 
 	.cssmenu #menu-button.menu-opened:after,
-	.cssmenu #menu-button.menu-opened:before { background: #FFFFFF; }
-
+	.cssmenu #menu-button.menu-opened:before 				{ background: #FFFFFF; }
 	#menu-left .cssmenu #menu-button.menu-opened:after,
-	#menu-left .cssmenu #menu-button.menu-opened:before { background: #DDDDDD; }
+	#menu-left .cssmenu #menu-button.menu-opened:before 	{ background: #DDDDDD; }
 	#menu-right .cssmenu #menu-button.menu-opened:after,
-	#menu-right .cssmenu #menu-button.menu-opened:before { background: #DDDDDD; }
+	#menu-right .cssmenu #menu-button.menu-opened:before 	{ background: #DDDDDD; }
+	.cssmenu-actionslinks #menu-button.menu-opened:after,
+	.cssmenu-actionslinks #menu-button.menu-opened:before 	{ background: #DDDDDD; }
 
 	.cssmenu .submenu-button {
 		position: absolute;
@@ -923,6 +930,11 @@ header .cssmenu ul ul li a 					{ background: #333333; }
 	.cssmenu .submenu-button.submenu-opened:before {
 		display: none;
 	}
+
+	.cssmenu-actionslinks > ul > li:last-child {
+		padding: 0 0 10px 0;
+		border-bottom: 1px solid rgba(120, 120, 120, 0.2);
+	}
 }
 
 
@@ -989,8 +1001,15 @@ header .cssmenu ul ul li a 					{ background: #333333; }
 	    padding: 4px 12px 4px 12px;
 	    font-size: 0;
 	}
-	.cssmenu-actionslinks #menu-button:before {
+	.cssmenu #menu-button:before {
 		font-size: 1.3rem;
+	}
+
+	.cssmenu-actionslinks #menu-button:before {
 		content: "\f013";
+	}
+
+	.cssmenu-tools #menu-button:before {
+		content: "\f0c9";
 	}
 }

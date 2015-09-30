@@ -1,5 +1,5 @@
 # IF C_DISPLAY #
-<menu id="cssmenu-{ID}" class="cssmenu cssmenu-right cssmenu-actionslinks">
+<menu id="cssmenu-module-{ID}" class="cssmenu cssmenu-right cssmenu-actionslinks">
 	<ul>
 		# START element #
 			# INCLUDE element.ELEMENT #
@@ -7,11 +7,11 @@
 	</ul>
 </menu>
 <script>
-	jQuery("#cssmenu-${escape(ID)}").menumaker({
+	jQuery("#cssmenu-module-${escape(ID)}").menumaker({
 		title: "${LangLoader::get_message('content.menus.actions', 'admin-links-common')} {MODULE_NAME}",
 		format: "multitoggle",
 		breakpoint: 980,
-		actionlink: true
+		actionslinks: true
 	});
 </script>
 # ENDIF #

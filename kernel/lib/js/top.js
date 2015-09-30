@@ -76,7 +76,7 @@
         resizeFix = function() {
           if ($(window).width() > settings.breakpoint) {
             
-            if (actionlink !== true) {
+            if (settings.actionslinks !== true) {
             	cssmenu.find('ul').show();
             }
             cssmenu.removeClass('small-screen');

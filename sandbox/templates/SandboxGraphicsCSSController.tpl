@@ -105,65 +105,40 @@
 
 		<h5>{@css.modules_menus}</h5><br />
 		<div class="content" style="height:200px;">
-			<menu class="dynamic-menu">
+			<menu id="cssmenu-galleryfilter" class="cssmenu cssmenu-right cssmenu-actionslinks cssmenu-tools">
 				<ul>
-					<li><a><i class="fa fa-bars"></i></a>
+					<li class="extend"><a><i class="fa fa-eye"></i> {@css.modules_menus.display}</a>
 						<ul>
-							<li class="extend"><a><i class="fa fa-eye"></i> {@css.modules_menus.display}</a>
-								<ul>
-									<li><a href="#"><i class="fa fa-eye"></i> {@css.modules_menus.display.most_viewed}</a></li>
-									<li><a href="#"><i class="fa fa-star-half-empty"></i> {@css.modules_menus.display.top_rated}</a></li>
-								</ul>
-							</li>
-							<li class="extend"><a><i class="fa fa-sort"></i> {@css.modules_menus.order_by}</a>
-								<ul>
-									<li><a href="#"><i class="fa fa-tag"></i> {@css.modules_menus.order_by.name}</a></li>
-									<li><a href="#"><i class="fa fa-clock-o"></i> {@css.modules_menus.order_by.date}</a></li>
-									<li><a href="#"><i class="fa fa-eye"></i> {@css.modules_menus.order_by.views}</a></li>
-									<li><a href="#"><i class="fa fa-star-half-empty"></i> {@css.modules_menus.order_by.notes}</a></li>
-									<li><a href="#"><i class="fa fa-comments-o"></i> {@css.modules_menus.order_by.coms}</a></li>
-								</ul>
-							</li>
-							<li class="extend"><a><i class="fa fa-sort-alpha-asc"></i> {@css.modules_menus.direction}</a>
-								<ul>
-									<li><a href="#"><i class="fa fa-sort-amount-asc"></i> {@css.modules_menus.direction.up}</a></li>
-									<li><a href="#"><i class="fa fa-sort-amount-desc"></i> {@css.modules_menus.direction.down}</a></li>
-								</ul>
-							</li>
+							<li><a href="#"><i class="fa fa-eye"></i> {@css.modules_menus.display.most_viewed}</a><li/>
+							<li><a href="#"><i class="fa fa-star-half-empty"></i> {@css.modules_menus.display.top_rated}</a></li>
+						</ul>
+					</li>
+					<li class="extend"><a><i class="fa fa-sort"></i> {@css.modules_menus.order_by}</a>
+						<ul>
+							<li><a href="#"><i class="fa fa-tag"></i> {@css.modules_menus.order_by.name}</a></li>
+							<li><a href="#"><i class="fa fa-clock-o"></i> {@css.modules_menus.order_by.date}</a></li>
+							<li><a href="#"><i class="fa fa-eye"></i> {@css.modules_menus.order_by.views}</a></li>
+							<li><a href="#"><i class="fa fa-star-half-empty"></i> {@css.modules_menus.order_by.notes}</a></li>
+							<li><a href="#"><i class="fa fa-comments-o"></i> {@css.modules_menus.order_by.coms}</a><li>
+						</ul>
+					</li>
+					<li class="extend"><a><i class="fa fa-sort-alpha-asc"></i> {@css.modules_menus.direction}</a>
+						<ul>
+							<li><a href="#"><i class="fa fa-sort-amount-asc"></i> {@css.modules_menus.direction.up}</a></li>
+							<li><a href="#"><i class="fa fa-sort-amount-desc"></i> {@css.modules_menus.direction.down}</a></li>
 						</ul>
 					</li>
 				</ul>
 			</menu>
+	        <script type="text/javascript">
+	            $("#cssmenu-galleryfilter").menumaker({
+	                title: "Sandbox",
+	                format: "multitoggle",
+	                breakpoint: 980,
+	                actionslinks:true
+	            });
+	        </script>
 			<br />
-			<menu class="dynamic-menu right">
-				<ul>
-					<li><a><i class="fa fa-bars"></i></a>
-						<ul>
-							<li class="extend"><a><i class="fa fa-eye"></i> {@css.modules_menus.display}</a>
-								<ul>
-									<li><a href="#"><i class="fa fa-eye"></i> {@css.modules_menus.display.most_viewed}</a></li>
-									<li><a href="#"><i class="fa fa-star-half-empty"></i> {@css.modules_menus.display.top_rated}</a></li>
-								</ul>
-							</li>
-							<li class="extend"><a><i class="fa fa-sort"></i> {@css.modules_menus.order_by}</a>
-								<ul>
-									<li><a href="#"><i class="fa fa-tag"></i> {@css.modules_menus.order_by.name}</a></li>
-									<li><a href="#"><i class="fa fa-clock-o"></i> {@css.modules_menus.order_by.date}</a></li>
-									<li><a href="#"><i class="fa fa-eye"></i> {@css.modules_menus.order_by.views}</a></li>
-									<li><a href="#"><i class="fa fa-star-half-empty"></i> {@css.modules_menus.order_by.notes}</a></li>
-									<li><a href="#"><i class="fa fa-comments-o"></i> {@css.modules_menus.order_by.coms}</a></li>
-								</ul>
-							</li>
-							<li class="extend"><a><i class="fa fa-sort-alpha-asc"></i> {@css.modules_menus.direction}</a>
-								<ul>
-									<li><a href="#"><i class="fa fa-sort-amount-asc"></i> {@css.modules_menus.direction.up}</a></li>
-									<li><a href="#"><i class="fa fa-sort-amount-desc"></i> {@css.modules_menus.direction.down}</a></li>
-								</ul>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</menu>
 			<br /><br />
 			<menu class="dynamic-menu group center">
 				<ul>
