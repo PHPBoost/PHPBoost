@@ -48,9 +48,9 @@ $warning_user = $request->get_getint('warning_user', 0);
 $punish_user = $request->get_getint('punish_user', 0);
 $ban_user = $request->get_getint('ban_user', 0);
 
-$login = TextHelper::strprotect(utf8_decode($request->get_postvalue('login', ''));
+$login = TextHelper::strprotect(utf8_decode($request->get_postvalue('login', '')));
 $login = str_replace('*', '%', $login);
-$divid = TextHelper::strprotect(utf8_decode($request->get_postvalue('divid', ''));
+$divid = TextHelper::strprotect(utf8_decode($request->get_postvalue('divid', '')));
 $admin = $request->get_postint('admin', 0);
 
 if (!empty($member) || !empty($insert_member) || !empty($add_member_auth) || !empty($admin_member) || !empty($warning_member) || !empty($punish_member)) //Recherche d'un membre
