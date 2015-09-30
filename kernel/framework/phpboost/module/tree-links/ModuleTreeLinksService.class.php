@@ -37,15 +37,15 @@ class ModuleTreeLinksService
 		if ($tree_links !== null)
 		{
 			$actions_tree_links = $tree_links->get_actions_tree_links();
+			$module = ModulesManager::get_module($module_name);
 			
 			$tpl = new FileTemplate('framework/module/module_actions_links_menu.tpl');
 			$tpl->put_all(array(
 				'C_DISPLAY' => $actions_tree_links->has_visible_links(),
 				'ID' => $module_name,
-				'TITLE' => LangLoader::get_message('content.menus.actions', 'admin-links-common'),
+				'MODULE_NAME' => $module->get_configuration()->get_name(),
 			));
 			
-			$module = ModulesManager::get_module($module_name);
 			$home_page = $module->get_configuration()->get_home_page();
 			if (!empty($home_page))
 			{
