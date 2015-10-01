@@ -812,7 +812,7 @@ header .cssmenu ul ul li a 					{ background: #333333; }
 	}
 	.cssmenu #menu-button {
 		display: block;
-		padding: 17px;
+		padding: 17px 40px 17px 17px;
 		color: #DDDDDD;
 		cursor: pointer;
 		font-size: 12px;
