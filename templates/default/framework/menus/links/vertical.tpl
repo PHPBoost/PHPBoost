@@ -20,8 +20,8 @@
 			</div>
 			<div class="module-mini-bottom"></div>
 		</div>
-        <script type="text/javascript">
-            $("#cssmenu-${escape(ID)}").menumaker({
+        <script>
+			jQuery("#cssmenu-${escape(ID)}").menumaker({
                 title: "{TITLE}",
                 format: "multitoggle",
                 breakpoint: 980
