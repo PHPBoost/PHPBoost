@@ -105,7 +105,7 @@
 
 		<h5>{@css.modules_menus}</h5><br />
 		<div class="content" style="height:200px;">
-			<menu id="cssmenu-galleryfilter" class="cssmenu cssmenu-right cssmenu-actionslinks cssmenu-tools">
+			<menu id="cssmenu-sandboxfilter" class="cssmenu cssmenu-right cssmenu-actionslinks cssmenu-tools">
 				<ul>
 					<li class="extend"><a><i class="fa fa-eye"></i> {@css.modules_menus.display}</a>
 						<ul>
@@ -130,14 +130,14 @@
 					</li>
 				</ul>
 			</menu>
-	        <script type="text/javascript">
-	            $("#cssmenu-galleryfilter").menumaker({
-	                title: "Sandbox",
-	                format: "multitoggle",
-	                breakpoint: 980,
-	                actionslinks:true
-	            });
-	        </script>
+			<script>
+				jQuery("#cssmenu-sandboxfilter").menumaker({
+					title: "Sandbox",
+					format: "multitoggle",
+					breakpoint: 980,
+					actionslinks:true
+				});
+			</script>
 			<br />
 			<br /><br />
 			<menu class="dynamic-menu group center">

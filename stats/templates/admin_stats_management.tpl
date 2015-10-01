@@ -511,7 +511,7 @@
 			else
 			{
 				var xhr_object = null;
-				var filename = '{PATH_TO_ROOT}/stats/ajax/stats_xmlhttprequest.php?stats_referer=1&id=' + divid;
+				var filename = '{PATH_TO_ROOT}/stats/ajax/stats_xmlhttprequest.php?token={TOKEN}&stats_referer=1&id=' + divid;
 				var data = null;
 				
 				if(window.XMLHttpRequest) // Firefox

@@ -44,7 +44,7 @@ class HtaccessFileCache implements CacheData
 		$this->htaccess_file_content = '';
 		$this->general_config = GeneralConfig::load();
 		
-		$this->add_disable_signatures_protection;
+		$this->add_disable_signatures_protection();
 		
 		$this->add_hide_directory_listings();
 		

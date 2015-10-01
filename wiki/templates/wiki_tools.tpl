@@ -70,13 +70,13 @@
 					# ENDIF #
 				</ul>
 			</menu>
-	        <script type="text/javascript">
-	            $("#cssmenu-wikitools").menumaker({
-	                title: "{L_OTHER_TOOLS}",
-	                format: "multitoggle",
-	                breakpoint: 980,
-	                actionslinks:true
-	            });
-	        </script>
+			<script>
+				jQuery("#cssmenu-wikitools").menumaker({
+					title: "{L_OTHER_TOOLS}",
+					format: "multitoggle",
+					breakpoint: 980,
+					actionslinks:true
+				});
+			</script>
 		</div>
 		<div  class="spacer" style="margin-top:15px;">&nbsp;</div>

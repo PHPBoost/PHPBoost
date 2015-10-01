@@ -124,13 +124,13 @@
 				clearTimeout(timeout);
 			
 			if( document.getElementById(previous) )
-			{		
+			{
 				document.getElementById(previous).style.display = 'none';
 				started = false
-			}	
+			}
 
 			if( document.getElementById('move' + divID) )
-			{			
+			{
 				document.getElementById('move' + divID).style.display = 'block';
 				previous = 'move' + divID;
 				started = true;
@@ -149,9 +149,9 @@
 		var start_thumb = {START_THUMB};
 		//Miniatures défilantes.
 		function display_thumbnails(direction)
-		{			
+		{
 			if( direction == 'left' )
-			{	
+			{
 				if( start_thumb > 0 )
 				{
 					start_thumb--;
@@ -177,7 +177,7 @@
 				}
 				else
 					return;
-			}	
+			}
 			
 			var j = 0;
 			for(var i = 0; i <= {NBR_PICS}; i++)
@@ -198,7 +198,7 @@
 					}
 				}
 			}
-		}	
+		}
 		//incrément le nombre de vues d'une image.
 		var already_view = false;
 		var incr_pics_displayed = 0;
@@ -209,7 +209,7 @@
 			else
 			{
 				if (document.getElementById('gv' + idpics))
-				{	
+				{
 					if (already_view && ('{DISPLAY_MODE}' == 'full_screen' || '{DISPLAY_MODE}' == 'resize'))
 					{
 						data = '';
@@ -227,7 +227,7 @@
 					incr_pics_displayed = idpics;
 				}
 			}
-		}	
+		}
 		-->
 		</script> 
 
@@ -256,14 +256,14 @@
 				</li>
 			</ul>
 		</menu>
-        <script type="text/javascript">
-            $("#cssmenu-galleryfilter").menumaker({
-                title: "{TITLE}",
-                format: "multitoggle",
-                breakpoint: 980,
-                actionslinks:true
-            });
-        </script>
+		<script>
+			jQuery("#cssmenu-galleryfilter").menumaker({
+				title: "{TITLE}",
+				format: "multitoggle",
+				breakpoint: 980,
+				actionslinks:true
+			});
+		</script>
 
 		# INCLUDE message_helper #
 		<div class="spacer"></div>
