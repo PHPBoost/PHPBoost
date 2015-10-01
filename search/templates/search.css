@@ -25,7 +25,19 @@ div#forms-selection a.SFL-current {
 
 div.SpecializedForm { padding: 0px 5px; }
 
+@media (max-width: 768px) {
+	#module-search .options {
+		float: none;
+	}
 
+	#module-search #form-all .form-element label {
+		text-align: center;
+	}
+	
+	#module-search #form-all .form-element label span {
+		font-size: 0.8em;
+	}
+}
 /* Zone des resultats
 -------------------------------------------*/
 div.resultsChoices {
