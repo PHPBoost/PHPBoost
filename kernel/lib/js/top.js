@@ -12,7 +12,8 @@
 			title: "Menu",
 			format: "dropdown",
 			breakpoint: 768,
-			sticky: false
+			sticky: false,
+			actionslinks: false
 		}, options);
 
 		return this.each(function() {
@@ -75,7 +76,9 @@
 			resizeFix = function() {
 				if ($(window).width() > settings.breakpoint) {
 				
-					cssmenu.find('ul').hide();
+					if (settings.actionslinks !== true) {
+						cssmenu.find('ul').show();
+					}
 					cssmenu.removeClass('small-screen');
 					if (settings.format === 'select') {
 						cssmenu.find('select').hide();
