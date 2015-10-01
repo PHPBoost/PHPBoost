@@ -546,6 +546,84 @@ a.upload-recent-file {
 	height: 0;
 }
 
+.cssmenu-group > ul {
+	text-align: center;
+	font-size: 0;
+}
+
+.cssmenu.cssmenu-group > ul > li {
+	display: inline-block;
+	float: none;
+}
+
+.cssmenu.cssmenu-group > ul > li:hover {
+	background-image: linear-gradient(to bottom, rgba(255,255,255,0.18) 40%,rgba(56,56,56,0.18) 100%);
+    background-color: #F0F0F0;
+    border-bottom-color: #B3B3B3;
+}
+
+.cssmenu.cssmenu-group > ul > li > a {
+	padding: 4px 12px;
+	font-size: 1.1rem;
+	text-decoration: none;
+	color: #444444;
+	font-weight: 300;
+}
+
+div.cssmenu-group {
+    border-radius: 4px;
+    border-right: 1px solid #F9F9F9;
+    border-left: 1px solid #BBBBBB;
+    position: relative;
+    padding: 2px 8px;
+    color: #444444;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
+    background-color: #FFFFFF;
+    border: 1px solid #999999;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    border-bottom-color: #B3B3B3;
+    cursor: pointer;
+    display: inline-block;
+}
+
+div.cssmenu-group a {
+	
+	font-size: 1.2rem;
+	text-decoration: none;
+	color: #444444;
+	font-weight: 300;
+}
+
+.cssmenu-group > ul > li:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+.cssmenu-group > ul > li:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.cssmenu-group > ul > li.current {
+    background-image: linear-gradient(to top, rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
+    background-color: #F0F0F0;
+    border-top-color: #B3B3B3;
+}
+
+.cssmenu-group > ul > li {
+    border-right: 1px solid #F9F9F9;
+    border-left: 1px solid #BBBBBB;
+    position: relative;
+    padding: 0;
+    color: #444444;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
+    background-color: #FFFFFF;
+    border: 1px solid #999999;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    border-bottom-color: #B3B3B3;
+    cursor: pointer;
+}
 
 #menu-left .cssmenu { margin-right: -9px; }
 #menu-right .cssmenu { margin-left: -9px; }

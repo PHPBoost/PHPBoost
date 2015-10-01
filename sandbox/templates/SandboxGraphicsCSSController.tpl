@@ -140,7 +140,7 @@
 			</script>
 			<br />
 			<br /><br />
-			<menu class="dynamic-menu group center">
+			<menu id="cssmenu-sandboxbug" class="cssmenu cssmenu-group">
 				<ul>
 					<li>
 						<a href="#">{@css.modules_menus.unsolved_bugs}</a>
@@ -156,6 +156,14 @@
 					</li>
 				</ul>
 			</menu>
+			<script>
+				jQuery("#cssmenu-sandboxbug").menumaker({
+					title: "Sandbox",
+					format: "multitoggle",
+					breakpoint: 980,
+					actionslinks:true
+				});
+			</script>
 		</div>
 		</div>
 

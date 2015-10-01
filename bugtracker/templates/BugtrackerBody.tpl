@@ -8,7 +8,7 @@
 	</header>
 	<div class="content">
 		# IF C_DISPLAY_MENU #
-		<menu class="dynamic-menu group center">
+		<menu id="cssmenu-{ID}" class="cssmenu cssmenu-group">
 			<ul>
 				<li# IF C_UNSOLVED # class="current"# ENDIF #>
 					<a href="${relative_url(BugtrackerUrlBuilder::unsolved())}">{@titles.unsolved}</a> 
@@ -28,6 +28,13 @@
 				# ENDIF #
 			</ul>
 		</menu>
+        <script>
+            jQuery("#cssmenu-${escape(ID)}").menumaker({
+                title: "{TITLE}",
+                format: "multitoggle",
+                breakpoint: 980
+            });
+        </script>
 		# ENDIF #
 		
 		# INCLUDE TEMPLATE #

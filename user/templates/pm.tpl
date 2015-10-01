@@ -55,7 +55,7 @@
 				<div class="content">					
 					<div style="float:right;">{L_PRIVATE_MSG}: {convers.PM_POURCENT}</div>
 					<br /><br />
-					<menu class="dynamic-menu group center">
+					<menu id="cssmenu-{ID}" class="cssmenu cssmenu-group">
 						<ul>
 							<li >
 								<a href="{convers.U_POST_NEW_CONVERS}"><i class="fa fa-plus"></i> {convers.L_POST_NEW_CONVERS}</a>
@@ -65,6 +65,13 @@
 							</li>
 						</ul>
 					</menu>
+			        <script>
+			            jQuery("#cssmenu-${escape(ID)}").menumaker({
+			                title: "{TITLE}",
+			                format: "multitoggle",
+			                breakpoint: 980
+			            });
+			        </script>
 					<br /><br />
 					<table>
 						<thead>

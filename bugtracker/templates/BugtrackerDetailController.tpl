@@ -1,4 +1,4 @@
-<menu class="dynamic-menu group center">
+<menu id="cssmenu-{ID}" class="cssmenu cssmenu-group">
 	<ul>
 		# IF C_CHANGE_STATUS #
 			<li><a href="{U_CHANGE_STATUS}" title="{@actions.change_status}"><i class="fa fa-gears"></i> {@actions.change_status}</a></li>
@@ -12,7 +12,13 @@
 		# ENDIF #
 	</ul>
 </menu>
-
+<script>
+    jQuery("#cssmenu-${escape(ID)}").menumaker({
+        title: "{TITLE}",
+        format: "multitoggle",
+        breakpoint: 980
+    });
+</script>
 <fieldset>
 	<legend>
 		{@titles.bugs_treatment_state}

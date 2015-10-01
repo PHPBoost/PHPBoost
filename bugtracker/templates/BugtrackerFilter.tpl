@@ -20,13 +20,9 @@ function toggle_filters_table() {
 }
 -->
 </script>
-<menu class="dynamic-menu">
-	<ul>
-		<li>
-			<a href="" onclick="toggle_filters_table(); return false;"><i class="fa fa-filter"></i> {L_FILTERS}</a> 
-		</li>
-	</ul>
-</menu>
+<div class="cssmenu-group">
+	<a href="" onclick="toggle_filters_table(); return false;"><i class="fa fa-filter"></i> {L_FILTERS}</a> 
+</div>
 <table id="table_filters"# IF NOT C_HAS_SELECTED_FILTERS # style="display:none;"# ENDIF #>
 	<thead>
 		<tr>
