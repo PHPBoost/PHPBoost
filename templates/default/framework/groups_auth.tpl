@@ -53,16 +53,16 @@
 <a class="small" href="javascript:check_select_multiple('{IDSELECT}', true);">{L_SELECT_ALL}</a>/<a class="small" href="javascript:check_select_multiple('{IDSELECT}', false);">{L_SELECT_NONE}</a>
 <br />
 <span class="smaller">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-<script type="text/javascript">
+<script>
 <!--
 function check_select_multiple(id, status)
 {
-	var i;	
+	var i;
 
 	//Sélection des groupes.
 	var selectidgroups = jQuery('#groups_auth' + id)[0];
 	for(i = 0; i < selectidgroups.length; i++)
-	{	
+	{
 		if (selectidgroups[i])
 			selectidgroups[i].selected = status;
 	}

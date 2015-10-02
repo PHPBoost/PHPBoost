@@ -7,7 +7,7 @@
 			<div class="module-contents">
 
 			# START alert_form #
-				<script type='text/javascript'>
+				<script>
 				<!--
 				function check_form_alert(){
 					if(document.getElementById('contents').value == "") {

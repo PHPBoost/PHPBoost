@@ -1,4 +1,4 @@
-<menu id="cssmenu-{ID}" class="cssmenu cssmenu-group">
+<menu id="cssmenu-bugtrackeractions" class="cssmenu cssmenu-group">
 	<ul>
 		# IF C_CHANGE_STATUS #
 			<li><a href="{U_CHANGE_STATUS}" title="{@actions.change_status}"><i class="fa fa-gears"></i> {@actions.change_status}</a></li>
@@ -13,11 +13,11 @@
 	</ul>
 </menu>
 <script>
-    jQuery("#cssmenu-${escape(ID)}").menumaker({
-        title: "{TITLE}",
-        format: "multitoggle",
-        breakpoint: 980
-    });
+	jQuery("#cssmenu-bugtrackeractions").menumaker({
+		title: "{TITLE}",
+		format: "multitoggle",
+		breakpoint: 980
+	});
 </script>
 <fieldset>
 	<legend>

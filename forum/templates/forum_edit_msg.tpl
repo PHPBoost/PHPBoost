@@ -1,6 +1,6 @@
 		# INCLUDE forum_top #
 		
-		<script type='text/javascript'>
+		<script>
 		<!--
 		function check_form_post(){
 			if(document.getElementById('contents').value == "") {

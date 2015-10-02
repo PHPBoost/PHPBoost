@@ -48,16 +48,16 @@
 		# INCLUDE message_helper #
 		
 		<form action="pm{convers.U_USER_ACTION_PM}" method="post" onsubmit="javascript:return Confirm_pm();">
-			<section>					
+			<section>
 				<header>
 					<h1>&bull; {convers.U_USER_VIEW} &raquo; {convers.U_PM_BOX}</h1>
 				</header>
-				<div class="content">					
+				<div class="content">
 					<div style="float:right;">{L_PRIVATE_MSG}: {convers.PM_POURCENT}</div>
 					<br /><br />
-					<menu id="cssmenu-{ID}" class="cssmenu cssmenu-group">
+					<menu id="cssmenu-pmactions" class="cssmenu cssmenu-group">
 						<ul>
-							<li >
+							<li>
 								<a href="{convers.U_POST_NEW_CONVERS}"><i class="fa fa-plus"></i> {convers.L_POST_NEW_CONVERS}</a>
 							</li>
 							<li>
@@ -65,13 +65,13 @@
 							</li>
 						</ul>
 					</menu>
-			        <script>
-			            jQuery("#cssmenu-${escape(ID)}").menumaker({
-			                title: "{TITLE}",
-			                format: "multitoggle",
-			                breakpoint: 980
-			            });
-			        </script>
+					<script>
+						jQuery("#cssmenu-pmactions").menumaker({
+							title: "{TITLE}",
+							format: "multitoggle",
+							breakpoint: 980
+						});
+					</script>
 					<br /><br />
 					<table>
 						<thead>

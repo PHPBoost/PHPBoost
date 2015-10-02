@@ -20,13 +20,13 @@
 			</div>
 			<div class="module-mini-bottom"></div>
 		</div>
-        <script>
+		<script>
 			jQuery("#cssmenu-${escape(ID)}").menumaker({
-                title: "{TITLE}",
-                format: "multitoggle",
-                breakpoint: 980
-            });
-        </script>
+				title: "{TITLE}",
+				format: "multitoggle",
+				breakpoint: 980
+			});
+		</script>
 	# ENDIF #
 	# IF C_NEXT_MENU # <!-- Children -->
 		<li>
