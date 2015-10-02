@@ -1189,6 +1189,7 @@ div.field-required:after {
 }
 
 .subcat-container {
+	margin: 10px 0px 5px 0px;
 }
 
 .subcat-element {
