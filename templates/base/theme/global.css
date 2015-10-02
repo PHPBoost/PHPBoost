@@ -932,13 +932,9 @@ header .cssmenu ul ul li a 					{ background: #333333; }
 	}
 
 	.cssmenu #menu-button.menu-opened:after,
-	.cssmenu #menu-button.menu-opened:before 				{ background: #FFFFFF; }
-	#menu-left .cssmenu #menu-button.menu-opened:after,
-	#menu-left .cssmenu #menu-button.menu-opened:before 	{ background: #DDDDDD; }
-	#menu-right .cssmenu #menu-button.menu-opened:after,
-	#menu-right .cssmenu #menu-button.menu-opened:before 	{ background: #DDDDDD; }
-	.cssmenu-actionslinks #menu-button.menu-opened:after,
-	.cssmenu-actionslinks #menu-button.menu-opened:before 	{ background: #DDDDDD; }
+	.cssmenu #menu-button.menu-opened:before 		{ background: #DDDDDD; }
+	header .cssmenu #menu-button.menu-opened:after,
+	header .cssmenu #menu-button.menu-opened:before { background: #FFFFFF; }
 
 	.cssmenu .submenu-button {
 		position: absolute;
@@ -1012,6 +1008,20 @@ header .cssmenu ul ul li a 					{ background: #333333; }
 	.cssmenu-actionslinks > ul > li:last-child {
 		padding: 0 0 10px 0;
 		border-bottom: 1px solid rgba(120, 120, 120, 0.2);
+	}
+
+	.cssmenu-group {
+		margin: 0 0 5px 0;
+	}
+
+	.cssmenu-group > ul > li {
+		border-radius: 0px;
+	}
+	.cssmenu-group > ul > li:first-child {
+	    border-radius: 4px 4px 0px 0px;
+	}
+	.cssmenu-group > ul > li:last-child {
+	    border-radius: 0px 0px 4px 4px;
 	}
 }
 
