@@ -138,6 +138,8 @@ class HtaccessFileCache implements CacheData
 	{
 		$this->add_section('HTTP Headers');
 		$this->add_line('<IfModule mod_headers.c>');
+		$this->add_line('# Enable keep-alive');
+		$this->add_line('Header set Connection keep-alive');
 		$this->add_line('# Disable your PHP version number from showing up in HTTP headers for added security.');
 		$this->add_line('Header unset X-Powered-By');
 		$this->add_line('# Tell the browser to attempt the HTTPS version first');
@@ -237,13 +239,6 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('RewriteCond %{REQUEST_METHOD} ^TRACE');
 		$this->add_line('RewriteRule .* - [F]');
 		$this->add_empty_line();
-		$this->add_line('# Block empty user agents and empty HTTP referrers');
-		$this->add_line('RewriteCond %{HTTP_REFERER} ^$ [NC]');
-		$this->add_line('RewriteCond %{HTTP_USER_AGENT} ^$ [NC]');
-		$this->add_line('RewriteRule .* - [F,L]');
-		$this->add_empty_line();
-		$this->add_line('# Prevent use of specified methods in HTTP Request');
-		$this->add_line('RewriteCond %{REQUEST_METHOD} ^(HEAD|TRACE|DELETE|TRACK) [NC,OR]');
 		$this->add_line('# Block out use of illegal or unsafe characters in the HTTP Request');
 		$this->add_line('RewriteCond %{THE_REQUEST} ^.*(\\r|\\n|%0A|%0D).* [NC,OR]');
 		$this->add_line('# Block out use of illegal or unsafe characters in the Referer Variable of the HTTP Request');
