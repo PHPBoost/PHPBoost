@@ -31,17 +31,19 @@
 
 define('PATH_TO_ROOT', '..');
 
-$get_brw = !empty($_GET['browsers']) ? true : false;
-$get_os = !empty($_GET['os']) ? true : false;
-$get_lang = !empty($_GET['lang']) ? true : false;
-$get_bot = !empty($_GET['bot']) ? true : false;
-$get_theme = !empty($_GET['theme']) ? true : false;
-$get_sex = !empty($_GET['sex']) ? true : false;
-$get_visit_month = !empty($_GET['visit_month']) ? true : false;
-$get_visit_year = !empty($_GET['visit_year']) ? true : false;
-$get_pages_day = !empty($_GET['pages_day']) ? true : false;
-$get_pages_month = !empty($_GET['pages_month']) ? true : false;
-$get_pages_year = !empty($_GET['pages_year']) ? true : false;
+include_once(PATH_TO_ROOT . '/kernel/init.php');
+
+$get_brw = retrieve(GET, 'browsers', false);
+$get_os = retrieve(GET, 'os', false);
+$get_lang = retrieve(GET, 'lang', false);
+$get_bot = retrieve(GET, 'bot', false);
+$get_theme = retrieve(GET, 'theme', false);
+$get_sex = retrieve(GET, 'sex', false);
+$get_visit_month = retrieve(GET, 'visit_month', false);
+$get_visit_year = retrieve(GET, 'visit_year', false);
+$get_pages_day = retrieve(GET, 'pages_day', false);
+$get_pages_month = retrieve(GET, 'pages_month', false);
+$get_pages_year = retrieve(GET, 'pages_year', false);
 
 include_once(PATH_TO_ROOT . '/kernel/begin.php');
 AppContext::get_session()->no_session_location(); //Ne réactualise pas l'emplacement du visiteur/membre
@@ -52,8 +54,8 @@ $Stats = new ImagesStats();
 $array_stats = array('other' => 0);
 if ($get_visit_month)
 {
-	$year = !empty($_GET['year']) ? NumberHelper::numeric($_GET['year']) : date('Y');
-	$month = !empty($_GET['month']) ? NumberHelper::numeric($_GET['month']) : '1';
+	$year = NumberHelper::numeric(retrieve(GET, 'year', date('Y')));
+	$month = NumberHelper::numeric(retrieve(GET, 'month', 1));
 
 	$array_stats = array();
 	$result = PersistenceContext::get_querier()->select("SELECT nbr, stats_day
@@ -86,7 +88,7 @@ if ($get_visit_month)
 }
 elseif ($get_visit_year)
 {
-	$year = !empty($_GET['year']) ? NumberHelper::numeric($_GET['year']) : '';
+	$year = NumberHelper::numeric(retrieve(GET, 'year', ''));
 
 	$array_stats = array();
 	$result = PersistenceContext::get_querier()->select("SELECT SUM(nbr) as total, stats_month
@@ -116,9 +118,9 @@ elseif ($get_visit_year)
 }
 elseif ($get_pages_day)
 {
-	$year = !empty($_GET['year']) ? NumberHelper::numeric($_GET['year']) : '';
-	$month = !empty($_GET['month']) ? NumberHelper::numeric($_GET['month']) : '1';
-	$day = !empty($_GET['day']) ? NumberHelper::numeric($_GET['day']) : '1';
+	$year = NumberHelper::numeric(retrieve(GET, 'year', ''));
+	$month = NumberHelper::numeric(retrieve(GET, 'month', 1));
+	$day = NumberHelper::numeric(retrieve(GET, 'day', 1));
 
 	$array_stats = $pages_details = array();
 	try {
@@ -147,8 +149,8 @@ elseif ($get_pages_day)
 }
 elseif ($get_pages_month)
 {
-	$year = !empty($_GET['year']) ? NumberHelper::numeric($_GET['year']) : date('Y');
-	$month = !empty($_GET['month']) ? NumberHelper::numeric($_GET['month']) : '1';
+	$year = NumberHelper::numeric(retrieve(GET, 'year', date('Y')));
+	$month = NumberHelper::numeric(retrieve(GET, 'month', 1));
 
 	$array_stats = array();
 	$result = PersistenceContext::get_querier()->select("SELECT pages, stats_day
@@ -181,7 +183,7 @@ elseif ($get_pages_month)
 }
 elseif ($get_pages_year)
 {
-	$year = !empty($_GET['year']) ? NumberHelper::numeric($_GET['year']) : '';
+	$year = NumberHelper::numeric(retrieve(GET, 'year', ''));
 
 	$array_stats = array();
 	$result = PersistenceContext::get_querier()->select("SELECT SUM(pages) as total, stats_month
@@ -230,7 +232,7 @@ elseif ($get_brw) //Navigateurs.
 	}
 
 	$Stats->load_data($array_stats, 'ellipse', 5);
-	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/browsers.png');
+	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/stats/cache/browsers.png');
 }
 elseif ($get_os)
 {
@@ -253,7 +255,7 @@ elseif ($get_os)
 	}
 
 	$Stats->load_data($array_stats, 'ellipse', 5);
-	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/os.png');
+	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/stats/cache/os.png');
 }
 elseif ($get_lang)
 {
@@ -283,7 +285,7 @@ elseif ($get_lang)
 	}
 
 	$Stats->load_data($array_stats, 'ellipse', 5);
-	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/lang.png');
+	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/stats/cache/lang.png');
 }
 elseif ($get_theme)
 {
@@ -298,7 +300,7 @@ elseif ($get_theme)
 	}
 
 	$Stats->load_data($stats_array, 'ellipse', 5);
-	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/theme.png');
+	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/stats/cache/theme.png');
 }
 elseif ($get_sex)
 {
@@ -331,7 +333,7 @@ elseif ($get_sex)
 	$result->dispose();
 
 	$Stats->load_data($array_stats, 'ellipse', 5);
-	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/sex.png');
+	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/stats/cache/sex.png');
 }
 elseif ($get_bot)
 {
@@ -372,7 +374,7 @@ elseif ($get_bot)
 		}
 	}
 	$Stats->load_data($stats_array, 'ellipse', 5);
-	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/bot.png');
+	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/stats/cache/bot.png');
 }
 
 ?>

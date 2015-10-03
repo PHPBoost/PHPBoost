@@ -125,6 +125,7 @@ else
 mark_topic_as_read($id_get, $topic['last_msg_id'], $topic['last_timestamp']);
 
 //Gestion de la page si redirection vers le dernier message lu.
+$page = 1;
 $idm = $request->get_getvalue('idm', 0);
 if (!empty($idm))
 {
@@ -139,11 +140,10 @@ if (!empty($idm))
 			$nbr_msg_before++;
 	}
 	
-	$_GET['pt'] = ceil(($nbr_msg_before + 1) / $config->get_number_messages_per_page()); //Modification de la page affichée.
+	$page = ceil(($nbr_msg_before + 1) / $config->get_number_messages_per_page()); //Modification de la page affichée.
 }
 
 //On crée une pagination si le nombre de msg est trop important.
-$page = AppContext::get_request()->get_getint('pt', 1);
 $pagination = new ModulePagination($page, $topic['nbr_msg'], $config->get_number_messages_per_page(), Pagination::LIGHT_PAGINATION);
 $pagination->set_url(new Url('/forum/topic.php?id=' . $id_get . '&amp;pt=%d'));
 
