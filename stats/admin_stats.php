@@ -572,7 +572,7 @@ else
 			$condition = 'WHERE stats_year=:year AND pages_detail <> \'\' GROUP BY stats_month';
 			$year = $pages_year;
 		}
-		elseif ($day)
+		elseif (retrieve(GET, 'd', false))
 		{
 			$condition = 'WHERE stats_year=:year AND stats_month=:month AND stats_day=:day AND pages_detail <> \'\' GROUP BY stats_month';
 			$year = retrieve(GET, 'y', (int)$current_year);
@@ -655,26 +655,26 @@ else
 
 			if (@extension_loaded('gd'))
 			{
-					$tpl->put_all(array(
-						'GRAPH_RESULT' => '<img src="display_stats.php?pages_year=1&amp;year=' . $pages_year . '" alt="" />'
+				$tpl->put_all(array(
+					'GRAPH_RESULT' => '<img src="display_stats.php?pages_year=1&amp;year=' . $pages_year . '" alt="" />'
+				));
+				
+				//On fait la liste des visites journalières
+				$result = $db_querier->select("SELECT stats_month, SUM(pages) AS total
+				FROM " . StatsSetup::$stats_table . "
+				WHERE stats_year = :year
+				GROUP BY stats_month", array(
+					'year' => $pages_year
+				));
+				while ($row = $result->fetch())
+				{
+					//On affiche les stats numériquement dans un tableau en dessous
+					$tpl->assign_block_vars('value', array(
+						'U_DETAILS' => '<a href="admin_stats' . url('.php?m=' . $row['stats_month'] . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
+						'NBR' => $row['total']
 					));
-						
-					//On fait la liste des visites journalières
-					$result = $db_querier->select("SELECT stats_month, SUM(pages) AS total
-					FROM " . StatsSetup::$stats_table . "
-					WHERE stats_year = :year
-					GROUP BY stats_month", array(
-						'year' => $pages_year
-					));
-					while ($row = $result->fetch())
-					{
-						//On affiche les stats numériquement dans un tableau en dessous
-						$tpl->assign_block_vars('value', array(
-							'U_DETAILS' => '<a href="admin_stats' . url('.php?m=' . $row['stats_month'] . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
-							'NBR' => $row['total']
-						));
-					}
-					$result->dispose();
+				}
+				$result->dispose();
 			}
 			else
 			{
@@ -750,7 +750,7 @@ else
 				}
 			}
 		}
-		elseif ($day)
+		elseif (retrieve(GET, 'd', false))
 		{
 			//Nombre de jours pour chaque mois (gestion des années bissextiles)
 			$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
@@ -1210,23 +1210,18 @@ else
 	}
 	elseif ($bot)
 	{
-		$tpl->put_all(array(
-			'C_STATS_ROBOTS' => true,
-			'L_ERASE_RAPPORT' => $LANG['erase_rapport'],
-			'L_ERASE' => $LANG['erase'],
-			'L_COLORS' => $LANG['colors'],
-			'L_VIEW_NUMBER' => $LANG['number_r_visit'],
-			'L_LAST_UPDATE' => $LANG['last_update']
-		));
-
-
 		$array_robot = StatsSaver::retrieve_stats('robots');
 		$stats_array = array();
+		$robots_visits_number = 0;
 		if (is_array($array_robot))
 		{
 			foreach ($array_robot as $key => $value)
 			{
+				if ($key == 'unknow_bot')
+					$key = addslashes($LANG['unknown_bot']);
+				
 				$array_info = explode('/', $value);
+				$robots_visits_number = $robots_visits_number + $array_info[0];
 				if (isset($array_info[0]) && isset($array_info[1]))
 				{
 					$name = ucwords($array_info[0]);
@@ -1254,19 +1249,32 @@ else
 			}
 		}
 		
-		$Stats = new ImagesStats();
-		$Stats->load_data($stats_array, 'ellipse');
-		foreach ($Stats->data_stats as $key => $angle_value)
+		if ($robots_visits_number)
 		{
-				$array_color = $Stats->array_allocated_color[$Stats->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
-				$name = ucfirst($key);
-				$tpl->assign_block_vars('list', array(
-					'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
-					'VIEWS' => NumberHelper::round(($angle_value * $Stats->nbr_entry)/360, 0),
-					'PERCENT' => NumberHelper::round(($angle_value/3.6), 1),
-					'L_NAME' => ($name == 'Other') ? $LANG['other'] : $name
-				));
+			$Stats = new ImagesStats();
+			$Stats->load_data($stats_array, 'ellipse');
+			foreach ($Stats->data_stats as $key => $angle_value)
+			{
+					$array_color = $Stats->array_allocated_color[$Stats->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
+					$name = ucfirst($key);
+					$tpl->assign_block_vars('list', array(
+						'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
+						'VIEWS' => NumberHelper::round(($angle_value * $Stats->nbr_entry)/360, 0),
+						'PERCENT' => NumberHelper::round(($angle_value/3.6), 1),
+						'L_NAME' => ($name == 'Other') ? $LANG['other'] : $name
+					));
+			}
 		}
+		
+		$tpl->put_all(array(
+			'C_STATS_ROBOTS' => true,
+			'C_ROBOTS_DATA' => $robots_visits_number,
+			'L_ERASE_RAPPORT' => $LANG['erase_rapport'],
+			'L_ERASE' => $LANG['erase'],
+			'L_COLORS' => $LANG['colors'],
+			'L_VIEW_NUMBER' => $LANG['number_r_visit'],
+			'L_LAST_UPDATE' => $LANG['last_update']
+		));
 	}
 	else
 	{

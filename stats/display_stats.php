@@ -341,6 +341,9 @@ elseif ($get_bot)
 	{
 		foreach ($array_robot as $key => $value)
 		{
+			if ($key == 'unknow_bot')
+				$key = addslashes($LANG['unknown_bot']);
+			
 			$array_info = explode('/', $value);
 			if (isset($array_info[0]) && isset($array_info[1]))
 			{

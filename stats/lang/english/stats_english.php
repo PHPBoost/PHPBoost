@@ -43,6 +43,7 @@ $LANG['admin.authorizations.read'] = 'Permission to display the statistics';
 //Robots
 $LANG['robot'] = 'Robot';
 $LANG['robots'] = 'Robots';
+$LANG['unknown_bot'] = 'Unknown robot';
 $LANG['erase_rapport'] = 'Erase rapport';
 $LANG['number_r_visit'] = 'Number of views';
 

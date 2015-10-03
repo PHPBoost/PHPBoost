@@ -737,7 +737,7 @@
 									# START list #
 									<tr>
 										<td>
-											 {list.L_NAME}  <span class="smaller">({list.PERCENT}%)</span>
+											{list.L_NAME}  <span class="smaller">({list.PERCENT}%)</span>
 										</td>
 										<td>
 											<div style="margin:auto;width:10px;margin:auto;height:10px;background:{list.COLOR}"></div>
@@ -747,21 +747,32 @@
 										</td>
 									</tr>
 									# END list #
+									# IF NOT C_ROBOTS_DATA #
+									<tr>
+										<td colspan="3">
+										${LangLoader::get_message('no_item_now', 'common')}
+										</td>
+									</tr>
+									# ENDIF #
 								</tbody>
 							</table>
 						</td>
+						# IF C_ROBOTS_DATA #
 						<td class="no-separator">
 							<img src="display_stats.php?bot=1" alt="" />
 						</td>
+						# ENDIF #
 					</tr>
 				</tbody>
 			</table>
+			# IF C_ROBOTS_DATA #
 			<br /><br />
 			<fieldset class="fieldset-submit">
 				<legend>{L_ERASE_RAPPORT}</legend>
 				<input type="hidden" name="token" value="{TOKEN}">
 				<button type="submit" name="erase" value="true" class="submit">{L_ERASE_RAPPORT}</button> 
 			</fieldset>
+			# ENDIF #
 		</form>
 		# ENDIF #
 		

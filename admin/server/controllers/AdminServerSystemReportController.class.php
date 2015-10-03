@@ -192,7 +192,7 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 			$fieldset->add_field(new FormFieldFree('enable_apcu_cache', '', MessageHelper::display($lang['advises.enable_apcu_cache'], MessageHelper::NOTICE)->render()));
 		$fieldset->add_field(new FormFieldFree('save_database', '', MessageHelper::display($lang['advises.save_database'], MessageHelper::SUCCESS)->render()));
 		
-		if (!$server_environment_config->is_database_tables_optimization_enabled())
+		if (!DatabaseConfig::load()->is_database_tables_optimization_enabled())
 			$fieldset->add_field(new FormFieldFree('optimize_database_tables', '', MessageHelper::display($lang['advises.optimize_database_tables'], MessageHelper::SUCCESS)->render()));
 		
 		if ($security_config->get_internal_password_min_length() == 6 && $security_config->get_internal_password_strength() == SecurityConfig::PASSWORD_STRENGTH_WEAK && !$security_config->are_login_and_email_forbidden_in_password())
