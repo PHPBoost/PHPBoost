@@ -7,7 +7,7 @@
 			jQuery("#cssmenu-${escape(ID)}").menumaker({
 				title: "{TITLE}",
 				format: "multitoggle",
-				breakpoint: 980
+				breakpoint: 768
 			});
 		</script>
 	# ENDIF #
@@ -22,4 +22,5 @@
 		</li>
 	# ENDIF #
 # ELSE # <!-- Simple Menu Link -->
-	<li><a href="{REL_URL}" title="{TITLE}"># IF C_IMG #<img src="{REL_IMG}" alt="" /># ENDIF #{TITLE}</a></li># ENDIF #
+	<li><a href="{REL_URL}" title="{TITLE}"># IF C_IMG #<img src="{REL_IMG}" alt="" /># ENDIF #{TITLE}</a></li>
+# ENDIF #

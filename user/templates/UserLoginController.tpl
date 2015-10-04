@@ -105,7 +105,7 @@
 			top: 30%
 		}
 		
-		@media ( max-width: 780px ) {
+		@media ( max-width: 768px ) {
 			div#global {
 				top: 15%
 			}

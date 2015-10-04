@@ -134,7 +134,7 @@
 				jQuery("#cssmenu-sandboxfilter").menumaker({
 					title: "Sandbox",
 					format: "multitoggle",
-					breakpoint: 980,
+					breakpoint: 768,
 					actionslinks:true
 				});
 			</script>
@@ -160,7 +160,7 @@
 				jQuery("#cssmenu-sandboxbug").menumaker({
 					title: "Sandbox",
 					format: "multitoggle",
-					breakpoint: 980,
+					breakpoint: 768,
 					actionslinks:true
 				});
 			</script>

@@ -86,7 +86,7 @@ div.connect-register i {
 	display: none;
 }
 
-@media ( max-width: 770px ) {
+@media ( max-width: 768px ) {
 
 	.js-menu-button {
 		display: inline-block;

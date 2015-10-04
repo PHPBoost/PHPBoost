@@ -13,13 +13,6 @@
 	width: 99%;
 }
 
-/* CSS ne s'applique pas aux écrans PC */
-@media ( max-width: 550px ) {
-	.bbcode-containers ul {
-		display: inline;
-	}
-}
-
 .bbcode-container {
 	margin: 0px;
 	font-size: 0;

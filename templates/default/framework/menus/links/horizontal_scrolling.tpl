@@ -1,15 +1,14 @@
 # IF C_MENU #
 	# IF C_FIRST_MENU #
-		<nav id="cssmenu-{ID}" class="cssmenu menu-horizontal">
-			<ul >
-				# START elements #{elements.DISPLAY}# END elements #
-			</ul>
+		<nav id="cssmenu-{ID}" class="cssmenu cssmenu-static">
+			<ul># START elements #{elements.DISPLAY}# END elements #</ul>
 		</nav>
 		<script>
 			jQuery("#cssmenu-${escape(ID)}").menumaker({
 				title: "{TITLE}",
 				format: "multitoggle",
-				breakpoint: 980
+				statique: true,
+				breakpoint: 768
 			});
 		</script>
 	# ENDIF #

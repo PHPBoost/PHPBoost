@@ -11,9 +11,9 @@
 		var cssmenu = $(this), settings = $.extend({
 			title: "Menu",
 			format: "dropdown",
-			breakpoint: 768,
 			sticky: false,
-			actionslinks: false
+			actionslinks: false,
+			statique: false,
 		}, options);
 
 		return this.each(function() {
@@ -72,9 +72,13 @@
 			}
 
 			if (settings.sticky === true) cssmenu.css('position', 'fixed');
+			if (settings.statique === true) {
+				cssmenu.find("#menu-button").removeClass("menu-opened");
+				cssmenu.find('ul').show();
+			}
 
 			resizeFix = function() {
-				if ($(window).width() > settings.breakpoint) {
+				if ($(window.screen.width) > settings.breakpoint) {
 				
 					if (settings.actionslinks !== true) {
 						cssmenu.find('ul').show();
@@ -88,7 +92,7 @@
 					}
 				}
 
-				if ($(window).width() <= settings.breakpoint && !cssmenu.hasClass("small-screen")) {
+				if ($(window.screen.width) <= settings.breakpoint && !cssmenu.hasClass("small-screen")) {
 					cssmenu.find('ul').hide().removeClass('open');            
 					cssmenu.addClass('small-screen');
 					if (settings.format === 'select') {

@@ -342,7 +342,7 @@ td.input-radio { width: 60px; }
 
 /* --- Affichage des tableaux responsive sur les petits écrans --- */
 
-@media ( max-width: 770px ) {
+@media ( max-width: 768px ) {
 	table thead th,
 	table tbody td,
 	table tfoot tr th {

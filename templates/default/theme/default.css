@@ -326,7 +326,7 @@ table.table-fixed {
 .lightcase-icon-spin:before { content: '\e805'; } /* 'spin' */
 
 /* Reduced layout for small devices */
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 768px) {
 
 	.lightcase-open body {
 		padding: 55px 0 70px 0;
@@ -491,7 +491,7 @@ table.table-fixed {
 
 }
 
-@media screen and (min-width: 641px) {
+@media screen and (min-width: 769px) {
 
 	/* Overlay */
 	#lightcase-overlay {

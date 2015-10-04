@@ -74,7 +74,7 @@
 				jQuery("#cssmenu-wikitools").menumaker({
 					title: "{L_OTHER_TOOLS}",
 					format: "multitoggle",
-					breakpoint: 980,
+					breakpoint: 768,
 					actionslinks:true
 				});
 			</script>

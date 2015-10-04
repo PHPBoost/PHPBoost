@@ -260,7 +260,7 @@
 			jQuery("#cssmenu-galleryfilter").menumaker({
 				title: "{TITLE}",
 				format: "multitoggle",
-				breakpoint: 980,
+				breakpoint: 768,
 				actionslinks:true
 			});
 		</script>

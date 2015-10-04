@@ -69,7 +69,7 @@
 						jQuery("#cssmenu-pmactions").menumaker({
 							title: "{TITLE}",
 							format: "multitoggle",
-							breakpoint: 980
+							breakpoint: 768
 						});
 					</script>
 					<br /><br />
