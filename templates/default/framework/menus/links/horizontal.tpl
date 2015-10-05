@@ -14,13 +14,13 @@
 	# IF C_NEXT_MENU # <!-- Children -->
 		<li>
 			# IF RELATIVE_URL #
-				<a href="{REL_URL}" title="{TITLE}"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" /> # ENDIF #{TITLE}</a>
+				<a href="{REL_URL}" title="{TITLE}"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF #{TITLE}</a>
 			# ELSE #
-				<span># IF C_IMG #<img src="{REL_IMG}" alt="" /># ENDIF #{TITLE}</span>
+				<span># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF #{TITLE}</span>
 			# ENDIF #
 			<ul># START elements #{elements.DISPLAY}# END elements #</ul>
 		</li>
 	# ENDIF #
 # ELSE # <!-- Simple Menu Link -->
-	<li><a href="{REL_URL}" title="{TITLE}"># IF C_IMG #<img src="{REL_IMG}" alt="" /># ENDIF #{TITLE}</a></li>
+	<li><a href="{REL_URL}" title="{TITLE}"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF #{TITLE}</a></li>
 # ENDIF #

@@ -87,6 +87,8 @@ abstract class LinksMenuElement extends Menu
 	 */
 	protected function _assign($template, $mode = self::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
 	{
+		$image = new Image(Url::to_absolute($this->image));
+		
 		parent::_assign($template);
 		$template->put_all(array(
             'C_MENU' => false,
@@ -103,7 +105,9 @@ abstract class LinksMenuElement extends Menu
             'RELATIVE_IMG' => Url::to_relative($this->image),
 			'REL_IMG' => Url::to_rel($this->image),
             'ID' => $this->get_uid(),
-            'ID_VAR' => $this->get_uid()
+            'ID_VAR' => $this->get_uid(),
+            'IMG_HEIGHT' => $image->get_height(),
+            'IMG_WIDTH' => $image->get_width()
 		));
 
 		//Full displaying: we also show the authorization formulary
