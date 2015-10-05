@@ -6,12 +6,12 @@
 		<a href="javascript:xmlhttprequest_calendar('{FIELD}', '?{U_NEXT}');"><i class="fa fa-caret-right fa-large"></i></a>
 	</div>
 	<div class="date-select-content">
-		<select name="m" onchange="xmlhttprequest_calendar('{FIELD}', '?input_field={INPUT_FIELD}&amp;field={FIELD}{LYEAR}&amp;d=1&amp;m=' + this.options[thiselectedIndex].value + '&amp;y={YEAR}{TYPE}');" class="date-select-month">
+		<select name="m" onchange="xmlhttprequest_calendar('{FIELD}', '?input_field={INPUT_FIELD}&amp;field={FIELD}{LYEAR}&amp;d=1&amp;m=' + jQuery('.{FIELD}-date-select-month').val() + '&amp;y={YEAR}{TYPE}');" class="date-select-month {FIELD}-date-select-month">
 			# START month #
 			{month.MONTH}
 			# END month #
 		</select>
-		<select name="y" onchange="xmlhttprequest_calendar('{FIELD}', '?input_field={INPUT_FIELD}&amp;field={FIELD}{LYEAR}&amp;d=1&amp;m={MONTH}{TYPE}&amp;y=+ this.options[this.selectedIndex].value);" class="date-select-year">
+		<select name="y" onchange="xmlhttprequest_calendar('{FIELD}', '?input_field={INPUT_FIELD}&amp;field={FIELD}{LYEAR}&amp;d=1&amp;m={MONTH}{TYPE}&amp;y=' + jQuery('.{FIELD}-date-select-year').val());" class="date-select-year {FIELD}-date-select-year">
 			# START year #
 				{year.YEAR}
 			# END year #
