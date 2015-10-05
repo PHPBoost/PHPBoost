@@ -67,7 +67,7 @@
 					</menu>
 					<script>
 						jQuery("#cssmenu-pmactions").menumaker({
-							title: "{TITLE}",
+							title: "${LangLoader::get_message('form.options', 'common')}",
 							format: "multitoggle",
 							breakpoint: 768
 						});

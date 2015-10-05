@@ -14,7 +14,7 @@
 </menu>
 <script>
 	jQuery("#cssmenu-bugtrackeractions").menumaker({
-		title: "{TITLE}",
+		title: "${LangLoader::get_message('form.options', 'common')}",
 		format: "multitoggle",
 		breakpoint: 768
 	});

@@ -94,6 +94,7 @@ $lang['constraint.not_required'] = 'Not required';
 
 //Sort
 $lang['sort'] = 'Sort';
+$lang['sort_options'] = 'Sort options';
 $lang['sort_by'] = 'Sort by';
 $lang['sort_by.alphabetic'] = 'Alphabetic';
 $lang['sort_by.number_views'] = 'Views';

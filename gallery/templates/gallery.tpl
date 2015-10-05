@@ -258,7 +258,7 @@
 		</menu>
 		<script>
 			jQuery("#cssmenu-galleryfilter").menumaker({
-				title: "{TITLE}",
+				title: "${LangLoader::get_message('sort_options', 'common')}",
 				format: "multitoggle",
 				breakpoint: 768,
 				actionslinks:true
