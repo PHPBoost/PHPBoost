@@ -367,7 +367,7 @@ class HtaccessFileCache implements CacheData
 	private function add_gzip_compression()
 	{
 		$this->add_section('Gzip compression');
-		$this->add_line('<IfModule mod_deflate.c>');
+		$this->add_line('<IfModule mod_filter.c>');
 		$this->add_line('	# Compress HTML, CSS, JavaScript, Text, XML and fonts');
 		$this->add_line('	AddOutputFilterByType DEFLATE application/javascript');
 		$this->add_line('	AddOutputFilterByType DEFLATE application/rss+xml');
@@ -395,7 +395,9 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('	BrowserMatch ^Mozilla/4 gzip-only-text/html');
 		$this->add_line('	BrowserMatch ^Mozilla/4\.0[678] no-gzip');
 		$this->add_line('	BrowserMatch \bMSIE !no-gzip !gzip-only-text/html');
-		$this->add_line('	Header append Vary User-Agent');
+		$this->add_line('	<IfModule mod_headers.c>');
+		$this->add_line('		Header append Vary User-Agent');
+		$this->add_line('	</IfModule>');
 		$this->add_line('</IfModule>');
 	}
 	
