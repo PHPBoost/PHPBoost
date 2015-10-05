@@ -193,6 +193,9 @@ $lang['user.message.success.delete'] = 'L\'utilisateur <b>:name</b> a été suppri
 $lang['extended-field.field.sex'] = 'Sexe';
 $lang['extended-field.field.sex-explain'] = '';
 
+$lang['extended-field.field.pmtomail'] = 'Recevoir une notification par mail à la réception d\'un message privé';
+$lang['extended-field.field.pmtomail-explain'] = '';
+
 $lang['extended-field.field.date-birth'] = 'Date de naissance';
 $lang['extended-field.field.date-birth-explain'] = '';
 

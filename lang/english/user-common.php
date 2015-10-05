@@ -192,6 +192,9 @@ $lang['user.message.success.delete'] = 'The user <b>:name</b> has been deleted';
 $lang['extended-field.field.sex'] = 'Sex';
 $lang['extended-field.field.sex-explain'] = '';
 
+$lang['extended-field.field.pmtomail'] = 'Receive mail notification when receiving a PM';
+$lang['extended-field.field.pmtomail-explain'] = '';
+
 $lang['extended-field.field.date-birth'] = 'Birth date';
 $lang['extended-field.field.date-birth-explain'] = '';
 

@@ -119,6 +119,7 @@ $lang['type.date'] = 'Date';
 $lang['type.user-theme-choice'] = 'Theme';
 $lang['type.user-lang-choice'] = 'Language';
 $lang['type.user_born'] = 'Date of birth';
+$lang['type.user_pmtomail'] = 'Mail notification when receiving PM';
 $lang['type.user-editor'] = 'Editor';
 $lang['type.user-timezone'] = 'Timezone choice';
 $lang['type.user-sex'] = 'Sex';

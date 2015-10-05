@@ -309,6 +309,17 @@ class InstallationServices
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
 		
+		//Mail notofication when receiving PM
+		$extended_field = new ExtendedField();
+		$extended_field->set_name($lang['extended-field.field.pmtomail']);
+		$extended_field->set_field_name('user_pmtomail');
+		$extended_field->set_description($lang['extended-field.field.pmtomail-explain']);
+		$extended_field->set_field_type('MemberUserPMToMailExtendedField');
+		$extended_field->set_is_required(false);
+		$extended_field->set_display(false);
+		$extended_field->set_is_freeze(true);
+		ExtendedFieldsService::add($extended_field);
+		
 		//Date Birth
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['extended-field.field.date-birth']);

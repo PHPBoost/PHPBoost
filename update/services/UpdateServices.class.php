@@ -418,6 +418,28 @@ class UpdateServices
 		if ((isset($columns['email']) && !$columns['email']['key']) || !isset($columns['email']))
 			self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member ADD UNIQUE KEY `email` (`email`)');
 		
+		// Modification des tables extended fields
+		$columns = self::$db_utils->desc_table(PREFIX . 'member_extended_fields');
+		
+		if (!isset($columns['user_pmtomail']))
+		{
+			self::$db_utils->add_column(PREFIX . 'member_extended_fields', 'user_pmtomail', array('type' => 'text', 'notnull' => 1));
+			self::$db_querier->insert(PREFIX . 'member_extended_fields_list', array(
+				'position' => 1,
+				'name' => LangLoader::get_message('type.user_pmtomail', 'admin-user-common'),
+				'field_name' => 'user_pmtomail',
+				'description' => '',
+				'field_type' => 'MemberUserPMToMailExtendedField',
+				'possible_values' => 's:0:"";',
+				'default_value' => '',
+				'required' => 0,
+				'display' => 0,
+				'regex' => 0,
+				'freeze' => 1,
+				'auth' => serialize(array('r-1' => 2, 'r0' => 3, 'r1' => 3))
+			));
+		}
+		
 		// Modification de la table sessions
 		$columns = self::$db_utils->desc_table(PREFIX . 'sessions');
 		

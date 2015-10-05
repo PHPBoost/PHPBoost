@@ -69,6 +69,7 @@ class KernelExtensionPointProvider extends ExtensionPointProvider
 			new MemberDateExtendedField(),
 			new MemberUserAvatarExtendedField(),
 			new MemberUserBornExtendedField(),
+			new MemberUserPMToMailExtendedField(),
 			new MemberUserSexExtendedField()
 		));
 	}
