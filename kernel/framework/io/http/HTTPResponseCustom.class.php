@@ -98,24 +98,27 @@ class HTTPResponseCustom
 	 */
 	public function set_default_attributes()
 	{
-		$headers = getallheaders();
-		
 		$this->set_header('Content-type', 'text/html; charset=windows-1252');
 		$this->set_header('Expires', '-1');
 		$this->set_header('Last-Modified', gmdate("D, d M Y H:i:s") . " GMT");
 		$this->set_header('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
 		$this->set_header('Pragma', 'no-cache');
 		
-		if (!isset($headers['X-Frame-Options']))
-			$this->set_header('X-Frame-Options', 'sameorigin');
-		if (!isset($headers['Strict-Transport-Security']))
-			$this->set_header('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
-		if (!isset($headers['X-Content-Type-Options']))
-			$this->set_header('X-Content-Type-Options', 'nosniff');
-		if (!isset($headers['X-XSS-Protection']))
-			$this->set_header('X-XSS-Protection', '1; mode=block');
-		if (!isset($headers['X-Permitted-Cross-Domain-Policies']))
-			$this->set_header('X-Permitted-Cross-Domain-Policies', 'master-only');
+		if (function_exists('getallheaders'))
+		{
+			$headers = getallheaders();
+			
+			if (!isset($headers['X-Frame-Options']))
+				$this->set_header('X-Frame-Options', 'sameorigin');
+			if (!isset($headers['Strict-Transport-Security']))
+				$this->set_header('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+			if (!isset($headers['X-Content-Type-Options']))
+				$this->set_header('X-Content-Type-Options', 'nosniff');
+			if (!isset($headers['X-XSS-Protection']))
+				$this->set_header('X-XSS-Protection', '1; mode=block');
+			if (!isset($headers['X-Permitted-Cross-Domain-Policies']))
+				$this->set_header('X-Permitted-Cross-Domain-Policies', 'master-only');
+		}
 	}
 
 	/**
