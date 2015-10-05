@@ -412,7 +412,7 @@ class HtaccessFileCache implements CacheData
 		$this->add_empty_line();
 		$this->add_line('	# CSS and JS expiration: 1 week after request');
 		$this->add_line('	ExpiresByType text/css "access plus 1 week"');
-		$this->add_line('	ExpiresByType text/javascript "access plus 1 week""');
+		$this->add_line('	ExpiresByType text/javascript "access plus 1 week"');
 		$this->add_line('	ExpiresByType text/x-javascript "access plus 1 week"');
 		$this->add_line('	ExpiresByType application/javascript "access plus 1 week"');
 		$this->add_line('	ExpiresByType application/x-javascript "access plus 1 week"');
