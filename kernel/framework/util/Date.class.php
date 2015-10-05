@@ -78,6 +78,10 @@ class Date
 			$this->date_time->setTimezone($date_timezone);
 			$this->date_time->setTimestamp($time);
 		}
+		else if (preg_match('`^-([0-9]+)$`i', $time))
+		{
+			$this->date_time = new DateTime('@' . $time, $date_timezone);
+		}
 		else
 		{
 			$this->date_time = new DateTime($time, $date_timezone);

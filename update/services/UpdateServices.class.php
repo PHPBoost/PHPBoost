@@ -436,7 +436,7 @@ class UpdateServices
 				'display' => 0,
 				'regex' => 0,
 				'freeze' => 1,
-				'auth' => serialize(array('r-1' => 2, 'r0' => 3, 'r1' => 3))
+				'auth' => serialize(array('r-1' => 2, 'r0' => 2, 'r1' => 3))
 			));
 		}
 		
