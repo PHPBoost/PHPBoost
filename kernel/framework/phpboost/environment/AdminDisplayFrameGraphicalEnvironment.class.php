@@ -56,7 +56,7 @@ class AdminDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvi
 			'BODY' => new StringTemplate($content)
 		));
 		
-		$template->display();
+		$template->display(true);
 	}
 }
 ?>

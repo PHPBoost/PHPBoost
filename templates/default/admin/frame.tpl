@@ -13,10 +13,10 @@
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_design.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_global.css" type="text/css" media="screen, print" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_content.css" type="text/css" media="screen, print" />
-		# ENDIF #
 		
 		<!-- Modules CSS -->
 		{MODULES_CSS}
+		# ENDIF #
 		
 		# IF C_FAVICON #
 		<link rel="shortcut icon" href="{FAVICON}" type="{FAVICON_TYPE}" />

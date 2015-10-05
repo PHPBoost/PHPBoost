@@ -232,7 +232,7 @@
 		</script> 
 
 		<menu id="cssmenu-galleryfilter" class="cssmenu cssmenu-right cssmenu-actionslinks cssmenu-tools">
-			<ul>
+			<ul class="hidden">
 				<li><a><i class="fa fa-eye"></i> {L_DISPLAY}</a>
 					<ul>
 						<li><a href="{U_BEST_VIEWS}"><i class="fa fa-eye"></i> {L_BEST_VIEWS}</a></li>
@@ -262,6 +262,9 @@
 				format: "multitoggle",
 				breakpoint: 768,
 				actionslinks:true
+			});
+			jQuery(document).ready(function() {
+				jQuery("#cssmenu-galleryfilter ul").removeClass('hidden');
 			});
 		</script>
 

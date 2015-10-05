@@ -1,6 +1,6 @@
 # IF C_DISPLAY #
 <menu id="cssmenu-module-{ID}" class="cssmenu cssmenu-right cssmenu-actionslinks">
-	<ul>
+	<ul class="hidden">
 		# START element #
 			# INCLUDE element.ELEMENT #
 		# END element #
@@ -12,6 +12,9 @@
 		format: "multitoggle",
 		breakpoint: 768,
 		actionslinks: true
+	});
+	jQuery(document).ready(function() {
+		jQuery("#cssmenu-module-${escape(ID)} ul").removeClass('hidden');
 	});
 </script>
 # ENDIF #

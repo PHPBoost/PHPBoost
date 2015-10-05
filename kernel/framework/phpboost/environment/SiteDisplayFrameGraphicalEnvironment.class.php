@@ -68,7 +68,7 @@ class SiteDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvir
 			'BODY' => new StringTemplate($content)
 		));
 		
-		$template->display();
+		$template->display(true);
 	}
 }
 ?>

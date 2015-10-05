@@ -122,6 +122,8 @@ a.wikipedia-link:before {
 .float-left, img.left   { float: left !important; }
 .float-right, img.right { float: right !important; }
 
+.hidden { display: none !important; }
+
 img.left, img.right {
 	margin: 6px;
 }

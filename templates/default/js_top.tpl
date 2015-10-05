@@ -6,4 +6,4 @@
 			var LANG = "{LANG}";
 		-->
 		</script>
-		<script src="{PATH_TO_ROOT}/kernel/lib/js/top.js"></script>
+		<script src="{PATH_TO_ROOT}/kernel/lib/js/global.js"></script>

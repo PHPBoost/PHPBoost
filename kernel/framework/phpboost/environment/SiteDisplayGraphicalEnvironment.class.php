@@ -135,7 +135,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'BODY' => $body_template
 		));
 		
-		$template->display();
+		$template->display(true);
 	}
 
 	protected function display_counter(Template $template)
