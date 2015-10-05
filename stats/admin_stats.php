@@ -51,7 +51,7 @@ else
 	$tpl = new FileTemplate('stats/admin_stats_management.tpl');
 	
 	$visit = $request->get_getint('visit', 0);
-	$visit_year = $request->get_getint('visit_year', 0);
+	$visit_year = $request->get_getint('year', 0);
 	$pages = $request->get_getint('pages', 0);
 	$pages_year = $request->get_getint('pages_year', 0);
 	$members = $request->get_getint('members', 0);
@@ -582,12 +582,15 @@ else
 			$condition = 'WHERE stats_year=:year AND stats_month=:month AND pages_detail <> \'\' GROUP BY stats_month';
 			$year = retrieve(GET, 'y', (int)$current_year);
 		}
-
-		//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
-		$info = array('max_nbr' => 0, 'min_day' => 0, 'sum_nbr' => 0, 'avg_nbr' => 0);
-		try {
-			$info = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(pages) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(pages) as sum_nbr', 'AVG(pages) as avg_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month', 'pages'), $condition, array('year' => $year, 'month' => $month, 'day' => $day));
-		} catch (RowNotFoundException $e) {}
+		
+		if (empty($pages_year))
+		{
+			//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
+			$info = array('max_nbr' => 0, 'min_day' => 0, 'sum_nbr' => 0, 'avg_nbr' => 0);
+			try {
+				$info = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(pages) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(pages) as sum_nbr', 'AVG(pages) as avg_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month', 'pages'), $condition, array('year' => $year, 'month' => $month, 'day' => $day));
+			} catch (RowNotFoundException $e) {}
+		}
 		
 		//On affiche les visiteurs totaux et du jour
 		$compteur_total = $db_querier->get_column_value(StatsSetup::$stats_table, 'SUM(pages)', '');
