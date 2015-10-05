@@ -76,7 +76,7 @@ tinymce.init({
 	selector : "textarea#" + field,
 	language : "{LANGUAGE}",
 	plugins: [
-		"advlist autolink autosave link image lists charmap hr anchor",
+		"advlist autolink autoresize autosave link image lists charmap hr anchor",
 		"searchreplace wordcount visualblocks visualchars fullscreen insertdatetime media",
 		"table contextmenu directionality smileys paste textcolor colorpicker textpattern imagetools"
 	],
