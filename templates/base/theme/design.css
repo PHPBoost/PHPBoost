@@ -14,6 +14,10 @@ html {
 
 body {
 	position: relative;
+	display: flex;
+	display: -ms-flexbox; /* IE10 Tricks */
+	flex-direction: column;
+	-ms-flex-direction: column; /* IE10 Tricks */
 	height: auto;
 	min-height: 100%;
 	background: #E8EDF3 ;
@@ -89,7 +93,7 @@ a#site-name {
 	line-height: 1em;
 	letter-spacing: 0.02em;
 	text-decoration: none;
-	text-shadow: 0 0 0 rgb(0,0,0), 1px 0 0 rgb(-255,-255,-255), 2px 0 0.1px rgba(0,0,0,0.1), 2px 0 0.1px rgba(0,0,0,0.2), 0 0 1px rgba(0,0,0,.1);
+	text-shadow: 0 0 0 rgb(0,0,0), 1px 0 0 rgb(0,0,0), 2px 0 0.1px rgba(0,0,0,0.1), 2px 0 0.1px rgba(0,0,0,0.2), 0 0 1px rgba(0,0,0,.1);
 }
 
 span#site-slogan {
@@ -107,6 +111,8 @@ div#global {
 	max-width: 1024px;
 	margin: 1.5em auto 0 auto;
 	padding: 0 10px;
+	flex: 1;
+	ms-flex: 1; /* IE10 Tricks */
 }
 
 aside#menu-left,
