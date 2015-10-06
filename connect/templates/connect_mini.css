@@ -14,7 +14,9 @@
 	display: inline-block;
 }
 
-#connect-menu div.horizontal-fieldset span {display: none;}
+#connect-menu div.horizontal-fieldset span {
+	display: none;
+}
 
 ul.connect-content {
 	margin: auto;
@@ -33,7 +35,7 @@ ul.connect-content {
 	margin-right: 0px;
 }
 
-#connect-menu ul.connect-content li > i{
+#connect-menu ul.connect-content li > i {
 	width: 18px;
 	text-align: center;
 }
@@ -42,6 +44,7 @@ ul.connect-content {
 #connect-menu div.horizontal-fieldset ul li a {
 	color: #FFFFFF;
 }
+
 #connect-menu div.horizontal-fieldset ul li > i {
 	vertical-align: 0px;
 }
@@ -66,21 +69,14 @@ div.connect-register i {
 #connect-menu div.vertical-fieldset input#password {
 	width: 120px;
 }
+
 #connect-menu div.vertical-fieldset button {
 	margin: 5px 0px;
 }
 	
-#connect-menu a.fb {
-	color: #3B5998;
-}
-
-#connect-menu a.google {
-	color: #D8432E;
-}
-
-#connect-menu a.twitter {
-	color: #5EA9DD;
-}
+#connect-menu a.fb 		{ color: #3B5998; }
+#connect-menu a.google 	{ color: #D8432E; }
+#connect-menu a.twitter { color: #5EA9DD; }
 
 .js-menu-button {
 	display: none;
@@ -117,21 +113,16 @@ div.connect-register i {
 		border-radius:4px;
 	}
 	
-	#connect-menu a.fb {
-		background: #3B5998;
-	}
-	
-	#connect-menu a.google {
-		background: #D8432E;
-	}
-	
-	#connect-menu a.twitter {
-		background: #5EA9DD;
+	#connect-menu a.fb 		{ background: #3B5998; }
+	#connect-menu a.google 	{ background: #D8432E; }	
+	#connect-menu a.twitter { background: #5EA9DD; }
+
+	#connect-menu div.horizontal-fieldset span {
+		display: inline-block;
 	}
 
-	#connect-menu div.horizontal-fieldset span {display: inline-block;}
-
-	ul.connect-content, div.connect-content {
+	ul.connect-content, 
+	div.connect-content {
 		visibility: hidden;
 		opacity: 0;
 		left: -100%;
@@ -141,7 +132,8 @@ div.connect-register i {
 		transition: left 0.5s, visibility 0.5s, opacity 0.5s;
 	}
 
-	#connect-menu.active ul.connect-content, #connect-menu.active  div.connect-content {
+	#connect-menu.active ul.connect-content,
+	#connect-menu.active div.connect-content {
 		visibility: visible;
 		opacity: 1;
 		width: auto;
@@ -155,14 +147,14 @@ div.connect-register i {
 		text-align: left;
 	}
 	
-	#connect-menu.active div.horizontal-fieldset  div.connect-content input {
+	#connect-menu.active div.horizontal-fieldset div.connect-content input {
 		display: block;
 		width: 100%;
 		padding: 10px 20px;
 		margin-bottom: 10px;
 	}
 	
-	#connect-menu.active div.horizontal-fieldset  div.connect-content button.submit {
+	#connect-menu.active div.horizontal-fieldset div.connect-content button.submit {
 		display: inline-block;
 		padding: 10px 20px;
 		margin-bottom: 10px;

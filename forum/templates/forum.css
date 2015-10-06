@@ -1,6 +1,4 @@
 section#main * { 
-	-webkit-box-sizing: content-box;
-	-moz-box-sizing: content-box;
 	box-sizing: content-box; 
 }
 
@@ -15,6 +13,7 @@ a.forum-link-pseudo:hover {
 	color: #F2FBFF; 
 	font-weight: bold;
 }
+
 /* Barre du titre du forum */
 #forum-top {
 	margin: 5px 0px 15px 0px;
@@ -160,7 +159,7 @@ a.forum-mbrmsg-links { color: #FFFFFF; } /* Couleur des liens pour les messages 
 	border: 1px solid #DDDDDD;
 	border-radius: 3px;
 }
-.module-top a:not(.*button) {
+.module-top a {
 	color: #334455;
 	font-size: 13px;
 }
@@ -176,7 +175,7 @@ a.forum-mbrmsg-links { color: #FFFFFF; } /* Couleur des liens pour les messages 
 	border-radius: 3px;
 	min-height: 33px;
 }
-.module-bottom a:not(.*button) {
+.module-bottom a {
 	color: #334455;
 	font-size: 13px;
 }
