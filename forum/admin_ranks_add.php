@@ -66,7 +66,7 @@ elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 	$error = '';
 	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
-		$authorized_pictures_extensions = FileUploadConfig::load()->get_picture_authorized_extensions();
+		$authorized_pictures_extensions = FileUploadConfig::load()->get_authorized_picture_extensions();
 		
 		if (!empty($authorized_pictures_extensions))
 		{

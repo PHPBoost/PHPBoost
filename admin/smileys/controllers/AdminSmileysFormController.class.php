@@ -108,7 +108,7 @@ class AdminSmileysFormController extends AdminController
 			$uploaded_file = $this->upload_form->get_value('file');
 			if ($uploaded_file !== null)
 			{
-				$authorized_pictures_extensions = FileUploadConfig::load()->get_picture_authorized_extensions();
+				$authorized_pictures_extensions = FileUploadConfig::load()->get_authorized_picture_extensions();
 				
 				if (empty($authorized_pictures_extensions))
 				{

@@ -109,7 +109,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 
 	$dir = 'pics/';
 
-	$authorized_pictures_extensions = FileUploadConfig::load()->get_picture_authorized_extensions();
+	$authorized_pictures_extensions = FileUploadConfig::load()->get_authorized_picture_extensions();
 	$error = '';
 	
 	if (!empty($authorized_pictures_extensions))
