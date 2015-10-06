@@ -54,7 +54,6 @@ class CSSCacheManager
 				$cache_file_location = '/cache/css/css-cache-'. md5($files) .'.css';
 				$files = explode(';', $files);
 			}
-			$files = array_merge($files, ModulesCssFilesService::get_css_files_always_displayed(), ModulesCssFilesService::get_css_files_running_module_displayed());
 			
 			$css_cache = new CSSCacheManager();
 			$css_cache->set_files($files);

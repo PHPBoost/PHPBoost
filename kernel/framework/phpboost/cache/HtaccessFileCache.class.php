@@ -407,8 +407,8 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('<IfModule mod_expires.c>');
 		$this->add_line('	ExpiresActive On');
 		$this->add_empty_line();
-		$this->add_line('	# Default expiration: 1 day after request');
-		$this->add_line('	ExpiresDefault "access plus 1 day"');
+		$this->add_line('	# Default expiration: 1 week after request');
+		$this->add_line('	ExpiresDefault "access plus 1 week"');
 		$this->add_empty_line();
 		$this->add_line('	# CSS and JS expiration: 1 week after request');
 		$this->add_line('	ExpiresByType text/css "access plus 1 week"');

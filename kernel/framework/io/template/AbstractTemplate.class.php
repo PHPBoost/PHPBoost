@@ -181,17 +181,13 @@ abstract class AbstractTemplate implements Template
 				$all_js .= $value;
 		}
 		
-		$all_js = str_replace('<!--', '', str_replace('-->', '', $all_js));
+		$all_js = str_replace(array('<!--', '-->'), '', $all_js);
 		
 		$generated_page = preg_replace($array_match_js, '', $generated_page);
 		$generated_page = str_replace('</body>', '<script>' . $js_variables_definition . '</script>' . $included_js . '<script>' . $all_js . '</script></body>', $generated_page);
 		
 		// Minifying html
-		if (!Debug::is_debug_mode_enabled())
-		{
-			$generated_page = preg_replace('`^//.+\r\n| //.+\r\n|\t//.+\r\n`isU', '', $generated_page);
-			$generated_page = trim(preg_replace('`([\n]+|[\t]+|<!-- .*?-->)`s', ' ', $generated_page));
-		}
+		$generated_page = trim(preg_replace(array('`^//.+\r\n| //.+\r\n|\t//.+\r\n`isU', '`([\t]+|<!-- .*?-->)`s', '`(\r\n)+|(\n)+`s'), array('', '', "\n"), $generated_page));
 		
 		echo $generated_page;
 	}
