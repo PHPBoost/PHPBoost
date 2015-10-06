@@ -23,7 +23,7 @@
 				$(this).find("#menu-button").on('click', function(){
 					$(this).toggleClass('menu-opened');
 					var mainmenu = $(this).next('ul');
-					if (mainmenu.hasClass('open')) { 
+					if (mainmenu.hasClass('open') && (settings.statique !== true)) { 
 						mainmenu.hide().removeClass('open');
 					}
 					else {
@@ -99,6 +99,7 @@
 						cssmenu.find('select').show();
 					}
 				}
+
 			};
 			resizeFix();
 			return $(window).on('resize', resizeFix);

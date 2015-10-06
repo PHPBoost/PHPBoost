@@ -538,6 +538,7 @@ a.upload-recent-file {
 	line-height: 1;
 	display: block;
 	position: relative;
+	margin: 0;
 }
 .cssmenu:after,
 .cssmenu > ul:after {
@@ -1074,19 +1075,24 @@ header .cssmenu ul ul li a 					{ background: #333333; }
 		position: absolute;
 		right: 0;
 		top: 23px;
-	    padding: 5px 0;
-	    width: 170px;
-	    font-size: 11px;
-	    background: #FFFFFF;
-	    border-radius: 3px;
-	    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-	    border: 1px solid #AAAAAA;
-	    z-index: 10;
+		padding: 5px 0;
+		width: 170px;
+		font-size: 11px;
+		background: #FFFFFF;
+		border-radius: 3px;
+		box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+		border: 1px solid #AAAAAA;
+		z-index: 10;
 	}
 }
 
 /* ---- Variante Static ---- */
 @media (max-width: 768px) {
+	
+	.cssmenu-static #menu-button {
+		cursor: default;
+	}
+
 	.cssmenu-static #menu-button:after,
 	.cssmenu-static #menu-button:before {
 		display: none;
