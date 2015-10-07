@@ -929,25 +929,29 @@ div.cssmenu-group a {
 .cssmenu-actionslinks ul li.has-sub a:after  { top: 9px; }
 .cssmenu-actionslinks ul li.has-sub a:before { top: 6px; }
 
-/* --- Personnalisation de la couleur des liens --- */
+/* --- Personnalisation graphique --- */
 /* ---- Niveau 1 ---- */
 header .cssmenu > ul > li > a 			{ color: #DDDDDD; }
 #menu-left .cssmenu > ul > li > a 		{ color: #444444; }
 #menu-right .cssmenu > ul > li > a 		{ color: #444444; }
+#main .cssmenu > ul > li > a 			{ color: #444444; }
 .cssmenu-actionslinks > ul > li > a 	{ color: #666666; }
 
 header .cssmenu li:hover > a 			{ color: #FFFFFF; }
 #menu-left .cssmenu li:hover > a 		{ color: #666666; }
 #menu-right .cssmenu li:hover > a 		{ color: #666666; }
+#main .cssmenu li:hover > a 			{ color: #666666; }
 
 /* ---- Niveau 2 ---- */
 .cssmenu ul ul li a 			    	{ color: #DDDDDD; }
+#main .cssmenu ul ul li a 				{ color: #333333; }
 #menu-left .cssmenu ul ul li a  		{ color: #333333; }
 #menu-right .cssmenu ul ul li a 		{ color: #333333; }
 .cssmenu-actionslinks li ul li a    	{ color: #666666; }
 
 .cssmenu ul ul li:hover > a		    	{ color: #333333; }
 header .cssmenu ul ul li:hover > a 		{ color: #FFFFFF; }
+#main .cssmenu ul ul li:hover > a 		{ color: #555555; }
 #menu-left .cssmenu ul ul li:hover > a 	{ color: #555555; }
 #menu-right .cssmenu ul ul li:hover > a { color: #555555; }
 .cssmenu-actionslinks li:hover > a 		{ color: #333333; }
@@ -1097,6 +1101,15 @@ header .cssmenu ul ul li a 					{ background: #333333; }
 	.cssmenu-static #menu-button:before {
 		display: none;
 	}
+
+	.cssmenu-static ul li {
+		border-top: none;
+	}
+
+	.cssmenu-static > ul > li > a,
+	.cssmenu-static ul ul > li > a {
+		padding-bottom: 5px;
+	}
 }
 
 /* ---- Personnalisation graphique du bouton responsive---- */
@@ -1105,6 +1118,8 @@ header .cssmenu ul ul li a 					{ background: #333333; }
 
 	.cssmenu #menu-button:before { background: #DDDDDD; }
 
+	#main .cssmenu #menu-button { color: #111111; }
+	
 	.cssmenu #menu-button.menu-opened:after,
 	.cssmenu #menu-button.menu-opened:before 		{ background: #DDDDDD; }
 
