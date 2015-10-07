@@ -7,7 +7,7 @@
 			jQuery("#cssmenu-${escape(ID)}").menumaker({
 				title: "{TITLE}",
 				format: "multitoggle",
-				statique: true,
+				menu_static: true,
 				breakpoint: 768
 			});
 		</script>
