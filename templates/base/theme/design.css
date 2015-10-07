@@ -27,7 +27,6 @@ body {
 }
 
 @media ( max-width: 768px ) {
-
 	body {
 		font-size: 1.4em;
 	}
@@ -111,54 +110,47 @@ div#global {
 	max-width: 1024px;
 	margin: 1.5em auto 0 auto;
 	padding: 0 10px;
-	flex: 1;
-	ms-flex: 1; /* IE10 Tricks */
+	flex-direction: row;
+	ms-flex-direction: row; /* IE10 Tricks */
 }
 
-aside#menu-left,
-aside#menu-right {
-    width: auto;
+div#global,
+#main {
+	flex: 1;
+	ms-flex: 1; /* IE10 Tricks */
+	display: flex;
+	display: ms-flexbox; /* IE10 Tricks */
+	min-height: 100%;
 }
 
 #main {
-   width: auto;
+	padding: 10px;
+	flex-direction: column;
+	ms-flex-direction: column; /* IE10 Tricks */
 }
 
-
-/* CSS applique aux écrans PC */
-@media ( min-width: 769px ) {
-
-	/* --- Menu gauche --- */
-	aside#menu-left {
-		float: left;
-		width: 19%;
-		margin-right: 1%;
-	}
-
-	/* --- Menu droit --- */
+@media (min-width: 769px) {
+	aside#menu-left,
 	aside#menu-right {
-		float: right;
-		width: 19%;
-		margin-left: 1%;
+	    max-width: 200px; 
 	}
 
-	/* --- Menu central : main --- */
-	div#main {
-		float: left;
-		width: 100%;
-		overflow: hidden;
-	}
-
-	div#main.main-with-left,
-	div#main.main-with-right {
-		width: 80%;
-	}
-
-	div#main.main-with-left.main-with-right {
-		width: 60%;
-	}
-
+	#main 			 { order: 2; }
+	aside#menu-left  { order: 1; }
+	aside#menu-right { order: 3; }
 }
+
+@media (max-width: 768px) {
+	div#global {
+		flex-direction: column;
+		ms-flex-direction: column; /* IE10 Tricks */
+	}
+
+	#main 			 { order: 1; }
+	aside#menu-left  { order: 2; }
+	aside#menu-right { order: 3; }
+}
+
 
 /* -- Contenu de la page --
 --------------------------------------*/
@@ -180,7 +172,6 @@ div#bottom-content {
 
 /* --- Emplacement au dessus du pied de page --- */
 div#top-footer {
-	clear: both;
 	padding: 2% 0;
 }
 

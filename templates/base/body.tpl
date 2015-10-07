@@ -37,14 +37,6 @@
 		</div>
 		# ENDIF #
 
-		# IF C_MENUS_LEFT_CONTENT #
-		<aside id="menu-left">
-			# START menus_left #
-			{menus_left.MENU}
-			# END menus_left #
-		</aside>
-		# ENDIF #
-
 		<div id="main" class="# IF C_MENUS_LEFT_CONTENT #main-with-left# ENDIF ## IF C_MENUS_RIGHT_CONTENT # main-with-right# ENDIF #" role="main">
 			# IF C_MENUS_TOPCENTRAL_CONTENT #
 			<div id="top-content">
@@ -90,6 +82,14 @@
 			# ENDIF #
 		</div>
 
+		# IF C_MENUS_LEFT_CONTENT #
+		<aside id="menu-left">
+			# START menus_left #
+			{menus_left.MENU}
+			# END menus_left #
+		</aside>
+		# ENDIF #
+
 		# IF C_MENUS_RIGHT_CONTENT #
 		<aside id="menu-right">
 			# START menus_right #
@@ -97,6 +97,9 @@
 			# END menus_right #
 		</aside>
 		# ENDIF #
+
+		<div class="spacer"></div>
+	</div>
 
 		# IF C_MENUS_TOP_FOOTER_CONTENT #
 		<div id="top-footer">
@@ -107,8 +110,6 @@
 		</div>
 		# ENDIF #
 
-		<div class="spacer"></div>
-	</div>
 
 	<footer id="footer">
 
