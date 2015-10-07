@@ -13,7 +13,7 @@
 			format: "dropdown",
 			sticky: false,
 			actionslinks: false,
-			statique: false,
+			menu_static: false,
 		}, options);
 
 		return this.each(function() {
@@ -23,7 +23,7 @@
 				$(this).find("#menu-button").on('click', function(){
 					$(this).toggleClass('menu-opened');
 					var mainmenu = $(this).next('ul');
-					if (mainmenu.hasClass('open') && (settings.statique !== true)) { 
+					if (mainmenu.hasClass('open') && (settings.menu_static !== true)) { 
 						mainmenu.hide().removeClass('open');
 					}
 					else {
@@ -72,7 +72,7 @@
 			}
 
 			if (settings.sticky === true) cssmenu.css('position', 'fixed');
-			if (settings.statique === true) {
+			if (settings.menu_static === true) {
 				cssmenu.find("#menu-button").removeClass("menu-opened");
 				cssmenu.find('ul').show();
 			}
