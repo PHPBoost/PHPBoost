@@ -1040,7 +1040,8 @@ div.field-required:after {
 	top: 8px;
 }
 
-.form-field-date.field-required:after {
+.form-field-date.field-required:after,
+.form-field-date.picture-status-constraint:after {
 	right: 24px;
 }
 
