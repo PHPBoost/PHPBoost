@@ -50,7 +50,7 @@
 		<form action="pm{convers.U_USER_ACTION_PM}" method="post" onsubmit="javascript:return Confirm_pm();">
 			<section>
 				<header>
-					<h1>&bull; {convers.U_USER_VIEW} &raquo; {convers.U_PM_BOX}</h1>
+					<h1>{convers.U_PM_BOX}</h1>
 				</header>
 				<div class="content">
 					<div style="float:right;">{L_PRIVATE_MSG}: {convers.PM_POURCENT}</div>
@@ -232,7 +232,7 @@
 		<form action="pm{edit_pm.U_ACTION_EDIT}" method="post" onsubmit="return check_form_convers();">
 			<section>
 				<header>
-					<h1>&bull; {edit_pm.U_USER_VIEW} &raquo; {edit_pm.U_PM_BOX}</h1>
+					<h1>{edit_pm.U_PM_BOX}</h1>
 				</header>
 				<div class="content">
 					<div class="fieldset-content">
