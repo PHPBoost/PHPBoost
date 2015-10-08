@@ -1,4 +1,4 @@
-		<table>
+		<table id="stats">
 			<thead>
 				<tr>
 					<th colspan="5">

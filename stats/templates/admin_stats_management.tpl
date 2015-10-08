@@ -1,5 +1,5 @@
 	<div id="admin-contents" style="margin-left:0;padding:10px">
-		<table>
+		<table id="stats">
 			<thead>
 				<tr>
 					<th colspan="5" style="width: 20%;">

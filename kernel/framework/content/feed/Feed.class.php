@@ -237,9 +237,14 @@ class Feed
 	 */
 	private static function update_cache($module_id, $name, $data, $idcat = 0)
 	{
-		$file = new File(FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php');
-		$file->write('<?php $__feed_object = unserialize(' . var_export($data->serialize(), true) . '); ?>');
-		$file->close();
+		if ($data instanceof FeedData)
+		{
+			$file = new File(FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php');
+			$file->write('<?php $__feed_object = unserialize(' . var_export($data->serialize(), true) . '); ?>');
+			$file->close();
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -265,7 +270,8 @@ class Feed
 				$template->put_all($template);
 			}
 		}
-
+		
+		$feed_data_cache_file_exists = true;
 		// Get the cache content or recreate it if not existing
 		$feed_data_cache_file = FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php';
 		if (!file_exists($feed_data_cache_file))
@@ -280,20 +286,20 @@ class Feed
 			}
 			$feed_provider = $provider->get_extension_point(FeedProvider::EXTENSION_POINT);
 			$data = $feed_provider->get_feed_data_struct($idcat);
-			self::update_cache($module_id, $name, $data, $idcat);
+			$feed_data_cache_file_exists = self::update_cache($module_id, $name, $data, $idcat);
 		}
 		
-		$result = include $feed_data_cache_file;
-		if ($result === false)
+		if ($feed_data_cache_file_exists)
 		{
-			user_error(sprintf(ERROR_GETTING_CACHE, $module_id, $idcat), E_USER_WARNING);
-			return '';
-		}
-		else
-		{
+			include $feed_data_cache_file;
 			$feed = new Feed($module_id, $name);
 			$feed->load_data($__feed_object);
 			return $feed->export($template, $number, $begin_at);
+		}
+		else
+		{
+			MessageHelper::display(sprintf(ERROR_GETTING_CACHE, $module_id, $idcat), MessageHelper::WARNING);
+			return '';
 		}
 	}
 

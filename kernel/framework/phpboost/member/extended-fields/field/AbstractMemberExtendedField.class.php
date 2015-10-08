@@ -140,6 +140,9 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 				case 'field_type':
 					$this->disable_fields_configuration[] = $name;
 					break;
+				case 'field_required':
+					$this->disable_fields_configuration[] = $name;
+					break;
 				case 'regex':
 					$this->disable_fields_configuration[] = $name;
 					break;

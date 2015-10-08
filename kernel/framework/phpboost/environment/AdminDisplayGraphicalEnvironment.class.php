@@ -120,7 +120,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'BODY' => $body_template
 		));
 		
-		$template->display(true);
+		$template->display();
 	}
 	
 	private static function get_subheader_tpl()

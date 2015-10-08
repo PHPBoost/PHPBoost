@@ -263,6 +263,7 @@ class AdminExtendedFieldMemberAddController extends AdminController
 			'description' => array(), 
 			'possible_values' => array(), 
 			'default_value' => array(), 
+			'field_required' => array(), 
 			'regex' => array(), 
 			'authorizations' => array()
 		);

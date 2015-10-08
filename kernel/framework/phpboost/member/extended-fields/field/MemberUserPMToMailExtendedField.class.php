@@ -30,7 +30,7 @@ class MemberUserPMToMailExtendedField extends AbstractMemberExtendedField
 	public function __construct()
 	{
 		parent::__construct();
-		$this->set_disable_fields_configuration(array('regex', 'possible_values', 'default_value'));
+		$this->set_disable_fields_configuration(array('field_required', 'regex', 'possible_values', 'default_value'));
 		$this->set_name(LangLoader::get_message('type.user_pmtomail','admin-user-common'));
 		$this->field_used_once = true;
 		$this->field_used_phpboost_config = true;
