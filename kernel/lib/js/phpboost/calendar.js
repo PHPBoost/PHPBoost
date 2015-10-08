@@ -83,7 +83,7 @@ function xmlhttprequest_calendar(field, vars)
 	jQuery.ajax({
 		url: filename,
 		type: "get",
-		data: {},
+		data: {'token' : TOKEN},
 		success: function(returnData){
 			jQuery('#' + field).html(returnData).fadeIn();
 		}

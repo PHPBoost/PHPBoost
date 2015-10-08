@@ -46,7 +46,7 @@ $input_date = $request->get_getvalue('input_date', '');
 //Vide par défaut => Type date.
 $calendar_type = !empty($date) ? 'timestamp' : 'date';
 $field = !empty($field) ? trim($field) : 'calendar';
-$lyear = !empty($request->get_getint('lyear', 0)) ? '&amp;lyear=1' : '';
+$lyear = $request->get_getint('lyear', 0) ? '&amp;lyear=1' : '';
 
 $date_lang = LangLoader::get('date-common');
 $tpl = new FileTemplate('framework/util/mini_calendar_response.tpl');
