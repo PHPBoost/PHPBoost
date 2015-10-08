@@ -211,7 +211,7 @@ class UserEditProfileController extends AbstractController
 			$form->add_constraint(new FormConstraintFieldsInequality($login, $password));
 		}
 
-		if (in_array(FacebookAuthenticationMethod::AUTHENTICATION_METHOD, $activated_auth_types))
+		if (in_array('facebook', $activated_auth_types))
 		{
 			if (in_array(FacebookAuthenticationMethod::AUTHENTICATION_METHOD, $this->user_auth_types))
 			{
@@ -223,7 +223,7 @@ class UserEditProfileController extends AbstractController
 			}
 		}
 		
-		if (in_array(GoogleAuthenticationMethod::AUTHENTICATION_METHOD, $activated_auth_types))
+		if (in_array('google', $activated_auth_types))
 		{
 			if (in_array(GoogleAuthenticationMethod::AUTHENTICATION_METHOD, $this->user_auth_types))
 			{
