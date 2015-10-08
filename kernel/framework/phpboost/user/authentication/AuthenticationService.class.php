@@ -94,10 +94,10 @@ class AuthenticationService
 		
 		$types = array(PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD); 
 		
-		if ($authentication_config->is_fb_auth_enabled())
+		if ($authentication_config->is_fb_auth_available())
 			$types[] = FacebookAuthenticationMethod::AUTHENTICATION_METHOD;
 		
-		if ($authentication_config->is_google_auth_enabled())
+		if ($authentication_config->is_google_auth_available())
 			$types[] = GoogleAuthenticationMethod::AUTHENTICATION_METHOD;
 		
 		return $types;

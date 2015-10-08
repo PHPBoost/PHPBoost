@@ -53,6 +53,12 @@ class AuthenticationConfig extends AbstractConfigData
 		return $this->get_property(self::FB_AUTH_ENABLED);
 	}
 	
+	public function is_fb_auth_available()
+	{
+		$server_configuration = new ServerConfiguration();
+		return $this->get_property(self::FB_AUTH_ENABLED) && $server_configuration->has_curl_library();
+	}
+	
 	public function get_fb_app_id()
 	{
 		return $this->get_property(self::FB_APP_ID);
@@ -86,6 +92,12 @@ class AuthenticationConfig extends AbstractConfigData
 	public function is_google_auth_enabled()
 	{
 		return $this->get_property(self::GOOGLE_AUTH_ENABLED);
+	}
+	
+	public function is_google_auth_available()
+	{
+		$server_configuration = new ServerConfiguration();
+		return $this->get_property(self::GOOGLE_AUTH_ENABLED) && $server_configuration->has_curl_library();
 	}
 
 	public function get_google_client_id()

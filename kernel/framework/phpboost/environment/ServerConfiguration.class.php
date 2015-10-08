@@ -63,6 +63,14 @@ class ServerConfiguration
 	}
 
 	/**
+	 * @return true if curl libray is available, else false.
+	 */
+	public function has_curl_library()
+	{
+		return @extension_loaded('curl');
+	}
+
+	/**
 	 * @return true if url rewriting is available, else false.
 	 */
 	public function has_url_rewriting()

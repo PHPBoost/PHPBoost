@@ -40,6 +40,7 @@ class AdminMemberConfigController extends AdminController
 	private $user_account_config;
 	private $security_config;
 	private $authentication_config;
+	private $server_configuration;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -72,6 +73,7 @@ class AdminMemberConfigController extends AdminController
 		$this->user_account_config = UserAccountsConfig::load();
 		$this->security_config = SecurityConfig::load();
 		$this->authentication_config = AuthenticationConfig::load();
+		$this->server_configuration = new ServerConfiguration();
 	}
 
 	private function build_form()
@@ -135,45 +137,52 @@ class AdminMemberConfigController extends AdminController
 		$fieldset = new FormFieldsetHTML('authentication_config', $this->lang['members.config-authentication']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldCheckbox('fb_auth_enabled', $this->lang['authentication.config.fb-auth-enabled'], $this->authentication_config->is_fb_auth_enabled(),
-			array('description' => $this->lang['authentication.config.fb-auth-enabled-explain'], 'events' => array('click' => '
-				if (HTMLForms.getField("fb_auth_enabled").getValue()) { 
-					HTMLForms.getField("fb_app_id").enable(); 
-					HTMLForms.getField("fb_app_key").enable(); 
-				} else { 
-					HTMLForms.getField("fb_app_id").disable(); 
-					HTMLForms.getField("fb_app_key").disable(); 
-				}'
-			)
-		)));
-		
-		$fieldset->add_field(new FormFieldTextEditor('fb_app_id', $this->lang['authentication.config.fb-app-id'], $this->authentication_config->get_fb_app_id(), 
-			array('required' => true, 'hidden' => !$this->authentication_config->is_fb_auth_enabled())
-		));
-		
-		$fieldset->add_field(new FormFieldPasswordEditor('fb_app_key', $this->lang['authentication.config.fb-app-key'], $this->authentication_config->get_fb_app_key(), 
-			array('required' => true, 'hidden' => !$this->authentication_config->is_fb_auth_enabled())
-		));
-		
-		$fieldset->add_field(new FormFieldCheckbox('google_auth_enabled', $this->lang['authentication.config.google-auth-enabled'], $this->authentication_config->is_google_auth_enabled(),
-			array('description' => $this->lang['authentication.config.google-auth-enabled-explain'], 'events' => array('click' => '
-				if (HTMLForms.getField("google_auth_enabled").getValue()) { 
-					HTMLForms.getField("google_client_id").enable(); 
-					HTMLForms.getField("google_client_secret").enable(); 
-				} else { 
-					HTMLForms.getField("google_client_id").disable(); 
-					HTMLForms.getField("google_client_secret").disable(); 
-				}'
-			)
-		)));
-		
-		$fieldset->add_field(new FormFieldTextEditor('google_client_id', $this->lang['authentication.config.google-client-id'], $this->authentication_config->get_google_client_id(), 
-			array('required' => true, 'hidden' => !$this->authentication_config->is_google_auth_enabled())
-		));
-		
-		$fieldset->add_field(new FormFieldPasswordEditor('google_client_secret', $this->lang['authentication.config.google-client-secret'], $this->authentication_config->get_google_client_secret(), 
-			array('required' => true, 'hidden' => !$this->authentication_config->is_google_auth_enabled())
-		));
+		if ($this->server_configuration->has_curl_library())
+		{
+			$fieldset->add_field(new FormFieldCheckbox('fb_auth_enabled', $this->lang['authentication.config.fb-auth-enabled'], $this->authentication_config->is_fb_auth_enabled(),
+				array('description' => $this->lang['authentication.config.fb-auth-enabled-explain'], 'events' => array('click' => '
+					if (HTMLForms.getField("fb_auth_enabled").getValue()) { 
+						HTMLForms.getField("fb_app_id").enable(); 
+						HTMLForms.getField("fb_app_key").enable(); 
+					} else { 
+						HTMLForms.getField("fb_app_id").disable(); 
+						HTMLForms.getField("fb_app_key").disable(); 
+					}'
+				)
+			)));
+			
+			$fieldset->add_field(new FormFieldTextEditor('fb_app_id', $this->lang['authentication.config.fb-app-id'], $this->authentication_config->get_fb_app_id(), 
+				array('required' => true, 'hidden' => !$this->authentication_config->is_fb_auth_enabled())
+			));
+			
+			$fieldset->add_field(new FormFieldPasswordEditor('fb_app_key', $this->lang['authentication.config.fb-app-key'], $this->authentication_config->get_fb_app_key(), 
+				array('required' => true, 'hidden' => !$this->authentication_config->is_fb_auth_enabled())
+			));
+			
+			$fieldset->add_field(new FormFieldCheckbox('google_auth_enabled', $this->lang['authentication.config.google-auth-enabled'], $this->authentication_config->is_google_auth_enabled(),
+				array('description' => $this->lang['authentication.config.google-auth-enabled-explain'], 'events' => array('click' => '
+					if (HTMLForms.getField("google_auth_enabled").getValue()) { 
+						HTMLForms.getField("google_client_id").enable(); 
+						HTMLForms.getField("google_client_secret").enable(); 
+					} else { 
+						HTMLForms.getField("google_client_id").disable(); 
+						HTMLForms.getField("google_client_secret").disable(); 
+					}'
+				)
+			)));
+			
+			$fieldset->add_field(new FormFieldTextEditor('google_client_id', $this->lang['authentication.config.google-client-id'], $this->authentication_config->get_google_client_id(), 
+				array('required' => true, 'hidden' => !$this->authentication_config->is_google_auth_enabled())
+			));
+			
+			$fieldset->add_field(new FormFieldPasswordEditor('google_client_secret', $this->lang['authentication.config.google-client-secret'], $this->authentication_config->get_google_client_secret(), 
+				array('required' => true, 'hidden' => !$this->authentication_config->is_google_auth_enabled())
+			));
+		}
+		else
+		{
+			$fieldset->add_field(new FormFieldFree('', '', MessageHelper::display($this->lang['authentication.config.curl_extension_disabled'], MessageHelper::WARNING)->render()));
+		}
 		
 		$fieldset = new FormFieldsetHTML('avatar_management', $this->lang['members.config.avatars-management']);
 		$form->add_fieldset($fieldset);
@@ -265,25 +274,28 @@ class AdminMemberConfigController extends AdminController
 		
 		SecurityConfig::save();
 		
-		if ($this->form->get_value('fb_auth_enabled'))
+		if ($this->server_configuration->has_curl_library())
 		{
-			$this->authentication_config->enable_fb_auth();
-			$this->authentication_config->set_fb_app_id($this->form->get_value('fb_app_id'));
-			$this->authentication_config->set_fb_app_key($this->form->get_value('fb_app_key'));
+			if ($this->form->get_value('fb_auth_enabled'))
+			{
+				$this->authentication_config->enable_fb_auth();
+				$this->authentication_config->set_fb_app_id($this->form->get_value('fb_app_id'));
+				$this->authentication_config->set_fb_app_key($this->form->get_value('fb_app_key'));
+			}
+			else
+				$this->authentication_config->disable_fb_auth();
+			
+			if ($this->form->get_value('google_auth_enabled'))
+			{
+				$this->authentication_config->enable_google_auth();
+				$this->authentication_config->set_google_client_id($this->form->get_value('google_client_id'));
+				$this->authentication_config->set_google_client_secret($this->form->get_value('google_client_secret'));
+			}
+			else
+				$this->authentication_config->disable_google_auth();
+			
+			AuthenticationConfig::save();
 		}
-		else
-			$this->authentication_config->disable_fb_auth();
-		
-		if ($this->form->get_value('google_auth_enabled'))
-		{
-			$this->authentication_config->enable_google_auth();
-			$this->authentication_config->set_google_client_id($this->form->get_value('google_client_id'));
-			$this->authentication_config->set_google_client_secret($this->form->get_value('google_client_secret'));
-		}
-		else
-			$this->authentication_config->disable_google_auth();
-		
-		AuthenticationConfig::save();
 		
 		$this->user_account_config->set_avatar_upload_enabled($this->form->get_value('upload_avatar_server'));
 		$this->user_account_config->set_default_avatar_name_enabled($this->form->get_value('default_avatar_activation'));

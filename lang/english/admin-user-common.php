@@ -70,6 +70,7 @@ $lang['security.config.login-and-email-forbidden-in-password'] = 'Forbid email a
 
 //Authentication Configuration
 $lang['members.config-authentication'] = 'Authentication configuration';
+$lang['authentication.config.curl_extension_disabled'] = '<b>php_curl</b> extension is disabled on this server. Enable it to use Facebook and Google authentication methods.';
 $lang['authentication.config.fb-auth-enabled'] = 'Enable Facebook authentication';
 $lang['authentication.config.fb-auth-enabled-explain'] = 'Go to <a href="https://developers.facebook.com">https://developers.facebook.com</a> to create your id';
 $lang['authentication.config.fb-app-id'] = 'Facebook App ID';
