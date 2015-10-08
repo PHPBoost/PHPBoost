@@ -58,7 +58,7 @@ class InstallationServices
 			LangLoader::set_locale($locale);
 		}
 		$this->messages = LangLoader::get('install', 'install');
-        $this->load_distribution_configuration();
+		$this->load_distribution_configuration();
 	}
 
 	public static function get_available_langs()
@@ -146,7 +146,7 @@ class InstallationServices
 	public function create_phpboost_tables($dbms, $host, $port, $database, $login, $password, $tables_prefix)
 	{
 		$db_connection_data = $this->initialize_db_connection($dbms, $host, $port, $database, $login, $password, $tables_prefix);
-        $this->create_tables();
+		$this->create_tables();
 		$this->write_connection_config_file($db_connection_data, $tables_prefix);
 		$this->generate_installation_token();
 		$this->regenerate_cache();
@@ -172,10 +172,10 @@ class InstallationServices
 		return true;
 	}
 
-    private function load_distribution_configuration()
-    {
-        $this->distribution_config = parse_ini_file(PATH_TO_ROOT . '/install/distribution.ini');
-    }
+	private function load_distribution_configuration()
+	{
+		$this->distribution_config = parse_ini_file(PATH_TO_ROOT . '/install/distribution.ini');
+	}
 
 	private function generate_website_configuration($server_url, $server_path, $site_name, $site_slogan = '', $site_desc = '', $site_timezone = '')
 	{
@@ -206,7 +206,7 @@ class InstallationServices
 		GeneralConfig::save();
 	}
 
-	private function save_server_environnement_config()
+	public function save_server_environnement_config()
 	{
 		$server_configuration = new ServerConfiguration();
 		$server_environment_config = ServerEnvironmentConfig::load();
@@ -394,10 +394,10 @@ class InstallationServices
 	{
 		$db_config_content = '<?php' . "\n" .
 			'$db_connection_data = ' . var_export($db_connection_data, true) . ";\n\n" .
-            'defined(\'PREFIX\') or define(\'PREFIX\' , \'' . $tables_prefix . '\');'. "\n" .
-            'defined(\'PHPBOOST_INSTALLED\') or define(\'PHPBOOST_INSTALLED\', true);' . "\n" .
-            'require_once PATH_TO_ROOT . \'/kernel/db/tables.php\';' . "\n" .
-        '?>';
+			'defined(\'PREFIX\') or define(\'PREFIX\' , \'' . $tables_prefix . '\');'. "\n" .
+			'defined(\'PHPBOOST_INSTALLED\') or define(\'PHPBOOST_INSTALLED\', true);' . "\n" .
+			'require_once PATH_TO_ROOT . \'/kernel/db/tables.php\';' . "\n" .
+		'?>';
 
 		$db_config_file = new File(PATH_TO_ROOT . '/kernel/db/config.php');
 		$db_config_file->write($db_config_content);

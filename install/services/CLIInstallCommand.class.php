@@ -194,6 +194,7 @@ class CLIInstallCommand implements CLICommand
 		{
 			return false;
 		}
+		$this->installation->save_server_environnement_config();
 		CLIOutput::writeln('installation successfull');
 		return true;
 	}
