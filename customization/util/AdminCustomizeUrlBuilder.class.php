@@ -52,10 +52,19 @@ class AdminCustomizeUrlBuilder
 	/**
 	 * @return Url
 	 */
-    public static function editor_file($theme = '', $file = '')
+    public static function editor_css_file($theme = '', $file = '')
 	{
 		$url = !empty($file) ? $theme . '/' . $file : $theme;
-		return DispatchManager::get_url(self::$dispatcher, '/editor/'. $url);
+		return DispatchManager::get_url(self::$dispatcher, '/editor/css/'. $url);
+	}
+
+	/**
+	 * @return Url
+	 */
+    public static function editor_tpl_file($theme = '', $file = '')
+	{
+		$url = !empty($file) ? $theme . '/' . $file : $theme;
+		return DispatchManager::get_url(self::$dispatcher, '/editor/tpl/'. $url);
 	}
 }
 ?>

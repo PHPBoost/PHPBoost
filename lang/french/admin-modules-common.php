@@ -30,6 +30,8 @@
  ####################################################
 $lang = array();
 
+$lang['module'] = 'Module';
+
 //Title
 $lang['modules.module_management'] = 'Gestion des modules';
 $lang['modules.add_module'] = 'Ajouter un module';

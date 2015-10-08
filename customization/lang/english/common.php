@@ -53,8 +53,12 @@ $lang['customization.favicon.current.change'] = 'Change your favicon';
 $lang['customization.favicon.current.erased'] = '<span style="color:#B22222;font-weight:bold;">The favicon that you saved is visibly removed from the server, please replace it with another</span>';
 $lang['customization.favicon.error'] = 'The favicon could not be changed';
 
+$lang['customization.editor.files.select'] = 'Select the file you want to edit';
+$lang['customization.editor.files.content'] = 'File Contents';
+
 $lang['css-files'] = 'CSS Files';
 $lang['customization.editor.css-files'] = 'CSS Files Editor';
-$lang['customization.editor.css-files.select'] = 'Select the file you want to edit';
-$lang['customization.editor.css-files.content'] = 'File Contents';
+
+$lang['tpl-files'] = 'TPL Files';
+$lang['customization.editor.tpl-files'] = 'TPL Files Editor';
 ?>

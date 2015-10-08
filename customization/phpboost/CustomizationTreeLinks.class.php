@@ -37,7 +37,8 @@ class CustomizationTreeLinks implements ModuleTreeLinksExtensionPoint
 		
 		$tree->add_link(new AdminModuleLink($lang['interface'], AdminCustomizeUrlBuilder::customize_interface()));
 		$tree->add_link(new AdminModuleLink($lang['favicon'], AdminCustomizeUrlBuilder::customize_favicon()));
-		$tree->add_link(new AdminModuleLink($lang['css-files'], AdminCustomizeUrlBuilder::editor_file()));
+		$tree->add_link(new AdminModuleLink($lang['css-files'], AdminCustomizeUrlBuilder::editor_css_file()));
+		$tree->add_link(new AdminModuleLink($lang['tpl-files'], AdminCustomizeUrlBuilder::editor_tpl_file()));
 		
 		return $tree;
 	}

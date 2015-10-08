@@ -125,6 +125,10 @@
 [b]Newsletter[/b]
 [*] Ajout de la possibilité de supprimer une archive
 
+[b]Personnalisation[/b]
+[*] [color=red]Nouveauté :[/color] Possibilité de personnaliser les fichiers css des modules
+[*] [color=red]Nouveauté :[/color] Possibilité de personnaliser les fichiers templates du thème (body.tpl et frame.tpl) et ceux des modules
+
 [b]ReCaptcha[/b]
 [*] Ajout d'une page de configuration pour entrer les identifiants permettant de mettre en place ReCaptcha v2
 
