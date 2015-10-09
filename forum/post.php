@@ -111,8 +111,6 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		}
 
 		$tpl = new FileTemplate('forum/forum_edit_msg.tpl');
-		$tpl_top = new FileTemplate('forum/forum_top.tpl');
-		$tpl_bottom = new FileTemplate('forum/forum_bottom.tpl');
 
 		$contents = retrieve(POST, 'contents', '', TSTRING);
 		$post_update = retrieve(POST, 'p_update', '', TSTRING_UNCHANGE);
@@ -144,13 +142,10 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		);
 
 		$tpl->put_all($vars_tpl);
-		$tpl_top->put_all($vars_tpl);
-		$tpl_bottom->put_all($vars_tpl);
 		
-		$tpl->put('forum_top', $tpl_top);
-		$tpl->put('forum_bottom', $tpl_bottom);
-		
+		$tpl->put('forum_top', $tpl_top->display());
 		$tpl->display();
+		$tpl->put('forum_bottom', $tpl_bottom->display());
 	}
 	elseif ($new_get === 'topic' && empty($error_get)) //Nouveau topic.
 	{
@@ -216,8 +211,6 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 			$tpl = new FileTemplate('forum/forum_post.tpl');
-			$tpl_top = new FileTemplate('forum/forum_top.tpl');
-			$tpl_bottom = new FileTemplate('forum/forum_bottom.tpl');
 
 			$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
 			$subtitle = retrieve(POST, 'desc', '', TSTRING_UNCHANGE);
@@ -310,13 +303,10 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			);
 
 			$tpl->put_all($vars_tpl);
-			$tpl_top->put_all($vars_tpl);
-			$tpl_bottom->put_all($vars_tpl);
 			
-			$tpl->put('forum_top', $tpl_top);
-			$tpl->put('forum_bottom', $tpl_bottom);
-			
+			$tpl->put('forum_top', $tpl_top->display());
 			$tpl->display();
+			$tpl->put('forum_bottom', $tpl_bottom->display());
 		}
 		else
 		{
@@ -324,8 +314,6 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 			$tpl = new FileTemplate('forum/forum_post.tpl');
-			$tpl_top = new FileTemplate('forum/forum_top.tpl');
-			$tpl_bottom = new FileTemplate('forum/forum_bottom.tpl');
 
 			if (ForumAuthorizationsService::check_authorizations($id_get)->moderation())
 			{
@@ -385,13 +373,10 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			);
 
 			$tpl->put_all($vars_tpl);
-			$tpl_top->put_all($vars_tpl);
-			$tpl_bottom->put_all($vars_tpl);
 			
-			$tpl->put('forum_top', $tpl_top);
-			$tpl->put('forum_bottom', $tpl_bottom);
-			
+			$tpl->put('forum_top', $tpl_top->display());
 			$tpl->display();
+			$tpl->put('forum_bottom', $tpl_bottom->display());
 		}
 	}
 	elseif ($new_get === 'n_msg' && empty($error_get)) //Nouveau message
@@ -564,8 +549,6 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			elseif (!empty($preview_topic))
 			{
 				$tpl = new FileTemplate('forum/forum_post.tpl');
-				$tpl_top = new FileTemplate('forum/forum_top.tpl');
-				$tpl_bottom = new FileTemplate('forum/forum_bottom.tpl');
 				
 				$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
 				$subtitle = retrieve(POST, 'desc', '', TSTRING_UNCHANGE);
@@ -659,19 +642,14 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				);
 
 				$tpl->put_all($vars_tpl);
-				$tpl_top->put_all($vars_tpl);
-				$tpl_bottom->put_all($vars_tpl);
 				
-				$tpl->put('forum_top', $tpl_top);
-				$tpl->put('forum_bottom', $tpl_bottom);
-				
+				$tpl->put('forum_top', $tpl_top->display());
 				$tpl->display();
+				$tpl->put('forum_bottom', $tpl_bottom->display());
 			}
 			else
 			{
 				$tpl = new FileTemplate('forum/forum_post.tpl');
-				$tpl_top = new FileTemplate('forum/forum_top.tpl');
-				$tpl_bottom = new FileTemplate('forum/forum_bottom.tpl');
 
 				$contents = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'contents', 'WHERE id = :id', array('id' => $id_first));
 
@@ -698,22 +676,19 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				$poll = array('question' => '', 'answers' => '', 'votes' => '', 'type' => '');
 				try {
 					$poll = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_poll', array('question', 'answers', 'votes', 'type'), 'WHERE idtopic=:id', array('id' => $idt_get));
-				} catch (RowNotFoundException $e) {
-					$error_controller = PHPBoostErrors::unexisting_element();
-					DispatchManager::redirect($error_controller);
-				}
+				} catch (RowNotFoundException $e) {}
 				
 				$array_answer = explode('|', $poll['answers']);
 				$array_votes = explode('|', $poll['votes']);
 
 				$TmpTemplate = new FileTemplate('forum/forum_generic_results.tpl');
 				$module_data_path = $TmpTemplate->get_pictures_data_path();
-
+				
 				//Affichage du lien pour changer le display_msg du topic et autorisation d'édition.
 				if ($config->is_message_before_topic_title_displayed() && ($is_modo || AppContext::get_current_user()->get_id() == $topic['user_id']))
 				{
 					$img_display = $topic['display_msg'] ? 'fa-msg-not-display' : 'fa-msg-display';
-					$tpl->put_all(array(
+					$tpl_bottom->put_all(array(
 						'C_DISPLAY_MSG' => true,
 						'ICON_DISPLAY_MSG' => $config->is_message_before_topic_title_icon_displayed() ? '<i class="fa ' . $img_display . '"></i>' : '',
 						'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $config->get_message_when_topic_is_solved() : $config->get_message_when_topic_is_unsolved(),
@@ -747,7 +722,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					));
 					$nbr_poll_field++;
 				}
-
+				
 				$vars_tpl = array(
 					'FORUM_NAME' => $config->get_forum_name(),
 					'TITLE' => $topic['title'],
@@ -760,8 +735,8 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					'KERNEL_EDITOR' => $editor->display(),
 					'NBR_POLL_FIELD' => $nbr_poll_field,
 					'NO_DISPLAY_POLL' => !empty($poll['question']) ? 'false' : 'true',
-					'C_DELETE_POLL' => ($is_modo) ? true : false, //Suppression d'un sondage => modo uniquement.
-					'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 19) ? true : false,
+					'C_DELETE_POLL' => $is_modo, //Suppression d'un sondage => modo uniquement.
+					'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 19),
 					'U_ACTION' => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m . '&amp;token=' . AppContext::get_session()->get_token()),
 					'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $category->get_name() . '</a>',
 					'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . $topic['title'] . '</a>',
@@ -802,13 +777,10 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				}
 
 				$tpl->put_all($vars_tpl);
-				$tpl_top->put_all($vars_tpl);
-				$tpl_bottom->put_all($vars_tpl);
 				
-				$tpl->put('forum_top', $tpl_top);
-				$tpl->put('forum_bottom', $tpl_bottom);
-				
+				$tpl->put('forum_top', $tpl_top->display());
 				$tpl->display();
+				$tpl->put('forum_bottom', $tpl_bottom->display());
 			}
 		}
 		//Sinon on édite simplement le message
@@ -849,8 +821,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			else
 			{
 				$tpl = new FileTemplate('forum/forum_edit_msg.tpl');
-				$tpl_top = new FileTemplate('forum/forum_top.tpl');
-				$tpl_bottom = new FileTemplate('forum/forum_bottom.tpl');
+				
 
 				$contents = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'contents', 'WHERE id = :id', array('id' => $id_m));
 				//Gestion des erreurs à l'édition.
@@ -878,13 +849,10 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				);
 
 				$tpl->put_all($vars_tpl);
-				$tpl_top->put_all($vars_tpl);
-				$tpl_bottom->put_all($vars_tpl);
 				
-				$tpl->put('forum_top', $tpl_top);
-				$tpl->put('forum_bottom', $tpl_bottom);
-				
+				$tpl->put('forum_top', $tpl_top->display());
 				$tpl->display();
+				$tpl->put('forum_bottom', $tpl_bottom->display());
 			}
 		}
 	}
@@ -906,8 +874,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			}
 
 			$tpl = new FileTemplate('forum/forum_edit_msg.tpl');
-			$tpl_top = new FileTemplate('forum/forum_top.tpl');
-			$tpl_bottom = new FileTemplate('forum/forum_bottom.tpl');
+			
 
 			//Gestion erreur.
 			switch ($error_get)
@@ -952,8 +919,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		elseif (!empty($id_get) && ($error_get === 'c_locked' || $error_get === 'c_write' || $error_get === 'incomplete_t' || $error_get === 'false_t'))
 		{
 			$tpl = new FileTemplate('forum/forum_post.tpl');
-			$tpl_top = new FileTemplate('forum/forum_top.tpl');
-			$tpl_bottom = new FileTemplate('forum/forum_bottom.tpl');
+			
 
 			if (ForumAuthorizationsService::check_authorizations($id_get)->moderation())
 			{
@@ -1043,13 +1009,10 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		}
 
 		$tpl->put_all($vars_tpl);
-		$tpl_top->put_all($vars_tpl);
-		$tpl_bottom->put_all($vars_tpl);
 		
-		$tpl->put('forum_top', $tpl_top);
-		$tpl->put('forum_bottom', $tpl_bottom);
-		
+		$tpl->put('forum_top', $tpl_top->display());
 		$tpl->display();
+		$tpl->put('forum_bottom', $tpl_bottom->display());
 	}
 	else
 	{

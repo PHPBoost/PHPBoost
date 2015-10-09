@@ -589,7 +589,7 @@ else
 	if ($config->is_message_before_topic_title_displayed() && ($check_group_edit_auth || AppContext::get_current_user()->get_id() == $topic['user_id']))
 	{
 		$img_msg_display = $topic['display_msg'] ? 'fa-msg-not-display' : 'fa-msg-display';
-		$tpl->put_all(array(
+		$tpl_bottom->put_all(array(
 			'C_DISPLAY_MSG' => true,
 			'ICON_DISPLAY_MSG' => $config->is_message_before_topic_title_icon_displayed() ? '<i class="fa ' . $img_msg_display . '"></i>' : '',
 			'L_DISPLAY_MSG' => $config->get_message_before_topic_title(),
@@ -602,12 +602,10 @@ else
 }
 
 $tpl->put_all($vars_tpl);
-$tpl_top->put_all($vars_tpl);
 $tpl_bottom->put_all($vars_tpl);
 
 $tpl->put('forum_top', $tpl_top);
 $tpl->put('forum_bottom', $tpl_bottom);
-
 $tpl->display();
 
 include('../kernel/footer.php');
