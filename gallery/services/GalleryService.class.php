@@ -68,7 +68,8 @@ class GalleryService
 		if (self::$categories_manager === null)
 		{
 			$categories_items_parameters = new CategoriesItemsParameters();
-			$categories_items_parameters->set_table_name_contains_items(MediaSetup::$media_table);
+			$categories_items_parameters->set_table_name_contains_items(GallerySetup::$gallery_table);
+			$categories_items_parameters->set_field_name_id_category('idcat');
 			self::$categories_manager = new CategoriesManager(GalleryCategoriesCache::load(), $categories_items_parameters);
 		}
 		return self::$categories_manager;

@@ -69,6 +69,7 @@ class MediaService
 		{
 			$categories_items_parameters = new CategoriesItemsParameters();
 			$categories_items_parameters->set_table_name_contains_items(MediaSetup::$media_table);
+			$categories_items_parameters->set_field_name_id_category('idcat');
 			self::$categories_manager = new CategoriesManager(MediaCategoriesCache::load(), $categories_items_parameters);
 		}
 		return self::$categories_manager;

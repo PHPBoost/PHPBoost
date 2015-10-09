@@ -85,7 +85,7 @@ class ForumCategory extends Category
 	public function get_properties()
 	{
 		return array_merge(parent::get_properties(), array(
-			'description' => $this->get_description(),
+			'description' => TextHelper::htmlspecialchars($this->get_description()),
 			'last_topic_id' => $this->get_last_topic_id(),
 			'url' => $this->get_url()
 		));
