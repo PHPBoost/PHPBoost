@@ -16,7 +16,7 @@
 			# START available #
 			<tr>
 				<td>
-					<img src="{PATH_TO_ROOT}/{available.ICON}/{available.ICON}.png" alt="" />
+					<img src="{PATH_TO_ROOT}/{available.ICON}/{available.ICON}.png" alt="{available.NAME}" />
 					<span class="text-strong">{available.NAME}</span>
 					<em>({available.VERSION})</em>
 				</td>

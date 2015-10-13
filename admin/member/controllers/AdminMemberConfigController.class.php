@@ -217,7 +217,7 @@ class AdminMemberConfigController extends AdminController
 			'description' => $this->lang['members.default-avatar-link-explain'], 'events' => array('change' => 'jQuery("#img_avatar").attr("src", "' . TPL_PATH_TO_ROOT . '/templates/'. AppContext::get_current_user()->get_theme() .'/images/" + HTMLForms.getField("default_avatar_link").getValue())'))
 		));
 		
-		$fieldset->add_field(new FormFieldFree('preview', LangLoader::get_message('preview', 'main'), '<img id="img_avatar" src="' . Url::to_rel('/templates/'. AppContext::get_current_user()->get_theme() .'/images/'. $default_avatar_link) .'" alt="" style="vertical-align:top" />'));
+		$fieldset->add_field(new FormFieldFree('preview', LangLoader::get_message('preview', 'main'), '<img id="img_avatar" src="' . Url::to_rel('/templates/'. AppContext::get_current_user()->get_theme() .'/images/'. $default_avatar_link) .'" alt="' . LangLoader::get_message('preview', 'main') . '" title="' . LangLoader::get_message('preview', 'main') . '" style="vertical-align:top" />'));
 
 		$fieldset = new FormFieldsetHTML('authorization', $this->lang['members.config.authorization']);
 		$form->add_fieldset($fieldset);

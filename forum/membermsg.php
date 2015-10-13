@@ -145,7 +145,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		{
 			$rank_img = TPL_PATH_TO_ROOT . '/forum/templates/images/ranks/' . $user_rank_icon;
 		}
-		$user_assoc_img = !empty($user_rank_icon) ? '<img src="' . $rank_img . '" alt="" />' : '';
+		$user_assoc_img = !empty($user_rank_icon) ? '<img src="' . $rank_img . '" alt="' . $ranks_info['name'] . '" />' : '';
 		
 		//Affichage des groupes du membre.
 		if (!empty($row['groups'])) 
@@ -167,7 +167,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		if (empty($row['user_avatar'])) 
 			$user_avatar = ($user_accounts_config->is_default_avatar_enabled() == '1') ? '<img src="../templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  $user_accounts_config->get_default_avatar_name() . '" alt="" />' : '';
 		else
-			$user_avatar = '<img src="' . Url::to_rel($row['user_avatar']) . '" alt=""	/>';
+			$user_avatar = '<img src="' . Url::to_rel($row['user_avatar']) . '" alt="" />';
 			
 		//Affichage du nombre de message.
 		if ($row['posted_msg'] >= 1)

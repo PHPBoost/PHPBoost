@@ -111,8 +111,8 @@ class AdminGeneralConfigController extends AdminController
 		));
 		
 		$fieldset->add_field(new FormFieldFree('picture_theme', $this->lang['general-config.theme_picture'],
-			'<a href="'. $this->get_picture_theme() .'" data-lightbox="theme" data-rel="lightcase:collection" id="preview_theme">
-				<img id="img_theme" src="'. $this->get_picture_theme() .'" alt="" style="max-height:180px;max-width:180px;" /></br>
+			'<a href="'. $this->get_picture_theme() .'" data-lightbox="theme" data-rel="lightcase:collection" id="preview_theme" title="' . $this->lang['general-config.theme_picture'] . '">
+				<img id="img_theme" src="'. $this->get_picture_theme() .'" alt="' . $this->lang['general-config.theme_picture'] . '" style="max-height:180px;max-width:180px;" /></br>
 				('. $this->lang['general-config.theme_preview_click'] .')
 			</a>'
 		));
@@ -122,7 +122,7 @@ class AdminGeneralConfigController extends AdminController
 				'if (HTMLForms.getField("start_page").getValue() == "other") {
 					HTMLForms.getField("other_start_page").enable();
 				} else {
-					HTMLForms.getField("other_start_page").disable();	
+					HTMLForms.getField("other_start_page").disable();
 				}'
 			))
 		));

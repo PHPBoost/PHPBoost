@@ -29,7 +29,7 @@
 			<div class="options infos">
 				<div class="center">
 					# IF C_HAS_PARTNER_PICTURE #
-						<img src="{U_PARTNER_PICTURE}" alt="" itemprop="image" />
+						<img src="{U_PARTNER_PICTURE}" alt="{NAME}" itemprop="image" />
 						<div class="spacer"></div>
 					# ENDIF #
 					# IF C_VISIBLE #

@@ -135,12 +135,12 @@ class UserRegistrationController extends AbstractController
 			$options_fieldset->add_field(new FormFieldThemesSelect('theme', $this->lang['theme'], $this->user_accounts_config->get_default_theme(),
 				array('check_authorizations' => true, 'events' => array('change' => $this->build_javascript_picture_themes()))
 			));
-			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['theme.preview'], '<img id="img_theme" src="'. $this->get_picture_theme() .'" alt="" style="vertical-align:top; max-height:180px;" />'));
+			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['theme.preview'], '<img id="img_theme" src="'. $this->get_picture_theme() .'" title="' . $this->lang['theme.preview'] . '" alt="' . $this->lang['theme.preview'] . '" style="vertical-align:top; max-height:180px;" />'));
 		}
 		
 		$options_fieldset->add_field(new FormFieldEditors('text-editor', $this->lang['text-editor'], ContentFormattingConfig::load()->get_default_editor()));
 		
-		$options_fieldset->add_field(new FormFieldLangsSelect('lang', $this->lang['lang'], $this->user_accounts_config->get_default_lang(), array('check_authorizations' => true)));	
+		$options_fieldset->add_field(new FormFieldLangsSelect('lang', $this->lang['lang'], $this->user_accounts_config->get_default_lang(), array('check_authorizations' => true)));
 		
 		$this->member_extended_fields_service->display_form_fields();
 

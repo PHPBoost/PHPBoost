@@ -36,7 +36,7 @@ function display_description(id){
 			<tr>
 				<td>
 					<span id="m{modules_not_activated.ID}"></span>
-					<img src="{PATH_TO_ROOT}/{modules_not_activated.ICON}/{modules_not_activated.ICON}.png" alt="" /><br />
+					<img src="{PATH_TO_ROOT}/{modules_not_activated.ICON}/{modules_not_activated.ICON}.png" alt="{modules_not_activated.NAME}" /><br />
 					<span class="text-strong">{modules_not_activated.NAME}</span> <em>({modules_not_activated.VERSION})</em>
 				</td>
 				<td>
@@ -80,7 +80,7 @@ function display_description(id){
 			<tr>
 				<td>
 					<span id="m{modules_activated.ID}"></span>
-					<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_activated.ICON}/{modules_activated.ICON}.png" alt="" /><br />
+					<img src="{PATH_TO_ROOT}/{modules_activated.ICON}/{modules_activated.ICON}.png" alt="{modules_activated.NAME}" /><br />
 					<span class="text-strong">{modules_activated.NAME}</span> <em>({modules_activated.VERSION})</em>
 				</td>
 				<td>

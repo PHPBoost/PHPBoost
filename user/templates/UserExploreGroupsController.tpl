@@ -30,7 +30,7 @@
 		# START members_list #
 		<tr>
 			<td>
-				# IF members_list.C_AVATAR #<img class="valign-middle" src="{members_list.U_AVATAR}" alt=""/># ENDIF #
+				# IF members_list.C_AVATAR #<img class="valign-middle" src="{members_list.U_AVATAR}" alt="{members_list.PSEUDO}"/># ENDIF #
 			</td>
 			<td>
 				<a href="{members_list.U_PROFILE}" class="{members_list.LEVEL_CLASS}" # IF members_list.C_GROUP_COLOR # style="color:{members_list.GROUP_COLOR}" # ENDIF #>
@@ -40,7 +40,7 @@
 			<td>
 				{members_list.LEVEL}
 			</td>
-		</tr>	
+		</tr>
 		# END members_list #
 		# IF C_NOT_MEMBERS #
 		<tr>

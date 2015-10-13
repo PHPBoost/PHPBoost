@@ -123,7 +123,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 
 			if ($header_logo_file->exists())
 			{
-				$picture = '<img src="' . Url::to_rel($header_logo_file->get_path()) . '">';
+				$picture = '<img src="' . Url::to_rel($header_logo_file->get_path()) . '" alt="' . $this->lang['customization.interface.logo.current'] . '" title="' . $this->lang['customization.interface.logo.current'] . '"/>';
 				$customize_interface_fieldset->add_field(new FormFieldFree('current_logo', $this->lang['customization.interface.logo.current'], $picture));
 			}
 			else

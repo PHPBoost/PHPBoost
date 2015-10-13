@@ -48,7 +48,7 @@ ${resources('update/update')}
 									<option value="{lang.LANG}" {lang.SELECTED}>{lang.LANG_NAME}</option>
 									# END lang #
 								</select>
-								&nbsp;&nbsp;&nbsp;<img src="../images/stats/countries/{LANG_IDENTIFIER}.png" alt="" class="valign-middle" />
+								&nbsp;&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/images/stats/countries/{LANG_IDENTIFIER}.png" alt="{LANG_IDENTIFIER}" class="valign-middle" />
 							</p>
 							<p id="button_change_lang">
 								<button type="submit" value="true" class="submit">{@change}</button>

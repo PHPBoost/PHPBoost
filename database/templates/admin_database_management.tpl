@@ -2,17 +2,17 @@
 			<ul>
 				<li class="title-menu">{L_DATABASE_MANAGEMENT}</li>
 				<li>
-					<a href="${relative_url(DatabaseUrlBuilder::database_management())}"><img src="database.png" alt="" /></a>
+					<a href="${relative_url(DatabaseUrlBuilder::database_management())}"><img src="database.png" alt="{L_DB_TOOLS}" /></a>
 					<br />
 					<a href="${relative_url(DatabaseUrlBuilder::database_management())}" class="quick-link">{L_DB_TOOLS}</a>
 				</li>
 				<li>
-					<a href="${relative_url(DatabaseUrlBuilder::db_sql_queries())}"><img src="database.png" alt="" /></a>
+					<a href="${relative_url(DatabaseUrlBuilder::db_sql_queries())}"><img src="database.png" alt="{L_QUERY}" /></a>
 					<br />
 					<a href="${relative_url(DatabaseUrlBuilder::db_sql_queries())}" class="quick-link">{L_QUERY}</a>
 				</li>
 				<li>
-					<a href="${relative_url(DatabaseUrlBuilder::configuration())}"><img src="database.png" alt="" /></a>
+					<a href="${relative_url(DatabaseUrlBuilder::configuration())}"><img src="database.png" alt="${LangLoader::get_message('configuration', 'admin-common')}" /></a>
 					<br />
 					<a href="${relative_url(DatabaseUrlBuilder::configuration())}" class="quick-link">${LangLoader::get_message('configuration', 'admin-common')}</a>
 				</li>
@@ -167,15 +167,15 @@
 					<div class="content">
 						<ul class="center" style="width:99%;margin:20px auto;">
 							<li class="small-block" style="width:20%;">
-								<img src="./database.png" alt="optimize" /><br/>
+								<img src="./database.png" alt="{L_OPTIMIZE}" /><br/>
 								<button type="submit" name="optimize" value="true" class="submit">{L_OPTIMIZE}</button>
 							</li>
 							<li class="small-block" style="width:20%;">
-								<img src="{PATH_TO_ROOT}/templates/default/images/admin/configuration.png" alt="repair" /><br/>
+								<img src="{PATH_TO_ROOT}/templates/default/images/admin/configuration.png" alt="{L_REPAIR}" /><br/>
 								<button type="submit" name="repair" value="true" class="submit">{L_REPAIR}</button>
 							</li>
 							<li class="small-block" style="width:20%;">
-								<img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="backup" class="valign-middle" /><br/>
+								<img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="{L_BACKUP}" class="valign-middle" /><br/>
 								<button type="submit" name="backup" value="true" class="submit">{L_BACKUP}</button>
 							</li>
 						</ul>
@@ -208,25 +208,25 @@
 				<menu class="dynamic-menu group center">
 					<ul>
 						<li>
-							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure"><img src="./database_mini.png"/> {L_TABLE_STRUCTURE}</a>
+							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure"><img src="./database_mini.png" alt="{L_TABLE_STRUCTURE}" title="{L_TABLE_STRUCTURE}"/> {L_TABLE_STRUCTURE}</a>
 						</li>
 						<li>
-							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=data"><img src="{PATH_TO_ROOT}/templates/default/images/admin/themes_mini.png"/> {L_TABLE_DISPLAY}</a>
+							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=data"><img src="{PATH_TO_ROOT}/templates/default/images/admin/themes_mini.png" alt="{L_TABLE_DISPLAY}" title="{L_TABLE_DISPLAY}"/> {L_TABLE_DISPLAY}</a>
 						</li>
 						<li>
-							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=query"><img src="{PATH_TO_ROOT}/templates/default/images/admin/tools_mini.png"/> SQL</a>
+							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=query"><img src="{PATH_TO_ROOT}/templates/default/images/admin/tools_mini.png" alt="SQL" title="SQL"/> SQL</a>
 						</li>
 						<li>
-							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=insert"><img src="{PATH_TO_ROOT}/templates/default/images/admin/extendfield_mini.png"/> {L_INSERT}</a>
+							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=insert"><img src="{PATH_TO_ROOT}/templates/default/images/admin/extendfield_mini.png" alt="{L_INSERT}" title="{L_INSERT}"/> {L_INSERT}</a>
 						</li>
 						<li>
-							<a href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table"><img src="{PATH_TO_ROOT}/templates/default/images/admin/cache_mini.png"/> {L_BACKUP}</a>
+							<a href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table"><img src="{PATH_TO_ROOT}/templates/default/images/admin/cache_mini.png" alt="{L_BACKUP}" title="{L_BACKUP}"/> {L_BACKUP}</a>
 						</li>
 						<li>
-							<a style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}" data-confirmation="{L_CONFIRM_TRUNCATE_TABLE}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/trash_mini.png"/> {L_TRUNCATE}</a>
+							<a style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}" data-confirmation="{L_CONFIRM_TRUNCATE_TABLE}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/trash_mini.png" alt="{L_TRUNCATE}" title="{L_TRUNCATE}"/> {L_TRUNCATE}</a>
 						</li>
 						<li>
-							<a style="color:red;padding-top: 6px;padding-bottom: 3px;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp" data-confirmation="delete-element"><i class="fa fa-delete"></i> {L_DELETE}</a>
+							<a style="color:red;padding-top: 6px;padding-bottom: 3px;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp" data-confirmation="delete-element" title="{L_DELETE}"><i class="fa fa-delete"></i> {L_DELETE}</a>
 						</li>
 					</ul>
 				</menu>
@@ -270,7 +270,7 @@
 							</td>
 							<td>
 								{L_EXPLAIN_BACKUP}<br />
-								<img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="backup" /><br />
+								<img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="{L_BACKUP}" /><br />
 								<label><input type="radio" name="backup_type" checked="checked" value="all"/> {L_BACKUP_ALL}</label>
 								<label><input type="radio" name="backup_type" value="struct"> {L_BACKUP_STRUCT}</label>
 								<label><input type="radio" name="backup_type" value="data"/> {L_BACKUP_DATA}</label>
@@ -412,7 +412,7 @@
 						# START file #
 						<tr class="center">
 							<td style="text-align:left;padding-left:20px;">
-								<a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" title="{L_RESTORE}" data-confirmation="{L_CONFIRM_RESTORE}"><img src="./database_mini.png" alt="" style="vertical-align:middle" /></a> <a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" title="{L_RESTORE}" data-confirmation="{L_CONFIRM_RESTORE}">{file.FILE_NAME}</a>
+								<a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" title="{L_RESTORE}" data-confirmation="{L_CONFIRM_RESTORE}"><img src="./database_mini.png" alt="{L_RESTORE}" style="vertical-align:middle" /></a> <a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" title="{L_RESTORE}" data-confirmation="{L_CONFIRM_RESTORE}">{file.FILE_NAME}</a>
 							</td>
 							<td style="width:120px;">
 								{file.WEIGHT}

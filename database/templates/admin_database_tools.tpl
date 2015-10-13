@@ -2,17 +2,17 @@
 			<ul>
 				<li class="title-menu">{L_DATABASE_MANAGEMENT}</li>
 				<li>
-					<a href="${relative_url(DatabaseUrlBuilder::database_management())}"><img src="database.png" alt="" /></a>
+					<a href="${relative_url(DatabaseUrlBuilder::database_management())}"><img src="database.png" alt="{L_DB_TOOLS}" /></a>
 					<br />
 					<a href="${relative_url(DatabaseUrlBuilder::database_management())}" class="quick-link">{L_DB_TOOLS}</a>
 				</li>
 				<li>
-					<a href="${relative_url(DatabaseUrlBuilder::db_sql_queries())}"><img src="database.png" alt="" /></a>
+					<a href="${relative_url(DatabaseUrlBuilder::db_sql_queries())}"><img src="database.png" alt="{L_QUERY}" /></a>
 					<br />
 					<a href="${relative_url(DatabaseUrlBuilder::db_sql_queries())}" class="quick-link">{L_QUERY}</a>
 				</li>
 				<li>
-					<a href="${relative_url(DatabaseUrlBuilder::configuration())}"><img src="database.png" alt="" /></a>
+					<a href="${relative_url(DatabaseUrlBuilder::configuration())}"><img src="database.png" alt="${LangLoader::get_message('configuration', 'admin-common')}" /></a>
 					<br />
 					<a href="${relative_url(DatabaseUrlBuilder::configuration())}" class="quick-link">${LangLoader::get_message('configuration', 'admin-common')}</a>
 				</li>
@@ -27,25 +27,25 @@
 				<menu class="dynamic-menu group center">
 					<ul>
 						<li>
-							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure"><img src="./database_mini.png"/> {L_TABLE_STRUCTURE}</a>
+							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure"><img src="./database_mini.png" alt="{L_TABLE_STRUCTURE}" title="{L_TABLE_STRUCTURE}"/> {L_TABLE_STRUCTURE}</a>
 						</li>
 						<li>
-							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=data"><img src="{PATH_TO_ROOT}/templates/default/images/admin/themes_mini.png"/> {L_TABLE_DISPLAY}</a>
+							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=data"><img src="{PATH_TO_ROOT}/templates/default/images/admin/themes_mini.png" alt="{L_TABLE_DISPLAY}" title="{L_TABLE_DISPLAY}"/> {L_TABLE_DISPLAY}</a>
 						</li>
 						<li>
-							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=query"><img src="{PATH_TO_ROOT}/templates/default/images/admin/tools_mini.png"/> SQL</a>
+							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=query"><img src="{PATH_TO_ROOT}/templates/default/images/admin/tools_mini.png" alt="SQL" title="SQL"/> SQL</a>
 						</li>
 						<li>
-							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=insert"><img src="{PATH_TO_ROOT}/templates/default/images/admin/extendfield_mini.png"/> {L_INSERT}</a>
+							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=insert"><img src="{PATH_TO_ROOT}/templates/default/images/admin/extendfield_mini.png" alt="{L_INSERT}" title="{L_INSERT}"/> {L_INSERT}</a>
 						</li>
 						<li>
-							<a href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table"><img src="{PATH_TO_ROOT}/templates/default/images/admin/cache_mini.png"/> {L_BACKUP}</a>
+							<a href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table"><img src="{PATH_TO_ROOT}/templates/default/images/admin/cache_mini.png" alt="{L_BACKUP}" title="{L_BACKUP}"/> {L_BACKUP}</a>
 						</li>
 						<li>
-							<a style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}" data-confirmation="{L_CONFIRM_TRUNCATE_TABLE}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/trash_mini.png"/> {L_TRUNCATE}</a>
+							<a style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}" data-confirmation="{L_CONFIRM_TRUNCATE_TABLE}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/trash_mini.png" alt="{L_TRUNCATE}" title="{L_TRUNCATE}"/> {L_TRUNCATE}</a>
 						</li>
 						<li>
-							<a style="color:red;padding-top: 6px;padding-bottom: 3px;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp;token={TOKEN}" data-confirmation="delete-element"><i class="fa fa-delete"></i> {L_DELETE}</a>
+							<a style="color:red;padding-top: 6px;padding-bottom: 3px;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp;token={TOKEN}" data-confirmation="delete-element" title="{L_DELETE}"><i class="fa fa-delete"></i> {L_DELETE}</a>
 						</li>
 					</ul>
 				</menu>
@@ -163,7 +163,7 @@
 						# IF TABLE_FREE #
 						<tr class="center">
 							<td colspan="2">
-								<img src="./database_mini.png" alt="" class="valign-middle" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=optimize">{L_OPTIMIZE}</a>
+								<img src="./database_mini.png" alt="{L_OPTIMIZE}" title="{L_OPTIMIZE}" class="valign-middle" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=optimize">{L_OPTIMIZE}</a>
 							</td>
 						</tr>
 						# ENDIF #

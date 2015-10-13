@@ -462,13 +462,13 @@ else
 			$width_source = !empty($width_source) ? $width_source + 30 : 0;
 			$height_source = !empty($height_source) ? $height_source + 30 : 0;
 			$bbcode = '[img]/upload/' . $row['path'] . '[/img]';
-			$tinymce = '<img src="' . PATH_TO_ROOT . '/upload/' . $row['path'] . '" alt="" />';
+			$tinymce = '<img src="' . PATH_TO_ROOT . '/upload/' . $row['path'] . '" alt="' . $row['name'] . '" />';
 			$link = '/upload/' . $row['path'];
 			break;
 			//Image svg
 			case 'svg':
 			$bbcode = '[img]/upload/' . $row['path'] . '[/img]';
-			$tinymce = '<img src="' . PATH_TO_ROOT . '/upload/' . $row['path'] . '" alt="" />';
+			$tinymce = '<img src="' . PATH_TO_ROOT . '/upload/' . $row['path'] . '" alt="' . $row['name'] . '" />';
 			$link = '/upload/' . $row['path'];
 			break;
 			//Sons

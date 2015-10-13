@@ -2,12 +2,12 @@
 				<ul>
 					<li class="title-menu">{L_WIKI_MANAGEMENT}</li>
 				<li>
-					<a href="admin_wiki.php"><img src="wiki.png" alt="" /></a>
+					<a href="admin_wiki.php"><img src="wiki.png" alt="{L_CONFIG_WIKI}" /></a>
 					<br />
 					<a href="admin_wiki.php" class="quick-link">{L_CONFIG_WIKI}</a>
 				</li>
 				<li>
-					<a href="admin_wiki_groups.php"><img src="wiki.png" alt="" /></a>
+					<a href="admin_wiki_groups.php"><img src="wiki.png" alt="{L_WIKI_GROUPS}" /></a>
 					<br />
 					<a href="admin_wiki_groups.php" class="quick-link">{L_WIKI_GROUPS}</a>
 				</li>

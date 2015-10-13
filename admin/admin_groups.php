@@ -384,7 +384,7 @@ else //Liste des groupes.
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
 			'GROUP_COLOR' => '#' . $row['color'],
-			'IMAGE' => !empty($row['img']) ? '<img src="'. PATH_TO_ROOT .'/images/group/' . $row['img'] . '" alt="" />' : ''
+			'IMAGE' => !empty($row['img']) ? '<img src="'. PATH_TO_ROOT .'/images/group/' . $row['img'] . '" alt="' . $row['name'] . '" />' : ''
 		));
 	}
 	$result->dispose();

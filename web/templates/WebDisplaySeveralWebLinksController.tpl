@@ -18,7 +18,7 @@
 		# START sub_categories_list #
 		<div class="subcat-element" style="width:{CATS_COLUMNS_WIDTH}%;">
 			<div class="subcat-content">
-				# IF sub_categories_list.C_CATEGORY_IMAGE #<a itemprop="about" href="{sub_categories_list.U_CATEGORY}"><img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="" /></a># ENDIF #
+				# IF sub_categories_list.C_CATEGORY_IMAGE #<a itemprop="about" href="{sub_categories_list.U_CATEGORY}"><img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" /></a># ENDIF #
 				<br />
 				<a itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
 				<br />
@@ -148,7 +148,7 @@
 						<div class="options infos">
 							<div class="center">
 								# IF weblinks.C_HAS_PARTNER_PICTURE #
-									<img src="{weblinks.U_PARTNER_PICTURE}" alt="" itemprop="image" />
+									<img src="{weblinks.U_PARTNER_PICTURE}" alt="{weblinks.NAME}" itemprop="image" />
 									<div class="spacer"></div>
 								# ENDIF #
 								# IF weblinks.C_VISIBLE #
