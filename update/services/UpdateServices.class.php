@@ -711,6 +711,8 @@ class UpdateServices
 		$file->delete();
 		$file = new File(Url::to_rel('/kernel/framework/core/environment/DeprecatedEnvironment.class.php'));
 		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/core/error/ErrorViewBuilder.class.php'));
+		$file->delete();
 		$file = new File(Url::to_rel('/kernel/framework/db/Sql.class.php'));
 		$file->delete();
 		$file = new File(Url::to_rel('/kernel/framework/db/SqlParameterExtractor.class.php'));
@@ -826,10 +828,16 @@ class UpdateServices
 		$file->delete();
 		$file = new File(Url::to_rel('/user/services/UserLostPasswordService.class.php'));
 		$file->delete();
+		$file = new File(Url::to_rel('/user/templates/ErrorViewBuilder.tpl'));
+		$file->delete();
 		$file = new File(Url::to_rel('/user/templates/UserMaintainController.tpl'));
 		$file->delete();
 		$file = new File(Url::to_rel('/user/util/UserDisplayResponse.class.php'));
 		$file->delete();
+		
+		$folder = new Folder(Url::to_rel('/user/controllers/error'));
+		if ($folder->exists())
+			$folder->delete();
 	}
 }
 ?>

@@ -96,9 +96,22 @@ class ExceptionHandler
 
 	private function prepare_controller()
 	{
-		$controller = new ErrorController();
-		$controller->set_level(E_ERROR);
-		$controller->set_exception($this->exception);
+		$title = LangLoader::get_message('error', 'status-messages-common');
+		
+		if ($this->exception !== null && Debug::is_debug_mode_enabled())
+		{
+			$message = TextHelper::htmlspecialchars($this->exception->getMessage()) . '<br /><br /><i>' .
+			$this->exception->getFile() . ':' . $this->exception->getLine() .
+			'</i><div class="spacer">&nbsp;</div>' .
+			Debug::get_stacktrace_as_string(0, $this->exception);
+			$title .= ' ' . $this->exception->getCode();
+		}
+		else
+		{
+			$message = TextHelper::htmlspecialchars(LangLoader::get_message('process.error', 'status-messages-common'));
+		}
+		
+		$controller = new UserErrorController($title, $message, UserErrorController::FATAL);
 		return $controller;
 	}
 

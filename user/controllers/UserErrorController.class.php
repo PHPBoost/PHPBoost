@@ -35,16 +35,16 @@ class UserErrorController extends AbstractController
 
 	const PREVIOUS_PAGE = 'javascript:history.back(1);';
 	
-    const SITE_RESPONSE = 'SiteDisplayResponse';
-    const ADMIN_RESPONSE = 'AdminDisplayResponse';
+	const SITE_RESPONSE = 'SiteDisplayResponse';
+	const ADMIN_RESPONSE = 'AdminDisplayResponse';
 
 	private $error_type;
 	private $title = '';
 	private $message = '';
 	private $time;
 	private $link = self::PREVIOUS_PAGE;
-    private $link_name = '';
-    private $response_classname = self::SITE_RESPONSE;
+	private $link_name = '';
+	private $response_classname = self::SITE_RESPONSE;
 
 	/**
 	 * @var View
@@ -56,7 +56,7 @@ class UserErrorController extends AbstractController
 		$this->title = $title;
 		$this->message = $message;
 		$this->error_type = $error_type;
-	    $this->link_name = LangLoader::get_message('back', 'main');
+		$this->link_name = LangLoader::get_message('back', 'main');
 	}
 
 	public function set_correction_link($link_name, $link = self::PREVIOUS_PAGE)
@@ -85,7 +85,7 @@ class UserErrorController extends AbstractController
 	
 	public function disable_correction_link() {
 		$this->link_name = "";
-        $this->link = "";
+		$this->link = "";
 	}
 	
 	public function execute(HTTPRequestCustom $request)
@@ -119,36 +119,15 @@ class UserErrorController extends AbstractController
 	private function fill_view()
 	{
 		$this->view->put_all(array(
-            'ERROR_TYPE' => $this->get_error_type(),
-            'ERROR_IMG' => $this->get_error_type_associated_image(),
-            'TITLE' => $this->title,
-            'MESSAGE' => $this->message,
-            'U_LINK' => $this->link,
+			'ERROR_TYPE' => $this->get_error_type(),
+			'TITLE' => $this->title,
+			'MESSAGE' => $this->message,
+			'U_LINK' => $this->link,
 			'TIME' => $this->time,
-            'LINK_NAME' => $this->link_name,
-		    'HAS_LINK' => !empty($this->link) && !empty($this->link_name),
+			'LINK_NAME' => $this->link_name,
+			'HAS_LINK' => !empty($this->link) && !empty($this->link_name),
 			'HAS_TIME' => !empty($this->time) && !empty($this->link),
 		));
-	}
-
-	private function get_error_type_associated_image() {
-		$img_error = 'question';
-		switch ($this->error_type)
-        {
-            case self::NOTICE:
-                $img_error = 'notice';
-                break;
-            case self::WARNING:
-                $img_error = 'important';
-                break;
-            case self::FATAL:
-                $img_error = 'stop';
-                break;
-            case self::SUCCESS:
-                $img_error = 'success';
-                break;
-        }
-        return $img_error;
 	}
 	
 	private function get_error_type()
