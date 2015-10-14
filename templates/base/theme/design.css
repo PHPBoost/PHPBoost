@@ -14,10 +14,6 @@ html {
 
 body {
 	position: relative;
-	display: flex;
-	display: -ms-flexbox; /* IE10 Tricks */
-	flex-direction: column;
-	-ms-flex-direction: column; /* IE10 Tricks */
 	height: auto;
 	min-height: 100%;
 	background: #E8EDF3 ;
@@ -110,45 +106,92 @@ div#global {
 	max-width: 1024px;
 	margin: 1.5em auto 0 auto;
 	padding: 0 10px;
-	flex-direction: row;
-	ms-flex-direction: row; /* IE10 Tricks */
-}
-
-div#global,
-#main {
-	flex: 1;
-	ms-flex: 1; /* IE10 Tricks */
 	display: flex;
-	display: ms-flexbox; /* IE10 Tricks */
-	min-height: 100%;
+	display: -ms-flexbox;
+	flex-direction: row;
+	-ms-flex-direction: row; /* IE10 Tricks */
 }
 
 #main {
-	padding: 10px;
-	flex-direction: column;
-	ms-flex-direction: column; /* IE10 Tricks */
+	padding: 0 10px;
 }
 
-@media (min-width: 769px) {
+@media ( min-width: 769px ) {
+	div#global {
+		min-height: 100vh;
+	}
+
+	#main {
+		order : 2;
+		-ms-flex-order: 2;
+		flex: 0 1 auto;
+		-ms-flex: 0 1 auto;
+	}
+
 	aside#menu-left,
 	aside#menu-right {
-	    max-width: 200px; 
+    	width: 200px;
+    	flex: 0 1 auto;
+    	-ms-flex: 0 1 auto;
 	}
 
-	#main 			 { order: 2; }
-	aside#menu-left  { order: 1; }
-	aside#menu-right { order: 3; }
+	aside#menu-left  { 
+		order : 1;
+		-ms-flex-order: 1;
+	}
+	aside#menu-right { 
+		order : 3;
+		-ms-flex-order: 3;
+	}
+
+	div#top-footer {
+		order : 4;
+		-ms-flex-order: 4;
+		flex: 0 1 100%;
+		-ms-flex: 0 1 100%;
+	}
 }
 
-@media (max-width: 768px) {
+@media ( max-width: 768px ) {
+
 	div#global {
 		flex-direction: column;
-		ms-flex-direction: column; /* IE10 Tricks */
+		-ms-flex-direction: column;
 	}
 
-	#main 			 { order: 1; }
-	aside#menu-left  { order: 2; }
-	aside#menu-right { order: 3; }
+	#main {
+		order : 1;
+		-ms-flex-order: 1;
+		flex: 0 1 100%;
+		-ms-flex: 0 1 100%;
+	}
+
+	aside#menu-left,
+	aside#menu-right {
+    	width: 100%;
+    	flex: 0 1 100%;
+    	-ms-flex: 0 1 100%;
+	}
+
+	aside#menu-left  {
+		order : 2;
+		-ms-flex-order: 2;
+	}
+	aside#menu-right {
+		order : 3;
+		-ms-flex-order: 3;
+	}
+
+	div#top-footer {
+		order : 4;
+		-ms-flex-order: 4;
+		flex: 0 1 100%;
+		-ms-flex: 0 1 100%;
+	}
+}
+
+div#top-footer {
+	padding: 2% 0;
 }
 
 
@@ -171,9 +214,7 @@ div#bottom-content {
 }
 
 /* --- Emplacement au dessus du pied de page --- */
-div#top-footer {
-	padding: 2% 0;
-}
+
 
 
 /* -- Pied de page - Footer --
