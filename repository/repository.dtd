@@ -5,7 +5,7 @@
 <!ELEMENT app (version+)>
 <!ATTLIST app
             id CDATA #REQUIRED
-            type (kernel|module|theme) "module">
+            type (kernel|module|template) "module">
 
 <!ELEMENT version (compatibility, download, update?, authors?, description, whatsnew?, warning?)>
 <!ATTLIST version
