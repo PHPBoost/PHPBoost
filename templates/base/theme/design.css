@@ -108,8 +108,10 @@ div#global {
 	padding: 0 10px;
 	display: flex;
 	display: -ms-flexbox;
+	display: -webkit-flex;
 	flex-direction: row;
 	-ms-flex-direction: row; /* IE10 Tricks */
+	-webkit-flex-direction: row;
 }
 
 #main {
@@ -124,31 +126,33 @@ div#global {
 	#main {
 		order : 2;
 		-ms-flex-order: 2;
-		flex: 0 1 auto;
-		-ms-flex: 0 1 auto;
+		-webkit-flex-order: 2;
+		flex: 1;
+		-ms-flex: 1;
 	}
 
 	aside#menu-left,
 	aside#menu-right {
     	width: 200px;
-    	flex: 0 1 auto;
-    	-ms-flex: 0 1 auto;
 	}
 
 	aside#menu-left  { 
 		order : 1;
 		-ms-flex-order: 1;
+		-webkit-flex-order: 1;
 	}
 	aside#menu-right { 
 		order : 3;
 		-ms-flex-order: 3;
+		-webkit-flex-order: 3;
 	}
 
 	div#top-footer {
 		order : 4;
 		-ms-flex-order: 4;
-		flex: 0 1 100%;
-		-ms-flex: 0 1 100%;
+		-webkit-flex-order: 4;
+		flex-basis:100%;
+		-ms-flex-basis:100%;
 	}
 }
 
@@ -157,36 +161,35 @@ div#global {
 	div#global {
 		flex-direction: column;
 		-ms-flex-direction: column;
+		-webkit-flex-direction: column;
 	}
 
 	#main {
 		order : 1;
 		-ms-flex-order: 1;
-		flex: 0 1 100%;
-		-ms-flex: 0 1 100%;
+		-webkit-flex-order: 1;
 	}
 
 	aside#menu-left,
 	aside#menu-right {
     	width: 100%;
-    	flex: 0 1 100%;
-    	-ms-flex: 0 1 100%;
 	}
 
 	aside#menu-left  {
 		order : 2;
 		-ms-flex-order: 2;
+		-webkit-flex-order: 2;
 	}
 	aside#menu-right {
 		order : 3;
 		-ms-flex-order: 3;
+		-webkit-flex-order: 3;
 	}
 
 	div#top-footer {
 		order : 4;
 		-ms-flex-order: 4;
-		flex: 0 1 100%;
-		-ms-flex: 0 1 100%;
+		-webkit-flex-order: 4;
 	}
 }
 
