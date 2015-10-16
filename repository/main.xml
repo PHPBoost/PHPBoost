@@ -3,7 +3,23 @@
 <repository>
 	<header />
 	<app id="kernel" type="kernel">
-		<version num="4.1.5" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2015/05/02">
+			<version num="4.1.6" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2015/10/15">
+				<compatibility min="4.1" />
+				<download url="http://www.phpboost.com/download/">PHPBoost 4.1.6</download>
+				<update url="http://phpboost.com/download/download-362+pack-de-mise-jour-4-1-5-vers-4-1-6.php">4.1.5 vers 4.1.6</update>
+				<authors>
+					<author name="Kévin Massy" email="reidlos@phpboost.com" />
+					<author name="Julien Briswalter" email="julienseth78@phpboost.com" />
+				</authors>
+				<description>
+					Cette mise à jour contient la mise à jour de la librairie Font Awesome en version 4.4.0 ainsi que quelques corrections de bugs.
+					Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				</description>
+				<whatsnew>
+					<new type="bug">Plusieurs corrections de bugs.</new>
+				</whatsnew>
+			</version>
+			<version num="4.1.5" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2015/05/02">
 			<compatibility min="4.1" />
 			<download url="http://www.phpboost.com/download/">PHPBoost 4.1.5</download>
 			<update url="http://phpboost.com/download/download-360+pack-de-mise-jour-4-1-4-vers-4-1-5.php">4.1.4 vers 4.1.5</update>
