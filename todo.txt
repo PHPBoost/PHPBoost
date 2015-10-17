@@ -23,14 +23,45 @@
 
 ######################################DOSSIERS##################################
 
-###################################### PHPBoost 4.2 ##################################
+###################################### PHPBoost 4.3 ##################################
 
 [b]Structure et fonctionnement:[/b]
 + Nettoyage des variables de langues
+- Revoir la façon dont est stocké les inscrits aux groupes (actuellement c'est stocké dans la table member et groups, faire une table de jointure)
+- passage de l'encodage du site et de la base de données en utf-8
+- Gestion des catégorie dans la partie front (#1185)
+- Vidéos en HTML5 (#886)
 
-[b]Graphique[/b]
-- Support mobile et version tablette
-- Refonte de la gestion des liens : suppression des types de menu de liens et création d'un menu de lien qui s'adapte automatiquement à l'emplacement
+[b]Administration[/b]
+- [color=red]Nouveauté:[/color] Compression de la base de données à l'exportation, importation en fichier compressé ou non.
+- possibilité d'uploader un zip avec plusieurs smileys
+
+[b]Commentaires :
+- Augmenter le nombre de liens dans les commentaires selon les différents niveaux d’autorisations (#1071)
+- Validation des comentaires (#908)
+
+[b]Installateur[/b]
+- Possibilité de choisir les modules, thèmes et langues à installer
+
+[b]Sécurité[/b]
+- possibilité de générer un mot de passe automatiquement lors de l'ajout d'un utilisateur via l'administration (+ envoi par mail)
+
+[b]Calendrier[/b]
+- Améliorer l'inscription aux événements (#1230)
+
+[b]Forum[/b]
+- Possibilité de mettre un pseudo lorsque l'on poste en visiteur.
+- Préfixe de sujet (#1080)
+- Sujets sans réponse (#1225)
+
+[b]News[/b]
+- Génération Méta (#1254)
+
+[b]Sondages[b]
+- Mise à jour du module (passage en MVC)
+
+[b]Wiki[/b]
+- Droits de lecture sur le Wiki (#1231)
 
 ###################################### PHPBoost ##################################
 
@@ -41,18 +72,13 @@
 - [color=red]Nouveauté:[/color] Editeur d'image avec interface js pour redimensionner, faire des rotations, des mises à l'échelles, etc.
 - [color=red]Nouveauté:[/color] Système de centralisation de mots clés, gestion de nuages de tags... A intégrer peut-être dans le module de recherche.
 - [color=red]Nouveauté:[/color] Interface de visualisation des valeurs des champs supplémentaires saisies par les membres.
-- [color=red]Nouveauté:[/color] Compression de la base de données à l'exportation, importation en fichier compressé ou non.
 - [color=red]Nouveauté:[/color] Interface de personnalisation graphique du site, modification des couleurs du site.
-- Etudier la possibilité de mettre les smileys dans une catégorie et pouvoir en importer par lot facilement.
 - Gestion des contraintes asynchrones dans le form builder
-- Revoir la façon dont est stocké les inscrits aux groupes (actuellement c'est stocké dans la table member et groups, faire une table de jointure)
-- [color=red]Nouveauté:[/color] Gestion des menus avec arborescence repliable
 - Possibilité de désactiver l'affichage d'un lien dans les menus
 - [color=red]Nouveauté:[/color] Système d'alertes (javascript) utilisateur évolué.
 - Refonte du système d'événement et intégration d'un système de notification
 - Filtres d'exclusion pour les menus
 - Stocker les dates sous un format ISO en BDD plutôt qu'en timestamp
-- Stocker les données en UTF-8 dans la base et changer le charset en utf-8 à l'affichage
 
 [b]Upload[/b]
 - Refonte de l'interface et du fonctionnement de l'interface d'upload, ajout d'API, ... 
@@ -62,25 +88,19 @@
 - Création d'un FormField tout en ajax pour directement choisir ses fichiers sans passer par une popup
 - Téléchargement des fichiers en AJAX avec barre de progression
 
-[b]Installateur[/b]
-- Possibilité de choisir les modules, thèmes et langues à installer
-
 [b]Sécurité[/b]
 - Expiration des comptes utilisateur
 - possibilité de forcer un membre/tous les membres à changer leur mot de passe à la prochaine connexion
 - loguer ce qui est fait dans l'administration
-- possibilité de générer un mot de passe automatiquement lors de l'ajout d'un utilisateur via l'administration (+ envoi par mail)
 
 [b]Messages privés[/b]
 - Possibilité d'envoyer des messages privés à tous les membres d'un groupe ou à tous les membres pour l'administrateur.
-- Possibilité de demander l'envoi d'un mail lors de l'envoi d'un mp.
 
 [b]Forum[/b]
 - [color=red]Nouveauté:[/color] Nouveaux droits globaux aux groupes dans le forum, suppression/édition des messages/sujets appartenant au membre.
 - [color=red]Nouveauté:[/color] Possibilité de créer des messages semi-automatiques pour les modérateurs.
 - [color=red]Nouveauté:[/color] Possibilité de délestage automatique des sujets (configuration).
 - [color=red]Nouveauté:[/color] Possibilité de définir des mots interdits (remplacés par des étoiles).
-- Possibilité de mettre un pseudo lorsque l'on poste en visiteur.
 
 [b]Galerie:[/b]
 - Voir les images plus vues/mieux notées, affichage sur l'ensemble de la galerie et non sur une catégorie.
