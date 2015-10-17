@@ -1,5 +1,5 @@
 <span style="float:right;padding:8px;padding-top:0px;padding-right:25px">
-	<img src="templates/images/PHPBoost_box.png" alt="Logo PHPBoost" />
+	<img src="templates/images/PHPBoost_box.png" alt="{@phpboost.logo}" />
 </span>
 <h1>{@step.welcome.message}</h1>
 <span class="spacer">&nbsp;</span>

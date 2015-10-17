@@ -53,6 +53,8 @@ $lang = array(
 	'generatedBy' => 'Powered by %s',
 	'poweredBy' => 'Powered by',
 	'phpboost.rights' => '',
+	'phpboost.slogan' => 'Create your website easily and for free!',
+	'phpboost.logo' => 'PHPBoost logo',
 
 //Introduction
 	'step.welcome.title' => 'Preamble',
@@ -127,7 +129,7 @@ $lang = array(
 							<legend>PHPBoost is now updated and ready to run !</legend>
 							<p class="success">The update of PHPBoost has been powered successfully. The PHPBoost Team thanks you for using its software and is proud to count you among its users.</p>
 							<p>Keep yourself informed about the evolution of PHPBoost by visiting our website, <a href="http://www.phpboost.com">www.phpboost.com</a>. You will be warned in the administration panel when updates are available. We strongly recommend to keep your website up to date so you can take advantage of the latest features and correct any flaws or errors.</p>
-							<p class="warning">For security reasons we also recommand you to delete the <b>install</b> and <b>update</b> folders and all their contents, hackers could manage to run the installation script and you could lose data !</p>
+							<p class="warning">For security reasons we also recommand you to delete the <b>update</b> folder and all its contents, hackers could manage to run the update script and you could lose data! An option will be offered once connected to the site to perform this deletion.</p>
 							<p>Don\'t forget the <a href="http://www.phpboost.com/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="http://www.phpboost.com/faq/"><acronym title="Frequently Asked Questions">FAQ</acronym></a>.</p>
 							<p>If you have any problem please go to the <a href="http://www.phpboost.com/forum/">support forum of PHPBoost</a>.</p>
 						</fieldset>

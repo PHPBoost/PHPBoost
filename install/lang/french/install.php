@@ -62,6 +62,8 @@ $lang = array(
 	'generatedBy' => 'Généré par %s',
 	'poweredBy' => 'Boosté par',
 	'phpboost.rights' => '',
+	'phpboost.slogan' => 'Créez votre site internet facilement et gratuitement !',
+	'phpboost.logo' => 'Logo PHPBoost',
 
 //Introduction
 	'step.welcome.title' => 'Préambule',
@@ -201,7 +203,7 @@ Cordialement l\'équipe PHPBoost.',
                             <legend>PHPBoost est désormais installé !</legend>
                             <p class="success">L\'installation de PHPBoost s\'est déroulée avec succès. L\'équipe PHPBoost vous remercie de lui avoir fait confiance et est heureuse de vous compter parmi ses utilisateurs.</p>
                             <p>Nous vous conseillons de vous tenir au courant de l\'évolution de PHPBoost via le site de la communauté francophone, <a href="http://www.phpboost.com">www.phpboost.com</a>. Vous serez automatiquement averti dans le panneau d\'administration de l\'arrivée de nouvelles mises à jour. Il est fortement conseillé de tenir votre système à jour afin de profiter des dernières nouveautés et de corriger les éventuelles failles ou erreurs.</p>
-                            <p class="warning">Par mesure de sécurité nous vous conseillons fortement de supprimer le dossier <b>install</b> et tout ce qu\'il contient. Des personnes mal intentionnées pourraient relancer le script d\'installation ou le script de mise à jour et écraser certaines de vos données !</p>
+                            <p class="warning">Par mesure de sécurité nous vous conseillons fortement de supprimer le dossier <b>install</b> et tout ce qu\'il contient. Des personnes mal intentionnées pourraient relancer le script d\'installation et écraser certaines de vos données ! Une option vous sera proposée une fois connecté sur le site pour effectuer cette suppression.</p>
                             <p>N\'oubliez pas de consulter la <a href="http://www.phpboost.com/wiki/">documentation</a> qui vous guidera dans l\'utilisation de PHPBoost ainsi que la <a href="http://www.phpboost.com/faq/"><acronym title="Foire Aux Questions">FAQ</acronym></a> qui répond aux questions les plus fréquentes.</p>
                             <p>En cas de problème, rendez-vous sur le <a href="http://www.phpboost.com/forum/">forum du support de PHPBoost</a>.</p>
                         </fieldset>

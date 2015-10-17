@@ -3,7 +3,7 @@ ${resources('install/install')}
 <html lang="{L_XML_LANGUAGE}">
 	<head>
 		<title>{@installation.title} - {STEP_TITLE}</title>
-		<meta charset="iso-8859-1" />
+		<meta charset="windows-1252" />
 		<meta name="description" content="PHPBoost" />
 		<meta name="robots" content="noindex, follow" />
 		
@@ -27,7 +27,7 @@ ${resources('install/install')}
 			<div id="site-logo"></div>
 			<div id="site-name-container">
 				<a id="site-name" title="PHPBoost CMS">PHPBoost CMS</a>
-				<span id="site-slogan">Créez votre site internet facilement et gratuitement !</span>
+				<span id="site-slogan">{@phpboost.slogan}</span>
 			</div>
 		</div>
 		</div>
@@ -118,7 +118,7 @@ ${resources('install/install')}
 		<div id="main">
 			<div id="main-content">
 				<div style="text-align: right; padding: 0px 30px 5px 0px; margin-bottom: 10px; border-bottom: 1px solid #EFEFEF;">
-					<img src="templates/images/phpboost.png" alt="Logo PHPBoost" class="valign-middle" /> {STEP_TITLE}
+					<img src="templates/images/phpboost.png" alt="{@phpboost.logo}" class="valign-middle" /> {STEP_TITLE}
 				</div>
 				# INCLUDE installStep #
 			</div>
