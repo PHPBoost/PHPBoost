@@ -233,25 +233,25 @@
 
 		<menu id="cssmenu-galleryfilter" class="cssmenu cssmenu-right cssmenu-actionslinks cssmenu-tools">
 			<ul class="hidden">
-				<li><a><i class="fa fa-eye"></i> {L_DISPLAY}</a>
+				<li><a class="cssmenu-title"><i class="fa fa-eye"></i> {L_DISPLAY}</a>
 					<ul>
-						<li><a href="{U_BEST_VIEWS}"><i class="fa fa-eye"></i> {L_BEST_VIEWS}</a></li>
-						<li><a href="{U_BEST_NOTES}"><i class="fa fa-star-half-empty"></i> {L_BEST_NOTES}</a></li>
+						<li><a href="{U_BEST_VIEWS}" class="cssmenu-title"><i class="fa fa-eye"></i> {L_BEST_VIEWS}</a></li>
+						<li><a href="{U_BEST_NOTES}" class="cssmenu-title"><i class="fa fa-star-half-empty"></i> {L_BEST_NOTES}</a></li>
 					</ul>
 				</li>
-				<li><a><i class="fa fa-sort"></i> {L_ORDER_BY}</a>
+				<li><a class="cssmenu-title"><i class="fa fa-sort"></i> {L_ORDER_BY}</a>
 					<ul>
-						<li><a href="{U_ORDER_BY_NAME}"><i class="fa fa-tag"></i> {L_NAME}</a></li>
-						<li><a href="{U_ORDER_BY_DATE}"><i class="fa fa-clock-o"></i> {L_DATE}</a></li>
-						<li><a href="{U_ORDER_BY_VIEWS}"><i class="fa fa-eye"></i> {L_VIEWS}</a></li>
-						<li><a href="{U_ORDER_BY_NOTES}"><i class="fa fa-star-half-empty"></i> {L_NOTES}</a></li>
-						<li><a href="{U_ORDER_BY_COM}"><i class="fa fa-comments-o"></i> {L_COM}</a></li>
+						<li><a href="{U_ORDER_BY_NAME}" class="cssmenu-title"><i class="fa fa-tag"></i> {L_NAME}</a></li>
+						<li><a href="{U_ORDER_BY_DATE}" class="cssmenu-title"><i class="fa fa-clock-o"></i> {L_DATE}</a></li>
+						<li><a href="{U_ORDER_BY_VIEWS}" class="cssmenu-title"><i class="fa fa-eye"></i> {L_VIEWS}</a></li>
+						<li><a href="{U_ORDER_BY_NOTES}" class="cssmenu-title"><i class="fa fa-star-half-empty"></i> {L_NOTES}</a></li>
+						<li><a href="{U_ORDER_BY_COM}" class="cssmenu-title"><i class="fa fa-comments-o"></i> {L_COM}</a></li>
 					</ul>
 				</li>
-				<li><a><i class="fa fa-sort-alpha-asc"></i> {L_DIRECTION}</a>
+				<li><a class="cssmenu-title"><i class="fa fa-sort-alpha-asc"></i> {L_DIRECTION}</a>
 					<ul>
-						<li><a href="{U_ASC}"><i class="fa fa-sort-amount-asc"></i> {L_ASC}</a></li>
-						<li><a href="{U_DESC}"><i class="fa fa-sort-amount-desc"></i> {L_DESC}</a></li>
+						<li><a href="{U_ASC}" class="cssmenu-title"><i class="fa fa-sort-amount-asc"></i> {L_ASC}</a></li>
+						<li><a href="{U_DESC}" class="cssmenu-title"><i class="fa fa-sort-amount-desc"></i> {L_DESC}</a></li>
 					</ul>
 				</li>
 			</ul>

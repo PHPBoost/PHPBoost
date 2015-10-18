@@ -58,10 +58,10 @@
 					<menu id="cssmenu-pmactions" class="cssmenu cssmenu-group">
 						<ul>
 							<li>
-								<a href="{convers.U_POST_NEW_CONVERS}"><i class="fa fa-plus"></i> {convers.L_POST_NEW_CONVERS}</a>
+								<a href="{convers.U_POST_NEW_CONVERS}" class="cssmenu-title"><i class="fa fa-plus"></i> {convers.L_POST_NEW_CONVERS}</a>
 							</li>
 							<li>
-								<a href="{convers.U_MARK_AS_READ}"><i class="fa fa-eraser"></i> {convers.L_MARK_AS_READ}</a>
+								<a href="{convers.U_MARK_AS_READ}" class="cssmenu-title"><i class="fa fa-eraser"></i> {convers.L_MARK_AS_READ}</a>
 							</li>
 						</ul>
 					</menu>

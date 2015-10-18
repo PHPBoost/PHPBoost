@@ -1,6 +1,6 @@
 # IF C_MENU # <!-- Menu -->
 	# IF C_FIRST_MENU # <!-- Title -->
-		<nav id="cssmenu-{ID}" class="cssmenu">
+		<nav id="cssmenu-{ID}" class="cssmenu cssmenu-horizontal">
 			<ul># START elements #{elements.DISPLAY}# END elements #</ul>
 		</nav>
 		<script>
@@ -14,13 +14,13 @@
 	# IF C_NEXT_MENU # <!-- Children -->
 		<li>
 			# IF RELATIVE_URL #
-				<a href="{REL_URL}" title="{TITLE}"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF #{TITLE}</a>
+				<a href="{REL_URL}" title="{TITLE}" class="cssmenu-title"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF #{TITLE}</a>
 			# ELSE #
-				<span># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF #{TITLE}</span>
+				<span class="cssmenu-title"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF #{TITLE}</span>
 			# ENDIF #
 			<ul># START elements #{elements.DISPLAY}# END elements #</ul>
 		</li>
 	# ENDIF #
 # ELSE # <!-- Simple Menu Link -->
-	<li><a href="{REL_URL}" title="{TITLE}"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF #{TITLE}</a></li>
+	<li><a href="{REL_URL}" title="{TITLE}" class="cssmenu-title"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF #{TITLE}</a></li>
 # ENDIF #
