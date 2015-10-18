@@ -201,6 +201,11 @@ class DownloadConfig extends AbstractConfigData
 		return $this->get_property(self::SORT_TYPE) == DownloadFile::SORT_NUMBER_DOWNLOADS;
 	}
 	
+	public function is_sort_type_notation()
+	{
+		return $this->get_property(self::SORT_TYPE) == DownloadFile::SORT_NOTATION;
+	}
+	
 	public function get_files_number_in_menu()
 	{
 		return $this->get_property(self::FILES_NUMBER_IN_MENU);

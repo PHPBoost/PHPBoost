@@ -66,15 +66,21 @@ class DownloadModuleMiniMenu extends ModuleMiniMenu
 			$tpl->put_all(array(
 				'C_FILES' => !empty($downloadfiles),
 				'C_SORT_BY_DATE' => $config->is_sort_type_date(),
+				'C_SORT_BY_NOTATION' => $config->is_sort_type_notation(),
 				'C_SORT_BY_NUMBER_DOWNLOADS' => $config->is_sort_type_number_downloads()
 			));
 			
+			$displayed_position = 1;
 			foreach ($downloadfiles as $file)
 			{
 				$downloadfile = new DownloadFile();
 				$downloadfile->set_properties($file);
 				
-				$tpl->assign_block_vars('downloadfiles', $downloadfile->get_array_tpl_vars());
+				$tpl->assign_block_vars('downloadfiles', array_merge($downloadfile->get_array_tpl_vars(), array(
+					'DISPLAYED_POSITION' => $displayed_position
+				)));
+				
+				$displayed_position++;
 			}
 			
 			return $tpl->render();

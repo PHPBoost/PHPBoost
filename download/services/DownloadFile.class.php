@@ -471,6 +471,7 @@ class DownloadFile
 			'CONTENTS' => $contents,
 			'DESCRIPTION' => $description,
 			'DATE' => $this->creation_date->format(Date::FORMAT_DAY_MONTH_YEAR),
+			'DATE_DAY_MONTH' => $this->creation_date->format(Date::FORMAT_DAY_MONTH),
 			'DATE_ISO8601' => $this->creation_date->format(Date::FORMAT_ISO8601),
 			'UPDATED_DATE' => $this->updated_date !== null ? $this->updated_date->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
 			'UPDATED_DATE_ISO8601' => $this->updated_date !== null ? $this->updated_date->format(Date::FORMAT_ISO8601) : '',
