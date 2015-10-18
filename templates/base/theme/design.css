@@ -40,11 +40,10 @@ div#top-header {
 	min-height: 139px;
 	max-width: 1024px;
 	margin: auto;
-	overflow: hidden;
 }
 
 div#top-header-content{
-	float: right;
+
 }
 
 /* --- Partie inferieur du header --- */
@@ -114,10 +113,6 @@ div#global {
 	-webkit-flex-direction: row;
 }
 
-#main {
-	padding: 0 10px;
-}
-
 @media ( min-width: 769px ) {
 	div#global {
 		min-height: 100vh;
@@ -129,6 +124,7 @@ div#global {
 		-webkit-flex-order: 2;
 		flex: 1;
 		-ms-flex: 1;
+		padding: 0 10px;
 	}
 
 	aside#menu-left,
