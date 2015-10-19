@@ -1,5 +1,6 @@
 #mini-search-form {
-	margin: 20px 25px 10px 0;
+	float: right;
+    padding-top: 50px;
 	white-space: nowrap;
 	vertical-align: middle;
 }
