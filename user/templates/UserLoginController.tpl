@@ -9,7 +9,7 @@
 	</div>
 # ELSE #
 
-	<div id="global">
+	<div id="global" class="global-maintain">
 		# IF C_MAINTAIN #
 			<div id="maintain" class="center">
 				{L_MAINTAIN}
