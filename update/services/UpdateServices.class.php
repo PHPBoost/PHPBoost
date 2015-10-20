@@ -800,7 +800,11 @@ class UpdateServices
 		$file->delete();
 		$file = new File(Url::to_rel('/templates/default/framework/content/syndication/images/addrss.png'));
 		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/framework/menus/links/horizontal_scrolling.tpl'));
+		$file->delete();
 		$file = new File(Url::to_rel('/templates/default/framework/menus/links/tree.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/framework/menus/links/vertical_scrolling.tpl'));
 		$file->delete();
 		$file = new File(Url::to_rel('/templates/default/images/color.png'));
 		$file->delete();
