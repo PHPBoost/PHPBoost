@@ -457,6 +457,9 @@ class Article
 			//Articles
 			'TITLE' => $this->get_title(),
 			'DATE' => $this->get_date_created()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT),
+			'DATE_DAY' => $this->get_date_created()->get_day(),
+			'DATE_MONTH' => $this->get_date_created()->get_month(),
+			'DATE_YEAR' => $this->get_date_created()->get_year(),
 			'DATE_ISO8601' => $this->get_date_created()->format(Date::FORMAT_ISO8601),
 			'DATE_SHORT' => $this->get_date_created()->format(Date::FORMAT_DAY_MONTH_YEAR),
 			'STATUS' => $this->get_status(),
