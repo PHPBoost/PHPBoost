@@ -38,9 +38,11 @@ class LinksMenu extends LinksMenuElement
 	## Menu types ##
 	const VERTICAL_MENU = 'vertical';
 	const HORIZONTAL_MENU = 'horizontal';
+	const STATIC_MENU = 'static';
+	
+	/* Deprecated */
 	const VERTICAL_SCROLLING_MENU = 'vertical_scrolling';
 	const HORIZONTAL_SCROLLING_MENU = 'horizontal_scrolling';
-	const STATIC_MENU = 'static';
 
 	/**
 	* @access protected
@@ -61,10 +63,10 @@ class LinksMenu extends LinksMenuElement
 	* @param string $type Menu's type
 	* @param int $id The Menu's id in the database
 	*/
-	public function __construct($title, $url, $image = '', $type = self::VERTICAL_SCROLLING_MENU)
+	public function __construct($title, $url, $image = '', $type = self::STATIC_MENU)
 	{
 		// Set the menu type
-		$this->type = in_array($type, self::get_menu_types_list()) ? $type : self::VERTICAL_SCROLLING_MENU;
+		$this->type = in_array($type, self::get_menu_types_list()) ? $type : self::STATIC_MENU;
 		$this->type = in_array($this->type, array(self::HORIZONTAL_SCROLLING_MENU, self::VERTICAL_SCROLLING_MENU)) ? self::STATIC_MENU : $this->type;
 
 		// Build the menu element on witch is based the menu
@@ -206,7 +208,7 @@ class LinksMenu extends LinksMenuElement
 	*/
 	public static function get_menu_types_list()
 	{
-		return array(self::VERTICAL_MENU, self::HORIZONTAL_MENU, self::VERTICAL_SCROLLING_MENU, self::HORIZONTAL_SCROLLING_MENU);
+		return array(self::VERTICAL_MENU, self::HORIZONTAL_MENU, self::STATIC_MENU);
 	}
 
 	/**
