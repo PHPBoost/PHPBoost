@@ -61,7 +61,7 @@ class AdminLoggedErrorsControllerList extends AdminController
 			'error' => 'error.fatal' 
 		);
 		
-		$table_model = new HTMLTableModel(__CLASS__, array(
+		$table_model = new HTMLTableModel('AdminTable', array(
 			new HTMLTableColumn(LangLoader::get_message('date', 'date-common'), '', 'col-large'),
 			new HTMLTableColumn(LangLoader::get_message('description', 'main'))
 		), new HTMLTableSortingRule(''), self::NUMBER_ITEMS_PER_PAGE);
@@ -101,7 +101,7 @@ class AdminLoggedErrorsControllerList extends AdminController
 	
 	private function build_form()
 	{
-		$form = new HTMLForm(__CLASS__ . '_clear_form', AdminErrorsUrlBuilder::clear_logged_errors()->rel(), false);
+		$form = new HTMLForm(__CLASS__, AdminErrorsUrlBuilder::clear_logged_errors()->rel(), false);
 		
 		$fieldset = new FormFieldsetHTML('clear_errors', $this->lang['clear_list']);
 		$form->add_fieldset($fieldset);

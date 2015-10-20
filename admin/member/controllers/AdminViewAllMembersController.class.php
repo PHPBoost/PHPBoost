@@ -46,7 +46,7 @@ class AdminViewAllMembersController extends AdminController
 	
 	private function build_form()
 	{
-		$form = new HTMLForm(__CLASS__ . '_search_member');
+		$form = new HTMLForm(__CLASS__);
 		
 		$fieldset = new FormFieldsetHTML('search_member', LangLoader::get_message('search_member', 'main'));
 		$form->add_fieldset($fieldset);
@@ -60,7 +60,7 @@ class AdminViewAllMembersController extends AdminController
 	{
 		$number_admins = UserService::count_admin_members();
 		
-		$table_model = new SQLHTMLTableModel(DB_TABLE_MEMBER, __CLASS__, array(
+		$table_model = new SQLHTMLTableModel(DB_TABLE_MEMBER, 'AdminTable', array(
 			new HTMLTableColumn($this->lang['display_name'], 'display_name'),
 			new HTMLTableColumn($this->lang['level'], 'level'),
 			new HTMLTableColumn($this->lang['email']),

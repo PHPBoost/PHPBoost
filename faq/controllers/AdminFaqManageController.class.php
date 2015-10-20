@@ -51,7 +51,7 @@ class AdminFaqManageController extends AdminModuleController
 	
 	private function build_table()
 	{
-		$table_model = new SQLHTMLTableModel(FaqSetup::$faq_table, __CLASS__, array(
+		$table_model = new SQLHTMLTableModel(FaqSetup::$faq_table, 'AdminTable', array(
 			new HTMLTableColumn($this->lang['faq.form.question'], 'question'),
 			new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
 			new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),

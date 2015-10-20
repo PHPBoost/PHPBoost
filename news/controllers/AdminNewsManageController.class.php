@@ -47,7 +47,7 @@ class AdminNewsManageController extends AdminModuleController
 
 	private function build_table()
 	{
-		$table_model = new SQLHTMLTableModel(NewsSetup::$news_table, __CLASS__, array(
+		$table_model = new SQLHTMLTableModel(NewsSetup::$news_table, 'AdminTable', array(
 			new HTMLTableColumn(LangLoader::get_message('form.name', 'common'), 'name'),
 			new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
 			new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),

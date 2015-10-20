@@ -56,7 +56,7 @@ class AdminErrorsController404List extends AdminController
 
 	private function build_table()
 	{
-		$table_model = new SQLHTMLTableModel(PREFIX . 'errors_404', __CLASS__, array(
+		$table_model = new SQLHTMLTableModel(PREFIX . 'errors_404', 'AdminTable', array(
 			new HTMLTableColumn($this->lang['404_error_requested_url']),
 			new HTMLTableColumn($this->lang['404_error_from_url']),
 			new HTMLTableColumn($this->lang['404_error_times'], 'times', 'col-small'),
@@ -96,7 +96,7 @@ class AdminErrorsController404List extends AdminController
 	
 	private function build_form()
 	{
-		$form = new HTMLForm(__CLASS__ . '_clear_form', AdminErrorsUrlBuilder::clear_404_errors()->rel(), false);
+		$form = new HTMLForm(__CLASS__, AdminErrorsUrlBuilder::clear_404_errors()->rel(), false);
 		
 		$fieldset = new FormFieldsetHTML('clear_errors', $this->lang['clear_list']);
 		$form->add_fieldset($fieldset);

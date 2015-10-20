@@ -47,7 +47,7 @@ class AdminSmileysListController extends AdminController
 
 	private function build_table()
 	{
-		$table_model = new HTMLTableModel(__CLASS__, array(
+		$table_model = new HTMLTableModel('AdminTable', array(
 			new HTMLTableColumn($this->lang['smiley']),
 			new HTMLTableColumn(LangLoader::get_message('code', 'main')),
 			new HTMLTableColumn('')
