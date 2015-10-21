@@ -113,6 +113,10 @@ div#global {
 	-webkit-flex-direction: row;
 }
 
+div#main {
+	max-width: 100%;
+}
+
 @media ( min-width: 769px ) {
 	div#global {
 		min-height: 100vh;
