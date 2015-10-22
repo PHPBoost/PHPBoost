@@ -124,6 +124,14 @@ a.wikipedia-link:before {
 
 .hidden { display: none !important; }
 
+@media ( max-width: 768px ) {
+	.hidden-small-screens { display: none !important; }
+}
+
+@media ( min-width: 769px ) {
+	.hidden-large-screens { display: none !important; }
+}
+
 img.left, img.right {
 	margin: 6px;
 }
