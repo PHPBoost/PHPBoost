@@ -1,6 +1,6 @@
 # IF C_FIRST_MENU # <!-- Menu container NAV -->
 
-	#  IF C_MENU_CONTAINER # <!-- Open mini-module-container -->
+	# IF C_MENU_CONTAINER # <!-- Open mini-module-container -->
 	<div class="module-mini-container">
 		<div class="module-mini-top">
 			<h3 class="menu-vertical-{DEPTH}">
