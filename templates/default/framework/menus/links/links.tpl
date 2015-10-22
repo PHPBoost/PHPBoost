@@ -16,7 +16,7 @@
 	# ENDIF #
 
 	<nav id="cssmenu-{ID}" class="cssmenu# IF C_MENU_HORIZONTAL # cssmenu-horizontal# ENDIF ## IF C_MENU_VERTICAL # cssmenu-vertical# ENDIF ## IF C_MENU_STATIC # cssmenu-static# ENDIF ## IF C_MENU_LEFT # cssmenu-left# ENDIF ## IF C_MENU_RIGHT # cssmenu-right# ENDIF #">
-		<ul># START elements #{elements.DISPLAY}# END elements #</ul>
+		<ul class="level-{DEPTH}"># START elements #{elements.DISPLAY}# END elements #</ul>
 	</nav>
 
 	# IF C_MENU_CONTAINER # <!-- Close mini-module-container -->
@@ -36,14 +36,14 @@
 # IF C_NEXT_MENU # <!-- Element for Menu -->
 
 	<li # IF C_HAS_CHILD #class="has-sub" # ENDIF #>
-		# IF RELATIVE_URL #
+		# IF C_URL #
 			<a href="{REL_URL}" title="{TITLE}" class="cssmenu-title"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" idth="{IMG_WIDTH}" /> # ENDIF #{TITLE}</a>
 		# ELSE #
 			<span class="cssmenu-title"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF #{TITLE}</span>
 		# ENDIF #
 
 		# IF C_HAS_CHILD # <!-- Add Sub-Menu Element -->
-		<ul># START elements #{elements.DISPLAY}# END elements #</ul>
+		<ul class="level-{DEPTH}"># START elements #{elements.DISPLAY}# END elements #</ul>
 		# ENDIF #
 	</li>
 

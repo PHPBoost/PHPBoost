@@ -143,15 +143,16 @@ class LinksMenu extends LinksMenuElement
 		// Menu assignment
 		parent::_assign($tpl, $mode);
 		$tpl->put_all(array(
-			'C_MENU' => true,
 			'C_NEXT_MENU' => $this->depth > 0,
 			'C_FIRST_MENU' => $this->depth == 0,
-			'C_HAS_CHILD' => count($this->elements) > 0
+			'C_HAS_CHILD' => count($this->elements) > 0,
+			'DEPTH' => $this->depth
 		));
 		
-		if ($this->type == self::VERTICAL_MENU)
+		if ($this->type == self::AUTOMATIC_MENU)
 		{
 			$tpl->put_all(array(
+				'C_MENU_CONTAINER' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
 				'C_MENU_HORIZONTAL' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__HEADER, Menu::BLOCK_POSITION__SUB_HEADER, Menu::BLOCK_POSITION__TOP_CENTRAL, Menu::BLOCK_POSITION__BOTTOM_CENTRAL)),
 				'C_MENU_VERTICAL' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
 				'C_MENU_STATIC' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__TOP_FOOTER, Menu::BLOCK_POSITION__FOOTER)),
@@ -200,17 +201,18 @@ class LinksMenu extends LinksMenuElement
 		// Menu assignment
 		parent::_assign($tpl, LinksMenuElement::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING);
 		$tpl->put_all(array(
-			'C_MENU' => true,
 			'C_NEXT_MENU' => $this->depth > 0,
 			'C_FIRST_MENU' => $this->depth == 0,
 			'C_HAS_CHILD' => count($this->elements) > 0,
+			'DEPTH' => $this->depth,
 			'ID' => '##.#GET_UID#.##',
-			'ID_VAR' => '##.#GET_UID_VAR#.##',
+			'ID_VAR' => '##.#GET_UID_VAR#.##'
 		));
 		
-		if ($this->type == self::VERTICAL_MENU)
+		if ($this->type == self::AUTOMATIC_MENU)
 		{
 			$tpl->put_all(array(
+				'C_MENU_CONTAINER' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
 				'C_MENU_HORIZONTAL' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__HEADER, Menu::BLOCK_POSITION__SUB_HEADER, Menu::BLOCK_POSITION__TOP_CENTRAL, Menu::BLOCK_POSITION__BOTTOM_CENTRAL)),
 				'C_MENU_VERTICAL' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
 				'C_MENU_STATIC' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__TOP_FOOTER, Menu::BLOCK_POSITION__FOOTER)),
