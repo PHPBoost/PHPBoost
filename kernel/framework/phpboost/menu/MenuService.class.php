@@ -249,7 +249,7 @@ class MenuService
         if ($direction > 0)
         {   // Moving the menu down
 			$parameters = array('block' => $menu->get_block());
-			$max_position = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MENUS, 'MAX(c_order)', 'WHERE block=:block AND enabled=1', $parameters);
+			$max_position = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MENUS, 'MAX(position)', 'WHERE block=:block AND enabled=1', $parameters);
 			
             // Getting the max diff
             if (($new_block_position = ($menu->get_block_position() + $direction)) > $max_position)
