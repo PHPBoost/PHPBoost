@@ -91,30 +91,30 @@ abstract class LinksMenuElement extends Menu
 		
 		parent::_assign($template);
 		$template->put_all(array(
-            'C_MENU' => false,
-            'TITLE' => $this->title,
-            'C_FIRST_LEVEL' => $this->depth == 1,
-            'DEPTH' => $this->depth,
-            'PARENT_DEPTH' => $this->depth - 1,
-            'C_URL' => !empty($this->url),
-            'C_IMG' => !empty($this->image),
-            'ABSOLUTE_URL' => Url::to_absolute($this->url),
-            'ABSOLUTE_IMG' => Url::to_absolute($this->image),
-            'RELATIVE_URL' => Url::to_relative($this->url),
+			'C_MENU' => false,
+			'TITLE' => $this->title,
+			'C_FIRST_LEVEL' => $this->depth == 1,
+			'DEPTH' => $this->depth,
+			'PARENT_DEPTH' => $this->depth - 1,
+			'C_URL' => !empty($this->url),
+			'C_IMG' => !empty($this->image),
+			'ABSOLUTE_URL' => Url::to_absolute($this->url),
+			'ABSOLUTE_IMG' => Url::to_absolute($this->image),
+			'RELATIVE_URL' => Url::to_relative($this->url),
 			'REL_URL' => Url::to_rel($this->url),
-            'RELATIVE_IMG' => Url::to_relative($this->image),
+			'RELATIVE_IMG' => Url::to_relative($this->image),
 			'REL_IMG' => Url::to_rel($this->image),
-            'ID' => $this->get_uid(),
-            'ID_VAR' => $this->get_uid(),
-            'IMG_HEIGHT' => $image->get_height(),
-            'IMG_WIDTH' => $image->get_width()
+			'ID' => $this->get_uid(),
+			'ID_VAR' => $this->get_uid(),
+			'IMG_HEIGHT' => $image->get_height(),
+			'IMG_WIDTH' => $image->get_width()
 		));
 
 		//Full displaying: we also show the authorization formulary
 		if ($mode)
 		{
 			$template->put_all(array(
-  				'AUTH_FORM' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, $this->get_auth(), array(), 'menu_element_' . $this->uid . '_auth')
+				'AUTH_FORM' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, $this->get_auth(), array(), 'menu_element_' . $this->uid . '_auth')
 			));
 		}
 	}

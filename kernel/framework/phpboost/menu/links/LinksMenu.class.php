@@ -36,6 +36,7 @@ class LinksMenu extends LinksMenuElement
 	const LINKS_MENU__CLASS = 'LinksMenu';
 
 	## Menu types ##
+	const AUTOMATIC_MENU = 'automatic';
 	const VERTICAL_MENU = 'vertical';
 	const HORIZONTAL_MENU = 'horizontal';
 	const STATIC_MENU = 'static';
@@ -125,7 +126,7 @@ class LinksMenu extends LinksMenuElement
 		 // Get the good Template object
 		if (!is_object($template) || !($template instanceof Template))
 		{
-			$tpl = new FileTemplate('framework/menus/links/' . $this->type . '.tpl');
+			$tpl = new FileTemplate('framework/menus/links/links.tpl');
 		}
 		else
 		{
@@ -147,7 +148,29 @@ class LinksMenu extends LinksMenuElement
 			'C_FIRST_MENU' => $this->depth == 0,
 			'C_HAS_CHILD' => count($this->elements) > 0
 		));
-
+		
+		if ($this->type == self::VERTICAL_MENU)
+		{
+			$tpl->put_all(array(
+				'C_MENU_HORIZONTAL' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__HEADER, Menu::BLOCK_POSITION__SUB_HEADER, Menu::BLOCK_POSITION__TOP_CENTRAL, Menu::BLOCK_POSITION__BOTTOM_CENTRAL)),
+				'C_MENU_VERTICAL' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
+				'C_MENU_STATIC' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__TOP_FOOTER, Menu::BLOCK_POSITION__FOOTER)),
+				'C_MENU_LEFT' => $this->get_block() == Menu::BLOCK_POSITION__LEFT,
+				'C_MENU_RIGHT' => $this->get_block() == Menu::BLOCK_POSITION__RIGHT
+			));
+		}
+		else
+		{
+			$tpl->put_all(array(
+				'C_MENU_CONTAINER' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
+				'C_MENU_HORIZONTAL' => $this->type == self::HORIZONTAL_MENU,
+				'C_MENU_VERTICAL' => $this->type == self::VERTICAL_MENU,
+				'C_MENU_STATIC' => $this->type == self::STATIC_MENU,
+				'C_MENU_LEFT' => $this->get_block() == Menu::BLOCK_POSITION__LEFT,
+				'C_MENU_RIGHT' => $this->get_block() == Menu::BLOCK_POSITION__RIGHT
+			));
+		}
+		
 		return $tpl->render();
 	}
 
@@ -160,7 +183,7 @@ class LinksMenu extends LinksMenuElement
 		// Get the good Template object
 		if (!is_object($template) || !($template instanceof Template))
 		{
-			$tpl = new FileTemplate('framework/menus/links/' . $this->type . '.tpl');
+			$tpl = new FileTemplate('framework/menus/links/links.tpl');
 		}
 		else
 		{
@@ -184,6 +207,28 @@ class LinksMenu extends LinksMenuElement
 			'ID' => '##.#GET_UID#.##',
 			'ID_VAR' => '##.#GET_UID_VAR#.##',
 		));
+		
+		if ($this->type == self::VERTICAL_MENU)
+		{
+			$tpl->put_all(array(
+				'C_MENU_HORIZONTAL' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__HEADER, Menu::BLOCK_POSITION__SUB_HEADER, Menu::BLOCK_POSITION__TOP_CENTRAL, Menu::BLOCK_POSITION__BOTTOM_CENTRAL)),
+				'C_MENU_VERTICAL' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
+				'C_MENU_STATIC' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__TOP_FOOTER, Menu::BLOCK_POSITION__FOOTER)),
+				'C_MENU_LEFT' => $this->get_block() == Menu::BLOCK_POSITION__LEFT,
+				'C_MENU_RIGHT' => $this->get_block() == Menu::BLOCK_POSITION__RIGHT
+			));
+		}
+		else
+		{
+			$tpl->put_all(array(
+				'C_MENU_CONTAINER' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
+				'C_MENU_HORIZONTAL' => $this->type == self::HORIZONTAL_MENU,
+				'C_MENU_VERTICAL' => $this->type == self::VERTICAL_MENU,
+				'C_MENU_STATIC' => $this->type == self::STATIC_MENU,
+				'C_MENU_LEFT' => $this->get_block() == Menu::BLOCK_POSITION__LEFT,
+				'C_MENU_RIGHT' => $this->get_block() == Menu::BLOCK_POSITION__RIGHT
+			));
+		}
 
 		if ($this->depth == 0)
 		{   // We protect and unprotect only on the top level
@@ -208,7 +253,7 @@ class LinksMenu extends LinksMenuElement
 	*/
 	public static function get_menu_types_list()
 	{
-		return array(self::VERTICAL_MENU, self::HORIZONTAL_MENU, self::STATIC_MENU);
+		return array(self::AUTOMATIC_MENU, self::VERTICAL_MENU, self::HORIZONTAL_MENU, self::STATIC_MENU);
 	}
 
 	/**
