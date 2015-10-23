@@ -143,6 +143,7 @@ class LinksMenu extends LinksMenuElement
 		// Menu assignment
 		parent::_assign($tpl, $mode);
 		$tpl->put_all(array(
+			'C_MENU' => true,
 			'C_NEXT_MENU' => $this->depth > 0,
 			'C_FIRST_MENU' => $this->depth == 0,
 			'C_HAS_CHILD' => count($this->elements) > 0,
@@ -201,6 +202,7 @@ class LinksMenu extends LinksMenuElement
 		// Menu assignment
 		parent::_assign($tpl, LinksMenuElement::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING);
 		$tpl->put_all(array(
+			'C_MENU' => true,
 			'C_NEXT_MENU' => $this->depth > 0,
 			'C_FIRST_MENU' => $this->depth == 0,
 			'C_HAS_CHILD' => count($this->elements) > 0,

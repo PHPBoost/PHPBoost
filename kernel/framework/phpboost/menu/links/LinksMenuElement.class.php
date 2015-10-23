@@ -91,7 +91,7 @@ abstract class LinksMenuElement extends Menu
 		
 		parent::_assign($template);
 		$template->put_all(array(
-			'C_NEXT_MENU' => $this->depth > 0,
+			'C_MENU' => false,
 			'TITLE' => $this->title,
 			'DEPTH' => $this->depth,
 			'PARENT_DEPTH' => $this->depth - 1,

@@ -1076,9 +1076,7 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 	.cssmenu #menu-button {
 		display: block;
 		padding: 17px 40px 17px 17px;
-		color: #DDDDDD;
 		cursor: pointer;
-		font-size: 12px;
 		text-transform: uppercase;
 		font-weight: 700;
 	}
