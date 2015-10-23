@@ -1,15 +1,21 @@
 # IF C_SUSCRIBE #
-<menu class="dynamic-menu group center">
+<menu id="cssmenu-newsletter-actions" class="cssmenu cssmenu-group">
 	<ul>
 		<li>
-			<a href="${relative_url(NewsletterUrlBuilder::subscribe())}">{@newsletter.subscribe_newsletters}</a> 
+			<a href="${relative_url(NewsletterUrlBuilder::subscribe())}" class="cssmenu-title"><i class="fa fa-envelope-o"></i> {@newsletter.subscribe_newsletters}</a> 
 		</li>
 		<li>
-			<a href="${relative_url(NewsletterUrlBuilder::unsubscribe())}">{@newsletter.unsubscribe_newsletters}</a>
+			<a href="${relative_url(NewsletterUrlBuilder::unsubscribe())}" class="cssmenu-title">{@newsletter.unsubscribe_newsletters}</a>
 		</li>
 	</ul>
 </menu>
-
+<script>
+	jQuery("#cssmenu-newsletter-actions").menumaker({
+		title: "${LangLoader::get_message('form.options', 'common')}",
+		format: "multitoggle",
+		breakpoint: 768
+	});
+</script>
 <div class="spacer">&nbsp;</div>
 # ENDIF #
 
