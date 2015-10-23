@@ -153,7 +153,7 @@ class SandboxFormController extends ModuleController
 	   
 		// SHORT MULTI LINE TEXT
 		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('short_multi_line_text', 'Champ texte multi lignes moyen', 'titi',
-			array('rows' => 7)
+			array('rows' => 7, 'required' => true)
 		));
 		
 		// MULTI LINE TEXT
