@@ -1,5 +1,14 @@
 <script>
 <!--
+function check_form()
+{
+	if(document.getElementById('menu_element_{ID}_name').value == "") {
+		alert("{L_REQUIRE_NAME}");
+		return false;
+	}
+	return true;
+}
+
 var idMax = {ID_MAX};
 
 function initSortableMenu() {
@@ -146,11 +155,12 @@ jQuery(document).ready(function() {
 -->
 </script>
 <div id="admin-contents">
-	<form action="links.php?action=save" method="post" class="fieldset-content" onsubmit="build_menu_elements_tree();">
+	<form action="links.php?action=save" method="post" class="fieldset-content" onsubmit="build_menu_elements_tree();return check_form();">
+		<p class="center">${LangLoader::get_message('form.explain_required_fields', 'status-messages-common')}</p>
 		<fieldset> 
 			<legend>{L_ACTION_MENUS}</legend>
 			<div class="form-element">
-				<label for="menu_element_{ID}_name">{L_NAME}</label>
+				<label for="menu_element_{ID}_name">* {L_NAME}</label>
 				<div class="form-field"><input type="text" name="menu_element_{ID}_name" id="menu_element_{ID}_name" value="{MENU_NAME}"></div>
 			</div>
 			<div class="form-element">

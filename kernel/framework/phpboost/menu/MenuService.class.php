@@ -241,51 +241,51 @@ class MenuService
 	 * @param int $diff the direction to move it. positives integers move down, negatives, up.
 	*/
 	public static function change_position($menu, $direction = self::MOVE_UP)
-    {
-        $block_position = $menu->get_block_position();
-        $new_block_position = $block_position;
-        $update_query = '';
-        
-        if ($direction > 0)
-        {   // Moving the menu down
+	{
+		$block_position = $menu->get_block_position();
+		$new_block_position = $block_position;
+		$update_query = '';
+		
+		if ($direction > 0)
+		{   // Moving the menu down
 			$parameters = array('block' => $menu->get_block());
 			$max_position = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MENUS, 'MAX(position)', 'WHERE block=:block AND enabled=1', $parameters);
 			
-            // Getting the max diff
-            if (($new_block_position = ($menu->get_block_position() + $direction)) > $max_position)
-                $new_block_position = $max_position;
-            
-            $update_query = "
-                UPDATE " . DB_TABLE_MENUS . " SET position=position - 1
-                WHERE
-                    block='" . $menu->get_block() . "' AND
-                    position BETWEEN '" . ($block_position + 1) . "' AND '" . $new_block_position . "'
-            ";
-        }
-        else if ($direction < 0)
-        {   // Moving the menu up
-            
-            // Getting the max diff
-            if (($new_block_position = ($menu->get_block_position() + $direction)) < 0)
-                $new_block_position = 0;
-                            
-            // Updating other menus
-            $update_query = "
-                UPDATE " . DB_TABLE_MENUS . " SET position=position + 1
-                WHERE
-                    block='" . $menu->get_block() . "' AND
-                    position BETWEEN '" . $new_block_position . "' AND '" . ($block_position - 1) . "'
-            ";
-        }
-        
-        if ($block_position != $new_block_position)
-        {   // Updating other menus
-            PersistenceContext::get_querier()->inject($update_query);
-            
-            // Updating the current menu
-            $menu->set_block_position($new_block_position);
-            self::save($menu);
-        }
+			// Getting the max diff
+			if (($new_block_position = ($menu->get_block_position() + $direction)) > $max_position)
+				$new_block_position = $max_position;
+			
+			$update_query = "
+				UPDATE " . DB_TABLE_MENUS . " SET position=position - 1
+				WHERE
+					block='" . $menu->get_block() . "' AND
+					position BETWEEN '" . ($block_position + 1) . "' AND '" . $new_block_position . "'
+			";
+		}
+		else if ($direction < 0)
+		{   // Moving the menu up
+			
+			// Getting the max diff
+			if (($new_block_position = ($menu->get_block_position() + $direction)) < 0)
+				$new_block_position = 0;
+							
+			// Updating other menus
+			$update_query = "
+				UPDATE " . DB_TABLE_MENUS . " SET position=position + 1
+				WHERE
+					block='" . $menu->get_block() . "' AND
+					position BETWEEN '" . $new_block_position . "' AND '" . ($block_position - 1) . "'
+			";
+		}
+		
+		if ($block_position != $new_block_position)
+		{   // Updating other menus
+			PersistenceContext::get_querier()->inject($update_query);
+			
+			// Updating the current menu
+			$menu->set_block_position($new_block_position);
+			self::save($menu);
+		}
 	}
 	
 	/**
@@ -442,7 +442,7 @@ class MenuService
 	 * @param int $menu_type the menu type
 	 * @return LinksMenu the menu with links to modules
 	 */
-	public static function website_modules($menu_type = LinksMenu::VERTICAL_MENU)
+	public static function website_modules($menu_type = LinksMenu::AUTOMATIC_MENU)
 	{
 		$modules_menu = new LinksMenu('PHPBoost', '/', '', $menu_type);
 		$modules = ModulesManager::get_activated_modules_map_sorted_by_localized_name();
@@ -464,7 +464,7 @@ class MenuService
 						break;
 					}
 				}
-				$modules_menu->add(new LinksMenuLink($configuration->get_name(), '/' . $module->get_id() . '/' . $start_page, $img));
+				$modules_menu->add(new LinksMenuLink($configuration->get_name(), '/' . $module->get_id() . '/', $img));
 			}
 		}
 		return $modules_menu;
@@ -480,16 +480,16 @@ class MenuService
 	{
 		$vertical_position = in_array($position, array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT));
 		$template->put_all(array(
-            'C_HEADER' => $position == Menu::BLOCK_POSITION__HEADER,
-            'C_SUBHEADER' => $position == Menu::BLOCK_POSITION__SUB_HEADER,
-            'C_TOP_CENTRAL' => $position == Menu::BLOCK_POSITION__TOP_CENTRAL,
-            'C_BOTTOM_CENTRAL' => $position == Menu::BLOCK_POSITION__BOTTOM_CENTRAL,
-            'C_TOP_FOOTER' => $position == Menu::BLOCK_POSITION__TOP_FOOTER,
-            'C_FOOTER' => $position == Menu::BLOCK_POSITION__FOOTER,
-            'C_LEFT' => $position == Menu::BLOCK_POSITION__LEFT,
-            'C_RIGHT' => $position == Menu::BLOCK_POSITION__RIGHT,
-            'C_VERTICAL' => $vertical_position,
-            'C_HORIZONTAL' => !$vertical_position
+			'C_HEADER' => $position == Menu::BLOCK_POSITION__HEADER,
+			'C_SUBHEADER' => $position == Menu::BLOCK_POSITION__SUB_HEADER,
+			'C_TOP_CENTRAL' => $position == Menu::BLOCK_POSITION__TOP_CENTRAL,
+			'C_BOTTOM_CENTRAL' => $position == Menu::BLOCK_POSITION__BOTTOM_CENTRAL,
+			'C_TOP_FOOTER' => $position == Menu::BLOCK_POSITION__TOP_FOOTER,
+			'C_FOOTER' => $position == Menu::BLOCK_POSITION__FOOTER,
+			'C_LEFT' => $position == Menu::BLOCK_POSITION__LEFT,
+			'C_RIGHT' => $position == Menu::BLOCK_POSITION__RIGHT,
+			'C_VERTICAL' => $vertical_position,
+			'C_HORIZONTAL' => !$vertical_position
 		));
 	}
 	## Tools ##

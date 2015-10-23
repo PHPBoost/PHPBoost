@@ -39,7 +39,7 @@ if ($action == 'save')
 	$menu_uid = retrieve(POST, 'menu_uid', 0);
 	
 	//Properties of the menu we are creating/editing
-	$type = retrieve(POST, 'menu_element_' . $menu_uid . '_type', LinksMenu::VERTICAL_MENU);
+	$type = retrieve(POST, 'menu_element_' . $menu_uid . '_type', LinksMenu::AUTOMATIC_MENU);
 	
 	function build_menu_from_form($elements_ids, $level = 0)
 	{
@@ -181,6 +181,7 @@ $tpl->put_all(array(
 	'L_CONTENT' => $LANG['content'],
 	'L_AUTHORIZATIONS' => $LANG['authorizations'],
 	'L_ADD' => LangLoader::get_message('add', 'common'),
+	'L_REQUIRE_NAME' => $LANG['require_name'],
 	'J_AUTH_FORM' => str_replace(array("&quot;", "<!--", "-->"), array('"', "", ""), TextHelper::to_js_string(Authorizations::generate_select(Menu::MENU_AUTH_BIT, array('r-1' => Menu::MENU_AUTH_BIT, 'r0' => Menu::MENU_AUTH_BIT, 'r1' => Menu::MENU_AUTH_BIT), array(), 'menu_element_##UID##_auth'))),
 	'JL_AUTHORIZATIONS' => TextHelper::to_js_string($LANG['authorizations']),
 	'JL_PROPERTIES' => TextHelper::to_js_string($LANG['properties']),
@@ -232,7 +233,7 @@ if ($menu_id > 0)
 }
 else
 {   // Create a new generic menu
-	$menu = new LinksMenu('', '', '', LinksMenu::VERTICAL_MENU);
+	$menu = new LinksMenu('', '', '', LinksMenu::AUTOMATIC_MENU);
 }
 
 $tpl->put_all(array(

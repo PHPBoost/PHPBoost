@@ -134,6 +134,7 @@ class InstallationServices
 	private function create_database($database)
 	{
 		try {
+			$database = str_replace(array('/', '\\', '.', ' ', '"', '\''), '_', $database);
 			$database = PersistenceContext::get_dbms_utils()->create_database($database);
 			$databases_list = PersistenceContext::get_dbms_utils()->list_databases();
 			PersistenceContext::close_db_connection();
@@ -289,7 +290,7 @@ class InstallationServices
 	private function add_menus()
 	{
 		MenuService::enable_all(true);
-		$modules_menu = MenuService::website_modules(LinksMenu::VERTICAL_MENU);
+		$modules_menu = MenuService::website_modules();
 		MenuService::move($modules_menu, Menu::BLOCK_POSITION__LEFT, false);
 		MenuService::set_position($modules_menu, -$modules_menu->get_block_position());
 	}

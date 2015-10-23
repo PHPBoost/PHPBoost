@@ -64,10 +64,10 @@ class LinksMenu extends LinksMenuElement
 	* @param string $type Menu's type
 	* @param int $id The Menu's id in the database
 	*/
-	public function __construct($title, $url, $image = '', $type = self::STATIC_MENU)
+	public function __construct($title, $url, $image = '', $type = self::AUTOMATIC_MENU)
 	{
 		// Set the menu type
-		$this->type = in_array($type, self::get_menu_types_list()) ? $type : self::STATIC_MENU;
+		$this->type = in_array($type, self::get_menu_types_list()) ? $type : self::AUTOMATIC_MENU;
 		$this->type = in_array($this->type, array(self::HORIZONTAL_SCROLLING_MENU, self::VERTICAL_SCROLLING_MENU)) ? self::STATIC_MENU : $this->type;
 
 		// Build the menu element on witch is based the menu
