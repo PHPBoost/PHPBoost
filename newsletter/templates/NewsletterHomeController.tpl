@@ -2,7 +2,7 @@
 <menu id="cssmenu-newsletter-actions" class="cssmenu cssmenu-group">
 	<ul>
 		<li>
-			<a href="${relative_url(NewsletterUrlBuilder::subscribe())}" class="cssmenu-title"><i class="fa fa-envelope-o"></i> {@newsletter.subscribe_newsletters}</a> 
+			<a href="${relative_url(NewsletterUrlBuilder::subscribe())}" class="cssmenu-title">{@newsletter.subscribe_newsletters}</a> 
 		</li>
 		<li>
 			<a href="${relative_url(NewsletterUrlBuilder::unsubscribe())}" class="cssmenu-title">{@newsletter.unsubscribe_newsletters}</a>
