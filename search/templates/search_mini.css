@@ -1,8 +1,14 @@
 #mini-search-form {
 	float: right;
-    padding-top: 50px;
+    margin: 40px 20px 0 0;
 	white-space: nowrap;
 	vertical-align: middle;
+}
+
+@media ( max-width: 768px ) {
+	#mini-search-form {
+	    margin: 20px 20px 20px 0;
+	}
 }
 
 #mini-search-form.input-element-button input {
