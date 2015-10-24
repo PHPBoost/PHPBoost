@@ -81,6 +81,11 @@ abstract class Menu
 	 * @var int The Menu position on the website
 	 */
     public $position = -1;
+	/**
+	* @access protected
+	* @var bool menu hidden or not with small screens
+	*/
+	protected $hidden_with_small_screens = false;
     /**
 	 * @access protected
 	 * @var Array<Filter> The filter list
@@ -160,6 +165,10 @@ abstract class Menu
 	 * @param int $position the Menu position to set
 	 */
     public function set_block_position($position) { $this->position = $position; }
+	/*
+	* @param bool $value true if menu hidden with small screens
+	*/
+	public function set_hidden_with_small_screens($value) { $this->hidden_with_small_screens = $value; }
 
     ## Getters ##
     /**
@@ -190,6 +199,10 @@ abstract class Menu
 	 * @return bool true if the Menu is enabled, false otherwise
 	 */
     public function is_enabled() { return $this->enabled; }
+	/**
+	* @return bool check if menu is hidden with small screens
+	*/
+	public function is_hidden_with_small_screens() { return $this->hidden_with_small_screens; }
 	/**
 	* @return string the menu filters
 	*/

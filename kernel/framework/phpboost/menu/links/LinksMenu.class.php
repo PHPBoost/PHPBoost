@@ -147,6 +147,7 @@ class LinksMenu extends LinksMenuElement
 			'C_NEXT_MENU' => $this->depth > 0,
 			'C_FIRST_MENU' => $this->depth == 0,
 			'C_HAS_CHILD' => count($this->elements) > 0,
+			'C_HIDDEN_WITH_SMALL_SCREENS' => $this->hidden_with_small_screens,
 			'DEPTH' => $this->depth
 		));
 		

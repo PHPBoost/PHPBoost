@@ -118,6 +118,7 @@ if ($action == 'save')
 	
 	//Menu enabled?
 	$menu->enabled(retrieve(POST, 'menu_element_' . $menu_uid . '_enabled', Menu::MENU_NOT_ENABLED));
+	$menu->set_hidden_with_small_screens((bool)retrieve(POST, 'menu_element_' . $menu_uid . '_hidden_with_small_screens', false));
 	$menu->set_block(retrieve(POST, 'menu_element_' . $menu_uid . '_location', Menu::BLOCK_POSITION__NOT_ENABLED));
 	$menu->set_auth(Authorizations::build_auth_array_from_form(
 		Menu::MENU_AUTH_BIT, 'menu_element_' . $menu_uid . '_auth'
@@ -165,6 +166,7 @@ $tpl->put_all(array(
 	'L_URL' => $LANG['url'],
 	'L_IMAGE' => LangLoader::get_message('form.picture', 'common'),
 	'L_STATUS' => $LANG['status'],
+	'L_HIDDEN_WITH_SMALL_SCREENS' => $LANG['hidden_with_small_screens'],
 	'L_AUTHS' => $LANG['auths'],
 	'L_ENABLED' => LangLoader::get_message('enabled', 'common'),
 	'L_DISABLED' => LangLoader::get_message('disabled', 'common'),
@@ -242,6 +244,7 @@ $tpl->put_all(array(
 		Menu::MENU_AUTH_BIT, $menu->get_auth(), array(), 'menu_element_' . $menu->get_uid() . '_auth'
 	),
 	'C_ENABLED' => !empty($menu_id) ? $menu->is_enabled() : true,
+	'C_MENU_HIDDEN_WITH_SMALL_SCREENS' => $menu->is_hidden_with_small_screens(),
 	'MENU_ID' => $menu->get_id(),
 	'MENU_TREE' => $menu->display($edit_menu_tpl, LinksMenuElement::LINKS_MENU_ELEMENT__FULL_DISPLAYING),
 	'MENU_NAME' => $menu->get_title(),

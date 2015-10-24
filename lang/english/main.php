@@ -121,6 +121,7 @@ $LANG['quotation'] = 'Quotation';
 $LANG['default'] = 'Default';
 $LANG['type'] = 'Type';
 $LANG['status'] = 'Status';
+$LANG['hidden_with_small_screens'] = 'Hidden with small screens';
 $LANG['url'] = 'Url';
 $LANG['replies'] = 'Replies';
 $LANG['back'] = 'Back';
