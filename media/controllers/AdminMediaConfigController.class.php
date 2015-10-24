@@ -191,7 +191,7 @@ class AdminMediaConfigController extends AdminModuleController
 		$this->config->set_max_video_width($this->form->get_value('max_video_width'));
 		$this->config->set_max_video_height($this->form->get_value('max_video_height'));
 		$this->config->set_root_category_description($this->form->get_value('root_category_description'));
-		$this->config->set_root_category_content_type($this->form->get_value('root_category_content_type'));
+		$this->config->set_root_category_content_type($this->form->get_value('root_category_content_type')->get_raw_value());
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		
 		MediaConfig::save();

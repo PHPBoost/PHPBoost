@@ -87,7 +87,7 @@ class SandboxTableController extends ModuleController
 				new HTMLTableRowCell(($row['show_email'] == 1) ? '<a href="mailto:' . $row['email'] . '" class="basic-button smaller">Mail</a>' : '&nbsp;'),
 				new HTMLTableRowCell(Date::to_format($row['registration_date'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
 				new HTMLTableRowCell(!empty($row['posted_msg']) ? $row['posted_msg'] : '0'),
-				new HTMLTableRowCell(!empty(Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)) ? $row['last_connection_date'] : $row['registration_date']),
+				new HTMLTableRowCell(!empty($row['last_connection_date']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('never', 'main')),
 				new HTMLTableRowCell('<a href="' . Url::to_rel('/user/pm.php?pm=' . $row['user_id']) . '" class="basic-button smaller">MP</a>')
 			));
 		}
