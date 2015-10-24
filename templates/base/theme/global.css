@@ -159,6 +159,10 @@ h4.formatter-title {
 .calendar-block .date-picker tbody tr:last-child td:first-child { border-radius: 0px 0px 0px 2px; }
 .calendar-block .date-picker tbody tr:last-child td:last-child	{ border-radius: 0px 0px 2px 0px; }
 
+td.calendar-week {
+    border-right: 1px solid #BBBBBB;
+}
+
 /* --- les blocs bbcode --- */
 
 .bbcode-block-container {

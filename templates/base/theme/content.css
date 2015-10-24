@@ -3,22 +3,6 @@
 Contient les formulaires, les modules (et modules minis), messages.
 --------------------------------------*/
 
-/* CSS applique aux écrans PC */
-@media ( min-width: 769px ) {
-
-}
-
-/* CSS applique aux tablettes */
-@media ( max-width: 768px ) {
-
-}
-
-/* CSS applique aux smartphones */
-@media ( max-width: 480px ) {
-
-}
-
-
 /* -- Conteneurs, éléments de module, ... --
 --------------------------------------*/
 
@@ -480,19 +464,12 @@ table.formatter-table th.formatter-table-head {
 	text-align: center;
 	font-weight: normal;
 }
-table.formatter-table th.formatter-table-head:first-child {
-	border-top-left-radius: 3px;
-}
-table.formatter-table th.formatter-table-head:last-child {
-	border-top-right-radius: 3px;
-}
 
-table.formatter-table th.formatter-table-head a {
-	color: #E5E6E6;
-}
-table.formatter-table th.formatter-table-head a:hover {
-	color: #FFFFFF;
-}
+table.formatter-table th.formatter-table-head:first-child { border-top-left-radius: 3px;  }
+table.formatter-table th.formatter-table-head:last-child  { border-top-right-radius: 3px; }
+
+table.formatter-table th.formatter-table-head a 	  {	color: #E5E6E6; }
+table.formatter-table th.formatter-table-head a:hover {	color: #FFFFFF; }
 
 table.formatter-table th.formatter-table-head p {
 	margin-bottom: 0px;
