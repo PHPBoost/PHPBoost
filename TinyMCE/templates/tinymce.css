@@ -1,4 +1,22 @@
-div.mce-edit-area, div.mce-statusbar { width: 100%; }
-label.mce-wordcount { position: relative; }
-div.mce-window-head { padding: 20px 15px; }
-.form-element-textarea .form-field-textarea div { float: none; }
+div.mce-edit-area,
+div.mce-statusbar {
+	width: 98%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+label.mce-wordcount {
+	position: relative;
+}
+
+div.mce-window-head {
+	padding: 20px 15px;
+}
+
+.form-element-textarea .form-field-textarea div {
+	float: none;
+}
+
+.mce-resizehandle {
+	margin-bottom: 5px !important;
+}
