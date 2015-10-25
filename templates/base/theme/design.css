@@ -112,6 +112,21 @@ span#site-slogan {
 	letter-spacing: 0.1em;
 }
 
+@media ( max-width: 768px ) {
+	div#site-logo {
+		width: 60px;
+		height: 60px;
+	}
+
+	div#site-name-container {
+		margin: 0.4em 0 0 0;;
+	}
+
+	a#site-name {
+		font-size: 3em;
+	}
+	
+}
 
 /* -- Conteneur global du site --
 --------------------------------------*/
