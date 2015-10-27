@@ -137,14 +137,18 @@ class NewsDisplayNewsController extends ModuleController
 	
 	private function build_suggested_news(News $news)
 	{
+		$now = new Date();
+		
 		$result = PersistenceContext::get_querier()->select('
 		SELECT id, name, id_category, rewrited_name, 
 		(2 * FT_SEARCH_RELEVANCE(name, :search_content) + FT_SEARCH_RELEVANCE(contents, :search_content) / 3) AS relevance
-		FROM '. NewsSetup::$news_table .'
-		WHERE (FT_SEARCH(name, :search_content) OR	FT_SEARCH(contents, :search_content)) AND id <> :excluded_id
+		FROM ' . NewsSetup::$news_table . '
+		WHERE (FT_SEARCH(name, :search_content) OR FT_SEARCH(contents, :search_content)) AND id <> :excluded_id
+		AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))
 		ORDER BY relevance DESC LIMIT 0, 10', array(
 			'excluded_id' => $news->get_id(),
 			'search_content' => $news->get_name() .','. $news->get_contents(),
+			'timestamp_now' => $now->get_timestamp()
 		));
 		
 		$this->tpl->put('C_SUGGESTED_NEWS', ($result->get_rows_count() > 0 && NewsConfig::load()->get_news_suggestions_enabled()));
