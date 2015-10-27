@@ -64,6 +64,7 @@ if ($action_post == 'save')
 	{
 		$menu->set_block(retrieve(POST, 'location', Menu::BLOCK_POSITION__NOT_ENABLED));
 	}
+	$menu->set_hidden_with_small_screens((bool)retrieve(POST, 'hidden_with_small_screens', false));
 	$menu->set_auth(Authorizations::build_auth_array_from_form(Menu::MENU_AUTH_BIT));
 	$menu->set_display_title(retrieve(POST, 'display_title', false));
 	$menu->set_content(retrieve(POST, 'contents', '', TSTRING_UNCHANGE));
@@ -96,6 +97,7 @@ $tpl->put_all(array(
 	'L_NAME' => $LANG['name'],
 	'L_CONTENT' => $LANG['content'],
 	'L_STATUS' => $LANG['status'],
+	'L_HIDDEN_WITH_SMALL_SCREENS' => $LANG['hidden_with_small_screens'],
 	'L_AUTHS' => $LANG['auths'],
 	'L_ENABLED' => LangLoader::get_message('enabled', 'common'),
 	'L_DISABLED' => LangLoader::get_message('disabled', 'common'),
@@ -141,6 +143,7 @@ if ($edit)
 		'IDMENU' => $id,
 		'NAME' => $menu->get_title(),
 		'AUTH_MENUS' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, $menu->get_auth()),
+		'C_MENU_HIDDEN_WITH_SMALL_SCREENS' => $menu->is_hidden_with_small_screens(),
 		'C_ENABLED' => $menu->is_enabled(),
 		'CONTENTS' => !empty($content) ? FormatingHelper::unparse($content) : '',
 		'DISPLAY_TITLE_CHECKED' => $menu->get_display_title() ? 'checked="checked"' : ''

@@ -199,13 +199,8 @@ jQuery(document).ready(function() {
 				<label for="menu_element_{ID}_enabled">{L_STATUS}</label>
 				<div class="form-field"><label>
 					<select name="menu_element_{ID}_enabled" id="menu_element_{ID}_enabled">
-					   # IF C_ENABLED #
-							<option value="1" selected="selected">{L_ENABLED}</option>
-							<option value="0">{L_DISABLED}</option>
-						# ELSE #
-							<option value="1">{L_ENABLED}</option>
-							<option value="0" selected="selected">{L_DISABLED}</option>
-						# ENDIF #
+						<option value="1"# IF C_ENABLED # selected="selected"# ENDIF #>{L_ENABLED}</option>
+						<option value="0"# IF NOT C_ENABLED # selected="selected"# ENDIF #>{L_DISABLED}</option>
 					</select>
 				</label></div>
 			</div>

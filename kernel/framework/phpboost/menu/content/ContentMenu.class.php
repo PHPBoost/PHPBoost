@@ -34,58 +34,59 @@ class ContentMenu extends Menu
 {
 	const CONTENT_MENU__CLASS = 'ContentMenu';
 
-    /**
-     * @var string the menu's content
-     */
-    public $content = '';
-
-    /**
-     * @var bool If true, the content menu title will be displayed
-     */
-    public $display_title = true;
-
-    public function __construct($title)
-    {
-       parent::__construct($title);
-    }
+	/**
+	 * @var string the menu's content
+	 */
+	public $content = '';
 
 	/**
-     * @desc Display the content menu.
-     * @return a string of the parsed template ready to be displayed
-     */
-    public function display()
-    {
+	 * @var bool If true, the content menu title will be displayed
+	 */
+	public $display_title = true;
+
+	public function __construct($title)
+	{
+	   parent::__construct($title);
+	}
+
+	/**
+	 * @desc Display the content menu.
+	 * @return a string of the parsed template ready to be displayed
+	 */
+	public function display()
+	{
 		$tpl = new FileTemplate('framework/menus/content/display.tpl');
-        $tpl->put_all(array(
-            'C_DISPLAY_TITLE' => $this->display_title,
+		$tpl->put_all(array(
+			'C_DISPLAY_TITLE' => $this->display_title,
 			'C_VERTICAL_BLOCK' => ($this->get_block() == Menu::BLOCK_POSITION__LEFT || $this->get_block() == Menu::BLOCK_POSITION__RIGHT),
-            'TITLE' => $this->title,
-        	'CONTENT' => FormatingHelper::second_parse($this->content)
-        ));
-        return $tpl->render();
-    }
+			'TITLE' => $this->title,
+			'CONTENT' => FormatingHelper::second_parse($this->content),
+			'C_HIDDEN_WITH_SMALL_SCREENS' => $this->hidden_with_small_screens
+		));
+		return $tpl->render();
+	}
 
-    ## Setters ##
-    /**
-     * @param bool $display_title if false, the title won't be displayed
-     */
-    public function set_display_title($display_title) { $this->display_title = $display_title; }
+	## Setters ##
+	/**
+	 * @param bool $display_title if false, the title won't be displayed
+	 */
+	public function set_display_title($display_title) { $this->display_title = $display_title; }
 
-    /**
-     * @param string $content the content to set
-     */
-    public function set_content($content) { $this->content = FormatingHelper::strparse($content, array(), false); }
+	/**
+	 * @param string $content the content to set
+	 */
+	public function set_content($content) { $this->content = FormatingHelper::strparse($content, array(), false); }
 
-    ## Getters ##
-    /**
-     * @desc Returns true if the title will be displayed
-     * @return bool true if the title will be displayed
-     */
-    public function get_display_title() { return $this->display_title; }
+	## Getters ##
+	/**
+	 * @desc Returns true if the title will be displayed
+	 * @return bool true if the title will be displayed
+	 */
+	public function get_display_title() { return $this->display_title; }
 
-    /**
-     * @return string the menu content
-     */
-    public function get_content() { return $this->content; }
+	/**
+	 * @return string the menu content
+	 */
+	public function get_content() { return $this->content; }
 }
 ?>

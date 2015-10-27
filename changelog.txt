@@ -34,6 +34,7 @@
 [*] Possibilité de configurer l'optimisation automatique des tables de la base de données dans la configuration avancée
 [*] Suppression de la clé de déverrouillage de l'administration
 [*] Possibilité de définir le nombre de flux affichés dans les menus de flux
+[*] Possibilité de masquer les menus en version mobile
 
 [b]Profil[/b]
 [*] Lors de l'affichage du profil un champ texte court de type email ou site web est automatiquement affiché sous forme de bouton avec une icône pour certaines marques
@@ -47,7 +48,7 @@
 [*] Mise à jour de la librairie d'icônes Font-Awesome
 [*] Intégration de Lightcase (lightbox responsive)
 [*] Design responsive pour le thème base (support mobile et version tablette)
-+ Refonte de la gestion des liens : suppression des types de menu de liens et création d'un menu de lien qui s'adapte automatiquement à l'emplacement
+[*] Refonte de la gestion des liens : suppression des types de menu de liens et création d'un menu de lien qui s'adapte automatiquement à l'emplacement
 + Refonte de l'administration en responsive
 
 [b]Divers[/b]

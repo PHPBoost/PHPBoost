@@ -66,6 +66,7 @@ if ($action_post == 'save')
 	AppContext::get_response()->redirect('menus.php');
 
 	$menu->enabled(retrieve(POST, 'activ', Menu::MENU_NOT_ENABLED));
+	$menu->set_hidden_with_small_screens((bool)retrieve(POST, 'hidden_with_small_screens', false));
 	if ($menu->is_enabled())
 	{
 		$menu->set_block(retrieve(POST, 'location', Menu::BLOCK_POSITION__NOT_ENABLED));
@@ -98,6 +99,7 @@ $tpl->put_all(array(
 	'L_AVAILABLES_FEEDS' => $LANG['availables_feeds'],
 	'L_NAME' => $LANG['name'],
 	'L_STATUS' => $LANG['status'],
+	'L_HIDDEN_WITH_SMALL_SCREENS' => $LANG['hidden_with_small_screens'],
 	'L_AUTHS' => $LANG['auths'],
 	'L_ENABLED' => LangLoader::get_message('enabled', 'common'),
 	'L_DISABLED' => LangLoader::get_message('disabled', 'common'),
@@ -141,6 +143,7 @@ if ($edit)
 		'NAME' => $menu->get_title(),
 		'ITEMS_NUMBER' => $menu->get_number(),
 		'AUTH_MENUS' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, $menu->get_auth()),
+		'C_MENU_HIDDEN_WITH_SMALL_SCREENS' => $menu->is_hidden_with_small_screens(),
 		'C_ENABLED' => $menu->is_enabled(),
 		'C_EDIT' => true,
 	));

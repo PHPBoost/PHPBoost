@@ -61,15 +61,16 @@ class FeedMenu extends Menu
 	 * @return the tpl to parse a feed
      * @static
 	 */
-	public static function get_template($name = '', $block_position = Menu::BLOCK_POSITION__LEFT)
+	public static function get_template($name = '', $block_position = Menu::BLOCK_POSITION__LEFT, $hidden_with_small_screens = false)
 	{
 		$tpl = new FileTemplate('framework/menus/feed/feed.tpl');
 		$tpl->put_all(array(
 			'NAME' => $name,
 			'C_NAME' => !empty($name),
-			'C_VERTICAL_BLOCK' => ($block_position == Menu::BLOCK_POSITION__LEFT || $block_position == Menu::BLOCK_POSITION__RIGHT)
+			'C_VERTICAL_BLOCK' => ($block_position == Menu::BLOCK_POSITION__LEFT || $block_position == Menu::BLOCK_POSITION__RIGHT),
+			'C_HIDDEN_WITH_SMALL_SCREENS' => $hidden_with_small_screens
 		));
-			
+		
 		return $tpl;
 	}
 
@@ -123,7 +124,7 @@ class FeedMenu extends Menu
 	public function display()
 	{
 		return Feed::get_parsed($this->module_id, $this->name, $this->category,
-		    self::get_template($this->get_title(), $this->get_block()), $this->number, $this->begin_at
+		    self::get_template($this->get_title(), $this->get_block(), $this->hidden_with_small_screens), $this->number, $this->begin_at
 		);
 	}
 
