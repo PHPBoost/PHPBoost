@@ -1,4 +1,4 @@
-<div id="module-mini-web" class="module-mini-container"# IF C_HORIZONTAL # style="width:auto;"# ENDIF #>
+<div id="module-mini-web" class="module-mini-container">
 	<div class="module-mini-top">
 		<h5 class="sub-title">{@partners}</h5>
 	</div>

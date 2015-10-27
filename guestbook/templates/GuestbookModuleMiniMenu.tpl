@@ -1,4 +1,4 @@
-<div class="module-mini-container"# IF C_HORIZONTAL # style="width:auto;"# ENDIF #>
+<div class="module-mini-container">
 	<div class="module-mini-top">
 		<h5 class="sub-title">{@module_title}</h5>
 	</div>

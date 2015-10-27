@@ -1,4 +1,4 @@
-<div id="module-mini-download" class="module-mini-container"# IF C_HORIZONTAL # style="width:auto;"# ENDIF #>
+<div id="module-mini-download" class="module-mini-container">
 	<div class="module-mini-top">
 		<h5 class="sub-title"># IF C_SORT_BY_DATE #{@last_download_files}# ELSE #{@most_downloaded_files}# ENDIF #</h5>
 	</div>

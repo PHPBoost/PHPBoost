@@ -102,7 +102,7 @@ function shoutbox_refresh_messages_box() {
 </script>
 # IF C_DISPLAY_SHOUT_BBCODE #<script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode.js"></script># ENDIF #
 
-<div id="module-mini-shoutbox" class="module-mini-container"# IF C_HORIZONTAL # style="width:auto;"# ENDIF #>
+<div id="module-mini-shoutbox" class="module-mini-container">
 	<div class="module-mini-top">
 		<h5 class="sub-title">{@module_title}</h5>
 	</div>
