@@ -75,23 +75,24 @@ div#sub-header-content{
 /* --- Logo et Nom du site web --- */
 div#site-infos {
 	max-width: 940px;
-	margin: 1.5em 1.5em 0 1.5em;
+	margin: 1.5em 0 0 1.5em;
 	flex: 1 1 auto;
+	display: flex;
+	display: -ms-flexbox;
 }
 
 div#site-logo {
-	float: left;
 	margin: 0 1em 0 0;
 	background: url('images/logo.png') no-repeat center center;
 	background-size: cover;
 	width: 90px;
 	height: 90px;
+	flex: 0 0 auto;
+	-ms-flex: 0 0 auto;
 }
 
 div#site-name-container {
 	margin: 1em 0 0 0;
-	overflow: hidden;
-	float: left;
 }
 
 a#site-name {
