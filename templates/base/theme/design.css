@@ -246,6 +246,10 @@ div#bottom-content {
 	margin: 2% 0 0 0;
 }
 
+div.block-container {
+	margin-top: 15px;
+}
+
 /* --- Emplacement au dessus du pied de page --- */
 
 
