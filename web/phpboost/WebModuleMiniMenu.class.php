@@ -36,45 +36,50 @@ class WebModuleMiniMenu extends ModuleMiniMenu
 		return self::BLOCK_POSITION__RIGHT;
 	}
 	
-	public function display($tpl = false)
+	public function get_menu_id()
 	{
-		if (WebAuthorizationsService::check_authorizations()->read())
+		return 'module-mini-web';
+	}
+	
+	public function get_menu_title()
+	{
+		return LangLoader::get_message('partners', 'common', 'web');
+	}
+	
+	public function is_displayed()
+	{
+		return WebAuthorizationsService::check_authorizations()->read();
+	}
+	
+	public function get_menu_content()
+	{
+		//Create file template
+		$tpl = new FileTemplate('web/WebModuleMiniMenu.tpl');
+		
+		//Assign the lang file to the tpl
+		$tpl->add_lang(LangLoader::get('common', 'web'));
+		
+		//Load module cache
+		$web_cache = WebCache::load();
+		
+		$partners_weblinks = $web_cache->get_partners_weblinks();
+		
+		$tpl->put('C_PARTNERS', !empty($partners_weblinks));
+		
+		foreach ($partners_weblinks as $partner)
 		{
-			//Load module lang
-			$lang = LangLoader::get('common', 'web');
+			$partner_picture = new Url($partner['partner_picture']);
+			$picture = $partner_picture->rel();
 			
-			//Create file template
-			$tpl = new FileTemplate('web/WebModuleMiniMenu.tpl');
-			
-			//Assign the lang file to the tpl
-			$tpl->add_lang($lang);
-			
-			//Assign menu default position
-			MenuService::assign_positions_conditions($tpl, $this->get_block());
-			
-			//Load module cache
-			$web_cache = WebCache::load();
-			
-			$partners_weblinks = $web_cache->get_partners_weblinks();
-			
-			$tpl->put('C_PARTNERS', !empty($partners_weblinks));
-			
-			foreach ($partners_weblinks as $partner)
-			{
-				$partner_picture = new Url($partner['partner_picture']);
-				$picture = $partner_picture->rel();
-				
-				$tpl->assign_block_vars('partners', array(
-					'C_HAS_PARTNER_PICTURE' => !empty($picture),
-					'NAME' => $partner['name'],
-					'U_PARTNER_PICTURE' => $picture,
-					'U_VISIT' => WebUrlBuilder::visit($partner['id'])->rel()
-				));
-			}
-			
-			return $tpl->render();
+			$tpl->assign_block_vars('partners', array(
+				'C_HAS_PARTNER_PICTURE' => !empty($picture),
+				'NAME' => $partner['name'],
+				'U_PARTNER_PICTURE' => $picture,
+				'U_VISIT' => WebUrlBuilder::visit($partner['id'])->rel()
+			));
 		}
-		return '';
+		
+		return $tpl->render();
 	}
 }
 ?>

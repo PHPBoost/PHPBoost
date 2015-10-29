@@ -32,20 +32,29 @@ class CalendarModuleMiniMenu extends ModuleMiniMenu
 		return self::BLOCK_POSITION__LEFT;
 	}
 	
-	public function display($tpl = false)
+	public function get_menu_id()
 	{
-		if (!Url::is_current_url('/calendar/') && CalendarAuthorizationsService::check_authorizations()->read())
-		{
-			$tpl = new FileTemplate('calendar/CalendarModuleMiniMenu.tpl');
-			$tpl->add_lang(LangLoader::get('common', 'calendar'));
-			
-			MenuService::assign_positions_conditions($tpl, $this->get_block());
-			
-			$tpl->put('CALENDAR', CalendarAjaxCalendarController::get_view(true));
-			
-			return $tpl->render();  
-		}
-		return '';
+		return 'module-mini-calendar';
+	}
+	
+	public function get_menu_title()
+	{
+		return LangLoader::get_message('module_title', 'common', 'calendar');
+	}
+	
+	public function is_displayed()
+	{
+		return !Url::is_current_url('/calendar/') && CalendarAuthorizationsService::check_authorizations()->read();
+	}
+	
+	public function get_menu_content()
+	{
+		$tpl = new FileTemplate('calendar/CalendarModuleMiniMenu.tpl');
+		$tpl->add_lang(LangLoader::get('common', 'calendar'));
+		
+		$tpl->put('CALENDAR', CalendarAjaxCalendarController::get_view(true));
+		
+		return $tpl->render();
 	}
 }
 ?>

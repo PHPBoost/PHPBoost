@@ -63,7 +63,7 @@ class FeedMenu extends Menu
 	 */
 	public static function get_template($name = '', $block_position = Menu::BLOCK_POSITION__LEFT, $hidden_with_small_screens = false)
 	{
-		$tpl = new FileTemplate('framework/menus/feed/feed.tpl');
+		$tpl = new FileTemplate('framework/menus/feed.tpl');
 		$tpl->put_all(array(
 			'NAME' => $name,
 			'C_NAME' => !empty($name),

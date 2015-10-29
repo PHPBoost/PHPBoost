@@ -126,7 +126,7 @@ class LinksMenu extends LinksMenuElement
 		 // Get the good Template object
 		if (!is_object($template) || !($template instanceof Template))
 		{
-			$tpl = new FileTemplate('framework/menus/links/links.tpl');
+			$tpl = new FileTemplate('framework/menus/links.tpl');
 		}
 		else
 		{

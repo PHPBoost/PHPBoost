@@ -14,15 +14,14 @@
 				<label for="activ">{L_STATUS}</label>
 				<div class="form-field"><label>
 					<select name="activ" id="activ">
-					   # IF C_ENABLED #
-							<option value="1" selected="selected">{L_ENABLED}</option>
-							<option value="0">{L_DISABLED}</option>
-						# ELSE #
-							<option value="1">{L_ENABLED}</option>
-							<option value="0" selected="selected">{L_DISABLED}</option>
-						# ENDIF #
+						<option value="1"# IF C_ENABLED # selected="selected"# ENDIF #>{L_ENABLED}</option>
+						<option value="0"# IF NOT C_ENABLED # selected="selected"# ENDIF #>{L_DISABLED}</option>
 					</select>
 				</label></div>
+			</div>
+			<div class="form-element">
+				<label for="hidden_with_small_screens">{L_HIDDEN_WITH_SMALL_SCREENS}</label>
+				<div class="form-field"><input type="checkbox" name="hidden_with_small_screens" id="hidden_with_small_screens"# IF C_MENU_HIDDEN_WITH_SMALL_SCREENS # checked="checked"# ENDIF #></div>
 			</div>
 			<div class="form-element">
 				<label for="auth">{L_AUTHS}</label>

@@ -1,24 +1,15 @@
-<div id="module-mini-web" class="module-mini-container">
-	<div class="module-mini-top">
-		<h5 class="sub-title">{@partners}</h5>
-	</div>
-	<div class="module-mini-contents">
-		<p class="center">
-		# IF C_PARTNERS #
-			# START partners #
-			<a href="{partners.U_VISIT}" title="{partners.NAME}">
-				# IF partners.C_HAS_PARTNER_PICTURE #
-				<img src="{partners.U_PARTNER_PICTURE}" alt="{partners.NAME}" itemprop="image" class="partner-picture" />
-				# ELSE #
-				{partners.NAME}
-				# ENDIF #
-			</a>
-			# END partners #
+<p class="center">
+# IF C_PARTNERS #
+	# START partners #
+	<a href="{partners.U_VISIT}" title="{partners.NAME}">
+		# IF partners.C_HAS_PARTNER_PICTURE #
+		<img src="{partners.U_PARTNER_PICTURE}" alt="{partners.NAME}" itemprop="image" class="partner-picture" />
 		# ELSE #
-		${LangLoader::get_message('no_item_now', 'common')}
+		{partners.NAME}
 		# ENDIF #
-		</p>
-	</div>
-	<div class="module-mini-bottom">
-	</div>
-</div>
+	</a>
+	# END partners #
+# ELSE #
+${LangLoader::get_message('no_item_now', 'common')}
+# ENDIF #
+</p>
