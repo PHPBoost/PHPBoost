@@ -104,13 +104,13 @@
 			# START weblinks #
 			<article # IF C_CATEGORY_DISPLAYED_SUMMARY #class="block" # ENDIF #itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 				<header>
-					<h1>
+					<h2>
 						<span class="actions">
 							# IF weblinks.C_EDIT #<a href="{weblinks.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a># ENDIF #
 							# IF weblinks.C_DELETE #<a href="{weblinks.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a># ENDIF #
 						</span>
 						<a href="{weblinks.U_LINK}" itemprop="name">{weblinks.NAME}</a>
-					</h1>
+					</h2>
 					
 					<meta itemprop="url" content="{weblinks.U_LINK}">
 					<meta itemprop="description" content="${escape(weblinks.DESCRIPTION)}"/>

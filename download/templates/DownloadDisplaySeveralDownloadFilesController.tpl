@@ -106,13 +106,13 @@
 			# START downloadfiles #
 			<article # IF C_CATEGORY_DISPLAYED_SUMMARY #class="block" # ENDIF #itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 				<header>
-					<h1>
+					<h2>
 						<span class="actions">
 							# IF downloadfiles.C_EDIT #<a href="{downloadfiles.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a># ENDIF #
 							# IF downloadfiles.C_DELETE #<a href="{downloadfiles.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a># ENDIF #
 						</span>
 						<a href="{downloadfiles.U_LINK}" itemprop="name">{downloadfiles.NAME}</a>
-					</h1>
+					</h2>
 					
 					<meta itemprop="url" content="{downloadfiles.U_LINK}">
 					<meta itemprop="description" content="${escape(downloadfiles.DESCRIPTION)}"/>

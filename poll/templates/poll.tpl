@@ -24,7 +24,7 @@
 		<form method="post" action="{PATH_TO_ROOT}/poll/poll{U_POLL_ACTION}">
 			<article>
 				<header>
-					<h1>
+					<h2>
 						{QUESTION}
 						# IF C_IS_ADMIN #
 						<span class="actions">
@@ -32,13 +32,13 @@
 							<a href="{PATH_TO_ROOT}/poll/admin_poll.php?delete=1&amp;id={IDPOLL}&amp;token={TOKEN}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 						</span>
 						# ENDIF #
-					</h1>
+					</h2>
 				</header>
 				<div class="content">
 					# INCLUDE message_helper #
 					
 					<article class="block">
-						<header><h1>{QUESTION}</h1></header>
+						<header><h2>{QUESTION}</h2></header>
 						<div class="content">
 							# IF C_POLL_QUESTION #
 							<div>
@@ -101,7 +101,7 @@
 				# START list #
 				<article class="block">
 					<header>
-						<h1>
+						<h2>
 							{list.QUESTION}
 							<span class="actions">
 								# IF C_IS_ADMIN #
@@ -109,7 +109,7 @@
 								<a href="{PATH_TO_ROOT}/poll/admin_poll.php?delete=1&amp;id={list.ID}&amp;token={TOKEN}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 								# ENDIF #
 							</span>
-						</h1>
+						</h2>
 					</header>
 					<div class="content">
 						# START list.result #

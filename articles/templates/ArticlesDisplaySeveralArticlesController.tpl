@@ -45,7 +45,7 @@
 			# START articles #
 				<article # IF C_MOSAIC #class="small-block"# ENDIF # itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 					<header>
-						<h1>
+						<h2>
 							<a itemprop="url" href="{articles.U_ARTICLE}"><span itemprop="name">{articles.TITLE}</span></a>
 							<span class="actions">
 								# IF articles.C_EDIT #
@@ -55,7 +55,7 @@
 									<a href="{articles.U_DELETE_ARTICLE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
 								# ENDIF #
 							</span>
-						</h1>
+						</h2>
 						
 						<div class="more">
 							${LangLoader::get_message('by', 'common')}

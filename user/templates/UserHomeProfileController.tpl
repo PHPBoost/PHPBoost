@@ -2,7 +2,7 @@
 	<header>
 		<h1>{@profile}</h1>
 	</header>
-	<div class="content" >
+	<div class="content">
 		<p class="center text-strong">${LangLoader::get_message('welcome', 'user-common')} {PSEUDO}</p>
 		
 		<ul id="profile-container">

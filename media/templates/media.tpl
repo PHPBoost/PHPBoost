@@ -109,7 +109,7 @@
 		# IF C_DISPLAY_MEDIA #
 		<article>
 			<header>
-				<h1>
+				<h2>
 					{NAME} 
 					<span class="actions">
 						# IF C_DISPLAY_COMMENTS #
@@ -121,7 +121,7 @@
 							<a href="{U_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 						# ENDIF #
 					</span>
-				</h1>
+				</h2>
 			</header>
 			<div class="content">
 			
