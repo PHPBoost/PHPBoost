@@ -214,7 +214,7 @@
 			<legend>{L_RESPOND}</legend>
 			<div class="form-element-textarea">
 				{KERNEL_EDITOR}
-				<div class="form-field-textarea"">
+				<div class="form-field-textarea">
 					<textarea rows="25" cols="66" id="contents" name="contents">{post_pm.CONTENTS}</textarea>
 				</div>
 			</div>
@@ -248,7 +248,7 @@
 							<div class="form-element-textarea">
 								<label for="contents">* {L_MESSAGE}</label>
 								{KERNEL_EDITOR}
-								<div class="form-field-textarea"">
+								<div class="form-field-textarea">
 									<textarea rows="25" id="contents" name="contents">{edit_pm.CONTENTS}</textarea>
 								</div>
 							</div>
@@ -304,7 +304,7 @@
 							<div class="form-element-textarea">
 								<label for="contents">* {L_MESSAGE}</label>
 								{KERNEL_EDITOR}
-								<div class="form-field-textarea"">
+								<div class="form-field-textarea">
 									<textarea rows="25" id="contents" name="contents">{CONTENTS}</textarea>
 								</div>
 							</div>
