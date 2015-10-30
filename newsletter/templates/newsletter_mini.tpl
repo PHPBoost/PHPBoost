@@ -1,29 +1,20 @@
 # IF C_VERTICAL #
 <form action="{PATH_TO_ROOT}/newsletter/?url=/subscribe/" method="post">
-	<div class="module-mini-container">
-		<div class="module-mini-top">
-			<h5 class="sub-title">{@newsletter}</h5>
-		</div>
-		<div class="module-mini-contents">
-			<p>
-				<input type="text" name="mail_newsletter" maxlength="50" value="{USER_MAIL}" placeholder="${LangLoader::get_message('email', 'user-common')}">
-			</p>
-			<p>
-				<label><input type="radio" name="subscribe" value="subscribe" checked="checked"> {@newsletter.subscribe_newsletters}</label>
-				<br />
-				<label><input type="radio" name="subscribe" value="unsubscribe"> {@newsletter.unsubscribe_newsletters}</label>
-			</p>
-			<p>
-				<input type="hidden" name="token" value="{TOKEN}">
-				<button type="submit" name="" value="true">OK</button>
-			</p>
-			<p class="newsletter-link">
-				<a href="${relative_url(NewsletterUrlBuilder::archives())}" class="small">{@newsletter.archives}</a>
-			</p>
-		</div>
-		<div class="module-mini-bottom">
-		</div>
-	</div>
+	<p>
+		<input type="text" name="mail_newsletter" maxlength="50" value="{USER_MAIL}" placeholder="${LangLoader::get_message('email', 'user-common')}">
+	</p>
+	<p>
+		<label><input type="radio" name="subscribe" value="subscribe" checked="checked"> {@newsletter.subscribe_newsletters}</label>
+		<br />
+		<label><input type="radio" name="subscribe" value="unsubscribe"> {@newsletter.unsubscribe_newsletters}</label>
+	</p>
+	<p>
+		<input type="hidden" name="token" value="{TOKEN}">
+		<button type="submit" name="" value="true">OK</button>
+	</p>
+	<p class="newsletter-link">
+		<a href="${relative_url(NewsletterUrlBuilder::archives())}" class="small">{@newsletter.archives}</a>
+	</p>
 </form>
 # ELSE #
 <div id="newsletter">

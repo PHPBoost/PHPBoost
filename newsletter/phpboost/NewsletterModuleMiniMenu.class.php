@@ -37,19 +37,64 @@ class NewsletterModuleMiniMenu extends ModuleMiniMenu
 		return '';
 	}
 
-	public function display($tpl = false)
+	public function get_menu_id()
 	{
-		 if (NewsletterAuthorizationsService::check_authorizations()->subscribe())
+		return 'module-mini-newsletter';
+	}
+	
+	public function get_menu_title()
+	{
+		return LangLoader::get_message('newsletter', 'common', 'newsletter');
+	}
+	
+	public function is_displayed()
+	{
+		return NewsletterAuthorizationsService::check_authorizations()->subscribe();
+	}
+	
+	public function get_menu_content()
+	{
+		$tpl = new FileTemplate('newsletter/newsletter_mini.tpl');
+		
+		$tpl->add_lang(LangLoader::get('common', 'newsletter'));
+		
+		$tpl->put_all(array(
+			'USER_MAIL' => AppContext::get_current_user()->get_email(),
+			'C_VERTICAL' => $this->get_block() == Menu::BLOCK_POSITION__LEFT || $this->get_block() == Menu::BLOCK_POSITION__RIGHT
+		));
+		
+		return $tpl->render();
+	}
+	
+	public function display()
+	{
+		if ($this->is_displayed())
 		{
-			$tpl = new FileTemplate('newsletter/newsletter_mini.tpl');
-			MenuService::assign_positions_conditions($tpl, $this->get_block());
-			
-			$lang = LangLoader::get('common', 'newsletter');
-			$tpl->add_lang($lang);
-			
-			$tpl->put('USER_MAIL', AppContext::get_current_user()->get_email());
-			
-			return $tpl->render();
+			if ($this->get_block() == Menu::BLOCK_POSITION__LEFT || $this->get_block() == Menu::BLOCK_POSITION__RIGHT)
+			{
+				$template = $this->get_template_to_use();
+				MenuService::assign_positions_conditions($template, $this->get_block());
+				$this->assign_common_template_variables($template);
+				
+				$template->put_all(array(
+					'ID' => $this->get_menu_id(),
+					'TITLE' => $this->get_menu_title(),
+					'CONTENTS' => $this->get_menu_content()
+				));
+				
+				return $template->render();
+			}
+			else
+			{
+				$tpl = new FileTemplate('newsletter/newsletter_mini.tpl');
+				MenuService::assign_positions_conditions($tpl, $this->get_block());
+				
+				$tpl->add_lang(LangLoader::get('common', 'newsletter'));
+				
+				$tpl->put('USER_MAIL', AppContext::get_current_user()->get_email());
+				
+				return $tpl->render();
+			}
 		}
 		return '';
 	}
