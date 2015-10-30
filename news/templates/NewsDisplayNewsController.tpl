@@ -43,28 +43,28 @@
 		<aside>
 			# IF C_SOURCES #
 			<div id="news-sources-container">
-				<span>${LangLoader::get_message('form.sources', 'common')}</span> :
+				<span class="news-sources-title"><i class="fa fa-map-signs"></i> ${LangLoader::get_message('form.sources', 'common')}</span> :
 				# START sources #
-				<a itemprop="isBasedOnUrl" href="{sources.URL}" class="small">{sources.NAME}</a># IF sources.C_SEPARATOR #, # ENDIF #
+				<a itemprop="isBasedOnUrl" href="{sources.URL}" class="small news-sources-item">{sources.NAME}</a># IF sources.C_SEPARATOR #, # ENDIF #
 				# END sources #
 			</div>
 			# ENDIF #
 
 			# IF C_KEYWORDS #
 			<div id="news-tags-container">
-				<span>${LangLoader::get_message('form.keywords', 'common')}</span> :
+				<span class="news-tags-title"><i class="fa fa-tags"></i> ${LangLoader::get_message('form.keywords', 'common')}</span> :
 					# START keywords #
-						<a itemprop="keywords" rel="tag" href="{keywords.URL}">{keywords.NAME}</a># IF keywords.C_SEPARATOR #, # ENDIF #
+						<a itemprop="keywords" rel="tag" href="{keywords.URL}" class="news-tags-item">{keywords.NAME}</a># IF keywords.C_SEPARATOR #, # ENDIF #
 					# END keywords #
 			</div>
 			# ENDIF #
 
 			# IF C_SUGGESTED_NEWS #
 				<div id="news-suggested-container">
-					<span>${LangLoader::get_message('suggestions', 'common')} :</span>
+					<span class="news-suggested-title"><i class="fa fa-lightbulb-o"></i> ${LangLoader::get_message('suggestions', 'common')} :</span>
 					<ul>
 						# START suggested #
-						<li><a href="{suggested.URL}">{suggested.NAME}</a></li>
+						<li><a href="{suggested.URL}" class="news-suggested-item">{suggested.NAME}</a></li>
 						# END suggested #
 					</ul>
 				</div>
