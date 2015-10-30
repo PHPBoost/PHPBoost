@@ -4,6 +4,12 @@
 	margin: 15px 15px 15px 30px;
 }
 
+#news-tags-title,
+#news-sources-title,
+#news-suggested-title {
+	font-weight: bold;
+}
+
 .news-separator { 
 	width: 70%;
 	margin:20px auto 20px auto;
