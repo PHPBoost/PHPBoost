@@ -14,7 +14,7 @@ function display_description(id){
 -->
 </script>
 <form action="{REWRITED_SCRIPT}" method="post">
-	<table>
+	<table id="AdminTable">
 		<caption>{@modules.installed_not_activated_modules}</caption>
 		# IF C_MODULES_NOT_ACTIVATED #
 		<thead>
@@ -64,7 +64,7 @@ function display_description(id){
 	<div class="notice message-helper-small">${LangLoader::get_message('no_item_now', 'common')}</div>
 		# ENDIF #
 		
-	<table>
+	<table id="AdminTable2">
 		<caption>{@modules.installed_activated_modules}</caption>
 		# IF C_MODULES_ACTIVATED #
 		<thead>
@@ -80,7 +80,7 @@ function display_description(id){
 			<tr>
 				<td>
 					<span id="m{modules_activated.ID}"></span>
-					<img src="{PATH_TO_ROOT}/{modules_activated.ICON}/{modules_activated.ICON}.png" alt="{modules_activated.NAME}" /><br />
+					<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_activated.ICON}/{modules_activated.ICON}.png" alt="{modules_activated.NAME}" /><br />
 					<span class="text-strong">{modules_activated.NAME}</span> <em>({modules_activated.VERSION})</em>
 				</td>
 				<td>

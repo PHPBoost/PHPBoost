@@ -1,28 +1,22 @@
-<div id="admin-quick-menu">
-    <ul>
-        <li class="title-menu">{L_WEBSITE_UPDATES}</li>
-        <li>
-            <a href="updates.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="" /></a>
-            <br />
-            <a href="updates.php" class="quick-link">{L_WEBSITE_UPDATES}</a>
-        </li>
-        <li>
-            <a href="updates.php?type=kernel"><img src="{PATH_TO_ROOT}/templates/default/images/admin/configuration.png" alt="" /></a>
-            <br />
-            <a href="updates.php?type=kernel" class="quick-link">{L_KERNEL}</a>
-        </li>
-        <li>
-            <a href="updates.php?type=module"><img src="{PATH_TO_ROOT}/templates/default/images/admin/modules.png" alt="" /></a>
-            <br />
-            <a href="updates.php?type=module" class="quick-link">{L_MODULES}</a>
-        </li>
-        <li>
-            <a href="updates.php?type=template"><img src="{PATH_TO_ROOT}/templates/default/images/admin/themes.png" alt="" /></a>
-            <br />
-            <a href="updates.php?type=template" class="quick-link">{L_THEMES}</a>
-        </li>
-    </ul>
-</div>
+<nav id="admin-quick-menu">
+    <a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_PROFIL}">
+		<i class="fa fa-bars"></i> {L_WEBSITE_UPDATES}
+	</a>
+	<ul>
+		<li>
+			<a href="updates.php" class="quick-link">{L_WEBSITE_UPDATES}</a>
+		</li>
+		<li>
+			<a href="updates.php?type=kernel" class="quick-link">{L_KERNEL}</a>
+		</li>
+		<li>
+			<a href="updates.php?type=module" class="quick-link">{L_MODULES}</a>
+		</li>
+		<li>
+			<a href="updates.php?type=template" class="quick-link">{L_THEMES}</a>
+		</li>
+	</ul>
+</nav>
 
 <div id="admin-contents">
 	<div style="clear:right;"></div>
@@ -30,7 +24,7 @@
         <div class="warning message-helper-small">{L_UNEXISTING_UPDATE}</div>
     # ELSE #
         <h1>{L_APP_UPDATE_MESSAGE}</h1>
-        <table>
+        <table id="AdminTable">
         	<tbody>
 	            <tr>
 		            <td style="vertical-align:top;padding-right:10px;">

@@ -1,14 +1,15 @@
-<div id="admin-quick-menu">
-    <ul>
-        <li class="title-menu">{TITLE}</li>
-        # START links #
-        <li>
-            <a href="{links.U_LINK}"><img src="{links.U_IMG}" alt="${escape(links.LINK)}" /></a><br />
-            <a href="{links.U_LINK}" class="quick-link">${escape(links.LINK)}</a>
-        </li>
-        # END links #
-    </ul>
-</div>
+<nav id="admin-quick-menu">
+	<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_PROFIL}">
+		<i class="fa fa-bars"></i> {TITLE}
+	</a>
+	<ul>
+		# START links #
+		<li>
+			<a href="{links.U_LINK}" class="quick-link">${escape(links.LINK)}</a>
+		</li>
+		# END links #
+	</ul>
+</nav>
 <div id="admin-contents">
 	# INCLUDE KERNEL_MESSAGE #
 	# INCLUDE content #

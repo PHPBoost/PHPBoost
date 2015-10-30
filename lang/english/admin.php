@@ -32,7 +32,6 @@
 
 $LANG['administration'] = 'Administration';
 
-$LANG['extend_menu'] = 'Extended menu';
 $LANG['phpinfo'] = 'PHP info';
 
 //Requis
@@ -62,6 +61,19 @@ $LANG['unknow_bot'] = 'Unknown bot';
 $LANG['version'] = 'Version';
 
 //Index
+$LANG['quick_access'] = 'Quick access';
+$LANG['add_content'] = 'Add content';
+$LANG['modules_management'] = 'Manage your modules';
+$LANG['add_articles'] = 'Add articles';
+$LANG['add_news'] = 'Add news';
+$LANG['customize_site'] = 'Customize your site';
+$LANG['add_template'] = 'Add a template';
+$LANG['menus_management'] = 'Manage your menus';
+$LANG['customize_template'] = 'Customize your template';
+$LANG['site_management'] = 'Manage your site';
+$LANG['general_config'] = 'General configuration';
+$LANG['empty_cache'] = 'Empty the site cache';
+$LANG['save_database'] = 'Save the database';
 $LANG['update_available'] = 'Update available';
 $LANG['core_update_available'] = 'New core version available, please update PHPBoost ! <a href="http://www.phpboost.com">More informations</a>';
 $LANG['no_core_update_available'] = 'No newer version, system is up to date';
@@ -78,6 +90,7 @@ $LANG['last_comments'] = 'Last comments';
 $LANG['view_all_comments'] = 'View all comments';
 $LANG['writing_pad'] = 'Writing pad';
 $LANG['writing_pad_explain'] = 'This form is provided to enter your personal notes.';
+
 
 //Administrator alerts
 $LANG['administrator_alerts'] = 'Alerts';
@@ -138,10 +151,11 @@ $LANG['menus_links_add'] = 'Links menu';
 $LANG['menus_feed_add'] = 'Feed menu';
 $LANG['menus_edit'] = 'Edit menu';
 $LANG['menus_add'] = 'Add menu';
-$LANG['automatic_menu'] = 'Automatic';
-$LANG['vertical_menu'] = 'Vertical scrolling menu';
-$LANG['horizontal_menu'] = 'Horizontal scrolling menu';
-$LANG['static_menu'] = 'Static menu';
+$LANG['vertical_menu'] = 'Vertical menu';
+$LANG['horizontal_menu'] = 'Horizontal menu';
+$LANG['tree_menu'] = 'Tree menu';
+$LANG['vertical_scrolling_menu'] = 'Vertical scrolling menu';
+$LANG['horizontal_scrolling_menu'] = 'Horizontal scrolling menu';
 $LANG['available_menus'] = 'Available menus';
 $LANG['no_available_menus'] = 'No menus available';
 $LANG['menu_header'] = 'Header';

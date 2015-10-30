@@ -1,59 +1,63 @@
 	<div id="admin-contents" style="margin-left:0;padding:10px">
-		<table id="stats">
-			<thead>
-				<tr>
-					<th colspan="5" style="width: 20%;">
-						{L_STATS}
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td class="no-separator">
-						<a href="admin_stats.php?site=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/site.png" alt="" /></a>
-						<br /><a href="admin_stats.php?site=1#stats">{L_SITE}</a>
-					</td>
-					<td class="no-separator">
-						<a href="admin_stats.php?members=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/member.png" alt="" /></a>
-						<br /><a href="admin_stats.php?members=1#stats">{L_USERS}</a>
-					</td>
-					<td class="no-separator">
-						<a href="admin_stats.php?visit=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/visitors.png" alt="" /></a>
-						<br /><a href="admin_stats.php?visit=1#stats">{L_VISITS}</a>
-					</td>
-					<td class="no-separator">
-						<a href="admin_stats.php?pages=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/pages.png" alt="" /></a>
-						<br /><a href="admin_stats.php?pages=1#stats">{L_PAGES}</a>
-					</td>
-					<td class="no-separator">
-						<a href="admin_stats.php?browser=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/browsers.png" alt="" /></a>
-						<br /><a href="admin_stats.php?browser=1#stats">{L_BROWSERS}</a>
-					</td>
-				</tr>
-				<tr>
-					<td class="no-separator">
-						<a href="admin_stats.php?os=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/os.png" alt="" /></a>
-						<br /><a href="admin_stats.php?os=1#stats">{L_OS}</a>
-					</td>
-					<td class="no-separator">
-						<a href="admin_stats.php?lang=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/countries.png" alt="" /></a>
-						<br /><a href="admin_stats.php?lang=1#stats">{L_LANG}</a>
-					</td>
-					<td class="no-separator">
-						<a href="admin_stats.php?referer=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/referer.png" alt="" /></a>
-						<br /><a href="admin_stats.php?referer=1#stats">{L_REFERER}</a>
-					</td>
-					<td class="no-separator">
-						<a href="admin_stats.php?keyword=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/keyword.png" alt="" /></a>
-						<br /><a href="admin_stats.php?keyword=1#stats">{L_KEYWORD}</a>
-					</td>
-					<td class="no-separator">
-						<a href="admin_stats.php?bot=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/robots.png" alt="" /></a>
-						<br /><a href="admin_stats.php?bot=1#stats">{L_ROBOTS}</a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+		<fieldset>
+			<legend>{L_STATS}</legend>
+			<div class="fieldset-inset">
+				<nav>
+					<ul class="AdminStats">
+						<li>
+							<a href="admin_stats.php?site=1#stats">
+								<i class="fa fa-home fa-2x"></i> <span>{L_SITE}</span>
+							</a>
+						</li>
+						<li>
+							<a href="admin_stats.php?members=1#stats">
+								<i class="fa fa-users fa-2x"></i> <span>{L_USERS}</span>
+							</a>
+						</li>
+						<li>
+							<a href="admin_stats.php?visit=1#stats">
+								<i class="fa fa-eye fa-2x"></i> <span>{L_VISITS}</span>
+							</a>
+						</li>
+						<li>
+							<a href="admin_stats.php?pages=1#stats">
+								<i class="fa fa-file-o fa-2x"></i> <span>{L_PAGES}</span>
+							</a>
+						</li>
+						<li>
+							<a href="admin_stats.php?browser=1#stats">
+								<i class="fa fa-globe fa-2x"></i> <span>{L_BROWSERS}</span>
+							</a>
+						</li>
+						<li>
+							<a href="admin_stats.php?os=1#stats">
+								<i class="fa fa-laptop fa-2x"></i> <span>{L_OS}</span>
+							</a>
+						</li>
+						<li>
+							<a href="admin_stats.php?lang=1#stats">
+								<i class="fa fa-flag-o fa-2x"></i> <span>{L_LANG}</span>
+							</a>
+						</li>
+						<li>
+							<a href="admin_stats.php?referer=1#stats">
+								<i class="fa fa-share-square-o fa-2x"></i> <span>{L_REFERER}</span>
+							</a>
+						</li>
+						<li>
+							<a href="admin_stats.php?keyword=1#stats">
+								<i class="fa fa-key fa-2x"></i> <span>{L_KEYWORD}</span>
+							</a>
+						</li>
+						<li>
+							<a href="admin_stats.php?bot=1#stats">
+								<i class="fa fa-search fa-2x"></i> <span>{L_ROBOTS}</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>	
+		</fieldset>
 		
 		<br /><br />
 		
@@ -83,26 +87,21 @@
 		
 		
 		# IF C_STATS_USERS #
-		<table>
+		<table id="AdminTable">
 			<thead>
 				<tr>
-					<th colspan="2">
+					<th>
 						{L_USERS}
+					</th>
+					<th>
+						{L_LAST_USER}
 					</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
 					<td>
-						{L_USERS}
-					</td>
-					<td>
 						{USERS}
-					</td>
-				 </tr>
-				<tr>
-					<td>
-						{L_LAST_USER}
 					</td>
 					<td>
 						<a href="{U_LAST_USER_PROFILE}" class="{LAST_USER_LEVEL_CLASS}" # IF C_LAST_USER_GROUP_COLOR # style="color:{LAST_USER_GROUP_COLOR}" # ENDIF #>{LAST_USER}</a>
@@ -111,67 +110,54 @@
 			</tbody>
 		</table>
 		<br /><br />
-		<table>
-			<thead>
-				<tr>
-					<th colspan="3">
-						{L_TEMPLATES}
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>
-						<table>
-							<thead>
-								<tr>
-									<th>
-										{L_TEMPLATES} 
-									</th>
-									<th>
-										{L_COLORS}
-									</th>
-									<th>
-										{L_USERS}
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								# START templates #
-								<tr>
-									<td>
-										{templates.THEME} <span class="smaller">({templates.PERCENT}%)</span>
-									</td>
-									<td>
-										<div style="margin:auto;width:10px;margin:auto;height:10px;background:{templates.COLOR};border:1px solid black;"></div>
-									</td>
-									<td>
-										{templates.NBR_THEME}
-									</td>
-								</tr>
-								# END templates #
-							</tbody>
-						</table>
-					</td>
-					<td class="no-separator">
-						<img src="display_stats.php?theme=1" alt="" />
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		<br /><br />
-		<table>
-			<thead>
-				<tr>
-					<th colspan="3">
-						{L_SEX}
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-			<tr>
-				<td>
-					<table>
+		<fieldset>
+			<legend>{L_TEMPLATES}</legend>
+			<div class="fieldset-inset">
+				<div class="medium-block" style="text-align: center;">
+					<img class="fieldset-img" src="display_stats.php?theme=1" alt="{L_TEMPLATES}" />
+				</div>
+				<div class="medium-block">
+					<table id="AdminTable2">
+						<thead>
+							<tr>
+								<th>
+									{L_TEMPLATES} 
+								</th>
+								<th>
+									{L_COLORS}
+								</th>
+								<th>
+									{L_USERS}
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr colspan="3">
+							</tr>
+							# START templates #
+							<tr>
+								<td>
+									{templates.THEME} <span class="smaller">({templates.PERCENT}%)</span>
+								</td>
+								<td>
+									<div style="margin:auto;width:10px;margin:auto;height:10px;background:{templates.COLOR};border:1px solid black;"></div>
+								</td>
+								<td>
+									{templates.NBR_THEME}
+								</td>
+							</tr>
+							# END templates #
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>{L_SEX}</legend>
+			<div class="fieldset-inset">
+				<div class="medium-block" style="text-align: center;"><div class="bargraph">{GRAPH_RESULT_SEX}</div></div>
+				<div class="medium-block">				
+					<table id="AdminTable3">
 						<thead>
 							<tr>
 								<th>
@@ -186,6 +172,8 @@
 							</tr>
 						</thead>
 						<tbody>
+							<tr colspan="3">
+							</tr>
 							# START sex #
 							<tr>
 								<td>
@@ -201,41 +189,32 @@
 							# END sex #
 						</tbody>
 					</table>
-				</td>
-				<td class="no-separator">
-					{GRAPH_RESULT_SEX}
-				</td>
-			</tr>
-			</tbody>
-		</table>
-		<br /><br />
-		<table>
+				</div>
+			</div>
+		</fieldset>
+		<table id="AdminTable4">
+			<caption>{L_TOP_TEN_POSTERS}</caption>
 			<thead>
 				<tr>
-					<th colspan="3">
-						{L_TOP_TEN_POSTERS}
+					<th>
+						{L_PSEUDO}
+					</th>
+					<th>
+						N&deg;
+					</th>
+					<th>
+						{L_MSG}
 					</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>
-						N&deg;
-					</td>
-					<td>
-						{L_PSEUDO}
-					</td>
-					<td>
-						{L_MSG}
-					</td>
-				</tr>
 				# START top_poster #
 				<tr>
 					<td>
-						{top_poster.ID}
+						<a href="{top_poster.U_USER_PROFILE}" class="{top_poster.USER_LEVEL_CLASS}" # IF top_poster.C_USER_GROUP_COLOR # style="color:{top_poster.USER_GROUP_COLOR}" # ENDIF #>{top_poster.LOGIN}</a>
 					</td>
 					<td>
-						<a href="{top_poster.U_USER_PROFILE}" class="{top_poster.USER_LEVEL_CLASS}" # IF top_poster.C_USER_GROUP_COLOR # style="color:{top_poster.USER_GROUP_COLOR}" # ENDIF #>{top_poster.LOGIN}</a>
+						{top_poster.ID}
 					</td>
 					<td>
 						{top_poster.USER_POST}
@@ -249,44 +228,34 @@
 		
 		# IF C_STATS_VISIT #
 		<form action="admin_stats.php#stats" method="get">
-			<table>
-				<thead>
-					<tr>
-						<th>
-							{L_VISITORS} {MONTH} {U_YEAR}
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>
-							<div style="width:60%;text-align:center;margin:auto">
-								<p class="text-strong">{L_TOTAL}: {VISIT_TOTAL} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L_TODAY}: {VISIT_DAY}</p>
-								<a class="fa fa-arrow-left" href="admin_stats{U_PREVIOUS_LINK}#stats"></a>&nbsp;&nbsp;&nbsp;&nbsp;
-								# IF C_STATS_DAY #
-								<select name="d">
-									{STATS_DAY}
-								</select>
-								# ENDIF #
-								# IF C_STATS_MONTH #
-								<select name="m">
-									{STATS_MONTH}
-								</select>
-								# ENDIF #
-								# IF C_STATS_YEAR #
-								<select name="y">
-									{STATS_YEAR}
-								</select>
-								# ENDIF #
-								<input type="hidden" name="{TYPE}" value="1">
-								<input type="hidden" name="token" value="{TOKEN}">
-								<button type="submit" name="date" value="true" class="submit">{L_SUBMIT}</button>
-								&nbsp;&nbsp;&nbsp;&nbsp;
-								<a class="fa fa-arrow-right" href="admin_stats{U_NEXT_LINK}#stats"></a>
-							</div>
-							<br />
-							# IF C_STATS_NO_GD #
-							<br />
+			<fieldset>
+				<legend>{L_VISITORS} {MONTH} {U_YEAR}</legend>
+				<div class="fieldset-inset">
+					<div class="medium-block center">
+						<p class="text-strong">{L_TOTAL}: {VISIT_TOTAL} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L_TODAY}: {VISIT_DAY}</p>
+						<a class="fa fa-arrow-left" href="admin_stats{U_PREVIOUS_LINK}#stats"></a>&nbsp;
+						<a class="fa fa-arrow-right" href="admin_stats{U_NEXT_LINK}#stats"></a>&nbsp;&nbsp;&nbsp;
+						# IF C_STATS_DAY #
+						<select name="d">
+							{STATS_DAY}
+						</select>
+						# ENDIF #
+						# IF C_STATS_MONTH #
+						<select name="m">
+							{STATS_MONTH}
+						</select>
+						# ENDIF #
+						# IF C_STATS_YEAR #
+						<select name="y">
+							{STATS_YEAR}
+						</select>
+						# ENDIF #
+						<input type="hidden" name="{TYPE}" value="1">
+						<button type="submit" name="date" value="true" class="submit">{L_SUBMIT}</button>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+					</div>
+					<div class="medium-block" style="text-align: center;">
+						# IF C_STATS_NO_GD #
 							<table>
 								<tbody>
 									<tr>
@@ -294,7 +263,7 @@
 										<td>
 											{MAX_NBR}
 										</td>
-
+		
 										# START values #
 										<td>
 											<table>
@@ -313,7 +282,7 @@
 											</table>
 										</td>	
 										# END values #
-
+		
 										# START end_td #
 											{end_td.END_TD}
 										# END end_td #
@@ -334,27 +303,22 @@
 									</tr>
 								</tbody>
 							</table>
-							<br />
-							# ENDIF #
-
-							{GRAPH_RESULT}
-						</td>
-					</tr>
-					<tr>
-						<td>
-							{L_TOTAL}: {SUM_NBR}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{L_AVERAGE}: {MOY_NBR}
-						</td>
-					</tr>
-					<tr>
-						<td>
-							{U_VISITS_MORE}
-						</td>
-					</tr>
-				</tbody>
-			</table>
+						# ENDIF #
+						<br />
+						<div class="bargraph">{GRAPH_RESULT}</div>
+					</div>
+					<div class="block" style="text-align: center;">
+						{L_TOTAL}: {SUM_NBR}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{L_AVERAGE}: {MOY_NBR}
+					</div>
+					<div class="block" style="text-align: center;">
+						{U_VISITS_MORE}
+					</div>
+				</div>
+			</fieldset>
+			
 		</form>	
 		<br /><br />
-		<table>
+		<table id="AdminTable">
 			<thead>
 				<tr>
 					<th>
@@ -382,119 +346,117 @@
 
 
 		# IF C_STATS_BROWSERS #
-		<table>
-			<thead>
-				<tr>
-					<th colspan="2">
-						{L_BROWSERS}
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>
-						<table>
-							<tbody>
-								# START list #
-								<tr>
-									<td class="no-separator">
-										{list.IMG}
-									</td>
-									<td class="no-separator">
-										<div style="margin:auto;width:10px;height:10px;margin:auto;background:{list.COLOR};border:1px solid black;"></div>
-									</td>
-									<td class="no-separator">
-										 {list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
-									</td>
-								</tr>
-								# END list #
-							</tbody>
-						</table>
-					</td>
-					<td class="no-separator">
-						{GRAPH_RESULT}
-					</td>
-				</tr>
-			</tbody>
-		</table>
+		<fieldset>
+			<legend>{L_BROWSERS}</legend>
+			<div class="fieldset-inset">
+				<div class="medium-block" style="text-align: center;">
+					<div class="bargraph">{GRAPH_RESULT}</div>
+				</div>
+				<div class="medium-block">
+					<table id="AdminTable">
+						<thead>
+							<tr>
+								<th>{L_BROWSERS}</th>
+								<th>Couleur</th>
+								<th>Pourcentage</th>
+							</tr>
+						</thead>
+						<tbody>
+							# START list #
+							<tr>
+								<td class="no-separator">
+									{list.IMG}
+								</td>
+								<td class="no-separator">
+									<div style="margin:auto;width:10px;height:10px;margin:auto;background:{list.COLOR};border:1px solid black;"></div>
+								</td>
+								<td class="no-separator">
+									 {list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
+								</td>
+							</tr>
+							# END list #
+						</tbody>
+					</table>
+				</div>				
+			</div>
+		</fieldset>
 		# ENDIF #
 
 
 		# IF C_STATS_OS #
-		<table>
-			<thead>
-				<tr>
-					<th colspan="2">
-						{L_OS}
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>
-						<table>
-							<tbody>
-								# START list #
-								<tr>
-									<td class="no-separator">
-										{list.IMG}
-									</td>
-									<td class="no-separator">
-										<div style="margin:auto;width:10px;height:10px;background:{list.COLOR};border:1px solid black;"></div>
-									</td>
-									<td class="no-separator">
-										{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
-									</td>
-								</tr>
-								# END list #
-							</tbody>
-						</table>
-					</td>
-					<td class="no-separator">
-						{GRAPH_RESULT}
-					</td>
-				</tr>
-			</tbody>
-		</table>
+		<fieldset>
+			<legend>{L_OS}</legend>
+			<div class="fieldset-inset">
+				<div class="medium-block" style="text-align: center;">
+					<div class="bargraph">{GRAPH_RESULT}</div>
+				</div>
+				<div class="medium-block">
+					<table id="AdminTable">
+						<thead>
+							<tr>
+								<th>{L_OS}</th>
+								<th>Couleur</th>
+								<th>Pourcentage</th>
+							</tr>
+						</thead>
+						<tbody>
+							# START list #
+							<tr>
+								<td class="no-separator">
+									{list.IMG}
+								</td>
+								<td class="no-separator">
+									<div style="margin:auto;width:10px;height:10px;background:{list.COLOR};border:1px solid black;"></div>
+								</td>
+								<td class="no-separator">
+									{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
+								</td>
+							</tr>
+							# END list #
+						</tbody>
+					</table>
+				</div>				
+			</div>
+		</fieldset>
 		# ENDIF #
 
 		
 		# IF C_STATS_LANG #
-		<table>
-			<thead>
-				<tr>
-					<th colspan="2">
-						{L_LANG}
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>
-						<table>
-							<tbody>
-								# START list #
-								<tr>
-									<td class="no-separator">
-										{list.IMG}
-									</td>
-									<td class="no-separator">
-										<div style="margin:auto;width:10px;margin:auto;height:10px;background:{list.COLOR};border:1px solid black;"></div>
-									</td>
-									<td class="no-separator">
-										{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
-									</td>
-								</tr>
-								# END list #
-							</tbody>
-						</table>
-					</td>
-					<td class="no-separator">
-						{GRAPH_RESULT}
-					</td>
-				</tr>
-			</tbody>
-		</table>
+		<fieldset>
+			<legend>{L_LANG}</legend>
+			<div class="fieldset-inset">
+				<div class="medium-block" style="text-align: center;">
+					<div class="bargraph">{GRAPH_RESULT}</div>
+				</div>
+				<div class="medium-block">
+					<table id="AdminTable">
+						<thead>
+							<tr>
+								<th>{L_LANG}</th>
+								<th>Couleur</th>
+								<th>Pourcentage</th>
+							</tr>
+						</thead>
+						<tbody>
+							# START list #
+							<tr>
+								<td class="no-separator">
+									{list.IMG}
+								</td>
+								<td class="no-separator">
+									<div style="margin:auto;width:10px;margin:auto;height:10px;background:{list.COLOR};border:1px solid black;"></div>
+								</td>
+								<td class="no-separator">
+									{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
+								</td>
+							</tr>
+							# END list #
+						</tbody>
+					</table>
+				</div>				
+			</div>
+		</fieldset>
+		
 		# ENDIF #
 		
 
@@ -511,7 +473,7 @@
 			else
 			{
 				var xhr_object = null;
-				var filename = '{PATH_TO_ROOT}/stats/ajax/stats_xmlhttprequest.php?token={TOKEN}&stats_referer=1&id=' + divid;
+				var filename = '{PATH_TO_ROOT}/stats/ajax/stats_xmlhttprequest.php?stats_referer=1&id=' + divid;
 				var data = null;
 				
 				if(window.XMLHttpRequest) // Firefox
@@ -542,7 +504,7 @@
 		-->
 		</script>
 		
-		<table>
+		<table id="AdminTable">
 			<thead>
 				<tr>
 					<th>
@@ -640,7 +602,7 @@
 		-->
 		</script>
 		
-		<table>
+		<table id="AdminTable">
 			<thead>
 				<tr>
 					<th>
@@ -708,96 +670,73 @@
 		
 		# IF C_STATS_ROBOTS #
 		<form action="admin_stats.php?bot=1#stats" name="form" method="post" style="margin:auto;" onsubmit="return check_form();">
-			<table>
-				<thead>
-					<tr> 
-						<th colspan="2">
-							{L_ROBOTS}
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr> 
-						<td>
-							<table>
-								<thead>
-									<tr>
-										<th style="text-align:center">
-											{L_ROBOTS} 
-										</th>
-										<th style="text-align:center">
-											{L_COLORS}
-										</th>
-										<th style="text-align:center">
-											{L_VIEW_NUMBER}
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									# START list #
-									<tr>
-										<td>
-											{list.L_NAME}  <span class="smaller">({list.PERCENT}%)</span>
-										</td>
-										<td>
-											<div style="margin:auto;width:10px;margin:auto;height:10px;background:{list.COLOR}"></div>
-										</td>
-										<td>
-											{list.VIEWS}
-										</td>
-									</tr>
-									# END list #
-									# IF NOT C_ROBOTS_DATA #
-									<tr>
-										<td colspan="3">
-										${LangLoader::get_message('no_item_now', 'common')}
-										</td>
-									</tr>
-									# ENDIF #
-								</tbody>
-							</table>
-						</td>
-						# IF C_ROBOTS_DATA #
-						<td class="no-separator">
-							<img src="display_stats.php?bot=1" alt="" />
-						</td>
-						# ENDIF #
-					</tr>
-				</tbody>
-			</table>
-			# IF C_ROBOTS_DATA #
-			<br /><br />
-			<fieldset class="fieldset-submit">
-				<legend>{L_ERASE_RAPPORT}</legend>
-				<input type="hidden" name="token" value="{TOKEN}">
-				<button type="submit" name="erase" value="true" class="submit">{L_ERASE_RAPPORT}</button> 
+			<fieldset>
+				<legend>{L_ROBOTS}</legend>
+				<div class="fieldset-inset">
+					<div class="medium-block" style="text-align: center;">
+						<img class="fieldset-img" src="display_stats.php?bot=1" alt="" />
+					</div>			
+					<div class="medium-block">
+						<table id="AdminTable">
+							<thead>
+								<tr>
+									<th style="text-align:center">
+										{L_ROBOTS} 
+									</th>
+									<th style="text-align:center">
+										{L_COLORS}
+									</th>
+									<th style="text-align:center">
+										{L_VIEW_NUMBER}
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								# START list #
+								<tr>
+									<td>
+										 {list.L_NAME}  <span class="smaller">({list.PERCENT}%)</span>
+									</td>
+									<td>
+										<div style="margin:auto;width:10px;margin:auto;height:10px;background:{list.COLOR}"></div>
+									</td>
+									<td>
+										{list.VIEWS}
+									</td>
+								</tr>
+								# END list #
+							</tbody>
+						</table>
+					</div>
+					<br /><br />
+					<fieldset class="fieldset-submit">
+						<legend>{L_ERASE_RAPPORT}</legend>
+						<div class="fieldset-inset">
+							<button type="submit" name="erase" value="true" class="submit">{L_ERASE_RAPPORT}</button>
+						</div>
+					</fieldset>					
+				</div>
 			</fieldset>
-			# ENDIF #
 		</form>
 		# ENDIF #
 		
 		<br /><br />
 		<form action="admin_stats.php" method="post" class="fieldset-content">
 				<fieldset>
-					<legend>
-						{L_AUTHORIZATIONS}
-					</legend>
-					<div class="form-element">
-						
-							<label>
-								{L_READ_AUTHORIZATION}
-							</label>
-						
-						<div class="form-field">
-							{READ_AUTHORIZATION}
+					<legend>{L_AUTHORIZATIONS}</legend>
+					<div class="fieldset-inset">
+						<div class="form-element">
+							<label>{L_READ_AUTHORIZATION}</label>
+							<div class="form-field">{READ_AUTHORIZATION}</div>
 						</div>
 					</div>
 				</fieldset>
 				
 				<fieldset class="fieldset-submit">
-					<input type="hidden" name="token" value="{TOKEN}">
-					<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button>
-					<button type="reset" value="true">{L_RESET}</button>
+					<div class="fieldset-inset">
+						<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button>
+						<button type="reset" value="true">{L_RESET}</button>
+					</div>
 				</fieldset>
 			</form>
 	</div>

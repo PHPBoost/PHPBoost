@@ -1,188 +1,204 @@
-<ul>
-	<li>
-		<h5 class="links"><img src="{PATH_TO_ROOT}/templates/default/images/admin/admin_mini.png" alt="" /> {L_INDEX}</h5>
-		<ul>
-			<li><a href="{PATH_TO_ROOT}/index.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/admin_mini.png"/> {L_INDEX_SITE}</a></li>
-			<li><a href="{PATH_TO_ROOT}/admin/admin_index.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/ranks_mini.png"/> {L_ADMINISTRATION}</a></li>
-			<li class="separator"></li>
-			<li><a href="${relative_url(UserUrlBuilder::disconnect())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/home_mini.png"/> {L_DISCONNECT}</a></li>
-			# IF C_ADMIN_LINKS_1 #
-			<li class="separator"></li>
-				# START admin_links_1 #
-					# INCLUDE admin_links_1.MODULE_MENU #
-				# END admin_links_1 #
-			# ENDIF #
-		</ul>
-	</li>
-	<li>
-		<h5 class="links"><img src="{PATH_TO_ROOT}/templates/default/images/admin/ranks_mini.png" alt="" /> {L_ADMINISTRATION}</h5>
-		<ul>
-			<li class="extend">
-				<a href="${relative_url(AdminConfigUrlBuilder::general_config())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/config_mini.png"/> {L_CONFIGURATION}</a>
-				<ul>
-					<li><a href="${relative_url(AdminConfigUrlBuilder::general_config())}">{L_CONFIG_GENERAL}</a></li>
-					<li><a href="${relative_url(AdminConfigUrlBuilder::advanced_config())}">{L_CONFIG_ADVANCED}</a></li>
-					<li><a href="${relative_url(AdminConfigUrlBuilder::mail_config())}">{L_MAIL_CONFIG}</a></li>
-				</ul>
-			</li>
-			 <li class="extend">
-				<a href="{PATH_TO_ROOT}/admin/updates/updates.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/updater_mini.png"/> {L_UPDATES}</a>
-				<ul>
-					<li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=kernel">{L_KERNEL}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=module">{L_MODULES}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=template">{L_THEMES}</a></li>
-				</ul>
-			</li>
-			<li><a href="${relative_url(AdminMaintainUrlBuilder::maintain())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/maintain_mini.png"/> {L_MAINTAIN}</a></li>
-			<li class="extend">
-				<a href="${relative_url(AdminThemeUrlBuilder::list_installed_theme())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/themes_mini.png"/> {L_THEMES}</a>
-				<ul>
-					<li><a href="${relative_url(AdminThemeUrlBuilder::list_installed_theme())}">{L_MANAGEMENT}</a></li>
-					<li><a href="${relative_url(AdminThemeUrlBuilder::add_theme())}">{L_ADD}</a></li>
-				</ul>
-			</li>
-			<li class="extend">
-				<a href="${relative_url(AdminLangsUrlBuilder::list_installed_langs())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/languages_mini.png"/> {L_LANGS}</a>
-				<ul>
-					<li><a href="${relative_url(AdminLangsUrlBuilder::list_installed_langs())}">{L_MANAGEMENT}</a></li>
-					<li><a href="${relative_url(AdminLangsUrlBuilder::install())}">{L_ADD}</a></li>
-				</ul>
-			</li>
-			<li><a href="{PATH_TO_ROOT}/admin/admin_alerts.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/administrator_alert_mini.png"/> {L_ADMINISTRATOR_ALERTS}</a></li>
-			# IF C_ADMIN_LINKS_2 #
-			<li class="separator"></li>
-				# START admin_links_2 #
-					# INCLUDE admin_links_2.MODULE_MENU #
-				# END admin_links_2 #
-			# ENDIF #
-		</ul>
-	</li>
-	<li>
-		<h5 class="links"><img src="{PATH_TO_ROOT}/templates/default/images/admin/tools_mini.png" class="valign-middle" alt="" /> {L_TOOLS}</h5>
-		<ul>
-			<li class="extend">
-				<a href="${relative_url(AdminCacheUrlBuilder::clear_cache())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/cache_mini.png"/> {L_CACHE}</a>
-				<ul>
-					<li><a href="${relative_url(AdminCacheUrlBuilder::clear_cache())}">{L_CACHE}</a></li>
-					<li><a href="${relative_url(AdminCacheUrlBuilder::clear_syndication_cache())}">{L_SYNDICATION_CACHE}</a></li>
-					<li><a href="${relative_url(AdminCacheUrlBuilder::clear_css_cache())}">{L_CSS_CACHE_CONFIG}</a></li>
-					<li><a href="${relative_url(AdminCacheUrlBuilder::configuration())}">{L_CONFIGURATION}</a></li>
-				</ul>
-			</li>
-			<li class="extend">
-				<a href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/errors_mini.png"/> {L_ERRORS}</a>
-				<ul>
-					<li><a href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}">{L_ERRORS}</a></li>
-					<li><a href="${relative_url(AdminErrorsUrlBuilder::list_404_errors())}">{L_404_ERRORS}</a></li>
-				</ul>
-			</li><li class="extend">
-				<a href="${relative_url(AdminServerUrlBuilder::system_report())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/server_mini.png"/> {L_SERVER}</a>
-				<ul>
-					<li><a href="${relative_url(AdminServerUrlBuilder::phpinfo())}">{L_PHPINFO}</a></li>
-					<li><a href="${relative_url(AdminServerUrlBuilder::system_report())}">{L_SYSTEM_REPORT}</a></li>
-				</ul>
-			</li>
-			# IF C_ADMIN_LINKS_3 #
-			<li class="separator"></li>
-				# START admin_links_3 #
-					# INCLUDE admin_links_3.MODULE_MENU #
-				# END admin_links_3 #
-			# ENDIF #
-		</ul>
-	</li>
-	<li>
-		<h5 class="links"><img src="{PATH_TO_ROOT}/templates/default/images/admin/groups_mini.png" class="valign-middle" alt="" /> {L_USER}</h5>
-		<ul>
-			<li class="extend">
-				<a href="${relative_url(AdminMembersUrlBuilder::management())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/members_mini.png"/> {L_USER}</a>
-				<ul>
-					<li><a href="${relative_url(AdminMembersUrlBuilder::management())}">{L_MANAGEMENT}</a></li>
-					<li><a href="${relative_url(AdminMembersUrlBuilder::add())}">{L_ADD}</a></li>
-					<li><a href="${relative_url(AdminMembersUrlBuilder::configuration())}">{L_CONFIGURATION}</a></li>
-					<li><a href="{PATH_TO_ROOT}/user/moderation_panel.php">{L_PUNISHEMENT}</a></li>
-				</ul>
-			</li>
-			<li class="extend">
-				<a href="{PATH_TO_ROOT}/admin/admin_groups.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/groups_mini.png"/> {L_GROUP}</a>
-				<ul>
-					<li><a href="{PATH_TO_ROOT}/admin/admin_groups.php">{L_MANAGEMENT}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/admin_groups.php?add=1">{L_ADD}</a></li>
-				</ul>
-			</li>
-			<li class="extend">
-				<a href="${relative_url(AdminExtendedFieldsUrlBuilder::fields_list())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/extendfield_mini.png"/> {L_EXTEND_FIELD}</a>
-				<ul>
-					<li><a href="${relative_url(AdminExtendedFieldsUrlBuilder::fields_list())}">{L_MANAGEMENT}</a></li>
-					<li><a href="${relative_url(AdminExtendedFieldsUrlBuilder::add())}">{L_ADD}</a></li>
-				</ul>
-			</li>
-			# IF C_ADMIN_LINKS_4 #
-			<li class="separator"></li>
-				# START admin_links_4 #
-					# INCLUDE admin_links_4.MODULE_MENU #
-				# END admin_links_4 #
-			# ENDIF #
-		</ul>
-	</li>
-	<li>
-		<h5 class="links"><img src="{PATH_TO_ROOT}/templates/default/images/admin/contents_mini.png" class="valign-middle" alt="" /> {L_CONTENT}</h5>
-		<ul>
-			<li><a href="${relative_url(AdminContentUrlBuilder::content_configuration())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/content_mini.png"/> {L_CONTENT_CONFIG}</a></li>
-			<li class="extend">
-				<a href="{PATH_TO_ROOT}/admin/menus/menus.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/menus_mini.png"/> {L_MENUS}</a>
-				<ul>
-					<li><a href="{PATH_TO_ROOT}/admin/menus/menus.php">{L_MANAGEMENT}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/menus/links.php">{L_ADD_LINKS_MENU}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/menus/content.php">{L_ADD_CONTENT_MENU}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/menus/feed.php">{L_ADD_FEED_MENU}</a></li>
-				</ul>
-			</li>
-			<li class="extend">
-				<a href="{PATH_TO_ROOT}/admin/admin_files.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/files_mini.png"/> {L_FILES}</a>
-				<ul>
-					<li><a href="{PATH_TO_ROOT}/admin/admin_files.php">{L_MANAGEMENT}</a></li>
-					<li><a href="${relative_url(AdminFilesUrlBuilder::configuration())}">{L_CONFIGURATION}</a></li>
-				</ul>
-			</li>
-			<li class="extend">
-				<a href="${relative_url(UserUrlBuilder::comments())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/com_mini.png"/> {L_COMMENTS}</a>
-				<ul>
-					<li><a href="${relative_url(UserUrlBuilder::comments())}">{L_MANAGEMENT}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/content/?url=/comments/config/">{L_CONFIGURATION}</a></li>
-				</ul>
-			</li>
-			<li class="extend">
-				<a href="${relative_url(AdminSmileysUrlBuilder::management())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/smileys_mini.png"/> {L_SMILEY}</a>
-				<ul>
-					<li><a href="${relative_url(AdminSmileysUrlBuilder::management())}">{L_MANAGEMENT}</a></li>
-					<li><a href="${relative_url(AdminSmileysUrlBuilder::add())}">{L_ADD}</a></li>
-				</ul>
-			</li>
-			# IF C_ADMIN_LINKS_5 #
-			<li class="separator"></li>
-				# START admin_links_5 #
-					# INCLUDE admin_links_5.MODULE_MENU #
-				# END admin_links_5 #
-			# ENDIF #
-		</ul>
-	</li>
-	<li>
-		<h5 class="links"><img src="{PATH_TO_ROOT}/templates/default/images/admin/modules_mini.png" class="valign-middle" alt="" /> {L_MODULES}</h5>
-		<ul>
-			<li class="extend">
-				<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/modules_mini.png"/> {L_MODULES}</a>
-				<ul> 
-					<li><a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}">{L_MANAGEMENT}</a></li>
-					<li><a href="${relative_url(AdminModulesUrlBuilder::add_module())}">{L_ADD}</a></li>
-					<li><a href="${relative_url(AdminModulesUrlBuilder::update_module())}">{L_UPDATES}</a></li>
-				</ul>
-			</li>
-			# IF C_ADMIN_LINKS_6 #
-			<li class="separator"></li>
-				# START admin_links_6 #
-					# INCLUDE admin_links_6.MODULE_MENU #
-				# END admin_links_6 #
-			# ENDIF #
-		</ul>
-	</li>
-</ul>
+<nav class="admin-index">
+	<ul>
+		<li>
+			<a href="{PATH_TO_ROOT}/index.php">
+				<i class="fa fa-fw fa-share-square-o"></i> <span>{L_INDEX_SITE}</span>
+			</a>
+		</li>
+		<li>
+			<a href="{PATH_TO_ROOT}/admin/admin_index.php">
+				<i class="fa fa-fw fa-home"></i> <span>{L_ADMINISTRATION}</span>
+			</a>
+		</li>
+		<li>
+			<a href="{PATH_TO_ROOT}/admin/admin_extend.php">
+				<i class="fa fa-fw fa-th"></i> <span>{L_EXTEND_MENU}</span>
+			</a>
+		</li>
+		<li>
+			<a href="${relative_url(UserUrlBuilder::disconnect())}">
+				<i class="fa fa-fw fa-sign-out"></i> <span>{L_DISCONNECT}</span>
+			</a>
+		</li>
+	</ul>
+</nav>
+<script src="{PATH_TO_ROOT}/templates/default/admin/js/menumaker.js" type="text/javascript"></script>
+<nav id="rm-admin" class="rm">
+	<ul>
+		<li><a class="cssmenu-title"><i class="fa fa-fw fa-cog"></i> {L_ADMINISTRATION}</a>
+			<ul>
+				<li>
+					<a class="cssmenu-title" href="${relative_url(AdminConfigUrlBuilder::general_config())}"><i class="fa fa-fw fa-cog"></i> {L_CONFIGURATION}</a>
+					<ul>
+						<li><a class="cssmenu-title" href="${relative_url(AdminConfigUrlBuilder::general_config())}"><i class="fa fa-fw fa-cog"></i> {L_CONFIG_GENERAL}</a></li>
+						<li><a class="cssmenu-title" href="${relative_url(AdminConfigUrlBuilder::advanced_config())}"><i class="fa fa-fw fa-cogs"></i> {L_CONFIG_ADVANCED}</a></li>
+						<li><a class="cssmenu-title" href="${relative_url(AdminConfigUrlBuilder::mail_config())}"><i class="fa fa-fw fa-envelope-o"></i> {L_MAIL_CONFIG}</a></li>
+					</ul>
+				</li>
+				<li>
+					<a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/updates/updates.php"><i class="fa fa-fw fa-download"></i> {L_UPDATES}</a>
+					<ul>
+						<li><a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/updates/updates.php?type=kernel"><i class="fa fa-fw fa-cog"></i> {L_KERNEL}</a></li>
+						<li><a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/updates/updates.php?type=module"><i class="fa fa-fw fa-cubes"></i> {L_MODULES}</a></li>
+						<li><a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/updates/updates.php?type=template"><i class="fa fa-fw fa-picture-o"></i> {L_THEMES}</a></li>
+					</ul>
+				</li>
+				<li>
+					<a class="cssmenu-title" href="${relative_url(AdminMaintainUrlBuilder::maintain())}"><i class="fa fa-fw fa-clock-o"></i> {L_MAINTAIN}</a>
+				</li>
+				<li>
+					<a class="cssmenu-title" href="${relative_url(AdminThemeUrlBuilder::list_installed_theme())}"><i class="fa fa-fw fa-picture-o"></i> {L_THEMES}</a>
+					<ul>
+						<li><a class="cssmenu-title" href="${relative_url(AdminThemeUrlBuilder::list_installed_theme())}"><i class="fa fa-fw fa-cog"></i> {L_MANAGEMENT}</a></li>
+						<li><a class="cssmenu-title" href="${relative_url(AdminThemeUrlBuilder::add_theme())}"><i class="fa fa-fw fa-plus"></i> {L_ADD}</a></li>
+					</ul>
+				</li>
+				<li>
+					<a class="cssmenu-title" href="${relative_url(AdminLangsUrlBuilder::list_installed_langs())}"><i class="fa fa-fw fa-language"></i> {L_LANGS}</a>
+					<ul>
+						<li><a class="cssmenu-title" href="${relative_url(AdminLangsUrlBuilder::list_installed_langs())}"><i class="fa fa-fw fa-cog"></i> {L_MANAGEMENT}</a></li>
+						<li><a class="cssmenu-title" href="${relative_url(AdminLangsUrlBuilder::install())}"><i class="fa fa-fw fa-plus"></i> {L_ADD}</a></li>
+					</ul>
+				</li>
+				<li>
+					<a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/admin_alerts.php"><i class="fa fa-fw fa-bell"></i> {L_ADMINISTRATOR_ALERTS}</a>
+				</li>
+				# IF C_ADMIN_LINKS_2 #
+					# START admin_links_2 #
+						# INCLUDE admin_links_2.MODULE_MENU #
+					# END admin_links_2 #
+				# ENDIF #
+			</ul>
+		</li>
+		<li><a class="cssmenu-title"><i class="fa fa-fw fa-wrench"></i> {L_TOOLS}</a>
+			<ul>
+				<li>
+					<a class="cssmenu-title" href="${relative_url(AdminCacheUrlBuilder::clear_cache())}"><i class="fa fa-fw fa-refresh"></i> {L_CACHE}</a>
+					<ul>
+						<li><a class="cssmenu-title" href="${relative_url(AdminCacheUrlBuilder::clear_cache())}"><i class="fa fa-fw fa-refresh"></i> {L_CACHE}</a></li>
+						<li><a class="cssmenu-title" href="${relative_url(AdminCacheUrlBuilder::clear_syndication_cache())}"><i class="fa fa-fw fa-rss"></i> {L_SYNDICATION_CACHE}</a></li>
+						<li><a class="cssmenu-title" href="${relative_url(AdminCacheUrlBuilder::clear_css_cache())}"><i class="fa fa-fw fa-css3"></i> {L_CSS_CACHE_CONFIG}</a></li>
+						<li><a class="cssmenu-title" href="${relative_url(AdminCacheUrlBuilder::configuration())}"><i class="fa fa-fw fa-cogs"></i> {L_CONFIGURATION}</a></li>
+					</ul>
+				</li>
+				<li>
+					<a class="cssmenu-title" href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}"><i class="fa fa-fw fa-exclamation-triangle"></i> {L_ERRORS}</a>
+					<ul>
+						<li><a class="cssmenu-title" href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}"><i class="fa fa-fw fa-exclamation-circle"></i> {L_ERRORS}</a></li>
+						<li><a class="cssmenu-title" href="${relative_url(AdminErrorsUrlBuilder::list_404_errors())}"><i class="fa fa-fw fa-ban"></i> {L_404_ERRORS}</a></li>
+					</ul>
+				</li>
+				<li>
+					<a class="cssmenu-title" href="${relative_url(AdminServerUrlBuilder::system_report())}"><i class="fa fa-fw fa-building"></i> {L_SERVER}</a>
+					<ul>
+						<li><a class="cssmenu-title" href="${relative_url(AdminServerUrlBuilder::phpinfo())}"><i class="fa fa-fw fa-info"></i> {L_PHPINFO}</a></a></li>
+						<li><a class="cssmenu-title" href="${relative_url(AdminServerUrlBuilder::system_report())}"><i class="fa fa-fw fa-info-circle"></i> {L_SYSTEM_REPORT}</a></li>
+					</ul>
+				</li>
+				# IF C_ADMIN_LINKS_3 #
+					# START admin_links_3 #
+						# INCLUDE admin_links_3.MODULE_MENU #
+					# END admin_links_3 #
+				# ENDIF #
+			</ul>
+		</li>
+		<li><a class="cssmenu-title"><i class="fa fa-fw fa-user"></i> {L_USER}</a>
+			<ul>
+				<li>
+					<a class="cssmenu-title" href="${relative_url(AdminMembersUrlBuilder::management())}"><i class="fa fa-fw fa-user"></i> {L_USER}</a>
+					<ul>
+						<li><a class="cssmenu-title" href="${relative_url(AdminMembersUrlBuilder::management())}"><i class="fa fa-fw fa-cog"></i> {L_MANAGEMENT}</a></li>
+						<li><a class="cssmenu-title" href="${relative_url(AdminMembersUrlBuilder::add())}"><i class="fa fa-fw fa-plus"></i> {L_ADD}</a></li>
+						<li><a class="cssmenu-title" href="${relative_url(AdminMembersUrlBuilder::configuration())}"><i class="fa fa-fw fa-cogs"></i> {L_CONFIGURATION}</a></li>
+						<li><a class="cssmenu-title" href="{PATH_TO_ROOT}/user/moderation_panel.php"><i class="fa fa-fw fa-ban"></i> {L_PUNISHEMENT}</a></li>
+					</ul>
+				</li>
+				<li>
+					<a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/admin_groups.php"><i class="fa fa-fw fa-users"></i> {L_GROUP}</a>
+					<ul>
+						<li><a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/admin_groups.php"><i class="fa fa-fw fa-cog"></i> {L_MANAGEMENT}</a></li>
+						<li><a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/admin_groups.php?add=1"><i class="fa fa-fw fa-plus"></i> {L_ADD}</a></li>
+					</ul>
+				</li>
+				<li>
+					<a class="cssmenu-title" href="${relative_url(AdminExtendedFieldsUrlBuilder::fields_list())}"><i class="fa fa-fw fa-reorder"></i> {L_EXTEND_FIELD}</a>
+					<ul>
+						<li><a class="cssmenu-title" href="${relative_url(AdminExtendedFieldsUrlBuilder::fields_list())}"><i class="fa fa-cog"></i> {L_MANAGEMENT}</a></li>
+						<li><a class="cssmenu-title" href="${relative_url(AdminExtendedFieldsUrlBuilder::add())}"><i class="fa fa-fw fa-plus"></i> {L_ADD}</a></li>
+					</ul>
+				</li>
+				# IF C_ADMIN_LINKS_4 #
+					# START admin_links_4 #
+						# INCLUDE admin_links_4.MODULE_MENU #
+					# END admin_links_4 #
+				# ENDIF #
+			</ul>
+		</li>
+		<li><a class="cssmenu-title"><i class="fa fa-fw fa-square-o"></i> {L_CONTENT}</a>
+			<ul>
+				<li>
+					<a class="cssmenu-title" href="${relative_url(AdminContentUrlBuilder::content_configuration())}"><i class="fa fa-fw fa-square-o"></i> {L_CONTENT_CONFIG}</a>
+				</li>
+				<li>
+					<a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/menus/menus.php"><i class="fa fa-fw fa-list-ul"></i> {L_MENUS}</a>
+					<ul>
+						<li><a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/menus/menus.php"><i class="fa fa-fw fa-cog"></i> {L_MANAGEMENT}</a></li>
+						<li><a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/menus/links.php"><i class="fa fa-fw fa-list-ul"></i> {L_ADD_LINKS_MENU}</a></li>
+						<li><a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/menus/content.php"><i class="fa fa-fw fa-file-o"></i> {L_ADD_CONTENT_MENU}</a></li>
+						<li><a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/menus/feed.php"><i class="fa fa-fw fa-rss"></i> {L_ADD_FEED_MENU}</a></li>
+					</ul>
+				</li>
+				<li>
+					<a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/admin_files.php"><i class="fa fa-fw fa-file-text-o"></i> {L_FILES}</a>
+					<ul>
+						<li><a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/admin_files.php"><i class="fa fa-fw fa-cog"></i> {L_MANAGEMENT}</a></li>
+						<li><a class="cssmenu-title" href="${relative_url(AdminFilesUrlBuilder::configuration())}"><i class="fa fa-cogs"></i> {L_CONFIGURATION}</a></li>
+					</ul>
+				</li>
+				<li>
+					<a class="cssmenu-title" href="${relative_url(UserUrlBuilder::comments())}"><i class="fa fa-fw fa-comment-o"></i> {L_COMMENTS}</a>
+					<ul>
+						<li><a class="cssmenu-title" href="${relative_url(UserUrlBuilder::comments())}"><i class="fa fa-fw fa-cog"></i> {L_MANAGEMENT}</a></li>
+						<li><a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/content/?url=/comments/config/"><i class="fa fa-fw fa-cogs"></i> {L_CONFIGURATION}</a></li>
+					</ul>
+				</li>
+				<li>
+					<a class="cssmenu-title" href="${relative_url(AdminSmileysUrlBuilder::management())}"><i class="fa fa-fw fa-smile-o"></i> {L_SMILEY}</a>
+					<ul>
+						<li><a class="cssmenu-title" href="${relative_url(AdminSmileysUrlBuilder::management())}"><i class="fa fa-fw fa-cog"></i> {L_MANAGEMENT}</a></li>
+						<li><a class="cssmenu-title" href="${relative_url(AdminSmileysUrlBuilder::add())}"><i class="fa fa-fw fa-plus"></i> {L_ADD}</a></li>
+					</ul>
+				</li>
+				# IF C_ADMIN_LINKS_5 #
+					# START admin_links_5 #
+						# INCLUDE admin_links_5.MODULE_MENU #
+					# END admin_links_5 #
+				# ENDIF #
+			</ul>
+		</li>
+		<li><a class="cssmenu-title"><i class="fa fa-fw fa-cubes"></i> {L_MODULES}</a>
+			<ul>
+				<li>
+					<a class="cssmenu-title" href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}"><i class="fa fa-fw fa-cubes"></i> {L_MODULES}</a>
+					<ul> 
+						<li><a class="cssmenu-title" href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}"><i class="fa fa-fw fa-cog"></i> {L_MANAGEMENT}</a></li>
+						<li><a class="cssmenu-title" href="${relative_url(AdminModulesUrlBuilder::add_module())}"><i class="fa fa-fw fa-plus"></i> {L_ADD}</a></li>
+						<li><a class="cssmenu-title" href="${relative_url(AdminModulesUrlBuilder::update_module())}"><i class="fa fa-fw fa-level-up"></i> {L_UPDATES}</a></li>
+					</ul>
+				</li>
+				# IF C_ADMIN_LINKS_6 #
+					# START admin_links_6 #
+						# INCLUDE admin_links_6.MODULE_MENU #
+					# END admin_links_6 #
+				# ENDIF #
+			</ul>
+		</li>
+	</ul>
+</nav>
+<script type="text/javascript">
+	$("#rm-admin").menumaker({
+		title: "&nbsp;  ",
+		format: "multitoggle",
+		breakpoint: 9000
+	});
+</script>

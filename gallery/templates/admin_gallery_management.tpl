@@ -199,288 +199,277 @@
 		-->
 		</script>
 		
-		<div id="admin-quick-menu">
+		<nav id="admin-quick-menu">
+			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_PROFIL}">
+				<i class="fa fa-bars"></i> {L_GALLERY_MANAGEMENT}
+			</a>
 			<ul>
-				<li class="title-menu">{L_GALLERY_MANAGEMENT}</li>
 				<li>
-					<a href="${relative_url(GalleryUrlBuilder::manage_categories())}"><img src="gallery.png" alt="" /></a>
-					<br />
 					<a href="${relative_url(GalleryUrlBuilder::manage_categories())}" class="quick-link">{L_GALLERY_CAT_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="${relative_url(GalleryUrlBuilder::add_category())}"><img src="gallery.png" alt="" /></a>
-					<br />
 					<a href="${relative_url(GalleryUrlBuilder::add_category())}"" class="quick-link">{L_GALLERY_CAT_ADD}</a>
 				</li>
 				<li>
-					<a href="admin_gallery.php"><img src="gallery.png" alt="" /></a>
-					<br />
 					<a href="admin_gallery.php" class="quick-link">{L_GALLERY_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_gallery_add.php"><img src="gallery.png" alt="" /></a>
-					<br />
 					<a href="admin_gallery_add.php" class="quick-link">{L_GALLERY_PICS_ADD}</a>
 				</li>
 				<li>
-					<a href="admin_gallery_config.php"><img src="gallery.png" alt="" /></a>
-					<br />
 					<a href="admin_gallery_config.php" class="quick-link">{L_GALLERY_CONFIG}</a>
 				</li>
 			</ul>
-		</div>
+		</nav>
 		
 		<div id="admin-contents">
 			# INCLUDE message_helper #
 			
 			# START pics #
-			<article class="block">
-				<header>
-					<h1>
-						<span class"center">{GALLERY} {pics.EDIT}</span>
-					</h1>
+			<fieldset>
+				<legend>
+					{GALLERY} {pics.EDIT}
 					# IF C_PAGINATION #
 					<p class="center">
 						# INCLUDE PAGINATION #
 					</p>
 					# ENDIF #
-				<header>
-				<div class="content">
-				# START cat #
-				<table>
-					<thead>
-						<tr>
-							<th colspan="{COLSPAN}">
-								{L_CATEGORIES}
-							</th>
-						</tr>
-					</thead>
-					# IF C_PAGINATION #
-					<thead>
-						<tr>
-							<th colspan="{COLSPAN}">
-								# INCLUDE PAGINATION #
-							</th>
-						</tr>
-					</thead>
-					# ENDIF #
-					<tbody>
-					# START cat.list #
-					{cat.list.TR_START}
-						<td style="vertical-align:bottom;width:{COLUMN_WIDTH_CATS}%;padding:15px 0px;">
-							<a href="admin_gallery.php?cat={cat.list.IDCAT}"># IF cat.list.C_IMG #<img itemprop="thumbnailUrl" src="{cat.list.IMG}" alt="" /># ENDIF #</a>
-							
-							<br />
-							<a href="admin_gallery.php?cat={cat.list.IDCAT}">{cat.list.CAT}</a>
-							<br />
-							<span class="smaller">{cat.list.L_NBR_PICS}</span> 
-						</td>
-					{cat.list.TR_END}
-					# END cat.list #
+				</legend>
+				<div class="fieldset-inset">
 					
-					# START cat.end_td #
-						{cat.end_td.TD_END}
-					{cat.end_td.TR_END}
-					# END cat.end_td #
-					</tbody>
-				</table>
-				<div class="spacer">&nbsp;</div>
-				# IF C_SUBCATEGORIES_PAGINATION #<span class="center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
-				# END cat #
-				
-				# START pics.pics_max #
-					<table style="margin:auto;max-width:300px;">
-						<tbody>
-							<tr>
-								<td id="pics_max" colspan="{COLSPAN}">
-									{pics.PICS_MAX}
-								</td>
-							</tr>
-							<tr>
-								# IF pics.pics_max.C_PREVIOUS #
-								<td class="left no-separator" style="width:50%">
-									{pics.pics_max.U_PREVIOUS} 
-								</td>
-								# ENDIF #
-								# IF pics.pics_max.C_NEXT #
-								<td class="right no-separator">
-									{pics.pics_max.U_NEXT}
-								</td>
-								# ENDIF #
-							</tr>
-						</tbody>
-					</table>
-					
-					<div class="spacer">&nbsp;</div>
-					
-					<table>
-						<thead>
-							<tr>
-								<th colspan="2">
-									{L_INFORMATIONS}
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td class="smaller">
-									<strong>{L_NAME}:</strong> {pics.pics_max.NAME}
-								</td>
-								<td class="smaller">
-									<strong>{L_POSTOR}:</strong> {pics.pics_max.POSTOR}
-								</td>
-							</tr>
-							<tr>
-								<td class="smaller">
-									<strong>{L_VIEWS}:</strong> {pics.pics_max.VIEWS}
-								</td>
-								<td class="smaller">
-									<strong>{L_ADD_ON}:</strong> {pics.pics_max.DATE}
-								</td>
-							</tr>
-							<tr>
-								<td class="smaller">
-									<strong>{L_DIMENSION}:</strong> {pics.pics_max.DIMENSION}
-								</td>
-								<td class="smaller">
-									<strong>{L_SIZE}:</strong> {pics.pics_max.SIZE} Ko
-								</td>
-							</tr>
-							<tr>
-								<td colspan="2" class="small">
-									&nbsp;&nbsp;&nbsp;<span id="fihref{pics.pics_max.ID}"><a href="javascript:display_rename_file('{pics.pics_max.ID}', '{pics.pics_max.RENAME}', '{pics.pics_max.RENAME_CUT}');" title="{L_EDIT}" class="fa fa-edit"></a>
-									
-									<a href="gallery{pics.pics_max.U_DEL}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a> 
-						
-									<div style="position:absolute;z-index:100;margin-top:110px;float:left;display:none;" id="move{pics.pics_max.ID}">
-										<div class="bbcode-block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({pics.pics_max.ID}, 1);" onmouseout="pics_hide_block({pics.pics_max.ID}, 0);">
-											<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
-											<select class="valign-middle" name="{pics.pics_max.ID}cat" onchange="document.location = 'gallery{pics.pics_max.U_MOVE}">
-												{pics.pics_max.CAT}
-											</select>
-											<br /><br />
-										</div>
-									</div>
-									<a href="javascript:pics_display_block({pics.pics_max.ID});" onmouseover="pics_hide_block({pics.pics_max.ID}, 1);" onmouseout="pics_hide_block({pics.pics_max.ID}, 0);" class="fa fa-move" title="{L_MOVETO}"></a>
-									
-									
-									<a id="img_aprob{pics.pics_max.ID}" href="javascript:pics_aprob({pics.pics_max.ID});" # IF pics.pics_max.C_APPROVED #title="{L_APROB}" class="fa fa-eye"# ELSE #title="{L_UNAPROB}" class="fa fa-eye-slash"# ENDIF #></a>
-									&nbsp;<span id="img{pics.pics_max.ID}"></span>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					
-					<div class="spacer">&nbsp;</div>
-					
-					<table>
-						<thead>
-							<tr>
-								<th colspan="{pics.pics_max.COLSPAN}">
-									{L_THUMBNAILS}
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td style="width:50px;">
-									<span id="display_left">
-									# IF pics.pics_max.C_LEFT_THUMBNAILS #
-									<a href="javascript:display_thumbnails('left')" class="fa fa-arrow-left fa-2x"></a>
-									# ENDIF #
-									</span>
-								</td>
-								
-								# START pics.pics_max.list_preview_pics #
-									{pics.pics_max.list_preview_pics.PICS}
-								# END pics.pics_max.list_preview_pics #
-								
-								
-								<td style="width:50px;">
-									<span id="display_right">
-									# IF pics.pics_max.C_RIGHT_THUMBNAILS #
-									<a href="javascript:display_thumbnails('right')" class="fa fa-arrow-right fa-2x"></a>
-									# ENDIF #
-									</span>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					# END pics.pics_max #
-					
-					# IF NOT pics.C_PICS_MAX #
-					<table style="table-layout:fixed">
+					# START cat #
+					<table id="AdminTable">
 						<thead>
 							<tr>
 								<th colspan="{COLSPAN}">
-									{GALLERY} {pics.EDIT}
+									{L_CATEGORIES}
 								</th>
 							</tr>
 						</thead>
+						# IF C_PAGINATION #
+						<thead>
+							<tr>
+								<th colspan="{COLSPAN}">
+									# INCLUDE PAGINATION #
+								</th>
+							</tr>
+						</thead>
+						# ENDIF #
 						<tbody>
-							# START pics.list #
-							{pics.list.TR_START}
-								<td style="vertical-align:bottom;width:{COLUMN_WIDTH_PICS}%;padding:15px 0px;">
-									<div style="margin-bottom:20px;height:{HEIGHT_MAX}px;padding:0 5px;" id="pics{pics.list.ID}"><a class="small" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}" data-lightbox="2">{pics.list.IMG}</a></div>
-									<div class="smaller">
-										<a class="com" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}"><span id="fi_{pics.list.ID}">{pics.list.NAME}</span></a> <span id="fi{pics.list.ID}"></span>
-										<br />
-										{pics.list.U_POSTOR}
-									</div>
+						# START cat.list #
+						{cat.list.TR_START}
+							<td style="vertical-align:bottom;width:{COLUMN_WIDTH_CATS}%;padding:15px 0px;">
+								<a href="admin_gallery.php?cat={cat.list.IDCAT}"># IF cat.list.C_IMG #<img itemprop="thumbnailUrl" src="{cat.list.IMG}" alt="" /># ENDIF #</a>
+								
+								<br />
+								<a href="admin_gallery.php?cat={cat.list.IDCAT}">{cat.list.CAT}</a>
+								<br />
+								<span class="smaller">{cat.list.L_NBR_PICS}</span> 
+							</td>
+						{cat.list.TR_END}
+						# END cat.list #
+						
+						# START cat.end_td #
+							{cat.end_td.TD_END}
+						{cat.end_td.TR_END}
+						# END cat.end_td #
+						</tbody>
+					</table>
+					<div class="spacer">&nbsp;</div>
+					# IF C_SUBCATEGORIES_PAGINATION #<span class="center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
+					# END cat #
+					
+					# START pics.pics_max #
+						<table id="AdminTable" style="margin:auto;max-width:300px;">
+							<tbody>
+								<tr>
+									<td id="pics_max" colspan="{COLSPAN}">
+										{pics.PICS_MAX}
+									</td>
+								</tr>
+								<tr>
+									# IF pics.pics_max.C_PREVIOUS #
+									<td class="left no-separator" style="width:50%">
+										{pics.pics_max.U_PREVIOUS} 
+									</td>
+									# ENDIF #
+									# IF pics.pics_max.C_NEXT #
+									<td class="right no-separator">
+										{pics.pics_max.U_NEXT}
+									</td>
+									# ENDIF #
+								</tr>
+							</tbody>
+						</table>
+						
+						<div class="spacer">&nbsp;</div>
+						
+						<table id="AdminTable2">
+							<thead>
+								<tr>
+									<th colspan="2">
+										{L_INFORMATIONS}
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class="smaller">
+										<strong>{L_NAME}:</strong> {pics.pics_max.NAME}
+									</td>
+									<td class="smaller">
+										<strong>{L_POSTOR}:</strong> {pics.pics_max.POSTOR}
+									</td>
+								</tr>
+								<tr>
+									<td class="smaller">
+										<strong>{L_VIEWS}:</strong> {pics.pics_max.VIEWS}
+									</td>
+									<td class="smaller">
+										<strong>{L_ADD_ON}:</strong> {pics.pics_max.DATE}
+									</td>
+								</tr>
+								<tr>
+									<td class="smaller">
+										<strong>{L_DIMENSION}:</strong> {pics.pics_max.DIMENSION}
+									</td>
+									<td class="smaller">
+										<strong>{L_SIZE}:</strong> {pics.pics_max.SIZE} Ko
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2" class="small">
+										&nbsp;&nbsp;&nbsp;<span id="fihref{pics.pics_max.ID}"><a href="javascript:display_rename_file('{pics.pics_max.ID}', '{pics.pics_max.RENAME}', '{pics.pics_max.RENAME_CUT}');" title="{L_EDIT}" class="fa fa-edit"></a>
 										
-									<div style="margin:auto;">
-										{pics.list.RENAME_FILE}
-										
-										<a href="admin_gallery.php?del={pics.list.ID}&amp;token={TOKEN}&amp;cat={CAT_ID}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
+										<a href="gallery{pics.pics_max.U_DEL}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a> 
 							
-										<div style="position:absolute;z-index:100;margin-top:110px;float:left;display:none;" id="move{pics.list.ID}">
-											<div class="bbcode-block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);">
+										<div style="position:absolute;z-index:100;margin-top:110px;float:left;display:none;" id="move{pics.pics_max.ID}">
+											<div class="bbcode-block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({pics.pics_max.ID}, 1);" onmouseout="pics_hide_block({pics.pics_max.ID}, 0);">
 												<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
-												<select class="valign-middle" name="{pics.list.ID}cat" onchange="document.location = 'admin_gallery.php?id={pics.list.ID}&amp;token={TOKEN}&amp;move=' + this.options[this.selectedIndex].value">
-													{pics.list.CAT}
+												<select class="valign-middle" name="{pics.pics_max.ID}cat" onchange="document.location = 'gallery{pics.pics_max.U_MOVE}'>
+													{pics.pics_max.CAT}
 												</select>
 												<br /><br />
 											</div>
 										</div>
-										<a href="javascript:pics_display_block({pics.list.ID});" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);" class="fa fa-move" title="{L_MOVETO}"></a>
+										<a href="javascript:pics_display_block({pics.pics_max.ID});" onmouseover="pics_hide_block({pics.pics_max.ID}, 1);" onmouseout="pics_hide_block({pics.pics_max.ID}, 0);" class="fa fa-move" title="{L_MOVETO}"></a>
 										
-										<a id="img_aprob{pics.list.ID}" href="javascript:pics_aprob({pics.list.ID});" # IF pics.list.C_APPROVED #title="{L_APROB}" class="fa fa-eye"# ELSE #title="{L_UNAPROB}" class="fa fa-eye-slash"# ENDIF #></a>
-										&nbsp;<span id="img{pics.list.ID}"></span>
-									</div>
-								</td>
-							{pics.list.TR_END}
-							# END pics.list #
-							
-							# START pics.end_td_pics #
-								{pics.end_td_pics.TD_END}
-							{pics.end_td_pics.TR_END}
-							# END pics.end_td_pics #
-							
-						</tbody>
-					</table>
-					# ENDIF #
-					
-					# IF C_DISPLAY_NO_PICTURES_MESSAGE #
-						# IF NOT C_PICTURES #
-						<div class="notice">
-							{L_TOTAL_IMG}
-						</div>
-						# ELSE #
-						<p style="text-align:center" class="smaller">
-							{L_TOTAL_IMG}
-						</p>
+										
+										<a id="img_aprob{pics.pics_max.ID}" href="javascript:pics_aprob({pics.pics_max.ID});" # IF pics.pics_max.C_APPROVED #title="{L_APROB}" class="fa fa-eye"# ELSE #title="{L_UNAPROB}" class="fa fa-eye-slash"# ENDIF #></a>
+										&nbsp;<span id="img{pics.pics_max.ID}"></span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						
+						<div class="spacer">&nbsp;</div>
+						
+						<table id="AdminTable3">
+							<thead>
+								<tr>
+									<th colspan="{pics.pics_max.COLSPAN}">
+										{L_THUMBNAILS}
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td style="width:50px;">
+										<span id="display_left">
+										# IF pics.pics_max.C_LEFT_THUMBNAILS #
+										<a href="javascript:display_thumbnails('left')" class="fa fa-arrow-left fa-2x"></a>
+										# ENDIF #
+										</span>
+									</td>
+									
+									# START pics.pics_max.list_preview_pics #
+										{pics.pics_max.list_preview_pics.PICS}
+									# END pics.pics_max.list_preview_pics #
+									
+									
+									<td style="width:50px;">
+										<span id="display_right">
+										# IF pics.pics_max.C_RIGHT_THUMBNAILS #
+										<a href="javascript:display_thumbnails('right')" class="fa fa-arrow-right fa-2x"></a>
+										# ENDIF #
+										</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						# END pics.pics_max #
+						
+						# IF NOT pics.C_PICS_MAX #
+						<table id="AdminTable" style="table-layout:fixed">
+							<thead>
+								<tr>
+									<th colspan="{COLSPAN}">
+										{GALLERY} {pics.EDIT}
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								# START pics.list #
+								{pics.list.TR_START}
+									<td style="vertical-align:bottom;width:{COLUMN_WIDTH_PICS}%;padding:15px 0px;">
+										<div style="margin-bottom:20px;height:{HEIGHT_MAX}px;padding:0 5px;" id="pics{pics.list.ID}"><a class="small" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}" data-lightbox="2">{pics.list.IMG}</a></div>
+										<div class="smaller">
+											<a class="com" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}"><span id="fi_{pics.list.ID}">{pics.list.NAME}</span></a> <span id="fi{pics.list.ID}"></span>
+											<br />
+											{pics.list.U_POSTOR}
+										</div>
+											
+										<div style="margin:auto;">
+											{pics.list.RENAME_FILE}
+											
+											<a href="admin_gallery.php?del={pics.list.ID}&amp;token={TOKEN}&amp;cat={CAT_ID}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
+								
+											<div style="position:absolute;z-index:100;margin-top:110px;float:left;display:none;" id="move{pics.list.ID}">
+												<div class="bbcode-block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);">
+													<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
+													<select class="valign-middle" name="{pics.list.ID}cat" onchange="document.location = 'admin_gallery.php?id={pics.list.ID}&amp;token={TOKEN}&amp;move=' + this.options[this.selectedIndex].value">
+														{pics.list.CAT}
+													</select>
+													<br /><br />
+												</div>
+											</div>
+											<a href="javascript:pics_display_block({pics.list.ID});" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);" class="fa fa-move" title="{L_MOVETO}"></a>
+											
+											<a id="img_aprob{pics.list.ID}" href="javascript:pics_aprob({pics.list.ID});" # IF pics.list.C_APPROVED #title="{L_APROB}" class="fa fa-eye"# ELSE #title="{L_UNAPROB}" class="fa fa-eye-slash"# ENDIF #></a>
+											&nbsp;<span id="img{pics.list.ID}"></span>
+										</div>
+									</td>
+								{pics.list.TR_END}
+								# END pics.list #
+								
+								# START pics.end_td_pics #
+									{pics.end_td_pics.TD_END}
+								{pics.end_td_pics.TR_END}
+								# END pics.end_td_pics #
+								
+							</tbody>
+						</table>
 						# ENDIF #
-					# ENDIF #
-				</div>
-				
-				<footer>
+						
+						# IF C_DISPLAY_NO_PICTURES_MESSAGE #
+							# IF NOT C_PICTURES #
+							<div class="notice">
+								{L_TOTAL_IMG}
+							</div>
+							# ELSE #
+							<p style="text-align:center" class="smaller">
+								{L_TOTAL_IMG}
+							</p>
+							# ENDIF #
+						# ENDIF #
+					</div>
 					# IF C_PAGINATION #
 					<p class="center">
 						# INCLUDE PAGINATION #
 					</p>
 					# ENDIF #
-				</footer>
-			</article>
+				</div>
+			</fielset>
 			# END pics #
 		</div>
 		

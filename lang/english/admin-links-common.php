@@ -39,6 +39,7 @@ $lang['updates'] = 'Updates';
 
 $lang['index'] = 'Index';
 $lang['index.site'] = 'Site';
+$lang['index.extend_menu'] = 'Extended menu';
 $lang['index.disconnect'] = 'Disconnect';
 
 

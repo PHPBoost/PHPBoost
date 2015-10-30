@@ -1,159 +1,156 @@
-<div id="admin-quick-menu">
+<nav id="admin-quick-menu">
+	<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_PROFIL}">
+		<i class="fa fa-bars"></i> {L_QUICK_LINKS}
+	</a>
 	<ul>
-		<li class="title-menu">{L_QUICK_LINKS}</li>
 		<li>
-			<a href="{U_INDEX_SITE}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/admin.png" alt="" /></a>
-			<br />
 			<a href="{U_INDEX_SITE}" class="quick-link">{L_SITE}</a>
 		</li>
 		<li>
-			<a href="{PATH_TO_ROOT}/admin/admin_index.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/ranks.png" alt="" /></a>
-			<br />
 			<a href="{PATH_TO_ROOT}/admin/admin_index.php" class="quick-link">{L_INDEX_ADMIN}</a>
 		</li>
 		<li>
-			<a href="${relative_url(UserUrlBuilder::disconnect())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/home.png" alt="" /></a>
-			<br />
 			<a href="${relative_url(UserUrlBuilder::disconnect())}" class="quick-link">{L_DISCONNECT}</a>
 		</li>
 	</ul>
-</div>
+</nav>
 
 <div id="admin-contents">
-	<table>
-		<thead>
-			<tr>
-				<th colspan="5">
-					{L_SITE}
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr class="center">
-				<td class="no-separator" style="width:20%;">
-					<a href="${relative_url(AdminConfigUrlBuilder::general_config())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/configuration.png" alt="" /></a>
-					<br />
-					<a href="${relative_url(AdminConfigUrlBuilder::general_config())}">{L_CONFIGURATION}</a>
-				</td>
-				<td class="no-separator" style="width:20%;">
-					<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/modules.png" alt="" /></a>
-					<br />
-					<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}">{L_MODULES}</a>
-				</td>
-				<td class="no-separator" style="width:20%;">
-					<a href="${relative_url(AdminThemeUrlBuilder::list_installed_theme())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/themes.png" alt="" /></a>
-					<br />
-					<a href="${relative_url(AdminThemeUrlBuilder::list_installed_theme())}">{L_THEME}</a>
-				</td>
-				<td class="no-separator" style="width:20%;">
-					<a href="${relative_url(AdminLangsUrlBuilder::list_installed_langs())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/languages.png" alt="" /></a>
-					<br />
-					<a href="${relative_url(AdminLangsUrlBuilder::list_installed_langs())}">{L_LANG}</a>
-				</td>
-				<td class="no-separator" style="width:20%;">
-					<a href="{PATH_TO_ROOT}/admin/admin_alerts.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/administrator_alert.png" alt="" /></a>
-					<br />
-					<a href="{PATH_TO_ROOT}/admin/admin_alerts.php">{L_ADMINISTRATOR_ALERTS}</a>
-				</td>
-			</tr>
-			<tr class="center">
-				<td class="no-separator" style="width:20%;">
-					<a href="{PATH_TO_ROOT}/admin/updates"><img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="" /></a>
-					<br />
-					<a href="{PATH_TO_ROOT}/admin/updates">{L_WEBSITE_UPDATES}</a>
-				</td>
-				<td class="no-separator" style="width:20%;">
-					<a href="${relative_url(AdminMaintainUrlBuilder::maintain())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/maintain.png" alt="" /></a>
-					<br />
-					<a href="${relative_url(AdminMaintainUrlBuilder::maintain())}">{L_MAINTAIN}</a>
-				</td>
-				<td class="no-separator" style="width:20%;">
-					<a href="${relative_url(AdminCacheUrlBuilder::clear_cache())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/cache.png" alt="" /></a>
-					<br />
-					<a href="${relative_url(AdminCacheUrlBuilder::clear_cache())}">{L_CACHE}</a>
-				</td>
-				<td class="no-separator" style="width:20%;">
-					<a href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/errors.png" alt="" /></a>
-					<br />
-					<a href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}">{L_ERRORS}</a>
-				</td>
-				<td class="no-separator" style="width:20%;">
-					<a href="${relative_url(AdminServerUrlBuilder::system_report())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/server.png" alt="" /></a>
-					<br />
-					<a href="${relative_url(AdminServerUrlBuilder::system_report())}">{L_SERVER}</a>
-				</td>
-			</tr>
-			<tr class="center">
-				<td class="no-separator" style="width:20%;">
-					<a href="${relative_url(AdminMembersUrlBuilder::management())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/members.png" alt="" /></a>
-					<br />
-					<a href="${relative_url(AdminMembersUrlBuilder::management())}">{L_USER}</a>
-				</td>
-				<td class="no-separator" style="width:20%;">
-					<a href="{PATH_TO_ROOT}/admin/admin_groups.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/groups.png" alt="" /></a>
-					<br />
-					<a href="{PATH_TO_ROOT}/admin/admin_groups.php">{L_GROUP}</a>
-				</td>
-				<td class="no-separator" style="width:20%;">
-					<a href="${relative_url(AdminExtendedFieldsUrlBuilder::fields_list())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/extendfield.png" alt=""/></a>
-					<br />
-					<a href="${relative_url(AdminExtendedFieldsUrlBuilder::fields_list())}">{L_EXTEND_FIELD}</a>
-				</td>
-				<td class="no-separator" style="width:20%;">&nbsp;</td>
-				<td class="no-separator" style="width:20%;">&nbsp;</td>
-			</tr>
-			<tr class="center">
-				<td class="no-separator" style="width:20%;">
-					<a href="{PATH_TO_ROOT}/admin/menus/"><img src="{PATH_TO_ROOT}/templates/default/images/admin/menus.png" alt="" /></a>
-					<br />
-					<a href="{PATH_TO_ROOT}/admin/menus/">{L_SITE_MENU}</a>
-				</td>
-				<td class="no-separator" style="width:20%;">
-					<a href="${relative_url(AdminContentUrlBuilder::content_configuration())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/content.png" alt="" /></a>
-					<br />
-					<a href="${relative_url(AdminContentUrlBuilder::content_configuration())}">{L_CONTENT_CONFIG}</a>
-				</td>
-				<td class="no-separator" style="width:20%;">
-					<a href="${relative_url(AdminSmileysUrlBuilder::management())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/smileys.png" alt="" /></a>
-					<br />
-					<a href="${relative_url(AdminSmileysUrlBuilder::management())}">{L_SMILEY}</a>
-				</td>
-				<td class="no-separator" style="width:20%;">
-					<a href="{PATH_TO_ROOT}/admin/admin_files.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/files.png" alt="" /></a>
-					<br />
-					<a href="{PATH_TO_ROOT}/admin/admin_files.php">{L_FILES}</a>
-				</td>
-				<td class="no-separator" style="width:20%;">
-					<a href="${relative_url(UserUrlBuilder::comments())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/com.png" alt="" /></a>
-					<br />
-					<a href="${relative_url(UserUrlBuilder::comments())}">{L_COM}</a>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-
-	<table>
-		<thead>
-			<tr>
-				<th colspan="5">
-					{L_MODULES}
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-			# START modules_extend #
-			{modules_extend.START_TR}
-				<td class="no-separator" style="width:20%;">
-					<a href="{modules_extend.U_ADMIN_MODULE}"><img src="{modules_extend.IMG}" alt="" /></a>
-					<br />
-					<a href="{modules_extend.U_ADMIN_MODULE}">{modules_extend.NAME}</a>
-				</td>
-				# START modules_extend.td #
-				{modules_extend.td.TD}
-				# END modules_extend.td #
-			{modules_extend.END_TR}
-			# END modules_extend #
-		</tbody>
-	</table>
-	<br />
+	
+	<fieldset>
+		<legend>${LangLoader::get_message('administration', 'admin-links-common')}</legend>
+		<div class="fieldset-inset">
+			<nav class="admin-extend-menu">
+				<ul>
+					<li>
+							<a href="${relative_url(AdminConfigUrlBuilder::general_config())}">
+								<i class="fa fa-cog fa-2x"></i>
+								<p>{L_CONFIGURATION}</p>
+							</a>
+					</li>
+					<li>
+							<a href="{PATH_TO_ROOT}/admin/updates">
+								<i class="fa fa-download fa-2x"></i>
+								<p>{L_WEBSITE_UPDATES}</p>
+							</a>
+					</li>
+					<li>
+							<a href="${relative_url(AdminMaintainUrlBuilder::maintain())}">
+								<i class="fa fa-clock-o fa-2x"></i>
+								<p>{L_MAINTAIN}</p>
+							</a>
+					</li>
+					<li>
+							<a href="${relative_url(AdminThemeUrlBuilder::list_installed_theme())}">
+								<i class="fa fa-picture-o fa-2x"></i>
+								<p>{L_THEME}</p>
+							</a>
+					</li>
+					<li>
+							<a href="${relative_url(AdminLangsUrlBuilder::list_installed_langs())}">
+								<i class="fa fa-language fa-2x"></i>
+								<p>{L_LANG}</p>
+							</a>
+					</li>
+					<li>
+							<a href="{PATH_TO_ROOT}/admin/admin_alerts.php">
+								<i class="fa fa-bell fa-2x"></i>
+								<p>{L_ADMINISTRATOR_ALERTS}</p>
+							</a>
+					</li>
+					<li>
+							<a href="${relative_url(AdminCacheUrlBuilder::clear_cache())}">
+								<i class="fa fa-refresh fa-2x"></i>
+								<p>{L_CACHE}</p>
+							</a>
+					</li>
+					<li>
+							<a href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}">
+								<i class="fa fa-error fa-2x"></i>
+								<p>{L_ERRORS}</p>
+							</a>
+					</li>
+					<li>
+							<a href="${relative_url(AdminServerUrlBuilder::system_report())}">
+								<i class="fa fa-building fa-2x"></i>
+								<p>{L_SERVER}</p>
+							</a>
+					</li>
+					<li>
+							<a href="${relative_url(AdminMembersUrlBuilder::management())}">
+								<i class="fa fa-user fa-2x"></i>
+								<p>{L_USER}</p>
+							</a>
+					</li>
+					<li>
+							<a href="{PATH_TO_ROOT}/admin/admin_groups.php">
+								<i class="fa fa-users fa-2x"></i>
+								<p>{L_GROUP}</p>
+							</a>
+					</li>
+					<li>
+							<a href="${relative_url(AdminExtendedFieldsUrlBuilder::fields_list())}">
+								<i class="fa fa-bars fa-2x"></i>
+								<p>{L_EXTEND_FIELD}</p>
+							</a>
+					</li>
+					<li>
+							<a href="${relative_url(AdminContentUrlBuilder::content_configuration())}">
+								<i class="fa fa-square-o fa-2x"></i>
+								<p>{L_CONTENT_CONFIG}</p>
+							</a>
+					</li>
+					<li>
+							<a href="{PATH_TO_ROOT}/admin/menus/">
+								<i class="fa fa-list-ul fa-2x"></i>
+								<p>{L_SITE_MENU}</p>
+							</a>
+					</li>
+					<li>
+							<a href="{PATH_TO_ROOT}/admin/admin_files.php">
+								<i class="fa fa-file-o fa-2x"></i>
+								<p>{L_FILES}</p>
+							</a>
+					</li>
+					<li>
+							<a href="${relative_url(UserUrlBuilder::comments())}">
+								<i class="fa fa-comment-o fa-2x"></i>
+								<p>{L_COM}</p>
+							</a>
+					</li>
+					<li>
+							<a href="${relative_url(AdminSmileysUrlBuilder::management())}">
+								<i class="fa fa-smile-o fa-2x"></i>
+								<p>{L_SMILEY}</p>
+							</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</fieldset>
+	
+	<fieldset>
+		<legend>{L_MODULES}</legend>
+		<div class="fieldset-inset">
+			<nav class="admin-extend-menu">
+				<ul>
+					<li>
+							<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}">
+								<i class="fa fa-cubes fa-2x"></i>
+								<p>${LangLoader::get_message('management', 'admin-links-common')}</p>
+							</a>
+					</li>
+					# START modules_extend #
+					<li>
+							<a href="{modules_extend.U_ADMIN_MODULE}">
+								<img src="{modules_extend.IMG}" alt="" />
+								<p>{modules_extend.NAME}</p>
+							</a>
+					</li>
+					# END modules_extend #
+				</ul>
+			</nav>
+		</div>
+	</fieldset>
+	
 </div>

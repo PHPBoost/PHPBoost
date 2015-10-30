@@ -65,7 +65,6 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'HEADER_LOGO' => Url::to_rel($header_logo_path),
 			'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version(),
 			'CONTENT' => $content,
-			'L_EXTEND_MENU' => self::$lang_admin['extend_menu'],
 			'L_POWERED_BY' => self::$lang['powered_by'],
 			'L_PHPBOOST_RIGHT' => self::$lang['phpboost_right'],
 		));
@@ -135,6 +134,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'L_ADMINISTRATION' => $subheader_lang['administration'],
 			'L_INDEX' => $subheader_lang['index'],
 			'L_INDEX_SITE' => $subheader_lang['index.site'],
+			'L_EXTEND_MENU' => $subheader_lang['index.extend_menu'],
 			'L_DISCONNECT' => $subheader_lang['index.disconnect'],
 			'L_CONFIGURATION' => $subheader_lang['configuration'],
 			'L_CONFIG_GENERAL' => $subheader_lang['administration.configuration.general'],

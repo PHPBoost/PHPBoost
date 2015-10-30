@@ -32,7 +32,6 @@
 
 $LANG['administration'] = 'Administration';
 
-$LANG['extend_menu'] = 'Menu étendu';
 $LANG['phpinfo'] = 'PHP info';
 
 //Requis
@@ -63,6 +62,19 @@ $LANG['unknow_bot'] = 'Bot inconnu';
 $LANG['version'] = 'Version';
 
 //Index
+$LANG['quick_access'] = 'Accès rapide';
+$LANG['add_content'] = 'Ajouter du contenu';
+$LANG['modules_management'] = 'Gérer les modules';
+$LANG['add_articles'] = 'Ajouter un article';
+$LANG['add_news'] = 'Ajouter une news';
+$LANG['customize_site'] = 'Personnaliser le site';
+$LANG['add_template'] = 'Ajouter un thème';
+$LANG['menus_management'] = 'Gérer les menus';
+$LANG['customize_template'] = 'Personnaliser le thème';
+$LANG['site_management'] = 'Administrer le site';
+$LANG['general_config'] = 'Configuration générale';
+$LANG['empty_cache'] = 'Vider le cache du site';
+$LANG['save_database'] = 'Sauvegarder la base de données';
 $LANG['update_available'] = 'Mises à jour disponibles';
 $LANG['core_update_available'] = 'Nouvelle version <strong>%s</strong> du noyau disponible, pensez à mettre à jour PHPBoost ! <a href="http://www.phpboost.com">Plus d\'informations</a>';
 $LANG['no_core_update_available'] = 'Aucune nouvelle version disponible, le système est à jour !';
@@ -139,10 +151,11 @@ $LANG['menus_links_add'] = 'Menu de liens';
 $LANG['menus_feed_add'] = 'Menu de flux';
 $LANG['menus_edit'] = 'Modifier le menu';
 $LANG['menus_add'] = 'Ajouter un menu';
-$LANG['automatic_menu'] = 'Automatique';
-$LANG['vertical_menu'] = 'Menu vertical déroulant';
-$LANG['horizontal_menu'] = 'Menu horizontal déroulant';
-$LANG['static_menu'] = 'Menu statique';
+$LANG['vertical_menu'] = 'Menu vertical';
+$LANG['horizontal_menu'] = 'Menu horizontal';
+$LANG['tree_menu'] = 'Menu arborescent';
+$LANG['vertical_scrolling_menu'] = 'Menu vertical déroulant';
+$LANG['horizontal_scrolling_menu'] = 'Menu horizontal déroulant';
 $LANG['available_menus'] = 'Menus disponibles';
 $LANG['no_available_menus'] = 'Aucun menu disponible';
 $LANG['menu_header'] = 'Tête de page';

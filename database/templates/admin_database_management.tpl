@@ -1,23 +1,16 @@
-		<div id="admin-quick-menu">
-			<ul>
-				<li class="title-menu">{L_DATABASE_MANAGEMENT}</li>
-				<li>
-					<a href="${relative_url(DatabaseUrlBuilder::database_management())}"><img src="database.png" alt="{L_DB_TOOLS}" /></a>
-					<br />
-					<a href="${relative_url(DatabaseUrlBuilder::database_management())}" class="quick-link">{L_DB_TOOLS}</a>
-				</li>
-				<li>
-					<a href="${relative_url(DatabaseUrlBuilder::db_sql_queries())}"><img src="database.png" alt="{L_QUERY}" /></a>
-					<br />
-					<a href="${relative_url(DatabaseUrlBuilder::db_sql_queries())}" class="quick-link">{L_QUERY}</a>
-				</li>
-				<li>
-					<a href="${relative_url(DatabaseUrlBuilder::configuration())}"><img src="database.png" alt="${LangLoader::get_message('configuration', 'admin-common')}" /></a>
-					<br />
-					<a href="${relative_url(DatabaseUrlBuilder::configuration())}" class="quick-link">${LangLoader::get_message('configuration', 'admin-common')}</a>
-				</li>
-			</ul>
-		</div>
+		<nav id="admin-quick-menu">
+				<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_PROFIL}">
+					<i class="fa fa-bars"></i> {L_DATABASE_MANAGEMENT}
+				</a>
+				<ul>
+					<li>
+						<a href="admin_database.php" class="quick-link">{L_DB_TOOLS}</a>
+					</li>
+					<li>
+						<a href="admin_database.php?query=1" class="quick-link">{L_QUERY}</a>
+					</li>
+				</ul>
+		</nav>
 		
 		<div id="admin-contents">
 			# IF C_DATABASE_INDEX #
@@ -26,62 +19,43 @@
 
 			<form method="post" action="admin_database.php?action=restore&amp;token={TOKEN}" enctype="multipart/form-data" name="upload_file">
 			
-			<section>
-				<header>
-					<h1>{L_DATABASE_MANAGEMENT}</h1>
-				</header>
-				<div class="content">
-					<article class="block">
-						<header></header>
-						<div class="content">
-							{L_EXPLAIN_ACTIONS}
-							<div class="spacer">&nbsp;</div>
-							<div class="question">{L_EXPLAIN_ACTIONS_QUESTION}</div>
+				
+				<fieldset>
+						<legend>{L_DATABASE_MANAGEMENT}</legend>
+						<div class="fieldset-inset">
+								{L_EXPLAIN_ACTIONS}
+								<div class="spacer">&nbsp;</div>
+								<div class="question">{L_EXPLAIN_ACTIONS_QUESTION}</div>
 						</div>
-						<footer></footer>
-					</article>
-				</div>
-				<footer></footer>
-			</section>
-			
-			<section>
-				<header>
-					<h1>{L_DB_RESTORE}</h1>
-				</header>
-				<div class="content">
-					<article class="block" style="float:left;width:49%;min-height:209px;margin-right:7px;">
-						<header></header>
-						<div class="content">
-							{L_RESTORE_FROM_SERVER}
-							<br /><br />
-							<a href="admin_database.php?action=restore">{L_FILE_LIST}</a>
+				</fieldset>
+				<fieldset>
+						<legend>{L_DB_RESTORE}</legend>
+						<div class="fieldset-inset">
+								<div class="db-restore medium-block">
+									{L_RESTORE_FROM_SERVER}
+										<br /><br />
+										<a href="admin_database.php?action=restore">{L_FILE_LIST}</a>
+								</div>
+								<div class="db-restore medium-block">
+										{L_RESTORE_FROM_UPLOADED_FILE}
+										<br /><br />
+										<input type="file" class="file" name="file_sql">
+										<input type="hidden" name="max_file_size" value="500000000">
+										<br /><br />
+										<div class="center">
+												<button type="submit" name="" value="true" class="submit">{L_RESTORE_NOW}</button>
+										</div>
+								</div>
 						</div>
-						<footer></footer>
-					</article>
-					<article class="block" style="float:left;width:49%;margin-left:7px;">
-						<header></header>
-						<div class="content">
-							{L_RESTORE_FROM_UPLOADED_FILE}
-							<br /><br />
-							<input type="file" class="file" name="file_sql">
-							<input type="hidden" name="max_file_size" value="500000000">
-							<input type="hidden" name="token" value="{TOKEN}">
-							<br /><br />
-							<div class="center"><button type="submit" name="" value="true" class="submit">{L_RESTORE_NOW}</button></div>
-						</div>
-						<footer></footer>
-					</article>
-				</div>
-				<footer></footer>
-			</section>
+				</fieldset>
 			</form>
 
 			<form action="{TARGET}" method="post">
-				<table id="tables">
+				<table id="AdminTable">
 					<caption>{L_TABLE_LIST}</caption>
 					<thead>
-						<tr class="center">
-							<th style="width:140px;">
+						<tr>
+							<th>
 								<span class="text-strong">{L_SELECTED_TABLES}</span>
 							</th>
 							<th>
@@ -104,41 +78,19 @@
 							</th>
 						</tr>
 					</thead>
-					<tfoot>
-						<tr class="center"> 
-							<th>
-								<input type="checkbox" onclick="check_all(this.checked, 'id');" class="valign-middle"> {L_ALL}
-							</th>
-							<th>
-								<strong>{NBR_TABLES}</strong>
-							</th>
-							<th style="text-align:right;">
-								<strong>{NBR_ROWS}</strong>
-							</th>
-							<th>
-								--
-							</th>
-							<th>
-								--
-							</th>
-							<th style="text-align:right;">
-								<strong>{NBR_DATA}</strong>
-							</th>
-							<th style="text-align:right;">
-								<strong>{NBR_FREE}</strong>
-							</th>
-						</tr>
-					</tfoot>
 					<tbody>
 						# START table_list #
 						<tr class="center">
 							<td>
-								<input type="checkbox" id="id{table_list.I}" name="table_{table_list.TABLE_NAME}">
+								<div class="form-field-checkbox" style="margin: auto;">
+										<input type="checkbox" id="id{table_list.I}" name="table_{table_list.TABLE_NAME}" />
+										<label for="id{table_list.I}"></label>
+								</div>
 							</td>
 							<td>
 								<a href="admin_database_tools.php?table={table_list.TABLE_NAME}">{table_list.TABLE_NAME}</a>
 							</td>
-							<td style="text-align:right;">
+							<td>
 								{table_list.TABLE_ROWS}
 							</td>
 							<td>
@@ -147,42 +99,67 @@
 							<td>
 								{table_list.TABLE_COLLATION}
 							</td>
-							<td style="text-align:right;">
+							<td>
 								{table_list.TABLE_DATA}
 							</td>
-							<td style="text-align:right;">
+							<td>
 								{table_list.TABLE_FREE}
 							</td>
 						</tr>
 						# END table_list #
+						<tr class="center"> 
+							<td>
+								<div class="form-field-checkbox" style="display: inline-block">
+										<input type="checkbox" id="check-all" onclick="check_all(this.checked, 'id');" class="valign-middle"> 
+										<label for="check-all"></label>
+								</div>
+								<span style="vertical-align: bottom">{L_ALL}</span>
+							</td>
+							<td>
+								<strong>{NBR_TABLES}</strong>
+							</td>
+							<td>
+								<strong>{NBR_ROWS}</strong>
+							</td>
+							<td>
+								--
+							</td>
+							<td>
+								--
+							</td>
+							<td>
+								<strong>{NBR_DATA}</strong>
+							</td>
+							<td>
+								<strong>{NBR_FREE}</strong>
+							</td>
+						</tr>
 					</tbody>
 				</table>
 				
 				<div class="spacer">&nbsp;</div>
 				
-				<section>
-					<header>
-						<h1>{ACTION_FOR_SELECTION}</h1>
-					</header>
-					<div class="content">
-						<ul class="center" style="width:99%;margin:20px auto;">
-							<li class="small-block" style="width:20%;">
-								<img src="./database.png" alt="{L_OPTIMIZE}" /><br/>
-								<button type="submit" name="optimize" value="true" class="submit">{L_OPTIMIZE}</button>
-							</li>
-							<li class="small-block" style="width:20%;">
-								<img src="{PATH_TO_ROOT}/templates/default/images/admin/configuration.png" alt="{L_REPAIR}" /><br/>
-								<button type="submit" name="repair" value="true" class="submit">{L_REPAIR}</button>
-							</li>
-							<li class="small-block" style="width:20%;">
-								<img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="{L_BACKUP}" class="valign-middle" /><br/>
-								<button type="submit" name="backup" value="true" class="submit">{L_BACKUP}</button>
-							</li>
-						</ul>
-						<input type="hidden" name="token" value="{TOKEN}">
-					</div>
-					<footer></footer>
-				</section>
+				<div class="block">
+						<fieldset>
+								<legend>{ACTION_FOR_SELECTION}</legend>
+								<div class="fieldset-inset">
+										<ul class="center">
+											<li class="small-block">
+												<i class="fa fa-bar-chart fa-2x"></i> 
+												<button type="submit" name="optimize" value="true" class="submit">{L_OPTIMIZE}</button>
+											</li>
+											<li class="small-block">
+												<i class="fa fa-cogs fa-2x"></i> 
+												<button type="submit" name="repair" value="true" class="submit">{L_REPAIR}</button>
+											</li>
+											<li class="small-block">
+												<i class="fa fa-save fa-2x"></i> 
+												<button type="submit" name="backup" value="true" class="submit">{L_BACKUP}</button>
+											</li>
+										</ul>
+								</div>
+						</fieldset>
+				</div>
 				
 				<script>
 				<!--
@@ -205,31 +182,52 @@
 				<div class="block-contents1" style="padding:5px;padding-bottom:7px;margin-bottom:5px;">
 					- <a class="small" href="admin_database.php#tables">{L_DATABASE_MANAGEMENT}</a> - <a class="small" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{TABLE_NAME}</a>
 				</div>
-				<menu class="dynamic-menu group center">
+				<nav id="cssmenu-database-backup" class="cssmenu cssmenu-group">
 					<ul>
 						<li>
-							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure"><img src="./database_mini.png" alt="{L_TABLE_STRUCTURE}" title="{L_TABLE_STRUCTURE}"/> {L_TABLE_STRUCTURE}</a>
+							<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">
+								<i class="fa fa-fw fa-code-fork"></i> {L_TABLE_STRUCTURE}
+							</a>
 						</li>
 						<li>
-							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=data"><img src="{PATH_TO_ROOT}/templates/default/images/admin/themes_mini.png" alt="{L_TABLE_DISPLAY}" title="{L_TABLE_DISPLAY}"/> {L_TABLE_DISPLAY}</a>
+							<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=data">
+								<i class="fa fa-fw fa-laptop"></i> {L_TABLE_DISPLAY}
+							</a>
 						</li>
 						<li>
-							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=query"><img src="{PATH_TO_ROOT}/templates/default/images/admin/tools_mini.png" alt="SQL" title="SQL"/> SQL</a>
+							<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=query">
+								<i class="fa fa-fw fa-wrench"></i> SQL
+							</a>
 						</li>
 						<li>
-							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=insert"><img src="{PATH_TO_ROOT}/templates/default/images/admin/extendfield_mini.png" alt="{L_INSERT}" title="{L_INSERT}"/> {L_INSERT}</a>
+							<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=insert">
+								<i class="fa fa-fw fa-plus"></i> {L_INSERT}
+							</a>
 						</li>
 						<li>
-							<a href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table"><img src="{PATH_TO_ROOT}/templates/default/images/admin/cache_mini.png" alt="{L_BACKUP}" title="{L_BACKUP}"/> {L_BACKUP}</a>
+							<a class="cssmenu-title" href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table">
+								<i class="fa fa-fw fa-save"></i> {L_BACKUP}
+							</a>
 						</li>
 						<li>
-							<a style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}" data-confirmation="{L_CONFIRM_TRUNCATE_TABLE}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/trash_mini.png" alt="{L_TRUNCATE}" title="{L_TRUNCATE}"/> {L_TRUNCATE}</a>
+							<a class="cssmenu-title" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}" data-confirmation="{L_CONFIRM_TRUNCATE_TABLE}">
+								<i class="fa fa-fw fa-share-square-o"></i> {L_TRUNCATE}
+							</a>
 						</li>
 						<li>
-							<a style="color:red;padding-top: 6px;padding-bottom: 3px;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp" data-confirmation="delete-element" title="{L_DELETE}"><i class="fa fa-delete"></i> {L_DELETE}</a>
+							<a class="cssmenu-title" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp;token={TOKEN}" data-confirmation="delete-element">
+								<i class="fa fa-fw fa-delete"></i> {L_DELETE}
+							</a>
 						</li>
 					</ul>
-				</menu>
+				</nav>
+				<script type="text/javascript">
+					$("#cssmenu-database-backup").menumaker({
+						title: "&nbsp;  ",
+						format: "multitoggle",
+						breakpoint: 768
+					});
+				</script>
 			</div>
 			<div class="spacer">&nbsp;</div>
 			# ENDIF #
@@ -248,35 +246,49 @@
 					-->
 				</script>
 				
-				<table>
+				<table id="AdminTable">
 					<caption>{L_BACKUP_DATABASE}</caption>
 					<thead>
 						<tr>
-							<th colspan="2" style="text-align:center;">
+							<th>
 								{L_SELECTION}
+							</th>
+							<th>
 							</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr class="center">
+						<tr>
 							<td>
 								<select name="table_list[]" size="8" multiple="multiple">
 								# START table_list #
 									<option value="{table_list.NAME}" name="table_{table_list.NAME}" id="{table_list.I}" {table_list.SELECTED}>{table_list.NAME}</option>
 								# END table_list #
 								</select>
-								<br />
+								<br /><br />
 								<a class="small" href="javascript:check_select_all_tables(true);">{SELECT_ALL}</a> / <a class="small" href="javascript:check_select_all_tables(false);">{SELECT_NONE}</a>
 							</td>
 							<td>
-								{L_EXPLAIN_BACKUP}<br />
-								<img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="{L_BACKUP}" /><br />
-								<label><input type="radio" name="backup_type" checked="checked" value="all"/> {L_BACKUP_ALL}</label>
-								<label><input type="radio" name="backup_type" value="struct"> {L_BACKUP_STRUCT}</label>
-								<label><input type="radio" name="backup_type" value="data"/> {L_BACKUP_DATA}</label>
-								<br /><br />
+								<p>{L_EXPLAIN_BACKUP}</p>
+								<p class="center"><i class="fa fa-2x fa-save"></i></p>
+								<p>
+										<div class="form-field-radio">
+												<input type="radio" id="backup_all" name="backup_type" checked="checked" value="all"/>
+												<label for="backup_all"></label>
+										</div>
+										<span class="form-field-radio-span">{L_BACKUP_ALL}</span>
+										<div class="form-field-radio">
+												<input type="radio" id="backup_struct" name="backup_type" value="struct">
+												<label for="backup_struct"></label>
+										</div>
+										<span class="form-field-radio-span">{L_BACKUP_STRUCT}</span>
+										<div class="form-field-radio">
+												<input type="radio" id="backup_data" name="backup_type" value="data"/>
+												<label for="backup_data"></label>
+										</div>
+										<span class="form-field-radio-span">{L_BACKUP_DATA}</span>
+								</p>
 								<button type="submit" name="" value="true" class="submit">{L_BACKUP}</button>
-								<input type="hidden" name="token" value="{TOKEN}">
 							</td>
 						</tr>
 					</tbody>
@@ -318,106 +330,107 @@
 				</script>
 				
 				<form action="admin_database.php?query=1&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
-				<section>
-					<header>
-						<h1>{L_QUERY}</h1>
-					</header>
-					<div class="content">
-						<article>
-							<header></header>
-							<div class="content">
-								<span id="errorh"></span>
-								<div class="warning">{L_EXPLAIN_QUERY}</div>
-								<fieldset>
-									<label for="query">* {L_EXECUTED_QUERY}</label>
-									<textarea rows="12" cols="70" id="query" name="query">{QUERY}</textarea>
-								</fieldset>
-								<fieldset class="fieldset-submit" style="margin:0">
-									<button type="submit" name="submit" value="true" class="submit">{L_EXECUTE}</button>
-									<input type="hidden" name="token" value="{TOKEN}">
-								</fieldset>
-							</div>
-							<footer></footer>
-						</article>
-					</div>
-					<footer></footer>
-				</section>
+				<fieldset>
+						<legend>{L_QUERY}</legend>
+						<div class="fieldset-inset">
+								<div class="content">
+										<article>
+											<header></header>
+											<div class="content">
+												<span id="errorh"></span>
+												<div class="warning">{L_EXPLAIN_QUERY}</div>
+												<fieldset>
+													<label for="query">* {L_EXECUTED_QUERY}</label>
+													<textarea rows="12" id="query" name="query">{QUERY}</textarea>
+												</fieldset>
+												<fieldset class="fieldset-submit" style="margin:0">
+													<button type="submit" name="submit" value="true" class="submit">{L_EXECUTE}</button>
+												</fieldset>
+											</div>
+											<footer></footer>
+										</article>
+								</div>
+						</div>
+				</fieldset>
 				</form>
 				
 				# IF C_QUERY_RESULT #
-				<section>
-					<header>
-						<h1>{L_RESULT}</h1>
-					</header>
-					<div class="content" id="executed_query">
-						<article class="block">
-							<header>{L_EXECUTED_QUERY}</header>
-							<div class="content">
-								<fieldset style="background-color:white;margin:0px">
-									<p style="color:black;font-size:10px;">{QUERY_HIGHLIGHT}</p>
-								</fieldset>
-								
-								<div style="width:99%;margin:auto;overflow:auto;padding:18px 2px">
-									<table>
-										# IF C_HEAD #
-										<thead>
-											<tr class="center">
-												# START head #
-												<th>{head.FIELD_NAME}</th>
-												# END head #
-											</tr>
-										</thead>
-										# ENDIF #
-										<tbody>
-											# START line #
-											<tr>
-												# START line.field #
-												<td style="{line.field.STYLE}">
-													{line.field.FIELD_NAME}
-												</td>
-												# END line.field #
-											</tr>
-											# END line #
-										</tbody>
-									</table>
+				<fieldset>
+						<legend>{L_RESULT}</legend>
+						<div class="fieldset-inset">
+								<div class="content" id="executed_query">
+										<article class="block">
+											<header>{L_EXECUTED_QUERY}</header>
+											<div class="content">
+												<fieldset style="background-color:white;margin:0px">
+													<p style="color:black;font-size:10px;">{QUERY_HIGHLIGHT}</p>
+												</fieldset>
+												
+												<div style="width:99%;margin:auto;overflow:auto;padding:18px 2px">
+													<table id="AdminTable">
+														# IF C_HEAD #
+														<thead>
+															<tr>
+																# START head #
+																<th>{head.FIELD_NAME}</th>
+																# END head #
+															</tr>
+														</thead>
+														# ENDIF #
+														<tbody>
+															# START line #
+															<tr>
+																# START line.field #
+																<td>
+																	{line.field.FIELD_NAME}
+																</td>
+																# END line.field #
+															</tr>
+															# END line #
+														</tbody>
+													</table>
+												</div>
+											</div>
+											<footer></footer>
+										</article>
 								</div>
-							</div>
-							<footer></footer>
-						</article>
-					</div>
-					<footer></footer>
-				</section>
+						</div>
+				</fieldset>
 				# ENDIF #
 			# ENDIF #
 
 			# IF C_DATABASE_FILES #
 				# INCLUDE message_helper #
-				<table>
+				<table id="AdminTable">
 					<caption>{L_LIST_FILES}</caption>
 					<thead>
-						<tr class="center">
-							<th style="text-align:left;padding-left:20px;">
-								<span class="text-strong">{L_NAME}</span>
+						<tr>
+							<th>
+								{L_NAME}
 							</th>
-							<th style="width:120px;">
-								<span class="text-strong">{L_WEIGHT}</span>
+							<th>
+								{L_WEIGHT}
 							</th>
-							<th style="width:140px;">
-								<span class="text-strong">{L_DATE}</span>
+							<th>
+								{L_DATE}
 							</th>
-							<th></th>
+							<th>
+							</th>
 						</tr>
 					</thead>
 					<tbody>
 						# START file #
-						<tr class="center">
-							<td style="text-align:left;padding-left:20px;">
-								<a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" title="{L_RESTORE}" data-confirmation="{L_CONFIRM_RESTORE}"><img src="./database_mini.png" alt="{L_RESTORE}" style="vertical-align:middle" /></a> <a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" title="{L_RESTORE}" data-confirmation="{L_CONFIRM_RESTORE}">{file.FILE_NAME}</a>
+						<tr>
+							<td>
+								<a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" title="{L_RESTORE}" data-confirmation="{L_CONFIRM_RESTORE}">
+										<i class="fa fa-server"></i> 
+										{file.FILE_NAME}
+								</a>
 							</td>
-							<td style="width:120px;">
+							<td>
 								{file.WEIGHT}
 							</td>
-							<td style="width:120px;">
+							<td>
 								{file.FILE_DATE}
 							</td>
 							<td>
@@ -425,7 +438,7 @@
 							</td>
 						</tr>
 						# END file #
-						<tr class="center">
+						<tr>
 							<td colspan="4">
 								{L_INFO}
 							</td>

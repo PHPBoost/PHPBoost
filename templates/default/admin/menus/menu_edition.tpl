@@ -17,7 +17,7 @@
 	<li class="sortable-element" id="menu_element_{ID}" data-id="{ID}">
 		<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
 		<div class="sortable-title">
-			<i class="fa fa-folder"></i>
+			<i class="fa fa-folder" style="cursor:move"></i>
 			<label for="menu_element_{ID}_name">{L_NAME}</label> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name">
 			<label for="menu_element_{ID}_url">{L_URL}</label> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url">
 			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)">
@@ -35,23 +35,23 @@
 				<div class="form-field">{AUTH_FORM}</div>
 			</div>
 		</fieldset>
-		<hr/>
+        <hr/>
 		<ul class="sortable-block" id="menu_element_{ID}_list">
-			# START elements #
-				{elements.DISPLAY}
-			# END elements #
+    		# START elements #
+    			{elements.DISPLAY}
+    		# END elements #
 		</ul>
 		<fieldset class="fieldset-submit">
 			<button type="button" id="menu_element_{ID}_add_sub_element" name="menu_element_{ID}_add_sub_element" onclick="addSubElement('menu_element_{ID}');">{L_ADD_SUB_ELEMENT}</button>
-			<button type="button" id="menu_element_{ID}_add_sub_menu" name="menu_element_{ID}_add_sub_menu" onclick="addSubMenu('menu_element_{ID}');">{L_ADD_SUB_MENU}</button>
+            <button type="button" id="menu_element_{ID}_add_sub_menu" name="menu_element_{ID}_add_sub_menu" onclick="addSubMenu('menu_element_{ID}');">{L_ADD_SUB_MENU}</button>
 		</fieldset>
 	</li>
 # ENDIF #
 
 # IF C_LINK #
-	<li class="sortable-element" id="menu_element_{ID}" data-id="{ID}">
+    <li class="sortable-element" id="menu_element_{ID}" data-id="{ID}">
 		<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
-		<div class="sortable-title">
+   		<div class="sortable-title">
 			<i class="fa fa-globe"></i>
 			<label for="menu_element_{ID}_name">{L_NAME}</label> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name">
 			<label for="menu_element_{ID}_url">{L_URL}</label> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url">
@@ -70,12 +70,5 @@
 				<div class="form-field">{AUTH_FORM}</div>
 			</div>
 		</fieldset>
-		<hr/>
-		<ul class="sortable-block" id="menu_element_{ID}_list">
-		</ul>
-		<fieldset class="fieldset-submit">
-			<button type="button" id="menu_element_{ID}_add_sub_element" name="menu_element_{ID}_add_sub_element" onclick="addSubElement('menu_element_{ID}');">{L_ADD_SUB_ELEMENT}</button>
-			<button type="button" id="menu_element_{ID}_add_sub_menu" name="menu_element_{ID}_add_sub_menu" onclick="addSubMenu('menu_element_{ID}');">{L_ADD_SUB_MENU}</button>
-		</fieldset>
-	</li>
+    </li>
 # ENDIF #

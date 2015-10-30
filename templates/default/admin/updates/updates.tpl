@@ -1,34 +1,28 @@
-<div id="admin-quick-menu">
+<nav id="admin-quick-menu">
+	<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_PROFIL}">
+		<i class="fa fa-bars"></i> {L_WEBSITE_UPDATES}
+	</a>
 	<ul>
-		<li class="title-menu">{L_WEBSITE_UPDATES}</li>
 		<li>
-			<a href="updates.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="" /></a>
-			<br />
 			<a href="updates.php" class="quick-link">{L_WEBSITE_UPDATES}</a>
 		</li>
 		<li>
-			<a href="updates.php?type=kernel"><img src="{PATH_TO_ROOT}/templates/default/images/admin/configuration.png" alt="" /></a>
-			<br />
 			<a href="updates.php?type=kernel" class="quick-link">{L_KERNEL}</a>
 		</li>
 		<li>
-			<a href="updates.php?type=module"><img src="{PATH_TO_ROOT}/templates/default/images/admin/modules.png" alt="" /></a>
-			<br />
 			<a href="updates.php?type=module" class="quick-link">{L_MODULES}</a>
 		</li>
 		<li>
-			<a href="updates.php?type=template"><img src="{PATH_TO_ROOT}/templates/default/images/admin/themes.png" alt="" /></a>
-			<br />
 			<a href="updates.php?type=template" class="quick-link">{L_THEMES}</a>
 		</li>
 	</ul>
-</div>
+</nav>
 
 <div id="admin-contents">
 	# IF C_INCOMPATIBLE_PHP_VERSION #
 		<div class="warning message-helper-small">{L_INCOMPATIBLE_PHP_VERSION}</div>
 	# ELSE #		
-		<table>
+		<table id="AdminTable">
 			<caption>{L_WEBSITE_UPDATES}</caption>
 		# IF C_UPDATES #
  			<div class="warning message-helper-small">{L_UPDATES_ARE_AVAILABLE}</div>
@@ -51,7 +45,7 @@
 					<td>
 						{L_NAME} : <strong>{apps.name}</strong> - {L_VERSION} : <strong>{apps.version}</strong>
 						<div style="padding:5px;padding-top:10px;text-align:justify;">{apps.short_description}</div>
-						<p style="text-align:right;"><a href="detail.php?identifier={apps.identifier}" title="{L_MORE_DETAILS}" class="small">{L_DETAILS}</a></p>
+						<p><a href="detail.php?identifier={apps.identifier}" title="{L_MORE_DETAILS}" class="small">{L_DETAILS}</a></p>
 					</td>
 					<td>{apps.L_PRIORITY}</td>
 					<td class="center">
@@ -70,9 +64,7 @@
 			<div class="success message-helper-small">{L_NO_AVAILABLES_UPDATES}</div>
 		# ENDIF #
 		<p class="center" style="margin-top:100px;">
-			<a href="{U_CHECK}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="" /></a>
-			<br />
-			<a href="{U_CHECK}">{L_CHECK_FOR_UPDATES_NOW}</a>
+			<a href="{U_CHECK}"><i class="fa fa-download"></i></a> <a href="{U_CHECK}">{L_CHECK_FOR_UPDATES_NOW}</a>
 		</p>
 	# ENDIF #
 </div>

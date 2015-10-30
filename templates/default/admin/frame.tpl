@@ -3,6 +3,7 @@
 	<head>
 		<title>{TITLE}</title>
 		<meta charset=windows-1252" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 		<!-- Theme CSS -->
 		# IF C_CSS_CACHE_ENABLED #
@@ -13,19 +14,35 @@
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_design.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_global.css" type="text/css" media="screen, print" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_content.css" type="text/css" media="screen, print" />
-		# ENDIF #
 		
 		<!-- Modules CSS -->
 		{MODULES_CSS}
+		# ENDIF #
 		
 		# IF C_FAVICON #
 		<link rel="shortcut icon" href="{FAVICON}" type="{FAVICON_TYPE}" />
 		# ENDIF #
 		
 		# INCLUDE JS_TOP #
+		
 	</head>
 	<body>
 		# INCLUDE BODY #
 		# INCLUDE JS_BOTTOM #
+		<script src="{PATH_TO_ROOT}/templates/default/admin/js/jquery.basictable.js" type="text/javascript"></script>
+		<script>
+			$('#AdminTable').basictable();
+			$('#AdminTable2').basictable();
+			$('#AdminTable3').basictable();
+			$('#AdminTable4').basictable();
+		</script>
+		<script>
+			<!--
+			function open_submenu(myid)
+			{
+				jQuery('#' + myid).toggleClass('active');
+			}
+			-->
+		</script>	
 	</body>
 </html>

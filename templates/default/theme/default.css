@@ -197,12 +197,10 @@ div.horizontal-fieldset .form-element label {
 .fieldset-content {
 	margin: auto;
 	margin-top: 20px;
-	width: 95%;
 }
 @media ( max-width: 768px ) {
 	.fieldset-content {
 		margin-top: 0.5em;
-		width: 98%;
 	}
 }
 

@@ -2,15 +2,15 @@
 		<!--
 			function check_form_conf()
 			{
-				if(document.getElementById('nb_results_p').value == "") {
+				if(document.getElementById('nb_results_p').value == "")) {
 					alert("{L_REQUIRE_INTEGER}");
 					return false;
 				}
-				if(document.getElementById('cache_time').value == "") {
+				if(document.getElementById('cache_time').value == "")) {
 					alert("{L_REQUIRE_INTEGER}");
 					return false;
 				}
-				if(document.getElementById('max_use').value == "") {
+				if(document.getElementById('max_use').value == "")) {
 					alert("{L_REQUIRE_INTEGER}");
 					return false;
 				}
@@ -18,21 +18,19 @@
 			}
 		-->
 		</script>
-		<div id="admin-quick-menu">
+		<nav id="admin-quick-menu">
+			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_PROFIL}">
+				<i class="fa fa-bars"></i> {L_SEARCH_MANAGEMENT}
+			</a>
 			<ul>
-				<li class="title-menu">{L_SEARCH_MANAGEMENT}</li>
 				<li>
-					<a href="admin_search.php"><img src="search.png" alt="" /></a>
-					<br />
 					<a href="admin_search.php" class="quick-link">{L_SEARCH_CONFIG}</a>
 				</li>
 				<li>
-					<a href="admin_search.php?weighting=true"><img src="search.png" alt="" /></a>
-					<br />
 					<a href="admin_search.php?weighting=true" class="quick-link">{L_SEARCH_CONFIG_WEIGHTING}</a>
 				</li>
 			</ul>
-		</div>
+		</nav>
 
 		<div id="admin-contents">
 			# IF NOT C_WEIGHTING #
@@ -40,73 +38,81 @@
 				<p class="center">{L_REQUIRE}</p>
 				<fieldset>
 					<legend>{L_SEARCH_CONFIG}</legend>
-					<div class="form-element">
-						<label for="nb_results_p">* {L_NB_RESULTS_P}</label>
-						<div class="form-field"><input type="number" min="1" max="200" id="nb_results_p" name="nb_results_p" value="{NB_RESULTS_P}"></div>
-					</div>
-					<div class="form-element">
-						<label for="authorized_modules[]">* {L_AUTHORIZED_MODULES} <span class="field-description">{L_AUTHORIZED_MODULES_EXPLAIN}</span></label>
-						<div class="form-field"><label>
-							<select id="authorized_modules[]" name="authorized_modules[]" size="5" multiple="multiple" class="list-modules">
-								# START authorized_modules #
-								<option value="{authorized_modules.MODULE}" id="{authorized_modules.MODULE}"{authorized_modules.SELECTED}>{authorized_modules.L_MODULE_NAME}</option>
-								# END authorized_modules #
-							</select>
-						</label></div>
+					<div class="fieldset-inset">
+						<div class="form-element">
+							<label for="nb_results_p">* {L_NB_RESULTS_P}</label>
+							<div class="form-field"><input type="number" min="1" max="200" id="nb_results_p" name="nb_results_p" value="{NB_RESULTS_P}"></div>
+						</div>
+						<div class="form-element">
+							<label for="authorized_modules[]">* {L_AUTHORIZED_MODULES} <span class="field-description">{L_AUTHORIZED_MODULES_EXPLAIN}</span></label>
+							<div class="form-field"><label>
+								<select id="authorized_modules[]" name="authorized_modules[]" size="5" multiple="multiple" class="list-modules">
+									# START authorized_modules #
+									<option value="{authorized_modules.MODULE}" id="{authorized_modules.MODULE}"{authorized_modules.SELECTED}>{authorized_modules.L_MODULE_NAME}</option>
+									# END authorized_modules #
+								</select>
+							</label></div>
+						</div>
 					</div>
 				</fieldset>
 				
 				<fieldset>
 					<legend>{L_SEARCH_CACHE}</legend>
-					<div class="form-element">
-						<label for="cache_time">* {L_CACHE_TIME} <span class="field-description">{L_CACHE_TIME_EXPLAIN}</span></label>
-						<div class="form-field"><input type="number" min="0" id="cache_time" name="cache_time" value="{CACHE_TIME}"></div>
-					</div>
-					<div class="form-element">
-						<label for="max_use">* {L_MAX_USE} <span class="field-description">{L_MAX_USE_EXPLAIN}</span></label>
-						<div class="form-field"><input type="number" min="0" id="max_use" name="max_use" value="{MAX_USE}"></div>
+					<div class="fieldset-inset">
+						<div class="form-element">
+							<label for="cache_time">* {L_CACHE_TIME} <span class="field-description">{L_CACHE_TIME_EXPLAIN}</span></label>
+							<div class="form-field"><input type="number" min="0" id="cache_time" name="cache_time" value="{CACHE_TIME}"></div>
+						</div>
+						<div class="form-element">
+							<label for="max_use">* {L_MAX_USE} <span class="field-description">{L_MAX_USE_EXPLAIN}</span></label>
+							<div class="form-field"><input type="number" min="0" id="max_use" name="max_use" value="{MAX_USE}"></div>
+						</div>
 					</div>
 				</fieldset>
 				
 				<fieldset>
-					<legend>
-						{L_AUTHORIZATIONS}
-					</legend>
-					<div class="form-element">
-						<label>
-							{L_READ_AUTHORIZATION}
-						</label>
-						<div class="form-field">
-							{READ_AUTHORIZATION}
+					<legend>{L_AUTHORIZATIONS}</legend>
+					<div class="fieldset-inset">
+						<div class="form-element">
+							<label>
+								{L_READ_AUTHORIZATION}
+							</label>
+							<div class="form-field">
+								{READ_AUTHORIZATION}
+							</div>
 						</div>
 					</div>
 				</fieldset>
 				
 				<fieldset class="fieldset-submit">
-				<legend>{L_UPDATE}</legend>
-					<input type="hidden" name="token" value="{TOKEN}">
-					<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button>
-					<button type="reset" value="true">{L_RESET}</button>
+					<legend>{L_UPDATE}</legend>
+					<div class="fieldset-inset">
+						<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button>
+						<button type="reset" value="true">{L_RESET}</button>
+					</div>
 				</fieldset>
 			</form>
 			<form action="admin_search.php?clear=1&amp;token={TOKEN}" name="form" method="post" class="fieldset-content">
 				<fieldset>
 					<legend>{L_CLEAR_OUT_CACHE}</legend>
-					<p class="center">
-						<a href="admin_search.php?clear=1" title="{L_CLEAR_OUT_CACHE}">
-							<i class="fa fa-refresh fa-2x"></i>
-						</a>
-						<br />
-						<a href="admin_search.php?clear=1">{L_CLEAR_OUT_CACHE}</a>
-					</p>
+					<div class="fieldset-inset">
+						<p class="center">
+							<a href="admin_search.php?clear=1" title="{L_CLEAR_OUT_CACHE}">
+								<i class="fa fa-refresh fa-2x"></i>
+							</a>
+							<br />
+							<a href="admin_search.php?clear=1">{L_CLEAR_OUT_CACHE}</a>
+						</p>
+					</div>
 				</fieldset>
 			</form>
 			# ELSE #
 			<form action="admin_search.php?weighting=true&amp;token={TOKEN}" method="post" class="fieldset-content">
 				<fieldset>
 					<legend>{L_SEARCH_CONFIG_WEIGHTING}</legend>
-					<p>{L_SEARCH_CONFIG_WEIGHTING_EXPLAIN}</p>
-						<table>
+					<div class="fieldset-inset">
+						<p>{L_SEARCH_CONFIG_WEIGHTING_EXPLAIN}</p>
+						<table id="AdminTable">
 							<thead>
 								<tr>
 									<th>{L_MODULES}</th>
@@ -122,12 +128,15 @@
 								# END weights #
 							</tbody>
 						</table>
+					</div>
 				</fieldset>
 				
 				<fieldset class="fieldset-submit">
-				<legend>{L_UPDATE}</legend>
-					<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button> 
-					<button type="reset" value="true">{L_RESET}</button>
+					<legend>{L_UPDATE}</legend>
+					<div class="fieldset-inset">
+						<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button> 
+						<button type="reset" value="true">{L_RESET}</button>
+					</div>
 				</fieldset>
 			</form>
 			# ENDIF #

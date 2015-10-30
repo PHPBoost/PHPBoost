@@ -1,35 +1,30 @@
-		<div id="admin-quick-menu">
+		<nav id="admin-quick-menu">
+			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_PROFIL}">
+				<i class="fa fa-bars"></i> {L_POLL_MANAGEMENT}
+			</a>
 			<ul>
-				<li class="title-menu">{L_POLL_MANAGEMENT}</li>
 				<li>
-					<a href="admin_poll.php"><img src="poll.png" alt="" /></a>
-					<br />
 					<a href="admin_poll.php" class="quick-link">{L_POLL_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_poll_add.php"><img src="poll.png" alt="" /></a>
-					<br />
 					<a href="admin_poll_add.php" class="quick-link">{L_POLL_ADD}</a>
 				</li>
 				<li>
-					<a href="admin_poll_config.php"><img src="poll.png" alt="" /></a>
-					<br />
 					<a href="admin_poll_config.php" class="quick-link">{L_POLL_CONFIG}</a>
 				</li>
 			</ul>
-		</div> 
+		</nav> 
 		
 		<div id="admin-contents">
-			<table>
+			<table id="AdminTable">
 				<caption>{L_POLL_MANAGEMENT}</caption>
 				<thead>
 					<tr>
-						<th></th>
-						<th>
-							{L_POLLS}
-						</th>
 						<th>
 							{L_QUESTION}
+						</th>
+						<th>
+							{L_POLLS}
 						</th>
 						<th>
 							{L_PSEUDO}
@@ -43,6 +38,7 @@
 						<th>
 							{L_APROB}
 						</th>
+						<th></th>
 					</tr>
 				</thead>
 				# IF C_PAGINATION #
@@ -57,15 +53,11 @@
 				<tbody>
 					# START questions #
 					<tr> 
-						<td> 
-							<a href="admin_poll.php?id={questions.IDPOLL}" title="{L_UPDATE}" class="fa fa-edit"></a>
-							<a href="admin_poll.php?delete=true&amp;id={questions.IDPOLL}&amp;token={TOKEN}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+						<td class="left"> 
+							{questions.QUESTIONS}
 						</td>
 						<td>
 							<a href="../poll/poll.php?id={questions.IDPOLL}">${LangLoader::get_message('display', 'common')}</a>
-						</td>
-						<td class="left"> 
-							{questions.QUESTIONS}
 						</td>
 						<td> 
 							# IF questions.PSEUDO #<a href="{questions.U_AUTHOR_PROFILE}" class="small {questions.USER_LEVEL_CLASS}" # IF questions.C_USER_GROUP_COLOR # style="color:{questions.USER_GROUP_COLOR}" # ENDIF #>{questions.PSEUDO}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF # 
@@ -80,6 +72,10 @@
 							{questions.APROBATION} 
 							<br />
 							<span class="smaller">{questions.VISIBLE}</span>
+						</td>
+						<td> 
+							<a href="admin_poll.php?id={questions.IDPOLL}" title="{L_UPDATE}" class="fa fa-edit"></a>
+							<a href="admin_poll.php?delete=true&amp;id={questions.IDPOLL}&amp;token={TOKEN}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 						</td>
 					</tr>
 					# END questions #

@@ -77,6 +77,19 @@ $advises_form = new HTMLForm('advises_list', '', false);
 AdminServerSystemReportController::get_advises($advises_form);
 
 $tpl->put_all(array(
+	'L_QUICK_ACCESS' => $LANG['quick_access'],
+	'L_ADD_CONTENT' => $LANG['add_content'],
+	'L_MODULES_MANAGEMENT' => $LANG['modules_management'],
+	'L_ADD_ARTICLES' => $LANG['add_articles'],
+	'L_ADD_NEWS' => $LANG['add_news'],
+	'L_CUSTOMIZE_SITE' => $LANG['customize_site'],
+	'L_ADD_TEMPLATE' => $LANG['add_template'],
+	'L_MENUS_MANAGEMENT' => $LANG['menus_management'],
+	'L_CUSTOMIZE_TEMPLATE' => $LANG['customize_template'],
+	'L_SITE_MANAGEMENT' => $LANG['site_management'],
+	'L_GENERAL_CONFIG' => $LANG['general_config'],
+	'L_EMPTY_CACHE' => $LANG['empty_cache'],
+	'L_SAVE_DATABASE' => $LANG['save_database'],
 	'WRITING_PAD_CONTENT' => WritingPadConfig::load()->get_content(),
 	'C_NO_COM' => $i == 0,
 	'C_UNREAD_ALERTS' => (bool)AdministratorAlertService::get_number_unread_alerts(),

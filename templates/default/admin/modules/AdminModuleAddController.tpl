@@ -1,7 +1,7 @@
 # INCLUDE UPLOAD_FORM #
 <form action="{REWRITED_SCRIPT}" method="post" class="fieldset-content">
 	# INCLUDE MSG #
-	<table>
+	<table id="AdminTable">
 		<caption>{@modules.modules_available}</caption>
 		# IF C_MODULES_AVAILABLE #
 		<thead>

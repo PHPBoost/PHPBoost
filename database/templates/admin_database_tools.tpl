@@ -1,59 +1,73 @@
-		<div id="admin-quick-menu">
-			<ul>
-				<li class="title-menu">{L_DATABASE_MANAGEMENT}</li>
-				<li>
-					<a href="${relative_url(DatabaseUrlBuilder::database_management())}"><img src="database.png" alt="{L_DB_TOOLS}" /></a>
-					<br />
-					<a href="${relative_url(DatabaseUrlBuilder::database_management())}" class="quick-link">{L_DB_TOOLS}</a>
-				</li>
-				<li>
-					<a href="${relative_url(DatabaseUrlBuilder::db_sql_queries())}"><img src="database.png" alt="{L_QUERY}" /></a>
-					<br />
-					<a href="${relative_url(DatabaseUrlBuilder::db_sql_queries())}" class="quick-link">{L_QUERY}</a>
-				</li>
-				<li>
-					<a href="${relative_url(DatabaseUrlBuilder::configuration())}"><img src="database.png" alt="${LangLoader::get_message('configuration', 'admin-common')}" /></a>
-					<br />
-					<a href="${relative_url(DatabaseUrlBuilder::configuration())}" class="quick-link">${LangLoader::get_message('configuration', 'admin-common')}</a>
-				</li>
-			</ul>
-		</div>
+		<nav id="admin-quick-menu">
+				<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_PROFIL}">
+					<i class="fa fa-bars"></i> {L_DATABASE_MANAGEMENT}
+				</a>
+				<ul>
+					<li>
+						<a href="admin_database.php" class="quick-link">{L_DB_TOOLS}</a>
+					</li>
+					<li>
+						<a href="admin_database.php?query=1" class="quick-link">{L_QUERY}</a>
+					</li>
+				</ul>
+		</nav>
 		
 		<div id="admin-contents">
 			<div style="width:95%;margin:auto;">
 				<div class="block-contents1" style="padding:5px;padding-bottom:7px;margin-bottom:5px">
 					<a class="small" href="admin_database.php#tables">{L_DATABASE_MANAGEMENT}</a> / <a class="small" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{TABLE_NAME}</a>
 				</div>
-				<menu class="dynamic-menu group center">
+				<nav id="cssmenu-database-tools" class="cssmenu cssmenu-group">
 					<ul>
 						<li>
-							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure"><img src="./database_mini.png" alt="{L_TABLE_STRUCTURE}" title="{L_TABLE_STRUCTURE}"/> {L_TABLE_STRUCTURE}</a>
+							<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">
+								<i class="fa fa-fw fa-code-fork"></i> {L_TABLE_STRUCTURE}
+							</a>
 						</li>
 						<li>
-							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=data"><img src="{PATH_TO_ROOT}/templates/default/images/admin/themes_mini.png" alt="{L_TABLE_DISPLAY}" title="{L_TABLE_DISPLAY}"/> {L_TABLE_DISPLAY}</a>
+							<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=data">
+								<i class="fa fa-fw fa-laptop"></i> {L_TABLE_DISPLAY}
+							</a>
 						</li>
 						<li>
-							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=query"><img src="{PATH_TO_ROOT}/templates/default/images/admin/tools_mini.png" alt="SQL" title="SQL"/> SQL</a>
+							<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=query">
+								<i class="fa fa-fw fa-wrench"></i> SQL
+							</a>
 						</li>
 						<li>
-							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=insert"><img src="{PATH_TO_ROOT}/templates/default/images/admin/extendfield_mini.png" alt="{L_INSERT}" title="{L_INSERT}"/> {L_INSERT}</a>
+							<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=insert">
+								<i class="fa fa-fw fa-plus"></i> {L_INSERT}
+							</a>
 						</li>
 						<li>
-							<a href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table"><img src="{PATH_TO_ROOT}/templates/default/images/admin/cache_mini.png" alt="{L_BACKUP}" title="{L_BACKUP}"/> {L_BACKUP}</a>
+							<a class="cssmenu-title" href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table">
+								<i class="fa fa-fw fa-save"></i> {L_BACKUP}
+							</a>
 						</li>
 						<li>
-							<a style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}" data-confirmation="{L_CONFIRM_TRUNCATE_TABLE}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/trash_mini.png" alt="{L_TRUNCATE}" title="{L_TRUNCATE}"/> {L_TRUNCATE}</a>
+							<a class="cssmenu-title" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}" data-confirmation="{L_CONFIRM_TRUNCATE_TABLE}">
+								<i class="fa fa-fw fa-share-square-o"></i> {L_TRUNCATE}
+							</a>
 						</li>
 						<li>
-							<a style="color:red;padding-top: 6px;padding-bottom: 3px;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp;token={TOKEN}" data-confirmation="delete-element" title="{L_DELETE}"><i class="fa fa-delete"></i> {L_DELETE}</a>
+							<a class="cssmenu-title" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp;token={TOKEN}" data-confirmation="delete-element">
+								<i class="fa fa-fw fa-delete"></i> {L_DELETE}
+							</a>
 						</li>
 					</ul>
-				</menu>
+				</nav>
+				<script type="text/javascript">
+					$("#cssmenu-database-tools").menumaker({
+						title: "{L_DB_TOOLS}",
+						format: "multitoggle",
+						breakpoint: 768
+					});
+				</script>
 			</div>
 			<div class="spacer">&nbsp;</div>
 			
 			# IF C_DATABASE_TABLE_STRUCTURE #
-			<table>
+			<table id="AdminTable">
 				<caption>{TABLE_NAME}</caption>
 				<thead>
 					<tr class="center">
@@ -91,11 +105,10 @@
 				</tbody>
 			</table>
 			
-			<div style="width:95%;margin:auto;">
-				<table style="float:left;width:100px;margin-right:15px">
+				<table id="AdminTable2">
 					<caption>{L_TABLE_INDEX}</caption>
 					<thead>
-						<tr class="center">
+						<tr>
 							<th>{L_INDEX_NAME}</th>
 							<th>{L_TABLE_TYPE}</th>
 							<th>{L_TABLE_FIELD}</th>
@@ -118,138 +131,117 @@
 					</tbody>
 				</table>
 				
-				<table style="float:left;width:170px;margin-right:15px">
+				<table id="AdminTable3">
 					<caption>{L_SIZE}</caption>
 					<thead>
 						<tr class="center">
-							<th colspan="2">
-								{TABLE_NAME}
+							<th>
+								{L_TABLE_DATA}
 							</th>
+							<th>
+								{L_TABLE_INDEX}								
+							</th>
+							<th>
+								{L_TABLE_FREE}								
+							</th>
+							<th>
+								{L_TABLE_TOTAL}
+							</th>
+						# IF TABLE_FREE #
+							<th>
+							</th>
+						# ENDIF #
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td style="min-width:60px;">
-								<span class="text-strong">{L_TABLE_DATA}</span>
-							</td>
-							<td style="text-align:right;">
+							<td>
 								{TABLE_DATA}
 							</td>
-						</tr>
-						<tr>
 							<td>
-								<span class="text-strong">{L_TABLE_INDEX}</span>
-							</td>
-							<td style="text-align:right;">
 								{TABLE_INDEX}
 							</td>
-						</tr>
-						<tr>
 							<td>
-								<span class="text-strong">{L_TABLE_FREE}</span>
-							</td>
-							<td style="text-align:right;">
 								{TABLE_FREE}
 							</td>
-						</tr>
-						<tr>
 							<td>
-								<span class="text-strong">{L_TABLE_TOTAL}</span>
-							</td>
-							<td style="text-align:right;">
 								{TABLE_TOTAL_SIZE}
 							</td>
-						</tr>
 						# IF TABLE_FREE #
-						<tr class="center">
-							<td colspan="2">
-								<img src="./database_mini.png" alt="{L_OPTIMIZE}" title="{L_OPTIMIZE}" class="valign-middle" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=optimize">{L_OPTIMIZE}</a>
-							</td>
+							<td>
+								
+								<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=optimize">
+										<i class="fa fa-bar-chart"></i> {L_OPTIMIZE}
+								</a>
+						    </td>
 						</tr>
 						# ENDIF #
 					</tbody>
 				</table>
 				
-				<table style="float:left;width:300px;">
+				<table id="AdminTable4">
 					<caption>{L_STATISTICS}</caption>
 					<thead>
-						<tr class="center">
-							<th colspan="2">
-								{TABLE_NAME}
+						<tr>
+							<th>
+								{L_TABLE_ROWS_FORMAT}
+							</th>
+							<th>
+								{L_TABLE_ROWS}
+							</th>
+							<th>
+								{L_TABLE_ENGINE}
+							</th>
+							<th>
+								{L_TABLE_COLLATION}
+							</th>
+							<th>
+								{L_SIZE}
+							</th>
+						# IF C_AUTOINDEX #
+							<th>
+								{L_AUTOINCREMENT}
+							</th>
+						# ENDIF #
+							<th>
+								{L_CREATION_DATE}
+							</th>
+							<th>
+								{L_LAST_UPDATE}
 							</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td style="width:130px;">
-								<span class="text-strong">{L_TABLE_ROWS_FORMAT}</span>
-							</td>
-							<td style="text-align:right;">
+							<td>
 								{TABLE_ROW_FORMAT}
 							</td>
-						</tr>
-						<tr>
 							<td>
-								<span class="text-strong">{L_TABLE_ROWS}</span>
-							</td>
-							<td style="text-align:right;">
 								{TABLE_ROWS}
 							</td>
-						</tr>
-						<tr>
 							<td>
-								<span class="text-strong">{L_TABLE_ENGINE}</span>
-							</td>
-							<td style="text-align:right;">
 								{TABLE_ENGINE}
 							</td>
-						</tr>
-						<tr>
 							<td>
-								<span class="text-strong">{L_TABLE_COLLATION}</span>
-							</td>
-							<td style="text-align:right;">
 								{TABLE_COLLATION}
 							</td>
-						</tr>
-						<tr>
 							<td>
-								<span class="text-strong">{L_SIZE}</span>
-							</td>
-							<td style="text-align:right;">
 								{TABLE_TOTAL_SIZE}
 							</td>
-						</tr>
 						# IF C_AUTOINDEX #
-						<tr>
 							<td>
-								<span class="text-strong">{L_AUTOINCREMENT}</span>
-							</td>
-							<td style="text-align:right;">
 								{TABLE_AUTOINCREMENT}
 							</td>
-						</tr>
 						# ENDIF #
-						<tr>
 							<td>
-								<span class="text-strong">{L_CREATION_DATE}</span>
+								{TABLE_CREATION_DATE}
 							</td>
-							<td style="text-align:right;">
-								<span class="smaller">{TABLE_CREATION_DATE}</span>
-							</td>
-						</tr>
-						<tr>
 							<td>
-								<span class="text-strong">{L_LAST_UPDATE}</span>
-							</td>
-							<td style="text-align:right;">
-								<span class="smaller">{TABLE_LAST_UPDATE}</span>
+								{TABLE_LAST_UPDATE}
 							</td>
 						</tr>
 					</tbody>
 				</table>
-				<div class="spacer"></div>
-			</div>
 			# ENDIF #
 			
 			
@@ -267,9 +259,9 @@
 								<div class="spacer">&nbsp;</div>
 								# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
 								<div style="width:99%;margin:auto;overflow:auto;padding:0px 2px">
-									<table>
+									<table id="AdminTable">
 										<thead>
-											<tr class="center">
+											<tr>
 												<th>&nbsp;</th>
 												# START head #
 												<th>{head.FIELD_NAME}</th>
@@ -280,7 +272,7 @@
 											# START line #
 											<tr>
 												# START line.field #
-												<td style="{line.field.STYLE}">
+												<td>
 													{line.field.FIELD_NAME}
 												</td>
 												# END line.field #
@@ -331,79 +323,70 @@
 			</script>
 			
 			<form action="admin_database_tools.php?table={TABLE_NAME}&action=query&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
-				<section>
-					<header>
-						<h1>{L_QUERY}</h1>
-					</header>
-					<div class="content">
-						<article>
-							<header></header>
-							<div class="content">
-								<span id="errorh"></span>
-								<div class="warning">{L_EXPLAIN_QUERY}</div>
-								<fieldset>
-									<label for="query">* {L_EXECUTED_QUERY}</label>
-									<textarea rows="12" cols="70" id="query" name="query">{QUERY}</textarea>
-								</fieldset>
-								<fieldset class="fieldset-submit" style="margin:0">
-									<button type="submit" name="submit" value="true" class="submit">{L_EXECUTE}</button>
-									<input type="hidden" name="token" value="{TOKEN}">
-								</fieldset>
-							</div>
-							<footer></footer>
-						</article>
-					</div>
-					<footer></footer>
-				</section>
+				<fieldset>
+						<legend>{L_QUERY}</legend>
+						<div class="fieldset-inset">
+								<div class="content">
+									<span id="errorh"></span>
+									<div class="warning">{L_EXPLAIN_QUERY}</div>
+									<fieldset>
+										<label for="query">* {L_EXECUTED_QUERY}</label>
+										<textarea rows="12" id="query" name="query">{QUERY}</textarea>
+									</fieldset>
+									<fieldset class="fieldset-submit" style="margin:0">
+										<button type="submit" name="submit" value="true" class="submit">{L_EXECUTE}</button>
+									</fieldset>								
+								</div>
+						</div>
+				</fieldset>
 			</form>
 			
 				# IF C_QUERY_RESULT #
-				<section>
-					<header>
-						<h1>{L_RESULT}</h1>
-					</header>
-					<div class="content" id="executed_query">
-						<article class="block">
-							<header>{L_EXECUTED_QUERY}</header>
-							<div class="content">
-								<fieldset style="background-color:white;margin:0px">
-									<p style="color:black;font-size:10px;">{QUERY_HIGHLIGHT}</p>
-								</fieldset>
-								
-								<div style="width:99%;margin:auto;overflow:auto;padding:18px 2px">
-									<table>
-										<thead>
-											<tr class="center">
-												# START head #
-												<th>{head.FIELD_NAME}</th>
-												# END head #
-											</tr>
-										</thead>
-										<tbody>
-											# START line #
-											<tr>
-												# START line.field #
-												<td style="{line.field.STYLE}">
-													{line.field.FIELD_NAME}
-												</td>
-												# END line.field #
-											</tr>
-											# END line #
-										</tbody>
-									</table>
+				<fieldset>
+						<legend>{L_RESULT}</legend>
+						<div class="fieldset-inset">
+								<div class="content" id="executed_query">
+										<article class="block">
+												<header>{L_EXECUTED_QUERY}</header>
+														<div class="content">
+																<fieldset style="background-color:white;margin:0px">
+																	<p style="color:black;font-size:10px;">{QUERY_HIGHLIGHT}</p>
+																</fieldset>
+												
+																<div style="width:99%;margin:auto;overflow:auto;padding:18px 2px">
+																	<table id="AdminTable">
+																		<thead>
+																			<tr class="center">
+																				# START head #
+																				<th>{head.FIELD_NAME}</th>
+																				# END head #
+																			</tr>
+																		</thead>
+																		<tbody>
+																			# START line #
+																			<tr>
+																				# START line.field #
+																				<td style="{line.field.STYLE}">
+																					{line.field.FIELD_NAME}
+																				</td>
+																				# END line.field #
+																			</tr>
+																			# END line #
+																		</tbody>
+																	</table>
+																</div>
+														</div>
+												<footer></footer>
+										</article>
 								</div>
-							</div>
-							<footer></footer>
-						</article>
-					</div>
-					<footer></footer>
-				</section>
+						</div>
+				</fieldset>
 				# ENDIF #
 			# ENDIF #
 			
 			# IF C_DATABASE_UPDATE_FORM #
 			<form action="admin_database_tools.php?table={TABLE_NAME}&amp;field={FIELD_NAME}&amp;value={FIELD_VALUE}&amp;action={ACTION}&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
-				<table>
+				<table id="AdminTable">
 					<thead>
 						<tr class="center">
 							<th>
@@ -424,19 +407,19 @@
 						# START fields #
 						<tr>
 							<td>
-								<span class="text-strong">{fields.FIELD_NAME}</span>
+								{fields.FIELD_NAME}
 							</td>
 							<td>
-								<span class="text-strong">{fields.FIELD_TYPE}</span>
+								{fields.FIELD_TYPE}
 							</td>
 							<td>
 								{fields.FIELD_NULL}
 							</td>
 							<td>
 								# IF fields.C_FIELD_FORM_EXTEND #
-								<textarea rows="6" name="{fields.FIELD_NAME}">{fields.FIELD_VALUE}</textarea>
+								<textarea rows="6" cols="37" name="{fields.FIELD_NAME}">{fields.FIELD_VALUE}</textarea>
 								# ELSE #
-								<input type="text" name="{fields.FIELD_NAME}" value="{fields.FIELD_VALUE}">
+								<input type="text" size="30" name="{fields.FIELD_NAME}" value="{fields.FIELD_VALUE}">
 								# ENDIF #
 							</td>
 						</tr>
@@ -446,7 +429,6 @@
 				<fieldset class="fieldset-submit" style="margin:0">
 					<legend>{L_EXECUTE}</legend>
 					<button type="submit" name="submit" value="true" class="submit">{L_EXECUTE}</button>
-					<input type="hidden" name="token" value="{TOKEN}">
 				</fieldset>
 			</form>
 			# ENDIF #

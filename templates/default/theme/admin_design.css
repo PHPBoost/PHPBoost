@@ -13,46 +13,29 @@ body {
 	min-height: 100%;
 	background: #E8EDF3 ;
 	color: #555555;
-	font-size: 1.3em;
+	font-size: 1.5em;
 	font-family: "Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
 }
 
-div#global {
+@media (min-width:769px){
+	body {
+		font-size: 1.3em;
+	}
 }
 
-/* ##### Entête de la page ###### */
-header#header-admin-container {
-	background: #366393;
-}
-
-div#header-admin { 
-	min-height: 139px;
-	max-width: 1024px;
-	margin: auto;
-	overflow: hidden;
-}
-
-div#site-logo {
-	float: left;
-	margin: 0 1em 0 0;
-	background: url('images/logo.png') no-repeat center center;
-	background-size: cover;
-	width: 90px;
-	height: 90px;
-}
-
-div#site-infos {
-	margin: 1.5em 1.5em 0 1.5em;
+/* --- Entête de la page ============================================================= */
+header#header-admin {
+	background: #404040;
 }
 
 div#site-name-container {
-	padding-top: 1em;
-	overflow: hidden;
+	padding: 10px;
+	text-align: center;
 }
 
 a#site-name {
 	color: #F9FCFF;
-	font-size: 50px;
+	font-size: 1.2em;
 	font-weight: bold;
 	line-height: 1em;
 	text-shadow: 0px 0px 0 rgb(0,0,0), 1px 0px 0 rgb(-255,-255,-255),2px 0px 1px rgba(0,0,0,0.1),2px 0px 1px rgba(0,0,0,0.2),0px 0px 1px rgba(0,0,0,.1);
@@ -60,98 +43,96 @@ a#site-name {
 	text-decoration: none;
 }
 
-span#site-slogan {
-	display: block;
-	color: #FFFFFF;
-	font-size: 12px;
-	padding: 4px 0px 0px 4px;
-	letter-spacing: 1.5pt;
-	margin-bottom: 10px;
-}
-
+/* --- Sous-entête de la page =================================== */
 div#sub-header-admin {
-	min-height: 29px;
-	background: #353535;
-	border-top: 1px solid #bebebe;
+	z-index: 5000;
 }
 
-div#sub-header-admin-content {
-	max-width: 1024px;
-	margin: auto;
-	line-height: 29px;
+@media (min-width:769px) {
+	header#header-admin {
+		position: fixed;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		z-index: 3;
+		max-width: 230px;
+		max-height: none;  
+		overflow: hidden;
+		height:100%;
+		width:260px;
+	}
+	div.header-admin-container{
+		max-height: 100%;
+		position:absolute;
+		right: -20px;
+		overflow-y: scroll;
+		width: calc(100% + 20px);
+		left:0;
+		padding-right: 20px;
+	}
+	div#site-name-container { padding: 30px 10px;}
+}
+/* --- Support ================================================= */
+#support-pbt {
+	display: none;
+	margin: 40px auto;
+	overflow:hidden;
+	padding: 0 20px 0 10px;
 }
 
-div#sub-header-admin .dynamic-menu {
-	width: auto;
-	height: 35px;
-	padding-left: 15px;
-	float: left;
-	vertical-align: middle;
+@media (min-width:769px){
+	#support-pbt {
+		display: block;
+	}
+	#support-pbt nav {float:right;}
+	
+	#support-pbt ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+	
+		
+	#support-pbt h3 {color: #eeeeee}
+		
+	#support-pbt ul li {padding: 0 0 5px 10px;}
+		
+	#support-pbt ul li a {color:#ffffff; }
+	
+	div#site-logo {
+		background: url('images/logo.png') no-repeat center center;
+		background-size: cover;
+		width: 64px;
+		height:64px;
+		float:left;
+	}
+}
+/* --- Conteneur principal ============================================================= */
+div#global {
+	background: #e0e0e0;
 }
 
-div#sub-header-admin .dynamic-menu h5 {
-	color: #FFFFFF;
-	margin-right: 2px;
-	background: transparent;
-	border: none;
-	font-weight: normal;
-	border-radius: 4px 4px 0 0;
-	margin-right: 0;
-	line-height: 25px;
+@media (min-width:769px) {
+	div#global {
+		width:100%;
+		padding-left:230px;
+	}
 }
 
-div#sub-header-admin .dynamic-menu > ul > li:hover {
-	background: transparent;
-}
-
-div#sub-header-admin .dynamic-menu > ul > li:hover h5 {
-	color: #444444;
-	background: #FFFFFF;
-}
-
-div#sub-header-admin .dynamic-menu > ul > li > ul {border-radius: 0 4px 4px 4px; }
-
-div#sub-header-admin .dynamic-menu li a,
-div#sub-header-admin .dynamic-menu li span,
-div#sub-header-admin .dynamic-menu li li a,
-div#sub-header-admin .dynamic-menu li li span {
-	font-size: 100%;
-}
-
-/* Liens vers les menus étendus */
-div#admin-extend-link {
-	float: right;
-	margin: -2px 15px 0px 0px;
-	padding: 4px 6px;
-	border-radius: 4px;
-	font-size: 12px;
-}
-
-div#admin-extend-link:hover { background: #FFFFFF; }
-
-div#admin-extend-link a {
-	color: #FFFFFF;
-	text-decoration: none;
-}
-div#admin-extend-link:hover a { color: #444444; }
-
-/* Conteneur principal */
+/* --- Conteneurs ============================================================= */
 div#admin-main {
-	max-width: 1024px;
-	padding: 0 0 42px 0;
-	margin: 10px auto 0;
+	min-height:95vh;
+	padding-bottom: 40px;
+	overflow:hidden;
 }
 
-/* Conteneurs */
-div#admin-contents {
+div#admin-contents {	
+	clear: both;
 	margin: auto;
-	margin-left: 202px;
-	border-spacing: 1px;
-	padding: 10px;
-	background: #FFFFFF;
-	border: 1px #BEBEBE solid;
-	border-bottom: 2px solid #99B1CB;
-	overflow-x: auto;
+}
+
+@media (min-width:769px){
+	div#admin-contents{padding: 10px 20px;}
 }
 
 html>body div#admin-contents {
@@ -159,86 +140,655 @@ html>body div#admin-contents {
 	min-height: 450px;
 }
 
-/* Menu de gauche */
-div#admin-quick-menu {
-	float: left;
-	width: 190px;
-	text-align: center;
-	padding-top: 5px;
-	margin: auto;
-	border-spacing: 1px;
-	padding: 10px;
-	padding-bottom: 20px;
-	background: #FFFFFF;
-	border: 1px #BEBEBE solid;
-	border-bottom: 2px solid #99B1CB;
-}
 
-div#admin-quick-menu ul {
-	list-style-type: none;
-	width: 169px;
-	margin: 12px 0 0 0;
-}
-
-div#admin-quick-menu li {
-	display: block;
-	width: auto;
-	padding: 15px 0px;
-}
-
-div#admin-quick-menu li.title-menu {
-	font-family: Verdana, 'Bitstream Vera Sans', Times, serif;
-	text-transform: uppercase;
-	font-weight: bold;
-	font-size: 11px;
-	color: #0E2A48;
-	padding: 6px 0px;
-	margin-bottom: 20px;
-	border-bottom: 2px solid #336397;
-}
-
-div#admin-quick-menu li a {	
-	display: inline-block;
-	margin-bottom: 8px;
-}
-
-div#admin-quick-menu li a.quick-link {
-	font-family: Verdana, 'Bitstream Vera Sans', Times, serif;
-	text-transform: none;
-	font-weight: normal;
-	font-size: 10px;
-	color: #0E2A48;
-	background: none repeat scroll 0 0 #f2f5f8;
-	border: 1px solid #D6DEE7;
-	padding: 3px 8px;
-	text-decoration: none;
-	margin: 0px;
-}
-
-/* Tableaux de l'administration */
+/* --- Tableaux de l'administration ============================================================= */
 .block-container {
 	width: 98%;
 	margin-top: 15px;
 }
 
-/* Coloration des moteur de recherche */
+/* --- Coloration des moteur de recherche ============================================================= */
 .robot {
 	color: #FF6600;
-	font-size: 12px;
+	font-size: .9em;
 	font-weight: bold;
 }
 
-/* ##### Pied de page ###### */
+/* --- Pied de page ============================================================= */
 footer#footer {
-	height: 40px;
-	clear: both;
-	padding: 10px 20px 0px 0px;
+	min-height: 5vh;
+	padding: 5px 10px;
 	text-align: right;
-	border-top: #336397 2px solid;
-	background: #212121;
-	position: absolute;
-	bottom: 0;
-	width: 100%;
+	border-top: #366393 5px solid;
+	background: #404040;
 }
 
-footer#footer span { color: #FFFFFF; font-size: 10px; }
+footer#footer span { color: #FFFFFF; font-size: .8em; }
+
+/* ================================================================================== */
+
+/* ===========================
+   #   #  #####  #   #  #   #  #####
+   ## ##  #      ##  #  #   #  #
+   # # #  ###    # # #  #   #  #####
+   #   #  #      #  ##  #   #      #
+   #   #  #####  #   #  #####  #####
+*/
+
+/* --- Menu Quick-Admin ============================================================= */
+
+nav#admin-quick-menu {
+	position: relative;
+	box-shadow: 0 1px 5px 3px rgba(0,0,0,.4);
+	background: #366393;
+}
+
+nav#admin-quick-menu ul {
+	opacity: 0;
+	visibility: hidden;
+	position: absolute;
+	z-index: 900;
+	width: 100%;
+	transition: all .5s ease 0s;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+	
+nav#admin-quick-menu.active ul{
+	opacity: 1;
+	visibility: visible;
+	transition: all .5s ease 0s;
+	background: #366393;
+}
+	
+nav#admin-quick-menu li {
+	display: block;
+}
+
+nav#admin-quick-menu li a.quick-link {
+	padding: 10px;
+	text-decoration: none;
+	margin: 0px;
+	display: block;
+	color: #eeeeee;
+}
+
+nav#admin-quick-menu li:hover a.quick-link {
+	color:#ffffff;
+	background: rgba(0,0,0,.3);
+}
+
+a.js-menu-button {
+	display: table;
+	margin: auto;
+	padding: 10px;
+	color: #eeeeee;
+}
+
+a:hover.js-menu-button {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+@media (min-width:769px){
+	
+	a.js-menu-button {
+		display: none;
+	}
+	
+	nav#admin-quick-menu {overflow: hidden;}
+	
+	nav#admin-quick-menu ul {
+		padding: 0 8px;
+		position: relative;
+		width: auto;
+		float: right;
+		opacity: 1;
+		visibility: visible;
+	}
+
+	nav#admin-quick-menu li { display: inline-block;}
+	nav#admin-quick-menu li a.quick-link {text-align: right;padding: 16px 10px;}
+}
+
+/* --- menu index ============================================================= */
+
+nav.admin-index { 
+	display: table;
+	float: right;
+}
+
+@media (min-width:769px){
+	nav.admin-index {
+		float: none;
+		margin: auto;
+	}
+}
+
+nav.admin-index ul {
+	margin: 0;
+	list-style-type: none;
+}
+
+nav.admin-index li {
+	display: inline-block;
+	position: relative;
+}
+
+nav.admin-index a{
+	padding: 0.55em ;
+	color: #ffffff;
+	display: block;
+	font-size: 1.5em;
+	position: relative;
+}
+
+nav.admin-index li:after {
+	content: '|';
+	position: absolute;
+	color: #777777;
+	font-size: 2em;
+	font-weight: 300;
+	top: 15%;
+	right: 87%;
+}
+
+nav.admin-index li:first-child:after {
+	content: ''
+}
+
+@media (min-width:769px){
+	nav.admin-index a{
+		font-size: 1.4em;
+		padding: .56em;
+	}
+}
+
+nav.admin-index li a span {
+	display: block;
+	width: 200%;
+	text-align: center;
+	opacity: 0;
+	visibility: hidden;
+	position: absolute;
+	font-size: .6em;
+	top:200%;
+	left: -50%;
+	transition: all .3s ease 0s;
+	white-space: nowrap;
+}
+
+@media (max-width:769px){
+	nav.admin-index li:last-child a span{
+		right:0;
+		left: -100%;
+	}
+}
+
+nav.admin-index li a:hover span {
+	opacity: 1;
+	visibility: visible;
+	top:100%;
+	transition: all .5s ease 0s;
+	color: #ffffff;
+}
+
+nav.admin-index i.fa-share-square-o {
+	color:#DDDDDD;
+    -ms-transform: rotateY(180deg); 
+    -webkit-transform: rotateY(180deg); 
+    transform: rotateY(180deg);
+	margin-top:3px;
+	margin-bottom:-3px;
+}
+nav.admin-index li:hover i.fa-share-square-o {color:#BBBBBB}
+
+nav.admin-index i.fa-home {color:#05bab0}
+nav.admin-index li:hover i.fa-home {color:#048a83}
+
+nav.admin-index i.fa-sign-out {color:#E74C3C}
+nav.admin-index li:hover i.fa-sign-out {color:#C92C1C}
+
+nav.admin-index i.fa-th {color:#1FA6D5}
+nav.admin-index li:hover i.fa-th {color:#1589B1}
+
+/* --- menu administration ========================================================= */
+
+/* --- Couleur des icônes --- */
+
+nav#rm-admin i {margin-right:2px;}
+
+/* niveau 1 */
+
+nav#rm-admin span i.fa-cubes {color: #05bab0;}
+nav#rm-admin span:hover i.fa-cubes {color: #058480;}
+
+
+nav#rm-admin span i.fa-cog {color: #dddddd;}
+nav#rm-admin span:hover i.fa-cog {color: #bbbbbb;}
+
+nav#rm-admin span i.fa-wrench {color: #fcc44c;}
+nav#rm-admin span:hover i.fa-wrench {color: #e5af39;}
+
+nav#rm-admin span i.fa-user {color: #3498db;}
+nav#rm-admin span:hover i.fa-user {color: #1b7cbd;}
+
+nav#rm-admin span i.fa-square-o {color: #fc4c7d;}
+nav#rm-admin span:hover i.fa-square-o {color: #e03363;}
+
+/* niveau 2+ */
+
+nav#rm-admin i.fa-cog {color:#999999}
+nav#rm-admin a:hover i.fa-cog {color:#777777}
+
+nav#rm-admin i.fa-envelope-o {color:#fcc44c}
+nav#rm-admin a:hover i.fa-envelope-o {color:#e5af39}
+
+nav#rm-admin i.fa-download {color:#f86227}
+nav#rm-admin a:hover i.fa-download {color:#d6511c}
+
+nav#rm-admin i.fa-cubes {color:#05bab0}
+nav#rm-admin a:hover i.fa-cubes {color:#058480}
+
+nav#rm-admin i.fa-picture-o {color:#05bab0}
+nav#rm-admin a:hover i.fa-picture-o {color:#058480}
+
+nav#rm-admin i.fa-clock-o {color:#fcc44c}
+nav#rm-admin a:hover i.fa-clock-o {color:#e5af39}
+
+nav#rm-admin i.fa-language {color:#2ecc71}
+nav#rm-admin a:hover i.fa-language {color:#16a352}
+
+nav#rm-admin i.fa-bell {color:#f1c40f}
+nav#rm-admin a:hover i.fa-bell {color:#d8b00e}
+
+nav#rm-admin i.fa-refresh {color:#dddddd}
+nav#rm-admin a:hover i.fa-refresh {color:#bbbbbb}
+
+nav#rm-admin i.fa-exclamation-triangle {color:#e74c3c}
+nav#rm-admin a:hover i.fa-exclamation-triangle {color:#c92c1c}
+
+nav#rm-admin i.fa-building {color:#9b59b6}
+nav#rm-admin a:hover i.fa-building {color:#8533a7}
+
+nav#rm-admin i.fa-user {color:#1dcaa8}
+nav#rm-admin a:hover i.fa-user {color:#139b80}
+
+nav#rm-admin i.fa-users {color:#3498db}
+nav#rm-admin a:hover i.fa-users {color:#1b7cbd}
+
+nav#rm-admin i.fa-reorder {color:#9b59b6}
+nav#rm-admin a:hover i.fa-reorder {color:#8533a7}
+
+nav#rm-admin i.fa-square-o {color:#2ecc71}
+nav#rm-admin a:hover i.fa-square-o {color:#16a352}
+
+nav#rm-admin i.fa-list-ul {color:#1fa6d5}
+nav#rm-admin a:hover i.fa-list-ul {color:#1589b1}
+
+nav#rm-admin i.fa-file-text-o {color:#1dcaa8}
+nav#rm-admin a:hover i.fa-file-text-o {color:#139b80}
+
+nav#rm-admin i.fa-comment-o {color:#fc4c7d}
+nav#rm-admin a:hover i.fa-comment-o {color:#e03363}
+
+nav#rm-admin i.fa-smile-o {color:#f1c40f}
+nav#rm-admin a:hover i.fa-smile-o {color:#d8b00e}
+
+/* niveau 3 */
+
+nav#rm-admin i.fa-cogs {color:#dddddd}
+nav#rm-admin a:hover i.fa-cogs {color:#bbbbbb}
+
+nav#rm-admin i.fa-plus {color:#75ad16}
+nav#rm-admin a:hover i.fa-plus {color:#5f8a16}
+
+nav#rm-admin i.fa-rss {color:#f86227}
+nav#rm-admin a:hover i.fa-rss {color:#d6511c}
+
+nav#rm-admin i.fa-css3 {color:#1fa6d5}
+nav#rm-admin a:hover i.fa-css3 {color:#1589b1}
+
+nav#rm-admin i.fa-exclamation-circle {color:#e67e22}
+nav#rm-admin a:hover i.fa-exclamation-circle {color:#ca6a14}
+
+nav#rm-admin i.fa-ban:before {color:#e74c3c}
+nav#rm-admin a:hover i.fa-ban:before {color:#c92c1c}
+
+nav#rm-admin i.fa-info {color:#1fa6d5}
+nav#rm-admin a:hover i.fa-info {color:#1589b1}
+
+nav#rm-admin i.fa-info-circle {color:#3498db}
+nav#rm-admin a:hover i.fa-info-circle {color:#1b7cbd}
+
+nav#rm-admin i.fa-file-o {color:#1dcaa8}
+nav#rm-admin a:hover i.fa-file-o {color:#139b80}
+
+nav#rm-admin i.fa-level-up {color:#1dcaa8}
+nav#rm-admin a:hover i.fa-level-up {color:#139b80}
+
+.rm,
+.rm ul,
+.rm ul li,
+.rm ul li a,
+.rm #menu-button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+  line-height: 1;
+  display: block;
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.rm ul ul{z-index: 102}
+.rm:after,
+.rm > ul:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+.rm #menu-button {
+  display: none;
+}
+.rm > ul > li {
+  float: left;
+}
+.rm.align-center > ul {
+  font-size: 0;
+  text-align: center;
+}
+.rm.align-center > ul > li {
+  display: inline-block;
+  float: none;
+}
+.rm.align-center ul ul {
+  text-align: left;
+}
+.rm.align-right > ul > li {
+  float: right;
+}
+.rm > ul > li > a {
+  padding: 17px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-decoration: none;
+  color: #dddddd;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.rm > ul > li:hover > a {
+  color: #ffffff;
+}
+.rm > ul > li.has-sub > a {
+  padding-right: 30px;
+}
+.rm > ul > li.has-sub > a:after {
+  position: absolute;
+  top: 22px;
+  right: 11px;
+  width: 8px;
+  height: 2px;
+  display: block;
+  background: #dddddd;
+  content: '';
+}
+.rm > ul > li.has-sub > a:before {
+  position: absolute;
+  top: 19px;
+  right: 14px;
+  display: block;
+  width: 2px;
+  height: 8px;
+  background: #dddddd;
+  content: '';
+  -webkit-transition: all .25s ease;
+  -moz-transition: all .25s ease;
+  -ms-transition: all .25s ease;
+  -o-transition: all .25s ease;
+  transition: all .25s ease;
+}
+.rm > ul > li.has-sub:hover > a:before {
+  top: 23px;
+  height: 0;
+}
+.rm ul ul {
+  position: absolute;
+  left: -9999px;
+}
+.rm.align-right ul ul {
+  text-align: right;
+}
+.rm ul ul li {
+  height: 0;
+  -webkit-transition: all .25s ease;
+  -moz-transition: all .25s ease;
+  -ms-transition: all .25s ease;
+  -o-transition: all .25s ease;
+  transition: all .25s ease;
+}
+.rm li:hover > ul {
+  left: auto;
+}
+.rm.align-right li:hover > ul {
+  left: auto;
+  right: 0;
+}
+.rm li:hover > ul > li {
+  height: 35px;
+}
+.rm ul ul ul {
+  margin-left: 100%;
+  top: 0;
+}
+.rm.align-right ul ul ul {
+  margin-left: 0;
+  margin-right: 100%;
+}
+.rm ul ul li a {
+  border-bottom: 1px solid rgba(150, 150, 150, 0.15);
+  padding: 11px 15px;
+  width: 170px;
+  font-size: 12px;
+  text-decoration: none;
+  color: #dddddd;
+  font-weight: 400;
+  background: #333333;
+}
+.rm ul ul li:last-child > a,
+.rm ul ul li.last-item > a {
+  border-bottom: 0;
+}
+.rm ul ul li:hover > a,
+.rm ul ul li a:hover {
+  color: #ffffff;
+}
+.rm ul ul li.has-sub > a:after {
+  position: absolute;
+  top: 16px;
+  right: 11px;
+  width: 8px;
+  height: 2px;
+  display: block;
+  background: #dddddd;
+  content: '';
+}
+.rm.align-right ul ul li.has-sub > a:after {
+  right: auto;
+  left: 11px;
+}
+.rm ul ul li.has-sub > a:before {
+  position: absolute;
+  top: 13px;
+  right: 14px;
+  display: block;
+  width: 2px;
+  height: 8px;
+  background: #dddddd;
+  content: '';
+  -webkit-transition: all .25s ease;
+  -moz-transition: all .25s ease;
+  -ms-transition: all .25s ease;
+  -o-transition: all .25s ease;
+  transition: all .25s ease;
+}
+.rm.align-right ul ul li.has-sub > a:before {
+  right: auto;
+  left: 14px;
+}
+.rm ul ul > li.has-sub:hover > a:before {
+  top: 17px;
+  height: 0;
+}
+.rm.small-screen {
+  width: 100%;
+}
+
+@media (max-width:769px){
+	.rm.small-screen {top: 65px;}
+	.rm.small-screen > ul.open {top: -65px;}
+}
+
+.rm.small-screen ul {
+  width: 100%;
+  display: none;
+}
+.rm.small-screen.align-center > ul {
+  text-align: left;
+}
+.rm.small-screen ul li {
+  width: 100%;
+}
+.rm.small-screen ul ul li,
+.rm.small-screen li:hover > ul > li {
+  height: auto;
+}
+.rm.small-screen ul li a,
+.rm.small-screen ul ul li a {
+  width: 100%;
+  border-bottom: 0;
+}
+.rm.small-screen > ul > li {
+  float: none;
+}
+.rm.small-screen ul ul ul li a {
+  padding-left: 25px;
+  background: rgba(0,0,0,.2);
+}
+.rm.small-screen ul ul li a {
+  color: #dddddd;
+  background: rgba(0,0,0,.1);
+}
+.rm.small-screen ul ul li:hover > a,
+.rm.small-screen ul ul li.active > a {
+  color: #ffffff;
+}
+.rm.small-screen ul ul,
+.rm.small-screen ul ul ul,
+.rm.small-screen.align-right ul ul {
+  position: relative;
+  left: 0;
+  width: 100%;
+  margin: 0;
+  text-align: left;
+}
+.rm.small-screen > ul > li.has-sub > a:after,
+.rm.small-screen > ul > li.has-sub > a:before,
+.rm.small-screen ul ul > li.has-sub > a:after,
+.rm.small-screen ul ul > li.has-sub > a:before {
+  display: none;
+}
+.rm.small-screen #menu-button {
+  display:block;
+  padding: 17px;
+  color: #dddddd;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.rm.small-screen #menu-button:before {
+  position: absolute;
+  top: -46px;
+  left: 17px;
+  display: block;
+  font-size:25px;
+  font-family: fontawesome;
+  content: '\f0c9';
+}
+
+.rm.small-screen #menu-button.menu-opened:before {
+  top: -46px;
+  font-size:25px;
+  font-family: fontawesome;
+  content: '\f00d';
+}
+.rm.small-screen .submenu-button {
+  position: absolute;
+  z-index: 99;
+  right: 0;
+  top: 0;
+  display: block;
+  height: 46px;
+  width: 46px;
+  cursor: pointer;
+}
+.rm.small-screen .submenu-button.submenu-opened {
+  background: #262626;
+}
+.rm.small-screen ul ul .submenu-button {
+  height: 34px;
+  width: 34px;
+}
+.rm.small-screen .submenu-button:after {
+  position: absolute;
+  top: 22px;
+  right: 19px;
+  width: 8px;
+  height: 2px;
+  display: block;
+  background: #dddddd;
+  content: '';
+}
+.rm.small-screen ul ul .submenu-button:after {
+  top: 15px;
+  right: 13px;
+}
+.rm.small-screen .submenu-button.submenu-opened:after {
+  background: #ffffff;
+}
+.rm.small-screen .submenu-button:before {
+  position: absolute;
+  top: 19px;
+  right: 22px;
+  display: block;
+  width: 2px;
+  height: 8px;
+  background: #dddddd;
+  content: '';
+}
+.rm.small-screen ul ul .submenu-button:before {
+  top: 12px;
+  right: 16px;
+}
+.rm.small-screen .submenu-button.submenu-opened:before {
+  display: none;
+}
+.rm.small-screen.select-list {
+  padding: 5px;
+}
+
+@media (min-width:769px){
+	.rm.small-screen > ul{
+		display: block !important;
+		top: 20px
+	}
+.rm.small-screen #menu-button {
+  display:none;
+}

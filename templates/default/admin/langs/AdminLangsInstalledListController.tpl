@@ -1,5 +1,5 @@
 <form action="{REWRITED_SCRIPT}" method="post">
-	<table>
+	<table id="AdminTable">
 		<caption>{@langs.installed_langs}</caption>
 		<thead>
 			<tr> 
@@ -18,12 +18,12 @@
 				</td>
 			</tr>
 			# START langs_installed #
-				<tr>
-					<td>
+				<tr> 	
+					<td class="# IF langs_installed.C_IS_DEFAULT_LANG # row-disabled # ENDIF #">					
 						<span id="lang-{langs_installed.ID}"></span>
 						<span class="text-strong">{langs_installed.NAME}</span> <span class="text-italic">({langs_installed.VERSION})</span>
 					</td>
-					<td class="left">
+					<td class="# IF langs_installed.C_IS_DEFAULT_LANG # row-disabled # ENDIF #">
 						<div id="desc_explain{langs_installed.ID}">
 							<span class="text-strong">{@langs.author} :</span> 
 							<a href="mailto:{langs_installed.AUTHOR_EMAIL}">{langs_installed.AUTHOR_NAME}</a>
@@ -34,7 +34,7 @@
 							<span class="text-strong">{@langs.compatibility} :</span> PHPBoost {langs_installed.COMPATIBILITY}<br />
 						</div>
 					</td>
-					<td>
+					<td class="# IF langs_installed.C_IS_DEFAULT_LANG # row-disabled # ENDIF #">
 						# IF NOT langs_installed.C_IS_DEFAULT_LANG #
 							<div id="authorizations_explain-{langs_installed.ID}">{langs_installed.AUTHORIZATIONS}</div>
 						# ELSE #
@@ -42,7 +42,7 @@
 						# ENDIF #
 					</td>
 					# IF NOT langs_installed.C_IS_DEFAULT_LANG #
-					<td class="input-radio">
+					<td class="input-radio# IF langs_installed.C_IS_DEFAULT_LANG # row-disabled # ENDIF #">
 						<label><input type="radio" name="activated-{langs_installed.ID}" value="1" # IF langs_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> ${LangLoader::get_message('yes', 'common')}</label>
 						<label><input type="radio" name="activated-{langs_installed.ID}" value="0" # IF NOT langs_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> ${LangLoader::get_message('no', 'common')}</label>
 					</td>
@@ -50,10 +50,10 @@
 						<button type="submit" class="submit" name="delete-{langs_installed.ID}" value="true">${LangLoader::get_message('delete', 'common')}</button>
 					</td>
 					# ELSE #
-					<td>
+					<td class="row-disabled">
 						${LangLoader::get_message('yes', 'common')}
 					</td>
-					<td>
+					<td class="row-disabled">
 					</td>
 					# ENDIF #
 					
@@ -65,9 +65,11 @@
 	
 	<fieldset class="fieldset-submit">
 		<legend>{L_SUBMIT}</legend>
-		<button type="submit" class="submit" name="update_langs_configuration" value="true">{L_UPDATE}</button>
-		<input type="hidden" name="token" value="{TOKEN}">
-		<input type="hidden" name="update" value="true">
-		<button type="reset" value="true">{L_RESET}</button>
+		<div class="fieldset-inset">
+			<button type="submit" class="submit" name="update_langs_configuration" value="true">{L_UPDATE}</button>
+			<input type="hidden" name="token" value="{TOKEN}">
+			<input type="hidden" name="update" value="true">
+			<button type="reset" value="true">{L_RESET}</button>
+		</div>
 	</fieldset>
 </form>

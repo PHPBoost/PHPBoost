@@ -1,23 +1,23 @@
-		<div id="admin-quick-menu">
+		
+		
+		<nav id="admin-quick-menu">
+			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_PROFIL}">
+				<i class="fa fa-bars"></i> {L_FILES_MANAGEMENT}
+			</a>
 			<ul>
-				<li class="title-menu">{L_FILES_MANAGEMENT}</li>
 				<li>
-					<a href="admin_files.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/files.png" alt="" /></a>
-					<br />
 					<a href="admin_files.php" class="quick-link">{L_FILES_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_files_config.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/files.png" alt="" /></a>
-					<br />
 					<a href="admin_files_config.php" class="quick-link">{L_CONFIG_FILES}</a>
 				</li>
 			</ul>
-		</div>
+		</nav>
 		
 		<div id="admin-contents">
-			<section>
-				<header><h1>{L_FILES_MANAGEMENT}</h1></header>
-				<div class="content">
+			<fieldset>
+				<legend>{L_FILES_MANAGEMENT}</legend>
+				<div class="fieldset-inset">
 					<div class="upload-address-bar">
 						<a href="admin_files.php"><i class="fa fa-home"></i> {L_ROOT}</a>{URL}
 					</div>
@@ -28,15 +28,15 @@
 							# START folder #
 								<div style="float:left;width:33%;text-align:center;">
 									<i class="fa fa-folder fa-2x"></i> {folder.NAME}
-								</div>
+								</div>	
 							# END folder #
-							
+									
 							# START file #
 								<div style="float:left;width:33%;text-align:center;">
 									# IF file.C_DISPLAY_REAL_IMG #
 										<img src="{PATH_TO_ROOT}/upload/{file.FILE_ICON}" alt="" style="width:100px;height:auto;" />
 									# ELSE #
-										<i class="fa {file.FILE_ICON}"></i>
+										<img src="{PATH_TO_ROOT}/templates/default/images/upload/{file.FILE_ICON}" alt="" />
 									# ENDIF #
 									{file.NAME}
 									<span class="smaller">{file.FILETYPE}</span><br />
@@ -47,7 +47,7 @@
 							<div style="float:left;width:33%;text-align:center;">
 								<strong>{L_MOVE_TO}</strong>
 								<br />
-								<i class="fa fa-arrow-right"></i>
+								<i class="fa fa-arrow-right fa-2x"></i>
 							</div>
 							<div style="float:left;width:33%;text-align:center;">
 									<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/upload.js"></script>
@@ -65,12 +65,10 @@
 						<div class="spacer"></div>
 						<fieldset class="fieldset-submit">
 							<input type="hidden" name="new_cat" id="id_cat" value="{SELECTED_CAT}">
-							<input type="hidden" name="token" value="{TOKEN}">
 							<button type="submit" class="submit" value="true" name="valid">{L_SUBMIT}</button>
 						</fieldset>
 					</form>
 				</div>
-				<footer></footer>
-			</section>
+			</fieldset>
 		</div>
 		

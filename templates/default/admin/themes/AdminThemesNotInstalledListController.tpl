@@ -1,7 +1,7 @@
 # INCLUDE UPLOAD_FORM #
 <form action="{REWRITED_SCRIPT}" method="post" class="fieldset-content">
 	# INCLUDE MSG #
-	<table>
+	<table id="AdminTable">
 		<caption>{@themes.themes_available}</caption>
 		# IF C_THEME_INSTALL #
 		<thead>
@@ -15,8 +15,8 @@
 		</thead>
 		<tbody>
 			# START themes_not_installed #
-			<tr>
-				<td>
+			<tr> 	
+				<td>					
 					<span id="theme-{themes_not_installed.ID}"></span>
 					<span class="text-strong">{themes_not_installed.NAME}</span> <span class="text-italic">({themes_not_installed.VERSION})</span>
 					<br /><br />
@@ -29,7 +29,7 @@
 						# START themes_not_installed.pictures #
 							<a href="{themes_not_installed.pictures.URL}" data-lightbox="{themes_not_installed.ID}" data-rel="lightcase:collection" title="{themes_not_installed.NAME}"></a>
 						# END themes_not_installed.pictures #
-					# ENDIF #
+					# ENDIF #				
 				</td>
 				<td>
 					<div id="desc_explain{themes_not_installed.ID}" style="text-align:left;">

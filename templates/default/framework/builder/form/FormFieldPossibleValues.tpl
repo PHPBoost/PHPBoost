@@ -14,8 +14,8 @@ FormFieldPossibleValues.prototype = {
 			jQuery('<div/>', {id : id}).appendTo('#input_fields_' + this.id_input);
 			
 			jQuery('<div/>', {id : id + '_radio', class: 'form-field-radio'}).appendTo('#' + id);
-			jQuery('<label/> ', {for : 'field_is_default_' + this.id_input}).appendTo('#' + id + '_radio');
-			jQuery('<input/> ', {type : 'radio', id : 'field_is_default_' + this.id_input, name : 'field_is_default_' + this.id_input, value : this.integer}).appendTo('#' + id + '_radio');
+			jQuery('<input/> ', {type : 'radio', id : 'field_is_default_' + this.id_input + this.integer, name : 'field_is_default_' + this.id_input, value : this.integer}).appendTo('#' + id + '_radio');
+			jQuery('<label/> ', {for : 'field_is_default_' + this.id_input + this.integer}).appendTo('#' + id + '_radio');
 			jQuery('#field_is_default_' + id).after('&nbsp;');
 
 			jQuery('<input/> ', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{@field.name}'}).appendTo('#' + id);
@@ -41,13 +41,13 @@ var FormFieldPossibleValues = new FormFieldPossibleValues();
 -->
 </script>
 
-<div id="input_fields_${escape(HTML_ID)}">
+<div id="input_fields_${escape(HTML_ID)}" class="form-field-values">
 <span class="text-strong">{@field.possible_values.is_default}</span>
 # START fieldelements #
 	<div id="${escape(HTML_ID)}_{fieldelements.ID}">
 		<div class="form-field-radio">
-			<label for"field_is_default_${escape(HTML_ID)}"></label>
 			<input type="radio" name="field_is_default_${escape(HTML_ID)}" id="field_is_default_${escape(HTML_ID)}" value="{fieldelements.ID}"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF #>
+			<label for="field_is_default_${escape(HTML_ID)}"></label>
 		</div>
 		<input type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@field.name}"/>
 		<a href="javascript:FormFieldPossibleValues.delete_field({fieldelements.ID});" id="delete_${escape(HTML_ID)}_{fieldelements.ID}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
