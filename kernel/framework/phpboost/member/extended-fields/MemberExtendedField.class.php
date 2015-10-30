@@ -117,7 +117,7 @@ class MemberExtendedField
 		$this->description = $properties['description'];
 		$this->field_type = $properties['field_type'];
 		$this->value = $properties['value'];
-		$this->possible_values = $properties['possible_values'];
+		$this->possible_values = unserialize($properties['possible_values']);
 		$this->default_value = $properties['default_value'];
 		$this->required = $properties['required'];
 		$this->regex = $properties['regex'];

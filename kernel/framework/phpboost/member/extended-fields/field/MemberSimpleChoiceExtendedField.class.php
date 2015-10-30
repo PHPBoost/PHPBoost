@@ -39,7 +39,6 @@ class MemberSimpleChoiceExtendedField extends AbstractMemberExtendedField
 		$fieldset = $member_extended_field->get_fieldset();
 		
 		$options = array();
-		$i = 0;
 		$default = '';
 		foreach ($member_extended_field->get_possible_values() as $name => $parameters)
 		{
@@ -48,7 +47,6 @@ class MemberSimpleChoiceExtendedField extends AbstractMemberExtendedField
 			{
 				$default = $name;
 			}
-			$i++;
 		}
 		
 		if (empty($default))

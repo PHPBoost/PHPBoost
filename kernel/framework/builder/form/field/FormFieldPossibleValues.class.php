@@ -94,16 +94,17 @@ class FormFieldPossibleValues extends AbstractFormField
 	{
 		$request = AppContext::get_request();
 		$values = array();
+		$field_is_default = 'field_is_default_' . $this->get_html_id();
+		$default_field = $request->get_postint($field_is_default, 0);
 		for ($i = 0; $i <= $this->max_input; $i++)
 		{
 			$field_name = 'field_name_' . $this->get_html_id() . '_' . $i;
 			if ($request->has_postparameter($field_name))
 			{
-				$field_is_default = 'field_is_default_' . $this->get_html_id() . '_' . $i;
 				if ($request->get_poststring($field_name))
 				{
 					$values[preg_replace('/\s+/', '', $request->get_poststring($field_name))] = array(
-						'is_default'	=> $request->get_postint($field_is_default, 0),
+						'is_default' => $default_field == $i,
 						'title'	=> addslashes($request->get_poststring($field_name))
 					);
 				}
