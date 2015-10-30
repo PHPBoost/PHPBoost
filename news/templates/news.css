@@ -4,9 +4,9 @@
 	margin: 15px 15px 15px 30px;
 }
 
-#news-tags-title,
-#news-sources-title,
-#news-suggested-title {
+.news-tags-title,
+.news-sources-title,
+.news-suggested-title {
 	font-weight: bold;
 }
 
