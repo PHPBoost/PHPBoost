@@ -789,6 +789,7 @@ nav#rm-admin a:hover i.fa-level-up {color:#139b80}
 		display: block !important;
 		top: 20px
 	}
-.rm.small-screen #menu-button {
-  display:none;
+	.rm.small-screen #menu-button {
+	  display:none;
+	}
 }

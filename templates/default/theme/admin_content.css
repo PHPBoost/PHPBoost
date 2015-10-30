@@ -384,7 +384,7 @@ table.bt thead th:first-child{
 }
 
 @media (min-width:769px){ 
-	table.bt thead th:first-child{ border-radius: 3px 3px 0 0; }
+	table.bt thead th:first-child { border-radius: 3px 3px 0 0; }
 }
 
 table.bt tbody td {
@@ -514,7 +514,7 @@ fieldset#AdminLoggedErrorsControllerList_fbuttons,
 fieldset#AdminErrorsController404List_fbuttons{margin: 0 5px;}
 
 @media (min-width:769px){
-	fieldset{margin: 20px 20px 0;}
+	fieldset {margin: 20px 20px 0;}
 	fieldset[id*="_captcha_fieldset"] {margin: 0 20px;}
 
 	fieldset#AdminLoggedErrorsControllerList_fbuttons,
