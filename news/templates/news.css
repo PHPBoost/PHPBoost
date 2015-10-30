@@ -1,4 +1,8 @@
-#news-suggested-container { margin: 15px 15px 15px 30px; }
+#news-tags-container,
+#news-sources-container,
+#news-suggested-container {
+	margin: 15px 15px 15px 30px;
+}
 
 .news-separator { 
 	width: 70%;
