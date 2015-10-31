@@ -4,19 +4,19 @@
 			</a>
 			<ul>
 				<li>
-					<a href="admin_alerts.php" class="quick-link">{L_ADMINISTRATOR_ALERTS}</a>
+					<a href="{PATH_TO_ROOT}/admin/admin_alerts.php" class="quick-link">{L_ADMINISTRATOR_ALERTS}</a>
 				</li>
 				<li>
 					<a href="${relative_url(AdminMembersUrlBuilder::management())}" class="quick-link">{L_USERS_MANAGMENT}</a>
 				</li>
 				<li>
-					<a href="menus/menus.php" class="quick-link">{L_MENUS_MANAGMENT}</a>
+					<a href="{PATH_TO_ROOT}/admin/menus/menus.php" class="quick-link">{L_MENUS_MANAGMENT}</a>
 				</li>
 				<li>
 					<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}" class="quick-link">{L_MODULES_MANAGMENT}</a>
 				</li>
 				<li>
-					<a href="updates/updates.php" class="quick-link">{L_WEBSITE_UPDATES}</a>
+					<a href="{PATH_TO_ROOT}/admin/updates/updates.php" class="quick-link">{L_WEBSITE_UPDATES}</a>
 				</li>
 			</ul>
 		</nav>
@@ -24,7 +24,7 @@
 		<div id="admin-contents">
 			
 			<div class="block welcome">
-				<img class="float-left" src="./../templates/default/theme/images/logo.png" alt="Logo" />
+				<img class="float-left" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="Logo" />
 				<div class="welcome-desc">
 					<h2>Bienvenue sur le panneau d'administration de votre site</h2>
 					<p>
@@ -32,7 +32,7 @@
 						<br />La page d'accueil recense les actions les plus courantes
 						<br />Prenez le temps de lire les conseils afin d'optimiser la sécurité de votre site
 					</p>
-				</div>				
+				</div>
 			</div>
 			
 			<fieldset class="quick-acces">
@@ -41,32 +41,32 @@
 					<div class="small-block">
 						<h3><i class="fa fa-plus"></i> {L_ADD_CONTENT}</h3>
 						<ul>
-							<li><a href="./../admin/modules/installed/" title="Modules">{L_MODULES_MANAGEMENT}</a></li>
+							<li><a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}" title="Modules">{L_MODULES_MANAGEMENT}</a></li>
 							# IF ModulesManager::is_module_installed('articles') #
-							<li><a href="./../articles/add/" title="Article">{L_ADD_ARTICLES}</a></li>
+							<li><a href="${relative_url(ArticlesUrlBuilder::add_article())}" title="Article">{L_ADD_ARTICLES}</a></li>
 							# ENDIF #
 							# IF ModulesManager::is_module_installed('news') #
-							<li><a href="./../news/add/" title="News">{L_ADD_NEWS}</a></li>
+							<li><a href="${relative_url(NewsUrlBuilder::add_news())}" title="News">{L_ADD_NEWS}</a></li>
 							# ENDIF #
 						</ul>
 					</div>
 					<div class="small-block">
 						<h3><i class="fa fa-picture-o"></i> {L_CUSTOMIZE_SITE}</h3>
 						<ul>
-							<li><a href="./../admin/themes/add" title="Thèmes">{L_ADD_TEMPLATE}</a></li>
-							<li><a href="./../admin/menus" title="Menus">{L_MENUS_MANAGEMENT}</a></li>
+							<li><a href="${relative_url(AdminThemeUrlBuilder::add_theme())}" title="Thèmes">{L_ADD_TEMPLATE}</a></li>
+							<li><a href="{PATH_TO_ROOT}/admin/menus" title="Menus">{L_MENUS_MANAGEMENT}</a></li>
 							# IF ModulesManager::is_module_installed('customization') #
-							<li><a href="./../customization/editor/css/" title="CSS">{L_CUSTOMIZE_TEMPLATE}</a></li>
+							<li><a href="${relative_url(AdminCustomizeUrlBuilder::editor_css_file())}" title="CSS">{L_CUSTOMIZE_TEMPLATE}</a></li>
 							# ENDIF #
 						</ul>
 					</div>
 					<div class="small-block">
 						<h3><i class="fa fa-cogs"></i> {L_SITE_MANAGEMENT}</h3>
 						<ul>
-							<li><a href="./../admin/config/general" title="Config">{L_GENERAL_CONFIG}</a></li>
-							<li><a href="./../admin/cache/data" title="Cache">{L_EMPTY_CACHE}</a></li>
-							# IF ModulesManager::is_module_installed('news') #
-							<li><a href="./../database/admin_database.php" title="Database">{L_SAVE_DATABASE}</a></li>
+							<li><a href="${relative_url(AdminConfigUrlBuilder::general_config())}" title="Config">{L_GENERAL_CONFIG}</a></li>
+							<li><a href="${relative_url(AdminCacheUrlBuilder::clear_cache())}" title="Cache">{L_EMPTY_CACHE}</a></li>
+							# IF ModulesManager::is_module_installed('database') #
+							<li><a href="{PATH_TO_ROOT}/database/admin_database.php" title="Database">{L_SAVE_DATABASE}</a></li>
 							# ENDIF #
 						</ul>
 					</div>
@@ -107,8 +107,6 @@
 						<p class="smaller center"><a href="${relative_url(UserUrlBuilder::comments())}">{L_VIEW_ALL_COMMENTS}</a></p>
 					</div>
 				</fieldset>
-				
-				# INCLUDE CACHE_FORM #
 				
 				<form action="admin_index.php" method="post">
 					<fieldset>

@@ -81,7 +81,7 @@ header span.actions a {
 /* CSS applique aux écrans PC */
 @media ( min-width: 769px ) {
 	.more {
-		margin: 0 0.2em 2em 0.2em;
+		margin: 0 0.2em 2em 1.2em;
 	}
 }
 

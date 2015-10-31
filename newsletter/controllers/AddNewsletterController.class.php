@@ -120,7 +120,7 @@ class AddNewsletterController extends ModuleController
 	private function send_test($type)
 	{
 		$newsletter_config = NewsletterConfig::load();
-		$subscribers[] = array('mail' => $newsletter_config->get_mail_sender());
+		$subscribers[] = array('user_id' => AppContext::get_current_user()->get_id());
 		NewsletterMailFactory::send_mail(
 			$subscribers, 
 			$type, 

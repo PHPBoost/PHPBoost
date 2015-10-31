@@ -29,24 +29,24 @@ class AdminCacheMenuDisplayResponse extends AdminMenuDisplayResponse
 {
 	public function __construct($view, $title_page)
 	{ 
-        parent::__construct($view);
-        
-        $lang = LangLoader::get('admin-cache-common');
-        $this->set_title($lang['cache']);
-        
-        $this->add_link($lang['cache'], AdminCacheUrlBuilder::clear_cache(), 
-        '/templates/default/images/admin/cache.png');
-        
-        $this->add_link($lang['syndication_cache'], AdminCacheUrlBuilder::clear_syndication_cache(), 
-        '/templates/default/images/admin/rss.png');
+		parent::__construct($view);
+		
+		$lang = LangLoader::get('admin-cache-common');
+		$this->set_title($lang['cache']);
+		
+		$this->add_link($lang['cache'], AdminCacheUrlBuilder::clear_cache(), 
+		'/templates/default/images/admin/cache.png');
+		
+		$this->add_link($lang['syndication_cache'], AdminCacheUrlBuilder::clear_syndication_cache(), 
+		'/templates/default/images/admin/rss.png');
 
-        $this->add_link($lang['css_cache'], AdminCacheUrlBuilder::clear_css_cache(), 
-        '/templates/default/images/admin/themes.png');
-        
-        $this->add_link($lang['cache_configuration'], AdminCacheUrlBuilder::configuration(), 
-        '/templates/default/images/admin/configuration.png');
-        
-        $env = $this->get_graphical_environment();
+		$this->add_link($lang['css_cache'], AdminCacheUrlBuilder::clear_css_cache(), 
+		'/templates/default/images/admin/themes.png');
+		
+		$this->add_link($lang['cache_configuration'], AdminCacheUrlBuilder::configuration(), 
+		'/templates/default/images/admin/configuration.png');
+		
+		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);
 	}
 }
