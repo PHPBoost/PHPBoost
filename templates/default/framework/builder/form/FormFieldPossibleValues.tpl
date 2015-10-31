@@ -16,7 +16,7 @@ FormFieldPossibleValues.prototype = {
 			jQuery('<div/>', {id : id + '_radio', class: 'form-field-radio'}).appendTo('#' + id);
 			jQuery('<input/> ', {type : 'radio', id : 'field_is_default_' + this.id_input + this.integer, name : 'field_is_default_' + this.id_input, value : this.integer}).appendTo('#' + id + '_radio');
 			jQuery('<label/> ', {for : 'field_is_default_' + this.id_input + this.integer}).appendTo('#' + id + '_radio');
-			jQuery('#field_is_default_' + id).after('&nbsp;');
+			jQuery('#' + id + '_radio').after('&nbsp;');
 
 			jQuery('<input/> ', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{@field.name}'}).appendTo('#' + id);
 			jQuery('#field_name_' + id).after('&nbsp;');
