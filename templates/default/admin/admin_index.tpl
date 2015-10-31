@@ -26,12 +26,8 @@
 			<div class="block welcome">
 				<img class="float-left" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="Logo" />
 				<div class="welcome-desc">
-					<h2>Bienvenue sur le panneau d'administration de votre site</h2>
-					<p>
-						L'administration vous permet de gérer le contenu et la configuration de votre site
-						<br />La page d'accueil recense les actions les plus courantes
-						<br />Prenez le temps de lire les conseils afin d'optimiser la sécurité de votre site
-					</p>
+					<h2>{L_WELCOME_TITLE}</h2>
+					<p>{L_WELCOME_DESC}</p>
 				</div>
 			</div>
 			

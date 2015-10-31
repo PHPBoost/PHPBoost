@@ -15,16 +15,17 @@
 						<ul>
 							<li>
 								<a href="http://www.phpboost.com/forum" title="Forum">
-									<i class="fa fa-fw fa-globe"></i> Support</a>
+									<i class="fa fa-fw fa-globe"></i> {L_INDEX_SUPPORT}
+								</a>
 							</li>
 							<li>
 								<a href="http://www.phpboost.com/faq" title="F.A.Q.">
-									<i class="fa fa-fw fa-question-circle"></i> F.A.Q.
+									<i class="fa fa-fw fa-question-circle"></i> {L_INDEX_FAQ}
 								</a>
 							</li>
 							<li>
 								<a href="http://www.phpboost.com/wiki" title="Documentation">
-									<i class="fa fa-fw fa-search"></i> Documentation
+									<i class="fa fa-fw fa-search"></i> {L_INDEX_DOCUMENTATION}
 								</a>
 							</li>
 						</ul>

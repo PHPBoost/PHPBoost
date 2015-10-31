@@ -90,6 +90,8 @@ $tpl->put_all(array(
 	'L_GENERAL_CONFIG' => $LANG['general_config'],
 	'L_EMPTY_CACHE' => $LANG['empty_cache'],
 	'L_SAVE_DATABASE' => $LANG['save_database'],
+	'L_WELCOME_TITLE' => $LANG['welcome_title'],
+	'L_WELCOME_DESC' => $LANG['welcome_desc'],
 	'WRITING_PAD_CONTENT' => WritingPadConfig::load()->get_content(),
 	'C_NO_COM' => $i == 0,
 	'C_UNREAD_ALERTS' => (bool)AdministratorAlertService::get_number_unread_alerts(),

@@ -29,6 +29,11 @@
  ####################################################
 #                      French                      #
  ####################################################
+ 
+ // Admin panel
+$LANG['index.support'] = 'Support';
+$LANG['index.faq'] = 'F.A.Q.';
+$LANG['index.documentation'] = 'Documentation';
 
 // Dates
 $LANG['xml_lang'] = 'fr';

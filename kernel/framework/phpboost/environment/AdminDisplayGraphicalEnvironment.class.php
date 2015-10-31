@@ -65,6 +65,9 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'HEADER_LOGO' => Url::to_rel($header_logo_path),
 			'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version(),
 			'CONTENT' => $content,
+			'L_INDEX_SUPPORT' => self::$lang['index.support'],
+			'L_INDEX_FAQ' => self::$lang['index.faq'],
+			'L_INDEX_DOCUMENTATION' => self::$lang['index.documentation'],
 			'L_POWERED_BY' => self::$lang['powered_by'],
 			'L_PHPBOOST_RIGHT' => self::$lang['phpboost_right'],
 		));

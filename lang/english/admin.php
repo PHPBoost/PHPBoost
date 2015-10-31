@@ -74,6 +74,8 @@ $LANG['site_management'] = 'Manage your site';
 $LANG['general_config'] = 'General configuration';
 $LANG['empty_cache'] = 'Empty the site cache';
 $LANG['save_database'] = 'Save the database';
+$LANG['welcome_title'] = 'Welcome to the administration panel of your site';
+$LANG['welcome_desc'] = 'The administration lets you manage content and configuration of your site<br />The home page lists the most common actions<br />Take time to read the tips to optimize the security of your site';
 $LANG['update_available'] = 'Update available';
 $LANG['core_update_available'] = 'New core version available, please update PHPBoost ! <a href="http://www.phpboost.com">More informations</a>';
 $LANG['no_core_update_available'] = 'No newer version, system is up to date';
