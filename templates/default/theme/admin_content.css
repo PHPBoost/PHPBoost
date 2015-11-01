@@ -257,6 +257,11 @@ table, .table-fixed {
 	}
 }
 
+table.mini {
+	width: 100% !important;
+	margin: 8px 0 !important;
+}
+
 /* Entete */
 table caption {
 	margin: 5px 2% 0 2%;
@@ -1568,7 +1573,7 @@ div.container-block-absolute > div {
 .menu-block-libelle {
 	color: #0E2A48;
 	width: 165px;
-	height: 20px;
+	min-height: 20px;
 	margin: 0px;
 	text-align: center;
 	font-weight: bold;
@@ -1620,42 +1625,42 @@ div.container-block-absolute > div {
 
 .menus-block-move-cursor { cursor: move; }
 
+.menus-block-container .module-mini-bottom {padding-bottom: 5px;}
+
 .menus-block-move {
-	float: right;
-	background: none;
 	height: 16px;
-	width: 16px;
 }
 
 .menus-block-move a {
 	display: block;
-	height: 16px;
-	width: 16px;
 	position: relative;
+	height: 16px;
+	width: 100%;
 }
 
-.menus-block-container:hover > div.menus-block-move-top a:after {
+.menus-block-move-top a:after {
 	position: absolute;
-	top: 10px;
+	top: -10px;
 	right: 0;
 	content: '\f106';
 	font-family: fontawesome;
-	width: 16px;
-	height:16px;
 	font-size: 2em;
-	font-weight:300;
-	}
-.menus-block-container:hover > div.menus-block-move-bot a:before{ 
+}
+
+.menus-block-move-bot a:after {
 	position: absolute;
-	bottom: 5px;
+	bottom: 0;
 	right: 0;
 	content: '\f107';
 	font-family: fontawesome;
-	width: 16px;
-	height:16px;
 	font-size: 2em;
-	font-weight:300;
-	}
+}
+@media (min-width:769px){
+	.menus-block-container > div.menus-block-move-top a{opacity:  0}	
+	.menus-block-container > div.menus-block-move-bot a{opacity: 0}
+	.menus-block-container:hover > div.menus-block-move-top a{opacity: 1}	
+	.menus-block-container:hover > div.menus-block-move-bot a{opacity: 1}	
+}
 
 .menu-spacer {
 	width: 99%;
