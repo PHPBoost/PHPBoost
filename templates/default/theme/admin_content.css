@@ -995,14 +995,14 @@ textarea#writing_pad_content {
 }
 
 /* CSS applique aux écrans PC */
-@media all and ( min-width: 769px ) {
+@media all and (min-width: 769px) {
 	.form-element-textarea-small {
 		width: 49%;
 	}
 }
 
 /* CSS applique aux smartphones */
-@media all and ( max-width: 480px ) {
+@media all and (max-width: 480px) {
 	.form-element-auth .form-field .advanced-auth-input {
 		float: none;
 		margin: 5px 0px 0px 0px;
@@ -1584,6 +1584,7 @@ div.container-block-absolute > div {
 	border-top-right-radius: 5px;
 	border-top-left-radius: 5px;
 }
+
 .menus-block-add {
 	color: #0E2A48;
 	width: 165px;
@@ -1598,6 +1599,7 @@ div.container-block-absolute > div {
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
 }
+
 .menus-block-add-links {
 	padding: 2px 0px;
 	border-radius: 0px;
@@ -1605,6 +1607,7 @@ div.container-block-absolute > div {
 	border-bottom-right-radius: 0px;
 	margin: -1px 0px 0px 0px;
 }
+
 .menus-block-container {
 	margin: 0px;
 	margin-bottom: 6px;
@@ -1655,6 +1658,7 @@ div.container-block-absolute > div {
 	font-family: fontawesome;
 	font-size: 2em;
 }
+
 @media (min-width:769px){
 	.menus-block-container > div.menus-block-move-top a{opacity:  0}	
 	.menus-block-container > div.menus-block-move-bot a{opacity: 0}
@@ -1715,17 +1719,17 @@ div.container-block-absolute > div {
 @media all and (min-width:980px) {
 
 	.MenusManagementColumn > div:nth-child(1) {
-		width: 200px;
+		width: 220px;
 		float: left;
 	}
 	
 	.MenusManagementColumn > div:nth-child(3)  {
-		width: 200px;
+		width: 220px;
 		float: right;
 	}
 	
 	.MenusManagementCentral {
-		width: calc(100% - 400px);
+		width: calc(100% - 440px);
 		float: left;
 	}
 }
@@ -1790,7 +1794,7 @@ a.upload-recent-file {
 }
 
 .admin-extend-menu li {
-	width: calc( 97% / 2);
+	width: calc(97% / 2);
 	display: inline-block;
 	margin: 5px 0 0;
 	vertical-align: text-top;
@@ -1862,10 +1866,10 @@ a.upload-recent-file {
 
 @media all and (min-width:481px) {
 	.admin-extend-menu li {
-		width: calc( 97% / 3);}
+		width: calc(97% / 3);}
 }
 
 @media all and (min-width:981px) {
 	.admin-extend-menu li {
-		width: calc( 97% / 4);}
+		width: calc(97% / 4);}
 }

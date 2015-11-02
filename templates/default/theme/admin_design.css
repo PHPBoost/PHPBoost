@@ -109,7 +109,8 @@ div#sub-header-admin {
 }
 /* --- Conteneur principal ============================================================= */
 div#global {
-	background: #e0e0e0;
+	/*background: #e0e0e0;*/
+	background: #E8EDF3;
 }
 
 @media (min-width:769px) {
@@ -712,7 +713,6 @@ nav#rm-admin a:hover i.fa-level-up {color:#139b80}
   text-transform: uppercase;
   font-weight: 700;
 }
-
 .rm.small-screen #menu-button:before {
   position: absolute;
   top: -46px;
@@ -738,6 +738,9 @@ nav#rm-admin a:hover i.fa-level-up {color:#139b80}
   height: 46px;
   width: 46px;
   cursor: pointer;
+}
+.rm.small-screen .submenu-button:hover{
+	background: rgba(0,0,0,.2);
 }
 .rm.small-screen .submenu-button.submenu-opened {
   background: #262626;
