@@ -1518,6 +1518,7 @@ ul.AdminStats li:hover i.fa-search {color:#1b344d}
 	padding: 14px;
 	background: #366393;
 	color: #ffffff;
+	box-shadow: 0 1px 5px 3px rgba(0,0,0,.4);
 }
 
 .ThemesManagement > div {
@@ -1534,7 +1535,6 @@ ul.AdminStats li:hover i.fa-search {color:#1b344d}
 /* --- boxes --- */
 
 .MenusManagement {
-	background: #ffffff;
 	padding: 10px;
 }
 
@@ -1613,8 +1613,8 @@ div.container-block-absolute > div {
 	margin-bottom: 6px;
 	padding: 5px;
 	padding-bottom: 7px;
-	background: #d1d1d1;
-	border: 1px solid #8F8F8F;
+	background: #cbd6e2;
+	border: 1px solid #366393;
 	border-radius: 3px;
 	overflow: auto;
 }
@@ -1681,10 +1681,10 @@ div.container-block-absolute > div {
 	min-height: 55px;
 	padding: 10px;
 	padding-top: 30px;
-	border: 2px dashed #8F8F8F;
+	border: 2px dashed #bbbbbb;
 	margin-top: 20px;
 	border-radius: 3px;
-	background: #E5E5E5;
+	background: #f5f5f5;
 	text-align: center;
 }
 

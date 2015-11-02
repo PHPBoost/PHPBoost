@@ -694,8 +694,10 @@ div.cssmenu-group .cssmenu-title {
 
 /* ---- Position des sous menu ---- */
 .cssmenu li:hover > ul 							{ left: auto ; 			  }
-aside .cssmenu-left li:hover > ul 				{ left: 100% ; top: 0;    }
-aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
+aside .cssmenu-left li:hover > ul,
+#container-leftmenu .cssmenu-left li:hover > ul { left: 100% ; top: 0;    }
+aside .cssmenu.cssmenu-right li:hover > ul,
+#container-rightmenu .cssmenu.cssmenu-right li:hover > ul { right: 100%; top: 0;    }
 .cssmenu.cssmenu-actionslinks li:hover > ul 	{ right: 0   ; top: 100%; }
 .cssmenu.cssmenu-actionslinks ul li:hover > ul 	{ right: 100%; top: 0;    }
 
@@ -1019,7 +1021,6 @@ header .cssmenu ul ul li .cssmenu-title						{ background: #333333; }
 	.cssmenu #menu-button {
 		display: block;
 		padding: 17px 40px 17px 17px;
-		color: #DDDDDD;
 		cursor: pointer;
 		font-size: 12px;
 		text-transform: uppercase;
@@ -1150,11 +1151,11 @@ header .cssmenu ul ul li .cssmenu-title						{ background: #333333; }
 /* ---- Personnalisation graphique du bouton responsive---- */
 @media (max-width: 768px) {
 	.cssmenu #menu-button:after {
-		border-color: #DDDDDD;
+		border-color: #555555;
 	}
 
 	.cssmenu #menu-button:before {
-		background: #DDDDDD;
+		background: #555555;
 	}
 
 	#main .cssmenu #menu-button {
