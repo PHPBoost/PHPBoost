@@ -1,30 +1,30 @@
 
 	<header id="header-admin">
-			<div class="header-admin-container">		
+			<div class="header-admin-container">
 				<div id="top-header-admin">
 					<div id="site-name-container">
 						<a id="site-name" href="{PATH_TO_ROOT}/">{SITE_NAME}</a>
 					</div>
 				</div>
 				<div id="sub-header-admin">
-					<div id="admin-link"># INCLUDE subheader_menu #</div>					
+					<div id="admin-link"># INCLUDE subheader_menu #</div>
 				</div>
 				<div id="support-pbt">
 					<div id="site-logo" # IF C_HEADER_LOGO #style="background: url('{HEADER_LOGO}') no-repeat;"# ENDIF #></div>
 					<nav>
 						<ul>
 							<li>
-								<a href="http://www.phpboost.com/forum" title="Forum">
+								<a href="http://www.phpboost.com/forum" title="{L_INDEX_SUPPORT}">
 									<i class="fa fa-fw fa-globe"></i> {L_INDEX_SUPPORT}
 								</a>
 							</li>
 							<li>
-								<a href="http://www.phpboost.com/faq" title="F.A.Q.">
+								<a href="http://www.phpboost.com/faq" title="{L_INDEX_FAQ}">
 									<i class="fa fa-fw fa-question-circle"></i> {L_INDEX_FAQ}
 								</a>
 							</li>
 							<li>
-								<a href="http://www.phpboost.com/wiki" title="Documentation">
+								<a href="http://www.phpboost.com/wiki" title="{L_INDEX_DOCUMENTATION}">
 									<i class="fa fa-fw fa-search"></i> {L_INDEX_DOCUMENTATION}
 								</a>
 							</li>
