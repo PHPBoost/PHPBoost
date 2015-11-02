@@ -22,7 +22,7 @@
 		</li>
 	</ul>
 </nav>
-<script src="{PATH_TO_ROOT}/templates/default/admin/js/menumaker.js" type="text/javascript"></script>
+<script src="{PATH_TO_ROOT}/templates/default/admin/js/menumaker.js"></script>
 <nav id="rm-admin" class="rm">
 	<ul>
 		<li><a class="cssmenu-title"><i class="fa fa-fw fa-cog"></i> {L_ADMINISTRATION}</a>
@@ -195,8 +195,8 @@
 		</li>
 	</ul>
 </nav>
-<script type="text/javascript">
-	$("#rm-admin").menumaker({
+<script>
+	jQuery("#rm-admin").menumaker({
 		title: "&nbsp;  ",
 		format: "multitoggle",
 		breakpoint: 9000

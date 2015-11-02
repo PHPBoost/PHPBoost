@@ -29,20 +29,19 @@
 	<body>
 		# INCLUDE BODY #
 		# INCLUDE JS_BOTTOM #
-		<script src="{PATH_TO_ROOT}/templates/default/admin/js/jquery.basictable.js" type="text/javascript"></script>
+		<script src="{PATH_TO_ROOT}/templates/default/admin/js/jquery.basictable.js"></script>
 		<script>
-			$('#AdminTable').basictable();
-			$('#AdminTable2').basictable();
-			$('#AdminTable3').basictable();
-			$('#AdminTable4').basictable();
-		</script>
-		<script>
-			<!--
+		<!--
+			jQuery('#AdminTable').basictable();
+			jQuery('#AdminTable2').basictable();
+			jQuery('#AdminTable3').basictable();
+			jQuery('#AdminTable4').basictable();
+			
 			function open_submenu(myid)
 			{
 				jQuery('#' + myid).toggleClass('active');
 			}
-			-->
-		</script>	
+		-->
+		</script>
 	</body>
 </html>

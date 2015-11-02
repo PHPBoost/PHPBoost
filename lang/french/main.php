@@ -125,6 +125,7 @@ $LANG['quotation'] = 'Citation';
 $LANG['default'] = 'Défaut';
 $LANG['type'] = 'Type';
 $LANG['status'] = 'Statut';
+$LANG['hidden_with_small_screens'] = 'Caché sur petit écran (mobile)';
 $LANG['url'] = 'Url';
 $LANG['replies'] = 'Réponses';
 $LANG['back'] = 'Retour';
