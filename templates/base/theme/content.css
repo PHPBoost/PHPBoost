@@ -14,7 +14,7 @@ article {
 }
 
 /* CSS applique aux tablettes */
-@media ( min-width: 769px ) {
+@media (min-width: 769px) {
 	section,
 	article {
 		width: 98%;
@@ -79,7 +79,7 @@ header span.actions a {
 }
 
 /* CSS applique aux écrans PC */
-@media ( min-width: 769px ) {
+@media (min-width: 769px) {
 	.more {
 		margin: 0 0.2em 2em 1.2em;
 	}
@@ -103,7 +103,7 @@ article footer {
 
 
 /* CSS applique aux tablettes */
-@media ( max-width: 768px ) {
+@media (max-width: 768px) {
 	.content {
 		padding: 1em 0;
 	}
@@ -167,7 +167,7 @@ article footer {
 }
 
 /* CSS applique aux smartphones */
-@media ( max-width: 480px ) {
+@media (max-width: 480px) {
 	/* Affiche des blocs en vertical */
 	.small-block,
 	.medium-block {
@@ -509,7 +509,7 @@ table tfoot nav.pagination a span.current-page {
 
 /* --- Affichage des tableaux responsive sur les petits écrans --- */
 
-@media ( max-width: 768px ) {
+@media (max-width: 768px) {
 	table thead th,
 	table tbody td,
 	table tfoot tr th {
@@ -744,7 +744,7 @@ input.field-xlarge  { width: 250px; }
 }
 
 /* CSS applique aux tablettes */
-@media ( max-width: 768px ) {
+@media (max-width: 768px) {
 	.form-element,
 	.form-element-textarea {
 		margin: 0px 0.6em 1em 0.6em;
@@ -756,7 +756,7 @@ input.field-xlarge  { width: 250px; }
 }
 
 /* CSS applique aux smartphones */
-@media ( max-width: 480px ) {
+@media (max-width: 480px) {
 	.form-element,
 	.form-element-textarea {
 		margin: 0px 0.6em 0.5em 0.6em;
@@ -800,7 +800,7 @@ input.field-xlarge  { width: 250px; }
 }
 
 /* CSS applique aux tablettes */
-@media ( max-width: 768px ) {
+@media (max-width: 768px) {
 
 	.form-element > label {
 		width: 100%;
@@ -924,14 +924,14 @@ textarea {
 }
 
 /* CSS applique aux écrans PC */
-@media ( min-width: 769px ) {
+@media (min-width: 769px) {
 	.form-element-textarea-small {
 		width: 49%;
 	}
 }
 
 /* CSS applique aux smartphones */
-@media ( max-width: 480px ) {
+@media (max-width: 480px) {
 	.form-element-auth .form-field .advanced-auth-input {
 		float: none;
 		margin: 5px 0px 0px 0px;
