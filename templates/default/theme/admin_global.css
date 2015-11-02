@@ -1164,7 +1164,7 @@ header .cssmenu ul ul li .cssmenu-title						{ background: #333333; }
 	
 	.cssmenu #menu-button.menu-opened:after,
 	.cssmenu #menu-button.menu-opened:before {
-		background: #DDDDDD;
+		background: #555555;
 	}
 
 	header .cssmenu #menu-button.menu-opened:after,
