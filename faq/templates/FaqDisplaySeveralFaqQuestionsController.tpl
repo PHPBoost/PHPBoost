@@ -274,8 +274,8 @@ jQuery(document).ready(function() {
 		</form>
 		# ELSE #
 			# START questions #
-			<article id="question-{questions.ID}" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
-				<header>
+			<article id="question-{questions.ID}" itemscope="itemscope" itemtype="http://schema.org/CreativeWork" class="faq-question-element-container">
+				<header class="faq-question-element">
 					<span>
 						# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
 						<a href="" id="question{questions.ID}" onclick="show_answer({questions.ID});return false;" title=""><i class="fa fa-caret-right"></i></a>
