@@ -67,7 +67,7 @@
 			<div class="spacer">&nbsp;</div>
 			
 			# IF C_DATABASE_TABLE_STRUCTURE #
-			<table id="AdminTable">
+			<table id="table">
 				<caption>{TABLE_NAME}</caption>
 				<thead>
 					<tr class="center">
@@ -105,7 +105,7 @@
 				</tbody>
 			</table>
 			
-				<table id="AdminTable2">
+				<table id="table2">
 					<caption>{L_TABLE_INDEX}</caption>
 					<thead>
 						<tr>
@@ -131,7 +131,7 @@
 					</tbody>
 				</table>
 				
-				<table id="AdminTable3">
+				<table id="table3">
 					<caption>{L_SIZE}</caption>
 					<thead>
 						<tr class="center">
@@ -179,7 +179,7 @@
 					</tbody>
 				</table>
 				
-				<table id="AdminTable4">
+				<table id="table4">
 					<caption>{L_STATISTICS}</caption>
 					<thead>
 						<tr>
@@ -259,7 +259,7 @@
 								<div class="spacer">&nbsp;</div>
 								# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
 								<div style="width:99%;margin:auto;overflow:auto;padding:0px 2px">
-									<table id="AdminTable">
+									<table id="table">
 										<thead>
 											<tr>
 												<th>&nbsp;</th>
@@ -354,7 +354,7 @@
 																</fieldset>
 												
 																<div style="width:99%;margin:auto;overflow:auto;padding:18px 2px">
-																	<table id="AdminTable">
+																	<table id="table">
 																		<thead>
 																			<tr class="center">
 																				# START head #
@@ -386,7 +386,7 @@
 			
 			# IF C_DATABASE_UPDATE_FORM #
 			<form action="admin_database_tools.php?table={TABLE_NAME}&amp;field={FIELD_NAME}&amp;value={FIELD_VALUE}&amp;action={ACTION}&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
-				<table id="AdminTable">
+				<table id="table">
 					<thead>
 						<tr class="center">
 							<th>

@@ -61,7 +61,7 @@ class AdminLoggedErrorsControllerList extends AdminController
 			'error' => 'error.fatal' 
 		);
 		
-		$table_model = new HTMLTableModel('AdminTable', array(
+		$table_model = new HTMLTableModel('table', array(
 			new HTMLTableColumn(LangLoader::get_message('date', 'date-common'), '', 'col-large'),
 			new HTMLTableColumn(LangLoader::get_message('description', 'main'))
 		), new HTMLTableSortingRule(''), self::NUMBER_ITEMS_PER_PAGE);

@@ -238,7 +238,7 @@
 				<div class="fieldset-inset">
 					
 					# START cat #
-					<table id="AdminTable">
+					<table id="table">
 						<thead>
 							<tr>
 								<th colspan="{COLSPAN}">
@@ -280,7 +280,7 @@
 					# END cat #
 					
 					# START pics.pics_max #
-						<table id="AdminTable" style="margin:auto;max-width:300px;">
+						<table id="table" style="margin:auto;max-width:300px;">
 							<tbody>
 								<tr>
 									<td id="pics_max" colspan="{COLSPAN}">
@@ -304,7 +304,7 @@
 						
 						<div class="spacer">&nbsp;</div>
 						
-						<table id="AdminTable2">
+						<table id="table2">
 							<thead>
 								<tr>
 									<th colspan="2">
@@ -364,7 +364,7 @@
 						
 						<div class="spacer">&nbsp;</div>
 						
-						<table id="AdminTable3">
+						<table id="table3">
 							<thead>
 								<tr>
 									<th colspan="{pics.pics_max.COLSPAN}">
@@ -400,7 +400,7 @@
 						# END pics.pics_max #
 						
 						# IF NOT pics.C_PICS_MAX #
-						<table id="AdminTable" style="table-layout:fixed">
+						<table id="table" style="table-layout:fixed">
 							<thead>
 								<tr>
 									<th colspan="{COLSPAN}">

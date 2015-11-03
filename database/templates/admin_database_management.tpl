@@ -51,7 +51,7 @@
 			</form>
 
 			<form action="{TARGET}" method="post">
-				<table id="AdminTable">
+				<table id="table">
 					<caption>{L_TABLE_LIST}</caption>
 					<thead>
 						<tr>
@@ -246,7 +246,7 @@
 					-->
 				</script>
 				
-				<table id="AdminTable">
+				<table id="table">
 					<caption>{L_BACKUP_DATABASE}</caption>
 					<thead>
 						<tr>
@@ -367,7 +367,7 @@
 												</fieldset>
 												
 												<div style="width:99%;margin:auto;overflow:auto;padding:18px 2px">
-													<table id="AdminTable">
+													<table id="table">
 														# IF C_HEAD #
 														<thead>
 															<tr>
@@ -401,7 +401,7 @@
 
 			# IF C_DATABASE_FILES #
 				# INCLUDE message_helper #
-				<table id="AdminTable">
+				<table id="table">
 					<caption>{L_LIST_FILES}</caption>
 					<thead>
 						<tr>

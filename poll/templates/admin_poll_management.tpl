@@ -16,7 +16,7 @@
 		</nav> 
 		
 		<div id="admin-contents">
-			<table id="AdminTable">
+			<table id="table">
 				<caption>{L_POLL_MANAGEMENT}</caption>
 				<thead>
 					<tr>

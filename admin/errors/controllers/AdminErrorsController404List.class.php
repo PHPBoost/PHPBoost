@@ -56,7 +56,7 @@ class AdminErrorsController404List extends AdminController
 
 	private function build_table()
 	{
-		$table_model = new SQLHTMLTableModel(PREFIX . 'errors_404', 'AdminTable', array(
+		$table_model = new SQLHTMLTableModel(PREFIX . 'errors_404', 'table', array(
 			new HTMLTableColumn($this->lang['404_error_requested_url']),
 			new HTMLTableColumn($this->lang['404_error_from_url']),
 			new HTMLTableColumn($this->lang['404_error_times'], 'times', 'col-small'),

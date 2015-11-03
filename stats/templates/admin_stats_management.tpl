@@ -87,7 +87,7 @@
 		
 		
 		# IF C_STATS_USERS #
-		<table id="AdminTable">
+		<table id="table">
 			<thead>
 				<tr>
 					<th>
@@ -117,7 +117,7 @@
 					<img class="fieldset-img" src="display_stats.php?theme=1" alt="{L_TEMPLATES}" />
 				</div>
 				<div class="medium-block">
-					<table id="AdminTable2">
+					<table id="table2">
 						<thead>
 							<tr>
 								<th>
@@ -157,7 +157,7 @@
 			<div class="fieldset-inset">
 				<div class="medium-block" style="text-align: center;"><div class="bargraph">{GRAPH_RESULT_SEX}</div></div>
 				<div class="medium-block">				
-					<table id="AdminTable3">
+					<table id="table3">
 						<thead>
 							<tr>
 								<th>
@@ -192,7 +192,7 @@
 				</div>
 			</div>
 		</fieldset>
-		<table id="AdminTable4">
+		<table id="table4">
 			<caption>{L_TOP_TEN_POSTERS}</caption>
 			<thead>
 				<tr>
@@ -318,7 +318,7 @@
 			
 		</form>	
 		<br /><br />
-		<table id="AdminTable">
+		<table id="table">
 			<thead>
 				<tr>
 					<th>
@@ -353,7 +353,7 @@
 					<div class="bargraph">{GRAPH_RESULT}</div>
 				</div>
 				<div class="medium-block">
-					<table id="AdminTable">
+					<table id="table">
 						<thead>
 							<tr>
 								<th>{L_BROWSERS}</th>
@@ -391,7 +391,7 @@
 					<div class="bargraph">{GRAPH_RESULT}</div>
 				</div>
 				<div class="medium-block">
-					<table id="AdminTable">
+					<table id="table">
 						<thead>
 							<tr>
 								<th>{L_OS}</th>
@@ -429,7 +429,7 @@
 					<div class="bargraph">{GRAPH_RESULT}</div>
 				</div>
 				<div class="medium-block">
-					<table id="AdminTable">
+					<table id="table">
 						<thead>
 							<tr>
 								<th>{L_LANG}</th>
@@ -504,7 +504,7 @@
 		-->
 		</script>
 		
-		<table id="AdminTable">
+		<table id="table">
 			<thead>
 				<tr>
 					<th>
@@ -602,7 +602,7 @@
 		-->
 		</script>
 		
-		<table id="AdminTable">
+		<table id="table">
 			<thead>
 				<tr>
 					<th>
@@ -677,7 +677,7 @@
 						<img class="fieldset-img" src="display_stats.php?bot=1" alt="" />
 					</div>			
 					<div class="medium-block">
-						<table id="AdminTable">
+						<table id="table">
 							<thead>
 								<tr>
 									<th style="text-align:center">

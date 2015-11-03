@@ -50,7 +50,7 @@ class AdminArticlesManageController extends AdminModuleController
 	
 	private function build_table()
 	{
-		$table_model = new SQLHTMLTableModel(ArticlesSetup::$articles_table, 'AdminTable', array(
+		$table_model = new SQLHTMLTableModel(ArticlesSetup::$articles_table, 'table', array(
 			new HTMLTableColumn(LangLoader::get_message('form.title', 'common'), 'title'),
 			new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
 			new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),

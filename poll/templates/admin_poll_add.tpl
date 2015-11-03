@@ -91,7 +91,7 @@
 						<div class="form-element">
 							<label for="a0">* {L_ANSWERS}</label>
 							<div class="form-field">
-								<table id="AdminTable">
+								<table id="table">
 									<tbody>
 										<tr>
 											<td class="no-separator text-strong">

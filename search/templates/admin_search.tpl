@@ -112,7 +112,7 @@
 					<legend>{L_SEARCH_CONFIG_WEIGHTING}</legend>
 					<div class="fieldset-inset">
 						<p>{L_SEARCH_CONFIG_WEIGHTING_EXPLAIN}</p>
-						<table id="AdminTable">
+						<table id="table">
 							<thead>
 								<tr>
 									<th>{L_MODULES}</th>
