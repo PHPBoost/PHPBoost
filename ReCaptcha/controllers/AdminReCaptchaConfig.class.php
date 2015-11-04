@@ -79,12 +79,12 @@ class AdminReCaptchaConfig extends AdminModuleController
 		$fieldset->add_field(new FormFieldFree('explain', '', $this->lang['config.recaptcha-explain']));
 		
 		$fieldset->add_field(new FormFieldTextEditor('site_key', $this->lang['config.site_key'], $this->config->get_site_key(),
-			array(),
+			array('required' => true),
 			array(new FormFieldConstraintLengthMin(30))
 		));
 		
 		$fieldset->add_field(new FormFieldPasswordEditor('secret_key', $this->lang['config.secret_key'], $this->config->get_secret_key(),
-			array(),
+			array('required' => true),
 			array(new FormFieldConstraintLengthMin(30))
 		));
 		

@@ -129,12 +129,14 @@ function show_answer(id_question)
 		if(jQuery("#answer" + id_question).css('display') == 'none')
 		{
 			jQuery("#answer" + id_question).fadeIn();
-			jQuery("#question" + id_question).html('<i class=" fa fa-caret-down"></i>');
+			jQuery("#question" + id_question).removeClass('fa-caret-right');
+			jQuery("#question" + id_question).addClass('fa-caret-down');
 		}
 		else
 		{
 			jQuery("#answer" + id_question).fadeOut();
-			jQuery("#question" + id_question).html('<i class=" fa fa-caret-right"></i>');
+			jQuery("#question" + id_question).removeClass('fa-caret-down');
+			jQuery("#question" + id_question).addClass('fa-caret-right');
 		}
 	}
 }
@@ -198,7 +200,7 @@ jQuery(document).ready(function() {
 			<ol>
 			# START questions #
 				<li id="title-question-{questions.ID}">
-					<a href="#q{questions.ID}">{questions.QUESTION}</a>
+					<a href="#question{questions.ID}">{questions.QUESTION}</a>
 				</li>
 			# END questions #
 			</ol>
@@ -216,11 +218,11 @@ jQuery(document).ready(function() {
 						<div class="sortable-title">
 							<span>
 								# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
-								<a href="" id="question{questions.ID}" onclick="show_answer({questions.ID});return false;" title=""><i class="fa fa-caret-right"></i></a>
+								<a href="" onclick="show_answer({questions.ID});return false;" title=""><i id="question{questions.ID}" class="fa fa-caret-right"></i></a>
 								<a href="" onclick="show_answer({questions.ID});return false;" title="">{questions.QUESTION}</a>
 								# ELSE #
-								<i class="fa fa-caret-right"></i>
-								<span id="question{questions.ID}">{questions.QUESTION}</span>
+								<i id="question{questions.ID}" class="fa fa-caret-right"></i>
+								<span>{questions.QUESTION}</span>
 								# ENDIF #
 							</span>
 							<div class="sortable-actions">
@@ -278,11 +280,11 @@ jQuery(document).ready(function() {
 				<header class="faq-question-element">
 					<span>
 						# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
-						<a href="" id="question{questions.ID}" onclick="show_answer({questions.ID});return false;" title=""><i class="fa fa-caret-right"></i></a>
+						<a href="" onclick="show_answer({questions.ID});return false;" title=""><i id="question{questions.ID}" class="fa fa-caret-right"></i></a>
 						<a href="" onclick="show_answer({questions.ID});return false;" title=""><span itemprop="name">{questions.QUESTION}</span></a>
 						# ELSE #
-						<i class="fa fa-caret-right"></i>
-						<span id="q{questions.ID}" itemprop="name">{questions.QUESTION}</span>
+						<i id="question{questions.ID}" class="fa fa-caret-right"></i>
+						<span itemprop="name">{questions.QUESTION}</span>
 						# ENDIF #
 					</span>
 					
