@@ -1214,8 +1214,8 @@ div.field-required:after {
 .sortable-block .sortable-element .sortable-selector {
 	display: table-cell;
 	width: 10px;
-	background: #D6DEE7;
-	opacity: 0;
+	background-color: #81A4C8;
+	opacity: 0.3;
 	transition: opacity 1s;
 	cursor: move;
 }
