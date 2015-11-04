@@ -16,7 +16,7 @@ body {
 	position: relative;
 	height: auto;
 	min-height: 100%;
-	background: #E8EDF3 ;
+	background-color: #E8EDF3 ;
 	color: #555555;
 	font-size: 1.3em;
 	font-family: "Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
@@ -31,7 +31,7 @@ body {
 /* -- En-tete de page - Header --
 --------------------------------------*/
 header#header {
-	background: #366393;
+	background-color: #366393;
 }
 
 /* --- Partie superieure du header --- */
@@ -63,7 +63,7 @@ div#top-header-content {
 /* --- Partie inferieur du header --- */
 div#sub-header {
 	min-height: 35px;
-	background: #353535;
+	background-color: #353535;
 	border-top: 1px solid #8B9193;
 }
 
@@ -83,7 +83,7 @@ div#site-infos {
 
 div#site-logo {
 	margin: 0 1em 0 0;
-	background: url('images/logo.png') no-repeat center center;
+	background-image: url('images/logo.png') no-repeat center center;
 	background-size: cover;
 	width: 90px;
 	height: 90px;
@@ -102,7 +102,7 @@ a#site-name {
 	line-height: 1em;
 	letter-spacing: 0.02em;
 	text-decoration: none;
-	text-shadow: 0 0 0 rgb(0,0,0), 1px 0 0 rgb(0,0,0), 2px 0 0.1px rgba(0,0,0,0.1), 2px 0 0.1px rgba(0,0,0,0.2), 0 0 1px rgba(0,0,0,.1);
+	text-shadow: 0 0 0 rgba(0, 0, 0, 1), 1px 0 0 rgba(0, 0, 0, 1), 2px 0 0.1px rgba(0, 0, 0, 0.1), 2px 0 0.1px rgba(0, 0, 0, 0.2), 0 0 1px rgba(0, 0, 0, 0.1);
 }
 
 span#site-slogan {
@@ -235,7 +235,7 @@ div#top-footer {
 div#main-content {
 	padding: 1.5em 0.8em;
 	border: 1px #BEBEBE solid;
-	background: #FFFFFF;
+	background-color: #FFFFFF;
 }
 
 /* --- Emplacement au dessus et en dessous du contenu de la page --- */
@@ -260,7 +260,7 @@ div.block-container {
 footer#footer {
 	clear: both;
 	width: 100%;
-	background: #212121;
+	background-color: #212121;
 	border-top: #336397 2px solid;
 }
 
