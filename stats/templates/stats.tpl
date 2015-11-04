@@ -5,8 +5,8 @@
 		</header>
 		
 		<nav id="menustats">
-			<a href="" class="js-menu-button" onclick="open_submenu('menustats');return false;" title="Catégorie">
-				<i class="fa fa-bars"></i> Catégories
+			<a href="" class="js-menu-button" onclick="open_submenu('menustats');return false;" title="${LangLoader::get_message('categories', 'categories-common')}">
+				<i class="fa fa-bars"></i> ${LangLoader::get_message('categories', 'categories-common')}
 			</a>
 			<ul>
 				<li>
