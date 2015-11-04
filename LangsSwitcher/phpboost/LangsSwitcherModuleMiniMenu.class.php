@@ -27,25 +27,48 @@
 
 class LangsSwitcherModuleMiniMenu extends ModuleMiniMenu
 {    
-    public function get_default_block()
-    {
-    	return self::BLOCK_POSITION__RIGHT;
-    }
-    
+	public function get_default_block()
+	{
+		return self::BLOCK_POSITION__RIGHT;
+	}
+	
 	public function admin_display()
-    {
-        return '';
-    }
-
-	public function display($tpl = false)
-    {
-	    $langswitcher_lang = LangLoader::get('langswitcher_common', 'LangsSwitcher');
+	{
+		return '';
+	}
+	
+	public function get_menu_id()
+	{
+		return 'module-mini-langswitcher';
+	}
+	
+	public function get_menu_title()
+	{
+		return LangLoader::get_message('switch_lang', 'langswitcher_common', 'LangsSwitcher');
+	}
+	
+	public function is_displayed()
+	{
+		return true;
+	}
+	
+	public function get_menu_content()
+	{
+		$tpl = $this->get_content();
+		
+		$tpl->put('C_VERTICAL', $this->get_block() == Menu::BLOCK_POSITION__LEFT || $this->get_block() == Menu::BLOCK_POSITION__RIGHT);
+		
+		return $tpl->render();
+	}
+	
+	public function get_content()
+	{
 		$user = AppContext::get_current_user();
 
-        $lang_id = AppContext::get_request()->get_string('switchlang', '');
-        if (!empty($lang_id))
-        {
-	        $lang = LangsManager::get_lang($lang_id);
+		$lang_id = AppContext::get_request()->get_string('switchlang', '');
+		if (!empty($lang_id))
+		{
+			$lang = LangsManager::get_lang($lang_id);
 			if ($lang !== null)
 			{
 				if ($lang->is_activated() && $lang->check_auth())
@@ -55,32 +78,58 @@ class LangsSwitcherModuleMiniMenu extends ModuleMiniMenu
 			}
 			$query_string = preg_replace('`switchlang=[^&]+`', '', QUERY_STRING);
 			AppContext::get_response()->redirect(trim(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : '')));
-        }
+		}
 
-	    $tpl = new FileTemplate('LangsSwitcher/langswitcher.tpl');
-	
-	    MenuService::assign_positions_conditions($tpl, $this->get_block());
-
-	    foreach(LangsManager::get_activated_and_authorized_langs_map() as $id => $lang)
-	    {
+		$tpl = new FileTemplate('LangsSwitcher/langswitcher.tpl');
+		$tpl->add_lang(LangLoader::get('langswitcher_common', 'LangsSwitcher'));
+		
+		foreach(LangsManager::get_activated_and_authorized_langs_map() as $id => $lang)
+		{
 			$selected = ($user->get_locale() == $id) ? ' selected="selected"' : '';
-    		$tpl->assign_block_vars('langs', array(
-    			'NAME' => $lang->get_configuration()->get_name(),
-    			'IDNAME' => $id,
-    			'SELECTED' => $selected
-    		));
-	    }
+			$tpl->assign_block_vars('langs', array(
+				'NAME' => $lang->get_configuration()->get_name(),
+				'IDNAME' => $id,
+				'SELECTED' => $selected
+			));
+		}
+		
+		$lang_identifier = str_replace('en', 'uk', LangLoader::get_message('xml_lang', 'main'));
+		$tpl->put_all(array(
+			'DEFAULT_LANG' => UserAccountsConfig::load()->get_default_lang(),
+			'IMG_LANG_IDENTIFIER' => TPL_PATH_TO_ROOT . '/images/stats/countries/' . $lang_identifier . '.png',
+		));
+		
+		return $tpl;
+	}
 	
-	    $lang_identifier = str_replace('en', 'uk', LangLoader::get_message('xml_lang', 'main'));
-	    $tpl->put_all(array(
-	    	'DEFAULT_LANG' => UserAccountsConfig::load()->get_default_lang(),
-	    	'IMG_LANG_IDENTIFIER' => TPL_PATH_TO_ROOT . '/images/stats/countries/' . $lang_identifier . '.png',
-	    	'L_SWITCH_LANG' => $langswitcher_lang['switch_lang'],
-	    	'L_DEFAULT_LANG' => $langswitcher_lang['default_lang'],
-	    	'L_SUBMIT' => LangLoader::get_message('submit', 'main')
-	    ));
-	
-	    return $tpl->render();
-    }
+	public function display()
+	{
+		if ($this->is_displayed())
+		{
+			if ($this->get_block() == Menu::BLOCK_POSITION__LEFT || $this->get_block() == Menu::BLOCK_POSITION__RIGHT)
+			{
+				$template = $this->get_template_to_use();
+				MenuService::assign_positions_conditions($template, $this->get_block());
+				$this->assign_common_template_variables($template);
+				
+				$template->put_all(array(
+					'ID' => $this->get_menu_id(),
+					'TITLE' => $this->get_menu_title(),
+					'CONTENTS' => $this->get_menu_content()
+				));
+				
+				return $template->render();
+			}
+			else
+			{
+				$tpl = $this->get_content();
+				
+				MenuService::assign_positions_conditions($tpl, $this->get_block());
+				
+				return $tpl->render();
+			}
+		}
+		return '';
+	}
 }
 ?>

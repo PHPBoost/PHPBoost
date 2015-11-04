@@ -54,16 +54,22 @@ class NewsletterModuleMiniMenu extends ModuleMiniMenu
 	
 	public function get_menu_content()
 	{
+		$tpl = $this->get_content();
+		
+		$tpl->put('C_VERTICAL', $this->get_block() == Menu::BLOCK_POSITION__LEFT || $this->get_block() == Menu::BLOCK_POSITION__RIGHT);
+		
+		return $tpl->render();
+	}
+	
+	public function get_content()
+	{
 		$tpl = new FileTemplate('newsletter/newsletter_mini.tpl');
 		
 		$tpl->add_lang(LangLoader::get('common', 'newsletter'));
 		
-		$tpl->put_all(array(
-			'USER_MAIL' => AppContext::get_current_user()->get_email(),
-			'C_VERTICAL' => $this->get_block() == Menu::BLOCK_POSITION__LEFT || $this->get_block() == Menu::BLOCK_POSITION__RIGHT
-		));
+		$tpl->put('USER_MAIL', AppContext::get_current_user()->get_email());
 		
-		return $tpl->render();
+		return $tpl;
 	}
 	
 	public function display()
@@ -86,12 +92,9 @@ class NewsletterModuleMiniMenu extends ModuleMiniMenu
 			}
 			else
 			{
-				$tpl = new FileTemplate('newsletter/newsletter_mini.tpl');
+				$tpl = $this->get_content();
+				
 				MenuService::assign_positions_conditions($tpl, $this->get_block());
-				
-				$tpl->add_lang(LangLoader::get('common', 'newsletter'));
-				
-				$tpl->put('USER_MAIL', AppContext::get_current_user()->get_email());
 				
 				return $tpl->render();
 			}

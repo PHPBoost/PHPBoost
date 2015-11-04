@@ -52,7 +52,7 @@ class CalendarEventsListController extends ModuleController
 	
 	private function build_table()
 	{
-		$table_model = new SQLHTMLTableModel(CalendarSetup::$calendar_events_table, __CLASS__, array(
+		$table_model = new SQLHTMLTableModel(CalendarSetup::$calendar_events_table, 'table', array(
 			new HTMLTableColumn(LangLoader::get_message('form.title', 'common'), 'title'),
 			new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
 			new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),

@@ -56,6 +56,15 @@ class SearchModuleMiniMenu extends ModuleMiniMenu
 	
 	public function get_menu_content()
 	{
+		$tpl = $this->get_content();
+		
+		$tpl->put('C_VERTICAL', $this->get_block() == Menu::BLOCK_POSITION__LEFT || $this->get_block() == Menu::BLOCK_POSITION__RIGHT);
+		
+		return $tpl->render();
+	}
+	
+	public function get_content()
+	{
 		global $LANG;
 		load_module_lang('search');
 		
@@ -69,11 +78,10 @@ class SearchModuleMiniMenu extends ModuleMiniMenu
 			'L_SEARCH' => $LANG['search'],
 			'U_FORM_VALID' => url(TPL_PATH_TO_ROOT . '/search/search.php#results'),
 			'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
-			'U_ADVANCED_SEARCH' => url(TPL_PATH_TO_ROOT . '/search/search.php'),
-			'C_VERTICAL' => $this->get_block() == Menu::BLOCK_POSITION__LEFT || $this->get_block() == Menu::BLOCK_POSITION__RIGHT
+			'U_ADVANCED_SEARCH' => url(TPL_PATH_TO_ROOT . '/search/search.php')
 		));
 		
-		return $tpl->render();
+		return $tpl;
 	}
 	
 	public function display()
@@ -96,21 +104,9 @@ class SearchModuleMiniMenu extends ModuleMiniMenu
 			}
 			else
 			{
-				global $LANG;
-				load_module_lang('search');
+				$tpl = $this->get_content();
 				
-				$search = retrieve(REQUEST, 'q', '');
-				
-				$tpl = new FileTemplate('search/search_mini.tpl');
-				
-				$tpl->put_all(Array(
-					'TEXT_SEARCHED' => !empty($search) ? stripslashes(retrieve(REQUEST, 'q', '')) : '',
-					'WARNING_LENGTH_STRING_SEARCH' => addslashes($LANG['warning_length_string_searched']),
-					'L_SEARCH' => $LANG['search'],
-					'U_FORM_VALID' => url(TPL_PATH_TO_ROOT . '/search/search.php#results'),
-					'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
-					'U_ADVANCED_SEARCH' => url(TPL_PATH_TO_ROOT . '/search/search.php'),
-				));
+				MenuService::assign_positions_conditions($tpl, $this->get_block());
 				
 				return $tpl->render();
 			}
