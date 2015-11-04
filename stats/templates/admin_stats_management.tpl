@@ -2,64 +2,65 @@
 		<fieldset>
 			<legend>{L_STATS}</legend>
 			<div class="fieldset-inset">
-				<nav>
-					<ul class="AdminStats">
+				<nav id="MenuStats">
+					<a href="" class="js-menu-button" onclick="open_submenu('MenuStats');return false;" title="Catégorie">
+						<i class="fa fa-bars"></i> Categories
+					</a>
+					<ul>
 						<li>
 							<a href="admin_stats.php?site=1#stats">
-								<i class="fa fa-home fa-2x"></i> <span>{L_SITE}</span>
+								<i class="fa fa-home"></i> <span>{L_SITE}</span>
 							</a>
 						</li>
 						<li>
 							<a href="admin_stats.php?members=1#stats">
-								<i class="fa fa-users fa-2x"></i> <span>{L_USERS}</span>
+								<i class="fa fa-users"></i> <span>{L_USERS}</span>
 							</a>
 						</li>
 						<li>
 							<a href="admin_stats.php?visit=1#stats">
-								<i class="fa fa-eye fa-2x"></i> <span>{L_VISITS}</span>
+								<i class="fa fa-eye"></i> <span>{L_VISITS}</span>
 							</a>
 						</li>
 						<li>
 							<a href="admin_stats.php?pages=1#stats">
-								<i class="fa fa-file-o fa-2x"></i> <span>{L_PAGES}</span>
+								<i class="fa fa-file-o"></i> <span>{L_PAGES}</span>
 							</a>
 						</li>
 						<li>
 							<a href="admin_stats.php?browser=1#stats">
-								<i class="fa fa-globe fa-2x"></i> <span>{L_BROWSERS}</span>
+								<i class="fa fa-globe"></i> <span>{L_BROWSERS}</span>
 							</a>
 						</li>
 						<li>
 							<a href="admin_stats.php?os=1#stats">
-								<i class="fa fa-laptop fa-2x"></i> <span>{L_OS}</span>
+								<i class="fa fa-laptop"></i> <span>{L_OS}</span>
 							</a>
 						</li>
 						<li>
 							<a href="admin_stats.php?lang=1#stats">
-								<i class="fa fa-flag-o fa-2x"></i> <span>{L_LANG}</span>
+								<i class="fa fa-flag-o"></i> <span>{L_LANG}</span>
 							</a>
 						</li>
 						<li>
 							<a href="admin_stats.php?referer=1#stats">
-								<i class="fa fa-share-square-o fa-2x"></i> <span>{L_REFERER}</span>
+								<i class="fa fa-share-square-o"></i> <span>{L_REFERER}</span>
 							</a>
 						</li>
 						<li>
 							<a href="admin_stats.php?keyword=1#stats">
-								<i class="fa fa-key fa-2x"></i> <span>{L_KEYWORD}</span>
+								<i class="fa fa-key"></i> <span>{L_KEYWORD}</span>
 							</a>
 						</li>
 						<li>
 							<a href="admin_stats.php?bot=1#stats">
-								<i class="fa fa-search fa-2x"></i> <span>{L_ROBOTS}</span>
+								<i class="fa fa-search"></i> <span>{L_ROBOTS}</span>
 							</a>
 						</li>
 					</ul>
 				</nav>
 			</div>	
 		</fieldset>
-		
-		<br /><br />
 		
 		# IF C_STATS_SITE #
 		<table>
@@ -233,20 +234,22 @@
 				<div class="fieldset-inset">
 					<div class="medium-block center">
 						<p class="text-strong">{L_TOTAL}: {VISIT_TOTAL} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L_TODAY}: {VISIT_DAY}</p>
-						<a class="fa fa-arrow-left" href="admin_stats{U_PREVIOUS_LINK}#stats"></a>&nbsp;
-						<a class="fa fa-arrow-right" href="admin_stats{U_NEXT_LINK}#stats"></a>&nbsp;&nbsp;&nbsp;
+						<p class=""center>
+							<a class="fa fa-arrow-left" href="admin_stats{U_PREVIOUS_LINK}#stats"></a>&nbsp;
+							<a class="fa fa-arrow-right" href="admin_stats{U_NEXT_LINK}#stats"></a>&nbsp;&nbsp;&nbsp;
+						</p>
 						# IF C_STATS_DAY #
-						<select name="d">
+						<select name="d" style="width: 80%; margin: 5px auto;">
 							{STATS_DAY}
 						</select>
 						# ENDIF #
 						# IF C_STATS_MONTH #
-						<select name="m">
+						<select name="m" style="width: 80%; margin: 5px auto;">
 							{STATS_MONTH}
 						</select>
 						# ENDIF #
 						# IF C_STATS_YEAR #
-						<select name="y">
+						<select name="y" style="width: 80%; margin: 5px auto;">
 							{STATS_YEAR}
 						</select>
 						# ENDIF #

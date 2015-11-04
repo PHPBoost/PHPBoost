@@ -37,6 +37,13 @@ class StatsExtensionPointProvider extends ExtensionPointProvider
 		return new StatsHomePageExtensionPoint();
 	}
 	
+	public function css_files()
+	{
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->adding_always_displayed_file('stats.css');
+		return $module_css_files;
+	}
+	
 	public function menus()
 	{
 		return new StatsMenusExtensionPoint();
