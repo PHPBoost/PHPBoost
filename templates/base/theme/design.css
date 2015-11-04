@@ -289,11 +289,17 @@ footer#footer .footer-infos span {
 div#compteur {
 	color: #E9ECD9;
 	position: absolute;
-	top: 50px;
+	top: 100px;
 	right: 0px;
 	font-size: 0.9em;
 	margin-right: 15px;
 	text-align: right;
+}
+
+@media (max-width: 768px) {
+	div#compteur {
+		top: 0px;
+	}
 }
 
 /* --- Barre d'outils --- */
