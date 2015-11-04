@@ -1,11 +1,11 @@
-	<section id="stats">
+	<section id="module-stats">
 		
 		<header>
 			<h1>{L_STATS}</h1>
 		</header>
 		
-		<nav id="MenuStats">
-			<a href="" class="js-menu-button" onclick="open_submenu('MenuStats');return false;" title="Catégorie">
+		<nav id="menustats">
+			<a href="" class="js-menu-button" onclick="open_submenu('menustats');return false;" title="Catégorie">
 				<i class="fa fa-bars"></i> Catégories
 			</a>
 			<ul>

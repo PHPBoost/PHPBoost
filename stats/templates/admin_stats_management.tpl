@@ -2,8 +2,8 @@
 		<fieldset>
 			<legend>{L_STATS}</legend>
 			<div class="fieldset-inset">
-				<nav id="MenuStats">
-					<a href="" class="js-menu-button" onclick="open_submenu('MenuStats');return false;" title="Catégorie">
+				<nav id="menustats">
+					<a href="" class="js-menu-button" onclick="open_submenu('menustats');return false;" title="Catégorie">
 						<i class="fa fa-bars"></i> Categories
 					</a>
 					<ul>
