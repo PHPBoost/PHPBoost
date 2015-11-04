@@ -1246,6 +1246,7 @@ div.field-required:after {
 		font-family: fontawesome;
 	}
 }
+
 .sortable-block .sortable-element:hover .sortable-actions {
 	opacity: 1;
 }
