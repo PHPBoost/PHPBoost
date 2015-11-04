@@ -84,7 +84,7 @@ function delete_alert(id)
 </script>
 		
 <div id="admin-contents">
-	<table id="AdminTable">
+	<table id="table">
 		<caption>{L_ADMIN_ALERTS}</caption>
 		
 		# IF C_EXISTING_ALERTS #

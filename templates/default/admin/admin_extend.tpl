@@ -66,7 +66,7 @@
 					</li>
 					<li>
 							<a href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}">
-								<i class="fa fa-error fa-2x"></i>
+								<i class="fa fa-exclamation-triangle fa-2x"></i>
 								<p>{L_ERRORS}</p>
 							</a>
 					</li>

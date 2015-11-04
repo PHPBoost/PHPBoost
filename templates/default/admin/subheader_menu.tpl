@@ -1,27 +1,4 @@
-<nav class="admin-index">
-	<ul>
-		<li>
-			<a href="{PATH_TO_ROOT}/index.php">
-				<i class="fa fa-fw fa-share-square-o"></i> <span>{L_INDEX_SITE}</span>
-			</a>
-		</li>
-		<li>
-			<a href="{PATH_TO_ROOT}/admin/admin_index.php">
-				<i class="fa fa-fw fa-home"></i> <span>{L_ADMINISTRATION}</span>
-			</a>
-		</li>
-		<li>
-			<a href="{PATH_TO_ROOT}/admin/admin_extend.php">
-				<i class="fa fa-fw fa-th"></i> <span>{L_EXTEND_MENU}</span>
-			</a>
-		</li>
-		<li>
-			<a href="${relative_url(UserUrlBuilder::disconnect())}">
-				<i class="fa fa-fw fa-sign-out"></i> <span>{L_DISCONNECT}</span>
-			</a>
-		</li>
-	</ul>
-</nav>
+
 <script src="{PATH_TO_ROOT}/templates/default/admin/js/menumaker.js"></script>
 <nav id="rm-admin" class="rm">
 	<ul>
@@ -197,7 +174,7 @@
 </nav>
 <script>
 	jQuery("#rm-admin").menumaker({
-		title: "&nbsp;  ",
+		title: "{HEADER_LOGO} Menu",
 		format: "multitoggle",
 		breakpoint: 9000
 	});

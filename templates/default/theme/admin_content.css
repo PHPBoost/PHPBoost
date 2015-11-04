@@ -268,13 +268,15 @@ table caption {
 	font-size: 1em;
 	text-align: center;
 	padding: 5px 10px;
-	border-bottom: 5px solid #ffffff;
 	position: relative;
+	background: rgba(0,0,0,.1);
+	border-radius: 50px 50px 0 0;
 }
 @media (min-width:769px){
 	table caption {
-		margin: 5px 50% 0 2%;
+		margin: 5px 50% 5px 2%;
 		max-width: 300px;
+		border-radius: 50px ;
 	}
 }
 
@@ -375,7 +377,9 @@ table tfoot nav.pagination a span.current-page {
 	text-decoration: none;
 }
 
-td.input-radio { width: 60px; }
+td.input-radio { width: 80px; }
+td.input-radio .form-field-radio-span {padding: 0}
+
 
 /* --- responsive tables basictable.js --- */
 
@@ -527,7 +531,6 @@ fieldset#AdminErrorsController404List_fbuttons{margin: 0 5px;}
 }
 
 .fieldset-inset {
-	background: rgba(255,255,255,.5);
 	overflow: hidden;
 	padding: 15px;
 }
@@ -564,13 +567,12 @@ option { padding: 0px 3px; }
 legend {
 	display: block;
 	margin: 0;
-	padding: 0 0 10px;
+	padding: 0 0 8px;
 	width: 100%;
 	text-transform: none;
 	color: #474747;
 	font-size: 1.6em;
-	border-bottom: 5px solid #366393;
-	text-align: center;
+	border-bottom:2px solid #bbbbbb;
 }
 
 /* --- Elements de saisie --- */
@@ -1257,10 +1259,21 @@ div.field-required:after {
 .sortable-block .sortable-element .sortable-selector {
 	display: table-cell;
 	width: 10px;
-	background: #D6DEE7;
+	background: rgba(54,99,147,.5);
 	opacity: 0;
-	transition: opacity 1s;
+	transition: opacity 1s, width .5s;
 	cursor: move;
+	position: relative;
+}
+
+.sortable-selector:after {
+	position: absolute;
+	content:'\f07d';
+	font-size: 1.5em;
+	top: 20%;
+	left: 6px;
+	color: #f1f2f3;
+	font-family: fontawesome;
 }
 
 .sortable-block .sortable-element:hover .sortable-actions {
@@ -1269,6 +1282,17 @@ div.field-required:after {
 
 .sortable-block .sortable-element:hover .sortable-selector {
 	opacity: 0.6;
+	width: 20px;
+}
+
+@media (min-width:769px) {
+	.sortable-block .sortable-element .sortable-selector {
+		width: 20px;
+		opacity: .6;
+	}
+	.sortable-block .sortable-element:hover .sortable-selector {
+		opacity: 1;
+	}
 }
 
 .sortable-block .sortable-title {
@@ -1369,7 +1393,10 @@ body.dragging, body.dragging * {
 	padding-top: 10px;
 }
 
-.welcome-desc p {clear: both;}
+.welcome-desc p {
+	clear: both;
+	padding: 10px;
+}
 
 .quick-acces ul {margin:0 0 20px 30px}
 
@@ -1392,85 +1419,12 @@ body.dragging, body.dragging * {
 .cssmenu.cssmenu-group #menu-button:after {border-color: #676A74}
 
 /* --- statistiques ========================================================================= */
-ul.AdminStats {
-	padding: 0;
-	margin: 0 0 5px 0;
-	list-style-type: none;
+@media (max-width:769px){
+	#MenuStats a.js-menu-button {
+		color: #555555;
+		display: block;
+	}
 }
-
-ul.AdminStats li{
-	width: calc(96% / 2);
-	display: inline-block;
-	position: relative;
-	text-align: center;
-}
-
-ul.AdminStats li a {
-	padding: 20px 10px;
-	display: block;
-}
-
-ul.AdminStats li:hover {background: rgba(0,0,0,.05);}
-
-@media (min-width:481px){
-	ul.AdminStats li{width: calc(94% / 5);}
-}
-
-@media (min-width:981px){
-	ul.AdminStats li{width: calc(94% / 10);}
-}
-
-ul.AdminStats li span{
-	opacity: 0;
-	visibility: hidden;
-	position: absolute;
-	top:200%;
-	left: -50%;
-	transition: all .3s ease 0s;
-	white-space: nowrap;
-	text-align: center;
-	display:none;
-	width:200%;
-	display: block;
-}
-
-ul.AdminStats li:hover span {
-	opacity: 1;
-	visibility: visible;
-	top:100%;
-	transition: all .5s ease 0s;
-}
-
-ul.AdminStats i.fa-home {color:#05bab0}
-ul.AdminStats li:hover i.fa-home {color:#058480}
-
-ul.AdminStats i.fa-users {color:#3498db}
-ul.AdminStats li:hover i.fa-users {color:#1b7cbd}
-
-ul.AdminStats i.fa-eye {color:#2ecc71}
-ul.AdminStats li:hover i.fa-eye {color:#16a352}
-
-ul.AdminStats i.fa-file-o {color:#4372aa}
-ul.AdminStats li:hover i.fa-file-o {color:#2d4d73}
-
-ul.AdminStats i.fa-globe {color:#1fa6d5}
-ul.AdminStats li:hover i.fa-globe {color:#1589b1}
-
-ul.AdminStats i.fa-laptop {color:#999999}
-ul.AdminStats li:hover i.fa-laptop {color:#777777}
-
-ul.AdminStats i.fa-flag-o {color:#9b59b6}
-ul.AdminStats li:hover i.fa-flag-o {color:#8533a7}
-
-ul.AdminStats i.fa-share-square-o {color:#f86227}
-ul.AdminStats li:hover i.fa-share-square-o {color:#d6511c}
-
-ul.AdminStats i.fa-key {color:#f1c40f}
-ul.AdminStats li:hover i.fa-key {color:#d8b00e}
-
-ul.AdminStats i.fa-search {color:#34495e}
-ul.AdminStats li:hover i.fa-search {color:#1b344d}
-
 .bargraph img {width: 100%}
 @media (min-width:641px){
 	.bargraph img {width:auto}
@@ -1515,10 +1469,17 @@ ul.AdminStats li:hover i.fa-search {color:#1b344d}
 
 .ThemesManagement {
 	overflow: hidden;
-	padding: 14px;
-	background: #366393;
+	padding: 8px 12px;
+	background: #353535;
 	color: #ffffff;
-	box-shadow: 0 1px 5px 3px rgba(0,0,0,.4);
+}
+
+@media (min-width:769px){
+	.ThemesManagement {
+		background: rgba(255,255,255,.5);
+		color: #4372AA;
+		padding: 12px 12px 13px;
+	}
 }
 
 .ThemesManagement > div {
@@ -1617,6 +1578,14 @@ div.container-block-absolute > div {
 	border: 1px solid #366393;
 	border-radius: 3px;
 	overflow: auto;
+}
+
+.menus-block-container .module-mini-container{
+	display: none;
+}
+
+.menus-block-container:hover .module-mini-container{
+	display: block;
 }
 
 .menus-block-top { margin-bottom: 5px; }
@@ -1782,6 +1751,10 @@ a.upload-recent-file {
 	margin: auto;
 	display: table;
 }
+
+
+.admin-extend-menu p {padding: 0}
+
 .admin-extend-menu ul{
 	margin: 0;
 	padding: 0;
@@ -1802,7 +1775,7 @@ a.upload-recent-file {
 
 .admin-extend-menu li a {
 	display: block;
-	padding: 10px;
+	padding: 10px 5px;
 	text-align: center;
 }
 
@@ -1831,8 +1804,8 @@ a.upload-recent-file {
 .admin-extend-menu i.fa-refresh {color: #dddddd}
 .admin-extend-menu li:hover i.fa-refresh {color: #bbbbbb}
 
-.admin-extend-menu i.fa-error:before {color: #BA4B49}
-.admin-extend-menu li:hover i.fa-error:before {color: #880000}
+.admin-extend-menu i.fa-exclamation-triangle {color: #BA4B49}
+.admin-extend-menu li:hover i.fa-exclamation-triangle {color: #880000}
 
 .admin-extend-menu i.fa-building {color: #34495e}
 .admin-extend-menu li:hover i.fa-building {color: #1b344d}

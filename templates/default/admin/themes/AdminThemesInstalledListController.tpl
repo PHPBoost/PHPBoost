@@ -1,5 +1,5 @@
 <form action="{REWRITED_SCRIPT}" method="post">
-	<table id="AdminTable">
+	<table id="table">
 		<caption>{@themes.installed_theme}</caption>
 		<thead>
 			<tr> 
@@ -61,8 +61,19 @@
 					
 					# IF NOT themes_installed.C_IS_DEFAULT_THEME #
 					<td class="input-radio">
-						<label><input type="radio" name="activated-{themes_installed.ID}" value="1" # IF themes_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> ${LangLoader::get_message('yes', 'common')}</label>
-						<label><input type="radio" name="activated-{themes_installed.ID}" value="0" # IF NOT themes_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> ${LangLoader::get_message('no', 'common')}</label>
+						<div class="form-field-radio">
+							<input id="activated-{themes_installed.ID}" type="radio" name="activated-{themes_installed.ID}" value="1" # IF themes_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #>
+							<label for="activated-{themes_installed.ID}"></label>
+						</div>
+						<span class="form-field-radio-span">${LangLoader::get_message('yes', 'common')}</span>
+						<br />
+						<div class="form-field-radio">
+							<input id="activated-{themes_installed.ID}2" type="radio" name="activated-{themes_installed.ID}" value="0" # IF NOT themes_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #>
+							<label for="activated-{themes_installed.ID}2"></label>
+						</div>
+						<span class="form-field-radio-span">${LangLoader::get_message('no', 'common')}</span>
+						<label> </label>
+						<label> </label>
 					</td>
 					<td>
 						<button type="submit" class="submit" name="delete-{themes_installed.ID}" value="true">${LangLoader::get_message('delete', 'common')}</button>

@@ -24,7 +24,7 @@
         <div class="warning message-helper-small">{L_UNEXISTING_UPDATE}</div>
     # ELSE #
         <h1>{L_APP_UPDATE_MESSAGE}</h1>
-        <table id="AdminTable">
+        <table id="table">
         	<tbody>
 	            <tr>
 		            <td style="vertical-align:top;padding-right:10px;">

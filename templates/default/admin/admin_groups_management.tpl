@@ -16,7 +16,7 @@
 			<fieldset class="fieldset-content">
 				<legend>{L_GROUPS_MANAGEMENT}</legend>
 				<div class="fieldset-inset">
-					<table id="AdminTable">
+					<table id="table">
 						<thead>
 							<tr>
 								<th>

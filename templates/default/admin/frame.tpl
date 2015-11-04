@@ -16,6 +16,8 @@
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_content.css" type="text/css" media="screen, print" />
 		# ENDIF #
 		
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+		
 		<!-- Modules CSS -->
 		{MODULES_CSS}
 				
@@ -32,10 +34,10 @@
 		<script src="{PATH_TO_ROOT}/templates/default/admin/js/jquery.basictable.js"></script>
 		<script>
 		<!--
-			jQuery('#AdminTable').basictable();
-			jQuery('#AdminTable2').basictable();
-			jQuery('#AdminTable3').basictable();
-			jQuery('#AdminTable4').basictable();
+			jQuery('#table').basictable();
+			jQuery('#table2').basictable();
+			jQuery('#table3').basictable();
+			jQuery('#table4').basictable();
 			
 			function open_submenu(myid)
 			{

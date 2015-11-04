@@ -1,5 +1,5 @@
 <form action="{REWRITED_SCRIPT}" method="post">
-	<table id="AdminTable">
+	<table id="table">
 		<caption>{@langs.installed_langs}</caption>
 		<thead>
 			<tr> 
@@ -43,8 +43,17 @@
 					</td>
 					# IF NOT langs_installed.C_IS_DEFAULT_LANG #
 					<td class="input-radio# IF langs_installed.C_IS_DEFAULT_LANG # row-disabled # ENDIF #">
-						<label><input type="radio" name="activated-{langs_installed.ID}" value="1" # IF langs_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> ${LangLoader::get_message('yes', 'common')}</label>
-						<label><input type="radio" name="activated-{langs_installed.ID}" value="0" # IF NOT langs_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> ${LangLoader::get_message('no', 'common')}</label>
+						<div class="formfield-radio">
+							<input id="activated-{langs_installed.ID}" type="radio" name="activated-{langs_installed.ID}" value="1" # IF langs_installed.C_IS_ACTIVATED # checked="checked" # ENDIF # />
+							<label for="activated-{langs_installed.ID}"></label>
+						</div>
+						<span class="form-field-radio-span">${LangLoader::get_message('yes', 'common')}</span>
+						<br />
+						<div class="formfield-radio">
+							<input id="activated-{langs_installed.ID}2" type="radio" name="activated-{langs_installed.ID}" value="0" # IF NOT langs_installed.C_IS_ACTIVATED # checked="checked" # ENDIF # />
+							<label for="activated-{langs_installed.ID}2"></label>
+						</div>
+						<span class="form-field-radio-span">${LangLoader::get_message('no', 'common')}</span>
 					</td>
 					<td>
 						<button type="submit" class="submit" name="delete-{langs_installed.ID}" value="true">${LangLoader::get_message('delete', 'common')}</button>

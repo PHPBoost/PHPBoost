@@ -1,5 +1,5 @@
 # IF C_DISPLAY #
-<li # IF C_HAS_SUB_LINK # class="extend" # ENDIF #><a href="{U_LINK}"><img src="{IMG}" alt="{NAME}"/> {NAME}</a>
+<li><a href="{U_LINK}"><img src="{IMG}" alt="{NAME}"/> {NAME}</a>
 	# IF C_HAS_SUB_LINK #
 	<ul>
 		# START element #

@@ -164,7 +164,7 @@
 			</form>
 			
 			
-			<table id="AdminTable">
+			<table id="table">
 				<caption>
 					{L_MBR_GROUP}
 				</caption>

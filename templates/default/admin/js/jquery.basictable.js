@@ -73,8 +73,8 @@
 
     var start = function(table, data) {
       table.addClass('bt');
-      $("#AdminTable tfoot th[colspan=4]").attr('colspan','1');      
-      $("#AdminTable tfoot th[colspan=2]").attr('colspan','1');
+      $("#table tfoot th[colspan=4]").attr('colspan','1');      
+      $("#table tfoot th[colspan=2]").attr('colspan','1');
 
       if (data.tableWrapper) {
         table.parent('.bt-wrapper').addClass('active');
@@ -83,7 +83,7 @@
 
     var end = function(table, data) {
       table.removeClass('bt');
-      $("#AdminTable tfoot th[colspan=1]").attr('colspan','2'); 
+      $("#table tfoot th[colspan=1]").attr('colspan','2'); 
 
       if (data.tableWrapper) {
         table.parent('.bt-wrapper').removeClass('active');

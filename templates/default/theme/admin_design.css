@@ -11,10 +11,11 @@ body {
 	position: relative;
 	height: auto;
 	min-height: 100%;
-	background: #E8EDF3 ;
+	background: #f1f2f3 ;
+	/*background: #ffffff;*/
 	color: #555555;
 	font-size: 1.5em;
-	font-family: "Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
+	font-family: 'Open Sans', "Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
 }
 
 @media (min-width:769px){
@@ -29,14 +30,14 @@ header#header-admin {
 }
 
 div#site-name-container {
-	padding: 10px;
+	padding: 20px 10px;
 	text-align: center;
 }
 
 a#site-name {
 	color: #F9FCFF;
 	font-size: 1.2em;
-	font-weight: bold;
+	font-weight: 400;
 	line-height: 1em;
 	text-shadow: 0px 0px 0 rgb(0,0,0), 1px 0px 0 rgb(-255,-255,-255),2px 0px 1px rgba(0,0,0,0.1),2px 0px 1px rgba(0,0,0,0.2),0px 0px 1px rgba(0,0,0,.1);
 	letter-spacing: 1.1pt;
@@ -46,7 +47,10 @@ a#site-name {
 /* --- Sous-entête de la page =================================== */
 div#sub-header-admin {
 	z-index: 5000;
+	width: 100%;
 }
+
+h3.menu-title {display: none;}
 
 @media (min-width:769px) {
 	header#header-admin {
@@ -59,7 +63,7 @@ div#sub-header-admin {
 		max-height: none;  
 		overflow: hidden;
 		height:100%;
-		width:260px;
+		width:250px;
 	}
 	div.header-admin-container{
 		max-height: 100%;
@@ -68,49 +72,31 @@ div#sub-header-admin {
 		overflow-y: scroll;
 		width: calc(100% + 20px);
 		left:0;
-		padding-right: 20px;
 	}
-	div#site-name-container { padding: 30px 10px;}
-}
-/* --- Support ================================================= */
-#support-pbt {
-	display: none;
-	margin: 40px auto;
-	overflow:hidden;
-	padding: 0 20px 0 10px;
-}
-
-@media (min-width:769px){
-	#support-pbt {
+	div#site-name-container {
+		padding: 30px 10px;
+		width: 230px
+	}
+	h3.menu-title {
+		color: #eeeeee;
+		overflow: hidden;
+		padding: 5px 0px 5px 30px;
+		background: rgba(0,0,0,.2);
+		font-weight: 300;
 		display: block;
-	}
-	#support-pbt nav {float:right;}
-	
-	#support-pbt ul {
-		list-style-type: none;
-		margin: 0;
-		padding: 0;
-	}
-	
-		
-	#support-pbt h3 {color: #eeeeee}
-		
-	#support-pbt ul li {padding: 0 0 5px 10px;}
-		
-	#support-pbt ul li a {color:#ffffff; }
-	
-	div#site-logo {
+		margin: 20px 0 0;
+	}	
+	div.site-logo {
 		background: url('images/logo.png') no-repeat center center;
 		background-size: cover;
-		width: 64px;
-		height:64px;
-		float:left;
+		width: 25px;
+		height:25px;
+		display: inline-block;
+		vertical-align: middle;
 	}
 }
 /* --- Conteneur principal ============================================================= */
 div#global {
-	/*background: #e0e0e0;*/
-	background: #E8EDF3;
 }
 
 @media (min-width:769px) {
@@ -177,11 +163,8 @@ footer#footer span { color: #FFFFFF; font-size: .8em; }
 */
 
 /* --- Menu Quick-Admin ============================================================= */
-
 nav#admin-quick-menu {
-	position: relative;
-	box-shadow: 0 1px 5px 3px rgba(0,0,0,.4);
-	background: #366393;
+	background: #353535;
 }
 
 nav#admin-quick-menu ul {
@@ -200,7 +183,7 @@ nav#admin-quick-menu.active ul{
 	opacity: 1;
 	visibility: visible;
 	transition: all .5s ease 0s;
-	background: #366393;
+	background: #353535;
 }
 	
 nav#admin-quick-menu li {
@@ -212,12 +195,11 @@ nav#admin-quick-menu li a.quick-link {
 	text-decoration: none;
 	margin: 0px;
 	display: block;
-	color: #eeeeee;
+	color: #ffffff;
 }
 
 nav#admin-quick-menu li:hover a.quick-link {
-	color:#ffffff;
-	background: rgba(0,0,0,.3);
+	background: rgba(255,255,255,.5);
 }
 
 a.js-menu-button {
@@ -238,7 +220,11 @@ a:hover.js-menu-button {
 		display: none;
 	}
 	
-	nav#admin-quick-menu {overflow: hidden;}
+	nav#admin-quick-menu {
+		overflow: hidden;
+		background: rgba(255,255,255,.5);
+		border-bottom: 1px solid #366393;
+	}
 	
 	nav#admin-quick-menu ul {
 		padding: 0 8px;
@@ -247,24 +233,20 @@ a:hover.js-menu-button {
 		float: right;
 		opacity: 1;
 		visibility: visible;
+		
 	}
 
 	nav#admin-quick-menu li { display: inline-block;}
-	nav#admin-quick-menu li a.quick-link {text-align: right;padding: 16px 10px;}
+	nav#admin-quick-menu li a.quick-link {
+		text-align: right;
+		padding: 14px 10px;
+		color: #4372AA;
+	}
 }
 
 /* --- menu index ============================================================= */
 
-nav.admin-index { 
-	display: table;
-	float: right;
-}
-
-@media (min-width:769px){
-	nav.admin-index {
-		float: none;
-		margin: auto;
-	}
+nav.admin-index {
 }
 
 nav.admin-index ul {
@@ -275,24 +257,20 @@ nav.admin-index ul {
 nav.admin-index li {
 	display: inline-block;
 	position: relative;
+	width: calc(94.7% / 4);
+}
+
+nav.admin-index li:hover {
+	background: rgba(0,0,0,.1);
 }
 
 nav.admin-index a{
-	padding: 0.55em ;
+	padding: 0.3em ;
 	color: #ffffff;
 	display: block;
-	font-size: 1.5em;
+	font-size: 1em;
 	position: relative;
-}
-
-nav.admin-index li:after {
-	content: '|';
-	position: absolute;
-	color: #777777;
-	font-size: 2em;
-	font-weight: 300;
-	top: 15%;
-	right: 87%;
+	text-align: center;
 }
 
 nav.admin-index li:first-child:after {
@@ -302,7 +280,7 @@ nav.admin-index li:first-child:after {
 @media (min-width:769px){
 	nav.admin-index a{
 		font-size: 1.4em;
-		padding: .56em;
+		padding: .555em;
 	}
 }
 
@@ -314,160 +292,33 @@ nav.admin-index li a span {
 	visibility: hidden;
 	position: absolute;
 	font-size: .6em;
-	top:200%;
+	top:100%;
 	left: -50%;
 	transition: all .3s ease 0s;
 	white-space: nowrap;
 }
 
-@media (max-width:769px){
+@media (min-width:769px){
 	nav.admin-index li:last-child a span{
 		right:0;
-		left: -100%;
+		left: -70%;
 	}
 }
 
 nav.admin-index li a:hover span {
 	opacity: 1;
 	visibility: visible;
-	top:100%;
+	top:90%;
 	transition: all .5s ease 0s;
 	color: #ffffff;
 }
 
-nav.admin-index i.fa-share-square-o {
-	color:#DDDDDD;
-    -ms-transform: rotateY(180deg); 
-    -webkit-transform: rotateY(180deg); 
-    transform: rotateY(180deg);
-	margin-top:3px;
-	margin-bottom:-3px;
-}
-nav.admin-index li:hover i.fa-share-square-o {color:#BBBBBB}
-
-nav.admin-index i.fa-home {color:#05bab0}
-nav.admin-index li:hover i.fa-home {color:#048a83}
-
-nav.admin-index i.fa-sign-out {color:#E74C3C}
-nav.admin-index li:hover i.fa-sign-out {color:#C92C1C}
-
-nav.admin-index i.fa-th {color:#1FA6D5}
-nav.admin-index li:hover i.fa-th {color:#1589B1}
-
 /* --- menu administration ========================================================= */
-
-/* --- Couleur des icônes --- */
 
 nav#rm-admin i {margin-right:2px;}
 
-/* niveau 1 */
-
-nav#rm-admin span i.fa-cubes {color: #05bab0;}
-nav#rm-admin span:hover i.fa-cubes {color: #058480;}
-
-
-nav#rm-admin span i.fa-cog {color: #dddddd;}
-nav#rm-admin span:hover i.fa-cog {color: #bbbbbb;}
-
-nav#rm-admin span i.fa-wrench {color: #fcc44c;}
-nav#rm-admin span:hover i.fa-wrench {color: #e5af39;}
-
-nav#rm-admin span i.fa-user {color: #3498db;}
-nav#rm-admin span:hover i.fa-user {color: #1b7cbd;}
-
-nav#rm-admin span i.fa-square-o {color: #fc4c7d;}
-nav#rm-admin span:hover i.fa-square-o {color: #e03363;}
-
-/* niveau 2+ */
-
-nav#rm-admin i.fa-cog {color:#999999}
-nav#rm-admin a:hover i.fa-cog {color:#777777}
-
-nav#rm-admin i.fa-envelope-o {color:#fcc44c}
-nav#rm-admin a:hover i.fa-envelope-o {color:#e5af39}
-
-nav#rm-admin i.fa-download {color:#f86227}
-nav#rm-admin a:hover i.fa-download {color:#d6511c}
-
-nav#rm-admin i.fa-cubes {color:#05bab0}
-nav#rm-admin a:hover i.fa-cubes {color:#058480}
-
-nav#rm-admin i.fa-picture-o {color:#05bab0}
-nav#rm-admin a:hover i.fa-picture-o {color:#058480}
-
-nav#rm-admin i.fa-clock-o {color:#fcc44c}
-nav#rm-admin a:hover i.fa-clock-o {color:#e5af39}
-
-nav#rm-admin i.fa-language {color:#2ecc71}
-nav#rm-admin a:hover i.fa-language {color:#16a352}
-
-nav#rm-admin i.fa-bell {color:#f1c40f}
-nav#rm-admin a:hover i.fa-bell {color:#d8b00e}
-
-nav#rm-admin i.fa-refresh {color:#dddddd}
-nav#rm-admin a:hover i.fa-refresh {color:#bbbbbb}
-
-nav#rm-admin i.fa-exclamation-triangle {color:#e74c3c}
-nav#rm-admin a:hover i.fa-exclamation-triangle {color:#c92c1c}
-
-nav#rm-admin i.fa-building {color:#9b59b6}
-nav#rm-admin a:hover i.fa-building {color:#8533a7}
-
-nav#rm-admin i.fa-user {color:#1dcaa8}
-nav#rm-admin a:hover i.fa-user {color:#139b80}
-
-nav#rm-admin i.fa-users {color:#3498db}
-nav#rm-admin a:hover i.fa-users {color:#1b7cbd}
-
-nav#rm-admin i.fa-reorder {color:#9b59b6}
-nav#rm-admin a:hover i.fa-reorder {color:#8533a7}
-
-nav#rm-admin i.fa-square-o {color:#2ecc71}
-nav#rm-admin a:hover i.fa-square-o {color:#16a352}
-
-nav#rm-admin i.fa-list-ul {color:#1fa6d5}
-nav#rm-admin a:hover i.fa-list-ul {color:#1589b1}
-
-nav#rm-admin i.fa-file-text-o {color:#1dcaa8}
-nav#rm-admin a:hover i.fa-file-text-o {color:#139b80}
-
-nav#rm-admin i.fa-comment-o {color:#fc4c7d}
-nav#rm-admin a:hover i.fa-comment-o {color:#e03363}
-
-nav#rm-admin i.fa-smile-o {color:#f1c40f}
-nav#rm-admin a:hover i.fa-smile-o {color:#d8b00e}
-
-/* niveau 3 */
-
-nav#rm-admin i.fa-cogs {color:#dddddd}
-nav#rm-admin a:hover i.fa-cogs {color:#bbbbbb}
-
-nav#rm-admin i.fa-plus {color:#75ad16}
-nav#rm-admin a:hover i.fa-plus {color:#5f8a16}
-
-nav#rm-admin i.fa-rss {color:#f86227}
-nav#rm-admin a:hover i.fa-rss {color:#d6511c}
-
-nav#rm-admin i.fa-css3 {color:#1fa6d5}
-nav#rm-admin a:hover i.fa-css3 {color:#1589b1}
-
-nav#rm-admin i.fa-exclamation-circle {color:#e67e22}
-nav#rm-admin a:hover i.fa-exclamation-circle {color:#ca6a14}
-
-nav#rm-admin i.fa-ban:before {color:#e74c3c}
-nav#rm-admin a:hover i.fa-ban:before {color:#c92c1c}
-
-nav#rm-admin i.fa-info {color:#1fa6d5}
-nav#rm-admin a:hover i.fa-info {color:#1589b1}
-
-nav#rm-admin i.fa-info-circle {color:#3498db}
-nav#rm-admin a:hover i.fa-info-circle {color:#1b7cbd}
-
-nav#rm-admin i.fa-file-o {color:#1dcaa8}
-nav#rm-admin a:hover i.fa-file-o {color:#139b80}
-
-nav#rm-admin i.fa-level-up {color:#1dcaa8}
-nav#rm-admin a:hover i.fa-level-up {color:#139b80}
+li.has-sub,
+li.has-sub a {cursor: text;}
 
 .rm,
 .rm ul,
@@ -516,12 +367,12 @@ nav#rm-admin a:hover i.fa-level-up {color:#139b80}
   float: right;
 }
 .rm > ul > li > a {
-  padding: 17px;
+  padding: 19px 17px 15px;
   font-size: 12px;
   letter-spacing: 1px;
   text-decoration: none;
   color: #dddddd;
-  font-weight: 700;
+  font-weight: 400;
   text-transform: uppercase;
 }
 .rm > ul > li:hover > a {
@@ -610,6 +461,11 @@ nav#rm-admin a:hover i.fa-level-up {color:#139b80}
 .rm ul ul li a:hover {
   color: #ffffff;
 }
+
+.rm ul ul li:not(.has-sub) a:hover{
+	background: rgba(0,0,0,.3);
+	cursor: pointer;
+}
 .rm ul ul li.has-sub > a:after {
   position: absolute;
   top: 16px;
@@ -647,15 +503,15 @@ nav#rm-admin a:hover i.fa-level-up {color:#139b80}
   top: 17px;
   height: 0;
 }
+
 .rm.small-screen {
-  width: 100%;
+	width: 100%;
 }
-
-@media (max-width:769px){
-	.rm.small-screen {top: 65px;}
-	.rm.small-screen > ul.open {top: -65px;}
+@media (min-width:769px){
+	.rm.small-screen {
+	  width: 230px;
+	}
 }
-
 .rm.small-screen ul {
   width: 100%;
   display: none;
@@ -707,16 +563,17 @@ nav#rm-admin a:hover i.fa-level-up {color:#139b80}
 }
 .rm.small-screen #menu-button {
   display:block;
-  padding: 17px;
+  padding: 10px;
   color: #dddddd;
   cursor: pointer;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 400;
+  background: rgba(0,0,0,.1);
 }
 .rm.small-screen #menu-button:before {
   position: absolute;
-  top: -46px;
-  left: 17px;
+  top: 5px;
+  right: 17px;
   display: block;
   font-size:25px;
   font-family: fontawesome;
@@ -724,7 +581,7 @@ nav#rm-admin a:hover i.fa-level-up {color:#139b80}
 }
 
 .rm.small-screen #menu-button.menu-opened:before {
-  top: -46px;
+  top: 5px;
   font-size:25px;
   font-family: fontawesome;
   content: '\f00d';
@@ -735,8 +592,8 @@ nav#rm-admin a:hover i.fa-level-up {color:#139b80}
   right: 0;
   top: 0;
   display: block;
-  height: 46px;
-  width: 46px;
+  height: 49px;
+  width: 49px;
   cursor: pointer;
 }
 .rm.small-screen .submenu-button:hover{
@@ -746,13 +603,13 @@ nav#rm-admin a:hover i.fa-level-up {color:#139b80}
   background: #262626;
 }
 .rm.small-screen ul ul .submenu-button {
-  height: 34px;
-  width: 34px;
+  height: 37px;
+  width: 37px;
 }
 .rm.small-screen .submenu-button:after {
   position: absolute;
-  top: 22px;
-  right: 19px;
+  top: 24px;
+  right: 20px;
   width: 8px;
   height: 2px;
   display: block;
@@ -760,16 +617,16 @@ nav#rm-admin a:hover i.fa-level-up {color:#139b80}
   content: '';
 }
 .rm.small-screen ul ul .submenu-button:after {
-  top: 15px;
-  right: 13px;
+  top: 17px;
+  right: 15px;
 }
 .rm.small-screen .submenu-button.submenu-opened:after {
   background: #ffffff;
 }
 .rm.small-screen .submenu-button:before {
   position: absolute;
-  top: 19px;
-  right: 22px;
+  top: 21px;
+  right: 23px;
   display: block;
   width: 2px;
   height: 8px;
@@ -777,8 +634,8 @@ nav#rm-admin a:hover i.fa-level-up {color:#139b80}
   content: '';
 }
 .rm.small-screen ul ul .submenu-button:before {
-  top: 12px;
-  right: 16px;
+  top: 14px;
+  right: 18px;
 }
 .rm.small-screen .submenu-button.submenu-opened:before {
   display: none;
@@ -790,9 +647,34 @@ nav#rm-admin a:hover i.fa-level-up {color:#139b80}
 @media (min-width:769px){
 	.rm.small-screen > ul{
 		display: block !important;
-		top: 20px
 	}
 	.rm.small-screen #menu-button {
 	  display:none;
 	}
+}
+
+
+.rm.small-screen ul ul ul li.extend > a,
+.rm.small-screen ul ul ul li.extend > span {display: none}
+
+.rm.small-screen ul ul ul li.extend ul  {display: block !important;}
+/* --- Support ================================================= */
+#support-pbt {
+	display: none;
+}
+
+@media (min-width:769px){
+	#support-pbt {
+		display: block;
+	}
+	
+	#support-pbt ul {
+		list-style-type: none;
+		margin: 10px 0 60px 40px;
+		padding: 0;
+	}	
+		
+	#support-pbt ul li {padding: 0 0 10px 5px;}
+		
+	#support-pbt ul li a {color:#ffffff; }
 }

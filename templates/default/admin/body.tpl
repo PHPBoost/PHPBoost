@@ -1,17 +1,49 @@
 
 	<header id="header-admin">
-			<div class="header-admin-container">
-				<div id="top-header-admin">
-					<div id="site-name-container">
-						<a id="site-name" href="{PATH_TO_ROOT}/">{SITE_NAME}</a>
-					</div>
+		<nav class="admin-index">
+			<ul>
+				<li>
+					<a href="{PATH_TO_ROOT}/index.php">
+						<i class="fa fa-fw fa-home"></i> <span>Site{L_INDEX_SITE}</span>
+					</a>
+				</li>
+				<li>
+					<a href="{PATH_TO_ROOT}/admin/admin_index.php">
+						<i class="fa fa-fw fa-cogs"></i> <span>Administration{L_ADMINISTRATION}</span>
+					</a>
+				</li>
+				<li>
+					<a href="{PATH_TO_ROOT}/admin/admin_extend.php">
+						<i class="fa fa-fw fa-th"></i> <span>Menu étendu{L_EXTEND_MENU}</span>
+					</a>
+				</li>
+				<li>
+					<a href="${relative_url(UserUrlBuilder::disconnect())}">
+						<i class="fa fa-fw fa-sign-out"></i> <span>Déconnexion{L_DISCONNECT}</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
+		<div class="header-admin-container">
+			<div id="top-header-admin">
+				<div id="site-name-container">
+					<a id="site-name" href="{PATH_TO_ROOT}/">{SITE_NAME}</a>
 				</div>
-				<div id="sub-header-admin">
-					<div id="admin-link"># INCLUDE subheader_menu #</div>
-				</div>
+			</div>
+			<div id="sub-header-admin">
+				<div id="admin-link">
+						<h3 class="menu-title">
+							<div class="site-logo" # IF C_HEADER_LOGO #style="background: url('{HEADER_LOGO}') no-repeat;"# ENDIF #></div>
+							<span>Menu</span>
+						</h3>
+					# INCLUDE subheader_menu #
+				</div>					
 				<div id="support-pbt">
-					<div id="site-logo" # IF C_HEADER_LOGO #style="background: url('{HEADER_LOGO}') no-repeat;"# ENDIF #></div>
 					<nav>
+						<h3 class="menu-title">
+							<div class="site-logo" # IF C_HEADER_LOGO #style="background: url('{HEADER_LOGO}') no-repeat;"# ENDIF #></div>
+							<span>Besoin d'aide ?</span>
+						</h3>
 						<ul>
 							<li>
 								<a href="http://www.phpboost.com/forum" title="{L_INDEX_SUPPORT}">
@@ -25,13 +57,14 @@
 							</li>
 							<li>
 								<a href="http://www.phpboost.com/wiki" title="{L_INDEX_DOCUMENTATION}">
-									<i class="fa fa-fw fa-search"></i> {L_INDEX_DOCUMENTATION}
+									<i class="fa fa-fw fa-book"></i> {L_INDEX_DOCUMENTATION}
 								</a>
 							</li>
 						</ul>
 					</nav>
 				</div>
 			</div>
+		</div>
 	</header>
 	
 	<div id="global">

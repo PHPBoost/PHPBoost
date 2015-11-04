@@ -1,4 +1,4 @@
-<table id="AdminTable">
+<table id="table">
 	<thead>
 		<tr>
 			<th style="width: 180px;">{L_MENU_CONFIGURATION_NAME}</th>

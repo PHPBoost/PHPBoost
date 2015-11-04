@@ -1,5 +1,5 @@
 		<nav id="admin-quick-menu">
-			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_PROFIL}">
+			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_QUICK_LINKS}">
 				<i class="fa fa-bars"></i> {L_QUICK_LINKS}
 			</a>
 			<ul>
@@ -35,7 +35,7 @@
 				<legend><i class="fa fa-angle-double-right"></i> {L_QUICK_ACCESS}</legend>
 				<div class="fieldset-inset">
 					<div class="small-block">
-						<h3><i class="fa fa-plus"></i> {L_ADD_CONTENT}</h3>
+						<h3><i class="fa fa-fw fa-plus"></i> {L_ADD_CONTENT}</h3>
 						<ul>
 							<li><a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}" title="{L_MODULES_MANAGEMENT}">{L_MODULES_MANAGEMENT}</a></li>
 							# IF ModulesManager::is_module_installed('articles') #
@@ -47,7 +47,7 @@
 						</ul>
 					</div>
 					<div class="small-block">
-						<h3><i class="fa fa-picture-o"></i> {L_CUSTOMIZE_SITE}</h3>
+						<h3><i class="fa fa-fw fa-picture-o"></i> {L_CUSTOMIZE_SITE}</h3>
 						<ul>
 							<li><a href="${relative_url(AdminThemeUrlBuilder::add_theme())}" title="{L_ADD_TEMPLATE}">{L_ADD_TEMPLATE}</a></li>
 							<li><a href="{PATH_TO_ROOT}/admin/menus" title="{L_MENUS_MANAGEMENT}">{L_MENUS_MANAGEMENT}</a></li>
@@ -57,7 +57,7 @@
 						</ul>
 					</div>
 					<div class="small-block">
-						<h3><i class="fa fa-cogs"></i> {L_SITE_MANAGEMENT}</h3>
+						<h3><i class="fa fa-fw fa-cogs"></i> {L_SITE_MANAGEMENT}</h3>
 						<ul>
 							<li><a href="${relative_url(AdminConfigUrlBuilder::general_config())}" title="{L_GENERAL_CONFIG}">{L_GENERAL_CONFIG}</a></li>
 							<li><a href="${relative_url(AdminCacheUrlBuilder::clear_cache())}" title="{L_EMPTY_CACHE}">{L_EMPTY_CACHE}</a></li>
@@ -97,7 +97,7 @@
 									<br /><br />
 							# END comments_list #
 							# IF C_NO_COM #
-							<p><em>{L_NO_COMMENT}</em></p>
+							<p class="center"><em>{L_NO_COMMENT}</em></p>
 							# ENDIF #
 						</div>
 						<p class="smaller center"><a href="${relative_url(UserUrlBuilder::comments())}">{L_VIEW_ALL_COMMENTS}</a></p>
@@ -109,7 +109,7 @@
 						<legend><i class="fa fa-user"></i> {L_USER_ONLINE}</legend>
 						<div class="fieldset-inset" style="padding:15px 0">
 							<div class="form-element">
-								<table id="AdminTable" style="width:100%; margin:0">
+								<table id="table" style="width:100% !important; margin:0">
 									<thead>
 										<tr> 
 											<th>

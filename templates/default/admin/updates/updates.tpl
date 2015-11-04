@@ -22,7 +22,7 @@
 	# IF C_INCOMPATIBLE_PHP_VERSION #
 		<div class="warning message-helper-small">{L_INCOMPATIBLE_PHP_VERSION}</div>
 	# ELSE #		
-		<table id="AdminTable">
+		<table id="table">
 			<caption>{L_WEBSITE_UPDATES}</caption>
 		# IF C_UPDATES #
  			<div class="warning message-helper-small">{L_UPDATES_ARE_AVAILABLE}</div>

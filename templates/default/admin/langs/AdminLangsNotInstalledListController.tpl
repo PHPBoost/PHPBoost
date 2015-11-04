@@ -1,7 +1,7 @@
 # INCLUDE UPLOAD_FORM #
 <form action="{REWRITED_SCRIPT}" method="post" class="fieldset-content">
 	# INCLUDE MSG #
-	<table id="AdminTable">
+	<table id="table">
 		<caption>{@langs}</caption>
 		# IF C_LANG_INSTALL #
 		<thead>
@@ -35,8 +35,17 @@
 					<div id="authorizations_explain-{langs_not_installed.ID}">{langs_not_installed.AUTHORIZATIONS}</div>
 				</td>
 				<td class="input-radio">
-					<label><input type="radio" name="activated-{langs_not_installed.ID}" value="1" checked="checked"> ${LangLoader::get_message('yes', 'common')}</label>
-					<label><input type="radio" name="activated-{langs_not_installed.ID}" value="0"> ${LangLoader::get_message('no', 'common')}</label>
+					<div class="form-field-radio">
+						<input id="activated-{langs_not_installed.ID}" type="radio" name="activated-{langs_not_installed.ID}" value="1" checked="checked" />
+						<label for="activated-{langs_not_installed.ID}"></label>
+					</div>
+					<span class="form-field-radio-span">${LangLoader::get_message('yes', 'common')}</span>
+					<br />
+					<div class="form-field-radio">
+						<input id="activated-{langs_not_installed.ID}2" type="radio" name="activated-{langs_not_installed.ID}" value="0" />
+						<label for="activated-{langs_not_installed.ID}2"></label>
+					</div>
+					<span class="form-field-radio-span">${LangLoader::get_message('no', 'common')}</span>
 				</td>
 				<td>
 					<button type="submit" class="submit" name="add-{langs_not_installed.ID}" value="true">{@langs.install_lang}</button>
