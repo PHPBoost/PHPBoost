@@ -73,9 +73,11 @@ class InstallCreateAdminController extends InstallController
 		$this->form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('display_name', LangLoader::get_message('display_name', 'user-common'), '',
-			array('required' => true, 'maxlength' => 100, 'events' => array('blur' => '
-				if (!HTMLForms.getField("custom_login").getValue()) {
+			array('maxlength' => 100, 'required' => true, 'events' => array('blur' => '
+				if (!HTMLForms.getField("login").getValue() && HTMLForms.getField("display_name").validate() == "") {
 					HTMLForms.getField("login").setValue(HTMLForms.getField("display_name").getValue().replace(/\s/g, \'\'));
+					HTMLForms.getField("login").enableValidationMessage();
+					HTMLForms.getField("login").liveValidate();
 				}')
 			),
 			array(new FormFieldConstraintLengthRange(3, 100, $this->lang['admin.login.length']))
