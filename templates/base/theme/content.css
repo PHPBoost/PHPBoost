@@ -1213,11 +1213,21 @@ div.field-required:after {
 
 .sortable-block .sortable-element .sortable-selector {
 	display: table-cell;
-	width: 10px;
+	position: relative;
+	width: 20px;
 	background-color: #81A4C8;
 	opacity: 0.3;
 	transition: opacity 1s;
 	cursor: move;
+}
+
+.sortable-selector:after {
+	position: absolute;
+	content: "\f047;
+	top: 28%;
+	left: 4px;
+	color: #FFFFFF;
+	font-family: fontawesome;
 }
 
 .sortable-block .sortable-element:hover .sortable-actions {
