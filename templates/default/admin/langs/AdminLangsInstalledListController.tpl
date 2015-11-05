@@ -43,13 +43,13 @@
 					</td>
 					# IF NOT langs_installed.C_IS_DEFAULT_LANG #
 					<td class="input-radio# IF langs_installed.C_IS_DEFAULT_LANG # row-disabled # ENDIF #">
-						<div class="formfield-radio">
+						<div class="form-field-radio">
 							<input id="activated-{langs_installed.ID}" type="radio" name="activated-{langs_installed.ID}" value="1" # IF langs_installed.C_IS_ACTIVATED # checked="checked" # ENDIF # />
 							<label for="activated-{langs_installed.ID}"></label>
 						</div>
 						<span class="form-field-radio-span">${LangLoader::get_message('yes', 'common')}</span>
 						<br />
-						<div class="formfield-radio">
+						<div class="form-field-radio">
 							<input id="activated-{langs_installed.ID}2" type="radio" name="activated-{langs_installed.ID}" value="0" # IF NOT langs_installed.C_IS_ACTIVATED # checked="checked" # ENDIF # />
 							<label for="activated-{langs_installed.ID}2"></label>
 						</div>
