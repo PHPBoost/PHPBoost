@@ -83,7 +83,7 @@ div#site-infos {
 
 div#site-logo {
 	margin: 0 1em 0 0;
-	background-image: url('images/logo.png') no-repeat center center;
+	background: url('images/logo.png') no-repeat center center;
 	background-size: cover;
 	width: 90px;
 	height: 90px;
