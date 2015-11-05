@@ -70,6 +70,10 @@ abstract class AbstractFormField implements FormField
 	/**
 	 * @var string
 	 */
+	protected $style = '';
+	/**
+	 * @var string
+	 */
 	protected $css_class = '';
 	/**
 	 * @var string
@@ -379,6 +383,10 @@ abstract class AbstractFormField implements FormField
 					$this->set_readonly($value);
 					unset($field_options['readonly']);
 					break;
+				case 'style':
+					$this->set_style($value);
+					unset($field_options['style']);
+					break;
 				case 'class':
 					$this->set_css_class($value);
 					unset($field_options['class']);
@@ -480,6 +488,7 @@ abstract class AbstractFormField implements FormField
 			'C_REQUIRED_AND_HAS_VALUE' => $this->is_required() && (!empty($this->value) || $this->value == '0'),
 			'VALUE' => $this->get_value(),
 			'C_HAS_CONSTRAINTS' => $this->has_constraints(),
+			'STYLE' => $this->get_style(),
 			'CLASS' => $this->get_css_class(),
 			'FIELD_CLASS' => $this->get_css_field_class(),
 			'C_HAS_FIELD_CLASS' => $this->get_css_field_class() != '',
@@ -512,6 +521,16 @@ abstract class AbstractFormField implements FormField
 			}
 		}
 		return $related_fields;
+	}
+
+	protected function get_style()
+	{
+		return $this->style;
+	}
+
+	protected function set_style($style)
+	{
+		$this->style = $style;
 	}
 
 	protected function get_css_class()
