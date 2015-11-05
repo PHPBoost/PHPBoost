@@ -3,8 +3,8 @@
 			<legend>{L_STATS}</legend>
 			<div class="fieldset-inset">
 				<nav id="menustats">
-					<a href="" class="js-menu-button" onclick="open_submenu('menustats');return false;" title="Catégorie">
-						<i class="fa fa-bars"></i> Categories
+					<a href="" class="js-menu-button" onclick="open_submenu('menustats');return false;" title="${LangLoader::get_message('categories', 'categories-common')}">
+						<i class="fa fa-bars"></i> ${LangLoader::get_message('categories', 'categories-common')}
 					</a>
 					<ul>
 						<li>
@@ -114,7 +114,7 @@
 		<fieldset>
 			<legend>{L_TEMPLATES}</legend>
 			<div class="fieldset-inset">
-				<div class="medium-block" style="text-align: center;">
+				<div class="medium-block center">
 					<img class="fieldset-img" src="display_stats.php?theme=1" alt="{L_TEMPLATES}" />
 				</div>
 				<div class="medium-block">
@@ -156,8 +156,8 @@
 		<fieldset>
 			<legend>{L_SEX}</legend>
 			<div class="fieldset-inset">
-				<div class="medium-block" style="text-align: center;"><div class="bargraph">{GRAPH_RESULT_SEX}</div></div>
-				<div class="medium-block">				
+				<div class="medium-block center"><div class="bargraph">{GRAPH_RESULT_SEX}</div></div>
+				<div class="medium-block">
 					<table id="table3">
 						<thead>
 							<tr>
@@ -257,9 +257,9 @@
 						<button type="submit" name="date" value="true" class="submit">{L_SUBMIT}</button>
 						&nbsp;&nbsp;&nbsp;&nbsp;
 					</div>
-					<div class="medium-block" style="text-align: center;">
+					<div class="medium-block center">
 						# IF C_STATS_NO_GD #
-							<table>
+							<table id="table">
 								<tbody>
 									<tr>
 										<td></td>
@@ -283,7 +283,7 @@
 													</tr>
 												</tbody>
 											</table>
-										</td>	
+										</td>
 										# END values #
 		
 										# START end_td #
@@ -310,16 +310,16 @@
 						<br />
 						<div class="bargraph">{GRAPH_RESULT}</div>
 					</div>
-					<div class="block" style="text-align: center;">
+					<div class="block center">
 						{L_TOTAL}: {SUM_NBR}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{L_AVERAGE}: {MOY_NBR}
 					</div>
-					<div class="block" style="text-align: center;">
+					<div class="block center">
 						{U_VISITS_MORE}
 					</div>
 				</div>
 			</fieldset>
 			
-		</form>	
+		</form>
 		<br /><br />
 		<table id="table">
 			<thead>
@@ -352,7 +352,7 @@
 		<fieldset>
 			<legend>{L_BROWSERS}</legend>
 			<div class="fieldset-inset">
-				<div class="medium-block" style="text-align: center;">
+				<div class="medium-block center">
 					<div class="bargraph">{GRAPH_RESULT}</div>
 				</div>
 				<div class="medium-block">
@@ -360,8 +360,8 @@
 						<thead>
 							<tr>
 								<th>{L_BROWSERS}</th>
-								<th>Couleur</th>
-								<th>Pourcentage</th>
+								<th>{L_COLORS}</th>
+								<th>{L_PERCENTAGE}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -380,7 +380,7 @@
 							# END list #
 						</tbody>
 					</table>
-				</div>				
+				</div>
 			</div>
 		</fieldset>
 		# ENDIF #
@@ -390,7 +390,7 @@
 		<fieldset>
 			<legend>{L_OS}</legend>
 			<div class="fieldset-inset">
-				<div class="medium-block" style="text-align: center;">
+				<div class="medium-block center">
 					<div class="bargraph">{GRAPH_RESULT}</div>
 				</div>
 				<div class="medium-block">
@@ -398,8 +398,8 @@
 						<thead>
 							<tr>
 								<th>{L_OS}</th>
-								<th>Couleur</th>
-								<th>Pourcentage</th>
+								<th>{L_COLORS}</th>
+								<th>{L_PERCENTAGE}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -418,7 +418,7 @@
 							# END list #
 						</tbody>
 					</table>
-				</div>				
+				</div>
 			</div>
 		</fieldset>
 		# ENDIF #
@@ -428,7 +428,7 @@
 		<fieldset>
 			<legend>{L_LANG}</legend>
 			<div class="fieldset-inset">
-				<div class="medium-block" style="text-align: center;">
+				<div class="medium-block center">
 					<div class="bargraph">{GRAPH_RESULT}</div>
 				</div>
 				<div class="medium-block">
@@ -436,8 +436,8 @@
 						<thead>
 							<tr>
 								<th>{L_LANG}</th>
-								<th>Couleur</th>
-								<th>Pourcentage</th>
+								<th>{L_COLORS}</th>
+								<th>{L_PERCENTAGE}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -456,10 +456,9 @@
 							# END list #
 						</tbody>
 					</table>
-				</div>				
+				</div>
 			</div>
 		</fieldset>
-		
 		# ENDIF #
 		
 
@@ -476,7 +475,7 @@
 			else
 			{
 				var xhr_object = null;
-				var filename = '{PATH_TO_ROOT}/stats/ajax/stats_xmlhttprequest.php?stats_referer=1&id=' + divid;
+				var filename = '{PATH_TO_ROOT}/stats/ajax/stats_xmlhttprequest.php?token={TOKEN}&stats_referer=1&id=' + divid;
 				var data = null;
 				
 				if(window.XMLHttpRequest) // Firefox
@@ -676,20 +675,22 @@
 			<fieldset>
 				<legend>{L_ROBOTS}</legend>
 				<div class="fieldset-inset">
-					<div class="medium-block" style="text-align: center;">
+					# IF C_ROBOTS_DATA #
+					<div class="medium-block center">
 						<img class="fieldset-img" src="display_stats.php?bot=1" alt="" />
-					</div>			
+					</div>
+					# ENDIF #
 					<div class="medium-block">
 						<table id="table">
 							<thead>
 								<tr>
-									<th style="text-align:center">
+									<th>
 										{L_ROBOTS} 
 									</th>
-									<th style="text-align:center">
+									<th>
 										{L_COLORS}
 									</th>
-									<th style="text-align:center">
+									<th>
 										{L_VIEW_NUMBER}
 									</th>
 								</tr>
@@ -708,16 +709,26 @@
 									</td>
 								</tr>
 								# END list #
+								# IF NOT C_ROBOTS_DATA #
+								<tr>
+									<td colspan="3">
+									${LangLoader::get_message('no_item_now', 'common')}
+									</td>
+								</tr>
+								# ENDIF #
 							</tbody>
 						</table>
 					</div>
+					# IF C_ROBOTS_DATA #
 					<br /><br />
 					<fieldset class="fieldset-submit">
 						<legend>{L_ERASE_RAPPORT}</legend>
 						<div class="fieldset-inset">
 							<button type="submit" name="erase" value="true" class="submit">{L_ERASE_RAPPORT}</button>
+							<input type="hidden" name="token" value="{TOKEN}">
 						</div>
-					</fieldset>					
+					</fieldset>
+					# ENDIF #
 				</div>
 			</fieldset>
 		</form>

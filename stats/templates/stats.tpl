@@ -94,7 +94,7 @@
 							{L_USERS}
 						</th>
 						<th>
-							{L_LAST_USER}						
+							{L_LAST_USER}
 						</th>
 					</tr>
 				</thead>
@@ -112,7 +112,7 @@
 				
 			<h3>{L_TEMPLATES}</h3>
 			<div class="medium-block">
-				{GRAPH_RESULT_THEME}				
+				{GRAPH_RESULT_THEME}
 			</div>
 			<div class="medium-block">
 				<table id="table2">
@@ -312,7 +312,7 @@
 					# ENDIF #
 					{GRAPH_RESULT}
 					<p class="center">{L_TOTAL}: {SUM_NBR}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{L_AVERAGE}: {MOY_NBR}</p>
-					<p class="center">{U_VISITS_MORE}</p>					
+					<p class="center">{U_VISITS_MORE}</p>
 				</div>
 				<div class="medium-block">
 					<table id="table">
@@ -338,7 +338,7 @@
 							</tr>
 							# END value #
 						</tbody>
-					</table>					
+					</table>
 				</div>
 				<div class="spacer"></div>
 			</article>
@@ -357,15 +357,9 @@
 				<table id="table">
 					<thead>
 						<tr>
-							<th>
-								{L_BROWSERS}
-							</th>
-							<th>
-								{COLOR}
-							</th>
-							<th>
-								{PERCENT}
-							</th>
+							<th>{L_BROWSERS}</th>
+							<th>{L_COLORS}</th>
+							<th>{L_PERCENTAGE}</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -401,11 +395,9 @@
 				<table>
 					<thead>
 						<tr>
-							<th>
-								{L_OS}
-							</th>
-							<th></th>
-							<th></th>
+							<th>{L_OS}</th>
+							<th>{L_COLORS}</th>
+							<th>{L_PERCENTAGE}</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -421,7 +413,7 @@
 								{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
 							</td>
 						</tr>
-						# END list #							
+						# END list #
 					</tbody>
 				</table>
 			</div>
@@ -442,11 +434,9 @@
 				<table>
 					<thead>
 						<tr>
-							<th>
-								{L_LANG}
-							</th>
-							<th></th>
-							<th></th>
+							<th>{L_LANG}</th>
+							<th>{L_COLORS}</th>
+							<th>{L_PERCENTAGE}</th>
 						</tr>
 					</thead>
 					<tbody>

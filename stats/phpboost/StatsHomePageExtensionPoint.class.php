@@ -1135,7 +1135,9 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				$tpl->put_all(array(
 					'C_STATS_BROWSERS' => true,
 					'GRAPH_RESULT' => !file_exists('../cache/browsers.png') ? '<img src="display_stats.php?browsers=1" alt="" />' : '<img src="../cache/browsers.png" alt="" />',
-					'L_BROWSERS' => $LANG['browser_s']
+					'L_BROWSERS' => $LANG['browser_s'],
+					'L_COLORS' => $LANG['colors'],
+					'L_PERCENTAGE' => $LANG['percentage']
 				));
 				$stats_menu = 'browsers';
 				$array_stats_info = $stats_array_browsers;
@@ -1146,7 +1148,9 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				$tpl->put_all(array(
 					'C_STATS_OS' => true,
 					'GRAPH_RESULT' => !file_exists('../cache/os.png') ? '<img src="display_stats.php?os=1" alt="" />' : '<img src="../cache/os.png" alt="" />',
-					'L_OS' => $LANG['os']
+					'L_OS' => $LANG['os'],
+					'L_COLORS' => $LANG['colors'],
+					'L_PERCENTAGE' => $LANG['percentage']
 				));
 				$stats_menu = 'os';
 				$array_stats_info = $stats_array_os;
@@ -1157,7 +1161,9 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				$tpl->put_all(array(
 					'C_STATS_LANG' => true,
 					'GRAPH_RESULT' => !file_exists('../cache/lang.png') ? '<img src="display_stats.php?lang=1" alt="" />' : '<img src="../cache/lang.png" alt="" />',
-					'L_LANG' => $LANG['stat_lang']
+					'L_LANG' => $LANG['stat_lang'],
+					'L_COLORS' => $LANG['colors'],
+					'L_PERCENTAGE' => $LANG['percentage']
 				));
 				$stats_menu = 'lang';
 				$array_stats_info = $stats_array_lang;

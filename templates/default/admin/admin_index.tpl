@@ -7,13 +7,19 @@
 					<a href="{PATH_TO_ROOT}/admin/admin_alerts.php" class="quick-link">{L_ADMINISTRATOR_ALERTS}</a>
 				</li>
 				<li>
-					<a href="${relative_url(AdminMembersUrlBuilder::management())}" class="quick-link">{L_USERS_MANAGMENT}</a>
+					<a href="${relative_url(AdminMembersUrlBuilder::management())}" class="quick-link">{L_ACTION_USERS_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="{PATH_TO_ROOT}/admin/menus/menus.php" class="quick-link">{L_MENUS_MANAGMENT}</a>
+					<a href="{PATH_TO_ROOT}/admin/menus/menus.php" class="quick-link">{L_ACTION_MENUS_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}" class="quick-link">{L_MODULES_MANAGMENT}</a>
+					<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}" class="quick-link">{L_ACTION_MODULES_MANAGEMENT}</a>
+				</li>
+				<li>
+					<a href="${relative_url(AdminThemeUrlBuilder::list_installed_theme())}" class="quick-link">{L_ACTION_THEMES_MANAGEMENT}</a>
+				</li>
+				<li>
+					<a href="${relative_url(AdminLangsUrlBuilder::list_installed_langs())}" class="quick-link">{L_ACTION_LANGS_MANAGEMENT}</a>
 				</li>
 				<li>
 					<a href="{PATH_TO_ROOT}/admin/updates/updates.php" class="quick-link">{L_WEBSITE_UPDATES}</a>
@@ -80,9 +86,11 @@
 								<div class="success">{L_NO_UNREAD_ALERT}</div>
 							# ENDIF #
 						</div>
+						# IF C_UNREAD_ALERTS #
 						<p class="smaller center">
 							<a href="admin_alerts.php">{L_DISPLAY_ALL_ALERTS}</a>
 						</p>
+						# ENDIF #
 					</div>
 				</fieldset>
 				<fieldset>
@@ -100,7 +108,7 @@
 							<p class="center"><em>{L_NO_COMMENT}</em></p>
 							# ENDIF #
 						</div>
-						<p class="smaller center"><a href="${relative_url(UserUrlBuilder::comments())}">{L_VIEW_ALL_COMMENTS}</a></p>
+						# IF NOT C_NO_COM #<p class="smaller center"><a href="${relative_url(UserUrlBuilder::comments())}">{L_VIEW_ALL_COMMENTS}</a></p># ENDIF #
 					</div>
 				</fieldset>
 				
@@ -140,7 +148,7 @@
 											</td>
 											<td>
 												{user.TIME}
-											</td>					
+											</td>
 										</tr>
 										# END user #
 									</tbody>
