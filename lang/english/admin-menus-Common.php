@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           admin-errors-Common.php
+ *                           admin-menus-common.php
  *                            -------------------
  *   begin                : December 13, 2009
  *   copyright            : (C) 2009 Loic Rouchon

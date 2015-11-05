@@ -758,7 +758,11 @@ class UpdateServices
 		$folder = new Folder(Url::to_rel('/lang/french/classes'));
 		if ($folder->exists())
 			$folder->delete();
+		$file = new File(Url::to_rel('/lang/english/admin-menus-Common.php'));
+		$file->delete();
 		$file = new File(Url::to_rel('/lang/english/stats.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/lang/french/admin-menus-Common.php'));
 		$file->delete();
 		$file = new File(Url::to_rel('/lang/french/stats.php'));
 		$file->delete();

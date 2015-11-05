@@ -114,7 +114,7 @@ class MenuAdminService
 			}
 		}
 		
-		$tpl_filter->add_lang(LangLoader::get('admin-menus-Common'));
+		$tpl_filter->add_lang(LangLoader::get('admin-menus-common'));
 		$tpl_filter->put_all(array(
 		    'NBR_FILTER' => ($menu->get_id() == '') ? 0 : count($menu->get_filters()) - 1,
 		));

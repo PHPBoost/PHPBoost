@@ -36,8 +36,8 @@ $admin_links_lang = LangLoader::get('admin-links-common');
 $template->put_all(array(
 	'L_QUICK_LINKS' => $admin_links_lang['quick_links'],
 	'L_CONFIGURATION' => $admin_links_lang['configuration'],
-	'L_SITE' => $admin_links_lang['index.site'],
-	'L_DISCONNECT' => $admin_links_lang['index.disconnect'],
+	'L_SITE' => LangLoader::get_message('index.site', 'main'),
+	'L_DISCONNECT' => LangLoader::get_message('index.disconnect', 'main'),
 	'L_INDEX_ADMIN' => $admin_links_lang['administration'],
 	'L_SITE_MENU' => $admin_links_lang['content.menus'],
 	'L_MAINTAIN' => $admin_links_lang['tools.maintain'],
