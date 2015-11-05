@@ -20,16 +20,16 @@ a:hover {
 }
 
 /* --- Les liens des utilisateurs --- */
-a.admin { color: #FFA34F; }
-a.modo { color: #006699; }
-a.member { color: #000000; }
+a.admin 	{ color: #FFA34F; }
+a.modo 		{ color: #006699; }
+a.member 	{ color: #000000; }
 
 /* --- Les differentes tailles de polices --- */
-.smaller { font-size: 0.869em; }
-.small { font-size: 0.923em; }
-.big { font-size: 1.231em; }
-.bigger { font-size: 1.385em; }
-.biggest { font-size: 1.538em; }
+.smaller 	{ font-size: 0.869em; }
+.small 		{ font-size: 0.923em; }
+.big 		{ font-size: 1.231em; }
+.bigger 	{ font-size: 1.385em; }
+.biggest 	{ font-size: 1.538em; }
 
 /* --- Les titres (balise h) --- */
 h1 { font-size: 1.615em; }
@@ -38,7 +38,10 @@ h3 { font-size: 1.385em; }
 h4 { font-size: 1.308em; }
 h5 { font-size: 1.231em; }
 h6 { font-size: 1.154em; }
-h1, h2, h3, h4, h5, h6{font-weight: 400;}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 400;
+}
 
 h5 {
 	-webkit-margin-before: 0px;
@@ -48,7 +51,9 @@ h5 {
 }
 
 /* --- Les sous titres --- */
-h3.title1, h3.title2, h4.stitle1, h4.stitle2 { display: inline; }
+h3.title1, h3.title2, h4.stitle1, h4.stitle2 {
+	display: inline;
+}
 
 h3.title1, h3.title2 {
 	border-bottom: 1px solid #366393;
@@ -115,13 +120,15 @@ ul, ol {
 }
 
 .calendar-block .date-select-container {
-	background: #F5F5F5;
+	background-color: #F5F5F5;
 	padding: 2px 0px;
 	border-radius: 3px 3px 0px 0px;
 }
 
 @media (max-width:768px){
-	.calendar-block .date-select-container {font-size: 1.5em;}
+	.calendar-block .date-select-container {
+		font-size: 1.5em;
+	}
 }
 
 .calendar-block .date-select-previous {
@@ -170,7 +177,7 @@ ul, ol {
 	border-top: 1px solid #CCCCCC;
 	padding: 5px 0px;
 	border-radius: 0px;
-	background: #FFFFFF;
+	background-color: #FFFFFF;
 	font-weight: bold;
 	color: #666666;
 }
@@ -187,10 +194,10 @@ ul, ol {
 .calendar-block .date-picker tbody td:first-child { border-left: none; }
 .calendar-block .date-picker tbody td:last-child  { border-right: none; }
 
-.calendar-block .date-picker tbody td.calendar-none    { background: #FFFFFF; }
-.calendar-block .date-picker tbody td.calendar-today   { background: #B5E5B9; }
-.calendar-block .date-picker tbody td.calendar-event   { background: #DBE5EE; }
-.calendar-block .date-picker tbody td.calendar-weekend { background: #FFE3B6; }
+.calendar-block .date-picker tbody td.calendar-none    { background-color: #FFFFFF; }
+.calendar-block .date-picker tbody td.calendar-today   { background-color: #B5E5B9; }
+.calendar-block .date-picker tbody td.calendar-event   { background-color: #DBE5EE; }
+.calendar-block .date-picker tbody td.calendar-weekend { background-color: #FFE3B6; }
 
 .calendar-block .date-picker tbody tr:last-child td {
 	border-bottom: none;
@@ -211,7 +218,7 @@ ul, ol {
 }
 
 .bbcode-block {
-	background: #F3F3F3;
+	background-color: #F3F3F3;
 	border-radius: 3px;
 	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 	border: 1px solid #AAAAAA;
@@ -257,7 +264,7 @@ ul, ol {
 .blockquote, .code, .hide {
 	overflow: auto;
 	max-height: 500px;
-	background: #FAFAFA;
+	background-color: #FAFAFA;
 	border: 1px solid #DDDDDD;
 	border-radius: 3px;
 	color: #444444;
@@ -277,9 +284,13 @@ ul, ol {
 }
 
 /* --- les autres element bbcode --- */
-.indent { margin-left: 30px; }
+.indent {
+	margin-left: 30px;
+}
 
-.formatter-acronym { cursor: help; }
+.formatter-acronym {
+	cursor: help;
+}
 
 .formatter-block {
 	margin: 5px 20px;
@@ -312,12 +323,13 @@ ul, ol {
 
 /* --- La barre de progression --- */
 .progressbar-container {
-	background: #F5F5F5;
+	background-color: #F5F5F5;
 	margin: 4px 0px 10px;
 	border-radius: 3px;
 	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 	position: relative;
 }
+
 .progressbar-container .progressbar-infos {
 	line-height: 13px;
 	font-size: .95em;
@@ -325,11 +337,13 @@ ul, ol {
 	width: 100%;
 	position: absolute;
 }
+
 .progressbar {
 	border-top-left-radius: 3px;
 	border-bottom-left-radius: 3px;
 	box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
 }
+
 .progressbar[style*="width: 100"] {
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 3px;
@@ -342,28 +356,38 @@ ul, ol {
 }
 
 /* --- Le systeme de notation --- */
-.static-notation, .notation { display: inline-block; }
-.static-notation .star, .notation .star { color: #E3CF7A; font-size: 1.1em; padding-right: 5px; text-decoration: none; }
+.static-notation, .notation {
+	display: inline-block;
+}
+
+.static-notation .star, .notation .star {
+	color: #E3CF7A;
+	font-size: 1.1em;
+	padding-right: 5px;
+	text-decoration: none;
+}
 
 
 /* -- Les Icones specifiques PHPBoost de FontAwesome --
 -------------------------------------------*/
 
-.fa-syndication:before { color: #F57900; }
-.fa-success:before { color: #478948; }
-.fa-forbidden:before { color: #BA4B49; }
-.fa-error:before { color: #BA4B49; }
-.fa-warning:before { color: #C19954; }
-.fa-ban:before { color: #BA4B49; }
-.fa-unban:before { color: #478948; }
-.fa-male:before { color: #8DC3E9; }
-.fa-female:before { color: #F49CC4; }
-.fa-online:before { color: #52D132; }
-.fa-offline:before { color: #E05759; }
-.fa-trend-up:before { color: #478948; }
-.fa-trend-down:before { color: #BA4B49; }
+.fa-syndication:before 	{ color: #F57900; }
+.fa-success:before 		{ color: #478948; }
+.fa-forbidden:before 	{ color: #BA4B49; }
+.fa-error:before 		{ color: #BA4B49; }
+.fa-warning:before 		{ color: #C19954; }
+.fa-ban:before 			{ color: #BA4B49; }
+.fa-unban:before 		{ color: #478948; }
+.fa-male:before 		{ color: #8DC3E9; }
+.fa-female:before 		{ color: #F49CC4; }
+.fa-online:before 		{ color: #52D132; }
+.fa-offline:before 		{ color: #E05759; }
+.fa-trend-up:before 	{ color: #478948; }
+.fa-trend-down:before 	{ color: #BA4B49; }
 
-li.small-block .fa-stack { height: 2.34em; }
+li.small-block .fa-stack {
+	height: 2.34em;
+}
 
 .fa-circle-alert {
 	z-index: 1;
@@ -398,7 +422,9 @@ li.small-block .fa-stack { height: 2.34em; }
 div.message-helper-small { width: 90%; }
 
 @media (min-width:769px){
-	div.message-helper-small { width: 50%; }
+	div.message-helper-small {
+		width: 50%;
+	}
 }
 
 .error, .notice, .warning, .success, .question {
@@ -430,22 +456,22 @@ div.message-helper-small { width: 90%; }
 	text-align: center;
 }
 
-.error:before { content: "\f00d"; }
-.error, .error:before { color: #BA4B49; }
-.notice:before { content: "\f12a"; }
-.notice, .notice:before { color: #888888; }
-.warning:before { content: "\f071"; }
-.warning, .warning:before { color: #C19954; }
-.success:before { content: "\f00c"; }
-.success, .success:before { color: #478948; }
-.question:before { content: "\f128"; }
+.error:before 				{ content: "\f00d"; }
+.error, .error:before 		{ color: #BA4B49; }
+.notice:before 				{ content: "\f12a"; }
+.notice, .notice:before 	{ color: #888888; }
+.warning:before 			{ content: "\f071"; }
+.warning, .warning:before 	{ color: #C19954; }
+.success:before 			{ content: "\f00c"; }
+.success, .success:before 	{ color: #478948; }
+.question:before 			{ content: "\f128"; }
 .question, .question:before { color: #3B88AE; }
 
-.question { background-color: #DAEEF8; border-color: #BDE9F2; }
-.notice { background-color: #F0F0F0; border-color: #E2E2E2; }
-.warning { background-color: #FDF9E4; border-color: #FBECCD; }
-.error { background-color: #F3DFDF; border-color: #ECCDD2; }
-.success { background-color: #E0F1D9; border-color: #D7EAC7; }
+.question 	{ background-color: #DAEEF8; border-color: #BDE9F2; }
+.notice 	{ background-color: #F0F0F0; border-color: #E2E2E2; }
+.warning 	{ background-color: #FDF9E4; border-color: #FBECCD; }
+.error 		{ background-color: #F3DFDF; border-color: #ECCDD2; }
+.success 	{ background-color: #E0F1D9; border-color: #D7EAC7; }
 
 /* ===========================
    #   #  #####  #   #  #   #  #####
@@ -467,6 +493,7 @@ div.message-helper-small { width: 90%; }
 	position: relative;
 	margin: 0;
 }
+
 .cssmenu:after,
 .cssmenu > ul:after {
 	content: "";
@@ -477,10 +504,17 @@ div.message-helper-small { width: 90%; }
 	height: 0;
 }
 
-#menu-left .cssmenu { margin-right: -9px; }
-#menu-right .cssmenu { margin-left: -9px; }
+#menu-left .cssmenu {
+	margin-right: -9px;
+}
 
-.cssmenu li:hover > .cssmenu-title { text-decoration: none; }
+#menu-right .cssmenu {
+	margin-left: -9px;
+}
+
+.cssmenu li:hover > .cssmenu-title {
+	text-decoration: none;
+}
 
 .cssmenu .cssmenu-title img {
 	margin: 0px 5px 0px 0px;
@@ -494,14 +528,17 @@ div.message-helper-small { width: 90%; }
 	.cssmenu {
 		width: 100%;
 	}
+	
 	.cssmenu ul {
 		width: 100%;
 		display: none;
 	}
+	
 	.cssmenu ul li {
 		width: 100%;
 		border-top: 1px solid rgba(120, 120, 120, 0.2);
 	}
+	
 	.cssmenu ul ul li,
 	.cssmenu li:hover > ul > li {
 		height: auto;
@@ -517,7 +554,7 @@ div.message-helper-small { width: 90%; }
 /* ---- Variante cssmenu-horizontal ---- */
 #main .cssmenu-horizontal {
 	border: 1px #BEBEBE solid;
-	background: #FFFFFF;
+	background-color: #FFFFFF;
 }
 
 /* ---- Variante cssmenu-group ---- */
@@ -528,7 +565,7 @@ div.cssmenu-group {
     position: relative;
     padding: 2px 8px;
     color: #444444;
-    background-image: linear-gradient(to bottom, rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%,rgba(56, 56, 56, 0.18) 100%);
     background-color: #FFFFFF;
     border: 1px solid #999999;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
@@ -599,6 +636,7 @@ div.cssmenu-group .cssmenu-title {
 		border-right: 1px solid #444444;
 		position: relative;
 	}
+	
 	#sub-header .cssmenu-horizontal > ul > li:after {
 		position:absolute;
 		right: 1;
@@ -694,13 +732,13 @@ div.cssmenu-group .cssmenu-title {
 }
 
 /* ---- Position des sous menu ---- */
-.cssmenu li:hover > ul 							{ left: auto ; 			  }
+.cssmenu li:hover > ul 										{ left: auto ; 			  }
 aside .cssmenu-left li:hover > ul,
-#container-leftmenu .cssmenu-left li:hover > ul { left: 100% ; top: 0;    }
+#container-leftmenu .cssmenu-left li:hover > ul 			{ left: 100% ; top: 0;    }
 aside .cssmenu.cssmenu-right li:hover > ul,
-#container-rightmenu .cssmenu.cssmenu-right li:hover > ul { right: 100%; top: 0;    }
-.cssmenu.cssmenu-actionslinks li:hover > ul 	{ right: 0   ; top: 100%; }
-.cssmenu.cssmenu-actionslinks ul li:hover > ul 	{ right: 100%; top: 0;    }
+#container-rightmenu .cssmenu.cssmenu-right li:hover > ul 	{ right: 100%; top: 0;    }
+.cssmenu.cssmenu-actionslinks li:hover > ul 				{ right: 0   ; top: 100%; }
+.cssmenu.cssmenu-actionslinks ul li:hover > ul 				{ right: 100%; top: 0;    }
 
 @media (max-width: 768px) {
 	.cssmenu li:hover > ul 						{ left: 0;  }
@@ -718,7 +756,7 @@ aside .cssmenu.cssmenu-right li:hover > ul,
     border-right: 1px solid #F9F9F9;
     border-left: 1px solid #BBBBBB;
     color: #444444;
-    background-image: linear-gradient(to bottom, rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%,rgba(56, 56, 56, 0.18) 100%);
     background-color: #FFFFFF;
     border: 1px solid #999999;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
@@ -731,7 +769,7 @@ aside .cssmenu.cssmenu-right li:hover > ul,
 }
 
 .cssmenu.cssmenu-group > ul > li:hover {
-	background-image: linear-gradient(to bottom, rgba(255,255,255,0.18) 40%,rgba(56,56,56,0.18) 100%);
+	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 40%,rgba(56, 56, 56, 0.18) 100%);
     background-color: #F0F0F0;
     border-bottom-color: #B3B3B3;
 }
@@ -746,7 +784,7 @@ aside .cssmenu.cssmenu-right li:hover > ul,
 }
 
 .cssmenu-group > ul > li.current {
-    background-image: linear-gradient(to top, rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
+    background-image: linear-gradient(to top, rgba(255, 255, 255, 0.18) 0%,rgba(56, 56, 56, 0.18) 100%);
     background-color: #F0F0F0;
     border-top-color: #B3B3B3;
 }
@@ -760,12 +798,15 @@ aside .cssmenu.cssmenu-right li:hover > ul,
 }
 
 @media (max-width: 768px) {
+	
 	.cssmenu-group > ul > li {
 		border-radius: 0px;
 	}
+	
 	.cssmenu-group > ul > li:first-child {
 	    border-radius: 4px 4px 0px 0px;
 	}
+	
 	.cssmenu-group > ul > li:last-child {
 	    border-radius: 0px 0px 4px 4px;
 	}
@@ -773,6 +814,7 @@ aside .cssmenu.cssmenu-right li:hover > ul,
 
 /* ---- Variante cssmenu-actionslinks ---- */
 @media (max-width: 768px) {
+	
 	.cssmenu-actionslinks > ul > li:last-child {
 		padding: 0 0 10px 0;
 		border-bottom: 1px solid rgba(120, 120, 120, 0.2);
@@ -780,6 +822,7 @@ aside .cssmenu.cssmenu-right li:hover > ul,
 }
 
 @media (min-width: 769px) {
+	
 	.cssmenu.cssmenu-static li > .cssmenu-title {
 		border: none;
 	}
@@ -822,6 +865,7 @@ aside .cssmenu.cssmenu-right li:hover > ul,
 }
 
 @media (min-width: 769px) {
+	
 	.cssmenu ul ul li {
 		height: 0;
 		transition: all .25s ease;
@@ -882,17 +926,21 @@ aside .cssmenu.cssmenu-right li:hover > ul,
 }
 
 @media (max-width: 768px) {
+	
 	.cssmenu ul ul li .cssmenu-title,
 	.cssmenu.cssmenu-actionslinks ul li ul li .cssmenu-title {
 		padding-left: 25px;
 	}
+	
 	.cssmenu ul ul ul li .cssmenu-title,
 	.cssmenu.cssmenu-actionslinks ul li ul li ul li .cssmenu-title  {
 		padding-left: 35px;
 	}
+	
 	.cssmenu ul ul li .cssmenu-title {
 		background: none;
 	}
+	
 	.cssmenu ul ul,
 	.cssmenu ul ul ul {
 		position: relative;
@@ -905,6 +953,7 @@ aside .cssmenu.cssmenu-right li:hover > ul,
 
 /* ---- Variantes ---- */
 @media (min-width: 769px) {
+	
 	.cssmenu-vertical ul ul {
 		position: relative;
 	}
@@ -942,6 +991,7 @@ aside .cssmenu.cssmenu-right li:hover > ul,
 	.cssmenu.cssmenu-static ul ul > li > .cssmenu-title {
 		padding-left: 10px;
 	}
+	
 	.cssmenu.cssmenu-static ul ul ul > li > .cssmenu-title {
 		padding-left: 20px;
 	}
@@ -965,8 +1015,8 @@ header .cssmenu li:hover > .cssmenu-title 					{ color: #FFFFFF; }
 #main .cssmenu li:hover > .cssmenu-title 					{ color: #666666; }
 
 @media (min-width: 769px) {
-	header .cssmenu-horizontal > ul > li:hover				{ background: #333333; }
-	#main .cssmenu-horizontal > ul > li:hover  				{ background: #F9F9F9; }
+	header .cssmenu-horizontal > ul > li:hover				{ background-color: #333333; }
+	#main .cssmenu-horizontal > ul > li:hover  				{ background-color: #F9F9F9; }
 }
 
 /* ---- Niveau 2 ---- */
@@ -984,23 +1034,23 @@ header .cssmenu ul ul li:hover > .cssmenu-title 			{ color: #FFFFFF; }
 footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 #top-footer .cssmenu-static ul ul li:hover > .cssmenu-title { color: #262626; }
 
-header .cssmenu ul ul li .cssmenu-title						{ background: #333333; }
-.cssmenu.cssmenu-vertical ul ul li .cssmenu-title  			{ background: #FFFFFF; }
+header .cssmenu ul ul li .cssmenu-title						{ background-color: #333333; }
+.cssmenu.cssmenu-vertical ul ul li .cssmenu-title  			{ background-color: #FFFFFF; }
 
-.cssmenu-actionslinks ul li:hover > .cssmenu-title:after 	{ background: #333333; }
+.cssmenu-actionslinks ul li:hover > .cssmenu-title:after 	{ background-color: #333333; }
 
 @media (min-width: 769px) {
-	.cssmenu-actionslinks li:hover > .cssmenu-title 		{ background: #DDDDDD; }
-	#main .cssmenu-horizontal ul ul							{ background: #F9F9F9; }
-	#main .cssmenu-horizontal ul ul	> li:hover				{ background: #F1F1F1; }
+	.cssmenu-actionslinks li:hover > .cssmenu-title 		{ background-color: #DDDDDD; }
+	#main .cssmenu-horizontal ul ul							{ background-color: #F9F9F9; }
+	#main .cssmenu-horizontal ul ul	> li:hover				{ background-color: #F1F1F1; }
 }
 
 /* ---- Personnalisation de l'indicateur de sous-Menu ---- */
 @media (min-width: 769px) {
 	.cssmenu li.has-sub > .cssmenu-title:after,
-	.cssmenu li.has-sub > .cssmenu-title:before 		 	{ background: #DDDDDD; }
+	.cssmenu li.has-sub > .cssmenu-title:before 		 	{ background-color: #DDDDDD; }
 	.cssmenu-vertical li.has-sub > .cssmenu-title:after,
-	.cssmenu-vertical li.has-sub > .cssmenu-title:before 	{ background: #444444; }
+	.cssmenu-vertical li.has-sub > .cssmenu-title:before 	{ background-color: #444444; }
 }
 
 /* --- Bouton responsive --- */
@@ -1013,12 +1063,14 @@ header .cssmenu ul ul li .cssmenu-title						{ background: #333333; }
 }
 
 @media (min-width: 769px) {
+	
 	.cssmenu #menu-button:before {
 		font-size: 1.3rem;
 	}
 }
 
 @media (max-width: 768px) {
+	
 	.cssmenu #menu-button {
 		display: block;
 		padding: 17px 40px 17px 17px;
@@ -1041,10 +1093,11 @@ header .cssmenu ul ul li .cssmenu-title						{ background: #333333; }
 		border-width: 2px 0 2px 0;
 		border-style: solid;
 	}
+	
 	.cssmenu #menu-button:before {
 		height: 2px;
 		width: 20px;
-		background: #DDDDDD;
+		background-color: #DDDDDD;
 		font-size: 1.3rem;
 	}
 
@@ -1061,6 +1114,7 @@ header .cssmenu ul ul li .cssmenu-title						{ background: #333333; }
 }
 /* ---- Position du bouton ---- */
 @media (max-width: 768px) {
+	
 	.cssmenu #menu-button:after 				{ top: 22px; right: 17px; }
 	.cssmenu #menu-button:before 				{ top: 16px; right: 17px; }
 	.cssmenu #menu-button.menu-opened:after,
@@ -1084,7 +1138,7 @@ header .cssmenu ul ul li .cssmenu-title						{ background: #333333; }
 	    line-height: 1;
 	    -webkit-font-smoothing: antialiased;
 	    color: #444444;
-	    background-image: linear-gradient(to bottom, rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
+	    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%,rgba(56, 56, 56, 0.18) 100%);
 	    background-color: #FFFFFF;
 	    border: 1px solid #999999;
 	    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1)  #B3B3B3 rgba(0, 0, 0, 0.25);
@@ -1119,7 +1173,7 @@ header .cssmenu ul ul li .cssmenu-title						{ background: #333333; }
 		padding: 5px 0;
 		width: 170px;
 		font-size: 11px;
-		background: #FFFFFF;
+		background-color: #FFFFFF;
 		border-radius: 3px;
 		box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 		border: 1px solid #AAAAAA;
@@ -1156,7 +1210,7 @@ header .cssmenu ul ul li .cssmenu-title						{ background: #333333; }
 	}
 
 	.cssmenu #menu-button:before {
-		background: #555555;
+		background-color: #555555;
 	}
 
 	#main .cssmenu #menu-button {
@@ -1165,19 +1219,20 @@ header .cssmenu ul ul li .cssmenu-title						{ background: #333333; }
 	
 	.cssmenu #menu-button.menu-opened:after,
 	.cssmenu #menu-button.menu-opened:before {
-		background: #555555;
+		background-color: #555555;
 	}
 
 	header .cssmenu #menu-button.menu-opened:after,
-	header .cssmenu #menu-button.menu-opened:before 			{ background: #FFFFFF; }
+	header .cssmenu #menu-button.menu-opened:before 			{ background-color: #FFFFFF; }
 
 	header .cssmenu-vertical #menu-button.menu-opened:after,
-	header .cssmenu-vertical #menu-button.menu-opened:before 	{ background: #DDDDDD; }
+	header .cssmenu-vertical #menu-button.menu-opened:before 	{ background-color: #DDDDDD; }
 }
 
 /* --- Bouton submenu --- */
 /* --- Classes générales cssmenu --- */
 @media (max-width: 768px) {
+	
 	.cssmenu .submenu-button {
 		position: absolute;
 		z-index: 99;
@@ -1234,16 +1289,16 @@ header .cssmenu ul ul li .cssmenu-title						{ background: #333333; }
 
 /* ---- Personnalisation background Bouton submenu ---- */
 @media (max-width: 768px) {
-	.cssmenu .submenu-button:after  						{ background: #DDDDDD; }
-	.cssmenu .submenu-button:before 						{ background: #DDDDDD; }
+	.cssmenu .submenu-button:after  						{ background-color: #DDDDDD; }
+	.cssmenu .submenu-button:before 						{ background-color: #DDDDDD; }
 
-	.cssmenu .submenu-button.submenu-opened:after 			{ background: #FFFFFF; }
+	.cssmenu .submenu-button.submenu-opened:after 			{ background-color: #FFFFFF; }
 
-	.cssmenu .submenu-button.submenu-opened 				{ background: #262626; }
-	.cssmenu-actionslinks .submenu-button.submenu-opened 	{ background: #DDDDDD; }
+	.cssmenu .submenu-button.submenu-opened 				{ background-color: #262626; }
+	.cssmenu-actionslinks .submenu-button.submenu-opened 	{ background-color: #DDDDDD; }
 
-	#menu-left .cssmenu .submenu-button.submenu-opened 		{ background: rgba(120, 120, 120, 0.2); }
-	#menu-right .cssmenu .submenu-button.submenu-opened 	{ background: rgba(120, 120, 120, 0.2); }
+	#menu-left .cssmenu .submenu-button.submenu-opened 		{ background-color: rgba(120, 120, 120, 0.2); }
+	#menu-right .cssmenu .submenu-button.submenu-opened 	{ background-color: rgba(120, 120, 120, 0.2); }
 }
 	
 /* ---- Postion icone Submenu ---- */

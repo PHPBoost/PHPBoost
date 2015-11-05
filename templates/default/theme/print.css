@@ -5,10 +5,14 @@ body{
  	font-family: "Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
 	color: black;
 }
-h1 { border-bottom: 1px solid black; }
+h1 {
+	border-bottom: 1px solid black;
+}
 
-table { border-collapse: collapse; }
+td, th {
+	border: 1px solid black;
+}
 
-td, th { border: 1px solid black; }
-
-th { font-weight: bold; }
+th {
+	font-weight: bold;
+}

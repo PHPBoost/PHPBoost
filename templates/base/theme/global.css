@@ -77,18 +77,18 @@ h4.formatter-title {
 
 .calendar-block .date-select-container {
 	background: #F5F5F5;
-	padding: 2px 0px;
-	border-radius: 3px 3px 0px 0px;
+	padding: 2px 0;
+	border-radius: 3px 3px 0 0;
 }
 
 .calendar-block .date-select-previous {
 	float: left;
-	margin: 1px 4px 0px 4px;
+	margin: 1px 4px 0 4px;
 }
 
 .calendar-block .date-select-next {
 	float: right;
-	margin: 1px 4px 0px 4px;
+	margin: 1px 4px 0 4px;
 }
 
 .calendar-block .date-select-next i,
@@ -128,8 +128,8 @@ h4.formatter-title {
 
 .calendar-block .date-picker thead tr th {
 	border-top: 1px solid #CCCCCC;
-	padding: 5px 0px;
-	border-radius: 0px;
+	padding: 5px 0;
+	border-radius: 0;
 	background: #FFFFFF;
 	font-weight: bold;
 	color: #666666;
@@ -156,8 +156,8 @@ h4.formatter-title {
 	border-bottom: none;
 }
 
-.calendar-block .date-picker tbody tr:last-child td:first-child { border-radius: 0px 0px 0px 2px; }
-.calendar-block .date-picker tbody tr:last-child td:last-child	{ border-radius: 0px 0px 2px 0px; }
+.calendar-block .date-picker tbody tr:last-child td:first-child { border-radius: 0 0 0 2px; }
+.calendar-block .date-picker tbody tr:last-child td:last-child	{ border-radius: 0 0 2px 0; }
 
 td.calendar-week {
     border-right: 1px solid #BBBBBB;
@@ -178,7 +178,7 @@ td.calendar-week {
 .bbcode-block {
 	background: #F3F3F3;
 	border-radius: 3px;
-	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 	border: 1px solid #AAAAAA;
 	margin: 0;
 }
@@ -201,7 +201,7 @@ td.calendar-week {
 }
 
 .color-picker td {
-	padding: 0px;
+	padding: 0;
 	border: 1px solid #F3F3F3;
 }
 
@@ -215,7 +215,7 @@ td.calendar-week {
 .formatter-blockquote, .formatter-code, .formatter-hide {
 	display: block;
 	width: 93%;
-	padding: 2px 0px;
+	padding: 2px 0;
 	font-weight: bold;
 	margin: auto;
 }
@@ -228,7 +228,7 @@ td.calendar-week {
 	border-radius: 3px;
 	color: #444444;
 	padding: 8px;
-	margin: 0px 25px;
+	margin: 0 25px;
 }
 
 .hide {
@@ -281,7 +281,7 @@ td.calendar-week {
 	background-color: #FFFFFF;
 	border: 1px solid #CCCCCC;
 	padding: 2px;
-	margin: 2px 0px 0px 0px;
+	margin: 2px 0 0 0;
 	border-radius: 4px;
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
 }
@@ -289,7 +289,7 @@ td.calendar-week {
 /* --- La barre de progression --- */
 .progressbar-container {
 	background: #F5F5F5;
-	margin: 4px 0px 10px;
+	margin: 4px 0 10px;
 	border-radius: 3px;
 	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 	position: relative;
@@ -381,7 +381,7 @@ li.small-block .fa-stack {
 .feed-list {
 	list-style-type: none;
 	text-align: left;
-	margin: 5px 0px;
+	margin: 5px 0;
 }
 
 
@@ -455,7 +455,7 @@ div#message-maintain {
 }
 
 div#message-maintain > div {
-	margin: 0px auto;
+	margin: 0 auto;
 }
 
 div#release {
@@ -470,7 +470,7 @@ div#release {
 	border: 1px solid #DDDDDD;
 	border-radius: 3px;
 	color: #444444;
-	margin: 0px 25px;
+	margin: 0 25px;
 	padding: 6px;
 }
 
@@ -527,6 +527,7 @@ a.upload-recent-file {
 	position: relative;
 	margin: 0;
 }
+
 .cssmenu:after,
 .cssmenu > ul:after {
 	content: "";
@@ -537,31 +538,37 @@ a.upload-recent-file {
 	height: 0;
 }
 
-#menu-left .cssmenu { margin-right: -9px; }
-#menu-right .cssmenu { margin-left: -9px; }
+#menu-left .cssmenu 	{ margin-right: -9px; }
+#menu-right .cssmenu 	{ margin-left: -9px; }
 
-.cssmenu li:hover > .cssmenu-title { text-decoration: none; }
+.cssmenu li:hover > .cssmenu-title {
+	text-decoration: none;
+}
 
 .cssmenu .cssmenu-title img {
-	margin: 0px 5px 0px 0px;
+	margin: 0 5px 0 0;
 	vertical-align: bottom;
 }
 
-#top-header .cssmenu li.has-sub ul li:first-child .cssmenu-title { border-radius: 0px 5px 0px 0px; }
-#top-header .cssmenu li.has-sub ul li:last-child .cssmenu-title  { border-radius: 0px 0px 5px 5px; }
+#top-header .cssmenu li.has-sub ul li:first-child .cssmenu-title { border-radius: 0 5px 0 0; }
+#top-header .cssmenu li.has-sub ul li:last-child .cssmenu-title  { border-radius: 0 0 5px 5px; }
 
 @media (max-width: 768px) {
+	
 	.cssmenu {
 		width: 100%;
 	}
+	
 	.cssmenu ul {
 		width: 100%;
 		display: none;
 	}
+	
 	.cssmenu ul li {
 		width: 100%;
 		border-top: 1px solid rgba(120, 120, 120, 0.2);
 	}
+	
 	.cssmenu ul ul li,
 	.cssmenu li:hover > ul > li {
 		height: auto;
@@ -588,7 +595,7 @@ div.cssmenu-group {
     position: relative;
     padding: 2px 8px;
     color: #444444;
-    background-image: linear-gradient(to bottom, rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%,rgba(56, 56, 56, 0.18) 100%);
     background-color: #FFFFFF;
     border: 1px solid #999999;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
@@ -605,6 +612,7 @@ div.cssmenu-group .cssmenu-title {
 }
 
 @media (max-width: 768px) {
+	
 	.cssmenu-group {
 		margin: 0 0 5px 0;
 	}
@@ -616,6 +624,7 @@ div.cssmenu-group .cssmenu-title {
 }
 
 @media (min-width: 769px) {
+	
 	.cssmenu-actionslinks {
 		float: right;
 		margin: 0 5px 5px 5px;
@@ -631,6 +640,7 @@ div.cssmenu-group .cssmenu-title {
 }
 
 @media (max-width: 768px) {
+	
 	.cssmenu-actionslinks ul li {
 		border: none;
 	}
@@ -638,10 +648,14 @@ div.cssmenu-group .cssmenu-title {
 
 /* ---- Autres variantes ---- */
 @media (min-width: 769px) {
-	#cssmenu-galleryfilter ul { width: 130px; }
+	
+	#cssmenu-galleryfilter ul {
+		width: 130px;
+	}
 }
 
 @media (min-width: 769px) {
+	
 	.cssmenu.cssmenu-static li.has-sub > .cssmenu-title:after,
 	.cssmenu.cssmenu-static li.has-sub > .cssmenu-title:before {
 		display: none;
@@ -651,6 +665,7 @@ div.cssmenu-group .cssmenu-title {
 /* --- Niveau 1 --- */
 /* ---- Classes générales cssmenu ---- */
 @media (min-width: 769px) {
+	
 	.cssmenu > ul > li {
 		float: left;
 	}
@@ -659,6 +674,7 @@ div.cssmenu-group .cssmenu-title {
 		border-right: 1px solid #444444;
 		position: relative;
 	}
+	
 	#sub-header .cssmenu-horizontal > ul > li:after {
 		position:absolute;
 		right: 1;
@@ -669,7 +685,9 @@ div.cssmenu-group .cssmenu-title {
 	}
 
 	#sub-header .cssmenu-horizontal > ul > li:last-child,
-	#main .cssmenu-horizontal > ul > li:last-child { border: none; }
+	#main .cssmenu-horizontal > ul > li:last-child {
+		border: none;
+	}
 
 	#sub-header .cssmenu-horizontal > ul > li:last-child:after,
 	#main .cssmenu-horizontal > ul > li:last-child:after {
@@ -681,6 +699,7 @@ div.cssmenu-group .cssmenu-title {
 		border-right: 1px solid #EFEFEF;
 		position: relative;
 	}
+	
 	#main .cssmenu-horizontal > ul > li:after {
 		position:absolute;
 		right: 1;
@@ -695,7 +714,7 @@ div.cssmenu-group .cssmenu-title {
 	}
 
 	header .cssmenu-horizontal > ul > li.has-sub:hover {
-		border-radius : 5px 5px 0px 0px;
+		border-radius : 5px 5px 0 0;
 	}
 
 }
@@ -719,6 +738,7 @@ div.cssmenu-group .cssmenu-title {
 }
 
 @media (min-width: 769px) {
+	
 	.cssmenu > ul > li.has-sub > .cssmenu-title:after,
 	.cssmenu > ul > li.has-sub > .cssmenu-title:before {
 		position: absolute;
@@ -776,35 +796,37 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
     border-right: 1px solid #F9F9F9;
     border-left: 1px solid #BBBBBB;
     color: #444444;
-    background-image: linear-gradient(to bottom, rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%,rgba(56, 56, 56, 0.18) 100%);
     background-color: #FFFFFF;
     border: 1px solid #999999;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
     border-bottom-color: #B3B3B3;
     cursor: pointer;
 }
+
 .cssmenu.cssmenu-group > ul > li {
 	display: inline-block;
 	float: none;
 }
 
 .cssmenu.cssmenu-group > ul > li:hover {
-	background-image: linear-gradient(to bottom, rgba(255,255,255,0.18) 40%,rgba(56,56,56,0.18) 100%);
+	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 40%,rgba(56, 56, 56, 0.18) 100%);
     background-color: #F0F0F0;
     border-bottom-color: #B3B3B3;
 }
 
 .cssmenu-group > ul > li:first-child {
-	border-radius: 4px 0px 0px 4px;
+	border-radius: 4px 0 0 4px;
 	border-left: 1px solid rgba(0, 0, 0, 0.1);
 }
+
 .cssmenu-group > ul > li:last-child {
-    border-radius: 0px 4px 4px 0px;
+    border-radius: 0 4px 4px 0;
 	border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .cssmenu-group > ul > li.current {
-    background-image: linear-gradient(to top, rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
+    background-image: linear-gradient(to top, rgba(255, 255, 255, 0.18) 0%,rgba(56, 56, 56, 0.18) 100%);
     background-color: #F0F0F0;
     border-top-color: #B3B3B3;
 }
@@ -818,14 +840,17 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 }
 
 @media (max-width: 768px) {
+	
 	.cssmenu-group > ul > li {
-		border-radius: 0px;
+		border-radius: 0;
 	}
+	
 	.cssmenu-group > ul > li:first-child {
-	    border-radius: 4px 4px 0px 0px;
+	    border-radius: 4px 4px 0 0;
 	}
+	
 	.cssmenu-group > ul > li:last-child {
-	    border-radius: 0px 0px 4px 4px;
+	    border-radius: 0 0 4px 4px;
 	}
 }
 
@@ -851,7 +876,7 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 @media (min-width: 769px) {
 
 	.cssmenu.cssmenu-static > ul > li {
-		padding: 0px 10px 0px 10px;
+		padding: 0 10px 0 10;
 	}
 
 	footer .cssmenu.cssmenu-static > ul > li 		{ border-right: 1px solid #2A2A2A; }
@@ -865,7 +890,7 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 	.cssmenu.cssmenu-static > ul > li > .cssmenu-title {
 		font-size: 17px;
 		border-bottom: 1px solid #25466C;
-		margin: 0px 0px 20px 0px;
+		margin: 0 0 20px 0;
 		padding-bottom: 5px;
 		font-weight: bold;
     }
@@ -880,6 +905,7 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 }
 
 @media (min-width: 769px) {
+	
 	.cssmenu ul ul li {
 		height: 0;
 		transition: all .25s ease;
@@ -920,6 +946,7 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 	display: block;
 	content: '';
 }
+
 .cssmenu ul ul li.has-sub > .cssmenu-title:after {
 	width: 8px;
 	height: 2px;
@@ -940,17 +967,21 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 }
 
 @media (max-width: 768px) {
+	
 	.cssmenu ul ul li .cssmenu-title,
 	.cssmenu.cssmenu-actionslinks ul li ul li .cssmenu-title {
 		padding-left: 25px;
 	}
+	
 	.cssmenu ul ul ul li .cssmenu-title,
 	.cssmenu.cssmenu-actionslinks ul li ul li ul li .cssmenu-title  {
 		padding-left: 35px;
 	}
+	
 	.cssmenu ul ul li .cssmenu-title {
 		background: none;
 	}
+	
 	.cssmenu ul ul,
 	.cssmenu ul ul ul {
 		position: relative;
@@ -984,6 +1015,7 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 }
 
 @media (min-width: 769px) {
+	
 	.cssmenu-static ul ul {
 	    position: relative;
 	    left: 0;
@@ -1000,6 +1032,7 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 	.cssmenu.cssmenu-static ul ul > li > .cssmenu-title {
 		padding-left: 10px;
 	}
+	
 	.cssmenu.cssmenu-static ul ul ul > li > .cssmenu-title {
 		padding-left: 20px;
 	}
@@ -1071,12 +1104,14 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 }
 
 @media (min-width: 769px) {
+	
 	.cssmenu #menu-button:before {
 		font-size: 1.3rem;
 	}
 }
 
 @media (max-width: 768px) {
+	
 	.cssmenu #menu-button {
 		display: block;
 		padding: 17px 40px 17px 17px;
@@ -1102,6 +1137,7 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 		border-width: 2px 0 2px 0;
 		border-style: solid;
 	}
+	
 	.cssmenu #menu-button:before {
 		height: 2px;
 		width: 20px;
@@ -1145,7 +1181,7 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 	    line-height: 1;
 	    -webkit-font-smoothing: antialiased;
 	    color: #444444;
-	    background-image: linear-gradient(to bottom, rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
+	    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%,rgba(56,56, 56, 0.18) 100%);
 	    background-color: #FFFFFF;
 	    border: 1px solid #999999;
 	    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1)  #B3B3B3 rgba(0, 0, 0, 0.25);
@@ -1182,7 +1218,7 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 		font-size: 11px;
 		background: #FFFFFF;
 		border-radius: 3px;
-		box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+		box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 		border: 1px solid #AAAAAA;
 		z-index: 10;
 	}
@@ -1212,6 +1248,7 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 
 /* ---- Personnalisation graphique du bouton responsive---- */
 @media (max-width: 768px) {
+	
 	.cssmenu #menu-button:after {
 		border-color: #DDDDDD;
 	}
@@ -1239,6 +1276,7 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 /* --- Bouton submenu --- */
 /* --- Classes générales cssmenu --- */
 @media (max-width: 768px) {
+	
 	.cssmenu .submenu-button {
 		position: absolute;
 		z-index: 99;
@@ -1286,6 +1324,7 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 
 /* ---- Variante Static ---- */
 @media (max-width: 768px) {
+	
 	.cssmenu-static .submenu-button,
 	.cssmenu-static .submenu-button:after,
 	.cssmenu-static .submenu-button:before {
@@ -1295,6 +1334,7 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 
 /* ---- Personnalisation background Bouton submenu ---- */
 @media (max-width: 768px) {
+	
 	.cssmenu .submenu-button:after  						{ background: #DDDDDD; }
 	.cssmenu .submenu-button:before 						{ background: #DDDDDD; }
 
@@ -1310,6 +1350,7 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 	
 /* ---- Postion icone Submenu ---- */
 @media (max-width: 768px) {
+	
 	.cssmenu .submenu-button:after 				 { top: 22px; right: 19px; }
   	.cssmenu .submenu-button:before 			 { top: 19px; right: 22px; }
   	.cssmenu ul ul .submenu-button:after 		 { top: 15px; right: 13px; }

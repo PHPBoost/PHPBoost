@@ -41,11 +41,12 @@ class FormFieldRadioChoiceOption extends AbstractFormFieldEnumOption
 	 */
 	public function display()
 	{
-		$tpl_src = '<label><input type="radio" name="${escape(NAME)}" value="${escape(VALUE)}" # IF C_CHECKED # checked="checked" # ENDIF # # IF C_DISABLE # disabled="disabled" # ENDIF #> {LABEL}</label>';
+		$tpl_src = '<div class="form-field-radio"><input id="${escape(ID)}" type="radio" name="${escape(NAME)}" value="${escape(VALUE)}" # IF C_CHECKED # checked="checked" # ENDIF # # IF C_DISABLE # disabled="disabled" # ENDIF #><label for="${escape(ID)}"></label></div><span class="form-field-radio-span"> {LABEL}</span>';
 		
 		$tpl = new StringTemplate($tpl_src);
 		
 		$tpl->put_all(array(
+			'ID' => $this->get_field_id(),
 			'NAME' => $this->get_field_id(),
 			'VALUE' => $this->get_raw_value(),
 			'C_CHECKED' => $this->is_active(),

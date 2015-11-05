@@ -122,7 +122,7 @@ article footer {
 	border-style: solid;
 	border-width: 2px 1px 1px 1px;
 	border-color: #366393 #CCCCCC #99B1CB #CCCCCC;
-	background: #F2F8FF;
+	background-color: #F2F8FF;
 	padding: 0.8em;
 }
 
@@ -183,7 +183,7 @@ section footer ul.pagination {
 }
 
 ul.pagination {
-	margin: 0px;
+	margin: 0;
 }
 
 ul.pagination .fa:before {
@@ -191,7 +191,7 @@ ul.pagination .fa:before {
 }
 
 ul.pagination-block {
-	margin: 5px 0px;
+	margin: 5px 0;
 }
 
 ul.pagination-block li {
@@ -211,22 +211,24 @@ ul.pagination-block li a {
 ul.pagination-block li a {
 	color: #333333;
 	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
-	background-image: linear-gradient(to bottom,  rgba(255,255,255,0.18) 0%, rgba(56,56,56,0.10) 100%);
+	background-image: linear-gradient(to bottom,  rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.10) 100%);
 	background-color: #F9F9F9;
 	border: 1px solid #CCCCCC;
 	border-color: #E1E1E1 #E1E1E1 #BFBFBF #CFCFCF;
 	border-radius: 4px;
-	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
+	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0 2px rgba(0, 0, 0, 0.05);
 }
+
 ul.pagination-block li a:hover {
 	background-color: #FDFDFD;
-	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.1);
+	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0 2px rgba(0, 0, 0, 0.1);
 	transition: all 0.1s linear;
 }
+
 ul.pagination-block li a:active {
 	background-color: #F1F1F1;
 	border: 1px solid #DDDDDD;
-	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
+	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0 2px rgba(0, 0, 0, 0.05);
 }
 
 ul.pagination-block li a.current-page {
@@ -235,6 +237,7 @@ ul.pagination-block li a.current-page {
 	border-color: #366393;
 	text-decoration: none;
 }
+
 ul.pagination-block li a.current-page:hover {
 	background-color: #366393;
 	border-color: #315A86;
@@ -286,6 +289,7 @@ ul.pagination-block-bis li a.next-page:hover {
 	margin: 0;
 	padding: 0;
 }
+
 .explorer .content ul ul {
 	margin-left: 22px;
 }
@@ -295,7 +299,7 @@ ul.pagination-block-bis li a.next-page:hover {
 }
 
 .explorer .content ul a {
-	padding: 3px 0px;
+	padding: 3px 0;
 	display: block;
 	text-decoration: none;
 	color: #666666;
@@ -309,6 +313,7 @@ ul.pagination-block-bis li a.next-page:hover {
 	width: 20px;
 	vertical-align: top;
 }
+
 .explorer .content ul .fa:before {
 	vertical-align: middle;
 }
@@ -337,7 +342,7 @@ ul.pagination-block-bis li a.next-page:hover {
 .options {
 	margin: 5px;
 	padding: 6px 12px;
-	background: #EEEEEE;
+	background-color: #EEEEEE;
 	border: 1px solid #DDDDDD;
 	border-radius: 3px;
 	float: right;
@@ -356,8 +361,8 @@ ul.pagination-block-bis li a.next-page:hover {
 --------------------------------------*/
 table {
 	width: 100%;
-	padding: 0px;
-	margin: 8px 0px;
+	padding: 0;
+	margin: 8px 0;
 	border-spacing: 0;
 }
 
@@ -382,6 +387,7 @@ table thead th {
 table thead th:first-child {
 	border-top-left-radius: 3px;
 }
+
 table thead th:last-child {
 	border-top-right-radius: 3px;
 }
@@ -389,8 +395,9 @@ table thead th:last-child {
 table thead th a {
 	color: #E5E6E6;
 }
+
 table thead th a:hover {
-	color: #FFFFFF;
+	color: BACKGROUND-COLOR:FFF;
 }
 
 /* --- Contenu du tableau --- */
@@ -404,11 +411,13 @@ table tbody td {
 }
 
 table tbody tr:nth-child(even) td {
-	background-color: #FFFFFF;
+	background-color: BACKGROUND-COLOR:FFF;
 }
+
 table tbody tr:last-child td {
 	border-bottom: 1px solid #D1D2D4;
 }
+
 table tbody tr td:last-child {
 	border-right: 1px solid #D1D2D4;
 }
@@ -420,6 +429,7 @@ table tbody tr.no-separator td {
 table tbody tr td.no-separator {
 	border-left: none;
 }
+
 table tbody tr td.no-separator:first-child {
 	border-left: 1px solid #D1D2D4;
 }
@@ -436,10 +446,12 @@ table tfoot tr th:first-child {
 	border-left: 1px solid #D1D2D4;
 	border-bottom-left-radius: 3px;
 }
+
 table tfoot tr th:last-child {
 	border-right: 1px solid #D1D2D4;
 	border-bottom-right-radius: 3px;
 }
+
 table tfoot tr th:only-child {
 	text-align: right;
 }
@@ -469,10 +481,10 @@ table.formatter-table th.formatter-table-head:first-child { border-top-left-radi
 table.formatter-table th.formatter-table-head:last-child  { border-top-right-radius: 3px; }
 
 table.formatter-table th.formatter-table-head a 	  {	color: #E5E6E6; }
-table.formatter-table th.formatter-table-head a:hover {	color: #FFFFFF; }
+table.formatter-table th.formatter-table-head a:hover {	color: BACKGROUND-COLOR:FFF; }
 
 table.formatter-table th.formatter-table-head p {
-	margin-bottom: 0px;
+	margin-bottom: 0;
 }
 
 .col-smaller { width: 3em;  }
@@ -527,26 +539,28 @@ button,
 	color: #333333;
 	text-align: center;
 	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
-	background-image: linear-gradient(to bottom,  rgba(255,255,255,0.18) 0%, rgba(56,56,56,0.10) 100%);
+	background-image: linear-gradient(to bottom,  rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.10) 100%);
 	background-color: #F9F9F9;
 	border: 1px solid #CCCCCC;
 	border-color: #E1E1E1 #E1E1E1 #BFBFBF #CFCFCF;
 	border-radius: 4px;
-	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
+	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0 2px rgba(0, 0, 0, 0.05);
 	word-wrap: no-warp;
 	padding: 0.3em 1em;
 }
+
 button:hover,
 .button-hover {
 	background-color: #FDFDFD;
-	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.1);
+	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0 2px rgba(0, 0, 0, 0.1);
 	transition: all 0.1s linear;
 }
+
 button:active,
 .button-active {
 	background-color: #F1F1F1;
 	border: 1px solid #DDDDDD;
-	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
+	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0 2px rgba(0, 0, 0, 0.05);
 }
 
 /* --- Petit bouton --- */
@@ -562,6 +576,7 @@ button.submit {
 	background-color: #3B6B9F;
 	border-color: #366393;
 }
+
 button.submit:hover {
 	background-color: #366393;
 	border-color: #315A86;
@@ -574,22 +589,24 @@ button.submit:hover {
 	font-weight: bold;
 	text-align: center;
 	border-radius: 2px;
-	background: #2F5B8A;
-	color: #FFFFFF;
+	background-color: #2F5B8A;
+	color: BACKGROUND-COLOR:FFF;
 	margin: 1px;
 }
+
 .basic-button:hover {
-	background: #3D6997;
-	color: #FFFFFF;
+	background-color: #3D6997;
+	color: BACKGROUND-COLOR:FFF;
 	text-decoration: none;
 }
 
 /* --- Bouton basic avec couleur alternative --- */
 .basic-button.alt {
-	background: #AAAAAA;
+	background-color: #AAAAAA;
 }
+
 .basic-button.alt:hover {
-	background: #BBBBBB;
+	background-color: #BBBBBB;
 }
 
 
@@ -625,15 +642,15 @@ optgroup {
 }
 
 option {
-	padding: 0px 3px;
+	padding: 0 3px;
 }
 
 /* --- Previsualisation --- */
 .xmlhttprequest-preview {
 	border: 1px solid #CCCCCC;
-	background-color: #FFFFFF;
+	background-color: BACKGROUND-COLOR:FFF;
 	color: #2E3B5F;
-	padding: 0px 2px;
+	padding: 0 2px;
 }
 
 .xmlhttprequest-preview img {
@@ -642,7 +659,7 @@ option {
 
 legend {
 	display: block;
-	margin: 0px 0px 0.6em 0px;
+	margin: 0 0 0.6em 0;
 	width: 100%;
 	text-transform: none;
 	color: #474747;
@@ -663,12 +680,13 @@ input[type=file],
 textarea,
 select {
 	color: #555555;
-	background-color: #FFFFFF;
+	background-color: BACKGROUND-COLOR:FFF;
 	border: 1px solid #CCCCCC;
 	border-radius: 4px;
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
 	padding: 4px 18px 4px 6px;
 }
+
 input[type=text]:hover,
 input[type=email]:hover,
 input[type=url]:hover,
@@ -682,8 +700,9 @@ textarea:hover,
 select:hover {
 	color: #333333;
 	border: 1px solid #BBBBBB;
-	background-color: #FFFFFF;
+	background-color: BACKGROUND-COLOR:FFF;
 }
+
 input[type=text]:focus,
 input[type=email]:focus,
 input[type=url]:focus,
@@ -702,7 +721,7 @@ select:focus {
 }
 
 input[type=color] {
-	padding: 0px 2px 0px 2px;
+	padding: 0 2px 0 2px;
 	width: 25px;
 }
 
@@ -735,23 +754,23 @@ input.field-xlarge  { width: 250px; }
 /* --- Element du formulaire (englobe le label et l'input d'un champ) --- */
 .form-element,
 .form-element-textarea {
-	margin: 0px 1em 1em 1em;
+	margin: 0 1em 1em 1em;
 	position: relative;
 }
 
 .fieldset-description {
-	margin: 0px 1em 1.5em 1em;
+	margin: 0 1em 1.5em 1em;
 }
 
 /* CSS applique aux tablettes */
 @media (max-width: 768px) {
 	.form-element,
 	.form-element-textarea {
-		margin: 0px 0.6em 1em 0.6em;
+		margin: 0 0.6em 1em 0.6em;
 	}
 
 	.fieldset-description {
-		margin: 0px 0.6em 1.3em 0.6em;
+		margin: 0 0.6em 1.3em 0.6em;
 	}
 }
 
@@ -759,11 +778,11 @@ input.field-xlarge  { width: 250px; }
 @media (max-width: 480px) {
 	.form-element,
 	.form-element-textarea {
-		margin: 0px 0.6em 0.5em 0.6em;
+		margin: 0 0.6em 0.5em 0.6em;
 	}
 
 	.fieldset-description {
-		margin: 0px 0.6em 0.9em 0.6em;
+		margin: 0 0.6em 0.9em 0.6em;
 	}
 }
 
@@ -823,7 +842,7 @@ select[disabled=disabled],
 select[disabled=disabled]:hover,
 select[disabled=disabled]:focus {
 	cursor: not-allowed;
-	background: #F1F1F1;
+	background-color: #F1F1F1;
 	color: #AAAAAA;
 	border: 1px solid #CCCCCC;
 }
@@ -837,7 +856,7 @@ textarea[readonly=readonly]:focus,
 select[readonly=readonly],
 select[readonly=readonly]:hover,
 select[readonly=readonly]:focus {
-	background: #FAFAFA;
+	background-color: #FAFAFA;
 	color: #888888;
 	border: 1px solid #CCCCCC;
 }
@@ -867,7 +886,7 @@ textarea {
 
 .form-element-auth .form-field {
 	display: inline-block;
-	margin: 2px 0px 0px 0px;
+	margin: 2px 0 0 0;
 }
 
 .form-element-auth .form-field div[class^="advanced-auth"] {
@@ -908,19 +927,19 @@ textarea {
 .advanced-auth-input button {
 	margin-left: -29px;
 	padding: 5px 5px 6px 5px;
-	border-width: 0px 0px 0px 1px;
-	border-radius: 0px 4px 4px 0px;
+	border-width: 0 0 0 1px;
+	border-radius: 0 4px 4px 0;
 }
 
 .advanced-auth-input-result {
 	width: 138px;
 	height: 100px;
-	margin: 2px 0px 0px 0px;
+	margin: 2px 0 0 0;
 }
 
 .bbcode ~ .form-field-textarea textarea {
-	border-radius: 0px 0px 4px 4px;
-	border-width: 0px 1px 1px 1px;
+	border-radius: 0 0 4px 4px;
+	border-width: 0 1px 1px 1px;
 }
 
 /* CSS applique aux écrans PC */
@@ -934,7 +953,7 @@ textarea {
 @media (max-width: 480px) {
 	.form-element-auth .form-field .advanced-auth-input {
 		float: none;
-		margin: 5px 0px 0px 0px;
+		margin: 5px 0 0 0;
 	}
 }
 
@@ -963,14 +982,14 @@ textarea {
 	left: 5px;
 	min-width: 20em;
 
-	background: #FEFEFE;
+	background-color: #FEFEFE;
 	border: 1px solid #EAEAEA;
-	box-shadow: 1px 3px 6px rgba(0,0,0,0.3);
+	box-shadow: 1px 3px 6px rgba(0, 0, 0, 0.3);
 	border-radius: 3px;
 
 	font-size: 0.8em;
 	font-weight: bold;
-	text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
+	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 input + .text-status-constraint {
@@ -1120,8 +1139,8 @@ div.field-required:after {
 
 /* --- Auto-completion --- */
 .autocomplete-suggestions {
-	border: 1px solid #999;
-	background: #FFF;
+	border: 1px solid #999999;
+	background-color: #FFFFFF;
 	overflow: auto;
 }
 
@@ -1137,7 +1156,7 @@ div.field-required:after {
 	cursor: pointer;
 }
 
-.autocomplete-selected { background: #F0F0F0; }
+.autocomplete-selected { background-color: #F0F0F0; }
 .autocomplete-no-suggestion { text-align: center; }
 
 
@@ -1167,7 +1186,7 @@ div.field-required:after {
 }
 
 .subcat-container {
-	margin: 10px 0px 5px 0px;
+	margin: 10px 0 5px 0;
 }
 
 .subcat-element {
@@ -1196,7 +1215,7 @@ div.field-required:after {
 }
 
 .sortable-block .sortable-element {
-	background: #FFFFFF;
+	background-color: #FFFFFF;
 	border: 1px solid #D6DEE7;
 	padding: 0;
 	margin-bottom: 6px;
@@ -1208,26 +1227,29 @@ div.field-required:after {
 
 .sortable-block .sortable-element:hover {
 	border: 1px solid #d0d8e1;
-	box-shadow: 0px 0px 5px #EAEAEA;
+	box-shadow: 0 0 5px #EAEAEA;
 }
 
-.sortable-block .sortable-element .sortable-selector {
-	display: table-cell;
-	position: relative;
-	width: 20px;
-	background-color: #81A4C8;
-	opacity: 0.3;
-	transition: opacity 1s;
-	cursor: move;
-}
+@media (min-width:769px){ 
 
-.sortable-selector:after {
-	position: absolute;
-	content: "\f047";
-	top: 28%;
-	left: 4px;
-	color: #FFFFFF;
-	font-family: fontawesome;
+	.sortable-block .sortable-element .sortable-selector {
+		display: table-cell;
+		position: relative;
+		width: 20px;
+		background-color: #81A4C8;
+		opacity: 0.3;
+		transition: opacity 1s;
+		cursor: move;
+	}
+	
+	.sortable-selector:after {
+		position: absolute;
+		content: "\f047";
+		top: 34%;
+		left: 4px;
+		color: #FFFFFF;
+		font-family: fontawesome;
+	}
 }
 
 .sortable-block .sortable-element:hover .sortable-actions {
@@ -1263,7 +1285,7 @@ div.field-required:after {
 }
 
 .sortable-block fieldset {
-	padding: 0px 30px;
+	padding: 0 30px;
 }
 
 .sortable-block .sortable-actions {
@@ -1301,7 +1323,7 @@ body.dragging, body.dragging * {
 }
 
 .dropzone {
-	margin: 10px 0px;
+	margin: 10px 0;
 	padding-top: 5px;
 	height: 30px;
 	border: 1px dashed #AAAAAA;
@@ -1315,10 +1337,10 @@ body.dragging, body.dragging * {
 /* -- Modules minis --
 --------------------------------------*/
 .module-mini-container {
-	margin: 0px 0px 10px 0px;
+	margin: 0 0 10px 0;
 	border: 1px #bebebe solid;
 	border-bottom: 2px #99B1CB solid;
-	background: #FFFFFF;
+	background-color: #FFFFFF;
 	border-spacing: 1px;
 	padding: 5px;
 	clear: both;
@@ -1333,7 +1355,6 @@ body.dragging, body.dragging * {
 
 .module-mini-container h5,
 .module-mini-container h3 {
-
 	color: #515C68;
 }
 
@@ -1341,7 +1362,7 @@ body.dragging, body.dragging * {
 	border-top: none;
 	border-bottom: none;
 	text-align: center;
-	padding: 5px 4px 0px 4px;
+	padding: 5px 4px 0 4px;
 }
 
 .module-mini-bottom {
@@ -1385,7 +1406,7 @@ body.dragging, body.dragging * {
 	margin: 5px 0 0 140px;
 	border: 1px solid #D6DEE7;
 	color: #333333;
-	background: #ECEFFA;
+	background-color: #ECEFFA;
 	min-height: 80px;
 	border-radius: 4px;
 }
@@ -1427,12 +1448,12 @@ body.dragging, body.dragging * {
 }
 
 .message-user-infos img {
-	padding: 10px 0px;
+	padding: 10px 0;
 }
 
 /* --- Moderation des messages --- */
 .message-moderate {
-	background: #ECEFFA;
+	background-color: #ECEFFA;
 	border: 1px solid #D6DEE7;
 	border-radius: 4px;
 	padding: 4px 0 4px 0;
@@ -1479,6 +1500,10 @@ ul#profile-container li {
 /* -- Maintenance --
 --------------------------------------*/
 
-#maintain { margin: 10px 0px; }
+#maintain {
+	margin: 10px 0;
+}
 
-div.delay { margin: 20px 0px; }
+div.delay {
+	margin: 20px 0;
+}

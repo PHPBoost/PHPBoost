@@ -73,7 +73,7 @@ fieldset {
 }
 
 hr {
-	background: #C4CED6;
+	background-color: #C4CED6;
 	border: none;
 	margin: 1px auto;
 	height: 1px;
@@ -124,11 +124,11 @@ a.wikipedia-link:before {
 
 .hidden { display: none !important; }
 
-@media ( max-width: 768px ) {
+@media (max-width: 768px) {
 	.hidden-small-screens { display: none !important; }
 }
 
-@media ( min-width: 769px ) {
+@media (min-width: 769px) {
 	.hidden-large-screens { display: none !important; }
 }
 
@@ -224,7 +224,7 @@ ul.pagination .current-page {
 
 /* Debug */
 .pbt-debug {
-	background: orange !important;
+	background-color: orange !important;
 	outline: 3px solid orangered !important;
 }
 
@@ -247,7 +247,7 @@ ul.pagination .current-page {
 
 @media print {
 	* {
-		background: transparent;
+		background-color: transparent;
 		color: #000000;
 		text-shadow: none;
 		box-shadow: none;
@@ -343,21 +343,19 @@ table.table-fixed {
 	.lightcase-open body > *:not([id*=lightcase-]) {
 		position: fixed !important;
 		top: -9999px !important;
-
 		width: 0 !important;
 		height: 0 !important;
-
 		overflow: hidden !important;
 	}
 
 	/* Overlay */
 	#lightcase-overlay {
-		background: #333;
+		background-color: #333;
 	}
 
 	/* Loading */
 	#lightcase-loading {
-		color: #aaa;
+		color: #AAAAAA;
 	}
 
 	/* Case */
@@ -366,24 +364,19 @@ table.table-fixed {
 		font-size: 13px;
 		line-height: 18px;
 		text-align: left;
-
-		text-shadow: 0 0 10px rgba(0,0,0,0.5);
+		text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 	}
 
 	#lightcase-case:not([data-type=image]):not([data-type=video]):not([data-type=flash]):not([data-type=error]),
 	#lightcase-case:not([data-type=image]):not([data-type=video]):not([data-type=flash]):not([data-type=error]) .lightcase-contentInner,
 	#lightcase-case:not([data-type=image]):not([data-type=video]):not([data-type=flash]):not([data-type=error]) .lightcase-inlineWrap {
 		position: relative !important;
-
 		top: auto !important;
 		left: auto !important;
-
 		width: auto !important;
 		height: auto !important;
-
 		margin: 0 !important;
 		padding: 0 !important;
-
 		border: none;
 		background: none;
 	}
@@ -399,7 +392,7 @@ table.table-fixed {
 	#lightcase-case .lightcase-content h5,
 	#lightcase-case .lightcase-content h6,
 	#lightcase-case .lightcase-content p {
-		color: #aaa;
+		color: #AAAAAA;
 	}
 
 	/* Additional info */
@@ -415,10 +408,6 @@ table.table-fixed {
 		padding: 15px;
 		border: none;
 		background: none;
-
-		-webkit-box-shadow: none;
-		-moz-box-shadow: none;
-		-o-box-shadow: none;
 		box-shadow: none;
 	}
 	#lightcase-case:not([data-type=image]):not([data-type=video]):not([data-type=flash]):not([data-type=error]) .lightcase-contentInner,
@@ -445,15 +434,13 @@ table.table-fixed {
 		bottom: 0;
 		left: 0;
 		height: 55px;
-
-		background: rgba(55,55,55,0.9);
+		background-color: rgba(55, 55, 55, 0.9);
 	}
 
 	#lightcase-nav a {
 		position: fixed;
 		z-index: 9999;
 		bottom: 15px;
-
 		outline: none;
 		cursor: pointer;
 		font-size: 24px;
@@ -468,7 +455,6 @@ table.table-fixed {
 		z-index: 9997;
 		top: 15px;
 		right: 15px;
-
 		opacity: 0;
 	}
 
@@ -488,13 +474,11 @@ table.table-fixed {
 	#lightcase-case p.lightcase-error {
 		padding: 30px 0;
 		font-size: 17px;
-		text-align: center;
-		
+		text-align: center;		
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
-
-		color: #aaa;
+		color: #AAAAAA;
 	}
 
 }
@@ -503,7 +487,7 @@ table.table-fixed {
 
 	/* Overlay */
 	#lightcase-overlay {
-		background: #333;
+		background-color: #333333;
 	}
 
 	/* Loading */
@@ -518,9 +502,8 @@ table.table-fixed {
 		font-size: 13px;
 		line-height: 18px;
 		text-align: left;
-
-		color: #aaa;
-		text-shadow: 0 0 10px rgba(0,0,0,0.5);
+		color: #AAAAAA;
+		text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 	}
 
 	/* Content */
@@ -528,21 +511,15 @@ table.table-fixed {
 		position: relative;
 		z-index: 1;
 		overflow: hidden;
-
 		text-shadow: none;
-
-		background-color: #fff;
-
-		-webkit-box-shadow: 0 0 30px rgba(0,0,0,0.5);
-		-moz-box-shadow: 0 0 30px rgba(0,0,0,0.5);
-		-o-box-shadow: 0 0 30px rgba(0,0,0,0.5);
-		box-shadow: 0 0 30px rgba(0,0,0,0.5);
+		background-color: #FFFFFF;
+		box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
 
 		-webkit-backface-visibility: hidden;
 	}
 	#lightcase-case[data-type=image] .lightcase-content,
 	#lightcase-case[data-type=video] .lightcase-content {
-		background-color: #333;
+		background-color: #333333;
 	}
 	#lightcase-case[data-type=image] .lightcase-contentInner,
 	#lightcase-case[data-type=video] .lightcase-contentInner {
@@ -550,12 +527,7 @@ table.table-fixed {
 	}
 	#lightcase-case:not([data-type=error]) .lightcase-inlineWrap {
 		padding: 30px;
-
 		overflow: auto;
-
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing: border-box;
-		-o-box-sizing: border-box;
 		box-sizing: border-box;
 	}
 
@@ -570,7 +542,7 @@ table.table-fixed {
 	#lightcase-case .lightcase-content h5,
 	#lightcase-case .lightcase-content h6,
 	#lightcase-case .lightcase-content p {
-		color: #333;
+		color: #333333;
 	}
 
 	/* Navigation */
@@ -607,14 +579,17 @@ table.table-fixed {
 
 		outline: none;
 	}
+	
 	#lightcase-nav a.lightcase-icon-play,
 	#lightcase-nav a.lightcase-icon-pause {
 		left: 50%;
 		margin-left: -0.5em;
 	}
+	
 	#lightcase-nav a.lightcase-icon-prev {
 		left: 15px;
 	}
+	
 	#lightcase-nav a.lightcase-icon-next {
 		right: 15px;
 	}
@@ -623,9 +598,8 @@ table.table-fixed {
 	#lightcase-case p.lightcase-error {
 		margin: 0;
 		padding: 0;
-
 		font-size: 17px;
-		color: #aaa;
+		color: #AAAAAA;
 	}
 
 }
@@ -637,7 +611,6 @@ table.table-fixed {
 		display: none;
 		width: 100%;
 		height: 100%;
-
 		position: fixed;
 		z-index: 1000;
 		top: 0;
@@ -650,27 +623,18 @@ table.table-fixed {
 		z-index: 1001;
 		top: 50%;
 		left: 50%;
-
 		margin-top: -0.5em;
 		margin-left: -0.5em;
-
 		opacity: 1;
-
-		font-size: 32px;
-		
+		font-size: 32px;		
 		/* Fixes the icon wobble issue in firefox */
 		-moz-transform-origin: 50% 53%;
-
-		-webkit-animation: lightcase-loading-spin 0.5s infinite linear;
-		-moz-animation: lightcase-loading-spin 0.5s infinite linear;
-		-o-animation: lightcase-loading-spin 0.5s infinite linear;
 		animation: lightcase-loading-spin 0.5s infinite linear;
 	}
 
 	/* Case */
 	#lightcase-case {
 		display: none;
-
 		position: fixed;
 		z-index: 1002;
 		top: 50%;
@@ -685,7 +649,6 @@ table.table-fixed {
 		 * to the maximum height additionally to the image height.
 		 */
 		position: absolute;
-
 		padding-top: 15px;
 	}
 
@@ -696,7 +659,6 @@ table.table-fixed {
 	#lightcase-case .lightcase-caption {
 		margin: 0;
 		padding: 0;
-
 		font-size: 17px;
 		line-height: 1.5;
 		font-weight: normal;
@@ -720,27 +682,23 @@ table.table-fixed {
 		 */
 		font-size: 38px;
 		line-height: 1;
-
 		text-align: center;
 		text-shadow: none;
 	}
+	
 	a[class*='lightcase-icon-'],
 	a[class*='lightcase-icon-']:focus {
 		position: fixed;
 		z-index: 9999;
-
-		color: rgba(255,255,255,0.6);
-
-		-webkit-tap-highlight-color: rgba(0,0,0,0);
-
-		-webkit-transition: color, opacity, ease-in-out 0.25s;
-		-moz-transition: color, opacity, ease-in-out 0.25s;
-		-o-transition: color, opacity, ease-in-out 0.25s;
+		color: rgba(255, 255, 255, 0.6);
+		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 		transition: color, opacity, ease-in-out 0.25s;
 	}
+	
 	a[class*='lightcase-icon-']:hover {
-		color: rgba(255,255,255,1);
+		color: rgba(255, 255, 255, 1);
 	}
+	
 	a[class*='lightcase-icon-'] > span {
 		display: inline-block;
 		text-indent: -9999px;
