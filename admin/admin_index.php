@@ -76,6 +76,11 @@ $result->dispose();
 $advises_form = new HTMLForm('advises_list', '', false);
 AdminServerSystemReportController::get_advises($advises_form);
 
+//Header logo
+$theme = ThemesManager::get_theme(AppContext::get_current_user()->get_theme());
+$customize_interface = $theme->get_customize_interface();
+$header_logo_path = $customize_interface->get_header_logo_path();
+
 $tpl->put_all(array(
 	'L_QUICK_ACCESS' => $LANG['quick_access'],
 	'L_ADD_CONTENT' => $LANG['add_content'],
@@ -93,6 +98,8 @@ $tpl->put_all(array(
 	'L_WELCOME_TITLE' => $LANG['welcome_title'],
 	'L_WELCOME_DESC' => $LANG['welcome_desc'],
 	'WRITING_PAD_CONTENT' => WritingPadConfig::load()->get_content(),
+	'C_HEADER_LOGO' => !empty($header_logo_path),
+	'HEADER_LOGO' => Url::to_rel($header_logo_path),
 	'C_NO_COM' => $i == 0,
 	'C_UNREAD_ALERTS' => (bool)AdministratorAlertService::get_number_unread_alerts(),
 	'L_INDEX_ADMIN' => $LANG['administration'],
