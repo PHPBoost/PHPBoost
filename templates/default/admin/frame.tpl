@@ -31,14 +31,8 @@
 	<body>
 		# INCLUDE BODY #
 		# INCLUDE JS_BOTTOM #
-		<script src="{PATH_TO_ROOT}/templates/default/admin/js/jquery.basictable.js"></script>
 		<script>
 		<!--
-			jQuery('#table').basictable();
-			jQuery('#table2').basictable();
-			jQuery('#table3').basictable();
-			jQuery('#table4').basictable();
-			
 			function open_submenu(myid)
 			{
 				jQuery('#' + myid).toggleClass('active');

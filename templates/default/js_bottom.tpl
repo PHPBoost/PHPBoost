@@ -28,5 +28,10 @@
 					}
 				});
 			});
+			
+			jQuery('#table').basictable();
+			jQuery('#table2').basictable();
+			jQuery('#table3').basictable();
+			jQuery('#table4').basictable();
 		-->
 		</script>
