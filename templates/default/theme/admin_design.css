@@ -1,6 +1,6 @@
 /* --------------------------------------
 		admin_design.css
-Contient les conteneur, fortement dépendant du design.
+Contient les conteneur, fortement dÃ©pendant du design.
 --------------------------------------*/ 
 html {
 	font-size: 100%;
@@ -23,7 +23,7 @@ body {
 	}
 }
 
-/* --- Entête de la page ============================================================= */
+/* --- EntÃªte de la page ============================================================= */
 header#header-admin {
 	background-color: #404040;
 }
@@ -43,7 +43,7 @@ a#site-name {
 	text-decoration: none;
 }
 
-/* --- Sous-entête de la page =================================== */
+/* --- Sous-entÃªte de la page =================================== */
 div#sub-header-admin {
 	z-index: 5000;
 	width: 100%;
@@ -86,7 +86,7 @@ h3.menu-title {display: none;}
 		margin: 20px 0 0;
 	}	
 	div.site-logo {
-		background-image: url('images/logo.png') no-repeat center center;
+		background: url('images/logo.png') no-repeat center center;
 		background-size: cover;
 		width: 25px;
 		height:25px;
