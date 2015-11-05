@@ -43,7 +43,7 @@ class FormFieldRadioChoice extends AbstractFormFieldChoice
 	public function __construct($id, $label, $value, $options, array $field_options = array(), array $constraints = array())
 	{
 		parent::__construct($id, $label, $value, $options, $field_options, $constraints);
-		$this->set_css_form_field_class('form-field-radio');
+		$this->set_css_form_field_class('form-field-radio-button');
 	}
 
 	/**

@@ -857,7 +857,7 @@ div.field-required:after {
 	box-shadow: 0 0 5px rgba(71, 137, 72, 0.1);
 }
 
-.form-field-radio.field-required:after,
+.form-field-radio-button.field-required:after,
 .form-field-multiple-checkbox.field-required:after {
 	top: 3px;
 	right: -6px;

@@ -26,8 +26,17 @@
 					<span class="text-strong">{@modules.compatibility} :</span> PHPBoost {available.COMPATIBILITY}<br />
 				</td>
 				<td class="input-radio">
-					<label><input type="radio" name="activated-{available.ID}" value="1" checked="checked"> ${LangLoader::get_message('yes', 'common')}</label>
-					<label><input type="radio" name="activated-{available.ID}" value="0"> ${LangLoader::get_message('no', 'common')}</label>
+					<div class="form-field-radio">
+						<input id="activated-{available.ID}" type="radio" name="activated-{available.ID}" value="1" checked="checked" />
+						<label for="activated-{available.ID}"></label>
+					</div>
+					<span class="form-field-radio-span">${LangLoader::get_message('yes', 'common')}</span>
+					<br />
+					<div class="form-field-radio">
+						<input id="activated-{available.ID}2" type="radio" name="activated-{available.ID}" value="0" />
+						<label for="activated-{available.ID}2"></label>
+					</div>
+					<span class="form-field-radio-span">${LangLoader::get_message('no', 'common')}</span>
 				</td>
 				<td>
 					<input type="hidden" name="token" value="{TOKEN}">

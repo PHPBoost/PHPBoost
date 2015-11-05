@@ -35,6 +35,12 @@
 $LANG['index.support'] = 'Support';
 $LANG['index.faq'] = 'F.A.Q.';
 $LANG['index.documentation'] = 'Documentation';
+$LANG['index.site'] = 'Site';
+$LANG['index.administration'] = 'Administration';
+$LANG['index.extend_menu'] = 'Extended menu';
+$LANG['index.disconnect'] = 'Disconnect';
+$LANG['admin.main_menu'] = 'Menu';
+$LANG['admin.need_help'] = 'Need help ?';
 
 // Dates
 $LANG['xml_lang'] = 'en';

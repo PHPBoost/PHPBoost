@@ -30,7 +30,7 @@
 		<div id="admin-contents">
 			
 			<div class="block welcome">
-				<img class="float-left" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="Logo" />
+				<div class="index-logo" # IF C_HEADER_LOGO #style="background: url('{HEADER_LOGO}') no-repeat;"# ENDIF #></div>
 				<div class="welcome-desc">
 					<h2>{L_WELCOME_TITLE}</h2>
 					<p>{L_WELCOME_DESC}</p>

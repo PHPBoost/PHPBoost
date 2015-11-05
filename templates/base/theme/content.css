@@ -122,7 +122,7 @@ article footer {
 	border-style: solid;
 	border-width: 2px 1px 1px 1px;
 	border-color: #366393 #CCCCCC #99B1CB #CCCCCC;
-	background-color: #F2F8FF;
+	background: #F2F8FF;
 	padding: 0.8em;
 }
 
@@ -211,7 +211,7 @@ ul.pagination-block li a {
 ul.pagination-block li a {
 	color: #333333;
 	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
-	background-image: linear-gradient(to bottom,  rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.10) 100%);
+	background-image: linear-gradient(to bottom,  rgba(255,255,255,0.18) 0%, rgba(56,56,56,0.10) 100%);
 	background-color: #F9F9F9;
 	border: 1px solid #CCCCCC;
 	border-color: #E1E1E1 #E1E1E1 #BFBFBF #CFCFCF;
@@ -337,7 +337,7 @@ ul.pagination-block-bis li a.next-page:hover {
 .options {
 	margin: 5px;
 	padding: 6px 12px;
-	background-color: #EEEEEE;
+	background: #EEEEEE;
 	border: 1px solid #DDDDDD;
 	border-radius: 3px;
 	float: right;
@@ -406,11 +406,9 @@ table tbody td {
 table tbody tr:nth-child(even) td {
 	background-color: #FFFFFF;
 }
-
 table tbody tr:last-child td {
 	border-bottom: 1px solid #D1D2D4;
 }
-
 table tbody tr td:last-child {
 	border-right: 1px solid #D1D2D4;
 }
@@ -422,7 +420,6 @@ table tbody tr.no-separator td {
 table tbody tr td.no-separator {
 	border-left: none;
 }
-
 table tbody tr td.no-separator:first-child {
 	border-left: 1px solid #D1D2D4;
 }
@@ -439,12 +436,10 @@ table tfoot tr th:first-child {
 	border-left: 1px solid #D1D2D4;
 	border-bottom-left-radius: 3px;
 }
-
 table tfoot tr th:last-child {
 	border-right: 1px solid #D1D2D4;
 	border-bottom-right-radius: 3px;
 }
-
 table tfoot tr th:only-child {
 	text-align: right;
 }
@@ -456,7 +451,6 @@ table tfoot tr th * {
 table tfoot tr th a {
 	color: #676A74;
 }
-
 table tfoot tr th select {
 	padding: 2px 5px;
 }
@@ -533,7 +527,7 @@ button,
 	color: #333333;
 	text-align: center;
 	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
-	background-image: linear-gradient(to bottom,  rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.10) 100%);
+	background-image: linear-gradient(to bottom,  rgba(255,255,255,0.18) 0%, rgba(56,56,56,0.10) 100%);
 	background-color: #F9F9F9;
 	border: 1px solid #CCCCCC;
 	border-color: #E1E1E1 #E1E1E1 #BFBFBF #CFCFCF;
@@ -580,19 +574,23 @@ button.submit:hover {
 	font-weight: bold;
 	text-align: center;
 	border-radius: 2px;
-	background-color: #2F5B8A;
+	background: #2F5B8A;
 	color: #FFFFFF;
 	margin: 1px;
 }
 .basic-button:hover {
-	background-color: #3D6997;
+	background: #3D6997;
 	color: #FFFFFF;
 	text-decoration: none;
 }
 
 /* --- Bouton basic avec couleur alternative --- */
-.basic-button.alt 		{ background-color: #AAAAAA; }
-.basic-button.alt:hover { background-color: #BBBBBB; }
+.basic-button.alt {
+	background: #AAAAAA;
+}
+.basic-button.alt:hover {
+	background: #BBBBBB;
+}
 
 
 /* -- Formulaires --
@@ -749,11 +747,11 @@ input.field-xlarge  { width: 250px; }
 @media (max-width: 768px) {
 	.form-element,
 	.form-element-textarea {
-		margin: 0 0.6em 1em 0.6em;
+		margin: 0px 0.6em 1em 0.6em;
 	}
 
 	.fieldset-description {
-		margin: 0 0.6em 1.3em 0.6em;
+		margin: 0px 0.6em 1.3em 0.6em;
 	}
 }
 
@@ -761,11 +759,11 @@ input.field-xlarge  { width: 250px; }
 @media (max-width: 480px) {
 	.form-element,
 	.form-element-textarea {
-		margin: 0 0.6em 0.5em 0.6em;
+		margin: 0px 0.6em 0.5em 0.6em;
 	}
 
 	.fieldset-description {
-		margin: 0 0.6em 0.9em 0.6em;
+		margin: 0px 0.6em 0.9em 0.6em;
 	}
 }
 
@@ -825,7 +823,7 @@ select[disabled=disabled],
 select[disabled=disabled]:hover,
 select[disabled=disabled]:focus {
 	cursor: not-allowed;
-	background-color: #F1F1F1;
+	background: #F1F1F1;
 	color: #AAAAAA;
 	border: 1px solid #CCCCCC;
 }
@@ -839,7 +837,7 @@ textarea[readonly=readonly]:focus,
 select[readonly=readonly],
 select[readonly=readonly]:hover,
 select[readonly=readonly]:focus {
-	background-color: #FAFAFA;
+	background: #FAFAFA;
 	color: #888888;
 	border: 1px solid #CCCCCC;
 }
@@ -857,21 +855,10 @@ textarea {
 	resize: vertical;
 }
 
-.form-element-textarea {
-	width: 98%;
-}
-
-.form-element-textarea textarea {
-	width: 100%;
-}
-
-.form-element-textarea .form-field-textarea {
-	display: block;
-}
-
-.form-element-textarea .form-field-textarea div {
-	float: left;
-}
+.form-element-textarea { width: 98%; }
+.form-element-textarea textarea { width: 100%; }
+.form-element-textarea .form-field-textarea { display: block; }
+.form-element-textarea .form-field-textarea div { float: left; }
 
 .form-element-preview {
 	text-align: center;
@@ -975,13 +962,15 @@ textarea {
 	padding: 6px 5px;
 	left: 5px;
 	min-width: 20em;
-	background-color: #FEFEFE;
+
+	background: #FEFEFE;
 	border: 1px solid #EAEAEA;
-	box-shadow: 1px 3px 6px rgba(0, 0, 0, 0.3);
+	box-shadow: 1px 3px 6px rgba(0,0,0,0.3);
 	border-radius: 3px;
+
 	font-size: 0.8em;
 	font-weight: bold;
-	text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.5);
+	text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
 }
 
 input + .text-status-constraint {
@@ -1123,7 +1112,7 @@ div.field-required:after {
 	box-shadow: 0 0 5px rgba(71, 137, 72, 0.1);
 }
 
-.form-field-radio.field-required:after,
+.form-field-radio-button.field-required:after,
 .form-field-multiple-checkbox.field-required:after {
 	top: 3px;
 	right: -6px;
@@ -1131,8 +1120,8 @@ div.field-required:after {
 
 /* --- Auto-completion --- */
 .autocomplete-suggestions {
-	border: 1px solid #999999;
-	background-color: #FFFFFF;
+	border: 1px solid #999;
+	background: #FFF;
 	overflow: auto;
 }
 
@@ -1148,13 +1137,9 @@ div.field-required:after {
 	cursor: pointer;
 }
 
-.autocomplete-selected {
-	background-color: #F0F0F0;
-}
+.autocomplete-selected { background: #F0F0F0; }
+.autocomplete-no-suggestion { text-align: center; }
 
-.autocomplete-no-suggestion {
-	text-align: center;
-}
 
 .field-button {
 	display: inline-block;
@@ -1211,7 +1196,7 @@ div.field-required:after {
 }
 
 .sortable-block .sortable-element {
-	background-color: #FFFFFF;
+	background: #FFFFFF;
 	border: 1px solid #D6DEE7;
 	padding: 0;
 	margin-bottom: 6px;
@@ -1226,25 +1211,23 @@ div.field-required:after {
 	box-shadow: 0px 0px 5px #EAEAEA;
 }
 
-@media (min-width: 769px) {
-	.sortable-block .sortable-element .sortable-selector {
-		display: table-cell;
-		position: relative;
-		width: 20px;
-		background-color: #81A4C8;
-		opacity: 0.3;
-		transition: opacity 1s;
-		cursor: move;
-	}
+.sortable-block .sortable-element .sortable-selector {
+	display: table-cell;
+	position: relative;
+	width: 20px;
+	background-color: #81A4C8;
+	opacity: 0.3;
+	transition: opacity 1s;
+	cursor: move;
+}
 
-	.sortable-selector:after {
-		position: absolute;
-		content: "\f047";
-		top: 34%;
-		left: 4px;
-		color: #FFFFFF;
-		font-family: fontawesome;
-	}
+.sortable-selector:after {
+	position: absolute;
+	content: "\f047";
+	top: 28%;
+	left: 4px;
+	color: #FFFFFF;
+	font-family: fontawesome;
 }
 
 .sortable-block .sortable-element:hover .sortable-actions {
@@ -1259,6 +1242,7 @@ div.field-required:after {
 	background-image: linear-gradient(to bottom, #FFFFFF 50%, #FAFAFA 100%);
 	padding: 8px 5px 5px 10px;
 }
+
 .sortable-block .sortable-title:hover {
 	background-image: linear-gradient(to bottom, #FFFFFF 25%, #F2F5F8 100%);
 }
@@ -1334,7 +1318,7 @@ body.dragging, body.dragging * {
 	margin: 0px 0px 10px 0px;
 	border: 1px #bebebe solid;
 	border-bottom: 2px #99B1CB solid;
-	background-color: #FFFFFF;
+	background: #FFFFFF;
 	border-spacing: 1px;
 	padding: 5px;
 	clear: both;
@@ -1349,6 +1333,7 @@ body.dragging, body.dragging * {
 
 .module-mini-container h5,
 .module-mini-container h3 {
+
 	color: #515C68;
 }
 
@@ -1400,7 +1385,7 @@ body.dragging, body.dragging * {
 	margin: 5px 0 0 140px;
 	border: 1px solid #D6DEE7;
 	color: #333333;
-	background-color: #ECEFFA;
+	background: #ECEFFA;
 	min-height: 80px;
 	border-radius: 4px;
 }
@@ -1447,7 +1432,7 @@ body.dragging, body.dragging * {
 
 /* --- Moderation des messages --- */
 .message-moderate {
-	background-color: #ECEFFA;
+	background: #ECEFFA;
 	border: 1px solid #D6DEE7;
 	border-radius: 4px;
 	padding: 4px 0 4px 0;
@@ -1494,10 +1479,6 @@ ul#profile-container li {
 /* -- Maintenance --
 --------------------------------------*/
 
-#maintain {
-	margin: 10px 0px;
-}
+#maintain { margin: 10px 0px; }
 
-div.delay {
-	margin: 20px 0px;
-}
+div.delay { margin: 20px 0px; }

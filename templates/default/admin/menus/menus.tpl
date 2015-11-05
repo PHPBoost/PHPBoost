@@ -98,7 +98,7 @@ function createSortableMenu()
 
 	<form id="form_menus" action="menus.php?action=save" method="post" onsubmit="build_menu_tree();">
 		
-		<div class="themesmanagement">
+		<div class="ThemesManagement">
 			<div>
 				<strong>{L_THEME_MANAGEMENT} :</strong> 
 				<select name="switchtheme" onchange="document.location = '?token={TOKEN}&amp;theme=' + this.options[this.selectedIndex].value;">
@@ -109,7 +109,7 @@ function createSortableMenu()
 			</div>
 		</div>
 		<div id="admin-contents admin-contents-no-column">		
-			<div class="menusmanagement">
+			<div class="MenusManagement">
 				<div>
 					<div id="container-header">
 						<div class="container-block">
@@ -172,7 +172,7 @@ function createSortableMenu()
 						</div>
 					</div>
 				</div><!-- container-subheader -->
-				<div class="menusmanagementcolumn">
+				<div class="MenusManagementColumn">
 					<div>
 						<div id="container-leftmenu">
 							<div class="container-block">
@@ -205,7 +205,7 @@ function createSortableMenu()
 							</div>
 						</div>
 					</div><!-- container-left-menu -->
-					<div class="menusmanagementcentral">
+					<div class="MenusManagementCentral">
 						<div>
 							<div id="container-topcentral">
 								<div class="container-block">

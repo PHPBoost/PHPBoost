@@ -70,6 +70,12 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'L_INDEX_DOCUMENTATION' => self::$lang['index.documentation'],
 			'L_POWERED_BY' => self::$lang['powered_by'],
 			'L_PHPBOOST_RIGHT' => self::$lang['phpboost_right'],
+			'L_ADMINISTRATION' => self::$lang['index.administration'],
+			'L_INDEX_SITE' => self::$lang['index.site'],
+			'L_EXTEND_MENU' => self::$lang['index.extend_menu'],
+			'L_DISCONNECT' => self::$lang['index.disconnect'],
+			'L_ADMIN_MAIN_MENU' => self::$lang['admin.main_menu'],
+			'L_NEED_HELP' => self::$lang['admin.need_help'],
 		));
 		
 		if (GraphicalEnvironmentConfig::load()->is_page_bench_enabled())
@@ -133,12 +139,8 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 		$subheader_tpl->put_all(array(
 			'L_ADD' => $subheader_lang['add'],
-			'L_MANAGEMENT' => $subheader_lang['management'],
 			'L_ADMINISTRATION' => $subheader_lang['administration'],
-			'L_INDEX' => $subheader_lang['index'],
-			'L_INDEX_SITE' => $subheader_lang['index.site'],
-			'L_EXTEND_MENU' => $subheader_lang['index.extend_menu'],
-			'L_DISCONNECT' => $subheader_lang['index.disconnect'],
+			'L_MANAGEMENT' => $subheader_lang['management'],
 			'L_CONFIGURATION' => $subheader_lang['configuration'],
 			'L_CONFIG_GENERAL' => $subheader_lang['administration.configuration.general'],
 			'L_CONFIG_ADVANCED' => $subheader_lang['administration.configuration.advanced'],

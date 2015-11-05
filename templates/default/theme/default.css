@@ -73,7 +73,7 @@ fieldset {
 }
 
 hr {
-	background-color: #C4CED6;
+	background: #C4CED6;
 	border: none;
 	margin: 1px auto;
 	height: 1px;
@@ -114,21 +114,21 @@ a.wikipedia-link:before {
 /* Alignements */
 .inline { display: inline !important; }
 
-.center  { text-align: center !important; 	}
-.left    { text-align: left !important; 	}
-.right   { text-align: right !important; 	}
-.justify { text-align: justify !important; 	}
+.center  { text-align: center !important; }
+.left    { text-align: left !important; }
+.right   { text-align: right !important; }
+.justify { text-align: justify !important; }
 
-.float-left, img.left   { float: left !important;  }
+.float-left, img.left   { float: left !important; }
 .float-right, img.right { float: right !important; }
 
 .hidden { display: none !important; }
 
-@media (max-width: 768px) {
+@media ( max-width: 768px ) {
 	.hidden-small-screens { display: none !important; }
 }
 
-@media (min-width: 769px) {
+@media ( min-width: 769px ) {
 	.hidden-large-screens { display: none !important; }
 }
 
@@ -137,11 +137,11 @@ img.left, img.right {
 }
 
 /* Classes textes */
-.text-strong  { font-weight: bold !important; 	}
+.text-strong  { font-weight: bold !important; }
 .text-justify { text-align: justify !important; }
-.text-italic  { font-style: italic !important; 	}
+.text-italic  { font-style: italic !important; }
 
-.valign-top    { vertical-align: top !important; 	}
+.valign-top    { vertical-align: top !important; }
 .valign-middle { vertical-align: middle !important; }
 .valign-bottom { vertical-align: bottom !important; }
 
@@ -224,7 +224,7 @@ ul.pagination .current-page {
 
 /* Debug */
 .pbt-debug {
-	background-color: orange !important;
+	background: orange !important;
 	outline: 3px solid orangered !important;
 }
 
@@ -247,7 +247,7 @@ ul.pagination .current-page {
 
 @media print {
 	* {
-		background-color: transparent;
+		background: transparent;
 		color: #000000;
 		text-shadow: none;
 		box-shadow: none;
@@ -326,12 +326,12 @@ table.table-fixed {
 }
 
 /* Codes */
-.lightcase-icon-play:before  { content: '\e800'; } /* 'play' */
+.lightcase-icon-play:before { content: '\e800'; } /* 'play' */
 .lightcase-icon-pause:before { content: '\e801'; } /* 'pause' */
 .lightcase-icon-close:before { content: '\e802'; } /* 'close' */
-.lightcase-icon-prev:before  { content: '\e803'; } /* 'prev' */
-.lightcase-icon-next:before  { content: '\e804'; } /* 'next' */
-.lightcase-icon-spin:before  { content: '\e805'; } /* 'spin' */
+.lightcase-icon-prev:before { content: '\e803'; } /* 'prev' */
+.lightcase-icon-next:before { content: '\e804'; } /* 'next' */
+.lightcase-icon-spin:before { content: '\e805'; } /* 'spin' */
 
 /* Reduced layout for small devices */
 @media screen and (max-width: 768px) {
@@ -343,19 +343,21 @@ table.table-fixed {
 	.lightcase-open body > *:not([id*=lightcase-]) {
 		position: fixed !important;
 		top: -9999px !important;
+
 		width: 0 !important;
 		height: 0 !important;
+
 		overflow: hidden !important;
 	}
 
 	/* Overlay */
 	#lightcase-overlay {
-		background-color: #333333;
+		background: #333;
 	}
 
 	/* Loading */
 	#lightcase-loading {
-		color: #AAAAAA;
+		color: #aaa;
 	}
 
 	/* Case */
@@ -364,6 +366,7 @@ table.table-fixed {
 		font-size: 13px;
 		line-height: 18px;
 		text-align: left;
+
 		text-shadow: 0 0 10px rgba(0,0,0,0.5);
 	}
 
@@ -371,12 +374,16 @@ table.table-fixed {
 	#lightcase-case:not([data-type=image]):not([data-type=video]):not([data-type=flash]):not([data-type=error]) .lightcase-contentInner,
 	#lightcase-case:not([data-type=image]):not([data-type=video]):not([data-type=flash]):not([data-type=error]) .lightcase-inlineWrap {
 		position: relative !important;
+
 		top: auto !important;
 		left: auto !important;
+
 		width: auto !important;
 		height: auto !important;
+
 		margin: 0 !important;
 		padding: 0 !important;
+
 		border: none;
 		background: none;
 	}
@@ -392,7 +399,7 @@ table.table-fixed {
 	#lightcase-case .lightcase-content h5,
 	#lightcase-case .lightcase-content h6,
 	#lightcase-case .lightcase-content p {
-		color: #AAAAAA;
+		color: #aaa;
 	}
 
 	/* Additional info */
@@ -408,6 +415,10 @@ table.table-fixed {
 		padding: 15px;
 		border: none;
 		background: none;
+
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		-o-box-shadow: none;
 		box-shadow: none;
 	}
 	#lightcase-case:not([data-type=image]):not([data-type=video]):not([data-type=flash]):not([data-type=error]) .lightcase-contentInner,
@@ -434,19 +445,21 @@ table.table-fixed {
 		bottom: 0;
 		left: 0;
 		height: 55px;
-		background-color: rgba(55, 55, 55, 0.9);
+
+		background: rgba(55,55,55,0.9);
 	}
 
 	#lightcase-nav a {
 		position: fixed;
 		z-index: 9999;
 		bottom: 15px;
+
 		outline: none;
 		cursor: pointer;
 		font-size: 24px;
 	}
 	#lightcase-nav a:hover {
-		text-shadow: 0 0 15px #FFFFFF;
+		text-shadow: 0 0 15px #fff;
 	}
 
 	/* Icon positioning */
@@ -455,6 +468,7 @@ table.table-fixed {
 		z-index: 9997;
 		top: 15px;
 		right: 15px;
+
 		opacity: 0;
 	}
 
@@ -475,10 +489,12 @@ table.table-fixed {
 		padding: 30px 0;
 		font-size: 17px;
 		text-align: center;
+		
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
-		color: #AAAAAA;
+
+		color: #aaa;
 	}
 
 }
@@ -487,13 +503,13 @@ table.table-fixed {
 
 	/* Overlay */
 	#lightcase-overlay {
-		background-color: #333333;
+		background: #333;
 	}
 
 	/* Loading */
 	#lightcase-loading {
-		color: #FFFFFF;
-		text-shadow: 0 0 15px #FFFFFF;
+		color: #fff;
+		text-shadow: 0 0 15px #fff;
 	}
 
 	/* Case */
@@ -502,6 +518,7 @@ table.table-fixed {
 		font-size: 13px;
 		line-height: 18px;
 		text-align: left;
+
 		color: #aaa;
 		text-shadow: 0 0 10px rgba(0,0,0,0.5);
 	}
@@ -511,15 +528,21 @@ table.table-fixed {
 		position: relative;
 		z-index: 1;
 		overflow: hidden;
+
 		text-shadow: none;
-		background-color: #FFFFFF;
-		box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+
+		background-color: #fff;
+
+		-webkit-box-shadow: 0 0 30px rgba(0,0,0,0.5);
+		-moz-box-shadow: 0 0 30px rgba(0,0,0,0.5);
+		-o-box-shadow: 0 0 30px rgba(0,0,0,0.5);
+		box-shadow: 0 0 30px rgba(0,0,0,0.5);
 
 		-webkit-backface-visibility: hidden;
 	}
 	#lightcase-case[data-type=image] .lightcase-content,
 	#lightcase-case[data-type=video] .lightcase-content {
-		background-color: #333333;
+		background-color: #333;
 	}
 	#lightcase-case[data-type=image] .lightcase-contentInner,
 	#lightcase-case[data-type=video] .lightcase-contentInner {
@@ -527,7 +550,12 @@ table.table-fixed {
 	}
 	#lightcase-case:not([data-type=error]) .lightcase-inlineWrap {
 		padding: 30px;
+
 		overflow: auto;
+
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		-o-box-sizing: border-box;
 		box-sizing: border-box;
 	}
 
@@ -542,29 +570,27 @@ table.table-fixed {
 	#lightcase-case .lightcase-content h5,
 	#lightcase-case .lightcase-content h6,
 	#lightcase-case .lightcase-content p {
-		color: #333333;
+		color: #333;
 	}
 
 	/* Navigation */
 	#lightcase-nav a {
 		top: 50%;
 		margin-top: -0.5em;
+
 		outline: none;
 		cursor: pointer;
 	}
-
 	#lightcase-nav a.lightcase-icon-close {
 		margin: 0;
 	}
-
 	#lightcase-nav a.lightcase-icon-close,
 	#lightcase-nav a.lightcase-icon-play,
 	#lightcase-nav a.lightcase-icon-pause {
 		opacity: 0;
 	}
-
 	#lightcase-nav a:hover {
-		text-shadow: 0 0 15px #FFFFFF;
+		text-shadow: 0 0 15px #fff;
 	}
 	#lightcase-nav a:hover,
 	#lightcase-case:hover ~ #lightcase-nav a {
@@ -575,21 +601,20 @@ table.table-fixed {
 	#lightcase-nav a.lightcase-icon-close {
 		position: fixed;
 		z-index: 9997;
+
 		top: 15px;
 		right: 15px;
+
 		outline: none;
 	}
-
 	#lightcase-nav a.lightcase-icon-play,
 	#lightcase-nav a.lightcase-icon-pause {
 		left: 50%;
 		margin-left: -0.5em;
 	}
-
 	#lightcase-nav a.lightcase-icon-prev {
 		left: 15px;
 	}
-
 	#lightcase-nav a.lightcase-icon-next {
 		right: 15px;
 	}
@@ -598,8 +623,9 @@ table.table-fixed {
 	#lightcase-case p.lightcase-error {
 		margin: 0;
 		padding: 0;
+
 		font-size: 17px;
-		color: #AAAAAA;
+		color: #aaa;
 	}
 
 }
@@ -611,6 +637,7 @@ table.table-fixed {
 		display: none;
 		width: 100%;
 		height: 100%;
+
 		position: fixed;
 		z-index: 1000;
 		top: 0;
@@ -623,20 +650,27 @@ table.table-fixed {
 		z-index: 1001;
 		top: 50%;
 		left: 50%;
+
 		margin-top: -0.5em;
 		margin-left: -0.5em;
-		opacity: 1;
-		font-size: 32px;
 
+		opacity: 1;
+
+		font-size: 32px;
+		
 		/* Fixes the icon wobble issue in firefox */
 		-moz-transform-origin: 50% 53%;
 
+		-webkit-animation: lightcase-loading-spin 0.5s infinite linear;
+		-moz-animation: lightcase-loading-spin 0.5s infinite linear;
+		-o-animation: lightcase-loading-spin 0.5s infinite linear;
 		animation: lightcase-loading-spin 0.5s infinite linear;
 	}
 
 	/* Case */
 	#lightcase-case {
 		display: none;
+
 		position: fixed;
 		z-index: 1002;
 		top: 50%;
@@ -651,6 +685,7 @@ table.table-fixed {
 		 * to the maximum height additionally to the image height.
 		 */
 		position: absolute;
+
 		padding-top: 15px;
 	}
 
@@ -661,6 +696,7 @@ table.table-fixed {
 	#lightcase-case .lightcase-caption {
 		margin: 0;
 		padding: 0;
+
 		font-size: 17px;
 		line-height: 1.5;
 		font-weight: normal;
@@ -688,22 +724,23 @@ table.table-fixed {
 		text-align: center;
 		text-shadow: none;
 	}
-
 	a[class*='lightcase-icon-'],
 	a[class*='lightcase-icon-']:focus {
 		position: fixed;
 		z-index: 9999;
-		color: rgba(255, 255, 255, 0.6);
 
-		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+		color: rgba(255,255,255,0.6);
 
+		-webkit-tap-highlight-color: rgba(0,0,0,0);
+
+		-webkit-transition: color, opacity, ease-in-out 0.25s;
+		-moz-transition: color, opacity, ease-in-out 0.25s;
+		-o-transition: color, opacity, ease-in-out 0.25s;
 		transition: color, opacity, ease-in-out 0.25s;
 	}
-
 	a[class*='lightcase-icon-']:hover {
-		color: rgba(255, 255, 255, 1);
+		color: rgba(255,255,255,1);
 	}
-	
 	a[class*='lightcase-icon-'] > span {
 		display: inline-block;
 		text-indent: -9999px;

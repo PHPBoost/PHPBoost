@@ -76,7 +76,7 @@ h4.formatter-title {
 }
 
 .calendar-block .date-select-container {
-	background-color: #F5F5F5;
+	background: #F5F5F5;
 	padding: 2px 0px;
 	border-radius: 3px 3px 0px 0px;
 }
@@ -130,7 +130,7 @@ h4.formatter-title {
 	border-top: 1px solid #CCCCCC;
 	padding: 5px 0px;
 	border-radius: 0px;
-	background-color: #FFFFFF;
+	background: #FFFFFF;
 	font-weight: bold;
 	color: #666666;
 }
@@ -147,10 +147,10 @@ h4.formatter-title {
 .calendar-block .date-picker tbody td:first-child { border-left: none; }
 .calendar-block .date-picker tbody td:last-child  { border-right: none; }
 
-.calendar-block .date-picker tbody td.calendar-none    { background-color: #FFFFFF; }
-.calendar-block .date-picker tbody td.calendar-today   { background-color: #B5E5B9; }
-.calendar-block .date-picker tbody td.calendar-event   { background-color: #DBE5EE; }
-.calendar-block .date-picker tbody td.calendar-weekend { background-color: #FFE3B6; }
+.calendar-block .date-picker tbody td.calendar-none    { background: #FFFFFF; }
+.calendar-block .date-picker tbody td.calendar-today   { background: #B5E5B9; }
+.calendar-block .date-picker tbody td.calendar-event   { background: #DBE5EE; }
+.calendar-block .date-picker tbody td.calendar-weekend { background: #FFE3B6; }
 
 .calendar-block .date-picker tbody tr:last-child td {
 	border-bottom: none;
@@ -176,7 +176,7 @@ td.calendar-week {
 }
 
 .bbcode-block {
-	background-color: #F3F3F3;
+	background: #F3F3F3;
 	border-radius: 3px;
 	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 	border: 1px solid #AAAAAA;
@@ -223,7 +223,7 @@ td.calendar-week {
 .blockquote, .code, .hide {
 	overflow: auto;
 	max-height: 500px;
-	background-color: #FAFAFA;
+	background: #FAFAFA;
 	border: 1px solid #DDDDDD;
 	border-radius: 3px;
 	color: #444444;
@@ -288,7 +288,7 @@ td.calendar-week {
 
 /* --- La barre de progression --- */
 .progressbar-container {
-	background-color: #F5F5F5;
+	background: #F5F5F5;
 	margin: 4px 0px 10px;
 	border-radius: 3px;
 	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -466,7 +466,7 @@ div#release {
 /* -- Systeme d Upload --
 --------------------------------------*/
 .upload-address-bar {
-	background-color: #FAFAFA;
+	background: #FAFAFA;
 	border: 1px solid #DDDDDD;
 	border-radius: 3px;
 	color: #444444;
@@ -507,7 +507,7 @@ a.upload-recent-file {
 
 /* --- Deplacement des fichiers --- */
 .upload-selected-cat {
-	background-color: #F5FBFF;
+	background: #F5FBFF;
 	border: 1px solid #2C5169;
 }
 
@@ -577,7 +577,7 @@ a.upload-recent-file {
 /* ---- Variante cssmenu-horizontal ---- */
 #main .cssmenu-horizontal {
 	border: 1px #BEBEBE solid;
-	background-color: #FFFFFF;
+	background: #FFFFFF;
 }
 
 /* ---- Variante cssmenu-group ---- */
@@ -588,7 +588,7 @@ div.cssmenu-group {
     position: relative;
     padding: 2px 8px;
     color: #444444;
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.18) 100%);
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
     background-color: #FFFFFF;
     border: 1px solid #999999;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
@@ -776,7 +776,7 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
     border-right: 1px solid #F9F9F9;
     border-left: 1px solid #BBBBBB;
     color: #444444;
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.18) 100%);
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
     background-color: #FFFFFF;
     border: 1px solid #999999;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
@@ -789,7 +789,7 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 }
 
 .cssmenu.cssmenu-group > ul > li:hover {
-	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 40%, rgba(56, 56, 56, 0.18) 100%);
+	background-image: linear-gradient(to bottom, rgba(255,255,255,0.18) 40%,rgba(56,56,56,0.18) 100%);
     background-color: #F0F0F0;
     border-bottom-color: #B3B3B3;
 }
@@ -804,7 +804,7 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 }
 
 .cssmenu-group > ul > li.current {
-    background-image: linear-gradient(to top, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.18) 100%);
+    background-image: linear-gradient(to top, rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
     background-color: #F0F0F0;
     border-top-color: #B3B3B3;
 }
@@ -1023,8 +1023,8 @@ header .cssmenu li:hover > .cssmenu-title 					{ color: #FFFFFF; }
 #main .cssmenu li:hover > .cssmenu-title 					{ color: #666666; }
 
 @media (min-width: 769px) {
-	header .cssmenu-horizontal > ul > li:hover				{ background-color: #333333; }
-	#main .cssmenu-horizontal > ul > li:hover  				{ background-color: #F9F9F9; }
+	header .cssmenu-horizontal > ul > li:hover				{ background: #333333; }
+	#main .cssmenu-horizontal > ul > li:hover  				{ background: #F9F9F9; }
 }
 
 /* ---- Niveau 2 ---- */
@@ -1042,23 +1042,23 @@ header .cssmenu ul ul li:hover > .cssmenu-title 			{ color: #FFFFFF; }
 footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 #top-footer .cssmenu-static ul ul li:hover > .cssmenu-title { color: #262626; }
 
-.cssmenu.cssmenu-vertical ul ul li .cssmenu-title  			{ background-color: #FFFFFF; }
+.cssmenu.cssmenu-vertical ul ul li .cssmenu-title  			{ background: #FFFFFF; }
 
-.cssmenu-actionslinks ul li:hover > .cssmenu-title:after 	{ background-color: #333333; }
+.cssmenu-actionslinks ul li:hover > .cssmenu-title:after 	{ background: #333333; }
 
 @media (min-width: 769px) {
-	header .cssmenu ul ul li .cssmenu-title					{ background-color: #333333; }
-	.cssmenu-actionslinks li:hover > .cssmenu-title 		{ background-color: #DDDDDD; }
-	#main .cssmenu-horizontal ul ul							{ background-color: #F9F9F9; }
-	#main .cssmenu-horizontal ul ul	> li:hover				{ background-color: #F1F1F1; }
+	header .cssmenu ul ul li .cssmenu-title					{ background: #333333; }
+	.cssmenu-actionslinks li:hover > .cssmenu-title 		{ background: #DDDDDD; }
+	#main .cssmenu-horizontal ul ul							{ background: #F9F9F9; }
+	#main .cssmenu-horizontal ul ul	> li:hover				{ background: #F1F1F1; }
 }
 
 /* ---- Personnalisation de l'indicateur de sous-Menu ---- */
 @media (min-width: 769px) {
 	.cssmenu li.has-sub > .cssmenu-title:after,
-	.cssmenu li.has-sub > .cssmenu-title:before 		 	{ background-color: #DDDDDD; }
+	.cssmenu li.has-sub > .cssmenu-title:before 		 	{ background: #DDDDDD; }
 	.cssmenu-vertical li.has-sub > .cssmenu-title:after,
-	.cssmenu-vertical li.has-sub > .cssmenu-title:before 	{ background-color: #444444; }
+	.cssmenu-vertical li.has-sub > .cssmenu-title:before 	{ background: #444444; }
 }
 
 /* --- Bouton responsive --- */
@@ -1105,7 +1105,7 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 	.cssmenu #menu-button:before {
 		height: 2px;
 		width: 20px;
-		background-color: #DDDDDD;
+		background: #DDDDDD;
 		font-size: 1.3rem;
 	}
 
@@ -1145,7 +1145,7 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 	    line-height: 1;
 	    -webkit-font-smoothing: antialiased;
 	    color: #444444;
-	    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.18) 100%);
+	    background-image: linear-gradient(to bottom, rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
 	    background-color: #FFFFFF;
 	    border: 1px solid #999999;
 	    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1)  #B3B3B3 rgba(0, 0, 0, 0.25);
@@ -1180,7 +1180,7 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 		padding: 5px 0;
 		width: 170px;
 		font-size: 11px;
-		background-color: #FFFFFF;
+		background: #FFFFFF;
 		border-radius: 3px;
 		box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 		border: 1px solid #AAAAAA;
@@ -1217,7 +1217,7 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 	}
 
 	.cssmenu #menu-button:before {
-		background-color: #DDDDDD;
+		background: #DDDDDD;
 	}
 
 	#main .cssmenu #menu-button {
@@ -1226,14 +1226,14 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 	
 	.cssmenu #menu-button.menu-opened:after,
 	.cssmenu #menu-button.menu-opened:before {
-		background-color: #DDDDDD;
+		background: #DDDDDD;
 	}
 
 	header .cssmenu #menu-button.menu-opened:after,
-	header .cssmenu #menu-button.menu-opened:before 			{ background-color: #FFFFFF; }
+	header .cssmenu #menu-button.menu-opened:before 			{ background: #FFFFFF; }
 
 	header .cssmenu-vertical #menu-button.menu-opened:after,
-	header .cssmenu-vertical #menu-button.menu-opened:before 	{ background-color: #DDDDDD; }
+	header .cssmenu-vertical #menu-button.menu-opened:before 	{ background: #DDDDDD; }
 }
 
 /* --- Bouton submenu --- */
@@ -1295,17 +1295,17 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 
 /* ---- Personnalisation background Bouton submenu ---- */
 @media (max-width: 768px) {
-	.cssmenu .submenu-button:after  						{ background-color: #DDDDDD; }
-	.cssmenu .submenu-button:before 						{ background-color: #DDDDDD; }
+	.cssmenu .submenu-button:after  						{ background: #DDDDDD; }
+	.cssmenu .submenu-button:before 						{ background: #DDDDDD; }
 
-	.cssmenu .submenu-button.submenu-opened:after 			{ background-color: #FFFFFF; }
+	.cssmenu .submenu-button.submenu-opened:after 			{ background: #FFFFFF; }
 
-	.cssmenu .submenu-button.submenu-opened 				{ background-color: #262626; }
-	#top-header .cssmenu .submenu-button.submenu-opened 	{ background-color: rgba(255, 255, 255, 0.05); }
-	.cssmenu-actionslinks .submenu-button.submenu-opened 	{ background-color: #DDDDDD; }
+	.cssmenu .submenu-button.submenu-opened 				{ background: #262626; }
+	#top-header .cssmenu .submenu-button.submenu-opened 	{ background: rgba(255, 255, 255, 0.05); }
+	.cssmenu-actionslinks .submenu-button.submenu-opened 	{ background: #DDDDDD; }
 
-	#menu-left .cssmenu .submenu-button.submenu-opened 		{ background-color: rgba(120, 120, 120, 0.2); }
-	#menu-right .cssmenu .submenu-button.submenu-opened 	{ background-color: rgba(120, 120, 120, 0.2); }
+	#menu-left .cssmenu .submenu-button.submenu-opened 		{ background: rgba(120, 120, 120, 0.2); }
+	#menu-right .cssmenu .submenu-button.submenu-opened 	{ background: rgba(120, 120, 120, 0.2); }
 }
 	
 /* ---- Postion icone Submenu ---- */
