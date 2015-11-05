@@ -234,7 +234,7 @@
 				<div class="fieldset-inset">
 					<div class="medium-block center">
 						<p class="text-strong">{L_TOTAL}: {VISIT_TOTAL} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L_TODAY}: {VISIT_DAY}</p>
-						<p class=""center>
+						<p class="center">
 							<a class="fa fa-arrow-left" href="admin_stats{U_PREVIOUS_LINK}#stats"></a>&nbsp;
 							<a class="fa fa-arrow-right" href="admin_stats{U_NEXT_LINK}#stats"></a>&nbsp;&nbsp;&nbsp;
 						</p>
@@ -253,6 +253,8 @@
 							{STATS_YEAR}
 						</select>
 						# ENDIF #
+						<br />
+						<br />
 						<input type="hidden" name="{TYPE}" value="1">
 						<button type="submit" name="date" value="true" class="submit">{L_SUBMIT}</button>
 						&nbsp;&nbsp;&nbsp;&nbsp;
@@ -309,18 +311,19 @@
 						# ENDIF #
 						<br />
 						<div class="bargraph">{GRAPH_RESULT}</div>
+						<p class="block center">
+							{L_TOTAL}: {SUM_NBR}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{L_AVERAGE}: {MOY_NBR}
+						</p>
 					</div>
-					<div class="block center">
-						{L_TOTAL}: {SUM_NBR}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{L_AVERAGE}: {MOY_NBR}
-					</div>
-					<div class="block center">
+					<p class="block center">
 						{U_VISITS_MORE}
-					</div>
+					</p>
 				</div>
-			</fieldset>
-			
+			</fieldset>			
 		</form>
+		
 		<br /><br />
+		
 		<table id="table">
 			<thead>
 				<tr>

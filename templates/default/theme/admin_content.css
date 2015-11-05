@@ -790,16 +790,16 @@ input[type=color] {
 	top: 3px;
 	left: 5px;
 	z-index: 1;
-	background-color: #404040;
+	background-color: #dddddd;
     background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.1) 100%);
     border: 1px solid #333;
 }
 
 .form-field-checkbox input[type=checkbox]:checked + label {
 	left: 41px;
-	background-color: #57A957;
+	background-color: #62b0ff;
     background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.1) 100%);
-    border: 1px solid #080;
+    border: 1px solid #366393;
 }
 
 /* --- input form-field-values --- */
@@ -1548,9 +1548,9 @@ body.dragging, body.dragging * {
 .cssmenu.cssmenu-group #menu-button:after 				{ border-color: #676A74; }
 
 /* --- statistiques ========================================================================= */
-@media (max-width:769px){
+@media (max-width:768px){
 	
-	#MenuStats a.js-menu-button {
+	#menustats a.js-menu-button {
 		color: #555555;
 		display: block;
 	}
