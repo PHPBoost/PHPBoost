@@ -110,7 +110,7 @@ foreach ($array_location as $key => $name)
 
 $tpl->put_all(array(
 	'IDMENU' => $id,
-	'NAME' => $menu->get_title(),
+	'NAME' => $menu->get_formated_title(),
 	'C_MENU_HIDDEN_WITH_SMALL_SCREENS' => $menu->is_hidden_with_small_screens(),
 	'LOCATIONS' => $locations,
 	'AUTH_MENUS' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, $menu->get_auth()),

@@ -64,7 +64,21 @@ class ModuleMiniMenu extends Menu
 	
 	public function get_formated_title()
 	{
-		return get_class($this);
+		$class_name = get_class($this);
+		$module_name = strstr($class_name, 'ModuleMiniMenu', true);
+		$module_name = strlen(preg_replace('/[a-z]*/', '', $module_name)) > 1 ? $module_name : strtolower($module_name); //Pour les modules qui ont plus de 2 majuscules on les garde, sinon on les enlève
+		
+		$module = '';
+		
+		try
+		{
+			$module = ModulesManager::get_module($module_name);
+		}
+		catch (Exception $e) {}
+		
+		$localized_module_name = !empty($module) ? $module->get_configuration()->get_name() : '';
+		
+		return !empty($localized_module_name) ? (!preg_match('/^' . Langloader::get_message('admin.main_menu', 'main') . ' /', $localized_module_name) ? Langloader::get_message('admin.main_menu', 'main') . ' ' : '') . $localized_module_name : $class_name;
 	}
 	
 	public function display()
