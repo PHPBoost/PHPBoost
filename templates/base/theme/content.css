@@ -397,7 +397,7 @@ table thead th a {
 }
 
 table thead th a:hover {
-	color: BACKGROUND-COLOR:FFF;
+	color: #FFFFFF;
 }
 
 /* --- Contenu du tableau --- */
@@ -411,7 +411,7 @@ table tbody td {
 }
 
 table tbody tr:nth-child(even) td {
-	background-color: BACKGROUND-COLOR:FFF;
+	background-color: #FFFFFF;
 }
 
 table tbody tr:last-child td {
@@ -481,7 +481,7 @@ table.formatter-table th.formatter-table-head:first-child { border-top-left-radi
 table.formatter-table th.formatter-table-head:last-child  { border-top-right-radius: 3px; }
 
 table.formatter-table th.formatter-table-head a 	  {	color: #E5E6E6; }
-table.formatter-table th.formatter-table-head a:hover {	color: BACKGROUND-COLOR:FFF; }
+table.formatter-table th.formatter-table-head a:hover {	color: #FFFFFF; }
 
 table.formatter-table th.formatter-table-head p {
 	margin-bottom: 0;
@@ -590,13 +590,13 @@ button.submit:hover {
 	text-align: center;
 	border-radius: 2px;
 	background-color: #2F5B8A;
-	color: BACKGROUND-COLOR:FFF;
+	color:#FFFFFF;
 	margin: 1px;
 }
 
 .basic-button:hover {
 	background-color: #3D6997;
-	color: BACKGROUND-COLOR:FFF;
+	color: #FFFFFF;
 	text-decoration: none;
 }
 
@@ -648,7 +648,7 @@ option {
 /* --- Previsualisation --- */
 .xmlhttprequest-preview {
 	border: 1px solid #CCCCCC;
-	background-color: BACKGROUND-COLOR:FFF;
+	background-color: #FFFFFF;
 	color: #2E3B5F;
 	padding: 0 2px;
 }
@@ -680,7 +680,7 @@ input[type=file],
 textarea,
 select {
 	color: #555555;
-	background-color: BACKGROUND-COLOR:FFF;
+	background-color: #FFFFFF;
 	border: 1px solid #CCCCCC;
 	border-radius: 4px;
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
@@ -700,7 +700,7 @@ textarea:hover,
 select:hover {
 	color: #333333;
 	border: 1px solid #BBBBBB;
-	background-color: BACKGROUND-COLOR:FFF;
+	background-color: #FFFFFF;
 }
 
 input[type=text]:focus,
@@ -1135,6 +1135,10 @@ div.field-required:after {
 .form-field-multiple-checkbox.field-required:after {
 	top: 3px;
 	right: -6px;
+}
+
+.form-field-radio {
+	display: inline-block;
 }
 
 /* --- Auto-completion --- */
