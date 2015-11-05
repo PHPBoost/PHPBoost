@@ -434,6 +434,7 @@ class UserEditProfileController extends AbstractController
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['user'], UserUrlBuilder::home()->rel());
+		$breadcrumb->add(StringVars::replace_vars($this->lang['profile_of'], array('name' => $this->user->get_display_name())), UserUrlBuilder::profile($this->user->get_id())->rel());
 		$breadcrumb->add($this->lang['profile.edit'], UserUrlBuilder::edit_profile($this->user->get_id())->rel());
 		
 		return $response;

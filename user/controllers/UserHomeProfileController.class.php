@@ -76,7 +76,7 @@ class UserHomeProfileController extends AbstractController
 			'U_CONTRIBUTION_PANEL' => UserUrlBuilder::contribution_panel()->rel(),
 			'U_MODERATION_PANEL' => UserUrlBuilder::moderation_panel()->rel(),
 			'U_UPLOAD' => UserUrlBuilder::upload_files_panel()->rel(),
-			'U_EDIT_PROFILE' => UserUrlBuilder::edit_profile()->rel()
+			'U_VIEW_PROFILE' => UserUrlBuilder::profile($this->user->get_id())->rel()
 		));
 	}
 	

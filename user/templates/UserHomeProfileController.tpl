@@ -3,13 +3,13 @@
 		<h1>{@profile}</h1>
 	</header>
 	<div class="content">
-		<p class="center text-strong">${LangLoader::get_message('welcome', 'user-common')} {PSEUDO}</p>
+		<p class="center text-strong">{@welcome} {PSEUDO}</p>
 		
 		<ul id="profile-container">
 			<li class="small-block">
-				<a href="{U_EDIT_PROFILE}" title="">
+				<a href="{U_VIEW_PROFILE}" title="">
 					<i class="fa fa-user fa-2x"></i><br/>
-					{@profile.edit}
+					${LangLoader::get_message('my_private_profile', 'main')}
 				</a> 
 			</li>
 			<li class="small-block">
