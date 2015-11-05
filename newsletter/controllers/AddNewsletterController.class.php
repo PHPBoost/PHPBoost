@@ -78,25 +78,34 @@ class AddNewsletterController extends ModuleController
 	private function build_form($type)
 	{
 		$form = new HTMLForm(__CLASS__);
-
+		
 		$fieldset = new FormFieldsetHTML('add-newsletter', $this->lang['newsletter-add']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldMultipleCheckbox('newsletter_choice', $this->lang['add.choice_streams'], array(), $this->get_streams(),
-			array('required' => true)
-		));
-		
-		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['newsletter.title'], NewsletterConfig::load()->get_newsletter_name(), array(
-			'required' => true)
-		));
-		
-		$fieldset->add_field($this->return_editor($type));
-		
-		$this->submit_button = new FormButtonDefaultSubmit();
-		$this->send_test_button = new FormButtonSubmit($this->lang['add.send_test'], 'send_test');
-		$form->add_button($this->submit_button);
-		$form->add_button($this->send_test_button);
-		$form->add_button(new FormButtonReset());
+		if (NewsletterConfig::load()->get_mail_sender())
+		{
+			$fieldset->add_field(new FormFieldMultipleCheckbox('newsletter_choice', $this->lang['add.choice_streams'], array(), $this->get_streams(),
+				array('required' => true)
+			));
+			
+			$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['newsletter.title'], NewsletterConfig::load()->get_newsletter_name(), array(
+				'required' => true)
+			));
+			
+			$fieldset->add_field($this->return_editor($type));
+			
+			$this->submit_button = new FormButtonDefaultSubmit();
+			$this->send_test_button = new FormButtonSubmit($this->lang['add.send_test'], 'send_test');
+			$form->add_button($this->submit_button);
+			$form->add_button($this->send_test_button);
+			$form->add_button(new FormButtonReset());
+		}
+		else
+		{
+			$fieldset->add_field(new FormFieldHTML('mail_sender_not_configured_msg', MessageHelper::display($this->lang['error.sender-mail-not-configured' . (AppContext::get_current_user()->is_admin() ? '-for-admin' : '')], MessageHelper::WARNING)->render()));
+			
+			$this->submit_button = new FormButtonDefaultSubmit();
+		}
 		
 		$this->form = $form;
 	}

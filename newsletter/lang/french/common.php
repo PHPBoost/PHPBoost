@@ -120,6 +120,8 @@ $lang['stream.message.success.edit'] = 'Le flux <b>:name</b> a été modifié';
 $lang['stream.message.success.delete'] = 'Le flux <b>:name</b> a été supprimé';
 
 //Errors
+$lang['error.sender-mail-not-configured'] = 'L\'adresse email d\'envoi de la newsletter n\'a pas été configurée par l\'administrateur, veuillez réessayer quand ça sera fait.';
+$lang['error.sender-mail-not-configured-for-admin'] = 'L\'adresse email d\'envoi de la newsletter n\'a pas été configurée. Veuillez la <a href="' . NewsletterUrlBuilder::configuration()->rel() . '">configurer</a> avant de pouvoir envoyer une newsletter.';
 $lang['admin.stream-not-existed'] = 'Le flux demandé n\'existe pas';
 $lang['error-subscriber-not-existed'] = 'L\'incrit n\'existe pas';
 $lang['error-archive-not-existed'] = 'L\'archive n\'existe pas';

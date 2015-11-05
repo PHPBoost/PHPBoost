@@ -120,6 +120,8 @@ $lang['stream.message.success.edit'] = 'The stream <b>:name</b> has been modifie
 $lang['stream.message.success.delete'] = 'The stream <b>:name</b> has been deleted';
 
 //Errors
+$lang['error.sender-mail-not-configured'] = 'The newsletter sender mail has not been configured by the administrator, please try again later.';
+$lang['error.sender-mail-not-configured-for-admin'] = 'The newsletter sender mail has not been configured. Please <a href="' . NewsletterUrlBuilder::configuration()->rel() . '">configure</a> it before sending a newsletter.';
 $lang['admin.stream-not-existed'] = 'The requested stream does not exist';
 $lang['error-subscriber-not-existed'] = 'This registrant is not exist';
 $lang['error-archive-not-existed'] = 'This archive does not exist';

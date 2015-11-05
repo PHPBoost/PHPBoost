@@ -84,10 +84,19 @@ class HomeAddNewsletterController extends ModuleController
 		$fieldset = new FormFieldsetHTML('choices-fieldset');
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldHTML('choices_table', $this->build_choices_table()->render()));
-		
-		$this->submit_button = new FormButtonDefaultSubmit($this->lang['newsletter.types.next']);
-		$form->add_button($this->submit_button);
+		if (NewsletterConfig::load()->get_mail_sender())
+		{
+			$fieldset->add_field(new FormFieldHTML('choices_table', $this->build_choices_table()->render()));
+			
+			$this->submit_button = new FormButtonDefaultSubmit($this->lang['newsletter.types.next']);
+			$form->add_button($this->submit_button);
+		}
+		else
+		{
+			$fieldset->add_field(new FormFieldHTML('mail_sender_not_configured_msg', MessageHelper::display($this->lang['error.sender-mail-not-configured' . (AppContext::get_current_user()->is_admin() ? '-for-admin' : '')], MessageHelper::WARNING)->render()));
+			
+			$this->submit_button = new FormButtonDefaultSubmit();
+		}
 		
 		$this->form = $form;
 	}
