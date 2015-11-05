@@ -13,7 +13,7 @@
 					# ENDIF #
 				</div>
 				<div class="message-level">{comments.L_LEVEL}</div>
-				# IF comments.C_AVATAR #<img src="{comments.U_AVATAR}" alt="" class="message-avatar" /># ENDIF #
+				# IF comments.C_AVATAR #<img src="{comments.U_AVATAR}" alt="${LangLoader::get_message('avatar', 'user-common')}" class="message-avatar" /># ENDIF #
 			</div>
 
 			<div class="message-date">

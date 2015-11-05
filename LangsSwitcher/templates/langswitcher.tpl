@@ -6,7 +6,7 @@
 					<option value="{langs.IDNAME}"{langs.SELECTED}>{langs.NAME}</option>
 				# END langs #
 				</select>
-				<img src="{IMG_LANG_IDENTIFIER}" alt="" class="valign-middle" />
+				<img src="{IMG_LANG_IDENTIFIER}" alt="{DEFAULT_LANG}" class="valign-middle" />
 			</p>
 			<a href="?switchlang={DEFAULT_LANG}">{@default_lang}</a>
 	</form>

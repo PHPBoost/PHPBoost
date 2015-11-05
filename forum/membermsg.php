@@ -165,9 +165,9 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		
 		//Avatar
 		if (empty($row['user_avatar'])) 
-			$user_avatar = ($user_accounts_config->is_default_avatar_enabled() == '1') ? '<img src="../templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  $user_accounts_config->get_default_avatar_name() . '" alt="" />' : '';
+			$user_avatar = ($user_accounts_config->is_default_avatar_enabled() == '1') ? '<img src="../templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  $user_accounts_config->get_default_avatar_name() . '" alt="' . LangLoader::get_message('avatar', 'user-common') . '" />' : '';
 		else
-			$user_avatar = '<img src="' . Url::to_rel($row['user_avatar']) . '" alt="" />';
+			$user_avatar = '<img src="' . Url::to_rel($row['user_avatar']) . '" alt="' . LangLoader::get_message('avatar', 'user-common') . '" />';
 			
 		//Affichage du nombre de message.
 		if ($row['posted_msg'] >= 1)

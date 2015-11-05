@@ -29,7 +29,7 @@
 				<td>
 					<a href="{users.U_PROFILE}" class="{users.LEVEL_CLASS}" # IF users.C_GROUP_COLOR # style="color:{users.GROUP_COLOR}" # ENDIF #>{users.PSEUDO}</a>
 					<div>{users.LEVEL}</div>
-					# IF users.C_AVATAR #<img src="{users.U_AVATAR}" class="message-avatar" /># ENDIF #
+					# IF users.C_AVATAR #<img src="{users.U_AVATAR}" class="message-avatar" alt="${LangLoader::get_message('avatar', 'user-common')}" /># ENDIF #
 				</td>
 				<td>
 					<a href="{users.U_LOCATION}">{users.TITLE_LOCATION}</a>

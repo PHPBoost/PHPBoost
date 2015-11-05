@@ -94,7 +94,7 @@
 									<select name="icon" id="icon" onchange="img_change('img_icon', '{PATH_TO_ROOT}/forum/templates/images/ranks/' + this.options[selectedIndex].value)">
 										{RANK_OPTIONS}
 									</select>
-									<img src="{PATH_TO_ROOT}/forum/templates/images/ranks/rank_0.png" id="img_icon" alt="" style="display:none;" />
+									<img src="{PATH_TO_ROOT}/forum/templates/images/ranks/rank_0.png" id="img_icon" alt="rank_0.png" style="display:none;" />
 								</label></div>
 							</div>
 						</div>

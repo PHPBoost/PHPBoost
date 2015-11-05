@@ -67,7 +67,7 @@
 											{rank.RANK_OPTIONS}
 										</select>
 										<br />
-										# IF rank.IMG_RANK # <img src="{PATH_TO_ROOT}/forum/templates/images/ranks/{rank.IMG_RANK}" id="icon{rank.ID}" alt="" /> # ENDIF #
+										# IF rank.IMG_RANK # <img src="{PATH_TO_ROOT}/forum/templates/images/ranks/{rank.IMG_RANK}" id="icon{rank.ID}" alt="{rank.IMG_RANK}" /> # ENDIF #
 									</td>
 									<td>
 										{rank.DELETE}

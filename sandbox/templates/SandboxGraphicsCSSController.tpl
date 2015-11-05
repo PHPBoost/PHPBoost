@@ -418,7 +418,7 @@
 							<a itemprop="author" href="{PATH_TO_ROOT}/user/?url=/profile/1" class="admin">{@css.messages.login}</a>
 					</div>
 					<div class="message-level">{@css.messages.level}</div>
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" class="message-avatar" />
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" class="message-avatar" alt="${LangLoader::get_message('avatar', 'user-common')}" />
 				</div>
 
 				<div class="message-date">

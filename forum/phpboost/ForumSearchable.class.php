@@ -242,7 +242,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			'TITLE' => ucfirst($result_data['title']),
 			'DATE' => Date::to_format($result_data['date'], 'd/m/y'),
 			'CONTENTS' => FormatingHelper::second_parse($result_data['contents']),
-			'USER_AVATAR' => '<img src="' . (UserAccountsConfig::load()->is_default_avatar_enabled() && !empty($result_data['avatar']) ? $result_data['avatar'] : PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name()) . '" alt="" class="message-avatar"/>'
+			'USER_AVATAR' => '<img src="' . (UserAccountsConfig::load()->is_default_avatar_enabled() && !empty($result_data['avatar']) ? $result_data['avatar'] : PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name()) . '" alt="' . ${LangLoader::get_message('avatar', 'user-common')} . '" class="message-avatar"/>'
 		));
 
 			return $tpl->render();
