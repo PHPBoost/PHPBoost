@@ -122,6 +122,18 @@ abstract class AbstractFormFieldChoice extends AbstractFormField
 		}
 		return null;
 	}
+
+	protected function get_option_id($raw_option)
+	{
+		foreach ($this->options as $id => $option)
+		{
+			if ($option->get_raw_value() == $raw_option)
+			{
+				return $id;
+			}
+		}
+		return null;
+	}
 	
 	/**
 	 * {@inheritdoc}

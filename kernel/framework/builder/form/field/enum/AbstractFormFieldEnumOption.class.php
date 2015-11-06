@@ -106,8 +106,8 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 			return $this->active;
 		}
 		else
-		{		
-			return $this->get_field()->get_value() === $this;		
+		{
+			return $this->get_field()->get_value() === $this;
 		}
 	}
 	
@@ -124,6 +124,11 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 	protected function get_field_id()
 	{
 		return $this->get_field()->get_html_id();
+	}
+	
+	protected function get_option_id()
+	{
+		return $this->get_field()->get_html_id() . $this->get_field()->get_option_id($this->raw_value);
 	}
 	
 	/**
