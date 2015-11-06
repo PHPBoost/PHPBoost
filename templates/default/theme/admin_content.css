@@ -802,6 +802,12 @@ input[type=color] {
     border: 1px solid #366393;
 }
 
+.form-field-multiple-checkbox .form-field-checkbox {
+	margin: 5px 5px 0 0;
+	display: inline-block;
+	vertical-align: middle;
+}
+
 /* --- input form-field-values --- */
 
 .form-field-values input[type="text"] {
