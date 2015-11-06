@@ -111,8 +111,8 @@ class LangsManager
 			$default_lang = self::get_default_lang();
 			if (self::get_lang($id)->get_id() !== $default_lang)
 			{
-				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('user_lang' => $default_lang), 
-					'WHERE user_lang=:old_user_lang', array('old_user_lang' => $id
+				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('locale' => $default_lang), 
+					'WHERE locale=:old_locale', array('old_locale' => $id
 				));
 				
 				LangsConfig::load()->remove_lang_by_id($id);
