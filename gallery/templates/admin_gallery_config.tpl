@@ -357,7 +357,7 @@
 				<fieldset>
 					<legend>{L_CACHE}</legend>
 					<div class="fieldset-inset">
-						<img src="{PATH_TO_ROOT}/templates/default/images/admin/cache.png" alt="" style="float:left;padding:6px;" />
+						<p class="center"><i class="fa fa-2x fa-refresh"></i></p>
 						{L_EXPLAIN_GALLERY_CACHE}
 					</div>
 				</fieldset>
