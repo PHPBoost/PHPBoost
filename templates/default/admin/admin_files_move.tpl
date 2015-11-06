@@ -9,7 +9,7 @@
 					<a href="admin_files.php" class="quick-link">{L_FILES_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_files_config.php" class="quick-link">{L_CONFIG_FILES}</a>
+					<a href="${relative_url(AdminFilesUrlBuilder::configuration())}" class="quick-link">{L_CONFIG_FILES}</a>
 				</li>
 			</ul>
 		</nav>
