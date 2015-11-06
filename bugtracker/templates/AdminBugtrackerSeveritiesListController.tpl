@@ -25,7 +25,10 @@
 		# START severities #
 		<tr>
 			<td>
-				<input type="radio" name="default_severity" value="{severities.ID}"# IF severities.C_IS_DEFAULT # checked="checked"# ENDIF # />
+				<div class="form-field-radio">
+					<input type="radio" name="default_severity{severities.ID}" value="{severities.ID}"# IF severities.C_IS_DEFAULT # checked="checked"# ENDIF # />
+					<label for="default_severity{severities.ID}"></label>
+				</div>				
 			</td>
 			<td>
 				<input type="color" name="color{severities.ID}" id="color{severities.ID}" value="{severities.COLOR}" />

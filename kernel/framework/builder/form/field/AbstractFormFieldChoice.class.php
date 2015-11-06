@@ -123,7 +123,7 @@ abstract class AbstractFormFieldChoice extends AbstractFormField
 		return null;
 	}
 
-	protected function get_option_id($raw_option)
+	public function get_option_id($raw_option)
 	{
 		foreach ($this->options as $id => $option)
 		{

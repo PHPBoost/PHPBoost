@@ -82,7 +82,10 @@ var BugtrackerFormFieldTypes = new BugtrackerFormFieldTypes();
 		# START types #
 		<tr>
 			<td>
-				<input type="radio" name="default_type" value="{types.ID}"# IF types.C_IS_DEFAULT # checked="checked"# ENDIF # />
+				<div class="form-field-radio">
+					<input id="default_type{types.ID}" type="radio" name="default_type" value="{types.ID}"# IF types.C_IS_DEFAULT # checked="checked"# ENDIF # />
+					<label for="default_type{types.ID}"></label>
+				</div>				
 			</td>
 			<td>
 				<input type="text" maxlength="100" class="field-large" name="type{types.ID}" value="{types.NAME}" />

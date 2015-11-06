@@ -56,7 +56,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		$fieldset = $member_extended_field->get_fieldset();
 		
 		$value = $member_extended_field->get_value();
-		$image = !empty($value) ? '<img src="'. Url::to_rel($value) .'" alt="' . {LangLoader::get_message('avatar', 'user-common') . '" title="' . LangLoader::get_message('avatar', 'user-common') . '" />' : $this->lang['extended-field.field.avatar.no_avatar'];
+		$image = !empty($value) ? '<img src="'. Url::to_rel($value) .'" alt="' . LangLoader::get_message('avatar', 'user-common') . '" title="' . LangLoader::get_message('avatar', 'user-common') . '" />' : $this->lang['extended-field.field.avatar.no_avatar'];
 		$fieldset->add_field(new FormFieldFree('current_avatar', $this->lang['extended-field.field.avatar.current_avatar'], $image));
 		
 		if (UserAccountsConfig::load()->is_avatar_upload_enabled())

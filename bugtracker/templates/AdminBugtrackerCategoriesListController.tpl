@@ -82,7 +82,10 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 		# START categories #
 		<tr>
 			<td>
-				<input type="radio" name="default_category" value="{categories.ID}"# IF categories.C_IS_DEFAULT # checked="checked"# ENDIF # />
+				<div class="form-field-radio">
+					<input id="default_category" type="radio" name="default_category" value="{categories.ID}"# IF categories.C_IS_DEFAULT # checked="checked"# ENDIF # />
+					<label for="default_category{categories.ID}"></label>
+				</div>				
 			</td>
 			<td>
 				<input type="text" maxlength="100" class="field-large" name="category{categories.ID}" value="{categories.NAME}" />
