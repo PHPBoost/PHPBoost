@@ -20,10 +20,10 @@ function change_alert_status(id, status)
 	var filename = PATH_TO_ROOT + '/kernel/framework/ajax/admin_alerts.php?change_status=' + id + '&token={TOKEN}';
 
 	if(window.XMLHttpRequest) // Firefox
-	   xhr_object = new XMLHttpRequest();
+		xhr_object = new XMLHttpRequest();
 	else if(window.ActiveXObject) // Internet Explorer
-	   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-	else // XMLHttpRequest non support� par le navigateur
+		xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
+	else // XMLHttpRequest non supporté par le navigateur
 		return;
 	
 	xhr_object.open('GET', filename, true);
@@ -47,7 +47,7 @@ function change_alert_status(id, status)
 	}
 
 	xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhr_object.send(data);	
+	xhr_object.send(data);
 }
 
 function delete_alert(id)
@@ -82,84 +82,87 @@ function delete_alert(id)
 }
 -->
 </script>
-		
+
 <div id="admin-contents">
-	<table id="table">
-		
+	<fieldset class="fieldset-content">
+		<legend>{L_ADMIN_ALERTS}</legend>
+		<div class="fieldset-inset">
 		# IF C_EXISTING_ALERTS #
-		<caption>{L_ADMIN_ALERTS}</caption>
-		<thead>
-			<tr> 
-				<th>
-					# IF NOT C_ORDER_ENTITLED_ASC #
-						<a href="{U_ORDER_ENTITLED_ASC}" class="fa fa-table-sort-up"></a>
-					# ENDIF #
-					{L_TYPE}
-					# IF NOT C_ORDER_ENTITLED_DESC #
-						<a href="{U_ORDER_ENTITLED_DESC}" class="fa fa-table-sort-down"></a>
-					# ENDIF #
-				</th>
-				<th>
-					# IF NOT C_ORDER_CREATION_DATE_ASC #
-						<a href="{U_ORDER_CREATION_DATE_ASC}" class="fa fa-table-sort-up"></a>
-					# ENDIF #
-					{L_DATE}
-					# IF NOT C_ORDER_CREATION_DATE_DESC #
-						<a href="{U_ORDER_CREATION_DATE_DESC}" class="fa fa-table-sort-down"></a>
-					# ENDIF #
-				</th>
-				<th>
-					# IF NOT C_ORDER_PRIORITY_ASC #
-						<a href="{U_ORDER_PRIORITY_ASC}" class="fa fa-table-sort-up"></a>
-					# ENDIF #
-					{L_PRIORITY}
-					# IF NOT C_ORDER_PRIORITY_DESC #
-						<a href="{U_ORDER_PRIORITY_DESC}" class="fa fa-table-sort-down"></a>
-					# ENDIF #
-				</th>
-				<th>
-					# IF NOT C_ORDER_STATUS_ASC #
-						<a href="{U_ORDER_STATUS_ASC}" class="fa fa-table-sort-up"></a>
-					# ENDIF #
-					{L_ACTIONS}
-					# IF NOT C_ORDER_STATUS_DESC #
-						<a href="{U_ORDER_STATUS_DESC}" class="fa fa-table-sort-down"></a>
-					# ENDIF #
-				</th>
-			</tr>
-		</thead>
-		# IF C_PAGINATION #
-		<tfoot>
-			<tr> 
-				<th colspan="4">
-					# INCLUDE PAGINATION #
-				</th>
-			</tr>
-		</tfoot>
+			<table id="table">
+			<caption>{L_ADMIN_ALERTS}</caption>
+			<thead>
+				<tr> 
+					<th>
+						# IF NOT C_ORDER_ENTITLED_ASC #
+							<a href="{U_ORDER_ENTITLED_ASC}" class="fa fa-table-sort-up"></a>
+						# ENDIF #
+						{L_TYPE}
+						# IF NOT C_ORDER_ENTITLED_DESC #
+							<a href="{U_ORDER_ENTITLED_DESC}" class="fa fa-table-sort-down"></a>
+						# ENDIF #
+					</th>
+					<th>
+						# IF NOT C_ORDER_CREATION_DATE_ASC #
+							<a href="{U_ORDER_CREATION_DATE_ASC}" class="fa fa-table-sort-up"></a>
+						# ENDIF #
+						{L_DATE}
+						# IF NOT C_ORDER_CREATION_DATE_DESC #
+							<a href="{U_ORDER_CREATION_DATE_DESC}" class="fa fa-table-sort-down"></a>
+						# ENDIF #
+					</th>
+					<th>
+						# IF NOT C_ORDER_PRIORITY_ASC #
+							<a href="{U_ORDER_PRIORITY_ASC}" class="fa fa-table-sort-up"></a>
+						# ENDIF #
+						{L_PRIORITY}
+						# IF NOT C_ORDER_PRIORITY_DESC #
+							<a href="{U_ORDER_PRIORITY_DESC}" class="fa fa-table-sort-down"></a>
+						# ENDIF #
+					</th>
+					<th>
+						# IF NOT C_ORDER_STATUS_ASC #
+							<a href="{U_ORDER_STATUS_ASC}" class="fa fa-table-sort-up"></a>
+						# ENDIF #
+						{L_ACTIONS}
+						# IF NOT C_ORDER_STATUS_DESC #
+							<a href="{U_ORDER_STATUS_DESC}" class="fa fa-table-sort-down"></a>
+						# ENDIF #
+					</th>
+				</tr>
+			</thead>
+			# IF C_PAGINATION #
+			<tfoot>
+				<tr> 
+					<th colspan="4">
+						# INCLUDE PAGINATION #
+					</th>
+				</tr>
+			</tfoot>
+			# ENDIF #
+			<tbody>
+				# START alerts #
+				<tr id="delete_{alerts.ID}"> 
+					<td>
+						{alerts.IMG} <a href="{alerts.FIXING_URL}">{alerts.NAME}</a>
+					</td>
+					<td>
+						{alerts.DATE}
+					</td>
+					<td style="{alerts.STYLE}">
+						{alerts.PRIORITY} 
+					</td>
+					<td>
+						{alerts.ACTIONS}
+						<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" title="# IF alerts.C_PROCESSED #{L_UNFIX}# ELSE #{L_FIX}# ENDIF #" id="status_{alerts.ID}"><i class="fa # IF alerts.C_PROCESSED #fa-success# ELSE #fa-error# ENDIF #"></i></a>
+						<a href="javascript:delete_alert('{alerts.ID}');" title="{L_DELETE}" class="fa fa-delete"></a>
+					</td>
+				</tr>
+				# END alerts #
+			</tbody>
+		</table>
+		# ELSE #
+		<div class="question message-helper-small">{L_NO_ALERT}</div>
 		# ENDIF #
-		<tbody>
-			# START alerts #
-			<tr id="delete_{alerts.ID}"> 
-				<td>
-					{alerts.IMG} <a href="{alerts.FIXING_URL}">{alerts.NAME}</a>
-				</td>
-				<td>
-					{alerts.DATE}
-				</td>
-				<td style="{alerts.STYLE}">
-					{alerts.PRIORITY} 
-				</td>
-				<td>
-					{alerts.ACTIONS}
-					<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" title="# IF alerts.C_PROCESSED #{L_UNFIX}# ELSE #{L_FIX}# ENDIF #" id="status_{alerts.ID}"><i class="fa # IF alerts.C_PROCESSED #fa-success# ELSE #fa-error# ENDIF #"></i></a>
-					<a href="javascript:delete_alert('{alerts.ID}');" title="{L_DELETE}" class="fa fa-delete"></a>
-				</td>
-			</tr>
-			# END alerts #
-		</tbody>
-		# ENDIF #	
-	</table>
-	# IF NOT C_EXISTING_ALERTS #
-	<div class="question message-helper-small">{L_NO_ALERT}</div>
-	# ENDIF #			
+		</div>
+	</fieldset>
 </div>
