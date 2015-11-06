@@ -3,7 +3,7 @@
  *                                topic.php
  *                            -------------------
  *   begin                : October 26, 2005
- *   copyright            : (C) 2005 Viarre Régis / Sautel Benoît
+ *   copyright            : (C) 2005 Viarre RÃ©gis / Sautel BenoÃ®t
  *   email                : mickaelhemri@gmail.com / ben.popeye@gmail.com
  *
  *  
@@ -44,7 +44,7 @@ try {
 	DispatchManager::redirect($error_controller);
 }
 
-//Existance de la catégorie.
+//Existance de la catÃ©gorie.
 if ($topic['idcat'] != Category::ROOT_CATEGORY && !ForumService::get_categories_manager()->get_categories_cache()->category_exists($topic['idcat']))
 {
 	$controller = PHPBoostErrors::unexisting_category();
@@ -58,7 +58,7 @@ try {
 	DispatchManager::redirect($error_controller);
 }
 
-//Récupération de la barre d'arborescence.
+//RÃ©cupÃ©ration de la barre d'arborescence.
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
 $categories = array_reverse(ForumService::get_categories_manager()->get_parents($topic['idcat'], true));
 foreach ($categories as $id => $cat)
@@ -71,9 +71,9 @@ $Bread_crumb->add($topic['title'], '');
 define('TITLE', $topic['title']);
 require_once('../kernel/header.php'); 
 
-$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : ''; //On encode l'url pour un éventuel rewriting.
+$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : ''; //On encode l'url pour un Ã©ventuel rewriting.
 
-//Redirection changement de catégorie.
+//Redirection changement de catÃ©gorie.
 if ($change_cat)
 	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . '+' . $category->get_rewrited_name() . '.php', '&'));
 	
@@ -95,7 +95,7 @@ $tpl = new FileTemplate('forum/forum_topic.tpl');
 $TmpTemplate = new FileTemplate('forum/forum_generic_results.tpl');
 $module_data_path = $TmpTemplate->get_pictures_data_path();
 
-//Si l'utilisateur a le droit de déplacer le topic, ou le verrouiller.	
+//Si l'utilisateur a le droit de dÃ©placer le topic, ou le verrouiller.	
 $check_group_edit_auth = ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation();
 if ($check_group_edit_auth)
 {
@@ -121,7 +121,7 @@ else
 	));
 }
 
-//Message(s) dans le topic non lu ( non prise en compte des topics trop vieux (x semaine) ou déjà lus).
+//Message(s) dans le topic non lu ( non prise en compte des topics trop vieux (x semaine) ou dÃ©jÃ  lus).
 mark_topic_as_read($id_get, $topic['last_msg_id'], $topic['last_timestamp']);
 
 //Gestion de la page si redirection vers le dernier message lu.
@@ -132,18 +132,18 @@ if (!empty($idm))
 	//Calcul de la page sur laquelle se situe le message.
 	$nbr_msg_before = PersistenceContext::get_querier()->count(PREFIX . "forum_msg", 'WHERE idtopic = :idtopic AND id < :id', array('idtopic' => $id_get, 'id' => $idm)); //Nombre de message avant le message de destination.
 	
-	//Dernier message de la page? Redirection vers la page suivante pour prendre en compte la reprise du message précédent.
+	//Dernier message de la page? Redirection vers la page suivante pour prendre en compte la reprise du message prÃ©cÃ©dent.
 	if (is_int(($nbr_msg_before + 1) / $config->get_number_messages_per_page())) 
 	{
-		//On redirige vers la page suivante, seulement si ce n'est pas la dernière.
+		//On redirige vers la page suivante, seulement si ce n'est pas la derniÃ¨re.
 		if ($topic['nbr_msg'] != ($nbr_msg_before + 1))
 			$nbr_msg_before++;
 	}
 	
-	$page = ceil(($nbr_msg_before + 1) / $config->get_number_messages_per_page()); //Modification de la page affichée.
+	$page = ceil(($nbr_msg_before + 1) / $config->get_number_messages_per_page()); //Modification de la page affichÃ©e.
 }
 
-//On crée une pagination si le nombre de msg est trop important.
+//On crÃ©e une pagination si le nombre de msg est trop important.
 $pagination = new ModulePagination($page, $topic['nbr_msg'], $config->get_number_messages_per_page(), Pagination::LIGHT_PAGINATION);
 $pagination->set_url(new Url('/forum/topic.php?id=' . $id_get . '&amp;pt=%d'));
 
@@ -153,7 +153,7 @@ if ($pagination->current_page_is_empty() && $page > 1)
 	DispatchManager::redirect($error_controller);
 }
 
-//Affichage de l'arborescence des catégories.
+//Affichage de l'arborescence des catÃ©gories.
 $i = 0;
 $forum_cats = '';
 $Bread_crumb->remove_last();
@@ -203,7 +203,7 @@ $vars_tpl = array(
 	'L_RESET' => $LANG['reset']
 );
 
-//Création du tableau des rangs.
+//CrÃ©ation du tableau des rangs.
 $array_ranks = array(-1 => $LANG['guest_s'], 0 => $LANG['member_s'], 1 => $LANG['modo_s'], 2 => $LANG['admin_s']);
 
 $extended_fields_cache = ExtendedFieldsCache::load();
@@ -215,8 +215,8 @@ foreach ($displayed_extended_fields as $field_type)
 }
 
 list($track, $track_pm, $track_mail, $poll_done) = array(false, false, false, false);
-$ranks_cache = ForumRanksCache::load()->get_ranks(); //Récupère les rangs en cache.
-$quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
+$ranks_cache = ForumRanksCache::load()->get_ranks(); //RÃ©cupÃ¨re les rangs en cache.
+$quote_last_msg = ($page > 1) ? 1 : 0; //On enlÃ¨ve 1 au limite si on est sur une page > 1, afin de rÃ©cupÃ©rer le dernier msg de la page prÃ©cÃ©dente.
 $i = 0;
 $j = 0;
 $result = PersistenceContext::get_querier()->select("SELECT msg.id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, m.user_id, p.question, p.answers, p.voter_id, p.votes, p.type, m.display_name as login, m.level, m.groups, m.email, m.show_email, m.registration_date AS registered, ext_field.user_avatar, m.posted_msg, ext_field.user_sign, " . $extended_fields_to_recover_list . "m.warning_percentage, m.delay_readonly, m.delay_banned, m2.display_name as login_edit, s.user_id AS connect, tr.id AS trackid, tr.pm as trackpm, tr.track AS track, tr.mail AS trackmail, msg.contents
@@ -238,7 +238,7 @@ LIMIT :number_items_per_page OFFSET :display_from", array(
 ));
 while ( $row = $result->fetch() )
 {
-	//Invité?
+	//InvitÃ©?
 	$is_guest = empty($row['user_id']);
 	$first_message = ($row['id'] == $topic['first_msg_id']) ? true : false;
 
@@ -247,16 +247,16 @@ while ( $row = $result->fetch() )
 	if ($check_group_edit_auth || (AppContext::get_current_user()->get_id() == $row['user_id'] && !$is_guest && !$first_message))
 	{
 		list($edit, $del) = array(true, true);
-		if ($check_group_edit_auth) //Fonctions réservées à ceux possédants les droits de modérateurs seulement.
+		if ($check_group_edit_auth) //Fonctions rÃ©servÃ©es Ã  ceux possÃ©dants les droits de modÃ©rateurs seulement.
 		{
 			$cut = (!$first_message) ? true : false;
 			$moderator = (!$is_guest) ? true : false;
 		}
 	}
-	elseif (AppContext::get_current_user()->get_id() == $row['user_id'] && !$is_guest && $first_message) //Premier msg du topic => suppression du topic non autorisé au membre auteur du message.
+	elseif (AppContext::get_current_user()->get_id() == $row['user_id'] && !$is_guest && $first_message) //Premier msg du topic => suppression du topic non autorisÃ© au membre auteur du message.
 		$edit = true;
 	
-	//Gestion des sondages => executé une seule fois.
+	//Gestion des sondages => executÃ© une seule fois.
 	if (!empty($row['question']) && $poll_done === false)
 	{
 		$tpl->put_all(array(
@@ -270,13 +270,13 @@ while ( $row = $result->fetch() )
 		));
 		
 		$array_voter = explode('|', $row['voter_id']);
-		if (in_array(AppContext::get_current_user()->get_id(), $array_voter) || $request->get_getvalue('r', 0) || AppContext::get_current_user()->get_id() === -1) //Déjà voté.
+		if (in_array(AppContext::get_current_user()->get_id(), $array_voter) || $request->get_getvalue('r', 0) || AppContext::get_current_user()->get_id() === -1) //DÃ©jÃ  votÃ©.
 		{
 			$array_answer = explode('|', $row['answers']);
 			$array_vote = explode('|', $row['votes']);
 			
 			$sum_vote = array_sum($array_vote);	
-			$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //Empêche la division par 0.
+			$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //EmpÃªche la division par 0.
 
 			foreach ($array_answer as $key => $answer)
 			{
@@ -328,13 +328,13 @@ while ( $row = $result->fetch() )
 	$user_rank = ($row['level'] === '0') ? $LANG['member'] : $LANG['guest'];
 	$user_group = $user_rank;
 	$user_rank_icon = '';
-	if ($row['level'] === '2') //Rang spécial (admins).  
+	if ($row['level'] === '2') //Rang spÃ©cial (admins).  
 	{
 		$user_rank = $ranks_cache[-2]['name'];
 		$user_group = $user_rank;
 		$user_rank_icon = $ranks_cache[-2]['icon'];
 	}
-	elseif ($row['level'] === '1') //Rang spécial (modos).  
+	elseif ($row['level'] === '1') //Rang spÃ©cial (modos).  
 	{
 		$user_rank = $ranks_cache[-1]['name'];
 		$user_group = $user_rank;
@@ -353,7 +353,7 @@ while ( $row = $result->fetch() )
 	}
 	
 	$theme = AppContext::get_current_user()->get_theme();
-	//Image associée au rang.
+	//Image associÃ©e au rang.
 	if (file_exists(TPL_PATH_TO_ROOT . '/templates/' . $theme . '/modules/forum/images/ranks/' . $user_rank_icon))
 	{
 		$rank_img = TPL_PATH_TO_ROOT . '/templates/' . $theme . '/modules/forum/images/ranks/' . $user_rank_icon;
@@ -384,7 +384,7 @@ while ( $row = $result->fetch() )
 	if (empty($row['user_avatar'])) 
 		$user_avatar = ($user_accounts_config->is_default_avatar_enabled() == '1') ? '<img src="../templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  $user_accounts_config->get_default_avatar_name() . '" alt="' . LangLoader::get_message('avatar', 'user-common') . '" />' : '';
 	else
-		$user_avatar = '<img src="' . Url::to_rel($row['user_avatar']) . '" alt="' . {LangLoader::get_message('avatar', 'user-common') . '"/>';
+		$user_avatar = '<img src="' . Url::to_rel($row['user_avatar']) . '" alt="' . LangLoader::get_message('avatar', 'user-common') . '"/>';
 		
 	//Affichage du nombre de message.
 	if ($row['posted_msg'] >= 1)
@@ -412,14 +412,14 @@ while ( $row = $result->fetch() )
 		'USER_MAIL' => ( !empty($row['email']) && ($row['show_email'] == '1' ) ) ? '<a href="mailto:' . $row['email'] . '" class="basic-button smaller">Mail</a>' : '',
 		'USER_SIGN' => (!empty($row['user_sign']) && !empty($user_sign_field) && $user_sign_field['display']) ? '____________________<br />' . FormatingHelper::second_parse($row['user_sign']) : '',
 		'USER_WARNING' => $row['warning_percentage'],
-		'L_FORUM_QUOTE_LAST_MSG' => ($quote_last_msg == 1 && $i == 0) ? $LANG['forum_quote_last_msg'] : '', //Reprise du dernier message de la page précédente.
+		'L_FORUM_QUOTE_LAST_MSG' => ($quote_last_msg == 1 && $i == 0) ? $LANG['forum_quote_last_msg'] : '', //Reprise du dernier message de la page prÃ©cÃ©dente.
 		'C_USER_ONLINE' => !empty($row['connect']),
 		'C_FORUM_USER_LOGIN' => !empty($row['login']),
 		'C_FORUM_MSG_EDIT' => $edit,
 		'C_FORUM_MSG_DEL' => $del,
 		'C_FORUM_MSG_DEL_MSG' => (!$first_message),
 		'C_FORUM_MSG_CUT' => $cut,
-		'C_FORUM_USER_EDITOR' => ($row['timestamp_edit'] > 0 && $config->is_edit_mark_enabled()), //Ajout du marqueur d'édition si activé.
+		'C_FORUM_USER_EDITOR' => ($row['timestamp_edit'] > 0 && $config->is_edit_mark_enabled()), //Ajout du marqueur d'Ã©dition si activÃ©.
 		'C_FORUM_USER_EDITOR_LOGIN' => !empty($row['login_edit']),
 		'C_FORUM_MODERATOR' => $moderator,
 		'U_FORUM_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
@@ -482,7 +482,7 @@ $result->dispose();
 //Listes les utilisateurs en lignes.
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" . url('/forum/topic.php?id=' . $id_get, '/forum/topic-' . $id_get) ."%'");
 
-//Liste des catégories.
+//Liste des catÃ©gories.
 $search_category_children_options = new SearchCategoryChildrensOptions();
 $search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 $categories_tree = ForumService::get_categories_manager()->get_select_categories_form_field('cats', '', $topic['idcat'], $search_category_children_options);
@@ -508,7 +508,7 @@ $vars_tpl = array_merge($vars_tpl, array(
 	'MODO' => $total_modo,
 	'MEMBER' => $total_member,
 	'GUEST' => $total_visit,
-	'SELECT_CAT' => $cat_list, //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
+	'SELECT_CAT' => $cat_list, //Retourne la liste des catÃ©gories, avec les vÃ©rifications d'accÃ¨s qui s'imposent.
 	'U_SUSCRIBE' => ($track) ? url('.php?ut=' . $id_get) : url('.php?t=' . $id_get),
 	'U_SUSCRIBE_PM' => url('.php?token=' . AppContext::get_session()->get_token() . '&amp;' . ($track_pm ? 'utp' : 'tp') . '=' . $id_get),
 	'U_SUSCRIBE_MAIL' => url('.php?token=' . AppContext::get_session()->get_token() . '&amp;' . ($track_mail ? 'utm' : 'tm') . '=' . $id_get),
@@ -536,7 +536,7 @@ $vars_tpl = array_merge($vars_tpl, array(
 	'L_ONLINE' => strtolower($LANG['online']),
 ));
 
-//Récupération du message quoté.
+//RÃ©cupÃ©ration du message quotÃ©.
 $contents = '';
 if (!empty($quote_get))
 {
@@ -551,7 +551,7 @@ if (!empty($quote_get))
 	$contents = '[quote=' . $pseudo . ']' . FormatingHelper::unparse($quote_msg['contents']) . '[/quote]';
 }
 
-//Formulaire de réponse, non présent si verrouillé.
+//Formulaire de rÃ©ponse, non prÃ©sent si verrouillÃ©.
 if ($topic['status'] == '0' && !$check_group_edit_auth)
 {
 	$tpl->put_all(array(
@@ -559,7 +559,7 @@ if ($topic['status'] == '0' && !$check_group_edit_auth)
 		'L_ERROR_AUTH_WRITE' => $LANG['e_topic_lock_forum']
 	));
 }	
-elseif (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->write()) //On vérifie si l'utilisateur a les droits d'écritures.
+elseif (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->write()) //On vÃ©rifie si l'utilisateur a les droits d'Ã©critures.
 {
 	$tpl->put_all(array(
 		'C_ERROR_AUTH_WRITE' => true,
@@ -585,7 +585,7 @@ else
 		'U_FORUM_ACTION_POST' => url('.php?idt=' . $id_get . '&amp;id=' . $topic['idcat'] . '&amp;new=n_msg&amp;token=' . AppContext::get_session()->get_token()),
 	));
 
-	//Affichage du lien pour changer le display_msg du topic et autorisation d'édition du statut.
+	//Affichage du lien pour changer le display_msg du topic et autorisation d'Ã©dition du statut.
 	if ($config->is_message_before_topic_title_displayed() && ($check_group_edit_auth || AppContext::get_current_user()->get_id() == $topic['user_id']))
 	{
 		$img_msg_display = $topic['display_msg'] ? 'fa-msg-not-display' : 'fa-msg-display';
