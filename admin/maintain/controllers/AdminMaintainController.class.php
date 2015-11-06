@@ -120,7 +120,7 @@ class AdminMaintainController extends AdminController
 		));
 		
 		$fieldset->add_field(new FormFieldDate('maintain_until', LangLoader::get_message('until', 'main'), $this->get_maintain_until_date(),
-			array('hidden' => $this->get_maintain_type() != 'until')
+			array('required' => true, 'hidden' => $this->get_maintain_type() != 'until')
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('display_duration', $this->lang['display_duration'], $this->maintenance_config->get_display_duration(),
