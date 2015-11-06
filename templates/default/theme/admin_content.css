@@ -1918,20 +1918,9 @@ a.upload-recent-file {
 }
 
 /* --- admin-extend ================================================================ */
-.admin-extend-menu {
-	margin: auto;
-	display: table;
-}
 
 .admin-extend-menu p {
 	padding: 0;
-}
-
-.admin-extend-menu ul{
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
-	display: table;
 }
 
 .admin-extend-menu ul h5 {
