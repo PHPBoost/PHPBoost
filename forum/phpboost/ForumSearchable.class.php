@@ -53,7 +53,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		$time = !empty($args['ForumTime']) ? NumberHelper::numeric($args['ForumTime']) : 0;
 		$where = !empty($args['ForumWhere']) ? TextHelper::strprotect($args['ForumWhere']) : 'all';
 		
-		//Liste des catégories.
+		//Liste des catÃ©gories.
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 		$categories_tree = ForumService::get_categories_manager()->get_select_categories_form_field('cats', '', $idcat, $search_category_children_options);
@@ -102,7 +102,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 
 	public function get_search_args()
 	/**
-	 *  Renvoie la liste des arguments de la méthode <get_search_args>
+	 *  Renvoie la liste des arguments de la mÃ©thode <get_search_args>
 	 */
 	{
 		return Array('ForumTime', 'ForumIdcat', 'ForumWhere');
@@ -110,7 +110,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 
 	public function get_search_request($args)
 	/**
-	 *  Renvoie la requête de recherche dans le forum
+	 *  Renvoie la requÃªte de recherche dans le forum
 	 */
 	{
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
@@ -242,7 +242,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			'TITLE' => ucfirst($result_data['title']),
 			'DATE' => Date::to_format($result_data['date'], 'd/m/y'),
 			'CONTENTS' => FormatingHelper::second_parse($result_data['contents']),
-			'USER_AVATAR' => '<img src="' . (UserAccountsConfig::load()->is_default_avatar_enabled() && !empty($result_data['avatar']) ? $result_data['avatar'] : PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name()) . '" alt="' . ${LangLoader::get_message('avatar', 'user-common')} . '" class="message-avatar"/>'
+			'USER_AVATAR' => '<img src="' . (UserAccountsConfig::load()->is_default_avatar_enabled() && !empty($result_data['avatar']) ? $result_data['avatar'] : PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name()) . '" alt="' . LangLoader::get_message('avatar', 'user-common') . '" class="message-avatar"/>'
 		));
 
 			return $tpl->render();
