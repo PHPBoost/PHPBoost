@@ -84,7 +84,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		}
 		elseif (!empty($value))
 		{
-			$avatar = '<img src="'. Url::to_rel($value) .'" alt="' . {LangLoader::get_message('avatar', 'user-common') . '" title="' . LangLoader::get_message('avatar', 'user-common') . '" />';
+			$avatar = '<img src="'. Url::to_rel($value) .'" alt="' . LangLoader::get_message('avatar', 'user-common') . '" title="' . LangLoader::get_message('avatar', 'user-common') . '" />';
 		}
 		else
 		{

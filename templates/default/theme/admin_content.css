@@ -308,9 +308,8 @@ table caption {
 @media (min-width:769px){
 	
 	table caption {
-		margin: 5px 50% 5px 2%;
+		margin: 5px 50% 0 2%;
 		max-width: 300px;
-		border-radius: 50px ;
 	}
 	
 	table, .table-fixed {
