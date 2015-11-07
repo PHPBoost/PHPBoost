@@ -37,10 +37,9 @@ class AdminErrorsDisplayResponse extends AdminMenuDisplayResponse
 		
 		$lang = LangLoader::get('admin-errors-common');
 		$this->set_title($lang['logged_errors']);
-		$picture = '/templates/default/images/admin/errors.png';
 		
-		$this->add_link($lang['logged_errors'], AdminErrorsUrlBuilder::logged_errors(), $picture);
-		$this->add_link($lang['404_errors'], AdminErrorsUrlBuilder::list_404_errors(), $picture);
+		$this->add_link($lang['logged_errors'], AdminErrorsUrlBuilder::logged_errors());
+		$this->add_link($lang['404_errors'], AdminErrorsUrlBuilder::list_404_errors());
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

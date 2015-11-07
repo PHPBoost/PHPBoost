@@ -29,13 +29,13 @@ class AdminExtendedFieldsDisplayResponse extends AdminMenuDisplayResponse
 {
 	public function __construct($view, $title_page)
 	{
-        parent::__construct($view);
+		parent::__construct($view);
 
 		$lang = LangLoader::get('admin-user-common');
-		$picture = '/templates/default/images/admin/extendfield.png';
 		$this->set_title($lang['extended-field']);
-		$this->add_link($lang['extended-fields-management'], AdminExtendedFieldsUrlBuilder::fields_list(), $picture);
-		$this->add_link($lang['extended-field-add'], AdminExtendedFieldsUrlBuilder::add(), $picture);
+		
+		$this->add_link($lang['extended-fields-management'], AdminExtendedFieldsUrlBuilder::fields_list());
+		$this->add_link($lang['extended-field-add'], AdminExtendedFieldsUrlBuilder::add());
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

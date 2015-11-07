@@ -32,9 +32,9 @@ class AdminContentDisplayResponse extends AdminMenuDisplayResponse
 		parent::__construct($view);
 
 		$lang = LangLoader::get('admin-contents-common');
-		$picture = '/templates/default/images/admin/content.png';
 		$this->set_title($lang['content.config']);
-		$this->add_link($lang['content.config'], AdminContentUrlBuilder::content_configuration(), $picture);
+		
+		$this->add_link($lang['content.config'], AdminContentUrlBuilder::content_configuration());
 
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

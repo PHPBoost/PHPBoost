@@ -34,8 +34,8 @@ class AdminServerDisplayResponse extends AdminMenuDisplayResponse
 		$lang = LangLoader::get('admin');
 		$this->set_title($lang['server']);
 
-		$this->add_link($lang['phpinfo'], AdminServerUrlBuilder::phpinfo(), '/templates/default/images/admin/phpinfo.png');
-		$this->add_link($lang['system_report'], AdminServerUrlBuilder::system_report(), '/templates/default/images/admin/system_report.png');
+		$this->add_link($lang['phpinfo'], AdminServerUrlBuilder::phpinfo());
+		$this->add_link($lang['system_report'], AdminServerUrlBuilder::system_report());
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

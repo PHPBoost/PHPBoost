@@ -37,9 +37,8 @@ class AdminShoutboxDisplayResponse extends AdminMenuDisplayResponse
 		
 		$lang = LangLoader::get('common', 'shoutbox');
 		$this->set_title($lang['module_title']);
-		$picture = 'shoutbox.png';
 		
-		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), ShoutboxUrlBuilder::configuration(), $picture);
+		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), ShoutboxUrlBuilder::configuration());
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page, $lang['module_title']);

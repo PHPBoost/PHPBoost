@@ -36,13 +36,12 @@ class AdminArticlesDisplayResponse extends AdminMenuDisplayResponse
 		
 		$lang = LangLoader::get('common', 'articles');
 		$this->set_title($lang['articles']);
-		$img = 'articles.png';
 		
-		$this->add_link(LangLoader::get_message('categories.management', 'categories-common'), ArticlesUrlBuilder::manage_categories(), $img);
-		$this->add_link(LangLoader::get_message('category.add', 'categories-common'), ArticlesUrlBuilder::add_category(), $img);
-		$this->add_link($lang['articles_management'], ArticlesUrlBuilder::manage_articles(), $img);
-		$this->add_link($lang['articles.add'], ArticlesUrlBuilder::add_article(), $img);
-		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), ArticlesUrlBuilder::configuration(), $img);
+		$this->add_link(LangLoader::get_message('categories.management', 'categories-common'), ArticlesUrlBuilder::manage_categories());
+		$this->add_link(LangLoader::get_message('category.add', 'categories-common'), ArticlesUrlBuilder::add_category());
+		$this->add_link($lang['articles_management'], ArticlesUrlBuilder::manage_articles());
+		$this->add_link($lang['articles.add'], ArticlesUrlBuilder::add_article());
+		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), ArticlesUrlBuilder::configuration());
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page, $lang['articles']);

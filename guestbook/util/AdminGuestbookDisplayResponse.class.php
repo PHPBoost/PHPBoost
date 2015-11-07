@@ -37,9 +37,8 @@ class AdminGuestbookDisplayResponse extends AdminMenuDisplayResponse
 		
 		$lang = LangLoader::get('common', 'guestbook');
 		$this->set_title($lang['module_title']);
-		$picture = 'guestbook.png';
 		
-		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), GuestbookUrlBuilder::configuration(), $picture);
+		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), GuestbookUrlBuilder::configuration());
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page, $lang['module_title']);

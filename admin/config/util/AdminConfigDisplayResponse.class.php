@@ -29,15 +29,16 @@ class AdminConfigDisplayResponse extends AdminMenuDisplayResponse
 {
 	public function __construct($view, $title_page)
 	{ 
-        parent::__construct($view);
-        
-        $lang = LangLoader::get('admin-config-common');
-        $this->set_title($lang['configuration']);
-        $img = '/templates/default/images/admin/configuration.png';
-        $this->add_link($lang['general-config'], AdminConfigUrlBuilder::general_config(), $img);
-        $this->add_link($lang['advanced-config'], AdminConfigUrlBuilder::advanced_config(), $img);
-        $this->add_link($lang['mail-config'], AdminConfigUrlBuilder::mail_config(), $img);
-        $env = $this->get_graphical_environment();
+		parent::__construct($view);
+		
+		$lang = LangLoader::get('admin-config-common');
+		$this->set_title($lang['configuration']);
+		
+		$this->add_link($lang['general-config'], AdminConfigUrlBuilder::general_config());
+		$this->add_link($lang['advanced-config'], AdminConfigUrlBuilder::advanced_config());
+		$this->add_link($lang['mail-config'], AdminConfigUrlBuilder::mail_config());
+		
+		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);
 	}
 }

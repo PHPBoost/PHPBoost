@@ -33,10 +33,9 @@ class AdminFilesDisplayResponse extends AdminMenuDisplayResponse
 		
 		$lang = LangLoader::get('main');
 		$this->set_title($lang['files_management']);
-		$img = '/templates/default/images/admin/files.png';
 
-		$this->add_link($lang['files_management'], AdminFilesUrlBuilder::management(), $img);
-		$this->add_link($lang['files_config'], AdminFilesUrlBuilder::configuration(), $img);
+		$this->add_link($lang['files_management'], AdminFilesUrlBuilder::management());
+		$this->add_link($lang['files_config'], AdminFilesUrlBuilder::configuration());
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

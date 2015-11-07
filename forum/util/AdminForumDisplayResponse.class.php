@@ -36,15 +36,13 @@ class AdminForumDisplayResponse extends AdminMenuDisplayResponse
 		parent::__construct($view);
 		
 		$lang = LangLoader::get('common', 'forum');
-		$picture = '/forum/forum.png';
-		$ranks_picture = '/templates/default/images/admin/ranks.png';
 		$this->set_title($lang['module_title']);
 		
-		$this->add_link(LangLoader::get_message('categories.management', 'categories-common'), ForumUrlBuilder::manage_categories(), $picture);
-		$this->add_link(LangLoader::get_message('category.add', 'categories-common'), ForumUrlBuilder::add_category(), $picture);
-		$this->add_link($lang['forum.ranks_management'], ForumUrlBuilder::manage_ranks(), $ranks_picture);
-		$this->add_link($lang['forum.actions.add_rank'], ForumUrlBuilder::add_rank(), $ranks_picture);
-		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), ForumUrlBuilder::configuration(), $picture);
+		$this->add_link(LangLoader::get_message('categories.management', 'categories-common'), ForumUrlBuilder::manage_categories());
+		$this->add_link(LangLoader::get_message('category.add', 'categories-common'), ForumUrlBuilder::add_category());
+		$this->add_link($lang['forum.ranks_management'], ForumUrlBuilder::manage_ranks());
+		$this->add_link($lang['forum.actions.add_rank'], ForumUrlBuilder::add_rank());
+		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), ForumUrlBuilder::configuration());
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page, $lang['module_title']);

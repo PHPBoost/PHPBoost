@@ -109,7 +109,7 @@ class AdminReCaptchaConfig extends AdminModuleController
 		
 		$response = new AdminMenuDisplayResponse($tpl);
 		$response->set_title($title);
-		$response->add_link($this->lang['config.title'], DispatchManager::get_url('/ReCaptcha', '/admin/config/'), 'ReCaptcha.png');
+		$response->add_link($this->lang['config.title'], DispatchManager::get_url('/ReCaptcha', '/admin/config/'));
 		$env = $response->get_graphical_environment();
 		$env->set_page_title($title);
 		

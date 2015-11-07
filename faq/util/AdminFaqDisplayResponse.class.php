@@ -36,14 +36,13 @@ class AdminFaqDisplayResponse extends AdminMenuDisplayResponse
 		parent::__construct($view);
 		
 		$lang = LangLoader::get('common', 'faq');
-		$picture = '/faq/faq.png';
 		$this->set_title($lang['module_title']);
 		
-		$this->add_link(LangLoader::get_message('categories.management', 'categories-common'), FaqUrlBuilder::manage_categories(), $picture);
-		$this->add_link(LangLoader::get_message('category.add', 'categories-common'), FaqUrlBuilder::add_category(), $picture);
-		$this->add_link($lang['faq.management'], FaqUrlBuilder::manage(), $picture);
-		$this->add_link($lang['faq.actions.add'], FaqUrlBuilder::add(), $picture);
-		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), FaqUrlBuilder::configuration(), $picture);
+		$this->add_link(LangLoader::get_message('categories.management', 'categories-common'), FaqUrlBuilder::manage_categories());
+		$this->add_link(LangLoader::get_message('category.add', 'categories-common'), FaqUrlBuilder::add_category());
+		$this->add_link($lang['faq.management'], FaqUrlBuilder::manage());
+		$this->add_link($lang['faq.actions.add'], FaqUrlBuilder::add());
+		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), FaqUrlBuilder::configuration());
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page, $lang['module_title']);

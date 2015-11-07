@@ -36,14 +36,13 @@ class AdminWebDisplayResponse extends AdminMenuDisplayResponse
 		parent::__construct($view);
 		
 		$lang = LangLoader::get('common', 'web');
-		$picture = '/web/web.png';
 		$this->set_title($lang['module_title']);
 		
-		$this->add_link(LangLoader::get_message('categories.management', 'categories-common'), WebUrlBuilder::manage_categories(), $picture);
-		$this->add_link(LangLoader::get_message('category.add', 'categories-common'), WebUrlBuilder::add_category(), $picture);
-		$this->add_link($lang['web.management'], WebUrlBuilder::manage(), $picture);
-		$this->add_link($lang['web.actions.add'], WebUrlBuilder::add(), $picture);
-		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), WebUrlBuilder::configuration(), $picture);
+		$this->add_link(LangLoader::get_message('categories.management', 'categories-common'), WebUrlBuilder::manage_categories());
+		$this->add_link(LangLoader::get_message('category.add', 'categories-common'), WebUrlBuilder::add_category());
+		$this->add_link($lang['web.management'], WebUrlBuilder::manage());
+		$this->add_link($lang['web.actions.add'], WebUrlBuilder::add());
+		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), WebUrlBuilder::configuration());
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page, $lang['module_title']);

@@ -37,13 +37,12 @@ class AdminCalendarDisplayResponse extends AdminMenuDisplayResponse
 		
 		$lang = LangLoader::get('common', 'calendar');
 		$this->set_title($lang['module_title']);
-		$picture = 'calendar.png';
 		
-		$this->add_link(LangLoader::get_message('categories.management', 'categories-common'), CalendarUrlBuilder::manage_categories(), $picture);
-		$this->add_link(LangLoader::get_message('category.add', 'categories-common'), CalendarUrlBuilder::add_category(), $picture);
-		$this->add_link($lang['calendar.config.events.management'], CalendarUrlBuilder::manage_events(), $picture);
-		$this->add_link($lang['calendar.titles.add_event'], CalendarUrlBuilder::add_event(), $picture);
-		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), CalendarUrlBuilder::configuration(), $picture);
+		$this->add_link(LangLoader::get_message('categories.management', 'categories-common'), CalendarUrlBuilder::manage_categories());
+		$this->add_link(LangLoader::get_message('category.add', 'categories-common'), CalendarUrlBuilder::add_category());
+		$this->add_link($lang['calendar.config.events.management'], CalendarUrlBuilder::manage_events());
+		$this->add_link($lang['calendar.titles.add_event'], CalendarUrlBuilder::add_event());
+		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), CalendarUrlBuilder::configuration());
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page, $lang['module_title']);

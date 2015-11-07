@@ -29,13 +29,13 @@ class AdminLangsDisplayResponse extends AdminMenuDisplayResponse
 {
 	public function __construct($view, $title_page)
 	{
-        parent::__construct($view);
+		parent::__construct($view);
 
 		$lang = LangLoader::get('admin-langs-common');
-		$picture = '/templates/default/images/admin/languages.png';
 		$this->set_title($lang['langs.langs_management']);
-		$this->add_link($lang['langs.installed_langs'], AdminLangsUrlBuilder::list_installed_langs(), $picture);
-		$this->add_link($lang['langs.add_lang'], AdminLangsUrlBuilder::install(), $picture);
+		
+		$this->add_link($lang['langs.installed_langs'], AdminLangsUrlBuilder::list_installed_langs());
+		$this->add_link($lang['langs.add_lang'], AdminLangsUrlBuilder::install());
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

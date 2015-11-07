@@ -29,13 +29,13 @@ class AdminCommentsDisplayResponse extends AdminMenuDisplayResponse
 {
 	public function __construct($view, $title_page)
 	{
-        parent::__construct($view);
+		parent::__construct($view);
 
 		$lang = LangLoader::get('admin-contents-common');
-		$picture = '/templates/default/images/admin/com.png';
 		$this->set_title($lang['comments']);
-		$this->add_link($lang['comments.config'], DispatchManager::get_url('/admin/content/', '/comments/config/'), $picture);
-		$this->add_link($lang['comments.management'], UserUrlBuilder::comments(), $picture);
+		
+		$this->add_link($lang['comments.config'], DispatchManager::get_url('/admin/content/', '/comments/config/'));
+		$this->add_link($lang['comments.management'], UserUrlBuilder::comments());
 
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

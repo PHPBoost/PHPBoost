@@ -33,8 +33,9 @@ class AdminMaintainDisplayResponse extends AdminMenuDisplayResponse
 		
 		$title = LangLoader::get_message('maintain', 'user-common');
 		$this->set_title($title);
-		$img = '/templates/default/images/admin/maintain.png';
-		$this->add_link($title, AdminMaintainUrlBuilder::maintain(), $img);
+		
+		$this->add_link($title, AdminMaintainUrlBuilder::maintain());
+		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);
 	}

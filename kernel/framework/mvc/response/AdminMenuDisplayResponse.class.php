@@ -52,12 +52,11 @@ class AdminMenuDisplayResponse extends AbstractResponse
 		$this->full_view->put_all(array('TITLE' => $title));
 	}
 
-	public function add_link($name, $url, $img)
+	public function add_link($name, $url)
 	{
 		$this->links[] = array(
-		    'LINK' => $name,
-		    'U_LINK' => Url::to_rel($url),
-		    'U_IMG' => Url::to_rel($img)
+			'LINK' => $name,
+			'U_LINK' => Url::to_rel($url)
 		);
 	}
 

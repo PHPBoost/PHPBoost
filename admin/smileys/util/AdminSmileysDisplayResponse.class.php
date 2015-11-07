@@ -33,10 +33,9 @@ class AdminSmileysDisplayResponse extends AdminMenuDisplayResponse
 		
 		$lang = LangLoader::get('admin');
 		$this->set_title($lang['smiley_management']);
-		$img = '/templates/default/images/admin/smileys.png';
-
-		$this->add_link($lang['smiley_management'], AdminSmileysUrlBuilder::management(), $img);
-		$this->add_link($lang['add_smiley'], AdminSmileysUrlBuilder::add(), $img);
+		
+		$this->add_link($lang['smiley_management'], AdminSmileysUrlBuilder::management());
+		$this->add_link($lang['add_smiley'], AdminSmileysUrlBuilder::add());
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

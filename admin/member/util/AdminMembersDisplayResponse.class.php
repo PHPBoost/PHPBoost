@@ -32,12 +32,12 @@ class AdminMembersDisplayResponse extends AdminMenuDisplayResponse
 		parent::__construct($view);
 
 		$lang = LangLoader::get('admin-user-common');
-		$picture = '/templates/default/images/admin/members.png';
 		$this->set_title($lang['members.members-management']);
-		$this->add_link($lang['members.members-management'], AdminMembersUrlBuilder::management(), $picture);
-		$this->add_link($lang['members.add-member'], AdminMembersUrlBuilder::add(), $picture);
-		$this->add_link($lang['members.config-members'], AdminMembersUrlBuilder::configuration(), $picture);
-		$this->add_link($lang['members.members-punishment'], PATH_TO_ROOT . '/user/moderation_panel.php', $picture);
+		
+		$this->add_link($lang['members.members-management'], AdminMembersUrlBuilder::management());
+		$this->add_link($lang['members.add-member'], AdminMembersUrlBuilder::add());
+		$this->add_link($lang['members.config-members'], AdminMembersUrlBuilder::configuration());
+		$this->add_link($lang['members.members-punishment'], UserUrlBuilder::moderation_panel());
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);
