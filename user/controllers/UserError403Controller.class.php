@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       UserError404Controller.class.php
+ *                       UserError403Controller.class.php
  *                            -------------------
  *   begin                : October 19, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
@@ -39,6 +39,11 @@ class UserError403Controller extends UserErrorController
 	{
 		AppContext::get_response()->set_status_code(403);
 		return parent::execute($request);
+	}
+
+	protected function create_view()
+	{
+		$this->view = new FileTemplate('user/UserError403Controller.tpl');
 	}
 }
 ?>

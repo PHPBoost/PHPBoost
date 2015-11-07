@@ -49,7 +49,7 @@ class UserErrorController extends AbstractController
 	/**
 	 * @var View
 	 */
-	private $view;
+	protected $view;
 
 	public function __construct($title, $message, $error_type = self::QUESTION)
 	{
@@ -111,7 +111,7 @@ class UserErrorController extends AbstractController
 		}
 	}
 
-	private function create_view()
+	protected function create_view()
 	{
 		$this->view = new FileTemplate('user/UserErrorController.tpl');
 	}

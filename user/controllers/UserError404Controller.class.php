@@ -42,5 +42,10 @@ class UserError404Controller extends UserErrorController
 		AdminError404Service::register_404();
 		return parent::execute($request);
 	}
+
+	protected function create_view()
+	{
+		$this->view = new FileTemplate('user/UserError404Controller.tpl');
+	}
 }
 ?>
