@@ -149,7 +149,7 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 
 		$fieldset->add_field(new FormFieldLabel($this->admin_lang['system_report_summerization_explain']));
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('summerization', '', $summerization . $directories_summerization,
-			array('rows' => 20, 'cols' => 15, 'class' => 'system-report', 'style' => 'font-family: monospace;')
+			array('rows' => 20, 'cols' => 15, 'class' => 'system-report')
 		));
 		
 		$this->form = $form;

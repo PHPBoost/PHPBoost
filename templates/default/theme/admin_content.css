@@ -1540,6 +1540,8 @@ body.dragging, body.dragging * {
 	}
 }
 
+.system-report { font-family: monospace; }
+
 /* --- database =============================================================== */
 
 .db-restore {
