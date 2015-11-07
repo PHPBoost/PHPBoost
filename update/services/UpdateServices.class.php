@@ -804,8 +804,6 @@ class UpdateServices
 		$file->delete();
 		$file = new File(Url::to_rel('/templates/default/framework/content/syndication/images/addrss.png'));
 		$file->delete();
-		$file = new File(Url::to_rel('/templates/default/images/color.png'));
-		$file->delete();
 		
 		$folder = new Folder(Url::to_rel('/templates/default/framework/menus/content'));
 		if ($folder->exists())
@@ -822,10 +820,7 @@ class UpdateServices
 		$folder = new Folder(Url::to_rel('/templates/default/admin/errors'));
 		if ($folder->exists())
 			$folder->delete();
-		$folder = new Folder(Url::to_rel('/templates/default/images/lightbox'));
-		if ($folder->exists())
-			$folder->delete();
-		$folder = new Folder(Url::to_rel('/templates/default/images/upload'));
+		$folder = new Folder(Url::to_rel('/templates/default/images'));
 		if ($folder->exists())
 			$folder->delete();
 	}
