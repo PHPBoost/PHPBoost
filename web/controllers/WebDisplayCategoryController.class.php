@@ -150,7 +150,7 @@ class WebDisplayCategoryController extends ModuleController
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = web.id AND notes.module_name = \'web\'
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = web.id AND note.module_name = \'web\' AND note.user_id = :user_id
 		' . $condition . '
-		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
+		ORDER BY web.privileged_partner DESC, ' . $sort_field . ' ' . $sort_mode . '
 		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
