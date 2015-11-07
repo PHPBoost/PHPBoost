@@ -393,6 +393,7 @@ else
 	if ($folder == 0 && !$show_member && empty($folder_member))
 	{
 		$template->assign_block_vars('folder', array(
+			'C_MEMBERS_FOLDER' => true,
 			'C_MEMBER_FOLDER' => true,
 			'NAME' => '<a class="com" href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>',
 			'U_FOLDER' => '?showm=1',
