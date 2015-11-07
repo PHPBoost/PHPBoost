@@ -14,7 +14,9 @@ BugtrackerFormFieldCategories.prototype = {
 			
 			jQuery('<td/>', {id : 'td1_' + id}).appendTo('#tr_' + id);
 			
-			jQuery('<input/> ', {type : 'radio', name : 'default_category', value : id}).appendTo('#td1_' + id);
+			jQuery('<div/>', {id : 'categories_radio_' + id, class: 'form-field-radio'}).appendTo('#td1_' + id);
+			jQuery('<input/> ', {type : 'radio', id : 'default_category' + id, name : 'default_category', value : id}).appendTo('#categories_radio_' + id);
+			jQuery('<label/> ', {for : 'default_category' + id}).appendTo('#categories_radio_' + id);
 			
 			jQuery('<td/>', {id : 'td2_' + id}).appendTo('#tr_' + id);
 			
@@ -49,7 +51,7 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 -->
 </script>
 
-<table>
+<table id="table2">
 	<thead>
 		<tr>
 			<th class="small-column">
@@ -82,10 +84,10 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 		# START categories #
 		<tr>
 			<td>
-				<div class="form-field-radio">
+				<div id="categories_radio_{categories.ID}" class="form-field-radio">
 					<input id="default_category" type="radio" name="default_category" value="{categories.ID}"# IF categories.C_IS_DEFAULT # checked="checked"# ENDIF # />
 					<label for="default_category{categories.ID}"></label>
-				</div>				
+				</div>
 			</td>
 			<td>
 				<input type="text" maxlength="100" class="field-large" name="category{categories.ID}" value="{categories.NAME}" />

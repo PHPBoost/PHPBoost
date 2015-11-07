@@ -15,7 +15,9 @@ BugtrackerFormFieldVersions.prototype = {
 			
 			jQuery('<td/>', {id : 'td1_' + id}).appendTo('#tr_' + id);
 			
-			jQuery('<input/> ', {type : 'radio', id : 'default_version' + id, name : 'default_version', value : id, style : 'display:none;'}).appendTo('#td1_' + id);
+			jQuery('<div/>', {id : 'versions_radio_' + id, class: 'form-field-radio', style : 'display:none;'}).appendTo('#td1_' + id);
+			jQuery('<input/> ', {type : 'radio', id : 'default_version' + id, name : 'default_version', value : id}).appendTo('#versions_radio_' + id);
+			jQuery('<label/> ', {for : 'default_version' + id}).appendTo('#versions_radio_' + id);
 			
 			jQuery('<td/>', {id : 'td2_' + id}).appendTo('#tr_' + id);
 			
@@ -34,7 +36,9 @@ BugtrackerFormFieldVersions.prototype = {
 			
 			jQuery('<td/>', {id : 'td4_' + id}).appendTo('#tr_' + id);
 			
-			jQuery('<input/> ', {type : 'checkbox', id : 'detected_in' + id, name : 'detected_in' + id, onclick : 'javascript:display_default_version_radio(' + id + ');'}).appendTo('#td4_' + id);
+			jQuery('<div/>', {id : 'versions_checkbox_' + id, class: 'form-field-checkbox'}).appendTo('#td4_' + id);
+			jQuery('<input/> ', {type : 'checkbox', id : 'detected_in' + id, name : 'detected_in' + id, onclick : 'javascript:display_default_version_radio(' + id + ');'}).appendTo('#versions_checkbox_' + id);
+			jQuery('<label/> ', {for : 'detected_in' + id}).appendTo('#versions_checkbox_' + id);
 			
 			jQuery('<td/>', {id : 'td5_' + id}).appendTo('#tr_' + id);
 			
@@ -66,17 +70,17 @@ var BugtrackerFormFieldVersions = new BugtrackerFormFieldVersions();
 function display_default_version_radio(version_id)
 {
 	if (jQuery('#detected_in' + version_id).prop('checked'))
-		jQuery('#default_version' + version_id).show();
+		jQuery('#versions_radio_' + version_id).show();
 	else
 	{
 		jQuery('#default_version' + version_id).prop('checked', false);
-		jQuery('#default_version' + version_id).hide();
+		jQuery('#versions_radio_' + version_id).hide();
 	}
 }
 -->
 </script>
 
-<table>
+<table id="table5">
 	<thead>
 		<tr>
 			<th class="small-column">
@@ -115,7 +119,7 @@ function display_default_version_radio(version_id)
 		# START versions #
 		<tr>
 			<td>
-				<div class="form-field-radio">
+				<div id="versions_radio_{versions.ID}" class="form-field-radio">
 					<input type="radio" id="default_version{versions.ID}" name="default_version" value="{versions.ID}"# IF versions.C_IS_DEFAULT # checked="checked"# ENDIF ## IF NOT versions.C_DETECTED_IN # style="display:none"# ENDIF # />
 					<label for="default_version{versions.ID}"></label>
 				</div>
@@ -133,11 +137,10 @@ function display_default_version_radio(version_id)
 				<a onclick="xmlhttprequest_calendar('release_date{versions.ID}_date', '?input_field=release_date{versions.ID}&amp;field=release_date{versions.ID}_date&amp;d={versions.DAY}&amp;m={versions.MONTH}&amp;y={versions.YEAR}');display_calendar({versions.ID});" onmouseover="hide_calendar({versions.ID}, 1);" onmouseout="hide_calendar({versions.ID}, 0);" style="cursor:pointer;"><i class="fa fa-calendar"></i></a>
 			</td> 
 			<td>
-				<div class="form-field-checkbox">
+				<div id="versions_checkbox_{versions.ID}" class="form-field-checkbox">
 					<input type="checkbox" id="detected_in{versions.ID}" name="detected_in{versions.ID}" onclick="javascript:display_default_version_radio('{versions.ID}');"# IF versions.C_DETECTED_IN # checked="checked"# ENDIF # />
 					<label for="detected_in{versions.ID}"></label>
 				</div>
-				
 			</td> 
 			<td>
 				<a href="{versions.LINK_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>

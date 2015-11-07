@@ -33,5 +33,6 @@
 			jQuery('#table2').basictable();
 			jQuery('#table3').basictable();
 			jQuery('#table4').basictable();
+			jQuery('#table5').basictable();
 		-->
 		</script>

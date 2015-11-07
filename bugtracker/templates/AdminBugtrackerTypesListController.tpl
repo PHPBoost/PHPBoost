@@ -14,7 +14,9 @@ BugtrackerFormFieldTypes.prototype = {
 			
 			jQuery('<td/>', {id : 'td1_' + id}).appendTo('#tr_' + id);
 			
-			jQuery('<input/> ', {type : 'radio', name : 'default_type', value : id}).appendTo('#td1_' + id);
+			jQuery('<div/>', {id : 'types_radio_' + id, class: 'form-field-radio'}).appendTo('#td1_' + id);
+			jQuery('<input/> ', {type : 'radio', id : 'default_type' + id, name : 'default_type', value : id}).appendTo('#types_radio_' + id);
+			jQuery('<label/> ', {for : 'default_type' + id}).appendTo('#types_radio_' + id);
 			
 			jQuery('<td/>', {id : 'td2_' + id}).appendTo('#tr_' + id);
 			
@@ -49,7 +51,7 @@ var BugtrackerFormFieldTypes = new BugtrackerFormFieldTypes();
 -->
 </script>
 
-<table>
+<table id="table">
 	<thead>
 		<tr>
 			<th class="small-column">
@@ -82,10 +84,10 @@ var BugtrackerFormFieldTypes = new BugtrackerFormFieldTypes();
 		# START types #
 		<tr>
 			<td>
-				<div class="form-field-radio">
+				<div id="types_radio_{types.ID}" class="form-field-radio">
 					<input id="default_type{types.ID}" type="radio" name="default_type" value="{types.ID}"# IF types.C_IS_DEFAULT # checked="checked"# ENDIF # />
 					<label for="default_type{types.ID}"></label>
-				</div>				
+				</div>
 			</td>
 			<td>
 				<input type="text" maxlength="100" class="field-large" name="type{types.ID}" value="{types.NAME}" />

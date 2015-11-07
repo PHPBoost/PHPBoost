@@ -1,4 +1,4 @@
-<table>
+<table id="table4">
 	<thead>
 		<tr>
 			<th class="small-column">
@@ -25,7 +25,7 @@
 				<div class="form-field-radio">
 					<input id="default_priority{priorities.ID}" type="radio" name="default_priority" value="{priorities.ID}"# IF priorities.C_IS_DEFAULT # checked="checked"# ENDIF # />
 					<label for="default_priority{priorities.ID}"></label>
-				</div>				
+				</div>
 			</td>
 			<td>
 				<input type="text" maxlength="100" class="field-large" name="priority{priorities.ID}" value="{priorities.NAME}" />
