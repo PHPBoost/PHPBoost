@@ -175,8 +175,7 @@ th {
 	padding-left: 6px;	
 }
 .row-final {
-	border-bottom-left-radius: 7px;
-	border-bottom-right-radius: 7px;
+	border-radius: 0;
 }
 .row-right {
 	width: auto;
