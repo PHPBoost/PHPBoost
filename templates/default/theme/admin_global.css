@@ -110,7 +110,7 @@ ul, ol {
 
 .calendar-block .date-picker {
 	margin: 0;
-	width: 100%;
+	width: 100% !important;
 	table-layout: fixed;
 }
 
