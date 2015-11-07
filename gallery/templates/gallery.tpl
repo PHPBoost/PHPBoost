@@ -5,7 +5,7 @@
 		{
 			if( pics_displayed != id )
 			{
-				document.getElementById('pics_max').innerHTML = '<img src="' + path + '" alt="" />';
+				document.getElementById('pics_max').innerHTML = '<img src="' + path + '" alt="' + path + '" />';
 				pics_displayed = id;
 			}
 			else
@@ -188,12 +188,12 @@
 					var key_right = start_thumb + j;
 					if( direction == 'left' && array_pics[key_left] )
 					{	
-						document.getElementById('thumb' + i).innerHTML = '<a href="' + array_pics[key_left]['link'] + '"><img src="{PATH_TO_ROOT}/gallery/pics/thumbnails/' + array_pics[key_left]['path'] + '" alt="" /></a>';
+						document.getElementById('thumb' + i).innerHTML = '<a href="' + array_pics[key_left]['link'] + '"><img src="{PATH_TO_ROOT}/gallery/pics/thumbnails/' + array_pics[key_left]['path'] + '" alt="' + array_pics[key_left]['path'] + '" /></a>';
 						j++;
 					}
 					else if( direction == 'right' && array_pics[key_right] ) 
 					{
-						document.getElementById('thumb' + i).innerHTML = '<a href="' + array_pics[key_right]['link'] + '"><img src="{PATH_TO_ROOT}/gallery/pics/thumbnails/' + array_pics[key_right]['path'] + '" alt="" /></a>';				
+						document.getElementById('thumb' + i).innerHTML = '<a href="' + array_pics[key_right]['link'] + '"><img src="{PATH_TO_ROOT}/gallery/pics/thumbnails/' + array_pics[key_right]['path'] + '" alt="' + array_pics[key_right]['path'] + '" /></a>';
 						j++;
 					}
 				}
@@ -289,7 +289,7 @@
 				# START sub_categories_list #
 				<div class="subcat-element" style="width:{CATS_COLUMNS_WIDTH}%;">
 					<div class="subcat-content">
-						# IF sub_categories_list.C_CATEGORY_IMAGE #<a itemprop="about" href="{sub_categories_list.U_CATEGORY}"><img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="" /></a># ENDIF #
+						# IF sub_categories_list.C_CATEGORY_IMAGE #<a itemprop="about" href="{sub_categories_list.U_CATEGORY}"><img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" /></a># ENDIF #
 						<br />
 						<a itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
 						<br />
@@ -311,7 +311,7 @@
 						<p class="center" id="pics_max"></p>
 						
 						# IF C_GALLERY_PICS_MAX #
-							<p style="text-align:center;padding:15px 0px;overflow:auto;"><a href="{U_IMG_MAX}" data-lightbox="formatter"><img src="{U_IMG_MAX}" alt="" /></a></p>
+							<p style="text-align:center;padding:15px 0px;overflow:auto;"><a href="{U_IMG_MAX}" data-lightbox="formatter"><img src="{U_IMG_MAX}" alt="{U_IMG_MAX}" /></a></p>
 							<div class="options" style="float:none;">
 								<h6>{L_INFORMATIONS}</h6>
 								# IF C_TITLE_ENABLED #

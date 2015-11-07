@@ -221,7 +221,7 @@ else
 	$tpl->assign_block_vars('pics', array(
 		'C_PICS_MAX' => $nbr_pics == 0 || !empty($idpics),
 		'EDIT' => !empty($id_category) ? '<a href="' . GalleryUrlBuilder::edit_category($id_category)->rel() . '" title="' . LangLoader::get_message('edit', 'common') . '" class="fa fa-edit"></a>' : '',
-		'PICS_MAX' => '<img src="show_pics.php?id=' . $idpics . '&amp;cat=' . $id_category . '" alt="" / >'
+		'PICS_MAX' => '<img src="show_pics.php?id=' . $idpics . '&amp;cat=' . $id_category . '" alt="' . $category->get_name() . '" / >'
 	));
 	
 	if ($nbr_pics > 0)
@@ -262,7 +262,7 @@ else
 				list($i, $reach_pics_pos, $pos_pics, $thumbnails_before, $thumbnails_after, $start_thumbnails, $end_thumbnails) = array(0, false, 0, 0, 0, $nbr_pics_display_before, $nbr_pics_display_after);
 				$array_pics = array();
 				$array_js = 'var array_pics = new Array();';
-				$result = PersistenceContext::get_querier()->select("SELECT g.id, g.idcat, g.path
+				$result = PersistenceContext::get_querier()->select("SELECT g.id, g.name, g.idcat, g.path
 				FROM " . GallerySetup::$gallery_table . " g
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 				WHERE g.idcat = :idcat", array(
@@ -275,7 +275,7 @@ else
 						$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
 
 					//Affichage de la liste des miniatures sous l'image.
-					$array_pics[] = '<td style="text-align:center;height:' . ($config->get_mini_max_height() + 16) . 'px"><span id="thumb' . $i . '"><a href="admin_gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '#pics_max' . '"><img src="pics/thumbnails/' . $row['path'] . '" alt="" / ></a></span></td>';
+					$array_pics[] = '<td style="text-align:center;height:' . ($config->get_mini_max_height() + 16) . 'px"><span id="thumb' . $i . '"><a href="admin_gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '#pics_max' . '"><img src="pics/thumbnails/' . $row['path'] . '" alt="' . $row['name'] . '" / ></a></span></td>';
 
 					if ($row['id'] == $idpics)
 					{
@@ -353,7 +353,7 @@ else
 					'C_LEFT_THUMBNAILS' => ($pos_pics - $start_thumbnails),
 					'C_RIGHT_THUMBNAILS' => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics),
 					'ID' => $info_pics['id'],
-					'IMG' => '<img src="show_pics.php?id=' . $idpics . '&amp;cat=' . $id_category . '" alt="" / >',
+					'IMG' => '<img src="show_pics.php?id=' . $idpics . '&amp;cat=' . $id_category . '" alt="' . $info_pics['name'] . '" />',
 					'NAME' => '<span id="fi_' . $info_pics['id'] . '">' . stripslashes($info_pics['name']) . '</span> <span id="fi' . $info_pics['id'] . '"></span>',
 					'POSTOR' => '<a class="' . UserService::get_level_class($info_pics['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($info_pics['user_id'])->rel() .'">' . $info_pics['login'] . '</a>',
 					'DATE' => Date::to_format($info_pics['timestamp'], Date::FORMAT_DAY_MONTH_YEAR),

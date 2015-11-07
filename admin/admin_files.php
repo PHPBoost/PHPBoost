@@ -290,7 +290,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 		$cat_explorer = display_cat_explorer($info_move['idcat'], $cats, 1, $folder_member);
 		
 		$template->assign_block_vars('file', array(
-			'C_DISPLAY_REAL_IMG' => $display_real_img,		
+			'C_DISPLAY_REAL_IMG' => $display_real_img,
 			'NAME' => $info_move['name'],
 			'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
 			'SIZE' => ($info_move['size'] > 1024) ? NumberHelper::round($info_move['size']/1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($info_move['size'], 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),

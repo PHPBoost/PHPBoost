@@ -8,7 +8,7 @@
 			<div class="content">
 				# INCLUDE wiki_tools #
 				<div class="entete">
-					<img class="pbt-entete-img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
+					<img class="pbt-entete-img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="logo" />
 					<div class="pbt-entete-content">
 						<p class="pbt-entete-title">Bienvenue dans la documentation de PHPBoost.</p>
 						<span class="pbt-entete-desc">

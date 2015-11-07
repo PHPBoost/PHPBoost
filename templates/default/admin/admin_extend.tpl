@@ -135,17 +135,17 @@
 			<nav class="admin-extend-menu">
 				<ul>
 					<li>
-							<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}">
-								<i class="fa fa-cubes fa-2x"></i>
-								<p>${LangLoader::get_message('management', 'admin-links-common')}</p>
-							</a>
+						<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}">
+							<i class="fa fa-cubes fa-2x"></i>
+							<p>${LangLoader::get_message('management', 'admin-links-common')}</p>
+						</a>
 					</li>
 					# START modules_extend #
 					<li>
-							<a href="{modules_extend.U_ADMIN_MODULE}">
-								<img src="{modules_extend.IMG}" alt="" />
-								<p>{modules_extend.NAME}</p>
-							</a>
+						<a href="{modules_extend.U_ADMIN_MODULE}">
+							<img src="{modules_extend.IMG}" alt="{modules_extend.NAME}" />
+							<p>{modules_extend.NAME}</p>
+						</a>
 					</li>
 					# END modules_extend #
 				</ul>

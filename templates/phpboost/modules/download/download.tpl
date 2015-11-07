@@ -16,7 +16,7 @@
 				<!-- {DESCRIPTION} -->
 			# ENDIF #
 			<div class="pbt-entete">
-				<img class="pbt-entete-img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
+				<img class="pbt-entete-img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="logo" />
 				<div class="pbt-content">
 					<p class="pbt-title">Télécharger PHPBoost</p>
 					<span class="pbt-desc">Bienvenue sur la page de téléchargement de PHPBoost.</span>

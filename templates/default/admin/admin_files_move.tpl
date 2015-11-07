@@ -34,9 +34,9 @@
 							# START file #
 								<div style="float:left;width:33%;text-align:center;">
 									# IF file.C_DISPLAY_REAL_IMG #
-										<img src="{PATH_TO_ROOT}/upload/{file.FILE_ICON}" alt="" style="width:100px;height:auto;" />
+										<img src="{PATH_TO_ROOT}/upload/{file.FILE_ICON}" alt="{file.NAME}" style="width:100px;height:auto;" />
 									# ELSE #
-										<img src="{PATH_TO_ROOT}/templates/default/images/upload/{file.FILE_ICON}" alt="" />
+										<i class="fa {file.FILE_ICON}"></i>
 									# ENDIF #
 									{file.NAME}
 									<span class="smaller">{file.FILETYPE}</span><br />

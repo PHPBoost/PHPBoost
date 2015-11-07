@@ -126,7 +126,7 @@ else
 	if (in_array($get_error, $array_error))
 		$tpl->put('message_helper', MessageHelper::display($LANG[$get_error], MessageHelper::WARNING));
 
-	//Aficchage de la photo uploadée.
+	//Affichage de la photo uploadée.
 	if (!empty($add_pic))
 	{
 		$categories = GalleryService::get_categories_manager()->get_categories_cache()->get_categories();
@@ -140,7 +140,7 @@ else
 		
 		$tpl->assign_block_vars('image_up', array(
 			'NAME' => $imageup['name'],
-			'IMG' => '<a href="admin_gallery.php?cat=' . $imageup['idcat'] . '&amp;id=' . $add_pic . '#pics_max"><img src="pics/' . $imageup['path'] . '" alt="" /></a>',
+			'IMG' => '<a href="admin_gallery.php?cat=' . $imageup['idcat'] . '&amp;id=' . $add_pic . '#pics_max"><img src="pics/' . $imageup['path'] . '" alt="' . $imageup['name'] . '" /></a>',
 			'L_SUCCESS_UPLOAD' => $LANG['success_upload_img'],
 			'U_CAT' => '<a href="admin_gallery.php?cat=' . $imageup['idcat'] . '">' . $categories[$imageup['idcat']]->get_name() . '</a>'
 		));
@@ -295,7 +295,7 @@ else
 				
 				$tpl->assign_block_vars('list', array(
 					'ID' => $j,
-					'THUMNAILS' => '<img src="pics/thumbnails/' .  $pics . '" alt="" />',
+					'THUMNAILS' => '<img src="pics/thumbnails/' .  $pics . '" alt="' .  $pics . '" />',
 					'NAME' => $pics,
 					'UNIQ_NAME' => $pics,
 					'TR_START' => $tr_start,
