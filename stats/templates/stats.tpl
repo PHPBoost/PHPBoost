@@ -396,7 +396,7 @@
 				{GRAPH_RESULT}
 			</div>
 			<div class="medium-block">
-				<table>
+				<table id="table">
 					<thead>
 						<tr>
 							<th>{L_OS}</th>
@@ -435,7 +435,7 @@
 				{GRAPH_RESULT}
 			</div>
 			<div class="medium-block">
-				<table>
+				<table id="table">
 					<thead>
 						<tr>
 							<th>{L_LANG}</th>
@@ -512,7 +512,7 @@
 			<header>
 				<h2>{L_REFERER}</h2>
 			</header>
-			<table>
+			<table id="table">
 				<thead>
 					<tr>
 						<th>
@@ -687,5 +687,6 @@
 				jQuery('#' + myid).toggleClass('active');
 			}
 		-->
-		</script>
+	</script>
+	
 		
