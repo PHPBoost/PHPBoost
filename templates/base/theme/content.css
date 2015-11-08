@@ -530,6 +530,60 @@ table tfoot nav.pagination a span.current-page {
 	}
 }
 
+/* --- responsive tables basictable.js --- */
+
+table.bt thead th {
+	display: none;
+}
+
+table.bt thead th:first-child{
+	display: block;
+	border-radius: 0;
+}
+
+@media (min-width:769px){
+	
+	table.bt thead th:first-child {
+		border-radius: 3px 3px 0 0;
+	}
+}
+
+table.bt tbody td {
+	width: 100%;
+	text-align: left;
+	display: block;
+	vertical-align: top;
+	border-right: 1px solid #d1d2d4;
+}
+
+table.bt tbody td.no-separator {
+	border-left: 1px solid #d1d2d4;
+}
+
+table.bt tbody td:before {
+	content: attr(data-th) " ";
+	font-weight: bold;
+	display: inline-block ;
+	width:35%;
+}
+
+table.bt tbody td.bt-hide {
+	display: none;
+}
+
+table.bt tbody td .bt-content {
+	vertical-align: top;
+	display: inline-block ;
+	padding-left: 6px;
+	max-width:100%;
+}
+
+.bt-wrapper.active {
+	max-height: 310px;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
 /* -- Boutons et class boutons --
 ------------------------------------ */
 /* --- Normal --- */
