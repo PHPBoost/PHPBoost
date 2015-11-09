@@ -39,7 +39,7 @@
 			var name = document.getElementById("fiinput" + id_file).value;
 			var regex = /\/|\\|\||\?|<|>/;
 
-			if( regex.test(name) ) //interdiction des caractères spéciaux dans le nom.
+			if( regex.test(name) ) //interdiction des caractÃ¨res spÃ©ciaux dans le nom.
 			{
 				alert("{L_FILE_FORBIDDEN_CHARS}");
 				document.getElementById('fi_' + id_file).style.display = 'inline';
@@ -111,7 +111,7 @@
 			xmlhttprequest_sender(xhr_object, data);
 		}
 		
-		var delay = 2000; //Délai après lequel le bloc est automatiquement masqué après le départ de la souris.
+		var delay = 2000; //DÃ©lai aprÃ¨s lequel le bloc est automatiquement masquÃ© aprÃ¨s le dÃ©part de la souris.
 		var timeout;
 		var displayed = false;
 		var previous = '';
@@ -147,7 +147,7 @@
 		
 		{ARRAY_JS}
 		var start_thumb = {START_THUMB};
-		//Miniatures défilantes.
+		//Miniatures dÃ©filantes.
 		function display_thumbnails(direction)
 		{
 			if( direction == 'left' )
@@ -199,7 +199,7 @@
 				}
 			}
 		}
-		//incrément le nombre de vues d'une image.
+		//incrÃ©ment le nombre de vues d'une image.
 		var already_view = false;
 		var incr_pics_displayed = 0;
 		function increment_view(idpics)
@@ -271,7 +271,7 @@
 		# INCLUDE message_helper #
 		<div class="spacer"></div>
 		
-		<section>
+		<section id="module-gallery">
 			<header>
 				<h1>
 					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
