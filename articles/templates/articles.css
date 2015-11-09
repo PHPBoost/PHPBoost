@@ -27,4 +27,23 @@
     width: 33%;
 }
 
-#module-articles .small-block { min-height: 420px; }
+#module-articles .small-block {
+    min-height: 420px;
+}
+
+.article-articles.article-several.small-block {
+    padding: 1.2em;
+}
+
+.article-articles.article-several h2,
+.article-articles.article-several .more {
+    margin: 0;
+}
+
+.article-articles.article-several .content {
+    padding: 0 0.5em 0 0.5em;
+}
+
+.article-articles.article-several img {
+    padding: 0 0 0.5em 0;
+}
