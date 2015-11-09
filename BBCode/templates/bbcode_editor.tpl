@@ -406,7 +406,7 @@ function XMLHttpRequest_preview(field)
 
 		<ul class="bbcode-container bbcode-elements-more">
 			<li class="bbcode-elements">
-				<a href="" title="{L_BB_MORE}" onclick="show_bbcode_div('bbcode_more{FIELD}', 1);return false;" style="">
+				<a href="" title="{L_BB_MORE}" onclick="show_bbcode_div('bbcode_more{FIELD}', 1);return false;">
 					<i class="fa bbcode-icon-more bbcode-hover"></i>
 				</a>
 			</li>

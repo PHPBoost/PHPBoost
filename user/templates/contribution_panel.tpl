@@ -259,7 +259,7 @@
 					<div class="form-element-textarea">
 						<label for="contents">{L_DESCRIPTION}</label>
 						{EDITOR}
-						<div class="form-field-textarea"">
+						<div class="form-field-textarea">
 							<textarea rows="15" id="contents" name="contents">{DESCRIPTION}</textarea>
 						</div>
 					</div>

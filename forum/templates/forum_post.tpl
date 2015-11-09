@@ -144,7 +144,7 @@
 							<div class="form-element-textarea">
 								<label for="contents">* {L_MESSAGE}</label>
 								{KERNEL_EDITOR}
-								<div class="form-field-textarea"">
+								<div class="form-field-textarea">
 									<textarea rows="25" cols="47" id="contents" name="contents">{CONTENTS}</textarea>
 								</div>
 							</div>
