@@ -5,7 +5,7 @@
 
 				# IF C_EVENTS #
 					# START event #
-					<article itemscope="itemscope" itemtype="http://schema.org/Event">
+					<article itemscope="itemscope" itemtype="http://schema.org/Event" id="article-calendar-{event.ID}" class="article-calendar article-several">
 						<header>
 							<h2>
 								<a href="{event.U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>

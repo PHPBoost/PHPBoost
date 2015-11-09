@@ -2,7 +2,7 @@
 	# IF NOT C_APPROVED #
 		# INCLUDE NOT_VISIBLE_MESSAGE #
 	# ENDIF #
-	<article itemscope="itemscope" itemtype="http://schema.org/Event">
+	<article itemscope="itemscope" itemtype="http://schema.org/Event" id="article-calendar-{ID}" class="article-calendar">
 		<header>
 			<h1>
 				<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
