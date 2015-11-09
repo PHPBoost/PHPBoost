@@ -1,4 +1,4 @@
-		<article>
+		<article id="article-wiki-{ID}" class="article-wiki">
 			<header>
 				<h1>
 					<a href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}" class="fa fa-syndication"></a>

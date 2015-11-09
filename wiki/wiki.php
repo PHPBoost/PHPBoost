@@ -164,6 +164,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 	));
 	
 	$tpl->put_all(array(
+		'ID' => $article_infos['id'],
 		'ID_CAT' => $article_infos['id_cat'],
 		'TITLE' => $article_infos['title'],
 		'CONTENTS' => FormatingHelper::second_parse(wiki_no_rewrite($article_infos['content'])),
