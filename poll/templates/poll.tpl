@@ -1,5 +1,5 @@
 	# IF C_POLL_MAIN #
-		<section id="module-poll">
+		<section id="module-poll-main">
 			<header>
 				<h1>{L_POLL} <span class="actions">{EDIT}</span></h1>
 			</header>
@@ -22,7 +22,7 @@
 		
 	# IF C_POLL_VIEW #
 		<form method="post" action="{PATH_TO_ROOT}/poll/poll{U_POLL_ACTION}">
-			<article>
+			<section id="module-poll">
 				<header>
 					<h2>
 						{QUESTION}
@@ -37,7 +37,7 @@
 				<div class="content">
 					# INCLUDE message_helper #
 					
-					<article class="block">
+					<article id="article-poll-{IDPOLL}" class="article-poll block">
 						<header><h2>{QUESTION}</h2></header>
 						<div class="content">
 							# IF C_POLL_QUESTION #
@@ -86,7 +86,7 @@
 					</article>
 				</div>
 				<footer></footer>
-			</article>
+			</section>
 		</form>
 	# ENDIF #
 	
@@ -99,7 +99,7 @@
 			</header>
 			<div class="content">
 				# START list #
-				<article class="block">
+				<article id="article-poll-{list.ID}" class="article-poll article-several block">
 					<header>
 						<h2>
 							{list.QUESTION}
