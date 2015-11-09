@@ -1,4 +1,4 @@
-			<section id="module-calendar">
+			<section id="module-calendar-events">
 				<header>
 					<h2 class="center"># IF C_PENDING_PAGE #{@calendar.pending}# ELSE #{@calendar.titles.events_of} {DATE}# ENDIF #</h2>
 				</header>
