@@ -56,7 +56,7 @@
 				<div class="form-element-textarea">
 					<label for="contents">* {L_CONTENTS}</label>
 					{KERNEL_EDITOR}
-					<div class="form-field-textarea"">
+					<div class="form-field-textarea">
 						<textarea rows="25" id="contents" name="contents">{CONTENTS}</textarea>
 					</div>
 				</div>
