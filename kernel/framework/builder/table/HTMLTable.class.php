@@ -131,7 +131,7 @@ class HTMLTable extends AbstractHTMLElement
 		$has_filters = !empty($filters);
 		if ($filters)
 		{
-			$form = new HTMLForm('filters_form_' . $this->arg_id, '#');
+			$form = new HTMLForm('filters_form_' . $this->arg_id, '#', false);
 			$filters_fieldset_class = $this->filters_fieldset_class;
 			$fieldset = new $filters_fieldset_class('filters');
 			$fieldset->set_description(LangLoader::get_message('filters', 'common'));
