@@ -88,7 +88,7 @@ function delete_alert(id)
 		<legend>{L_ADMIN_ALERTS}</legend>
 		<div class="fieldset-inset">
 		# IF C_EXISTING_ALERTS #
-			<table id="table">
+		<table id="table">
 			<caption>{L_ADMIN_ALERTS}</caption>
 			<thead>
 				<tr> 

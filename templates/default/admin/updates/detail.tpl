@@ -19,83 +19,88 @@
 </nav>
 
 <div id="admin-contents">
-	<div style="clear:right;"></div>
-    # IF C_UNEXISTING_UPDATE #
-        <div class="warning message-helper-small">{L_UNEXISTING_UPDATE}</div>
-    # ELSE #
-        <h1>{L_APP_UPDATE_MESSAGE}</h1>
-        <table id="table">
-        	<tbody>
-	            <tr>
-		            <td style="vertical-align:top;padding-right:10px;">
-			            <div class="block-container">
-			                <div class="block-top"><span>{APP_NAME} - {APP_VERSION} ({APP_LANGUAGE})</span></div>
-			                <div class="block-contents">
-								{APP_DESCRIPTION}
-								<p class="smaller" style="text-align:right;margin:0">{APP_PUBDATE}</p>
-							</div>
-			            </div>
-			            # IF C_NEW_FEATURES #
-			                <div class="block-container">
-			                    <div class="block-top"><span>{L_NEW_FEATURES}</span></div>
-			                    <div class="block-contents">
-									<ul class="list"># START new_features #<li>{new_features.description}</li># END new_features #</ul>
+	<fieldset>
+		<legend>{L_APP_UPDATE_MESSAGE}</legend>
+		<div class="fieldset-inset">
+			<div style="clear:right;"></div>
+			# IF C_UNEXISTING_UPDATE #
+				<div class="warning message-helper-small">{L_UNEXISTING_UPDATE}</div>
+			# ELSE #
+				<table id="table">
+					<caption>{L_APP_UPDATE_MESSAGE}</caption>
+					<tbody>
+						<tr>
+							<td style="vertical-align:top;padding-right:10px;">
+								<div class="block-container">
+									<div class="block-top"><span>{APP_NAME} - {APP_VERSION} ({APP_LANGUAGE})</span></div>
+									<div class="block-contents">
+										{APP_DESCRIPTION}
+										<p class="smaller" style="text-align:right;margin:0">{APP_PUBDATE}</p>
+									</div>
 								</div>
-			                </div>
-			            # END IF #
-			            # IF C_IMPROVMENTS #
-			                <div class="block-container">
-			                    <div class="block-top"><span>{L_IMPROVMENTS}</span></div>
-			                    <div class="block-contents">
-									<ul class="list"># START improvments #<li>{improvments.description}</li># END improvments #</ul>
+								# IF C_NEW_FEATURES #
+									<div class="block-container">
+										<div class="block-top"><span>{L_NEW_FEATURES}</span></div>
+										<div class="block-contents">
+											<ul class="list"># START new_features #<li>{new_features.description}</li># END new_features #</ul>
+										</div>
+									</div>
+								# END IF #
+								# IF C_IMPROVMENTS #
+									<div class="block-container">
+										<div class="block-top"><span>{L_IMPROVMENTS}</span></div>
+										<div class="block-contents">
+											<ul class="list"># START improvments #<li>{improvments.description}</li># END improvments #</ul>
+										</div>
+									</div>
+								# END IF #
+								<div class="block-container">
+									<div class="block-top"><span class="{PRIORITY_CSS_CLASS}">{L_WARNING} - {APP_WARNING_LEVEL}</span></div>
+									<div class="block-contents">
+										{APP_WARNING}
+									</div>
 								</div>
-			                </div>
-			            # END IF #
-			            <div class="block-container">
-			                <div class="block-top"><span class="{PRIORITY_CSS_CLASS}">{L_WARNING} - {APP_WARNING_LEVEL}</span></div>
-			                <div class="block-contents">
-								{APP_WARNING}
-							</div>
-			            </div>
-			        </td>
-			        <td style="vertical-align:top;min-width:200px;">
-			            <div class="block-container">
-			                <div class="block-top"><span>{L_DOWNLOAD}</span></div>
-			                <div class="block-contents">
-								<ul class="list">
-									<li><a href="{U_APP_DOWNLOAD}">{L_DOWNLOAD_PACK}</a></li>
-									# IF U_APP_UPDATE #
-									<li><a href="{U_APP_UPDATE}">{L_UPDATE_PACK}</a></li>
-									# END IF #
-								</ul>
-							</div>
-			            </div>
-			            <div class="block-container">
-			                <div class="block-top"><span>{L_AUTHORS}</span></div>
-			                <div class="block-contents">
-								<ul class="list"># START authors #<li><a href="mailto:{authors.email}">{authors.name}</a></li># END authors #</ul>
-							</div>
-			            </div>
-			            # IF C_BUG_CORRECTIONS #
-			                <div class="block-container">
-			                    <div class="block-top"><span>{L_FIXED_BUGS}</span></div>
-			                    <div class="block-contents">
-									<ul class="list"># START bugs #<li>{bugs.description}</li># END bugs #</ul>
+							</td>
+							<td style="vertical-align:top;min-width:200px;">
+								<div class="block-container">
+									<div class="block-top"><span>{L_DOWNLOAD}</span></div>
+									<div class="block-contents">
+										<ul class="list">
+											<li><a href="{U_APP_DOWNLOAD}">{L_DOWNLOAD_PACK}</a></li>
+											# IF U_APP_UPDATE #
+											<li><a href="{U_APP_UPDATE}">{L_UPDATE_PACK}</a></li>
+											# END IF #
+										</ul>
+									</div>
 								</div>
-			                </div>
-			            # END IF #
-			            # IF C_SECURITY_IMPROVMENTS #
-			                <div class="block-container">
-			                    <div class="block-top"><span>{L_SECURITY_IMPROVMENTS}</span></div>
-								<div class="block-contents">
-									<ul class="list"># START security #<li>{security.description}</li># END security #</ul>
+								<div class="block-container">
+									<div class="block-top"><span>{L_AUTHORS}</span></div>
+									<div class="block-contents">
+										<ul class="list"># START authors #<li><a href="mailto:{authors.email}">{authors.name}</a></li># END authors #</ul>
+									</div>
 								</div>
-			                </div>
-			            # END IF #
-	                </td>
-	            </tr>
-			</tbody>
-        </table>
-    # END IF #
+								# IF C_BUG_CORRECTIONS #
+									<div class="block-container">
+										<div class="block-top"><span>{L_FIXED_BUGS}</span></div>
+										<div class="block-contents">
+											<ul class="list"># START bugs #<li>{bugs.description}</li># END bugs #</ul>
+										</div>
+									</div>
+								# END IF #
+								# IF C_SECURITY_IMPROVMENTS #
+									<div class="block-container">
+										<div class="block-top"><span>{L_SECURITY_IMPROVMENTS}</span></div>
+										<div class="block-contents">
+											<ul class="list"># START security #<li>{security.description}</li># END security #</ul>
+										</div>
+									</div>
+								# END IF #
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			# END IF #
+		</div>
+	</fieldset>
 </div>
     
