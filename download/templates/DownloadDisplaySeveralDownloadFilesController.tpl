@@ -104,7 +104,7 @@
 			</table>
 		# ELSE #
 			# START downloadfiles #
-			<article # IF C_CATEGORY_DISPLAYED_SUMMARY #class="block" # ENDIF #itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+			<article id="article-download-{downloadfiles.ID}" class="article-download article-several# IF C_CATEGORY_DISPLAYED_SUMMARY # block# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 				<header>
 					<h2>
 						<span class="actions">
