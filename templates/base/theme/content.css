@@ -92,7 +92,7 @@ a.read-more {
 
 .content {
 	padding: 0 1em;
-	overflow: hidden;
+	/*overflow: hidden;*/
 	text-align: justify;
 }
 
