@@ -95,6 +95,7 @@ elseif ($id_media > 0)
 	$group_color = User::get_group_color($media['groups'], $media['level']);
 	
 	$tpl->put_all(array(
+		'ID' => $id_media,
 		'C_DISPLAY_MEDIA' => true,
 		'C_MODO' => MediaAuthorizationsService::check_authorizations($media['idcat'])->moderation(),
 		'C_DISPLAY_NOTATION' => $config->is_notation_enabled(),

@@ -59,7 +59,7 @@
 						<div class="spacer">&nbsp;</div>
 	
 						# START file #
-							<article class="block">
+							<article id="article-media-{file.ID}" class="article-media article-several block">
 								<header>
 									<h1>
 										<a href="{file.U_MEDIA_LINK}">{file.NAME}</a>
@@ -107,7 +107,7 @@
 		# ENDIF #
 
 		# IF C_DISPLAY_MEDIA #
-		<article>
+		<article id="article-media-{ID}" class="article-media">
 			<header>
 				<h2>
 					{NAME} 

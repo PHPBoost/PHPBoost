@@ -54,7 +54,7 @@
 		-->
 		</script>
 
-		<section>
+		<section id="module-media-action">
 			<header>
 				<h1>{L_PAGE_TITLE}</h1>
 			</header>
@@ -90,7 +90,7 @@
 					<div class="form-element-textarea">
 						<label for="contents" id="preview_content">{L_CONTENTS}</label>
 						{KERNEL_EDITOR}
-						<div class="form-field-textarea"">
+						<div class="form-field-textarea">
 							<textarea rows="10" cols="90" id="contents" name="contents">{DESCRIPTION}</textarea>
 						</div>
 					</div>
@@ -110,7 +110,7 @@
 					<div class="form-element-textarea">
 						<label>{L_CONTRIBUTION_COUNTERPART} <p class="field-description">{L_CONTRIBUTION_COUNTERPART_EXPLAIN}</p></label>
 						{CONTRIBUTION_COUNTERPART_EDITOR}
-						<div class="form-field-textarea"">
+						<div class="form-field-textarea">
 							<textarea rows="20" cols="40" id="counterpart" name="counterpart">{CONTRIBUTION_COUNTERPART}</textarea>
 						</div>
 					</div>

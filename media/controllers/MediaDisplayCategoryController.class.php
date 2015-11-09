@@ -240,6 +240,7 @@ class MediaDisplayCategoryController extends ModuleController
 			$group_color = User::get_group_color($row['groups'], $row['level']);
 			
 			$this->tpl->assign_block_vars('file', array(
+				'ID' => $row['id'],
 				'NAME' => $row['name'],
 				'IMG_NAME' => str_replace('"', '\"', $row['name']),
 				'C_DESCRIPTION' => !empty($row['contents']),
