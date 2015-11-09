@@ -60,7 +60,7 @@ class GalleryDisplayCategoryController extends ModuleController
 		$g_sort = retrieve(GET, 'sort', '');
 		$g_sort = !empty($g_sort) ? 'sort=' . $g_sort : '';
 		
-		//RÈcupÈration du mode d'ordonnement.
+		//R√©cup√©ration du mode d'ordonnement.
 		if (preg_match('`([a-z]+)_([a-z]+)`', $g_sort, $array_match))
 		{
 			$g_type = $array_match[1];
@@ -80,7 +80,7 @@ class GalleryDisplayCategoryController extends ModuleController
 		$nbr_pics = $this->db_querier->count(GallerySetup::$gallery_table, 'WHERE idcat=:idcat AND aprob = 1', array('idcat' => $category->get_id()));
 		$total_cat = count($categories);
 		
-		//On crÈe une pagination si le nombre de catÈgories est trop important.
+		//On cr√©e une pagination si le nombre de cat√©gories est trop important.
 		$page = AppContext::get_request()->get_getint('p', 1);
 		$pagination = new ModulePagination($page, $total_cat, $config->get_categories_number_per_page());
 		$pagination->set_url(new Url('/gallery/gallery.php?p=%d&amp;cat=' . $category->get_id() . '&amp;id=' . $g_idpics . '&amp;' . $g_sort));
@@ -91,7 +91,7 @@ class GalleryDisplayCategoryController extends ModuleController
 			DispatchManager::redirect($error_controller);
 		}
 		
-		//Colonnes des catÈgories.
+		//Colonnes des cat√©gories.
 		$nbr_column_cats = ($total_cat > $config->get_columns_number()) ? $config->get_columns_number() : $total_cat;
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 		$column_width_cats = floor(100/$nbr_column_cats);
@@ -107,7 +107,7 @@ class GalleryDisplayCategoryController extends ModuleController
 		$module_data_path = $this->tpl->get_pictures_data_path();
 		$rewrite_title = Url::encode_rewrite($category->get_name());
 		
-		##### CatÈgorie disponibles #####
+		##### Cat√©gorie disponibles #####
 		$nbr_cat_displayed = 0;
 		if ($total_cat > 0 && empty($g_idpics))
 		{
@@ -255,7 +255,7 @@ class GalleryDisplayCategoryController extends ModuleController
 	
 			$this->tpl->put('C_GALLERY_PICS', true);
 			
-			//Affichage d'une photo demandÈe.
+			//Affichage d'une photo demand√©e.
 			if (!empty($g_idpics))
 			{
 				$info_pics = $this->db_querier->select_single_row_query("SELECT g.*, m.display_name, m.groups, m.level, notes.average_notes, notes.number_notes, note.note
@@ -277,7 +277,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					//Affichage miniatures.
 					$id_previous = 0;
 					$id_next = 0;
-					$nbr_pics_display_before = floor(($nbr_column_pics - 1)/2); //Nombres de photos de chaque cÙtÈ de la miniature de la photo affichÈe.
+					$nbr_pics_display_before = floor(($nbr_column_pics - 1)/2); //Nombres de photos de chaque c√¥t√© de la miniature de la photo affich√©e.
 					$nbr_pics_display_after = ($nbr_column_pics - 1) - floor($nbr_pics_display_before);
 					list($i, $reach_pics_pos, $pos_pics, $thumbnails_before, $thumbnails_after, $start_thumbnails, $end_thumbnails) = array(0, false, 0, 0, 0, $nbr_pics_display_before, $nbr_pics_display_after);
 					$array_pics = array();
@@ -290,12 +290,12 @@ class GalleryDisplayCategoryController extends ModuleController
 					));
 					while ($row = $result->fetch())
 					{
-						//Si la miniature n'existe pas (cache vidÈ) on regÈnËre la miniature ‡ partir de l'image en taille rÈelle.
+						//Si la miniature n'existe pas (cache vid√©) on reg√©n√®re la miniature √† partir de l'image en taille r√©elle.
 						if (!file_exists(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path']))
-							$Gallery->Resize_pics(PATH_TO_ROOT . '/gallery/pics/' . $row['path']); //Redimensionnement + crÈation miniature
+							$Gallery->Resize_pics(PATH_TO_ROOT . '/gallery/pics/' . $row['path']); //Redimensionnement + cr√©ation miniature
 	
 						//Affichage de la liste des miniatures sous l'image.
-						$array_pics[] = '<td style="text-align:center;height:' . ($config->get_mini_max_height() + 16) . 'px"><span id="thumb' . $i . '"><a href="gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;sort=' . $g_sort, '-' . $row['idcat'] . '-' . $row['id'] . '.php?sort=' . $g_sort) . '#pics_max' . '"><img src="pics/thumbnails/' . $row['path'] . '" alt="' . $row['path'] . '" / ></a></span></td>';
+						$array_pics[] = '<td style="text-align:center;height:' . ($config->get_mini_max_height() + 16) . 'px"><span id="thumb' . $i . '"><a href="gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;sort=' . $g_sort, '-' . $row['idcat'] . '-' . $row['id'] . '.php?sort=' . $g_sort) . '#pics_max' . '"><img src="pics/thumbnails/' . $row['path'] . '" alt="' . $row['path'] . '" /></a></span></td>';
 	
 						if ($row['id'] == $g_idpics)
 						{
@@ -346,7 +346,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					$comments_topic->set_id_in_module($info_pics['id']);
 					$comments_topic->set_url(new Url('/gallery/gallery.php?cat='. $category->get_id() .'&id=' . $g_idpics . '&com=0'));
 					
-					//Liste des catÈgories.
+					//Liste des cat√©gories.
 					$search_category_children_options = new SearchCategoryChildrensOptions();
 					$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 					$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
@@ -439,7 +439,7 @@ class GalleryDisplayCategoryController extends ModuleController
 			{
 				$sort = retrieve(GET, 'sort', '');
 				
-				//On crÈe une pagination si le nombre de photos est trop important.
+				//On cr√©e une pagination si le nombre de photos est trop important.
 				$page = AppContext::get_request()->get_getint('pp', 1);
 				$pagination = new ModulePagination($page, $nbr_pics, $config->get_pics_number_per_page());
 				$pagination->set_url(new Url('/gallery/gallery.php?pp=%d' . (!empty($sort) ? '&amp;sort=' . $sort : '') . '&amp;cat=' . $category->get_id()));
@@ -481,13 +481,13 @@ class GalleryDisplayCategoryController extends ModuleController
 				));
 				while ($row = $result->fetch())
 				{
-					//Si la miniature n'existe pas (cache vidÈ) on regÈnËre la miniature ‡ partir de l'image en taille rÈelle.
+					//Si la miniature n'existe pas (cache vid√©) on reg√©n√®re la miniature √† partir de l'image en taille r√©elle.
 					if (!file_exists(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path']))
-						$Gallery->Resize_pics(PATH_TO_ROOT . '/gallery/pics/' . $row['path']); //Redimensionnement + crÈation miniature
+						$Gallery->Resize_pics(PATH_TO_ROOT . '/gallery/pics/' . $row['path']); //Redimensionnement + cr√©ation miniature
 					
 					$onclick = '';
 					//Affichage de l'image en grand.
-					if ($config->get_pics_enlargement_mode() == GalleryConfig::FULL_SCREEN) //Ouverture en popup plein Ècran.
+					if ($config->get_pics_enlargement_mode() == GalleryConfig::FULL_SCREEN) //Ouverture en popup plein √©cran.
 					{
 						$display_link = PATH_TO_ROOT. '/gallery/pics/' . $row['path'] . '" data-lightbox="formatter" onmousedown="increment_view(' . $row['id'] . ');" title="' . str_replace('"', '', stripslashes($row['name']));
 					}
@@ -504,7 +504,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					else //Ouverture nouvelle page.
 						$display_link = url('gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], 'gallery-' . $row['idcat'] . '-' . $row['id'] . '.php') . '#pics_max';
 					
-					//Liste des catÈgories.
+					//Liste des cat√©gories.
 					$search_category_children_options = new SearchCategoryChildrensOptions();
 					$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 					$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
@@ -560,7 +560,7 @@ class GalleryDisplayCategoryController extends ModuleController
 				}
 				$result->dispose();
 	
-				//CrÈation des cellules du tableau si besoin est.
+				//Cr√©ation des cellules du tableau si besoin est.
 				while (!is_int($j/$nbr_column_pics))
 				{
 					$this->tpl->assign_block_vars('end_table', array(
