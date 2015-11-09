@@ -12,7 +12,7 @@
 		</div>
 	# ELSE #
 		# START news #
-			<article # IF C_DISPLAY_BLOCK_TYPE # class="block" # ENDIF # # IF C_SEVERAL_COLUMNS # style="display:inline-block;width:calc(98% / {NUMBER_COLUMNS})" # ENDIF # itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+			<article id="article-news-{news.ID}" class="article-news article-several# IF C_DISPLAY_BLOCK_TYPE # block# ENDIF #" # IF C_SEVERAL_COLUMNS # style="display:inline-block;width:calc(98% / {NUMBER_COLUMNS})" # ENDIF # itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 				<header>
 					<h2>
 						<a href="{news.U_LINK}"><span itemprop="name">{news.NAME}</span></a>
