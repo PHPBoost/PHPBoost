@@ -109,7 +109,28 @@ class CalendarAjaxCalendarController extends AbstractController
 			$start_date = new Date($event['start_date'], Timezone::SERVER_TIMEZONE);
 			$end_date = new Date($event['end_date'], Timezone::SERVER_TIMEZONE);
 			
-			for ($j = $start_date->get_day() ; $j <= $end_date->get_day() ; $j++)
+			if (($end_date->get_month() > $start_date->get_month() || $end_date->get_year() > $start_date->get_year()) && $month == $start_date->get_month())
+			{
+				$first_event_day = $start_date->get_day();
+				$last_event_day = $array_month[$month - 1];
+			}
+			else if (($end_date->get_month() > $start_date->get_month() || $end_date->get_year() > $start_date->get_year()) && $month == $end_date->get_month())
+			{
+				$first_event_day = 1;
+				$last_event_day = $end_date->get_day();
+			}
+			else if (($end_date->get_month() > $start_date->get_month() || $end_date->get_year() > $start_date->get_year()) && $month > $start_date->get_month() && $month < $end_date->get_month())
+			{
+				$first_event_day = 1;
+				$last_event_day = $array_month[$month - 1];
+			}
+			else
+			{
+				$first_event_day = $start_date->get_day();
+				$last_event_day = $end_date->get_day();
+			}
+			
+			for ($j = $first_event_day ; $j <= $last_event_day ; $j++)
 			{
 				if (($event['type'] == 'EVENT' && $start_date->get_month() == $month && $start_date->get_year() == $year) || ($event['type'] == 'BIRTHDAY' && $start_date->get_month() == $month))
 				{
