@@ -133,7 +133,7 @@
 				</div>
 				<div class="form-element-textarea">
 					{KERNEL_EDITOR}
-					<div class="form-field-textarea"">
+					<div class="form-field-textarea">
 						<textarea rows="15" cols="66" id="contents" name="contents" {status.SELECTED_TEXTAREA}>{status.UNDEFINED_STATUS}</textarea>
 					</div>
 				</div>
