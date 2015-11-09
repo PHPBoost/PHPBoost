@@ -158,7 +158,7 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('	# IE=edge means IE should use the latest (edge) version of its rendering engine.');
 		$this->add_line('	# chrome=1 means IE should use the Chrome rendering engine if installed.');
 		$this->add_line('	BrowserMatch MSIE ie');
-		$this->add_line('	Header set X-UA-Compatible "IE=Edge,chrome=1"');
+		$this->add_line('	Header set X-UA-Compatible "IE=Edge"');
 		$this->add_line('	# Disable server signature');
 		$this->add_line('	Header set ServerSignature "Off"');
 		$this->add_line('	Header set ServerTokens "Prod"');
