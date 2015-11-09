@@ -1,6 +1,6 @@
 <section id="module-articles">
 	# INCLUDE NOT_VISIBLE_MESSAGE #
-	<article itemscope="itemscope" itemtype="http://schema.org/Article">
+	<article itemscope="itemscope" itemtype="http://schema.org/Article" id="article-articles-{ID}" class="article-articles">
 		<header>
 			<h1>
 				<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>

@@ -455,6 +455,7 @@ class Article
 			'C_SOURCES' => $nbr_sources > 0,
 			
 			//Articles
+			'ID' => $this->get_id(),
 			'TITLE' => $this->get_title(),
 			'DATE' => $this->get_date_created()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT),
 			'DATE_DAY' => $this->get_date_created()->get_day(),

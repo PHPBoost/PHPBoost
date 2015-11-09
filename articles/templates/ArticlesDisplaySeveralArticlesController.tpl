@@ -43,7 +43,7 @@
 		# ENDIF #
 		<div class="spacer">&nbsp;</div>
 			# START articles #
-				<article # IF C_MOSAIC #class="small-block"# ENDIF # itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+				<article id="article-articles-{articles.ID}" # IF C_MOSAIC #class="article-articles small-block"# ENDIF # itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 					<header>
 						<h2>
 							<a itemprop="url" href="{articles.U_ARTICLE}"><span itemprop="name">{articles.TITLE}</span></a>
