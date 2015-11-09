@@ -1,4 +1,4 @@
-<section>
+<section id="module-newsletter">
 	<header>
 		<h1>
 			{@newsletter}
