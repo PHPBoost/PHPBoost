@@ -306,7 +306,7 @@
 			
 			<div class="content">
 				# IF C_GALLERY_PICS #
-				<article class="block">
+				<article id="article-gallery-{ID}" class="article-gallery article-several block">
 					<div class="content">
 						<p class="center" id="pics_max"></p>
 						
