@@ -1,4 +1,4 @@
-<section>
+<section id="module-online">
 	<header>
 		<h1>{@online}</h1>
 	</header>
