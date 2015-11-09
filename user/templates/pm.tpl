@@ -165,7 +165,7 @@
 				# IF pm.C_PAGINATION #<div class="float-right"># INCLUDE pm.PAGINATION #</div># ENDIF #
 			
 			# START pm.msg #
-				<article id="m{pm.msg.ID}" class="message">
+				<article id="article-pm-{pm.msg.ID}" class="article-pm article-several message">
 					<div class="message-container">
 
 						<div class="message-user-infos">
@@ -184,7 +184,7 @@
 
 						<div class="message-date">
 							<span class="actions">
-								<a href="#m{pm.msg.ID}">\#{pm.msg.ID}</a>
+								<a href="#article-pm-{pm.msg.ID}">\#{pm.msg.ID}</a>
 								# IF pm.msg.C_MODERATION_TOOLS #
 								<a href="pm.php?edit={pm.msg.ID}" title="{L_EDIT}" class="fa fa-edit"></a>
 								<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
