@@ -102,7 +102,7 @@
 			</table>
 		# ELSE #
 			# START weblinks #
-			<article # IF C_CATEGORY_DISPLAYED_SUMMARY #class="block# IF weblinks.C_IS_PARTNER # web-partner# ENDIF ## IF weblinks.C_IS_PRIVILEGED_PARTNER # web-privileged-partner# ENDIF #" # ENDIF #itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+			<article id="article-web-{weblinks.ID}" class="article-web article-several# IF C_CATEGORY_DISPLAYED_SUMMARY # block# IF weblinks.C_IS_PARTNER # web-partner# ENDIF ## IF weblinks.C_IS_PRIVILEGED_PARTNER # web-privileged-partner# ENDIF #" # ENDIF #itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 				<header>
 					<h2>
 						<span class="actions">
