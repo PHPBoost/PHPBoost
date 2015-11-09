@@ -1,4 +1,4 @@
-		<section>					
+		<section id="module-wiki">					
 			<header>
 				<h1>
 					<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" title="${LangLoader::get_message('syndication', 'common')}" class="fa fa-syndication"></a>
