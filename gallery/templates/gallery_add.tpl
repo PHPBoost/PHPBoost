@@ -1,5 +1,5 @@
 		<form action="{U_GALLERY_ACTION_ADD}" method="post" enctype="multipart/form-data">
-			<section>
+			<section id="module-gallery-add">
 				<header>
 					<h1><a href="gallery.php">{L_GALLERY}</a> &raquo; {U_GALLERY_CAT_LINKS}</h1>
 					<div style="float:right">
