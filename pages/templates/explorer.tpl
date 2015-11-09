@@ -6,7 +6,7 @@
 </script>
 <script src="{PATH_TO_ROOT}/pages/templates/js/pages.js"></script>
 
-<section>
+<section id="module-pages">
 	<header>
 		<h1>{TITLE}</h1>
 	</header>
