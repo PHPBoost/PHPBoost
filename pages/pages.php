@@ -182,6 +182,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "pages SET hits = hits + 1 WHERE id = " . $page_infos['id']);
 	
 	$tpl->put_all(array(
+		'ID' => $page_infos['id'],
 		'TITLE' => $page_infos['title'],
 		'CONTENTS' => pages_second_parse($page_infos['contents']),
 		'COUNT_HITS' => $page_infos['count_hits'] ? sprintf($LANG['page_hits'], $page_infos['hits'] + 1) : '&nbsp;',

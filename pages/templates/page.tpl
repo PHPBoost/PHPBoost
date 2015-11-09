@@ -1,4 +1,4 @@
-		<article>
+		<article id="article-pages-{ID}" class="article-pages">
 			<header>
 				<h1>
 					<span>{TITLE}</span>
