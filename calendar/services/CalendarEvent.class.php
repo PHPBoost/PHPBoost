@@ -208,7 +208,6 @@ class CalendarEvent
 			'END_DATE_ISO8601' => $this->end_date->format(Date::FORMAT_ISO8601),
 			'NUMBER_COMMENTS' => CommentsService::get_number_comments('calendar', $this->id),
 			'L_COMMENTS' => CommentsService::get_number_and_lang_comments('calendar', $this->id),
-			'REPEAT_TYPE' => $lang['calendar.labels.repeat.' . $this->content->get_repeat_type()],
 			'REPEAT_NUMBER' => $this->content->get_repeat_number(),
 			'AUTHOR' => $author->get_display_name(),
 			'AUTHOR_LEVEL_CLASS' => UserService::get_level_class($author->get_level()),
