@@ -231,52 +231,52 @@
 		-->
 		</script> 
 
-		<menu id="cssmenu-galleryfilter" class="cssmenu cssmenu-right cssmenu-actionslinks cssmenu-tools">
-			<ul class="hidden">
-				<li><a class="cssmenu-title"><i class="fa fa-eye"></i> {L_DISPLAY}</a>
-					<ul>
-						<li><a href="{U_BEST_VIEWS}" class="cssmenu-title"><i class="fa fa-eye"></i> {L_BEST_VIEWS}</a></li>
-						<li><a href="{U_BEST_NOTES}" class="cssmenu-title"><i class="fa fa-star-half-empty"></i> {L_BEST_NOTES}</a></li>
-					</ul>
-				</li>
-				<li><a class="cssmenu-title"><i class="fa fa-sort"></i> {L_ORDER_BY}</a>
-					<ul>
-						<li><a href="{U_ORDER_BY_NAME}" class="cssmenu-title"><i class="fa fa-tag"></i> {L_NAME}</a></li>
-						<li><a href="{U_ORDER_BY_DATE}" class="cssmenu-title"><i class="fa fa-clock-o"></i> {L_DATE}</a></li>
-						<li><a href="{U_ORDER_BY_VIEWS}" class="cssmenu-title"><i class="fa fa-eye"></i> {L_VIEWS}</a></li>
-						<li><a href="{U_ORDER_BY_NOTES}" class="cssmenu-title"><i class="fa fa-star-half-empty"></i> {L_NOTES}</a></li>
-						<li><a href="{U_ORDER_BY_COM}" class="cssmenu-title"><i class="fa fa-comments-o"></i> {L_COM}</a></li>
-					</ul>
-				</li>
-				<li><a class="cssmenu-title"><i class="fa fa-sort-alpha-asc"></i> {L_DIRECTION}</a>
-					<ul>
-						<li><a href="{U_ASC}" class="cssmenu-title"><i class="fa fa-sort-amount-asc"></i> {L_ASC}</a></li>
-						<li><a href="{U_DESC}" class="cssmenu-title"><i class="fa fa-sort-amount-desc"></i> {L_DESC}</a></li>
-					</ul>
-				</li>
-			</ul>
-		</menu>
-		<script>
-			jQuery("#cssmenu-galleryfilter").menumaker({
-				title: "${LangLoader::get_message('sort_options', 'common')}",
-				format: "multitoggle",
-				breakpoint: 768,
-				actionslinks:true
-			});
-			jQuery(document).ready(function() {
-				jQuery("#cssmenu-galleryfilter ul").removeClass('hidden');
-			});
-		</script>
-
 		# INCLUDE message_helper #
 		<div class="spacer"></div>
 		
 		<section id="module-gallery">
 			<header>
+				<menu id="cssmenu-galleryfilter" class="cssmenu cssmenu-right cssmenu-actionslinks cssmenu-tools">
+					<ul class="hidden">
+						<li><a class="cssmenu-title"><i class="fa fa-eye"></i> {L_DISPLAY}</a>
+							<ul>
+								<li><a href="{U_BEST_VIEWS}" class="cssmenu-title"><i class="fa fa-eye"></i> {L_BEST_VIEWS}</a></li>
+								<li><a href="{U_BEST_NOTES}" class="cssmenu-title"><i class="fa fa-star-half-empty"></i> {L_BEST_NOTES}</a></li>
+							</ul>
+						</li>
+						<li><a class="cssmenu-title"><i class="fa fa-sort"></i> {L_ORDER_BY}</a>
+							<ul>
+								<li><a href="{U_ORDER_BY_NAME}" class="cssmenu-title"><i class="fa fa-tag"></i> {L_NAME}</a></li>
+								<li><a href="{U_ORDER_BY_DATE}" class="cssmenu-title"><i class="fa fa-clock-o"></i> {L_DATE}</a></li>
+								<li><a href="{U_ORDER_BY_VIEWS}" class="cssmenu-title"><i class="fa fa-eye"></i> {L_VIEWS}</a></li>
+								<li><a href="{U_ORDER_BY_NOTES}" class="cssmenu-title"><i class="fa fa-star-half-empty"></i> {L_NOTES}</a></li>
+								<li><a href="{U_ORDER_BY_COM}" class="cssmenu-title"><i class="fa fa-comments-o"></i> {L_COM}</a></li>
+							</ul>
+						</li>
+						<li><a class="cssmenu-title"><i class="fa fa-sort-alpha-asc"></i> {L_DIRECTION}</a>
+							<ul>
+								<li><a href="{U_ASC}" class="cssmenu-title"><i class="fa fa-sort-amount-asc"></i> {L_ASC}</a></li>
+								<li><a href="{U_DESC}" class="cssmenu-title"><i class="fa fa-sort-amount-desc"></i> {L_DESC}</a></li>
+							</ul>
+						</li>
+					</ul>
+				</menu>
+				<script>
+					jQuery("#cssmenu-galleryfilter").menumaker({
+						title: "${LangLoader::get_message('sort_options', 'common')}",
+						format: "multitoggle",
+						breakpoint: 768,
+						actionslinks:true
+					});
+					jQuery(document).ready(function() {
+						jQuery("#cssmenu-galleryfilter ul").removeClass('hidden');
+					});
+				</script>
 				<h1>
 					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
 					{GALLERY} # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit smaller"></i></a># ENDIF #
 				</h1>
+
 				# IF C_CATEGORY_DESCRIPTION #
 					<div class="cat-description">
 						{CATEGORY_DESCRIPTION}

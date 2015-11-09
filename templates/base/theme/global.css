@@ -650,7 +650,7 @@ div.cssmenu-group .cssmenu-title {
 @media (min-width: 769px) {
 	
 	#cssmenu-galleryfilter ul {
-		width: 130px;
+		min-width: 130px;
 	}
 }
 
@@ -930,7 +930,7 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 @media (min-width: 769px) {
 	.cssmenu ul ul li .cssmenu-title {
 		border-bottom: 1px solid rgba(150, 150, 150, 0.15);
-		width: 170px;
+		width: 100%;
 	}
 }
 
@@ -1084,6 +1084,8 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 	.cssmenu-actionslinks li:hover > .cssmenu-title 		{ background: #DDDDDD; }
 	#main .cssmenu-horizontal ul ul							{ background: #F9F9F9; }
 	#main .cssmenu-horizontal ul ul	> li:hover				{ background: #F1F1F1; }
+	#cssmenu-galleryfilter ul ul li .cssmenu-title			{ background: #FFFFFF; }
+	#cssmenu-galleryfilter ul ul li:hover .cssmenu-title	{ background: #DDDDDD; }
 }
 
 /* ---- Personnalisation de l'indicateur de sous-Menu ---- */
