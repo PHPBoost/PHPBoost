@@ -3,7 +3,7 @@
  *                               admin_gallery.php
  *                            -------------------
  *   begin                : August 17, 2005
- *   copyright            : (C) 2005 Viarre RÈgis
+ *   copyright            : (C) 2005 Viarre R√©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -41,13 +41,13 @@ $move = $request->get_getint('move', 0);
 $Gallery = new Gallery();
 $config = GalleryConfig::load();
 
-if (!empty($idpics) && $move) //DÈplacement d'une image.
+if (!empty($idpics) && $move) //D√©placement d'une image.
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
 	$Gallery->Move_pics($idpics, $move);
 
-	//RÈgÈnÈration du cache des photos alÈatoires.
+	//R√©g√©n√©ration du cache des photos al√©atoires.
 	GalleryMiniMenuCache::invalidate();
 
 	AppContext::get_response()->redirect('/gallery/admin_gallery.php?cat=' . $move);
@@ -58,7 +58,7 @@ elseif (!empty($del)) //Suppression d'une image.
 
 	$Gallery->Del_pics($del);
 
-	//RÈgÈnÈration du cache des photos alÈatoires.
+	//R√©g√©n√©ration du cache des photos al√©atoires.
 	GalleryMiniMenuCache::invalidate();
 
 	AppContext::get_response()->redirect('/gallery/admin_gallery.php?cat=' . $id_category);
@@ -87,7 +87,7 @@ else
 	$nbr_pics = PersistenceContext::get_querier()->count(GallerySetup::$gallery_table, 'WHERE idcat=:idcat', array('idcat' => $id_category));
 	$total_cat = count($categories);
 	
-	//On crÈe une pagination si le nombre de catÈgories est trop important.
+	//On cr√©e une pagination si le nombre de cat√©gories est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $total_cat, $config->get_categories_number_per_page());
 	$pagination->set_url(new Url('/gallery/admin_gallery.php?p=%d'));
@@ -98,7 +98,7 @@ else
 		DispatchManager::redirect($error_controller);
 	}
 
-	//Colonnes des catÈgories.
+	//Colonnes des cat√©gories.
 	$nbr_column_cats = ($total_cat > $config->get_columns_number()) ? $config->get_columns_number() : $total_cat;
 	$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 	$column_width_cats = floor(100/$nbr_column_cats);
@@ -144,7 +144,7 @@ else
 		'L_SUBMIT' => $LANG['submit']
 	));
 
-	##### CatÈgorie disponibles #####
+	##### Cat√©gorie disponibles #####
 	if ($total_cat > 0)
 	{
 		$tpl->assign_block_vars('cat', array(
@@ -185,7 +185,7 @@ else
 		
 		while ($row = $result->fetch())
 		{
-			//On genËre le tableau pour $config->get_columns_number() colonnes
+			//On gen√®re le tableau pour $config->get_columns_number() colonnes
 			$multiple_x = $i / $nbr_column_cats;
 			$tr_start = is_int($multiple_x) ? '<tr>' : '';
 			$i++;
@@ -206,7 +206,7 @@ else
 		}
 		$result->dispose();
 
-		//CrÈation des cellules du tableau si besoin est.
+		//Cr√©ation des cellules du tableau si besoin est.
 		while (!is_int($i/$nbr_column_cats))
 		{
 			$i++;
@@ -221,12 +221,12 @@ else
 	$tpl->assign_block_vars('pics', array(
 		'C_PICS_MAX' => $nbr_pics == 0 || !empty($idpics),
 		'EDIT' => !empty($id_category) ? '<a href="' . GalleryUrlBuilder::edit_category($id_category)->rel() . '" title="' . LangLoader::get_message('edit', 'common') . '" class="fa fa-edit"></a>' : '',
-		'PICS_MAX' => '<img src="show_pics.php?id=' . $idpics . '&amp;cat=' . $id_category . '" alt="' . $category->get_name() . '" / >'
+		'PICS_MAX' => '<img src="show_pics.php?id=' . $idpics . '&amp;cat=' . $id_category . '" alt="' . $category->get_name() . '" />'
 	));
 	
 	if ($nbr_pics > 0)
 	{
-		//On crÈe une pagination si le nombre de photos est trop important.
+		//On cr√©e une pagination si le nombre de photos est trop important.
 		$page = AppContext::get_request()->get_getint('pp', 1);
 		$pagination = new ModulePagination($page, $nbr_pics, $config->get_pics_number_per_page());
 		$pagination->set_url(new Url('/gallery/admin_gallery.php?cat=' . $id_category . '&amp;pp=%d'));
@@ -257,7 +257,7 @@ else
 				//Affichage miniatures.
 				$id_previous = 0;
 				$id_next = 0;
-				$nbr_pics_display_before = floor(($nbr_column_pics - 1)/2); //Nombres de photos de chaque cÙtÈ de la miniature de la photo affichÈe.
+				$nbr_pics_display_before = floor(($nbr_column_pics - 1)/2); //Nombres de photos de chaque c√¥t√© de la miniature de la photo affich√©e.
 				$nbr_pics_display_after = ($nbr_column_pics - 1) - floor($nbr_pics_display_before);
 				list($i, $reach_pics_pos, $pos_pics, $thumbnails_before, $thumbnails_after, $start_thumbnails, $end_thumbnails) = array(0, false, 0, 0, 0, $nbr_pics_display_before, $nbr_pics_display_after);
 				$array_pics = array();
@@ -270,12 +270,12 @@ else
 				));
 				while ($row = $result->fetch())
 				{
-					//Si la miniature n'existe pas (cache vidÈ) on regÈnËre la miniature ‡ partir de l'image en taille rÈelle.
+					//Si la miniature n'existe pas (cache vid√©) on reg√©n√®re la miniature √† partir de l'image en taille r√©elle.
 					if (!file_exists('pics/thumbnails/' . $row['path']))
-						$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + crÈation miniature
+						$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + cr√©ation miniature
 
 					//Affichage de la liste des miniatures sous l'image.
-					$array_pics[] = '<td style="text-align:center;height:' . ($config->get_mini_max_height() + 16) . 'px"><span id="thumb' . $i . '"><a href="admin_gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '#pics_max' . '"><img src="pics/thumbnails/' . $row['path'] . '" alt="' . $row['name'] . '" / ></a></span></td>';
+					$array_pics[] = '<td style="text-align:center;height:' . ($config->get_mini_max_height() + 16) . 'px"><span id="thumb' . $i . '"><a href="admin_gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '#pics_max' . '"><img src="pics/thumbnails/' . $row['path'] . '" alt="' . $row['name'] . '" /></a></span></td>';
 
 					if ($row['id'] == $idpics)
 					{
@@ -329,7 +329,7 @@ else
 					'L_THUMBNAILS' => $LANG['thumbnails']
 				));
 
-				//Liste des catÈgories.
+				//Liste des cat√©gories.
 				$search_category_children_options = new SearchCategoryChildrensOptions();
 				$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 				$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
@@ -399,23 +399,23 @@ else
 			));
 			while ($row = $result->fetch())
 			{
-				//Si la miniature n'existe pas (cache vidÈ) on regÈnËre la miniature ‡ partir de l'image en taille rÈelle.
+				//Si la miniature n'existe pas (cache vid√©) on reg√©n√®re la miniature √† partir de l'image en taille r√©elle.
 				if (!file_exists('pics/thumbnails/' . $row['path']))
-					$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + crÈation miniature
+					$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + cr√©ation miniature
 
 				$name_cut = (strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 
-				//On reccourci le nom s'il est trop long pour Èviter de dÈformer l'administration.
+				//On reccourci le nom s'il est trop long pour √©viter de d√©former l'administration.
 				$name = TextHelper::html_entity_decode($row['name']);
 				$name = strlen($name) > 20 ? substr($name, 0, 20) . '...' : $name;
 
-				//On genËre le tableau pour x colonnes
+				//On gen√®re le tableau pour x colonnes
 				$tr_start = is_int($j / $nbr_column_pics) ? '<tr>' : '';
 				$j++;
 				$tr_end = is_int($j / $nbr_column_pics) ? '</tr>' : '';
 
 				//Affichage de l'image en grand.
-				if ($config->get_pics_enlargement_mode() == GalleryConfig::FULL_SCREEN) //Ouverture en popup plein Ècran.
+				if ($config->get_pics_enlargement_mode() == GalleryConfig::FULL_SCREEN) //Ouverture en popup plein √©cran.
 					$display_link = HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']);
 				elseif ($config->get_pics_enlargement_mode() == GalleryConfig::POPUP) //Ouverture en popup simple.
 					$display_link = 'javascript:display_pics_popup(\'' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\')';
@@ -424,7 +424,7 @@ else
 				else //Ouverture nouvelle page.
 					$display_link = 'admin_gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '#pics_max';
 
-				//Liste des catÈgories.
+				//Liste des cat√©gories.
 				$search_category_children_options = new SearchCategoryChildrensOptions();
 				$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 				$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
@@ -457,7 +457,7 @@ else
 			}
 			$result->dispose();
 
-			//CrÈation des cellules du tableau si besoin est.
+			//Cr√©ation des cellules du tableau si besoin est.
 			while (!is_int($j/$nbr_column_pics))
 			{
 				$j++;
