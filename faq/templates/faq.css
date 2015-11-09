@@ -7,7 +7,7 @@
 	line-height: 1.32em;
 }
 
-.faq-question-element-container {
+.article-faq {
 	background-image: linear-gradient(to bottom, #FFFFFF 50%, #FAFAFA 100%);
 	border: 1px solid #D6DEE7;
 	padding: 0;
@@ -17,11 +17,12 @@
 	display: table;
 	width: 100%;
 }
-.faq-question-element-container:hover {
+.article-faq:hover {
 	border: 1px solid #d0d8e1;
 	box-shadow: 0px 0px 5px #EAEAEA;
 	background-image: linear-gradient(to bottom, #FFFFFF 25%, #F2F5F8 100%);
 }
+
 .faq-question-element {
 	padding: 8px 5px 5px 10px;
 	margin: 0;
@@ -32,7 +33,7 @@
 	font-weight: bold;
 }
 
-.faq-question-element-container footer {
+.article-faq footer {
 	margin: 0;
 	padding: 0;
 }

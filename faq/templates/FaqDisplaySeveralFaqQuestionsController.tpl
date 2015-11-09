@@ -276,7 +276,7 @@ jQuery(document).ready(function() {
 		</form>
 		# ELSE #
 			# START questions #
-			<article id="question-{questions.ID}" itemscope="itemscope" itemtype="http://schema.org/CreativeWork" class="faq-question-element-container">
+			<article id="article-faq-{questions.ID}" itemscope="itemscope" itemtype="http://schema.org/CreativeWork" class="article-faq article-several">
 				<header class="faq-question-element">
 					<span>
 						# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
