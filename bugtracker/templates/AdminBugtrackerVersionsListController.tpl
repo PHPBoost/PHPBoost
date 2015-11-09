@@ -21,20 +21,18 @@ BugtrackerFormFieldVersions.prototype = {
 			
 			jQuery('<td/>', {id : 'td2_' + id}).appendTo('#tr_' + id);
 			
-			jQuery('<input/> ', {type : 'text', id : 'version_' + id, name : 'version_' + id, class : 'field-large', maxlength : 100, placeholder : ${escapejs(LangLoader::get_message('form.name', 'common'))}}).appendTo('#td2_' + id);
+			jQuery('<input/> ', {type : 'text', id : 'version_' + id, name : 'version_' + id, placeholder : ${escapejs(LangLoader::get_message('form.name', 'common'))}}).appendTo('#td2_' + id);
 			
 			jQuery('<td/>', {id : 'td3_' + id}).appendTo('#tr_' + id);
 			
-			jQuery('<input/> ', {type : 'text', id : 'release_date_' + id, name : 'release_date_' + id, class : 'input-date', maxlength : 10, placeholder : ${escapejs(LangLoader::get_message('date_format', 'date-common'))}}).appendTo('#td3_' + id).attr('size', '11');
+			jQuery('<input/> ', {type : 'text', id : 'release_date_' + id, name : 'release_date_' + id, maxlength : 10, placeholder : ${escapejs(LangLoader::get_message('date_format', 'date-common'))}}).appendTo('#td3_' + id).attr('size', '11');
 			jQuery('#release_date_' + id).after(' ');
 			
-			jQuery('<div/> ', {id : 'calendar-block' + id, style : 'display: inline-block;'}).appendTo('#td3_' + id);
-			
-			jQuery('<a/> ', {onclick : "xmlhttprequest_calendar('release_date" + id + "_date', '?input_field=release_date_" + id + "&amp;field=release_date" + id + "_date&amp;d={DAY}&amp;m={MONTH}&amp;y={YEAR}');display_calendar(" + id + ");", onmouseover : 'hide_calendar(' + id + ', 1);', onmouseout : 'hide_calendar(' + id + ', 0);', style : 'cursor:pointer;'}).html('<i class="fa fa-calendar"></i>').appendTo('#calendar-block' + id);
-			
-			jQuery('<div/> ', {id : 'calendar' + id, style : 'display: none;'}).appendTo('#calendar-block' + id);
+			jQuery('<div/> ', {id : 'calendar' + id, style : 'position:absolute;z-index:100;display:none;'}).appendTo('#td3_' + id);
 			
 			jQuery('<div/> ', {id : 'release_date' + id + '_date', class : 'calendar-block', onmouseover : 'hide_calendar(' + id + ', 1);', onmouseout : 'hide_calendar(' + id + ', 0);'}).appendTo('#calendar' + id);
+			
+			jQuery('<a/> ', {style : 'cursor:pointer;', onclick : "xmlhttprequest_calendar('release_date" + id + "_date', '?input_field=release_date_" + id + "&amp;field=release_date" + id + "_date&amp;d={DAY}&amp;m={MONTH}&amp;y={YEAR}');display_calendar(" + id + ");", onmouseover : 'hide_calendar(' + id + ', 1);', onmouseout : 'hide_calendar(' + id + ', 0);'}).html('<i class="fa fa-calendar"></i>').appendTo('#td3_' + id);
 			
 			jQuery('<td/>', {id : 'td4_' + id}).appendTo('#tr_' + id);
 			
@@ -82,10 +80,10 @@ function display_default_version_radio(version_id)
 -->
 </script>
 
-<table id="table5">
+<table id="table5" class="version-list">
 	<thead>
 		<tr>
-			<th class="small-column">
+			<th>
 				{@labels.default}
 			</th>
 			<th>
@@ -107,7 +105,10 @@ function display_default_version_radio(version_id)
 			<th>
 				<a href="javascript:BugtrackerFormFieldVersions.add_version();" title="{@titles.add_version}" id="add-version"><i class="fa fa-plus"></i></a>
 			</th>
-			<th colspan="4" class="right">
+			<th></th>
+			<th></th>
+			<th></th>
+			<th>
 				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete"></i> {@labels.del_default_value}</a># ENDIF #
 			</th>
 		</tr>
@@ -128,16 +129,15 @@ function display_default_version_radio(version_id)
 				
 			</td>
 			<td>
-				<input type="text" maxlength="100" class="field-large" name="version{versions.ID}" value="{versions.NAME}" />
+				<input type="text" name="version{versions.ID}" value="{versions.NAME}" />
 			</td>
 			<td>
-				<input type="text" maxlength="10" size="11" id="release_date{versions.ID}" name="release_date{versions.ID}" class="input-date" value="{versions.RELEASE_DATE}" placeholder="${LangLoader::get_message('date_format', 'date-common')}" />
-				<div style="display: inline-block;">
-					<a onclick="xmlhttprequest_calendar('release_date{versions.ID}_date', '?input_field=release_date{versions.ID}&amp;field=release_date{versions.ID}_date&amp;d={versions.DAY}&amp;m={versions.MONTH}&amp;y={versions.YEAR}');display_calendar({versions.ID});" onmouseover="hide_calendar({versions.ID}, 1);" onmouseout="hide_calendar({versions.ID}, 0);" style="cursor:pointer;"><i class="fa fa-calendar"></i></a>
-					<div id="calendar{versions.ID}" style="display: none;">
-						<div id="release_date{versions.ID}_date" class="calendar-block" onmouseover="hide_calendar({versions.ID}, 1);" onmouseout="hide_calendar({versions.ID}, 0);"></div>
+				<input type="text" maxlength="10" size="11" id="release_date{versions.ID}" name="release_date{versions.ID}" value="{versions.RELEASE_DATE}" placeholder="${LangLoader::get_message('date_format', 'date-common')}" />
+				<div style="position:absolute;z-index:100;display:none;left: 0; right: 0" id="calendar{versions.ID}">
+					<div id="release_date{versions.ID}_date" class="calendar-block" onmouseover="hide_calendar({versions.ID}, 1);" onmouseout="hide_calendar({versions.ID}, 0);">
 					</div>
 				</div>
+				<a onclick="xmlhttprequest_calendar('release_date{versions.ID}_date', '?input_field=release_date{versions.ID}&amp;field=release_date{versions.ID}_date&amp;d={versions.DAY}&amp;m={versions.MONTH}&amp;y={versions.YEAR}');display_calendar({versions.ID});" onmouseover="hide_calendar({versions.ID}, 1);" onmouseout="hide_calendar({versions.ID}, 0);" style="cursor:pointer;"><i class="fa fa-calendar"></i></a>
 			</td> 
 			<td>
 				<div id="versions_checkbox_{versions.ID}" class="form-field-checkbox">

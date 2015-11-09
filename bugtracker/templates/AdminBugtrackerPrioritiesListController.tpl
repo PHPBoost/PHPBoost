@@ -1,7 +1,7 @@
 <table id="table4">
 	<thead>
 		<tr>
-			<th class="small-column">
+			<th>
 				{@labels.default}
 			</th>
 			<th>
@@ -28,7 +28,7 @@
 				</div>
 			</td>
 			<td>
-				<input type="text" maxlength="100" class="field-large" name="priority{priorities.ID}" value="{priorities.NAME}" />
+				<input type="text" name="priority{priorities.ID}" value="{priorities.NAME}" />
 			</td>
 		</tr>
 		# END priorities #

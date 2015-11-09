@@ -20,7 +20,7 @@ BugtrackerFormFieldCategories.prototype = {
 			
 			jQuery('<td/>', {id : 'td2_' + id}).appendTo('#tr_' + id);
 			
-			jQuery('<input/> ', {type : 'text', id : 'category_' + id, name : 'category_' + id, class : 'field-large', maxlength : 100, placeholder : ${escapejs(LangLoader::get_message('form.name', 'common'))}}).appendTo('#td2_' + id);
+			jQuery('<input/> ', {type : 'text', id : 'category_' + id, name : 'category_' + id, placeholder : ${escapejs(LangLoader::get_message('form.name', 'common'))}}).appendTo('#td2_' + id);
 			
 			jQuery('<td/>', {id : 'td3_' + id}).appendTo('#tr_' + id);
 			
@@ -51,10 +51,10 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 -->
 </script>
 
-<table id="table2">
+<table id="table2" class="categories-list">
 	<thead>
 		<tr>
-			<th class="small-column">
+			<th>
 				{@labels.default}
 			</th>
 			<th>
@@ -90,7 +90,7 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 				</div>
 			</td>
 			<td>
-				<input type="text" maxlength="100" class="field-large" name="category{categories.ID}" value="{categories.NAME}" />
+				<input type="text" name="category{categories.ID}" value="{categories.NAME}" />
 			</td>
 			<td>
 				<a href="{categories.LINK_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>

@@ -20,7 +20,7 @@ BugtrackerFormFieldTypes.prototype = {
 			
 			jQuery('<td/>', {id : 'td2_' + id}).appendTo('#tr_' + id);
 			
-			jQuery('<input/> ', {type : 'text', id : 'type_' + id, name : 'type_' + id, class : 'field-large', maxlength : 100, placeholder : ${escapejs(LangLoader::get_message('form.name', 'common'))}}).appendTo('#td2_' + id);
+			jQuery('<input/> ', {type : 'text', id : 'type_' + id, name : 'type_' + id, placeholder : ${escapejs(LangLoader::get_message('form.name', 'common'))}}).appendTo('#td2_' + id);
 			
 			jQuery('<td/>', {id : 'td3_' + id}).appendTo('#tr_' + id);
 			
@@ -51,10 +51,10 @@ var BugtrackerFormFieldTypes = new BugtrackerFormFieldTypes();
 -->
 </script>
 
-<table id="table">
+<table id="table" class="type-list">
 	<thead>
 		<tr>
-			<th class="small-column">
+			<th>
 				{@labels.default}
 			</th>
 			<th>
@@ -67,11 +67,13 @@ var BugtrackerFormFieldTypes = new BugtrackerFormFieldTypes();
 	</thead>
 	<tfoot>
 		<tr>
-			<th>
-				<a href="javascript:BugtrackerFormFieldTypes.add_type();" title="{@titles.add_type}" id="add-type"><i class="fa fa-plus"></i></a>
-			</th>
-			<th colspan="2" class="right">
-				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete"></i> {@labels.del_default_value}</a># ENDIF #
+			<th colspan="3">
+				<div class="cw25 float-left">
+					<a href="javascript:BugtrackerFormFieldTypes.add_type();" title="{@titles.add_type}" id="add-type"><i class="fa fa-plus"></i></a>
+				</div>				
+				<div class="float-right">
+					# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete"></i> {@labels.del_default_value}</a># ENDIF #
+				</div>
 			</th>
 		</tr>
 	</tfoot>
@@ -90,7 +92,7 @@ var BugtrackerFormFieldTypes = new BugtrackerFormFieldTypes();
 				</div>
 			</td>
 			<td>
-				<input type="text" maxlength="100" class="field-large" name="type{types.ID}" value="{types.NAME}" />
+				<input type="text" name="type{types.ID}" value="{types.NAME}" />
 			</td>
 			<td>
 				<a href="{types.LINK_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>

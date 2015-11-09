@@ -1,7 +1,7 @@
 <table id="table3">
 	<thead>
 		<tr>
-			<th class="small-column">
+			<th>
 				{@labels.default}
 			</th>
 			<th class="medium-column">
@@ -34,7 +34,7 @@
 				<input type="color" name="color{severities.ID}" id="color{severities.ID}" value="{severities.COLOR}" />
 			</td>
 			<td>
-				<input type="text" maxlength="100" class="field-large" name="severity{severities.ID}" value="{severities.NAME}" />
+				<input type="text" name="severity{severities.ID}" value="{severities.NAME}" />
 			</td>
 		</tr>
 		# END severities #

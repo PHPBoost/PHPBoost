@@ -31,3 +31,45 @@
 .block {
     background: #FFFFFF
 }
+
+table.version-list tfoot tr th,
+table.categories-list tfoot tr th {
+	padding: 8px 0;
+}
+
+table.version-list input[id*="release_date"]{
+    width: 80%;    
+}
+
+table.bt tbody td .bt-content {
+    width:65% !important;
+}
+
+td .form-field-checkbox {
+    margin: auto;
+}
+
+.cw25 {
+    width: 100%;
+    text-align: center;
+}
+
+@media (min-width:980px){
+    .cw25 {
+        width: calc(100% / 4);        
+    }
+}
+
+div[id*="calendar"] {
+    width: 250px;
+    left: auto !important;
+    right: auto !important;
+}
+
+@media (min-width:980px){
+    div[id*="calendar"] {
+        width: 320px;
+    }
+}
+
+
