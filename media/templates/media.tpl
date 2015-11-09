@@ -1,5 +1,5 @@
 		# IF C_CATEGORIES #
-			<section>
+			<section id="module-media">
 				<header>
 					<h1>
 						<a href="${relative_url(SyndicationUrlBuilder::rss('media', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
