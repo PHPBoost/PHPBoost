@@ -1,5 +1,5 @@
 	# IF C_POLL_MAIN #
-		<section>
+		<section id="module-poll">
 			<header>
 				<h1>{L_POLL} <span class="actions">{EDIT}</span></h1>
 			</header>
@@ -92,7 +92,7 @@
 	
 	
 	# IF C_POLL_ARCHIVES #
-		<section>
+		<section id="module-poll-archives">
 			<header>
 				<h1>{L_ARCHIVE}</h1>
 				# IF C_PAGINATION #<span style="float:right;"># INCLUDE PAGINATION #</span># ENDIF #
