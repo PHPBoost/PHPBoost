@@ -14,7 +14,7 @@
 			<div class="notice message-helper-small center">${LangLoader::get_message('no_item_now', 'common')}</div>
 		# ENDIF #
 		# START messages #
-			<article id="m{messages.ID}" class="message">
+			<article id="article-shoutbox-{messages.ID}" class="article-shoutbox article-several message">
 				<div class="message-container">
 
 					<div class="message-user-infos">
