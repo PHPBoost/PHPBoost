@@ -412,7 +412,7 @@ class Bug
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($user->get_id())->rel(),
 			'U_LINK' => BugtrackerUrlBuilder::detail($this->id . '-' . $this->rewrited_title)->rel(),
 			'U_HISTORY' => BugtrackerUrlBuilder::history($this->id)->rel(),
-			'U_COMMENTS' => BugtrackerUrlBuilder::detail($this->id . '-' . $this->rewrited_title . '#comments_list')->rel()
+			'U_COMMENTS' => BugtrackerUrlBuilder::detail($this->id . '-' . $this->rewrited_title . '#comments-list')->rel()
 		);
 	}
 }

@@ -106,7 +106,7 @@ elseif ($id_media > 0)
 		'COUNT' => $media['counter'],
 		'KERNEL_NOTATION' => NotationService::display_active_image($notation),
 		'HITS' => ((int)$media['counter']+1) > 1 ? sprintf($MEDIA_LANG['n_times'], ((int)$media['counter']+1)) : sprintf($MEDIA_LANG['n_time'], ((int)$media['counter']+1)),
-		'U_COM' => PATH_TO_ROOT .'/media/media' . url('.php?id=' . $id_media . '&amp;com=0', '-' . $id_media . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php?com=0') .'#comments_list',
+		'U_COM' => PATH_TO_ROOT .'/media/media' . url('.php?id=' . $id_media . '&amp;com=0', '-' . $id_media . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php?com=0') .'#comments-list',
 		'L_COM' => CommentsService::get_number_and_lang_comments('media', $id_media),
 		'L_DATE' => LangLoader::get_message('date', 'date-common'),
 		'L_SIZE' => $LANG['size'],

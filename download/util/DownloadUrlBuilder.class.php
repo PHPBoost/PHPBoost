@@ -157,7 +157,7 @@ class DownloadUrlBuilder
 	 */
 	public static function display_comments($id_category, $rewrited_name_category, $id, $rewrited_name)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id . '-' . $rewrited_name . '/#comments_list');
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id . '-' . $rewrited_name . '/#comments-list');
 	}
 	
 	/**

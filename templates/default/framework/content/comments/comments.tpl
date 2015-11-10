@@ -7,15 +7,15 @@ function refresh_comments() {
 		dataType: "html",
 		data: {module_id: ${escapejs(MODULE_ID)}, id_in_module: ${escapejs(ID_IN_MODULE)}, topic_identifier: ${escapejs(TOPIC_IDENTIFIER)}, token: ${escapejs(TOKEN)}},
 		success: function(returnData){
-			jQuery("#comments_list").append(returnData);
-			jQuery('#refresh_comments').remove();
+			jQuery("#comments-list").append(returnData);
+			jQuery('#refresh-comments').remove();
 		}
 	});
 }
 
 # IF C_DISPLAY_VIEW_ALL_COMMENTS #
 jQuery(document).ready(function(){ 
-	jQuery("#refresh_comments").click(function() {
+	jQuery("#refresh-comments").click(function() {
 		refresh_comments();
 	});
 });
@@ -27,7 +27,7 @@ jQuery(document).ready(function(){
 //-->
 </script>
 
-<section id="comments_list">
+<section id="comments-list">
 	# IF C_DISPLAY_FORM #
 		<div id="comment-form">
 			# INCLUDE COMMENT_FORM #
@@ -53,6 +53,6 @@ jQuery(document).ready(function(){
 
 # IF C_DISPLAY_VIEW_ALL_COMMENTS #
 <div class="center">
-	<button type="submit" class="submit" id="refresh_comments">{@allComments}</button>
+	<button type="submit" class="submit" id="refresh-comments">{@allComments}</button>
 </div>
 # ENDIF #

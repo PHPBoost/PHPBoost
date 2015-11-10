@@ -44,7 +44,7 @@ class CommentsUrlBuilder
      */
 	public static function delete($comment_path, $id)
     {
-    	return self::build_url($comment_path, 'delete_comment=' . $id . '#comments_list');
+    	return self::build_url($comment_path, 'delete_comment=' . $id . '#comments-list');
     }
     
     /**
@@ -54,7 +54,7 @@ class CommentsUrlBuilder
      */
 	public static function lock_and_unlock($comment_path, $lock)
     {
-    	return self::build_url($comment_path, 'lock=' . (int)$lock . '#comments_list');
+    	return self::build_url($comment_path, 'lock=' . (int)$lock . '#comments-list');
     }
     
     /**

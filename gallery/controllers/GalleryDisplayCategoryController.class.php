@@ -409,7 +409,7 @@ class GalleryDisplayCategoryController extends ModuleController
 						'U_NEXT' => ($pos_pics < ($i - 1)) ? '<a href="' . GalleryUrlBuilder::get_link_item($category->get_id(),$id_next) . '#pics_max">' . $LANG['next'] . '</a> <a href="' . GalleryUrlBuilder::get_link_item($category->get_id(),$id_next) . '#pics_max"><i class="fa fa-arrow-right fa-2x"></i></a>' : '',
 						'U_LEFT_THUMBNAILS' => (($pos_pics - $start_thumbnails) > 0) ? '<span id="display_left"><a href="javascript:display_thumbnails(\'left\')"><i class="fa fa-arrow-left fa-2x"></i></a></span>' : '<span id="display_left"></span>',
 						'U_RIGHT_THUMBNAILS' => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics) ? '<span id="display_right"><a href="javascript:display_thumbnails(\'right\')"><i class="fa fa-arrow-right fa-2x"></i></a></span>' : '<span id="display_right"></span>',
-						'U_COMMENTS' => GalleryUrlBuilder::get_link_item($info_pics['idcat'],$info_pics['id'],0,$g_sort) .'#comments_list',
+						'U_COMMENTS' => GalleryUrlBuilder::get_link_item($info_pics['idcat'],$info_pics['id'],0,$g_sort) .'#comments-list',
 						'U_IMG_MAX' => PATH_TO_ROOT . '/gallery/pics/' . $info_pics['path']
 					));
 	
@@ -555,7 +555,7 @@ class GalleryDisplayCategoryController extends ModuleController
 						'U_DEL' => url('gallery.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;cat=' . $category->get_id()),
 						'U_MOVE' => url('gallery.php?id=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value'),
 						'U_DISPLAY' => $display_link,
-						'U_COMMENTS' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '.php?com=0') . '#comments_list'
+						'U_COMMENTS' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '.php?com=0') . '#comments-list'
 					));
 				}
 				$result->dispose();
