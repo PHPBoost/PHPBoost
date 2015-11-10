@@ -98,7 +98,6 @@ li.bbcode-elements a,
 	color: #111111;
 }
 
-/* CSS applique uniquement aux écrans PC */
 @media ( min-width: 769px ) {
 	.expand .bbcode-container {
 		display: block;
@@ -172,7 +171,6 @@ li.bbcode-elements a,
 	display: block;
 }
 
-
 .bbcode-block-code {
 	padding: 0;
 	margin: 0;
@@ -234,6 +232,14 @@ li.bbcode-elements a,
 	text-align: center;
  }
 
+.bbcode-block-fonts 	{ width: 120px; }
+.bbcode-block-title 	{ width: 70px;  }
+.bbcode-block-ul 		{ width: 150px; }
+.bbcode-block-block 	{ width: 100px; }
+.bbcode-block-message 	{ width: 110px; }
+.bbcode-block-table 	{ width: 160px; }
+.bbcode-block-code 		{ width: 130px; }
+
 /* Icones de la barre BBCode */
 .bbcode a,
 .bbcode .fa {
@@ -241,7 +247,6 @@ li.bbcode-elements a,
 	vertical-align: 0px;
 	color: #555555;
 }
-
 
 .bbcode-icon-anchor:before      { content: "\f13d"; }
 .bbcode-icon-bold:before        { content: "\f032"; }

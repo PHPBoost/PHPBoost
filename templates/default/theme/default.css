@@ -251,6 +251,18 @@ ul.pagination .current-page {
 	border-radius: 4px;
 }
 
+/* --- Elements de prévisualisation --- */
+.loading-preview-container {
+	position: relative;
+}
+
+.loading-preview {
+	position: absolute;
+	margin: 90px auto auto auto;
+	width: 100%;
+	text-align: center;
+}
+
 @media print {
 	* {
 		background-color: transparent;

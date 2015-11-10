@@ -18,7 +18,7 @@ function XMLHttpRequest_preview(field)
 		if(!displayed[field])
 			jQuery("#" + preview_field).slideDown(500);
 
-		jQuery('#loading_preview' + field).show();
+		jQuery('#loading-preview-' + field).show();
 
 		displayed[field] = true;
 
@@ -36,7 +36,7 @@ function XMLHttpRequest_preview(field)
 			success: function(returnData){
 				jQuery('#' + preview_field).html(returnData);
 
-				jQuery('#loading_preview' + field).hide();
+				jQuery('#loading-preview-' + field).hide();
 			}
 		});
 	}
@@ -58,12 +58,12 @@ function setTinyMceContent(content)
 
 -->
 </script>
-<div style="position:relative;display:none;" id="loading_preview{FIELD}">
-	<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;">
+<div id="loading-preview-{FIELD}" class="loading-preview-container" style="display:none;">
+	<div class="loading-preview">
 		<i class="fa fa-spinner fa-2x fa-spin"></i>
 	</div>
 </div>
-<div style="display:none;" class="xmlhttprequest-preview" id="xmlhttprequest-preview{FIELD}"></div>
+<div id="xmlhttprequest-preview{FIELD}" class="xmlhttprequest-preview" style="display:none;"></div>
 
 # IF NOT C_NOT_JS_INCLUDED #
 	<script src="{PATH_TO_ROOT}/TinyMCE/templates/js/tinymce/tinymce.min.js"></script>
