@@ -432,6 +432,13 @@ td.input-radio .form-field-radio-span {
 	padding: 0
 }
 
+/* --- images dans une table --- */
+
+.picture-table {
+	vertical-align: top;
+	max-width:180px;
+}
+
 
 /* --- responsive tables basictable.js --- */
 
@@ -611,6 +618,16 @@ fieldset#AdminErrorsController404List_fbuttons{
 	padding: 15px;
 }
 
+.fieldset-inset-user {
+	overflow: hidden;
+	padding: 15px 0;	
+}
+
+.fieldset-inset-user table {
+	width:100% !important;
+	margin:0;
+}
+
 fieldset p {
 	padding: 15px 10px;
 	margin: 0;
@@ -740,6 +757,12 @@ input[type=color] {
 	}
 }
 
+@media (min-width:769px){
+	p[id*="filter"] select,
+	p[id*="filter"] input{
+		width:200px;
+	}
+}
 /* --- checkbox --- */
 
 .form-field-checkbox input[type=checkbox] {
@@ -915,6 +938,24 @@ fieldset[id*=advises] .form-element {
 .form-field-free-large {
 	width: 100%;
 	max-width: none;
+}
+
+.form-field-action-link {
+	text-align: center;
+}
+
+.form-field-action-link ul {
+	margin: 5px;
+	list-style-type: none;
+}
+
+.form-field-action-link ul li {
+	margin: 2px 10px;
+	display: inline-table;
+}
+
+.form-field-action-link ul li a {
+	text-decoration: none;
 }
 
 /* --- Label pour les checkbox et radio --- */
@@ -1663,6 +1704,10 @@ body.dragging, body.dragging * {
 	color: #2D4D73 !important;
 }
 
+.menumanagement hr {
+	margin: 10px 0;
+}
+
 #valid-position-menus {
 	position: fixed;
 	z-index: 101;
@@ -1800,7 +1845,7 @@ div.container-block-absolute > div {
 }
 
 @media (min-width:769px){
-	.menus-block-container > div.menus-block-move-top a			{opacity:  0}	
+	.menus-block-container > div.menus-block-move-top a			{opacity: 0}	
 	.menus-block-container > div.menus-block-move-bot a			{opacity: 0}
 	.menus-block-container:hover > div.menus-block-move-top a	{opacity: 1}	
 	.menus-block-container:hover > div.menus-block-move-bot a	{opacity: 1}	
@@ -1847,13 +1892,13 @@ div.container-block-absolute > div {
 	float: left
 }
 
-.menusmanagementColumn {
+.menusmanagementcolumn {
 	overflow: hidden;
 }
 
 #container-leftmenu,
 #container-rightmenu,
-.menusmanagementCentral{
+.menusmanagementcentral{
 	width: 100%;
 }
 
@@ -1863,17 +1908,17 @@ div.container-block-absolute > div {
 
 @media (min-width:981px) {
 
-	.menusmanagementColumn > div:nth-child(1) {
+	.menusmanagementcolumn > div:nth-child(1) {
 		width: 220px;
 		float: left;
 	}
 	
-	.menusmanagementColumn > div:nth-child(3)  {
+	.menusmanagementcolumn > div:nth-child(3)  {
 		width: 220px;
 		float: right;
 	}
 	
-	.menusmanagementCentral {
+	.menusmanagementcentral {
 		width: calc(100% - 440px);
 		float: left;
 	}
@@ -1914,6 +1959,22 @@ div.container-block-absolute > div {
 
 a.upload-recent-file {
 	color: #BA4B49;
+}
+
+#new-file .form-field {
+	width: auto;
+}
+
+.file-move-container {
+	margin: 5px 0;
+	text-align: center;
+}
+
+@media (min-width:769px){
+	.file-move-container{
+		width: calc(100% / 3);
+		float: left;
+	}
 }
 
 /* --- Deplacement des fichiers --- */

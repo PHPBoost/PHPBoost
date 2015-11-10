@@ -172,7 +172,7 @@ function createSortableMenu()
 						</div>
 					</div>
 				</div><!-- container-subheader -->
-				<div class="menusmanagementColumn">
+				<div class="menusmanagementcolumn">
 					<div>
 						<div id="container-leftmenu">
 							<div class="container-block">
@@ -197,7 +197,7 @@ function createSortableMenu()
 								</div>
 							</div>
 							<div id="mod_left">
-								<hr style="margin:10px 0px" />
+								<hr />
 								# START mod_left #
 									{mod_left.MENU}
 								# END mod_left #
@@ -205,7 +205,7 @@ function createSortableMenu()
 							</div>
 						</div>
 					</div><!-- container-left-menu -->
-					<div class="menusmanagementCentral">
+					<div class="menusmanagementcentral">
 						<div>
 							<div id="container-topcentral">
 								<div class="container-block">
@@ -240,9 +240,9 @@ function createSortableMenu()
 						<div>
 							<div id="container-central">
 								<div class="container-block">
-									<div style="margin-top:5px;">
+									<div>
 										<p class="menu-block-libelle">{L_MENUS_AVAILABLE}</p>
-										<p class="menus-block-add" style="height:3px;"></p>
+										<p class="menus-block-add"></p>
 									</div>
 								</div>
 								
@@ -312,7 +312,7 @@ function createSortableMenu()
 								</div>
 							</div>
 							<div id="mod_right">
-								<hr style="margin:10px 0px" />
+								<hr />
 								# START mod_right #
 									{mod_right.MENU}
 								# END mod_right #

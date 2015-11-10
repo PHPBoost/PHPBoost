@@ -97,6 +97,10 @@ ul, ol {
 --------------------------------------*/
 
 /* --- Affichage du mini calendrier --- */
+.calendar-container {
+	display: inline-block;
+}
+
 .calendar-block {
 	position: absolute;
 	border: 1px solid #999999;
@@ -415,6 +419,37 @@ li.small-block .fa-stack {
 	margin: 5px 0px;
 }
 
+.feed-option-title {
+	font-weight:bold;
+	text-transform:uppercase;
+	padding:1px;
+	text-align:center;
+}
+
+.list {
+	margin-top: 8px
+}
+
+/* --- menu de flux avec image --- */
+
+.feed-img {
+	float:left;
+	width:73px;
+	text-align:center;
+}
+
+.feed-desc {
+	float:left;
+	width:250px;
+	padding-left:6px;
+}
+
+/* --- menus de contenu --- */
+
+.block-contents div {
+	text-align:justify;
+	padding-top:5px;
+}
 
 /* -- Les message d erreurs --
 --------------------------------------*/

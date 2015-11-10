@@ -115,9 +115,9 @@
 				<form action="admin_index.php" method="post">
 					<fieldset>
 						<legend><i class="fa fa-user"></i> {L_USER_ONLINE}</legend>
-						<div class="fieldset-inset" style="padding:15px 0">
+						<div class="fieldset-inset-user">
 							<div class="form-element">
-								<table id="table" style="width:100% !important; margin:0">
+								<table id="table">
 									<thead>
 										<tr> 
 											<th>
@@ -179,6 +179,6 @@
 					<input type="hidden" name="token" value="{TOKEN}">
 				</form>
 			</div>
-			
+			<div class="spacer"></div>
 		</div><!-- admin-contents -->
 			

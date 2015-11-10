@@ -39,10 +39,10 @@ function CheckForm() {
 					<option
 						value="null"
 						# IF C_NEW # selected="selected"# ENDIF #
-						style="font-weight:bold; text-transform:uppercase; padding:1px; text-align:center;">
+						class="feed-option-title">
 						{L_AVAILABLES_FEEDS}
 					</option>
-					<option value="null" style="text-align:center;"></option>
+					<option value="null" class="center"></option>
 					# START modules #
 						<optgroup label="{modules.NAME}">
 						# START modules.feeds_urls #
@@ -52,7 +52,7 @@ function CheckForm() {
 						 	</option>
 						# END modules.feeds_urls #
 						</optgroup>
-						<option value="null" style="text-align:center;">-----------------------------</option>
+						<option value="null" class="center">-----------------------------</option>
 					# END modules #
 				</select></div>
 			</div>

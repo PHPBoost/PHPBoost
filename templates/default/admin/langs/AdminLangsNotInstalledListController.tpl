@@ -24,8 +24,8 @@
 							<span id="lang-{langs_not_installed.ID}"></span>
 							<span class="text-strong">{langs_not_installed.NAME}</span> <em>({langs_not_installed.VERSION})</em>
 						</td>
-						<td>
-							<div id="desc_explain{langs_not_installed.ID}" style="text-align:left;">
+						<td class="left">
+							<div id="desc_explain{langs_not_installed.ID}">
 								<span class="text-strong">{@langs.author} :</span> 
 								<a href="mailto:{langs_not_installed.AUTHOR_EMAIL}">{langs_not_installed.AUTHOR_NAME}</a>
 								# IF langs_not_installed.C_WEBSITE # 

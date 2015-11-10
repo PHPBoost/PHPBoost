@@ -26,13 +26,13 @@
 					<form action="{TARGET}" method="post">
 						<div class="upload-elements-container">
 							# START folder #
-								<div style="float:left;width:33%;text-align:center;">
+								<div class="file-move-container">
 									<i class="fa fa-folder fa-2x"></i> {folder.NAME}
 								</div>	
 							# END folder #
 									
 							# START file #
-								<div style="float:left;width:33%;text-align:center;">
+								<div class="file-move-container">
 									# IF file.C_DISPLAY_REAL_IMG #
 										<img src="{PATH_TO_ROOT}/upload/{file.FILE_ICON}" alt="{file.NAME}" style="width:100px;height:auto;" />
 									# ELSE #
@@ -44,12 +44,12 @@
 								</div>
 							# END file #
 							
-							<div style="float:left;width:33%;text-align:center;">
+							<div class="file-move-container">
 								<strong>{L_MOVE_TO}</strong>
 								<br />
 								<i class="fa fa-arrow-right fa-2x"></i>
 							</div>
-							<div style="float:left;width:33%;text-align:center;">
+							<div class="file-move-container">
 									<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/upload.js"></script>
 									<script>
 									<!--
@@ -57,7 +57,7 @@
 										var selected_cat = {SELECTED_CAT};
 									-->
 									</script>
-									<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><i class="fa fa-home"></i> <span id="class_0" class="{CAT_0}">{L_ROOT}</span></a></span>
+									<span><a href="javascript:select_cat(0);"><i class="fa fa-home"></i> <span id="class_0" class="{CAT_0}">{L_ROOT}</span></a></span>
 									<br />
 									{FOLDERS}
 							</div>

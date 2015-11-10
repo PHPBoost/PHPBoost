@@ -23,7 +23,7 @@
 			<a href="{U_LINK}" class="fa fa-syndication"></a>
 			# IF C_NAME #{NAME}# ELSE #{TITLE}# ENDIF #
 		</h5>
-		<ul class="list" style="margin-top:8px;">
+		<ul class="list">
 			# START item #
 			<li><span class="smaller">{item.DATE}</span> <a href="{item.U_LINK} ">{item.TITLE}</a></li>
 			# END item #

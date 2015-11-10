@@ -48,7 +48,7 @@
 					# END filters #
 					
 					<span id="add_filter{NBR_FILTER}"></span>
-					<p style="text-align:center;margin-top:10px;">
+					<p class="center">
 						<a href="javascript:add_filter({NBR_FILTER})" title="{@add_filter}"><i class="fa fa-plus"></i></a>
 					</p>
 				</div>

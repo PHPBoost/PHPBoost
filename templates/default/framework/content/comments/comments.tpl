@@ -52,7 +52,7 @@ jQuery(document).ready(function(){
 </section>
 
 # IF C_DISPLAY_VIEW_ALL_COMMENTS #
-<div style="text-align:center;">
+<div class="center">
 	<button type="submit" class="submit" id="refresh_comments">{@allComments}</button>
 </div>
 # ENDIF #

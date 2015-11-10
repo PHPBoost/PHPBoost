@@ -19,13 +19,13 @@
 			</tr>
 			# START themes_installed #
 				<tr> 	
-					<td class="# IF themes_installed.C_IS_DEFAULT_THEME # row-disabled # ENDIF #">					
+					<td>					
 						<span id="theme-{themes_installed.ID}"></span>
 						<span class="text-strong">{themes_installed.NAME}</span> <em>({themes_installed.VERSION})</em>
 						<br /><br />
 						# IF themes_installed.C_PICTURES #
 							<a href="{themes_installed.MAIN_PICTURE}" data-lightbox="{themes_installed.ID}" data-rel="lightcase:collection" title="{themes_installed.NAME}">
-								<img src="{themes_installed.MAIN_PICTURE}" alt="{themes_installed.NAME}" style="vertical-align:top; max-height:180px;" />
+								<img src="{themes_installed.MAIN_PICTURE}" alt="{themes_installed.NAME}" class="picture-table" />
 								<br/>
 								{@themes.view_real_preview}
 							</a>
@@ -35,7 +35,7 @@
 						# ENDIF #
 						
 					</td>
-					<td class="# IF themes_installed.C_IS_DEFAULT_THEME # row-disabled # ENDIF #" style="text-align: left;">
+					<td class="left">
 						<div id="desc_explain{themes_installed.ID}">
 							<span class="text-strong">{@themes.author} :</span> 
 							<a href="mailto:{themes_installed.AUTHOR_EMAIL}">{themes_installed.AUTHOR_NAME}</a>
@@ -51,7 +51,7 @@
 							<span class="text-strong">{@themes.width} :</span> {themes_installed.WIDTH}<br />
 						</div>
 					</td>
-					<td class="# IF themes_installed.C_IS_DEFAULT_THEME # row-disabled # ENDIF #">
+					<td>
 						# IF NOT themes_installed.C_IS_DEFAULT_THEME #
 							<div id="authorizations_explain-{themes_installed.ID}">{themes_installed.AUTHORIZATIONS}</div>
 						# ELSE #
@@ -79,10 +79,10 @@
 						<button type="submit" class="submit" name="delete-{themes_installed.ID}" value="true">${LangLoader::get_message('delete', 'common')}</button>
 					</td>
 					# ELSE #
-					<td class="row-disabled">
+					<td>
 						${LangLoader::get_message('yes', 'common')}
 					</td>
-					<td class="row-disabled">
+					<td>
 					</td>
 					# ENDIF #
 
