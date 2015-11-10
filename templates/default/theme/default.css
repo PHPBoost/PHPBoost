@@ -102,7 +102,7 @@ pre {
 
 abbr, a.wikipedia-link {
 	border-bottom: 1px dotted;
-	cursor:help;
+	cursor: help;
 	position: relative;
 	padding-left: 18px;
 }
