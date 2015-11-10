@@ -97,6 +97,13 @@ ul, ol {
 --------------------------------------*/
 
 /* --- Affichage du mini calendrier --- */
+.calendar-block-container {
+	position: absolute;
+	z-index: 100;
+	left: 0;
+	right: 0;
+}
+
 .calendar-container {
 	display: inline-block;
 }

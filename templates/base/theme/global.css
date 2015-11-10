@@ -64,6 +64,13 @@ h4.formatter-title {
 /* ------------------------------ */
 
 /* --- Affichage du mini calendrier --- */
+.calendar-block-container {
+	position: absolute;
+	z-index: 100;
+	left: 0;
+	right: 0;
+}
+
 .calendar-block {
 	position: absolute;
 	border: 1px solid #999999;

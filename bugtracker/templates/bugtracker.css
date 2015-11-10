@@ -49,6 +49,10 @@ td .form-field-checkbox {
     margin: auto;
 }
 
+.form-field-progressbar {
+    width: 25%;
+}
+
 .cw25 {
     width: 100%;
     text-align: center;

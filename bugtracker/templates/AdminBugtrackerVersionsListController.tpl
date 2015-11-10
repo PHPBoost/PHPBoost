@@ -133,7 +133,7 @@ function display_default_version_radio(version_id)
 			</td>
 			<td>
 				<input type="text" maxlength="10" size="11" id="release_date{versions.ID}" name="release_date{versions.ID}" value="{versions.RELEASE_DATE}" placeholder="${LangLoader::get_message('date_format', 'date-common')}" />
-				<div style="position:absolute;z-index:100;display:none;left: 0; right: 0" id="calendar{versions.ID}">
+				<div id="calendar{versions.ID}" class="calendar-block-container" style="display:none;">
 					<div id="release_date{versions.ID}_date" class="calendar-block" onmouseover="hide_calendar({versions.ID}, 1);" onmouseout="hide_calendar({versions.ID}, 0);">
 					</div>
 				</div>
