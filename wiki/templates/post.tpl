@@ -18,7 +18,7 @@
 		</script>
 
 		# START preview #
-		<article id="article-wiki-preview-{preview.ID}" class="article-wiki">
+		<article>
 			<header>
 				<h1>{L_PREVIEWING}: {preview.TITLE}</h1>
 			</header>

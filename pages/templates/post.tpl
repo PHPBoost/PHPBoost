@@ -35,7 +35,7 @@
 		# INCLUDE message_helper #
 		
 		# START previewing #
-		<article id="article-pages-previewing-{previewing.ID}" class="article-pages">
+		<article>
 			<header>
 				<h1>{L_PREVIEWING} {previewing.TITLE}</h1>
 			</header>
