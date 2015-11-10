@@ -1,0 +1,671 @@
+﻿/* --------------------------------------
+		form.css
+Contient les élements : 
+ - button,
+ - formulaire,
+-----------------------------------------*/
+
+
+/* -- Boutons et class boutons -- */
+/* ------------------------------ */
+
+/* --- Normal --- */
+button,
+.button {
+	height: auto;
+	color: #333333;
+	text-align: center;
+	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
+	background-image: linear-gradient(to bottom,  rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.10) 100%);
+	background-color: #F9F9F9;
+	border: 1px solid #CCCCCC;
+	border-color: #E1E1E1 #E1E1E1 #BFBFBF #CFCFCF;
+	border-radius: 4px;
+	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0 2px rgba(0, 0, 0, 0.05);
+	word-wrap: no-warp;
+	padding: 0.3em 1em;
+}
+
+button:hover,
+.button-hover {
+	background-color: #FDFDFD;
+	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0 2px rgba(0, 0, 0, 0.1);
+	transition: all 0.1s linear;
+}
+
+button:active,
+.button-active {
+	background-color: #F1F1F1;
+	border: 1px solid #DDDDDD;
+	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0 2px rgba(0, 0, 0, 0.05);
+}
+
+/* --- Petit bouton --- */
+button.small,
+.button-small {
+	font-size: 1.1rem;
+	padding: 0.2em 0.5em;
+}
+
+/* --- Bouton de formulaire --- */
+button.submit {
+	color: #FEFEFE;
+	background-color: #3B6B9F;
+	border-color: #366393;
+}
+
+button.submit:hover {
+	background-color: #366393;
+	border-color: #315A86;
+}
+
+/* --- Bouton basic --- */
+.basic-button {
+	display: inline-block;
+	padding: 1px 6px;
+	font-weight: bold;
+	text-align: center;
+	border-radius: 2px;
+	background-color: #2F5B8A;
+	color:#FFFFFF;
+	margin: 1px;
+}
+
+.basic-button:hover {
+	background-color: #3D6997;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+/* --- Bouton basic avec couleur alternative --- */
+.basic-button.alt {
+	background-color: #AAAAAA;
+}
+
+.basic-button.alt:hover {
+	background-color: #BBBBBB;
+}
+
+/* --- field button --- */
+.field-button {
+	display: inline-block;
+	font-size: 0;
+	white-space: nowrap;
+}
+
+.field-button input {
+	border-radius: 4px 0 0 4px;
+}
+
+.field-button button {
+	font-size: 11px;
+	margin-left: -1px;
+	border-radius: 0 4px 4px 0;
+	padding: 4px 8px;
+}
+
+/* -- Formulaires -- */
+/* ----------------- */
+.fieldset-mini {
+	width: 540px;
+	margin: auto;
+	margin-top: 20px;
+}
+
+fieldset {
+	border: none;
+	background: none;
+	margin: 1.5em 0;
+}
+
+fieldset.fieldset-submit {
+	width: 100%;
+	text-align: center;
+	background: none;
+	border: none;
+}
+
+fieldset.fieldset-submit legend {
+	display: none;
+}
+
+optgroup {
+	font-weight: bold;
+	border: none;
+	border-bottom: 1px solid #5B5A5A;
+}
+
+option {
+	padding: 0 3px;
+}
+
+legend {
+	display: block;
+	margin: 0 0 0.6em 0;
+	width: 100%;
+	text-transform: none;
+	color: #474747;
+	font-size: 1.5em;
+	border-bottom: 1px solid #DDDDDD;
+}
+
+/* --- Previsualisation --- */
+.xmlhttprequest-preview {
+	border: 1px solid #CCCCCC;
+	background-color: #FFFFFF;
+	color: #2E3B5F;
+	padding: 0 2px;
+}
+
+.xmlhttprequest-preview img {
+	max-width: 600px;
+}
+
+/* --- Elements de saisie --- */
+input[type=text],
+input[type=email],
+input[type=url],
+input[type=number],
+input[type=color],
+input[type=tel],
+input[type=search],
+input[type=password],
+input[type=file],
+textarea,
+select {
+	color: #555555;
+	background-color: #FFFFFF;
+	border: 1px solid #CCCCCC;
+	border-radius: 4px;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
+	padding: 4px 18px 4px 6px;
+}
+
+input[type=text]:hover,
+input[type=email]:hover,
+input[type=url]:hover,
+input[type=number]:hover,
+input[type=color]:hover,
+input[type=tel]:hover,
+input[type=search]:hover,
+input[type=password]:hover,
+input[type=file]:hover,
+textarea:hover,
+select:hover {
+	color: #333333;
+	border: 1px solid #BBBBBB;
+	background-color: #FFFFFF;
+}
+
+input[type=text]:focus,
+input[type=email]:focus,
+input[type=url]:focus,
+input[type=number]:focus,
+input[type=color]:focus,
+input[type=tel]:focus,
+input[type=search]:focus,
+input[type=password]:focus,
+input[type=file]:focus,
+textarea:focus,
+select:focus {
+	color: #222222;
+	border-color: #BBBBBB;
+	outline: 0;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01), 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+input[type=color] {
+	padding: 0 2px 0 2px;
+	width: 25px;
+}
+
+form input:focus:invalid,
+form textarea:focus:invalid,
+form .constraint-status-right input,
+form .constraint-status-right textarea {
+	border-color: rgba(196, 60, 43, 0.3);
+	box-shadow: 0 0 3px rgba(196, 60, 43, 0.1);
+}
+
+form input:focus:valid,
+form textarea:focus:valid,
+form .constraint-status-right input,
+form .constraint-status-right textarea {
+	border-color: rgba(71, 137, 72, 0.3);
+	box-shadow: 0 0 5px rgba(71, 137, 72, 0.1);
+}
+
+input.field-smaller { width: 29px;  }
+input.field-small   { width: 77px;  }
+input.field-large   { width: 200px; }
+input.field-xlarge  { width: 250px; }
+
+/* --- Cache le generateur de mot de passe sur chrome --- */
+.cip-icon-key-small {
+	display: none !important;
+}
+
+/* --- Element du formulaire (englobe le label et l'input d'un champ) --- */
+.form-element,
+.form-element-textarea {
+	margin: 0 1em 1em 1em;
+	position: relative;
+}
+
+@media (min-width: 769px) {
+	div#main.main-with-left.main-with-right section .form-element,
+	div#main.main-with-left.main-with-right section .form-element-textarea {
+		margin: 5px 0;
+	}
+}
+
+.fieldset-description {
+	margin: 0 1em 1.5em 1em;
+}
+
+@media (max-width: 768px) {
+	.form-element,
+	.form-element-textarea {
+		margin: 0 0.6em 1em 0.6em;
+	}
+
+	.fieldset-description {
+		margin: 0 0.6em 1.3em 0.6em;
+	}
+}
+
+@media (max-width: 480px) {
+	.form-element,
+	.form-element-textarea {
+		margin: 0 0.6em 0.5em 0.6em;
+	}
+
+	.fieldset-description {
+		margin: 0 0.6em 0.9em 0.6em;
+	}
+}
+
+.form-field {
+	display: inline-block;
+	max-width: 600px;
+	position: relative;
+}
+
+.form-field-free-large {
+	width: 100%;
+	max-width: none;
+}
+
+/* --- Label pour les checkbox et radio --- */
+.form-field label {
+	margin: 0 10px 0 0;
+	display: block;
+}
+
+/* --- Label pour les inputs [for] et pour les elements sans associations --- */
+.form-element > label {
+	display: inline-block;
+	width: 40%;
+	text-align: left;
+	padding-right: 10px;
+	vertical-align: top;
+}
+
+.field-description {
+	font-size: 0.8em;
+	display: block;
+	line-height: 12px;
+}
+
+@media (max-width: 768px) {
+	.form-element > label {
+		width: 100%;
+	}
+
+	span.field-description {
+		display: inline-block;
+		font-size: 0.7em;
+		font-style: italic;
+	}
+}
+
+input[disabled=disabled],
+input[disabled=disabled]:hover,
+input[disabled=disabled]:focus,
+textarea[disabled=disabled],
+textarea[disabled=disabled]:hover,
+textarea[disabled=disabled]:focus,
+select[disabled=disabled],
+select[disabled=disabled]:hover,
+select[disabled=disabled]:focus {
+	cursor: not-allowed;
+	background-color: #F1F1F1;
+	color: #AAAAAA;
+	border: 1px solid #CCCCCC;
+}
+
+input[readonly=readonly],
+input[readonly=readonly]:hover,
+input[readonly=readonly]:focus,
+textarea[readonly=readonly],
+textarea[readonly=readonly]:hover,
+textarea[readonly=readonly]:focus,
+select[readonly=readonly],
+select[readonly=readonly]:hover,
+select[readonly=readonly]:focus {
+	background-color: #FAFAFA;
+	color: #888888;
+	border: 1px solid #CCCCCC;
+}
+
+/* --- Textarea --- */
+.form-field-textarea {
+	display: inline;
+	width: 99%;
+	position: relative;
+	margin: 5px auto;
+}
+
+textarea {
+	overflow: auto;
+	resize: vertical;
+}
+
+.form-element-textarea {
+	width: 98%;
+}
+
+.form-element-textarea textarea {
+	width: 100%;
+}
+
+.form-element-textarea .form-field-textarea {
+	display: block;
+}
+
+.form-element-textarea .form-field-textarea div {
+	float: left;
+}
+
+.form-element-preview {
+	text-align: center;
+	margin: 5px auto 0 auto;
+}
+
+/* --- choix des permissions --- */
+.form-element-auth .form-field {
+	display: inline-block;
+	margin: 2px 0 0 0;
+}
+
+.form-element-auth .form-field div[class^="advanced-auth"] {
+	float:left;
+}
+
+.form-element-auth .field-description {
+	display: inline;
+	font-style: italic;
+}
+
+.advanced-auth-group select {
+	max-width: 153px;
+	overflow-x: auto;
+	padding-right: 5px;
+}
+
+.advanced-auth-select select {
+	max-width: 132px;
+	word-wrap: normal;
+	overflow-x: auto;
+	padding-right: 5px;
+}
+
+.advanced-auth-select {
+	margin-left:5px;
+}
+
+.advanced-auth-input {
+	margin-left: 5px;
+	width: 144px;
+}
+
+.advanced-auth-input input {
+	padding: 4px 24px 4px 6px;
+}
+
+.advanced-auth-input button {
+	margin-left: -29px;
+	padding: 5px 5px 6px 5px;
+	border-width: 0 0 0 1px;
+	border-radius: 0 4px 4px 0;
+}
+
+.advanced-auth-input-result {
+	width: 138px;
+	height: 100px;
+	margin: 2px 0 0 0;
+}
+
+.bbcode ~ .form-field-textarea textarea {
+	border-radius: 0 0 4px 4px;
+	border-width: 0 1px 1px 1px;
+}
+
+@media (min-width: 769px) {
+	.form-element-textarea-small {
+		width: 49%;
+	}
+}
+
+@media (max-width: 480px) {
+	.form-element-auth .form-field .advanced-auth-input {
+		float: none;
+		margin: 5px 0 0 0;
+	}
+}
+
+/* --- Verification des contraintes de formulaire --- */
+.constraint-status-error input,
+.constraint-status-error textarea {
+	border-color: rgba(196, 60, 43, 0.3);
+	box-shadow: inset 0 0 3px rgba(196, 60, 43, 0.1);
+	color: #C43C35;
+}
+
+.constraint-status-error input:hover,
+.constraint-status-error input:focus,
+.constraint-status-error textarea:hover,
+.constraint-status-error textarea:focus {
+	border-color: rgba(196, 60, 43, 0.5);
+	box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.3);
+	color: #C43C35;
+}
+
+.text-status-constraint {
+	position:absolute;
+	display: block;
+	z-index: 1;
+	padding: 6px 5px;
+	left: 5px;
+	min-width: 20em;
+
+	background-color: #FEFEFE;
+	border: 1px solid #EAEAEA;
+	box-shadow: 1px 3px 6px rgba(0, 0, 0, 0.3);
+	border-radius: 3px;
+
+	font-size: 0.8em;
+	font-weight: bold;
+	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+input + .text-status-constraint {
+	top: 25px;
+}
+
+.text-status-constraint:before {
+	content: " ";
+	position: absolute;
+	border-bottom: 9px solid rgba(230, 230, 230, 1);
+	border-left: 9px solid transparent;
+	border-right: 9px solid transparent;
+	left: 8px;
+	top: -9px;
+}
+
+.text-status-constraint:after {
+	content: " ";
+	position: absolute;
+	border-bottom: 8px solid rgba(250, 250, 250, 1);
+	border-left: 8px solid transparent;
+	border-right: 8px solid transparent;
+	left: 9px;
+	top: -8px;
+}
+
+div.field-required:after,
+div.picture-status-constraint:after {
+	display: inline-block;
+	position: absolute;
+	font: normal normal normal 14px/1 FontAwesome;
+	font-size: inherit;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	right: 4px;
+}
+
+div.field-required:after {
+	content: "\f069";
+	color: #C43C35;
+	opacity: 0.6;
+	font-size: 0.8rem;
+	top: 8px;
+}
+
+.form-field-date.field-required:after,
+.form-field-date.picture-status-constraint:after {
+	right: 24px;
+}
+
+.form-field-select.field-required:after,
+.form-field-number.field-required:after,
+.form-field-decimal.field-required:after {
+	right: -10px;
+}
+
+.form-field-datetime.field-required:after {
+	right: -15px;
+}
+
+.form-field-checkbox.field-required:after {
+	right: -20px;
+	top: 0;
+}
+
+.form-field-upload-file.field-required:after {
+	right: 45px;
+	top: 10px;
+}
+
+.constraint-status-right .form-field-color:after,
+.constraint-status-right .form-field-select:after,
+.constraint-status-right .form-field-number:after,
+.constraint-status-right .form-field-decimal:after {
+	right: -20px;
+}
+
+.constraint-statuts-right .form-field-checkbox:after {
+	top: 4px;
+}
+
+.constraint-statuts-right .form-field-datetime:after {
+	right: -22px;
+}
+
+.form-field-number input,
+.form-field-decimal input,
+.form-field-datetime input {
+	padding-right: 2px;
+}
+
+.form-element-date .constraint-status-error div.field-required:after,
+.form-element-date .constraint-status-right div.field-required:after {
+	right: 10px;
+}
+
+.form-field-textarea.field-required:after,
+.constraint-status-right .form-field-textarea.field-required:after,
+.constraint-status-right .form-field-textarea.field-required:after {
+	top: 45%;
+}
+
+.constraint-status-right div.field-required:after {
+	content: " ";
+}
+
+.constraint-status-right div.form-field-checkbox.picture-status-constraint:after {
+	top: 0;
+}
+
+.constraint-status-right div.picture-status-constraint:after {
+	opacity: 1;
+	font-size: 1.5rem;
+	top: 4px;
+}
+
+.constraint-status-error .form-field-textarea .picture-status-constraint:after,
+.constraint-status-right .form-field-textarea .picture-status-constraint:after {
+	top: 40%;
+}
+
+.constraint-status-right div.picture-status-constraint:after {
+	content: "\f00c";
+	color: #57A957;
+}
+
+.constraint-status-error i.picture-status-constraint {
+	content: "\f056";
+	color: #C43C35;
+}
+
+.form-field-multi-select.field-required:after {
+	display: none;
+}
+
+.constraint-status-right .form-field-multi-select select {
+	border-color: rgba(71, 137, 72, 0.3);
+	box-shadow: 0 0 5px rgba(71, 137, 72, 0.1);
+}
+
+.form-field-radio-button.field-required:after,
+.form-field-multiple-checkbox.field-required:after {
+	top: 3px;
+	right: -6px;
+}
+
+.form-field-radio {
+	display: inline-block;
+}
+
+/* --- Auto-completion --- */
+.autocomplete-suggestions {
+	border: 1px solid #999999;
+	background-color: #FFFFFF;
+	overflow: auto;
+}
+
+.autocomplete-suggestions strong {
+	font-weight: normal;
+	color: #3399FF;
+}
+
+.autocomplete-suggestion {
+	padding: 2px 5px;
+	white-space: nowrap;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+.autocomplete-selected { background-color: #F0F0F0; }
+.autocomplete-no-suggestion { text-align: center; }

@@ -5,8 +5,8 @@ Le design.css permet de mettre en forme votre site web avec le design de votre c
 --------------------------------------*/
 
 
-/* -- Elements HTML generiques specifique au theme --
---------------------------------------*/
+/* -- Elements HTML generiques specifique au theme -- */
+/* -------------------------------------------------- */
 html {
 	font-size: 100%;
 	font-size: 10px;
@@ -28,14 +28,13 @@ body {
 	}
 }
 
-/* -- En-tete de page - Header --
---------------------------------------*/
+/* -- En-tete de page - Header -- */
+/* ------------------------------ */
 header#header {
 	background-color: #366393;
 }
 
 /* --- Partie superieure du header --- */
-
 div#top-header {
 	min-height: 139px;
 	max-width: 1024px;
@@ -129,8 +128,8 @@ span#site-slogan {
 	
 }
 
-/* -- Conteneur global du site --
---------------------------------------*/
+/* -- Conteneur global du site -- */
+/* ------------------------------ */
 div#global {
 	max-width: 1024px;
 	margin: 1.5em auto 0 auto;
@@ -229,8 +228,9 @@ div#top-footer {
 }
 
 
-/* -- Contenu de la page --
---------------------------------------*/
+/* -- Contenu de la page -- */
+/* ------------------------ */
+
 /* --- Contenu central --- */
 div#main-content {
 	padding: 1.5em 0.8em;
@@ -238,25 +238,23 @@ div#main-content {
 	background-color: #FFFFFF;
 }
 
+div.block-container {
+	margin-top: 15px;
+}
+
 /* --- Emplacement au dessus et en dessous du contenu de la page --- */
 div#top-content {
 	margin: 0 0 2% 0;
 }
 
+/* --- Emplacement au dessus du pied de page --- */
 div#bottom-content {
 	margin: 2% 0 0 0;
 }
 
-div.block-container {
-	margin-top: 15px;
-}
 
-/* --- Emplacement au dessus du pied de page --- */
-
-
-
-/* -- Pied de page - Footer --
---------------------------------------*/
+/* -- Pied de page - Footer -- */
+/* --------------------------- */
 footer#footer {
 	clear: both;
 	width: 100%;
@@ -283,22 +281,22 @@ footer#footer .footer-infos span {
 }
 
 
-/* -- Elements specifiques PHPboost --
---------------------------------------*/
+/* -- Elements specifiques PHPboost -- */
+/* ----------------------------------- */
+
 /* --- Compteur de visite --- */
 div#compteur {
 	color: #E9ECD9;
 	position: absolute;
-	top: 100px;
 	right: 0;
 	font-size: 0.9em;
 	margin-right: 15px;
 	text-align: right;
 }
 
-@media (max-width: 768px){
+@media (min-width: 769px){
 	div#compteur {
-		top: 0;
+		top: 100px;
 	}
 }
 
