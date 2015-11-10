@@ -128,6 +128,24 @@ class SearchConfig extends AbstractConfigData
 	{
 		$this->set_property(self::unauthorized_providers, $unauthorized_providers);
 	}
+
+	/**
+	 * Returns all the unauthorized search providers ids (unauthorized in search config and module not authorized for reading)
+	 * @return string[] The unauthorized search providers ids
+	 */
+	public function get_all_unauthorized_providers()
+	{
+		$modules_without_read_authorization[] = array();
+		
+		foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as $id => $module)
+		{
+			$authorizations_class = ucfirst($module->get_id()) . 'AuthorizationsService';
+			if (class_exists($authorizations_class) && method_exists($authorizations_class, 'check_authorizations') && method_exists($authorizations_class, 'read') && !$authorizations_class::check_authorizations()->read())
+				$modules_without_read_authorization[] = $module->get_id();
+		}
+		
+		return array_merge($this->get_property(self::unauthorized_providers), $modules_without_read_authorization);
+	}
 	
 	/**
 	 * Returns the authorizations of the module
