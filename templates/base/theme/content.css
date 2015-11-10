@@ -255,6 +255,9 @@ ul.pagination-block-bis li a.next-page:hover {
 	text-decoration: underline;
 }
 
+.pages-pagination a {
+	text-decoration: none;
+}
 
 /* -- Exploreur des catégories -- */
 /* ------------------------------ */
