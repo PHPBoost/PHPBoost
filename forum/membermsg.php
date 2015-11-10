@@ -145,11 +145,11 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		{
 			$rank_img = TPL_PATH_TO_ROOT . '/forum/templates/images/ranks/' . $user_rank_icon;
 		}
-		$user_assoc_img = !empty($user_rank_icon) ? '<img src="' . $rank_img . '" alt="' . $ranks_info['name'] . '" />' : '';
+		$user_assoc_img = !empty($user_rank_icon) ? '<img src="' . $rank_img . '" alt="' . $LANG['rank'] . '" />' : '';
 		
 		//Affichage des groupes du membre.
 		if (!empty($row['groups'])) 
-		{	
+		{
 			$user_groups = '';
 			$array_user_groups = explode('|', $row['groups']);
 			foreach (GroupsService::get_groups() as $idgroup => $array_group_info)
