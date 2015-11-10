@@ -174,7 +174,7 @@
 </nav>
 <script>
 	jQuery("#rm-admin").menumaker({
-		title: "${Langloader::get_message('admin.main_menu', 'main')}",
+		title: "${Langloader::get_message('admin.subheader_menu', 'main')}",
 		format: "multitoggle",
 		breakpoint: 9000
 	});
