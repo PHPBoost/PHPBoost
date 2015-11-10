@@ -57,7 +57,7 @@
 			# IF C_PAGINATION #
 				<div class="pages-pagination right">
 					# IF C_NEXT_PAGE #
-					<a style="text-decoration:none;" href="{U_NEXT_PAGE}">{L_NEXT_TITLE} <i class="fa fa-arrow-right"></i></a>
+					<a href="{U_NEXT_PAGE}">{L_NEXT_TITLE} <i class="fa fa-arrow-right"></i></a>
 					# ELSE #
 					&nbsp;
 					# ENDIF #
@@ -65,7 +65,7 @@
 				<div class="pages-pagination center"># INCLUDE PAGINATION_ARTICLES #</div>
 				<div class="pages-pagination">
 					# IF C_PREVIOUS_PAGE #
-					<a style="text-decoration:none;" href="{U_PREVIOUS_PAGE}"><i class="fa fa-arrow-left"></i> {L_PREVIOUS_TITLE}</a>
+					<a href="{U_PREVIOUS_PAGE}"><i class="fa fa-arrow-left"></i> {L_PREVIOUS_TITLE}</a>
 					# ENDIF #
 				</div>
 			# ENDIF #
@@ -85,7 +85,7 @@
 			# ENDIF #
 			<div class="spacer"></div>
 			# IF C_NOTATION_ENABLED #
-			<div style="float:left" class="smaller">
+			<div class="left smaller">
 				{KERNEL_NOTATION}
 			</div>
 			# ENDIF #
