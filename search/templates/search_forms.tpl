@@ -58,7 +58,7 @@
 								<div class="form-field">
 									<select id="searched_modules" name="searched_modules[]" size="5" multiple="multiple" class="list-modules">
 									# START searched_modules #
-										<option value="{searched_modules.MODULE}" id="{searched_modules.MODULE}"{searched_modules.SELECTED}>{searched_modules.L_MODULE_NAME}</option>
+										<option value="{searched_modules.MODULE}" {searched_modules.SELECTED}>{searched_modules.L_MODULE_NAME}</option>
 									# END searched_modules #
 									</select>
 								</div>
