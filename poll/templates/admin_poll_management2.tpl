@@ -199,7 +199,8 @@
 				<fieldset class="fieldset-submit">
 					<legend>{L_UPDATE}</legend>
 					<div class="fieldset-inset">
-						<input type="hidden" name="id" value="{IDPOLL}" />
+						<input type="hidden" name="id" value="{IDPOLL}">
+						<input type="hidden" name="token" value="{TOKEN}">
 						<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button>
 						<button type="reset" value="true">{L_RESET}</button>
 					</div>
