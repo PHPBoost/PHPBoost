@@ -91,9 +91,11 @@ class CalendarFormController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('contents', $common_lang['form.contents'], $event_content->get_contents(), array('rows' => 15, 'required' => true)));
 		
-		$fieldset->add_field(new FormFieldDateTime('start_date', $this->lang['calendar.labels.start_date'], $this->get_event()->get_start_date(), array('required' => true)));
+		$fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->lang['calendar.labels.start_date'], $this->get_event()->get_start_date(), array('required' => true)));
 		
-		$fieldset->add_field(new FormFieldDateTime('end_date', $this->lang['calendar.labels.end_date'], $this->get_event()->get_end_date(), array('required' => true)));
+		$fieldset->add_field($end_date = new FormFieldDateTime('end_date', $this->lang['calendar.labels.end_date'], $this->get_event()->get_end_date(), array('required' => true)));
+		
+		$form->add_constraint(new FormConstraintFieldsDifferenceSuperior($start_date, $end_date));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('repeat_type', $this->lang['calendar.labels.repeat_type'], $event_content->get_repeat_type(),
 			array(

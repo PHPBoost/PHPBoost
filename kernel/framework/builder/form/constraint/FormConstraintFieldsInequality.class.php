@@ -75,10 +75,10 @@ class FormConstraintFieldsInequality implements FormConstraint
 	public function get_js_validation()
 	{
 		return 'inequalityFormFieldValidator(' . TextHelper::to_js_string($this->first_field->get_id()) .
-			', ' . TextHelper::to_js_string($this->second_field->get_id()) . ', ' . TextHelper::to_js_string($this->get_message()) . ')';
+			', ' . TextHelper::to_js_string($this->second_field->get_id()) . ', ' . TextHelper::to_js_string($this->get_validation_error_message()) . ')';
 	}
 
-	private function get_message()
+	public function get_validation_error_message()
 	{
 		return StringVars::replace_vars($this->js_message, 
 			array('field1' => $this->first_field->get_label(), 'field2' => $this->second_field->get_label()));

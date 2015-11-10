@@ -277,6 +277,18 @@ abstract class AbstractFormField implements FormField
 				return false;
 			}
 		}
+		foreach ($this->form_constraints as $constraint)
+		{
+			if (!$constraint->validate($this))
+			{
+				$validation_error_message = $constraint->get_validation_error_message();
+				if (!empty($validation_error_message))
+				{
+					$this->validation_error_message = $this->get_label() . ' : ' . $validation_error_message;
+				}
+				return false;
+			}
+		}
 		return true;
 	}
 

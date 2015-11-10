@@ -92,6 +92,8 @@ $lang['form.has_to_be_filled'] = 'Le champ ":name" doit être renseigné';
 $lang['form.validation_error'] = 'Veuillez corriger les erreurs du formulaire';
 $lang['form.fields_must_be_equal'] = 'Les champs ":field1" et ":field2" doivent être égaux';
 $lang['form.fields_must_not_be_equal'] = 'Les champs ":field1" et ":field2" doivent avoir des valeurs différentes';
+$lang['form.first_field_must_be_inferior_to_second_field'] = 'Le champ ":field2" doit avoir une valeur inférieure au champ ":field1"';
+$lang['form.first_field_must_be_superior_to_second_field'] = 'Le champ ":field2" doit avoir une valeur supérieure au champ ":field1"';
 
 //User
 $lang['user.not_authorized_during_maintain'] = 'Vous n\'avez pas l\'autorisation d\'accéder au site pendant la maintenance';

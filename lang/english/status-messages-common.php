@@ -92,6 +92,8 @@ $lang['form.has_to_be_filled'] = 'The field ":name" has to be filled';
 $lang['form.validation_error'] = 'Please correct the form errors';
 $lang['form.fields_must_be_equal'] = 'Fields ":field1" and ":field2" must be equal';
 $lang['form.fields_must_not_be_equal'] = 'Fields ":field1" and ":field2" must have different values';
+$lang['form.first_field_must_be_inferior_to_second_field'] = 'Field ":field2" must have a value inferior to field ":field1"';
+$lang['form.first_field_must_be_superior_to_second_field'] = 'Field ":field2" must have a value superior to field ":field1"';
 
 //User
 $lang['user.not_authorized_during_maintain'] = 'You are not authorized to connect during the maintenance';
