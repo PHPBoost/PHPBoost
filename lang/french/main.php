@@ -38,7 +38,7 @@ $LANG['index.site'] = 'Site';
 $LANG['index.administration'] = 'Administration';
 $LANG['index.extend_menu'] = 'Menu étendu';
 $LANG['index.disconnect'] = 'Déconnexion';
-$LANG['admin.main_menu'] = 'Menu';
+$LANG['admin.main_menu'] = 'Menu principal';
 $LANG['admin.need_help'] = 'Besoin d\'aide ?';
 
 // Dates

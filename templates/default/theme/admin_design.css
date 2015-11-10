@@ -767,18 +767,21 @@ li.has-sub {
 	#support-pbt {
 		display: block;
 	}
-	
-	#support-pbt ul {
-		list-style-type: none;
-		margin: 10px 0 60px 40px;
-		padding: 0;
-	}	
 		
-	#support-pbt ul li {
-		padding: 0 0 10px 5px;
+	#support-pbt i {
+		margin-right: 2px;
 	}
 		
 	#support-pbt ul li a {
-		color:#ffffff;
+		color:#DDDDDD;
+		text-transform: uppercase;
+		text-decoration: none;
+		padding: 15px 17px;
+		display: block;
+	}
+		
+	#support-pbt ul li a:hover {
+		color: #ffffff;
+		background-color: rgba(0, 0, 0, .2);
 	}
 }

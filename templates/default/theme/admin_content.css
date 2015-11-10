@@ -296,21 +296,13 @@ table.mini {
 
 /* Entete */
 table caption {
-	margin: 5px 2% 0 2%;
-	font-size: 1em;
-	text-align: center;
-	padding: 5px 10px;
-	position: relative;
-	background-color: rgba(0, 0, 0, .1);
-	border-radius: 50px 50px 0 0;
+	margin: 5px;
+	font-size: 2em;
+	text-align: left;
+	border-bottom: 1px solid #d4d4d4;
 }
 
 @media (min-width:769px){
-	
-	table caption {
-		margin: 5px 50% 0 2%;
-		max-width: 300px;
-	}
 	
 	table, .table-fixed {
 		width: calc(100% - 40px) !important;
@@ -335,15 +327,14 @@ table thead th a:hover 		{ color: #FFFFFF; }
 /* Contenu */
 table tbody td {
 	background-color: #F5F5F5;
-	border-top: 1px solid #D1D2D4;
 	border-left: 1px solid #D1D2D4;
+	border-bottom: 1px solid #D1D2D4;
 	padding: 8px;
 	color: #676A74;
 	text-align: center;
 }
 
 table tbody tr:nth-child(even) td 	{ background-color: #FFFFFF; }
-table tbody tr:last-child td 		{ border-bottom: 1px solid #D1D2D4; }
 table tbody tr td:last-child 		{ border-right: 1px solid #D1D2D4; }
 
 table tbody tr.no-separator td 				{ border-top: none; }
