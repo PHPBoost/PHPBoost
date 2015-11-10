@@ -360,14 +360,14 @@
 							<table>
 								<thead>
 									<tr>
-										<th colspan="{COLSPAN}">
+										<th colspan="3">
 											{L_THUMBNAILS}
 										</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
-										<td style="width:50px;text-align:center">
+										<td style="width:50px;">
 											{U_LEFT_THUMBNAILS}
 										</td>
 										
@@ -375,7 +375,7 @@
 											{list_preview_pics.PICS}
 										# END list_preview_pics #
 										
-										<td style="width:50px;text-align:center">
+										<td style="width:50px;">
 											{U_RIGHT_THUMBNAILS}
 										</td>
 									</tr>
