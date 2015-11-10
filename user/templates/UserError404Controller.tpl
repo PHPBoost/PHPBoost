@@ -1,7 +1,7 @@
 # IF HAS_TIME #
 <meta http-equiv="refresh" content="{TIME};url=${U_LINK}">
 # ENDIF #
-<section>
+<section id="module-user-error-404">
 	<header><h1>${escape(TITLE)}</h1></header>
 	<div class="content">
 		<div class="{ERROR_TYPE}">{MESSAGE}</div>

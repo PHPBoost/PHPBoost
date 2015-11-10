@@ -48,7 +48,7 @@
 		# INCLUDE message_helper #
 		
 		<form action="pm{convers.U_USER_ACTION_PM}" method="post" onsubmit="javascript:return Confirm_pm();">
-			<section>
+			<section id="module-user-convers">
 				<header>
 					<h1>{convers.U_PM_BOX}</h1>
 				</header>
@@ -153,10 +153,9 @@
 			</section>
 		</form>
 		# END convers #
-
 		
 		# START pm #
-		<section>
+		<section id="module-user-pm">
 			<header>
 				<h1>{pm.U_PM_BOX} : {pm.U_TITLE_CONVERS}</h1>
 			</header>
@@ -230,7 +229,7 @@
 
 		# START edit_pm #
 		<form action="pm{edit_pm.U_ACTION_EDIT}" method="post" onsubmit="return check_form_convers();">
-			<section>
+			<section id="module-user-edit-pm">
 				<header>
 					<h1>{edit_pm.U_PM_BOX}</h1>
 				</header>
@@ -270,7 +269,7 @@
 
 		# START post_convers #
 		<form action="pm.php" method="post" onsubmit="return check_form_convers();">
-			<section>
+			<section id="module-user-post-convers">
 				<header>
 					<h1>{post_convers.U_PM_BOX}</h1>
 				</header>

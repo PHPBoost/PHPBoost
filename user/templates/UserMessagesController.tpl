@@ -1,4 +1,4 @@
-<section>
+<section id="module-user-messages">
 	<header>
 		<h1>{L_MESSAGES}</h1>
 	</header>

@@ -1,4 +1,4 @@
-		<section>
+		<section id="module-user-moderation-panel">
 			<header>
 				<h1>{L_MODERATION_PANEL}</h1>
 			</header>

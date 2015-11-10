@@ -1,4 +1,4 @@
-<section>
+<section id="module-user-home">
 	<header>
 		<h1>{@profile}</h1>
 	</header>

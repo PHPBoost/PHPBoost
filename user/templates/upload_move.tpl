@@ -8,7 +8,7 @@
 	}
 	-->
 	</script>
-	<section>
+	<section id="module-user-upload-move">
 		<header><h1>{L_FILES_MANAGEMENT}</h1></header>
 		<div class="content">
 			<div class="upload-address-bar">

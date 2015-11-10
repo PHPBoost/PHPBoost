@@ -274,7 +274,7 @@
 	-->
 	</script>
 	
-	<section id="upload">
+	<section id="module-user-upload">
 		<header><h1>{L_FILES_ACTION}</h1></header>
 		<div class="content">
 			<div class="upload-address-bar">

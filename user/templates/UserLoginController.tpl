@@ -8,7 +8,6 @@
 		<a href="{U_FORGET_PASSWORD}"><i class="fa fa-question-circle"></i> {L_FORGET_PASSWORD}</a>
 	</div>
 # ELSE #
-
 	<div id="global" class="global-maintain">
 		# IF C_MAINTAIN #
 			<div id="maintain" class="center">

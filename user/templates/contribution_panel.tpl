@@ -1,5 +1,5 @@
 	# IF C_CONTRIBUTION_LIST #
-	<section>
+	<section id="module-user-contribution-list">
 		<header>
 			<h1>{L_CONTRIBUTION_PANEL}</h1>
 		</header>
@@ -162,7 +162,7 @@
 	# ENDIF #
 
 	# IF C_CONSULT_CONTRIBUTION #
-	<section>
+	<section id="module-user-consult-contribution">
 		<header>
 			<h1>
 			{ENTITLED}
@@ -242,7 +242,7 @@
 	# ENDIF #
 	
 	# IF C_EDIT_CONTRIBUTION #
-	<section>
+	<section id="module-user-edit-contribution">
 		<header>
 			<h1>{ENTITLED}</h1>
 		</header>
