@@ -159,10 +159,16 @@ a.forum-mbrmsg-links { color: #FFFFFF; } /* Couleur des liens pour les messages 
 	border: 1px solid #DDDDDD;
 	border-radius: 3px;
 }
+
 .module-top a {
 	color: #334455;
 	font-size: 13px;
 }
+
+.module-top a.basic-button {
+	color: #FFFFFF;
+}
+
 .module-contents { clear: both; } /* Contenu des modules */
 
 .module-bottom-l {} /* Barre inférieure des modules */
