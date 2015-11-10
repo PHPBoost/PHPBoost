@@ -5,7 +5,7 @@
 # END users #
 
 # IF C_MORE_USERS #
-<div class="spacer">&nbsp;</div>
+<div class="spacer"></div>
 <a href="${relative_url(OnlineUrlBuilder::home())}">{TOTAL_USERS_CONNECTED} {L_USERS_ONLINE}</a>
 # ENDIF #
 

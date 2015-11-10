@@ -24,9 +24,9 @@
 					</div>
 				# END redirect #
 				
-				<div class="spacer">&nbsp;</div>
+				<div class="spacer"></div>
 					{CONTENTS}
-				<div class="spacer">&nbsp;</div>
+				<div class="spacer"></div>
 			</div>
 			<footer style="text-align:center">{COUNT_HITS}</footer>
 		</article>

@@ -402,7 +402,7 @@
 										<a class="small" href="{pics_list.U_DISPLAY}" onclick="{pics_list.ONCLICK}" # IF NOT pics_list.ONCLICK # data-lightbox="formatter"# ENDIF #><img src="{pics_list.U_PICTURE}" title="{pics_list.NAME}" alt="{pics_list.NAME}" class="gallery_image" /></a>
 									</div>
 									
-									<div class="spacer">&nbsp;</div>
+									<div class="spacer"></div>
 									
 									<div class="smaller">
 										# IF C_PICTURE_NAME_DISPLAYED #<a class="small" href="{pics_list.U_PICTURE_LINK}"><span id="fi_{pics_list.ID}">{pics_list.SHORT_NAME}</span></a># ELSE #<span id="fi_{pics_list.ID}"></span># ENDIF # <span id="fi{pics_list.ID}"></span>

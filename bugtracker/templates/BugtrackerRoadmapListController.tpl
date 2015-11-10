@@ -1,4 +1,4 @@
-<div class="spacer">&nbsp;</div>
+<div class="spacer"></div>
 
 # IF C_VERSIONS_AVAILABLE #
 	<section class="block">
@@ -6,7 +6,7 @@
 			# INCLUDE SELECT_VERSION #
 		</div>
 	</section>
-	<div class="spacer">&nbsp;</div>
+	<div class="spacer"></div>
 
 	# IF C_BUGS #
 	<table>

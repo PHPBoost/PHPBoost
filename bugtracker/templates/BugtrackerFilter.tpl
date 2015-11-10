@@ -103,4 +103,4 @@ function toggle_filters_table() {
 	</tbody>
 </table>
 
-<div class="spacer">&nbsp;</div>
+<div class="spacer"></div>

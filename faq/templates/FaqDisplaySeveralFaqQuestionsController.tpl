@@ -192,7 +192,7 @@ jQuery(document).ready(function() {
 		# IF C_PENDING #
 			# IF C_MORE_THAN_ONE_QUESTION #
 			# INCLUDE SORT_FORM #
-			<div class="spacer">&nbsp;</div>
+			<div class="spacer"></div>
 			# ENDIF #
 		# ENDIF #
 		# IF NOT C_DISPLAY_TYPE_ANSWERS_HIDDEN #

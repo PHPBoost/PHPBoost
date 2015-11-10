@@ -64,7 +64,7 @@
 					});
 				</script>
 			</div>
-			<div class="spacer">&nbsp;</div>
+			<div class="spacer"></div>
 			
 			# IF C_DATABASE_TABLE_STRUCTURE #
 			<table id="table">
@@ -256,7 +256,7 @@
 									<p style="color:black;font-size:10px;">{QUERY_HIGHLIGHT}</p>
 								</fieldset>
 								
-								<div class="spacer">&nbsp;</div>
+								<div class="spacer"></div>
 								# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
 								<div style="width:99%;margin:auto;overflow:auto;padding:0px 2px">
 									<table id="table">
@@ -281,7 +281,7 @@
 										</tbody>
 									</table>
 								</div>
-								<div class="spacer">&nbsp;</div>
+								<div class="spacer"></div>
 							<footer># IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #</footer>
 						</article>
 					</div>

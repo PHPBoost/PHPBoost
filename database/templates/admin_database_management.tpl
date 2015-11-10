@@ -24,7 +24,7 @@
 						<legend>{L_DATABASE_MANAGEMENT}</legend>
 						<div class="fieldset-inset">
 								{L_EXPLAIN_ACTIONS}
-								<div class="spacer">&nbsp;</div>
+								<div class="spacer"></div>
 								<div class="question">{L_EXPLAIN_ACTIONS_QUESTION}</div>
 						</div>
 				</fieldset>
@@ -137,7 +137,7 @@
 					</tbody>
 				</table>
 				
-				<div class="spacer">&nbsp;</div>
+				<div class="spacer"></div>
 				
 				<div class="block">
 						<fieldset>
@@ -229,7 +229,7 @@
 					});
 				</script>
 			</div>
-			<div class="spacer">&nbsp;</div>
+			<div class="spacer"></div>
 			# ENDIF #
 			
 			<form action="admin_database.php?action=backup&amp;token={TOKEN}" method="post" name="table_list">

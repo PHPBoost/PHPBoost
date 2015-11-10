@@ -21,7 +21,7 @@
   }
 </script>
 
-<div class="spacer">&nbsp;</div>
+<div class="spacer"></div>
 
 <section class="block">
 	<header>
@@ -38,7 +38,7 @@
 	</div>
 </section>
 
-<div class="spacer">&nbsp;</div>
+<div class="spacer"></div>
 
 # IF C_DISPLAY_VERSIONS #
 <section class="block">
@@ -83,7 +83,7 @@
 	</div>
 </section>
 
-<div class="spacer">&nbsp;</div>
+<div class="spacer"></div>
 # ENDIF #
 
 # IF C_DISPLAY_TOP_POSTERS #
@@ -91,7 +91,7 @@
 	<header>
 		<h1>{@labels.top_posters}</h1>
 	</header>
-	<div class="spacer">&nbsp;</div>
+	<div class="spacer"></div>
 	<div class="content">
 		# IF C_POSTERS #
 		<table>

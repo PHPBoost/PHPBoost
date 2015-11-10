@@ -45,15 +45,15 @@
 		<div class="content">
 			# IF C_PAGINATION #
 				# INCLUDE FORM #
-				<div class="spacer">&nbsp;</div>
+				<div class="spacer"></div>
 			# ENDIF #
 			# IF PAGE_NAME #
 				<h2 class="title page_name">{PAGE_NAME}</h2>
 			# ENDIF #
-			<span itemprop="text">{CONTENTS}</span>
-			<div class="spacer" style="margin-top:35px;">&nbsp;</div>
+			<span itemprop="text" class="contents">{CONTENTS}</span>
+
 			<hr />
-			<div class="spacer">&nbsp;</div>
+
 			# IF C_PAGINATION #
 				<div class="pages-pagination right">
 					# IF C_NEXT_PAGE #
@@ -69,7 +69,7 @@
 					# ENDIF #
 				</div>
 			# ENDIF #
-			<div class="spacer">&nbsp;</div>
+			<div class="spacer"></div>
 		</div>
 		<aside>
 			# IF C_SOURCES #
@@ -83,7 +83,7 @@
 			# IF C_DATE_UPDATED #
 			<div><i>{@articles.date_updated}<time datetime="{DATE_UPDATED_ISO8601}" itemprop="datePublished">{DATE_UPDATED}</time></i></div>
 			# ENDIF #
-			<div class="spacer">&nbsp;</div>
+			<div class="spacer"></div>
 			# IF C_NOTATION_ENABLED #
 			<div style="float:left" class="smaller">
 				{KERNEL_NOTATION}

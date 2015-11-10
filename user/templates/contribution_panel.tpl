@@ -151,7 +151,7 @@
 								<a href="{row.module.U_MODULE_LINK}" title="{row.module.LINK_TITLE}">{row.module.MODULE_NAME}</a>
 							</div>
 						# END row.module #
-						<div class="spacer">&nbsp;</div>
+						<div class="spacer"></div>
 					# END row #
 				# ELSE #
 					<div class="warning">{L_NO_MODULE_IN_WHICH_CONTRIBUTE}</div>

@@ -14,7 +14,7 @@
 			# INCLUDE CALENDAR #
 		</div>
 		
-		<div class="spacer">&nbsp;</div>
+		<div class="spacer"></div>
 		# ENDIF #
 		
 		<div id="events">

@@ -208,7 +208,7 @@
 					<a href="${relative_url(GalleryUrlBuilder::manage_categories())}" class="quick-link">{L_GALLERY_CAT_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="${relative_url(GalleryUrlBuilder::add_category())}"" class="quick-link">{L_GALLERY_CAT_ADD}</a>
+					<a href="${relative_url(GalleryUrlBuilder::add_category())}" class="quick-link">{L_GALLERY_CAT_ADD}</a>
 				</li>
 				<li>
 					<a href="admin_gallery.php" class="quick-link">{L_GALLERY_MANAGEMENT}</a>
@@ -275,7 +275,7 @@
 						# END cat.end_td #
 						</tbody>
 					</table>
-					<div class="spacer">&nbsp;</div>
+					<div class="spacer"></div>
 					# IF C_SUBCATEGORIES_PAGINATION #<span class="center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
 					# END cat #
 					
@@ -302,7 +302,7 @@
 							</tbody>
 						</table>
 						
-						<div class="spacer">&nbsp;</div>
+						<div class="spacer"></div>
 						
 						<table id="table2">
 							<thead>
@@ -362,7 +362,7 @@
 							</tbody>
 						</table>
 						
-						<div class="spacer">&nbsp;</div>
+						<div class="spacer"></div>
 						
 						<table id="table3">
 							<thead>

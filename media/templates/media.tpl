@@ -56,7 +56,7 @@
 								<option value="desc"{SELECTED_DESC}>{L_DESC}</option>
 							</select>
 						</div>
-						<div class="spacer">&nbsp;</div>
+						<div class="spacer"></div>
 	
 						# START file #
 							<article id="article-media-{file.ID}" class="article-media article-several block">
@@ -78,7 +78,7 @@
 										{file.DESCRIPTION}
 										</div>
 									# ENDIF #
-									<div class="spacer">&nbsp;</div>
+									<div class="spacer"></div>
 									<div class="smaller">
 										{L_BY} {file.POSTER}
 										<br />

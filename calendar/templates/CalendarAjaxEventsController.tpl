@@ -33,7 +33,7 @@
 								<span itemprop="text">{event.CONTENTS}</span>
 
 								# IF event.C_LOCATION #
-								<div class="spacer">&nbsp;</div>
+								<div class="spacer"></div>
 								<div itemscope="itemscope" itemtype="http://schema.org/Place">
 									<p itemprop="location">
 										<span class="text-strong">{@calendar.labels.location}</span> :
@@ -42,7 +42,7 @@
 								</div>
 								# ENDIF #
 								# IF event.C_PARTICIPATION_ENABLED #
-									<div class="spacer">&nbsp;</div>
+									<div class="spacer"></div>
 									# IF event.C_DISPLAY_PARTICIPANTS #
 									<div>
 										<span class="text-strong">{@calendar.labels.participants}</span> :
@@ -75,7 +75,7 @@
 									# IF event.C_REGISTRATION_CLOSED #<span class="small text-italic">{@calendar.labels.registration_closed}</span># ENDIF #
 								# ENDIF #
 
-								<div class="spacer">&nbsp;</div>
+								<div class="spacer"></div>
 								<div class="event-display-author">
 									{@calendar.labels.created_by} : # IF event.C_AUTHOR_EXIST #<a itemprop="author" href="{event.U_AUTHOR_PROFILE}" class="{event.AUTHOR_LEVEL_CLASS}" # IF event.C_AUTHOR_GROUP_COLOR # style="color:{event.AUTHOR_GROUP_COLOR}" # ENDIF #>{event.AUTHOR}</a># ELSE #{event.AUTHOR}# ENDIF #
 								</div>

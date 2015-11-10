@@ -102,7 +102,7 @@ class ExceptionHandler
 		{
 			$message = TextHelper::htmlspecialchars($this->exception->getMessage()) . '<br /><br /><i>' .
 			$this->exception->getFile() . ':' . $this->exception->getLine() .
-			'</i><div class="spacer">&nbsp;</div>' .
+			'</i><div class="spacer"></div>' .
 			Debug::get_stacktrace_as_string(0, $this->exception);
 			$title .= ' ' . $this->exception->getCode();
 		}

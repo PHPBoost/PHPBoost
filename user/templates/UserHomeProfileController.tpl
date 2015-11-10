@@ -76,7 +76,7 @@
 				</a>
 			</li>
 		</ul>
-		<div class="spacer">&nbsp;</div>
+		<div class="spacer"></div>
 		{MSG_MBR}
 	</div>
 	<footer></footer>

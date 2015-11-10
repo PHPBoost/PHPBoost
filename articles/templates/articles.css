@@ -47,3 +47,8 @@
 .article-articles.article-several img {
     padding: 0 0 0.5em 0;
 }
+
+span.contents + hr {
+    margin-top: 35px;
+    clear: both;
+}

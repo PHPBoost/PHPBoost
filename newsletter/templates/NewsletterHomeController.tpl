@@ -16,7 +16,7 @@
 		breakpoint: 768
 	});
 </script>
-<div class="spacer">&nbsp;</div>
+<div class="spacer"></div>
 # ENDIF #
 
 <table>

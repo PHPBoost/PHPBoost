@@ -8,7 +8,7 @@
 		# IF NOT C_MAIL_SENT #
 			# IF C_INFORMATIONS_TOP #
 			<p>{INFORMATIONS}</p>
-			<div class="spacer">&nbsp;</div>
+			<div class="spacer"></div>
 			# ENDIF #
 			
 			# IF C_INFORMATIONS_SIDE #
@@ -36,16 +36,16 @@
 			# ENDIF #
 			
 			# IF C_INFORMATIONS_SIDE #
-				<div class="spacer">&nbsp;</div>
+				<div class="spacer"></div>
 			</div>
 			# ENDIF #
 			
 			# IF C_INFORMATIONS_BOTTOM #
 			<p>{INFORMATIONS}</p>
-			<div class="spacer">&nbsp;</div>
+			<div class="spacer"></div>
 			# ENDIF #
 		# ELSE #
-			<div class="spacer">&nbsp;</div>
+			<div class="spacer"></div>
 			<div class="center"><a href="">{@contact.send_another_mail}</a></div>
 		# ENDIF #
 	</div>

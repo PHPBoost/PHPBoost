@@ -41,7 +41,7 @@
 		# IF C_ARTICLES_FILTERS #
 			# INCLUDE FORM #
 		# ENDIF #
-		<div class="spacer">&nbsp;</div>
+		<div class="spacer"></div>
 			# START articles #
 				<article id="article-articles-{articles.ID}" class="article-articles article-several# IF C_MOSAIC # small-block# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 					<header>
@@ -94,6 +94,6 @@
 				</article>
 			# END articles #
 	# ENDIF #
-		<div class="spacer">&nbsp;</div>
+		<div class="spacer"></div>
 	<footer># IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #</footer>
 </section>

@@ -31,7 +31,7 @@
 					<a href="${relative_url(GalleryUrlBuilder::manage_categories())}" class="quick-link">{L_GALLERY_CAT_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="${relative_url(GalleryUrlBuilder::add_category())}"" class="quick-link">{L_GALLERY_CAT_ADD}</a>
+					<a href="${relative_url(GalleryUrlBuilder::add_category())}" class="quick-link">{L_GALLERY_CAT_ADD}</a>
 				</li>
 				<li>
 					<a href="admin_gallery.php" class="quick-link">{L_GALLERY_MANAGEMENT}</a>
@@ -57,7 +57,7 @@
 							<div class="center">
 								<strong>{image_up.L_SUCCESS_UPLOAD}</strong>
 								
-								<div class="spacer">&nbsp;</div>
+								<div class="spacer"></div>
 								
 								<strong>{image_up.NAME}</strong>
 								<div class="spacer"></div>
@@ -68,7 +68,7 @@
 						# END image_up #
 						<span>{L_AUTH_EXTENSION}: <strong>{AUTH_EXTENSION} </strong></span>
 						
-						<div class="spacer">&nbsp;</div>
+						<div class="spacer"></div>
 						
 						<span>{L_WIDTH_MAX}: {WIDTH_MAX} {L_UNIT_PX}</span>
 						<div class="spacer"></div>
@@ -76,7 +76,7 @@
 						<div class="spacer"></div>
 						<span>{L_WEIGHT_MAX}: {WEIGHT_MAX} {L_UNIT_KO}</span>
 	
-						<div class="spacer">&nbsp;</div>
+						<div class="spacer"></div>
 						
 						<div class="form-element">
 							<label for="category">${LangLoader::get_message('form.category', 'common')}</label>
@@ -124,14 +124,14 @@
 									<div style="padding:0 5px;">
 									{list.THUMNAILS}
 									</div>
-									<div class="spacer">&nbsp;</div>
+									<div class="spacer"></div>
 									<div>
 										{L_NAME}
 										<div class="spacer"></div>
 										<input type="text" name="{list.ID}name" value="{list.NAME}">
 										<input type="hidden" name="{list.ID}uniq" value="{list.UNIQ_NAME}">
 									</div>
-									<div class="spacer">&nbsp;</div>
+									<div class="spacer"></div>
 									<div>
 										${LangLoader::get_message('form.category', 'common')}
 										<div class="spacer"></div>
@@ -139,7 +139,7 @@
 												{list.CATEGORIES}
 											</select>
 									</div>
-									<div class="spacer">&nbsp;</div>
+									<div class="spacer"></div>
 									<div class="right">
 										{L_SELECT} <input type="checkbox" checked="checked" id="{list.ID}activ" name="{list.ID}activ" value="1">
 										<div class="spacer"></div>
@@ -159,7 +159,7 @@
 				</table>
 				<div class="center"><a href="" onclick="unselect_all_pictures();return false;" id="change_all_pictures_selection_bottom" class="smaller">{L_UNSELECT_ALL_PICTURES}</a></div>
 				
-				<div class="spacer">&nbsp;</div>
+				<div class="spacer"></div>
 				
 				<div class="form-element">
 					<label for="root_cat">{L_GLOBAL_CAT_SELECTION} <spa class="field-description">{L_GLOBAL_CAT_SELECTION_EXPLAIN}</span></span></label>

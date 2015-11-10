@@ -29,14 +29,14 @@
 				<span itemprop="text">{CONTENTS}</span>
 				
 				# IF C_LOCATION #
-				<div class="spacer">&nbsp;</div>
+				<div class="spacer"></div>
 				<div itemprop="location" itemscope itemtype="http://schema.org/Place">
 					<span class="text-strong">{@calendar.labels.location}</span> :
 					<span itemprop="name">{LOCATION}</span>
 				</div>
 				# ENDIF #
 				# IF C_PARTICIPATION_ENABLED #
-					<div class="spacer">&nbsp;</div>
+					<div class="spacer"></div>
 					# IF C_DISPLAY_PARTICIPANTS #
 					<div>
 						<span class="text-strong">{@calendar.labels.participants}</span> :
@@ -69,7 +69,7 @@
 					# IF C_REGISTRATION_CLOSED #<span class="small text-italic">{@calendar.labels.registration_closed}</span># ENDIF #
 				# ENDIF #
 				
-				<div class="spacer">&nbsp;</div>
+				<div class="spacer"></div>
 				<div class="event-display-author">
 					{@calendar.labels.created_by} : # IF C_AUTHOR_EXIST #<a itemprop="author" href="{U_AUTHOR_PROFILE}" class="{AUTHOR_LEVEL_CLASS}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #{AUTHOR}# ENDIF #
 				</div>
@@ -80,7 +80,7 @@
 				{@calendar.labels.end_date} : <span class="float-right"><time datetime="{END_DATE_ISO8601}" itemprop="endDate">{END_DATE}</time></span>
 			</div>
 			
-			<div class="spacer">&nbsp;</div>
+			<div class="spacer"></div>
 			<hr style="width:70%;margin:0px auto 40px auto;">
 			
 			# INCLUDE COMMENTS #

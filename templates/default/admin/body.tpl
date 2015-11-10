@@ -37,7 +37,8 @@
 						<span>{L_ADMIN_MAIN_MENU}</span>
 					</h3>
 					# INCLUDE subheader_menu #
-				</div>					
+				</div>	
+
 				<div id="support-pbt">
 					<nav>
 						<h3 class="menu-title">

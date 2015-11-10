@@ -19,13 +19,13 @@
 							<a href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" title="{redirect.remove_redirection.L_REMOVE_REDIRECTION}" class="fa fa-delete" data-confirmation="{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}"></a>
 						# END redirect.remove_redirection #
 					</div>
-					<div class="spacer">&nbsp;</div>
+					<div class="spacer"></div>
 				# END redirect #
 				
 				# START status #
-					<div class="spacer">&nbsp;</div>
+					<div class="spacer"></div>
 					<div class="blockquote">{status.ARTICLE_STATUS}</div>
-					<div class="spacer">&nbsp;</div>
+					<div class="spacer"></div>
 				# END status #
 				
 				# START menu #
@@ -34,9 +34,9 @@
 						{menu.MENU}
 					</div>
 				# END menu #
-				<div class="spacer">&nbsp;</div>
+				<div class="spacer"></div>
 				{CONTENTS}
-				<div class="spacer">&nbsp;</div>
+				<div class="spacer"></div>
 				# START cat #
 					<hr />
 					# IF cat.list_cats #
