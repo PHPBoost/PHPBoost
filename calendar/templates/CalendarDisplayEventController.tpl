@@ -80,8 +80,7 @@
 				{@calendar.labels.end_date} : <span class="float-right"><time datetime="{END_DATE_ISO8601}" itemprop="endDate">{END_DATE}</time></span>
 			</div>
 			
-			<div class="spacer"></div>
-			<hr style="width:70%;margin:0px auto 40px auto;">
+			<hr>
 			
 			# INCLUDE COMMENTS #
 		</div>

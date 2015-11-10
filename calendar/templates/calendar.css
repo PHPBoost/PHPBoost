@@ -2,7 +2,7 @@ div.calendar-content {
 	padding: 6px;
 }
 
-/* Affichage du mois en cours*/
+/* Affichage du mois en cours */
 div.calendar-top-container {
 	background: #EEEEEE;
 	border: 1px solid #DDDDDD;
@@ -30,7 +30,7 @@ div.calendar-top-r {
 	padding: 1px 25px 0px 0px;
 }
 
-/* Affichage des évenements */
+/* Affichage des evenements */
 div.event-display-author {
 	font-size: 0.8em;
 	float: left;
@@ -46,16 +46,21 @@ div.event-display-dates {
 	width: 180px;
 }
 
-/* Particularité du tableau du calendrier */
+.event-display-dates + hr {
+	width: 70%;
+	margin: 0px auto 40px auto;
+	clear: both;
+}
 
-/* CSS applique aux écrans PC */
+/* Particularite du tableau du calendrier */
+
 @media ( min-width: 769px ) {
 	#module-calendar table.calendar-table tbody tr td {
 		height: 40px;
 	}
 }
 
-/* Couleur des différents évenements */
+/* Couleur des differents evenements */
 table tbody tr td.calendar-none    { background: #FFFFFF; }
 table tbody tr td.calendar-today   { background: #B5E5B9; }
 table tbody tr td.calendar-other   { background: #F1F1F1; }
@@ -66,7 +71,7 @@ table tbody tr td.calendar-weekend { background: #FFE3B6; }
 	width: 8%;
 }
 
-/* Affichage de du titre de l'évenement dans le tableau de l'administration */
+/* Affichage de du titre de l'evenement dans le tableau de l'administration */
 table tbody tr th.column-title {
 	width: 28%;
 }
