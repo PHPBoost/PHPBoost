@@ -489,7 +489,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					//Affichage de l'image en grand.
 					if ($config->get_pics_enlargement_mode() == GalleryConfig::FULL_SCREEN) //Ouverture en popup plein écran.
 					{
-						$display_link = PATH_TO_ROOT. '/gallery/pics/' . $row['path'] . '" data-lightbox="formatter" onmousedown="increment_view(' . $row['id'] . ');" title="' . str_replace('"', '', stripslashes($row['name']));
+						$display_link = PATH_TO_ROOT. '/gallery/pics/' . $row['path'] . '" onmousedown="increment_view(' . $row['id'] . ');" title="' . str_replace('"', '', stripslashes($row['name']));
 					}
 					elseif ($config->get_pics_enlargement_mode() == GalleryConfig::POPUP) //Ouverture en popup simple.
 					{
