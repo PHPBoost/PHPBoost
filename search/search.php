@@ -3,7 +3,7 @@
 *                               search.php
 *                            -------------------
 *   begin                : January 27, 2008
-*   copyright            : (C) 2008 Rouchon Loïc
+*   copyright            : (C) 2008 Rouchon LoÃ¯c
 *   email                : horn@phpboost.com
 *
 *
@@ -91,7 +91,7 @@ $config = SearchConfig::load();
 $modules_args = array();
 $used_modules = array();
 
-// Génération des formulaires précomplétés et passage aux templates
+// GÃ©nÃ©ration des formulaires prÃ©complÃ©tÃ©s et passage aux templates
 $provider_service = AppContext::get_extension_provider_service();
 $search_extensions_point_modules = array_keys($provider_service->get_extension_point(SearchableExtensionPoint::EXTENSION_POINT));
 $search_extensions_point = $provider_service->get_extension_point(SearchableExtensionPoint::EXTENSION_POINT);
@@ -101,26 +101,26 @@ foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as
 	if (in_array($module->get_id(), $search_extensions_point_modules))
 	{
 		$module_configuration = $module->get_configuration();
-		if (!in_array($module->get_id(), $config->get_unauthorized_providers()))
+		if (!in_array($module->get_id(), $config->get_all_unauthorized_providers()))
 		{
-			// Ajout du paramètre search à tous les modules
+			// Ajout du paramÃ¨tre search Ã  tous les modules
 			$modules_args[$module->get_id()]['search'] = $search;
 			if ($search_extensions_point[$module->get_id()]->has_search_options())
 			{
-				// Récupération de la liste des paramètres
+				// RÃ©cupÃ©ration de la liste des paramÃ¨tres
 				$form_module_args = $search_extensions_point[$module->get_id()]->get_search_args();
-				// Ajout des paramètres optionnels sans les sécuriser.
-				// Ils sont sécurisés à l'intérieur de chaque module.
+				// Ajout des paramÃ¨tres optionnels sans les sÃ©curiser.
+				// Ils sont sÃ©curisÃ©s Ã  l'intÃ©rieur de chaque module.
 				if ($search_in != 'all')
 				{
 					foreach ($form_module_args as $arg)
 					{
 						if ($arg == 'search')
-						{   // 'search' non sécurisé
+						{   // 'search' non sÃ©curisÃ©
 							$modules_args[$module->get_id()]['search'] = $search;
 						}
 						elseif ($request->has_postparameter($arg))
-						{   // Argument non sécurisé (sécurisé par le module en question)
+						{   // Argument non sÃ©curisÃ© (sÃ©curisÃ© par le module en question)
 							$modules_args[$module->get_id()][$arg] = $request->get_postvalue($arg);
 						}
 					}
@@ -145,12 +145,12 @@ foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as
 				));
 			}
 
-			// Récupération de la liste des modules à traiter
+			// RÃ©cupÃ©ration de la liste des modules Ã  traiter
 			if ( ($selected_modules === array()) || ($search_in === $module->get_id()) ||
 				(($search_in === 'all') && (in_array($module->get_id(), $selected_modules))) )
 			{
 				$selected = ' selected="selected"';
-				$used_modules[$module->get_id()] = $search_extensions_point[$module->get_id()]; // Ajout du module à traiter
+				$used_modules[$module->get_id()] = $search_extensions_point[$module->get_id()]; // Ajout du module Ã  traiter
 			}
 			else
 			{
@@ -200,7 +200,7 @@ if (!empty($search))
 		}
 	}
 
-	// Génération des résultats et passage aux templates
+	// GÃ©nÃ©ration des rÃ©sultats et passage aux templates
 	$nbResults = get_search_results($search, $used_modules, $modules_args, $results, $idsSearch);
 
 	foreach ($used_modules as $module_id => $extension_point)
