@@ -1,0 +1,7 @@
+.module-themeswitcher {
+	margin: 5px 0;
+}
+
+.module-themeswitcher select {
+	display: block;
+}

@@ -38,5 +38,12 @@ class ThemesSwitcherExtensionPointProvider extends ExtensionPointProvider
 			new ThemesSwitcherModuleMiniMenu()
 		));
 	}
+
+	public function css_files()
+	{
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->adding_always_displayed_file('themeswitcher.css');
+		return $module_css_files;
+	}
 }
 ?>
