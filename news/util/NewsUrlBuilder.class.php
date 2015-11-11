@@ -77,7 +77,7 @@ class NewsUrlBuilder
 	
 	public static function display_comments_news($id_category, $rewrited_name_category, $id_news, $rewrited_title)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id_news . '-' . $rewrited_title . '/', true);
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id_news . '-' . $rewrited_title . '/#comments-list');
 	}
 	
 	public static function display_category($id, $rewrited_name, $page = 1)
