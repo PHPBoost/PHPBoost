@@ -1,3 +1,20 @@
-.column-login { width: 200px; }
+.column-login {
+	width: 200px;
+}
 
-.column-last-update { width: 160px; }
+.column-last-update {
+	width: 160px;
+}
+
+.nbr-connected-user-container {
+	margin-top: 10px;
+}
+
+.online-users-container {
+	margin: 10px 0;
+}
+
+.online-user {
+	display: block;
+	margin: auto;
+}
