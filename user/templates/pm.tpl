@@ -53,7 +53,7 @@
 					<h1>{convers.U_PM_BOX}</h1>
 				</header>
 				<div class="content">
-					<div style="float:right;">{L_PRIVATE_MSG}: {convers.PM_POURCENT}</div>
+					<div class="right">{L_PRIVATE_MSG}: {convers.PM_POURCENT}</div>
 					<br /><br />
 					<menu id="cssmenu-pmactions" class="cssmenu cssmenu-group">
 						<ul>
@@ -96,7 +96,7 @@
 						<tfoot>
 							<tr>
 								<th colspan="6">
-									<div style="float:left;">&nbsp;<input type="checkbox" id="validc" onclick="check_convers(this.checked, 'd');" /> &nbsp;<input type="hidden" name="token" value="{TOKEN}"><button type="submit" name="valid" value="true" class="submit">{L_DELETE}</button></div>
+									<div class="left">&nbsp;<input type="checkbox" id="validc" onclick="check_convers(this.checked, 'd');" /> &nbsp;<input type="hidden" name="token" value="{TOKEN}"><button type="submit" name="valid" value="true" class="submit">{L_DELETE}</button></div>
 									# IF convers.C_PAGINATION #<div class="float-right"># INCLUDE convers.PAGINATION #</div># ENDIF #
 								</th>
 							</tr>

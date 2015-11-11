@@ -135,7 +135,7 @@ class UserViewProfileController extends AbstractController
 				}
 			}
 		}
-		return !empty($user_groups_html) ? '<ul style="list-style-type:none;">' . $user_groups_html . '</ul>' : $this->lang['user'];
+		return !empty($user_groups_html) ? '<ul class="no-list">' . $user_groups_html . '</ul>' : $this->lang['user'];
 	}
 
 	private function build_response(View $view, $user_id)

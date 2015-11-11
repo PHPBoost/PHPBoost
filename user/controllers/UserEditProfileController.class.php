@@ -249,7 +249,7 @@ class UserEditProfileController extends AbstractController
 			$options_fieldset->add_field(new FormFieldThemesSelect('theme', $this->lang['theme'], $this->user->get_theme(),
 				array('check_authorizations' => true, 'events' => array('change' => $this->build_javascript_picture_themes()))
 			));
-			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['theme.preview'], '<img id="img_theme" src="'. $this->get_picture_theme($this->user->get_theme()) .'" alt="' . $this->lang['theme.preview'] . '" title="' . $this->lang['theme.preview'] . '" style="vertical-align:top; max-height:180px;" />'));
+			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['theme.preview'], '<img id="img_theme" src="'. $this->get_picture_theme($this->user->get_theme()) .'" alt="' . $this->lang['theme.preview'] . '" title="' . $this->lang['theme.preview'] . '" class="preview-img" />'));
 		}
 		
 		$options_fieldset->add_field(new FormFieldEditors('text-editor', $this->lang['text-editor'], $this->user->get_editor()));

@@ -96,16 +96,16 @@
 							{contributions.MODULE}
 						</td>
 						# IF contributions.C_FIXED #
-							<td style="background-color:#7FFF9C;">
+							<td class="bkgd-color-fixed">
 								{contributions.STATUS}
 							</td>
 						# ELSE #
 							# IF contributions.C_PROCESSING #
-							<td style="background-color:#FFD86F;">
+							<td class="bkgd-color-processing">
 								{contributions.STATUS}
 							</td>
 							# ELSE #
-							<td style="background-color:#FF796F;">
+							<td class="bkgd-color-unknown">
 								{contributions.STATUS}
 							</td>
 							# ENDIF #
@@ -136,7 +136,7 @@
 			</table>
 			# ENDIF #
 			
-				<hr style="margin:20px 0;" />
+				<hr>
 				
 				<h1>{L_CONTRIBUTE}</h1>
 				<br />
@@ -177,15 +177,15 @@
 		<div class="content">
 			# IF C_WRITE_AUTH #
 				# IF C_UNPROCESSED_CONTRIBUTION #
-				<div style="text-align:center;margin:auto;width:300px">
-					<div style="float:left;width:50%">
+				<div class="unprocessed-contribution">
+					<div>
 						<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}">
 							<i class="fa fa-wrench fa-2x"></i>
 						</a>
 						<br />
 						<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}">{L_PROCESS_CONTRIBUTION}</a>
 					</div>
-					<div style="float:left;width:50%">
+					<div>
 						<a href="{U_UPDATE}" title="{L_UPDATE} {L_STATUS}"><i class="fa fa-check fa-2x"></i></a>
 						<br />
 						<a href="{U_UPDATE}" title="{L_UPDATE} {L_STATUS}">{L_UPDATE} {L_STATUS}</a>

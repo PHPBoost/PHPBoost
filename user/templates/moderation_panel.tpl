@@ -2,7 +2,7 @@
 			<header>
 				<h1>{L_MODERATION_PANEL}</h1>
 			</header>
-			<div class="content" style="padding-bottom:75px;">	
+			<div class="content">	
 			# IF C_MODO_PANEL_USER #
 				<table>
 					<thead>

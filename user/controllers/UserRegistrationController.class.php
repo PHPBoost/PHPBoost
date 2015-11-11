@@ -137,7 +137,7 @@ class UserRegistrationController extends AbstractController
 			$options_fieldset->add_field(new FormFieldThemesSelect('theme', $this->lang['theme'], $this->user_accounts_config->get_default_theme(),
 				array('check_authorizations' => true, 'events' => array('change' => $this->build_javascript_picture_themes()))
 			));
-			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['theme.preview'], '<img id="img_theme" src="'. $this->get_picture_theme() .'" title="' . $this->lang['theme.preview'] . '" alt="' . $this->lang['theme.preview'] . '" style="vertical-align:top; max-height:180px;" />'));
+			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['theme.preview'], '<img id="img_theme" src="'. $this->get_picture_theme() .'" title="' . $this->lang['theme.preview'] . '" alt="' . $this->lang['theme.preview'] . '" class="preview-img" />'));
 		}
 		
 		$options_fieldset->add_field(new FormFieldEditors('text-editor', $this->lang['text-editor'], ContentFormattingConfig::load()->get_default_editor()));
@@ -155,7 +155,7 @@ class UserRegistrationController extends AbstractController
 			$agreement = new FormFieldHTML('agreement.required', $this->lang['agreement.agree.required'] . '<br /><br />');
 			$agreement_fieldset->add_field($agreement);
 	
-			$agreement = new FormFieldHTML('agreement', '<div id="id-message-helper" class="notice" style="max-width:none;width:90%;max-height:250px;overflow-y:auto;">' . $agreement_text . '</div>');
+			$agreement = new FormFieldHTML('agreement', '<div id="id-message-helper" class="notice user-agreement">' . $agreement_text . '</div>');
 			$agreement_fieldset->add_field($agreement);
 			
 			$agreement_fieldset->add_field(new FormFieldCheckbox('agree', $this->lang['agreement.agree'], 
