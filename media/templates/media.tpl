@@ -131,9 +131,7 @@
 						<span class="text-strong">{L_BY} : </span><span>{BY}</span><br/>
 						<span class="text-strong">{L_VIEWED} : </span><span>{HITS}</span><br/>
 					# IF C_DISPLAY_NOTATION #
-					<div class="center">
-						<span class="text-strong">{KERNEL_NOTATION}</span>
-					</div>
+					<div class="center text-strong">{KERNEL_NOTATION}</div>
 					# ENDIF #
 				</div>
 				
