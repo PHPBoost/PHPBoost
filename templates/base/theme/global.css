@@ -1,4 +1,4 @@
-﻿/* --------------------------------------
+/* -------------------------------------
 		global.css
  Contient les classes globales au site, peuvent etre utilisees partout.
  - Mise en forme du texte
@@ -8,8 +8,8 @@
 --------------------------------------*/
 
 
-/* -- La mise en forme du texte --
---------------------------------------*/
+/* -- La mise en forme du texte -- */
+/* ------------------------------- */
 
 /* --- Les liens du site --- */
 a {
@@ -396,8 +396,8 @@ li.small-block .fa-stack {
 	text-align: center;
 }
 
-/* -- Les message d erreurs -- */
-/* --------------------------- */
+/* -- Les messages d erreurs -- */
+/* ---------------------------- */
 div.message-helper-small {
 	width: 50%
 }

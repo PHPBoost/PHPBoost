@@ -186,7 +186,6 @@ div#main {
 }
 
 @media (max-width: 768px) {
-
 	div#global {
 		flex-direction: column;
 		-ms-flex-direction: column;
@@ -294,7 +293,7 @@ div#compteur {
 	text-align: right;
 }
 
-@media (min-width: 769px){
+@media (min-width: 769px) {
 	div#compteur {
 		top: 100px;
 	}
