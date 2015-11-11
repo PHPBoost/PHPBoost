@@ -166,7 +166,7 @@ div.cssmenu-group .cssmenu-title {
 	#sub-header .cssmenu-horizontal > ul > li:after {
 		position:absolute;
 		right: 1;
-		top: 50;
+		top: 50px;
 		height: 100%;
 		width: 1px;
 		border-right: 1px solid #333333;
@@ -191,7 +191,7 @@ div.cssmenu-group .cssmenu-title {
 	#main .cssmenu-horizontal > ul > li:after {
 		position:absolute;
 		right: 1;
-		top: 50;
+		top: 50px;
 		height: 100%;
 		width: 1px;
 		border-right: 1px solid #EEEEEE;
