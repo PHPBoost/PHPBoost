@@ -98,12 +98,14 @@ $lang['add.add_newsletter'] = 'Ajouter une newsletter';
 //Types newsletters
 $lang['newsletter.types.choice'] = 'Veuillez sélectionner un type de message';
 $lang['newsletter.types.null'] = '--';
+$lang['newsletter.types.forall'] = 'Pour tous';
 $lang['newsletter.types.text'] = 'Texte';
-$lang['newsletter.types.text_explain'] = '<span style="color:green;"><strong>Pour tous</strong></span><br />Vous ne pourrez procéder à aucune mise en forme du message.';
+$lang['newsletter.types.text_explain'] = 'Vous ne pourrez procéder à aucune mise en forme du message.';
 $lang['newsletter.types.bbcode'] = 'BBCode';
-$lang['newsletter.types.bbcode_explain'] = '<span style="color:green;"><strong>Pour tous</strong></span><br />Vous pouvez formater le texte grâce au BBCode, le langage de mise en forme simplifié adopté sur tout le portail.';
+$lang['newsletter.types.bbcode_explain'] = 'Vous pouvez formater le texte grâce au BBCode, le langage de mise en forme simplifié adopté sur tout le portail.';
 $lang['newsletter.types.html'] = 'HTML';
-$lang['newsletter.types.html_explain'] = '<span style="color:red;"><strong>Utilisateurs expérimentés seulement</strong></span><br />Vous pouvez mettre en forme le texte à votre guise, mais vous devez connaître le langage html.';
+$lang['newsletter.types.forexpert'] = 'Utilisateurs expérimentés seulement';
+$lang['newsletter.types.html_explain'] = 'Vous pouvez mettre en forme le texte à votre guise, mais vous devez connaître le langage html.';
 $lang['newsletter.types.next'] = 'Suivant';
 
 //Other
