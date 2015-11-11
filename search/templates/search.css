@@ -73,6 +73,11 @@ div.results div.infosResults {
 	font-weight: bold;
 }
 
+.infosResults .infosResults-progressbar {
+	margin: auto;
+	width: 500px;
+}
+
 ul.search-results {
 	margin-left: 30px;
 	padding: 10px;

@@ -214,7 +214,7 @@
 									{NB_RESULTS}
 								# ENDIF #
 								{L_NB_RESULTS_FOUND}
-								<div style="margin:auto;width:500px;">
+								<div class="infosResults-progressbar">
 									<div id="progress_bar_{results.MODULE_NAME}" class="progressbar-container">
 										<span class="progressbar-infos"></span>
 										<div class="progressbar"></div>
