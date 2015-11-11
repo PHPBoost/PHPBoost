@@ -166,7 +166,7 @@ table tfoot nav.pagination a span.current-page {
 	text-decoration: none;
 }
 
-/* --- Affichage des tableaux responsive sur les petits écrans --- */
+/* --- Affichage des tableaux responsive sur les petits ecrans --- */
 @media (max-width: 768px) {
 	table thead th,
 	table tbody td,

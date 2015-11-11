@@ -1,6 +1,6 @@
 ﻿/* --------------------------------------
 		cssmenu.css
-Contient les élements associes aux menus 
+Contient les elements associes aux menus 
 -----------------------------------------*/
 
 
@@ -80,19 +80,19 @@ Contient les élements associes aux menus
 
 /* --- Variante cssmenu-group --- */
 div.cssmenu-group {
-    border-radius: 4px;
-    border-right: 1px solid #F9F9F9;
-    border-left: 1px solid #BBBBBB;
-    position: relative;
-    padding: 2px 8px;
-    color: #444444;
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%,rgba(56, 56, 56, 0.18) 100%);
-    background-color: #FFFFFF;
-    border: 1px solid #999999;
-    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-    border-bottom-color: #B3B3B3;
-    cursor: pointer;
-    display: inline-block;
+	border-radius: 4px;
+	border-right: 1px solid #F9F9F9;
+	border-left: 1px solid #BBBBBB;
+	position: relative;
+	padding: 2px 8px;
+	color: #444444;
+	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%,rgba(56, 56, 56, 0.18) 100%);
+	background-color: #FFFFFF;
+	border: 1px solid #999999;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	border-bottom-color: #B3B3B3;
+	cursor: pointer;
+	display: inline-block;
 }
 
 div.cssmenu-group .cssmenu-title {
@@ -103,7 +103,6 @@ div.cssmenu-group .cssmenu-title {
 }
 
 @media (max-width: 768px) {
-	
 	.cssmenu-group {
 		margin: 0 0 5px 0;
 	}
@@ -115,7 +114,6 @@ div.cssmenu-group .cssmenu-title {
 }
 
 @media (min-width: 769px) {
-	
 	.cssmenu-actionslinks {
 		float: right;
 		margin: 0 5px 5px 5px;
@@ -131,7 +129,6 @@ div.cssmenu-group .cssmenu-title {
 }
 
 @media (max-width: 768px) {
-	
 	.cssmenu-actionslinks ul li {
 		border: none;
 	}
@@ -139,14 +136,12 @@ div.cssmenu-group .cssmenu-title {
 
 /* --- Autres variantes --- */
 @media (min-width: 769px) {
-	
 	#cssmenu-galleryfilter ul {
 		min-width: 130px;
 	}
 }
 
 @media (min-width: 769px) {
-	
 	.cssmenu.cssmenu-static li.has-sub > .cssmenu-title:after,
 	.cssmenu.cssmenu-static li.has-sub > .cssmenu-title:before {
 		display: none;
@@ -157,9 +152,8 @@ div.cssmenu-group .cssmenu-title {
 /* -- Classes Niveau 1 -- */
 /* ---------------------- */
 
-/* --- Classes générales cssmenu --- */
+/* --- Classes generales cssmenu --- */
 @media (min-width: 769px) {
-	
 	.cssmenu > ul > li {
 		float: left;
 	}
@@ -210,7 +204,6 @@ div.cssmenu-group .cssmenu-title {
 	header .cssmenu-horizontal > ul > li.has-sub:hover {
 		border-radius : 5px 5px 0 0;
 	}
-
 }
 
 .cssmenu-left > ul > li,
@@ -232,7 +225,6 @@ div.cssmenu-group .cssmenu-title {
 }
 
 @media (min-width: 769px) {
-	
 	.cssmenu > ul > li.has-sub > .cssmenu-title:after,
 	.cssmenu > ul > li.has-sub > .cssmenu-title:before {
 		position: absolute;
@@ -268,7 +260,7 @@ div.cssmenu-group .cssmenu-title {
 }
 
 /* --- Position des sous menu --- */
-.cssmenu li:hover > ul 							{ left: auto ; 			  }
+.cssmenu li:hover > ul 							{ left: auto ;            }
 aside .cssmenu-left li:hover > ul 				{ left: 100% ; top: 0;    }
 aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 .cssmenu.cssmenu-actionslinks li:hover > ul 	{ right: 0   ; top: 100%; }
@@ -287,15 +279,15 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 }
 
 .cssmenu-group > ul > li {
-    border-right: 1px solid #F9F9F9;
-    border-left: 1px solid #BBBBBB;
-    color: #444444;
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%,rgba(56, 56, 56, 0.18) 100%);
-    background-color: #FFFFFF;
-    border: 1px solid #999999;
-    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-    border-bottom-color: #B3B3B3;
-    cursor: pointer;
+	border-right: 1px solid #F9F9F9;
+	border-left: 1px solid #BBBBBB;
+	color: #444444;
+	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%,rgba(56, 56, 56, 0.18) 100%);
+	background-color: #FFFFFF;
+	border: 1px solid #999999;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	border-bottom-color: #B3B3B3;
+	cursor: pointer;
 }
 
 .cssmenu.cssmenu-group > ul > li {
@@ -334,7 +326,6 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 }
 
 @media (max-width: 768px) {
-	
 	.cssmenu-group > ul > li {
 		border-radius: 0;
 	}
@@ -394,7 +385,7 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 /* -- Classes Niveau 2 -- */
 /* ---------------------- */
 
-/* --- Classes générales cssmenu --- */
+/* --- Classes generales cssmenu --- */
 .cssmenu ul ul {
 	position: absolute;
 	left: -9999px;
@@ -402,7 +393,6 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 }
 
 @media (min-width: 769px) {
-	
 	.cssmenu ul ul li {
 		height: 0;
 		transition: all .25s ease;
@@ -456,17 +446,16 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 }
 
 .cssmenu ul ul li.has-sub > .cssmenu-title:after  { top: 16px; right: 11px; }
-.cssmenu ul ul li.has-sub > .cssmenu-title:before { top: 13px; right: 14px; }
+.cssmenu ul ul li.has-sub > .cssmenu-title:before  { top: 13px; right: 14px; }
 
-.cssmenu ul ul > li.has-sub:hover > .cssmenu-title:before {
+.cssmenu ul ul > li.has-sub:hover > .cssmenu-title:before  {
 	top: 17px;
 	height: 0;
 }
 
 @media (max-width: 768px) {
-	
 	.cssmenu ul ul li .cssmenu-title,
-	.cssmenu.cssmenu-actionslinks ul li ul li .cssmenu-title {
+	.cssmenu.cssmenu-actionslinks ul li ul li .cssmenu-title  {
 		padding-left: 25px;
 	}
 	
@@ -598,7 +587,7 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 /* -- Bouton responsive -- */
 /* ----------------------- */
 
-/* --- Classes générales cssmenu --- */
+/* --- Classes generales cssmenu --- */
 .cssmenu #menu-button {
 	list-style: none;
 	line-height: 1;
@@ -607,7 +596,6 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 }
 
 @media (min-width: 769px) {
-	
 	.cssmenu #menu-button:before {
 		font-size: 1.3rem;
 	}
@@ -775,7 +763,7 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 /* -- Bouton submenu -- */
 /* -------------------- */
 
-/* --- Classes générales cssmenu --- */
+/* --- Classes generales cssmenu --- */
 @media (max-width: 768px) {
 	.cssmenu .submenu-button {
 		position: absolute;
