@@ -14,3 +14,14 @@
 	width: 70%;
 	margin:20px auto 20px auto;
 }
+
+.navigation-link {
+}
+
+.navigation-link-previous {
+	float: left;
+}
+
+.navigation-link-next {
+	float: right;
+}
