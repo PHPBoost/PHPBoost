@@ -29,7 +29,7 @@
 				# END status #
 				
 				# START menu #
-					<div class="options" style="float:none;width:50%">
+					<div class="options">
 						<div style="text-align:center;"><strong>{L_TABLE_OF_CONTENTS}</strong></div>
 						{menu.MENU}
 					</div>
@@ -62,9 +62,9 @@
 					# END cat.no_sub_article #
 					
 				# END cat #
-				<div class="spacer" style="margin-top:30px;">&nbsp;</div>
+				<div class="spacer"></div>
 			</div>
 			<footer>
-				<div style="text-align:center;margin-top:8px;margin-bottom:10px;">{HITS}</div>
+				<div class="wiki-hits">{HITS}</div>
 			</footer>
 		</article>

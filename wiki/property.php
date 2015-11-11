@@ -244,7 +244,7 @@ elseif ($wiki_status > 0)
 		'ID_ARTICLE' => $wiki_status,
 		'NO_STATUS' => str_replace('"', '\"', $LANG['wiki_no_status']),
 		'CURRENT_STATUS' => ($article_infos['defined_status'] == -1  ? $LANG['wiki_undefined_status'] : (($article_infos['defined_status'] > 0 ) ? $LANG['wiki_status_list'][$article_infos['defined_status'] - 1][1] : $LANG['wiki_no_status'])),
-		'SELECTED_TEXTAREA' => ($article_infos['defined_status'] >= 0  ? 'disabled="disabled" style="color:grey"' : ''),
+		'SELECTED_TEXTAREA' => ($article_infos['defined_status'] >= 0  ? 'disabled="disabled"' : ''),
 		'SELECTED_SELECT' => ($article_infos['defined_status'] < 0  ? 'disabled="disabled"' : ''),
 		'UNDEFINED' => ($article_infos['defined_status'] < 0  ? 'checked="checked"' : ''),
 		'DEFINED' => ($article_infos['defined_status'] >= 0  ? 'checked="checked"' : ''),

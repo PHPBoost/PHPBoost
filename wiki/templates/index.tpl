@@ -20,7 +20,7 @@
 					{L_NO_CAT}
 				# END cat_list #
 				<br /><br />
-				<div class="options" style="float:none;text-align:center;">
+				<div class="options">
 					<a href="{PATH_TO_ROOT}/wiki/{U_EXPLORER}" title="{L_EXPLORER}">
 						<i class="fa fa-folder-open"></i>
 						{L_EXPLORER}
@@ -41,7 +41,7 @@
 						<tr>
 							# START last_articles.list #
 							{last_articles.list.TR}
-								<td class="left" style="width:50%">
+								<td class="left" style="width:50%;">
 									<i class="fa fa-file-text"></i> <a href="{PATH_TO_ROOT}/wiki/{last_articles.list.U_ARTICLE}">{last_articles.list.ARTICLE}</a>
 								</td>
 							# END last_articles.list #

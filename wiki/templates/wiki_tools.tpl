@@ -1,6 +1,6 @@
-		<div style="margin-bottom:10px;">
+		<div class="wiki-tools-container">
 			<menu id="cssmenu-wikitools" class="cssmenu cssmenu-right cssmenu-actionslinks cssmenu-tools">
-				<ul>
+				<ul class="hidden">
 					# IF C_ACTIV_COM #
 						<li>
 							<a href="{U_COM}" class="cssmenu-title"><i class="fa fa-comments-o"></i> {L_COM}</a>
@@ -77,6 +77,9 @@
 					breakpoint: 768,
 					actionslinks:true
 				});
+				jQuery(document).ready(function() {
+						jQuery("#cssmenu-wikitools ul").removeClass('hidden');
+					});
 			</script>
 		</div>
-		<div  class="spacer" style="margin-top:15px;">&nbsp;</div>
+		<div class="spacer"></div>

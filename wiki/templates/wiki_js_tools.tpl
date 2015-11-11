@@ -10,11 +10,11 @@
 
 		<script src="{PICTURES_DATA_PATH}/js/wiki.js"></script>
 
-		<div class="bbcode" style="margin-bottom: -7px;">
-			<div class="bbcode-containers" style="align:center;">
+		<div class="bbcode wiki-bbcode">
+			<div class="bbcode-containers center">
 			<ul class="bbcode-container">
 				<li class="bbcode-elements">
-					<a href="javascript:insert_link();" title="{L_INSERT_LINK}" style="width: auto;">{L_INSERT_LINK} <i class="fa fa-link"></i></a>
+					<a href="javascript:insert_link();" title="{L_INSERT_LINK}" class="bbcode-wiki-insert">{L_INSERT_LINK} <i class="fa fa-link"></i></a>
 				</li>
 				<li class="bbcode-elements bbcode-separator"></li>
 				<li class="bbcode-elements">

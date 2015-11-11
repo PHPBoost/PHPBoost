@@ -10,7 +10,7 @@
 				<br />
 				<hr />
 				<br />
-				<p style="text-align:center">
+				<p class="center">
 					{EXPLAIN_WIKI_GROUPS}
 				</p>
 				<div class="form-element">
@@ -120,7 +120,7 @@
 				<div class="form-element">
 					<label>{L_STATUS}</label>
 					<div class="form-field">
-						<label style="display:inline-block;"><input type="radio" name="status" id="radio_defined" value="radio_defined" {status.DEFINED} onclick="javascript: change_type(0);" {status.SELECTED_DEFINED}> {L_DEFINED_STATUS}</label>
+						<label><input type="radio" name="status" id="radio_defined" value="radio_defined" {status.DEFINED} onclick="javascript: change_type(0);" {status.SELECTED_DEFINED}> {L_DEFINED_STATUS}</label>
 						<select id="id_status" name="id_status" {status.SELECTED_SELECT} class="nav" onchange="javascript:show_status();">
 						# START status.list #
 							<option value="{status.list.ID_STATUS}" {status.list.SELECTED}>{status.list.L_STATUS}</option>
@@ -212,7 +212,7 @@
 		<form action="action.php" method="post" onsubmit="return check_form_post();" class="fieldset-content">
 			<fieldset>
 				<legend>{rename.L_TITLE}</legend>
-				<p style="text-align:center;">
+				<p class="center">
 					{rename.L_RENAMING_ARTICLE}
 				</p>
 				<br />
@@ -342,7 +342,7 @@
 				<div class="form-element">
 					<label>{L_SELECT_CAT}</label>
 					<div class="form-field">
-						<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><i class="fa fa-folder"></i> <span id="class_0" class="{remove.CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
+						<span class="futur-cat-pages"><a href="javascript:select_cat(0);"><i class="fa fa-folder"></i> <span id="class_0" class="{remove.CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
 						<br />
 						{remove.CATS}
 					</div>
