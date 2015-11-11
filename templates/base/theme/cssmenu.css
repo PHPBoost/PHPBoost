@@ -1,13 +1,13 @@
 ﻿/* --------------------------------------
 		cssmenu.css
-Contient les élements associés aux menus 
+Contient les élements associes aux menus 
 -----------------------------------------*/
 
 
 /* -- Classes multi niveau -- */
 /* -------------------------- */
 
-/* --- Classes générales cssmenu --- */
+/* --- Classes generales cssmenu --- */
 .cssmenu,
 .cssmenu ul,
 .cssmenu ul li,
@@ -29,8 +29,8 @@ Contient les élements associés aux menus
 	height: 0;
 }
 
-#menu-left .cssmenu 	{ margin-right: -9px; }
-#menu-right .cssmenu 	{ margin-left: -9px; }
+#menu-left .cssmenu  { margin-right: -9px; }
+#menu-right .cssmenu  { margin-left: -9px; }
 
 .cssmenu li:hover > .cssmenu-title {
 	text-decoration: none;
