@@ -12,4 +12,19 @@
 	cursor: pointer;
 }
 
-ol { margin-left: 25px; }
+ol {
+	margin-left: 25px;
+}
+
+.futur-cat-pages {
+	padding-left: 17px;
+}
+
+.article-pages .options {
+	width: auto;
+	float: left;
+}
+
+.article-pages .content {
+	padding-bottom: 85px;
+}

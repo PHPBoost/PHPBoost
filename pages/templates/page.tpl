@@ -17,9 +17,9 @@
 					</span>
 				</h1>
 			</header>
-			<div class="content" style="padding-bottom:85px;">
+			<div class="content">
 				# START redirect #
-					<div class="options" style="width:auto; float:left;">
+					<div class="options">
 					{redirect.REDIRECTED_FROM} {redirect.DELETE_REDIRECTION}
 					</div>
 				# END redirect #
@@ -28,5 +28,5 @@
 					{CONTENTS}
 				<div class="spacer"></div>
 			</div>
-			<footer style="text-align:center">{COUNT_HITS}</footer>
+			<footer class="center">{COUNT_HITS}</footer>
 		</article>

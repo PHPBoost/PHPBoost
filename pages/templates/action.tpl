@@ -159,7 +159,7 @@
 			<label>{L_FUTURE_CAT}</label>
 			<div class="form-field">
 				<input type="hidden" name="report_cat" value="{remove.ID_CAT}" id="id_cat">
-				<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><img src="{PICTURES_DATA_PATH}/images/cat_root.png" alt="cat_root" /> <span id="class_0" class="{remove.CAT_0}">{L_ROOT}</span></a></span>
+				<span class="futur-cat-pages"><a href="javascript:select_cat(0);"><img src="{PICTURES_DATA_PATH}/images/cat_root.png" alt="cat_root" /> <span id="class_0" class="{remove.CAT_0}">{L_ROOT}</span></a></span>
 				<br />
 				{remove.CATS}
 			</div>
