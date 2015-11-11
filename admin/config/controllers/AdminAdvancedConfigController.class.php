@@ -98,14 +98,14 @@ class AdminAdvancedConfigController extends AdminController
 		try {
 			if ($server_configuration->has_url_rewriting())
 			{
-				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(), array('description' => $this->lang['advanced-config.config.available'])));
+				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(), array('description' => '<span class="text-strong color-available">' . $this->lang['advanced-config.config.available'] . '</span>')));
 			}
 			else
 			{
-				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], FormFieldCheckbox::UNCHECKED, array('disabled' => true, 'description' => $this->lang['advanced-config.config.not-available'])));
+				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], FormFieldCheckbox::UNCHECKED, array('disabled' => true, 'description' => '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.config.not-available'] . '</span>')));
 			}
 		} catch (UnsupportedOperationException $ex) {
-			$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(), array('description' => $this->lang['advanced-config.config.unknown'])));
+			$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(), array('description' => '<span class="text-strong color-unknown">' . $this->lang['advanced-config.config.unknown'] . '</span>')));
  		}
 		
 		$htaccess_manual_content_fieldset = new FormFieldsetHTML('htaccess_manual_content', $this->lang['advanced-config.htaccess-manual-content']);
@@ -148,13 +148,13 @@ class AdminAdvancedConfigController extends AdminController
 		if (function_exists('ob_gzhandler') && @extension_loaded('zlib'))
 		{
 			$miscellaneous_fieldset->add_field(new FormFieldCheckbox('output_gziping_enabled', $this->lang['advanced-config.output-gziping-enabled'], $this->server_environment_config->is_output_gziping_enabled(),
-				array('description' => $this->lang['advanced-config.config.available'])
+				array('description' => '<span class="text-strong color-available">' . $this->lang['advanced-config.config.available'] . '</span>')
 			));
 		}
 		else
 		{
 			$miscellaneous_fieldset->add_field(new FormFieldCheckbox('output_gziping_enabled', $this->lang['advanced-config.output-gziping-enabled'], FormFieldCheckbox::UNCHECKED, 
-				array('description' => $this->lang['advanced-config.config.not-available'], 'disabled' => true)
+				array('description' => '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.config.not-available'] . '</span>', 'disabled' => true)
 			));
 		}
 		

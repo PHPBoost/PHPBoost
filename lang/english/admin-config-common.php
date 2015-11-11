@@ -89,9 +89,9 @@ $lang = array(
 		Unfortunately this option isn\'t available on all servers. This page tests if your server supports URL rewriting. 
 		If after the test you get errors or white pages, remove the file <strong>.htaccess</strong> from the root directory of your server.',
 	
-	'advanced-config.config.not-available' => '<span style="color:#B22222;font-weight:bold;">Not available on your server</span>',
-	'advanced-config.config.available' => '<span style="color:#008000;font-weight:bold;">Available on your server</span>',
-	'advanced-config.config.unknown' => '<span style="color:#004b80;font-weight:bold;">Unknown sur votre serveur</span>',
+	'advanced-config.config.not-available' => 'Not available on your server',
+	'advanced-config.config.available' => 'Available on your server',
+	'advanced-config.config.unknown' => 'Unknown sur votre serveur',
 
 	'advanced-config.htaccess-manual-content' => 'Content of the .htaccess file',
 	'advanced-config.htaccess-manual-content.explain' => 'In this field you can put the instructions you would like to integrate into the .htaccess file 
