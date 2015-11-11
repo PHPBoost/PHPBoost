@@ -4,6 +4,6 @@
 <div class="success">${i18nraw('generation_succeeded')}</div>
 # ENDIF #
 <br />
-<div style="text-align:center;">
+<div class="center">
 	<button type="button" onclick="window.location = '{GENERATE}'">{@try_again}</button>
 </div>
