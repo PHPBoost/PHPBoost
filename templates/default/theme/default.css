@@ -1,6 +1,6 @@
 /* --------------------------------------
 		default.css
-Css par défaut commun * tout les thèmes, permet les ajouts nécessaires au framework et retrocompatibilité
+Css par defaut commun * tout les themes, permet les ajouts necessaires au framework et retrocompatibilite
 --------------------------------------*/
 
 /* Reset */
@@ -215,7 +215,7 @@ div.horizontal-fieldset .form-element label {
 	width: 100%;
 }
 
-/* Opacité */
+/* Opacite */
 .low-opacity {
 	opacity: 0.40;
 }
@@ -240,7 +240,7 @@ ul.pagination .current-page {
 	margin: 15px auto;
 }
 
-/* Prévisualisation AJAX. */
+/* Previsualisation AJAX. */
 .xmlhttprequest-preview {
 	overflow: auto;
 	height: 220px;
@@ -251,7 +251,7 @@ ul.pagination .current-page {
 	border-radius: 4px;
 }
 
-/* --- Elements de prévisualisation --- */
+/* --- Elements de previsualisation --- */
 .loading-preview-container {
 	position: relative;
 }
