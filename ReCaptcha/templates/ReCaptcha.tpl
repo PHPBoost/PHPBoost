@@ -6,8 +6,8 @@
 <div id="recaptcha-widget" style="display:none">
 	<div id="recaptcha_response_field" style="display:none;"></div>
 	<div id="recaptcha-container">
-		<div id="recaptcha_image"></div>
-		<div class="recaptcha_only_if_incorrect_sol" style="color:red">{@incorrect_sol}</div>
+		<div id="recaptcha-image"></div>
+		<div class="recaptcha_only_if_incorrect_sol color-alert">{@incorrect_sol}</div>
 		<input type="text" id="{HTML_ID}" name="{HTML_ID}" placeholder="{@type_the_answer_here}"/>
 	</div>
 	<div class="options">

@@ -32,13 +32,13 @@
 	border-radius: 0 0 0 4px;
 }
 
-#recaptcha_image {
+#recaptcha-image {
 	width: 96% !important;
 	height: auto !important;
 	max-width: 100%;
 }
 
-#recaptcha_image img { width: 100%; }
+#recaptcha-image img { width: 100%; }
 
 @media ( max-width: 768px ) {
 	.g-recaptcha div { width: 100% !important; }
