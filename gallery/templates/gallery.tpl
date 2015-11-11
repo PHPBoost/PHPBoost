@@ -311,8 +311,8 @@
 						<p class="center" id="pics_max"></p>
 						
 						# IF C_GALLERY_PICS_MAX #
-							<p style="text-align:center;padding:15px 0px;overflow:auto;"><a href="{U_IMG_MAX}" data-lightbox="formatter"><img src="{U_IMG_MAX}" alt="{U_IMG_MAX}" /></a></p>
-							<div class="options" style="float:none;">
+							<p class="pics-max"><a href="{U_IMG_MAX}" data-lightbox="formatter"><img src="{U_IMG_MAX}" alt="{U_IMG_MAX}" /></a></p>
+							<div class="options">
 								<h6>{L_INFORMATIONS}</h6>
 								# IF C_TITLE_ENABLED #
 									<span class="text-strong">{L_NAME} : </span><span>{NAME}</span><br/> 
@@ -336,9 +336,9 @@
 									# IF C_GALLERY_PICS_MODO #
 									<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');" class="basic-button" title="{L_EDIT}"><i class="fa fa-edit"></i></a></span>
 									
-									<div style="position:absolute;z-index:100;margin-top:10px;float:left;display:none;" id="move{ID}">
-										<div class="bbcode-block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);">
-											<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
+									<div id="move{ID}" class="move-pics-container">
+										<div class="bbcode-block move-pics-block" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);">
+											<div>{L_MOVETO} :</div>
 											<select class="valign-middle" name="{ID}cat" onchange="document.location = '{U_MOVE}">
 												{CAT}
 											</select>
@@ -352,9 +352,9 @@
 									# ENDIF #
 								</div>
 							</div>
-							<div style="margin:auto;width:640px;height:32px;padding:0;">
-								<span style="float:left">&nbsp;&nbsp;&nbsp;{U_PREVIOUS}</span>
-								<span style="float:right">{U_NEXT}&nbsp;&nbsp;&nbsp;</span>
+							<div class="link-to-other-pics-container">
+								<span class="left">&nbsp;&nbsp;&nbsp;{U_PREVIOUS}</span>
+								<span class="right">{U_NEXT}&nbsp;&nbsp;&nbsp;</span>
 							</div>
 							<br /><br />
 							<table>
@@ -384,7 +384,7 @@
 							{COMMENTS}
 						# ENDIF #
 						
-						<table style="table-layout:fixed">
+						<table class="table-pics">
 							# IF C_PAGINATION #
 							<tfoot>
 								<tr>
@@ -397,9 +397,9 @@
 							<tbody>
 							# START pics_list #
 								# IF pics_list.C_OPEN_TR #<tr># ENDIF #
-								<td style="vertical-align:bottom;width:{COLUMN_WIDTH_PICS}%;padding:15px 0px;">
-									<div style="padding:0 5px;" id="pics{pics_list.ID}">
-										<a class="small" href="{pics_list.U_DISPLAY}" onclick="{pics_list.ONCLICK}" # IF NOT pics_list.ONCLICK # data-lightbox="formatter"# ENDIF #><img src="{pics_list.U_PICTURE}" title="{pics_list.NAME}" alt="{pics_list.NAME}" class="gallery_image" /></a>
+								<td class="valign-bottom" style="width:{COLUMN_WIDTH_PICS}%;">
+									<div id="pics{pics_list.ID}" class="thumnails-list-container">
+										<a class="small" href="{pics_list.U_DISPLAY}" onclick="{pics_list.ONCLICK}" # IF NOT pics_list.ONCLICK # data-lightbox="formatter"# ENDIF #><img src="{pics_list.U_PICTURE}" title="{pics_list.NAME}" alt="{pics_list.NAME}" class="gallery-img" /></a>
 									</div>
 									
 									<div class="spacer"></div>
@@ -422,13 +422,13 @@
 										{pics_list.KERNEL_NOTATION}
 									</div>
 									
-									<div style="margin:auto;">
+									<div class="actions-container">
 										# IF C_GALLERY_MODO #
 										<span id="fihref{pics_list.ID}"><a href="javascript:display_rename_file('{pics_list.ID}', '{pics_list.RENAME}', '{pics_list.RENAME_CUT}');" title="{L_EDIT}" class="fa fa-edit"></a></span>
 										<a href="{pics_list.U_DEL}"title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
-										<div style="position:absolute;z-index:100;margin-top:10px;float:left;display:none;" id="move{pics_list.ID}">
-											<div class="bbcode-block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);">
-												<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
+										<div id="move{pics_list.ID}" class="move-pics-container">
+											<div class="bbcode-block move-pics-block" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);">
+												<div>{L_MOVETO} :</div>
 												<select class="valign-middle" name="{pics_list.ID}cat" onchange="document.location = '{pics_list.U_MOVE}">
 													{pics_list.CAT}
 												</select>
@@ -456,7 +456,7 @@
 				</article>
 				# ENDIF #
 					
-				<p style="text-align:center;padding-top:15px;" class="smaller">{L_TOTAL_IMG}</p>
+				<p class="nbr-total-pics smaller">{L_TOTAL_IMG}</p>
 			</div>
 			<footer>
 			</footer>

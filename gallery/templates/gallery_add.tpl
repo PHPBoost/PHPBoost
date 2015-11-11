@@ -2,12 +2,12 @@
 			<section id="module-gallery-add">
 				<header>
 					<h1><a href="gallery.php">{L_GALLERY}</a> &raquo; {U_GALLERY_CAT_LINKS}</h1>
-					<div style="float:right">
+					<div class="right">
 						{PAGINATION}
 					</div>
 				</header>
 				<div class="content">
-					<div style="text-align:center">
+					<div class="center">
 						# INCLUDE message_helper #
 		
 						# START image_up #
@@ -22,7 +22,7 @@
 						# END image_up #
 						
 						# START image_quota #
-						<div style="width:50%;margin:auto">
+						<div class="image-quota-container">
 							<strong>{image_quota.L_IMAGE_QUOTA}</strong>
 						</div>
 						# END image_quota #
@@ -46,13 +46,13 @@
 					</div>
 					<br />
 					<fieldset class="fieldset-submit">
-					<legend></legend><input type="hidden" name="max_file_size" value="2000000">
-					<input type="hidden" name="token" value="{TOKEN}">
-					<button type="submit" name="vupload" value="true" class="submit">{L_UPLOAD}</button>
+						<legend></legend><input type="hidden" name="max_file_size" value="2000000">
+						<input type="hidden" name="token" value="{TOKEN}">
+						<button type="submit" name="vupload" value="true" class="submit">{L_UPLOAD}</button>
 					</fieldset>
 				</div>
 				<footer>
-					<div style="float:right">
+					<div class="right">
 						{PAGINATION}
 					</div>
 				</footer>

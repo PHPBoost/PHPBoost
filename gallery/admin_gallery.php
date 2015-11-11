@@ -275,7 +275,7 @@ else
 						$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
 
 					//Affichage de la liste des miniatures sous l'image.
-					$array_pics[] = '<td style="text-align:center;height:' . ($config->get_mini_max_height() + 16) . 'px"><span id="thumb' . $i . '"><a href="admin_gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '#pics_max' . '"><img src="pics/thumbnails/' . $row['path'] . '" alt="' . $row['name'] . '" /></a></span></td>';
+					$array_pics[] = '<td class="center" style="height:' . ($config->get_mini_max_height() + 16) . 'px"><span id="thumb' . $i . '"><a href="admin_gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '#pics_max' . '"><img src="pics/thumbnails/' . $row['path'] . '" alt="' . $row['name'] . '" /></a></span></td>';
 
 					if ($row['id'] == $idpics)
 					{

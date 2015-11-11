@@ -238,7 +238,7 @@
 				<div class="fieldset-inset">
 					
 					# START cat #
-					<table id="table">
+					<table id="table" class="table-cat">
 						<thead>
 							<tr>
 								<th colspan="{COLSPAN}">
@@ -258,7 +258,7 @@
 						<tbody>
 						# START cat.list #
 						{cat.list.TR_START}
-							<td style="vertical-align:bottom;width:{COLUMN_WIDTH_CATS}%;padding:15px 0px;">
+							<td class="valign-bottom" style="width:{COLUMN_WIDTH_CATS}%;">
 								<a href="admin_gallery.php?cat={cat.list.IDCAT}"># IF cat.list.C_IMG #<img itemprop="thumbnailUrl" src="{cat.list.IMG}" alt="{cat.list.CAT}" /># ENDIF #</a>
 								
 								<br />
@@ -280,7 +280,7 @@
 					# END cat #
 					
 					# START pics.pics_max #
-						<table id="table" style="margin:auto;max-width:300px;">
+						<table id="table" class="table-pics">
 							<tbody>
 								<tr>
 									<td id="pics_max" colspan="{COLSPAN}">
@@ -289,7 +289,7 @@
 								</tr>
 								<tr>
 									# IF pics.pics_max.C_PREVIOUS #
-									<td class="left no-separator" style="width:50%">
+									<td class="left no-separator">
 										{pics.pics_max.U_PREVIOUS} 
 									</td>
 									# ENDIF #
@@ -343,10 +343,10 @@
 										
 										<a href="gallery{pics.pics_max.U_DEL}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a> 
 							
-										<div style="position:absolute;z-index:100;margin-top:110px;float:left;display:none;" id="move{pics.pics_max.ID}">
-											<div class="bbcode-block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({pics.pics_max.ID}, 1);" onmouseout="pics_hide_block({pics.pics_max.ID}, 0);">
-												<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
-												<select class="valign-middle" name="{pics.pics_max.ID}cat" onchange="document.location = 'gallery{pics.pics_max.U_MOVE}'>
+										<div id="move{pics.pics_max.ID}" class="move-pics-container">
+											<div class="bbcode-block move-pics-block" onmouseover="pics_hide_block({pics.pics_max.ID}, 1);" onmouseout="pics_hide_block({pics.pics_max.ID}, 0);">
+												<div>{L_MOVETO} :</div>
+												<select class="valign-middle" name="{pics.pics_max.ID}cat" onchange="document.location = 'gallery{pics.pics_max.U_MOVE}'">
 													{pics.pics_max.CAT}
 												</select>
 												<br /><br />
@@ -400,7 +400,7 @@
 						# END pics.pics_max #
 						
 						# IF NOT pics.C_PICS_MAX #
-						<table id="table" style="table-layout:fixed">
+						<table id="table" class="table-pics">
 							<thead>
 								<tr>
 									<th colspan="{COLSPAN}">
@@ -411,22 +411,23 @@
 							<tbody>
 								# START pics.list #
 								{pics.list.TR_START}
-									<td style="vertical-align:bottom;width:{COLUMN_WIDTH_PICS}%;padding:15px 0px;">
-										<div style="margin-bottom:20px;height:{HEIGHT_MAX}px;padding:0 5px;" id="pics{pics.list.ID}"><a class="small" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}" data-lightbox="2">{pics.list.IMG}</a></div>
+									<td class="valign-bottom" style="width:{COLUMN_WIDTH_PICS}%;">
+										<div id="pics{pics.list.ID}" class="pics-list-element" style="height:{HEIGHT_MAX}px;">
+											<a class="small" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}" data-lightbox="2">{pics.list.IMG}</a></div>
 										<div class="smaller">
 											<a class="com" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}"><span id="fi_{pics.list.ID}">{pics.list.NAME}</span></a> <span id="fi{pics.list.ID}"></span>
 											<br />
 											{pics.list.U_POSTOR}
 										</div>
 											
-										<div style="margin:auto;">
+										<div class="actions-container">
 											{pics.list.RENAME_FILE}
 											
 											<a href="admin_gallery.php?del={pics.list.ID}&amp;token={TOKEN}&amp;cat={CAT_ID}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
 								
-											<div style="position:absolute;z-index:100;margin-top:110px;float:left;display:none;" id="move{pics.list.ID}">
-												<div class="bbcode-block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);">
-													<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
+											<div id="move{pics.list.ID}" class="move-pics-container">
+												<div class="bbcode-block move-pics-block" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);">
+													<div>{L_MOVETO} :</div>
 													<select class="valign-middle" name="{pics.list.ID}cat" onchange="document.location = 'admin_gallery.php?id={pics.list.ID}&amp;token={TOKEN}&amp;move=' + this.options[this.selectedIndex].value">
 														{pics.list.CAT}
 													</select>
@@ -457,7 +458,7 @@
 								{L_TOTAL_IMG}
 							</div>
 							# ELSE #
-							<p style="text-align:center" class="smaller">
+							<p class="nbr-total-pics smaller">
 								{L_TOTAL_IMG}
 							</p>
 							# ENDIF #

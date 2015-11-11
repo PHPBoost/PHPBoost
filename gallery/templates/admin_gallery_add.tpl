@@ -119,9 +119,9 @@
 					<tbody>
 						# START list #
 						{list.TR_START}
-							<td style="vertical-align:bottom;">
+							<td class="valign-bottom">
 								<div class="smaller">
-									<div style="padding:0 5px;">
+									<div class="thumnails-list-container">
 									{list.THUMNAILS}
 									</div>
 									<div class="spacer"></div>
@@ -135,7 +135,7 @@
 									<div>
 										${LangLoader::get_message('form.category', 'common')}
 										<div class="spacer"></div>
-											<select name="{list.ID}cat" id="{list.ID}cat" style="max-width:100%;">
+											<select name="{list.ID}cat" id="{list.ID}cat" class="select-cat">
 												{list.CATEGORIES}
 											</select>
 									</div>

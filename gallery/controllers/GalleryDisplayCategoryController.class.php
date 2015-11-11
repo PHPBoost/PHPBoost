@@ -295,7 +295,7 @@ class GalleryDisplayCategoryController extends ModuleController
 							$Gallery->Resize_pics(PATH_TO_ROOT . '/gallery/pics/' . $row['path']); //Redimensionnement + création miniature
 	
 						//Affichage de la liste des miniatures sous l'image.
-						$array_pics[] = '<td style="text-align:center;height:' . ($config->get_mini_max_height() + 16) . 'px"><span id="thumb' . $i . '"><a href="gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;sort=' . $g_sort, '-' . $row['idcat'] . '-' . $row['id'] . '.php?sort=' . $g_sort) . '#pics_max' . '"><img src="pics/thumbnails/' . $row['path'] . '" alt="' . $row['path'] . '" /></a></span></td>';
+						$array_pics[] = '<td class="center" style="height:' . ($config->get_mini_max_height() + 16) . 'px"><span id="thumb' . $i . '"><a href="gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;sort=' . $g_sort, '-' . $row['idcat'] . '-' . $row['id'] . '.php?sort=' . $g_sort) . '#pics_max' . '"><img src="pics/thumbnails/' . $row['path'] . '" alt="' . $row['path'] . '" /></a></span></td>';
 	
 						if ($row['id'] == $g_idpics)
 						{
@@ -564,7 +564,7 @@ class GalleryDisplayCategoryController extends ModuleController
 				while (!is_int($j/$nbr_column_pics))
 				{
 					$this->tpl->assign_block_vars('end_table', array(
-						'TD_END' => '<td style="margin:15px 0px;width:' . $column_width_pics . '%">&nbsp;</td>',
+						'TD_END' => '<td class="td-end" style="width:' . $column_width_pics . '%">&nbsp;</td>',
 						'TR_END' => (is_int(++$j/$nbr_column_pics)) ? '</tr>' : ''
 					));
 				}
