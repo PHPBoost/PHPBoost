@@ -1,5 +1,4 @@
-<a href="{URL}" style="display:block;margin:auto;width:{WIDTH}px;height:{HEIGHT}px;" id="movie_1764"></a>
-<br />
+<a href="{URL}" id="movie_1764" class="media-flv" style="width:{WIDTH}px;height:{HEIGHT}px;"></a>
 <script>
 <!--
 jQuery(document).ready(function() {

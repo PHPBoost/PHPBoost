@@ -1,8 +1,8 @@
 		# IF C_DISPLAY #
 		<form action="moderation_media.php" method="post" class="fieldset-content">
-			<fieldset style="padding:15px 10px;">
+			<fieldset class="fieldset-submit">
 				<legend>{L_FILTER}</legend>
-				<div id="form" style="text-align:center;">
+				<div id="form" class="center">
 					{L_DISPLAY_FILE}&nbsp;
 					<select name="state" id="state" class="nav" onchange="change_order()">
 							<option value="all"{SELECTED_ALL}>{L_ALL}</option>
@@ -13,7 +13,7 @@
 					&nbsp;{L_INCLUDE_SUB_CATS}&nbsp;
 					<input type="checkbox" name="sub_cats" value="1"{SUB_CATS}>
 				</div>
-				<div style="margin-top:20px;text-align:center;">
+				<div class="fieldset-inset">
 					<input type="hidden" name="token" value="{TOKEN}">
 					<button type="submit" name="filter" value="true" class="submit">{L_SUBMIT}</button>
 					<button type="reset" value="true">{L_RESET}</button>
@@ -115,13 +115,13 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td style="background:#FFCCCC;">
+							<td class="bkgd-color-unaprobed">
 								{L_FILE_UNAPROBED}
 							</td>
-							<td style="background:#FFEE99;">
+							<td class="bkgd-color-unvisible">
 								{L_FILE_UNVISIBLE}
 							</td>
-							<td style="background:#CCFFCC;">
+							<td class="bkgd-color-visible">
 								{L_FILE_VISIBLE}
 							</td>
 						</tr>

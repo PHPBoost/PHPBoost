@@ -26,4 +26,11 @@
 	height: 100%;
 }
 
-.content { margin-top: 10px; }
+.content {
+	margin-top: 10px;
+}
+
+a.media-flv {
+	display: block;
+	margin: 10px auto;
+}

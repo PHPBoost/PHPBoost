@@ -74,7 +74,7 @@
 								</header>
 								<div class="content">
 									# IF file.C_DESCRIPTION #
-										<div class="media-desc" style="margin-top:10px">
+										<div class="media-desc">
 										{file.DESCRIPTION}
 										</div>
 									# ENDIF #
