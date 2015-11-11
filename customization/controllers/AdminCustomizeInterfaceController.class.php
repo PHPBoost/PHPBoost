@@ -128,7 +128,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 			}
 			else
 			{
-				$customize_interface_fieldset->add_field(new FormFieldFree('current_logo', $this->lang['customization.interface.logo.current'], $this->lang['customization.interface.logo.current.erased']));
+				$customize_interface_fieldset->add_field(new FormFieldFree('current_logo', $this->lang['customization.interface.logo.current'], '<span class="text-strong color-alert">' . $this->lang['customization.interface.logo.current.erased'] .'</span>'));
 			}
 		}
 		else 

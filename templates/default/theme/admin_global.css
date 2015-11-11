@@ -24,6 +24,8 @@ a.admin 	{ color: #FFA34F; }
 a.modo 		{ color: #006699; }
 a.member 	{ color: #000000; }
 
+.color-alert { color: #B22222; }
+
 /* --- Les differentes tailles de polices --- */
 .smaller 	{ font-size: 0.869em; }
 .small 		{ font-size: 0.923em; }

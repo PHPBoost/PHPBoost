@@ -22,10 +22,12 @@ a:hover {
 	text-decoration: underline;
 }
 
-/* --- Couleur des liens des utilisateurs --- */
+/* --- Couleur des liens --- */
 a.admin  { color: #FFA34F; }
 a.modo   { color: #006699; }
 a.member { color: #000000; }
+
+.color-alert { color: #B22222; }
 
 /* --- Tailles de polices --- */
 .smaller { font-size: 0.7em; }

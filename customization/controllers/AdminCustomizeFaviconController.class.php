@@ -107,7 +107,7 @@ class AdminCustomizeFaviconController extends AdminModuleController
 			}
 			else
 			{
-				$fieldset->add_field(new FormFieldFree('current_favicon', $this->lang['customization.favicon.current'], $this->lang['customization.favicon.current.erased']));
+				$fieldset->add_field(new FormFieldFree('current_favicon', $this->lang['customization.favicon.current'], '<span class="text-strong color-alert">' . $this->lang['customization.favicon.current.erased'] . '</span>'));
 			}
 		}
 		
