@@ -28,7 +28,7 @@ BugtrackerFormFieldVersions.prototype = {
 			jQuery('<input/> ', {type : 'text', id : 'release_date_' + id, name : 'release_date_' + id, maxlength : 10, placeholder : ${escapejs(LangLoader::get_message('date_format', 'date-common'))}}).appendTo('#td3_' + id).attr('size', '11');
 			jQuery('#release_date_' + id).after(' ');
 			
-			jQuery('<div/> ', {id : 'calendar' + id, style : 'position:absolute;z-index:100;display:none;'}).appendTo('#td3_' + id);
+			jQuery('<div/> ', {id : 'calendar' + id, class : 'calendar-block-container', style : 'display:none;'}).appendTo('#td3_' + id);
 			
 			jQuery('<div/> ', {id : 'release_date' + id + '_date', class : 'calendar-block', onmouseover : 'hide_calendar(' + id + ', 1);', onmouseout : 'hide_calendar(' + id + ', 0);'}).appendTo('#calendar' + id);
 			
