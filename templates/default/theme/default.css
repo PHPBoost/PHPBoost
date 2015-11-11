@@ -119,6 +119,7 @@ a.wikipedia-link:before {
 
 /* Alignements */
 .inline { display: inline !important; }
+.inline-block { display: inline-block !important; }
 
 .center  { text-align: center !important; }
 .left    { text-align: left !important; }

@@ -8,7 +8,8 @@ Contient les elements :
  - mini-module,
  - message postes,
  - profile user,
- - maintenance.
+ - maintenance,
+ - contribution.
 -----------------------------------------*/
 
 
@@ -681,6 +682,18 @@ ul#profile-container li {
 	text-align: center;
 }
 
+.preview-img {
+	vertical-align: top;
+	max-height: 180px;
+}
+
+.user-agreement {
+	max-width: none;
+	width: 90%;
+	max-height: 250px;
+	overflow-y: auto;
+}
+
 
 /* -- Le maintenance -- */ 
 /* -------------------- */
@@ -713,3 +726,31 @@ div#release {
 	margin-top: 20px;
 }
 
+
+
+/* -- Contribution -- */ 
+/* ------------------ */
+#module-user-contribution-list hr {
+	margin: 20px 0;
+}
+
+.module-contribution-element {
+	float: left;
+	text-align: center;
+	margin: 20px 0px;
+}
+
+.unprocessed-contribution {
+	text-align: center;
+	margin: auto;
+	width: 300px;
+}
+
+.unprocessed-contribution div {
+	float: left;
+	width: 50%;
+}
+
+#module-user-moderation-panel .content {
+	padding-bottom: 75px;
+}

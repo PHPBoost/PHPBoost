@@ -27,7 +27,19 @@ a.admin  { color: #FFA34F; }
 a.modo   { color: #006699; }
 a.member { color: #000000; }
 
-.color-alert { color: #B22222; }
+/* --- Couleur de texte --- */
+.color-alert 		{ color: #B22222; }
+.color-notavailable { color: #B22222; }
+.color-available 	{ color: #008000; }
+.color-unknown 		{ color: #004b80; }
+
+.bkgd-color-visible 	{ background-color: #CCFFCC; }
+.bkgd-color-unvisible 	{ background-color: #FFEE99; }
+.bkgd-color-unaprobed 	{ background-color: #FFCCCC; }
+
+.bkgd-color-fixed 		{ background-color: #7FFF9C; }
+.bkgd-color-processing 	{ background-color: #FFD86F; }
+.bkgd-color-unknown 	{ background-color: #FF796F; }
 
 /* --- Tailles de polices --- */
 .smaller { font-size: 0.7em; }
@@ -71,6 +83,10 @@ h4.formatter-title {
 	z-index: 100;
 	left: 0;
 	right: 0;
+}
+
+.calendar-container {
+	display: inline-block;
 }
 
 .calendar-block {
