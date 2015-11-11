@@ -40,7 +40,7 @@ ${resources('install/install')}
 					</td>
 				</tr>
 				<tr>
-					<td class="row-next row-final" style="text-align:center;">
+					<td class="row-next row-final center">
 						<form action="{U_CHANGE_LANG}" method="post">
 							<p>
 								<select name="new_language" id="change_lang" onchange="document.location='index.php?lang=' + document.getElementById('change_lang').value;">
@@ -52,10 +52,11 @@ ${resources('install/install')}
 							</p>
 							<p id="button_change_lang">
 								<button type="submit" value="true" class="submit">{@change}</button>
+								<input type="hidden" name="token" value="{TOKEN}">
 							</p>
 							<script>
 							<!--
-								document.getElementById('button_change_lang').style.display = 'none';
+								jQuery('#button_change_lang').hide();
 							-->
 							</script>
 						</form>

@@ -173,10 +173,10 @@
 							<p class="center">
 								<button type="submit" class="submit" name="writingpad" value="true">{L_UPDATE}</button>
 								<button type="reset" value="true">{L_RESET}</button>
+								<input type="hidden" name="token" value="{TOKEN}">
 							</p>
 						</div>
 					</fieldset>
-					<input type="hidden" name="token" value="{TOKEN}">
 				</form>
 			</div>
 			<div class="spacer"></div>

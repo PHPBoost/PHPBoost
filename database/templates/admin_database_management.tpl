@@ -43,7 +43,8 @@
 										<input type="hidden" name="max_file_size" value="500000000">
 										<br /><br />
 										<div class="center">
-												<button type="submit" name="" value="true" class="submit">{L_RESTORE_NOW}</button>
+											<button type="submit" name="" value="true" class="submit">{L_RESTORE_NOW}</button>
+											<input type="hidden" name="token" value="{TOKEN}">
 										</div>
 								</div>
 						</div>
@@ -143,6 +144,7 @@
 						<fieldset>
 								<legend>{ACTION_FOR_SELECTION}</legend>
 								<div class="fieldset-inset">
+										<input type="hidden" name="token" value="{TOKEN}">
 										<ul class="center">
 											<li class="small-block">
 												<i class="fa fa-bar-chart fa-2x"></i> 
@@ -289,6 +291,7 @@
 										<span class="form-field-radio-span">{L_BACKUP_DATA}</span>
 								</p>
 								<button type="submit" name="" value="true" class="submit">{L_BACKUP}</button>
+								<input type="hidden" name="token" value="{TOKEN}">
 							</td>
 						</tr>
 					</tbody>
@@ -345,6 +348,7 @@
 												</fieldset>
 												<fieldset class="fieldset-submit" style="margin:0">
 													<button type="submit" name="submit" value="true" class="submit">{L_EXECUTE}</button>
+													<input type="hidden" name="token" value="{TOKEN}">
 												</fieldset>
 											</div>
 											<footer></footer>

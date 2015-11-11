@@ -257,6 +257,7 @@
 						<br />
 						<input type="hidden" name="{TYPE}" value="1">
 						<button type="submit" name="date" value="true" class="submit">{L_SUBMIT}</button>
+						<input type="hidden" name="token" value="{TOKEN}">
 						&nbsp;&nbsp;&nbsp;&nbsp;
 					</div>
 					<div class="medium-block center">
@@ -319,7 +320,7 @@
 						{U_VISITS_MORE}
 					</p>
 				</div>
-			</fieldset>			
+			</fieldset>
 		</form>
 		
 		<br /><br />
@@ -753,6 +754,7 @@
 					<div class="fieldset-inset">
 						<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button>
 						<button type="reset" value="true">{L_RESET}</button>
+						<input type="hidden" name="token" value="{TOKEN}">
 					</div>
 				</fieldset>
 			</form>

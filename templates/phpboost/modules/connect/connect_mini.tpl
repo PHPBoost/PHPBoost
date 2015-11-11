@@ -31,6 +31,7 @@
 						<input type="password" id="password" name="password" class="connect-form" placeholder="{L_PASSWORD}" maxlength="30">
 						<input checked="checked" type="checkbox" name="auto">
 						<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}">
+						<input type="hidden" name="token" value="{TOKEN}">
 						<button type="submit" name="connect" value="true" class="submit">{L_CONNECT}</button>
 					</form>
 				</li>

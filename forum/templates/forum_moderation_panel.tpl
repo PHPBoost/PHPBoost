@@ -98,7 +98,8 @@
 						# ENDIF #
 						</tbody>
 					</table>
-				</form>	
+					<input type="hidden" name="token" value="{TOKEN}">
+				</form>
 				# ENDIF #
 
 
@@ -165,6 +166,7 @@
 							# ENDIF #
 						</tbody>
 					</table>
+					<input type="hidden" name="token" value="{TOKEN}">
 				</form>
 				# ENDIF #
 				
@@ -214,6 +216,7 @@
 					<fieldset class="fieldset-submit" style="padding-top:25px;">
 						<legend></legend>
 						<button type="submit" name="valid" value="true" class="submit">{L_CHANGE_STATUS}</button>
+						<input type="hidden" name="token" value="{TOKEN}">
 					</fieldset>
 				</form>
 				# ENDIF #
@@ -281,63 +284,64 @@
 				</script>
 
 				<form action="moderation_forum{U_ACTION}" method="post">
-				<table>
-					<tr>
-						<td>
-							<span class="float-left">
-								{L_SEARCH_USER}: <input type="text" maxlength="25" id="login" name="login">
-								<span id="search_img"></span>
-							</span>
-							<span style="float:left;margin-left:5px;">
-								<button type="submit" id="search_member" name="search_member" class="submit">{L_SEARCH}</button>
-								<script>
-								<!--
-									document.getElementById('search_member').style.display = 'none';
-									document.write('<button onclick="XMLHttpRequest_search();" type="button">{L_SEARCH}</button>');
-								-->
-								</script>
-								<div id="xmlhttprequest-result-search" style="display:none;" class="xmlhttprequest-result-search"></div>
-							</span>
-						</td>
-					</tr>
-				</table>
-				
-				<table>
-					<thead>
+					<table>
 						<tr>
-							<th style="width:25%;">{L_LOGIN}</th>
-							<th style="width:25%;">{L_INFO}</th>
-							<th style="width:25%;">{L_ACTION_USER}</th>
-							<th style="width:25%;">{L_PM}</th>
-						</tr>
-					</thead>
-					<tbody>
-						# START user_list #
-						<tr>
-							<td style="width:25%;">
-								<a href="{user_list.U_PROFILE}" class="{user_list.LEVEL_CLASS}" # IF user_list.C_GROUP_COLOR # style="color:{user_list.GROUP_COLOR}" # ENDIF #>{user_list.LOGIN}</a>
-							</td>
-							<td style="width:25%;">
-								{user_list.INFO}
-							</td>
-							<td style="width:25%;">
-								{user_list.U_ACTION_USER}
-							</td>
-							<td style="width:25%;">
-								<a href="{user_list.U_PM}" class="basic-button smaller">MP</a>
+							<td>
+								<span class="float-left">
+									{L_SEARCH_USER}: <input type="text" maxlength="25" id="login" name="login">
+									<span id="search_img"></span>
+								</span>
+								<span style="float:left;margin-left:5px;">
+									<button type="submit" id="search_member" name="search_member" class="submit">{L_SEARCH}</button>
+									<script>
+									<!--
+										document.getElementById('search_member').style.display = 'none';
+										document.write('<button onclick="XMLHttpRequest_search();" type="button">{L_SEARCH}</button>');
+									-->
+									</script>
+									<div id="xmlhttprequest-result-search" style="display:none;" class="xmlhttprequest-result-search"></div>
+								</span>
 							</td>
 						</tr>
-						# END user_list #
-						
-						# IF C_FORUM_NO_USER #
-						<tr>
-							<td colspan="4">
-								{L_NO_USER}
-							</td>
-						</tr>
-						# ENDIF #
-					</tbody>
-				</table>
+					</table>
+					
+					<table>
+						<thead>
+							<tr>
+								<th style="width:25%;">{L_LOGIN}</th>
+								<th style="width:25%;">{L_INFO}</th>
+								<th style="width:25%;">{L_ACTION_USER}</th>
+								<th style="width:25%;">{L_PM}</th>
+							</tr>
+						</thead>
+						<tbody>
+							# START user_list #
+							<tr>
+								<td style="width:25%;">
+									<a href="{user_list.U_PROFILE}" class="{user_list.LEVEL_CLASS}" # IF user_list.C_GROUP_COLOR # style="color:{user_list.GROUP_COLOR}" # ENDIF #>{user_list.LOGIN}</a>
+								</td>
+								<td style="width:25%;">
+									{user_list.INFO}
+								</td>
+								<td style="width:25%;">
+									{user_list.U_ACTION_USER}
+								</td>
+								<td style="width:25%;">
+									<a href="{user_list.U_PM}" class="basic-button smaller">MP</a>
+								</td>
+							</tr>
+							# END user_list #
+							
+							# IF C_FORUM_NO_USER #
+							<tr>
+								<td colspan="4">
+									{L_NO_USER}
+								</td>
+							</tr>
+							# ENDIF #
+						</tbody>
+					</table>
+					<input type="hidden" name="token" value="{TOKEN}">
 				</form>
 				# ENDIF #
 
@@ -393,6 +397,7 @@
 										{SELECT}
 									</select></label>
 									<button type="submit" name="valid_user" value="true" class="submit">{L_CHANGE_INFO}</button>
+									<input type="hidden" name="token" value="{TOKEN}">
 								</td>
 							</tr>
 						</tbody>

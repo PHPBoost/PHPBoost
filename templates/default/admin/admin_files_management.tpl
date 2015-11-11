@@ -322,10 +322,11 @@
 									</div>
 									<div class="form-element">
 										<div class="form-field">
-											<input type="file" name="upload_file" id="upload-file">					
+											<input type="file" name="upload_file" id="upload-file">
 											<input type="hidden" name="max_file_size" value="2000000">
 										</div>
 										<button type="submit" class="submit" name="valid_up" value="true">{L_UPLOAD}</button>
+										<input type="hidden" name="token" value="{TOKEN}">
 									</div>
 								</div>
 							</fieldset>
