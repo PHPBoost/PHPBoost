@@ -37,3 +37,7 @@
 	margin: 0;
 	padding: 0;
 }
+
+#questions-titles-list hr {
+	margin: 20px 0;
+}

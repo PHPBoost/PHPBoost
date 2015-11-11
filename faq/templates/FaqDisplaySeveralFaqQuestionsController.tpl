@@ -204,7 +204,9 @@ jQuery(document).ready(function() {
 				</li>
 			# END questions #
 			</ol>
-			<hr style="margin:20px 0;" />
+
+			<hr>
+
 		</div>
 		# ENDIF #
 		
