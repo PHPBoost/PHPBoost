@@ -143,7 +143,7 @@
 										<label for"start_end_date"></label>
 									</div>
 									<input class="input-date" type="text" id="start" name="start" value="{START}" /> 
-									<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar1">
+									<div style="position:absolute;z-index:100;top:6px;float:left;display:none;" id="calendar1" class="poll-calendar-block-container">
 										<div id="start_date" class="calendar-block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">
 										</div>
 									</div>

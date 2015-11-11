@@ -1,0 +1,18 @@
+.poll-question-select {
+	margin-top: 15px;
+	padding-left: 25px;
+}
+
+#module-mini-poll hr {
+	width: 90%;
+	margin: 10px auto;
+}
+
+.poll-container-title {
+	font-size: 0.8em;
+}
+
+.poll-question-mini-container {
+	padding-left: 6px;
+	text-align: left;
+}

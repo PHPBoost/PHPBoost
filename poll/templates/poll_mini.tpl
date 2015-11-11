@@ -1,10 +1,9 @@
 # START question #
-<form method="post" action="{PATH_TO_ROOT}/poll/poll{question.ID}" class="normal_form">
-	<span style="font-size:10px;">{question.QUESTION}</span>
+<form method="post" action="{PATH_TO_ROOT}/poll/poll{question.ID}" class="form-poll">
+	<span class="poll-container-title">{question.QUESTION}</span>
+	<hr>
 
-	<hr style="width:90%;" />
-	<br />
-	<p style="padding-left: 6px;text-align: left;">
+	<p class="poll-question-mini-container">
 		# START question.radio #
 		<label><input type="radio" name="radio" value="{question.radio.NAME}"> <span class="smaller">{question.radio.ANSWERS}</span></label>
 		<br /><br />
@@ -15,6 +14,7 @@
 		<br /><br />
 		# END question.checkbox #
 	</p>
+
 	<input type="hidden" name="token" value="{TOKEN}">
 	<button type="submit" name="valid_poll" value="true" class="submit">{L_VOTE}</button><br />
 	<a class="small" href="{PATH_TO_ROOT}/poll/poll{U_POLL_RESULT}">{L_POLL_RESULT}</a>
@@ -22,12 +22,11 @@
 # END question #
 
 # START result #
-<span style="font-size:10px;">{result.QUESTION}</span>
+<span class="poll-container-title">{result.QUESTION}</span>
+<hr>
 
-<hr style="width:90%;" />
-<br />
 # START result.answers #
-<p style="padding-left:6px;text-align:left;">
+<p class="poll-question-mini-container">
 	<span class="smaller">{result.answers.ANSWERS} : {result.answers.PERCENT}%</span>
 	<br />
 	<div class="progressbar-container" title="{result.answers.WIDTH}%">

@@ -3,7 +3,8 @@
 			<header>
 				<h1>{L_POLL} <span class="actions">{EDIT}</span></h1>
 			</header>
-			<div class="content" style="text-align:center;">
+
+			<div class="content center">
 				{L_POLL_MAIN}
 				<br /><br />
 				# START list #
@@ -43,11 +44,11 @@
 							# IF C_POLL_QUESTION #
 							<div>
 								# START radio #
-								<p style="margin-top:15px;padding-left:25px;"><label><input type="{radio.TYPE}" name="radio" value="{radio.NAME}"> {radio.ANSWERS}</label></p>
+								<p class="poll-question-select"><label><input type="{radio.TYPE}" name="radio" value="{radio.NAME}"> {radio.ANSWERS}</label></p>
 								# END radio #
 							
 								# START checkbox #
-								<p style="margin-top:15px;padding-left:25px;"><label><input type="{checkbox.TYPE}" name="{checkbox.NAME}" value="{checkbox.NAME}"> {checkbox.ANSWERS}</label></p>
+								<p class="poll-question-select"><label><input type="{checkbox.TYPE}" name="{checkbox.NAME}" value="{checkbox.NAME}"> {checkbox.ANSWERS}</label></p>
 								# END checkbox #
 								
 								<p class="center">
@@ -73,8 +74,8 @@
 									</div>
 									# END result #
 									<div>
-										<span class="smaller" style="float:left;">{VOTES} {L_VOTE}</span>
-										<span class="smaller" style="float:right;">{L_ON} : {DATE} </span>
+										<span class="smaller left">{VOTES} {L_VOTE}</span>
+										<span class="smaller right">{L_ON} : {DATE} </span>
 										&nbsp;
 									</div>
 								# ELSE #
@@ -95,7 +96,7 @@
 		<section id="module-poll-archives">
 			<header>
 				<h1>{L_ARCHIVE}</h1>
-				# IF C_PAGINATION #<span style="float:right;"># INCLUDE PAGINATION #</span># ENDIF #
+				# IF C_PAGINATION #<span class="right"># INCLUDE PAGINATION #</span># ENDIF #
 			</header>
 			<div class="content">
 				# START list #
@@ -123,14 +124,14 @@
 							</div>
 						# END list.result #
 						<div>
-							<span class="smaller" style="float:left;">{list.VOTE} {list.L_VOTE}</span>
-							<span class="smaller" style="float: right;">{L_ON} : {list.DATE} </span>
+							<span class="smaller left">{list.VOTE} {list.L_VOTE}</span>
+							<span class="smaller right">{L_ON} : {list.DATE} </span>
 							&nbsp;
 						</div>
 					</div>
 				</article>
 				# END list #
 			</div>
-			<footer># IF C_PAGINATION #<span style="float:right;"># INCLUDE PAGINATION #</span># ENDIF #</footer>
+			<footer># IF C_PAGINATION #<span class="right"># INCLUDE PAGINATION #</span># ENDIF #</footer>
 		</section>
 	# ENDIF #

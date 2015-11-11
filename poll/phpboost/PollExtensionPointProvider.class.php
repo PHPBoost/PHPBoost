@@ -46,5 +46,13 @@ class PollExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new PollTreeLinks();
 	}
+
+	public function css_files()
+	{
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->adding_always_displayed_file('poll.css');
+		return $module_css_files;
+	}
+
 }
 ?>
