@@ -21,7 +21,7 @@
 			if( document.getElementById('a'+i) )
 				document.getElementById('a'+i).innerHTML = '<label><input type="text" name="a'+i+'" value="" /></label><br /><span id="a'+i2+'"></span>';
 			if( document.getElementById('v'+i) )
-				document.getElementById('v'+i).innerHTML = '<label><input type="text" name="v'+i+'" value="" /></label><br /><span id="v'+i2+'"></span>';
+				document.getElementById('v'+i).innerHTML = '<label><input class="poll-vote" type="text" name="v'+i+'" value="" /></label><br /><span id="v'+i2+'"></span>';
 			if( document.getElementById('s'+i) )
 				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<span id="s'+i2+'"><a href="javascript:add_field('+i2+', '+i_max+')"><i class="fa fa-plus"></i></a></span>' : '';
 		}
@@ -106,22 +106,18 @@
 												<label><input type="text" name="a0" id="a0" value="{ANSWER0}" /></label><br />
 												<label><input type="text" name="a1" value="{ANSWER1}" /></label><br />
 												<label><input type="text" name="a2" value="{ANSWER2}" /></label><br />
-												<label><input type="text" name="a3" value="{ANSWER3}" /></label><br />
-												<label><input type="text" name="a4" value="{ANSWER4}" /></label><br />
-												<span id="a5"></span>
+												<span id="a3"></span>
 											</td>
 											<td class="no-separator">
 												<label><input class="poll-vote" type="text" name="v0" value="{VOTES0}" /> {PERCENT0}</label><br />
 												<label><input class="poll-vote" type="text" name="v1" value="{VOTES1}" /> {PERCENT1}</label><br />
 												<label><input class="poll-vote" type="text" name="v2" value="{VOTES2}" /> {PERCENT2}</label><br />
-												<label><input class="poll-vote" type="text" name="v3" value="{VOTES3}" /> {PERCENT3}</label><br />
-												<label><input class="poll-vote" type="text" name="v4" value="{VOTES4}" /> {PERCENT4}</label><br />
-												<span id="v5"></span>
+												<span id="v3"></span>
 											</td>
 										</tr>
 										<tr>
 											<td colspan="2">
-												<span id="s5"><a href="javascript:add_field(5, 20)"><i class="fa fa-plus"></i></a></span>
+												<span id="s3"><a href="javascript:add_field(3, 20)"><i class="fa fa-plus"></i></a></span>
 											</td>
 										</tr>
 									</tbody>

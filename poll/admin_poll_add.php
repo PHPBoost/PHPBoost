@@ -99,8 +99,11 @@ if ($valid)
 		{
 			if ($request->has_postparameter('a'.$i))
 			{
-				$answers .= str_replace('|', '', retrieve(POST, 'a'.$i, '')) . '|';
-				$votes .= str_replace('|', '', retrieve(POST, 'v'.$i, 0)) . '|';
+				if (!empty(retrieve(POST, 'a'.$i, '')))
+				{
+					$answers .= str_replace('|', '', retrieve(POST, 'a'.$i, '')) . '|';
+					$votes .= str_replace('|', '', retrieve(POST, 'v'.$i, 0)) . '|';
+				}
 			}
 		}
 
@@ -111,12 +114,14 @@ if ($valid)
 	else
 		AppContext::get_response()->redirect('/poll/admin_poll_add.php?error=incomplete#message_helper');
 }
-else	
-{		
+else
+{
+	$now = new Date();
 	$tpl = new FileTemplate('poll/admin_poll_add.tpl');
 	 
 	$tpl->put_all(array(
 		'VISIBLE_ENABLED' => 'checked="checked"',
+		'CURRENT_DATE' => $now->format(Date::FORMAT_DAY_MONTH_YEAR),
 		'L_REQUIRE_QUESTION' => $LANG['require_question'],
 		'L_REQUIRE_ANSWER' => $LANG['require_answer'],
 		'L_POLL_MANAGEMENT' => $LANG['poll_management'],

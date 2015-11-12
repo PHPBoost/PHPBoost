@@ -25,7 +25,7 @@
 			if( document.getElementById('a'+i) )
 				document.getElementById('a'+i).innerHTML = '<label><input type="text" name="a'+i+'" value="" /></label><br /><span id="a'+i2+'"></span>';
 			if( document.getElementById('v'+i) )
-				document.getElementById('v'+i).innerHTML = '<label><input type="text" name="v'+i+'" value="" /> 0.0%</label><br /><span id="v'+i2+'"></span>';
+				document.getElementById('v'+i).innerHTML = '<label><input class="poll-vote" type="text" name="v'+i+'" value="" /> 0.0%</label><br /><span id="v'+i2+'"></span>';
 			if( document.getElementById('s'+i) )
 				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<span id="s'+i2+'"><a href="javascript:add_field('+i2+', '+i_max+')"><i class="fa fa-plus"></i></a></span>' : '';
 		}

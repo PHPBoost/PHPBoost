@@ -124,14 +124,15 @@ elseif ($valid && !empty($id_post)) //inject
 			
 		$answers = '';
 		$votes = '';
-		$check_nbr_answer = 0;
 		for ($i = 0; $i < 20; $i++)
 		{
 			if ($request->has_postparameter('a'.$i))
 			{
-				$answers .= str_replace('|', '', retrieve(POST, 'a'.$i, '')) . '|';
-				$votes .= str_replace('|', '', retrieve(POST, 'v'.$i, 0)) . '|';
-				$check_nbr_answer++;
+				if (!empty(retrieve(POST, 'a'.$i, '')))
+				{
+					$answers .= str_replace('|', '', retrieve(POST, 'a'.$i, '')) . '|';
+					$votes .= str_replace('|', '', retrieve(POST, 'v'.$i, 0)) . '|';
+				}
 			}
 		}
 		$votes = trim($votes, '|');
@@ -142,7 +143,7 @@ elseif ($valid && !empty($id_post)) //inject
 	}
 	else
 		AppContext::get_response()->redirect('/poll/admin_poll.php?id= ' . $id_post . '&error=incomplete#message_helper');
-}	
+}
 elseif (!empty($id))
 {
 	$tpl = new FileTemplate('poll/admin_poll_management2.tpl');
@@ -160,7 +161,7 @@ elseif (!empty($id))
 		'TYPE_UNIQUE' => ($row['type'] == '1') ? 'checked="checked"' : '',
 		'TYPE_MULTIPLE' => ($row['type'] == '0') ? 'checked="checked"' : '',
 		'ARCHIVES_ENABLED' => ($row['archive'] == '1') ? 'checked="checked"' : '',
-		'ARCHIVES_DISABLED' => ($row['archive'] == '0') ? 'checked="checked"' : '',	
+		'ARCHIVES_DISABLED' => ($row['archive'] == '0') ? 'checked="checked"' : '',
 		'CURRENT_DATE' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR),
 		'DAY_RELEASE_S' => !empty($row['start']) ? Date::to_format($row['start'], 'd') : '',
 		'MONTH_RELEASE_S' => !empty($row['start']) ? Date::to_format($row['start'], 'm') : '',
