@@ -109,11 +109,11 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	protected function unparse_simple_tags()
 	{
 		$array_str = array(
-			'<br />', '<strong>', '</strong>', '<em>', '</em>', '<strike>', '</strike>', '<hr class="bb_hr" />', '<sup>', '</sup>',
+			'<br />', '<strong>', '</strong>', '<em>', '</em>', '<strike>', '</strike>', '<s>', '</s>', '<hr class="bb_hr" />', '<sup>', '</sup>',
 			'<sub>', '</sub>', '<pre>', '</pre>'
 			);
 		$array_str_replace = array(
-			'', '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '[line]', '[sup]', '[/sup]', '[sub]', '[/sub]', '[pre]', '[/pre]'
+			'', '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '[s]', '[/s]', '[line]', '[sup]', '[/sup]', '[sub]', '[/sub]', '[pre]', '[/pre]'
 		);
 		$this->content = str_replace($array_str, $array_str_replace, $this->content);
 

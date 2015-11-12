@@ -201,7 +201,7 @@ class BBCodeParser extends ContentFormattingParser
 			'b' => "<strong>$1</strong>",
 			'i' => "<em>$1</em>",
 			'u' => "<span style=\"text-decoration: underline;\">$1</span>",
-			's' => "<strike>$1</strike>",
+			's' => "<s>$1</s>",
 			'sup' => '<sup>$1</sup>',
 			'sub' => '<sub>$1</sub>',
 			'color' => "<span style=\"color:$1;\">$2</span>",

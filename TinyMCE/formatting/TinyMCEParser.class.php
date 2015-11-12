@@ -359,7 +359,7 @@ class TinyMCEParser extends ContentFormattingParser
 		if (!in_array('s', $this->forbidden_tags))
 		{
 			array_push($array_preg, '`&lt;span style="( *)?text-decoration: line-through;( *)?"&gt;(.+)&lt;/span&gt;`isU');
-			array_push($array_preg_replace, '<strike>$3</strike>');
+			array_push($array_preg_replace, '<s>$3</s>');
 		}
 		//Link tag
 		if (!in_array('url', $this->forbidden_tags))
@@ -605,7 +605,7 @@ class TinyMCEParser extends ContentFormattingParser
 			'b' => "<strong>$1</strong>",
 			'i' => "<em>$1</em>",
 			'u' => "<span style=\"text-decoration: underline;\">$1</span>",
-			's' => "<strike>$1</strike>",
+			's' => "<s>$1</s>",
 			'pre' => "<pre>$1</pre>",
 			'float' => "<p class=\"float-$1\">$2</p>",
 			'acronym' => "<abbr title=\"$1\">$2</abbr>",
