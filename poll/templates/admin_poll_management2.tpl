@@ -140,7 +140,7 @@
 				<fieldset>
 					<legend>{L_DATE}</legend>
 					<div class="fieldset-inset">
-						<div class="form-element" class="overflow_visible">
+						<div class="form-element">
 							<label for="release_date">* {L_RELEASE_DATE}</label>
 							<div class="form-field">
 								<div onclick="document.getElementById('start_end_date').checked = true;">
@@ -180,7 +180,7 @@
 								<span class="form-field-radio-span">{L_UNAPROB}</span>
 							</div>
 						</div>
-						<div class="form-element" class="overflow_visible">
+						<div class="form-element">
 							<label for="current_date">* {L_POLL_DATE}</label>
 							<div class="form-field"><label>
 								<input class="input-date" type="text" id="current_date" name="current_date" value="{CURRENT_DATE}" /> 

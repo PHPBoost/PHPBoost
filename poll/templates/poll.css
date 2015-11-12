@@ -16,3 +16,26 @@
 	padding-left: 6px;
 	text-align: left;
 }
+
+input[type="text"] {
+    border: 1px solid #d4d4d4;
+}
+
+table tr:first-child td {
+    border-top: 1px solid #d4d4d4;
+}
+
+.fieldset-inset {
+    overflow: visible;
+}
+
+#calendar1.poll-calendar-block-container,
+#calendar2.poll-calendar-block-container,
+#calendar3.poll-calendar-block-container {
+    position:absolute;
+    z-index:100;
+    top:-280px;
+    left: 0;
+    right: 0;
+    display:none;
+}

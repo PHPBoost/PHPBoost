@@ -134,7 +134,7 @@
 				<fieldset>
 					<legend>{L_DATE}</legend>
 					<div class="fieldset-inset">
-						<div class="form-element" class="overflow_visible">
+						<div class="form-element">
 							<label for="release_date">* {L_RELEASE_DATE}</label>
 							<div class="form-field">
 								<div onclick="document.getElementById('start_end_date').checked = true;">
@@ -143,7 +143,7 @@
 										<label for"start_end_date"></label>
 									</div>
 									<input class="input-date" type="text" id="start" name="start" value="{START}" /> 
-									<div style="position:absolute;z-index:100;top:6px;float:left;display:none;" id="calendar1" class="poll-calendar-block-container">
+									<div id="calendar1" class="poll-calendar-block-container">
 										<div id="start_date" class="calendar-block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">
 										</div>
 									</div>
@@ -152,7 +152,7 @@
 									{L_UNTIL}&nbsp;
 									
 									<input class="input-date" type="text" maxlength="10" id="end" name="end" value="{END}" /> 
-									<div style="position:relative;z-index:100;top:6px;margin-left:155px;float:left;display:none;" id="calendar2">
+									<div id="calendar2" class="poll-calendar-block-container">
 										<div id="end_date" class="calendar-block" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);">
 										</div>
 									</div>
@@ -172,11 +172,11 @@
 								<span class="form-field-radio-span">{L_UNAPROB}</span>
 							</div>
 						</div>
-						<div class="form-element" class="overflow_visible">
+						<div class="form-element">
 							<label for="current_date">* {L_POLL_DATE}</label>
 							<div class="form-field">
 								<input class="input-date" type="text" maxlength="10" id="current_date" name="current_date" value="{CURRENT_DATE}" /> 
-								<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar3">
+								<div id="calendar3" class="poll-calendar-block-container">
 									<div id="current" class="calendar-block" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);">
 									</div>
 								</div>
