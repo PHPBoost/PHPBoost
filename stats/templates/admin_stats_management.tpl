@@ -681,7 +681,7 @@
 				<div class="fieldset-inset">
 					# IF C_ROBOTS_DATA #
 					<div class="medium-block center">
-						<img class="fieldset-img" src="display_stats.php?bot=1" alt="" />
+						<img class="fieldset-img" src="display_stats.php?bot=1" alt="{L_ROBOTS}" />
 					</div>
 					# ENDIF #
 					<div class="medium-block">
@@ -689,7 +689,7 @@
 							<thead>
 								<tr>
 									<th>
-										{L_ROBOTS} 
+										{L_ROBOTS}
 									</th>
 									<th>
 										{L_COLORS}

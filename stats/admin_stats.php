@@ -111,8 +111,8 @@ else
 			'LAST_USER_GROUP_COLOR' => $last_user_group_color,
 			'U_LAST_USER_PROFILE' => UserUrlBuilder::profile($stats_cache->get_stats_properties('last_member_id'))->rel(),
 			'USERS' => $stats_cache->get_stats_properties('nbr_members'),
-			'GRAPH_RESULT_THEME' => !file_exists('../cache/theme.png') ? '<img src="display_stats.php?theme=1" alt="" />' : '<img src="../cache/theme.png" alt="" />',
-			'GRAPH_RESULT_SEX' => !file_exists('../cache/sex.png') ? '<img src="display_stats.php?sex=1" alt="" />' : '<img src="../cache/sex.png" alt="" />',
+			'GRAPH_RESULT_THEME' => !file_exists('../cache/theme.png') ? '<img src="display_stats.php?theme=1" alt="' . $LANG['theme_s'] . '" />' : '<img src="../cache/theme.png" alt="' . $LANG['theme_s'] . '" />',
+			'GRAPH_RESULT_SEX' => !file_exists('../cache/sex.png') ? '<img src="display_stats.php?sex=1" alt="' . $LANG['sex'] . '" />' : '<img src="../cache/sex.png" alt="' . $LANG['sex'] . '" />',
 			'L_LAST_USER' => $LANG['last_member'],
 			'L_TEMPLATES' => $LANG['theme_s'],
 			'L_PSEUDO' => LangLoader::get_message('display_name', 'user-common'),
@@ -284,9 +284,9 @@ else
 			if (@extension_loaded('gd'))
 			{
 				$tpl->put_all(array(
-					'GRAPH_RESULT' => '<img src="display_stats.php?visit_year=1&amp;year=' . $visit_year . '" alt="" />'
+					'GRAPH_RESULT' => '<img src="display_stats.php?visit_year=1&amp;year=' . $visit_year . '" alt="' . $LANG['total_visit'] . '" />'
 					));
-						
+					
 					//On fait la liste des visites journalières
 					$result = $db_querier->select("SELECT stats_month, SUM(nbr) AS total
 					FROM " . StatsSetup::$stats_table . "
@@ -443,7 +443,7 @@ else
 				if (@extension_loaded('gd'))
 				{
 					$tpl->put_all(array(
-						'GRAPH_RESULT' => '<img src="display_stats.php?visit_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
+						'GRAPH_RESULT' => '<img src="display_stats.php?visit_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="' . $LANG['total_visit'] . '" />'
 					));
 						
 					//On fait la liste des visites journalières
@@ -659,7 +659,7 @@ else
 			if (@extension_loaded('gd'))
 			{
 				$tpl->put_all(array(
-					'GRAPH_RESULT' => '<img src="display_stats.php?pages_year=1&amp;year=' . $pages_year . '" alt="" />'
+					'GRAPH_RESULT' => '<img src="display_stats.php?pages_year=1&amp;year=' . $pages_year . '" alt="' . $LANG['total_visit'] . '" />'
 				));
 				
 				//On fait la liste des visites journalières
@@ -817,7 +817,7 @@ else
 					'STATS_DAY' => $days,
 					'STATS_MONTH' => $months,
 					'STATS_YEAR' => $years,
-					'GRAPH_RESULT' => '<img src="display_stats.php?pages_day=1&amp;year=' . $year . '&amp;month=' . $month . '&amp;day=' . $day . '" alt="" />'
+					'GRAPH_RESULT' => '<img src="display_stats.php?pages_day=1&amp;year=' . $year . '&amp;month=' . $month . '&amp;day=' . $day . '" alt="' . $LANG['total_visit'] . '" />'
 				));
 
 				//On fait la liste des visites journalières
@@ -898,7 +898,7 @@ else
 				if (@extension_loaded('gd'))
 				{
 					$tpl->put_all(array(
-					'GRAPH_RESULT' => '<img src="display_stats.php?pages_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
+					'GRAPH_RESULT' => '<img src="display_stats.php?pages_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="' . $LANG['total_visit'] . '" />'
 					));
 						
 					//On fait la liste des visites journalières
@@ -1134,7 +1134,7 @@ else
 		{
 			$tpl->put_all(array(
 				'C_STATS_BROWSERS' => true,
-				'GRAPH_RESULT' => '<img src="display_stats.php?browsers=1" alt="" />',
+				'GRAPH_RESULT' => '<img src="display_stats.php?browsers=1" alt="' . $LANG['browser_s'] . '" />',
 				'L_BROWSERS' => $LANG['browser_s'],
 				'L_COLORS' => $LANG['colors'],
 				'L_PERCENTAGE' => $LANG['percentage']
@@ -1147,7 +1147,7 @@ else
 		{
 			$tpl->put_all(array(
 				'C_STATS_OS' => true,
-				'GRAPH_RESULT' => '<img src="display_stats.php?os=1" alt="" />',
+				'GRAPH_RESULT' => '<img src="display_stats.php?os=1" alt="' . $LANG['os'] . '" />',
 				'L_OS' => $LANG['os'],
 				'L_COLORS' => $LANG['colors'],
 				'L_PERCENTAGE' => $LANG['percentage']
@@ -1160,7 +1160,7 @@ else
 		{
 			$tpl->put_all(array(
 				'C_STATS_LANG' => true,
-				'GRAPH_RESULT' => '<img src="display_stats.php?lang=1" alt="" />',
+				'GRAPH_RESULT' => '<img src="display_stats.php?lang=1" alt="' . $LANG['stat_lang'] . '" />',
 				'L_LANG' => $LANG['stat_lang'],
 				'L_COLORS' => $LANG['colors'],
 				'L_PERCENTAGE' => $LANG['percentage']
