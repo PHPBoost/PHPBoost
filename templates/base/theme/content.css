@@ -518,6 +518,9 @@ body.dragging, body.dragging * {
 	opacity: 0.6;
 }
 
+.preview img {
+	overflow: hidden;
+}
 
 /* -- Modules minis -- */
 /* ------------------- */

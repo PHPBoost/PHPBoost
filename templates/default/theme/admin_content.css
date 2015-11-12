@@ -441,6 +441,11 @@ body.dragging, body.dragging * {
 	opacity: 0.6;
 }
 
+.preview img {
+	overflow: hidden;
+}
+
+
 /* --- Page d'accueil ========================================================== */
 .welcome {
 	overflow: hidden;
