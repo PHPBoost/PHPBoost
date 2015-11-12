@@ -3,7 +3,7 @@
  *                             TextHelper.class.php
  *                            -------------------
  *   begin                : Januar 21, 2010
- *   copyright            : (C) 2010 Régis Viarre
+ *   copyright            : (C) 2010 RÃ©gis Viarre
  *   email                : crowkait@phpboost.com
  *
  *
@@ -27,7 +27,7 @@
 
 /**
  * @desc Text helper
- * @author Régis Viarre <crowkait@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>
  * @package {@package}
  */
 class TextHelper
@@ -35,8 +35,8 @@ class TextHelper
 	const HTML_NO_PROTECT = false;
 	const HTML_PROTECT = true;
 
-	const ADDSLASHES_FORCE = 1; //Force l'échappement des caractères critique
-	const ADDSLASHES_NONE = 2; //Aucun échappement
+	const ADDSLASHES_FORCE = 1; //Force l'Ã©chappement des caractÃ¨res critique
+	const ADDSLASHES_NONE = 2; //Aucun Ã©chappement
 
 	/**
 	 * @desc Protects an input variable. Never trust user input!
@@ -62,11 +62,11 @@ class TextHelper
 		{
 			case self::ADDSLASHES_FORCE:
 			default:
-				//On force l'échappement de caractères
+				//On force l'Ã©chappement de caractÃ¨res
 				$var = addslashes($var);
 				break;
 			case self::ADDSLASHES_NONE:
-				//On ne touche pas la chaîne
+				//On ne touche pas la chaÃ®ne
 				$var = stripslashes($var);
 				break;
 		}
@@ -137,7 +137,7 @@ class TextHelper
 		addcslashes($string, '"')) . $bounds;
 	}
 	
-	public static function htmlspecialchars($string, $flags = null, $encoding = 'ISO-8859-1', $double_encode = true)
+	public static function htmlspecialchars($string, $flags = null, $encoding = 'windows-1252', $double_encode = true)
 	{
 		if ($flags === null)
 		{
@@ -155,7 +155,7 @@ class TextHelper
 		return htmlspecialchars_decode($string, $flags);
 	}
 	
-	public static function htmlentities($string, $flags = null, $encoding = 'ISO-8859-1', $double_encode = true)
+	public static function htmlentities($string, $flags = null, $encoding = 'windows-1252', $double_encode = true)
 	{
 		if ($flags === null)
 		{
@@ -164,7 +164,7 @@ class TextHelper
 		return htmlentities($string, $flags, $encoding, $double_encode);
 	}
 	
-	public static function html_entity_decode($string, $flags = null, $encoding = 'ISO-8859-1')
+	public static function html_entity_decode($string, $flags = null, $encoding = 'windows-1252')
 	{
 		if ($flags === null)
 		{
