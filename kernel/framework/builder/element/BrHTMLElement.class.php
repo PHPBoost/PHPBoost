@@ -33,7 +33,7 @@ class BrHTMLElement extends AbstractHTMLElement
 {
 	public function display()
 	{
-		return '</br>';
+		return '<br/>';
 	}
 }
 ?>
