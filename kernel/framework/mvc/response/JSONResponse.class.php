@@ -44,7 +44,7 @@ class JSONResponse implements Response
 	public function send()
 	{
 		$response = AppContext::get_response();
-		$response->set_header('Content-type', 'application/json; charset=iso-8859-1');
+		$response->set_header('Content-type', 'application/json; charset=windows-1252');
 		echo $this->json;
 	}
 }

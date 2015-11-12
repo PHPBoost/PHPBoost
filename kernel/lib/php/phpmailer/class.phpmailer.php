@@ -44,7 +44,7 @@ class PHPMailer
      * The character set of the message.
      * @type string
      */
-    public $CharSet = 'iso-8859-1';
+    public $CharSet = 'windows-1252';
 
     /**
      * The MIME Content-type of the message.

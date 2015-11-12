@@ -50,7 +50,7 @@ class HTTPFatalExceptionPrinter
 <html lang="en">
 	<head>
 		<title>' . $this->type . ' caught</title>
-		<meta charset="iso-8859-1" />
+		<meta charset="windows-1252" />
 		<style type="text/css">
 			body {background-color:#dddddd;}
 			table {width:100%;}
