@@ -114,7 +114,7 @@
 											</td>
 											<td class="no-separator">
 												# START votes #
-												<label><input type="text" name="v{votes.ID}" value="{votes.VOTES}" /> {votes.PERCENT}</label><br />
+												<label><input class="poll-vote" type="text" name="v{votes.ID}" value="{votes.VOTES}" /> {votes.PERCENT}</label><br />
 												# END votes #
 												<span id="v{MAX_ID}"></span>
 											</td>

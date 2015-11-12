@@ -111,11 +111,11 @@
 												<span id="a5"></span>
 											</td>
 											<td class="no-separator">
-												<label><input type="text" name="v0" value="{VOTES0}" /> {PERCENT0}</label><br />
-												<label><input type="text" name="v1" value="{VOTES1}" /> {PERCENT1}</label><br />
-												<label><input type="text" name="v2" value="{VOTES2}" /> {PERCENT2}</label><br />
-												<label><input type="text" name="v3" value="{VOTES3}" /> {PERCENT3}</label><br />
-												<label><input type="text" name="v4" value="{VOTES4}" /> {PERCENT4}</label><br />
+												<label><input class="poll-vote" type="text" name="v0" value="{VOTES0}" /> {PERCENT0}</label><br />
+												<label><input class="poll-vote" type="text" name="v1" value="{VOTES1}" /> {PERCENT1}</label><br />
+												<label><input class="poll-vote" type="text" name="v2" value="{VOTES2}" /> {PERCENT2}</label><br />
+												<label><input class="poll-vote" type="text" name="v3" value="{VOTES3}" /> {PERCENT3}</label><br />
+												<label><input class="poll-vote" type="text" name="v4" value="{VOTES4}" /> {PERCENT4}</label><br />
 												<span id="v5"></span>
 											</td>
 										</tr>

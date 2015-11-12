@@ -17,6 +17,10 @@
 	text-align: left;
 }
 
+.poll-vote {
+    width: 80% !important;
+}
+
 input[type="text"] {
     border: 1px solid #d4d4d4;
 }
