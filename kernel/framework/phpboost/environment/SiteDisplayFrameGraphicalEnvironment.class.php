@@ -32,7 +32,7 @@
  */
 class SiteDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvironment
 {
-	private static $main_lang;
+	private $display_css_login = false;
 	
 	public function __construct()
 	{
@@ -52,6 +52,7 @@ class SiteDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvir
 		$description = $this->get_seo_meta_data()->get_full_description();
 		$template->put_all(array(
 			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
+			'C_CSS_LOGIN_DISPLAYED' => $this->display_css_login,
 			'C_FAVICON' => $customization_config->favicon_exists(),
 			'C_CANONICAL_URL' => $this->get_seo_meta_data()->canonical_link_exists(),
 			'C_DESCRIPTION' => !empty($description),
@@ -69,6 +70,11 @@ class SiteDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvir
 		));
 		
 		$template->display(true);
+	}
+	
+	public function display_css_login()
+	{
+		$this->display_css_login = true;
 	}
 }
 ?>

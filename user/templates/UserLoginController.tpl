@@ -64,7 +64,7 @@
 			</div>
 
 			# IF NOT C_HAS_ERROR #
-			<p class="center" style="margin-bottom:40px;">
+			<p class="center">
 				<a href="" id="connect" onclick="jQuery('#loginForm').toggle();return false;">${LangLoader::get_message('connection', 'user-common')}</a>
 			</p>
 			
@@ -80,39 +80,6 @@
 
 		# INCLUDE ERROR_MESSAGE #
 		# INCLUDE LOGIN_FORM #
-		
-		<style>
-		<!--
-		.fieldset-content {
-			margin: 0px auto;
-			width: 450px;
-			max-width: 100%;
-		}
-		
-		body {
-			background: #E8EDF3;
-			height: 100%;
-			margin: 0;
-			padding: 0;
-		}
-		
-		div#global {
-			padding: 20px;
-			border-spacing: 1px;
-			border: 1px #bebebe solid;
-			background: #ffffff;
-			min-height: 0;
-			position: relative;
-			top: 30%
-		}
-		
-		@media ( max-width: 768px ) {
-			div#global {
-				top: 15%
-			}
-		}
-		-->
-		</style>
 	</div>
 
 # ENDIF #

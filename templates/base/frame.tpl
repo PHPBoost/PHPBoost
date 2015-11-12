@@ -21,6 +21,7 @@
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/cssmenu.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/form.css" type="text/css" media="screen, print" />
 		# ENDIF #
+		# IF C_CSS_LOGIN_DISPLAYED #<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/login.css" type="text/css" media="screen" /># ENDIF #
 
 		<!-- Modules CSS -->
 		{MODULES_CSS}
