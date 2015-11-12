@@ -421,7 +421,7 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 @media (min-width: 769px) {
 	.cssmenu ul ul li .cssmenu-title {
 		border-bottom: 1px solid rgba(150, 150, 150, 0.15);
-		width: 100%;
+		width: 170px;
 	}
 }
 
@@ -458,14 +458,24 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 }
 
 @media (max-width: 768px) {
-	.cssmenu ul ul li .cssmenu-title,
-	.cssmenu.cssmenu-actionslinks ul li ul li .cssmenu-title  {
+	.cssmenu ul.level-1 li .cssmenu-title,
+	.cssmenu.cssmenu-actionslinks ul.level-1 li .cssmenu-title  {
 		padding-left: 25px;
 	}
 	
-	.cssmenu ul ul ul li .cssmenu-title,
-	.cssmenu.cssmenu-actionslinks ul li ul li ul li .cssmenu-title  {
+	.cssmenu ul.level-2 li .cssmenu-title,
+	.cssmenu.cssmenu-actionslinks ul.level-2 li .cssmenu-title  {
 		padding-left: 35px;
+	}
+
+	.cssmenu ul.level-3 li .cssmenu-title,
+	.cssmenu.cssmenu-actionslinks ul.level-3 li.cssmenu-title  {
+		padding-left: 45px;
+	}
+
+	.cssmenu ul.level-4 li .cssmenu-title,
+	.cssmenu.cssmenu-actionslinks ul.level-4 li.cssmenu-title  {
+		padding-left: 55px;
 	}
 	
 	.cssmenu ul ul li .cssmenu-title {
