@@ -50,7 +50,7 @@
 			# IF PAGE_NAME #
 				<h2 class="title page_name">{PAGE_NAME}</h2>
 			# ENDIF #
-			<span itemprop="text" class="contents">{CONTENTS}</span>
+			<div itemprop="text" class="contents">{CONTENTS}</div>
 
 			<hr />
 
