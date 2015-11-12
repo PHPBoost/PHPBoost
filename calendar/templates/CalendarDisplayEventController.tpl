@@ -26,7 +26,7 @@
 				<meta itemprop="discussionUrl" content="{U_COMMENTS}">
 				<meta itemprop="interactionCount" content="{NUMBER_COMMENTS} UserComments">
 				# ENDIF #
-				<span itemprop="text">{CONTENTS}</span>
+				<div itemprop="text">{CONTENTS}</div>
 				
 				# IF C_LOCATION #
 				<div class="spacer"></div>
