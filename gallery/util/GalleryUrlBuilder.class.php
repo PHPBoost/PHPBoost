@@ -106,9 +106,8 @@ class GalleryUrlBuilder
 	// TODO : supprimer ce qui est en dessous si possible
 	public static function get_link_item($idcat, $id, $com = null, $sort = null)
 	{
-		return Url::to_absolute('/gallery/gallery'.url(
-			'.php?cat='.$idcat.'&id='.$id.(isset($com)?'&com='.$com:'').(isset($sort)?'&sort='.$sort:'') ,
-			'-'.$idcat.'-'.$id.'.php'.(isset($com)?'?com='.$com:'').(isset($sort)?'&sort='.$sort:'')));
+		return Url::to_absolute('/gallery/gallery' . url('.php?cat=' . $idcat . '&id=' . $id . (!empty($com) ? '&com=' . $com : '') . (!empty($sort) ? '&sort=' . $sort : ''),
+			'-' . $idcat . '-' . $id . '.php' . (!empty($com) ? '?com=' . $com : '') . (!empty($sort) ? '&sort=' . $sort : '')));
 	}
 	
 	public static function get_link_cat($id, $name = null)
