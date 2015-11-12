@@ -360,6 +360,8 @@ class TinyMCEParser extends ContentFormattingParser
 		{
 			array_push($array_preg, '`&lt;span style="( *)?text-decoration: line-through;( *)?"&gt;(.+)&lt;/span&gt;`isU');
 			array_push($array_preg_replace, '<s>$3</s>');
+			array_push($array_preg, '`&lt;s&gt;(.+)&lt;/s&gt;`isU');
+			array_push($array_preg_replace, '<s>$1</s>');
 		}
 		//Link tag
 		if (!in_array('url', $this->forbidden_tags))
