@@ -164,6 +164,26 @@ table.bt thead th{
 	display: none;
 }
 
+/* --- couleur des fleches de filtre --- */
+
+.table-arrow-color {
+	color:#81A4C8;
+}
+
+/* --- pagination des tables --- */
+
+.table-rows-options {
+	padding: 0 10px;
+}
+
+@media (min-width:981px){
+	
+	.table-navigation,
+	.table-rows-options {
+		float: right;
+	}
+}
+
 table.bt thead th:first-child{
 	display: block;
 	border-radius: 0;

@@ -21,11 +21,11 @@
 			# IF header_column.C_CSS_STYLE # style="{header_column.CSS_STYLE}"# ENDIF #>
 				
 				# IF header_column.C_SORTABLE #
-				<a href="{header_column.U_SORT_DESC}" title="{EL_DESCENDING}" class="fa fa-table-sort-up" # IF header_column.C_SORT_DESC_SELECTED # style="color:#000;" # ENDIF #></a>
+				<a href="{header_column.U_SORT_DESC}" title="{EL_DESCENDING}" class="fa fa-arrow-circle-up# IF header_column.C_SORT_DESC_SELECTED # table-arrow-color# ENDIF #"></a>
 				# ENDIF #
 				{header_column.NAME}
 				# IF header_column.C_SORTABLE #
-				<a href="{header_column.U_SORT_ASC}" title="{EL_ASCENDING}" class="fa fa-table-sort-down" # IF header_column.C_SORT_ASC_SELECTED # style="color:#000;" # ENDIF #></a>
+				<a href="{header_column.U_SORT_ASC}" title="{EL_ASCENDING}" class="fa fa-arrow-circle-down# IF header_column.C_SORT_ASC_SELECTED # table-arrow-color# ENDIF #"></a>
 				# ENDIF #
 			</th>
 			# END header_column #
@@ -43,7 +43,7 @@
 				</div>
 				# IF C_PAGINATION_ACTIVATED #
 					# IF C_NB_ROWS_OPTIONS #
-					<div style="float:right;padding:0 10px;">
+					<div class="table-rows-options">
 						<select name="nbItemsPerPage" onchange="window.location=this.value">
 							# START nbItemsOption #
 							<option value="{nbItemsOption.URL}"
@@ -54,7 +54,7 @@
 						</select>
 					</div>
 					# END IF #
-					<div style="float:right;">
+					<div class="table-pagination">
 						# INCLUDE pagination #
 					</div>
 				# ENDIF #
