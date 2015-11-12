@@ -762,3 +762,32 @@ div#release {
 #module-user-moderation-panel .content {
 	padding-bottom: 75px;
 }
+
+.contribution-module-container {
+	float: left;
+	text-align: center;
+	margin: 20px 0px;
+}
+
+.convers-announce {
+	padding-right: 0px;
+}
+
+.convers-title {
+	width: 50%;
+	text-align: left;
+}
+
+table.announce-legend td {
+	width: 33%;
+}
+
+.post-pm {
+	width: 80%;
+	margin: auto;
+}
+
+.available-modules-msg {
+	text-align: center;
+	margin-bottom: 15px;
+}

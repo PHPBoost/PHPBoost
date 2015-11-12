@@ -145,7 +145,7 @@
 					
 					# START row #
 						# START row.module #
-							<div style="float:left;width:{row.module.WIDTH}%;text-align:center;margin:20px 0px;">
+							<div class="contribution-module-container" style="width:{row.module.WIDTH}%;">
 								<a href="{row.module.U_MODULE_LINK}" title="{row.module.LINK_TITLE}"><img src="{PATH_TO_ROOT}/{row.module.MODULE_ID}/{row.module.MODULE_ID}.png" alt="{row.module.LINK_TITLE}" /></a>
 								<br />
 								<a href="{row.module.U_MODULE_LINK}" title="{row.module.LINK_TITLE}">{row.module.MODULE_NAME}</a>

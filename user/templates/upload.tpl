@@ -335,7 +335,7 @@
 					<fieldset>
 						<legend>{L_ADD_FILES}</legend>
 						<div class="form-element">
-							<div class="form-field" style="width:auto;">
+							<div class="form-field">
 								<input type="file" name="upload_file" id="upload-file">
 								<input type="hidden" name="max_file_size" value="2000000">
 							</div>
@@ -356,7 +356,7 @@
 			</div>
 			<div class="spacer"></div>
 			# IF C_DISPLAY_CLOSE_BUTTON #
-			<fieldset class="fieldset-submit" style="width:96%;margin:auto;">
+			<fieldset class="fieldset-submit">
 				<legend>${LangLoader::get_message('close', 'main')}</legend>
 				<button type="reset" onclick="javascript:close_popup()" value="true">${LangLoader::get_message('close', 'main')}</button>
 			</fieldset>

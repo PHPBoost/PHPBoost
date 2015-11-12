@@ -107,10 +107,10 @@
 								<td>
 									<input type="checkbox" id="d{convers.list.INCR}" name="{convers.list.ID}">
 								</td>
-								<td style="padding-right:0px;">
+								<td class="convers-announce">
 									<i class="fa fa-envelope {convers.list.ANNOUNCE}"></i>
 								</td>
-								<td style="width:50%;text-align:left;" class="no-separator">
+								<td class="convers-title no-separator">
 									{convers.list.ANCRE} <a href="pm{convers.list.U_CONVERS}">{convers.list.TITLE}</a> &nbsp;<span class="smaller">[{convers.list.U_AUTHOR}]</span>
 								</td>
 								<td>
@@ -135,15 +135,15 @@
 						</tbody>
 					</table>
 					<br />
-					<table>
+					<table class="announce-legend">
 						<tr>
-							<td style="width:33%;"> 
+							<td> 
 								<i class="fa fa-envelope message-announce"></i> {L_READ} 
 							</td>
-							<td style="width:34%;" class="no-separator">  
+							<td class="no-separator">  
 								<i class="fa fa-envelope message-announce-track"></i> {L_TRACK}
 							</td>
-							<td style="width:33%;" class="no-separator">  
+							<td class="no-separator">  
 								<i class="fa fa-envelope message-announce-new"></i> {L_NOT_READ}
 							</td>
 						</tr>
@@ -209,7 +209,7 @@
 		# START post_pm #
 		# INCLUDE message_helper #
 		<span id="quote"></span>
-		<form action="pm{post_pm.U_PM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" style="width:80%;margin:auto">
+		<form action="pm{post_pm.U_PM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" class="post-pm">
 			<legend>{L_RESPOND}</legend>
 			<div class="form-element-textarea">
 				{KERNEL_EDITOR}

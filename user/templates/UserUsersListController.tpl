@@ -6,7 +6,7 @@
 		# IF C_ARE_GROUPS #
 		<table>
 			<tr>
-				<td style="vertical-align:top;">
+				<td class="valign-top">
 					# INCLUDE SELECT_GROUP #
 				</td>
 			</tr>

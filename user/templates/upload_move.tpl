@@ -18,30 +18,30 @@
 			<form action="{TARGET}" method="post">
 				<div class="upload-elements-container">
 					# START folder #
-						<div style="float:left;width:33%;text-align:center;">
+						<div class="upload-elements-move-folder">
 							<i class="fa fa-folder"></i> {folder.NAME}
 						</div>
 					# END folder #
 							
 					# START file #
-						<div style="float:left;width:33%;text-align:center;">
+						<div class="upload-elements-move-file">
 							# IF file.C_DISPLAY_REAL_IMG #
-								<img src="{PATH_TO_ROOT}/upload/{file.FILE_ICON}" alt="{file.NAME}" style="width:100px;height:auto;" />
+								<img src="{PATH_TO_ROOT}/upload/{file.FILE_ICON}" alt="{file.NAME}"/>
 							# ELSE #
 								<i class="fa {file.FILE_ICON}"></i>
 							# ENDIF #
-							{file.NAME}
+							<br />{file.NAME}<br />
 							<span class="smaller">{file.FILETYPE}</span><br />
 							<span class="smaller">{file.SIZE}</span><br />
 						</div>
 					# END file #
 					
-					<div style="float:left;width:33%;text-align:center;">
+					<div class="upload-elements-move-to">
 						<strong>{L_MOVE_TO}</strong>
 						<br />
 						<i class="fa fa-arrow-right"></i>
 					</div>
-					<div style="float:left;width:33%;text-align:center;">
+					<div class="upload-elements-move-to-cat">
 							<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/upload.js"></script>
 							<script>
 							<!--
@@ -49,7 +49,7 @@
 								var selected_cat = {SELECTED_CAT};
 							-->
 							</script>
-							<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><i class="fa fa-home"></i> <span id="class_0" class="{CAT_0}">{L_ROOT}</span></a></span>
+							<span class="upload-root-cat"><a href="javascript:select_cat(0);"><i class="fa fa-home"></i> <span id="class_0" class="{CAT_0}">{L_ROOT}</span></a></span>
 							<br />
 							{FOLDERS}
 					</div>

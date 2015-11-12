@@ -39,7 +39,7 @@ $root = $request->get_getvalue('root', false);
 //Listage des répertoires dont le répertoire parent est connu
 if ($id_cat != 0)
 {
-	echo '<ul style="margin:0;padding:0;list-style-type:none;padding-left:30px;">';
+	echo '<ul class="upload-cat-explorer">';
 	//On sélectionne les répertoires dont l'id parent est connu
 	$result = PersistenceContext::get_querier()->select("SELECT id, id_parent, name
 		FROM " . PREFIX . "upload_cat
@@ -56,7 +56,7 @@ if ($id_cat != 0)
 		if ($sub_cats_number > 0)
 			echo '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="fa fa-plus-square-o" id="img2_' . $row['id'] . '"></a> <a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="fa fa-folder" id="img_' . $row['id'] . '"></a>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>';
 		else //Sinon on n'affiche pas le "+"
-			echo '<li style="padding-left:17px;"><i class="fa fa-folder"></i>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span></li>';
+			echo '<li class="upload-no-sub-cat"><i class="fa fa-folder"></i>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span></li>';
 	}
 	$result->dispose();
 	echo '</ul>';

@@ -4,7 +4,7 @@
 	</header>
 	<div class="content">
 		# START available_modules_msg #
-		<p style="text-align:center;margin-bottom:15px;"> 
+		<p class="available-modules-msg"> 
 			<a href="{available_modules_msg.U_LINK_USER_MSG}">
 			# IF available_modules_msg.C_IMG_USER_MSG #
 			{available_modules_msg.IMG_USER_MSG}
