@@ -72,7 +72,7 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 	
 	protected function create_form()
 	{
-		$form = new HTMLForm('comments', $this->comments_topic->get_url() . '#comments-list');
+		$form = new HTMLForm('comments', TextHelper::htmlentities($this->comments_topic->get_url()) . '#comments-list');
 		$fieldset = new FormFieldsetHTML('add_comment', $this->comments_lang['comment.add']);
 		$form->add_fieldset($fieldset);
 		
