@@ -37,7 +37,7 @@ function display_calendar(divID)
 		clearTimeout(timeout_calendar);
 	
 	var block = document.getElementById('calendar' + divID );
-	if (block.style.display == 'none')
+	if (block.style.display != 'block')
 	{
 		if( previous_calendar != '' && document.getElementById(previous_calendar) )
 			document.getElementById(previous_calendar).style.display = 'none';

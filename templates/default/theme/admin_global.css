@@ -143,6 +143,12 @@ ul, ol {
 	border-radius: 3px;
 }
 
+@media (min-width: 769px) {
+	.calendar-block {
+		width: 300px;
+	}
+}
+
 .calendar-block .date-picker {
 	margin: 0;
 	width: 100% !important;
@@ -160,7 +166,7 @@ ul, ol {
 	border-radius: 3px 3px 0px 0px;
 }
 
-@media (max-width:768px){
+@media (max-width: 768px) {
 	.calendar-block .date-select-container {
 		font-size: 1.5em;
 	}
