@@ -32,7 +32,7 @@
 						
 						now = new Date({MAINTAIN_NOW_FORMAT}+release_timeout_seconds++);
 						end = new Date(year, month, day, hour, minute, second);
-							
+						
 						release_time = (end.getTime() - now.getTime())/1000;
 						if( release_time <= 0 )
 						{
@@ -41,19 +41,19 @@
 						}
 						else
 							timeout = setTimeout('release('+year+', '+month+', '+day+', '+hour+', '+minute+', '+second+')', 1000);
-						
+							
 							release_days = Math.floor(release_time/sp_day);
 							release_time -= (release_days * sp_day);
-									
+							
 							release_hours = Math.floor(release_time/sp_hour);
 							release_time -= (release_hours * sp_hour);
-						
+							
 							release_minutes = Math.floor(release_time/sp_minute);
 							release_time -= (release_minutes * sp_minute);
-				
+							
 							release_seconds = Math.floor(release_time);
 							release_seconds = (release_seconds < 10) ? '0' + release_seconds : release_seconds;
-								
+							
 							document.getElementById('release').innerHTML = '<strong>' + release_days + '</strong> ${LangLoader::get_message('days', 'date-common')} <strong>' + release_hours + '</strong> ${LangLoader::get_message('hours', 'date-common')} <strong>' + release_minutes + '</strong> ${LangLoader::get_message('minutes', 'date-common')} <strong>' + release_seconds + '</strong> ${LangLoader::get_message('seconds', 'date-common')}';
 					}
 				}
@@ -65,14 +65,16 @@
 
 			# IF NOT C_HAS_ERROR #
 			<p class="center" style="margin-bottom:40px;">
-				<a href="#" id="connect" onclick="javascript:document.getElementById('loginForm').style.display='block';">${LangLoader::get_message('connection', 'user-common')}</a>
+				<a href="" id="connect" onclick="jQuery('#loginForm').toggle();return false;">${LangLoader::get_message('connection', 'user-common')}</a>
 			</p>
 			
-			<style>
+			<script>
 			<!--
-				form#loginForm, form#loginForm.fieldset-content p { display:none; }
+				jQuery(document).ready(function() {
+					jQuery('#loginForm').hide();
+				});
 			-->
-			</style>
+			</script>
 			# ENDIF #
 		# ENDIF #
 
