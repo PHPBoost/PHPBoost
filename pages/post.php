@@ -35,17 +35,19 @@ if (AppContext::get_current_user()->is_readonly())
 	DispatchManager::redirect($controller);
 }
 
+$request = AppContext::get_request();
+
 $id_edit = retrieve(GET, 'id', 0);
 $id_edit_post = retrieve(POST, 'id_edit', 0);
 $id_edit = $id_edit > 0 ? $id_edit : $id_edit_post;
 $title = retrieve(POST, 'title', '');
 $contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
-$count_hits = retrieve(POST, 'count_hits', 0);
-$enable_com = retrieve(POST, 'comments_activated', 0);
+$count_hits = (int)($request->has_postparameter('count_hits') && $request->get_value('count_hits') == 'on');
+$enable_com = (int)($request->has_postparameter('comments_activated') && $request->get_value('comments_activated') == 'on');
 $own_auth = retrieve(POST, 'own_auth', '');
-$is_cat = retrieve(POST, 'is_cat', 0);
+$is_cat = (int)($request->has_postparameter('is_cat') && $request->get_value('is_cat') == 'on');
 $id_cat = retrieve(POST, 'id_cat', 0);
-$display_print_link = retrieve(POST, 'display_print_link', 0);
+$display_print_link = (int)($request->has_postparameter('display_print_link') && $request->get_value('display_print_link') == 'on');
 $preview = retrieve(POST, 'preview', false);
 $del_article = retrieve(GET, 'del', 0);
 
@@ -86,19 +88,19 @@ else
 	
 require_once('../kernel/header.php');
 
-//On crée ou on édite une page
+//On crÃ©e ou on Ã©dite une page
 if (!empty($contents))
 {
 	if ($own_auth)
 	{
-		//Génération du tableau des droits.
+		//GÃ©nÃ©ration du tableau des droits.
 		$array_auth_all = Authorizations::build_auth_array_from_form(READ_PAGE, EDIT_PAGE, READ_COM);
 		$page_auth = addslashes(serialize($array_auth_all));
 	}
 	else
 		$page_auth = '';
 	
-	//on ne prévisualise pas, donc on poste le message ou on l'édite
+	//on ne prÃ©visualise pas, donc on poste le message ou on l'Ã©dite
 	if (!$preview)
 	{
 		//Edition d'une page
@@ -111,48 +113,48 @@ if (!empty($contents))
 				DispatchManager::redirect($error_controller);
 			}
 			
-			//Autorisation particulière ?
+			//Autorisation particuliÃ¨re ?
 			$special_auth = !empty($page_infos['auth']);
 			$array_auth = unserialize($page_infos['auth']);
-			//Vérification de l'autorisation d'éditer la page
+			//VÃ©rification de l'autorisation d'Ã©diter la page
 			if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
 				AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
 			
-			//on vérifie que la catégorie ne s'insère pas dans un de ses filles
+			//on vÃ©rifie que la catÃ©gorie ne s'insÃ¨re pas dans un de ses filles
 			if ($page_infos['is_cat'] == 1)
 			{
 				$sub_cats = array();
 				pages_find_subcats($sub_cats, $page_infos['id_cat']);
 				$sub_cats[] = $page_infos['id_cat'];
-				if (in_array($id_cat, $sub_cats)) //Si l'ancienne catégorie ne contient pas la nouvelle (sinon boucle infinie)
+				if (in_array($id_cat, $sub_cats)) //Si l'ancienne catÃ©gorie ne contient pas la nouvelle (sinon boucle infinie)
 					$error = 'cat_contains_cat';
 			}
 			
-			//Articles (on édite l'entrée de l'article pour la catégorie donc aucun problème)
+			//Articles (on Ã©dite l'entrÃ©e de l'article pour la catÃ©gorie donc aucun problÃ¨me)
 			if ($page_infos['is_cat'] == 0)
 			{		
-				//On met à jour la table
+				//On met Ã  jour la table
 				PersistenceContext::get_querier()->update(PREFIX . 'pages', array('contents' => pages_parse($contents), 'count_hits' => $count_hits, 'activ_com' => $enable_com, 'auth' => $page_auth, 'id_cat' => $id_cat, 'display_print_link' => $display_print_link), 'WHERE id = :id', array('id' => $id_edit));
-				//On redirige vers la page mise à jour
+				//On redirige vers la page mise Ã  jour
 				AppContext::get_response()->redirect('/pages/' . url('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title'], '&'));
 			}
-			//catégories : risque de boucle infinie
+			//catÃ©gories : risque de boucle infinie
 			elseif ($page_infos['is_cat'] == 1 && empty($error))
 			{
-				//Changement de catégorie mère ? => on met à jour la table catégories
+				//Changement de catÃ©gorie mÃ¨re ? => on met Ã  jour la table catÃ©gories
 				if ($id_cat != $page_infos['id_cat'])
 				{
 					PersistenceContext::get_querier()->update(PREFIX . 'pages_cats', array('id_parent' => $id_cat), 'WHERE id = :id', array('id' => $page_infos['id_cat']));
 				}
-				//On met à jour la table
+				//On met Ã  jour la table
 				PersistenceContext::get_querier()->update(PREFIX . 'pages', array('contents' => pages_parse($contents), 'count_hits' => $count_hits, 'activ_com' => $enable_com, 'auth' => $page_auth, 'display_print_link' => $display_print_link), 'WHERE id = :id', array('id' => $id_edit));
-				//Régénération du cache
+				//RÃ©gÃ©nÃ©ration du cache
 				PagesCategoriesCache::invalidate();
-				//On redirige vers la page mise à jour
+				//On redirige vers la page mise Ã  jour
 				AppContext::get_response()->redirect('/pages/' . url('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title'], '&'));
 			}
 		}
-		//Création d'une page
+		//CrÃ©ation d'une page
 		elseif (!empty($title))
 		{
 			if (!AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))
@@ -161,21 +163,21 @@ if (!empty($contents))
 			$encoded_title = Url::encode_rewrite($title);
 			$is_already_page = PersistenceContext::get_querier()->count(PREFIX . "pages", 'WHERE encoded_title=:encoded_title', array('encoded_title' => $encoded_title));
 			
-			//Si l'article n'existe pas déjà, on enregistre
+			//Si l'article n'existe pas dÃ©jÃ , on enregistre
 			if ($is_already_page == 0)
 			{
 				$result = PersistenceContext::get_querier()->insert(PREFIX . 'pages', array('title' => $title, 'encoded_title' => $encoded_title, 'contents' => pages_parse($contents), 'user_id' => AppContext::get_current_user()->get_id(), 'count_hits' => $count_hits, 'activ_com' => $enable_com, 'timestamp' => time(), 'auth' => $page_auth, 'is_cat' => $is_cat, 'id_cat' => $id_cat, 'display_print_link' => $display_print_link));
-				//Si c'est une catégorie
+				//Si c'est une catÃ©gorie
 				if ($is_cat > 0)
 				{
 					$last_id_page = $result->get_last_inserted_id();  
 					$result = PersistenceContext::get_querier()->insert(PREFIX . 'pages_cats', array('id_parent' => $id_cat, 'id_page' => $last_id_page));
 					$last_id_pages_cat = $result->get_last_inserted_id();
 					PersistenceContext::get_querier()->update(PREFIX . 'pages', array('id_cat' => $last_id_pages_cat), 'WHERE id = :id', array('id' => $last_id_page));
-					//Régénération du cache
+					//RÃ©gÃ©nÃ©ration du cache
 					PagesCategoriesCache::invalidate();
 				}
-				//On redirige vers la page mise à jour
+				//On redirige vers la page mise Ã  jour
 				AppContext::get_response()->redirect('/pages/' . url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 			}
 			//Sinon, message d'erreur
@@ -191,7 +193,7 @@ if (!empty($contents))
 //Suppression d'une page
 elseif ($del_article > 0)
 {
-    //Vérification de la validité du jeton
+    //VÃ©rification de la validitÃ© du jeton
     AppContext::get_session()->csrf_get_protect();
     
 	try {
@@ -201,7 +203,7 @@ elseif ($del_article > 0)
 		DispatchManager::redirect($error_controller);
 	}
 	
-	//Autorisation particulière ?
+	//Autorisation particuliÃ¨re ?
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
@@ -223,10 +225,10 @@ $tpl = new FileTemplate('pages/post.tpl');
 
 if ($id_edit > 0)
 {
-	//Autorisation particulière ?
+	//Autorisation particuliÃ¨re ?
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
-	//Vérification de l'autorisation d'éditer la page
+	//VÃ©rification de l'autorisation d'Ã©diter la page
 	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
 		AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
 	
@@ -242,9 +244,9 @@ if ($id_edit > 0)
 		));
 	}
 
-	//Génération de l'arborescence des catégories
+	//GÃ©nÃ©ration de l'arborescence des catÃ©gories
 	$cats = array();
-	//numéro de la catégorie de la page ou de la catégorie
+	//numÃ©ro de la catÃ©gorie de la page ou de la catÃ©gorie
 	$id_cat_display = $page_infos['is_cat'] == 1 ? $categories[$page_infos['id_cat']]['id_parent'] : $page_infos['id_cat'];
 	$cat_list = display_pages_cat_explorer($id_cat_display, $cats, 1);
 	
@@ -266,7 +268,7 @@ else
 	if (!AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))
 		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 		
-	//La page existe déjà !
+	//La page existe dÃ©jÃ  !
 	if ($error == 'page_already_exists')
 		$tpl->put('message_helper', MessageHelper::display($LANG['pages_already_exists'], MessageHelper::WARNING));
 	elseif ($error == 'preview')
@@ -285,7 +287,7 @@ else
 	
 	$tpl->assign_block_vars('create', array());
 	
-	//Génération de l'arborescence des catégories
+	//GÃ©nÃ©ration de l'arborescence des catÃ©gories
 	$cats = array();
 	$cat_list = display_pages_cat_explorer(0, $cats, 1);
 	$current_cat = $LANG['pages_root'];
@@ -297,7 +299,8 @@ else
 		'OWN_AUTH_CHECKED' => '',
 		'CAT_0' => 'selected',
 		'ID_CAT' => '0',
-		'SELECTED_CAT' => '0'
+		'SELECTED_CAT' => '0',
+		'CHECK_IS_CAT' => ($is_cat == 1 ? 'checked="checked"' : '')
 	));
 }
 
