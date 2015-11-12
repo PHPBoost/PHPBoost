@@ -23,7 +23,9 @@
 }
 
 #recaptcha-container span,
-#recaptcha-container div { margin: 5px; }
+#recaptcha-container div {
+	margin: 5px;
+}
 
 #recaptcha-container input {
 	width: 100%;
@@ -32,15 +34,22 @@
 	border-radius: 0 0 0 4px;
 }
 
-#recaptcha-image {
+#recaptcha_image {
 	width: 96% !important;
 	height: auto !important;
 	max-width: 100%;
 }
 
-#recaptcha-image img { width: 100%; }
+#recaptcha_image img {
+	width: 100%;
+}
 
 @media ( max-width: 768px ) {
-	.g-recaptcha div { width: 100% !important; }
-	.g-recaptcha iframe { max-width: 100%; }
+	.g-recaptcha div {
+		width: 100% !important;
+	}
+	
+	.g-recaptcha iframe {
+		max-width: 100%;
+	}
 }
