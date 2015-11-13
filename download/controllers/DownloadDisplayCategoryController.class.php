@@ -182,6 +182,7 @@ class DownloadDisplayCategoryController extends ModuleController
 			'CATS_COLUMNS_WIDTH' => $cats_columns_width,
 			'PAGINATION' => $pagination->display(),
 			'TABLE_COLSPAN' => 4 + (int)$this->config->are_comments_enabled() + (int)$this->config->is_notation_enabled(),
+			'ID_CAT' => $this->get_category()->get_id(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),
 			'CATEGORY_DESCRIPTION' => $category_description,
