@@ -1,4 +1,4 @@
-/* Surcharge de la classe notes pour passer à la ligne et ne pas deformer les tableaux */
+/* Surcharge de la classe notes pour passer Ã  la ligne et ne pas deformer les tableaux */
 .notes{ white-space: nowrap; }
 
 #scrolling_images {
@@ -100,4 +100,8 @@ ul {
 .pics-list-element {
 	margin-bottom: 20px;
 	padding: 0 5px;
+}
+
+.article-gallery > header {
+	display:none;
 }
