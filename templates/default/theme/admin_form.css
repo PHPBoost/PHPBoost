@@ -873,7 +873,6 @@ div.field-required:after {
 	cursor: pointer;
 }
 
-
 .autocomplete-selected {
 	background-color: #F0F0F0;
 }
@@ -897,4 +896,8 @@ div.field-required:after {
 	margin-left: -1px;
 	border-radius: 0 4px 4px 0;
 	padding: 4px 8px;
+}
+
+.form-element .fa-calendar {
+    cursor: pointer;
 }
