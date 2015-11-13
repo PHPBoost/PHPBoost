@@ -24,6 +24,7 @@
 				# END menus_sub_header #
 			# ENDIF #
 			</div>
+			<div class="spacer"></div>
 		</div>
 		<div class="spacer"></div>
 	</header>
