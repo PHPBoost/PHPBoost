@@ -486,10 +486,12 @@ class Article
 			'USER_GROUP_COLOR' => $user_group_color,
 			
 			//Category
+			'C_ROOT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY,
 			'CATEGORY_ID' => $category->get_id(),
 			'CATEGORY_NAME' => $category->get_name(),
 			'CATEGORY_DESCRIPTION' => $category->get_description(),
 			'CATEGORY_IMAGE' => $category->get_image()->rel(),
+			'U_EDIT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY ? ArticlesUrlBuilder::configuration()->rel() : ArticlesUrlBuilder::edit_category($category->get_id())->rel(),
 			
 			//Links
 			'U_COMMENTS' => ArticlesUrlBuilder::display_comments_article($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->rel(),
