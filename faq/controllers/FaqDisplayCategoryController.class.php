@@ -138,6 +138,7 @@ class FaqDisplayCategoryController extends ModuleController
 			'C_SUBCATEGORIES_PAGINATION' => $pagination->has_several_pages(),
 			'SUBCATEGORIES_PAGINATION' => $pagination->display(),
 			'CATS_COLUMNS_WIDTH' => $cats_columns_width,
+			'ID_CAT' => $this->get_category()->get_id(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),
 			'CATEGORY_DESCRIPTION' => $category_description,
