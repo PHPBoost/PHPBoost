@@ -169,8 +169,8 @@ div.cssmenu-group .cssmenu-title {
 	
 	#sub-header .cssmenu-horizontal > ul > li:after {
 		position:absolute;
-		right: 1px;
-		top: 50%;
+		right: 1;
+		top: 50px;
 		height: 100%;
 		width: 1px;
 		border-right: 1px solid #333333;
@@ -194,8 +194,8 @@ div.cssmenu-group .cssmenu-title {
 	
 	#main .cssmenu-horizontal > ul > li:after {
 		position:absolute;
-		right: 1px;
-		top: 50%;
+		right: 1;
+		top: 50px;
 		height: 100%;
 		width: 1px;
 		border-right: 1px solid #EEEEEE;
@@ -409,7 +409,6 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 }
 
 .cssmenu ul ul ul {
-	margin-left: 100%;
 	top: 0;
 }
 
@@ -459,22 +458,20 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 
 @media (max-width: 768px) {
 	.cssmenu ul.level-1 li .cssmenu-title,
-	.cssmenu.cssmenu-actionslinks ul.level-1 li .cssmenu-title  {
+	.cssmenu.cssmenu-actionslinks ul li ul li .cssmenu-title  {
 		padding-left: 25px;
 	}
 	
 	.cssmenu ul.level-2 li .cssmenu-title,
-	.cssmenu.cssmenu-actionslinks ul.level-2 li .cssmenu-title  {
+	.cssmenu.cssmenu-actionslinks ul li ul li ul li .cssmenu-title  {
 		padding-left: 35px;
 	}
 
-	.cssmenu ul.level-3 li .cssmenu-title,
-	.cssmenu.cssmenu-actionslinks ul.level-3 li.cssmenu-title  {
+	.cssmenu ul.level-3 li .cssmenu-title {
 		padding-left: 45px;
 	}
 
-	.cssmenu ul.level-4 li .cssmenu-title,
-	.cssmenu.cssmenu-actionslinks ul.level-4 li.cssmenu-title  {
+	.cssmenu ul.level-4 li .cssmenu-title {
 		padding-left: 55px;
 	}
 	
@@ -493,6 +490,10 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 }
 
 /* --- Variantes --- */
+.cssmenu-horizontal ul ul ul {
+	margin-left: 100%;
+}
+
 @media (min-width: 769px) {
 	.cssmenu-vertical ul ul {
 		position: relative;
