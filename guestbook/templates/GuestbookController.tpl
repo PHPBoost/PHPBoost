@@ -15,6 +15,9 @@
 		# ENDIF #
 		# START messages #
 			<article id="article-guestbook-{messages.ID}" class="article-guestbook article-several message">
+				<header>
+					<h2>${LangLoader::get_message('message', 'main')}</h2>
+				</header>
 				<div class="message-container">
 
 					<div class="message-user-infos">
@@ -55,6 +58,7 @@
 					</div>
 					
 				</div>
+				<footer></footer>
 			</article>
 		# END messages #
 	</div>
