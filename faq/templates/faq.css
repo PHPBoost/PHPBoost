@@ -30,6 +30,14 @@
 
 .question-title {
 	display: inline-block;
+	border: none;
+	margin: 0;
+}
+
+/* hack pour l'ancre */
+.question-anchor {
+	margin-top: -10px;
+	padding-top: 10px;
 }
 
 .article-faq footer {
