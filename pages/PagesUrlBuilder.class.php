@@ -46,7 +46,7 @@ class PagesUrlBuilder
 	public static function get_link_item_com($id,$com=0)
 	{
 		return PATH_TO_ROOT . self::PREFIX.url(
-			'pages.php?id='.$id.'&amp;com='.$com);
+			'pages.php?id='.$id.'&com='.$com);
 	}
 }
 ?>
