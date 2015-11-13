@@ -18,10 +18,9 @@
 .navigation-link {
 }
 
-.navigation-link-previous {
-	float: left;
-}
+.navigation-link-previous 	{ float: left;  }
+.navigation-link-next 		{ float: right; }
 
-.navigation-link-next {
-	float: right;
-}
+.navigation-link-previous i { margin-right: 5px; }
+.navigation-link-next i 	{ margin-left: 5px;  }
+

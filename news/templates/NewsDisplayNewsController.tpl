@@ -76,14 +76,12 @@
 			<div class="navigation-link">
 				# IF C_PREVIOUS_NEWS #
 				<span class="navigation-link-previous">
-					<a href="{U_PREVIOUS_NEWS}"><i class="fa fa-arrow-left fa-2x"></i></a>
-					<a href="{U_PREVIOUS_NEWS}">{PREVIOUS_NEWS}</a>
+					<a href="{U_PREVIOUS_NEWS}"><i class="fa fa-arrow-circle-left"></i>{PREVIOUS_NEWS}</a>
 				</span>
 				# ENDIF #
 				# IF C_NEXT_NEWS #
 				<span class="navigation-link-next">
-					<a href="{U_NEXT_NEWS}">{NEXT_NEWS}</a>
-					<a href="{U_NEXT_NEWS}"><i class="fa fa-arrow-right fa-2x"></i></a>
+					<a href="{U_NEXT_NEWS}">{NEXT_NEWS}<i class="fa fa-arrow-circle-right"></i></a>
 				</span>
 				# ENDIF #
 				<div class="spacer"></div>
