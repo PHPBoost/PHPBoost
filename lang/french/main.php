@@ -187,6 +187,7 @@ $LANG['refresh'] = 'Rafraichir';
 $LANG['rank'] = 'Rang';
 $LANG['ranks'] = 'Rangs';
 $LANG['never'] = 'Jamais';
+$LANG['picture'] = 'Images';
 
 //Dates.
 $LANG['on'] = 'Le';
