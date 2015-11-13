@@ -107,45 +107,55 @@
 		# ENDIF #
 
 		# IF C_DISPLAY_MEDIA #
-		<article id="article-media-{ID}" class="article-media">
+		<section id="module-media">
 			<header>
-				<h2>
-					{NAME} 
-					<span class="actions">
-						# IF C_DISPLAY_COMMENTS #
-							<a href="{U_COM}"><i class="fa fa-comments-o"></i> {L_COM}</a>
-						# ENDIF #
-						# IF C_MODO #
-							<a href="{U_UNVISIBLE_MEDIA}" class="fa fa-eye-slash" title="{L_UNAPROBED}"></a>
-							<a href="{U_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
-							<a href="{U_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
-						# ENDIF #
-					</span>
-				</h2>
+				<h1>
+					{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit smaller"></i></a># ENDIF #
+				</h1>
 			</header>
 			<div class="content">
-			
-				<div class="options infos">
-					<h6>{L_MEDIA_INFOS}</h6>
-						<span class="text-strong">{L_DATE} : </span><span>{DATE}</span><br/>
-						<span class="text-strong">{L_BY} : </span><span>{BY}</span><br/>
-						<span class="text-strong">{L_VIEWED} : </span><span>{HITS}</span><br/>
-					# IF C_DISPLAY_NOTATION #
-					<div class="center text-strong">{KERNEL_NOTATION}</div>
-					# ENDIF #
-				</div>
-				
-				<div class="media-desc">
-					{CONTENTS}
-				</div>
-				<div class="spacer"></div>
-				
-				<div class="media-content">
-					# INCLUDE media_format #
-				</div>
-
-				{COMMENTS}
+				<article id="article-media-{ID}" class="article-media">
+					<header>
+						<h2>
+							{NAME} 
+							<span class="actions">
+								# IF C_DISPLAY_COMMENTS #
+									<a href="{U_COM}"><i class="fa fa-comments-o"></i> {L_COM}</a>
+								# ENDIF #
+								# IF C_MODO #
+									<a href="{U_UNVISIBLE_MEDIA}" class="fa fa-eye-slash" title="{L_UNAPROBED}"></a>
+									<a href="{U_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
+									<a href="{U_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+								# ENDIF #
+							</span>
+						</h2>
+					</header>
+					<div class="content">
+					
+						<div class="options infos">
+							<h6>{L_MEDIA_INFOS}</h6>
+								<span class="text-strong">{L_DATE} : </span><span>{DATE}</span><br/>
+								<span class="text-strong">{L_BY} : </span><span>{BY}</span><br/>
+								<span class="text-strong">{L_VIEWED} : </span><span>{HITS}</span><br/>
+							# IF C_DISPLAY_NOTATION #
+							<div class="center text-strong">{KERNEL_NOTATION}</div>
+							# ENDIF #
+						</div>
+						
+						<div class="media-desc">
+							{CONTENTS}
+						</div>
+						<div class="spacer"></div>
+						
+						<div class="media-content">
+							# INCLUDE media_format #
+						</div>
+		
+						{COMMENTS}
+					</div>
+					<footer></footer>
+				</article>
 			</div>
 			<footer></footer>
-		</article>
+		</section>
 		# ENDIF #
