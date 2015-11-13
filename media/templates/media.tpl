@@ -61,7 +61,7 @@
 						# START file #
 							<article id="article-media-{file.ID}" class="article-media article-several block">
 								<header>
-									<h1>
+									<h2>
 										<a href="{file.U_MEDIA_LINK}">{file.NAME}</a>
 										# IF C_MODO #
 										<span class="actions">
@@ -70,7 +70,7 @@
 											<a href="{file.U_ADMIN_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 										</span>
 										# ENDIF #
-									</h1>
+									</h2>
 								</header>
 								<div class="content">
 									# IF file.C_DESCRIPTION #
