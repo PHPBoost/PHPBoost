@@ -33,7 +33,9 @@ article {
 
 
 /* --- articles --- */
-.article-several.block {
+.article-several.block,
+.article-several.small-block,
+.article-several.medium-block {
 	clear: none!important;
 }
 
