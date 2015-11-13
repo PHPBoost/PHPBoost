@@ -68,11 +68,6 @@ article header h3 {
 	}
 }
 
-/* --- articles --- */
-.article-several {
-	clear: both;
-}
-
 /* --- Icones actions (edition, suppression, etc) --- */
 span.actions {
 	float: right;
