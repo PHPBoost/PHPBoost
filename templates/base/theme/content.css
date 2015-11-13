@@ -32,6 +32,15 @@ article {
 }
 
 
+/* --- articles --- */
+.article-several.block {
+	clear: none!important;
+}
+
+.article-several {
+	clear: both;
+}
+
 /* --- Titre d'une page ou d'un element d'un module --- */
 section header h1,
 article header h1 {
