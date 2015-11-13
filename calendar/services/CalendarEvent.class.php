@@ -216,9 +216,11 @@ class CalendarEvent
 			'L_REGISTRATION_DAYS_LEFT' => $registration_days_left > 1 ? StringVars::replace_vars($lang['calendar.labels.remaining_days'], array('days_left' => $registration_days_left)) : $lang['calendar.labels.remaining_day'],
 			
 			//Category
+			'C_ROOT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY,
 			'CATEGORY_ID' => $category->get_id(),
 			'CATEGORY_NAME' => $category->get_name(),
 			'CATEGORY_COLOR' => $category->get_id() != Category::ROOT_CATEGORY ? $category->get_color() : '',
+			'U_EDIT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY ? CalendarUrlBuilder::configuration()->rel() : CalendarUrlBuilder::edit_category($category->get_id())->rel(),
 			
 			'U_SYNDICATION' => SyndicationUrlBuilder::rss('calendar', $category->get_id())->rel(),
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($author->get_id())->rel(),
