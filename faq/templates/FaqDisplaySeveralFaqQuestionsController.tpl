@@ -280,7 +280,7 @@ jQuery(document).ready(function() {
 			# START questions #
 			<article id="article-faq-{questions.ID}" itemscope="itemscope" itemtype="http://schema.org/CreativeWork" class="article-faq article-several">
 				<header class="faq-question-element">
-					<span>
+					<h3 class="question-title">
 						# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
 						<a href="" onclick="show_answer({questions.ID});return false;" title=""><i id="question{questions.ID}" class="fa fa-caret-right"></i></a>
 						<a href="" onclick="show_answer({questions.ID});return false;" title=""><span itemprop="name">{questions.QUESTION}</span></a>
@@ -288,7 +288,7 @@ jQuery(document).ready(function() {
 						<i id="question{questions.ID}" class="fa fa-caret-right"></i>
 						<span itemprop="name">{questions.QUESTION}</span>
 						# ENDIF #
-					</span>
+					</h3>
 					
 					<span class="actions">
 						<a href="{questions.U_LINK}" title=""><i class="fa fa-flag"></i></a>
