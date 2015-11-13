@@ -308,7 +308,7 @@
 				# IF C_GALLERY_PICS #
 				<article id="article-gallery-{ID}" class="article-gallery article-several block">
 					<header>
-						<h2># IF C_TITLE_ENABLED #{NAME}# ELSE #${LangLoader::get_message('picture', 'main')}# ENDIF #</h2>
+						<h2>${LangLoader::get_message('image', 'main')}</h2>
 					</header>
 					<div class="content">
 						<p class="center" id="pics_max"></p>
