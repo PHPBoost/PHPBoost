@@ -4,7 +4,7 @@
 *                            -------------------
 *   begin                : November 20, 2005
 *   last modified		: October 3rd, 2009 - JMNaylor
-*   copyright            : (C) 2005 Viarre Régis
+*   copyright            : (C) 2005 Viarre RÃ©gis
 *   email                : mickaelhemri@gmail.com
 *
 *
@@ -188,7 +188,7 @@ $LANG['refresh'] = 'Refresh';
 $LANG['rank'] = 'Rank';
 $LANG['ranks'] = 'Ranks';
 $LANG['never'] = 'Never';
-$LANG['picture'] = 'Images';
+$LANG['picture'] = 'Picture';
 
 //Dates.
 $LANG['on'] = 'On';
