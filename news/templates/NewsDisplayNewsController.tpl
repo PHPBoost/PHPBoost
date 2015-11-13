@@ -12,7 +12,6 @@
 		<article itemscope="itemscope" itemtype="http://schema.org/CreativeWork" id="article-news-{ID}" class="article-news">
 			<header>
 				<h2>
-					<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
 					<span itemprop="name">{NAME}</span>
 					<span class="actions">
 						# IF C_EDIT #
