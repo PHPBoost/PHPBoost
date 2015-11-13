@@ -33,6 +33,10 @@
 	font-weight: bold;
 }
 
+.question-title {
+	display: inline-block;
+}
+
 .article-faq footer {
 	margin: 0;
 	padding: 0;

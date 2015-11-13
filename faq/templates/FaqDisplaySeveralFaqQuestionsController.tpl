@@ -218,7 +218,7 @@ jQuery(document).ready(function() {
 					<li class="sortable-element" id="list-{questions.ID}" data-id="{questions.ID}">
 						<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
 						<div class="sortable-title">
-							<span>
+							<h3 class="question-title">
 								# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
 								<a href="" onclick="show_answer({questions.ID});return false;" title=""><i id="question{questions.ID}" class="fa fa-caret-right"></i></a>
 								<a href="" onclick="show_answer({questions.ID});return false;" title="">{questions.QUESTION}</a>
@@ -226,7 +226,7 @@ jQuery(document).ready(function() {
 								<i id="question{questions.ID}" class="fa fa-caret-right"></i>
 								<span>{questions.QUESTION}</span>
 								# ENDIF #
-							</span>
+							</h3>
 							<div class="sortable-actions">
 								# IF C_MORE_THAN_ONE_QUESTION #
 								<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{questions.ID}" onclick="return false;"><i class="fa fa-arrow-up"></i></a>
