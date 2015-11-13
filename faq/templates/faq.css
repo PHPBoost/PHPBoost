@@ -31,7 +31,15 @@
 .question-title {
 	display: inline-block;
 	border: none;
-	margin: 0;
+	overflow: initial;
+}
+
+.faq-question-element .question-title {
+	margin-left: 5px;
+}
+
+.sortable-title .question-title span {
+    font-size: 1.9rem;
 }
 
 /* hack pour l'ancre */
