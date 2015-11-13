@@ -97,6 +97,7 @@ elseif ($id_media > 0)
 	$tpl->put_all(array(
 		'ID' => $id_media,
 		'C_DISPLAY_MEDIA' => true,
+		'C_ROOT_CATEGORY' => $media['idcat'] == Category::ROOT_CATEGORY,
 		'C_MODO' => MediaAuthorizationsService::check_authorizations($media['idcat'])->moderation(),
 		'C_DISPLAY_NOTATION' => $config->is_notation_enabled(),
 		'C_DISPLAY_COMMENTS' => $config->are_comments_enabled(),
@@ -121,7 +122,9 @@ elseif ($id_media > 0)
 		'U_UNVISIBLE_MEDIA' => url('media_action.php?unvisible=' . $id_media . '&amp;token=' . AppContext::get_session()->get_token()),
 		'U_EDIT_MEDIA' => url('media_action.php?edit=' . $id_media),
 		'U_DELETE_MEDIA' => url('media_action.php?del=' . $id_media . '&amp;token=' . AppContext::get_session()->get_token()),
-		'U_POPUP_MEDIA' => url('media_popup.php?id=' . $id_media)
+		'U_POPUP_MEDIA' => url('media_popup.php?id=' . $id_media),
+		'CATEGORY_NAME' => $media['idcat'] == Category::ROOT_CATEGORY ? LangLoader::get_message('module_title', 'common', 'media') : MediaService::get_categories_manager()->get_categories_cache()->get_category($media['idcat'])->get_name(),
+		'U_EDIT_CATEGORY' => $media['idcat'] == Category::ROOT_CATEGORY ? MediaUrlBuilder::configuration()->rel() : MediaUrlBuilder::edit_category($media['idcat'])->rel()
 	));
 	
 	if (empty($mime_type_tpl[$media['mime_type']]))
