@@ -28,16 +28,8 @@
 	margin: 0;
 }
 
-.faq-question-element span {
-	font-size: 1.2em;
-	font-weight: bold;
-}
-
 .question-title {
 	display: inline-block;
-	overflow: visible;
-	border: none;
-	margin-left: 0;
 }
 
 .article-faq footer {
