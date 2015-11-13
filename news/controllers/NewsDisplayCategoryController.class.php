@@ -87,6 +87,7 @@ class NewsDisplayCategoryController extends ModuleController
 			'C_DISPLAY_CONDENSED_CONTENT' => $this->config->get_display_condensed_enabled(),
 			'C_COMMENTS_ENABLED' => $this->config->get_comments_enabled(),
 			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
+			'ID_CAT' => $this->get_category()->get_id(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? NewsUrlBuilder::configuration()->rel() : NewsUrlBuilder::edit_category($this->get_category()->get_id())->rel(),
 			
