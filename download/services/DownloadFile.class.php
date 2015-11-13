@@ -494,10 +494,12 @@ class DownloadFile
 			'NUMBER_COMMENTS' => CommentsService::get_number_comments('download', $this->id),
 			
 			//Category
+			'C_ROOT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY,
 			'CATEGORY_ID' => $category->get_id(),
 			'CATEGORY_NAME' => $category->get_name(),
 			'CATEGORY_DESCRIPTION' => $category->get_description(),
 			'CATEGORY_IMAGE' => $category->get_image()->rel(),
+			'U_EDIT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY ? DownloadUrlBuilder::configuration()->rel() : DownloadUrlBuilder::edit_category($category->get_id())->rel(),
 			
 			'U_SYNDICATION' => SyndicationUrlBuilder::rss('download', $this->id_category)->rel(),
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
