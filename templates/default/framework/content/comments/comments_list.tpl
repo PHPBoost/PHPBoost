@@ -1,5 +1,8 @@
 # START comments #
 	<article id="com{comments.ID_COMMENT}" class="message" itemscope="itemscope" itemtype="http://schema.org/Comment">
+		<header>
+			<h2>${LangLoader::get_message('comment', 'comments-common')}</h2>
+		</header>
 		<div class="message-container">
 
 			<div class="message-user-infos">
@@ -46,5 +49,6 @@
 			</div>
 			
 		</div>
+		<footer></footer>
 	</article>
 # END comments #
