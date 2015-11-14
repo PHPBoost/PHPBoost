@@ -461,6 +461,16 @@ body.dragging, body.dragging * {
 	padding:5px;
 }
 
+div.index-logo {
+	background-image: url('images/logo.png');
+	background-repeat: no-repeat;
+	background-position: center ; 
+	background-size: cover;
+	width: 90px;
+	height: 90px;
+	float: left;
+}
+
 .welcome img {
 	margin-right: 5px;
 }

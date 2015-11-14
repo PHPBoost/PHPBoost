@@ -30,7 +30,7 @@
 		<div id="admin-contents">
 			
 			<div class="block welcome">
-				<div class="index-logo" # IF C_HEADER_LOGO #style="background: url('{HEADER_LOGO}') no-repeat;"# ENDIF #></div>
+				<div class="index-logo" # IF C_HEADER_LOGO #style="background-image: url('{HEADER_LOGO}');"# ENDIF #></div>
 				<div class="welcome-desc">
 					<h2>{L_WELCOME_TITLE}</h2>
 					<p>{L_WELCOME_DESC}</p>

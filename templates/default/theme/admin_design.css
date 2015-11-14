@@ -63,14 +63,6 @@ h3.menu-title {
 	display: none;
 }
 
-div.index-logo {
-	background: url('images/logo.png') no-repeat center center;
-	background-size: cover;
-	width: 90px;
-	height: 90px;
-	float: left;
-}
-
 @media (min-width:769px) {
 	
 	header#header-admin {
@@ -110,7 +102,9 @@ div.index-logo {
 	}
 	
 	div.site-logo {
-		background: url('images/logo.png') no-repeat center center;
+		background-image: url('images/logo.png');
+		background-repeat: no-repeat;
+		background-position: center ; 
 		background-size: cover;
 		width: 25px;
 		height:25px;
@@ -119,7 +113,9 @@ div.index-logo {
 	}
 	
 	div.pbt-logo {
-		background: url('images/logo.png') no-repeat center center;
+		background-image: url('images/logo.png');
+		background-repeat: no-repeat;
+		background-position: center ; 
 		background-size: cover;
 		width: 25px;
 		height:25px;
