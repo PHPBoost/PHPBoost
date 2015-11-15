@@ -114,7 +114,7 @@ class ForumCategoriesFormController extends AbstractCategoriesFormController
 			'hidden' => !$this->get_category()->rewrited_name_is_personalized()
 		), array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`i'))));
 		
-		$fieldset->add_field(new FormFieldTextEditor('description', $this->common_lang['form.description'], $this->get_category()->get_description()));
+		$fieldset->add_field(new FormFieldRichTextEditor('description', $this->common_lang['form.description'], $this->get_category()->get_description()));
 		
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_category_in_excluded_categories(Category::ROOT_CATEGORY);
