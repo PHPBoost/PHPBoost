@@ -591,6 +591,10 @@ body.dragging, body.dragging * {
 	margin-top: 10px;
 }
 
+.view-topic i {
+	margin: 0 0 1px 5px;
+}
+
 /* --- infos du message --- */
 .message-date {
 	margin-left: 150px;

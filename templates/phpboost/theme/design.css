@@ -37,8 +37,6 @@ header#header {
 /* --- Partie superieure du header --- */
 div#command-bar {
 	background-color: rgba(255, 255, 255, 0.15);
-	padding: 2px;
-	font-size: 0.9em;
 }
 div#top-header {
 	height: 180px;
@@ -88,8 +86,9 @@ div#site-infos {
 
 div#site-logo {
 	margin: 0 1em 0 0;
-	background: url('images/logo.png') no-repeat center center;
-	background-size: cover;
+	background-image: url('images/logo.png');
+	background-position: center;
+	background-repeat: no-repeat;
 	width: 90px;
 	height: 90px;
 	flex: 0 0 auto;
