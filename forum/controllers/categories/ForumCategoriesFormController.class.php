@@ -75,6 +75,7 @@ class ForumCategoriesFormController extends AbstractCategoriesFormController
 				'events' => array('change' => '
 				if (HTMLForms.getField("type").getValue() == ' . ForumCategory::TYPE_CATEGORY . ') {
 					HTMLForms.getField("id_parent").disable();
+					HTMLForms.getField("description").disable();
 					HTMLForms.getField("url").disable();
 					if (HTMLForms.getField("special_authorizations").getValue()) {
 						jQuery("#' . __CLASS__ . '_authorizations > div").eq(1).hide();
@@ -82,6 +83,7 @@ class ForumCategoriesFormController extends AbstractCategoriesFormController
 					}
 				} else if (HTMLForms.getField("type").getValue() == ' . ForumCategory::TYPE_FORUM . ') {
 					HTMLForms.getField("id_parent").enable();
+					HTMLForms.getField("description").enable();
 					HTMLForms.getField("url").disable();
 					if (HTMLForms.getField("special_authorizations").getValue()) {
 						jQuery("#' . __CLASS__ . '_authorizations > div").eq(1).show();
@@ -89,6 +91,7 @@ class ForumCategoriesFormController extends AbstractCategoriesFormController
 					}
 				} else {
 					HTMLForms.getField("id_parent").enable();
+					HTMLForms.getField("description").enable();
 					HTMLForms.getField("url").enable();
 					if (HTMLForms.getField("special_authorizations").getValue()) {
 						jQuery("#' . __CLASS__ . '_authorizations > div").eq(1).hide();
@@ -114,7 +117,9 @@ class ForumCategoriesFormController extends AbstractCategoriesFormController
 			'hidden' => !$this->get_category()->rewrited_name_is_personalized()
 		), array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`i'))));
 		
-		$fieldset->add_field(new FormFieldRichTextEditor('description', $this->common_lang['form.description'], $this->get_category()->get_description()));
+		$fieldset->add_field(new FormFieldRichTextEditor('description', $this->common_lang['form.description'], $this->get_category()->get_description(),
+			array('hidden' => $this->get_category()->get_type() == ForumCategory::TYPE_CATEGORY)
+		));
 		
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_category_in_excluded_categories(Category::ROOT_CATEGORY);
