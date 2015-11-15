@@ -1,3 +1,11 @@
+.admin-poll input[type="text"] {
+    border: 1px solid #d4d4d4;
+}
+
+.admin-poll tbody tr:first-child td {
+    border-top: 1px solid #d4d4d4;
+}
+
 .poll-question-select {
 	margin-top: 15px;
 	padding-left: 25px;
@@ -19,14 +27,6 @@
 
 .poll-vote {
     width: 80% !important;
-}
-
-input[type="text"] {
-    border: 1px solid #d4d4d4;
-}
-
-table tr:first-child td {
-    border-top: 1px solid #d4d4d4;
 }
 
 .fieldset-inset {
