@@ -8,7 +8,8 @@
 	overflow: hidden;
 }
 
-ul {
+#module-gallery ul,
+#module-mini-gallery ul {
 	list-style: none;
 	margin: 0 auto;
 }
