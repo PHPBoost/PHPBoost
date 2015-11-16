@@ -297,7 +297,7 @@ input.field-xlarge  { width: 250px; }
 }
 
 .form-field-action-link {
-	  461  	text-align: center;
+	text-align: center;
 }
 
 /* --- Label pour les checkbox et radio --- */
