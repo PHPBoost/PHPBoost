@@ -12,7 +12,7 @@ Contient les elements :
 /* --- Normal --- */
 button,
 .button {
-	height: auto;
+	height: auto;f
 	color: #333333;
 	text-align: center;
 	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
@@ -294,6 +294,10 @@ input.field-xlarge  { width: 250px; }
 .form-field-free-large {
 	width: 100%;
 	max-width: none;
+}
+
+.form-field-action-link {
+	  461  	text-align: center;
 }
 
 /* --- Label pour les checkbox et radio --- */
