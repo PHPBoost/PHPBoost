@@ -48,8 +48,8 @@
 						<br />
 						# IF C_FB_AUTH_ENABLED #
 						<a class="social-connect fb" href="${relative_url(UserUrlBuilder::connect('fb'))}" title="${LangLoader::get_message('facebook-connect', 'user-common')}"><i class="fa fa-facebook-square biggest"></i></a>
-						# IF C_GOOGLE_AUTH_ENABLED #
 						# ENDIF #
+						# IF C_GOOGLE_AUTH_ENABLED #
 						<a class="social-connect google" href="${relative_url(UserUrlBuilder::connect('google'))}" title="${LangLoader::get_message('google-connect', 'user-common')}"><i class="fa fa-google-plus-square biggest"></i></a>
 						# ENDIF #
 					# ENDIF #
