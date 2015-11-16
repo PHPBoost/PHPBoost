@@ -59,7 +59,11 @@ class ArticlesFormController extends ModuleController
 			$this->redirect();
 		}
 		
-		$this->tpl->put('FORM', $this->form->display());
+		$this->tpl->put_all(array(
+			'FORM' => $this->form->display(),
+			'C_TINYMCE_EDITOR' => AppContext::get_current_user()->get_editor() == 'TinyMCE'
+		));
+		
 		return $this->build_response($this->tpl);
 	}
 
