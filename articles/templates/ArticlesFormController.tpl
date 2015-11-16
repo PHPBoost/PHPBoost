@@ -21,6 +21,8 @@
 
 			textarea.selectionStart = start + insert_value.length;
 			textarea.selectionEnd = start + insert_value.length;
+			
+			# IF C_TINYMCE_EDITOR # setTinyMceContent(document.getElementById('ArticlesFormController_contents').value + insert_value); # ENDIF #
 		}
 	}
 	
