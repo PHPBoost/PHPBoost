@@ -363,7 +363,7 @@ class HTTPRequestCustom
 
 	public function get_is_localhost()
 	{
-		return self::get_http_host() == 'localhost' || self::get_http_host() == '127.0.0.1' || self::get_http_host() == '::1';
+		return self::get_http_host() == 'localhost' || self::get_http_host() == 'local.dev' || self::get_http_host() == '127.0.0.1' || self::get_http_host() == '::1';
 	}
 
 	public function get_site_url()
