@@ -53,7 +53,7 @@ class MediaDisplayCategoryController extends ModuleController
 		$category = $this->get_category();
 		$authorized_categories = MediaService::get_authorized_categories($category->get_id());
 		
-		//Contenu de la catégorie
+		//Contenu de la catÃ©gorie
 		$page = AppContext::get_request()->get_getint('p', 1);
 		$subcategories_page = AppContext::get_request()->get_getint('subcategories_page', 1);
 		$get_sort = retrieve(GET, 'sort', '');
@@ -61,7 +61,7 @@ class MediaDisplayCategoryController extends ModuleController
 		$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
 		$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 		
-		//On crée une pagination si le nombre de sous-catégories est trop important.
+		//On crÃ©e une pagination si le nombre de sous-catÃ©gories est trop important.
 		$subcategories_number = count(MediaService::get_categories_manager()->get_categories_cache()->get_childrens($category->get_id()));
 		$pagination = new ModulePagination($subcategories_page, $subcategories_number, $config->get_categories_number_per_page());
 		$pagination->set_url(new Url('/media/media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $category->get_id() . '&amp;p=' . $page . '&amp;subcategories_page=%d'));
@@ -198,7 +198,7 @@ class MediaDisplayCategoryController extends ModuleController
 			'status' => MEDIA_STATUS_APROBED
 		);
 		
-		//On crée une pagination si le nombre de fichiers est trop important.
+		//On crÃ©e une pagination si le nombre de fichiers est trop important.
 		$mediafiles_number = MediaService::count($condition, $parameters);
 		$pagination = new ModulePagination($page, $mediafiles_number, $config->get_items_number_per_page());
 		$pagination->set_url(new Url('/media/media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $category->get_id() . '&amp;p=%d&amp;subcategories_page=' . $subcategories_page));
@@ -244,7 +244,7 @@ class MediaDisplayCategoryController extends ModuleController
 				'NAME' => $row['name'],
 				'IMG_NAME' => str_replace('"', '\"', $row['name']),
 				'C_DESCRIPTION' => !empty($row['contents']),
-				'DESCRIPTION' => FormatingHelper::second_parse($row['contents']),
+				'DESCRIPTION' => TextHelper::html_entity_decode(FormatingHelper::second_parse($row['contents'])),
 				'POSTER' => $MEDIA_LANG['media_added_by'] . ' : ' . !empty($row['display_name']) ? '<a href="' . UserUrlBuilder::profile($row['iduser'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : $LANG['guest'],
 				'DATE' => sprintf($MEDIA_LANG['add_on_date'], Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR)),
 				'COUNT' => sprintf($MEDIA_LANG['view_n_times'], $row['counter']),
