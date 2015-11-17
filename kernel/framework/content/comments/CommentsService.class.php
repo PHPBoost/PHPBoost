@@ -140,15 +140,13 @@ class CommentsService
 				
 			$number_comments_display = $topic->get_number_comments_display();
 			$number_comments = self::$comments_cache->get_count_comments_by_module($module_id, $id_in_module, $topic_identifier);
-			$refresh_all = AppContext::get_request()->get_getbool('refresh_all', false);
 			
 			self::$template->put_all(array(
 				'COMMENTS_LIST' => self::display_comments($module_id, $id_in_module, $topic_identifier, $number_comments_display, $authorizations),
 				'MODULE_ID' => $module_id,
 				'ID_IN_MODULE' => $id_in_module,
 				'TOPIC_IDENTIFIER' => $topic_identifier,
-				'C_DISPLAY_VIEW_ALL_COMMENTS' => ($number_comments > $number_comments_display) && $refresh_all == false,
-				'C_REFRESH_ALL' => $refresh_all,
+				'C_DISPLAY_VIEW_ALL_COMMENTS' => $number_comments > $number_comments_display,
 				'C_MODERATE' => $authorizations->is_authorized_moderation(),
 				'C_IS_LOCKED' => CommentsManager::comment_topic_locked($module_id, $id_in_module, $topic_identifier),
 				'U_LOCK' => CommentsUrlBuilder::lock_and_unlock($topic->get_path(), true)->rel(),

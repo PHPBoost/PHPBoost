@@ -21,10 +21,7 @@ jQuery(document).ready(function(){
 });
 # ENDIF #
 
-# IF C_REFRESH_ALL #
-	refresh_comments();
-# ENDIF #
-//-->
+-->
 </script>
 
 <section id="comments-list">
