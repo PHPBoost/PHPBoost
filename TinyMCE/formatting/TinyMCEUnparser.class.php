@@ -99,23 +99,20 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		$this->content = str_replace($array_str, $array_str_replace, $this->content);
 
 		//Replacing <br /> by a paragraph
-		$this->content = preg_replace(
-			array(
-				'`(<h3[^>]*>.*</h3>)\s*`iUs',
-				'`<p>\s*</p>`i',
-				'`\s*</p>`i',
-				'`<p>\s*`i',
-				'`<p>&nbsp;</p>\s*<p>(<h4[^>]*>.*</h4>)</p>\s*<p>&nbsp;</p>`iUs',
-			),
-			array(
-				"</p>\n$1\n<p>",
-				'<p>&nbsp;</p>',
-				'</p>',
-				'<p>',
-				'<br />$1<br />',
-			),
-			'<p>' . $this->content . '</p>'
-		);
+		if (!empty($this->content))
+		{
+			$this->content = preg_replace(
+				array(
+					'`\s*</p>`i',
+					'`<p>\s*`i',
+				),
+				array(
+					'</p>',
+					'<p>',
+				),
+				'<p>' . $this->content . '</p>'
+			);
+		}
 		
 		//Unparsing tags unsupported by TinyMCE, those are in BBCode
 		$this->unparse_bbcode_tags();
@@ -160,10 +157,12 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			'`<span id="([a-z0-9_-]+)"></span>`isU',
 			'`<span id="([a-z0-9_-]+)" class="anchor"></span>`isU',
 			'`<span id="([a-z0-9_-]+)">(.*)</span>`isU',
-			"`<h1 class=\"formatter-title\">(.*)</h1>(?:[\s]*<br />){0,}`isU",
-			"`<h2 class=\"formatter-title\">(.*)</h2>(?:[\s]*<br />){0,}`isU",
-			"`<br /><h3 class=\"formatter-title\">(.*)</h3><br />\s*`isU",
-			"`<br /><h4 class=\"formatter-title\">(.*)</h4><br />\s*`isU",
+			"`<h1 class=\"formatter-title\">(.*)</h1><br />(?:[\s]*){0,}`isU",
+			"`<h2 class=\"formatter-title\">(.*)</h2><br />(?:[\s]*){0,}`isU",
+			"`<h3 class=\"formatter-title\">(.*)</h3><br />(?:[\s]*){0,}`isU",
+			"`<h4 class=\"formatter-title\">(.*)</h4><br />(?:[\s]*){0,}`isU",
+			"`<h5 class=\"formatter-title\">(.*)</h5><br />(?:[\s]*){0,}`isU",
+			"`<h6 class=\"formatter-title\">(.*)</h6><br />(?:[\s]*){0,}`isU",
 			'`<span style="background-color:([^;]+);">(.+)</span>`isU',
 			'`<span style="color:([^;]+);">(.+)</span>`isU',
 			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU'
@@ -177,6 +176,8 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			"<h2>$1</h2>",
 			"<h3>$1</h3>",
 			"<h4>$1</h4>",
+			"<h5>$1</h5>",
+			"<h6>$1</h6>",
 			'<span style="background-color: $1;">$2</span>',
 			'<span style="color: $1;">$2</span>',
 			"<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"$2\" height=\"$3\"><param name=\"movie\" value=\"$1\" /><param name=\"quality\" value=\"high\" /><param name=\"menu\" value=\"false\" /><param name=\"wmode\" value=\"\" /><embed src=\"$1\" wmode=\"\" quality=\"high\" menu=\"false\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"$2\" height=\"$3\"></embed></object>"

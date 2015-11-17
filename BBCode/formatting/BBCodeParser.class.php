@@ -272,7 +272,7 @@ class BBCodeParser extends ContentFormattingParser
 			//Title tag
 			if (!in_array('title', $this->forbidden_tags))
 			{
-				$this->content = preg_replace_callback('`\[title=([1-4])\](.+)\[/title\]`iU', array($this, 'parse_title'), $this->content);
+				$this->content = preg_replace_callback('`\[title=([1-6])\](.+)\[/title\]`iU', array($this, 'parse_title'), $this->content);
 			}
 
 			//Image tag
@@ -475,6 +475,10 @@ class BBCodeParser extends ContentFormattingParser
 			break;
 			case 4:
 				return '<h4 class="formatter-title">' . $matches[2] . '</h4>';
+			case 5:
+				return '<h5 class="formatter-title">' . $matches[2] . '</h5>';
+			case 6:
+				return '<h6 class="formatter-title">' . $matches[2] . '</h6>';
 			break;
 		}
 	}

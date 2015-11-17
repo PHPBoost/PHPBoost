@@ -151,6 +151,8 @@ function XMLHttpRequest_preview(field)
 						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=2]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;" title="{L_TITLE} 2"> {L_TITLE} 2 </a></li>
 						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=3]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;" title="{L_TITLE} 3"> {L_TITLE} 3 </a></li>
 						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=4]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;" title="{L_TITLE} 4"> {L_TITLE} 4 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=5]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;" title="{L_TITLE} 5"> {L_TITLE} 5 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=6]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;" title="{L_TITLE} 6"> {L_TITLE} 6 </a></li>
 					</ul>
 				</div>
 			</li>

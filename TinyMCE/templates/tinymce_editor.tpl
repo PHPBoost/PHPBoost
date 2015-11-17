@@ -71,9 +71,8 @@ function setTinyMceContent(content)
 
 <script>
 <!--
-var field = "{FIELD}";
 tinymce.init({
-	selector : "textarea#" + field,
+	selector : "textarea\#{FIELD}",
 	language : "{LANGUAGE}",
 	plugins: [
 		"advlist autolink autoresize autosave link image lists charmap hr anchor",
@@ -99,7 +98,7 @@ tinymce.init({
 		"{PATH_TO_ROOT}/kernel/lib/css/font-awesome/css/font-awesome.css",
 		"{PATH_TO_ROOT}/templates/{THEME}/theme/global.css"
 	],
-    style_formats: [
+	style_formats: [
 		{title: ${escapejs(LangLoader::get_message('success', 'status-messages-common'))}, inline: 'span', classes: 'success'},
 		{title: ${escapejs(LangLoader::get_message('error.question', 'status-messages-common'))}, inline: 'span', classes: 'question'},
 		{title: ${escapejs(LangLoader::get_message('error.notice', 'status-messages-common'))}, inline: 'span', classes: 'notice'},
@@ -111,14 +110,21 @@ tinymce.init({
 			icon: 'browse',
 			onclick: function (field_name) {
 				ed.windowManager.open({ 
-					title: '',         
+					title: '',
 					url: '{PATH_TO_ROOT}/user/upload.php?popup=1&amp;close_button=0&amp;fd=' + field_name + '&amp;edt=TinyMCE',
 					width: 720,
-					height: 500,            
+					height: 500,
 				}); 
 			},
 			tooltip: 'Insert file'
 		});
+		ed.on('blur', function(){
+			jQuery("\#{FIELD}").val(ed.getContent());
+			# IF C_HTMLFORM #
+			HTMLForms.get("{FORM_NAME}").getField("{FIELD_NAME}").enableValidationMessage();
+			HTMLForms.get("{FORM_NAME}").getField("{FIELD_NAME}").liveValidate();
+			# ENDIF #
+		})
 	},
 
 	smileys: [

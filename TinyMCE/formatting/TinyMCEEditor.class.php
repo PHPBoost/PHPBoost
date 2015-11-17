@@ -114,10 +114,18 @@ class TinyMCEEditor extends ContentEditor
 			default :	break;
 		}
 		
+		$form_field_infos = explode('_', $this->identifier);
+		$form_name = $form_field_infos[0];
+		unset($form_field_infos[0]);
+		$field_name = implode('_', $form_field_infos);
+		
 		$template->put_all(array(
 			'C_NOT_JS_INCLUDED' => self::$js_included,
+			'C_HTMLFORM' => !empty($form_name) && !empty($field_name),
 			'PAGE_PATH' => $_SERVER['PHP_SELF'],
 			'FIELD' => $this->identifier,
+			'FORM_NAME' => $form_name,
+			'FIELD_NAME' => $field_name,
 			'FORBIDDEN_TAGS' => implode(',', $this->forbidden_tags),
 			'L_REQUIRE_TEXT' => LangLoader::get_message('require_text', 'main'),
 			'C_TOOLBAR1' => !empty($toolbar1),

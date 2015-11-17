@@ -293,8 +293,8 @@ class TinyMCEParser extends ContentFormattingParser
 				"\t",
 				'&gt;',
 				'&lt;',
-				"<br />\n",
-				"<br />\n",
+				"<br />",
+				"<br />",
 				' '
 			), $this->content);
 
@@ -302,17 +302,15 @@ class TinyMCEParser extends ContentFormattingParser
 			'`&lt;p&gt;\s*&nbsp;\s*&lt;/p&gt;\s*`',
 			'`&lt;div&gt;(.+)&lt;/div&gt;`isU',
 			'`&lt;p&gt;(.+)&lt;/p&gt;`isU',
-			'`&lt;h5&gt;(.+)&lt;/h5&gt;`isU',
-			'`&lt;h6&gt;(.+)&lt;/h6&gt;`isU',
-		'`&lt;/p&gt;[\s]*`i'
+			'`&lt;/p&gt;[\s]*`i',
+			'`&lt;p&gt;(.+)&lt;/p&gt;`'
 		);
 		$array_preg_replace = array(
 			'',
-			'$1' . "\n<br />",
-			'$1' . "\n<br />",
-			'<span style="font-size: 10px;">$1</span><br />',
-			'<span style="font-size: 8px;">$1</span><br />',
-			'&lt;/p&gt;'
+			'$1' . "<br />",
+			'$1' . "<br />",
+			'&lt;/p&gt;',
+			'$1'
 		);
 
 		//Replacement
@@ -430,16 +428,22 @@ class TinyMCEParser extends ContentFormattingParser
 		{
 			//Title 1
 			array_push($array_preg, '`&lt;h1[^&]*&gt;(.+)&lt;/h1&gt;`isU');
-			array_push($array_preg_replace, "\n" . '<h1 class="formatter-title">$1</h1>' . "\n<br />");
+			array_push($array_preg_replace, '<h1 class="formatter-title">$1</h1><br />');
 			//Title 2
 			array_push($array_preg, '`&lt;h2[^&]*&gt;(.+)&lt;/h2&gt;`isU');
-			array_push($array_preg_replace, "\n" . '<h2 class="formatter-title">$1</h2>' . "\n<br />");
+			array_push($array_preg_replace, '<h2 class="formatter-title">$1</h2><br />');
 			//Title 3
 			array_push($array_preg, '`&lt;h3[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h3&gt;`isU');
-			array_push($array_preg_replace, "\n" . '<br /><h3 class="formatter-title">$1</h3><br />' . "\n<br />");
+			array_push($array_preg_replace, '<h3 class="formatter-title">$1</h3><br />');
 			//Title 4
 			array_push($array_preg, '`&lt;h4[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h4&gt;`isU');
-			array_push($array_preg_replace, "\n" . '<br /><h4 class="formatter-title">$1</h4><br />' . "\n<br />");
+			array_push($array_preg_replace, '<h4 class="formatter-title">$1</h4><br />');
+			//Title 5
+			array_push($array_preg, '`&lt;h5[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h5&gt;`isU');
+			array_push($array_preg_replace, '<h5 class="formatter-title">$1</h5><br />');
+			//Title 6
+			array_push($array_preg, '`&lt;h6[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h6&gt;`isU');
+			array_push($array_preg_replace, '<h6 class="formatter-title">$1</h6><br />');
 		}
 		
 		//Style tag
@@ -944,18 +948,12 @@ class TinyMCEParser extends ContentFormattingParser
 			array(
 				'`^(\s|(?:<br />))*`i',
 				'`(\s|(?:<br />))*$`i',
-				'`<br />\s*(<h3[^>]*>.*</h3>)`iUs',
-				'`(<h3[^>]*>.*</h3>)\s*<br />`iUs',
-				'`(<h3[^>]*>.*)\s*<br />\s*(</h3>)`iUs',
 				// We delete the spaces which are at the begening of the line (inserted by TinyMCE to indent the HTML code)
 				"`(\n<br />)[\s]*`"
 			),
 			array(
 				'',
 				'',
-				'$1',
-				"$1\n",
-				"$1$2",
 				'$1'
 			),
 			$this->content

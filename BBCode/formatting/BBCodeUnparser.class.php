@@ -134,9 +134,11 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			'`<h2 class="formatter-title">(.*)</h2>`isU',
 			'`<h3 class="formatter-title">(.*)</h3>`isU',
 			'`<h4 class="formatter-title">(.*)</h4>`isU',
+			'`<h5 class="formatter-title">(.*)</h5>`isU',
+			'`<h6 class="formatter-title">(.*)</h6>`isU',
 			'`<span class="(success|question|notice|warning|error)">(.*)</span>`isU',
 			'`<audio controls><source src="(.*)" /></audio>`isU',
-		    '`<script><!--\s{1,5}insertSoundPlayer\("([^"]+)"\);\s{1,5}--></script>`sU',
+			'`<script><!--\s{1,5}insertSoundPlayer\("([^"]+)"\);\s{1,5}--></script>`sU',
 			'`\[\[MEDIA\]\]insertSoundPlayer\(\'([^\']+)\'\);\[\[/MEDIA\]\]`sU',
 			'`<object type="application/x-shockwave-flash" data="(?:\.\.)?/(?:kernel|includes)/data/movieplayer\.swf" width="([^"]+)" height="([^"]+)">(?:\s|(?:<br />))*<param name="FlashVars" value="flv=(.+)&width=[0-9]+&height=[0-9]+" />.*</object>`isU',
 			'`<script><!--\s{1,5}insertMoviePlayer\("([^"]+)", (\d{1,3}), (\d{1,3})\);\s{1,5}--></script>`sU',
@@ -166,12 +168,14 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			"[title=2]$1[/title]",
 			"[title=3]$1[/title]",
 			"[title=4]$1[/title]",
+			"[title=5]$1[/title]",
+			"[title=6]$1[/title]",
 			"[style=$1]$2[/style]",
 			"[sound]$1[/sound]",
 			"[sound]$1[/sound]",
 			"[sound]$1[/sound]",
 			"[movie=$1,$2]$3[/movie]",
-		    "[movie=$2,$3]$1[/movie]",
+			"[movie=$2,$3]$1[/movie]",
 			"[movie=$2,$3]$1[/movie]",
 			"[swf=$2,$3]$1[/swf]",
 			"[swf=$2,$3]$1[/swf]",
@@ -216,9 +220,9 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	private function unparse_img($matches)
 	{
 		$alt = !empty($matches[2]) ? ' alt="' . $matches[2] . '"' : '';
-        $title = !empty($matches[3]) ? ' title="' . $matches[3] . '"' : '';
-        $style = !empty($matches[4]) ? ' style="' . $matches[4] . '"' : '';
-        $class = !empty($matches[5]) ? ' class="' . $matches[5] . '"' : '';
+		$title = !empty($matches[3]) ? ' title="' . $matches[3] . '"' : '';
+		$style = !empty($matches[4]) ? ' style="' . $matches[4] . '"' : '';
+		$class = !empty($matches[5]) ? ' class="' . $matches[5] . '"' : '';
 
 		return '[img' . $alt . $title . $style . $class. ']' . $matches[1] . '[/img]';
 	}
