@@ -107,25 +107,25 @@
 		<div class="content" style="height:200px;">
 			<menu id="cssmenu-sandboxfilter" class="cssmenu cssmenu-right cssmenu-actionslinks cssmenu-tools">
 				<ul>
-					<li class="extend"><a><i class="fa fa-eye"></i> {@css.modules_menus.display}</a>
+					<li class="extend"><a class="cssmenu-title"><i class="fa fa-eye"></i> {@css.modules_menus.display}</a>
 						<ul>
-							<li><a href="#"><i class="fa fa-eye"></i> {@css.modules_menus.display.most_viewed}</a><li/>
-							<li><a href="#"><i class="fa fa-star-half-empty"></i> {@css.modules_menus.display.top_rated}</a></li>
+							<li><a href="#" class="cssmenu-title"><i class="fa fa-eye"></i> {@css.modules_menus.display.most_viewed}</a><li/>
+							<li><a href="#" class="cssmenu-title"><i class="fa fa-star-half-empty"></i> {@css.modules_menus.display.top_rated}</a></li>
 						</ul>
 					</li>
-					<li class="extend"><a><i class="fa fa-sort"></i> {@css.modules_menus.order_by}</a>
+					<li class="extend"><a class="cssmenu-title"><i class="fa fa-sort"></i> {@css.modules_menus.order_by}</a>
 						<ul>
-							<li><a href="#"><i class="fa fa-tag"></i> {@css.modules_menus.order_by.name}</a></li>
-							<li><a href="#"><i class="fa fa-clock-o"></i> {@css.modules_menus.order_by.date}</a></li>
-							<li><a href="#"><i class="fa fa-eye"></i> {@css.modules_menus.order_by.views}</a></li>
-							<li><a href="#"><i class="fa fa-star-half-empty"></i> {@css.modules_menus.order_by.notes}</a></li>
-							<li><a href="#"><i class="fa fa-comments-o"></i> {@css.modules_menus.order_by.coms}</a><li>
+							<li><a href="#" class="cssmenu-title"><i class="fa fa-tag"></i> {@css.modules_menus.order_by.name}</a></li>
+							<li><a href="#" class="cssmenu-title"><i class="fa fa-clock-o"></i> {@css.modules_menus.order_by.date}</a></li>
+							<li><a href="#" class="cssmenu-title"><i class="fa fa-eye"></i> {@css.modules_menus.order_by.views}</a></li>
+							<li><a href="#" class="cssmenu-title"><i class="fa fa-star-half-empty"></i> {@css.modules_menus.order_by.notes}</a></li>
+							<li><a href="#" class="cssmenu-title"><i class="fa fa-comments-o"></i> {@css.modules_menus.order_by.coms}</a><li>
 						</ul>
 					</li>
-					<li class="extend"><a><i class="fa fa-sort-alpha-asc"></i> {@css.modules_menus.direction}</a>
+					<li class="extend"><a class="cssmenu-title"><i class="fa fa-sort-alpha-asc"></i> {@css.modules_menus.direction}</a>
 						<ul>
-							<li><a href="#"><i class="fa fa-sort-amount-asc"></i> {@css.modules_menus.direction.up}</a></li>
-							<li><a href="#"><i class="fa fa-sort-amount-desc"></i> {@css.modules_menus.direction.down}</a></li>
+							<li><a href="#" class="cssmenu-title"><i class="fa fa-sort-amount-asc"></i> {@css.modules_menus.direction.up}</a></li>
+							<li><a href="#" class="cssmenu-title"><i class="fa fa-sort-amount-desc"></i> {@css.modules_menus.direction.down}</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -143,16 +143,16 @@
 			<menu id="cssmenu-sandboxbug" class="cssmenu cssmenu-group">
 				<ul>
 					<li>
-						<a href="#">{@css.modules_menus.unsolved_bugs}</a>
+						<a href="#" class="cssmenu-title">{@css.modules_menus.unsolved_bugs}</a>
 					</li>
 					<li class="current">
-						<a href="#">{@css.modules_menus.solved_bugs}</a>
+						<a href="#" class="cssmenu-title">{@css.modules_menus.solved_bugs}</a>
 					</li>
 					<li>
-						<a href="#">{@css.modules_menus.roadmap}</a>
+						<a href="#" class="cssmenu-title">{@css.modules_menus.roadmap}</a>
 					</li>
 					<li>
-						<a href="#">{@css.modules_menus.stats}</a>
+						<a href="#" class="cssmenu-title">{@css.modules_menus.stats}</a>
 					</li>
 				</ul>
 			</menu>
@@ -203,20 +203,22 @@
 			</div>
 		</div>
 		<br/></br>
-		<h5>{@css.options}</h5>
-		<div class="options">
-			<h6>{@css.options.sort_by}</h6>
-			<select>
-				<option>{@css.options.sort_by.alphabetical}</option>
-				<option>{@css.options.sort_by.size}</option>
-				<option>{@css.options.sort_by.date}</option>
-				<option>{@css.options.sort_by.popularity}</option>
-				<option>{@css.options.sort_by.note}</option>
-			</select>
-			<select>
-				<option>{@css.modules_menus.direction.up}</option>
-				<option>{@css.modules_menus.direction.down}</option>
-			</select>
+		<div style="overflow: hidden;">
+			<h5>{@css.options}</h5>
+			<div class="options">
+				<h6>{@css.options.sort_by}</h6>
+				<select>
+					<option>{@css.options.sort_by.alphabetical}</option>
+					<option>{@css.options.sort_by.size}</option>
+					<option>{@css.options.sort_by.date}</option>
+					<option>{@css.options.sort_by.popularity}</option>
+					<option>{@css.options.sort_by.note}</option>
+				</select>
+				<select>
+					<option>{@css.modules_menus.direction.up}</option>
+					<option>{@css.modules_menus.direction.down}</option>
+				</select>
+			</div>
 		</div>
 
 	</div>
@@ -339,7 +341,7 @@
 		<h1>{@css.table}</h1>
 	</header>
 	<div class="content">
-		<table>
+		<table id="table">
 			<caption>
 				{@css.table_description}
 			</caption>
@@ -524,7 +526,7 @@
 	<header>
 		<h1>{@css.page.title}</h1>
 	</header>
-	<div class="content">
+	<div class="content" style="overflow: hidden;">
 		<article class="medium-block">
 			<header>
 				<h1>{@css.block.title}</h1>
@@ -553,7 +555,7 @@
 	<header>
 		<h1>{@css.page.title}</h1>
 	</header>
-	<div class="content">
+	<div class="content" style="overflow: hidden;">
 		<article class="small-block">
 			<header>
 				<h1>{@css.block.title}</h1>

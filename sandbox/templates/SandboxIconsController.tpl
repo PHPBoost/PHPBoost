@@ -1,8 +1,16 @@
+<style>
+	<!--
+		.small-block:nth-child(3n+1) {
+			clear: both;
+		}
+	-->
+</style>
+
 <section>
 	<header>
 		<h1>{@title.icons}</h1>
 	</header>
-	<div class="content">
+	<div class="content" style="overflow: hidden;">
 		# START icons #
 			<article class="small-block">
 				<header>
