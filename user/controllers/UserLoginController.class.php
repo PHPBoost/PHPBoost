@@ -31,6 +31,7 @@ class UserLoginController extends AbstractController
 	const ADMIN_LOGIN = 2;
 
 	private $login_type;
+	private $redirect;
 
 	private $view;
 	private $lang;
@@ -42,9 +43,11 @@ class UserLoginController extends AbstractController
 	private $has_error;
 	private $maintain_config;
 	
-	public function __construct($login_type = self::USER_LOGIN)
+	public function __construct($login_type = self::USER_LOGIN, $redirect = '')
 	{
 		$this->login_type = $login_type;
+		if (!empty($redirect))
+			$this->redirect = $redirect;
 	}
 
 	public function execute(HTTPRequestCustom $request)
@@ -65,7 +68,7 @@ class UserLoginController extends AbstractController
 		{
 			if (!$this->maintain_config->is_under_maintenance() || ($this->maintain_config->is_under_maintenance() && $this->maintain_config->is_authorized_in_maintenance()))
 			{
-				if ($this->request->get_value('redirect', ''))
+				if ($this->request->get_value('redirect', '') || $this->redirect !== null)
 					AppContext::get_response()->redirect($this->get_redirect_url());
 				else
 					AppContext::get_response()->redirect(Environment::get_home_page());
@@ -226,14 +229,20 @@ class UserLoginController extends AbstractController
 
 		if ($this->login_type == self::ADMIN_LOGIN)
 		{
-			 return DispatchManager::get_url('/admin/admin_index.php', $redirect);
+			if ($this->redirect !== null && $this->redirect)
+				return DispatchManager::get_url($this->redirect, $redirect);
+			else
+				return DispatchManager::get_url('/admin/admin_index.php', $redirect);
 		}
 		return DispatchManager::get_url('/user/index.php', '/login' . $redirect);
 	}
 
 	private function get_redirect_url()
 	{
-		return new Url($this->request->get_value('redirect', '/'));
+		if ($this->redirect !== null && $this->redirect)
+			return new Url($this->redirect);
+		else
+			return new Url($this->request->get_value('redirect', '/'));
 	}
 
 	private function init_maintain_delay()
