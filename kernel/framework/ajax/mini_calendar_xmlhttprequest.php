@@ -46,7 +46,6 @@ $input_date = $request->get_getvalue('input_date', '');
 //Vide par défaut => Type date.
 $calendar_type = !empty($date) ? 'timestamp' : 'date';
 $field = !empty($field) ? trim($field) : 'calendar';
-$lyear = $request->get_getint('lyear', 0) ? '&amp;lyear=1' : '';
 
 $date_lang = LangLoader::get('date-common');
 $tpl = new FileTemplate('framework/util/mini_calendar_response.tpl');
@@ -80,11 +79,12 @@ if ($calendar_type == 'date')
 	$tpl->put_all(array(
 		'FIELD' => $field,
 		'INPUT_FIELD' => $input_field,
-		'LYEAR' => $lyear,
 		'MONTH' => $month,
 		'YEAR' => $year,
-		'U_PREVIOUS' => ($month == 1) ? 'input_field=' . $input_field . '&amp;field=' . $field . $lyear . '&amp;input_date=' . $input_date . '&amp;d=' . $day . '&amp;m=12&amp;y=' . ($year - 1) :  'input_field=' . $input_field . '&amp;input_field=' . $input_field . '&amp;field=' . $field . $lyear . '&amp;input_date=' . $input_date . '&amp;d=1&amp;m=' . ($month - 1) . '&amp;y=' . $year,
-		'U_NEXT' => ($month == 12) ? 'input_field=' . $input_field . '&amp;field=' . $field . $lyear . '&amp;input_date=' . $input_date . '&amp;d=' . $day . '&amp;m=1&amp;y=' . ($year + 1) :  'input_field=' . $input_field . '&amp;field=' . $field . $lyear . '&amp;input_date=' . $input_date . '&amp;d=1&amp;m=' . ($month + 1) . '&amp;y=' . $year
+		'PREVIOUS_YEAR' => ($month == 1) ? ($year - 1) : $year,
+		'PREVIOUS_MONTH' => ($month == 1) ? 12 : ($month - 1),
+		'NEXT_YEAR' => ($month == 12) ? ($year + 1) : $year,
+		'NEXT_MONTH' => ($month == 12) ? 1 : ($month + 1)
 	));
 
 	//Génération des select.

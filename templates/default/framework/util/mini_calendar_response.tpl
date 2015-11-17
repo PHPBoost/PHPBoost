@@ -1,17 +1,17 @@
 <div class="date-select-container">
 	<div class="date-select-previous">
-		<a href="" onclick="xmlhttprequest_calendar('{FIELD}', '?{U_PREVIOUS}');return false;"><i class="fa fa-caret-left fa-large"></i></a>
+		<a href="" onclick="xmlhttprequest_calendar(${escapejs(FIELD)}, ${escapejs(INPUT_FIELD)}, ${escapejs(PREVIOUS_YEAR)}, ${escapejs(PREVIOUS_MONTH)}, 1);return false;"><i class="fa fa-caret-left fa-large"></i></a>
 	</div>
 	<div class="date-select-next">
-		<a href="" onclick="xmlhttprequest_calendar('{FIELD}', '?{U_NEXT}');return false;"><i class="fa fa-caret-right fa-large"></i></a>
+		<a href="" onclick="xmlhttprequest_calendar(${escapejs(FIELD)}, ${escapejs(INPUT_FIELD)}, ${escapejs(NEXT_YEAR)}, ${escapejs(NEXT_MONTH)}, 1);return false;"><i class="fa fa-caret-right fa-large"></i></a>
 	</div>
 	<div class="date-select-content">
-		<select name="m" onchange="xmlhttprequest_calendar('{FIELD}', '?input_field={INPUT_FIELD}&amp;field={FIELD}{LYEAR}&amp;d=1&amp;m=' + jQuery('.{FIELD}-date-select-month').val() + '&amp;y={YEAR}{TYPE}');" class="date-select-month {FIELD}-date-select-month">
+		<select onchange="xmlhttprequest_calendar(${escapejs(FIELD)}, ${escapejs(INPUT_FIELD)}, ${escapejs(YEAR)}, jQuery(this).val(), 1);" class="date-select-month">
 			# START month #
 			{month.MONTH}
 			# END month #
 		</select>
-		<select name="y" onchange="xmlhttprequest_calendar('{FIELD}', '?input_field={INPUT_FIELD}&amp;field={FIELD}{LYEAR}&amp;d=1&amp;m={MONTH}{TYPE}&amp;y=' + jQuery('.{FIELD}-date-select-year').val());" class="date-select-year {FIELD}-date-select-year">
+		<select onchange="xmlhttprequest_calendar(${escapejs(FIELD)}, ${escapejs(INPUT_FIELD)}, jQuery(this).val(), ${escapejs(MONTH)}, 1);" class="date-select-year">
 			# START year #
 				{year.YEAR}
 			# END year #
@@ -36,7 +36,7 @@
 		<tr>
 			# START day #
 			<td class="{day.CLASS}">
-				<a href="" onclick="insert_date(${escapejs(day.INPUT_FIELD)}, ${escapejs(day.DATE)});return false;">{day.DAY}</a>
+				<a href="" onclick="insert_date(${escapejs(FIELD)}, ${escapejs(INPUT_FIELD)}, ${escapejs(day.DATE)});return false;">{day.DAY}</a>
 			</td>
 			# IF day.CHANGE_LINE #
 		</tr>
