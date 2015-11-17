@@ -103,7 +103,7 @@ elseif ($id_media > 0)
 		'C_DISPLAY_COMMENTS' => $config->are_comments_enabled(),
 		'ID_MEDIA' => $id_media,
 		'NAME' => $media['name'],
-		'CONTENTS' => FormatingHelper::second_parse($media['contents']),
+		'CONTENTS' => TextHelper::html_entity_decode(FormatingHelper::second_parse($media['contents'])),
 		'COUNT' => $media['counter'],
 		'KERNEL_NOTATION' => NotationService::display_active_image($notation),
 		'HITS' => ((int)$media['counter']+1) > 1 ? sprintf($MEDIA_LANG['n_times'], ((int)$media['counter']+1)) : sprintf($MEDIA_LANG['n_time'], ((int)$media['counter']+1)),
