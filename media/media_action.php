@@ -124,7 +124,7 @@ elseif ($delete > 0)
 
 	AppContext::get_response()->redirect('media' . url('.php?cat=' . $media['idcat'], '-' . $media['idcat'] . '.php'));
 }
-// Formulaire d'ajout ou d'édition.
+// Formulaire d'ajout ou d'Ã©dition.
 elseif ($add >= 0 && !$submit || $edit > 0)
 {
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
@@ -152,7 +152,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 		'L_SUBMIT' => $edit > 0 ? $LANG['update'] : $LANG['submit']
 	));
 
-	// Construction du tableau des catégories musicales.
+	// Construction du tableau des catÃ©gories musicales.
 	$categories = MediaService::get_categories_manager()->get_categories_cache()->get_categories();
 	$js_id_music = array();
 	foreach ($categories as $cat)
@@ -169,7 +169,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 	
 	$media = '';
 	
-	// Édition.
+	// Ã‰dition.
 	if ($edit > 0)
 	{
 		try {
@@ -206,7 +206,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 			'WIDTH' => $media['width'],
 			'HEIGHT' => $media['height'],
 			'U_MEDIA' => $media['url'],
-			'DESCRIPTION' => FormatingHelper::unparse($media['contents']),
+			'DESCRIPTION' => stripslashes(FormatingHelper::unparse($media['contents'])),
 			'APPROVED' => ($media['infos'] & MEDIA_STATUS_APROBED) !== 0 ? ' checked="checked"' : '',
 			'C_APROB' => ($media['infos'] & MEDIA_STATUS_APROBED) === 0,
 			'JS_ID_MUSIC' => '"' . implode('", "', $js_id_music) . '"',
@@ -280,7 +280,7 @@ elseif ($submit)
 		'width' => min(retrieve(POST, 'width', $config->get_max_video_width(), TINTEGER), $config->get_max_video_width()),
 		'height' => min(retrieve(POST, 'height', $config->get_max_video_height(), TINTEGER), $config->get_max_video_height()),
 		'url' => retrieve(POST, 'u_media', '', TSTRING),
-		'contents' => retrieve(POST, 'contents', '', TSTRING_UNCHANGE),
+		'contents' => retrieve(POST, 'contents', '', TSTRING_PARSE),
 		'approved' => retrieve(POST, 'approved', 0, TBOOL),
 		'contrib' => retrieve(POST, 'contrib', 0, TBOOL),
 		'counterpart' => retrieve(POST, 'counterpart', '', TSTRING_PARSE)
@@ -379,7 +379,7 @@ elseif ($submit)
 		DispatchManager::redirect($controller);
 	}
 
-	// Édition
+	// Ã‰dition
 	if ($media['idedit'] && MediaAuthorizationsService::check_authorizations($media['idcat'])->moderation())
 	{
 		PersistenceContext::get_querier()->update(PREFIX . "media", array('idcat' => $media['idcat'], 'name' => $media['name'], 'url' => $media['url'], 'contents' => $media['contents'], 'infos' => (MediaAuthorizationsService::check_authorizations($media['idcat'])->write() ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']), 'WHERE id = :id', array('id' => $media['idedit']));
