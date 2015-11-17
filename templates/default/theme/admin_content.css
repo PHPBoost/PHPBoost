@@ -502,6 +502,19 @@ div.index-logo {
 
 .system-report { font-family: monospace; }
 
+fieldset.quick-access {
+	display: none;
+}
+
+@media (min-width: 769px){
+	fieldset.quick-access {
+		display: block;
+	}
+	
+	fieldset.quick-access ul li {
+		padding: 5px 0;
+	}
+}
 /* --- database =============================================================== */
 
 .db-restore {

@@ -505,6 +505,11 @@ li.has-sub {
 	#support-pbt {
 		display: block;
 	}
+	
+	#support-pbt ul {
+		margin: 0;
+		list-style-type: none;
+	}
 		
 	#support-pbt i {
 		margin-right: 2px;
