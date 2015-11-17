@@ -1,12 +1,12 @@
-<div# IF NOT C_VERTICAL # class="lang_horizontal"# ENDIF #>
+<div class="langs-switcher# IF C_VERTICAL # langs-switcher-vertical# ENDIF #">
 	<form action="" method="get">
-			<p style="padding-top: 5px;">
+			<p>
 				<select name="switchlang" onchange="document.location = '?switchlang=' + this.options[this.selectedIndex].value;">
 				# START langs #
 					<option value="{langs.IDNAME}"{langs.SELECTED}>{langs.NAME}</option>
 				# END langs #
 				</select>
-				<img src="{IMG_LANG_IDENTIFIER}" alt="{DEFAULT_LANG}" class="valign-middle" />
+				<img src="{IMG_LANG_IDENTIFIER}" alt="{DEFAULT_LANG}" />
 			</p>
 			<a href="?switchlang={DEFAULT_LANG}">{@default_lang}</a>
 	</form>

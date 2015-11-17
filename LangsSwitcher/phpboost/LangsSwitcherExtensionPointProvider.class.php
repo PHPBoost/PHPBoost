@@ -38,5 +38,13 @@ class LangsSwitcherExtensionPointProvider extends ExtensionPointProvider
 			new LangsSwitcherModuleMiniMenu()
 		));
 	}
+
+	public function css_files()
+	{
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->adding_always_displayed_file('langsswitcher.css');
+		return $module_css_files;
+	}
+
 }
 ?>

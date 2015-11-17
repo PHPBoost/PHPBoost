@@ -1,0 +1,17 @@
+.langs-switcher {
+	margin: 5px 0;
+
+}
+
+.langs-switcher p {
+	margin-bottom: 0;
+}
+
+.langs-switcher select {
+	margin: 0 auto 5px auto;
+}
+
+.langs-switcher img {
+	vertical-align: top;
+	margin-top: 2px;
+}

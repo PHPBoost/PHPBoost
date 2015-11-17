@@ -1,7 +1,11 @@
-.module-themeswitcher {
+.themes-switcher {
 	margin: 5px 0;
 }
 
-.module-themeswitcher select {
+.themes-switcher select {
+	margin: 0 auto 5px auto;
+}
+
+.themes-switcher-vertical select {
 	display: block;
 }
