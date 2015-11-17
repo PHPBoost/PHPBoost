@@ -45,8 +45,10 @@
 	vertical-align: bottom;
 }
 
-#top-header .cssmenu li.has-sub ul li:first-child .cssmenu-title { border-radius: 0 5px 0 0; }
-#top-header .cssmenu li.has-sub ul li:last-child .cssmenu-title  { border-radius: 0 0 5px 5px; }
+#top-header .cssmenu ul > li:first-child > .cssmenu-title 				{ border-radius: 0 5px 0 0;   }
+#top-header .cssmenu ul > li:last-child > .cssmenu-title  				{ border-radius: 0 0 5px 5px; }
+#top-header .cssmenu ul > li.has-sub:first-child:hover > .cssmenu-title { border-radius: 0 0 0 0;     }
+#top-header .cssmenu ul > li.has-sub:last-child:hover > .cssmenu-title  { border-radius: 0 0 0;       }
 
 @media (max-width: 768px) {
 	
