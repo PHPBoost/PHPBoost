@@ -242,6 +242,26 @@
 		</nav>
 				
 		<div id="admin-contents">
+					
+			<div id="new-file">
+				# INCLUDE message_helper #
+				<form action="admin_files.php?f={FOLDER_ID}&amp;fm={USER_ID}&amp;token={TOKEN}" enctype="multipart/form-data" method="post">
+					<fieldset>
+						<legend>{L_ADD_FILES}</legend>
+						<div class="fieldset-inset">
+							<div class="form-element">
+								<div class="form-field">
+									<input type="file" name="upload_file" id="upload-file">
+									<input type="hidden" name="max_file_size" value="2000000">
+								</div>
+								<button type="submit" class="submit" name="valid_up" value="true">{L_UPLOAD}</button>
+								<input type="hidden" name="token" value="{TOKEN}">
+							</div>
+						</div>
+					</fieldset>
+				</form>	
+			</div>
+			
 			<fieldset>
 				<legend>{L_FILES_ACTION}</legend>
 				<div class="fieldset-inset">
@@ -265,72 +285,51 @@
 					</div>
 				</div>
 			</fieldset>
-				
-				
 					
-					<fieldset class="upload-elements-container">
-						<legend>{L_FOLDER_CONTENT}</legend>
-						<div class="fieldset-inset">
-							# IF C_EMPTY_FOLDER #
-								<div id="empty-folder" class="notice">{L_EMPTY_FOLDER}</div>
-								<span id="new-folder"></span>
-								
-							# ELSE #
-								# START folder #
-									<div class="upload-elements-repertory">
-										<a href="admin_files.php{folder.U_FOLDER}"><i class="fa # IF folder.C_MEMBER_FOLDER #fa-users# ELSE #fa-folder# ENDIF # fa-2x"></i></a>
-										<span id="f{folder.ID}"><a href="admin_files.php{folder.U_FOLDER}" class="com">{folder.NAME}</a></span><br />
-										{folder.RENAME_FOLDER}
-										# IF NOT folder.C_MEMBERS_FOLDER #<a href="admin_files.php?{folder.DEL_TYPE}={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{FOLDERM_ID}" title="{folder.L_TYPE_DEL_FOLDER}" data-confirmation="# IF folder.C_MEMBER_FOLDER #{L_CONFIRM_EMPTY_FOLDER}# ELSE #delete-element# ENDIF #"><i class="fa fa-delete"></i></a># ENDIF #
-										# IF folder.C_TYPEFOLDER #<a href="admin_files{folder.U_MOVE}" title="{L_MOVETO}"><i class="fa fa-move"></i></a># ENDIF #
-										<span id="img{folder.ID}"></span>
-									</div>
-								# END folder #
-								<span id="new-folder"></span>
-		
-								# START files #
-								<div class="upload-elements-file">
-									<i class="fa {files.IMG}"></i>
-									<a class="# IF files.C_RECENT_FILE #upload-recent-file# END IF #" href="{files.URL}"{files.LIGHTBOX}id="fi1{files.ID}">{files.NAME}</a><span id="fi{files.ID}"></span><br />
-									{files.BBCODE}<br />
-									<span class="text-strong">{files.FILETYPE}</span><br />
-									<span class="text-strong">{files.SIZE}</span><br />
-									{files.RENAME_FILE}
-									<a href="admin_files.php?del={files.ID}&amp;f={FOLDER_ID}&amp;fm={USER_ID}&amp;token={TOKEN}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
-									<a href="admin_files{files.U_MOVE}" title="{L_MOVETO}" class="fa fa-move"></a>
-									{files.INSERT}
-									<span id="imgf{files.ID}"></span>
-								</div>
-								# END files #
-							# ENDIF #
+			<fieldset class="upload-elements-container">
+				<legend>{L_FOLDER_CONTENT}</legend>
+				<div class="fieldset-inset">
+					# IF C_EMPTY_FOLDER #
+						<div id="empty-folder" class="notice">{L_EMPTY_FOLDER}</div>
+						<span id="new-folder"></span>
+						
+					# ELSE #
+						# START folder #
+							<div class="upload-elements-repertory">
+								<a href="admin_files.php{folder.U_FOLDER}"><i class="fa # IF folder.C_MEMBER_FOLDER #fa-users# ELSE #fa-folder# ENDIF # fa-2x"></i></a>
+								<span id="f{folder.ID}"><a href="admin_files.php{folder.U_FOLDER}" class="com">{folder.NAME}</a></span><br />
+								{folder.RENAME_FOLDER}
+								# IF NOT folder.C_MEMBERS_FOLDER #<a href="admin_files.php?{folder.DEL_TYPE}={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{FOLDERM_ID}" title="{folder.L_TYPE_DEL_FOLDER}" data-confirmation="# IF folder.C_MEMBER_FOLDER #{L_CONFIRM_EMPTY_FOLDER}# ELSE #delete-element# ENDIF #"><i class="fa fa-delete"></i></a># ENDIF #
+								# IF folder.C_TYPEFOLDER #<a href="admin_files{folder.U_MOVE}" title="{L_MOVETO}"><i class="fa fa-move"></i></a># ENDIF #
+								<span id="img{folder.ID}"></span>
+							</div>
+						# END folder #
+						<span id="new-folder"></span>
+
+						# START files #
+						<div class="upload-elements-file">
+							<i class="fa {files.IMG}"></i>
+							<a class="# IF files.C_RECENT_FILE #upload-recent-file# END IF #" href="{files.URL}"{files.LIGHTBOX}id="fi1{files.ID}">{files.NAME}</a><span id="fi{files.ID}"></span><br />
+							{files.BBCODE}<br />
+							<span class="text-strong">{files.FILETYPE}</span><br />
+							<span class="text-strong">{files.SIZE}</span><br />
+							{files.RENAME_FILE}
+							<a href="admin_files.php?del={files.ID}&amp;f={FOLDER_ID}&amp;fm={USER_ID}&amp;token={TOKEN}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
+							<a href="admin_files{files.U_MOVE}" title="{L_MOVETO}" class="fa fa-move"></a>
+							{files.INSERT}
+							<span id="imgf{files.ID}"></span>
 						</div>
-					</fieldset>
-					
-					<div class="spacer"></div>
-					
-					<div id="new-file">
-						# INCLUDE message_helper #
-						<form action="admin_files.php?f={FOLDER_ID}&amp;fm={USER_ID}&amp;token={TOKEN}" enctype="multipart/form-data" method="post">
-							<fieldset>
-								<legend>{L_ADD_FILES}</legend>
-								<div class="fieldset-inset">
-									<div class="options">
-										{L_FOLDERS} : <strong><span id="total-folder">{TOTAL_FOLDERS}</span></strong><br />
-										{L_FILES} : <strong>{TOTAL_FILES}</strong><br />
-										{L_FOLDER_SIZE} : <strong>{TOTAL_FOLDER_SIZE}</strong><br />
-										{L_DATA} : <strong>{TOTAL_SIZE}</strong>
-									</div>
-									<div class="form-element">
-										<div class="form-field">
-											<input type="file" name="upload_file" id="upload-file">
-											<input type="hidden" name="max_file_size" value="2000000">
-										</div>
-										<button type="submit" class="submit" name="valid_up" value="true">{L_UPLOAD}</button>
-										<input type="hidden" name="token" value="{TOKEN}">
-									</div>
-								</div>
-							</fieldset>
-						</form>	
-					</div>
+						# END files #
+					# ENDIF #
+				</div>
+							<div class="options">
+								{L_FOLDERS} : <strong><span id="total-folder">{TOTAL_FOLDERS}</span></strong><br />
+								{L_FILES} : <strong>{TOTAL_FILES}</strong><br />
+								{L_FOLDER_SIZE} : <strong>{TOTAL_FOLDER_SIZE}</strong><br />
+								{L_DATA} : <strong>{TOTAL_SIZE}</strong>
+							</div>
+			</fieldset>
+			
+			<div class="spacer"></div>
 		</div>
 		

@@ -275,12 +275,33 @@
 	</script>
 	
 	<section id="module-user-upload">
-		<header><h1>{L_FILES_ACTION}</h1></header>
+		<header>
+			<h1>{L_FILES_ACTION}</h1>
+		</header>
+		
 		<div class="content">
+
+			<div id="new-file">
+				# INCLUDE message_helper #
+				<form action="upload.php?f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" enctype="multipart/form-data" method="post">
+					<fieldset>
+						<legend>{L_ADD_FILES}</legend>
+						<div class="form-element">
+							<div class="form-field">
+								<input type="file" name="upload_file" id="upload-file">
+								<input type="hidden" name="max_file_size" value="2000000">
+							</div>
+							<input type="hidden" name="token" value="{TOKEN}">
+							<button type="submit" name="valid_up" value="true" class="submit">{L_UPLOAD}</button>
+							</div>
+					</fieldset>
+				</form>
+			</div>
+			
 			<div class="upload-address-bar">
 				<a href="upload.php?root=1{POPUP}"><i class="fa fa-home"></i> {L_ROOT}</a>{URL}
 			</div>
-
+			
 			<div class="upload-address-bar-links">
 				<a href="upload.php?fup={FOLDER_ID}{POPUP}">
 					<i class="fa fa-level-up"></i> {L_FOLDER_UP}
@@ -292,6 +313,7 @@
 					<i class="fa fa-save"></i> {L_ADD_FILES}
 				</a>
 			</div>
+			<div class="spacer"></div>
 			
 			<legend>{L_FOLDER_CONTENT}</legend>
 			
@@ -326,35 +348,17 @@
 					</div>
 					# END files #
 				# ENDIF #
+				<div class="options">
+					{L_FOLDERS} : <strong><span id="total-folder">{TOTAL_FOLDERS}</span></strong><br />
+					{L_FILES} : <strong>{TOTAL_FILES}</strong><br />
+					{L_FOLDER_SIZE} : <strong>{TOTAL_FOLDER_SIZE}</strong><br />
+					{L_DATA} : <strong>{TOTAL_SIZE}</strong>
+				</div>
 			</div>
-			
-			<div class="spacer"></div>
-			<div id="new-file">
-				# INCLUDE message_helper #
-				<form action="upload.php?f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" enctype="multipart/form-data" method="post">
-					<fieldset>
-						<legend>{L_ADD_FILES}</legend>
-						<div class="form-element">
-							<div class="form-field">
-								<input type="file" name="upload_file" id="upload-file">
-								<input type="hidden" name="max_file_size" value="2000000">
-							</div>
-							<input type="hidden" name="token" value="{TOKEN}">
-							<button type="submit" name="valid_up" value="true" class="submit">{L_UPLOAD}</button>
-							</div>
-					</fieldset>
-				</form>
-			</div>
-			
+						
 		</div>
+		
 		<footer>
-			<div class="options">
-				{L_FOLDERS} : <strong><span id="total-folder">{TOTAL_FOLDERS}</span></strong><br />
-				{L_FILES} : <strong>{TOTAL_FILES}</strong><br />
-				{L_FOLDER_SIZE} : <strong>{TOTAL_FOLDER_SIZE}</strong><br />
-				{L_DATA} : <strong>{TOTAL_SIZE}</strong>
-			</div>
-			<div class="spacer"></div>
 			# IF C_DISPLAY_CLOSE_BUTTON #
 			<fieldset class="fieldset-submit">
 				<legend>${LangLoader::get_message('close', 'main')}</legend>
@@ -362,4 +366,5 @@
 			</fieldset>
 			# ENDIF #
 		</footer>
+		
 	</section>
