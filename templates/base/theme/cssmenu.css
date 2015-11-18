@@ -515,6 +515,7 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 	.cssmenu-static ul ul {
 	    position: relative;
 	    left: 0;
+	    z-index: 0;
 	}
 
 	.cssmenu-static ul ul li {
