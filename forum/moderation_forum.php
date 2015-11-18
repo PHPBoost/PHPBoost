@@ -180,7 +180,7 @@ if ($action == 'alert') //Gestion des alertes
 			$group_color = User::get_group_color($row['groups'], $row['user_level']);
 			
 			$tpl->assign_block_vars('alert_list', array(
-				'TITLE' => '<a href="moderation_forum' . url('.php?action=alert&amp;id=' . $row['id']) . '">' . $row['title'] . '</a>',
+				'TITLE' => '<a href="moderation_forum' . url('.php?action=alert&amp;id=' . $row['id']) . '">' . stripslashes($row['title']) . '</a>',
 				'EDIT' => '<a href="moderation_forum' . url('.php?action=alert&amp;id=' . $row['id']) . '" class="fa fa-edit"></a>',
 				'TOPIC' => '<a href="topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '+' . Url::encode_rewrite($row['topic_title']) . '.php') . '">' . $row['topic_title'] . '</a>',
 				'STATUS' => $status,
@@ -245,7 +245,7 @@ if ($action == 'alert') //Gestion des alertes
 			
 			$tpl->put_all(array(
 				'ID' => $id_get,
-				'TITLE' => $row['title'],
+				'TITLE' => stripslashes($row['title']),
 				'TOPIC' => '<a href="topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '+' . Url::encode_rewrite($row['topic_title']) . '.php') . '">' . $row['topic_title'] . '</a>',
 				'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 				'STATUS' => $status,

@@ -92,7 +92,7 @@ while ($row = $result->fetch())
 {
 	$tpl->assign_block_vars('last_msg', array(
 		'U_TOPIC_ID' => url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
-		'TITLE' => $row['title']
+		'TITLE' => stripslashes($row['title'])
 	));
 }
 $result->dispose();
@@ -110,7 +110,7 @@ while ($row = $result->fetch())
 {
 	$tpl->assign_block_vars('popular', array(
 		'U_TOPIC_ID' => url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
-		'TITLE' => $row['title']
+		'TITLE' => stripslashes($row['title'])
 	));
 }
 $result->dispose();
@@ -128,7 +128,7 @@ while ($row = $result->fetch())
 {
 	$tpl->assign_block_vars('answers', array(
 		'U_TOPIC_ID' => url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
-		'TITLE' => $row['title']
+		'TITLE' => stripslashes($row['title'])
 	));
 }
 $result->dispose();

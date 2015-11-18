@@ -181,7 +181,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 			'TRACK' => '<i class="fa fa-msg-track"></i>',
 			'DISPLAY_MSG' => ($config->is_message_before_topic_title_displayed() && $config->is_message_before_topic_title_icon_displayed() && $row['display_msg']) ? '<i class="fa fa-msg-display"></i>' : '',
 			'TYPE' => $type[$row['type']],
-			'TITLE' => ucfirst($row['title']),
+			'TITLE' => ucfirst(stripslashes($row['title'])),
 			'AUTHOR' => !empty($row['login']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'" class="small '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>',
 			'DESC' => $row['subtitle'],
 			'PAGINATION' => $topic_pagination->display(),

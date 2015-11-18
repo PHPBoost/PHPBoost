@@ -42,7 +42,7 @@ try {
 
 $category = ForumService::get_categories_manager()->get_categories_cache()->get_category($topic['idcat']);
 
-$topic_name = !empty($topic['title']) ? $topic['title'] : '';
+$topic_name = !empty($topic['title']) ? stripslashes($topic['title']) : '';
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
 $Bread_crumb->add($category->get_name(), 'forum' . url('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '+' . $category->get_rewrited_name() . '.php'));
 $Bread_crumb->add($topic['title'], 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . Url::encode_rewrite($topic_name) . '.php'));
@@ -151,7 +151,7 @@ $vars_tpl = array(
 	'MEMBER' => $total_member,
 	'GUEST' => $total_visit,
 	'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '.php') . '">' . $category->get_name() . '</a>',
-	'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $topic_id, '-' . $topic_id . '.php') . '">' . $topic['title'] . '</a>',
+	'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $topic_id, '-' . $topic_id . '.php') . '">' . stripslashes($topic['title']) . '</a>',
 	'L_FORUM_INDEX' => $LANG['forum_index'],
 	'L_SUBMIT' => $LANG['submit'],
 	'L_PREVIEW' => $LANG['preview'],

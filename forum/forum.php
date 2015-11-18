@@ -380,7 +380,7 @@ if (!empty($id_get))
 			'IMG_ANNOUNCE' => $img_announce,
 			'ANCRE' => $new_ancre,
 			'TYPE' => $type[$row['type']],
-			'TITLE' => ucfirst($row['title']),
+			'TITLE' => ucfirst(stripslashes($row['title'])),
 			'AUTHOR' => !empty($row['login']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'" class="small '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>',
 			'DESC' => $row['subtitle'],
 			'PAGINATION' => $topic_pagination->display(),
