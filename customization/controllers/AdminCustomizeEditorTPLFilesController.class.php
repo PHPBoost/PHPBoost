@@ -49,24 +49,23 @@ class AdminCustomizeEditorTPLFilesController extends AdminModuleController
 		
 		$id_theme = $request->get_value('id_theme', '');
 		$id_module = '';
-		$file_name = $request->get_value('file_name', '');
+		$file_selected = $request->get_value('file_name', '');
 		
-		if (!empty($file_name))
-			$file_name .= '.tpl';
-		
-		if (preg_match('`/`', $file_name))
+		if (preg_match('`/`', $file_selected))
 		{
-			$split = explode('/', $file_name);
+			$split = explode('/', $file_selected);
 			$id_module = $split[0];
-			$file_name = $split[1];
+			$file_name = $split[1] . '.tpl';
 		}
+		else
+			$file_name = $file_selected . '.tpl';
 
-		$this->build_form($id_theme, $id_module, $file_name);
+		$this->build_form($id_theme, $id_module, $file_name, $file_selected);
 		
 		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
 		
-		if (!empty($id_theme) && !empty($file_name))
+		if (!empty($id_theme) && !empty($file_selected))
 		{
 			if ($this->submit_button->has_been_submited() && $this->form->validate())
 			{
@@ -85,7 +84,7 @@ class AdminCustomizeEditorTPLFilesController extends AdminModuleController
 		$this->lang = LangLoader::get('common', 'customization');
 	}
 	
-	private function build_form($theme_selected, $module_selected, $file_selected)
+	private function build_form($theme_selected, $module_selected, $file_name, $file_selected)
 	{
 		$form = new HTMLForm(__CLASS__);
 		
@@ -124,13 +123,13 @@ class AdminCustomizeEditorTPLFilesController extends AdminModuleController
 					if (!$module_folder->exists())
 						mkdir(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->tpl_modules_files_path . $module_selected);
 					
-					$this->tpl_file = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->tpl_modules_files_path . $module_selected . '/' . $file_selected);
+					$this->tpl_file = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->tpl_modules_files_path . $module_selected . '/' . $file_name);
 					if (!$this->tpl_file->exists())
-						copy(PATH_TO_ROOT . '/' . $module_selected . '/templates/' . $file_selected, PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->tpl_modules_files_path . $module_selected . '/' . $file_selected);
+						copy(PATH_TO_ROOT . '/' . $module_selected . '/templates/' . $file_name, PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->tpl_modules_files_path . $module_selected . '/' . $file_name);
 				}
 				else
 				{
-					$this->tpl_file = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->tpl_files_path . $file_selected);
+					$this->tpl_file = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->tpl_files_path . $file_name);
 				}
 				
 				$file_editor_fieldset->add_field(new FormFieldMultiLineTextEditor('tpl_file', $this->lang['customization.editor.files.content'], $this->tpl_file->read(),
@@ -186,6 +185,15 @@ class AdminCustomizeEditorTPLFilesController extends AdminModuleController
 				{
 					$files[] = new FormFieldSelectChoiceOption(LangLoader::get_message('module', 'admin-modules-common') . ' ' . ModulesManager::get_module($module->get_id())->get_configuration()->get_name() . ' : ' . $file->get_name(), $module->get_id() . '/' . $file->get_name_without_extension());
 				}
+			}
+		}
+		
+		$folder = new Folder(PATH_TO_ROOT . '/user/templates');
+		if ($folder->exists())
+		{
+			foreach ($folder->get_files('`\.tpl$`') as $file)
+			{
+				$files[] = new FormFieldSelectChoiceOption(LangLoader::get_message('users', 'user-common') . ' : ' . $file->get_name(), 'user/' . $file->get_name_without_extension());
 			}
 		}
 		
