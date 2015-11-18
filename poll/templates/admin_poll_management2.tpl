@@ -149,21 +149,11 @@
 											<input type="radio" value="2" name="visible" id="start_end_date" {VISIBLE_WAITING} />
 											<label for="start_end_date"></label> 
 										</div>
-										<input class="input-date" type="text" maxlength="10" id="start" name="start" value="{START}"> 
-										<div class="poll-calendar-block-container" id="calendar1">
-											<div id="start_date" class="calendar-block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">
-											</div>
-										</div>
-										<a onclick="xmlhttprequest_calendar('start_date', '?input_field=start&amp;field=start_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" class="fa fa-calendar"></a>
+										{CALENDAR_START}
 										
 										{L_UNTIL}&nbsp;
 										
-										<input class="input-date" type="text" maxlength="10" id="end" name="end" value="{END}"> 
-										<div class="poll-calendar-block-container" id="calendar2">
-											<div id="end_date" class="calendar-block" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);">
-											</div>
-										</div>
-										<a onclick="xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(2);" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" class="fa fa-calendar"></a>
+										{CALENDAR_END}
 									</label>
 								</div>
 								<br />
@@ -183,12 +173,7 @@
 						<div class="form-element">
 							<label for="current_date">* {L_POLL_DATE}</label>
 							<div class="form-field"><label>
-								<input class="input-date" type="text" id="current_date" name="current_date" value="{CURRENT_DATE}" /> 
-								<div class="poll-calendar-block-container" id="calendar3">
-									<div id="current" class="calendar-block" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);">
-									</div>
-								</div>
-								<a onclick="xmlhttprequest_calendar('current', '?input_field=current_date&amp;field=current&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(3);" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);" class="fa fa-calendar"></a>
+								{CALENDAR_CURRENT_DATE}
 								{L_AT}
 								<input class="input-date" type="text" maxlength="2" name="hour" value="{HOUR}" /> h <input class="input-date" type="text" maxlength="2" name="min" value="{MIN}" />
 							</label></div>
