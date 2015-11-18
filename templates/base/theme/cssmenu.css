@@ -488,11 +488,11 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 }
 
 /* --- Variantes --- */
-.cssmenu-horizontal ul ul ul {
-	margin-left: 100%;
-}
-
 @media (min-width: 769px) {
+	.cssmenu-horizontal ul ul ul {
+		margin-left: 100%;
+	}
+
 	.cssmenu-vertical ul ul {
 		position: relative;
 	}
@@ -511,9 +511,7 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 		width: 100%;
 		padding: 5px 15px;
 	}
-}
 
-@media (min-width: 769px) {
 	.cssmenu-static ul ul {
 	    position: relative;
 	    left: 0;
