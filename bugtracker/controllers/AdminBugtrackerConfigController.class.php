@@ -475,7 +475,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 				'C_DETECTED_IN'		=> $version['detected_in'],
 				'ID'				=> $key,
 				'NAME'				=> stripslashes($version['name']),
-				'RELEASE_DATE'		=> !empty($release_date) ? $release_date->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
+				'RELEASE_DATE'		=> !empty($release_date) ? $release_date->format(Date::FORMAT_ISO_DAY_MONTH_YEAR) : '',
 				'DAY'				=> !empty($release_date) ? $release_date->get_day() : date('d'),
 				'MONTH'				=> !empty($release_date) ? $release_date->get_month() : date('n'),
 				'YEAR'				=> !empty($release_date) ? $release_date->get_year() : date('Y'),
