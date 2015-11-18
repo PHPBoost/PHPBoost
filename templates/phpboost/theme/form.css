@@ -291,6 +291,12 @@ input.field-xlarge  { width: 250px; }
 	position: relative;
 }
 
+@media (max-width: 360px) {
+	.form-field {
+		max-width: 270px;
+	}
+}
+
 .form-field-free-large {
 	width: 100%;
 	max-width: none;
