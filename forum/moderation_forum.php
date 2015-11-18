@@ -694,7 +694,7 @@ else //Panneau de modération
 			'LEVEL_CLASS' => UserService::get_level_class($row['user_level']),
 			'GROUP_COLOR' => $group_color,
 			'DATE' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-			'U_ACTION' => (!empty($row['url']) ? '<a href="../forum/' . $row['url'] . '">' . $LANG[$row['action']] . '</a>' : $LANG[$row['action']]),
+			'U_ACTION' => (!empty($row['url']) ? '<a href="' . PATH_TO_ROOT . '/forum/' . $row['url'] . '">' . $LANG[$row['action']] . '</a>' : $LANG[$row['action']]),
 			'U_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 			'U_USER_CONCERN' => (!empty($row['user_id_action']) ? '<a href="'. UserUrlBuilder::profile($row['user_id_action'])->rel() .'" class="'.UserService::get_level_class($row['member_level']).'"' . (!empty($member_group_color) ? ' style="color:' . $member_group_color . '"' : '') . '>' . $row['member'] . '</a>' : '-')
 		));

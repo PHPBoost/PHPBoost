@@ -218,7 +218,7 @@ $vars_tpl = array(
 	'U_CHANGE_CAT'=> 'unread.php' . '&amp;token=' . AppContext::get_session()->get_token(),
 	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
 	'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
-	'U_FORUM_CAT' => '<a href="../forum/unread.php' . '">' . $LANG['show_not_reads'] . '</a>',
+	'U_FORUM_CAT' => '<a href="' . PATH_TO_ROOT . '/forum/unread.php' . '">' . $LANG['show_not_reads'] . '</a>',
 	'U_POST_NEW_SUBJECT' => '',
 	'L_FORUM_INDEX' => $LANG['forum_index'],
 	'L_FORUM' => $LANG['forum'],

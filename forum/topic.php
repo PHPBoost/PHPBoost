@@ -179,7 +179,7 @@ $vars_tpl = array(
 	'PAGE' => $page,
 	'TITLE_T' => ucfirst(stripslashes($topic['title'])),
 	'DISPLAY_MSG' => (($config->is_message_before_topic_title_displayed() && $topic['display_msg']) ? $config->get_message_before_topic_title() . ' ' : '') ,
-	'U_MSG_SET_VIEW' => '<a class="small" href="../forum/action' . url('.php?read=1&amp;f=' . $topic['idcat'], '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
+	'U_MSG_SET_VIEW' => '<a class="small" href="' . PATH_TO_ROOT . '/forum/action' . url('.php?read=1&amp;f=' . $topic['idcat'], '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
 	'U_CHANGE_CAT'=> 'topic' . url('.php?id=' . $id_get, '-' . $id_get . '+' . $category->get_rewrited_name() . '.php'),
 	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
 	'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
@@ -390,7 +390,7 @@ while ( $row = $result->fetch() )
 	if ($row['posted_msg'] >= 1)
 		$posted_msg = '<a href="'. UserUrlBuilder::messages($row['user_id'])->rel() . '" class="small">' . $LANG['message_s'] . '</a>: ' . $row['posted_msg'];
 	else
-		$posted_msg = (!$is_guest) ? '<a href="../forum/membermsg' . url('.php?id=' . $row['user_id'], '') . '" class="small">' . $LANG['message'] . '</a>: 0' : $LANG['message'] . ': 0';
+		$posted_msg = (!$is_guest) ? '<a href="' . PATH_TO_ROOT . '/forum/membermsg' . url('.php?id=' . $row['user_id'], '') . '" class="small">' . $LANG['message'] . '</a>: 0' : $LANG['message'] . ': 0';
 	
 	$user_sign_field = $extended_fields_cache->get_extended_field_by_field_name('user_sign');
 	
