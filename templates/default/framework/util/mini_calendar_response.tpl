@@ -36,7 +36,7 @@
 		<tr>
 			# START day #
 			<td class="{day.CLASS}">
-				<a href="" onclick="insert_date(${escapejs(FIELD)}, ${escapejs(INPUT_FIELD)}, ${escapejs(day.DATE)});return false;">{day.DAY}</a>
+				<a href="" onclick="insert_date(${escapejs(FIELD)}, ${escapejs(INPUT_FIELD)}, ${escapejs(day.DATE)}, ${escapejs(CALENDAR_NUMBER)});return false;">{day.DAY}</a>
 			</td>
 			# IF day.CHANGE_LINE #
 		</tr>
