@@ -41,22 +41,22 @@
 				<legend><i class="fa fa-angle-double-right"></i> {L_QUICK_ACCESS}</legend>
 				<div class="fieldset-inset">
 					<div class="small-block">
-						<h3><i class="fa fa-fw fa-picture-o"></i> {L_CUSTOMIZE_SITE}</h3>
-						<ul>
-							<li><a href="${relative_url(AdminThemeUrlBuilder::add_theme())}" title="{L_ADD_TEMPLATE}">{L_ADD_TEMPLATE}</a></li>
-							<li><a href="{PATH_TO_ROOT}/admin/menus" title="{L_MENUS_MANAGEMENT}">{L_MENUS_MANAGEMENT}</a></li>
-							# IF ModulesManager::is_module_installed('customization') #
-							<li><a href="${relative_url(AdminCustomizeUrlBuilder::editor_css_file())}" title="{L_CUSTOMIZE_TEMPLATE}">{L_CUSTOMIZE_TEMPLATE}</a></li>
-							# ENDIF #
-						</ul>
-					</div>
-					<div class="small-block">
 						<h3><i class="fa fa-fw fa-cogs"></i> {L_SITE_MANAGEMENT}</h3>
 						<ul>
 							<li><a href="${relative_url(AdminConfigUrlBuilder::general_config())}" title="{L_GENERAL_CONFIG}">{L_GENERAL_CONFIG}</a></li>
 							<li><a href="${relative_url(AdminCacheUrlBuilder::clear_cache())}" title="{L_EMPTY_CACHE}">{L_EMPTY_CACHE}</a></li>
 							# IF ModulesManager::is_module_installed('database') #
 							<li><a href="{PATH_TO_ROOT}/database/admin_database.php" title="{L_SAVE_DATABASE}">{L_SAVE_DATABASE}</a></li>
+							# ENDIF #
+						</ul>
+					</div>
+					<div class="small-block">
+						<h3><i class="fa fa-fw fa-picture-o"></i> {L_CUSTOMIZE_SITE}</h3>
+						<ul>
+							<li><a href="${relative_url(AdminThemeUrlBuilder::add_theme())}" title="{L_ADD_TEMPLATE}">{L_ADD_TEMPLATE}</a></li>
+							<li><a href="{PATH_TO_ROOT}/admin/menus" title="{L_MENUS_MANAGEMENT}">{L_MENUS_MANAGEMENT}</a></li>
+							# IF ModulesManager::is_module_installed('customization') #
+							<li><a href="${relative_url(AdminCustomizeUrlBuilder::editor_css_file())}" title="{L_CUSTOMIZE_TEMPLATE}">{L_CUSTOMIZE_TEMPLATE}</a></li>
 							# ENDIF #
 						</ul>
 					</div>

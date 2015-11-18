@@ -216,14 +216,14 @@ select {
 
 input[class=input-date],
 input[type=number] {
-	margin: 5px 0;
+	width: 80%;
 }
 
 @media (min-width:769px){
 	
 	input[class=input-date],
 	input[type=number] {
-		width:30%;
+		width: 130px;
 	}
 }
 
@@ -709,7 +709,6 @@ textarea#writing_pad_content {
 	display: block;
 	z-index: 1;
 	padding: 6px 5px;
-	left: 5px;
 	min-width: 20em;
 	background-color: #FEFEFE;
 	border: 1px solid #EAEAEA;
@@ -761,42 +760,17 @@ div.field-required:after {
 	color: #C43C35;
 	opacity: 0.6;
 	font-size: 0.8rem;
-	top:35%;
-}
-
-.form-field-date.field-required:after {
-	right: 24px;
-}
-
-.form-field-select.field-required:after,
-.form-field-number.field-required:after,
-.form-field-decimal.field-required:after {
-	/*right: -10px;*/
-}
-
-.form-field-datetime.field-required:after {
-	right: -15px;
+	top:40%;
 }
 
 .form-field-checkbox.field-required:after {
-	right: -10px;
+	left: -10px;
 	top: 4px;
 }
 
 .form-field-upload-file.field-required:after {
-	right: 45px;
+	left: 45px;
 	top: 10px;
-}
-
-.constraint-status-right .form-field-color:after,
-.constraint-status-right .form-field-select:after,
-.constraint-status-right .form-field-number:after,
-.constraint-status-right .form-field-decimal:after {
-	/*right: -20px;*/
-}
-
-.constraint-statuts-right .form-field-datetime:after {
-	right: -22px;
 }
 
 .form-field-number input,
@@ -807,7 +781,7 @@ div.field-required:after {
 
 .form-element-date .constraint-status-error div.field-required:after,
 .form-element-date .constraint-status-right div.field-required:after {
-	right: 10px;
+	left: 10px;
 }
 
 .form-field-textarea.field-required:after,
@@ -833,6 +807,7 @@ div.field-required:after {
 .constraint-status-right div.picture-status-constraint:after {
 	content: "\f00c";
 	color: #57A957;
+	top: 30%;
 }
 .constraint-status-error i.picture-status-constraint {
 	content: "\f056";
