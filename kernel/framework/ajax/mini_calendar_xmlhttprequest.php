@@ -3,7 +3,7 @@
  *                               mini_calendar_xmlhttprequest.php
  *                            -------------------
  *   begin                : January, 25 2007
- *   copyright            : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -32,7 +32,7 @@
 define('PATH_TO_ROOT', '../../..');
 
 include_once(PATH_TO_ROOT . '/kernel/begin.php');
-AppContext::get_session()->no_session_location(); //Ne réactualise pas l'emplacement du visiteur/membre
+AppContext::get_session()->no_session_location(); //Ne rÃ©actualise pas l'emplacement du visiteur/membre
 define('TITLE', '');
 include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
@@ -42,8 +42,9 @@ $date = $request->get_getvalue('date', '');
 $field = $request->get_getvalue('field', '');
 $input_field = $request->get_getvalue('input_field', '');
 $input_date = $request->get_getvalue('input_date', '');
+$calendar_number = $request->get_getvalue('calendar_number', '');
 
-//Vide par défaut => Type date.
+//Vide par dÃ©faut => Type date.
 $calendar_type = !empty($date) ? 'timestamp' : 'date';
 $field = !empty($field) ? trim($field) : 'calendar';
 
@@ -79,6 +80,7 @@ if ($calendar_type == 'date')
 	$tpl->put_all(array(
 		'FIELD' => $field,
 		'INPUT_FIELD' => $input_field,
+		'CALENDAR_NUMBER' => $calendar_number,
 		'MONTH' => $month,
 		'YEAR' => $year,
 		'PREVIOUS_YEAR' => ($month == 1) ? ($year - 1) : $year,
@@ -87,7 +89,7 @@ if ($calendar_type == 'date')
 		'NEXT_MONTH' => ($month == 12) ? 1 : ($month + 1)
 	));
 
-	//Génération des select.
+	//GÃ©nÃ©ration des select.
 	for ($i = 1; $i <= 12; $i++)
 	{
 		$selected = ($month == $i) ? 'selected="selected"' : '';
@@ -110,7 +112,7 @@ if ($calendar_type == 'date')
 		$first_day = 7;
 	}
 
-	//Génération du calendrier. 
+	//GÃ©nÃ©ration du calendrier. 
    
 	$month = ($month < 10 && substr($month, 0, 1) != 0) ? '0' . $month : $month;
 	$j = 1;
@@ -151,7 +153,7 @@ if ($calendar_type == 'date')
 }
 else
 {
-	//Non supporté
+	//Non supportÃ©
 }
 
 $tpl->display();
