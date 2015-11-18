@@ -134,6 +134,11 @@ div.cssmenu-group .cssmenu-title {
 	.cssmenu-actionslinks ul li {
 		border: none;
 	}
+
+	.cssmenu.cssmenu-actionslinks ul li .cssmenu-title,
+	.cssmenu.cssmenu-actionslinks ul li ul li .cssmenu-title {
+		padding: 10px 5px;
+	}
 }
 
 /* --- Autres variantes --- */
@@ -853,6 +858,6 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
   	.cssmenu .submenu-button:before 			 { top: 19px; right: 22px; }
   	.cssmenu ul ul .submenu-button:after 		 { top: 15px; right: 13px; }
 	.cssmenu ul ul .submenu-button:before 		 { top: 12px; right: 16px; }
-	.cssmenu-actionslinks .submenu-button:after  { top: 9px;  right: 7px;  }
-	.cssmenu-actionslinks .submenu-button:before { top: 6px;  right: 10px; }
+	.cssmenu-actionslinks .submenu-button:after  { top: 14px; right: 11px; }
+	.cssmenu-actionslinks .submenu-button:before { top: 11px; right: 14px; }
 }
