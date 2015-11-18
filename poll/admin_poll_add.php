@@ -3,7 +3,7 @@
  *                               admin_poll_add.php
  *                            -------------------
  *   begin                : June 22, 2005
- *   copyright            : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -65,12 +65,12 @@ if ($valid)
 				$visible = 2;
 			elseif ($start_timestamp == 0)
 				$visible = 1;
-			else //Date inférieur à celle courante => inutile.
+			else //Date infÃ©rieur Ã  celle courante => inutile.
 				$start_timestamp = 0;
 
 			if ($end_timestamp > time() && $end_timestamp > $start_timestamp && $start_timestamp != 0)
 				$visible = 2;
-			elseif ($start_timestamp != 0) //Date inférieur à celle courante => inutile.
+			elseif ($start_timestamp != 0) //Date infÃ©rieur Ã  celle courante => inutile.
 				$end_timestamp = 0;
 		}
 		elseif ($get_visible == 1)
@@ -121,7 +121,7 @@ else
 	 
 	$tpl->put_all(array(
 		'VISIBLE_ENABLED' => 'checked="checked"',
-		'CURRENT_DATE' => $now->format(Date::FORMAT_DAY_MONTH_YEAR),
+		'CURRENT_DATE' => $now->format(Date::FORMAT_ISO_DAY_MONTH_YEAR),
 		'L_REQUIRE_QUESTION' => $LANG['require_question'],
 		'L_REQUIRE_ANSWER' => $LANG['require_answer'],
 		'L_POLL_MANAGEMENT' => $LANG['poll_management'],
