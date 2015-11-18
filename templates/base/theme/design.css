@@ -157,8 +157,8 @@ div#main {
 		order : 2;
 		-ms-flex-order: 2;
 		-webkit-flex-order: 2;
-		flex: 0 0 auto;
-		-ms-flex: 0 0 auto;
+		flex: 1 0 auto;
+		-ms-flex: 1 0 auto;
 		padding: 0 10px;
 	}
 
