@@ -418,7 +418,8 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 @media (min-width: 769px) {
 	.cssmenu ul ul li .cssmenu-title {
 		border-bottom: 1px solid rgba(150, 150, 150, 0.15);
-		width: 170px;
+		white-space: nowrap;
+		padding: 11px 30px 11px 15px;
 	}
 }
 
