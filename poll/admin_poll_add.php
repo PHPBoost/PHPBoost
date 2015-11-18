@@ -116,12 +116,17 @@ if ($valid)
 }
 else
 {
-	$now = new Date();
 	$tpl = new FileTemplate('poll/admin_poll_add.tpl');
 	 
+	$calendar_start = new MiniCalendar('start');
+	$calendar_end = new MiniCalendar('end');
+	$calendar_current_date = new MiniCalendar('current_date', new Date());
+	
 	$tpl->put_all(array(
 		'VISIBLE_ENABLED' => 'checked="checked"',
-		'CURRENT_DATE' => $now->format(Date::FORMAT_ISO_DAY_MONTH_YEAR),
+		'CALENDAR_START' => $calendar_start->display(),
+		'CALENDAR_END' => $calendar_end->display(),
+		'CALENDAR_CURRENT_DATE' => $calendar_current_date->display(),
 		'L_REQUIRE_QUESTION' => $LANG['require_question'],
 		'L_REQUIRE_ANSWER' => $LANG['require_answer'],
 		'L_POLL_MANAGEMENT' => $LANG['poll_management'],
