@@ -1,4 +1,3 @@
-		<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/calendar.js"></script>
 		<script>
 		<!--
 		function check_form(){
