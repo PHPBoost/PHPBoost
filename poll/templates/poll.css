@@ -33,13 +33,16 @@
     overflow: visible;
 }
 
-#calendar1.poll-calendar-block-container,
-#calendar2.poll-calendar-block-container,
-#calendar3.poll-calendar-block-container {
+#calendar1 .calendar-block, 
+#calendar2 .calendar-block, 
+#calendar3 .calendar-block {
     position:absolute;
     z-index:100;
-    top:-280px;
+    top: auto;
+    bottom: 100%;
     left: 0;
+}
+#calendar2 .calendar-block {
+    left:auto;
     right: 0;
-    display:none;
 }

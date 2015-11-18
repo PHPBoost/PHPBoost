@@ -217,6 +217,7 @@ select {
 input[class=input-date],
 input[type=number] {
 	width: 80%;
+	margin-bottom: 5px;
 }
 
 @media (min-width:769px){
