@@ -3,7 +3,7 @@
  *                               admin_poll.php
  *                            -------------------
  *   begin                : June 29, 2005
- *   copyright            : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -32,7 +32,7 @@ require_once('../admin/admin_header.php');
 
 $request = AppContext::get_request();
 
-//On recupère les variables.
+//On recupÃ¨re les variables.
 $id = $request->get_getint('id', 0);
 $id_post = $request->get_postint('id', 0);
 $del = $request->get_getint('del', 0);
@@ -40,7 +40,7 @@ $valid = $request->get_postvalue('valid', false);
 
 $poll_config = PollConfig::load();
 
-//Liste des sondages affichés dans le mini module
+//Liste des sondages affichÃ©s dans le mini module
 $config_displayed_in_mini_module_list = $poll_config->get_displayed_in_mini_module_list();
 
 if ($del && !empty($id)) //Suppresion poll
@@ -50,7 +50,7 @@ if ($del && !empty($id)) //Suppresion poll
 	//On supprime des tables config et reponses des polls.
 	PersistenceContext::get_querier()->delete(PREFIX . 'poll', 'WHERE id=:id', array('id' => $id));
 	
-	###### Régénération du cache si le sondage fait parti de la liste des sondages affichés dans le mini-module #######
+	###### RÃ©gÃ©nÃ©ration du cache si le sondage fait parti de la liste des sondages affichÃ©s dans le mini-module #######
 	if (in_array($id, $config_displayed_in_mini_module_list))
 	{
 		$displayed_in_mini_module_list = $config_displayed_in_mini_module_list;
@@ -94,12 +94,12 @@ elseif ($valid && !empty($id_post)) //inject
 				$visible = 2;
 			elseif ($start_timestamp == 0)
 				$visible = 1;
-			else //Date inférieur à celle courante => inutile.
+			else //Date infÃ©rieur Ã  celle courante => inutile.
 				$start_timestamp = 0;
 
 			if ($end_timestamp > time() && $end_timestamp > $start_timestamp && $start_timestamp != 0)
 				$visible = 2;
-			elseif ($start_timestamp != 0) //Date inférieur à celle courante => inutile.
+			elseif ($start_timestamp != 0) //Date infÃ©rieur Ã  celle courante => inutile.
 				$end_timestamp = 0;
 		}
 		elseif ($get_visible == 1)
@@ -155,6 +155,10 @@ elseif (!empty($id))
 		DispatchManager::redirect($error_controller);
 	}
 	
+$calendar_start = new MiniCalendar('start', !empty($row['start']) ? new Date($row['start'], Timezone::SERVER_TIMEZONE) : null);
+	$calendar_end = new MiniCalendar('end', !empty($row['end']) ? new Date($row['end'], Timezone::SERVER_TIMEZONE) : null);
+	$calendar_current_date = new MiniCalendar('current_date', !empty($row['timestamp']) ? new Date($row['timestamp'], Timezone::SERVER_TIMEZONE) : new Date());
+	
 	$tpl->put_all(array(
 		'IDPOLL' => $row['id'],
 		'QUESTIONS' => $row['question'],
@@ -162,21 +166,12 @@ elseif (!empty($id))
 		'TYPE_MULTIPLE' => ($row['type'] == '0') ? 'checked="checked"' : '',
 		'ARCHIVES_ENABLED' => ($row['archive'] == '1') ? 'checked="checked"' : '',
 		'ARCHIVES_DISABLED' => ($row['archive'] == '0') ? 'checked="checked"' : '',
-		'CURRENT_DATE' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR),
-		'DAY_RELEASE_S' => !empty($row['start']) ? Date::to_format($row['start'], 'd') : '',
-		'MONTH_RELEASE_S' => !empty($row['start']) ? Date::to_format($row['start'], 'm') : '',
-		'YEAR_RELEASE_S' => !empty($row['start']) ? Date::to_format($row['start'], 'Y') : '',
-		'DAY_RELEASE_E' => !empty($row['end']) ? Date::to_format($row['end'], 'd') : '',
-		'MONTH_RELEASE_E' => !empty($row['end']) ? Date::to_format($row['end'], 'm') : '',
-		'YEAR_RELEASE_E' => !empty($row['end']) ? Date::to_format($row['end'], 'Y') : '',
-		'DAY_DATE' => !empty($row['timestamp']) ? Date::to_format($row['timestamp'], 'd') : '',
-		'MONTH_DATE' => !empty($row['timestamp']) ? Date::to_format($row['timestamp'], 'm') : '',
-		'YEAR_DATE' => !empty($row['timestamp']) ? Date::to_format($row['timestamp'], 'Y') : '',
 		'VISIBLE_WAITING' => (($row['visible'] == 2 || !empty($row['end'])) ? 'checked="checked"' : ''),
 		'VISIBLE_ENABLED' => (($row['visible'] == 1 && empty($row['end'])) ? 'checked="checked"' : ''),
 		'VISIBLE_UNAPROB' => (($row['visible'] == 0) ? 'checked="checked"' : ''),
-		'START' => ((!empty($row['start'])) ? Date::to_format($row['start'], Date::FORMAT_DAY_MONTH_YEAR) : ''),
-		'END' => ((!empty($row['end'])) ? Date::to_format($row['end'], Date::FORMAT_DAY_MONTH_YEAR) : ''),
+		'CALENDAR_START' => $calendar_start->display(),
+		'CALENDAR_END' => $calendar_end->display(),
+		'CALENDAR_CURRENT_DATE' => $calendar_current_date->display(),
 		'HOUR' => Date::to_format($row['timestamp'], 'H'),
 		'MIN' => Date::to_format($row['timestamp'], 'i'),
 		'DATE' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR),
@@ -215,7 +210,7 @@ elseif (!empty($id))
 	$array_vote = explode('|', $row['votes']);
 	
 	$sum_vote = array_sum($array_vote);
-	$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //Empêche la division par 0.
+	$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //EmpÃªche la division par 0.
 	
 	//Liste des choix des sondages => 20 maxi
 	$i = 0;
@@ -249,7 +244,7 @@ else
 	 
 	$nbr_poll = PersistenceContext::get_querier()->count(PREFIX . 'poll');
 
-	//On crée une pagination si le nombre de sondages est trop important.
+	//On crÃ©e une pagination si le nombre de sondages est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbr_poll, $_NBR_ELEMENTS_PER_PAGE);
 	$pagination->set_url(new Url('/poll/admin_poll.php?p=%d'));
@@ -296,7 +291,7 @@ else
 			
 		$archive = ( $row['archive'] == 1) ?  LangLoader::get_message('yes', 'common') : LangLoader::get_message('no', 'common');
 		
-		//On reccourci le lien si il est trop long pour éviter de déformer l'administration.
+		//On reccourci le lien si il est trop long pour Ã©viter de dÃ©former l'administration.
 		$question = strlen($row['question']) > 45 ? substr($row['question'], 0, 45) . '...' : $row['question'];
 		
 		$visible = '';
