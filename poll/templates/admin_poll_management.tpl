@@ -57,7 +57,7 @@
 							{questions.QUESTIONS}
 						</td>
 						<td>
-							<a href="../poll/poll.php?id={questions.IDPOLL}">${LangLoader::get_message('display', 'common')}</a>
+							<a href="{PATH_TO_ROOT}/poll/poll.php?id={questions.IDPOLL}">${LangLoader::get_message('display', 'common')}</a>
 						</td>
 						<td> 
 							# IF questions.PSEUDO #<a href="{questions.U_AUTHOR_PROFILE}" class="small {questions.USER_LEVEL_CLASS}" # IF questions.C_USER_GROUP_COLOR # style="color:{questions.USER_GROUP_COLOR}" # ENDIF #>{questions.PSEUDO}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF # 
