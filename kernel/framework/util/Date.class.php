@@ -96,7 +96,7 @@ class Date
 	 * 	<li>Date::FORMAT_DAY_MONTH_YEAR for a short formatting (month, day, year)</li>
 	 * 	<li>Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE for a longer displaying (year, month, day, hour and minutes)</li>
 	 *  <li>Date::FORMAT_TIMESTAMP for a timestamp</li>
-	 * 	<li>Date::DATE_RFC822 to format according to what the RFC822 announces</li>
+	 * 	<li>Date::FORMAT_RFC822 to format according to what the RFC822 announces</li>
 	 * 	<li>Date::FORMAT_ISO8601 to format according to what the ISO8601 announces</li>
 	 * 	<li>Date::FORMAT_DAY_MONTH_YEAR_LONG</li>
 	 * 	<li>Date::FORMAT_DAY_MONTH_YEAR_TEXT</li>
