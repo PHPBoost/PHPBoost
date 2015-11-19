@@ -104,7 +104,7 @@
 			</div><br />
 
 		<h5>{@css.modules_menus}</h5><br />
-		<div class="content" style="height:200px;">
+		<div class="content">
 			<menu id="cssmenu-sandboxfilter" class="cssmenu cssmenu-right cssmenu-actionslinks cssmenu-tools">
 				<ul>
 					<li class="extend"><a class="cssmenu-title"><i class="fa fa-eye"></i> {@css.modules_menus.display}</a>

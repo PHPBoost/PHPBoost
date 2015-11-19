@@ -336,6 +336,10 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 	.cssmenu-group > ul > li {
 		border-radius: 0;
 	}
+
+	.cssmenu.cssmenu-group > ul > li > .cssmenu-title {
+		padding: 10px 12px;
+	}
 	
 	.cssmenu-group > ul > li:first-child {
 	    border-radius: 4px 4px 0 0;
