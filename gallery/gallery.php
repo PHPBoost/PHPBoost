@@ -3,7 +3,7 @@
  *                               gallery.php
  *                            -------------------
  *   begin                : August 12, 2005
- *   copyright            : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -42,7 +42,7 @@ $g_notes = retrieve(GET, 'notes', false);
 $g_sort = retrieve(GET, 'sort', '');
 $g_sort = !empty($g_sort) ? 'sort=' . $g_sort : '';
 
-//Récupération du mode d'ordonnement.
+//RÃ©cupÃ©ration du mode d'ordonnement.
 if (preg_match('`([a-z]+)_([a-z]+)`', $g_sort, $array_match))
 {
 	$g_type = $array_match[1];
@@ -65,12 +65,12 @@ if (!empty($g_del)) //Suppression d'une image.
 
 	$Gallery->Del_pics($g_del);
 
-	//Régénération du cache des photos aléatoires.
+	//RÃ©gÃ©nÃ©ration du cache des photos alÃ©atoires.
 	GalleryMiniMenuCache::invalidate();
 
 	AppContext::get_response()->redirect('/gallery/gallery' . url('.php?cat=' . $id_category, '-' . $id_category . '.php', '&'));
 }
-elseif (!empty($g_idpics) && $g_move) //Déplacement d'une image.
+elseif (!empty($g_idpics) && $g_move) //DÃ©placement d'une image.
 {
 	if (AppContext::get_current_user()->is_readonly())
 	{
@@ -83,7 +83,7 @@ elseif (!empty($g_idpics) && $g_move) //Déplacement d'une image.
 	$g_move = max($g_move, 0);
 	$Gallery->Move_pics($g_idpics, $g_move);
 
-	//Régénération du cache des photos aléatoires.
+	//RÃ©gÃ©nÃ©ration du cache des photos alÃ©atoires.
 	GalleryMiniMenuCache::invalidate();
 
 	AppContext::get_response()->redirect('/gallery/gallery' . url('.php?cat=' . $g_move, '-' . $g_move . '.php', '&'));
@@ -96,14 +96,14 @@ elseif (isset($_FILES['gallery'])) //Upload
 		DispatchManager::redirect($controller);
 	}
 	
-	//Niveau d'autorisation de la catégorie, accès en écriture.
+	//Niveau d'autorisation de la catÃ©gorie, accÃ¨s en Ã©criture.
 	if (!GalleryAuthorizationsService::check_authorizations($id_category)->write())
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 
-	//Niveau d'autorisation de la catégorie, accès en écriture.
+	//Niveau d'autorisation de la catÃ©gorie, accÃ¨s en Ã©criture.
 	if (!$Gallery->auth_upload_pics(AppContext::get_current_user()->get_id(), AppContext::get_current_user()->get_level()))
 		AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $id_category . '&error=upload_limit', '-' . $id_category . '.php?add=1&error=upload_limit', '&') . '#message_helper');
 
@@ -126,7 +126,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 	else
 		$error = 'e_upload_invalid_format';
 		
-	if ($error != '') //Erreur, on arrête ici
+	if ($error != '') //Erreur, on arrÃªte ici
 	{
 		AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($id_category, $error) . '#message_helper');
 	}
@@ -134,7 +134,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 	{
 		$path = $dir . $Upload->get_filename();
 		$error = $Upload->check_img($config->get_max_width(), $config->get_max_height(), Upload::DELETE_ON_ERROR);
-		if (!empty($error)) //Erreur, on arrête ici
+		if (!empty($error)) //Erreur, on arrÃªte ici
 			AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($id_category,$error) . '#message_helper');
 		else
 		{
@@ -147,7 +147,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 			if ($Gallery->get_error() != '')
 				AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($id_category,$Upload->get_error()) . '#message_helper');
 
-			//Régénération du cache des photos aléatoires.
+			//RÃ©gÃ©nÃ©ration du cache des photos alÃ©atoires.
 			GalleryMiniMenuCache::invalidate();
 		}
 	}
@@ -165,7 +165,7 @@ elseif ($g_add)
 	$categories = GalleryService::get_categories_manager()->get_categories_cache()->get_categories();
 	$tpl = new FileTemplate('gallery/gallery_add.tpl');
 
-	//Niveau d'autorisation de la catégorie, accès en écriture.
+	//Niveau d'autorisation de la catÃ©gorie, accÃ¨s en Ã©criture.
 	if (!GalleryAuthorizationsService::check_authorizations($id_category)->write())
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
@@ -175,7 +175,7 @@ elseif ($g_add)
 	$cat_links = '';
 	foreach ($categories as $category)
 	{
-		if ($category->get_id() != Category::ROOT_CATEGORY && $category->get_id_parent() == $categories[$idcat]->get_id_parent())
+		if ($category->get_id() != Category::ROOT_CATEGORY && $category->get_id_parent() == $categories[id_category]->get_id_parent())
 			$cat_links .= ' <a href="' . GalleryUrlBuilder::get_link_cat($category->get_id()) . '">' . $category->get_name() . '</a> &raquo;';
 	}
 
@@ -186,9 +186,8 @@ elseif ($g_add)
 		$tpl->put('message_helper', MessageHelper::display(LangLoader::get_message($get_error, 'errors'), MessageHelper::WARNING));
 
 	$module_data_path = $tpl->get_pictures_data_path();
-	$path_pics = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'path', 'WHERE id = :id', array('id' => $g_idpics));
 
-	//Aficchage de la photo uploadée.
+	//Aficchage de la photo uploadÃ©e.
 	if (!empty($g_idpics))
 	{
 		try {
@@ -206,7 +205,7 @@ elseif ($g_add)
 		));
 	}
 
-	//Affichage du quota d'image uploadée.
+	//Affichage du quota d'image uploadÃ©e.
 	$category_authorizations = GalleryService::get_categories_manager()->get_heritated_authorizations($id_category, Category::WRITE_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY);
 	$quota = isset($category_authorizations['r-1']) ? ($category_authorizations['r-1'] != '3') : true;
 	if ($quota)
