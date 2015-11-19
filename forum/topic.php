@@ -125,7 +125,7 @@ else
 mark_topic_as_read($id_get, $topic['last_msg_id'], $topic['last_timestamp']);
 
 //Gestion de la page si redirection vers le dernier message lu.
-$page = 1;
+$page = AppContext::get_request()->get_getint('pt', 1);
 $idm = $request->get_getvalue('idm', 0);
 if (!empty($idm))
 {
