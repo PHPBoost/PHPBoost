@@ -132,9 +132,9 @@ class ForumHomeController extends ModuleController
 					if ($display_cat) //Affichage des forums d'une catégorie, ajout de la catégorie.
 					{
 						$this->view->assign_block_vars('forums_list.cats', array(
-							'IDCAT' => $id_get,
-							'NAME' => $row['name'],
-							'U_FORUM_VARS' => PATH_TO_ROOT . '/forum/' . url('index.php?id=' . $id_get, 'cat-' . $id_get . '+' . $row['rewrited_name'] . '.php')
+							'IDCAT' => $this->category->get_id(),
+							'NAME' => $this->category->get_name(),
+							'U_FORUM_VARS' => PATH_TO_ROOT . '/forum/' . url('index.php?id=' . $this->category->get_id(), 'cat-' . $this->category->get_id() . '+' . $this->category->get_rewrited_name() . '.php')
 						));
 						$display_cat = false;
 					}
