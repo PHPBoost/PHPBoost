@@ -267,7 +267,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 			}
 		}
 		
-		$tpl->put_all(array(
+		$vars_tpl = array(
 			'FORUM_NAME' => $config->get_forum_name(),
 			'NBR_MSG' => $total_msg,
 			'NBR_TOPIC' => $total_topic,
@@ -300,7 +300,11 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_GUEST' => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
 			'L_AND' => $LANG['and'],
 			'L_ONLINE' => strtolower($LANG['online'])
-		));
+		);
+		
+		$tpl->put_all($vars_tpl);
+		$tpl_top->put_all($vars_tpl);
+		$tpl_bottom->put_all($vars_tpl);
 		
 		$tpl->put('forum_top', $tpl_top);
 		$tpl->put('forum_bottom', $tpl_bottom);
