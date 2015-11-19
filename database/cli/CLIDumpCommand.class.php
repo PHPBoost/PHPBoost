@@ -44,7 +44,7 @@ class CLIDumpCommand implements CLICommand
 		if (count($args) == 0)
 		{
 			$date = new Date();
-			$file_name = PATH_TO_ROOT . '/cache/backup/dump-' . $date->format(Date::FORMAT_ISO8601) . '.sql';
+			$file_name = PATH_TO_ROOT . '/cache/backup/dump-' . Url::encode_rewrite($date->format(Date::FORMAT_ISO8601)) . '.sql';
 		}
 		else
 		{
