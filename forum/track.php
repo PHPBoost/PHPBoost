@@ -3,7 +3,7 @@
  *                                track.php
  *                            -------------------
  *   begin                : October 26, 2005
- *   copyright            : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -41,10 +41,10 @@ $request = AppContext::get_request();
 $change_cat = $request->get_postint('change_cat', 0);
 $valid = $request->get_postvalue('valid', false);
 
-//Redirection changement de catégorie.
+//Redirection changement de catÃ©gorie.
 if ($change_cat)
 	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . $rewrited_title . '.php', '&'));
-if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Réservé aux membres.
+if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //RÃ©servÃ© aux membres.
 	AppContext::get_response()->redirect(UserUrlBuilder::connect());
 	
 if ($valid)
@@ -91,7 +91,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 		DispatchManager::redirect($error_controller);
 	}
 
-	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
+	//Calcul du temps de pÃ©remption, ou de derniÃ¨re vue des messages par Ã  rapport Ã  la configuration.
 	$max_time_msg = forum_limit_time_msg();
 	
 	$TmpTemplate = new FileTemplate('forum/forum_generic_results.tpl');
@@ -115,18 +115,18 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 	));
 	while ($row = $result->fetch())
 	{
-		//On définit un array pour l'appellation correspondant au type de champ
+		//On dÃ©finit un array pour l'appellation correspondant au type de champ
 		$type = array('2' => $LANG['forum_announce'] . ':', '1' => $LANG['forum_postit'] . ':', '0' => '');
 		
-		//Vérifications des topics Lu/non Lus.
+		//VÃ©rifications des topics Lu/non Lus.
 		$img_announce = 'fa-announce';
 		$new_msg = false;
 		$blink = false;
-		if (!$is_guest) //Non visible aux invités.
+		if (!$is_guest) //Non visible aux invitÃ©s.
 		{
 			if ($row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg) //Nouveau message (non lu).
 			{
-				$img_announce = $img_announce . '-new'; //Image affiché aux visiteurs.
+				$img_announce = $img_announce . '-new'; //Image affichÃ© aux visiteurs.
 				$new_msg = true;
 				$blink = true;
 			}
@@ -135,7 +135,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 		$img_announce .= ($row['type'] == '2') ? '-top' : '';
 		$img_announce .= ($row['status'] == '0' && $row['type'] == '0') ? '-lock' : '';
 		
-		//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
+		//Si le dernier message lu est prÃ©sent on redirige vers lui, sinon on redirige vers le dernier postÃ©.
 		//Puis calcul de la page du last_msg_id ou du last_view_id.
 		if (!empty($row['last_view_id']))
 		{
@@ -151,17 +151,17 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 			$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';
 		}
 		
-		//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
+		//On encode l'url pour un Ã©ventuel rewriting, c'est une opÃ©ration assez gourmande
 		$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['title']) : '';
 		
-		//Affichage du dernier message posté.
+		//Affichage du dernier message postÃ©.
 		$last_group_color = User::get_group_color($row['last_user_groups'], $row['last_user_level']);
 		$last_msg = '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><i class="fa fa-hand-o-right"></i></a>' . ' ' . $LANG['on'] . ' ' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br /> ' . $LANG['by'] . ' ' . (!empty($row['last_login']) ? '<a class="small '.UserService::get_level_class($row['last_user_level']).'"' . (!empty($last_group_color) ? ' style="color:' . $last_group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['last_user_id'])->rel() .'">' . TextHelper::wordwrap_html($row['last_login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>');
 		
-		//Ancre ajoutée aux messages non lus.
+		//Ancre ajoutÃ©e aux messages non lus.
 		$new_ancre = ($new_msg === true && AppContext::get_current_user()->get_id() !== -1) ? '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><i class="fa fa-hand-o-right"></i></a>' : '';
 		
-		//On crée une pagination (si activé) si le nombre de topics est trop important.
+		//On crÃ©e une pagination (si activÃ©) si le nombre de topics est trop important.
 		$page = AppContext::get_request()->get_getint('pt', 1);
 		$topic_pagination = new ModulePagination($page, $row['nbr_msg'], $config->get_number_messages_per_page(), Pagination::LIGHT_PAGINATION);
 		$topic_pagination->set_url(new Url('/forum/topic.php?id=' . $row['id'] . '&amp;pt=%d'));
@@ -195,7 +195,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 	}
 	$result->dispose();
 	
-	//Le membre a déjà lu tous les messages.
+	//Le membre a dÃ©jÃ  lu tous les messages.
 	if ($nbr_topics == 0)
 	{
 		$tpl->put_all(array(
@@ -213,7 +213,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 		'PAGINATION' => $pagination->display(),
 		'U_MSG_SET_VIEW' => '<a class="small" href="' . PATH_TO_ROOT . '/forum/action' . url('.php?read=1&amp;favorite=1', '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
 		'U_CHANGE_CAT'=> 'track.php' . '&amp;token=' . AppContext::get_session()->get_token(),
-		'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
+		'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "forum-' + this.options[this.selectedIndex].value + '.php"),
 		'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
 		'U_FORUM_CAT' => '<a href="' . PATH_TO_ROOT . '/forum/track.php' . '">' . $LANG['show_topic_track'] . '</a>',
 		'U_POST_NEW_SUBJECT' => '',
@@ -235,7 +235,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 	//Listes les utilisateurs en lignes.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" ."/forum/track.php%'");
 
-	//Liste des catégories.
+	//Liste des catÃ©gories.
 	$search_category_children_options = new SearchCategoryChildrensOptions();
 	$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 	$categories_tree = ForumService::get_categories_manager()->get_select_categories_form_field('cats', '', Category::ROOT_CATEGORY, $search_category_children_options);
@@ -261,7 +261,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 		'MODO' => $total_modo,
 		'MEMBER' => $total_member,
 		'GUEST' => $total_visit,
-		'SELECT_CAT' => $cat_list, //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
+		'SELECT_CAT' => $cat_list, //Retourne la liste des catÃ©gories, avec les vÃ©rifications d'accÃ¨s qui s'imposent.
 		'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
 		'L_ADMIN' => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
 		'L_MODO' => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
