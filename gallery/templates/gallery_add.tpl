@@ -1,7 +1,7 @@
 		<form action="{U_GALLERY_ACTION_ADD}" method="post" enctype="multipart/form-data">
 			<section id="module-gallery-add">
 				<header>
-					<h1><a href="gallery.php">{L_GALLERY}</a> &raquo; {U_GALLERY_CAT_LINKS}</h1>
+					<h1>{L_GALLERY} - {L_ADD_IMG}</h1>
 					<div class="right">
 						{PAGINATION}
 					</div>
