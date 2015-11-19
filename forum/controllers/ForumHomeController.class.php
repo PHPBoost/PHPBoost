@@ -28,6 +28,7 @@
 class ForumHomeController extends ModuleController
 {
 	private $view;
+	private $category;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -41,6 +42,10 @@ class ForumHomeController extends ModuleController
 		global $LANG, $config, $nbr_msg_not_read, $tpl_top, $tpl_bottom;
 		
 		$id_get = retrieve(GET, 'id', 0);
+		
+		try {
+			$this->category = ForumService::get_categories_manager()->get_categories_cache()->get_category($id_get);
+		} catch (CategoryNotFoundException $e) {}
 		
 		require_once(PATH_TO_ROOT . '/forum/forum_begin.php');
 		require_once(PATH_TO_ROOT . '/forum/forum_tools.php');
@@ -238,12 +243,7 @@ class ForumHomeController extends ModuleController
 			$where = "AND s.location_script LIKE '%". $site_path ."/forum/%'";
 			if (!empty($id_get))
 			{
-				$category = '';
-				try {
-					$category = ForumService::get_categories_manager()->get_categories_cache()->get_category($id_get);
-				} catch (CategoryNotFoundException $e) {}
-				
-				$where = "AND s.location_script LIKE '%". $site_path . url('/forum/index.php?id=' . $id_get, '/forum/cat-' . $id_get . (!empty($category) ? '+' . $category->get_rewrited_name() : '') . '.php') ."'";
+				$where = "AND s.location_script LIKE '%". $site_path . url('/forum/index.php?id=' . $id_get, '/forum/cat-' . $id_get . ($this->category !== false && $id_get != Category::ROOT_CATEGORY ? '+' . $this->category->get_rewrited_name() : '') . '.php') ."'";
 			}
 			list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online($where);
 		}
@@ -323,6 +323,9 @@ class ForumHomeController extends ModuleController
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($LANG['title_forum'], ForumUrlBuilder::home());
+		
+		if ($this->category !== false && $this->category->get_id() != Category::ROOT_CATEGORY)
+			$breadcrumb->add($this->category->get_name(), url('/forum/index.php?id=' . $this->category->get_id(), '/forum/cat-' . $this->category->get_id() . '+' . $this->category->get_rewrited_name() . '.php'));
 		
 		return $response;
 	}
