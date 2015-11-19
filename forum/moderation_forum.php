@@ -3,7 +3,7 @@
  *                               moderation_forum.php
  *                            -------------------
  *   begin                : August 8, 2006
- *   copyright            : (C) 2006 Sautel Benoît / Viarre Régis
+ *   copyright            : (C) 2006 Sautel BenoÃ®t / Viarre RÃ©gis
  *   email                : ben.popeye@phpboost.com / crowkait@phpboost.com
  *
  *
@@ -44,7 +44,7 @@ $Bread_crumb->add($LANG['moderation_panel'], '../forum/moderation_forum.php');
 define('TITLE', $LANG['moderation_panel']);
 require_once('../kernel/header.php');
 
-//Au moins modérateur sur une catégorie du forum, ou modérateur global.
+//Au moins modÃ©rateur sur une catÃ©gorie du forum, ou modÃ©rateur global.
 $check_auth_by_group = false;
 
 foreach (ForumService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY) as $idcat => $cat)
@@ -56,7 +56,7 @@ foreach (ForumService::get_categories_manager()->get_categories_cache()->get_cat
 	}
 }
 
-if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL) && $check_auth_by_group !== true) //Si il n'est pas modérateur (total ou partiel)
+if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL) && $check_auth_by_group !== true) //Si il n'est pas modÃ©rateur (total ou partiel)
 {
 	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
@@ -72,7 +72,7 @@ $vars_tpl = array(
 	'L_ALERT_MANAGEMENT' => $LANG['alert_management'],
 );
 
-//Redirection changement de catégorie.
+//Redirection changement de catÃ©gorie.
 $id_topic_get = retrieve(POST, 'change_cat', '');
 if (!empty($id_topic_get))
 {
@@ -85,9 +85,9 @@ if (!empty($id_topic_get))
 	}
 	
 	$category = ForumService::get_categories_manager()->get_categories_cache()->get_category($topic['idcat']);
-	//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
+	//On encode l'url pour un Ã©ventuel rewriting, c'est une opÃ©ration assez gourmande
 	$rewrited_cat_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . $category->get_rewrited_name() : '';
-	//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
+	//On encode l'url pour un Ã©ventuel rewriting, c'est une opÃ©ration assez gourmande
 	$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : '';
 
 	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $id_topic_get, '-' . $id_topic_get . $rewrited_cat_title . '.php', '&'));
@@ -118,7 +118,7 @@ if ($action == 'alert') //Gestion des alertes
 		{
 			if ($new_status == '0') //On le passe en non lu
 				$Forumfct->Wait_alert_topic($id_get);
-			elseif ($new_status == '1') //On le passe en résolu
+			elseif ($new_status == '1') //On le passe en rÃ©solu
 				$Forumfct->Solve_alert_topic($id_get);
 		}
 
@@ -153,7 +153,7 @@ if ($action == 'alert') //Gestion des alertes
 			'L_DELETE_MESSAGE' => $LANG['delete_several_alerts']
 		));
 
-		//Vérification des autorisations.
+		//VÃ©rification des autorisations.
 		$authorized_categories = ForumService::get_authorized_categories(Category::ROOT_CATEGORY);
 
 		$i = 0;
@@ -204,7 +204,7 @@ if ($action == 'alert') //Gestion des alertes
 	}
 	else //On affiche les informations sur une alerte
 	{
-		//Vérification des autorisations.
+		//VÃ©rification des autorisations.
 		$authorized_categories = ForumService::get_authorized_categories(Category::ROOT_CATEGORY);
 		
 		$result = PersistenceContext::get_querier()->select("
@@ -265,7 +265,7 @@ if ($action == 'alert') //Gestion des alertes
 				'L_CAT' => $LANG['alert_concerned_cat']
 			));
 		}
-		else //Groupe, modérateur partiel qui n'a pas accès à cette alerte car elle ne concerne pas son forum
+		else //Groupe, modÃ©rateur partiel qui n'a pas accÃ¨s Ã  cette alerte car elle ne concerne pas son forum
 		{
 			$tpl->put_all(array(
 				'C_FORUM_ALERT_NOT_AUTH' => true,
@@ -279,7 +279,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 	$readonly = retrieve(POST, 'new_info', 0);
 	$readonly = $readonly > 0 ? (time() + $readonly) : 0;
 	$readonly_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
-	if (!empty($id_get) && retrieve(POST, 'valid_user', false)) //On met à  jour le niveau d'avertissement
+	if (!empty($id_get) && retrieve(POST, 'valid_user', false)) //On met Ã   jour le niveau d'avertissement
 	{
 		try {
 			$info_mbr = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id', 'level', 'email'), 'WHERE user_id=:id', array('id' => $id_get));
@@ -288,12 +288,12 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			DispatchManager::redirect($error_controller);
 		}
 
-		//Modérateur ne peux avertir l'admin (logique non?).
+		//ModÃ©rateur ne peux avertir l'admin (logique non?).
 		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)))
 		{
 			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('delay_readonly' => $readonly), ' WHERE user_id = :user_id', array('user_id' => $info_mbr['user_id']));
 
-			//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
+			//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-mÃªme.
 			if ($info_mbr['user_id'] != AppContext::get_current_user()->get_id())
 			{
 				if (!empty($readonly_contents) && !empty($readonly))
@@ -321,7 +321,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		'U_ACTION' => url('.php?action=punish&amp;token=' . AppContext::get_session()->get_token())
 	));
 
-	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
+	if (empty($id_get)) //On liste les membres qui ont dÃ©jÃ  un avertissement
 	{
 		if (retrieve(POST, 'search_member', false))
 		{
@@ -392,7 +392,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			DispatchManager::redirect($error_controller);
 		}
 
-		//Durée de la sanction.
+		//DurÃ©e de la sanction.
 		$date_lang = LangLoader::get('date-common');
 		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000);
 		$array_sanction = array(LangLoader::get_message('no', 'common'), '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], '2 ' . $date_lang['month'], $LANG['life']);
@@ -413,7 +413,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			}
 		}
 
-		//On crée le formulaire select
+		//On crÃ©e le formulaire select
 		$select = '';
 		foreach ($array_time as $key => $time)
 		{
@@ -471,7 +471,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 {
 	$new_warning_level = retrieve(POST, 'new_info', 0);
 	$warning_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
-	if ($new_warning_level >= 0 && $new_warning_level <= 100 && !empty($id_get) && retrieve(POST, 'valid_user', false)) //On met à  jour le niveau d'avertissement
+	if ($new_warning_level >= 0 && $new_warning_level <= 100 && !empty($id_get) && retrieve(POST, 'valid_user', false)) //On met Ã   jour le niveau d'avertissement
 	{
 		try {
 			$info_mbr = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id', 'level', 'email'), 'WHERE user_id=:id', array('id' => $id_get));
@@ -480,14 +480,14 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			DispatchManager::redirect($error_controller);
 		}
 
-		//Modérateur ne peux avertir l'admin (logique non?).
+		//ModÃ©rateur ne peux avertir l'admin (logique non?).
 		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)))
 		{
-			if ($new_warning_level < 100) //Ne peux pas mettre des avertissements supérieurs à 100.
+			if ($new_warning_level < 100) //Ne peux pas mettre des avertissements supÃ©rieurs Ã  100.
 			{
 				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('warning_percentage' => $new_warning_level), ' WHERE user_id = :user_id', array('user_id' => $info_mbr['user_id']));
 				
-				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
+				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-mÃªme.
 				if ($info_mbr['user_id'] != AppContext::get_current_user()->get_id())
 				{
 					if (!empty($warning_contents))
@@ -528,7 +528,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		'U_ACTION' => url('.php?action=warning&amp;token=' . AppContext::get_session()->get_token())
 	));
 
-	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
+	if (empty($id_get)) //On liste les membres qui ont dÃ©jÃ  un avertissement
 	{
 		if (retrieve(POST, 'search_member', false))
 		{
@@ -590,7 +590,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 	else //On affiche les infos sur l'utilisateur
 	{
 		try {
-			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'groups', 'delay_readonly'), 'WHERE user_id=:id', array('id' => $id_get));
+			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'groups', 'delay_readonly', 'warning_percentage'), 'WHERE user_id=:id', array('id' => $id_get));
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
@@ -598,7 +598,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 
 		$select = '';
 		$j = 0;
-		for ($j = 0; $j <= 10; $j++) //On crée le formulaire select
+		for ($j = 0; $j <= 10; $j++) //On crÃ©e le formulaire select
 		{
 			if ((10 * $j) == $member['warning_percentage'])
 				$select .= '<option value="' . 10 * $j . '" selected="selected">' . 10 * $j . '%</option>';
@@ -637,7 +637,7 @@ elseif (retrieve(GET, 'del_h', false) && AppContext::get_current_user()->check_l
 
 	AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php', '', '&'));
 }
-else //Panneau de modération
+else //Panneau de modÃ©ration
 {
 	$get_more = retrieve(GET, 'more', 0);
 
@@ -713,7 +713,7 @@ else //Panneau de modération
 //Listes les utilisateurs en lignes.
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" ."/forum/moderation_forum.php%'");
 
-//Liste des catégories.
+//Liste des catÃ©gories.
 $search_category_children_options = new SearchCategoryChildrensOptions();
 $search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 $categories_tree = ForumService::get_categories_manager()->get_select_categories_form_field('cats', '', Category::ROOT_CATEGORY, $search_category_children_options);
@@ -739,7 +739,7 @@ $vars_tpl = array_merge($vars_tpl, array(
 	'MODO' => $total_modo,
 	'MEMBER' => $total_member,
 	'GUEST' => $total_visit,
-	'SELECT_CAT' => $cat_list, //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
+	'SELECT_CAT' => $cat_list, //Retourne la liste des catÃ©gories, avec les vÃ©rifications d'accÃ¨s qui s'imposent.
 	'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
 	'L_ADMIN' => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
 	'L_MODO' => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
