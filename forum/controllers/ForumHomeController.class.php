@@ -331,7 +331,7 @@ class ForumHomeController extends ModuleController
 	{
 		$object = new self();
 		$object->build_view();
-		return $this->view;
+		return $object->view;
 	}
 }
 ?>
