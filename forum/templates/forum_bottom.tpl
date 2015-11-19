@@ -40,7 +40,7 @@
 					# IF SELECT_CAT #
 					<form action="{U_CHANGE_CAT}" method="post">
 						<div>
-							<select name="change_cat" onchange="if(this.options[this.selectedIndex].text.substring(0, 4) == '----') document.location = 'forum{U_ONCHANGE}'; else document.location = '{U_ONCHANGE_CAT}';" class="forum-online-select">
+							<select name="change_cat" onchange="if(this.options[this.selectedIndex].text.substring(0, 3) == '-- ') document.location = '{U_ONCHANGE_CAT}'; else document.location = '{U_ONCHANGE}';" class="forum-online-select">
 								{SELECT_CAT}
 							</select>
 						</div>
