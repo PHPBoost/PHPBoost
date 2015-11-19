@@ -41,7 +41,7 @@ class AdminGalleryDisplayResponse extends AdminMenuDisplayResponse
 		$this->add_link(LangLoader::get_message('categories.management', 'categories-common'), GalleryUrlBuilder::manage_categories());
 		$this->add_link(LangLoader::get_message('category.add', 'categories-common'), GalleryUrlBuilder::add_category());
 		$this->add_link($lang['gallery.management'], GalleryUrlBuilder::manage());
-		$this->add_link($lang['gallery.actions.add'], GalleryUrlBuilder::add());
+		$this->add_link($lang['gallery.actions.add'], GalleryUrlBuilder::admin_add());
 		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), GalleryUrlBuilder::configuration());
 		
 		$env = $this->get_graphical_environment();
