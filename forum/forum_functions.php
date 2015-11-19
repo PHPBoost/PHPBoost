@@ -3,7 +3,7 @@
  *                              forum_functions.php
  *                            -------------------
  *   begin                : December 11, 2007
- *   copyright            : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -92,7 +92,7 @@ function forum_list_user_online($condition)
 	return array($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total);
 }
 
-//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
+//Calcul du temps de pÃ©remption, ou de derniÃ¨re vue des messages par Ã  rapport Ã  la configuration.
 function forum_limit_time_msg()
 {
 	$last_view_forum = AppContext::get_session()->get_cached_data('last_view_forum');
@@ -105,7 +105,7 @@ function forum_limit_time_msg()
 //Marque un topic comme lu.
 function mark_topic_as_read($idtopic, $last_msg_id, $last_timestamp)
 {
-	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
+	//Calcul du temps de pÃ©remption, ou de derniÃ¨re vue des messages par Ã  rapport Ã  la configuration.
 	$last_view_forum = AppContext::get_session()->get_cached_data('last_view_forum', 0);
 	$max_time = (time() - (ForumConfig::load()->get_read_messages_storage_duration() * 3600 * 24));
 	$max_time_msg = ($last_view_forum > $max_time) ? $last_view_forum : $max_time;
@@ -143,24 +143,5 @@ function forum_history_collector($type, $user_id_action = '', $url_action = '')
 function forum_generate_feeds()
 {
     Feed::clear_cache('forum');
-}
-
-function parentChildSort($idField, $parentField, $els, $parentID = 0, &$result = array(), &$depth = 0){
-	foreach ($els as $key => $value)
-	{
-		if ($value[$parentField] == $parentID)
-		{
-			$value['depth'] = $depth;
-			array_push($result, $value);
-			unset($els[$key]);
-			$oldParent = $parentID; 
-			$parentID = $value[$idField];
-			$depth++;
-			parentChildSort($idField,$parentField, $els, $parentID, $result, $depth);
-			$parentID = $oldParent;
-			$depth--;
-		}
-	}
-	return $result;
 }
 ?>
