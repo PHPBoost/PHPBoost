@@ -89,9 +89,17 @@ class GalleryUrlBuilder
 	/**
 	 * @return Url
 	 */
+	public static function admin_add($id_category = null)
+	{
+		return new Url('/gallery/admin_gallery_add.php' . (!empty($id_category) ? '?cat=' . $id_category : ''));
+	}
+	
+	/**
+	 * @return Url
+	 */
 	public static function add($id_category = null)
 	{
-		return new Url('/gallery/admin_gallery_add.php');
+		return new Url('/gallery/gallery.php?add=1' . (!empty($id_category) ? '&cat=' . $id_category : ''));
 	}
 	
 	/**
