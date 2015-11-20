@@ -39,7 +39,7 @@ $categories_cache = PagesCategoriesCache::load();
 
 $db_querier = PersistenceContext::get_querier();
 
-//Requêtes préliminaires utiles par la suite
+//RequÃªtes prÃ©liminaires utiles par la suite
 if (!empty($encoded_title)) //Si on connait son titre
 {
 	try {
@@ -66,7 +66,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 		
 	define('TITLE', $page_infos['title']);
 	
-	//Définition du fil d'Ariane de la page
+	//DÃ©finition du fil d'Ariane de la page
 	if ($page_infos['is_cat'] == 0)
 		$Bread_crumb->add($page_infos['title'], PagesUrlBuilder::get_link_item($encoded_title));
 	
@@ -74,7 +74,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 	while ($id > 0)
 	{
 		$cat = $categories_cache->get_category($id);
-		//Si on a les droits de lecture sur la catégorie, on l'affiche
+		//Si on a les droits de lecture sur la catÃ©gorie, on l'affiche
 		if ($cat['auth'] || AppContext::get_current_user()->check_auth($cat['auth'], READ_PAGE))
 			$Bread_crumb->add($cat['title'],
 				PagesUrlBuilder::get_link_item(Url::encode_rewrite($cat['title'])));
@@ -129,11 +129,11 @@ if (!empty($encoded_title) && $num_rows == 1)
 {
 	$tpl = new FileTemplate('pages/page.tpl');
 	
-	//Autorisation particulière ?
+	//Autorisation particuliÃ¨re ?
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 
-	//Vérification de l'autorisation de voir la page
+	//VÃ©rification de l'autorisation de voir la page
 	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
@@ -166,7 +166,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 		));
 	}
 	
-	//Affichage des commentaires si il y en a la possibilité
+	//Affichage des commentaires si il y en a la possibilitÃ©
 	if ($page_infos['activ_com'] == 1 && (($special_auth && AppContext::get_current_user()->check_auth($array_auth, READ_COM)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_COM))))
 	{	
 		$number_comments = CommentsService::get_number_comments('pages', $page_infos['id']);
@@ -183,7 +183,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 	
 	$tpl->put_all(array(
 		'ID' => $page_infos['id'],
-		'TITLE' => $page_infos['title'],
+		'TITLE' => stripslashes($page_infos['title']),
 		'CONTENTS' => pages_second_parse($page_infos['contents']),
 		'COUNT_HITS' => $page_infos['count_hits'] ? sprintf($LANG['page_hits'], $page_infos['hits'] + 1) : '&nbsp;',
 		'L_LINKS' => $LANG['pages_links_list'],
@@ -192,7 +192,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 	
 	$tpl->display();
 }
-//Page non trouvée
+//Page non trouvÃ©e
 elseif ((!empty($encoded_title) || $id_com > 0) && $num_rows == 0)
 {
 	$error_controller = PHPBoostErrors::unexisting_page();
@@ -201,16 +201,16 @@ elseif ((!empty($encoded_title) || $id_com > 0) && $num_rows == 0)
 //Commentaires
 elseif ($id_com > 0)
 {
-	//Commentaires activés pour cette page ?
+	//Commentaires activÃ©s pour cette page ?
 	if ($page_infos['activ_com'] == 0)
 	{
 		DispatchManager::redirect(PHPBoostErrors::unexisting_page());
 	}
 		
-	//Autorisation particulière ?
+	//Autorisation particuliÃ¨re ?
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
-	//Vérification de l'autorisation de voir la page
+	//VÃ©rification de l'autorisation de voir la page
 	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)) && ($special_auth && !AppContext::get_current_user()->check_auth($array_auth, READ_COM)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, READ_COM)))
 	{
 		DispatchManager::redirect(PHPBoostErrors::user_not_authorized());
