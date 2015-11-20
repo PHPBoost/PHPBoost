@@ -1,5 +1,5 @@
 <div class="langs-switcher# IF C_VERTICAL # langs-switcher-vertical# ENDIF #">
-	<form action="" method="get">
+	<form action="{REWRITED_SCRIPT}" method="get">
 			<p>
 				<select name="switchlang" onchange="document.location = '?switchlang=' + this.options[this.selectedIndex].value;">
 				# START langs #
