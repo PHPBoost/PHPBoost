@@ -3,7 +3,7 @@
  *                              admin_database.php
  *                            -------------------
  *   begin                : August 06, 2006
- *   copyright            : (C) 2006-2007 Sautel Benoit / Viarre Régis
+ *   copyright            : (C) 2006-2007 Sautel Benoit / Viarre RÃ©gis
  *   email                : ben.popeye@phpboost.com / crowkait@phpboost.com
  *
  *  
@@ -92,7 +92,7 @@ if (!empty($query))
 		'C_DATABASE_QUERY' => true
 	));
 
-	if (!empty($query)) //On exécute une requête
+	if (!empty($query)) //On exÃ©cute une requÃªte
 	{
 		AppContext::get_session()->csrf_get_protect(); //Protection csrf
 		
@@ -101,16 +101,16 @@ if (!empty($query))
 		));
 	
 		$lower_query = strtolower($query);
-		if (strtolower(substr($query, 0, 6)) == 'select') //il s'agit d'une requête de sélection
+		if (strtolower(substr($query, 0, 6)) == 'select') //il s'agit d'une requÃªte de sÃ©lection
 		{
-			//On éxécute la requête
+			//On Ã©xÃ©cute la requÃªte
 			try {
 				$result = PersistenceContext::get_querier()->select(str_replace('phpboost_', PREFIX, $query));
 				$i = 1;
 				while ($row = $result->fetch())
 				{
 					$tpl->assign_block_vars('line', array());
-					//Premier passage: on liste le nom des champs sélectionnés
+					//Premier passage: on liste le nom des champs sÃ©lectionnÃ©s
 					if ($i == 1)
 					{
 						$tpl->put('C_HEAD', true);
@@ -139,7 +139,7 @@ if (!empty($query))
 			}
 			
 		}
-		elseif (substr($lower_query, 0, 11) == 'insert into' || substr($lower_query, 0, 6) == 'update' || substr($lower_query, 0, 11) == 'delete from' || substr($lower_query, 0, 11) == 'alter table'  || substr($lower_query, 0, 8) == 'truncate' || substr($lower_query, 0, 10) == 'drop table') //Requêtes d'autres types
+		elseif (substr($lower_query, 0, 11) == 'insert into' || substr($lower_query, 0, 6) == 'update' || substr($lower_query, 0, 11) == 'delete from' || substr($lower_query, 0, 11) == 'alter table'  || substr($lower_query, 0, 8) == 'truncate' || substr($lower_query, 0, 10) == 'drop table') //RequÃªtes d'autres types
 		{
 			try {
 				$result = PersistenceContext::get_querier()->inject(str_replace('phpboost_', PREFIX, $query));
@@ -207,7 +207,7 @@ elseif ($action == 'restore')
 			AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=success', '', '&'));
 		}
 	}
-	//Fichier envoyé par post
+	//Fichier envoyÃ© par post
 	elseif (!empty($post_file))
 	{
 		if ($post_file['size'] < 10485760 && preg_match('`[^/]+\.sql$`', $post_file['name']))
@@ -225,7 +225,7 @@ elseif ($action == 'restore')
 				
 				AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=success', '', '&'));
 			}
-			elseif (is_file($file_path))//Le fichier existe déjà, on ne peut pas le copier
+			elseif (is_file($file_path))//Le fichier existe dÃ©jÃ , on ne peut pas le copier
 				AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=file_already_exists', '', '&'));
 			else
 				AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=upload_failure', '', '&'));
@@ -313,7 +313,8 @@ elseif ($action == 'restore')
 	else
 	{
 		$tpl->put_all(array(
-			'L_INFO' => $LANG['db_restore_file'],
+			'C_FILES' => true,
+			'L_INFO' => $LANG['db_restore_file']
 		));
 		
 		foreach ($filelist as $file)
@@ -382,7 +383,7 @@ else
 	}
 	else
 	{
-		//Réparation ou optimisation des tables
+		//RÃ©paration ou optimisation des tables
 		if ($repair || $optimize)
 		{
 			$selected_tables = array();
