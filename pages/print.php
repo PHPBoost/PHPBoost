@@ -29,7 +29,7 @@ require_once('../kernel/begin.php');
 
 require_once('pages_defines.php');
 
-//Titre de l'article à afficher en version imprimable
+//Titre de l'article Ã  afficher en version imprimable
 $encoded_title = retrieve(GET, 'title', '', TSTRING);
 $pages_config = PagesConfig::load();
 
@@ -58,11 +58,11 @@ if (!empty($encoded_title)) //Si on connait son titre
 	else
 		$redirect_title = '';
 		
-	//Autorisation particulière ?
+	//Autorisation particuliÃ¨re ?
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 
-	//Vérification de l'autorisation de voir la page
+	//VÃ©rification de l'autorisation de voir la page
 	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($pages_config->get_authorizations(), READ_PAGE)))
 		AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth'));
 }
@@ -75,8 +75,8 @@ require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 $template = new FileTemplate('framework/content/print.tpl');
 
 $template->put_all(array(
-	'PAGE_TITLE' => $page_infos['title'] . ' - ' . GeneralConfig::load()->get_site_name(),
-	'TITLE' => $page_infos['title'],
+	'PAGE_TITLE' => stripslashes($page_infos['title']) . ' - ' . GeneralConfig::load()->get_site_name(),
+	'TITLE' => stripslashes($page_infos['title']),
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
 	'CONTENT' => FormatingHelper::second_parse($page_infos['contents'])
 ));
