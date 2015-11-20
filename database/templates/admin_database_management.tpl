@@ -423,12 +423,17 @@
 						</tr>
 					</thead>
 					<tbody>
+						<tr>
+							<td colspan="4">
+								# IF C_FILES #{L_INFO}# ELSE #${LangLoader::get_message('no_item_now', 'common')}# ENDIF #
+							</td>
+						</tr>
 						# START file #
 						<tr>
 							<td>
 								<a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" title="{L_RESTORE}" data-confirmation="{L_CONFIRM_RESTORE}">
-										<i class="fa fa-server"></i> 
-										{file.FILE_NAME}
+									<i class="fa fa-server"></i> 
+									{file.FILE_NAME}
 								</a>
 							</td>
 							<td>
@@ -442,11 +447,6 @@
 							</td>
 						</tr>
 						# END file #
-						<tr>
-							<td colspan="4">
-								{L_INFO}
-							</td>
-						</tr>
 					</tbody>
 				</table>
 
