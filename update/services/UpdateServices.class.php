@@ -741,6 +741,8 @@ class UpdateServices
 		$file->delete();
 		$file = new File(Url::to_rel('/kernel/lib/js/bottom.js'));
 		$file->delete();
+		$file = new File(Url::to_rel('/kernel/lib/js/phpboost/calendar.js'));
+		$file->delete();
 		
 		$folder = new Folder(Url::to_rel('/kernel/framework/phpboost/deprecated'));
 		if ($folder->exists())
