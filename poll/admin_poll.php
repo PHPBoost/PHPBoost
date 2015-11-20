@@ -161,7 +161,7 @@ $calendar_start = new MiniCalendar('start', !empty($row['start']) ? new Date($ro
 	
 	$tpl->put_all(array(
 		'IDPOLL' => $row['id'],
-		'QUESTIONS' => $row['question'],
+		'QUESTIONS' => stripslashes($row['question']),
 		'TYPE_UNIQUE' => ($row['type'] == '1') ? 'checked="checked"' : '',
 		'TYPE_MULTIPLE' => ($row['type'] == '0') ? 'checked="checked"' : '',
 		'ARCHIVES_ENABLED' => ($row['archive'] == '1') ? 'checked="checked"' : '',
@@ -292,7 +292,7 @@ else
 		$archive = ( $row['archive'] == 1) ?  LangLoader::get_message('yes', 'common') : LangLoader::get_message('no', 'common');
 		
 		//On reccourci le lien si il est trop long pour éviter de déformer l'administration.
-		$question = strlen($row['question']) > 45 ? substr($row['question'], 0, 45) . '...' : $row['question'];
+		$question = stripslashes(strlen($row['question']) > 45 ? substr($row['question'], 0, 45) . '...' : $row['question']);
 		
 		$visible = '';
 		if ($row['start'] > 0)

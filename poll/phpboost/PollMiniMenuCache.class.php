@@ -48,6 +48,7 @@ class PollMiniMenuCache implements CacheData
 		
 		while ($row = $result->fetch())
 		{
+			$row['question'] = stripslashes($row['question']);
 			$row['answers'] = explode('|', $row['answers']);
 			$row['votes'] = explode('|', $row['votes']);
 

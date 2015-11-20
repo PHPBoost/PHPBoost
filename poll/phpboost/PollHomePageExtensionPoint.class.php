@@ -78,7 +78,7 @@ class PollHomePageExtensionPoint implements HomePageExtensionPoint
 		{
 			$tpl->assign_block_vars('list', array(
 				'U_POLL_ID' => url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
-				'QUESTION' => $row['question']
+				'QUESTION' => stripslashes($row['question'])
 			));
 		}
 		$result->dispose();	
