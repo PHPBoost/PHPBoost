@@ -175,7 +175,7 @@ elseif ($g_add)
 	$cat_links = '';
 	foreach ($categories as $category)
 	{
-		if ($category->get_id() != Category::ROOT_CATEGORY && $category->get_id_parent() == $categories[id_category]->get_id_parent())
+		if ($category->get_id() != Category::ROOT_CATEGORY && $category->get_id_parent() == $categories[$id_category]->get_id_parent())
 			$cat_links .= ' <a href="' . GalleryUrlBuilder::get_link_cat($category->get_id()) . '">' . $category->get_name() . '</a> &raquo;';
 	}
 
