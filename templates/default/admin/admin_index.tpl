@@ -93,7 +93,7 @@
 						# ENDIF #
 					</div>
 				</fieldset>
-				<fieldset>
+				<fieldset class="admin-index-comments">
 					<legend><i class="fa fa-comment-o"></i> {L_LAST_COMMENTS}</legend>
 					<div class="fieldset-inset">
 						<div class="form-element">

@@ -506,6 +506,11 @@ fieldset.quick-access {
 	display: none;
 }
 
+fieldset.admin-index-comments .form-element{
+	max-height: 400px;
+	overflow: auto;
+}
+
 @media (min-width: 769px){
 	fieldset.quick-access {
 		display: block;
