@@ -1,5 +1,5 @@
 <div class="themes-switcher# IF C_VERTICAL # themes-switcher-vertical# ENDIF #">
-	<form action="" method="get">
+	<form action="{REWRITED_SCRIPT}" method="get">
 		<select name="switchtheme" onchange="document.location = '?switchtheme=' + this.options[this.selectedIndex].value;">
 		# START themes #
 			<option value="{themes.IDNAME}"{themes.SELECTED}>{themes.NAME}</option>
