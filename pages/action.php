@@ -81,7 +81,7 @@ if (!empty($new_title) && $id_rename_post > 0)
 		if ($create_redirection)
 		{
 			$db_querier->update(PREFIX . 'pages', array('title' => $new_title, 'encoded_title' => $encoded_title), 'WHERE id = :id', array('id' => $id_rename_post));
-			$db_querier->insert(PREFIX . 'pages', array('title' => $page_infos['title'], 'encoded_title' => $page_infos['encoded_title'], 'redirect' => $id_rename_post));
+			$db_querier->insert(PREFIX . 'pages', array('title' => stripslashes($page_infos['title']), 'encoded_title' => $page_infos['encoded_title'], 'redirect' => $id_rename_post));
 		}
 		else
 			$db_querier->update(PREFIX . 'pages', array('title' => $new_title, 'encoded_title' => $encoded_title), 'WHERE id = :id', array('id' => $id_rename_post));
@@ -251,7 +251,7 @@ if ($id_page > 0)
 	while ($id > 0)
 	{
 		if (empty($categories[$id]['auth']) || AppContext::get_current_user()->check_auth($categories[$id]['auth'], READ_PAGE))
-			$Bread_crumb->add($categories[$id]['title'], url('pages.php?title=' . Url::encode_rewrite($categories[$id]['title']), Url::encode_rewrite($categories[$id]['title'])));
+			$Bread_crumb->add(stripslashes($categories[$id]['title']), url('pages.php?title=' . Url::encode_rewrite(stripslashes($categories[$id]['title'])), Url::encode_rewrite(stripslashes($categories[$id]['title']))));
 			$id = (int)$categories[$id]['id_parent'];
 	}
 	if (AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))
@@ -300,7 +300,7 @@ if ($del_cat > 0)
 		$current_cat = $LANG['pages_no_selected_cat'];
 	
 	$tpl->put_all(array(
-		'L_TITLE' => sprintf($LANG['pages_remove_this_cat'], $page_infos['title']),
+		'L_TITLE' => sprintf($LANG['pages_remove_this_cat'], stripslashes($page_infos['title'])),
 		'L_REMOVE_ALL_CONTENTS' => $LANG['pages_remove_all_contents'],
 		'L_MOVE_ALL_CONTENTS' => $LANG['pages_move_all_contents'],
 		'L_FUTURE_CAT' => $LANG['pages_future_cat'],
@@ -334,11 +334,11 @@ elseif ($id_rename > 0)
 	$tpl->put_all(array(
 		'ID_RENAME' => $id_rename,
 		'L_SUBMIT' => $LANG['submit'],
-		'L_TITLE' => sprintf($LANG['pages_rename_page'], $page_infos['title']),
+		'L_TITLE' => sprintf($LANG['pages_rename_page'], stripslashes($page_infos['title'])),
 		'L_NEW_TITLE' => $LANG['pages_new_title'],
 		'L_CREATE_REDIRECTION' => $LANG['pages_create_redirection'],
 		'L_EXPLAIN_RENAME' => $LANG['pages_explain_rename'],
-		'FORMER_TITLE' => $page_infos['title']
+		'FORMER_TITLE' => stripslashes($page_infos['title'])
 	));
 	$tpl->assign_block_vars('rename', array());
 	
@@ -353,7 +353,7 @@ elseif ($id_new > 0)
 {
 	$tpl->put_all(array(
 		'ID_NEW' => $id_new,
-		'L_TITLE' => sprintf($LANG['pages_creation_redirection_title'], $page_infos['title']),
+		'L_TITLE' => sprintf($LANG['pages_creation_redirection_title'], stripslashes($page_infos['title'])),
 		'L_REDIRECTION_NAME' => $LANG['pages_new_title'],
 		'L_CREATE_REDIRECTION' => $LANG['pages_create_redirection'],
 		'L_SUBMIT' => $LANG['submit'],
@@ -391,7 +391,7 @@ elseif ($id_redirection > 0)
 	while ($row = $result->fetch())
 	{
 		$tpl->assign_block_vars('redirection.list', array(
-			'REDIRECTION_TITLE' => $row['title'],
+			'REDIRECTION_TITLE' => stripslashes($row['title']),
 			'ACTIONS' => '<a href="action.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '" title="' . $LANG['pages_delete_redirection'] . '" class="fa fa-delete" data-confirmation="' . $LANG['pages_confirm_delete_redirection'] . '"></a>'
 		));
 	}
@@ -427,7 +427,7 @@ else
 		$special_auth = !empty($row['auth']);
 		$array_auth = unserialize($row['auth']);
 		$tpl->assign_block_vars('redirections.list', array(
-			'REDIRECTION_TITLE' => '<a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a>',
+			'REDIRECTION_TITLE' => '<a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . stripslashes($row['title']) . '</a>',
 			'REDIRECTION_TARGET' => '<a href="' . url('pages.php?title=' . $row['page_encoded_title'], $row['page_encoded_title']) . '">' . $row['page_title'] . '</a>',
 			'ACTIONS' => ( ($special_auth && AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)) ) ? '<a href="action.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '" title="' . $LANG['pages_delete_redirection'] . '" class="fa fa-delete" data-confirmation="' . $LANG['pages_confirm_delete_redirection'] . '"></a>&nbsp;&bull;&nbsp;<a href="action.php?id=' . $row['page_id'] . '" title="' . $LANG['pages_manage_redirection'] . '" class="fa fa-fast-forward"></a>' : ''		));
 	}

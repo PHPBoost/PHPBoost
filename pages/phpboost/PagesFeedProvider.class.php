@@ -78,7 +78,7 @@ class PagesFeedProvider implements FeedProvider
 
 			$link = new Url(PagesUrlBuilder::get_link_item($row['encoded_title']));
 
-			$item->set_title($row['title']);
+			$item->set_title(stripslashes($row['title']));
 			$item->set_link($link);
 			$item->set_guid($link);
 			$item->set_desc(preg_replace('`\[page\](.+)\[/page\]`U', '<br /><strong>$1</strong><hr />', FormatingHelper::second_parse($row['contents'])));

@@ -52,7 +52,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 	$num_rows =!empty($page_infos['title']) ? 1 : 0;
 	if ($page_infos['redirect'] > 0)
 	{
-		$redirect_title = $page_infos['title'];
+		$redirect_title = stripslashes($page_infos['title']);
 		$redirect_id = $page_infos['id'];
 		try {
 			$page_infos = $db_querier->select_single_row(PREFIX . 'pages', array('id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'redirect', 'contents', 'display_print_link'), 'WHERE id = :id', array('id' => $page_infos['redirect']));
@@ -64,11 +64,11 @@ if (!empty($encoded_title)) //Si on connait son titre
 	else
 		$redirect_title = '';
 		
-	define('TITLE', $page_infos['title']);
+	define('TITLE', stripslashes($page_infos['title']));
 	
 	//Définition du fil d'Ariane de la page
 	if ($page_infos['is_cat'] == 0)
-		$Bread_crumb->add($page_infos['title'], PagesUrlBuilder::get_link_item($encoded_title));
+		$Bread_crumb->add(stripslashes($page_infos['title']), PagesUrlBuilder::get_link_item($encoded_title));
 	
 	$id = $page_infos['id_cat'];
 	while ($id > 0)
@@ -76,8 +76,8 @@ if (!empty($encoded_title)) //Si on connait son titre
 		$cat = $categories_cache->get_category($id);
 		//Si on a les droits de lecture sur la catégorie, on l'affiche
 		if ($cat['auth'] || AppContext::get_current_user()->check_auth($cat['auth'], READ_PAGE))
-			$Bread_crumb->add($cat['title'],
-				PagesUrlBuilder::get_link_item(Url::encode_rewrite($cat['title'])));
+			$Bread_crumb->add(stripslashes($cat['title']),
+				PagesUrlBuilder::get_link_item(Url::encode_rewrite(stripslashes($cat['title']))));
 		$id = (int)$cat['id_parent'];
 	}	
 	if (AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))
@@ -96,14 +96,14 @@ elseif ($id_com > 0)
 	$num_rows = $result->get_rows_count();
 	$page_infos = $result->fetch();
 	$result->dispose();
-	define('TITLE', sprintf($LANG['pages_page_com'], $page_infos['title']));
+	define('TITLE', sprintf($LANG['pages_page_com'], stripslashes($page_infos['title'])));
 	$Bread_crumb->add($LANG['pages_com'], PagesUrlBuilder::get_link_item_com($id_com));
 	$id = $page_infos['id_cat'];
 	while ($id > 0)
 	{
 		$cat = $categories_cache->get_category($id);
-		$Bread_crumb->add($cat['title'],
-			PagesUrlBuilder::get_link_item(Url::encode_rewrite($cat['title'])));
+		$Bread_crumb->add(stripslashes($cat['title']),
+			PagesUrlBuilder::get_link_item(Url::encode_rewrite(stripslashes($cat['title']))));
 		$id = (int)$cat['id_parent'];
 	}
 	if (AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))
@@ -183,7 +183,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 	
 	$tpl->put_all(array(
 		'ID' => $page_infos['id'],
-		'TITLE' => stripslashes($page_infos['title']),
+		'TITLE' => stripslashes(stripslashes($page_infos['title'])),
 		'CONTENTS' => pages_second_parse($page_infos['contents']),
 		'COUNT_HITS' => $page_infos['count_hits'] ? sprintf($LANG['page_hits'], $page_infos['hits'] + 1) : '&nbsp;',
 		'L_LINKS' => $LANG['pages_links_list'],

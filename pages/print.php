@@ -46,7 +46,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 	
 	if ($page_infos['redirect'] > 0)
 	{
-		$redirect_title = $page_infos['title'];
+		$redirect_title = stripslashes($page_infos['title']);
 		$redirect_id = $page_infos['id'];
 		try {
 			$page_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'pages', array('id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'redirect', 'contents'), 'WHERE id = :id', array('id' => $page_infos['redirect']));

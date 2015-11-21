@@ -76,7 +76,7 @@ if ($id_edit > 0)
 	$id = $page_infos['id_cat'];
 	while ($id > 0)
 	{
-		$Bread_crumb->add($categories[$id]['title'], url('pages.php?title=' . Url::encode_rewrite($categories[$id]['title']), Url::encode_rewrite($categories[$id]['title'])));
+		$Bread_crumb->add(stripslashes($categories[$id]['title']), url('pages.php?title=' . Url::encode_rewrite(stripslashes($categories[$id]['title'])), Url::encode_rewrite(stripslashes($categories[$id]['title']))));
 		$id = (int)$categories[$id]['id_parent'];
 	}
 	if (AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))
@@ -336,7 +336,7 @@ $tpl->put_all(array(
 	'L_AUTH' => $LANG['pages_auth'],
 	'L_PATH' => $LANG['pages_page_path'],
 	'L_PROPERTIES' => $LANG['pages_properties'],
-	'L_TITLE_POST' => $id_edit > 0 ? sprintf($LANG['pages_edit_page'], $page_infos['title']) : $LANG['pages_creation'],
+	'L_TITLE_POST' => $id_edit > 0 ? sprintf($LANG['pages_edit_page'], stripslashes($page_infos['title'])) : $LANG['pages_creation'],
 	'L_TITLE_FIELD' => $LANG['page_title'],
 	'L_CONTENTS' => $LANG['page_contents'],
 	'L_RESET' => $LANG['reset'],
