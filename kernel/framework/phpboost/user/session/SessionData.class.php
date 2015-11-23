@@ -429,13 +429,14 @@ class SessionData
 
 	private static function fill_user_cached_data(SessionData $data)
 	{
-		$columns = array('display_name', 'level', 'email', 'show_email', 'locale', 'theme', 'timezone', 'editor',
-			'unread_pm', 'posted_msg', 'registration_date', 'last_connection_date', 'groups', 'warning_percentage', 'delay_banned', 'delay_readonly');
-		$condition = 'WHERE user_id=:user_id';
-		$parameters = array('user_id' => $data->user_id);
 		try
 		{
-			$data->cached_data = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, $columns, $condition, $parameters);
+			$data->cached_data = PersistenceContext::get_querier()->select_single_row_query('SELECT member.user_id AS m_user_id, member.display_name, member.level, member.email, member.show_email, member.locale, member.theme, member.timezone, member.editor, member.unread_pm, member.posted_msg, member.registration_date, member.last_connection_date, member.groups, member.warning_percentage, member.delay_banned, member.delay_readonly, member_extended_fields.*
+			FROM ' . DB_TABLE_MEMBER . ' member
+			LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' member_extended_fields ON member_extended_fields.user_id = member.user_id
+			WHERE member.user_id = :user_id', array(
+				'user_id' => $data->user_id
+			));
 		}
 		catch (RowNotFoundException $ex)
 		{
