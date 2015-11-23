@@ -262,7 +262,7 @@ while ( $row = $result->fetch() )
 	{
 		$tpl->put_all(array(
 			'C_POLL_EXIST' => true,
-			'QUESTION' => $row['question'],
+			'QUESTION' => stripslashes($row['question']),
 			'U_POLL_RESULT' => url('.php?id=' . $id_get . '&amp;r=1&amp;pt=' . $page),
 			'U_POLL_ACTION' => url('.php?id=' . $id_get . '&amp;p=' . $page . '&amp;token=' . AppContext::get_session()->get_token()),
 			'L_POLL' => $LANG['poll'], 
@@ -282,7 +282,7 @@ while ( $row = $result->fetch() )
 			foreach ($array_answer as $key => $answer)
 			{
 				$tpl->assign_block_vars('poll_result', array(
-					'ANSWERS' => $answer, 
+					'ANSWERS' => stripslashes($answer), 
 					'NBRVOTE' => $array_vote[$key],
 					'WIDTH' => NumberHelper::round(($array_vote[$key] * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.
 					'PERCENT' => NumberHelper::round(($array_vote[$key] * 100 / $sum_vote), 1)
@@ -304,7 +304,7 @@ while ( $row = $result->fetch() )
 					$tpl->assign_block_vars('poll_radio', array(
 						'NAME' => $z,
 						'TYPE' => 'radio',
-						'ANSWERS' => $answer
+						'ANSWERS' => stripslashes($answer)
 					));
 					$z++;
 				}
@@ -316,7 +316,7 @@ while ( $row = $result->fetch() )
 					$tpl->assign_block_vars('poll_checkbox', array(
 						'NAME' => 'forumpoll' . $z,
 						'TYPE' => 'checkbox',
-						'ANSWERS' => $answer
+						'ANSWERS' => stripslashes($answer)
 					));
 					$z++;
 				}
