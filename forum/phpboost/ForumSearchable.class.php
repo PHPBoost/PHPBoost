@@ -241,7 +241,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			'U_TOPIC' => PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $result_data['topic_id'], '-' . $result_data['topic_id'] . $rewrited_title . '.php') . '#m' . $result_data['msg_id'],
 			'TITLE' => ucfirst(stripslashes($result_data['title'])),
 			'DATE' => Date::to_format($result_data['date'], 'd/m/y'),
-			'CONTENTS' => FormatingHelper::second_parse($result_data['contents']),
+			'CONTENTS' => FormatingHelper::second_parse(stripslashes($result_data['contents'])),
 			'USER_AVATAR' => '<img src="' . (UserAccountsConfig::load()->is_default_avatar_enabled() && !empty($result_data['avatar']) ? $result_data['avatar'] : PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name()) . '" alt="' . LangLoader::get_message('avatar', 'user-common') . '" class="message-avatar"/>'
 		));
 
