@@ -3,7 +3,7 @@
  *                                xmlhttprequest.php
  *                            -------------------
  *   begin                : Februar 15, 2007
- *   copyright            : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -44,14 +44,14 @@ if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 	$nbr_msg_not_read = 0;
 	if (!$is_guest)
 	{
-		//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
+		//Calcul du temps de pÃ©remption, ou de derniÃ¨re vue des messages par Ã  rapport Ã  la configuration.
 		$max_time_msg = forum_limit_time_msg();
 
-		//Vérification des autorisations.
-		$authorized_categories = ForumService::get_authorized_categories($id_get);
+		//VÃ©rification des autorisations.
+		$authorized_categories = ForumService::get_authorized_categories(Category::ROOT_CATEGORY);
 
 		$contents = '';
-		//Requête pour compter le nombre de messages non lus.
+		//RequÃªte pour compter le nombre de messages non lus.
 		$nbr_msg_not_read = 0;
 		$result = PersistenceContext::get_querier()->select("SELECT t.id AS tid, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.display_name as login, m.level as user_level, m.groups, v.last_view_id
 		FROM " . PREFIX . "forum_topics t
@@ -64,8 +64,8 @@ if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 		));
 		while ($row = $result->fetch())
 		{
-			//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
-			if (!empty($row['last_view_id'])) //Calcul de la page du last_view_id réalisé dans topic.php
+			//Si le dernier message lu est prÃ©sent on redirige vers lui, sinon on redirige vers le dernier postÃ©.
+			if (!empty($row['last_view_id'])) //Calcul de la page du last_view_id rÃ©alisÃ© dans topic.php
 			{
 				$last_msg_id = $row['last_view_id'];
 				$last_page = 'idm=' . $row['last_view_id'] . '&amp;';
@@ -115,7 +115,7 @@ elseif (retrieve(GET, 'del', false)) //Suppression d'un message.
 	
 	if (!empty($msg['idtopic']) && $topic['first_msg_id'] != $idm_get) //Suppression d'un message.
 	{
-		if (!empty($topic['idcat']) && (ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation() || AppContext::get_current_user()->get_id() == $msg['user_id'])) //Autorisé à supprimer?
+		if (!empty($topic['idcat']) && (ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation() || AppContext::get_current_user()->get_id() == $msg['user_id'])) //AutorisÃ© Ã  supprimer?
 		{
 			list($nbr_msg, $previous_msg_id) = $Forumfct->Del_msg($idm_get, $msg['idtopic'], $topic['idcat'], $topic['first_msg_id'], $topic['last_msg_id'], $topic['last_timestamp'], $msg['user_id']); //Suppression du message.
 			if ($nbr_msg === false && $previous_msg_id === false) //Echec de la suppression.
@@ -179,7 +179,7 @@ elseif (!empty($msg_d))
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
-	//Vérification de l'appartenance du sujet au membres, ou modo.
+	//VÃ©rification de l'appartenance du sujet au membres, ou modo.
 	$topic = PersistenceContext::get_querier()->select_single_row_query('SELECT idcat, user_id, display_msg FROM ' . PREFIX . 'forum_topics WHERE id=:id', array('id' => $msg_d));
 	
 	if ((!empty($topic['user_id']) && AppContext::get_current_user()->get_id() == $topic['user_id']) || ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation())
@@ -208,7 +208,7 @@ elseif (retrieve(GET, 'warning_moderation_panel', false) || retrieve(GET, 'punis
 			$i++;
 		}
 
-		if ($i == 0) //Aucun membre trouvé.
+		if ($i == 0) //Aucun membre trouvÃ©.
 			echo $LANG['no_result'];
 	}
 	else
