@@ -4,7 +4,17 @@
 <section id="module-user-error-404">
 	<header><h1>${escape(TITLE)}</h1></header>
 	<div class="content">
-		<div class="{ERROR_TYPE}">{MESSAGE}</div>
+		<i class="fa fa-warning fa-4x"></i>
+		
+		<div class="type-error">
+			{MESSAGE}
+		</div>
+		
+		<div class="message-error">
+			${LangLoader::get_message('error.404.message', 'status-messages-common')}
+		</div>
+
+		<div class="spacer"></div>
 		# IF HAS_LINK #
 		<div class="center">
 			<strong><a href="{U_LINK}" title="${escape(LINK_NAME)}">${escape(LINK_NAME)}</a></strong>

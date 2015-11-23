@@ -43,6 +43,8 @@ $lang['error.action.unauthorized'] = 'Unauthorized action!';
 $lang['error.module.uninstalled'] = 'This module isn\'t installed!';
 $lang['error.module.unactivated'] = 'This module isn\'t activated!';
 $lang['error.invalid_archive_content'] = 'The content of the archive is invalid!';
+$lang['error.404.message'] = 'It seems that a tornado has passed through here. <br />Unfortunately nothing more to see.';
+$lang['error.403.message'] = 'It seems that a tornado has passed through here. <br />Access is forbidden to the public.';
 
 $lang['csrf_invalid_token'] = 'Invalid session token. Please try to reload the page because the operation has not been performed.';
 

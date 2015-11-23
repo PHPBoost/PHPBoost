@@ -9,7 +9,8 @@ Contient les elements :
  - message postes,
  - profile user,
  - maintenance,
- - contribution.
+ - contribution,
+ - erreur 403/404.
 -----------------------------------------*/
 
 
@@ -808,4 +809,31 @@ table.announce-legend td {
 .available-modules-msg {
 	text-align: center;
 	margin-bottom: 15px;
+}
+
+
+/* -- Error 403/404 -- */ 
+/* ------------------- */
+#module-user-error-403 .content
+#module-user-error-404 .content, {
+	text-align: center;
+	font-size: 1.5em;
+}
+
+.fa-warning:before {
+	content: "\f071"; 
+}
+
+.fa-warning {
+	color: #C19954;
+	display: block;
+	margin: 40px auto 20px auto;
+}
+
+.message-error {
+	padding: 20px 0;
+}
+
+.type-error {
+	padding: 10px 0;
 }

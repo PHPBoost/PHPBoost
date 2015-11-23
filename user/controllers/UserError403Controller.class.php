@@ -31,7 +31,7 @@ class UserError403Controller extends UserErrorController
 	{
 		$error = LangLoader::get_message('error', 'status-messages-common');
 		$unexist_page = LangLoader::get_message('error.page.forbidden', 'status-messages-common');
-		$message = '<strong>' . $error . ' 403</strong>' . '<br /><br />' . $unexist_page;
+		$message = '<strong>403.</strong> ' . $unexist_page;
 		parent::__construct($error. ' 403', $message, self::WARNING);
 	}
 	
@@ -43,6 +43,11 @@ class UserError403Controller extends UserErrorController
 
 	protected function create_view()
 	{
+		$columns_disabled = ThemesManager::get_theme(AppContext::get_current_user()->get_theme())->get_columns_disabled();
+		$columns_disabled->set_disable_right_columns(true);
+		$columns_disabled->set_disable_left_columns(true);
+		$columns_disabled->set_disable_top_central(true);
+		$columns_disabled->set_disable_bottom_central(true);
 		$this->view = new FileTemplate('user/UserError403Controller.tpl');
 	}
 }
