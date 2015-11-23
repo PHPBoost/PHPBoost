@@ -43,6 +43,7 @@ try {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
 }
+$topic['title'] = stripslashes($topic['title']);
 
 //Existance de la catégorie.
 if ($topic['idcat'] != Category::ROOT_CATEGORY && !ForumService::get_categories_manager()->get_categories_cache()->category_exists($topic['idcat']))
