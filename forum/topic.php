@@ -548,7 +548,7 @@ if (!empty($quote_get))
 	}
 	
 	$pseudo = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id=:id', array('id' => $quote_msg['user_id']));
-	$contents = '[quote=' . $pseudo . ']' . FormatingHelper::unparse($quote_msg['contents']) . '[/quote]';
+	$contents = '[quote=' . $pseudo . ']' . stripslashes(FormatingHelper::unparse($quote_msg['contents'])) . '[/quote]';
 }
 
 //Formulaire de réponse, non présent si verrouillé.
