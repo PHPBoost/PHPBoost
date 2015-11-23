@@ -3,7 +3,7 @@
  *                                post.php
  *                            -------------------
  *   begin                : October 27, 2005
- *   copyright            : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -31,7 +31,7 @@ require_once('../forum/forum_tools.php');
 
 $id_get = retrieve(GET, 'id', 0);
 
-//Existance de la catégorie.
+//Existance de la catÃ©gorie.
 if ($id_get != Category::ROOT_CATEGORY && !ForumService::get_categories_manager()->get_categories_cache()->category_exists($id_get))
 {
 	$controller = PHPBoostErrors::unexisting_category();
@@ -51,7 +51,7 @@ try {
 	DispatchManager::redirect($error_controller);
 }
 
-//Récupération de la barre d'arborescence.
+//RÃ©cupÃ©ration de la barre d'arborescence.
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
 $categories = array_reverse(ForumService::get_categories_manager()->get_parents($id_get, true));
 foreach ($categories as $id => $cat)
@@ -66,14 +66,14 @@ require_once('../kernel/header.php');
 $new_get = retrieve(GET, 'new', '');
 $idt_get = retrieve(GET, 'idt', '');
 $error_get = retrieve(GET, 'error', '');
-$previs = retrieve(POST, 'prw', false); //Prévisualisation des messages.
+$previs = retrieve(POST, 'prw', false); //PrÃ©visualisation des messages.
 $post_topic = retrieve(POST, 'post_topic', false);
 $preview_topic = retrieve(POST, 'prw_t', '');
 
 $editor = AppContext::get_content_formatting_service()->get_default_editor();
 $editor->set_identifier('contents');
 	
-//Niveau d'autorisation de la catégorie
+//Niveau d'autorisation de la catÃ©gorie
 if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 {
 	$Forumfct = new Forum();
@@ -81,7 +81,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 	//Mod anti-flood
 	$check_time = (ContentManagementConfig::load()->is_anti_flood_enabled() && AppContext::get_current_user()->get_id() != -1) ? PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'MAX(timestamp) as timestamp', 'WHERE user_id = :user_id', array('user_id' => AppContext::get_current_user()->get_id())) : false;
 
-	//Affichage de l'arborescence des catégories.
+	//Affichage de l'arborescence des catÃ©gories.
 	$i = 0;
 	$forum_cats = '';
 	$Bread_crumb->remove_last();
@@ -94,7 +94,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		$i++;
 	}
 
-	if ($previs) //Prévisualisation des messages
+	if ($previs) //PrÃ©visualisation des messages
 	{
 		if (!ForumAuthorizationsService::check_authorizations($id_get)->write())
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
@@ -167,7 +167,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			//Mod anti Flood
 			if ($check_time !== false)
 			{
-				$delay_flood = ContentManagementConfig::load()->get_anti_flood_duration(); //On recupère le delai de flood.
+				$delay_flood = ContentManagementConfig::load()->get_anti_flood_duration(); //On recupÃ¨re le delai de flood.
 				$delay_expire = time() - $delay_flood; //On calcul la fin du delai.
 
 				//Droit de flooder?.
@@ -250,7 +250,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					$nbr_poll_field++;
 				}
 			}
-			for ($i = $nbr_poll_field; $i < 5; $i++) //On complète s'il y a moins de 5 réponses.
+			for ($i = $nbr_poll_field; $i < 5; $i++) //On complÃ¨te s'il y a moins de 5 rÃ©ponses.
 			{
 				$tpl->assign_block_vars('answers_poll', array(
 					'ID' => $i,
@@ -259,7 +259,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				$nbr_poll_field++;
 			}
 
-			//Type de réponses du sondage.
+			//Type de rÃ©ponses du sondage.
 			$poll_type = retrieve(POST, 'poll_type', 0);
 
 			$vars_tpl = array(
@@ -408,7 +408,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
 		$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 
-		//Si le topic n'est pas vérrouilé on ajoute le message.
+		//Si le topic n'est pas vÃ©rrouilÃ© on ajoute le message.
 		if ($topic['status'] != 0 || $is_modo)
 		{
 			if (!empty($contents) && !empty($idt_get) && empty($update)) //Nouveau message.
@@ -441,13 +441,13 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 ' . FormatingHelper::second_parse($contents);
 					}
 					
-					$Forumfct->Update_msg($idt_get, $topic['last_msg_id'], FormatingHelper::unparse($new_content), $topic['last_user_id']); //Mise à jour du topic.
+					$Forumfct->Update_msg($idt_get, $topic['last_msg_id'], FormatingHelper::unparse($new_content), $topic['last_user_id']); //Mise Ã  jour du topic.
 					$last_msg_id = $topic['last_msg_id'];
 				}
 				else
 					$last_msg_id = $Forumfct->Add_msg($idt_get, $topic['idcat'], $contents, $topic['title'], $last_page, $last_page_rewrite);
 
-				//Redirection après post.
+				//Redirection aprÃ¨s post.
 				AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $idt_get . $last_page, '-' . $idt_get . $last_page_rewrite . '.php', '&') . '#m' . $last_msg_id);
 			}
 			else
@@ -484,7 +484,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		//Edition du topic complet
 		if ($id_first == $id_m)
 		{
-			//User_id du message correspondant à l'utilisateur connecté => autorisation.
+			//User_id du message correspondant Ã  l'utilisateur connectÃ© => autorisation.
 			$user_id_msg = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'user_id', 'WHERE id = :id', array('id' => $id_m));
 			$check_auth = false;
 			if ($user_id_msg == AppContext::get_current_user()->get_id())
@@ -507,14 +507,14 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
 				if (!empty($title) && !empty($contents))
 				{
-					$Forumfct->Update_topic($idt_get, $id_m, $title, $subtitle, $contents, $type, $user_id_msg); //Mise à jour du topic.
+					$Forumfct->Update_topic($idt_get, $id_m, $title, $subtitle, $contents, $type, $user_id_msg); //Mise Ã  jour du topic.
 
-					//Mise à jour du sondage en plus du topic.
+					//Mise Ã  jour du sondage en plus du topic.
 					$del_poll = retrieve(POST, 'del_poll', false);
 					$question = retrieve(POST, 'question', '');
 					if (!empty($question) && !$del_poll) //Enregistrement du sondage.
 					{
-						//Mise à jour si le sondage existe, sinon création.
+						//Mise Ã  jour si le sondage existe, sinon crÃ©ation.
 						$check_poll = PersistenceContext::get_querier()->count(PREFIX . 'forum_poll', 'WHERE idtopic=:idtopic', array('idtopic' => $idt_get));
 
 						$poll_type = retrieve(POST, 'poll_type', 0);
@@ -532,15 +532,15 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 							}
 						}
 
-						if ($check_poll == 1) //Mise à jour.
+						if ($check_poll == 1) //Mise Ã  jour.
 							$Forumfct->Update_poll($idt_get, $question, $answers, $poll_type);
 						elseif ($check_poll == 0) //Ajout du sondage.
 							$Forumfct->Add_poll($idt_get, $question, $answers, $nbr_votes, $poll_type);
 					}
-					elseif ($del_poll && ForumAuthorizationsService::check_authorizations($id_get)->moderation()) //Suppression du sondage, admin et modo seulement biensûr...
+					elseif ($del_poll && ForumAuthorizationsService::check_authorizations($id_get)->moderation()) //Suppression du sondage, admin et modo seulement biensÃ»r...
 						$Forumfct->Del_poll($idt_get);
 
-					//Redirection après post.
+					//Redirection aprÃ¨s post.
 					AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php', '&'));
 				}
 				else
@@ -586,7 +586,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 						$nbr_poll_field++;
 					}
 				}
-				for ($i = $nbr_poll_field; $i < 5; $i++) //On complète s'il y a moins de 5 réponses.
+				for ($i = $nbr_poll_field; $i < 5; $i++) //On complÃ¨te s'il y a moins de 5 rÃ©ponses.
 				{
 					$tpl->assign_block_vars('answers_poll', array(
 						'ID' => $i,
@@ -595,7 +595,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					$nbr_poll_field++;
 				}
 
-				//Type de réponses du sondage.
+				//Type de rÃ©ponses du sondage.
 				$poll_type = retrieve(POST, 'poll_type', 0);
 
 				$vars_tpl = array(
@@ -653,7 +653,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
 				$contents = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'contents', 'WHERE id = :id', array('id' => $id_first));
 
-				//Gestion des erreurs à l'édition.
+				//Gestion des erreurs Ã  l'Ã©dition.
 				$get_error_e = retrieve(GET, 'errore', '');
 				if ($get_error_e == 'incomplete_t')
 					$tpl->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
@@ -672,7 +672,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					));
 				}
 
-				//Récupération des infos du sondage associé si il existe
+				//RÃ©cupÃ©ration des infos du sondage associÃ© si il existe
 				$poll = array('question' => '', 'answers' => '', 'votes' => '', 'type' => '');
 				try {
 					$poll = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_poll', array('question', 'answers', 'votes', 'type'), 'WHERE idtopic=:id', array('id' => $idt_get));
@@ -684,7 +684,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				$TmpTemplate = new FileTemplate('forum/forum_generic_results.tpl');
 				$module_data_path = $TmpTemplate->get_pictures_data_path();
 				
-				//Affichage du lien pour changer le display_msg du topic et autorisation d'édition.
+				//Affichage du lien pour changer le display_msg du topic et autorisation d'Ã©dition.
 				if ($config->is_message_before_topic_title_displayed() && ($is_modo || AppContext::get_current_user()->get_id() == $topic['user_id']))
 				{
 					$img_display = $topic['display_msg'] ? 'fa-msg-not-display' : 'fa-msg-display';
@@ -707,14 +707,14 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 						$nbr_votes = isset($array_votes[$key]) ? $array_votes[$key] : 0;
 						$tpl->assign_block_vars('answers_poll', array(
 							'ID' => $nbr_poll_field,
-							'ANSWER' => $answer,
+							'ANSWER' => stripslashes($answer),
 							'NBR_VOTES' => $nbr_votes,
 							'L_VOTES' => ($nbr_votes > 1) ? $LANG['votes'] : $LANG['vote']
 						));
 						$nbr_poll_field++;
 					}
 				}
-				for ($i = $nbr_poll_field; $i < 5; $i++) //On complète s'il y a moins de 5 réponses.
+				for ($i = $nbr_poll_field; $i < 5; $i++) //On complÃ¨te s'il y a moins de 5 rÃ©ponses.
 				{
 					$tpl->assign_block_vars('answers_poll', array(
 						'ID' => $i,
@@ -728,7 +728,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					'TITLE' => stripslashes($topic['title']),
 					'DESC' => $topic['subtitle'],
 					'CONTENTS' => FormatingHelper::unparse(stripslashes($contents)),
-					'POLL_QUESTION' => !empty($poll['question']) ? $poll['question'] : '',
+					'POLL_QUESTION' => !empty($poll['question']) ? stripslashes($poll['question']) : '',
 					'SELECTED_SIMPLE' => 'checked="ckecked"',
 					'MODULE_DATA_PATH' => $module_data_path,
 					'IDTOPIC' => $idt_get,
@@ -762,7 +762,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					'L_DELETE_POLL' => $LANG['delete_poll']
 				);
 
-				//Type de réponses du sondage.
+				//Type de rÃ©ponses du sondage.
 				if (isset($poll['type']) && $poll['type'] == '0')
 				{
 					$tpl->put_all(array(
@@ -783,10 +783,10 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				$tpl->put('forum_bottom', $tpl_bottom->display());
 			}
 		}
-		//Sinon on édite simplement le message
+		//Sinon on Ã©dite simplement le message
 		elseif ($id_m > $id_first)
 		{
-			//User_id du message correspondant à l'utilisateur connecté => autorisation.
+			//User_id du message correspondant Ã  l'utilisateur connectÃ© => autorisation.
 			$user_id_msg = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'user_id', 'WHERE id = :id', array('id' => $id_m));
 			$check_auth = false;
 			if ($user_id_msg == AppContext::get_current_user()->get_id())
@@ -794,7 +794,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			elseif ($is_modo)
 				$check_auth = true;
 
-			if (!$check_auth) //Non autorisé!
+			if (!$check_auth) //Non autorisÃ©!
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -812,7 +812,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					$msg_page_rewrite = ($msg_page > 1) ? '-' . $msg_page : '';
 					$msg_page = ($msg_page > 1) ? '&pt=' . $msg_page : '';
 
-					//Redirection après édition.
+					//Redirection aprÃ¨s Ã©dition.
 					AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $idt_get . $msg_page, '-' . $idt_get .  $msg_page_rewrite . '.php', '&') . '#m' . $id_m);
 				}
 				else
@@ -824,7 +824,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				
 
 				$contents = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'contents', 'WHERE id = :id', array('id' => $id_m));
-				//Gestion des erreurs à l'édition.
+				//Gestion des erreurs Ã  l'Ã©dition.
 				$get_error_e = retrieve(GET, 'errore', '');
 				if ($get_error_e == 'incomplete')
 					$tpl->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
