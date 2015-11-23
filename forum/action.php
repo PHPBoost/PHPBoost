@@ -3,7 +3,7 @@
  *                                action.php
  *                            -------------------
  *   begin                : August 14, 2005
- *   copyright            : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -48,7 +48,7 @@ $track_mail = retrieve(GET, 'tm', '');
 $untrack_mail = retrieve(GET, 'utm', '');
 
 $poll = retrieve(POST, 'valid_forum_poll', false); //Sondage forum.
-$massive_action_type = retrieve(POST, 'action_type', ''); //Opération de masse.
+$massive_action_type = retrieve(POST, 'action_type', ''); //OpÃ©ration de masse.
 
 $Forumfct = new Forum();
 
@@ -75,7 +75,7 @@ if (!empty($idm_get) && $del) //Suppression d'un message/topic.
 	//Si on veut supprimer le premier message, alors son rippe le topic entier (admin et modo seulement).
 	if (!empty($msg['idtopic']) && $topic['first_msg_id'] == $idm_get)
 	{
-		if (!empty($msg['idtopic']) && (ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation() || AppContext::get_current_user()->get_id() == $topic['user_id'])) //Autorisé à supprimer?
+		if (!empty($msg['idtopic']) && (ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation() || AppContext::get_current_user()->get_id() == $topic['user_id'])) //AutorisÃ© Ã  supprimer?
 		{
 			$Forumfct->Del_topic($msg['idtopic']); //Suppresion du topic.
 		}
@@ -89,7 +89,7 @@ if (!empty($idm_get) && $del) //Suppression d'un message/topic.
 	}
 	elseif (!empty($msg['idtopic']) && $topic['first_msg_id'] != $idm_get) //Suppression d'un message.
 	{
-		if (!empty($topic['idcat']) && (ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation() || AppContext::get_current_user()->get_id() == $msg['user_id'])) //Autorisé à supprimer?
+		if (!empty($topic['idcat']) && (ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation() || AppContext::get_current_user()->get_id() == $msg['user_id'])) //AutorisÃ© Ã  supprimer?
 		{
 			list($nbr_msg, $previous_msg_id) = $Forumfct->Del_msg($idm_get, $msg['idtopic'], $topic['idcat'], $topic['first_msg_id'], $topic['last_msg_id'], $topic['last_timestamp'], $msg['user_id']);
 		}
@@ -105,14 +105,14 @@ if (!empty($idm_get) && $del) //Suppression d'un message/topic.
 			DispatchManager::redirect($error_controller);
 		}
 
-		//On compte le nombre de messages du topic avant l'id supprimé.
+		//On compte le nombre de messages du topic avant l'id supprimÃ©.
 		$last_page = ceil( $nbr_msg/ $config->get_number_messages_per_page() );
 		$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 		$last_page = ($last_page > 1) ? '&pt=' . $last_page : '';
 
 		AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $msg['idtopic'] . $last_page, '-' . $msg['idtopic'] . $last_page_rewrite . '.php', '&') . '#m' . $previous_msg_id);
 	}
-	else //Non autorisé, on redirige.
+	else //Non autorisÃ©, on redirige.
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
@@ -143,15 +143,15 @@ elseif (!empty($idt_get))
 		DispatchManager::redirect($error_controller);
 	}
 
-	//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
+	//On encode l'url pour un Ã©ventuel rewriting, c'est une opÃ©ration assez gourmande
 	$rewrited_cat_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . $category->get_rewrited_name() : '';
-	//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
+	//On encode l'url pour un Ã©ventuel rewriting, c'est une opÃ©ration assez gourmande
 	$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : '';
 
 	//Changement du statut (display_msg) du sujet.
 	if ($msg_d)
 	{
-		//Vérification de l'appartenance du sujet au membres, ou modo.
+		//VÃ©rification de l'appartenance du sujet au membres, ou modo.
 		$check_mbr = 0;
 		try {
 			$check_mbr = PersistenceContext::get_querier()->get_column_value(PREFIX . 'forum_topics', 'user_id', 'WHERE id=:id', array('id' => $idt_get));
@@ -182,19 +182,19 @@ elseif (!empty($idt_get))
 		$voter_id = explode('|', $info_poll['voter_id']);
 		if (!in_array(AppContext::get_current_user()->get_id(), $voter_id))
 		{
-			//On concatène avec les votans existants.
+			//On concatÃ¨ne avec les votans existants.
 			$voter_id[] = AppContext::get_current_user()->get_id();
 			$array_votes = explode('|', $info_poll['votes']);
 
-			if ($info_poll['type'] == 0) //Réponse simple.
+			if ($info_poll['type'] == 0) //RÃ©ponse simple.
 			{
 				$id_answer = retrieve(POST, 'forumpoll', 0);
 				if (isset($array_votes[$id_answer]))
 					$array_votes[$id_answer]++;
 			}
-			else //Réponses multiples.
+			else //RÃ©ponses multiples.
 			{
-				//On boucle pour vérifier toutes les réponses du sondage.
+				//On boucle pour vÃ©rifier toutes les rÃ©ponses du sondage.
 				$nbr_answer = count($array_votes);
 				for ($i = 0; $i < $nbr_answer; $i++)
 				{
@@ -209,7 +209,7 @@ elseif (!empty($idt_get))
 	}
 	elseif (!empty($lock_get))
 	{
-		//Si l'utilisateur a le droit de déplacer le topic, ou le verrouiller.
+		//Si l'utilisateur a le droit de dÃ©placer le topic, ou le verrouiller.
 		if (ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation())
 		{
 			if ($lock_get === 'true') //Verrouillage du topic.
@@ -221,7 +221,7 @@ elseif (!empty($idt_get))
 
 				AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $idt_get, '-' . $idt_get  . $rewrited_title . '.php', '&'));
 			}
-			elseif ($lock_get === 'false')  //Déverrouillage du topic.
+			elseif ($lock_get === 'false')  //DÃ©verrouillage du topic.
 			{
 				//Instanciation de la class du forum.
 				$Forumfct = new Forum();
@@ -290,18 +290,20 @@ elseif (!empty($untrack_mail) && AppContext::get_current_user()->check_level(Use
 }
 elseif ($read) //Marquer comme lu.
 {
-	if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Réservé aux membres.
+	if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //RÃ©servÃ© aux membres.
 		AppContext::get_response()->redirect(UserUrlBuilder::connect());
 
-	//Calcul du temps de péremption, ou de dernière vue des messages.
+	//Calcul du temps de pÃ©remption, ou de derniÃ¨re vue des messages.
 	$check_last_view_forum = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER_EXTENDED_FIELDS, 'WHERE user_id=:user_id', array('user_id' => AppContext::get_current_user()->get_id()));
 
-	//Modification du last_view_forum, si le membre est déjà dans la table
+	//Modification du last_view_forum, si le membre est dÃ©jÃ  dans la table
 	if (!empty($check_last_view_forum))
 		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER_EXTENDED_FIELDS, array('last_view_forum' => time()), 'WHERE user_id=:id', array('id' => AppContext::get_current_user()->get_id()));
 	else
 		PersistenceContext::get_querier()->insert(DB_TABLE_MEMBER_EXTENDED_FIELDS, array('user_id' => AppContext::get_current_user()->get_id(), 'last_view_forum' =>  time()));
-
+	
+	AppContext::get_session()->recheck_cached_data();
+	
 	AppContext::get_response()->redirect('/forum/index.php');
 }
 else
