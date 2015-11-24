@@ -37,8 +37,8 @@
 				</div>
 			</div>
 			
-			<fieldset class="quick-access">
-				<legend><i class="fa fa-angle-double-right"></i> {L_QUICK_ACCESS}</legend>
+			<div class="quick-access">
+				<h2><i class="fa fa-angle-double-right"></i> {L_QUICK_ACCESS}</h2>
 				<div class="fieldset-inset">
 					<div class="small-block">
 						<h3><i class="fa fa-fw fa-cogs"></i> {L_SITE_MANAGEMENT}</h3>
@@ -73,11 +73,11 @@
 						</ul>
 					</div>
 				</div>
-			</fieldset>
+			</div>
 			
 			<div class="medium-block">
-				<fieldset>
-					<legend><i class="fa fa-bell"></i> {L_ADMIN_ALERTS}</legend>
+				<div class="admin-index-alert">
+					<h2><i class="fa fa-bell"></i> {L_ADMIN_ALERTS}</h2>
 					<div class="fieldset-inset">
 						<div class="form-element">
 							# IF C_UNREAD_ALERTS #
@@ -92,9 +92,9 @@
 						</p>
 						# ENDIF #
 					</div>
-				</fieldset>
-				<fieldset class="admin-index-comments">
-					<legend><i class="fa fa-comment-o"></i> {L_LAST_COMMENTS}</legend>
+				</div>
+				<div class="admin-index-comments">
+					<h2><i class="fa fa-comment-o"></i> {L_LAST_COMMENTS}</h2>
 					<div class="fieldset-inset">
 						<div class="form-element">
 							# START comments_list #	
@@ -110,11 +110,11 @@
 						</div>
 						# IF NOT C_NO_COM #<p class="smaller center"><a href="${relative_url(UserUrlBuilder::comments())}">{L_VIEW_ALL_COMMENTS}</a></p># ENDIF #
 					</div>
-				</fieldset>
+				</div>
 				
 				<form action="admin_index.php" method="post">
-					<fieldset>
-						<legend><i class="fa fa-user"></i> {L_USER_ONLINE}</legend>
+					<div class="admin-index-user-online">
+						<h2><i class="fa fa-user"></i> {L_USER_ONLINE}</h2>
 						<div class="fieldset-inset-user">
 							<div class="form-element">
 								<table id="table">
@@ -155,7 +155,7 @@
 								</table>
 							</div>
 						</div>
-					</fieldset>
+					</div>
 				</form>
 			</div>
 			
@@ -164,8 +164,8 @@
 				# INCLUDE ADVISES #
 				
 				<form action="admin_index.php" method="post">
-					<fieldset>
-						<legend><i class="fa fa-edit"></i> {L_WRITING_PAD}</legend>
+					<div class="admin-index-writting-pad">
+						<h2><i class="fa fa-edit"></i> {L_WRITING_PAD}</h2>
 						<div class="fieldset-inset">
 							<div class="form-element">
 								<textarea id="writing_pad_content" name="writing_pad_content">{WRITING_PAD_CONTENT}</textarea> 
@@ -176,7 +176,7 @@
 								<input type="hidden" name="token" value="{TOKEN}">
 							</p>
 						</div>
-					</fieldset>
+					</div>
 				</form>
 			</div>
 			<div class="spacer"></div>

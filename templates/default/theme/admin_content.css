@@ -502,22 +502,34 @@ div.index-logo {
 
 .system-report { font-family: monospace; }
 
-fieldset.quick-access {
+.quick-access {
 	display: none;
 }
 
-fieldset.admin-index-comments .form-element{
+.admin-index-comments .form-element{
 	max-height: 400px;
 	overflow: auto;
 }
 
+div[class*="admin-index"] {
+	margin: 20px 5px 0;
+}
+
+div[class*="admin-index"] h2 {
+	border-bottom: 2px solid #BBBBBB;
+	padding: 0 0 8px;
+}
+
 @media (min-width: 769px){
-	fieldset.quick-access {
+	.quick-access {
 		display: block;
 	}
-	
-	fieldset.quick-access ul li {
+	.quick-access ul li {
 		padding: 5px 0;
+	}
+
+	div[class*="admin-index"] {
+		margin: 20px 20px 0;
 	}
 }
 /* --- database =============================================================== */
