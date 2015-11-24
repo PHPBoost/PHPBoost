@@ -58,7 +58,7 @@ td .form-field-checkbox {
 	text-align: center;
 }
 
-@media (min-width:980px){
+@media (min-width:981px){
 	.cw25 {
 		width: calc(100% / 4);        
 	}
@@ -67,4 +67,13 @@ td .form-field-checkbox {
 div[id*="calendar"] {
 	left: auto !important;
 	right: auto !important;
+}
+
+@media (max-width: 980px) {
+	table.version-list div[id*="calendar"] {
+		display: none !important;
+	}
+	table.version-list .fa-calendar {
+		display: none !important;
+	}
 }
