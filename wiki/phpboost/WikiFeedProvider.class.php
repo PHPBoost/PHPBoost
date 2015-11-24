@@ -54,7 +54,7 @@ class WikiFeedProvider implements FeedProvider
 		$parameters = array('limit' => 20);
 		if (($idcat > 0) && array_key_exists($idcat, $categories))//Catégorie
 		{
-			$desc = sprintf($LANG['wiki_rss_cat'], $categories[$idcat]['title']);
+			$desc = sprintf($LANG['wiki_rss_cat'], stripslashes($categories[$idcat]['title']));
 			$where = 'AND a.id_cat = :idcat';
 			$parameters['idcat'] = $idcat;
 		}

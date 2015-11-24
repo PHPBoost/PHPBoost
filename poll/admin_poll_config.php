@@ -70,7 +70,7 @@ else
 	while ($row = $result->fetch())
 	{
 		$selected = in_array($row['id'], $poll_config->get_displayed_in_mini_module_list()) ? 'selected="selected"' : '';
-		$poll_list .= '<option value="' . $row['id'] . '" ' . $selected . ' id="displayed_in_mini_module_list' . $i++ . '">' . $row['question'] . '</option>';
+		$poll_list .= '<option value="' . $row['id'] . '" ' . $selected . ' id="displayed_in_mini_module_list' . $i++ . '">' . stripslashes($row['question']) . '</option>';
 	}
 	$result->dispose(); 
 	

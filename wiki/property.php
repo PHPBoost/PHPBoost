@@ -217,11 +217,11 @@ elseif ($id_auth > 0) //gestion du niveau d'autorisation
 	$array_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : $config->get_authorizations(); //Récupération des tableaux des autorisations et des groupes.
 	
 	$tpl->assign_block_vars('auth', array(
-		'L_TITLE' => sprintf($LANG['wiki_auth_management_article'], $article_infos['title']),
+		'L_TITLE' => sprintf($LANG['wiki_auth_management_article'], stripslashes($article_infos['title'])),
 		'ID' => $id_auth
 	));
 	
-	//On assigne les variables pour le POST en précisant l'idurl.	
+	//On assigne les variables pour le POST en précisant l'idurl.
 	$tpl->put_all(array(
 		'SELECT_RESTORE_ARCHIVE' => Authorizations::generate_select(WIKI_RESTORE_ARCHIVE, $array_auth),
 		'SELECT_DELETE_ARCHIVE' => Authorizations::generate_select(WIKI_DELETE_ARCHIVE, $array_auth),
@@ -239,7 +239,7 @@ elseif ($id_auth > 0) //gestion du niveau d'autorisation
 elseif ($wiki_status > 0)
 {
 	$tpl->assign_block_vars('status', array(
-		'L_TITLE' => sprintf($LANG['wiki_status_management_article'], $article_infos['title']),
+		'L_TITLE' => sprintf($LANG['wiki_status_management_article'], stripslashes($article_infos['title'])),
 		'UNDEFINED_STATUS' => ($article_infos['defined_status'] < 0 ) ? wiki_unparse($article_infos['undefined_status']) : '',
 		'ID_ARTICLE' => $wiki_status,
 		'NO_STATUS' => str_replace('"', '\"', $LANG['wiki_no_status']),
@@ -281,16 +281,16 @@ elseif ($move > 0) //On déplace l'article
 	$i = 1;
 	foreach ($cats as $key => $value)
 	{
-		$current_cat .= $categories[$value]['title'] . (($i < $nbr_cats) ? ' / ' : '');
+		$current_cat .= stripslashes($categories[$value]['title']) . (($i < $nbr_cats) ? ' / ' : '');
 		$i++;
 	}
 	if ($article_infos['id_cat'] > 0)
-		$current_cat .= ($nbr_cats > 0 ? ' / ' : '') . $categories[$article_infos['id_cat']]['title'];
+		$current_cat .= ($nbr_cats > 0 ? ' / ' : '') . stripslashes($categories[$article_infos['id_cat']]['title']);
 		else
 			$current_cat = $LANG['wiki_no_selected_cat'];
 			
 	$tpl->assign_block_vars('move', array(
-		'L_TITLE' => sprintf($LANG['wiki_moving_this_article'], $article_infos['title']),
+		'L_TITLE' => sprintf($LANG['wiki_moving_this_article'], stripslashes($article_infos['title'])),
 		'ID_ARTICLE' => $move,
 		'CATS' => $cat_list,
 		'CURRENT_CAT' => $current_cat,
@@ -311,11 +311,11 @@ elseif ($move > 0) //On déplace l'article
 elseif ($rename > 0)//On renomme un article
 {
 	$tpl->assign_block_vars('rename', array(
-		'L_TITLE' => sprintf($LANG['wiki_renaming_this_article'], $article_infos['title']),
+		'L_TITLE' => sprintf($LANG['wiki_renaming_this_article'], stripslashes($article_infos['title'])),
 		'L_RENAMING_ARTICLE' => $LANG['wiki_explain_renaming'],
 		'L_CREATE_REDIRECTION' => $LANG['wiki_create_redirection_after_renaming'],
 		'ID_ARTICLE' => $rename,
-		'FORMER_NAME' => $article_infos['title'],
+		'FORMER_NAME' => stripslashes($article_infos['title']),
 	));
 	
 	//Gestion des erreurs
@@ -330,7 +330,7 @@ elseif ($rename > 0)//On renomme un article
 elseif ($redirect > 0) //Redirections de l'article
 {
 	$tpl->assign_block_vars('redirect', array(
-		'L_TITLE' => sprintf($LANG['wiki_redirections_to_this_article'], $article_infos['title'])
+		'L_TITLE' => sprintf($LANG['wiki_redirections_to_this_article'], stripslashes($article_infos['title']))
 	));
 	//Liste des redirections
 	$result = PersistenceContext::get_querier()->select("SELECT title, id
@@ -343,7 +343,7 @@ elseif ($redirect > 0) //Redirections de l'article
 	{
 		$tpl->assign_block_vars('redirect.list', array(
 			'U_REDIRECTION_DELETE' => url('action.php?del_redirection=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
-			'REDIRECTION_NAME' => $row['title'],
+			'REDIRECTION_NAME' => stripslashes($row['title']),
 		));
 	}
 	
@@ -365,7 +365,7 @@ elseif ($create_redirection > 0) //Création d'une redirection
 		'L_REDIRECTION_NAME' => $LANG['wiki_redirection_name'],
 	));
 	$tpl->assign_block_vars('create', array(
-		'L_TITLE' => sprintf($LANG['wiki_create_redirection_to_this'], $article_infos['title']),
+		'L_TITLE' => sprintf($LANG['wiki_create_redirection_to_this'], stripslashes($article_infos['title'])),
 		'ID_ARTICLE' => $create_redirection
 	));
 	
@@ -408,16 +408,16 @@ elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
 		$i = 1;
 		foreach ($cats as $key => $value)
 		{
-			$current_cat .= $categories[$value]['title'] . (($i < $nbr_cats) ? ' / ' : '');
+			$current_cat .= stripslashes($categories[$value]['title']) . (($i < $nbr_cats) ? ' / ' : '');
 			$i++;
 		}
 		if ($article_infos['id_cat'] > 0)
-			$current_cat .= ($nbr_cats > 0 ? ' / ' : '') . $categories[$article_infos['id_cat']]['title'];
+			$current_cat .= ($nbr_cats > 0 ? ' / ' : '') . stripslashes($categories[$article_infos['id_cat']]['title']);
 		else
 			$current_cat = $LANG['wiki_no_selected_cat'];
 				
 		$tpl->assign_block_vars('remove', array(
-			'L_TITLE' => sprintf($LANG['wiki_remove_this_cat'], $article_infos['title']),
+			'L_TITLE' => sprintf($LANG['wiki_remove_this_cat'], stripslashes($article_infos['title'])),
 			'L_REMOVE_ALL_CONTENTS' => $LANG['wiki_remove_all_contents'],
 			'L_MOVE_ALL_CONTENTS' => $LANG['wiki_move_all_contents'],
 			'ID_ARTICLE' => $del_article,

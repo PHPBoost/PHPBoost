@@ -75,8 +75,8 @@ require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 $template = new FileTemplate('framework/content/print.tpl');
 
 $template->put_all(array(
-	'PAGE_TITLE' => $article_infos['title'] . ($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']),
-	'TITLE' => $article_infos['title'],
+	'PAGE_TITLE' => stripslashes($article_infos['title']) . ($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']),
+	'TITLE' => stripslashes($article_infos['title']),
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
 	'CONTENT' => FormatingHelper::second_parse($article_infos['content'])
 ));

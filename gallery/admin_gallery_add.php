@@ -139,7 +139,7 @@ else
 		}
 		
 		$tpl->assign_block_vars('image_up', array(
-			'NAME' => $imageup['name'],
+			'NAME' => stripslashes($imageup['name']),
 			'IMG' => '<a href="admin_gallery.php?cat=' . $imageup['idcat'] . '&amp;id=' . $add_pic . '#pics_max"><img src="pics/' . $imageup['path'] . '" alt="' . $imageup['name'] . '" /></a>',
 			'L_SUCCESS_UPLOAD' => $LANG['success_upload_img'],
 			'U_CAT' => '<a href="admin_gallery.php?cat=' . $imageup['idcat'] . '">' . $categories[$imageup['idcat']]->get_name() . '</a>'

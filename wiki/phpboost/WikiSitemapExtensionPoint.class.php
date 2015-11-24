@@ -74,7 +74,7 @@ class WikiSitemapExtensionPoint implements SitemapExtensionPoint
 		$categories_cache = WikiCategoriesCache::load();
 		$categories = $categories_cache->get_categories();
 		
-		$this_category = new SitemapLink($categories[$id_cat]['title'], new Url('/wiki/' . url('wiki.php?title='.$categories[$id_cat]['encoded_title'], $categories[$id_cat]['encoded_title'])));
+		$this_category = new SitemapLink(stripslashes($categories[$id_cat]['title']), new Url('/wiki/' . url('wiki.php?title='.$categories[$id_cat]['encoded_title'], $categories[$id_cat]['encoded_title'])));
 		
 		$category = new SitemapSection($this_category);
 		

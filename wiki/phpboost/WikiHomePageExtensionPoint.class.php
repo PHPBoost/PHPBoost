@@ -102,7 +102,7 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 				if ($cat['id_parent'] == 0)
 				{
 					$tpl->assign_block_vars('cat_list.list', array(
-						'CAT' => $cat['title'],
+						'CAT' => stripslashes($cat['title']),
 						'U_CAT' => url('wiki.php?title=' . $cat['encoded_title'], $cat['encoded_title'])
 					));
 					$i++;

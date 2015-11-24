@@ -57,7 +57,7 @@ if (!empty($id_article))
 	$tpl->put_all(array(
 		'C_ARTICLE' => true,
 		'L_HISTORY' => $LANG['wiki_history'],
-		'TITLE' => $article_infos['title'],
+		'TITLE' => stripslashes($article_infos['title']),
 		'U_ARTICLE' => url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'])
 	));
 	
@@ -161,7 +161,7 @@ else //On affiche la liste des modifications
 		$group_color = User::get_group_color($row['groups'], $row['level']);
 		
 		$tpl->assign_block_vars('list', array(
-			'TITLE' => $row['title'],
+			'TITLE' => stripslashes($row['title']),
 			'AUTHOR' => !empty($row['login']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : $row['user_ip'],
 			'DATE' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 			'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])

@@ -485,7 +485,7 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 		//On redirige soit vers l'article parent soit vers la catégorie
 		if (array_key_exists($article_infos['id_cat'], $categories) && $categories[$article_infos['id_cat']]['id_parent'] > 0)
 		{
-			$title = $categories[$categories[$article_infos['id_cat']]['id_parent']]['title'];
+			$title = stripslashes($categories[$categories[$article_infos['id_cat']]['id_parent']]['title']);
 			AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($title), Url::encode_rewrite($title), '&'));
 		}
 		else
@@ -499,7 +499,7 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 		
 		if (array_key_exists($report_cat, $categories))
 		{
-			$title = $categories[$report_cat]['title'];
+			$title = stripslashes($categories[$report_cat]['title']);
 			AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($title), Url::encode_rewrite($title), '&'));
 		}
 		else

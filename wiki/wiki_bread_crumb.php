@@ -39,7 +39,7 @@ switch ($bread_crumb_key)
 		if (!empty($article_infos['title']))
 		{
 			if ($article_infos['is_cat'] == 0)
-				$Bread_crumb->add($article_infos['title'], url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
+				$Bread_crumb->add(stripslashes($article_infos['title']), url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
 			$id_cat = (int)$article_infos['id_cat'];
 		}
 		if (!empty($id_cat)  && is_array($categories)) //Catégories infinies
@@ -47,7 +47,7 @@ switch ($bread_crumb_key)
 			$id = $id_cat; //Premier id
 			do
 			{
-				$Bread_crumb->add($categories[$id]['title'], url('wiki.php?title=' . $categories[$id]['encoded_title'], $categories[$id]['encoded_title']));
+				$Bread_crumb->add(stripslashes($categories[$id]['title']), url('wiki.php?title=' . $categories[$id]['encoded_title'], $categories[$id]['encoded_title']));
 				$id = (int)$categories[$id]['id_parent'];
 			}	
 			while ($id > 0);
@@ -59,11 +59,11 @@ switch ($bread_crumb_key)
 		$Bread_crumb->add(($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']),url('wiki.php'));
 		$Bread_crumb->add($LANG['wiki_history'], url('history.php'));
 			if (!empty($id_article))
-				$Bread_crumb->add($article_infos['title'], url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
+				$Bread_crumb->add(stripslashes($article_infos['title']), url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
 		break;
 	case 'wiki_history_article':
 		$Bread_crumb->add($LANG['wiki_history'], url('history.php?id=' . $id_article));
-		$Bread_crumb->add($article_infos['title'], url('wiki.php?title=' . $article_infos['encoded_title']), $article_infos['encoded_title']);
+		$Bread_crumb->add(stripslashes($article_infos['title']), url('wiki.php?title=' . $article_infos['encoded_title']), $article_infos['encoded_title']);
 
 		$id_cat = (int)$article_infos['id_cat'];
 		if (!empty($id_cat)  && is_array($categories)) //Catégories infinies
@@ -71,7 +71,7 @@ switch ($bread_crumb_key)
 			$id = $id_cat; //Premier id
 			do
 			{
-				$Bread_crumb->add($categories[$id]['title'], url('wiki.php?title=' . $categories[$id]['encoded_title'], $categories[$id]['encoded_title']));
+				$Bread_crumb->add(stripslashes($categories[$id]['title']), url('wiki.php?title=' . $categories[$id]['encoded_title'], $categories[$id]['encoded_title']));
 				$id = (int)$categories[$id]['id_parent'];
 			}
 			while ($id > 0);
@@ -102,7 +102,7 @@ switch ($bread_crumb_key)
 			$Bread_crumb->add($LANG['wiki_remove_cat'], url('property.php?del=' . $del_article));
 			
 		if (isset($article_infos) && $article_infos['is_cat'] == 0)
-			$Bread_crumb->add($article_infos['title'], url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
+			$Bread_crumb->add(stripslashes($article_infos['title']), url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
 			
 		$id_cat = !empty($article_infos['id_cat']) ? (int)$article_infos['id_cat'] : 0;
 		if ($id_cat > 0 && is_array($categories)) //Catégories infinies
@@ -110,7 +110,7 @@ switch ($bread_crumb_key)
 			$id = $id_cat;
 			do
 			{
-				$Bread_crumb->add($categories[$id]['title'], url('wiki.php?title=' . $categories[$id]['encoded_title'], $categories[$id]['encoded_title']));
+				$Bread_crumb->add(stripslashes($categories[$id]['title']), url('wiki.php?title=' . $categories[$id]['encoded_title'], $categories[$id]['encoded_title']));
 				$id = (int)$categories[$id]['id_parent'];
 			}
 			while ($id > 0);

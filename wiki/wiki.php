@@ -58,7 +58,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 
 	if (!empty($article_infos['redirect']))//Si on est redirigé
 	{
-		$ex_title = $article_infos['title'];
+		$ex_title = stripslashes($article_infos['title']);
 		$id_redirection = $article_infos['id'];
 		
 		$result = PersistenceContext::get_querier()->select("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, com_topic.number_comments, a.defined_status, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
@@ -101,7 +101,7 @@ elseif (!empty($id_contents))
 $bread_crumb_key = 'wiki';
 require_once('../wiki/wiki_bread_crumb.php');
 
-$page_title = (!empty($article_infos['title']) ? $article_infos['title'] . ' - ' : '') . ($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']);
+$page_title = (!empty($article_infos['title']) ? stripslashes($article_infos['title']) . ' - ' : '') . ($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']);
 define('TITLE', $page_title);
 
 require_once('../kernel/header.php');
@@ -166,7 +166,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 	$tpl->put_all(array(
 		'ID' => $article_infos['id'],
 		'ID_CAT' => $article_infos['id_cat'],
-		'TITLE' => $article_infos['title'],
+		'TITLE' => stripslashes($article_infos['title']),
 		'CONTENTS' => FormatingHelper::second_parse(wiki_no_rewrite($article_infos['content'])),
 		'HITS' => ($config->is_hits_counter_enabled() && $id_contents == 0) ? sprintf($LANG['wiki_article_hits'], (int)$article_infos['hits']) : '',
 		'L_SUB_CATS' => $LANG['wiki_subcats'],
@@ -193,7 +193,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 		while ($row = $result->fetch())
 		{
 			$tpl->assign_block_vars('cat.list_art', array(
-				'TITLE' => $row['title'],
+				'TITLE' => stripslashes($row['title']),
 				'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
 			));
 		}
@@ -210,7 +210,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 			if ($cat['id_parent'] == $id_cat)
 			{
 				$tpl->assign_block_vars('cat.list_cats', array(
-					'NAME' => $cat['title'],
+					'NAME' => stripslashes($cat['title']),
 					'U_CAT' => url('wiki.php?title=' . $cat['encoded_title'], $cat['encoded_title'])
 				));
 				$i++;

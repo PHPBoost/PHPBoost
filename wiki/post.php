@@ -264,10 +264,10 @@ else
 		$i = 1;
 		foreach ($cats as $key => $value)
 		{
-			$current_cat .= $categories[$value]['title'] . (($i < $nbr_cats) ? ' / ' : '');
+			$current_cat .= stripslashes($categories[$value]['title']) . (($i < $nbr_cats) ? ' / ' : '');
 			$i++;
 		}
-		$current_cat .= ($nbr_cats > 0 ? ' / ' : '') . $categories[$id_cat]['title'];
+		$current_cat .= ($nbr_cats > 0 ? ' / ' : '') . stripslashes($categories[$id_cat]['title']);
 		$tpl->put_all(array(
 			'SELECTED_CAT' => $id_cat,
 			'CAT_0' => '',
@@ -291,13 +291,13 @@ else
 			if ($sub_cats_number > 0)
 			{	
 				$tpl->assign_block_vars('create.list', array(
-					'DIRECTORY' => '<li class="sub"><a class="parent" href="javascript:show_wiki_cat_contents(' . $row['id'] . ', 1);"><i class="fa fa-plus-square-o" id="img2_' . $row['id'] . '"></i><i class="fa fa-folder" id ="img_' . $row['id'] . '"></i></a><a id="class_' . $row['id'] . '" href="javascript:select_cat(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>'
+					'DIRECTORY' => '<li class="sub"><a class="parent" href="javascript:show_wiki_cat_contents(' . $row['id'] . ', 1);"><i class="fa fa-plus-square-o" id="img2_' . $row['id'] . '"></i><i class="fa fa-folder" id ="img_' . $row['id'] . '"></i></a><a id="class_' . $row['id'] . '" href="javascript:select_cat(' . $row['id'] . ');">' . stripslashes($row['title']) . '</a><span id="cat_' . $row['id'] . '"></span></li>'
 				));
 			}
 			else
 			{
 				$tpl->assign_block_vars('create.list', array(
-					'DIRECTORY' => '<li class="sub"><a id="class_' . $row['id'] . '" href="javascript:select_cat(' . $row['id'] . ');"><i class="fa fa-folder"></i>' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>'
+					'DIRECTORY' => '<li class="sub"><a id="class_' . $row['id'] . '" href="javascript:select_cat(' . $row['id'] . ');"><i class="fa fa-folder"></i>' . stripslashes($row['title']) . '</a><span id="cat_' . $row['id'] . '"></span></li>'
 				));
 			}
 		}
@@ -319,7 +319,7 @@ $editor->set_identifier('contents');
 
 $tpl->put_all(array(
 	'C_VERIF_CODE' => !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
-	'TITLE' => $is_cat == 1 ? ($id_edit == 0 ? $LANG['wiki_create_cat'] : sprintf($LANG['wiki_edit_cat'], $article_infos['title'])) : ($id_edit == 0 ? $LANG['wiki_create_article'] : sprintf($LANG['wiki_edit_article'], $article_infos['title'])),
+	'TITLE' => $is_cat == 1 ? ($id_edit == 0 ? $LANG['wiki_create_cat'] : sprintf($LANG['wiki_edit_cat'], stripslashes($article_infos['title']))) : ($id_edit == 0 ? $LANG['wiki_create_article'] : sprintf($LANG['wiki_edit_article'], stripslashes($article_infos['title']))),
 	'KERNEL_EDITOR' => $editor->display(),
 	'ID_CAT' => $id_edit > 0 ? $article_infos['id_cat'] : '',
 	'CONTENTS' => !empty($contents_preview) ? $contents_preview : ($id_edit > 0 ? wiki_unparse(trim($contents)) : ''),
@@ -327,7 +327,7 @@ $tpl->put_all(array(
 	'IS_CAT' => $is_cat,
 	'ID_CAT' => $id_cat,
 	'VERIF_CODE' => $captcha->display(),
-	'ARTICLE_TITLE' => ($id_edit == 0 ? (!empty($encoded_title) ? $encoded_title : stripslashes($title)) : $article_infos['title']),
+	'ARTICLE_TITLE' => ($id_edit == 0 ? (!empty($encoded_title) ? $encoded_title : stripslashes($title)) : stripslashes($article_infos['title'])),
 	'L_TITLE_FIELD' => $LANG['title'],
 	'TARGET' => url('post.php' . ($is_cat == 1 ? '?type=cat' : '')),
 	'L_CONTENTS' => $LANG['wiki_contents'],

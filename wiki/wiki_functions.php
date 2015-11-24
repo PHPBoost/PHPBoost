@@ -204,7 +204,7 @@ function show_wiki_cat_contents($id_cat, $cats, $id, $display_select_link)
 		{
 			if (in_array($key, $cats)) //Si cette catégorie contient notre catégorie, on l'explore
 			{
-				$line .= '<li class="sub"><a class="parent" href="javascript:show_wiki_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="fa fa-minus-square-o" id="img2_' . $key . '"></i><i class="fa fa-folder-open" id="img_' . $key . '"></i></a><a id="class_' . $key . '" class="' . ($key == $id ? 'selected' : '') . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . $cat['title'] . '</a><span id="cat_' . $key . '">
+				$line .= '<li class="sub"><a class="parent" href="javascript:show_wiki_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="fa fa-minus-square-o" id="img2_' . $key . '"></i><i class="fa fa-folder-open" id="img_' . $key . '"></i></a><a id="class_' . $key . '" class="' . ($key == $id ? 'selected' : '') . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . stripslashes($cat['title']) . '</a><span id="cat_' . $key . '">
 				<ul class="no-list">'
 				. show_wiki_cat_contents($key, $cats, $id, $display_select_link) . '</ul></span></li>';
 			}
@@ -214,9 +214,9 @@ function show_wiki_cat_contents($id_cat, $cats, $id, $display_select_link)
 				$sub_cats_number = PersistenceContext::get_querier()->count(PREFIX . "wiki_cats", 'WHERE id_parent = :id', array('id' => $key));
 				//Si cette catégorie contient des sous catégories, on propose de voir son contenu
 				if ($sub_cats_number > 0)
-					$line .= '<li class="sub"><a class="parent" href="javascript:show_wiki_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="fa fa-plus-square-o" id="img2_' . $key . '"></i><i class="fa fa-folder" id="img_' . $key . '"></i></a><a id="class_' . $key . '" class="' . ($key == $id ? 'selected' : '') . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . $cat['title'] . '</a><span id="cat_' . $key . '"></span></li>';
+					$line .= '<li class="sub"><a class="parent" href="javascript:show_wiki_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="fa fa-plus-square-o" id="img2_' . $key . '"></i><i class="fa fa-folder" id="img_' . $key . '"></i></a><a id="class_' . $key . '" class="' . ($key == $id ? 'selected' : '') . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . stripslashes($cat['title']) . '</a><span id="cat_' . $key . '"></span></li>';
 				else //Sinon on n'affiche pas le "+"
-					$line .= '<li class="sub"><a id="class_' . $key . '" class="' . ($key == $id ? 'selected' : '') . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');"><i class="fa fa-folder"></i>' . $cat['title'] . '</a></li>';
+					$line .= '<li class="sub"><a id="class_' . $key . '" class="' . ($key == $id ? 'selected' : '') . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');"><i class="fa fa-folder"></i>' . stripslashes($cat['title']) . '</a></li>';
 			}
 		}
 	}
@@ -250,7 +250,7 @@ function build_wiki_cat_children($cats_tree, $cats, $id_parent = 0)
 			if (isset($cats[$i]) && $cats[$i]['id_parent'] == $id_parent)
 			{
 				$id = $cats[$i]['id'];
-				$feeds_cat = new FeedsCat('wiki', $id, $cats[$i]['title']);
+				$feeds_cat = new FeedsCat('wiki', $id, stripslashes($cats[$i]['title']));
 
 				// Decrease the complexity
 				unset($cats[$i]);
