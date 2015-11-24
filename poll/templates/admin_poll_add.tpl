@@ -44,7 +44,7 @@
 			</ul>
 		</nav> 
 		
-		<div id="admin-contents">
+		<div class="admin-module-poll" id="admin-contents">
 			
 			# INCLUDE message_helper #
 			

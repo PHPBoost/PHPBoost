@@ -49,7 +49,7 @@
 			</ul>
 		</nav> 
 		
-		<div id="admin-contents">
+		<div class="admin-module-poll" id="admin-contents">
 			# INCLUDE message_helper #
 			
 			<form action="admin_poll.php" method="post" onsubmit="return check_form();" class="fieldset-content">

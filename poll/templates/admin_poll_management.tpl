@@ -15,7 +15,7 @@
 			</ul>
 		</nav> 
 		
-		<div id="admin-contents">
+		<div class="admin-module-poll" id="admin-contents">
 			<table id="table">
 				<caption>{L_POLL_MANAGEMENT}</caption>
 				<thead>
