@@ -3,7 +3,7 @@
  *                              pollExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : July 7, 2008
- *   copyright            : (C) 2008 Régis Viarre
+ *   copyright            : (C) 2008 RÃ©gis Viarre
  *   email                : crowkait@phpboost.com
  *
  *
@@ -50,7 +50,8 @@ class PollExtensionPointProvider extends ExtensionPointProvider
 	public function css_files()
 	{
 		$module_css_files = new ModuleCssFiles();
-		$module_css_files->adding_always_displayed_file('poll.css');
+		$module_css_files->adding_always_displayed_file('poll_mini.css');
+		$module_css_files->adding_running_module_displayed_file('poll.css');
 		return $module_css_files;
 	}
 
