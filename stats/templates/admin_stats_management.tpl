@@ -722,17 +722,17 @@
 								# ENDIF #
 							</tbody>
 						</table>
+						# IF C_ROBOTS_DATA #
+						<br /><br />
+						<fieldset class="fieldset-submit">
+							<legend>{L_ERASE_RAPPORT}</legend>
+							<div class="fieldset-inset">
+								<button type="submit" name="erase" value="true" class="submit">{L_ERASE_RAPPORT}</button>
+								<input type="hidden" name="token" value="{TOKEN}">
+							</div>
+						</fieldset>
+						# ENDIF #
 					</div>
-					# IF C_ROBOTS_DATA #
-					<br /><br />
-					<fieldset class="fieldset-submit">
-						<legend>{L_ERASE_RAPPORT}</legend>
-						<div class="fieldset-inset">
-							<button type="submit" name="erase" value="true" class="submit">{L_ERASE_RAPPORT}</button>
-							<input type="hidden" name="token" value="{TOKEN}">
-						</div>
-					</fieldset>
-					# ENDIF #
 				</div>
 			</fieldset>
 		</form>
