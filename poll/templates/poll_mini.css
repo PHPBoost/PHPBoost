@@ -1,0 +1,14 @@
+
+.poll-container-title {
+	font-size: 1em;
+}
+
+#module-mini-poll hr {
+	width: 90%;
+	margin: 10px auto;
+}
+
+.poll-question-mini-container {
+	padding-left: 6px;
+	text-align: left;
+}

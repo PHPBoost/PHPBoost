@@ -18,7 +18,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
-
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
@@ -96,7 +96,7 @@ elseif ($valid && !empty($id_post)) //inject
 				$visible = 1;
 			else //Date inférieur à celle courante => inutile.
 				$start_timestamp = 0;
-
+				
 			if ($end_timestamp > time() && $end_timestamp > $start_timestamp && $start_timestamp != 0)
 				$visible = 2;
 			elseif ($start_timestamp != 0) //Date inférieur à celle courante => inutile.
@@ -147,7 +147,7 @@ elseif ($valid && !empty($id_post)) //inject
 elseif (!empty($id))
 {
 	$tpl = new FileTemplate('poll/admin_poll_management2.tpl');
-
+	
 	try {
 		$row = PersistenceContext::get_querier()->select_single_row(PREFIX . 'poll', array('*'), 'WHERE id=:id', array('id' => $id));
 	} catch (RowNotFoundException $e) {
@@ -243,18 +243,18 @@ else
 	$tpl = new FileTemplate('poll/admin_poll_management.tpl');
 	 
 	$nbr_poll = PersistenceContext::get_querier()->count(PREFIX . 'poll');
-
+	
 	//On crée une pagination si le nombre de sondages est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbr_poll, $_NBR_ELEMENTS_PER_PAGE);
 	$pagination->set_url(new Url('/poll/admin_poll.php?p=%d'));
-
+	
 	if ($pagination->current_page_is_empty() && $page > 1)
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-
+	
 	$tpl->put_all(array(
 		'C_PAGINATION' => $pagination->has_several_pages(),
 		'PAGINATION' => $pagination->display(),
@@ -268,8 +268,8 @@ else
 		'L_PSEUDO' => LangLoader::get_message('author', 'common'),
 		'L_APROB' => $LANG['aprob'],
 		'L_UPDATE' => $LANG['update']
-	)); 
-
+	));
+	
 	$result = PersistenceContext::get_querier()->select("SELECT p.id, p.question, p.archive, p.timestamp, p.visible, p.start, p.end, p.user_id, m.display_name, m.groups, m.level
 	FROM " . PREFIX . "poll p
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON p.user_id = m.user_id
