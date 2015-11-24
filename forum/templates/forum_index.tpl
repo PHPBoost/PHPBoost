@@ -56,7 +56,7 @@
 							<td class="forum-announce-topic">
 								<i class="fa fa-globe"></i>
 							</td>
-							<td class="forum-topic">
+							<td class="forum-topic" colspan="4">
 								<a href="{forums_list.subcats.U_FORUM_URL}" title="{forums_list.subcats.NAME}">{forums_list.subcats.NAME}</a>
 								<br />
 								<span class="smaller">{forums_list.subcats.DESC}</span>
