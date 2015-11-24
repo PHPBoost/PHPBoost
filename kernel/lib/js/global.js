@@ -247,8 +247,8 @@ e,b)},traverse:function(a){d.each(this.items||[],function(b){(b=d.data(this,"sub
 
 		var start = function(table, data) {
 			table.addClass('bt');
-			$("#table tfoot th[colspan=4]").attr('colspan','1');
-			$("#table tfoot th[colspan=2]").attr('colspan','1');
+			$(".error-list tfoot th").attr('colspan','1');
+			$(".error-list404 tfoot th").attr('colspan','1');
 
 			if (data.tableWrapper) {
 				table.parent('.bt-wrapper').addClass('active');
@@ -257,7 +257,8 @@ e,b)},traverse:function(a){d.each(this.items||[],function(b){(b=d.data(this,"sub
 
 		var end = function(table, data) {
 			table.removeClass('bt');
-			$("#table tfoot th[colspan=1]").attr('colspan','2'); 
+			$(".error-list tfoot th").attr('colspan','2');
+			$(".error-list404 tfoot th").attr('colspan','4');  
 
 			if (data.tableWrapper) {
 				table.parent('.bt-wrapper').removeClass('active');

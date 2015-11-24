@@ -63,7 +63,7 @@ class AdminErrorsController404List extends AdminController
 			new HTMLTableColumn(LangLoader::get_message('delete', 'common'), '', 'col-small')
 		), new HTMLTableSortingRule('times', HTMLTableSortingRule::DESC));
 		
-		$table = new HTMLTable($table_model, 'table-fixed');
+		$table = new HTMLTable($table_model, 'table-fixed error-list404');
 		
 		$table_model->set_caption($this->lang['404_list']);
 		

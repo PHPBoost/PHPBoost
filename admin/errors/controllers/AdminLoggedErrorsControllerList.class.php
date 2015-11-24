@@ -66,7 +66,7 @@ class AdminLoggedErrorsControllerList extends AdminController
 			new HTMLTableColumn(LangLoader::get_message('description', 'main'))
 		), new HTMLTableSortingRule(''), self::NUMBER_ITEMS_PER_PAGE);
 		
-		$table = new HTMLTable($table_model, 'table-fixed');
+		$table = new HTMLTable($table_model, 'table-fixed error-list');
 		
 		$table_model->set_caption($this->lang['logged_errors_list']);
 		
