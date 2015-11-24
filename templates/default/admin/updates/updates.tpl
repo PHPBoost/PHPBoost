@@ -32,11 +32,11 @@
 				<thead>
 					<tr>
 						# IF C_ALL #
-						<th style="width:50px;">{L_TYPE}</td>
+						<th style="width:100px;">{L_TYPE}</td>
 						# ENDIF #
 						<th>{L_DESCRIPTION}</td>
 						<th style="width:75px;">{L_PRIORITY}</td>
-						<th style="width:75px;">{L_UPDATE_DOWNLOAD}</td>
+						<th style="width:150px;">{L_UPDATE_DOWNLOAD}</td>
 					</tr>
 				</thead>
 				<tbody>

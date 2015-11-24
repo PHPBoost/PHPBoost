@@ -34,7 +34,7 @@
 								${LangLoader::get_message('last_update', 'admin')}
 							</th>
 							<th>
-								${LangLoader::get_message('description', 'admin-langs-common')}
+								${LangLoader::get_message('langs.description', 'admin-langs-common')}
 							</th>
 						</tr>
 					</thead>
