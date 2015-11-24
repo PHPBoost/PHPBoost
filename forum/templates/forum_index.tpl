@@ -1,3 +1,4 @@
+
 	# INCLUDE forum_top #
 		
 	# START forums_list #
@@ -5,33 +6,40 @@
 					</tbody>
 				</table>
 			</div>
-		</div>
+		</article>
 
 		# END forums_list.endcats #
 			
 		# START forums_list.cats #
-		<div class="module-position">
-			<div class="module-top-l"></div>
-			<div class="module-top-r"></div>
-			<div class="module-top">
-				<span class="forum-cat-title">
-					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',forums_list.cats.IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
-					&nbsp;&nbsp;<a href="{forums_list.cats.U_FORUM_VARS}" class="forum-link-cat">{forums_list.cats.NAME}</a>
-				</span>
-				# IF C_DISPLAY_UNREAD_DETAILS #
-				<span class="float-right">
-					<a href="{PATH_TO_ROOT}/forum/unread.php?cat={forums_list.cats.IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><i class="fa fa-notread"></i></a>
-				</span>
-				# ENDIF #
-			</div>
+		<script>
+			<!--
+			jQuery('#table-{forums_list.cats.IDCAT}').basictable();
+			-->
+		</script>
+			
+		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-index">
+			<header>
+				<h2>
+					<span class="forum-cat-title">
+						<a href="${relative_url(SyndicationUrlBuilder::rss('forum',forums_list.cats.IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
+						&nbsp;&nbsp;<a href="{forums_list.cats.U_FORUM_VARS}" class="forum-link-cat" title="{forums_list.cats.NAME}">{forums_list.cats.NAME}</a>
+					</span>
+					# IF C_DISPLAY_UNREAD_DETAILS #
+					<span class="float-right">
+						<a href="{PATH_TO_ROOT}/forum/unread.php?cat={forums_list.cats.IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><i class="fa fa-notread"></i></a>
+					</span>
+					# ENDIF #
+				</h2>
+			</header>
 			<div class="module-contents forum-contents">
-				<table class="forum-table">
+				<table id="table-{forums_list.cats.IDCAT}" class="forum-table">
 					<thead>
 						<tr>
-							<th class="forum-text-column" colspan="2">{L_FORUM}</th>
-							<th class="forum-text-column">{L_TOPIC}</th>
-							<th class="forum-text-column">{L_MESSAGE}</th>
-							<th class="forum-text-column" style="width:150px;">{L_LAST_MESSAGE}</th>
+							<th class="forum-announce-topic"><i class="fa fa-eye"></i></th>
+							<th class="forum-topic">{L_FORUM}</th>
+							<th class="forum-subject-nb">{L_TOPIC}</th>
+							<th class="forum-message-nb">{L_MESSAGE}</th>
+							<th class="forum-last-topic">{L_LAST_MESSAGE}</th>
 						</tr>
 					</thead>
 					<tfoot>
@@ -45,31 +53,31 @@
 		# START forums_list.subcats #
 						<tr>
 							# IF forums_list.subcats.U_FORUM_URL #
-							<td class="forum-sub-cat-img">
+							<td class="forum-announce-topic">
 								<i class="fa fa-globe"></i>
 							</td>
-							<td class="forum-sub-cat" colspan="4">
-								<a href="{forums_list.subcats.U_FORUM_URL}">{forums_list.subcats.NAME}</a>
+							<td class="forum-topic">
+								<a href="{forums_list.subcats.U_FORUM_URL}" title="{forums_list.subcats.NAME}">{forums_list.subcats.NAME}</a>
 								<br />
 								<span class="smaller">{forums_list.subcats.DESC}</span>
 							</td>
 							# ELSE #
-							<td class="forum-sub-cat-img">
+							<td class="forum-announce-topic">
 								<i class="fa # IF forums_list.subcats.C_BLINK #blink # ENDIF #{forums_list.subcats.IMG_ANNOUNCE}"></i>
 							</td>
-							<td class="forum-sub-cat">
-								<a href="{forums_list.subcats.U_FORUM_VARS}">{forums_list.subcats.NAME}</a>
+							<td class="forum-topic">
+								<a href="{forums_list.subcats.U_FORUM_VARS}" title="{forums_list.subcats.NAME}">{forums_list.subcats.NAME}</a>
 								<br />
 								<span class="smaller">{forums_list.subcats.DESC}</span>
-								<span class="smaller">{forums_list.subcats.SUBFORUMS}</span>
+								<span class="small">{forums_list.subcats.SUBFORUMS}</span>
 							</td>
-							<td class="forum-sub-cat-compteur">
+							<td class="forum-subject-nb">
 								{forums_list.subcats.NBR_TOPIC}
 							</td>
-							<td class="forum-sub-cat-compteur">
+							<td class="forum-message-nb">
 								{forums_list.subcats.NBR_MSG}
 							</td>
-							<td class="forum-sub-cat-last">
+							<td class="forum-last-topic">
 								{forums_list.subcats.U_LAST_TOPIC}
 							</td>
 							# ENDIF #
@@ -78,5 +86,5 @@
 		
 	# END forums_list #
 		
-		# INCLUDE forum_bottom #
+	# INCLUDE forum_bottom #	
 		

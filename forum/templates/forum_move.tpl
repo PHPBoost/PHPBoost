@@ -12,11 +12,12 @@
 		-->
 		</script>
 		
-		<div class="module-position">
-			<div class="module-top-l"></div>
-			<div class="module-top-r"></div>
-			<div class="module-top">&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T}</div>
-			<div class="module-contents">
+		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-move">
+			<header>
+				<h2>&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T}</h2>
+			</header>
+			
+			<div class="content">
 				<form method="post" action="move.php" onsubmit="javascript:return check_form_move();" class="fieldset-content">
 					<fieldset>
 						<legend>{L_MOVE_SUBJECT} : {TITLE}</legend>
@@ -38,9 +39,7 @@
 					</fieldset>
 				</form>
 			</div>
-			<div class="module-bottom-l"></div>
-			<div class="module-bottom-r"></div>
-			<div class="module-bottom">&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T}</div>
-		</div>
+			<footer>&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T}</footer>
+		</article>
 		
 		# INCLUDE forum_bottom #

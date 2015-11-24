@@ -11,55 +11,53 @@
 		-->
 		</script>
 		
-		<div class="module-position">
-			<div class="module-top-l"></div>
-			<div class="module-top-r"></div>
-			<div class="module-top"><a href="index.php">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span><em>{DESC}</em></span></div>
-			<div class="module-contents">
+		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-edit-message">
+			<header>
+				<h2>
+					&bull; <a href="index.php" title="{L_FORUM_INDEX}">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span><em>{DESC}</em></span>
+				</h2>
+			</header>
+			<div class="content">
 				<form action="{U_ACTION}" method="post" onsubmit="return check_form_post();">
 					# INCLUDE message_helper #
 
 					# IF C_FORUM_PREVIEW_MSG #
-					<div class="module-position">
-						<div class="module-top-l"></div>
-						<div class="module-top-r"></div>
-						<div class="module-top">
-							<span class="float-left">{L_PREVIEW}</span>
-							<span class="float-right"></span>&nbsp;
-						</div>
-					</div>
-					<div class="msg-position">
-						<div class="msg-container">
-							<div class="msg-pseudo-mbr"></div>
-							<div class="msg-top-row">
-								<div class="float-left"><i class="fa fa-hand-o-right"></i> {DATE}</div>
-								<div class="float-right"><i class="fa fa-quote-right"></i></div>
-							</div>
-							<div class="msg-contents-container">
-								<div class="msg-info-mbr">
+					<article id="article-forum-edit-message-preview">
+						<header>
+							<h3>
+								<span class="float-left">{L_PREVIEW}</span>
+							</h3>
+						</header>
+						<div class="msg-position">
+							<div class="msg-container">
+								<div class="msg-pseudo-mbr"></div>
+								<div class="msg-top-row">
+									<div class="float-left"><i class="fa fa-hand-o-right"></i> {DATE}</div>
+									<div class="float-right"><i class="fa fa-quote-right"></i></div>
 								</div>
-								<div class="msg-contents">
-									<div class="msg-contents-overflow">
-										{CONTENTS}
+								<div class="msg-contents-container">
+									<div class="msg-info-mbr">
+									</div>
+									<div class="msg-contents">
+										<div class="msg-contents-overflow">
+											{CONTENTS}
+										</div>
 									</div>
 								</div>
 							</div>
+							<div class="msg-sign">
+								<hr />
+								<span class="float-left">
+									<span class="basic-button smaller">MP</span>
+								</span>
+								<span class="float-right">
+								</span>&nbsp;
+							</div>
 						</div>
-						<div class="msg-sign">
-							<hr />
-							<span class="float-left">
-								<span class="basic-button smaller">MP</span>
-							</span>
-							<span class="float-right">
-							</span>&nbsp;
-						</div>
-					</div>
-					<div class="msg-position">
-						<div class="msg-bottom-l"></div>
-						<div class="msg-bottom-r"></div>
-						<div class="msg-bottom">&nbsp;</div>
-					</div>
-					<br /><br />
+						<footer>
+							&nbsp;
+						</footer>
+					</article>
 					# ENDIF #
 					
 					<div class="fieldset-content">
@@ -86,10 +84,10 @@
 					</div>
 				</form>
 			</div>
-			<div class="module-bottom-l"></div>
-			<div class="module-bottom-r"></div>
-			<div class="module-bottom"><a href="index.php">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span><em>{DESC}</em></span></div>
-		</div>
+			<footer>
+				&bull; <a href="index.php" title="{L_FORUM_INDEX}">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span><em>{DESC}</em></span>
+			</footer>
+		</article>
 		
 		# INCLUDE forum_bottom #
 		

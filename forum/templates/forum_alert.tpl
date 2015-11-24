@@ -1,10 +1,9 @@
 		# INCLUDE forum_top #
 		
-		<div class="module-position">
-			<div class="module-top-l"></div>
-			<div class="module-top-r"></div>
-			<div class="module-top">&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span><em>{DESC}</em></span> &raquo; <a href="">{L_ALERT}</a></div>
-			<div class="module-contents">
+		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-moderation">
+			<header>
+				<h2>&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span><em>{DESC}</em></span> &raquo; <a href="">{L_ALERT}</a></h2>
+			</header>
 
 			# START alert_form #
 				<script>
@@ -27,7 +26,7 @@
 					<fieldset>
 						<legend>{L_ALERT}</legend>
 						
-						<div id="id-message-helper" class="notice" style="width:80%;">{L_ALERT_EXPLAIN}: <a href="{alert_form.U_TOPIC}">{alert_form.TITLE}</a></div>
+						<div id="id-message-helper" class="notice">{L_ALERT_EXPLAIN}: <a title="{alert_form.TITLE}" href="{alert_form.U_TOPIC}">{alert_form.TITLE}</a></div>
 						<div class="form-element">
 							<label for="title">{L_ALERT_TITLE}</label>
 							<div class="form-field">
@@ -37,7 +36,7 @@
 						<div class="form-element-textarea">
 							<label for="contents"> *{L_ALERT_CONTENTS}</label>
 							{KERNEL_EDITOR}
-							<textarea style="width:70%" rows="15" cols="40" id="contents" name="contents"></textarea> 
+							<textarea rows="15" cols="40" id="contents" name="contents"></textarea> 
 							<input type="hidden" name="id" value="{alert_form.ID_ALERT}">
 						</div>
 					</fieldset>
@@ -61,14 +60,11 @@
 						{alert_confirm.MSG}
 						<br /><br />
 						<a href="{URL_TOPIC}">{L_BACK_TOPIC}</a>
-
+					</div>
 				</fieldset>
 				# END alert_confirm #
-			</div>
-			<div class="module-bottom-l"></div>
-			<div class="module-bottom-r"></div>
-			<div class="module-bottom">&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span><em>{DESC}</em></span> &raquo; <a href="">{L_ALERT}</a></div>
-		</div>
+			<footer>&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span><em>{DESC}</em></span> &raquo; <a href="">{L_ALERT}</a></footer>
+		</article>
 		
 		# INCLUDE forum_bottom #
 		

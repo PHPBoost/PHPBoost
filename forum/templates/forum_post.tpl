@@ -68,11 +68,14 @@
 		}
 		-->
 		</script>
-		<div class="module-position">
-			<div class="module-top-l"></div>
-			<div class="module-top-r"></div>
-			<div class="module-top">&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span><em>{DESC}</em></span></div>
-			<div class="module-contents">
+		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-post">
+			<header>
+				<h2>
+					&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span><em>{DESC}</em></span>
+				</h2>
+			</header>
+
+			<div class="content">
 				<form action="{U_ACTION}" method="post" onsubmit="return check_form_post();">
 					# INCLUDE message_helper #
 
@@ -162,7 +165,7 @@
 
 						<fieldset>	
 							<legend>{L_POLL}</legend>
-							<p id="hidepoll_link" class="center"><a href="javascript:hide_poll('hidepoll')">{L_OPEN_MENU_POLL}</a></p>
+							<p id="hidepoll_link" class="center"><a title="{L_OPEN_MENU_POLL}" href="javascript:hide_poll('hidepoll')">{L_OPEN_MENU_POLL}</a></p>
 							<div id="hidepoll">
 								<div class="form-element">
 									<label for="question">* {L_QUESTION}</label>
@@ -189,9 +192,9 @@
 										# END answers_poll #
 										<span id="add_poll_field{NBR_POLL_FIELD}"></span>	
 										
-										<p class="center" style="width:165px;" id="add_poll_field_link">
+										<p class="center" id="add_poll_field_link">
 											# IF C_ADD_POLL_FIELD #
-											<a href="javascript:add_poll_field({NBR_POLL_FIELD})"><i class="fa fa-plus"></i></a>
+											<a title="plus" href="javascript:add_poll_field({NBR_POLL_FIELD})"><i class="fa fa-plus"></i></a>
 											# ENDIF #
 										</p>
 									</div>
@@ -229,9 +232,9 @@
 					</div>
 				</form>
 			</div>
-			<div class="module-bottom-l"></div>
-			<div class="module-bottom-r"></div>
-			<div class="module-bottom">&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span><em>{DESC}</em></span></div>
-		</div>
+			<footer>
+				&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span><em>{DESC}</em></span>
+			</footer>
+		</article>
 		
 		# INCLUDE forum_bottom #

@@ -11,32 +11,27 @@
 		</script>
 		
 		<form action="track{U_TRACK_ACTION}" method="post">
-			<div class="module-position">
-				<div class="module-top-l"></div>
-				<div class="module-top-r"></div>
-				<div class="module-top">
-					<span>
-						&bull; {U_FORUM_CAT}
-					</span>
+			<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-track">
+				<header>
+					<h2>&bull; {U_FORUM_CAT}</h2>
 					# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #
-				</div>
-				<div class="module-contents forum-contents">
+				</header>
+				<div class="content">
 					<div class="text_small">{L_EXPLAIN_TRACK}</div>
-				</div>
-			</div>
-			<div class="module-position">
-				<div class="module-contents forum-contents">
-					<table class="module-table forum-table">
+					
+					<table id="table" class="module-table forum-table">
 						<thead>
 							<tr class="forum-text-column">
-								<th colspan="3" >{L_TOPIC}</th>
-								<th style="width:100px;">{L_AUTHOR}</th>
-								<th style="width:60px;">{L_MESSAGE}</th>
-								<th style="width:60px;">{L_VIEW}</th>
-								<th style="width:40px;"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'p');"> {L_PM}</th>
-								<th style="width:50px;"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'm');"> {L_MAIL}</th>
-								<th style="width:85px;"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'd');"> {L_DELETE}</th>
-								<th style="width:150px;">{L_LAST_MESSAGE}</th>
+								<th class="forum-announce-topic"><i class="fa fa-eye"></i></th>
+								<th class="forum-fixed-topic"><i class="fa fa-heart"></i></th>
+								<th class="forum-topic">{L_TOPIC}</th>
+								<th class="forum-author">{L_AUTHOR}</th>
+								<th class="forum-message-nb">{L_MESSAGE}</th>
+								<th class="forum-view">{L_VIEW}</th>
+								<th class="forum-pm"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'p');"> {L_PM}</th>
+								<th class="forum-mail"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'm');"> {L_MAIL}</th>
+								<th class="forum-delete"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'd');"> {L_DELETE}</th>
+								<th class="forum-last-topic">{L_LAST_MESSAGE}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -50,41 +45,41 @@
 	
 							# START topics #
 							<tr>
-								<td class="forum-sub-cat" style="width:40px;">
+								<td class="forum-announce-topic">
 									# IF NOT topics.C_HOT_TOPIC # 
 									<i class="fa {topics.IMG_ANNOUNCE}"></i>
 									# ELSE #
 									<i class="fa # IF topics.C_BLINK #blink # ENDIF #{topics.IMG_ANNOUNCE}-hot"></i>
 									# ENDIF #
 								</td>
-								<td class="forum-sub-cat" style="width:35px;">
+								<td class="forum-fixed-topic">
 									{topics.DISPLAY_MSG} {topics.TRACK} # IF C_POLL #<i class="fa fa-tasks"></i># ENDIF #
 								</td>
-								<td class="forum-sub-cat">
+								<td class="forum-topic">
 									# IF topics.C_PAGINATION #<span class="pagin-forum"># INCLUDE topics.PAGINATION #</span># ENDIF #
-									{topics.ANCRE} <strong>{topics.TYPE}</strong> <a href="topic{topics.U_TOPIC_VARS}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
+									{topics.ANCRE} <strong>{topics.TYPE}</strong> <a title="{topics.TITLE}" href="topic{topics.U_TOPIC_VARS}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
 									<br />
 									<span class="smaller">{topics.DESC}</span>
 								</td>
-								<td class="forum-sub-cat-compteur" style="width:100px;">
+								<td class="forum-author">
 									{topics.AUTHOR}
 								</td>
-								<td class="forum-sub-cat-compteur">
+								<td class="forum-message-nb">
 									{topics.MSG}
 								</td>
-								<td class="forum-sub-cat-compteur">
+								<td class="forum-view">
 									{topics.VUS}
 								</td>
-								<td class="forum-sub-cat-compteur" style="width:40px;">
+								<td class="forum-pm">
 									<input type="checkbox" id="p{topics.INCR}" name="p{topics.ID}" {topics.CHECKED_PM}>
 								</td>
-								<td class="forum-sub-cat-compteur" style="width:50px;">
+								<td class="forum-mail">
 									<input type="checkbox" id="m{topics.INCR}" name="m{topics.ID}" {topics.CHECKED_MAIL}>
 								</td>
-								<td class="forum-sub-cat-compteur" style="width:85px;">
+								<td class="forum-delete">
 									<input type="checkbox" id="d{topics.INCR}" name="d{topics.ID}">
 								</td>
-								<td class="forum-sub-cat-last">
+								<td class="forum-last-topic">
 									{topics.U_LAST_MSG}
 								</td>
 							</tr>
@@ -96,19 +91,14 @@
 						<button type="submit" name="valid" value="true" class="submit">{L_SUBMIT}</button>
 					</div>
 				</div>
-			</div>
+				<footer>
+					<span class="float-left">
+						&bull; {U_FORUM_CAT}
+					</span>
+					# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span><div class="spacer"></div># ENDIF #
+				</footer>
+			</article
 		</form>
-		
-		<div class="module-position">
-			<div class="module-bottom-l"></div>
-			<div class="module-bottom-r"></div>
-			<div class="module-bottom">
-				<span class="float-left">
-					&bull; {U_FORUM_CAT}
-				</span>
-				# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span><div class="spacer"></div># ENDIF #
-			</div>
-		</div>
 		
 		# INCLUDE forum_bottom #
 		

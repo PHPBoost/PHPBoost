@@ -1,14 +1,14 @@
 		# INCLUDE forum_top #
 		
-		<div class="module-position">					
-			<div class="module-top-l"></div>		
-			<div class="module-top-r"></div>
-			<div class="module-top"><strong>{L_STATS}</strong></div>
-			<div class="module-contents">
+		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-stats">					
+			<header>
+				<h2>&bull; {L_STATS}</h2>
+			</header>
+			<div class="content">
 				<table>
 					<thead>
 						<tr>
-							<th colspan="2">	
+							<th>	
 								{L_STATS}
 							</th>
 						</tr>
@@ -16,13 +16,16 @@
 					<tbody>
 						<tr>
 							<td>
-								{L_NBR_TOPICS}: <strong>{NBR_TOPICS}</strong><br />
-								{L_NBR_MSG}: <strong>{NBR_MSG}</strong>
-								<br /><br />
-								{L_NBR_TOPICS_DAY}: <strong>{NBR_TOPICS_DAY}</strong><br />
-								{L_NBR_MSG_DAY}: <strong>{NBR_MSG_DAY}</strong><br />
-								{L_NBR_TOPICS_TODAY}: <strong>{NBR_TOPICS_TODAY}</strong><br />
-								{L_NBR_MSG_TODAY}: <strong>{NBR_MSG_TODAY}</strong>
+								<p class="forum-stats">
+									<span>{L_NBR_TOPICS}: <strong>{NBR_TOPICS}</strong></span>
+									<span>{L_NBR_MSG}: <strong>{NBR_MSG}</strong></span>
+								</p>								
+								<p class="forum-stats">
+									<span>{L_NBR_TOPICS_DAY}: <strong>{NBR_TOPICS_DAY}</strong></span>
+									<span>{L_NBR_MSG_DAY}: <strong>{NBR_MSG_DAY}</strong></span>
+									<span>{L_NBR_TOPICS_TODAY}: <strong>{NBR_TOPICS_TODAY}</strong></span>
+									<span>{L_NBR_MSG_TODAY}: <strong>{NBR_MSG_TODAY}</strong></span>
+								</p>								
 							</td>
 						</tr>
 					</tbody>
@@ -33,7 +36,7 @@
 				<table>
 					<thead>
 						<tr>
-							<th colspan="2">	
+							<th>	
 								{L_LAST_MSG}
 							</th>
 						</tr>
@@ -54,7 +57,7 @@
 				<table>
 					<thead>
 						<tr>
-							<th colspan="2">	
+							<th>	
 								{L_POPULAR}
 							</th>
 						</tr>
@@ -75,7 +78,7 @@
 				<table>
 					<thead>
 						<tr>
-							<th colspan="2">	
+							<th>	
 								{L_ANSWERS}
 							</th>
 						</tr>
@@ -91,9 +94,7 @@
 					</tbody>
 				</table>
 			</div>
-			<div class="module-bottom-l"></div>		
-			<div class="module-bottom-r"></div>
-			<div class="module-bottom"></div>
-		</div>
+			<footer>&bull; {L_STATS}</footer>
+		</article>
 				
 		# INCLUDE forum_bottom #

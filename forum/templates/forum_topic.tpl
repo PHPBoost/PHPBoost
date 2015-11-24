@@ -123,34 +123,34 @@
 		-->
 		</script>
 
-		<div class="module-position">
-			<div class="module-top-l"></div>
-			<div class="module-top-r"></div>
-			<div class="module-top">
-				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
-				&bull; {U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
-				
-				<span class="float-right">
-					# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
+		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-{ID}">
+			<header>
+				<h2>
+					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
+					&bull; {U_FORUM_CAT} <a itemscope="name" title="{TITLE_T}" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
 					
-					# IF C_FORUM_MODERATOR #
-						# IF C_FORUM_LOCK_TOPIC #
-					<a href="action{U_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="fa fa-ban" data-confirmation="{L_ALERT_LOCK_TOPIC}"></a>
-						# ELSE #
-					<a href="action{U_TOPIC_UNLOCK}" title="{L_TOPIC_LOCK}" class="fa fa-unban" data-confirmation="{L_ALERT_UNLOCK_TOPIC}"></a>
+					<span class="float-right">
+						# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
+						
+						# IF C_FORUM_MODERATOR #
+							# IF C_FORUM_LOCK_TOPIC #
+						<a href="action{U_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="fa fa-ban" data-confirmation="{L_ALERT_LOCK_TOPIC}"></a>
+							# ELSE #
+						<a href="action{U_TOPIC_UNLOCK}" title="{L_TOPIC_LOCK}" class="fa fa-unban" data-confirmation="{L_ALERT_UNLOCK_TOPIC}"></a>
+							# ENDIF #
+						
+						<a href="move{U_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="fa fa-move" data-confirmation="{L_ALERT_MOVE_TOPIC}"></a>
 						# ENDIF #
-					
-					<a href="move{U_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="fa fa-move" data-confirmation="{L_ALERT_MOVE_TOPIC}"></a>
-					# ENDIF #
-				</span>
-			</div>
-		</div>	
-
+					</span>
+				</h2>
+				
+			</header>
+			
 		# IF C_POLL_EXIST #
-		<div class="module-position">
-			<div class="center">
+			<div class="content center">
+		
 				<form method="post" action="action{U_POLL_ACTION}">
-					<table style="width:80%;margin : 10px auto auto auto;">
+					<table class="forum-poll-table">
 						<thead>
 							<tr>
 								<th>{L_POLL}: {QUESTION}</th>
@@ -159,7 +159,7 @@
 						<tbody>
 							# START poll_radio #
 							<tr>
-								<td style="font-size:10px;">
+								<td>
 									<label><input type="{poll_radio.TYPE}" name="forumpoll" value="{poll_radio.NAME}"> {poll_radio.ANSWERS}</label>
 								</td>
 							</tr>
@@ -173,7 +173,7 @@
 							# END poll_checkbox #
 							# START poll_result #
 							<tr>
-								<td style="font-size:10px;">
+								<td>
 									{poll_result.ANSWERS}
 									
 									{poll_result.PERCENT}% - [{poll_result.NBRVOTE} {L_VOTE}]
@@ -197,101 +197,114 @@
 					# ENDIF #
 				</form>
 			</div>
-		</div>
 		# ENDIF #
-
+		
 		# START msg #
-		<div class="msg-position" id="d{msg.ID}">
-			<div class="msg-container{msg.CLASS_COLOR}">
-				<span id="m{msg.ID}"></span>
-				<div class="msg-top-row">
-					<div class="msg-pseudo-mbr">
-						# IF msg.C_FORUM_USER_LOGIN # 
-							<i class="fa # IF msg.C_USER_ONLINE #fa-online# ELSE #fa-offline# ENDIF #"></i> <a class="msg-link-pseudo" href="{msg.U_FORUM_USER_PROFILE}">{msg.FORUM_USER_LOGIN}</a>
-						# ELSE # 
-							<em>{L_GUEST}</em>
-						# ENDIF #
-					</div>
-					<span class="float-left"><a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" title=""><i class="fa fa-hand-o-right"></i></a> {msg.FORUM_MSG_DATE}</span>
-					<span class="float-right"><a href="topic{msg.U_VARS_QUOTE}" title="{L_QUOTE}"><i class="fa fa-quote-right"></i></a>
-					# IF msg.C_FORUM_MSG_EDIT # 
-					<a href="post{msg.U_FORUM_MSG_EDIT}" title="{L_EDIT}" class="fa fa-edit"></a>
-					# ENDIF #
-					
-					# IF msg.C_FORUM_MSG_DEL #
-						# IF msg.C_FORUM_MSG_DEL_MSG #
-					<a href="action{msg.U_FORUM_MSG_DEL}" title="{L_DELETE}" id="dimgnojs{msg.ID}" class="fa fa-delete"></a>
-					<a style="cursor:pointer;display:none" onclick="del_msg('{msg.ID}');" id="dimg{msg.ID}" title="{L_DELETE}" class="fa fa-delete"></a> 
-					<script>
-					<!--
-						document.getElementById('dimgnojs{msg.ID}').style.display = 'none';
-						document.getElementById('dimg{msg.ID}').style.display = 'inline';
-					-->
-					</script>
-						# ELSE #
-					<a href="action{msg.U_FORUM_MSG_DEL}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="{L_ALERT_DELETE_TOPIC}"></a> 
-						# ENDIF #
-					# ENDIF #
-					
-					# IF msg.C_FORUM_MSG_CUT # <a href="move{msg.U_FORUM_MSG_CUT}" title="{L_CUT_TOPIC}" class="fa fa-cut" data-confirmation="{L_ALERT_CUT_TOPIC}"></a> # ENDIF #
-					
-					<a href="{U_TITLE_T}#go_top" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go_top').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-up"></i></a> <a href="{U_TITLE_T}#go_bottom" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go_bottom').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-down"></i></a></span>
-				</div>
-				<div class="msg-contents-container">
-					<div class="msg-info-mbr">
-						<p class="center">{msg.USER_RANK}</p>
-						<p class="center">{msg.USER_IMG_ASSOC}</p>
-						<p class="center">{msg.USER_AVATAR}</p>
-						<p class="center">{msg.USER_GROUP}</p>
-						{msg.USER_DATE}<br />
-						{msg.USER_MSG}<br />
-					</div>
-					<div class="msg-contents{msg.CLASS_COLOR}">
-						<div class="msg-contents-overflow">
-							# IF msg.L_FORUM_QUOTE_LAST_MSG # <span class="text-strong">{msg.L_FORUM_QUOTE_LAST_MSG}</span><br /><br /> # ENDIF #
+			<div class="content">
+				
+				<div class="msg-position" id="d{msg.ID}">
+					<div class="msg-container{msg.CLASS_COLOR}">
+						<span id="m{msg.ID}"></span>
+						<div class="msg-top">
 							
-							{msg.FORUM_MSG_CONTENTS}
-							
-							# IF msg.C_FORUM_USER_EDITOR # 
-							<br /><br /><br /><br /><span style="padding: 10px;font-size:10px;font-style:italic;">
-							{L_EDIT_BY}
-								# IF msg.C_FORUM_USER_EDITOR_LOGIN # 
-							<a class="small" href="{msg.U_FORUM_USER_EDITOR_PROFILE}">{msg.FORUM_USER_EDITOR_LOGIN}</a>
-								# ELSE #
-							<em>{L_GUEST}</em>
+							<div class="msg-top-row">
+								<div class="msg-pseudo-mbr">
+								# IF msg.C_FORUM_USER_LOGIN # 
+									<i class="fa # IF msg.C_USER_ONLINE #fa-online# ELSE #fa-offline# ENDIF #"></i> <a title="{msg.FORUM_USER_LOGIN}" class="msg-link-pseudo" href="{msg.U_FORUM_USER_PROFILE}">{msg.FORUM_USER_LOGIN}</a>
+								# ELSE # 
+									<em>{L_GUEST}</em>
 								# ENDIF #
-							{L_ON} {msg.FORUM_USER_EDITOR_DATE}</span>
-							# ENDIF #
+								</div>		
+								<p class="center">{msg.USER_RANK}</p>
+								<p class="center">{msg.USER_IMG_ASSOC}</p>
+							</div>							
+							
+							<div class="msg-avatar-mbr center">
+								{msg.USER_AVATAR}
+							</div>
+							
+							<div class="msg-info-mbr">						
+								<p class="center">{msg.USER_GROUP}</p>
+								<p class="left">{msg.USER_DATE}</p>
+								<p class="left">{msg.USER_MSG}</p>
+							</div>
+						</div>
+						<div class="msg-contents-container{msg.CLASS_COLOR}">
+							<div class="msg-contents-info">
+								<span class="float-left">
+									<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" title="{msg.FORUM_MSG_DATE}"><i class="fa fa-hand-o-right"></i></a> {msg.FORUM_MSG_DATE}
+								</span>
+								<span class="float-right">
+									<a href="topic{msg.U_VARS_QUOTE}" title="{L_QUOTE}"><i class="fa fa-quote-right"></i></a>
+									# IF msg.C_FORUM_MSG_EDIT # 
+									<a href="post{msg.U_FORUM_MSG_EDIT}" title="{L_EDIT}" class="fa fa-edit"></a>
+									# ENDIF #
+									
+									# IF msg.C_FORUM_MSG_DEL #
+										# IF msg.C_FORUM_MSG_DEL_MSG #
+									<a href="action{msg.U_FORUM_MSG_DEL}" title="{L_DELETE}" id="dimgnojs{msg.ID}" class="fa fa-delete"></a>
+									<a onclick="del_msg('{msg.ID}');" id="dimg{msg.ID}" title="{L_DELETE}" class="fa fa-delete del-msg"></a> 
+									<script>
+									<!--
+										document.getElementById('dimgnojs{msg.ID}').style.display = 'none';
+										document.getElementById('dimg{msg.ID}').style.display = 'inline';
+									-->
+									</script>
+										# ELSE #
+									<a href="action{msg.U_FORUM_MSG_DEL}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="{L_ALERT_DELETE_TOPIC}"></a> 
+										# ENDIF #
+									# ENDIF #
+									
+									# IF msg.C_FORUM_MSG_CUT # <a href="move{msg.U_FORUM_MSG_CUT}" title="{L_CUT_TOPIC}" class="fa fa-cut" data-confirmation="{L_ALERT_CUT_TOPIC}"></a> # ENDIF #
+									
+									<a title="go-top" href="{U_TITLE_T}#go_top" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go_top').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-up"></i></a> <a title="go-bottom" href="{U_TITLE_T}#go_bottom" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go_bottom').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-down"></i></a>
+								</span>
+							</div>
+							<div class="msg-contents">
+								# IF msg.L_FORUM_QUOTE_LAST_MSG # <span class="text-strong">{msg.L_FORUM_QUOTE_LAST_MSG}</span><br /><br /> # ENDIF #
+								
+								{msg.FORUM_MSG_CONTENTS}
+								
+								# IF msg.C_FORUM_USER_EDITOR # 
+								<br /><br /><br /><br /><span class="user-editor">
+								{L_EDIT_BY}
+									# IF msg.C_FORUM_USER_EDITOR_LOGIN # 
+								<a class="small" href="{msg.U_FORUM_USER_EDITOR_PROFILE}">{msg.FORUM_USER_EDITOR_LOGIN}</a>
+									# ELSE #
+								<em>{L_GUEST}</em>
+									# ENDIF #
+								{L_ON} {msg.FORUM_USER_EDITOR_DATE}</span>
+								# ENDIF #
+							</div>
+							<div class="msg-sign{msg.CLASS_COLOR}">
+								<div class="msg-sign-mbr">
+									{msg.USER_SIGN}
+								</div>
+								<div class="msg-sign-info">
+									<span class="float-left">
+										{msg.USER_PM} {msg.USER_MAIL}
+										# START msg.ext_fields #
+											{msg.ext_fields.BUTTON}
+										# END msg.ext_fields #
+									</span>
+									<span class="float-right">
+										&nbsp;
+										# IF msg.C_FORUM_MODERATOR # 
+										{msg.USER_WARNING}%
+										<a href="moderation_forum{msg.U_FORUM_WARNING}" title="{L_WARNING_MANAGEMENT}" class="fa fa-warning"></a>
+										<a href="moderation_forum{msg.U_FORUM_PUNISHEMENT}" title="{L_PUNISHMENT_MANAGEMENT}" class="fa fa-lock"></a>
+										# ENDIF #
+									</span>&nbsp;
+								</div>
+								
+							</div>
 						</div>
 					</div>
+					
 				</div>
 			</div>
-			<div class="msg-sign{msg.CLASS_COLOR}">
-				<div class="msg-sign-overflow">
-					{msg.USER_SIGN}
-				</div>
-				<hr />
-				<span class="float-left">
-					{msg.USER_PM} {msg.USER_MAIL}
-					# START msg.ext_fields #
-						{msg.ext_fields.BUTTON}
-					# END msg.ext_fields #
-				</span>
-				<span class="float-right">
-					&nbsp;
-					# IF msg.C_FORUM_MODERATOR # 
-					{msg.USER_WARNING}%
-					<a href="moderation_forum{msg.U_FORUM_WARNING}" title="{L_WARNING_MANAGEMENT}" class="fa fa-warning"></a>
-					<a href="moderation_forum{msg.U_FORUM_PUNISHEMENT}" title="{L_PUNISHEMENT_MANAGEMENT}" class="fa fa-lock"></a>
-					# ENDIF #
-				</span>&nbsp;
-			</div>
-		</div>
 		# END msg #
-		<div class="module-position">
-			<div class="module-bottom-l"></div>
-			<div class="module-bottom-r"></div>
-			<div class="module-bottom">
+			<footer>
 				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
 				&bull; {U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title2">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
 				
@@ -309,38 +322,41 @@
 					# ENDIF #
 				</span>&nbsp;
 				<div class="spacer"></div>
+			</footer>
+			
+			<span id="go_bottom"></span>
+		# IF C_AUTH_POST #
+			<div class="forum-post-form">
+				<form action="post{U_FORUM_ACTION_POST}" method="post" onsubmit="return check_form_msg();">
+					<div class="form-element-textarea">
+						<label for="contents">{L_RESPOND}</label>
+						{KERNEL_EDITOR}
+						<div class="form-field-textarea">
+							<textarea id="contents" name="contents" rows="15" cols="40">{CONTENTS}</textarea>
+						</div>
+					</div>
+					
+					<fieldset class="fieldset-submit">
+						<legend>{L_SUBMIT}</legend>
+						<input type="hidden" name="token" value="{TOKEN}">
+						<button type="submit" name="valid" value="true" class="submit">{L_SUBMIT}</button>
+						<button type="button" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
+						<button type="reset" value="true">{L_RESET}</button>
+					</fieldset>
+				</form>
 			</div>
-		</div>
-		
+		# ENDIF #
+			
+		# IF C_ERROR_AUTH_WRITE #
+			<div calss="error-auth-write-response">{L_RESPOND}</div>	
+			<div class="forum-text-column error-auth-write">
+				{L_ERROR_AUTH_WRITE}
+			</div>
+		# ENDIF #
+		</article>	
+				
+				
 		# INCLUDE forum_bottom #
 			
-		<span id="go_bottom"></span>
-		# IF C_AUTH_POST #
-		<div class="forum-post-form">
-			<form action="post{U_FORUM_ACTION_POST}" method="post" onsubmit="return check_form_msg();">
-				<div class="form-element-textarea">
-					<label for="contents">{L_RESPOND}</label>
-					{KERNEL_EDITOR}
-					<div class="form-field-textarea">
-						<textarea id="contents" name="contents" rows="15" cols="40">{CONTENTS}</textarea>
-					</div>
-				</div>
-				
-				<fieldset class="fieldset-submit" style="padding-top:17px;margin-bottom:0px;">
-					<legend>{L_SUBMIT}</legend>
-					<input type="hidden" name="token" value="{TOKEN}">
-					<button type="submit" name="valid" value="true" class="submit">{L_SUBMIT}</button>
-					<button type="button" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
-					<button type="reset" value="true">{L_RESET}</button>
-				</fieldset>
-			</form>
-        </div>
-		# ENDIF #
 		
-		# IF C_ERROR_AUTH_WRITE #
-		<div style="font-size:10px;text-align:center;padding-bottom:2px;">{L_RESPOND}</div>	
-		<div class="forum-text-column" style="width:350px;margin:auto;height:auto;padding:2px;">
-			{L_ERROR_AUTH_WRITE}
-		</div>
-		# ENDIF #
 		

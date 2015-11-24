@@ -1,30 +1,35 @@
 		# INCLUDE forum_top #
 		
-		<div class="module-position">
-			<div class="module-top-l"></div>
-			<div class="module-top-r"></div>
-			<div class="module-top">&bull; <a href="index.php">{FORUM_NAME}</a> &raquo; <a href="moderation_forum.php">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}</div>
-			<div class="module-contents">
-				<table>
-					<thead>
+		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-moderation-panel">
+			<header>
+				<h2>
+					&bull; <a href="index.php" title="{FORUM_NAME}">{FORUM_NAME}</a> &raquo; <a href="moderation_forum.php" title="{L_MODERATION_FORUM}">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}
+				</h2>
+			</header>
+			<div class="content">
+				<table id="table">
+					<tbody>
 						<tr>
-							<td style="text-align:center;width:34%">
-								<a href="moderation_forum.php?action=warning" title="{L_USERS_WARNING}"><i class="fa fa-warning fa-2x"></i></a>
-								<br />
-								<a href="moderation_forum.php?action=warning" title="{L_USERS_WARNING}">{L_USERS_WARNING}</a>
+							<td class="td33P">
+								<a href="moderation_forum.php?action=warning" title="{L_USERS_WARNING}">
+									<i class="fa fa-warning fa-2x"></i>
+									<span class="forum-display-block">{L_USERS_WARNING}</span>
+								</a>
 							</td>
-							<td style="text-align:center;width:33%">
-								<a href="moderation_forum.php?action=punish" title="{L_USERS_PUNISHMENT}"><i class="fa fa-error fa-2x"></i></a>
-								<br />
-								<a href="moderation_forum.php?action=punish" title="{L_USERS_PUNISHMENT}">{L_USERS_PUNISHMENT}</a>
+							<td class="td33P">
+								<a href="moderation_forum.php?action=punish" title="{L_USERS_PUNISHMENT}">
+									<i class="fa fa-error fa-2x"></i>
+									<span class="forum-display-block">{L_USERS_PUNISHMENT}</span>
+								</a>
 							</td>
-							<td style="text-align:center;width:33%">
-								<a href="moderation_forum.php?action=alert" title="{L_ALERT_MANAGEMENT}"><i class="fa fa-forbidden fa-2x"></i></a>
-								<br />
-								<a href="moderation_forum.php?action=alert" title="{L_ALERT_MANAGEMENT}">{L_ALERT_MANAGEMENT}</a>
+							<td class="td33P">
+								<a href="moderation_forum.php?action=alert" title="{L_ALERT_MANAGEMENT}">
+									<i class="fa fa-forbidden fa-2x"></i>
+									<span class="forum-display-block">{L_ALERT_MANAGEMENT}</span>
+								</a>
 							</td>
 						</tr>
-					</thead>
+					</tbody>
 				</table>
 				<br /><br />
 				
@@ -40,7 +45,7 @@
 				-->
 				</script>
 				<form action="moderation_forum{U_ACTION_HISTORY}" method="post" onsubmit="javascript:return Confirm_history();">
-					<table>
+					<table id="table2">
 						<caption>
 							{L_HISTORY}
 						</caption>
@@ -55,7 +60,7 @@
 								<th>
 									{L_USER_CONCERN}
 								</th>
-								<th style="width: 150px">
+								<th class="forum-last-topic">
 									{L_DATE}
 								</th>
 							</tr>
@@ -67,7 +72,7 @@
 									<span class="float-left"><button type="submit" name="valid" value="true" class="submit">{L_DELETE}</button></span> 
 									# ENDIF #
 									# IF C_DISPLAY_LINK_MORE_ACTION #
-									<a href="moderation_forum{U_MORE_ACTION}">{L_MORE_ACTION}</a>
+									<a href="moderation_forum{U_MORE_ACTION}" title="{L_MORE_ACTION}">{L_MORE_ACTION}</a>
 									# ENDIF #
 								</th>
 							</tr>
@@ -75,16 +80,16 @@
 						<tbody>
 						# START action_list # 
 						<tr>
-							<td style="width: 150px">
-								<a href="{action_list.U_USER_PROFILE}" class="{action_list.LEVEL_CLASS}" # IF action_list.C_GROUP_COLOR # style="color:{action_list.GROUP_COLOR}" # ENDIF #>{action_list.LOGIN}</a>
+							<td class="forum-last-topic">
+								<a href="{action_list.U_USER_PROFILE}" class="{action_list.LEVEL_CLASS}" # IF action_list.C_GROUP_COLOR # style="color:{action_list.GROUP_COLOR}" # ENDIF # title="{action_list.LOGIN}">{action_list.LOGIN}</a>
 							</td>
 							<td>
 								{action_list.U_ACTION}
 							</td>
-							<td style="width: 150px">
+							<td class="forum-last-topic">
 								{action_list.U_USER_CONCERN}
 							</td>
-							<td style="width: 150px">
+							<td class="forum-last-topic">
 								{action_list.DATE}
 							</td>
 						</tr>
@@ -115,15 +120,15 @@
 				</script>
 		
 				<form name="alert" action="moderation_forum{U_ACTION_ALERT}" method="post" onsubmit="javascript:return Confirm_alert();">
-					<table>
+					<table id="table2">
 						<thead>
 							<tr>
-								<th style="width:25px;"><input type="checkbox" onclick="if(this.checked) {check_alert(true)} else {check_alert(false)};"></th>
-								<th style="width:20%;">{L_TITLE}</th>
-								<th style="width:20%;">{L_TOPIC}</th>
-								<th style="width:100px;">{L_STATUS}</th>
-								<th style="width:70px;">{L_LOGIN}</th>
-								<th style="width:70px;">{L_TIME}</th>
+								<th class="td25"><input type="checkbox" onclick="if(this.checked) {check_alert(true)} else {check_alert(false)};"></th>
+								<th class="td20P">{L_TITLE}</th>
+								<th class="td20P">{L_TOPIC}</th>
+								<th class="td100">{L_STATUS}</th>
+								<th class="td70">{L_LOGIN}</th>
+								<th class="td70">{L_TIME}</th>
 							</tr>
 						</thead>
 						<tfoot>
@@ -136,22 +141,22 @@
 						<tbody>
 							# START alert_list #
 							<tr>
-								<td style="width:25px;">
+								<td class="td25">
 									<input type="checkbox" name="a{alert_list.ID}">
 								</td>
-								<td style="width:20%;">
+								<td class="td20P">
 									{alert_list.TITLE} {alert_list.EDIT}
 								</td>
-								<td style="width:20%;">
+								<td class="td20P">
 									{alert_list.TOPIC}
 								</td>
-								<td style="width:100px;{alert_list.BACKGROUND_COLOR}">
+								<td class="td100" style="{alert_list.BACKGROUND_COLOR}">
 									{alert_list.STATUS}
 								</td>
-								<td style="width:70px;">
+								<td class="td70">
 									{alert_list.LOGIN}
 								</td>
-								<td style="width:70px;">
+								<td class="td70">
 									{alert_list.TIME}
 								</td>
 							</tr>
@@ -172,7 +177,7 @@
 				
 
 				# IF C_FORUM_ALERT_LIST #
-				<table>
+				<table id="table2">
 					<thead>
 						<tr>
 							<th colspan="2">
@@ -182,7 +187,7 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td style="width:25%;">{L_TITLE}</td>
+							<td class="td25P">{L_TITLE}</td>
 							<td>{TITLE}</td>
 						</tr>
 						<tr>
@@ -213,7 +218,7 @@
 				</table>
 
 				<form action="{U_CHANGE_STATUS}" method="post">
-					<fieldset class="fieldset-submit" style="padding-top:25px;">
+					<fieldset class="fieldset-submit">
 						<legend></legend>
 						<button type="submit" name="valid" value="true" class="submit">{L_CHANGE_STATUS}</button>
 						<input type="hidden" name="token" value="{TOKEN}">
@@ -287,11 +292,11 @@
 					<table>
 						<tr>
 							<td>
-								<span class="float-left">
+								<span>
 									{L_SEARCH_USER}: <input type="text" maxlength="25" id="login" name="login">
 									<span id="search_img"></span>
 								</span>
-								<span style="float:left;margin-left:5px;">
+								<span>
 									<button type="submit" id="search_member" name="search_member" class="submit">{L_SEARCH}</button>
 									<script>
 									<!--
@@ -305,29 +310,29 @@
 						</tr>
 					</table>
 					
-					<table>
+					<table id="table2">
 						<thead>
 							<tr>
-								<th style="width:25%;">{L_LOGIN}</th>
-								<th style="width:25%;">{L_INFO}</th>
-								<th style="width:25%;">{L_ACTION_USER}</th>
-								<th style="width:25%;">{L_PM}</th>
+								<th class="td25P">{L_LOGIN}</th>
+								<th class="td25P">{L_INFO}</th>
+								<th class="td25P">{L_ACTION_USER}</th>
+								<th class="td25P">{L_PM}</th>
 							</tr>
 						</thead>
 						<tbody>
 							# START user_list #
 							<tr>
-								<td style="width:25%;">
-									<a href="{user_list.U_PROFILE}" class="{user_list.LEVEL_CLASS}" # IF user_list.C_GROUP_COLOR # style="color:{user_list.GROUP_COLOR}" # ENDIF #>{user_list.LOGIN}</a>
+								<td class="td25P">
+									<a href="{user_list.U_PROFILE}" class="{user_list.LEVEL_CLASS}" # IF user_list.C_GROUP_COLOR # style="color:{user_list.GROUP_COLOR}" # ENDIF # title="{user_list.LOGIN}">{user_list.LOGIN}</a>
 								</td>
-								<td style="width:25%;">
+								<td class="td25P">
 									{user_list.INFO}
 								</td>
-								<td style="width:25%;">
+								<td class="td25P">
 									{user_list.U_ACTION_USER}
 								</td>
-								<td style="width:25%;">
-									<a href="{user_list.U_PM}" class="basic-button smaller">MP</a>
+								<td class="td25P">
+									<a href="{user_list.U_PM}" class="basic-button smaller" title="MP">MP</a>
 								</td>
 							</tr>
 							# END user_list #
@@ -360,39 +365,49 @@
 				-->
 				</script>
 				<form action="moderation_forum{U_ACTION_INFO}" method="post">
-					<table>
+					<table id="table2">
 						<thead>
 							<tr>
-								<th style="width:30%;">
-									{L_LOGIN}
+								<th>
+									${LangLoader::get_message('description', 'main')}
 								</th>
 								<th>
-									{LOGIN}
+									${LangLoader::get_message('display_name', 'user-common')}
 								</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
+								<td class="td33P">
+									{L_LOGIN}
+								</td>
 								<td>
+									{LOGIN}
+								</td>
+							</tr>
+							<tr>
+								<td class="td33P">
 									{L_PM}
 								</td>
 								<td>
-									<a href="{U_PM}" class="basic-button smaller">MP</a>
+									<a href="{U_PM}" class="basic-button smaller" title="MP">MP</a>
 								</td>
 							</tr>
 							<tr>
-								<td colspan="2">
+								<td class="td33P">
 									<div class="question">{L_ALTERNATIVE_PM}</div>
+								</td>
+								<td>
 									{KERNEL_EDITOR}
-									<textarea name="action_contents" id="action_contents" rows="12" cols="15">{ALTERNATIVE_PM}</textarea>
+									<textarea class="forum-textarea" name="action_contents" id="action_contents">{ALTERNATIVE_PM}</textarea>
 								</td>
 							</tr>
 							<tr>
-								<td>
+								<td class="td33P">
 									<label for="new_info">{L_INFO_EXPLAIN}</label>
 								</td>
 								<td>
-									<span id="action_info">{INFO}</span>
+									<span class="forum-display-block" id="action_info">{INFO}</span>
 									<label><select name="new_info" id="new_info" onchange="change_textarea_level(this.options[this.selectedIndex].value, {REGEX})">
 										{SELECT}
 									</select></label>
@@ -405,15 +420,12 @@
 				</form>
 				# ENDIF #
 
+			</div>
+			<footer>
+				&bull; <a href="index.php" title="{FORUM_NAME}">{FORUM_NAME}</a> &raquo; <a href="moderation_forum.php" title="{L_MODERATION_FORUM}">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}
+			</footer>
+		</article>
 
-				<br /><br />
-			</div>
-			<div class="module-bottom-r"></div>	
-			<div class="module-bottom-l"></div>
-			<div class="module-bottom">
-				&bull; <a href="index.php">{FORUM_NAME}</a> &raquo; <a href="moderation_forum.php">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}
-			</div>
-		</div>
 		
 		# INCLUDE forum_bottom #
 		

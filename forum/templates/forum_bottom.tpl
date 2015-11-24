@@ -1,33 +1,78 @@
-		<div id="forum-bottom">
+		
+		<footer id="forum-bottom">
 			<div class="forum-links">
-				<div class="float-left">
-					&bull; <a href="index.php">{L_FORUM_INDEX}</a> 
-				</div>
-				# IF C_USER_CONNECTED #
-					<div class="right">
-						<i class="fa fa-msg-track"></i> {U_TOPIC_TRACK} &bull;
-						<i class="fa fa-lastview"></i> {U_LAST_MSG_READ} &bull;
-						<i class="fa fa-notread"></i> <span id="nbr_unread_topics2">{U_MSG_NOT_READ}</span>
-						
-						<div style="position:relative;float:left;">
-							<div style="position:absolute;z-index:100;float:left;margin-left:130px;display:none;" id="forum_blockforum_unread2">
+				<nav class="cssmenu cssmenu-group float-left">
+					<ul>
+						<li>
+							<span class="cssmenu-title">
+								<i class="fa fa-globe"></i> <a class="small" href="index.php?" title="{L_FORUM_INDEX}">{L_FORUM_INDEX}</a>
+							</span>
+						</li>
+					</ul>
+				</nav>
+			# IF C_USER_CONNECTED #
+				<nav class="cssmenu cssmenu-group float-right" id="cssmenu-forum-bottom-link">
+					<ul>
+						<li>
+							<span class="cssmenu-title">
+								<i class="fa fa-msg-track"></i> {U_TOPIC_TRACK}
+							</span>
+						</li>
+						<li>
+							<span class="cssmenu-title">
+								<i class="fa fa-lastview"></i> {U_LAST_MSG_READ}
+							</span>
+						</li>
+						<li>
+							<div class="cssmenu-title">
+								<i class="fa fa-notread"></i> <span id="nbr_unread_topics2">{U_MSG_NOT_READ}</span>
+								<div class="forum-refresh">
+									<div style="display:none;" id="forum_blockforum_unread2">
+									</div>
+								</div>
+								<a href="javascript:XMLHttpRequest_unread_topics('2');" onmouseover="forum_hide_block('forum_unread2', 1);" onmouseout="forum_hide_block('forum_unread2', 0);"><i class="fa fa-refresh" id="refresh_unread2"></i></a>
 							</div>
-						</div>
-						<a href="javascript:XMLHttpRequest_unread_topics('2');" onmouseover="forum_hide_block('forum_unread2', 1);" onmouseout="forum_hide_block('forum_unread2', 0);"><i class="fa fa-refresh" id="refresh_unread2"></i></a>
-						
-						&bull;
-						<i class="fa fa-eraser"></i> {U_MSG_SET_VIEW}
-					</div>
+						</li>
+						<li>
+							<span class="cssmenu-title">
+								<i class="fa fa-eraser"></i> {U_MSG_SET_VIEW}						
+							</span>
+						</li>
+				# IF C_FORUM_CONNEXION #
+						<li>
+							<span class="cssmenu-title">
+								<i class="fa fa-sign-out"></i> <a title="{L_DISCONNECT}" class="small" href="${relative_url(UserUrlBuilder::disconnect())}" title="{L_DISCONNECT}">{L_DISCONNECT}</a>
+							</span>
+						</li>
 				# ENDIF #
-				<div class="spacer"></div>
-			</div>
-			# IF C_FORUM_CONNEXION #
-				# IF C_USER_NOTCONNECTED #
-				<div class="forum-title">
-					<a class="small" href="${relative_url(UserUrlBuilder::connect())}"><i class="fa fa-sign-in"></i> {L_CONNECT}</a> <span style="color:#000000;">&bull;</span> <a class="small" href="${relative_url(UserUrlBuilder::registration())}"><i class="fa fa-ticket"></i> {L_REGISTER}</a>
-				</div>
+					</ul>
+				</nav>
+			# ELSE #			
+				# IF C_FORUM_CONNEXION #
+				<nav class="cssmenu cssmenu-group float-right" id="cssmenu-forum-top-link">
+					<ul>
+						<li>
+							<span class="cssmenu-title">
+								<i class="fa fa-sign-in"></i> <a title="{L_CONNECT}" class="small" href="${relative_url(UserUrlBuilder::connect())}" title="{L_CONNECT}">{L_CONNECT}</a>
+							</span>
+						</li>
+						<li>
+							<span class="cssmenu-title">
+								<i class="fa fa-ticket"></i> <a title="{L_REGISTER}" class="small" href="${relative_url(UserUrlBuilder::registration())}" title="{L_REGISTER}">{L_REGISTER}</a>
+							</span>
+						</li>
+					</ul>
+				</nav>
 				# ENDIF #
 			# ENDIF #
+				
+				<div class="spacer"></div>
+			</div>
+			<script>
+				<!--
+				jQuery("#cssmenu-forum-bottom-link").menumaker({ title: " Index ", format: "multitoggle", breakpoint: 768, menu_static: false });
+				-->
+			</script>
 			
 			<div class="forum-online">
 				# IF USERS_ONLINE #
@@ -36,6 +81,7 @@
 					<br />
 					{L_USER} {L_ONLINE} : {USERS_ONLINE}
 				</span>
+				
 				<div class="forum-online-select-cat">
 					# IF SELECT_CAT #
 					<form action="{U_CHANGE_CAT}" method="post">
@@ -75,34 +121,48 @@
 						{L_TOTAL_POST}: <strong>{NBR_MSG}</strong> {L_MESSAGE} {L_DISTRIBUTED} <strong>{NBR_TOPIC}</strong> {L_TOPIC}
 					</span>
 					<span class="float-right">
-						<a href="{PATH_TO_ROOT}/forum/stats.php"><i class="fa fa-bar-chart-o"></i> {L_STATS}</a>
+						<a href="{PATH_TO_ROOT}/forum/stats.php" title="{L_STATS}"><i class="fa fa-bar-chart-o"></i> {L_STATS}</a>
 					</span>
 					<div class="spacer"></div>
 				</div>
 				# ENDIF #
 				
 				# IF C_AUTH_POST #
-				<div class="forum-action">
+				<nav id="cssmenu-forum-action" class="cssmenu cssmenu-group">
+					<ul>
 					# IF C_DISPLAY_MSG #
-					<span id="forum_change_statut">
-						<a href="{PATH_TO_ROOT}/forum/action{U_ACTION_MSG_DISPLAY}#go_bottom">{ICON_DISPLAY_MSG}</a>	<a href="{PATH_TO_ROOT}/forum/action{U_ACTION_MSG_DISPLAY}#go_bottom" class="small">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</a>
-					</span>
-					&bull;
+						<li>
+							<span class="cssmenu-title" id="forum_change_statut">
+								<a href="{PATH_TO_ROOT}/forum/action{U_ACTION_MSG_DISPLAY}#go_bottom" title="{L_EXPLAIN_DISPLAY_MSG_DEFAULT}">{ICON_DISPLAY_MSG}</a>	<a href="{PATH_TO_ROOT}/forum/action{U_ACTION_MSG_DISPLAY}#go_bottom" class="small" title="{L_EXPLAIN_DISPLAY_MSG_DEFAULT}">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</a>
+							</span>
+						</li>
 					# ENDIF #
-					<a href="{PATH_TO_ROOT}/forum/alert{U_ALERT}#go_bottom" class="fa fa-warning"></a> <a href="alert{U_ALERT}#go_bottom" class="small">{L_ALERT}</a>
-					&bull;
-					<span id="forum_track">
-						<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE}#go_bottom">{ICON_TRACK}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE}#go_bottom" class="small">{L_TRACK_DEFAULT}</a>
-					</span>
-					&bull;
-					<span id="forum_track_pm">
-						<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_PM}#go_bottom">{ICON_SUSCRIBE_PM}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_PM}#go_bottom" class="small">{L_SUSCRIBE_PM_DEFAULT}</a>
-					</span>
-					&bull;
-					<span id="forum_track_mail">
-						<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_MAIL}#go_bottom">{ICON_SUSCRIBE}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_MAIL}#go_bottom" class="small">{L_SUSCRIBE_DEFAULT}</a>
-					</span>
-				</div>
-				# ENDIF #
+						<li>
+							<a class="cssmenu-title" href="{PATH_TO_ROOT}/forum/alert{U_ALERT}#go_bottom" title="{L_ALERT}"><i class="fa fa-warning"></i> {L_ALERT}</a>
+						</li>
+						<li>
+							<span class="cssmenu-title" id="forum_track">
+								<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE}#go_bottom" title="{L_TRACK_DEFAULT}">{ICON_TRACK}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE}#go_bottom" class="small" title="{L_TRACK_DEFAULT}">{L_TRACK_DEFAULT}</a>
+							</span>
+						</li>
+						<li>
+							<span class="cssmenu-title" id="forum_track_pm">
+								<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_PM}#go_bottom" title="{L_SUSCRIBE_PM_DEFAULT}">{ICON_SUSCRIBE_PM}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_PM}#go_bottom" class="small" title="{L_SUSCRIBE_PM_DEFAULT}">{L_SUSCRIBE_PM_DEFAULT}</a>
+							</span>
+						</li>
+						<li>
+							<span id="forum_track_mail">
+								<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_MAIL}#go_bottom" title="{L_SUSCRIBE_DEFAULT}">{ICON_SUSCRIBE}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_MAIL}#go_bottom" class="small" title="{L_SUSCRIBE_DEFAULT}">{L_SUSCRIBE_DEFAULT}</a>
+							</span>
+						</li>
+					</ul>
+				</nav>
+			<script>
+				<!--
+				jQuery("#cssmenu-forum-action").menumaker({ title: " Forum action ", format: "multitoggle", breakpoint: 768, menu_static: false });
+				-->
+			</script>
+				#  ENDIF #
 			</div>
-		</div>
+		</footer>
+</section>

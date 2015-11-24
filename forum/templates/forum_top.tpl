@@ -79,48 +79,82 @@
 		}
 		-->
 		</script>
+<section id="module-forum">
+	<header id="forum-top">
 		
-		<div id="forum-top">
-			<div class="forum-title-l"></div>
-			<div class="forum-title-r"></div>
-			<div class="forum-title">
-				<div>
-					<div class="float-left">
-						<h2>{FORUM_NAME}</h2>
-						<div>
-							# IF C_FORUM_CONNEXION #
-								# IF C_USER_NOTCONNECTED #
-								<a class="small" href="${relative_url(UserUrlBuilder::connect())}"><i class="fa fa-sign-in"></i> {L_CONNECT}</a> <span style="color:#000000;">&bull;</span> <a class="small" href="${relative_url(UserUrlBuilder::registration())}"><i class="fa fa-ticket"></i> {L_REGISTER}</a>
-								# ENDIF #
-								# IF C_USER_CONNECTED #
-									<a class="small" href="${relative_url(UserUrlBuilder::disconnect())}"><i class="fa fa-sign-out"></i> {L_DISCONNECT}</a> 
-								# ENDIF #
-							# ENDIF #
-						</div>
-					</div>
-					<div class="spacer"></div>
-				</div>
-			</div>
-			<div class="forum-links">
-				<div class="float-left">
-					&bull; <a href="index.php?">{L_FORUM_INDEX}</a>
-				</div>
-				# IF C_USER_CONNECTED #
-					<div class="right">
-						<i class="fa fa-msg-track"></i> {U_TOPIC_TRACK} &bull;
-						<i class="fa fa-lastview"></i> {U_LAST_MSG_READ} &bull;
-						<i class="fa fa-notread"></i> <span id="nbr_unread_topics">{U_MSG_NOT_READ}</span>
+		<h1>{FORUM_NAME}</h1>
+		
+		<div class="forum-links">
+			<nav itemscope itemtype="http://schema.org/SiteNavigationElement" class="cssmenu cssmenu-group float-left">
+				<ul>
+					<li>
+						<span class="cssmenu-title">
+							<i class="fa fa-globe"></i> <a class="small" href="index.php?" title="{L_FORUM_INDEX}">{L_FORUM_INDEX}</a>
+						</span>
+					</li>
+				</ul>
+			</nav>
+		# IF C_USER_CONNECTED #
+			<nav itemscope itemtype="http://schema.org/SiteNavigationElement" class="cssmenu cssmenu-group float-right" id="cssmenu-forum-top-link">
+				<ul>
+					<li>
+						<span class="cssmenu-title">
+							<i class="fa fa-msg-track"></i> {U_TOPIC_TRACK}
+						</span>
 						
-						<div style="position:relative;float:left;">
-							<div style="position:absolute;z-index:100;float:left;margin-left:130px;display:none;" id="forum_blockforum_unread">
+					</li>
+					<li>
+						<span class="cssmenu-title">
+							<i class="fa fa-lastview"></i> {U_LAST_MSG_READ}
+						</span>
+					</li>
+					<li>
+						<div class="cssmenu-title">
+							<i class="fa fa-notread"></i> <span id="nbr_unread_topics">{U_MSG_NOT_READ}</span>
+							<a href="javascript:XMLHttpRequest_unread_topics('');" onmouseover="forum_hide_block('forum_unread', 1);" onmouseout="forum_hide_block('forum_unread', 0);"><i class="fa fa-refresh" id="refresh_unread"></i></a>
+							<div class="forum-refresh">
+								<div id="forum_blockforum_unread" style="display:none;"></div>
 							</div>
 						</div>
-						<a href="javascript:XMLHttpRequest_unread_topics('');" onmouseover="forum_hide_block('forum_unread', 1);" onmouseout="forum_hide_block('forum_unread', 0);"><i class="fa fa-refresh" id="refresh_unread"></i></a>
-						
-						&bull;
-						<i class="fa fa-eraser"></i> {U_MSG_SET_VIEW}
-					</div>
-				# ENDIF #
-				<div class="spacer"></div>
-			</div>
+					</li>
+					<li>
+						<span class="cssmenu-title">
+							<i class="fa fa-eraser"></i> {U_MSG_SET_VIEW}						
+						</span>
+					</li>
+			# IF C_FORUM_CONNEXION #
+					<li>
+						<span class="cssmenu-title">
+							<i class="fa fa-sign-out"></i> <a title="{L_DISCONNECT}" class="small" href="${relative_url(UserUrlBuilder::disconnect())}">{L_DISCONNECT}</a>
+						</span>
+					</li>
+			# ENDIF #
+				</ul>
+			</nav>
+		# ELSE #			
+			# IF C_FORUM_CONNEXION #
+			<nav itemscope itemtype="http://schema.org/SiteNavigationElement" class="cssmenu cssmenu-group float-right" id="cssmenu-forum-top-link">
+				<ul>
+					<li>
+						<span class="cssmenu-title">
+							<i class="fa fa-sign-in"></i> <a title="{L_CONNECT}" class="small" href="${relative_url(UserUrlBuilder::connect())}">{L_CONNECT}</a>
+						</span>
+					</li>
+					<li>
+						<span class="cssmenu-title">
+							<i class="fa fa-ticket"></i> <a title="{L_REGISTER}" class="small" href="${relative_url(UserUrlBuilder::registration())}">{L_REGISTER}</a>
+						</span>
+					</li>
+				</ul>
+			</nav>
+			# ENDIF #
+		# ENDIF #
+			
+			<div class="spacer"></div>
 		</div>
+		<script>
+			<!--
+			jQuery("#cssmenu-forum-top-link").menumaker({ title: " Index ", format: "multitoggle", breakpoint: 768, menu_static: false });
+			-->
+		</script>
+	</header>
