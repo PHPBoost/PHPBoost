@@ -172,12 +172,12 @@ a.read-more {
 	margin: 1% 0.5%;
 }
 
-/* ---- Affiche 2 blocs c么te聽a c么te ---- */
+/* ---- Affiche 2 blocs c魌e燼 c魌e ---- */
 .medium-block {
 	width: 49.00%;
 }
 
-/* ---- Affiche 3 blocs c么te聽a c么te ---- */
+/* ---- Affiche 3 blocs c魌e燼 c魌e ---- */
 .small-block {
 	width: 32.33%;
 }
@@ -664,6 +664,61 @@ body.dragging, body.dragging * {
 	padding: 10px 0;
 }
 
+@media (max-width: 768px) {
+	.message-container {
+		border: 1px solid #d1d2d4;
+		border-radius: 4px;
+		padding: 4px;
+	}
+	.message-user-infos {
+		width:80px;
+	}
+	.message-user-infos img {
+		max-width: 40px;
+	}
+	.message-date {
+		margin-left: 90px;
+	}
+	.message-date span.actions {
+		float: none;
+		display: block;
+		text-align: right;
+		margin-bottom: 20px;
+	}
+	.message-message {
+		clear: both;
+		margin: 0;
+	}
+
+	.message-message::before {
+		content: "";
+		top: auto;
+		bottom: 100%;
+		left: 204px;
+		position: absolute;
+		border-width: 15px;
+		border-color: transparent;
+		border-bottom-color: #D6DEE7;
+		border-style: solid;
+		display: block;
+		width: 0;
+	}
+	
+	.message-message::after {
+		content: "";
+		top: auto;
+		bottom: 100%;
+		left: 205px;
+		position: absolute;
+		border-width: 14px;
+		border-color: transparent;
+		border-bottom-color: #ECEFFA;
+		border-style: solid;
+		display: block;
+		width: 0;
+	}
+}
+
 /* --- Moderation des messages --- */
 .message-moderate {
 	background-color: #ECEFFA;
@@ -810,7 +865,6 @@ table.announce-legend td {
 	text-align: center;
 	margin-bottom: 15px;
 }
-
 
 /* -- Error 403/404 -- */ 
 /* ------------------- */
