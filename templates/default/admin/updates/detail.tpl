@@ -28,6 +28,16 @@
 			# ELSE #
 				<table id="table">
 					<caption>{L_APP_UPDATE_MESSAGE}</caption>
+					<thead>
+						<tr>
+							<th>
+								${LangLoader::get_message('last_update', 'admin')}
+							</th>
+							<th>
+								${LangLoader::get_message('description', 'admin-langs-common')}
+							</th>
+						</tr>
+					</thead>
 					<tbody>
 						<tr>
 							<td style="vertical-align:top;padding-right:10px;">
