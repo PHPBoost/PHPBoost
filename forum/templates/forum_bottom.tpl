@@ -116,7 +116,7 @@
 				# ENDIF #
 			
 				# IF C_TOTAL_POST #
-				<div style="margin-top:6px;">
+				<div>
 					<span class="float-left">
 						{L_TOTAL_POST}: <strong>{NBR_MSG}</strong> {L_MESSAGE} {L_DISTRIBUTED} <strong>{NBR_TOPIC}</strong> {L_TOPIC}
 					</span>
