@@ -73,13 +73,14 @@
 						});
 					</script>
 					<br /><br />
-					<table>
+					<table id="table">
 						<thead>
 							<tr>
 								<th>
 									<input type="checkbox" id="checkall" onclick="check_convers(this.checked, 'd');">
 								</th>
-								<th colspan="2">
+								<th></th>
+								<th>
 									{L_TITLE}
 								</th>
 								<th>

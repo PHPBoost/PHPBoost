@@ -4,7 +4,7 @@
 	</header>
 	<div class="content">
 		# IF C_ARE_GROUPS #
-		<table>
+		<table id="table2">
 			<tr>
 				<td class="valign-top">
 					# INCLUDE SELECT_GROUP #

@@ -6,7 +6,7 @@
 	</tr>
 </table>
 
-<table>
+<table id="table">
 	<caption>
 		{GROUP_NAME}
 		# IF C_ADMIN #

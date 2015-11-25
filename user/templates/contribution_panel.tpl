@@ -9,7 +9,7 @@
 			# IF C_NO_CONTRIBUTION #
 			<div class="success">{L_NO_CONTRIBUTION_TO_DISPLAY}</div>
 			# ELSE #
-			<table>
+			<table id="table">
 				<thead>
 					<tr>
 						<th>

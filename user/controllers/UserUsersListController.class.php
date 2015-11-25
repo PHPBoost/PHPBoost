@@ -50,7 +50,7 @@ class UserUsersListController extends AbstractController
 
 	private function build_table()
 	{
-		$table_model = new SQLHTMLTableModel(DB_TABLE_MEMBER, __CLASS__, array(
+		$table_model = new SQLHTMLTableModel(DB_TABLE_MEMBER, 'table', array(
 			new HTMLTableColumn($this->lang['display_name'], 'display_name'),
 			new HTMLTableColumn($this->lang['email']),
 			new HTMLTableColumn($this->lang['registration_date'], 'registration_date'),
