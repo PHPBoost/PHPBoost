@@ -768,6 +768,7 @@ div#release {
 	text-align: center;
 	margin: auto;
 	width: 300px;
+	overflow: hidden;
 }
 
 .unprocessed-contribution div {
