@@ -84,8 +84,11 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 				}
 				
 				$user_accounts_config = UserAccountsConfig::load();
-				$user_avatar = AppContext::get_session()->get_cached_data('user_avatar', '/templates/'. AppContext::get_current_user()->get_theme() .'/images/'. $user_accounts_config->get_default_avatar_name());
-				
+				$user_avatar = AppContext::get_session()->get_cached_data('user_avatar');
+				if (empty($user_avatar))
+				{
+					$user_avatar = '/templates/'. AppContext::get_current_user()->get_theme() .'/images/'. $user_accounts_config->get_default_avatar_name();
+				}
 				$total_alert = $user->get_unread_pm() + $contribution_number + ($user->check_level(User::ADMIN_LEVEL) ? AdministratorAlertService::get_number_unread_alerts() : 0);
 				
 				$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
