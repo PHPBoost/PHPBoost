@@ -501,6 +501,7 @@ div.message-helper-small {
 
 .upload-elements-container {
 	margin: 10px 0 0 20px;
+	overflow: hidden;
 }
 
 .upload-elements-file,
