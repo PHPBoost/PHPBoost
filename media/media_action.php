@@ -206,7 +206,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 			'WIDTH' => $media['width'],
 			'HEIGHT' => $media['height'],
 			'U_MEDIA' => $media['url'],
-			'DESCRIPTION' => stripslashes(FormatingHelper::unparse($media['contents'])),
+			'DESCRIPTION' => FormatingHelper::unparse(stripslashes($media['contents'])),
 			'APPROVED' => ($media['infos'] & MEDIA_STATUS_APROBED) !== 0 ? ' checked="checked"' : '',
 			'C_APROB' => ($media['infos'] & MEDIA_STATUS_APROBED) === 0,
 			'JS_ID_MUSIC' => '"' . implode('", "', $js_id_music) . '"',
