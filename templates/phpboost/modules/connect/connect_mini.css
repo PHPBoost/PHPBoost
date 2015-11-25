@@ -169,11 +169,12 @@ i.alert {
 		padding: 6px 2px 0px 0px;
 		border-right: 1px solid rgba(255, 255, 255, 0.20);
 		color: #FFFFFF;
-		transition: opacity 0.5s ease-out;
+		transition: 0.5s ease-out;
+		transition-delay: 0.3s;
 	}
 	.connect-menu-container:hover {
 		background-color: #373737;
-		transition: opacity 0.3s ease-out;
+		transition: 0.3s ease-out;
 	}
 
 	.connect-disconnect {
@@ -190,19 +191,21 @@ i.alert {
 	#connect-menu ul.connect-connected {
 		position: absolute;
 		opacity: 0;
-		left: -9999px;
+		visibility: hidden;
+		top: 28px;
+		left: -220px;
 		width: 280px;
 		background-color: #373737;
 		padding: 5px;
 		text-align: left;
-		transition: opacity 0.3s ease-out;
+		transition: 0.3s ease-out;
+		transition-delay: 0.3s;
 	}
 
 	#connect-menu li.connect-menu-container:hover ul.connect-connected {
-		top: 28px;
-		left: -220px;
-		transition: opacity 0.3s ease-out;
+		transition: 0.5s ease-out;
 		opacity: 1;
+		visibility: visible;
 	}
 
 	ul.connect-connected > li {
