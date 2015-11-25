@@ -112,7 +112,7 @@ class AdminGeneralConfigController extends AdminController
 		
 		$fieldset->add_field(new FormFieldFree('picture_theme', $this->lang['general-config.theme_picture'],
 			'<a href="'. $this->get_picture_theme() .'" data-lightbox="theme" data-rel="lightcase:collection" id="preview_theme" title="' . $this->lang['general-config.theme_picture'] . '">
-				<img id="img_theme" src="'. $this->get_picture_theme() .'" alt="' . $this->lang['general-config.theme_picture'] . '" style="max-height:180px;max-width:180px;" /></br>
+				<img id="img_theme" src="'. $this->get_picture_theme() .'" alt="' . $this->lang['general-config.theme_picture'] . '" class="admin-theme-img" /></br>
 				('. $this->lang['general-config.theme_preview_click'] .')
 			</a>'
 		));
