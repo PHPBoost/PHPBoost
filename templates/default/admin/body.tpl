@@ -77,7 +77,7 @@
 		
 		<footer id="footer">
 			<span>
-				{L_POWERED_BY} <a style="font-size:10px" href="http://www.phpboost.com" title="PHPBoost">PHPBoost</a> {L_PHPBOOST_RIGHT}
+				{L_POWERED_BY} <a class="powered-by" href="http://www.phpboost.com" title="PHPBoost">PHPBoost</a> {L_PHPBOOST_RIGHT}
 			</span>	
 			# IF C_DISPLAY_BENCH #
 				<span>

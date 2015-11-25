@@ -32,11 +32,11 @@
 				<thead>
 					<tr>
 						# IF C_ALL #
-						<th style="width:100px;">{L_TYPE}</td>
+						<th class="td100">{L_TYPE}</td>
 						# ENDIF #
 						<th>{L_DESCRIPTION}</td>
-						<th style="width:75px;">{L_PRIORITY}</td>
-						<th style="width:150px;">{L_UPDATE_DOWNLOAD}</td>
+						<th class="td75">{L_PRIORITY}</td>
+						<th class="td150">{L_UPDATE_DOWNLOAD}</td>
 					</tr>
 				</thead>
 				<tbody>
@@ -47,7 +47,7 @@
 						# ENDIF #
 						<td>
 							{L_NAME} : <strong>{apps.name}</strong> - {L_VERSION} : <strong>{apps.version}</strong>
-							<div style="padding:5px;padding-top:10px;text-align:justify;">{apps.short_description}</div>
+							<div class="update-desc">{apps.short_description}</div>
 							<p><a href="detail.php?identifier={apps.identifier}" title="{L_MORE_DETAILS}" class="small">{L_DETAILS}</a></p>
 						</td>
 						<td>{apps.L_PRIORITY}</td>
@@ -65,7 +65,7 @@
 			# ELSE #
 				<div class="success message-helper-small">{L_NO_AVAILABLES_UPDATES}</div>
 			# ENDIF #
-			<p class="center" style="margin-top:50px;">
+			<p class="center">
 				<a href="{U_CHECK}"><i class="fa fa-download"></i></a> <a href="{U_CHECK}">{L_CHECK_FOR_UPDATES_NOW}</a>
 			</p>
 		# ENDIF #

@@ -532,6 +532,28 @@ div[class*="admin-index"] h2 {
 		margin: 20px 20px 0;
 	}
 }
+
+/* --- configuration generale --- */
+
+.admin-theme-img {
+	max-height: 180px;
+	max-width: 180px;
+}
+
+/* --- updates --- */
+
+@media (min-width: 981px) {
+	.td150 	{ width: 150px; }
+	.td100 	{ width: 100px; }
+	.td75	{ width: 75px; }
+}
+
+.update-desc {
+	padding: 5px;
+	padding-top: 10px;
+	text-align: justify;
+}
+
 /* --- database =============================================================== */
 
 .db-restore {
@@ -913,6 +935,11 @@ a.upload-recent-file {
 .file-move-container {
 	margin: 5px 0;
 	text-align: center;
+}
+
+.file-move-container img {
+	width: 100px;
+	height: auto;
 }
 
 @media (min-width:769px){

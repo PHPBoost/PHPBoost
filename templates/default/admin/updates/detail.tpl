@@ -40,12 +40,12 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td style="vertical-align:top;padding-right:10px;">
+							<td class="valign-top">
 								<div class="block-container">
 									<div class="block-top"><span>{APP_NAME} - {APP_VERSION} ({APP_LANGUAGE})</span></div>
 									<div class="block-contents">
 										{APP_DESCRIPTION}
-										<p class="smaller" style="text-align:right;margin:0">{APP_PUBDATE}</p>
+										<p class="smaller">{APP_PUBDATE}</p>
 									</div>
 								</div>
 								# IF C_NEW_FEATURES #
@@ -71,7 +71,7 @@
 									</div>
 								</div>
 							</td>
-							<td style="vertical-align:top;min-width:200px;">
+							<td class="valign-top">
 								<div class="block-container">
 									<div class="block-top"><span>{L_DOWNLOAD}</span></div>
 									<div class="block-contents">
