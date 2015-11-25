@@ -1,144 +1,325 @@
-#connect-menu { 
-	display: inline-block; 
-	float: right;
+/*--------------------------------------
+			connect_mini.css
+			Module connect
+--------------------------------------*/
+
+/* classe generique */
+#connect-menu ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
 }
 
-#connect-menu div.horizontal-fieldset {
-	text-align: right;
-	padding: 0px;
-}
-
-#connect-menu div.horizontal-fieldset { margin: 0px; }
-
-#connect-menu ul { list-style: none; }
-
-#connect-menu div.horizontal-fieldset form { 
-	display: inline-block;
-	margin: 0px auto;
-	width: 157px;
-	text-align: center;
-}
-
-#connect-menu div.horizontal-fieldset form input.connect-form { 
-	display: block;
-	margin: 3px auto 5px auto;
-}
-#connect-menu div.horizontal-fieldset form > button { margin-top: 5px; }
-
-#connect-menu div.horizontal-fieldset > ul {
-	margin: auto;
-	padding: 0px;
-}
-
-#connect-menu div.horizontal-fieldset ul li,
-#connect-menu div.horizontal-fieldset ul li a { color: #FFFFFF; }
-
-#connect-menu input.submit{ margin-left: 23px; }
-
-#connect-menu li { position: relative; }
-
-#connect-menu div.horizontal-fieldset > ul > li > a {
-	display: inline-block;
-	height: 32px;
-	padding: 12px 12px 0px 12px;
+#connect-menu a {
+	color: #DEDEDE;
 	text-decoration: none;
 }
 
-#connect-menu div.horizontal-fieldset > ul > li {
-	display: inline-block;
-	float: left;
-	height: 44px;
+i.alert {
+	color: #9F3F0E;
 }
 
-#connect-menu div.horizontal-fieldset > ul > li.connect-login { 
-	background: #2A6730;
-	background: linear-gradient(to bottom, #2A6730 0%, #337435 37%, #337435 61%, #245933 100%);
-	background: -ms-linear-gradient(top, #2A6730 0%, #337435 37%, #337435 61%, #245933 100%);
-}
-#connect-menu div.horizontal-fieldset > ul > li.connect-alert { 
-	background: #702822;
-	background: linear-gradient(to bottom, #702822 0%, #7e2f2f 37%, #7e2f2f 61%, #602b1b 100%);
-	background: -ms-linear-gradient(top, #702822 0%, #7e2f2f 37%, #7e2f2f 61%, #602b1b 100%);
+.fa-connect:before {
+	content: "\f085";
 }
 
-#connect-menu div.horizontal-fieldset li:hover > ul,
-#connect-menu div.horizontal-fieldset li:hover > .sub-menu { 
-	opacity: 1;
-	visibility: visible;
-	transition: visibility 0s ease-out, opacity 0.3s ease-out ;
-	-webkit-transition: visibility 0s ease-out, opacity 0.3s ease-out ;
+#connect-menu .horizontal-fieldset {
+	margin: 0px auto;
+	min-height: 28px;
+	max-width: 1024px;
 }
 
-#connect-menu div.horizontal-fieldset li > ul,
-#connect-menu div.horizontal-fieldset li > .sub-menu {
-	position: absolute;
-	background: #353535;
-	top: 43px;
-	left: -70px;
-	height: 120px;
-	width: 170px;
-	z-index: 25;
-	padding-top: 10px;
-	border-top: 3px solid #2E5C35;
-	border-bottom: 2px solid #99B1CB;
-	visibility: hidden;
-	opacity: 0;
-	transition: visibility 0.3s ease-out, opacity 0.4s ease-out ;
-	-webkit-transition: visibility 0.3s ease-out, opacity 0.4s ease-out ;
+#connect-menu div.connect-content {
+	text-align: center;
+	margin: auto;
 }
 
-#connect-menu div.horizontal-fieldset li > ul.connect-connected {
-	left: -96px;
-	width: 285px;
-	text-align: left;
-}
-
-ul.connect-connected i { 
-	text-align: center; 
-	width: 15px;
-}
-
-#connect-menu div.horizontal-fieldset > ul > li.connect-alert > ul { border-top: 3px solid #602B1B; }
-#connect-menu div.horizontal-fieldset > ul > li.connect-alert > a { padding-right: 0px; }
-#connect-menu div.horizontal-fieldset > ul > li.connect-alert > span { 
-	margin-right: 12px;
-	font-size: 12px; 
-}
-
-#connect-menu div.horizontal-fieldset ul li ul li { padding-left: 100px; }
-
-img.connect-avatar{
-	float: left;
-	padding: 5px;	
-}
-
-div.connect-welcome {
+/* affichage du message de bienvenue */
+.connect-welcome {
 	overflow: hidden;
-	float: right;
 	text-align: right;
-	color: #BBBBBB;
-	font-size: 12px;
+	color: #E3F3F3;
 	font-style: Italic;
-	padding: 13px 10px 0px 0px;
+	padding: 7px 10px 0px 5px;
+	height: 100%;
+	float: left;
 }
-div.connect-welcome a,
-div.connect-welcome a:hover {
-	font-style: normal;
-	font-weight: bold;
+
+.connect-welcome .modo,
+.connect-welcome .admin,
+.connect-welcome .member {
+	color: #E0F3FF;
+	font-weight: normal;
+	text-shadow: rgba(0, 0, 0, 0.1) 0 1px 1px;
 	text-transform: capitalize;
 }
-div.connect-welcome a.member { color: #EFEFEF; }
 
-li.connect-subscribe,
-li.connect-disconnect { 
-	border-bottom: 3px solid #353535;
-	transition: border 1s ease-out;
-    -webkit-transition: border 1s ease-out;
+/* Bouton responsive */
+.js-menu-button {
+	display: none;
 }
 
-li.connect-subscribe:hover,
-li.connect-disconnect:hover {
-	border-bottom: 3px solid #336397;
-	transition: border 0.3s ease-out;
-    -webkit-transition: border 0.3s ease-out;
+@media (max-width: 768px) {
+	.js-menu-button {
+		display: inline-block;
+		padding: 5px 10px 5px 10px;
+		float: right;
+	}
+
+	.disconnected .js-menu-button {
+		float: none;
+	}
+}
+
+/* Bouton du mode deconnecte */
+#connect-menu button {
+	transition: 1s ease-out;
+}
+
+#connect-menu button#btn-connect:hover,
+#connect-menu button#btn-register:hover {
+	transition: 1s ease-out;
+	color: #EFEFEF;
+}
+
+#connect-menu button#btn-connect {
+	background-color: #168661;
+	border-color: #096A4A;
+	color: #7CCAB0;
+}
+#connect-menu button#btn-connect:hover {
+	background-color: #2F9674;
+	border-color: #168661;
+}
+
+#connect-menu button#btn-register {
+	background-color: #1E5083;
+	border-color: #1E5083;
+	color: #81A4C8;
+}
+#connect-menu button#btn-register:hover {
+	background-color: #366493;
+	border-color: #1E5083;
+}
+
+@media (min-width: 769px) {
+	#connect-menu button {
+		margin-top: 1px;
+	}
+}
+
+@media (max-width: 768px) {
+	#connect-menu.active button.submit {
+		display: block;
+		padding: 10px 20px;
+		margin: 10px auto 0 auto;
+		width: 70%;
+	}
+
+	#connect-menu button {
+		display: block;
+	}
+}
+
+/* Mot de passe oublie */ 
+@media (min-width: 769px) {
+	.forgot-pass {
+		display: inline-block;
+		padding: 0px 0px 0px 5px;
+		vertical-align: middle;
+		color: #E0F3FF;
+	}
+	.forgot-pass:hover {
+		color: #F1F1F1;
+	}
+}
+
+@media (max-width: 768px) {
+	#connect-menu.disconnected .forgot-pass {
+		padding: 20px;
+		display: block;
+	}
+	#connect-menu.disconnected .forgot-pass:hover {
+		text-decoration: underline;
+	}
+}
+
+
+
+/* Affichage des elements */
+@media (min-width: 769px) {
+	#connect-menu ul.connect-content {
+		text-align: center;
+		float: right;
+	}
+
+	ul.connect-content > li {
+		border-left: 1px solid rgba(255, 255, 255, 0.30);
+		border-right: 1px solid rgba(255, 255, 255, 0.20);
+	}
+
+	ul.connect-content > li:first-child { border-left: none;  }
+	ul.connect-content > li:last-child  { border-right: none; }
+
+	.connect-menu-container {
+		position: relative;
+		float:left;
+		height: 28px;
+		width: 35px;
+		padding: 6px 2px 0px 0px;
+		border-right: 1px solid rgba(255, 255, 255, 0.20);
+		color: #FFFFFF;
+		transition: opacity 0.5s ease-out;
+	}
+	.connect-menu-container:hover {
+		background-color: #373737;
+		transition: opacity 0.3s ease-out;
+	}
+
+	.connect-disconnect {
+		border-left: 1px solid rgba(255, 255, 255, 0.30);
+		height: 28px;
+		float: left;
+	}
+
+	.connect-disconnect i {
+		padding: 6px 10px 5px 10px;
+		color: #FFFFFF;
+	}
+
+	#connect-menu ul.connect-connected {
+		position: absolute;
+		opacity: 0;
+		left: -9999px;
+		width: 280px;
+		background-color: #373737;
+		padding: 5px;
+		text-align: left;
+		transition: opacity 0.3s ease-out;
+	}
+
+	#connect-menu li.connect-menu-container:hover ul.connect-connected {
+		top: 28px;
+		left: -220px;
+		transition: opacity 0.3s ease-out;
+		opacity: 1;
+	}
+
+	ul.connect-connected > li {
+		padding: 2px 0;
+	}
+
+	ul.connect-connected a {
+		color: #FFFFFF;
+	}
+
+	.connect-avatar {
+		height: 100px;
+		width: 90px;
+		margin: 5px 5px 0px 0px;
+		float: left;
+	}
+
+	.connect-avatar img {
+		overflow: visible;
+	}
+
+	#connect-menu form {
+		display: inline-block;
+	}
+}
+
+@media (max-width: 768px) {
+	#connect-menu.disconnected .horizontal-fieldset {
+		text-align: center;
+	}
+
+	.connect-content {
+		display: none;
+	}
+
+ 	#connect-menu.active .fa-bars:before {
+		content: "\f00d";
+	}
+
+	#connect-menu.active .connect-content {
+		display: block;
+		padding-top: 28px;
+	}
+	#connect-menu.active .fa-connect {
+		display: none;
+	}
+
+	#connect-menu.active li {
+		width: 100%;
+		text-align: left;
+		padding-top: 5px;
+	}
+
+	#connect-menu.active .connect-connected {
+		border-top: 1px solid rgba(255, 255, 255, 0.15);
+	}
+
+	#connect-menu.active .connect-connected span,
+	#connect-menu.active .connect-content .connect-welcome {
+		display: none;
+	}
+	
+	#connect-menu.active .connect-connected li:hover,
+	#connect-menu.active .connect-disconnect a:hover {
+		background-color: rgba(255, 255, 255, 0.10);
+	}
+	
+	#connect-menu.active .connect-connected li a,
+	#connect-menu.active .connect-disconnect a {
+		display: block;
+		padding: 7px 5px 7px 10px;
+	}
+
+	#connect-menu.active .connect-connected li a i.fa {
+		vertical-align: top;
+	}
+	
+	#connect-menu.active .connect-content form {
+		padding: 0px 10px;
+	}
+
+	#connect-menu.active .connect-content input {
+		display: inline-block;
+		padding: 10px 20px;
+	}
+
+	#connect-menu.active .connect-content input#autoconnect {
+		margin-bottom: 4px;
+	}
+
+	#connect-menu.active .connect-content form span {
+		padding: 5px 0px 0px 5px;
+	}
+
+	#connect-menu.active .connect-content input#login,
+	#connect-menu.active .connect-content input#password {
+		width: 100%;
+		margin-bottom: 10px;
+	}
+}
+
+/* Partie Sociale */
+#connect-menu a.fb 		{ color: #3B5998; }
+#connect-menu a.google 	{ color: #D8432E; }
+#connect-menu a.twitter { color: #5EA9DD; }
+
+@media (max-width: 768px) {
+	#connect-menu a.social-connect {
+		color: #DEDEDE;
+		padding: 5px;
+		display: block;
+		text-align: center;
+		margin-bottom: 10px;
+		border-radius:4px;
+	}
+	
+	#connect-menu a.fb 		{ background: #3B5998; }
+	#connect-menu a.google 	{ background: #D8432E; }	
+	#connect-menu a.twitter { background: #5EA9DD; }
 }

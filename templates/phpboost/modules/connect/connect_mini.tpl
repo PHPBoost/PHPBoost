@@ -17,74 +17,85 @@
 	-->
 	</script>
 # ENDIF #
+<script>
+	<!--
+	function open_submenu(myid)
+	{
+		jQuery('#' + myid).toggleClass('active');
+	}
+	-->
+</script>
 
-# IF C_VERTICAL #
-
-# ELSE #
-	# IF C_USER_NOTCONNECTED #
-	<div id="connect-menu">
-		<div class="horizontal-fieldset">
-			<ul>
-				<li class="connect-login"><a href='/user/?url=/connect'>{L_CONNECT}</a>
-					<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();" class="sub-menu">
-						<input type="text" id="login" name="login" class="connect-form" placeholder="{L_PSEUDO}" maxlength="25">
-						<input type="password" id="password" name="password" class="connect-form" placeholder="{L_PASSWORD}" maxlength="30">
-						<input checked="checked" type="checkbox" name="auto">
-						<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}">
-						<input type="hidden" name="token" value="{TOKEN}">
-						<button type="submit" name="connect" value="true" class="submit">{L_CONNECT}</button>
-					</form>
-				</li>
-				<li class="connect-subscribe">
-					<a href='${relative_url(UserUrlBuilder::registration())}'>{L_REGISTER}</a>
-				</li>
-			</ul>
-		</div>
-	</div>
-	# ELSE #
-	<div id="connect-menu">
-		<div class="horizontal-fieldset">
-			<ul>
-				# IF NUMBER_TOTAL_ALERT #
-				<li class="connect-login connect-alert"><a href="${relative_url(UserUrlBuilder::home_profile())}">{L_PRIVATE_PROFIL}</a> <span style="font-size:11px;margin-right:12px;">({NUMBER_TOTAL_ALERT})</span> 
-				# ELSE #
-				<li class="connect-login"><a href="${relative_url(UserUrlBuilder::home_profile())}">{L_PRIVATE_PROFIL}</a>
+# IF C_USER_NOTCONNECTED #
+<div id="connect-menu" class="disconnected">
+	<div class="horizontal-fieldset">
+		<a href="" class="js-menu-button" onclick="open_submenu('connect-menu');return false;" title="{L_CONNECT}"><i class="fa fa-sign-in"></i> {L_CONNECT}</a>
+		<div class="connect-content">
+			<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();">
+				<input type="text" id="login" name="login" placeholder="{L_PSEUDO}" class="connect_form">
+				<input type="password" id="password" name="password" class="connect_form" placeholder="{L_PASSWORD}">
+				<input checked="checked" id="autoconnect" type="checkbox" name="autoconnect" title="{L_AUTOCONNECT}"><span class="hidden-large-screens">{L_AUTOCONNECT}</span>
+				<input type="hidden" name="redirect" value="{SITE_REWRITED_SCRIPT}">
+				<input type="hidden" name="token" value="{TOKEN}">
+				<button type="submit" id="btn-connect" name="authenticate" value="internal" class="submit">{L_CONNECT}</button>
+			</form>
+			# IF C_USER_REGISTER #
+				<form action="${relative_url(UserUrlBuilder::registration())}" method="post">
+					<button type="submit" id="btn-register" name="register" value="true" class="submit">{L_REGISTER}</button>
+					<input type="hidden" name="token" value="{TOKEN}">
+				</form>
+				# IF C_FB_AUTH_ENABLED #
+				<a class="social-connect fb" href="${relative_url(UserUrlBuilder::connect('fb'))}" title="${LangLoader::get_message('facebook-connect', 'user-common')}"><i class="fa fa-facebook-square biggest"></i><span>&nbsp; ${LangLoader::get_message('facebook-connect', 'user-common')}</span></a>
 				# ENDIF #
-					<ul class="connect-connected">
-						<img src="{U_AVATAR_IMG}" alt="avatar" title="Avatar" width="90px" class="connect-avatar"/>
-						<li>
-							<i class="fa fa-user"></i> 
-							<a href="${relative_url(UserUrlBuilder::home_profile())}" class="small"> {L_PRIVATE_PROFIL}</a>
-						</li>
-						<li>
-							<i class="fa fa-envelope# IF C_HAS_PM # blink# ENDIF #"></i>
-							<a href="{U_USER_PM}" class="small"> {L_NBR_PM}</a>
-						</li>
-						# IF C_ADMIN_AUTH #
-						<li>
-							<i class="fa fa-wrench# IF C_UNREAD_ALERT # blink# ENDIF #"></i> 
-							<a href="${relative_url(UserUrlBuilder::administration())}" class="small"> {L_ADMIN_PANEL}# IF C_UNREAD_ALERT # ({NUMBER_UNREAD_ALERTS})# ENDIF #</a> 
-						</li>
-						# ENDIF #
-						# IF C_MODERATOR_AUTH #
-						<li>
-							<i class="fa fa-legal"></i>
-							<a href="${relative_url(UserUrlBuilder::moderation_panel())}" class="small"> {L_MODO_PANEL}</a>
-						</li>
-						# ENDIF #
-						<li>
-							<i class="fa fa-file-text# IF C_UNREAD_CONTRIBUTION # blink# ENDIF #"></i>
-							<a href="${relative_url(UserUrlBuilder::contribution_panel())}" class="small"> {L_CONTRIBUTION_PANEL}# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION # ({NUMBER_UNREAD_CONTRIBUTIONS})# ENDIF #</a>
-						</li>
-	
-					</ul>
-				</li>
-				<li class="connect-disconnect">
-					<a href="${relative_url(UserUrlBuilder::disconnect())}" class="small"><i class="fa fa-sign-out"></i> {L_DISCONNECT}</a>
-				</li>
-			</ul>
+				# IF C_GOOGLE_AUTH_ENABLED #
+				<a class="social-connect google" href="${relative_url(UserUrlBuilder::connect('google'))}" title="${LangLoader::get_message('google-connect', 'user-common')}"><i class="fa fa-google-plus-square biggest"></i><span>&nbsp; ${LangLoader::get_message('google-connect', 'user-common')}</span></a>
+				# ENDIF #
+			# ENDIF #
+			<a class="forgot-pass small" href="${relative_url(UserUrlBuilder::forget_password())}">{L_FORGOT_PASS}</a>
 		</div>
 	</div>
-	<div class="connect-welcome">${LangLoader::get_message('welcome', 'user-common')}, <a href="{U_USER_PROFILE}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a></div>
-	# ENDIF #
+</div>
+# ELSE #
+<div id="connect-menu">
+	<div class="horizontal-fieldset">
+		<span class="connect-welcome hidden-large-screens">${LangLoader::get_message('welcome', 'user-common')}, <a href="{U_USER_PROFILE}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a></span>
+		<a href="" class="js-menu-button" onclick="open_submenu('connect-menu');return false;" title="{L_PROFIL}">{L_PROFIL} <i class="fa fa-bars"></i></a>
+		<ul class="connect-content">
+			<li class="connect-welcome">${LangLoader::get_message('welcome', 'user-common')}, <a href="{U_USER_PROFILE}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a>
+			</li>
+			<li class="connect-menu-container">
+				<i class="fa fa-connect# IF NUMBER_TOTAL_ALERT # blink alert# ENDIF #"></i>
+
+				<ul class="connect-connected">
+					<span class="connect-avatar">
+						<img src="{U_AVATAR_IMG}" alt="avatar" title="Avatar" />
+					</span>
+					<li>
+						<a href="${relative_url(UserUrlBuilder::home_profile())}" class="small"><i class="fa fa-user"></i> {L_PRIVATE_PROFIL}</a>
+					</li>
+					<li>
+						<a href="{U_USER_PM}" class="small"><i class="fa fa-envelope# IF C_HAS_PM # blink alert# ENDIF #"></i> {L_NBR_PM}</a>
+					</li>
+					# IF C_ADMIN_AUTH #
+					<li>
+						<a href="${relative_url(UserUrlBuilder::administration())}" class="small"><i class="fa fa-wrench# IF C_UNREAD_ALERT # blink alert# ENDIF #"></i> {L_ADMIN_PANEL}# IF C_UNREAD_ALERT # ({NUMBER_UNREAD_ALERTS})# ENDIF #</a>
+					</li>
+					# ENDIF #
+					# IF C_MODERATOR_AUTH #
+					<li>
+						<a href="${relative_url(UserUrlBuilder::moderation_panel())}" class="small"><i class="fa fa-legal"></i> {L_MODO_PANEL}</a>
+					</li>
+					# ENDIF #
+					<li>
+						<a href="${relative_url(UserUrlBuilder::contribution_panel())}" class="small"><i class="fa fa-file-text# IF C_UNREAD_CONTRIBUTION # blink alert# ENDIF #"></i> {L_CONTRIBUTION_PANEL}# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION # ({NUMBER_UNREAD_CONTRIBUTIONS})# ENDIF #</a>
+					</li>
+				</ul>
+			</li>
+			<li class="connect-disconnect">
+				<a href="${relative_url(UserUrlBuilder::disconnect())}" class="small" title="{L_DISCONNECT}"><i class="fa fa-sign-out"></i> <span class="hidden-large-screens"><span>{L_DISCONNECT}</span></a>
+			</li>
+		</ul>
+
+	</div>
+</div>
 # ENDIF #
