@@ -60,7 +60,7 @@ class DownloadFile
 	const SORT_ALPHABETIC = 'name';
 	const SORT_AUTHOR = 'display_name';
 	const SORT_DATE = 'creation_date';
-	const SORT_UPDATED_DATE = 'updated_date DESC, creation_date';
+	const SORT_UPDATED_DATE = 'updated_date';
 	const SORT_NOTATION = 'average_notes';
 	const SORT_NUMBER_COMMENTS = 'number_comments';
 	const SORT_NUMBER_DOWNLOADS = 'number_downloads';
@@ -255,7 +255,7 @@ class DownloadFile
 	
 	public function has_updated_date()
 	{
-		return $this->updated_date !== null;
+		return $this->updated_date !== null && $this->updated_date->get_timestamp() !== $this->creation_date->get_timestamp();
 	}
 	
 	public function get_author_user()
@@ -363,7 +363,7 @@ class DownloadFile
 			'start_date' => $this->get_start_date() !== null ? $this->get_start_date()->get_timestamp() : '',
 			'end_date' => $this->get_end_date() !== null ? $this->get_end_date()->get_timestamp() : '',
 			'creation_date' => $this->get_creation_date()->get_timestamp(),
-			'updated_date' => $this->get_updated_date() !== null ? $this->get_updated_date()->get_timestamp() : '',
+			'updated_date' => $this->get_updated_date() !== null ? $this->get_updated_date()->get_timestamp() : $this->get_creation_date()->get_timestamp(),
 			'author_display_name' => $this->get_author_display_name(),
 			'author_user_id' => $this->get_author_user()->get_id(),
 			'number_downloads' => $this->get_number_downloads(),
@@ -463,7 +463,7 @@ class DownloadFile
 			'C_PICTURE' => $this->has_picture(),
 			'C_CUSTOM_AUTHOR_DISPLAY_NAME' => $this->is_author_display_name_enabled(),
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
-			'C_UPDATED_DATE' => $this->updated_date !== null,
+			'C_UPDATED_DATE' => $this->has_updated_date(),
 			
 			//Downloadlink
 			'ID' => $this->id,

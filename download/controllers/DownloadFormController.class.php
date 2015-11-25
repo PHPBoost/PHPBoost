@@ -295,9 +295,6 @@ class DownloadFormController extends ModuleController
 		
 		if ($this->is_contributor_member())
 		{
-			if ($downloadfile->get_id() === null)
-				$downloadfile->set_creation_date(new Date());
-			
 			$downloadfile->set_approbation_type(DownloadFile::NOT_APPROVAL);
 			$downloadfile->clean_start_and_end_date();
 		}
@@ -324,7 +321,7 @@ class DownloadFormController extends ModuleController
 			}
 		}
 		
-		if ($downloadfile->get_id() === null)
+		if ($this->is_new_downloadfile)
 		{
 			$id = DownloadService::add($downloadfile);
 		}

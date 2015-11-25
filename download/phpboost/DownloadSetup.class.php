@@ -145,7 +145,7 @@ class DownloadSetup extends DefaultModuleSetup
 			'start_date' => 0,
 			'end_date' => 0,
 			'creation_date' => time(),
-			'updated_date' => 0,
+			'updated_date' => time(),
 			'author_display_name' => '',
 			'author_user_id' => 1,
 			'number_downloads' => 0,
