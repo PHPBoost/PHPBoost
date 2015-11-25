@@ -193,7 +193,7 @@ class DownloadConfig extends AbstractConfigData
 	
 	public function is_sort_type_date()
 	{
-		return $this->get_property(self::SORT_TYPE) == DownloadFile::SORT_DATE;
+		return $this->get_property(self::SORT_TYPE) == DownloadFile::SORT_DATE || $this->get_property(self::SORT_TYPE) == DownloadFile::SORT_UPDATED_DATE;
 	}
 	
 	public function is_sort_type_number_downloads()

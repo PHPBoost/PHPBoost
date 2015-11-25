@@ -143,6 +143,7 @@ $lang['form.approbation.now'] = 'Publier maintenant';
 $lang['form.date.start'] = 'A partir du';
 $lang['form.date.end'] = 'Jusqu\'au';
 $lang['form.date.creation'] = 'Date de création';
+$lang['form.date.update'] = 'Dernière modification';
 $lang['form.date.end.enable'] = 'Définir une date de fin de publication';
 $lang['form.url'] = 'Adresse';
 $lang['form.other'] = 'Autre';

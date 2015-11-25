@@ -92,8 +92,11 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 			case 'author':
 				$sort_field = DownloadFile::SORT_AUTHOR;
 				break;
-			default:
+			case 'creation_date':
 				$sort_field = DownloadFile::SORT_DATE;
+				break;
+			default:
+				$sort_field = DownloadFile::SORT_UPDATED_DATE;
 				break;
 		}
 		
@@ -157,6 +160,7 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, 
 			array(
+				new FormFieldSelectChoiceOption($common_lang['form.date.update'], 'updated_date'),
 				new FormFieldSelectChoiceOption($common_lang['form.date.creation'], 'date'),
 				new FormFieldSelectChoiceOption($common_lang['form.name'], 'name'),
 				new FormFieldSelectChoiceOption($this->lang['downloads_number'], 'download'),

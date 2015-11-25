@@ -330,6 +330,7 @@ class DownloadFormController extends ModuleController
 		}
 		else
 		{
+			$downloadfile->set_updated_date(new Date());
 			$id = $downloadfile->get_id();
 			DownloadService::update($downloadfile);
 		}

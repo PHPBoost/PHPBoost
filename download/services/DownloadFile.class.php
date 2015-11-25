@@ -60,6 +60,7 @@ class DownloadFile
 	const SORT_ALPHABETIC = 'name';
 	const SORT_AUTHOR = 'display_name';
 	const SORT_DATE = 'creation_date';
+	const SORT_UPDATED_DATE = 'updated_date DESC, creation_date';
 	const SORT_NOTATION = 'average_notes';
 	const SORT_NUMBER_COMMENTS = 'number_comments';
 	const SORT_NUMBER_DOWNLOADS = 'number_downloads';

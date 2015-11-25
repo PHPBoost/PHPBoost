@@ -31,7 +31,7 @@
 
 class DownloadUrlBuilder
 {
-	const DEFAULT_SORT_FIELD = 'date';
+	const DEFAULT_SORT_FIELD = 'date_updated';
 	const DEFAULT_SORT_MODE = 'desc';
 	
 	private static $dispatcher = '/download';

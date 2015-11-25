@@ -149,6 +149,7 @@ class AdminDownloadConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_type', $this->lang['config.sort_type'], $this->config->get_sort_type(),
 			array(
+				new FormFieldSelectChoiceOption(LangLoader::get_message('form.date.update', 'common'), DownloadFile::SORT_UPDATED_DATE),
 				new FormFieldSelectChoiceOption(LangLoader::get_message('form.date.creation', 'common'), DownloadFile::SORT_DATE),
 				new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.best_note', 'common'), DownloadFile::SORT_NOTATION),
 				new FormFieldSelectChoiceOption($this->lang['downloads_number'], DownloadFile::SORT_NUMBER_DOWNLOADS)

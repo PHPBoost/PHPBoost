@@ -42,7 +42,6 @@ $lang['articles.published_articles'] = 'Articles publiés';
 $lang['articles.select_page'] = 'Sélectionnez une page';
 $lang['articles.summary'] = 'Sommaire :';
 $lang['articles.print.article'] = 'Impression d\'un article';
-$lang['articles.date_updated'] = 'Dernière modification : ';
 
 //Articles configuration
 $lang['articles_configuration.display_icon_cats'] = 'Afficher l\'icône des catégories';
