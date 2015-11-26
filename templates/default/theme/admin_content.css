@@ -542,12 +542,6 @@ div[class*="admin-index"] h2 {
 
 /* --- updates --- */
 
-@media (min-width: 981px) {
-	.td150 	{ width: 150px; }
-	.td100 	{ width: 100px; }
-	.td75	{ width: 75px; }
-}
-
 .update-desc {
 	padding: 5px;
 	padding-top: 10px;
@@ -558,6 +552,34 @@ div[class*="admin-index"] h2 {
 
 .db-restore {
 	padding: 5px;
+}
+
+.db-operator-color 	{ color:#FF00FF; }
+.db-keywords-color 	{ color:#990099; }
+.db-text-color		{ color:#008000; }
+.db-number-color 	{ color:#008080; }
+
+.block-contents1 {
+	padding: 5px;
+	padding-bottom: 7px;
+	margin-bottom: 5px;
+}
+
+.db-executed-query {
+	background-color: #FFFFFF;
+	margin: 0px;
+}
+
+.db-executed-query p {
+	color: #000000;
+	font-size: 1em;
+}
+
+.db-query-result {
+	width: 99%;
+	margin: auto;
+	overflow: auto;
+	padding: 18px 2px;
 }
 
 .cssmenu.cssmenu-group #menu-button						{ color: #676A74; }

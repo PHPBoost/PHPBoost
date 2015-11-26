@@ -62,19 +62,19 @@
 							<th>
 								<span class="text-strong">{L_TABLE_NAME}</span>
 							</th>
-							<th style="width:70px;">
+							<th class="td70">
 								<span class="text-strong">{L_TABLE_ROWS}</span>
 							</th>
-							<th style="width:100px;">
+							<th class="td100">
 								<span class="text-strong">{L_TABLE_ENGINE}</span>
 							</th>
-							<th style="width:150px;">
+							<th class="td150">
 								<span class="text-strong">{L_TABLE_COLLATION}</span>
 							</th>
-							<th style="width:70px;">
+							<th class="td70">
 								<span class="text-strong">{L_TABLE_DATA}</span>
 							</th>
-							<th style="width:70px;">
+							<th class="td70">
 								<span class="text-strong">{L_TABLE_FREE}</span>
 							</th>
 						</tr>
@@ -114,7 +114,7 @@
 										<input type="checkbox" id="check-all" onclick="check_all(this.checked, 'id');" class="valign-middle"> 
 										<label for="check-all"></label>
 								</div>
-								<span style="vertical-align: bottom">{L_ALL}</span>
+								<span class="valign-bottom">{L_ALL}</span>
 							</td>
 							<td>
 								<strong>{NBR_TABLES}</strong>
@@ -180,8 +180,8 @@
 			
 			# IF C_DATABASE_BACKUP #
 			# IF TABLE_NAME #
-			<div style="width:95%;margin:auto;">
-				<div class="block-contents1" style="padding:5px;padding-bottom:7px;margin-bottom:5px;">
+			<div>
+				<div class="block-contents1">
 					- <a class="small" href="admin_database.php#tables">{L_DATABASE_MANAGEMENT}</a> - <a class="small" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{TABLE_NAME}</a>
 				</div>
 				<nav id="cssmenu-database-backup" class="cssmenu cssmenu-group">
@@ -346,7 +346,7 @@
 													<label for="query">* {L_EXECUTED_QUERY}</label>
 													<textarea rows="12" id="query" name="query">{QUERY}</textarea>
 												</fieldset>
-												<fieldset class="fieldset-submit" style="margin:0">
+												<fieldset class="fieldset-submit">
 													<button type="submit" name="submit" value="true" class="submit">{L_EXECUTE}</button>
 													<input type="hidden" name="token" value="{TOKEN}">
 												</fieldset>
@@ -366,11 +366,11 @@
 										<article class="block">
 											<header>{L_EXECUTED_QUERY}</header>
 											<div class="content">
-												<fieldset style="background-color:white;margin:0px">
-													<p style="color:black;font-size:10px;">{QUERY_HIGHLIGHT}</p>
+												<fieldset class="db-executed-query">
+													<p>{QUERY_HIGHLIGHT}</p>
 												</fieldset>
 												
-												<div style="width:99%;margin:auto;overflow:auto;padding:18px 2px">
+												<div class="db-query-result">
 													<table id="table">
 														# IF C_HEAD #
 														<thead>

@@ -110,6 +110,13 @@ article header ul.pagination, article footer ul.pagination { display: inline; }
 	display:none;
 }
 
+.edit-pseudo {
+	padding: 10px;
+	font-size: 1em;
+	font-style: italic;
+	margin: 40px 0 20px;
+}
+
 /* --- stats --- */
 .forum-stats span {
 	display: block;

@@ -184,6 +184,18 @@ table.bt thead th{
 	}
 }
 
+/* --- largeur specifique de colonne --- */
+
+@media (min-width: 981px) {
+	.td150 	{ width: 150px; }
+	.td100 	{ width: 100px; }
+	.td75	{ width: 75px; }
+	.td70 	{ width: 70px; }
+	.td50 	{ width: 50px; }
+}
+
+/* --- design mobile --- */
+
 table.bt thead th:first-child{
 	display: block;
 	border-radius: 0;

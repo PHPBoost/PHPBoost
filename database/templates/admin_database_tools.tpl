@@ -13,8 +13,8 @@
 		</nav>
 		
 		<div id="admin-contents">
-			<div style="width:95%;margin:auto;">
-				<div class="block-contents1" style="padding:5px;padding-bottom:7px;margin-bottom:5px">
+			<div>
+				<div class="block-contents1">
 					<a class="small" href="admin_database.php#tables">{L_DATABASE_MANAGEMENT}</a> / <a class="small" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{TABLE_NAME}</a>
 				</div>
 				<nav id="cssmenu-database-tools" class="cssmenu cssmenu-group">
@@ -252,13 +252,13 @@
 						<article class="block">
 							<header>{L_EXECUTED_QUERY}</header>
 							<div class="content">
-								<fieldset style="background-color:white;margin:0px">
-									<p style="color:black;font-size:10px;">{QUERY_HIGHLIGHT}</p>
+								<fieldset class="db-executed-query">
+									<p>{QUERY_HIGHLIGHT}</p>
 								</fieldset>
 								
 								<div class="spacer"></div>
 								# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
-								<div style="width:99%;margin:auto;overflow:auto;padding:0px 2px">
+								<div class="db-query-result">
 									<table id="table">
 										<thead>
 											<tr>
@@ -427,7 +427,7 @@
 						# END fields #
 					</tbody>
 				</table>
-				<fieldset class="fieldset-submit" style="margin:0">
+				<fieldset class="fieldset-submit">
 					<legend>{L_EXECUTE}</legend>
 					<button type="submit" name="submit" value="true" class="submit">{L_EXECUTE}</button>
 					<input type="hidden" name="token" value="{TOKEN}">
