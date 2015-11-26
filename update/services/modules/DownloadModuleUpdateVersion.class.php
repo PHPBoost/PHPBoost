@@ -59,7 +59,7 @@ class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 			'user_id' => 'author_user_id INT(11)',
 			'url' => 'url VARCHAR(255)',
 			'image' => 'picture_url VARCHAR(255)',
-			'size' => 'size INT(11)',
+			'size' => 'size BIGINT(18)',
 			'timestamp' => 'creation_date INT(11)',
 			'release_timestamp' => 'updated_date INT(11)',
 			'start' => 'start_date INT(11)',
