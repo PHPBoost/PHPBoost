@@ -363,7 +363,7 @@
 							<table>
 								<thead>
 									<tr>
-										<th colspan="3">
+										<th colspan="{COLSPAN}">
 											{L_THUMBNAILS}
 										</th>
 									</tr>
