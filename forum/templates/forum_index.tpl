@@ -17,7 +17,7 @@
 			-->
 		</script>
 			
-		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-index">
+		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-{forums_list.cats.IDCAT}">
 			<header>
 				<h2>
 					<span class="forum-cat-title">

@@ -8,7 +8,7 @@
 		# END error_auth_write #
 
 		# IF C_FORUM_SUB_CATS #
-			<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-forum">
+			<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-subforum">
 				<header>
 					<h2>
 						<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
@@ -72,7 +72,7 @@
 			</article>
 		# ENDIF #
 
-		<article>
+		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-forum">
 			<header>
 				<h2>
 					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a> {U_FORUM_CAT}
