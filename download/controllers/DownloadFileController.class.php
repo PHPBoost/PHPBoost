@@ -58,19 +58,13 @@ class DownloadFileController extends AbstractController
 			DownloadService::update_number_downloads($this->downloadfile);
 			DownloadCache::invalidate();
 			
-			$file = new File($this->downloadfile->get_url()->absolute());
-			
-			$filesize = @filesize($this->downloadfile->get_url()->absolute());
-			$filesize = ($filesize !== false) ? $filesize : (!empty($info_file) ? $this->downloadfile->get_size() : false);
-			if ($filesize !== false)
-				header('Content-Length: ' . $filesize);
-			header('content-type:application/force-download');
-			header('Content-Disposition:attachment;filename="' . substr(strrchr($this->downloadfile->get_url()->absolute(), '/'), 1) . '"');
-			header('Expires:0');
-			header('Cache-Control:must-revalidate');
-			header('Pragma:public');
-			if ($file->exists())
-				AppContext::get_response()->redirect($this->downloadfile->get_url()->absolute());
+			header('Content-Disposition: attachment; filename="' . urldecode(basename($this->downloadfile->get_url()->absolute())) . '"');
+			header('Content-Description: File Transfer');
+			header('Content-Transfer-Encoding: binary');
+			header('Accept-Ranges: bytes');
+			header('Content-Type: application/force-download');
+			set_time_limit(0);
+			readfile($this->downloadfile->get_url()->absolute());
 		}
 		else
 		{
