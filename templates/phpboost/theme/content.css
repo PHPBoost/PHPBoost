@@ -47,7 +47,11 @@ article {
 /* --- Titre d'une page ou d'un element d'un module --- */
 section header h1,
 article header h1 {
-	border-bottom: 1px solid #336397;
+	color: #81A4C8;
+	text-transform: uppercase;
+	font-weight: 400;
+
+	text-align: left;
 }
 section header h1 a:hover {
 	text-decoration: none;
@@ -537,22 +541,27 @@ body.dragging, body.dragging * {
 /* -- Modules minis -- */
 /* ------------------- */
 .module-mini-container {
-	margin: 0 0 10px 0;
+	margin: 0 0 30px 0;
 	border-spacing: 1px;
 	padding: 5px;
 	clear: both;
+	position: relative;
 }
 
 .module-mini-top {
 	min-height: 24px;
 	text-align: center;
-	border-bottom: 2px #336397 solid;
 	padding: 0.2em 0 0.2em 0;
+	margin-bottom: 5px;
 }
 
 .module-mini-container h5,
 .module-mini-container h3 {
-	color: #515C68;
+	color: #81A4C8;
+	text-transform: uppercase;
+	font-weight: 400;
+    font-size: 18px;
+    text-align: left;
 }
 
 .module-mini-contents {
@@ -564,6 +573,15 @@ body.dragging, body.dragging * {
 
 .module-mini-bottom {
 	height: 15px;
+}
+
+.module-mini-container:after {
+	position: absolute;
+	height: 1px;
+	width: 95%;
+    background: #EFEFEF;
+    border-bottom: 1px solid #FFFFFF;
+	content:"";
 }
 
 

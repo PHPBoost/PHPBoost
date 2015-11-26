@@ -19,6 +19,14 @@ Contient les elements associes aux menus
 	margin: 0;
 }
 
+@media (min-width: 769px) {
+	#sub-header .cssmenu {
+		text-align: center;
+		margin: auto;
+		width: 700px;
+	}
+}
+
 .cssmenu:after,
 .cssmenu > ul:after {
 	content: "";
@@ -166,20 +174,14 @@ div.cssmenu-group .cssmenu-title {
 	}
 
 	#sub-header .cssmenu-horizontal > ul > li {
-		border-right: 1px solid #444444;
+		border-left: 1px solid #494949;
+		border-right: 1px solid #222222;
 		position: relative;
 	}
-	
-	#sub-header .cssmenu-horizontal > ul > li:after {
-		position:absolute;
-		right: 1;
-		top: 50px;
-		height: 100%;
-		width: 1px;
-		border-right: 1px solid #333333;
-	}
 
-	#sub-header .cssmenu-horizontal > ul > li:last-child,
+	#sub-header .cssmenu-horizontal > ul > li:first-child { border-left: none;  }
+	#sub-header .cssmenu-horizontal > ul > li:last-child  { border-right: none; }
+
 	#main .cssmenu-horizontal > ul > li:last-child {
 		border: none;
 	}
@@ -224,6 +226,14 @@ div.cssmenu-group .cssmenu-title {
 	font-size: 12px;
 	letter-spacing: 1px;
 	font-weight: 700;
+}
+
+@media (min-width: 769px) {
+	#sub-header .cssmenu > ul > li > .cssmenu-title {
+		font-size: 17px;
+		font-weight: normal;
+		font-family: "Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
+	}
 }
 
 /* --- Indicateur de sous menu --- */
@@ -568,6 +578,14 @@ header .cssmenu li:hover > .cssmenu-title 					{ color: #FFFFFF; }
 @media (min-width: 769px) {
 	header .cssmenu-horizontal > ul > li:hover				{ background: #333333; }
 	#main .cssmenu-horizontal > ul > li:hover  				{ background: #F9F9F9; }
+
+	#sub-header .cssmenu-horizontal > ul > li > .cssmenu-title {
+		color: #CCCCCC;
+	}
+	#sub-header .cssmenu-horizontal > ul > li > .cssmenu-title:hover {
+		color: #EFEFEF;
+		background: #393939;
+	}
 }
 
 /* --- Niveau 2 --- */
