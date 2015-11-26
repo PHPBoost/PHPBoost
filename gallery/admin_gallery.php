@@ -362,6 +362,7 @@ else
 					'DIMENSION' => $info_pics['width'] . ' x ' . $info_pics['height'],
 					'SIZE' => NumberHelper::round($info_pics['weight']/1024, 1),
 					'COLSPAN' => ($config->get_columns_number() + 2),
+					'COLSPAN_PICTURE' => (int)($pos_pics > 0) + (int)($pos_pics < ($i - 1)),
 					'CAT' => $cat_list,
 					'RENAME' => addslashes($info_pics['name']),
 					'RENAME_CUT' => addslashes($info_pics['name']),
