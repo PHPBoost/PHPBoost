@@ -27,7 +27,7 @@
 	margin: 15px 0px;
 }
 
-.thumnails-list-container {
+.thumbnails-list-container {
 	padding:0 5px;
 }
 
@@ -38,6 +38,8 @@
 
 .table-pics {
 	margin: auto;
+	display: table;
+	table-layout: fixed;
 }
 
 .table-cat tbody td {
@@ -56,6 +58,12 @@
 	text-align: center;
 	padding: 15px 0px;
 	overflow: auto;
+}
+
+.pics-max-thumbnails {
+	margin: auto;
+	display: table;
+	table-layout: fixed;
 }
 
 .move-pics-container {
@@ -83,8 +91,8 @@
 
 .link-to-other-pics-container {
 	margin: auto;
-	width: 640px;
-	height: 32px;
+	width: 100%;
+	overflow: hidden;
 	padding: 0;
 }
 
@@ -105,4 +113,8 @@
 
 .article-gallery > header {
 	display:none;
+}
+
+#module-gallery .subcat-content {
+	display: block;
 }

@@ -356,11 +356,11 @@
 								</div>
 							</div>
 							<div class="link-to-other-pics-container">
-								<span class="left">&nbsp;&nbsp;&nbsp;{U_PREVIOUS}</span>
-								<span class="right">{U_NEXT}&nbsp;&nbsp;&nbsp;</span>
+								<span class="float-left">&nbsp;&nbsp;&nbsp;{U_PREVIOUS}</span>
+								<span class="float-right">{U_NEXT}&nbsp;&nbsp;&nbsp;</span>
 							</div>
 							<br /><br />
-							<table>
+							<table class="pics-max-thumbnails">
 								<thead>
 									<tr>
 										<th colspan="{COLSPAN}">
@@ -370,7 +370,7 @@
 								</thead>
 								<tbody>
 									<tr>
-										<td style="width:50px;">
+										<td>
 											{U_LEFT_THUMBNAILS}
 										</td>
 										
@@ -378,7 +378,7 @@
 											{list_preview_pics.PICS}
 										# END list_preview_pics #
 										
-										<td style="width:50px;">
+										<td>
 											{U_RIGHT_THUMBNAILS}
 										</td>
 									</tr>
@@ -401,7 +401,7 @@
 							# START pics_list #
 								# IF pics_list.C_OPEN_TR #<tr># ENDIF #
 								<td class="valign-bottom" style="width:{COLUMN_WIDTH_PICS}%;">
-									<div id="pics{pics_list.ID}" class="thumnails-list-container">
+									<div id="pics{pics_list.ID}" class="thumbnails-list-container">
 										<a class="small" href="{pics_list.U_DISPLAY}" onclick="{pics_list.ONCLICK}" # IF NOT pics_list.ONCLICK # data-lightbox="formatter"# ENDIF #><img src="{pics_list.U_PICTURE}" title="{pics_list.NAME}" alt="{pics_list.NAME}" class="gallery-img" /></a>
 									</div>
 									
