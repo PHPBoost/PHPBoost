@@ -76,4 +76,5 @@ $lang['download.form.author_display_name'] = 'Nom de l\'auteur';
 $lang['download.message.success.add'] = 'Le fichier <b>:name</b> a été ajouté';
 $lang['download.message.success.edit'] = 'Le fichier <b>:name</b> a été modifié';
 $lang['download.message.success.delete'] = 'Le fichier <b>:name</b> a été supprimé';
+$lang['download.message.error.file_not_found'] = 'Fichier introuvable, le lien est peut-être mort.';
 ?>
