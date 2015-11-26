@@ -283,14 +283,14 @@
 						<table id="table" class="table-pics">
 							<thead>
 								<tr>
-									<th colspan="2">
+									<th colspan="{pics.pics_max.COLSPAN_PICTURE}">
 										{pics.pics_max.PICTURE_NAME}
 									</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<td id="pics_max" colspan="2">
+									<td id="pics_max" colspan="{pics.pics_max.COLSPAN_PICTURE}">
 										{pics.PICS_MAX}
 									</td>
 								</tr>
