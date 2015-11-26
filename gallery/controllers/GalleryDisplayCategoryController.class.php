@@ -502,7 +502,10 @@ class GalleryDisplayCategoryController extends ModuleController
 						$display_link = '';
 					}
 					else //Ouverture nouvelle page.
+					{
+						$onclick = true;
 						$display_link = url('gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], 'gallery-' . $row['idcat'] . '-' . $row['id'] . '.php') . '#pics_max';
+					}
 					
 					//Liste des catégories.
 					$search_category_children_options = new SearchCategoryChildrensOptions();
