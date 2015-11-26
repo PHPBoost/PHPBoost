@@ -246,8 +246,8 @@ else
 		{
 			$info_pics = PersistenceContext::get_querier()->select_single_row_query("SELECT g.id, g.idcat, g.name, g.user_id, g.views, g.width, g.height, g.weight, g.timestamp, g.aprob, m.display_name, m.level, m.user_groups
 			FROM " . GallerySetup::$gallery_table . " g
-			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id",
-			"WHERE g.idcat = :idcat AND g.id = :id", array(
+			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
+			WHERE g.idcat = :idcat AND g.id = :id", array(
 				'idcat' => $id_category,
 				'id' => $idpics
 			));
@@ -354,8 +354,9 @@ else
 					'C_RIGHT_THUMBNAILS' => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics),
 					'ID' => $info_pics['id'],
 					'IMG' => '<img src="show_pics.php?id=' . $idpics . '&amp;cat=' . $id_category . '" alt="' . $info_pics['name'] . '" />',
+					'PICTURE_NAME' => stripslashes($info_pics['name']),
 					'NAME' => '<span id="fi_' . $info_pics['id'] . '">' . stripslashes($info_pics['name']) . '</span> <span id="fi' . $info_pics['id'] . '"></span>',
-					'POSTOR' => '<a class="' . UserService::get_level_class($info_pics['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($info_pics['user_id'])->rel() .'">' . $info_pics['login'] . '</a>',
+					'POSTOR' => '<a class="' . UserService::get_level_class($info_pics['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($info_pics['user_id'])->rel() .'">' . $info_pics['display_name'] . '</a>',
 					'DATE' => Date::to_format($info_pics['timestamp'], Date::FORMAT_DAY_MONTH_YEAR),
 					'VIEWS' => ($info_pics['views'] + 1),
 					'DIMENSION' => $info_pics['width'] . ' x ' . $info_pics['height'],
