@@ -368,6 +368,10 @@ select[readonly=readonly]:focus {
 	border: 1px solid #CCCCCC;
 }
 
+.form-field-checkbox {
+	display: inline-block;
+}
+
 /* --- Textarea --- */
 .form-field-textarea {
 	display: inline;
