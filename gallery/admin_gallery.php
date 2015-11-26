@@ -244,7 +244,7 @@ else
 
 		if (!empty($idpics))
 		{
-			$info_pics = PersistenceContext::get_querier()->select_single_row_query("SELECT g.id, g.idcat, g.name, g.user_id, g.views, g.width, g.height, g.weight, g.timestamp, g.aprob, m.display_name, m.level, m.user_groups
+			$info_pics = PersistenceContext::get_querier()->select_single_row_query("SELECT g.id, g.idcat, g.name, g.user_id, g.views, g.width, g.height, g.weight, g.timestamp, g.aprob, m.display_name, m.level, m.groups
 			FROM " . GallerySetup::$gallery_table . " g
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 			WHERE g.idcat = :idcat AND g.id = :id", array(
