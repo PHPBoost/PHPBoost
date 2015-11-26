@@ -107,6 +107,16 @@ fieldset {
 	background: none;
 }
 
+fieldset img {
+	max-width: 250px;
+}
+
+@media (min-width: 768px) {
+	fieldset img {
+		max-width: 450px;
+	}
+}
+
 fieldset[id*="_captcha_fieldset"] {
 	margin: 0 5px;
 }

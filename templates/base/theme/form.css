@@ -118,6 +118,16 @@ fieldset {
 	margin: 1.5em 0;
 }
 
+fieldset img {
+	max-width: 250px;
+}
+
+@media (min-width: 768px) {
+	fieldset img {
+		max-width: 450px;
+	}
+}
+
 fieldset.fieldset-submit {
 	width: 100%;
 	text-align: center;
