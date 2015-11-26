@@ -42,6 +42,11 @@
 	table-layout: fixed;
 }
 
+.table-cat {
+	display: table;
+	table-layout: fixed;
+}
+
 .table-cat tbody td {
 	padding: 15px 0px;
 }
