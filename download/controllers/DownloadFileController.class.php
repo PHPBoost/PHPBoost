@@ -58,13 +58,29 @@ class DownloadFileController extends AbstractController
 			DownloadService::update_number_downloads($this->downloadfile);
 			DownloadCache::invalidate();
 			
-			header('Content-Disposition: attachment; filename="' . urldecode(basename($this->downloadfile->get_url()->absolute())) . '"');
-			header('Content-Description: File Transfer');
-			header('Content-Transfer-Encoding: binary');
-			header('Accept-Ranges: bytes');
-			header('Content-Type: application/force-download');
-			set_time_limit(0);
-			readfile($this->downloadfile->get_url()->absolute());
+			$status = 200;
+			$file_headers = get_headers($this->downloadfile->get_url()->absolute(), true);
+			if (is_array($file_headers))
+			{
+				if(preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/', $file_headers[0], $matches))
+					$status = (int)$matches[1];
+			}
+			
+			if ($status == 200)
+			{
+				header('Content-Disposition: attachment; filename="' . urldecode(basename($this->downloadfile->get_url()->absolute())) . '"');
+				header('Content-Description: File Transfer');
+				header('Content-Transfer-Encoding: binary');
+				header('Accept-Ranges: bytes');
+				header('Content-Type: application/force-download');
+				set_time_limit(0);
+				readfile($this->downloadfile->get_url()->absolute());
+			}
+			else
+			{
+				$error_controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('download.message.error.file_not_found', 'common', 'download'), UserErrorController::WARNING);
+				DispatchManager::redirect($error_controller);
+			}
 		}
 		else
 		{
