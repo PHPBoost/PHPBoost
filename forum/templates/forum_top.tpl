@@ -109,13 +109,14 @@
 						</span>
 					</li>
 					<li>
-						<div class="cssmenu-title">
+						<span class="cssmenu-title">
 							<i class="fa fa-notread"></i> <span id="nbr_unread_topics">{U_MSG_NOT_READ}</span>
-							<a href="javascript:XMLHttpRequest_unread_topics('');" onmouseover="forum_hide_block('forum_unread', 1);" onmouseout="forum_hide_block('forum_unread', 0);"><i class="fa fa-refresh" id="refresh_unread"></i></a>
 							<div class="forum-refresh">
 								<div id="forum_blockforum_unread" style="display:none;"></div>
 							</div>
-						</div>
+							<a href="javascript:XMLHttpRequest_unread_topics('');" onmouseover="forum_hide_block('forum_unread', 1);" onmouseout="forum_hide_block('forum_unread', 0);"><i class="fa fa-refresh" id="refresh_unread"></i></a>
+						</span>
+						
 					</li>
 					<li>
 						<span class="cssmenu-title">

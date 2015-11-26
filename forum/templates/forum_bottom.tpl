@@ -24,14 +24,14 @@
 							</span>
 						</li>
 						<li>
-							<div class="cssmenu-title">
+							<span class="cssmenu-title">
 								<i class="fa fa-notread"></i> <span id="nbr_unread_topics2">{U_MSG_NOT_READ}</span>
 								<div class="forum-refresh">
 									<div style="display:none;" id="forum_blockforum_unread2">
 									</div>
 								</div>
 								<a href="javascript:XMLHttpRequest_unread_topics('2');" onmouseover="forum_hide_block('forum_unread2', 1);" onmouseout="forum_hide_block('forum_unread2', 0);"><i class="fa fa-refresh" id="refresh_unread2"></i></a>
-							</div>
+							</span>
 						</li>
 						<li>
 							<span class="cssmenu-title">
