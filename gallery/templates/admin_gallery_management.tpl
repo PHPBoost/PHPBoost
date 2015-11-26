@@ -35,7 +35,7 @@
 			var name = document.getElementById("fiinput" + id_file).value;
 			var regex = /\/|\\|\||\?|<|>/;
 			
-			if( regex.test(name) ) //interdiction des caractères spéciaux dans la nom.
+			if( regex.test(name) ) //interdiction des caractÃ¨res spÃ©ciaux dans le nom.
 			{
 				alert("{L_FILE_FORBIDDEN_CHARS}");	
 				document.getElementById('fi_' + id_file).style.display = 'inline';
@@ -108,7 +108,7 @@
 			xmlhttprequest_sender(xhr_object, data);
 		}
 		
-		var delay = 2000; //Délai après lequel le bloc est automatiquement masqué, après le départ de la souris.
+		var delay = 2000; //DÃ©lai aprÃ¨s lequel le bloc est automatiquement masquÃ©, aprÃ¨s le dÃ©part de la souris.
 		var timeout;
 		var displayed = false;
 		var previous = '';
@@ -144,7 +144,7 @@
 		
 		{ARRAY_JS}
 		var start_thumb = {START_THUMB};
-		//Miniatures défilantes.
+		//Miniatures dÃ©filantes.
 		function display_thumbnails(direction)
 		{
 			if( direction == 'left' )
@@ -281,9 +281,16 @@
 					
 					# START pics.pics_max #
 						<table id="table" class="table-pics">
+							<thead>
+								<tr>
+									<th colspan="2">
+										{pics.pics_max.PICTURE_NAME}
+									</th>
+								</tr>
+							</thead>
 							<tbody>
 								<tr>
-									<td id="pics_max" colspan="{COLSPAN}">
+									<td id="pics_max" colspan="2">
 										{pics.PICS_MAX}
 									</td>
 								</tr>
