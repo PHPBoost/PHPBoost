@@ -200,7 +200,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 			'U_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 			'U_VARS_ANCRE' => url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php'),
 			'U_FORUM_CAT' => '<a class="forum-mbrmsg-links" href="' . PATH_TO_ROOT . '/forum/forum' . url('.php?id=' . $row['idcat'], '-' . $row['idcat'] . $rewrited_cat_title . '.php') . '">' . $row['name'] . '</a>',
-			'U_TITLE_T' => '<a class="forum-mbrmsg-links" href="' . PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php') . '">' . ucfirst(stripslashes($row['title'])) . '</a>'
+			'U_TITLE_T' => '<a class="forum-mbrmsg-links" href="' . PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php') . '">' . stripslashes($row['title']) . '</a>'
 		));
 		
 		foreach ($displayed_extended_fields as $field_type)

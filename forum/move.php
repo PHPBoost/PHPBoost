@@ -239,7 +239,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		'KERNEL_EDITOR' => $editor->display(),
 		'FORUM_NAME' => $config->get_forum_name() . ' : ' . $LANG['cut_topic'],
 		'IDTOPIC' => 0,
-		'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $msg['idtopic'], '-' . $msg['idtopic'] . '.php') . '">' . ucfirst(stripslashes($topic['title'])) . '</a>',
+		'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $msg['idtopic'], '-' . $msg['idtopic'] . '.php') . '">' . stripslashes($topic['title']) . '</a>',
 		'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $cat['id'], '-' . $cat['id'] . '.php') . '">' . $cat['name'] . '</a>',
 		'L_ACTION' => $LANG['forum_cut_subject'] . ' : ' . $topic['title'],
 		'L_FORUM_INDEX' => $LANG['forum_index'],

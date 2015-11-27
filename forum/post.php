@@ -129,7 +129,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			'C_FORUM_PREVIEW_MSG' => true,
 			'U_ACTION' => 'post.php' . $update . '&amp;token=' . AppContext::get_session()->get_token(),
 			'U_FORUM_CAT' => $forum_cats,
-			'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . ucfirst(stripslashes($topic['title'])) . '</a>',
+			'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . stripslashes($topic['title']) . '</a>',
 			'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 			'L_REQUIRE_TEXT' => $LANG['require_text'],
 			'L_REQUIRE_TITLE' => $LANG['require_title'],

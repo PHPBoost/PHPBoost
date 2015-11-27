@@ -76,7 +76,7 @@ class ForumFeedProvider implements FeedProvider
 			$item->set_title(
 				(($config->is_message_before_topic_title_displayed() && !empty($row['display_msg'])) ?
 				TextHelper::html_entity_decode($config->get_message_before_topic_title(), ENT_NOQUOTES) . ' ' : '') .
-				ucfirst($row['title'])
+				stripslashes($row['title'])
 			);
 			$item->set_link($link);
 			$item->set_guid($link);

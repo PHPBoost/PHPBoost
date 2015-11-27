@@ -79,7 +79,7 @@ if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 				$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';
 			}
 
-			$last_topic_title = (($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '') . ' ' . ucfirst($row['title']);
+			$last_topic_title = (($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '') . ' ' . $row['title'];
 			$last_topic_title = (strlen(TextHelper::html_entity_decode($last_topic_title)) > 25) ? TextHelper::substr_html($last_topic_title, 0, 25) . '...' : $last_topic_title;
 			$last_topic_title = addslashes($last_topic_title);
 			$row['login'] = !empty($row['login']) ? $row['login'] : $LANG['guest'];

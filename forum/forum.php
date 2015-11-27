@@ -164,12 +164,12 @@ if (!empty($id_get))
 						$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';
 					}
 					
-					$last_topic_title = (($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '') . ' ' . ucfirst($row['title']);
+					$last_topic_title = (($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '') . ' ' . $row['title'];
 					$last_topic_title = stripslashes((strlen(TextHelper::html_entity_decode($last_topic_title)) > 20) ? TextHelper::substr_html($last_topic_title, 0, 20) . '...' : $last_topic_title);
 					
 					$group_color = User::get_group_color($row['groups'], $row['user_level']);
 					
-					$last = '<a href="topic' . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title'])  . '.php') . '" class="small">' . ucfirst($last_topic_title) . '</a><br />
+					$last = '<a href="topic' . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title'])  . '.php') . '" class="small">' . $last_topic_title . '</a><br />
 					<a href="topic' . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id . '" title=""><i class="fa fa-hand-o-right"></i></a> ' . $LANG['on'] . ' ' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />
 					' . $LANG['by'] . (!empty($row['display_name']) ? ' <a href="'. UserUrlBuilder::profile($row['last_user_id'])->rel() .'" class="small '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['display_name'], 13) . '</a>' : ' ' . $LANG['guest']);
 				}
@@ -379,7 +379,7 @@ if (!empty($id_get))
 			'IMG_ANNOUNCE' => $img_announce,
 			'ANCRE' => $new_ancre,
 			'TYPE' => $type[$row['type']],
-			'TITLE' => ucfirst(stripslashes($row['title'])),
+			'TITLE' => stripslashes($row['title']),
 			'AUTHOR' => !empty($row['login']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'" class="small '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>',
 			'DESC' => $row['subtitle'],
 			'PAGINATION' => $topic_pagination->display(),
