@@ -2,10 +2,10 @@
 	<header>
 		<h1>{@online}</h1>
 	</header>
-	<table>
+	<table id="table">
 		<thead>
 			<tr>
-				<th class="column-login">
+				<th>
 					${LangLoader::get_message('form.name', 'common')}
 				</th>
 				<th>

@@ -879,6 +879,11 @@ div.field-required:after {
 	padding: 4px 8px;
 }
 
+@media (min-width:769px) {
+	.td100 { width: 100px; }
+	.td150 { width: 150px; }
+}
+
 /* ################ */
 
 

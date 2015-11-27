@@ -1,10 +1,7 @@
-<table>
+<table id="table">
 	# IF C_ARCHIVES #
 	<thead>
 		<tr> 
-			# IF C_MODERATE #
-			<th></th>
-			# ENDIF #
 			# IF NOT C_SPECIFIC_STREAM #
 			<th>
 				<a href="{SORT_STREAM_TOP}" class="fa fa-table-sort-up"></a>
@@ -27,6 +24,9 @@
 				{@archives.nbr_subscribers} 
 				<a href="{SORT_SUBSCRIBERS_BOTTOM}" class="fa fa-table-sort-down"></a>
 			</th>
+			# IF C_MODERATE #
+			<th></th>
+			# ENDIF #
 		</tr>
 	</thead>
 	# IF C_PAGINATION #
@@ -41,11 +41,6 @@
 	<tbody>
 		# START archives_list #
 			<tr>
-				# IF C_MODERATE #
-				<td>
-					<a href="{archives_list.U_DELETE_ARCHIVE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
-				</td>
-				# ENDIF #
 				# IF NOT C_SPECIFIC_STREAM #
 				<td>
 					<a href="{archives_list.U_VIEW_STREAM}">{archives_list.STREAM_NAME}</a>
@@ -60,6 +55,11 @@
 				<td>
 					{archives_list.NBR_SUBSCRIBERS}
 				</td>
+				# IF C_MODERATE #
+				<td>
+					<a href="{archives_list.U_DELETE_ARCHIVE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+				</td>
+				# ENDIF #
 			</tr>
 		# END archives_list #
 	</tbody>

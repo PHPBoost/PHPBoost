@@ -1,8 +1,7 @@
-<table>
+<table id="table">
 	# IF C_SUBSCRIBERS #
 	<thead>
 		<tr>
-			<th></th>
 			<th>
 				<a href="{SORT_PSEUDO_TOP}" class="fa fa-table-sort-up"></a>
 				{@subscribers.pseudo} 
@@ -11,6 +10,7 @@
 			<th>
 				{@subscribers.mail}
 			</th>
+			<th></th>
 		</tr>
 	</thead>
 	# IF C_PAGINATION #
@@ -25,6 +25,12 @@
 	<tbody>
 		# START subscribers_list #
 		<tr>
+			<td>
+				{subscribers_list.PSEUDO}
+			</td>
+			<td>
+				{subscribers_list.MAIL}
+			</td>
 			<td> 
 				# IF subscribers_list.C_AUTH_MODO #
 					# IF subscribers_list.C_EDIT #
@@ -32,12 +38,6 @@
 					# ENDIF #
 					<a href="{subscribers_list.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 				# ENDIF #
-			</td>
-			<td>
-				{subscribers_list.PSEUDO}
-			</td>
-			<td>
-				{subscribers_list.MAIL}
 			</td>
 		</tr>
 		# END subscribers_list #

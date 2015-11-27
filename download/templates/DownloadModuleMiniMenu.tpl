@@ -1,4 +1,4 @@
-<table>
+<table  id="table-mini-download">
 	<thead>
 		<tr>
 			<th><i class="fa # IF C_SORT_BY_DATE #fa-calendar# ELSE #fa-trophy# ENDIF #"></i></th>
@@ -30,3 +30,7 @@
 	# ENDIF #
 	</tbody>
 </table>
+
+<script>
+	jQuery('#table-mini-download').basictable();
+</script>

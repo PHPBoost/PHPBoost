@@ -1,4 +1,4 @@
-<table>
+<table id="table">
 	<tr>
 		<td>
 			# INCLUDE SELECT_GROUP #
@@ -6,7 +6,7 @@
 	</tr>
 </table>
 
-<table id="table">
+<table id="table2">
 	<caption>
 		{GROUP_NAME}
 		# IF C_ADMIN #

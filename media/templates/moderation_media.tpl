@@ -43,7 +43,7 @@
 		<form action="moderation_media.php" method="post" class="fieldset-content">
 			<fieldset>
 				<legend>{L_MODO_PANEL}</legend>
-				<table>
+				<table id="table">
 					<thead>
 						<tr>
 							<th>
@@ -107,7 +107,7 @@
 						# ENDIF #
 					</tbody>
 				</table>
-				<table>
+				<table id="table2">
 					<thead>
 						<tr>
 							<th colspan="3">{L_LEGEND}</th>

@@ -1,7 +1,7 @@
 # IF redirections #
 	{L_REDIRECTIONS}
 	# START redirections #
-	<table>
+	<table id="table">
 		<thead>
 			<tr>
 				<th>
@@ -44,7 +44,7 @@
 # IF redirection #
 	{L_redirection}
 	# START redirection #
-	<table>
+	<table id="table2">
 		<thead>
 			<tr>
 				<th>

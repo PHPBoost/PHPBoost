@@ -6,7 +6,7 @@
 		<legend>{@modules.updates_available}</legend>
 		<div class="fieldset-inset">
 		# IF C_UPDATES #
-			<table>
+			<table id="table">
 				<caption>{@modules.updates_available}</caption>
 				<thead>
 					<tr>

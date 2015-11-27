@@ -4,7 +4,7 @@
 			<div class="notice">{L_NO_FAVORITE}</div>
 		# ELSE #
 		{L_FAVORITES}
-			<table>
+			<table id="table">
 				<thead>
 					<tr>
 						<th>

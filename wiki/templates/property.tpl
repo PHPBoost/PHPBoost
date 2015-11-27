@@ -238,7 +238,7 @@
 		
 		# START redirect #
 		{redirect.L_TITLE}
-		<table>
+		<table id="table">
 			<thead>
 				<tr>
 					<th>

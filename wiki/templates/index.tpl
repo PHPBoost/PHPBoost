@@ -29,7 +29,7 @@
 				<br />
 				# START last_articles #
 				<hr /><br />
-				<table>
+				<table id="table">
 					<thead>
 						<tr> 
 							<th colspan="2">

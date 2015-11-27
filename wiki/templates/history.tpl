@@ -1,5 +1,5 @@
 		# IF C_ARTICLE #
-		<table>
+		<table id="table">
 			<caption>{L_HISTORY}: <a href="{U_ARTICLE}">{TITLE}</a></caption>
 			<thead>
 				<tr>
@@ -37,7 +37,7 @@
 			</tbody>
 		</table>
 		# ELSE #
-		<table>
+		<table id="table2">
 			<caption>{L_HISTORY}</caption>
 			<thead>
 				<tr>

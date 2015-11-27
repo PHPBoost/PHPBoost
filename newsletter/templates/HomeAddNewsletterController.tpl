@@ -1,4 +1,4 @@
-<table>
+<table id="table">
 	<thead>
 		<tr> 
 			<th colspan="3">{@newsletter.types.choice}</th>
