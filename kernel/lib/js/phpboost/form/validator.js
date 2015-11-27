@@ -316,6 +316,7 @@ function UrlExistsValidator(field_id, message)
 			jQuery.ajax({
 				url: PATH_TO_ROOT + "/kernel/framework/ajax/dispatcher.php?url=/url_validation/",
 				type: "post",
+				dataType: "json",
 				async: false,
 				data: {url_to_check : url_to_check, token : TOKEN},
 				success: function(returnData){

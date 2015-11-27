@@ -29,11 +29,25 @@ class AjaxImagePreviewController extends AbstractController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
-		$image = $request->get_string('image', '');
+		$status = 200;
+		$url = '';
+		$image_to_check = $request->get_string('image', '');
+		$image = new Url($image_to_check);
 		
-		$object = array('url' => Url::to_rel($image));
+		if ($image_to_check)
+		{
+			$file_headers = get_headers($image->absolute(), true);
+			if (is_array($file_headers))
+			{
+				if(preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/', $file_headers[0], $matches))
+					$status = (int)$matches[1];
+			}
+		}
 		
-		return new JSONResponse($object);
+		if ($status == 200)
+			$url = $image->absolute();
+		
+		return new JSONResponse(array('url' => $url));
 	}
 }
 ?>
