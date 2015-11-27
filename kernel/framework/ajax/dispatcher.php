@@ -37,7 +37,8 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('AjaxUserAutoCompleteController','`^/users_autocomplete/?$`'),
 	new UrlControllerMapper('AjaxSearchUserAutoCompleteController','`^/search_users_autocomplete/?$`'),
 	new UrlControllerMapper('AjaxImagePreviewController', '`^/image/preview/?$`'),
-	new UrlControllerMapper('AjaxKeywordsAutoCompleteController','`^/tags/?$`')
+	new UrlControllerMapper('AjaxKeywordsAutoCompleteController','`^/tags/?$`'),
+	new UrlControllerMapper('AjaxUrlValidationController', '`^/url_validation/?$`')
 );
 
 DispatchManager::dispatch($url_controller_mappers);

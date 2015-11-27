@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                             FormFieldUrlEditor.class.php
+ *                         FormFieldConstraintUrlExists.class.php
  *                            -------------------
- *   begin                : June 1, 2015
+ *   begin                : November 27, 2015
  *   copyright            : (C) 2015 Julien BRISWALTER
  *   email                : julienseth78@phpboost.com
  *
@@ -26,27 +26,46 @@
 
 /**
  * @author Julien BRISWALTER <julienseth78@phpboost.com>
- * @desc This class manages an url address.
+ * @desc
  * @package {@package}
  */
-class FormFieldUrlEditor extends FormFieldTextEditor
+class FormFieldConstraintUrlExists extends FormFieldConstraintRegex
 {
-	protected $type = 'url';
-	
-	/**
-	 * @desc Constructs a FormFieldUrlEditor.
-	 * @param string $id Field identifier
-	 * @param string $label Field label
-	 * @param string $value Default value
-	 * @param string[] $field_options Map containing the options
-	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
-	 */
-	public function __construct($id, $label, $value, $field_options = array(), array $constraints = array())
+	private $error_message;
+ 
+	public function __construct($error_message = '')
 	{
-		$constraints[] = new FormFieldConstraintUrl();
-		$constraints[] = new FormFieldConstraintUrlExists();
-		parent::__construct($id, $label, $value, $field_options, $constraints);
-		$this->set_css_form_field_class('form-field-url');
+		if (empty($error_message))
+		{
+			$error_message = LangLoader::get_message('form.invalid_url', 'status-messages-common');
+		}
+		$this->set_validation_error_message($error_message);
+		$this->error_message = TextHelper::to_js_string($error_message);
+	}
+ 
+	public function validate(FormField $field)
+	{
+		return $this->url_is_valid($field);
+	}
+ 
+	public function url_is_valid(FormField $field)
+	{
+		$status = 200;
+		$url = new Url($field->get_value());
+		$file_headers = get_headers($url->absolute(), true);
+		if (is_array($file_headers))
+		{
+			if(preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/', $file_headers[0], $matches))
+				$status = (int)$matches[1];
+		}
+		
+		return $status == 200;
+	}
+ 
+	public function get_js_validation(FormField $field)
+	{
+		return 'UrlExistsValidator(' . TextHelper::to_js_string($field->get_id()) .', '. $this->error_message . ')';
 	}
 }
+
 ?>

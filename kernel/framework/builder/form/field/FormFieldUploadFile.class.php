@@ -42,6 +42,7 @@ class FormFieldUploadFile extends AbstractFormField
 	 */
 	public function __construct($id, $label, $value, $field_options = array(), array $constraints = array())
 	{
+		$constraints[] = new FormFieldConstraintUrlExists(LangLoader::get_message('form.unexisting_file', 'status-messages-common'));
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
 

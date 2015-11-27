@@ -299,6 +299,38 @@ function UserExistValidator(field_id, message)
 	return '';
 }
 
+function UrlExistsValidator(field_id, message)
+{
+	var field = HTMLForms.getField(field_id);
+	if (field)
+	{
+		var value = field.getValue();
+		var error = '';
+		if (value != '')
+		{
+			if (value.substring(1) == '/')
+				url_to_check = PATH_TO_ROOT + value;
+			else
+				url_to_check = value;
+			
+			jQuery.ajax({
+				url: PATH_TO_ROOT + "/kernel/framework/ajax/dispatcher.php?url=/url_validation/",
+				type: "post",
+				async: false,
+				data: {url_to_check : url_to_check, token : TOKEN},
+				success: function(returnData){
+					if (returnData.status != 200)
+					{
+						error = message;
+					}
+				}
+			});
+		}
+		return error;
+	}
+	return '';
+}
+
 /* #### Multiple Field Constraints #### */
 function equalityFormFieldValidator(field_id, field_id2, message)
 {

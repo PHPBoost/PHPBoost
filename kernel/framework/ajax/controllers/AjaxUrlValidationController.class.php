@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                             FormFieldUrlEditor.class.php
+ *                          AjaxUrlValidationController.class.php
  *                            -------------------
- *   begin                : June 1, 2015
+ *   begin                : November 27, 2015
  *   copyright            : (C) 2015 Julien BRISWALTER
  *   email                : julienseth78@phpboost.com
  *
@@ -24,29 +24,25 @@
  *
  ###################################################*/
 
-/**
- * @author Julien BRISWALTER <julienseth78@phpboost.com>
- * @desc This class manages an url address.
- * @package {@package}
- */
-class FormFieldUrlEditor extends FormFieldTextEditor
+class AjaxUrlValidationController extends AbstractController
 {
-	protected $type = 'url';
-	
-	/**
-	 * @desc Constructs a FormFieldUrlEditor.
-	 * @param string $id Field identifier
-	 * @param string $label Field label
-	 * @param string $value Default value
-	 * @param string[] $field_options Map containing the options
-	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
-	 */
-	public function __construct($id, $label, $value, $field_options = array(), array $constraints = array())
+	public function execute(HTTPRequestCustom $request)
 	{
-		$constraints[] = new FormFieldConstraintUrl();
-		$constraints[] = new FormFieldConstraintUrlExists();
-		parent::__construct($id, $label, $value, $field_options, $constraints);
-		$this->set_css_form_field_class('form-field-url');
+		$status = 200;
+		
+		$url_to_check = $request->get_value('url_to_check', '');
+		if ($url_to_check)
+		{
+			$url = new Url($url_to_check);
+			$file_headers = get_headers($url->absolute(), true);
+			if (is_array($file_headers))
+			{
+				if(preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/', $file_headers[0], $matches))
+					$status = (int)$matches[1];
+			}
+		}
+		
+		return new JSONResponse(array('status' => $status));
 	}
 }
 ?>
