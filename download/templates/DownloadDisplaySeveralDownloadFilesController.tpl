@@ -38,38 +38,21 @@
 			<div class="spacer"></div>
 		# ENDIF #
 		# IF C_CATEGORY_DISPLAYED_TABLE #
-			<table>
+			<table id="table">
 				<thead>
 					<tr>
-						# IF C_MODERATION #<th class="col-smaller"></th># ENDIF #
 						<th>${LangLoader::get_message('form.name', 'common')}</th>
 						<th class="col-small">${LangLoader::get_message('form.keywords', 'common')}</th>
 						<th class="col-small">${LangLoader::get_message('form.date.creation', 'common')}</th>
 						<th class="col-small">{@downloads_number}</th>
 						# IF C_NOTATION_ENABLED #<th>${LangLoader::get_message('note', 'common')}</th># ENDIF #
 						# IF C_COMMENTS_ENABLED #<th class="col-small">${LangLoader::get_message('comments', 'comments-common')}</th># ENDIF #
+						# IF C_MODERATION #<th class="col-smaller"></th># ENDIF #
 					</tr>
 				</thead>
-				# IF C_PAGINATION #
-				<tfoot>
-					<tr>
-						<th colspan="{TABLE_COLSPAN}"># INCLUDE PAGINATION #</th>
-					</tr>
-				</tfoot>
-				# ENDIF #
 				<tbody>
 					# START downloadfiles #
 					<tr>
-						# IF C_MODERATION #
-						<td>
-							# IF downloadfiles.C_EDIT #
-								<a href="{downloadfiles.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
-							# ENDIF #
-							# IF downloadfiles.C_DELETE #
-								<a href="{downloadfiles.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
-							# ENDIF #
-						</td>
-						# ENDIF #
 						<td>
 							<a href="{downloadfiles.U_LINK}" itemprop="name">{downloadfiles.NAME}</a>
 						</td>
@@ -96,6 +79,16 @@
 						# IF C_COMMENTS_ENABLED #
 						<td>
 							# IF downloadfiles.C_COMMENTS # {downloadfiles.NUMBER_COMMENTS} # ENDIF # {downloadfiles.L_COMMENTS}
+						</td>
+						# ENDIF #
+						# IF C_MODERATION #
+						<td>
+							# IF downloadfiles.C_EDIT #
+								<a href="{downloadfiles.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+							# ENDIF #
+							# IF downloadfiles.C_DELETE #
+								<a href="{downloadfiles.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
+							# ENDIF #
 						</td>
 						# ENDIF #
 					</tr>
