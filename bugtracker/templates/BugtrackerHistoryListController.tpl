@@ -1,5 +1,5 @@
 # IF C_HISTORY #
-<table>
+<table id="table">
 	<thead>
 		<tr>
 			<th>

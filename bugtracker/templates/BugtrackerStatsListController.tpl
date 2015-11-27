@@ -47,7 +47,7 @@
 	</header>
 	<div class="content">
 		# IF C_FIXED_BUGS #
-		<table>
+		<table id="table">
 			<thead>
 				<tr>
 					<th>
@@ -94,7 +94,7 @@
 	<div class="spacer"></div>
 	<div class="content">
 		# IF C_POSTERS #
-		<table>
+		<table id="table2">
 			<thead>
 				<tr>
 					<th>

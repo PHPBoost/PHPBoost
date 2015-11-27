@@ -1,7 +1,7 @@
 # INCLUDE FILTER_LIST #
 
 # IF C_BUGS #
-	<table>
+	<table id="table">
 		<thead>
 			<tr>
 				<th>

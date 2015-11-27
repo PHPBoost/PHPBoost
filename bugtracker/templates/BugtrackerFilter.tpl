@@ -104,3 +104,6 @@ function toggle_filters_table() {
 </table>
 
 <div class="spacer"></div>
+<script>
+	jQuery('#table_filters').basictable();
+</script>
