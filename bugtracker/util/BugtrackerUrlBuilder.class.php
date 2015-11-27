@@ -120,7 +120,7 @@ class BugtrackerUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function roadmap($version = 0, $version_name = null, $status = null, $sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1)
+	public static function roadmap($version = 0, $version_name = null, $status = null, $sort_field = '', $sort_mode = '', $page = 1)
 	{
 		$version = $version !== 0 ? $version . '-' : '';
 		$version_name = $version_name !== null ? $version_name . '/' : '';
