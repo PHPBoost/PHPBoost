@@ -96,7 +96,7 @@ h4.formatter-title {
 .calendar-block {
 	position: absolute;
 	border: 1px solid #999999;
-	top: 2px;
+	top: 100%;
 	left: 17px;
 	z-index: 10;
 	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
