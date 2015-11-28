@@ -88,6 +88,7 @@ tinymce.init({
 	# IF C_TOOLBAR3 #toolbar3: "{TOOLBAR3}",# ENDIF #
 
 	menubar: false,
+	imagetools_proxy: '{PATH_TO_ROOT}/TinyMCE/lib/TinyMCEPicturesProxy.php',
 	autoresize_max_height: '500px',
 	advlist_number_styles: 'default',
 	advlist_bullet_styles: 'default',
