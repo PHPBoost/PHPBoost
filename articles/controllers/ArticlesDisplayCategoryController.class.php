@@ -123,6 +123,8 @@ class ArticlesDisplayCategoryController extends ModuleController
 			'C_DISPLAY_CATS_ICON' => $this->config->are_cats_icon_enabled(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_NO_ARTICLE_AVAILABLE' => $result->get_rows_count() == 0,
+			'C_ONE_ARTICLE_AVAILABLE' => $result->get_rows_count() == 1,
+			'C_TWO_ARTICLE_AVAILABLE' => $result->get_rows_count() == 2,
 			'PAGINATION' => $pagination->display(),
 			'ID_CAT' => $this->get_category()->get_id(),
 			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? ArticlesUrlBuilder::configuration()->rel() : ArticlesUrlBuilder::edit_category($this->get_category()->get_id())->rel()
