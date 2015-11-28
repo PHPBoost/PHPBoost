@@ -145,12 +145,31 @@ div.cssmenu-group .cssmenu-title {
 	#cssmenu-galleryfilter ul {
 		min-width: 130px;
 	}
+
+	#cssmenu-admin-menu.cssmenu-vertical .has-sub {
+		position: relative;
+	}
+
+	#cssmenu-admin-menu.cssmenu-vertical .has-sub > ul {
+		position: absolute;
+		z-index: 100;
+		width: 300px;
+	}
+
 }
 
 @media (min-width: 769px) {
 	.cssmenu.cssmenu-static li.has-sub > .cssmenu-title:after,
 	.cssmenu.cssmenu-static li.has-sub > .cssmenu-title:before {
 		display: none;
+	}
+
+	#cssmenu-admin-menu.cssmenu-vertical ul > li > .cssmenu-title {
+		text-transform: uppercase;
+		text-decoration: none;
+		font-weight: normal;
+		padding: 15px 17px;
+		display: block;
 	}
 }
 
@@ -263,6 +282,8 @@ div.cssmenu-group .cssmenu-title {
 
 	.cssmenu-vertical > ul > li.has-sub > .cssmenu-title:after  { top: 11px; }
 	.cssmenu-vertical > ul > li.has-sub > .cssmenu-title:before { top: 8px;  }
+	#cssmenu-admin-menu.cssmenu-vertical ul > li.has-sub > .cssmenu-title:after  { top: 19px; }
+	#cssmenu-admin-menu.cssmenu-vertical ul > li.has-sub > .cssmenu-title:before { top: 16px; }
 }
 
 /* --- Position des sous menu --- */
@@ -271,6 +292,12 @@ aside .cssmenu-left li:hover > ul 				{ left: 100% ; top: 0;    }
 aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 .cssmenu.cssmenu-actionslinks li:hover > ul 	{ right: 0   ; top: 100%; }
 .cssmenu.cssmenu-actionslinks ul li:hover > ul 	{ right: 100%; top: 0;    }
+
+@media (min-width: 769px) {
+	#cssmenu-admin-menu.cssmenu-vertical ul li:hover > ul 	{
+		left: 100%; top: 0;   
+	}
+}
 
 @media (max-width: 768px) {
 	.cssmenu li:hover > ul 						{ left: 0;  }
@@ -424,6 +451,75 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 		border-bottom: 1px solid rgba(150, 150, 150, 0.15);
 		width: 170px;
 	}
+
+	#cssmenu-admin-menu ul.multicolumns > li > .cssmenu-title {
+		padding: 14px 25px 14px 14px;
+		height: 40px;
+		width: 170px;
+	}
+	#cssmenu-admin-menu ul.multicolumns > li > .cssmenu-title img {
+    	width: 1.28571429em;
+    	text-align: center;	
+	}
+	#cssmenu-admin-menu ul.multicolumns > li > .cssmenu-title i {
+	    margin: 0 5px 0 0;
+	    vertical-align: bottom;
+	}
+   
+	#cssmenu-admin-menu ul.multicolumns {
+		-webkit-column-gap: 0px;
+		-moz-column-gap: 0px;
+		column-gap: 0px;
+		vertical-align: top;
+	}
+	
+	#cssmenu-admin-menu ul.multicolumns.columns-1 {
+		width: calc(170px * 1);
+	}
+
+	#cssmenu-admin-menu ul.multicolumns.columns-2 {
+		-webkit-column-count: 2;
+		-moz-column-count: 2;
+		column-count: 2;
+		width: calc(170px * 2);
+		height: calc(40px * 7);
+	}
+
+	#cssmenu-admin-menu ul.multicolumns.columns-3 {
+		-webkit-column-count: 3;
+		-moz-column-count: 3;
+		column-count: 3;
+		width: calc(170px * 3);
+		height: calc(40px * 7);
+	}
+
+	#cssmenu-admin-menu ul.multicolumns.columns-4 {
+		-webkit-column-count: 4;
+		-moz-column-count: 4;
+		column-count: 4;
+		width: calc(170px * 4);
+		height: calc(40px * 7);
+	}
+
+	#cssmenu-admin-menu ul.multicolumns.columns-5 {
+		-webkit-column-count: 5;
+		-moz-column-count: 5;
+		column-count: 5;
+		width: calc(170px * 5);
+		height: calc(40px * 7);
+	}
+
+	#cssmenu-admin-menu ul.multicolumns.columns-2 > li > .cssmenu-title:before,
+	#cssmenu-admin-menu ul.multicolumns.columns-3 > li > .cssmenu-title:before,
+	#cssmenu-admin-menu ul.multicolumns.columns-4 > li > .cssmenu-title:before,
+	#cssmenu-admin-menu ul.multicolumns.columns-5 > li > .cssmenu-title:before
+	#cssmenu-admin-menu ul.multicolumns.columns-2 > li > .cssmenu-title:after,
+	#cssmenu-admin-menu ul.multicolumns.columns-3 > li > .cssmenu-title:after,
+	#cssmenu-admin-menu ul.multicolumns.columns-4 > li > .cssmenu-title:after,
+	#cssmenu-admin-menu ul.multicolumns.columns-5 > li > .cssmenu-title:after {
+		display: none;
+
+	}
 }
 
 /* --- Indicateur de sous menu --- */
@@ -560,9 +656,24 @@ header .cssmenu li:hover > .cssmenu-title 					{ color: #FFFFFF; }
 .cssmenu.cssmenu-vertical li:hover > .cssmenu-title 		{ color: #666666; }
 #main .cssmenu li:hover > .cssmenu-title 					{ color: #666666; }
 
+#cssmenu-admin-menu.cssmenu-vertical ul > li > .cssmenu-title {
+		color: #DDDDDD;
+	}
+
 @media (min-width: 769px) {
 	header .cssmenu-horizontal > ul > li:hover				{ background: #333333; }
 	#main .cssmenu-horizontal > ul > li:hover  				{ background: #F9F9F9; }
+	
+
+	
+	#cssmenu-admin-menu.cssmenu-vertical ul > li > .cssmenu-title:after,
+	#cssmenu-admin-menu.cssmenu-vertical ul > li > .cssmenu-title:before {
+		background: #DDDDDD;
+	}
+
+	#cssmenu-admin-menu.cssmenu-vertical ul li:hover > .cssmenu-title {
+		background: rgba(0, 0, 0, 0.2);
+	}
 }
 
 /* --- Niveau 2 --- */
@@ -580,9 +691,12 @@ header .cssmenu ul ul li:hover > .cssmenu-title 			{ color: #FFFFFF; }
 footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 #top-footer .cssmenu-static ul ul li:hover > .cssmenu-title { color: #262626; }
 
-.cssmenu.cssmenu-vertical ul ul li .cssmenu-title  			{ background: #FFFFFF; }
+.cssmenu.cssmenu-vertical ul ul li .cssmenu-title  							{ background: #FFFFFF; }
+.cssmenu-actionslinks ul li:hover > .cssmenu-title:after 					{ background: #333333; }
 
-.cssmenu-actionslinks ul li:hover > .cssmenu-title:after 	{ background: #333333; }
+#cssmenu-admin-menu ul.multicolumns 										{ background: #404040; }
+#cssmenu-admin-menu.cssmenu-vertical ul.level-1 li > .cssmenu-title 		{ background: #404040; }
+#cssmenu-admin-menu.cssmenu-vertical ul.level-1 li:hover > .cssmenu-title	{ background: #363636; }
 
 @media (min-width: 769px) {
 	header .cssmenu ul ul li .cssmenu-title					{ background: #333333; }

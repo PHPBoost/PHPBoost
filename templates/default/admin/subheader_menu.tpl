@@ -1,20 +1,20 @@
-
-<script src="{PATH_TO_ROOT}/templates/default/admin/js/menumaker.js"></script>
-<nav id="rm-admin" class="rm">
-	<ul>
-		<li><a class="cssmenu-title"><i class="fa fa-fw fa-cog"></i> {L_ADMINISTRATION}</a>
-			<ul>
-				<li>
+<script src="{PATH_TO_ROOT}/kernel/lib/js/global.js"></script>
+<nav id="cssmenu-admin-menu" class="cssmenu cssmenu-vertical cssmenu-left">
+	<ul class="level-0">
+		<li class="has-sub">
+			<a class="cssmenu-title"><i class="fa fa-fw fa-cog"></i> {L_ADMINISTRATION}</a>
+			<ul class="level-1">
+				<li class="has-sub">
 					<a class="cssmenu-title" href="${relative_url(AdminConfigUrlBuilder::general_config())}"><i class="fa fa-fw fa-cog"></i> {L_CONFIGURATION}</a>
-					<ul>
+					<ul class="level-2">
 						<li><a class="cssmenu-title" href="${relative_url(AdminConfigUrlBuilder::general_config())}"><i class="fa fa-fw fa-cog"></i> {L_CONFIG_GENERAL}</a></li>
 						<li><a class="cssmenu-title" href="${relative_url(AdminConfigUrlBuilder::advanced_config())}"><i class="fa fa-fw fa-cogs"></i> {L_CONFIG_ADVANCED}</a></li>
 						<li><a class="cssmenu-title" href="${relative_url(AdminConfigUrlBuilder::mail_config())}"><i class="fa fa-fw fa-envelope-o"></i> {L_MAIL_CONFIG}</a></li>
 					</ul>
 				</li>
-				<li>
+				<li class="has-sub">
 					<a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/updates/updates.php"><i class="fa fa-fw fa-download"></i> {L_UPDATES}</a>
-					<ul>
+					<ul class="level-2">
 						<li><a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/updates/updates.php?type=kernel"><i class="fa fa-fw fa-cog"></i> {L_KERNEL}</a></li>
 						<li><a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/updates/updates.php?type=module"><i class="fa fa-fw fa-cubes"></i> {L_MODULES}</a></li>
 						<li><a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/updates/updates.php?type=template"><i class="fa fa-fw fa-picture-o"></i> {L_THEMES}</a></li>
@@ -23,16 +23,16 @@
 				<li>
 					<a class="cssmenu-title" href="${relative_url(AdminMaintainUrlBuilder::maintain())}"><i class="fa fa-fw fa-clock-o"></i> {L_MAINTAIN}</a>
 				</li>
-				<li>
+				<li class="has-sub">
 					<a class="cssmenu-title" href="${relative_url(AdminThemeUrlBuilder::list_installed_theme())}"><i class="fa fa-fw fa-picture-o"></i> {L_THEMES}</a>
-					<ul>
+					<ul class="level-2">
 						<li><a class="cssmenu-title" href="${relative_url(AdminThemeUrlBuilder::list_installed_theme())}"><i class="fa fa-fw fa-cog"></i> {L_MANAGEMENT}</a></li>
 						<li><a class="cssmenu-title" href="${relative_url(AdminThemeUrlBuilder::add_theme())}"><i class="fa fa-fw fa-plus"></i> {L_ADD}</a></li>
 					</ul>
 				</li>
-				<li>
+				<li class="has-sub">
 					<a class="cssmenu-title" href="${relative_url(AdminLangsUrlBuilder::list_installed_langs())}"><i class="fa fa-fw fa-language"></i> {L_LANGS}</a>
-					<ul>
+					<ul class="level-2">
 						<li><a class="cssmenu-title" href="${relative_url(AdminLangsUrlBuilder::list_installed_langs())}"><i class="fa fa-fw fa-cog"></i> {L_MANAGEMENT}</a></li>
 						<li><a class="cssmenu-title" href="${relative_url(AdminLangsUrlBuilder::install())}"><i class="fa fa-fw fa-plus"></i> {L_ADD}</a></li>
 					</ul>
@@ -47,27 +47,28 @@
 				# ENDIF #
 			</ul>
 		</li>
-		<li><a class="cssmenu-title"><i class="fa fa-fw fa-wrench"></i> {L_TOOLS}</a>
-			<ul>
-				<li>
+		<li class="has-sub">
+			<a class="cssmenu-title"><i class="fa fa-fw fa-wrench"></i> {L_TOOLS}</a>
+			<ul class="level-1">
+				<li class="has-sub">
 					<a class="cssmenu-title" href="${relative_url(AdminCacheUrlBuilder::clear_cache())}"><i class="fa fa-fw fa-refresh"></i> {L_CACHE}</a>
-					<ul>
+					<ul class="level-2">
 						<li><a class="cssmenu-title" href="${relative_url(AdminCacheUrlBuilder::clear_cache())}"><i class="fa fa-fw fa-refresh"></i> {L_CACHE}</a></li>
 						<li><a class="cssmenu-title" href="${relative_url(AdminCacheUrlBuilder::clear_syndication_cache())}"><i class="fa fa-fw fa-rss"></i> {L_SYNDICATION_CACHE}</a></li>
 						<li><a class="cssmenu-title" href="${relative_url(AdminCacheUrlBuilder::clear_css_cache())}"><i class="fa fa-fw fa-css3"></i> {L_CSS_CACHE_CONFIG}</a></li>
 						<li><a class="cssmenu-title" href="${relative_url(AdminCacheUrlBuilder::configuration())}"><i class="fa fa-fw fa-cogs"></i> {L_CONFIGURATION}</a></li>
 					</ul>
 				</li>
-				<li>
+				<li class="has-sub">
 					<a class="cssmenu-title" href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}"><i class="fa fa-fw fa-exclamation-triangle"></i> {L_ERRORS}</a>
-					<ul>
+					<ul class="level-2">
 						<li><a class="cssmenu-title" href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}"><i class="fa fa-fw fa-exclamation-circle"></i> {L_ERRORS}</a></li>
 						<li><a class="cssmenu-title" href="${relative_url(AdminErrorsUrlBuilder::list_404_errors())}"><i class="fa fa-fw fa-ban"></i> {L_404_ERRORS}</a></li>
 					</ul>
 				</li>
-				<li>
+				<li class="has-sub">
 					<a class="cssmenu-title" href="${relative_url(AdminServerUrlBuilder::system_report())}"><i class="fa fa-fw fa-building"></i> {L_SERVER}</a>
-					<ul>
+					<ul class="level-2">
 						<li><a class="cssmenu-title" href="${relative_url(AdminServerUrlBuilder::phpinfo())}"><i class="fa fa-fw fa-info"></i> {L_PHPINFO}</a></a></li>
 						<li><a class="cssmenu-title" href="${relative_url(AdminServerUrlBuilder::system_report())}"><i class="fa fa-fw fa-info-circle"></i> {L_SYSTEM_REPORT}</a></li>
 					</ul>
@@ -79,27 +80,28 @@
 				# ENDIF #
 			</ul>
 		</li>
-		<li><a class="cssmenu-title"><i class="fa fa-fw fa-user"></i> {L_USER}</a>
-			<ul>
-				<li>
+		<li class="has-sub">
+			<a class="cssmenu-title"><i class="fa fa-fw fa-user"></i> {L_USER}</a>
+			<ul class="level-1">
+				<li class="has-sub">
 					<a class="cssmenu-title" href="${relative_url(AdminMembersUrlBuilder::management())}"><i class="fa fa-fw fa-user"></i> {L_USER}</a>
-					<ul>
+					<ul class="level-2">
 						<li><a class="cssmenu-title" href="${relative_url(AdminMembersUrlBuilder::management())}"><i class="fa fa-fw fa-cog"></i> {L_MANAGEMENT}</a></li>
 						<li><a class="cssmenu-title" href="${relative_url(AdminMembersUrlBuilder::add())}"><i class="fa fa-fw fa-plus"></i> {L_ADD}</a></li>
 						<li><a class="cssmenu-title" href="${relative_url(AdminMembersUrlBuilder::configuration())}"><i class="fa fa-fw fa-cogs"></i> {L_CONFIGURATION}</a></li>
 						<li><a class="cssmenu-title" href="{PATH_TO_ROOT}/user/moderation_panel.php"><i class="fa fa-fw fa-ban"></i> {L_PUNISHEMENT}</a></li>
 					</ul>
 				</li>
-				<li>
+				<li class="has-sub">
 					<a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/admin_groups.php"><i class="fa fa-fw fa-users"></i> {L_GROUP}</a>
-					<ul>
+					<ul class="level-2">
 						<li><a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/admin_groups.php"><i class="fa fa-fw fa-cog"></i> {L_MANAGEMENT}</a></li>
 						<li><a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/admin_groups.php?add=1"><i class="fa fa-fw fa-plus"></i> {L_ADD}</a></li>
 					</ul>
 				</li>
-				<li>
+				<li class="has-sub">
 					<a class="cssmenu-title" href="${relative_url(AdminExtendedFieldsUrlBuilder::fields_list())}"><i class="fa fa-fw fa-reorder"></i> {L_EXTEND_FIELD}</a>
-					<ul>
+					<ul class="level-2">
 						<li><a class="cssmenu-title" href="${relative_url(AdminExtendedFieldsUrlBuilder::fields_list())}"><i class="fa fa-cog"></i> {L_MANAGEMENT}</a></li>
 						<li><a class="cssmenu-title" href="${relative_url(AdminExtendedFieldsUrlBuilder::add())}"><i class="fa fa-fw fa-plus"></i> {L_ADD}</a></li>
 					</ul>
@@ -111,37 +113,38 @@
 				# ENDIF #
 			</ul>
 		</li>
-		<li><a class="cssmenu-title"><i class="fa fa-fw fa-square-o"></i> {L_CONTENT}</a>
-			<ul>
+		<li class="has-sub">
+			<a class="cssmenu-title"><i class="fa fa-fw fa-square-o"></i> {L_CONTENT}</a>
+			<ul class="level-1">
 				<li>
 					<a class="cssmenu-title" href="${relative_url(AdminContentUrlBuilder::content_configuration())}"><i class="fa fa-fw fa-square-o"></i> {L_CONTENT_CONFIG}</a>
 				</li>
-				<li>
+				<li class="has-sub">
 					<a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/menus/menus.php"><i class="fa fa-fw fa-list-ul"></i> {L_MENUS}</a>
-					<ul>
+					<ul class="level-2">
 						<li><a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/menus/menus.php"><i class="fa fa-fw fa-cog"></i> {L_MANAGEMENT}</a></li>
 						<li><a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/menus/links.php"><i class="fa fa-fw fa-list-ul"></i> {L_ADD_LINKS_MENU}</a></li>
 						<li><a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/menus/content.php"><i class="fa fa-fw fa-file-o"></i> {L_ADD_CONTENT_MENU}</a></li>
 						<li><a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/menus/feed.php"><i class="fa fa-fw fa-rss"></i> {L_ADD_FEED_MENU}</a></li>
 					</ul>
 				</li>
-				<li>
+				<li class="has-sub">
 					<a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/admin_files.php"><i class="fa fa-fw fa-file-text-o"></i> {L_FILES}</a>
-					<ul>
+					<ul class="level-2">
 						<li><a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/admin_files.php"><i class="fa fa-fw fa-cog"></i> {L_MANAGEMENT}</a></li>
 						<li><a class="cssmenu-title" href="${relative_url(AdminFilesUrlBuilder::configuration())}"><i class="fa fa-cogs"></i> {L_CONFIGURATION}</a></li>
 					</ul>
 				</li>
-				<li>
+				<li class="has-sub">
 					<a class="cssmenu-title" href="${relative_url(UserUrlBuilder::comments())}"><i class="fa fa-fw fa-comment-o"></i> {L_COMMENTS}</a>
-					<ul>
+					<ul class="level-2">
 						<li><a class="cssmenu-title" href="${relative_url(UserUrlBuilder::comments())}"><i class="fa fa-fw fa-cog"></i> {L_MANAGEMENT}</a></li>
 						<li><a class="cssmenu-title" href="{PATH_TO_ROOT}/admin/content/?url=/comments/config/"><i class="fa fa-fw fa-cogs"></i> {L_CONFIGURATION}</a></li>
 					</ul>
 				</li>
-				<li>
+				<li class="has-sub">
 					<a class="cssmenu-title" href="${relative_url(AdminSmileysUrlBuilder::management())}"><i class="fa fa-fw fa-smile-o"></i> {L_SMILEY}</a>
-					<ul>
+					<ul class="level-2">
 						<li><a class="cssmenu-title" href="${relative_url(AdminSmileysUrlBuilder::management())}"><i class="fa fa-fw fa-cog"></i> {L_MANAGEMENT}</a></li>
 						<li><a class="cssmenu-title" href="${relative_url(AdminSmileysUrlBuilder::add())}"><i class="fa fa-fw fa-plus"></i> {L_ADD}</a></li>
 					</ul>
@@ -153,11 +156,12 @@
 				# ENDIF #
 			</ul>
 		</li>
-		<li><a class="cssmenu-title"><i class="fa fa-fw fa-cubes"></i> {L_MODULES}</a>
-			<ul>
-				<li>
+		<li class="has-sub">
+			<a class="cssmenu-title"><i class="fa fa-fw fa-cubes"></i> {L_MODULES}</a>
+			<ul class="level-1 multicolumns columns-{U_NBR_MODULES}">
+				<li class="has-sub">
 					<a class="cssmenu-title" href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}"><i class="fa fa-fw fa-cubes"></i> {L_MODULES}</a>
-					<ul> 
+					<ul class="level-2"> 
 						<li><a class="cssmenu-title" href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}"><i class="fa fa-fw fa-cog"></i> {L_MANAGEMENT}</a></li>
 						<li><a class="cssmenu-title" href="${relative_url(AdminModulesUrlBuilder::add_module())}"><i class="fa fa-fw fa-plus"></i> {L_ADD}</a></li>
 						<li><a class="cssmenu-title" href="${relative_url(AdminModulesUrlBuilder::update_module())}"><i class="fa fa-fw fa-level-up"></i> {L_UPDATES}</a></li>
@@ -172,10 +176,11 @@
 		</li>
 	</ul>
 </nav>
+
 <script>
-	jQuery("#rm-admin").menumaker({
+	jQuery("#cssmenu-admin-menu").menumaker({
 		title: "${Langloader::get_message('admin.subheader_menu', 'main')}",
 		format: "multitoggle",
-		breakpoint: 9000
+		breakpoint: 768
 	});
 </script>

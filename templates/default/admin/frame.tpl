@@ -2,7 +2,7 @@
 <html lang="{L_XML_LANGUAGE}">
 	<head>
 		<title>{TITLE}</title>
-		<meta charset=windows-1252" />
+		<meta charset="windows-1252" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 		<!-- Theme CSS -->

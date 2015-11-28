@@ -1,7 +1,7 @@
-<li# IF C_HAS_SUB_LINK # class="extend"# ENDIF #>
+<li# IF C_HAS_SUB_LINK # class="has-sub"# ENDIF #>
 	<a href="{U_LINK}" class="cssmenu-title">{NAME}</a>
 	# IF C_HAS_SUB_LINK #
-	<ul>
+	<ul class="level-1">
 		# START element #
 			# INCLUDE element.ELEMENT #
 		# END element #

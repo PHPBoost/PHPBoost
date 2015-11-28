@@ -73,7 +73,6 @@ h3.menu-title {
 		z-index: 3;
 		max-width: 230px;
 		max-height: none;  
-		overflow: hidden;
 		height:100%;
 		width:250px;
 	}
@@ -81,9 +80,6 @@ h3.menu-title {
 	div.header-admin-container{
 		max-height: 100%;
 		position:absolute;
-		right: -20px;
-		overflow-y: scroll;
-		width: calc(100% + 20px);
 		left:0;
 	}
 	
@@ -139,7 +135,6 @@ div#global {
 div#admin-main {
 	min-height:95vh;
 	padding-bottom: 40px;
-	overflow:hidden;
 }
 
 div#admin-contents {	

@@ -1,7 +1,8 @@
 # IF C_DISPLAY #
-<li><a href="{U_LINK}"><img src="{IMG}" alt="{NAME}"/> {NAME}</a>
+<li # IF C_HAS_SUB_LINK # class="has-sub"# ENDIF #>
+	<a href="{U_LINK}" class="cssmenu-title"><img src="{IMG}" alt="{NAME}"/> {NAME}</a>
 	# IF C_HAS_SUB_LINK #
-	<ul>
+	<ul class="level-2">
 		# START element #
 			# INCLUDE element.ELEMENT #
 		# END element #

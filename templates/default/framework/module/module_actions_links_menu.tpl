@@ -1,6 +1,6 @@
 # IF C_DISPLAY #
 <menu id="cssmenu-module-{ID}" class="cssmenu cssmenu-right cssmenu-actionslinks">
-	<ul class="hidden">
+	<ul class="level-0 hidden">
 		# START element #
 			# INCLUDE element.ELEMENT #
 		# END element #

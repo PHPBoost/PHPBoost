@@ -137,6 +137,17 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$subheader_tpl = new FileTemplate('admin/subheader_menu.tpl');
 		$subheader_tpl->add_lang($subheader_lang);
 
+		$modules = ModulesManager::get_activated_modules_map_sorted_by_localized_name();
+		
+		$modules_number = 0;
+		foreach ($modules as $module)
+		{
+			if ($module->get_configuration()->get_admin_menu() == 'modules')
+			{
+				$modules_number++;
+			}
+		}
+
 		$subheader_tpl->put_all(array(
 			'L_ADD' => $subheader_lang['add'],
 			'L_ADMINISTRATION' => $subheader_lang['administration'],
@@ -174,6 +185,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'L_FILES' => $subheader_lang['content.files'],
 			'L_COMMENTS' => $subheader_lang['content.comments'],
 			'L_MODULES' => $subheader_lang['modules'],
+			'U_NBR_MODULES' => ceil( ($modules_number + 1) / 7),
 			'U_INDEX_SITE' => Environment::get_home_page(),
 			'C_ADMIN_LINKS_1' => false,
 			'C_ADMIN_LINKS_2' => false,
@@ -183,15 +195,14 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'C_ADMIN_LINKS_1' => false
 		));
 
-		$modules = ModulesManager::get_activated_modules_map_sorted_by_localized_name();
 		$array_pos = array(0, 4, 4, 3, 3, 1);
 		$menus_numbers = array('index' => 1, 'administration' => 2, 'tools' => 3, 'members' => 4,
 			 'content' => 5, 'modules' => 6);
+		
 		foreach ($modules as $module)
 		{
 			$module_id = $module->get_id();
 			$configuration = $module->get_configuration();
-
 			$menu_pos_name = $configuration->get_admin_menu();
 			$menu_pos = 0;
 
@@ -199,7 +210,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			{
 				$menu_pos = $menus_numbers[$menu_pos_name];
 			}
-			
+
 			if ($menu_pos > 0)
 			{
 				$array_pos[$menu_pos-1]++;
@@ -207,7 +218,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 				$subheader_tpl->put('C_ADMIN_LINKS_' . $menu_pos, true);
 				
 				$subheader_tpl->assign_block_vars('admin_links_' . $menu_pos, array(
-					'MODULE_MENU' => ModuleTreeLinksService::display_admin_actions_menu($module)
+					'MODULE_MENU' => ModuleTreeLinksService::display_admin_actions_menu($module)					
 				));
 			}
 		}
