@@ -52,3 +52,6 @@ span.contents + hr {
     margin: 35px 0 20px 0;
     clear: both;
 }
+
+#module-articles .one-article   { width: 100%; }
+#module-articles .two-articles  { width: 49%;  }
