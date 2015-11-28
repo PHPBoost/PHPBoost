@@ -397,7 +397,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//Youtube tag
 		if (!in_array('youtube', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`&lt;video(?: style="([^"]+)")?(?: controls="([^"]+)")? width="([^"]+)" height="([^"]+)"(?: controls="([^"]+)")?&gt;\s?&lt;source src="https://www.youtube.com/(.*)" /&gt;&lt;/video&gt;`is', array($this, 'parse_youtube_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="(?:https?:)?//www.youtube.com/(.*)" width="([^"]+)" height="([^"]+)"(?: frameborder="0")?(?: allowfullscreen="allowfullscreen")?&gt;(.+)?&lt;/iframe&gt;`isU', array($this, 'parse_youtube_tag'), $this->content);
 		}
 		//Flash tag
 		if (!in_array('swf', $this->forbidden_tags))
@@ -743,27 +743,7 @@ class TinyMCEParser extends ContentFormattingParser
 	
 	private function parse_youtube_tag($matches)
 	{
-		$video = '[[MEDIA]]insertYoutubePlayer(\'https://www.youtube.com/' . $matches[6] . '\', ' . $matches[3] . ', ' . $matches[4] . ');[[/MEDIA]]';
-		if (!empty($matches[1]))
-		{
-			$style = trim($matches[1]);
-			switch ($style)
-			{
-				case 'float: left;':
-					$style = 'class="float-left"';
-					break;
-				case 'float: right;':
-					$style = 'class="float-right"';
-					break;
-				case 'display: block; margin-left: auto; margin-right: auto;':
-					$style = 'style="text-align:center"';
-					break;
-				default:
-					break;
-			}
-			$video = '<p ' . $style . '>' . $video . '</p>';
-		}
-		return $video;
+		return '[[MEDIA]]insertYoutubePlayer(\'https://www.youtube.com/' . $matches[1] . '\', ' . $matches[2] . ', ' . $matches[3] . ');[[/MEDIA]]';
 	}
 	
 	private function parse_swf_tag($matches)

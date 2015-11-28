@@ -88,6 +88,7 @@ tinymce.init({
 	# IF C_TOOLBAR3 #toolbar3: "{TOOLBAR3}",# ENDIF #
 
 	menubar: false,
+	autoresize_max_height: '500px',
 	advlist_number_styles: 'default',
 	advlist_bullet_styles: 'default',
 	fontsize_formats: '5pt 10pt 15pt 20pt 25pt 30pt 35pt 40pt 45pt',

@@ -153,7 +153,7 @@
 [*] Ajout des microdonnées pour améliorer le référencement
 
 [b]TinyMCE[/b]
-[*] Mise à jour du module (TinyMCE version 4.2.8)
+[*] Mise à jour du module (TinyMCE version 4.3.0)
 
 [b]Script de migration[/b]
 [*] Vérification automatique de la présence de la nouvelle version par le noyau, et redirection vers le script d'update
