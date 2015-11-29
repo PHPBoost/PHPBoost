@@ -53,5 +53,12 @@ span.contents + hr {
     clear: both;
 }
 
-#module-articles .one-article   { width: 100%; }
-#module-articles .two-articles  { width: 49%;  }
+#module-articles .small-block.one-article {
+    width: 100%;
+}
+
+@media (min-width: 769px) {
+    #module-articles .small-block.two-articles {
+        width: 49%;
+    }
+}
