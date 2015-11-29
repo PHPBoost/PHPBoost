@@ -2,7 +2,7 @@
 	<ul class="level-0">
 		<li class="has-sub">
 			<a class="cssmenu-title"><i class="fa fa-fw fa-cog"></i> {L_ADMINISTRATION}</a>
-			<ul class="level-1">
+			<ul class="level-1 cssmenu-admin-links">
 				<li class="has-sub">
 					<a class="cssmenu-title" href="${relative_url(AdminConfigUrlBuilder::general_config())}"><i class="fa fa-fw fa-cog"></i> {L_CONFIGURATION}</a>
 					<ul class="level-2">
@@ -48,7 +48,7 @@
 		</li>
 		<li class="has-sub">
 			<a class="cssmenu-title"><i class="fa fa-fw fa-wrench"></i> {L_TOOLS}</a>
-			<ul class="level-1">
+			<ul class="level-1 cssmenu-tools-links">
 				<li class="has-sub">
 					<a class="cssmenu-title" href="${relative_url(AdminCacheUrlBuilder::clear_cache())}"><i class="fa fa-fw fa-refresh"></i> {L_CACHE}</a>
 					<ul class="level-2">
@@ -81,7 +81,7 @@
 		</li>
 		<li class="has-sub">
 			<a class="cssmenu-title"><i class="fa fa-fw fa-user"></i> {L_USER}</a>
-			<ul class="level-1">
+			<ul class="level-1 cssmenu-user-links">
 				<li class="has-sub">
 					<a class="cssmenu-title" href="${relative_url(AdminMembersUrlBuilder::management())}"><i class="fa fa-fw fa-user"></i> {L_USER}</a>
 					<ul class="level-2">
@@ -114,7 +114,7 @@
 		</li>
 		<li class="has-sub">
 			<a class="cssmenu-title"><i class="fa fa-fw fa-square-o"></i> {L_CONTENT}</a>
-			<ul class="level-1">
+			<ul class="level-1 cssmenu-content-links">
 				<li>
 					<a class="cssmenu-title" href="${relative_url(AdminContentUrlBuilder::content_configuration())}"><i class="fa fa-fw fa-square-o"></i> {L_CONTENT_CONFIG}</a>
 				</li>
@@ -157,7 +157,7 @@
 		</li>
 		<li class="has-sub">
 			<a class="cssmenu-title"><i class="fa fa-fw fa-cubes"></i> {L_MODULES}</a>
-			<ul class="level-1 multicolumns columns-{U_NBR_MODULES}">
+			<ul class="level-1 cssmenu-module-links multicolumns columns-{U_NBR_MODULES}">
 				<li class="has-sub">
 					<a class="cssmenu-title" href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}"><i class="fa fa-fw fa-cubes"></i> {L_MODULES}</a>
 					<ul class="level-2"> 

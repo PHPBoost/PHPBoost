@@ -472,6 +472,11 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 		column-gap: 0px;
 		vertical-align: top;
 	}
+
+	@media (max-height: 700px) {
+		#cssmenu-admin-menu li.has-sub:hover > .cssmenu-module-links 	{ top: -40px; }
+		#cssmenu-admin-menu li.has-sub:hover > .cssmenu-content-links 	{ top: -80px; }
+	}
 	
 	#cssmenu-admin-menu ul.multicolumns.columns-1 {
 		width: calc(170px * 1);
