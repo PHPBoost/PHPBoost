@@ -1,4 +1,3 @@
-<script src="{PATH_TO_ROOT}/kernel/lib/js/global.js"></script>
 <nav id="cssmenu-admin-menu" class="cssmenu cssmenu-vertical cssmenu-left">
 	<ul class="level-0">
 		<li class="has-sub">
