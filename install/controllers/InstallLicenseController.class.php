@@ -64,7 +64,7 @@ class InstallLicenseController extends InstallController
 		$agreement = new FormFieldHTML('agreementExplanation', $this->lang['step.license.require.agreement'] . '<br /><br />');
 		$fieldset->add_field($agreement);
 		$license_content = file_get_contents('gpl-license.txt');
-		$license_block = '<div class="licence-container"><div class="license-content">' . $license_content . '</div></div>';
+		$license_block = '<div class="license-container"><div class="license-content">' . $license_content . '</div></div>';
 		$license = new FormFieldHTML('licenseContent', $license_block);
 		$fieldset->add_field($license);
 		$agree_checkbox = new FormFieldCheckbox('agree', $this->lang['step.license.please_agree'], FormFieldCheckbox::UNCHECKED,

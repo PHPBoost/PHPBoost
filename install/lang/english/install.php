@@ -198,44 +198,53 @@ Best regards,
 The PHPBoost Team.',
 
 // End of installation
+	'congratulations' => 'Congratulations !',
     'step.finish.title' => 'End of installation',
 	'finish.message' => '<fieldset>
                             <legend>PHPBoost is now installed and ready to run !</legend>
-                            <p class="success">The installation of PHPBoost has been powered successfully. The PHPBoost Team thanks you for using its software and is proud to count you among its users.</p>
-                            <p>Keep yourself informed about the evolution of PHPBoost by visiting our website, <a href="http://www.phpboost.com">www.phpboost.com</a>. You will be warned in the administration panel when updates are available. We strongly recommend to keep your website up to date so you can take advantage of the latest features and correct any flaws or errors.</p>
-                            <p class="warning">For security reasons we also recommand you to delete the <b>install</b> folder and all its content. Hackers could manage to run the installation script and you could lose data! An option will be offered once connected to the site to perform this deletion.</p>
-                            <p>Don\'t forget to consult the <a href="http://www.phpboost.com/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="http://www.phpboost.com/faq/"><acronym title="Frequently Asked Questions">FAQ</acronym></a>.</p>
-                            <p>If you have any problem please go to the <a href="http://www.phpboost.com/forum/">support forum of PHPBoost</a>.</p>
+							<div class="fielset-inset">
+								<p class="success">The installation of PHPBoost has been powered successfully. The PHPBoost Team thanks you for using its software and is proud to count you among its users.</p>
+								<p>Keep yourself informed about the evolution of PHPBoost by visiting our website, <a href="http://www.phpboost.com">www.phpboost.com</a>. You will be warned in the administration panel when updates are available. We strongly recommend to keep your website up to date so you can take advantage of the latest features and correct any flaws or errors.</p>
+								<p class="warning">For security reasons we also recommand you to delete the <b>install</b> folder and all its content. Hackers could manage to run the installation script and you could lose data! An option will be offered once connected to the site to perform this deletion.</p>
+								<p>Don\'t forget to consult the <a href="http://www.phpboost.com/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="http://www.phpboost.com/faq/"><acronym title="Frequently Asked Questions">FAQ</acronym></a>.</p>
+								<p>If you have any problem please go to the <a href="http://www.phpboost.com/forum/">support forum of PHPBoost</a>.</p>
+							</div>
                         </fieldset>
                         <fieldset>
                             <legend>Thanks</legend>
-                            <h2>Members</h2>
-                            <p>Thanks to all the members of the community who cheer us on daily and contribute to the software quality by reporting bugs and suggestion improvements, which allows to lead to a stable and powerful CMS.</p>
-                            <p>Thanks to the members of our teams and particulary to <strong>soupaloignon</strong> for communication team, <strong>aiglobulles</strong>, <strong>55 Escape</strong> and <strong>Micman</strong> for the documentation writing, <strong>ElenWii</strong> and <strong>babsolune</strong> for the graphics and <strong>benflovideo</strong> for the moderation of the community.</p>
-                            <h2>Other projects</h2>
-                            <p>PHPBoost uses different tools allowing it to enlarge its features panel enough implying the development time rising. Most of these tools are under GNU/GPL license.</p>
-                            <ul>
-                                <li><a href="https://notepad-plus-plus.org">Notepad++</a> and <a href="http://www.sublimetext.com">Sublime Text</a> : Very powerful text editors used for the whole development, thanks a lot !</li>
-                                <li><a href="http://tango.freedesktop.org/Tango_Desktop_Project">Tango Desktop Project</a> : Icon set used in the whole interface.</li>
-                                <li><a href="http://www.phpconcept.net/pclzip/">PCLZIP by PHPConcept</a> : PHP library which manage work with zip files.</li>
-                                <li><a href="http://www.xm1math.net/phpmathpublisher/">PHPMathPublisher</a> : Functions which permit us to interpret LaTeX language and export it to pictures viewable by a web browser.</li>
-                                <li><a href="http://www.tinymce.com">TinyMCE</a> : TinyMCE is a <acronym title="What You See Is What You Get">WYSIWYG</acronym> editor which allows users to see their text formatting in real time.</li>
-                                <li><a href="http://qbnz.com/highlighter/">GeSHi</a> : Generic Syntax Highlighter used to highlight the source code of many programming languages.</li>
-                                <li><a href="http://jquery.com">jQuery</a> : Javascript and <acronym title="Asynchronous Javascript And XML">AJAX</acronym> Framework</li>
-                                <li><a href="http://flowplayer.org">Flowplayer</a> : flash video reader</li>
-                                <li><a href="http://fontawesome.io">Font Awesome</a> : icons librairy</li>
-                                <li><a href="http://cornel.bopp-art.com/lightcase/">Lightcase.js</a> : responsive Lightbox</li>
-                            </ul>
+							<div class="fielset-inset">
+								<h2>Members</h2>
+								<p>Thanks to all the members of the community who cheer us on daily and contribute to the software quality by reporting bugs and suggestion improvements, which allows to lead to a stable and powerful CMS.</p>
+								<p>Thanks to the members of our teams and particulary to <strong>soupaloignon</strong> for communication team, <strong>aiglobulles</strong>, <strong>55 Escape</strong>, <strong>Micman</strong> and <strong>Dramaturge</strong> for the documentation writing, <strong>ElenWii</strong> and <strong>babsolune</strong> for the graphics and <strong>benflovideo</strong> for the moderation of the community.</p>
+								<h2>Other projects</h2>
+								<p>PHPBoost uses different tools allowing it to enlarge its features panel enough implying the development time rising. Most of these tools are under GNU/GPL license.</p>
+								<ul>
+									<li><a href="https://notepad-plus-plus.org">Notepad++</a> and <a href="http://www.sublimetext.com">Sublime Text</a> : Very powerful text editors used for the whole development, thanks a lot !</li>
+									<li><a href="http://tango.freedesktop.org/Tango_Desktop_Project">Tango Desktop Project</a> : Icon set used in the whole interface.</li>
+									<li><a href="http://www.phpconcept.net/pclzip/">PCLZIP by PHPConcept</a> : PHP library which manage work with zip files.</li>
+									<li><a href="http://www.xm1math.net/phpmathpublisher/">PHPMathPublisher</a> : Functions which permit us to interpret LaTeX language and export it to pictures viewable by a web browser.</li>
+									<li><a href="http://www.tinymce.com">TinyMCE</a> : TinyMCE is a <acronym title="What You See Is What You Get">WYSIWYG</acronym> editor which allows users to see their text formatting in real time.</li>
+									<li><a href="http://qbnz.com/highlighter/">GeSHi</a> : Generic Syntax Highlighter used to highlight the source code of many programming languages.</li>
+									<li><a href="http://jquery.com">jQuery</a> : Javascript and <acronym title="Asynchronous Javascript And XML">AJAX</acronym> Framework</li>
+									<li><a href="http://flowplayer.org">Flowplayer</a> : flash video reader</li>
+									<li><a href="http://fontawesome.io">Font Awesome</a> : icons librairy</li>
+									<li><a href="http://cornel.bopp-art.com/lightcase/">Lightcase.js</a> : responsive Lightbox</li>
+									<li><a href="https://github.com/cssmenumaker/jQuery-Plugin-Responsive-Drop-Down">CssMenuMaker.js</a> : Menus responsive</li>
+									<li><a href="http://www.jerrylow.com/basictable/">BasicTable.js</a> : Tables responsive</li>
+								</ul>
+							</div>
                         </fieldset>
                         <fieldset>
                             <legend>Credits</legend>
-                            <ul>
-                                <li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, founder of PHPBoost project and developer retired</li>
-                                <li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, developer retired</li>
-                                <li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, developer retired</li>
-                                <li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, developer</li>
-                                <li><strong>Julien BRISWALTER</strong> <em>(alias julienseth78)</em>, developer</li>
-                            </ul>
+							<div class="fielset-inset">
+								<ul>
+									<li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, founder of PHPBoost project and developer retired</li>
+									<li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, developer retired</li>
+									<li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, developer retired</li>
+									<li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, developer</li>
+									<li><strong>Julien BRISWALTER</strong> <em>(alias julienseth78)</em>, developer</li>
+								</ul>
+							</div>
                         </fieldset>',
 	'site.index' => 'Go to the website',
 	'admin.index' => 'Go to the administration panel'

@@ -1,3 +1,11 @@
-<h1>{@step.license.agreement}</h1>
-<span class="spacer">&nbsp;</span>
-# INCLUDE LICENSE_FORM #
+    <header>
+        <h2>{@step.license.agreement}</h2>
+    </header>
+    
+    <div class="content">
+        # INCLUDE LICENSE_FORM #
+    </div>
+    
+    <footer>
+    </footer>
+

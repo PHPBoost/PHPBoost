@@ -1,14 +1,24 @@
-<span style="float:right;padding:8px;padding-top:0px;padding-right:25px">
-	<img src="templates/images/PHPBoost_box.png" alt="{@phpboost.logo}" />
-</span>
-<h1>{@step.welcome.message}</h1>
-<span class="spacer">&nbsp;</span>
-{@H|step.welcome.explanation}
-<div style="margin-bottom:60px;">&nbsp;</div>
-<h1>${set(@step.welcome.distribution, ['distribution': @distribution.name])}</h1>
-<span class="spacer">&nbsp;</span>
-${html(@step.welcome.distribution.explanation)}
-<br />
-${html(@distribution.description)}
-
-# INCLUDE LICENSE_FORM #
+	<header>
+		<h2>{@step.welcome.message}</h2>
+	</header>
+	
+	<div class="content">
+		<img class="float-right pbt-box" src="templates/images/PHPBoost_box.png" alt="{@phpboost.logo}" />
+	
+		{@H|step.welcome.explanation}
+		<div style="margin-bottom:60px;">&nbsp;</div>
+		
+		<h3>${set(@step.welcome.distribution, ['distribution': @distribution.name])}</h3>
+		${html(@step.welcome.distribution.explanation)}
+		<br />
+		${html(@distribution.description)}
+		
+			
+	</div>
+	
+	<footer>
+		<div class="next-step">
+			# INCLUDE LICENSE_FORM #	
+		</div>
+	</footer>
+	

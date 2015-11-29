@@ -112,13 +112,13 @@ class InstallDisplayResponse extends AbstractResponse
 	private function init_steps()
 	{
 		$steps = array(
-			array('name' => $this->lang['step.list.introduction'], 'img' => 'intro.png'),
-			array('name' => $this->lang['step.list.license'], 'img' => 'license.png'),
-			array('name' => $this->lang['step.list.server'], 'img' => 'config.png'),
-			array('name' => $this->lang['step.list.database'], 'img' => 'database.png'),
-			array('name' => $this->lang['step.list.website'], 'img' => 'advanced_config.png'),
-			array('name' => $this->lang['step.list.admin'], 'img' => 'admin.png'),
-			array('name' => $this->lang['step.list.end'], 'img' => 'end.png')
+			array('name' => $this->lang['step.list.introduction'], 'img' => 'home'),
+			array('name' => $this->lang['step.list.license'], 'img' => 'file-text-o'),
+			array('name' => $this->lang['step.list.server'], 'img' => 'cog'),
+			array('name' => $this->lang['step.list.database'], 'img' => 'server'),
+			array('name' => $this->lang['step.list.website'], 'img' => 'cogs'),
+			array('name' => $this->lang['step.list.admin'], 'img' => 'users'),
+			array('name' => $this->lang['step.list.end'], 'img' => 'check')
 		);
 		$this->nb_steps = count($steps);
 

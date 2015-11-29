@@ -1,4 +1,11 @@
-<h1>{@adminCreation}</h1>
-<span class="spacer">&nbsp;</span>
-{@H|adminCreation.explanation}
-# INCLUDE ADMIN_FORM #
+    <header>
+        <h2>{@adminCreation}</h2>
+    </header>
+    
+    <div class="content">
+        {@H|adminCreation.explanation}
+        # INCLUDE ADMIN_FORM #
+    </div>
+    
+    <footer></footer>
+
