@@ -74,4 +74,5 @@ $lang['authorizations.read_topics_content'] = 'Autorisation d\'afficher le conte
 $lang['authorizations.flood'] = 'Autorisation de flooder';
 $lang['authorizations.hide_edition_mark'] = 'Désactivation du marqueur d\'édition des messages';
 $lang['authorizations.unlimited_topics_tracking'] = 'Désactivation de la limite de sujet suivis';
+$lang['forum_message_options'] = 'Options du message';
 ?>

@@ -74,4 +74,5 @@ $lang['authorizations.read_topics_content'] = 'Display topics content authorizat
 $lang['authorizations.flood'] = 'Flood authorization';
 $lang['authorizations.hide_edition_mark'] = 'Hide last edited time information';
 $lang['authorizations.unlimited_topics_tracking'] = 'Deactivate topics subscription limit';
+$lang['forum_message_options'] = 'Message options';
 ?>

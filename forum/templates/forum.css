@@ -625,3 +625,7 @@ footer#forum-bottom {
 footer#forum-bottom .forum-links {
 	border-bottom: 1px solid #CCCCCC;
 }
+
+footer#forum-bottom .forum-message-options {
+	border-bottom: none;
+}

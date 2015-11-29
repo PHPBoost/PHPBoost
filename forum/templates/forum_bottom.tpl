@@ -70,7 +70,7 @@
 			</div>
 			<script>
 				<!--
-				jQuery("#cssmenu-forum-bottom-link").menumaker({ title: " Index ", format: "multitoggle", breakpoint: 768, menu_static: false });
+				jQuery("#cssmenu-forum-bottom-link").menumaker({ title: " {L_FORUM_INDEX} ", format: "multitoggle", breakpoint: 768, menu_static: false });
 				-->
 			</script>
 			
@@ -128,40 +128,42 @@
 				# ENDIF #
 				
 				# IF C_AUTH_POST #
-				<nav id="cssmenu-forum-action" class="cssmenu cssmenu-group">
-					<ul>
-					# IF C_DISPLAY_MSG #
-						<li>
-							<span class="cssmenu-title" id="forum_change_statut">
-								<a href="" onclick="XMLHttpRequest_change_statut();return false;" id="forum_change_img">{ICON_DISPLAY_MSG}</a> <a href="" onclick="XMLHttpRequest_change_statut();return false;"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>
-							</span>
-						</li>
-					# ENDIF #
-						<li>
-							<span class="cssmenu-title">
-								<a href="{PATH_TO_ROOT}/forum/alert{U_ALERT}#go_bottom" title="{L_ALERT}"><i class="fa fa-warning"></i> {L_ALERT}</a>
-							</span>
-						</li>
-						<li>
-							<span class="cssmenu-title" id="forum_track">
-								<a href="" onclick="XMLHttpRequest_track();return false;" id="forum_track_img">{ICON_TRACK}</a> <a href="" onclick="XMLHttpRequest_track();return false;"><span id="forum_track_msg">{L_TRACK_DEFAULT}</span></a>
-							</span>
-						</li>
-						<li>
-							<span class="cssmenu-title" id="forum_track_pm">
-								<a href="" onclick="XMLHttpRequest_track_pm();return false;" id="forum_track_pm_img">{ICON_SUSCRIBE_PM}</a> <a href="" onclick="XMLHttpRequest_track_pm();return false;"><span id="forum_track_pm_msg">{L_SUSCRIBE_PM_DEFAULT}</span></a>
-							</span>
-						</li>
-						<li>
-							<span id="forum_track_mail">
-								<a href="" onclick="XMLHttpRequest_track_mail();return false;" id="forum_track_mail_img">{ICON_SUSCRIBE}</a> <a href="" onclick="XMLHttpRequest_track_mail();return false;"><span id="forum_track_mail_msg">{L_SUSCRIBE_DEFAULT}</span></a>
-							</span>
-						</li>
-					</ul>
-				</nav>
+				<div class="forum-links forum-message-options">
+					<nav id="cssmenu-forum-action" class="cssmenu cssmenu-group">
+						<ul>
+						# IF C_DISPLAY_MSG #
+							<li>
+								<span class="cssmenu-title" id="forum_change_statut">
+									<a href="" onclick="XMLHttpRequest_change_statut();return false;" id="forum_change_img">{ICON_DISPLAY_MSG}</a> <a href="" onclick="XMLHttpRequest_change_statut();return false;"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>
+								</span>
+							</li>
+						# ENDIF #
+							<li>
+								<span class="cssmenu-title">
+									<a href="{PATH_TO_ROOT}/forum/alert{U_ALERT}#go_bottom" title="{L_ALERT}"><i class="fa fa-warning"></i> {L_ALERT}</a>
+								</span>
+							</li>
+							<li>
+								<span class="cssmenu-title" id="forum_track">
+									<a href="" onclick="XMLHttpRequest_track();return false;" id="forum_track_img">{ICON_TRACK}</a> <a href="" onclick="XMLHttpRequest_track();return false;"><span id="forum_track_msg">{L_TRACK_DEFAULT}</span></a>
+								</span>
+							</li>
+							<li>
+								<span class="cssmenu-title" id="forum_track_pm">
+									<a href="" onclick="XMLHttpRequest_track_pm();return false;" id="forum_track_pm_img">{ICON_SUSCRIBE_PM}</a> <a href="" onclick="XMLHttpRequest_track_pm();return false;"><span id="forum_track_pm_msg">{L_SUSCRIBE_PM_DEFAULT}</span></a>
+								</span>
+							</li>
+							<li>
+								<span class="cssmenu-title" id="forum_track_mail">
+									<a href="" onclick="XMLHttpRequest_track_mail();return false;" id="forum_track_mail_img">{ICON_SUSCRIBE}</a> <a href="" onclick="XMLHttpRequest_track_mail();return false;"><span id="forum_track_mail_msg">{L_SUSCRIBE_DEFAULT}</span></a>
+								</span>
+							</li>
+						</ul>
+					</nav>
+				</div>
 			<script>
 				<!--
-				jQuery("#cssmenu-forum-action").menumaker({ title: " Forum action ", format: "multitoggle", breakpoint: 768, menu_static: false });
+				jQuery("#cssmenu-forum-action").menumaker({ title: " ${LangLoader::get_message('forum_message_options', 'common', 'forum')} ", format: "multitoggle", breakpoint: 768, menu_static: false });
 				-->
 			</script>
 				#  ENDIF #

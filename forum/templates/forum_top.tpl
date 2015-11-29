@@ -155,7 +155,7 @@
 		</div>
 		<script>
 			<!--
-			jQuery("#cssmenu-forum-top-link").menumaker({ title: " Index ", format: "multitoggle", breakpoint: 768, menu_static: false });
+			jQuery("#cssmenu-forum-top-link").menumaker({ title: " {L_FORUM_INDEX} ", format: "multitoggle", breakpoint: 768, menu_static: false });
 			-->
 		</script>
 	</header>
