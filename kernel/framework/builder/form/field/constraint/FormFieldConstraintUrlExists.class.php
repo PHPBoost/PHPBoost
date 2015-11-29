@@ -59,7 +59,7 @@ class FormFieldConstraintUrlExists extends FormFieldConstraintRegex
 				$status = (int)$matches[1];
 		}
 		
-		return $status == 200;
+		return $status == 200 || $status == 302;
 	}
  
 	public function get_js_validation(FormField $field)

@@ -165,10 +165,10 @@ class InstallationServices
 		return true;
 	}
 
-	public function create_admin($login, $password, $email, $create_session = true, $auto_connect = true)
+	public function create_admin($display_name, $login, $password, $email, $create_session = true, $auto_connect = true)
 	{
 		$this->get_installation_token();
-		$this->create_first_admin($login, $password, $email, $create_session, $auto_connect);
+		$this->create_first_admin($display_name, $login, $password, $email, $create_session, $auto_connect);
 		$this->delete_installation_token();
 		return true;
 	}
@@ -405,22 +405,22 @@ class InstallationServices
 		$db_config_file->close();
 	}
 
-	private function create_first_admin($login, $password, $email, $create_session, $auto_connect)
+	private function create_first_admin($display_name, $login, $password, $email, $create_session, $auto_connect)
 	{
-		$user_id = $this->create_first_admin_account($login, $password, $email, LangLoader::get_locale(), $this->distribution_config['theme'], GeneralConfig::load()->get_site_timezone());
+		$user_id = $this->create_first_admin_account($display_name, $login, $password, $email, LangLoader::get_locale(), $this->distribution_config['theme'], GeneralConfig::load()->get_site_timezone());
 		$this->configure_mail_sender_system($email);
 		$this->configure_accounts_policy();
-		$this->send_installation_mail($login, $password, $email);
+		$this->send_installation_mail($display_name, $password, $email);
 		if ($create_session)
 		{
 			$this->connect_admin($user_id, $auto_connect);
 		}
 	}
 
-	private function create_first_admin_account($login, $password, $email, $locale, $theme, $timezone)
+	private function create_first_admin_account($display_name, $login, $password, $email, $locale, $theme, $timezone)
 	{
 		$user = new User();
-		$user->set_display_name($login);
+		$user->set_display_name($display_name);
 		$user->set_level(User::ADMIN_LEVEL);
 		$user->set_email($email);
 		$user->set_locale($locale);

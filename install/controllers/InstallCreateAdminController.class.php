@@ -54,7 +54,7 @@ class InstallCreateAdminController extends InstallController
 			}
 			
 			$installation_services = new InstallationServices();
-			$installation_services->create_admin(
+			$installation_services->create_admin($this->form->get_value('display_name'), 
 			$login, $this->form->get_value('password'),
 			$this->form->get_value('email'), $this->form->get_value('createSession'),
 			$this->form->get_value('autoconnect'));
