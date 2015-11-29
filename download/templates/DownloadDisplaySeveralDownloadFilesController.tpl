@@ -136,7 +136,13 @@
 						<div class="spacer"></div>
 					</div>
 					<div class="content">
+						# IF downloadfiles.C_PICTURE #
+						<span class="float-right">
+							<img src="{downloadfiles.U_PICTURE}" alt="{downloadfiles.NAME}" itemprop="image" />
+						</span>
+						# ENDIF #
 						{downloadfiles.DESCRIPTION}# IF downloadfiles.C_READ_MORE #... <a href="{downloadfiles.U_LINK}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
+						<div class="spacer"></div>
 					</div>
 				# ELSE #
 					<div class="content">
