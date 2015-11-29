@@ -415,8 +415,37 @@ class UpdateServices
 			self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member DROP KEY `user_id`');
 		if ((isset($columns['display_name']) && !$columns['display_name']['key']) || !isset($columns['display_name']))
 			self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member ADD UNIQUE KEY `display_name` (`display_name`)');
+		
 		if ((isset($columns['email']) && !$columns['email']['key']) || !isset($columns['email']))
-			self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member ADD UNIQUE KEY `email` (`email`)');
+		{
+			try {
+				self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member ADD UNIQUE KEY `email` (`email`)');
+			} catch (Exception $e) {
+				$result = PersistenceContext::get_querier()->select('SELECT email, GROUP_CONCAT(user_id) AS user_id_list, GROUP_CONCAT(display_name) AS display_name_list FROM ' . PREFIX . 'member GROUP BY email
+				HAVING COUNT(0) > 1
+				ORDER BY registration_date ASC');
+				
+				while ($row = $result->fetch())
+				{
+					$user_id_list = explode(',' $row['user_id_list']);
+					$ids_number = count($row['user_id_list']);
+					$i = 1;
+					foreach ($user_id_list as $id)
+					{
+						if ($i < $ids_number)
+						{
+							self::$db_querier->update(PREFIX . 'member', array('email' => $row['email'] . '_' . KeyGenerator::generate_key(5)), 'WHERE user_id=:user_id', array('user_id' => $user_id));
+							$i++;
+						}
+					}
+					
+					$this->add_information_to_file('The mail address ' . $row['email'], ' is duplicate in your database (user_id : ' . $row['user_id_list'] . ') for the users ' . $row['display_name_list'] . '. The oldest accounts have been automatically modified, please tell the users to update them or deleted them if they are no more used.');
+				}
+				$result->dispose();
+				
+				self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member ADD UNIQUE KEY `email` (`email`)');
+			}
+		}
 		
 		// Modification des tables extended fields
 		$columns = self::$db_utils->desc_table(PREFIX . 'member_extended_fields');
