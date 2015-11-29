@@ -76,7 +76,7 @@ ${resources('install/install')}
 							# START step #
 								<li class="{step.CSS_CLASS}">
 									<span class="cssmenu-title">
-										<i class="fa fa-{step.IMG} fa-fw" title="${escape(step.NAME)}"></i> <span>&nbsp;{step.NAME}</span>
+										<i class="fa fa-{step.IMG} fa-fw" title="${escape(step.NAME)}"></i><span>{step.NAME}</span>
 									</span>								
 								</li>
 							# END step #
@@ -104,12 +104,12 @@ ${resources('install/install')}
 							<ul>
 								<li>
 									<a class="cssmenu-title" href="{@documentation.link}" title="{@documentation}">
-										<i class="fa fa-book fa-fw"></i> <span>&nbsp;{@documentation}</span>
+										<i class="fa fa-book fa-fw"></i> <span>{@documentation}</span>
 									</a>
 								</li>
 								<li>
 									<a class="cssmenu-title" href="{RESTART}" onclick="return confirm('${escapejs(@installation.confirmRestart)}');" title="{@installation.restart}">
-										<i class="fa fa-refresh fa-fw"></i> <span>&nbsp;{@installation.restart}</span>
+										<i class="fa fa-refresh fa-fw"></i> <span>{@installation.restart}</span>
 									</a>							
 								</li>
 							</ul>
