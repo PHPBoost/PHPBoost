@@ -165,7 +165,7 @@
 
 						<fieldset>	
 							<legend>{L_POLL}</legend>
-							<p id="hidepoll_link" class="center"><a title="{L_OPEN_MENU_POLL}" href="javascript:hide_poll('hidepoll')">{L_OPEN_MENU_POLL}</a></p>
+							<p id="hidepoll_link" class="center"><a title="{L_OPEN_MENU_POLL}" href="" onclick="hide_poll('hidepoll');return false;">{L_OPEN_MENU_POLL}</a></p>
 							<div id="hidepoll">
 								<div class="form-element">
 									<label for="question">* {L_QUESTION}</label>
@@ -190,11 +190,11 @@
 										# START answers_poll #
 										<label><input type="text" name="a{answers_poll.ID}" value="{answers_poll.ANSWER}" /> <em>{answers_poll.NBR_VOTES} {answers_poll.L_VOTES}</em></label><br>
 										# END answers_poll #
-										<span id="add_poll_field{NBR_POLL_FIELD}"></span>	
+										<span id="add_poll_field{NBR_POLL_FIELD}"></span>
 										
 										<p class="center" id="add_poll_field_link">
 											# IF C_ADD_POLL_FIELD #
-											<a title="plus" href="javascript:add_poll_field({NBR_POLL_FIELD})"><i class="fa fa-plus"></i></a>
+											<a title="plus" href="" onclick="add_poll_field({NBR_POLL_FIELD});return false;"><i class="fa fa-plus"></i></a>
 											# ENDIF #
 										</p>
 									</div>
@@ -204,9 +204,11 @@
 							<!--
 							if( {NO_DISPLAY_POLL} )
 								document.getElementById('hidepoll').style.display = 'none';
+							else
+								document.getElementById('hidepoll_link').style.display = 'none';
 							-->
 							</script>
-						</fieldset>	
+						</fieldset>
 						
 						<fieldset class="fieldset-submit">
 						<legend>{L_SUBMIT}</legend>
