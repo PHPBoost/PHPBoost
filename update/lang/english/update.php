@@ -136,22 +136,24 @@ $lang = array(
 						<fieldset>
 							<legend>Thanks</legend>
 							<h2>Members</h2>
-							<p>Thanks to all the members of the community who cheer us on daily and contribute to the software quality by reporting bugs and suggestion improvements, which allows to lead to a stable and powerful version CMS.</p>
-							<p>Thanks to the members of our teams and particulary to <strong>soupaloignon</strong> for communication team, <strong>aiglobulles</strong>, <strong>55 Escape</strong> and <strong>Micman</strong> for the documentation writing, <strong>ElenWii</strong> and <strong>babsolune</strong> for the graphics and <strong>benflovideo</strong> for the moderation of the community.</p>
-							<h2>Other projects</h2>
-							<p>PHPBoost uses different tools allowing it to enlarge its features panel enough implying the development time rising. Most of these tools are under GNU/GPL license.</p>
-							<ul>
-								<li><a href="https://notepad-plus-plus.org">Notepad++</a> and <a href="http://www.sublimetext.com">Sublime Text</a> : Very powerful text editors used for the whole development, thanks a lot !</li>
-								<li><a href="http://tango.freedesktop.org/Tango_Desktop_Project">Tango Desktop Project</a> : Icon set used in the whole interface.</li>
-								<li><a href="http://www.phpconcept.net/pclzip/">PCLZIP by PHPConcept</a> : PHP library which manage work with zip files.</li>
-								<li><a href="http://www.xm1math.net/phpmathpublisher/">PHPMathPublisher</a> : Functions which permit us to interpret LaTeX language and export it to pictures viewable by a web browser.</li>
-								<li><a href="http://www.tinymce.com">TinyMCE</a> : TinyMCE is a <acronym title="What You See Is What You Get">WYSIWYG</acronym> editor which allows users to see their text formatting in real time.</li>
-								<li><a href="http://qbnz.com/highlighter/">GeSHi</a> : Generic Syntax Highlighter used to highlight the source code of many programming languages.</li>
-								<li><a href="http://jquery.com">jQuery</a> : Javascript and <acronym title="Asynchronous Javascript And XML">AJAX</acronym> Framework</li>
-								<li><a href="http://flowplayer.org">Flowplayer</a> : flash video reader</li>
-								<li><a href="http://fontawesome.io">Font Awesome</a> : icons librairy</li>
-                                <li><a href="http://cornel.bopp-art.com/lightcase/">Lightcase.js</a> : responsive Lightbox</li>
-							</ul>
+								<p>Thanks to all the members of the community who cheer us on daily and contribute to the software quality by reporting bugs and suggestion improvements, which allows to lead to a stable and powerful CMS.</p>
+								<p>Thanks to the members of our teams and particulary to <strong>soupaloignon</strong> for communication team, <strong>aiglobulles</strong>, <strong>55 Escape</strong>, <strong>Micman</strong> and <strong>Dramaturge</strong> for the documentation writing, <strong>ElenWii</strong> and <strong>babsolune</strong> for the graphics and <strong>benflovideo</strong> for the moderation of the community.</p>
+								<h2>Other projects</h2>
+								<p>PHPBoost uses different tools allowing it to enlarge its features panel enough implying the development time rising. Most of these tools are under GNU/GPL license.</p>
+								<ul>
+									<li><a href="https://notepad-plus-plus.org">Notepad++</a> and <a href="http://www.sublimetext.com">Sublime Text</a> : Very powerful text editors used for the whole development, thanks a lot !</li>
+									<li><a href="http://tango.freedesktop.org/Tango_Desktop_Project">Tango Desktop Project</a> : Icon set used in the whole interface.</li>
+									<li><a href="http://www.phpconcept.net/pclzip/">PCLZIP by PHPConcept</a> : PHP library which manage work with zip files.</li>
+									<li><a href="http://www.xm1math.net/phpmathpublisher/">PHPMathPublisher</a> : Functions which permit us to interpret LaTeX language and export it to pictures viewable by a web browser.</li>
+									<li><a href="http://www.tinymce.com">TinyMCE</a> : TinyMCE is a <acronym title="What You See Is What You Get">WYSIWYG</acronym> editor which allows users to see their text formatting in real time.</li>
+									<li><a href="http://qbnz.com/highlighter/">GeSHi</a> : Generic Syntax Highlighter used to highlight the source code of many programming languages.</li>
+									<li><a href="http://jquery.com">jQuery</a> : Javascript and <acronym title="Asynchronous Javascript And XML">AJAX</acronym> Framework</li>
+									<li><a href="http://flowplayer.org">Flowplayer</a> : flash video reader</li>
+									<li><a href="http://fontawesome.io">Font Awesome</a> : icons librairy</li>
+									<li><a href="http://cornel.bopp-art.com/lightcase/">Lightcase.js</a> : responsive Lightbox</li>
+									<li><a href="https://github.com/cssmenumaker/jQuery-Plugin-Responsive-Drop-Down">CssMenuMaker.js</a> : Menus responsive</li>
+									<li><a href="http://www.jerrylow.com/basictable/">BasicTable.js</a> : Tables responsive</li>
+								</ul>
 						</fieldset>
 						<fieldset>
 							<legend>Credits</legend>
