@@ -267,7 +267,7 @@ if (!empty($id_get))
 		'FORUM_NAME' => $config->get_forum_name(),
 		'PAGINATION' => $pagination->display(),
 		'IDCAT' => $id_get,
-		//'C_MASS_MODO_CHECK' => $check_group_edit_auth ? true : false,
+		//'C_MASS_MODO_CHECK' => $check_group_edit_auth,
 		'C_MASS_MODO_CHECK' => false,
 		'C_POST_NEW_SUBJECT' => $check_group_write_auth,
 		'U_MSG_SET_VIEW' => '<a class="small" href="' . PATH_TO_ROOT . '/forum/action' . url('.php?read=1&amp;f=' . $id_get, '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',

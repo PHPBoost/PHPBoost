@@ -61,7 +61,7 @@ elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 	@clearstatcache();
 	$dir = PATH_TO_ROOT . '/forum/templates/images/ranks/';
 	if (!is_writable($dir))
-		$is_writable = (@chmod($dir, 0777)) ? true : false;
+		$is_writable = @chmod($dir, 0777);
 	
 	$error = '';
 	if (is_writable($dir)) //Dossier en écriture, upload possible

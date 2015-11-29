@@ -31,6 +31,8 @@ require_once('../forum/forum_tools.php');
 
 $id_get = retrieve(GET, 'id', 0);
 
+$is_modo = ForumAuthorizationsService::check_authorizations($id_get)->moderation();
+
 //Existance de la catégorie.
 if ($id_get != Category::ROOT_CATEGORY && !ForumService::get_categories_manager()->get_categories_cache()->category_exists($id_get))
 {
@@ -151,7 +153,6 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 	{
 		if ($post_topic && !empty($id_get))
 		{
-			$is_modo = ForumAuthorizationsService::check_authorizations($id_get)->moderation();
 			if (!ForumAuthorizationsService::check_authorizations($id_get)->write())
 				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
@@ -217,7 +218,6 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 			$question = retrieve(POST, 'question', '', TSTRING_UNCHANGE);
 
-			$is_modo = ForumAuthorizationsService::check_authorizations($id_get)->moderation();
 			$type = retrieve(POST, 'type', 0);
 
 			if (!$is_modo)
@@ -277,7 +277,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				'DATE' => $LANG['on'] . ' ' . Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 				'CONTENTS_PREVIEW' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents))),
 				'C_FORUM_PREVIEW_MSG' => true,
-				'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 19) ? true : false,
+				'C_ADD_POLL_FIELD' => $nbr_poll_field <= 19,
 				'U_ACTION' => 'post.php' . url('?new=topic&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
 				'U_FORUM_CAT' => $forum_cats,
 				'U_TITLE_T' => '<a href="post' . url('.php?new=topic&amp;id=' . $id_get) . '">' . $title . '</a>',
@@ -395,8 +395,6 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			DispatchManager::redirect($controller);
 		}
 
-		$is_modo = ForumAuthorizationsService::check_authorizations($id_get)->moderation();
-
 		//Mod anti Flood
 		if ($check_time !== false)
 		{
@@ -478,8 +476,6 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
-
-		$is_modo = ForumAuthorizationsService::check_authorizations($id_get)->moderation();
 
 		//Edition du topic complet
 		if ($id_first == $id_m)
@@ -614,8 +610,8 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					'DATE' => $LANG['on'] . ' ' . Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 					'CONTENTS_PREVIEW' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents))),
 					'C_FORUM_PREVIEW_MSG' => true,
-					'C_DELETE_POLL' => ($is_modo) ? true : false, //Suppression d'un sondage => modo uniquement.
-					'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 19) ? true : false,
+					'C_DELETE_POLL' => $is_modo, //Suppression d'un sondage => modo uniquement.
+					'C_ADD_POLL_FIELD' => $nbr_poll_field <= 19,
 					'U_ACTION' => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m . '&amp;token=' . AppContext::get_session()->get_token()),
 					'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $category->get_name() . '</a>',
 					'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . $title . '</a>',
@@ -693,8 +689,14 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 						'ICON_DISPLAY_MSG' => $config->is_message_before_topic_title_icon_displayed() ? '<i class="fa ' . $img_display . '"></i>' : '',
 						'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $config->get_message_when_topic_is_solved() : $config->get_message_when_topic_is_unsolved(),
 						'L_EXPLAIN_DISPLAY_MSG' => $config->get_message_when_topic_is_unsolved(),
-						'L_EXPLAIN_DISPLAY_MSG_BIS' => $config->get_message_when_topic_is_solved(),
-						'U_ACTION_MSG_DISPLAY' => url('.php?msg_d=1&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token())
+						'L_EXPLAIN_DISPLAY_MSG_BIS' => $config->get_message_when_topic_is_solved()
+					));
+					$tpl->put_all(array(
+						'C_DISPLAY_MSG' => true,
+						'ICON_DISPLAY_MSG' => $config->is_message_before_topic_title_icon_displayed() ? '<i class="fa ' . $img_display . '"></i>' : '',
+						'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $config->get_message_when_topic_is_solved() : $config->get_message_when_topic_is_unsolved(),
+						'L_EXPLAIN_DISPLAY_MSG' => $config->get_message_when_topic_is_unsolved(),
+						'L_EXPLAIN_DISPLAY_MSG_BIS' => $config->get_message_when_topic_is_solved()
 					));
 				}
 

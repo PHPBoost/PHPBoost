@@ -51,7 +51,7 @@
 		{
 			var idtopic = {IDTOPIC};
 			if( document.getElementById('forum_change_img') )
-				document.getElementById('forum_change_img').innerHTML = '<i class="fa fa-spinner fa-2x fa-spin"></i>';
+				document.getElementById('forum_change_img').innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 			
 			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/forum/xmlhttprequest.php?token={TOKEN}&msg_d=' + idtopic);
 			xhr_object.onreadystatechange = function()
@@ -219,14 +219,8 @@
 							# IF C_DISPLAY_MSG #
 							<br /><br /><br />
 							<span id="forum_change_statut">
-								<a href="action{U_ACTION_MSG_DISPLAY}#go_bottom">{ICON_DISPLAY_MSG}</a>	<a href="action{U_ACTION_MSG_DISPLAY}#go_bottom">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</a>
+								<a href="" onclick="XMLHttpRequest_change_statut();return false;" id="forum_change_img">{ICON_DISPLAY_MSG}</a> <a href="" onclick="XMLHttpRequest_change_statut();return false;"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>
 							</span>
-							<script>
-							<!--
-							document.getElementById('forum_change_statut').style.display = 'none';
-							document.write('<a href="javascript:XMLHttpRequest_change_statut()" id="forum_change_img">{ICON_DISPLAY_MSG}</a> <a href="javascript:XMLHttpRequest_change_statut()"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>');
-							-->
-							</script>
 							# ENDIF #
 						</fieldset>
 					</div>

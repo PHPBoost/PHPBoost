@@ -61,8 +61,7 @@ if ($valid)
 		$mail = ($request->has_postparameter('m' . $row['id']) && $request->get_postvalue('m' . $row['id']) == 'on') ? 1 : 0;
 		if ($row['mail'] != $mail)
 			PersistenceContext::get_querier()->update(PREFIX . 'forum_track', array('mail' => $mail), 'WHERE idtopic =:id', array('id' => $row['id']));
-		$del = ($request->has_postparameter('d' . $row['id']) && $request->get_postvalue('d' . $row['id']) == 'on') ? true : false;
-		if ($del)
+		if ($request->has_postparameter('d' . $row['id']) && $request->get_postvalue('d' . $row['id']) == 'on')
 			PersistenceContext::get_querier()->delete(PREFIX . 'forum_track', 'WHERE idtopic=:id', array('id' => $row['id']));
 	}
 	$result->dispose();

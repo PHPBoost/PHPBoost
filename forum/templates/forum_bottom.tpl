@@ -47,7 +47,7 @@
 				# ENDIF #
 					</ul>
 				</nav>
-			# ELSE #			
+			# ELSE #
 				# IF C_FORUM_CONNEXION #
 				<nav class="cssmenu cssmenu-group float-right" id="cssmenu-forum-top-link">
 					<ul>
@@ -133,26 +133,28 @@
 					# IF C_DISPLAY_MSG #
 						<li>
 							<span class="cssmenu-title" id="forum_change_statut">
-								<a href="{PATH_TO_ROOT}/forum/action{U_ACTION_MSG_DISPLAY}#go_bottom" title="{L_EXPLAIN_DISPLAY_MSG_DEFAULT}">{ICON_DISPLAY_MSG}</a>	<a href="{PATH_TO_ROOT}/forum/action{U_ACTION_MSG_DISPLAY}#go_bottom" class="small" title="{L_EXPLAIN_DISPLAY_MSG_DEFAULT}">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</a>
+								<a href="" onclick="XMLHttpRequest_change_statut();return false;" id="forum_change_img">{ICON_DISPLAY_MSG}</a> <a href="" onclick="XMLHttpRequest_change_statut();return false;"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>
 							</span>
 						</li>
 					# ENDIF #
 						<li>
-							<a class="cssmenu-title" href="{PATH_TO_ROOT}/forum/alert{U_ALERT}#go_bottom" title="{L_ALERT}"><i class="fa fa-warning"></i> {L_ALERT}</a>
+							<span class="cssmenu-title">
+								<a href="{PATH_TO_ROOT}/forum/alert{U_ALERT}#go_bottom" title="{L_ALERT}"><i class="fa fa-warning"></i> {L_ALERT}</a>
+							</span>
 						</li>
 						<li>
 							<span class="cssmenu-title" id="forum_track">
-								<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE}#go_bottom" title="{L_TRACK_DEFAULT}">{ICON_TRACK}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE}#go_bottom" class="small" title="{L_TRACK_DEFAULT}">{L_TRACK_DEFAULT}</a>
+								<a href="" onclick="XMLHttpRequest_track();return false;" id="forum_track_img">{ICON_TRACK}</a> <a href="" onclick="XMLHttpRequest_track();return false;"><span id="forum_track_msg">{L_TRACK_DEFAULT}</span></a>
 							</span>
 						</li>
 						<li>
 							<span class="cssmenu-title" id="forum_track_pm">
-								<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_PM}#go_bottom" title="{L_SUSCRIBE_PM_DEFAULT}">{ICON_SUSCRIBE_PM}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_PM}#go_bottom" class="small" title="{L_SUSCRIBE_PM_DEFAULT}">{L_SUSCRIBE_PM_DEFAULT}</a>
+								<a href="" onclick="XMLHttpRequest_track_pm();return false;" id="forum_track_pm_img">{ICON_SUSCRIBE_PM}</a> <a href="" onclick="XMLHttpRequest_track_pm();return false;"><span id="forum_track_pm_msg">{L_SUSCRIBE_PM_DEFAULT}</span></a>
 							</span>
 						</li>
 						<li>
 							<span id="forum_track_mail">
-								<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_MAIL}#go_bottom" title="{L_SUSCRIBE_DEFAULT}">{ICON_SUSCRIBE}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_MAIL}#go_bottom" class="small" title="{L_SUSCRIBE_DEFAULT}">{L_SUSCRIBE_DEFAULT}</a>
+								<a href="" onclick="XMLHttpRequest_track_mail();return false;" id="forum_track_mail_img">{ICON_SUSCRIBE}</a> <a href="" onclick="XMLHttpRequest_track_mail();return false;"><span id="forum_track_mail_msg">{L_SUSCRIBE_DEFAULT}</span></a>
 							</span>
 						</li>
 					</ul>

@@ -343,7 +343,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 			'NO_DISPLAY_POLL' => !empty($question) ? 'false' : 'true',
 			'NBR_POLL_FIELD' => $nbr_poll_field,
 			'C_FORUM_PREVIEW_MSG' => true,
-			'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 18) ? true : false,
+			'C_ADD_POLL_FIELD' => $nbr_poll_field <= 18,
 			'C_FORUM_POST_TYPE' => true,
 			'L_PREVIEW' => $LANG['preview'],
 			'L_TYPE' => '* ' . $LANG['type'],

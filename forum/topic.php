@@ -241,7 +241,7 @@ while ( $row = $result->fetch() )
 {
 	//Invité?
 	$is_guest = empty($row['user_id']);
-	$first_message = ($row['id'] == $topic['first_msg_id']) ? true : false;
+	$first_message = $row['id'] == $topic['first_msg_id'];
 
 	//Gestion du niveau d'autorisation.
 	list($edit, $del, $cut, $moderator) = array(false, false, false, false);
@@ -250,8 +250,8 @@ while ( $row = $result->fetch() )
 		list($edit, $del) = array(true, true);
 		if ($check_group_edit_auth) //Fonctions réservées à ceux possédants les droits de modérateurs seulement.
 		{
-			$cut = (!$first_message) ? true : false;
-			$moderator = (!$is_guest) ? true : false;
+			$cut = !$first_message;
+			$moderator = !$is_guest;
 		}
 	}
 	elseif (AppContext::get_current_user()->get_id() == $row['user_id'] && !$is_guest && $first_message) //Premier msg du topic => suppression du topic non autorisé au membre auteur du message.
@@ -510,9 +510,6 @@ $vars_tpl = array_merge($vars_tpl, array(
 	'MEMBER' => $total_member,
 	'GUEST' => $total_visit,
 	'SELECT_CAT' => $cat_list, //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
-	'U_SUSCRIBE' => ($track) ? url('.php?ut=' . $id_get) : url('.php?t=' . $id_get),
-	'U_SUSCRIBE_PM' => url('.php?token=' . AppContext::get_session()->get_token() . '&amp;' . ($track_pm ? 'utp' : 'tp') . '=' . $id_get),
-	'U_SUSCRIBE_MAIL' => url('.php?token=' . AppContext::get_session()->get_token() . '&amp;' . ($track_mail ? 'utm' : 'tm') . '=' . $id_get),
 	'IS_TRACK' => $track ? 'true' : 'false',
 	'IS_TRACK_PM' => $track_pm ? 'true' : 'false',
 	'IS_TRACK_MAIL' => $track_mail ? 'true' : 'false',
@@ -597,7 +594,14 @@ else
 			'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $config->get_message_when_topic_is_solved() : $config->get_message_when_topic_is_unsolved(),
 			'L_EXPLAIN_DISPLAY_MSG' => $config->get_message_when_topic_is_unsolved(),
 			'L_EXPLAIN_DISPLAY_MSG_BIS' => $config->get_message_when_topic_is_solved(),
-			'U_ACTION_MSG_DISPLAY' => url('.php?msg_d=1&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token())
+		));
+		$tpl->put_all(array(
+			'C_DISPLAY_MSG' => true,
+			'ICON_DISPLAY_MSG' => $config->is_message_before_topic_title_icon_displayed() ? '<i class="fa ' . $img_msg_display . '"></i>' : '',
+			'L_DISPLAY_MSG' => $config->get_message_before_topic_title(),
+			'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $config->get_message_when_topic_is_solved() : $config->get_message_when_topic_is_unsolved(),
+			'L_EXPLAIN_DISPLAY_MSG' => $config->get_message_when_topic_is_unsolved(),
+			'L_EXPLAIN_DISPLAY_MSG_BIS' => $config->get_message_when_topic_is_solved(),
 		));
 	}
 }
