@@ -149,7 +149,7 @@ article h3 {
 
 article {
     padding: 10px;
-    min-height: calc(95vh - 63px);
+    min-height: calc(95vh - 59px);
 }
 
 .content > a > img {
