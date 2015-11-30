@@ -3,7 +3,7 @@
  *                         FormFieldConstraintRegex.class.php
  *                            -------------------
  *   begin                : December 19, 2009
- *   copyright            : (C) 2009 Régis Viarre, Loic Rouchon
+ *   copyright            : (C) 2009 RÃ©gis Viarre, Loic Rouchon
  *   email                : crowkait@phpboost.com, loic.rouchon@phpboost.com
  *
  ###################################################
@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author Régis Viarre <crowkait@phpboost.com>, Loic Rouchon <loic.rouchon@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>, Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc
  * @package {@package}
  */
@@ -59,7 +59,15 @@ class FormFieldConstraintRegex extends AbstractFormFieldConstraint
 		$delimiter = $regex[0];
 		$end_delimiter_position = strrpos($regex, $delimiter);
 		$js_regex = substr($regex, 1, $end_delimiter_position - 1);
-		$js_options = substr($regex, $end_delimiter_position + 1);
+		
+		$js_options_chars = str_split(substr($regex, $end_delimiter_position + 1));
+		$js_options = '';
+		foreach ($js_options_chars as $option)
+		{
+			if (in_array($option, array('i', 'm', 'g')))
+				$js_options .= $option;
+		}
+		
 		$this->js_regex = str_replace('\.', '\\\.', $js_regex);
 		$this->js_regex = '\'' . str_replace('\'', '\\\'', $this->js_regex) . '\'';
 		$this->js_options = '\'' . str_replace('\'', '\\\'', $js_options) . '\'';
