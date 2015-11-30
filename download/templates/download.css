@@ -1,1 +1,16 @@
-.mini-download-table-name { max-width: 84px; }
+.mini-download-table-name {
+	max-width: 84px;
+}
+
+.download-picture {
+	display: block;
+	padding-bottom: 10px;
+	text-align: center;
+}
+
+@media ( min-width: 480px ) {
+	.download-picture {
+		float: right;
+		padding-left: 10px;
+	}
+}

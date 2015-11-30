@@ -137,7 +137,7 @@
 					</div>
 					<div class="content">
 						# IF downloadfiles.C_PICTURE #
-						<span class="float-right">
+						<span class="download-picture">
 							<img src="{downloadfiles.U_PICTURE}" alt="{downloadfiles.NAME}" itemprop="image" />
 						</span>
 						# ENDIF #
