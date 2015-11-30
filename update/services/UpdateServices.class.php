@@ -427,7 +427,7 @@ class UpdateServices
 				
 				while ($row = $result->fetch())
 				{
-					$user_id_list = explode(',' $row['user_id_list']);
+					$user_id_list = explode(',', $row['user_id_list']);
 					$ids_number = count($row['user_id_list']);
 					$i = 1;
 					foreach ($user_id_list as $id)
