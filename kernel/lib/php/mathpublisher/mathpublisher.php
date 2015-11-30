@@ -325,7 +325,7 @@ $fontesmath = array(
 
 function est_nombre($str) 
 {
-return @ereg("^[0-9]", $str);
+return @preg_match('/^[0-9]/', $str);
 }
 
 function tableau_expression($expression)
@@ -341,7 +341,7 @@ $d=0;
 for($i = 0; $i < count($t); $i++)
 	{
 	if (is_array($t[$i])) $t[$i] = $t[$i][1];
-	if (@ereg("formula", $t[$i]))
+	if (@preg_match('/formula/', $t[$i]))
 		{
 		$d=$i+2;
 		break;
@@ -658,7 +658,7 @@ $taille=max($taille,6);
 global $symboles, $fontesmath;
 $texte=stripslashes($texte);
 if (isset($fontesmath[$texte])) $font = PHP_MATH_PUBLISHER_FONT_DIR."/".$fontesmath[$texte].".ttf";
-elseif (@ereg("[a-zA-Z]", $texte)) $font = PHP_MATH_PUBLISHER_FONT_DIR."/cmmi10.ttf";
+elseif (@preg_match('/[a-zA-Z]/', $texte)) $font = PHP_MATH_PUBLISHER_FONT_DIR."/cmmi10.ttf";
 else $font = PHP_MATH_PUBLISHER_FONT_DIR."/cmr10.ttf";
 if (isset($symboles[$texte])) $texte = $symboles[$texte];
 $htexte = 'dg'.$texte;
@@ -737,7 +737,7 @@ var $base_verticale;
 //*****************************************************************
 class expression_texte extends  expression
 {
-function expression_texte($exp)
+function __construct($exp)
 {
 $this->texte = $exp;
 }
@@ -751,7 +751,7 @@ $this->base_verticale = imagesy($this->image) / 2;
 class expression_math extends  expression
 {
 var $noeuds;
-function expression_math($exp)
+function __construct($exp)
 {
 $this->texte = "&$";
 $this->noeuds = $exp;
@@ -1605,7 +1605,7 @@ $handle=opendir(PHP_MATH_PUBLISHER_CACHE_DIR);
 while ($fi = readdir($handle))
 	{
 	$info=pathinfo($fi);
-	if ($fi!="." && $fi!=".." && $info["extension"]=="png" && @ereg("^math",$fi)) 
+	if ($fi!="." && $fi!=".." && $info["extension"]=="png" && @preg_match('/^math/',$fi)) 
 		{
 		list($math,$v,$name)=explode("_",$fi);
 		if ($name==$n) 
