@@ -84,7 +84,7 @@ class AdminContactFieldFormController extends AdminModuleController
 	{
 		$field = $this->get_field();
 		
-		$regex_type = is_numeric($field->get_regex()) ? $field->get_regex() : 0;
+		$regex_type = !$this->is_new_field ? (is_numeric($field->get_regex()) ? $field->get_regex() : 6) : 0;
 		$regex = is_string($field->get_regex()) ? $field->get_regex() : '';
 		
 		$form = new HTMLForm(__CLASS__);
@@ -110,7 +110,8 @@ class AdminContactFieldFormController extends AdminModuleController
 			$this->get_array_select_regex(),
 			array('disabled' => $field->is_readonly(), 'description' => $this->admin_user_common_lang['field.regex-explain'], 'events' => array('change' => '
 				if (HTMLForms.getField("regex_type").getValue() == 6) { 
-					HTMLForms.getField("regex").enable(); 
+					HTMLForms.getField("regex").enable();
+					jQuery("#' . __CLASS__ . '_regex").focus();
 				} else { 
 					HTMLForms.getField("regex").disable(); 
 				}'))
@@ -200,9 +201,10 @@ class AdminContactFieldFormController extends AdminModuleController
 		
 		if (!$field->is_readonly() && !$this->form->field_is_disabled('regex_type'))
 		{
-			$regex = 0;
-			if (!$this->form->field_is_disabled('regex_type'))
-				$regex = is_numeric($this->form->get_value('regex_type', '')->get_raw_value()) ? $this->form->get_value('regex_type', '')->get_raw_value() : $this->form->get_value('regex', '');
+			$regex = $regex_type = $this->form->get_value('regex_type')->get_raw_value();
+			
+			if (!$this->form->field_is_disabled('regex'))
+				$regex = $regex_type != 6 ? $regex_type : $this->form->get_value('regex');
 			
 			$field->set_regex($regex);
 		}
@@ -290,11 +292,12 @@ class AdminContactFieldFormController extends AdminModuleController
 					{
 						$event .= 'HTMLForms.getField("regex_type").disable();';
 					}
-					$event .= '} else {
-					HTMLForms.getField("' .$name_field_disable. '").enable();';
+					$event .= '} else { HTMLForms.getField("' .$name_field_disable. '").enable();';
 					if ($name_field_disable == 'regex')
 					{
-						$event .= 'HTMLForms.getField("regex_type").enable();';
+						$event .= 'if (HTMLForms.getField("regex_type").getValue() != 6)
+							HTMLForms.getField("regex").disable();
+						HTMLForms.getField("regex_type").enable();';
 					}
 					$event .= '}';
 			}
