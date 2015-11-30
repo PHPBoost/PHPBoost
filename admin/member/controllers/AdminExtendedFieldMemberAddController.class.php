@@ -118,9 +118,7 @@ class AdminExtendedFieldMemberAddController extends AdminController
 				}'))
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('regex', $this->lang['regex.personnal-regex'], '', array(
-			'maxlength' => 25)
-		));
+		$fieldset->add_field(new FormFieldTextEditor('regex', $this->lang['regex.personnal-regex'], ''));
 		
 		$fieldset->add_field(new FormFieldCheckbox('field_required', $this->lang['field.required'], 0, array(
 			'description' => $this->lang['field.required_explain']
