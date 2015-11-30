@@ -45,9 +45,12 @@ a.member 	{ color: #000000; }
 .bkgd-color-unvisible 	{ background-color: #FFEE99; }
 .bkgd-color-unaprobed 	{ background-color: #FFCCCC; }
 
-.bkgd-color-fixed 		{ background-color: #7FFF9C; }
-.bkgd-color-processing 	{ background-color: #FFD86F; }
-.bkgd-color-unknown 	{ background-color: #FF796F; }
+.bkgd-color-fixed 			{ background-color: #7FFF9C; }
+tr td.bkgd-color-fixed 		{ background-color: #7FFF9C; }
+.bkgd-color-processing 		{ background-color: #FFD86F; }
+tr td.bkgd-color-processing { background-color: #FFD86F; }
+.bkgd-color-unknown 		{ background-color: #FF796F; }
+tr td.bkgd-color-unknown 	{ background-color: #FF796F; }
 
 /* --- Les differentes tailles de polices --- */
 .smaller 	{ font-size: 0.869em; }
