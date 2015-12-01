@@ -29,8 +29,7 @@ table caption {
 	border-bottom: 1px solid #d4d4d4;
 }
 
-@media (min-width:769px){
-	
+@media (min-width: 769px) {
 	table, .table-fixed {
 		width: calc(100% - 40px) !important;
 		margin: 8px 20px;
@@ -46,9 +45,10 @@ table thead th {
 	font-weight: normal;
 }
 
-table thead th:first-child 	{ border-top-left-radius: 3px; }
+table thead th:first-child 	{ border-top-left-radius: 3px;  }
 table thead th:last-child 	{ border-top-right-radius: 3px; }
-table thead th a 			{ color: #E5E6E6; }
+
+table thead th a 		{ color: #E5E6E6; }
 table thead th a:hover 		{ color: #FFFFFF; }
 
 /* Contenu */
@@ -61,11 +61,15 @@ table tbody td {
 	text-align: center;
 }
 
-table tbody tr:nth-child(even) td 	{ background-color: #FFFFFF; }
-table tbody tr td:last-child 		{ border-right: 1px solid #D1D2D4; }
+tr:nth-child(even) td 	{
+	background-color: #FFFFFF;
+}
+table tbody tr td:last-child {
+	border-right: 1px solid #D1D2D4;
+}
 
-table tbody tr.no-separator td 				{ border-top: none; }
-table tbody tr td.no-separator 				{ border-left: none; }
+table tbody tr.no-separator td 			{ border-top: none;  }
+table tbody tr td.no-separator 			{ border-left: none; }
 table tbody tr td.no-separator:first-child 	{ border-left: 1px solid #D1D2D4; }
 
 /* Pied */
@@ -78,13 +82,23 @@ table tfoot tr th {
 
 table tfoot tr th:first-child 	{ border-left: 1px solid #D1D2D4; border-bottom-left-radius: 3px; }
 table tfoot tr th:last-child 	{ border-right: 1px solid #D1D2D4; border-bottom-right-radius: 3px; }
-table tfoot tr th:only-child 	{ text-align: right; }
+table tfoot tr th:only-child 	{
+	text-align: right;
+}
 
-table tfoot tr th * 		{ vertical-align: middle; }
-table tfoot tr th a 		{ color: #676A74; }
-table tfoot tr th select 	{ padding: 2px 5px; }
+table tfoot tr th * {
+	vertical-align: middle;
+}
 
-/* Patch thead Tableaux formatés */
+table tfoot tr th a {
+	color: #676A74;
+}
+
+table tfoot tr th select {
+	padding: 2px 5px;
+}
+
+/* Patch thead Tableaux formatÃ©s */
 table.formatter-table th.formatter-table-head {
 	padding: 8px;
 	background-color: #4D4C50;
@@ -94,13 +108,15 @@ table.formatter-table th.formatter-table-head {
 	font-weight: normal;
 }
 
-table.formatter-table th.formatter-table-head:first-child 	{ border-top-left-radius: 3px; }
-table.formatter-table th.formatter-table-head:last-child 	{ border-top-right-radius: 3px; }
+table.formatter-table th.formatter-table-head:first-child { border-top-left-radius: 3px;  }
+table.formatter-table th.formatter-table-head:last-child  { border-top-right-radius: 3px; }
 
-table.formatter-table th.formatter-table-head a 		{ color: #E5E6E6; }
+table.formatter-table th.formatter-table-head a 	{ color: #E5E6E6; }
 table.formatter-table th.formatter-table-head a:hover 	{ color: #FFFFFF; }
 
-table.formatter-table th.formatter-table-head p 		{ margin-bottom: 0px; }
+table.formatter-table th.formatter-table-head p {
+	margin-bottom: 0px;
+}
 
 .col-smaller { width: 3em;  }
 .col-small   { width: 6em;  }
@@ -108,14 +124,13 @@ table.formatter-table th.formatter-table-head p 		{ margin-bottom: 0px; }
 .col-larger  { width: 12em; }
 .col-xlarge  { width: 15em; }
 
-@media (max-width:980px){
-	
+@media (max-width: 980px) {
 	.col-large {
 		width: 100%
 	}
 	
-	table tbody td					{border-right: 1px solid #D1D2D4;}
-	table tbody tr td.no-separator 	{border-left: 1px solid #D1D2D4;}
+	table tbody td			{ border-right: 1px solid #D1D2D4; }
+	table tbody tr td.no-separator 	{ border-left: 1px solid #D1D2D4;  }
 }
 
 /* Mini tableaux */
@@ -131,7 +146,7 @@ table.mini td a {
 }
 
 /* Pagination footer tableaux */
-table tfoot nav.pagination a{
+table tfoot nav.pagination a {
 	color: #8B8D90;
 	text-decoration: none;
 	padding: 3px 3px;
@@ -147,11 +162,10 @@ td.input-radio {
 }
 
 td.input-radio .form-field-radio-span {
-	padding: 0
+	padding: 0;
 }
 
 /* --- images dans une table --- */
-
 .picture-table {
 	vertical-align: top;
 	max-width:180px;
@@ -159,8 +173,7 @@ td.input-radio .form-field-radio-span {
 
 
 /* --- responsive tables basictable.js --- */
-
-table.bt thead th{
+table.bt thead th {
 	display: none;
 }
 
@@ -176,8 +189,7 @@ table.bt thead th{
 	padding: 0 10px;
 }
 
-@media (min-width:981px){
-	
+@media (min-width: 981px ){
 	.table-navigation,
 	.table-rows-options {
 		float: right;
@@ -195,14 +207,12 @@ table.bt thead th{
 }
 
 /* --- design mobile --- */
-
-table.bt thead th:first-child{
+table.bt thead th:first-child {
 	display: block;
 	border-radius: 0;
 }
 
-@media (min-width:769px){
-	
+@media (min-width: 769px) {
 	table.bt thead th:first-child {
 		border-radius: 3px 3px 0 0;
 	}
