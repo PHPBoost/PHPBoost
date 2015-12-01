@@ -56,7 +56,7 @@ table tbody td {
 	text-align: center;
 }
 
-table tbody tr:nth-child(even) td {
+tr:nth-child(even) td {
 	background-color: #FFFFFF;
 }
 
