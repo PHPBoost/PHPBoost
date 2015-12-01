@@ -28,13 +28,13 @@
 						
 						<div id="id-message-helper" class="notice">{L_ALERT_EXPLAIN}: <a title="{alert_form.TITLE}" href="{alert_form.U_TOPIC}">{alert_form.TITLE}</a></div>
 						<div class="form-element">
-							<label for="title">{L_ALERT_TITLE}</label>
+							<label for="title">* {L_ALERT_TITLE}</label>
 							<div class="form-field">
 								<input type="text" name="title" id="title" class="field-large">
 							</div>
 						</div>
 						<div class="form-element-textarea">
-							<label for="contents"> *{L_ALERT_CONTENTS}</label>
+							<label for="contents">* {L_ALERT_CONTENTS}</label>
 							{KERNEL_EDITOR}
 							<textarea rows="15" cols="40" id="contents" name="contents"></textarea> 
 							<input type="hidden" name="id" value="{alert_form.ID_ALERT}">
@@ -55,11 +55,10 @@
 				# START alert_confirm #
 				<fieldset>
 					<legend>{L_ALERT}</legend>
-					<div class="center">
-						<br /><br />
+					<div class="success">
 						{alert_confirm.MSG}
 						<br /><br />
-						<a href="{URL_TOPIC}">{L_BACK_TOPIC}</a>
+						<div class="center"><a href="{URL_TOPIC}">{L_BACK_TOPIC}</a></div>
 					</div>
 				</fieldset>
 				# END alert_confirm #

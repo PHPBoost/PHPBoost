@@ -140,7 +140,7 @@
 						# ENDIF #
 							<li>
 								<span class="cssmenu-title">
-									<a href="{PATH_TO_ROOT}/forum/alert{U_ALERT}#go_bottom" title="{L_ALERT}"><i class="fa fa-warning"></i> {L_ALERT}</a>
+									<a href="{PATH_TO_ROOT}/forum/alert{U_ALERT}" title="{L_ALERT}"><i class="fa fa-warning"></i></a> <a href="{PATH_TO_ROOT}/forum/alert{U_ALERT}" title="{L_ALERT}">{L_ALERT}</a>
 								</span>
 							</li>
 							<li>
