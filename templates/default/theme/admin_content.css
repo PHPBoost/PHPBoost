@@ -714,7 +714,7 @@ div.container-block {
 div.container-block > div {
 	position: relative;
 	float: left;
-	z-index: 99;
+	z-index: 10;
 }
 
 div.container-block-absolute {
