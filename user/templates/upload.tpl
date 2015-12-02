@@ -3,7 +3,15 @@
 	<!--
 	function insert_popup(code) 
 	{
+		# IF C_TINYMCE_EDITOR #
+		if (opener == null)
+			var field = window.parent.document.getElementById("{FIELD}");
+		else
+			var field = opener.document.getElementById("{FIELD}");
+		# ELSE #
 		var field = opener.document.getElementById("{FIELD}");
+		# ENDIF #
+		
 		var field_type = field.tagName.toLowerCase();
 		
 		if (field_type == 'input')
@@ -13,7 +21,7 @@
 		else
 		{
 			# IF C_TINYMCE_EDITOR #
-			opener.insertTinyMceContent(code); //insertion pour tinymce.
+			window.parent.insertTinyMceContent(code); //insertion pour tinymce.
 			# ELSE #
 			field.value = field.value + code;
 			# ENDIF #
