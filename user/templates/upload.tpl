@@ -3,15 +3,23 @@
 	<!--
 	function insert_popup(code) 
 	{
-		# IF C_TINYMCE_EDITOR #
-		window.parent.insertTinyMceContent(code); //insertion pour tinymce.
-		# ELSE #
+		var field = opener.document.getElementById("{FIELD}");
+		var field_type = field.tagName.toLowerCase();
 		
-		var textarea = opener.document.getElementById("{FIELD}");
-		var value = textarea.value;
-		textarea.focus();
-		textarea.value = value + code;
-		# ENDIF #
+		if (field_type == 'input')
+		{
+			field.value = code;
+		}
+		else
+		{
+			# IF C_TINYMCE_EDITOR #
+			opener.insertTinyMceContent(code); //insertion pour tinymce.
+			# ELSE #
+			field.value = field.value + code;
+			# ENDIF #
+		}
+		
+		field.focus();
 	}	
 	function close_popup()
 	{
@@ -70,7 +78,7 @@
 		var regex = /\/|\.|\\|\||\?|<|>|\"/;
 		
 		document.getElementById('img' + id_folder).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
-		if( name != '' && regex.test(name) ) //interdiction des caractères spéciaux dans la nom.
+		if( name != '' && regex.test(name) ) //interdiction des caractÃ¨res spÃ©ciaux dans la nom.
 		{
 			alert("{L_FOLDER_FORBIDDEN_CHARS}");
 			document.getElementById('f' + id_folder).innerHTML = '<a href="upload.php?f=' + id_folder + '{POPUP}">' + previous_cut_name + '</a>';
@@ -108,7 +116,7 @@
 		var name = document.getElementById("folder_name").value;
 		var regex = /\/|\.|\\|\||\?|<|>|\"/;
 
-		if( name != '' && regex.test(name) ) //interdiction des caractères spéciaux dans le nom.
+		if( name != '' && regex.test(name) ) //interdiction des caractÃ¨res spÃ©ciaux dans le nom.
 		{
 			alert("{L_FOLDER_FORBIDDEN_CHARS}");
 			document.getElementById('new-folder' + divid).innerHTML = '';
@@ -171,7 +179,7 @@
 		var regex = /\/|\\|\||\?|<|>|\"/;
 
 		document.getElementById('imgf' + id_file).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
-		if( name != '' && regex.test(name) ) //interdiction des caractères spéciaux dans la nom.
+		if( name != '' && regex.test(name) ) //interdiction des caractÃ¨res spÃ©ciaux dans la nom.
 		{
 			alert("{L_FOLDER_FORBIDDEN_CHARS}");
 			document.getElementById('fi1' + id_file).style.display = 'inline';
@@ -213,7 +221,7 @@
 			xmlhttprequest_sender(xhr_object, data);
 		}
 	}	
-	var delay = 1000; //Délai après lequel le bloc est automatiquement masqué, après le départ de la souris.
+	var delay = 1000; //DÃ©lai aprÃ¨s lequel le bloc est automatiquement masquÃ©, aprÃ¨s le dÃ©part de la souris.
 	var timeout;
 	var displayed = false;
 	var previous_block;
