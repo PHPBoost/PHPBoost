@@ -113,7 +113,7 @@ tinymce.init({
 			onclick: function (field_name) {
 				ed.windowManager.open({ 
 					title: '',
-					url: '{PATH_TO_ROOT}/user/upload.php?popup=1&amp;close_button=0&amp;fd=' + field_name + '&amp;edt=TinyMCE',
+					url: '{PATH_TO_ROOT}/user/upload.php?popup=1&amp;close_button=0&amp;fd=' + HTMLForms.get("{FORM_NAME}").getId() + '_{FIELD_NAME}&amp;edt=TinyMCE',
 					width: 720,
 					height: 500,
 				}); 
