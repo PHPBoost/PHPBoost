@@ -372,7 +372,7 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 @media (min-width: 769px) {
 
 	.cssmenu.cssmenu-static > ul > li {
-		padding: 0 10px 0 10;
+		padding: 0 10px 0 10px;
 	}
 
 	footer .cssmenu.cssmenu-static > ul > li 		{ border-right: 1px solid #2A2A2A; }
