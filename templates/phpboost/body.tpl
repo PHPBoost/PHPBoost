@@ -114,12 +114,44 @@
 
 		# IF C_MENUS_FOOTER_CONTENT #
 		<div class="footer-content">
+			<div class="block-container">
+				<div class="footer-partenaires">
+					<div class="footer-partners-title">
+						<img src="{PATH_TO_ROOT}/templates/phpboost/theme/images/transparent.gif" class="sprite-img footer-partners-title-img" />
+						Les partenaires
+					</div>
+					<a href="http://www.nuxit.com/" class="footer-partners-nuxit" title="Nuxit">
+						<p class="partners-nuxit-top">Hébergement de site web</p>
+						<p class="center">
+							<img src="{PATH_TO_ROOT}/templates/phpboost/theme/images/transparent.gif" class="sprite-img footer-partners-nuxit-img" />
+						</p>
+						<p class="partners-nuxit-bottom">Qualité, fiabilité, Support</p>
+					</a>
+				</div>
+			</div>
 			# START menus_footer #
 			{menus_footer.MENU}
 			# END menus_footer #
+
+			<div class="footer-social-container">
+				<div class="footer-social footer-social-guestbook">
+					<a href="{PATH_TO_ROOT}/guestbook/" title="Livre d'Or"></a>
+				</div>
+				<div class="footer-social footer-social-gplus">			
+					<a href="https://plus.google.com/103112963627704533252" rel="publisher" title="Google +"></a>
+				</div>
+				<div class="footer-social footer-social-twitter">			
+					<a href="http://twitter.com/PHPBoostCMS" title="Twitter"></a>
+				</div>
+				<div class="footer-social footer-social-facebook">			
+					<a href="http://www.facebook.com/pages/PHPBoost-CMS/229132847163144" title="Facebook"></a>
+				</div>
+				<div class="footer-social footer-social-rss">
+					<a href="{PATH_TO_ROOT}/syndication/rss/news" title="Flux RSS"></a>
+				</div>
+			</div>
 		</div>
 		# ENDIF #
-
 		<div class="footer-infos">
 			<span>
 				{L_POWERED_BY} <a href="http://www.phpboost.com" title="PHPBoost">PHPBoost</a> {L_PHPBOOST_RIGHT}
