@@ -363,7 +363,15 @@ class HTTPRequestCustom
 
 	public function get_is_localhost()
 	{
-		return self::get_http_host() == 'localhost' || self::get_http_host() == 'local.dev' || self::get_http_host() == '127.0.0.1' || self::get_http_host() == '::1';
+		$patterns = array('localhost', 'local.dev', '127.0.0.1', '::1');
+		
+		foreach ($patterns as $value)
+		{
+			if (strpos($value, self::get_http_host()) !== false)
+				return true;
+		} 
+		
+		return false;
 	}
 
 	public function get_site_url()
