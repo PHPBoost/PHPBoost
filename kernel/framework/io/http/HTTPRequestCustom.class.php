@@ -367,7 +367,7 @@ class HTTPRequestCustom
 		
 		foreach ($patterns as $value)
 		{
-			if (strpos($value, self::get_http_host()) !== false)
+			if (strpos(self::get_http_host(), $value) !== false)
 				return true;
 		} 
 		
