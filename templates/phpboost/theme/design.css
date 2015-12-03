@@ -461,3 +461,125 @@ nav#breadcrumb ol li:not(.current):after {
 	content: '/';
 	color: #616161;
 }
+
+
+/* Boutons */
+
+div.pbt-button-container { 
+	margin: auto;
+	text-align: center;
+}
+
+div.pbt-button {
+	border-radius: 2px;
+	display: inline-block;
+	font-weight: bold;
+	line-height: 29px;
+}
+div.pbt-button:hover { box-shadow: 0px 0px 1px #212121; }
+
+div.pbt-button-blue { 
+	border: 1px solid #1E5083;
+	background: #366493;
+	background: linear-gradient(to bottom, #366493 0%, #1E5083 100%);
+	box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3);
+	margin-right: 10px;
+}
+div.pbt-button-blue:hover { 
+	background: #1E5083;
+}
+
+div.pbt-button-green { 
+	border: 1px solid #096A4A;
+	background: #2F9674;
+	background: linear-gradient(to bottom, #2F9674 0%, #168661 100%);
+	box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3);
+	margin-left: 10px;
+}
+div.pbt-button-green:hover { 
+	background: #168661;
+}
+
+div.pbt-button-gray {
+	background-color: #F1F1F1;
+	background-image: linear-gradient(to top,#F1F1F1 0%,#FFFFFF 100%);
+	border: 1px solid #d9d9d9;
+	margin-left: 10px; 
+}
+div.pbt-button-gray:hover {
+	background-color: #ECECEC;
+	background-image: linear-gradient(to top,#ECECEC 0%,#FBFBFB 100%);
+	border: 1px solid #D0D0D0;
+	box-shadow: 0px 0px 1px #CCCCCC;
+}
+
+.pbt-button-title {
+	padding: 6px 0px 0px 0px;
+	color: #FFFFFF; 
+	font-size: 20px;
+	margin-bottom: 0px;
+}
+div.pbt-button-gray .pbt-button-title { color: #444444;font-size: 15px; }
+
+p.pbt-button-com {
+	padding-top: 2px;
+	font-size: 11px;
+	margin-bottom: 0px;
+	text-align: left;	
+}
+div.pbt-button-blue p.pbt-button-com { color: #C98621; padding-left: 67px; }
+div.pbt-button-green p.pbt-button-com { color: #005136; padding-left: 70px; }
+div.pbt-button-gray p.pbt-button-com { color: #b3aeae; text-align: center; }
+
+
+a.pbt-button-a {
+	display: block;
+	padding: 6px 6px;
+	color: #444444;
+}
+a.pbt-button-a:hover { text-decoration: none; color: #212121; }
+
+a.pbt-button-add { width: 70px; padding: 0px 10px 0px 7px; }
+
+img.pbt-button-img, a.pbt-button-a {
+    transition: all 0.1s ease-out;
+    overflow: hidden;
+}
+
+a.pbt-button-a:hover img.pbt-button-img, a.pbt-button-a:hover{
+	opacity: 1;
+	overflow: hidden;
+}
+
+img.pbt-custom-img {
+	float: left;	
+	overflow: hidden;
+}
+
+h2.pbt-custom-subtitle {
+	text-align: left;
+	padding-left: 7px;
+}
+
+h2.pbt-custom-subtitle a {
+	font-size: 16px;
+	font-family: "Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
+	font-weight: bold;	
+}
+
+
+/* Entête spécifique */
+.pbt-entete { margin: auto; }
+
+.pbt-content { text-align: justify; margin-bottom: 10px; }
+
+.pbt-desc { 
+	font-style: italic; 
+	font-weight: normal;
+	font-size: 12px;
+}
+
+img.pbt-entete-img {
+	float: left;
+	padding: 0px 10px 10px 0px;	
+}
