@@ -374,7 +374,7 @@
 												</fieldset>
 												
 												<div class="db-query-result">
-													<table id="table">
+													<table id="table" class="table-fixed">
 														# IF C_HEAD #
 														<thead>
 															<tr>

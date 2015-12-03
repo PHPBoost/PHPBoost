@@ -262,7 +262,7 @@
 								<div class="spacer"></div>
 								# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
 								<div class="db-query-result">
-									<table id="table">
+									<table id="table" class="table-fixed">
 										<thead>
 											<tr>
 												<th>&nbsp;</th>
@@ -353,12 +353,12 @@
 										<article class="block">
 												<header>{L_EXECUTED_QUERY}</header>
 														<div class="content">
-																<fieldset style="background-color:white;margin:0px">
-																	<p style="color:black;font-size:10px;">{QUERY_HIGHLIGHT}</p>
+																<fieldset class="db-executed-query">
+																	<p>{QUERY_HIGHLIGHT}</p>
 																</fieldset>
 												
-																<div style="width:99%;margin:auto;overflow:auto;padding:18px 2px">
-																	<table id="table">
+																<div class="db-query-result">
+																	<table id="table" class="table-fixed">
 																		<thead>
 																			<tr class="center">
 																				# START head #
