@@ -189,6 +189,10 @@ table.bt thead th {
 	padding: 0 10px;
 }
 
+.table-rows-options select{
+	margin: 5px 0;
+}
+
 @media (min-width: 981px ){
 	.table-navigation,
 	.table-rows-options {
