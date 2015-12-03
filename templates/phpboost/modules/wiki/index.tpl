@@ -1,4 +1,4 @@
-		<section>					
+		<section id="module-wiki">
 			<header>
 				<h1>
 					<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" title="${LangLoader::get_message('syndication', 'common')}" class="fa fa-syndication"></a>
@@ -8,7 +8,7 @@
 			<div class="content">
 				# INCLUDE wiki_tools #
 				<div class="entete">
-					<img class="pbt-entete-img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="logo" />
+					<img class="pbt-entete-img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
 					<div class="pbt-entete-content">
 						<p class="pbt-entete-title">Bienvenue dans la documentation de PHPBoost.</p>
 						<span class="pbt-entete-desc">
@@ -18,7 +18,7 @@
 				
 				<hr style="margin:25px 0px;" />
 
-				<section class="block">
+				<section class="block pbt-wiki-about">
 					<header>
 						<h1>A propos de PHPBoost</h1>
 					</header>
@@ -64,7 +64,7 @@
 					<footer></footer>
 				</section>
 
-				<section>
+				<section class="pbt-wiki-section">
 					<header>
 						<h1>
 							<a href="{PATH_TO_ROOT}/wiki/presentation-de-phpboost">Présentation de PHPBoost</a>
@@ -72,7 +72,7 @@
 						</h1>
 					</header>
 					<div class="content">
-						<p class="more">Les articles<p>
+						<p class="more">Les articles</p>
 						<ul class="no-list">
 							<li>
 								<i class="fa fa-file-text"></i>
@@ -102,7 +102,7 @@
 					<footer></footer>
 				</section>
 				
-				<section>
+				<section class="pbt-wiki-section">
 					<header>
 						<h1>
 							<a href="{PATH_TO_ROOT}/wiki/installation-et-migration-de-phpboost">Installation et migration de PHPBoost</a>
@@ -110,7 +110,7 @@
 						</h1>
 					</header>
 					<div class="content">
-						<p class="more">Les catégories<p>
+						<p class="more">Les catégories</p>
 						<ul class="no-list">
 							<li>
 								<i class="fa fa-folder-open"></i>
@@ -132,7 +132,7 @@
 					<footer></footer>
 				</section>		
 			
-				<section>
+				<section class="pbt-wiki-section">
 					<header>
 						<h1>
 							<a href="{PATH_TO_ROOT}/wiki/utilisation-de-phpboost">Utilisation de PHPBoost</a>
@@ -141,7 +141,7 @@
 					</header>
 					<div class="content">
 					
-						<p class="more">Les catégories<p>
+						<p class="more">Les catégories</p>
 						<ul class="no-list">
 							<li>
 								<i class="fa fa-folder-open"></i>
@@ -178,7 +178,7 @@
 				</section>	
 				
 				
-				<section>
+				<section class="pbt-wiki-section">
 					<header>
 						<h1>
 							<a href="{PATH_TO_ROOT}/wiki/design-et-interface">Design et Interface</a>
@@ -187,17 +187,17 @@
 					</header>
 					<div class="content">
 					
-						<p class="more">Les catégories<p>
+						<p class="more">Les catégories</p>
 						<ul class="no-list">
 							<li>
 								<i class="fa fa-folder-open"></i>
-								<a href="{PATH_TO_ROOT}/wiki/personnaliser-un-theme">Personnaliser un thème</a>
-								<span class="more"> - Modifier l'aspect de votre site</span>
+								<a href="{PATH_TO_ROOT}/wiki/creer-un-theme">Créer un thème</a>
+								<span class="more"> - De A à Z</span>
 							</li>
 							<li>
 								<i class="fa fa-folder-open"></i>
-								<a href="{PATH_TO_ROOT}/wiki/structure-d-un-theme">Structure d'un thème</a>
-								<span class="more"> - Comprendre l'organisation d'un thème</span>
+								<a href="{PATH_TO_ROOT}/wiki/personnaliser-un-theme">Personnaliser un thème</a>
+								<span class="more"> - Modifier un thème existant</span>
 							</li>
 							<li>
 								<i class="fa fa-folder-open"></i>
@@ -209,7 +209,7 @@
 					<footer></footer>
 				</section>	
 				
-				<section>
+				<section class="pbt-wiki-section">
 					<header>
 						<h1>
 							<a href="{PATH_TO_ROOT}/wiki/developper-avec-phpboost">Développer avec PHPBoost</a>
@@ -218,7 +218,7 @@
 					</header>
 					<div class="content">
 					
-						<p class="more">Les catégories<p>
+						<p class="more">Les catégories</p>
 						<ul class="no-list">
 							<li>
 								<i class="fa fa-folder-open"></i>
@@ -237,7 +237,7 @@
 							</li>
 						</ul>
 						
-						<p class="more">Les articles<p>
+						<p class="more">Les articles</p>
 						<ul class="no-list">
 							<li>
 								<i class="fa fa-file-text"></i>
@@ -288,7 +288,7 @@
 						<thead>
 							<tr>
 								<th colspan="2">
-									# IF last_articles.C_ARTICLES #<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a> # ENDIF #<strong><em>{last_articles.L_ARTICLES}</em></strong>
+									# IF last_articles.C_ARTICLES #<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a> # ENDIF #<strong><em>{last_articles.L_ARTICLES}</em></strong>
 								</th>
 							</tr>
 						</thead>
