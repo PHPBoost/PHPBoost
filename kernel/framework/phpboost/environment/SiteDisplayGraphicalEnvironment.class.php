@@ -58,7 +58,8 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	{
 		$template = new FileTemplate('body.tpl');
 		
-		$theme = ThemesManager::get_theme(AppContext::get_current_user()->get_theme());
+		$theme_id = AppContext::get_current_user()->get_theme() ? AppContext::get_current_user()->get_theme() : UserAccountsConfig::load()->get_default_theme();
+		$theme = ThemesManager::get_theme($theme_id);
 		$customize_interface = $theme->get_customize_interface();
 		$header_logo_path = $customize_interface->get_header_logo_path();
 		
@@ -236,7 +237,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		if ($maintenance_config->is_under_maintenance() && $maintenance_config->get_display_duration_for_admin())
 		{
 			$date_lang = LangLoader::get('date-common');
-			//Durée de la maintenance.
+			//DurÃ©e de la maintenance.
 			$array_time = array(-1, 60, 300, 600, 900, 1800, 3600, 7200, 10800, 14400, 18000,
 			21600, 25200, 28800, 57600, 86400, 172800, 604800);
 			$array_delay = array(LangLoader::get_message('unspecified', 'main'), '1 ' . $date_lang['minute'],
@@ -247,7 +248,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				'16 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['hours'],
 				'1 ' . $date_lang['week']);
 
-			//Retourne le délai de maintenance le plus proche.
+			//Retourne le dÃ©lai de maintenance le plus proche.
 			if (!$maintenance_config->is_unlimited_maintenance())
 			{
 				$key_delay = 0;
@@ -279,7 +280,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				Date::to_format(time(), 'G', Timezone::SITE_TIMEZONE), Date::to_format(time(), 'i',
 				Timezone::SITE_TIMEZONE), Date::to_format(time(), 's', Timezone::SITE_TIMEZONE));
 			}
-			else //Délai indéterminé.
+			else //DÃ©lai indÃ©terminÃ©.
 			{
 				$key_delay = 0;
 				$array_release = array('0', '0', '0', '0', '0', '0');
