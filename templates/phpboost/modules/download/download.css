@@ -1,3 +1,49 @@
+.mini-download-table-name {
+	max-width: 84px;
+}
+
+.download-picture {
+	display: block;
+	padding-bottom: 10px;
+	text-align: center;
+}
+
+@media ( min-width: 480px ) {
+	.download-picture {
+		float: right;
+		padding-left: 10px;
+	}
+}
+
+@media ( max-width: 768px ) {
+	#module-download-pbt article {
+		margin: 1em auto;
+	}
+}
+
+@media ( max-width: 480px ) {
+	#module-download-pbt .pbt-button-blue  {
+		margin: 0;
+		width: 100%;
+	}
+
+	#module-download-pbt .pbt-button-gray i {
+		display: block;
+	}
+
+	#module-download-pbt .pbt-button-gray .pbt-button-a {
+		line-height: 15px;
+	}
+}
+
+@media ( min-width: 769px ) {
+	.pbt-custom-container {
+		float:left;
+		width: 47%;
+		padding-right: 15px;
+	}
+}
+
 div.pbt-container {	text-align: center; }
 
 div.pbt-dev-container { 
