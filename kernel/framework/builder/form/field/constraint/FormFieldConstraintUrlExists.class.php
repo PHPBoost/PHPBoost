@@ -52,7 +52,7 @@ class FormFieldConstraintUrlExists extends FormFieldConstraintRegex
 	{
 		$status = 200;
 		$url = new Url($field->get_value());
-		if (function_exists('get_headers') && ($file_headers = get_headers($url->relative(), true)) && isset($file_headers[0]))
+		if (function_exists('get_headers') && ($file_headers = get_headers($url->absolute(), true)) && isset($file_headers[0]))
 		{
 			if(preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/', $file_headers[0], $matches))
 				$status = (int)$matches[1];
