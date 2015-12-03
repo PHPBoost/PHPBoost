@@ -9,6 +9,9 @@
 					<li>
 						<a href="admin_database.php?query=1" class="quick-link">{L_QUERY}</a>
 					</li>
+					<li>
+						<a href="${relative_url(DatabaseUrlBuilder::configuration())}" class="quick-link">${LangLoader::get_message('configuration', 'admin-common')}</a>
+					</li>
 				</ul>
 		</nav>
 		
