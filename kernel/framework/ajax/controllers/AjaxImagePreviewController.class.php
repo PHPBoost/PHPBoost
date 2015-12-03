@@ -36,7 +36,7 @@ class AjaxImagePreviewController extends AbstractController
 		
 		if ($image_to_check)
 		{
-			if (function_exists('get_headers') && ($file_headers = get_headers($image->relative(), true)) && isset($file_headers[0]))
+			if (function_exists('get_headers') && ($file_headers = get_headers($image->absolute(), true)) && isset($file_headers[0]))
 			{
 				if(preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/', $file_headers[0], $matches))
 					$status = (int)$matches[1];
