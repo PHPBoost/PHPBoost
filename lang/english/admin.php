@@ -59,6 +59,7 @@ $LANG['generate'] = 'Generate';
 $LANG['or_direct_path'] = 'Or direct path';
 $LANG['unknow_bot'] = 'Unknown bot';
 $LANG['version'] = 'Version';
+$LANG['close_menu'] = 'Close the menu';
 
 //Index
 $LANG['quick_access'] = 'Quick access';
