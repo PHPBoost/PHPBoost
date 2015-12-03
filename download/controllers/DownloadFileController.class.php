@@ -59,7 +59,7 @@ class DownloadFileController extends AbstractController
 			DownloadCache::invalidate();
 			
 			$status = 200;
-			if (function_exists('get_headers') && ($file_headers = get_headers($this->downloadfile->get_url()->relative(), true)) && isset($file_headers[0]))
+			if (function_exists('get_headers') && ($file_headers = get_headers($this->downloadfile->get_url()->absolute(), true)) && isset($file_headers[0]))
 			{
 				if(preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/', $file_headers[0], $matches))
 					$status = (int)$matches[1];
