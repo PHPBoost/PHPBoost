@@ -3,7 +3,7 @@
  *                             LinksMenuElement.class.php
  *                            -------------------
  *   begin                : July 08, 2008
- *   copyright            : (C) 2008 Régis Viarre; Loic Rouchon
+ *   copyright            : (C) 2008 RÃ©gis Viarre; Loic Rouchon
  *   email                : crowkait@phpboost.com; loic.rouchon@phpboost.com
  *
  *
@@ -87,7 +87,7 @@ abstract class LinksMenuElement extends Menu
 	 */
 	protected function _assign($template, $mode = self::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
 	{
-		$image = new Image(Url::to_absolute($this->image));
+		$image = new Image(Url::to_relative($this->image));
 		
 		parent::_assign($template);
 		$template->put_all(array(
@@ -151,14 +151,14 @@ abstract class LinksMenuElement extends Menu
 	 */
 	public function set_image($image)
 	{
-		$this->image = Url::get_relative($image);
+		$this->image = Url::to_relative($image);
 	}
 	/**
 	 * @param string $url the value to set
 	 */
 	public function set_url($url)
 	{
-		$this->url = Url::get_relative($url);
+		$this->url = Url::to_relative($url);
 	}
 
 	## Getters ##
