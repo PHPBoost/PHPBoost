@@ -270,7 +270,8 @@ class DownloadFormController extends ModuleController
 		if ($this->config->is_author_displayed())
 			$downloadfile->set_author_display_name(($this->form->get_value('author_display_name') && $this->form->get_value('author_display_name') !== $downloadfile->get_author_user()->get_display_name() ? $this->form->get_value('author_display_name') : ''));
 		
-		$file_size = $status = 0;
+		$file_size = 0;
+		$status = 200;
 		
 		$file = new File($downloadfile->get_url()->rel());
 		if ($file->exists())
@@ -278,11 +279,9 @@ class DownloadFormController extends ModuleController
 		
 		if (empty($file_size))
 		{
-			$file_headers = get_headers($downloadfile->get_url()->absolute(), true);
-			if (is_array($file_headers))
+			if (function_exists('get_headers') && ($file_headers = get_headers($downloadfile->get_url()->relative(), true)) && isset($file_headers['Content-Length']))
 			{
-				if (isset($file_headers['Content-Length']))
-					$file_size = $file_headers['Content-Length'];
+				$file_size = $file_headers['Content-Length'];
 				
 				if(preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/', $file_headers[0], $matches))
 					$status = (int)$matches[1];
