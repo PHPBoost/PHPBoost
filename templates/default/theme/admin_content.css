@@ -833,7 +833,7 @@ div.container-block-absolute > div {
 	font-size: 2em;
 }
 
-@media (min-width:769px){
+@media (min-width: 769px) {
 	.menus-block-container > div.menus-block-move-top a			{opacity: 0}	
 	.menus-block-container > div.menus-block-move-bot a			{opacity: 0}
 	.menus-block-container:hover > div.menus-block-move-top a	{opacity: 1}	

@@ -838,6 +838,16 @@ div#release {
 	padding-bottom: 75px;
 }
 
+#module-user-moderation-panel .bt td:before {
+	display: none;
+}
+
+#module-user-moderation-panel .bt-content {
+	width: 100%;
+	text-align: center;
+	display: block;
+}
+
 .contribution-module-container {
 	float: left;
 	text-align: center;
