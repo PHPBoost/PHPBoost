@@ -30,13 +30,11 @@
  * @desc This class allows you to obtain informations on an image.
  * @package {@package}
  */
-class Image
+class Image extends FileSystemElement
 {
-	private $path;
-
 	public function __construct($path)
 	{
-		$this->path = $path;		
+		parent::__construct($path);
 	}
 	
 	/**
@@ -46,11 +44,6 @@ class Image
 	private function get_properties()
 	{
 		return @getimagesize($this->path);
-	}
-
-	public function get_path()
-	{
-		return $this->path;
 	}
 
 	public function get_width()
