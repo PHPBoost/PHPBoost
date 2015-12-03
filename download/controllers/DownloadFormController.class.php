@@ -279,7 +279,7 @@ class DownloadFormController extends ModuleController
 		
 		if (empty($file_size))
 		{
-			if (function_exists('get_headers') && ($file_headers = get_headers($downloadfile->get_url()->relative(), true)) && isset($file_headers['Content-Length']))
+			if (function_exists('get_headers') && ($file_headers = get_headers($downloadfile->get_url()->absolute(), true)) && isset($file_headers['Content-Length']))
 			{
 				$file_size = $file_headers['Content-Length'];
 				
