@@ -47,6 +47,8 @@
 					</li>
 					<li>
 						<a href="${relative_url(AdminMaintainUrlBuilder::maintain())}" title="{L_MAINTAIN}"><i class="fa fa-fw fa-clock-o"></i>{L_MAINTAIN}</a>
+					</li>
+					<li>	
 						<a href="{PATH_TO_ROOT}/admin/admin_alerts.php" title="{L_ADMINISTRATOR_ALERTS}"><i class="fa fa-fw fa-bell"></i> {L_ADMINISTRATOR_ALERTS}</a>
 					</li>
 					# IF C_ADMIN_LINKS_2 #

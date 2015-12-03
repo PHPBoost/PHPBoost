@@ -853,7 +853,7 @@ div.field-required:after {
 }
 
 .autocomplete-suggestion {
-	padding: 2px 5px;
+	padding: 5px;
 	white-space: nowrap;
 	overflow: hidden;
 	cursor: pointer;
