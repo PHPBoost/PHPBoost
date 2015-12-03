@@ -28,10 +28,6 @@ img, table, td, blockquote, code, pre, textarea, input, video, object, .video-pl
 	max-width: 100%;
 }
 
-img {
-	height: auto !important;
-}
-
 input, button, label, select, textarea, legend {
 	font-family: inherit;
 	font-size: inherit;
