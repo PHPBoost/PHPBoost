@@ -1,4 +1,21 @@
 # IF C_ROOT_CATEGORY #
+	<script>
+	<!--
+	function toggle_root_cat_display() {
+		jQuery('.content').is(":visible"))
+		{
+			jQuery('.content').hide(400);
+			jQuery('.root-categories-container').show(200);
+			jQuery('#display-tree').html('<i class="fa fa-folder"></i> Afficher l\'accueil des t√©l√©chargements');
+		} else {
+			jQuery('.root-categories-container').hide(400);
+			jQuery('.content').show(200);
+			jQuery('#display-tree').html('<i class="fa fa-folder"></i> Parcourir l\'arborescence');
+		}
+	};
+	-->
+	</script>
+	
 	<section id="module-download-pbt">
 		<header>
 			<h1>
@@ -11,6 +28,29 @@
 				# END IF #
 			</h1>
 		</header>
+		
+		<div class="root-categories-container" style="display: none;">
+			# IF C_SUB_CATEGORIES #
+			<div class="subcat-container">
+				# START sub_categories_list #
+				<div class="subcat-element" style="width:{CATS_COLUMNS_WIDTH}%;">
+					<div class="subcat-content">
+						# IF sub_categories_list.C_CATEGORY_IMAGE #<a itemprop="about" href="{sub_categories_list.U_CATEGORY}"><img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" /></a># ENDIF #
+						<br />
+						<a itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
+						<br />
+						<span class="small">{sub_categories_list.DOWNLOADFILES_NUMBER} # IF sub_categories_list.C_MORE_THAN_ONE_DOWNLOADFILE #${TextHelper::lowercase_first(LangLoader::get_message('files', 'common', 'download'))}# ELSE #${TextHelper::lowercase_first(LangLoader::get_message('file', 'common', 'download'))}# ENDIF #</span>
+					</div>
+				</div>
+				# END sub_categories_list #
+				<div class="spacer"></div>
+			</div>
+			# IF C_SUBCATEGORIES_PAGINATION #<span class="center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
+			# ELSE #
+				# IF NOT C_CATEGORY_DISPLAYED_TABLE #<div class="spacer"></div># ENDIF #
+			# ENDIF #
+		</div>
+		
 		<div class="content">
 			# IF C_DESCRIPTION #
 				<!-- {DESCRIPTION} -->
@@ -18,48 +58,48 @@
 			<div class="pbt-entete">
 				<img class="pbt-entete-img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
 				<div class="pbt-content">
-					<p class="pbt-title">TÈlÈcharger PHPBoost</p>
-					<span class="pbt-desc">Bienvenue sur la page de tÈlÈchargement de PHPBoost.</span>
+					<p class="pbt-title">T√©l√©charger PHPBoost</p>
+					<span class="pbt-desc">Bienvenue sur la page de t√©l√©chargement de PHPBoost.</span>
 				</div>
 			</div>
 			<hr style="margin:25px 0px;" />
 			Vous trouverez sur cette page :
 			<br /><br />
 			<ul>
-				<li>La derniËre version stable : PHPBoost 4.1 et sa version PDK destinÈe aux dÈveloppeurs</li>
-				<li>L'ancienne version PHPBoost 4.0</li>
-				<li>Mise ‡ jour des versions 4.0 et 4.1</li>
-				<li>Les scripts de migration pour passer votre site sous PHPBoost 4.0 ou 4.1</li>
+				<li>La derni√®re version stable : PHPBoost 5.0 et sa version PDK destin√©e aux d√©veloppeurs</li>
+				<li>L'ancienne version PHPBoost 4.1</li>
+				<li>Mise √† jour des versions 4.1 et 5.0</li>
+				<li>Les scripts de migration pour passer votre site sous PHPBoost 4.1 ou 5.0</li>
 			</ul>
 			<hr style="margin:25px auto 25px auto;" />
 
 			<article class="block">
 				<header>
-					<h1>TÈlÈcharger PHPBoost 5.0 - Zephyr</h1>
+					<h1>T√©l√©charger PHPBoost 5.0 - Zephyr</h1>
 					<p class="pbt-desc">
-						Pour les nostalgiques, ou pour les personnes ayant besoin de rÈparer une version 4.0 encore en production.
+						La version stable de PHPBoost. A utiliser pour b√©n√©ficier de toutes les derni√®res fonctionnalit√©s implant√©es.
 					</p>
 				</header>
 					
 				<div class="pbt-button-container">
 					<div class="pbt-button pbt-button-blue">
-						<a href="{PATH_TO_ROOT}/download/file-229+phpboost-4-0.php" class="pbt-button-a">
+						<a href="${relative_url(DownloadConfigUrlBuilder::download(361))}" class="pbt-button-a">
 							<div class="pbt-custom-img pbt-custom-img-phpboost"></div>
-							<p class="pbt-button-title">TÈlÈcharger PHPBoost 5.0</p>
-							<p class="pbt-button-com">Rev : 5.0.0 | Req : PHP 5.1.2 | .zip </p>
+							<p class="pbt-button-title">T√©l√©charger PHPBoost 5.0</p>
+							<p class="pbt-button-com">Rev : 5.0.0 | Req : PHP 5.3 | .zip </p>
 						</a>
 					</div>
 					<div class="pbt-button pbt-button-green">
-						<a href="{PATH_TO_ROOT}/download/category-36+mises-jour.php" class="pbt-button-a">
+						<a href="${relative_url(DownloadConfigUrlBuilder::display_category(45, 'mises-jour-phpboost-5-0'))}" class="pbt-button-a">
 							<div class="pbt-custom-img pbt-custom-img-phpboost"></div>
-							<p class="pbt-button-title">Mises ‡ jour</p>
-							<p class="pbt-button-com pbt-button-com-green">Mise ‡ jour et migration</p>
+							<p class="pbt-button-title">Mises √† jour</p>
+							<p class="pbt-button-com pbt-button-com-green">Mise √† jour et migration</p>
 						</a>
 					</div>
 				</div>
 				
 				<div class="pbt-dev-container">
-					<a href="{PATH_TO_ROOT}/download/download-232+phpboost-4-0-pdk.php" class="pbt-dev">TÈlÈcharger la version pour dÈveloppeurs (PDK)</a>
+					<a href="${relative_url(DownloadConfigUrlBuilder::display(44, 'phpboost-5-0', 364, 'phpboost-5-0-pdk'))}" class="pbt-dev">T√©l√©charger la version pour d√©veloppeurs (PDK)</a>
 				</div>
 					
 				<hr style="margin:10px auto 0px auto;" />
@@ -69,16 +109,16 @@
 						<div class="pbt-custom-container">
 							<div class="pbt-custom-img pbt-custom-img-modules"></div>
 							<h2 class="title pbt-custom-subtitle">
-								<a href="{PATH_TO_ROOT}/download/category-38+modules.php">Modules compatibles</a>
+								<a href="${relative_url(DownloadConfigUrlBuilder::display_category(47, 'modules-phpboost-5-0'))}">Modules compatibles</a>
 							</h2>
-							<p class="pbt-custom-desc">Donnez de nouvelles fonctionnalitÈs ‡ votre site.</p>
+							<p class="pbt-custom-desc">Donnez de nouvelles fonctionnalit√©s √† votre site.</p>
 						</div>
 						<div class="pbt-custom-container">
 							<div class="pbt-custom-img pbt-custom-img-themes"></div>
 							<h2 class="title pbt-custom-subtitle">
-								<a href="{PATH_TO_ROOT}/download/category-37+themes.php">ThËmes compatibles</a>
+								<a href="${relative_url(DownloadConfigUrlBuilder::display_category(46, 'themes-phpboost-5-0'))}">Th√®mes compatibles</a>
 							</h2>
-							<p class="pbt-custom-desc">Trouvez la bonne entitÈ graphique pour votre site.</p>
+							<p class="pbt-custom-desc">Trouvez la bonne entit√© graphique pour votre site.</p>
 						</div>
 					</div>
 						
@@ -88,31 +128,31 @@
 
 			<article class="block">
 				<header>
-					<h1>TÈlÈcharger PHPBoost 4.1 - Sirocco</h1>
+					<h1>T√©l√©charger PHPBoost 4.1 - Sirocco</h1>
 					<p class="pbt-desc">
-						La version stable de PHPBoost. A utiliser pour bÈnÈficier de toutes les derniËres fonctionnalitÈs implantÈes.
+						Pour les nostalgiques, ou pour les personnes ayant besoin de r√©parer une version 4.1 encore en production.
 					</p>
 				</header>
 
 				<div class="pbt-button-container">
 					<div class="pbt-button pbt-button-blue">
-						<a href="{PATH_TO_ROOT}/download/file-299+phpboost-4-1.php" class="pbt-button-a">
+						<a href="${relative_url(DownloadConfigUrlBuilder::download(299))}" class="pbt-button-a">
 							<div class="pbt-custom-img pbt-custom-img-phpboost"></div>
-							<p class="pbt-button-title">TÈlÈcharger PHPBoost 4.1</p>
-							<p class="pbt-button-com">Rev : 4.1.0 | Req : PHP 5.3 | .zip </p>
+							<p class="pbt-button-title">T√©l√©charger PHPBoost 4.1</p>
+							<p class="pbt-button-com">Rev : 4.1.6 | Req : PHP 5.3 | .zip </p>
 						</a>
 					</div>
 					<div class="pbt-button pbt-button-green">
-						<a href="{PATH_TO_ROOT}/download/category-41+mises-a-jour-phpboost-4-1.php" class="pbt-button-a">
+						<a href="${relative_url(DownloadConfigUrlBuilder::display_category(41, 'mises-a-jour-phpboost-4-1'))}" class="pbt-button-a">
 							<div class="pbt-custom-img pbt-custom-img-phpboost"></div>
-							<p class="pbt-button-title">Mises ‡ jour</p>
-							<p class="pbt-button-com pbt-button-com-green">Mise ‡ jour et migration</p>
+							<p class="pbt-button-title">Mises √† jour</p>
+							<p class="pbt-button-com pbt-button-com-green">Mise √† jour et migration</p>
 						</a>
 					</div>
 				</div>
 				
 				<div class="pbt-dev-container">
-					<a href="{PATH_TO_ROOT}/download/download-339+phpboost-4-1-pdk.php" class="pbt-dev">TÈlÈcharger la version pour dÈveloppeurs (PDK)</a>
+					<a href="${relative_url(DownloadConfigUrlBuilder::display(40, 'phpboost-4-1', 339, 'phpboost-4-1-pdk'))}" class="pbt-dev">T√©l√©charger la version pour d√©veloppeurs (PDK)</a>
 				</div>
 					
 				<hr style="margin:10px auto 0px auto;" />
@@ -122,27 +162,27 @@
 						<div class="pbt-custom-container">
 							<div class="pbt-custom-img pbt-custom-img-modules"></div>
 							<h2 class="title pbt-custom-subtitle">
-								<a href="{PATH_TO_ROOT}/download/category-43+modules-phpboost-4-1.php">Modules compatibles</a>
+								<a href="${relative_url(DownloadConfigUrlBuilder::display_category(43, 'modules-phpboost-4-1'))}">Modules compatibles</a>
 							</h2>
-							<p class="pbt-custom-desc">Donnez de nouvelles fonctionnalitÈs ‡ votre site.</p>
+							<p class="pbt-custom-desc">Donnez de nouvelles fonctionnalit√©s √† votre site.</p>
 						</div>
 						<div class="pbt-custom-container">
 							<div class="pbt-custom-img pbt-custom-img-themes"></div>
 							<h2 class="title pbt-custom-subtitle">
-								<a href="{PATH_TO_ROOT}/download/category-42+themes-phpboost-4-1.php">ThËmes compatibles</a>
+								<a href="${relative_url(DownloadConfigUrlBuilder::display_category(42, 'themes-phpboost-4-1'))}">Th√®mes compatibles</a>
 							</h2>
-							<p class="pbt-custom-desc">Trouvez la bonne entitÈ graphique pour votre site.</p>
+							<p class="pbt-custom-desc">Trouvez la bonne entit√© graphique pour votre site.</p>
 						</div>
 					</div>
 						
 					<div class="spacer"></div>
 				</div>										
 			</article>
-																				
+			
 			<hr style="margin:20px auto 30px auto;" />
 				
 			<div class="pbt-button pbt-button-gray center" style="margin: auto; width: 34%; display: inherit;">
-				<a href="{PATH_TO_ROOT}/download/download.php?explore=1" class="pbt-button-a" style="width: auto;">
+				<a id="display-tree" href="" onclick="toggle_root_cat_display();return false;" class="pbt-button-a" style="width: auto;">
 					<i class="fa fa-folder"></i> Parcourir l'arborescence
 				</a>
 			</div>
