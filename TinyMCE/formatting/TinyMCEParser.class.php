@@ -72,13 +72,13 @@ class TinyMCEParser extends ContentFormattingParser
 	{
 		$this->content = TextHelper::html_entity_decode($this->content);
 		
-		//On supprime d'abord toutes les occurences de balises CODE que nous réinjecterons à la fin pour ne pas y toucher
+		//On supprime d'abord toutes les occurences de balises CODE que nous rÃ©injecterons Ã  la fin pour ne pas y toucher
 		if (!in_array('code', $this->forbidden_tags))
 		{
 			$this->pick_up_tag('code', '=[A-Za-z0-9#+-]+(?:,[01]){0,2}');
 		}
 
-		//On prélève tout le code HTML afin de ne pas l'altérer
+		//On prÃ©lÃ¨ve tout le code HTML afin de ne pas l'altÃ©rer
 		if (!in_array('html', $this->forbidden_tags) && AppContext::get_current_user()->check_auth($this->html_auth, 1))
 		{
 			$this->pick_up_tag('html');
@@ -104,7 +104,7 @@ class TinyMCEParser extends ContentFormattingParser
 
 		$this->correct();
 
-		//On remet le code HTML mis de côté
+		//On remet le code HTML mis de cÃ´tÃ©
 		if (!empty($this->array_tags['html']))
 		{
 			$this->array_tags['html'] = array_map(create_function('$string', 'return str_replace("[html]", "<!-- START HTML -->\n", str_replace("[/html]", "\n<!-- END HTML -->", $string));'), $this->array_tags['html']);
@@ -117,7 +117,7 @@ class TinyMCEParser extends ContentFormattingParser
 
 		parent::parse();
 		
-		//On réinsère les fragments de code qui ont été prélevés pour ne pas les considérer
+		//On rÃ©insÃ¨re les fragments de code qui ont Ã©tÃ© prÃ©levÃ©s pour ne pas les considÃ©rer
 		if (!empty($this->array_tags['code']))
 		{
 			$this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isU\', \'[[CODE$1]]$2[[/CODE]]\', TextHelper::htmlspecialchars($string, ENT_NOQUOTES));'), $this->array_tags['code']);
@@ -135,10 +135,10 @@ class TinyMCEParser extends ContentFormattingParser
 	 */
 	private function prepare_content()
 	{
-		//On enlève toutes les entités HTML rajoutées par TinyMCE
+		//On enlÃ¨ve toutes les entitÃ©s HTML rajoutÃ©es par TinyMCE
 		$this->content = TextHelper::html_entity_decode($this->content);
 
-		//On casse toutes les balises HTML (sauf celles qui ont été prélevées dans le code et la balise HTML)
+		//On casse toutes les balises HTML (sauf celles qui ont Ã©tÃ© prÃ©levÃ©es dans le code et la balise HTML)
 		$this->content = TextHelper::htmlspecialchars($this->content, ENT_NOQUOTES);
 
 		//While we aren't in UTF8 encoding, we have to use HTML entities to display some special chars, we accept them.
@@ -280,7 +280,7 @@ class TinyMCEParser extends ContentFormattingParser
 	{
 		global $LANG;
 
-		//Modification de quelques tags HTML envoyés par TinyMCE
+		//Modification de quelques tags HTML envoyÃ©s par TinyMCE
 		$this->content = str_replace(
 			array(
 				'&amp;nbsp;&amp;nbsp;&amp;nbsp;',
@@ -316,7 +316,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//Replacement
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 
-		//On supprime tous les retours à la ligne ajoutés par TinyMCE (seuls les nouveaux paragraphes (<p>) compteront)
+		//On supprime tous les retours Ã  la ligne ajoutÃ©s par TinyMCE (seuls les nouveaux paragraphes (<p>) compteront)
 		$this->content = str_replace('\r\n', '\n', $this->content);
 		$this->content = preg_replace('`\s*\n+\s*`isU', "\n", $this->content);
 
@@ -478,8 +478,8 @@ class TinyMCEParser extends ContentFormattingParser
 		// size tag
 		if (!in_array('size', $this->forbidden_tags))
 		{
-			//On doit repasser plusieurs fois pour que ça soit pris en compte (comportement un peu bizarre)
-			//Par mesure de sécurité on s'arrête à 10
+			//On doit repasser plusieurs fois pour que Ã§a soit pris en compte (comportement un peu bizarre)
+			//Par mesure de sÃ©curitÃ© on s'arrÃªte Ã  10
 			$nbr_size_parsing = 0;
 			while (preg_match('`&lt;span style="(.*)font-size: ([0-9a-z-]+);(.*)"&gt;(.+)&lt;/span&gt;`isU', $this->content) && $nbr_size_parsing++ < 10)
 			{
@@ -514,9 +514,9 @@ class TinyMCEParser extends ContentFormattingParser
 		//Font tag
 		if (!in_array('font', $this->forbidden_tags))
 		{
-			//TinyMCE a un comportement un peu spécial avec la gestion des polices, il les imbrique les unes dans les autres de façon pas très logique
-			//Tant qu'il existe des occurences de cette balise à travailler, on les traite
-			//Sécurité : on traite au maximum 10 fois pour éviter les boucles infinies éventuelles
+			//TinyMCE a un comportement un peu spÃ©cial avec la gestion des polices, il les imbrique les unes dans les autres de faÃ§on pas trÃ¨s logique
+			//Tant qu'il existe des occurences de cette balise Ã  travailler, on les traite
+			//SÃ©curitÃ© : on traite au maximum 10 fois pour Ã©viter les boucles infinies Ã©ventuelles
 			$nbr_font_parsing = 0;
 			while (preg_match('`&lt;span style="(.*)font-family: (.*);(.*)"&gt;(.*)&lt;/span&gt;`isU', $this->content) && $nbr_font_parsing++ < 10)
 			{
@@ -571,7 +571,7 @@ class TinyMCEParser extends ContentFormattingParser
 		$smileys_cache = SmileysCache::load()->get_smileys();
 		if (!empty($smileys_cache))
 		{
-			//Création du tableau de remplacement.
+			//CrÃ©ation du tableau de remplacement.
 			foreach ($smileys_cache as $code => $infos)
 			{
 				$smiley_code[] = '`(?:(?![a-z0-9]))(?<!&[a-z]{4}|&[a-z]{5}|&[a-z]{6}|")(' . str_replace('\'', '\\\\\\\'', preg_quote($code)) . ')(?:(?![a-z0-9]))`';
@@ -629,7 +629,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//Suppression des remplacements des balises interdites.
 		if (!empty($this->forbidden_tags))
 		{
-			//Si on interdit les liens, on ajoute toutes les manières par lesquelles elles peuvent passer
+			//Si on interdit les liens, on ajoute toutes les maniÃ¨res par lesquelles elles peuvent passer
 			if (in_array('url', $this->forbidden_tags))
 			{
 				$this->forbidden_tags[] = 'url2';
@@ -798,8 +798,23 @@ class TinyMCEParser extends ContentFormattingParser
 	
 	private function parse_img($matches)
 	{
+		$width = $height = 0;
 		$alt = !empty($matches[3]) ? $matches[3] : '';
-		$style = !empty($matches[1]) ? ' style="' . $matches[1] : '';
+		$style = !empty($matches[1]) ? $matches[1] : '';
+		
+		if (preg_match('`width:.?([0-9]+)px;`iU', $style, $temp_array))
+		{
+			$width = $temp_array[1];
+			$style = preg_replace('`width:.?' . $width . 'px;`iU', '', $style);
+		}
+		
+		if (preg_match('`height:.?([0-9]+)px;`iU', $style, $temp_array))
+		{
+			$height = $temp_array[1];
+			$style = preg_replace('`height:.?' . $height . 'px;`iU', '', $style);
+		}
+		$style = explode(';', $style);
+		
 		foreach (explode('" ', $matches[4] . ' ') as $raw_property)
 		{
 			$exp = explode('="', $raw_property);
@@ -808,24 +823,32 @@ class TinyMCEParser extends ContentFormattingParser
 				continue;
 			}
 			$value = trim($exp[1]);
-			$style .= in_array(trim($exp[0]), array('style', 'width', 'height')) && empty($style) ? ' style="' : '';
 			
 			switch (trim($exp[0]))
 			{
 				case 'style':
-					$style .= $value;
+					array_merge($style, explode(';', $value));
 					break;
 				case 'width':
-					$style .= 'width:' . $value . 'px;';
+					$width = $value;
 					break;
 				case 'height':
-					$style .= 'height:' . $value . 'px;';
+					$height = $value;
 					break;
 				default:
 					break;
 			}
 		}
-		$style .= !empty($style) ? '"' : '';
+		
+		if ($width > 0)
+		{
+			$style[] = 'width: ' . $width . 'px';
+			
+			if (!empty($height) && $width <= 600)
+				$style[] = 'height: ' . $height . 'px';
+		}
+		
+		$style = !empty($style) ? ' style="' . implode(';', array_filter($style)) . '"' : '';
 		
 		return '<img src="' . $matches[2] . '" alt="' . $alt . '"' . $style .' />';
 	}
