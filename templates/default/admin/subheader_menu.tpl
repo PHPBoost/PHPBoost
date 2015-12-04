@@ -2,7 +2,7 @@
 	<ul>
 		<li class="admin-li">
 			<a href="#openmodal-{L_ADMINISTRATION}" title="{L_ADMINISTRATION}"><i class="fa fa-fw fa-cog"></i><span>{L_ADMINISTRATION}</span></a>
-			<div id="openmodal-{L_ADMINISTRATION}" class="cssmenu-modal">				
+			<div id="openmodal-{L_ADMINISTRATION}" class="cssmenu-modal">
 				<a href="#closemodal" title="${LangLoader::get_message('close_menu', 'admin')}" class="close"><span>x</span></a>
 				<div class="next-menu">
 					<a class="float-left" href="#openmodule-{L_MODULES}" title="{L_MODULES}">
@@ -48,7 +48,7 @@
 					<li>
 						<a href="${relative_url(AdminMaintainUrlBuilder::maintain())}" title="{L_MAINTAIN}"><i class="fa fa-fw fa-clock-o"></i>{L_MAINTAIN}</a>
 					</li>
-					<li>	
+					<li>
 						<a href="{PATH_TO_ROOT}/admin/admin_alerts.php" title="{L_ADMINISTRATOR_ALERTS}"><i class="fa fa-fw fa-bell"></i> {L_ADMINISTRATOR_ALERTS}</a>
 					</li>
 					# IF C_ADMIN_LINKS_2 #
@@ -62,7 +62,7 @@
 		</li>
 		<li class="admin-li">
 			<a href="#openmodal-{L_TOOLS}" title="{L_TOOLS}"><i class="fa fa-fw fa-wrench"></i><span>{L_TOOLS}</span></a>
-			<div id="openmodal-{L_TOOLS}" class="cssmenu-modal">				
+			<div id="openmodal-{L_TOOLS}" class="cssmenu-modal">
 				<a href="#closemodal" title="${LangLoader::get_message('close_menu', 'admin')}" class="close"><span>x</span></a>
 				<div class="next-menu">
 					<a class="float-left" href="#openmodal-{L_ADMINISTRATION}" title="{L_ADMINISTRATION}">
@@ -87,7 +87,7 @@
 					<li>
 						<a href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}" title="{L_ERRORS}"><i class="fa fa-fw fa-exclamation-triangle"></i>{L_ERRORS}</a>
 						<ul class="level-2">
-							<li><a href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}" title="{L_ERRORS}"><i class="fa fa-fw fa-exclamation-circle"></i>{L_ERRORS}</a></li>
+							<li><a href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}" title="{L_LOGGED_ERRORS}"><i class="fa fa-fw fa-exclamation-circle"></i>{L_LOGGED_ERRORS}</a></li>
 							<li><a href="${relative_url(AdminErrorsUrlBuilder::list_404_errors())}" title="{L_404_ERRORS}"><i class="fa fa-fw fa-ban"></i>{L_404_ERRORS}</a></li>
 						</ul>
 					</li>
@@ -108,7 +108,7 @@
 		</li>
 		<li class="admin-li">
 			<a href="#openmodal-{L_USER}" title="{L_USER}"><i class="fa fa-fw fa-user"></i><span>{L_USER}</span></a>
-			<div id="openmodal-{L_USER}" class="cssmenu-modal">				
+			<div id="openmodal-{L_USER}" class="cssmenu-modal">
 				<a href="#closemodal" title="${LangLoader::get_message('close_menu', 'admin')}" class="close"><span>x</span></a>
 				<div class="next-menu">
 					<a class="float-left" href="#openmodal-{L_TOOLS}" title="{L_TOOLS}">
@@ -154,7 +154,7 @@
 		</li>
 		<li class="admin-li">
 			<a href="#openmodal-{L_CONTENT}" title="{L_CONTENT}"><i class="fa fa-fw fa-square-o"></i><span>{L_CONTENT}</span></a>
-			<div id="openmodal-{L_CONTENT}" class="cssmenu-modal">				
+			<div id="openmodal-{L_CONTENT}" class="cssmenu-modal">
 				<a href="#closemodal" title="${LangLoader::get_message('close_menu', 'admin')}" class="close"><span>x</span></a>
 				<div class="next-menu">
 					<a class="float-left" href="#openmodal-{L_USER}" title="{L_USER}">
@@ -210,7 +210,7 @@
 		</li>
 		<li class="admin-li">
 			<a href="#openmodule-{L_MODULES}" title="{L_MODULES}"><i class="fa fa-fw fa-cube"></i><span>{L_MODULES}</span></a>
-			<div id="openmodule-{L_MODULES}" class="cssmenu-modal">				
+			<div id="openmodule-{L_MODULES}" class="cssmenu-modal">
 				<a href="#closemodal" title="${LangLoader::get_message('close_menu', 'admin')}" class="close"><span>x</span></a>
 				<div class="next-menu">
 					<a class="float-left" href="#openmodal-{L_CONTENT}" title="{L_CONTENT}">
