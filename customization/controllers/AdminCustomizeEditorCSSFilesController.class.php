@@ -37,7 +37,7 @@ class AdminCustomizeEditorCSSFilesController extends AdminModuleController
 	 */
 	private $submit_button;
 	
-	private $css_file;
+	private $tpl;
 	
 	private $templates_path = '/templates/';
 	private $css_files_path = '/theme/';
@@ -45,44 +45,45 @@ class AdminCustomizeEditorCSSFilesController extends AdminModuleController
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->load_lang();
+		$this->init();
 		
 		$id_theme = $request->get_value('id_theme', '');
 		$id_module = '';
-		$file_name = $request->get_value('file_name', '');
-
-		if (preg_match('`/`', $file_name))
+		$file_selected = $request->get_value('file_name', '');
+		
+		if (preg_match('`/`', $file_selected))
 		{
-			$split = explode('/', $file_name);
+			$split = explode('/', $file_selected);
 			$id_module = $split[0];
 			$file_name = $split[1];
 		}
-
-		$this->build_form($id_theme, $id_module, $file_name);
+		else
+			$file_name = $file_selected . '.css';
 		
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$this->build_form($id_theme, $id_module, $file_name, $file_selected);
 		
-		if (!empty($id_theme) && !empty($file_name))
+		if (!empty($id_theme) && !empty($file_selected))
 		{
 			if ($this->submit_button->has_been_submited() && $this->form->validate())
 			{
-				$this->save();
-				$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+				$this->save($id_theme, $id_module, $file_name);
+				$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 			}
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$this->tpl->put('FORM', $this->form->display());
 
-		return new AdminCustomizationDisplayResponse($tpl, $this->lang['customization.editor.css-files']);
+		return new AdminCustomizationDisplayResponse($this->tpl, $this->lang['customization.editor.css-files']);
 	}
 
-	private function load_lang()
+	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'customization');
+		$this->tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$this->tpl->add_lang($this->lang);
 	}
 	
-	private function build_form($theme_selected, $module_selected, $file_selected)
+	private function build_form($theme_selected, $module_selected, $file_name, $file_selected)
 	{
 		$form = new HTMLForm(__CLASS__);
 		
@@ -112,27 +113,24 @@ class AdminCustomizeEditorCSSFilesController extends AdminModuleController
 			{
 				if (!empty($module_selected))
 				{
-					$modules_folder = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_modules_files_path);
+					$css_file = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_modules_files_path . $module_selected . '/' . $file_name);
+					if (!$css_file->exists())
+						$css_file = new File(PATH_TO_ROOT . '/' . $module_selected . '/templates/' . $file_name);
 					
-					if (!$modules_folder->exists())
-						mkdir(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_modules_files_path);
-					
-					$module_folder = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_modules_files_path . $module_selected);
-					if (!$module_folder->exists())
-						mkdir(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_modules_files_path . $module_selected);
-					
-					$this->css_file = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_modules_files_path . $module_selected . '/' . $file_selected);
-					if (!$this->css_file->exists())
-						copy(PATH_TO_ROOT . '/' . $module_selected . '/templates/' . $file_selected, PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_modules_files_path . $module_selected . '/' . $file_selected);
+					$file_editor_fieldset->add_field(new FormFieldHidden('id_theme', $theme_selected));
+					$file_editor_fieldset->add_field(new FormFieldHidden('file_name', $file_selected));
 				}
 				else
 				{
-					$this->css_file = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_files_path . $file_selected);
+					$css_file = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_files_path . $file_selected);
 				}
 				
-				$file_editor_fieldset->add_field(new FormFieldMultiLineTextEditor('css_file', $this->lang['customization.editor.files.content'], $this->css_file->read(),
-					array('rows' => 30)
-				));
+				if ($css_file->exists())
+				{
+					$file_editor_fieldset->add_field(new FormFieldMultiLineTextEditor('css_file', $this->lang['customization.editor.files.content'], $css_file->read(),
+						array('rows' => 30)
+					));
+				}
 			}
 		}
 		
@@ -146,10 +144,23 @@ class AdminCustomizeEditorCSSFilesController extends AdminModuleController
 		$this->form = $form;
 	}
 
-	private function save()
+	private function save($theme_selected, $module_selected, $file_name)
 	{
-		$this->css_file->write($this->form->get_value('css_file'));
-		$this->css_file->close();
+		$modules_folder = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_modules_files_path);
+		
+		if (!$modules_folder->exists())
+			mkdir(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_modules_files_path);
+		
+		$module_folder = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_modules_files_path . $module_selected);
+		if (!$module_folder->exists())
+			mkdir(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_modules_files_path . $module_selected);
+		
+		$css_file = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_modules_files_path . $module_selected . '/' . $file_name);
+		if (!$css_file->exists())
+			copy(PATH_TO_ROOT . '/' . $module_selected . '/templates/' . $file_name, PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_modules_files_path . $module_selected . '/' . $file_name);
+		
+		$css_file->write($this->form->get_value('css_file'));
+		$css_file->close();
 	}
 	
 	private function list_themes()
@@ -169,10 +180,15 @@ class AdminCustomizeEditorCSSFilesController extends AdminModuleController
 		$files[] = new FormFieldSelectChoiceOption('--', '');
 		
 		$folder = new Folder(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_files_path);
-		foreach ($folder->get_files('`\.css$`') as $file)
+		if ($folder->exists())
 		{
-			$files[] = new FormFieldSelectChoiceOption($file->get_name(), $file->get_name());
+			foreach ($folder->get_files('`\.css$`') as $file)
+			{
+				$files[] = new FormFieldSelectChoiceOption($file->get_name(), $file->get_name());
+			}
 		}
+		else
+			$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('error.page.unexist', 'status-messages-common'), MessageHelper::WARNING));
 		
 		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $id => $module) 
 		{
