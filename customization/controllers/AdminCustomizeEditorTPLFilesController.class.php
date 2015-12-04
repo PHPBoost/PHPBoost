@@ -37,7 +37,7 @@ class AdminCustomizeEditorTPLFilesController extends AdminModuleController
 	 */
 	private $submit_button;
 	
-	private $tpl_file;
+	private $tpl;
 	
 	private $templates_path = '/templates/';
 	private $tpl_files_path = '/';
@@ -45,7 +45,7 @@ class AdminCustomizeEditorTPLFilesController extends AdminModuleController
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->load_lang();
+		$this->init();
 		
 		$id_theme = $request->get_value('id_theme', '');
 		$id_module = '';
@@ -59,29 +59,28 @@ class AdminCustomizeEditorTPLFilesController extends AdminModuleController
 		}
 		else
 			$file_name = $file_selected . '.tpl';
-
-		$this->build_form($id_theme, $id_module, $file_name, $file_selected);
 		
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$this->build_form($id_theme, $id_module, $file_name, $file_selected);
 		
 		if (!empty($id_theme) && !empty($file_selected))
 		{
 			if ($this->submit_button->has_been_submited() && $this->form->validate())
 			{
-				$this->save();
-				$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+				$this->save($id_theme, $id_module, $file_name);
+				$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 			}
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$this->tpl->put('FORM', $this->form->display());
 
-		return new AdminCustomizationDisplayResponse($tpl, $this->lang['customization.editor.tpl-files']);
+		return new AdminCustomizationDisplayResponse($this->tpl, $this->lang['customization.editor.tpl-files']);
 	}
 
-	private function load_lang()
+	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'customization');
+		$this->tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$this->tpl->add_lang($this->lang);
 	}
 	
 	private function build_form($theme_selected, $module_selected, $file_name, $file_selected)
@@ -114,27 +113,24 @@ class AdminCustomizeEditorTPLFilesController extends AdminModuleController
 			{
 				if (!empty($module_selected))
 				{
-					$modules_folder = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->tpl_modules_files_path);
-					
-					if (!$modules_folder->exists())
-						mkdir(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->tpl_modules_files_path);
-					
-					$module_folder = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->tpl_modules_files_path . $module_selected);
-					if (!$module_folder->exists())
-						mkdir(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->tpl_modules_files_path . $module_selected);
-					
 					$this->tpl_file = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->tpl_modules_files_path . $module_selected . '/' . $file_name);
 					if (!$this->tpl_file->exists())
-						copy(PATH_TO_ROOT . '/' . $module_selected . '/templates/' . $file_name, PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->tpl_modules_files_path . $module_selected . '/' . $file_name);
+						$this->tpl_file = new File(PATH_TO_ROOT . '/' . $module_selected . '/templates/' . $file_name);
+					
+					$file_editor_fieldset->add_field(new FormFieldHidden('id_theme', $theme_selected));
+					$file_editor_fieldset->add_field(new FormFieldHidden('file_name', $file_selected));
 				}
 				else
 				{
 					$this->tpl_file = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->tpl_files_path . $file_name);
 				}
 				
-				$file_editor_fieldset->add_field(new FormFieldMultiLineTextEditor('tpl_file', $this->lang['customization.editor.files.content'], $this->tpl_file->read(),
-					array('rows' => 30)
-				));
+				if ($this->tpl_file->exists())
+				{
+					$file_editor_fieldset->add_field(new FormFieldMultiLineTextEditor('tpl_file', $this->lang['customization.editor.files.content'], $this->tpl_file->read(),
+						array('rows' => 30)
+					));
+				}
 			}
 		}
 		
@@ -148,8 +144,21 @@ class AdminCustomizeEditorTPLFilesController extends AdminModuleController
 		$this->form = $form;
 	}
 
-	private function save()
+	private function save($theme_selected, $module_selected, $file_name)
 	{
+		$modules_folder = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->tpl_modules_files_path);
+		
+		if (!$modules_folder->exists())
+			mkdir(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->tpl_modules_files_path);
+		
+		$module_folder = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->tpl_modules_files_path . $module_selected);
+		if (!$module_folder->exists())
+			mkdir(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->tpl_modules_files_path . $module_selected);
+		
+		$this->tpl_file = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->tpl_modules_files_path . $module_selected . '/' . $file_name);
+		if (!$this->tpl_file->exists())
+			copy(PATH_TO_ROOT . '/' . $module_selected . '/templates/' . $file_name, PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->tpl_modules_files_path . $module_selected . '/' . $file_name);
+		
 		$this->tpl_file->write(TextHelper::html_entity_decode($this->form->get_value('tpl_file')));
 		$this->tpl_file->close();
 	}
@@ -171,10 +180,15 @@ class AdminCustomizeEditorTPLFilesController extends AdminModuleController
 		$files[] = new FormFieldSelectChoiceOption('--', '');
 		
 		$folder = new Folder(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->tpl_files_path);
-		foreach ($folder->get_files('`\.tpl$`') as $file)
+		if ($folder->exists())
 		{
-			$files[] = new FormFieldSelectChoiceOption($file->get_name(), $file->get_name_without_extension());
+			foreach ($folder->get_files('`\.tpl$`') as $file)
+			{
+				$files[] = new FormFieldSelectChoiceOption($file->get_name(), $file->get_name_without_extension());
+			}
 		}
+		else
+			$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('error.page.unexist', 'status-messages-common'), MessageHelper::WARNING));
 		
 		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $id => $module) 
 		{
