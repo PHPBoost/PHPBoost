@@ -30,6 +30,7 @@
  ####################################################
 
 $lang = array(
+	'errors' => 'Erreurs',
 	'logged_errors' => 'Erreurs archivées',
 	'logged_errors_list' => 'Liste des erreurs archivées',
 	'clear_list' => 'Vider la liste',

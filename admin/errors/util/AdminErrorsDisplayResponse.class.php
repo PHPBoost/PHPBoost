@@ -36,7 +36,7 @@ class AdminErrorsDisplayResponse extends AdminMenuDisplayResponse
 		parent::__construct($view);
 		
 		$lang = LangLoader::get('admin-errors-common');
-		$this->set_title($lang['logged_errors']);
+		$this->set_title($lang['errors']);
 		
 		$this->add_link($lang['logged_errors'], AdminErrorsUrlBuilder::logged_errors());
 		$this->add_link($lang['404_errors'], AdminErrorsUrlBuilder::list_404_errors());
