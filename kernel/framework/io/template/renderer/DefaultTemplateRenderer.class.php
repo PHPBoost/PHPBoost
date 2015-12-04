@@ -68,6 +68,7 @@ class DefaultTemplateRenderer implements TemplateRenderer
 
 	private function parse(TemplateLoader $loader, TemplateData $data)
 	{
+		$_result = '';
 		$_functions = $this->functions;
 		$_data = $data;
 		include $loader->get_cache_file_path();
@@ -76,7 +77,8 @@ class DefaultTemplateRenderer implements TemplateRenderer
 
 	private function execute(TemplateLoader $loader, TemplateData $data)
 	{
-        $_functions = $this->functions;
+		$_result = '';
+		$_functions = $this->functions;
 		$_data = $data;
 		eval($this->get_code_to_eval($loader));
 		return $_result;
