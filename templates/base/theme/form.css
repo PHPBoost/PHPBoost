@@ -564,7 +564,7 @@ div.field-required:after {
 	color: #C43C35;
 	opacity: 0.6;
 	font-size: 0.8rem;
-	top: 9px;
+	top: 10px;
 }
 
 .form-field-date.field-required:after,
@@ -587,16 +587,15 @@ div.field-required:after {
 	top: 0;
 }
 
-.form-field-upload-file.picture-status-constraint:after {
-	right: 40px;
-	top: 13px;
-}
-
 .form-field-upload-file.field-required:after {
 	right: 43px;
-	top: 13px;
+	top: 12px;
 }
 
+.constraint-status-right .form-field-upload-file.picture-status-constraint:after {
+	right: 40px;
+	top: 8px;
+}
 
 .constraint-status-right .form-field-color:after,
 .constraint-status-right .form-field-select:after,
@@ -641,7 +640,7 @@ div.field-required:after {
 .constraint-status-right div.picture-status-constraint:after {
 	opacity: 1;
 	font-size: 1.5rem;
-	top: 5px;
+	top: 6px;
 }
 
 .constraint-status-error .form-field-textarea .picture-status-constraint:after,
