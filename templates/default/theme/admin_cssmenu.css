@@ -537,10 +537,8 @@ footer .cssmenu.cssmenu-static > ul > li:last-child,
 
 aside .cssmenu-vertical ul ul {
 	position: absolute;
-}
-
-aside .cssmenu-vertical ul ul {
 	border: 1px #BEBEBE solid;
+	margin-top: -1px;
 }
 
 header .cssmenu-vertical ul ul li .cssmenu-title,
