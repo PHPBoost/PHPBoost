@@ -208,6 +208,8 @@ ul.submenu li {
 .cssmenu-modal:target .next-menu {
 	width: 100%;
 	background-color: #f1f2f3;
+	flex: 0 0 auto;
+	-webkit-flex: 0 0 auto;
 }
 
 div[id*="openmodal-"],

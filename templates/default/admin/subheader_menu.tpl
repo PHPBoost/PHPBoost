@@ -87,7 +87,7 @@
 					<li>
 						<a href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}" title="{L_ERRORS}"><i class="fa fa-fw fa-exclamation-triangle"></i>{L_ERRORS}</a>
 						<ul class="level-2">
-							<li><a href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}" title="{L_ERRORS}"><i class="fa fa-fw fa-exclamation-circle"></i>{L_ERRORS}</a></li>
+							<li><a href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}" title="{L_LOGGED_ERRORS}"><i class="fa fa-fw fa-exclamation-circle"></i>{L_LOGGED_ERRORS}</a></li>
 							<li><a href="${relative_url(AdminErrorsUrlBuilder::list_404_errors())}" title="{L_404_ERRORS}"><i class="fa fa-fw fa-ban"></i>{L_404_ERRORS}</a></li>
 						</ul>
 					</li>
