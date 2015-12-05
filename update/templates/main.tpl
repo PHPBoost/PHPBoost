@@ -6,10 +6,17 @@ ${resources('update/update')}
 		<meta charset="windows-1252" />
 		<meta name="description" content="PHPBoost" />
 		<meta name="robots" content="noindex, follow" />
-		
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/default.css" type="text/css" media="screen, print, handheld" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/default.css" type="text/css" media="screen, print" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/kernel/lib/css/font-awesome/css/font-awesome.css" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_design.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_global.css" type="text/css" media="screen, print" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_content.css" type="text/css" media="screen, print" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_cssmenu.css" type="text/css" media="screen, print" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_form.css" type="text/css" media="screen, print" />
 		<link type="text/css" href="templates/update.css" title="phpboost" rel="stylesheet" />
+		
 		<script>
 		<!--
 		var PATH_TO_ROOT = "{PATH_TO_ROOT}";
@@ -21,34 +28,30 @@ ${resources('update/update')}
 		<link rel="shortcut icon" href="{PATH_TO_ROOT}/favicon.ico" type="image/x-icon" />
 	</head>
 	<body>
-	<div id="global">
-		<div id="header-container">
-			<div id="site-infos">
-			<div id="site-logo"></div>
-			<div id="site-name-container">
-				<a id="site-name" title="PHPBoost CMS">PHPBoost CMS</a>
-				<span id="site-slogan">{@phpboost.slogan}</span>
-			</div>
-		</div>
-		</div>
-		<div id="left-menu">
-            # IF NOT C_HAS_PREVIOUS_STEP #
-			<table class="table-left">
-				<tr>
-					<td class="row-top">
-						{@language.change}
-					</td>
-				</tr>
-				<tr>
-					<td class="row-next row-final center">
-						<form action="{U_CHANGE_LANG}" method="post">
+		<header id="header-admin">
+			<div class="header-admin-container">
+				<div id="top-header-admin">
+					<div id="site-name-container">
+						<div id="update-site-logo"></div>
+						<a id="site-name" title="PHPBoost CMS">PHPBoost CMS</a>
+						<span id="site-slogan">{@phpboost.slogan}</span>
+					</div>
+				</div>
+				<div id="sub-header-admin">
+					# IF NOT C_HAS_PREVIOUS_STEP #
+					<div>
+						<h3 class="menu-title">
+							<div class="site-logo"></div>
+							{@language.change}
+						</h3>
+						<form class="center" action="{U_CHANGE_LANG}" method="post">
 							<p>
 								<select name="new_language" id="change_lang" onchange="document.location='index.php?lang=' + document.getElementById('change_lang').value;">
 									# START lang #
 									<option value="{lang.LANG}" {lang.SELECTED}>{lang.LANG_NAME}</option>
 									# END lang #
 								</select>
-								&nbsp;&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/images/stats/countries/{LANG_IDENTIFIER}.png" alt="{LANG_IDENTIFIER}" class="valign-middle" />
+								&nbsp;&nbsp;&nbsp;<img src="../images/stats/countries/{LANG_IDENTIFIER}.png" alt="{LANG_IDENTIFIER}" class="valign-middle" />
 							</p>
 							<p id="button_change_lang">
 								<button type="submit" value="true" class="submit">{@change}</button>
@@ -60,57 +63,52 @@ ${resources('update/update')}
 							-->
 							</script>
 						</form>
-					</td>
-				</tr>
-			</table>
-			# END IF #
-			<table class="table-left">
-				<tr>
-					<td class="row-top">
-						{@steps.list}
-					</td>
-				</tr>
-				# START step #
-					<tr>
-						<td class="{step.CSS_CLASS}">
-							<img src="templates/images/{step.IMG}" alt="${escape(step.NAME)}" class="valign-middle" />&nbsp;&nbsp;{step.NAME}
-						</td>
-					</tr>
-				# END step #
-			</table>
-			<table class="table-left">
-				<tr>
-					<td class="row-top">
-						{@installation.progression}
-					</td>
-				</tr>
-				<tr>
-					<td class="row-next row-final">
+					</div>
+					# END IF #
+					
+					<div>
+						<h3 class="menu-title">
+							<div class="site-logo"></div>
+							{@steps.list}
+						</h3>
+						<nav class="cssmenu cssmenu-vertical step-menu">
+							<ul>
+							# START step #
+								<li class="{step.CSS_CLASS}">
+									<span class="cssmenu-title">
+										<i class="fa fa-{step.IMG} fa-fw" title="${escape(step.NAME)}"></i><span>{step.NAME}</span>
+									</span>								
+								</li>
+							# END step #
+							</ul>
+						</nav>
+					</div>
+					
+					<div>
+						<h3 class="menu-title">
+							<div class="site-logo"></div>
+							{@installation.progression}
+						</h3>
 						<div class="progressbar-container">
 							<span class="progressbar-infos">{PROGRESSION}%</span>
 							<div class="progressbar" style="width:{PROGRESSION}%"></div>
 						</div>
-					</td>
-				</tr>
-			</table>
-		</div>
-		
-		<div id="main">
-			<div id="main-content">
-				<div style="text-align: right; padding: 0px 30px 5px 0px; margin-bottom: 10px; border-bottom: 1px solid #EFEFEF;">
-					<img src="templates/images/phpboost.png" alt="{@phpboost.logo}" class="valign-middle" /> {STEP_TITLE}
+					</div>
+					
 				</div>
-				# INCLUDE UpdateStep #
 			</div>
-		</div>
+		</header>
 		
-		<div class="spacer"></div>
-	</div>
-	
-	<div id="footer">
-		<span>
-			{@poweredBy} <a style="font-size:10px" href="http://www.phpboost.com" title="PHPBoost">PHPBoost</a> {@phpboost.rights}
-		</span>
-	</div>
+		<section id="global">
+			<header>
+				<h1><div class="site-logo"></div> {STEP_TITLE}</h1>
+			</header>
+			<article>
+				# INCLUDE UpdateStep #
+			</article>
+			<footer>
+				{@poweredBy} <a href="http://www.phpboost.com" title="PHPBoost">PHPBoost</a> {@phpboost.rights}
+			</footer>
+		</section>
 	</body>
 </html>

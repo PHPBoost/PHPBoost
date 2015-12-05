@@ -1,23 +1,26 @@
-{@H|finish.message}
-<fieldset class="fieldset-submit" style="width:250px;margin:auto;">
-    <table>
-    	<tbody>
-	        <tr>
-	            <td class="td100">
-	                <a href="{PATH_TO_ROOT}/"><img src="templates/images/go-home.png" alt="{@site.index}" /></a>
-	            </td>
-	            <td class="td150">
-	                <a href="{PATH_TO_ROOT}/admin"><img src="templates/images/admin_panel.png" alt="{@admin.index}" /></a>
-	            </td>
-	        </tr>
-	        <tr>
-	            <td class="valign-middle">
-	                <a href="{PATH_TO_ROOT}/">{@site.index}</a>
-	            </td>
-	            <td class="valign-middle">
-	                <a href="{PATH_TO_ROOT}/admin">{@admin.index}</a>
-	            </td>
-	        </tr>
-        </tbody>
-    </table>
-</fieldset>
+	<header>
+		<h2>{@H|congratulations}</h2>
+	</header>
+	
+	<div class="content">
+		{@H|finish.message}
+	</div>
+	
+	<footer>
+		<nav class="finish-menu">
+			<ul>
+				<li>
+					<a href="{PATH_TO_ROOT}/" title="">
+						<i class="fa fa-home fa-2x"></i>
+						<span>{@site.index}</span>
+					</a>
+				</li>
+				<li>
+					<a href="{PATH_TO_ROOT}/admin" title="">
+						<i class="fa fa-cogs fa-2x"></i>
+						<span>{@admin.index}</span>
+					</a>
+				</li>
+			</ul>
+		</nav>	
+	</footer>

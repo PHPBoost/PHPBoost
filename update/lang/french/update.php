@@ -119,6 +119,7 @@ $lang = array(
 	<p> Veuillez vérifier que vous avez bien saisi le bon préfixe et la bonne base de données.</p>',
 
 //Execute update
+	'congratulations' => 'Félicitations !',
 	'step.execute.title' => 'Exécuter la mise à jour',
 	'step.execute.message' => 'Mise à jour du site',
 	'step.execute.explanation' => 'Cette étape va convertir votre site PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' vers PHPBoost ' . UpdateServices::NEW_KERNEL_VERSION . '.

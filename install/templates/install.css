@@ -1,3 +1,30 @@
+header#header-admin {
+    padding-bottom: 10px;
+}
+
+@media (min-width:769px) {
+	header#header-admin {
+		position: fixed;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		z-index: 3;
+		max-width: 230px;
+		max-height: none;	
+		overflow: hidden;
+		height:100%;
+		width:250px;
+	}
+	div.header-admin-container{
+		max-height: 100%;
+		position:absolute;
+		right: -20px;
+		overflow-y: scroll;
+		width: calc(100% + 20px);
+		left:0;
+	}
+}
+
 @media (max-width: 768px) {
     div#site-name-container {
         padding: 10px;
@@ -115,6 +142,7 @@ select {
     .step-menu.cssmenu > ul > li > .cssmenu-title {
         padding: 5px;
         text-align: center;
+        display: block;
     }
     
     .help-menu.cssmenu > ul > li > .cssmenu-title i {
@@ -158,7 +186,7 @@ article h3 {
 
 article {
     padding: 10px;
-    min-height: calc(95vh - 59px);
+    min-height: calc(95vh - 57px);
 }
 
 .content > a > img {

@@ -1,13 +1,18 @@
-<span style="float:right;padding:8px;padding-top:0px;padding-right:25px">
-	<img src="templates/images/PHPBoost_box.png" alt="{@phpboost.logo}" />
-</span>
-<div style="width:520px">
-	<h1>{@step.introduction.message}</h1>
-	<span class="spacer">&nbsp;</span>
-	{@H|step.introduction.explanation}
-	# IF C_PUT_UNDER_MAINTENANCE #{@H|step.introduction.maintenance_notice}# ENDIF #
-	{@H|step.introduction.team_signature}
-</div>
-<div style="margin-bottom:60px;">&nbsp;</div>
+	<header>
+		<h2>{@step.introduction.message}</h2>
+	</header>
+	
+	<div class="content">
+		<img class="float-right pbt-box" src="templates/images/PHPBoost_box.png" alt="{@phpboost.logo}" />
+	
+		{@H|step.introduction.explanation}
+		# IF C_PUT_UNDER_MAINTENANCE #{@H|step.introduction.maintenance_notice}# ENDIF #
+		{@H|step.introduction.team_signature}
+	</div>
+	
+	<footer>
+		<div class="next-step">
+			# INCLUDE SERVER_FORM #
+		</div>
+	</footer>
 
-# INCLUDE SERVER_FORM #

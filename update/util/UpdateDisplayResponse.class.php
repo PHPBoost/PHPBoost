@@ -104,11 +104,11 @@ class UpdateDisplayResponse extends AbstractResponse
 	private function init_steps()
 	{
 		$steps = array(
-			array('name' => $this->lang['step.list.introduction'], 'img' => 'intro.png'),
-			array('name' => $this->lang['step.list.server'], 'img' => 'config.png'),
-			array('name' => $this->lang['step.list.database'], 'img' => 'database.png'),
-			array('name' => $this->lang['step.list.execute'], 'img' => 'database.png'),
-			array('name' => $this->lang['step.list.end'], 'img' => 'end.png')
+			array('name' => $this->lang['step.list.introduction'], 'img' => 'home'),
+			array('name' => $this->lang['step.list.server'], 'img' => 'cog'),
+			array('name' => $this->lang['step.list.database'], 'img' => 'server'),
+			array('name' => $this->lang['step.list.execute'], 'img' => 'refresh'),
+			array('name' => $this->lang['step.list.end'], 'img' => 'check')
 		);
 		$this->nb_steps = count($steps) - 1;
 

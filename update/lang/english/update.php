@@ -119,6 +119,7 @@ $lang = array(
 	<p> Please check that you have specified the correct prefix and good database.</p>',
 
 //Execute update
+	'congratulations' => 'Congratulations !',
 	'step.execute.title' => 'Execute update',
 	'step.execute.message' => 'Site update',
 	'step.execute.explanation' => 'This step will convert your site PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' to ' . UpdateServices::NEW_KERNEL_VERSION . ' PHPBoost.

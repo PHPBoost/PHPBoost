@@ -1,6 +1,14 @@
-<h1>{@step.execute.message}</h1>
-<span class="spacer">&nbsp;</span>
-{@H|step.execute.explanation}
-<div style="margin-bottom:320px;">&nbsp;</div>
+	<header>
+		<h2>{@step.execute.message}</h2>
+	</header>
+	
+	<div class="content">
+		{@H|step.execute.explanation}
+	</div>
+	
+	<footer>
+		<div class="next-step">
+			# INCLUDE SERVER_FORM #
+		</div>
+	</footer>
 
-# INCLUDE SERVER_FORM #

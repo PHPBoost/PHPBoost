@@ -1,6 +1,10 @@
-<h1>{@step.server.title}</h1>
+	<header>
+		<h2>{@step.server.title}</h2>
+	</header>
+	
+	<div class="content">
 <a href="http://www.php.net/">
-	<img src="templates/images/php.png" alt="PHP" style="float:right;bottom:20px; margin-left:5px;position:relative;"/>
+	<img src="templates/images/php.png" alt="PHP" class="float-right" />
 </a>
 <span class="spacer">&nbsp;</span>
 {@H|step.server.explanation}
@@ -75,5 +79,12 @@
 # IF ERROR #
 <fieldset id="error"><div class="error">{ERROR}</div></fieldset>
 # END #
+		
+	</div>
+	
+	<footer>
+		<div class="next-step">
+			# INCLUDE CONTINUE_FORM #
+		</div>
+	</footer>
 
-# INCLUDE CONTINUE_FORM #
