@@ -36,6 +36,9 @@
 #menu-left .cssmenu  { margin-right: -9px; }
 #menu-right .cssmenu  { margin-left: -9px; }
 
+#menu-left .cssmenu.small-screen  { margin-right: 0; }
+#menu-right .cssmenu.small-screen  { margin-left: 0; }
+
 .cssmenu li:hover > .cssmenu-title {
 	text-decoration: none;
 }
@@ -49,33 +52,39 @@
 #top-header .cssmenu ul > li:last-child > .cssmenu-title  				{ border-radius: 0 0 5px 5px; }
 #top-header .cssmenu ul > li.has-sub:first-child:hover > .cssmenu-title { border-radius: 0 0 0 0;     }
 #top-header .cssmenu ul > li.has-sub:last-child:hover > .cssmenu-title  { border-radius: 0 0 0;       }
+	
+.cssmenu.small-screen {
+	width: 100%;
+}
 
-@media (max-width: 768px) {
-	
-	.cssmenu {
-		width: 100%;
-	}
-	
-	.cssmenu ul {
-		width: 100%;
-		display: none;
-	}
-	
-	.cssmenu ul li {
-		width: 100%;
-		border-top: 1px solid rgba(120, 120, 120, 0.2);
-	}
-	
-	.cssmenu ul ul li,
-	.cssmenu li:hover > ul > li {
-		height: auto;
-	}
+.cssmenu.small-screen ul {
+	width: 100%;
+	display: none;
+}
 
-	.cssmenu ul li .cssmenu-title,
-	.cssmenu ul ul li .cssmenu-title {
-		width: 100%;
-		border-bottom: 0;
-	}
+.cssmenu.small-screen ul li {
+	width: 100%;
+	border-top: 1px solid rgba(120, 120, 120, 0.2);
+}
+
+.cssmenu.small-screen > ul > li:last-child.has-sub {
+	border-bottom: 1px solid rgba(120, 120, 120, 0.2);
+}
+
+.cssmenu.small-screen ul ul li,
+.cssmenu.small-screen li:hover > ul > li {
+	height: auto;
+}
+
+.cssmenu.small-screen ul li .cssmenu-title,
+.cssmenu.small-screen ul ul li .cssmenu-title {
+	width: 100%;
+	border-bottom: 0;
+	padding: 17px;
+}
+
+.cssmenu.small-screen ul ul li .cssmenu-title {
+	padding: 11px;
 }
 
 /* --- Variante cssmenu-horizontal --- */
@@ -108,23 +117,27 @@ div.cssmenu-group .cssmenu-title {
 	font-weight: 300;
 }
 
-@media (max-width: 768px) {
-	.cssmenu-group {
-		margin: 0 0 5px 0;
-	}
+
+.cssmenu-group.small-screen {
+	margin: 0 0 5px 0;
 }
+
 
 /* --- Variante cssmenu-actionslinks --- */
 .cssmenu-actionslinks {
 	margin: 0 0 20px 0;
 }
 
-@media (min-width: 769px) {
-	.cssmenu-actionslinks {
-		float: right;
-		margin: 0 5px 5px 5px;
-	}
+.cssmenu-actionslinks {
+	float: right;
+	margin: 0 5px 5px 5px;
 }
+
+.cssmenu-actionslinks.small-screen {
+	float: none;
+	margin: 0;
+}
+
 
 .cssmenu.cssmenu-actionslinks ul li .cssmenu-title,
 .cssmenu.cssmenu-actionslinks ul li ul li .cssmenu-title {
@@ -134,102 +147,92 @@ div.cssmenu-group .cssmenu-title {
 	border: none;
 }
 
-@media (max-width: 768px) {
-	.cssmenu-actionslinks ul li {
-		border: none;
-	}
+
+.cssmenu-actionslinks.small-screen ul li {
+	border: none;
 }
+
+.cssmenu.cssmenu-actionslinks.small-screen ul li .cssmenu-title,
+.cssmenu.cssmenu-actionslinks.small-screen ul li ul li .cssmenu-title {
+	padding: 10px 5px;
+}
+
 
 /* --- Autres variantes --- */
 @media (min-width: 769px) {
 	#cssmenu-galleryfilter ul {
 		min-width: 130px;
 	}
-
-	#cssmenu-admin-menu.cssmenu-vertical .has-sub {
-		position: relative;
-	}
-
-	#cssmenu-admin-menu.cssmenu-vertical .has-sub > ul {
-		position: absolute;
-		z-index: 100;
-		width: 300px;
-	}
-
 }
 
-@media (min-width: 769px) {
-	.cssmenu.cssmenu-static li.has-sub > .cssmenu-title:after,
-	.cssmenu.cssmenu-static li.has-sub > .cssmenu-title:before {
-		display: none;
-	}
 
-	#cssmenu-admin-menu.cssmenu-vertical ul > li > .cssmenu-title {
-		text-transform: uppercase;
-		text-decoration: none;
-		font-weight: normal;
-		padding: 15px 17px;
-		display: block;
-	}
+.cssmenu.cssmenu-static li.has-sub > .cssmenu-title:after,
+.cssmenu.cssmenu-static li.has-sub > .cssmenu-title:before {
+	display: none;
 }
+
 
 
 /* -- Classes Niveau 1 -- */
 /* ---------------------- */
 
 /* --- Classes generales cssmenu --- */
-@media (min-width: 769px) {
-	.cssmenu > ul > li {
-		float: left;
-	}
 
-	#sub-header .cssmenu-horizontal > ul > li {
-		border-right: 1px solid #444444;
-		position: relative;
-	}
-	
-	#sub-header .cssmenu-horizontal > ul > li:after {
-		position:absolute;
-		right: 1;
-		top: 50px;
-		height: 100%;
-		width: 1px;
-		border-right: 1px solid #333333;
-	}
-
-	#sub-header .cssmenu-horizontal > ul > li:last-child,
-	#main .cssmenu-horizontal > ul > li:last-child {
-		border: none;
-	}
-
-	#sub-header .cssmenu-horizontal > ul > li:last-child:after,
-	#main .cssmenu-horizontal > ul > li:last-child:after {
-		width: 0;
-		height: 0;
-	}
-
-	#main .cssmenu-horizontal > ul > li {
-		border-right: 1px solid #EFEFEF;
-		position: relative;
-	}
-	
-	#main .cssmenu-horizontal > ul > li:after {
-		position:absolute;
-		right: 1;
-		top: 50px;
-		height: 100%;
-		width: 1px;
-		border-right: 1px solid #EEEEEE;
-	}
-
-	header .cssmenu-horizontal > ul > li:hover {
-		border-radius : 5px 5px 5px 5px;
-	}
-
-	header .cssmenu-horizontal > ul > li.has-sub:hover {
-		border-radius : 5px 5px 0 0;
-	}
+.cssmenu > ul > li {
+	float: left;
 }
+
+#sub-header .cssmenu-horizontal > ul > li {
+	border-right: 1px solid #444444;
+	position: relative;
+}
+
+#sub-header .cssmenu-horizontal > ul > li:after {
+	position:absolute;
+	right: 1%;
+	top: 50px;
+	height: 100%;
+	width: 1px;
+	border-right: 1px solid #333333;
+}
+
+#sub-header .cssmenu-horizontal > ul > li:last-child,
+#main .cssmenu-horizontal > ul > li:last-child {
+	border-bottom: none;
+}
+
+#sub-header .cssmenu-horizontal > ul > li:last-child:after,
+#main .cssmenu-horizontal > ul > li:last-child:after {
+	width: 0;
+	height: 0;
+}
+
+#main .cssmenu-horizontal > ul > li {
+	border-right: 1px solid #EFEFEF;
+	position: relative;
+}
+
+#main .cssmenu-horizontal.small-screen > ul > li {
+	border-right: none;
+}
+
+#main .cssmenu-horizontal > ul > li:after {
+	position:absolute;
+	right: 1%;
+	top: 50px;
+	height: 100%;
+	width: 1px;
+	border-right: 1px solid #EEEEEE;
+}
+
+header .cssmenu-horizontal > ul > li:hover {
+	border-radius : 5px 5px 5px 5px;
+}
+
+header .cssmenu-horizontal > ul > li.has-sub:hover {
+	border-radius : 5px 5px 0 0;
+}
+
 
 .cssmenu-left > ul > li,
 .cssmenu-right > ul > li {
@@ -249,61 +252,55 @@ div.cssmenu-group .cssmenu-title {
 	padding-right: 30px;
 }
 
-@media (min-width: 769px) {
-	.cssmenu > ul > li.has-sub > .cssmenu-title:after,
-	.cssmenu > ul > li.has-sub > .cssmenu-title:before {
-		position: absolute;
-		display: block;
-		content: '';
-	}
 
-	.cssmenu > ul > li.has-sub > .cssmenu-title:after {
-		width: 8px;
-		height: 2px;
-	}
-
-	.cssmenu > ul > li.has-sub > .cssmenu-title:before {
-		width: 2px;
-		height: 8px;
-		transition: all .25s ease;
-	}
-
-	.cssmenu > ul > li.has-sub:hover > .cssmenu-title:before {
-		height: 0;
-	}
-
-	.cssmenu-vertical > ul > li > .cssmenu-title {
-		padding: 5px 17px 5px 6px;
-	}
-
-	.cssmenu > ul > li.has-sub > .cssmenu-title:after 			{ top: 22px; right: 11px; }
-	.cssmenu > ul > li.has-sub > .cssmenu-title:before 			{ top: 19px; right: 14px; }
-	.cssmenu > ul > li.has-sub:hover > .cssmenu-title:before 	{ top: 23px; }
-
-	.cssmenu-vertical > ul > li.has-sub > .cssmenu-title:after  { top: 11px; }
-	.cssmenu-vertical > ul > li.has-sub > .cssmenu-title:before { top: 8px;  }
-	#cssmenu-admin-menu.cssmenu-vertical ul > li.has-sub > .cssmenu-title:after  { top: 19px; }
-	#cssmenu-admin-menu.cssmenu-vertical ul > li.has-sub > .cssmenu-title:before { top: 16px; }
+.cssmenu > ul > li.has-sub > .cssmenu-title:after,
+.cssmenu > ul > li.has-sub > .cssmenu-title:before {
+	position: absolute;
+	display: block;
+	content: '';
 }
+
+.cssmenu > ul > li.has-sub > .cssmenu-title:after {
+	width: 8px;
+	height: 2px;
+}
+
+.cssmenu > ul > li.has-sub > .cssmenu-title:before {
+	width: 2px;
+	height: 8px;
+	transition: all .25s ease;
+}
+
+.cssmenu > ul > li.has-sub:hover > .cssmenu-title:before {
+	height: 0;
+}
+
+.cssmenu-vertical > ul > li > .cssmenu-title {
+	padding: 5px 17px 5px 6px;
+}
+
+.cssmenu > ul > li.has-sub > .cssmenu-title:after 			{ top: 22px; right: 11px; }
+.cssmenu > ul > li.has-sub > .cssmenu-title:before 			{ top: 19px; right: 14px; }
+.cssmenu > ul > li.has-sub:hover > .cssmenu-title:before 	{ top: 23px; }
+
+.cssmenu-vertical > ul > li.has-sub > .cssmenu-title:after  { top: 11px; }
+.cssmenu-vertical > ul > li.has-sub > .cssmenu-title:before { top: 8px;  }
+
 
 /* --- Position des sous menu --- */
-.cssmenu li:hover > ul 							{ left: auto ;            }
-aside .cssmenu-left li:hover > ul 				{ left: 100% ; top: 0;    }
-aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
-.cssmenu.cssmenu-actionslinks li:hover > ul 	{ right: 0   ; top: 100%; }
-.cssmenu.cssmenu-actionslinks ul li:hover > ul 	{ right: 100%; top: 0;    }
+.cssmenu li:hover > ul 								{ left: auto ;            }
+aside .cssmenu-left li:hover > ul 					{ left: 100% ; top: 0;    }
+aside .cssmenu-right li:hover > ul 					{ right: 100%; top: 0;    }
+aside .cssmenu-left.cssmenu-static li:hover > ul	{ left: 0 ; top: 0;       }
+aside .cssmenu-right.cssmenu-static li:hover > ul 	{ right: 0; top: 0;       }
+.cssmenu.cssmenu-actionslinks li:hover > ul 		{ right: 0   ; top: 100%; }
+.cssmenu.cssmenu-actionslinks ul li:hover > ul 		{ right: 100%; top: 0;    }
 
-@media (min-width: 769px) {
-	#cssmenu-admin-menu.cssmenu-vertical ul li:hover > ul 	{
-		left: 100%; top: 0;   
-	}
-}
 
-@media (max-width: 768px) {
-	.cssmenu li:hover > ul 						{ left: 0;  }
-	.cssmenu.cssmenu-right li:hover > ul 		{ right: 0; }
-	.cssmenu.cssmenu-left li:hover > ul 		{ left: 0;  }
-}
+.cssmenu.small-screen li:hover > ul 				{ left: 0;  }
+.cssmenu.cssmenu-right.small-screen li:hover > ul 	{ right: 0; }
+.cssmenu.cssmenu-left.small-screen li:hover > ul 	{ left: 0;  }
+
 
 /* --- Variante cssmenu-group --- */
 .cssmenu-group > ul {
@@ -358,61 +355,65 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 	font-weight: 300;
 }
 
-@media (max-width: 768px) {
-	.cssmenu-group > ul > li {
-		border-radius: 0;
-	}
-	
-	.cssmenu-group > ul > li:first-child {
-	    border-radius: 4px 4px 0 0;
-	}
-	
-	.cssmenu-group > ul > li:last-child {
-	    border-radius: 0 0 4px 4px;
-	}
+
+.cssmenu-group.small-screen > ul > li {
+	border-radius: 0;
 }
+
+.cssmenu.cssmenu-group.small-screen > ul > li > .cssmenu-title {
+	padding: 10px 12px;
+}
+
+.cssmenu-group.small-screen > ul > li:first-child {
+	border-radius: 4px 4px 0 0;
+}
+
+.cssmenu-group.small-screen > ul > li:last-child {
+	border-radius: 0 0 4px 4px;
+}
+
 
 /* --- Variante cssmenu-actionslinks --- */
-@media (max-width: 768px) {
-	.cssmenu-actionslinks > ul > li:last-child {
-		padding: 0 0 10px 0;
-		border-bottom: 1px solid rgba(120, 120, 120, 0.2);
-	}
+
+.cssmenu-actionslinks.small-screen > ul > li:last-child {
+	padding: 0 0 10px 0;
+	border-bottom: 1px solid rgba(120, 120, 120, 0.2);
 }
 
-@media (min-width: 769px) {
-	.cssmenu.cssmenu-static li > .cssmenu-title {
-		border: none;
-	}
 
-	.cssmenu.cssmenu-static > ul > li.has-sub > .cssmenu-title {
-		text-align: center;
-	}
+
+.cssmenu.cssmenu-static li > .cssmenu-title {
+	border: none;
 }
+
+.cssmenu.cssmenu-static > ul > li > .cssmenu-title {
+	text-align: center;
+}
+
 
 /* --- Variante cssmenu-static --- */
-@media (min-width: 769px) {
 
-	.cssmenu.cssmenu-static > ul > li {
-		padding: 0 10px 0 10;
-	}
 
-	footer .cssmenu.cssmenu-static > ul > li 		{ border-right: 1px solid #2A2A2A; }
-	#top-footer .cssmenu.cssmenu-static > ul > li 	{ border-right: 1px solid #DDDDDD; }
-
-	footer .cssmenu.cssmenu-static > ul > li:last-child,
-	#top-footer .cssmenu.cssmenu-static > ul > li:last-child {
-		border-right: none;
-	}
-
-	.cssmenu.cssmenu-static > ul > li > .cssmenu-title {
-		font-size: 17px;
-		border-bottom: 1px solid #25466C;
-		margin: 0 0 20px 0;
-		padding-bottom: 5px;
-		font-weight: bold;
-    }
+.cssmenu.cssmenu-static > ul > li {
+	padding: 0 10px 0 10px;
 }
+
+footer .cssmenu.cssmenu-static > ul > li 		{ border-right: 1px solid #2A2A2A; }
+#top-footer .cssmenu.cssmenu-static > ul > li 	{ border-right: 1px solid #DDDDDD; }
+
+footer .cssmenu.cssmenu-static > ul > li:last-child,
+#top-footer .cssmenu.cssmenu-static > ul > li:last-child {
+	border-right: none;
+}
+
+.cssmenu.cssmenu-static > ul > li > .cssmenu-title {
+	font-size: 17px;
+	border-bottom: 1px solid #25466C;
+	margin: 0 0 20px 0;
+	padding-bottom: 5px;
+	font-weight: bold;
+}
+
 
 
 /* -- Classes Niveau 2 -- */
@@ -425,12 +426,12 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 	z-index: 10;
 }
 
-@media (min-width: 769px) {
-	.cssmenu ul ul li {
-		height: 0;
-		transition: all .25s ease;
-	}
+
+.cssmenu ul ul li {
+	height: 0;
+	transition: all .25s ease;
 }
+
 
 .cssmenu li:hover > ul > li {
 	height: auto;
@@ -446,103 +447,13 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 	font-size: 12px;
 }
 
-@media (min-width: 769px) {
-	.cssmenu ul ul li .cssmenu-title {
-		border-bottom: 1px solid rgba(150, 150, 150, 0.15);
-		width: 170px;
-	}
 
-	#cssmenu-admin-menu ul.multicolumns > li > .cssmenu-title {
-		padding: 14px 25px 14px 14px;
-		height: 40px;
-		width: 170px;
-	}
-	#cssmenu-admin-menu ul.multicolumns > li > .cssmenu-title img {
-    	width: 1.28571429em;
-    	text-align: center;	
-	}
-	#cssmenu-admin-menu ul.multicolumns > li > .cssmenu-title i {
-	    margin: 0 5px 0 0;
-	    vertical-align: bottom;
-	}
-   
-	#cssmenu-admin-menu ul.multicolumns {
-		-webkit-column-gap: 0px;
-		-moz-column-gap: 0px;
-		column-gap: 0px;
-		vertical-align: top;
-	}
-
-	@media (max-height: 700px) {
-		#cssmenu-admin-menu li.has-sub:hover > .cssmenu-module-links 	{ top: -40px; }
-		#cssmenu-admin-menu li.has-sub:hover > .cssmenu-content-links 	{ top: -80px; }
-	}
-	
-	#cssmenu-admin-menu ul.multicolumns.columns-1 {
-		width: calc(170px * 1);
-	}
-
-	#cssmenu-admin-menu ul.multicolumns.columns-2 {
-		-webkit-column-count: 2;
-		-moz-column-count: 2;
-		column-count: 2;
-		width: calc(170px * 2);
-		height: calc(40px * 7);
-	}
-
-	#cssmenu-admin-menu ul.multicolumns.columns-3 {
-		-webkit-column-count: 3;
-		-moz-column-count: 3;
-		column-count: 3;
-		width: calc(170px * 3);
-		height: calc(40px * 7);
-	}
-
-	#cssmenu-admin-menu ul.multicolumns.columns-4 {
-		-webkit-column-count: 4;
-		-moz-column-count: 4;
-		column-count: 4;
-		width: calc(170px * 4);
-		height: calc(40px * 7);
-	}
-
-	#cssmenu-admin-menu ul.multicolumns.columns-5 {
-		-webkit-column-count: 5;
-		-moz-column-count: 5;
-		column-count: 5;
-		width: calc(170px * 5);
-		height: calc(40px * 7);
-	}
-
-	#cssmenu-admin-menu ul.multicolumns.columns-2 > li > .cssmenu-title:before,
-	#cssmenu-admin-menu ul.multicolumns.columns-3 > li > .cssmenu-title:before,
-	#cssmenu-admin-menu ul.multicolumns.columns-4 > li > .cssmenu-title:before,
-	#cssmenu-admin-menu ul.multicolumns.columns-5 > li > .cssmenu-title:before,
-	#cssmenu-admin-menu ul.multicolumns.columns-2 > li > .cssmenu-title:after,
-	#cssmenu-admin-menu ul.multicolumns.columns-3 > li > .cssmenu-title:after,
-	#cssmenu-admin-menu ul.multicolumns.columns-4 > li > .cssmenu-title:after,
-	#cssmenu-admin-menu ul.multicolumns.columns-5 > li > .cssmenu-title:after {
-		display: none;
-	}
-
-	#cssmenu-admin-menu ul.multicolumns ul {
-		display: none;
-	}
+.cssmenu ul ul li .cssmenu-title {
+	border-bottom: 1px solid rgba(150, 150, 150, 0.15);
+	white-space: nowrap;
+	padding: 11px 30px 11px 15px;
 }
 
-@media (max-width: 768px) {
-	#cssmenu-admin-menu ul.multicolumns ul.level-2 li.has-sub > .cssmenu-title,
-	#cssmenu-admin-menu ul.multicolumns ul.level-2 li.has-sub > .submenu-button {
-		display: none;
-	}
-
-	#cssmenu-admin-menu ul.multicolumns ul.level-2 li.has-sub > ul.level-1 {
-		display: block!important;
-	}
-	#cssmenu-admin-menu ul.multicolumns ul.level-2 li.has-sub > ul.level-1 > li:first-child {
-		border-top: none;
-	}
-}
 
 /* --- Indicateur de sous menu --- */
 .cssmenu ul ul li:last-child > .cssmenu-title,
@@ -576,88 +487,92 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 	height: 0;
 }
 
-@media (max-width: 768px) {
-	.cssmenu ul.level-1 li .cssmenu-title,
-	.cssmenu.cssmenu-actionslinks ul li ul li .cssmenu-title  {
-		padding-left: 25px;
-	}
-	
-	.cssmenu ul.level-2 li .cssmenu-title,
-	.cssmenu.cssmenu-actionslinks ul li ul li ul li .cssmenu-title  {
-		padding-left: 35px;
-	}
-
-	.cssmenu ul.level-3 li .cssmenu-title {
-		padding-left: 45px;
-	}
-
-	.cssmenu ul.level-4 li .cssmenu-title {
-		padding-left: 55px;
-	}
-	
-	.cssmenu ul ul li .cssmenu-title {
-		background: none;
-	}
-	
-	.cssmenu ul ul,
-	.cssmenu ul ul ul {
-		position: relative;
-		left: 0;
-		width: 100%;
-		margin: 0;
-		text-align: left;
-	}
+.cssmenu.small-screen ul ul li.has-sub > .cssmenu-title:after,  
+.cssmenu.small-screen ul ul li.has-sub > .cssmenu-title:before {
+	display: none
 }
 
+
+.cssmenu.small-screen ul.level-1 li .cssmenu-title  {
+	padding-left: 25px;
+}
+
+.cssmenu.small-screen ul.level-2 li .cssmenu-title,
+.cssmenu.cssmenu-actionslinks.small-screen ul li ul li ul li .cssmenu-title  {
+	padding-left: 35px;
+}
+
+.cssmenu.small-screen ul.level-3 li .cssmenu-title {
+	padding-left: 45px;
+}
+
+.cssmenu.small-screen ul.level-4 li .cssmenu-title {
+	padding-left: 55px;
+}
+
+.cssmenu.small-screen ul ul li .cssmenu-title {
+	background: none;
+}
+
+.cssmenu.small-screen ul ul,
+.cssmenu.small-screen ul ul ul {
+	position: relative;
+	left: 0;
+	width: 100%;
+	margin: 0;
+	text-align: left;
+	border: none;
+}
+
+
 /* --- Variantes --- */
+
 .cssmenu-horizontal ul ul ul {
 	margin-left: 100%;
 }
 
-@media (min-width: 769px) {
-	.cssmenu-vertical ul ul {
-		position: relative;
-	}
-
-	aside .cssmenu-vertical ul ul {
-		position: absolute;
-	}
-
-	aside .cssmenu-vertical ul ul {
-	    border: 1px #BEBEBE solid;
-	}
-
-	header .cssmenu-vertical ul ul li .cssmenu-title,
-	#main .cssmenu-vertical ul ul li .cssmenu-title {
-		border-bottom: none;
-		width: 100%;
-		padding: 5px 15px;
-	}
+.cssmenu-vertical ul ul {
+	position: relative;
 }
 
-@media (min-width: 769px) {
-	.cssmenu-static ul ul {
-	    position: relative;
-	    left: 0;
-	}
-
-	.cssmenu-static ul ul li {
-    	height: auto;
-	}
-
-	.cssmenu-static ul ul ul {
-		margin-left: 0;
-	}
-
-	.cssmenu.cssmenu-static ul ul > li > .cssmenu-title {
-		padding-left: 10px;
-	}
-	
-	.cssmenu.cssmenu-static ul ul ul > li > .cssmenu-title {
-		padding-left: 20px;
-	}
-
+aside .cssmenu-vertical ul ul {
+	position: absolute;
 }
+
+aside .cssmenu-vertical ul ul {
+	border: 1px #BEBEBE solid;
+}
+
+header .cssmenu-vertical ul ul li .cssmenu-title,
+#main .cssmenu-vertical ul ul li .cssmenu-title {
+	border-bottom: none;
+	width: 100%;
+	padding: 5px 15px;
+}
+
+.cssmenu-static ul ul {
+	position: relative;
+	left: 0;
+	z-index: 0;
+}
+
+.cssmenu-static ul ul li {
+	height: auto;
+}
+
+.cssmenu-static ul ul ul {
+	margin-left: 0;
+}
+
+.cssmenu.cssmenu-static ul ul > li > .cssmenu-title {
+	padding-left: 10px;
+}
+
+.cssmenu.cssmenu-static ul ul ul > li > .cssmenu-title {
+	padding-left: 20px;
+}
+
+
 
 .cssmenu-actionslinks ul li.has-sub .cssmenu-title:after  { top: 9px; }
 .cssmenu-actionslinks ul li.has-sub .cssmenu-title:before { top: 6px; }
@@ -667,26 +582,20 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 /* -------------------------------- */
 
 /* --- Niveau 1 --- */
-header .cssmenu > ul > li > .cssmenu-title 						{ color: #DDDDDD; }
-.cssmenu.cssmenu-vertical > ul > li > .cssmenu-title			{ color: #444444; }
-#main .cssmenu > ul > li > .cssmenu-title 						{ color: #444444; }
-.cssmenu-actionslinks > ul > li > .cssmenu-title 				{ color: #666666; }
-footer .cssmenu-static > ul > li > .cssmenu-title 				{ color: #DDDDDD; }
-#top-footer .cssmenu-static > ul > li > .cssmenu-title 			{ color: #444444; }
+header .cssmenu > ul > li > .cssmenu-title 					{ color: #DDDDDD; }
+.cssmenu.cssmenu-vertical > ul > li > .cssmenu-title		{ color: #444444; }
+#main .cssmenu > ul > li > .cssmenu-title 					{ color: #444444; }
+.cssmenu-actionslinks > ul > li > .cssmenu-title 			{ color: #666666; }
+footer .cssmenu-static > ul > li > .cssmenu-title 			{ color: #DDDDDD; }
+#top-footer .cssmenu-static > ul > li > .cssmenu-title 		{ color: #444444; }
 
-header .cssmenu li:hover > .cssmenu-title 						{ color: #FFFFFF; }
-.cssmenu.cssmenu-vertical li:hover > .cssmenu-title 			{ color: #666666; }
-#main .cssmenu li:hover > .cssmenu-title 						{ color: #666666; }
-
-#cssmenu-admin-menu.cssmenu-vertical ul > li > .cssmenu-title 	{ color: #DDDDDD; }
+header .cssmenu li:hover > .cssmenu-title 					{ color: #FFFFFF; }
+.cssmenu.cssmenu-vertical li:hover > .cssmenu-title 		{ color: #666666; }
+#main .cssmenu li:hover > .cssmenu-title 					{ color: #666666; }
 
 @media (min-width: 769px) {
-	header .cssmenu-horizontal > ul > li:hover								{ background: #333333; }
-	#main .cssmenu-horizontal > ul > li:hover  								{ background: #F9F9F9; }
-	
-	#cssmenu-admin-menu.cssmenu-vertical ul > li > .cssmenu-title:after,
-	#cssmenu-admin-menu.cssmenu-vertical ul > li > .cssmenu-title:before 	{ background: #DDDDDD; }
-	#cssmenu-admin-menu.cssmenu-vertical ul li:hover > .cssmenu-title 		{ background: #363636; }
+	header .cssmenu-horizontal > ul > li:hover				{ background: #333333; }
+	#main .cssmenu-horizontal > ul > li:hover  				{ background: #F9F9F9; }
 }
 
 /* --- Niveau 2 --- */
@@ -694,6 +603,7 @@ header .cssmenu li:hover > .cssmenu-title 						{ color: #FFFFFF; }
 #main .cssmenu ul ul li .cssmenu-title 						{ color: #333333; }
 .cssmenu.cssmenu-vertical ul ul li .cssmenu-title  			{ color: #333333; }
 .cssmenu-actionslinks li ul li .cssmenu-title    			{ color: #666666; }
+aside .cssmenu-static li ul li .cssmenu-title, 
 #top-footer .cssmenu-static li ul li .cssmenu-title 		{ color: #666666; }
 
 .cssmenu ul ul li:hover > .cssmenu-title					{ color: #333333; }
@@ -704,29 +614,27 @@ header .cssmenu ul ul li:hover > .cssmenu-title 			{ color: #FFFFFF; }
 footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 #top-footer .cssmenu-static ul ul li:hover > .cssmenu-title { color: #262626; }
 
-.cssmenu.cssmenu-vertical ul ul li .cssmenu-title  							{ background: #FFFFFF; }
-.cssmenu-actionslinks ul li:hover > .cssmenu-title:after 					{ background: #333333; }
+.cssmenu.cssmenu-vertical ul ul li .cssmenu-title  			{ background: #FFFFFF; }
 
-#cssmenu-admin-menu ul.multicolumns 										{ background: #363636; }
-#cssmenu-admin-menu.cssmenu-vertical ul.level-1 li > .cssmenu-title 		{ background: #363636; }
-#cssmenu-admin-menu.cssmenu-vertical ul.level-1 li:hover > .cssmenu-title	{ background: #404040; }
+.cssmenu-actionslinks ul li:hover > .cssmenu-title:after 	{ background: #333333; }
 
-@media (min-width: 769px) {
-	header .cssmenu ul ul li .cssmenu-title					{ background: #333333; }
-	.cssmenu-actionslinks li:hover > .cssmenu-title 		{ background: #DDDDDD; }
-	#main .cssmenu-horizontal ul ul							{ background: #F9F9F9; }
-	#main .cssmenu-horizontal ul ul	> li:hover				{ background: #F1F1F1; }
-	#cssmenu-galleryfilter ul ul li .cssmenu-title			{ background: #FFFFFF; }
-	#cssmenu-galleryfilter ul ul li:hover .cssmenu-title	{ background: #DDDDDD; }
-}
+
+header .cssmenu ul ul li .cssmenu-title						{ background: #333333; }
+.cssmenu-actionslinks li:hover > .cssmenu-title 			{ background: #DDDDDD; }
+.cssmenu-actionslinks.small-screen li:hover > .cssmenu-title{ background: transparent; }
+#main .cssmenu-horizontal ul ul								{ background: #F9F9F9; }
+#main .cssmenu-horizontal ul ul	> li:hover					{ background: #F1F1F1; }
+#cssmenu-galleryfilter ul ul li .cssmenu-title				{ background: #FFFFFF; }
+#cssmenu-galleryfilter ul ul li:hover .cssmenu-title		{ background: #DDDDDD; }
+
 
 /* --- Personnalisation de l'indicateur de sous-Menu --- */
-@media (min-width: 769px) {
-	.cssmenu li.has-sub > .cssmenu-title:after,
-	.cssmenu li.has-sub > .cssmenu-title:before 		 	{ background: #DDDDDD; }
-	.cssmenu-vertical li.has-sub > .cssmenu-title:after,
-	.cssmenu-vertical li.has-sub > .cssmenu-title:before 	{ background: #444444; }
-}
+
+.cssmenu li.has-sub > .cssmenu-title:after,
+.cssmenu li.has-sub > .cssmenu-title:before 		 	{ background: #DDDDDD; }
+.cssmenu-vertical li.has-sub > .cssmenu-title:after,
+.cssmenu-vertical li.has-sub > .cssmenu-title:before 	{ background: #444444; }
+
 
 /* -- Bouton responsive -- */
 /* ----------------------- */
@@ -739,263 +647,297 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 	position: relative;
 }
 
-@media (min-width: 769px) {
-	.cssmenu #menu-button:before {
-		font-size: 1.3rem;
-	}
+
+.cssmenu #menu-button:before {
+	font-size: 1.3rem;
 }
 
-@media (max-width: 768px) {
-	.cssmenu #menu-button {
-		display: block;
-		padding: 17px 40px 17px 17px;
-		cursor: pointer;
-		text-transform: uppercase;
-		font-weight: 700;
-	}
 
-	#top-footer .cssmenu #menu-button 	{ color: #444444; }
-	#cssmenu-admin-menu #menu-button 	{ color: #CCCCCC; }
 
-	.cssmenu #menu-button:after, 
-	.cssmenu #menu-button:before {
-		position: absolute;
-		display: block;
-		content: '';
-	}
-
-	.cssmenu #menu-button:after {
-		height: 4px;
-		width: 20px;
-		border-width: 2px 0 2px 0;
-		border-style: solid;
-	}
-	
-	.cssmenu #menu-button:before {
-		height: 2px;
-		width: 20px;
-		background: #DDDDDD;
-		font-size: 1.3rem;
-	}
-
-	.cssmenu #menu-button.menu-opened:after {
-		border: 0;
-		height: 2px;
-		transform: rotate(45deg);
-	}
-
-	.cssmenu #menu-button.menu-opened:before {
-		transform: rotate(-45deg);
-	}
+.cssmenu.small-screen #menu-button {
+	display: block;
+	padding: 17px 40px 17px 17px;
+	cursor: pointer;
+	text-transform: uppercase;
+	font-weight: 700;
 }
+
+#top-footer .cssmenu.small-screen #menu-button {
+	color: #444444;
+}
+
+.cssmenu.small-screen #menu-button:after, 
+.cssmenu.small-screen #menu-button:before {
+	position: absolute;
+	display: block;
+	content: '';
+}
+
+.cssmenu.small-screen #menu-button:after {
+	height: 4px;
+	width: 20px;
+	border-width: 2px 0 2px 0;
+	border-style: solid;
+}
+
+.cssmenu.small-screen #menu-button:before {
+	height: 2px;
+	width: 20px;
+	background: #DDDDDD;
+	font-size: 1.3rem;
+}
+
+.cssmenu.small-screen #menu-button.menu-opened:after {
+	border: 0;
+	height: 2px;
+	transform: rotate(45deg);
+}
+
+.cssmenu.small-screen #menu-button.menu-opened:before {
+	transform: rotate(-45deg);
+}
+
 
 /* --- Position du bouton --- */
-@media (max-width: 768px) {
-	.cssmenu #menu-button:after 				{ top: 22px; right: 17px; }
-	.cssmenu #menu-button:before 				{ top: 16px; right: 17px; }
-	.cssmenu #menu-button.menu-opened:after,
-	.cssmenu #menu-button.menu-opened:before 	{ top: 23px; width: 15px; }
-}
+
+.cssmenu.small-screen #menu-button:after 				{ top: 22px; right: 17px; }
+.cssmenu.small-screen #menu-button:before 				{ top: 16px; right: 17px; }
+.cssmenu.small-screen #menu-button.menu-opened:after,
+.cssmenu.small-screen #menu-button.menu-opened:before 	{ top: 23px; width: 15px; }
+
 
 /* --- Variante cssmenu-actionslinks --- */
-@media (min-width: 769px) {
-	.cssmenu #menu-button:before {
-		font-size: 1.3rem;
-	}
 
-	.cssmenu-actionslinks #menu-button {
-		float: right;
-		position: relative;
-	    display: inline-block;
-	    font-family: FontAwesome;
-	    font-style: normal;
-	    font-weight: normal;
-	    line-height: 1;
-	    -webkit-font-smoothing: antialiased;
-	    color: #444444;
-	    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%,rgba(56,56, 56, 0.18) 100%);
-	    background-color: #FFFFFF;
-	    border: 1px solid #999999;
-	    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1)  #B3B3B3 rgba(0, 0, 0, 0.25);
-	    border-radius: 4px;
-	    cursor: pointer;
-	    text-align: center;
-	    padding: 4px 12px 4px 12px;
-	    font-size: 0;
-	}
-
-	.cssmenu-actionslinks #menu-button + ul {
-		display: none;
-	}
-
-	.cssmenu-actionslinks #menu-button:hover + ul,
-	.cssmenu-actionslinks #menu-button + ul:hover {
-		display: block;
-	}
-
-	.cssmenu-actionslinks #menu-button:before {
-		content: "\f013";
-	}
-
-	.cssmenu-tools #menu-button:before {
-		content: "\f0c9";
-	}
-
-	.cssmenu-actionslinks ul {
-		position: absolute;
-		right: 0;
-		top: 23px;
-		padding: 5px 0;
-		width: 170px;
-		font-size: 11px;
-		background: #FFFFFF;
-		border-radius: 3px;
-		box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-		border: 1px solid #AAAAAA;
-		z-index: 10;
-	}
+.cssmenu #menu-button:before {
+	font-size: 1.3rem;
 }
+
+.cssmenu-actionslinks #menu-button {
+	float: right;
+	position: relative;
+	display: inline-block;
+	font-family: FontAwesome;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	color: #444444;
+	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%,rgba(56,56, 56, 0.18) 100%);
+	background-color: #FFFFFF;
+	border: 1px solid #999999;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1)  #B3B3B3 rgba(0, 0, 0, 0.25);
+	border-radius: 4px;
+	cursor: pointer;
+	text-align: center;
+	padding: 4px 12px 4px 12px;
+	font-size: 0;
+}
+
+#main .cssmenu-actionslinks.small-screen #menu-button {
+	float: none;
+	background-color: transparent;
+	background-image: none;
+	border: none;
+	font-size: 100%;
+	font-family: "Trebuchet MS",Verdana,"Bitstream Vera Sans",Times,serif;
+	text-align: left;
+}
+
+.cssmenu-actionslinks #menu-button + ul {
+	display: none !important;
+}
+
+.cssmenu-actionslinks #menu-button:hover + ul,
+.cssmenu-actionslinks #menu-button + ul:hover{
+	display: block !important;
+}
+
+.cssmenu-actionslinks.small-screen #menu-button:hover + ul,
+.cssmenu-actionslinks.small-screen #menu-button + ul:hover {
+	display: none !important;
+}
+
+.cssmenu-actionslinks.small-screen #menu-button + ul.open,
+.cssmenu-actionslinks.small-screen #menu-button + ul:hover.open {
+	display: block !important;
+}
+
+.cssmenu-actionslinks #menu-button:before {
+	content: "\f013";
+}
+
+.cssmenu-tools #menu-button:before {
+	content: "\f0c9";
+}
+
+.cssmenu-actionslinks ul {
+	position: absolute;
+	right: 0;
+	top: 23px;
+	padding: 5px 0;
+	width: 170px;
+	font-size: 11px;
+	background: #FFFFFF;
+	border-radius: 3px;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	border: 1px solid #AAAAAA;
+	z-index: 10;
+}
+
+.cssmenu-actionslinks.small-screen ul {
+	border: none;
+	box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+	top: 100%;
+}
+
+.cssmenu-actionslinks.small-screen li.has-sub > a,
+.cssmenu-actionslinks.small-screen li.has-sub > .submenu-button {
+	display:none;
+}
+
+.cssmenu-actionslinks.small-screen li.has-sub > ul {
+	display: block !important;
+	padding: 0;
+}
+
 
 /* --- Variante Static --- */
-@media (max-width: 768px) {
-	.cssmenu-static #menu-button {
-		cursor: default;
-	}
 
-	.cssmenu-static #menu-button:after,
-	.cssmenu-static #menu-button:before {
-		display: none;
-	}
-
-	.cssmenu-static ul li {
-		border-top: none;
-	}
-
-	.cssmenu-static > ul > li > .cssmenu-title,
-	.cssmenu-static ul ul > li > .cssmenu-title {
-		padding-bottom: 5px;
-	}
+.cssmenu-static.small-screen #menu-button {
+	cursor: default;
 }
+
+.cssmenu-static.small-screen #menu-button:after,
+.cssmenu-static.small-screen #menu-button:before {
+	display: none;
+}
+
+.cssmenu-static.small-screen ul li {
+	border-top: none;
+}
+
+.cssmenu-static.small-screen > ul > li > .cssmenu-title,
+.cssmenu-static.small-screen ul ul > li > .cssmenu-title {
+	padding-bottom: 5px;
+}
+
 
 /* --- Personnalisation graphique du bouton responsive--- */
-@media (max-width: 768px) {
-	.cssmenu #menu-button:after {
-		border-color: #DDDDDD;
-	}
 
-	.cssmenu #menu-button:before {
-		background: #DDDDDD;
-	}
-
-	#main .cssmenu #menu-button {
-		color: #111111;
-	}
-	
-	.cssmenu #menu-button.menu-opened:after,
-	.cssmenu #menu-button.menu-opened:before {
-		background: #DDDDDD;
-	}
-
-	header .cssmenu #menu-button.menu-opened:after,
-	header .cssmenu #menu-button.menu-opened:before 			{ background: #FFFFFF; }
-
-	header .cssmenu-vertical #menu-button.menu-opened:after,
-	header .cssmenu-vertical #menu-button.menu-opened:before 	{ background: #DDDDDD; }
+.cssmenu.small-screen #menu-button:after {
+	border-color: #DDDDDD;
 }
+
+.cssmenu.small-screen #menu-button:before {
+	background: #DDDDDD;
+}
+
+#main .cssmenu.small-screen #menu-button {
+	color: #111111;
+}
+
+.cssmenu.small-screen #menu-button.menu-opened:after,
+.cssmenu.small-screen #menu-button.menu-opened:before {
+	background: #DDDDDD;
+}
+
+header .cssmenu.small-screen #menu-button.menu-opened:after,
+header .cssmenu.small-screen #menu-button.menu-opened:before 			{ background: #FFFFFF; }
+
+header .cssmenu-vertical.small-screen #menu-button.menu-opened:after,
+header .cssmenu-vertical.small-screen #menu-button.menu-opened:before 	{ background: #DDDDDD; }
+
 
 /* -- Bouton submenu -- */
 /* -------------------- */
 
 /* --- Classes generales cssmenu --- */
-@media (max-width: 768px) {
-	.cssmenu .submenu-button {
-		position: absolute;
-		z-index: 99;
-		right: 0;
-		top: 0;
-		display: block;
-		border-left: 1px solid rgba(120, 120, 120, 0.2);
-		height: 46px;
-		width: 46px;
-		cursor: pointer;
-	}
-	#cssmenu-admin-menu .submenu-button{
-		height: 48px;
-		width: 48px;
-	}
 
-	.cssmenu ul ul .submenu-button {
-		height: 34px;
-		width: 34px;
-	}
-
-	#cssmenu-admin-menu ul ul .submenu-button {
-		height: 38px;
-		width: 38px;
-	}
-
-	.cssmenu .submenu-button:after,
-	.cssmenu .submenu-button:before {
-		position: absolute;
-		display: block;
-		content: '';
-	}
-
-	.cssmenu .submenu-button:after {
-		width: 8px;
-		height: 2px;
-	}
-	
-	.cssmenu .submenu-button:before {
-		width: 2px;
-		height: 8px;
-	}
-
-	.cssmenu .submenu-button.submenu-opened:before {
-		display: none;
-	}
-
-	.cssmenu-actionslinks .submenu-button {
-		height: 21px;
-		width: 21px;
-		border: none;
-	}
+.cssmenu.small-screen > ul > li.has-sub > .cssmenu-title:before,
+.cssmenu.small-screen > ul > li.has-sub > .cssmenu-title:after {
+	display: none;
 }
+
+.cssmenu.small-screen .submenu-button {
+	position: absolute;
+	z-index: 99;
+	right: 0;
+	top: 0;
+	display: block;
+	border-left: 1px solid rgba(120, 120, 120, 0.2);
+	height: 46px;
+	width: 46px;
+	cursor: pointer;
+}
+
+.cssmenu.small-screen ul ul .submenu-button {
+	height: 34px;
+	width: 34px;
+}
+
+.cssmenu.small-screen .submenu-button:after,
+.cssmenu.small-screen .submenu-button:before {
+	position: absolute;
+	display: block;
+	content: '';
+}
+
+.cssmenu.small-screen .submenu-button:after {
+	width: 8px;
+	height: 2px;
+}
+
+.cssmenu.small-screen .submenu-button:before {
+	width: 2px;
+	height: 8px;
+}
+
+.cssmenu.small-screen .submenu-button.submenu-opened:before {
+	display: none;
+}
+
+.cssmenu-actionslinks.small-screen .submenu-button {
+	height: 31px;
+	width: 31px;
+	border: none;
+}
+
 
 /* --- Variante Static --- */
-@media (max-width: 768px) {
-	.cssmenu-static .submenu-button,
-	.cssmenu-static .submenu-button:after,
-	.cssmenu-static .submenu-button:before {
-		display: none;
-	}
+
+.cssmenu-static.small-screen .submenu-button,
+.cssmenu-static.small-screen .submenu-button:after,
+.cssmenu-static.small-screen .submenu-button:before {
+	display: none;
 }
+
+.cssmenu-static.small-screen ul ul,
+.cssmenu-static.small-screen ul ul ul {
+	display: block !important;
+}
+
 
 /* --- Personnalisation background Bouton submenu --- */
-@media (max-width: 768px) {
-	.cssmenu .submenu-button:after  						{ background: #DDDDDD; }
-	.cssmenu .submenu-button:before 						{ background: #DDDDDD; }
 
-	.cssmenu .submenu-button.submenu-opened:after 			{ background: #FFFFFF; }
+.cssmenu.small-screen .submenu-button:after  						{ background: #DDDDDD; }
+.cssmenu.small-screen .submenu-button:before 						{ background: #DDDDDD; }
 
-	.cssmenu .submenu-button.submenu-opened 				{ background: #262626; }
-	#top-header .cssmenu .submenu-button.submenu-opened 	{ background: rgba(255, 255, 255, 0.05); }
-	.cssmenu-actionslinks .submenu-button.submenu-opened 	{ background: #DDDDDD; }
+.cssmenu.small-screen .submenu-button.submenu-opened:after 			{ background: #FFFFFF; }
 
-	#menu-left .cssmenu .submenu-button.submenu-opened 		{ background: rgba(120, 120, 120, 0.2); }
-	#menu-right .cssmenu .submenu-button.submenu-opened 	{ background: rgba(120, 120, 120, 0.2); }
-}
+.cssmenu.small-screen .submenu-button.submenu-opened 				{ background: #262626; }
+#top-header .cssmenu.small-screen .submenu-button.submenu-opened 	{ background: rgba(255, 255, 255, 0.05); }
+.cssmenu-actionslinks.small-screen .submenu-button.submenu-opened 	{ background: #DDDDDD; }
+
+#menu-left .cssmenu.small-screen .submenu-button.submenu-opened 		{ background: rgba(120, 120, 120, 0.2); }
+#menu-right .cssmenu.small-screen .submenu-button.submenu-opened 	{ background: rgba(120, 120, 120, 0.2); }
+
 	
 /* --- Postion icone Submenu --- */
-@media (max-width: 768px) {
-	.cssmenu .submenu-button:after 						{ top: 22px; right: 19px; }
-	.cssmenu .submenu-button:before 					{ top: 19px; right: 22px; }
-	.cssmenu ul ul .submenu-button:after 				{ top: 15px; right: 13px; }
-	.cssmenu ul ul .submenu-button:before 				{ top: 12px; right: 16px; }
-	.cssmenu-actionslinks .submenu-button:after 		{ top: 9px;  right: 7px;  }
-	.cssmenu-actionslinks .submenu-button:before 		{ top: 6px;  right: 10px; }
-	#cssmenu-admin-menu .submenu-button:after 			{ top: 24px; right: 21px; }
-	#cssmenu-admin-menu .submenu-button:before 			{ top: 21px; right: 24px; }
-	#cssmenu-admin-menu ul ul .submenu-button:after 	{ top: 18px; right: 15px; }
-	#cssmenu-admin-menu ul ul .submenu-button:before 	{ top: 15px; right: 18px; }
-}
+
+.cssmenu.small-screen .submenu-button:after 				 { top: 22px; right: 19px; }
+.cssmenu.small-screen .submenu-button:before 			 { top: 19px; right: 22px; }
+.cssmenu.small-screen ul ul .submenu-button:after 		 { top: 15px; right: 13px; }
+.cssmenu.small-screen ul ul .submenu-button:before 		 { top: 12px; right: 16px; }
+.cssmenu-actionslinks.small-screen .submenu-button:after  { top: 14px; right: 11px; }
+.cssmenu-actionslinks.small-screen .submenu-button:before { top: 11px; right: 14px; }
+
