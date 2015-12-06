@@ -12,9 +12,11 @@ ContactFormFieldObjectPossibleValues.prototype = {
 			var id = this.id_input + '_' + this.integer;
 			
 			jQuery('<div/>', {'id' : id}).appendTo('#input_fields_' + this.id_input);
-
-			jQuery('<input/> ', {type : 'checkbox', id : 'field_is_default_' + id, name : 'field_is_default_' + id, value : '1', 'class' : 'per-default'}).appendTo('#' + id);
-			jQuery('#' + id).append(' ');
+			
+			jQuery('<div/>', {id : id + '_checkbox', class: 'form-field-checkbox'}).appendTo('#' + id);
+			jQuery('<input/> ', {type : 'checkbox', id : 'field_is_default_' + this.id_input + this.integer, name : 'field_is_default_' + this.id_input, value : '1', 'class' : 'per-default'}).appendTo('#' + id + '_checkbox');
+			jQuery('<label/> ', {for : 'field_is_default_' + this.id_input + this.integer}).appendTo('#' + id + '_checkbox');
+			jQuery('#' + id + '_checkbox').after('&nbsp;');
 			
 			jQuery('<input/> ', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, required : "required", placeholder : '{@field.possible_values.subject}'}).appendTo('#' + id);
 			jQuery('#' + id).append(' ');
@@ -50,7 +52,11 @@ var ContactFormFieldObjectPossibleValues = new ContactFormFieldObjectPossibleVal
 <div class="text-strong"><span class="is_default_title">${LangLoader::get_message('field.possible_values.is_default', 'admin-user-common')}</span><span class="name_title">{@field.possible_values.subject}</span><span>${LangLoader::get_message('field.possible_values.recipient', 'common', 'contact')}</span></div>
 # START fieldelements #
 	<div id="${escape(HTML_ID)}_{fieldelements.ID}">
-		<input type="checkbox" name="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" id="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" value="1"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF # class="per-default">
+		<div class="form-field-checkbox">
+			<input type="checkbox" name="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" id="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" value="1"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF # class="per-default">
+			<label for="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}"></label>
+		</div>
+		
 		<input type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" required="required" placeholder="{@field.possible_values.subject}">
 		<select id="field_recipient_${escape(HTML_ID)}_{fieldelements.ID}" name="field_recipient_${escape(HTML_ID)}_{fieldelements.ID}">
 			# START fieldelements.recipients_list #

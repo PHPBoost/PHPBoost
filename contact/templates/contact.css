@@ -8,3 +8,18 @@
 .per-default { margin: 0 13px 0 15px; }
 .is_default_title { margin-right: 30px; }
 .name_title { margin-right: 92px; }
+
+div[id*="AdminContactFieldFormController_possible_values_"] {
+	margin: 10px 0 0 ;
+}
+
+div[id*="AdminContactFieldFormController_possible_values_"] .form-field-checkbox {
+	display: inline-block;
+	vertical-align: middle;
+	margin-top: 0;
+}
+
+div[id*="AdminContactFieldFormController_possible_values_"] input[id*="field_name_AdminContactFieldFormController_possible_values_"] {
+	width: calc(100% - 80px);
+	margin-bottom: 5px;
+}

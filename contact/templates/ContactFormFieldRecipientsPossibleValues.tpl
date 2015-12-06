@@ -13,8 +13,10 @@ ContactFormFieldRecipientsPossibleValues.prototype = {
 			
 			jQuery('<div/>', {'id' : id}).appendTo('#input_fields_' + this.id_input);
 
-			jQuery('<input/> ', {type : 'checkbox', id : 'field_is_default_' + id, name : 'field_is_default_' + id, value : '1', 'class' : 'per-default'}).appendTo('#' + id);
-			jQuery('#' + id).append(' ');
+			jQuery('<div/>', {id : id + '_checkbox', class: 'form-field-checkbox'}).appendTo('#' + id);
+			jQuery('<input/> ', {type : 'checkbox', id : 'field_is_default_' + this.id_input + this.integer, name : 'field_is_default_' + this.id_input, value : '1', 'class' : 'per-default'}).appendTo('#' + id + '_checkbox');
+			jQuery('<label/> ', {for : 'field_is_default_' + this.id_input + this.integer}).appendTo('#' + id + '_checkbox');
+			jQuery('#' + id + '_checkbox').after('&nbsp;');
 			
 			jQuery('<input/> ', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, required : "required", placeholder : '{@field.name}'}).appendTo('#' + id);
 			jQuery('#' + id).append(' ');
@@ -46,7 +48,10 @@ var ContactFormFieldRecipientsPossibleValues = new ContactFormFieldRecipientsPos
 <span class="text-strong">{@field.possible_values.is_default}</span>
 # START fieldelements #
 	<div id="${escape(HTML_ID)}_{fieldelements.ID}">
-		<input type="checkbox" name="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" id="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" value="1"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF # class="per-default">
+		<div class="form-field-checkbox">
+			<input type="checkbox" name="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" id="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" value="1"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF # class="per-default">
+			<label for="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}"></label>
+		</div>		
 		<input type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" required="required" placeholder="{@field.name}">
 		<input type="email" name="field_email_${escape(HTML_ID)}_{fieldelements.ID}" id="field_email_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.EMAIL}" placeholder="${LangLoader::get_message('field.possible_values.email', 'common', 'contact')}" multiple="multiple" required="required"# IF NOT fieldelements.C_DELETABLE # disabled="disabled"# ENDIF #>
 		# IF fieldelements.C_DELETABLE #<a href="javascript:ContactFormFieldRecipientsPossibleValues.delete({fieldelements.ID});" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a># ENDIF #
