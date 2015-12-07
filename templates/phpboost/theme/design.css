@@ -300,98 +300,9 @@ footer#footer .footer-content {
 	border-bottom: 2px groove #444444;
 }
 
-footer#footer .footer-content .block-container {
-	display: inline-block;
-	width: 235px;
-    height: 100%;
-    margin: 0 -4px 0 0;
-    padding: 0 10px;
-    vertical-align: top;
-    border-right: 1px solid #1F1F1F;
-}
-
 .sprite-img {
 	background: url('images/sprite-phpboost.png');
 }
-
-.footer-partenaires {
-	margin-top: 5px;
-}
-
-.footer-partners-title {
-    font-size: 17px;
-    border-bottom: 1px solid #25466C;
-    margin: 0 0 20px 0;
-    padding-bottom: 5px;
-    font-weight: bold;
-	color: #DDDDDD;
-	text-align: center;
-} 
-
-a.footer-partners-nuxit {
-	text-decoration: none !important;
-	text-align: center;
-}
-
-.footer-partners-nuxit p {
-	margin: 0;
-}
-
-.footer-partners-title-img {
-	background-position: -1px -1px;
-	height: 25px;
-	width: 25px;
-}
-
-.footer-partners-nuxit-img {
-	background-position: -1px -128px;
-	height: 60px!important;
-	width: 125px;
-}
-
-.partners-nuxit-top {
-	font-size: 0.9em;
-	color: #DFA959;
-	line-height: 0px;
-	margin-bottom: 0px;
-	font-weight: bold;
-}
-
-.partners-nuxit-bottom {
-	font-size: 0.9em;
-	font-style: italic;
-	color: #8BB9FF;"
-}
-
-.footer-social-container {
-	margin: auto;
-	width: 920px;
-	height: 28px;
-}
-
-.footer-social {	
-	float: right; 
-	background: url('images/sprite-phpboost.png') no-repeat;
-	margin-top: 2px;
-	height: 46px;
-}
-.footer-social:hover {	
-	margin-top: 0px;
-	height: 48px;
-}
-
-.footer-social-rss 			{ background-position: -1px -78px; }
-.footer-social-facebook 	{ background-position: -51px -78px; }
-.footer-social-twitter 		{ background-position: -101px -78px; }
-.footer-social-gplus 		{ background-position: -151px -78px; }
-.footer-social-guestbook 	{ background-position: -201px -78px; }
-
-.footer-social a {
-	display: block;
-	width: 48px;
-	height: 48px;
-}
-
 
 footer#footer .footer-content nav.cssmenu {
 	display: inline-block;
@@ -404,15 +315,15 @@ footer#footer .footer-infos {
 }
 
 footer#footer .footer-infos span {
-	color: #81A4C8;
+	color: #FBFDFF;
 	font-size: 0.8em;
 }
 
 footer#footer .footer-infos a {
-	color: #9F7D0E;
+	color: #366493;
 }
 footer#footer .footer-infos a:hover {
-	color: #E2BE47;
+	color: #1E5083;
 	text-decoration: none;
 }
 
