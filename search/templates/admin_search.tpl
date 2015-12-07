@@ -2,15 +2,15 @@
 		<!--
 			function check_form_conf()
 			{
-				if(document.getElementById('nb_results_p').value == "")) {
+				if (document.getElementById('nb_results_p').value == "") {
 					alert("{L_REQUIRE_INTEGER}");
 					return false;
 				}
-				if(document.getElementById('cache_time').value == "")) {
+				if (document.getElementById('cache_time').value == "") {
 					alert("{L_REQUIRE_INTEGER}");
 					return false;
 				}
-				if(document.getElementById('max_use').value == "")) {
+				if (document.getElementById('max_use').value == "") {
 					alert("{L_REQUIRE_INTEGER}");
 					return false;
 				}
@@ -46,7 +46,7 @@
 						<div class="form-element">
 							<label for="authorized_modules[]">* {L_AUTHORIZED_MODULES} <span class="field-description">{L_AUTHORIZED_MODULES_EXPLAIN}</span></label>
 							<div class="form-field"><label>
-								<select id="authorized_modules[]" name="authorized_modules[]" size="5" multiple="multiple" class="list-modules">
+								<select id="authorized_modules[]" name="authorized_modules[]" size="10" multiple="multiple" class="list-modules">
 									# START authorized_modules #
 									<option value="{authorized_modules.MODULE}" id="{authorized_modules.MODULE}"{authorized_modules.SELECTED}>{authorized_modules.L_MODULE_NAME}</option>
 									# END authorized_modules #
