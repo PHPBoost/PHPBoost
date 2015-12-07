@@ -273,7 +273,7 @@ a:hover.close span {
 	width: 100%;
 }
 
-@media (min-width: 481px){
+@media (min-width: 479px){
 	.submenu > li {
 		display: inline-block;
 		vertical-align: text-top;
