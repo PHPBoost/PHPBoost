@@ -23,6 +23,15 @@ header#forum-top .forum-links {
 
 /* --- menu index ========================================================= */
 
+.forum-index {
+	display:none;
+}
+
+@media (min-width: 769px){	
+	.forum-index {
+		display: block;
+	}
+}
 .forum-links .cssmenu #menu-button {
     color: #999999 !important;
 }
@@ -34,11 +43,13 @@ header#forum-top .forum-links {
 .forum-links .cssmenu #menu-button::before {
     background-color: #999999;
 }
-.forum-links .cssmenu #menu-button.menu-opened::after, .forum-links .cssmenu #menu-button.menu-opened::before {
+
+.forum-links .cssmenu #menu-button.menu-opened::after,
+.forum-links .cssmenu #menu-button.menu-opened::before,
+header .forum-links .cssmenu #menu-button.menu-opened::after,
+header .forum-links .cssmenu #menu-button.menu-opened::before {
     background-color: #999999;
 }
-
-@media (min-width:768px) {
 		
 	.forum-links .cssmenu{
 		margin-top: 5px;
@@ -67,7 +78,6 @@ header#forum-top .forum-links {
 		background: none;
 		border: none;
 	}
-}
 
 /* -- details des pages ============================================================== */
 
@@ -103,6 +113,12 @@ article header ul.pagination, article footer ul.pagination { display: inline; }
 .forum-poll-table {
 	width:80%;
 	margin : 10px auto auto auto;
+}
+	
+@media (max-width: 768px) {
+	.forum-poll-table td {
+		text-align: left;
+	}
 }
 
 .del-msg {
@@ -166,6 +182,19 @@ article header a.basic-button {
 	color: #FFFFFF;
 }
 
+article header .float-right a,
+footer .float-right a,
+ul.pagination a{
+	padding: 8px;
+}
+
+@media (min-width: 769px){
+	article header .float-right a,
+	footer .float-right a,
+	ul.pagination a {
+		padding: 4px;
+	}
+}
 .desc-forum { font-size: 0.8em; }
 
 
@@ -476,6 +505,10 @@ a.msg-link-pseudo:hover { color: #F2FBFF; }
 	border-top: 1px solid #d1d2d4;
 }
 
+.msg-sign-info .float-right a {
+	padding: 2px 8px;
+}
+
 @media (max-width: 768px) {
 	ul.pagination li {
 		padding: 4px;
@@ -554,8 +587,12 @@ a.msg-link-pseudo:hover { color: #F2FBFF; }
 	}
 	
 	.msg-contents-info a {
-		padding: 4px;
+		padding: 0 4px;
 		color: inherit;
+	}
+	
+	.msg-contents-info .float-right a {
+		padding: 8px;
 	}
 	
 	.msg-sign span a,

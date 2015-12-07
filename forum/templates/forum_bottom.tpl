@@ -1,7 +1,7 @@
 		
 		<footer id="forum-bottom">
 			<div class="forum-links">
-				<nav class="cssmenu cssmenu-group float-left">
+				<nav class="cssmenu cssmenu-group float-left forum-index">
 					<ul>
 						<li>
 							<span class="cssmenu-title">

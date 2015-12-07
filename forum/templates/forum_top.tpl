@@ -85,7 +85,7 @@
 		<h1>{FORUM_NAME}</h1>
 		
 		<div class="forum-links">
-			<nav itemscope itemtype="http://schema.org/SiteNavigationElement" class="cssmenu cssmenu-group float-left">
+			<nav itemscope itemtype="http://schema.org/SiteNavigationElement" class="cssmenu cssmenu-group float-left forum-index">
 				<ul>
 					<li>
 						<span class="cssmenu-title">
