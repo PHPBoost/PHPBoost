@@ -32,6 +32,7 @@ header#forum-top .forum-links {
 		display: block;
 	}
 }
+
 .forum-links .cssmenu #menu-button {
     color: #999999 !important;
 }
@@ -51,33 +52,33 @@ header .forum-links .cssmenu #menu-button.menu-opened::before {
     background-color: #999999;
 }
 		
-	.forum-links .cssmenu{
-		margin-top: 5px;
-	}
-	
-	.forum-links .cssmenu i {
-		padding-bottom: 3px;
-	}
-	
-	.forum-links .cssmenu .small {
-		color: #334455;
-		font-size: 1.1em;
-	}
+.forum-links .cssmenu{
+	margin-top: 5px;
+}
 
-	.forum-links .cssmenu.cssmenu-group > ul > li > .cssmenu-title {
-		padding: 8px 5px;
-		letter-spacing: 0;
-	}
-	
-	.forum-links .cssmenu-group > ul > li {
-		background: none;
-		border: none;
-	}
-	
-	.forum-links .cssmenu-group > ul > li:hover {
-		background: none;
-		border: none;
-	}
+.forum-links .cssmenu i {
+	padding-bottom: 3px;
+}
+
+.forum-links .cssmenu .small {
+	color: #334455;
+	font-size: 1.1em;
+}
+
+.forum-links .cssmenu.cssmenu-group > ul > li > .cssmenu-title {
+	padding: 8px 5px;
+	letter-spacing: 0;
+}
+
+.forum-links .cssmenu-group > ul > li {
+	background: none;
+	border: none;
+}
+
+.forum-links .cssmenu-group > ul > li:hover {
+	background: none;
+	border: none;
+}
 
 /* -- details des pages ============================================================== */
 
@@ -162,7 +163,7 @@ article header ul.pagination, article footer ul.pagination { display: inline; }
 /* --- header du contenu de la page --- */
 article header {
 	padding: 8px;
-	background: #EEEEEE;
+	background-color: #EEEEEE;
 	border: 1px solid #DDDDDD;
 	border-radius: 3px;
 }
@@ -195,6 +196,7 @@ ul.pagination a{
 		padding: 4px;
 	}
 }
+
 .desc-forum { font-size: 0.8em; }
 
 
@@ -209,7 +211,7 @@ ul.pagination a{
 article footer {
 	padding: 8px;
 	margin-top: 10px;
-	background: #EEEEEE;
+	background-color: #EEEEEE;
 	border: 1px solid #DDDDDD;
 	border-radius: 3px;
 	min-height: 33px;
@@ -225,6 +227,7 @@ a.forum-link-pseudo {
 	color: #E8EAEB; 
 	font-weight: bold;
 }
+
 a.forum-link-pseudo:hover { 
 	color: #F2FBFF; 
 	font-weight: bold;
@@ -245,7 +248,7 @@ a.forum-link-pseudo:hover {
 }
 
 .forum-notread { 
-	background: #f5f5f5;
+	background-color: #f5f5f5;
 	padding: 4px;
 	font-size: 0.8em;
 	color: #366393;
@@ -346,12 +349,14 @@ a.forum-link-cat { font-weight: bold; }
 	height: 1%;
 	clear: both;
 }
+
 .forum-online-select-cat {
 	float: left;
 	text-align: right;
 	clear: both;
 	padding: 5px;
 }
+
 .forum-online-select {
 	min-width: 160px;
 	max-width: 530px;
@@ -361,13 +366,12 @@ a.forum-link-cat { font-weight: bold; }
 .forum-cat-title {
 	padding: 0px 5px;
 }
-.forum-cat-title a {}
 
 a.forum-mbrmsg-links { color: #FFFFFF; } /* Couleur des liens pour les messages du membre */
 
 .forum-search-word {
-	background: yellow;
-	color: black;
+	background-color: #ffff00;
+	color: #000000;
 }
 
 .pagin-forum { float: right; }
@@ -407,7 +411,7 @@ a.msg-link-pseudo:hover { color: #F2FBFF; }
 
 .msg-top {
 	width: 135px;
-	background: #F0F3FF;
+	background-color: #F0F3FF;
 	display: flex;
 	display: -ms-flexbox;
 	display: -webkit-flex;
@@ -425,7 +429,7 @@ a.msg-link-pseudo:hover { color: #F2FBFF; }
 /* Pseudo du membre */
 .msg-pseudo-mbr {
 	padding: 4px;
-	background: #4D4C50;
+	background-color: #4D4C50;
 }
 
 .msg-info-mbr { /* Case des informations du membre */
@@ -459,7 +463,7 @@ a.msg-link-pseudo:hover { color: #F2FBFF; }
 /* --- info case du message ---*/
 .msg-contents-info {
 	padding: 4px;
-	background: #4D4C50;
+	background-color: #4D4C50;
 	color: #E8EAEB;
 }
 
@@ -478,7 +482,7 @@ a.msg-link-pseudo:hover { color: #F2FBFF; }
 /* Signature du membre */
 .msg-sign,
 .msg-sign2 { 
-	background: #FCFCFD;
+	background-color: #FCFCFD;
 	padding: 4px;
 	font-size: 11px;
 	width:100%;
@@ -491,7 +495,9 @@ a.msg-link-pseudo:hover { color: #F2FBFF; }
 }
 
 /* Signature du membre => Couleur alternative */
-.msg-sign2 { background: #FCFCFD; }
+.msg-sign2 {
+	background-color: #FCFCFD;
+}
 
 /* Signature du membre, fixe la hauteur maximale */
 .msg-sign-mbr { 
@@ -614,47 +620,37 @@ a.msg-link-pseudo:hover { color: #F2FBFF; }
 }
 
 .fa-announce:before,
-.fa-announce-new:before { content: "\f075"; }
-
+.fa-announce-new:before 		{ content: "\f075"; }
 .fa-announce-hot:before,
-.fa-announce-new-hot:before { content: "\f086"; }
-
+.fa-announce-new-hot:before 	{ content: "\f086"; }
 .fa-announce-lock:before,
-.fa-announce-new-lock:before { content: "\f023"; }
-
+.fa-announce-new-lock:before 	{ content: "\f023"; }
 .fa-announce-post:before,
-.fa-announce-new-post:before { content: "\f071"; }
-
+.fa-announce-new-post:before 	{ content: "\f071"; }
 .fa-announce-top:before,
-.fa-announce-new-top:before { content: "\f06a"; }
-
+.fa-announce-new-top:before 	{ content: "\f06a"; }
 .fa-announce:before,
-.fa-announce-hot:before { color: #D1D2D4; }
-
+.fa-announce-hot:before 		{ color: #D1D2D4;   }
 .fa-announce-new:before,
-.fa-announce-new-hot:before { color: #676A74; }
+.fa-announce-new-hot:before 	{ color: #676A74;   }
 
-.fa-msg-display:before { content: "\f00c"; color: #478948; }
-.fa-msg-not-display:before { content: "\f00d"; color: #BA4B49; }
-
-.fa-msg-track:before { content: "\f004"; color: #BA4B49; }
-.fa-msg-not-track:before { content: "\f004"; color: #000000; }
-
-.fa-pm-track:before { content: "\f0e0"; color: #4372AA; }
-.fa-pm-not-track:before { content: "\f0e0"; color: #000000; }
-
-.fa-mail-track:before { content: "\f003"; color: #4372aa; }
-.fa-mail-not-track:before { content: "\f003"; color: #000000; }
-
-.fa-lastview:before { content: "\f017"; color: #334455; }
-.fa-notread:before { content: "\f0f6"; color: #334455; }
+.fa-msg-display:before 			{ content: "\f00c"; color: #478948; }
+.fa-msg-not-display:before 		{ content: "\f00d"; color: #BA4B49; }
+.fa-msg-track:before 			{ content: "\f004"; color: #BA4B49; }
+.fa-msg-not-track:before 		{ content: "\f004"; color: #000000; }
+.fa-pm-track:before 			{ content: "\f0e0"; color: #4372AA; }
+.fa-pm-not-track:before 		{ content: "\f0e0"; color: #000000; }
+.fa-mail-track:before 			{ content: "\f003"; color: #4372aa; }
+.fa-mail-not-track:before 		{ content: "\f003"; color: #000000; }
+.fa-lastview:before 			{ content: "\f017"; color: #334455; }
+.fa-notread:before 				{ content: "\f0f6"; color: #334455; }
 
 /* -- footer ==================================================================== */
 
 footer#forum-bottom {
 	margin: 15px 0px 5px 0px;
 	padding: 8px;
-	background: #EEEEEE;
+	background-color: #EEEEEE;
 	border: 1px solid #DDDDDD;
 	border-radius: 3px;
 }

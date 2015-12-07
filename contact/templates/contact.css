@@ -10,16 +10,24 @@
 .name_title { margin-right: 92px; }
 
 div[id*="AdminContactFieldFormController_possible_values_"] {
+	clear: both;
 	margin: 10px 0 0 ;
 }
 
 div[id*="AdminContactFieldFormController_possible_values_"] .form-field-checkbox {
 	display: inline-block;
 	vertical-align: middle;
-	margin-top: 0;
 }
 
-div[id*="AdminContactFieldFormController_possible_values_"] input[id*="field_name_AdminContactFieldFormController_possible_values_"] {
-	width: calc(100% - 80px);
+input[id*="field_name_AdminContactFieldFormController_possible_values_"] {
+	width: calc(100% - 75px);
 	margin-bottom: 5px;
+}
+
+input[id*="field_email_AdminContactFieldFormController_possible_values_"] {
+	margin-bottom: 5px;
+}
+
+#add-AdminContactFieldFormController_possible_values i[class*="fa-plus"] {
+	float: right;
 }
