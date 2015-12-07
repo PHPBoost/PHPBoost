@@ -95,7 +95,7 @@ if (!empty($contents))
 	{
 		//Génération du tableau des droits.
 		$array_auth_all = Authorizations::build_auth_array_from_form(READ_PAGE, EDIT_PAGE, READ_COM);
-		$page_auth = addslashes(serialize($array_auth_all));
+		$page_auth = serialize($array_auth_all);
 	}
 	else
 		$page_auth = '';
