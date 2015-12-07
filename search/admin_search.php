@@ -3,7 +3,7 @@
  *                               admin_forum_config.php
  *                            -------------------
  *   begin                : March 22, 2008
- *   copyright            : (C) 2008 Loïc Rouchon
+ *   copyright            : (C) 2008 LoÃ¯c Rouchon
  *   email                : horn@phpboost.com
  *
  *
@@ -42,7 +42,7 @@ $clearOutCache = $request->get_getvalue('clear', '');
 $weighting = $request->get_getvalue('weighting', '');
 $valid = $request->get_postvalue('valid', false);
 
-//Si c'est confirmé on execute
+//Si c'est confirmÃ© on execute
 if ($valid)
 {
 	if (!$weighting)
@@ -95,20 +95,24 @@ else
 	if (!$weighting)
 	{
 		$provider_service = AppContext::get_extension_provider_service();
-		foreach ($provider_service->get_providers(SearchableExtensionPoint::EXTENSION_POINT) as $module_id => $provider)
+		$search_extensions_point_modules = array_keys($provider_service->get_extension_point(SearchableExtensionPoint::EXTENSION_POINT));
+		
+		foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as $id => $module)
 		{
-			$module_configuration = ModulesManager::get_module($module_id)->get_configuration();
-			
-			if (in_array($module_id, $config->get_unauthorized_providers()))
-			$selected = ' selected="selected"';
-			else
-			$selected = '';
+			if (in_array($module->get_id(), $search_extensions_point_modules))
+			{
+				$module_configuration = $module->get_configuration();
+				if (in_array($module->get_id(), $config->get_unauthorized_providers()))
+					$selected = ' selected="selected"';
+				else
+					$selected = '';
 
-			$tpl->assign_block_vars('authorized_modules', array(
-				'MODULE' => $module_id,
-				'SELECTED' => $selected,
-				'L_MODULE_NAME' => ucfirst($module_configuration->get_name())
-			));
+				$tpl->assign_block_vars('authorized_modules', array(
+					'MODULE' => $module->get_id(),
+					'SELECTED' => $selected,
+					'L_MODULE_NAME' => ucfirst($module_configuration->get_name())
+				));
+			}
 		}
 
 		$tpl->put_all(array(
