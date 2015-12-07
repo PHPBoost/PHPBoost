@@ -388,8 +388,13 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 	footer .cssmenu.cssmenu-static > ul > li {
 		border-right: 1px solid #1F1F1F;
 		border-left: 1px solid #2A2A2A;
+		width: 25%;
 	}
 	#top-footer .cssmenu.cssmenu-static > ul > li 	{ border-right: 1px solid #DDDDDD; }
+	
+	footer .cssmenu.cssmenu-static > ul > li:first-child {
+		border-left: none;
+	}
 
 	footer .cssmenu.cssmenu-static > ul > li:last-child,
 	#top-footer .cssmenu.cssmenu-static > ul > li:last-child {
@@ -456,6 +461,25 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 		padding: 11px 30px 11px 15px;
 	}
 }
+footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 {
+	text-align: center;
+}
+
+footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 li .cssmenu-title {
+	font-family: FontAwesome;
+	font-size: inherit;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 li:nth-child(1) .cssmenu-title:before { content: "\f09a"; }
+footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 li:nth-child(2) .cssmenu-title:before { content: "\f0d5"; }
+footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 li:nth-child(3) .cssmenu-title:before { content: "\f099"; }
+
+footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 li:nth-child(1) .cssmenu-title:hover:before { color: #3B5998; }
+footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 li:nth-child(2) .cssmenu-title:hover:before { color: #DD4B39; }
+footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 li:nth-child(3) .cssmenu-title:hover:before { color: #4099FF; }
 
 /* --- Indicateur de sous menu --- */
 .cssmenu ul ul li:last-child > .cssmenu-title,
