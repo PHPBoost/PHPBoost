@@ -39,15 +39,6 @@ function xmlhttprequest_calendar(field, input_field, year, month, day, calendar_
 -->
 </script>
 # ENDIF #
-<script>
-<!--
-jQuery(document).ready(function() {
-	jQuery('\#calendar{CALENDAR_NUMBER}').mouseleave(function (event) {
-		jQuery('\#calendar{CALENDAR_NUMBER}').hide();
-	});
-});
--->
-</script>
 
 <input type="text" size="11" maxlength="10" id="{CALENDAR_ID}" class="input-date" name="{CALENDAR_ID}" value="{DEFAULT_DATE}" onclick="xmlhttprequest_calendar('{CALENDAR_ID}_date', ${escapejs(CALENDAR_ID)}, ${escapejs(YEAR)}, ${escapejs(MONTH)}, ${escapejs(DAY)}, ${escapejs(CALENDAR_NUMBER)});return false;" placeholder="${LangLoader::get_message('date_format', 'date-common')}">
 <div class="calendar-container">
