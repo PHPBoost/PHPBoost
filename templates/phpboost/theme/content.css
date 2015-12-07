@@ -195,6 +195,12 @@ a.read-more {
 	}
 }
 
+@media (max-width: 768px) {
+	.block {
+		width: 100%;
+		margin: 1em 0;
+	}
+}
 
 /* -- Pagination des pages -- */
 /* -------------------------- */

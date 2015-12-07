@@ -122,7 +122,7 @@ fieldset img {
 	max-width: 250px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 769px) {
 	fieldset img {
 		max-width: 450px;
 	}
