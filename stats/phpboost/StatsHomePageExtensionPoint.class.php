@@ -87,10 +87,12 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 		{
 			$stats_cache = StatsCache::load();
 			$last_user_group_color = User::get_group_color($stats_cache->get_stats_properties('last_member_groups'), $stats_cache->get_stats_properties('last_member_level'));
+			$user_sex_field = ExtendedFieldsCache::load()->get_extended_field_by_field_name('user_sex');
 			
 			$tpl->put_all(array(
 				'C_STATS_USERS' => true,
 				'C_LAST_USER_GROUP_COLOR' => !empty($last_user_group_color),
+				'C_DISPLAY_SEX' => (!empty($user_sex_field) && $user_sex_field['display']),
 				'LAST_USER' => $stats_cache->get_stats_properties('last_member_login'),
 				'LAST_USER_LEVEL_CLASS' => UserService::get_level_class($stats_cache->get_stats_properties('last_member_level')),
 				'LAST_USER_GROUP_COLOR' => $last_user_group_color,

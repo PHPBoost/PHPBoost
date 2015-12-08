@@ -146,7 +146,8 @@
 					</tbody>
 				</table>
 			</div>
-		
+			
+			# IF C_DISPLAY_SEX #
 			<div class="spacer"></div>
 			
 			<h3>{L_SEX}</h3>
@@ -185,9 +186,10 @@
 					</tbody>
 				</table>
 			</div>
-		
+			# ENDIF #
+			
 			<div class="spacer"></div>
-		
+			
 			<table id="table4">
 				<thead>
 					<tr>
