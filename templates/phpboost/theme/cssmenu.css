@@ -40,6 +40,8 @@ Contient les elements associes aux menus
 #menu-left .cssmenu  { margin-right: -9px; }
 #menu-right .cssmenu  { margin-left: -9px; }
 
+#menu-left .cssmenu.small-screen  { margin-right: 0; }
+#menu-right .cssmenu.small-screen  { margin-left: 0; }
 .cssmenu li:hover > .cssmenu-title {
 	text-decoration: none;
 }
@@ -53,6 +55,36 @@ Contient les elements associes aux menus
 #top-header .cssmenu ul > li:last-child > .cssmenu-title  				{ border-radius: 0 0 5px 5px; }
 #top-header .cssmenu ul > li.has-sub:first-child:hover > .cssmenu-title { border-radius: 0 0 0 0;     }
 #top-header .cssmenu ul > li.has-sub:last-child:hover > .cssmenu-title  { border-radius: 0 0 0;       }
+	
+.cssmenu.small-screen {
+	width: 100%;
+}
+
+.cssmenu.small-screen ul {
+	width: 100%;
+	display: none;
+}
+
+.cssmenu.small-screen ul li {
+	width: 100%;
+	border-top: 1px solid rgba(120, 120, 120, 0.2);
+}
+
+.cssmenu.small-screen > ul > li:last-child.has-sub {
+	border-bottom: 1px solid rgba(120, 120, 120, 0.2);
+}
+
+.cssmenu.small-screen ul ul li,
+.cssmenu.small-screen li:hover > ul > li {
+	height: auto;
+}
+
+.cssmenu.small-screen ul li .cssmenu-title,
+.cssmenu.small-screen ul ul li .cssmenu-title {
+	width: 100%;
+	border-bottom: 0;
+	padding: 17px;
+}
 
 @media (max-width: 768px) {
 	
@@ -80,6 +112,10 @@ Contient les elements associes aux menus
 		width: 100%;
 		border-bottom: 0;
 	}
+}
+
+.cssmenu.small-screen ul ul li .cssmenu-title {
+	padding: 11px;
 }
 
 /* --- Variante cssmenu-horizontal --- */
@@ -118,16 +154,23 @@ div.cssmenu-group .cssmenu-title {
 	}
 }
 
+.cssmenu-group.small-screen {
+	margin: 0 0 5px 0;
+}
+
 /* --- Variante cssmenu-actionslinks --- */
 .cssmenu-actionslinks {
 	margin: 0 0 20px 0;
 }
 
-@media (min-width: 769px) {
-	.cssmenu-actionslinks {
-		float: right;
-		margin: 0 5px 5px 5px;
-	}
+.cssmenu-actionslinks {
+	float: right;
+	margin: 0 5px 5px 5px;
+}
+
+.cssmenu-actionslinks.small-screen {
+	float: none;
+	margin: 0;
 }
 
 .cssmenu.cssmenu-actionslinks ul li .cssmenu-title,
@@ -138,15 +181,13 @@ div.cssmenu-group .cssmenu-title {
 	border: none;
 }
 
-@media (max-width: 768px) {
-	.cssmenu-actionslinks ul li {
-		border: none;
-	}
+.cssmenu-actionslinks.small-screen ul li {
+	border: none;
+}
 
-	.cssmenu.cssmenu-actionslinks ul li .cssmenu-title,
-	.cssmenu.cssmenu-actionslinks ul li ul li .cssmenu-title {
-		padding: 10px 5px;
-	}
+.cssmenu.cssmenu-actionslinks.small-screen ul li .cssmenu-title,
+.cssmenu.cssmenu-actionslinks.small-screen ul li ul li .cssmenu-title {
+	padding: 10px 5px;
 }
 
 /* --- Autres variantes --- */
@@ -360,6 +401,33 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 	}
 }
 
+.cssmenu-group.small-screen > ul.open {
+	display: table !important;
+	margin: auto;
+	width: auto;
+}
+
+.cssmenu-group.small-screen > ul > li,
+.cssmenu-group.small-screen > ul > li:hover {
+	border-radius: 0;
+	border: none;
+	background: transparent;
+	width: auto;
+	float: left;
+	clear: both;
+}
+
+.cssmenu.cssmenu-group.small-screen > ul > li > .cssmenu-title {
+	padding: 10px 12px;
+}
+
+.cssmenu-group.small-screen > ul > li:first-child {
+	border-radius: 4px 4px 0 0;
+}
+
+.cssmenu-group.small-screen > ul > li:last-child {
+	border-radius: 0 0 4px 4px;
+}
 /* --- Variante cssmenu-actionslinks --- */
 @media (max-width: 768px) {
 	.cssmenu-actionslinks > ul > li:last-child {
@@ -544,6 +612,43 @@ footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 li:nth-chil
 		margin: 0;
 		text-align: left;
 	}
+}
+
+.cssmenu.small-screen ul ul li.has-sub > .cssmenu-title:after,  
+.cssmenu.small-screen ul ul li.has-sub > .cssmenu-title:before {
+	display: none
+}
+
+
+.cssmenu.small-screen ul.level-1 li .cssmenu-title  {
+	padding-left: 25px;
+}
+
+.cssmenu.small-screen ul.level-2 li .cssmenu-title,
+.cssmenu.cssmenu-actionslinks.small-screen ul li ul li ul li .cssmenu-title  {
+	padding-left: 35px;
+}
+
+.cssmenu.small-screen ul.level-3 li .cssmenu-title {
+	padding-left: 45px;
+}
+
+.cssmenu.small-screen ul.level-4 li .cssmenu-title {
+	padding-left: 55px;
+}
+
+.cssmenu.small-screen ul ul li .cssmenu-title {
+	background: none;
+}
+
+.cssmenu.small-screen ul ul,
+.cssmenu.small-screen ul ul ul {
+	position: relative;
+	left: 0;
+	width: 100%;
+	margin: 0;
+	text-align: left;
+	border: none;
 }
 
 /* --- Variantes --- */
@@ -739,6 +844,16 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 		font-size: 1.3rem;
 	}
 
+#main .cssmenu-actionslinks.small-screen #menu-button {
+	float: none;
+	background-color: transparent;
+	background-image: none;
+	border: none;
+	font-size: 100%;
+	font-family: "Trebuchet MS",Verdana,"Bitstream Vera Sans",Times,serif;
+	text-align: left;
+}
+
 	.cssmenu-actionslinks #menu-button {
 		float: right;
 		position: relative;
@@ -800,6 +915,22 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 		border: 1px solid #AAAAAA;
 		z-index: 10;
 	}
+}
+
+.cssmenu-actionslinks.small-screen ul {
+	border: none;
+	box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+	top: 100%;
+}
+
+.cssmenu-actionslinks.small-screen li.has-sub > a,
+.cssmenu-actionslinks.small-screen li.has-sub > .submenu-button {
+	display:none;
+}
+
+.cssmenu-actionslinks.small-screen li.has-sub > ul {
+	display: block !important;
+	padding: 0;
 }
 
 /* --- Variante Static --- */
@@ -875,6 +1006,55 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 		width: 34px;
 	}
 
+.cssmenu.small-screen > ul > li.has-sub > .cssmenu-title:before,
+.cssmenu.small-screen > ul > li.has-sub > .cssmenu-title:after {
+	display: none;
+}
+
+.cssmenu.small-screen .submenu-button {
+	position: absolute;
+	z-index: 99;
+	right: 0;
+	top: 0;
+	display: block;
+	border-left: 1px solid rgba(120, 120, 120, 0.2);
+	height: 46px;
+	width: 46px;
+	cursor: pointer;
+}
+
+.cssmenu.small-screen ul ul .submenu-button {
+	height: 34px;
+	width: 34px;
+}
+
+.cssmenu.small-screen .submenu-button:after,
+.cssmenu.small-screen .submenu-button:before {
+	position: absolute;
+	display: block;
+	content: '';
+}
+
+.cssmenu.small-screen .submenu-button:after {
+	width: 8px;
+	height: 2px;
+}
+
+.cssmenu.small-screen .submenu-button:before {
+	width: 2px;
+	height: 8px;
+}
+
+.cssmenu.small-screen .submenu-button.submenu-opened:before {
+	display: none;
+}
+
+.cssmenu-actionslinks.small-screen .submenu-button {
+	height: 31px;
+	width: 31px;
+	border: none;
+}
+
 	.cssmenu .submenu-button:after,
 	.cssmenu .submenu-button:before {
 		position: absolute;
@@ -925,6 +1105,17 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 
 	#menu-left .cssmenu .submenu-button.submenu-opened 		{ background: rgba(120, 120, 120, 0.2); }
 	#menu-right .cssmenu .submenu-button.submenu-opened 	{ background: rgba(120, 120, 120, 0.2); }
+}
+
+.cssmenu-static.small-screen .submenu-button,
+.cssmenu-static.small-screen .submenu-button:after,
+.cssmenu-static.small-screen .submenu-button:before {
+	display: none;
+}
+
+.cssmenu-static.small-screen ul ul,
+.cssmenu-static.small-screen ul ul ul {
+	display: block !important;
 }
 	
 /* --- Postion icone Submenu --- */
