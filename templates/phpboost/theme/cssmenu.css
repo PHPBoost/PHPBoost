@@ -761,12 +761,22 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 	}
 
 	.cssmenu-actionslinks #menu-button + ul {
-		display: none;
+		display: none !important;
 	}
 
 	.cssmenu-actionslinks #menu-button:hover + ul,
-	.cssmenu-actionslinks #menu-button + ul:hover {
-		display: block;
+	.cssmenu-actionslinks #menu-button + ul:hover{
+		display: block !important;
+	}
+
+	.cssmenu-actionslinks.small-screen #menu-button:hover + ul,
+	.cssmenu-actionslinks.small-screen #menu-button + ul:hover {
+		display: none !important;
+	}
+
+	.cssmenu-actionslinks.small-screen #menu-button + ul.open,
+	.cssmenu-actionslinks.small-screen #menu-button + ul:hover.open {
+		display: block !important;
 	}
 
 	.cssmenu-actionslinks #menu-button:before {
