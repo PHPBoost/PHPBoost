@@ -58,14 +58,7 @@ class DownloadFileController extends AbstractController
 			DownloadService::update_number_downloads($this->downloadfile);
 			DownloadCache::invalidate();
 			
-			$status = 200;
-			if (function_exists('get_headers') && ($file_headers = get_headers($this->downloadfile->get_url()->absolute(), true)) && isset($file_headers[0]))
-			{
-				if(preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/', $file_headers[0], $matches))
-					$status = (int)$matches[1];
-			}
-			
-			if ($status == 200)
+			if (Url::check_status($this->downloadfile->get_url()) == Url::STATUS_OK)
 			{
 				header('Content-Disposition: attachment; filename="' . urldecode(basename($this->downloadfile->get_url()->absolute())) . '"');
 				header('Content-Description: File Transfer');

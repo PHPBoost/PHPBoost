@@ -41,7 +41,7 @@ jQuery("#" + ${escapejs(NAME)}).blur(function(){
 			url: PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/image/preview/',
 			type: "post",
 			dataType: "json",
-			data: {token:${escapejs(TOKEN)}, image:HTMLForms.getField(${escapejs(ID)}).getValue()},
+			data: {token: ${escapejs(TOKEN)}, image: HTMLForms.getField(${escapejs(ID)}).getValue()},
 			beforeSend: function(){
 				jQuery('#${escape(HTML_ID)}_preview_picture').hide();
 				jQuery('#${escape(HTML_ID)}_preview_picture').after('<i id="${escape(HTML_ID)}_preview_loading" class="fa fa-spinner fa-spin"></i>');

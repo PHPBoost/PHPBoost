@@ -50,15 +50,9 @@ class FormFieldConstraintUrlExists extends FormFieldConstraintRegex
  
 	public function url_is_valid(FormField $field)
 	{
-		$status = 200;
-		$url = new Url($field->get_value());
-		if (function_exists('get_headers') && ($file_headers = get_headers($url->absolute(), true)) && isset($file_headers[0]))
-		{
-			if(preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/', $file_headers[0], $matches))
-				$status = (int)$matches[1];
-		}
+		$status = Url::check_status($field->get_value());
 		
-		return $status == 200 || $status == 302;
+		return $status == Url::STATUS_OK || $status == Url::STATUS_FOUND;
 	}
  
 	public function get_js_validation(FormField $field)

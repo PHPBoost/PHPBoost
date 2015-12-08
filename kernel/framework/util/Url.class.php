@@ -50,6 +50,9 @@ class Url
 	const FILE_REGEX = '[A-Za-z0-9-+_,~:\.\%!=]+';
 	const ARGS_REGEX = '(?:\?(?!&)(?:(?:&amp;|&)?[A-Za-z0-9-+=,_~:;/\?\'\%!]+(?:=[A-Za-z0-9-+=_~:;/\.\?\'\%\*]+)?)*)?';
 	const ANCHOR_REGEX = '\#[a-z0-9-_/+\.!=]*';
+	
+	const STATUS_OK = 200;
+	const STATUS_FOUND = 302;
 
 	private static $root = TPL_PATH_TO_ROOT;
 	private static $server = SERVER_URL;
@@ -226,6 +229,86 @@ class Url
 		$url = trim($url, ' -');
 		
 		return $url;
+	}
+	
+	/**
+	 * @desc Checks the status of an url.
+	 * @param string $url Url to check.
+	 * @return int The status of the url.
+	 */
+	public static function check_status($url)
+	{
+		$status = self::STATUS_OK;
+		
+		if (!($url instanceof Url))
+			$url = new Url($url);
+		
+		if ($url->absolute())
+		{
+			if (function_exists('stream_context_set_default'))
+				stream_context_set_default(array('http' => array('method' => 'HEAD')));
+
+			if (function_exists('get_headers'))
+			{
+				$file_headers = array();
+				
+				try {
+					$file_headers = @get_headers($url->absolute(), true);
+				} catch (Exception $e) {}
+				
+				if (isset($file_headers[0]))
+				{
+					if(preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/', $file_headers[0], $matches))
+						$status = (int)$matches[1];
+				}
+			}
+		}
+		
+		return $status;
+	}
+	
+	/**
+	 * @desc Retrieves the size of a file in url.
+	 * @param string $url Url to check.
+	 * @return int The size of the url file.
+	 */
+	public static function get_url_file_size($url)
+	{
+		$file_size = 0;
+		
+		if (!($url instanceof Url))
+			$url = new Url($url);
+		
+		$file = new File($url->rel());
+		if ($file->exists())
+			$file_size = $file->get_file_size();
+		
+		if (empty($file_size) && $url->absolute())
+		{
+			if (function_exists('stream_context_set_default'))
+				stream_context_set_default(array('http' => array('method' => 'HEAD')));
+
+			if (function_exists('get_headers'))
+			{
+				$file_headers = array();
+				
+				try {
+					$file_headers = @get_headers($url->absolute(), true);
+				} catch (Exception $e) {}
+				
+				if (isset($file_headers[0]))
+				{
+					$status = 0;
+					if(preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/', $file_headers[0], $matches))
+						$status = (int)$matches[1];
+					
+					if ($status == self::STATUS_OK && isset($file_headers['Content-Length']))
+						$file_size = $file_headers['Content-Length'];
+				}
+			}
+		}
+		
+		return $file_size;
 	}
 
 	/**

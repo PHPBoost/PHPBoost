@@ -28,20 +28,7 @@ class AjaxUrlValidationController extends AbstractController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
-		$status = 200;
-		
-		$url_to_check = $request->get_value('url_to_check', '');
-		if ($url_to_check)
-		{
-			$url = new Url($url_to_check);
-			if (function_exists('get_headers') && ($file_headers = get_headers($url->absolute(), true)) && isset($file_headers[0]))
-			{
-				if(preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/', $file_headers[0], $matches))
-					$status = (int)$matches[1];
-			}
-		}
-		
-		return new JSONResponse(array('status' => $status));
+		return new JSONResponse(array('status' => Url::check_status($request->get_value('url_to_check', ''))));
 	}
 }
 ?>

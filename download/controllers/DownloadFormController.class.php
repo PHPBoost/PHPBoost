@@ -270,25 +270,8 @@ class DownloadFormController extends ModuleController
 		if ($this->config->is_author_displayed())
 			$downloadfile->set_author_display_name(($this->form->get_value('author_display_name') && $this->form->get_value('author_display_name') !== $downloadfile->get_author_user()->get_display_name() ? $this->form->get_value('author_display_name') : ''));
 		
-		$file_size = 0;
-		$status = 200;
-		
-		$file = new File($downloadfile->get_url()->rel());
-		if ($file->exists())
-			$file_size = $file->get_file_size();
-		
-		if (empty($file_size))
-		{
-			if (function_exists('get_headers') && ($file_headers = get_headers($downloadfile->get_url()->absolute(), true)) && isset($file_headers['Content-Length']))
-			{
-				$file_size = $file_headers['Content-Length'];
-				
-				if(preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/', $file_headers[0], $matches))
-					$status = (int)$matches[1];
-			}
-		}
-		
-		$file_size = ($status == 200 && empty($file_size) && $downloadfile->get_size()) ? $downloadfile->get_size() : $file_size;
+		$file_size = Url::get_url_file_size($downloadfile->get_url());
+		$file_size = (empty($file_size) && $downloadfile->get_size()) ? $downloadfile->get_size() : $file_size;
 		
 		$downloadfile->set_size($file_size);
 		
