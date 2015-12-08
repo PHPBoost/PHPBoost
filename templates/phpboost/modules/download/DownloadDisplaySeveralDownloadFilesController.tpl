@@ -1,4 +1,5 @@
 # IF C_ROOT_CATEGORY #
+	${resources('PHPBoostOfficial/common')}
 	<script>
 	<!--
 	function toggle_root_cat_display() {
@@ -6,11 +7,11 @@
 		{
 			jQuery('.content').hide(400);
 			jQuery('.root-categories-container').show(200);
-			jQuery('#display-tree').html('<i class="fa fa-folder"></i> Afficher l\'accueil des téléchargements');
+			jQuery('#display-tree').html('<i class="fa fa-folder"></i> ' + ${escapejs(LangLoader::get_message('download.display_root_cat', 'common', 'PHPBoostOfficial'))});
 		} else {
 			jQuery('.root-categories-container').hide(400);
 			jQuery('.content').show(200);
-			jQuery('#display-tree').html('<i class="fa fa-folder"></i> Parcourir l\'arborescence');
+			jQuery('#display-tree').html('<i class="fa fa-folder"></i> ' + ${escapejs(LangLoader::get_message('download.display_tree', 'common', 'PHPBoostOfficial'))});
 		}
 	};
 	-->
@@ -20,7 +21,7 @@
 		<header>
 			<h1>
 				<a href="${relative_url(SyndicationUrlBuilder::rss('download', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
-				# IF C_PENDING #{@download.pending}# ELSE #{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit smaller"></i></a># ENDIF #
+				${LangLoader::get_message('module_title', 'common', 'download')} # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit smaller"></i></a># ENDIF #
 			</h1>
 			# IF C_CATEGORY_DESCRIPTION #
 				<div class="cat-description">
@@ -58,48 +59,48 @@
 			<div class="pbt-header">
 				<img class="pbt-header-img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
 				<div class="pbt-content">
-					<p class="pbt-title">Télécharger PHPBoost</p>
-					<span class="pbt-desc">Bienvenue sur la page de téléchargement de PHPBoost.</span>
+					<p class="pbt-title">{@download.header.title}</p>
+					<span class="pbt-desc">{@download.header.description}</span>
 				</div>
 			</div>
 			<hr style="margin:25px 0px;" />
-			Vous trouverez sur cette page :
+			{@download.page_content.title} :
 			<br /><br />
 			<ul>
-				<li>La dernière version stable : PHPBoost 5.0 et sa version PDK destinée aux développeurs</li>
-				<li>L'ancienne version PHPBoost 4.1</li>
-				<li>Mise à jour des versions 4.1 et 5.0</li>
-				<li>Les scripts de migration pour passer votre site sous PHPBoost 4.1 ou 5.0</li>
+				<li>{@download.page_content.last_stable_version}</li>
+				<li>{@download.page_content.previous_version}</li>
+				<li>{@download.page_content.updates}</li>
+				<li>{@download.page_content.updates_scripts}</li>
 			</ul>
 			<hr style="margin:25px auto 25px auto;" />
 
 			<article class="block">
 				<header>
-					<h1>Télécharger PHPBoost 5.0 - Zephyr</h1>
+					<h1>{@download} {@download.last_major_version_number} - {@download.last_version_name}</h1>
 					<p class="pbt-desc">
-						La version stable de PHPBoost. A utiliser pour bénéficier de toutes les dernières fonctionnalités implantées.
+						{@download.last_version.description}
 					</p>
 				</header>
 				
 				<div class="pbt-button-container">
 					<div class="pbt-button pbt-button-blue">
-						<a href="${relative_url(DownloadConfigUrlBuilder::download(361))}" class="pbt-button-a">
+						<a href="{@download.last_version_download_link}" class="pbt-button-a">
 							<div class="pbt-custom-img pbt-custom-img-phpboost"></div>
-							<p class="pbt-button-title">Télécharger PHPBoost 5.0</p>
-							<p class="pbt-button-com">Rev : 5.0.0 | Req : PHP 5.3 | .zip </p>
+							<p class="pbt-button-title">{@download} {@download.last_major_version_number}</p>
+							<p class="pbt-button-com">Rev : {@download.phpboost_last_complete_version_number} | Req : {@download.last_minimal_php_version} | .zip </p>
 						</a>
 					</div>
 					<div class="pbt-button pbt-button-green">
-						<a href="${relative_url(DownloadConfigUrlBuilder::display_category(45, 'mises-jour-phpboost-5-0'))}" class="pbt-button-a">
+						<a href="{@download.last_version_updates_cat_link}" class="pbt-button-a">
 							<div class="pbt-custom-img pbt-custom-img-phpboost"></div>
-							<p class="pbt-button-title">Mises à jour</p>
-							<p class="pbt-button-com pbt-button-com-green">Mise à jour et migration</p>
+							<p class="pbt-button-title">{@download.updates}</p>
+							<p class="pbt-button-com pbt-button-com-green">{@download.updates.description}</p>
 						</a>
 					</div>
 				</div>
 				
 				<div class="pbt-dev-container">
-					<a href="${relative_url(DownloadConfigUrlBuilder::display(44, 'phpboost-5-0', 364, 'phpboost-5-0-pdk'))}" class="pbt-dev">Télécharger la version pour développeurs (PDK)</a>
+					<a href="{@download.last_version_pdk_link}" class="pbt-dev">{@download.pdk}</a>
 				</div>
 				
 				<hr style="margin:10px auto 0px auto;" />
@@ -109,16 +110,16 @@
 						<div class="pbt-custom-container">
 							<div class="pbt-custom-img pbt-custom-img-modules"></div>
 							<h2 class="title pbt-custom-subtitle">
-								<a href="${relative_url(DownloadConfigUrlBuilder::display_category(47, 'modules-phpboost-5-0'))}">Modules compatibles</a>
+								<a href="{@download.last_version_modules_cat_link}">{@download.compatible_modules}</a>
 							</h2>
-							<p class="pbt-custom-desc">Donnez de nouvelles fonctionnalités à votre site.</p>
+							<p class="pbt-custom-desc">{@download.compatible_modules.description}</p>
 						</div>
 						<div class="pbt-custom-container">
 							<div class="pbt-custom-img pbt-custom-img-themes"></div>
 							<h2 class="title pbt-custom-subtitle">
-								<a href="${relative_url(DownloadConfigUrlBuilder::display_category(46, 'themes-phpboost-5-0'))}">Thèmes compatibles</a>
+								<a href="{@download.last_version_themes_cat_link}">{@download.compatible_themes}</a>
 							</h2>
-							<p class="pbt-custom-desc">Trouvez la bonne entité graphique pour votre site.</p>
+							<p class="pbt-custom-desc">{@download.compatible_themes.description}</p>
 						</div>
 					</div>
 					
@@ -128,50 +129,50 @@
 
 			<article class="block">
 				<header>
-					<h1>Télécharger PHPBoost 4.1 - Sirocco</h1>
+					<h1>{@download} {@download.previous_major_version_number} - {@download.previous_version_name}</h1>
 					<p class="pbt-desc">
-						Pour les nostalgiques, ou pour les personnes ayant besoin de réparer une version 4.1 encore en production.
+						{@download.previous_version.description}
 					</p>
 				</header>
 
 				<div class="pbt-button-container">
 					<div class="pbt-button pbt-button-blue">
-						<a href="${relative_url(DownloadConfigUrlBuilder::download(299))}" class="pbt-button-a">
+						<a href="{@download.previous_version_download_link}" class="pbt-button-a">
 							<div class="pbt-custom-img pbt-custom-img-phpboost"></div>
-							<p class="pbt-button-title">Télécharger PHPBoost 4.1</p>
-							<p class="pbt-button-com">Rev : 4.1.6 | Req : PHP 5.3 | .zip </p>
+							<p class="pbt-button-title">{@download} {@download.previous_major_version_number}</p>
+							<p class="pbt-button-com">Rev : {@download.previous_complete_version_number} | Req : PHP {@download.previous_minimal_php_version} | .zip </p>
 						</a>
 					</div>
 					<div class="pbt-button pbt-button-green">
-						<a href="${relative_url(DownloadConfigUrlBuilder::display_category(41, 'mises-a-jour-phpboost-4-1'))}" class="pbt-button-a">
+						<a href="{@download.previous_version_updates_cat_link}" class="pbt-button-a">
 							<div class="pbt-custom-img pbt-custom-img-phpboost"></div>
-							<p class="pbt-button-title">Mises à jour</p>
-							<p class="pbt-button-com pbt-button-com-green">Mise à jour et migration</p>
+							<p class="pbt-button-title">{@download.updates}</p>
+							<p class="pbt-button-com pbt-button-com-green">{@download.updates.description}</p>
 						</a>
 					</div>
 				</div>
 				
 				<div class="pbt-dev-container">
-					<a href="${relative_url(DownloadConfigUrlBuilder::display(40, 'phpboost-4-1', 339, 'phpboost-4-1-pdk'))}" class="pbt-dev">Télécharger la version pour développeurs (PDK)</a>
+					<a href="{@download.previous_version_pdk_link}" class="pbt-dev">{@download.pdk}</a>
 				</div>
-					
+				
 				<hr style="margin:10px auto 0px auto;" />
-					
+				
 				<div class="pbt-custom-content">
 					<div style="width: 90%;margin:auto;">
 						<div class="pbt-custom-container">
 							<div class="pbt-custom-img pbt-custom-img-modules"></div>
 							<h2 class="title pbt-custom-subtitle">
-								<a href="${relative_url(DownloadConfigUrlBuilder::display_category(43, 'modules-phpboost-4-1'))}">Modules compatibles</a>
+								<a href="{@download.previous_version_modules_cat_link}">{@download.compatible_modules}</a>
 							</h2>
-							<p class="pbt-custom-desc">Donnez de nouvelles fonctionnalités à votre site.</p>
+							<p class="pbt-custom-desc">{@download.compatible_modules.description}</p>
 						</div>
 						<div class="pbt-custom-container">
 							<div class="pbt-custom-img pbt-custom-img-themes"></div>
 							<h2 class="title pbt-custom-subtitle">
-								<a href="${relative_url(DownloadConfigUrlBuilder::display_category(42, 'themes-phpboost-4-1'))}">Thèmes compatibles</a>
+								<a href="{@download.previous_version_themes_cat_link}">{@download.compatible_themes}</a>
 							</h2>
-							<p class="pbt-custom-desc">Trouvez la bonne entité graphique pour votre site.</p>
+							<p class="pbt-custom-desc">{@download.compatible_themes.description}</p>
 						</div>
 					</div>
 					
@@ -181,10 +182,10 @@
 		</div>
 		
 		<hr style="margin:20px auto 30px auto;" />
-		
+			
 		<div class="pbt-button pbt-button-gray center" style="margin: auto; width: 34%; display: inherit;">
 			<a id="display-tree" href="" onclick="toggle_root_cat_display();return false;" class="pbt-button-a" style="width: auto;">
-				<i class="fa fa-folder"></i> Parcourir l'arborescence
+				<i class="fa fa-folder"></i> {@download.display_tree}
 			</a>
 		</div>
 		<footer># IF C_PAGINATION #<div class="center"># INCLUDE PAGINATION #</div># ENDIF #</footer>
