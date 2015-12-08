@@ -351,9 +351,20 @@ aside .cssmenu-right.cssmenu-static li:hover > ul 	{ right: 0; top: 0;       }
 	font-weight: 300;
 }
 
+.cssmenu-group.small-screen > ul.open {
+	display: table !important;
+	margin: auto;
+	width: auto;
+}
 
-.cssmenu-group.small-screen > ul > li {
+.cssmenu-group.small-screen > ul > li,
+.cssmenu-group.small-screen > ul > li:hover {
 	border-radius: 0;
+	border: none;
+	background: transparent;
+	width: auto;
+	float: left;
+	clear: both;
 }
 
 .cssmenu.cssmenu-group.small-screen > ul > li > .cssmenu-title {
