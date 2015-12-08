@@ -1232,6 +1232,7 @@ class PHPMailer
     public function getSMTPInstance()
     {
         if (!is_object($this->smtp)) {
+			include_once PATH_TO_ROOT . '/kernel/lib/php/phpmailer/class.smtp.php';
             $this->smtp = new SMTP;
         }
         return $this->smtp;
