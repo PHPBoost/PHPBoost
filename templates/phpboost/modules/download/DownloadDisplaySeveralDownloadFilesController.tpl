@@ -2,7 +2,7 @@
 	<script>
 	<!--
 	function toggle_root_cat_display() {
-		jQuery('.content').is(":visible"))
+		if (jQuery('.content').is(":visible"))
 		{
 			jQuery('.content').hide(400);
 			jQuery('.root-categories-container').show(200);
@@ -20,13 +20,13 @@
 		<header>
 			<h1>
 				<a href="${relative_url(SyndicationUrlBuilder::rss('download', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
-				{TITLE}
-				# IF C_ADMIN #
-				<span class="actions">
-					<a href="{U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
-				</span>
-				# END IF #
+				# IF C_PENDING #{@download.pending}# ELSE #{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit smaller"></i></a># ENDIF #
 			</h1>
+			# IF C_CATEGORY_DESCRIPTION #
+				<div class="cat-description">
+					{CATEGORY_DESCRIPTION}
+				</div>
+			# ENDIF #
 		</header>
 		
 		<div class="root-categories-container" style="display: none;">
@@ -55,8 +55,8 @@
 			# IF C_DESCRIPTION #
 				<!-- {DESCRIPTION} -->
 			# ENDIF #
-			<div class="pbt-entete">
-				<img class="pbt-entete-img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
+			<div class="pbt-header">
+				<img class="pbt-header-img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
 				<div class="pbt-content">
 					<p class="pbt-title">Télécharger PHPBoost</p>
 					<span class="pbt-desc">Bienvenue sur la page de téléchargement de PHPBoost.</span>
@@ -80,7 +80,7 @@
 						La version stable de PHPBoost. A utiliser pour bénéficier de toutes les dernières fonctionnalités implantées.
 					</p>
 				</header>
-					
+				
 				<div class="pbt-button-container">
 					<div class="pbt-button pbt-button-blue">
 						<a href="${relative_url(DownloadConfigUrlBuilder::download(361))}" class="pbt-button-a">
@@ -101,9 +101,9 @@
 				<div class="pbt-dev-container">
 					<a href="${relative_url(DownloadConfigUrlBuilder::display(44, 'phpboost-5-0', 364, 'phpboost-5-0-pdk'))}" class="pbt-dev">Télécharger la version pour développeurs (PDK)</a>
 				</div>
-					
+				
 				<hr style="margin:10px auto 0px auto;" />
-					
+				
 				<div class="pbt-custom-content">
 					<div style="width: 90%;margin:auto;">
 						<div class="pbt-custom-container">
@@ -121,9 +121,9 @@
 							<p class="pbt-custom-desc">Trouvez la bonne entité graphique pour votre site.</p>
 						</div>
 					</div>
-						
+					
 					<div class="spacer"></div>
-				</div>										
+				</div>
 			</article>
 
 			<article class="block">
@@ -174,18 +174,18 @@
 							<p class="pbt-custom-desc">Trouvez la bonne entité graphique pour votre site.</p>
 						</div>
 					</div>
-						
+					
 					<div class="spacer"></div>
-				</div>										
+				</div>
 			</article>
-			
-			<hr style="margin:20px auto 30px auto;" />
-				
-			<div class="pbt-button pbt-button-gray center" style="margin: auto; width: 34%; display: inherit;">
-				<a id="display-tree" href="" onclick="toggle_root_cat_display();return false;" class="pbt-button-a" style="width: auto;">
-					<i class="fa fa-folder"></i> Parcourir l'arborescence
-				</a>
-			</div>
+		</div>
+		
+		<hr style="margin:20px auto 30px auto;" />
+		
+		<div class="pbt-button pbt-button-gray center" style="margin: auto; width: 34%; display: inherit;">
+			<a id="display-tree" href="" onclick="toggle_root_cat_display();return false;" class="pbt-button-a" style="width: auto;">
+				<i class="fa fa-folder"></i> Parcourir l'arborescence
+			</a>
 		</div>
 		<footer># IF C_PAGINATION #<div class="center"># INCLUDE PAGINATION #</div># ENDIF #</footer>
 	</section>

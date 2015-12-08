@@ -480,7 +480,7 @@ h2.pbt-custom-subtitle a {
 
 
 /* Entête spécifique */
-.pbt-entete { margin: auto; }
+.pbt-header { margin: auto; }
 
 .pbt-content { text-align: justify; margin-bottom: 10px; }
 
@@ -490,7 +490,7 @@ h2.pbt-custom-subtitle a {
 	font-size: 12px;
 }
 
-img.pbt-entete-img {
+img.pbt-header-img {
 	float: left;
 	padding: 0px 10px 10px 0px;	
 }

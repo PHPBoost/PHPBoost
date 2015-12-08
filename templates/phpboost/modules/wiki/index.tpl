@@ -7,11 +7,11 @@
 			</header>
 			<div class="content">
 				# INCLUDE wiki_tools #
-				<div class="entete">
-					<img class="pbt-entete-img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
-					<div class="pbt-entete-content">
-						<p class="pbt-entete-title">Bienvenue dans la documentation de PHPBoost.</p>
-						<span class="pbt-entete-desc">
+				<div class="header">
+					<img class="pbt-header-img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
+					<div class="pbt-header-content">
+						<p class="pbt-header-title">Bienvenue dans la documentation de PHPBoost.</p>
+						<span class="pbt-header-desc">
 						<br />Que vous soyez un utilisateur débutant ou confirmé, nous espérons que vous trouverez sur ces pages toutes les informations dont vous avez besoin. Dans le cas contraire, utilisez le <a href="{PATH_TO_ROOT}/forum/">Forum du projet</a> pour votre demande d'information.</span>
 					</div>
 				</div>
