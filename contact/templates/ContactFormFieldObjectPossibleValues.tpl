@@ -13,10 +13,10 @@ ContactFormFieldObjectPossibleValues.prototype = {
 			
 			jQuery('<div/>', {'id' : id}).appendTo('#input_fields_' + this.id_input);
 			
-			jQuery('<div/>', {id : id + '_checkbox', class: 'form-field-checkbox'}).appendTo('#' + id);
-			jQuery('<input/> ', {type : 'checkbox', id : 'field_is_default_' + this.id_input + this.integer, name : 'field_is_default_' + this.id_input, value : '1', 'class' : 'per-default'}).appendTo('#' + id + '_checkbox');
-			jQuery('<label/> ', {for : 'field_is_default_' + this.id_input + this.integer}).appendTo('#' + id + '_checkbox');
-			jQuery('#' + id + '_checkbox').after('&nbsp;');
+			jQuery('<div/>', {id : 'checkbox_' + this.integer, class: 'form-field-checkbox'}).appendTo('#' + id);
+			jQuery('<input/> ', {type : 'checkbox', id : 'field_is_default_' + this.id_input + this.integer, name : 'field_is_default_' + this.id_input, value : '1', 'class' : 'per-default'}).appendTo('#checkbox_' + this.integer);
+			jQuery('<label/> ', {for : 'field_is_default_' + this.id_input + this.integer}).appendTo('#checkbox_' + this.integer);
+			jQuery('#checkbox_' + this.integer).after(' ');
 			
 			jQuery('<input/> ', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, required : "required", placeholder : '{@field.possible_values.subject}'}).appendTo('#' + id);
 			jQuery('#' + id).append(' ');

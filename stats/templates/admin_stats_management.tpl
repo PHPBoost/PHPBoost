@@ -153,6 +153,7 @@
 				</div>
 			</div>
 		</fieldset>
+		# IF C_DISPLAY_SEX #
 		<fieldset>
 			<legend>{L_SEX}</legend>
 			<div class="fieldset-inset">
@@ -193,6 +194,7 @@
 				</div>
 			</div>
 		</fieldset>
+		# ENDIF #
 		<table id="table4">
 			<caption>{L_TOP_TEN_POSTERS}</caption>
 			<thead>

@@ -16,10 +16,10 @@ FormFieldPossibleValues.prototype = {
 			jQuery('<div/>', {id : id + '_radio', class: 'form-field-radio'}).appendTo('#' + id);
 			jQuery('<input/> ', {type : 'radio', id : 'field_is_default_' + this.id_input + this.integer, name : 'field_is_default_' + this.id_input, value : this.integer}).appendTo('#' + id + '_radio');
 			jQuery('<label/> ', {for : 'field_is_default_' + this.id_input + this.integer}).appendTo('#' + id + '_radio');
-			jQuery('#' + id + '_radio').after('&nbsp;');
+			jQuery('#' + id + '_radio').after(' ');
 
 			jQuery('<input/> ', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{@field.name}'}).appendTo('#' + id);
-			jQuery('#field_name_' + id).after('&nbsp;');
+			jQuery('#field_name_' + id).after(' ');
 			
 			jQuery('<a/> ', {href : 'javascript:FormFieldPossibleValues.delete_field('+ this.integer +');', id : 'delete_' + id, 'title' : "${LangLoader::get_message('delete', 'common')}", class : 'fa fa-delete'}).appendTo('#' + id);
 			
