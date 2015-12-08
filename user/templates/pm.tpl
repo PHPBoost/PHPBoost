@@ -77,7 +77,7 @@
 						<thead>
 							<tr>
 								<th>
-									<input type="checkbox" id="checkall" onclick="check_convers(this.checked, 'd');">
+									<i class="fa fa-envelope"></i>
 								</th>
 								<th></th>
 								<th>
