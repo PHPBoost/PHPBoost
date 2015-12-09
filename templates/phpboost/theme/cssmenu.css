@@ -529,9 +529,6 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 		padding: 11px 30px 11px 15px;
 	}
 }
-footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 {
-	text-align: center;
-}
 
 footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 li .cssmenu-title {
 	font-family: FontAwesome;
@@ -541,9 +538,17 @@ footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 li .cssmenu
 	-moz-osx-font-smoothing: grayscale;
 }
 
+footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 li .cssmenu-title img {
+	display: none;
+}
+
 footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 li:nth-child(1) .cssmenu-title:before { content: "\f09a"; }
 footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 li:nth-child(2) .cssmenu-title:before { content: "\f0d5"; }
 footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 li:nth-child(3) .cssmenu-title:before { content: "\f099"; }
+
+footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 li:nth-child(1) .cssmenu-title:before { padding: 0 12px 0 2px; }
+footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 li:nth-child(2) .cssmenu-title:before { padding: 0 4px 0 0; 	}
+footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 li:nth-child(3) .cssmenu-title:before { padding: 0 8px 0 0; 	}
 
 footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 li:nth-child(1) .cssmenu-title:hover:before { color: #3B5998; }
 footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 li:nth-child(2) .cssmenu-title:hover:before { color: #DD4B39; }
