@@ -251,6 +251,10 @@ input.field-small   { width: 77px;  }
 input.field-large   { width: 200px; }
 input.field-xlarge  { width: 250px; }
 
+input.input-date 	{ width: 100px; }
+input.input-hours 	{ width: 50px;  }
+input.input-minutes { width: 50px;  }
+
 /* --- Cache le generateur de mot de passe sur chrome --- */
 .cip-icon-key-small {
 	display: none !important;

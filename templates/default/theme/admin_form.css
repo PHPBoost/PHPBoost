@@ -428,10 +428,14 @@ form .constraint-status-right textarea {
 	box-shadow: 0 0 5px rgba(71, 137, 72, 0.1);
 }
 
-input.field-smaller { width: 29px; }
-input.field-small {  width: 77px; }
-input.field-large { width: 200px; }
-input.field-xlarge { width: 300px; }
+input.field-smaller { width: 29px;	}
+input.field-small 	{ width: 77px; 	}
+input.field-large 	{ width: 200px; }
+input.field-xlarge 	{ width: 300px; }
+
+input.input-date 	{ width: 100px; }
+input.input-hours 	{ width: 50px;  }
+input.input-minutes { width: 50px;  }
 
 /* --- Cache le generateur de mot de passe sur chrome --- */
 .cip-icon-key-small {
