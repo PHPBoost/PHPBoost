@@ -11,6 +11,11 @@
 	}
 }
 
+#mini-search-form button,
+#mini-search-form .button {
+	margin-top:0;
+}
+
 #mini-search-form.input-element-button input {
 	width: 120px;
 	border-radius: 4px 0px 0px 4px;

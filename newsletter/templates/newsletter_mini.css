@@ -14,6 +14,11 @@ div#newsletter {
 	float: right;
 	margin: 10px;
 }
+
+div#newsletter button,
+div#newsletter .button {
+	margin-top: 0;
+}
  
 .newsletter-link { 
 	margin: 0;
