@@ -329,11 +329,12 @@ i.alert {
 }
 
 #connect-menu a.fb i {
-	padding: 2px 0 0 6px;
+	padding: 4px 0 0 10px;
 	background-color: #3B5998;
 }
 
 #connect-menu a.google i {
+	padding: 2px 0 0 0;
 	background-color: #D8432E;
 }
 

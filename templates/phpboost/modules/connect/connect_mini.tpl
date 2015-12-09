@@ -45,10 +45,10 @@
 					<input type="hidden" name="token" value="{TOKEN}">
 				</form>
 				# IF C_FB_AUTH_ENABLED #
-				<a class="social-connect fb" href="${relative_url(UserUrlBuilder::connect('fb'))}" title="${LangLoader::get_message('facebook-connect', 'user-common')}"><i class="fa fa-facebook-square biggest"></i><span>&nbsp; ${LangLoader::get_message('facebook-connect', 'user-common')}</span></a>
+				<a class="social-connect fb" href="${relative_url(UserUrlBuilder::connect('fb'))}" title="${LangLoader::get_message('facebook-connect', 'user-common')}"><i class="fa fa-facebook"></i><span>&nbsp; ${LangLoader::get_message('facebook-connect', 'user-common')}</span></a>
 				# ENDIF #
 				# IF C_GOOGLE_AUTH_ENABLED #
-				<a class="social-connect google" href="${relative_url(UserUrlBuilder::connect('google'))}" title="${LangLoader::get_message('google-connect', 'user-common')}"><i class="fa fa-google-plus-square biggest"></i><span>&nbsp; ${LangLoader::get_message('google-connect', 'user-common')}</span></a>
+				<a class="social-connect google" href="${relative_url(UserUrlBuilder::connect('google'))}" title="${LangLoader::get_message('google-connect', 'user-common')}"><i class="fa fa-google-plus"></i><span>&nbsp; ${LangLoader::get_message('google-connect', 'user-common')}</span></a>
 				# ENDIF #
 			# ENDIF #
 			<a class="forgot-pass small" href="${relative_url(UserUrlBuilder::forget_password())}">{L_FORGOT_PASS}</a>

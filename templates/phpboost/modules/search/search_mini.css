@@ -22,7 +22,7 @@
 
 #mini-search-form.input-element-button button {
 	border-radius: 0px 4px 4px 0px;
-	margin-left: -5px;
+	margin: 0px 0px 0 -5px;
 	padding: 4px 10px 4px 10px;
 	height: 25px;
 }
