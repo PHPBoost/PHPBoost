@@ -471,7 +471,7 @@
 		<!--
 		function XMLHttpRequest_referer(divid)
 		{
-			if ( document.getElementById('url' + divid).style.display == 'inline' )
+			if ( document.getElementById('url' + divid).style.display != 'none' )
 			{
 				jQuery('#url' + divid).fadeToggle();
 				document.getElementById('img_url' + divid).className = 'fa fa-plus-square-o';
@@ -585,7 +585,7 @@
 		<!--
 		function XMLHttpRequest_referer(divid)
 		{
-			if ( document.getElementById('url' + divid).style.display == 'inline' )
+			if ( document.getElementById('url' + divid).style.display != 'none' )
 			{
 				jQuery('#url' + divid).fadeToggle();
 				document.getElementById('img_url' + divid).className = 'fa fa-plus-square-o';
