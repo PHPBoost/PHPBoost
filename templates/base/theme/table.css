@@ -1,7 +1,10 @@
 /* --------------------------------------
 		table.css
 Contient les elements pour l'affichage des tableaux HTML et responsive.
+ - Affichage des tableaux basic
+ - Table responsive basictable.js
 --------------------------------------*/
+
 
 /* -- Affichage des tableaux basic -- */
 /* --------------------------------- */
@@ -30,21 +33,11 @@ table thead th {
 	font-weight: normal;
 }
 
-table thead th:first-child {
-	border-top-left-radius: 3px;
-}
+table thead th:first-child { border-top-left-radius: 3px;  }
+table thead th:last-child  { border-top-right-radius: 3px; }
 
-table thead th:last-child {
-	border-top-right-radius: 3px;
-}
-
-table thead th a {
-	color: #E5E6E6;
-}
-
-table thead th a:hover {
-	color: #FFFFFF;
-}
+table thead th a 		{ color: #E5E6E6; }
+table thead th a:hover 	{ color: #FFFFFF; }
 
 /* --- Contenu du tableau --- */
 table tbody td {
@@ -82,10 +75,10 @@ table tbody tr td.no-separator:first-child {
 
 /* --- Pied de tableau --- */
 table tfoot tr th {
-	color: #AAAAAA;
-	background-color: #F0F0F0;
 	padding: 8px;
+	background-color: #F0F0F0;
 	border-bottom: 1px solid #D1D2D4;
+	color: #AAAAAA;
 }
 
 table tfoot tr th:first-child {
@@ -139,7 +132,6 @@ table.formatter-table th.formatter-table-head p {
 .col-large   { width: 9em;  }
 .col-larger  { width: 12em; }
 .col-xlarge  { width: 15em; }
-
 
 /* --- mini tableaux --- */
 table.mini th,
@@ -218,10 +210,10 @@ table.bt tbody td.bt-hide {
 }
 
 table.bt tbody td .bt-content {
-	vertical-align: top;
-	display: inline-block ;
+	display: inline-block;
 	padding-left: 6px;
 	max-width: 100%;
+	vertical-align: top;
 }
 
 .bt-wrapper.active {

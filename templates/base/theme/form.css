@@ -79,13 +79,8 @@ button.submit:hover {
 }
 
 /* --- Bouton basic avec couleur alternative --- */
-.basic-button.alt {
-	background-color: #AAAAAA;
-}
-
-.basic-button.alt:hover {
-	background-color: #BBBBBB;
-}
+.basic-button.alt 		{ background-color: #AAAAAA; }
+.basic-button.alt:hover { background-color: #BBBBBB; }
 
 /* --- field button --- */
 .field-button {
@@ -99,11 +94,12 @@ button.submit:hover {
 }
 
 .field-button button {
-	font-size: 11px;
 	margin-left: -1px;
-	border-radius: 0 4px 4px 0;
 	padding: 4px 8px;
+	border-radius: 0 4px 4px 0;
+	font-size: 11px;
 }
+
 
 /* -- Formulaires -- */
 /* ----------------- */
@@ -154,10 +150,10 @@ legend {
 	display: block;
 	margin: 0 0 0.6em 0;
 	width: 100%;
+	border-bottom: 1px solid #DDDDDD;
 	text-transform: none;
 	color: #474747;
 	font-size: 1.5em;
-	border-bottom: 1px solid #DDDDDD;
 }
 
 /* --- Previsualisation --- */
@@ -184,12 +180,12 @@ input[type=password],
 input[type=file],
 textarea,
 select {
-	color: #555555;
 	background-color: #FFFFFF;
 	border: 1px solid #CCCCCC;
 	border-radius: 4px;
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
 	padding: 4px 18px 4px 6px;
+	color: #555555;
 }
 
 input[type=text]:hover,
@@ -203,9 +199,9 @@ input[type=password]:hover,
 input[type=file]:hover,
 textarea:hover,
 select:hover {
-	color: #333333;
-	border: 1px solid #BBBBBB;
 	background-color: #FFFFFF;
+	border: 1px solid #BBBBBB;
+	color: #333333;
 }
 
 input[type=text]:focus,
@@ -219,10 +215,10 @@ input[type=password]:focus,
 input[type=file]:focus,
 textarea:focus,
 select:focus {
-	color: #222222;
 	border-color: #BBBBBB;
-	outline: 0;
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01), 0 0 6px rgba(0, 0, 0, 0.2);
+	outline: 0;
+	color: #222222;
 }
 
 input[type=color] {
@@ -246,17 +242,17 @@ form .constraint-status-right textarea {
 	box-shadow: 0 0 5px rgba(71, 137, 72, 0.1);
 }
 
-input.field-smaller { width: 29px;  }
-input.field-small   { width: 77px;  }
-input.field-large   { width: 200px; }
-input.field-xlarge  { width: 250px; }
+input.field-smaller 	{ width: 29px;  }
+input.field-small   	{ width: 77px;  }
+input.field-large   	{ width: 200px; }
+input.field-xlarge 		{ width: 250px; }
 
-input.input-date 	{ width: 100px; }
-input.input-hours 	{ width: 50px;  }
-input.input-minutes { width: 50px;  }
+input.input-date 		{ width: 100px; }
+input.input-hours 		{ width: 50px;  }
+input.input-minutes 	{ width: 50px;  }
 
-input[name$="_hours"] { width: 50px;}
-input[name$="_minutes"] { width: 50px;}
+input[name$="_hours"] 	{ width: 50px;  }
+input[name$="_minutes"] { width: 50px;  }
 
 /* --- Cache le generateur de mot de passe sur chrome --- */
 .cip-icon-key-small {
@@ -304,9 +300,9 @@ input[name$="_minutes"] { width: 50px;}
 }
 
 .form-field {
+	position: relative;
 	display: inline-block;
 	max-width: 600px;
-	position: relative;
 }
 
 @media (max-width:360px) {
@@ -368,8 +364,8 @@ select[disabled=disabled]:hover,
 select[disabled=disabled]:focus {
 	cursor: not-allowed;
 	background-color: #F1F1F1;
-	color: #AAAAAA;
 	border: 1px solid #CCCCCC;
+	color: #AAAAAA;
 }
 
 input[readonly=readonly],
@@ -382,8 +378,8 @@ select[readonly=readonly],
 select[readonly=readonly]:hover,
 select[readonly=readonly]:focus {
 	background-color: #FAFAFA;
-	color: #888888;
 	border: 1px solid #CCCCCC;
+	color: #888888;
 }
 
 .form-field-checkbox {
@@ -534,44 +530,46 @@ input + .text-status-constraint {
 	top: 25px;
 }
 
+.text-status-constraint:after,
 .text-status-constraint:before {
 	content: " ";
 	position: absolute;
+}
+
+.text-status-constraint:before {
+	left: 8px;
+	top: -9px;
 	border-bottom: 9px solid rgba(230, 230, 230, 1);
 	border-left: 9px solid transparent;
 	border-right: 9px solid transparent;
-	left: 8px;
-	top: -9px;
 }
 
 .text-status-constraint:after {
-	content: " ";
-	position: absolute;
+	left: 9px;
+	top: -8px;
 	border-bottom: 8px solid rgba(250, 250, 250, 1);
 	border-left: 8px solid transparent;
 	border-right: 8px solid transparent;
-	left: 9px;
-	top: -8px;
 }
 
 div.field-required:after,
 div.picture-status-constraint:after {
 	display: inline-block;
 	position: absolute;
+	right: 4px;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	right: 4px;
 }
 
 div.field-required:after {
-	content: "\f069";
-	color: #C43C35;
-	opacity: 0.6;
-	font-size: 0.8rem;
 	top: 10px;
+	opacity: 0.6;
+	color: #C43C35;
+	font-size: 0.8rem;
+	content: "\f069";
 }
 
 .form-field-date.field-required:after,
@@ -686,8 +684,8 @@ div.field-required:after {
 
 /* --- Auto-completion --- */
 .autocomplete-suggestions {
-	border: 1px solid #999999;
 	background-color: #FFFFFF;
+	border: 1px solid #999999;
 	overflow: auto;
 }
 
@@ -703,5 +701,10 @@ div.field-required:after {
 	cursor: pointer;
 }
 
-.autocomplete-selected { background-color: #F0F0F0; }
-.autocomplete-no-suggestion { text-align: center; }
+.autocomplete-selected {
+	background-color: #F0F0F0;
+}
+
+.autocomplete-no-suggestion {
+	text-align: center;
+}

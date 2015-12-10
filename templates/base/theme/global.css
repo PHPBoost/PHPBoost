@@ -248,7 +248,9 @@ td.calendar-week {
 }
 
 /* --- les blocs de quote, de code ou caches --- */
-.formatter-blockquote, .formatter-code, .formatter-hide {
+.formatter-hide,
+.formatter-code,
+.formatter-blockquote {
 	display: block;
 	width: 93%;
 	padding: 2px 0;
@@ -256,7 +258,9 @@ td.calendar-week {
 	margin: auto;
 }
 
-.blockquote, .code, .hide {
+.hide,
+.code,
+.blockquote {
 	overflow: auto;
 	max-height: 500px;
 	background-color: #FAFAFA;
@@ -347,14 +351,12 @@ td.calendar-week {
 }
 
 .progressbar {
-	border-top-left-radius: 3px;
-	border-bottom-left-radius: 3px;
+	border-radius: 3px 0px 0px 3px;
 	box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
 }
 
 .progressbar[style*="100"] {
-	border-top-right-radius: 3px;
-	border-bottom-right-radius: 3px;
+	border-radius: 3px 3px 3px 3px;
 }
 
 .progressbar-container .progressbar {
@@ -416,7 +418,7 @@ li.small-block .fa-stack {
 	top: 4px;
 	width: 100%;
 	margin: 0 auto;
-	color: white;
+	color: #FFFFFF;
 	font-size: 0.7em;
 	text-align: center;
 }
@@ -424,10 +426,14 @@ li.small-block .fa-stack {
 /* -- Les messages d erreurs -- */
 /* ---------------------------- */
 div.message-helper-small {
-	width: 50%
+	width: 50%;
 }
 
-.error, .notice, .warning, .success, .question {
+.error,
+.notice,
+.warning,
+.success,
+.question {
 	height: auto;
 	padding: 10px 10px 10px 40px;
 	margin: 5px auto 15px auto;
@@ -440,7 +446,11 @@ div.message-helper-small {
 	overflow: hidden;
 }
 
-.error:before, .notice:before, .warning:before, .success:before, .question:before {
+.error:before,
+.notice:before,
+.warning:before,
+.success:before, 
+.question:before {
 	font-family: FontAwesome;
 	font-style: normal;
 	font-weight: normal;
@@ -535,11 +545,11 @@ a.upload-recent-file {
 }
 
 .upload-cat-explorer {
-	padding-left: 30px
+	padding-left: 30px;
 }
 
 .upload-no-sub-cat {
-	padding-left: 17px
+	padding-left: 17px;
 }
 
 /* --- Deplacement des fichiers --- */
@@ -549,8 +559,8 @@ a.upload-recent-file {
 }
 
 .upload-elements-move-to,
-.upload-elements-move-to-cat,
 .upload-elements-move-file,
+.upload-elements-move-to-cat,
 .upload-elements-move-folder {
 	float: left;
 	width: 33%;

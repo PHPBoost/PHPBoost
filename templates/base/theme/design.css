@@ -40,20 +40,30 @@ div#top-header {
 	max-width: 1024px;
 	margin: auto;
 	display: flex;
+	display: -ms-flexbox;
+	display: -webkit-flex;
 	flex-direction: row;
+	-ms-flex-direction: row;
+	-webkit-flex-direction: row;
 }
 
 div#top-header-content {
 	flex: 1 1 auto;
+	-ms-flex: 1 1 auto;
+	-webkit-flex: 1 1 auto;
 }
 
 @media (max-width: 768px) {
 	div#top-header {
 		flex-direction: column;
+		-ms-flex-direction: column;
+		-webkit-flex-direction: column;
 	}
 	
 	div#top-header-content {
 		align-self: flex-end;
+		-ms-align-self: flex-end;
+		-webkit-align-self: flex-end;
 	}
 }
 
@@ -76,6 +86,7 @@ div#site-infos {
 	flex: 1 1 auto;
 	display: flex;
 	display: -ms-flexbox;
+	display: -webkit-flex;
 }
 
 div#site-logo {
@@ -88,6 +99,7 @@ div#site-logo {
 	height: 60px;
 	flex: 0 0 auto;
 	-ms-flex: 0 0 auto;
+	-webkit-flex: 0 0 auto;
 }
 
 div#site-name-container {
@@ -119,7 +131,7 @@ span#site-slogan {
 	}
 
 	div#site-name-container {
-		margin: 1em 0 0 0;;
+		margin: 1em 0 0 0;
 	}
 
 	a#site-name {
@@ -170,7 +182,7 @@ aside#menu-right {
 	div#global {
 		min-height: 100vh;
 		flex-direction: row;
-		-ms-flex-direction: row; /* IE10 Tricks */
+		-ms-flex-direction: row;
 		-webkit-flex-direction: row;
 	}
 
@@ -272,11 +284,11 @@ footer#footer .footer-infos span {
 
 /* --- Compteur de visite --- */
 div#compteur {
-	color: #E9ECD9;
 	position: absolute;
 	right: 0;
-	font-size: 0.9em;
 	margin-right: 15px;
+	font-size: 0.9em;
+	color: #E9ECD9;
 	text-align: right;
 }
 

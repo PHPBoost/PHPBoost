@@ -16,7 +16,6 @@ Contient les elements :
 
 /* -- Conteneurs, elements de module -- */
 /* ------------------------------------ */
-
 section,
 article {
 	width: 100%;
@@ -31,7 +30,6 @@ article {
 		margin: 1em auto;
 	}
 }
-
 
 /* --- articles --- */
 .article-several.block,
@@ -108,7 +106,6 @@ header span.actions a {
 /* --- Contenu --- */
 .content {
 	padding: 0 1em;
-	/*overflow: hidden;*/
 	text-align: justify;
 }
 
@@ -280,6 +277,7 @@ ul.pagination-block-bis li a.next-page:hover {
 	text-decoration: none;
 }
 
+
 /* -- Exploreur des categories -- */
 /* ------------------------------ */
 .explorer .cats,
@@ -345,13 +343,14 @@ ul.pagination-block-bis li a.next-page:hover {
 .explorer .content ul a.parent .fa:first-child {
 	width: 14px;
 }
+
 .explorer .content ul a.parent .fa:first-child:before {
 	width: 14px;
 	font-size: 11px;
 }
 
 .explorer .content ul a:hover,
-.explorer .content ul a:hover+a {
+.explorer .content ul a:hover + a {
 	background-color: #EEEEEE;
 }
 
@@ -381,6 +380,7 @@ ul.pagination-block-bis li a.next-page:hover {
 .infos {
 	margin-left: 20px;
 }
+
 
 /* -- Gestion des categories -- */
 /* ---------------------------- */
@@ -520,7 +520,8 @@ ul.pagination-block-bis li a.next-page:hover {
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
 }
 
-body.dragging, body.dragging * {
+body.dragging,
+body.dragging * {
 	cursor: move !important;
 }
 
@@ -539,11 +540,12 @@ body.dragging, body.dragging * {
 	overflow: hidden;
 }
 
+
 /* -- Modules minis -- */
 /* ------------------- */
 .module-mini-container {
 	margin: 0 0 10px 0;
-	border: 1px #bebebe solid;
+	border: 1px #BEBEBE solid;
 	border-bottom: 2px #99B1CB solid;
 	background-color: #FFFFFF;
 	border-spacing: 1px;
@@ -583,7 +585,7 @@ body.dragging, body.dragging * {
 }
 
 #comments-list > header { 
-	display:none;
+	display: none;
 }
 
 .message {
@@ -626,30 +628,30 @@ body.dragging, body.dragging * {
 	border-radius: 4px;
 }
 
+.message-message::after,
 .message-message::before {
-	content: "";
-	top: 15px;
-	bottom: auto;
-	left: -25px;
 	position: absolute;
-	border-width: 15px 25px 15px 0;
-	border-color: transparent #D6DEE7;
-	border-style: solid;
 	display: block;
+	content: "";
 	width: 0;
 }
 
+.message-message::before {
+	top: 15px;
+	bottom: auto;
+	left: -25px;
+	border-width: 15px 25px 15px 0;
+	border-color: transparent #D6DEE7;
+	border-style: solid;
+}
+
 .message-message::after {
-	content: "";
 	top: 16px;
 	bottom: auto;
 	left: -24px;
-	position: absolute;
 	border-width: 14px 24px 14px 0;
 	border-color: transparent #ECEFFA;
 	border-style: solid;
-	display: block;
-	width: 0;
 }
 
 .message-avatar {
@@ -667,7 +669,7 @@ body.dragging, body.dragging * {
 		padding: 4px;
 	}
 	.message-user-infos {
-		width:80px;
+		width: 80px;
 	}
 	.message-user-infos img {
 		max-width: 40px;
@@ -687,31 +689,23 @@ body.dragging, body.dragging * {
 	}
 
 	.message-message::before {
-		content: "";
 		top: auto;
 		bottom: 100%;
 		left: 204px;
-		position: absolute;
 		border-width: 15px;
 		border-color: transparent;
 		border-bottom-color: #D6DEE7;
 		border-style: solid;
-		display: block;
-		width: 0;
 	}
 	
 	.message-message::after {
-		content: "";
 		top: auto;
 		bottom: 100%;
 		left: 205px;
-		position: absolute;
 		border-width: 14px;
 		border-color: transparent;
 		border-bottom-color: #ECEFFA;
 		border-style: solid;
-		display: block;
-		width: 0;
 	}
 }
 
@@ -786,12 +780,13 @@ div.delay {
 #global.global-maintain {
 	flex-direction: column;
 	-ms-flex-direction: column;
+	-webkit-flex-direction: column;
 }
 
 div#message-maintain {
+	position: absolute;
 	top: 5px;
 	width: 100%;
-	position: absolute;
 	opacity: 0.98;
 	text-align: center;
 }
@@ -803,7 +798,6 @@ div#message-maintain > div {
 div#release {
 	margin-top: 20px;
 }
-
 
 
 /* -- Contribution -- */ 
@@ -872,6 +866,7 @@ table.announce-legend td {
 	text-align: center;
 	margin-bottom: 15px;
 }
+
 
 /* -- Error 403/404 -- */ 
 /* ------------------- */
