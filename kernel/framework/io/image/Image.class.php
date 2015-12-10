@@ -34,7 +34,7 @@ class Image extends FileSystemElement
 {
 	public function __construct($path)
 	{
-		parent::__construct($path);
+		$this->path = $path;
 	}
 	
 	/**
@@ -45,7 +45,12 @@ class Image extends FileSystemElement
 	{
 		return @getimagesize($this->path);
 	}
-
+	
+	public function get_path()
+	{
+		return $this->path;
+	}
+	
 	public function get_width()
 	{
 		$property = $this->get_properties();
