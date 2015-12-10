@@ -113,8 +113,12 @@ a.parent i[id^="img2_"] {
 	margin-bottom: -7px;
 }
 
-.bbcode-wiki-insert {
-	width: auto;
+.bbcode li.bbcode-elements > a.bbcode-wiki-insert {
+	width: 100%;
+}
+
+.wiki-bbcode.bbcode li:nth-child(3).bbcode-elements > a {
+	padding: 0;
 }
 
 .wiki-tools-container {
