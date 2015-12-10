@@ -142,6 +142,34 @@ function forum_history_collector($type, $user_id_action = '', $url_action = '')
 //Gestion du rss du forum.
 function forum_generate_feeds()
 {
-    Feed::clear_cache('forum');
+	Feed::clear_cache('forum');
 }
+
+/*---------------------------------
+function parentChildSort_r
+$idField        = The item's ID identifier (required)
+$parentField    = The item's parent identifier (required)
+$els            = The array (required)
+$parentID       = The parent ID for which to sort (internal)
+$result     = The result set (internal)
+$depth          = The depth (internal)
+----------------------------------*/
+
+function parentChildSort_r($idField, $parentField, $els, $parentID = 0, &$result = array(), &$depth = 0){
+	foreach ($els as $key => $value):
+		if ($value[$parentField] == $parentID){
+			$value['depth'] = $depth;
+			array_push($result, $value);
+			unset($els[$key]);
+			$oldParent = $parentID; 
+			$parentID = $value[$idField];
+			$depth++;
+			parentChildSort_r($idField,$parentField, $els, $parentID, $result, $depth);
+			$parentID = $oldParent;
+			$depth--;
+		}
+	endforeach;
+	return $result;
+}
+
 ?>
