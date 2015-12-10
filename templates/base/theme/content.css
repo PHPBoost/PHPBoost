@@ -370,6 +370,7 @@ ul.pagination-block-bis li a.next-page:hover {
 	border: 1px solid #DDDDDD;
 	border-radius: 3px;
 	float: right;
+	max-width: 100%;
 }
 
 .options h6 {
