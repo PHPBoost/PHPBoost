@@ -398,6 +398,7 @@ select[readonly=readonly]:focus {
 textarea {
 	overflow: auto;
 	resize: vertical;
+	width: 100%;
 }
 
 .form-element-textarea {
