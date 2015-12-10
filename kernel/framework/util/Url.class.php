@@ -243,6 +243,10 @@ class Url
 		if (!($url instanceof Url))
 			$url = new Url($url);
 		
+		$file = new File($url->rel());
+		if ($file->exists())
+			return $status;
+		
 		if ($url->absolute())
 		{
 			if (function_exists('stream_context_set_default'))
@@ -250,13 +254,7 @@ class Url
 
 			if (function_exists('get_headers'))
 			{
-				$file_headers = array();
-				
-				try {
-					$file_headers = @get_headers($url->absolute(), true);
-				} catch (Exception $e) {}
-				
-				if (isset($file_headers[0]))
+				if ($file_headers = @get_headers($url->absolute(), true) && isset($file_headers[0]))
 				{
 					if(preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/', $file_headers[0], $matches))
 						$status = (int)$matches[1];
@@ -290,13 +288,7 @@ class Url
 
 			if (function_exists('get_headers'))
 			{
-				$file_headers = array();
-				
-				try {
-					$file_headers = @get_headers($url->absolute(), true);
-				} catch (Exception $e) {}
-				
-				if (isset($file_headers[0]))
+				if ($file_headers = @get_headers($url->absolute(), true) && isset($file_headers[0]))
 				{
 					$status = 0;
 					if(preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/', $file_headers[0], $matches))
