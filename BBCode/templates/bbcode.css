@@ -57,6 +57,10 @@ li.bbcode-elements > a {
 	width: 23px;
 }
 
+.bbcode li.bbcode-elements > a.bbcode-wiki-insert {
+	width: 100%;
+}
+
 li.bbcode-elements > a:hover {
 	color: #222222;
 	text-decoration: none;
