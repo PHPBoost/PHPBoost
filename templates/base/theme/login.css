@@ -10,26 +10,27 @@ Contient les elements pour afficher la page de connexion a l'administration ou a
 }
 
 body {
-	background: #E8EDF3;
+	background-color: #E8EDF3;
 	height: 100%;
 	margin: 0;
 	padding: 0;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: column;
+	flex-direction: column;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-align-items: center;
+	align-items: center;
 }
 
 div#global {
 	padding: 20px;
 	border-spacing: 1px;
 	border: 1px #bebebe solid;
-	background: #ffffff;
+	background-color: #ffffff;
 	min-height: 0;
-	position: relative;
-	top: 30%
-}
-
-@media ( max-width: 768px ) {
-	div#global {
-		top: 15%
-	}
+	width: 100%;
 }
 
 #connect { margin-bottom:40px; }

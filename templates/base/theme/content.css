@@ -105,9 +105,6 @@ header span.actions a {
 	}
 }
 
-a.read-more {
-}
-
 /* --- Contenu --- */
 .content {
 	padding: 0 1em;
@@ -617,9 +614,6 @@ body.dragging, body.dragging * {
 	float: left;
 }
 
-.message-container {
-}
-
 .message-message {
 	position: relative;
 	padding: 15px;
@@ -659,12 +653,6 @@ body.dragging, body.dragging * {
 
 .message-avatar {
 	width: 80px;
-}
-
-.message-content {
-}
-
-.message-pseudo a {
 }
 
 .message-user-infos img {

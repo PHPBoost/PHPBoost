@@ -86,7 +86,7 @@ Contient les elements associes aux menus
 /* --- Variante cssmenu-horizontal --- */
 #main .cssmenu-horizontal {
 	border: 1px #BEBEBE solid;
-	background: #FFFFFF;
+	background-color: #FFFFFF;
 }
 
 /* --- Variante cssmenu-group --- */
@@ -599,8 +599,8 @@ header .cssmenu li:hover > .cssmenu-title 					{ color: #FFFFFF; }
 #main .cssmenu li:hover > .cssmenu-title 					{ color: #666666; }
 
 @media (min-width: 769px) {
-	header .cssmenu-horizontal > ul > li:hover				{ background: #333333; }
-	#main .cssmenu-horizontal > ul > li:hover  				{ background: #F9F9F9; }
+	header .cssmenu-horizontal > ul > li:hover				{ background-color: #333333; }
+	#main .cssmenu-horizontal > ul > li:hover  				{ background-color: #F9F9F9; }
 }
 
 /* --- Niveau 2 --- */
@@ -619,26 +619,26 @@ header .cssmenu ul ul li:hover > .cssmenu-title 			{ color: #FFFFFF; }
 footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 #top-footer .cssmenu-static ul ul li:hover > .cssmenu-title { color: #262626; }
 
-.cssmenu.cssmenu-vertical ul ul li .cssmenu-title  			{ background: #FFFFFF; }
+.cssmenu.cssmenu-vertical ul ul li .cssmenu-title  			{ background-color: #FFFFFF; }
 
-.cssmenu-actionslinks ul li:hover > .cssmenu-title:after 	{ background: #333333; }
+.cssmenu-actionslinks ul li:hover > .cssmenu-title:after 	{ background-color: #333333; }
 
 
-header .cssmenu ul ul li .cssmenu-title						{ background: #333333; }
-.cssmenu-actionslinks li:hover > .cssmenu-title 			{ background: #DDDDDD; }
-.cssmenu-actionslinks.small-screen li:hover > .cssmenu-title{ background: transparent; }
-#main .cssmenu-horizontal ul ul								{ background: #F9F9F9; }
-#main .cssmenu-horizontal ul ul	> li:hover					{ background: #F1F1F1; }
-#cssmenu-galleryfilter ul ul li .cssmenu-title				{ background: #FFFFFF; }
-#cssmenu-galleryfilter ul ul li:hover .cssmenu-title		{ background: #DDDDDD; }
+header .cssmenu ul ul li .cssmenu-title						{ background-color: #333333; }
+.cssmenu-actionslinks li:hover > .cssmenu-title 			{ background-color: #DDDDDD; }
+.cssmenu-actionslinks.small-screen li:hover > .cssmenu-title{ background-color: transparent; }
+#main .cssmenu-horizontal ul ul								{ background-color: #F9F9F9; }
+#main .cssmenu-horizontal ul ul	> li:hover					{ background-color: #F1F1F1; }
+#cssmenu-galleryfilter ul ul li .cssmenu-title				{ background-color: #FFFFFF; }
+#cssmenu-galleryfilter ul ul li:hover .cssmenu-title		{ background-color: #DDDDDD; }
 
 
 /* --- Personnalisation de l'indicateur de sous-Menu --- */
 
 .cssmenu li.has-sub > .cssmenu-title:after,
-.cssmenu li.has-sub > .cssmenu-title:before 		 	{ background: #DDDDDD; }
+.cssmenu li.has-sub > .cssmenu-title:before 		 	{ background-color: #DDDDDD; }
 .cssmenu-vertical li.has-sub > .cssmenu-title:after,
-.cssmenu-vertical li.has-sub > .cssmenu-title:before 	{ background: #444444; }
+.cssmenu-vertical li.has-sub > .cssmenu-title:before 	{ background-color: #444444; }
 
 
 /* -- Bouton responsive -- */
@@ -688,7 +688,7 @@ header .cssmenu ul ul li .cssmenu-title						{ background: #333333; }
 .cssmenu.small-screen #menu-button:before {
 	height: 2px;
 	width: 20px;
-	background: #DDDDDD;
+	background-color: #DDDDDD;
 	font-size: 1.3rem;
 }
 
@@ -782,7 +782,7 @@ header .cssmenu ul ul li .cssmenu-title						{ background: #333333; }
 	padding: 5px 0;
 	width: 170px;
 	font-size: 11px;
-	background: #FFFFFF;
+	background-color: #FFFFFF;
 	border-radius: 3px;
 	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 	border: 1px solid #AAAAAA;
@@ -834,7 +834,7 @@ header .cssmenu ul ul li .cssmenu-title						{ background: #333333; }
 }
 
 .cssmenu.small-screen #menu-button:before {
-	background: #DDDDDD;
+	background-color: #DDDDDD;
 }
 
 #main .cssmenu.small-screen #menu-button {
@@ -843,14 +843,14 @@ header .cssmenu ul ul li .cssmenu-title						{ background: #333333; }
 
 .cssmenu.small-screen #menu-button.menu-opened:after,
 .cssmenu.small-screen #menu-button.menu-opened:before {
-	background: #DDDDDD;
+	background-color: #DDDDDD;
 }
 
 header .cssmenu.small-screen #menu-button.menu-opened:after,
-header .cssmenu.small-screen #menu-button.menu-opened:before 			{ background: #FFFFFF; }
+header .cssmenu.small-screen #menu-button.menu-opened:before 			{ background-color: #FFFFFF; }
 
 header .cssmenu-vertical.small-screen #menu-button.menu-opened:after,
-header .cssmenu-vertical.small-screen #menu-button.menu-opened:before 	{ background: #DDDDDD; }
+header .cssmenu-vertical.small-screen #menu-button.menu-opened:before 	{ background-color: #DDDDDD; }
 
 
 /* -- Bouton submenu -- */
@@ -924,17 +924,17 @@ header .cssmenu-vertical.small-screen #menu-button.menu-opened:before 	{ backgro
 
 /* --- Personnalisation background Bouton submenu --- */
 
-.cssmenu.small-screen .submenu-button:after  						{ background: #DDDDDD; }
-.cssmenu.small-screen .submenu-button:before 						{ background: #DDDDDD; }
+.cssmenu.small-screen .submenu-button:after  						{ background-color: #DDDDDD; }
+.cssmenu.small-screen .submenu-button:before 						{ background-color: #DDDDDD; }
 
-.cssmenu.small-screen .submenu-button.submenu-opened:after 			{ background: #FFFFFF; }
+.cssmenu.small-screen .submenu-button.submenu-opened:after 			{ background-color: #FFFFFF; }
 
-.cssmenu.small-screen .submenu-button.submenu-opened 				{ background: #262626; }
-#top-header .cssmenu.small-screen .submenu-button.submenu-opened 	{ background: rgba(255, 255, 255, 0.05); }
-.cssmenu-actionslinks.small-screen .submenu-button.submenu-opened 	{ background: #DDDDDD; }
+.cssmenu.small-screen .submenu-button.submenu-opened 				{ background-color: #262626; }
+#top-header .cssmenu.small-screen .submenu-button.submenu-opened 	{ background-color: rgba(255, 255, 255, 0.05); }
+.cssmenu-actionslinks.small-screen .submenu-button.submenu-opened 	{ background-color: #DDDDDD; }
 
-#menu-left .cssmenu.small-screen .submenu-button.submenu-opened 		{ background: rgba(120, 120, 120, 0.2); }
-#menu-right .cssmenu.small-screen .submenu-button.submenu-opened 	{ background: rgba(120, 120, 120, 0.2); }
+#menu-left .cssmenu.small-screen .submenu-button.submenu-opened 	{ background-color: rgba(120, 120, 120, 0.2); }
+#menu-right .cssmenu.small-screen .submenu-button.submenu-opened 	{ background-color: rgba(120, 120, 120, 0.2); }
 
 	
 /* --- Postion icone Submenu --- */

@@ -113,7 +113,7 @@ h4.formatter-title {
 }
 
 .calendar-block .date-select-container {
-	background: #F5F5F5;
+	background-color: #F5F5F5;
 	padding: 2px 0;
 	border-radius: 3px 3px 0 0;
 }
@@ -167,7 +167,7 @@ h4.formatter-title {
 	border-top: 1px solid #CCCCCC;
 	padding: 5px 0;
 	border-radius: 0;
-	background: #FFFFFF;
+	background-color: #FFFFFF;
 	font-weight: bold;
 	color: #666666;
 }
@@ -184,10 +184,10 @@ h4.formatter-title {
 .calendar-block .date-picker tbody td:first-child { border-left: none; }
 .calendar-block .date-picker tbody td:last-child  { border-right: none; }
 
-.calendar-block .date-picker tbody td.calendar-none    { background: #FFFFFF; }
-.calendar-block .date-picker tbody td.calendar-today   { background: #B5E5B9; }
-.calendar-block .date-picker tbody td.calendar-event   { background: #DBE5EE; }
-.calendar-block .date-picker tbody td.calendar-weekend { background: #FFE3B6; }
+.calendar-block .date-picker tbody td.calendar-none    { background-color: #FFFFFF; }
+.calendar-block .date-picker tbody td.calendar-today   { background-color: #B5E5B9; }
+.calendar-block .date-picker tbody td.calendar-event   { background-color: #DBE5EE; }
+.calendar-block .date-picker tbody td.calendar-weekend { background-color: #FFE3B6; }
 
 .calendar-block .date-picker tbody tr:last-child td {
 	border-bottom: none;
@@ -212,7 +212,7 @@ td.calendar-week {
 }
 
 .bbcode-block {
-	background: #F3F3F3;
+	background-color: #F3F3F3;
 	border-radius: 3px;
 	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 	border: 1px solid #AAAAAA;
@@ -259,7 +259,7 @@ td.calendar-week {
 .blockquote, .code, .hide {
 	overflow: auto;
 	max-height: 500px;
-	background: #FAFAFA;
+	background-color: #FAFAFA;
 	border: 1px solid #DDDDDD;
 	border-radius: 3px;
 	color: #444444;
@@ -331,7 +331,7 @@ td.calendar-week {
 
 /* --- La barre de progression --- */
 .progressbar-container {
-	background: #F5F5F5;
+	background-color: #F5F5F5;
 	margin: 4px 0 10px;
 	border-radius: 3px;
 	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -481,7 +481,7 @@ div.message-helper-small {
 }
 
 .upload-address-bar {
-	background: #FAFAFA;
+	background-color: #FAFAFA;
 	border: 1px solid #DDDDDD;
 	border-radius: 3px;
 	color: #444444;
@@ -544,7 +544,7 @@ a.upload-recent-file {
 
 /* --- Deplacement des fichiers --- */
 .upload-selected-cat {
-	background: #F5FBFF;
+	background-color: #F5FBFF;
 	border: 1px solid #2C5169;
 }
 
