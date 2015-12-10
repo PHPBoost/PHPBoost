@@ -43,6 +43,7 @@ class FormFieldUrlEditor extends FormFieldTextEditor
 	 */
 	public function __construct($id, $label, $value, $field_options = array(), array $constraints = array())
 	{
+		$this->set_placeholder('http://');
 		$constraints[] = new FormFieldConstraintUrl();
 		$constraints[] = new FormFieldConstraintUrlExists();
 		parent::__construct($id, $label, $value, $field_options, $constraints);
