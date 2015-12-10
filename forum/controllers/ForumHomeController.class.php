@@ -88,7 +88,7 @@ class ForumHomeController extends ModuleController
 		LEFT JOIN ' . ForumSetup::$forum_view_table . ' v ON v.user_id = :user_id AND v.idtopic = t.id
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' m ON m.user_id = t.last_user_id
 		WHERE ' . ($display_cat ? 'c.id_parent = :id_cat AND ' : '') . 'c.id IN :authorized_categories
-		ORDER BY c.id, c.id_parent, c.c_order', array(
+		ORDER BY c.id_parent, c.c_order', array(
 			'id_cat' => $id_get,
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'authorized_categories' => $authorized_categories
@@ -100,6 +100,8 @@ class ForumHomeController extends ModuleController
 			$categories[] = $row;
 		}
 		$result->dispose();
+		
+		$categories = parentChildSort_r('cid', 'id_parent', $categories);
 		
 		$display_sub_cats = false;
 		$is_sub_forum = array();
