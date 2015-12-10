@@ -87,7 +87,7 @@
 						<a href="{@download.last_version_download_link}" class="pbt-button-a">
 							<div class="pbt-custom-img pbt-custom-img-phpboost"></div>
 							<p class="pbt-button-title">{@download} {@download.last_major_version_number}</p>
-							<p class="pbt-button-com">Rev : {@download.phpboost_last_complete_version_number} | Req : {@download.last_minimal_php_version} | .zip </p>
+							<p class="pbt-button-com">Rev : {@download.phpboost_last_major_version_number} | Req : {@download.last_minimal_php_version} | .zip </p>
 						</a>
 					</div>
 					<div class="pbt-button pbt-button-green">
