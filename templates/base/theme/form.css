@@ -255,8 +255,8 @@ input.input-date 	{ width: 100px; }
 input.input-hours 	{ width: 50px;  }
 input.input-minutes { width: 50px;  }
 
-input[name$="date_hours"] { width: 50px;}
-input[name$="date_minutes"] { width: 50px;}
+input[name$="_hours"] { width: 50px;}
+input[name$="_minutes"] { width: 50px;}
 
 /* --- Cache le generateur de mot de passe sur chrome --- */
 .cip-icon-key-small {
