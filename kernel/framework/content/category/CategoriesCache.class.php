@@ -27,7 +27,7 @@
 
 abstract class CategoriesCache implements CacheData
 {
-	private $categories;
+	protected $categories;
 	
 	public function synchronize()
 	{
@@ -41,6 +41,7 @@ abstract class CategoriesCache implements CacheData
 		{
 			$category = new $category_class();
 			$category->set_properties($row);
+			$category->set_elements_number($categories_cache->get_category_elements_number($category->get_id()));
 			
 			if (!$category->has_special_authorizations())
 			{
@@ -48,6 +49,29 @@ abstract class CategoriesCache implements CacheData
 			}
 			
 			$this->categories[$row['id']] = $category;
+			
+			if ($category->get_id_parent() != Category::ROOT_CATEGORY)
+			{
+				$current_category_elements_number = $category->get_elements_number();
+				$id_parent = $category->get_id_parent();
+				while ($id_parent != Category::ROOT_CATEGORY)
+				{
+					$parent_elements_number = $this->categories[$id_parent]->get_elements_number();
+					
+					if (is_array($current_category_elements_number))
+					{
+						foreach ($current_category_elements_number as $element_id => $elements_number)
+						{
+							$parent_elements_number[$element_id] = $parent_elements_number[$element_id] + $elements_number;
+						}
+						$this->categories[$id_parent]->set_elements_number($parent_elements_number);
+					}
+					else
+						$this->categories[$id_parent]->set_elements_number($parent_elements_number + $current_category_elements_number);
+					
+					$id_parent = $this->categories[$id_parent]->get_id_parent();
+				}
+			}
 		}
 	}
 	
@@ -59,19 +83,48 @@ abstract class CategoriesCache implements CacheData
 	
 	abstract public function get_root_category();
 	
+	protected function get_category_elements_number($id_category)
+	{
+		return 0;
+	}
+	
 	public function get_categories()
 	{
 		return $this->categories;
 	}
 	
-	public function get_childrens($id_category)
+	public function get_childrens($id_category, $allowed_categories_filter = array())
 	{
 		$childrens = array();
 		foreach ($this->categories as $id => $category)
 		{
-			if ($category->get_id_parent() == $id_category && $category->get_id() != Category::ROOT_CATEGORY)
+			if ($category->get_id_parent() == $id_category && $id != Category::ROOT_CATEGORY)
 			{
-				$childrens[$id] = $category;
+				if ((!empty($allowed_categories_filter) && in_array($id, $allowed_categories_filter)) || empty($allowed_categories_filter))
+					$childrens[$id] = $category;
+			}
+			
+			if (!empty($allowed_categories_filter) && !in_array($id, $allowed_categories_filter))
+			{
+				$current_category_elements_number = $category->get_elements_number();
+				$id_parent = $category->get_id_parent();
+				while ($id_parent != Category::ROOT_CATEGORY)
+				{
+					$parent_elements_number = $this->categories[$id_parent]->get_elements_number();
+					
+					if (is_array($current_category_elements_number))
+					{
+						foreach ($current_category_elements_number as $element_id => $elements_number)
+						{
+							$parent_elements_number[$element_id] = $parent_elements_number[$element_id] - $elements_number;
+						}
+						$this->categories[$id_parent]->set_elements_number($parent_elements_number);
+					}
+					else
+						$this->categories[$id_parent]->set_elements_number($parent_elements_number - $current_category_elements_number);
+					
+					$id_parent = $this->categories[$id_parent]->get_id_parent();
+				}
 			}
 		}
 		return $childrens;

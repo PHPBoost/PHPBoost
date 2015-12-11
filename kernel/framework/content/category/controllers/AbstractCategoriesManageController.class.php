@@ -107,17 +107,21 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 		if ($request->get_postvalue('submit', false))
 		{
 			$categories = json_decode(TextHelper::html_entity_decode($request->get_value('tree')));
-
+			$categories_cache = $this->get_categories_manager()->get_categories_cache();
+			
 			foreach ($categories as $position => $tree)
 			{
 				$id = $tree->id;
 				$children = $tree->children[0];
-				$category = $this->get_categories_manager()->get_categories_cache()->get_category($id);
+				$category = $categories_cache->get_category($id);
 
 				$this->get_categories_manager()->update_position($category, Category::ROOT_CATEGORY, ($position +1));
 
 				$this->update_childrens_positions($children, $category->get_id());
 			}
+			
+			$categories_cache::invalidate();
+			
 			$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.position.update', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 	}
