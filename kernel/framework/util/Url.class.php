@@ -254,7 +254,8 @@ class Url
 
 			if (function_exists('get_headers'))
 			{
-				if ($file_headers = @get_headers($url->absolute(), true) && isset($file_headers[0]))
+				$file_headers = @get_headers($url->absolute(), true);
+				if (isset($file_headers[0]))
 				{
 					if(preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/', $file_headers[0], $matches))
 						$status = (int)$matches[1];
@@ -288,7 +289,8 @@ class Url
 
 			if (function_exists('get_headers'))
 			{
-				if ($file_headers = @get_headers($url->absolute(), true) && isset($file_headers[0]))
+				$file_headers = @get_headers($url->absolute(), true);
+				if (isset($file_headers[0]))
 				{
 					$status = 0;
 					if(preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/', $file_headers[0], $matches))
