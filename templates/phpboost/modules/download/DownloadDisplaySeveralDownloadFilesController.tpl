@@ -6,10 +6,12 @@
 		if (jQuery('.content').is(":visible"))
 		{
 			jQuery('.content').hide(400);
+			# IF C_CATEGORY_DESCRIPTION #jQuery('.cat-description').show(200);# ENDIF #
 			jQuery('.root-categories-container').show(200);
 			jQuery('#display-tree').html('<i class="fa fa-folder"></i> ' + ${escapejs(LangLoader::get_message('download.display_root_cat', 'common', 'PHPBoostOfficial'))});
 		} else {
 			jQuery('.root-categories-container').hide(400);
+			# IF C_CATEGORY_DESCRIPTION #jQuery('.cat-description').hide(400);# ENDIF #
 			jQuery('.content').show(200);
 			jQuery('#display-tree').html('<i class="fa fa-folder"></i> ' + ${escapejs(LangLoader::get_message('download.display_tree', 'common', 'PHPBoostOfficial'))});
 		}
@@ -24,7 +26,7 @@
 				${LangLoader::get_message('module_title', 'common', 'download')} # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit smaller"></i></a># ENDIF #
 			</h1>
 			# IF C_CATEGORY_DESCRIPTION #
-				<div class="cat-description">
+				<div class="cat-description" style="display: none;">
 					{CATEGORY_DESCRIPTION}
 				</div>
 			# ENDIF #
