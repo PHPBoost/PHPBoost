@@ -220,6 +220,19 @@
 				</select>
 			</div>
 		</div>
+		<br/></br>		
+		<h5>{@css.button}</h5>
+		<div class="content center">
+			<button type="submit" class="button">{@css.button}</button>
+			<button type="submit" class="button-hover">{@css.button} hover</button>
+			<button type="submit" class="button-active">{@css.button} active</button>
+		</div>
+		<div class="content center">
+			<button type="submit" class="button-small">{@css.button} small</button>
+			<button type="submit" class="submit">{@css.button} submit</button>
+			<button type="submit" class="basic-button">{@css.button} basic-button</button>
+			<button type="submit" class="basic-button alt">{@css.button} basic-button.alt</button>
+		</div>
 
 	</div>
 	<footer></footer>

@@ -119,6 +119,7 @@ $lang['css.options.sort_by.size'] = 'Taille';
 $lang['css.options.sort_by.date'] = 'Date';
 $lang['css.options.sort_by.popularity'] = 'Popularité';
 $lang['css.options.sort_by.note'] = 'Note';
+$lang['css.button'] = 'Bouton';
 $lang['css.quote'] = 'Citation';
 $lang['css.code'] = 'Code';
 $lang['css.code.php'] = 'Code PHP';
