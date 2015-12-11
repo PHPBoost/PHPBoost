@@ -27,7 +27,7 @@
 
 /**
  * @package {@package}
- * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @author BenoÃ®t Sautel <ben.popeye@phpboost.com>
  * @desc BBCode unparser. It converts a content using the PHPBoost HTML reference code (for example
  * coming from a database) to the PHPBoost BBCode syntax.
  */
@@ -48,7 +48,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	 */
 	public function parse()
 	{
-		//Isolement du code source et du code HTML qui ne sera pas protégé
+		//Isolement du code source et du code HTML qui ne sera pas protÃ©gÃ©
 		$this->unparse_html(self::PICK_UP);
 		$this->unparse_code(self::PICK_UP);
 		
@@ -86,7 +86,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		$smileys_cache = SmileysCache::load()->get_smileys();
 		if (!empty($smileys_cache))
 		{
-			//Création du tableau de remplacement
+			//CrÃ©ation du tableau de remplacement
 			foreach ($smileys_cache as $code => $infos)
 			{
 				$smiley_img_url[] = '`<img src="([^"]+)?/images/smileys/' . preg_quote($infos['url_smiley']) . '(.*) />`sU';
@@ -127,6 +127,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			'`<p class="float-(left|right)">(.*)</p>`isU',
 			'`<span id="([a-z0-9_-]+)" class="anchor"></span>`isU',
 			'`<span id="([a-z0-9_-]+)">(.*)</span>`isU',
+			'`<acronym title="([^"]+)" class="bb_acronym">(.*)</acronym>`isU',
 			'`<abbr title="([^"]+)">(.*)</abbr>`isU',
 			'`<a href="mailto:(.*)">(.*)</a>`isU',
 			'`<a(?: title="([^"]+)?")? href="([^"]+)"(?: target="([^"]+)")?>(.*)</a>`isU',
@@ -161,6 +162,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			"[float=$1]$2[/float]",
 			"[anchor=$1][/anchor]",
 			"[anchor=$1]$2[/anchor]",
+			"[acronym=$1]$2[/acronym]",
 			"[acronym=$1]$2[/acronym]",
 			"[mail=$1]$2[/mail]",
 			"[url=$2]$4[/url]",
@@ -308,7 +310,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	 */
 	protected function unparse_wikipedia_link($matches)
 	{
-		//On est dans la langue par défaut
+		//On est dans la langue par dÃ©faut
 		if ($matches[1] == LangLoader::get_message('wikipedia_subdomain', 'editor-common'))
 		{
 			$lang = '';
@@ -318,7 +320,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			$lang = $matches[1];
 		}
 			
-		//L'intitulé du lien est différent du nom de l'article
+		//L'intitulÃ© du lien est diffÃ©rent du nom de l'article
 		if ($matches[2] != $matches[3])
 		{
 			$page_name = $matches[2];
