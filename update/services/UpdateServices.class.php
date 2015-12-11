@@ -199,37 +199,37 @@ class UpdateServices
 		
 		Environment::try_to_increase_max_execution_time();
 		
-		// Mise en maintenance du site s'il ne l'est pas déjà
+		// Mise en maintenance du site s'il ne l'est pas dÃ©jÃ 
 		$this->put_site_under_maintenance();
 		
-		// Suppression des fichiers qui ne sont plus présent dans la nouvelle version pour éviter les conflits
+		// Suppression des fichiers qui ne sont plus prÃ©sent dans la nouvelle version pour Ã©viter les conflits
 		$this->delete_old_files();
 		
 		// Suppression du captcha PHPBoostCaptcha
 		$this->delete_phpboostcaptcha();
 		
-		// Désinstallation des anciens menus (dans /menus)
+		// DÃ©sinstallation des anciens menus (dans /menus)
 		$this->delete_old_menus();
 		
-		// Mise à jour des tables du noyau
+		// Mise Ã  jour des tables du noyau
 		$this->update_kernel_tables();
 		
-		// Mise à jour de la version du noyau
+		// Mise Ã  jour de la version du noyau
 		$this->update_kernel_version();
 		
-		// Mise à jour des modules
+		// Mise Ã  jour des modules
 		$this->update_modules();
 		
-		// Mise à jour des thèmes
+		// Mise Ã  jour des thÃ¨mes
 		$this->update_themes();
 		
-		// Mise à jour des langues
+		// Mise Ã  jour des langues
 		$this->update_langs();
 		
-		// installation du module UrlUpdater pour la réécriture des Url des modules mis à jour
+		// installation du module UrlUpdater pour la rÃ©Ã©criture des Url des modules mis Ã  jour
 		ModulesManager::install_module('UrlUpdater');
 		
-		// Fin de la mise à jour : régénération du cache
+		// Fin de la mise Ã  jour : rÃ©gÃ©nÃ©ration du cache
 		$this->delete_update_token();
 		$this->generate_cache();
 		HtaccessFileCache::regenerate();
@@ -286,7 +286,7 @@ class UpdateServices
 	
 	private function update_kernel_tables()
 	{
-		// Création des nouvelles tables pour l'authentification
+		// CrÃ©ation des nouvelles tables pour l'authentification
 		$tables = self::$db_utils->list_tables(true);
 		
 		// Modification de la table member
@@ -418,32 +418,31 @@ class UpdateServices
 		
 		if ((isset($columns['email']) && !$columns['email']['key']) || !isset($columns['email']))
 		{
+			$result = self::$db_querier->select('SELECT email, GROUP_CONCAT(user_id) AS user_id_list, GROUP_CONCAT(display_name) AS display_name_list FROM ' . PREFIX . 'member GROUP BY email
+			HAVING COUNT(0) > 1
+			ORDER BY registration_date ASC');
+			
+			while ($row = $result->fetch())
+			{
+				$user_id_list = explode(',', $row['user_id_list']);
+				$ids_number = count($row['user_id_list']);
+				$i = 1;
+				foreach ($user_id_list as $user_id)
+				{
+					if ($i < $ids_number)
+					{
+						self::$db_querier->update(PREFIX . 'member', array('email' => $row['email'] . '_' . KeyGenerator::generate_key(5)), 'WHERE user_id=:user_id', array('user_id' => $user_id));
+						$i++;
+					}
+				}
+				
+				$this->add_information_to_file('The mail address ' . $row['email'], ' is duplicate in your database (user_id : ' . $row['user_id_list'] . ') for the users ' . $row['display_name_list'] . '. The oldest accounts have been automatically modified, please tell the users to update them or deleted them if they are no more used.');
+			}
+			$result->dispose();
+			
 			try {
 				self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member ADD UNIQUE KEY `email` (`email`)');
 			} catch (Exception $e) {
-				$result = PersistenceContext::get_querier()->select('SELECT email, GROUP_CONCAT(user_id) AS user_id_list, GROUP_CONCAT(display_name) AS display_name_list FROM ' . PREFIX . 'member GROUP BY email
-				HAVING COUNT(0) > 1
-				ORDER BY registration_date ASC');
-				
-				while ($row = $result->fetch())
-				{
-					$user_id_list = explode(',', $row['user_id_list']);
-					$ids_number = count($row['user_id_list']);
-					$i = 1;
-					foreach ($user_id_list as $id)
-					{
-						if ($i < $ids_number)
-						{
-							self::$db_querier->update(PREFIX . 'member', array('email' => $row['email'] . '_' . KeyGenerator::generate_key(5)), 'WHERE user_id=:user_id', array('user_id' => $user_id));
-							$i++;
-						}
-					}
-					
-					$this->add_information_to_file('The mail address ' . $row['email'], ' is duplicate in your database (user_id : ' . $row['user_id_list'] . ') for the users ' . $row['display_name_list'] . '. The oldest accounts have been automatically modified, please tell the users to update them or deleted them if they are no more used.');
-				}
-				$result->dispose();
-				
-				self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member ADD UNIQUE KEY `email` (`email`)');
 			}
 		}
 		
