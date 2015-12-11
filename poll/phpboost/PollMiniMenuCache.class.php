@@ -40,29 +40,34 @@ class PollMiniMenuCache implements CacheData
 	{
 		$this->polls = array();
 		
-		$result = PersistenceContext::get_querier()->select("SELECT id, question, votes, answers, type
-		FROM " . PollSetup::$poll_table . "
-		WHERE archive = 0 AND visible = 1 AND id IN :ids_list", array(
-			'ids_list' => PollConfig::load()->get_displayed_in_mini_module_list()
-		));
+		$displayed_in_mini_module_list = PollConfig::load()->get_displayed_in_mini_module_list();
 		
-		while ($row = $result->fetch())
+		if ($displayed_in_mini_module_list)
 		{
-			$row['question'] = stripslashes($row['question']);
-			$row['answers'] = explode('|', $row['answers']);
-			$row['votes'] = explode('|', $row['votes']);
-
-			$number_votes = array_sum($row['votes']) ? array_sum($row['votes']) : 1;
-
-			$array_votes = array_combine($row['answers'], $row['votes']);
-			foreach ($array_votes as $answer => $nbrvote)
-				$array_votes[$answer] = NumberHelper::round(($nbrvote * 100 / $number_votes), 1);
+			$result = PersistenceContext::get_querier()->select("SELECT id, question, votes, answers, type
+			FROM " . PollSetup::$poll_table . "
+			WHERE archive = 0 AND visible = 1 AND id IN :ids_list", array(
+				'ids_list' => $displayed_in_mini_module_list
+			));
 			
-			$row['votes'] = $array_votes;
-			$row['total'] = $number_votes;
-			$this->polls[$row['id']] = $row;
+			while ($row = $result->fetch())
+			{
+				$row['question'] = stripslashes($row['question']);
+				$row['answers'] = explode('|', $row['answers']);
+				$row['votes'] = explode('|', $row['votes']);
+
+				$number_votes = array_sum($row['votes']) ? array_sum($row['votes']) : 1;
+
+				$array_votes = array_combine($row['answers'], $row['votes']);
+				foreach ($array_votes as $answer => $nbrvote)
+					$array_votes[$answer] = NumberHelper::round(($nbrvote * 100 / $number_votes), 1);
+				
+				$row['votes'] = $array_votes;
+				$row['total'] = $number_votes;
+				$this->polls[$row['id']] = $row;
+			}
+			$result->dispose();
 		}
-		$result->dispose();
 	}
 	
 	public function get_polls()
