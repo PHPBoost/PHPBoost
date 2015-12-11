@@ -342,7 +342,7 @@
 									<div id="move{ID}" class="move-pics-container">
 										<div class="bbcode-block move-pics-block" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);">
 											<div>{L_MOVETO} :</div>
-											<select class="valign-middle" name="{ID}cat" onchange="document.location = '{U_MOVE}'">
+											<select class="valign-middle" name="{ID}cat" onchange="document.location = '{U_MOVE}">
 												{CAT}
 											</select>
 										</div>
@@ -432,7 +432,7 @@
 										<div id="move{pics_list.ID}" class="move-pics-container">
 											<div class="bbcode-block move-pics-block" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);">
 												<div>{L_MOVETO} :</div>
-												<select class="valign-middle" name="{pics_list.ID}cat" onchange="document.location = '{pics_list.U_MOVE}'">
+												<select class="valign-middle" name="{pics_list.ID}cat" onchange="document.location = '{pics_list.U_MOVE}">
 													{pics_list.CAT}
 												</select>
 											</div>
