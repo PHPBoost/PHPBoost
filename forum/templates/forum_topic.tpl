@@ -212,16 +212,16 @@
 								# ELSE # 
 									<em>{L_GUEST}</em>
 								# ENDIF #
-								</div>		
+								</div>
 								<p class="center">{msg.USER_RANK}</p>
 								<p class="center">{msg.USER_IMG_ASSOC}</p>
-							</div>							
+							</div>
 							
 							<div class="msg-avatar-mbr center">
 								{msg.USER_AVATAR}
 							</div>
 							
-							<div class="msg-info-mbr">						
+							<div class="msg-info-mbr">
 								<p class="center">{msg.USER_GROUP}</p>
 								<p class="left">{msg.USER_DATE}</p>
 								<p class="left">{msg.USER_MSG}</p>
@@ -233,7 +233,7 @@
 									<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" title="{msg.FORUM_MSG_DATE}"><i class="fa fa-hand-o-right"></i></a> {msg.FORUM_MSG_DATE}
 								</span>
 								<span class="float-right">
-									<a href="topic{msg.U_VARS_QUOTE}" title="{L_QUOTE}"><i class="fa fa-quote-right"></i></a>
+									<a href="topic{msg.U_VARS_QUOTE}#go_bottom" title="{L_QUOTE}"><i class="fa fa-quote-right"></i></a>
 									# IF msg.C_FORUM_MSG_EDIT # 
 									<a href="post{msg.U_FORUM_MSG_EDIT}" title="{L_EDIT}" class="fa fa-edit"></a>
 									# ENDIF #
