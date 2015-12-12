@@ -1,6 +1,10 @@
 /* Sur Class */
 body { font-size: 13px; }
 
+#cssmenu-module-PHPBoostOfficial {
+	display: none;
+}
+
 div#main-content {
 	border: none;
 	background: none;
@@ -21,31 +25,48 @@ nav#breadcrumb { display: none; }
 /* Partie presentation */
 div#p-container {
 	padding: 0 10px 10px 10px;
-	height: 289px;
+	height: auto;
 	overflow: hidden;
 }
 
 p.p-slide-content {
 	font-style: italic;
 	padding: 15px 5px 5px 5px;
+	margin: 0;
 	line-height: 1.60em;
-	width: 485px;
 	font-size: 12px;
 }
 
-img.p-img {
-	float: left;
-	width: 400px;
-	box-shadow: 0px 0px 10px #d0d9e3;
-	margin-top: 43px;
+@media (min-width: 769px) {
+	p.p-slide-content {
+		width: 485px;
+	}
 }
 
-div#p-slide{
-	padding: 20px 10px 0px 30px;
-	margin: 40px 0px 0px 0px;
-	max-height: 150px;
-	text-align: justify;
-	overflow: hidden;
+@media (min-width: 769px) {
+	img.p-img {
+		float: left;
+		margin-top: 43px;
+		box-shadow: 0px 0px 10px #d0d9e3;
+	}
+	div#p-slide{
+		padding: 20px 10px 0px 30px;
+		margin: 40px 0px 0px 0px;
+		text-align: justify;
+		overflow: hidden;
+	}
+}
+
+@media (max-width: 768px) {
+	img.p-img {
+		display: none;
+	}
+	div#p-slide{
+		padding: 20px 10px 0px 30px;
+		margin: 0px 0px 0px 0px;
+		text-align: justify;
+		overflow: hidden;
+	}
 }
 
 a.p-slide-title{
@@ -62,25 +83,39 @@ a.p-slide-title:hover {
 	text-decoration: none;
 }
 
-div.p-left { 
-	margin-left: 500px;
-}
-
-div#p-more {
-	margin-right: 80px;
+#p-more {
+	margin: 0 80px 0 0;
 	text-align: right;
 }
 
 div#p-link {
-	margin-right: 20px;
+	margin: 0 auto;
 	padding: 15px 5px;
+	width: 100%;
+}
+@media (min-width: 769px) {
+	div#p-link {
+		width: 400px;
+		overflow: hidden;
+	}
 }
 
 div.p-link-btn {
-	float: left;
+	display: inline-block;
 	text-align: left;
-	margin-right: 45px;
+	margin: 0 0 0 25px;
 	border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+	div.p-link-btn {
+		display: block;
+		margin: 10px auto 0 auto;
+	}
+
+	div.btn-ddl { width: 189px; }
+	div.btn-try { width: 141px; }
+
 }
 
 div.p-link-btn a {
@@ -88,6 +123,7 @@ div.p-link-btn a {
 	height: 52px;
 	opacity: 0.97;
 }
+
 div.p-link-btn a:hover {
 	text-decoration: none;
 	opacity: 1;

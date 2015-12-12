@@ -8,28 +8,28 @@
 		<p class="p-slide-content">
 			{@site_slide_description}
 		</p>
+		<p id="p-more" class="p-left">
+			<a href="{PATH_TO_ROOT}/pages/fonctionnalites-de-phpboost" class="p-more_content" title="{@phpboost_features}">{@phpboost_features.explain}</a>
+		</p>
 	</div>
-	<div id="p-more" class="p-left">
-		<a href="{PATH_TO_ROOT}/pages/fonctionnalites-de-phpboost" class="p-more_content" title="{@phpboost_features}">{@phpboost_features.explain}</a>
-	</div>
-	
-	<div id="p-link" class="p-left">
-		<div class="p-link-btn btn-ddl">
-			<a href="{PATH_TO_ROOT}/download/" title="{@download.phpboost}">
-				<i class="fa fa-download fa-2x"></i>
-				<p class="p-link-title">{@download}</p>
-				<p class="p-link-com ddl-com">{@version} {@download.last_major_version_number}</p>
-			</a>
+		<div id="p-link">
+			<div class="p-link-btn btn-ddl">
+				<a href="{PATH_TO_ROOT}/download/" title="{@download.phpboost}">
+					<i class="fa fa-download fa-2x"></i>
+					<p class="p-link-title">{@download}</p>
+					<p class="p-link-com ddl-com">{@version} {@download.last_major_version_number}</p>
+				</a>
+			</div>
+			<div class="p-link-btn btn-try">
+				<a href="http://demo.phpboost.com" title="{@demo}">
+					<i class="fa fa-cog fa-2x"></i>
+					<p class="p-link-title">{@try}</p>
+					<p class="p-link-com try-com">{@demo.website}</p>
+				</a>
+			</div>
+			<div class="spacer"></div>
 		</div>
-		<div class="p-link-btn btn-try">
-			<a href="http://demo.phpboost.com" title="{@demo}">
-				<i class="fa fa-cog fa-2x"></i>
-				<p class="p-link-title">{@try}</p>
-				<p class="p-link-com try-com">{@demo.website}</p>
-			</a>
-		</div>
-	</div>
-	
+	<div class="spacer"></div>
 </div>
 
 <!-- 3 last modules and templates -->
