@@ -20,3 +20,18 @@ div.mce-window-head {
 .mce-resizehandle {
 	margin-bottom: 5px !important;
 }
+
+div[id$="rich_text_field"] .form-field-textarea.field-required:after,
+div[id$="rich_text_field"].constraint-status-right .form-field-textarea.field-required:after,
+div[id$="rich_text_field"].constraint-status-error .form-field-textarea.field-required:after {
+	top: auto;
+	right: 28px;
+}
+
+div[id$="rich_text_field"].constraint-status-error .form-field-textarea.field-required:after {
+	bottom: 10px;
+}
+
+div[id$="rich_text_field"].constraint-status-right .form-field-textarea.field-required:after {
+	bottom: 8px;
+}
