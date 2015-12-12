@@ -59,56 +59,33 @@ class WebDisplayCategoryController extends ModuleController
 	private function build_view(HTTPRequestCustom $request)
 	{
 		$now = new Date();
-		$authorized_categories = WebService::get_authorized_categories($this->get_category()->get_id());
 		$mode = $request->get_getstring('sort', WebUrlBuilder::DEFAULT_SORT_MODE);
 		$field = $request->get_getstring('field', WebUrlBuilder::DEFAULT_SORT_FIELD);
 		$page = AppContext::get_request()->get_getint('page', 1);
 		$subcategories_page = AppContext::get_request()->get_getint('subcategories_page', 1);
 		
-		$subcategories_number = count(WebService::get_categories_manager()->get_categories_cache()->get_childrens($this->get_category()->get_id()));
-		$subcategories_pagination = $this->get_subcategories_pagination($subcategories_number, $this->config->get_categories_number_per_page(), $field, $mode, $page, $subcategories_page);
-		
-		//Children categories
-		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= web_cats.id, web_cats.*,
-		(SELECT COUNT(*) FROM ' . WebSetup::$web_table . '
-			WHERE id_category IN (
-				@id_cat,
-				(SELECT GROUP_CONCAT(id SEPARATOR \',\') FROM ' . WebSetup::$web_cats_table . ' WHERE id_parent = @id_cat), 
-				(SELECT GROUP_CONCAT(childs.id SEPARATOR \',\') FROM ' . WebSetup::$web_cats_table . ' parents
-				INNER JOIN ' . WebSetup::$web_cats_table . ' childs ON parents.id = childs.id_parent
-				WHERE parents.id_parent = @id_cat)
-			)
-			AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))
-		) AS weblinks_number
-		FROM ' . WebSetup::$web_cats_table . ' web_cats
-		WHERE id_parent = :id_category
-		AND id IN :authorized_categories
-		ORDER BY id_parent, c_order
-		LIMIT :number_items_per_page OFFSET :display_from', array(
-			'timestamp_now' => $now->get_timestamp(),
-			'id_category' => $this->category->get_id(),
-			'authorized_categories' => $authorized_categories,
-			'number_items_per_page' => $subcategories_pagination->get_number_items_per_page(),
-			'display_from' => $subcategories_pagination->get_display_from()
-		));
+		$subcategories = WebService::get_categories_manager()->get_categories_cache()->get_childrens($this->get_category()->get_id(), WebService::get_authorized_categories($this->get_category()->get_id()));
+		$subcategories_pagination = $this->get_subcategories_pagination(count($subcategories), $this->config->get_categories_number_per_page(), $field, $mode, $page, $subcategories_page);
 		
 		$nbr_cat_displayed = 0;
-		while ($row = $result->fetch())
+		foreach ($subcategories as $id => $category)
 		{
-			$category_image = new Url($row['image']);
-			
-			$this->tpl->assign_block_vars('sub_categories_list', array(
-				'C_CATEGORY_IMAGE' => !empty($row['image']),
-				'C_MORE_THAN_ONE_WEBLINK' => $row['weblinks_number'] > 1,
-				'CATEGORY_NAME' => $row['name'],
-				'CATEGORY_IMAGE' => $category_image->rel(),
-				'WEBLINKS_NUMBER' => $row['weblinks_number'],
-				'U_CATEGORY' => WebUrlBuilder::display_category($row['id'], $row['rewrited_name'])->rel()
-			));
-			
 			$nbr_cat_displayed++;
+			
+			if ($nbr_cat_displayed > $subcategories_pagination->get_display_from() && $nbr_cat_displayed <= ($subcategories_pagination->get_display_from() + $subcategories_pagination->get_number_items_per_page()))
+			{
+				$category_image = $category->get_image()->rel();
+				
+				$this->tpl->assign_block_vars('sub_categories_list', array(
+					'C_CATEGORY_IMAGE' => !empty($category_image),
+					'C_MORE_THAN_ONE_WEBLINK' => $category->get_elements_number() > 1,
+					'CATEGORY_NAME' => $category->get_name(),
+					'CATEGORY_IMAGE' => $category_image,
+					'WEBLINKS_NUMBER' => $category->get_elements_number(),
+					'U_CATEGORY' => WebUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel()
+				));
+			}
 		}
-		$result->dispose();
 		
 		$nbr_column_cats = ($nbr_cat_displayed > $this->config->get_columns_number_per_line()) ? $this->config->get_columns_number_per_line() : $nbr_cat_displayed;
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
@@ -329,7 +306,12 @@ class WebDisplayCategoryController extends ModuleController
 		$response = new SiteDisplayResponse($this->tpl);
 		
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['module_title']);
+		
+		if ($this->get_category()->get_id() != Category::ROOT_CATEGORY)
+			$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['module_title']);
+		else
+			$graphical_environment->set_page_title($this->lang['module_title']);
+		
 		$graphical_environment->get_seo_meta_data()->set_description($this->get_category()->get_description());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), AppContext::get_request()->get_getint('page', 1)));
 		

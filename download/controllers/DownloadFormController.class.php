@@ -258,6 +258,7 @@ class DownloadFormController extends ModuleController
 	private function save()
 	{
 		$downloadfile = $this->get_downloadfile();
+		$previous_category_id = $downloadfile->get_id_category();
 		
 		$downloadfile->set_name($this->form->get_value('name'));
 		$downloadfile->set_rewrited_name(Url::encode_rewrite($downloadfile->get_name()));
@@ -325,6 +326,9 @@ class DownloadFormController extends ModuleController
 		
 		Feed::clear_cache('download');
 		DownloadCache::invalidate();
+		
+		if ($previous_category_id != $downloadfile->get_id_category())
+			DownloadCategoriesCache::invalidate();
 	}
 	
 	private function contribution_actions(DownloadFile $downloadfile, $id)

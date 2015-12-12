@@ -46,6 +46,11 @@ class FaqCategoriesCache extends CategoriesCache
 		return 'faq';
 	}
 	
+	protected function get_category_elements_number($id_category)
+	{
+		return FaqService::count('WHERE id_category = :id_category AND approved = 1', array('id_category' => $id_category));
+	}
+	
 	public function get_root_category()
 	{
 		$root = new RichRootCategory();

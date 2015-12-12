@@ -46,6 +46,17 @@ class DownloadCategoriesCache extends CategoriesCache
 		return 'download';
 	}
 	
+	protected function get_category_elements_number($id_category)
+	{
+		$now = new Date();
+		return DownloadService::count('WHERE id_category = :id_category AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))',
+			array(
+				'timestamp_now' => $now->get_timestamp(),
+				'id_category' => $id_category
+			)
+		);
+	}
+	
 	public function get_root_category()
 	{
 		$root = new RichRootCategory();

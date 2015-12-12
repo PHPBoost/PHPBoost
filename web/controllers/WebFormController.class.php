@@ -252,6 +252,7 @@ class WebFormController extends ModuleController
 	private function save()
 	{
 		$weblink = $this->get_weblink();
+		$previous_category_id = $weblink->get_id_category();
 		
 		$weblink->set_name($this->form->get_value('name'));
 		$weblink->set_rewrited_name(Url::encode_rewrite($weblink->get_name()));
@@ -310,6 +311,9 @@ class WebFormController extends ModuleController
 		
 		Feed::clear_cache('web');
 		WebCache::invalidate();
+		
+		if ($previous_category_id != $weblink->get_id_category())
+			WebCategoriesCache::invalidate();
 	}
 	
 	private function contribution_actions(WebLink $weblink, $id)

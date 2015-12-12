@@ -51,6 +51,7 @@ class DownloadDeleteController extends ModuleController
 		
 		Feed::clear_cache('download');
 		DownloadCache::invalidate();
+		DownloadCategoriesCache::invalidate();
 		
 		AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : DownloadUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('download.message.success.delete', 'common', 'download'), array('name' => $this->downloadfile->get_name())));
 	}
