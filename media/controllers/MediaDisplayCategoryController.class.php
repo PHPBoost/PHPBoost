@@ -50,8 +50,6 @@ class MediaDisplayCategoryController extends ModuleController
 		require_once(PATH_TO_ROOT . '/media/media_constant.php');
 		load_module_lang('media');
 		$config = MediaConfig::load();
-		$category = $this->get_category();
-		$authorized_categories = MediaService::get_authorized_categories($category->get_id());
 		
 		//Contenu de la catégorie
 		$page = AppContext::get_request()->get_getint('p', 1);
@@ -61,79 +59,57 @@ class MediaDisplayCategoryController extends ModuleController
 		$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
 		$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 		
-		//On crée une pagination si le nombre de sous-catégories est trop important.
-		$subcategories_number = count(MediaService::get_categories_manager()->get_categories_cache()->get_childrens($category->get_id()));
-		$pagination = new ModulePagination($subcategories_page, $subcategories_number, $config->get_categories_number_per_page());
-		$pagination->set_url(new Url('/media/media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $category->get_id() . '&amp;p=' . $page . '&amp;subcategories_page=%d'));
+		$subcategories = MediaService::get_categories_manager()->get_categories_cache()->get_childrens($this->get_category()->get_id(), MediaService::get_authorized_categories($this->get_category()->get_id()));
+		
+		$subcategories_pagination = new ModulePagination($subcategories_page, count($subcategories), $config->get_categories_number_per_page());
+		$subcategories_pagination->set_url(new Url('/media/media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $this->get_category()->get_id() . '&amp;p=' . $page . '&amp;subcategories_page=%d'));
 
-		if ($pagination->current_page_is_empty() && $subcategories_page > 1)
+		if ($subcategories_pagination->current_page_is_empty() && $subcategories_page > 1)
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
 		}
 		
-		//Children categories
-		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= media_cats.id, media_cats.*,
-		(SELECT COUNT(*) FROM ' . MediaSetup::$media_table . '
-			WHERE idcat IN (
-				@id_cat,
-				(SELECT GROUP_CONCAT(id SEPARATOR \',\') FROM ' . MediaSetup::$media_cats_table . ' WHERE id_parent = @id_cat), 
-				(SELECT GROUP_CONCAT(childs.id SEPARATOR \',\') FROM ' . MediaSetup::$media_cats_table . ' parents
-				INNER JOIN ' . MediaSetup::$media_cats_table . ' childs ON parents.id = childs.id_parent
-				WHERE parents.id_parent = @id_cat)
-			)
-			AND infos = :status
-		) AS mediafiles_number
-		FROM ' . MediaSetup::$media_cats_table .' media_cats
-		WHERE id_parent = :id_category
-		AND id IN :authorized_categories
-		ORDER BY id_parent, c_order
-		LIMIT :number_items_per_page OFFSET :display_from', array(
-			'id_category' => $category->get_id(),
-			'status' => MEDIA_STATUS_APROBED,
-			'authorized_categories' => $authorized_categories,
-			'number_items_per_page' => $pagination->get_number_items_per_page(),
-			'display_from' => $pagination->get_display_from()
-		));
-		
 		$nbr_cat_displayed = 0;
-		while ($row = $result->fetch())
+		foreach ($subcategories as $id => $category)
 		{
-			$category_image = new Url($row['image']);
-			
-			$this->tpl->assign_block_vars('sub_categories_list', array(
-				'C_CATEGORY_IMAGE' => !empty($row['image']),
-				'CATEGORY_NAME' => $row['name'],
-				'CATEGORY_IMAGE' => $category_image->rel(),
-				'MEDIAFILES_NUMBER' => sprintf(($row['mediafiles_number'] > 1 ? $MEDIA_LANG['num_medias'] : $MEDIA_LANG['num_media']), $row['mediafiles_number']),
-				'U_CATEGORY' => MediaUrlBuilder::display_category($row['id'], $row['rewrited_name'])->rel()
-			));
-			
 			$nbr_cat_displayed++;
+			
+			if ($nbr_cat_displayed > $subcategories_pagination->get_display_from() && $nbr_cat_displayed <= ($subcategories_pagination->get_display_from() + $subcategories_pagination->get_number_items_per_page()))
+			{
+				$category_image = $category->get_image()->rel();
+				
+				$this->tpl->assign_block_vars('sub_categories_list', array(
+					'C_CATEGORY_IMAGE' => !empty($category_image),
+					'CATEGORY_NAME' => $category->get_name(),
+					'CATEGORY_IMAGE' => $category_image,
+					'MEDIAFILES_NUMBER' => sprintf(($category->get_elements_number() > 1 ? $MEDIA_LANG['num_medias'] : $MEDIA_LANG['num_media']), $category->get_elements_number()),
+					'U_CATEGORY' => MediaUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel()
+				));
+			}
 		}
-		$result->dispose();
 		
 		$nbr_column_cats = ($nbr_cat_displayed > $config->get_columns_number_per_line()) ? $config->get_columns_number_per_line() : $nbr_cat_displayed;
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 		$cats_columns_width = floor(100 / $nbr_column_cats);
 		
-		$category_description = FormatingHelper::second_parse($category->get_description());
+		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
 		
 		$this->tpl->put_all(array(
 			'C_CATEGORIES' => true,
-			'C_ROOT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY,
+			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
 			'C_CATEGORY_DESCRIPTION' => $category_description,
 			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
-			'C_MODO' => MediaAuthorizationsService::check_authorizations($category->get_id())->moderation(),
-			'C_SUBCATEGORIES_PAGINATION' => $pagination->has_several_pages(),
-			'SUBCATEGORIES_PAGINATION' => $pagination->display(),
+			'C_MODO' => MediaAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
+			'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
+			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
 			'L_UNAPROBED' => $MEDIA_LANG['unaprobed_media_short'],
 			'L_BY' => $MEDIA_LANG['media_added_by'],
 			'CATS_COLUMNS_WIDTH' => $cats_columns_width,
-			'CATEGORY_NAME' => $category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('module_title', 'common', 'media') : $category->get_name(),
+			'CATEGORY_NAME' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('module_title', 'common', 'media') : $this->get_category()->get_name(),
 			'CATEGORY_DESCRIPTION' => $category_description,
-			'U_EDIT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY ? MediaUrlBuilder::configuration()->rel() : MediaUrlBuilder::edit_category($category->get_id())->rel(),
-			'ID_CAT' => $category->get_id()
+			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? MediaUrlBuilder::configuration()->rel() : MediaUrlBuilder::edit_category($this->get_category()->get_id())->rel(),
+			'ID_CAT' => $this->get_category()->get_id()
 		));
 		
 		$selected_fields = array('alpha' => '', 'date' => '', 'nbr' => '', 'note' => '', 'com' => '', 'asc' => '', 'desc' => '');
@@ -194,14 +170,14 @@ class MediaDisplayCategoryController extends ModuleController
 		
 		$condition = 'WHERE idcat = :idcat AND infos = :status';
 		$parameters = array(
-			'idcat' => $category->get_id(),
+			'idcat' => $this->get_category()->get_id(),
 			'status' => MEDIA_STATUS_APROBED
 		);
 		
 		//On crée une pagination si le nombre de fichiers est trop important.
 		$mediafiles_number = MediaService::count($condition, $parameters);
 		$pagination = new ModulePagination($page, $mediafiles_number, $config->get_items_number_per_page());
-		$pagination->set_url(new Url('/media/media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $category->get_id() . '&amp;p=%d&amp;subcategories_page=' . $subcategories_page));
+		$pagination->set_url(new Url('/media/media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $this->get_category()->get_id() . '&amp;p=%d&amp;subcategories_page=' . $subcategories_page));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
 		{
@@ -227,10 +203,10 @@ class MediaDisplayCategoryController extends ModuleController
 		
 		$this->tpl->put_all(array(
 			'C_FILES' => $result->get_rows_count() > 0,
-			'C_DISPLAY_NO_FILE_MSG' => $result->get_rows_count() == 0 && $category->get_id() != Category::ROOT_CATEGORY,
+			'C_DISPLAY_NO_FILE_MSG' => $result->get_rows_count() == 0 && $this->get_category()->get_id() != Category::ROOT_CATEGORY,
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
-			'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'media-0-' . $category->get_id() . '.php?' : 'media.php?cat=' . $category->get_id() . '&'
+			'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'media-0-' . $this->get_category()->get_id() . '.php?' : 'media.php?cat=' . $this->get_category()->get_id() . '&'
 		));
 		
 		while ($row = $result->fetch())
@@ -249,11 +225,11 @@ class MediaDisplayCategoryController extends ModuleController
 				'DATE' => sprintf($MEDIA_LANG['add_on_date'], Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR)),
 				'COUNT' => sprintf($MEDIA_LANG['view_n_times'], $row['counter']),
 				'NOTE' => NotationService::display_static_image($notation),
-				'U_MEDIA_LINK' => PATH_TO_ROOT . '/media/' . url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $category->get_id() . '+' . Url::encode_rewrite($row['name']) . '.php'),
+				'U_MEDIA_LINK' => PATH_TO_ROOT . '/media/' . url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $this->get_category()->get_id() . '+' . Url::encode_rewrite($row['name']) . '.php'),
 				'U_ADMIN_UNVISIBLE_MEDIA' => PATH_TO_ROOT . url('/media/media_action.php?unvisible=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
 				'U_ADMIN_EDIT_MEDIA' => PATH_TO_ROOT . url('/media/media_action.php?edit=' . $row['id']),
 				'U_ADMIN_DELETE_MEDIA' => PATH_TO_ROOT . url('/media/media_action.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
-				'U_COM_LINK' => '<a href="'. PATH_TO_ROOT .'/media/media' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '-' . $category->get_id() . '+' . Url::encode_rewrite($row['name']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('media', $row['id']) . '</a>'
+				'U_COM_LINK' => '<a href="'. PATH_TO_ROOT .'/media/media' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '-' . $this->get_category()->get_id() . '+' . Url::encode_rewrite($row['name']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('media', $row['id']) . '</a>'
 			));
 		}
 		$result->dispose();
@@ -303,7 +279,12 @@ class MediaDisplayCategoryController extends ModuleController
 		$response = new SiteDisplayResponse($this->tpl);
 		
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['module_title']);
+		
+		if ($this->get_category()->get_id() != Category::ROOT_CATEGORY)
+			$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['module_title']);
+		else
+			$graphical_environment->set_page_title($this->lang['module_title']);
+		
 		$graphical_environment->get_seo_meta_data()->set_description($this->get_category()->get_description());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(MediaUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), AppContext::get_request()->get_getint('page', 1)));
 		

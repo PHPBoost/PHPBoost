@@ -41,7 +41,7 @@ class ArticlesAuthorizationsService
 	
 	public function read()
 	{
-		return $this->is_authorized(Category::READ_AUTHORIZATIONS);
+		return $this->is_authorized(Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY);
 	}
 	
 	public function contribution()

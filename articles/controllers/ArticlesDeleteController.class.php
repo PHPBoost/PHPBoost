@@ -57,6 +57,7 @@ class ArticlesDeleteController extends ModuleController
 		NotationService::delete_notes_id_in_module('articles', $article->get_id());
 		
 		Feed::clear_cache('articles');
+		ArticlesCategoriesCache::invalidate();
 		
 		AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : ArticlesUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('articles.message.success.delete', 'common', 'articles'), array('title' => $article->get_title())));
 	}

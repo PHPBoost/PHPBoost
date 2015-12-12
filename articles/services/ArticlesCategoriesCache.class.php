@@ -45,6 +45,17 @@ class ArticlesCategoriesCache extends CategoriesCache
 		return 'articles';
 	}
 	
+	protected function get_category_elements_number($id_category)
+	{
+		$now = new Date();
+		return ArticlesService::count('WHERE id_category = :id_category AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))',
+			array(
+				'timestamp_now' => $now->get_timestamp(),
+				'id_category' => $id_category
+			)
+		);
+	}
+	
 	public function get_root_category()
 	{
 		$root = new RichRootCategory();

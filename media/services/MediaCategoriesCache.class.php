@@ -46,6 +46,18 @@ class MediaCategoriesCache extends CategoriesCache
 		return 'media';
 	}
 	
+	protected function get_category_elements_number($id_category)
+	{
+		require_once(PATH_TO_ROOT . '/media/media_constant.php');
+		
+		return MediaService::count('WHERE idcat = :id_category AND infos = :status',
+			array(
+				'id_category' => $id_category,
+				'status' => MEDIA_STATUS_APROBED
+			)
+		);
+	}
+	
 	public function get_root_category()
 	{
 		$config = MediaConfig::load();

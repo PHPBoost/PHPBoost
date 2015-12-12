@@ -115,6 +115,8 @@ elseif ($delete > 0)
 	// Feeds Regeneration
 	Feed::clear_cache('media');
 	
+	MediaCategoriesCache::invalidate();
+	
 	$category = MediaService::get_categories_manager()->get_categories_cache()->get_category($media['idcat']);
 	bread_crumb($media['idcat']);
 	$Bread_crumb->add($MEDIA_LANG['delete_media'], url('media.php?cat=' . $media['idcat'], 'media-0-' . $media['idcat'] . '+' . $category->get_rewrited_name() . '.php'));
@@ -399,7 +401,9 @@ elseif ($submit)
 
 		// Feeds Regeneration
 		Feed::clear_cache('media');
-
+		
+		MediaCategoriesCache::invalidate();
+		
 		AppContext::get_response()->redirect('media' . url('.php?id=' . $media['idedit']));
 	}
 	// Ajout
@@ -410,7 +414,9 @@ elseif ($submit)
 		$new_id_media = $result->get_last_inserted_id();
 		// Feeds Regeneration
 		Feed::clear_cache('media');
-
+		
+		MediaCategoriesCache::invalidate();
+		
 		if (!$auth_write)
 		{
 			$media_contribution = new Contribution();

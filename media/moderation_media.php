@@ -115,6 +115,8 @@ if ($submit)
 		// Feeds Regeneration
 		Feed::clear_cache('media');
 
+		MediaCategoriesCache::invalidate();
+		
 		AppContext::get_response()->redirect(url('moderation_media.php'));
 	}
 	else

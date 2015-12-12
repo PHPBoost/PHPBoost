@@ -39,6 +39,15 @@ class ArticlesService
 		self::$db_querier = PersistenceContext::get_querier();
 	}
 	
+	 /**
+	 * @desc Count items number.
+	 * @param string $condition (optional) : Restriction to apply to the list of items
+	 */
+	public static function count($condition = '', $parameters = array())
+	{
+		return self::$db_querier->count(ArticlesSetup::$articles_table, $condition, $parameters);
+	}
+	
 	public static function add(Article $article)
 	{
 		$result = self::$db_querier->insert(ArticlesSetup::$articles_table, $article->get_properties());
