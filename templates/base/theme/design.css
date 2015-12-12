@@ -36,15 +36,15 @@ header#header {
 
 /* --- Partie superieure du header --- */
 div#top-header {
-	min-height: 139px;
-	max-width: 1024px;
-	margin: auto;
 	display: flex;
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	flex-direction: row;
 	-ms-flex-direction: row;
 	-webkit-flex-direction: row;
+	margin: auto;
+	min-height: 139px;
+	max-width: 1024px;
 }
 
 div#top-header-content {
@@ -75,28 +75,28 @@ div#sub-header {
 }
 
 div#sub-header-content{
-	max-width: 1024px;
 	margin: auto;
+	max-width: 1024px;
 }
 
 /* --- Logo et Nom du site web --- */
 div#site-infos {
-	max-width: 940px;
-	margin: 1.5em 0 0 1.5em;
-	flex: 1 1 auto;
 	display: flex;
 	display: -ms-flexbox;
 	display: -webkit-flex;
+	margin: 1.5em 0 0 1.5em;
+	max-width: 940px;
+	flex: 1 1 auto;
 }
 
 div#site-logo {
 	margin: 0 1em 0 0;
+	width: 60px;
+	height: 60px;
 	background-image: url('images/logo.png');
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
-	width: 60px;
-	height: 60px;
 	flex: 0 0 auto;
 	-ms-flex: 0 0 auto;
 	-webkit-flex: 0 0 auto;
@@ -124,7 +124,7 @@ span#site-slogan {
 	letter-spacing: 0.1em;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 769px) {
 	div#site-logo {
 		width: 90px;
 		height: 90px;
@@ -143,23 +143,23 @@ span#site-slogan {
 /* -- Conteneur global du site -- */
 /* ------------------------------ */
 div#global {
-	max-width: 1024px;
-	margin: 1.5em auto 0 auto;
-	padding: 0 10px;
 	display: flex;
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	flex-direction: column;
 	-ms-flex-direction: column;
 	-webkit-flex-direction: column;
+	margin: 1.5em auto 0 auto;
+	padding: 0 10px;
+	max-width: 1024px;
 }
 
 div#main {
+	padding: 0 0 10px 0;
 	max-width: 100%;
 	order : 1;
 	-ms-flex-order: 1;
 	-webkit-flex-order: 1;
-	padding: 0 0 10px 0;
 }
 
 aside#menu-left,
@@ -187,12 +187,12 @@ aside#menu-right {
 	}
 
 	div#main {
+		padding: 0 10px;
 		order : 2;
 		-ms-flex-order: 2;
 		-webkit-flex-order: 2;
 		flex: 1 0 auto;
 		-ms-flex: 1 0 auto;
-		padding: 0 10px;
 	}
 
 	aside#menu-left,
@@ -254,23 +254,23 @@ div#bottom-content {
 /* -- Pied de page - Footer -- */
 /* --------------------------- */
 footer#footer {
-	clear: both;
 	width: 100%;
 	background-color: #212121;
 	border-top: #336397 2px solid;
+	clear: both;
 }
 
 footer#footer .footer-content {
 	margin: 0 auto 0 auto;
-	max-width: 1024px;
 	padding: 1.5em 0;
+	max-width: 1024px;
 	border-bottom: 2px groove #444444;
 }
 
 footer#footer .footer-infos {
+	padding-top: 10px;
 	min-height: 40px;
 	text-align: center;
-	padding-top: 10px;
 }
 
 footer#footer .footer-infos span {
@@ -300,13 +300,13 @@ div#compteur {
 
 /* --- Barre de lien rapide --- */
 nav#breadcrumb {
-	text-indent: 10px;
 	margin: 0 0 20px 10px;
+	text-indent: 10px;
 }
 
 nav#breadcrumb ol {
-	list-style: none;
 	margin: 0;
+	list-style: none;
 }
 
 nav#breadcrumb ol li {

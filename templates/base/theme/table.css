@@ -9,19 +9,19 @@ Contient les elements pour l'affichage des tableaux HTML et responsive.
 /* -- Affichage des tableaux basic -- */
 /* --------------------------------- */
 table {
-	width: 100%;
-	padding: 0;
 	margin: 8px 0;
+	padding: 0;
+	width: 100%;
 	border-spacing: 0;
 }
 
 /* --- Entete du tableau --- */
 table caption {
+	margin: 5px 0 5px 20px;
+	border-bottom: 1px solid #D1D2D5;
 	color: #757679;
 	font-size: 13px;
 	text-align: left;
-	margin: 5px 0 5px 20px;
-	border-bottom: 1px solid #D1D2D5;
 }
 
 table thead th {
@@ -41,10 +41,10 @@ table thead th a:hover 	{ color: #FFFFFF; }
 
 /* --- Contenu du tableau --- */
 table tbody td {
+	padding: 8px;
 	background-color: #F5F5F5;
 	border-top: 1px solid #D1D2D4;
 	border-left: 1px solid #D1D2D4;
-	padding: 8px;
 	color: #676A74;
 	text-align: center;
 }
@@ -53,8 +53,16 @@ tr:nth-child(even) td {
 	background-color: #FFFFFF;
 }
 
-table tbody tr:last-child td {
-	border-bottom: 1px solid #D1D2D4;
+@media (min-width: 769px) {
+	table tbody tr:last-child td {
+		border-bottom: 1px solid #D1D2D4;
+	}
+}
+
+@media (max-width: 768px) {
+	table tbody tr:last-child td:last-child {
+		border-bottom: 1px solid #D1D2D4;
+	}
 }
 
 table tbody tr td:last-child {
@@ -187,11 +195,11 @@ table.bt thead th:first-child{
 }
 
 table.bt tbody td {
-	width: 100%;
-	text-align: left;
 	display: block;
-	vertical-align: top;
+	width: 100%;
 	border-right: 1px solid #D1D2D4;
+	text-align: left;
+	vertical-align: top;
 }
 
 table.bt tbody td.no-separator {
@@ -199,10 +207,10 @@ table.bt tbody td.no-separator {
 }
 
 table.bt tbody td:before {
+	display: inline-block;
+	width: 35%;
 	content: attr(data-th) " ";
 	font-weight: bold;
-	display: inline-block ;
-	width: 35%;
 }
 
 table.bt tbody td.bt-hide {

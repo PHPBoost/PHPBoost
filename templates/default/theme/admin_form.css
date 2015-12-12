@@ -7,23 +7,21 @@
  * 
  * --- ###################################################################### ---*/
 
-/* --- Boutons ================================================= */
+/* -- Boutons ================================================= */
 
 /* --- Normal --- */
-
 button,
 .button {
 	height: auto;
-	padding: .6em 2em;
-	margin: 0 5px;
-	color: #333333;
-	text-align: center;
-	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
+	margin: 5px 5px 0 5px;
+	padding: 0.6em 2em;
 	background-color: #F9F9F9;
 	border: 1px solid #CCCCCC;
 	border-color: #E1E1E1 #E1E1E1 #BFBFBF #CFCFCF;
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
-	margin-top: 5px;
+	color: #333333;
+	text-align: center;
+	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
 }
 
 button:hover,
@@ -42,14 +40,14 @@ button:active,
 
 button.small,
 .button-small {
-	font-size: .95em;
+	font-size: 0.95em;
 	padding: 2px 6px;
 }
 
 button.submit {
-	color: #FEFEFE;
 	background-color: #3B6B9F;
 	border-color: #366393;
+	color: #FEFEFE;
 }
 
 button.submit:hover {
@@ -66,8 +64,7 @@ button[id*=menu_element] {
 	margin-bottom: 10px;
 }
 
-@media (min-width:769px){
-	
+@media (min-width: 769px) {
 	button[id*=menu_element] {
 		width: auto;
 	}	
@@ -76,13 +73,13 @@ button[id*=menu_element] {
 /* --- Bouton basic --- */
 .basic-button {
 	display: inline-block;
+	margin: 1px;
 	padding: 1px 6px;
+	background-color: #2F5B8A;
+	border-radius: 2px;
 	font-weight: bold;
 	text-align: center;
-	border-radius: 2px;
-	background-color: #2F5B8A;
 	color: #FFFFFF;
-	margin: 1px;
 }
 
 .basic-button:hover {
@@ -95,11 +92,9 @@ button[id*=menu_element] {
 .basic-button.alt:hover { background-color: #BBBBBB; }
 
 /* --- Formulaires =========================================================*/
-
 .fieldset-mini {
 	width: 540px;
-	margin: auto;
-	margin-top: 20px;
+	margin: 20px auto auto auto;
 }
 
 fieldset {
@@ -127,7 +122,7 @@ fieldset#AdminErrorsController404List_fbuttons{
 	margin: 0 5px;
 }
 
-@media (min-width:769px){
+@media (min-width: 769px) {
 	
 	fieldset {
 		margin: 20px 20px 0;
@@ -137,8 +132,10 @@ fieldset#AdminErrorsController404List_fbuttons{
 		margin: 0 20px;
 	}
 
-	fieldset#AdminLoggedErrorsControllerList_fbuttons,
-	fieldset#AdminErrorsController404List_fbuttons {margin: 0 20px;}
+	fieldset#AdminErrorsController404List_fbuttons,
+	fieldset#AdminLoggedErrorsControllerList_fbuttons { 
+		margin: 0 20px;
+	}
 }
 
 .fieldset-inset {
@@ -152,20 +149,20 @@ fieldset#AdminErrorsController404List_fbuttons{
 }
 
 .fieldset-inset-user table {
-	width:100% !important;
-	margin:0;
+	margin: 0;
+	width: 100% !important;
 }
 
 fieldset p {
-	padding: 15px 10px;
 	margin: 0;
+	padding: 15px 10px;
 }
 
 fieldset.fieldset-submit {
 	padding-bottom: 15px;
-	text-align: center;
 	background: none;
 	border: none;
+	text-align: center;
 }
 
 fieldset.fieldset-submit legend {
@@ -173,9 +170,9 @@ fieldset.fieldset-submit legend {
 }
 
 optgroup {
-	font-weight: bold;
 	border: none;
 	border-bottom: 1px solid #5B5A5A;
+	font-weight: bold;
 }
 
 option {
@@ -184,14 +181,13 @@ option {
 
 /* --- Prévisualition --- */
 .xmlhttprequest-preview {
-	font-size: .95em;
-	border-left: 1px solid #99b1cb;
-	border-top: 1px solid #99b1cb;
-	border-right: 1px solid #CCCCCC;
-	border-bottom: 1px solid #CCCCCC;
-	background-color: #FFFFFF;
-	color: #2E3B5F;
 	padding: 0px 2px;
+	background-color: #FFFFFF;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #99B1CB #CCCCCC #CCCCCC #99B1CB;
+	color: #2E3B5F;
+	font-size: 0.95em;
 }
 
 legend {
@@ -199,10 +195,10 @@ legend {
 	margin: 0;
 	padding: 0 0 8px;
 	width: 100%;
-	text-transform: none;
+	border-bottom:2px solid #BBBBBB;
 	color: #474747;
 	font-size: 1.6em;
-	border-bottom:2px solid #bbbbbb;
+	text-transform: none;
 }
 
 /* --- Elements de saisie --- */
@@ -219,8 +215,8 @@ textarea,
 select {
 	padding: 10px 10px 10px 25px;
 	color: #555555;
-	background-color: #eeeeee;
-	border: 1px solid #ffffff;
+	background-color: #EEEEEE;
+	border: 1px solid #FFFFFF;
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
 	width: 100%;
 }
@@ -250,9 +246,9 @@ input[type=password]:hover,
 input[type=file]:hover,
 textarea:hover,
 select:hover {
-	color: #333333;
 	border: 1px solid #BBBBBB;
 	background-color: #FFFFFF;
+	color: #333333;
 }
 
 input[type=text]:focus,
@@ -266,21 +262,20 @@ input[type=password]:focus,
 input[type=file]:focus,
 textarea:focus,
 select:focus {
-	color: #222222;
+	background-color: #FFFFFF;
 	border-color: #BBBBBB;
 	outline: 0;
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01), 0 0 6px rgba(0, 0, 0, 0.2);
-	background-color: #FFFFFF;
+	color: #222222;
 }
 
 input[type=color] {
-	padding: 10px 2px ;
+	padding: 10px 2px;
 	width: 100%;
 	height: 38px;
 }
 
-@media (min-width:769px){
-	
+@media (min-width: 769px) {
 	input[type=color] {
 		width: 150px;
 	}
@@ -289,68 +284,68 @@ input[type=color] {
 @media (min-width:769px){
 	p[id*="filter"] select,
 	p[id*="filter"] input{
-		width:200px;
+		width: 200px;
 	}
 }
-/* --- checkbox --- */
 
+/* --- checkbox --- */
 .form-field-checkbox input[type=checkbox] {
 	visibility: hidden;
 }
 
 .form-field-checkbox {
+	position: relative;
+	margin: 0;
 	width: 70px !important;
 	height: 30px;
-	background-color: #ffffff;
-	margin: 0;
+	background-color: #FFFFFF;
 	border-radius: 50px;
-	position: relative;
-    box-shadow: 0 0 5px 3px rgba(0, 0, 0, .05);
+    box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.05);
+}
+
+.form-field-checkbox:after,
+.form-field-checkbox:before {
+	position: absolute !important;
+	z-index: 0;
+	font-family: FontAwesome !important;
+	font-size: 18px !important;
 }
 
 .form-field-checkbox:after {
-	content: '\f00d' !important;
-	font-size: 18px !important;
-    font-family: FontAwesome !important;
-	color: #404040 !important;
-	position: absolute !important;
 	left: 47px !important;
-    top: 6px !important;
-	z-index: 0;
+	top: 6px !important;
+	content: '\f00d' !important;
+	color: #404040 !important;
 }
 
 .form-field-checkbox:before {
-	content: '\f00c';
-	font-size: 18px;
-    font-family: FontAwesome;
-	color: #57A957;
-	position: absolute;
 	left: 9px;
     top: 6px;
-	z-index: 0;
+	content: '\f00c';
+	color: #57A957;
 }
 
 .form-field-checkbox label {
-	display: block;
-	width: 24px;
-	height: 24px;
-	border-radius: 50px;
-	transition: all .3s ease 0s;
-	cursor: pointer;
 	position: absolute;
+	display: block;
 	top: 3px;
 	left: 5px;
 	z-index: 1;
+	width: 24px;
+	height: 24px;
 	background-color: #dddddd;
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.1) 100%);
-    border: 1px solid #333;
+	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.1) 100%);
+	border: 1px solid #333;
+	border-radius: 50px;
+	transition: all .3s ease 0s;
+	cursor: pointer;
 }
 
 .form-field-checkbox input[type=checkbox]:checked + label {
 	left: 41px;
 	background-color: #62b0ff;
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.1) 100%);
-    border: 1px solid #366393;
+	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.1) 100%);
+	border: 1px solid #366393;
 }
 
 .form-field-multiple-checkbox .form-field-checkbox {
@@ -360,7 +355,6 @@ input[type=color] {
 }
 
 /* --- input form-field-values --- */
-
 .form-field-values input[type="text"] {
 	width: 80%;
 	margin: 10px 0;
@@ -378,40 +372,39 @@ input[type=color] {
 }
 
 .form-field-radio {
+	position: relative;
+	display: inline-block;
+	margin: 5px 0;
 	width: 16px !important;
 	height: 16px;
 	background-color: #ffffff;
-	margin: 5px 0;
 	border-radius: 50px;
-	position: relative;
-    box-shadow: 0 0 3px 1px rgba(0, 0, 0, .1);
-	display: inline-block;
+	box-shadow: 0 0 3px 1px rgba(0, 0, 0, .1);
 }
 
 .form-field-radio label {
-	display: block;
-	width: 10px;
-	height: 10px;
-	border-radius: 50px;
-	transition: all .3s ease 0s;
-	cursor: pointer;
 	position: absolute;
+	display: block;
 	top: 3px;
 	left: 3px;
-	z-index: 1;
+	z-index: 1;	
+	width: 10px;
+	height: 10px;
 	background-color: #dddddd;
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.1) 100%);
-    border: 1px solid #333333;
+	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.1) 100%);
+	border-radius: 50px;
+	border: 1px solid #333333;
+	transition: all .3s ease 0s;
+	cursor: pointer;
 }
 
 .form-field-radio input[type=radio]:checked + label {
 	background-color: #62b0ff;
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.1) 100%);
-    border: 1px solid #366393;
+	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.1) 100%);
+	border: 1px solid #366393;
 }
 
 /* --- form --- */
-
 form input:focus:invalid,
 form textarea:focus:invalid,
 form .constraint-status-right input,
@@ -449,7 +442,7 @@ input.input-minutes { width: 50px;  }
 }
 
 .form-element-preview {
-	margin:10px;
+	margin: 10px;
 	text-align: center;
 }
 
@@ -483,8 +476,8 @@ fieldset[id*=advises] .form-element {
 }
 
 .form-field-action-link ul li {
-	margin: 2px 10px;
 	display: inline-table;
+	margin: 2px 10px;
 }
 
 .form-field-action-link ul li a {
@@ -493,30 +486,29 @@ fieldset[id*=advises] .form-element {
 
 /* --- Label pour les checkbox et radio --- */
 .form-field label {
-	margin: 0 10px 0 0;
 	display: block;
+	margin: 0 10px 0 0;
 }
 
 /* --- Label pour les inputs [for] et pour les elements sans associations--- */
 .form-element > label {
 	display: inline-block;
-	width: 100%;
-	text-align: left;
+	margin-bottom: 8px;
 	padding-right: 10px;
 	padding-top: 3px;
+	width: 100%;
+	text-align: left;
 	vertical-align: top;
-	margin-bottom: 8px;
 }
 
-@media (min-width:769px){
-	
+@media (min-width: 769px) {
 	.form-element > label{
 		width: 40%;
 	}
 	
 	.form-field {
-		width: 58%;
 		display: inline-block;
+		width: 58%;
 	}
 
 	.form-field-free-large {
@@ -528,13 +520,13 @@ fieldset[id*=advises] .form-element {
 .form-element textarea,
 .form-element select,
 .form-element-textarea textarea {
-	background-color: #ffffff;
+	background-color: #FFFFFF;
 }
 
 .field-description {
-	font-size: .8em;
 	display: block;
 	line-height: 12px;
+	font-size: 0.8em;
 }
 
 p[id*=filter] input,
@@ -547,16 +539,14 @@ div[id*=menu_element] input {
 	margin-bottom: 10px;
 }
 
-@media (min-width:769px){
-	
+@media (min-width: 769px) {
 	div[id*=menu_element] input {
 		width: 22%;
 		margin-bottom: 0;
 	}	
 }
 
-@media (min-width:981px){
-	
+@media (min-width: 981px) {
 	div[id*=menu_element] input {
 		width: 25%;
 	}	
@@ -571,10 +561,10 @@ textarea[disabled=disabled]:focus,
 select[disabled=disabled], 
 select[disabled=disabled]:hover, 
 select[disabled=disabled]:focus {
-	cursor: not-allowed;
 	background-color: #F1F1F1;
-	color: #AAAAAA;
 	border: 1px solid #CCCCCC;
+	color: #AAAAAA;
+	cursor: not-allowed;
 }
 
 input[readonly=readonly], 
@@ -587,16 +577,16 @@ select[readonly=readonly],
 select[readonly=readonly]:hover, 
 select[readonly=readonly]:focus {
 	background-color: #FAFAFA;
-	color: #888888;
 	border: 1px solid #CCCCCC;
+	color: #888888;
 }
 
 /* --- Textarea --- */
 textarea {
-	overflow: auto;
 	display: block;
-	width: 94%;
 	margin: 5px auto;
+	width: 94%;
+	overflow: auto;
 	resize: vertical;
 }
 
@@ -605,14 +595,20 @@ textarea#writing_pad_content {
 	width: 100%;
 }
 
-.form-element-textarea-small 					{ width: 49%; }
-.form-element-textarea textarea 				{ width: 99%; }
-.form-element-textarea .form-field-textarea 	{ display: block; }
-.form-element-textarea .form-field-textarea div { float: left; }
+.form-element-textarea-small 	{ width: 49%; }
+.form-element-textarea textarea { width: 99%; }
+
+.form-element-textarea .form-field-textarea {
+	display: block;
+}
+
+.form-element-textarea .form-field-textarea div {
+	float: left;
+}
 
 .form-element-preview {
-	text-align: center;
 	margin: 5px auto 0 auto;
+	text-align: center;
 }
 
 .form-element-auth .form-field {
@@ -626,14 +622,13 @@ textarea#writing_pad_content {
 }
 
 .advanced-auth-group select {
+	margin-bottom: 5px;
+	padding: 0 5px;
 	width: 100%;
 	overflow-x: auto;
-	padding: 0 5px;
-	margin-bottom: 5px;
 }
 
-@media (min-width:769px){
-	
+@media (min-width: 769px) {
 	.advanced-auth-group {
 		display: inline-block;
 	}
@@ -642,21 +637,21 @@ textarea#writing_pad_content {
 		min-width: 170px;
 	}
 	
-	div[id*="advanced_auth"]{
+	div[id*="advanced_auth"] {
 		display: inline-block;
 		margin: 0 5px 5px 0;
 	}
 }
 
 .advanced-auth-select select {
-	min-width: 170px;
-	word-wrap: normal;
-	overflow-x: auto;
 	padding-right: 5px;
+	min-width: 170px;
+	overflow-x: auto;
+	word-wrap: normal;
 }
 
 .advanced-auth-select {
-		margin: 0 5px 5px 0;
+	margin: 0 5px 5px 0;
 }
 
 .advanced-auth-input {
@@ -665,8 +660,8 @@ textarea#writing_pad_content {
 }
 
 .advanced-auth-input input {
-	padding: 4px 24px 4px 6px;
 	margin-bottom: 5px;
+	padding: 4px 24px 4px 6px;
 }
 
 .advanced-auth-input button {
@@ -676,9 +671,9 @@ textarea#writing_pad_content {
 }
 
 .advanced-auth-input-result {
+	margin: 2px 0px 0px 0px;
 	width: 138px;
 	height: 100px;
-	margin: 2px 0px 0px 0px;
 }
 
 .bbcode ~ .form-field-textarea textarea {
@@ -688,7 +683,6 @@ textarea#writing_pad_content {
 
 /* --- CSS appliques aux écrans PC --- */
 @media (min-width: 769px) {
-	
 	.form-element-textarea-small {
 		width: 49%;
 	}
@@ -696,7 +690,6 @@ textarea#writing_pad_content {
 
 /* --- CSS appliques aux smartphones --- */
 @media (max-width: 480px) {
-	
 	.form-element-auth .form-field .advanced-auth-input {
 		float: none;
 		margin: 5px 0px 0px 0px;
@@ -740,43 +733,43 @@ input + .text-status-constraint {
 }
 
 .text-status-constraint:before {
-	content: " ";
 	position: absolute;
+	left: 8px;
+	top: -9px;
 	border-bottom: 9px solid rgba(230, 230, 230, 1);
 	border-left: 9px solid transparent;
 	border-right: 9px solid transparent;
-	left: 8px;
-	top: -9px;
+	content: " ";
 }
 
 .text-status-constraint:after {
-	content: " ";
 	position: absolute;
 	border-bottom: 8px solid rgba(250, 250, 250, 1);
 	border-left: 8px solid transparent;
 	border-right: 8px solid transparent;
 	left: 9px;
 	top: -8px;
+	content: " ";
 }
 
 div.field-required:after,
 div.picture-status-constraint:after {
-	display: inline-block;
 	position: absolute;
+	display: inline-block;
+	left: 5px;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	text-rendering: auto;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	left:5px;
 }
 
 div.field-required:after {
+	top:40%;
+	opacity: 0.6;
 	content: "\f069";
 	color: #C43C35;
-	opacity: 0.6;
 	font-size: 0.8rem;
-	top:40%;
 }
 
 .form-field-checkbox.field-required:after {
@@ -821,10 +814,11 @@ div.field-required:after {
 }
 
 .constraint-status-right div.picture-status-constraint:after {
+	top: 30%;
 	content: "\f00c";
 	color: #57A957;
-	top: 30%;
 }
+
 .constraint-status-error i.picture-status-constraint {
 	content: "\f056";
 	color: #C43C35;
@@ -847,7 +841,7 @@ div.field-required:after {
 
 /* --- Auto-completion --- */
 .autocomplete-suggestions {
-	border: 1px solid #999;
+	border: 1px solid #999999;
 	background-color: #FFFFFF;
 	overflow: auto;
 }
@@ -859,8 +853,8 @@ div.field-required:after {
 
 .autocomplete-suggestion {
 	padding: 8px 5px;
-	white-space: nowrap;
 	overflow: hidden;
+	white-space: nowrap;
 	cursor: pointer;
 }
 
@@ -884,10 +878,10 @@ div.field-required:after {
 }
 
 .field-button button {
-	font-size: .95em;
 	margin-left: -1px;
-	border-radius: 0 4px 4px 0;
 	padding: 4px 8px;
+	border-radius: 0 4px 4px 0;
+	font-size: 0.95em;
 }
 
 .form-element .fa-calendar {

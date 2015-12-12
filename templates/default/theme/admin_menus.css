@@ -11,8 +11,8 @@
  * 
  * --- ###################################################################### ---*/
 
-/* --- Menu index ============================================================= */
 
+/* -- Menu index ============================================================= */
 nav.admin-index {
 }
 
@@ -54,15 +54,15 @@ nav.admin-index li:first-child:after {
 nav.admin-index li a span {
 	position: absolute;
 	display: block;
-	opacity: 0;
-	visibility: hidden;
 	top: 100%;
 	left: 0;
 	width: 100%;
+	opacity: 0;
+	visibility: hidden;
 	text-align: center;
 	font-size: 0.6em;
-	transition: all 0.3s ease 0s;
 	white-space: nowrap;
+	transition: all 0.3s ease 0s;
 }
 
 @media (min-width: 769px) {
@@ -83,16 +83,16 @@ nav.admin-index li a:hover span {
 	opacity: 1;
 	visibility: visible;
 	top: 90%;
-	transition: all 0.5s ease 0s;
 	color: #FFFFFF;
+	transition: all 0.5s ease 0s;
 }
 
-/* --- Menu principal modal ========================================= */
 
-@media (min-width: 769px){
+/* -- Menu principal modal ========================================= */
+@media (min-width: 769px) {
 	.cssmenu-admin {
 		margin-bottom: 20px;
-}
+	}
 }
 
 .cssmenu-admin ul {
@@ -103,8 +103,8 @@ nav.admin-index li a:hover span {
 
 .cssmenu-admin > ul > li {
     display:inline-block;
-	text-align: center;
 	width: calc(100% /  5 - 5px);
+	text-align: center;
 }
 
 ul.submenu li {
@@ -128,25 +128,25 @@ ul.submenu li {
 }
 
 .admin-li > a {
-	color: #ffffff;
+	display: block;
+	padding: 8px;
+	color: #FFFFFF;
 	font-weight: 400;
 	font-size: 1em;
-    text-transform: uppercase;
-	display: block;
 	text-decoration: none;
-    padding: 8px;
+	text-transform: uppercase;
 }
 
 .admin-li > a:hover {
-	color: #dddddd;
+	color: #DDDDDD;
 }
 
 .admin-li > a span {
-	font-size: 1.3rem;
 	display: none;
+	font-size: 1.3rem;
 }
 
-@media (min-width: 769px) and (min-height: 601px){
+@media (min-width: 769px) and (min-height: 601px) {
 	.admin-li > a {
 		padding: 8px 17px;
 	}
@@ -166,25 +166,25 @@ ul.submenu li {
 	opacity:0;
 	pointer-events: none;
 	font-size: 1.2rem;
-	color: #f5f5f5;
+	color: #F5F5F5;
 	overflow: hidden;
 }
 
-@media (min-width: 769px){
+@media (min-width: 769px) {
 	.cssmenu-modal {
-		left:230px;
+		left: 230px;
 	}
 }
 
 .cssmenu-modal:target {
-	opacity:1;
+	opacity: 1;
 	padding: 30px 20px;
-	pointer-events: auto;
     overflow-y: auto;
 	background-color: rgba(0, 0, 0, 0.6);
+	pointer-events: auto;
 }
 
-@media (min-width: 769px){
+@media (min-width: 769px) {
 	.cssmenu-modal:target {
 		width: calc(100% - 230px);
 	}
@@ -207,33 +207,36 @@ ul.submenu li {
 .cssmenu-modal:target .submenu,
 .cssmenu-modal:target .next-menu {
 	width: 100%;
-	background-color: #f1f2f3;
+	background-color: #F1F2F3;
 	flex: 0 0 auto;
+	-ms-flex: 0 0 auto;
 	-webkit-flex: 0 0 auto;
 }
 
 div[id*="openmodal-"],
 div[id*="openmodule-"] {
-	display: -webkit-flex;
 	display: flex;
-	-webkit-flex-direction: column;
+	display: -ms-flex;
+	display: -webkit-flex;
 	flex-direction: column;
-	-webkit-justify-content: flex-start;
+	-ms-flex-direction: column;
+	-webkit-flex-direction: column;
 	justify-content: flex-start;
-	-webkit-align-items: flex-start;
+	-ms-justify-content: flex-start;
+	-webkit-justify-content: flex-start;
 	align-items: flex-start;
+	-ms-align-items: flex-start;
+	-webkit-align-items: flex-start;
 }
 
-@media (min-width:769px){
+@media (min-width: 769px) {
 	div[id*="openmodal-"] {
-		display: -webkit-flex;
-		display: flex;
-		-webkit-flex-direction: column;
-		flex-direction: column;
-		-webkit-justify-content: center;
 		justify-content: center;
-		-webkit-align-items: center;
+		-ms-justify-content: center;
+		-webkit-justify-content: center;
 		align-items: center;
+		-ms-align-items: center;
+		-webkit-align-items: center;
 	}
 }
 
@@ -250,21 +253,21 @@ div[id*="openmodule-"] {
 }
 
 a.close span {
-	cursor: pointer;
-	color: #cccccc;
 	padding: 1px 8px 5px;
-	font-size: 1.5rem;
 	border-radius: 30px;
-	border: 1px solid #cccccc;
+	border: 1px solid #CCCCCC;
+	font-size: 1.5rem;
+	color: #CCCCCC;
+	cursor: pointer;
 }
 
 a:hover.close span {
-	color: #ffffff;
-	border-color: #ffffff;
+	border-color: #FFFFFF;
+	color: #FFFFFF;
 }
 
 .submenu {
-	z-index: 100;
+	z-index: 10;
 }
 
 .submenu > li {
@@ -273,7 +276,7 @@ a:hover.close span {
 	width: 100%;
 }
 
-@media (min-width: 479px){
+@media (min-width: 479px) {
 	.submenu > li {
 		display: inline-block;
 		vertical-align: text-top;
@@ -281,26 +284,26 @@ a:hover.close span {
 	}
 }
 
-@media (min-width: 1025px){
+@media (min-width: 1025px) {
 	.submenu > li {
 		width: calc(100% / 3 - 5px);
 	}
 }
 
-@media (min-width: 1367px){
+@media (min-width: 1367px) {
 	.submenu > li {
 		width: calc(100% / 5 - 5px);
 	}
 }
 
-@media (min-width: 1601px){
+@media (min-width: 1601px) {
 	.submenu > li {
 		width: calc(100% / 6 - 5px);
 	}
 }
 
 .submenu a {
-    font-size: 1.5em;
+	font-size: 1.5em;
 }
 
 .submenu i {
@@ -308,28 +311,29 @@ a:hover.close span {
 }
 
 .submenu > li > a {
-    padding: 10px;
-    display: table;
+	display: table;
+	padding: 10px;
 	text-decoration: none;
-	border-bottom: 1px solid #dddddd;    
+	border-bottom: 1px solid #DDDDDD;    
 }
 
 .submenu ul {
-    padding: 10px;
+	padding: 10px;
 }
 
 .submenu ul li a {
-    padding: 5px 0;
-    display: table;
+	display: table;
+	padding: 5px 0;
 }
 
 ul.level-2 > li.has-sub > a {
-    display: none;
+	display: none;
 }
 
 ul.level-2 ul {
-    padding: 0;
+	padding: 0;
 }
+
 ul.level-2 a {
 	font-weight: 400;
 	font-size: 1em;
@@ -338,7 +342,7 @@ ul.level-2 a {
 
 .next-menu {
 	width:100%;
-	z-index: 100;
+	z-index: 20;
 	padding: 10px;
 	margin-top: 5px;
 }
@@ -352,13 +356,12 @@ ul.level-2 a {
 }
 
 
-/* --- Menu support ================================================= */
+/* -- Menu support ================================================= */
 #support-pbt {
 	display: none;
 }
 
 @media (min-width: 769px) {
-	
 	#support-pbt {
 		display: block;
 	}
@@ -387,7 +390,7 @@ ul.level-2 a {
 }
 
 
-/* --- Menu de liens rapides ============================================================= */
+/* -- Menu de liens rapides ============================================================= */
 nav#admin-quick-menu {
 	background-color: #353535;
 	min-height: 39px;
@@ -409,7 +412,7 @@ nav#admin-quick-menu.active ul {
 	opacity: 1;
 	visibility: visible;
 	background-color: #353535;
-	transition: all .5s ease 0s;
+	transition: all 0.5s ease 0s;
 }
 	
 nav#admin-quick-menu li {
@@ -471,8 +474,7 @@ a:hover.js-menu-button {
 	}
 }
 
-/* --- Menu etendu ================================================================ */
-
+/* -- Menu etendu ================================================================ */
 .admin-extend-menu p {
 	padding: 0;
 }
@@ -553,14 +555,12 @@ a:hover.js-menu-button {
 .admin-extend-menu li:hover i.fa-cubes 					{ color: #058480; }
 
 @media (min-width: 481px) {
-	
 	.admin-extend-menu li {
 		width: calc(97% / 3);
 	}
 }
 
 @media (min-width: 981px) {
-	
 	.admin-extend-menu li {
 		width: calc(97% / 4);
 	}

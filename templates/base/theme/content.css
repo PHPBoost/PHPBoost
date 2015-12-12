@@ -18,16 +18,16 @@ Contient les elements :
 /* ------------------------------------ */
 section,
 article {
+	margin: 0 auto;
 	width: 100%;
-	margin: 0 auto;	
 	vertical-align: top;
 }
 
 @media (min-width: 769px) {
 	section,
 	article {
-		width: 98%;
 		margin: 1em auto;
+		width: 98%;
 	}
 }
 
@@ -53,14 +53,14 @@ section header h1 a:hover {
 
 section header h2,
 article header h2 {
-	border-bottom: 1px solid #336397;
 	margin-left: 15px;
+	border-bottom: 1px solid #336397;
 }
 
 section header h3,
 article header h3 {
-	border-bottom: 1px solid #336397;
 	margin-left: 15px;
+	border-bottom: 1px solid #336397;
 }
 
 @media (min-width: 769px) {
@@ -129,11 +129,11 @@ header span.actions a {
 .block,
 .medium-block,
 .small-block {
+	padding: 0.8em;
+	background-color: #F2F8FF;
 	border-style: solid;
 	border-width: 2px 1px 1px 1px;
 	border-color: #366393 #CCCCCC #99B1CB #CCCCCC;
-	background-color: #F2F8FF;
-	padding: 0.8em;
 }
 
 .block .content,
@@ -218,22 +218,22 @@ ul.pagination-block li {
 ul.pagination-block li a {
 	display: inline-block;
 	padding: 2px 7px;
-	text-align: center;
-	text-decoration: none;
 	outline: none;
 	font-weight: bold;
 	font-size: 0.8em;
+	text-align: center;
+	text-decoration: none;
 }
 
 ul.pagination-block li a {
-	color: #333333;
-	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
 	background-image: linear-gradient(to bottom,  rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.10) 100%);
 	background-color: #F9F9F9;
 	border: 1px solid #CCCCCC;
 	border-color: #E1E1E1 #E1E1E1 #BFBFBF #CFCFCF;
 	border-radius: 4px;
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0 2px rgba(0, 0, 0, 0.05);
+	color: #333333;
+	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
 }
 
 ul.pagination-block li a:hover {
@@ -249,9 +249,9 @@ ul.pagination-block li a:active {
 }
 
 ul.pagination-block li a.current-page {
-	color: #FEFEFE;
 	background-color: #3B6B9F;
 	border-color: #366393;
+	color: #FEFEFE;
 	text-decoration: none;
 }
 
@@ -283,8 +283,8 @@ ul.pagination-block-bis li a.next-page:hover {
 .explorer .cats,
 .explorer .files {
 	display: inline-block;
-	width: 62%;
 	margin: 5px 0.33%;
+	width: 62%;
 	vertical-align: top;
 }
 
@@ -294,22 +294,23 @@ ul.pagination-block-bis li a.next-page:hover {
 }
 
 .explorer h1 {
+	margin: 5px 0;
 	color: #666666;
 	font-size: 13px;
-	margin: 5px 0;
 }
 
 .explorer .content {
-	border: 1px solid #DDDDDD;
 	padding: 5px 0;
-	border-radius: 3px;
 	min-height: 120px;
+	border: 1px solid #DDDDDD;
+	border-radius: 3px;
+	
 }
 
 .explorer .content ul {
-	list-style-type: none;
 	margin: 0;
 	padding: 0;
+	list-style-type: none;
 }
 
 .explorer .content ul ul {
@@ -321,8 +322,8 @@ ul.pagination-block-bis li a.next-page:hover {
 }
 
 .explorer .content ul a {
-	padding: 3px 0;
 	display: block;
+	padding: 3px 0;
 	text-decoration: none;
 	color: #666666;
 }
@@ -363,13 +364,13 @@ ul.pagination-block-bis li a.next-page:hover {
 }
 
 .options {
+	float: right;
 	margin: 5px;
 	padding: 6px 12px;
+	max-width: 100%;
 	background-color: #EEEEEE;
 	border: 1px solid #DDDDDD;
-	border-radius: 3px;
-	float: right;
-	max-width: 100%;
+	border-radius: 3px;	
 }
 
 .options h6 {
@@ -394,8 +395,8 @@ ul.pagination-block-bis li a.next-page:hover {
 
 .subcat-element {
 	float: left;
-	text-align: center;
 	margin-bottom: 20px;
+	text-align: center;
 }
 
 .subcat-content {
@@ -410,22 +411,22 @@ ul.pagination-block-bis li a.next-page:hover {
 }
 
 .sortable-block {
-	list-style-type: none;
-	list-style-position: outside;
 	margin: 0;
 	padding: 0;
 	min-height: 24px;
+	list-style-type: none;
+	list-style-position: outside;
 }
 
 .sortable-block .sortable-element {
+	display: table;
+	margin-bottom: 6px;
+	padding: 0;
+	width: 100%;
 	background-color: #FFFFFF;
 	border: 1px solid #D6DEE7;
-	padding: 0;
-	margin-bottom: 6px;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
-	transition: box-shadow 0.2s;
-	display: table;
-	width: 100%;
+	transition: box-shadow 0.2s;	
 }
 
 .sortable-block .sortable-element:hover {
@@ -438,8 +439,8 @@ ul.pagination-block-bis li a.next-page:hover {
 		display: table-cell;
 		position: relative;
 		width: 20px;
-		background-color: #81A4C8;
 		opacity: 0.3;
+		background-color: #81A4C8;
 		transition: opacity 1s;
 		cursor: move;
 	}
@@ -463,8 +464,8 @@ ul.pagination-block-bis li a.next-page:hover {
 }
 
 .sortable-block .sortable-title {
-	background-image: linear-gradient(to bottom, #FFFFFF 50%, #FAFAFA 100%);
 	padding: 8px 5px 5px 10px;
+	background-image: linear-gradient(to bottom, #FFFFFF 50%, #FAFAFA 100%);
 }
 
 .sortable-block .sortable-title:hover {
@@ -498,13 +499,13 @@ ul.pagination-block-bis li a.next-page:hover {
 }
 
 .sortable-block .sortable-element hr {
-	background-color: #999999;
 	margin-top: 5px;
+	background-color: #999999;
 }
 
 .sortable-block .sortable-element label {
-	color: #1F507F;
 	margin-left: 14px;
+	color: #1F507F;
 }
 
 .sortable-block .sortable-actions img,
@@ -529,11 +530,11 @@ body.dragging * {
 	margin: 10px 0;
 	padding-top: 5px;
 	height: 30px;
+	opacity: 0.6;
 	border: 1px dashed #AAAAAA;
 	border-radius: 5px;
 	text-align: center;
 	color: #AAAAAA;
-	opacity: 0.6;
 }
 
 .preview img {
@@ -545,19 +546,19 @@ body.dragging * {
 /* ------------------- */
 .module-mini-container {
 	margin: 0 0 10px 0;
+	padding: 5px;
+	background-color: #FFFFFF;
 	border: 1px #BEBEBE solid;
 	border-bottom: 2px #99B1CB solid;
-	background-color: #FFFFFF;
 	border-spacing: 1px;
-	padding: 5px;
 	clear: both;
 }
 
 .module-mini-top {
-	min-height: 24px;
-	text-align: center;
-	border-bottom: 2px #336397 solid;
 	padding: 0.2em 0 0.2em 0;
+	min-height: 24px;
+	border-bottom: 2px #336397 solid;
+	text-align: center;
 }
 
 .module-mini-container h5,
@@ -566,10 +567,10 @@ body.dragging * {
 }
 
 .module-mini-contents {
+	padding: 5px 4px 0 4px;
 	border-top: none;
 	border-bottom: none;
 	text-align: center;
-	padding: 5px 4px 0 4px;
 }
 
 .module-mini-bottom {
@@ -589,8 +590,8 @@ body.dragging * {
 }
 
 .message {
-	width: 98%;
 	margin-bottom: 20px;
+	width: 98%;
 	overflow: auto;
 }
 
@@ -612,28 +613,28 @@ body.dragging * {
 }
 
 .message-user-infos {
-	text-align: center;
-	width: 120px;
 	float: left;
+	width: 120px;
+	text-align: center;
 }
 
 .message-message {
 	position: relative;
-	padding: 15px;
 	margin: 5px 0 0 140px;
-	border: 1px solid #D6DEE7;
-	color: #333333;
-	background-color: #ECEFFA;
+	padding: 15px;
 	min-height: 80px;
+	background-color: #ECEFFA;
+	border: 1px solid #D6DEE7;
 	border-radius: 4px;
+	color: #333333;
 }
 
 .message-message::after,
 .message-message::before {
 	position: absolute;
 	display: block;
-	content: "";
 	width: 0;
+	content: "";
 }
 
 .message-message::before {
@@ -664,25 +665,30 @@ body.dragging * {
 
 @media (max-width: 768px) {
 	.message-container {
+		padding: 4px;
 		border: 1px solid #d1d2d4;
 		border-radius: 4px;
-		padding: 4px;
 	}
+
 	.message-user-infos {
 		width: 80px;
 	}
+
 	.message-user-infos img {
 		max-width: 40px;
 	}
+
 	.message-date {
 		margin-left: 90px;
 	}
+
 	.message-date span.actions {
 		float: none;
 		display: block;
-		text-align: right;
 		margin-bottom: 20px;
+		text-align: right;
 	}
+
 	.message-message {
 		clear: both;
 		margin: 0;
@@ -711,12 +717,12 @@ body.dragging * {
 
 /* --- Moderation des messages --- */
 .message-moderate {
+	margin-bottom: 10px;
+	padding: 4px 0 4px 0;
+	width: 98%;
 	background-color: #ECEFFA;
 	border: 1px solid #D6DEE7;
 	border-radius: 4px;
-	padding: 4px 0 4px 0;
-	margin-bottom: 10px;
-	width: 98%;
 	text-align: center;
 	vertical-align: middle;
 }
@@ -743,8 +749,8 @@ i.message-announce-new {
 /* -- Profile User -- */
 /* ------------------ */
 ul#profile-container {
-	width: 99%;
 	margin: 30px auto;
+	width: 99%;
 	list-style-type: none;
 }
 
@@ -755,13 +761,13 @@ ul#profile-container li {
 }
 
 .preview-img {
-	vertical-align: top;
 	max-height: 180px;
+	vertical-align: top;
 }
 
 .user-agreement {
-	max-width: none;
 	width: 90%;
+	max-width: none;
 	max-height: 250px;
 	overflow-y: auto;
 }
@@ -808,15 +814,15 @@ div#release {
 
 .module-contribution-element {
 	float: left;
-	text-align: center;
 	margin: 20px 0px;
+	text-align: center;
 }
 
 .unprocessed-contribution {
-	text-align: center;
 	margin: auto;
 	width: 300px;
 	overflow: hidden;
+	text-align: center;
 }
 
 .unprocessed-contribution div {
@@ -833,15 +839,15 @@ div#release {
 }
 
 #module-user-moderation-panel .bt-content {
+	display: block;
 	width: 100%;
 	text-align: center;
-	display: block;
 }
 
 .contribution-module-container {
 	float: left;
-	text-align: center;
 	margin: 20px 0px;
+	text-align: center;
 }
 
 .convers-announce {
@@ -858,13 +864,13 @@ table.announce-legend td {
 }
 
 .post-pm {
-	width: 80%;
 	margin: auto;
+	width: 80%;
 }
 
 .available-modules-msg {
-	text-align: center;
 	margin-bottom: 15px;
+	text-align: center;
 }
 
 
@@ -883,9 +889,9 @@ table.announce-legend td {
 
 #module-user-error-403 .fa-warning,
 #module-user-error-404 .fa-warning {
-	color: #C19954;
 	display: block;
 	margin: 40px auto 20px auto;
+	color: #C19954;
 }
 
 #module-user-error-403 .message-error,

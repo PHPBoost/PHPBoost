@@ -12,19 +12,19 @@ Contient les elements :
 /* --- Normal --- */
 button,
 .button {
+	margin-top: 5px;
+	padding: 0.3em 1em;
 	height: auto;
-	color: #333333;
-	text-align: center;
-	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
 	background-image: linear-gradient(to bottom,  rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.10) 100%);
 	background-color: #F9F9F9;
 	border: 1px solid #CCCCCC;
 	border-color: #E1E1E1 #E1E1E1 #BFBFBF #CFCFCF;
 	border-radius: 4px;
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0 2px rgba(0, 0, 0, 0.05);
-	white-space: nowrap;
-	padding: 0.3em 1em;
-	margin-top: 5px;
+	color: #333333;
+	text-align: center;
+	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
+	white-space: nowrap;	
 }
 
 button:hover,
@@ -44,15 +44,15 @@ button:active,
 /* --- Petit bouton --- */
 button.small,
 .button-small {
-	font-size: 1.1rem;
 	padding: 0.2em 0.5em;
+	font-size: 1.1rem;
 }
 
 /* --- Bouton de formulaire --- */
 button.submit {
-	color: #FEFEFE;
 	background-color: #3B6B9F;
 	border-color: #366393;
+	color: #FEFEFE;
 }
 
 button.submit:hover {
@@ -63,13 +63,14 @@ button.submit:hover {
 /* --- Bouton basic --- */
 .basic-button {
 	display: inline-block;
-	padding: 1px 6px;
-	font-weight: bold;
-	text-align: center;
-	border-radius: 2px;
-	background-color: #2F5B8A;
-	color:#FFFFFF;
 	margin: 1px;
+	padding: 1px 6px;
+	background-color: #2F5B8A;
+	border-radius: 2px;
+	font-weight: bold;
+	text-align: center;	
+	color:#FFFFFF;
+	
 }
 
 .basic-button:hover {
@@ -104,15 +105,14 @@ button.submit:hover {
 /* -- Formulaires -- */
 /* ----------------- */
 .fieldset-mini {
+	margin: 20px auto auto auto;
 	width: 540px;
-	margin: auto;
-	margin-top: 20px;
 }
 
 fieldset {
-	border: none;
-	background: none;
 	margin: 1.5em 0;
+	background: none;
+	border: none;	
 }
 
 fieldset img {
@@ -127,9 +127,9 @@ fieldset img {
 
 fieldset.fieldset-submit {
 	width: 100%;
-	text-align: center;
 	background: none;
 	border: none;
+	text-align: center;
 }
 
 fieldset.fieldset-submit legend {
@@ -137,9 +137,9 @@ fieldset.fieldset-submit legend {
 }
 
 optgroup {
-	font-weight: bold;
 	border: none;
 	border-bottom: 1px solid #5B5A5A;
+	font-weight: bold;
 }
 
 option {
@@ -158,10 +158,10 @@ legend {
 
 /* --- Previsualisation --- */
 .xmlhttprequest-preview {
-	border: 1px solid #CCCCCC;
-	background-color: #FFFFFF;
-	color: #2E3B5F;
 	padding: 0 2px;
+	background-color: #FFFFFF;
+	border: 1px solid #CCCCCC;
+	color: #2E3B5F;
 }
 
 .xmlhttprequest-preview img {
@@ -180,11 +180,11 @@ input[type=password],
 input[type=file],
 textarea,
 select {
+	padding: 4px 18px 4px 6px;
 	background-color: #FFFFFF;
 	border: 1px solid #CCCCCC;
 	border-radius: 4px;
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
-	padding: 4px 18px 4px 6px;
 	color: #555555;
 }
 
@@ -262,8 +262,8 @@ input[name$="_minutes"] { width: 50px;  }
 /* --- Element du formulaire (englobe le label et l'input d'un champ) --- */
 .form-element,
 .form-element-textarea {
-	margin: 0 1em 1em 1em;
 	position: relative;
+	margin: 0 1em 1em 1em;
 }
 
 @media (min-width: 769px) {
@@ -322,22 +322,22 @@ input[name$="_minutes"] { width: 50px;  }
 
 /* --- Label pour les checkbox et radio --- */
 .form-field label {
-	margin: 0 10px 0 0;
 	display: block;
+	margin: 0 10px 0 0;
 }
 
 /* --- Label pour les inputs [for] et pour les elements sans associations --- */
 .form-element > label {
 	display: inline-block;
+	padding-right: 10px;
 	width: 40%;
 	text-align: left;
-	padding-right: 10px;
 	vertical-align: top;
 }
 
 .field-description {
-	font-size: 0.8em;
 	display: block;
+	font-size: 0.8em;
 	line-height: 12px;
 }
 
@@ -362,10 +362,10 @@ textarea[disabled=disabled]:focus,
 select[disabled=disabled],
 select[disabled=disabled]:hover,
 select[disabled=disabled]:focus {
-	cursor: not-allowed;
 	background-color: #F1F1F1;
 	border: 1px solid #CCCCCC;
 	color: #AAAAAA;
+	cursor: not-allowed;
 }
 
 input[readonly=readonly],
@@ -388,16 +388,16 @@ select[readonly=readonly]:focus {
 
 /* --- Textarea --- */
 .form-field-textarea {
-	display: inline;
-	width: 99%;
 	position: relative;
+	display: inline;
 	margin: 5px auto;
+	width: 99%;
 }
 
 textarea {
+	width: 100%;
 	overflow: auto;
 	resize: vertical;
-	width: 100%;
 }
 
 .form-element-textarea {
@@ -417,8 +417,8 @@ textarea {
 }
 
 .form-element-preview {
-	text-align: center;
 	margin: 5px auto 0 auto;
+	text-align: center;
 }
 
 /* --- choix des permissions --- */
@@ -437,16 +437,16 @@ textarea {
 }
 
 .advanced-auth-group select {
+	padding-right: 5px;
 	max-width: 153px;
 	overflow-x: auto;
-	padding-right: 5px;
 }
 
 .advanced-auth-select select {
+	padding-right: 5px;
 	max-width: 132px;
 	word-wrap: normal;
 	overflow-x: auto;
-	padding-right: 5px;
 }
 
 .advanced-auth-select {
@@ -470,9 +470,9 @@ textarea {
 }
 
 .advanced-auth-input-result {
+	margin: 2px 0 0 0;
 	width: 138px;
 	height: 100px;
-	margin: 2px 0 0 0;
 }
 
 .bbcode ~ .form-field-textarea textarea {

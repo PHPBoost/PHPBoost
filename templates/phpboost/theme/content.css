@@ -770,6 +770,11 @@ div#message-maintain > div {
 	margin: 0 auto;
 }
 
+div#message-maintain .warning {
+	border-radius: 5px;
+	border-width: 4px;
+}
+
 div#release {
 	margin-top: 20px;
 }
