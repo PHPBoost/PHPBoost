@@ -73,12 +73,13 @@ class GalleryDisplayCategoryController extends ModuleController
 		$config = GalleryConfig::load();
 		$category = $this->get_category();
 		
-		$categories = GalleryService::get_categories_manager()->get_categories_cache()->get_childrens($category->get_id());
-		$authorized_categories = GalleryService::get_authorized_categories($category->get_id());
+		$subcategories = GalleryService::get_categories_manager()->get_categories_cache()->get_childrens($category->get_id(), GalleryService::get_authorized_categories($category->get_id()));
+		$elements_number = $category->get_elements_number();
+		
 		$Gallery = new Gallery();
 		
-		$nbr_pics = $this->db_querier->count(GallerySetup::$gallery_table, 'WHERE idcat=:idcat AND aprob = 1', array('idcat' => $category->get_id()));
-		$total_cat = count($categories);
+		$nbr_pics = $elements_number['pics_aprob'];
+		$total_cat = count($subcategories);
 		
 		//On crée une pagination si le nombre de catégories est trop important.
 		$page = AppContext::get_request()->get_getint('p', 1);
@@ -113,44 +114,24 @@ class GalleryDisplayCategoryController extends ModuleController
 		{
 			$this->tpl->put('C_GALLERY_CATS', true);
 			
-			$j = 0;
-			$result = $this->db_querier->select('SELECT @id_cat:= gallery_cats.id, gallery_cats.*,
-			(SELECT COUNT(*) FROM ' . GallerySetup::$gallery_table . '
-				WHERE idcat IN (
-					@id_cat,
-					(SELECT GROUP_CONCAT(id SEPARATOR \',\') FROM ' . GallerySetup::$gallery_cats_table . ' WHERE id_parent = @id_cat), 
-					(SELECT GROUP_CONCAT(childs.id SEPARATOR \',\') FROM ' . GallerySetup::$gallery_cats_table . ' parents
-					INNER JOIN ' . GallerySetup::$gallery_cats_table . ' childs ON parents.id = childs.id_parent
-					WHERE parents.id_parent = @id_cat)
-				)
-				AND aprob = 1
-			) AS nbr_pics
-			FROM ' . GallerySetup::$gallery_cats_table . ' gallery_cats
-			WHERE id_parent = :id_category
-			AND id IN :authorized_categories
-			ORDER BY id_parent, c_order
-			LIMIT :number_items_per_page OFFSET :display_from', array(
-				'id_category' => $category->get_id(),
-				'authorized_categories' => $authorized_categories,
-				'number_items_per_page' => $pagination->get_number_items_per_page(),
-				'display_from' => $pagination->get_display_from()
-			));
-			
-			while ($row = $result->fetch())
+			foreach ($subcategories as $id => $cat)
 			{
-				$category_image = new Url($row['image']);
-				
-				$this->tpl->assign_block_vars('sub_categories_list', array(
-					'C_CATEGORY_IMAGE' => !empty($row['image']),
-					'CATEGORY_NAME' => $row['name'],
-					'CATEGORY_IMAGE' => $category_image->rel(),
-					'PICTURES_NUMBER' => sprintf($LANG['nbr_pics_info'], $row['nbr_pics']),
-					'U_CATEGORY' => GalleryUrlBuilder::get_link_cat($row['id'],$row['name'])
-				));
-				
 				$nbr_cat_displayed++;
+				
+				if ($nbr_cat_displayed > $pagination->get_display_from() && $nbr_cat_displayed <= ($pagination->get_display_from() + $pagination->get_number_items_per_page()))
+				{
+					$category_image = $cat->get_image()->rel();
+					$elements_number = $cat->get_elements_number();
+					
+					$this->tpl->assign_block_vars('sub_categories_list', array(
+						'C_CATEGORY_IMAGE' => !empty($category_image),
+						'CATEGORY_NAME' => $cat->get_name(),
+						'CATEGORY_IMAGE' => $category_image,
+						'PICTURES_NUMBER' => sprintf($LANG['nbr_pics_info'], $elements_number['pics_aprob']),
+						'U_CATEGORY' => GalleryUrlBuilder::get_link_cat($cat->get_id(), $cat->get_name())
+					));
+				}
 			}
-			$result->dispose();
 		}
 		
 		$category_description = FormatingHelper::second_parse($category->get_description());
@@ -619,7 +600,12 @@ class GalleryDisplayCategoryController extends ModuleController
 		$response = new SiteDisplayResponse($this->tpl);
 		
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['module_title']);
+		
+		if ($this->get_category()->get_id() != Category::ROOT_CATEGORY)
+			$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['module_title']);
+		else
+			$graphical_environment->set_page_title($this->lang['module_title']);
+		
 		$graphical_environment->get_seo_meta_data()->set_description($this->get_category()->get_description());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(GalleryUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), AppContext::get_request()->get_getint('page', 1)));
 		

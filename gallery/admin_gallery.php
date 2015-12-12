@@ -49,6 +49,7 @@ if (!empty($idpics) && $move) //Déplacement d'une image.
 
 	//Régénération du cache des photos aléatoires.
 	GalleryMiniMenuCache::invalidate();
+	GalleryCategoriesCache::invalidate();
 
 	AppContext::get_response()->redirect('/gallery/admin_gallery.php?cat=' . $move);
 }
@@ -60,6 +61,7 @@ elseif (!empty($del)) //Suppression d'une image.
 
 	//Régénération du cache des photos aléatoires.
 	GalleryMiniMenuCache::invalidate();
+	GalleryCategoriesCache::invalidate();
 
 	AppContext::get_response()->redirect('/gallery/admin_gallery.php?cat=' . $id_category);
 }
@@ -81,11 +83,11 @@ else
 		$category = GalleryService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
 	}
 	
-	$categories = GalleryService::get_categories_manager()->get_categories_cache()->get_childrens($id_category);
-	$authorized_categories = GalleryService::get_authorized_categories($id_category);
+	$subcategories = GalleryService::get_categories_manager()->get_categories_cache()->get_childrens($category->get_id(), GalleryService::get_authorized_categories($category->get_id()));
+	$elements_number = $category->get_elements_number();
 	
-	$nbr_pics = PersistenceContext::get_querier()->count(GallerySetup::$gallery_table, 'WHERE idcat=:idcat', array('idcat' => $id_category));
-	$total_cat = count($categories);
+	$nbr_pics = $elements_number['pics_aprob'] + $elements_number['pics_unaprob'];
+	$total_cat = count($subcategories);
 	
 	//On crée une pagination si le nombre de catégories est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
@@ -145,66 +147,40 @@ else
 	));
 
 	##### Catégorie disponibles #####
+	$nbr_cat_displayed = 0;
 	if ($total_cat > 0)
 	{
 		$tpl->assign_block_vars('cat', array(
 		));
 		
 		$i = 0;
-		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= gallery_cats.id, gallery_cats.*,
-		(SELECT COUNT(*) FROM ' . GallerySetup::$gallery_table . '
-			WHERE idcat IN (
-				@id_cat,
-				(SELECT GROUP_CONCAT(id SEPARATOR \',\') FROM ' . GallerySetup::$gallery_cats_table . ' WHERE id_parent = @id_cat), 
-				(SELECT GROUP_CONCAT(childs.id SEPARATOR \',\') FROM ' . GallerySetup::$gallery_cats_table . ' parents
-				INNER JOIN ' . GallerySetup::$gallery_cats_table . ' childs ON parents.id = childs.id_parent
-				WHERE parents.id_parent = @id_cat)
-			)
-			AND aprob = 1
-		) AS nbr_pics,
-		(SELECT COUNT(*) FROM ' . GallerySetup::$gallery_table . '
-			WHERE idcat IN (
-				@id_cat,
-				(SELECT GROUP_CONCAT(id SEPARATOR \',\') FROM ' . GallerySetup::$gallery_cats_table . ' WHERE id_parent = @id_cat), 
-				(SELECT GROUP_CONCAT(childs.id SEPARATOR \',\') FROM ' . GallerySetup::$gallery_cats_table . ' parents
-				INNER JOIN ' . GallerySetup::$gallery_cats_table . ' childs ON parents.id = childs.id_parent
-				WHERE parents.id_parent = @id_cat)
-			)
-			AND aprob = 0
-		) AS nbr_pics_unaprob
-		FROM ' . GallerySetup::$gallery_cats_table . ' gallery_cats
-		WHERE id_parent = :id_category
-		AND id IN :authorized_categories
-		ORDER BY id_parent, c_order
-		LIMIT :number_items_per_page OFFSET :display_from', array(
-			'id_category' => $id_category,
-			'authorized_categories' => $authorized_categories,
-			'number_items_per_page' => $pagination->get_number_items_per_page(),
-			'display_from' => $pagination->get_display_from()
-		));
-		
-		while ($row = $result->fetch())
+		foreach ($subcategories as $id => $cat)
 		{
-			//On genère le tableau pour $config->get_columns_number() colonnes
-			$multiple_x = $i / $nbr_column_cats;
-			$tr_start = is_int($multiple_x) ? '<tr>' : '';
-			$i++;
-			$multiple_x = $i / $nbr_column_cats;
-			$tr_end = is_int($multiple_x) ? '</tr>' : '';
-
-			$category_image = new Url($row['image']);
+			$nbr_cat_displayed++;
 			
-			$tpl->assign_block_vars('cat.list', array(
-				'C_IMG' => !empty($row['image']),
-				'IDCAT' => $row['id'],
-				'CAT' => $row['name'],
-				'IMG' => $category_image->rel(),
-				'TR_START' => $tr_start,
-				'TR_END' => $tr_end,
-				'L_NBR_PICS' => sprintf($LANG['nbr_pics_info_admin'], $row['nbr_pics'], $row['nbr_pics_unaprob'])
-			));
+			if ($nbr_cat_displayed > $pagination->get_display_from() && $nbr_cat_displayed <= ($pagination->get_display_from() + $pagination->get_number_items_per_page()))
+			{
+				//On genère le tableau pour $config->get_columns_number() colonnes
+				$multiple_x = $i / $nbr_column_cats;
+				$tr_start = is_int($multiple_x) ? '<tr>' : '';
+				$i++;
+				$multiple_x = $i / $nbr_column_cats;
+				$tr_end = is_int($multiple_x) ? '</tr>' : '';
+				
+				$category_image = $cat->get_image()->rel();
+				$elements_number = $cat->get_elements_number();
+				
+				$tpl->assign_block_vars('cat.list', array(
+					'C_IMG' => !empty($category_image),
+					'IDCAT' => $cat->get_id(),
+					'CAT' => $cat->get_name(),
+					'IMG' => $category_image,
+					'TR_START' => $tr_start,
+					'TR_END' => $tr_end,
+					'L_NBR_PICS' => sprintf($LANG['nbr_pics_info_admin'], $elements_number['pics_aprob'], $elements_number['pics_unaprob'])
+				));
+			}
 		}
-		$result->dispose();
 
 		//Création des cellules du tableau si besoin est.
 		while (!is_int($i/$nbr_column_cats))

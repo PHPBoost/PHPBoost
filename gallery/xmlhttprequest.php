@@ -94,6 +94,7 @@ else
 				echo $Gallery->Aprob_pics($id_file);
 				//Régénération du cache des photos aléatoires.
 				GalleryMiniMenuCache::invalidate();
+				GalleryCategoriesCache::invalidate();
 			}
 			else 
 				echo 0;

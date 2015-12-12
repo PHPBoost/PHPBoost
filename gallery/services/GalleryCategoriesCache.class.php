@@ -46,6 +46,17 @@ class GalleryCategoriesCache extends CategoriesCache
 		return 'gallery';
 	}
 	
+	protected function get_category_elements_number($id_category)
+	{
+		$pics_aprob = GalleryService::count('WHERE idcat = :id_category AND aprob = 1', array('id_category' => $id_category));
+		$pics_unaprob = GalleryService::count('WHERE idcat = :id_category AND aprob = 0', array('id_category' => $id_category));
+		
+		return array(
+			'pics_aprob' => $pics_aprob,
+			'pics_unaprob' => $pics_unaprob
+		);
+	}
+	
 	public function get_root_category()
 	{
 		$root = new RichRootCategory();

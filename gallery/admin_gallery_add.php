@@ -83,6 +83,7 @@ if (isset($_FILES['gallery']) && $idcat_post) //Upload
 
 			//Régénération du cache des photos aléatoires.
 			GalleryMiniMenuCache::invalidate();
+			GalleryCategoriesCache::invalidate();
 		}
 	}
 
@@ -113,6 +114,7 @@ elseif ($valid && !empty($nbr_pics_post)) //Ajout massif d'images par ftp.
 
 	//Régénération du cache des photos aléatoires.
 	GalleryMiniMenuCache::invalidate();
+	GalleryCategoriesCache::invalidate();
 
 	AppContext::get_response()->redirect('/gallery/admin_gallery_add.php');
 }
