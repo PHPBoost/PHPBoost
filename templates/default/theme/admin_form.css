@@ -113,6 +113,11 @@ fieldset img {
 	}
 }
 
+fieldset .table-cat img {
+	max-width: 100%;
+	margin-bottom: 10px;
+}
+
 fieldset[id*="_captcha_fieldset"] {
 	margin: 0 5px;
 }

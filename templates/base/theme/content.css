@@ -401,6 +401,11 @@ ul.pagination-block-bis li a.next-page:hover {
 
 .subcat-content {
 	margin: auto;
+	padding: 0 5px;
+}
+
+.subcat-content img {
+	margin-bottom: 10px;
 }
 
 
