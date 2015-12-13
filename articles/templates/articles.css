@@ -53,6 +53,11 @@ span.contents + hr {
     clear: both;
 }
 
+.form-field-action-link ul {
+    list-style-type: none;
+    margin: 0;
+}
+
 #module-articles .small-block.one-article {
     width: 99%;
 }
