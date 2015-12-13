@@ -48,95 +48,51 @@ class SandboxIconsController extends ModuleController
 	
 	private function build_view()
 	{
+		//Social
 		$icons = array(
-			'fa fa-arrow-right',
-			'fa fa-arrow-left',
-			'fa fa-arrow-up',
-			'fa fa-arrow-down',
-			'fa fa-arrows',
-			'fa fa-ban',
-			'fa fa-bars',
-			'fa fa-book',
-			'fa fa-calendar',
-			'fa fa-caret-down',
-			'fa fa-caret-left',
-			'fa fa-caret-right',
-			'fa fa-check',
-			'fa fa-clock-o',
-			'fa fa-cloud-upload',
-			'fa fa-cog',
-			'fa fa-comment',
-			'fa fa-comments-o',
-			'fa fa-delete',
-			'fa fa-download',
-			'fa fa-edit',
-			'fa fa-envelope',
-			'fa fa-envelope-o',
-			'fa fa-eraser',
-			'fa fa-error',
-			'fa fa-eye',
-			'fa fa-eye-slash',
-			'fa fa-facebook',
-			'fa fa-fast-forward',
-			'fa fa-female',
-			'fa fa-file',
-			'fa fa-file-text',
-			'fa fa-filter',
-			'fa fa-flag',
-			'fa fa-folder',
-			'fa fa-folder-open',
-			'fa fa-forbidden',
-			'fa fa-gavel',
-			'fa fa-google-plus',
-			'fa fa-hand-o-right',
-			'fa fa-heart',
-			'fa fa-home',
-			'fa fa-level-down',
-			'fa fa-level-up',
-			'fa fa-magic',
-			'fa fa-male',
-			'fa fa-minus',
-			'fa fa-minus-square-o',
-			'fa fa-move',
-			'fa fa-notice',
-			'fa fa-offline',
-			'fa fa-online',
-			'fa fa-pencil',
-			'fa fa-plus',
-			'fa fa-plus-square-o',
-			'fa fa-print',
-			'fa fa-question',
-			'fa fa-question-circle',
-			'fa fa-random',
-			'fa fa-refresh',
-			'fa fa-remove',
-			'fa fa-reply',
-			'fa fa-search',
-			'fa fa-sign-in',
-			'fa fa-sign-out',
-			'fa fa-skype',
-			'fa fa-sort',
-			'fa fa-sort-alpha-asc',
-			'fa fa-spinner',
-			'fa fa-star',
-			'fa fa-star-half-empty',
-			'fa fa-star-o',
-			'fa fa-success',
-			'fa fa-syndication',
-			'fa fa-tag',
-			'fa fa-tags',
-			'fa fa-ticket',
-			'fa fa-twitter',
-			'fa fa-unban',
-			'fa fa-unlink',
-			'fa fa-user',
-			'fa fa-warning',
-			'fa fa-wrench'
+			'facebook',
+			'google',
+			'twitter',
+			'hashtag'
 		);
 		
-		foreach ($icons as $icon)
+		$code = array(
+			'\f09a',
+			'\f1a0',
+			'\f099',
+			'\f292'
+			
+		);
+		
+		$icon = array_combine($icons, $code);
+		
+		foreach ($icon as $fa=> $before)
 		{
-			$this->view->assign_block_vars('icons', array('CLASS' => $icon));
+			$this->view->assign_block_vars('social', array('FA' => $fa, 'BEFORE' => $before));
+		}
+		
+		//Responsive
+		$icons = array(
+			'television',
+			'desktop',
+			'laptop',
+			'tablet',
+			'mobile'
+		);
+		
+		$code = array(
+			'\f26c',
+			'\f108',
+			'\f109',
+			'\f10a',
+			'\f10b'
+		);
+		
+		$icon = array_combine($icons, $code);
+		
+		foreach ($icon as $fa=> $before)
+		{
+			$this->view->assign_block_vars('responsive', array('FA' => $fa, 'BEFORE' => $before));
 		}
 	}
 	

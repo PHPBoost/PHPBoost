@@ -30,8 +30,11 @@
  #						French						#
  ####################################################
 
-//Titre
+// --- Titre
+
 $lang['module_title'] = 'Bac à sable';
+
+// --- Welcome
 
 $lang['title.form_builder'] = 'Formulaires';
 $lang['title.table_builder'] = 'Tableaux';
@@ -53,19 +56,47 @@ Vous pouvez ici tester plusieurs parties du framework PHPBoost :<br />
 <br />
 ';
 
-$lang['css.message_success'] = 'Ceci est un message de succès';
-$lang['css.message_notice'] = 'Ceci est un message d\'information';
-$lang['css.message_warning'] = 'Ceci est un message d\'avertissement';
-$lang['css.message_error'] = 'Ceci est un message d\'erreur';
-$lang['css.message_question'] = 'Ceci est une question, est-ce que l\'affichage sur deux lignes fonctionne correctement ?';
+// --- Icônes
+
+$lang['css.icon.sample'] = 'Quelques exemples';
+$lang['css.icon.social'] = 'Réseaux sociaux';
+$lang['css.icon.screen'] = 'Ecrans';
+$lang['css.icon.icon'] = 'Icône';
+$lang['css.icon.name'] = 'Nom';
+$lang['css.icon.code'] = 'Code';
+$lang['css.icon.list'] = 'La liste complète des icônes et de leur code associé : ';
+
+$lang['css.icon.howto'] = 'Comment ça marche ?';
+$lang['css.icon.howto.explain'] = 'Font-Awesome est une icon-font, une police de caractère qui permet d\'afficher des icônes simplement';
+$lang['css.icon.howto.update'] = 'Elle est implémentée depuis la version 4.1 de PHPBoost. Chaque mise à jour de Font-Awesome est implémentée dans la mise à jour de PHPBoost qui suit.';
+$lang['css.icon.howto.html'] = 'En html';
+$lang['css.icon.howto.html.class'] = 'On utilise le nom de l\'icône en tant que classe : ';
+$lang['css.icon.howto.html.class.result.i'] = 'Nous donnera l\'icône "edit" suivi du texte : ';
+$lang['css.icon.howto.html.class.result.a'] = 'Nous donnera le lien précédé de l\'icône "globe" : ';
+$lang['css.icon.howto.html.class.result.all'] = 'Il en est de même pour tout type de balise html.';
+$lang['css.icon.howto.css'] = 'En CSS';
+$lang['css.icon.howto.css.class'] = 'Il faut définir votre classe, puis le code de votre icône en tant que contenu du ::before ou du ::after de la classe :';
+$lang['css.icon.howto.css.css.code'] = 'Code CSS :';
+$lang['css.icon.howto.css.html.code'] = 'Code HTML :';
+$lang['css.icon.howto.variants'] = 'Les variantes';
+$lang['css.icon.howto.variants.explain'] = 'Font-Awesome propose une panoplie de variantes telles que la taille de l\'icône, l\'animation, la rotation, l\'empilement et bien d\'autres.';
+$lang['css.icon.howto.variants.list'] = 'Leur fonctionnement est expliqué ici (anglais) : ';
+$lang['css.icon.howto.variants.spinner'] = 'Nous donnera l\'icone "spinner", défini en pulsation et faisant 2 fois sa taille initiale : ';
+
+// --- CSS
+
+//Typogrphie
 $lang['css.typography'] = 'Typographie';
 $lang['css.titles'] = 'Titres';
 $lang['css.title'] = 'Titre';
+$lang['css.specific_titles'] = 'Titres spécifiques (BBCode)';
+
 $lang['css.styles'] = 'Styles';
 $lang['css.text_bold'] = 'Texte en gras';
 $lang['css.text_italic'] = 'Texte en italique';
 $lang['css.text_underline'] = 'Texte souligné';
 $lang['css.text_strike'] = 'Texte barré';
+
 $lang['css.sizes'] = 'Tailles';
 $lang['css.link'] = 'Lien';
 $lang['css.link_smaller'] = 'Lien en très petit';
@@ -73,10 +104,13 @@ $lang['css.link_small'] = 'Lien en petit';
 $lang['css.link_big'] = 'Lien en grand';
 $lang['css.link_bigger'] = 'Lien en plus grand';
 $lang['css.link_biggest'] = 'Lien très grand';
+
 $lang['css.rank_color'] = 'Couleur selon rang de l\'utilisateur';
 $lang['css.admin'] = 'Administrateur';
 $lang['css.modo'] = 'Modérateur';
 $lang['css.member'] = 'Membre';
+
+//Divers
 $lang['css.miscellaneous'] = 'Divers';
 $lang['css.main_actions_icons'] = 'Icônes des principales actions';
 $lang['css.rss_feed'] = 'Flux RSS';
@@ -85,11 +119,14 @@ $lang['css.delete'] = 'Supprimer';
 $lang['css.delete.confirm'] = 'Supprimer (contrôle automatique JS avec confirmation de suppression)';
 $lang['css.delete.confirm.custom'] = 'Supprimer (contrôle automatique JS avec confirmation personnalisée)';
 $lang['css.delete.custom_message'] = 'Message personnalisé';
+
 $lang['css.lists'] = 'Listes';
 $lang['css.element'] = 'Elément';
+
 $lang['css.progress_bar'] = 'Barre de progression';
 $lang['css.progress_bar.util_infos'] = 'Informations utiles';
 $lang['css.progress_bar.votes'] = '3 votes';
+
 $lang['css.modules_menus'] = 'Menus des modules';
 $lang['css.modules_menus.display'] = 'Afficher';
 $lang['css.modules_menus.display.most_viewed'] = 'Les plus vues';
@@ -107,11 +144,13 @@ $lang['css.modules_menus.unsolved_bugs'] = 'Bugs non-résolus';
 $lang['css.modules_menus.solved_bugs'] = 'Bugs résolus';
 $lang['css.modules_menus.roadmap'] = 'Feuille de route';
 $lang['css.modules_menus.stats'] = 'Statistiques';
+
 $lang['css.explorer'] = 'Explorateur';
 $lang['css.root'] = 'Racine';
 $lang['css.tree'] = 'Arborescence';
 $lang['css.cat'] = 'Catégorie';
 $lang['css.file'] = 'Fichier';
+
 $lang['css.options'] = 'Options';
 $lang['css.options.sort_by'] = 'Trier selon';
 $lang['css.options.sort_by.alphabetical'] = 'Alphabétique';
@@ -119,25 +158,48 @@ $lang['css.options.sort_by.size'] = 'Taille';
 $lang['css.options.sort_by.date'] = 'Date';
 $lang['css.options.sort_by.popularity'] = 'Popularité';
 $lang['css.options.sort_by.note'] = 'Note';
+
 $lang['css.button'] = 'Bouton';
+
+$lang['css.sortable'] = 'Sortable Drag & Drop';
+$lang['css.static.sortable'] = 'Sortable positionné';
+$lang['css.moved.sortable'] = 'Sortable en mouvement';
+$lang['css.dropzone'] = 'déplacer ici';
+
+//Blockquote
 $lang['css.quote'] = 'Citation';
 $lang['css.code'] = 'Code';
 $lang['css.code.php'] = 'Code PHP';
 $lang['css.hidden'] = 'Texte caché';
+
+//Pagination
 $lang['css.pagination'] = 'Pagination';
+
+//Tables
 $lang['css.table'] = 'Tableau';
 $lang['css.table_description'] = 'Description du tableau';
 $lang['css.table.name'] = 'Nom';
 $lang['css.table.description'] = 'Description';
 $lang['css.table.author'] = 'Auteur';
 $lang['css.table.test'] = 'Test';
+$lang['css.specific.table'] = 'Tableau spécifique (bbcode)';
+$lang['css.table.header'] = 'Entête';
+
+//Messages
 $lang['css.messages_and_coms'] = 'Messages et commentaires';
 $lang['css.messages.login'] = 'admin';
 $lang['css.messages.level'] = 'Administrateur';
 $lang['css.messages.date'] = '05/09/2013 à 15h37';
 $lang['css.messages.content'] = 'Ceci est un commentaire';
-$lang['css.specific_titles'] = 'Titres spécifiques (BBCode)';
 $lang['css.error_messages'] = 'Messages d\'erreurs';
+
+$lang['css.message_success'] = 'Ceci est un message de succès';
+$lang['css.message_notice'] = 'Ceci est un message d\'information';
+$lang['css.message_warning'] = 'Ceci est un message d\'avertissement';
+$lang['css.message_error'] = 'Ceci est un message d\'erreur';
+$lang['css.message_question'] = 'Ceci est une question, est-ce que l\'affichage sur deux lignes fonctionne correctement ?';
+
+//Pages
 $lang['css.page'] = 'Page';
 $lang['css.page.title'] = 'Titre de la page';
 $lang['css.page.subtitle'] = 'Sous-Titre';
@@ -146,6 +208,8 @@ $lang['css.blocks'] = 'Blocs';
 $lang['css.block.title'] = 'Titre du bloc';
 $lang['css.blocks.medium'] = 'Blocs (2 sur une ligne)';
 $lang['css.blocks.small'] = 'Blocs (3 sur une ligne)';
+
+// --- Mail
 
 $lang['mail.title'] = 'Email';
 $lang['mail.sender_mail'] = 'Email de l\'expéditeur';
@@ -168,5 +232,6 @@ $lang['mail.smtp.secure_protocol.tls'] = 'TLS';
 $lang['mail.smtp.secure_protocol.ssl'] = 'SSL';
 $lang['mail.success'] = 'L\'email a été envoyé';
 
+//Tempalte
 $lang['string_template.result'] = 'Temps de génération du template sans cache : :non_cached_time secondes<br />Temps de génération du template avec cache : :cached_time secondes<br />Longueur de la chaîne : :string_length caractères.';
 ?>

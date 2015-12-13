@@ -33,6 +33,8 @@
 //Title
 $lang['module_title'] = 'Sandbox';
 
+// --- Welcome
+
 $lang['title.form_builder'] = 'Form builder';
 $lang['title.table_builder'] = 'Table builder';
 $lang['title.icons'] = 'Icons';
@@ -53,19 +55,48 @@ Here you can test several parts of the PHPBoost framework:<br />
 <br />
 ';
 
-$lang['css.message_success'] = 'This is a success message';
-$lang['css.message_notice'] = 'This is a notice message';
-$lang['css.message_warning'] = 'This is a warning message';
-$lang['css.message_error'] = 'This is an error message';
-$lang['css.message_question'] = 'This is a question, is the two-lines display working correctly?';
+// --- Icons
+
+$lang['css.icon.sample'] = 'Some samples';
+$lang['css.icon.social'] = 'Social network';
+$lang['css.icon.screen'] = 'Screens';
+$lang['css.icon.icon'] = 'Icon';
+$lang['css.icon.name'] = 'Name';
+$lang['css.icon.code'] = 'Code';
+$lang['css.icon.list'] = 'The complete list of icons and their own code : ';
+
+$lang['css.icon.howto'] = 'How to ?';
+$lang['css.icon.howto.explain'] = 'Font-Awesome is an icon-font, a font to simply display icons';
+$lang['css.icon.howto.update'] = 'It\'s integrated since the 4.1 PHPBoost version. Each update of Font-Awesome is integrated in the next PHPBoost update.';
+$lang['css.icon.howto.html'] = 'Html way';
+$lang['css.icon.howto.html.class'] = 'Set the icon name as a class : ';
+$lang['css.icon.howto.html.class.result.i'] = 'That gives the "edit" icon following by : ';
+$lang['css.icon.howto.html.class.result.a'] = 'That gives the link with ths "globe" icon first : ';
+$lang['css.icon.howto.html.class.result.all'] = 'You can play with all html tags.';
+$lang['css.icon.howto.css'] = 'CSS way';
+$lang['css.icon.howto.css.class'] = 'Set your class, then the icon code as content of ::before or ::after of the class :';
+$lang['css.icon.howto.css.css.code'] = 'CSS :';
+$lang['css.icon.howto.css.html.code'] = 'HTML :';
+$lang['css.icon.howto.variants'] = 'Variants';
+$lang['css.icon.howto.variants.explain'] = 'Font-Awesome is setted with some variants like sizing the icon, animation, rotation, stacking and somelse.';
+$lang['css.icon.howto.variants.list'] = 'All variants are explained here : ';
+$lang['css.icon.howto.variants.spinner'] = 'That gives the "spinner" icon, setted in pulse and twice bigger than its initial size : ';
+
+
+// --- CSS
+
+//Typography
 $lang['css.typography'] = 'Typography';
 $lang['css.titles'] = 'Titles';
 $lang['css.title'] = 'Title';
+$lang['css.specific_titles'] = 'Specific titles (BBCode)';
+
 $lang['css.styles'] = 'Styles';
 $lang['css.text_bold'] = 'Bold text';
 $lang['css.text_italic'] = 'Italic text';
 $lang['css.text_underline'] = 'Underline text';
 $lang['css.text_strike'] = 'Strike text';
+
 $lang['css.sizes'] = 'Tailles';
 $lang['css.link'] = 'Link';
 $lang['css.link_smaller'] = 'Smaller link';
@@ -73,10 +104,13 @@ $lang['css.link_small'] = 'Small link';
 $lang['css.link_big'] = 'Big link';
 $lang['css.link_bigger'] = 'Bigger link';
 $lang['css.link_biggest'] = 'Biggest link';
+
 $lang['css.rank_color'] = 'User rank color';
 $lang['css.admin'] = 'Administrator';
 $lang['css.modo'] = 'Moderator';
 $lang['css.member'] = 'Member';
+
+//Miscellaneous
 $lang['css.miscellaneous'] = 'Miscellaneous';
 $lang['css.main_actions_icons'] = 'Main actions icons';
 $lang['css.rss_feed'] = 'RSS feed';
@@ -85,11 +119,14 @@ $lang['css.delete'] = 'Delete';
 $lang['css.delete.confirm'] = 'Delete (automatic JS control with delete confirmation)';
 $lang['css.delete.confirm.custom'] = 'Delete (automatic JS control with custom confirmation)';
 $lang['css.delete.custom_message'] = 'Custom message';
+
 $lang['css.lists'] = 'Lists';
 $lang['css.element'] = 'Element';
+
 $lang['css.progress_bar'] = 'Progress bar';
 $lang['css.progress_bar.util_infos'] = 'Util informations';
 $lang['css.progress_bar.votes'] = '3 votes';
+
 $lang['css.modules_menus'] = 'Modules menus';
 $lang['css.modules_menus.display'] = 'Display';
 $lang['css.modules_menus.display.most_viewed'] = 'Most viewed';
@@ -107,11 +144,13 @@ $lang['css.modules_menus.unsolved_bugs'] = 'Unsolved bugs';
 $lang['css.modules_menus.solved_bugs'] = 'Solved bugs';
 $lang['css.modules_menus.roadmap'] = 'Roadmap';
 $lang['css.modules_menus.stats'] = 'Statistics';
+
 $lang['css.explorer'] = 'Explorer';
 $lang['css.root'] = 'Root';
 $lang['css.tree'] = 'Tree';
 $lang['css.cat'] = 'Category';
 $lang['css.file'] = 'File';
+
 $lang['css.options'] = 'Options';
 $lang['css.options.sort_by'] = 'Sort by';
 $lang['css.options.sort_by.alphabetical'] = 'Alphabetical';
@@ -119,25 +158,48 @@ $lang['css.options.sort_by.size'] = 'Size';
 $lang['css.options.sort_by.date'] = 'Date';
 $lang['css.options.sort_by.popularity'] = 'Popularity';
 $lang['css.options.sort_by.note'] = 'Note';
+
 $lang['css.button'] = 'Button';
+
+$lang['css.sortable'] = 'Sortable Drag & Drop';
+$lang['css.static.sortable'] = 'Sortable spoted';
+$lang['css.moved.sortable'] = 'Sortable moving';
+$lang['css.dropzone'] = 'Spot here';
+
+//Blockquotes
 $lang['css.quote'] = 'Quote';
 $lang['css.code'] = 'Code';
 $lang['css.code.php'] = 'PHP Code';
 $lang['css.hidden'] = 'Hidden text';
+
+//Pagination
 $lang['css.pagination'] = 'Pagination';
+
+//Tables
 $lang['css.table'] = 'Table';
 $lang['css.table_description'] = 'Table description';
 $lang['css.table.name'] = 'Name';
 $lang['css.table.description'] = 'Description';
 $lang['css.table.author'] = 'Author';
 $lang['css.table.test'] = 'Test';
+$lang['css.specific.table'] = 'Specific table (bbcode)';
+$lang['css.table.header'] = 'Header';
+
+//Messages
 $lang['css.messages_and_coms'] = 'Messages and comments';
 $lang['css.messages.login'] = 'admin';
 $lang['css.messages.level'] = 'Administrator';
 $lang['css.messages.date'] = '09/05/2013 at 15h37';
 $lang['css.messages.content'] = 'This is a comment';
-$lang['css.specific_titles'] = 'Specific titles (BBCode)';
+
+$lang['css.message_success'] = 'This is a success message';
+$lang['css.message_notice'] = 'This is a notice message';
+$lang['css.message_warning'] = 'This is a warning message';
+$lang['css.message_error'] = 'This is an error message';
+$lang['css.message_question'] = 'This is a question, is the two-lines display working correctly?';
 $lang['css.error_messages'] = 'Error messages';
+
+//Pages
 $lang['css.page'] = 'Page';
 $lang['css.page.title'] = 'Page title';
 $lang['css.page.subtitle'] = 'Subtitle';
@@ -168,5 +230,6 @@ $lang['mail.smtp.secure_protocol.tls'] = 'TLS';
 $lang['mail.smtp.secure_protocol.ssl'] = 'SSL';
 $lang['mail.success'] = 'The mail has been sent';
 
+//Template
 $lang['string_template.result'] = 'Template generation duration without cache : :non_cached_time seconds<br />Template generation duration with cache: :cached_time seconds<br />Lenght of the parsed string: :string_length chars.';
 ?>

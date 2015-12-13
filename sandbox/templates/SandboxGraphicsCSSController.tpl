@@ -13,6 +13,14 @@
 			<h5>h5. {@css.title} 5</h5>
 			<h6>h6. {@css.title} 6</h6><br />
 		</div>
+		
+		<h5>{@css.specific_titles}</h5><br />
+		<div class="content">
+			<h1 class="formatter-title">{@css.title} 1</h1><br />
+			<h2 class="formatter-title">{@css.title} 2</h2><br />
+			<h3 class="formatter-title">{@css.title} 3</h3><br />
+			<h4 class="formatter-title">{@css.title} 4</h4><br /><br />
+		</div>
 
 		<h5>{@css.styles}</h5><br />
 		<div class="content">
@@ -74,6 +82,18 @@
 				<li>{@css.element} 2</li>
 				<li>{@css.element} 3</li>
 			</ol>
+			
+			<ul class="formatter-ul">
+				<li class="formatter-li">{@css.element} bbcode 1</li>
+				<li class="formatter-li">{@css.element} bbcode 2</li>
+				<li class="formatter-li">{@css.element} bbcode 3</li>
+			</ul>
+
+			<ol class="formatter-ol">
+				<li class="formatter-li">{@css.element} bbcode 1</li>
+				<li class="formatter-li">{@css.element} bbcode 2</li>
+				<li class="formatter-li">{@css.element} bbcode 3</li>
+			</ol>
 		</div>
 		<br />
 
@@ -101,10 +121,11 @@
 			<div class="progressbar-container" style="width:35%">
 				<div class="progressbar-infos">100%</div>
 				<div class="progressbar" style="width:100%"></div>
-			</div><br />
+			</div>
+		</div><br />
 
 		<h5>{@css.modules_menus}</h5><br />
-		<div class="content">
+		<div class="content" style="position: relative">
 			<menu id="cssmenu-sandboxfilter" class="cssmenu cssmenu-right cssmenu-actionslinks cssmenu-tools">
 				<ul>
 					<li class="extend"><a class="cssmenu-title"><i class="fa fa-eye"></i> {@css.modules_menus.display}</a>
@@ -132,7 +153,7 @@
 			</menu>
 			<script>
 				jQuery("#cssmenu-sandboxfilter").menumaker({
-					title: "Sandbox",
+					title: "Sandbox Options",
 					format: "multitoggle",
 					breakpoint: 768,
 					actionslinks:true
@@ -158,15 +179,15 @@
 			</menu>
 			<script>
 				jQuery("#cssmenu-sandboxbug").menumaker({
-					title: "Sandbox",
+					title: "Sandbox Group",
 					format: "multitoggle",
 					breakpoint: 768,
 					actionslinks:true
 				});
 			</script>
 		</div>
-		</div>
-
+		
+		<br /><br />
 		<h5>{@css.explorer}</h5>
 		<div class="content">
 			<div class="explorer">
@@ -233,7 +254,28 @@
 			<button type="submit" class="basic-button">{@css.button} basic-button</button>
 			<button type="submit" class="basic-button alt">{@css.button} basic-button.alt</button>
 		</div>
-
+		<br/></br>	
+		<h5>{@css.sortable}</h5>
+		<br/></br>
+		<div class="content">
+			<ul class="sortable-block">
+				<li class="sortable-element">
+					<div class="sortable-selector" title="Déplacer"></div>
+					<div class="sortable-title">
+						<span><a>{@css.static.sortable}</a></span>
+					</div>
+				</li>
+				<li class="sortable-element dragged" style="position: relative;">
+					<div class="sortable-selector" title="Déplacer"></div>
+					<div class="sortable-title">
+						<span><a>{@css.moved.sortable}</a></span>
+					</div>
+				</li>
+				<li>
+					<div class="dropzone">{@css.dropzone}</div>
+				</li>
+			</ul>
+		</div>
 	</div>
 	<footer></footer>
 </section>
@@ -284,17 +326,17 @@
 				<span style="color: #0000FF; font-weight: bold;">return</span> <span style="color: #000080;">$this</span><span style="color: #8000FF;">-&gt;</span><span style="color: #000000;">categories</span><span style="color: #8000FF;">;</span>
 			<span style="color: #8000FF;">&#125;</span>
 		&nbsp;
-			<span style="color: #0000FF; font-weight: bold;">public</span> <span style="color: #0000FF; font-weight: bold;">function</span> get_children<span style="color: #8000FF;">&#40;</span><span style="color: #000080;">$id_category</span><span style="color: #8000FF;">&#41;</span>
+			<span style="color: #0000FF; font-weight: bold;">public</span> <span style="color: #0000FF; font-weight: bold;">function</span> get_childrens<span style="color: #8000FF;">&#40;</span><span style="color: #000080;">$id_category</span><span style="color: #8000FF;">&#41;</span>
 			<span style="color: #8000FF;">&#123;</span>
-				<span style="color: #000080;">$children</span> <span style="color: #8000FF;">=</span> <span style="color: #0000FF; font-weight: bold;">array</span><span style="color: #8000FF;">&#40;</span><span style="color: #8000FF;">&#41;</span><span style="color: #8000FF;">;</span>
+				<span style="color: #000080;">$childrens</span> <span style="color: #8000FF;">=</span> <span style="color: #0000FF; font-weight: bold;">array</span><span style="color: #8000FF;">&#40;</span><span style="color: #8000FF;">&#41;</span><span style="color: #8000FF;">;</span>
 				<span style="color: #0000FF; font-weight: bold;">foreach</span> <span style="color: #8000FF;">&#40;</span><span style="color: #000080;">$this</span><span style="color: #8000FF;">-&gt;</span><span style="color: #000000;">categories</span> <span style="color: #0000FF; font-weight: bold;">as</span> <span style="color: #000080;">$id</span> <span style="color: #8000FF;">=&gt;</span> <span style="color: #000080;">$category</span><span style="color: #8000FF;">&#41;</span>
 				<span style="color: #8000FF;">&#123;</span>
 					<span style="color: #0000FF; font-weight: bold;">if</span> <span style="color: #8000FF;">&#40;</span><span style="color: #000080;">$category</span><span style="color: #8000FF;">-&gt;</span><span style="color: #000000;">get_id_parent</span><span style="color: #8000FF;">&#40;</span><span style="color: #8000FF;">&#41;</span> <span style="color: #8000FF;">==</span> <span style="color: #000080;">$id_category</span><span style="color: #8000FF;">&#41;</span>
 					<span style="color: #8000FF;">&#123;</span>
-						<span style="color: #000080;">$children</span><span style="color: #8000FF;">&#91;</span><span style="color: #000080;">$id</span><span style="color: #8000FF;">&#93;</span> <span style="color: #8000FF;">=</span> <span style="color: #000080;">$category</span><span style="color: #8000FF;">;</span>
+						<span style="color: #000080;">$childrens</span><span style="color: #8000FF;">&#91;</span><span style="color: #000080;">$id</span><span style="color: #8000FF;">&#93;</span> <span style="color: #8000FF;">=</span> <span style="color: #000080;">$category</span><span style="color: #8000FF;">;</span>
 					<span style="color: #8000FF;">&#125;</span>
 				<span style="color: #8000FF;">&#125;</span>
-				<span style="color: #0000FF; font-weight: bold;">return</span> <span style="color: #000080;">$children</span><span style="color: #8000FF;">;</span>
+				<span style="color: #0000FF; font-weight: bold;">return</span> <span style="color: #000080;">$childrens</span><span style="color: #8000FF;">;</span>
 			<span style="color: #8000FF;">&#125;</span>
 		&nbsp;
 			<span style="color: #0000FF; font-weight: bold;">public</span> <span style="color: #0000FF; font-weight: bold;">function</span> category_exists<span style="color: #8000FF;">&#40;</span><span style="color: #000080;">$id</span><span style="color: #8000FF;">&#41;</span>
@@ -416,6 +458,23 @@
 				</tr>
 			</tbody>
 		</table>
+		<br /><br />
+		<h5>{@css.specific.table}</h5>
+		<table class="formatter-table">
+			<tbody>
+				<tr class="formatter-table-row">
+					<th class="formatter-table-head" colspan="2">{@css.table.header}</th>
+				</tr>
+				<tr class="formatter-table-row">
+					<td class="formatter-table-col">{@css.table.test}</td>
+					<td class="formatter-table-col">{@css.table.description}</td>
+				</tr>
+				<tr class="formatter-table-row">
+					<td class="formatter-table-col">{@css.table.test}</td>
+					<td class="formatter-table-col">{@css.table.description}</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 	<footer></footer>
 </section>
@@ -455,20 +514,6 @@
 	<footer></footer>
 </section>
 
-<section>
-	<header>
-		<h1>{@css.specific_titles}</h1>
-	</header>
-	<br />
-	<div class="content">
-		<h1 class="formatter-title">{@css.title} 1</h1><br />
-		<h2 class="formatter-title">{@css.title} 2</h2><br />
-		<h3 class="formatter-title">{@css.title} 3</h3><br />
-		<h4 class="formatter-title">{@css.title} 4</h4>
-	</div>
-	<footer></footer>
-</section>
-
 <br />
 
 <section>
@@ -491,13 +536,13 @@
 	</header>
 	<div class="content">
 		Huic Arabia est conserta, ex alio latere Nabataeis contigua; opima varietate conmerciorum castrisque oppleta validis et castellis, quae ad repellendos gentium vicinarum excursus sollicitudo pervigil veterum per oportunos saltus erexit et cautos. haec quoque civitates habet inter oppida quaedam ingentes Bostram et Gerasam atque Philadelphiam murorum firmitate cautissimas. hanc provinciae inposito nomine rectoreque adtributo obtemperare legibus nostris Traianus conpulit imperator incolarum tumore saepe contunso cum glorioso marte Mediam urgeret et Parthos.<br/>
-		<section>
+		<article>
 			<header>
 				<h2>{@css.page.subtitle}</h2>
 			</header>
 			<div class="content">
 				Huic Arabia est conserta, ex alio latere Nabataeis contigua; opima varietate conmerciorum castrisque oppleta validis et castellis, quae ad repellendos gentium vicinarum excursus sollicitudo pervigil veterum per oportunos saltus erexit et cautos. haec quoque civitates habet inter oppida quaedam ingentes Bostram et Gerasam atque Philadelphiam murorum firmitate cautissimas. hanc provinciae inposito nomine rectoreque adtributo obtemperare legibus nostris Traianus conpulit imperator incolarum tumore saepe contunso cum glorioso marte Mediam urgeret et Parthos.<br/>
-				<section>
+				<article>
 					<header>
 						<h3>{@css.page.subsubtitle}</h3>
 					</header>
@@ -505,10 +550,10 @@
 						Huic Arabia est conserta, ex alio latere Nabataeis contigua; opima varietate conmerciorum castrisque oppleta validis et castellis, quae ad repellendos gentium vicinarum excursus sollicitudo pervigil veterum per oportunos saltus erexit et cautos. haec quoque civitates habet inter oppida quaedam ingentes Bostram et Gerasam atque Philadelphiam murorum firmitate cautissimas. hanc provinciae inposito nomine rectoreque adtributo obtemperare legibus nostris Traianus conpulit imperator incolarum tumore saepe contunso cum glorioso marte Mediam urgeret et Parthos.
 					</div>
 					<footer></footer>
-				</section>
+				</article>
 			</div>
 			<footer></footer>
-		</section>
+		</article>
 	</div>
 	<footer></footer>
 </section>
