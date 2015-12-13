@@ -4,7 +4,7 @@ div.calendar-content {
 
 /* Affichage du mois en cours */
 div.calendar-top-container {
-	background: #EEEEEE;
+	background-color: #EEEEEE;
 	border: 1px solid #DDDDDD;
 	border-radius: 3px;
 	padding: 4px;
@@ -22,12 +22,12 @@ div.calendar-top-container a:hover {
 
 div.calendar-top-l {
 	float: left;
-	padding: 1px 0px 0px 25px;
+	padding: 1px 0 0 25px;
 }
 
 div.calendar-top-r {
 	float: right;
-	padding: 1px 25px 0px 0px;
+	padding: 1px 25px 0 0;
 }
 
 /* Affichage des evenements */
@@ -48,7 +48,7 @@ div.event-display-dates {
 
 .event-display-dates + hr {
 	width: 70%;
-	margin: 0px auto 40px auto;
+	margin: 0 auto 40px auto;
 	clear: both;
 }
 
@@ -61,10 +61,10 @@ div.event-display-dates {
 }
 
 /* Couleur des differents evenements */
-table tbody tr td.calendar-none    { background: #FFFFFF; }
-table tbody tr td.calendar-today   { background: #B5E5B9; }
-table tbody tr td.calendar-other   { background: #F1F1F1; }
-table tbody tr td.calendar-weekend { background: #FFE3B6; }
+table tbody tr td.calendar-none    { background-color: #FFFFFF; }
+table tbody tr td.calendar-today   { background-color: #B5E5B9; }
+table tbody tr td.calendar-other   { background-color: #F1F1F1; }
+table tbody tr td.calendar-weekend { background-color: #FFE3B6; }
 
 #module-calendar table tbody tr td.calendar-week {
 	border-right: 1px solid #AAAAAA;
@@ -86,19 +86,19 @@ table tbody tr th.column-title {
 	padding-top: 1px;
 }
 
-#module-mini-calendar .calendar-top-l { padding: 0px 0 0 7px; }
-#module-mini-calendar .calendar-top-r { padding: 0px 7px 0 0; }
+#module-mini-calendar .calendar-top-l { padding: 0 0 0 7px; }
+#module-mini-calendar .calendar-top-r { padding: 0 7px 0 0; }
 
 #module-mini-calendar #date_select_form form.fieldset-content {
-	margin-top: 0px;
+	margin-top: 0;
 }
 
 #module-mini-calendar #CalendarAjaxCalendarController_choose-date {
-	margin: 5px 0px 10px 0px;
+	margin: 5px 0 10px 0;
 }
 
 #module-mini-calendar #CalendarAjaxCalendarController_choose-date div.form-element {
-	margin: 0px;
+	margin: 0;
 }
 
 #module-mini-calendar .form-field select {

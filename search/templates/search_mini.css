@@ -13,17 +13,17 @@
 
 #mini-search-form button,
 #mini-search-form .button {
-	margin-top:0;
+	margin-top: 0;
 }
 
 #mini-search-form.input-element-button input {
 	width: 120px;
-	border-radius: 4px 0px 0px 4px;
+	border-radius: 4px 0 0 4px;
 	height: 25px;
 }
 
 #mini-search-form.input-element-button button {
-	border-radius: 0px 4px 4px 0px;
+	border-radius: 0 4px 4px 0;
 	margin-left: -5px;
 	padding: 4px 10px 4px 10px;
 	height: 25px;

@@ -6,7 +6,7 @@
 
 .newsletter-title {
 	font-size: 12px;
-	padding: 5px 10px 0px 0px;
+	padding: 5px 10px 0 0;
 	vertical-align: middle;
 }
  
@@ -25,14 +25,14 @@ div#newsletter .button {
 	margin-top: 10px;
 }
 
-.input-element-button input {
+div#newsletter  .input-element-button input {
 	width: 120px;
 	font-size: 12px;
-	border-radius: 4px 0px 0px 4px;
+	border-radius: 4px 0 0 4px;
 }
 
-.input-element-button button {
+div#newsletter  .input-element-button button {
 	font-size: 12px;
-	border-radius: 0px 4px 4px 0px;
+	border-radius: 0 4px 4px 0;
 	margin-left: -5px;
 }

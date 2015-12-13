@@ -8,7 +8,7 @@
 
 #connect-menu div.vertical-fieldset,
 #connect-menu div.horizontal-fieldset {
-	margin: 0px;
+	margin: 0;
 }
 
 #connect-menu div.vertical-fieldset form {
@@ -36,7 +36,7 @@ ul.connect-content {
 	margin-right: 10px;
 }
 #connect-menu div.horizontal-fieldset ul.connect-content li:last-child {
-	margin-right: 0px;
+	margin-right: 0;
 }
 
 #connect-menu ul.connect-content li > i {
@@ -50,12 +50,12 @@ ul.connect-content {
 }
 
 #connect-menu div.horizontal-fieldset ul li > i {
-	vertical-align: 0px;
+	vertical-align: 0;
 }
 
 #connect-menu div.vertical-fieldset label {
 	text-align: center;
-	padding-right: 0px;
+	padding-right: 0;
 }
 
 #connect-menu div.vertical-fieldset ul.connect-content {
@@ -75,7 +75,7 @@ div.connect-register i {
 }
 
 #connect-menu div.vertical-fieldset button {
-	margin: 5px 0px;
+	margin: 5px 0;
 }
 	
 #connect-menu a.fb 		{ color: #3B5998; }
@@ -100,7 +100,7 @@ div.connect-register i {
 	}
 
 	#connect-menu .horizontal-fieldset li {
-		padding: 3px 0px 3px 2px;
+		padding: 3px 0 3px 2px;
 	}
 
 	#connect-menu .horizontal-fieldset a {
@@ -131,7 +131,7 @@ div.connect-register i {
 		opacity: 0;
 		left: -100%;
 		position: absolute;
-		background: #353535;
+		background-color: #353535;
 		padding: 10px;
 		transition: left 0.5s, visibility 0.5s, opacity 0.5s;
 	}

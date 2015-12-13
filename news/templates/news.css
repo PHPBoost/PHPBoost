@@ -12,10 +12,7 @@
 
 .news-separator { 
 	width: 70%;
-	margin:20px auto 20px auto;
-}
-
-.navigation-link {
+	margin: 20px auto 20px auto;
 }
 
 .navigation-link-previous 	{ float: left;  }
