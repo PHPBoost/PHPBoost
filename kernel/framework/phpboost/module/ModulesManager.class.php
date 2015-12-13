@@ -408,6 +408,19 @@ class ModulesManager
 				else
 					$error = LangLoader::get_message('last_editor_installed', 'editor-common');
 			}
+			
+			$captchas = AppContext::get_captcha_service()->get_available_captchas();
+			if (in_array($module_id, $captchas))
+			{
+				if (count($captchas) > 1)
+				{
+					$default_captcha = ContentManagementConfig::load()->get_used_captcha_module();
+					if ($default_captcha == $module_id)
+						$error = LangLoader::get_message('captcha.is_default', 'status-messages-common');
+				}
+				else
+					$error = LangLoader::get_message('captcha.last_installed', 'status-messages-common');
+			}
 		}
 		else
 		{
@@ -431,7 +444,7 @@ class ModulesManager
 			{
 				HtaccessFileCache::regenerate();
 			}
-		}	
+		}
 		
 		return $error;
 	}

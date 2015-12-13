@@ -141,7 +141,7 @@ class AdminModulesManagementController extends AdminController
 				foreach ($errors as $module_name => $error)
 				{
 					$this->view->assign_block_vars('errors', array(
-						'MSG' => MessageHelper::display($module_name . ' : ' . $error, MessageHelper::WARNING, 10)
+						'MSG' => MessageHelper::display($module_name . ' : ' . $error, MessageHelper::WARNING)
 					));
 				}
 			}

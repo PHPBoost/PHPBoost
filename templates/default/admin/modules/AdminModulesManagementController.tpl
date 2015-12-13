@@ -13,6 +13,11 @@ function display_description(id){
 }
 -->
 </script>
+
+# START errors #
+	# INCLUDE errors.MSG #
+# END errors #
+
 <form action="{REWRITED_SCRIPT}" method="post">
 	<table id="table">
 		<caption>{@modules.installed_not_activated_modules}</caption>
@@ -26,12 +31,6 @@ function display_description(id){
 			</tr>
 		</thead>
 		<tbody>
-			# START errors #
-			<tr>
-				# INCLUDE errors.MSG #
-			</tr>
-			# END errors #
-			
 			# START modules_not_activated #
 			<tr>
 				<td>
