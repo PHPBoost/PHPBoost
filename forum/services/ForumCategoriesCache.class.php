@@ -46,6 +46,17 @@ class ForumCategoriesCache extends CategoriesCache
 		return 'forum';
 	}
 	
+	protected function get_category_elements_number($id_category)
+	{
+		$topics_number = ForumService::count_topics('WHERE idcat = :id_category', array('id_category' => $id_category));
+		$messages_number = ForumService::count_messages('WHERE idtopic = :id_category', array('id_category' => $id_category));
+		
+		return array(
+			'topics_number' => $topics_number,
+			'messages_number' => $messages_number
+		);
+	}
+	
 	public function get_root_category()
 	{
 		$root = new ForumCategory();

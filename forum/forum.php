@@ -30,9 +30,10 @@ require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
 $id_get = retrieve(GET, 'id', 0);
+$categories_cache = ForumService::get_categories_manager()->get_categories_cache();
 
 //Vérification de l'existance de la catégorie.
-if ($id_get != Category::ROOT_CATEGORY && !ForumService::get_categories_manager()->get_categories_cache()->category_exists($id_get))
+if ($id_get != Category::ROOT_CATEGORY && !$categories_cache->category_exists($id_get))
 {
 	$controller = PHPBoostErrors::unexisting_category();
     DispatchManager::redirect($controller);
@@ -46,7 +47,7 @@ if (!ForumAuthorizationsService::check_authorizations($id_get)->read())
 }
 
 try {
-	$category = ForumService::get_categories_manager()->get_categories_cache()->get_category($id_get);
+	$category = $categories_cache->get_category($id_get);
 } catch (CategoryNotFoundException $e) {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
@@ -104,22 +105,7 @@ if (!empty($id_get))
 		$authorized_categories = ForumService::get_authorized_categories($id_get);
 		
 		//On liste les sous-catégories.
-		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= c.id, c.id AS cid, c.id_parent, c.name, c.rewrited_name, c.description as subname, c.url, c.last_topic_id, t.id AS tid, t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, t.status, m.user_id, m.display_name, m.level AS user_level, m.groups, v.last_view_id,
-		(SELECT COUNT(*) FROM ' . ForumSetup::$forum_topics_table . '
-			WHERE idcat IN (
-				@id_cat,
-				(SELECT GROUP_CONCAT(id SEPARATOR \',\') FROM ' . ForumSetup::$forum_cats_table . ' WHERE id_parent = @id_cat), 
-				(SELECT GROUP_CONCAT(childs.id SEPARATOR \',\') FROM ' . ForumSetup::$forum_cats_table . ' parents
-				INNER JOIN ' . ForumSetup::$forum_cats_table . ' childs ON parents.id = childs.id_parent
-				WHERE parents.id_parent = @id_cat)
-			)
-		) AS nbr_topic,
-		(SELECT COUNT(*) FROM ' . ForumSetup::$forum_message_table . '
-			WHERE idtopic IN (
-				(SELECT GROUP_CONCAT(id SEPARATOR \',\') FROM ' . ForumSetup::$forum_topics_table . ' WHERE idcat = @id_cat), 
-				(SELECT GROUP_CONCAT(t.id SEPARATOR \',\') FROM ' . ForumSetup::$forum_topics_table . ' t LEFT JOIN ' . ForumSetup::$forum_cats_table . ' c ON t.idcat = c.id WHERE id_parent = @id_cat)
-			)
-		) AS nbr_msg
+		$result = PersistenceContext::get_querier()->select('SELECT c.id AS cid, c.id_parent, c.name, c.rewrited_name, c.description as subname, c.url, c.last_topic_id, t.id AS tid, t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, t.status, m.user_id, m.display_name, m.level AS user_level, m.groups, v.last_view_id
 		FROM ' . ForumSetup::$forum_cats_table . ' c
 		LEFT JOIN ' . ForumSetup::$forum_topics_table . ' t ON t.id = c.last_topic_id
 		LEFT JOIN ' . ForumSetup::$forum_view_table . ' v ON v.user_id = :user_id AND v.idtopic = t.id
@@ -134,7 +120,12 @@ if (!empty($id_get))
 		$categories = array();
 		while ($row = $result->fetch())
 		{
-			$categories[] = $row;
+			$category = $categories_cache->get_category($row['cid']);
+			$elements_number = $category->get_elements_number();
+			
+			$categories[$row['cid']] = $row;
+			$categories[$row['cid']]['nbr_topic'] = $elements_number['topics_number'];
+			$categories[$row['cid']]['nbr_msg'] = $elements_number['messages_number'];
 		}
 		$result->dispose();
 		

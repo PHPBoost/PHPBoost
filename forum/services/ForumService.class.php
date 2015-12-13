@@ -31,7 +31,32 @@
  */
 class ForumService
 {
+	private static $db_querier;
+	
 	private static $categories_manager;
+	
+	public static function __static()
+	{
+		self::$db_querier = PersistenceContext::get_querier();
+	}
+	
+	 /**
+	 * @desc Count topics number.
+	 * @param string $condition (optional) : Restriction to apply to the list of topics
+	 */
+	public static function count_topics($condition = '', $parameters = array())
+	{
+		return self::$db_querier->count(ForumSetup::$forum_topics_table, $condition, $parameters);
+	}
+	
+	 /**
+	 * @desc Count messages number.
+	 * @param string $condition (optional) : Restriction to apply to the list of messages
+	 */
+	public static function count_messages($condition = '', $parameters = array())
+	{
+		return self::$db_querier->count(ForumSetup::$forum_message_table, $condition, $parameters);
+	}
 	
 	 /**
 	 * @desc Return the authorized categories.
