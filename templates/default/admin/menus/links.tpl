@@ -206,7 +206,12 @@ jQuery(document).ready(function() {
 			</div>
 			<div class="form-element">
 				<label for="menu_element_{ID}_hidden_with_small_screens">{L_HIDDEN_WITH_SMALL_SCREENS}</label>
-				<div class="form-field"><input type="checkbox" name="menu_element_{ID}_hidden_with_small_screens" id="menu_element_{ID}_hidden_with_small_screens"# IF C_MENU_HIDDEN_WITH_SMALL_SCREENS # checked="checked"# ENDIF #></div>
+				<div class="form-field">
+					<div class="form-field-checkbox">
+						<input type="checkbox" name="menu_element_{ID}_hidden_with_small_screens" id="menu_element_{ID}_hidden_with_small_screens"# IF C_MENU_HIDDEN_WITH_SMALL_SCREENS # checked="checked"# ENDIF #>
+						<label for="menu_element_{ID}_hidden_with_small_screens"></label>
+					</div>
+				</div>
 			</div>
 			<div class="form-element">
 				<label>{L_AUTHS}</label>

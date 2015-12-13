@@ -26,7 +26,12 @@ function CheckForm() {
 			</div>
 			<div class="form-element">
 				<label for="name">{L_DISPLAY_TITLE}</label>
-				<div class="form-field"><input type="checkbox" name="display_title[]" value="display_title" {DISPLAY_TITLE_CHECKED}></div>
+				<div class="form-field">
+					<div class="form-field-checkbox">
+						<input type="checkbox" id="display_title" name="display_title[]" value="display_title" {DISPLAY_TITLE_CHECKED} />
+						<label for="display_title"></label>
+					</div>
+				</div>
 			</div>
 			<div class="form-element">
 				<label for="location">{L_LOCATION}</label>
@@ -51,7 +56,12 @@ function CheckForm() {
 			</div>
 			<div class="form-element">
 				<label for="hidden_with_small_screens">{L_HIDDEN_WITH_SMALL_SCREENS}</label>
-				<div class="form-field"><input type="checkbox" name="hidden_with_small_screens" id="hidden_with_small_screens"# IF C_MENU_HIDDEN_WITH_SMALL_SCREENS # checked="checked"# ENDIF #></div>
+				<div class="form-field">
+					<div class="form-field-checkbox">
+						<input type="checkbox" name="hidden_with_small_screens" id="hidden_with_small_screens"# IF C_MENU_HIDDEN_WITH_SMALL_SCREENS # checked="checked"# ENDIF # />
+						<label for="hidden_with_small_screens"></label>
+					</div>
+				</div>
 			</div>
 			<div class="form-element">
 				<label>{L_AUTHS}</label>
