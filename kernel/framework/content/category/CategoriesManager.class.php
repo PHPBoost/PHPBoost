@@ -322,26 +322,30 @@ class CategoriesManager
 	 */
 	public function get_parents($id_category, $add_this = false)
 	{
-		if (!$this->get_categories_cache()->category_exists($id_category))
-		{
-			throw new CategoryNotFoundException($id_category);
-		}
-		
 		$parents_categories = array();
 		
-		if ($add_this)
-			$parents_categories[$id_category] = $this->categories_cache->get_category($id_category);
-
-		if ($id_category > 0)
+		if ($id_category != Category::ROOT_CATEGORY)
 		{
-			while ((int)$this->categories_cache->get_category($id_category)->get_id_parent() != Category::ROOT_CATEGORY)
+			if (!$this->get_categories_cache()->category_exists($id_category))
 			{
-				$id_parent = $this->categories_cache->get_category($id_category)->get_id_parent();
-			    $parents_categories[$id_parent] = $this->categories_cache->get_category($id_parent);
-			    $id_category = $id_parent;
+				throw new CategoryNotFoundException($id_category);
 			}
-			$parents_categories[Category::ROOT_CATEGORY] = $this->categories_cache->get_category(Category::ROOT_CATEGORY);
+			
+			if ($add_this)
+				$parents_categories[$id_category] = $this->categories_cache->get_category($id_category);
+
+			if ($id_category > 0)
+			{
+				while ((int)$this->categories_cache->get_category($id_category)->get_id_parent() != Category::ROOT_CATEGORY)
+				{
+					$id_parent = $this->categories_cache->get_category($id_category)->get_id_parent();
+					$parents_categories[$id_parent] = $this->categories_cache->get_category($id_parent);
+					$id_category = $id_parent;
+				}
+				$parents_categories[Category::ROOT_CATEGORY] = $this->categories_cache->get_category(Category::ROOT_CATEGORY);
+			}
 		}
+		
 		return $parents_categories;
 	}
 	
