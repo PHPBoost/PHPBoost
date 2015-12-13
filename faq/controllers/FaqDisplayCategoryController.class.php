@@ -65,7 +65,7 @@ class FaqDisplayCategoryController extends ModuleController
 		$config = FaqConfig::load();
 		$subcategories_page = AppContext::get_request()->get_getint('subcategories_page', 1);
 		
-		$subcategories = FaqService::get_categories_manager()->get_categories_cache()->get_childrens($this->get_category()->get_id(), FaqService::get_authorized_categories($this->get_category()->get_id()));
+		$subcategories = FaqService::get_categories_manager()->get_categories_cache()->get_children($this->get_category()->get_id(), FaqService::get_authorized_categories($this->get_category()->get_id()));
 		$subcategories_pagination = $this->get_subcategories_pagination(count($subcategories), $config->get_categories_number_per_page(), $subcategories_page);
 		
 		$nbr_cat_displayed = 0;

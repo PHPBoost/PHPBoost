@@ -31,8 +31,8 @@
 	</script>
 
 	<ul id="subcat-{ID}" class="sortable-block">
-		# START childrens #
-			{childrens.child}
-		# END childrens #
+		# START children #
+			{children.child}
+		# END children #
 	</ul>
 </li>

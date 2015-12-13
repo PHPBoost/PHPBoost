@@ -151,9 +151,9 @@ class CategoriesManager
 		if ($this->get_categories_cache()->category_exists($id) && $this->get_categories_cache()->category_exists($id_parent))
 		{
 			$options = new SearchCategoryChildrensOptions();
-			$childrens = $this->get_childrens($id, $options);
-			$childrens[$id] = $category;
-			if (!array_key_exists($id_parent, $childrens))
+			$children = $this->get_children($id, $options);
+			$children[$id] = $category;
+			if (!array_key_exists($id_parent, $children))
 			{
 				$max_order = $this->db_querier->get_column_value($this->table_name, 'MAX(c_order)', 'WHERE id_parent=:id_parent', array('id_parent' => $id_parent));
 				$max_order = NumberHelper::numeric($max_order);
@@ -237,9 +237,9 @@ class CategoriesManager
 		if ($this->get_categories_cache()->category_exists($id) && $this->get_categories_cache()->category_exists($id_parent) && !($category->get_id_parent() == $id_parent && $category->get_order() == $position))
 		{
 			$options = new SearchCategoryChildrensOptions();
-			$childrens = $this->get_childrens($id, $options);
-			$childrens[$id] = $category;
-			if (!array_key_exists($id_parent, $childrens))
+			$children = $this->get_children($id, $options);
+			$children[$id] = $category;
+			if (!array_key_exists($id_parent, $children))
 			{
 				$max_order = $this->db_querier->get_column_value($this->table_name, 'MAX(c_order)', 'WHERE id_parent=:id_parent', array('id_parent' => $id_parent));
 				$max_order = NumberHelper::numeric($max_order);
@@ -284,11 +284,11 @@ class CategoriesManager
 	}
 	
 	/**
-	 * @desc Category[string] the childrens Categories map (id => category) for category id
+	 * @desc Category[string] the children Categories map (id => category) for category id
 	 * @param int $id_category
 	 * @param SearchCategoryChildrensOptions $search_category_children_options
 	 */
-	public function get_childrens($id_category, SearchCategoryChildrensOptions $search_category_children_options, $add_this = false)
+	public function get_children($id_category, SearchCategoryChildrensOptions $search_category_children_options, $add_this = false)
 	{
 		if (!$this->get_categories_cache()->category_exists($id_category))
 		{
@@ -297,10 +297,10 @@ class CategoriesManager
 		
 		$categories = $this->categories_cache->get_categories();
 		$root_category = $categories[Category::ROOT_CATEGORY];
-		$childrens_categories = array();
+		$children_categories = array();
 		
 		if ($add_this)
-			$childrens_categories[$id_category] = $this->categories_cache->get_category($id_category);
+			$children_categories[$id_category] = $this->categories_cache->get_category($id_category);
 		
 		if (($search_category_children_options->is_excluded_categories_recursive() && $search_category_children_options->category_is_excluded($root_category)) || !$search_category_children_options->check_authorizations($root_category))
 		{
@@ -309,10 +309,10 @@ class CategoriesManager
 		
 		if ($id_category == Category::ROOT_CATEGORY && !$search_category_children_options->category_is_excluded($root_category))
 		{
-			$childrens_categories[Category::ROOT_CATEGORY] = $root_category;
+			$children_categories[Category::ROOT_CATEGORY] = $root_category;
 		}
 
-		return $this->build_children_map($id_category, $categories, $id_category, $search_category_children_options, $childrens_categories);
+		return $this->build_children_map($id_category, $categories, $id_category, $search_category_children_options, $children_categories);
 	}
 	
 	/**
@@ -408,20 +408,20 @@ class CategoriesManager
 	 */
 	public function get_categories_items_parameters() { return $this->categories_items_parameters; }
 	
-	private function build_children_map($id_category, $categories, $id_parent, $search_category_children_options, &$childrens_categories = array(), $node = 1)
+	private function build_children_map($id_category, $categories, $id_parent, $search_category_children_options, &$children_categories = array(), $node = 1)
 	{
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id_parent() == $id_parent && $id != Category::ROOT_CATEGORY)
 			{
 				if ($search_category_children_options->check_authorizations($category) && !$search_category_children_options->category_is_excluded($category))
-					$childrens_categories[$id] = $category;
+					$children_categories[$id] = $category;
 				
 				if ($search_category_children_options->check_authorizations($category) && ($search_category_children_options->is_excluded_categories_recursive() ? !$search_category_children_options->category_is_excluded($category) : true) && $search_category_children_options->is_enabled_recursive_exploration())
-					$this->build_children_map($id_category, $categories, $id, $search_category_children_options, $childrens_categories, ($node+1));
+					$this->build_children_map($id_category, $categories, $id, $search_category_children_options, $children_categories, ($node+1));
 			}
 		}
-		return $childrens_categories;
+		return $children_categories;
 	}
 }
 ?>

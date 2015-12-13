@@ -139,7 +139,7 @@ class ForumHomeController extends ModuleController
 						'C_END_S_CATS' => false
 					));
 					
-					$children = ForumService::get_categories_manager()->get_categories_cache()->get_childrens($row['cid']);
+					$children = ForumService::get_categories_manager()->get_categories_cache()->get_children($row['cid']);
 					if ($children)
 					{
 						foreach ($children as $id => $child) //Listage des sous forums.

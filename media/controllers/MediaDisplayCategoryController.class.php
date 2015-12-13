@@ -59,7 +59,7 @@ class MediaDisplayCategoryController extends ModuleController
 		$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
 		$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 		
-		$subcategories = MediaService::get_categories_manager()->get_categories_cache()->get_childrens($this->get_category()->get_id(), MediaService::get_authorized_categories($this->get_category()->get_id()));
+		$subcategories = MediaService::get_categories_manager()->get_categories_cache()->get_children($this->get_category()->get_id(), MediaService::get_authorized_categories($this->get_category()->get_id()));
 		
 		$subcategories_pagination = new ModulePagination($subcategories_page, count($subcategories), $config->get_categories_number_per_page());
 		$subcategories_pagination->set_url(new Url('/media/media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $this->get_category()->get_id() . '&amp;p=' . $page . '&amp;subcategories_page=%d'));

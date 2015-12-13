@@ -64,7 +64,7 @@ class DownloadDisplayCategoryController extends ModuleController
 		$page = AppContext::get_request()->get_getint('page', 1);
 		$subcategories_page = AppContext::get_request()->get_getint('subcategories_page', 1);
 		
-		$subcategories = DownloadService::get_categories_manager()->get_categories_cache()->get_childrens($this->get_category()->get_id(), DownloadService::get_authorized_categories($this->get_category()->get_id()));
+		$subcategories = DownloadService::get_categories_manager()->get_categories_cache()->get_children($this->get_category()->get_id(), DownloadService::get_authorized_categories($this->get_category()->get_id()));
 		$subcategories_pagination = $this->get_subcategories_pagination(count($subcategories), $this->config->get_categories_number_per_page(), $field, $mode, $page, $subcategories_page);
 		
 		$nbr_cat_displayed = 0;

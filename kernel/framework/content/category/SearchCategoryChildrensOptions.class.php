@@ -28,7 +28,7 @@
 /**
  * @package {@package}
  * @author Kévin MASSY
- * @desc This class allows you to manage options of children used in CategoriesManager::get_childrens() and CategoriesManager::get_select_categories_form_field().
+ * @desc This class allows you to manage options of children used in CategoriesManager::get_children() and CategoriesManager::get_select_categories_form_field().
  * You will be able to manage one or more permission bits, exclude certain categories disable recursive search of one, several or all categories
  */
 class SearchCategoryChildrensOptions

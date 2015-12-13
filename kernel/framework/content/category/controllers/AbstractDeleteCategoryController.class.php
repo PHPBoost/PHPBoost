@@ -54,8 +54,8 @@ abstract class AbstractDeleteCategoryController extends AdminModuleController
 			DispatchManager::redirect($controller);
 		}
 
-		$childrens = $this->get_category_childrens($category);
-		if (empty($childrens) && !$this->get_category_items_exists($category))
+		$children = $this->get_category_children($category);
+		if (empty($children) && !$this->get_category_items_exists($category))
 		{
 			$this->get_categories_manager()->delete($this->get_category()->get_id());
 			AppContext::get_response()->redirect($this->get_categories_management_url(), StringVars::replace_vars($this->get_success_message(), array('name' => $this->get_category()->get_name())));
@@ -70,7 +70,7 @@ abstract class AbstractDeleteCategoryController extends AdminModuleController
 			if ($this->form->get_value('delete_category_and_content'))
 			{
 				$this->get_categories_manager()->delete($this->get_category()->get_id());
-				foreach ($childrens as $id => $category)
+				foreach ($children as $id => $category)
 				{
 					$this->get_categories_manager()->delete($id);
 				}
@@ -80,8 +80,8 @@ abstract class AbstractDeleteCategoryController extends AdminModuleController
 				$id_parent = $this->form->get_value('move_in_other_cat')->get_raw_value();
 				$this->get_categories_manager()->move_items_into_another($category, $id_parent);
 				
-				$childrens = $this->get_category_childrens($category, false);
-				foreach ($childrens as $id => $category)
+				$children = $this->get_category_children($category, false);
+				foreach ($children as $id => $category)
 				{
 					$this->get_categories_manager()->move_into_another($category, $id_parent);
 				}
@@ -130,12 +130,12 @@ abstract class AbstractDeleteCategoryController extends AdminModuleController
 		$this->form = $form;
 	}
 	
-	private function get_category_childrens(Category $category, $enable_recursive_exploration = true)
+	private function get_category_children(Category $category, $enable_recursive_exploration = true)
 	{
 		$options = new SearchCategoryChildrensOptions();
 		$options->add_category_in_excluded_categories($category->get_id());
 		$options->set_enable_recursive_exploration($enable_recursive_exploration);
-		return $this->get_categories_manager()->get_childrens($category->get_id(), $options);
+		return $this->get_categories_manager()->get_children($category->get_id(), $options);
 	}
 	
 	private function get_category_items_exists(Category $category)

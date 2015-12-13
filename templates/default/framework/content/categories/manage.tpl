@@ -59,9 +59,9 @@ function change_reposition_pictures()
 				# IF C_NO_CATEGORIES #
 					<div class="center">${LangLoader::get_message('no_item_now', 'common')}</div>
 				# ELSE #
-					# START childrens #
-						{childrens.child}
-					# END childrens #
+					# START children #
+						{children.child}
+					# END children #
 				# ENDIF #
 			</ul>
 	</fieldset>

@@ -97,7 +97,7 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 				
 				$this->build_children_view($category_view, $categories, $id);
 				
-				$template->assign_block_vars('childrens', array('child' => $category_view->render()));
+				$template->assign_block_vars('children', array('child' => $category_view->render()));
 			}
 		}
 	}
@@ -117,7 +117,7 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 
 				$this->get_categories_manager()->update_position($category, Category::ROOT_CATEGORY, ($position +1));
 
-				$this->update_childrens_positions($children, $category->get_id());
+				$this->update_children_positions($children, $category->get_id());
 			}
 			
 			$categories_cache::invalidate();
@@ -126,7 +126,7 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 		}
 	}
 	
-	private function update_childrens_positions($categories, $id_parent)
+	private function update_children_positions($categories, $id_parent)
 	{
 		if (!empty($categories))
 		{
@@ -140,7 +140,7 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 					
 					$this->get_categories_manager()->update_position($category, $id_parent, ($position +1));
 					
-					$this->update_childrens_positions($children, $category->get_id());
+					$this->update_children_positions($children, $category->get_id());
 				}
 			}
 		}

@@ -95,7 +95,7 @@ if (!empty($id_get))
 	$max_time_msg = forum_limit_time_msg();
 	
 	//Affichage des sous forums s'il y en a.
-	if (ForumService::get_categories_manager()->get_categories_cache()->get_childrens($id_get))
+	if (ForumService::get_categories_manager()->get_categories_cache()->get_children($id_get))
 	{
 		$tpl->put_all(array(
 			'C_FORUM_SUB_CATS' => true
@@ -172,7 +172,7 @@ if (!empty($id_get))
 
 				//Vérirication de l'existance de sous forums.
 				$subforums = '';
-				$children = ForumService::get_categories_manager()->get_categories_cache()->get_childrens($row['cid']);
+				$children = ForumService::get_categories_manager()->get_categories_cache()->get_children($row['cid']);
 				if ($children)
 				{
 					foreach ($children as $id => $child) //Listage des sous forums.

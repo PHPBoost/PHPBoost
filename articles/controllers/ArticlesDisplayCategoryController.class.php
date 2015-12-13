@@ -166,7 +166,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 	
 	private function build_categories_listing_view(Date $now, $field, $mode, $page, $subcategories_page)
 	{
-		$subcategories = ArticlesService::get_categories_manager()->get_categories_cache()->get_childrens($this->get_category()->get_id(), ArticlesService::get_authorized_categories($this->get_category()->get_id()));
+		$subcategories = ArticlesService::get_categories_manager()->get_categories_cache()->get_children($this->get_category()->get_id(), ArticlesService::get_authorized_categories($this->get_category()->get_id()));
 		$subcategories_pagination = $this->get_subcategories_pagination(count($subcategories), $this->config->get_number_categories_per_page(), $field, $mode, $page, $subcategories_page);
 		
 		$nbr_cat_displayed = 0;

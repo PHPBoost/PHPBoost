@@ -65,7 +65,7 @@ class ForumService
 	{
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
-		$categories = self::get_categories_manager()->get_childrens($current_id_category, $search_category_children_options, true);
+		$categories = self::get_categories_manager()->get_children($current_id_category, $search_category_children_options, true);
 		return array_keys($categories);
 	}
 	

@@ -56,7 +56,7 @@ class NewsFeedProvider implements FeedProvider
 			$data->set_lang(LangLoader::get_message('xml_lang', 'main'));
 			$data->set_auth_bit(Category::READ_AUTHORIZATIONS);
 	
-			$categories = NewsService::get_categories_manager()->get_childrens($idcat, new SearchCategoryChildrensOptions(), true);
+			$categories = NewsService::get_categories_manager()->get_children($idcat, new SearchCategoryChildrensOptions(), true);
 			$ids_categories = array_keys($categories);
 	
 			$now = new Date();

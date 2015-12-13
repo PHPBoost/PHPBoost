@@ -91,7 +91,7 @@ class ArticlesService
 		if (AppContext::get_current_user()->is_guest())
 			$search_category_children_options->set_allow_only_member_level_authorizations(ArticlesConfig::load()->are_descriptions_displayed_to_guests());
 		
-		$categories = self::get_categories_manager()->get_childrens($current_id_category, $search_category_children_options, true);
+		$categories = self::get_categories_manager()->get_children($current_id_category, $search_category_children_options, true);
 		return array_keys($categories);
 	}
 	

@@ -594,7 +594,7 @@ class Forum
 	function update_last_topic_id($idcat)
 	{
 		$category = ForumService::get_categories_manager()->get_categories_cache()->get_category($idcat);
-		$children = ForumService::get_categories_manager()->get_categories_cache()->get_childrens($idcat);
+		$children = ForumService::get_categories_manager()->get_categories_cache()->get_children($idcat);
 
 		//Récupération du timestamp du dernier message de la catégorie.
 		$last_timestamp = 0;

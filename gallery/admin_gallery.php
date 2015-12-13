@@ -83,7 +83,7 @@ else
 		$category = GalleryService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
 	}
 	
-	$subcategories = GalleryService::get_categories_manager()->get_categories_cache()->get_childrens($category->get_id(), GalleryService::get_authorized_categories($category->get_id()));
+	$subcategories = GalleryService::get_categories_manager()->get_categories_cache()->get_children($category->get_id(), GalleryService::get_authorized_categories($category->get_id()));
 	$elements_number = $category->get_elements_number();
 	
 	$nbr_pics = $elements_number['pics_aprob'] + $elements_number['pics_unaprob'];

@@ -93,15 +93,15 @@ abstract class CategoriesCache implements CacheData
 		return $this->categories;
 	}
 	
-	public function get_childrens($id_category, $allowed_categories_filter = array())
+	public function get_children($id_category, $allowed_categories_filter = array())
 	{
-		$childrens = array();
+		$children = array();
 		foreach ($this->categories as $id => $category)
 		{
 			if ($category->get_id_parent() == $id_category && $id != Category::ROOT_CATEGORY)
 			{
 				if ((!empty($allowed_categories_filter) && in_array($id, $allowed_categories_filter)) || empty($allowed_categories_filter))
-					$childrens[$id] = $category;
+					$children[$id] = $category;
 			}
 			
 			if (!empty($allowed_categories_filter) && !in_array($id, $allowed_categories_filter))
@@ -127,7 +127,7 @@ abstract class CategoriesCache implements CacheData
 				}
 			}
 		}
-		return $childrens;
+		return $children;
 	}
 	
 	public function category_exists($id)
