@@ -1,8 +1,8 @@
 header#header-admin {
-    padding-bottom: 10px;
+	padding-bottom: 10px;
 }
 
-@media (min-width:769px) {
+@media (min-width: 769px) {
 	header#header-admin {
 		position: fixed;
 		top: 0;
@@ -10,88 +10,89 @@ header#header-admin {
 		bottom: 0;
 		z-index: 3;
 		max-width: 230px;
-		max-height: none;	
-		overflow: hidden;
-		height:100%;
 		width:250px;
+		max-height: none;	
+		height:100%;
+		overflow: hidden;
 	}
+
 	div.header-admin-container{
-		max-height: 100%;
-		position:absolute;
+		position: absolute;
 		right: -20px;
-		overflow-y: scroll;
+		left: 0;
+		max-height: 100%;
 		width: calc(100% + 20px);
-		left:0;
+		overflow-y: scroll;
 	}
 }
 
 @media (max-width: 768px) {
-    div#site-name-container {
-        padding: 10px;
-    }
+	div#site-name-container {
+		padding: 10px;
+	}
 }
+
 div#update-site-logo {
-    background-image: url('images/logo.png');
-    background-repeat: no-repeat;
-    background-position: center ; 
-    background-size: cover;
-    width: 25px;
-    height:25px;
-    display: inline-block;
-    vertical-align: middle;
-    margin-bottom: 10px;
+	display: inline-block;
+	margin-bottom: 10px;
+	width: 25px;
+	height:25px;
+	background-image: url('images/logo.png');
+	background-repeat: no-repeat;
+	background-position: center ; 
+	background-size: cover;
+	vertical-align: middle;
 }
 
 a#site-name {
-    font-size: 1.8em;    
+	font-size: 1.8em;	
 }
 
 #site-slogan {
-    color: #ffffff;
-    display: none;
-    padding: 5px;
+	display: none;
+	padding: 5px;
+	color: #FFFFFF;
 }
 
 @media (min-width: 769px) {
-    #site-slogan {
-        display: block;
-    }
+	#site-slogan {
+		display: block;
+	}
 }
 
 /*--- Menus ====================================================================== */
-
 h3.menu-title {
-    padding-left: 15px;
+	padding-left: 15px;
 }
 
 div.site-logo {
-    float: left;
-    margin-right: 5px;
+	float: left;
+	margin-right: 5px;
 }
 
 select {
-    width: 150px;
-    margin: 5px 0 5px ;
-    padding: 5px 10px;
+	margin: 5px 0 5px ;
+	padding: 5px 10px;
+	width: 150px;
 }
 
 .cssmenu > ul > li {
-    width: 100%;
+	width: 100%;
 }
 
 .cssmenu > ul > li > .cssmenu-title {
-    padding: 12px 17px;
-    display: table;
+	display: table;
+	padding: 12px 17px;
 }
 
 .cssmenu > ul > li > .cssmenu-title i, 
 .cssmenu > ul > li > .cssmenu-title span{
-    display: table-cell;
-    color: #dddddd;
+	display: table-cell;
+	color: #DDDDDD;
 }
 
 .cssmenu > ul > li > .cssmenu-title i{
-    padding-right: 8px;
+	padding-right: 8px;
 }
 
 .row-success {
@@ -101,135 +102,135 @@ select {
 .row-current {
 	background: #FF9900;
 }
+
 .cssmenu > ul > li.row-current > .cssmenu-title span{
-    color: #ffffff;
+	color: #FFFFFF;
 }
-    
+	
 .help-menu.cssmenu > ul > li > a:hover.cssmenu-title i, 
 .help-menu.cssmenu > ul > li > a:hover.cssmenu-title span {
-    color: #8AC77F;
+	color: #8AC77F;
 }
 
 .progressbar-container {
-    width: 90%;
-    margin: 10px auto;
+	
+	margin: 10px auto;
+	width: 90%;
 }
 
-.progressbar[style="width:100%"]{
-    border-radius: 3px;
+.progressbar[style*="100"]{
+	border-radius: 3px;
 }
 
-@media (max-width:768px) {
-    
-    .cssmenu ul {
-        display: block;
-    }
-    
-    .step-menu.cssmenu > ul > li {
-        width: calc(100% / 5);
-    }
-    
-    .cssmenu > ul > li > .cssmenu-title {
-        padding: 5px;
-        display: block;
-    }
-    
-    .step-menu.cssmenu > ul > li > .cssmenu-title {
-        padding: 5px;
-        text-align: center;
-    }
-    
-    .help-menu.cssmenu > ul > li > .cssmenu-title i {
-        vertical-align: top;
-    }
-    
-    .step-menu.cssmenu > ul > li > .cssmenu-title i {
-        display: inline-block;
-        padding: 0;
-    }
-    
-    .step-menu.cssmenu > ul > li > .cssmenu-title span {
-        display: none;
-    }
+@media (max-width: 768px) {
+	.cssmenu ul {
+		display: block;
+	}
+	
+	.step-menu.cssmenu > ul > li {
+		width: calc(100% / 5);
+	}
+	
+	.cssmenu > ul > li > .cssmenu-title {
+		display: block;
+		padding: 5px;
+	}
+	
+	.step-menu.cssmenu > ul > li > .cssmenu-title {
+		padding: 5px;
+		text-align: center;
+	}
+	
+	.help-menu.cssmenu > ul > li > .cssmenu-title i {
+		vertical-align: top;
+	}
+	
+	.step-menu.cssmenu > ul > li > .cssmenu-title i {
+		display: inline-block;
+		padding: 0;
+	}
+	
+	.step-menu.cssmenu > ul > li > .cssmenu-title span {
+		display: none;
+	}
 }
 
 /* --- contenu ====================================================================== */
 section#global, article {
-    margin: 0;
-    width: 100%;
+	margin: 0;
+	width: 100%;
 }
 
 section header {
-    margin-bottom: 10px
+	margin-bottom: 10px
 }
 
 section header h1 {
-    padding: 10px;
-    border-bottom: 2px solid #BBBBBB;
+	padding: 10px;
+	border-bottom: 2px solid #BBBBBB;
 }
 
 article header h2 {
-    border-bottom: none;
-    padding: 10px;
-    font-weight: 400;
+	padding: 10px;
+	border-bottom: none;
+	font-weight: 400;
 }
 
 article h3 {
-    padding: 15px;
+	padding: 15px;
 }
 
 article {
-    padding: 10px;
-    min-height: calc(95vh - 57px);
+	padding: 10px;
+	min-height: calc(95vh - 57px);
 }
 
 .content > a > img {
-    margin: 0 0 5px 10px;
+	margin: 0 0 5px 10px;
 }
 
 .next-step .fieldset-inset {
-    padding: 0;
+	padding: 0;
 }
 
 .next-step button {
-    margin: 5px 0;
+	margin: 5px 0;
 }
 
-@media (min-width:769px) {
-	
+@media (min-width: 769px) {
 	section#global {
-		width:100%;
-		padding-left:230px;
+		padding-left: 230px;
+		width: 100%;
 	}
-    
-    article {
-        padding: 20px;
-    }
+	
+	article {
+		padding: 20px;
+	}
 
-    article header h2 {
-        font-size: 2.5em;
-    }
+	article header h2 {
+		font-size: 2.5em;
+	}
 }
 
 /* --- welcome --- */
 
 .pbt-box {
-    padding: 8px;
-    padding-top: 0px;
-    padding-right: 25px;
-    width: 150px;
+	padding: 0px 25px 8px 8px;
+	width: 150px;
 }
 
-@media (min-width: 769px){
-    .pbt-box {width:auto;}
+@media (min-width: 769px) {
+	.pbt-box {
+		width: auto;
+	}
 }
+
 /* --- Bloc License --- */
-
 .license-container {
-	padding: 15px 0px;
-	border: 1px solid #DFDFDF;
-	background-color: #ffffff;
 	margin-bottom: 10px;
+	padding: 15px 0px;
+	background-color: #FFFFFF;
+	border: 1px solid #DFDFDF;
 }
 
 .license-content {
@@ -240,78 +241,69 @@ article {
 }
 
 /* --- config serveurs --- */
+.success-block,
+.failure-block {
+	float: left;
+	margin-left: 5px;
+	padding: 2px;
+	width: calc(50% - 10px);
+	font-weight: bold;
+	text-align: center;
+}
 
-.success-block {
-	float: left;
-	margin-left: 5px;
-	text-align: center;
-	width: calc(50% - 10px);
-	background: #8AC77F;
-	color: green;
-	font-weight: bold;
-	padding: 2px;
-}
-.failure-block {	
-	float: left;
-	margin-left: 5px;
-	text-align: center;
-	width: calc(50% - 10px);
-	background: #ee8d8d;
-	color: red;
-	font-weight: bold;
-	padding: 2px;
-}
+.success-block { background: #8AC77F; color: #008000; }
+.failure-block { background: #EE8D8D; color: #FF0000; }
 
 #chmod .form-element {
-    padding: 2px;
+	padding: 2px;
 }
 
 /* --- finish --- */
 
 nav.finish-menu ul {
-    list-style-type: none;
-    display: table;
-    margin: 20px auto;
-    padding: 0;
+	list-style-type: none;
+	display: table;
+	margin: 20px auto;
+	padding: 0;
 }
 
 nav.finish-menu ul li {
-    display: inline-block;
-    text-align: center;
-    padding:10px;
-    width: 100%;
+	display: inline-block;
+	text-align: center;
+	padding:10px;
+	width: 100%;
 }
 
 nav.finish-menu ul li a {
-    text-decoration: none;
+	text-decoration: none;
 }
 
 nav.finish-menu ul li i,
 nav.finish-menu ul li span {
-    display: block;
+	display: block;
 }
 
 @media (min-width:769px){
-    
-    nav.finish-menu ul li {
-        width: 200px;
-        vertical-align: top;
-    }
-    
-    nav.finish-menu ul li i,
-    nav.finish-menu ul li span {
-        display: block;
-    }
+	
+	nav.finish-menu ul li {
+		width: 200px;
+		vertical-align: top;
+	}
+	
+	nav.finish-menu ul li i,
+	nav.finish-menu ul li span {
+		display: block;
+	}
 }
 
 /* --- footer --- */
 
 section > footer {
-    padding: 10px;
-    text-align: right;
-    background: #404040;
-    margin: 0;
-    min-height: 5vh;
-    color: #ffffff;
-    border-top: 5px solid #366393;
+	padding: 10px;
+	text-align: right;
+	background: #404040;
+	margin: 0;
+	min-height: 5vh;
+	color: #ffffff;
+	border-top: 5px solid #366393;
 }

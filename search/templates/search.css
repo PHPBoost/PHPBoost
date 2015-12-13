@@ -1,7 +1,5 @@
-
-/* Zone de saisie de la recherche
+/* -- Zone de saisie de la recherche
 -------------------------------------------*/
-
 div.search-field {
 	text-align: center;
 }
@@ -11,10 +9,10 @@ div#forms-selection {
 }
 
 div#forms-selection a {
-	padding: 2px 8px;
 	display: block;
-	text-decoration: none;
+	padding: 2px 8px;
 	color: #888888;
+	text-decoration: none;
 }
 div#forms-selection a:hover {
 	background-color: #DDDDDD;
@@ -42,7 +40,8 @@ div.SpecializedForm {
 		font-size: 0.8em;
 	}
 }
-/* Zone des resultats
+
+/* -- Zone des resultats
 -------------------------------------------*/
 div.resultsChoices {
 	position: relative;
@@ -63,11 +62,11 @@ div.results {
 }
 
 div.results span.title {
+	position: relative;
+	top: -25px;
 	font-weight: bold;
 	text-align: center;
 	text-transform: uppercase;
-	position: relative;
-	top: -25px;
 }
 
 div.results div.infosResults {
@@ -86,9 +85,12 @@ ul.search-results {
 	margin-left: 30px;
 	padding: 10px;
 }
-ul.search-results li { padding: 5px; }
+
+ul.search-results li {
+	padding: 5px;
+}
 
 div.PaginationResults {
-	text-align: right;
 	padding: 5px;
+	text-align: right;
 }

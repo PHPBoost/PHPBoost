@@ -1,9 +1,9 @@
-/* Conteneur des messages de la shoutbox.*/
+/* -- Conteneur des messages de la shoutbox.*/
 #shoutbox-messages-container {
+	margin: auto;
 	height: 150px;
 	overflow: auto;
 	text-align: left;
-	margin: auto;
 	word-wrap: break-word;
 }
 
@@ -17,17 +17,17 @@
 
 #module-mini-shoutbox textarea,
 #module-mini-shoutbox textarea:valid {
-	border-color: #CCCCCC;
 	width: 90%;
+	border-color: #CCCCCC;
 }
 
 #shoutbox-bbcode-container ul {
-	padding: 0;
 	margin: 0;
+	padding: 0;
 }
 
 #shoutbox-bbcode-container ul li {
-	border: none;
 	display: inline-block;
+	border: none;
 }
 

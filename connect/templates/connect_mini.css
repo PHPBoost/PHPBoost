@@ -54,13 +54,14 @@ ul.connect-content {
 }
 
 #connect-menu div.vertical-fieldset label {
-	text-align: center;
 	padding-right: 0;
+	text-align: center;
 }
 
 #connect-menu div.vertical-fieldset ul.connect-content {
 	text-align: left;
 }
+
 #connect-menu div.horizontal-fieldset ul.connect-content {
 	text-align: center;
 }
@@ -86,15 +87,14 @@ div.connect-register i {
 	display: none;
 }
 
-@media ( max-width: 768px ) {
-
+@media (max-width: 768px) {
 	.js-menu-button {
 		display: inline-block;
 		padding: 5px 10px 5px 10px;
 	}
 	
 	#connect-menu div.horizontal-fieldset div.connect-content,
-	#connect-menu div.horizontal-fieldset form{
+	#connect-menu div.horizontal-fieldset form {
 		width: 100%;
 		text-align: center;
 	}
@@ -109,12 +109,12 @@ div.connect-register i {
 	}
 
 	#connect-menu .horizontal-fieldset a.social-connect {
-		color: #DEDEDE;
-		padding: 5px;
 		display: block;
-		text-align: center;
 		margin-bottom: 10px;
+		padding: 5px;
 		border-radius:4px;
+		color: #DEDEDE;
+		text-align: center;
 	}
 	
 	#connect-menu a.fb 		{ background: #3B5998; }
@@ -127,22 +127,22 @@ div.connect-register i {
 
 	ul.connect-content, 
 	div.connect-content {
+		position: absolute;
+		padding: 10px;
+		left: -100%;
 		visibility: hidden;
 		opacity: 0;
-		left: -100%;
-		position: absolute;
 		background-color: #353535;
-		padding: 10px;
 		transition: left 0.5s, visibility 0.5s, opacity 0.5s;
 	}
 
 	#connect-menu.active ul.connect-content,
 	#connect-menu.active div.connect-content {
+		z-index: 200;
+		left: 0%;
+		width: auto;
 		visibility: visible;
 		opacity: 1;
-		width: auto;
-		left: 0%;
-		z-index: 200;
 		transition: left 0.5s, visibility 0.5s, opacity 0.5s;
 	}
 
@@ -153,16 +153,15 @@ div.connect-register i {
 	
 	#connect-menu.active div.horizontal-fieldset div.connect-content input {
 		display: block;
-		width: 100%;
-		padding: 10px 20px;
 		margin-bottom: 10px;
+		padding: 10px 20px;
+		width: 100%;
 	}
 	
 	#connect-menu.active div.horizontal-fieldset div.connect-content button.submit {
 		display: inline-block;
-		padding: 10px 20px;
 		margin-bottom: 10px;
+		padding: 10px 20px;
 		width: 100%;
 	}
-
 }

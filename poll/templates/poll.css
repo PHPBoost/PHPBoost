@@ -1,45 +1,43 @@
 /* --- admin --- */
-
 .admin-poll input[type="text"] {
-    border: 1px solid #d4d4d4;
+	border: 1px solid #D4D4D4;
 }
 
 .admin-poll tbody tr:first-child td {
-    border-top: 1px solid #d4d4d4;
+	border-top: 1px solid #D4D4D4;
 }
 
 .admin-module-poll #calendar1 .calendar-block, 
 .admin-module-poll #calendar2 .calendar-block, 
 .admin-module-poll #calendar3 .calendar-block {
-    position:absolute;
-    z-index:100;
-    top: auto;
-    bottom: 100%;
-    left: 0;
+	position: absolute;
+	z-index: 100;
+	top: auto;
+	bottom: 100%;
+	left: 0;
 }
 
 .admin-module-poll .fieldset-inset {
-    overflow: visible;
+	overflow: visible;
 }
 
-@media (min-width:1081px) {
-    .admin-module-poll #calendar2 .calendar-block {
-        left:200px;
-    }
+@media (min-width: 1081px) {
+	.admin-module-poll #calendar2 .calendar-block {
+		left: 200px;
+	}
 }
 
-@media (min-width:1367px) {
-    .admin-module-poll #calendar2 .calendar-block {
-        left:320px;
-    }
+@media (min-width: 1367px) {
+	.admin-module-poll #calendar2 .calendar-block {
+		left: 320px;
+	}
 }
 
 .poll-vote {
-    width: 80% !important;
+	width: 80% !important;
 }
 
 /* --- modules --- */
-
 .poll-question-select {
 	margin-top: 15px;
 	padding-left: 25px;

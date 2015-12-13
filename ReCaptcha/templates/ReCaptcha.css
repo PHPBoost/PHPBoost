@@ -1,24 +1,24 @@
 #recaptcha-widget {
-	border-collapse: collapse;
-	border-radius: 4px;
-	border: 1px solid #CCCCCC;
 	display: inline-block;
+	border: 1px solid #CCCCCC;
+	border-radius: 4px;
+	border-collapse: collapse;	
 }
 
 #recaptcha-widget .options {
-	margin: 0;
-	float: none;
 	display: table-cell;
+	float: none;
+	margin: 0;
+	padding: 5px;
 	height: 100%;
 	vertical-align: middle;
-	padding: 5px;
 	border-radius: 0 4px 4px 0;
 	border: none;
 }
 
 #recaptcha-container {
 	display: table-cell;
-	border-right: 1px solid #CCC;
+	border-right: 1px solid #CCCCCC;
 	vertical-align: top;
 }
 
@@ -44,7 +44,7 @@
 	width: 100%;
 }
 
-@media ( max-width: 768px ) {
+@media (max-width: 768px) {
 	.g-recaptcha div {
 		width: 100% !important;
 	}

@@ -5,8 +5,8 @@
 }
 
 .newsletter-title {
-	font-size: 12px;
 	padding: 5px 10px 0 0;
+	font-size: 12px;
 	vertical-align: middle;
 }
  
@@ -21,18 +21,17 @@ div#newsletter .button {
 }
  
 .newsletter-link { 
-	margin: 0;
-	margin-top: 10px;
+	margin: 10px 0 0 0;
 }
 
 div#newsletter  .input-element-button input {
 	width: 120px;
-	font-size: 12px;
 	border-radius: 4px 0 0 4px;
+	font-size: 12px;
 }
 
 div#newsletter  .input-element-button button {
-	font-size: 12px;
-	border-radius: 0 4px 4px 0;
 	margin-left: -5px;
+	border-radius: 0 4px 4px 0;
+	font-size: 12px;
 }

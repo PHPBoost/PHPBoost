@@ -402,6 +402,7 @@ textarea {
 
 .form-element-textarea {
 	width: 98%;
+	margin: 0 1% 1em 1%;
 }
 
 .form-element-textarea textarea {

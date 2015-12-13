@@ -1,17 +1,19 @@
 /* Surcharge de la classe notes pour passer à la ligne et ne pas deformer les tableaux */
-.notes{ white-space: nowrap; }
+.notes {
+	white-space: nowrap;
+}
 
 #scrolling_images {
 	position: relative;
-	height: 150px;
 	margin: 20px auto;
+	height: 150px;
 	overflow: hidden;
 }
 
 #module-gallery ul,
 #module-mini-gallery ul {
-	list-style: none;
 	margin: 0 auto;
+	list-style: none;
 }
 
 #mini-gallery-slideshow li {
@@ -37,8 +39,8 @@
 }
 
 .table-pics {
-	margin: auto;
 	display: table;
+	margin: auto;
 	table-layout: fixed;
 }
 
@@ -60,23 +62,23 @@
 }
 
 .pics-max {
-	text-align: center;
 	padding: 15px 0;
 	overflow: auto;
+	text-align: center;
 }
 
 .pics-max-thumbnails {
-	margin: auto;
 	display: table;
+	margin: auto;
 	table-layout: fixed;
 }
 
 .move-pics-container {
 	position: absolute;
 	z-index: 100;
-	margin-top: 10px;
 	float: left;
 	display: none;
+	margin-top: 10px;
 }
 
 .move-pics-block {
@@ -90,15 +92,15 @@
 }
 
 .nbr-total-pics {
-	text-align: center;
 	padding-top: 15px;
+	text-align: center;
 }
 
 .link-to-other-pics-container {
 	margin: auto;
+	padding: 0;
 	width: 100%;
 	overflow: hidden;
-	padding: 0;
 }
 
 .actions-container {
@@ -106,9 +108,9 @@
 }
 
 .image-quota-container {
+	margin: auto;
 	width: 50%;
 	text-align: center;
-	margin: auto;
 }
 
 .pics-list-element {

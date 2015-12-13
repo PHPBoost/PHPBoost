@@ -1,7 +1,7 @@
 textarea {
+	float: left;
 	height: 70px;
 	width: 47%;
-	float:left;
 }
 
 textarea.answers {

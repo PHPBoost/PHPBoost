@@ -53,7 +53,6 @@ tr:nth-child(even) td {
 	background-color: #FFFFFF;
 }
 
-
 table tbody tr:last-child td {
 	border-bottom: 1px solid #D1D2D4;
 }
@@ -65,7 +64,6 @@ table.bt tbody tr:last-child td {
 table.bt tbody tr:last-child td:last-child {
 	border-bottom: 1px solid #D1D2D4;
 }
-
 
 table tbody tr td:last-child {
 	border-right: 1px solid #D1D2D4;

@@ -1,14 +1,14 @@
 .pages-button {
-	width: 145px;	
-	height: 20px;
-	background-color: #788EA0;	
-	font-weight: bold;
-	color: #EDFFF0;
-	text-align: center;
-	text-decoration: none;
-	border: 1px solid #6D93B4;
 	margin-left: 10px;
 	padding: 4px 2px;
+	width: 145px;	
+	height: 20px;
+	background-color: #788EA0;
+	border: 1px solid #6D93B4;
+	color: #EDFFF0;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
 	cursor: pointer;
 }
 
@@ -21,8 +21,8 @@ ol {
 }
 
 .article-pages .options {
-	width: auto;
 	float: left;
+	width: auto;
 }
 
 .article-pages .content {

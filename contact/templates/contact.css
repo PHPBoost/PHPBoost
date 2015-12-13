@@ -1,17 +1,27 @@
 .informations-side {
-	width: 38%;
 	margin: 69px 0;
+	width: 38%;
 }
 
-.form-side { width: 60%; }
+.form-side {
+	width: 60%;
+}
 
-.per-default { margin: 0 13px 0 15px; }
-.is_default_title { margin-right: 30px; }
-.name_title { margin-right: 92px; }
+.per-default {
+	margin: 0 13px 0 15px;
+}
+
+.is_default_title {
+	margin-right: 30px;
+}
+
+.name_title {
+	margin-right: 92px;
+}
 
 div[id*="AdminContactFieldFormController_possible_values_"] {
+	margin: 10px 0 0 0;
 	clear: both;
-	margin: 10px 0 0 ;
 }
 
 div[id*="AdminContactFieldFormController_possible_values_"] .form-field-checkbox {
@@ -20,8 +30,8 @@ div[id*="AdminContactFieldFormController_possible_values_"] .form-field-checkbox
 }
 
 input[id*="field_name_AdminContactFieldFormController_possible_values_"] {
-	width: calc(100% - 75px);
 	margin-bottom: 5px;
+	width: calc(100% - 75px);
 }
 
 input[id*="field_email_AdminContactFieldFormController_possible_values_"] {

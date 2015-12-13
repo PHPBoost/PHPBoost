@@ -4,10 +4,10 @@ div.calendar-content {
 
 /* Affichage du mois en cours */
 div.calendar-top-container {
+	padding: 4px;
 	background-color: #EEEEEE;
 	border: 1px solid #DDDDDD;
 	border-radius: 3px;
-	padding: 4px;
 }
 
 div.calendar-top-content {
@@ -32,23 +32,23 @@ div.calendar-top-r {
 
 /* Affichage des evenements */
 div.event-display-author {
-	font-size: 0.8em;
 	float: left;
 	padding-top: 4px;
 	padding-bottom: 4px;
+	font-size: 0.8em;
 }
 
 div.event-display-dates {
+	float: right;
+	padding: 4px;
+	width: 180px;
 	font-size: 0.8em;
 	font-weight: normal;
-	padding: 4px;
-	float: right;
-	width: 180px;
 }
 
 .event-display-dates + hr {
-	width: 70%;
 	margin: 0 auto 40px auto;
+	width: 70%;
 	clear: both;
 }
 
@@ -67,8 +67,8 @@ table tbody tr td.calendar-other   { background-color: #F1F1F1; }
 table tbody tr td.calendar-weekend { background-color: #FFE3B6; }
 
 #module-calendar table tbody tr td.calendar-week {
-	border-right: 1px solid #AAAAAA;
 	width: 8%;
+	border-right: 1px solid #AAAAAA;
 }
 
 /* Affichage de du titre de l'evenement dans le tableau de l'administration */
@@ -82,8 +82,8 @@ table tbody tr th.column-title {
 }
 
 #module-mini-calendar .calendar-top-content h5 {
-	font-size: 0.9em;
 	padding-top: 1px;
+	font-size: 0.9em;
 }
 
 #module-mini-calendar .calendar-top-l { padding: 0 0 0 7px; }

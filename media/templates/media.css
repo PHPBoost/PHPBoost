@@ -1,17 +1,17 @@
 .options.infos {
+	margin-top: 15px;
 	width: 230px;
 	font-size: 11px;
-	margin-top: 15px;
 }
 
-.media-desc { 
-	text-align: justify;
+.media-desc {
 	margin-top: 15px;
+	text-align: justify;
 }
 
 .media-content {
-	margin: 25px auto;
 	position: relative;
+	margin: 25px auto;
 	padding-bottom: 56.25%; /* 16:9 */
 	padding-top: 25px;
 	height: 0;
