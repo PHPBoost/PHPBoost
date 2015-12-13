@@ -53,17 +53,19 @@ tr:nth-child(even) td {
 	background-color: #FFFFFF;
 }
 
-@media (min-width: 769px) {
-	table tbody tr:last-child td {
-		border-bottom: 1px solid #D1D2D4;
-	}
+
+table tbody tr:last-child td {
+	border-bottom: 1px solid #D1D2D4;
 }
 
-@media (max-width: 768px) {
-	table tbody tr:last-child td:last-child {
-		border-bottom: 1px solid #D1D2D4;
-	}
+table.bt tbody tr:last-child td {
+	border-bottom: none;
 }
+
+table.bt tbody tr:last-child td:last-child {
+	border-bottom: 1px solid #D1D2D4;
+}
+
 
 table tbody tr td:last-child {
 	border-right: 1px solid #D1D2D4;
