@@ -77,10 +77,6 @@ ul.no-list a i.fa {
 	width: 18px;
 }
 
-a.parent i[id^="img2_"] {
-	margin-left: -18px;
-}
-
 #module-wiki .content .options {
 	float: none;
 	text-align: center;

@@ -276,13 +276,19 @@ ul.pagination-block-bis li a.next-page:hover {
 
 .explorer .content ul a.parent {
 	float: left;
+	height: 0;
+}
+
+.explorer .content ul a.parent i[id^="img2_"] {
+	margin-left: -18px;
 }
 
 .explorer .content ul a {
 	display: block;
-	padding: 3px 0px;
+	padding: 3px 0;
 	color: #666666;
 	text-decoration: none;
+	text-align: left;
 }
 
 .explorer .content > ul > li > a {

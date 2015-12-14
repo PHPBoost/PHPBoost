@@ -326,13 +326,19 @@ ul.pagination-block-bis li a.next-page:hover {
 
 .explorer .content ul a.parent {
 	float: left;
+	height: 0;
+}
+
+.explorer .content ul a.parent i[id^="img2_"] {
+	margin-left: -18px;
 }
 
 .explorer .content ul a {
-	padding: 3px 0;
 	display: block;
-	text-decoration: none;
+	padding: 3px 0;
 	color: #666666;
+	text-decoration: none;
+	text-align: left;
 }
 
 .explorer .content > ul > li > a {
@@ -343,6 +349,8 @@ ul.pagination-block-bis li a.next-page:hover {
 	width: 20px;
 	vertical-align: top;
 }
+
+
 
 .explorer .content ul .fa:before {
 	vertical-align: middle;
