@@ -122,6 +122,7 @@
 	display: none;
 }
 
-#module-gallery .subcat-content {
-	display: block;
+#module-gallery .subcat-element {
+	display: inline-block;
+	float: none;
 }
