@@ -60,7 +60,7 @@ class FormFieldActionLinkList extends AbstractFormField
 				'TITLE' => $action->get_title(),
 				'CSS_CLASS' => $action->get_css_class(),
 				'U_LINK' => $action->get_url()->rel(),
-				'U_IMG' => $action->get_img()->rel(),
+				'U_IMG' => $action->has_img() ? $action->get_img()->rel() : '',
 			));
 		}
 

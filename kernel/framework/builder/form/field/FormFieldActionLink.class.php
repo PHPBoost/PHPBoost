@@ -43,7 +43,7 @@ class FormFieldActionLink extends AbstractFormField
 	 * @param string $css_class the action font awesome css class
 	 * @param Url $img the action icon url
 	 */
-	public function __construct($id, $title, $url, $css_class, $img)
+	public function __construct($id, $title, $url, $css_class = '', $img = '')
 	{
 		$this->action = new FormFieldActionLinkElement($title, $url, $css_class, $img);
 		parent::__construct($id, '', '');
