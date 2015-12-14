@@ -292,6 +292,52 @@ input[type=color] {
 		width: 200px;
 	}
 }
+/* --- checkbox mini --- */
+
+.form-field-checkbox-mini input[type=checkbox] {
+	visibility: hidden;
+}
+
+.form-field-checkbox-mini {
+	width: 15px !important;
+	height: 15px;
+	background-color: #ffffff;
+	margin: 0;
+	border-radius: 3px;
+	position: relative;
+	display: inline-block;
+	margin-top: 2px;
+}
+
+.form-field-checkbox-mini label {
+	display: block;
+	width: 13px;
+	height: 13px;
+	border-radius: 3px;
+	transition: all .3s ease 0s;
+	cursor: pointer;
+	position: absolute;
+	top: 1px;
+	left: 1px;
+	z-index: 1;
+	background-color: #dddddd;
+    border: 1px solid #333;
+}
+
+.form-field-checkbox-mini input[type=checkbox]:checked +  label {
+	background-color: #ffffff;
+}
+
+.form-field-checkbox-mini input[type=checkbox]:checked + label:before {
+	position: absolute;
+	content: '\f00c';
+	font-size: 16px;
+    font-family: FontAwesome;
+	color: #366393;
+	left: -2px;
+	top: -3px;
+	transition: all .3s ease 0s;
+}
 
 /* --- checkbox --- */
 .form-field-checkbox input[type=checkbox] {
