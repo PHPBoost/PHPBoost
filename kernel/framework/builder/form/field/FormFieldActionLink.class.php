@@ -37,14 +37,15 @@ class FormFieldActionLink extends AbstractFormField
 	private $action;
 
 	/**
-     * @param string $id the form field id
-     * @param string $title the action title
-     * @param Url $url the action url
-     * @param Url $img the action icon url
+	 * @param string $id the form field id
+	 * @param string $title the action title
+	 * @param Url $url the action url
+	 * @param string $css_class the action font awesome css class
+	 * @param Url $img the action icon url
 	 */
-	public function __construct($id, $title, $url, $img)
+	public function __construct($id, $title, $url, $css_class, $img)
 	{
-		$this->action = new FormFieldActionLinkElement($title, $url, $img);
+		$this->action = new FormFieldActionLinkElement($title, $url, $css_class, $img);
 		parent::__construct($id, '', '');
 	}
 
@@ -53,13 +54,13 @@ class FormFieldActionLink extends AbstractFormField
 	 */
 	public function display()
 	{
-	    $field = new FormFieldActionLinkList($this->id, array($this->action));
-	    return $field->display();
+		$field = new FormFieldActionLinkList($this->id, array($this->action));
+		return $field->display();
 	}
 
-    protected function get_default_template()
-    {
-        return new FileTemplate('framework/builder/form/FormFieldActionLinkList.tpl');
-    }
+	protected function get_default_template()
+	{
+		return new FileTemplate('framework/builder/form/FormFieldActionLinkList.tpl');
+	}
 }
 ?>

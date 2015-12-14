@@ -55,10 +55,12 @@ class FormFieldActionLinkList extends AbstractFormField
 
 		foreach ($this->actions as $action) {
 			$template->assign_block_vars('action', array(
-	            'TITLE' => $action->get_title(),
-	            'U_LINK' => $action->get_url()->rel(),
-	            'U_IMG' => $action->get_img()->rel(),
-	            'IS_IMG_RELATIVE' => $action->get_img()->is_relative()
+				'C_PICTURE' => $action->has_css_class() || $action->has_img(),
+				'C_IMG' => $action->has_img(),
+				'TITLE' => $action->get_title(),
+				'CSS_CLASS' => $action->get_css_class(),
+				'U_LINK' => $action->get_url()->rel(),
+				'U_IMG' => $action->get_img()->rel(),
 			));
 		}
 

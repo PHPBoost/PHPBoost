@@ -68,6 +68,8 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/AdminArticlesManageController.tpl'));
 		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/images/pagebreak.png'));
+		$file->delete();
 	}
 }
 ?>

@@ -130,8 +130,7 @@ class ArticlesFormController extends ModuleController
 			array('rows' => 15, 'required' => true)
 		));
 		
-		$onclick_action = 'javascript:bbcode_page();';
-		$fieldset->add_field(new FormFieldActionLink('add_page', $this->lang['articles.form.add_page'] , $onclick_action, PATH_TO_ROOT . '/articles/templates/images/pagebreak.png'));
+		$fieldset->add_field(new FormFieldActionLink('add_page', $this->lang['articles.form.add_page'] , 'javascript:bbcode_page();', 'fa-pagebreak'));
 		
 		$other_fieldset = new FormFieldsetHTML('other', $this->common_lang['form.other']);
 		$form->add_fieldset($other_fieldset);

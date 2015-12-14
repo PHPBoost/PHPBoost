@@ -65,3 +65,5 @@ span.contents + hr {
 		width: 49%;
 	}
 }
+
+.fa-pagebreak:before { content: "\f0f6"; }
