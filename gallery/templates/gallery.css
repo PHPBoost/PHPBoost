@@ -121,8 +121,3 @@
 .article-gallery > header {
 	display: none;
 }
-
-#module-gallery .subcat-element {
-	display: inline-block;
-	float: none;
-}

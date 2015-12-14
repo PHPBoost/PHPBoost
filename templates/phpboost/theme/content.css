@@ -395,12 +395,14 @@ ul.pagination-block-bis li a.next-page:hover {
 
 .subcat-container {
 	margin: 10px 0 5px 0;
+	font-size: 0;
 }
 
 .subcat-element {
-	float: left;
-	text-align: center;
 	margin-bottom: 20px;
+	font-size: 13px;
+	display: inline-block;
+	text-align: center;
 }
 
 .subcat-content {

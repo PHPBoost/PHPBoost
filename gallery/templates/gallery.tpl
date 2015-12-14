@@ -287,7 +287,7 @@
 			# IF C_SUB_CATEGORIES #
 			<div class="subcat-container">
 				# START sub_categories_list #
-				<div class="subcat-element" style="width:calc({CATS_COLUMNS_WIDTH}% - 5px);">
+				<div class="subcat-element" style="width:{CATS_COLUMNS_WIDTH}%;">
 					<div class="subcat-content">
 						# IF sub_categories_list.C_CATEGORY_IMAGE #<a itemprop="about" href="{sub_categories_list.U_CATEGORY}"><img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" /></a># ENDIF #
 						<br />
