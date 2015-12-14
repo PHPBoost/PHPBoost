@@ -23,6 +23,7 @@
 .pages-pagination {
 	float: right;
 	width: 33%;
+	margin-bottom: 10px;
 }
 
 #module-articles .small-block {

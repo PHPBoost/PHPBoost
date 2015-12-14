@@ -5,11 +5,11 @@
 			# IF action.C_PICTURE #
 			<a href="{action.U_LINK}" title="{action.TITLE}">
 				# IF action.C_IMG #
-				<img src="{action.U_IMG}" alt="{action.TITLE}" />
+				<img src="{action.U_IMG}" alt="{action.TITLE}" /><br />
 				# ELSE #
-				<i class="fa {action.CSS_CLASS}"></i>
+				<i class="fa {action.CSS_CLASS}"></i><br />
 				# ENDIF #
-			</a><br />
+			</a>
 			# ENDIF #
 			<a href="{action.U_LINK}">{action.TITLE}</a>
 		</li>
