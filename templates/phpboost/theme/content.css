@@ -413,6 +413,18 @@ ul.pagination-block-bis li a.next-page:hover {
 	text-align: center;
 }
 
+@media (max-width: 540px){
+	.subcat-element {
+		width: 50% !important;
+	}
+}
+
+@media (max-width: 360px){
+	.subcat-element {
+		width: 100% !important;
+	}
+}
+
 .subcat-content {
 	margin: auto;
 	padding: 0 5px;
