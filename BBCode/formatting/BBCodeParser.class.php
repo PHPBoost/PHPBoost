@@ -73,7 +73,8 @@ class BBCodeParser extends ContentFormattingParser
 
 		//Interprétation des sauts de ligne
 		$this->content = nl2br($this->content);
-
+		$this->content = str_replace(array(' <br />', ' <br>', ' <br/>'), '<br />', $this->content);
+		
 		// BBCode simple tags
 		$this->parse_simple_tags();
 

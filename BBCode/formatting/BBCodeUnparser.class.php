@@ -71,7 +71,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		{
 			$this->unparse_list();
 		}
-
+		
 		$this->unparse_code(self::REIMPLANT);
 		$this->unparse_html(self::REIMPLANT);
 	}
@@ -113,10 +113,10 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			'<sub>', '</sub>', '<pre>', '</pre>'
 			);
 		$array_str_replace = array(
-			'', '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '[s]', '[/s]', '[line]', '[sup]', '[/sup]', '[sub]', '[/sub]', '[pre]', '[/pre]'
+			' ', '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '[s]', '[/s]', '[line]', '[sup]', '[/sup]', '[sub]', '[/sub]', '[pre]', '[/pre]'
 		);
 		$this->content = str_replace($array_str, $array_str_replace, $this->content);
-
+		
 		$array_preg = array(
 			'`<span style="text-decoration: underline;">(.*)</span>`isU',
 			'`<span style="color:([^;]+);">(.*)</span>`isU',
