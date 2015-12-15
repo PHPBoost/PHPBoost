@@ -56,7 +56,7 @@
 				# IF PAGE_NAME #
 					<h2 class="title page_name">{PAGE_NAME}</h2>
 				# ENDIF #
-				<div itemprop="text" class="contents">{CONTENTS}</div>
+					<div itemprop="text">{CONTENTS}</div>
 	
 				<hr />
 	

@@ -20,6 +20,10 @@
 	text-decoration: none;
 }
 
+#module-articles hr {
+	margin-top: 10px;
+}
+
 .pages-pagination {
 	float: right;
 	width: 33%;
