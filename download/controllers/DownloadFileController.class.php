@@ -66,7 +66,10 @@ class DownloadFileController extends AbstractController
 				header('Accept-Ranges: bytes');
 				header('Content-Type: application/force-download');
 				set_time_limit(0);
+				ob_clean();
+				flush();
 				readfile($this->downloadfile->get_url()->absolute());
+				exit;
 			}
 			else
 			{
