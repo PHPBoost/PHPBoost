@@ -159,7 +159,7 @@ class KernelSetup
 	private function create_comments_table()
 	{
 		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true),
+			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'id_topic' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'message' => array('type' => 'text', 'length' => 65000),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
@@ -177,7 +177,7 @@ class KernelSetup
 	private function create_comments_topic_table()
 	{
 		$fields = array(
-			'id_topic' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true),
+			'id_topic' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'module_id' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'topic_identifier' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "'default'"),	
 			'id_in_module' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
@@ -226,7 +226,7 @@ class KernelSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'ip' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"),
-			'time' => array('type' => 'date', 'notnull' => 1, 'default' => "'0000-00-00'"),
+			'time' => array('type' => 'date', 'notnull' => 1, 'default' => "''"),
 			'total' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
@@ -358,7 +358,7 @@ class KernelSetup
 			'posted_msg' => array('type' => 'integer', 'length' => 6, 'notnull' => 1, 'default' => 0),
 			'registration_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'last_connection_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'groups' => array('type' => 'text', 'length' => 65000, 'default' => "''"),
+			'groups' => array('type' => 'text', 'length' => 65000),
 			'warning_percentage' => array('type' => 'integer', 'length' => 6, 'notnull' => 1, 'default' => 0),
 			'delay_banned' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'delay_readonly' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),

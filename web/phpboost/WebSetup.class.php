@@ -79,7 +79,7 @@ class WebSetup extends DefaultModuleSetup
 			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'rewrited_name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'contents' => array('type' => 'text', 'length' => 65000, 'default' => "''"),
+			'contents' => array('type' => 'text', 'length' => 65000),
 			'short_contents' => array('type' => 'text', 'length' => 65000),
 			'approbation_type' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),

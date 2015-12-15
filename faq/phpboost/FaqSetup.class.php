@@ -77,7 +77,7 @@ class FaqSetup extends DefaultModuleSetup
 			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'q_order' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'question' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'answer' => array('type' => 'text', 'length' => 65000, 'default' => "''"),
+			'answer' => array('type' => 'text', 'length' => 65000),
 			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'approved' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0)
