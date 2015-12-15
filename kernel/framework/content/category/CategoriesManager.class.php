@@ -345,6 +345,11 @@ class CategoriesManager
 				$parents_categories[Category::ROOT_CATEGORY] = $this->categories_cache->get_category(Category::ROOT_CATEGORY);
 			}
 		}
+		else
+		{
+			if ($add_this)
+				$parents_categories[$id_category] = $this->categories_cache->get_category($id_category);
+		}
 		
 		return $parents_categories;
 	}
