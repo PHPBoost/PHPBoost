@@ -36,12 +36,11 @@ require_once('../kernel/header.php');
 //Configuration des authorisations
 $config_authorizations = $pages_config->get_authorizations();
 
-$tpl = new FileTemplate('pages/explorer.tpl');
+$template = new FileTemplate('pages/explorer.tpl');
 
-$module_data_path = $tpl->get_pictures_data_path();
+$module_data_path = $template->get_pictures_data_path();
 
 //Liste des dossiers de la racine
-$root = '';
 foreach (PagesCategoriesCache::load()->get_categories() as $key => $cat)
 {
 	if ($cat['id_parent'] == 0)
@@ -51,7 +50,11 @@ foreach (PagesCategoriesCache::load()->get_categories() as $key => $cat)
 		//Vérification de l'autorisation d'éditer la page
 		if (($special_auth && AppContext::get_current_user()->check_auth($cat['auth'], READ_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)))
 		{
-			$root .= '<li><a href="javascript:open_cat(' . $key . '); show_pages_cat_contents(' . $cat['id_parent'] . ', 0);"><i class="fa fa-folder"></i>' . stripslashes($cat['title']) . '</a></li>';
+			$template->assign_block_vars('list_cats', array(
+				'KEY' =>  $key,
+				'ID_PARENT' => $cat['id_parent'],
+				'TITLE' => stripslashes($cat['title'])
+			));
 		}
 	}
 }
@@ -68,17 +71,19 @@ while ($row = $result->fetch())
 	//Vérification de l'autorisation d'éditer la page
 	if (($special_auth && AppContext::get_current_user()->check_auth($array_auth, READ_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)))
 	{
-		$root .= '<li><a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '"><i class="fa fa-file"></i>' . stripslashes($row['title']) . '</a></li>';
+		$template->assign_block_vars('list_files', array(
+			'TITLE' => stripslashes($row['title']),
+			'URL_FILE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
+		));
 	}
 }
 $result->dispose();
 
-$tpl->put_all(array(
+$template->put_all(array(
 	'PAGES_PATH' => $module_data_path,
 	'TITLE' => $LANG['pages_explorer'],
 	'L_ROOT' => $LANG['pages_root'],
 	'SELECTED_CAT' => $cat > 0 ? $cat : 0,
-	'ROOT_CONTENTS' => $root,
 	'L_CATS' => $LANG['pages_cats_tree']
 ));
 
@@ -91,27 +96,21 @@ ORDER BY p.title ASC");
 while ($row = $result->fetch())
 {
 	$sub_cats_number = PersistenceContext::get_querier()->count(PREFIX . "pages_cats", 'WHERE id_parent=:id_parent', array('id_parent' => $row['id']));
-	if ($sub_cats_number > 0)
-	{	
-		$tpl->assign_block_vars('list', array(
-			'DIRECTORY' => '<li class="sub"><a class="parent" href="javascript:show_pages_cat_contents(' . $row['id'] . ', 0);"><i class="fa fa-plus-square-o" id="img2_' . $row['id'] . '"></i><i class="fa fa-folder" id ="img_' . $row['id'] . '"></i></a><a id="class_' . $row['id'] . '" href="javascript:open_cat(' . $row['id'] . ');">' . stripslashes($row['title']) . '</a><span id="cat_' . $row['id'] . '"></span></li>'
-		));
-	}
-	else
-	{
-		$tpl->assign_block_vars('list', array(
-			'DIRECTORY' => '<li class="sub"><a id="class_' . $row['id'] . '" href="javascript:open_cat(' . $row['id'] . ');"><i class="fa fa-folder"></i>' . stripslashes($row['title']) . '</a><span id="cat_' . $row['id'] . '"></span></li>'
-		));
-	}
+
+	$template->assign_block_vars('list', array(
+		'ID' => $row['id'],
+		'TITLE' => stripslashes($row['title']),
+		'U_FOLDER' => $sub_cats_number > 0
+	));
 }
 $result->dispose();
-$tpl->put_all(array(
+$template->put_all(array(
 	'SELECTED_CAT' => 0,
 	'CAT_0' => 'selected',
 	'CAT_LIST' => ''
 ));
 
-$tpl->display();
+$template->display();
 
 
 require_once('../kernel/footer.php');
