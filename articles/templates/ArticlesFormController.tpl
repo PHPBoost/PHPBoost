@@ -2,7 +2,7 @@
 <!--
 	function bbcode_page()
 	{
-		var page = prompt('{@articles.form.add_page.title}');
+		var page = prompt('{@articles.form.add_page.title}', '');
 
 		if (page) {
 			var textarea = document.getElementById('ArticlesFormController_contents');

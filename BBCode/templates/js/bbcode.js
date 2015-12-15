@@ -293,21 +293,21 @@ function bbcode_list(field)
 
 function bbcode_url(field, prompt_text)
 {
-	var url = prompt(prompt_text);
+	var url = prompt(prompt_text, '');
 	if( url != null)
 		insertbbcode('[url=' + url + ']', '[/url]', field);
 }
 
 function bbcode_lightbox(field, prompt_text)
 {
-	var url = prompt(prompt_text);
+	var url = prompt(prompt_text, '');
 	if( url != null)
 		insertbbcode('[lightbox=' + url + '][img style="max-width:150px;"]' + url, '[/img][/lightbox]', field);
 }
 
 function bbcode_anchor(field, prompt_text)
 {
-	var anchor = prompt(prompt_text);
+	var anchor = prompt(prompt_text, '');
 	if( anchor != null)
 		insertbbcode('[anchor=' + anchor + ']', '[/anchor]', field);
 	else
