@@ -57,6 +57,10 @@ span.contents + hr {
     list-style-type: none;
 }
 
+.form-field-action-link i {
+	font-size: 2.3rem;
+}
+
 #module-articles .small-block.one-article {
 	width: 99%;
 }
