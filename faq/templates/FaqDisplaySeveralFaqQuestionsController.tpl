@@ -145,8 +145,8 @@ jQuery(document).ready(function() {
 	var anchor = window.location.hash;
 	var id_question;
 	 
-	id_question = anchor.substring(2,anchor.length);
-	if (anchor.substring(0,2) == "#q" && id_question.match(/^[0-9]+$/))
+	id_question = anchor.substring(9,anchor.length);
+	if (anchor.substring(0,9) == "#question" && id_question.match(/^[0-9]+$/))
 		show_answer(id_question);
 });
 # ENDIF #
