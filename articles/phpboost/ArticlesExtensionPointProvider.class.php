@@ -57,14 +57,14 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 		return new ArticlesFeedProvider();
 	}
 	
+	public function scheduled_jobs()
+	{
+		return new ArticlesScheduledJobs();
+	}
+	
 	public function search()
 	{
 		return new ArticlesSearchable();
-	}
-	
-	public function url_mappings()
-	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/articles/index.php')));
 	}
 
 	public function sitemap()
@@ -75,6 +75,11 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 	public function tree_links()
 	{
 		return new ArticlesTreeLinks();
+	}
+	
+	public function url_mappings()
+	{
+		return new UrlMappings(array(new DispatcherUrlMapping('/articles/index.php')));
 	}
 }
 ?>

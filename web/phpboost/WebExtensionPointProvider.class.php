@@ -62,7 +62,12 @@ class WebExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new ModuleMenus(array(new WebModuleMiniMenu()));
 	}
-        
+	
+	public function scheduled_jobs()
+	{
+		return new WebScheduledJobs();
+	}
+	
 	public function search()
 	{
 		return new WebSearchable();

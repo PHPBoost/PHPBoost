@@ -278,16 +278,44 @@ class NewsFormController extends ModuleController
 			$news->set_approbation_type($this->form->get_value('approbation_type')->get_raw_value());
 			if ($news->get_approbation_type() == News::APPROVAL_DATE)
 			{
-				$news->set_start_date($this->form->get_value('start_date'));
+				$config = NewsConfig::load();
+				$deferred_operations = $config->get_deferred_operations();
+				
+				$old_start_date = $news->get_start_date();
+				$start_date = $this->form->get_value('start_date');
+				$news->set_start_date($start_date);
+				
+				if ($old_start_date !== null && $old_start_date->get_timestamp() != $start_date->get_timestamp() && in_array($old_start_date->get_timestamp(), $deferred_operations))
+				{
+					$key = array_search($old_start_date->get_timestamp(), $deferred_operations);
+					unset($deferred_operations[$key]);
+				}
+				
+				if (!in_array($start_date->get_timestamp(), $deferred_operations))
+					$deferred_operations[] = $start_date->get_timestamp();
 				
 				if ($this->form->get_value('end_date_enable'))
 				{
-					$news->set_end_date($this->form->get_value('end_date'));
+					$old_end_date = $news->get_end_date();
+					$end_date = $this->form->get_value('end_date');
+					$news->set_end_date($end_date);
+					
+					if ($old_end_date !== null && $old_end_date->get_timestamp() != $end_date->get_timestamp() && in_array($old_end_date->get_timestamp(), $deferred_operations))
+					{
+						$key = array_search($old_end_date->get_timestamp(), $deferred_operations);
+						unset($deferred_operations[$key]);
+					}
+					
+					if (!in_array($end_date->get_timestamp(), $deferred_operations))
+						$deferred_operations[] = $end_date->get_timestamp();
 				}
 				else
 				{
 					$news->clean_end_date();
 				}
+				
+				$config->set_deferred_operations($deferred_operations);
+				NewsConfig::save();
 			}
 			else
 			{

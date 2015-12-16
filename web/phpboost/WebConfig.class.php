@@ -49,6 +49,8 @@ class WebConfig extends AbstractConfigData
 	const DISPLAY_ALL_CONTENT = 'all_content';
 	const DISPLAY_TABLE = 'table';
 	
+	const DEFERRED_OPERATIONS = 'deferred_operations';
+	
 	const NUMBER_CARACTERS_BEFORE_CUT = 250;
 	
 	public function get_items_number_per_page()
@@ -206,6 +208,16 @@ class WebConfig extends AbstractConfigData
 		$this->set_property(self::AUTHORIZATIONS, $authorizations);
 	}
 	
+	public function get_deferred_operations()
+	{
+		return $this->get_property(self::DEFERRED_OPERATIONS);
+	}
+	
+	public function set_deferred_operations(Array $deferred_operations)
+	{
+		$this->set_property(self::DEFERRED_OPERATIONS, $deferred_operations);
+	}
+	
 	/**
 	 * {@inheritdoc}
 	 */
@@ -224,7 +236,8 @@ class WebConfig extends AbstractConfigData
 			self::SORT_TYPE => WebLink::SORT_ALPHABETIC,
 			self::SORT_MODE => WebLink::ASC,
 			self::PARTNERS_NUMBER_IN_MENU => 5,
-			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13)
+			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13),
+			self::DEFERRED_OPERATIONS => array()
 		);
 	}
 	

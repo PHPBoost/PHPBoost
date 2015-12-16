@@ -343,16 +343,44 @@ class ArticlesFormController extends ModuleController
 			$article->set_publishing_state($this->form->get_value('publishing_state')->get_raw_value());
 			if ($article->get_publishing_state() == Article::PUBLISHED_DATE)
 			{
-				$article->set_publishing_start_date($this->form->get_value('publishing_start_date'));
-
+				$config = ArticlesConfig::load();
+				$deferred_operations = $config->get_deferred_operations();
+				
+				$old_start_date = $article->get_publishing_start_date();
+				$start_date = $this->form->get_value('publishing_start_date');
+				$article->set_publishing_start_date($start_date);
+				
+				if ($old_start_date !== null && $old_start_date->get_timestamp() != $start_date->get_timestamp() && in_array($old_start_date->get_timestamp(), $deferred_operations))
+				{
+					$key = array_search($old_start_date->get_timestamp(), $deferred_operations);
+					unset($deferred_operations[$key]);
+				}
+				
+				if (!in_array($start_date->get_timestamp(), $deferred_operations))
+					$deferred_operations[] = $start_date->get_timestamp();
+				
 				if ($this->form->get_value('end_date_enable'))
 				{
-					$article->set_publishing_end_date($this->form->get_value('publishing_end_date'));
+					$old_end_date = $article->get_publishing_end_date();
+					$end_date = $this->form->get_value('publishing_end_date');
+					$article->set_publishing_end_date($end_date);
+					
+					if ($old_end_date !== null && $old_end_date->get_timestamp() != $end_date->get_timestamp() && in_array($old_end_date->get_timestamp(), $deferred_operations))
+					{
+						$key = array_search($old_end_date->get_timestamp(), $deferred_operations);
+						unset($deferred_operations[$key]);
+					}
+					
+					if (!in_array($end_date->get_timestamp(), $deferred_operations))
+						$deferred_operations[] = $end_date->get_timestamp();
 				}
 				else
 				{
 					$article->clean_publishing_end_date();
 				}
+				
+				$config->set_deferred_operations($deferred_operations);
+				ArticlesConfig::save();
 			}
 			else
 			{

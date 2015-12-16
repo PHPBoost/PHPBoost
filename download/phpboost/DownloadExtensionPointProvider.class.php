@@ -62,7 +62,12 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new ModuleMenus(array(new DownloadModuleMiniMenu()));
 	}
-        
+	
+	public function scheduled_jobs()
+	{
+		return new DownloadScheduledJobs();
+	}
+	
 	public function search()
 	{
 		return new DownloadSearchable();

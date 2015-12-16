@@ -292,16 +292,43 @@ class DownloadFormController extends ModuleController
 			$downloadfile->set_approbation_type($this->form->get_value('approbation_type')->get_raw_value());
 			if ($downloadfile->get_approbation_type() == DownloadFile::APPROVAL_DATE)
 			{
-				$downloadfile->set_start_date($this->form->get_value('start_date'));
+				$deferred_operations = $this->config->get_deferred_operations();
 				
-				if ($this->form->get_value('end_date_enable'))
+				$old_start_date = $downloadfile->get_start_date();
+				$start_date = $this->form->get_value('start_date');
+				$downloadfile->set_start_date($start_date);
+				
+				if ($old_start_date !== null && $old_start_date->get_timestamp() != $start_date->get_timestamp() && in_array($old_start_date->get_timestamp(), $deferred_operations))
 				{
-					$downloadfile->set_end_date($this->form->get_value('end_date'));
+					$key = array_search($old_start_date->get_timestamp(), $deferred_operations);
+					unset($deferred_operations[$key]);
+				}
+				
+				if (!in_array($start_date->get_timestamp(), $deferred_operations))
+					$deferred_operations[] = $start_date->get_timestamp();
+				
+				if ($this->form->get_value('end_date_enabled'))
+				{
+					$old_end_date = $downloadfile->get_end_date();
+					$end_date = $this->form->get_value('end_date');
+					$downloadfile->set_end_date($end_date);
+					
+					if ($old_end_date !== null && $old_end_date->get_timestamp() != $end_date->get_timestamp() && in_array($old_end_date->get_timestamp(), $deferred_operations))
+					{
+						$key = array_search($old_end_date->get_timestamp(), $deferred_operations);
+						unset($deferred_operations[$key]);
+					}
+					
+					if (!in_array($end_date->get_timestamp(), $deferred_operations))
+						$deferred_operations[] = $end_date->get_timestamp();
 				}
 				else
 				{
 					$downloadfile->clean_end_date();
 				}
+				
+				$this->config->set_deferred_operations($deferred_operations);
+				DownloadConfig::save();
 			}
 			else
 			{

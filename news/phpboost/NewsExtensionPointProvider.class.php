@@ -56,7 +56,12 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		$module_css_files->adding_running_module_displayed_file('news.css');
 		return $module_css_files;
 	}
-        
+	
+	public function scheduled_jobs()
+	{
+		return new NewsScheduledJobs();
+	}
+	
 	public function search()
 	{
 		return new NewsSearchable();

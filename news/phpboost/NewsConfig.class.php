@@ -45,6 +45,8 @@ class NewsConfig extends AbstractConfigData
 	const DISPLAY_BLOCK = 'block';
 	const DISPLAY_LIST = 'list';
 	
+	const DEFERRED_OPERATIONS = 'deferred_operations';
+	
 	const AUTHORIZATIONS = 'authorizations';
 	
 	public function get_number_news_per_page()
@@ -151,6 +153,16 @@ class NewsConfig extends AbstractConfigData
 	{
 		$this->set_property(self::AUTHORIZATIONS, $authorizations);
 	}
+	
+	public function get_deferred_operations()
+	{
+		return $this->get_property(self::DEFERRED_OPERATIONS);
+	}
+	
+	public function set_deferred_operations(Array $deferred_operations)
+	{
+		$this->set_property(self::DEFERRED_OPERATIONS, $deferred_operations);
+	}
 
 	/**
 	 * {@inheritdoc}
@@ -167,7 +179,8 @@ class NewsConfig extends AbstractConfigData
 			self::NEWS_SUGGESTIONS_ENABLED => true,
 			self::AUTHOR_DISPLAYED => true,
 			self::DISPLAY_TYPE => self::DISPLAY_LIST,
-			self::AUTHORIZATIONS => array('r1' => 13, 'r0' => 5, 'r-1' => 1)
+			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13),
+			self::DEFERRED_OPERATIONS => array()
 		);
 	}
 
