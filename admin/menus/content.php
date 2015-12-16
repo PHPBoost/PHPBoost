@@ -60,10 +60,6 @@ if ($action_post == 'save')
 	}
 	
 	$menu->enabled(retrieve(POST, 'activ', Menu::MENU_NOT_ENABLED));
-	if ($menu->is_enabled())
-	{
-		$menu->set_block(retrieve(POST, 'location', Menu::BLOCK_POSITION__NOT_ENABLED));
-	}
 	$menu->set_hidden_with_small_screens((bool)retrieve(POST, 'hidden_with_small_screens', false));
 	$menu->set_auth(Authorizations::build_auth_array_from_form(Menu::MENU_AUTH_BIT));
 	$menu->set_display_title(retrieve(POST, 'display_title', false));
@@ -72,9 +68,37 @@ if ($action_post == 'save')
 	//Filters
 	MenuAdminService::set_retrieved_filters($menu);
 	
-	MenuService::move($menu, $menu->get_block());
+	if ($menu->is_enabled())
+	{
+		$menu->set_block(retrieve(POST, 'location', Menu::BLOCK_POSITION__NOT_ENABLED));
+	}
+	if ($menu->is_enabled())
+	{
+		$block = retrieve(POST, 'location', Menu::BLOCK_POSITION__NOT_ENABLED);
+		
+		if ($menu->get_block() == $block)
+		{   // Save the menu if enabled
+			$menu->set_block_position($menu->get_block_position());
+			MenuService::save($menu);
+		}
+		else
+		{   // Move the menu to its new location and save it
+			$menu->set_block($block);
+			MenuService::move($menu, $menu->get_block());
+		}
+	}
+	else
+	{   // The menu is not enabled, we only save it with its block location
+		// When enabling it, the menu will be moved to this block location
+		$block = $menu->get_block();
+		// Disable the menu and move it to the disabled position computing new positions
+		MenuService::move($menu, Menu::BLOCK_POSITION__NOT_ENABLED);
+		
+		// Restore its position and save it
+		$menu->set_block($block);
+		MenuService::save($menu);
+	}
 	MenuService::generate_cache();
-	
 	AppContext::get_response()->redirect('menus.php#m' . $menu->get_id());
 }
 
