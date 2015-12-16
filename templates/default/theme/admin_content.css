@@ -929,6 +929,24 @@ div.container-block-absolute > div {
 	clear: both;
 }
 
+.menusmanagement .fa-arrows {
+	display: none;
+}
+.menusmanagement a.fa,
+.menusmanagement a i{
+	padding: 0 8px;
+}
+
+@media (min-width: 769px) and (min-height: 601px) {
+	.menusmanagement .fa-arrows {
+		display: inline-block;
+	}
+	.menusmanagement a.fa,
+	.menusmanagement a i{
+		padding: 0 ;
+	}
+}
+
 @media (min-width: 981px) {
 	.menus-management-column > div:nth-child(1) {
 		float: left;
