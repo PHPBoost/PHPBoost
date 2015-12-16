@@ -82,6 +82,7 @@ class NewsDisplayCategoryController extends ModuleController
 		
 		$number_columns_display_news = $this->config->get_number_columns_display_news();
 		$this->tpl->put_all(array(
+			'C_CATEGORY' => true,
 			'C_DISPLAY_BLOCK_TYPE' => $this->config->get_display_type() == NewsConfig::DISPLAY_BLOCK,
 			'C_DISPLAY_LIST_TYPE' => $this->config->get_display_type() == NewsConfig::DISPLAY_LIST,
 			'C_DISPLAY_CONDENSED_CONTENT' => $this->config->get_display_condensed_enabled(),
