@@ -83,9 +83,7 @@ tinymce.init({
 	nanospell_server: "php",
 	nanospell_dictionary: "fr, en",
 	
-	# IF C_TOOLBAR1 #toolbar1: "{TOOLBAR1}",# ENDIF #
-	# IF C_TOOLBAR2 #toolbar2: "{TOOLBAR2}",# ENDIF #
-	# IF C_TOOLBAR3 #toolbar3: "{TOOLBAR3}",# ENDIF #
+	# IF C_TOOLBAR #toolbar1: "{TOOLBAR}",# ENDIF #
 
 	menubar: false,
 	imagetools_proxy: '{PATH_TO_ROOT}/TinyMCE/lib/TinyMCEPicturesProxy.php',

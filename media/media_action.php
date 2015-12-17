@@ -242,7 +242,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 			'CATEGORIES' => $categories_list,
 			'WIDTH' => '425',
 			'HEIGHT' => '344',
-			'U_MEDIA' => 'http://',
+			'U_MEDIA' => '',
 			'DESCRIPTION' => '',
 			'APPROVED' => 'checked="checked"',
 			'C_APROB' => false,

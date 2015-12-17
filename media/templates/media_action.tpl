@@ -85,7 +85,7 @@
 					</div>
 					<div class="form-element">
 						<label for="u_media">* {L_U_MEDIA}</label>
-						<div class="form-field"><input type="text" maxlength="500" class="field-large" id="u_media" name="u_media" value="{U_MEDIA}"></div>
+						<div class="form-field"><input type="text" maxlength="500" class="field-large" id="u_media" name="u_media" value="{U_MEDIA}" placeholder="http://"></div>
 					</div>
 					<div class="form-element-textarea">
 						<label for="contents" id="preview_content">{L_CONTENTS}</label>

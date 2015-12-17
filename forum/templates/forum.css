@@ -327,12 +327,6 @@ table.bt tbody tr:last-child td:last-child {
 	}
 }
 
-/* Formulaire pour poster les messages */
-.forum-post-form {
-	margin: 15px auto auto auto;
-	width: 90%;
-}
-
 /* Cadre des liens: alerter les moderateurs et suivre le sujet */
 .forum-action {
 	margin-top: 5px;
