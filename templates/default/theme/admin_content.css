@@ -891,7 +891,7 @@ div.container-block-absolute > div {
 #mod_topfooter, #mod_footer {
 	margin-top: 20px;
 	padding: 30px 10px 10px 10px;
-	min-height: 55px;
+	min-height: 75px;
 	background-color: #f5f5f5;
 	border: 2px dashed #bbbbbb;
 	border-radius: 3px;
