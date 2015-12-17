@@ -92,11 +92,15 @@ class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 			$this->querier->inject('ALTER TABLE ' . PREFIX . 'download ADD FULLTEXT KEY `title` (`name`)');
 		}
 		
-		$result = $this->querier->select_rows(PREFIX . 'download', array('id', 'name'));
+		$result = $this->querier->select_rows(PREFIX . 'download', array('id', 'name', 'url', 'size'));
 		while ($row = $result->fetch())
 		{
+			$file_size = Url::get_url_file_size($row['url']);
+			$file_size = (empty($file_size) && $row['size']) ? $row['size'] : $file_size;
+			
 			$this->querier->update(PREFIX . 'download', array(
-				'rewrited_name' => Url::encode_rewrite($row['name'])
+				'rewrited_name' => Url::encode_rewrite($row['name']),
+				'size' => $file_size
 			), 'WHERE id = :id', array('id' => $row['id']));
 		}
 		$result->dispose();
