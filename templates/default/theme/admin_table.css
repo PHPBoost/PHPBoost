@@ -12,7 +12,7 @@
 table,
 .table-fixed {
 	width: calc(100% - 10px) !important;
-	padding: 0px;
+	padding: 0;
 	margin: 8px 5px;
 	border-spacing: 0;
 }
@@ -134,7 +134,7 @@ table.formatter-table th.formatter-table-head a 		{ color: #E5E6E6; }
 table.formatter-table th.formatter-table-head a:hover 	{ color: #FFFFFF; }
 
 table.formatter-table th.formatter-table-head p {
-	margin-bottom: 0px;
+	margin-bottom: 0;
 }
 
 .col-smaller { width: 3em;  }

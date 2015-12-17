@@ -388,6 +388,14 @@ ul.pagination-block-bis li a.next-page:hover {
 	margin-left: 20px;
 }
 
+@media (max-width: 768px) {
+	.infos {
+		float: none;
+		width: 100%;
+		margin: 0 0 10px;
+	}
+}
+
 
 /* -- Gestion des categories -- */
 /* ---------------------------- */
@@ -838,7 +846,7 @@ div#release {
 
 .module-contribution-element {
 	float: left;
-	margin: 20px 0px;
+	margin: 20px 0;
 	text-align: center;
 }
 
@@ -870,12 +878,12 @@ div#release {
 
 .contribution-module-container {
 	float: left;
-	margin: 20px 0px;
+	margin: 20px 0;
 	text-align: center;
 }
 
 .convers-announce {
-	padding-right: 0px;
+	padding-right: 0;
 }
 
 .convers-title {

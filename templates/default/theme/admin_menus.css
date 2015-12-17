@@ -422,7 +422,7 @@ nav#admin-quick-menu li {
 nav#admin-quick-menu li a.quick-link {
 	display: block;
 	padding: 10px;
-	margin: 0px;
+	margin: 0;
 	color: #FFFFFF;
 	text-decoration: none;
 }

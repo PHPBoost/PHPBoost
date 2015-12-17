@@ -71,10 +71,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h5 {
-	-webkit-margin-before: 0px;
-    -webkit-margin-after: 0px;
-    -webkit-margin-start: 0px;
-    -webkit-margin-end: 0px;
+	-webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 0;
 }
 
 /* --- Les sous titres --- */
@@ -84,7 +84,7 @@ h3.title1, h3.title2, h4.stitle1, h4.stitle2 {
 
 h3.title1, h3.title2 {
 	border-bottom: 1px solid #366393;
-	padding: 0px 0px 0px 3px;
+	padding: 0 0 0 3px;
 	margin-bottom: 15px;
 	font-weight: bold;
 }
@@ -103,14 +103,14 @@ h3.title2 {
 
 /* --- Sous titre 1 --- */
 h4.stitle1 {
-	margin: 0px 0px 10px 40px;
+	margin: 0 0 10px 40px;
 	font-size: 1.5em;
 	color: #366393;
 }
 
 /* --- Sous titre 2 --- */
 h4.stitle2 {
-	margin: 0px 0px 10px 60px;
+	margin: 0 0 10px 60px;
 	font-size: 1.3em;
 }
 
@@ -164,8 +164,8 @@ ul, ol {
 
 .calendar-block .date-select-container {
 	background-color: #F5F5F5;
-	padding: 2px 0px;
-	border-radius: 3px 3px 0px 0px;
+	padding: 2px 0;
+	border-radius: 3px 3px 0 0;
 }
 
 @media (max-width: 768px) {
@@ -210,9 +210,9 @@ ul, ol {
 }
 
 .calendar-block .date-picker thead tr th {
-	padding: 5px 0px;
+	padding: 5px 0;
 	border-top: 1px solid #CCCCCC;
-	border-radius: 0px;
+	border-radius: 0;
 	background-color: #FFFFFF;
 	font-weight: bold;
 	color: #666666;
@@ -239,8 +239,8 @@ ul, ol {
 	border-bottom: none;
 }
 
-.calendar-block .date-picker tbody tr:last-child td:first-child { border-radius: 0px 0px 0px 2px; }
-.calendar-block .date-picker tbody tr:last-child td:last-child  { border-radius: 0px 0px 2px 0px; }
+.calendar-block .date-picker tbody tr:last-child td:first-child { border-radius: 0 0 0 2px; }
+.calendar-block .date-picker tbody tr:last-child td:last-child  { border-radius: 0 0 2px 0; }
 
 /* --- les blocs bbcode --- */
 .bbcode-block-container {
@@ -256,7 +256,7 @@ ul, ol {
 .bbcode-block {
 	margin: 0;
 	background-color: #F3F3F3;
-	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 	border: 1px solid #AAAAAA;
 	border-radius: 3px;
 }
@@ -294,12 +294,12 @@ ul, ol {
 	display: block;
 	width: 93%;
 	margin: auto;
-	padding: 2px 0px;
+	padding: 2px 0;
 	font-weight: bold;
 }
 .blockquote, .code, .hide {
 	overflow: auto;
-	margin: 0px 25px;
+	margin: 0 25px;
 	padding: 8px;
 	max-height: 500px;
 	background-color: #FAFAFA;
@@ -352,7 +352,7 @@ ul, ol {
 /* --- La recherche de membre (AJAX) --- */
 .xmlhttprequest-result-search {
 	overflow: auto;
-	margin: 2px 0px 0px 0px;
+	margin: 2px 0 0 0;
 	padding: 2px;
 	min-height: 40px;
 	width: 100px;
@@ -365,7 +365,7 @@ ul, ol {
 /* --- La barre de progression --- */
 .progressbar-container {
 	position: relative;
-	margin: 4px 0px 10px;
+	margin: 4px 0 10px;
 	background-color: #F5F5F5;
 	border-radius: 3px;
 	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -380,7 +380,7 @@ ul, ol {
 }
 
 .progressbar {
-	border-radius: 3px 0px 0px 3px;
+	border-radius: 3px 0 0 3px;
 	box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
 }
 
@@ -449,7 +449,7 @@ li.small-block .fa-stack {
 
 /* --- menu de flux --- */
 .feed-list {
-	margin: 5px 0px;
+	margin: 5px 0;
 	list-style-type: none;
 	text-align: left;
 }
