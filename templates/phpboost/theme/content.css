@@ -395,6 +395,15 @@ ul.pagination-block-bis li a.next-page:hover {
 	margin-left: 20px;
 }
 
+@media (max-width: 768px) {
+	.infos {
+		float: none;
+		margin: 0 0 10px;
+		width: 100%;
+	}
+}
+
+
 /* -- Gestion des categories -- */
 /* ---------------------------- */
 .cat-description {
