@@ -24,7 +24,7 @@ body {
 	-webkit-align-items: center;
 	margin: 0;
 	padding: 0;
-	height: 100%;
+	height: auto;
 	background-color: #E8EDF3;
 }
 
