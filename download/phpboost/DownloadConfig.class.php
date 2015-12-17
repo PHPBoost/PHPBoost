@@ -43,6 +43,8 @@ class DownloadConfig extends AbstractConfigData
 	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
 	const SORT_TYPE = 'sort_type';
 	const FILES_NUMBER_IN_MENU = 'files_number_in_menu';
+	const LIMIT_OLDEST_FILE_DAY_IN_MENU_ENABLED = 'limit_oldest_file_day_in_menu_enabled';
+	const OLDEST_FILE_DAY_IN_MENU = 'oldest_file_day_in_menu';
 	const AUTHORIZATIONS = 'authorizations';
 	
 	const DISPLAY_SUMMARY = 'summary';
@@ -218,6 +220,31 @@ class DownloadConfig extends AbstractConfigData
 		$this->set_property(self::FILES_NUMBER_IN_MENU, $value);
 	}
 	
+	public function enable_limit_oldest_file_day_in_menu()
+	{
+		$this->set_property(self::LIMIT_OLDEST_FILE_DAY_IN_MENU_ENABLED, true);
+	}
+	
+	public function disable_limit_oldest_file_day_in_menu()
+	{
+		$this->set_property(self::LIMIT_OLDEST_FILE_DAY_IN_MENU_ENABLED, false);
+	}
+	
+	public function is_limit_oldest_file_day_in_menu_enabled()
+	{
+		return $this->get_property(self::LIMIT_OLDEST_FILE_DAY_IN_MENU_ENABLED);
+	}
+	
+	public function get_oldest_file_day_in_menu()
+	{
+		return $this->get_property(self::OLDEST_FILE_DAY_IN_MENU);
+	}
+	
+	public function set_oldest_file_day_in_menu($value)
+	{
+		$this->set_property(self::OLDEST_FILE_DAY_IN_MENU, $value);
+	}
+	
 	public function get_authorizations()
 	{
 		return $this->get_property(self::AUTHORIZATIONS);
@@ -256,6 +283,8 @@ class DownloadConfig extends AbstractConfigData
 			self::ROOT_CATEGORY_DESCRIPTION => LangLoader::get_message('root_category_description', 'config', 'download'),
 			self::SORT_TYPE => DownloadFile::SORT_NUMBER_DOWNLOADS,
 			self::FILES_NUMBER_IN_MENU => 5,
+			self::LIMIT_OLDEST_FILE_DAY_IN_MENU_ENABLED => false,
+			self::OLDEST_FILE_DAY_IN_MENU => 30,
 			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13),
 			self::DEFERRED_OPERATIONS => array()
 		);

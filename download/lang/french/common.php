@@ -59,6 +59,8 @@ $lang['config.downloaded_files_menu'] = 'Menu téléchargements';
 $lang['config.sort_type'] = 'Ordre d\'affichage des fichiers';
 $lang['config.sort_type.explain'] = 'Sens décroissant';
 $lang['config.files_number_in_menu'] = 'Nombre de fichiers affichés maximum';
+$lang['config.limit_oldest_file_day_in_menu'] = 'Limiter l\'âge des fichiers dans le menu';
+$lang['config.oldest_file_day_in_menu'] = 'Age maximum (en jours)';
 
 //SEO
 $lang['download.seo.description.tag'] = 'Tous les fichiers sur le sujet :subject.';

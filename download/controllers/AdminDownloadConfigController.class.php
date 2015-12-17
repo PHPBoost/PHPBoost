@@ -62,6 +62,7 @@ class AdminDownloadConfigController extends AdminModuleController
 			$this->save();
 			$this->form->get_field_by_id('display_descriptions_to_guests')->set_hidden($this->config->get_category_display_type() == DownloadConfig::DISPLAY_ALL_CONTENT);
 			$this->form->get_field_by_id('notation_scale')->set_hidden(!$this->config->is_notation_enabled());
+			$this->form->get_field_by_id('oldest_file_day_in_menu')->set_hidden(!$this->config->is_limit_oldest_file_day_in_menu_enabled());
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 		
@@ -167,6 +168,21 @@ class AdminDownloadConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
+		$fieldset->add_field(new FormFieldCheckbox('limit_oldest_file_day_in_menu', $this->lang['config.limit_oldest_file_day_in_menu'], $this->config->is_limit_oldest_file_day_in_menu_enabled(), array(
+			'events' => array('click' => '
+				if (HTMLForms.getField("limit_oldest_file_day_in_menu").getValue()) {
+					HTMLForms.getField("oldest_file_day_in_menu").enable();
+				} else {
+					HTMLForms.getField("oldest_file_day_in_menu").disable();
+				}'
+			)
+		)));
+		
+		$fieldset->add_field(new FormFieldNumberEditor('oldest_file_day_in_menu', $this->lang['config.oldest_file_day_in_menu'], $this->config->get_oldest_file_day_in_menu(), 
+			array('min' => 1, 'max' => 365, 'required' => true, 'hidden' => !$this->config->is_limit_oldest_file_day_in_menu_enabled()),
+			array(new FormFieldConstraintIntegerRange(1, 365))
+		));
+		
 		$common_lang = LangLoader::get('common');
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $common_lang['authorizations'],
 			array('description' => $this->admin_common_lang['config.authorizations.explain'])
@@ -232,6 +248,16 @@ class AdminDownloadConfigController extends AdminModuleController
 		$this->config->set_root_category_description($this->form->get_value('root_category_description'));
 		$this->config->set_sort_type($this->form->get_value('sort_type')->get_raw_value());
 		$this->config->set_files_number_in_menu($this->form->get_value('files_number_in_menu'));
+		
+		
+		if ($this->form->get_value('limit_oldest_file_day_in_menu'))
+		{
+			$this->config->enable_limit_oldest_file_day_in_menu();
+			$this->config->set_oldest_file_day_in_menu($this->form->get_value('oldest_file_day_in_menu'));
+		}
+		else
+			$this->config->disable_limit_oldest_file_day_in_menu();
+		
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		
 		DownloadConfig::save();

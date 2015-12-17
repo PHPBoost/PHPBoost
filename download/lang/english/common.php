@@ -59,6 +59,8 @@ $lang['config.downloaded_files_menu'] = 'Downloaded files menu';
 $lang['config.sort_type'] = 'Files display order';
 $lang['config.sort_type.explain'] = 'Descending mode';
 $lang['config.files_number_in_menu'] = 'Max files displayed number';
+$lang['config.limit_oldest_file_day_in_menu'] = 'Limit files age in menu';
+$lang['config.oldest_file_day_in_menu'] = 'Maximum age (in days)';
 
 //SEO
 $lang['download.seo.description.tag'] = 'All downloads on :subject.';
