@@ -40,9 +40,10 @@ class NewsUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/admin/config/');
 	}
 	
-	public static function add_category()
+	public static function add_category($id_parent = null)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/add/');
+		$id_parent = !empty($id_parent) ? $id_parent . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/add/' . $id_parent);
 	}
 	
 	public static function edit_category($id)

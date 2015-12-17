@@ -38,7 +38,7 @@ class DownloadTreeLinks implements ModuleTreeLinksExtensionPoint
 		
 		$manage_categories_link = new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), DownloadUrlBuilder::manage_categories());
 		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), DownloadUrlBuilder::manage_categories()));
-		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('category.add', 'categories-common'), DownloadUrlBuilder::add_category()));
+		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('category.add', 'categories-common'), DownloadUrlBuilder::add_category(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY))));
 		$tree->add_link($manage_categories_link);
 		
 		$manage_link = new AdminModuleLink($lang['download.manage'], DownloadUrlBuilder::manage());

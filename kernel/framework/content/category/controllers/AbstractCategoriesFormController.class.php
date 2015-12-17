@@ -212,6 +212,7 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 				$category_class = $this->get_categories_manager()->get_categories_cache()->get_category_class();
 				$this->is_new_category = true;
 				$this->category =  new $category_class();
+				$this->category->set_id_parent(AppContext::get_request()->get_getint('id_parent', Category::ROOT_CATEGORY));
 				$this->category->set_authorizations($this->get_categories_manager()->get_categories_cache()->get_root_category()->get_authorizations());
 			}
 		}

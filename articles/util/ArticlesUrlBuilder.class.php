@@ -45,9 +45,10 @@ class ArticlesUrlBuilder
 		return SyndicationUrlBuilder::rss('articles', $id);
 	}
 	
-	public static function add_category()
+	public static function add_category($id_parent = null)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/add/');
+		$id_parent = !empty($id_parent) ? $id_parent . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/add/' . $id_parent);
 	}
 	
 	public static function edit_category($id)
@@ -87,7 +88,7 @@ class ArticlesUrlBuilder
 	
 	public static function add_article($id_category = null)
 	{
-		$id_category = !empty($id_category) ? $id_category . '/': '';
+		$id_category = !empty($id_category) ? $id_category . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/add/' . $id_category);
 	}
 	

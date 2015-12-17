@@ -37,7 +37,7 @@ class ArticlesTreeLinks implements ModuleTreeLinksExtensionPoint
 		
 		$manage_categories_link = new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), ArticlesUrlBuilder::manage_categories());
 		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), ArticlesUrlBuilder::manage_categories()));
-		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('category.add', 'categories-common'), ArticlesUrlBuilder::add_category()));
+		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('category.add', 'categories-common'), ArticlesUrlBuilder::add_category(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY))));
 		$tree->add_link($manage_categories_link);
 	
 		$manage_articles_link = new AdminModuleLink($lang['articles_management'], ArticlesUrlBuilder::manage_articles());

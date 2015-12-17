@@ -40,7 +40,7 @@ $url_controller_mappers = array(
 	
 	//Categories
 	new UrlControllerMapper('FaqCategoriesManageController', '`^/admin/categories/?$`'),
-	new UrlControllerMapper('FaqCategoriesFormController', '`^/admin/categories/add/?$`'),
+	new UrlControllerMapper('FaqCategoriesFormController', '`^/admin/categories/add/?([0-9]+)?/?$`', array('id_parent')),
 	new UrlControllerMapper('FaqCategoriesFormController', '`^/admin/categories/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('FaqDeleteCategoryController', '`^/admin/categories/([0-9]+)/delete/?$`', array('id')),
 	

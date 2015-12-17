@@ -40,7 +40,7 @@ $url_controller_mappers = array(
 	
 	//Categories
 	new UrlControllerMapper('DownloadCategoriesManageController', '`^/admin/categories/?$`'),
-	new UrlControllerMapper('DownloadCategoriesFormController', '`^/admin/categories/add/?$`'),
+	new UrlControllerMapper('DownloadCategoriesFormController', '`^/admin/categories/add/?([0-9]+)?/?$`', array('id_parent')),
 	new UrlControllerMapper('DownloadCategoriesFormController', '`^/admin/categories/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('DownloadDeleteCategoryController', '`^/admin/categories/([0-9]+)/delete/?$`', array('id')),
 	
