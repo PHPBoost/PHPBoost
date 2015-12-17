@@ -816,7 +816,7 @@ div#release {
 .module-contribution-element {
 	float: left;
 	text-align: center;
-	margin: 20px 0px;
+	margin: 20px 0;
 }
 
 .unprocessed-contribution {
@@ -848,11 +848,11 @@ div#release {
 .contribution-module-container {
 	float: left;
 	text-align: center;
-	margin: 20px 0px;
+	margin: 20px 0;
 }
 
 .convers-announce {
-	padding-right: 0px;
+	padding-right: 0;
 }
 
 .convers-title {

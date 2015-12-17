@@ -1,6 +1,6 @@
 #mini-search-form {
 	float: right;
-    margin: 4em 3em 0 0;
+	margin: 4em 3em 0 0;
 	white-space: nowrap;
 	vertical-align: middle;
 	background: rgba(255,255,255,.15);
@@ -10,19 +10,19 @@
 
 @media ( max-width: 768px ) {
 	#mini-search-form {
-	    margin: 20px 20px 20px 0;
+		margin: 20px 20px 20px 0;
 	}
 }
 
 #mini-search-form.input-element-button input {
 	width: 120px;
-	border-radius: 4px 0px 0px 4px;
+	border-radius: 4px 0 0 4px;
 	height: 25px;
 }
 
 #mini-search-form.input-element-button button {
-	border-radius: 0px 4px 4px 0px;
-	margin: 0px 0px 0 -5px;
+	border-radius: 0 4px 4px 0;
+	margin: 0 0 0 -5px;
 	padding: 4px 10px 4px 10px;
 	height: 25px;
 }

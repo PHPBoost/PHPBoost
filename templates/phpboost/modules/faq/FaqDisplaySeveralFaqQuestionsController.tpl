@@ -144,8 +144,8 @@ jQuery(document).ready(function() {
 	var anchor = window.location.hash;
 	var id_question;
 	 
-	id_question = anchor.substring(2,anchor.length);
-	if (anchor.substring(0,2) == "#q" && id_question.match(/^[0-9]+$/))
+	id_question = anchor.substring(9,anchor.length);
+	if (anchor.substring(0,9) == "#question" && id_question.match(/^[0-9]+$/))
 		show_answer(id_question);
 });
 # ENDIF #
@@ -157,7 +157,7 @@ jQuery(document).ready(function() {
 	<header>
 		<h1>
 			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
-			# IF C_PENDING #{@faq.pending}# ELSE #{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit smaller"></i></a># ENDIF #
+			# IF C_PENDING #{@faq.pending}# ELSE #{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF # # IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit smaller"></i></a># ENDIF ## ENDIF #
 		</h1>
 		# IF C_CATEGORY_DESCRIPTION #
 			<div class="cat-description">

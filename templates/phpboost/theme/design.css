@@ -146,7 +146,7 @@ div#global {
 	flex-direction: row;
 	-ms-flex-direction: row; /* IE10 Tricks */
 	-webkit-flex-direction: row;
-	border-width: 0px 1px;
+	border-width: 0 1px;
 	border-style: solid;
 	border-color: #DFDFDF;
 	background-color: #FAFAFA;
@@ -210,7 +210,7 @@ aside#menu-right {
 		width: 100%;
 		height: 100%;
 		content:"";
-		box-shadow: #999999 0px 0px 3px;
+		box-shadow: #999999 0 0 3px;
 	}
 
 	div#main:before 		{ left: 0; }
@@ -356,7 +356,7 @@ div#compteur {
 /* --- Barre de lien rapide --- */
 nav#breadcrumb {
 	text-indent: 10px;
-	margin: 0px 0px 20px 10px;
+	margin: 0 0 20px 10px;
 }
 
 nav#breadcrumb ol {
@@ -387,13 +387,13 @@ div.pbt-button {
 	font-weight: bold;
 	line-height: 29px;
 }
-div.pbt-button:hover { box-shadow: 0px 0px 1px #212121; }
+div.pbt-button:hover { box-shadow: 0 0 1px #212121; }
 
 div.pbt-button-blue { 
 	border: 1px solid #1E5083;
 	background: #366493;
 	background: linear-gradient(to bottom, #366493 0%, #1E5083 100%);
-	box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
 	margin-right: 10px;
 }
 div.pbt-button-blue:hover { 
@@ -404,7 +404,7 @@ div.pbt-button-green {
 	border: 1px solid #096A4A;
 	background: #2F9674;
 	background: linear-gradient(to bottom, #2F9674 0%, #168661 100%);
-	box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
 	margin-left: 10px;
 }
 div.pbt-button-green:hover { 
@@ -421,21 +421,21 @@ div.pbt-button-gray:hover {
 	background-color: #ECECEC;
 	background-image: linear-gradient(to top,#ECECEC 0%,#FBFBFB 100%);
 	border: 1px solid #D0D0D0;
-	box-shadow: 0px 0px 1px #CCCCCC;
+	box-shadow: 0 0 1px #CCCCCC;
 }
 
 .pbt-button-title {
-	padding: 6px 0px 0px 0px;
+	padding: 6px 0 0 0;
 	color: #FFFFFF; 
 	font-size: 20px;
-	margin-bottom: 0px;
+	margin-bottom: 0;
 }
 div.pbt-button-gray .pbt-button-title { color: #444444;font-size: 15px; }
 
 p.pbt-button-com {
 	padding-top: 2px;
 	font-size: 11px;
-	margin-bottom: 0px;
+	margin-bottom: 0;
 	text-align: left;	
 }
 div.pbt-button-blue p.pbt-button-com { color: #C98621; padding-left: 67px; }
@@ -450,7 +450,7 @@ a.pbt-button-a {
 }
 a.pbt-button-a:hover { text-decoration: none; color: #212121; }
 
-a.pbt-button-add { width: 70px; padding: 0px 10px 0px 7px; }
+a.pbt-button-add { width: 70px; padding: 0 10px 0 7px; }
 
 img.pbt-button-img, a.pbt-button-a {
     transition: all 0.1s ease-out;
@@ -492,5 +492,5 @@ h2.pbt-custom-subtitle a {
 
 img.pbt-header-img {
 	float: left;
-	padding: 0px 10px 10px 0px;	
+	padding: 0 10px 10px 0;	
 }

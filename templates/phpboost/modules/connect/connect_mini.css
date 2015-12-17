@@ -24,7 +24,7 @@ i.alert {
 }
 
 #connect-menu .horizontal-fieldset {
-	margin: 0px auto;
+	margin: 0 auto;
 	min-height: 28px;
 	max-width: 1024px;
 }
@@ -40,7 +40,7 @@ i.alert {
 	text-align: right;
 	color: #E3F3F3;
 	font-style: Italic;
-	padding: 7px 10px 0px 5px;
+	padding: 7px 10px 0 5px;
 	height: 28px;
 	float: left;
 }
@@ -125,7 +125,7 @@ i.alert {
 @media (min-width: 769px) {
 	.forgot-pass {
 		display: inline-block;
-		padding: 0px 0px 0px 5px;
+		padding: 0 0 0 5px;
 		vertical-align: middle;
 		color: #E0F3FF;
 	}
@@ -166,7 +166,7 @@ i.alert {
 		float:left;
 		height: 28px;
 		width: 35px;
-		padding: 6px 2px 0px 0px;
+		padding: 6px 2px 0 0;
 		border-right: 1px solid rgba(255, 255, 255, 0.20);
 		color: #FFFFFF;
 		transition: 0.5s ease-out;
@@ -219,7 +219,7 @@ i.alert {
 	.connect-avatar {
 		height: 100px;
 		width: 90px;
-		margin: 5px 5px 0px 0px;
+		margin: 5px 5px 0 0;
 		float: left;
 	}
 
@@ -284,7 +284,7 @@ i.alert {
 	}
 	
 	#connect-menu.active .connect-content form {
-		padding: 0px 10px;
+		padding: 0 10px;
 	}
 
 	#connect-menu.active .connect-content input {
@@ -297,7 +297,7 @@ i.alert {
 	}
 
 	#connect-menu.active .connect-content form span {
-		padding: 5px 0px 0px 5px;
+		padding: 5px 0 0 5px;
 	}
 
 	#connect-menu.active .connect-content input#login,

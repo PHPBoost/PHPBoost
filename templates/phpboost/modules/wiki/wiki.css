@@ -3,7 +3,7 @@
 	color: #333333;
 	font-size: 17px;
 	font-weight: bold;
-	padding: 0px 5px;
+	padding: 0 5px;
 	border-bottom: 2px solid #336397;
 }
 .wiki_paragraph2 {
@@ -11,8 +11,8 @@
 	color: #333333;
 	font-size: 16px;
 	font-weight: bold;
-	margin: 5px 0px 10px 45px;
-	padding: 0px 3px;
+	margin: 5px 0 10px 45px;
+	padding: 0 3px;
 	clear: both;
 	font-weight: bold;
 	background: #FFFFFF;
@@ -58,7 +58,7 @@
 }
 
 ol {
-	margin: 0px 0px 0px 25px;
+	margin: 0 0 0 25px;
 }
 
 ol.wiki_list_1 > li {
@@ -66,7 +66,7 @@ ol.wiki_list_1 > li {
 }
 
 ul.no-list {
-	margin: 0px 0px 0px 20px;
+	margin: 0 0 0 20px;
 }
 
 ul.no-list a i.fa {
@@ -130,7 +130,7 @@ a.parent i[id^="img2_"] {
 }
 
 .pbt-content-about li {
-	padding: 2px 0px;
+	padding: 2px 0;
 }
 
 .pbt-wiki-about footer {

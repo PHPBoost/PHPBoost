@@ -51,10 +51,10 @@ Contient les elements associes aux menus
 	vertical-align: bottom;
 }
 
-#top-header .cssmenu ul > li:first-child > .cssmenu-title 				{ border-radius: 0 5px 0 0;   }
-#top-header .cssmenu ul > li:last-child > .cssmenu-title  				{ border-radius: 0 0 5px 5px; }
-#top-header .cssmenu ul > li.has-sub:first-child:hover > .cssmenu-title { border-radius: 0 0 0 0;     }
-#top-header .cssmenu ul > li.has-sub:last-child:hover > .cssmenu-title  { border-radius: 0 0 0;       }
+#top-header .cssmenu ul > li:first-child > .cssmenu-title 				{ border-radius: 0 5px 0 0; 	}
+#top-header .cssmenu ul > li:last-child > .cssmenu-title  				{ border-radius: 0 0 5px 5px; 	}
+#top-header .cssmenu ul > li.has-sub:first-child:hover > .cssmenu-title { border-radius: 0 0 0 0; 		}
+#top-header .cssmenu ul > li.has-sub:last-child:hover > .cssmenu-title  { border-radius: 0 0 0; 		}
 	
 .cssmenu.small-screen {
 	width: 100%;
@@ -318,11 +318,11 @@ div.cssmenu-group .cssmenu-title {
 }
 
 /* --- Position des sous menu --- */
-.cssmenu li:hover > ul 							{ left: auto ;            }
-aside .cssmenu-left li:hover > ul 				{ left: 100% ; top: 0;    }
-aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
+.cssmenu li:hover > ul 							{ left: auto ;			}
+aside .cssmenu-left li:hover > ul 				{ left: 100% ; top: 0;	}
+aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;	}
 .cssmenu.cssmenu-actionslinks li:hover > ul 	{ right: 0   ; top: 100%; }
-.cssmenu.cssmenu-actionslinks ul li:hover > ul 	{ right: 100%; top: 0;    }
+.cssmenu.cssmenu-actionslinks ul li:hover > ul 	{ right: 100%; top: 0;	}
 
 @media (max-width: 768px) {
 	.cssmenu li:hover > ul 						{ left: 0;  }
@@ -355,8 +355,8 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 
 .cssmenu.cssmenu-group > ul > li:hover {
 	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 40%,rgba(56, 56, 56, 0.18) 100%);
-    background-color: #F0F0F0;
-    border-bottom-color: #B3B3B3;
+	background-color: #F0F0F0;
+	border-bottom-color: #B3B3B3;
 }
 
 .cssmenu-group > ul > li:first-child {
@@ -365,14 +365,14 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 }
 
 .cssmenu-group > ul > li:last-child {
-    border-radius: 0 4px 4px 0;
+	border-radius: 0 4px 4px 0;
 	border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .cssmenu-group > ul > li.current {
-    background-image: linear-gradient(to top, rgba(255, 255, 255, 0.18) 0%,rgba(56, 56, 56, 0.18) 100%);
-    background-color: #F0F0F0;
-    border-top-color: #B3B3B3;
+	background-image: linear-gradient(to top, rgba(255, 255, 255, 0.18) 0%,rgba(56, 56, 56, 0.18) 100%);
+	background-color: #F0F0F0;
+	border-top-color: #B3B3B3;
 }
 
 .cssmenu.cssmenu-group > ul > li > .cssmenu-title {
@@ -393,11 +393,11 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 	}
 	
 	.cssmenu-group > ul > li:first-child {
-	    border-radius: 4px 4px 0 0;
+		border-radius: 4px 4px 0 0;
 	}
 	
 	.cssmenu-group > ul > li:last-child {
-	    border-radius: 0 0 4px 4px;
+		border-radius: 0 0 4px 4px;
 	}
 }
 
@@ -477,7 +477,7 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;    }
 		font-weight: bold;
 		width: 235px;
 		padding: 5px 5px 5px 5px;
-    }
+	}
 
 	footer ul.level-0 > li.has-sub > .cssmenu-title > img {
 		background: url('images/sprite-phpboost.png');
@@ -671,7 +671,7 @@ footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 li:nth-chil
 	}
 
 	aside .cssmenu-vertical ul ul {
-	    border: 1px #BEBEBE solid;
+		border: 1px #BEBEBE solid;
 	}
 
 	header .cssmenu-vertical ul ul li .cssmenu-title,
@@ -682,13 +682,13 @@ footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 li:nth-chil
 	}
 
 	.cssmenu-static ul ul {
-	    position: relative;
-	    left: 0;
-	    z-index: 0;
+		position: relative;
+		left: 0;
+		z-index: 0;
 	}
 
 	.cssmenu-static ul ul li {
-    	height: auto;
+		height: auto;
 	}
 
 	.cssmenu-static ul ul ul {
@@ -741,7 +741,7 @@ header .cssmenu li:hover > .cssmenu-title 					{ color: #FFFFFF; }
 .cssmenu ul ul li .cssmenu-title 							{ color: #DDDDDD; }
 #main .cssmenu ul ul li .cssmenu-title 						{ color: #333333; }
 .cssmenu.cssmenu-vertical ul ul li .cssmenu-title  			{ color: #333333; }
-.cssmenu-actionslinks li ul li .cssmenu-title    			{ color: #666666; }
+.cssmenu-actionslinks li ul li .cssmenu-title				{ color: #666666; }
 #top-footer .cssmenu-static li ul li .cssmenu-title 		{ color: #666666; }
 
 .cssmenu ul ul li:hover > .cssmenu-title					{ color: #333333; }
@@ -862,22 +862,22 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 	.cssmenu-actionslinks #menu-button {
 		float: right;
 		position: relative;
-	    display: inline-block;
-	    font-family: FontAwesome;
-	    font-style: normal;
-	    font-weight: normal;
-	    line-height: 1;
-	    -webkit-font-smoothing: antialiased;
-	    color: #444444;
-	    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%,rgba(56,56, 56, 0.18) 100%);
-	    background-color: #FFFFFF;
-	    border: 1px solid #999999;
-	    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1)  #B3B3B3 rgba(0, 0, 0, 0.25);
-	    border-radius: 4px;
-	    cursor: pointer;
-	    text-align: center;
-	    padding: 4px 12px 4px 12px;
-	    font-size: 0;
+		display: inline-block;
+		font-family: FontAwesome;
+		font-style: normal;
+		font-weight: normal;
+		line-height: 1;
+		-webkit-font-smoothing: antialiased;
+		color: #444444;
+		background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%,rgba(56,56, 56, 0.18) 100%);
+		background-color: #FFFFFF;
+		border: 1px solid #999999;
+		border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1)  #B3B3B3 rgba(0, 0, 0, 0.25);
+		border-radius: 4px;
+		cursor: pointer;
+		text-align: center;
+		padding: 4px 12px 4px 12px;
+		font-size: 0;
 	}
 
 	.cssmenu-actionslinks #menu-button + ul {

@@ -48,7 +48,7 @@ tr td.bkgd-color-unknown 	{ background-color: #FF796F; }
 .smaller { font-size: 0.7em; }
 .small   { font-size: 0.9em; }
 .normal  { font-size: 1.0em; }
-.big     { font-size: 1.2em; }
+.big	 { font-size: 1.2em; }
 .bigger  { font-size: 1.5em; }
 .biggest { font-size: 2.0em; }
 
@@ -184,7 +184,7 @@ h4.formatter-title {
 .calendar-block .date-picker tbody td:first-child { border-left: none;  }
 .calendar-block .date-picker tbody td:last-child  { border-right: none; }
 
-.calendar-block .date-picker tbody td.calendar-none    { background: #FFFFFF; }
+.calendar-block .date-picker tbody td.calendar-none	{ background: #FFFFFF; }
 .calendar-block .date-picker tbody td.calendar-today   { background: #B5E5B9; }
 .calendar-block .date-picker tbody td.calendar-event   { background: #DBE5EE; }
 .calendar-block .date-picker tbody td.calendar-weekend { background: #FFE3B6; }
@@ -197,7 +197,7 @@ h4.formatter-title {
 .calendar-block .date-picker tbody tr:last-child td:last-child	{ border-radius: 0 0 2px 0; }
 
 td.calendar-week {
-    border-right: 1px solid #BBBBBB;
+	border-right: 1px solid #BBBBBB;
 }
 
 /* --- les blocs bbcode --- */
@@ -351,7 +351,7 @@ td.calendar-week {
 }
 
 .progressbar {
-	border-radius: 3px 0px 0px 3px;
+	border-radius: 3px 0 0 3px;
 	box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
 }
 
@@ -384,19 +384,19 @@ td.calendar-week {
 /* ---------------------------------------------------- */
 
 /* --- les couleurs d icones --- */
-.fa-syndication:before { color: #F57900; }
-.fa-success:before     { color: #478948; }
-.fa-forbidden:before   { color: #BA4B49; }
-.fa-error:before       { color: #BA4B49; }
-.fa-warning:before     { color: #C19954; }
-.fa-ban:before         { color: #BA4B49; }
-.fa-unban:before       { color: #478948; }
-.fa-male:before        { color: #8DC3E9; }
-.fa-female:before      { color: #F49CC4; }
-.fa-online:before      { color: #52D132; }
-.fa-offline:before     { color: #E05759; }
-.fa-trend-up:before    { color: #478948; }
-.fa-trend-down:before  { color: #BA4B49; }
+.fa-syndication:before 	{ color: #F57900; }
+.fa-success:before 		{ color: #478948; }
+.fa-forbidden:before 	{ color: #BA4B49; }
+.fa-error:before 		{ color: #BA4B49; }
+.fa-warning:before 		{ color: #C19954; }
+.fa-ban:before 			{ color: #BA4B49; }
+.fa-unban:before 		{ color: #478948; }
+.fa-male:before 		{ color: #8DC3E9; }
+.fa-female:before 		{ color: #F49CC4; }
+.fa-online:before 		{ color: #52D132; }
+.fa-offline:before 		{ color: #E05759; }
+.fa-trend-up:before 	{ color: #478948; }
+.fa-trend-down:before 	{ color: #BA4B49; }
 
 /* --- Les alertes --- */
 li.small-block .fa-stack {
@@ -440,7 +440,7 @@ div.message-helper-small {
 	line-height: 20px;
 	border-color: #FFFFFF;
 	border-style: solid;
-	border-width: 0px 0px 0px 7px;
+	border-width: 0 0 0 7px;
 	border-radius: 0 4px 4px 0;
 	position: relative;
 	display: block;
@@ -467,19 +467,19 @@ div.message-helper-small {
 	text-align: center;
 }
 
-.error:before    { content: "\f00d"; }
+.error:before	{ content: "\f00d"; }
 .notice:before   { content: "\f12a"; }
 .warning:before	 { content: "\f071"; }
 .success:before	 { content: "\f00c"; }
 .question:before { content: "\f128"; }
 
-.error, .error:before       { color: #BA4B49; }
-.notice, .notice:before     { color: #888888; }
+.error, .error:before	   { color: #BA4B49; }
+.notice, .notice:before	 { color: #888888; }
 .warning, .warning:before   { color: #C19954; }
 .success, .success:before   { color: #478948; }
 .question, .question:before { color: #3B88AE; }
 
-.error    { background-color: #F3DFDF; border-color: #ECCDD2; }
+.error	{ background-color: #F3DFDF; border-color: #ECCDD2; }
 .notice   { background-color: #F0F0F0; border-color: #E2E2E2; }
 .warning  { background-color: #FDF9E4; border-color: #FBECCD; }
 .success  { background-color: #E0F1D9; border-color: #D7EAC7; }

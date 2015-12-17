@@ -4,32 +4,34 @@ Contient les elements pour afficher la page de connexion a l'administration ou a
 --------------------------------------*/
 
 .fieldset-content {
-	margin: 0px auto;
+	margin: 0 auto;
 	width: 450px;
 	max-width: 100%;
 }
 
 body {
-	background: #E8EDF3;
-	height: 100%;
 	margin: 0;
 	padding: 0;
+	height: 100%;
+	background-color: #E8EDF3;
 }
 
 div#global {
-	padding: 20px;
-	border-spacing: 1px;
-	border: 1px #bebebe solid;
-	background: #ffffff;
-	min-height: 0;
 	position: relative;
-	top: 30%
+	top: 30%;
+	padding: 20px;
+	min-height: 0;
+	background-color: #FFFFFF;
+	border: 1px #bebebe solid;
+	border-spacing: 1px;
 }
 
-@media ( max-width: 768px ) {
+@media (max-width: 768px) {
 	div#global {
 		top: 15%
 	}
 }
 
-#connect { margin-bottom:40px; }
+#connect {
+	margin-bottom: 40px;
+}

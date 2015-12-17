@@ -16,7 +16,7 @@
 					</div>
 				</div>
 				
-				<hr style="margin:25px 0px;" />
+				<hr style="margin:25px 0;" />
 
 				<section class="block pbt-wiki-about">
 					<header>
@@ -269,7 +269,7 @@
 					<footer></footer>
 				</section>
 
-				<hr style="margin:5px 0px 25px 0px;" />
+				<hr style="margin:5px 0 25px 0;" />
 				
 				# IF IS_MODERATOR #
 					<div class="center">
@@ -282,7 +282,7 @@
 					
 					<br />
 					# START last_articles #
-					<hr style="margin:0px 0px 25px 0px;" />
+					<hr style="margin:0px 0 25px 0;" />
 					<br />
 					<table>
 						<thead>
