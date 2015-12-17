@@ -38,10 +38,8 @@ class ForumRanksCache implements CacheData
 	public function synchronize()
 	{
 		$this->ranks = array();
-		$querier = PersistenceContext::get_querier();
 		
-		$columns = array('id', 'name', 'msg', 'icon', 'special');
-		$result = $querier->select_rows(PREFIX . 'forum_ranks', $columns, 'ORDER BY msg ASC');
+		$result = PersistenceContext::get_querier()->select_rows(PREFIX . 'forum_ranks', array('id', 'name', 'msg', 'icon', 'special'), 'ORDER BY msg ASC');
 		while ($row = $result->fetch())
 		{
 			$this->ranks[$row['msg']] = array(
@@ -51,6 +49,7 @@ class ForumRanksCache implements CacheData
 				'special' => $row['special']
 			);
 		}
+		$result->dispose();
 	}
 
 	public function get_ranks()

@@ -85,6 +85,8 @@ class AuthenticationService
 		foreach ($result as $row) {
 			$types[] = $row['method'];
 		}
+		$result->dispose();
+		
 		return $types;
 	}
 

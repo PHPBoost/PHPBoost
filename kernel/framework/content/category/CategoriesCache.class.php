@@ -73,6 +73,7 @@ abstract class CategoriesCache implements CacheData
 				}
 			}
 		}
+		$result->dispose();
 	}
 	
 	abstract public function get_table_name();

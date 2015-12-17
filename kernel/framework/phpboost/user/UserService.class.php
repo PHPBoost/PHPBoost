@@ -223,6 +223,7 @@ class UserService
 			{
 				self::delete_by_id($row['user_id']);
 			}
+			$result->dispose();
 		}
 	}
 	

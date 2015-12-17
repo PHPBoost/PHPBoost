@@ -103,7 +103,8 @@ class CategoriesManager
 				{
 					$this->db_querier->update($this->table_name, array('c_order' => ($row['c_order'] + 1), 'WHERE id=:id', array('id' => $row['id'])));
 				}
-
+				$result->dispose();
+				
 				$result = $this->db_querier->insert($this->table_name, $category->get_properties());
 				$this->regenerate_cache();
 				return $result->get_last_inserted_id();
@@ -170,6 +171,7 @@ class CategoriesManager
 					{
 						$this->db_querier->update($this->table_name, array('c_order' => ($row['c_order'] - 1)), 'WHERE id=:id', array('id' => $row['id']));
 					}
+					$result->dispose();
 				}
 				else
 				{
@@ -178,6 +180,7 @@ class CategoriesManager
 					{
 						$this->db_querier->update($this->table_name, array('c_order' => ($row['c_order'] + 1)), 'WHERE id=:id', array('id' => $row['id']));
 					}
+					$result->dispose();
 					
 					$this->db_querier->update($this->table_name, array('id_parent' => $id_parent, 'c_order' => $position), 'WHERE id=:id', array('id' => $id));
 					
@@ -189,6 +192,7 @@ class CategoriesManager
 					{
 						$this->db_querier->update($this->table_name, array('c_order' => ($row['c_order'] - 1)), 'WHERE id=:id', array('id' => $row['id']));
 					}
+					$result->dispose();
 				}
 
 				$this->regenerate_cache();
@@ -280,6 +284,8 @@ class CategoriesManager
 		{
 			$this->db_querier->update($this->table_name, array('c_order' => ($row['c_order'] - 1)), 'WHERE id=:id', array('id' => $row['id']));
 		}
+		$result->dispose();
+		
 		$this->regenerate_cache();
 	}
 	

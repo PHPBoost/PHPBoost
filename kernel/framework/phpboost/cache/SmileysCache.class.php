@@ -50,6 +50,7 @@ class SmileysCache implements CacheData
 				'url_smiley' => $row['url_smiley']
 			);
 		}
+		$result->dispose();
 	}
 
 	public function get_smileys()

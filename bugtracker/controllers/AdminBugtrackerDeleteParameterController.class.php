@@ -235,6 +235,7 @@ class AdminBugtrackerDeleteParameterController extends AdminModuleController
 				{
 					$bugs_list[] = $row['id'];
 				}
+				$result->dispose();
 				
 				//Delete bugs
 				BugtrackerService::delete('WHERE type=:id', array('id' => $this->id));
@@ -245,6 +246,7 @@ class AdminBugtrackerDeleteParameterController extends AdminModuleController
 				{
 					$bugs_list[] = $row['id'];
 				}
+				$result->dispose();
 				
 				//Delete bugs
 				BugtrackerService::delete('WHERE category=:id', array('id' => $this->id));
@@ -255,6 +257,7 @@ class AdminBugtrackerDeleteParameterController extends AdminModuleController
 				{
 					$bugs_list[] = $row['id'];
 				}
+				$result->dispose();
 				
 				//Delete bugs
 				BugtrackerService::delete('WHERE detected_in=:id OR fixed_in=:id', array('id' => $this->id));

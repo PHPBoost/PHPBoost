@@ -325,7 +325,8 @@ class NotationService
 			{
 				$notes += $row['note'];
 			}
-
+			$result->dispose();
+			
 			return (round(($notes / $result->get_rows_count()) / 0.25) * 0.25);
 		} catch (RowNotFoundException $e) {
 			return 0;

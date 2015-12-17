@@ -54,6 +54,7 @@ class GroupsCache implements CacheData
 				'members' => explode('|', $row['members'])
 			);
 		}
+		$result->dispose();
 	}
 
 	/**

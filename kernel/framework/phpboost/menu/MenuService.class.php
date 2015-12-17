@@ -68,6 +68,8 @@ class MenuService
 		{
 			$menus[$row['id']] = self::initialize($row);
 		}
+		$results->dispose();
+		
 		return $menus;
 	}
 
@@ -90,6 +92,8 @@ class MenuService
 				$menus[$row['block']][] = self::initialize($row);
 			}
 		}
+		$results->dispose();
+		
 		return $menus;
 	}
 
@@ -365,6 +369,7 @@ class MenuService
 		{
 			self::delete(self::initialize($row));
 		}
+		$results->dispose();
 	}
 
 	/**
@@ -402,6 +407,7 @@ class MenuService
 				}
 			}
 		}
+		$results->dispose();
 
 		$new_menus = array_diff_key($menus, $installed_minimodules);
 		foreach ($new_menus as $class => $menu)

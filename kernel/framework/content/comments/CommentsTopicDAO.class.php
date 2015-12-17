@@ -72,6 +72,7 @@ class CommentsTopicDAO
 		{
 			$id_topics[] = $row['id_topic'];
 		}
+		$result->dispose();
 		
 		return $id_topics;
 	}

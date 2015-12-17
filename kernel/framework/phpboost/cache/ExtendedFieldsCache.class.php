@@ -62,6 +62,7 @@ class ExtendedFieldsCache implements CacheData
 				'auth' => !empty($auth) ? $auth : array()
 			);
 		}
+		$result->dispose();
 	}
 
 	public function get_extended_fields()
