@@ -28,6 +28,7 @@
 class ForumCategory extends Category
 {
 	private $type;
+	private $status;
 	private $description;
 	private $last_topic_id;
 	private $url;
@@ -36,9 +37,13 @@ class ForumCategory extends Category
 	const TYPE_FORUM = 1;
 	const TYPE_URL = 2;
 	
+	const STATUS_UNLOCKED = 0;
+	const STATUS_LOCKED = 1;
+	
 	public function __construct()
 	{
 		$this->type = self::TYPE_CATEGORY;
+		$this->status = self::STATUS_UNLOCKED;
 		$this->last_topic_id = 0;
 	}
 	
@@ -50,6 +55,16 @@ class ForumCategory extends Category
 	public function get_type()
 	{
 		return $this->type;
+	}
+	
+	public function set_status($status)
+	{
+		$this->status = $status;
+	}
+	
+	public function get_status()
+	{
+		return $this->status;
 	}
 	
 	public function set_description($description)
@@ -85,6 +100,7 @@ class ForumCategory extends Category
 	public function get_properties()
 	{
 		return array_merge(parent::get_properties(), array(
+			'status' => $this->get_status(),
 			'description' => $this->get_description(),
 			'last_topic_id' => $this->get_last_topic_id(),
 			'url' => $this->get_url()
@@ -101,6 +117,7 @@ class ForumCategory extends Category
 			$this->set_type(self::TYPE_CATEGORY);
 		
 		parent::set_properties($properties);
+		$this->set_status($properties['status']);
 		$this->set_description($properties['description']);
 		$this->set_last_topic_id($properties['last_topic_id']);
 		$this->set_url($properties['url']);
@@ -114,6 +131,7 @@ class ForumCategory extends Category
 			'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
 			'description' => array('type' => 'text', 'length' => 65000),
 			'c_order' => array('type' => 'integer', 'length' => 11, 'unsigned' => 1, 'notnull' => 1, 'default' => 0),
+			'status' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'special_authorizations' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'auth' => array('type' => 'text', 'length' => 65000),
 			'id_parent' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),

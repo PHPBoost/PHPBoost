@@ -76,6 +76,7 @@ class ForumCategoriesFormController extends AbstractCategoriesFormController
 				if (HTMLForms.getField("type").getValue() == ' . ForumCategory::TYPE_CATEGORY . ') {
 					HTMLForms.getField("id_parent").disable();
 					HTMLForms.getField("description").disable();
+					HTMLForms.getField("status").enable();
 					HTMLForms.getField("url").disable();
 					if (HTMLForms.getField("special_authorizations").getValue()) {
 						jQuery("#' . __CLASS__ . '_authorizations > div").eq(1).hide();
@@ -84,6 +85,7 @@ class ForumCategoriesFormController extends AbstractCategoriesFormController
 				} else if (HTMLForms.getField("type").getValue() == ' . ForumCategory::TYPE_FORUM . ') {
 					HTMLForms.getField("id_parent").enable();
 					HTMLForms.getField("description").enable();
+					HTMLForms.getField("status").enable();
 					HTMLForms.getField("url").disable();
 					if (HTMLForms.getField("special_authorizations").getValue()) {
 						jQuery("#' . __CLASS__ . '_authorizations > div").eq(1).show();
@@ -92,6 +94,7 @@ class ForumCategoriesFormController extends AbstractCategoriesFormController
 				} else {
 					HTMLForms.getField("id_parent").enable();
 					HTMLForms.getField("description").enable();
+					HTMLForms.getField("status").disable();
 					HTMLForms.getField("url").enable();
 					if (HTMLForms.getField("special_authorizations").getValue()) {
 						jQuery("#' . __CLASS__ . '_authorizations > div").eq(1).hide();
@@ -128,6 +131,14 @@ class ForumCategoriesFormController extends AbstractCategoriesFormController
 			$search_category_children_options->add_category_in_excluded_categories($this->get_category()->get_id());
 		
 		$fieldset->add_field($this->get_categories_manager()->get_select_categories_form_field('id_parent', $this->common_lang['form.category'], $this->get_category()->get_id_parent(), $search_category_children_options, array('required' => true, 'hidden' => $this->get_category()->get_type() == ForumCategory::TYPE_CATEGORY)));
+		
+		$fieldset->add_field(new FormFieldRadioChoice('status', $this->common_lang['status'], $this->get_category()->get_status(),
+			array(
+				new FormFieldRadioChoiceOption(LangLoader::get_message('category.status.unlocked', 'common', 'forum'), ForumCategory::STATUS_UNLOCKED),
+				new FormFieldRadioChoiceOption(LangLoader::get_message('category.status.locked', 'common', 'forum'), ForumCategory::STATUS_LOCKED)
+			),
+			array('hidden' => $this->get_category()->get_type() == ForumCategory::TYPE_URL)
+		));
 		
 		$fieldset->add_field(new FormFieldUrlEditor('url', LangLoader::get_message('form.url', 'common'), $this->get_category()->get_url(),
 			array('required' => true, 'hidden' => $this->get_category()->get_type() != ForumCategory::TYPE_URL)
@@ -180,10 +191,15 @@ class ForumCategoriesFormController extends AbstractCategoriesFormController
 
 	protected function set_properties()
 	{
+		$status = $this->form->get_value('status');
 		parent::set_properties();
 		$this->get_category()->set_description($this->form->get_value('description'));
 		if ($this->get_category()->get_type() == ForumCategory::TYPE_URL);
+		{
+			$status = ForumCategory::STATUS_UNLOCKED;
 			$this->get_category()->set_url($this->form->get_value('url'));
+		}
+		$this->get_category()->set_status($status);
 	}
 }
 ?>

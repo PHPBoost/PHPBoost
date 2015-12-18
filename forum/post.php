@@ -161,12 +161,18 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			else
 				$type = 0;
 
+			//Verrouillé?
+			$check_status = $category->get_status();
+			//Déverrouillé pour admin et modo dans tous les cas
+			if ($is_modo)
+				$check_status = ForumCategory::STATUS_UNLOCKED;
+
 			$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 			$title = retrieve(POST, 'title', '');
 			$subtitle = retrieve(POST, 'desc', '');
 
 			//Mod anti Flood
-			if ($check_time !== false)
+			if ($check_time !== false && $check_status == ForumCategory::STATUS_UNLOCKED)
 			{
 				$delay_flood = ContentManagementConfig::load()->get_anti_flood_duration(); //On recupère le delai de flood.
 				$delay_expire = time() - $delay_flood; //On calcul la fin du delai.
@@ -176,35 +182,40 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=flood_t&id=' . $id_get, '', '&') . '#message_helper');
 			}
 
-			if (!empty($contents) && !empty($title)) //Insertion nouveau topic.
+			if ($check_status == ForumCategory::STATUS_UNLOCKED)
 			{
-				list($last_topic_id, $last_msg_id) = $Forumfct->Add_topic($id_get, $title, $subtitle, $contents, $type); //Insertion nouveau topic.
-
-				//Ajout d'un sondage en plus du topic.
-				$question = retrieve(POST, 'question', '');
-				if (!empty($question))
+				if (!empty($contents) && !empty($title)) //Insertion nouveau topic.
 				{
-					$poll_type = retrieve(POST, 'poll_type', 0);
-					$poll_type = ($poll_type == 0 || $poll_type == 1) ? $poll_type : 0;
+					list($last_topic_id, $last_msg_id) = $Forumfct->Add_topic($id_get, $title, $subtitle, $contents, $type); //Insertion nouveau topic.
 
-					$answers = array();
-					$nbr_votes = 0;
-					for ($i = 0; $i < 20; $i++)
+					//Ajout d'un sondage en plus du topic.
+					$question = retrieve(POST, 'question', '');
+					if (!empty($question))
 					{
-						$answer = str_replace('|', '', retrieve(POST, 'a'.$i, ''));
-						if (!empty($answer))
-						{
-							$answers[$i] = $answer;
-							$nbr_votes++;
-						}
-					}
-					$Forumfct->Add_poll($last_topic_id, $question, $answers, $nbr_votes, $poll_type); //Ajout du sondage.
-				}
+						$poll_type = retrieve(POST, 'poll_type', 0);
+						$poll_type = ($poll_type == 0 || $poll_type == 1) ? $poll_type : 0;
 
-				AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $last_topic_id, '-' . $last_topic_id . '.php', '&') . '#m' . $last_msg_id);
+						$answers = array();
+						$nbr_votes = 0;
+						for ($i = 0; $i < 20; $i++)
+						{
+							$answer = str_replace('|', '', retrieve(POST, 'a'.$i, ''));
+							if (!empty($answer))
+							{
+								$answers[$i] = $answer;
+								$nbr_votes++;
+							}
+						}
+						$Forumfct->Add_poll($last_topic_id, $question, $answers, $nbr_votes, $poll_type); //Ajout du sondage.
+					}
+
+					AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $last_topic_id, '-' . $last_topic_id . '.php', '&') . '#m' . $last_msg_id);
+				}
+				else
+					AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=incomplete_t&id=' . $id_get, '', '&') . '#message_helper');
 			}
-			else
-				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=incomplete_t&id=' . $id_get, '', '&') . '#message_helper');
+			else //Verrouillé
+				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_locked&id=' . $id_get, '', '&') . '#message_helper');
 		}
 		elseif (!empty($preview_topic) && !empty($id_get))
 		{
@@ -395,6 +406,15 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			DispatchManager::redirect($controller);
 		}
 
+		//Catégorie verrouillée?
+		$check_status = $category->get_status();
+		//Déverrouillé pour admin et modo dans tous les cas
+		if ($is_modo)
+			$check_status = ForumCategory::STATUS_UNLOCKED;
+
+		if ($check_status == ForumCategory::STATUS_LOCKED) //Verrouillée
+			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_locked&id=' . $id_get, '', '&') . '#message_helper');
+			
 		//Mod anti Flood
 		if ($check_time !== false)
 		{

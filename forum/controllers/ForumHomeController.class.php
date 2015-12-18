@@ -68,7 +68,7 @@ class ForumHomeController extends ModuleController
 		$i = 0;
 
 		//On liste les catégories et sous-catégories.
-		$result = PersistenceContext::get_querier()->select('SELECT c.id AS cid, c.id_parent, c.name, c.rewrited_name, c.description as subname, c.url, c.last_topic_id, t.id AS tid, t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, t.status, m.user_id, m.display_name as login, m.level as user_level, m.groups, v.last_view_id
+		$result = PersistenceContext::get_querier()->select('SELECT c.id AS cid, c.id_parent, c.name, c.rewrited_name, c.description as subname, c.url, c.last_topic_id, c.status, t.id AS tid, t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, t.status, m.user_id, m.display_name as login, m.level as user_level, m.groups, v.last_view_id
 		FROM ' . ForumSetup::$forum_cats_table . ' c
 		LEFT JOIN ' . ForumSetup::$forum_topics_table . ' t ON t.id = c.last_topic_id
 		LEFT JOIN ' . ForumSetup::$forum_view_table . ' v ON v.user_id = :user_id AND v.idtopic = t.id
@@ -114,7 +114,7 @@ class ForumHomeController extends ModuleController
 					'NAME' => $row['name'],
 					'U_FORUM_VARS' => ForumUrlBuilder::display_category($row['cid'], $row['rewrited_name'])->rel()
 				));
-				$display_sub_cats = true;
+				$display_sub_cats = $row['status'] == ForumCategory::STATUS_UNLOCKED;
 			}
 			else //On liste les sous-catégories
 			{
@@ -197,7 +197,7 @@ class ForumHomeController extends ModuleController
 							$blink = true;
 						}
 					}
-					$img_announce .= ($row['status'] == '0') ? '-lock' : '';
+					$img_announce .= ($row['status'] == ForumCategory::STATUS_LOCKED) ? '-lock' : '';
 	
 					$total_topic += $row['nbr_topic'];
 					$total_msg += $row['nbr_msg'];

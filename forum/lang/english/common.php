@@ -59,6 +59,10 @@ $lang['config.message_when_topic_is_solved'] = 'Message explanation to members i
 $lang['config.message_before_topic_title_icon_displayed'] = 'Display associated icon';
 $lang['config.message_before_topic_title_icon_displayed.explain'] = '<i class="fa fa-msg-display"></i> / <i class="fa fa-msg-not-display"></i>';
 
+//Categories
+$lang['category.status.unlocked'] = 'Unlocked';
+$lang['category.status.locked'] = 'Locked';
+
 //Extended Field
 $lang['extended-field.field.website'] = 'Website';
 $lang['extended-field.field.website-explain'] = 'Please enter a valid url (ex : http://www.phpboost.com)';

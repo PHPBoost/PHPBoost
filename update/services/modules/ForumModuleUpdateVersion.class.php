@@ -129,20 +129,19 @@ class ForumModuleUpdateVersion extends ModuleUpdateVersion
 			$this->db_utils->drop_column(PREFIX . 'forum_cats', 'nbr_topic');
 		if (isset($columns['nbr_msg']))
 			$this->db_utils->drop_column(PREFIX . 'forum_cats', 'nbr_msg');
-		if (isset($columns['status']))
-			$this->db_utils->drop_column(PREFIX . 'forum_cats', 'status');
 		if (isset($columns['aprob']))
 			$this->db_utils->drop_column(PREFIX . 'forum_cats', 'aprob');
 		
 		if (isset($columns['level']))
 		{
-			$result = $this->querier->select_rows(PREFIX . 'forum_cats', array('id', 'name', 'auth'));
+			$result = $this->querier->select_rows(PREFIX . 'forum_cats', array('id', 'name', 'auth', 'status'));
 			while ($row = $result->fetch())
 			{
 				$this->querier->update(PREFIX . 'forum_cats', array(
 					'id_parent' => $categories_tree[$row['id']]['id_parent'],
 					'c_order' => $categories_tree[$row['id']]['c_order'],
 					'rewrited_name' => Url::encode_rewrite($row['name']),
+					'status' => $row['status'] == 1 ? 0 : 1,
 					'special_authorizations' => (int)!empty($row['auth'])
 				), 'WHERE id = :id', array('id' => $row['id']));
 			}

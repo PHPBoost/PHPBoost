@@ -59,6 +59,10 @@ $lang['config.message_when_topic_is_solved'] = 'Message devant le titre du topic
 $lang['config.message_before_topic_title_icon_displayed'] = 'Afficher l\'icône associée';
 $lang['config.message_before_topic_title_icon_displayed.explain'] = '<i class="fa fa-msg-display"></i> / <i class="fa fa-msg-not-display"></i>';
 
+//Categories
+$lang['category.status.unlocked'] = 'Déverrouillée';
+$lang['category.status.locked'] = 'Verrouillée';
+
 //Extended Field
 $lang['extended-field.field.website'] = 'Site web';
 $lang['extended-field.field.website-explain'] = 'Veuillez renseigner un site web valide (ex : http://www.phpboost.com)';
