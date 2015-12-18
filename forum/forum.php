@@ -105,7 +105,7 @@ if (!empty($id_get))
 		$authorized_categories = ForumService::get_authorized_categories($id_get);
 		
 		//On liste les sous-catégories.
-		$result = PersistenceContext::get_querier()->select('SELECT c.id AS cid, c.id_parent, c.name, c.rewrited_name, c.description as subname, c.url, c.last_topic_id, c.status, t.id AS tid, t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, t.status, m.user_id, m.display_name, m.level AS user_level, m.groups, v.last_view_id
+		$result = PersistenceContext::get_querier()->select('SELECT c.id AS cid, c.id_parent, c.name, c.rewrited_name, c.description as subname, c.url, c.last_topic_id, c.status AS cat_status, t.id AS tid, t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, t.status, m.user_id, m.display_name, m.level AS user_level, m.groups, v.last_view_id
 		FROM ' . ForumSetup::$forum_cats_table . ' c
 		LEFT JOIN ' . ForumSetup::$forum_topics_table . ' t ON t.id = c.last_topic_id
 		LEFT JOIN ' . ForumSetup::$forum_view_table . ' v ON v.user_id = :user_id AND v.idtopic = t.id
@@ -198,7 +198,7 @@ if (!empty($id_get))
 						$blink = true;
 					}
 				}
-				$img_announce .= ($row['status'] == ForumCategory::STATUS_LOCKED) ? '-lock' : '';
+				$img_announce .= ($row['cat_status'] == ForumCategory::STATUS_LOCKED) ? '-lock' : '';
 				
 				$tpl->assign_block_vars('subcats', array(
 					'C_BLINK' => $blink,
@@ -218,7 +218,7 @@ if (!empty($id_get))
 	
 	//On vérifie si l'utilisateur a les droits d'écritures.
 	$check_group_write_auth = ForumAuthorizationsService::check_authorizations($id_get)->write();
-	$locked_cat = ($row['status'] == ForumCategory::STATUS_LOCKED && !$User->check_level(User::ADMIN_LEVEL));
+	$locked_cat = ($row['cat_status'] == ForumCategory::STATUS_LOCKED && !$User->check_level(User::ADMIN_LEVEL));
 	if (!$check_group_write_auth)
 	{
 		$tpl->assign_block_vars('error_auth_write', array(
