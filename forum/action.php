@@ -202,7 +202,7 @@ elseif (!empty($idt_get))
 						$array_votes[$i]++;
 				}
 			}
-			PersistenceContext::get_querier()->update(PREFIX . 'forum_poll', array('voter_id' =>  implode('|', $$voter_id), 'votes' =>  implode('|', $array_votes)), 'WHERE idtopic=:id', array('id' => $idt_get));
+			PersistenceContext::get_querier()->update(PREFIX . 'forum_poll', array('voter_id' =>  implode('|', $voter_id), 'votes' =>  implode('|', $array_votes)), 'WHERE idtopic=:id', array('id' => $idt_get));
 		}
 
 		AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $idt_get . '&pt=' . $page_get, '-' . $idt_get . '-' . $page_get . $rewrited_title . '.php', '&'));
