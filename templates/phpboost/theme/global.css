@@ -314,9 +314,15 @@ td.calendar-week {
 
 /* --- menu de flux --- */
 .feed-list {
+	margin: 5px 0;
 	list-style-type: none;
 	text-align: left;
-	margin: 5px 0;
+}
+
+@media (max-width: 769px) {
+	.feed-list li {
+		padding: 4px 0;
+	}
 }
 
 /* --- La recherche de membre (AJAX) --- */
