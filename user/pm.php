@@ -549,7 +549,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 				$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
 				
 				$tpl->assign_block_vars('edit_pm', array(
-					'CONTENTS' => ($prw_convers XOR $prw) ? $contents : FormatingHelper::unparse($pm['contents']),
+					'CONTENTS' => ($prw_convers XOR $prw) ? $contents : FormatingHelper::unparse(stripslashes($pm['contents'])),
 					'U_ACTION_EDIT' => url('.php?edit=' . $pm_edit . '&amp;token=' . AppContext::get_session()->get_token()),
 					'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>'
 				));
@@ -732,7 +732,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		
 		$pseudo = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id = :id', array('id' => $quote_msg['user_id']));
 		
-		$contents = '[quote=' . $pseudo . ']' . FormatingHelper::unparse($quote_msg['contents']) . '[/quote]';
+		$contents = '[quote=' . $pseudo . ']' . FormatingHelper::unparse(stripslashes($quote_msg['contents'])) . '[/quote]';
 	}
 	else
 		$contents = '';

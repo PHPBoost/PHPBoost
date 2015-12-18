@@ -108,11 +108,11 @@ class ForumCategoriesCache extends CategoriesCache
 	protected function get_category_elements_number($id_category)
 	{
 		$topics_number = ForumService::count_topics('WHERE idcat = :id_category', array('id_category' => $id_category));
-		$messages_number = ForumService::count_messages('WHERE idtopic = :id_category', array('id_category' => $id_category));
+		$messages_number = ForumService::count_messages('WHERE idcat = :id_category', array('id_category' => $id_category));
 		
 		return array(
-			'topics_number' => $topics_number,
-			'messages_number' => $messages_number
+			'topics_number' => (int)$topics_number,
+			'messages_number' => (int)$messages_number
 		);
 	}
 	

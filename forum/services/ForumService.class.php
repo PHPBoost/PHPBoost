@@ -55,7 +55,12 @@ class ForumService
 	 */
 	public static function count_messages($condition = '', $parameters = array())
 	{
-		return self::$db_querier->count(ForumSetup::$forum_message_table, $condition, $parameters);
+		$messages_number = 0;
+		try {
+			$messages_number = PersistenceContext::get_querier()->get_column_value(ForumSetup::$forum_topics_table, 'SUM(nbr_msg)', $condition, $parameters);
+		} catch (RowNotFoundException $e) {}
+		
+		return $messages_number;
 	}
 	
 	 /**

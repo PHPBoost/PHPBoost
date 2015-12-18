@@ -89,7 +89,7 @@
 				<ul>
 					<li>
 						<span class="cssmenu-title">
-							<i class="fa fa-globe"></i> <a class="small" href="index.php?" title="{L_FORUM_INDEX}">{L_FORUM_INDEX}</a>
+							<i class="fa fa-globe"></i> <a class="small" href="index.php" title="{L_FORUM_INDEX}">{L_FORUM_INDEX}</a>
 						</span>
 					</li>
 				</ul>

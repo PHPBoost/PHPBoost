@@ -76,19 +76,19 @@ if (!empty($id_get)) //Déplacement du sujet.
 	$cat_list = '';
 	foreach ($categories_tree_options as $option)
 	{
-		if ($option->get_raw_value() != $topic['idcat'])
+		if (!$option->get_raw_value())
 		{
-			if (!$option->get_raw_value())
-			{
-				$option->set_label($LANG['root']);
+			$option->set_label('');
+			$cat_list .= $option->display()->render();
+		}
+		else
+		{
+			$option_cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
+			if ($option_cat->get_type() == ForumCategory::TYPE_CATEGORY || $option_cat->get_id() == $topic['idcat'])
+				$option->set_disable(true);
+			
+			if (!$option_cat->get_url())
 				$cat_list .= $option->display()->render();
-			}
-			else
-			{
-				$option_cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
-				if (!$option_cat->get_url())
-					$cat_list .= $option->display()->render();
-			}
 		}
 	}
 
@@ -145,7 +145,7 @@ elseif (!empty($id_post)) //Déplacement du topic
 			$Forumfct = new Forum();
 
 			$Forumfct->Move_topic($id_post, $idcat, $to); //Déplacement du topic
-
+			
 			AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $id_post, '-' .$id_post  . '.php', '&'));
 		}
 		else
@@ -163,7 +163,7 @@ elseif (!empty($id_post)) //Déplacement du topic
 }
 elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //Choix de la nouvelle catégorie, titre, sous-titre du topic à scinder.
 {
-	$tpl = new FileTemplate('forum/forum_move.tpl');
+	$tpl = new FileTemplate('forum/forum_post.tpl');
 
 	$idm = !empty($id_get_msg) ? $id_get_msg : $id_post_msg;
 	
@@ -214,19 +214,22 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	$cat_list = '';
 	foreach ($categories_tree_options as $option)
 	{
-		if ($option->get_raw_value() != $topic['idcat'])
+		if (!$option->get_raw_value())
 		{
-			if (!$option->get_raw_value())
-			{
-				$option->set_label($LANG['root']);
+			$option->set_label('');
+			$cat_list .= $option->display()->render();
+		}
+		else
+		{
+			$option_cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
+			if ($option_cat->get_type() == ForumCategory::TYPE_CATEGORY)
+				$option->set_disable(true);
+			
+			if ($option_cat->get_id() == $topic['idcat'])
+				$option->set_active(true);
+			
+			if (!$option_cat->get_url())
 				$cat_list .= $option->display()->render();
-			}
-			else
-			{
-				$option_cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
-				if (!$option_cat->get_url())
-					$cat_list .= $option->display()->render();
-			}
 		}
 	}
 
@@ -275,7 +278,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		$tpl->put_all(array(
 			'TITLE' => '',
 			'DESC' => '',
-			'CONTENTS' => FormatingHelper::unparse($msg['contents']),
+			'CONTENTS' => FormatingHelper::unparse(stripslashes($msg['contents'])),
 			'IDM' => $id_get_msg,
 			'CHECKED_NORMAL' => 'checked="checked"',
 			'SELECTED_SIMPLE' => 'checked="checked"',
@@ -429,7 +432,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 			//Instanciation de la class du forum.
 			$Forumfct = new Forum();
 
-			$last_topic_id = $Forumfct->Cut_topic($id_post_msg, $msg['idtopic'], $topic['idcat'], $to, $title, $subtitle, $contents, $type, $msg['user_id'], $topic['last_user_id'], $topic['last_msg_id'], $topic['last_timestamp']); //Scindement du topic
+			$last_topic_id = $Forumfct->Cut_topic($id_post_msg, $msg['idtopic'], $topic['idcat'], $to, $title, $subtitle, $contents, $type, $msg['user_id'], $topic['last_user_id'], $topic['last_msg_id']); //Scindement du topic
 
 			//Ajout d'un sondage en plus du topic.
 			$question = retrieve(POST, 'question', '');

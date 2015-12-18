@@ -439,7 +439,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 ' . FormatingHelper::second_parse($contents);
 					}
 					
-					$Forumfct->Update_msg($idt_get, $topic['last_msg_id'], FormatingHelper::unparse($new_content), $topic['last_user_id']); //Mise à jour du topic.
+					$Forumfct->Update_msg($idt_get, $topic['last_msg_id'], FormatingHelper::unparse(stripslashes($new_content)), $topic['last_user_id']); //Mise à jour du topic.
 					$last_msg_id = $topic['last_msg_id'];
 				}
 				else

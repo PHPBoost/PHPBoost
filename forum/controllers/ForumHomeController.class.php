@@ -92,7 +92,8 @@ class ForumHomeController extends ModuleController
 		}
 		$result->dispose();
 		
-		$categories = parentChildSort_r('cid', 'id_parent', $categories);
+		if (!$display_cat)
+			$categories = parentChildSort_r('cid', 'id_parent', $categories);
 		
 		$display_sub_cats = false;
 		$is_sub_forum = array();

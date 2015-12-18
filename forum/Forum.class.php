@@ -417,24 +417,36 @@ class Forum
 
 		//Insertion de l'action dans l'historique.
 		forum_history_collector(H_MOVE_TOPIC, $topic['user_id'], 'topic' . url('.php?id=' . $idtopic, '-' . $idtopic . '.php', '&'));
+		
+		ForumCategoriesCache::invalidate();
 	}
 
 	//Déplacement d'un sujet
-	function Cut_topic($id_msg_cut, $idtopic, $idcat, $idcat_dest, $title, $subtitle, $contents, $type, $msg_user_id, $last_user_id, $last_msg_id, $last_timestamp)
+	function Cut_topic($id_msg_cut, $idtopic, $idcat, $idcat_dest, $title, $subtitle, $contents, $type, $msg_user_id, $last_user_id, $last_msg_id)
 	{
+		$now = new Date();
 		//Calcul du nombre de messages déplacés.
 		$nbr_msg = PersistenceContext::get_querier()->count(PREFIX . "forum_msg", 'WHERE idtopic = :idtopic AND id >= :id', array('idtopic' => $idtopic, 'id' => $id_msg_cut));
 		$nbr_msg = !empty($nbr_msg) ? NumberHelper::numeric($nbr_msg) : 1;
 
 		//Insertion nouveau topic.
-		$result = PersistenceContext::get_querier()->insert(PREFIX . "forum_topics", array('idcat' => $idcat_dest, 'title' => $title, 'subtitle' => $subtitle, 'user_id' => $msg_user_id, 'nbr_msg' => $nbr_msg, 'nbr_views' => 0, 'last_user_id' => $last_user_id, 'last_msg_id' => $last_msg_id, 'last_timestamp' => $last_timestamp, 'first_msg_id' => $id_msg_cut, 'type' => $type, 'status' => 1, 'aprob' => 0));
+		$result = PersistenceContext::get_querier()->insert(PREFIX . "forum_topics", array('idcat' => $idcat_dest, 'title' => $title, 'subtitle' => $subtitle, 'user_id' => $msg_user_id, 'nbr_msg' => $nbr_msg, 'nbr_views' => 0, 'last_user_id' => $last_user_id, 'last_msg_id' => $last_msg_id, 'last_timestamp' => $now->get_timestamp(), 'first_msg_id' => $id_msg_cut, 'type' => $type, 'status' => 1, 'aprob' => 0));
 		$last_topic_id = $result->get_last_inserted_id(); //Dernier topic inseré
-
+		
 		//Mise à jour du message.
 		PersistenceContext::get_querier()->update(PREFIX . "forum_msg", array('contents' => $contents), 'WHERE id = :id', array('id' => $id_msg_cut));
 		
 		//Déplacement des messages.
-		PersistenceContext::get_querier()->update(PREFIX . "forum_msg", array('idtopic' => $last_topic_id), 'WHERE idtopic = :idtopic AND id >= :id', array('idtopic' => $idtopic, 'id' => $id_msg_cut));
+		$messages_to_move = array();
+		$result = PersistenceContext::get_querier()->select_rows(PREFIX . 'forum_msg', array('id'), 'WHERE idtopic = :idtopic AND id >= :id', array('idtopic' => $idtopic, 'id' => $id_msg_cut));
+		while ($row = $result->fetch())
+		{
+			$messages_to_move[] = $row['id'];
+		}
+		$result->dispose();
+		
+		if (!empty($messages_to_move))
+			PersistenceContext::get_querier()->update(PREFIX . "forum_msg", array('idtopic' => $last_topic_id), 'WHERE id IN :ids_list', array('ids_list' => $messages_to_move));
 
 		//Mise à jour de l'ancien topic
 		try {
@@ -461,7 +473,9 @@ class Forum
 
 		//Insertion de l'action dans l'historique.
 		forum_history_collector(H_CUT_TOPIC, 0, 'topic' . url('.php?id=' . $last_topic_id, '-' . $last_topic_id . '.php', '&'));
-
+		
+		ForumCategoriesCache::invalidate();
+		
 		return $last_topic_id;
 	}
 
@@ -591,20 +605,23 @@ class Forum
 
 	## Private Method ##
 	//Met à jour chaque catégories quelque soit le niveau de profondeur de la catégorie source. Cas le plus favorable et courant seulement 3 requêtes.
-	function update_last_topic_id($idcat)
+	function Update_last_topic_id($idcat)
 	{
 		$category = ForumService::get_categories_manager()->get_categories_cache()->get_category($idcat);
 		$children = ForumService::get_categories_manager()->get_categories_cache()->get_children($idcat);
-
+		$cat_ids = implode(', ', array_keys($children));
+		if (empty($cat_ids))
+			$cat_ids = $idcat;
+		
 		//Récupération du timestamp du dernier message de la catégorie.
 		$last_timestamp = 0;
 		try {
-			$last_timestamp = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'MAX(last_timestamp)', 'WHERE idcat IN (' . implode(', ', array_keys($children)) . ')');
+			$last_timestamp = PersistenceContext::get_querier()->get_column_value(ForumSetup::$forum_topics_table, 'MAX(last_timestamp)', 'WHERE idcat IN (' . $cat_ids . ')');
 		} catch (RowNotFoundException $e) {}
 		
 		$last_topic_id = 0;
 		try {
-			$last_topic_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'id', 'WHERE last_timestamp = :timestamp', array('timestamp' => $last_timestamp));
+			$last_topic_id = PersistenceContext::get_querier()->get_column_value(ForumSetup::$forum_topics_table, 'id', 'WHERE last_timestamp = :timestamp', array('timestamp' => $last_timestamp));
 		} catch (RowNotFoundException $e) {}
 		
 		PersistenceContext::get_querier()->update(ForumSetup::$forum_cats_table, array('last_topic_id' => (int)$last_topic_id ), 'WHERE id = :id', array('id' => $idcat));
