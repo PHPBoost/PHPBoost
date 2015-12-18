@@ -63,10 +63,9 @@ class NewsletterUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function add_stream($id_parent = null)
+	public static function add_stream()
 	{
-		$id_parent = !empty($id_parent) ? $id_parent . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/admin/stream/add/' . $id_parent);
+		return DispatchManager::get_url(self::$dispatcher, '/admin/stream/add/');
 	}
 	
 	/**

@@ -35,7 +35,7 @@ $url_controller_mappers = array(
 	
 	//Streams
 	new UrlControllerMapper('NewsletterStreamsManageController', '`^/admin/streams/?$`'),
-	new UrlControllerMapper('NewsletterStreamsFormController', '`^/admin/stream/add/?([0-9]+)?/?$`', array('id_parent')),
+	new UrlControllerMapper('NewsletterStreamsFormController', '`^/admin/stream/add/?$`'),
 	new UrlControllerMapper('NewsletterStreamsFormController', '`^/admin/stream/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('NewsletterDeleteStreamController', '`^/admin/stream/([0-9]+)/delete/?$`', array('id')),
 	
