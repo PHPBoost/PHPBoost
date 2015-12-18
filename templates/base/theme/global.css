@@ -319,6 +319,11 @@ td.calendar-week {
 	text-align: left;
 }
 
+@media (max-width: 769px) {
+	.feed-list li {
+		padding: 4px 0;
+	}
+}
 /* --- La recherche de membre (AJAX) --- */
 .xmlhttprequest-result-search {
 	margin: 2px 0 0 0;

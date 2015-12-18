@@ -388,7 +388,7 @@ ul.pagination-block-bis li a.next-page:hover {
 	margin-left: 20px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 480px) {
 	.infos {
 		float: none;
 		width: 100%;
