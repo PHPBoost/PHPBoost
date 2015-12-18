@@ -120,8 +120,8 @@ if (!empty($id_get))
 		$categories = array();
 		while ($row = $result->fetch())
 		{
-			$category = $categories_cache->get_category($row['cid']);
-			$elements_number = $category->get_elements_number();
+			$cat = $categories_cache->get_category($row['cid']);
+			$elements_number = $cat->get_elements_number();
 			
 			$categories[$row['cid']] = $row;
 			$categories[$row['cid']]['nbr_topic'] = $elements_number['topics_number'];
@@ -218,7 +218,7 @@ if (!empty($id_get))
 	
 	//On vérifie si l'utilisateur a les droits d'écritures.
 	$check_group_write_auth = ForumAuthorizationsService::check_authorizations($id_get)->write();
-	$locked_cat = ($row['cat_status'] == ForumCategory::STATUS_LOCKED && !$User->check_level(User::ADMIN_LEVEL));
+	$locked_cat = ($category->get_status() == ForumCategory::STATUS_LOCKED && !$User->check_level(User::ADMIN_LEVEL));
 	if (!$check_group_write_auth)
 	{
 		$tpl->assign_block_vars('error_auth_write', array(
