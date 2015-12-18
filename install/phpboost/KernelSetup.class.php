@@ -226,7 +226,7 @@ class KernelSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'ip' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"),
-			'time' => array('type' => 'date', 'notnull' => 1, 'default' => "''"),
+			'time' => array('type' => 'date', 'notnull' => 1),
 			'total' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(

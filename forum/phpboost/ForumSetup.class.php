@@ -290,6 +290,8 @@ class ForumSetup extends DefaultModuleSetup
 		$extended_field->set_name(self::$member_extended_field_last_view_forum_column);
 		$extended_field->set_field_name(self::$member_extended_field_last_view_forum_column);
 		$extended_field->set_field_type('MemberHiddenExtendedField');
+		$extended_field->set_is_required(false);
+		$extended_field->set_display(false);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
 		
