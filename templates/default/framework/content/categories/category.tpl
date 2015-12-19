@@ -30,9 +30,11 @@
 	-->
 	</script>
 
+	# IF C_ALLOWED_TO_HAVE_CHILDS #
 	<ul id="subcat-{ID}" class="sortable-block">
 		# START children #
 			{children.child}
 		# END children #
 	</ul>
+	# ENDIF #
 </li>

@@ -102,12 +102,15 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 			'hidden' => !$this->get_category()->rewrited_name_is_personalized()
 		), array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`i'))));
 		
-		$search_category_children_options = new SearchCategoryChildrensOptions();
-		
-		if ($this->get_category()->get_id())
-			$search_category_children_options->add_category_in_excluded_categories($this->get_category()->get_id());
+		if ($this->get_category()->is_allowed_to_have_childs())
+		{
+			$search_category_children_options = new SearchCategoryChildrensOptions();
 			
-		$fieldset->add_field($this->get_categories_manager()->get_select_categories_form_field('id_parent', $this->common_lang['form.category'], $this->get_category()->get_id_parent(), $search_category_children_options));
+			if ($this->get_category()->get_id())
+				$search_category_children_options->add_category_in_excluded_categories($this->get_category()->get_id());
+				
+			$fieldset->add_field($this->get_categories_manager()->get_select_categories_form_field('id_parent', $this->common_lang['form.category'], $this->get_category()->get_id_parent(), $search_category_children_options));
+		}
 		
 		$this->build_fieldset_options($form);
 		
@@ -145,7 +148,7 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 		$rewrited_name = $this->form->get_value('rewrited_name', '');
 		$rewrited_name = $this->form->get_value('personalize_rewrited_name') && !empty($rewrited_name) ? $rewrited_name : Url::encode_rewrite($this->get_category()->get_name());
 		$this->get_category()->set_rewrited_name($rewrited_name);
-		if ($this->form->get_value('id_parent'))
+		if ($this->get_category()->is_allowed_to_have_childs() && $this->form->get_value('id_parent'))
 			$this->get_category()->set_id_parent($this->form->get_value('id_parent')->get_raw_value());
 		else
 			$this->get_category()->set_id_parent(Category::ROOT_CATEGORY);

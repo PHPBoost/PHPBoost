@@ -87,6 +87,7 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 				$category_view->add_lang($this->lang);
 				$category_view->put_all(array(
 					'C_DESCRIPTION' => !empty($description),
+					'C_ALLOWED_TO_HAVE_CHILDS' => $category->is_allowed_to_have_childs(),
 					'U_DISPLAY' => $this->get_display_category_url($category)->rel(),
 					'U_EDIT' => $this->get_edit_category_url($category)->rel(),
 					'U_DELETE' => $this->get_delete_category_url($category)->rel(),

@@ -35,6 +35,7 @@ class Category
 	protected $auth = array();
 	protected $id_parent;
 	protected $elements_number;
+	protected $allowed_to_have_childs = true;
 	
 	const READ_AUTHORIZATIONS = 1;
 	const WRITE_AUTHORIZATIONS = 2;
@@ -143,10 +144,15 @@ class Category
 		$this->elements_number = $elements_number;
 	}
 	
+	public function is_allowed_to_have_childs()
+	{
+		return $this->allowed_to_have_childs;
+	}
+	
 	public function check_auth($bit)
-    {
-    	return AppContext::get_current_user()->check_auth($this->auth, $bit);
-    }
+	{
+		return AppContext::get_current_user()->check_auth($this->auth, $bit);
+	}
 
 	public function get_properties()
 	{
