@@ -54,10 +54,10 @@ class ExtendedFieldsDatabaseService
 				'field_type' => $extended_field->get_field_type(),
 				'possible_values' => serialize($extended_field->get_possible_values()),
 				'default_value' => TextHelper::htmlspecialchars($extended_field->get_default_value()),
-				'required' => (string)$extended_field->get_required(),
-				'display' => (string)$extended_field->get_display(),
+				'required' => (int)$extended_field->get_required(),
+				'display' => (int)$extended_field->get_display(),
 				'regex' => TextHelper::htmlspecialchars($extended_field->get_regex()),
-				'freeze' => (string)$extended_field->get_is_freeze(),
+				'freeze' => (int)$extended_field->get_is_freeze(),
 				'auth' => serialize($extended_field->get_authorization()),
 		));
 	}
@@ -81,10 +81,10 @@ class ExtendedFieldsDatabaseService
 				'field_type' => $extended_field->get_field_type(),
 				'possible_values' => serialize($extended_field->get_possible_values()),
 				'default_value' => TextHelper::htmlspecialchars($extended_field->get_default_value()),
-				'required' => (string)$extended_field->get_required(),
-				'display' => (string)$extended_field->get_display(),
+				'required' => (int)$extended_field->get_required(),
+				'display' => (int)$extended_field->get_display(),
 				'regex' => TextHelper::htmlspecialchars($extended_field->get_regex()),
-				'freeze' => (string)$extended_field->get_is_freeze(),
+				'freeze' => (int)$extended_field->get_is_freeze(),
 				'auth' => serialize($extended_field->get_authorization()),
 				'id' => $extended_field->get_id(),
 		));
@@ -128,7 +128,7 @@ class ExtendedFieldsDatabaseService
 			display = :display
 			WHERE id = :id"
 			, array(
-				'display' => (string)$extended_field->get_display(),
+				'display' => (int)$extended_field->get_display(),
 				'id' => $extended_field->get_id(),
 		));
 	}
@@ -140,7 +140,7 @@ class ExtendedFieldsDatabaseService
 			display = :display
 			WHERE field_name = :field_name"
 			, array(
-				'display' => (string)$extended_field->get_display(),
+				'display' => (int)$extended_field->get_display(),
 				'field_name' => $extended_field->get_field_name(),
 		));
 	}
