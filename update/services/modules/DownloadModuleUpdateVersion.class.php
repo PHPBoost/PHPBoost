@@ -96,7 +96,7 @@ class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 		while ($row = $result->fetch())
 		{
 			$file_size = Url::get_url_file_size($row['url']);
-			$file_size = (empty($file_size) && $row['size']) ? $row['size'] : $file_size;
+			$file_size = (empty($file_size) && $row['size']) ? $row['size'] * pow(1024, 2) : $file_size;
 			
 			$this->querier->update(PREFIX . 'download', array(
 				'rewrited_name' => Url::encode_rewrite($row['name']),
