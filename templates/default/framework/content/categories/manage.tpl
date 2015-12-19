@@ -55,15 +55,17 @@ function change_reposition_pictures()
 <form action="{REWRITED_SCRIPT}" method="post" onsubmit="serialize_sortable();">
 	<fieldset>
 		<legend>{FIELDSET_TITLE}</legend>
-			<ul id="categories" class="sortable-block">
-				# IF C_NO_CATEGORIES #
-					<div class="center">${LangLoader::get_message('no_item_now', 'common')}</div>
-				# ELSE #
-					# START children #
-						{children.child}
-					# END children #
-				# ENDIF #
-			</ul>
+			<div class="fieldset-inset">
+				<ul id="categories" class="sortable-block">
+					# IF C_NO_CATEGORIES #
+						<div class="center">${LangLoader::get_message('no_item_now', 'common')}</div>
+					# ELSE #
+						# START children #
+							{children.child}
+						# END children #
+					# ENDIF #
+				</ul>
+			</div>
 	</fieldset>
 	# IF C_MORE_THAN_ONE_CATEGORY #
 	<fieldset class="fieldset-submit">
