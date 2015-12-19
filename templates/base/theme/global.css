@@ -320,7 +320,8 @@ td.calendar-week {
 }
 
 @media (max-width: 769px) {
-	.feed-list li {
+	.feed-list li a {
+		margin: 1px 0;
 		padding: 4px 0;
 	}
 }
