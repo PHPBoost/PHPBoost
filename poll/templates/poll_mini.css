@@ -12,3 +12,7 @@
 	padding-left: 6px;
 	text-align: left;
 }
+
+#module-mini-poll button.submit {
+	margin-bottom: 10px;
+}

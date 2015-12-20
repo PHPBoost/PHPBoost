@@ -16,6 +16,12 @@
 	border: none;
 }
 
+#recaptcha-widget .options > a,
+#recaptcha-widget .options > div {
+	display: block;
+	padding: 8px 0;
+}
+
 #recaptcha-container {
 	display: table-cell;
 	border-right: 1px solid #CCCCCC;
