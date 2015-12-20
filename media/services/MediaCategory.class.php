@@ -54,13 +54,13 @@ class MediaCategory extends RichCategory
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
+			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
 			'description' => array('type' => 'text', 'length' => 65000),
 			'c_order' => array('type' => 'integer', 'length' => 11, 'unsigned' => 1, 'notnull' => 1, 'default' => 0),
 			'special_authorizations' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'auth' => array('type' => 'text', 'length' => 65000),
-			'image' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
+			'image' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'id_parent' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'content_type' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0)
 		);

@@ -112,7 +112,7 @@ class ForumSetup extends DefaultModuleSetup
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'idcat' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'idtopic' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
+			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'contents' => array('type' => 'text', 'length' => 65000),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'status' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
@@ -135,7 +135,7 @@ class ForumSetup extends DefaultModuleSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'action' => array('type' => 'string', 'length' => 50, 'notnull' => 1),
+			'action' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'user_id_action' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'url' => array('type' => 'text', 'length' => 2048),
@@ -158,7 +158,7 @@ class ForumSetup extends DefaultModuleSetup
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'timestamp_edit' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'user_id_edit' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'user_ip' => array('type' => 'string', 'length' => 128, 'notnull' => 1)
+			'user_ip' => array('type' => 'string', 'length' => 128, 'notnull' => 1, 'default' => "''")
 		);
 		$options = array(
 			'primary' => array('id'),
@@ -174,7 +174,7 @@ class ForumSetup extends DefaultModuleSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'idtopic' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'question' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
+			'question' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'answers' => array('type' => 'text', 'length' => 65000),
 			'voter_id' => array('type' => 'text', 'length' => 65000),
 			'votes' => array('type' => 'text', 'length' => 65000),
@@ -192,8 +192,8 @@ class ForumSetup extends DefaultModuleSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'idcat' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'title' => array('type' => 'string', 'length' => 100, 'notnull' => 1),
-			'subtitle' => array('type' => 'string', 'length' => 75, 'notnull' => 1),
+			'title' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
+			'subtitle' => array('type' => 'string', 'length' => 75, 'notnull' => 1, 'default' => "''"),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'nbr_msg' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
 			'nbr_views' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
@@ -388,7 +388,8 @@ class ForumSetup extends DefaultModuleSetup
 			'contents' => $this->messages['sample.thread.message.content'],
 			'timestamp' => time(),
 			'timestamp_edit' => 0,
-			'user_id_edit' => 0
+			'user_id_edit' => 0,
+			'user_ip' => AppContext::get_request()->get_ip_address()
 		));
 		
 		//Mise à jour du nombre de messages du membre.

@@ -63,7 +63,7 @@ class GalleryModuleUpdateVersion extends ModuleUpdateVersion
 		if (!isset($columns['id_parent']))
 			$this->db_utils->add_column(PREFIX . 'gallery_cats', 'id_parent', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
 		if (!isset($columns['image']))
-			$this->db_utils->add_column(PREFIX . 'gallery_cats', 'image', array('type' => 'string', 'length' => 255, 'notnull' => 1));
+			$this->db_utils->add_column(PREFIX . 'gallery_cats', 'image', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"));
 		
 		if (isset($columns['level']))
 		{

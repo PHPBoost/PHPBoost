@@ -183,7 +183,7 @@ class KernelSetup
 			'id_in_module' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'is_locked' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'number_comments' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'path' => array('type' => 'string', 'length' => 255, 'notnull' => 1)
+			'path' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''")
 		);
 		$options = array(
 			'primary' => array('id_topic'),
@@ -256,10 +256,10 @@ class KernelSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'entitled' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
+			'entitled' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'description' => array('type' => 'text', 'length' => 65000),
-			'fixing_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
-			'module' => array('type' => 'string', 'length' => 100, 'notnull' => 1),
+			'fixing_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'module' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
 			'current_status' => array('type' => 'boolean', 'length' => 3, 'notnull' => 1, 'default' => 0),
 			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'fixing_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
@@ -287,9 +287,9 @@ class KernelSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 10, 'autoincrement' => true, 'notnull' => 1),
-			'requested_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
-			'from_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
-			'times' => array('type' => 'integer', 'length' => 11, 'notnull' => 1)
+			'requested_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'from_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'times' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
 
 		$options = array(
@@ -414,9 +414,9 @@ class KernelSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'title' => array('type' => 'string', 'length' => 128, 'notnull' => 1),
+			'title' => array('type' => 'string', 'length' => 128, 'notnull' => 1, 'default' => "''"),
 			'object' => array('type' => 'text', 'length' => 16777215),
-			'class' => array('type' => 'string', 'length' => 67, 'notnull' => 1),
+			'class' => array('type' => 'string', 'length' => 67, 'notnull' => 1, 'default' => "''"),
 			'enabled' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'block' => array('type' => 'boolean', 'length' => 2, 'notnull' => 1, 'default' => 0),
 			'position' => array('type' => 'boolean', 'length' => 2, 'notnull' => 1, 'default' => 0)
@@ -478,7 +478,7 @@ class KernelSetup
 		$fields = array(
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'session_id' => array('type' => 'string', 'length' => 64, 'default' => "''"),
-			'token' => array('type' => 'string', 'length' => 64, 'notnull' => 1),
+			'token' => array('type' => 'string', 'length' => 64, 'notnull' => 1, 'default' => "''"),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'ip' => array('type' => 'string', 'length' => 64, 'default' => "''"),
 			'location_script' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),

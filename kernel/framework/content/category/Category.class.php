@@ -182,7 +182,7 @@ class Category
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
+			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
 			'c_order' => array('type' => 'integer', 'length' => 11, 'unsigned' => 1, 'notnull' => 1, 'default' => 0),
 			'special_authorizations' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
