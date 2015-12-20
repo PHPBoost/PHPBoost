@@ -125,6 +125,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					
 					$this->tpl->assign_block_vars('sub_categories_list', array(
 						'C_CATEGORY_IMAGE' => !empty($category_image),
+						'CATEGORY_ID' => $category->get_id(),
 						'CATEGORY_NAME' => $cat->get_name(),
 						'CATEGORY_IMAGE' => $category_image,
 						'PICTURES_NUMBER' => sprintf($LANG['nbr_pics_info'], $elements_number['pics_aprob']),

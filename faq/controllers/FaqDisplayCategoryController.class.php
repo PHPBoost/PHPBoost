@@ -80,6 +80,7 @@ class FaqDisplayCategoryController extends ModuleController
 				$this->tpl->assign_block_vars('sub_categories_list', array(
 					'C_CATEGORY_IMAGE' => !empty($category_image),
 					'C_MORE_THAN_ONE_QUESTION' => $category->get_elements_number() > 1,
+					'CATEGORY_ID' => $category->get_id(),
 					'CATEGORY_NAME' => $category->get_name(),
 					'CATEGORY_IMAGE' => $category_image,
 					'QUESTIONS_NUMBER' => $category->get_elements_number(),

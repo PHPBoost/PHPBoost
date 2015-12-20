@@ -81,6 +81,7 @@ class MediaDisplayCategoryController extends ModuleController
 				
 				$this->tpl->assign_block_vars('sub_categories_list', array(
 					'C_CATEGORY_IMAGE' => !empty($category_image),
+					'CATEGORY_ID' => $category->get_id(),
 					'CATEGORY_NAME' => $category->get_name(),
 					'CATEGORY_IMAGE' => $category_image,
 					'MEDIAFILES_NUMBER' => sprintf(($category->get_elements_number() > 1 ? $MEDIA_LANG['num_medias'] : $MEDIA_LANG['num_media']), $category->get_elements_number()),
