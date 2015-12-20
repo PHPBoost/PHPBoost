@@ -53,10 +53,15 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 	{
 		$template = new FileTemplate('admin/body.tpl');
 		$template->add_lang(self::$lang);
-
+		
+		$header_logo_path = '';
 		$theme = ThemesManager::get_theme(AppContext::get_current_user()->get_theme());
-		$customize_interface = $theme->get_customize_interface();
-		$header_logo_path = $customize_interface->get_header_logo_path();
+		
+		if ($theme)
+		{
+			$customize_interface = $theme->get_customize_interface();
+			$header_logo_path = $customize_interface->get_header_logo_path();
+		}
 		
 		$template->put_all(array(
 			'SITE_NAME' => GeneralConfig::load()->get_site_name(),
@@ -219,7 +224,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 				$subheader_tpl->put('C_ADMIN_LINKS_' . $menu_pos, true);
 				
 				$subheader_tpl->assign_block_vars('admin_links_' . $menu_pos, array(
-					'MODULE_MENU' => ModuleTreeLinksService::display_admin_actions_menu($module)					
+					'MODULE_MENU' => ModuleTreeLinksService::display_admin_actions_menu($module)
 				));
 			}
 		}

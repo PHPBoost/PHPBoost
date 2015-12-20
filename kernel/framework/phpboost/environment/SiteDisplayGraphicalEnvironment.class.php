@@ -58,9 +58,14 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	{
 		$template = new FileTemplate('body.tpl');
 		
+		$header_logo_path = '';
 		$theme = ThemesManager::get_theme(AppContext::get_current_user()->get_theme());
-		$customize_interface = $theme->get_customize_interface();
-		$header_logo_path = $customize_interface->get_header_logo_path();
+		
+		if ($theme)
+		{
+			$customize_interface = $theme->get_customize_interface();
+			$header_logo_path = $customize_interface->get_header_logo_path();
+		}
 		
 		$template->put_all(array(
 			'MAINTAIN' => $this->display_site_maintenance(),
