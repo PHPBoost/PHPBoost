@@ -58,8 +58,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	{
 		$template = new FileTemplate('body.tpl');
 		
-		$theme_id = AppContext::get_current_user()->get_theme() ? AppContext::get_current_user()->get_theme() : UserAccountsConfig::load()->get_default_theme();
-		$theme = ThemesManager::get_theme($theme_id);
+		$theme = ThemesManager::get_theme(AppContext::get_current_user()->get_theme());
 		$customize_interface = $theme->get_customize_interface();
 		$header_logo_path = $customize_interface->get_header_logo_path();
 		

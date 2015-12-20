@@ -346,7 +346,7 @@ class KernelSetup
 	{
 		$fields = array(
 			'user_id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'display_name' => array('type' => 'string', 'length' => 255, 'default' => "''"),
+			'display_name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'level' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'email' => array('type' => 'string', 'length' => 50, 'default' => "''"),
 			'show_email' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 1),

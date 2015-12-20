@@ -374,7 +374,7 @@ class UpdateServices
 		}
 		
 		$rows_change = array(
-			'login' => 'display_name VARCHAR(255)',
+			'login' => 'display_name VARCHAR(255) NOT NULL DEFAULT \'\'',
 			'timestamp' => 'registration_date INT(11)',
 			'user_groups' => 'groups TEXT',
 			'user_lang' => 'locale VARCHAR(25)',
@@ -382,7 +382,7 @@ class UpdateServices
 			'user_mail' => 'email VARCHAR(50)',
 			'user_show_mail' => 'show_email INT(4)',
 			'user_editor' => 'editor VARCHAR(15)',
-			'user_timezone' => 'timezone VARCHAR(50)',
+			'user_timezone' => 'timezone VARCHAR(50) NOT NULL DEFAULT \'\'',
 			'user_msg' => 'posted_msg INT(6)',
 			'user_pm' => 'unread_pm INT(6)',
 			'user_warning' => 'warning_percentage INT(6)',
@@ -451,7 +451,13 @@ class UpdateServices
 		
 		if (!isset($columns['user_pmtomail']))
 		{
-			self::$db_utils->add_column(PREFIX . 'member_extended_fields', 'user_pmtomail', array('type' => 'text', 'notnull' => 1));
+			foreach ($columns as $id => $properties)
+			{
+				if ($id != 'user_id')
+					self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member_extended_fields CHANGE ' . $id . ' ' . $id . ' TEXT');
+			}
+			
+			self::$db_utils->add_column(PREFIX . 'member_extended_fields', 'user_pmtomail', array('type' => 'string', 'length' => 512, 'notnull' => 1, 'default' => "''"));
 			self::$db_querier->insert(PREFIX . 'member_extended_fields_list', array(
 				'position' => 1,
 				'name' => LangLoader::get_message('type.user_pmtomail', 'admin-user-common'),
@@ -474,8 +480,8 @@ class UpdateServices
 		$rows_change = array(
 			'session_ip' => 'ip VARCHAR(64)',
 			'session_time' => 'timestamp INT(11)',
-			'session_script' => 'location_script VARCHAR(100)',
-			'session_script_title' => 'location_title VARCHAR(100)',
+			'session_script' => 'location_script VARCHAR(100) NOT NULL DEFAULT \'\'',
+			'session_script_title' => 'location_title VARCHAR(100) NOT NULL DEFAULT \'\'',
 			'modules_parameters' => 'cached_data TEXT'
 		);
 		
