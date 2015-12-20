@@ -375,6 +375,13 @@ aside .cssmenu-right.cssmenu-static li:hover > ul 	{ right: 0;		top: 0;		}
 }
 
 /* --- Variante cssmenu-static --- */
+#main .cssmenu.cssmenu-static,
+#top-footer .cssmenu.cssmenu-static {
+	margin: 5px 0;
+	background-color: #ffffff;
+	border: 1px solid #BEBEBE;
+}
+
 .cssmenu.cssmenu-static > ul > li {
 	padding: 0 10px 0 10px;
 }
