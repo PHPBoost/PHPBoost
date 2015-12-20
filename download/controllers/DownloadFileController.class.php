@@ -60,16 +60,11 @@ class DownloadFileController extends AbstractController
 			
 			if (Url::check_status($this->downloadfile->get_url()) == Url::STATUS_OK)
 			{
-				header('Content-Disposition: attachment; filename="' . urldecode(basename($this->downloadfile->get_url()->absolute())) . '"');
 				header('Content-Description: File Transfer');
 				header('Content-Transfer-Encoding: binary');
 				header('Accept-Ranges: bytes');
 				header('Content-Type: application/force-download');
-				set_time_limit(0);
-				ob_clean();
-				flush();
-				readfile($this->downloadfile->get_url()->absolute());
-				exit;
+				header('Location: ' . $this->downloadfile->get_url()->absolute());
 			}
 			else
 			{
