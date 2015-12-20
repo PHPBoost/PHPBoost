@@ -98,6 +98,7 @@ header span.actions a {
 }
 
 .more {
+	padding: 10px 5px 0 5px;
 	font-size: 11px;
 	font-size: 1.1rem;
 	font-style: italic;
@@ -106,6 +107,7 @@ header span.actions a {
 @media (min-width: 769px) {
 	.more {
 		margin: 0 0.2em 2em 1.2em;
+		padding: 0;
 	}
 }
 

@@ -319,10 +319,11 @@ td.calendar-week {
 	text-align: left;
 }
 
-@media (max-width: 769px) {
+@media (max-width: 768px) {
 	.feed-list li a {
 		margin: 1px 0;
-		padding: 4px 0;
+		padding: 7px 0;
+		display: inline-block;
 	}
 }
 

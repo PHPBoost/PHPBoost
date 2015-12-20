@@ -156,6 +156,13 @@ table.mini td {
 	font-size: 11px;
 }
 
+@media (max-width: 768px) {
+	table.mini th,
+	table.mini td {
+		padding: 7px 1px;
+	}
+}
+
 table.mini th a,
 table.mini td a {
 	font-size: 11px;
