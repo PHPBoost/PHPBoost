@@ -149,7 +149,7 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 			'TYPE' => $type[$row['type']],
 			'TITLE' => stripslashes($row['title']),
 			'AUTHOR' => !empty($row['login']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'" class="small '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>',
-			'DESC' => $row['subtitle'],
+			'DESC' => stripslashes($row['subtitle']),
 			'PAGINATION' => $topic_pagination->display(),
 			'MSG' => ($row['nbr_msg'] - 1),
 			'VUS' => $row['nbr_views'],

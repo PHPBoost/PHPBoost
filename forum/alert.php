@@ -142,7 +142,7 @@ list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total
 
 $vars_tpl = array(
 	'FORUM_NAME' => $config->get_forum_name() . ' : ' . $LANG['alert_topic'],
-	'DESC' => $topic['subtitle'],
+	'DESC' => stripslashes($topic['subtitle']),
 	'C_USER_CONNECTED' => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 	'TOTAL_ONLINE' => $total_online,
 	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,

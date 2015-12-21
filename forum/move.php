@@ -332,7 +332,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 
 		$vars_tpl = array_merge($vars_tpl, array(
 			'TITLE' => $title,
-			'DESC' => $subtitle,
+			'DESC' => stripslashes($subtitle),
 			'CONTENTS' => $contents,
 			'QUESTION' => $question,
 			'IDM' => $id_post_msg,

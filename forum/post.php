@@ -124,7 +124,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			'P_UPDATE' => $post_update,
 			'FORUM_NAME' => $config->get_forum_name(),
 			'KERNEL_EDITOR' => $editor->display(),
-			'DESC' => $topic['subtitle'],
+			'DESC' => stripslashes($topic['subtitle']),
 			'CONTENTS' => $contents,
 			'DATE' => $LANG['on'] . ' ' . Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 			'CONTENTS_PREVIEW' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents))),
@@ -275,8 +275,8 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
 			$vars_tpl = array(
 				'FORUM_NAME' => $config->get_forum_name(),
-				'TITLE' => $title,
-				'DESC' => $subtitle,
+				'TITLE' => stripslashes($title),
+				'DESC' => stripslashes($subtitle),
 				'CONTENTS' => $contents,
 				'KERNEL_EDITOR' => $editor->display(),
 				'POLL_QUESTION' => $question,
@@ -616,8 +616,8 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
 				$vars_tpl = array(
 					'FORUM_NAME' => $config->get_forum_name(),
-					'TITLE' => $title,
-					'DESC' => $subtitle,
+					'TITLE' => stripslashes($title),
+					'DESC' => stripslashes($subtitle),
 					'CONTENTS' => $contents,
 					'KERNEL_EDITOR' => $editor->display(),
 					'POLL_QUESTION' => $question,
@@ -748,7 +748,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				$vars_tpl = array(
 					'FORUM_NAME' => $config->get_forum_name(),
 					'TITLE' => stripslashes($topic['title']),
-					'DESC' => $topic['subtitle'],
+					'DESC' => stripslashes($topic['subtitle']),
 					'CONTENTS' => FormatingHelper::unparse(stripslashes($contents)),
 					'POLL_QUESTION' => !empty($poll['question']) ? stripslashes($poll['question']) : '',
 					'SELECTED_SIMPLE' => 'checked="ckecked"',
@@ -854,7 +854,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				$vars_tpl = array(
 					'P_UPDATE' => url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
 					'FORUM_NAME' => $config->get_forum_name(),
-					'DESC' => $topic['subtitle'],
+					'DESC' => stripslashes($topic['subtitle']),
 					'CONTENTS' => FormatingHelper::unparse(stripslashes($contents)),
 					'KERNEL_EDITOR' => $editor->display(),
 					'U_ACTION' => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m . '&amp;token=' . AppContext::get_session()->get_token()),
@@ -922,7 +922,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			$vars_tpl = array(
 				'P_UPDATE' => '',
 				'FORUM_NAME' => $config->get_forum_name(),
-				'DESC' => $topic['subtitle'],
+				'DESC' => stripslashes($topic['subtitle']),
 				'KERNEL_EDITOR' => $editor->display(),
 				'U_ACTION' => 'post.php' . url('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
 				'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $category->get_name() . '</a>',
