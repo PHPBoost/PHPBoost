@@ -355,10 +355,10 @@ class Article
 			'author_user_id' => $this->get_author_user()->get_id(),
 			'author_name_displayed' => $this->get_author_name_displayed(),
 			'published' => $this->get_publishing_state(),
-			'publishing_start_date' => $this->get_publishing_start_date() !== null ? $this->get_publishing_start_date()->get_timestamp() : '',
-			'publishing_end_date' => $this->get_publishing_end_date() !== null ? $this->get_publishing_end_date()->get_timestamp() : '',
+			'publishing_start_date' => $this->get_publishing_start_date() !== null ? $this->get_publishing_start_date()->get_timestamp() : 0,
+			'publishing_end_date' => $this->get_publishing_end_date() !== null ? $this->get_publishing_end_date()->get_timestamp() : 0,
 			'date_created' => $this->get_date_created()->get_timestamp(),
-			'date_updated' => $this->get_date_updated() !== null ? $this->get_date_updated()->get_timestamp() : '',
+			'date_updated' => $this->get_date_updated() !== null ? $this->get_date_updated()->get_timestamp() : 0,
 			'notation_enabled' => $this->get_notation_enabled(),
 			'sources' => serialize($this->get_sources())
 		);
