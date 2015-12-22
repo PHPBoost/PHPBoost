@@ -744,10 +744,21 @@ div[class*="admin-index"] h2 {
 #valid-position-menus {
 	position: fixed;
 	z-index: 101;
-	top: 90%;
+	bottom: 10%;
+	left: 0;
 	right: 0;
-	margin-right: 5px;
+	text-align: center;
 	padding: 6px;
+}
+
+@media (min-width: 481px) {
+	#valid-position-menus {
+		left: auto;
+		right: 0;
+		margin-right: 5px;
+		bottom: 5%;
+		padding: 6px;
+	}
 }
 
 div.container-block {
