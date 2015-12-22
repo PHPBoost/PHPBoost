@@ -743,7 +743,7 @@ div[class*="admin-index"] h2 {
 
 #valid-position-menus {
 	position: fixed;
-	z-index: 101;
+	z-index: 2;
 	bottom: 10%;
 	left: 0;
 	right: 0;
