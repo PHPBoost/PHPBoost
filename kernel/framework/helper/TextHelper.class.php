@@ -143,7 +143,7 @@ class TextHelper
 		{
 			$flags = ENT_COMPAT;
 		}
-		return htmlspecialchars($string, $flags, $encoding, $double_encode);
+		return str_replace('&amp;', '&', htmlspecialchars($string, $flags, $encoding, $double_encode));
 	}
 	
 	public static function htmlspecialchars_decode($string, $flags = null)
