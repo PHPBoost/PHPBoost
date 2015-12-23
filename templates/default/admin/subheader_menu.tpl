@@ -2,7 +2,7 @@
 	<ul>
 		<li class="admin-li">
 			<a href="#openmodal-{L_ADMINISTRATION}" title="{L_ADMINISTRATION}"><i class="fa fa-fw fa-cog"></i><span>{L_ADMINISTRATION}</span></a>
-			<div id="openmodal-{L_ADMINISTRATION}" class="cssmenu-modal">				
+			<div id="openmodal-{L_ADMINISTRATION}" class="cssmenu-modal">
 				<a href="#closemodal" title="${LangLoader::get_message('close_menu', 'admin')}" class="close"><span>x</span></a>
 				<div class="next-menu">
 					<a class="float-left" href="#openmodule-{L_MODULES}" title="{L_MODULES}">
@@ -24,14 +24,6 @@
 						</ul>
 					</li>
 					<li>
-						<a href="{PATH_TO_ROOT}/admin/updates/updates.php" title="{L_UPDATES}"><i class="fa fa-fw fa-download"></i>{L_UPDATES}</a>
-						<ul class="level-2">
-							<li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=kernel" title="{L_KERNEL}"><i class="fa fa-fw fa-cog"></i>{L_KERNEL}</a></li>
-							<li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=module" title="{L_MODULES}"><i class="fa fa-fw fa-cubes"></i>{L_MODULES}</a></li>
-							<li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=template" title="{L_THEMES}"><i class="fa fa-fw fa-picture-o"></i>{L_THEMES}</a></li>
-						</ul>
-					</li>
-					<li>
 						<a href="${relative_url(AdminThemeUrlBuilder::list_installed_theme())}" title="{L_THEMES}"><i class="fa fa-fw fa-picture-o"></i>{L_THEMES}</a>
 						<ul class="level-2">
 							<li><a href="${relative_url(AdminThemeUrlBuilder::list_installed_theme())}" title="{L_MANAGEMENT}"><i class="fa fa-fw fa-cog"></i>{L_MANAGEMENT}</a></li>
@@ -46,9 +38,17 @@
 						</ul>
 					</li>
 					<li>
+						<a href="{PATH_TO_ROOT}/admin/updates/updates.php" title="{L_UPDATES}"><i class="fa fa-fw fa-download"></i>{L_UPDATES}</a>
+						<ul class="level-2">
+							<li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=kernel" title="{L_KERNEL}"><i class="fa fa-fw fa-cog"></i>{L_KERNEL}</a></li>
+							<li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=module" title="{L_MODULES}"><i class="fa fa-fw fa-cubes"></i>{L_MODULES}</a></li>
+							<li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=template" title="{L_THEMES}"><i class="fa fa-fw fa-picture-o"></i>{L_THEMES}</a></li>
+						</ul>
+					</li>
+					<li>
 						<a href="${relative_url(AdminMaintainUrlBuilder::maintain())}" title="{L_MAINTAIN}"><i class="fa fa-fw fa-clock-o"></i>{L_MAINTAIN}</a>
 					</li>
-					<li>	
+					<li>
 						<a href="{PATH_TO_ROOT}/admin/admin_alerts.php" title="{L_ADMINISTRATOR_ALERTS}"><i class="fa fa-fw fa-bell"></i> {L_ADMINISTRATOR_ALERTS}</a>
 					</li>
 					# IF C_ADMIN_LINKS_2 #
@@ -62,7 +62,7 @@
 		</li>
 		<li class="admin-li">
 			<a href="#openmodal-{L_TOOLS}" title="{L_TOOLS}"><i class="fa fa-fw fa-wrench"></i><span>{L_TOOLS}</span></a>
-			<div id="openmodal-{L_TOOLS}" class="cssmenu-modal">				
+			<div id="openmodal-{L_TOOLS}" class="cssmenu-modal">
 				<a href="#closemodal" title="${LangLoader::get_message('close_menu', 'admin')}" class="close"><span>x</span></a>
 				<div class="next-menu">
 					<a class="float-left" href="#openmodal-{L_ADMINISTRATION}" title="{L_ADMINISTRATION}">
@@ -108,7 +108,7 @@
 		</li>
 		<li class="admin-li">
 			<a href="#openmodal-{L_USER}" title="{L_USER}"><i class="fa fa-fw fa-user"></i><span>{L_USER}</span></a>
-			<div id="openmodal-{L_USER}" class="cssmenu-modal">				
+			<div id="openmodal-{L_USER}" class="cssmenu-modal">
 				<a href="#closemodal" title="${LangLoader::get_message('close_menu', 'admin')}" class="close"><span>x</span></a>
 				<div class="next-menu">
 					<a class="float-left" href="#openmodal-{L_TOOLS}" title="{L_TOOLS}">
@@ -154,7 +154,7 @@
 		</li>
 		<li class="admin-li">
 			<a href="#openmodal-{L_CONTENT}" title="{L_CONTENT}"><i class="fa fa-fw fa-square-o"></i><span>{L_CONTENT}</span></a>
-			<div id="openmodal-{L_CONTENT}" class="cssmenu-modal">				
+			<div id="openmodal-{L_CONTENT}" class="cssmenu-modal">
 				<a href="#closemodal" title="${LangLoader::get_message('close_menu', 'admin')}" class="close"><span>x</span></a>
 				<div class="next-menu">
 					<a class="float-left" href="#openmodal-{L_USER}" title="{L_USER}">
@@ -210,7 +210,7 @@
 		</li>
 		<li class="admin-li">
 			<a href="#openmodule-{L_MODULES}" title="{L_MODULES}"><i class="fa fa-fw fa-cube"></i><span>{L_MODULES}</span></a>
-			<div id="openmodule-{L_MODULES}" class="cssmenu-modal">				
+			<div id="openmodule-{L_MODULES}" class="cssmenu-modal">
 				<a href="#closemodal" title="${LangLoader::get_message('close_menu', 'admin')}" class="close"><span>x</span></a>
 				<div class="next-menu">
 					<a class="float-left" href="#openmodal-{L_CONTENT}" title="{L_CONTENT}">
