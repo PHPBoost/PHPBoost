@@ -47,7 +47,7 @@ class WebVisitWebLinkController extends AbstractController
 			}
 		}
 		
-		if ($this->weblink !== null && !DownloadAuthorizationsService::check_authorizations($this->weblink->get_id_category())->read())
+		if ($this->weblink !== null && !WebAuthorizationsService::check_authorizations($this->weblink->get_id_category())->read())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);

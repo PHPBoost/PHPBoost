@@ -48,7 +48,7 @@ class WebCache implements CacheData
 			FROM ' . WebSetup::$web_table . ' web
 			LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = web.id AND com.module_id = \'web\'
 			LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = web.id AND notes.module_name = \'web\'
-			WHERE web.approbation_type = 1 OR (web.approbation_type = 2 AND (web.start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now))) AND partner = 1
+			WHERE (partner = 1 OR privileged_partner = 1) AND (web.approbation_type = 1 OR (web.approbation_type = 2 AND (web.start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now))))
 			ORDER BY web.privileged_partner DESC, ' . $config->get_sort_type() . ' ' . $config->get_sort_mode() . '
 			LIMIT :partners_number_in_menu OFFSET 0', array(
 				'timestamp_now' => $now->get_timestamp(),
