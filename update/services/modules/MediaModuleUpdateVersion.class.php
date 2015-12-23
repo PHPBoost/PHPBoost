@@ -41,7 +41,7 @@ class MediaModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		$tables = $this->db_utils->list_tables(true);
 		
-		if (in_array(PREFIX . 'media_cat', $tables))
+		if (!in_array(PREFIX . 'media_cats', $tables))
 			$this->update_cats_table();
 		
 		$this->delete_old_files();

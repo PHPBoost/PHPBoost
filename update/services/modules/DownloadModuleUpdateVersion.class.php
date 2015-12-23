@@ -43,7 +43,7 @@ class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 		
 		if (in_array(PREFIX . 'download', $tables))
 			$this->update_download_table();
-		if (in_array(PREFIX . 'download_cat', $tables))
+		if (!in_array(PREFIX . 'download_cats', $tables))
 			$this->update_cats_table();
 		
 		$this->delete_old_files();

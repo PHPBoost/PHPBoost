@@ -43,7 +43,7 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 		
 		if (in_array(PREFIX . 'web', $tables))
 			$this->update_web_table();
-		if (in_array(PREFIX . 'web_cat', $tables))
+		if (!in_array(PREFIX . 'web_cats', $tables))
 			$this->update_cats_table();
 		
 		$this->delete_old_files();
