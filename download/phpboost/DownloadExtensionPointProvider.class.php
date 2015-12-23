@@ -44,7 +44,8 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 	public function css_files()
 	{
 		$module_css_files = new ModuleCssFiles();
-		$module_css_files->adding_always_displayed_file('download.css');
+		$module_css_files->adding_always_displayed_file('download_mini.css');
+		$module_css_files->adding_running_module_displayed_file('download.css');
 		return $module_css_files;
 	}
 	
