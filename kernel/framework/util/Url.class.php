@@ -238,7 +238,7 @@ class Url
 	 */
 	public static function check_url_validity($url)
 	{
-		$status = self::STATUS_OK;
+		$status = 0;
 		
 		if (!($url instanceof Url))
 			$url = new Url($url);
@@ -261,9 +261,11 @@ class Url
 						$status = (int)$matches[1];
 				}
 			}
+			else
+				$status = self::STATUS_OK;
 		}
 		
-		return $status == self::STATUS_OK || $status == self::STATUS_FOUND;
+		return in_array($status, array(self::STATUS_OK, self::STATUS_FOUND));
 	}
 	
 	/**
