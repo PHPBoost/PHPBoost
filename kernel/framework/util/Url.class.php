@@ -236,7 +236,7 @@ class Url
 	 * @param string $url Url to check.
 	 * @return int The status of the url.
 	 */
-	public static function check_status($url)
+	public static function check_url_validity($url)
 	{
 		$status = self::STATUS_OK;
 		
@@ -263,7 +263,7 @@ class Url
 			}
 		}
 		
-		return $status;
+		return $status == self::STATUS_OK || $status == self::STATUS_FOUND;
 	}
 	
 	/**

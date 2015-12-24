@@ -50,9 +50,7 @@ class FormFieldConstraintUrlExists extends FormFieldConstraintRegex
  
 	public function url_is_valid(FormField $field)
 	{
-		$status = Url::check_status($field->get_value());
-		
-		return $status == Url::STATUS_OK || $status == Url::STATUS_FOUND;
+		return Url::check_url_validity($field->get_value());
 	}
  
 	public function get_js_validation(FormField $field)

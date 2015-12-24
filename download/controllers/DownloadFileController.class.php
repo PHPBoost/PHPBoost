@@ -58,7 +58,7 @@ class DownloadFileController extends AbstractController
 			DownloadService::update_number_downloads($this->downloadfile);
 			DownloadCache::invalidate();
 			
-			if (Url::check_status($this->downloadfile->get_url()) == Url::STATUS_OK)
+			if (Url::check_url_validity($this->downloadfile->get_url()))
 			{
 				header('Content-Description: File Transfer');
 				header('Content-Transfer-Encoding: binary');

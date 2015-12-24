@@ -32,7 +32,7 @@ class AjaxImagePreviewController extends AbstractController
 		$url = '';
 		$image = new Url($request->get_string('image', ''));
 		
-		if (Url::check_status($image) == Url::STATUS_OK)
+		if (Url::check_url_validity($image))
 			$url = $image->absolute();
 		
 		return new JSONResponse(array('url' => $url));

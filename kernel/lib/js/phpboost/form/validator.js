@@ -320,7 +320,7 @@ function UrlExistsValidator(field_id, message)
 				async: false,
 				data: {url_to_check : url_to_check, token : TOKEN},
 				success: function(returnData){
-					if (returnData.status != 200)
+					if (returnData.is_valid != 1)
 					{
 						error = message;
 					}
