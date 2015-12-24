@@ -1,20 +1,8 @@
-<FilesMatch "\.(png)$">
-	<IfModule mod_authz_core.c>
-	   # Apache 2.4
-	   Require all granted
-	</IfModule>
-	<IfModule !mod_authz_core.c>
-	   # Apache 2.2
-	   Allow from all
-	</IfModule>
-</FilesMatch>
- 
 <IfModule mod_authz_core.c>
-   # Apache 2.4
-   Require all denied
+	# Apache 2.4
+	Require all denied
 </IfModule>
 <IfModule !mod_authz_core.c>
-   # Apache 2.2
-   Deny from all
+	# Apache 2.2
+	Deny from all
 </IfModule>
- 
