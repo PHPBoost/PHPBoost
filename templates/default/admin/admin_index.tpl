@@ -45,7 +45,7 @@
 						<ul>
 							<li><a href="${relative_url(AdminConfigUrlBuilder::general_config())}" title="{L_GENERAL_CONFIG}">{L_GENERAL_CONFIG}</a></li>
 							<li><a href="${relative_url(AdminCacheUrlBuilder::clear_cache())}" title="{L_EMPTY_CACHE}">{L_EMPTY_CACHE}</a></li>
-							# IF ModulesManager::is_module_installed('database') #
+							# IF C_MODULE_DATABASE_INSTALLED #
 							<li><a href="{PATH_TO_ROOT}/database/admin_database.php" title="{L_SAVE_DATABASE}">{L_SAVE_DATABASE}</a></li>
 							# ENDIF #
 						</ul>
@@ -55,7 +55,7 @@
 						<ul>
 							<li><a href="${relative_url(AdminThemeUrlBuilder::add_theme())}" title="{L_ADD_TEMPLATE}">{L_ADD_TEMPLATE}</a></li>
 							<li><a href="{PATH_TO_ROOT}/admin/menus" title="{L_MENUS_MANAGEMENT}">{L_MENUS_MANAGEMENT}</a></li>
-							# IF ModulesManager::is_module_installed('customization') #
+							# IF C_MODULE_CUSTOMIZATION_INSTALLED #
 							<li><a href="${relative_url(AdminCustomizeUrlBuilder::editor_css_file())}" title="{L_CUSTOMIZE_TEMPLATE}">{L_CUSTOMIZE_TEMPLATE}</a></li>
 							# ENDIF #
 						</ul>
@@ -64,10 +64,10 @@
 						<h3><i class="fa fa-fw fa-plus"></i> {L_ADD_CONTENT}</h3>
 						<ul>
 							<li><a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}" title="{L_MODULES_MANAGEMENT}">{L_MODULES_MANAGEMENT}</a></li>
-							# IF ModulesManager::is_module_installed('articles') #
+							# IF C_MODULE_ARTICLES_INSTALLED #
 							<li><a href="${relative_url(ArticlesUrlBuilder::add_article())}" title="{L_ADD_ARTICLES}">{L_ADD_ARTICLES}</a></li>
 							# ENDIF #
-							# IF ModulesManager::is_module_installed('news') #
+							# IF C_MODULE_NEWS_INSTALLED #
 							<li><a href="${relative_url(NewsUrlBuilder::add_news())}" title="{L_ADD_NEWS}">{L_ADD_NEWS}</a></li>
 							# ENDIF #
 						</ul>
@@ -97,7 +97,7 @@
 					<h2><i class="fa fa-comment-o"></i> {L_LAST_COMMENTS}</h2>
 					<div class="fieldset-inset">
 						<div class="form-element">
-							# START comments_list #	
+							# START comments_list #
 									<a href="{comments_list.U_LINK}">
 										<i class="fa fa-hand-o-right"></i>
 									</a>
