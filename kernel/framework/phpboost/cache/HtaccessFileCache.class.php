@@ -76,7 +76,7 @@ class HtaccessFileCache implements CacheData
 		
 		$this->add_expires_headers();
 		
-		$this->disable_file_etags();
+		//$this->disable_file_etags();
 		
 		$this->add_manual_content();
 		
@@ -103,9 +103,9 @@ class HtaccessFileCache implements CacheData
 	{
 		$this->add_section('Disable signatures protection');
 		$this->add_line('# Disable your Apache version number from showing up in HTTP headers for added security');
-		$this->add_line('ServerSignature Off');
 		$this->add_line('<IfDefine IfModule>');
 		$this->add_line('	<IfModule ModSecurity.c>');
+		$this->add_line('		ServerSignature Off');
 		$this->add_line('		SecServerSignature \'\'');
 		$this->add_line('	</IfModule>');
 		$this->add_line('</IfDefine>');
@@ -469,6 +469,7 @@ class HtaccessFileCache implements CacheData
 	private function disable_file_etags()
 	{
 		$this->add_section('Disable file etags');
+		$this->add_line('Header unset ETag');
 		$this->add_line('FileETag none');
 	}
 
