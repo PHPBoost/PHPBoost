@@ -141,7 +141,10 @@ class PHPBoostOfficialHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function build_last_news_view()
 	{
-		$news = NewsService::get_news('WHERE approbation_type=1 ORDER BY creation_date DESC LIMIT 0,1', array());
+		$now = new Date();
+		$news = NewsService::get_news('WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) ORDER BY creation_date DESC LIMIT 0,1', array(
+			'timestamp_now' => $now->get_timestamp()
+		));
 		$tpl = new FileTemplate('PHPBoostOfficial/last_news.tpl');
 		
 		$tpl->put_all($news->get_array_tpl_vars());

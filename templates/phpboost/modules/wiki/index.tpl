@@ -288,7 +288,7 @@
 						<thead>
 							<tr>
 								<th colspan="2">
-									# IF last_articles.C_ARTICLES #<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a> # ENDIF #<strong><em>{last_articles.L_ARTICLES}</em></strong>
+									# IF last_articles.C_ARTICLES #<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a> # ENDIF #<strong><em>{last_articles.L_ARTICLES}</em></strong>
 								</th>
 							</tr>
 						</thead>

@@ -78,11 +78,12 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		'U_FORUM_VIEW_MSG' => url('.php?id=' . $view_msg)
 	));
 	
-	$result = PersistenceContext::get_querier()->select("SELECT msg.id, msg.user_id, msg.idtopic, msg.timestamp, msg.timestamp_edit, m.groups, t.title, t.status, t.idcat, c.name, m.display_name, m.level, m.email, m.show_email, m.registration_date AS registered, m.posted_msg, m.warning_percentage, m.delay_banned, s.user_id AS connect, msg.contents, ext_field.user_avatar, m.posted_msg, ext_field.user_sign, " . $extended_fields_to_recover_list . "m.warning_percentage, m.delay_readonly, m.delay_banned 
+	$result = PersistenceContext::get_querier()->select("SELECT msg.id, msg.user_id, msg.idtopic, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, m2.display_name AS login_edit, m.groups, t.title, t.status, t.idcat, c.name, m.display_name, m.level, m.email, m.show_email, m.registration_date AS registered, m.posted_msg, m.warning_percentage, m.delay_banned, s.user_id AS connect, msg.contents, ext_field.user_avatar, m.posted_msg, ext_field.user_sign, " . $extended_fields_to_recover_list . "m.warning_percentage, m.delay_readonly, m.delay_banned 
 	FROM " . PREFIX . "forum_msg msg
 	LEFT JOIN " . PREFIX . "forum_topics t ON msg.idtopic = t.id
 	LEFT JOIN " . ForumSetup::$forum_cats_table . " c ON c.id = t.idcat
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = :user_id
+	LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = msg.user_id_edit
 	LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = msg.user_id
 	LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.timestamp > :timestamp
 	WHERE msg.user_id = :id AND t.idcat IN :authorized_categories
