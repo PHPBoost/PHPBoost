@@ -469,12 +469,12 @@ img.lm-img {
 }
 
 /* Configuration */
-.major-version-number-title { margin-left: 15px; }
-.minor-version-number-title { margin-left: 20px; }
-.minimal-php-version-title { margin-left: 35px; }
+.major-version-number-title { margin-left: 12px; }
+.minor-version-number-title { margin-left: 15px; }
+.minimal-php-version-title { margin-left: 30px; }
 .name-title { margin-left: 105px; }
 .fa-plus { margin-top: 10px; }
 input[type=text] {
-	width: 170px;
+	width: 165px;
 	margin: 5px 0 0 15px;
 }
