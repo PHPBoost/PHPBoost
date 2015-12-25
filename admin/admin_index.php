@@ -81,6 +81,13 @@ $theme = ThemesManager::get_theme(AppContext::get_current_user()->get_theme());
 $customize_interface = $theme->get_customize_interface();
 $header_logo_path = $customize_interface->get_header_logo_path();
 
+
+//Check if modules are installed for quicklinks
+$module_database_installed = ModulesManager::is_module_installed('database');
+$module_customization_installed = ModulesManager::is_module_installed('customization');
+$module_articles_installed = ModulesManager::is_module_installed('articles');
+$module_news_installed = ModulesManager::is_module_installed('news');
+
 $tpl->put_all(array(
 	'L_QUICK_ACCESS' => $LANG['quick_access'],
 	'L_ADD_CONTENT' => $LANG['add_content'],
@@ -102,14 +109,14 @@ $tpl->put_all(array(
 	'HEADER_LOGO' => Url::to_rel($header_logo_path),
 	'C_NO_COM' => $i == 0,
 	'C_UNREAD_ALERTS' => (bool)AdministratorAlertService::get_number_unread_alerts(),
-	'C_MODULE_DATABASE_INSTALLED' => (bool)ModulesManager::is_module_installed('database'),
-	'C_MODULE_CUSTOMIZATION_INSTALLED' => (bool)ModulesManager::is_module_installed('customization'),
-	'C_MODULE_ARTICLES_INSTALLED' => (bool)ModulesManager::is_module_installed('articles'),
-	'C_MODULE_NEWS_INSTALLED' => (bool)ModulesManager::is_module_installed('news'),
-	'U_SAVE_DATABASE' => Url::to_rel('/database/admin_database.php'),
-	'U_EDIT_CSS_FILES' => AdminCustomizeUrlBuilder::editor_css_file()->rel(),
-	'U_ADD_ARTICLE' => ArticlesUrlBuilder::add_article()->rel(),
-	'U_ADD_NEWS' => NewsUrlBuilder::add_news()->rel(),
+	'C_MODULE_DATABASE_INSTALLED' => $module_database_installed,
+	'C_MODULE_CUSTOMIZATION_INSTALLED' => $module_customization_installed,
+	'C_MODULE_ARTICLES_INSTALLED' => $module_articles_installed,
+	'C_MODULE_NEWS_INSTALLED' => $module_news_installed,
+	'U_SAVE_DATABASE' => $module_database_installed ? Url::to_rel('/database/admin_database.php') : '',
+	'U_EDIT_CSS_FILES' => $module_customization_installed ? AdminCustomizeUrlBuilder::editor_css_file()->rel() : '',
+	'U_ADD_ARTICLE' => $module_articles_installed ? ArticlesUrlBuilder::add_article()->rel() : '',
+	'U_ADD_NEWS' => $module_news_installed ? NewsUrlBuilder::add_news()->rel() : '',
 	'L_INDEX_ADMIN' => $LANG['administration'],
 	'L_ADMIN_ALERTS' => $LANG['administrator_alerts'],
 	'L_NO_UNREAD_ALERT' => $LANG['no_unread_alert'],
