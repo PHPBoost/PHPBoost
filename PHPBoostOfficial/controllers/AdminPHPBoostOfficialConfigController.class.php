@@ -174,12 +174,11 @@ class AdminPHPBoostOfficialConfigController extends AdminModuleController
 					try {
 						$phpboost_forum_themes_cat_id = PersistenceContext::get_querier()->get_column_value(ForumSetup::$forum_cats_table, 'id', 'WHERE rewrited_name = :rewrited_name', array('rewrited_name' => Url::encode_rewrite($this->lang['download.themes_phpboost']) . '-' . $rewrited_major_version_number));
 					} catch (RowNotFoundException $e) {
-						$phpboost_forum_themes_cat = new RichCategory();
+						$phpboost_forum_themes_cat = new ForumCategory();
 						$phpboost_forum_themes_cat->set_name($this->lang['download.themes_phpboost'] . ' ' . $version['major_version_number']);
 						$phpboost_forum_themes_cat->set_rewrited_name(Url::encode_rewrite($phpboost_forum_themes_cat->get_name()));
 						$phpboost_forum_themes_cat->set_id_parent(87);
 						$phpboost_forum_themes_cat->set_description($this->lang['download.theme_category.description'] . ' ' . $version['major_version_number']);
-						$phpboost_forum_themes_cat->set_image(new Url('/forum/forum.png'));
 						$phpboost_forum_themes_cat_id = ForumService::get_categories_manager()->add($phpboost_forum_themes_cat);
 					}
 				}
@@ -189,12 +188,11 @@ class AdminPHPBoostOfficialConfigController extends AdminModuleController
 					try {
 						$phpboost_forum_modules_cat_id = PersistenceContext::get_querier()->get_column_value(ForumSetup::$forum_cats_table, 'id', 'WHERE rewrited_name = :rewrited_name', array('rewrited_name' => Url::encode_rewrite($this->lang['download.modules_phpboost']) . '-' . $rewrited_major_version_number));
 					} catch (RowNotFoundException $e) {
-						$phpboost_forum_modules_cat = new RichCategory();
+						$phpboost_forum_modules_cat = new ForumCategory();
 						$phpboost_forum_modules_cat->set_name($this->lang['download.modules_phpboost'] . ' ' . $version['major_version_number']);
 						$phpboost_forum_modules_cat->set_rewrited_name(Url::encode_rewrite($phpboost_forum_modules_cat->get_name()));
 						$phpboost_forum_modules_cat->set_id_parent(84);
 						$phpboost_forum_modules_cat->set_description($this->lang['download.theme_category.description'] . ' ' . $version['major_version_number']);
-						$phpboost_forum_modules_cat->set_image(new Url('/forum/forum.png'));
 						$phpboost_forum_modules_cat_id = ForumService::get_categories_manager()->add($phpboost_forum_modules_cat);
 					}
 				}
