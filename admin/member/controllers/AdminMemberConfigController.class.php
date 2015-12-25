@@ -55,10 +55,15 @@ class AdminMemberConfigController extends AdminController
 			$this->save();
 			$this->form->get_field_by_id('type_activation_members')->set_hidden(!$this->user_account_config->is_registration_enabled());
 			$this->form->get_field_by_id('unactivated_accounts_timeout')->set_hidden(!$this->user_account_config->is_registration_enabled() || $this->user_account_config->get_member_accounts_validation_method() == UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION);
-			$this->form->get_field_by_id('fb_app_id')->set_hidden(!$this->authentication_config->is_fb_auth_enabled());
-			$this->form->get_field_by_id('fb_app_key')->set_hidden(!$this->authentication_config->is_fb_auth_enabled());
-			$this->form->get_field_by_id('google_client_id')->set_hidden(!$this->authentication_config->is_google_auth_enabled());
-			$this->form->get_field_by_id('google_client_secret')->set_hidden(!$this->authentication_config->is_google_auth_enabled());
+			
+			if ($this->server_configuration->has_curl_library())
+			{
+				$this->form->get_field_by_id('fb_app_id')->set_hidden(!$this->authentication_config->is_fb_auth_enabled());
+				$this->form->get_field_by_id('fb_app_key')->set_hidden(!$this->authentication_config->is_fb_auth_enabled());
+				$this->form->get_field_by_id('google_client_id')->set_hidden(!$this->authentication_config->is_google_auth_enabled());
+				$this->form->get_field_by_id('google_client_secret')->set_hidden(!$this->authentication_config->is_google_auth_enabled());
+			}
+			
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 
