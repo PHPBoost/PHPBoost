@@ -426,13 +426,13 @@ ul.pagination-block-bis li a.next-page:hover {
 
 @media (max-width: 540px){
 	.subcat-element {
-		width: 50% !important;
+		width: 50%;
 	}
 }
 
 @media (max-width: 360px){
 	.subcat-element {
-		width: 100% !important;
+		width: 100%;
 	}
 }
 
@@ -894,20 +894,24 @@ table.announce-legend td {
 	font-size: 1.5em;
 }
 
-.fa-warning:before {
+#module-user-error-403 .fa-warning:before,
+#module-user-error-404 .fa-warning:before {
 	content: "\f071"; 
 }
 
-.fa-warning {
+#module-user-error-403 .fa-warning,
+#module-user-error-404 .fa-warning {
 	color: #C19954;
 	display: block;
 	margin: 40px auto 20px auto;
 }
 
-.message-error {
+#module-user-error-403 .message-error,
+#module-user-error-404 .message-error {
 	padding: 20px 0;
 }
 
-.type-error {
+#module-user-error-403 .type-error,
+#module-user-error-404 .type-error {
 	padding: 10px 0;
 }

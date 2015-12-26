@@ -160,6 +160,7 @@ div#main {
 aside#menu-right {
 	background-image: #F4F4F4;
 	position: relative;
+	max-width: 250px;
 }
 
 @media (min-width: 769px) {
@@ -177,7 +178,6 @@ aside#menu-right {
 		width: 77%;
 	}
 
-	aside#menu-left,
 	aside#menu-right {
 		width: 23%;
 		padding: 10px 5px 10px 5px;

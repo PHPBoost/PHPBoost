@@ -485,9 +485,10 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;	}
 		width: 25px;
 	}
 
-	footer ul.level-0 > li.has-sub:nth-child(1) > .cssmenu-title > img { background-position: -28px -1px; }
-	footer ul.level-0 > li.has-sub:nth-child(2) > .cssmenu-title > img { background-position: -55px -1px; }
-	footer ul.level-0 > li.has-sub:nth-child(3) > .cssmenu-title > img { background-position: -82px -1px; }
+	footer ul.level-0 > li.has-sub:nth-child(1) > .cssmenu-title > img { background-position: -26px -1px; }
+	footer ul.level-0 > li.has-sub:nth-child(2) > .cssmenu-title > img { background-position: -53px -1px; }
+	footer ul.level-0 > li.has-sub:nth-child(3) > .cssmenu-title > img { background-position: -79px -1px; }
+	footer ul.level-0 > li.has-sub:nth-child(4) > .cssmenu-title > img { background-position: -1px -1px;  }
 }
 
 
