@@ -58,7 +58,7 @@ class AdminCustomizeEditorCSSFilesController extends AdminModuleController
 			$file_name = $split[1];
 		}
 		else
-			$file_name = $file_selected . '.css';
+			$file_name = $file_selected;
 		
 		$this->build_form($id_theme, $id_module, $file_name, $file_selected);
 		
@@ -155,7 +155,11 @@ class AdminCustomizeEditorCSSFilesController extends AdminModuleController
 		if (!$module_folder->exists())
 			mkdir(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_modules_files_path . $module_selected);
 		
-		$css_file = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_modules_files_path . $module_selected . '/' . $file_name);
+		if ($module_selected)
+			$css_file = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_modules_files_path . $module_selected . '/' . $file_name);
+		else
+			$css_file = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_files_path . $file_name);
+		
 		if (!$css_file->exists())
 			copy(PATH_TO_ROOT . '/' . $module_selected . '/templates/' . $file_name, PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_modules_files_path . $module_selected . '/' . $file_name);
 		
