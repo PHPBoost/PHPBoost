@@ -154,7 +154,7 @@ class News
 	public function is_visible()
 	{
 		$now = new Date();
-		return NewsAuthorizationsService::check_authorizations($this->id_cat)->read() && ($this->get_approbation_type() == News::APPROVAL_NOW || ($this->get_approbation_type() == News::APPROVAL_DATE && $this->get_start_date()->is_anterior_to($now) && ($this->end_date_enabled ? $this->get_end_date()->is_posterior_to($now) : true)));
+		return NewsAuthorizationsService::check_authorizations($this->id_cat)->read() && ($this->get_approbation_type() == self::APPROVAL_NOW || ($this->get_approbation_type() == self::APPROVAL_DATE && $this->get_start_date()->is_anterior_to($now) && ($this->end_date_enabled ? $this->get_end_date()->is_posterior_to($now) : true)));
 	}
 	
 	public function get_status()
@@ -397,6 +397,7 @@ class News
 			'C_AUTHOR_DISPLAYED' => $news_config->get_author_displayed(),
 			'C_READ_MORE' => !$this->get_short_contents_enabled() && $description != $contents && strlen($description) >= $news_config->get_number_character_to_cut(),
 			'C_SOURCES' => $nbr_sources > 0,
+			'C_DIFFERED' => $this->approbation_type == self::APPROVAL_DATE,
 
 			//News
 			'ID' => $this->id,
@@ -408,9 +409,11 @@ class News
 			'DATE_MONTH' => $this->creation_date->get_month(),
 			'DATE_YEAR' => $this->creation_date->get_year(),
 			'DATE_ISO8601' => $this->creation_date->format(Date::FORMAT_ISO8601),
-			'DATE_DAY' => $this->creation_date->get_day(),
-			'DATE_MONTH' => $this->creation_date->get_month(),
-			'DATE_YEAR' => $this->creation_date->get_year(),
+			'DIFFERED_START_DATE' => $this->start_date ? $this->start_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) : '',
+			'DIFFERED_START_DATE_DAY' => $this->start_date ? $this->start_date->get_day() : '',
+			'DIFFERED_START_DATE_MONTH' => $this->start_date ? $this->start_date->get_month() : '',
+			'DIFFERED_START_DATE_YEAR' =>  $this->start_date ? $this->start_date->get_year() : '',
+			'DIFFERED_START_DATE_ISO8601' => $this->start_date ? $this->start_date->format(Date::FORMAT_ISO8601) : '',
 			'STATUS' => $this->get_status(),
 			'C_AUTHOR_EXIST' => $user->get_id() !== User::VISITOR_LEVEL,
 			'PSEUDO' => $user->get_display_name(),

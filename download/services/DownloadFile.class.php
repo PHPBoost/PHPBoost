@@ -464,6 +464,7 @@ class DownloadFile
 			'C_CUSTOM_AUTHOR_DISPLAY_NAME' => $this->is_author_display_name_enabled(),
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			'C_UPDATED_DATE' => $this->has_updated_date(),
+			'C_DIFFERED' => $this->approbation_type == self::APPROVAL_DATE,
 			
 			//Downloadlink
 			'ID' => $this->id,
@@ -477,6 +478,11 @@ class DownloadFile
 			'DATE_YEAR' => $this->creation_date->get_year(),
 			'DATE_DAY_MONTH' => $this->creation_date->format(Date::FORMAT_DAY_MONTH),
 			'DATE_ISO8601' => $this->creation_date->format(Date::FORMAT_ISO8601),
+			'DIFFERED_START_DATE' => $this->start_date ? $this->start_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) : '',
+			'DIFFERED_START_DATE_DAY' => $this->start_date ? $this->start_date->get_day() : '',
+			'DIFFERED_START_DATE_MONTH' => $this->start_date ? $this->start_date->get_month() : '',
+			'DIFFERED_START_DATE_YEAR' =>  $this->start_date ? $this->start_date->get_year() : '',
+			'DIFFERED_START_DATE_ISO8601' => $this->start_date ? $this->start_date->format(Date::FORMAT_ISO8601) : '',
 			'UPDATED_DATE' => $this->updated_date !== null ? $this->updated_date->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
 			'UPDATED_DATE_ISO8601' => $this->updated_date !== null ? $this->updated_date->format(Date::FORMAT_ISO8601) : '',
 			'STATUS' => $this->get_status(),
