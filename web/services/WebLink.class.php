@@ -428,6 +428,7 @@ class WebLink
 			'C_IS_PARTNER' => $this->is_partner(),
 			'C_HAS_PARTNER_PICTURE' => $this->has_partner_picture(),
 			'C_IS_PRIVILEGED_PARTNER' => $this->is_privileged_partner(),
+			'C_DIFFERED' => $this->approbation_type == self::APPROVAL_DATE,
 			
 			//Weblink
 			'ID' => $this->id,
@@ -440,6 +441,11 @@ class WebLink
 			'DATE_MONTH' => $this->creation_date->get_month(),
 			'DATE_YEAR' => $this->creation_date->get_year(),
 			'DATE_ISO8601' => $this->creation_date->format(Date::FORMAT_ISO8601),
+			'DIFFERED_START_DATE' => $this->start_date ? $this->start_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) : '',
+			'DIFFERED_START_DATE_DAY' => $this->start_date ? $this->start_date->get_day() : '',
+			'DIFFERED_START_DATE_MONTH' => $this->start_date ? $this->start_date->get_month() : '',
+			'DIFFERED_START_DATE_YEAR' =>  $this->start_date ? $this->start_date->get_year() : '',
+			'DIFFERED_START_DATE_ISO8601' => $this->start_date ? $this->start_date->format(Date::FORMAT_ISO8601) : '',
 			'STATUS' => $this->get_status(),
 			'C_AUTHOR_EXIST' => $user->get_id() !== User::VISITOR_LEVEL,
 			'PSEUDO' => $user->get_display_name(),

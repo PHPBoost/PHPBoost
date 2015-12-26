@@ -453,6 +453,7 @@ class Article
 			'C_NOTATION_ENABLED' => $this->get_notation_enabled(),
 			'C_READ_MORE' => !$this->get_description_enabled() && $description != FormatingHelper::second_parse($this->contents) && strlen($description) >= ArticlesConfig::load()->get_number_character_to_cut(),
 			'C_SOURCES' => $nbr_sources > 0,
+			'C_DIFFERED' => $this->published == self::PUBLISHED_DATE,
 			
 			//Articles
 			'ID' => $this->get_id(),
