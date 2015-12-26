@@ -43,7 +43,7 @@
 			# INCLUDE THEMES #
 			<div class="subcat-container">
 					
-				<div class="subcat-element download-subcat-element download-subcat-templates">
+				<div class="subcat-element subcat-templates">
 					<a itemprop="about" href="{@download.last_version_themes_cat_link}" class="subcat-content">
 						<span class="subcat-img-container">
 							<img itemprop="thumbnailUrl" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" alt="{@download.compatible_themes}" class="subcat-img" />
@@ -64,7 +64,7 @@
 			
 			<div class="subcat-container">
 					
-				<div class="subcat-element download-subcat-element download-subcat-modules">
+				<div class="subcat-element subcat-modules">
 					<a itemprop="about" href="{@download.last_version_modules_cat_link}" class="subcat-content" title="{@modules_for_phpboost}">
 						<span class="subcat-img-container">
 							<img itemprop="thumbnailUrl" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" alt="{@download.compatible_themes}" class="subcat-img" />

@@ -1,5 +1,5 @@
 # START item #
-<div class="article-download article-several article-download-modules" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+<div class="pbt-element pbt-element-modules" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 	<div class="content">
 		<a href="{item.U_LINK}">
 			<div class="pbt-element-img-container">
