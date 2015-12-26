@@ -1,16 +1,18 @@
 # START item #
-<div class="lc lm">
-	<a href="{item.U_LINK}">
-		<div class="float-left">
-			<p class="lm-img-container">
-				# IF item.C_IMG #
-					<img src="{item.U_IMG}" title="{item.TITLE}" alt="{item.TITLE}" class="lm-img" width="64" height="64"/>
-				# ENDIF #
-			</p>
-		</div>
-		<p class="lc-title lm-title">{item.TITLE}</p>
-		<p class="lc-desc">{item.DESC}</p>
-		<p class="lc-author">${TextHelper::lowercase_first(LangLoader::get_message('by', 'common'))} : <span>{item.PSEUDO}</span></p>
-	</a>
+<div class="article-download article-several article-download-modules" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+	<div class="content">
+		<a href="{item.U_LINK}">
+			<div class="pbt-element-img-container">
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/modules.jpg" alt="{item.TITLE}" class="pbt-img pbt-img-modules" itemprop="image" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" class="pbt-icon pbt-icon-modules" />
+				<img src="{item.U_IMG}" class="pbt-logo" />
+			</div>
+			<div class="pbt-element-info-container">
+				<p class="pbt-info-title">{item.TITLE}</p>
+				<p class="pbt-info-desc">{item.DESC}</p>
+				<p class="pbt-info-author">${LangLoader::get_message('by', 'common')} {item.PSEUDO}</p>
+			</div>
+		</a>
+	</div>
 </div>
 # END item #

@@ -35,28 +35,46 @@
 <!-- 3 last modules and templates -->
 <div id="lc-container">
 
-	<div id="lt-container">
+	<div class="lt-container">
 		<div class="lc-img lt-title-img"></div>
 		<div class="lc-title title">{@last_themes}</div>
 	
-		<div id="lt-content">
+		<div class="lt-content">
 			# INCLUDE THEMES #
-			<div class="lc-more">
-				<a href="{@download.last_version_themes_cat_link}" title="{@themes_for_phpboost}">[{@discover_other_themes}]</a>
+			<div class="subcat-container">
+					
+				<div class="subcat-element download-subcat-element download-subcat-templates">
+					<a itemprop="about" href="{@download.last_version_themes_cat_link}" class="subcat-content">
+						<span class="subcat-img-container">
+							<img itemprop="thumbnailUrl" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" alt="{@download.compatible_themes}" class="subcat-img" />
+						</span>
+						<span class="subcat-title">{@discover_other_themes}</span>
+					</a>
+				</div>
+
 			</div>
-			<div class="spacer"></div>
 		</div>
 	</div>
 	
-	<div id="lm-container">
+	<div class="lm-container">
 		<div class="lc-img lm-title-img"></div>
 		<div class="lc-title title">{@last_modules}</div>
 		
-		<div id="lm-content">
-			# INCLUDE MODULES #
-			<div class="lc-more" id="lt-more">
-				<a href="{@download.last_version_modules_cat_link}" title="{@modules_for_phpboost}">[{@discover_other_modules}]</a>
+		<div class="lm-content">
+			
+			<div class="subcat-container">
+					
+				<div class="subcat-element download-subcat-element download-subcat-modules">
+					<a itemprop="about" href="{@download.last_version_modules_cat_link}" class="subcat-content" title="{@modules_for_phpboost}">
+						<span class="subcat-img-container">
+							<img itemprop="thumbnailUrl" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" alt="{@download.compatible_themes}" class="subcat-img" />
+						</span>
+						<span class="subcat-title">{@discover_other_modules}</span>
+					</a>
+				</div>
+
 			</div>
+			# INCLUDE MODULES #
 			<div class="spacer"></div>
 		</div>
 	</div>
@@ -66,7 +84,7 @@
 <!-- Last news -->
 <div id="ln-container">
 
-	<div id="ln-top-img">
+	<div id="ln-top-img" class="lc-img">
 		<a href="{PATH_TO_ROOT}/syndication/rss/news/" title="{@news.phpboost.rss}"></a>
 	</div>
 	<div id="ln-top" class="title">{@news.phpboost}</div>

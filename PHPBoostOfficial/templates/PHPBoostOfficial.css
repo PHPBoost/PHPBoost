@@ -1,6 +1,3 @@
-/* Sur Class */
-body { font-size: 13px; }
-
 #cssmenu-module-PHPBoostOfficial {
 	display: none;
 }
@@ -12,12 +9,14 @@ div#main-content {
 	margin: 0;
 }
 
-nav#breadcrumb { display: none; }
+nav#breadcrumb {
+	display: none;
+}
 
 /* General */
 .title {
 	color: #366493;
-	font-size: 20px;
+	font-size: 1.5em;
 	font-family: "Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
 	text-decoration: none;
 }
@@ -198,12 +197,16 @@ div#lc-container {
 
 div.lc-title {
 	border-bottom: 2px solid #366493;
-	margin: 0 5px 0 48px;
-	padding-top: 10px;
+	margin: 0 20px 0 40px;
+	padding: 15px 0 2px 0;
+
+	text-align: left;
 }
 
 div.lc-img {
 	float: left;
+	background-image: url('../../templates/phpboost/theme/images/sprite-phpboost.png');
+	background-repeat: no-repeat;
 	height: 48px;
 	width: 48px;
 }
@@ -273,15 +276,16 @@ div#lt-more {
 
 /* Class themes */
 div.lt-title-img {
-	background: url('../../templates/phpboost/theme/images/sprite-phpboost.png') -101px -28px no-repeat;
+	background-position: -99px -27px;
 }
 
-div#lt-container {
-	float: left;
+.lt-container {
+	text-align: center;
 }
 
-div#lt-content {
+.lt-content{
 	clear: both;
+	font-size: 0;
 }
 
 div.lt {
@@ -329,45 +333,17 @@ p.lt-author {
 }
 
 /* Class modules */
-div#lm-container {
-	margin-left: 630px;
+.lm-container {
+	text-align: center;
 }
 
-div#lm-content{}
+.lm-content{
+	clear: both;
+	font-size: 0;
+}
 
 div.lm-title-img {
-	background: url('../../templates/phpboost/theme/images/sprite-phpboost.png') -1px -28px no-repeat;
-}
-
-p.lm-title {
-	padding-left: 0;
-}
-
-div.lm {
-	border-right: 2px solid #99B1CB;
-	height: 96px;
-	width: 302px;
-	transition: all 0.8s ease-out;
-}
-div.lm:hover {
-	border-right: 2px solid #6788AB;
-	transition: all 0.5s ease-out;
-}
-
-div.lm a { 
-	display: block;
-	height: 95px;
-}
-
-img.lm-img {
-	margin: 5px;
-	max-width: 64px;
-}
-
-p.lm-img-container {
-	max-height: 94px;
-	width: 64px;
-	display: table-cell;
+	background-position: -1px -27px;
 }
 
 /* Partie Dernieres news du projet */
@@ -431,7 +407,7 @@ div#ln-top {
 }
 
 div#ln-top-img {
-	background: url('../../templates/phpboost/theme/images/sprite-phpboost.png') -151px -28px no-repeat;
+	background-position: -148px -27px;
 	float: right;
 	margin-right: 220px;
 }
@@ -463,18 +439,315 @@ p.ln-content {
 	text-align: justify;
 }
 
-img.lm-img {
-	max-height: 64px;
-	max-width: 64px;
-}
 
 /* Configuration */
 .major-version-number-title { margin-left: 12px; }
 .minor-version-number-title { margin-left: 15px; }
-.minimal-php-version-title { margin-left: 30px; }
-.name-title { margin-left: 105px; }
-.fa-plus { margin-top: 10px; }
+.minimal-php-version-title 	{ margin-left: 30px; }
+
+.name-title {
+	margin-left: 105px;
+}
+
+.fa-plus {
+	margin-top: 10px;
+}
+
 input[type=text] {
+	width: 170px;
 	width: 165px;
 	margin: 5px 0 0 15px;
+}
+
+
+
+
+/* Affichage des elements */
+#module-download .content {
+	padding: 0 !important;
+	text-align: center;
+}
+
+.article-download header {
+	display: none;
+}
+
+.article-download {
+	position: relative;
+	display: inline-block;
+	margin: 0;
+	width: 23%;
+}
+
+@media (max-width: 768px) and (min-width: 481px) {
+	.article-download {
+		width: 250px;
+	}
+}
+
+@media (max-width: 480px) {
+	.article-download {
+		width: 60%;
+	}
+}
+
+.article-download .content {	
+	margin: 0 5px 10px 5px;
+	padding: 0!important;
+	background-color: #FAFAFA;
+	border: 1px solid #CCCCCC;
+	border-radius: 2px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+	transition: 1s ease;
+	font-size: 1.5rem;
+}
+
+.article-download:hover .content{
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	transition: 1s ease;
+	background-color: #F1F1F1;
+}
+
+.article-download .content a:hover {
+	text-decoration: none; 
+}
+
+
+.article-download .content .actions {
+	position: absolute;
+	z-index: 1;
+	bottom: 0;
+	left: 0;
+}
+
+.article-download .content .actions a {
+	opacity: 0;
+	display: block;
+	float: left;
+	padding: 2px 5px 2px 0;
+	transition: opacity 1s ease;
+}
+
+.article-download .content .actions a:first-child {
+	padding-left: 8px;
+	border-radius: 0 0 5px 0;
+}
+
+.article-download .content .actions i {
+	color: #222222;
+}
+
+.article-download:hover .content .actions a {
+	opacity: 0.5;
+	transition: opacity 1s ease;
+}
+
+.article-download img {
+	overflow: visible;
+}
+
+
+.pbt-element-img-container {
+	position: relative;
+	height: auto;
+	max-height: 130px;
+	width: 100%;
+	border-bottom: 4px solid #CCCCCC;
+	overflow: hidden;
+}
+
+.pbt-element-img-container img {
+	width: 100%;
+}
+
+.pbt-element-info-container {
+	height: auto;
+	padding: 8px 0 40px 0;
+}
+
+.pbt-element-img-container {
+	opacity: 0.9;
+	transition: opacity 0.3s ease;
+}
+
+.article-download:hover .pbt-element-img-container {
+	opacity: 1;
+	transition: opacity 0.3s ease;
+}
+
+img.pbt-icon {
+	position: absolute;
+	bottom: 5px;
+	z-index: 10;
+	overflow: hidden;
+	background-image: url(../../templates/phpboost/theme/images/sprite-phpboost.png);
+	background-repeat: no-repeat;
+	border: none!important; 
+	box-shadow: none;	
+}
+
+img.pbt-icon-templates {
+	background-position: -26px -270px;
+	width: 49px;
+	height: 24px;
+	left: 5px;
+}
+
+img.pbt-icon-modules,
+img.pbt-icon-updates,
+img.pbt-icon-releases {
+	background-position: -1px -270px;
+	width: 24px;
+	height: 24px;
+	left: 10px;
+}
+
+img.pbt-logo {
+	position: absolute;
+	z-index: 1;
+	top: 15%;
+	right: 10%;
+	max-width: 64px;
+}
+
+.pbt-info-title {
+	height: 30px;
+	width: 99%;
+	display: block;
+	margin: 5px auto 0 auto;
+	font-weight: bold;
+	font-size: 1.2em;
+	line-height: 1.4;
+	color: #222222;
+	text-align: center;
+}
+
+.pbt-info-desc {
+	color: #AAAAAA;
+	font-style: italic;
+	font-size: 0.9em;
+	height: 30px;
+	overflow: hidden;
+	text-align: center;
+	margin: 5px 10px;
+}
+
+.article-download-cats-updates .pbt-info-desc {
+	display: none;
+}
+
+.pbt-info-author {
+	position: absolute;
+	bottom: 5px;
+	right: 12px;
+	color: #AAAAAA;
+	font-style: italic;
+	font-size: 0.8em;
+	text-align: right;
+
+}
+
+.article-several {
+	clear: none;
+}
+
+.article-download footer {
+	clear: both;
+}
+
+
+/* Subcat */
+.subcat-container {
+	margin-bottom: 0;
+	vertical-align: bottom;
+	width: 23%;
+	display: inline-block;
+}
+
+@media (max-width: 768px) and (min-width: 481px) {
+	.subcat-container {
+		width: 250px;
+	}
+}
+
+@media (max-width: 480px) {
+	.subcat-container {
+		width: 60%;
+	}
+}
+
+.download-subcat-element {
+	position: relative;
+	margin: 0 5px 10px 5px;
+	padding-top: 100px;
+	opacity: 0.8;
+	overflow: hidden;
+	transition: opacity 0.5s ease;
+	width: auto;
+}
+
+.download-subcat-element:hover {
+	opacity: 1;
+	transition: opacity 0.5s ease;
+}
+
+.download-subcat-element .subcat-content {
+	display: block;
+	padding: 20px 10px 0 10px;
+	height: 128px;
+	border-top: 5px solid #FFFFFF;
+}
+
+.download-subcat-element .subcat-content:hover {
+	text-decoration: none;
+}
+
+.download-subcat-element .subcat-img-container {
+	position: absolute;
+	top: 10px;
+	left: 0;
+	width: 100%;
+	padding: 0 10px;
+}
+
+.subcat-img-container .subcat-img {
+	height: 128px;
+	width: 128px;
+	overflow: hidden;
+}
+
+.subcat-img { 
+	background-image: url(../../templates/phpboost/theme/images/sprite-phpboost.png);
+	background-repeat: no-repeat;
+	width: 128px;
+	height: 128px;
+}
+
+.download-subcat-templates .subcat-img 		{ background-position: -259px -76px; 	}
+.download-subcat-modules .subcat-img 		{ background-position: -388px -76px; 	}
+
+.download-subcat-templates .subcat-content 	{ background-color: #7CCAB0; border-color: #2F9674; }
+.download-subcat-modules .subcat-content 	{ background-color: #FFD79C; border-color: #E2A447; }
+
+.download-subcat-element .subcat-title {
+	display: block;
+	padding-top: 20px;
+	font-size: 1.2em;
+	font-weight: bold;
+	color: #363636;
+}
+
+.download-subcat-element:hover .subcat-title {
+	color: #222222;
+}
+
+.download-subcat-element .subcat-more {
+	display: block;
+	padding-top: 2px;
+	font-size: 0.9em;
+	font-style: italic;
+	color: #555555;	
+}
+.download-subcat-element:hover .subcat-more {
+	color: #444444;
 }
