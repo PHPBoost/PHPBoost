@@ -32,7 +32,6 @@ class PHPBoostOfficialHomePageExtensionPoint implements HomePageExtensionPoint
 	public function get_home_page()
 	{
 		$columns_disabled = ThemesManager::get_theme(AppContext::get_current_user()->get_theme())->get_columns_disabled();
-		$columns_disabled->set_disable_left_columns(true);
 		$columns_disabled->set_disable_right_columns(true);
 		$columns_disabled->set_disable_top_central(true);
 		$columns_disabled->set_disable_bottom_central(true);
