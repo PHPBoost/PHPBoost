@@ -40,5 +40,13 @@ class PHPBoostOfficialUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/config/');
 	}
+	
+	/**
+	 * @return Url
+	 */
+	public static function home()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/');
+	}
 }
 ?>
