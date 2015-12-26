@@ -240,7 +240,7 @@ div.cssmenu-group .cssmenu-title {
 	
 	#main .cssmenu-horizontal > ul > li:after {
 		position:absolute;
-		right: 1;
+		right: 1px;
 		top: 50px;
 		height: 100%;
 		width: 1px;
@@ -534,7 +534,6 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;	}
 footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 li .cssmenu-title {
 	font-family: FontAwesome;
 	font-size: inherit;
-	text-rendering: auto;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }

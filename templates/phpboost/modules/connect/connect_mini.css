@@ -102,6 +102,10 @@ i.alert {
 	border-color: #1E5083;
 }
 
+#connect-menu .connect-content input {
+	margin: auto;
+}
+
 @media (min-width: 769px) {
 	#connect-menu button {
 		margin-top: 1px;
@@ -313,7 +317,7 @@ i.alert {
 #connect-menu a.fb i,
 #connect-menu a.google i {
 	height: 25px;
-	width: 29px;
+	width: 32px;
 	color: rgba(255, 255, 255, 0.8);
 	border-radius: 5px;
 	font-size: 1.5em;
@@ -352,7 +356,7 @@ i.alert {
 		text-align: center;
 		margin: 5px auto;
 		border-radius:4px;
-		width: calc(70% - 10px);
+		width: 70%;
 	}
 
 	#connect-menu a.fb {
