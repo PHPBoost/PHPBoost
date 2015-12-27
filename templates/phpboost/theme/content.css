@@ -622,7 +622,7 @@ body.dragging, body.dragging * {
 	position: absolute;
 	height: 1px;
 	width: 95%;
-    background: #EFEFEF;
+    background: #E1E1E1;
     border-bottom: 1px solid #FFFFFF;
 	content:"";
 }

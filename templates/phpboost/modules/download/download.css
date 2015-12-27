@@ -11,7 +11,7 @@
 .pbt-button {
 	margin: auto;
 	width: 34%;
-	display: inherit;
+	display: block;
 }
 
 .pbt-button-gray a.pbt-button-a {
@@ -25,15 +25,6 @@
 .pbt-content {
 	padding-top: 25px;
 	text-align: center;
-}
-
-.pbt-content .subcat-container {
-	width: 30%;
-	display: inline-block;
-}
-
-.pbt-content .subcat-container .subcat-element {
-	width: 100%;
 }
 
 .pbt-explain {

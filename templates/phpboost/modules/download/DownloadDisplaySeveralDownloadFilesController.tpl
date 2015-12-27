@@ -3,10 +3,10 @@
 	$(document).ready(function(){
 		
 		/* Tableaux contenant les numeros associes a chaque type de categories */
-		var updates   = [36, 39, 41];
+		var updates   = [36, 39, 41, 45];
 		var releases  = [27, 35, 40, 44];
-		var modules   = [29, 34, 38, 43];
-		var templates = [30, 37, 42];
+		var modules   = [29, 34, 38, 43, 47];
+		var templates = [30, 37, 42, 46];
 
 		/* Images que l on souhaite afficher en grand */
 		var img_modules  = "{PATH_TO_ROOT}/templates/{THEME}/theme/images/modules.jpg";
@@ -182,10 +182,10 @@
 					<article class="article-download article-several article-download-release article-download-pbt-rev" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 						<header>
 							<h2>
-								<a href="{@download.last_version_download_link}" itemprop="name">{@download} {@download.last_major_version_number}</a>
+								<a href="{@download.last_version_download_link}" itemprop="name">{@download} {@download.phpboost_last_major_version_number}</a>
 							</h2>
 							<meta itemprop="url" content="{@download.last_version_download_link}">
-							<meta itemprop="description" content="${escape(@download.last_complete_version_number)}"/>
+							<meta itemprop="description" content="${escape(@download.phpboost_last_major_version_number)}"/>
 						</header>
 						
 						<div class="content">
@@ -196,7 +196,7 @@
 									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" id="pbt-logo-001" class="pbt-logo pbt-logo-releases" />
 								</div>
 								<div class="pbt-element-info-container">
-									<p class="pbt-info-title">{@download.last_complete_version_number}</p>
+									<p class="pbt-info-title">{@download.phpboost_last_major_version_number}</p>
 									<p class="pbt-info-desc">{@download.last_minimal_php_version} | .zip</p>
 									<p class="pbt-info-author">${LangLoader::get_message('by', 'common')} PHPBoost</p>
 								</div>
@@ -245,10 +245,6 @@
 								<span class="subcat-more">{@download.updates.description}</span>
 							</a>
 						</div>
-
-					</div>
-
-					<div class="subcat-container">
 					
 						<div class="subcat-element download-subcat-element download-subcat-modules" >
 							<a itemprop="about" href="{@download.last_version_modules_cat_link}" class="subcat-content">
@@ -260,10 +256,6 @@
 							</a>
 						</div>
 
-					</div>
-
-					<div class="subcat-container">
-					
 						<div class="subcat-element download-subcat-element download-subcat-templates" >
 							<a itemprop="about" href="{@download.last_version_themes_cat_link}" class="subcat-content">
 								<span class="subcat-img-container">
@@ -336,7 +328,7 @@
 									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" id="pbt-logo-011" class="pbt-logo pbt-logo-pdk" />
 								</div>
 								<div class="pbt-element-info-container">
-									<p class="pbt-info-title">{@download.previous_major_version_number}</p>
+									<p class="pbt-info-title">{@download.pdk}</p>
 									<p class="pbt-info-desc">Req : PHP {@download.previous_minimal_php_version} | .zip</p>
 									<p class="pbt-info-author">${LangLoader::get_message('by', 'common')} PHPBoost</p>
 								</div>
@@ -360,10 +352,6 @@
 								<span class="subcat-more">{@download.updates.description}</span>
 							</a>
 						</div>
-
-					</div>
-
-					<div class="subcat-container">
 					
 						<div class="subcat-element download-subcat-element download-subcat-modules" >
 							<a itemprop="about" href="{@download.previous_version_modules_cat_link}" class="subcat-content">
@@ -374,10 +362,6 @@
 								<span class="subcat-more">{@download.compatible_modules.description}</span>
 							</a>
 						</div>
-
-					</div>
-
-					<div class="subcat-container">
 					
 						<div class="subcat-element download-subcat-element download-subcat-templates" >
 							<a itemprop="about" href="{@download.previous_version_themes_cat_link}" class="subcat-content">
