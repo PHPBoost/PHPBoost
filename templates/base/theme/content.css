@@ -633,6 +633,10 @@ body.dragging * {
 	display:none;
 }
 
+.message > footer {
+	clear: both;
+}
+
 .view-topic {
 	margin-top: 10px;
 }
