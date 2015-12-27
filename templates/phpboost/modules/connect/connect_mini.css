@@ -4,6 +4,20 @@
 --------------------------------------*/
 
 /* classe generique */
+#command-bar {
+	position: absolute;
+	z-index: 50;
+	top: 0;
+	width: 100%;
+	background-color: rgba(255, 255, 255, 0.15);
+}
+
+#connect-menu {
+	max-width: 1024px;
+	margin: 0 auto;
+}
+
+
 #connect-menu ul {
 	margin: 0;
 	padding: 0;
@@ -11,8 +25,14 @@
 }
 
 #connect-menu a {
-	color: #DEDEDE;
+	color: #1E5083;
 	text-decoration: none;
+}
+
+@media (min-width: 769px) {
+	#connect-menu a {
+		color: #DEDEDE;
+	}
 }
 
 i.alert {
@@ -26,7 +46,6 @@ i.alert {
 #connect-menu .horizontal-fieldset {
 	margin: 0 auto;
 	min-height: 28px;
-	max-width: 1024px;
 }
 
 #connect-menu div.connect-content {
@@ -196,6 +215,7 @@ i.alert {
 		position: absolute;
 		opacity: 0;
 		visibility: hidden;
+		z-index: 50;
 		top: 28px;
 		left: -220px;
 		width: 280px;
@@ -252,6 +272,7 @@ i.alert {
 	#connect-menu.active .connect-content {
 		display: block;
 		padding-top: 28px;
+		background-color: #86A6C7;
 	}
 	#connect-menu.active .fa-connect {
 		display: none;
@@ -274,7 +295,7 @@ i.alert {
 	
 	#connect-menu.active .connect-connected li:hover,
 	#connect-menu.active .connect-disconnect a:hover {
-		background-color: rgba(255, 255, 255, 0.10);
+		background-color: rgba(255, 255, 255, 0.2);
 	}
 	
 	#connect-menu.active .connect-connected li a,
@@ -367,7 +388,7 @@ i.alert {
 	#connect-menu a.google 	{ background: #D8432E; }	
 	#connect-menu a.twitter { background: #5EA9DD; }
 
-	#connect-menu a span { 
+	#connect-menu a.social-connect span { 
 		font-size: 0.89em;
 	}
 }

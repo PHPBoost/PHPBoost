@@ -25,7 +25,7 @@
 	}
 	-->
 </script>
-
+<div id="command-bar">
 # IF C_USER_NOTCONNECTED #
 <div id="connect-menu" class="disconnected">
 	<div class="horizontal-fieldset">
@@ -99,3 +99,4 @@
 	</div>
 </div>
 # ENDIF #
+</div>

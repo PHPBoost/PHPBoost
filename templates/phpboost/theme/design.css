@@ -31,35 +31,14 @@ body {
 /* -- En-tete de page - Header -- */
 /* ------------------------------ */
 header#header {
+	position: relative;
 	background: linear-gradient(to bottom, #81a4c8 0%,#517ba6 22%,#366493 51%,#1e5083 83%,#103b67 100%);
 }
 
 /* --- Partie superieure du header --- */
-div#command-bar {
-	background-color: rgba(255, 255, 255, 0.15);
-}
 div#top-header {
 	height: 180px;
-	max-width: 1024px;
 	margin: auto;
-	display: flex;
-	flex-direction: row;
-}
-
-@media (max-width: 768px) {
-	div#top-header {
-		flex-direction: column;
-	}
-}
-
-div#top-header-content {
-	flex: 1 1 auto;
-}
-
-@media (max-width: 768px) {
-	div#top-header-content {
-		align-self: flex-end;
-	}
 }
 
 /* --- Partie inferieur du header --- */
@@ -77,11 +56,16 @@ div#sub-header-content{
 
 /* --- Logo et Nom du site web --- */
 div#site-infos {
-	max-width: 940px;
-	margin: 3.5em 0 0 1.5em;
-	flex: 1 1 auto;
+	max-width: 1024px;
+	margin: 0 auto;
+	padding-top: 50px;
 	display: flex;
 	display: -ms-flexbox;
+}
+@media (max-width: 768px) {
+	div#site-infos {
+		padding-top: 60px;
+	}
 }
 
 div#site-logo {

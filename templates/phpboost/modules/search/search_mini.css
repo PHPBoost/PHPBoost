@@ -1,6 +1,19 @@
+#module-mini-search-form {
+	position: absolute;
+	z-index: 1;
+	top: 30px;
+	width: 100%;
+}
+
+#mini-search-form-container {
+	max-width: 1024px;
+	margin: 0 auto;
+}
+
 #mini-search-form {
 	float: right;
 	margin: 4em 3em 0 0;
+	width: 167px;
 	white-space: nowrap;
 	vertical-align: middle;
 	background: rgba(255,255,255,.15);

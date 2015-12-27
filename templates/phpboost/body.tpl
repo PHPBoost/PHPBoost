@@ -1,12 +1,5 @@
 	# INCLUDE MAINTAIN #
 	<header id="header">
-		<div id="command-bar">
-		# IF C_MENUS_LEFT_CONTENT #
-			# START menus_left #
-			{menus_left.MENU}
-			# END menus_left #
-		# ENDIF #
-		</div>
 		<div id="top-header">
 			<div id="site-infos">
 				<div id="site-logo" # IF C_HEADER_LOGO #style="background: url('{HEADER_LOGO}') no-repeat;"# ENDIF #></div>
@@ -88,6 +81,14 @@
 			</div>
 			# ENDIF #
 		</div>
+
+		# IF C_MENUS_LEFT_CONTENT #
+		<aside id="menu-left">
+			# START menus_left #
+			{menus_left.MENU}
+			# END menus_left #
+		</aside>
+		# ENDIF #
 
 		# IF C_MENUS_RIGHT_CONTENT #
 		<aside id="menu-right">
