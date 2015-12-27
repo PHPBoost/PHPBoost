@@ -1,3 +1,92 @@
+<script>
+<!--
+	$(document).ready(function(){
+		
+		/* Tableaux contenant les numeros associes a chaque type de categories */
+		var updates   = [36, 39, 41];
+		var releases  = [27, 35, 40, 44];
+		var modules   = [29, 34, 38, 43];
+		var templates = [30, 37, 42];
+
+		/* Images que l on souhaite afficher en grand */
+		var img_modules  = "{PATH_TO_ROOT}/templates/{THEME}/theme/images/modules.jpg";
+		var img_releases = "{PATH_TO_ROOT}/templates/{THEME}/theme/images/modules.jpg";
+		var img_updates  = "{PATH_TO_ROOT}/templates/{THEME}/theme/images/modules.jpg";
+		var img_default  = "{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif";
+
+		/* On parcours toutes les elements avec la class article-download */
+		$( ".article-download" ).each(function(){ 
+			
+			var cats_id = 0;
+
+			/* On recupere l id de l element pere */
+			var article_id 	= parseInt( $(this).attr('id').replace("article-download-", "") );
+
+			/* On recupere le numero de categorie parmis les classes */
+			$.each( $(this).attr('class').split(" "), function( index, value ) {
+				if ( value.search("article-download-cats") == 0 )
+				cats_id = parseInt( value.replace("article-download-cats-", "") );
+			});	
+
+			$(this).removeClass("article-download-cats-" + cats_id);
+
+			/* On applique les modifications en fonction du type de categories rencontre. */
+			if ( $.inArray(cats_id, updates) != -1 )
+			{
+				$(this).addClass("article-download-cats-updates");
+				$("#pbt-img-" + article_id ).addClass("pbt-img-updates");
+				$("#pbt-img-" + article_id ).attr("src", img_updates);
+				$("#pbt-icon-" + article_id ).addClass("pbt-icon-updates");
+				$("#pbt-logo-" + article_id ).addClass("pbt-logo-updates");
+			}
+
+			if ( $.inArray(cats_id, releases) != -1 )
+			{
+				$(this).addClass("article-download-cats-release");
+				$("#pbt-img-" + article_id ).addClass("pbt-img-releases");
+				$("#pbt-img-" + article_id ).attr("src", img_releases);
+				$("#pbt-icon-" + article_id ).addClass("pbt-icon-releases");
+				$("#pbt-logo-" + article_id ).addClass("pbt-logo-releases");
+			}
+
+			if ( $.inArray(cats_id, modules) != -1 )
+			{
+				$(this).addClass("article-download-cats-modules");
+				$("#pbt-img-" + article_id ).addClass("pbt-img-modules");
+				$("#pbt-img-" + article_id ).attr("src", img_modules);
+				$("#pbt-icon-" + article_id ).addClass("pbt-icon-modules");
+				$("#pbt-logo-" + article_id ).addClass("pbt-logo-modules");
+			}
+
+			if ( $.inArray(cats_id, templates) != -1 )
+			{
+				$(this).addClass("article-download-templates");
+				$("#pbt-img-" + article_id ).addClass("pbt-img-templates");
+				$("#pbt-icon-" + article_id ).addClass("pbt-icon-templates");
+				$("#pbt-logo-" + article_id ).remove();
+			}
+
+		});
+	
+		/* On parcours toutes les elements avec la class download-subcat-element */
+		$( ".download-subcat-element" ).each(function(){ 
+			
+			/* On recupere l id de l element pere */
+			var subcat_id = parseInt( $(this).attr('id').replace("download-subcat-", "") );
+
+			$("#subcat-img-" + subcat_id).attr("src", img_default);
+
+			/* On applique les modifications en fonction du type de categories rencontre. */
+			if ( $.inArray(subcat_id, updates) != -1 ) 		{ $(this).addClass("download-subcat-updates"); 		}
+			if ( $.inArray(subcat_id, releases) != -1 ) 	{ $(this).addClass("download-subcat-releases"); 		}
+			if ( $.inArray(subcat_id, modules) != -1 ) 		{ $(this).addClass("download-subcat-modules"); 		}
+			if ( $.inArray(subcat_id, templates) != -1 ) 	{ $(this).addClass("download-subcat-templates"); 	}
+
+		});
+	});
+-->
+</script>
+
 # IF C_ROOT_CATEGORY #
 	${resources('PHPBoostOfficial/common')}
 	<script>
@@ -36,14 +125,16 @@
 			# IF C_SUB_CATEGORIES #
 			<div class="subcat-container">
 				# START sub_categories_list #
-				<div class="subcat-element" style="width:{CATS_COLUMNS_WIDTH}%;">
-					<div class="subcat-content">
-						# IF sub_categories_list.C_CATEGORY_IMAGE #<a itemprop="about" href="{sub_categories_list.U_CATEGORY}"><img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" /></a># ENDIF #
-						<br />
-						<a itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
-						<br />
-						<span class="small">{sub_categories_list.DOWNLOADFILES_NUMBER} # IF sub_categories_list.C_MORE_THAN_ONE_DOWNLOADFILE #${TextHelper::lowercase_first(LangLoader::get_message('files', 'common', 'download'))}# ELSE #${TextHelper::lowercase_first(LangLoader::get_message('file', 'common', 'download'))}# ENDIF #</span>
-					</div>
+				<div id="download-subcat-{sub_categories_list.CATEGORY_ID}" class="subcat-element download-subcat-element">
+					<a itemprop="about" href="{sub_categories_list.U_CATEGORY}" class="subcat-content">
+						# IF sub_categories_list.C_CATEGORY_IMAGE #
+						<span class="subcat-img-container">
+							<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" class="subcat-img" />
+						</span>
+						# ENDIF #
+						<span class="subcat-title">{sub_categories_list.CATEGORY_NAME}</span>
+						<span class="subcat-more">{sub_categories_list.DOWNLOADFILES_NUMBER} # IF sub_categories_list.C_MORE_THAN_ONE_DOWNLOADFILE #${TextHelper::lowercase_first(LangLoader::get_message('files', 'common', 'download'))}# ELSE #${TextHelper::lowercase_first(LangLoader::get_message('file', 'common', 'download'))}# ENDIF #</span>
+					</a>
 				</div>
 				# END sub_categories_list #
 				<div class="spacer"></div>
@@ -64,19 +155,21 @@
 					<p class="pbt-title">{@download.header.title}</p>
 					<span class="pbt-desc">{@download.header.description}</span>
 				</div>
+				<div class="spacer"></div>
 			</div>
-			<hr style="margin:25px 0px;" />
-			{@download.page_content.title} :
-			<br /><br />
-			<ul>
-				<li>{@download.page_content.last_stable_version}</li>
-				<li>{@download.page_content.previous_version}</li>
-				<li>{@download.page_content.updates}</li>
-				<li>{@download.page_content.updates_scripts}</li>
-			</ul>
-			<hr style="margin:25px auto 25px auto;" />
 
-			<article class="block">
+			<div class="pbt-explain">
+				{@download.page_content.title} :
+				<br /><br />
+				<ul>
+					<li>{@download.page_content.last_stable_version}</li>
+					<li>{@download.page_content.previous_version}</li>
+					<li>{@download.page_content.updates}</li>
+					<li>{@download.page_content.updates_scripts}</li>
+				</ul>
+			</div>
+
+			<article class="pbt-block">
 				<header>
 					<h1>{@download} {@download.last_major_version_number} - {@download.last_version_name}</h1>
 					<p class="pbt-desc">
@@ -84,52 +177,112 @@
 					</p>
 				</header>
 				
-				<div class="pbt-button-container">
-					<div class="pbt-button pbt-button-blue">
-						<a href="{@download.last_version_download_link}" class="pbt-button-a">
-							<div class="pbt-custom-img pbt-custom-img-phpboost"></div>
-							<p class="pbt-button-title">{@download} {@download.last_major_version_number}</p>
-							<p class="pbt-button-com">Rev : {@download.last_complete_version_number} | Req : {@download.last_minimal_php_version} | .zip </p>
-						</a>
-					</div>
-					<div class="pbt-button pbt-button-green">
-						<a href="{@download.last_version_updates_cat_link}" class="pbt-button-a">
-							<div class="pbt-custom-img pbt-custom-img-phpboost"></div>
-							<p class="pbt-button-title">{@download.updates}</p>
-							<p class="pbt-button-com pbt-button-com-green">{@download.updates.description}</p>
-						</a>
-					</div>
-				</div>
-				
-				<div class="pbt-dev-container">
-					<a href="{@download.last_version_pdk_link}" class="pbt-dev">{@download.pdk}</a>
-				</div>
-				
-				<hr style="margin:10px auto 0px auto;" />
-				
-				<div class="pbt-custom-content">
-					<div style="width: 90%;margin:auto;">
-						<div class="pbt-custom-container">
-							<div class="pbt-custom-img pbt-custom-img-modules"></div>
-							<h2 class="title pbt-custom-subtitle">
-								<a href="{@download.last_version_modules_cat_link}">{@download.compatible_modules}</a>
+				<div class="pbt-content">
+
+					<article class="article-download article-several article-download-release article-download-pbt-rev" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+						<header>
+							<h2>
+								<a href="{@download.last_version_download_link}" itemprop="name">{@download} {@download.last_major_version_number}</a>
 							</h2>
-							<p class="pbt-custom-desc">{@download.compatible_modules.description}</p>
+							<meta itemprop="url" content="{@download.last_version_download_link}">
+							<meta itemprop="description" content="${escape(@download.last_complete_version_number)}"/>
+						</header>
+						
+						<div class="content">
+							<a href="{@download.last_version_download_link}" itemprop="name">
+								<div class="pbt-element-img-container">
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/modules.jpg" id="pbt-img-001" class="pbt-img pbt-img-releases" itemprop="image" />
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" id="pbt-icon-001" class="pbt-icon pbt-icon-releases" />
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" id="pbt-logo-001" class="pbt-logo pbt-logo-releases" />
+								</div>
+								<div class="pbt-element-info-container">
+									<p class="pbt-info-title">{@download.last_complete_version_number}</p>
+									<p class="pbt-info-desc">{@download.last_minimal_php_version} | .zip</p>
+									<p class="pbt-info-author">${LangLoader::get_message('by', 'common')} PHPBoost</p>
+								</div>
+							</a>
 						</div>
-						<div class="pbt-custom-container">
-							<div class="pbt-custom-img pbt-custom-img-themes"></div>
-							<h2 class="title pbt-custom-subtitle">
-								<a href="{@download.last_version_themes_cat_link}">{@download.compatible_themes}</a>
+							
+						<footer></footer>
+					</article>
+
+					<article class="article-download article-several article-download-release article-download-pdk" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+						<header>
+							<h2>
+								<a href="{@download.last_version_pdk_link}" itemprop="name">{@download} {@download.last_major_version_number}</a>
 							</h2>
-							<p class="pbt-custom-desc">{@download.compatible_themes.description}</p>
+							<meta itemprop="url" content="{@download.last_version_download_link}">
+							<meta itemprop="description" content="${escape(@download.last_complete_version_number)}"/>
+						</header>
+						
+						<div class="content">
+							<a href="{@download.last_version_download_link}" itemprop="name">
+								<div class="pbt-element-img-container">
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/modules.jpg" id="pbt-img-002" class="pbt-img pbt-img-releases" itemprop="image" />
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" id="pbt-icon-002" class="pbt-icon pbt-icon-releases" />
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" id="pbt-logo-002" class="pbt-logo pbt-logo-pdk" />
+								</div>
+								<div class="pbt-element-info-container">
+									<p class="pbt-info-title">{@download.pdk}</p>
+									<p class="pbt-info-author">${LangLoader::get_message('by', 'common')} PHPBoost</p>
+								</div>
+							</a>
 						</div>
+							
+						<footer></footer>
+					</article>
+				</div>
+
+				<div class="pbt-content">
+					<div class="subcat-container">
+					
+						<div class="subcat-element download-subcat-element download-subcat-updates" >
+							<a itemprop="about" href="{@download.last_version_updates_cat_link}" class="subcat-content">
+								<span class="subcat-img-container">
+									<img itemprop="thumbnailUrl" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" alt="{@download.updates}" id="subcat-img-001" class="subcat-img" />
+								</span>
+								<span class="subcat-title">{@download.updates}</span>
+								<span class="subcat-more">{@download.updates.description}</span>
+							</a>
+						</div>
+
+					</div>
+
+					<div class="subcat-container">
+					
+						<div class="subcat-element download-subcat-element download-subcat-modules" >
+							<a itemprop="about" href="{@download.last_version_modules_cat_link}" class="subcat-content">
+								<span class="subcat-img-container">
+									<img itemprop="thumbnailUrl" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" alt="{@download.compatible_modules}" id="subcat-img-002" class="subcat-img" />
+								</span>
+								<span class="subcat-title">{@download.compatible_modules}</span>
+								<span class="subcat-more">{@download.compatible_modules.description}</span>
+							</a>
+						</div>
+
+					</div>
+
+					<div class="subcat-container">
+					
+						<div class="subcat-element download-subcat-element download-subcat-templates" >
+							<a itemprop="about" href="{@download.last_version_themes_cat_link}" class="subcat-content">
+								<span class="subcat-img-container">
+									<img itemprop="thumbnailUrl" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" alt="{@download.compatible_themes}" id="subcat-img-003" class="subcat-img" />
+								</span>
+								<span class="subcat-title">{@download.compatible_themes}</span>
+								<span class="subcat-more">{@download.compatible_themes.description}</span>
+							</a>
+						</div>
+
 					</div>
 					
-					<div class="spacer"></div>
 				</div>
+												
 			</article>
 
-			<article class="block">
+			<hr style="margin:60px auto 60px auto;" />
+
+			<article class="pbt-block">
 				<header>
 					<h1>{@download} {@download.previous_major_version_number} - {@download.previous_version_name}</h1>
 					<p class="pbt-desc">
@@ -137,63 +290,122 @@
 					</p>
 				</header>
 
-				<div class="pbt-button-container">
-					<div class="pbt-button pbt-button-blue">
-						<a href="{@download.previous_version_download_link}" class="pbt-button-a">
-							<div class="pbt-custom-img pbt-custom-img-phpboost"></div>
-							<p class="pbt-button-title">{@download} {@download.previous_major_version_number}</p>
-							<p class="pbt-button-com">Rev : {@download.previous_complete_version_number} | Req : PHP {@download.previous_minimal_php_version} | .zip </p>
-						</a>
-					</div>
-					<div class="pbt-button pbt-button-green">
-						<a href="{@download.previous_version_updates_cat_link}" class="pbt-button-a">
-							<div class="pbt-custom-img pbt-custom-img-phpboost"></div>
-							<p class="pbt-button-title">{@download.updates}</p>
-							<p class="pbt-button-com pbt-button-com-green">{@download.updates.description}</p>
-						</a>
-					</div>
-				</div>
-				
-				<div class="pbt-dev-container">
-					<a href="{@download.previous_version_pdk_link}" class="pbt-dev">{@download.pdk}</a>
-				</div>
-				
-				<hr style="margin:10px auto 0px auto;" />
-				
-				<div class="pbt-custom-content">
-					<div style="width: 90%;margin:auto;">
-						<div class="pbt-custom-container">
-							<div class="pbt-custom-img pbt-custom-img-modules"></div>
-							<h2 class="title pbt-custom-subtitle">
-								<a href="{@download.previous_version_modules_cat_link}">{@download.compatible_modules}</a>
+				<div class="pbt-content">
+
+					<article class="article-download article-several article-download-release article-download-pbt-rev" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+						<header>
+							<h2>
+								<a href="{@download.previous_version_download_link}" itemprop="name">{@download} {@download.previous_major_version_number}</a>
 							</h2>
-							<p class="pbt-custom-desc">{@download.compatible_modules.description}</p>
+							<meta itemprop="url" content="{@download.previous_version_download_link}">
+							<meta itemprop="description" content="${escape(@download.previous_version_download_link)}"/>
+						</header>
+						
+						<div class="content">
+							<a href="{@download.previous_version_download_link}" itemprop="name">
+								<div class="pbt-element-img-container">
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/modules.jpg" id="pbt-img-011" class="pbt-img pbt-img-releases" itemprop="image" />
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" id="pbt-icon-011" class="pbt-icon pbt-icon-releases" />
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" id="pbt-logo-011" class="pbt-logo pbt-logo-releases" />
+								</div>
+								<div class="pbt-element-info-container">
+									<p class="pbt-info-title">{@download.previous_major_version_number}</p>
+									<p class="pbt-info-desc">Req : PHP {@download.previous_minimal_php_version} | .zip</p>
+									<p class="pbt-info-author">${LangLoader::get_message('by', 'common')} PHPBoost</p>
+								</div>
+							</a>
 						</div>
-						<div class="pbt-custom-container">
-							<div class="pbt-custom-img pbt-custom-img-themes"></div>
-							<h2 class="title pbt-custom-subtitle">
-								<a href="{@download.previous_version_themes_cat_link}">{@download.compatible_themes}</a>
+							
+						<footer></footer>
+					</article>
+
+					<article class="article-download article-several article-download-release article-download-pdk" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+						<header>
+							<h2>
+								<a href="{@download.previous_version_pdk_link}" itemprop="name">{@download} {@download.pdk}</a>
 							</h2>
-							<p class="pbt-custom-desc">{@download.compatible_themes.description}</p>
+							<meta itemprop="url" content="{@download.previous_version_pdk_link}">
+							<meta itemprop="description" content="${escape(@download.previous_version_pdk_link)}"/>
+						</header>
+						
+						<div class="content">
+							<a href="{@download.previous_version_pdk_link}" itemprop="name">
+								<div class="pbt-element-img-container">
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/modules.jpg" id="pbt-img-011" class="pbt-img pbt-img-releases" itemprop="image" />
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" id="pbt-icon-011" class="pbt-icon pbt-icon-releases" />
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" id="pbt-logo-011" class="pbt-logo pbt-logo-pdk" />
+								</div>
+								<div class="pbt-element-info-container">
+									<p class="pbt-info-title">{@download.previous_major_version_number}</p>
+									<p class="pbt-info-desc">Req : PHP {@download.previous_minimal_php_version} | .zip</p>
+									<p class="pbt-info-author">${LangLoader::get_message('by', 'common')} PHPBoost</p>
+								</div>
+							</a>
 						</div>
+							
+						<footer></footer>
+					</article>
+
+				</div>
+
+				<div class="pbt-content">
+					<div class="subcat-container">
+					
+						<div class="subcat-element download-subcat-element download-subcat-updates" >
+							<a itemprop="about" href="{@download.previous_version_updates_cat_link}" class="subcat-content">
+								<span class="subcat-img-container">
+									<img itemprop="thumbnailUrl" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" alt="{@download.updates}" id="subcat-img-011" class="subcat-img" />
+								</span>
+								<span class="subcat-title">{@download.updates}</span>
+								<span class="subcat-more">{@download.updates.description}</span>
+							</a>
+						</div>
+
+					</div>
+
+					<div class="subcat-container">
+					
+						<div class="subcat-element download-subcat-element download-subcat-modules" >
+							<a itemprop="about" href="{@download.previous_version_modules_cat_link}" class="subcat-content">
+								<span class="subcat-img-container">
+									<img itemprop="thumbnailUrl" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" alt="{@download.compatible_modules}" id="subcat-img-012" class="subcat-img" />
+								</span>
+								<span class="subcat-title">{@download.compatible_modules}</span>
+								<span class="subcat-more">{@download.compatible_modules.description}</span>
+							</a>
+						</div>
+
+					</div>
+
+					<div class="subcat-container">
+					
+						<div class="subcat-element download-subcat-element download-subcat-templates" >
+							<a itemprop="about" href="{@download.previous_version_themes_cat_link}" class="subcat-content">
+								<span class="subcat-img-container">
+									<img itemprop="thumbnailUrl" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" alt="{@download.compatible_themes}" id="subcat-img-013" class="subcat-img" />
+								</span>
+								<span class="subcat-title">{@download.compatible_themes}</span>
+								<span class="subcat-more">{@download.compatible_themes.description}</span>
+							</a>
+						</div>
+
 					</div>
 					
-					<div class="spacer"></div>
 				</div>
 			</article>
 		</div>
 		
 		<hr style="margin:20px auto 30px auto;" />
 			
-		<div class="pbt-button pbt-button-gray center" style="margin: auto; width: 34%; display: inherit;">
-			<a id="display-tree" href="" onclick="toggle_root_cat_display();return false;" class="pbt-button-a" style="width: auto;">
+		<div class="pbt-button pbt-button-gray center">
+			<a id="display-tree" href="" onclick="toggle_root_cat_display();return false;" class="pbt-button-a">
 				<i class="fa fa-folder"></i> {@download.display_tree}
 			</a>
 		</div>
 		<footer># IF C_PAGINATION #<div class="center"># INCLUDE PAGINATION #</div># ENDIF #</footer>
 	</section>
 # ELSE #
-<section id="module-download">
+<section id="module-download-several">
 	<header>
 		<h1>
 			<a href="${relative_url(SyndicationUrlBuilder::rss('download', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
@@ -209,14 +421,14 @@
 	# IF C_SUB_CATEGORIES #
 	<div class="subcat-container">
 		# START sub_categories_list #
-		<div class="subcat-element" style="width:{CATS_COLUMNS_WIDTH}%;">
-			<div class="subcat-content">
-				# IF sub_categories_list.C_CATEGORY_IMAGE #<a itemprop="about" href="{sub_categories_list.U_CATEGORY}"><img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" /></a># ENDIF #
-				<br />
-				<a itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
-				<br />
-				<span class="small">{sub_categories_list.DOWNLOADFILES_NUMBER} # IF sub_categories_list.C_MORE_THAN_ONE_DOWNLOADFILE #${TextHelper::lowercase_first(LangLoader::get_message('files', 'common', 'download'))}# ELSE #${TextHelper::lowercase_first(LangLoader::get_message('file', 'common', 'download'))}# ENDIF #</span>
-			</div>
+		<div id="download-subcat-{sub_categories_list.CATEGORY_ID}" class="subcat-element download-subcat-element">
+			<a itemprop="about" href="{sub_categories_list.U_CATEGORY}" class="subcat-content">
+				<span class="subcat-img-container">
+					<img itemprop="thumbnailUrl" src="# IF sub_categories_list.C_CATEGORY_IMAGE #{sub_categories_list.CATEGORY_IMAGE}# ELSE #{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif# ENDIF #" alt="{sub_categories_list.CATEGORY_NAME}" id="subcat-img-{sub_categories_list.CATEGORY_ID}" class="subcat-img" />
+				</span>
+				<span class="subcat-title">{sub_categories_list.CATEGORY_NAME}</span>
+				<span class="subcat-more">{sub_categories_list.DOWNLOADFILES_NUMBER} # IF sub_categories_list.C_MORE_THAN_ONE_DOWNLOADFILE #${TextHelper::lowercase_first(LangLoader::get_message('files', 'common', 'download'))}# ELSE #${TextHelper::lowercase_first(LangLoader::get_message('file', 'common', 'download'))}# ENDIF #</span>
+			</a>
 		</div>
 		# END sub_categories_list #
 		<div class="spacer"></div>
@@ -232,175 +444,41 @@
 			# INCLUDE SORT_FORM #
 			<div class="spacer"></div>
 		# ENDIF #
-		# IF C_CATEGORY_DISPLAYED_TABLE #
-			<table id="table">
-				<thead>
-					<tr>
-						<th>${LangLoader::get_message('form.name', 'common')}</th>
-						<th class="col-small">${LangLoader::get_message('form.keywords', 'common')}</th>
-						<th class="col-small">${LangLoader::get_message('form.date.creation', 'common')}</th>
-						<th class="col-small">{@downloads_number}</th>
-						# IF C_NOTATION_ENABLED #<th>${LangLoader::get_message('note', 'common')}</th># ENDIF #
-						# IF C_COMMENTS_ENABLED #<th class="col-small">${LangLoader::get_message('comments', 'comments-common')}</th># ENDIF #
-						# IF C_MODERATION #<th class="col-smaller"></th># ENDIF #
-					</tr>
-				</thead>
-				<tbody>
-					# START downloadfiles #
-					<tr>
-						<td>
-							<a href="{downloadfiles.U_LINK}" itemprop="name">{downloadfiles.NAME}</a>
-						</td>
-						<td>
-							# IF downloadfiles.C_KEYWORDS #
-								# START downloadfiles.keywords #
-									<a itemprop="keywords" href="{downloadfiles.keywords.URL}">{downloadfiles.keywords.NAME}</a># IF downloadfiles.keywords.C_SEPARATOR #, # ENDIF #
-								# END downloadfiles.keywords #
-							# ELSE #
-								${LangLoader::get_message('none', 'common')}
-							# ENDIF #
-						</td>
-						<td>
-							<time datetime="# IF NOT downloadfiles.C_DIFFERED #{downloadfiles.DATE_ISO8601}# ELSE #{downloadfiles.DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT downloadfiles.C_DIFFERED #{downloadfiles.DATE}# ELSE #{downloadfiles.DIFFERED_START_DATE}# ENDIF #</time>
-						</td>
-						<td>
-							{downloadfiles.NUMBER_DOWNLOADS}
-						</td>
-						# IF C_NOTATION_ENABLED #
-						<td>
-							{downloadfiles.STATIC_NOTATION}
-						</td>
-						# ENDIF #
-						# IF C_COMMENTS_ENABLED #
-						<td>
-							# IF downloadfiles.C_COMMENTS # {downloadfiles.NUMBER_COMMENTS} # ENDIF # {downloadfiles.L_COMMENTS}
-						</td>
-						# ENDIF #
-						# IF C_MODERATION #
-						<td>
-							# IF downloadfiles.C_EDIT #
-								<a href="{downloadfiles.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
-							# ENDIF #
-							# IF downloadfiles.C_DELETE #
-								<a href="{downloadfiles.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
-							# ENDIF #
-						</td>
-						# ENDIF #
-					</tr>
-					# END downloadfiles #
-				</tbody>
-			</table>
-		# ELSE #
-			# START downloadfiles #
-			<article id="article-download-{downloadfiles.ID}" class="article-download article-several# IF C_CATEGORY_DISPLAYED_SUMMARY # block# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
-				<header>
-					<h2>
-						<span class="actions">
-							# IF downloadfiles.C_EDIT #<a href="{downloadfiles.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a># ENDIF #
-							# IF downloadfiles.C_DELETE #<a href="{downloadfiles.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a># ENDIF #
-						</span>
-						<a href="{downloadfiles.U_LINK}" itemprop="name">{downloadfiles.NAME}</a>
-					</h2>
+
+		# START downloadfiles #
+		<article id="article-download-{downloadfiles.ID}" class="article-download article-several article-download-cats-{downloadfiles.CATEGORY_ID}" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+			<header>
+				<h2>
+					<a href="{downloadfiles.U_LINK}" itemprop="name">{downloadfiles.NAME}</a>
+				</h2>
 					
-					<meta itemprop="url" content="{downloadfiles.U_LINK}">
-					<meta itemprop="description" content="${escape(downloadfiles.DESCRIPTION)}"/>
-					# IF C_COMMENTS_ENABLED #
-					<meta itemprop="discussionUrl" content="{downloadfiles.U_COMMENTS}">
-					<meta itemprop="interactionCount" content="{downloadfiles.NUMBER_COMMENTS} UserComments">
-					# ENDIF #
-				</header>
+				<meta itemprop="url" content="{downloadfiles.U_LINK}">
+				<meta itemprop="description" content="${escape(downloadfiles.DESCRIPTION)}"/>
+			</header>
+			
+			<div class="content">
+				<span class="actions">
+					# IF downloadfiles.C_EDIT #<a href="{downloadfiles.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a># ENDIF #
+					# IF downloadfiles.C_DELETE #<a href="{downloadfiles.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a># ENDIF #
+				</span>
+				<a href="{downloadfiles.U_LINK}" itemprop="name">
+					<div class="pbt-element-img-container">
+						<img src="{downloadfiles.U_PICTURE}" id="pbt-img-{downloadfiles.ID}" class="pbt-img" itemprop="image" />
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" id="pbt-icon-{downloadfiles.ID}" class="pbt-icon" />
+						<img src="{downloadfiles.U_PICTURE}" id="pbt-logo-{downloadfiles.ID}" class="pbt-logo" />
+					</div>
+					<div class="pbt-element-info-container">
+						<p class="pbt-info-title">{downloadfiles.NAME}</p>
+						<p class="pbt-info-desc">{downloadfiles.DESCRIPTION}</p>
+						<p class="pbt-info-author">${LangLoader::get_message('by', 'common')} {downloadfiles.PSEUDO}</p>
+					</div>
+				</a>
+			</div>
 				
-				# IF C_CATEGORY_DISPLAYED_SUMMARY #
-					<div class="more">
-						<i class="fa fa-download" title="{downloadfiles.L_DOWNLOADED_TIMES}"></i>
-						<span title="{downloadfiles.L_DOWNLOADED_TIMES}">{downloadfiles.NUMBER_DOWNLOADS}</span>
-						# IF C_COMMENTS_ENABLED #
-							| <i class="fa fa-comment" title="${LangLoader::get_message('comments', 'comments-common')}"></i>
-							# IF downloadfiles.C_COMMENTS # {downloadfiles.NUMBER_COMMENTS} # ENDIF # {downloadfiles.L_COMMENTS}
-						# ENDIF #
-						# IF downloadfiles.C_KEYWORDS #
-							| <i class="fa fa-tags" title="${LangLoader::get_message('form.keywords', 'common')}"></i> 
-							# START downloadfiles.keywords #
-								<a itemprop="keywords" href="{downloadfiles.keywords.URL}">{downloadfiles.keywords.NAME}</a>
-								# IF downloadfiles.keywords.C_SEPARATOR #, # ENDIF #
-							# END downloadfiles.keywords #
-						# ENDIF #
-						# IF C_NOTATION_ENABLED #
-							<span class="float-right">{downloadfiles.STATIC_NOTATION}</span>
-						# ENDIF #
-						<div class="spacer"></div>
-					</div>
-					<div class="content">
-						# IF downloadfiles.C_PICTURE #
-						<span class="download-picture">
-							<img src="{downloadfiles.U_PICTURE}" alt="{downloadfiles.NAME}" itemprop="image" />
-						</span>
-						# ENDIF #
-						{downloadfiles.DESCRIPTION}# IF downloadfiles.C_READ_MORE #... <a href="{downloadfiles.U_LINK}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
-						<div class="spacer"></div>
-					</div>
-				# ELSE #
-					<div class="content">
-						<div class="options infos">
-							<div class="center">
-								# IF downloadfiles.C_PICTURE #
-									<img src="{downloadfiles.U_PICTURE}" alt="{downloadfiles.NAME}" itemprop="image" />
-									<div class="spacer"></div>
-								# ENDIF #
-								# IF downloadfiles.C_VISIBLE #
-									<a href="{downloadfiles.U_DOWNLOAD}" class="basic-button">
-										<i class="fa fa-download"></i> {@download}
-									</a>
-									# IF IS_USER_CONNECTED #
-									<a href="{downloadfiles.U_DEADLINK}" class="basic-button alt" title="${LangLoader::get_message('deadlink', 'common')}">
-										<i class="fa fa-unlink"></i>
-									</a>
-									# ENDIF #
-								# ENDIF #
-							</div>
-							<h6>{@file_infos}</h6>
-							<span class="text-strong">${LangLoader::get_message('size', 'common')} : </span><span># IF downloadfiles.C_SIZE #{downloadfiles.SIZE}# ELSE #${LangLoader::get_message('unknown_size', 'common')}# ENDIF #</span><br/>
-							<span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} : </span><span><time datetime="# IF NOT downloadfiles.C_DIFFERED #{downloadfiles.DATE_ISO8601}# ELSE #{downloadfiles.DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT downloadfiles.C_DIFFERED #{downloadfiles.DATE}# ELSE #{downloadfiles.DIFFERED_START_DATE}# ENDIF #</time></span><br/>
-							# IF C_UPDATED_DATE #<span class="text-strong">${LangLoader::get_message('form.date.update', 'common')} : </span><span><time datetime="{downloadfiles.UPDATED_DATE_ISO8601}" itemprop="dateModified">{downloadfiles.UPDATED_DATE}</time></span><br/># ENDIF #
-							<span class="text-strong">{@downloads_number} : </span><span>{downloadfiles.NUMBER_DOWNLOADS}</span><br/>
-							# IF NOT C_CATEGORY #<span class="text-strong">${LangLoader::get_message('category', 'categories-common')} : </span><span><a itemprop="about" class="small" href="{downloadfiles.U_CATEGORY}">{downloadfiles.CATEGORY_NAME}</a></span><br/># ENDIF #
-							# IF downloadfiles.C_KEYWORDS #
-								<span class="text-strong">${LangLoader::get_message('form.keywords', 'common')} : </span>
-								<span>
-									# START downloadfiles.keywords #
-										<a itemprop="keywords" class="small" href="{downloadfiles.keywords.URL}">{downloadfiles.keywords.NAME}</a># IF downloadfiles.keywords.C_SEPARATOR #, # ENDIF #
-									# END downloadfiles.keywords #
-								</span><br/>
-							# ENDIF #
-							# IF C_AUTHOR_DISPLAYED #
-								<span class="text-strong">${LangLoader::get_message('author', 'common')} : </span>
-								<span>
-									# IF downloadfiles.C_CUSTOM_AUTHOR_DISPLAY_NAME #
-										{downloadfiles.CUSTOM_AUTHOR_DISPLAY_NAME}
-									# ELSE #
-										# IF downloadfiles.C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="small {downloadfiles.USER_LEVEL_CLASS}" href="{downloadfiles.U_AUTHOR_PROFILE}" # IF downloadfiles.C_USER_GROUP_COLOR # style="color:{downloadfiles.USER_GROUP_COLOR}" # ENDIF #>{downloadfiles.PSEUDO}</a># ELSE #{downloadfiles.PSEUDO}# ENDIF #  
-									# ENDIF #
-								</span><br/>
-							# ENDIF #
-							# IF C_COMMENTS_ENABLED #
-								<span># IF downloadfiles.C_COMMENTS # {downloadfiles.NUMBER_COMMENTS} # ENDIF # {downloadfiles.L_COMMENTS}</span>
-							# ENDIF #
-							# IF downloadfiles.C_VISIBLE #
-								# IF C_NOTATION_ENABLED #
-									<div class="spacer"></div>
-									<div class="center">{downloadfiles.NOTATION}</div>
-								# ENDIF #
-							# ENDIF #
-						</div>
-						
-						<div itemprop="text">{downloadfiles.CONTENTS}</div>
-					</div>
-				# ENDIF #
-				
-				<footer></footer>
-			</article>
-			# END downloadfiles #
-		# ENDIF #
+			<footer></footer>
+		</article>
+		# END downloadfiles #
+		<div class="spacer"></div>
 	# ELSE #
 		# IF NOT C_HIDE_NO_ITEM_MESSAGE #
 		<div class="center">
