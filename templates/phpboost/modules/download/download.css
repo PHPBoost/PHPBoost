@@ -39,6 +39,10 @@
 	width: 100%;
 }
 
+.download-pdk-last-link {
+	display: block;
+	text-align: center;
+}
 
 /* Affichage des elements */
 #module-download-several .content {
@@ -69,8 +73,10 @@
 	}
 }
 
-.article-download-pbt-rev 	{ width: 280px; }
-.article-download-pdk 		{ width: 160px; }
+@media (min-width: 769px) {
+	.article-download-pbt-rev 	{ width: 40%; }
+	.article-download-pdk 		{ width: 25%; }
+}
 
 .article-several .content {	
 	margin: 0 5px 10px 5px;
@@ -188,6 +194,11 @@ img.pbt-logo {
 	top: 15%;
 	right: 10%;
 	max-width: 64px;
+}
+
+.article-download-pdk .pbt-img-releases {
+	width: auto;
+	max-width: none;
 }
 
 .pbt-logo-pdk {

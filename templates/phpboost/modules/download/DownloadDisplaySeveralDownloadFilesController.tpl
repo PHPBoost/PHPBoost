@@ -4,7 +4,7 @@
 		
 		/* Tableaux contenant les numeros associes a chaque type de categories */
 		var updates   = [36, 39, 41, 45];
-		var releases  = [27, 35, 40, 44];
+		var releases  = [26, 27, 35, 40, 44];
 		var modules   = [29, 34, 38, 43, 47];
 		var templates = [30, 37, 42, 46];
 
@@ -179,7 +179,7 @@
 				
 				<div class="pbt-content">
 
-					<article class="article-download article-several article-download-release article-download-pbt-rev" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+					<article id="pbt-rev-last" class="article-download article-several article-download-release article-download-pbt-rev" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 						<header>
 							<h2>
 								<a href="{@download.last_version_download_link}" itemprop="name">{@download} {@download.phpboost_last_major_version_number}</a>
@@ -205,8 +205,10 @@
 							
 						<footer></footer>
 					</article>
+					
+					<a href="{@download.last_version_download_link}" itemprop="name" class="download-pdk-last-link hidden-large-screens">{@download.pdk_version_txt}</a>
 
-					<article class="article-download article-several article-download-release article-download-pdk" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+					<article id="pdk-last" class="article-download article-several article-download-release article-download-pdk hidden-small-screens" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 						<header>
 							<h2>
 								<a href="{@download.last_version_pdk_link}" itemprop="name">{@download} {@download.last_major_version_number}</a>
@@ -223,7 +225,8 @@
 									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" id="pbt-logo-002" class="pbt-logo pbt-logo-pdk" />
 								</div>
 								<div class="pbt-element-info-container">
-									<p class="pbt-info-title">{@download.pdk}</p>
+									<p class="pbt-info-title">{@download.last_version_pdk}</p>
+									<p class="pbt-info-desc">{@download.pdk_version}</p>
 									<p class="pbt-info-author">${LangLoader::get_message('by', 'common')} PHPBoost</p>
 								</div>
 							</a>
@@ -236,7 +239,7 @@
 				<div class="pbt-content">
 					<div class="subcat-container">
 					
-						<div class="subcat-element download-subcat-element download-subcat-updates" >
+						<div id="subcat-001" class="subcat-element download-subcat-element download-subcat-updates" >
 							<a itemprop="about" href="{@download.last_version_updates_cat_link}" class="subcat-content">
 								<span class="subcat-img-container">
 									<img itemprop="thumbnailUrl" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" alt="{@download.updates}" id="subcat-img-001" class="subcat-img" />
@@ -246,7 +249,7 @@
 							</a>
 						</div>
 					
-						<div class="subcat-element download-subcat-element download-subcat-modules" >
+						<div id="subcat-002" class="subcat-element download-subcat-element download-subcat-modules" >
 							<a itemprop="about" href="{@download.last_version_modules_cat_link}" class="subcat-content">
 								<span class="subcat-img-container">
 									<img itemprop="thumbnailUrl" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" alt="{@download.compatible_modules}" id="subcat-img-002" class="subcat-img" />
@@ -256,7 +259,7 @@
 							</a>
 						</div>
 
-						<div class="subcat-element download-subcat-element download-subcat-templates" >
+						<div id="subcat-003" class="subcat-element download-subcat-element download-subcat-templates" >
 							<a itemprop="about" href="{@download.last_version_themes_cat_link}" class="subcat-content">
 								<span class="subcat-img-container">
 									<img itemprop="thumbnailUrl" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" alt="{@download.compatible_themes}" id="subcat-img-003" class="subcat-img" />
@@ -284,7 +287,7 @@
 
 				<div class="pbt-content">
 
-					<article class="article-download article-several article-download-release article-download-pbt-rev" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+					<article id="pbt-rev-previous" class="article-download article-several article-download-release article-download-pbt-rev" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 						<header>
 							<h2>
 								<a href="{@download.previous_version_download_link}" itemprop="name">{@download} {@download.previous_major_version_number}</a>
@@ -310,11 +313,13 @@
 							
 						<footer></footer>
 					</article>
+					
+					<a href="{@download.previous_version_pdk_link}" itemprop="name" class="download-pdk-last-link hidden-large-screens">{@download.pdk_version_txt}</a>
 
-					<article class="article-download article-several article-download-release article-download-pdk" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+					<article id="pdk-preview" class="article-download article-several article-download-release article-download-pdk hidden-small-screens" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 						<header>
 							<h2>
-								<a href="{@download.previous_version_pdk_link}" itemprop="name">{@download} {@download.pdk}</a>
+								<a href="{@download.previous_version_pdk_link}" itemprop="name">{@download} {@download.pdk_version}</a>
 							</h2>
 							<meta itemprop="url" content="{@download.previous_version_pdk_link}">
 							<meta itemprop="description" content="${escape(@download.previous_version_pdk_link)}"/>
@@ -328,8 +333,8 @@
 									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" id="pbt-logo-011" class="pbt-logo pbt-logo-pdk" />
 								</div>
 								<div class="pbt-element-info-container">
-									<p class="pbt-info-title">{@download.pdk}</p>
-									<p class="pbt-info-desc">Req : PHP {@download.previous_minimal_php_version} | .zip</p>
+									<p class="pbt-info-title">{@download.previous_version_pdk}</p>
+									<p class="pbt-info-desc">{@download.pdk_version}</p>
 									<p class="pbt-info-author">${LangLoader::get_message('by', 'common')} PHPBoost</p>
 								</div>
 							</a>
@@ -343,7 +348,7 @@
 				<div class="pbt-content">
 					<div class="subcat-container">
 					
-						<div class="subcat-element download-subcat-element download-subcat-updates" >
+						<div id="subcat-004" class="subcat-element download-subcat-element download-subcat-updates" >
 							<a itemprop="about" href="{@download.previous_version_updates_cat_link}" class="subcat-content">
 								<span class="subcat-img-container">
 									<img itemprop="thumbnailUrl" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" alt="{@download.updates}" id="subcat-img-011" class="subcat-img" />
@@ -353,7 +358,7 @@
 							</a>
 						</div>
 					
-						<div class="subcat-element download-subcat-element download-subcat-modules" >
+						<div id="subcat-005" class="subcat-element download-subcat-element download-subcat-modules" >
 							<a itemprop="about" href="{@download.previous_version_modules_cat_link}" class="subcat-content">
 								<span class="subcat-img-container">
 									<img itemprop="thumbnailUrl" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" alt="{@download.compatible_modules}" id="subcat-img-012" class="subcat-img" />
@@ -363,7 +368,7 @@
 							</a>
 						</div>
 					
-						<div class="subcat-element download-subcat-element download-subcat-templates" >
+						<div id="subcat-006" class="subcat-element download-subcat-element download-subcat-templates" >
 							<a itemprop="about" href="{@download.previous_version_themes_cat_link}" class="subcat-content">
 								<span class="subcat-img-container">
 									<img itemprop="thumbnailUrl" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" alt="{@download.compatible_themes}" id="subcat-img-013" class="subcat-img" />
