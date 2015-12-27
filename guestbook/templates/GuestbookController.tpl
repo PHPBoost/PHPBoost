@@ -33,7 +33,7 @@
 							<div class="spacer"></div>
 							# START messages.user_groups #
 								# IF messages.user_groups.C_GROUP_PICTURE #
-								<img src="{PATH_TO_ROOT}/images/group/{messages.user_groups.GROUP_PICTURE}" alt="{messages.user_groups.GROUP_NAME}" title="{messages.user_groups.GROUP_NAME}"/>
+								<img src="{PATH_TO_ROOT}/images/group/{messages.user_groups.GROUP_PICTURE}" alt="{messages.user_groups.GROUP_NAME}" title="{messages.user_groups.GROUP_NAME}" class="message-user-group"/>
 								# ELSE #
 								${LangLoader::get_message('group', 'main')}: {messages.user_groups.GROUP_NAME}
 								# ENDIF #

@@ -649,6 +649,10 @@ body.dragging, body.dragging * {
 	display:none;
 }
 
+.message > footer {
+	clear: both;
+}
+
 .view-topic {
 	margin-top: 10px;
 }
@@ -718,8 +722,12 @@ body.dragging, body.dragging * {
 .message-pseudo a {
 }
 
-.message-user-infos img {
+.message-user-infos img.message-avatar {
 	padding: 10px 0;
+}
+
+article .message-user-infos .message-user-group {
+	display: none;
 }
 
 /* --- Moderation des messages --- */
