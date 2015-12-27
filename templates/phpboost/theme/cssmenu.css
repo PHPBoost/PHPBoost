@@ -55,7 +55,7 @@ Contient les elements associes aux menus
 #top-header .cssmenu ul > li:last-child > .cssmenu-title  				{ border-radius: 0 0 5px 5px; 	}
 #top-header .cssmenu ul > li.has-sub:first-child:hover > .cssmenu-title { border-radius: 0 0 0 0; 		}
 #top-header .cssmenu ul > li.has-sub:last-child:hover > .cssmenu-title  { border-radius: 0 0 0; 		}
-	
+
 .cssmenu.small-screen {
 	width: 100%;
 }
@@ -1122,7 +1122,7 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 .cssmenu-static.small-screen ul ul ul {
 	display: block !important;
 }
-	
+
 /* --- Postion icone Submenu --- */
 @media (max-width: 768px) {
 	.cssmenu .submenu-button:after 				 { top: 22px; right: 19px; }

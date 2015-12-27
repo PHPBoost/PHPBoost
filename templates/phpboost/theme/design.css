@@ -41,7 +41,7 @@ div#top-header {
 	margin: auto;
 }
 
-/* --- Partie inferieur du header --- */
+/* --- Partie inferieure du header --- */
 div#sub-header {
 	min-height: 35px;
 	background-image: linear-gradient(#373737,#232323);
@@ -115,7 +115,6 @@ span#site-slogan {
 	a#site-name {
 		font-size: 3em;
 	}
-	
 }
 
 /* -- Conteneur global du site -- */
@@ -420,7 +419,7 @@ p.pbt-button-com {
 	padding-top: 2px;
 	font-size: 11px;
 	margin-bottom: 0;
-	text-align: left;	
+	text-align: left;
 }
 div.pbt-button-blue p.pbt-button-com { color: #C98621; padding-left: 67px; }
 div.pbt-button-green p.pbt-button-com { color: #005136; padding-left: 70px; }
@@ -447,7 +446,7 @@ a.pbt-button-a:hover img.pbt-button-img, a.pbt-button-a:hover{
 }
 
 img.pbt-custom-img {
-	float: left;	
+	float: left;
 	overflow: hidden;
 }
 
@@ -459,11 +458,11 @@ h2.pbt-custom-subtitle {
 h2.pbt-custom-subtitle a {
 	font-size: 16px;
 	font-family: "Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
-	font-weight: bold;	
+	font-weight: bold;
 }
 
 
-/* Entête spécifique */
+/* Entete specifique */
 .pbt-header { margin: auto; }
 
 .pbt-content { text-align: justify; margin-bottom: 10px; }
@@ -476,5 +475,5 @@ h2.pbt-custom-subtitle a {
 
 img.pbt-header-img {
 	float: left;
-	padding: 0 10px 10px 0;	
+	padding: 0 10px 10px 0;
 }
