@@ -28,6 +28,17 @@ body {
 	}
 }
 
+/* -- Gestion largeur site -- */
+/* -------------------------- */
+div#sub-header-content,
+div#site-infos,
+div#global,
+footer#footer .footer-content,
+#connect-menu,
+#mini-search-form-container {
+	max-width: 1280px;
+}
+
 /* -- En-tete de page - Header -- */
 /* ------------------------------ */
 header#header {
@@ -56,13 +67,11 @@ div#sub-header {
 }
 
 div#sub-header-content{
-	max-width: 1024px;
 	margin: auto;
 }
 
 /* --- Logo et Nom du site web --- */
 div#site-infos {
-	max-width: 1024px;
 	margin: 0 auto;
 	padding-top: 50px;
 	display: flex;
@@ -126,7 +135,6 @@ span#site-slogan {
 /* -- Conteneur global du site -- */
 /* ------------------------------ */
 div#global {
-	max-width: 1024px;
 	margin: 1px auto 0 auto;
 	padding: 0;
 	display: flex;
@@ -142,8 +150,8 @@ div#global {
 }
 
 div#main {
+	position: relative;
 	max-width: 100%;
-	position:relative;
 }
 
 aside#menu-right {
@@ -268,7 +276,19 @@ div#top-content {
 
 /* --- Emplacement au dessus du pied de page --- */
 div#bottom-content {
-	margin: 2% 0 0 0;
+	position: relative;
+	margin: 2% auto 0 auto;
+	padding-top: 2%;
+}
+
+#bottom-content:before {
+	position: absolute;
+	top: 0;
+	height: 1px;
+	width: 100%;
+	background: #E1E1E1;
+	border-bottom: 1px solid #FFFFFF;
+	content: "";
 }
 
 
@@ -284,7 +304,6 @@ footer#footer {
 
 footer#footer .footer-content {
 	margin: 0 auto 0 auto;
-	max-width: 1024px;
 	padding: 1.5em 0;
 	border-bottom: 2px groove #444444;
 }
@@ -295,6 +314,7 @@ footer#footer .footer-content {
 
 footer#footer .footer-content nav.cssmenu {
 	display: inline-block;
+	width: 100%;
 }
 
 footer#footer .footer-infos {

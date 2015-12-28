@@ -19,7 +19,6 @@
 }
 
 #connect-menu {
-	max-width: 1024px;
 	margin: 0 auto;
 }
 
@@ -180,6 +179,7 @@ i.alert {
 	#connect-menu ul.connect-content {
 		text-align: center;
 		float: right;
+		margin-right: 30px;
 	}
 
 	ul.connect-content > li {
