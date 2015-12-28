@@ -4,9 +4,9 @@
 		
 		/* Tableaux contenant les numeros associes a chaque type de categories */
 		var updates 		= [36, 39, 41, 45];
-		var releases_old 	= [27, 35, 40];
-		var releases_v5 	= [44];
-		var outils 			= [26];
+		var prev_releases 	= [27, 35, 40];
+		var last_release	= [44];
+		var tools			= [26];
 		var modules 		= [29, 34, 38, 43, 47];
 		var templates 		= [30, 37, 42, 46];
 
@@ -42,7 +42,7 @@
 				$("#pbt-logo-" + article_id ).addClass("pbt-logo-updates");
 			}
 
-			if (( $.inArray(cats_id, releases_old) != -1 ) || ( $.inArray(cats_id, releases_v5) != -1 ) || ( $.inArray(cats_id, outils) != -1 ))
+			if (( $.inArray(cats_id, prev_releases) != -1 ) || ( $.inArray(cats_id, last_releases) != -1 ) || ( $.inArray(cats_id, tools) != -1 ))
 			{
 				$(this).addClass("article-download-cats-release");
 				$("#pbt-img-" + article_id ).addClass("pbt-img-releases");
@@ -79,12 +79,12 @@
 			$("#subcat-img-" + subcat_id).attr("src", img_default);
 
 			/* On applique les modifications en fonction du type de categories rencontre. */
-			if ( $.inArray(subcat_id, updates) != -1 ) 		{ $(this).addClass("download-subcat-updates"); 		}
-			if ( $.inArray(subcat_id, releases_old) != -1 ) { $(this).addClass("download-subcat-releases-old"); }
-			if ( $.inArray(subcat_id, releases_v5) != -1 ) 	{ $(this).addClass("download-subcat-releases-v5"); 	}
-			if ( $.inArray(subcat_id, outils) != -1 ) 		{ $(this).addClass("download-subcat-outils"); 		}
-			if ( $.inArray(subcat_id, modules) != -1 ) 		{ $(this).addClass("download-subcat-modules"); 		}
-			if ( $.inArray(subcat_id, templates) != -1 ) 	{ $(this).addClass("download-subcat-templates"); 	}
+			if ( $.inArray(subcat_id, updates) != -1 ) 			{ $(this).addClass("download-subcat-updates"); 			}
+			if ( $.inArray(subcat_id, prev_releases) != -1 ) 	{ $(this).addClass("download-subcat-prev-releases"); 	}
+			if ( $.inArray(subcat_id, last_release) != -1 ) 	{ $(this).addClass("download-subcat-last-release"); 	}
+			if ( $.inArray(subcat_id, tools) != -1 ) 			{ $(this).addClass("download-subcat-tools"); 			}
+			if ( $.inArray(subcat_id, modules) != -1 ) 			{ $(this).addClass("download-subcat-modules"); 			}
+			if ( $.inArray(subcat_id, templates) != -1 ) 		{ $(this).addClass("download-subcat-templates"); 		}
 
 		});
 	});
