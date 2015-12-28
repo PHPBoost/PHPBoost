@@ -3,10 +3,12 @@
 	$(document).ready(function(){
 		
 		/* Tableaux contenant les numeros associes a chaque type de categories */
-		var updates   = [36, 39, 41, 45];
-		var releases  = [26, 27, 35, 40, 44];
-		var modules   = [29, 34, 38, 43, 47];
-		var templates = [30, 37, 42, 46];
+		var updates 		= [36, 39, 41, 45];
+		var releases_old 	= [27, 35, 40];
+		var releases_v5 	= [44];
+		var outils 			= [26];
+		var modules 		= [29, 34, 38, 43, 47];
+		var templates 		= [30, 37, 42, 46];
 
 		/* Images que l on souhaite afficher en grand */
 		var img_modules  = "{PATH_TO_ROOT}/templates/{THEME}/theme/images/modules.jpg";
@@ -40,7 +42,7 @@
 				$("#pbt-logo-" + article_id ).addClass("pbt-logo-updates");
 			}
 
-			if ( $.inArray(cats_id, releases) != -1 )
+			if (( $.inArray(cats_id, releases_old) != -1 ) || ( $.inArray(cats_id, releases_v5) != -1 ) || ( $.inArray(cats_id, outils) != -1 ))
 			{
 				$(this).addClass("article-download-cats-release");
 				$("#pbt-img-" + article_id ).addClass("pbt-img-releases");
@@ -78,7 +80,9 @@
 
 			/* On applique les modifications en fonction du type de categories rencontre. */
 			if ( $.inArray(subcat_id, updates) != -1 ) 		{ $(this).addClass("download-subcat-updates"); 		}
-			if ( $.inArray(subcat_id, releases) != -1 ) 	{ $(this).addClass("download-subcat-releases"); 		}
+			if ( $.inArray(subcat_id, releases_old) != -1 ) { $(this).addClass("download-subcat-releases-old"); }
+			if ( $.inArray(subcat_id, releases_v5) != -1 ) 	{ $(this).addClass("download-subcat-releases-v5"); 	}
+			if ( $.inArray(subcat_id, outils) != -1 ) 		{ $(this).addClass("download-subcat-outils"); 		}
 			if ( $.inArray(subcat_id, modules) != -1 ) 		{ $(this).addClass("download-subcat-modules"); 		}
 			if ( $.inArray(subcat_id, templates) != -1 ) 	{ $(this).addClass("download-subcat-templates"); 	}
 
@@ -97,13 +101,14 @@
 			jQuery('.content').hide(400);
 			# IF C_CATEGORY_DESCRIPTION #jQuery('.cat-description').show(200);# ENDIF #
 			jQuery('.root-categories-container').show(200);
-			jQuery('#display-tree').html('<i class="fa fa-folder"></i> ' + ${escapejs(LangLoader::get_message('download.display_root_cat', 'common', 'PHPBoostOfficial'))});
+			jQuery('#display-tree-txt').html(${escapejs(LangLoader::get_message('download.display_root_cat', 'common', 'PHPBoostOfficial'))});
 		} else {
 			jQuery('.root-categories-container').hide(400);
 			# IF C_CATEGORY_DESCRIPTION #jQuery('.cat-description').hide(400);# ENDIF #
 			jQuery('.content').show(200);
-			jQuery('#display-tree').html('<i class="fa fa-folder"></i> ' + ${escapejs(LangLoader::get_message('download.display_tree', 'common', 'PHPBoostOfficial'))});
+			jQuery('#display-tree-txt').html(${escapejs(LangLoader::get_message('download.display_tree', 'common', 'PHPBoostOfficial'))});
 		}
+		jQuery('#display-tree').parent().toggleClass("pbt-button-cat");
 	};
 	-->
 	</script>
@@ -127,11 +132,9 @@
 				# START sub_categories_list #
 				<div id="download-subcat-{sub_categories_list.CATEGORY_ID}" class="subcat-element download-subcat-element">
 					<a itemprop="about" href="{sub_categories_list.U_CATEGORY}" class="subcat-content">
-						# IF sub_categories_list.C_CATEGORY_IMAGE #
 						<span class="subcat-img-container">
-							<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" class="subcat-img" />
+							<img itemprop="thumbnailUrl" src="# IF sub_categories_list.C_CATEGORY_IMAGE #{sub_categories_list.CATEGORY_IMAGE}# ELSE #{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif# ENDIF #" alt="{sub_categories_list.CATEGORY_NAME}" class="subcat-img" />
 						</span>
-						# ENDIF #
 						<span class="subcat-title">{sub_categories_list.CATEGORY_NAME}</span>
 						<span class="subcat-more">{sub_categories_list.DOWNLOADFILES_NUMBER} # IF sub_categories_list.C_MORE_THAN_ONE_DOWNLOADFILE #${TextHelper::lowercase_first(LangLoader::get_message('files', 'common', 'download'))}# ELSE #${TextHelper::lowercase_first(LangLoader::get_message('file', 'common', 'download'))}# ENDIF #</span>
 					</a>
@@ -388,7 +391,8 @@
 			
 		<div class="pbt-button pbt-button-gray center">
 			<a id="display-tree" href="" onclick="toggle_root_cat_display();return false;" class="pbt-button-a">
-				<i class="fa fa-folder"></i> {@download.display_tree}
+				<i class="fa fa-folder"></i>
+				<span id="display-tree-txt" >{@download.display_tree}</span>
 			</a>
 		</div>
 		<footer># IF C_PAGINATION #<div class="center"># INCLUDE PAGINATION #</div># ENDIF #</footer>
