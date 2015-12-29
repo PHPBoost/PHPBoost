@@ -305,7 +305,6 @@ footer#footer {
 footer#footer .footer-content {
 	margin: 0 auto 0 auto;
 	padding: 1.5em 0;
-	border-bottom: 2px groove #444444;
 }
 
 .sprite-img {
@@ -319,8 +318,11 @@ footer#footer .footer-content nav.cssmenu {
 
 footer#footer .footer-infos {
 	min-height: 40px;
+	width: 60%;
 	text-align: center;
 	padding-top: 10px;
+	margin: auto;
+	border-top: 2px groove #444444;
 }
 
 footer#footer .footer-infos span {
@@ -336,6 +338,16 @@ footer#footer .footer-infos a:hover {
 	text-decoration: none;
 }
 
+@media (max-width: 768px) {
+	.footer-infos span {
+		display: block;
+		padding: 0 0 5px 0;
+	}
+	
+	span.footer-infos-separator {
+		display: none;
+	}
+}
 
 /* -- Elements specifiques PHPboost -- */
 /* ----------------------------------- */

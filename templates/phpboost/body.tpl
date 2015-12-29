@@ -125,14 +125,15 @@
 				{L_POWERED_BY} <a href="http://www.phpboost.com" title="PHPBoost">PHPBoost</a> {L_PHPBOOST_RIGHT}
 			</span>
 			# IF C_DISPLAY_BENCH #
+			<span class="footer-infos-separator">&nbsp;|&nbsp;</span>
 			<span>
-				&nbsp;|&nbsp;
 				{L_ACHIEVED} {BENCH}{L_UNIT_SECOND} - {REQ} {L_REQ} - {MEMORY_USED}
 			</span>
 			# ENDIF #
 			# IF C_DISPLAY_AUTHOR_THEME #
+			<span class="footer-infos-separator">&nbsp;|&nbsp;</span>
 			<span>
-				| {L_THEME} {L_THEME_NAME} {L_BY}
+				{L_THEME} {L_THEME_NAME} {L_BY}
 				<a href="{U_THEME_AUTHOR_LINK}">{L_THEME_AUTHOR}</a>
 			</span>
 			# ENDIF #
