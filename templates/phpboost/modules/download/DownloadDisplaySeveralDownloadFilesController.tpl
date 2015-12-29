@@ -42,7 +42,7 @@
 				$("#pbt-logo-" + article_id ).addClass("pbt-logo-updates");
 			}
 
-			if (( $.inArray(cats_id, prev_releases) != -1 ) || ( $.inArray(cats_id, last_releases) != -1 ) || ( $.inArray(cats_id, tools) != -1 ))
+			if (( $.inArray(cats_id, prev_releases) != -1 ) || ( $.inArray(cats_id, last_release) != -1 ) || ( $.inArray(cats_id, tools) != -1 ))
 			{
 				$(this).addClass("article-download-cats-release");
 				$("#pbt-img-" + article_id ).addClass("pbt-img-releases");
