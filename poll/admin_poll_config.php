@@ -37,8 +37,10 @@ $valid = $request->get_postvalue('valid', false);
 
 if ($valid)
 {
+	$displayed_in_mini_module_list = explode(',', retrieve(POST, 'displayed_in_mini_module_list', ''));
+	
 	$poll_config->set_authorizations(Authorizations::build_auth_array_from_form(PollAuthorizationsService::READ_AUTHORIZATIONS, PollAuthorizationsService::WRITE_AUTHORIZATIONS));
-	$poll_config->set_displayed_in_mini_module_list(retrieve(POST, 'displayed_in_mini_module_list', array()));
+	$poll_config->set_displayed_in_mini_module_list($displayed_in_mini_module_list);
 	$poll_config->set_cookie_name(retrieve(POST, 'cookie_name', 'poll', TSTRING_UNCHANGE));
 	$poll_config->set_cookie_lenght(retrieve(POST, 'cookie_lenght', 30));
 	
