@@ -59,7 +59,7 @@ function XMLHttpRequest_preview(field)
 				<div id="bb-block1{FIELD}" class="bbcode-block-container" style="display:none;">
 					<div class="bbcode-block block-smileys" onmouseover="bb_hide_block('1', '{FIELD}', 1);" onmouseout="bb_hide_block('1', '{FIELD}', 0);">
 						# START smileys #
-							<a href="" onclick="insertbbcode('{smileys.CODE}', 'smile', '{FIELD}');bb_hide_block('1', '{FIELD}', 0);return false;" class="bbcode-hover" title="{smileys.CODE}"><img src="{smileys.URL}" alt="{smileys.CODE}"></a>
+							<a href="" onclick="insertbbcode('{smileys.CODE}', 'smile', '{FIELD}');bb_hide_block('1', '{FIELD}', 0);return false;" class="bbcode-hover" title="{smileys.CODE}"><img src="{smileys.URL}" title="{smileys.CODE}" alt="{smileys.CODE}"></a>
 						# END smileys #
 					</div>
 				</div>
@@ -350,7 +350,7 @@ function XMLHttpRequest_preview(field)
 				</a>
 				<div id="bb-block8{FIELD}" class="bbcode-block-container" style="display:none;">
 					<div class="bbcode-block bbcode-block-list bbcode-block-code" onmouseover="bb_hide_block('8', '{FIELD}', 1);" onmouseout="bb_hide_block('8', '{FIELD}', 0);">
-						<ul class="bbcode-block-code">
+						<ul>
 							<li class="bbcode-code-title"><span>{L_TEXT}</span></li>
 							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=text]', '[/code]', '{FIELD}');bb_hide_block('8', '{FIELD}', 0);return false;" title="{L_CODE} text">Text</a></li>
 							<li><a href="" onclick="{DISABLED_B}insertbbcode('[code=sql]', '[/code]', '{FIELD}');bb_hide_block('8', '{FIELD}', 0);return false;" title="{L_CODE} sql">SqL</a></li>

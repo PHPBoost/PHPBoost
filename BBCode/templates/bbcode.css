@@ -177,6 +177,10 @@ li.bbcode-elements a,
 	overflow-y: scroll;
 }
 
+.bbcode-block-code > ul {
+	margin-left: 0;
+}
+
 .bbcode-block-code li {
 	padding: 0 0 0 12px;
 }
