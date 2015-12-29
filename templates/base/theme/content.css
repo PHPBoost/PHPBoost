@@ -78,6 +78,11 @@ article header h3 {
 	}
 }
 
+section footer,
+article footer {
+	clear: both;
+}
+
 /* --- Icones actions (edition, suppression, etc) --- */
 span.actions {
 	float: right;
