@@ -912,7 +912,7 @@ else //Liste des conversation, dans la boite du membre.
 		if ($row['user_id'] == -1)
 			$author = $LANG['admin'];
 		elseif (!empty($row['login']))
-			$author = '<a href="' . UserUrlBuilder::profile($row['user_id'])->rel() . '" class="small '.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>';
+			$author = '<a href="' . UserUrlBuilder::profile($row['user_id'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>';
 		else
 			$author = '<strike>' . $LANG['guest'] . '</strike>';
 			
