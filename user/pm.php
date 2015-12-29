@@ -182,7 +182,7 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $current_user->get_id())
 		switch ($get_error)
 		{
 			case 'e_unexist_user':
-				$errstr = $LANG['e_unexist_member'];
+				$errstr = LangLoader::get_message('user.not_exists', 'status-messages-common');
 				$type = MessageHelper::WARNING;
 				break;
 			case 'e_pm_full_post':
