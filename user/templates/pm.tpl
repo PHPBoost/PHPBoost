@@ -166,7 +166,7 @@
 			
 			# START pm.msg #
 				<article id="article-pm-{pm.msg.ID}" class="article-pm article-several message">
-					<div class="message-container">
+					<div id="m{pm.msg.ID}" class="message-container">
 
 						<div class="message-user-infos">
 							<div class="message-pseudo">
