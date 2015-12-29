@@ -512,7 +512,7 @@ input[type=text] {
 
 @media (max-width: 480px) {
 	.pbt-element {
-		width: 60%;
+		width: 80%;
 	}
 }
 
@@ -697,7 +697,7 @@ img.pbt-logo {
 
 @media (max-width: 480px) {
 	.subcat-container {
-		width: 60%;
+		width: 80%;
 	}
 }
 
