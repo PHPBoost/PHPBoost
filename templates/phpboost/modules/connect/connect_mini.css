@@ -79,18 +79,23 @@ i.alert {
 }
 
 /* Bouton responsive */
-.js-menu-button {
+#connect-menu .js-menu-button {
 	display: none;
 }
 
+#connect-menu .js-menu-button i {
+	width: 15px;
+	vertical-align: top;
+}
+
 @media (max-width: 768px) {
-	.js-menu-button {
+	#connect-menu .js-menu-button {
 		display: inline-block;
 		padding: 5px 10px 5px 10px;
 		float: right;
 	}
 
-	.disconnected .js-menu-button {
+	#connect-menu .disconnected .js-menu-button {
 		float: none;
 	}
 }

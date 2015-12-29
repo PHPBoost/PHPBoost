@@ -59,7 +59,7 @@
 <div id="connect-menu">
 	<div class="horizontal-fieldset">
 		<span class="connect-welcome hidden-large-screens">${LangLoader::get_message('welcome', 'user-common')}, <a href="{U_USER_PROFILE}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a></span>
-		<a href="" class="js-menu-button" onclick="open_submenu('connect-menu');return false;" title="{L_PROFIL}">{L_PROFIL} <i class="fa fa-bars"></i></a>
+		<a href="" class="js-menu-button" onclick="open_submenu('connect-menu');return false;" title="{L_PROFIL}">{L_PROFIL} <i class="fa fa-bars # IF NUMBER_TOTAL_ALERT # blink alert# ENDIF #"></i></a>
 		<ul class="connect-content">
 			<li class="connect-welcome">${LangLoader::get_message('welcome', 'user-common')}, <a href="{U_USER_PROFILE}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a>
 			</li>
