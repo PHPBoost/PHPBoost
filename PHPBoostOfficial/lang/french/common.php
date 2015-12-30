@@ -34,9 +34,7 @@ $cache = PHPBoostOfficialCache::load();
 
 $lang['module_title'] = 'PHPBoost - Site Officiel';
 $lang['site_description'] = 'Créez votre site Internet facilement en moins de 5 minutes';
-$lang['site_slide_description'] = 'PHPBoost est un système de gestion de contenu (CMS) français et libre, qui existe depuis 2005, vous permettant de créer facilement votre site Internet.<br/>
-Très complet en terme de fonctionnalités il est cependant simple à utiliser.<br/>
-A l\'usage il s\'avère être un CMS fiable et robuste, optimisé pour le référencement et personnalisable à souhait.';
+$lang['site_slide_description'] = 'PHPBoost est un système de gestion de contenu (CMS) français et libre, qui existe depuis 2005, vous permettant de créer facilement votre site Internet. Très complet en terme de fonctionnalités il est cependant simple à utiliser. A l\'usage il s\'avère être un CMS fiable et robuste, optimisé pour le référencement et personnalisable à souhait.';
 $lang['versions'] = 'Versions successives de PHPBoost';
 $lang['versions.explain'] = 'Permet de mettre à jour automatiquement la page de téléchargements du site';
 $lang['major_version_number'] = 'Numéro de version majeure';
@@ -72,8 +70,8 @@ $lang['download.compatible_themes'] = 'Thèmes compatibles';
 $lang['download.compatible_themes.description'] = 'Trouvez la bonne entité graphique pour votre site.';
 $lang['download.pdk_version'] = 'La version pour développeurs';
 $lang['download.pdk_version_txt'] = 'Télécharger la version pour développeurs (PDK)';
-$lang['download.last_version_pdk'] = 'PDK '. $cache->get_last_version_major_version_number();
-$lang['download.previous_version_pdk'] = 'PDK '. $cache->get_previous_version_major_version_number();
+$lang['download.last_version_pdk'] = $cache->get_last_version_major_version_number() . 'PDK';
+$lang['download.previous_version_pdk'] = $cache->get_previous_version_major_version_number() . 'PDK';
 $lang['download.last_major_version_number'] = $cache->get_last_version_major_version_number();
 $lang['download.phpboost_last_major_version_number'] = 'PHPBoost ' . $cache->get_last_version_major_version_number();
 $lang['download.last_complete_version_number'] = $cache->get_last_version_major_version_number() . '.' . $cache->get_last_version_minor_version_number();
