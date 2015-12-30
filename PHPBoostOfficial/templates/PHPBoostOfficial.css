@@ -100,11 +100,17 @@ div.p-link-btn {
 	border-radius: 4px;
 }
 
-@media (max-width: 768px) {
-	#p-more {
-		margin: 0 80px 0 0;
-	}
+#p-more {
+	float: right;
+}
 
+@media (min-width: 481px) {
+	#p-more {
+		margin: 0 40px 0 0;
+	}
+}
+
+@media (max-width: 768px) {
 	div.p-link-btn {
 		display: block;
 		margin: 10px auto 0 auto;
