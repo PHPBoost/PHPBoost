@@ -628,6 +628,10 @@ footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 li:nth-chil
 	padding-left: 25px;
 }
 
+.cssmenu.small-screen.cssmenu-static ul.level-1 li .cssmenu-title  {
+	padding-left: 35px;
+}
+
 .cssmenu.small-screen ul.level-2 li .cssmenu-title,
 .cssmenu.cssmenu-actionslinks.small-screen ul li ul li ul li .cssmenu-title  {
 	padding-left: 35px;
@@ -736,6 +740,12 @@ header .cssmenu li:hover > .cssmenu-title 					{ color: #FFFFFF; }
 	#main .cssmenu-horizontal > ul > li:hover  				{ background: #F9F9F9; }
 }
 
+@media (max-width: 768px) {
+	footer .cssmenu-static > ul > li > .cssmenu-title {
+		color: #AAAAAA;
+		font-size: 1.05em;
+	}
+}
 /* --- Niveau 2 --- */
 .cssmenu ul ul li .cssmenu-title 							{ color: #DDDDDD; }
 #main .cssmenu ul ul li .cssmenu-title 						{ color: #333333; }
@@ -948,6 +958,11 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 		display: none;
 	}
 
+	footer .cssmenu-static #menu-button:after,
+	footer .cssmenu-static #menu-button:before {
+		display: block;
+	}
+
 	.cssmenu-static ul li {
 		border-top: none;
 	}
@@ -986,6 +1001,12 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 
 	header .cssmenu-vertical #menu-button.menu-opened:after,
 	header .cssmenu-vertical #menu-button.menu-opened:before 	{ background: #DDDDDD; }
+	
+	footer .cssmenu #menu-button:after { border-color: #555555; }
+	footer .cssmenu #menu-button:before,
+	footer .cssmenu #menu-button.menu-opened:after,
+	footer .cssmenu #menu-button.menu-opened:before 			{ background: #555555; }
+
 }
 
 /* -- Bouton submenu -- */
