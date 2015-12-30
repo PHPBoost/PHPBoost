@@ -255,7 +255,7 @@
 									
 									# IF msg.C_FORUM_MSG_CUT # <a href="move{msg.U_FORUM_MSG_CUT}" title="{L_CUT_TOPIC}" class="fa fa-cut" data-confirmation="{L_ALERT_CUT_TOPIC}"></a> # ENDIF #
 									
-									<a title="go-top" href="{U_TITLE_T}#go_top" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go_top').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-up"></i></a> <a title="go-bottom" href="{U_TITLE_T}#go_bottom" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go_bottom').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-down"></i></a>
+									<a title="${LangLoader::get_message('go_top', 'common', 'forum')}" href="{U_TITLE_T}#go_top" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go_top').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-up"></i></a> <a title="${LangLoader::get_message('go_bottom', 'common', 'forum')}" href="{U_TITLE_T}#go_bottom" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go_bottom').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-down"></i></a>
 								</span>
 							</div>
 							<div class="msg-contents">

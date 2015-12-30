@@ -38,6 +38,8 @@ $lang['forum.manage_ranks'] = 'Manage ranks';
 $lang['forum.ranks_management'] = 'Ranks management';
 
 $lang['xml_forum_desc'] = 'Last forum thread';
+$lang['go_top'] = 'Go top';
+$lang['go_bottom'] = 'Go bottom';
 
 //config
 $lang['config.forum_name'] = 'Forum name';
