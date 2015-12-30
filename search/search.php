@@ -43,7 +43,7 @@ $request = AppContext::get_request();
 $search = retrieve(REQUEST, 'q', '');
 $unsecure_search = stripslashes(retrieve(REQUEST, 'q', ''));
 $search_in = retrieve(POST, 'search_in', 'all');
-$selected_modules = retrieve(POST, 'searched_modules', array());
+$selected_modules = explode(',', retrieve(POST, 'searched_modules', ''));
 $query_mode = retrieve(POST, 'query_mode', true);
 
 if ($search_in !== 'all')
