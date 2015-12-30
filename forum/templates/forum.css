@@ -11,7 +11,7 @@ header#forum-top {
 }
 
 header#forum-top h1 {
-	padding: .7em 0.5em 1em 0.5em;
+	padding: 0.7em 0.5em 1em 0.5em;
 	border-bottom: none;
 	font-size: 1.5rem;
 }
@@ -340,9 +340,9 @@ a.forum-link-cat {
 
 /* Affichage des membres en ligne */
 .forum-online {
-	padding: 6px;
-	height: auto !important;
-	overflow: hidden !important;
+	padding: 6px 6px 0 6px;
+	height: auto;
+	overflow: hidden;
 	clear: both;
 }
 
@@ -667,4 +667,9 @@ footer#forum-bottom .forum-links {
 
 footer#forum-bottom .forum-message-options {
 	border-bottom: none;
+}
+
+/* -- Taille police menu ========================================================= */
+.cssmenu.cssmenu-group > ul > li > .cssmenu-title {
+	font-size: 1.2rem;
 }
