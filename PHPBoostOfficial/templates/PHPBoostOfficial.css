@@ -372,8 +372,17 @@ div#ln-right {
 }
 
 div.ln-first { 
-	
 	margin: 5px 15px 0 0;
+}
+
+div.ln-first { 
+	margin: 5px 15px 0 0;
+}
+
+@media (max-width: 480px) {
+	div.ln-first { 
+		margin: 10px 0px 0 0;
+	}	
 }
 
 div.ln-first-content {
@@ -478,9 +487,11 @@ p.ln-date {
 	font-size: 10px;
 }
 
-p.ln-content {
+.ln-content {
 	line-height: 1.60em;
 	text-align: justify;
+	max-height: 184px;
+	overflow: hidden;
 }
 
 
