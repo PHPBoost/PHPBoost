@@ -18,7 +18,7 @@
 				<header>
 					<h2>${LangLoader::get_message('message', 'main')}</h2>
 				</header>
-				<div class="message-container">
+				<div id="m{messages.ID}" class="message-container">
 
 					<div class="message-user-infos">
 						<div class="message-pseudo">
