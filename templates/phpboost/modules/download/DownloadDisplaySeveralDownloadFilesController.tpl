@@ -308,7 +308,7 @@
 								</div>
 								<div class="pbt-element-info-container">
 									<p class="pbt-info-title">{@download.previous_major_version_number}</p>
-									<p class="pbt-info-desc">Req : PHP {@download.previous_minimal_php_version} | .zip</p>
+									<p class="pbt-info-desc">PHP {@download.previous_minimal_php_version} | .zip</p>
 									<p class="pbt-info-author">${LangLoader::get_message('by', 'common')} PHPBoost</p>
 								</div>
 							</a>

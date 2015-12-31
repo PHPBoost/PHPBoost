@@ -34,6 +34,7 @@ p.p-slide-content {
 	margin: 0;
 	line-height: 1.60em;
 	font-size: 12px;
+	text-align: justify;
 }
 
 @media (min-width: 769px) {
@@ -42,7 +43,7 @@ p.p-slide-content {
 		margin-top: 43px;
 		box-shadow: 0 0 10px #d0d9e3;
 	}
-	div#p-slide{
+	div#p-slide {
 		padding: 20px 10px 0 30px;
 		margin: 40px 0 0 0;
 		text-align: justify;
@@ -54,15 +55,16 @@ p.p-slide-content {
 	img.p-img {
 		display: none;
 	}
-	div#p-slide{
-		padding: 20px 10px 0 30px;
+
+	div#p-slide {
+		padding: 20px 10px 0 10px;
 		margin: 0 0 0 0;
-		text-align: justify;
+		text-align: center;
 		overflow: hidden;
 	}
 }
 
-a.p-slide-title{
+a.p-slide-title {
 	color: #5F5F5F;
 	font-size: 20px;
 	font-family: "Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
@@ -672,7 +674,7 @@ img.pbt-logo {
 	color: #AAAAAA;
 	font-style: italic;
 	font-size: 0.9em;
-	height: 30px;
+	height: 32px;
 	overflow: hidden;
 	text-align: center;
 	margin: 5px 10px;
