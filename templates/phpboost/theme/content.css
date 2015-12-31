@@ -672,6 +672,10 @@ body.dragging, body.dragging * {
 	margin-left: 150px;
 }
 
+.message-date i {
+	vertical-align: top;
+}
+
 .message-user-infos {
 	text-align: center;
 	width: 120px;
@@ -758,6 +762,10 @@ article .message-user-infos .message-user-group {
 		float: right;
 	}
 
+	.message-level {
+		display: ;
+	}
+
 	.message-date {
 		float: right;
 		max-width: 120px;
@@ -787,7 +795,7 @@ article .message-user-infos .message-user-group {
 	.message-date {
 		text-align: left;
 		margin: 0;
-		padding: 22px 0 0 0;
+		padding: 23px 0 0 0;
 	}
 
 }
@@ -858,7 +866,6 @@ article .message-user-infos .message-user-group {
 	.message-date span.actions a {
 		padding: 5px 2px 5px 2px;
 		display: inline-block;
-		width: 18px;
 	}
 
 	.message-message {
