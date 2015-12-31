@@ -22,6 +22,7 @@ article {
 	width: 100%;
 	margin: 0 auto;
 	vertical-align: top;
+	position: relative;
 }
 
 @media (min-width: 769px) {
@@ -733,6 +734,157 @@ body.dragging, body.dragging * {
 
 article .message-user-infos .message-user-group {
 	display: none;
+}
+
+@media (max-width: 480px) {
+	.message-user-infos {
+
+	}
+
+	.message-user-infos img.message-avatar {
+ 		max-height: 54px;
+    	width: auto;
+	    padding: 4px;
+	    margin: 5px 5px 0 15px;
+	    float: left;
+	}
+
+	.message-message {
+		border-top: 1px solid #CAD1EB;
+	}
+
+	.message-pseudo {
+		padding: 20px 10px 0 0px;
+		float: right;
+	}
+
+	.message-date {
+		float: right;
+		max-width: 120px;
+		text-align: right;
+		margin: 0 15px 0 0;
+		padding: 20px 0 0 0;
+	}
+
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+	.message-container {
+		padding-left: 70px;
+	}
+
+	.message-pseudo {
+		padding: 20px 10px 0 15px;
+	}
+	
+	.message-user-infos img {
+	    max-width: 54px;
+		position: absolute;
+		top: 20px;
+		left: 15px;
+	}
+
+	.message-date {
+		text-align: left;
+		margin: 0;
+		padding: 22px 0 0 0;
+	}
+
+}
+
+@media (max-width: 768px) {
+	.message-container {
+	    border: 1px solid #D6DEE7;
+	    color: #333333;
+	    background-color: #ECEFFA;
+	    min-height: 80px;
+	    border-radius: 4px;
+	    position: relative;
+	}
+
+	.message-message {
+	    border: none;
+	    background-color: none;
+	    border-radius: 0;
+	}
+
+	.message-message::after,
+	.message-message::before {
+		display: none;
+	}
+
+	.message-user-infos {
+		display: inline-block;
+	}
+
+	.message-pseudo {
+		text-align: left;
+	}
+
+	.message-pseudo a {
+		font-weight: bold;
+		color: #555555;
+		font-size: 1.2em;
+	}
+	.message-pseudo a:hover {
+		text-decoration: none;
+		color: #222222;
+	}
+	
+	.message-user-infos {
+		width: auto;
+	}
+
+	.message-user-infos img {
+	    padding: 3px;
+	    background-color: #fff;
+	    box-shadow: 0 1px 9px #e0e0e0,inset 0 0 2px rgba(215,215,215,0.75);
+	}
+
+	.message-date {
+		display: inline-block;
+		font-size: 0.8em;
+	}
+
+	.message-date span.actions {
+		bottom: 5px;
+		right: 8px;
+		display: block;
+		position: absolute;
+		text-align: right;
+		font-size: 1.2em;
+		z-index: 1;
+	}
+	.message-date span.actions a {
+		padding: 5px 2px 5px 2px;
+		display: inline-block;
+		width: 18px;
+	}
+
+	.message-message {
+		clear: both;
+		margin: 0;
+	}
+
+	.message-message::before {
+		top: auto;
+		bottom: 100%;
+		left: 204px;
+		border-width: 15px;
+		border-color: transparent;
+		border-bottom-color: #D6DEE7;
+		border-style: solid;
+	}
+	
+	.message-message::after {
+		top: auto;
+		bottom: 100%;
+		left: 205px;
+		border-width: 14px;
+		border-color: transparent;
+		border-bottom-color: #ECEFFA;
+		border-style: solid;
+	}
 }
 
 /* --- Moderation des messages --- */
