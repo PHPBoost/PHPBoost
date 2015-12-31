@@ -159,7 +159,7 @@ class ShoutboxMessage
 			
 			//Message
 			'ID' => $this->id,
-			'CONTENTS' => FormatingHelper::second_parse(stripslashes($this->contents)),
+			'CONTENTS' => FormatingHelper::second_parse($this->contents),
 			'DATE' => $this->creation_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 			'DATE_DAY' => $this->creation_date->get_day(),
 			'DATE_MONTH' => $this->creation_date->get_month(),

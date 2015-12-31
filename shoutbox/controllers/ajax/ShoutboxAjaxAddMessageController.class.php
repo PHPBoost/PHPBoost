@@ -55,7 +55,7 @@ class ShoutboxAjaxAddMessageController extends AbstractController
 				$shoutbox_message->init_default_properties();
 				$shoutbox_message->set_login($pseudo);
 				$shoutbox_message->set_user_id(AppContext::get_current_user()->get_id());
-				$shoutbox_message->set_contents($contents);
+				$shoutbox_message->set_contents(stripslashes($contents));
 				$shoutbox_message->set_creation_date(new Date());
 				$code = ShoutboxService::add($shoutbox_message);
 			}
