@@ -33,66 +33,63 @@ include('../wiki/wiki_functions.php');
 
 //Titre de l'article
 $encoded_title = retrieve(GET, 'title', '');
-//numéro de l'article (utile pour les archives)
+//numÃ©ro de l'article (utile pour les archives)
 $id_contents = retrieve(GET, 'id_contents', 0);
 
 $num_rows = 0;
 $parse_redirection = false;
 
-//Requêtes préliminaires utiles par la suite
+//RequÃªtes prÃ©liminaires utiles par la suite
 if (!empty($encoded_title)) //Si on connait son titre
 {
-	$result = PersistenceContext::get_querier()->select("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, a.defined_status, com_topic.number_comments, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
-	FROM " . PREFIX . "wiki_articles a
-	LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
-	LEFT JOIN " . PREFIX . "wiki_favorites f ON f.id_article = a.id
-	LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com_topic ON a.id = com_topic.id_in_module AND com_topic.module_id = 'wiki'
-	WHERE a.encoded_title = :encoded_title
-	GROUP BY a.id", array(
-		'encoded_title' => $encoded_title
-	));
-	$num_rows = $result->get_rows_count();
-	$article_infos = $result->fetch();
-	$result->dispose();
-	$id_article = $article_infos['id'];
-
-	if (!empty($article_infos['redirect']))//Si on est redirigé
-	{
-		$ex_title = stripslashes($article_infos['title']);
-		$id_redirection = $article_infos['id'];
-		
-		$result = PersistenceContext::get_querier()->select("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, com_topic.number_comments, a.defined_status, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
+	try {
+		$article_infos = PersistenceContext::get_querier()->select_single_row_query("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, a.defined_status, com_topic.number_comments, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
 		FROM " . PREFIX . "wiki_articles a
 		LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
 		LEFT JOIN " . PREFIX . "wiki_favorites f ON f.id_article = a.id
 		LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com_topic ON a.id = com_topic.id_in_module AND com_topic.module_id = 'wiki'
-		WHERE a.id = :id
+		WHERE a.encoded_title = :encoded_title
 		GROUP BY a.id", array(
-			'id' => $article_infos['redirect']
+			'encoded_title' => $encoded_title
 		));
-		$article_infos = $result->fetch();
-		$result->dispose();
-		$id_article = $article_infos['id'];
-		$parse_redirection = true;
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+	
+	$num_rows = 1;
+	$id_article = $article_infos['id'];
+	
+	if (!empty($article_infos['redirect']))//Si on est redirigÂ¦
+	{
+		try {
+			$encoded_title = PersistenceContext::get_querier()->get_column_value(PREFIX . "wiki_articles", 'encoded_title', 'WHERE id=:id', array('id' => $article_infos['redirect']));
+		} catch (RowNotFoundException $e) {
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
 		
 		AppContext::get_response()->set_status_code(301);
-		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
-		exit();
+		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $encoded_title, $encoded_title));
 	}
 }
 //Sinon on cherche dans les archives
 elseif (!empty($id_contents))
 {
-	$result = PersistenceContext::get_querier()->select("SELECT a.title, a.encoded_title, a.id, c.id_contents, a.id_cat, a.is_cat, a.defined_status, a.undefined_status, com_topic.number_comments, f.id AS id_favorite, c.menu, c.content
-	FROM " . PREFIX . "wiki_contents c
-	LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.id_article
-	LEFT JOIN " . PREFIX . "wiki_favorites f ON f.id_article = a.id
-	LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com_topic ON a.id = com_topic.id_in_module AND com_topic.module_id = 'wiki'
-	WHERE c.id_contents = :id", array(
-		'id' => $id_contents
-	));
-	$article_infos = $result->fetch();
-	$result->dispose();
+	try {
+		$article_infos = PersistenceContext::get_querier()->select_single_row_query("SELECT a.title, a.encoded_title, a.id, c.id_contents, a.id_cat, a.is_cat, a.defined_status, a.undefined_status, com_topic.number_comments, f.id AS id_favorite, c.menu, c.content
+		FROM " . PREFIX . "wiki_contents c
+		LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.id_article
+		LEFT JOIN " . PREFIX . "wiki_favorites f ON f.id_article = a.id
+		LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com_topic ON a.id = com_topic.id_in_module AND com_topic.module_id = 'wiki'
+		WHERE c.id_contents = :id", array(
+			'id' => $id_contents
+		));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+	
 	$id_article = $article_infos['id'];
 	$num_rows = 1;
 }
@@ -173,9 +170,9 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 		'L_SUB_ARTICLES' => $LANG['wiki_subarticles'],
 		'L_TABLE_OF_CONTENTS' => $LANG['wiki_table_of_contents'],
 	));
-	if ($article_infos['is_cat'] == 1 && $id_contents == 0) //Catégorie non archivée
+	if ($article_infos['is_cat'] == 1 && $id_contents == 0) //CatÃ©gorie non archivÃ©e
 	{
-		//On liste les articles de la catégorie et ses sous catégories
+		//On liste les articles de la catÃ©gorie et ses sous catÃ©gories
 		$result = PersistenceContext::get_querier()->select("SELECT a.title, a.encoded_title, a.id
 		FROM " . PREFIX . "wiki_articles a
 		LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
