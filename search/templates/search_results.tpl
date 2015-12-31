@@ -1,5 +1,5 @@
 		<script><!--
-			// CrÈe un lien de pagination javascript
+			// Cr√©e un lien de pagination javascript
 			function writePagin(fctName, fctArgs, isCurrentPage, textPagin, i)
 			{
 			    pagin = '<span class="pagination';
@@ -12,8 +12,8 @@
 			    return pagin;
 			}
 
-			// CrÈe la pagination ‡ partir du nom du bloc de page, du bloc de pagination, du nombre de rÈsultats
-			// du nombre de rÈsultats par page ...
+			// Cr√©e la pagination √† partir du nom du bloc de page, du bloc de pagination, du nombre de r√©sultats
+			// du nombre de r√©sultats par page ...
 			function ChangePagination(page, nbPages, blocPagin, blocName, nbPagesBefore, nbPagesAfter)
 			{
 			    var pagin = '';
@@ -31,7 +31,7 @@
 			        var fctName = 'ChangePagination';
 			        var fctArgs = ', '  + nbPages + ', \'' + blocPagin + '\', \'' + blocName + '\', ' + nbPagesBefore + ', ' + nbPagesAfter;
 			        
-			        // DÈbut
+			        // D√©but
 			        if (page != 0)
 			            pagin += writePagin(fctName, fctArgs, false, '&laquo;', 0);
 			        
@@ -51,15 +51,15 @@
 			            pagin += writePagin(fctName, fctArgs, false, '&raquo;', nbPages - 1);
 			    }
 			    
-			    // On cache tous les autre rÈsultats du module
+			    // On cache tous les autre r√©sultats du module
 			    for ( var i = 0; i < nbPages; i++)
 			    	jQuery('#' + blocName + '_' + i).fadeOut();
 			        
-			    // On montre la page demandÈe
+			    // On montre la page demand√©e
 			    jQuery('#' + blocName + '_' + page).fadeIn();
 			    
-			    // Mise ‡ jour de la pagination
-			    jQuery('#' + blocPagin).innerHTML = pagin;
+			    // Mise √† jour de la pagination
+			    jQuery('#' + blocPagin).html(pagin);
 			}
 
 			const RESULTS = 'results_';
@@ -83,14 +83,14 @@
 				var calculatedResults = new Array('all');
 				
 				function HideResults()
-				// Cache tous les rÈsultats
+				// Cache tous les r√©sultats
 				{
 					for( var i = 0; i < modulesResults.length; i++ )
 						jQuery('#' + RESULTS + modulesResults[i]).fadeOut();
 				}
 				
 				function ChangeResults()
-				// Change le cadre des rÈsultats
+				// Change le cadre des r√©sultats
 				{
 					var module = document.getElementById('results_choice').value;
 					HideResults();
@@ -102,7 +102,7 @@
 				}
 				
 				function GetFormData()
-				// Reconstitution d'une chaine "POSTABLE" ‡ partir des formulaires
+				// Reconstitution d'une chaine "POSTABLE" √† partir des formulaires
 				{
 					var dataString = "";
 					var form = document.getElementById('mini-search-form');
@@ -114,10 +114,10 @@
 						{
 							dataString += elements[i].name.replace('[', '%5B').replace(']', '%5D') + '=';
 							if (elements[i].name.indexOf('[]') > 0)
-							{   // Cas des multi-sÈlections
+							{   // Cas des multi-s√©lections
 								selectedChilds = new Array();
 								for (var j = 0; j < elements[i].length; j++)
-								{   // On ajoute tous les fils sÈlectionnÈs
+								{   // On ajoute tous les fils s√©lectionn√©s
 									if (elements[i].options[j].selected)
 										selectedChilds.push(escape_xmlhttprequest(elements[i].options[j].value));
 								}
@@ -136,7 +136,7 @@
 				}
 				
 				function XMLHttpRequest_search_module(module)
-				// Affiche les rÈsultats de la recherche pour le module particulier <module>
+				// Affiche les r√©sultats de la recherche pour le module particulier <module>
 				{
 					var xhr_object = xmlhttprequest_init('../search/searchXMLHTTPRequest.php?token={TOKEN}');
 					xhr_object.onreadystatechange = function()
@@ -152,7 +152,7 @@
 							if( xhr_object.status == 200 )
 							{
 								change_progressbar('progress_bar_' + module, 100, "{L_QUERY_SUCCESS}");
-								// Si les r√©sultats sont toujours en cache, on les rÈcupËre.
+								// Si les r√É¬©sultats sont toujours en cache, on les r√©cup√®re.
 								eval(xhr_object.responseText);
 								if( !syncErr )
 								{
@@ -160,8 +160,8 @@
 									document.getElementById(RESULTS_LIST + module).innerHTML = resultsAJAX['results'];
 									ChangePagination(0, Math.ceil(nbResults[module] / NB_RESULTS_PER_PAGE), PAGINATION_RESULTS + module, RESULTS + module, 2, 2);
 									
-									// Met ‡ jour la liste des rÈsultats affichÈ, pour ne pas les rechercher
-									// dans la base de donnÈe si ils sont dÈj‡ dans le html.
+									// Met √† jour la liste des r√©sultats affich√©, pour ne pas les rechercher
+									// dans la base de donn√©e si ils sont d√©j√† dans le html.
 									calculatedResults.push(module);
 								}
 								else window.alert('SYNCHRONISATION ERROR');
