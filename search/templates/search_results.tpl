@@ -95,7 +95,7 @@
 					var module = document.getElementById('results_choice').value;
 					HideResults();
 					jQuery('#' + RESULTS + module).fadeIn();
-					if (!jQuery.inArray(module, calculatedResults))
+					if (jQuery.inArray(module, calculatedResults) == -1)
 					{
 						XMLHttpRequest_search_module(module);
 					}
