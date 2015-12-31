@@ -238,7 +238,7 @@ if (!empty($id_get))
 	//On crée une pagination (si activé) si le nombre de forum est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbr_topic, $config->get_number_topics_per_page(), Pagination::LIGHT_PAGINATION);
-	$pagination->set_url(new Url('/forum/forum.php?id=' . $id_get . '&amp;p=%d'));
+	$pagination->set_url(new Url('/forum/forum' . url('.php?id=' . $id_get . '&amp;p=%d', '-' . $id_get . '-%d+' . $category->get_rewrited_name() . '.php')));
 
 	if ($pagination->current_page_is_empty() && $page > 1)
 	{
@@ -364,7 +364,7 @@ if (!empty($id_get))
 		//On crée une pagination (si activé) si le nombre de topics est trop important.
 		$page = AppContext::get_request()->get_getint('pt', 1);
 		$topic_pagination = new ModulePagination($page, $row['nbr_msg'], $config->get_number_messages_per_page(), Pagination::LIGHT_PAGINATION);
-		$topic_pagination->set_url(new Url('/forum/topic.php?id=' . $row['id'] . '&amp;pt=%d'));
+		$topic_pagination->set_url(new Url('/forum/topic' . url('.php?id=' . $row['id'] . '&amp;pt=%d', '-' . $row['id'] . '-%d' . $rewrited_title_topic . '.php')));
 		
 		$group_color = User::get_group_color($row['user_groups'], $row['user_level']);
 		
