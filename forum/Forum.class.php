@@ -201,7 +201,7 @@ class Forum
 			//Récupération du message précédent celui supprimé afin de rediriger vers la bonne ancre.
 			$previous_msg_id = 0;
 			try {
-				$previous_msg_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg" , 'id', 'WHERE idtopic = :idtopic AND id < :id ORDER BY timestamp DESC', array('idtopic' => $idtopic, 'id' => $idmsg));
+				$previous_msg_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg" , 'id', 'WHERE idtopic = :idtopic AND id < :id ORDER BY timestamp DESC LIMIT 1', array('idtopic' => $idtopic, 'id' => $idmsg));
 			} catch (RowNotFoundException $e) {}
 			
 			if ($last_msg_id == $idmsg) //On met à jour le dernier message posté dans la liste des topics.

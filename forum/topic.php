@@ -545,7 +545,11 @@ if (!empty($quote_get))
 		DispatchManager::redirect($error_controller);
 	}
 	
-	$pseudo = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id=:id', array('id' => $quote_msg['user_id']));
+	$pseudo = $LANG['guest'];
+	try {
+		$pseudo = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id=:id', array('id' => $quote_msg['user_id']));
+	} catch (RowNotFoundException $e) {}
+	
 	$contents = '[quote=' . $pseudo . ']' . FormatingHelper::unparse(stripslashes($quote_msg['contents'])) . '[/quote]';
 }
 
