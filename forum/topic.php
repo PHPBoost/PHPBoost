@@ -146,7 +146,7 @@ if (!empty($idm))
 
 //On crée une pagination si le nombre de msg est trop important.
 $pagination = new ModulePagination($page, $topic['nbr_msg'], $config->get_number_messages_per_page(), Pagination::LIGHT_PAGINATION);
-$pagination->set_url(new Url('/forum/topic.php?id=' . $id_get . '&amp;pt=%d'));
+$pagination->set_url(new Url('/forum/topic' . url('.php?id=' . $id_get . '&amp;pt=%d', '-' . $id_get . '-%d' . $rewrited_title . '.php')));
 
 if ($pagination->current_page_is_empty() && $page > 1)
 {
