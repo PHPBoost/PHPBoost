@@ -175,11 +175,11 @@ class UserRegistrationController extends AbstractController
 	{
 		if ($this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION)
 		{
-			return '<strong>'. $this->lang['registration.validation.mail.explain'] . '<strong>';
+			return '<strong>'. $this->lang['registration.validation.mail.explain'] . '</strong>';
 		}
 		elseif ($this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION)
 		{
-			return '<strong>'. $this->lang['registration.validation.administrator.explain'] . '<strong>';
+			return '<strong>'. $this->lang['registration.validation.administrator.explain'] . '</strong>';
 		}
 		else
 		{
