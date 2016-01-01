@@ -384,7 +384,7 @@ div.ln-first {
 @media (max-width: 480px) {
 	div.ln-first { 
 		margin: 10px 0px 0 0;
-	}	
+	}
 }
 
 div.ln-first-content {
@@ -539,7 +539,7 @@ input[type=text] {
 	}
 }
 
-.pbt-element .content {	
+.pbt-element .content {
 	margin: 0 5px 10px 5px;
 	padding: 0!important;
 	background-color: #FAFAFA;
@@ -628,10 +628,10 @@ img.pbt-icon {
 	bottom: 5px;
 	z-index: 10;
 	overflow: hidden;
-	background-image: url(../../templates/phpboost/theme/images/sprite-phpboost.png);
+	background-image: url('../../templates/phpboost/theme/images/sprite-phpboost.png');
 	background-repeat: no-repeat;
 	border: none!important; 
-	box-shadow: none;	
+	box-shadow: none;
 }
 
 img.pbt-icon-templates {
@@ -765,7 +765,7 @@ img.pbt-logo {
 }
 
 .subcat-img { 
-	background-image: url(../../templates/phpboost/theme/images/sprite-phpboost.png);
+	background-image: url('../../templates/phpboost/theme/images/sprite-phpboost.png');
 	background-repeat: no-repeat;
 	width: 128px;
 	height: 128px;
@@ -794,7 +794,7 @@ img.pbt-logo {
 	padding-top: 2px;
 	font-size: 0.9em;
 	font-style: italic;
-	color: #555555;	
+	color: #555555;
 }
 .subcat-element:hover .subcat-more {
 	color: #444444;

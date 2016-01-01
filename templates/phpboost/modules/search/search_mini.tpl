@@ -14,10 +14,6 @@
 			return false;
 		}
 	}
-	
-	jQuery(document).ready(function() {
-		jQuery('#search_token').val(${escapejs(TOKEN)});
-	});
 -->
 </script>
 
@@ -25,7 +21,7 @@
 	<div id="mini-search-form-container">
 		<div id="mini-search-form" class="input-element-button">
 			<input type="search" id="TxTMiniSearched" name="q" value="{TEXT_SEARCHED}" placeholder="{L_SEARCH}...">
-			<input type="hidden" id="search_token" name="token" value="{TOKEN}">
+			<input type="hidden" name="token" value="{TOKEN}">
 			<button type="submit" name="search_submit"><i class="fa fa-search"></i></button>
 		</div>
 	</div>

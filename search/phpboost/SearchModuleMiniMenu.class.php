@@ -73,7 +73,7 @@ class SearchModuleMiniMenu extends ModuleMiniMenu
 		$tpl = new FileTemplate('search/search_mini.tpl');
 		
 		$tpl->put_all(Array(
-			'TEXT_SEARCHED' => !empty($search) ? stripslashes(retrieve(REQUEST, 'q', '')) : '',
+			'TEXT_SEARCHED' => !empty($search) ? stripslashes($search) : '',
 			'WARNING_LENGTH_STRING_SEARCH' => addslashes($LANG['warning_length_string_searched']),
 			'L_SEARCH' => $LANG['search'],
 			'U_FORM_VALID' => url(TPL_PATH_TO_ROOT . '/search/search.php#results'),

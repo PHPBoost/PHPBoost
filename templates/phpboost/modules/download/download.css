@@ -1,16 +1,15 @@
+#module-download-pbt .pbt-button-gray	{ width: 220px; }
+#module-download-pbt .pbt-button-cat 	{ width: 320px; }
 
-	#module-download-pbt .pbt-button-gray	{ width: 220px; }
-	#module-download-pbt .pbt-button-cat 	{ width: 320px; }
+#module-download-pbt .pbt-button-a i {
+	display: inline-block;
+	font-size: 1.5em;
+	padding-right: 5px;
+}
 
-	#module-download-pbt .pbt-button-a i {
-		display: inline-block;
-		font-size: 1.5em;
-		padding-right: 5px;
-	}
-
-	#module-download-pbt .pbt-button-a span {
-		display: inline-block;
-	}
+#module-download-pbt .pbt-button-a span {
+	display: inline-block;
+}
 
 .pbt-button {
 	margin: auto;
@@ -82,7 +81,7 @@
 	.article-download-pdk 		{ width: 25%; }
 }
 
-.article-several .content {	
+.article-several .content {
 	margin: 0 5px 10px 5px;
 	padding: 0!important;
 	background-color: #FAFAFA;
@@ -206,7 +205,7 @@ img.pbt-logo {
 }
 
 .pbt-logo-pdk {
-	background-image: url(../../theme/images/sprite-phpboost.png);
+	background-image: url('../../theme/images/sprite-phpboost.png');
 	background-repeat: no-repeat;
 	background-position: -1px -205px;
 	width: 64px;
@@ -326,7 +325,7 @@ img.pbt-logo {
 }
 
 .subcat-img { 
-	background-image: url(../../theme/images/sprite-phpboost.png);
+	background-image: url('../../theme/images/sprite-phpboost.png');
 	background-repeat: no-repeat;
 	width: 128px;
 	height: 128px;
@@ -366,7 +365,7 @@ img.pbt-logo {
 	padding-top: 2px;
 	font-size: 0.9em;
 	font-style: italic;
-	color: #555555;	
+	color: #555555;
 }
 .download-subcat-element:hover .subcat-more {
 	color: #444444;
