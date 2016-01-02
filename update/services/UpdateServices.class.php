@@ -375,20 +375,20 @@ class UpdateServices
 		
 		$rows_change = array(
 			'login' => 'display_name VARCHAR(255) NOT NULL DEFAULT \'\'',
-			'timestamp' => 'registration_date INT(11)',
+			'timestamp' => 'registration_date INT(11) NOT NULL DEFAULT 0',
 			'user_groups' => 'groups TEXT',
-			'user_lang' => 'locale VARCHAR(25)',
-			'user_theme' => 'theme VARCHAR(50)',
-			'user_mail' => 'email VARCHAR(50)',
-			'user_show_mail' => 'show_email INT(4)',
-			'user_editor' => 'editor VARCHAR(15)',
+			'user_lang' => 'locale VARCHAR(25) NOT NULL DEFAULT \'\'',
+			'user_theme' => 'theme VARCHAR(50) NOT NULL DEFAULT \'\'',
+			'user_mail' => 'email VARCHAR(50) NOT NULL DEFAULT \'\'',
+			'user_show_mail' => 'show_email INT(4) NOT NULL DEFAULT 1',
+			'user_editor' => 'editor VARCHAR(15) NOT NULL DEFAULT \'\'',
 			'user_timezone' => 'timezone VARCHAR(50) NOT NULL DEFAULT \'\'',
-			'user_msg' => 'posted_msg INT(6)',
-			'user_pm' => 'unread_pm INT(6)',
-			'user_warning' => 'warning_percentage INT(6)',
-			'user_readonly' => 'delay_readonly INT(11)',
-			'user_ban' => 'delay_banned INT(11)',
-			'last_connect' => 'last_connection_date INT(11)',
+			'user_msg' => 'posted_msg INT(6) NOT NULL DEFAULT 0',
+			'user_pm' => 'unread_pm INT(6) NOT NULL DEFAULT 0',
+			'user_warning' => 'warning_percentage INT(6) NOT NULL DEFAULT 0',
+			'user_readonly' => 'delay_readonly INT(11) NOT NULL DEFAULT 0',
+			'user_ban' => 'delay_banned INT(11) NOT NULL DEFAULT 0',
+			'last_connect' => 'last_connection_date INT(11) NOT NULL DEFAULT 0',
 		);
 		
 		foreach ($rows_change as $old_name => $new_name)
@@ -478,8 +478,8 @@ class UpdateServices
 		$columns = self::$db_utils->desc_table(PREFIX . 'sessions');
 		
 		$rows_change = array(
-			'session_ip' => 'ip VARCHAR(64)',
-			'session_time' => 'timestamp INT(11)',
+			'session_ip' => 'ip VARCHAR(64) NOT NULL DEFAULT \'\'',
+			'session_time' => 'timestamp INT(11) NOT NULL DEFAULT 0',
 			'session_script' => 'location_script VARCHAR(100) NOT NULL DEFAULT \'\'',
 			'session_script_title' => 'location_title VARCHAR(100) NOT NULL DEFAULT \'\'',
 			'modules_parameters' => 'cached_data TEXT'
@@ -521,7 +521,7 @@ class UpdateServices
 	public function update_modules()
 	{
 		$modules_config = ModulesConfig::load();
-		foreach ($modules_config->get_modules() as $id => $module)
+		foreach (ModulesManager::get_installed_modules_map() as $id => $module)
 		{
 			if (ModulesManager::module_is_upgradable($id))
 			{
