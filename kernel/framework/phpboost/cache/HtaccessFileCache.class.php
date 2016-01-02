@@ -62,7 +62,7 @@ class HtaccessFileCache implements CacheData
 		
 		$this->add_expires_headers();
 		
-		$this->disable_file_etags();
+		//$this->disable_file_etags();
 
 		$this->add_manual_content();
 
