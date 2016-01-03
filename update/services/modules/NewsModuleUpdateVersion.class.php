@@ -55,6 +55,15 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 		
 		if (isset($columns['archives']))
 			$this->db_utils->drop_column(PREFIX . 'news', 'archives');
+		
+		$result = $this->querier->select_rows(PREFIX . 'news', array('id', 'name'));
+		while ($row = $result->fetch())
+		{
+			$this->querier->update(PREFIX . 'news', array(
+				'rewrited_name' => Url::encode_rewrite($row['name'])
+			), 'WHERE id = :id', array('id' => $row['id']));
+		}
+		$result->dispose();
 	}
 	
 	private function update_cats_table()
@@ -66,10 +75,11 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 		if (isset($columns['visible']))
 			$this->db_utils->drop_column(PREFIX . 'news_cats', 'visible');
 		
-		$result = $this->querier->select_rows(PREFIX . 'news_cats', array('id', 'auth'));
+		$result = $this->querier->select_rows(PREFIX . 'news_cats', array('id', 'name', 'auth'));
 		while ($row = $result->fetch())
 		{
 			$this->querier->update(PREFIX . 'news_cats', array(
+				'rewrited_name' => Url::encode_rewrite($row['name']),
 				'special_authorizations' => (int)!empty($row['auth'])
 			), 'WHERE id = :id', array('id' => $row['id']));
 		}

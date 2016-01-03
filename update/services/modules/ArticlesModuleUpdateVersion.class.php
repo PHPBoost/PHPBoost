@@ -41,10 +41,24 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		$tables = $this->db_utils->list_tables(true);
 		
+		if (in_array(PREFIX . 'articles', $tables))
+			$this->update_articles_table();
 		if (in_array(PREFIX . 'articles_cats', $tables))
 			$this->update_cats_table();
 		
 		$this->delete_old_files();
+	}
+	
+	private function update_articles_table()
+	{
+		$result = $this->querier->select_rows(PREFIX . 'articles', array('id', 'title'));
+		while ($row = $result->fetch())
+		{
+			$this->querier->update(PREFIX . 'articles', array(
+				'rewrited_title' => Url::encode_rewrite($row['title'])
+			), 'WHERE id = :id', array('id' => $row['id']));
+		}
+		$result->dispose();
 	}
 	
 	private function update_cats_table()
@@ -54,10 +68,11 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 		if (!isset($columns['special_authorizations']))
 			$this->db_utils->add_column(PREFIX . 'articles_cats', 'special_authorizations', array('type' => 'boolean', 'notnull' => 1, 'default' => 0));
 		
-		$result = $this->querier->select_rows(PREFIX . 'articles_cats', array('id', 'auth'));
+		$result = $this->querier->select_rows(PREFIX . 'articles_cats', array('id', 'name', 'auth'));
 		while ($row = $result->fetch())
 		{
 			$this->querier->update(PREFIX . 'articles_cats', array(
+				'rewrited_name' => Url::encode_rewrite($row['name']),
 				'special_authorizations' => (int)!empty($row['auth'])
 			), 'WHERE id = :id', array('id' => $row['id']));
 		}

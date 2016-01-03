@@ -52,10 +52,11 @@ class NewsletterModuleUpdateVersion extends ModuleUpdateVersion
 		if (!isset($columns['special_authorizations']))
 			$this->db_utils->add_column(PREFIX . 'newsletter_streams', 'special_authorizations', array('type' => 'boolean', 'notnull' => 1, 'default' => 0));
 		
-		$result = $this->querier->select_rows(PREFIX . 'newsletter_streams', array('id', 'auth'));
+		$result = $this->querier->select_rows(PREFIX . 'newsletter_streams', array('id', 'name', 'auth'));
 		while ($row = $result->fetch())
 		{
 			$this->querier->update(PREFIX . 'newsletter_streams', array(
+				'rewrited_name' => Url::encode_rewrite($row['name']),
 				'special_authorizations' => (int)!empty($row['auth'])
 			), 'WHERE id = :id', array('id' => $row['id']));
 		}
