@@ -197,7 +197,13 @@ class Forum
 			//On supprime le message demandé.
 			PersistenceContext::get_querier()->delete(PREFIX . 'forum_msg', 'WHERE id=:id', array('id' => $idmsg));
 			//On met à jour la table forum_topics.
-			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET nbr_msg = nbr_msg - 1 WHERE id = '" . $idtopic . "'");
+			$actual_nbr_msg = 0;
+			try {
+				$actual_nbr_msg = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'nbr_msg', 'WHERE id=:id', array('id' => $idtopic));
+			} catch (RowNotFoundException $e) {}
+			
+			if (!empty($actual_nbr_msg))
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET nbr_msg = nbr_msg - 1 WHERE id = '" . $idtopic . "'");
 			//Récupération du message précédent celui supprimé afin de rediriger vers la bonne ancre.
 			$previous_msg_id = 0;
 			try {
@@ -219,16 +225,22 @@ class Forum
 				//On met maintenant a jour le last_topic_id dans les catégories.
 				$this->Update_last_topic_id($idcat);
 			}
-				
+			
 			//On retire un msg au membre.
-			PersistenceContext::get_querier()->inject("UPDATE " . DB_TABLE_MEMBER . " SET posted_msg = posted_msg - 1 WHERE user_id = '" . $msg_user_id . "'");
-				
+			$user_posted_msg_number = 0;
+			try {
+				$user_posted_msg_number = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'posted_msg', 'WHERE user_id=:id', array('id' => $msg_user_id));
+			} catch (RowNotFoundException $e) {}
+			
+			if (!empty($user_posted_msg_number))
+				PersistenceContext::get_querier()->inject("UPDATE " . DB_TABLE_MEMBER . " SET posted_msg = posted_msg - 1 WHERE user_id = '" . $msg_user_id . "'");
+			
 			//Mise à jour du dernier message lu par les membres.
 			PersistenceContext::get_querier()->update(PREFIX . 'forum_view', array('last_view_id' => $previous_msg_id), 'WHERE last_view_id=:id', array('id' => $idmsg));
 			//On marque le topic comme lu, si c'est le dernier du message du topic.
 			if ($last_msg_id == $idmsg)
 			mark_topic_as_read($idtopic, $previous_msg_id, $last_timestamp);
-				
+			
 			//Insertion de l'action dans l'historique.
 			if ($msg_user_id != AppContext::get_current_user()->get_id())
 			{

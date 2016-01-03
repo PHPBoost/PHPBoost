@@ -615,7 +615,14 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	
 	if ($convers['user_view_pm'] > 0 && $convers['last_user_id'] != $current_user->get_id()) //Membre n'ayant pas encore lu la conversation.
 	{
-		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('unread_pm' => 'unread_pm - ' . (int)$convers['user_view_pm']), 'WHERE user_id = :id', array('id' => $current_user->get_id()));
+		$user_unread_pm = 0;
+		try {
+			$user_unread_pm = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'unread_pm', 'WHERE user_id=:id', array('id' => $current_user->get_id()));
+		} catch (RowNotFoundException $e) {}
+		
+		if (!empty($user_unread_pm))
+			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('unread_pm' => 'unread_pm - ' . (int)$convers['user_view_pm']), 'WHERE user_id = :id', array('id' => $current_user->get_id()));
+		
 		PersistenceContext::get_querier()->update(DB_TABLE_PM_TOPIC, array('user_view_pm' => 0), 'WHERE id = :id', array('id' => $pm_id_get));
 		PersistenceContext::get_querier()->update(DB_TABLE_PM_MSG, array('view_status' => 1), 'WHERE idconvers = :id AND user_id <> :user_id', array('id' => $convers['id'], 'user_id' => $current_user->get_id()));
 		SessionData::recheck_cached_data_from_user_id($current_user->get_id());
