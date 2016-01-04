@@ -46,7 +46,10 @@ class ForumHomeController extends ModuleController
 		
 		try {
 			$this->category = $categories_cache->get_category($id_get);
-		} catch (CategoryNotFoundException $e) {}
+		} catch (CategoryNotFoundException $e) {
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
 		
 		require_once(PATH_TO_ROOT . '/forum/forum_begin.php');
 		require_once(PATH_TO_ROOT . '/forum/forum_tools.php');
