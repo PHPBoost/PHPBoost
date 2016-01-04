@@ -3,7 +3,7 @@
  *                        CategoriesCache.class.php
  *                            -------------------
  *   begin                : January 31, 2013
- *   copyright            : (C) 2013 Kévin MASSY
+ *   copyright            : (C) 2013 KÃ©vin MASSY
  *   email                : kevin.massy@phpboost.com
  *
  *
@@ -35,6 +35,7 @@ abstract class CategoriesCache implements CacheData
 		$category_class = $categories_cache->get_category_class();
 		
 		$root_category = $categories_cache->get_root_category();
+		$root_category->set_elements_number($categories_cache->get_category_elements_number($root_category->get_id()));
 		$this->categories[Category::ROOT_CATEGORY] = $root_category;
 		$result = PersistenceContext::get_querier()->select_rows($categories_cache->get_table_name(), array('*'), 'ORDER BY id_parent, c_order');
 		while ($row = $result->fetch())
