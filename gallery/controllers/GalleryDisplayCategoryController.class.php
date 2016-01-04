@@ -362,7 +362,7 @@ class GalleryDisplayCategoryController extends ModuleController
 						'SIZE' => NumberHelper::round($info_pics['weight']/1024, 1),
 						'L_COMMENTS' => CommentsService::get_number_and_lang_comments('gallery', $info_pics['id']),
 						'KERNEL_NOTATION' => $activ_note ? NotationService::display_active_image($notation) : '',
-						'COLSPAN' => ($config->get_columns_number() + 2),
+						'COLSPAN' => min(($i + 2), ($config->get_columns_number() + 2)),
 						'CAT' => $cat_list,
 						'RENAME' => $html_protected_name,
 						'RENAME_CUT' => $html_protected_name,
