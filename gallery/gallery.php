@@ -119,7 +119,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 		$Upload = new Upload($dir);
 
 		$idpic = 0;
-		$idcat_post = retrieve(POST, 'cat', '');
+		$idcat_post = retrieve(POST, '_cat', 0);
 		$name_post = retrieve(POST, 'name', '', TSTRING_AS_RECEIVED);
 
 		if (!$Upload->file('gallery', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`i', Upload::UNIQ_NAME, $config->get_max_weight()))
