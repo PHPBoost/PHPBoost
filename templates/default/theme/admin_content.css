@@ -553,6 +553,10 @@ div.index-logo {
 	overflow: auto;
 }
 
+.admin-index-comments p.smaller {
+	margin-top: 15px;
+}
+
 div[class*="admin-index"] {
 	margin: 20px 5px 0;
 }
