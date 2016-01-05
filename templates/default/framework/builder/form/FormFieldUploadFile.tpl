@@ -1,4 +1,4 @@
-<div id="${escape(HTML_ID)}_field"# IF C_HIDDEN # style="display:none;" # ENDIF # class="form-element form-element-upload-file # IF C_REQUIRED_AND_HAS_VALUE # constraint-status-right # ENDIF # # IF C_HAS_FIELD_CLASS #{FIELD_CLASS}# ENDIF #">
+<div id="${escape(HTML_ID)}_field" class="form-element form-element-upload-file# IF C_REQUIRED_AND_HAS_VALUE # constraint-status-right# ENDIF ## IF C_HAS_FIELD_CLASS # {FIELD_CLASS}# ENDIF #"# IF C_HIDDEN # style="display:none;"# ENDIF #>
 	# IF C_HAS_LABEL #
 		<label for="${escape(HTML_ID)}">
 			{LABEL}
@@ -9,7 +9,7 @@
 	# ENDIF #
 
 	<div id="onblurContainerResponse${escape(HTML_ID)}" class="form-field # IF C_AUTH_UPLOAD #form-field-upload-file# ENDIF # picture-status-constraint# IF C_REQUIRED # field-required # ENDIF #">
-		<input type="text" name="${escape(NAME)}" id="${escape(HTML_ID)}" value="{VALUE}" class="field-xlarge ${escape(CLASS)}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_READONLY #readonly="readonly"# ENDIF #/>
+		<input type="text" name="${escape(NAME)}" id="${escape(HTML_ID)}" value="{VALUE}" class="field-xlarge ${escape(CLASS)}"# IF C_DISABLED # disabled="disabled"# ENDIF ## IF C_READONLY # readonly="readonly"# ENDIF #/>
 		# IF C_AUTH_UPLOAD #
 			<a title="${LangLoader::get_message('files_management', 'main')}" href="" class="fa fa-cloud-upload fa-2x" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=${escape(NAME)}&amp;parse=true&amp;no_path=true', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"></a>
 		# ENDIF #

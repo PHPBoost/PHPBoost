@@ -20,7 +20,7 @@ jQuery(document).ready(function() {
 -->
 </script>
 # ENDIF #
-<div id="${escape(HTML_ID)}_field" # IF C_HIDDEN # style="display:none;" # ENDIF # class="form-element form-element-date # IF C_REQUIRED_AND_HAS_VALUE # constraint-status-right # ENDIF #">
+<div id="${escape(HTML_ID)}_field" class="form-element form-element-date# IF C_REQUIRED_AND_HAS_VALUE # constraint-status-right# ENDIF #"# IF C_HIDDEN # style="display:none;"# ENDIF #>
 	# IF C_HAS_LABEL #
 		<label for="${escape(HTML_ID)}">
 			{LABEL}
@@ -35,8 +35,8 @@ jQuery(document).ready(function() {
 		<span class="text-status-constraint" style="display:none" id="onblurMessageResponse${escape(HTML_ID)}"></span>
 		# IF C_HOUR #
 		{L_AT}
-		<input type="number" min="0" max="23" id="${escape(HTML_ID)}_hours" class="input-hours" name="${escape(HTML_ID)}_hours" value="{HOURS}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_READONLY # readonly="readonly" # ENDIF #/> {L_H}
-		<input type="number" min="0" max="59" id="${escape(HTML_ID)}_minutes" class="input-minutes" name="${escape(HTML_ID)}_minutes" value="{MINUTES}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_READONLY # readonly="readonly" # ENDIF #/>
+		<input type="number" min="0" max="23" id="${escape(HTML_ID)}_hours" class="input-hours" name="${escape(HTML_ID)}_hours" value="{HOURS}" # IF C_DISABLED # disabled="disabled"# ENDIF ## IF C_READONLY # readonly="readonly"# ENDIF #/> {L_H}
+		<input type="number" min="0" max="59" id="${escape(HTML_ID)}_minutes" class="input-minutes" name="${escape(HTML_ID)}_minutes" value="{MINUTES}"# IF C_DISABLED # disabled="disabled"# ENDIF ## IF C_READONLY # readonly="readonly"# ENDIF #/>
 		# ENDIF #
 	</div>
 </div>

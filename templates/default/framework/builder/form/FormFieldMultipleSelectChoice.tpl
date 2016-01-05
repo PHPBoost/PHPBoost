@@ -37,7 +37,7 @@
 	});
 -->
 </script>
-<select multiple="multiple" name="${escape(NAME)}[]" id="${escape(HTML_ID)}" size="{SIZE}" class="${escape(CSS_CLASS)}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_HIDDEN # style="display:none;" # ENDIF #>
+<select multiple="multiple" name="${escape(NAME)}[]" id="${escape(HTML_ID)}" size="{SIZE}" class="${escape(CSS_CLASS)}"# IF C_DISABLED # disabled="disabled"# ENDIF ## IF C_HIDDEN # style="display:none;"# ENDIF #>
 	# START options # # INCLUDE options.OPTION # # END options # 
 </select>
 <br />
