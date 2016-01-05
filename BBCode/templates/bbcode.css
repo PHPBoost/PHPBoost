@@ -120,17 +120,13 @@ li.bbcode-elements a,
 
 .bbcode-block-container {
 	position: absolute;
+	bottom: 0;
+	margin: 0;
+	padding: 0;
 	z-index: 10;
 }
 
-.bbcode-block {
-	position: relative;
-	bottom: 0;
-	margin: 0;
-	padding: 3px 0;
-}
-
-.bbcode-block::before {
+.bbcode-block-container:before {
 	position: absolute;
 	top: -8px;
 	left: 8px;
@@ -140,7 +136,7 @@ li.bbcode-elements a,
 	content: " ";
 }
 
-.bbcode-block::after {
+.bbcode-block-container:after {
 	position: absolute;
 	left: 9px;
 	top: -7px;
@@ -153,11 +149,20 @@ li.bbcode-elements a,
 .block-smileys {
 	width: 150px;
 	height: 150px;
+	padding: 2px 0px 2px 3px;
 	overflow-y: scroll;
 }
 
+.block-smileys li {
+	display: inline-block;
+}
+
+.block-smileys li a {
+	display: block;
+}
+
 .bbcode-block-list {
-	margin: 1px 0;
+	margin: 0;
 	padding: 3px 0;
 	overflow: visible;
 }

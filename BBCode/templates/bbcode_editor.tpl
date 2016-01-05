@@ -57,11 +57,13 @@ function XMLHttpRequest_preview(field)
 					<i class="fa bbcode-icon-smileys" {AUTH_SMILEYS}></i>
 				</a>
 				<div id="bb-block1{FIELD}" class="bbcode-block-container" style="display:none;">
-					<div class="bbcode-block block-smileys" onmouseover="bb_hide_block('1', '{FIELD}', 1);" onmouseout="bb_hide_block('1', '{FIELD}', 0);">
+					<ul class="bbcode-block block-smileys" onmouseover="bb_hide_block('1', '{FIELD}', 1);" onmouseout="bb_hide_block('1', '{FIELD}', 0);">
 						# START smileys #
+							<li>
 							<a href="" onclick="insertbbcode('{smileys.CODE}', 'smile', '{FIELD}');bb_hide_block('1', '{FIELD}', 0);return false;" class="bbcode-hover" title="{smileys.CODE}"><img src="{smileys.URL}" title="{smileys.CODE}" alt="{smileys.CODE}"></a>
+							</li>
 						# END smileys #
-					</div>
+					</ul>
 				</div>
 			</li>
 
