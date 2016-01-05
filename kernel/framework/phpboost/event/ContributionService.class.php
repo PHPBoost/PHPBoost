@@ -3,7 +3,7 @@
  *                         ContributionService.class.php
  *                            -------------------
  *   begin                : July 21, 2008
- *   copyright            : (C) 2008 Benoît Sautel
+ *   copyright            : (C) 2008 BenoÃ®t Sautel
  *   email                : ben.popeye@phpboost.com
  *
  *   
@@ -30,7 +30,7 @@
 
 /**
  * @package {@package}
- * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @author BenoÃ®t Sautel <ben.popeye@phpboost.com>
  * @desc This service allows developers to manage their contributions.
  */
 class ContributionService
@@ -95,7 +95,7 @@ class ContributionService
 		LEFT JOIN " . DB_TABLE_MEMBER . " poster_member ON poster_member.user_id = c.poster_id
 		LEFT JOIN " . DB_TABLE_MEMBER . " fixer_member ON fixer_member.user_id = c.fixer_id
 		WHERE contribution_type = :contribution_type
-		ORDER BY " . $criteria . " " . strtoupper($order), array(
+		ORDER BY " . $criteria . " " . strtoupper($order) . ", creation_date DESC", array(
 			'contribution_type' => self::CONTRIBUTION_TYPE
 		));
 		while ($row = $result->fetch())
