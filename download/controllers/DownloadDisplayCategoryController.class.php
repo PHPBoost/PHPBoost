@@ -345,7 +345,6 @@ class DownloadDisplayCategoryController extends ModuleController
 		$object->init();
 		$object->check_authorizations();
 		$object->build_view(AppContext::get_request());
-		$object->build_view();
 		return $object->tpl;
 	}
 }
