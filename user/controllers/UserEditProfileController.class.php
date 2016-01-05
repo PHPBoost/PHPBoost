@@ -191,10 +191,13 @@ class UserEditProfileController extends AbstractController
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists($this->user->get_id()))
 		));
 
-		$connect_fieldset->add_field(new FormFieldPasswordEditor('old_password', $this->lang['password.old'], '', array(
-			'description' => $this->lang['password.old.explain'], 'hidden' => $more_than_one_authentication_type))
-		);
-
+		if (!AppContext::get_current_user()->is_admin())
+		{
+			$connect_fieldset->add_field(new FormFieldPasswordEditor('old_password', $this->lang['password.old'], '', array(
+				'description' => $this->lang['password.old.explain'], 'hidden' => $more_than_one_authentication_type))
+			);
+		}
+		
 		$connect_fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '',
 			array('description' => StringVars::replace_vars($this->lang['password.explain'], array('number' => $security_config->get_internal_password_min_length())), 'hidden' => $more_than_one_authentication_type),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
@@ -341,11 +344,11 @@ class UserEditProfileController extends AbstractController
 			elseif (!empty($password))
 			{
 				$old_password = $this->form->get_value('old_password');
-				if (!empty($old_password))
+				if (!empty($old_password) || AppContext::get_current_user()->is_admin())
 				{
 					$old_password_hashed = KeyGenerator::string_hash($old_password);
 
-					if ($old_password_hashed == $this->internal_auth_infos['password'])
+					if ($old_password_hashed == $this->internal_auth_infos['password'] || AppContext::get_current_user()->is_admin())
 					{
 						PHPBoostAuthenticationMethod::update_auth_infos($user_id, $login, $approbation, KeyGenerator::string_hash($password));
 						$has_error = false;
