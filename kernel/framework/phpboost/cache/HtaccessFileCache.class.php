@@ -76,7 +76,7 @@ class HtaccessFileCache implements CacheData
 		
 		$this->add_expires_headers();
 		
-		//$this->disable_file_etags();
+		$this->disable_file_etags();
 		
 		$this->add_manual_content();
 		
@@ -103,7 +103,7 @@ class HtaccessFileCache implements CacheData
 	{
 		$this->add_section('Disable signatures protection');
 		$this->add_line('# Disable your Apache version number from showing up in HTTP headers for added security');
-		$this->add_line('<IfDefine IfModule>');
+		$this->add_line('<IfDefine !Free>');
 		$this->add_line('	<IfModule ModSecurity.c>');
 		$this->add_line('		ServerSignature Off');
 		$this->add_line('		SecServerSignature \'\'');
@@ -127,7 +127,7 @@ class HtaccessFileCache implements CacheData
 	private function add_server_protections()
 	{
 		$this->add_section('Server protection');
-		$this->add_line('<IfDefine IfModule>');
+		$this->add_line('<IfDefine !Free>');
 		$this->add_line('	<IfModule mod_access.c>');
 		$this->add_line('		# Do Not Track: Universal Third-Party Web Tracking Opt Out');
 		$this->add_line('		# http://datatracker.ietf.org/doc/draft-mayer-do-not-track/');
@@ -143,7 +143,7 @@ class HtaccessFileCache implements CacheData
 	private function add_http_headers()
 	{
 		$this->add_section('HTTP Headers');
-		$this->add_line('<IfDefine IfModule>');
+		$this->add_line('<IfDefine !Free>');
 		$this->add_line('	<IfModule mod_headers.c>');
 		$this->add_line('		# Enable keep-alive');
 		$this->add_line('		Header set Connection keep-alive');
@@ -371,7 +371,7 @@ class HtaccessFileCache implements CacheData
 	private function add_gzip_compression()
 	{
 		$this->add_section('Gzip compression');
-		$this->add_line('<IfDefine IfModule>');
+		$this->add_line('<IfDefine !Free>');
 		$this->add_line('	<IfModule mod_filter.c>');
 		$this->add_line('		# Compress HTML, CSS, JavaScript, Text, XML and fonts');
 		$this->add_line('		AddOutputFilterByType DEFLATE application/javascript');
@@ -410,7 +410,7 @@ class HtaccessFileCache implements CacheData
 	private function add_expires_headers()
 	{
 		$this->add_section('Expires Headers');
-		$this->add_line('<IfDefine IfModule>');
+		$this->add_line('<IfDefine !Free>');
 		$this->add_line('	<IfModule mod_expires.c>');
 		$this->add_line('		ExpiresActive On');
 		$this->add_empty_line();
@@ -469,8 +469,10 @@ class HtaccessFileCache implements CacheData
 	private function disable_file_etags()
 	{
 		$this->add_section('Disable file etags');
-		$this->add_line('Header unset ETag');
-		$this->add_line('FileETag none');
+		$this->add_line('<IfDefine !Free>');
+		$this->add_line('	Header unset ETag');
+		$this->add_line('	FileETag none');
+		$this->add_line('</IfDefine>');
 	}
 
 	private function add_manual_content()
