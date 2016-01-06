@@ -62,7 +62,7 @@ class UserUsersListController extends AbstractController
 		$table = new HTMLTable($table_model);
 
 		$results = array();
-		$result = $table_model->get_sql_results('m LEFT JOIN ' . DB_TABLE_INTERNAL_AUTHENTICATION .' ia ON ia.user_id = m.user_id');
+		$result = $table_model->get_sql_results();
 		foreach ($result as $row)
 		{
 			$posted_msg = !empty($row['posted_msg']) ? $row['posted_msg'] : '0';
