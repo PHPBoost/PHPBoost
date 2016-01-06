@@ -180,8 +180,8 @@ class ContactController extends ModuleController
 		$message .= $this->form->get_value('f_message');
 		
 		$mail = new Mail();
-		$mail->set_sender(MailServiceConfig::load()->get_default_mail_sender(), $this->lang['module_title']);
-		$mail->set_reply_to($this->form->get_value('f_sender_mail'), ($current_user->get_level() == User::VISITOR_LEVEL ? $this->lang['module_title'] : $current_user->get_display_name()));
+		$mail->set_sender(MailServiceConfig::load()->get_default_mail_sender(), $this->lang['module_title'] . ' - ' . $current_user->get_display_name());
+		$mail->set_reply_to($this->form->get_value('f_sender_mail'), $this->lang['module_title'] . ' - ' . $current_user->get_display_name());
 		$mail->set_subject($subject);
 		$mail->set_content($message);
 		
