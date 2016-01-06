@@ -36,7 +36,7 @@ class CalendarSearchable extends AbstractSearchableExtensionPoint
 			id_event AS id_content,
 			title,
 			( 2 * FT_SEARCH_RELEVANCE(title, '" . $args['search'] . "') + FT_SEARCH_RELEVANCE(contents, '" . $args['search'] . "') ) / 3 * " . $weight . " AS relevance,
-			CONCAT('" . PATH_TO_ROOT . "/calendar/index.php?url=/', id_category, '-', IF(id_category != 0, cat.rewrited_name, 'root'), '/', id_event, '-', event_content.rewrited_title) AS link
+			CONCAT('" . PATH_TO_ROOT . "/calendar/" . (!ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? "index.php?url=/" : "") . "', id_category, '-', IF(id_category != 0, cat.rewrited_name, 'root'), '/', id_event, '-', event_content.rewrited_title) AS link
 			FROM " . CalendarSetup::$calendar_events_table . " event
 			LEFT JOIN " . CalendarSetup::$calendar_events_content_table . " event_content ON event_content.id = event.content_id
 			LEFT JOIN ". CalendarSetup::$calendar_cats_table ." cat ON id_category = cat.id
