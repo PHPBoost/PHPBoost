@@ -39,7 +39,7 @@ class BugtrackerSearchable extends AbstractSearchableExtensionPoint
 			id AS id_content,
 			title,
 			( 2 * FT_SEARCH_RELEVANCE(title, '" . $args['search'] . "') + FT_SEARCH_RELEVANCE(contents, '" . $args['search'] . "') ) / 3 * " . $weight . " AS relevance,
-			CONCAT('" . PATH_TO_ROOT . "/bugtracker/index.php?url=/detail/',id) AS link
+			CONCAT('" . PATH_TO_ROOT . "/bugtracker/" . (!ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? "index.php?url=/" : "") . "detail/',id) AS link
 			FROM " . BugtrackerSetup::$bugtracker_table . "
 			WHERE ( FT_SEARCH(title, '" . $args['search'] . "') OR FT_SEARCH(contents, '" . $args['search'] . "') )
 			ORDER BY relevance DESC
