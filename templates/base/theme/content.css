@@ -18,6 +18,7 @@ Contient les elements :
 /* ------------------------------------ */
 section,
 article {
+	position: relative;
 	margin: 0 auto;
 	width: 100%;
 	vertical-align: top;
@@ -629,8 +630,8 @@ body.dragging * {
 }
 
 .message {
-	margin-bottom: 20px;
 	width: 98%;
+	margin-bottom: 20px;
 	overflow: auto;
 }
 
@@ -655,8 +656,12 @@ body.dragging * {
 	margin-left: 150px;
 }
 
+.message-date i {
+	vertical-align: top;
+}
+
 .message-user-infos {
-	float: left;
+	float: left;	
 	width: 120px;
 	text-align: center;
 }
@@ -672,69 +677,171 @@ body.dragging * {
 	color: #333333;
 }
 
-.message-message::after,
 .message-message::before {
 	position: absolute;
-	display: block;
-	width: 0;
-	content: "";
-}
-
-.message-message::before {
 	top: 15px;
 	bottom: auto;
 	left: -25px;
+	display: block;
+	width: 0;
 	border-width: 15px 25px 15px 0;
 	border-color: transparent #D6DEE7;
 	border-style: solid;
+	content: "";
 }
 
 .message-message::after {
+	position: absolute;
+	content: "";
 	top: 16px;
 	bottom: auto;
 	left: -24px;
+	display: block;
+	width: 0;
 	border-width: 14px 24px 14px 0;
 	border-color: transparent #ECEFFA;
-	border-style: solid;
+	border-style: solid;	
 }
 
 .message-avatar {
 	width: 80px;
 }
 
-.message-user-infos img {
+.message-user-infos img.message-avatar {
 	padding: 10px 0;
+}
+
+article .message-user-infos .message-user-group {
+	display: none;
+}
+
+@media (max-width: 480px) {
+	.message-user-infos img.message-avatar {
+		float: left;
+		margin: 5px 5px 0 15px;
+		padding: 4px;
+		max-height: 54px;
+		width: auto;
+	}
+
+	.message-message {
+		border-top: 1px solid #CAD1EB;
+	}
+
+	.message-pseudo {
+		float: right;
+		padding: 20px 10px 0 0px;
+	}
+
+	.message-level {
+		display: none;
+	}
+
+	.message-date {
+		float: right;
+		margin: 0 15px 0 0;
+		padding: 20px 0 0 0;
+		max-width: 120px;
+		text-align: right;
+	}
+
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+	.message-container {
+		padding-left: 70px;
+	}
+
+	.message-pseudo {
+		padding: 20px 10px 0 15px;
+	}
+	
+	.message-user-infos img {
+		position: absolute;
+		top: 20px;
+		left: 15px;
+		max-width: 54px;
+	}
+
+	.message-date {
+		margin: 0;
+		padding: 23px 0 0 0;
+		text-align: left;
+	}
+
 }
 
 @media (max-width: 768px) {
 	.message-container {
-		padding: 4px;
-		border: 1px solid #d1d2d4;
+		position: relative;
+		min-height: 80px;
+		background-color: #ECEFFA;
+		border: 1px solid #D6DEE7;
 		border-radius: 4px;
-	}
-
-	.message-user-infos {
-		width: 80px;
-	}
-
-	.message-user-infos img {
-		max-width: 40px;
-	}
-
-	.message-date {
-		margin-left: 90px;
-	}
-
-	.message-date span.actions {
-		float: none;
-		display: block;
-		margin-bottom: 20px;
-		text-align: right;
+		color: #333333;
 	}
 
 	.message-message {
-		clear: both;
+		background-color: none;
+		border: none;
+		border-radius: 0;
+	}
+
+	.message-message::after,
+	.message-message::before {
+		display: none;
+	}
+
+	.message-user-infos {
+		display: inline-block;
+	}
+
+	.message-pseudo {
+		text-align: left;
+	}
+
+	.message-pseudo a {
+		color: #555555;
+		font-size: 1.2em;
+		font-weight: bold;
+	}
+	.message-pseudo a:hover {
+		color: #222222;
+		text-decoration: none;
+	}
+	
+	.message-user-infos {
+		width: auto;
+	}
+
+	.message-user-infos img {
+		padding: 3px;
+		background-color: #fff;
+		box-shadow: 0 1px 9px #e0e0e0,inset 0 0 2px rgba(215,215,215,0.75);
+	}
+
+	.message-date {
+		display: inline-block;
+		font-size: 0.8em;
+	}
+
+	.message-date span.actions {
+		position: absolute;
+		bottom: 5px;
+		right: 8px;
+		z-index: 1;
+		display: block;
+		text-align: right;
+		font-size: 1.2em;
+	}
+	.message-date span.actions a {
+		display: inline-block;
+		padding: 5px 2px 5px 2px;
+	}
+
+	.message-message {
 		margin: 0;
+		clear: both;
 	}
 
 	.message-message::before {
