@@ -139,7 +139,7 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 		{
 			AppContext::get_response()->redirect($this->facebook->getLoginUrl(array('scope' => 'email')));
 		}
-		return $this->facebook->api('/me');
+		return $this->facebook->api('/me', array('fields' => 'id,name,email'));
 	}
 }
 ?>
