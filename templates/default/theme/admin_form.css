@@ -547,6 +547,16 @@ fieldset[id*=advises] .form-element {
 	text-decoration: none;
 }
 
+@media (min-width: 769px) {
+	.form-field-select {
+		width: 59%;
+	}
+}
+
+.form-field-select select {
+	max-width: 100%;
+}
+
 /* --- Label pour les checkbox et radio --- */
 .form-field label {
 	display: block;
