@@ -42,7 +42,7 @@ class DownloadSearchable extends AbstractSearchableExtensionPoint
 			d.name AS title,
 			( 2 * FT_SEARCH_RELEVANCE(d.name, '" . $args['search'] . "') + (FT_SEARCH_RELEVANCE(d.contents, '" . $args['search'] . "') +
 			FT_SEARCH_RELEVANCE(d.short_contents, '" . $args['search'] . "')) / 2 ) / 3 * " . $weight . " AS relevance,
-			CONCAT('" . PATH_TO_ROOT . "/download/index.php?url=/', id_category, '-', IF(id_category != 0, cat.rewrited_name, 'root'), '/', d.id, '-', d.rewrited_name) AS link
+			CONCAT('" . PATH_TO_ROOT . "/download/" . (!ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? "index.php?url=/" : "") . "', id_category, '-', IF(id_category != 0, cat.rewrited_name, 'root'), '/', d.id, '-', d.rewrited_name) AS link
 			FROM " . DownloadSetup::$download_table . " d
 			LEFT JOIN ". DownloadSetup::$download_cats_table ." cat ON d.id_category = cat.id
 			WHERE ( FT_SEARCH(d.name, '" . $args['search'] . "') OR FT_SEARCH(d.contents, '" . $args['search'] . "') OR FT_SEARCH_RELEVANCE(d.short_contents, '" . $args['search'] . "') )
