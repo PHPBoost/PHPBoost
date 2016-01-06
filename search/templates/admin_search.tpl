@@ -96,14 +96,11 @@
 			<form action="admin_search.php?clear=1&amp;token={TOKEN}" name="form" method="post" class="fieldset-content">
 				<fieldset>
 					<legend>{L_CLEAR_OUT_CACHE}</legend>
-					<div class="fieldset-inset">
-						<p class="center">
-							<a href="admin_search.php?clear=1" title="{L_CLEAR_OUT_CACHE}">
-								<i class="fa fa-refresh fa-2x"></i>
-							</a>
-							<br />
-							<a href="admin_search.php?clear=1">{L_CLEAR_OUT_CACHE}</a>
-						</p>
+					<div class="fieldset-inset fieldset-refresh">
+						<a href="admin_search.php?clear=1" title="{L_CLEAR_OUT_CACHE}">
+							<i class="fa fa-refresh fa-2x"></i>
+							<span>{L_CLEAR_OUT_CACHE}</span>
+						</a>
 					</div>
 				</fieldset>
 			</form>
