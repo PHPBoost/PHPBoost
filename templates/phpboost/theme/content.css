@@ -642,7 +642,7 @@ body.dragging, body.dragging * {
 }
 
 #comments-list > header { 
-	display:none;
+	display: none;
 }
 
 .message {
@@ -652,7 +652,7 @@ body.dragging, body.dragging * {
 }
 
 #comments-list .message > header {
-	display:none;
+	display: none;
 }
 
 .message > footer {
@@ -680,9 +680,6 @@ body.dragging, body.dragging * {
 	text-align: center;
 	width: 120px;
 	float: left;
-}
-
-.message-container {
 }
 
 .message-message {
@@ -726,12 +723,6 @@ body.dragging, body.dragging * {
 	width: 80px;
 }
 
-.message-content {
-}
-
-.message-pseudo a {
-}
-
 .message-user-infos img.message-avatar {
 	padding: 10px 0;
 }
@@ -741,16 +732,12 @@ article .message-user-infos .message-user-group {
 }
 
 @media (max-width: 480px) {
-	.message-user-infos {
-
-	}
-
 	.message-user-infos img.message-avatar {
  		max-height: 54px;
-    	width: auto;
-	    padding: 4px;
-	    margin: 5px 5px 0 15px;
-	    float: left;
+    		width: auto;
+		padding: 4px;
+		margin: 5px 5px 0 15px;
+		float: left;
 	}
 
 	.message-message {
@@ -763,7 +750,7 @@ article .message-user-infos .message-user-group {
 	}
 
 	.message-level {
-		display: ;
+		display: none;
 	}
 
 	.message-date {
