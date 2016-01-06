@@ -94,8 +94,8 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 			$result = $db_querier->select_rows(PREFIX . 'download', array('id', 'id_category', 'rewrited_name'));
 			while ($row = $result->fetch())
 			{
-				$category = $categories[$row['id_category']];
-				if (!empty($category))
+				$category = isset($categories[$row['id_category']]) ? $categories[$row['id_category']] : null;
+				if ($category !== null)
 				{
 					$this->urls_mappings[] = new UrlMapping('^download/download-' . $row['id'] . '(-?[^.]*)\.php$', '/download/' . $category->get_id() . '-' . $category->get_rewrited_name() . '/' . $row['id'] . '-' . $row['rewrited_name'], 'L,R=301');
 					$this->urls_mappings[] = new UrlMapping('^download/file-' . $row['id'] . '(-?[^.]*)\.php$', '/download/' . $category->get_id() . '-' . $category->get_rewrited_name() . '/' . $row['id'] . '-' . $row['rewrited_name'], 'L,R=301');
@@ -138,8 +138,8 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 			$result = $db_querier->select_rows(PREFIX . 'web', array('id', 'id_category', 'rewrited_name'));
 			while ($row = $result->fetch())
 			{
-				$category = $categories[$row['id_category']];
-				if (!empty($category))
+				$category = isset($categories[$row['id_category']]) ? $categories[$row['id_category']] : null;
+				if ($category !== null)
 				{
 					$this->urls_mappings[] = new UrlMapping('^web/web-' . $category->get_id() . '-' . $row['id'] . '([^.]*)\.php$', '/web/' . $category->get_id() . '-' . $category->get_rewrited_name() . '/' . $row['id'] . '-' . $row['rewrited_name'], 'L,R=301');
 				}
