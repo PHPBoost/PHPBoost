@@ -75,7 +75,7 @@ class AdminViewAllMembersController extends AdminController
 		$table_model->set_caption(LangLoader::get_message('members.members-management', 'admin-user-common'));
 		
 		$results = array();
-		$result = $table_model->get_sql_results('m LEFT JOIN ' . DB_TABLE_INTERNAL_AUTHENTICATION .' ia ON ia.user_id = m.user_id', array('m.*', 'ia.approved'));
+		$result = $table_model->get_sql_results('m LEFT JOIN ' . DB_TABLE_INTERNAL_AUTHENTICATION .' ia ON ia.user_id = m.user_id', array('m.*', 'ia.approved', 'ia.login'));
 		foreach ($result as $row)
 		{
 			$user = new User();
@@ -95,7 +95,7 @@ class AdminViewAllMembersController extends AdminController
 				new HTMLTableRowCell(new LinkHTMLElement('mailto:' . $user->get_email(), $this->lang['email'], array(), 'basic-button smaller')),
 				new HTMLTableRowCell(Date::to_format($row['registration_date'], Date::FORMAT_DAY_MONTH_YEAR)),
 				new HTMLTableRowCell(!empty($row['last_connection_date']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('never', 'main')),
-				new HTMLTableRowCell($row['approved'] ? LangLoader::get_message('yes', 'common') : LangLoader::get_message('no', 'common')),
+				new HTMLTableRowCell(empty($row['login']) || $row['approved'] ? LangLoader::get_message('yes', 'common') : LangLoader::get_message('no', 'common')),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display())
 			));
 		}
