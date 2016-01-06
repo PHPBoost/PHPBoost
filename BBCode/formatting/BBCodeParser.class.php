@@ -48,21 +48,25 @@ class BBCodeParser extends ContentFormattingParser
 	 */
 	public function parse()
 	{
+		//On decode le contenu
 		$this->content = TextHelper::html_entity_decode($this->content);
 		
-		//On supprime d'abord toutes les occurences de balises CODE que nous réinjecterons à la fin pour ne pas y toucher
+		//On remplace les tabulations par des espaces
+		$this->content = preg_replace('`\t`sU', '    ', $this->content);
+		
+		//On supprime d'abord toutes les occurences de balises CODE que nous rÃ©injecterons Ã  la fin pour ne pas y toucher
 		if (!in_array('code', $this->forbidden_tags))
 		{
 			$this->pick_up_tag('code', '=[A-Za-z0-9#+-]+(?:,[01]){0,2}');
 		}
 
-		//On prélève tout le code HTML afin de ne pas l'altérer
+		//On prÃ©lÃ¨ve tout le code HTML afin de ne pas l'altÃ©rer
 		if (!in_array('html', $this->forbidden_tags) && AppContext::get_current_user()->check_auth($this->html_auth, 1))
 		{
 			$this->pick_up_tag('html');
 		}
 
-		//Ajout des espaces pour éviter l'absence de parsage lorsqu'un séparateur de mot est éxigé
+		//Ajout des espaces pour Ã©viter l'absence de parsage lorsqu'un sÃ©parateur de mot est Ã©xigÃ©
 		$this->content = ' ' . $this->content . ' ';
 
 		//Traitement du code HTML
@@ -71,7 +75,7 @@ class BBCodeParser extends ContentFormattingParser
 		//Traitement des smilies
 		$this->parse_smilies();
 
-		//Interprétation des sauts de ligne
+		//InterprÃ©tation des sauts de ligne
 		$this->content = nl2br($this->content);
 		$this->content = str_replace(array(' <br />', ' <br>', ' <br/>'), '<br />', $this->content);
 		
@@ -90,7 +94,7 @@ class BBCodeParser extends ContentFormattingParser
 			$this->parse_list();
 		}
 
-		//On remet le code HTML mis de côté
+		//On remet le code HTML mis de cÃ´tÃ©
 		if (!empty($this->array_tags['html']))
 		{
 			$this->array_tags['html'] = array_map(create_function('$string', 'return str_replace("[html]", "<!-- START HTML -->\n", str_replace("[/html]", "\n<!-- END HTML -->", $string));'), $this->array_tags['html']);
@@ -99,7 +103,7 @@ class BBCodeParser extends ContentFormattingParser
 
 		parent::parse();
 			
-		//On réinsère les fragments de code qui ont été prévelevés pour ne pas les considérer
+		//On rÃ©insÃ¨re les fragments de code qui ont Ã©tÃ© prÃ©velevÃ©s pour ne pas les considÃ©rer
 		if (!empty($this->array_tags['code']))
 		{
 			$this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isU\', \'[[CODE$1]]$2[[/CODE]]\', TextHelper::htmlspecialchars($string, ENT_NOQUOTES));'), $this->array_tags['code']);
@@ -126,9 +130,9 @@ class BBCodeParser extends ContentFormattingParser
 
 		//Treatment of the Word pasted characters
 		$array_str = array(
-			'€', '‚', 'ƒ', '„', '…', '†', '‡', 'ˆ', '‰',
-			'Š', '‹', 'Œ', 'Ž', '‘', '’', '“', '”', '•',
-			'–', '—',  '˜', '™', 'š', '›', 'œ', 'ž', 'Ÿ'
+			'â‚¬', 'â€š', 'Æ’', 'â€ž', 'â€¦', 'â€ ', 'â€¡', 'Ë†', 'â€°',
+			'Å ', 'â€¹', 'Å’', 'Å½', 'â€˜', 'â€™', 'â€œ', 'â€', 'â€¢',
+			'â€“', 'â€”',  'Ëœ', 'â„¢', 'Å¡', 'â€º', 'Å“', 'Å¾', 'Å¸'
 			);
 
 			$array_str_replace = array(
@@ -147,7 +151,7 @@ class BBCodeParser extends ContentFormattingParser
 		$smileys_cache = SmileysCache::load()->get_smileys();
 		if (!empty($smileys_cache))
 		{
-			//Création du tableau de remplacement.
+			//CrÃ©ation du tableau de remplacement.
 			foreach ($smileys_cache as $code => $infos)
 			{
 				$smiley_code[] = '`(?:(?![a-z0-9]))(?<!&[a-z]{4}|&[a-z]{5}|&[a-z]{6}|")(' . preg_quote($code) . ')(?:(?![a-z0-9]))`';
@@ -235,7 +239,7 @@ class BBCodeParser extends ContentFormattingParser
 			//Suppression des remplacements des balises interdites.
 			if (!empty($this->forbidden_tags))
 			{
-				//Si on interdit les liens, on ajoute toutes les manières par lesquelles elles peuvent passer
+				//Si on interdit les liens, on ajoute toutes les maniÃ¨res par lesquelles elles peuvent passer
 				if (in_array('url', $this->forbidden_tags))
 				{
 					$this->forbidden_tags[] = 'url1';
@@ -289,7 +293,7 @@ class BBCodeParser extends ContentFormattingParser
 				$this->content = preg_replace_callback('`\[wikipedia(?: page="([^"]+)")?(?: lang="([a-z]+)")?\](.+)\[/wikipedia\]`isU', array($this, 'parse_wikipedia_links'), $this->content);
 			}
 
-			##Parsage des balises imbriquées.
+			##Parsage des balises imbriquÃ©es.
 			//Quote tag
 			if (!in_array('quote', $this->forbidden_tags))
 			{
@@ -344,12 +348,12 @@ class BBCodeParser extends ContentFormattingParser
 				//Si c'est le contenu d'un tableau on le parse
 				if ($i % 3 === 2)
 				{
-					//On parse d'abord les sous tableaux éventuels
+					//On parse d'abord les sous tableaux Ã©ventuels
 					$this->parse_imbricated_table($content[$i]);
-					//On parse le tableau concerné (il doit commencer par [row] puis [col] ou [head] et se fermer pareil moyennant espaces et retours à la ligne sinon il n'est pas valide)
+					//On parse le tableau concernÃ© (il doit commencer par [row] puis [col] ou [head] et se fermer pareil moyennant espaces et retours Ã  la ligne sinon il n'est pas valide)
 					if (preg_match('`^(?:\s|<br />)*\[row(?: style="[^"]+")?\](?:\s|<br />)*\[(?:col|head)(?: colspan="[0-9]+")?(?: rowspan="[0-9]+")?(?: style="[^"]+")?\].*\[/(?:col|head)\](?:\s|<br />)*\[/row\](?:\s|<br />)*$`sU', $content[$i]))
 					{
-						//On nettoie les caractères éventuels (espaces ou retours à la ligne) entre les différentes cellules du tableau pour éviter les erreurs xhtm
+						//On nettoie les caractÃ¨res Ã©ventuels (espaces ou retours Ã  la ligne) entre les diffÃ©rentes cellules du tableau pour Ã©viter les erreurs xhtm
 						$content[$i] = preg_replace_callback('`^(\s|<br />)+\[row.*\]`U', array('BBCodeParser', 'clear_html_br'), $content[$i]);
 						$content[$i] = preg_replace_callback('`\[/row\](\s|<br />)+$`U', array('BBCodeParser', 'clear_html_br'), $content[$i]);
 						$content[$i] = preg_replace_callback('`\[/row\](\s|<br />)+\[row.*\]`U', array('BBCodeParser', 'clear_html_br'), $content[$i]);
@@ -365,18 +369,18 @@ class BBCodeParser extends ContentFormattingParser
 						$content[$i] = preg_replace('`\[row( style="[^"]+")?\](.*)\[/row\]`sU', '<tr class="formatter-table-row"$1>$2</tr>', $content[$i]);
 						$content[$i] = preg_replace('`\[col((?: colspan="[0-9]+")?(?: rowspan="[0-9]+")?(?: style="[^"]+")?)?\](.*)\[/col\]`sU', '<td class="formatter-table-col"$1>$2</td>', $content[$i]);
 						$content[$i] = preg_replace('`\[head((?: colspan="[0-9]+")?(?: style="[^"]+")?)?\](.*)\[/head\]`sU', '<th class="formatter-table-head"$1>$2</th>', $content[$i]);
-						//parsage réussi (tableau valide), on rajoute le tableau devant
+						//parsage rÃ©ussi (tableau valide), on rajoute le tableau devant
 						$content[$i] = '<table class="formatter-table"' . $content[$i - 1] . '>' . $content[$i] . '</table>';
 
 					}
 					else
 					{
-						//le tableau n'est pas valide, on met des balises temporaires afin qu'elles ne soient pas parsées au niveau inférieur
+						//le tableau n'est pas valide, on met des balises temporaires afin qu'elles ne soient pas parsÃ©es au niveau infÃ©rieur
 						$content[$i] = str_replace(array('[col', '[row', '[/col', '[/row', '[head', '[/head'), array('[\col', '[\row', '[\/col', '[\/row', '[\head', '[\/head'), $content[$i]);
 						$content[$i] = '[table' . $content[$i - 1] . ']' . $content[$i] . '[/table]';
 					}
 				}
-				//On concatène la chaîne finale si ce n'est pas le style du tableau
+				//On concatÃ¨ne la chaÃ®ne finale si ce n'est pas le style du tableau
 				if ($i % 3 !== 1)
 				$string_content .= $content[$i];
 			}
@@ -389,10 +393,10 @@ class BBCodeParser extends ContentFormattingParser
 	 */
 	protected function parse_table()
 	{
-		//On supprime les éventuels quote qui ont été transformés en leur entité html
+		//On supprime les Ã©ventuels quote qui ont Ã©tÃ© transformÃ©s en leur entitÃ© html
 		$this->split_imbricated_tag($this->content, 'table', ' style="[^"]+"');
 		$this->parse_imbricated_table($this->content);
-		//On remet les tableaux invalides tels qu'ils étaient avant
+		//On remet les tableaux invalides tels qu'ils Ã©taient avant
 		$this->content = str_replace(array('[\col', '[\row', '[\/col', '[\/row', '[\head', '[\/head'), array('[col', '[row', '[/col', '[/row', '[head', '[/head'), $this->content);
 	}
 
@@ -412,13 +416,13 @@ class BBCodeParser extends ContentFormattingParser
 				//Si c'est le contenu d'une liste on le parse
 				if ($i % 3 === 2)
 				{
-					//On parse d'abord les sous listes éventuelles
+					//On parse d'abord les sous listes Ã©ventuelles
 					if (is_array($content[$i]))
 					$this->parse_imbricated_list($content[$i]);
 
-					if (strpos($content[$i], '[*]') !== false) //Si il contient au moins deux éléments
+					if (strpos($content[$i], '[*]') !== false) //Si il contient au moins deux Ã©lÃ©ments
 					{
-						//Nettoyage des listes (retours à la ligne)
+						//Nettoyage des listes (retours Ã  la ligne)
 						$content[$i] = preg_replace_callback('`\[\*\]((?:\s|<br />)+)`', array('BBCodeParser', 'clear_html_br'), $content[$i]);
 						$content[$i] = preg_replace_callback('`((?:\s|<br />)+)\[\*\]`', array('BBCodeParser', 'clear_html_br'), $content[$i]);
 						if (substr($content[$i - 1], 0, 8) == '=ordered')
@@ -434,7 +438,7 @@ class BBCodeParser extends ContentFormattingParser
 						$content[$i] = '<' . $list_tag . $content[$i - 1] . ' class="formatter-' . $list_tag . '">' . str_replace('[*]', '</li><li class="formatter-li">', $content[$i]) . '</li></' . $list_tag . '>';
 					}
 				}
-				//On concatène la chaîne finale si ce n'est pas le style ou le type de tableau
+				//On concatÃ¨ne la chaÃ®ne finale si ce n'est pas le style ou le type de tableau
 				if ($i % 3 !== 1)
 				$string_content .= $content[$i];
 			}
@@ -447,7 +451,7 @@ class BBCodeParser extends ContentFormattingParser
 	 */
 	protected function parse_list()
 	{
-		//On nettoie les guillemets échappés
+		//On nettoie les guillemets Ã©chappÃ©s
 		//on travaille dessus
 		if (preg_match('`\[list(=(?:un)?ordered)?( style="[^"]+")?\](\s|<br />)*\[\*\].*\[/list\]`s', $this->content))
 		{
