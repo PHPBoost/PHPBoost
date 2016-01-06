@@ -158,6 +158,18 @@ fieldset#AdminErrorsController404List_fbuttons{
 	width: 100% !important;
 }
 
+.fieldset-refresh {
+	text-align: center;
+}
+
+.fieldset-refresh a:hover {
+	text-decoration: none;
+}
+
+.fieldset-refresh a:hover span {
+	text-decoration: underline;
+}
+
 fieldset p {
 	margin: 0;
 	padding: 15px 10px;
@@ -184,7 +196,7 @@ option {
 	padding: 0 3px;
 }
 
-/* --- Prévisualition --- */
+/* --- PrÃ©visualition --- */
 .xmlhttprequest-preview {
 	padding: 0 2px;
 	background-color: #FFFFFF;
@@ -732,7 +744,7 @@ textarea#writing_pad_content {
 	border-width: 0 1px 1px 1px;
 }
 
-/* --- CSS appliques aux écrans PC --- */
+/* --- CSS appliques aux Ã©crans PC --- */
 @media (min-width: 769px) {
 	.form-element-textarea-small {
 		width: 49%;
