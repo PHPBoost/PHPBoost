@@ -75,7 +75,7 @@ class AdminViewAllMembersController extends AdminController
 		$table_model->set_caption(LangLoader::get_message('members.members-management', 'admin-user-common'));
 		
 		$results = array();
-		$result = $table_model->get_sql_results('m LEFT JOIN ' . DB_TABLE_INTERNAL_AUTHENTICATION .' ia ON ia.user_id = m.user_id');
+		$result = $table_model->get_sql_results('m LEFT JOIN ' . DB_TABLE_INTERNAL_AUTHENTICATION .' ia ON ia.user_id = m.user_id', array('m.*', 'ia.approved'));
 		foreach ($result as $row)
 		{
 			$user = new User();
