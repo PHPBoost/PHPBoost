@@ -67,7 +67,7 @@ class UserViewProfileController extends AbstractController
 		$fieldset = new FormFieldsetHTML('profile', $this->lang['profile']);
 		$form->add_fieldset($fieldset);
 
-		if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+		if ($this->user_infos['user_id'] == AppContext::get_current_user()->get_id() || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		{
 			$link_edit = '<a href="'. UserUrlBuilder::edit_profile($user_id)->rel() .'" title="'.$this->lang['profile.edit'].'" class="fa fa-edit"></a>';
 			$fieldset->add_field(new FormFieldFree('profile_edit', $this->lang['profile.edit'], $link_edit));
