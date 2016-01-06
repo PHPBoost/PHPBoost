@@ -354,6 +354,16 @@ input.input-minutes { width: 50px;  }
 	}
 }
 
+@media (min-width: 769px) {
+	.form-field-select {
+		width: 59%;
+	}
+}
+
+.form-field-select select {
+	max-width: 100%;
+}
+
 input[disabled=disabled],
 input[disabled=disabled]:hover,
 input[disabled=disabled]:focus,
