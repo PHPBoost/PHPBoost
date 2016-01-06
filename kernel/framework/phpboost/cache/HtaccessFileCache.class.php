@@ -62,7 +62,7 @@ class HtaccessFileCache implements CacheData
 		
 		$this->add_expires_headers();
 		
-		//$this->disable_file_etags();
+		$this->disable_file_etags();
 
 		$this->add_manual_content();
 
@@ -192,23 +192,23 @@ class HtaccessFileCache implements CacheData
 	{
 		$this->add_empty_line();
 		$this->add_line('# Expires Headers #');
-		$this->add_line('<IfDefine IfModule>');
+		$this->add_line('<IfDefine !Free>');
 		$this->add_line('	<IfModule mod_expires.c>');
-	    $this->add_line('	ExpiresActive On');
-	    $this->add_line('	ExpiresDefault "access plus 1 week"');
-	    $this->add_line('	ExpiresByType image/jpg                     "access plus 1 month"');
-	    $this->add_line('	ExpiresByType image/jpeg                    "access plus 1 month"');
-	    $this->add_line('	ExpiresByType image/png                     "access plus 1 month"');
-	    $this->add_line('	ExpiresByType image/gif                     "access plus 1 month"');
-	    $this->add_line('	AddType image/x-icon .ico');
-	    $this->add_line('	ExpiresByType image/ico                     "access plus 1 month"');
-	    $this->add_line('	ExpiresByType image/icon                    "access plus 1 month"');
-	    $this->add_line('	ExpiresByType image/x-icon                  "access plus 1 month"');
-	    $this->add_line('	ExpiresByType text/css                      "access plus 1 month"');
-	    $this->add_line('	ExpiresByType text/javascript               "access plus 1 month"');
-	    $this->add_line('	ExpiresByType application/javascript        "access plus 1 month"');
-	    $this->add_line('	ExpiresByType application/x-javascript      "access plus 1 month"');
-	    $this->add_line('	ExpiresByType application/x-shockwave-flash "access plus 1 month"');
+	    $this->add_line('			ExpiresActive On');
+	    $this->add_line('			ExpiresDefault "access plus 1 week"');
+	    $this->add_line('			ExpiresByType image/jpg                     "access plus 1 month"');
+	    $this->add_line('			ExpiresByType image/jpeg                    "access plus 1 month"');
+	    $this->add_line('			ExpiresByType image/png                     "access plus 1 month"');
+	    $this->add_line('			ExpiresByType image/gif                     "access plus 1 month"');
+	    $this->add_line('			AddType image/x-icon .ico');
+	    $this->add_line('			ExpiresByType image/ico                     "access plus 1 month"');
+	    $this->add_line('			ExpiresByType image/icon                    "access plus 1 month"');
+	    $this->add_line('			ExpiresByType image/x-icon                  "access plus 1 month"');
+	    $this->add_line('			ExpiresByType text/css                      "access plus 1 month"');
+	    $this->add_line('			ExpiresByType text/javascript               "access plus 1 month"');
+	    $this->add_line('			ExpiresByType application/javascript        "access plus 1 month"');
+	    $this->add_line('			ExpiresByType application/x-javascript      "access plus 1 month"');
+	    $this->add_line('			ExpiresByType application/x-shockwave-flash "access plus 1 month"');
 		$this->add_line('	</IfModule>');
 		$this->add_line('</IfDefine>');
 	}
@@ -217,7 +217,9 @@ class HtaccessFileCache implements CacheData
 	{
 		$this->add_empty_line();
 		$this->add_line('# Disable file etags #');
-		$this->add_line('FileETag none');
+		$this->add_line('<IfDefine !Free>');
+		$this->add_line('	FileETag none');
+		$this->add_line('</IfDefine>');
 	}
 
 	private function add_manual_content()
