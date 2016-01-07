@@ -4,6 +4,12 @@
 	<div class="center">
 		# IF C_REGISTRATION_ENABLED # 
 		<a href="{U_REGISTER}"><i class="fa fa-ticket"></i> {@registration}</a><br />
+			# IF C_FB_AUTH_ENABLED #
+			<a class="social-connect fb" href="${relative_url(UserUrlBuilder::connect('fb'))}" title="${LangLoader::get_message('facebook-connect', 'user-common')}"><i class="fa fa-facebook-square biggest"></i></a>
+			# ENDIF #
+			# IF C_GOOGLE_AUTH_ENABLED #
+			<a class="social-connect google" href="${relative_url(UserUrlBuilder::connect('google'))}" title="${LangLoader::get_message('google-connect', 'user-common')}"><i class="fa fa-google-plus-square biggest"></i></a><br />
+			# ENDIF #
 		# ENDIF #
 		<a href="{U_FORGET_PASSWORD}"><i class="fa fa-question-circle"></i> {L_FORGET_PASSWORD}</a>
 	</div>
