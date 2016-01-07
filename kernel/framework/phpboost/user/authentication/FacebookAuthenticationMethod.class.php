@@ -136,7 +136,7 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 		$fb_id = $this->facebook->getUser();
 		if (!$fb_id)
 		{
-			AppContext::get_response()->redirect($this->facebook->getLoginUrl(array('scope' => 'email')));
+			AppContext::get_response()->redirect($this->facebook->getLoginUrl(array('scope' => 'email', 'redirect_uri'  => UserUrlBuilder::connect('fb')->absolute())));
 		}
 		return $this->facebook->api('/me', array('fields' => 'id,name,email'));
 	}
