@@ -52,7 +52,7 @@ class ForumHomeController extends ModuleController
 		}
 		
 		//Vérification des autorisations d'accès.
-		if (!ForumAuthorizationsService::check_authorizations($this->category->get_id())->read())
+		if (!ForumAuthorizationsService::check_authorizations($id_get)->read())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
