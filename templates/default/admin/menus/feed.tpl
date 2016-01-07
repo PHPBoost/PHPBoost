@@ -1,18 +1,18 @@
 <script>
 <!--
 function CheckForm() {
-	if (jQuery('#name').value == '') {
-		jQuery('#name').select();
+	if (jQuery('#name').val() == '') {
+		jQuery('#name').focus();
 		window.alert({JL_REQUIRE_NAME});
 		return false;
 	}
-	if (jQuery('#feed_url').options[0].selected || jQuery('#feed_url').options[1].selected) {
-		jQuery('#feed_url').select();
+	if (jQuery("#feed_url option[value='0']").attr('selected', 'selected') || jQuery("#feed_url option[value='1']").attr('selected', 'selected')) {
+		jQuery('#feed_url').focus();
 		window.alert({JL_REQUIRE_FEED});
 		return false;
 	}
-	if (jQuery('#items_number').value == '' || jQuery('#items_number').value == 0) {
-		jQuery('#items_number').select();
+	if (jQuery('#items_number').val() == '' || jQuery('#items_number').val() == 0) {
+		jQuery('#items_number').focus();
 		window.alert({JL_REQUIRE_ITEMS_NUMBER});
 		return false;
 	}
