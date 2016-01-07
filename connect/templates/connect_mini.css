@@ -78,10 +78,10 @@ div.connect-register i {
 #connect-menu div.vertical-fieldset button {
 	margin: 5px 0;
 }
-	
-#connect-menu a.fb 		{ color: #3B5998; }
-#connect-menu a.google 	{ color: #D8432E; }
-#connect-menu a.twitter { color: #5EA9DD; }
+
+#connect-menu div.horizontal-fieldset button {
+	margin: 0;
+}
 
 .js-menu-button {
 	display: none;
@@ -107,19 +107,6 @@ div.connect-register i {
 		color: #DEDEDE;
 		text-decoration: none;
 	}
-
-	#connect-menu .horizontal-fieldset a.social-connect {
-		display: block;
-		margin-bottom: 10px;
-		padding: 5px;
-		border-radius:4px;
-		color: #DEDEDE;
-		text-align: center;
-	}
-	
-	#connect-menu a.fb 		{ background: #3B5998; }
-	#connect-menu a.google 	{ background: #D8432E; }	
-	#connect-menu a.twitter { background: #5EA9DD; }
 
 	#connect-menu div.horizontal-fieldset span {
 		display: inline-block;
@@ -164,4 +151,50 @@ div.connect-register i {
 		padding: 10px 20px;
 		width: 100%;
 	}
+}
+
+#connect-menu a.social-connect {
+	display: inline-block;
+	margin: 10px 0;
+	width: 30px;
+	height: 30px;
+	vertical-align: top;
+	border-radius:4px;
+	color: #DEDEDE;
+	text-align: center;
+}
+
+#connect-menu .horizontal-fieldset a.social-connect {
+	margin: 0;
+	vertical-align: middle;
+}
+
+@media (max-width: 768px) {
+	#connect-menu .horizontal-fieldset a.social-connect {
+		display: block;
+		width: auto;
+		margin: 5px 0;
+	}
+
+	#connect-menu .horizontal-fieldset a.social-connect i {
+		margin-right: 5px;
+	}
+}
+
+#connect-menu a.social-connect i:before {
+	color: #FFFFFF;
+}
+
+#connect-menu a.fb i:before 	{ font-size: 1.9em; }
+#connect-menu a.google i:before { font-size: 1.8em; }
+
+#connect-menu a.fb 	{ padding: 6px 0 0 4px; }
+#connect-menu a.google 	{ padding: 4px 0 0 0; }
+
+#connect-menu a.fb 	{ background: #3B5998; }
+#connect-menu a.google 	{ background: #D8432E; }	
+#connect-menu a.twitter { background: #5EA9DD; }
+
+#connect-menu .vertical-fieldset a.social-connect span {
+	display: none;
 }
