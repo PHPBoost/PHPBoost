@@ -299,6 +299,10 @@ input[name$="_minutes"] { width: 50px;  }
 	}
 }
 
+.form-element [id$="user_avatar"] img {
+	max-width: 200px;
+}
+
 .form-field {
 	position: relative;
 	display: inline-block;

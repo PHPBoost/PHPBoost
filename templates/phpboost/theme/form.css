@@ -300,6 +300,10 @@ input.input-minutes { width: 50px;  }
 	}
 }
 
+.form-element [id$="user_avatar"] img {
+	max-width: 200px;
+}
+
 .form-field {
 	display: inline-block;
 	max-width: 600px;

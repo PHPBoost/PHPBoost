@@ -513,6 +513,10 @@ fieldset[id*=advises] .form-element {
 	padding: 10px 10px;
 }
 
+.form-element [id$="user_avatar"] img {
+	max-width: 200px;
+}
+
 .form-field {
 	width: 100%;
 	position: relative;
