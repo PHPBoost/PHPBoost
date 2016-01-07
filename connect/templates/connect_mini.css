@@ -70,6 +70,23 @@ div.connect-register i {
 	vertical-align: -1px;
 }
 
+#connect-menu input#login,
+#connect-menu input#password {
+	padding: 4px 6px;
+}
+
+#connect-menu div.horizontal-fieldset input#login,
+#connect-menu div.horizontal-fieldset input#password {
+	margin: 0;
+}
+
+@media (max-width: 768px) {
+	#connect-menu div.horizontal-fieldset input#login,
+	#connect-menu div.horizontal-fieldset input#password {
+		margin: 5px 0;
+	}
+}
+
 #connect-menu div.vertical-fieldset input#login,
 #connect-menu div.vertical-fieldset input#password {
 	width: 120px;
@@ -81,6 +98,37 @@ div.connect-register i {
 
 #connect-menu div.horizontal-fieldset button {
 	margin: 0;
+}
+
+/* Mot de passe oublie */ 
+
+.vertical-fieldset .forgot-pass {
+	color: #999999;
+}
+.vertical-fieldset .forgot-pass:hover {
+	color: #555555;
+}
+
+@media (min-width: 769px) {
+	.forgot-pass {
+		display: inline-block;
+		padding: 0 0 0 5px;
+		vertical-align: middle;
+		color: #E0F3FF;
+	}
+	.forgot-pass:hover {
+		color: #F1F1F1;
+	}
+}
+
+@media (max-width: 768px) {
+	#connect-menu .forgot-pass {
+		padding: 20px;
+		display: block;
+	}
+	#connect-menu .forgot-pass:hover {
+		text-decoration: underline;
+	}
 }
 
 .js-menu-button {

@@ -54,7 +54,7 @@
 						# ENDIF #
 					# ENDIF #
 					<br />
-					<a class="small" href="${relative_url(UserUrlBuilder::forget_password())}"><i class="fa fa-question-circle"></i> {L_FORGOT_PASS}</a>
+					<a class="forgot-pass small" href="${relative_url(UserUrlBuilder::forget_password())}"><i class="fa fa-question-circle"></i> {L_FORGOT_PASS}</a>
 				</div>
 			</div>
 			<div class="module-mini-bottom">
@@ -127,7 +127,7 @@
 					<a class="social-connect google" href="${relative_url(UserUrlBuilder::connect('google'))}" title="${LangLoader::get_message('google-connect', 'user-common')}"><i class="fa fa-google-plus"></i><span>${LangLoader::get_message('google-connect', 'user-common')}</span></a>
 					# ENDIF #
 				# ENDIF #
-				<a class="small" href="${relative_url(UserUrlBuilder::forget_password())}">{L_FORGOT_PASS}</a>
+				<a class="forgot-pass small" href="${relative_url(UserUrlBuilder::forget_password())}">{L_FORGOT_PASS}</a>
 			</div>
 		</div>
 	</div>
