@@ -470,7 +470,6 @@ class HtaccessFileCache implements CacheData
 	{
 		$this->add_section('Disable file etags');
 		$this->add_line('<IfDefine !Free>');
-		$this->add_line('	Header unset ETag');
 		$this->add_line('	FileETag none');
 		$this->add_line('</IfDefine>');
 	}
