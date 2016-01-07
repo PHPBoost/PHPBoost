@@ -32,50 +32,56 @@ class ForumAuthorizationsService
 	const UNLIMITED_TOPICS_TRACKING_AUTHORIZATIONS = 64;
 	const READ_TOPICS_CONTENT_AUTHORIZATIONS = 128;
 	
-	public static function check_authorizations()
+	public static function check_authorizations($id_category = Category::ROOT_CATEGORY)
 	{
 		$instance = new self();
+		$instance->id_category = $id_category;
 		return $instance;
 	}
 	
 	public function read()
 	{
-		return $this->get_authorizations(Category::READ_AUTHORIZATIONS);
+		return $this->is_authorized(Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY);
 	}
 	
 	public function write()
 	{
-		return $this->get_authorizations(Category::WRITE_AUTHORIZATIONS);
+		return $this->is_authorized(Category::WRITE_AUTHORIZATIONS);
 	}
 	
 	public function moderation()
 	{
-		return $this->get_authorizations(Category::MODERATION_AUTHORIZATIONS);
+		return $this->is_authorized(Category::MODERATION_AUTHORIZATIONS);
 	}
 	
 	public function flood()
 	{
-		return $this->get_authorizations(self::FLOOD_AUTHORIZATIONS);
+		return $this->is_authorized(self::FLOOD_AUTHORIZATIONS);
 	}
 	
 	public function hide_edition_mark()
 	{
-		return $this->get_authorizations(self::HIDE_EDITION_MARK_AUTHORIZATIONS);
+		return $this->is_authorized(self::HIDE_EDITION_MARK_AUTHORIZATIONS);
 	}
 	
 	public function unlimited_topics_tracking()
 	{
-		return $this->get_authorizations(self::UNLIMITED_TOPICS_TRACKING_AUTHORIZATIONS);
+		return $this->is_authorized(self::UNLIMITED_TOPICS_TRACKING_AUTHORIZATIONS);
 	}
 	
 	public function read_topics_content()
 	{
-		return $this->get_authorizations(self::READ_TOPICS_CONTENT_AUTHORIZATIONS);
+		return $this->is_authorized(self::READ_TOPICS_CONTENT_AUTHORIZATIONS);
 	}
 	
-	private function get_authorizations($bit)
+	private function is_authorized($bit, $mode = Authorizations::AUTH_CHILD_PRIORITY)
 	{
-		return AppContext::get_current_user()->check_auth(ForumConfig::load()->get_authorizations(), $bit);
+		if (in_array($bit, !array(Category::READ_AUTHORIZATIONS, Category::WRITE_AUTHORIZATIONS, Category::MODERATION_AUTHORIZATIONS)))
+			$auth = ForumConfig::load()->get_authorizations();
+		else
+			$auth = ForumService::get_categories_manager()->get_heritated_authorizations($this->id_category, $bit, $mode);
+		
+		return AppContext::get_current_user()->check_auth($auth, $bit);
 	}
 }
 ?>
