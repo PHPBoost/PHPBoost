@@ -122,8 +122,12 @@ class UserLoginController extends AbstractController
 	
 	private function init_vars_template()
 	{
+		$authentication_config = AuthenticationConfig::load();
+		
 		$this->view->put_all(array(
 			'C_REGISTRATION_ENABLED' => UserAccountsConfig::load()->is_registration_enabled(),
+			'C_FB_AUTH_ENABLED' => $authentication_config->is_fb_auth_available(),
+			'C_GOOGLE_AUTH_ENABLED' => $authentication_config->is_google_auth_available(),
 			'C_USER_LOGIN' => $this->login_type == self::USER_LOGIN && !$this->maintain_config->is_under_maintenance(),
 			'C_ADMIN_LOGIN' => $this->login_type == self::ADMIN_LOGIN,
 			'C_HAS_ERROR' => $this->has_error,
