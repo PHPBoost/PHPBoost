@@ -11,7 +11,7 @@
 		<script src="{PICTURES_DATA_PATH}/js/wiki.js"></script>
 
 		<div class="bbcode wiki-bbcode">
-			<div class="bbcode-containers center">
+			<div class="bbcode-containers">
 			<ul class="bbcode-container">
 				<li class="bbcode-elements">
 					<a href="javascript:insert_link();" title="{L_INSERT_LINK}" class="bbcode-wiki-insert">{L_INSERT_LINK} <i class="fa fa-link"></i></a>

@@ -110,7 +110,19 @@ a.parent i[id^="img2_"] {
 }
 
 .wiki-bbcode {
-	margin-bottom: -7px;
+	margin-bottom: -6px;
+}
+
+.wiki-edit .bbcode-containers {
+	border-radius: 0;
+	border-top: none;
+	text-align: center;
+}
+
+.wiki-edit .wiki-bbcode .bbcode-containers {
+	border-radius: 4px 4px 0 0;
+	border-top: 1px solid #BBBBBB;
+	border-bottom: none;
 }
 
 .bbcode li.bbcode-elements > a.bbcode-wiki-insert {
