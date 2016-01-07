@@ -110,15 +110,12 @@ class GoogleAuthenticationMethod extends AuthenticationMethod
 	 */
 	public function authenticate()
 	{
+		$user_id = 0;
 		$data = $this->get_google_user_data();
 		$google_id = $data['id'];
 
 		try {
-			
-			$condition = 'WHERE method=:method AND identifier=:identifier';
-			$parameters = array('method' => self::AUTHENTICATION_METHOD, 'identifier' => $google_id);
-			return $this->querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', $condition, $parameters);
-			
+			$user_id = $this->querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', 'WHERE method=:method AND identifier=:identifier',  array('method' => self::AUTHENTICATION_METHOD, 'identifier' => $google_id));
 		} catch (RowNotFoundException $e) {
 			
 			$email_exists = $this->querier->row_exists(DB_TABLE_MEMBER, 'WHERE email=:email', array('email' => $data['email']));
@@ -138,6 +135,9 @@ class GoogleAuthenticationMethod extends AuthenticationMethod
 				return UserService::create($user, $auth_method, $fields_data);
 			}
 		}
+		
+		$this->update_user_info($user_id);
+		return $user_id;
 	}
 
 	private function get_google_user_data()
@@ -173,6 +173,11 @@ class GoogleAuthenticationMethod extends AuthenticationMethod
 		{
 			AppContext::get_response()->redirect($this->google_client->createAuthUrl());
 		}
+	}
+
+	private function update_user_info($user_id)
+	{
+		$this->querier->update(DB_TABLE_MEMBER, array('last_connection_date' => time()), $condition, $parameters);
 	}
 }
 ?>
