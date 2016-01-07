@@ -60,11 +60,16 @@
 						<div class="cats">
 							<div class="content">
 								<ul>
-									<li><a class="{CAT_0}" id="class_0" href="javascript:select_cat(0);"><i class="fa fa-folder"></i>{L_DO_NOT_SELECT_ANY_CAT}</a></li>
-									# START create.list #
-										{create.list.DIRECTORY}
-									# END create.list #
-									{CAT_LIST}
+									<li><a class="{CAT_0}" id="class_0" href="javascript:select_cat(0);"><i class="fa fa-folder"></i>{L_DO_NOT_SELECT_ANY_CAT}</a>
+										<ul>
+											# START create.list #
+											<li class="sub">
+												{create.list.DIRECTORY}
+											</li>
+											# END create.list #
+											{CAT_LIST}
+										</ul>
+									</li>
 								</ul>
 							</div>
 						</div>
