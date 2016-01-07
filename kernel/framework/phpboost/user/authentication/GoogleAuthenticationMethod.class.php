@@ -177,7 +177,7 @@ class GoogleAuthenticationMethod extends AuthenticationMethod
 
 	private function update_user_info($user_id)
 	{
-		$this->querier->update(DB_TABLE_MEMBER, array('last_connection_date' => time()), $condition, $parameters);
+		$this->querier->update(DB_TABLE_MEMBER, array('last_connection_date' => time()), 'WHERE user_id=:user_id', array('user_id' => $user_id));
 	}
 }
 ?>
