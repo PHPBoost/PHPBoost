@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                            FacebookAuthenticationMethod.class.php
+ *                            GoogleAuthenticationMethod.class.php
  *                            -------------------
  *   begin                : November 28, 2014
  *   copyright            : (C) 2014 Kevin MASSY
