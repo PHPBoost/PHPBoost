@@ -343,62 +343,58 @@ i.alert {
 }
 
 /* Partie Sociale */
-#connect-menu a.twitter { color: #5EA9DD; }
 
-#connect-menu a.fb i,
-#connect-menu a.google i {
-	height: 25px;
-	width: 32px;
-	color: rgba(255, 255, 255, 0.8);
-	border-radius: 5px;
-	font-size: 1.5em;
-	margin-top: 1px;
-	text-align: left;
-	overflow: hidden;
+#connect-menu a.social-connect {
+	display: inline-block;
+	margin: 10px 0;
+	width: 30px;
+	height: 30px;
+	vertical-align: top;
+	border-radius:4px;
+	color: #DEDEDE;
+	text-align: center;
+}
+
+#connect-menu .horizontal-fieldset a.social-connect {
+	margin: 0;
+	vertical-align: middle;
+}
+
+@media (max-width: 768px) {
+	#connect-menu .horizontal-fieldset a.social-connect {
+		display: block;
+		width: auto;
+		margin: 5px 0;
+	}
+
+	#connect-menu .horizontal-fieldset a.social-connect i {
+		margin-right: 5px;
+	}
+	
+	#connect-menu a.social-connect span { 
+		font-size: 0.89em;
+	}
+}
+
+#connect-menu a.social-connect i:before {
+	color: #EFEFEF;
 	transition: 0.3s ease-out;
 }
-#connect-menu a.fb:hover i,
-#connect-menu a.google:hover i {
+#connect-menu a.social-connect:hover i:before {
 	color: #FFFFFF;
 	transition: 0.3s ease-out;
 }
 
-#connect-menu a.fb i {
-	padding: 4px 0 0 10px;
-	background-color: #3B5998;
-}
+#connect-menu a.fb i:before 	{ font-size: 1.9em; }
+#connect-menu a.google i:before { font-size: 1.8em; }
 
-#connect-menu a.google i {
-	padding: 2px 0 0 0;
-	background-color: #D8432E;
-}
+#connect-menu a.fb 	{ padding: 6px 0 0 4px; }
+#connect-menu a.google 	{ padding: 4px 0 0 0; }
 
-@media (min-width: 769px) {
-	#connect-menu a span { 
-		display: none;
-	}
-}
+#connect-menu a.fb 	{ background: #3B5998; }
+#connect-menu a.google 	{ background: #D8432E; }	
+#connect-menu a.twitter { background: #5EA9DD; }
 
-@media (max-width: 768px) {
-	#connect-menu a.social-connect {
-		color: #DEDEDE;
-		padding: 5px 10px;
-		display: block;
-		text-align: center;
-		margin: 5px auto;
-		border-radius:4px;
-		width: 70%;
-	}
-
-	#connect-menu a.fb {
-		margin-top: 20px;
-	}
-
-	#connect-menu a.fb 	{ background: #3B5998; }
-	#connect-menu a.google 	{ background: #D8432E; }
-	#connect-menu a.twitter { background: #5EA9DD; }
-
-	#connect-menu a.social-connect span { 
-		font-size: 0.89em;
-	}
+#connect-menu .vertical-fieldset a.social-connect span {
+	display: none;
 }
