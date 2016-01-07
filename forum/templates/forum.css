@@ -347,15 +347,19 @@ a.forum-link-cat {
 }
 
 .forum-online-select-cat {
-	float: left;
 	padding: 5px;
-	text-align: right;
 	clear: both;
 }
 
 .forum-online-select {
 	min-width: 160px;
 	max-width: 530px;
+}
+
+@media (max-width: 768px) {
+	.forum-online-select {
+		max-width: 100%;
+	}
 }
 
 /* Contenu */
