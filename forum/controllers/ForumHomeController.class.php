@@ -51,6 +51,13 @@ class ForumHomeController extends ModuleController
 			DispatchManager::redirect($error_controller);
 		}
 		
+		//Vérification des autorisations d'accès.
+		if (!ForumAuthorizationsService::check_authorizations(this->category->get_id())->read())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
+		
 		require_once(PATH_TO_ROOT . '/forum/forum_begin.php');
 		require_once(PATH_TO_ROOT . '/forum/forum_tools.php');
 
