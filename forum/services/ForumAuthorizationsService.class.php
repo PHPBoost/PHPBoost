@@ -76,7 +76,7 @@ class ForumAuthorizationsService
 	
 	private function is_authorized($bit, $mode = Authorizations::AUTH_CHILD_PRIORITY)
 	{
-		if (in_array($bit, !array(Category::READ_AUTHORIZATIONS, Category::WRITE_AUTHORIZATIONS, Category::MODERATION_AUTHORIZATIONS)))
+		if (!in_array($bit, array(Category::READ_AUTHORIZATIONS, Category::WRITE_AUTHORIZATIONS, Category::MODERATION_AUTHORIZATIONS)))
 			$auth = ForumConfig::load()->get_authorizations();
 		else
 			$auth = ForumService::get_categories_manager()->get_heritated_authorizations($this->id_category, $bit, $mode);
