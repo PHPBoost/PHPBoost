@@ -94,16 +94,22 @@ h4.formatter-title {
 
 .form-field .calendar-container {
 	display: inline-block;
+	position: relative;
 }
 
 .calendar-block {
 	position: absolute;
 	border: 1px solid #999999;
-	top: 2px;
-	left: 17px;
 	z-index: 10;
 	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 	border-radius: 3px;
+}
+
+@media (min-width: 769px) {
+	.calendar-block {
+		top: 22px;
+		right: -10px;
+	}
 }
 
 .calendar-block .date-picker {
@@ -112,8 +118,19 @@ h4.formatter-title {
 	table-layout: fixed;
 }
 
+@media (max-width: 768px) {
+	.calendar-block {
+		top: 22px;
+		left: -40px;
+	}
+
+	.calendar-block .date-picker {
+		width: 250px;
+	}
+}
+
 .calendar-block .date-select-container {
-	background: #F5F5F5;
+	background-color: #F5F5F5;
 	padding: 2px 0;
 	border-radius: 3px 3px 0 0;
 }
@@ -136,6 +153,7 @@ h4.formatter-title {
 .calendar-block .date-select-content {
 	margin: auto;
 	width: 150px;
+	text-align: center;
 }
 
 .calendar-block .date-select-content select,
@@ -157,6 +175,20 @@ h4.formatter-title {
 	margin: 0;
 }
 
+@media (max-width: 768px) {
+	.calendar-block .date-select-content {
+		width: 185px;
+	}
+
+	.calendar-block .date-select-month {
+		width: 92px;
+	}
+
+	.calendar-block .date-select-year {
+		width: 55px;
+	}
+}
+
 .calendar-block .date-picker select,
 .calendar-block .date-picker select:focus {
 	box-shadow: none;
@@ -167,7 +199,7 @@ h4.formatter-title {
 	border-top: 1px solid #CCCCCC;
 	padding: 5px 0;
 	border-radius: 0;
-	background: #FFFFFF;
+	background-color: #FFFFFF;
 	font-weight: bold;
 	color: #666666;
 }
@@ -184,10 +216,10 @@ h4.formatter-title {
 .calendar-block .date-picker tbody td:first-child { border-left: none;  }
 .calendar-block .date-picker tbody td:last-child  { border-right: none; }
 
-.calendar-block .date-picker tbody td.calendar-none	{ background: #FFFFFF; }
-.calendar-block .date-picker tbody td.calendar-today   { background: #B5E5B9; }
-.calendar-block .date-picker tbody td.calendar-event   { background: #DBE5EE; }
-.calendar-block .date-picker tbody td.calendar-weekend { background: #FFE3B6; }
+.calendar-block .date-picker tbody td.calendar-none		{ background-color: #FFFFFF; }
+.calendar-block .date-picker tbody td.calendar-today 	{ background-color: #B5E5B9; }
+.calendar-block .date-picker tbody td.calendar-event 	{ background-color: #DBE5EE; }
+.calendar-block .date-picker tbody td.calendar-weekend 	{ background-color: #FFE3B6; }
 
 .calendar-block .date-picker tbody tr:last-child td {
 	border-bottom: none;
