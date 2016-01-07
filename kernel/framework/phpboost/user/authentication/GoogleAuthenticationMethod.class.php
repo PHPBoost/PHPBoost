@@ -59,11 +59,11 @@ class GoogleAuthenticationMethod extends AuthenticationMethod
 		$this->google_client = new Google_Client();
 		$this->google_client->setClientId($auth_config->get_google_client_id());
 		$this->google_client->setClientSecret($auth_config->get_google_client_secret());
-		$this->google_client->setRedirectUri(AppContext::get_request()->get_site_url() . $_SERVER['REQUEST_URI']);
+		$this->google_client->setRedirectUri(UserUrlBuilder::connect('google')->absolute());
 		$this->google_client->setScopes(array(
-              'https://www.googleapis.com/auth/userinfo.profile',
-              'https://www.googleapis.com/auth/userinfo.email',
-          ));
+			  'https://www.googleapis.com/auth/userinfo.profile',
+			  'https://www.googleapis.com/auth/userinfo.email',
+		  ));
 		$this->google_auth = new Google_Oauth2Service($this->google_client);
 	}
 	
@@ -76,12 +76,12 @@ class GoogleAuthenticationMethod extends AuthenticationMethod
 
 		$authentication_method_columns = array(
 			'user_id' => $user_id,
-            'method' => self::AUTHENTICATION_METHOD,
+			'method' => self::AUTHENTICATION_METHOD,
 			'identifier' => $data['id'],
 			'data' => serialize($data)
 		);
 		try {
-            $this->querier->insert(DB_TABLE_AUTHENTICATION_METHOD, $authentication_method_columns);
+			$this->querier->insert(DB_TABLE_AUTHENTICATION_METHOD, $authentication_method_columns);
 		} catch (SQLQuerierException $ex) {
 			throw new IllegalArgumentException('User Id ' . $user_id .
 				' is already associated with an authentication method [' . $ex->getMessage() . ']');
@@ -94,10 +94,10 @@ class GoogleAuthenticationMethod extends AuthenticationMethod
 	public function dissociate($user_id)
 	{
 		try {
-            $this->querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id AND method=:method', array(
-            	'user_id' => $user_id,
-          		'method' => self::AUTHENTICATION_METHOD
-          	));
+			$this->querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id AND method=:method', array(
+				'user_id' => $user_id,
+				'method' => self::AUTHENTICATION_METHOD
+			));
 		} catch (SQLQuerierException $ex) {
 			throw new IllegalArgumentException('User Id ' . $user_id .
 				' is already dissociated with an authentication method [' . $ex->getMessage() . ']');
