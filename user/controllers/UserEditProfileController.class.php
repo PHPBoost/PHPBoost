@@ -172,7 +172,7 @@ class UserEditProfileController extends AbstractController
 			}
 			else
 			{
-				$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['internal_connection'] . ' <i class="fa fa-error"></i>', '<a  href="" onclick="javascript:HTMLForms.getField(\'custom_login\').enable();HTMLForms.getField(\'password\').enable();HTMLForms.getField(\'password_bis\').enable();return false;">' . LangLoader::get_message('create_internal_connection', 'user-common') . '</a>'));
+				$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['internal_connection'] . ' <i class="fa fa-error"></i>', '<a  href="" onclick="javascript:HTMLForms.getField(\'custom_login\').setValue(false);HTMLForms.getField(\'custom_login\').enable();HTMLForms.getField(\'password\').enable();HTMLForms.getField(\'password_bis\').enable();return false;">' . LangLoader::get_message('create_internal_connection', 'user-common') . '</a>'));
 			}
 		}
 
@@ -180,8 +180,6 @@ class UserEditProfileController extends AbstractController
 			array('description'=> $this->lang['login.custom.explain'], 'hidden' => $more_than_one_authentication_type, 'events' => array('click' => '
 				if (HTMLForms.getField("custom_login").getValue()) {
 					HTMLForms.getField("login").enable();
-					HTMLForms.getField("login").enableValidationMessage();
-					HTMLForms.getField("login").liveValidate();
 				} else {
 					HTMLForms.getField("login").disable();
 				}')
@@ -291,6 +289,11 @@ class UserEditProfileController extends AbstractController
 		if ($this->form->get_value('delete_account'))
 		{
 			UserService::delete_by_id($user_id);
+			
+			if ($user_id == AppContext::get_current_user()->get_id())
+				AppContext::get_response()->redirect(Environment::get_home_page());
+			else
+				AppContext::get_response()->redirect(UserUrlBuilder::home(), StringVars::replace_vars(LangLoader::get_message('user.message.success.delete', 'user-common'), array('name' => $this->user->get_display_name())));
 		}
 		else
 		{
