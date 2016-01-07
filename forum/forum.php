@@ -36,20 +36,20 @@ $categories_cache = ForumService::get_categories_manager()->get_categories_cache
 if ($id_get != Category::ROOT_CATEGORY && !$categories_cache->category_exists($id_get))
 {
 	$controller = PHPBoostErrors::unexisting_category();
-    DispatchManager::redirect($controller);
-}
-
-//Vérification des autorisations d'accès.
-if (!ForumAuthorizationsService::check_authorizations($id_get)->read())
-{
-	$error_controller = PHPBoostErrors::user_not_authorized();
-	DispatchManager::redirect($error_controller);
+	DispatchManager::redirect($controller);
 }
 
 try {
 	$category = $categories_cache->get_category($id_get);
 } catch (CategoryNotFoundException $e) {
 	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
+
+//Vérification des autorisations d'accès.
+if (!ForumAuthorizationsService::check_authorizations($category->get_id())->read())
+{
+	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
 }
 
