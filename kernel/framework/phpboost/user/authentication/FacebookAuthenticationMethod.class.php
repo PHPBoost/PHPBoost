@@ -68,12 +68,12 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 
 		$authentication_method_columns = array(
 			'user_id' => $user_id,
-            'method' => self::AUTHENTICATION_METHOD,
+			'method' => self::AUTHENTICATION_METHOD,
 			'identifier' => $data['id'],
 			'data' => serialize($data)
 		);
 		try {
-            $this->querier->insert(DB_TABLE_AUTHENTICATION_METHOD, $authentication_method_columns);
+			$this->querier->insert(DB_TABLE_AUTHENTICATION_METHOD, $authentication_method_columns);
 		} catch (SQLQuerierException $ex) {
 			throw new IllegalArgumentException('User Id ' . $user_id .
 				' is already associated with an authentication method [' . $ex->getMessage() . ']');
@@ -86,31 +86,27 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 	public function dissociate($user_id)
 	{
 		try {
-            $this->querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id AND method=:method', array(
-            	'user_id' => $user_id,
-          		'method' => self::AUTHENTICATION_METHOD
-          	));
+			$this->querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id AND method=:method', array(
+				'user_id' => $user_id,
+				'method' => self::AUTHENTICATION_METHOD
+			));
 		} catch (SQLQuerierException $ex) {
 			throw new IllegalArgumentException('User Id ' . $user_id .
 				' is already dissociated with an authentication method [' . $ex->getMessage() . ']');
 		}
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
 	public function authenticate()
 	{
+		$user_id = 0;
 		$data = $this->get_fb_user_data();
 		$fb_id = $data['id'];
 
 		try {
-			
-			$condition = 'WHERE method=:method AND identifier=:identifier';
-			$parameters = array('method' => self::AUTHENTICATION_METHOD, 'identifier' => $fb_id);
-			return $this->querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', $condition, $parameters);
-			
+			$user_id = $this->querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', 'WHERE method=:method AND identifier=:identifier',  array('method' => self::AUTHENTICATION_METHOD, 'identifier' => $fb_id));
 		} catch (RowNotFoundException $e) {
 			
 			$email_exists = $this->querier->row_exists(DB_TABLE_MEMBER, 'WHERE email=:email', array('email' => $data['email']));
@@ -130,6 +126,9 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 				return UserService::create($user, $auth_method, $fields_data);
 			}
 		}
+		
+		$this->update_user_info($user_id);
+		return $user_id;
 	}
 
 	private function get_fb_user_data()
@@ -140,6 +139,11 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 			AppContext::get_response()->redirect($this->facebook->getLoginUrl(array('scope' => 'email')));
 		}
 		return $this->facebook->api('/me', array('fields' => 'id,name,email'));
+	}
+
+	private function update_user_info($user_id)
+	{
+		$this->querier->update(DB_TABLE_MEMBER, array('last_connection_date' => time()), $condition, $parameters);
 	}
 }
 ?>
