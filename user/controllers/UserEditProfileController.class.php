@@ -168,11 +168,11 @@ class UserEditProfileController extends AbstractController
 		{
 			if (in_array(PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD, $this->user_auth_types))
 			{
-				$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['internal_connection'] . ' <i class="fa fa-success"></i>', '<a onclick="javascript:HTMLForms.getField(\'custom_login\').enable();'. ($has_custom_login ? 'HTMLForms.getField(\'login\').enable();' : '') .'HTMLForms.getField(\'password\').enable();HTMLForms.getField(\'password_bis\').enable();HTMLForms.getField(\'old_password\').enable();">'. LangLoader::get_message('edit', 'common') .'</a>'));
+				$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['internal_connection'] . ' <i class="fa fa-success"></i>', '<a  href="" onclick="javascript:HTMLForms.getField(\'custom_login\').enable();'. ($has_custom_login ? 'HTMLForms.getField(\'login\').enable();HTMLForms.getField(\'custom_login\').setValue(true);HTMLForms.getField(\'login\').enableValidationMessage();HTMLForms.getField(\'login\').liveValidate();' : '') .'HTMLForms.getField(\'password\').enable();HTMLForms.getField(\'password_bis\').enable();HTMLForms.getField(\'old_password\').enable();return false;">' . LangLoader::get_message('edit', 'common') . '</a>'));
 			}
 			else
 			{
-				$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['internal_connection'] . ' <i class="fa fa-error"></i>', '<a onclick="javascript:HTMLForms.getField(\'custom_login\').enable();HTMLForms.getField(\'password\').enable();HTMLForms.getField(\'password_bis\').enable();">Créer une authentification interne</a>'));
+				$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['internal_connection'] . ' <i class="fa fa-error"></i>', '<a  href="" onclick="javascript:HTMLForms.getField(\'custom_login\').enable();HTMLForms.getField(\'password\').enable();HTMLForms.getField(\'password_bis\').enable();return false;">' . LangLoader::get_message('create_internal_connection', 'user-common') . '</a>'));
 			}
 		}
 
@@ -180,6 +180,8 @@ class UserEditProfileController extends AbstractController
 			array('description'=> $this->lang['login.custom.explain'], 'hidden' => $more_than_one_authentication_type, 'events' => array('click' => '
 				if (HTMLForms.getField("custom_login").getValue()) {
 					HTMLForms.getField("login").enable();
+					HTMLForms.getField("login").enableValidationMessage();
+					HTMLForms.getField("login").liveValidate();
 				} else {
 					HTMLForms.getField("login").disable();
 				}')
@@ -216,7 +218,7 @@ class UserEditProfileController extends AbstractController
 			$form->add_constraint(new FormConstraintFieldsInequality($login, $password));
 		}
 
-		if (in_array('facebook', $activated_auth_types))
+		if (in_array('fb', $activated_auth_types))
 		{
 			if (in_array(FacebookAuthenticationMethod::AUTHENTICATION_METHOD, $this->user_auth_types))
 			{
