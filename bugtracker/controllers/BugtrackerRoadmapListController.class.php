@@ -200,7 +200,7 @@ class BugtrackerRoadmapListController extends ModuleController
 		$fieldset = new FormFieldsetHorizontal('choose-version');
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('roadmap_version', $this->lang['titles.choose_version'], $requested_version_id . '-' . $requested_version_id, $this->build_select_versions(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('roadmap_version', $this->lang['titles.choose_version'], $requested_version_id . '-' . $requested_version_name, $this->build_select_versions(),
 			array('events' => array('change' => 'document.location = "'. BugtrackerUrlBuilder::roadmap()->rel() .'" + HTMLForms.getField("roadmap_version").getValue()' . ($requested_status != 'all' ? ' + "/" + HTMLForms.getField("status").getValue()' : '') . ';')
 		)));
 		
