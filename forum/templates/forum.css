@@ -258,11 +258,13 @@ a.forum-link-pseudo:hover {
 	.forum-refresh #forum_blockforum_unread2 {
 		left: -34px;
 		right: auto;
+		top: 20px;
 	}
 
 	.forum-refresh #forum_blockforum_unread > div,
 	.forum-refresh #forum_blockforum_unread2 > div {
 		width: 300px !important;
+		overflow: visible !important;
 	}
 	
 	.forum-notread {
