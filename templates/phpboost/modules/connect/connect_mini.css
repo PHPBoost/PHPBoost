@@ -156,13 +156,13 @@ i.alert {
 
 /* Mot de passe oublie */ 
 @media (min-width: 769px) {
-	.forgot-pass {
+	#connect-menu .forgot-pass {
 		display: inline-block;
 		padding: 0 0 0 5px;
 		vertical-align: middle;
 		color: #E0F3FF;
 	}
-	.forgot-pass:hover {
+	#connect-menu .forgot-pass:hover {
 		color: #F1F1F1;
 	}
 }
@@ -343,6 +343,25 @@ i.alert {
 }
 
 /* Partie Sociale */
-#connect-menu a.fb {
-	padding: 6px 0 0 4px;
+#connect-menu a.social-connect {
+	color: #DEDEDE;
 }
+
+@media (min-width: 769px) {
+	#connect-menu a.social-connect {
+		margin: 2px auto;
+	}
+
+	#connect-menu a.fb {
+		padding: 7px 0 0 4px;
+	}
+}
+
+@media (max-width: 768px) {
+	#connect-menu a.social-connect {
+		height: auto;
+	}
+}
+
+
+

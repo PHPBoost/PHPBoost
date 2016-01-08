@@ -1,7 +1,3 @@
-#sub-header #connect-menu  {
-	margin-top: 2px;
-}
-
 #connect-menu div.horizontal-fieldset {
 	padding: 2px 8px 2px 2px;
 }
@@ -101,22 +97,21 @@ div.connect-register i {
 }
 
 /* Mot de passe oublie */ 
-
-.vertical-fieldset .forgot-pass {
+#connect-menu .vertical-fieldset .forgot-pass {
 	color: #999999;
 }
-.vertical-fieldset .forgot-pass:hover {
+#connect-menu .vertical-fieldset .forgot-pass:hover {
 	color: #555555;
 }
 
 @media (min-width: 769px) {
-	.forgot-pass {
+	#connect-menu .forgot-pass {
 		display: inline-block;
 		padding: 0 0 0 5px;
 		vertical-align: middle;
 		color: #E0F3FF;
 	}
-	.forgot-pass:hover {
+	#connect-menu .forgot-pass:hover {
 		color: #F1F1F1;
 	}
 }
@@ -203,6 +198,14 @@ div.connect-register i {
 
 
 /* Partie Sociale */
-#connect-menu a.fb {
+#connect-menu .horizontal-fieldset a.fb {
 	padding: 6px 0 0 4px;
 }
+
+@media (min-width: 769px) {
+	#connect-menu a.fb {
+		padding: 7px 0 0 4px;
+	}
+}
+
+

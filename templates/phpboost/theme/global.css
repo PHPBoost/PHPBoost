@@ -618,8 +618,8 @@ a.social-connect {
 @media (max-width: 768px) {
 	.horizontal-fieldset a.social-connect {
 		display: block;
-		width: auto;
-		margin: 5px 0;
+		width: 70%;
+		margin: 5px auto;
 	}
 
 	.horizontal-fieldset a.social-connect i {
@@ -640,7 +640,7 @@ a.social-connect:hover i:before {
 a.fb i:before 		{ font-size: 1.9em; }
 a.google i:before 	{ font-size: 1.7em; }
 
-a.fb 		{ padding: 8px 0 0 4px; }
+a.fb 		{ padding: 7px 0 0 4px; }
 a.google 	{ padding: 6px 1px 0 0; }
 
 @media (max-width: 768px) {
@@ -653,6 +653,13 @@ a.fb 		{ background: #3B5998; }
 a.google 	{ background: #D8432E; }	
 a.twitter 	{ background: #5EA9DD; }
 
-.vertical-fieldset a.social-connect span {
+a.social-connect span {
 	display: none;
+}
+
+@media (max-width: 768px) {
+	a.social-connect span {
+		display: inline-block;
+		vertical-align: top;
+	}	
 }

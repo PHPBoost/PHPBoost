@@ -614,8 +614,8 @@ a.social-connect {
 @media (max-width: 768px) {
 	.horizontal-fieldset a.social-connect {
 		display: block;
-		width: auto;
-		margin: 5px 0;
+		width: 100%;
+		margin: 5px auto;
 	}
 
 	.horizontal-fieldset a.social-connect i {
@@ -641,7 +641,7 @@ a.google 	{ padding: 6px 1px 0 0; }
 
 @media (max-width: 768px) {
 	a.fb {
-		padding: 6px 0 0 3px;
+		padding: 5px 0 0 3px;
 	}
 }
 
@@ -649,6 +649,6 @@ a.fb 		{ background: #3B5998; }
 a.google 	{ background: #D8432E; }	
 a.twitter 	{ background: #5EA9DD; }
 
-.vertical-fieldset a.social-connect span {
+a.social-connect span {
 	display: none;
 }
