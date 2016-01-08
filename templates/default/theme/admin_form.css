@@ -22,6 +22,7 @@ button,
 	color: #333333;
 	text-align: center;
 	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
+	white-space: nowrap;
 }
 
 button:hover,
