@@ -29,8 +29,8 @@
 				# END status #
 				
 				# START menu #
-					<div class="options">
-						<div style="text-align:center;"><strong>{L_TABLE_OF_CONTENTS}</strong></div>
+					<div class="wiki-summary">
+						<div class="wiki-summary-title">{L_TABLE_OF_CONTENTS}</div>
 						{menu.MENU}
 					</div>
 				# END menu #

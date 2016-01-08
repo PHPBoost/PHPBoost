@@ -82,12 +82,17 @@ ul.no-list a i.fa {
 	text-align: center;
 }
 
-#preview.content .options {
-	float: none;
-	width: 70%;
+.wiki-summary {
+	display: inline-block;
+	margin: 5px;
+	padding: 6px 12px;
+	max-width: 100%;
+	background-color: #EEEEEE;
+	border: 1px solid #DDDDDD;
+	border-radius: 3px;
 }
 
-#preview.content .options > div {
+.wiki-summary-title {
 	font-weight: bold;
 }
 

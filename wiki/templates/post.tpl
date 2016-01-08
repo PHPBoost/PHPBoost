@@ -24,8 +24,8 @@
 			</header>
 			<div class="content" id="preview">
 				# START preview.menu #
-					<div class="options">
-						<div>{L_TABLE_OF_CONTENTS}</div>
+					<div class="wiki-summary">
+						<div class="wiki-summary-title">{L_TABLE_OF_CONTENTS}</div>
 						{preview.menu.MENU}
 					</div>
 				# END preview.menu #
