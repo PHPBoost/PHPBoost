@@ -167,7 +167,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	{
 		$theme = ThemesManager::get_theme(AppContext::get_current_user()->get_theme());
 		$menus = MenusCache::load()->get_menus();
-		$columns_disabled = $theme ? ThemesManager::get_theme($theme)->get_columns_disabled() : new ColumnsDisabled();
+		$columns_disabled = $theme ? $theme->get_columns_disabled() : new ColumnsDisabled();
 		
 		foreach ($menus as $cached_menu)
 		{
