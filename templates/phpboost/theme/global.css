@@ -105,28 +105,15 @@ h4.formatter-title {
 	border-radius: 3px;
 }
 
-@media (min-width: 769px) {
-	.calendar-block {
-		top: 22px;
-		right: -10px;
-	}
+.calendar-block {
+	top: 25px;
+	left: -104px;
 }
 
 .calendar-block .date-picker {
 	margin: 0;
-	width: 178px;
+	width: 250px;
 	table-layout: fixed;
-}
-
-@media (max-width: 768px) {
-	.calendar-block {
-		top: 22px;
-		left: -40px;
-	}
-
-	.calendar-block .date-picker {
-		width: 250px;
-	}
 }
 
 .calendar-block .date-select-container {
@@ -152,7 +139,7 @@ h4.formatter-title {
 
 .calendar-block .date-select-content {
 	margin: auto;
-	width: 150px;
+	width: 185px;
 	text-align: center;
 }
 
@@ -166,27 +153,13 @@ h4.formatter-title {
 }
 
 .calendar-block .date-select-month {
-	width: 87px;
+	width: 92px;
 	margin: 0 1px 0 5px;
 }
 
 .calendar-block .date-select-year {
-	width: 53px;
+	width: 55px;
 	margin: 0;
-}
-
-@media (max-width: 768px) {
-	.calendar-block .date-select-content {
-		width: 185px;
-	}
-
-	.calendar-block .date-select-month {
-		width: 92px;
-	}
-
-	.calendar-block .date-select-year {
-		width: 55px;
-	}
 }
 
 .calendar-block .date-picker select,
