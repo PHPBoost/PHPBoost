@@ -919,7 +919,7 @@ ul#profile-container li {
 	width: 90%;
 	max-width: none;
 	max-height: 250px;
-	overflow-y: auto;
+	overflow-y: auto !important;
 }
 
 

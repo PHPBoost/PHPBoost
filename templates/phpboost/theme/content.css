@@ -935,7 +935,7 @@ ul#profile-container li {
 	max-width: none;
 	width: 90%;
 	max-height: 250px;
-	overflow-y: auto;
+	overflow-y: auto !important;
 }
 
 
