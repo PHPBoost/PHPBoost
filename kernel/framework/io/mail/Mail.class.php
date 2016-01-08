@@ -123,16 +123,14 @@ class Mail
 	 * @param string $reply_to The mail address to reply to.
 	 * @param string $reply_to_name SENDER_ADMIN constante if the mail is sent by the administrator, SENDER_USER constante for user or string for other name
 	 */
-	public function set_reply_to($reply_to, $reply_to_name = self::SENDER_ADMIN)
+	public function set_reply_to($reply_to, $reply_to_name = '')
 	{
-		$site_name = GeneralConfig::load()->get_site_name();
-		
 		if ($reply_to_name == self::SENDER_ADMIN || $reply_to_name == self::SENDER_USER)
 		{
 			$reply_to_name = $reply_to_name == self::SENDER_ADMIN ? LangLoader::get_message('administrator', 'user-common') : LangLoader::get_message('user', 'user-common');
 		}
 		
-		$this->reply_to_name = str_replace('"', '', $site_name . ' - ' . $reply_to_name);
+		$this->reply_to_name = $reply_to_name;
 
 		$this->reply_to_mail = $reply_to;
 	}
