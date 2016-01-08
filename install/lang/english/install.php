@@ -220,7 +220,6 @@ The PHPBoost Team.',
 								<p>PHPBoost uses different tools allowing it to enlarge its features panel enough implying the development time rising. Most of these tools are under GNU/GPL license.</p>
 								<ul>
 									<li><a href="https://notepad-plus-plus.org">Notepad++</a> and <a href="http://www.sublimetext.com">Sublime Text</a> : Very powerful text editors used for the whole development, thanks a lot !</li>
-									<li><a href="http://tango.freedesktop.org/Tango_Desktop_Project">Tango Desktop Project</a> : Icon set used in the whole interface.</li>
 									<li><a href="http://www.phpconcept.net/pclzip/">PCLZIP by PHPConcept</a> : PHP library which manage work with zip files.</li>
 									<li><a href="http://www.xm1math.net/phpmathpublisher/">PHPMathPublisher</a> : Functions which permit us to interpret LaTeX language and export it to pictures viewable by a web browser.</li>
 									<li><a href="http://www.tinymce.com">TinyMCE</a> : TinyMCE is a <acronym title="What You See Is What You Get">WYSIWYG</acronym> editor which allows users to see their text formatting in real time.</li>
