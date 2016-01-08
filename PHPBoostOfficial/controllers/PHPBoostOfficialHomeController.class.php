@@ -59,6 +59,8 @@ class PHPBoostOfficialHomeController extends ModuleController
 		
 		$this->build_feed_news_view();
 		$this->build_last_news_view();
+		
+		//$this->build_partners_view();
 	}
 	
 	private function build_modules_view(SelectQueryResult $results)
@@ -134,6 +136,30 @@ class PHPBoostOfficialHomeController extends ModuleController
 		$tpl->put_all($news->get_array_tpl_vars());
 		
 		$this->view->put('LAST_NEWS', $tpl);
+	}
+	
+	private function build_partners_view()
+	{
+		$tpl = new FileTemplate('PHPBoostOfficial/partners.tpl');
+		
+		$partners_weblinks = WebCache::load()->get_partners_weblinks();
+		
+		$tpl->put('C_PARTNERS', !empty($partners_weblinks));
+		
+		foreach ($partners_weblinks as $partner)
+		{
+			$partner_picture = new Url($partner['partner_picture']);
+			$picture = $partner_picture->rel();
+			
+			$tpl->assign_block_vars('partners', array(
+				'C_HAS_PARTNER_PICTURE' => !empty($picture),
+				'NAME' => $partner['name'],
+				'U_PARTNER_PICTURE' => $picture,
+				'U_VISIT' => WebUrlBuilder::visit($partner['id'])->rel()
+			));
+		}
+		
+		$this->view->put('PARTNERS', $tpl);
 	}
 	
 	private function init()
