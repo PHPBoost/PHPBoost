@@ -26,7 +26,7 @@
 		<tr>
 			<td>
 				<div class="form-field-radio">
-					<input type="radio" name="default_severity{severities.ID}" value="{severities.ID}"# IF severities.C_IS_DEFAULT # checked="checked"# ENDIF # />
+					<input id="default_severity{severities.ID}" type="radio" name="default_severity" value="{severities.ID}"# IF severities.C_IS_DEFAULT # checked="checked"# ENDIF # />
 					<label for="default_severity{severities.ID}"></label>
 				</div>
 			</td>
