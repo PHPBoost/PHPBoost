@@ -554,7 +554,7 @@ fieldset[id*=advises] .form-element {
 
 @media (min-width: 769px) {
 	.form-field-select {
-		width: 59%;
+		max-width: 59%;
 	}
 }
 

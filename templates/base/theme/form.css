@@ -359,7 +359,7 @@ input[name$="_minutes"] { width: 50px;  }
 
 @media (min-width: 769px) {
 	.form-field-select {
-		width: 59%;
+		max-width: 59%;
 	}
 }
 
