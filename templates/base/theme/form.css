@@ -136,6 +136,16 @@ fieldset.fieldset-submit legend {
 	display: none;
 }
 
+.horizontal-fieldset-desc,
+.horizontal-fieldset-element  {
+	display: inline-table;
+	vertical-align: middle;
+}
+
+.horizontal-fieldset-element .form-field-select {
+	max-width: none;
+}
+
 optgroup {
 	border: none;
 	border-bottom: 1px solid #5B5A5A;
