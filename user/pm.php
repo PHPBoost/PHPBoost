@@ -93,6 +93,9 @@ if ($read)
 	}
 	$result->dispose();
 	
+	if ($nbr_waiting_pm < 0)
+		$nbr_waiting_pm = 0;
+	
 	PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('unread_pm' => $nbr_waiting_pm), 'WHERE user_id = :id', array('id' => $current_user->get_id()));
 	
 	if ($nbr_waiting_pm != $nbr_pm)
@@ -621,7 +624,10 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		} catch (RowNotFoundException $e) {}
 		
 		if (!empty($user_unread_pm))
-			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('unread_pm' => 'unread_pm - ' . (int)$convers['user_view_pm']), 'WHERE user_id = :id', array('id' => $current_user->get_id()));
+		{
+			$unread_pm = max(($user_unread_pm - (int)$convers['user_view_pm']), 0);
+			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('unread_pm' => $unread_pm), 'WHERE user_id = :id', array('id' => $current_user->get_id()));
+		}
 		
 		PersistenceContext::get_querier()->update(DB_TABLE_PM_TOPIC, array('user_view_pm' => 0), 'WHERE id = :id', array('id' => $pm_id_get));
 		PersistenceContext::get_querier()->update(DB_TABLE_PM_MSG, array('view_status' => 1), 'WHERE idconvers = :id AND user_id <> :user_id', array('id' => $convers['id'], 'user_id' => $current_user->get_id()));
