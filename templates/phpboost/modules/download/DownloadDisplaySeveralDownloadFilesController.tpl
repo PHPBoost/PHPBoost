@@ -40,6 +40,7 @@
 				$("#pbt-img-" + article_id ).attr("src", img_updates);
 				$("#pbt-icon-" + article_id ).addClass("pbt-icon-updates");
 				$("#pbt-logo-" + article_id ).addClass("pbt-logo-updates");
+				$("#pbt-logo-" + article_id ).attr("src", img_default);
 			}
 
 			if (( $.inArray(cats_id, prev_releases) != -1 ) || ( $.inArray(cats_id, last_release) != -1 ) || ( $.inArray(cats_id, tools) != -1 ))
