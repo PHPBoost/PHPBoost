@@ -50,9 +50,10 @@ class Forum
 
 		//Topic
 		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET " . ($new_topic ? '' : 'nbr_msg = nbr_msg + 1, ') . "last_user_id = '" . AppContext::get_current_user()->get_id() . "', last_msg_id = '" . $last_msg_id . "', last_timestamp = '" . $last_timestamp . "' WHERE id = '" . $idtopic . "'");
-
-		//On met à jour le last_topic_id dans la catégorie dans le lequel le message a été posté
-		PersistenceContext::get_querier()->update(ForumSetup::$forum_cats_table, array('last_topic_id' => $idtopic), 'WHERE id = :id', array('id' => $idcat));
+		
+		//On met à jour le last_topic_id dans la catégorie dans le lequel le message a été posté et ses parents
+		$categories = array_keys(ForumService::get_categories_manager()->get_parents($idcat, true));
+		PersistenceContext::get_querier()->update(ForumSetup::$forum_cats_table, array('last_topic_id' => $idtopic), 'WHERE id IN :categories_id', array('categories_id' => $categories));
 
 		//Mise à jour du nombre de messages du membre.
 		PersistenceContext::get_querier()->inject("UPDATE " . DB_TABLE_MEMBER . " SET posted_msg = posted_msg + 1 WHERE user_id = '" . AppContext::get_current_user()->get_id() . "'");
