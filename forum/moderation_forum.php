@@ -73,24 +73,14 @@ $vars_tpl = array(
 );
 
 //Redirection changement de catégorie.
-$id_topic_get = retrieve(POST, 'change_cat', '');
-if (!empty($id_topic_get))
+$change_cat = retrieve(POST, 'change_cat', '');
+if (!empty($change_cat))
 {
-	//On va chercher les infos sur le topic
+	$new_cat = '';
 	try {
-		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('idcat', 'title'), 'WHERE id=:id', array('id' => $id_topic_get));
-	} catch (RowNotFoundException $e) {
-		$error_controller = PHPBoostErrors::unexisting_element();
-		DispatchManager::redirect($error_controller);
-	}
-	
-	$category = ForumService::get_categories_manager()->get_categories_cache()->get_category($topic['idcat']);
-	//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
-	$rewrited_cat_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . $category->get_rewrited_name() : '';
-	//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
-	$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : '';
-
-	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $id_topic_get, '-' . $id_topic_get . $rewrited_cat_title . '.php', '&'));
+		$new_cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($change_cat);
+	} catch (CategoryNotFoundException $e) { }
+	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . ($new_cat && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . $new_cat->get_rewrited_name() : '') . '.php', '&'));
 }
 
 if ($action == 'alert') //Gestion des alertes

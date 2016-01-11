@@ -37,7 +37,7 @@
 			
 			if( regex.test(name) ) //interdiction des caractères spéciaux dans le nom.
 			{
-				alert("{L_FILE_FORBIDDEN_CHARS}");	
+				alert("{L_FILE_FORBIDDEN_CHARS}");
 				document.getElementById('fi_' + id_file).style.display = 'inline';
 				document.getElementById('fi' + id_file).style.display = 'none';
 			}
@@ -73,11 +73,11 @@
 			document.getElementById('img' + id_file).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 
 			data = "id_file=" + id_file;
-			var xhr_object = xmlhttprequest_init('xmlhttprequest.php?token={TOKEN}&aprob_pics=1&token={TOKEN}');
+			var xhr_object = xmlhttprequest_init('xmlhttprequest.php?aprob_pics=1&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '-1' )
-				{	
+				{
 					var img_aprob, title_aprob;
 					if( xhr_object.responseText == 0 )
 					{

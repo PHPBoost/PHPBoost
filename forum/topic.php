@@ -31,10 +31,19 @@ require_once('../forum/forum_tools.php');
 
 $request = AppContext::get_request();
 
+//Redirection changement de catégorie.
+$change_cat = retrieve(POST, 'change_cat', '');
+if (!empty($change_cat))
+{
+	$new_cat = '';
+	try {
+		$new_cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($change_cat);
+	} catch (CategoryNotFoundException $e) { }
+	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . ($new_cat && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . $new_cat->get_rewrited_name() : '') . '.php', '&'));
+}
+
 $id_get = $request->get_getint('id', 0);
 $quote_get = $request->get_getint('quote', 0);
-
-$change_cat = $request->get_postint('change_cat', 0);
 
 //On va chercher les infos sur le topic
 try {
@@ -74,10 +83,6 @@ require_once('../kernel/header.php');
 
 $rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : ''; //On encode l'url pour un éventuel rewriting.
 
-//Redirection changement de catégorie.
-if ($change_cat)
-	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . '+' . $category->get_rewrited_name() . '.php', '&'));
-	
 //Autorisation en lecture.
 if (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->read() || !ForumAuthorizationsService::check_authorizations()->read_topics_content())
 {

@@ -38,7 +38,14 @@ require_once('../kernel/header.php');
 //Redirection changement de catégorie.
 $change_cat = retrieve(POST, 'change_cat', '');
 if (!empty($change_cat))
-	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . $rewrited_title . '.php', '&'));
+{
+	$new_cat = '';
+	try {
+		$new_cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($change_cat);
+	} catch (CategoryNotFoundException $e) { }
+	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . ($new_cat && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . $new_cat->get_rewrited_name() : '') . '.php', '&'));
+}
+
 if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Réservé aux membres.
 	AppContext::get_response()->redirect(UserUrlBuilder::connect()->rel()); 
 
