@@ -132,7 +132,8 @@ class MiniCalendar
 	 */
 	public static function retrieve_date($calendar_name)
 	{
-		return new Date(retrieve(REQUEST, $calendar_name, '', TSTRING_UNCHANGE));
+		$value = retrieve(REQUEST, $calendar_name, '', TSTRING_UNCHANGE);
+		return preg_match('`^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$`', $value) > 0 ? new Date($value) : null;
 	}
 }
 ?>
