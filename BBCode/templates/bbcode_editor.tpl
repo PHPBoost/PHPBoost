@@ -48,7 +48,7 @@ function XMLHttpRequest_preview(field)
 
 <div id="xmlhttprequest-preview{FIELD}" class="xmlhttprequest-preview" style="display:none;"></div>
 
-<div class="bbcode expand">
+<div id="bbcode-expanded" class="bbcode expand">
 	<div class="bbcode-containers">
 
 		<ul class="bbcode-container">
