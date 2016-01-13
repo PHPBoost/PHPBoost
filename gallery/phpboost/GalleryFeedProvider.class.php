@@ -123,7 +123,7 @@ class GalleryFeedProvider implements FeedProvider
 		$data->set_lang($LANG['xml_lang']);
 		$data->set_auth_bit(GalleryAuthorizationsService::READ_AUTHORIZATIONS);
 
-        $req_cats = (($idcat > 0) && isset($CAT_GALLERY[$idcat])) ? ' AND c.id_left >= :cat_left AND id_right <= :cat_right' : '';
+        $req_cats = (($idcat > 0) && isset($CAT_GALLERY[$idcat])) ? ' AND id_left >= :cat_left AND id_right <= :cat_right' : '';
         $parameters = array('limit' => 2 * $config->get_pics_number_per_page());
         if ($idcat > 0)
         {
