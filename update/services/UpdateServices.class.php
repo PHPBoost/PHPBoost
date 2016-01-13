@@ -532,7 +532,7 @@ class UpdateServices
 			{
 				if ($module->get_configuration()->get_compatibility() != self::NEW_KERNEL_VERSION)
 				{
-					$module->set_activated(false);
+					ModulesManager::update_module($id, false);
 					$this->add_information_to_file('module ' . $id, 'has been disabled because : incompatible with new version');
 				}
 			}
