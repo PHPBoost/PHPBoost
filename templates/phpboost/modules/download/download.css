@@ -105,8 +105,8 @@
 .article-several .content .actions {
 	position: absolute;
 	z-index: 1;
-	bottom: 0;
-	left: 0;
+	bottom: 20px;
+	left: 2px;
 }
 
 .article-several .content .actions a {
@@ -115,6 +115,15 @@
 	float: left;
 	padding: 2px 5px 2px 0;
 	transition: opacity 1s ease;
+}
+
+@media (max-width: 768px) {
+	.article-several .content .actions {
+		bottom: 10px;
+	}
+	.article-several .content .actions a {
+		opacity: 0.4;
+	}
 }
 
 .article-several .content .actions a:first-child {
