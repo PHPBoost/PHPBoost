@@ -20,7 +20,7 @@ html, body {
 
 img {
 	border: none;
-	overflow: scroll;
+	overflow: auto;
 	vertical-align: middle;
 }
 
