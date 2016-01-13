@@ -202,7 +202,7 @@ function set_bbcode_preference(divID)
 	if( getCookie('hide-bbcode') == 0 )
 	{
 		jQuery('#' + divID).hide();
-			jQuery('#bbcode-expanded').removeClass('expand');
+		jQuery('#bbcode-expanded').removeClass('expand');
 	}
 }
 
