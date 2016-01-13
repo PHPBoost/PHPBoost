@@ -103,6 +103,9 @@ class UserAccountsConfig extends AbstractConfigData
 	
 	const MAX_PRIVATE_MESSAGES_NUMBER = 'max_pm_number';
 	
+	const ALLOW_USERS_TO_CHANGE_DISPLAY_NAME = 'allow_users_to_change_display_name';
+	const ALLOW_USERS_TO_CHANGE_EMAIL = 'allow_users_to_change_email';
+	
 	const AUTOMATIC_USER_ACCOUNTS_VALIDATION = '1';
 	const MAIL_USER_ACCOUNTS_VALIDATION = '2';
 	const ADMINISTRATOR_USER_ACCOUNTS_VALIDATION = '3';
@@ -425,6 +428,26 @@ class UserAccountsConfig extends AbstractConfigData
 		$this->set_property(self::MAX_PRIVATE_MESSAGES_NUMBER, $number);
 	}
 
+	public function are_users_allowed_to_change_display_name()
+	{
+		return $this->get_property(self::ALLOW_USERS_TO_CHANGE_DISPLAY_NAME);
+	}
+
+	public function set_allow_users_to_change_display_name($enabled)
+	{
+		$this->set_property(self::ALLOW_USERS_TO_CHANGE_DISPLAY_NAME, $enabled);
+	}
+
+	public function are_users_allowed_to_change_email()
+	{
+		return $this->get_property(self::ALLOW_USERS_TO_CHANGE_EMAIL);
+	}
+
+	public function set_allow_users_to_change_email($enabled)
+	{
+		$this->set_property(self::ALLOW_USERS_TO_CHANGE_EMAIL, $enabled);
+	}
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -448,7 +471,9 @@ class UserAccountsConfig extends AbstractConfigData
 			self::AUTH_READ_MEMBERS => array('r0' => 1, 'r1' => 1),
 			self::DEFAULT_LANG => 'english',
 			self::DEFAULT_THEME => 'base',
-			self::MAX_PRIVATE_MESSAGES_NUMBER => 50
+			self::MAX_PRIVATE_MESSAGES_NUMBER => 50,
+			self::ALLOW_USERS_TO_CHANGE_DISPLAY_NAME => false,
+			self::ALLOW_USERS_TO_CHANGE_EMAIL => false
 		);
 	}
 
