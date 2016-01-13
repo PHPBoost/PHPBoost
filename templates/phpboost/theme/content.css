@@ -842,8 +842,8 @@ article .message-user-infos .message-user-group {
 	}
 
 	.message-date span.actions {
-		bottom: 5px;
-		right: 8px;
+		bottom: 0;
+		right: 6px;
 		display: block;
 		position: absolute;
 		text-align: right;
@@ -857,7 +857,7 @@ article .message-user-infos .message-user-group {
 
 	.message-message {
 		clear: both;
-		margin: 0;
+		margin: 0 auto 10px auto;
 	}
 
 	.message-message::before {

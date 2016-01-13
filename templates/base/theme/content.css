@@ -827,8 +827,8 @@ article .message-user-infos .message-user-group {
 
 	.message-date span.actions {
 		position: absolute;
-		bottom: 5px;
-		right: 8px;
+		bottom: 0;
+		right: 6px;
 		z-index: 1;
 		display: block;
 		text-align: right;
@@ -840,7 +840,7 @@ article .message-user-infos .message-user-group {
 	}
 
 	.message-message {
-		margin: 0;
+		margin: 0 auto 10px auto;
 		clear: both;
 	}
 
