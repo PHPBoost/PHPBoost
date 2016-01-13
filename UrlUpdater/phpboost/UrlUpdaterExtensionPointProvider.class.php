@@ -97,11 +97,13 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 				$category = isset($categories[$row['id_category']]) ? $categories[$row['id_category']] : null;
 				if ($category !== null)
 				{
-					$this->urls_mappings[] = new UrlMapping('^download/download-' . $row['id'] . '(-?[^.]*)\.php$', '/download/' . $category->get_id() . '-' . $category->get_rewrited_name() . '/' . $row['id'] . '-' . $row['rewrited_name'], 'L,R=301');
-					$this->urls_mappings[] = new UrlMapping('^download/file-' . $row['id'] . '(-?[^.]*)\.php$', '/download/' . $category->get_id() . '-' . $category->get_rewrited_name() . '/' . $row['id'] . '-' . $row['rewrited_name'], 'L,R=301');
+					$this->urls_mappings[] = new UrlMapping('^download/download-' . $row['id'] . '(+?[^.]*)\.php$', '/download/' . $category->get_id() . '-' . $category->get_rewrited_name() . '/' . $row['id'] . '-' . $row['rewrited_name'], 'L,R=301');
+					$this->urls_mappings[] = new UrlMapping('^download/file-' . $row['id'] . '(+?[^.]*)\.php$', '/download/' . $category->get_id() . '-' . $category->get_rewrited_name() . '/' . $row['id'] . '-' . $row['rewrited_name'], 'L,R=301');
 				}
 			}
 			$result->dispose();
+			
+			$this->urls_mappings[] = new UrlMapping('^download/count\.php?id=([0-9]*)$', '/download/download/$1', 'L,R=301');
 			
 			foreach ($categories as $id => $category)
 			{
