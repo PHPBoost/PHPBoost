@@ -83,6 +83,7 @@ $lang['download.last_version_pdk_link'] = $cache->get_last_version_pdk_link();
 $lang['download.last_version_modules_cat_link'] = $cache->get_last_version_modules_cat_link();
 $lang['download.last_version_themes_cat_link'] = $cache->get_last_version_themes_cat_link();
 $lang['download.previous_major_version_number'] = $cache->get_previous_version_major_version_number();
+$lang['download.phpboost_previous_major_version_number'] = 'PHPBoost ' .  $cache->get_previous_version_major_version_number();
 $lang['download.previous_complete_version_number'] = $cache->get_previous_version_major_version_number() . '.' . $cache->get_previous_version_minor_version_number();
 $lang['download.previous_minimal_php_version'] = $cache->get_previous_version_minimal_php_version();
 $lang['download.previous_version_name'] = $cache->get_previous_version_name();
@@ -105,5 +106,7 @@ $lang['news.phpboost.rss'] = 'Flux RSS des actualités de PHPBoost';
 $lang['news.phpboost'] = 'L\'actualité de PHPBoost';
 $lang['news.previous_news'] = 'Les news précédentes';
 $lang['news.category.description'] = 'Toutes les news concernant PHPBoost';
+
+$lang['partners.title'] = 'Nos partenaires';
 
 ?>
