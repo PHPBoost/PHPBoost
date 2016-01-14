@@ -88,7 +88,7 @@ class FormatingHelper
 	public static function second_parse($content)
 	{
 		$parser = AppContext::get_content_formatting_service()->get_default_second_parser();
-		$parser->set_content(stripslashes($content));
+		$parser->set_content($content);
 		$parser->parse();
 	
 		return $parser->get_content();
