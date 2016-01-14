@@ -72,10 +72,10 @@ class MemberUserBornExtendedField extends AbstractMemberExtendedField
 		$field_name = $member_extended_field->get_field_name();
 		if ($form->has_field($field_name))
 		{
-			$timestamp = $form->get_value($field_name)->get_timestamp();
+			$date = $form->get_value($field_name);
 			
-			if (!empty($timestamp))
-				return $form->get_value($field_name)->format(Date::FORMAT_TIMESTAMP);
+			if (!empty($date))
+				return $date->format(Date::FORMAT_TIMESTAMP);
 				
 			return '';
 		}
