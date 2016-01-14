@@ -75,6 +75,7 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 		$template->put_all(array(
 			'C_EDITOR_ENABLED' => true,
 			'EDITOR' => $editor->display(),
+			'EDITOR_NAME' => strtolower($editor->get_name()),
 			'VALUE' => $this->get_raw_value(),
 			'PREVIEW_BUTTON' => $this->get_preview_button_code()
 		));
