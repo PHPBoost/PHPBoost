@@ -437,7 +437,7 @@ class ModulesManager
 			ModulesConfig::load()->update($module);
 			ModulesConfig::save();
 			
-			MenuService::generate_cache();
+			MenuService::add_mini_module($module_id);
 			Feed::clear_cache($module_id);
 			
 			if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())

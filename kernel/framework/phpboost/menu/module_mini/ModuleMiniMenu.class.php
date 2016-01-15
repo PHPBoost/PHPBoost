@@ -65,7 +65,7 @@ class ModuleMiniMenu extends Menu
 	public function get_formated_title()
 	{
 		$class_name = get_class($this);
-		$module_name = strstr($class_name, 'ModuleMiniMenu', true);
+		$module_name = strstr($class_name, self::MODULE_MINI_MENU__CLASS, true);
 		$module_name = strlen(preg_replace('/[a-z]*/', '', $module_name)) > 1 ? $module_name : strtolower($module_name); //Pour les modules qui ont plus de 2 majuscules on les garde, sinon on les enlève
 		
 		$module = '';

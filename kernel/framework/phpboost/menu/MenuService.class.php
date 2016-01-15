@@ -330,28 +330,7 @@ class MenuService
 	*/
 	public static function add_mini_module($module_id, $generate_cache = true)
 	{
-		if (MenusProvidersService::module_containing_extension_point($module_id))
-		{
-			foreach (MenusProvidersService::get_menus($module_id) as $menu)
-			{
-				if ($menu instanceof ModuleMiniMenu)
-				{
-					$title = $menu->get_title();
-					$default_block = $menu->get_default_block();
-					$menu->set_title($module_id . '/' . $title);
-					$menu->set_block($default_block);
-					$menu->enabled($menu->default_is_enabled());
-					self::save($menu);
-				}
-			}
-				
-			if ($generate_cache)
-			{
-				self::generate_cache();
-			}
-			return true;
-		}
-		return false;
+		self::update_mini_modules_list($generate_cache);
 	}
 
 	/**
@@ -360,16 +339,28 @@ class MenuService
 	 */
 	public static function delete_mini_module($module)
 	{
-		$conditions = 'WHERE class=:class';
-		$parameters = array(
-			'class' => ucfirst($module) . ModuleMiniMenu::MODULE_MINI_MENU__CLASS,
-		);
-		$results = self::$querier->select_rows(DB_TABLE_MENUS, self::$columns, $conditions, $parameters);
-		foreach ($results as $row)
+		$menus_class = array();
+		
+		if (MenusProvidersService::module_containing_extension_point($module_id))
 		{
-			self::delete(self::initialize($row));
+			foreach (MenusProvidersService::get_menus($module) as $menu)
+			{
+				if ($menu instanceof ModuleMiniMenu)
+				{
+					$menus_class[] = get_class($menu);
+				}
+			}
 		}
-		$results->dispose();
+		
+		if (!empty($menus_class))
+		{
+			$results = self::$querier->select_rows(DB_TABLE_MENUS, self::$columns, 'WHERE class IN :class', array('class' => $menus_class));
+			foreach ($results as $row)
+			{
+				self::delete(self::initialize($row));
+			}
+			$results->dispose();
+		}
 	}
 
 	/**
@@ -395,16 +386,14 @@ class MenuService
 		$results = self::$querier->select_rows(DB_TABLE_MENUS, array('id', 'title', 'class'));
 		foreach ($results as $row)
 		{
-			if (strpos($row['class'], ModuleMiniMenu::MODULE_MINI_MENU__CLASS) !== false)
+			if (array_key_exists($row['class'], $menus))
 			{
-				if (array_key_exists($row['class'], $menus))
-				{
-					$installed_minimodules[$row['class']] = $row['id'];
-				}
-				else
-				{
+				$installed_minimodules[$row['class']] = $row['id'];
+			}
+			else
+			{
+				if (!in_array($row['class'], array(ContentMenu::CONTENT_MENU__CLASS, FeedMenu::FEED_MENU__CLASS, LinksMenu::LINKS_MENU__CLASS)))
 					self::delete($row['id']);
-				}
 			}
 		}
 		$results->dispose();
