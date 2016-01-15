@@ -93,7 +93,8 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 					'U_DELETE' => $this->get_delete_category_url($category)->rel(),
 					'ID' => $id,
 					'NAME' => $category->get_name(),
-					'DESCRIPTION' => $description
+					'DESCRIPTION' => $description,
+					'DELETE_CONFIRMATION_MESSAGE' => StringVars::replace_vars($this->get_delete_confirmation_message(), array('name' => $category->get_name()))
 				));
 				
 				$this->build_children_view($category_view, $categories, $id);
@@ -153,6 +154,14 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 	protected function get_title()
 	{
 		return $this->lang['categories.management'];
+	}
+	
+	/**
+	 * @return string Delete category confirmation message
+	 */
+	protected function get_delete_confirmation_message()
+	{
+		return $this->lang['category.message.delete_confirmation'];
 	}
 	
 	/**

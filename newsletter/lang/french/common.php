@@ -120,6 +120,7 @@ $lang['newsletter.contents'] = 'Contenu';
 $lang['stream.message.success.add'] = 'Le flux <b>:name</b> a été ajouté';
 $lang['stream.message.success.edit'] = 'Le flux <b>:name</b> a été modifié';
 $lang['stream.message.success.delete'] = 'Le flux <b>:name</b> a été supprimé';
+$lang['stream.message.delete_confirmation'] = 'Voulez-vous vraiment supprimer le flux :name ?';
 
 //Errors
 $lang['error.sender-mail-not-configured'] = 'L\'adresse email d\'envoi de la newsletter n\'a pas été configurée par l\'administrateur, veuillez réessayer quand ça sera fait.';

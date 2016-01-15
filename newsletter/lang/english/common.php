@@ -120,6 +120,7 @@ $lang['newsletter.contents'] = 'Content';
 $lang['stream.message.success.add'] = 'The stream <b>:name</b> has been added';
 $lang['stream.message.success.edit'] = 'The stream <b>:name</b> has been modified';
 $lang['stream.message.success.delete'] = 'The stream <b>:name</b> has been deleted';
+$lang['stream.message.delete_confirmation'] = 'Do you really want to delete the stream :name?';
 
 //Errors
 $lang['error.sender-mail-not-configured'] = 'The newsletter sender mail has not been configured by the administrator, please try again later.';

@@ -59,5 +59,10 @@ class NewsletterStreamsManageController extends AbstractCategoriesManageControll
 	{
 		return LangLoader::get_message('newsletter.streams', 'common', 'newsletter');
 	}
+	
+	protected function get_delete_confirmation_message()
+	{
+		return LangLoader::get_message('stream.message.delete_confirmation', 'common', 'newsletter');
+	}
 }
 ?>

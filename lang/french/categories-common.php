@@ -54,4 +54,5 @@ $lang['delete.move_in_other_cat'] = 'Déplacer le contenu dans :';
 $lang['category.message.success.add'] = 'La catégorie <b>:name</b> a été ajoutée';
 $lang['category.message.success.edit'] = 'La catégorie <b>:name</b> a été modifiée';
 $lang['category.message.success.delete'] = 'La catégorie <b>:name</b> a été supprimée';
+$lang['category.message.delete_confirmation'] = 'Voulez-vous vraiment supprimer la catégorie :name ?';
 ?>
