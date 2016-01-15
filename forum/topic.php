@@ -57,7 +57,7 @@ $topic['title'] = stripslashes($topic['title']);
 //Existance de la catégorie.
 if ($topic['idcat'] != Category::ROOT_CATEGORY && !ForumService::get_categories_manager()->get_categories_cache()->category_exists($topic['idcat']))
 {
-	$controller = PHPBoostErrors::unexisting_category();
+	$controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($controller);
 }
 

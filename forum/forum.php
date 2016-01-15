@@ -33,9 +33,9 @@ $id_get = retrieve(GET, 'id', 0);
 $categories_cache = ForumService::get_categories_manager()->get_categories_cache();
 
 //Vérification de l'existance de la catégorie.
-if ($id_get != Category::ROOT_CATEGORY && !$categories_cache->category_exists($id_get))
+if (empty($id_get) || ($id_get != Category::ROOT_CATEGORY && !$categories_cache->category_exists($id_get)))
 {
-	$controller = PHPBoostErrors::unexisting_category();
+	$controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($controller);
 }
 

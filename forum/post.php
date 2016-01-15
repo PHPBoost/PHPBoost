@@ -36,7 +36,7 @@ $is_modo = ForumAuthorizationsService::check_authorizations($id_get)->moderation
 //Existance de la catégorie.
 if ($id_get != Category::ROOT_CATEGORY && !ForumService::get_categories_manager()->get_categories_cache()->category_exists($id_get))
 {
-	$controller = PHPBoostErrors::unexisting_category();
+	$controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($controller);
 }
 
