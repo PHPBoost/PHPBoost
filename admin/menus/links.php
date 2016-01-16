@@ -50,6 +50,7 @@ if ($action == 'save')
 		$menu_image = retrieve(POST, 'menu_element_' . $menu_element_id . '_image', '');
 		
 		$array_size = count($elements_ids);
+		
 		if ($array_size == 1 && $level > 0)
 		{   // If it's a menu, there's only one element;
 			$menu = new LinksMenuLink($menu_name, $menu_url, $menu_image);
@@ -63,7 +64,8 @@ if ($action == 'save')
 			
 			$array_size = count($elements_ids);
 			for ($i = 0; $i < $array_size; $i++)
-			{	// We build all its children and add it to its father
+			{
+				// We build all its children and add it to its father
 				$menu->add(build_menu_from_form($elements_ids[$i], $level + 1));
 			}
 		}
@@ -83,7 +85,9 @@ if ($action == 'save')
 			$children = array();
 			foreach($element->children[0] as $p => $t)
 			{
-				$children[$p] = build_menu_children_tree($t);
+				$menu_child_name = retrieve(POST, 'menu_element_' . $t->id . '_name', '', TSTRING_UNCHANGE);
+				if (!empty($menu_child_name))
+					$children[$p] = build_menu_children_tree($t);
 			}
 			$menu = array_merge(
 				array('id' => $element->id),
