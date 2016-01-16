@@ -41,6 +41,9 @@ $lang['xml_forum_desc'] = 'Last forum thread';
 $lang['go_top'] = 'Go top';
 $lang['go_bottom'] = 'Go bottom';
 
+$lang['forum.links'] = 'Links';
+$lang['forum.message_options'] = 'Message options';
+
 //config
 $lang['config.forum_name'] = 'Forum name';
 $lang['config.number_topics_per_page'] = 'Number of topics per page';
@@ -80,5 +83,4 @@ $lang['authorizations.read_topics_content'] = 'Display topics content authorizat
 $lang['authorizations.flood'] = 'Flood authorization';
 $lang['authorizations.hide_edition_mark'] = 'Hide last edited time information';
 $lang['authorizations.unlimited_topics_tracking'] = 'Deactivate topics subscription limit';
-$lang['forum_message_options'] = 'Message options';
 ?>

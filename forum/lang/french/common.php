@@ -41,6 +41,9 @@ $lang['xml_forum_desc'] = 'Derniers sujets du forum';
 $lang['go_top'] = 'Remonter';
 $lang['go_bottom'] = 'Descendre';
 
+$lang['forum.links'] = 'Liens';
+$lang['forum.message_options'] = 'Options du message';
+
 //config
 $lang['config.forum_name'] = 'Nom du forum';
 $lang['config.number_topics_per_page'] = 'Nombre de sujets par page';
@@ -80,5 +83,4 @@ $lang['authorizations.read_topics_content'] = 'Autorisation d\'afficher le conte
 $lang['authorizations.flood'] = 'Autorisation de flooder';
 $lang['authorizations.hide_edition_mark'] = 'Désactivation du marqueur d\'édition des messages';
 $lang['authorizations.unlimited_topics_tracking'] = 'Désactivation de la limite de sujet suivis';
-$lang['forum_message_options'] = 'Options du message';
 ?>

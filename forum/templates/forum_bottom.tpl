@@ -70,7 +70,7 @@
 			</div>
 			<script>
 				<!--
-				jQuery("#cssmenu-forum-bottom-link").menumaker({ title: " {L_FORUM_INDEX} ", format: "multitoggle", breakpoint: 768, menu_static: false });
+				jQuery("#cssmenu-forum-bottom-link").menumaker({ title: " ${LangLoader::get_message('forum.links', 'common', 'forum')} ", format: "multitoggle", breakpoint: 768, menu_static: false });
 				-->
 			</script>
 			
@@ -163,7 +163,7 @@
 				</div>
 			<script>
 				<!--
-				jQuery("#cssmenu-forum-action").menumaker({ title: " ${LangLoader::get_message('forum_message_options', 'common', 'forum')} ", format: "multitoggle", breakpoint: 768, menu_static: false });
+				jQuery("#cssmenu-forum-action").menumaker({ title: " ${LangLoader::get_message('forum.message_options', 'common', 'forum')} ", format: "multitoggle", breakpoint: 768, menu_static: false });
 				-->
 			</script>
 				#  ENDIF #

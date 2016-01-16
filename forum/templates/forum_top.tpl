@@ -14,7 +14,7 @@
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
-				{	
+				{
 					if( document.getElementById('refresh_unread' + divID) )
 						document.getElementById('refresh_unread' + divID).className = 'fa fa-refresh';
 					
@@ -30,7 +30,7 @@
 					document.getElementById('forum_blockforum_unread2').innerHTML = array_unread_topics[2];
 				}
 				else if( xhr_object.readyState == 4 && xhr_object.responseText == '' )
-				{	
+				{
 					alert("{L_AUTH_ERROR}");
 					if( document.getElementById('refresh_unread' + divID) )
 						document.getElementById('refresh_unread' + divID).className = 'fa fa-refresh';
@@ -75,7 +75,7 @@
 			{
 				clearTimeout(timeout_forum);
 				timeout_forum = setTimeout('forum_display_block(\'' + forumid + '\')', delay_forum);
-			}	
+			}
 		}
 		-->
 		</script>
@@ -132,7 +132,7 @@
 			# ENDIF #
 				</ul>
 			</nav>
-		# ELSE #			
+		# ELSE #
 			# IF C_FORUM_CONNEXION #
 			<nav itemscope itemtype="http://schema.org/SiteNavigationElement" class="cssmenu cssmenu-group float-right" id="cssmenu-forum-top-link">
 				<ul>
@@ -155,7 +155,7 @@
 		</div>
 		<script>
 			<!--
-			jQuery("#cssmenu-forum-top-link").menumaker({ title: " {L_FORUM_INDEX} ", format: "multitoggle", breakpoint: 768, menu_static: false });
+			jQuery("#cssmenu-forum-top-link").menumaker({ title: " ${LangLoader::get_message('forum.links', 'common', 'forum')} ", format: "multitoggle", breakpoint: 768, menu_static: false });
 			-->
 		</script>
 	</header>

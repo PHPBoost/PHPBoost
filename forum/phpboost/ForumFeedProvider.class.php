@@ -82,7 +82,7 @@ class ForumFeedProvider implements FeedProvider
 				);
 				$item->set_link($link);
 				$item->set_guid($link);
-				$item->set_desc(str_replace('&nbsp;', ' ', FormatingHelper::second_parse($row['contents'])));
+				$item->set_desc(str_replace('&nbsp;', ' ', FormatingHelper::second_parse(stripslashes($row['contents']))));
 				$item->set_date(new Date($row['last_timestamp'], Timezone::SERVER_TIMEZONE));
 				$item->set_auth(ForumService::get_categories_manager()->get_heritated_authorizations($row['idcat'], Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
 

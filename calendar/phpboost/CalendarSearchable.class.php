@@ -42,7 +42,7 @@ class CalendarSearchable extends AbstractSearchableExtensionPoint
 			LEFT JOIN ". CalendarSetup::$calendar_cats_table ." cat ON id_category = cat.id
 			WHERE ( FT_SEARCH(title, '" . $args['search'] . "') OR FT_SEARCH(contents, '" . $args['search'] . "') )
 			AND event_content.approved = 1
-			AND id_category IN(" . implode(", ", $authorized_categories) . ")
+			AND id_category IN (" . implode(", ", $authorized_categories) . ")
 			ORDER BY relevance DESC
 			LIMIT 100 OFFSET 0";
 	}
