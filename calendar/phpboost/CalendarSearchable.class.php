@@ -37,6 +37,7 @@ class CalendarSearchable extends AbstractSearchableExtensionPoint
 	public function get_search_request($args)
 	{
 		$authorized_categories = CalendarService::get_authorized_categories(Category::ROOT_CATEGORY);
+		$authorized_categories = count($authorized_categories) > 0 ? $authorized_categories : array('1024'); // Fictive id_category if no authorized category
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
 		
 		return "SELECT " . $args['id_search'] . " AS id_search,
