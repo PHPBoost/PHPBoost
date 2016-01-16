@@ -182,17 +182,13 @@ article header a.basic-button {
 	color: #FFFFFF;
 }
 
-article header .float-right a,
-footer .float-right a,
 ul.pagination a {
-	padding: 8px;
+	padding: 6px;
 }
 
 @media (min-width: 769px) {
-	article header .float-right a,
-	footer .float-right a,
 	ul.pagination a {
-		padding: 4px;
+		padding: 3px;
 	}
 }
 
@@ -527,10 +523,6 @@ a.msg-link-pseudo:hover {
 }
 
 @media (max-width: 768px) {
-	ul.pagination li {
-		padding: 4px;
-	}
-	
 	tfoot, 
 	td.forum-announce-topic, 
 	td.forum-fixed-topic, 
