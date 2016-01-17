@@ -116,9 +116,9 @@ abstract class CategoriesCache implements CacheData
 					
 					if (is_array($current_category_elements_number))
 					{
-						foreach ($current_category_elements_number as $element_id => $elements_number)
+						foreach ($current_category_elements_number as $element_id => $elements_nbr)
 						{
-							$elements_number = $parent_elements_number - $current_category_elements_number;
+							$elements_number = $parent_elements_number[$element_id] - $current_category_elements_number;
 							$parent_elements_number[$element_id] = $elements_number > 0 ? $elements_number : 0;
 						}
 						$this->categories[$id_parent]->set_elements_number($parent_elements_number);
