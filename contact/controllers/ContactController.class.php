@@ -183,7 +183,7 @@ class ContactController extends ModuleController
 		$mail->set_sender(MailServiceConfig::load()->get_default_mail_sender(), $this->lang['module_title']);
 		$mail->set_reply_to($this->form->get_value('f_sender_mail'), $current_user->get_display_name());
 		$mail->set_subject($subject);
-		$mail->set_content($message);
+		$mail->set_content(TextHelper::html_entity_decode($message));
 		
 		if ($recipients_field->is_displayed())
 		{
