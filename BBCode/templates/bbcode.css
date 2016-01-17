@@ -1,121 +1,105 @@
 /** BBcode **/
 .bbcode {
-	width: 100%;
-	margin-bottom: -5px;
-}
-
-.bbcode-containers {
-	margin: 5px auto 5px auto;
+	position: relative;
+	display: table;
+	margin: 5px auto -5px auto;
 	width: 99%;
 	background-color: #EEEEEE;
 	border: 1px solid #BBBBBB;
 	border-radius: 4px 4px 0 0;
 }
 
-.bbcode-container {
-	display: inline;
-	margin: 0;
-	padding: 2px 0 2px 0;
-	font-size: 0;
+.bbcode-containers {
+	display: table-cell;
 }
 
-li.bbcode-elements {
+.bbcode-container {
 	position: relative;
 	display: inline-block;
-	height: 24px;
-	vertical-align: top;
-}
-
-li.bbcode-separator {
-	margin: 2px 0 0 0;
+	margin: 2px 0 2px 0;
 	padding: 0;
-	height: 19px;
-	width: 1px;
-	border-right: 1px solid #BEBEBE;
+	font-size: 0;
+	border-right: 1px solid #CECECE;
 }
 
-li.bbcode-separator:after {
+.bbcode-container:after {
 	position: absolute;
 	right: -2px;
 	height: 24px;
 	width: 1px;
 	content: "";
+	background: #FFFFFF;
 }
 
-li.bbcode-elements:last-child {
-	border-right: none;
+.bbcode-elements {
+	position: relative;
+	display: inline-block;
+	height: 24px;
 }
 
-li.bbcode-elements > a {
+.bbcode-elements > a {
 	display: inline-block;
 	height: 22px;
 	border: 1px solid transparent;
 }
 
-.bbcode li.bbcode-elements > a {
+.bbcode .bbcode-elements > a {
 	margin: 1px 2px;
 	padding: 2px 2px 0 2px;
 	width: 23px;
 }
 
-li.bbcode-elements > a:hover {
+.bbcode-elements > a:hover {
 	color: #222222;
 	text-decoration: none;
 }
 
-.bbcode li.bbcode-elements > a:hover {
+.bbcode .bbcode-elements > a:hover {
 	background-image: linear-gradient(#F8F8F8, #F1F1F1);
 	border: 1px solid #C6C6C6;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+	border-radius: 3px;
 }
 
-li.bbcode-elements a,
+.bbcode-elements a,
 .bbcode-block-container {
 	font-size: 1.3rem;
 }
 
 .bbcode-elements-more {
-	display: inline;
-	float: right;
-	bottom: 0;
-	margin: 0 0 0 5px;
-	padding: 0 5px;
+	display: table-cell;
+	margin: auto;
+	width: 20px;
+	vertical-align: middle;
+	font-size: 1rem;
+	text-align: center;
 }
 
-.bbcode-elements-more li.bbcode-elements > a {
+.bbcode .bbcode-elements-more a {
+	padding: 0;
+	width: 20px;
+}
+
+.bbcode-elements-more a {
 	margin: 3px 0;
 	padding: 0;
 	width: 18px;
 	height: 18px;
 }
 
-.bbcode-elements-more .fa {
-	color: #AAAAAA;
-}
-
-.bbcode-elements-more:hover .fa {
-	color: #111111;
-}
-
-@media ( min-width: 769px ) {
-	.expand .bbcode-container {
-		display: block;
-	}
-}
-
-.expand .bbcode-more {
-	display: inline;
-}
-
-.bbcode-upload {
-	float: right;
-	margin-top: 3px;
-}
+.bbcode-elements-more .fa 		{ color: #AAAAAA; }
+.bbcode-elements-more:hover .fa { color: #111111; }
 
 .bbcode-hover,
 .bbcode-elements a,
 .bbcode-elements i {
 	cursor: pointer;
+}
+
+@media (max-width: 768px) {
+	.bbcode-backspace {
+		display: none;
+	}
 }
 
 .bbcode-block-container {

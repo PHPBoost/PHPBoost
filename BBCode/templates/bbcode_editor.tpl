@@ -50,8 +50,7 @@ function XMLHttpRequest_preview(field)
 
 <div id="bbcode-expanded" class="bbcode expand">
 	<div class="bbcode-containers">
-
-		<ul class="bbcode-container">
+		<ul id="bbcode-container-smileys" class="bbcode-container">
 			<li class="bbcode-elements">
 				<a href="" onclick="bb_display_block('1', '{FIELD}');return false;" onmouseover="bb_hide_block('1', '{FIELD}', 1);" onmouseout="bb_hide_block('1', '{FIELD}', 0);" class="bbcode-hover" title="{L_BB_SMILEYS}">
 					<i class="fa bbcode-icon-smileys" {AUTH_SMILEYS}></i>
@@ -66,9 +65,9 @@ function XMLHttpRequest_preview(field)
 					</ul>
 				</div>
 			</li>
+		</ul>
 
-			<li class="bbcode-elements bbcode-separator"></li>
-
+		<ul id="bbcode-container-fonts" class="bbcode-container">
 			<li class="bbcode-elements">
 				<a href="" class="fa bbcode-icon-bold" {AUTH_B} onclick="{DISABLED_B}insertbbcode('[b]', '[/b]', '{FIELD}');return false;" title="{L_BB_BOLD}"></a>
 			</li>
@@ -140,9 +139,9 @@ function XMLHttpRequest_preview(field)
 					</ul>
 				</div>
 			</li>
+		</ul>
 
-			<li class="bbcode-elements bbcode-separator"></li>
-
+		<ul id="bbcode-container-titles" class="bbcode-container">
 			<li class="bbcode-elements">
 				<a href="" onclick="{DISABLED_TITLE}bb_display_block('2', '{FIELD}');return false;" onmouseout="{DISABLED_TITLE}bb_hide_block('2', '{FIELD}', 0);" class="bbcode-hover" title="{L_BB_TITLE}">
 					<i class="fa bbcode-icon-title" {AUTH_TITLE}></i>
@@ -185,9 +184,9 @@ function XMLHttpRequest_preview(field)
 					</div>
 				</div>
 			</li>
+		</ul>
 
-			<li class="bbcode-elements bbcode-separator"></li>
-
+		<ul id="bbcode-container-blocks" class="bbcode-container">
 			<li class="bbcode-elements">
 				<a href="" onclick="{DISABLED_BLOCK}bb_display_block('3', '{FIELD}');return false;" onmouseout="{DISABLED_BLOCK}bb_hide_block('3', '{FIELD}', 0);" class="bbcode-hover" title="{L_BB_CONTAINER}">
 					<i class="fa bbcode-icon-subtitle" {AUTH_BLOCK}></i>
@@ -222,15 +221,15 @@ function XMLHttpRequest_preview(field)
 					</ul>
 				</div>
 			</li>
+		</ul>
 
-			<li class="bbcode-elements bbcode-separator"></li>
-
+		<ul id="bbcode-container-links" class="bbcode-container">
 			<li class="bbcode-elements">
 				<a href="" class="fa bbcode-icon-url" {AUTH_URL} onclick="{DISABLED_URL}bbcode_url('{FIELD}', ${escapejs(L_URL_PROMPT)});return false;" title="{L_BB_URL}"></a>
 			</li>
+		</ul>
 
-			<li class="bbcode-elements bbcode-separator"></li>
-
+		<ul id="bbcode-container-pictures" class="bbcode-container">
 			<li class="bbcode-elements">
 				<a href="" class="fa bbcode-icon-image" {AUTH_IMG} onclick="{DISABLED_IMG}insertbbcode('[img]', '[/img]', '{FIELD}');return false;" title="{L_BB_IMAGE}"></a>
 			</li>
@@ -238,19 +237,21 @@ function XMLHttpRequest_preview(field)
 			<li class="bbcode-elements">
 				<a href="" class="fa bbcode-icon-lightbox" {AUTH_LIGHTBOX} onclick="{DISABLED_lightbox}bbcode_lightbox('{FIELD}', ${escapejs(L_URL_PROMPT)});return false;" title="{L_BB_LIGHTBOX}"></a>
 			</li>
+		</ul>
 
-			# IF C_UPLOAD_MANAGEMENT #
-			<li class="bbcode-elements bbcode-separator"></li>
-
+		# IF C_UPLOAD_MANAGEMENT #
+		<ul id="bbcode-container-upload" class="bbcode-container">
 			<li class="bbcode-elements">
 				<a title="{L_BB_UPLOAD}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd={FIELD}&amp;edt=BBCode', '', 'height=550,width=720,resizable=yes,scrollbars=yes');return false;">
 					<i class="fa bbcode-icon-upload"></i>
 				</a>
 			</li>
-			# ENDIF #
 		</ul>
+		# ENDIF #
+		
+		<span class="bbcode-backspace"><br /></span>
 
-		<ul id="bbcode-more-{FIELD}" class="bbcode-container bbcode-more">
+		<ul id="bbcode-container-aligns" class="bbcode-container bbcode-container-more">
 			<li class="bbcode-elements">
 				<a href="" class="fa bbcode-icon-left" {AUTH_ALIGN} onclick="{DISABLED_ALIGN}insertbbcode('[align=left]', '[/align]', '{FIELD}');return false;" title="{L_BB_LEFT}"></a>
 			</li>
@@ -266,9 +267,9 @@ function XMLHttpRequest_preview(field)
 			<li class="bbcode-elements">
 				<a href="" class="fa bbcode-icon-justify" {AUTH_ALIGN} onclick="{DISABLED_ALIGN}insertbbcode('[align=justify]', '[/align]', '{FIELD}');return false;" title="{L_BB_JUSTIFY}"></a>
 			</li>
+		</ul>
 
-			<li class="bbcode-elements bbcode-separator"></li>
-
+		<ul id="bbcode-container-positions" class="bbcode-container bbcode-container-more">
 			<li class="bbcode-elements">
 				<a href="" class="fa bbcode-icon-float-left" {AUTH_FLOAT} onclick="{DISABLED_FLOAT}insertbbcode('[float=left]', '[/float]', '{FIELD}');return false;" title="{L_BB_FLOAT_LEFT}"></a>
 			</li>
@@ -313,24 +314,24 @@ function XMLHttpRequest_preview(field)
 					</div>
 				</div>
 			</li>
-
-			<li class="bbcode-elements bbcode-separator"></li>
-
+		</ul>
+		
+		<ul id="bbcode-container-exp" class="bbcode-container bbcode-container-more">
 			<li class="bbcode-elements">
 				<a href="" class="fa bbcode-icon-sup" {AUTH_SUP} onclick="{DISABLED_SUP}insertbbcode('[sup]', '[/sup]', '{FIELD}');return false;" title="{L_BB_SUP}"></a>
 			</li>
 			<li class="bbcode-elements">
 				<a href="" class="fa bbcode-icon-sub" {AUTH_SUB} onclick="{DISABLED_SUB}insertbbcode('[sub]', '[/sub]', '{FIELD}');return false;" title="{L_BB_SUB}"></a>
 			</li>
+		</ul>
 
-			<li class="bbcode-elements bbcode-separator"></li>
-
+		<ul id="bbcode-container-anchor" class="bbcode-container bbcode-container-more">
 			<li class="bbcode-elements">
 				<a href="" class="fa bbcode-icon-anchor" {AUTH_ANCHOR} onclick="{DISABLED_ANCHOR}bbcode_anchor('{FIELD}', ${escapejs(L_ANCHOR_PROMPT)});return false;" title="{L_BB_ANCHOR}"></a>
 			</li>
+		</ul>
 
-			<li class="bbcode-elements bbcode-separator"></li>
-
+		<ul id="bbcode-container-movies" class="bbcode-container bbcode-container-more">
 			<li class="bbcode-elements">
 				<a href="" class="fa bbcode-icon-flash" {AUTH_SWF} onclick="{DISABLED_SWF}insertbbcode('[swf=425,344]', '[/swf]', '{FIELD}');return false;" title="{L_BB_SWF}"></a>
 			</li>
@@ -343,9 +344,9 @@ function XMLHttpRequest_preview(field)
 			<li class="bbcode-elements">
 				<a href="" class="fa bbcode-icon-sound" {AUTH_SOUND} onclick="{DISABLED_SOUND}insertbbcode('[sound]', '[/sound]', '{FIELD}');return false;" title="{L_BB_SOUND}"></a>
 			</li>
-
-			<li class="bbcode-elements bbcode-separator"></li>
-
+		</ul>
+		
+		<ul id="bbcode-container-code" class="bbcode-container bbcode-container-more">
 			<li class="bbcode-elements">
 				<a href="" onclick="{DISABLED_CODE}bb_display_block('8', '{FIELD}');return false;" onmouseout="{DISABLED_CODE}bb_hide_block('8', '{FIELD}', 0);" class="bbcode-hover" title="{L_BB_CODE}">
 					<i class="fa bbcode-icon-code" {AUTH_CODE}></i>
@@ -398,31 +399,27 @@ function XMLHttpRequest_preview(field)
 			<li class="bbcode-elements">
 				<a href="" class="fa bbcode-icon-html" {AUTH_HTML} onclick="{DISABLED_HTML}insertbbcode('[html]', '[/html]', '{FIELD}');return false;" title="{L_BB_HTML}"></a>
 			</li>
+		</ul>
 
-			<li class="bbcode-elements bbcode-separator"></li>
-
+		<ul id="bbcode-container-aligns" class="bbcode-container bbcode-container-more">
 			<li class="bbcode-elements">
 				<a href="http://www.phpboost.com/wiki/bbcode" title="{L_BB_HELP}">
 					<i class="fa bbcode-icon-help"></i>
 				</a>
 			</li>
 		</ul>
-
-		<ul class="bbcode-container bbcode-elements-more">
-			<li class="bbcode-elements">
-				<a href="" title="{L_BB_MORE}" onclick="show_bbcode_div('bbcode-more-{FIELD}', 1);return false;">
-					<i class="fa bbcode-icon-more bbcode-hover"></i>
-				</a>
-			</li>
-		</ul>
-
-		<div class="spacer"></div>
 	</div>
-</div>
 
+	<div class="bbcode-elements bbcode-elements-more">
+		<a href="" title="{L_BB_MORE}" onclick="show_bbcode_div('bbcode-container-more');return false;">
+			<i class="fa bbcode-icon-more bbcode-hover"></i>
+		</a>
+	</div>
+
+</div>
 
 <script>
 <!--
-set_bbcode_preference('bbcode-more-{FIELD}');
+set_bbcode_preference('bbcode-container-more');
 -->
 </script>
