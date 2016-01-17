@@ -249,7 +249,8 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			'`<!-- START HTML -->' . "\n" . '(.+)' . "\n" . '<!-- END HTML -->`isU',
 			'`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU',
 			'`<p class="float-(left|right)">(.*)</p>`isU',
-			'`<a href="([^"]+)" data-lightbox="formatter">(.*)</a>`isU'
+			'`<a href="([^"]+)" rel="lightbox\[2\]">(.*)</a>`isU',
+			'`<a href="([^"]+)" data-lightbox="formatter">(.*)</a>`isU',
 		);
 
 		$array_preg_replace = array(
@@ -273,6 +274,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			"[html]$1[/html]",
 			"[math]$1[/math]",
 			"[float=$1]$2[/float]",
+			"[lightbox=$1]$2[/lightbox]",
 			"[lightbox=$1]$2[/lightbox]"
 		);
 

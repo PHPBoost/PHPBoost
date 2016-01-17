@@ -149,6 +149,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			'`\[\[MEDIA\]\]insertSwfPlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`sU',
 			'`\[\[MEDIA\]\]insertYoutubePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`sU',
 			'`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU',
+			'`<a href="([^"]+)" rel="lightbox\[2\]">(.*)</a>`isU',
 			'`<a href="([^"]+)" data-lightbox="formatter">(.*)</a>`isU',
 		);
 
@@ -184,6 +185,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			"[swf=$2,$3]$1[/swf]",
 			"[youtube=$2,$3]$1[/youtube]",
 			"[math]$1[/math]",
+			"[lightbox=$1]$2[/lightbox]",
 			"[lightbox=$1]$2[/lightbox]"
 		);
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);

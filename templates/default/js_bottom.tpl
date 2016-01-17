@@ -15,6 +15,7 @@
 			});
 			
 			jQuery(document).ready(function() {
+				jQuery('a[rel^=lightbox]').attr('data-rel', 'lightcase:collection');
 				jQuery('a[data-lightbox^=formatter]').attr('data-rel', 'lightcase:collection');
 				jQuery('a[data-rel^=lightcase]').lightcase({
 					labels : {
