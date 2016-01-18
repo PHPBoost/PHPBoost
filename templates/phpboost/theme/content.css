@@ -299,13 +299,19 @@ ul.pagination-block-bis li a.next-page:hover {
 .explorer .cats,
 .explorer .files {
 	display: inline-block;
-	width: 62%;
 	margin: 5px 0.33%;
+	width: 48%;
 	vertical-align: top;
 }
 
+@media (max-width: 480px) {
+	.explorer .cats,
+	.explorer .files {
+		width: 100%;
+	}
+}
+
 .explorer .cats {
-	width: 35.6%;
 	min-width: 200px;
 }
 

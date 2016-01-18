@@ -292,12 +292,18 @@ ul.pagination-block-bis li a.next-page:hover {
 .explorer .files {
 	display: inline-block;
 	margin: 5px 0.33%;
-	width: 62%;
+	width: 48%;
 	vertical-align: top;
 }
 
+@media (max-width: 480px) {
+	.explorer .cats,
+	.explorer .files {
+		width: 100%;
+	}
+}
+
 .explorer .cats {
-	width: 35.6%;
 	min-width: 200px;
 }
 
@@ -312,7 +318,6 @@ ul.pagination-block-bis li a.next-page:hover {
 	min-height: 120px;
 	border: 1px solid #DDDDDD;
 	border-radius: 3px;
-	
 }
 
 .explorer .content ul {
