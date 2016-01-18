@@ -369,7 +369,18 @@ class SessionData
 		$parameters = array('user_id' => $user_id);
 		$condition = 'WHERE user_id=:user_id';
 		$columns = array('session_id', 'token', 'timestamp', 'ip', 'location_script', 'location_title', 'data', 'cached_data');
-		$row = PersistenceContext::get_querier()->select_single_row(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
+		
+		try {
+			$row = PersistenceContext::get_querier()->select_single_row(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
+		} catch (NotASingleRowFoundException $e) {
+			$row = PersistenceContext::get_querier()->select_single_row_query('SELECT *
+			FROM ' . DB_TABLE_SESSIONS . '
+			WHERE user_id=:user_id
+			ORDER BY timestamp DESC
+			LIMIT 1', $parameters);
+			
+			PersistenceContext::get_querier()->delete(DB_TABLE_SESSIONS, 'WHERE user_id=:user_id AND session_id != :session_id', array('user_id' => $user_id, 'session_id' => $row['session_id']));
+		}
 		return self::init_from_row($user_id, $row['session_id'], $row);
 	}
 
