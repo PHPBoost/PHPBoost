@@ -81,8 +81,6 @@ class UserRegistrationController extends AbstractController
 			array('maxlength' => 100, 'required' => true, 'description'=> $this->lang['display_name.explain'], 'events' => array('blur' => '
 				if (!HTMLForms.getField("login").getValue() && HTMLForms.getField("display_name").validate() == "") {
 					HTMLForms.getField("login").setValue(HTMLForms.getField("display_name").getValue().replace(/\s/g, \'\'));
-					HTMLForms.getField("login").enableValidationMessage();
-					HTMLForms.getField("login").liveValidate();
 				}')
 			),
 			array(new FormFieldConstraintLengthRange(3, 100), new FormFieldConstraintDisplayNameExists())

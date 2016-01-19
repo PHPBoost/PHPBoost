@@ -325,7 +325,7 @@ FormField.prototype = {
 	clearErrorMessage : function() {
 		if (jQuery('#' + this.getHTMLId() + '_field').length && jQuery('#onblurContainerResponse' + this.getHTMLId()).length) {
 
-			jQuery('#' + this.getHTMLId() + '_field').removeClass('constraint-status-right').addClass('constraint-status-error');
+			jQuery('#' + this.getHTMLId() + '_field').removeClass('constraint-status-right').removeClass('constraint-status-error');
 			jQuery('#onblurMessageResponse' + this.getHTMLId()).html('');
 			jQuery("#onblurMessageResponse" + this.getHTMLId()).fadeOut(200);
 		}

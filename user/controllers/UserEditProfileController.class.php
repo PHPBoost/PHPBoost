@@ -131,8 +131,6 @@ class UserEditProfileController extends AbstractController
 			array('maxlength' => 100, 'required' => true, 'description'=> $this->lang['display_name.explain'], 'disabled' => !AppContext::get_current_user()->is_admin() && !$this->user_accounts_config->are_users_allowed_to_change_display_name(), 'events' => array('blur' => '
 				if (!HTMLForms.getField("login").getValue() && HTMLForms.getField("display_name").validate() == "") {
 					HTMLForms.getField("login").setValue(HTMLForms.getField("display_name").getValue().replace(/\s/g, \'\'));
-					HTMLForms.getField("login").enableValidationMessage();
-					HTMLForms.getField("login").liveValidate();
 				}')
 			),
 			array(new FormFieldConstraintLengthRange(3, 100), new FormFieldConstraintDisplayNameExists($this->user->get_id()))
@@ -168,7 +166,7 @@ class UserEditProfileController extends AbstractController
 		{
 			if (in_array(PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD, $this->user_auth_types))
 			{
-				$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['internal_connection'] . ' <i class="fa fa-success"></i>', '<a  href="" onclick="javascript:HTMLForms.getField(\'custom_login\').enable();'. ($has_custom_login ? 'HTMLForms.getField(\'login\').enable();HTMLForms.getField(\'custom_login\').setValue(true);HTMLForms.getField(\'login\').enableValidationMessage();HTMLForms.getField(\'login\').liveValidate();' : '') .'HTMLForms.getField(\'password\').enable();HTMLForms.getField(\'password_bis\').enable();HTMLForms.getField(\'old_password\').enable();return false;">' . LangLoader::get_message('edit', 'common') . '</a>'));
+				$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['internal_connection'] . ' <i class="fa fa-success"></i>', '<a  href="" onclick="javascript:HTMLForms.getField(\'custom_login\').enable();'. ($has_custom_login ? 'HTMLForms.getField(\'login\').enable();HTMLForms.getField(\'custom_login\').setValue(true);' : '') .'HTMLForms.getField(\'password\').enable();HTMLForms.getField(\'password_bis\').enable();HTMLForms.getField(\'old_password\').enable();return false;">' . LangLoader::get_message('edit', 'common') . '</a>'));
 			}
 			else
 			{
