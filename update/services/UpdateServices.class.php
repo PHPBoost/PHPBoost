@@ -662,7 +662,7 @@ class UpdateServices
 
 		if (!$is_token_valid)
 		{
-			throw new TokenNotFoundException($this->token->get_path_from_root());
+			throw new UpdateTokenNotFoundException($this->token->get_path_from_root());
 		}
 	}
 	
