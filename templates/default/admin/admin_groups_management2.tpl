@@ -103,13 +103,22 @@
 						<div class="form-element">
 							<label for="data_group_limit">{L_DATA_GROUP_LIMIT} <span class="field-description">{L_DATA_GROUP_LIMIT_EXPLAIN}</span></label>
 							<div class="form-field">
-								<label><input type="text" name="data_group_limit" id="data_group_limit" value="{DATA_GROUP_LIMIT}"> {L_MB}</label>
+								<label><input type="text" name="data_group_limit" id="data_group_limit" value="{DATA_GROUP_LIMIT}"></label>
 							</div>
 						</div>
 						<div class="form-element">
 							<label for="color_group">{L_COLOR_GROUP}</label>
 							<div class="form-field">
 								<label><input type="color" name="color_group" id="color_group" value="{COLOR_GROUP}" pattern="#[A-Fa-f0-9]{6}" placeholder="#000000"></label>
+							</div>
+						</div>
+						<div class="form-element">
+							<label for="delete_group_color">{L_DELETE_GROUP_COLOR}</label>
+							<div class="form-field">
+								<div class="form-field-checkbox">
+									<input type="checkbox" name="delete_group_color" id="delete_group_color">
+									<label for="delete_group_color"></label>
+								</div>
 							</div>
 						</div>
 						<div class="form-element">
@@ -219,7 +228,7 @@
 						<div class="center">
 							<button type="submit" class="submit" name="valid" value="true">{L_UPLOAD}</button>
 							<input type="hidden" value="{TOKEN}" name="token">
-						</div>						
+						</div>
 					</div>
 				</fieldset>
 			</form>
@@ -259,7 +268,7 @@
 						<div class="form-element">
 							<label for="data_group_limit">{L_DATA_GROUP_LIMIT} <span class="field-description">{L_DATA_GROUP_LIMIT_EXPLAIN}</span></label>
 							<div class="form-field">
-								<label><input type="text" name="data_group_limit" id="data_group_limit" value="5"> {L_MB}</label>
+								<label><input type="text" name="data_group_limit" id="data_group_limit" value="5"></label>
 							</div>
 						</div>
 						<div class="form-element">

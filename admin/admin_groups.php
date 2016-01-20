@@ -52,6 +52,11 @@ if ($valid && !empty($idgroup_post)) //Modification du groupe.
 	$pm_group_limit = retrieve(POST, 'pm_group_limit', 75);
 	$color_group = retrieve(POST, 'color_group', '');
 	$color_group = substr($color_group, 0, 1) == '#' ? substr($color_group, 1) : $color_group;
+	$delete_group_color = (bool)retrieve(POST, 'delete_group_color', false);
+	
+	if ($delete_group_color)
+		$color_group = '';
+	
 	$data_group_limit = $data_group_limit ? NumberHelper::numeric($data_group_limit, 'float') * 1024 : '5120';
 		
 	$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);
@@ -241,10 +246,10 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 			'L_DATA_GROUP_LIMIT' => $LANG['data_group_limit'],
 			'L_DATA_GROUP_LIMIT_EXPLAIN' => $LANG['data_group_limit_explain'],
 			'L_COLOR_GROUP' => $LANG['color_group'],
+			'L_DELETE_GROUP_COLOR' => $LANG['delete_color_group'],
 			'L_YES' => LangLoader::get_message('yes', 'common'),
 			'L_NO' => LangLoader::get_message('no', 'common'),
 			'L_ADD' => LangLoader::get_message('add', 'common'),
-			'L_MB' => LangLoader::get_message('unit.megabytes', 'common'),
 			'L_MBR_GROUP' => $LANG['mbrs_group'],
 			'L_PSEUDO' => LangLoader::get_message('display_name', 'user-common'),
 			'L_SEARCH' => $LANG['search'],
@@ -342,7 +347,6 @@ elseif ($add) //Interface d'ajout du groupe.
 		'L_DATA_GROUP_LIMIT' => $LANG['data_group_limit'],
 		'L_DATA_GROUP_LIMIT_EXPLAIN' => $LANG['data_group_limit_explain'],
 		'L_COLOR_GROUP' => $LANG['color_group'],
-		'L_MB' => LangLoader::get_message('unit.megabytes', 'common'),
 		'L_YES' => LangLoader::get_message('yes', 'common'),
 		'L_NO' => LangLoader::get_message('no', 'common'),
 		'L_ADD' => LangLoader::get_message('add', 'common')
