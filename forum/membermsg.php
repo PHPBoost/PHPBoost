@@ -181,7 +181,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		$tpl->assign_block_vars('list', array(
 			'C_GROUP_COLOR' => !empty($group_color),
 			'C_GUEST' => empty($row['display_name']),
-			'CONTENTS' => FormatingHelper::second_parse($row['contents']),
+			'CONTENTS' => FormatingHelper::second_parse(stripslashes($row['contents'])),
 			'DATE' => $LANG['on'] . ' ' . Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 			'ID' => $row['id'],
 			'USER_RANK' => ($row['warning_percentage'] < '100' || (time() - $row['delay_banned']) < 0) ? $user_rank : LangLoader::get_message('banned', 'user-common'),
