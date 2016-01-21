@@ -155,8 +155,10 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 			$array_user_groups = explode('|', $row['groups']);
 			foreach (GroupsService::get_groups() as $idgroup => $array_group_info)
 			{
+				$group_color = User::get_group_color($idgroup);
+				
 				if (is_numeric(array_search($idgroup, $array_user_groups)))
-					$user_groups .= !empty($array_group_info['img']) ? '<img src="../images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info['name'] . '<br />';
+					$user_groups .= !empty($array_group_info['img']) ? '<a href="' . UserUrlBuilder::group($idgroup)->rel() . '"' . ($group_color ? ' style="color:' . $group_color . '"' : '') . '><img src="../images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/></a><br />' : $LANG['group'] . ': <a href="' . UserUrlBuilder::group($idgroup)->rel() . '"' . ($group_color ? ' style="color:' . $group_color . '"' : '') . '>' . $array_group_info['name'] . '</a><br />';
 			}
 		}
 		else
