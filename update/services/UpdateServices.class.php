@@ -256,6 +256,28 @@ class UpdateServices
 		if (!in_array(PREFIX . 'forum_ranks', $tables))
 			PersistenceContext::get_querier()->inject('RENAME TABLE '. PREFIX .'ranks' .' TO '. PREFIX .'forum_ranks');
 		
+		// Update extended fields possible values
+		$result = PersistenceContext::get_querier()->select('SELECT id, possible_values, default_value FROM ' . PREFIX . 'member_extended_fields_list');
+		while ($row = $result->fetch())
+		{
+			$new_possible_values = array();
+			$possible_values = explode('|', $row['possible_values']);
+			
+			if (!empty($possible_values))
+			{
+				foreach ($possible_values as $value)
+				{
+					$new_possible_values[preg_replace('/\s+/', '', $value)] = array(
+						'is_default' => $value == $row['default_values'],
+						'title' => $value
+					);
+				}
+				
+				PersistenceContext::get_querier()->update(PREFIX . 'member_extended_fields_list', array('possible_values' => serialize($new_possible_values)), 'WHERE id=:id', array('id' => $row['id']));
+			}
+		}
+		$result->dispose();
+		
 		PersistenceContext::get_dbms_utils()->truncate(PREFIX .'smileys');
 		
 		$this->insert_smileys_data();
