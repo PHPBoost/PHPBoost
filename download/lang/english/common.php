@@ -54,13 +54,16 @@ $lang['config.category_display_type'] = 'Displayed informations in categories';
 $lang['config.category_display_type.display_summary'] = 'Summary';
 $lang['config.category_display_type.display_all_content'] = 'All content';
 $lang['config.category_display_type.display_table'] = 'Table';
-$lang['config.display_descriptions_to_guests'] = 'Display summary files to guests if they don\'t have read authorization';
+$lang['config.display_descriptions_to_guests'] = 'Display summary files to guests if they don\'t have read permission';
 $lang['config.downloaded_files_menu'] = 'Downloaded files menu';
 $lang['config.sort_type'] = 'Files display order';
 $lang['config.sort_type.explain'] = 'Descending mode';
 $lang['config.files_number_in_menu'] = 'Max files displayed number';
 $lang['config.limit_oldest_file_day_in_menu'] = 'Limit files age in menu';
 $lang['config.oldest_file_day_in_menu'] = 'Maximum age (in days)';
+
+//authorizations
+$lang['authorizations.display_download_link'] = 'Display download link permission';
 
 //SEO
 $lang['download.seo.description.tag'] = 'All downloads on :subject.';
@@ -79,4 +82,5 @@ $lang['download.message.success.add'] = 'The file <b>:name</b> has been added';
 $lang['download.message.success.edit'] = 'The file <b>:name</b> has been modified';
 $lang['download.message.success.delete'] = 'The file <b>:name</b> has been deleted';
 $lang['download.message.error.file_not_found'] = 'File not found, the link may be dead.';
+$lang['download.message.warning.unauthorized_to_download_file'] = 'You are not authorized to download the file.';
 ?>

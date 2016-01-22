@@ -41,6 +41,15 @@ class DownloadConfigUpdateVersion extends ConfigUpdateVersion
 		$download_config->set_columns_number_per_line($config['columns_number']);
 		$download_config->set_root_category_description($config['root_contents']);
 		
+		$authorizations = $config->get_authorizations();
+		
+		foreach ($authorizations as $id => $auth)
+		{
+			$authorizations[$id] = $auth + 16;
+		}
+		
+		$download_config->set_authorizations($authorizations);
+		
 		DownloadConfig::save();
 		
 		return true;

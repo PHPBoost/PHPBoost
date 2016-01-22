@@ -39,13 +39,18 @@
 							<div class="spacer"></div>
 						# ENDIF #
 						# IF C_VISIBLE #
-							<a href="{U_DOWNLOAD}" class="basic-button">
-								<i class="fa fa-download"></i> {@download}
-							</a>
-							# IF IS_USER_CONNECTED #
-							<a href="{U_DEADLINK}" class="basic-button alt" title="${LangLoader::get_message('deadlink', 'common')}">
-								<i class="fa fa-unlink"></i>
-							</a>
+							# IF C_DISPLAY_DOWNLOAD_LINK #
+								<a href="{U_DOWNLOAD}" class="basic-button">
+									<i class="fa fa-download"></i> {@download}
+								</a>
+								
+								# IF IS_USER_CONNECTED #
+								<a href="{U_DEADLINK}" class="basic-button alt" title="${LangLoader::get_message('deadlink', 'common')}">
+									<i class="fa fa-unlink"></i>
+								</a>
+								# ENDIF #
+							# ELSE #
+								# INCLUDE UNAUTHORIZED_TO_DOWNLOAD_MESSAGE #
 							# ENDIF #
 						# ENDIF #
 					</div>

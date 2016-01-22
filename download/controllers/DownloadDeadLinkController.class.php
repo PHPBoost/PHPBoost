@@ -47,7 +47,12 @@ class DownloadDeadLinkController extends AbstractController
 			}
 		}
 		
-		if ($this->downloadfile !== null && $this->downloadfile->is_visible())
+		if ($this->downloadfile !== null && (!DownloadAuthorizationsService::check_authorizations($this->downloadfile->get_id_category())->read() || !DownloadAuthorizationsService::check_authorizations()->display_download_link()))
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
+		else if ($this->downloadfile !== null && $this->downloadfile->is_visible())
 		{
 			if (!PersistenceContext::get_querier()->row_exists(PREFIX . 'events', 'WHERE id_in_module=:id_in_module AND module=\'download\' AND current_status = 0', array('id_in_module' => $this->downloadfile->get_id())))
 			{

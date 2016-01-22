@@ -62,6 +62,9 @@ $lang['config.files_number_in_menu'] = 'Nombre de fichiers affichés maximum';
 $lang['config.limit_oldest_file_day_in_menu'] = 'Limiter l\'âge des fichiers dans le menu';
 $lang['config.oldest_file_day_in_menu'] = 'Age maximum (en jours)';
 
+//authorizations
+$lang['authorizations.display_download_link'] = 'Autorisation d\'afficher le lien de téléchargement';
+
 //SEO
 $lang['download.seo.description.tag'] = 'Tous les fichiers sur le sujet :subject.';
 $lang['download.seo.description.pending'] = 'Tous les fichiers en attente.';
@@ -79,4 +82,5 @@ $lang['download.message.success.add'] = 'Le fichier <b>:name</b> a été ajouté';
 $lang['download.message.success.edit'] = 'Le fichier <b>:name</b> a été modifié';
 $lang['download.message.success.delete'] = 'Le fichier <b>:name</b> a été supprimé';
 $lang['download.message.error.file_not_found'] = 'Fichier introuvable, le lien est peut-être mort.';
+$lang['download.message.warning.unauthorized_to_download_file'] = 'Vous n\'êtes pas autorisé à télécharger le fichier.';
 ?>

@@ -4,6 +4,10 @@
 	text-align: center;
 }
 
+.options {
+	max-width: 280px;
+}
+
 @media (min-width: 480px) {
 	.download-picture {
 		float: right;

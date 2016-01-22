@@ -285,7 +285,7 @@ class DownloadConfig extends AbstractConfigData
 			self::FILES_NUMBER_IN_MENU => 5,
 			self::LIMIT_OLDEST_FILE_DAY_IN_MENU_ENABLED => false,
 			self::OLDEST_FILE_DAY_IN_MENU => 30,
-			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13),
+			self::AUTHORIZATIONS => array('r-1' => 17, 'r0' => 21, 'r1' => 29),
 			self::DEFERRED_OPERATIONS => array()
 		);
 	}

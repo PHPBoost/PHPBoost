@@ -47,7 +47,7 @@ class DownloadFileController extends AbstractController
 			}
 		}
 		
-		if ($this->downloadfile !== null && !DownloadAuthorizationsService::check_authorizations($this->downloadfile->get_id_category())->read())
+		if ($this->downloadfile !== null && (!DownloadAuthorizationsService::check_authorizations($this->downloadfile->get_id_category())->read() || !DownloadAuthorizationsService::check_authorizations()->display_download_link()))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
