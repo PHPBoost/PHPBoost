@@ -30,7 +30,7 @@ a.member { color: #000000; }
 
 /* --- Couleur de texte --- */
 .color-alert 		{ color: #B22222; }
-.color-notavailable 	{ color: #B22222; }
+.color-notavailable { color: #B22222; }
 .color-available 	{ color: #008000; }
 .color-unknown 		{ color: #004b80; }
 
