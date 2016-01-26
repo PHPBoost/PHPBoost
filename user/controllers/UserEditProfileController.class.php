@@ -333,10 +333,16 @@ class UserEditProfileController extends AbstractController
 			}
 
 			$login = $this->form->get_value('email');
+			$custom_login_hidden = $this->form->get_field_by_id('custom_login')->is_hidden();
+			
+			if ($custom_login_hidden)
+				$this->form->get_field_by_id('custom_login')->set_hidden(false);
+			
 			if ($this->form->get_value('custom_login', false))
-			{
 				$login = $this->form->get_value('login');
-			}
+			
+			if ($custom_login_hidden)
+				$this->form->get_field_by_id('custom_login')->set_hidden(true);
 
 			$password = $this->form->get_value('password');
 			if ($this->internal_auth_infos === null && !empty($password))
