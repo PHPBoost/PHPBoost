@@ -58,12 +58,16 @@ class AutoConnectData
 
 	public static function create_cookie($user_id)
 	{
+		$data = $row = null;
 		$columns = array('autoconnect_key');
 		$condition = 'WHERE user_id=:user_id';
 		$parameters = array('user_id' => $user_id);
-		$row = self::$querier->select_single_row(DB_TABLE_MEMBER, $columns, $condition, $parameters);
-		$data = null;
-		if (!empty($row['autoconnect_key']))
+		
+		try {
+			$row = self::$querier->select_single_row(DB_TABLE_MEMBER, $columns, $condition, $parameters);
+		} catch (RowNotFoundException $e) { }
+		
+		if (!empty($row) && !empty($row['autoconnect_key']))
 		{
 			$data = new AutoConnectData($user_id, $row['autoconnect_key']);
 		}
