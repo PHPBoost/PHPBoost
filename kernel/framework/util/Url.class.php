@@ -120,7 +120,7 @@ class Url
 				$url = 'http://' . $url;
 			}
 
-			$url = str_replace(self::get_absolute_root() . '/', '/', self::compress($url));
+			$url = preg_replace('`^https?://' . AppContext::get_request()->get_site_domain_name() . GeneralConfig::load()->get_site_path() . '`', '/', self::compress($url));
 			if (!strpos($url, '://'))
 			{
 				$this->is_relative = true;
