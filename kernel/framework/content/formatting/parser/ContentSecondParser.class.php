@@ -32,7 +32,7 @@
  * which replaces the code by a lot of html code which formats the code.
  * This kind of tag is treated in real time by this class.
  * The content you put in that parser must come from a ContentFormattingParser class (BBCodeParser or TinyMCEParser) (it can have been saved in a database between the first parsing and the real time parsing).
- * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @author BenoÃ®t Sautel <ben.popeye@phpboost.com>
  */
 class ContentSecondParser extends AbstractParser
 {
@@ -77,8 +77,6 @@ class ContentSecondParser extends AbstractParser
 		}
 		
 		$this->parse_feed_tag();
-		
-		$this->content = Url::html_convert_root_relative2absolute($this->content, $this->path_to_root, $this->page_path);
 	}
 
 	/**
@@ -88,7 +86,7 @@ class ContentSecondParser extends AbstractParser
 	 */
 	public static function export_html_text($html_content)
 	{
-		//Balise vidéo
+		//Balise vidÃ©o
 		$html_content = preg_replace('`<a href="([^"]+)" style="display:block;margin:auto;width:([0-9]+)px;height:([0-9]+)px;" id="movie_[0-9]+"></a><br /><script><!--\s*insertMoviePlayer\(\'movie_[0-9]+\'\);\s*--></script>`isU',
 			'<object type="application/x-shockwave-flash" width="$2" height="$3">
 				<param name="FlashVars" value="flv=$1&width=$2&height=$3" />
@@ -150,7 +148,7 @@ class ContentSecondParser extends AbstractParser
 			require_once(PATH_TO_ROOT . '/kernel/lib/php/geshi/geshi.php');
 			$Geshi = new GeSHi($contents, $language);
 
-			if ($line_number) //Affichage des numéros de lignes.
+			if ($line_number) //Affichage des numÃ©ros de lignes.
 			{
 				$Geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
 			}
