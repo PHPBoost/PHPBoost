@@ -379,6 +379,11 @@ class HTTPRequestCustom
 		return 'http' . ($this->get_is_https() ? 's' : '') . '://' . self::get_http_host();
 	}
 
+	public function get_site_domain_name()
+	{
+		return self::get_http_host();
+	}
+
 	public function get_user_agent()
 	{
 		return isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
