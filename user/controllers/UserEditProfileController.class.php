@@ -161,7 +161,7 @@ class UserEditProfileController extends AbstractController
 		$form->add_fieldset($connect_fieldset);
 		
 		$more_than_one_authentication_type = count($activated_auth_types) > 1;
-		$has_custom_login = $this->user->get_email() !== $this->internal_auth_infos['login'];
+		$has_custom_login = $this->internal_auth_infos['login'] && $this->user->get_email() !== $this->internal_auth_infos['login'];
 		if ($more_than_one_authentication_type)
 		{
 			if (in_array(PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD, $this->user_auth_types))
