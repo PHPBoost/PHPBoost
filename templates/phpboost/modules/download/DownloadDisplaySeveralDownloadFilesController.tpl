@@ -464,7 +464,15 @@
 					<div class="pbt-element-info-container">
 						<p class="pbt-info-title">{downloadfiles.NAME}</p>
 						<p class="pbt-info-desc">{downloadfiles.DESCRIPTION}</p>
-						<p class="pbt-info-author">${LangLoader::get_message('by', 'common')} {downloadfiles.PSEUDO}</p>
+						# IF C_AUTHOR_DISPLAYED #
+							<p class="pbt-info-author">${LangLoader::get_message('by', 'common')} 
+							# IF downloadfiles.C_CUSTOM_AUTHOR_DISPLAY_NAME #
+								{downloadfiles.CUSTOM_AUTHOR_DISPLAY_NAME}
+							# ELSE #
+								{downloadfiles.PSEUDO}
+							# ENDIF #
+							</p>
+						# ENDIF #
 					</div>
 				</a>
 			</div>
