@@ -189,7 +189,7 @@ class UserEditProfileController extends AbstractController
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists($this->user->get_id()))
 		));
 
-		if (AppContext::get_current_user()->is_admin() || $this->user->get_id() == AppContext::get_current_user()->get_id())
+		if ($this->user->get_id() == AppContext::get_current_user()->get_id())
 		{
 			$connect_fieldset->add_field(new FormFieldPasswordEditor('old_password', $this->lang['password.old'], '', array(
 				'description' => $this->lang['password.old.explain'], 'hidden' => $more_than_one_authentication_type))
@@ -318,7 +318,9 @@ class UserEditProfileController extends AbstractController
 			}
 			
 			$this->user->set_locale($this->form->get_value('lang')->get_raw_value());
+			$this->form->get_field_by_id('display_name')->enable();
 			$this->user->set_display_name($this->form->get_value('display_name'));
+			$this->form->get_field_by_id('email')->enable();
 			$this->user->set_email($this->form->get_value('email'));
 			$this->user->set_locale($this->form->get_value('lang')->get_raw_value());
 			$this->user->set_editor($this->form->get_value('text-editor')->get_raw_value());
