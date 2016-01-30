@@ -339,7 +339,7 @@ class WebFormController extends ModuleController
 		Feed::clear_cache('web');
 		WebCache::invalidate();
 		
-		if ($previous_category_id != $weblink->get_id_category())
+		if ($this->is_new_weblink || $previous_category_id != $weblink->get_id_category())
 			WebCategoriesCache::invalidate();
 	}
 	
