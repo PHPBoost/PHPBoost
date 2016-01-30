@@ -210,7 +210,7 @@ class FaqFormController extends ModuleController
 		Feed::clear_cache('faq');
 		FaqCache::invalidate();
 		
-		if ($previous_category_id != $faq_question->get_id_category())
+		if ($this->is_new_faq_question || $previous_category_id != $faq_question->get_id_category())
 			FaqCategoriesCache::invalidate();
 	}
 	

@@ -354,7 +354,7 @@ class DownloadFormController extends ModuleController
 		Feed::clear_cache('download');
 		DownloadCache::invalidate();
 		
-		if ($previous_category_id != $downloadfile->get_id_category())
+		if ($this->is_new_downloadfile || $previous_category_id != $downloadfile->get_id_category())
 			DownloadCategoriesCache::invalidate();
 	}
 	

@@ -407,7 +407,7 @@ class ArticlesFormController extends ModuleController
 
 		Feed::clear_cache('articles');
 		
-		if ($previous_category_id != $article->get_id_category())
+		if ($this->is_new_article || $previous_category_id != $article->get_id_category())
 			ArticlesCategoriesCache::invalidate();
 	}
 
