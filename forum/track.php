@@ -248,7 +248,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 	$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 	$method->setAccessible(true);
 	$categories_tree_options = $method->invoke($categories_tree);
-	$cat_list = '';
+	$cat_list = '<option value="">--</option>';
 	foreach ($categories_tree_options as $option)
 	{
 		if ($option->get_raw_value())

@@ -13,8 +13,10 @@
 		<form action="track{U_TRACK_ACTION}" method="post">
 			<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-track">
 				<header>
-					<h2>&bull; {U_FORUM_CAT}</h2>
-					# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #
+					<h2>
+						&bull; {U_FORUM_CAT}
+						# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #
+					</h2>
 				</header>
 				<div class="content">
 					<div class="text_small">{L_EXPLAIN_TRACK}</div>
