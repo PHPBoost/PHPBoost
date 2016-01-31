@@ -201,8 +201,8 @@ class ContentSecondParser extends AbstractParser
 		{
 			$contents = '<span class="formatter-code">' . LangLoader::get_message('code_tag', 'main') . '</span><div class="code">' . $contents . '</div>';
 		}
-			
-		return TextHelper::htmlspecialchars_decode($contents);
+		
+		return $contents;
 	}
 
 	/**
