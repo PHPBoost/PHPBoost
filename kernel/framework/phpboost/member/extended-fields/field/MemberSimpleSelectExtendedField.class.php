@@ -66,7 +66,9 @@ class MemberSimpleSelectExtendedField extends AbstractMemberExtendedField
 		$default = $member_extended_field->get_value();
 		foreach ($member_extended_field->get_possible_values() as $name => $parameters)
 		{
-			$options[] = new FormFieldSelectChoiceOption(stripslashes($parameters['title']), $name);
+			$option = new FormFieldSelectChoiceOption(stripslashes($parameters['title']), $name);
+			$option->set_active($default == $parameters['title']);
+			$options[] = $option;
 		}
 		
 		if (empty($default))
