@@ -58,13 +58,23 @@ class MemberMultipleSelectExtendedField extends AbstractMemberExtendedField
 		$fieldset = $member_extended_field->get_fieldset();
 		
 		$options = array();
-		$default_values = explode('|', $member_extended_field->get_value());
+		$default_values = $this->unserialise_value($member_extended_field->get_value());
 		foreach ($member_extended_field->get_possible_values() as $name => $parameters)
 		{
 			$options[] = new FormFieldSelectChoiceOption(stripslashes($parameters['title']), $name);
 		}
 		
 		$fieldset->add_field(new FormFieldMultipleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $default_values, $options, array('required' => (bool)$member_extended_field->get_required(), 'description' => $member_extended_field->get_description())));
+	}
+	
+	public function display_field_profile(MemberExtendedField $member_extended_field)
+	{
+		$fieldset = $member_extended_field->get_fieldset();
+		$value = implode(', ', $this->unserialise_value($member_extended_field->get_value()));
+		if (!empty($value))
+		{
+			$fieldset->add_field(new FormFieldFree($member_extended_field->get_field_name(), $member_extended_field->get_name(), $value));
+		}
 	}
 	
 	public function get_data(HTMLForm $form, MemberExtendedField $member_extended_field)
@@ -84,6 +94,11 @@ class MemberMultipleSelectExtendedField extends AbstractMemberExtendedField
 	private function serialise_value(Array $array)
 	{
 		return implode('|', $array);
+	}
+	
+	private function unserialise_value($string)
+	{
+		return explode('|', $string);
 	}
 }
 ?>
