@@ -47,7 +47,7 @@ class Url
 	const USER_REGEX = '[a-z0-9-_]+(?::[a-z0-9-_]+)?@';
 	const DOMAIN_REGEX = '(?:[a-z0-9-_~]+\.)*[a-z0-9-_~]+(?::[0-9]{1,5})?/';
 	const FOLDERS_REGEX = '/*(?:[A-Za-z0-9~_\.+@,-]+/+)*';
-	const FILE_REGEX = '[A-Za-z0-9-+_,~:\.\%!=]+';
+	const FILE_REGEX = '[A-Za-z0-9-+_,~:/\.\%!=]+';
 	const ARGS_REGEX = '(?:\?(?!&)(?:(?:&amp;|&)?[A-Za-z0-9-+=,_~:;/\.\?\'\%\*!]+(?:=[A-Za-z0-9-+=_~:;/\.\?\'\%\*!]+)?)*)?';
 	const ANCHOR_REGEX = '\#[a-z0-9-_/+\.!=]*';
 	
