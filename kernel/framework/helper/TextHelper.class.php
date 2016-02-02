@@ -152,7 +152,7 @@ class TextHelper
 		{
 			$flags = ENT_COMPAT;
 		}
-		return htmlspecialchars_decode($string, $flags);
+		return str_replace('&', '&amp;', htmlspecialchars_decode($string, $flags));
 	}
 	
 	public static function htmlentities($string, $flags = null, $encoding = 'windows-1252', $double_encode = true)
