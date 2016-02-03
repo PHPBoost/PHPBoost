@@ -58,11 +58,14 @@
 						</h2>
 						
 						<div class="more">
-							${LangLoader::get_message('by', 'common')}
 							# IF articles.C_AUTHOR_DISPLAYED #
+								${LangLoader::get_message('by', 'common')}
 								# IF articles.C_AUTHOR_EXIST #<a itemprop="author" href="{articles.U_AUTHOR}" class="{articles.USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>{articles.PSEUDO}</a># ELSE #{articles.PSEUDO}# ENDIF #,
+								${TextHelper::lowercase_first(LangLoader::get_message('the', 'common'))} 
+							# ELSE #
+								${LangLoader::get_message('the', 'common')} 
 							# ENDIF # 
-							${TextHelper::lowercase_first(LangLoader::get_message('the', 'common'))} <time datetime="# IF NOT articles.C_DIFFERED #{articles.DATE_ISO8601}# ELSE #{articles.PUBLISHING_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT articles.C_DIFFERED #{articles.DATE}# ELSE #{articles.PUBLISHING_START_DATE}# ENDIF #</time>
+							<time datetime="# IF NOT articles.C_DIFFERED #{articles.DATE_ISO8601}# ELSE #{articles.PUBLISHING_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT articles.C_DIFFERED #{articles.DATE}# ELSE #{articles.PUBLISHING_START_DATE}# ENDIF #</time>
 							${TextHelper::lowercase_first(LangLoader::get_message('in', 'common'))} <a itemprop="about" href="{articles.U_CATEGORY}">{articles.CATEGORY_NAME}</a>
 						</div>
 						
