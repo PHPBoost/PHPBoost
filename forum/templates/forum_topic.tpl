@@ -233,7 +233,7 @@
 									<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" title="{msg.FORUM_MSG_DATE}"><i class="fa fa-hand-o-right"></i></a> {msg.FORUM_MSG_DATE}
 								</span>
 								<span class="float-right">
-									<a href="topic{msg.U_VARS_QUOTE}#go_bottom" title="{L_QUOTE}"><i class="fa fa-quote-right"></i></a>
+									# IF C_AUTH_POST #<a href="topic{msg.U_VARS_QUOTE}#go_bottom" title="{L_QUOTE}"><i class="fa fa-quote-right"></i></a># ENDIF #
 									# IF msg.C_FORUM_MSG_EDIT # 
 									<a href="post{msg.U_FORUM_MSG_EDIT}" title="{L_EDIT}" class="fa fa-edit"></a>
 									# ENDIF #
