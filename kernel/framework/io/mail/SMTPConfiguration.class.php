@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           SMTPMailService.class.php
+ *                           SMTPConfiguration.class.php
  *                            -------------------
  *   begin                : March 8, 2010
  *   copyright            : (C) 2010 Benoit Sautel
