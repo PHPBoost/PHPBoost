@@ -610,7 +610,7 @@ input[type=text] {
 
 .pbt-element-info-container {
 	height: auto;
-	padding: 8px 0 40px 0;
+	padding: 8px 0 20px 0;
 }
 
 .pbt-element-img-container {
@@ -673,8 +673,8 @@ img.pbt-logo {
 .pbt-info-desc {
 	color: #AAAAAA;
 	font-style: italic;
-	font-size: 0.9em;
-	height: 32px;
+	font-size: 0.85em;
+	height: 45px;
 	overflow: hidden;
 	text-align: center;
 	margin: 5px 10px;
