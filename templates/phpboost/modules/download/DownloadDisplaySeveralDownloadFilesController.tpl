@@ -50,6 +50,7 @@
 				$("#pbt-img-" + article_id ).attr("src", img_releases);
 				$("#pbt-icon-" + article_id ).addClass("pbt-icon-releases");
 				$("#pbt-logo-" + article_id ).addClass("pbt-logo-releases");
+				$("#pbt-logo-" + article_id ).attr("src", img_default);
 			}
 
 			if ( $.inArray(cats_id, modules) != -1 )
