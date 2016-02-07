@@ -214,16 +214,17 @@ img.pbt-logo {
 }
 
 .pbt-logo-pdk,
-.pbt-logo-updates {
+.pbt-logo-updates,
+.pbt-logo-releases {
 	background-image: url('../../theme/images/sprite-phpboost.png');
 	background-repeat: no-repeat;
-	
 	width: 64px;
 	height: 64px;
 }
 
-.pbt-logo-pdk 		{ background-position: -1px -205px;	 }
-.pbt-logo-updates 	{ background-position: -65px -205px; }
+.pbt-logo-pdk 		{ background-position: -1px -205px;	  }
+.pbt-logo-updates 	{ background-position: -65px -205px;  }
+.pbt-logo-releases 	{ background-position: -127px -205px; }
 
 .pbt-info-title {
 	height: 30px;
