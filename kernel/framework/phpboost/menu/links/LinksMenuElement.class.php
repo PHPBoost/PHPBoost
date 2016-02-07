@@ -87,7 +87,7 @@ abstract class LinksMenuElement extends Menu
 	 */
 	protected function _assign($template, $mode = self::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
 	{
-		$image = new Image(Url::to_relative($this->image));
+		$image = new Image(Url::to_absolute($this->image));
 		
 		parent::_assign($template);
 		$template->put_all(array(
