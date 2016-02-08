@@ -50,6 +50,10 @@ class AdminGeneralConfigController extends AdminController
 		{
 			$this->save();
 			$this->form->get_field_by_id('other_start_page')->set_hidden($this->general_config->get_module_home_page() != 'other');
+			$this->form->get_field_by_id('picture_theme')->set_value('<a href="'. $this->get_picture_theme() .'" data-lightbox="theme" data-rel="lightcase:collection" id="preview_theme" title="' . $this->lang['general-config.theme_picture'] . '">
+				<img id="img_theme" src="'. $this->get_picture_theme() .'" alt="' . $this->lang['general-config.theme_picture'] . '" class="admin-theme-img" /><br />
+				('. $this->lang['general-config.theme_preview_click'] .')
+			</a>');
 			$this->clear_cache();
 			$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
@@ -112,7 +116,7 @@ class AdminGeneralConfigController extends AdminController
 		
 		$fieldset->add_field(new FormFieldFree('picture_theme', $this->lang['general-config.theme_picture'],
 			'<a href="'. $this->get_picture_theme() .'" data-lightbox="theme" data-rel="lightcase:collection" id="preview_theme" title="' . $this->lang['general-config.theme_picture'] . '">
-				<img id="img_theme" src="'. $this->get_picture_theme() .'" alt="' . $this->lang['general-config.theme_picture'] . '" class="admin-theme-img" /></br>
+				<img id="img_theme" src="'. $this->get_picture_theme() .'" alt="' . $this->lang['general-config.theme_picture'] . '" class="admin-theme-img" /><br />
 				('. $this->lang['general-config.theme_preview_click'] .')
 			</a>'
 		));
