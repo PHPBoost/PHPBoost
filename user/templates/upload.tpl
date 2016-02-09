@@ -1,6 +1,22 @@
 	# IF POPUP #<style type="text/css">body {background:#FAFAFA;}</style># ENDIF #
 	<script>
 	<!--
+	function insertAtCursor(myField, myValue) {
+		//IE support
+		if (document.selection) {
+			myField.focus();
+			sel = document.selection.createRange();
+			sel.text = myValue;
+		}
+		//MOZILLA/NETSCAPE support
+		else if (myField.selectionStart || myField.selectionStart == '0') {
+			var startPos = myField.selectionStart;
+			var endPos = myField.selectionEnd;
+			myField.value = myField.value.substring(0, startPos) + myValue + myField.value.substring(endPos, myField.value.length);
+		} else {
+			myField.value += myValue;
+		}
+	}
 	function insert_popup(code) 
 	{
 		# IF C_TINYMCE_EDITOR #
@@ -23,12 +39,13 @@
 			# IF C_TINYMCE_EDITOR #
 			window.parent.insertTinyMceContent(code); //insertion pour tinymce.
 			# ELSE #
-			field.value = field.value + code;
+			insertAtCursor(field, code);
+			field.scrollTop(field.prop("selectionStart"));
 			# ENDIF #
 		}
 		
 		field.focus();
-	}	
+	}
 	function close_popup()
 	{
 		opener=self;
