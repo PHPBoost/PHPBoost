@@ -41,16 +41,9 @@ class MySQLQueryTranslator implements SQLQueryTranslator
 	{
 		$this->query = $query;
 
-		$this->translate_operators();
 		$this->translate_functions();
 
 		return $this->query;
-	}
-
-	private function translate_operators()
-	{
-		$this->query = preg_replace_callback('`[\w:_\']+(?:\s*\|\|\s*[\w.:_\']+)+`',
-		array($this, 'concat_callback'), $this->query);
 	}
 
 	private function translate_functions()
@@ -59,12 +52,6 @@ class MySQLQueryTranslator implements SQLQueryTranslator
         'MATCH($1) AGAINST($2)', $this->query);
 		$this->query = preg_replace('`FT_SEARCH_RELEVANCE\(\s*(.+)\s*,\s*(.+)\s*\)`iU',
         'MATCH($1) AGAINST($2)', $this->query);
-	}
-
-	private function concat_callback($matches)
-	{
-		$parameters = explode('||', $matches[0]);
-		return 'CONCAT(' . implode(',', $parameters) .')';
 	}
 }
 ?>
