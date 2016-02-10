@@ -50,7 +50,7 @@ if ($contribution_id > 0)
 		DispatchManager::redirect($error_controller);
 	}
 	
-	$Bread_crumb->add($LANG['member_area'], UserUrlBuilder::home()->rel());
+	$Bread_crumb->add($LANG['user'], UserUrlBuilder::home()->rel());
 	$Bread_crumb->add($LANG['contribution_panel'], url('contribution_panel.php'));
 	$Bread_crumb->add($contribution->get_entitled(), url('contribution_panel.php?id=' . $contribution->get_id()));
 	
@@ -68,7 +68,7 @@ elseif ($id_update > 0)
 	   DispatchManager::redirect($error_controller);
     }
 	
-	$Bread_crumb->add($LANG['member_area'], UserUrlBuilder::home()->rel());
+	$Bread_crumb->add($LANG['user'], UserUrlBuilder::home()->rel());
 	$Bread_crumb->add($LANG['contribution_panel'], url('contribution_panel.php'));
 	$Bread_crumb->add($contribution->get_entitled(), url('contribution_panel.php?id=' . $contribution->get_id()));
 	$Bread_crumb->add($LANG['contribution_edition'], url('contribution_panel.php?edit=' . $id_update));
@@ -137,7 +137,7 @@ elseif ($id_to_delete > 0)
 }
 else
 {
-	$Bread_crumb->add($LANG['member_area'], UserUrlBuilder::home()->rel());
+	$Bread_crumb->add($LANG['user'], UserUrlBuilder::home()->rel());
 	$Bread_crumb->add($LANG['contribution_panel'], url('contribution_panel.php'));
 	define('TITLE', $LANG['contribution_panel']);
 }

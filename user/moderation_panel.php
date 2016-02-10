@@ -27,7 +27,7 @@
 
 require_once('../kernel/begin.php');
 
-$Bread_crumb->add($LANG['member_area'], UserUrlBuilder::home()->rel());
+$Bread_crumb->add($LANG['user_s'], UserUrlBuilder::home()->rel());
 $Bread_crumb->add($LANG['moderation_panel'], UserUrlBuilder::moderation_panel()->rel());
 
 $action = retrieve(GET, 'action', 'warning', TSTRING_UNCHANGE);

@@ -206,7 +206,6 @@ $LANG['add_member'] = 'Add a member';
 $LANG['alert_member_already_auth'] = 'The member is already in the list';
 
 //Members
-$LANG['member_area'] = 'Member Area';
 $LANG['mail_track_topic'] = 'Send me an email when a reply is posted in a tracked topic';
 $LANG['localisation'] = 'Location';
 $LANG['sex'] = 'Sex';
