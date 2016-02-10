@@ -27,7 +27,7 @@
 
 require_once('../kernel/begin.php');
 define('TITLE', $LANG['title_pm']);
-$Bread_crumb->add($LANG['member_area'], UserUrlBuilder::home()->rel());
+$Bread_crumb->add($LANG['user'], UserUrlBuilder::home()->rel());
 $Bread_crumb->add($LANG['title_pm'], UserUrlBuilder::personnal_message()->rel());
 require_once('../kernel/header.php');
 $current_user = AppContext::get_current_user();

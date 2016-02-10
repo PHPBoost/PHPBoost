@@ -48,7 +48,7 @@ if (!empty($popup)) //Popup.
 }
 else //Affichage de l'interface de gestion.
 {
-	$Bread_crumb->add($LANG['member_area'], UserUrlBuilder::profile(AppContext::get_current_user()->get_id())->rel());
+	$Bread_crumb->add($LANG['user'], UserUrlBuilder::profile(AppContext::get_current_user()->get_id())->rel());
 	$Bread_crumb->add($LANG['files_management'], UserUrlBuilder::upload_files_panel()->rel());
 	require_once('../kernel/header.php');
 	$field = '';
