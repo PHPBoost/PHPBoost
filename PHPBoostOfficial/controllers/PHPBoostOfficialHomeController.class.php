@@ -42,7 +42,7 @@ class PHPBoostOfficialHomeController extends ModuleController
 	private function build_view()
 	{
 		$now = new Date();
-		$id_cats = array('37', '38', '42', '43');
+		$id_cats = array('37', '38', '42', '43', '46', '47');
 		
 		$querier = PersistenceContext::get_querier();
 		$results = $querier->select('SELECT file.id, file.id_category, file.name, file.rewrited_name, file.short_contents, file.creation_date, file.picture_url, user.display_name
@@ -69,7 +69,7 @@ class PHPBoostOfficialHomeController extends ModuleController
 		$i = 0;
 		foreach ($results as $row)
 		{
-			if ($row['id_category'] == '38' || $row['id_category'] == '43')
+			if ($row['id_category'] == '38' || $row['id_category'] == '43' || $row['id_category'] == '47')
 			{
 				if ($i >= 3)
 				{
@@ -97,7 +97,7 @@ class PHPBoostOfficialHomeController extends ModuleController
 		$i = 0;
 		foreach ($results as $row)
 		{
-			if ($row['id_category'] == '37' || $row['id_category'] == '42')
+			if ($row['id_category'] == '37' || $row['id_category'] == '42' || $row['id_category'] == '46')
 			{
 				if ($i >= 3)
 				{
