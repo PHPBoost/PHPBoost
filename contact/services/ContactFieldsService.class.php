@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : July 31, 2013
  *   copyright            : (C) 2013 Julien BRISWALTER
- *   email                : julienseth78@phpboost.com
+ *   email                : j1.seth@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
  /**
- * @author Julien BRISWALTER <julienseth78@phpboost.com>
+ * @author Julien BRISWALTER <j1.seth@phpboost.com>
  * @desc This class is a Factory and return instance class
  * @package {@package}
  */

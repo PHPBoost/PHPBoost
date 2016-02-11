@@ -3,8 +3,8 @@
  *		                  DatabaseConfig.class.php
  *                            -------------------
  *   begin                : September 30, 2015
- *   copyright            : (C) 2015 julienseth78
- *   email                : julienseth78@phpboost.com
+ *   copyright            : (C) 2015 j1.seth
+ *   email                : j1.seth@phpboost.com
  *
  *
  ###################################################

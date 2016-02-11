@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : September 2, 2014
  *   copyright            : (C) 2014 Julien BRISWALTER
- *   email                : julienseth78@phpboost.com
+ *   email                : j1.seth@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
  /**
- * @author Julien BRISWALTER <julienseth78@phpboost.com>
+ * @author Julien BRISWALTER <j1.seth@phpboost.com>
  */
 
 class FaqQuestion

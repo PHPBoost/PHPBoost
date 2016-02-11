@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : January 20, 2015
  *   copyright            : (C) 2015 Julien BRISWALTER
- *   email                : julienseth78@phpboost.com
+ *   email                : j1.seth@phpboost.com
  *
  ###################################################
  *
@@ -26,7 +26,7 @@
 
 /**
  * 
- * @author Julien BRISWALTER <julienseth78@phpboost.com>
+ * @author Julien BRISWALTER <j1.seth@phpboost.com>
  * @package {@package}
  */
 class SpanHTMLElement extends AbstractHTMLElement

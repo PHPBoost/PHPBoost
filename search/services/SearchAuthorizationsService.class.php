@@ -3,8 +3,8 @@
  *                               SearchAuthorizationsService.class.php
  *                            -------------------
  *   begin                : November 16, 2013
- *   copyright            : (C) 2013 julienseth78
- *   email                : julienseth78@phpboost.com
+ *   copyright            : (C) 2013 j1.seth
+ *   email                : j1.seth@phpboost.com
  *
  *
  ###################################################

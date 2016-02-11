@@ -3,8 +3,8 @@
  *		                         ShoutboxFormController.class.php
  *                            -------------------
  *   begin                : October 14, 2014
- *   copyright            : (C) 2014 julienseth78
- *   email                : julienseth78@phpboost.com
+ *   copyright            : (C) 2014 j1.seth
+ *   email                : j1.seth@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
  /**
- * @author Julien BRISWALTER <julienseth78@phpboost.com>
+ * @author Julien BRISWALTER <j1.seth@phpboost.com>
  */
 class ShoutboxFormController extends ModuleController
 {

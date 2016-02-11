@@ -163,7 +163,7 @@ $lang = array(
 								<li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, développeur retraité</li>
 								<li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, développeur retraité</li>
 								<li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, développeur</li>
-								<li><strong>Julien BRISWALTER</strong> <em>(alias julienseth78)</em>, développeur</li>
+								<li><strong>Julien BRISWALTER</strong> <em>(alias j1.seth)</em>, développeur</li>
 							</ul>
 						</fieldset>',
 	'site.index' => 'Aller à l\'accueil du site',
