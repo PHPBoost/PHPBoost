@@ -241,7 +241,7 @@ The PHPBoost Team.',
 									<li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, developer retired</li>
 									<li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, developer retired</li>
 									<li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, developer</li>
-									<li><strong>Julien BRISWALTER</strong> <em>(alias julienseth78)</em>, developer</li>
+									<li><strong>Julien BRISWALTER</strong> <em>(alias j1.seth)</em>, developer</li>
 								</ul>
 							</div>
                         </fieldset>',

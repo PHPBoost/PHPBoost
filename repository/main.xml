@@ -9,7 +9,7 @@
 			<update url="http://phpboost.com/download/41-mises-a-jour-phpboost-4-1/366-pack-de-mise-a-jour-4-1-6-vers-4-1-7/">4.1.6 vers 4.1.7</update>
 			<authors>
 				<author name="Kévin Massy" email="reidlos@phpboost.com" />
-				<author name="Julien Briswalter" email="julienseth78@phpboost.com" />
+				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
 			</authors>
 			<description>
 				Cette mise à jour contient la mise à jour de la librairie Font Awesome en version 4.5.0 ainsi que quelques corrections de bugs pour permettre d'installer PHPBoost sur Free.
@@ -25,7 +25,7 @@
 			<update url="http://phpboost.com/download/download-362+pack-de-mise-jour-4-1-5-vers-4-1-6.php">4.1.5 vers 4.1.6</update>
 			<authors>
 				<author name="Kévin Massy" email="reidlos@phpboost.com" />
-				<author name="Julien Briswalter" email="julienseth78@phpboost.com" />
+				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
 			</authors>
 			<description>
 				Cette mise à jour contient la mise à jour de la librairie Font Awesome en version 4.4.0 ainsi que quelques corrections de bugs.
@@ -41,7 +41,7 @@
 			<update url="http://phpboost.com/download/download-360+pack-de-mise-jour-4-1-4-vers-4-1-5.php">4.1.4 vers 4.1.5</update>
 			<authors>
 				<author name="Kévin Massy" email="reidlos@phpboost.com" />
-				<author name="Julien Briswalter" email="julienseth78@phpboost.com" />
+				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
 			</authors>
 			<description>
 				Cette mise à jour contient un grand nombre de corrections de bugs et offre une meilleure stabilité de PHPBoost.
@@ -57,7 +57,7 @@
 			<update url="http://phpboost.com/download/download-359+pack-de-mise-jour-4-1-3-vers-4-1-4.php">4.1.3 vers 4.1.4</update>
 			<authors>
 				<author name="Kévin Massy" email="reidlos@phpboost.com" />
-				<author name="Julien Briswalter" email="julienseth78@phpboost.com" />
+				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
 			</authors>
 			<description>
 				Cette mise à jour contient un grand nombre de corrections de bugs et offre une meilleure stabilité de PHPBoost.
@@ -74,7 +74,7 @@
 					<update url="http://phpboost.com/download/download-358+pack-de-mise-jour-4-1-2-vers-4-1-3.php">4.1.2 vers 4.1.3</update>
 			<authors>
 				<author name="Kévin Massy" email="reidlos@phpboost.com" />
-				<author name="Julien Briswalter" email="julienseth78@phpboost.com" />
+				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
 					</authors>
 					<description>
 					Cette mise à jour contient un grand nombre de corrections de bugs et offre une meilleure stabilité de PHPBoost.
@@ -90,7 +90,7 @@
 					<update url="http://phpboost.com/download/download-348+pack-de-mise-a-jour-4-1-1-vers-4-1-2.php">4.1.1 vers 4.1.2</update>
 			<authors>
 				<author name="Kévin Massy" email="reidlos@phpboost.com" />
-				<author name="Julien Briswalter" email="julienseth78@phpboost.com" />
+				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
 					</authors>
 					<description>
 					Cette mise à jour contient un grand nombre de corrections de bugs et offre une meilleure stabilité de PHPBoost.
@@ -107,7 +107,7 @@
 					<update url="http://phpboost.com/download/download-340+pack-de-mise-a-jour-4-1-0-vers-4-1-1.php">4.1.0 vers 4.1.1</update>
 			<authors>
 				<author name="Kévin Massy" email="reidlos@phpboost.com" />
-				<author name="Julien Briswalter" email="julienseth78@phpboost.com" />
+				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
 					</authors>
 					<description>
 					Cette mise à jour contient un grand nombre de corrections de bugs et offre une meilleure stabilité de PHPBoost.
@@ -125,7 +125,7 @@
 			<download url="http://www.phpboost.com/download/">PHPBoost 4.1.0</download>
 			<authors>
 				<author name="Kévin Massy" email="reidlos@phpboost.com" />
-				<author name="Julien Briswalter" email="julienseth78@phpboost.com" />
+				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
 			</authors>
 			<description>
 				Plus lègère et plus performante, PHPBoost 4.1 améliorera nettement le référencement de votre site et vous fera profiter de nombreuses améliorations et nouveautées.
@@ -147,7 +147,7 @@
 					<update url="http://phpboost.com/download/file-294+pack-de-mise-a-jour-4-0-5-vers-4-0-6.php">4.0.5 vers 4.0.6</update>
 			<authors>
 				<author name="Kévin Massy" email="reidlos@phpboost.com" />
-				<author name="Julien Briswalter" email="julienseth78@phpboost.com" />
+				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
 			</authors>
 			<description>
 					Cette mise à jour contient un grand nombre de corrections de bugs et offre une meilleure stabilité de PHPBoost.
@@ -164,7 +164,7 @@
 					<update url="http://phpboost.com/download/file-288+pack-de-mise-a-jour-4-0-4-vers-4-0-5.php">4.0.4 vers 4.0.5</update>
 			<authors>
 				<author name="Kévin Massy" email="reidlos@phpboost.com" />
-				<author name="Julien Briswalter" email="julienseth78@phpboost.com" />
+				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
 				<author name="Benoît Sautel" email="ben.popeye@phpboost.com" />
 						<author name="Régis Viarre" email="crowkait@phpboost.com" />
 						<author name="Loïc Rouchon" email="horn@phpboost.com" />

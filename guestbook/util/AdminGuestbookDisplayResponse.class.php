@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : November 30, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julienseth78@phpboost.com
+ *   email                : j1.seth@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
  /**
- * @author Julien BRISWALTER <julienseth78@phpboost.com>
+ * @author Julien BRISWALTER <j1.seth@phpboost.com>
  * @desc AdminMenuDisplayResponse of the guestbook module
  */
 class AdminGuestbookDisplayResponse extends AdminMenuDisplayResponse

@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : December 02, 2014
  *   copyright            : (C) 2014 Julien BRISWALTER
- *   email                : julienseth78@phpboost.com
+ *   email                : j1.seth@phpboost.com
  *
  *
  ###################################################

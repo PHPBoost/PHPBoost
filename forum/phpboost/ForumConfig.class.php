@@ -3,8 +3,8 @@
  *		                  ForumConfig.class.php
  *                            -------------------
  *   begin                : September 11, 2014
- *   copyright            : (C) 2014 julienseth78
- *   email                : julienseth78@phpboost.com
+ *   copyright            : (C) 2014 j1.seth
+ *   email                : j1.seth@phpboost.com
  *
  *
  ###################################################

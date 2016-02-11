@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : June 12, 2015
  *   copyright            : (C) 2015 Julien BRISWALTER
- *   email                : julienseth78@phpboost.com
+ *   email                : j1.seth@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Julien BRISWALTER <julienseth78@phpboost.com>
+ * @author Julien BRISWALTER <j1.seth@phpboost.com>
  * @desc This class manage single-line text fields with a link to access the upload modal form.
  * @package {@package}
  */

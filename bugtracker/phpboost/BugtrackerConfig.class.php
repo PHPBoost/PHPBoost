@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : September 06, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julienseth78@phpboost.com
+ *   email                : j1.seth@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Julien BRISWALTER <julienseth78@phpboost.com>
+ * @author Julien BRISWALTER <j1.seth@phpboost.com>
  * @desc Configuration of the bugtracker module
  */
 class BugtrackerConfig extends AbstractConfigData

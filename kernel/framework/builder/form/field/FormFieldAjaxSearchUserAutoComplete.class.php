@@ -3,8 +3,8 @@
  *                          FormFieldAjaxSearchUserAutoComplete.class.php
  *                            -------------------
  *   begin                : June 26, 2013
- *   copyright            : (C) 2013 julienseth78
- *   email                : julienseth78@phpboost.com
+ *   copyright            : (C) 2013 j1.seth
+ *   email                : j1.seth@phpboost.com
  *
  ###################################################
  *
@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author Julien BRISWALTER <julienseth78@phpboost.com>
+ * @author Julien BRISWALTER <j1.seth@phpboost.com>
  * @desc This class represents a search user ajax completer field
  * @package {@package}
  */
