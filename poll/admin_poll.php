@@ -103,12 +103,12 @@ elseif ($valid && !empty($id_post)) //inject
 				$end_timestamp = 0;
 		}
 		elseif ($get_visible == 1)
-		{	
+		{
 			$start_timestamp = 0;
 			$end_timestamp = 0;
 		}
 		else
-		{	
+		{
 			$visible = 0;
 			$start_timestamp = 0;
 			$end_timestamp = 0;
@@ -128,10 +128,10 @@ elseif ($valid && !empty($id_post)) //inject
 		{
 			if ($request->has_postparameter('a'.$i))
 			{
-				if (!empty(retrieve(POST, 'a'.$i, '')))
+				if ($request->get_postvalue('a'.$i, ''))
 				{
-					$answers .= str_replace('|', '', retrieve(POST, 'a'.$i, '')) . '|';
-					$votes .= str_replace('|', '', retrieve(POST, 'v'.$i, 0)) . '|';
+					$answers .= str_replace('|', '', $request->get_postvalue('a'.$i, '')) . '|';
+					$votes .= str_replace('|', '', $request->get_postvalue('v'.$i, 0)) . '|';
 				}
 			}
 		}

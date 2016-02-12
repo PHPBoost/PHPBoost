@@ -99,10 +99,10 @@ if ($valid)
 		{
 			if ($request->has_postparameter('a'.$i))
 			{
-				if (!empty(retrieve(POST, 'a'.$i, '')))
+				if ($request->get_postvalue('a'.$i, ''))
 				{
-					$answers .= str_replace('|', '', retrieve(POST, 'a'.$i, '')) . '|';
-					$votes .= str_replace('|', '', retrieve(POST, 'v'.$i, 0)) . '|';
+					$answers .= str_replace('|', '', $request->get_postvalue('a'.$i, '')) . '|';
+					$votes .= str_replace('|', '', $request->get_postvalue('v'.$i, 0)) . '|';
 				}
 			}
 		}

@@ -130,7 +130,7 @@
 					<legend>{L_DATE}</legend>
 					<div class="fieldset-inset">
 						<div class="form-element">
-							<label for="release_date">* {L_RELEASE_DATE}</label>
+							<label for="release_date">{L_RELEASE_DATE}</label>
 							<div class="form-field">
 								<div onclick="document.getElementById('start_end_date').checked = true;">
 									<div class="form-field-radio">
