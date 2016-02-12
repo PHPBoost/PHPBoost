@@ -92,12 +92,12 @@ class UpdateDBConfigController extends UpdateController
 		$this->form->add_fieldset($fieldset_schema);
 
 		$schema = new FormFieldTextEditor('schema', $this->lang['schema'], '',
-		array('required' => $this->lang['db.required.schema']));
+		array('required' => $this->lang['db.required.schema']),
 		array(new FormFieldConstraintRegex('`^[a-z0-9_-]+$`i')));
 		$schema->add_event('change', '$FFS(\'overwriteFieldset\').disable()');
 		$fieldset_schema->add_field($schema);
 		$tables_prefix = new FormFieldTextEditor('tablesPrefix', $this->lang['schema.tablePrefix'], 'phpboost_',
-		array('description' => $this->lang['schema.tablePrefix.explanation']));
+		array('description' => $this->lang['schema.tablePrefix.explanation']),
 		array(new FormFieldConstraintRegex('`^[a-z0-9_]+$`i')));
 		$fieldset_schema->add_field($tables_prefix);
 
