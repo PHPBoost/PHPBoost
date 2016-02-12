@@ -6,7 +6,7 @@ function CheckForm() {
 		window.alert({JL_REQUIRE_NAME});
 		return false;
 	}
-	if (jQuery("#feed_url option[value='0']").attr('selected', 'selected') || jQuery("#feed_url option[value='1']").attr('selected', 'selected')) {
+	if (jQuery('#feed_url').val() == "null" || jQuery('#feed_url').val() == '') {
 		jQuery('#feed_url').focus();
 		window.alert({JL_REQUIRE_FEED});
 		return false;
