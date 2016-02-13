@@ -245,7 +245,11 @@ class Url
 		
 		$file = new File($url->rel());
 		if ($file->exists())
-			return $status;
+			return true;
+		
+		$folder = new Folder($url->rel());
+		if ($folder->exists())
+			return true;
 		
 		if ($url->absolute())
 		{

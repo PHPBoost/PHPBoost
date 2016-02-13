@@ -31,8 +31,6 @@
  */
 class FormFieldUrlEditor extends FormFieldTextEditor
 {
-	protected $type = 'url';
-	
 	/**
 	 * @desc Constructs a FormFieldUrlEditor.
 	 * @param string $id Field identifier
