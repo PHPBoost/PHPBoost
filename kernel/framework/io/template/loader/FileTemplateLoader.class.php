@@ -68,7 +68,11 @@ class FileTemplateLoader implements TemplateLoader
 
 	private function compute_cache_file_path()
 	{
-		$this->cache_filepath = PATH_TO_ROOT . '/cache/tpl/' . trim(str_replace(
+		$template_folder = new Folder(PATH_TO_ROOT . '/cache/tpl/' . AppContext::get_current_user()->get_theme());
+		if (!$template_folder->exists())
+			mkdir(PATH_TO_ROOT . '/cache/tpl/' . AppContext::get_current_user()->get_theme());
+		
+		$this->cache_filepath = PATH_TO_ROOT . '/cache/tpl/' . AppContext::get_current_user()->get_theme() . '/' . trim(str_replace(
 		array('/', '.', '..', 'tpl', 'templates'),
 		array('_', '', '', '', 'tpl'),
 		$this->real_filepath
@@ -178,12 +182,6 @@ class FileTemplateLoader implements TemplateLoader
 			//      /templates/default/.../$file.tpl
 			$this->get_kernel_paths();
 		}
-		elseif ($this->module == 'menus')
-		{   // Framework - Templates priority order
-			//      /templates/$theme/menus/$menu/$file.tpl
-			//      /menus/$menu/default/framework/.../$file.tpl
-			$this->get_menus_paths();
-		}
 		else
 		{   // Module - Templates
 			$this->get_module_paths();
@@ -195,20 +193,6 @@ class FileTemplateLoader implements TemplateLoader
 		$this->get_template_real_filepaths_and_data_path(array(
 		$this->theme_templates_folder . $this->filepath,
 		$this->default_templates_folder . $this->filepath
-		));
-	}
-
-	private function get_menus_paths()
-	{
-		$menu = substr($this->folder, 0, strpos($this->folder, '/'));
-		if (empty($menu))
-		{
-			$menu = $this->folder;
-		}
-
-		$this->get_template_real_filepaths_and_data_path(array(
-		$this->theme_templates_folder . '/menus/' . $menu . '/' . $this->filename,
-		PATH_TO_ROOT . '/menus/' . $menu . '/templates/' . $this->filename
 		));
 	}
 

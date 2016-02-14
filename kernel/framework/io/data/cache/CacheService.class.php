@@ -58,12 +58,12 @@ class CacheService
 
 	public function clear_template_cache()
 	{
-		$this->delete_files(self::$tpl_cache_folder, self::$all_files_regex_without_extensions);
+		$this->delete_files(self::$tpl_cache_folder, self::$all_files_regex_without_extensions, true);
 	}
 
 	public function clear_css_cache()
 	{
-		$this->delete_files(self::$css_cache_folder, self::$all_files_regex_without_extensions);
+		$this->delete_files(self::$css_cache_folder, self::$all_files_regex_without_extensions, true);
 	}
 
 	public function clear_syndication_cache()
@@ -71,12 +71,20 @@ class CacheService
 		$this->delete_files(self::$syndication_cache_folder, self::$all_files_regex_without_extensions);
 	}
 
-	private function delete_files(Folder $folder, $regex = '')
+	private function delete_files(Folder $folder, $regex = '', $delete_sub_folders = false)
 	{
 		$files_to_delete = $folder->get_files($regex, true);
 		foreach ($files_to_delete as $file)
 		{
 			$file->delete();
+		}
+		
+		if ($delete_sub_folders)
+		{
+			foreach ($folder->get_folders() as $f)
+			{
+				$f->delete();
+			}
 		}
 	}
 }

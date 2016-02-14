@@ -44,14 +44,18 @@ class CSSCacheManager
 	{
 		if (!empty($files))
 		{
+			$template_folder = new Folder(PATH_TO_ROOT . '/cache/css/' . AppContext::get_current_user()->get_theme());
+			if (!$template_folder->exists())
+				mkdir(PATH_TO_ROOT . '/cache/css/' . AppContext::get_current_user()->get_theme());
+			
 			if (is_array($files))
 			{
-				$cache_file_location = '/cache/css/css-cache-'. md5(implode(';', $files)) .'.css';
+				$cache_file_location = '/cache/css/' . AppContext::get_current_user()->get_theme() . '/css-cache-'. md5(implode(';', $files)) .'.css';
 			}
 			else
 			{
 				$files = str_replace('{THEME}', AppContext::get_current_user()->get_theme(), $files);
-				$cache_file_location = '/cache/css/css-cache-'. md5($files) .'.css';
+				$cache_file_location = '/cache/css/' . AppContext::get_current_user()->get_theme() . '/css-cache-'. md5($files) .'.css';
 				$files = explode(';', $files);
 			}
 			
