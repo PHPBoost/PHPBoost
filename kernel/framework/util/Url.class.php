@@ -49,7 +49,7 @@ class Url
 	const FOLDERS_REGEX = '/*(?:[a-z0-9~_\.+@,-]+/+)*';
 	const FILE_REGEX = '[A-Za-z0-9-+_,~:/\.\%!=]+';
 	const ARGS_REGEX = '(?:\?(?!&)(?:(?:&amp;|&)?[A-Za-z0-9-+=,_~:;/\.\?\'\%\*!]+(?:=[A-Za-z0-9-+=_~:;/\.\?\'\%\*!]+)?)*)?';
-	const ANCHOR_REGEX = '\#[a-z0-9-_/+\.!]*';
+	const ANCHOR_REGEX = '\#[A-Za-z0-9-_/+\.!]*';
 
 	private static $root = TPL_PATH_TO_ROOT;
 	private static $server = SERVER_URL;
