@@ -109,23 +109,6 @@
 				insertbbcode('[link=' + url_encode_rewrite(link_name) + ']', '[/link]', 'contents');
 		}
 		
-		function url_encode_rewrite(link_name)
-		{
-			link_name = link_name.toLowerCase(link_name);
-			
-			var chars_special = new Array(/ /g, /é/g, /è/g, /ê/g, /à/g, /â/g, /ù/g, /ü/g, /û/g, /ï/g, /î/g, /ô/g, /ç/g);
-			var chars_replace = new Array("-", "e", "e", "e", "a", "a", "u", "u", "u", "i", "i", "o", "c");
-			var nbr_chars = chars_special.length;
-			for( var i = 0; i < nbr_chars; i++)
-			{
-				link_name = link_name.replace(chars_special[i], chars_replace[i]); 
-			}
-
-			link_name = link_name.replace(/([^a-z0-9]|[\s])/g, '-');
-			link_name = link_name.replace(/([-]{2,})/g, '-');
-			return link_name.replace(/(^\s*)|(\s*$)/g,'').replace(/(^-)|(-$)/g,'');
-		}
-		
 		function insert_paragraph(level)
 		{
 			var string = '-';

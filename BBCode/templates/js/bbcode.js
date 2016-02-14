@@ -125,6 +125,24 @@ function ie_sel(target, open_balise, close_balise)
 	return;
 }
 
+//Fonction de remplacement des caractères spéciaux
+function url_encode_rewrite(link_name)
+{
+	link_name = link_name.toLowerCase(link_name);
+	
+	var chars_special = new Array(/ /g, /é/g, /è/g, /ê/g, /à/g, /â/g, /ù/g, /ü/g, /û/g, /ï/g, /î/g, /ô/g, /ç/g);
+	var chars_replace = new Array("-", "e", "e", "e", "a", "a", "u", "u", "u", "i", "i", "o", "c");
+	var nbr_chars = chars_special.length;
+	for( var i = 0; i < nbr_chars; i++)
+	{
+		link_name = link_name.replace(chars_special[i], chars_replace[i]); 
+	}
+
+	link_name = link_name.replace(/([^a-z0-9]|[\s])/g, '-');
+	link_name = link_name.replace(/([-]{2,})/g, '-');
+	return link_name.replace(/(^\s*)|(\s*$)/g,'').replace(/(^-)|(-$)/g,'');
+}
+
 //Fonction d'insertion du BBcode dans le champs, tient compte du navigateur utilisé.
 function insertbbcode(open_balise, close_balise, field)
 {
@@ -311,7 +329,7 @@ function bbcode_anchor(field, prompt_text)
 {
 	var anchor = prompt(prompt_text, '');
 	if( anchor != null)
-		insertbbcode('[anchor=' + anchor + ']', '[/anchor]', field);
+		insertbbcode('[anchor=' + url_encode_rewrite(anchor) + ']', '[/anchor]', field);
 	else
 		insertbbcode('[anchor]', '[/anchor]', field);
 }
