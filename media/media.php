@@ -52,26 +52,31 @@ elseif ($id_media > 0)
 	$tpl = new FileTemplate('media/media.tpl');
 	$config = MediaConfig::load();
 	
-	$media = PersistenceContext::get_querier()->select_single_row_query("SELECT v.*, mb.display_name, mb.groups, mb.level, notes.average_notes, notes.number_notes, note.note
-	FROM " . PREFIX . "media AS v
-	LEFT JOIN " . DB_TABLE_MEMBER . " AS mb ON v.iduser = mb.user_id
-	LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON notes.id_in_module = v.id AND notes.module_name = 'media'
-	LEFT JOIN " . DB_TABLE_NOTE . " note ON note.id_in_module = v.id AND note.module_name = 'media' AND note.user_id = :user_id
-	WHERE v.id = :id", array(
-		'user_id' => AppContext::get_current_user()->get_id(),
-		'id' => $id_media
-	));
+	try {
+		$media = PersistenceContext::get_querier()->select_single_row_query("SELECT v.*, mb.display_name, mb.groups, mb.level, notes.average_notes, notes.number_notes, note.note
+		FROM " . PREFIX . "media AS v
+		LEFT JOIN " . DB_TABLE_MEMBER . " AS mb ON v.iduser = mb.user_id
+		LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON notes.id_in_module = v.id AND notes.module_name = 'media'
+		LEFT JOIN " . DB_TABLE_NOTE . " note ON note.id_in_module = v.id AND note.module_name = 'media' AND note.user_id = :user_id
+		WHERE v.id = :id", array(
+			'user_id' => AppContext::get_current_user()->get_id(),
+			'id' => $id_media
+		));
+	} catch (CategoryNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+   		DispatchManager::redirect($error_controller);
+	}
 	
-	if (empty($media) || ($media['infos'] & MEDIA_STATUS_UNVISIBLE) !== 0)
+	if (($media['infos'] & MEDIA_STATUS_UNVISIBLE) !== 0)
 	{
 		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
-            $LANG['e_unexist_media']);
-        DispatchManager::redirect($controller);
+		$LANG['e_unexist_media']);
+		DispatchManager::redirect($controller);
 	}
 	elseif (!MediaAuthorizationsService::check_authorizations($media['idcat'])->read())
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
-        DispatchManager::redirect($error_controller);
+		DispatchManager::redirect($error_controller);
 	}
 
 	bread_crumb($media['idcat']);
