@@ -23,12 +23,12 @@
             $(this).toggleClass('menu-opened');
             var mainmenu = $(this).next('ul');
             if (mainmenu.hasClass('open')) { 
-              mainmenu.hide().removeClass('open');
+              mainmenu.addClass('hidesub').removeClass('open');
             }
             else {
-              mainmenu.show().addClass('open');
+              mainmenu.removeClass('hidesub').addClass('open');
               if (settings.format === "dropdown") {
-                mainmenu.find('ul').show();
+                mainmenu.find('ul').removeClass('hidesub');
               }
             }
           });
@@ -38,10 +38,10 @@
             cssmenu.find('.submenu-button').on('click', function() {
               $(this).toggleClass('submenu-opened');
               if ($(this).siblings('ul').hasClass('open')) {
-                $(this).siblings('ul').removeClass('open').hide();
+                $(this).siblings('ul').removeClass('open').addClass('hidesub');
               }
               else {
-                $(this).siblings('ul').addClass('open').show();
+                $(this).siblings('ul').addClass('open').removeClass('hidesub');
               }
             });
           };
@@ -50,34 +50,14 @@
           else cssmenu.addClass('dropdown');
         }
 
-        else if (settings.format === 'select')
-        {
-          cssmenu.append('<select style="width: 100%"/>').addClass('select-list');
-          var selectList = cssmenu.find('select');
-          selectList.append('<option>' + settings.title + '</option>', {
-                                                         "selected": "selected",
-                                                         "value": ""});
-          cssmenu.find('a').each(function() {
-            var element = $(this), indentation = "";
-            for (i = 1; i < element.parents('ul').length; i++)
-            {
-              indentation += '-';
-            }
-            selectList.append('<option value="' + $(this).attr('href') + '">' + indentation + element.text() + '</option');
-          });
-          selectList.on('change', function() {
-            window.location = $(this).find("option:selected").val();
-          });
-        }
-
         if (settings.sticky === true) cssmenu.css('position', 'fixed');
 
         resizeFix = function() {
           if ($(window).width() > settings.breakpoint) {
-            cssmenu.find('ul').show();
+            cssmenu.find('ul').removeClass('hidesub');
             cssmenu.removeClass('small-screen');
             if (settings.format === 'select') {
-              cssmenu.find('select').hide();
+              cssmenu.find('select').addClass('hidesub');
             }
             else {
               cssmenu.find("#menu-button").removeClass("menu-opened");
@@ -85,7 +65,7 @@
           }
 
           if ($(window).width() <= settings.breakpoint && !cssmenu.hasClass("small-screen")) {
-            cssmenu.find('ul').hide().removeClass('open');
+            cssmenu.find('ul').addClass('hidesub').removeClass('open');
             cssmenu.addClass('small-screen');
             if (settings.format === 'select') {
               cssmenu.find('select').show();
