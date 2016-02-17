@@ -525,7 +525,7 @@ ul.pagination-block-bis li a.next-page:hover {
 	background-image: linear-gradient(to bottom, #FFFFFF 25%, #F2F5F8 100%);
 }
 
-.sortable-block .sortable-title span {
+.sortable-block .sortable-title > span {
 	font-size: 1.5em;
 	font-weight: bold;
 }
