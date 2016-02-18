@@ -97,6 +97,7 @@ function shoutbox_refresh_messages_box() {
 			if (messages.substring(2, 10) == "messages") {
 				messages = messages.replace(/\\(.?)/g, function (s, n1){switch (n1){case '\\':return '\\';case '0':return '\u0000';case '':return '';default:return n1;}});
 				messages = messages.replace(/>nn</g, '><');
+                                messages = messages.replace(/<br \/>n/g, '<br \/>');
 				messages = messages.slice(14);
 				messages = messages.slice(0, -3);
 
