@@ -322,7 +322,7 @@ $tpl->put_all(array(
 	'TITLE' => $is_cat == 1 ? ($id_edit == 0 ? $LANG['wiki_create_cat'] : sprintf($LANG['wiki_edit_cat'], stripslashes($article_infos['title']))) : ($id_edit == 0 ? $LANG['wiki_create_article'] : sprintf($LANG['wiki_edit_article'], stripslashes($article_infos['title']))),
 	'KERNEL_EDITOR' => $editor->display(),
 	'ID_CAT' => $id_edit > 0 ? $article_infos['id_cat'] : '',
-	'CONTENTS' => ($id_edit > 0 ? wiki_unparse(trim($contents)) : ''),
+	'CONTENTS' => $preview ? $contents_preview : ($id_edit > 0 ? wiki_unparse(trim($contents)) : ''),
 	'ID_EDIT' => $id_edit,
 	'IS_CAT' => $is_cat,
 	'ID_CAT' => $id_cat,
