@@ -218,12 +218,12 @@
 							<h2>
 								<a href="{@download.last_version_pdk_link}" itemprop="name">{@download} {@download.last_major_version_number}</a>
 							</h2>
-							<meta itemprop="url" content="{@download.last_version_download_link}">
+							<meta itemprop="url" content="{@download.last_version_pdk_link}">
 							<meta itemprop="description" content="${escape(@download.last_complete_version_number)}"/>
 						</header>
 						
 						<div class="content">
-							<a href="{@download.last_version_download_link}" itemprop="name">
+							<a href="{@download.last_version_pdk_link}" itemprop="name">
 								<div class="pbt-element-img-container">
 									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/modules.jpg" id="pbt-img-002" class="pbt-img pbt-img-releases" itemprop="image" />
 									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" id="pbt-icon-002" class="pbt-icon pbt-icon-releases" />
