@@ -1,7 +1,7 @@
 		
 		
 		<nav id="admin-quick-menu">
-			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_PROFIL}">
+			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_FILES_MANAGEMENT}">
 				<i class="fa fa-bars"></i> {L_FILES_MANAGEMENT}
 			</a>
 			<ul>
