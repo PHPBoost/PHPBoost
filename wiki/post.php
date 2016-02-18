@@ -69,17 +69,17 @@ $captcha = AppContext::get_captcha_service()->get_default_factory();
 if (!empty($contents)) //On enregistre un article
 {
 	include_once('../wiki/wiki_functions.php');	
-	//On crée le menu des paragraphes et on enregistre le menu
+	//On crÃ©e le menu des paragraphes et on enregistre le menu
 	$menu = '';
 	
-	//Si on détecte la syntaxe des menus alors on lance les fonctions, sinon le menu sera vide et non affiché
+	//Si on dÃ©tecte la syntaxe des menus alors on lance les fonctions, sinon le menu sera vide et non affichÃ©
 	if (preg_match('`[\-]{2,6}`isU', $contents))
 	{
-		$menu_list = wiki_explode_menu($contents); //On éclate le menu en tableaux
+		$menu_list = wiki_explode_menu($contents); //On Ã©clate le menu en tableaux
 		$menu = wiki_display_menu($menu_list); //On affiche le menu
 	}
 	
-	if ($preview)//Prévisualisation
+	if ($preview)//PrÃ©visualisation
 	{
 		$tpl->assign_block_vars('preview', array(
 			'CONTENTS' => FormatingHelper::second_parse(wiki_no_rewrite(stripslashes($contents))),
@@ -94,7 +94,7 @@ if (!empty($contents)) //On enregistre un article
 	}
 	else //Sinon on poste
 	{
-		if ($id_edit > 0)//On édite un article
+		if ($id_edit > 0)//On Ã©dite un article
 		{
 			try {
 				$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . "wiki_articles", array('encoded_title', 'auth'), 'WHERE id = :id', array('id' => $id_edit));
@@ -113,11 +113,11 @@ if (!empty($contents)) //On enregistre un article
 			} 
 			
 			$previous_id_contents = PersistenceContext::get_querier()->get_column_value(PREFIX . "wiki_articles", 'id_contents', 'WHERE id = :id', array('id' => $id_edit));
-			//On met à jour l'ancien contenu (comme archive)
+			//On met Ã  jour l'ancien contenu (comme archive)
 			PersistenceContext::get_querier()->update(PREFIX . "wiki_contents", array('activ' => 0), 'WHERE id_contents = :id', array('id' => $previous_id_contents));
-			//On insère le contenu
+			//On insÃ¨re le contenu
 			$result = PersistenceContext::get_querier()->insert(PREFIX . "wiki_contents", array('id_article' => $id_edit, 'menu' => $menu, 'content' => $contents, 'activ' => 1, 'user_id' => AppContext::get_current_user()->get_id(), 'user_ip' => AppContext::get_request()->get_ip_address(), 'timestamp' => time()));
-			//Dernier id enregistré
+			//Dernier id enregistrÃ©
 			$id_contents = $result->get_last_inserted_id();
             
 	 		//On donne le nouveau id de contenu
@@ -131,7 +131,7 @@ if (!empty($contents)) //On enregistre un article
 			$redirect = $article_infos['encoded_title'];
 			AppContext::get_response()->redirect(url('wiki.php?title=' . $redirect, $redirect, '', '&'));
 		}
-		elseif (!empty($title)) //On crée un article
+		elseif (!empty($title)) //On crÃ©e un article
 		{
 			//autorisations
 			if ($is_cat && !AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_CREATE_CAT))
@@ -154,7 +154,7 @@ if (!empty($contents)) //On enregistre un article
 				DispatchManager::redirect($error_controller);
 			}
 			
-			//On vérifie que le titre n'existe pas
+			//On vÃ©rifie que le titre n'existe pas
 			$article_exists = PersistenceContext::get_querier()->count(PREFIX . "wiki_articles", 'WHERE encoded_title = :encoded_title', array('encoded_title' => Url::encode_rewrite($title)));
 			
 			//Si il existe: message d'erreur
@@ -163,19 +163,19 @@ if (!empty($contents)) //On enregistre un article
 			else //On enregistre
 			{
 				$result = PersistenceContext::get_querier()->insert(PREFIX . "wiki_articles", array('title' => $title, 'encoded_title' => Url::encode_rewrite($title), 'id_cat' => $new_id_cat, 'is_cat' => $is_cat, 'undefined_status' => '', 'auth' => ''));
-				//On récupère le numéro de l'article créé
+				//On rÃ©cupÃ¨re le numÃ©ro de l'article crÃ©Ã©
 				$id_article = $result->get_last_inserted_id();
-				//On insère le contenu
+				//On insÃ¨re le contenu
 				$result = PersistenceContext::get_querier()->insert(PREFIX . "wiki_contents", array('id_article' => $id_article, 'menu' => $menu, 'content' => $contents, 'activ' => 1, 'user_id' => AppContext::get_current_user()->get_id(), 'user_ip' => AppContext::get_request()->get_ip_address(), 'timestamp' => time()));
-				//On met à jour le numéro du contenu dans la table articles
+				//On met Ã  jour le numÃ©ro du contenu dans la table articles
 				$id_contents = $result->get_last_inserted_id();
-				if ($is_cat == 1)//si c'est une catégorie, on la crée
+				if ($is_cat == 1)//si c'est une catÃ©gorie, on la crÃ©e
 				{
 					$result = PersistenceContext::get_querier()->insert(PREFIX . "wiki_cats", array('id_parent' => $new_id_cat, 'article_id' => $id_article));
-					//on récupère l'id de la dernière catégorie créée
+					//on rÃ©cupÃ¨re l'id de la derniÃ¨re catÃ©gorie crÃ©Ã©e
 					$id_created_cat = $result->get_last_inserted_id();
 					PersistenceContext::get_querier()->update(PREFIX . "wiki_articles", array('id_contents' => $id_contents, 'id_cat' => $id_created_cat), 'WHERE id = :id', array('id' => $id_article));
-					//On régénère le cache
+					//On rÃ©gÃ©nÃ¨re le cache
 					WikiCategoriesCache::invalidate();
 				}
 				else
@@ -191,7 +191,7 @@ if (!empty($contents)) //On enregistre un article
 	}
 }
 
-if ($id_edit > 0)//On édite
+if ($id_edit > 0)//On Ã©dite
 {
 	try {
 		$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . "wiki_articles", array('*'), 'WHERE id = :id', array('id' => $id_edit));
@@ -251,7 +251,7 @@ else
 	if (!empty($encoded_title))
 		$tpl->put('message_helper', MessageHelper::display($LANG['wiki_article_does_not_exist'], MessageHelper::WARNING));
 	
-	if ($id_cat > 0 && array_key_exists($id_cat, $categories)) //Catégorie préselectionnée
+	if ($id_cat > 0 && array_key_exists($id_cat, $categories)) //CatÃ©gorie prÃ©selectionnÃ©e
 	{
 		$tpl->assign_block_vars('create', array());
 		$cats = array();
@@ -275,7 +275,7 @@ else
 			'CURRENT_CAT' => $current_cat
 		));
 	}
-	else //Si il n'a pas de catégorie parente
+	else //Si il n'a pas de catÃ©gorie parente
 	{
 		$tpl->assign_block_vars('create', array());
 		$contents = '';
@@ -312,7 +312,7 @@ else
 	$l_action_submit = $LANG['submit'];
 }
 
-//On travaille uniquement en BBCode, on force le langage de l'éditeur
+//On travaille uniquement en BBCode, on force le langage de l'Ã©diteur
 $content_editor = AppContext::get_content_formatting_service()->get_default_factory();
 $editor = $content_editor->get_editor();
 $editor->set_identifier('contents');
@@ -322,7 +322,7 @@ $tpl->put_all(array(
 	'TITLE' => $is_cat == 1 ? ($id_edit == 0 ? $LANG['wiki_create_cat'] : sprintf($LANG['wiki_edit_cat'], stripslashes($article_infos['title']))) : ($id_edit == 0 ? $LANG['wiki_create_article'] : sprintf($LANG['wiki_edit_article'], stripslashes($article_infos['title']))),
 	'KERNEL_EDITOR' => $editor->display(),
 	'ID_CAT' => $id_edit > 0 ? $article_infos['id_cat'] : '',
-	'CONTENTS' => !empty($contents_preview) ? $contents_preview : ($id_edit > 0 ? wiki_unparse(trim($contents)) : ''),
+	'CONTENTS' => ($id_edit > 0 ? wiki_unparse(trim($contents)) : ''),
 	'ID_EDIT' => $id_edit,
 	'IS_CAT' => $is_cat,
 	'ID_CAT' => $id_cat,
