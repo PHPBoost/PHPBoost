@@ -118,15 +118,13 @@ abstract class CategoriesCache implements CacheData
 					{
 						foreach ($current_category_elements_number as $element_id => $elements_nbr)
 						{
-							$elements_number = $parent_elements_number[$element_id] - $current_category_elements_number;
-							$parent_elements_number[$element_id] = $elements_number > 0 ? $elements_number : 0;
+							$parent_elements_number[$element_id] = max(($parent_elements_number[$element_id] - $elements_nbr), 0);
 						}
 						$this->categories[$id_parent]->set_elements_number($parent_elements_number);
 					}
 					else
 					{
-						$elements_number = $parent_elements_number - $current_category_elements_number;
-						$this->categories[$id_parent]->set_elements_number($elements_number > 0 ? $elements_number : 0);
+						$this->categories[$id_parent]->set_elements_number(max(($parent_elements_number - $current_category_elements_number), 0));
 					}
 					
 					$id_parent = $this->categories[$id_parent]->get_id_parent();
