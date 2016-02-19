@@ -524,7 +524,6 @@ class GalleryDisplayCategoryController extends ModuleController
 						'APROB' => $row['aprob'],
 						'PATH' => $row['path'],
 						'NAME' => stripslashes($row['name']),
-						'SHORT_NAME' => TextHelper::wordwrap_html(stripslashes($row['name']), 22, ' '),
 						'POSTOR' => $LANG['by'] . (!empty($row['display_name']) ? ' <a class="small '.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'">' . $row['display_name'] . '</a>' : ' ' . $LANG['guest']),
 						'VIEWS' => $row['views'],
 						'L_VIEWS' => $row['views'] > 1 ? $LANG['views'] : $LANG['view'],

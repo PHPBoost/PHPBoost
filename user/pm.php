@@ -717,7 +717,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 			'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 			'DATE' => $LANG['on'] . ' ' . Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 			'USER_AVATAR' => $user_avatar,
-			'PSEUDO' => $is_admin ? $LANG['admin'] : (!empty($row['display_name']) ? TextHelper::wordwrap_html($row['display_name'], 13) : $LANG['guest']),
+			'PSEUDO' => $is_admin ? $LANG['admin'] : (!empty($row['display_name']) ? $row['display_name'] : $LANG['guest']),
 			'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 			'GROUP_COLOR' => $group_color,
 		
