@@ -406,7 +406,7 @@ while ( $row = $result->fetch() )
 		'ID' => $row['id'],
 		'CLASS_COLOR' => ($j%2 == 0) ? '' : 2,
 		'FORUM_ONLINE_STATUT_USER' => !empty($row['connect']) ? 'online' : 'offline',
-		'FORUM_USER_LOGIN' => TextHelper::wordwrap_html($row['login'], 13),
+		'FORUM_USER_LOGIN' => $row['login'],
 		'FORUM_MSG_DATE' => $LANG['on'] . ' ' . Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 		'FORUM_MSG_CONTENTS' => FormatingHelper::second_parse(stripslashes($row['contents'])),
 		'FORUM_USER_EDITOR_LOGIN' => $row['login_edit'],
