@@ -32,12 +32,12 @@
 
 $lang['root_category_description'] = 'Welcome to the multimedia section of the website!
 <br /><br />
-One category and one file were created to show you how this module works. Here are some tips to get started on this module.
+One category and one media file were created to show you how this module works. Here are some tips to get started on this module.
 <br /><br /> 
 <ul class="formatter-ul">
-	<li class="formatter-li"> To configure or customize the module homepage your module, go into the <a href="' . MediaUrlBuilder::configuration()->relative() . '">module administration</a></li>
-	<li class="formatter-li"> To create categories, <a href="' . MediaUrlBuilder::add_category()->relative() . '">clic here</a></li>
-	<li class="formatter-li"> To create multimedia files, <a href="' . MediaUrlBuilder::add()->relative() . '">clic here</a></li>
+	<li class="formatter-li"> To configure or customize the module homepage your module, go into the <a href="' . MediaUrlBuilder::configuration()->rel() . '">module administration</a></li>
+	<li class="formatter-li"> To create categories, <a href="' . MediaUrlBuilder::add_category()->rel() . '">clic here</a></li>
+	<li class="formatter-li"> To create multimedia files, <a href="' . MediaUrlBuilder::add()->rel() . '">clic here</a></li>
 </ul>
 <br />To learn more, don \'t hesitate to consult the documentation for the module on <a href="http://www.phpboost.com">PHPBoost</a> website.';
 ?>

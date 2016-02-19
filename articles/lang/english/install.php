@@ -39,12 +39,12 @@ $lang['default.article.description'] = '';
 $lang['default.article.contents'] = 'This brief article will give you some simple tips to take control of this module.<br /> 
 <br /> 
 <ul class="formatter-ul"> 
-<li class="formatter-li">To configure your module, <a href="' . ArticlesUrlBuilder::configuration()->relative() . '">click here</a> 
-</li><li class="formatter-li">To add categories: <a href="' . ArticlesUrlBuilder::add_category()->relative() . '">click here</a> (categories and subcategories are infinitely)
-</li><li class="formatter-li">To add an item: <a href="' . ArticlesUrlBuilder::add_article()->relative() . '">click here</a> 
+<li class="formatter-li">To configure your module, <a href="' . ArticlesUrlBuilder::configuration()->rel() . '">click here</a> 
+</li><li class="formatter-li">To add categories: <a href="' . ArticlesUrlBuilder::add_category()->rel() . '">click here</a> (categories and subcategories are infinitely)
+</li><li class="formatter-li">To add an item: <a href="' . ArticlesUrlBuilder::add_article()->rel() . '">click here</a> 
 </li></ul> 
 <ul class="formatter-ul">
-<li class="formatter-li">To format your articles, you can use bbcode language or the WYSIWYG editor (cf this (cf cet <a href="http://www.phpboost.com/articles/articles-6-61+mise-en-page-du-contenu.php">article</a>)<br /> 
+<li class="formatter-li">To format your articles, you can use bbcode language or the WYSIWYG editor (see this <a href="http://www.phpboost.com/wiki/bbcode">article</a>)<br /> 
 </li></ul><br /> 
 <br /> 
 For more information, please see the module documentation on the site <a href="http://www.phpboost.com">PHPBoost</a>.<br /> 
