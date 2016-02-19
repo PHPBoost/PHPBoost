@@ -34,10 +34,10 @@ $lang['wiki_name'] = 'Wiki ' . GeneralConfig::load()->get_site_name();
 $lang['index_text'] = 'Bienvenue sur le module wiki !<br /><br />
 Voici quelques conseils pour bien débuter sur ce module.<br />
 <ul class="formatter-ul">
-<li class="formatter-li">Pour configurer votre module, rendez vous dans l\'<a href="/wiki/admin_wiki.php">administration du module</a></li>
-<li class="formatter-li">Pour créer des catégories, <a href="/wiki/post.php?type=cat">cliquez ici</a></li>
-<li class="formatter-li">Pour créer des articles, rendez vous <a href="/wiki/post.php">ici</a></li>
+<li class="formatter-li">Pour configurer votre module, rendez vous dans l\'<a href="' . WikiUrlBuilder::configuration()->rel() . '">administration du module</a></li>
+<li class="formatter-li">Pour créer des catégories, <a href="' . WikiUrlBuilder::add_category()->rel() . '">cliquez ici</a></li>
+<li class="formatter-li">Pour créer des articles, rendez vous <a href="' . WikiUrlBuilder::add()->rel() . '">ici</a></li>
 </ul><br /><br />
-Pour personnaliser l\'accueil de ce module, <a href="/wiki/admin_wiki.php">cliquez ici</a><br /><br />
+Pour personnaliser l\'accueil de ce module, <a href="' . WikiUrlBuilder::configuration()->rel() . '">cliquez ici</a><br /><br />
 Pour en savoir plus, n\'hésitez pas à consulter la documentation du module sur le site de <a href="http://www.phpboost.com/forum/">PHPBoost</a>.';
 ?>
