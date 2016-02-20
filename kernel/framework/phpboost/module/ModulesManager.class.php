@@ -237,7 +237,7 @@ class ModulesManager
 	 * 	<li>NOT_INSTALLED_MODULE: the module to uninstall doesn't exist!</li>
 	 * </ul>
 	 */
-	public static function uninstall_module($module_id, $drop_files = false)
+	public static function uninstall_module($module_id, $drop_files = false, $generate_cache = true)
 	{
 		if (!empty($module_id) && self::is_module_installed($module_id))
 		{
@@ -294,7 +294,15 @@ class ModulesManager
 					}
 				}
 				
-				AppContext::get_cache_service()->clear_cache();
+				if ($generate_cache)
+				{
+					AppContext::get_cache_service()->clear_cache();
+					
+					if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
+					{
+						HtaccessFileCache::regenerate();
+					}
+				}
 				
 				return self::MODULE_UNINSTALLED;
 			}
@@ -306,7 +314,7 @@ class ModulesManager
 		}
 	}
 
-	public static function upgrade_module($module_identifier)
+	public static function upgrade_module($module_identifier, $generate_cache = true)
 	{
 		if (!empty($module_identifier) && is_dir(PATH_TO_ROOT . '/' . $module_identifier))
 		{
@@ -324,14 +332,14 @@ class ModulesManager
 						ModulesConfig::load()->update($module);
 						ModulesConfig::save();
 						
-						AppContext::get_cache_service()->clear_cache();
-						
-						try {
+						if ($generate_cache)
+						{
+							AppContext::get_cache_service()->clear_cache();
+							
 							if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
 							{
 								HtaccessFileCache::regenerate();
 							}
-						} catch (IOException $ex) {
 						}
 					}
 					else
@@ -374,7 +382,7 @@ class ModulesManager
 		return false;
 	}
 	
-	public static function update_module($module_id, $activated)
+	public static function update_module($module_id, $activated, $generate_cache = true)
 	{
 		$error = '';
 		if (!$activated)
@@ -440,9 +448,14 @@ class ModulesManager
 			MenuService::add_mini_module($module_id);
 			Feed::clear_cache($module_id);
 			
-			if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
+			if ($generate_cache)
 			{
-				HtaccessFileCache::regenerate();
+				AppContext::get_cache_service()->clear_cache();
+				
+				if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
+				{
+					HtaccessFileCache::regenerate();
+				}
 			}
 		}
 		
