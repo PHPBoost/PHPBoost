@@ -205,6 +205,10 @@ class UpdateServices
 		// Suppression des fichiers qui ne sont plus présent dans la nouvelle version pour éviter les conflits
 		$this->delete_old_files();
 		
+		// Désinstallation du module UrlUpdater pour éviter les problèmes
+		if (ModulesManager::is_module_installed('UrlUpdater'))
+			ModulesManager::uninstall_module('UrlUpdater');
+		
 		// Suppression du captcha PHPBoostCaptcha
 		$this->delete_phpboostcaptcha();
 		
@@ -525,14 +529,14 @@ class UpdateServices
 		{
 			if (ModulesManager::module_is_upgradable($id))
 			{
-				ModulesManager::upgrade_module($id);
+				ModulesManager::upgrade_module($id, false);
 				$module->set_installed_version($module->get_configuration()->get_version());
 			}
 			else
 			{
 				if ($module->get_configuration()->get_compatibility() != self::NEW_KERNEL_VERSION)
 				{
-					ModulesManager::update_module($id, false);
+					ModulesManager::update_module($id, false, false);
 					$this->add_information_to_file('module ' . $id, 'has been disabled because : incompatible with new version');
 				}
 			}
@@ -557,6 +561,13 @@ class UpdateServices
 				$message = $e->getMessage();
 			}
 			$this->add_error_to_file($class['type'] . ' ' . $object->get_module_id(), $success, $message);
+		}
+		
+		AppContext::get_cache_service()->clear_cache();
+		
+		if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
+		{
+			HtaccessFileCache::regenerate();
 		}
 	}
 	
