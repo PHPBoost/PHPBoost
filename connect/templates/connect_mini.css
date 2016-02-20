@@ -160,10 +160,8 @@ div.connect-register i {
 		position: absolute;
 		padding: 10px;
 		left: -100%;
-		visibility: hidden;
-		opacity: 0;
 		background-color: #353535;
-		transition: left 0.5s, visibility 0.5s, opacity 0.5s;
+		transition: left 0.5s;
 	}
 
 	#connect-menu.active ul.connect-content,
@@ -171,9 +169,7 @@ div.connect-register i {
 		z-index: 200;
 		left: 0%;
 		width: auto;
-		visibility: visible;
-		opacity: 1;
-		transition: left 0.5s, visibility 0.5s, opacity 0.5s;
+		transition: left 0.5s;
 	}
 
 	#connect-menu div.horizontal-fieldset ul.connect-content li {
