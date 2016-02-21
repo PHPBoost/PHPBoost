@@ -101,7 +101,7 @@ class FeedItem
     }
     
     ## Getters ##
-    public function get_title() { return $this->title; }
+    public function get_title() { return str_replace('&', '&amp;', TextHelper::htmlspecialchars_decode($this->title)); }
     public function get_link() { return $this->link; }
     public function get_guid() { return $this->guid; }
     public function get_date() { return $this->date->format(Date::FORMAT_DAY_MONTH, Timezone::USER_TIMEZONE); }
