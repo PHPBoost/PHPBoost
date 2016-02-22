@@ -48,7 +48,7 @@
 						<td>
 							{L_NAME} : <strong>{apps.name}</strong> - {L_VERSION} : <strong>{apps.version}</strong>
 							<div class="update-desc">{apps.short_description}</div>
-							<p><a href="detail.php?identifier={apps.identifier}" title="{L_MORE_DETAILS}" class="small">{L_DETAILS}</a></p>
+							<p><a href="{PATH_TO_ROOT}/admin/updates/detail.php?identifier={apps.identifier}" title="{L_MORE_DETAILS}" class="small">{L_DETAILS}</a></p>
 						</td>
 						<td>{apps.L_PRIORITY}</td>
 						<td class="center">

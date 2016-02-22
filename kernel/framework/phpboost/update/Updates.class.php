@@ -147,7 +147,7 @@ class Updates
 			else
 				$alert->set_entitled(sprintf(LangLoader::get_message('update_available', 'admin'), $app->get_type(), $app->get_name(), $app->get_version()));
 
-			$alert->set_fixing_url('admin/updates/detail.php?identifier=' . $identifier);
+			$alert->set_fixing_url('/admin/updates/detail.php?identifier=' . $identifier);
 			$alert->set_priority($app->get_priority());
 			$alert->set_properties(serialize($app));
 			$alert->set_type('updates');
