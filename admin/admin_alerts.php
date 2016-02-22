@@ -82,13 +82,9 @@ foreach ($alerts_list as $alert)
 	
 	$creation_date = $alert->get_creation_date();
 	
-	$fixing_url = $alert->get_fixing_url();
-	if (!($fixing_url instanceof Url))
-		$fixing_url = new Url($fixing_url);
-	
 	$template->assign_block_vars('alerts', array(
 		'C_PROCESSED' => $alert->get_status() == AdministratorAlert::ADMIN_ALERT_STATUS_PROCESSED,
-		'FIXING_URL' => $fixing_url->rel(),
+		'FIXING_URL' => $alert->get_fixing_url(),
 		'NAME' => $alert->get_entitled(),
 		'PRIORITY' => $alert->get_priority_name(),
 		'STYLE' => 'background:#' . $color . ';',
