@@ -19,6 +19,7 @@
 }
 
 #connect-menu {
+	position: relative;
 	margin: 0 auto;
 }
 
@@ -67,6 +68,7 @@ i.alert {
 	padding: 7px 10px 0 5px;
 	height: 28px;
 	float: left;
+	z-index: 11;
 }
 
 .connect-welcome .modo,
@@ -81,6 +83,7 @@ i.alert {
 /* Bouton responsive */
 #connect-menu .js-menu-button {
 	display: none;
+	z-index: 11;
 }
 
 #connect-menu .js-menu-button i {
@@ -224,7 +227,7 @@ i.alert {
 
 	#connect-menu ul.connect-connected {
 		position: absolute;
-		opacity: 0;
+		opacity: 0.1;
 		z-index: 50;
 		top: -200px;
 		left: -220px;
@@ -238,7 +241,6 @@ i.alert {
 	#connect-menu li.connect-menu-container:hover ul.connect-connected {
 		transition: opacity 0.3s ease-out;
 		opacity: 1;
-
 		top: 28px;
 	}
 
@@ -272,7 +274,12 @@ i.alert {
 	}
 
 	.connect-content {
-		display: none;
+		position: absolute;
+		left: -9999px;
+		z-index: 10;
+		height: 0;
+		overflow: hidden;
+		transition: height 0.6s;
 	}
 
  	#connect-menu.active .fa-bars:before {
@@ -280,9 +287,12 @@ i.alert {
 	}
 
 	#connect-menu.active .connect-content {
-		display: block;
-		padding-top: 28px;
+		left: 0;
+		top: 28px;
+		height: 210px;
+		width: 100%;
 		background-color: #86A6C7;
+		transition: height 0.1s;
 	}
 	#connect-menu.active .fa-connect {
 		display: none;
@@ -294,8 +304,12 @@ i.alert {
 		padding-top: 5px;
 	}
 
+	#connect-menu.active .connect-menu-container {
+		padding: 0;
+	}
+
 	#connect-menu.active .connect-connected {
-		border-top: 1px solid rgba(255, 255, 255, 0.15);
+		border-top: 1px solid #81A4C8;
 	}
 
 	#connect-menu.active .connect-connected span,
@@ -362,6 +376,3 @@ i.alert {
 		height: auto;
 	}
 }
-
-
-
