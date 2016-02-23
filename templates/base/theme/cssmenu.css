@@ -17,6 +17,7 @@ Contient les elements associes aux menus
 	margin: 0;
 	list-style: none;
 	line-height: 1;
+	left: auto;
 }
 
 .cssmenu:after,
@@ -27,6 +28,12 @@ Contient les elements associes aux menus
 	content: "";
 	line-height: 0;
 	clear: both;
+}
+
+.close {
+	left: -9999px !important;
+	height: 0;
+	overflow: hidden;
 }
 
 #menu-left .cssmenu   { margin-right: -9px; }
@@ -54,7 +61,7 @@ Contient les elements associes aux menus
 }
 
 .cssmenu.small-screen ul {
-	display: none;
+	display: block;
 	width: 100%;
 }
 
@@ -472,7 +479,7 @@ footer .cssmenu.cssmenu-static > ul > li:last-child,
 
 .cssmenu.small-screen ul ul li.has-sub > .cssmenu-title:after,  
 .cssmenu.small-screen ul ul li.has-sub > .cssmenu-title:before {
-	display: none
+	display: none;
 }
 
 .cssmenu.small-screen ul.level-1 li .cssmenu-title  {
@@ -711,22 +718,22 @@ header .cssmenu ul ul li .cssmenu-title							{ background-color: #333333;	}
 }
 
 .cssmenu-actionslinks #menu-button + ul {
-	display: none !important;
+	left: -9999px;
 }
 
 .cssmenu-actionslinks #menu-button:hover + ul,
 .cssmenu-actionslinks #menu-button + ul:hover{
-	display: block !important;
+	left: auto;
 }
 
 .cssmenu-actionslinks.small-screen #menu-button:hover + ul,
 .cssmenu-actionslinks.small-screen #menu-button + ul:hover {
-	display: none !important;
+	left: -9999px;
 }
 
 .cssmenu-actionslinks.small-screen #menu-button + ul.open,
 .cssmenu-actionslinks.small-screen #menu-button + ul:hover.open {
-	display: block !important;
+	left: auto;
 }
 
 .cssmenu-actionslinks #menu-button:before {
