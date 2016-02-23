@@ -10,6 +10,7 @@
 	jQuery("#cssmenu-module-${escape(ID)}").menumaker({
 		title: "${LangLoader::get_message('content.menus.actions', 'admin-links-common')} {MODULE_NAME}",
 		format: "multitoggle",
+		actionslinks: true,
 		breakpoint: 768
 	});
 	jQuery(document).ready(function() {
