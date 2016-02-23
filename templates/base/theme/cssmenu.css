@@ -30,7 +30,7 @@ Contient les elements associes aux menus
 	clear: both;
 }
 
-.hidesub {
+.close {
 	left: -9999px !important;
 	height: 0;
 	overflow: hidden;
