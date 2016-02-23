@@ -53,6 +53,9 @@ class ContentSecondParser extends AbstractParser
 	 */
 	public function parse()
 	{
+		//Relative url parsing
+		$this->content = preg_replace_callback('`(src|href)="/([A-Za-z0-9-_\./]+)"`sU', array($this, 'callbackrelative_url'), $this->content);
+		
 		//Balise code
 		if (strpos($this->content, '[[CODE') !== false)
 		{
@@ -169,6 +172,16 @@ class ContentSecondParser extends AbstractParser
 		}
 
 		return $contents;
+	}
+
+	/**
+	 * @static
+	 * @desc Displays the url correctly when PHPBoost is installed in a sub-folder
+	 * @return string the relative url
+	 */
+	private function callbackrelative_url($matches)
+	{
+		return $matches[1] . '="' . Url::to_rel('/' . $matches[2]) . '"';
 	}
 
 	/**
