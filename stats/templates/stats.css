@@ -14,7 +14,7 @@
 
 #menustats ul {
 	position: absolute;
-	z-index: 50;
+	z-index: 4;
 	margin: 0 0 20px 0;
 	padding: 0;
 	opacity: 0;
