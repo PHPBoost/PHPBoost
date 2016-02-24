@@ -163,7 +163,7 @@ class AdminCustomizeEditorCSSFilesController extends AdminModuleController
 		if (!$css_file->exists())
 			copy(PATH_TO_ROOT . '/' . $module_selected . '/templates/' . $file_name, PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_modules_files_path . $module_selected . '/' . $file_name);
 		
-		$css_file->write($this->form->get_value('css_file'));
+		$css_file->write(TextHelper::html_entity_decode($this->form->get_value('css_file')));
 		$css_file->close();
 	}
 	
