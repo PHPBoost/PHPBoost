@@ -1040,9 +1040,11 @@ table.announce-legend td {
 	width: 33%;
 }
 
-.post-pm {
-	width: 80%;
-	margin: auto;
+@media (min-width: 769px) {
+	.post-pm {
+		margin: auto;
+		width: 80%;
+	}
 }
 
 .available-modules-msg {
