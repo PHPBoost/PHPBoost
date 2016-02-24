@@ -308,6 +308,13 @@ input[name$="_minutes"] { width: 50px;  }
 	}
 }
 
+@media (max-width: 768px) {
+	.form-element-textarea + div.center button,
+	.fieldset-content > div.center button {
+		margin-top: 5px;
+	}
+}
+
 .form-element [id$="user_avatar"] img {
 	max-width: 200px;
 }
