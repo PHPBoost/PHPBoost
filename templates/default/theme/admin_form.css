@@ -452,6 +452,10 @@ input[type=color] {
 	margin: 10px 0;
 }
 
+.bt-content .form-field-radio {
+	margin-right: 10px;
+}
+
 .form-field-radio [type="radio"]:not(:checked),
 .form-field-radio [type="radio"]:checked {
 	position: absolute;
