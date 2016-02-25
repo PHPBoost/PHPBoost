@@ -144,7 +144,7 @@ class SessionData
 
 	public function get_data($key)
 	{
-		if (array_key_exists($key, $this->cached_data))
+		if (array_key_exists($key, $this->data))
 		{
 			return $this->data[$key];
 		}
@@ -327,6 +327,18 @@ class SessionData
 		$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
 		$parameters = array('user_id' => $data->user_id, 'session_id' => $data->session_id);
 		PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
+		
+		if (is_array($data->cached_data) && array_key_exists('last_connection_date', $data->cached_data))
+		{
+			$now = new Date();
+			$last_connection_date = new Date($data->cached_data['last_connection_date'], Timezone::SERVER_TIMEZONE);
+			if (!($last_connection_date->get_day() == $now->get_day() && $last_connection_date->get_month() == $now->get_month() && $last_connection_date->get_year() == $now->get_year()))
+			{
+				$data->update_user_info($data->user_id);
+				$data->recheck_cached_data_from_user_id($data->user_id);
+			}
+		}
+		
 		return $data;
 	}
 	
@@ -453,6 +465,11 @@ class SessionData
 		{
 			$data->cached_data = User::get_visitor_properties(self::DEFAULT_VISITOR_DISPLAY_NAME);
 		}
+	}
+
+	protected function update_user_info($user_id)
+	{
+		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('last_connection_date' => time()), 'WHERE user_id=:user_id', array('user_id' => $user_id));
 	}
 
 	/**
