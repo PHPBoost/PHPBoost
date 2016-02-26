@@ -3,6 +3,21 @@
 <repository>
 	<header />
 	<app id="kernel" type="kernel">
+		<version num="5.0.1" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/02/25">
+			<compatibility min="5.0" />
+			<download url="http://www.phpboost.com/download/">PHPBoost 5.0.1</download>
+			<update url="http://phpboost.com/download/45-mises-a-jour-phpboost-5-0/408-pack-de-mise-a-jour-5-0-0-vers-5-0-1/">5.0.0 vers 5.0.1</update>
+			<authors>
+				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
+			</authors>
+			<description>
+				Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
+				Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+			</description>
+			<whatsnew>
+				<new type="bug">Plusieurs corrections de bugs.</new>
+			</whatsnew>
+		</version>
 		<version num="5.0.0" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/02/11">
 			<compatibility min="4.1" />
 			<download url="http://www.phpboost.com/download/">PHPBoost 5.0.0</download>
