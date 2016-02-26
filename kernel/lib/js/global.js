@@ -14,13 +14,14 @@
 			format: "dropdown",
 			breakpoint: 768,
 			sticky: false,
+			static: false,
 			actionslinks: false
 		}, options);
 
 		return this.each(function() {
 			cssmenu.find('li ul').parent().addClass('has-sub');
 			cssmenu.prepend('<div id="menu-button">' + settings.title + '</div>');
-			$(this).find("#menu-button").on('click', function(){
+			$(this).find('#menu-button').on('click', function(){
 				$(this).toggleClass('menu-opened');
 				var mainmenu = $(this).next('ul');
 				if (mainmenu.hasClass('open')) {
@@ -32,7 +33,7 @@
 			});
 	
 			multiTg = function() {
-				cssmenu.find(".has-sub").prepend('<span class="submenu-button"></span>');
+				cssmenu.find('.has-sub').prepend('<span class="submenu-button"></span>');
 				cssmenu.find('.submenu-button').on('click', function() {
 					$(this).toggleClass('submenu-opened');
 					if ($(this).siblings('ul').hasClass('open')) {
@@ -49,15 +50,29 @@
 			resizeFix = function() {
 				if ($(window).width() > settings.breakpoint) {
 					cssmenu.find('ul').removeClass('close');
+					cssmenu.find('ul').removeClass('open');
 					cssmenu.removeClass('small-screen');
-					cssmenu.find("#menu-button").removeClass("menu-opened");
+					cssmenu.find('#menu-button').removeClass('menu-opened');
 				}
 	
-				if ($(window).width() <= settings.breakpoint && !cssmenu.hasClass("small-screen")) {
-					if (!settings.actionslinks) {
+				if ($(window).width() <= settings.breakpoint && !cssmenu.hasClass('small-screen')) {
+
+					if (settings.static) {
+						cssmenu.find('ul').addClass('open');
+						cssmenu.find('ul').removeClass('close');
+						cssmenu.find('#menu-button').addClass('menu-opened');
+					}
+
+					if (settings.actionslinks) {
+						cssmenu.find('.level-0').addClass('close');
+						cssmenu.find('.level-0').removeClass('open');
+					}
+
+					if (!settings.actionslinks && !settings.static) {
+						cssmenu.find('ul').removeClass('open');
 						cssmenu.find('ul').addClass('close');
 					}
-					cssmenu.find('ul').removeClass('open');
+
 					cssmenu.addClass('small-screen');
 				}
 
