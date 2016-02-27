@@ -42,7 +42,7 @@ class AdminCustomizeFaviconController extends AdminModuleController
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->load_lang();
-		$this->load_config();	
+		$this->load_config();
 		$this->build_form();
 
 		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
@@ -58,16 +58,15 @@ class AdminCustomizeFaviconController extends AdminModuleController
 				if ($file_type->is_picture())
 				{
 					$this->save($favicon);
+					$favicon_file = new File(PATH_TO_ROOT . $this->config->get_favicon_path());
+					$picture = '<img src="' . Url::to_rel($favicon_file->get_path()) . '" alt="' . $this->lang['customization.favicon.current'] . '" title="' . $this->lang['customization.favicon.current'] . '"/>';
+					$this->form->get_field_by_id('current_favicon')->set_value($picture);
 					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 				}
 				else
 				{
-					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), MessageHelper::ERROR, 4));
+					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('form.invalid_picture', 'status-messages-common'), MessageHelper::ERROR, 4));
 				}
-			}
-			else
-			{
-				$tpl->put('MSG', MessageHelper::display($this->lang['customization.favicon.error'], MessageHelper::ERROR, 4));
 			}
 		}
 
