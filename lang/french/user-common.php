@@ -44,6 +44,7 @@ $lang['punishment-management'] = 'Gestion des sanctions';
 
 $lang['profile.edit.password.error'] = 'Le mot de passe que vous avez entré n\'est pas correct';
 $lang['external-auth.account-exists'] = 'Pour associer votre compte avec la connexion externe vous devez vous connecter sur le site et vous rendre dans l\'édition de votre profil';
+$lang['external-auth.email-not-found'] = 'L\'adresse email de votre compte n\'a pas pu être récupérée, votre compte ne peut pas être associé.';
 
 //Contribution
 $lang['contribution'] = 'Contribution';
