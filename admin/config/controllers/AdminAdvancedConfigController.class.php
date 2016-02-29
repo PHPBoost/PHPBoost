@@ -203,7 +203,7 @@ class AdminAdvancedConfigController extends AdminController
 			$this->server_environment_config->set_url_rewriting_enabled($this->form->get_value('url_rewriting_enabled'));
 		}
 		
-		$this->server_environment_config->set_htaccess_manual_content($this->form->get_value('htaccess_manual_content'));
+		$this->server_environment_config->set_htaccess_manual_content(TextHelper::html_entity_decode($this->form->get_value('htaccess_manual_content')));
 		
 		$robots_file = new File(PATH_TO_ROOT . '/robots.txt');
 		$robots_file->write($this->form->get_value('robots_content'));
