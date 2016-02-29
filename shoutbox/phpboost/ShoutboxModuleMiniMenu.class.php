@@ -79,8 +79,6 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 					'CODE' => addslashes($code_smile)
 				));
 			}
-			
-			
 		}
 		
 		$tpl->put_all(array(
