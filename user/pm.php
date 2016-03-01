@@ -480,7 +480,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la 
 	{
 		//On récupère les info de la conversation.
 		try {
-			$convers = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_TOPIC, array('title', 'user_id', 'user_id_dest'), 'WHERE id = :id', array('id' => $pm['idconvers']));
+			$conversation = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_TOPIC, array('title', 'user_id', 'user_id_dest'), 'WHERE id = :id', array('id' => $pm['idconvers']));
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
@@ -573,7 +573,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la 
 					));
 					
 					$tpl->assign_block_vars('edit_pm.title', array(
-						'TITLE' => ($prw_convers XOR $prw) ? stripslashes($title) : stripslashes($convers['title'])
+						'TITLE' => ($prw_convers XOR $prw) ? stripslashes($title) : stripslashes($conversation['title'])
 					));
 				}
 				else
@@ -708,7 +708,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		$group_color = User::get_group_color($row['groups'], $row['level']);
 		
 		$tpl->assign_block_vars('pm.msg', array(
-			'C_MODERATION_TOOLS' => (($current_user->get_id() === $row['user_id'] && $row['id'] === $convers['last_msg_id']) && ($row['view_status'] === '0')), //Dernier mp éditable. et si le destinataire ne la pas encore lu
+			'C_MODERATION_TOOLS' => ($row['id'] === $convers['last_msg_id']) && !$row['view_status'], //Dernier mp éditable. et si le destinataire ne la pas encore lu
 			'C_VISITOR' => $is_admin,
 			'C_AVATAR' => $row['user_avatar'] || ($user_accounts_config->is_default_avatar_enabled()),
 			'C_GROUP_COLOR' => !empty($group_color),
