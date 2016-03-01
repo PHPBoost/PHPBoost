@@ -25,6 +25,10 @@
 	background-color: #FFFFFF;
 }
 
+#module-bugtracker table#table {
+	table-layout: fixed;
+}
+
 table.version-list tfoot tr th,
 table.categories-list tfoot tr th {
 	padding: 8px 0;
