@@ -144,9 +144,24 @@ function deleteElement(element_id)
 function image_preview(input,image)
 {
 	var url = input.value;
-	var reg = /^https?:\/\//i;
-	if (reg.test(url)) image.src = url;
-	else image.src = '{PATH_TO_ROOT}' + url;
+	image.src = '';
+	
+	jQuery.ajax({
+		url: PATH_TO_ROOT + "/kernel/framework/ajax/dispatcher.php?url=/url_validation/",
+		type: "post",
+		dataType: "json",
+		async: false,
+		data: {url_to_check : url, token : TOKEN},
+		success: function(returnData){
+			if (returnData.is_valid == 1)
+			{
+				if (url.charAt(0) == '/')
+					image.src = PATH_TO_ROOT + url;
+				else
+					image.src = url;
+			}
+		}
+	});
 }
 
 jQuery(document).ready(function() {

@@ -308,17 +308,12 @@ function UrlExistsValidator(field_id, message)
 		var error = '';
 		if (value != '')
 		{
-			if (value.substring(1) == '/')
-				url_to_check = PATH_TO_ROOT + value;
-			else
-				url_to_check = value;
-			
 			jQuery.ajax({
 				url: PATH_TO_ROOT + "/kernel/framework/ajax/dispatcher.php?url=/url_validation/",
 				type: "post",
 				dataType: "json",
 				async: false,
-				data: {url_to_check : url_to_check, token : TOKEN},
+				data: {url_to_check : value, token : TOKEN},
 				success: function(returnData){
 					if (returnData.is_valid != 1)
 					{
