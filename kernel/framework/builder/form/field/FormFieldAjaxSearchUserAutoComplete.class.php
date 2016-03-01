@@ -31,9 +31,13 @@
  */
 class FormFieldAjaxSearchUserAutoComplete extends FormFieldAjaxCompleter
 {
+	protected $display_html_in_suggestions = true;
+	
 	// Input not filled on click on suggestions
 	protected $preserve_input = 'true';
 	
+	// Show results if no suggestion
+	protected $no_suggestion_notice = 'true';
 	
 	 /**
 	 * @desc Constructs a FormFieldAjaxCompleter.

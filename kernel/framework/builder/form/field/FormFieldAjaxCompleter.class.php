@@ -35,8 +35,13 @@ class FormFieldAjaxCompleter extends FormFieldTextEditor
 	private $file;
 	private $name_parameter = 'value';
 	
+	protected $display_html_in_suggestions = false;
+	
 	// Fill input on click on suggestions
 	protected $preserve_input = 'false';
+	
+	// Show results if no suggestion
+	protected $no_suggestion_notice = 'false';
 	
 	protected static $tpl_src = '<input type="text" size="{SIZE}" maxlength="{MAX_LENGTH}" name="${escape(NAME)}" id="${escape(HTML_ID)}" value="${escape(VALUE)}"
 	class="${escape(CLASS)}" # IF C_DISABLED # disabled="disabled" # ENDIF # autocomplete="off" onfocus="javascript:load_autocompleter_{HTML_ID}();" />
@@ -45,11 +50,19 @@ class FormFieldAjaxCompleter extends FormFieldTextEditor
 			jQuery("#" + ${escapejs(HTML_ID)}).autocomplete({
 				serviceUrl: ${escapejs(FILE)},
 				paramName: ${escapejs(NAME_PARAMETER)},
-				showNoSuggestionNotice: true,
+				showNoSuggestionNotice: {NO_SUGGESTION_NOTICE},
 				noSuggestionNotice: ${escapejs(LangLoader::get_message(\'no_result\', \'main\'))},
 				preserveInput: {PRESERVE_INPUT},
 				params: {\'token\': ${escapejs(TOKEN)}},
-				minChars: 2
+				# IF C_DISPLAY_HTML_IN_SUGGESTIONS #
+				onSelect: function (suggestion) {
+					jQuery("#" + ${escapejs(HTML_ID)}).val(jQuery(suggestion.value).html());
+					jQuery("#" + ${escapejs(HTML_ID)}).trigger("blur");
+				},
+				formatResult: function (suggestion, currentValue) { 
+					return suggestion.value;
+				}
+				# ENDIF #
 			});
 		}
 	</script>';
@@ -96,7 +109,9 @@ class FormFieldAjaxCompleter extends FormFieldTextEditor
 			'FILE' =>  $this->file,
 			'METHOD' =>  $this->method,
 			'NAME_PARAMETER' =>  $this->name_parameter,
-			'PRESERVE_INPUT' =>  $this->preserve_input,
+			'C_DISPLAY_HTML_IN_SUGGESTIONS' => $this->display_html_in_suggestions,
+			'PRESERVE_INPUT' => $this->preserve_input,
+			'NO_SUGGESTION_NOTICE' => $this->no_suggestion_notice,
 			'ID' => $this->get_id(),
 			'HTML_ID' => $this->get_html_id(),
 			'VALUE' => $this->get_value(),
@@ -131,6 +146,14 @@ class FormFieldAjaxCompleter extends FormFieldTextEditor
 				case 'name_parameter' :
 					$this->name_parameter = $value;
 					unset($field_options['name_parameter']);
+					break;
+				case 'display_html_in_suggestions' :
+					$this->display_html_in_suggestions = (bool)$value;
+					unset($field_options['display_html_in_suggestions']);
+					break;
+				case 'no_suggestion_notice' :
+					$this->no_suggestion_notice = $value ? 'true' : 'false';
+					unset($field_options['no_suggestion_notice']);
 					break;
 			}
 		}

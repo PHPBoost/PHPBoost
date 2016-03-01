@@ -31,26 +31,31 @@
  */
 class FormFieldAjaxUserAutoComplete extends FormFieldAjaxCompleter
 {
-    /**
-     * @desc Constructs a FormFieldAjaxCompleter.
-     * It has these options in addition to the AbstractFormField ones:
-     * <ul>
-     * 	<li>size: the number of size of the field</li>
-     * 	<li>maxlength: the number of maxlength of the field</li>
+	protected $display_html_in_suggestions = true;
+	
+	// Show results if no suggestion
+	protected $no_suggestion_notice = 'true';
+	
+	/**
+	 * @desc Constructs a FormFieldAjaxCompleter.
+	 * It has these options in addition to the AbstractFormField ones:
+	 * <ul>
+	 * 	<li>size: the number of size of the field</li>
+	 * 	<li>maxlength: the number of maxlength of the field</li>
 	 *  <li>method: the string method send request : post or get</li>
 	 *  <li>file: the string file url</li>
 	 *  <li>parameter: the string parameter name variable send for request</li>
-     * </ul>
-     * @param string $id Field identifier
-     * @param string $label Field label
-     * @param string $value Default value
-     * @param string[] $field_options Map containing the options
-     * @param FormFieldConstraint[] $constraints The constraints checked during the validation
-     */
-    public function __construct($id, $label, $value, $field_options = array(), array $constraints = array())
-    {
-    	$field_options['file'] = TPL_PATH_TO_ROOT . '/kernel/framework/ajax/dispatcher.php?url=/users_autocomplete&token='. AppContext::get_session()->get_token();
-        parent::__construct($id, $label, $value, $field_options, $constraints);
-    }
+	 * </ul>
+	 * @param string $id Field identifier
+	 * @param string $label Field label
+	 * @param string $value Default value
+	 * @param string[] $field_options Map containing the options
+	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
+	 */
+	public function __construct($id, $label, $value, $field_options = array(), array $constraints = array())
+	{
+		$field_options['file'] = TPL_PATH_TO_ROOT . '/kernel/framework/ajax/dispatcher.php?url=/users_autocomplete&token='. AppContext::get_session()->get_token();
+		parent::__construct($id, $label, $value, $field_options, $constraints);
+	}
 }
 ?>
