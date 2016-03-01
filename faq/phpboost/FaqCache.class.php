@@ -44,7 +44,9 @@ class FaqCache implements CacheData
 		$result = PersistenceContext::get_querier()->select('
 			SELECT id, id_category, question
 			FROM ' . FaqSetup::$faq_table . ' faq
-			WHERE approved = 1'
+			WHERE approved = 1
+			ORDER BY RAND()
+			LIMIT 50'
 		);
 		
 		while ($row = $result->fetch())
