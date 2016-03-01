@@ -66,21 +66,17 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 				if ($file_type->is_picture())
 				{
 					$this->save($header_logo, $theme);
-					AppContext::get_response()->redirect(AdminCustomizeUrlBuilder::customize_interface());
+					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 				}
 				else
 				{
-					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), MessageHelper::ERROR, 4));
+					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('form.invalid_picture', 'status-messages-common'), MessageHelper::ERROR, 4));
 				}
 			}
 			elseif ($this->form->get_value('use_default_logo'))
 			{
 				$this->delete_pictures_saved($theme);
-				AppContext::get_response()->redirect(AdminCustomizeUrlBuilder::customize_interface());
-			}
-			else
-			{
-				$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), MessageHelper::ERROR, 4));
+				$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 			}
 		}
 
@@ -176,9 +172,9 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 				$customize_interface->set_header_logo_path($save_destination->get_path_from_root());
 				ThemesManager::change_customize_interface($id, $customize_interface);
 			}
-					
+			
 			$this->config->set_header_logo_path_all_themes($save_destination->get_path_from_root());
-			CustomizationConfig::save();			
+			CustomizationConfig::save();
 		}
 	}
 	
@@ -203,7 +199,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 			}
 			
 			$this->config->remove_header_logo_path_all_themes();
-			CustomizationConfig::save();			
+			CustomizationConfig::save();
 		}
 	}
 	

@@ -91,6 +91,7 @@ $lang['form.doesnt_match_integer_max'] = 'La valeur saisie doit être inférieure 
 $lang['form.doesnt_match_medium_password_regex'] = 'Le mot de passe doit comporter au moins une minuscule et une majuscule ou une minuscule et un chiffre';
 $lang['form.doesnt_match_strong_password_regex'] = 'Le mot de passe doit comporter au moins une minuscule, une majuscule et un chiffre';
 $lang['form.invalid_url'] = 'L\'url n\'est pas valide';
+$lang['form.invalid_picture'] = 'Le fichier indiqué n\'est pas une image';
 $lang['form.unexisting_file'] = 'Le fichier n\'a pas été trouvé, son adresse doit être incorrecte';
 $lang['form.has_to_be_filled'] = 'Le champ ":name" doit être renseigné';
 $lang['form.validation_error'] = 'Veuillez corriger les erreurs du formulaire';

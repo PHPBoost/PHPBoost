@@ -49,13 +49,7 @@ class FormFieldAjaxCompleter extends FormFieldTextEditor
 				noSuggestionNotice: ${escapejs(LangLoader::get_message(\'no_result\', \'main\'))},
 				preserveInput: {PRESERVE_INPUT},
 				params: {\'token\': ${escapejs(TOKEN)}},
-				onSelect: function (suggestion) {
-					jQuery("#" + ${escapejs(HTML_ID)}).val(jQuery(suggestion.value).html());
-					jQuery("#" + ${escapejs(HTML_ID)}).trigger("blur");
-				},
-				formatResult: function (suggestion, currentValue) { 
-					return suggestion.value;
-				}
+				minChars: 2
 			});
 		}
 	</script>';

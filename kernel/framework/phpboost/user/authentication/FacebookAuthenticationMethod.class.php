@@ -109,22 +109,27 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 			$user_id = $this->querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', 'WHERE method=:method AND identifier=:identifier',  array('method' => self::AUTHENTICATION_METHOD, 'identifier' => $fb_id));
 		} catch (RowNotFoundException $e) {
 			
-			$email_exists = $this->querier->row_exists(DB_TABLE_MEMBER, 'WHERE email=:email', array('email' => $data['email']));
-			if ($email_exists)
+			if (!empty($data['email']))
 			{
-				$this->error_msg = LangLoader::get_message('external-auth.account-exists', 'user-common');
+				$email_exists = $this->querier->row_exists(DB_TABLE_MEMBER, 'WHERE email=:email', array('email' => $data['email']));
+				if ($email_exists)
+				{
+					$this->error_msg = LangLoader::get_message('external-auth.account-exists', 'user-common');
+				}
+				else
+				{
+					$user = new User();
+					$user->set_display_name(utf8_decode($data['name']));
+					$user->set_level(User::MEMBER_LEVEL);
+					$user->set_email($data['email']);
+					
+					$auth_method = new FacebookAuthenticationMethod();
+					$fields_data = array('user_avatar' => 'https://graph.facebook.com/'. $fb_id .'/picture');
+					return UserService::create($user, $auth_method, $fields_data);
+				}
 			}
 			else
-			{
-				$user = new User();
-				$user->set_display_name(utf8_decode($data['name']));
-				$user->set_level(User::MEMBER_LEVEL);
-				$user->set_email($data['email']);
-				
-				$auth_method = new FacebookAuthenticationMethod();
-				$fields_data = array('user_avatar' => 'https://graph.facebook.com/'. $fb_id .'/picture');
-				return UserService::create($user, $auth_method, $fields_data);
-			}
+				$this->error_msg = LangLoader::get_message('external-auth.email-not-found', 'user-common');
 		}
 		
 		$this->update_user_info($user_id);
