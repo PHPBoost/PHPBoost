@@ -17,7 +17,7 @@
 	</p>
 </form>
 # ELSE #
-<div id="newsletter">
+<div id="newsletter"# IF C_HIDDEN_WITH_SMALL_SCREENS # class="hidden-small-screens"# ENDIF #>
 	<form action="{PATH_TO_ROOT}/newsletter/?url=/subscribe/" method="post">
 		<div class="newsletter-form input-element-button">
 			<span class="newsletter-title">{@newsletter}</span> 

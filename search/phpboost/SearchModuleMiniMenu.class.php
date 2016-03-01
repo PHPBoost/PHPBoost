@@ -105,8 +105,8 @@ class SearchModuleMiniMenu extends ModuleMiniMenu
 			else
 			{
 				$tpl = $this->get_content();
-				
 				MenuService::assign_positions_conditions($tpl, $this->get_block());
+				$this->assign_common_template_variables($tpl);
 				
 				return $tpl->render();
 			}
