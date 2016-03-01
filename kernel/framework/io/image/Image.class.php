@@ -32,9 +32,12 @@
  */
 class Image extends FileSystemElement
 {
+	private $properties;
+	
 	public function __construct($path)
 	{
 		$this->path = $path;
+		$this->properties = $this->get_properties();
 	}
 	
 	/**
@@ -53,20 +56,17 @@ class Image extends FileSystemElement
 	
 	public function get_width()
 	{
-		$property = $this->get_properties();
-		return $property[0];
+		return is_array($this->properties) ? $this->properties[0] : 0;
 	}
 
 	public function get_height()
 	{
-		$property = $this->get_properties();
-		return $property[1];
+		return is_array($this->properties) ? $this->properties[1] : 0;
 	}
 	
 	public function get_mime_type()
 	{
-		$property = $this->get_properties();
-		return $property['mime'];
+		return is_array($this->properties) ? $this->properties['mime'] : null;
 	}
 	
 	/**
