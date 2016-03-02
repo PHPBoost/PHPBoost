@@ -254,7 +254,7 @@ class Url
 		if ($url->absolute())
 		{
 			if (function_exists('stream_context_set_default'))
-				stream_context_set_default(array('http' => array('method' => 'HEAD')));
+				stream_context_set_default(array('http' => array('method' => 'HEAD', 'timeout' => 1)));
 
 			if (function_exists('get_headers'))
 			{
@@ -291,8 +291,8 @@ class Url
 		if (empty($file_size) && $url->absolute())
 		{
 			if (function_exists('stream_context_set_default'))
-				stream_context_set_default(array('http' => array('method' => 'HEAD')));
-
+				stream_context_set_default(array('http' => array('method' => 'HEAD', 'timeout' => 1)));
+			
 			if (function_exists('get_headers'))
 			{
 				$file_headers = @get_headers($url->absolute(), true);
