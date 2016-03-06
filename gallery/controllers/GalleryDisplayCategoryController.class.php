@@ -240,7 +240,9 @@ class GalleryDisplayCategoryController extends ModuleController
 			//Affichage d'une photo demandée.
 			if (!empty($g_idpics))
 			{
-				$info_pics = $this->db_querier->select_single_row_query("SELECT g.*, m.display_name, m.groups, m.level, notes.average_notes, notes.number_notes, note.note
+				$info_pics = array();
+				try {
+					$info_pics = $this->db_querier->select_single_row_query("SELECT g.*, m.display_name, m.groups, m.level, notes.average_notes, notes.number_notes, note.note
 					FROM " . GallerySetup::$gallery_table . " g
 					LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 					LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = g.id AND com.module_id = 'gallery'
@@ -252,7 +254,9 @@ class GalleryDisplayCategoryController extends ModuleController
 						'idcat' => $category->get_id(),
 						'id' => $g_idpics
 					));
-				if (!empty($info_pics['id']))
+				} catch (RowNotFoundException $e) {}
+				
+				if ($info_pics && !empty($info_pics['id']))
 				{
 					$Bread_crumb->add(stripslashes($info_pics['name']), PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $info_pics['idcat'] . '&amp;id=' . $info_pics['id'], '-' . $info_pics['idcat'] . '-' . $info_pics['id'] . '.php'));
 					

@@ -44,9 +44,9 @@ if (!empty($g_idpics))
 	//Mise à jour du nombre de vues.
 	PersistenceContext::get_querier()->inject("UPDATE " . GallerySetup::$gallery_table . " SET views = views + 1 WHERE idcat = :idcat AND id = :id", array('idcat' => $id_category, 'id' => $g_idpics));
 
-	$path = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'path', 'WHERE idcat = :idcat AND id = :id' . (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL) ? '' : ' AND aprob = 1'), array('idcat' => $id_category, 'id' => $g_idpics));
-	if (empty($path))
-	{
+	try {
+		$path = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'path', 'WHERE idcat = :idcat AND id = :id' . (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL) ? '' : ' AND aprob = 1'), array('idcat' => $id_category, 'id' => $g_idpics));
+	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
