@@ -220,15 +220,18 @@ else
 
 		if (!empty($idpics))
 		{
-			$info_pics = PersistenceContext::get_querier()->select_single_row_query("SELECT g.id, g.idcat, g.name, g.user_id, g.views, g.width, g.height, g.weight, g.timestamp, g.aprob, m.display_name, m.level, m.groups
-			FROM " . GallerySetup::$gallery_table . " g
-			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
-			WHERE g.idcat = :idcat AND g.id = :id", array(
-				'idcat' => $id_category,
-				'id' => $idpics
-			));
+			$info_pics = array();
+			try {
+				$info_pics = PersistenceContext::get_querier()->select_single_row_query("SELECT g.id, g.idcat, g.name, g.user_id, g.views, g.width, g.height, g.weight, g.timestamp, g.aprob, m.display_name, m.level, m.groups
+				FROM " . GallerySetup::$gallery_table . " g
+				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
+				WHERE g.idcat = :idcat AND g.id = :id", array(
+					'idcat' => $id_category,
+					'id' => $idpics
+				));
+			} catch (RowNotFoundException $e) {}
 			
-			if (!empty($info_pics['id']))
+			if ($info_pics && !empty($info_pics['id']))
 			{
 				//Affichage miniatures.
 				$id_previous = 0;

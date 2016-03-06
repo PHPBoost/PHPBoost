@@ -64,7 +64,12 @@ else
 	
 	if (!empty($rename_pics)) //Renomme une image.
 	{
-		$id_cat = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'idcat', 'WHERE id = :id', array('id' => $id_file));
+		try {
+			$id_cat = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'idcat', 'WHERE id = :id', array('id' => $id_file));
+		} catch (RowNotFoundException $e) {
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
 		
 		if (GalleryAuthorizationsService::check_authorizations($id_cat)->moderation()) //Modo
 		{
@@ -83,7 +88,12 @@ else
 	}
 	elseif (!empty($aprob_pics))
 	{
-		$id_cat = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'idcat', 'WHERE id = :id', array('id' => $id_file));
+		try {
+			$id_cat = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'idcat', 'WHERE id = :id', array('id' => $id_file));
+		} catch (RowNotFoundException $e) {
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
 		
 		if (GalleryAuthorizationsService::check_authorizations($id_cat)->moderation()) //Modo
 		{

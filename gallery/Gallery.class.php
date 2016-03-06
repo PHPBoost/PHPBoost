@@ -291,7 +291,13 @@ class Gallery
 	//Approuve une image.
 	public function Aprob_pics($id_pics)
 	{
-		$aprob = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'aprob', "WHERE id = :id", array('id' => $id_pics));
+		try {
+			$aprob = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'aprob', "WHERE id = :id", array('id' => $id_pics));
+		} catch (RowNotFoundException $e) {
+			$error_controller = PHPBoostErrors::unexisting_element();
+			DispatchManager::redirect($error_controller);
+		}
+		
 		if ($aprob)
 		{
 			PersistenceContext::get_querier()->update(GallerySetup::$gallery_table, array('aprob' => 0), 'WHERE id = :id', array('id' => $id_pics));
