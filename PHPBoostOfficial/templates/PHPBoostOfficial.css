@@ -611,6 +611,7 @@ input[type=text] {
 .pbt-element-info-container {
 	height: auto;
 	padding: 8px 0 20px 0;
+	min-height: 110px;
 }
 
 .pbt-element-img-container {
