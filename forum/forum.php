@@ -46,6 +46,9 @@ try {
 	DispatchManager::redirect($error_controller);
 }
 
+if ($category->get_type() != ForumCategory::TYPE_FORUM)
+	AppContext::get_response()->redirect('/forum/' . url('index.php?id=' . $category->get_id(), 'cat-' . $category->get_id() . '+' . $category->get_rewrited_name() . '.php'));
+
 //Vérification des autorisations d'accès.
 if (!ForumAuthorizationsService::check_authorizations($category->get_id())->read())
 {
