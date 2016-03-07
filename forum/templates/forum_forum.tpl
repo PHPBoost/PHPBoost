@@ -2,7 +2,7 @@
 		# INCLUDE forum_top #
 
 		# START error_auth_write #
-		<div class="error-auth-write">
+		<div class="notice">
 			{error_auth_write.L_ERROR_AUTH_WRITE}
 		</div>
 		# END error_auth_write #
