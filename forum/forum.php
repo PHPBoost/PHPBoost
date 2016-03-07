@@ -234,7 +234,7 @@ if (!empty($id_get))
 	//Catégorie verrouillée?
 	elseif ($locked_cat)
 	{
-		$Template->assign_block_vars('error_auth_write', array(
+		$tpl->assign_block_vars('error_auth_write', array(
 			'L_ERROR_AUTH_WRITE' => $LANG['e_cat_lock_forum']
 		));
 	}
