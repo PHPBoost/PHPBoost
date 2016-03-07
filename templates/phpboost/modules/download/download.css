@@ -162,6 +162,7 @@
 	position: relative;
 	height: auto;
 	padding: 8px 0 20px 0;
+	min-height: 110px;
 }
 
 .pbt-element-img-container {
@@ -236,6 +237,10 @@ img.pbt-logo {
 	line-height: 1.4;
 	color: #222222;
 	text-align: center;
+}
+
+.article-download-cats-modules .pbt-info-title {
+	height: auto;
 }
 
 .pbt-info-desc {
