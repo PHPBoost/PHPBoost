@@ -150,7 +150,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 				$tpl->assign_block_vars('pics_mini', array(
 					'ID' => $row['id'],
 					'PICS' => TPL_PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path'],
-					'NAME' => TextHelper::strprotect($row['name'], TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_FORCE),
+					'NAME' => $row['name'],
 					'HEIGHT' => $row['height'],
 					'WIDTH' => $row['width'],
 					'U_PICS' => TPL_PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php')
