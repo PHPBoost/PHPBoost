@@ -53,6 +53,8 @@ try {
 	DispatchManager::redirect($error_controller);
 }
 
+$locked_cat = ($category->get_status() == ForumCategory::STATUS_LOCKED && !AppContext::get_current_user()->is_admin());
+
 //Récupération de la barre d'arborescence.
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
 $categories = array_reverse(ForumService::get_categories_manager()->get_parents($id_get, true));
@@ -98,7 +100,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
 	if ($previs) //Prévisualisation des messages
 	{
-		if (!ForumAuthorizationsService::check_authorizations($id_get)->write())
+		if (!ForumAuthorizationsService::check_authorizations($id_get)->write() || $locked_cat)
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 		try {
@@ -153,7 +155,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 	{
 		if ($post_topic && !empty($id_get))
 		{
-			if (!ForumAuthorizationsService::check_authorizations($id_get)->write())
+			if (!ForumAuthorizationsService::check_authorizations($id_get)->write() || $locked_cat)
 				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 			if ($is_modo)
@@ -219,7 +221,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		}
 		elseif (!empty($preview_topic) && !empty($id_get))
 		{
-			if (!ForumAuthorizationsService::check_authorizations($id_get)->write())
+			if (!ForumAuthorizationsService::check_authorizations($id_get)->write() || $locked_cat)
 				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 			$tpl = new FileTemplate('forum/forum_post.tpl');
@@ -321,9 +323,12 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		}
 		else
 		{
-			if (!ForumAuthorizationsService::check_authorizations($id_get)->write())
-				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
-
+			if (!ForumAuthorizationsService::check_authorizations($id_get)->write() || $locked_cat)
+			{
+				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $locked_cat ? $LANG['e_cat_lock_forum'] : $LANG['e_cat_write']);
+				DispatchManager::redirect($controller);
+			}
+			
 			$tpl = new FileTemplate('forum/forum_post.tpl');
 
 			if (ForumAuthorizationsService::check_authorizations($id_get)->moderation())
