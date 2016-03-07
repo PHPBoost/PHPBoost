@@ -191,15 +191,41 @@ class ForumCategoriesFormController extends AbstractCategoriesFormController
 
 	protected function set_properties()
 	{
-		$status = $this->form->get_value('status');
+		$status = $this->form->get_value('status')->get_raw_value();
 		parent::set_properties();
 		$this->get_category()->set_description($this->form->get_value('description'));
-		if ($this->get_category()->get_type() == ForumCategory::TYPE_URL);
+		if ($this->get_category()->get_type() == ForumCategory::TYPE_URL)
 		{
 			$status = ForumCategory::STATUS_UNLOCKED;
 			$this->get_category()->set_url($this->form->get_value('url'));
 		}
 		$this->get_category()->set_status($status);
+		
+		if ($this->form->get_value('special_authorizations'))
+		{
+			$this->get_category()->set_special_authorizations(true);
+			$autorizations = $this->form->get_value('authorizations')->build_auth_array();
+			if ($this->get_category()->get_type() != ForumCategory::TYPE_FORUM)
+			{
+				foreach ($autorizations as $id => $auth)
+				{
+					$new_auth = ($autorizations[$id] > Category::MODERATION_AUTHORIZATIONS) ? ($autorizations[$id] - Category::MODERATION_AUTHORIZATIONS) : $autorizations[$id];
+					$new_auth = ($new_auth > Category::WRITE_AUTHORIZATIONS) ? ($new_auth - Category::WRITE_AUTHORIZATIONS) : $new_auth;
+					
+					if ($new_auth == 1)
+						$autorizations[$id] = $new_auth;
+					else
+						unset($autorizations[$id]);
+				}
+			}
+		}
+		else
+		{
+			$this->get_category()->set_special_authorizations(false);
+			$autorizations = array();
+		}
+		
+		$this->get_category()->set_authorizations($autorizations);
 	}
 }
 ?>
