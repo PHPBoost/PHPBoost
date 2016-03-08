@@ -54,7 +54,7 @@ class ContentSecondParser extends AbstractParser
 	public function parse()
 	{
 		//Relative url parsing
-		$this->content = preg_replace_callback('`(src|href)="/([A-Za-z0-9-_\./]+)"`sU', array($this, 'callbackrelative_url'), $this->content);
+		$this->content = preg_replace_callback('`(src|href)="/([A-Za-z0-9#+-_\./]+)"`sU', array($this, 'callbackrelative_url'), $this->content);
 		
 		//Balise code
 		if (strpos($this->content, '[[CODE') !== false)
