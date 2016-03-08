@@ -35,7 +35,7 @@ $request = AppContext::get_request();
 //On recupère les variables.
 $id = $request->get_getint('id', 0);
 $id_post = $request->get_postint('id', 0);
-$del = $request->get_getint('del', 0);
+$del = $request->get_getint('delete', 0);
 $valid = $request->get_postvalue('valid', false);
 
 $poll_config = PollConfig::load();
@@ -155,7 +155,7 @@ elseif (!empty($id))
 		DispatchManager::redirect($error_controller);
 	}
 	
-$calendar_start = new MiniCalendar('start', !empty($row['start']) ? new Date($row['start'], Timezone::SERVER_TIMEZONE) : null);
+	$calendar_start = new MiniCalendar('start', !empty($row['start']) ? new Date($row['start'], Timezone::SERVER_TIMEZONE) : null);
 	$calendar_end = new MiniCalendar('end', !empty($row['end']) ? new Date($row['end'], Timezone::SERVER_TIMEZONE) : null);
 	$calendar_current_date = new MiniCalendar('current_date', !empty($row['timestamp']) ? new Date($row['timestamp'], Timezone::SERVER_TIMEZONE) : new Date());
 	
