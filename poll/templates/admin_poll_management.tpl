@@ -75,7 +75,7 @@
 						</td>
 						<td> 
 							<a href="admin_poll.php?id={questions.IDPOLL}" title="{L_UPDATE}" class="fa fa-edit"></a>
-							<a href="admin_poll.php?delete=true&amp;id={questions.IDPOLL}&amp;token={TOKEN}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+							<a href="admin_poll.php?delete=1&amp;id={questions.IDPOLL}&amp;token={TOKEN}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 						</td>
 					</tr>
 					# END questions #
