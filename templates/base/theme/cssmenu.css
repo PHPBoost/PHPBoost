@@ -774,6 +774,12 @@ header .cssmenu ul ul li .cssmenu-title							{ background-color: #333333;	}
 	padding: 0;
 }
 
+/* --- Variante tools --- */
+.cssmenu-tools.small-screen li.has-sub > a,
+.cssmenu-tools.small-screen li.has-sub > .submenu-button {
+	display: block;
+}
+
 /* --- Variante Static --- */
 .cssmenu-static.small-screen #menu-button {
 	cursor: default;
@@ -812,6 +818,8 @@ header .cssmenu.small-screen #menu-button.menu-opened:before 			{ background-col
 header .cssmenu-vertical.small-screen #menu-button.menu-opened:after,
 header .cssmenu-vertical.small-screen #menu-button.menu-opened:before 	{ background-color: #DDDDDD; }
 
+header .cssmenu-tools.small-screen #menu-button.menu-opened:after,
+header .cssmenu-tools.small-screen #menu-button.menu-opened:before 		{ background-color: #DDDDDD; }
 
 /* -- Bouton submenu -- */
 /* -------------------- */

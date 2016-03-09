@@ -1,6 +1,6 @@
 		<div class="wiki-tools-container">
 			<menu id="cssmenu-wikitools" class="cssmenu cssmenu-right cssmenu-actionslinks cssmenu-tools">
-				<ul class="hidden">
+				<ul class="level-0 hidden">
 					# IF C_ACTIV_COM #
 						<li>
 							<a href="{U_COM}" class="cssmenu-title"><i class="fa fa-comments-o"></i> {L_COM}</a>
@@ -74,12 +74,11 @@
 				jQuery("#cssmenu-wikitools").menumaker({
 					title: "{L_OTHER_TOOLS}",
 					format: "multitoggle",
-					breakpoint: 768,
-					actionslinks:true
+					breakpoint: 768
 				});
 				jQuery(document).ready(function() {
-						jQuery("#cssmenu-wikitools ul").removeClass('hidden');
-					});
+					jQuery("#cssmenu-wikitools ul").removeClass('hidden');
+				});
 			</script>
 		</div>
 		<div class="spacer"></div>

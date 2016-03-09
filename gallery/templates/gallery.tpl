@@ -237,15 +237,15 @@
 		<section id="module-gallery">
 			<header>
 				<menu id="cssmenu-galleryfilter" class="cssmenu cssmenu-right cssmenu-actionslinks cssmenu-tools">
-					<ul class="hidden">
+					<ul class="level-0 hidden">
 						<li><a class="cssmenu-title"><i class="fa fa-eye"></i> {L_DISPLAY}</a>
-							<ul>
+							<ul class="level-1">
 								<li><a href="{U_BEST_VIEWS}" class="cssmenu-title"><i class="fa fa-eye"></i> {L_BEST_VIEWS}</a></li>
 								<li><a href="{U_BEST_NOTES}" class="cssmenu-title"><i class="fa fa-star-half-empty"></i> {L_BEST_NOTES}</a></li>
 							</ul>
 						</li>
 						<li><a class="cssmenu-title"><i class="fa fa-sort"></i> {L_ORDER_BY}</a>
-							<ul>
+							<ul class="level-1">
 								<li><a href="{U_ORDER_BY_NAME}" class="cssmenu-title"><i class="fa fa-tag"></i> {L_NAME}</a></li>
 								<li><a href="{U_ORDER_BY_DATE}" class="cssmenu-title"><i class="fa fa-clock-o"></i> {L_DATE}</a></li>
 								<li><a href="{U_ORDER_BY_VIEWS}" class="cssmenu-title"><i class="fa fa-eye"></i> {L_VIEWS}</a></li>
@@ -254,7 +254,7 @@
 							</ul>
 						</li>
 						<li><a class="cssmenu-title"><i class="fa fa-sort-alpha-asc"></i> {L_DIRECTION}</a>
-							<ul>
+							<ul class="level-1">
 								<li><a href="{U_ASC}" class="cssmenu-title"><i class="fa fa-sort-amount-asc"></i> {L_ASC}</a></li>
 								<li><a href="{U_DESC}" class="cssmenu-title"><i class="fa fa-sort-amount-desc"></i> {L_DESC}</a></li>
 							</ul>
@@ -265,8 +265,7 @@
 					jQuery("#cssmenu-galleryfilter").menumaker({
 						title: "${LangLoader::get_message('sort_options', 'common')}",
 						format: "multitoggle",
-						breakpoint: 768,
-						actionslinks:true
+						breakpoint: 768
 					});
 					jQuery(document).ready(function() {
 						jQuery("#cssmenu-galleryfilter ul").removeClass('hidden');
