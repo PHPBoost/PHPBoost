@@ -127,15 +127,15 @@
 		<h5>{@css.modules_menus}</h5><br />
 		<div class="content" style="position: relative">
 			<menu id="cssmenu-sandboxfilter" class="cssmenu cssmenu-right cssmenu-actionslinks cssmenu-tools">
-				<ul>
+				<ul class="level-0">
 					<li class="extend"><a class="cssmenu-title"><i class="fa fa-eye"></i> {@css.modules_menus.display}</a>
-						<ul>
+						<ul class="level-1">
 							<li><a href="#" class="cssmenu-title"><i class="fa fa-eye"></i> {@css.modules_menus.display.most_viewed}</a><li/>
 							<li><a href="#" class="cssmenu-title"><i class="fa fa-star-half-empty"></i> {@css.modules_menus.display.top_rated}</a></li>
 						</ul>
 					</li>
 					<li class="extend"><a class="cssmenu-title"><i class="fa fa-sort"></i> {@css.modules_menus.order_by}</a>
-						<ul>
+						<ul class="level-1">
 							<li><a href="#" class="cssmenu-title"><i class="fa fa-tag"></i> {@css.modules_menus.order_by.name}</a></li>
 							<li><a href="#" class="cssmenu-title"><i class="fa fa-clock-o"></i> {@css.modules_menus.order_by.date}</a></li>
 							<li><a href="#" class="cssmenu-title"><i class="fa fa-eye"></i> {@css.modules_menus.order_by.views}</a></li>
@@ -144,7 +144,7 @@
 						</ul>
 					</li>
 					<li class="extend"><a class="cssmenu-title"><i class="fa fa-sort-alpha-asc"></i> {@css.modules_menus.direction}</a>
-						<ul>
+						<ul class="level-1">
 							<li><a href="#" class="cssmenu-title"><i class="fa fa-sort-amount-asc"></i> {@css.modules_menus.direction.up}</a></li>
 							<li><a href="#" class="cssmenu-title"><i class="fa fa-sort-amount-desc"></i> {@css.modules_menus.direction.down}</a></li>
 						</ul>
@@ -155,14 +155,13 @@
 				jQuery("#cssmenu-sandboxfilter").menumaker({
 					title: "Sandbox Options",
 					format: "multitoggle",
-					breakpoint: 768,
-					actionslinks:true
+					breakpoint: 768
 				});
 			</script>
 			<br />
 			<br /><br />
 			<menu id="cssmenu-sandboxbug" class="cssmenu cssmenu-group">
-				<ul>
+				<ul class="level-0">
 					<li>
 						<a href="#" class="cssmenu-title">{@css.modules_menus.unsolved_bugs}</a>
 					</li>
@@ -181,8 +180,7 @@
 				jQuery("#cssmenu-sandboxbug").menumaker({
 					title: "Sandbox Group",
 					format: "multitoggle",
-					breakpoint: 768,
-					actionslinks:true
+					breakpoint: 768
 				});
 			</script>
 		</div>
