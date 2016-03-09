@@ -946,12 +946,18 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 
 .cssmenu-actionslinks.small-screen li.has-sub > a,
 .cssmenu-actionslinks.small-screen li.has-sub > .submenu-button {
-	display:none;
+	display: none;
 }
 
 .cssmenu-actionslinks.small-screen li.has-sub > ul {
 	display: block !important;
 	padding: 0;
+}
+
+/* --- Variante tools --- */
+.cssmenu-tools.small-screen li.has-sub > a,
+.cssmenu-tools.small-screen li.has-sub > .submenu-button {
+	display: block;
 }
 
 /* --- Variante Static --- */
@@ -1013,6 +1019,9 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 	footer .cssmenu #menu-button:before,
 	footer .cssmenu #menu-button.menu-opened:after,
 	footer .cssmenu #menu-button.menu-opened:before 			{ background: #555555; }
+
+	header .cssmenu-tools.small-screen #menu-button.menu-opened:after,
+	header .cssmenu-tools.small-screen #menu-button.menu-opened:before 		{ background-color: #DDDDDD; }
 
 }
 
