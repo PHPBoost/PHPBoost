@@ -87,26 +87,46 @@ abstract class LinksMenuElement extends Menu
 	 */
 	protected function _assign($template, $mode = self::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
 	{
-		$image = new Image(Url::to_absolute($this->image));
+		if ($this->image)
+		{
+			if ($this->image instanceof Url)
+				$url = $this->image;
+			else
+				$url = new Url($this->image);
+			
+			if (file_exists(PATH_TO_ROOT . $this->image))
+			{
+				$image = new Image($url->absolute());
+				
+				$template->put_all(array(
+					'C_IMG' => !empty($this->image),
+					'ABSOLUTE_IMG' => $url->absolute(),
+					'RELATIVE_IMG' => $url->relative(),
+					'REL_IMG' => $url->rel(),
+					'IMG_HEIGHT' => $image->get_height(),
+					'IMG_WIDTH' => $image->get_width()
+				));
+			}
+		}
 		
 		parent::_assign($template);
+		
+		if ($this->url instanceof Url)
+			$url = $this->url;
+		else
+			$url = new Url($this->url);
+		
 		$template->put_all(array(
 			'C_MENU' => false,
 			'TITLE' => $this->title,
 			'DEPTH' => $this->depth,
 			'PARENT_DEPTH' => $this->depth - 1,
-			'C_URL' => !empty($this->url),
-			'C_IMG' => !empty($this->image),
-			'ABSOLUTE_URL' => Url::to_absolute($this->url),
-			'ABSOLUTE_IMG' => Url::to_absolute($this->image),
-			'RELATIVE_URL' => Url::to_relative($this->url),
-			'RELATIVE_IMG' => Url::to_relative($this->image),
-			'REL_URL' => Url::to_rel($this->url),
-			'REL_IMG' => Url::to_rel($this->image),
+			'C_URL' => $this->url,
+			'ABSOLUTE_URL' => $url->absolute(),
+			'RELATIVE_URL' => $url->relative(),
+			'REL_URL' => $url->rel(),
 			'ID' => $this->get_uid(),
-			'ID_VAR' => $this->get_uid(),
-			'IMG_HEIGHT' => $image->get_height(),
-			'IMG_WIDTH' => $image->get_width()
+			'ID_VAR' => $this->get_uid()
 		));
 
 		//Full displaying: we also show the authorization formulary
@@ -125,7 +145,11 @@ abstract class LinksMenuElement extends Menu
 	 */
 	private function _get_url($string_url, $compute_relative_url = true)
 	{
-		$url = new Url($string_url);
+		if ($string_url instanceof Url)
+			$url = $string_url;
+		else
+			$url = new Url($string_url);
+		
 		if ($compute_relative_url)
 		{
 			return $url->relative();
@@ -151,14 +175,14 @@ abstract class LinksMenuElement extends Menu
 	 */
 	public function set_image($image)
 	{
-		$this->image = Url::to_relative($image);
+		$this->image = $image;
 	}
 	/**
 	 * @param string $url the value to set
 	 */
 	public function set_url($url)
 	{
-		$this->url = Url::to_relative($url);
+		$this->url = $url;
 	}
 
 	## Getters ##
