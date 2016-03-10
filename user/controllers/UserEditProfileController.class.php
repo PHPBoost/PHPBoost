@@ -166,7 +166,7 @@ class UserEditProfileController extends AbstractController
 		{
 			if (in_array(PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD, $this->user_auth_types))
 			{
-				$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['internal_connection'] . ' <i class="fa fa-success"></i>', '<a  href="" onclick="javascript:HTMLForms.getField(\'custom_login\').enable();'. ($has_custom_login ? 'HTMLForms.getField(\'login\').enable();HTMLForms.getField(\'custom_login\').setValue(true);' : '') .'HTMLForms.getField(\'password\').enable();HTMLForms.getField(\'password_bis\').enable();HTMLForms.getField(\'old_password\').enable();return false;">' . LangLoader::get_message('edit', 'common') . '</a>'));
+				$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['internal_connection'] . ' <i class="fa fa-success"></i>', '<a  href="" onclick="javascript:HTMLForms.getField(\'custom_login\').enable();'. ($has_custom_login ? 'HTMLForms.getField(\'login\').enable();HTMLForms.getField(\'custom_login\').setValue(true);' : '') . 'HTMLForms.getField(\'password\').enable();HTMLForms.getField(\'password_bis\').enable();' . ($this->user->get_id() == AppContext::get_current_user()->get_id() ? 'HTMLForms.getField(\'old_password\').enable();' : '') . 'return false;">' . LangLoader::get_message('edit', 'common') . '</a>'));
 			}
 			else
 			{
