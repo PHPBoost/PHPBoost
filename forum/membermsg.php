@@ -50,14 +50,18 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	
 	$authorized_categories = ForumService::get_authorized_categories(Category::ROOT_CATEGORY);
 	
-	$row = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as nbr_msg
-	FROM " . PREFIX . "forum_msg msg
-	LEFT JOIN " . PREFIX . "forum_topics t ON msg.idtopic = t.id
-	WHERE msg.user_id = :user_id AND t.idcat IN :authorized_categories", array(
-		'authorized_categories' => $authorized_categories,
-		'user_id' => $view_msg
-	));
-	$nbr_msg = $row['nbr_msg'];
+	$nbr_msg = 0;
+	
+	try {
+		$row = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as nbr_msg
+		FROM " . PREFIX . "forum_msg msg
+		LEFT JOIN " . PREFIX . "forum_topics t ON msg.idtopic = t.id
+		WHERE msg.user_id = :user_id AND t.idcat IN :authorized_categories", array(
+			'authorized_categories' => $authorized_categories,
+			'user_id' => $view_msg
+		));
+		$nbr_msg = $row['nbr_msg'];
+	} catch (RowNotFoundException $e) {}
 	
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbr_msg, $_NBR_ELEMENTS_PER_PAGE, Pagination::LIGHT_PAGINATION);

@@ -51,17 +51,21 @@ if (!$is_guest)
 		$clause_topic = " AND t.id != '" . $id_get . "'";
 	}
 	
+	$nbr_msg_not_read = 0;
+	
 	//Requête pour compter le nombre de messages non lus.
-	$row = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as nbr_msg_not_read
-	FROM " . PREFIX . "forum_topics t
-	LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
-	LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = :user_id
-	WHERE t.last_timestamp >= :last_timestamp AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL)" . $clause_topic . " AND c.id IN :authorized_categories", array(
-		'authorized_categories' => $authorized_categories,
-		'last_timestamp' => $max_time_msg,
-		'user_id' => AppContext::get_current_user()->get_id()
-	));
-	$nbr_msg_not_read = $row['nbr_msg_not_read'];
+	try {
+		$row = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as nbr_msg_not_read
+		FROM " . PREFIX . "forum_topics t
+		LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
+		LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = :user_id
+		WHERE t.last_timestamp >= :last_timestamp AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL)" . $clause_topic . " AND c.id IN :authorized_categories", array(
+			'authorized_categories' => $authorized_categories,
+			'last_timestamp' => $max_time_msg,
+			'user_id' => AppContext::get_current_user()->get_id()
+		));
+		$nbr_msg_not_read = $row['nbr_msg_not_read'];
+	} catch (RowNotFoundException $e) {}
 }
 
 //Formulaire de connexion sur le forum.

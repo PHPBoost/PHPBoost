@@ -78,14 +78,18 @@ if ($valid)
 elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage des message()s non lu(s) du membre.
 {
 	$tpl = new FileTemplate('forum/forum_track.tpl');
-
-	$row = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as nbr_topics
-	FROM " . PREFIX . "forum_topics t
-	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id
-	WHERE tr.user_id = :user_id", array(
-		'user_id' => AppContext::get_current_user()->get_id()
-	));
-	$nbr_topics = $row['nbr_topics'];
+	
+	$nbr_topics = 0;
+	
+	try {
+		$row = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as nbr_topics
+		FROM " . PREFIX . "forum_topics t
+		LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id
+		WHERE tr.user_id = :user_id", array(
+			'user_id' => AppContext::get_current_user()->get_id()
+		));
+		$nbr_topics = $row['nbr_topics'];
+	} catch (RowNotFoundException $e) {}
 	
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbr_topics, $config->get_number_topics_per_page(), Pagination::LIGHT_PAGINATION);

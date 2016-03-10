@@ -327,17 +327,21 @@ class Forum
 		//Limite de sujets suivis?
 		if (!ForumAuthorizationsService::check_authorizations()->unlimited_topics_tracking())
 		{
+			$tracked_topics_number = 0;
 			//Récupère l'id du topic le plus vieux autorisé par la limite de sujet suivis.
-			$tracked_topics_number = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as number
-			FROM " . PREFIX . "forum_track
-			WHERE user_id = :user_id
-			ORDER BY id DESC
-			LIMIT " . $config->get_max_topic_number_in_favorite(), array(
-				'user_id' => AppContext::get_current_user()->get_id()
-			));
+			try {
+				$tracked_topics_number = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as number
+				FROM " . PREFIX . "forum_track
+				WHERE user_id = :user_id
+				ORDER BY id DESC
+				LIMIT " . $config->get_max_topic_number_in_favorite(), array(
+					'user_id' => AppContext::get_current_user()->get_id()
+				));
+			} catch (RowNotFoundException $e) {}
 			
 			//Suppression des sujets suivis dépassant le nbr maximum autorisé.
-			PersistenceContext::get_querier()->delete(PREFIX . 'forum_track', 'WHERE user_id=:id  AND id < :number', array('id' => AppContext::get_current_user()->get_id(), 'number' => $tracked_topics_number['number']));
+			if (!empty($tracked_topics_number))
+				PersistenceContext::get_querier()->delete(PREFIX . 'forum_track', 'WHERE user_id=:id  AND id < :number', array('id' => AppContext::get_current_user()->get_id(), 'number' => $tracked_topics_number['number']));
 		}
 	}
 

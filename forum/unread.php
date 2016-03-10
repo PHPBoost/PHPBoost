@@ -60,17 +60,21 @@ $max_time_msg = forum_limit_time_msg();
 //Vérification des autorisations.
 $authorized_categories = ForumService::get_authorized_categories(Category::ROOT_CATEGORY);
 
-$row = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as nbr_topics
-FROM " . PREFIX . "forum_topics t
-LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
-LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = :user_id
-WHERE " . (!empty($idcat_unread) ? "c.id_parent = :id AND " : '') . "t.last_timestamp >= :max_time_msg AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) AND c.id IN :authorized_categories", array(
-	'user_id' => AppContext::get_current_user()->get_id(),
-	'id' => $idcat_unread,
-	'max_time_msg' => $max_time_msg,
-	'authorized_categories' => $authorized_categories,
-));
-$nbr_topics  = $row['nbr_topics'];
+$nbr_topics = 0;
+
+try {
+	$row = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as nbr_topics
+	FROM " . PREFIX . "forum_topics t
+	LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
+	LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = :user_id
+	WHERE " . (!empty($idcat_unread) ? "c.id_parent = :id AND " : '') . "t.last_timestamp >= :max_time_msg AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) AND c.id IN :authorized_categories", array(
+		'user_id' => AppContext::get_current_user()->get_id(),
+		'id' => $idcat_unread,
+		'max_time_msg' => $max_time_msg,
+		'authorized_categories' => $authorized_categories,
+	));
+	$nbr_topics = $row['nbr_topics'];
+} catch (RowNotFoundException $e) {}
 
 $cat_filter = !empty($idcat_unread) ? '&amp;cat=' . $idcat_unread : '';
 

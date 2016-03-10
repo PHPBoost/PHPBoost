@@ -45,13 +45,19 @@ $total_messages = PersistenceContext::get_querier()->count(ForumSetup::$forum_me
 $total_day = max(1, $total_day);
 $nbr_topics_day = NumberHelper::round($total_topics / $total_day, 1);
 $nbr_msg_day = NumberHelper::round($total_messages / $total_day, 1);
-$row = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as nbr_topics_today
-FROM " . ForumSetup::$forum_topics_table . " t
-JOIN " . ForumSetup::$forum_message_table . " m ON m.id = t.first_msg_id
-WHERE m.timestamp > :timestamp", array(
-	'timestamp' => $timestamp_today
-));
-$nbr_topics_today = $row['nbr_topics_today'];
+
+$nbr_topics_today = 0;
+
+try {
+	$row = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as nbr_topics_today
+	FROM " . ForumSetup::$forum_topics_table . " t
+	JOIN " . ForumSetup::$forum_message_table . " m ON m.id = t.first_msg_id
+	WHERE m.timestamp > :timestamp", array(
+		'timestamp' => $timestamp_today
+	));
+	$nbr_topics_today = $row['nbr_topics_today'];
+} catch (RowNotFoundException $e) {}
+
 $nbr_msg_today = PersistenceContext::get_querier()->count(ForumSetup::$forum_message_table, 'WHERE timestamp > :timestamp', array('timestamp' => $timestamp_today));
 
 $vars_tpl = array(
