@@ -52,8 +52,17 @@ class PHPBoostOfficialCache implements CacheData
 				$phpboost_download_id = 0;
 				$this->last_version = array();
 			}
+			
 			if (!empty($phpboost_download_id))
-				$this->last_version['download_link'] = DownloadUrlBuilder::download($phpboost_download_id)->rel();
+			{
+				$phpboost_cat_id = 0;
+				try {
+					$phpboost_cat_id = PersistenceContext::get_querier()->get_column_value(DownloadSetup::$download_cats_table, 'id', 'WHERE rewrited_name = :rewrited_name', array('rewrited_name' => 'phpboost-' . $last_version_rewrited_major_version_number));
+				} catch (RowNotFoundException $e) {}
+				
+				if (!empty($phpboost_cat_id))
+					$this->last_version['download_link'] = DownloadUrlBuilder::display($phpboost_cat_id, 'phpboost-' . $last_version_rewrited_major_version_number, $phpboost_download_id, 'phpboost-' . $last_version_rewrited_major_version_number)->rel();
+			}
 			
 			$this->previous_version = prev($versions);
 			$previous_version_rewrited_major_version_number = Url::encode_rewrite($this->previous_version['major_version_number']);
@@ -63,8 +72,17 @@ class PHPBoostOfficialCache implements CacheData
 				$phpboost_download_id = 0;
 				$this->previous_version = array();
 			}
+			
 			if (!empty($phpboost_download_id))
-				$this->previous_version['download_link'] = DownloadUrlBuilder::download($phpboost_download_id)->rel();
+			{
+				$phpboost_cat_id = 0;
+				try {
+					$phpboost_cat_id = PersistenceContext::get_querier()->get_column_value(DownloadSetup::$download_cats_table, 'id', 'WHERE rewrited_name = :rewrited_name', array('rewrited_name' => 'phpboost-' . $previous_version_rewrited_major_version_number));
+				} catch (RowNotFoundException $e) {}
+				
+				if (!empty($phpboost_cat_id))
+					$this->previous_version['download_link'] = DownloadUrlBuilder::display($phpboost_cat_id, 'phpboost-' . $previous_version_rewrited_major_version_number, $phpboost_download_id, 'phpboost-' . $previous_version_rewrited_major_version_number)->rel();
+			}
 			
 			if (!empty($this->last_version) && !empty($this->previous_version))
 			{
