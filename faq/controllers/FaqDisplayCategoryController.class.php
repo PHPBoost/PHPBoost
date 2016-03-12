@@ -183,7 +183,7 @@ class FaqDisplayCategoryController extends ModuleController
 	
 	private function update_position(HTTPRequestCustom $request)
 	{
-		$questions_list = json_decode($request->get_postvalue('tree', false));
+		$questions_list = json_decode(TextHelper::html_entity_decode($request->get_value('tree')));
 		foreach($questions_list as $position => $tree)
 		{
 			FaqService::update_position($tree->id, $position);
