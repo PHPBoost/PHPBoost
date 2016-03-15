@@ -41,7 +41,7 @@ class ForumAuthorizationsService
 	
 	public function read()
 	{
-		return $this->is_authorized(Category::READ_AUTHORIZATIONS, $this->id_category != Category::ROOT_CATEGORY ? Authorizations::AUTH_PARENT_PRIORITY : Authorizations::AUTH_CHILD_PRIORITY);
+		return $this->is_authorized(Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY);
 	}
 	
 	public function write()

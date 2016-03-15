@@ -109,13 +109,13 @@ class Authorizations
 	 * @param int $disabled Disabled all option for the select. Set to 1 for disable.
 	 * @param boolean $disabled_advanced_auth Disable advanced authorizations.
 	 * @return String The formated select.
-     * @static
+	 * @static
 	 */
 	public static function generate_select($auth_bit, $array_auth = array(), $array_ranks_default = array(), $idselect = '', $disabled = '', $disabled_advanced_auth = false)
-    {
-        global $LANG, $array_ranks;
+	{
+		global $LANG, $array_ranks;
 
-        //Récupération du tableau des rangs.
+		//Récupération du tableau des rangs.
 		$array_ranks = is_array($array_ranks) ?
 			$array_ranks :
 			array(
@@ -131,46 +131,46 @@ class Authorizations
 		$tpl = new FileTemplate('framework/groups_auth.tpl');
 
 		$tpl->put_all(array(
-			'C_NO_ADVANCED_AUTH' => ($disabled_advanced_auth) ? true : false,
-			'C_ADVANCED_AUTH' => ($disabled_advanced_auth) ? false : true,
+			'C_NO_ADVANCED_AUTH' => $disabled_advanced_auth,
+			'C_ADVANCED_AUTH' => !$disabled_advanced_auth,
 			'IDSELECT' => $idselect,
 			'DISABLED_SELECT' => (empty($disabled) ? 'if (disabled == 0)' : ''),
 			'L_USERS' => $LANG['member_s'],
 			'L_ADD_USER' => $LANG['add_member'],
 			'L_REQUIRE_PSEUDO' => addslashes($LANG['require_pseudo']),
 			'L_RANKS' => $LANG['ranks'],
-            'L_GROUPS' => $LANG['groups'],
-            'L_GO' => $LANG['go'],
+			'L_GROUPS' => $LANG['groups'],
+			'L_GO' => $LANG['go'],
 			'L_ADVANCED_AUTHORIZATION' => $LANG['advanced_authorization'],
 			'L_SELECT_ALL' => $LANG['select_all'],
 			'L_SELECT_NONE' => $LANG['select_none'],
 			'L_EXPLAIN_SELECT_MULTIPLE' => $LANG['explain_select_multiple']
-        ));
+		));
 
 		##### Génération d'une liste à sélection multiple des rangs et membres #####
 		//Liste des rangs
-        $j = -1;
-        foreach ($array_ranks as $idrank => $group_name)
-        {
-           	//Si il s'agit de l'administrateur, il a automatiquement l'autorisation
-        	if ($idrank == 2)
-        	{
-        		$tpl->assign_block_vars('ranks_list', array(
+		$j = -1;
+		foreach ($array_ranks as $idrank => $group_name)
+		{
+			//Si il s'agit de l'administrateur, il a automatiquement l'autorisation
+			if ($idrank == 2)
+			{
+				$tpl->assign_block_vars('ranks_list', array(
 					'ID' => $j,
 					'IDRANK' => $idrank,
 					'RANK_NAME' => $group_name,
 					'DISABLED' => '',
 					'SELECTED' => ' selected="selected"'
 				));
-        	}
-        	else
-        	{
-	            $selected = '';
-	            if ( array_key_exists('r' . $idrank, $array_auth) && ((int)$array_auth['r' . $idrank] & (int)$auth_bit) !== 0 && empty($disabled))
-	            {
-	                $selected = ' selected="selected"';
-	            }
-	            $selected = (isset($array_ranks_default[$idrank]) && $array_ranks_default[$idrank] === true && empty($disabled)) ? 'selected="selected"' : $selected;
+			}
+			else
+			{
+				$selected = '';
+				if ( array_key_exists('r' . $idrank, $array_auth) && ((int)$array_auth['r' . $idrank] & (int)$auth_bit) !== 0 && empty($disabled))
+				{
+					$selected = ' selected="selected"';
+				}
+				$selected = (isset($array_ranks_default[$idrank]) && $array_ranks_default[$idrank] === true && empty($disabled)) ? 'selected="selected"' : $selected;
 
 				$tpl->assign_block_vars('ranks_list', array(
 					'ID' => $j,
@@ -179,27 +179,27 @@ class Authorizations
 					'DISABLED' => (!empty($disabled) ? 'disabled = "disabled" ' : ''),
 					'SELECTED' => $selected
 				));
-        	}
+			}
 			$j++;
-        }
+		}
 
-        //Liste des groupes.
-        $groups_name = GroupsService::get_groups_names();
-        foreach ($groups_name as $idgroup => $group_name)
-        {
-            $selected = '';
-            if (array_key_exists($idgroup, $array_auth) && ((int)$array_auth[$idgroup] & (int)$auth_bit) !== 0 && empty($disabled))
-            {
-                $selected = ' selected="selected"';
-            }
+		//Liste des groupes.
+		$groups_name = GroupsService::get_groups_names();
+		foreach ($groups_name as $idgroup => $group_name)
+		{
+			$selected = '';
+			if (array_key_exists($idgroup, $array_auth) && ((int)$array_auth[$idgroup] & (int)$auth_bit) !== 0 && empty($disabled))
+			{
+				$selected = ' selected="selected"';
+			}
 
-            $tpl->assign_block_vars('groups_list', array(
+			$tpl->assign_block_vars('groups_list', array(
 				'IDGROUP' => $idgroup,
 				'GROUP_NAME' => $group_name,
 				'DISABLED' => $disabled,
 				'SELECTED' => $selected
 			));
-        }
+		}
 
 		##### Génération du formulaire pour les autorisations membre par membre. #####
 		//Recherche des membres autorisé.
@@ -226,7 +226,7 @@ class Authorizations
 		//Listing des membres autorisés.
 		if ($advanced_auth)
 		{
-			$result = PersistenceContext::get_querier()->select_rows(DB_TABLE_MEMBER, array('user_id, display_name'), 'WHERE user_id IN :user_ids', array('user_ids' => str_replace('m', '', array_keys($array_auth_members))));
+			$result = PersistenceContext::get_querier()->select_rows(DB_TABLE_MEMBER, array('user_id, display_name'), 'WHERE user_id=:user_ids', array('user_ids' => str_replace('m', '', array_keys($array_auth_members))));
 			while ($row = $result->fetch())
 			{
 				$tpl->assign_block_vars('members_list', array(
@@ -238,10 +238,10 @@ class Authorizations
 			$result->dispose();
 		}
 
-        return $tpl->render();
-    }
+		return $tpl->render();
+	}
 
-    /**
+	/**
 	 * @desc Check authorizations for a member, a group or a rank
 	 * @param int $type Type of check, used RANK_TYPE for ranks, GROUP_TYPE for groups and USER_TYPE for users.
 	 * @param int $value Value int the authorization array to check.
@@ -298,11 +298,13 @@ class Authorizations
 
 		if ($mode == self::AUTH_PARENT_PRIORITY)
 		{
+			$parent_guest_auth = $parent['r-1'];
+			
 			foreach ($parent as $key => $value)
 			{
-				if ($bit = ($value & $auth_bit))
+				if ($bit = ($value & $auth_bit) || $parent_guest_auth)
 				{
-					if (!empty($child[$key]))
+					if (!empty($child[$key]) || ($parent_guest_auth && !empty($child['r-1'])))
 					{
 						$merged[$key] = $auth_bit;
 					}
