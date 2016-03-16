@@ -165,23 +165,28 @@ abstract class AbstractTemplate implements Template
 		$generated_page = $this->render();
 		
 		$js_variables_definition = $included_js = $all_js = '';
+		$array_match_js = array();
 		
-		$array_match_js = array('`<script src="([^"]*)"></script>`isU', '`<script(?: type="text/javascript")?>(?:<!--)?(.*)(?:-->)?</script>`isU');
-		
-		preg_match_all($array_match_js[0], $generated_page, $matches);
-		foreach ($matches[1] as $value) {
-			$included_js .= '<script src="' . $value . '"></script>';
+		if (!preg_match('`post\.php|edit`', REWRITED_SCRIPT))
+		{
+			$array_match_js[] = '`<script src="([^"]*)"></script>`isU';
+			$array_match_js[] = '`<script(?: type="text/javascript")?>(?:<!--)?(.*)(?:-->)?</script>`isU';
+			
+			preg_match_all($array_match_js[0], $generated_page, $matches);
+			foreach ($matches[1] as $value) {
+				$included_js .= '<script src="' . $value . '"></script>';
+			}
+			
+			preg_match_all($array_match_js[1], $generated_page, $matches);
+			foreach ($matches[1] as $key => $value) {
+				if ($key == 0)
+					$js_variables_definition = $value;
+				else
+					$all_js .= $value;
+			}
+			
+			$all_js = str_replace(array('<!--', '-->'), '', $all_js);
 		}
-		
-		preg_match_all($array_match_js[1], $generated_page, $matches);
-		foreach ($matches[1] as $key => $value) {
-			if ($key == 0)
-				$js_variables_definition = $value;
-			else
-				$all_js .= $value;
-		}
-		
-		$all_js = str_replace(array('<!--', '-->'), '', $all_js);
 		
 		$generated_page = preg_replace($array_match_js, '', $generated_page);
 		$generated_page = str_replace('</body>', '<script>' . $js_variables_definition . '</script>' . $included_js . '<script>' . $all_js . '</script></body>', $generated_page);
