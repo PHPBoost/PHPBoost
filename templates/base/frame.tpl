@@ -35,6 +35,7 @@
 
 	<body itemscope="itemscope" itemtype="http://schema.org/WebPage">
 		# INCLUDE BODY #
+		<a id="scroll-to-top" class="scroll-to" href="#"><i class="fa fa-chevron-up"></i></a>
 		# INCLUDE JS_BOTTOM #
 	</body>
 </html>

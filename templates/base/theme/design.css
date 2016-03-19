@@ -197,7 +197,7 @@ aside#menu-right {
 
 	aside#menu-left,
 	aside#menu-right {
-    	width: 200px;
+		width: 200px;
 	}
 
 	aside#menu-left  { 
@@ -322,4 +322,30 @@ nav#breadcrumb ol li {
 nav#breadcrumb ol li:not(.current):after {
 	content: '/';
 	color: #616161;
+}
+
+/* --- Scroll to Top --- */
+.scroll-to {
+	position: fixed;
+	z-index: 10;
+	display: none;
+	background-color: rgba(15, 15, 16, 0.8);
+	border-radius: 2px;
+}
+
+#scroll-to-top {
+	right: 25px;
+	bottom: 25px;
+	padding: 9px 11px 11px 10px;
+}
+
+.scroll-to i {
+	font-size: 2em;
+	color: rgba(255, 255, 255, 0.8);
+	transition: 0.2s;
+}
+
+.scroll-to:hover i {
+	color: rgba(255, 255, 255, 1);
+	transition: 0.5s;
 }
