@@ -105,4 +105,8 @@ $lang['user.not_authorized_during_maintain'] = 'You are not authorized to connec
 $lang['user.not_exists'] = 'User not exists !';
 $lang['user.auth.passwd_flood'] = ':remaining_tries tries are remaining. After that, you\'ll have to wait 5 minutes to have 2 more tries (10min for 5)!';
 $lang['user.auth.passwd_flood_max'] = 'You have failed, too many authentication attempts, your account is locked for 5 minutes.';
+
+//BBcode
+$lang['bbcode_member'] = 'You need to be member to see this message';
+$lang['bbcode_moderator'] = 'You need to be moderator to see this message';
 ?>
