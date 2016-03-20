@@ -61,7 +61,19 @@ class ContentSecondParser extends AbstractParser
 		{
 			$this->content = preg_replace_callback('`\[\[CODE(?:=([A-Za-z0-9#+-]+))?(?:,(0|1)(?:,(0|1))?)?\]\](.+)\[\[/CODE\]\]`sU', array($this, 'callbackhighlight_code'), $this->content);
 		}
-
+		
+		//Balise member
+		if (strpos($this->content, '[MEMBER]') !== false)
+        {
+            $this->content = preg_replace_callback('`\[MEMBER\](.+)\[/MEMBER\]`isU', array($this, 'callback_member_tag'), $this->content);
+        }
+		
+		//Balise moderator
+		if (strpos($this->content, '[MODERATOR]') !== false)
+        {
+            $this->content = preg_replace_callback('`\[MODERATOR\](.+)\[/MODERATOR\]`isU', array($this, 'callback_moderator_tag'), $this->content);
+        }
+		
 		//Media
 		if (strpos($this->content, '[[MEDIA]]') !== false)
 		{
@@ -217,7 +229,37 @@ class ContentSecondParser extends AbstractParser
 		
 		return $contents;
 	}
-
+	
+	/**
+	 * @static
+	 * @desc Display the content only if it's a connected user.
+	 * @param string[] 1 => the content inside member tag.
+	 * @return string The content if it's a member or a generic message.
+	 */
+	private function callback_member_tag($matches)
+    {
+        if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
+        {
+            return $matches[1];
+        }
+        return LangLoader::get_message('bbcode_member', 'status-messages-common');
+    }
+	
+	/**
+	 * @static
+	 * @desc Display the content only if it's a moderator user.
+	 * @param string[] 1 => the content inside moderator tag.
+	 * @return string The content if it's a moderator or a generic message.
+	 */
+	private function callback_moderator_tag($matches)
+    {
+        if (AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL))
+        {
+            return $matches[1];
+        }
+        return LangLoader::get_message('bbcode_moderator', 'status-messages-common');
+    }
+	
 	/**
 	 * @static
 	 * @desc Parses the latex code and replaces it by an image containing the mathematic formula.
