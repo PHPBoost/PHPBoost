@@ -160,7 +160,11 @@ elseif (!empty($del_folder)) //Supprime un dossier.
 		Uploads::Del_folder($del_folder);
 	else
 	{
-		$check_user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $del_folder));
+		$check_user_id = 0;
+		try {
+			$check_user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $del_folder));
+		} catch (RowNotFoundException $ex) {}
+		
 		//Suppression du dossier et de tout le contenu
 		if ($check_user_id == AppContext::get_current_user()->get_id())
 		{
@@ -199,7 +203,10 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
-	$folder_owner = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $move_folder));
+	$folder_owner = 0;
+	try {
+		$folder_owner = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $move_folder));
+	} catch (RowNotFoundException $ex) {}
 	
 	if ($folder_owner == AppContext::get_current_user()->get_id())
 	{
@@ -510,7 +517,12 @@ else
 	$group_limit = AppContext::get_current_user()->check_max_value(DATA_GROUP_LIMIT, $files_upload_config->get_maximum_size_upload());
 	$unlimited_data = ($group_limit === -1) || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
 	
-	$total_size = !empty($folder) ? Uploads::Member_memory_used(AppContext::get_current_user()->get_id()) : PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD, 'SUM(size)', 'WHERE user_id = :id', array('id' => AppContext::get_current_user()->get_id()));
+	$total_size = 0;
+	try {
+		$total_size = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD, 'SUM(size)', 'WHERE user_id = :id', array('id' => AppContext::get_current_user()->get_id()));
+	} catch (RowNotFoundException $ex) {}
+	
+	$total_size = !empty($folder) ? Uploads::Member_memory_used(AppContext::get_current_user()->get_id()) : $total_size;
 	$tpl->put_all(array(
 		'PERCENT' => !$unlimited_data ? '(' . NumberHelper::round($total_size/$group_limit, 3) * 100 . '%)' : '',
 		'SIZE_LIMIT' => !$unlimited_data ? (($group_limit > 1024) ? NumberHelper::round($group_limit/1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($group_limit, 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common')) : $LANG['illimited'],

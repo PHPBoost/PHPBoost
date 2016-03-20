@@ -118,7 +118,11 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 	if (!empty($title) && !empty($contents) && !empty($login))
 	{
 		//On essaye de récupérer le user_id, si le membre n'a pas cliqué une fois la recherche AJAX terminée.
-		$user_id_dest = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name = :name', array('name' => $login));
+		$user_id_dest = 0;
+		try {
+			$user_id_dest = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name = :name', array('name' => $login));
+		} catch (RowNotFoundException $ex) {}
+		
 		if (!empty($user_id_dest) && $user_id_dest != $current_user->get_id())
 		{
 			$contents = FormatingHelper::strparse($contents, array(), false);
@@ -130,10 +134,20 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 			$pmtomail_field = ExtendedFieldsCache::load()->get_extended_field_by_field_name('user_pmtomail');
 			if (!empty($pmtomail_field) && $pmtomail_field['display'])
 			{
-				if (PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER_EXTENDED_FIELDS, 'user_pmtomail', 'WHERE user_id = :id', array('id' => $user_id_dest)))
+				$send_mail = 0;
+				try {
+					$send_mail = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER_EXTENDED_FIELDS, 'user_pmtomail', 'WHERE user_id = :id', array('id' => $user_id_dest));
+				} catch (RowNotFoundException $ex) {}
+				
+				if ($send_mail)
 				{
-					$email_dest = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'email', 'WHERE user_id = :id', array('id' => $user_id_dest));
-					AppContext::get_mail_service()->send_from_properties($email_dest, $LANG['new_pm'] . ' : ' . stripslashes($title), $contents);
+					$email_dest = '';
+					try {
+						$email_dest = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'email', 'WHERE user_id = :id', array('id' => $user_id_dest));
+					} catch (RowNotFoundException $ex) {}
+					
+					if ($email_dest)
+						AppContext::get_mail_service()->send_from_properties($email_dest, $LANG['new_pm'] . ' : ' . stripslashes($title), $contents);
 				}
 			}
 			
@@ -167,7 +181,13 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $current_user->get_id())
 		'L_RESET' => $LANG['reset']
 	));
 	
-	$login = !empty($pm_get) ? PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id = :id', array('id' => $pm_get)) : '';
+	$login = '';
+	if (!empty($pm_get))
+	{
+		try  {
+			$login = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id = :id', array('id' => $pm_get));
+		} catch (RowNotFoundException $ex) {}
+	}
 	
 	$tpl->assign_block_vars('post_convers', array(
 		'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>',
@@ -254,7 +274,10 @@ elseif ($prw && empty($pm_edit) && empty($pm_del)) //Prévisualisation du messag
 	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 	
 	//On récupère les info de la conversation.
-	$convers_title = PersistenceContext::get_querier()->get_column_value(DB_TABLE_PM_TOPIC, 'title', 'WHERE id = :id', array('id' => $pm_id_get));
+	$convers_title = '';
+	try {
+		$convers_title = PersistenceContext::get_querier()->get_column_value(DB_TABLE_PM_TOPIC, 'title', 'WHERE id = :id', array('id' => $pm_id_get));
+	} catch (RowNotFoundException $ex) {}
 	
 	$tpl = new FileTemplate('user/pm.tpl');
 
@@ -318,10 +341,20 @@ elseif ($pm_post && !empty($pm_id_get) && empty($pm_edit) && empty($pm_del)) //E
 			$pmtomail_field = ExtendedFieldsCache::load()->get_extended_field_by_field_name('user_pmtomail');
 			if (!empty($pmtomail_field) && $pmtomail_field['display'])
 			{
-				if (PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER_EXTENDED_FIELDS, 'user_pmtomail', 'WHERE user_id = :id', array('id' => $user_id_dest)))
+				$send_email = 0;
+				try {
+					$send_email = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER_EXTENDED_FIELDS, 'user_pmtomail', 'WHERE user_id = :id', array('id' => $user_id_dest));
+				} catch (RowNotFoundException $ex) {}
+				
+				if ($send_email)
 				{
-					$email_dest = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'email', 'WHERE user_id = :id', array('id' => $user_id_dest));
-					AppContext::get_mail_service()->send_from_properties($email_dest, $LANG['new_pm'] . ' : ' . stripslashes($convers['title']), $contents);
+					$email_dest = '';
+					try {
+						$email_dest = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'email', 'WHERE user_id = :id', array('id' => $user_id_dest));
+					} catch (RowNotFoundException $ex) {}
+					
+					if ($email_dest)
+						AppContext::get_mail_service()->send_from_properties($email_dest, $LANG['new_pm'] . ' : ' . stripslashes($convers['title']), $contents);
 				}
 			}
 			
@@ -384,8 +417,12 @@ elseif ($pm_del_convers) //Suppression de conversation.
 					$del_convers = true;
 			}
 			
-			$view_status = PersistenceContext::get_querier()->get_column_value(DB_TABLE_PM_MSG, 'view_status', 'WHERE id = :id', array('id' => $row['last_msg_id']));
-			$update_nbr_pm = ($view_status == '0') ? true : false;
+			$view_status = 0;
+			try {
+				$view_status = PersistenceContext::get_querier()->get_column_value(DB_TABLE_PM_MSG, 'view_status', 'WHERE id = :id', array('id' => $row['last_msg_id']));
+			} catch (RowNotFoundException $ex) {}
+			
+			$update_nbr_pm = ($view_status == '0');
 			PrivateMsg::delete_conversation($current_user->get_id(), $row['id'], $expd, $del_convers, $update_nbr_pm);
 		}
 	}
@@ -436,7 +473,11 @@ elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne 
 			//Le destinataire n'a pas lu le message => on peut éditer.
 			if ($view === false)
 			{
-				$id_first = PersistenceContext::get_querier()->get_column_value(DB_TABLE_PM_MSG, 'MIN(id)', 'WHERE idconvers = :id', array('id' => $pm['idconvers']));
+				$id_first = 0;
+				try {
+					$id_first = PersistenceContext::get_querier()->get_column_value(DB_TABLE_PM_MSG, 'MIN(id)', 'WHERE idconvers = :id', array('id' => $pm['idconvers']));
+				} catch (RowNotFoundException $ex) {}
+				
 				if ($pm_del > $id_first) //Suppression du message.
 				{
 					$pm_last_msg = PrivateMsg::delete($pm_to, $pm_del, $pm['idconvers']);
@@ -493,7 +534,11 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la 
 		//Le destinataire n'a pas lu le message => on peut éditer.
 		if ($view === false)
 		{
-			$id_first = PersistenceContext::get_querier()->get_column_value(DB_TABLE_PM_MSG, 'MIN(id)', 'WHERE idconvers = :id', array('id' => $pm['idconvers']));
+			$id_first = 0;
+			try {
+				$id_first = PersistenceContext::get_querier()->get_column_value(DB_TABLE_PM_MSG, 'MIN(id)', 'WHERE idconvers = :id', array('id' => $pm['idconvers']));
+			} catch (RowNotFoundException $ex) {}
+			
 			if ($convers XOR $edit_pm)
 			{
 				$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
@@ -743,9 +788,12 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 			DispatchManager::redirect($error_controller);
 		}
 		
-		$pseudo = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id = :id', array('id' => $quote_msg['user_id']));
+		$pseudo = '';
+		try {
+			$pseudo = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id = :id', array('id' => $quote_msg['user_id']));
+		} catch (RowNotFoundException $ex) {}
 		
-		$contents = '[quote=' . $pseudo . ']' . FormatingHelper::unparse(stripslashes($quote_msg['contents'])) . '[/quote]';
+		$contents = '[quote' . ($pseudo ? '=' . $pseudo : '') . ']' . FormatingHelper::unparse(stripslashes($quote_msg['contents'])) . '[/quote]';
 	}
 	else
 		$contents = '';
