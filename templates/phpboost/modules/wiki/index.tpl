@@ -23,7 +23,7 @@
 						<h1>A propos de PHPBoost</h1>
 					</header>
 					<div class="content">
-						<ul class="no-list pbt-content-about">
+						<ul class="pbt-wiki-section-list pbt-content-about">
 							<li>
 								<i class="fa fa-file-text"></i>
 								<a href="{PATH_TO_ROOT}/wiki/presentation-de-phpboost">Présentation de PHPBoost</a>
@@ -42,7 +42,7 @@
 							</li>
 						</ul>
 						
-						<ul class="no-list pbt-content-about">
+						<ul class="pbt-wiki-section-list pbt-content-about">
 							<li>
 								<i class="fa fa-file-text"></i>
 								<a href="{PATH_TO_ROOT}/forum/">Forum</a>
@@ -73,7 +73,7 @@
 					</header>
 					<div class="content">
 						<p class="more">Les articles</p>
-						<ul class="no-list">
+						<ul class="pbt-wiki-section-list">
 							<li>
 								<i class="fa fa-file-text"></i>
 								<a href="{PATH_TO_ROOT}/wiki/presentation-de-phpboost">Présentation de PHPBoost</a>
@@ -92,7 +92,7 @@
 						</ul>
 						
 						<p class="more">Les articles<p>
-						<ul class="no-list">
+						<ul class="pbt-wiki-section-list">
 							<li>
 								<i class="fa fa-file-text"></i>
 								<a href="{PATH_TO_ROOT}/wiki/liste-des-modules-supportes-et-contenus-dans-votre-distribution">Liste des modules supportés et contenus dans votre distribution</a>
@@ -111,7 +111,7 @@
 					</header>
 					<div class="content">
 						<p class="more">Les catégories</p>
-						<ul class="no-list">
+						<ul class="pbt-wiki-section-list">
 							<li>
 								<i class="fa fa-folder-open"></i>
 								<a href="{PATH_TO_ROOT}/wiki/installation-de-phpboost">Installation de PHPBoost</a>
@@ -142,7 +142,7 @@
 					<div class="content">
 					
 						<p class="more">Les catégories</p>
-						<ul class="no-list">
+						<ul class="pbt-wiki-section-list">
 							<li>
 								<i class="fa fa-folder-open"></i>
 								<a href="{PATH_TO_ROOT}/wiki/panneau-d-administration">Panneau d'administration</a>
@@ -166,7 +166,7 @@
 						</ul>
 						
 						<p class="more">Les articles<p>
-						<ul class="no-list">
+						<ul class="pbt-wiki-section-list">
 							<li>
 								<i class="fa fa-file-text"></i>
 								<a href="{PATH_TO_ROOT}/wiki/utiliser-phpboost-en-ligne-de-commande">Utiliser PHPBoost en ligne de commande</a>
@@ -188,7 +188,7 @@
 					<div class="content">
 					
 						<p class="more">Les catégories</p>
-						<ul class="no-list">
+						<ul class="pbt-wiki-section-list">
 							<li>
 								<i class="fa fa-folder-open"></i>
 								<a href="{PATH_TO_ROOT}/wiki/creer-un-theme">Créer un thème</a>
@@ -219,7 +219,7 @@
 					<div class="content">
 					
 						<p class="more">Les catégories</p>
-						<ul class="no-list">
+						<ul class="pbt-wiki-section-list">
 							<li>
 								<i class="fa fa-folder-open"></i>
 								<a href="{PATH_TO_ROOT}/wiki/creer-un-module">Créer un module</a>
@@ -238,7 +238,7 @@
 						</ul>
 						
 						<p class="more">Les articles</p>
-						<ul class="no-list">
+						<ul class="pbt-wiki-section-list">
 							<li>
 								<i class="fa fa-file-text"></i>
 								<a href="{PATH_TO_ROOT}/wiki/conventions-de-developpement">Conventions de développement</a>
@@ -266,6 +266,47 @@
 						</ul>
 						
 					</div>
+					<footer></footer>
+				</section>
+
+				<section class="pbt-wiki-section">
+					<header>
+						<h1>
+							<a href="{PATH_TO_ROOT}/wiki/tutoriels">Les tutoriels</a>
+							<span class="more">Apprenez et partagez vos astuces</span>
+						</h1>
+					</header>
+
+					<div class="content">
+					
+						<p class="more">Les articles</p>
+						<ul class="pbt-wiki-section-list">
+							<li>
+								<i class="fa fa-file-text"></i>
+								<a href="{PATH_TO_ROOT}/wiki/configurer-les-connexions-externes">Configurer les connexions externes</a>
+								<span class="more"> - Connexion avec le login Facebook ou Google+</span>
+							</li>
+							<li>
+								<i class="fa fa-file-text"></i>
+								<a href="{PATH_TO_ROOT}/wiki/integrer-les-boutons-des-reseaux-sociaux">Intégrer les boutons des réseaux sociaux</a>
+								<span class="more"> - Ajouter les liens de "like" et de partage de vos réseaux sociaux préférés</span>
+							</li>
+							<li>
+								<i class="fa fa-file-text"></i>
+								<a href="{PATH_TO_ROOT}/wiki/ajouter-des-images-sur-les-categories-du-forum">Ajouter des images sur les catégries du forum</a>
+								<span class="more"> - Personnaliser votre forum</span>
+							</li>
+							<li>
+								<i class="fa fa-file-text"></i>
+								<a href="{PATH_TO_ROOT}/wiki/homecustom-ajout-d-elements-recuperes-dans-la-base-de-donnee">Ajouter des élements récupérés dans la base de donnée sur votre page d'accueil</a>
+								<span class="more"> - Mettre en avant le contenu de votre site</span>
+							</li>
+							<li>
+								<a href="{PATH_TO_ROOT}/wiki/tutoriels">
+									<span class="more" style="font-style:normal;">[+ d'articles]</span>
+								</a>
+							</li>
+						</ul>
 					<footer></footer>
 				</section>
 

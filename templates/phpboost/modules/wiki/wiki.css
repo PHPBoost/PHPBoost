@@ -65,11 +65,18 @@ ol.wiki_list_1 > li {
 	margin-top: 5px;
 }
 
-ul.no-list {
+ul.pbt-wiki-section-list {
 	margin: 0 0 0 20px;
+	list-style: none;
 }
 
-ul.no-list a i.fa {
+@media (min-width: 769px) {
+	.pbt-wiki-section-list li {
+		line-height: 1.5em;
+	}
+}
+
+ul.pbt-wiki-section-list a i.fa {
 	width: 18px;
 }
 
@@ -159,7 +166,7 @@ a.parent i[id^="img2_"] {
 }
 
 .pbt-wiki-section {
-	margin: 60px 0;
+	margin: 50px 0;
 }
 
 .pbt-wiki-section h1 {
@@ -180,10 +187,15 @@ a.parent i[id^="img2_"] {
 		display: block;
 		padding-left: 10px;
 	}
+	.pbt-wiki-section .content .more {
+		padding: 0px 5px 7px 5px;
+	}
 }
+
 .pbt-wiki-section .content .more {
 	margin: 0 0 5px 5px;
 }
+
 
 .pbt-wiki-section .content ul {
 	margin-bottom: 15px;
