@@ -36,9 +36,14 @@ function display_cat_explorer($id, &$cats, $display_select_link = 1, $user_id)
 		//On remonte l'arborescence des catégories afin de savoir quelle catégorie développer
 		do
 		{
-			$id_cat = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'id_parent', 'WHERE id = :id_cat AND user_id = :user_id', array('id_cat' => $id_cat, 'user_id' => $user_id));
-			$cats[] = $id_cat;
-		}	
+			$id_cat = -1;
+			try {
+				$id_cat = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'id_parent', 'WHERE id = :id_cat AND user_id = :user_id', array('id_cat' => $id_cat, 'user_id' => $user_id));
+			} catch (RowNotFoundException $ex) {}
+			
+			if ($id_cat >= 0)
+				$cats[] = $id_cat;
+		}
 		while ($id_cat > 0);
 	}
 

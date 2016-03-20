@@ -114,7 +114,12 @@ if ($action == 'punish')
 		if ($search_member)
 		{
 			$login = retrieve(POST, 'login_mbr', '');
-			$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :name', array('name' => '%' . $login . '%'));
+			
+			$user_id = 0;
+			try {
+				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :name', array('name' => '%' . $login . '%'));
+			} catch (RowNotFoundException $ex) {}
+			
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('punish', $user_id));
 			else
@@ -295,7 +300,12 @@ else if ($action == 'warning')
 		if ($search_member)
 		{
 			$login = retrieve(POST, 'login_mbr', '');
-			$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :name', array('name' => '%' . $login . '%'));
+			
+			$user_id = 0;
+			try {
+				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :name', array('name' => '%' . $login . '%'));
+			} catch (RowNotFoundException $ex) {}
+			
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('warning', $user_id));
 			else
@@ -429,12 +439,17 @@ else
 		if ($search_member)
 		{
 			$login = retrieve(POST, 'login_mbr', '');
-			$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :name', array('name' => '%' . $login . '%'));
+			
+			$user_id = 0;
+			try {
+				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :name', array('name' => '%' . $login . '%'));
+			} catch (RowNotFoundException $ex) {}
+			
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('ban', $user_id));
 			else
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('ban'));
-		}	
+		}
 		
 		$moderation_panel_template->put_all(array(
 			'C_MODO_PANEL_USER_LIST' => true,
