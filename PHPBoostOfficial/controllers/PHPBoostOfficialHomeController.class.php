@@ -60,7 +60,7 @@ class PHPBoostOfficialHomeController extends ModuleController
 		$this->build_feed_news_view();
 		$this->build_last_news_view();
 		
-		//$this->build_partners_view();
+		$this->build_partners_view();
 	}
 	
 	private function build_modules_view(SelectQueryResult $results)

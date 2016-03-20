@@ -802,6 +802,19 @@ img.pbt-logo {
 }
 
 /* Partners */
+#lp-container {
+	padding: 40px 20px;
+	clear: both;
+}
+
+.lp-title { 
+	margin: 5px 10px 5px 46px;
+	border-bottom: 2px solid #336397;
+}
+
+.lp-title-img {
+	background-position: -197px -27px;
+}
 
 .lp-content {
 	text-align: center;

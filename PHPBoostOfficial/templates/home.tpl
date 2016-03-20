@@ -99,3 +99,12 @@
 	</div>
 	
 </div>
+
+<!-- Partenaires -->
+<div id="lp-container">
+	<div class="lc-img lp-title-img"></div>
+	<div class="lp-title title">{@partners.title}</div>
+	<div class="lp-content">
+		# INCLUDE PARTNERS #
+	</div>
+</div>
