@@ -96,7 +96,10 @@ abstract class LinksMenuElement extends Menu
 			
 			if (file_exists(PATH_TO_ROOT . $this->image))
 			{
-				$image = new Image($url->absolute());
+				if (!$url->is_relative())
+					$image = new Image($url->absolute());
+				else
+					$image = new Image(PATH_TO_ROOT . $this->image);
 				
 				$template->put_all(array(
 					'C_IMG' => !empty($this->image),

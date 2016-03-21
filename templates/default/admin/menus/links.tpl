@@ -144,7 +144,6 @@ function deleteElement(element_id)
 function image_preview(input,image)
 {
 	var url = input.value;
-	image.src = '';
 	
 	jQuery.ajax({
 		url: PATH_TO_ROOT + "/kernel/framework/ajax/dispatcher.php?url=/url_validation/",
@@ -159,7 +158,18 @@ function image_preview(input,image)
 					image.src = PATH_TO_ROOT + url;
 				else
 					image.src = url;
+				
+				jQuery('#' + image.id).show();
 			}
+			else
+			{
+				image.src = '';
+				jQuery('#' + image.id).hide();
+			}
+		},
+		error: function(returnData){
+			image.src = '';
+			jQuery('#' + image.id).hide();
 		}
 	});
 }
