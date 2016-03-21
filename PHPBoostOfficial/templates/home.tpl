@@ -1,34 +1,37 @@
 <!-- Download link -->
 <div id="p-container">
-
-	<img src="{PATH_TO_ROOT}/PHPBoostOfficial/templates/images/pub.png" alt="PHPBoost CMS" class="p-img" width="400" height="256"/>
 	
-	<div id="p-slide">
-		<a href="#" class="p-slide-title">PHPBoost CMS</a>
-		<p class="p-slide-content">
-			{@site_slide_description}
-		</p>
-		<p id="p-more" class="p-left">
-			<a href="{PATH_TO_ROOT}/pages/fonctionnalites-de-phpboost" class="p-more_content" title="{@phpboost_features}">{@phpboost_features.explain}</a>
-		</p>
-	</div>
-		<div id="p-link">
-			<div class="p-link-btn btn-ddl">
-				<a href="{PATH_TO_ROOT}/download/" title="{@download.phpboost}">
-					<i class="fa fa-download fa-2x"></i>
-					<p class="p-link-title">{@download}</p>
-					<p class="p-link-com ddl-com">{@version} {@download.last_major_version_number}</p>
-				</a>
+	<!-- Slider -->
+	<ul class="p-slide-container">
+		<li id="p-slide-pub" class="p-slide-element">
+			<img src="{PATH_TO_ROOT}/PHPBoostOfficial/templates/images/pub.png" alt="PHPBoost CMS" class="p-slide-img" width="400" height="256"/>
+			<div class="p-slide-txt">
+				<a href="#" class="p-slide-title">PHPBoost CMS</a>
+				<p class="p-slide-content">
+					{@site_slide_description}
+				</p>
+				<a href="{PATH_TO_ROOT}/pages/fonctionnalites-de-phpboost" class="p-slide-more" title="{@phpboost_features}">{@phpboost_features.explain}</a>
 			</div>
-			<div class="p-link-btn btn-try">
-				<a href="http://demo.phpboost.com" title="{@demo}">
-					<i class="fa fa-cog fa-2x"></i>
-					<p class="p-link-title">{@try}</p>
-					<p class="p-link-com try-com">{@demo.website}</p>
-				</a>
-			</div>
-			<div class="spacer"></div>
+		</li>
+	</ul>
+
+	<div id="p-link">
+		<div class="p-link-btn btn-ddl">
+			<a href="{PATH_TO_ROOT}/download/" title="{@download.phpboost}">
+				<i class="fa fa-download fa-2x"></i>
+				<p class="p-link-title">{@download}</p>
+				<p class="p-link-com ddl-com">{@version} {@download.last_major_version_number}</p>
+			</a>
 		</div>
+		<div class="p-link-btn btn-try">
+			<a href="http://demo.phpboost.com" title="{@demo}">
+				<i class="fa fa-cog fa-2x"></i>
+				<p class="p-link-title">{@try}</p>
+				<p class="p-link-com try-com">{@demo.website}</p>
+			</a>
+		</div>
+		<div class="spacer"></div>
+	</div>
 	<div class="spacer"></div>
 </div>
 

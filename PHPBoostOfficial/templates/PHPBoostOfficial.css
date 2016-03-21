@@ -28,6 +28,10 @@ div#p-container {
 	overflow: hidden;
 }
 
+.p-slide-container {
+	list-style: none;
+}
+
 p.p-slide-content {
 	font-style: italic;
 	padding: 15px 5px 5px 5px;
@@ -38,12 +42,12 @@ p.p-slide-content {
 }
 
 @media (min-width: 769px) {
-	img.p-img {
+	img.p-slide-img {
 		float: left;
-		margin-top: 43px;
 		box-shadow: 0 0 10px #d0d9e3;
 	}
-	div#p-slide {
+
+	div.p-slide-txt {
 		padding: 20px 10px 0 30px;
 		margin: 40px 0 0 0;
 		text-align: justify;
@@ -52,11 +56,11 @@ p.p-slide-content {
 }
 
 @media (max-width: 768px) {
-	img.p-img {
+	img.p-slide-img {
 		display: none;
 	}
 
-	div#p-slide {
+	div.p-slide-txt {
 		padding: 20px 10px 0 10px;
 		margin: 0 0 0 0;
 		text-align: center;
@@ -78,11 +82,6 @@ a.p-slide-title:hover {
 	text-decoration: none;
 }
 
-#p-more {
-	margin
-	text-align: right;
-}
-
 div#p-link {
 	margin: 0 auto;
 	padding: 15px 5px;
@@ -102,12 +101,12 @@ div.p-link-btn {
 	border-radius: 4px;
 }
 
-#p-more {
+.p-slide-more {
 	float: right;
 }
 
 @media (min-width: 481px) {
-	#p-more {
+	.p-slide-more {
 		margin: 0 40px 0 0;
 	}
 }
@@ -203,9 +202,8 @@ div#lc-container {
 
 div.lc-title {
 	border-bottom: 2px solid #366493;
-	margin: 0 20px 20px 40px;
-	padding: 15px 0 2px 0;
-
+	margin: 0 40px 20px 55px;
+	padding: 15px 0 2px 5px;;
 	text-align: left;
 }
 
@@ -808,7 +806,8 @@ img.pbt-logo {
 }
 
 .lp-title { 
-	margin: 5px 10px 5px 46px;
+    margin: 0 40px 20px 55px;
+    padding: 15px 0 2px 5px;
 	border-bottom: 2px solid #336397;
 }
 
