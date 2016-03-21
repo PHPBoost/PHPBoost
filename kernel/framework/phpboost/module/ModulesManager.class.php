@@ -252,16 +252,8 @@ class ModulesManager
 				
 				PersistenceContext::get_querier()->delete(DB_TABLE_CONFIGS, "WHERE name = :name", array('name' => $module_id));
 				
-				//Régénération des feeds.
+				//RÃ©gÃ©nÃ©ration des feeds.
 				Feed::clear_cache($module_id);
-				
-				try {
-					if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
-					{
-						HtaccessFileCache::regenerate();
-					}
-				} catch (IOException $ex) {
-				}
 				
 				MenuService::delete_mini_module($module_id);
 				MenuService::delete_module_feeds_menus($module_id);
