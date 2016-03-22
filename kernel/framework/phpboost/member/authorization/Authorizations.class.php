@@ -3,7 +3,7 @@
  *                          Autorizations.class.php
  *                            -------------------
  *   begin                : July 26 2008
- *   copyright            : (C) 2008 Viarre Régis / Sautel Benoit
+ *   copyright            : (C) 2008 Viarre RÃ©gis / Sautel Benoit
  *   email                : crowkait@phpboost.com / ben.popeye@phpboost.com
  *
  *
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Régis VIARRE <crowkait@phpboost.com> / Sautel Benoit <ben.popeye@phpboost.com>
+ * @author RÃ©gis VIARRE <crowkait@phpboost.com> / Sautel Benoit <ben.popeye@phpboost.com>
  * @desc This class contains only static methods, it souldn't be instantiated.
  * @package {@package}
  * @deprecated
@@ -48,14 +48,14 @@ class Authorizations
 		$sum_auth = 0;
 		$nbr_arg = func_num_args();
 
-		//Si le nom du formulaire select est passé en paramètre, c'est le dernier
+		//Si le nom du formulaire select est passÃ© en paramÃ¨tre, c'est le dernier
 		$idselect = '';
 		if (gettype(func_get_arg($nbr_arg - 1)) == 'string')
 		{
 			$idselect = func_get_arg(--$nbr_arg);
 		}
 
-		//Récupération du dernier argument, si ce n'est pas un tableau => booléen demandant la sélection par défaut de l'admin.
+		//RÃ©cupÃ©ration du dernier argument, si ce n'est pas un tableau => boolÃ©en demandant la sÃ©lection par dÃ©faut de l'admin.
 		$admin_auth_default = true;
 		if ($nbr_arg > 1)
 		{
@@ -65,11 +65,11 @@ class Authorizations
 			else
 				$nbr_arg--; //On diminue de 1 le nombre d'argument, car le denier est le flag.
 		}
-		//On balaye les tableaux passés en argument.
+		//On balaye les tableaux passÃ©s en argument.
 		for ($i = 0; $i < $nbr_arg; $i++)
 			self::get_auth_array(func_get_arg($i), $idselect, $array_auth_all, $sum_auth);
 
-		ksort($array_auth_all); //Tri des clés du tableau par ordre alphabétique, question de lisibilité.
+		ksort($array_auth_all); //Tri des clÃ©s du tableau par ordre alphabÃ©tique, question de lisibilitÃ©.
 
 		return $array_auth_all;
 	}
@@ -87,7 +87,7 @@ class Authorizations
 		$array_auth_all = array();
 		$sum_auth = 0;
 
-		//Récupération du tableau des autorisation.
+		//RÃ©cupÃ©ration du tableau des autorisation.
 		self::get_auth_array($bit_value, $idselect, $array_auth_all, $sum_auth);
 
 		//Admin tous les droits dans n'importe quel cas.
@@ -95,7 +95,7 @@ class Authorizations
 		{
 			$array_auth_all['r2'] = $sum_auth;
 		}
-		ksort($array_auth_all); //Tri des clées du tableau par ordre alphabétique, question de lisibilité.
+		ksort($array_auth_all); //Tri des clÃ©es du tableau par ordre alphabÃ©tique, question de lisibilitÃ©.
 
 		return $array_auth_all;
 	}
@@ -115,7 +115,7 @@ class Authorizations
 	{
 		global $LANG, $array_ranks;
 
-		//Récupération du tableau des rangs.
+		//RÃ©cupÃ©ration du tableau des rangs.
 		$array_ranks = is_array($array_ranks) ?
 			$array_ranks :
 			array(
@@ -125,7 +125,7 @@ class Authorizations
 				'2' => $LANG['admin']
 			);
 
-		//Identifiant du select, par défaut la valeur du bit de l'autorisation.
+		//Identifiant du select, par dÃ©faut la valeur du bit de l'autorisation.
 		$idselect = ((string)$idselect == '') ? $auth_bit : $idselect;
 
 		$tpl = new FileTemplate('framework/groups_auth.tpl');
@@ -147,7 +147,7 @@ class Authorizations
 			'L_EXPLAIN_SELECT_MULTIPLE' => $LANG['explain_select_multiple']
 		));
 
-		##### Génération d'une liste à sélection multiple des rangs et membres #####
+		##### GÃ©nÃ©ration d'une liste Ã  sÃ©lection multiple des rangs et membres #####
 		//Liste des rangs
 		$j = -1;
 		foreach ($array_ranks as $idrank => $group_name)
@@ -201,8 +201,8 @@ class Authorizations
 			));
 		}
 
-		##### Génération du formulaire pour les autorisations membre par membre. #####
-		//Recherche des membres autorisé.
+		##### GÃ©nÃ©ration du formulaire pour les autorisations membre par membre. #####
+		//Recherche des membres autorisÃ©.
 		$array_auth_members = array();
 		if (is_array($array_auth))
 		{
@@ -223,7 +223,7 @@ class Authorizations
 			'C_NO_GROUP' => count($groups_name) == 0
 		));
 
-		//Listing des membres autorisés.
+		//Listing des membres autorisÃ©s.
 		if ($advanced_auth)
 		{
 			$result = PersistenceContext::get_querier()->select_rows(DB_TABLE_MEMBER, array('user_id, display_name'), 'WHERE user_id=:user_ids', array('user_ids' => str_replace('m', '', array_keys($array_auth_members))));
@@ -288,7 +288,7 @@ class Authorizations
 	 */
 	public static function merge_auth($parent, $child, $auth_bit, $mode)
 	{
-		//Parcours des différents types d'utilisateur
+		//Parcours des diffÃ©rents types d'utilisateur
 		$merged = array();
 
 		if (!is_array($child))
@@ -298,7 +298,7 @@ class Authorizations
 
 		if ($mode == self::AUTH_PARENT_PRIORITY)
 		{
-			$parent_guest_auth = $parent['r-1'];
+			$parent_guest_auth = isset($parent['r-1']) ? $parent['r-1'] : 0;
 			
 			foreach ($parent as $key => $value)
 			{
@@ -350,7 +350,7 @@ class Authorizations
 
 		if ($original_bit > $final_bit)
 		{
-			//De combien doit-on se décaler à droite (Combien de divisions par 2) ?
+			//De combien doit-on se dÃ©caler Ã  droite (Combien de divisions par 2) ?
 			$quotient = log($original_bit / $final_bit, 2);
 
 			foreach ($auth as $user_kind => $auth_values)
@@ -360,7 +360,7 @@ class Authorizations
 		}
 		elseif ($original_bit < $final_bit)
 		{
-			//De combien doit-on se décaler à gauche (combien de multiplications par 2) ?
+			//De combien doit-on se dÃ©caler Ã  gauche (combien de multiplications par 2) ?
 			$quotient = log($final_bit / $original_bit, 2);
 
 			foreach ($auth as $user_kind => $auth_values)
@@ -378,7 +378,7 @@ class Authorizations
 		return $result;
 	}
 
-	//Récupération du tableau des autorisations.
+	//RÃ©cupÃ©ration du tableau des autorisations.
 	/**
 	 * @desc Get authorization array from the form.
 	 * @param int $bit_value The bit emplacement in the authorization array used to set it.
@@ -393,12 +393,12 @@ class Authorizations
 
 		##### Niveau et Groupes #####
 		$array_auth_groups = !empty($_REQUEST['groups_auth' . $idselect]) ? $_REQUEST['groups_auth' . $idselect] : '';
-		if (!empty($array_auth_groups)) //Récupération du formulaire.
+		if (!empty($array_auth_groups)) //RÃ©cupÃ©ration du formulaire.
 		{
 			$sum_auth += $bit_value;
 			if (is_array($array_auth_groups))
 			{
-				//Ajout des autorisations supérieures si une autorisations inférieure est autorisée. Ex: Membres autorisés implique modérateurs autorisés.
+				//Ajout des autorisations supÃ©rieures si une autorisations infÃ©rieure est autorisÃ©e. Ex: Membres autorisÃ©s implique modÃ©rateurs autorisÃ©s.
 				$array_level = array(0 => 'r-1', 1 => 'r0', 2 => 'r1');
 				$min_auth = 3;
 				foreach ($array_level as $level => $key)
@@ -433,9 +433,9 @@ class Authorizations
 			}
 		}
 
-		##### Membres (autorisations avancées) ######
+		##### Membres (autorisations avancÃ©es) ######
 		$array_auth_members = !empty($_REQUEST['members_auth' . $idselect]) ? $_REQUEST['members_auth' . $idselect] : '';
-		if (!empty($array_auth_members)) //Récupération du formulaire.
+		if (!empty($array_auth_members)) //RÃ©cupÃ©ration du formulaire.
 		{
 			if (is_array($array_auth_members))
 			{
