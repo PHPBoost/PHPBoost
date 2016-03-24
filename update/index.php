@@ -25,14 +25,15 @@
  *
  ###################################################*/
 
-if (version_compare(phpversion(), '5.3', '<') == -1)
-{
-	die('<h1>Impossible to update PHPBoost</h1><p>At least PHP 5.3 is needed but your current PHP version is ' . phpversion() . '</p>');
-}
-
 define('PATH_TO_ROOT', '..');
 require_once PATH_TO_ROOT . '/update/environment/UpdateEnvironment.class.php';
 UpdateEnvironment::load_imports();
+
+if (version_compare(phpversion(), ServerConfiguration::MIN_PHP_VERSION, '<') == -1)
+{
+	die('<h1>Impossible to update PHPBoost</h1><p>At least PHP ' . ServerConfiguration::MIN_PHP_VERSION . ' is needed but your current PHP version is ' . phpversion() . '</p>');
+}
+
 UpdateEnvironment::init();
 
 $permissions = PHPBoostFoldersPermissions::get_permissions();

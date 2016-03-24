@@ -105,7 +105,7 @@ class PHPBoostOfficialVersions extends AbstractFormField
 					$values[Url::encode_rewrite($request->get_postvalue($field_major_version_number))] = array(
 						'major_version_number' => $request->get_postvalue($field_major_version_number, 0),
 						'minor_version_number' => $request->get_postint($field_minor_version_number, 0),
-						'minimal_php_version' => $request->get_postvalue($field_minimal_php_version, '5.3'),
+						'minimal_php_version' => $request->get_postvalue($field_minimal_php_version, ServerConfiguration::MIN_PHP_VERSION),
 						'name' => addslashes($request->get_poststring($field_name))
 					);
 				}
