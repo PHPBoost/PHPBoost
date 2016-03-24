@@ -152,7 +152,7 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 			}
 			
 			//Succès redirection vers la conversation.
-			AppContext::get_response()->redirect('/user/pm' . url('.php?id=' . $pm_convers_id, '-0-' . $pm_convers_id . '.php', '&') . '#m' . $pm_msg_id);
+			AppContext::get_response()->redirect('/user/pm' . url('.php?id=' . $pm_convers_id, '-0-' . $pm_convers_id, '&') . '#m' . $pm_msg_id);
 		}
 		else //Destinataire non trouvé.
 			AppContext::get_response()->redirect('/user/pm' . url('.php?post=1&error=e_unexist_user', '', '&') . '#message_helper');
@@ -295,7 +295,7 @@ elseif ($prw && empty($pm_edit) && empty($pm_del)) //Prévisualisation du messag
 		'DATE' => Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 		'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents))),
 		'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>',
-		'U_TITLE_CONVERS' => '<a href="pm' . url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get .'.php') . '">' . $convers_title . '</a>'
+		'U_TITLE_CONVERS' => '<a href="pm' . url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get) . '">' . $convers_title . '</a>'
 	));
 	
 	$tpl->assign_block_vars('post_pm', array(
@@ -363,13 +363,13 @@ elseif ($pm_post && !empty($pm_id_get) && empty($pm_edit) && empty($pm_del)) //E
 			$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 			$last_page = ($last_page > 1) ? '&p=' . $last_page : '';
 			
-			AppContext::get_response()->redirect('/user/pm' . url('.php?id=' . $pm_id_get . $last_page, '-0-' . $pm_id_get . $last_page_rewrite . '.php', '&') . '#m' . $pm_msg_id);
+			AppContext::get_response()->redirect('/user/pm' . url('.php?id=' . $pm_id_get . $last_page, '-0-' . $pm_id_get . $last_page_rewrite, '&') . '#m' . $pm_msg_id);
 		}
 		else //Le destinataire a supprimé la conversation.
-			AppContext::get_response()->redirect('/user/pm' . url('.php?id=' . $pm_id_get . '&error=e_pm_del', '-0-' . $pm_id_get . '-0.php?error=e_pm_del', '&') . '#message_helper');
+			AppContext::get_response()->redirect('/user/pm' . url('.php?id=' . $pm_id_get . '&error=e_pm_del', '-0-' . $pm_id_get . '-0&error=e_pm_del', '&') . '#message_helper');
 	}
 	else //Champs manquants.
-		AppContext::get_response()->redirect('/user/pm' . url('.php?id=' . $pm_id_get . '&error=e_incomplete', '-0-' . $pm_id_get . '-0-e_incomplete.php', '&') . '#message_helper');
+		AppContext::get_response()->redirect('/user/pm' . url('.php?id=' . $pm_id_get . '&error=e_incomplete', '-0-' . $pm_id_get . '-0&error=e_incomplete', '&') . '#message_helper');
 }
 elseif ($pm_del_convers) //Suppression de conversation.
 {
@@ -430,7 +430,7 @@ elseif ($pm_del_convers) //Suppression de conversation.
 	
 	SessionData::recheck_cached_data_from_user_id($current_user->get_id());
 	
-	AppContext::get_response()->redirect('/user/pm' . url('.php?pm=' . $current_user->get_id(), '-' . $current_user->get_id() . '.php', '&'));
+	AppContext::get_response()->redirect('/user/pm' . url('.php?pm=' . $current_user->get_id(), '-' . $current_user->get_id(), '&'));
 }
 elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne la pas encore lu.
 {
@@ -481,7 +481,7 @@ elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne 
 				if ($pm_del > $id_first) //Suppression du message.
 				{
 					$pm_last_msg = PrivateMsg::delete($pm_to, $pm_del, $pm['idconvers']);
-					AppContext::get_response()->redirect('/user/pm' . url('.php?id=' . $pm['idconvers'], '-0-' . $pm['idconvers'] . '.php', '&') . '#m' . $pm_last_msg);
+					AppContext::get_response()->redirect('/user/pm' . url('.php?id=' . $pm['idconvers'], '-0-' . $pm['idconvers'], '&') . '#m' . $pm_last_msg);
 				}
 				elseif ($pm_del == $id_first) //Suppression de la conversation.
 				{
@@ -575,7 +575,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la 
 				}
 				
 				//Succès redirection vers la conversation.
-				AppContext::get_response()->redirect('/user/pm' . url('.php?id=' . $pm['idconvers'], '-0-' . $pm['idconvers'] . '.php', '&') . '#m' . $pm_edit);
+				AppContext::get_response()->redirect('/user/pm' . url('.php?id=' . $pm['idconvers'], '-0-' . $pm['idconvers'], '&') . '#m' . $pm_edit);
 			}
 			else //Interface d'édition
 			{
@@ -694,7 +694,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		'C_PAGINATION' => $pagination->has_several_pages(),
 		'PAGINATION' => $pagination->display(),
 		'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>',
-		'U_TITLE_CONVERS' => '<a href="pm' . url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get .'.php') . '">' . stripslashes($convers['title']) . '</a>'
+		'U_TITLE_CONVERS' => '<a href="pm' . url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get) . '">' . stripslashes($convers['title']) . '</a>'
 	));
 
 	$tpl->put_all(array(
@@ -806,7 +806,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		
 		$tpl->assign_block_vars('post_pm', array(
 			'CONTENTS' => $contents,
-			'U_PM_ACTION_POST' => url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get . '.php')
+			'U_PM_ACTION_POST' => url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get)
 		));
 		
 		//Gestion des erreurs
@@ -1000,7 +1000,7 @@ else //Liste des conversation, dans la boite du membre.
 		
 		//Affichage du dernier message posté.
 		$last_group_color = User::get_group_color($row['last_groups'], $row['last_level']);
-		$last_msg = '<a href="pm' . url('.php?' . $last_page . 'id=' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite . '.php') . '#m' . $row['last_msg_id'] . '" title="" class="fa fa-hand-o-right"></a>' . ' ' . $LANG['on'] . ' ' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />';
+		$last_msg = '<a href="pm' . url('.php?' . $last_page . 'id=' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite) . '#m' . $row['last_msg_id'] . '" title="" class="fa fa-hand-o-right"></a>' . ' ' . $LANG['on'] . ' ' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />';
 		$last_msg .= ($row['user_id'] == -1) ? $LANG['by'] . ' ' . $LANG['admin'] : $LANG['by'] . ' <a href="' . UserUrlBuilder::profile($row['last_user_id'])->rel() . '" class="small '.UserService::get_level_class($row['last_level']).'"' . (!empty($last_group_color) ? ' style="color:' . $last_group_color . '"' : '') . '>' . $row['last_login'] . '</a>';
 
 		$tpl->assign_block_vars('convers.list', array(
@@ -1010,7 +1010,7 @@ else //Liste des conversation, dans la boite du membre.
 			'TITLE' => stripslashes($row['title']),
 			'MSG' => ($row['nbr_msg'] - 1),
 			'U_PARTICIPANTS' => (($row['user_convers_status'] != 0) ? '<strike>' . $participants . '</strike>' : $participants),
-			'U_CONVERS'	=> url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php'),
+			'U_CONVERS'	=> url('.php?id=' . $row['id'], '-0-' . $row['id']),
 			'U_AUTHOR' => $LANG['by'] . ' ' . $author,
 			'U_LAST_MSG' => $last_msg
 		));
