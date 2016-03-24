@@ -33,7 +33,6 @@ class InstallationServices
 	const UNKNOWN_ERROR = 3;
 
 	private static $token_file_content = '1';
-	private static $min_php_version = '5.3';
 
 	/**
 	 * @var File

@@ -25,16 +25,15 @@
  *
  ###################################################*/
 
-if (version_compare(phpversion(), '5.3', '<') == -1)
-{
-	// Version is not retrieved from the ServerConfiguration::MIN_PHP_VERSION constant because
-	// it would imply that bootstraping will work and that PHP version is at least 5.0 (static keyword)
-	die('<h1>Impossible to install PHPBoost</h1><p>At least PHP 5.3 is needed but your current PHP version is ' . phpversion() . '</p>');
-}
-
 define('PATH_TO_ROOT', '..');
 require_once PATH_TO_ROOT . '/install/environment/InstallEnvironment.class.php';
 InstallEnvironment::load_imports();
+
+if (version_compare(phpversion(), ServerConfiguration::MIN_PHP_VERSION, '<') == -1)
+{
+	die('<h1>Impossible to install PHPBoost</h1><p>At least PHP ' . ServerConfiguration::MIN_PHP_VERSION . ' is needed but your current PHP version is ' . phpversion() . '</p>');
+}
+
 InstallEnvironment::init();
 
 $permissions = PHPBoostFoldersPermissions::get_permissions();
