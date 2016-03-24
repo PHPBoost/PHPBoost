@@ -241,13 +241,18 @@ class Url
 		$status = 0;
 		
 		if (!($url instanceof Url))
+		{
+			if ($url[0] == '/' && file_exists(PATH_TO_ROOT . $url))
+				return true;
+			
 			$url = new Url($url);
+		}
 		
-		$file = new File($url->rel());
+		$file = new File($url->relative());
 		if ($file->exists())
 			return true;
 		
-		$folder = new Folder($url->rel());
+		$folder = new Folder($url->relative());
 		if ($folder->exists())
 			return true;
 		

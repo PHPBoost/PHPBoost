@@ -304,7 +304,7 @@ class HtaccessFileCache implements CacheData
 			$this->add_line('RewriteRule .*upload/.*$ - [F]');
 			$this->add_section('Stop hotlinking');
 			$this->add_line('RewriteCond %{HTTP_REFERER} !^$');
-			$this->add_line('RewriteCond %{HTTP_HOST}@@%{HTTP_REFERER} !^([^@]*)@@https?://\1/.* [NC]');
+			$this->add_line('RewriteCond %{HTTP_REFERER} !^' . $this->general_config->get_site_url());
 			$this->add_line('RewriteRule \.(bmp|gif|jpe?g|png|swf)$ - [F,L,NC]');
 		}
 	}
