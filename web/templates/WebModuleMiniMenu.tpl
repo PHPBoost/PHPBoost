@@ -1,4 +1,4 @@
-<p class="center">
+<div id="module-mini-web" class="center">
 # IF C_PARTNERS #
 	# START partners #
 	<a href="{partners.U_VISIT}" title="{partners.NAME}">
@@ -12,4 +12,4 @@
 # ELSE #
 ${LangLoader::get_message('no_item_now', 'common')}
 # ENDIF #
-</p>
+</div>
