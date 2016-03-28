@@ -155,7 +155,7 @@
 				<!-- {DESCRIPTION} -->
 			# ENDIF #
 			<div class="pbt-header">
-				<img class="pbt-header-img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="pbt-header-img" class="pbt-header-img" />
 				<div class="pbt-content">
 					<p class="pbt-title">{@download.header.title}</p>
 					<span class="pbt-desc">{@download.header.description}</span>
@@ -196,9 +196,9 @@
 						<div class="content">
 							<a href="{@download.last_version_download_link}" itemprop="name">
 								<div class="pbt-element-img-container">
-									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/modules.jpg" id="pbt-img-001" class="pbt-img pbt-img-releases" itemprop="image" />
-									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" id="pbt-icon-001" class="pbt-icon pbt-icon-releases" />
-									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" id="pbt-logo-001" class="pbt-logo pbt-logo-releases" />
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/modules.jpg" alt="pbt-img-releases" id="pbt-img-001" class="pbt-img pbt-img-releases" itemprop="image" />
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" alt="pbt-icon-releases" id="pbt-icon-001" class="pbt-icon pbt-icon-releases" />
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="pbt-logo-releases" id="pbt-logo-001" class="pbt-logo pbt-logo-releases" />
 								</div>
 								<div class="pbt-element-info-container">
 									<p class="pbt-info-title">{@download.phpboost_last_complete_major_version_number}</p>
@@ -225,9 +225,9 @@
 						<div class="content">
 							<a href="{@download.last_version_pdk_link}" itemprop="name">
 								<div class="pbt-element-img-container">
-									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/modules.jpg" id="pbt-img-002" class="pbt-img pbt-img-releases" itemprop="image" />
-									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" id="pbt-icon-002" class="pbt-icon pbt-icon-releases" />
-									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" id="pbt-logo-002" class="pbt-logo pbt-logo-pdk" />
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/modules.jpg" alt="pbt-img-releases" id="pbt-img-002" class="pbt-img pbt-img-releases" itemprop="image" />
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" alt="pbt-icon-releases" id="pbt-icon-002" class="pbt-icon pbt-icon-releases" />
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" alt="pbt-logo-pdk" id="pbt-logo-002" class="pbt-logo pbt-logo-pdk" />
 								</div>
 								<div class="pbt-element-info-container">
 									<p class="pbt-info-title">{@download.last_version_pdk}</p>
@@ -304,9 +304,9 @@
 						<div class="content">
 							<a href="{@download.previous_version_download_link}" itemprop="name">
 								<div class="pbt-element-img-container">
-									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/modules.jpg" id="pbt-img-011" class="pbt-img pbt-img-releases" itemprop="image" />
-									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" id="pbt-icon-011" class="pbt-icon pbt-icon-releases" />
-									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" id="pbt-logo-011" class="pbt-logo pbt-logo-releases" />
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/modules.jpg" alt="pbt-img-releases" id="pbt-img-011" class="pbt-img pbt-img-releases" itemprop="image" />
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" alt="pbt-icon-releases" id="pbt-icon-011" class="pbt-icon pbt-icon-releases" />
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="pbt-logo-releases" id="pbt-logo-011" class="pbt-logo pbt-logo-releases" />
 								</div>
 								<div class="pbt-element-info-container">
 									<p class="pbt-info-title">{@download.phpboost_previous_complete_major_version_number}</p>
@@ -333,9 +333,9 @@
 						<div class="content">
 							<a href="{@download.previous_version_pdk_link}" itemprop="name">
 								<div class="pbt-element-img-container">
-									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/modules.jpg" id="pbt-img-011" class="pbt-img pbt-img-releases" itemprop="image" />
-									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" id="pbt-icon-011" class="pbt-icon pbt-icon-releases" />
-									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" id="pbt-logo-011" class="pbt-logo pbt-logo-pdk" />
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/modules.jpg" alt="pbt-img-releases" id="pbt-img-012" class="pbt-img pbt-img-releases" itemprop="image" />
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" alt="pbt-icon-releases" id="pbt-icon-012" class="pbt-icon pbt-icon-releases" />
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" alt="pbt-logo-pdk" id="pbt-logo-012" class="pbt-logo pbt-logo-pdk" />
 								</div>
 								<div class="pbt-element-info-container">
 									<p class="pbt-info-title">{@download.previous_version_pdk}</p>
@@ -458,9 +458,9 @@
 				</span>
 				<a href="{downloadfiles.U_LINK}" itemprop="name">
 					<div class="pbt-element-img-container">
-						<img src="{downloadfiles.U_PICTURE}" id="pbt-img-{downloadfiles.ID}" class="pbt-img" itemprop="image" />
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" id="pbt-icon-{downloadfiles.ID}" class="pbt-icon" />
-						<img src="{downloadfiles.U_PICTURE}" id="pbt-logo-{downloadfiles.ID}" class="pbt-logo" />
+						<img src="{downloadfiles.U_PICTURE}" alt="pbt-img" id="pbt-img-{downloadfiles.ID}" class="pbt-img" itemprop="image" />
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif" alt="pbt-icon" id="pbt-icon-{downloadfiles.ID}" class="pbt-icon" />
+						<img src="{downloadfiles.U_PICTURE}" alt="pbt-logo" id="pbt-logo-{downloadfiles.ID}" class="pbt-logo" />
 					</div>
 					<div class="pbt-element-info-container">
 						<p class="pbt-info-title">{downloadfiles.NAME}</p>
