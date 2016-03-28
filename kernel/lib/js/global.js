@@ -18,10 +18,13 @@ e=n.propHooks[b]),void 0!==c?e&&"set"in e&&void 0!==(d=e.set(a,c,b))?d:a[b]=c:e&
 			actionslinks: false
 		}, options);
 
+		var regtitle = new RegExp('[^A-Za-z0-9]', 'gi');
+
 		return this.each(function() {
+			menu_title = settings.title.replace(regtitle,'').toLowerCase();
 			cssmenu.find('li ul').parent().addClass('has-sub');
-			cssmenu.prepend('<div id="menu-button">' + settings.title + '</div>');
-			$(this).find('#menu-button').on('click', function(){
+			cssmenu.prepend('<div id="menu-button-' + menu_title + '" class="menu-button">' + settings.title + '</div>');
+			$(this).find('#menu-button-' + menu_title).on('click', function(){
 				$(this).toggleClass('menu-opened');
 				var mainmenu = $(this).next('ul');
 				if (mainmenu.hasClass('open')) {
