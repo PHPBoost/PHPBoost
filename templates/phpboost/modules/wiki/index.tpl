@@ -7,7 +7,7 @@
 			</header>
 			<div class="content">
 				# INCLUDE wiki_tools #
-				<div class="header">
+				<div class="pbt-wiki-header">
 					<img class="pbt-header-img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
 					<div class="pbt-header-content">
 						<p class="pbt-header-title">Bienvenue dans la documentation de PHPBoost.</p>
@@ -16,11 +16,11 @@
 					</div>
 				</div>
 				
-				<hr style="margin:25px 0;" />
+				<hr class="pbt-wiki-section-start"/>
 
 				<section class="block pbt-wiki-about">
 					<header>
-						<h1>A propos de PHPBoost</h1>
+						<h2>A propos de PHPBoost</h2>
 					</header>
 					<div class="content">
 						<ul class="pbt-wiki-section-list pbt-content-about">
@@ -66,10 +66,10 @@
 
 				<section class="pbt-wiki-section">
 					<header>
-						<h1>
+						<h2>
 							<a href="{PATH_TO_ROOT}/wiki/presentation-de-phpboost">Présentation de PHPBoost</a>
 							<span class="more">Tout savoir sur le projet</span>
-						</h1>
+						</h2>
 					</header>
 					<div class="content">
 						<p class="more">Les articles</p>
@@ -104,10 +104,10 @@
 				
 				<section class="pbt-wiki-section">
 					<header>
-						<h1>
+						<h2>
 							<a href="{PATH_TO_ROOT}/wiki/installation-et-migration-de-phpboost">Installation et migration de PHPBoost</a>
 							<span class="more">Installer et migrer PHPBoost très facilement</span>
-						</h1>
+						</h2>
 					</header>
 					<div class="content">
 						<p class="more">Les catégories</p>
@@ -134,13 +134,12 @@
 			
 				<section class="pbt-wiki-section">
 					<header>
-						<h1>
+						<h2>
 							<a href="{PATH_TO_ROOT}/wiki/utilisation-de-phpboost">Utilisation de PHPBoost</a>
 							<span class="more">Bien commencer avec PHPBoost</span>
-						</h1>
+						</h2>
 					</header>
 					<div class="content">
-					
 						<p class="more">Les catégories</p>
 						<ul class="pbt-wiki-section-list">
 							<li>
@@ -172,21 +171,18 @@
 								<a href="{PATH_TO_ROOT}/wiki/utiliser-phpboost-en-ligne-de-commande">Utiliser PHPBoost en ligne de commande</a>
 							</li>
 						</ul>
-						
 					</div>
 					<footer></footer>
 				</section>	
 				
-				
 				<section class="pbt-wiki-section">
 					<header>
-						<h1>
+						<h2>
 							<a href="{PATH_TO_ROOT}/wiki/design-et-interface">Design et Interface</a>
 							<span class="more">Personnaliser l'aspect de votre site</span>
-						</h1>
+						</h2>
 					</header>
 					<div class="content">
-					
 						<p class="more">Les catégories</p>
 						<ul class="pbt-wiki-section-list">
 							<li>
@@ -211,13 +207,12 @@
 				
 				<section class="pbt-wiki-section">
 					<header>
-						<h1>
+						<h2>
 							<a href="{PATH_TO_ROOT}/wiki/developper-avec-phpboost">Développer avec PHPBoost</a>
 							<span class="more">Créer des modules et du contenu dynamique</span>
-						</h1>
+						</h2>
 					</header>
 					<div class="content">
-					
 						<p class="more">Les catégories</p>
 						<ul class="pbt-wiki-section-list">
 							<li>
@@ -260,25 +255,22 @@
 							</li>
 							<li>
 								<a href="{PATH_TO_ROOT}/wiki/developper-avec-phpboost">
-									<span class="more" style="font-style:normal;">[+ d'articles]</span>
+									<span class="more more-articles">[+ d'articles]</span>
 								</a>
 							</li>
 						</ul>
-						
 					</div>
 					<footer></footer>
 				</section>
 
 				<section class="pbt-wiki-section">
 					<header>
-						<h1>
+						<h2>
 							<a href="{PATH_TO_ROOT}/wiki/tutoriels">Les tutoriels</a>
 							<span class="more">Apprenez et partagez vos astuces</span>
-						</h1>
+						</h2>
 					</header>
-
 					<div class="content">
-					
 						<p class="more">Les articles</p>
 						<ul class="pbt-wiki-section-list">
 							<li>
@@ -303,14 +295,15 @@
 							</li>
 							<li>
 								<a href="{PATH_TO_ROOT}/wiki/tutoriels">
-									<span class="more" style="font-style:normal;">[+ d'articles]</span>
+									<span class="more more-articles">[+ d'articles]</span>
 								</a>
 							</li>
 						</ul>
+					</div>
 					<footer></footer>
 				</section>
 
-				<hr style="margin:5px 0 25px 0;" />
+				<hr class="pbt-wiki-section-end" />
 				
 				# IF IS_MODERATOR #
 					<div class="center">
@@ -323,7 +316,7 @@
 					
 					<br />
 					# START last_articles #
-					<hr style="margin:0px 0 25px 0;" />
+					<hr class="last-articles" />
 					<br />
 					<table>
 						<thead>

@@ -70,6 +70,10 @@ ul.pbt-wiki-section-list {
 	list-style: none;
 }
 
+#module-wiki .pbt-wiki-section-start {
+	margin: 25px 0;
+}
+
 @media (min-width: 769px) {
 	.pbt-wiki-section-list li {
 		line-height: 1.5em;
@@ -161,6 +165,10 @@ a.parent i[id^="img2_"] {
 	padding: 2px 0;
 }
 
+.pbt-wiki-about {
+	margin-top: 25px;
+}
+
 .pbt-wiki-about footer {
 	clear: both;
 }
@@ -169,11 +177,11 @@ a.parent i[id^="img2_"] {
 	margin: 50px 0;
 }
 
-.pbt-wiki-section h1 {
+.pbt-wiki-section h2 {
 	font-size: 2rem;
 }
 
-.pbt-wiki-section h1 span {
+.pbt-wiki-section h2 span {
 	text-transform: none;
 	color: #1E5083;
 }
@@ -199,4 +207,16 @@ a.parent i[id^="img2_"] {
 
 .pbt-wiki-section .content ul {
 	margin-bottom: 15px;
+}
+
+.pbt-wiki-section-end {
+	margin:5px 0 25px 0;
+}
+
+#module-wiki .last-articles {
+	margin: 0px 0 25px 0;
+}
+
+#module-wiki .more-articles {
+	font-style: normal;
 }
