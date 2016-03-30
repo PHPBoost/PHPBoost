@@ -55,7 +55,7 @@ e=n.propHooks[b]),void 0!==c?e&&"set"in e&&void 0!==(d=e.set(a,c,b))?d:a[b]=c:e&
 					cssmenu.find('ul').removeClass('close');
 					cssmenu.find('ul').removeClass('open');
 					cssmenu.removeClass('small-screen');
-					cssmenu.find('#menu-button').removeClass('menu-opened');
+					cssmenu.find('#menu-button-' + menu_title).removeClass('menu-opened');
 				}
 	
 				if ($(window).width() <= settings.breakpoint && !cssmenu.hasClass('small-screen')) {
@@ -63,7 +63,7 @@ e=n.propHooks[b]),void 0!==c?e&&"set"in e&&void 0!==(d=e.set(a,c,b))?d:a[b]=c:e&
 					if (settings.static) {
 						cssmenu.find('ul').addClass('open');
 						cssmenu.find('ul').removeClass('close');
-						cssmenu.find('#menu-button').addClass('menu-opened');
+						cssmenu.find('#menu-button-' + menu_title).addClass('menu-opened');
 					}
 
 					if (settings.actionslinks) {
