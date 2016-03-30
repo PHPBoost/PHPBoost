@@ -31,22 +31,22 @@ header#forum-top .forum-links {
 	}
 }
 
-.forum-links .cssmenu #menu-button {
+.forum-links .cssmenu .menu-button {
     color: #999999 !important;
 }
 
-.forum-links .cssmenu #menu-button::after {
+.forum-links .cssmenu .menu-button::after {
 	border-color: #999999;
  }
  
-.forum-links .cssmenu #menu-button::before {
+.forum-links .cssmenu .menu-button::before {
     background-color: #999999;
 }
 
-.forum-links .cssmenu #menu-button.menu-opened:after,
-.forum-links .cssmenu #menu-button.menu-opened:before,
-header .forum-links .cssmenu #menu-button.menu-opened:after,
-header .forum-links .cssmenu #menu-button.menu-opened:before {
+.forum-links .cssmenu .menu-button.menu-opened:after,
+.forum-links .cssmenu .menu-button.menu-opened:before,
+header .forum-links .cssmenu .menu-button.menu-opened:after,
+header .forum-links .cssmenu .menu-button.menu-opened:before {
     background-color: #999999;
 }
 		

@@ -621,18 +621,18 @@ header .cssmenu ul ul li .cssmenu-title							{ background-color: #333333;	}
 /* ----------------------- */
 
 /* --- Classes generales cssmenu --- */
-.cssmenu #menu-button {
+.cssmenu .menu-button {
 	display: none;
 	position: relative;
 	list-style: none;
 	line-height: 1;
 }
 
-.cssmenu #menu-button:before {
+.cssmenu .menu-button:before {
 	font-size: 1.3rem;
 }
 
-.cssmenu.small-screen #menu-button {
+.cssmenu.small-screen .menu-button {
 	display: block;
 	padding: 17px 40px 17px 17px;
 	text-transform: uppercase;
@@ -640,53 +640,53 @@ header .cssmenu ul ul li .cssmenu-title							{ background-color: #333333;	}
 	cursor: pointer;
 }
 
-#top-footer .cssmenu.small-screen #menu-button {
+#top-footer .cssmenu.small-screen .menu-button {
 	color: #444444;
 }
 
-.cssmenu.small-screen #menu-button:after, 
-.cssmenu.small-screen #menu-button:before {
+.cssmenu.small-screen .menu-button:after, 
+.cssmenu.small-screen .menu-button:before {
 	position: absolute;
 	display: block;
 	content: '';
 }
 
-.cssmenu.small-screen #menu-button:after {
+.cssmenu.small-screen .menu-button:after {
 	height: 4px;
 	width: 20px;
 	border-width: 2px 0 2px 0;
 	border-style: solid;
 }
 
-.cssmenu.small-screen #menu-button:before {
+.cssmenu.small-screen .menu-button:before {
 	height: 2px;
 	width: 20px;
 	background-color: #DDDDDD;
 	font-size: 1.3rem;
 }
 
-.cssmenu.small-screen #menu-button.menu-opened:after {
+.cssmenu.small-screen .menu-button.menu-opened:after {
 	height: 2px;
 	border: 0;
 	transform: rotate(45deg);
 }
 
-.cssmenu.small-screen #menu-button.menu-opened:before {
+.cssmenu.small-screen .menu-button.menu-opened:before {
 	transform: rotate(-45deg);
 }
 
 /* --- Position du bouton --- */
-.cssmenu.small-screen #menu-button:after 				{ top: 22px; right: 17px; }
-.cssmenu.small-screen #menu-button:before 				{ top: 16px; right: 17px; }
-.cssmenu.small-screen #menu-button.menu-opened:after,
-.cssmenu.small-screen #menu-button.menu-opened:before 	{ top: 23px; width: 15px; }
+.cssmenu.small-screen .menu-button:after 				{ top: 22px; right: 17px; }
+.cssmenu.small-screen .menu-button:before 				{ top: 16px; right: 17px; }
+.cssmenu.small-screen .menu-button.menu-opened:after,
+.cssmenu.small-screen .menu-button.menu-opened:before 	{ top: 23px; width: 15px; }
 
 /* --- Variante cssmenu-actionslinks --- */
-.cssmenu #menu-button:before {
+.cssmenu .menu-button:before {
 	font-size: 1.3rem;
 }
 
-.cssmenu-actionslinks #menu-button {
+.cssmenu-actionslinks .menu-button {
 	float: right;
 	position: relative;
 	display: inline-block;
@@ -707,7 +707,7 @@ header .cssmenu ul ul li .cssmenu-title							{ background-color: #333333;	}
 	-webkit-font-smoothing: antialiased;
 }
 
-#main .cssmenu-actionslinks.small-screen #menu-button {
+#main .cssmenu-actionslinks.small-screen .menu-button {
 	float: none;
 	background-color: transparent;
 	background-image: none;
@@ -717,30 +717,30 @@ header .cssmenu ul ul li .cssmenu-title							{ background-color: #333333;	}
 	text-align: left;
 }
 
-.cssmenu-actionslinks #menu-button + ul {
+.cssmenu-actionslinks .menu-button + ul {
 	left: -9999px;
 }
 
-.cssmenu-actionslinks #menu-button:hover + ul,
-.cssmenu-actionslinks #menu-button + ul:hover{
+.cssmenu-actionslinks .menu-button:hover + ul,
+.cssmenu-actionslinks .menu-button + ul:hover{
 	left: auto;
 }
 
-.cssmenu-actionslinks.small-screen #menu-button:hover + ul,
-.cssmenu-actionslinks.small-screen #menu-button + ul:hover {
+.cssmenu-actionslinks.small-screen .menu-button:hover + ul,
+.cssmenu-actionslinks.small-screen .menu-button + ul:hover {
 	left: -9999px;
 }
 
-.cssmenu-actionslinks.small-screen #menu-button + ul.open,
-.cssmenu-actionslinks.small-screen #menu-button + ul:hover.open {
+.cssmenu-actionslinks.small-screen .menu-button + ul.open,
+.cssmenu-actionslinks.small-screen .menu-button + ul:hover.open {
 	left: auto;
 }
 
-.cssmenu-actionslinks #menu-button:before {
+.cssmenu-actionslinks .menu-button:before {
 	content: "\f013";
 }
 
-.cssmenu-tools #menu-button:before {
+.cssmenu-tools .menu-button:before {
 	content: "\f0c9";
 }
 
@@ -781,12 +781,12 @@ header .cssmenu ul ul li .cssmenu-title							{ background-color: #333333;	}
 }
 
 /* --- Variante Static --- */
-.cssmenu-static.small-screen #menu-button {
+.cssmenu-static.small-screen .menu-button {
 	cursor: default;
 }
 
-.cssmenu-static.small-screen #menu-button:after,
-.cssmenu-static.small-screen #menu-button:before {
+.cssmenu-static.small-screen .menu-button:after,
+.cssmenu-static.small-screen .menu-button:before {
 	display: none;
 }
 
@@ -800,26 +800,26 @@ header .cssmenu ul ul li .cssmenu-title							{ background-color: #333333;	}
 }
 
 /* --- Personnalisation graphique du bouton responsive--- */
-.cssmenu.small-screen #menu-button:after {
+.cssmenu.small-screen .menu-button:after {
 	border-color: #DDDDDD;
 }
 
-#main .cssmenu.small-screen #menu-button {
+#main .cssmenu.small-screen .menu-button {
 	color: #111111;
 }
 
-.cssmenu.small-screen #menu-button:before 								{ background-color: #DDDDDD; }
-.cssmenu.small-screen #menu-button.menu-opened:after,
-.cssmenu.small-screen #menu-button.menu-opened:before 					{ background-color: #DDDDDD; }
+.cssmenu.small-screen .menu-button:before 								{ background-color: #DDDDDD; }
+.cssmenu.small-screen .menu-button.menu-opened:after,
+.cssmenu.small-screen .menu-button.menu-opened:before 					{ background-color: #DDDDDD; }
 
-header .cssmenu.small-screen #menu-button.menu-opened:after,
-header .cssmenu.small-screen #menu-button.menu-opened:before 			{ background-color: #FFFFFF; }
+header .cssmenu.small-screen .menu-button.menu-opened:after,
+header .cssmenu.small-screen .menu-button.menu-opened:before 			{ background-color: #FFFFFF; }
 
-header .cssmenu-vertical.small-screen #menu-button.menu-opened:after,
-header .cssmenu-vertical.small-screen #menu-button.menu-opened:before 	{ background-color: #DDDDDD; }
+header .cssmenu-vertical.small-screen .menu-button.menu-opened:after,
+header .cssmenu-vertical.small-screen .menu-button.menu-opened:before 	{ background-color: #DDDDDD; }
 
-header .cssmenu-tools.small-screen #menu-button.menu-opened:after,
-header .cssmenu-tools.small-screen #menu-button.menu-opened:before 		{ background-color: #DDDDDD; }
+header .cssmenu-tools.small-screen .menu-button.menu-opened:after,
+header .cssmenu-tools.small-screen .menu-button.menu-opened:before 		{ background-color: #DDDDDD; }
 
 /* -- Bouton submenu -- */
 /* -------------------- */

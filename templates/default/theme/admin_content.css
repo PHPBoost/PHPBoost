@@ -624,17 +624,17 @@ div[class*="admin-index"] h2 {
 	overflow: auto;
 }
 
-.cssmenu.cssmenu-group #menu-button	{
+.cssmenu.cssmenu-group .menu-button	{
 	color: #676A74;
 }
 
-.cssmenu.cssmenu-group #menu-button:before,
-.cssmenu.cssmenu-group #menu-button.menu-opened:before,
-.cssmenu.cssmenu-group #menu-button.menu-opened:after	{
+.cssmenu.cssmenu-group .menu-button:before,
+.cssmenu.cssmenu-group .menu-button.menu-opened:before,
+.cssmenu.cssmenu-group .menu-button.menu-opened:after	{
 	background-color: #676A74;
 }
 
-.cssmenu.cssmenu-group #menu-button:after {
+.cssmenu.cssmenu-group .menu-button:after {
 	border-color: #676A74;
 }
 
