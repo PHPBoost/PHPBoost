@@ -227,15 +227,15 @@
 			<div class="options">
 				<h6>{@css.options.sort_by}</h6>
 				<select>
-					<option>{@css.options.sort_by.alphabetical}</option>
-					<option>{@css.options.sort_by.size}</option>
-					<option>{@css.options.sort_by.date}</option>
-					<option>{@css.options.sort_by.popularity}</option>
-					<option>{@css.options.sort_by.note}</option>
+					<option value="{@css.options.sort_by.alphabetical}">{@css.options.sort_by.alphabetical}</option>
+					<option value="{@css.options.sort_by.size}">{@css.options.sort_by.size}</option>
+					<option value="{@css.options.sort_by.date}">{@css.options.sort_by.date}</option>
+					<option value="{@css.options.sort_by.popularity}">{@css.options.sort_by.popularity}</option>
+					<option value="{@css.options.sort_by.note}">{@css.options.sort_by.note}</option>
 				</select>
 				<select>
-					<option>{@css.modules_menus.direction.up}</option>
-					<option>{@css.modules_menus.direction.down}</option>
+					<option value="{@css.modules_menus.direction.up}">{@css.modules_menus.direction.up}</option>
+					<option value="{@css.modules_menus.direction.down}">{@css.modules_menus.direction.down}</option>
 				</select>
 			</div>
 		</div>
