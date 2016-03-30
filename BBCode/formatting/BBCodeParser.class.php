@@ -470,19 +470,18 @@ class BBCodeParser extends ContentFormattingParser
 		$level = (int)$matches[1];
 		switch ($level) {
 			case 1:
-				return '<h1 class="formatter-title">' . $matches[2] . '</h1>';
-			break;
-			case 2:
 				return '<h2 class="formatter-title">' . $matches[2] . '</h2>';
 			break;
-			case 3:
+			case 2:
 				return '<h3 class="formatter-title">' . $matches[2] . '</h3>';
 			break;
-			case 4:
+			case 3:
 				return '<h4 class="formatter-title">' . $matches[2] . '</h4>';
-			case 5:
+			break;
+			case 4:
 				return '<h5 class="formatter-title">' . $matches[2] . '</h5>';
-			case 6:
+			break;
+			case 5:
 				return '<h6 class="formatter-title">' . $matches[2] . '</h6>';
 			break;
 		}
