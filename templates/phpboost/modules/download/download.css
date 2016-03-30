@@ -21,6 +21,16 @@
 	width: auto;
 }
 
+.pbt-block header h2 {
+	border-bottom: none;
+	margin-left: 0;
+	color: #81A4C8;
+	text-transform: uppercase;
+	font-size: 2.6rem;
+	font-weight: 400;
+	text-align: left;
+}
+
 .pbt-block .pbt-content { 
 	padding: 0;
 }
