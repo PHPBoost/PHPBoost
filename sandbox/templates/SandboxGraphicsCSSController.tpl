@@ -1,6 +1,6 @@
 <section>
 	<header>
-		<h1>{@css.typography}</h1>
+		<h2>{@css.typography}</h2>
 	</header>
 	<div class="content">
 
@@ -16,10 +16,10 @@
 		
 		<h5>{@css.specific_titles}</h5><br />
 		<div class="content">
-			<h1 class="formatter-title">{@css.title} 1</h1><br />
 			<h2 class="formatter-title">{@css.title} 2</h2><br />
 			<h3 class="formatter-title">{@css.title} 3</h3><br />
-			<h4 class="formatter-title">{@css.title} 4</h4><br /><br />
+			<h4 class="formatter-title">{@css.title} 4</h4><br />
+			<h5 class="formatter-title">{@css.title} 1</h5><br /><br />
 		</div>
 
 		<h5>{@css.styles}</h5><br />
@@ -53,7 +53,7 @@
 
 <section>
 	<header>
-		<h1>{@css.miscellaneous}</h1>
+		<h2>{@css.miscellaneous}</h2>
 	</header>
 
 	<div class="content">
@@ -190,7 +190,7 @@
 		<div class="content">
 			<div class="explorer">
 				<div class="cats">
-						<h1>{@css.explorer}</h1>
+						<h2>{@css.explorer}</h2>
 					<div class="content">
 						<ul>
 							<li><a id="class_0" href="#"><i class="fa fa-folder"></i>{@css.root}</a>
@@ -209,7 +209,7 @@
 					</div>
 				</div>
 				<div class="files">
-						<h1>{@css.tree}</h1>
+						<h2>{@css.tree}</h2>
 					<div class="content" id="cat_contents">
 						<ul>
 							<li><a href="#"><i class="fa fa-folder"></i>{@css.cat} 3</a></li>
@@ -280,7 +280,7 @@
 
 <section>
 	<header>
-		<h1>{@css.quote}, {@css.code}, {@css.hidden}</h1>
+		<h2>{@css.quote}, {@css.code}, {@css.hidden}</h2>
 	</header>
 	<div class="content">
 		<span class="formatter-blockquote">{@css.quote} :</span><div class="blockquote">Dein Syria per speciosam interpatet diffusa planitiem. hanc nobilitat Antiochia, mundo cognita civitas, cui non certaverit alia advecticiis ita adfluere copiis et internis, et Laodicia et Apamia itidemque Seleucia iam inde a primis auspiciis florentissimae.</div><br />
@@ -381,7 +381,7 @@
 
 <section>
 	<header>
-		<h1>{@css.pagination}</h1>
+		<h2>{@css.pagination}</h2>
 	</header>
 	<div class="content">
 		<div class="center"># INCLUDE PAGINATION #</div>
@@ -391,7 +391,7 @@
 
 <section>
 	<header>
-		<h1>{@css.table}</h1>
+		<h2>{@css.table}</h2>
 	</header>
 	<div class="content">
 		<table id="table">
@@ -479,7 +479,7 @@
 
 <section>
 	<header>
-		<h1>{@css.messages_and_coms}</h1>
+		<h2>{@css.messages_and_coms}</h2>
 	</header>
 	<div class="content"><br />
 		<div id="com2" class="message" itemscope="itemscope" itemtype="http://schema.org/Comment">
@@ -516,7 +516,7 @@
 
 <section>
 	<header>
-		<h1>{@css.error_messages}</h1>
+		<h2>{@css.error_messages}</h2>
 	</header>
 	<div class="content">
 		# START messages # # INCLUDE messages.VIEW # # END messages #
@@ -530,7 +530,7 @@
 
 <section>
 	<header>
-		<h1>{@css.page.title}</h1>
+		<h2>{@css.page.title}</h2>
 	</header>
 	<div class="content">
 		Huic Arabia est conserta, ex alio latere Nabataeis contigua; opima varietate conmerciorum castrisque oppleta validis et castellis, quae ad repellendos gentium vicinarum excursus sollicitudo pervigil veterum per oportunos saltus erexit et cautos. haec quoque civitates habet inter oppida quaedam ingentes Bostram et Gerasam atque Philadelphiam murorum firmitate cautissimas. hanc provinciae inposito nomine rectoreque adtributo obtemperare legibus nostris Traianus conpulit imperator incolarum tumore saepe contunso cum glorioso marte Mediam urgeret et Parthos.<br/>
@@ -560,12 +560,12 @@
 
 <section>
 	<header>
-		<h1>{@css.page.title}</h1>
+		<h2>{@css.page.title}</h2>
 	</header>
 	<div class="content">
 		<article class="block">
 			<header>
-				<h1>{@css.block.title}</h1>
+				<h3>{@css.block.title}</h3>
 			</header>
 			<div class="content">
 				Inpares parte deviis scirent diffuso petivere idem sed deviis documentis idem stataria omnia latrones undique.
@@ -580,12 +580,12 @@
 
 <section>
 	<header>
-		<h1>{@css.page.title}</h1>
+		<h2>{@css.page.title}</h2>
 	</header>
 	<div class="content" style="overflow: hidden;">
 		<article class="medium-block">
 			<header>
-				<h1>{@css.block.title}</h1>
+				<h3>{@css.block.title}</h3>
 			</header>
 			<div class="content">
 				Inpares parte deviis scirent diffuso petivere idem sed deviis documentis idem stataria omnia latrones undique.
@@ -594,7 +594,7 @@
 		</article>
 		<article class="medium-block">
 			<header>
-				<h1>{@css.block.title}</h1>
+				<h3>{@css.block.title}</h3>
 			</header>
 			<div class="content">
 				Inpares parte deviis scirent diffuso petivere idem sed deviis documentis idem stataria omnia latrones undique.
@@ -609,12 +609,12 @@
 
 <section>
 	<header>
-		<h1>{@css.page.title}</h1>
+		<h2>{@css.page.title}</h2>
 	</header>
 	<div class="content" style="overflow: hidden;">
 		<article class="small-block">
 			<header>
-				<h1>{@css.block.title}</h1>
+				<h3>{@css.block.title}</h3>
 			</header>
 			<div class="content">
 				Inpares parte deviis.
@@ -623,7 +623,7 @@
 		</article>
 		<article class="small-block">
 			<header>
-				<h1>{@css.block.title}</h1>
+				<h3>{@css.block.title}</h3>
 			</header>
 			<div class="content">
 				Inpares parte deviis.
@@ -632,7 +632,7 @@
 		</article>
 		<article class="small-block">
 			<header>
-				<h1>{@css.block.title}</h1>
+				<h3>{@css.block.title}</h3>
 			</header>
 			<div class="content">
 				Inpares parte deviis.
