@@ -176,7 +176,7 @@
 
 			<article class="pbt-block">
 				<header>
-					<h1>{@download} {@download.last_major_version_number} - {@download.last_version_name}</h1>
+					<h2>{@download} {@download.last_major_version_number} - {@download.last_version_name}</h2>
 					<p class="pbt-desc">
 						{@download.last_version.description}
 					</p>
@@ -186,9 +186,9 @@
 
 					<article id="pbt-rev-last" class="article-download article-several article-download-release article-download-pbt-rev" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 						<header>
-							<h2>
+							<h3>
 								<a href="{@download.last_version_download_link}" itemprop="name">{@download} {@download.phpboost_last_major_version_number}</a>
-							</h2>
+							</h3>
 							<meta itemprop="url" content="{@download.last_version_download_link}">
 							<meta itemprop="description" content="${escape(@download.phpboost_last_major_version_number)}"/>
 						</header>
@@ -215,9 +215,9 @@
 
 					<article id="pdk-last" class="article-download article-several article-download-release article-download-pdk hidden-small-screens" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 						<header>
-							<h2>
+							<h3>
 								<a href="{@download.last_version_pdk_link}" itemprop="name">{@download} {@download.last_major_version_number}</a>
-							</h2>
+							</h3>
 							<meta itemprop="url" content="{@download.last_version_pdk_link}">
 							<meta itemprop="description" content="${escape(@download.last_complete_version_number)}"/>
 						</header>
@@ -284,7 +284,7 @@
 
 			<article class="pbt-block">
 				<header>
-					<h1>{@download} {@download.previous_major_version_number} - {@download.previous_version_name}</h1>
+					<h2>{@download} {@download.previous_major_version_number} - {@download.previous_version_name}</h2>
 					<p class="pbt-desc">
 						{@download.previous_version.description}
 					</p>
@@ -294,9 +294,9 @@
 
 					<article id="pbt-rev-previous" class="article-download article-several article-download-release article-download-pbt-rev" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 						<header>
-							<h2>
+							<h3>
 								<a href="{@download.previous_version_download_link}" itemprop="name">{@download} {@download.previous_major_version_number}</a>
-							</h2>
+							</h3>
 							<meta itemprop="url" content="{@download.previous_version_download_link}">
 							<meta itemprop="description" content="${escape(@download.previous_version_download_link)}"/>
 						</header>
@@ -323,9 +323,9 @@
 
 					<article id="pdk-preview" class="article-download article-several article-download-release article-download-pdk hidden-small-screens" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 						<header>
-							<h2>
+							<h3>
 								<a href="{@download.previous_version_pdk_link}" itemprop="name">{@download} {@download.pdk_version}</a>
-							</h2>
+							</h3>
 							<meta itemprop="url" content="{@download.previous_version_pdk_link}">
 							<meta itemprop="description" content="${escape(@download.previous_version_pdk_link)}"/>
 						</header>
