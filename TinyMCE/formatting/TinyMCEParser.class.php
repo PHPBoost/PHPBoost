@@ -427,20 +427,20 @@ class TinyMCEParser extends ContentFormattingParser
 		if (!in_array('title', $this->forbidden_tags))
 		{
 			//Title 1
-			array_push($array_preg, '`&lt;h2[^&]*&gt;(.+)&lt;/h2&gt;`isU');
-			array_push($array_preg_replace, '<h2 class="formatter-title">$1</h2><br />');
+			array_push($array_preg, '`&lt;h1[^&]*&gt;(.+)&lt;/h1&gt;`isU');
+			array_push($array_preg_replace, '<h2 class="formatter-title">$1</h2>');
 			//Title 2
-			array_push($array_preg, '`&lt;h3[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h3&gt;`isU');
-			array_push($array_preg_replace, '<h3 class="formatter-title">$1</h3><br />');
+			array_push($array_preg, '`&lt;h2[^&]*&gt;(.+)&lt;/h2&gt;`isU');
+			array_push($array_preg_replace, '<h3 class="formatter-title">$1</h3>');
 			//Title 3
-			array_push($array_preg, '`&lt;h4[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h4&gt;`isU');
-			array_push($array_preg_replace, '<h4 class="formatter-title">$1</h4><br />');
+			array_push($array_preg, '`&lt;h3[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h3&gt;`isU');
+			array_push($array_preg_replace, '<h4 class="formatter-title">$1</h4>');
 			//Title 4
-			array_push($array_preg, '`&lt;h5[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h5&gt;`isU');
-			array_push($array_preg_replace, '<h5 class="formatter-title">$1</h5><br />');
+			array_push($array_preg, '`&lt;h4[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h4&gt;`isU');
+			array_push($array_preg_replace, '<h5 class="formatter-title">$1</h5>');
 			//Title 5
-			array_push($array_preg, '`&lt;h6[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h6&gt;`isU');
-			array_push($array_preg_replace, '<h6 class="formatter-title">$1</h6><br />');
+			array_push($array_preg, '`&lt;h5[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h5&gt;`isU');
+			array_push($array_preg_replace, '<h6 class="formatter-title">$1</h6>');
 		}
 		
 		//Style tag
