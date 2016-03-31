@@ -90,6 +90,7 @@ tinymce.init({
 	autoresize_max_height: '500px',
 	advlist_number_styles: 'default',
 	advlist_bullet_styles: 'default',
+	block_formats: 'Paragraph=p;Heading 1=h1;Heading 2=h2;Heading 3=h3;Heading 4=h4;Heading 5=h5;Preformatted=pre',
 	fontsize_formats: '5pt 10pt 15pt 20pt 25pt 30pt 35pt 40pt 45pt',
 	convert_urls: false,
 	media_alt_source: false,

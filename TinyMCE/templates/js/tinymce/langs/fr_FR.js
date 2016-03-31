@@ -206,5 +206,6 @@ tinymce.addI18n('fr_FR',{
 "Edit image": "Modifier l'image",
 "Image options": "Options de l'image",
 "Apply": "Appliquer",
-"Back": "Retour"
+"Back": "Retour",
+"Preformatted": "Pr\u00e9format\u00e9"
 });
