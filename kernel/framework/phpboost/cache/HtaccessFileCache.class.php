@@ -44,6 +44,8 @@ class HtaccessFileCache implements CacheData
 		$this->htaccess_file_content = '';
 		$this->general_config = GeneralConfig::load();
 		
+		$this->add_free_php56();
+		
 		$this->add_disable_signatures_protection();
 		
 		$this->add_hide_directory_listings();
@@ -99,6 +101,20 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('# ' . $name . ' #');
 	}
 	
+	private function get_domain($hostname)
+	{
+		preg_match("/[a-z0-9\-]{1,63}\.[a-z\.]{2,6}$/", parse_url($hostname, PHP_URL_HOST), $_domain_tld);
+		return $_domain_tld[0];
+	}
+
+	private function add_free_php56()
+	{
+		if($this->get_domain($this->general_config->get_site_url()) == 'free.fr')
+		{
+			$this->add_section('Enable PHP5.6 on '. $this->get_domain($this->general_config->get_site_url()) .' hosting');
+			$this->add_line('php56 1');
+		}
+	}
 	private function add_disable_signatures_protection()
 	{
 		$this->add_section('Disable signatures protection');
