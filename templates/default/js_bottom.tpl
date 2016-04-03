@@ -1,6 +1,3 @@
-		<!--[if lt IE 9]>
-		<script async src="{PATH_TO_ROOT}/kernel/lib/js/html5shiv/html5shiv.js"></script>
-		<![endif]-->
 		<script>
 		<!-- 
 			jQuery('[data-confirmation]').each(function() {
