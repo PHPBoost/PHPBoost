@@ -128,8 +128,8 @@ class CalendarEvent
 		return array(
 			'id_event' => $this->get_id(),
 			'content_id' => $this->content->get_id(),
-			'start_date' => $this->get_start_date() !== null ? $this->get_start_date()->get_timestamp() : '',
-			'end_date' => $this->get_end_date() !== null ? $this->get_end_date()->get_timestamp() : '',
+			'start_date' => (int)($this->get_start_date() !== null ? $this->get_start_date()->get_timestamp() : ''),
+			'end_date' => (int)($this->get_end_date() !== null ? $this->get_end_date()->get_timestamp() : ''),
 			'parent_id' => $this->get_parent_id()
 		);
 	}

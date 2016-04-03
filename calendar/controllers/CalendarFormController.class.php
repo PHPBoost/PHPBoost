@@ -270,7 +270,7 @@ class CalendarFormController extends ModuleController
 			$event_content->authorize_registration();
 			$event_content->set_max_registered_members($this->form->get_value('max_registered_members'));
 			
-			if ($this->form->get_value('last_registration_date_enabled'))
+			if ($this->form->get_value('last_registration_date_enabled') && $this->form->get_value('last_registration_date') !== null)
 			{
 				$event_content->enable_last_registration_date();
 				$event_content->set_last_registration_date($this->form->get_value('last_registration_date'));

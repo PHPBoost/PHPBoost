@@ -263,11 +263,11 @@ class CalendarEventContent
 			'contents' => $this->get_contents(),
 			'location' => $this->get_location(),
 			'approved' => (int)$this->is_approved(),
-			'creation_date' => $this->get_creation_date()->get_timestamp(),
+			'creation_date' => (int)$this->get_creation_date()->get_timestamp(),
 			'author_id' => $this->get_author_user()->get_id(),
 			'registration_authorized' => (int)$this->is_registration_authorized(),
 			'max_registered_members' => $this->get_max_registered_members(),
-			'last_registration_date' => $this->get_last_registration_date() !== null ? $this->get_last_registration_date()->get_timestamp() : '',
+			'last_registration_date' => (int)($this->get_last_registration_date() !== null ? $this->get_last_registration_date()->get_timestamp() : ''),
 			'register_authorizations' => serialize($this->get_register_authorizations()),
 			'repeat_number' => $this->get_repeat_number(),
 			'repeat_type' => $this->get_repeat_type()
