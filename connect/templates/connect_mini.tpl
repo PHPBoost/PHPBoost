@@ -29,7 +29,7 @@
 
 # IF C_VERTICAL #
 	# IF C_USER_NOTCONNECTED #
-		<div id="connect-menu" class="module-mini-container">
+		<div id="connect-menu" class="module-mini-container not-connected">
 			<div class="module-mini-top">
 				<h5 class="sub-title">{L_CONNECT}</h5>
 			</div>
@@ -61,7 +61,7 @@
 			</div>
 		</div>
 	# ELSE #
-		<div id="connect-menu" class="module-mini-container">
+		<div id="connect-menu" class="module-mini-container connected">
 			<div class="module-mini-top">
 				<h5 class="sub-title">{L_PROFIL}</h5>
 			</div>
@@ -103,7 +103,7 @@
 	# ENDIF #
 # ELSE #
 	# IF C_USER_NOTCONNECTED #
-	<div id="connect-menu">
+	<div id="connect-menu" class="not-connected">
 		<div class="horizontal-fieldset">
 			<a href="" class="js-menu-button" onclick="open_submenu('connect-menu');return false;" title="{L_CONNECT}"><i class="fa fa-sign-in"></i> {L_CONNECT}</a>
 			<div class="connect-content">
@@ -132,7 +132,7 @@
 		</div>
 	</div>
 	# ELSE #
-	<div id="connect-menu">
+	<div id="connect-menu" class="connected">
 		<div class="horizontal-fieldset">
 			<a href="" class="js-menu-button" onclick="open_submenu('connect-menu');return false;" title="{L_PROFIL}"><i class="fa fa-bars"></i> {L_PROFIL}</a>
 			<ul class="connect-content">
