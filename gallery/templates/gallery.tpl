@@ -241,7 +241,7 @@
 						<li><a class="cssmenu-title"><i class="fa fa-eye"></i> {L_DISPLAY}</a>
 							<ul class="level-1">
 								<li><a href="{U_BEST_VIEWS}" class="cssmenu-title"><i class="fa fa-eye"></i> {L_BEST_VIEWS}</a></li>
-								<li><a href="{U_BEST_NOTES}" class="cssmenu-title"><i class="fa fa-star-half-empty"></i> {L_BEST_NOTES}</a></li>
+								# IF C_NOTATION_ENABLED #<li><a href="{U_BEST_NOTES}" class="cssmenu-title"><i class="fa fa-star-half-empty"></i> {L_BEST_NOTES}</a></li># ENDIF #
 							</ul>
 						</li>
 						<li><a class="cssmenu-title"><i class="fa fa-sort"></i> {L_ORDER_BY}</a>
@@ -249,7 +249,7 @@
 								<li><a href="{U_ORDER_BY_NAME}" class="cssmenu-title"><i class="fa fa-tag"></i> {L_NAME}</a></li>
 								<li><a href="{U_ORDER_BY_DATE}" class="cssmenu-title"><i class="fa fa-clock-o"></i> {L_DATE}</a></li>
 								<li><a href="{U_ORDER_BY_VIEWS}" class="cssmenu-title"><i class="fa fa-eye"></i> {L_VIEWS}</a></li>
-								<li><a href="{U_ORDER_BY_NOTES}" class="cssmenu-title"><i class="fa fa-star-half-empty"></i> {L_NOTES}</a></li>
+								# IF C_NOTATION_ENABLED #<li><a href="{U_ORDER_BY_NOTES}" class="cssmenu-title"><i class="fa fa-star-half-empty"></i> {L_NOTES}</a></li># ENDIF #
 								<li><a href="{U_ORDER_BY_COM}" class="cssmenu-title"><i class="fa fa-comments-o"></i> {L_COM}</a></li>
 							</ul>
 						</li>
@@ -420,8 +420,10 @@
 										<br />
 										<a href="{pics_list.U_COMMENTS}">{pics_list.L_COMMENTS}</a>
 										# ENDIF #
+										# IF C_NOTATION_ENABLED #
 										<br />
 										{pics_list.KERNEL_NOTATION}
+										# ENDIF #
 									</div>
 									
 									<div class="actions-container">
