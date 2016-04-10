@@ -191,7 +191,7 @@ class BugtrackerUrlBuilder
 		$sort_mode = $sort_mode !== '' ? $sort_mode . '/' : '';
 		$page = $page !== 1 ? $page . '/' : '';
 		$filter = $filter !== null ? $filter . '/' : '';
-		$filter_id = $filter !== null && $filter_id !== 0 ? $filter_id . '/' : '';
+		$filter_id = $filter !== null && $filter_id !== 0 ? $filter_id : '';
 		return DispatchManager::get_url(self::$dispatcher, '/unsolved/' . $sort_field . $sort_mode . $page . $filter . $filter_id);
 	}
 	
@@ -204,7 +204,7 @@ class BugtrackerUrlBuilder
 		$sort_mode = $sort_mode !== '' ? $sort_mode . '/' : '';
 		$page = $page !== 1 ? $page . '/' : '';
 		$filter = $filter !== null ? $filter . '/' : '';
-		$filter_id = $filter !== null && $filter_id !== 0 ? $filter_id . '/' : '';
+		$filter_id = $filter !== null && $filter_id !== 0 ? $filter_id : '';
 		return DispatchManager::get_url(self::$dispatcher, '/solved/' . $sort_field . $sort_mode . $page . $filter . $filter_id);
 	}
 }
