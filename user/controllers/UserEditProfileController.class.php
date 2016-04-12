@@ -391,8 +391,8 @@ class UserEditProfileController extends AbstractController
 						AdministratorAlertService::save_alert($alert);
 						
 						$site_name = GeneralConfig::load()->get_site_name();
-						$subject = StringVars::replace_vars($this->user_lang['registration.subject-mail'], array('site_name' => $site_name));
-						$content = StringVars::replace_vars($this->user_lang['registration.email.mail-administrator-validation'], array(
+						$subject = StringVars::replace_vars($this->lang['registration.subject-mail'], array('site_name' => $site_name));
+						$content = StringVars::replace_vars($this->lang['registration.email.mail-administrator-validation'], array(
 							'pseudo' => $this->user->get_display_name(),
 							'site_name' => $site_name,
 							'signature' => MailServiceConfig::load()->get_mail_signature()
