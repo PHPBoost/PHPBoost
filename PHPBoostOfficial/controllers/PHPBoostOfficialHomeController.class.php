@@ -114,13 +114,22 @@ class PHPBoostOfficialHomeController extends ModuleController
 				}
 				
 				$category = DownloadService::get_categories_manager()->get_categories_cache()->get_category($row['id_category']);
+
+                                $pseudo = "";
+                                if ($row['author_display_name'] != "") {
+                                        $pseudo = $row['author_display_name'];
+                                }
+                                else {
+                                        $pseudo = $row['display_name'];
+                                }
+				
 				$tpl->assign_block_vars('item', array(
 					'U_LINK' => DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $row['id'], $row['rewrited_name'])->rel(),
 					'U_IMG' => Url::to_rel($row['picture_url']),
 					'C_IMG' => !empty($row['picture_url']),
 					'TITLE' => $row['name'],
 					'DESC' => $row['short_contents'],
-					'PSEUDO' => $row['display_name']
+					'PSEUDO' => $pseudo
 				));
 				$i++;
 			}
