@@ -456,7 +456,7 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 
 	CommentsService::delete_comments_topic_module('wiki', $del_to_remove);
 	
-	if ($remove_action == 'remove_all') //On supprime le contenu de la catégorie
+	if ($remove_action == 'remove_all' || count($sub_cats) <= 1) //On supprime le contenu de la catégorie
 	{
 		foreach ($sub_cats as $id) //Chaque sous-catégorie
 		{
