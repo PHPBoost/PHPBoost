@@ -23,7 +23,9 @@
 						'navigator.next' : ${escapejs(LangLoader::get_message('next', 'common'))},
 						'navigator.play' : ${escapejs(LangLoader::get_message('play', 'common'))},
 						'navigator.pause' : ${escapejs(LangLoader::get_message('pause', 'common'))}
-					}
+					},
+					maxHeight: window.innerHeight,
+					maxWidth: window.innerWidth
 				});
 			});
 			
