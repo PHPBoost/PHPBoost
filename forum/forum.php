@@ -227,7 +227,7 @@ if (!empty($id_get))
 	
 	//On vérifie si l'utilisateur a les droits d'écritures.
 	$check_group_write_auth = ForumAuthorizationsService::check_authorizations($id_get)->write();
-	$locked_cat = ($category->get_status() == ForumCategory::STATUS_LOCKED && !AppContext::get_current_user()->is_admin());
+	$locked_cat = ($category->get_status() == ForumCategory::STATUS_LOCKED);
 	if (!$check_group_write_auth)
 	{
 		$tpl->assign_block_vars('error_auth_write', array(

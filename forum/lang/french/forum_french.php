@@ -36,7 +36,7 @@ $LANG['update_data_cached'] = 'Recompter le nombre de sujets et de messages';
 
 //Erreurs
 $LANG['e_topic_lock_forum'] = 'Sujet verrouillé, vous ne pouvez pas poster de message';
-$LANG['e_cat_lock_forum'] = 'Catégorie verrouillée, création de nouveau sujet/message impossible';
+$LANG['e_cat_lock_forum'] = 'Forum verrouillé, création de nouveau sujet/message impossible';
 $LANG['e_unexist_topic_forum'] = 'Le topic que vous demandez n\'existe pas';
 $LANG['e_unable_cut_forum'] = 'Vous ne pouvez pas scinder le sujet à partir de ce message';
 $LANG['e_cat_write'] = 'Vous n\'êtes pas autorisé à écrire dans cette catégorie';
