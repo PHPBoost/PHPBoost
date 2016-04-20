@@ -25,7 +25,8 @@
 						'navigator.pause' : ${escapejs(LangLoader::get_message('pause', 'common'))}
 					},
 					maxHeight: window.innerHeight,
-					maxWidth: window.innerWidth
+					maxWidth: window.innerWidth,
+					shrinkFactor: 0.85
 				});
 			});
 			
