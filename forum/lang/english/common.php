@@ -65,7 +65,6 @@ $lang['config.message_before_topic_title_icon_displayed'] = 'Display associated 
 $lang['config.message_before_topic_title_icon_displayed.explain'] = '<i class="fa fa-msg-display"></i> / <i class="fa fa-msg-not-display"></i>';
 
 //Categories
-$lang['category.status.unlocked'] = 'Unlocked';
 $lang['category.status.locked'] = 'Locked';
 
 //Extended Field

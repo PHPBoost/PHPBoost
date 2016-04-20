@@ -65,7 +65,6 @@ $lang['config.message_before_topic_title_icon_displayed'] = 'Afficher l\'icône a
 $lang['config.message_before_topic_title_icon_displayed.explain'] = '<i class="fa fa-msg-display"></i> / <i class="fa fa-msg-not-display"></i>';
 
 //Categories
-$lang['category.status.unlocked'] = 'Déverrouillé';
 $lang['category.status.locked'] = 'Verrouillé';
 
 //Extended Field
