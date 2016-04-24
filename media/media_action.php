@@ -277,7 +277,7 @@ elseif ($submit)
 	
 	$media = array(
 		'idedit' => retrieve(POST, 'idedit', 0, TINTEGER),
-		'name' => retrieve(POST, 'name', '', TSTRING),
+		'name' => stripslashes(retrieve(POST, 'name', '', TSTRING)),
 		'idcat' => retrieve(POST, 'idcat', 0, TINTEGER),
 		'width' => min(retrieve(POST, 'width', $config->get_max_video_width(), TINTEGER), $config->get_max_video_width()),
 		'height' => min(retrieve(POST, 'height', $config->get_max_video_height(), TINTEGER), $config->get_max_video_height()),
