@@ -177,7 +177,6 @@ class FaqFormController extends ModuleController
 	private function save()
 	{
 		$faq_question = $this->get_faq_question();
-		$previous_category_id = $faq_question->get_id_category();
 		
 		$faq_question->set_question($this->form->get_value('question'));
 		$faq_question->set_rewrited_question(Url::encode_rewrite($faq_question->get_question()));
@@ -209,9 +208,7 @@ class FaqFormController extends ModuleController
 		
 		Feed::clear_cache('faq');
 		FaqCache::invalidate();
-		
-		if ($this->is_new_faq_question || $previous_category_id != $faq_question->get_id_category())
-			FaqCategoriesCache::invalidate();
+		FaqCategoriesCache::invalidate();
 	}
 	
 	private function contribution_actions(FaqQuestion $faq_question, $id)

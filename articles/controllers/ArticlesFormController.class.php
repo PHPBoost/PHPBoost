@@ -309,7 +309,6 @@ class ArticlesFormController extends ModuleController
 	private function save()
 	{
 		$article = $this->get_article();
-		$previous_category_id = $article->get_id_category();
 		
 		$article->set_title($this->form->get_value('title'));
 		$article->set_id_category($this->form->get_value('id_category')->get_raw_value());
@@ -406,9 +405,7 @@ class ArticlesFormController extends ModuleController
 		ArticlesService::get_keywords_manager()->put_relations($id_article, $this->form->get_value('keywords'));
 
 		Feed::clear_cache('articles');
-		
-		if ($this->is_new_article || $previous_category_id != $article->get_id_category())
-			ArticlesCategoriesCache::invalidate();
+		ArticlesCategoriesCache::invalidate();
 	}
 
 	private function contribution_actions(Article $article, $id_article)
