@@ -1027,7 +1027,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			
 			$page = AppContext::get_request()->get_getint('p', 1);
 			$pagination = new ModulePagination($page, $nbr_referer, $_NBR_ELEMENTS_PER_PAGE);
-			$pagination->set_url(new Url('/stats/admin_stats.php?referer=1&amp;p=%d'));
+			$pagination->set_url(new Url('/stats/stats.php?referer=1&amp;p=%d'));
 			
 			if ($pagination->current_page_is_empty() && $page > 1)
 			{
@@ -1082,7 +1082,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			
 			$page = AppContext::get_request()->get_getint('p', 1);
 			$pagination = new ModulePagination($page, $nbr_keyword, $_NBR_ELEMENTS_PER_PAGE);
-			$pagination->set_url(new Url('/stats/admin_stats.php?keyword=1&amp;p=%d'));
+			$pagination->set_url(new Url('/stats/stats.php?keyword=1&amp;p=%d'));
 			
 			if ($pagination->current_page_is_empty() && $page > 1)
 			{
