@@ -83,23 +83,23 @@
 						# ELSE #
 						# START files #
 						<tr>
-							<td style="background:{files.COLOR};">
+							<td class="{files.COLOR}">
 								<a href="{files.U_FILE}">{files.NAME}</a>
 								<a href="{files.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
 							</td>
-							<td style="background:{files.COLOR};">
+							<td class="{files.COLOR}">
 								<a href="{files.U_CAT}">{files.CAT}</a>
 							</td>
-							<td style="background:{files.COLOR};">
+							<td class="{files.COLOR}">
 								<input type="radio" id="visible{files.ID}" name="action[{files.ID}]" value="visible"{files.SHOW}>
 							</td>
-							<td style="background:{files.COLOR};">
+							<td class="{files.COLOR}">
 								<input type="radio" id="unvisible{files.ID}" name="action[{files.ID}]" value="unvisible"{files.HIDE}>
 							</td>
-							<td style="background:{files.COLOR};">
+							<td class="{files.COLOR}">
 								<input type="radio" name="action[{files.ID}]" value="unaprobed"{files.UNAPROBED} # IF NOT files.UNAPROBED #disabled="disabled" # ENDIF #/>
 							</td>
-							<td style="background:{files.COLOR};">
+							<td class="{files.COLOR}">
 								<input type="radio" id="delete{files.ID}" name="action[{files.ID}]" value="delete" onclick="return confirm('{L_CONFIRM_DELETE}');">
 							</td>
 						</tr>
