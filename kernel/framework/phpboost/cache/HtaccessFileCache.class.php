@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           HtaccessCache.class.php
+ *                           HtaccessFileCache.class.php
  *                            -------------------
  *   begin                : October 22, 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -43,6 +43,8 @@ class HtaccessFileCache implements CacheData
 	{
 		$this->htaccess_file_content = '';
 		$this->general_config = GeneralConfig::load();
+		
+		$this->add_free_php56();
 		
 		$this->add_disable_signatures_protection();
 		
@@ -97,6 +99,21 @@ class HtaccessFileCache implements CacheData
 	{
 		$this->add_empty_line();
 		$this->add_line('# ' . $name . ' #');
+	}
+	
+	private function get_domain($hostname)
+	{
+		preg_match("/[a-z0-9\-]{1,63}\.[a-z\.]{2,6}$/", parse_url($hostname, PHP_URL_HOST), $_domain_tld);
+		return $_domain_tld[0];
+	}
+	
+	private function add_free_php56()
+	{
+		if($this->get_domain($this->general_config->get_site_url()) == 'free.fr')
+		{
+			$this->add_section('Enable PHP5.6 on '. $this->get_domain($this->general_config->get_site_url()) .' hosting');
+			$this->add_line('php56 1');
+		}
 	}
 	
 	private function add_disable_signatures_protection()
@@ -182,7 +199,7 @@ class HtaccessFileCache implements CacheData
 	{
 		$this->add_section('Core');
 
-		$this->add_rewrite_rule('^user/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})\.php$', 'user/pm.php?pm=$1&id=$2&p=$3&quote=$4');
+		$this->add_rewrite_rule('^user/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})$', 'user/pm.php?pm=$1&id=$2&p=$3&quote=$4');
 
 		$eps = AppContext::get_extension_provider_service();
 		$mappings = $eps->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT);
