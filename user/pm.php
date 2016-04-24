@@ -541,7 +541,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la 
 			
 			if ($convers XOR $edit_pm)
 			{
-				$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+				$contents = stripslashes(retrieve(POST, 'contents', '', TSTRING_PARSE));
 				$title = retrieve(POST, 'title', '');
 				
 				if ($edit_pm && !empty($contents))
@@ -597,7 +597,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la 
 				$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
 				
 				$tpl->assign_block_vars('edit_pm', array(
-					'CONTENTS' => ($prw_convers XOR $prw) ? $contents : FormatingHelper::unparse(stripslashes($pm['contents'])),
+					'CONTENTS' => ($prw_convers XOR $prw) ? $contents : FormatingHelper::unparse(addslashes($pm['contents'])),
 					'U_ACTION_EDIT' => url('.php?edit=' . $pm_edit . '&amp;token=' . AppContext::get_session()->get_token()),
 					'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>'
 				));
