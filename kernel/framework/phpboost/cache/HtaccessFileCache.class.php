@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           HtaccessCache.class.php
+ *                           HtaccessFileCache.class.php
  *                            -------------------
  *   begin                : October 22, 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -106,7 +106,7 @@ class HtaccessFileCache implements CacheData
 		preg_match("/[a-z0-9\-]{1,63}\.[a-z\.]{2,6}$/", parse_url($hostname, PHP_URL_HOST), $_domain_tld);
 		return $_domain_tld[0];
 	}
-
+	
 	private function add_free_php56()
 	{
 		if($this->get_domain($this->general_config->get_site_url()) == 'free.fr')
@@ -115,6 +115,7 @@ class HtaccessFileCache implements CacheData
 			$this->add_line('php56 1');
 		}
 	}
+	
 	private function add_disable_signatures_protection()
 	{
 		$this->add_section('Disable signatures protection');
