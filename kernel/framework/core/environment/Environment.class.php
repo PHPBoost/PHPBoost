@@ -322,25 +322,31 @@ class Environment
 
 	public static function compute_running_module_name()
 	{
-		$path = substr(SCRIPT, strlen(DIR));
+		$path = substr(REWRITED_SCRIPT, strlen(DIR));
 		$path = trim($path, '/');
-		if (strpos($path, '/'))
+		
+		$general_config = GeneralConfig::load();
+		$other_home_page = trim($general_config->get_other_home_page(), '/');
+		
+		if (strpos($path, '/') || (!empty($other_home_page) && $path == $other_home_page))
 		{
 			$module_name = explode('/', $path);
 			self::$running_module_name = $module_name[0];
-			self::$home_page_running = false;
+			
+			if ($path == $other_home_page)
+				self::$home_page_running = true;
+			else
+				self::$home_page_running = false;
 		}
 		else
 		{
 			self::$home_page_running = true;
 
-			$general_config = GeneralConfig::load();
-			$other_home_page = $general_config->get_other_home_page();
 			$module_home_page = $general_config->get_module_home_page();
 
 			if (empty($other_home_page) && !empty($module_home_page))
 			{
-				self::$running_module_name = $general_config->get_module_home_page();
+				self::$running_module_name = $module_home_page;
 			}
 			else
 				self::$running_module_name = '';
