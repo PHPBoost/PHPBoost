@@ -429,7 +429,7 @@
 									<div class="actions-container">
 										# IF C_GALLERY_MODO #
 										<span id="fihref{pics_list.ID}"><a href="javascript:display_rename_file('{pics_list.ID}', '{pics_list.RENAME}', '{pics_list.RENAME_CUT}');" title="{L_EDIT}" class="fa fa-edit"></a></span>
-										<a href="{pics_list.U_DEL}"title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
+										<a href="{pics_list.U_DEL}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
 										<div id="move{pics_list.ID}" class="move-pics-container">
 											<div class="bbcode-block move-pics-block" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);">
 												<div>{L_MOVETO} :</div>
