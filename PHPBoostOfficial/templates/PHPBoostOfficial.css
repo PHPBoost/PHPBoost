@@ -66,6 +66,10 @@ p.p-slide-content {
 		text-align: center;
 		overflow: hidden;
 	}
+
+	ul.p-slide-container {
+		margin: 0;
+	}
 }
 
 a.p-slide-title {
@@ -107,7 +111,7 @@ div.p-link-btn {
 
 @media (min-width: 481px) {
 	.p-slide-more {
-		margin: 0 40px 0 0;
+		margin: 0 5px 0 0;
 	}
 }
 

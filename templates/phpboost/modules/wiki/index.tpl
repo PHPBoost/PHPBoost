@@ -53,7 +53,7 @@
 							</li>
 							<li>
 								<i class="fa fa-file-text"></i>
-								<a href="{PATH_TO_ROOT}/wiki/creer-un-theme">Créer un thème</a>
+								<a href="{PATH_TO_ROOT}/wiki/structure-d-un-theme">Structure d'un thème</a>
 							</li>
 							<li>
 								<i class="fa fa-file-text"></i>
@@ -187,7 +187,7 @@
 						<ul class="pbt-wiki-section-list">
 							<li>
 								<i class="fa fa-folder-open"></i>
-								<a href="{PATH_TO_ROOT}/wiki/creer-un-theme">Créer un thème</a>
+								<a href="{PATH_TO_ROOT}/wiki/structure-d-un-theme">Structure un thème</a>
 								<span class="more"> - De A à Z</span>
 							</li>
 							<li>

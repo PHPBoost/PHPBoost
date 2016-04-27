@@ -44,12 +44,14 @@
 					<button type="submit" id="btn-register" name="register" value="true" class="submit">{L_REGISTER}</button>
 					<input type="hidden" name="token" value="{TOKEN}">
 				</form>
-				# IF C_FB_AUTH_ENABLED #
-				<a class="social-connect fb" href="${relative_url(UserUrlBuilder::connect('fb'))}" title="${LangLoader::get_message('facebook-connect', 'user-common')}"><i class="fa fa-facebook"></i><span>${LangLoader::get_message('facebook-connect', 'user-common')}</span></a>
-				# ENDIF #
-				# IF C_GOOGLE_AUTH_ENABLED #
-				<a class="social-connect google" href="${relative_url(UserUrlBuilder::connect('google'))}" title="${LangLoader::get_message('google-connect', 'user-common')}"><i class="fa fa-google-plus"></i><span>${LangLoader::get_message('google-connect', 'user-common')}</span></a>
-				# ENDIF #
+				<div class="social-connect-container">
+					# IF C_FB_AUTH_ENABLED #
+					<a class="social-connect fb" href="${relative_url(UserUrlBuilder::connect('fb'))}" title="${LangLoader::get_message('facebook-connect', 'user-common')}"><i class="fa fa-facebook"></i><span>${LangLoader::get_message('facebook-connect', 'user-common')}</span></a>
+					# ENDIF #
+					# IF C_GOOGLE_AUTH_ENABLED #
+					<a class="social-connect google" href="${relative_url(UserUrlBuilder::connect('google'))}" title="${LangLoader::get_message('google-connect', 'user-common')}"><i class="fa fa-google-plus"></i><span>${LangLoader::get_message('google-connect', 'user-common')}</span></a>
+					# ENDIF #
+				</div>
 			# ENDIF #
 			<a class="forgot-pass small" href="${relative_url(UserUrlBuilder::forget_password())}">{L_FORGOT_PASS}</a>
 		</div>
