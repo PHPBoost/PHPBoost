@@ -192,7 +192,7 @@ aside#menu-right {
 		-ms-flex-order: 2;
 		-webkit-flex-order: 2;
 		flex: 1 0 auto;
-		-ms-flex: 1 0 auto;
+		-ms-flex: 1 0 100%;
 	}
 
 	aside#menu-left,
