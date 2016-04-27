@@ -153,9 +153,9 @@ class Debug
 
 	/**
 	 * @desc Displays information on an exception and exits
-	 * @param Exception $exception the exception to display information on
+	 * @param $exception the exception to display information on
 	 */
-	public static function fatal(Exception $exception)
+	public static function fatal($exception)
 	{
 		if (!self::$html_output)
 		{
@@ -212,7 +212,7 @@ class Debug
 	/**
 	 * @desc print the current stacktrace
 	 */
-	public static function get_stacktrace_as_string($start_trace_index = 0,	Exception $exception = null)
+	public static function get_stacktrace_as_string($start_trace_index = 0, $exception = null)
 	{
 		$string_stacktrace = '';
 		$stacktrace = null;
