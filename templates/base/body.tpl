@@ -67,13 +67,9 @@
 						</li>
 						# START link_bread_crumb #
 						<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb" # IF link_bread_crumb.C_CURRENT # class="current" # ENDIF #>
-							# IF link_bread_crumb.C_CURRENT #
-							<span itemprop="title">{link_bread_crumb.TITLE}</span>
-							# ELSE #
 							<a href="{link_bread_crumb.URL}" title="{link_bread_crumb.TITLE}" itemprop="url">
 								<span itemprop="title">{link_bread_crumb.TITLE}</span>
 							</a>
-							# ENDIF #
 						</li>
 						# END link_bread_crumb #
 					</ol>
