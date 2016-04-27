@@ -172,7 +172,7 @@ i.alert {
 
 @media (max-width: 768px) {
 	#connect-menu.disconnected .forgot-pass {
-		padding: 20px;
+		padding: 15px 20px 20px 20px;
 		display: block;
 	}
 	#connect-menu.disconnected .forgot-pass:hover {
@@ -373,6 +373,10 @@ i.alert {
 @media (min-width: 769px) {
 	#connect-menu a.social-connect {
 		margin: 2px auto;
+	}
+
+	.social-connect-container {
+		display: inline-block;
 	}
 }
 
