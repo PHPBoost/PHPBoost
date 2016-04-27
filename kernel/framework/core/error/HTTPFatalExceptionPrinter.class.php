@@ -36,7 +36,7 @@ class HTTPFatalExceptionPrinter
 	private $is_row_odd = true;
 	private $output = '';
 
-	public function __construct(Exception $exception)
+	public function __construct($exception)
 	{
 		$this->exception = $exception;
 		$this->type = get_class($this->exception);
