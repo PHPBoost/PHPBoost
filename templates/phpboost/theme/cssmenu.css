@@ -8,16 +8,28 @@ Contient les elements associes aux menus
 /* -------------------------- */
 
 /* --- Classes generales cssmenu --- */
+.cssmenu {
+	font-size: 0;
+}
+
 .cssmenu,
 .cssmenu ul,
 .cssmenu ul li,
 .cssmenu ul li .cssmenu-title {
-	list-style: none;
-	line-height: 1;
-	display: block;
 	position: relative;
 	margin: 0;
+	list-style: none;
+	line-height: 1;
 	left: auto;
+}
+
+.cssmenu 		{ display: block; }
+
+
+.cssmenu ul,
+.cssmenu ul li,
+.cssmenu ul li .cssmenu-title {
+	display: block;
 }
 
 @media (min-width: 769px) {
@@ -45,6 +57,31 @@ Contient les elements associes aux menus
 #menu-right .cssmenu.small-screen  { margin-left: 0; }
 .cssmenu li:hover > .cssmenu-title {
 	text-decoration: none;
+}
+
+.cssmenu-img {
+	display: inline-block;
+}
+
+@media (max-width: 768px) {
+	.cssmenu > .cssmenu-img {
+		display: none;
+	}
+
+	.cssmenu-img {
+		padding: 0px 5px 0px 0px;
+	}
+}
+
+@media (min-width: 769px) {
+	.cssmenu-img {
+		padding: 10px 0 0 5px;
+		vertical-align: top;
+	}
+}
+
+.cssmenu-img-level-0 ~ ul.level-0 {
+	display: inline-block;
 }
 
 .close {
@@ -125,10 +162,15 @@ Contient les elements associes aux menus
 	padding: 11px;
 }
 
+@media (max-width: 768px) {
+	.cssmenu.small-screen .cssmenu-img-level-0 + div  {
+		padding: 10px 40px 5px 17px;
+	}
+}
+
 /* --- Variante cssmenu-horizontal --- */
 #main .cssmenu-horizontal {
-	border: 1px #BEBEBE solid;
-	background: #FFFFFF;
+	background-color: #FFFFFF;
 }
 
 /* --- Variante cssmenu-group --- */
@@ -798,6 +840,7 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 	line-height: 1;
 	display: none;
 	position: relative;
+	font-size: 1.2rem;
 }
 
 @media (min-width: 769px) {
@@ -865,15 +908,15 @@ footer .cssmenu-static ul ul li:hover > .cssmenu-title 		{ color: #FFFFFF; }
 		font-size: 1.3rem;
 	}
 
-#main .cssmenu-actionslinks.small-screen .menu-button {
-	float: none;
-	background-color: transparent;
-	background-image: none;
-	border: none;
-	font-size: 100%;
-	font-family: "Trebuchet MS",Verdana,"Bitstream Vera Sans",Times,serif;
-	text-align: left;
-}
+	#main .cssmenu-actionslinks.small-screen .menu-button {
+		float: none;
+		background-color: transparent;
+		background-image: none;
+		border: none;
+		font-size: 100%;
+		font-family: "Trebuchet MS",Verdana,"Bitstream Vera Sans",Times,serif;
+		text-align: left;
+	}
 
 	.cssmenu-actionslinks .menu-button {
 		float: right;

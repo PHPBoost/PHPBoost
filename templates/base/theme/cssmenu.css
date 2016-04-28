@@ -8,16 +8,28 @@ Contient les elements associes aux menus
 /* -------------------------- */
 
 /* --- Classes generales cssmenu --- */
+.cssmenu {
+	font-size: 0;
+}
+
 .cssmenu,
 .cssmenu ul,
 .cssmenu ul li,
 .cssmenu ul li .cssmenu-title {
-	display: block;
 	position: relative;
 	margin: 0;
 	list-style: none;
 	line-height: 1;
 	left: auto;
+}
+
+.cssmenu 		{ display: block; }
+header .cssmenu { display: inline-block; }
+
+.cssmenu ul,
+.cssmenu ul li,
+.cssmenu ul li .cssmenu-title {
+	display: block;
 }
 
 .cssmenu:after,
@@ -28,6 +40,31 @@ Contient les elements associes aux menus
 	content: "";
 	line-height: 0;
 	clear: both;
+}
+
+.cssmenu-img {
+	display: inline-block;
+}
+
+@media (max-width: 768px) {
+	.cssmenu > .cssmenu-img {
+		display: none;
+	}
+
+	.cssmenu-img {
+		padding: 0px 5px 0px 0px;
+	}
+}
+
+@media (min-width: 769px) {
+	.cssmenu-img {
+		padding: 10px 0 0 5px;
+		vertical-align: top;
+	}
+}
+
+.cssmenu-img-level-0 ~ ul.level-0 {
+	display: inline-block;
 }
 
 .close {
@@ -90,10 +127,15 @@ Contient les elements associes aux menus
 	padding: 11px;
 }
 
+@media (max-width: 768px) {
+	.cssmenu.small-screen .cssmenu-img-level-0 + div  {
+		padding: 10px 40px 5px 17px;
+	}
+}
+
 /* --- Variante cssmenu-horizontal --- */
 #main .cssmenu-horizontal {
 	background-color: #FFFFFF;
-	border: 1px #BEBEBE solid;
 }
 
 /* --- Variante cssmenu-group --- */
@@ -626,6 +668,7 @@ header .cssmenu ul ul li .cssmenu-title							{ background-color: #333333;	}
 	position: relative;
 	list-style: none;
 	line-height: 1;
+	font-size: 1.2rem;
 }
 
 .cssmenu .menu-button:before {
@@ -696,7 +739,6 @@ header .cssmenu ul ul li .cssmenu-title							{ background-color: #333333;	}
 	border: 1px solid #999999;
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1)  #B3B3B3 rgba(0, 0, 0, 0.25);
 	border-radius: 4px;
-	font-size: 0;
 	font-family: FontAwesome;
 	font-style: normal;
 	font-weight: normal;
@@ -707,12 +749,17 @@ header .cssmenu ul ul li .cssmenu-title							{ background-color: #333333;	}
 	-webkit-font-smoothing: antialiased;
 }
 
+@media (min-width: 769px) {
+	.cssmenu-actionslinks .menu-button {
+		font-size: 0;
+	}
+}
+
 #main .cssmenu-actionslinks.small-screen .menu-button {
 	float: none;
 	background-color: transparent;
 	background-image: none;
 	border: none;
-	font-size: 100%;
 	font-family: "Trebuchet MS",Verdana,"Bitstream Vera Sans",Times,serif;
 	text-align: left;
 }
