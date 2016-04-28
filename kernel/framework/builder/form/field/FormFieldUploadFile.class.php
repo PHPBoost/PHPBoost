@@ -60,7 +60,7 @@ class FormFieldUploadFile extends AbstractFormField
 		$template->put_all(array(
 			'C_PREVIEW_HIDDEN' => !$file_type->is_picture(),
 			'C_AUTH_UPLOAD' => FileUploadConfig::load()->is_authorized_to_access_interface_files(),
-			'FILE_PATH' => Url::to_relative($this->get_value()),
+			'FILE_PATH' => Url::to_rel($this->get_value()),
 		));
 
 		return $template;

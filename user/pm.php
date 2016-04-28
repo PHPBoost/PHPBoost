@@ -729,7 +729,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 			'timestamp' => (time() - SessionsConfig::load()->get_active_session_duration()),
 			'idconvers' => $pm_id_get,
 			'number_items_per_page' => ($_NBR_ELEMENTS_PER_PAGE + $quote_last_msg),
-			'display_from' => ($pagination->get_display_from() - $quote_last_msg)
+			'display_from' => max(($pagination->get_display_from() - $quote_last_msg), 0)
 		)
 	);
 	
