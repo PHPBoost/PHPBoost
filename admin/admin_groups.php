@@ -97,17 +97,21 @@ elseif ($valid && $add_post) //ajout  du groupe.
 	}
 }
 elseif (!empty($idgroup) && $del_group) //Suppression du groupe.
-{	
+{
 	$array_members = array();
 	try {
 		$array_members = explode('|', PersistenceContext::get_querier()->get_column_value(DB_TABLE_GROUP, 'members', 'WHERE id=:id', array('id' => $idgroup)));
 	} catch (RowNotFoundException $e) {}
 	
-	foreach ($array_members as $key => $user_id)
+	if(!empty($array_members))
 	{
-		GroupsService::remove_member($user_id, $idgroup); //Mise à jour des membres étant dans le groupe supprimé.
+		foreach ($array_members as $key => $user_id)
+		{
+			if (!empty($user_id) && UserService::user_exists('WHERE user_id=:user_id', array('user_id' => $user_id)))
+				GroupsService::remove_member($user_id, $idgroup); //Mise à jour des membres étant dans le groupe supprimé.
+		}
 	}
-
+	
 	PersistenceContext::get_querier()->delete(DB_TABLE_GROUP, 'WHERE id=:id', array('id' => $idgroup));
 	
 	GroupsCache::invalidate(); //On régénère le fichier de cache des groupes

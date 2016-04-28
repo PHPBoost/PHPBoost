@@ -306,7 +306,7 @@ class HtaccessFileCache implements CacheData
 	{
 		// TODO : mettre une option dans la configuration avancée pour le paramétrer
 		//$this->add_section('Force to use HTTPS if available');
-		//$this->add_line('RewriteCond %{SERVER_PORT}s ^(443(s)|[0-9]+s)$');
+		//$this->add_line('RewriteCond %{HTTPS} off');
 		//$this->add_line('RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}');
 	}
 	
@@ -360,7 +360,7 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('RewriteCond %{HTTP_USER_AGENT} ^Net\ Vampire [NC,OR]');
 		$this->add_line('RewriteCond %{HTTP_USER_AGENT} ^NetZIP [NC,OR]');
 		$this->add_line('# Tools');
-		$this->add_line('RewriteCond %{HTTP_USER_AGENT} ^(curl|Dart.?Communications|Enfish|htdig|Java|larbin) [NC,OR]');
+		$this->add_line('RewriteCond %{HTTP_USER_AGENT} ^(Dart.?Communications|Enfish|htdig|Java|larbin) [NC,OR]');
 		$this->add_line('RewriteCond %{HTTP_USER_AGENT} (FrontPage|Indy.?Library|RPT\-HTTPClient) [NC,OR]');
 		$this->add_line('RewriteCond %{HTTP_USER_AGENT} ^(libwww|lwp|libwww-perl.*|PHP|Python|www\.thatrobotsite\.com|webbandit|Wget|Zeus) [NC,OR]');
 		$this->add_line('RewriteCond %{HTTP_USER_AGENT} ^(Microsoft|MFC).(Data|Internet|URL|WebDAV|Foundation).(Access|Explorer|Control|MiniRedir|Class) [NC,OR]');

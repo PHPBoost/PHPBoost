@@ -133,7 +133,7 @@ if (ServerConfiguration::get_phpversion() > Updates::PHP_MIN_VERSION_UPDATES)
 else
 {
 	$tpl->put_all(array(
-		'L_INCOMPATIBLE_PHP_VERSION' => sprintf($LANG['incompatible_php_version'], PHP_MIN_VERSION_UPDATES),
+		'L_INCOMPATIBLE_PHP_VERSION' => sprintf($LANG['incompatible_php_version'], Updates::PHP_MIN_VERSION_UPDATES),
 		'C_INCOMPATIBLE_PHP_VERSION' => true,
 	));
 }

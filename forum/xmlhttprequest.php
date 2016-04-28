@@ -116,9 +116,12 @@ elseif (retrieve(GET, 'del', false)) //Suppression d'un message.
 	} catch (RowNotFoundException $e) {}
 	
 	//On va chercher les infos sur le topic
-	try {
-		$topic = PersistenceContext::get_querier()->select_single_row_query('SELECT id, user_id, idcat, first_msg_id, last_msg_id, last_timestamp FROM ' . PREFIX . 'forum_topics WHERE id=:id', array('id' => $msg['idtopic']));
-	} catch (RowNotFoundException $e) {}
+	if ($msg)
+	{
+		try {
+			$topic = PersistenceContext::get_querier()->select_single_row_query('SELECT id, user_id, idcat, first_msg_id, last_msg_id, last_timestamp FROM ' . PREFIX . 'forum_topics WHERE id=:id', array('id' => $msg['idtopic']));
+		} catch (RowNotFoundException $e) {}
+	}
 	
 	if ($msg && $topic && !empty($msg['idtopic']) && $topic['first_msg_id'] != $idm_get) //Suppression d'un message.
 	{
