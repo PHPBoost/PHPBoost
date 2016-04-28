@@ -149,7 +149,7 @@ i.alert {
 		display: block;
 		padding: 10px 20px;
 		margin: 10px auto 0 auto;
-		width: 70%;
+		width: 90%;
 	}
 
 	#connect-menu button {
@@ -293,7 +293,9 @@ i.alert {
 		width: 100%;
 		background-color: #86A6C7;
 		transition: height 0.1s;
+		border-bottom: 1px solid #366493;
 	}
+	
 	#connect-menu.active .fa-connect {
 		display: none;
 	}
@@ -384,6 +386,7 @@ i.alert {
 	#connect-menu a.social-connect {
 		height: 40px;
 		padding: 10px;
+		width: 90%;
 	}
 	
 	#connect-menu a.fb 		{ border: 1px solid #224389; }
