@@ -328,7 +328,7 @@ class Environment
 		$general_config = GeneralConfig::load();
 		$other_home_page = trim($general_config->get_other_home_page(), '/');
 		
-		if (strpos($path, '/') || (!empty($other_home_page) && $path == $other_home_page))
+		if (!empty($path) || (!empty($other_home_page) && $path == $other_home_page))
 		{
 			$module_name = explode('/', $path);
 			self::$running_module_name = $module_name[0];
