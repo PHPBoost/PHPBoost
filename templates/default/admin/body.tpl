@@ -3,7 +3,7 @@
 		<nav class="admin-index">
 			<ul>
 				<li>
-					<a href="{PATH_TO_ROOT}/index.php" title="{L_INDEX_SITE}">
+					<a href="{PATH_TO_ROOT}/" title="{L_INDEX_SITE}">
 						<i class="fa fa-fw fa-home"></i> <span>{L_INDEX_SITE}</span>
 					</a>
 				</li>
