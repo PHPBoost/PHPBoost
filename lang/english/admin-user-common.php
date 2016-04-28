@@ -57,7 +57,7 @@ $lang['members.config.default-avatar-activation'] = 'Enable default avatar';
 $lang['members.config.default-avatar-activation-explain'] = 'Put an avatar to members who do not have one';
 $lang['members.config.default-avatar-link'] = 'Address of the default avatar';
 $lang['members.default-avatar-link-explain'] = 'Put it in the images folder of your theme';
-$lang['members.config.authorization-read-member-profile'] = 'Here you define the permissions to read the list of members as well as some personal information such as their emails.';
+$lang['members.config.authorization-read-member-profile'] = 'Here you define the permissions to read the list of groups and members as well as some personal information such as their emails.';
 $lang['members.config.welcome-message'] = 'Message to all members';
 $lang['members.config.welcome-message-content'] = 'Welcome message displayed in the panel member';
 
