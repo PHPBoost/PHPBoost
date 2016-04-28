@@ -1,4 +1,4 @@
-<table  id="table-mini-download">
+<table id="table-mini-download">
 	<thead>
 		<tr>
 			<th><i class="fa # IF C_SORT_BY_DATE #fa-calendar# ELSE #fa-trophy# ENDIF #"></i></th>
