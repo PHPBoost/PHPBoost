@@ -8,6 +8,10 @@ Contient les elements associes aux menus
 /* -------------------------- */
 
 /* --- Classes generales cssmenu --- */
+.cssmenu {
+	font-size: 0;
+}
+
 .cssmenu,
 .cssmenu ul,
 .cssmenu ul li,
