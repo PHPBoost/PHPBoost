@@ -24,6 +24,8 @@
 			menu_title = settings.title.replace(regtitle,'').toLowerCase();
 			cssmenu.find('li ul').parent().addClass('has-sub');
 			cssmenu.prepend('<div id="menu-button-' + menu_title + '" class="menu-button">' + settings.title + '</div>');
+			$(this).find(".cssmenu-img").prependTo(this);
+			$(this).find(".cssmenu-img").clone().prependTo( "#menu-button-" + menu_title );
 			$(this).find('#menu-button-' + menu_title).on('click', function(){
 				$(this).toggleClass('menu-opened');
 				var mainmenu = $(this).next('ul');
