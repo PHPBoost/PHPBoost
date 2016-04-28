@@ -317,6 +317,14 @@ class Authorizations
 				{
 					$merged[$key] = $bit;
 				}
+				unset($child[$key]);
+			}
+			foreach ($child as $key => $value)
+			{
+				if (!empty($value) || ($parent_guest_auth && !empty($merged['r-1'])))
+				{
+					$merged[$key] = $parent_guest_auth;
+				}
 			}
 		}
 		elseif ($mode == self::AUTH_CHILD_PRIORITY)
