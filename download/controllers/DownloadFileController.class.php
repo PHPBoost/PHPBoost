@@ -58,13 +58,15 @@ class DownloadFileController extends AbstractController
 			DownloadService::update_number_downloads($this->downloadfile);
 			DownloadCache::invalidate();
 			
-			if (Url::check_url_validity($this->downloadfile->get_url()->relative()))
+			if (Url::check_url_validity($this->downloadfile->get_url()->absolute()))
 			{
 				header('Content-Description: File Transfer');
 				header('Content-Transfer-Encoding: binary');
 				header('Accept-Ranges: bytes');
 				header('Content-Type: application/force-download');
 				header('Location: ' . $this->downloadfile->get_url()->absolute());
+				
+				return $this->generate_response();
 			}
 			else
 			{
@@ -77,6 +79,18 @@ class DownloadFileController extends AbstractController
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
 		}
+	}
+	
+	private function generate_response()
+	{
+		$response = new SiteDisplayResponse(new StringTemplate(''));
+		
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->downloadfile->get_name(), LangLoader::get_message('module_title', 'common', 'download'));
+		$graphical_environment->get_seo_meta_data()->set_description($this->downloadfile->get_short_contents());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::download($this->downloadfile->get_id()));
+		
+		return $response;
 	}
 }
 ?>
