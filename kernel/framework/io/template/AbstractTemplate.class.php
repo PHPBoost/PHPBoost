@@ -169,8 +169,8 @@ abstract class AbstractTemplate implements Template
 		
 		if (!preg_match('`post\.php|edit`', REWRITED_SCRIPT))
 		{
-			$array_match_js[] = '`<script(?: .*)? src="([^"]*)"(.*)?></script>`isU';
-			$array_match_js[] = '`<script(?: .*)?>(?:<!--)?(.*)(?:-->)?</script>`isU';
+			$array_match_js[] = '`<script(?: type="text/javascript")? src="([^"]*)"(?: type="text/javascript")?></script>`isU';
+			$array_match_js[] = '`<script(?: type="text/javascript")?>(?:<!--)?(.*)(?:-->)?</script>`isU';
 			
 			preg_match_all($array_match_js[0], $generated_page, $matches);
 			foreach ($matches[1] as $value) {
