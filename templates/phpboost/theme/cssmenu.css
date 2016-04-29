@@ -579,9 +579,8 @@ aside .cssmenu.cssmenu-right li:hover > ul 		{ right: 100%; top: 0;	}
 	}
 }
 
-footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 li .cssmenu-title {
+footer .cssmenu.cssmenu-static ul.level-0 li:nth-child(4) ul.level-1 li .cssmenu-title:before {
 	font-family: FontAwesome;
-	font-size: inherit;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
