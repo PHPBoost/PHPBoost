@@ -32,5 +32,5 @@ jQuery(document).ready(function() {
 		custom_theme_widget: 'recaptcha-widget'
 	};
 	</script >
-	<script src="http://www.google.com/recaptcha/api/challenge?k={SITE_KEY}" ></script >
+	<script src="https://www.google.com/recaptcha/api/challenge?k={SITE_KEY}" ></script >
 </div>
