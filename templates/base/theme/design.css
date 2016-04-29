@@ -211,13 +211,15 @@ aside#menu-right {
 		-webkit-flex-order: 3;
 	}
 	
-	.main-with-left,
-	.main-with-right {
+	#main.main-with-left,
+	#main.main-with-right {
 		width: calc(100% - 200px);
+		-ms-flex: 1 0 auto; /*Tricks IE*/
 	}
 	
-	.main-with-left.main-with-right {
+	#main.main-with-left.main-with-right {
 		width: calc(100% - 400px);
+		-ms-flex: 1 0 auto; /*Tricks IE*/
 	}
 }
 
