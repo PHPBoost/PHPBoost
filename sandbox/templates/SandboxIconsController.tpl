@@ -64,17 +64,17 @@
 		</header>
 		<div class="content">
 			<p>{@css.icon.howto.explain}</p>
-			<p>{@css.icon.howto.update}</p>		
+			<p>{@css.icon.howto.update}</p>
 			
 			<br />
 			<h3>{@css.icon.howto.html}</h3>
 			<p>{@css.icon.howto.html.class}</p>
 			<div class="code">
-				<pre><span><</span><span>i class="fa fa-edit"><</span>/i> Edition</pre>
-			</div>			
+				<pre><span><i class="fa fa-edit"></i> Edition</span></pre>
+			</div>
 			<p>{@css.icon.howto.html.class.result.i}<i class="fa fa-edit"></i> Edition</p>
 			<div class="code">
-				<pre><span><</span>a class="fa fa-globe" href="http://www.phpboost.com">PHPBoost<<span>/a></span></pre>
+				<pre><span><a class="fa fa-globe" href="http://www.phpboost.com">PHPBoost</a></span></pre>
 			</div>
 			<p>{@css.icon.howto.html.class.result.a}<a class="fa fa-globe" href="http://www.phpboost.com">PHPBoost</a></p>
 			<p>{@css.icon.howto.html.class.result.all}</p>
@@ -84,11 +84,11 @@
 			<p>{@css.icon.howto.css.class}</p>
 			<span class="formatter-code">{@css.icon.howto.css.css.code}</span>
 			<div class="code">
-				<pre>.success { ... }<br /><br />.success::before {<br /> content: "\f00c";<br /> font-family: FontAwesome; <br />}</pre>				
+				<pre>.success { ... }<br /><br />.success::before {<br /> content: "\f00c";<br /> font-family: FontAwesome; <br />}</pre>
 			</div>
 			<span class="formatter-code">{@css.icon.howto.css.html.code}</span>
 			<div class="code">
-				<pre><span>div class="success">{@css.message_success}<<span>/div></span></pre>
+				<pre><span><div class="success">{@css.message_success}</div></span></pre>
 			</div>
 			<div class="success">{@css.message_success}</div>
 			
@@ -97,7 +97,7 @@
 			<p>{@css.icon.howto.variants.explain}</p>
 			<p>{@css.icon.howto.variants.list}<a class="basic-button" href="https://fortawesome.github.io/Font-Awesome/examples/">Font-Awesome/examples</a></p>
 			<div class="code">
-				<pre><<span>i class="fa fa-spinner fa-pulse fa-2x><</span>/i></pre>
+				<pre><span><i class="fa fa-spinner fa-pulse fa-2x></i></span></pre>
 			</div>
 			<p>{@css.icon.howto.variants.spinner}<i class="fa fa-spinner fa-pulse fa-2x"></i></p>
 		</div>
