@@ -88,5 +88,13 @@ class SandboxUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/template');
 	}
+	
+	/**
+	 * @return Url
+	 */
+	public static function menu()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/menu');
+	}
 }
 ?>
