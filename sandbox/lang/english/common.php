@@ -39,6 +39,7 @@ $lang['title.form_builder'] = 'Form builder';
 $lang['title.table_builder'] = 'Table builder';
 $lang['title.icons'] = 'Icons';
 $lang['title.css'] = 'CSS';
+$lang['title.cssmenu'] = 'Cssmenu';
 $lang['title.mail_sender'] = 'Mail sender';
 $lang['title.string_template'] = 'Template benchmark';
 
@@ -46,14 +47,138 @@ $lang['welcome_message'] = 'Welcome in the Sandbox module.<br /><br />
 Here you can test several parts of the PHPBoost framework:<br />
 <ul>
 <li>Rendering of the different fields of the <a href="' . SandboxUrlBuilder::form()->absolute() . '">form builder</a></li>
-<li>The <a href="' . SandboxUrlBuilder::table()->absolute() . '">dynaic table generation</a></li>
+<li>The <a href="' . SandboxUrlBuilder::table()->absolute() . '">dynamic table generation</a></li>
 <li>The <a href="' . SandboxUrlBuilder::icons()->absolute() . '">icons list</a> of the Font Awesome library used in the  different modules</li>
 <li>Rendering of the main <a href="' . SandboxUrlBuilder::css()->absolute() . '">CSS clsss</a></li>
+<li>Rendering of cssmenu <a href="' . SandboxUrlBuilder::cssmenu()->absolute() . '">cssmenu menus</a></li>
 <li><a href="' . SandboxUrlBuilder::mail()->absolute() . '">Mail sending</a></li>
 <li>The <a href="' . SandboxUrlBuilder::template()->absolute() . '">template benchmark</a> with or without cache</li>
 </ul>
 <br />
 ';
+
+// --- Form
+
+$lang['form.title'] = 'Form';
+$lang['form.desc'] = 'This is a description';
+$lang['form.input.text'] = 'Text field';
+$lang['form.input.text.desc'] = 'Constraints: letters, numbers and underscore';
+$lang['form.input.text.lorem'] = 'Lorem ipsum';
+$lang['form.input.text.disabled'] = 'Disabled field';
+$lang['form.input.text.disabled.desc'] = 'Disabled';
+$lang['form.input.url'] = 'Web site';
+$lang['form.input.url.desc'] = 'Valid url';
+$lang['form.input.url.placeholder'] = 'https://www.phpboost.com';
+$lang['form.input.email'] = 'Email';
+$lang['form.input.email.desc'] = 'Valide email';
+$lang['form.input.email.placeholder'] = 'lorem@phpboost.com';
+$lang['form.input.email.multiple'] = 'Multiple email';
+$lang['form.input.email.multiple.desc'] = 'Valide emails, separated by comma';
+$lang['form.input.email.multiple.placeholder'] = 'lorem@phpboost.com,ipsum@phpboost.com';
+$lang['form.input.phone'] = 'Phone number';
+$lang['form.input.phone.desc'] = 'Valid phone number';
+$lang['form.input.phone.placeholder'] = '0123456789';
+$lang['form.input.text.required'] = 'Required field';
+$lang['form.input.text.required.filled'] = 'Required field filled';
+$lang['form.input.text.required.empty'] = 'Required field empty';
+$lang['form.input.number'] = 'Number';
+$lang['form.input.number.desc'] = 'interval: from 10 to 100';
+$lang['form.input.number.placeholder'] = '20';
+$lang['form.input.number.decimal'] = 'Decimal number';
+$lang['form.input.number.decimal.desc'] = 'Use comma';
+$lang['form.input.number.decimal.placeholder'] = '5.5';
+$lang['form.input.length'] = 'Slider';
+$lang['form.input.length.desc'] = 'Clic and drag';
+$lang['form.input.length.placeholder'] = '4';
+$lang['form.input.password'] = 'Password';
+$lang['form.input.password.desc'] = ' characters minimum';
+$lang['form.input.password.placeholder'] = 'aaaaaa';
+$lang['form.input.password.confirm'] = 'Confirm password';
+$lang['form.input.multiline.medium'] = 'Medium multiline text field';
+$lang['form.input.multiline'] = 'Multiline text field';
+$lang['form.input.multiline.desc'] = 'Description';
+$lang['form.input.multiline.lorem'] = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut tempor lacus.';
+$lang['form.input.rich.text'] = 'Text field with editor';
+$lang['form.input.rich.text.placeholder'] = 'Create a website <strong>easily</strong>';
+$lang['form.input.checkbox'] = 'Checkbox';
+$lang['form.input.multiple.checkbox'] = 'Multiple checkbox';
+$lang['form.input.radio'] = 'Radio buttons';
+$lang['form.input.select'] = 'Select';
+$lang['form.input.multiple.select'] = 'Select with serveral choices';
+$lang['form.input.choice.1'] = 'Choice 1';
+$lang['form.input.choice.2'] = 'Choice 2';
+$lang['form.input.choice.3'] = 'Choice 3';
+$lang['form.input.choice.4'] = 'Choice 4';
+$lang['form.input.choice.5'] = 'Choice 5';
+$lang['form.input.choice.6'] = 'Choice 6';
+$lang['form.input.choice.7'] = 'Choice 7';
+$lang['form.input.choice.group.1'] = 'Group 1';
+$lang['form.input.choice.group.2'] = 'Group 2';
+$lang['form.input.timezone'] = 'TimeZone';
+$lang['form.input.user.completion'] = 'User completion';
+$lang['form.send.button'] = 'Send';
+
+$lang['form.title.2'] = 'Form 2';
+$lang['form.input.hidden'] = 'hidden field';
+$lang['form.free.html'] = 'Free field';
+$lang['form.date'] = 'Date';
+$lang['form.date.hm'] = 'Date/hour/minutes';
+$lang['form.color'] = 'color';
+$lang['form.search'] = 'Search';
+$lang['form.file.picker'] = 'File picker';
+$lang['form.multiple.file.picker'] = 'Multiple file picker';
+$lang['form.file.upload'] = 'Link to file';
+
+$lang['form.authorization'] = 'Authorization';
+$lang['form.authorization.1'] = 'Action 1';
+$lang['form.authorization.1.desc'] = 'Authorizations for l\'action 1';
+$lang['form.authorization.2'] = 'Action 2';
+
+$lang['form.vertical.desc'] = 'Vertical form';
+$lang['form.horizontal.desc'] = 'Horizontal form';
+
+$lang['form.preview'] = 'Preview';
+$lang['form.button'] = 'Button';
+
+// --- Cssmenu
+
+$lang['css.menu.site.title'] = 'Cssmenu menus';
+$lang['css.menu.site.slogan'] = 'Sandbox - Design of cssmenu';
+$lang['css.menu.breadcrumb.index'] = 'Home';
+$lang['css.menu.breadcrumb.sandbox'] = 'sandbox';
+$lang['css.menu.breadcrumb.cssmenu'] = 'cssmenu';
+$lang['css.menu.h2'] = 'All the cssmenu menus';
+$lang['css.menu.element'] = 'Menu element';
+$lang['css.menu.sub.element'] = 'Submenu';
+$lang['css.menu.horizontal.sub.header'] = 'Menu in sub-header';
+$lang['css.menu.sub.admin'] = 'Administration';
+$lang['css.menu.horizontal.top'] = ' Header horizontal menu';
+$lang['css.menu.horizontal.scrolling'] = 'Horizontal scrolling menu';
+$lang['css.menu.vertical.scrolling'] = 'Vertical scrolling menu';
+$lang['css.menu.vertical.img'] = 'Menu with icons';
+$lang['css.menu.vertical.scrolling.left'] = 'Vert scroll menu on left';
+$lang['css.menu.vertical.scrolling.right'] = 'Vert scroll menu on right';
+$lang['css.menu.actionslinks.sandbox'] = 'Sandbox';
+$lang['css.menu.actionslinks.index'] = 'Homepage';
+$lang['css.menu.actionslinks.form'] = 'Forms';
+$lang['css.menu.actionslinks.css'] = 'CSS';
+$lang['css.menu.actionslinks.menu'] = 'Cssmenu';
+$lang['css.menu.actionslinks.icons'] = 'Icons';
+$lang['css.menu.actionslinks.table'] = 'Table';
+$lang['css.menu.actionslinks.template'] = 'Templates';
+$lang['css.menu.actionslinks.mail'] = 'Mail sending';
+$lang['css.menu.actionslinks'] = 'Options menu of modules';
+$lang['css.menu.group'] = 'Group menu';
+$lang['css.menu.static'] = 'Static menu';
+$lang['css.menu.static.footer'] = 'Footer static menu';
+
+// --- lorem ipsum for Cssmenu
+
+$lang['css.menu.content'] = 'This page has a specific design to display all the menu types in all fields can be filled';
+$lang['lorem.ipsum'] = ' Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis condimentum eros. Vestibulum fermentum eleifend consectetur.
+Nulla efficitur molestie vulputate. Sed finibus dolor in est faucibus egestas. Nullam odio elit, rutrum ut tempor in, elementum ut nisi.
+Nunc placerat convallis dolor, vitae semper justo placerat vel. Nulla porta quis nisl vitae commodo. Aliquam et tortor viverra, porttitor nulla nec,
+pretium ligula. Sed eleifend consequat tincidunt.';
 
 // --- Icons
 
@@ -81,7 +206,6 @@ $lang['css.icon.howto.variants'] = 'Variants';
 $lang['css.icon.howto.variants.explain'] = 'Font-Awesome is setted with some variants like sizing the icon, animation, rotation, stacking and somelse.';
 $lang['css.icon.howto.variants.list'] = 'All variants are explained here : ';
 $lang['css.icon.howto.variants.spinner'] = 'That gives the "spinner" icon, setted in pulse and twice bigger than its initial size : ';
-
 
 // --- CSS
 
@@ -127,24 +251,6 @@ $lang['css.progress_bar'] = 'Progress bar';
 $lang['css.progress_bar.util_infos'] = 'Util informations';
 $lang['css.progress_bar.votes'] = '3 votes';
 
-$lang['css.modules_menus'] = 'Modules menus';
-$lang['css.modules_menus.display'] = 'Display';
-$lang['css.modules_menus.display.most_viewed'] = 'Most viewed';
-$lang['css.modules_menus.display.top_rated'] = 'Top rated';
-$lang['css.modules_menus.order_by'] = 'Order by';
-$lang['css.modules_menus.order_by.name'] = 'Name';
-$lang['css.modules_menus.order_by.date'] = 'Date';
-$lang['css.modules_menus.order_by.views'] = 'Views';
-$lang['css.modules_menus.order_by.notes'] = 'Notes';
-$lang['css.modules_menus.order_by.coms'] = 'Comments';
-$lang['css.modules_menus.direction'] = 'Direction';
-$lang['css.modules_menus.direction.up'] = 'Up';
-$lang['css.modules_menus.direction.down'] = 'Down';
-$lang['css.modules_menus.unsolved_bugs'] = 'Unsolved bugs';
-$lang['css.modules_menus.solved_bugs'] = 'Solved bugs';
-$lang['css.modules_menus.roadmap'] = 'Roadmap';
-$lang['css.modules_menus.stats'] = 'Statistics';
-
 $lang['css.explorer'] = 'Explorer';
 $lang['css.root'] = 'Root';
 $lang['css.tree'] = 'Tree';
@@ -159,7 +265,10 @@ $lang['css.options.sort_by.date'] = 'Date';
 $lang['css.options.sort_by.popularity'] = 'Popularity';
 $lang['css.options.sort_by.note'] = 'Note';
 
-$lang['css.button'] = 'Button';
+$lang['css.modules_menus.direction.up'] = 'Up';
+$lang['css.modules_menus.direction.down'] = 'Down';
+
+$lang['css.button'] = 'Buttons';
 
 $lang['css.sortable'] = 'Sortable Drag & Drop';
 $lang['css.static.sortable'] = 'Sortable spoted';

@@ -31,7 +31,6 @@
  ####################################################
 
 // --- Titre
-
 $lang['module_title'] = 'Bac à sable';
 
 // --- Welcome
@@ -40,6 +39,7 @@ $lang['title.form_builder'] = 'Formulaires';
 $lang['title.table_builder'] = 'Tableaux';
 $lang['title.icons'] = 'Icônes';
 $lang['title.css'] = 'CSS';
+$lang['title.menu'] = 'Cssmenu';
 $lang['title.mail_sender'] = 'Envoi de mail';
 $lang['title.string_template'] = 'Génération de template';
 
@@ -50,11 +50,135 @@ Vous pouvez ici tester plusieurs parties du framework PHPBoost :<br />
 <li>La <a href="' . SandboxUrlBuilder::table()->absolute() . '">génération de tableaux dynamiques</a></li>
 <li>La <a href="' . SandboxUrlBuilder::icons()->absolute() . '">liste des icônes</a> de la librairie Font Awesome utilisées dans les modules</li>
 <li>Le rendu des principales <a href="' . SandboxUrlBuilder::css()->absolute() . '">classes CSS</a></li>
+<li>Le rendu des menus cssmenu <a href="' . SandboxUrlBuilder::menu()->absolute() . '">menus cssmenu</a></li>
 <li>L\'<a href="' . SandboxUrlBuilder::mail()->absolute() . '">envoi de mails</a></li>
 <li>La <a href="' . SandboxUrlBuilder::template()->absolute() . '">génération de template</a> avec ou sans cache</li>
 </ul>
 <br />
 ';
+
+// --- Form
+
+$lang['form.title'] = 'Formulaire';
+$lang['form.desc'] = 'Ceci est une description';
+$lang['form.input.text'] = 'Champ texte';
+$lang['form.input.text.desc'] = 'Contraintes: lettres, chiffres et tiret bas';
+$lang['form.input.text.lorem'] = 'Lorem ipsum';
+$lang['form.input.text.disabled'] = 'Champ désactivé';
+$lang['form.input.text.disabled.desc'] = 'Désactivé';
+$lang['form.input.url'] = 'Site web';
+$lang['form.input.url.desc'] = 'Url valide';
+$lang['form.input.url.placeholder'] = 'https://www.phpboost.com';
+$lang['form.input.email'] = 'Email';
+$lang['form.input.email.desc'] = 'Email valide';
+$lang['form.input.email.placeholder'] = 'lorem@phpboost.com';
+$lang['form.input.email.multiple'] = 'Email multiple';
+$lang['form.input.email.multiple.desc'] = 'Emails valides, séparés par une virgule';
+$lang['form.input.email.multiple.placeholder'] = 'lorem@phpboost.com,ipsum@phpboost.com';
+$lang['form.input.phone'] = 'Numéro de téléphone';
+$lang['form.input.phone.desc'] = 'Numéro de téléphone valide';
+$lang['form.input.phone.placeholder'] = '0123456789';
+$lang['form.input.text.required'] = 'Champ requis';
+$lang['form.input.text.required.filled'] = 'Champ requis rempli';
+$lang['form.input.text.required.empty'] = 'Champ requis vide';
+$lang['form.input.number'] = 'Nombre';
+$lang['form.input.number.desc'] = 'intervalle: de 10 à 100';
+$lang['form.input.number.placeholder'] = '20';
+$lang['form.input.number.decimal'] = 'Nombre décimal';
+$lang['form.input.number.decimal.desc'] = 'Utiliser la virgule';
+$lang['form.input.number.decimal.placeholder'] = '5.5';
+$lang['form.input.length'] = 'Slider';
+$lang['form.input.length.desc'] = 'Faites glisser';
+$lang['form.input.length.placeholder'] = '4';
+$lang['form.input.password'] = 'Mot de passe';
+$lang['form.input.password.desc'] = ' caractères minimum';
+$lang['form.input.password.placeholder'] = 'aaaaaa';
+$lang['form.input.password.confirm'] = 'Confirmation du mot de passe';
+$lang['form.input.multiline.medium'] = 'Champ texte multi lignes moyen';
+$lang['form.input.multiline'] = 'Champ texte multi lignes';
+$lang['form.input.multiline.desc'] = 'Description';
+$lang['form.input.multiline.lorem'] = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut tempor lacus.';
+$lang['form.input.rich.text'] = 'Champ texte avec éditeur';
+$lang['form.input.rich.text.placeholder'] = 'Créer un site <strong>facilement</strong>';
+$lang['form.input.checkbox'] = 'Case à cocher';
+$lang['form.input.multiple.checkbox'] = 'Case à cocher multiple';
+$lang['form.input.radio'] = 'Boutons radio';
+$lang['form.input.select'] = 'Liste déroulante';
+$lang['form.input.multiple.select'] = 'Liste déroulante multiple';
+$lang['form.input.choice.1'] = 'Choix 1';
+$lang['form.input.choice.2'] = 'Choix 2';
+$lang['form.input.choice.3'] = 'Choix 3';
+$lang['form.input.choice.4'] = 'Choix 4';
+$lang['form.input.choice.5'] = 'Choix 5';
+$lang['form.input.choice.6'] = 'Choix 6';
+$lang['form.input.choice.7'] = 'Choix 7';
+$lang['form.input.choice.group.1'] = 'Groupe 1';
+$lang['form.input.choice.group.2'] = 'Groupe 2';
+$lang['form.input.timezone'] = 'TimeZone';
+$lang['form.input.user.completion'] = 'Auto complétion utilisateurs';
+$lang['form.send.button'] = 'Envoyer';
+
+$lang['form.title.2'] = 'Formulaire 2';
+$lang['form.input.hidden'] = 'Champ caché';
+$lang['form.free.html'] = 'Champ libre';
+$lang['form.date'] = 'Date';
+$lang['form.date.hm'] = 'Date/heure/minutes';
+$lang['form.color'] = 'Couleur';
+$lang['form.search'] = 'Recherche';
+$lang['form.file.picker'] = 'Fichier';
+$lang['form.multiple.file.picker'] = 'Plusieurs fichiers';
+$lang['form.file.upload'] = 'Lien vers un fichier';
+
+$lang['form.authorization'] = 'Autorisation';
+$lang['form.authorization.1'] = 'Action 1';
+$lang['form.authorization.1.desc'] = 'Autorisations pour l\'action 1';
+$lang['form.authorization.2'] = 'Action 2';
+
+$lang['form.vertical.desc'] = 'Formulaire vertical';
+$lang['form.horizontal.desc'] = 'Formulaire horizontal';
+
+$lang['form.preview'] = 'Prévisualiser';
+$lang['form.button'] = 'Bouton';
+
+// --- Cssmenu
+
+$lang['css.menu.site.title'] = 'Menus cssmenu';
+$lang['css.menu.site.slogan'] = 'Bac à sable - le design des cssmenu';
+$lang['css.menu.breadcrumb.index'] = 'Accueil';
+$lang['css.menu.breadcrumb.sandbox'] = 'Bac à sable';
+$lang['css.menu.breadcrumb.cssmenu'] = 'cssmenu';
+$lang['css.menu.h2'] = 'Les différents menus cssmenu';
+$lang['css.menu.element'] = 'Item du menu';
+$lang['css.menu.sub.element'] = 'Sous menu';
+$lang['css.menu.horizontal.sub.header'] = 'Menu de sous-entête';
+$lang['css.menu.sub.admin'] = 'Administration';
+$lang['css.menu.horizontal.top'] = 'Menu horizontal Header';
+$lang['css.menu.horizontal.scrolling'] = 'Menu horizontal déroulant';
+$lang['css.menu.vertical.scrolling'] = 'Menu vertical scroll';
+$lang['css.menu.vertical.img'] = 'Menu avec images';
+$lang['css.menu.vertical.scrolling.left'] = 'Menu vert scroll à gauche';
+$lang['css.menu.vertical.scrolling.right'] = 'Menu vert scroll à droite';
+$lang['css.menu.actionslinks.sandbox'] = 'Bac à sable';
+$lang['css.menu.actionslinks.index'] = 'Accueil';
+$lang['css.menu.actionslinks.form'] = 'Formulaires';
+$lang['css.menu.actionslinks.css'] = 'CSS';
+$lang['css.menu.actionslinks.menu'] = 'Cssmenu';
+$lang['css.menu.actionslinks.icons'] = 'Icônes';
+$lang['css.menu.actionslinks.table'] = 'Tableaux';
+$lang['css.menu.actionslinks.template'] = 'Génération de templates';
+$lang['css.menu.actionslinks.mail'] = 'Envoi de mail';
+$lang['css.menu.actionslinks'] = 'Menu options des modules';
+$lang['css.menu.group'] = 'Menu groupes';
+$lang['css.menu.static'] = 'Menu statique';
+$lang['css.menu.static.footer'] = 'Menu statique pied de page';
+
+// --- lorem ipsum pour Cssmenu
+
+$lang['css.menu.content'] = 'Cette page a un design spécifique de manière à afficher tous les types de menus en fonction des emplacements potentiels susceptibles d\'être utilisés';
+$lang['lorem.ipsum'] = ' Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis condimentum eros. Vestibulum fermentum eleifend consectetur.
+Nulla efficitur molestie vulputate. Sed finibus dolor in est faucibus egestas. Nullam odio elit, rutrum ut tempor in, elementum ut nisi.
+Nunc placerat convallis dolor, vitae semper justo placerat vel. Nulla porta quis nisl vitae commodo. Aliquam et tortor viverra, porttitor nulla nec,
+pretium ligula. Sed eleifend consequat tincidunt.';
 
 // --- Icônes
 
@@ -127,24 +251,6 @@ $lang['css.progress_bar'] = 'Barre de progression';
 $lang['css.progress_bar.util_infos'] = 'Informations utiles';
 $lang['css.progress_bar.votes'] = '3 votes';
 
-$lang['css.modules_menus'] = 'Menus des modules';
-$lang['css.modules_menus.display'] = 'Afficher';
-$lang['css.modules_menus.display.most_viewed'] = 'Les plus vues';
-$lang['css.modules_menus.display.top_rated'] = 'Les mieux notées';
-$lang['css.modules_menus.order_by'] = 'Ordonner par';
-$lang['css.modules_menus.order_by.name'] = 'Nom';
-$lang['css.modules_menus.order_by.date'] = 'Date';
-$lang['css.modules_menus.order_by.views'] = 'Vues';
-$lang['css.modules_menus.order_by.notes'] = 'Notes';
-$lang['css.modules_menus.order_by.coms'] = 'Commentaires';
-$lang['css.modules_menus.direction'] = 'Direction';
-$lang['css.modules_menus.direction.up'] = 'Croissant';
-$lang['css.modules_menus.direction.down'] = 'Décroissant';
-$lang['css.modules_menus.unsolved_bugs'] = 'Bugs non-résolus';
-$lang['css.modules_menus.solved_bugs'] = 'Bugs résolus';
-$lang['css.modules_menus.roadmap'] = 'Feuille de route';
-$lang['css.modules_menus.stats'] = 'Statistiques';
-
 $lang['css.explorer'] = 'Explorateur';
 $lang['css.root'] = 'Racine';
 $lang['css.tree'] = 'Arborescence';
@@ -159,7 +265,10 @@ $lang['css.options.sort_by.date'] = 'Date';
 $lang['css.options.sort_by.popularity'] = 'Popularité';
 $lang['css.options.sort_by.note'] = 'Note';
 
-$lang['css.button'] = 'Bouton';
+$lang['css.modules_menus.direction.up'] = 'Croissant';
+$lang['css.modules_menus.direction.down'] = 'Décroissant';
+
+$lang['css.button'] = 'Boutons';
 
 $lang['css.sortable'] = 'Sortable Drag & Drop';
 $lang['css.static.sortable'] = 'Sortable positionné';
@@ -234,4 +343,6 @@ $lang['mail.success'] = 'L\'email a été envoyé';
 
 //Tempalte
 $lang['string_template.result'] = 'Temps de génération du template sans cache : :non_cached_time secondes<br />Temps de génération du template avec cache : :cached_time secondes<br />Longueur de la chaîne : :string_length caractères.';
+
+
 ?>
