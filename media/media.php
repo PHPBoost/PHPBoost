@@ -62,7 +62,7 @@ elseif ($id_media > 0)
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'id' => $id_media
 		));
-	} catch (CategoryNotFoundException $e) {
+	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
    		DispatchManager::redirect($error_controller);
 	}
