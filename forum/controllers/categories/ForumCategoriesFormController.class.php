@@ -188,10 +188,13 @@ class ForumCategoriesFormController extends AbstractCategoriesFormController
 	protected function set_properties()
 	{
 		parent::set_properties();
+		$this->get_category()->set_type($this->form->get_value('type')->get_raw_value());
 		$this->get_category()->set_description($this->form->get_value('description'));
 		
 		if ($this->get_category()->get_type() == ForumCategory::TYPE_URL)
 			$this->get_category()->set_url($this->form->get_value('url'));
+		else
+			$this->get_category()->set_url('');
 		
 		if ($this->get_category()->get_type() == ForumCategory::TYPE_FORUM)
 			$status = $this->form->get_value('status');
