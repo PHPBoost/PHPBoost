@@ -82,11 +82,11 @@ class FormFieldCheckbox extends AbstractFormField
 		$request = AppContext::get_request();
 		if ($request->has_parameter($this->get_html_id()))
 		{
-			$this->set_value($request->get_value($this->get_html_id()) == 'on');
+			$this->set_value((int)$request->get_value($this->get_html_id()) == 'on');
 		}
 		else
 		{
-			$this->set_value(false);
+			$this->set_value(0);
 		}
 	}
 
