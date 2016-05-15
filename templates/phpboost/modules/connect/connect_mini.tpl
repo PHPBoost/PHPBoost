@@ -32,8 +32,8 @@
 		<a href="" class="js-menu-button" onclick="open_submenu('connect-menu');return false;" title="{L_CONNECT}"><i class="fa fa-sign-in"></i> {L_CONNECT}</a>
 		<div class="connect-content">
 			<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();">
-				<input type="text" id="login" name="login" placeholder="{L_PSEUDO}" class="connect_form">
-				<input type="password" id="password" name="password" class="connect_form" placeholder="{L_PASSWORD}">
+				<input type="text" id="login" name="login" title="{L_PSEUDO}" placeholder="{L_PSEUDO}" class="connect-form">
+				<input type="password" id="password" name="password" class="connect-form" title="{L_PASSWORD}" placeholder="{L_PASSWORD}">
 				<input checked="checked" id="autoconnect" type="checkbox" name="autoconnect" title="{L_AUTOCONNECT}"><span class="hidden-large-screens">{L_AUTOCONNECT}</span>
 				<input type="hidden" name="redirect" value="{SITE_REWRITED_SCRIPT}">
 				<input type="hidden" name="token" value="{TOKEN}">
