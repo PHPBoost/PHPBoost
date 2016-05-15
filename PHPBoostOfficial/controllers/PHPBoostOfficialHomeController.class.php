@@ -61,6 +61,15 @@ class PHPBoostOfficialHomeController extends ModuleController
 		$this->build_last_news_view();
 		
 		$this->build_partners_view();
+		
+		if (ModulesManager::is_module_installed('GoogleAnalytics') & ModulesManager::is_module_activated('GoogleAnalytics'))
+		{
+			$identifier = GoogleAnalyticsConfig::load()->get_identifier();
+			$this->view->put_all(array(
+				'C_GOOGLEANALYTICS_IDENTIFIER' => !empty($identifier),
+				'GOOGLEANALYTICS_IDENTIFIER' => $identifier
+			));
+		}
 	}
 	
 	private function build_modules_view(SelectQueryResult $results)
@@ -79,12 +88,10 @@ class PHPBoostOfficialHomeController extends ModuleController
 				$category = DownloadService::get_categories_manager()->get_categories_cache()->get_category($row['id_category']);
 				
 				$pseudo = "";
-				if ($row['author_display_name'] != "") {
+				if ($row['author_display_name'] != "")
 					$pseudo = $row['author_display_name'];
-				}
-				else {
+				else
 					$pseudo = $row['display_name'];
-				}
 				
 				$tpl->assign_block_vars('item', array(
 					'U_LINK' => DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $row['id'], $row['rewrited_name'])->rel(),
@@ -115,13 +122,11 @@ class PHPBoostOfficialHomeController extends ModuleController
 				
 				$category = DownloadService::get_categories_manager()->get_categories_cache()->get_category($row['id_category']);
 
-                                $pseudo = "";
-                                if ($row['author_display_name'] != "") {
-                                        $pseudo = $row['author_display_name'];
-                                }
-                                else {
-                                        $pseudo = $row['display_name'];
-                                }
+				$pseudo = "";
+				if ($row['author_display_name'] != "")
+					$pseudo = $row['author_display_name'];
+				else
+					$pseudo = $row['display_name'];
 				
 				$tpl->assign_block_vars('item', array(
 					'U_LINK' => DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $row['id'], $row['rewrited_name'])->rel(),
