@@ -35,8 +35,8 @@
 			</div>
 			<div class="module-mini-contents vertical-fieldset">
 				<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();" class="form-element">
-					<label>{L_PSEUDO}<br /><input type="text" id="login" name="login" placeholder="{L_PSEUDO}" maxlength="25"></label>
-					<label>{L_PASSWORD}<br /><input type="password" id="password" name="password" placeholder="{L_PASSWORD}" maxlength="30"></label>
+					<label>{L_PSEUDO}<br /><input type="text" id="login" name="login" title="{L_PSEUDO}" placeholder="{L_PSEUDO}" maxlength="25"></label>
+					<label>{L_PASSWORD}<br /><input type="password" id="password" name="password" title="{L_PASSWORD}" placeholder="{L_PASSWORD}" maxlength="30"></label>
 					<label>{L_AUTOCONNECT} <input checked="checked" type="checkbox" name="autoconnect"></label>
 					<input type="hidden" name="redirect" value="{SITE_REWRITED_SCRIPT}">
 					<input type="hidden" name="token" value="{TOKEN}">
@@ -108,8 +108,8 @@
 			<a href="" class="js-menu-button" onclick="open_submenu('connect-menu');return false;" title="{L_CONNECT}"><i class="fa fa-sign-in"></i> {L_CONNECT}</a>
 			<div class="connect-content">
 				<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();">
-					<input type="text" id="login" name="login" placeholder="{L_PSEUDO}" class="connect_form">
-					<input type="password" id="password" name="password" class="connect_form" placeholder="{L_PASSWORD}">
+					<input type="text" id="login" name="login" title="{L_PSEUDO}" placeholder="{L_PSEUDO}" class="connect-form">
+					<input type="password" id="password" name="password" class="connect-form" title="{L_PASSWORD}" placeholder="{L_PASSWORD}">
 					<input checked="checked" type="checkbox" name="autoconnect">
 					<input type="hidden" name="redirect" value="{SITE_REWRITED_SCRIPT}">
 					<input type="hidden" name="token" value="{TOKEN}">
@@ -134,7 +134,7 @@
 	# ELSE #
 	<div id="connect-menu" class="connected">
 		<div class="horizontal-fieldset">
-			<a href="" class="js-menu-button" onclick="open_submenu('connect-menu');return false;" title="{L_PROFIL}"><i class="fa fa-bars"></i> {L_PROFIL}</a>
+			<a href="" class="js-menu-button" onclick="open_submenu('connect-menu');return false;" title="{L_PROFIL}"><i class="fa fa-bars # IF NUMBER_TOTAL_ALERT # blink alert# ENDIF #"></i> {L_PROFIL}</a>
 			<ul class="connect-content">
 				<li>
 					<i class="fa fa-user"></i>
