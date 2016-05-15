@@ -142,19 +142,19 @@ div.btn-try a { width: 141px; }
 
 div.btn-ddl {
 	border: 1px solid #1E5083;
-	background: #366493;
+	background-color: #366493;
 	background: linear-gradient(to bottom, #366493 40%, #1E5083 175%);
 	box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
 }
-div.btn-ddl:hover { background: #1E5083; }
+div.btn-ddl:hover { background-color: #1E5083; }
 
 div.btn-try {
 	border: 1px solid #096A4A;
-	background: #2F9674;
+	background-color: #2F9674;
 	background: linear-gradient(to bottom, #2F9674 40%, #168661 175%);
 	box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
 }
-div.btn-try:hover { background: #168661; }
+div.btn-try:hover { background-color: #168661; }
 
 div.p-link-btn i {
 	float: right;
@@ -172,7 +172,7 @@ div.btn-try i {
 	color: #204519;
 	margin: 14px 12px 0 0;
 }
-div.btn-try:hover i { color: #1a3714; }
+div.btn-try:hover i { color: #1A3714; }
 
 p.p-link-title {
 	padding: 12px 0 0 10px;

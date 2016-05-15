@@ -1,6 +1,6 @@
 <!-- Download link -->
 <div id="p-container">
-	
+
 	<!-- Slider -->
 	<ul class="p-slide-container">
 		<li id="p-slide-pub" class="p-slide-element">
@@ -13,6 +13,7 @@
 				<a href="{PATH_TO_ROOT}/pages/fonctionnalites-de-phpboost" class="p-slide-more" title="{@phpboost_features}">{@phpboost_features.explain}</a>
 			</div>
 		</li>
+		# INCLUDE SLIDES #
 	</ul>
 
 	<div id="p-link">
@@ -41,11 +42,11 @@
 	<div class="lt-container">
 		<div class="lc-img lt-title-img"></div>
 		<div class="lc-title title">{@last_themes}</div>
-	
+
 		<div class="lt-content">
 			# INCLUDE THEMES #
 			<div class="subcat-container">
-					
+
 				<div class="subcat-element subcat-templates">
 					<a itemprop="about" href="{@download.last_version_themes_cat_link}" class="subcat-content">
 						<span class="subcat-img-container">
@@ -58,15 +59,15 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="lm-container">
 		<div class="lc-img lm-title-img"></div>
 		<div class="lc-title title">{@last_modules}</div>
-		
+
 		<div class="lm-content">
-			
+
 			<div class="subcat-container">
-					
+
 				<div class="subcat-element subcat-modules">
 					<a itemprop="about" href="{@download.last_version_modules_cat_link}" class="subcat-content" title="{@modules_for_phpboost}">
 						<span class="subcat-img-container">
@@ -81,7 +82,7 @@
 			<div class="spacer"></div>
 		</div>
 	</div>
-	
+
 </div>
 
 <!-- Last news -->
@@ -93,14 +94,14 @@
 	<div id="ln-top" class="title">{@news.phpboost}</div>
 
 	# INCLUDE LAST_NEWS #
-	
+
 	<div class="ln-list">
 		<div id="ln-list-title" class="title">{@news.previous_news}</div>
 		<div class="ln-list-content">
 			{FEED_NEWS}
 		</div>
 	</div>
-	
+
 </div>
 
 <!-- Partenaires -->
