@@ -75,15 +75,31 @@ class CalendarEventsListController extends ModuleController
 			LEFT JOIN ' . CalendarSetup::$calendar_events_content_table . ' event_content ON event_content.id = event.content_id
 			LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = event_content.author_id'
 		);
+		
+		$events = array();
+		$moderation_link_number = 0;
 		foreach ($result as $row)
 		{
 			$event = new CalendarEvent();
 			$event->set_properties($row);
+			$events[] = $event;
+			if ($event->is_authorized_to_edit() || $event->is_authorized_to_delete())
+				$moderation_link_number++;
+		}
+		
+		if (empty($moderation_link_number))
+			$table_model->delete_last_column();
+		
+		foreach ($events as $event)
+		{
 			$category = $event->get_content()->get_category();
 			$user = $event->get_content()->get_author_user();
 
 			$edit_link = new LinkHTMLElement(CalendarUrlBuilder::edit_event(!$event->get_parent_id() ? $event->get_id() : $event->get_parent_id()), '', array('title' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
+			$edit_link = $event->is_authorized_to_edit() ? $edit_link->display() : '';
+			
 			$delete_link = new LinkHTMLElement(CalendarUrlBuilder::delete_event($event->get_id()), '', array('title' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => !$event->belongs_to_a_serie() ? 'delete-element' : ''), 'fa fa-delete');
+			$delete_link = $event->is_authorized_to_delete() ? $delete_link->display() : '';
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
@@ -96,7 +112,7 @@ class CalendarEventsListController extends ModuleController
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell(LangLoader::get_message('from_date', 'main') . ' ' . $event->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . $br->display() . LangLoader::get_message('to_date', 'main') . ' ' . $event->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
 				new HTMLTableRowCell($event->belongs_to_a_serie() ? $this->get_repeat_type_label($event) . ' - ' . $event->get_content()->get_repeat_number() . ' ' . $this->lang['calendar.labels.repeat_times'] : LangLoader::get_message('no', 'common')),
-				new HTMLTableRowCell($edit_link->display() . $delete_link->display())
+				$moderation_link_number ? new HTMLTableRowCell($edit_link . $delete_link) : null
 			));
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
