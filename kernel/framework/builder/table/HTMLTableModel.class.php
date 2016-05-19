@@ -58,7 +58,8 @@ class HTMLTableModel
 	{
 		foreach ($columns as $column)
 		{
-			$this->add_column($column);
+			if ($column instanceof HTMLTableColumn)
+				$this->add_column($column);
 		}
 
 		$default_sorting_rule->set_is_default_sorting(true);
@@ -258,6 +259,11 @@ class HTMLTableModel
 		{
 			$this->allowed_sort_parameters[] = $column->get_sortable_parameter();
 		}
+	}
+
+	public function delete_last_column()
+	{
+		array_pop($this->columns);
 	}
 }
 ?>

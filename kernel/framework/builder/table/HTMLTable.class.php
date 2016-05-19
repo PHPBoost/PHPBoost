@@ -267,7 +267,8 @@ class HTMLTable extends AbstractHTMLElement
 		
 		foreach ($row->get_cells() as $cell)
 		{
-			$this->generate_cell($cell);
+			if ($cell instanceof HTMLTableRowCell)
+				$this->generate_cell($cell);
 		}
 	}
 
