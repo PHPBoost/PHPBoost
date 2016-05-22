@@ -84,18 +84,19 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 		$internal_authentication_columns = array(
 			'user_id' => $user_id,
 			'login' => $this->login,
-            'password' => $this->password,
+			'password' => $this->password,
 			'registration_pass' => $this->registration_pass,
+			'last_connection' => time(),
 			'approved' => (int)$this->approved
 		);
 		$authentication_method_columns = array(
 			'user_id' => $user_id,
-            'method' => self::AUTHENTICATION_METHOD,
+			'method' => self::AUTHENTICATION_METHOD,
 			'identifier' => $user_id
 		);
 		try {
-            $this->querier->insert(DB_TABLE_INTERNAL_AUTHENTICATION, $internal_authentication_columns);
-            $this->querier->insert(DB_TABLE_AUTHENTICATION_METHOD, $authentication_method_columns);
+			$this->querier->insert(DB_TABLE_INTERNAL_AUTHENTICATION, $internal_authentication_columns);
+			$this->querier->insert(DB_TABLE_AUTHENTICATION_METHOD, $authentication_method_columns);
 		} catch (SQLQuerierException $ex) {
 			throw new IllegalArgumentException('User Id ' . $user_id .
 				' is already associated with an authentication method [' . $ex->getMessage() . ']');
