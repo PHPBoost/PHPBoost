@@ -197,7 +197,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 			'USER_DATE' => (!$is_guest) ? $LANG['registered_on'] . ': ' . Date::to_format($row['registered'], Date::FORMAT_DAY_MONTH_YEAR) : '',
 			'USER_MSG' => (!$is_guest) ? $posted_msg : '',
 			'USER_MAIL' => ( !empty($row['email']) && ($row['show_email'] == '1' ) ) ? '<a href="mailto:' . $row['email'] . '" class="basic-button smaller">Mail</a>' : '',
-			'USER_SIGN' => (!empty($row['user_sign']) && !empty($user_sign_field) && $user_sign_field['display']) ? '____________________<br />' . FormatingHelper::second_parse($row['user_sign']) : '',
+			'USER_SIGN' => (!empty($row['user_sign']) && !empty($user_sign_field) && $user_sign_field['display']) ? '<hr /><br />' . FormatingHelper::second_parse($row['user_sign']) : '',
 			'USER_WARNING' => $row['warning_percentage'],
 			'USER_PM' => !$is_guest && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? '<a href="'. UserUrlBuilder::personnal_message($row['user_id'])->rel() . '" class="basic-button smaller">MP</a>' : '',
 			'USER_ONLINE' => '<i class="fa ' . (!empty($row['connect']) ? 'fa-online' : 'fa-offline') . '"></i>',
