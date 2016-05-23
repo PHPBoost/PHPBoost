@@ -418,7 +418,7 @@ while ( $row = $result->fetch() )
 		'USER_DATE' => (!$is_guest) ? $LANG['registered_on'] . ': ' . Date::to_format($row['registered'], Date::FORMAT_DAY_MONTH_YEAR) : '',
 		'USER_MSG' => (!$is_guest) ? $posted_msg : '',
 		'USER_MAIL' => ( !empty($row['email']) && ($row['show_email'] == '1' ) ) ? '<a href="mailto:' . $row['email'] . '" class="basic-button smaller">Mail</a>' : '',
-		'USER_SIGN' => (!empty($row['user_sign']) && !empty($user_sign_field) && $user_sign_field['display']) ? '____________________<br />' . FormatingHelper::second_parse($row['user_sign']) : '',
+		'USER_SIGN' => (!empty($row['user_sign']) && !empty($user_sign_field) && $user_sign_field['display']) ? '<hr /><br />' . FormatingHelper::second_parse($row['user_sign']) : '',
 		'USER_WARNING' => $row['warning_percentage'],
 		'L_FORUM_QUOTE_LAST_MSG' => ($quote_last_msg == 1 && $i == 0) ? $LANG['forum_quote_last_msg'] : '', //Reprise du dernier message de la page précédente.
 		'C_USER_ONLINE' => !empty($row['connect']),
