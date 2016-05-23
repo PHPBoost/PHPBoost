@@ -215,7 +215,7 @@ class UserService
 	{
 		$user_account_settings = UserAccountsConfig::load();
 		$delay_unactiv_max = $user_account_settings->get_unactivated_accounts_timeout() * 3600 * 24;
-		if ($delay_unactiv_max > 0 && $user_account_settings->get_member_accounts_validation_method() != 2)
+		if ($delay_unactiv_max > 0 && $user_account_settings->get_member_accounts_validation_method() != UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION)
 		{
 			$result = self::$querier->select_rows(DB_TABLE_INTERNAL_AUTHENTICATION, array('user_id'), 
 			'WHERE last_connection < :last_connection AND approved = 0', array('last_connection' => (time() - $delay_unactiv_max)));
