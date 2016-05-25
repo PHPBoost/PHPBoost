@@ -237,6 +237,7 @@ class Mail
 	public function set_content($content)
 	{
 		$this->content = $content;
+		$this->set_is_html($content != strip_tags($content));
 	}
 
 	/**
