@@ -94,7 +94,7 @@ class UserLostPasswordController extends AbstractController
 		$general_config = GeneralConfig::load();
 		$parameters = array(
 			'pseudo' => $user->get_display_name(),
-			'host' => $general_config->get_site_url(),
+			'host' => $general_config->get_complete_site_url(),
 			'change_password_link' => UserUrlBuilder::change_password($change_password_pass)->absolute(),
 			'signature' => MailServiceConfig::load()->get_mail_signature()
 		);

@@ -41,7 +41,7 @@ class UserRegistrationService
 				$parameters = array(
 					'pseudo' => $pseudo,
 					'site_name' => $site_name,
-					'host' => $general_config->get_site_url(),
+					'host' => $general_config->get_complete_site_url(),
 					'login' => $login,
 					'password' => $password,
 					'accounts_validation_explain' => $lang['registration.email.automatic-validation'],
@@ -54,7 +54,7 @@ class UserRegistrationService
 				$parameters = array(
 					'pseudo' => $pseudo,
 					'site_name' => $site_name,
-					'host' => $general_config->get_site_url(),
+					'host' => $general_config->get_complete_site_url(),
 					'login' => $login,
 					'password' => $password,
 					'accounts_validation_explain' => 
@@ -80,7 +80,7 @@ class UserRegistrationService
 				$parameters = array(
 					'pseudo' => $pseudo,
 					'site_name' => $site_name,
-					'host' => $general_config->get_site_url(),
+					'host' => $general_config->get_complete_site_url(),
 					'login' => $login,
 					'password' => $password,
 					'accounts_validation_explain' => $lang['registration.email.administrator-validation'],

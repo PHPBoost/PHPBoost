@@ -84,7 +84,7 @@ foreach ($alerts_list as $alert)
 	
 	$template->assign_block_vars('alerts', array(
 		'C_PROCESSED' => $alert->get_status() == AdministratorAlert::ADMIN_ALERT_STATUS_PROCESSED,
-		'FIXING_URL' => $alert->get_fixing_url(),
+		'FIXING_URL' => Url::to_rel($alert->get_fixing_url()),
 		'NAME' => $alert->get_entitled(),
 		'PRIORITY' => $alert->get_priority_name(),
 		'STYLE' => 'background:#' . $color . ';',
