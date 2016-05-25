@@ -46,6 +46,11 @@ class GeneralConfig extends AbstractConfigData
 		return $this->get_property(self::SITE_URL);
 	}
 
+	public function get_complete_site_url()
+	{
+		return $this->get_property(self::SITE_URL) . $this->get_property(self::SITE_PATH);
+	}
+
 	/**
 	 * @param string $url The URL must begin with a protocol (for instance http://) and must not end with a slash.
 	 */
