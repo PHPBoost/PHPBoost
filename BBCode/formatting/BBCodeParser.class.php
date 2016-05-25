@@ -48,9 +48,6 @@ class BBCodeParser extends ContentFormattingParser
 	 */
 	public function parse()
 	{
-		//On decode le contenu
-		$this->content = TextHelper::html_entity_decode($this->content);
-		
 		//On remplace les tabulations par des espaces
 		$this->content = preg_replace('`\t`sU', '    ', $this->content);
 		
@@ -60,6 +57,9 @@ class BBCodeParser extends ContentFormattingParser
 			$this->pick_up_tag('code', '=[A-Za-z0-9#+-]+(?:,[01]){0,2}');
 		}
 
+		//On decode le contenu
+		$this->content = TextHelper::html_entity_decode($this->content);
+		
 		//On prélève tout le code HTML afin de ne pas l'altérer
 		if (!in_array('html', $this->forbidden_tags) && AppContext::get_current_user()->check_auth($this->html_auth, 1))
 		{

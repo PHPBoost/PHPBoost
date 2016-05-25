@@ -50,7 +50,7 @@ abstract class ContentFormattingUnparser extends AbstractParser
 		if ($action == self::PICK_UP)
 		{
 			$mask = '`<!-- START HTML -->' . "\n" . '(.+)' . "\n" . '<!-- END HTML -->`sU';
-			$content_split = preg_split($mask, $this->content, -1, PREG_SPLIT_DELIM_CAPTURE);
+			$content_split = preg_split($mask, str_replace('&nbsp;', '&amp;nbsp;', $this->content), -1, PREG_SPLIT_DELIM_CAPTURE);
 
 			$content_length = count($content_split);
 			$id_tag = 0;
@@ -113,7 +113,7 @@ abstract class ContentFormattingUnparser extends AbstractParser
 		if ($action == self::PICK_UP)
 		{
 			$mask = '`\[\[CODE(=[A-Za-z0-9#+-]+(?:,(?:0|1)(?:,1)?)?)?\]\]' . '(.+)' . '\[\[/CODE\]\]`sU';
-			$content_split = preg_split($mask, $this->content, -1, PREG_SPLIT_DELIM_CAPTURE);
+			$content_split = preg_split($mask, str_replace('&nbsp;', '&amp;nbsp;', $this->content), -1, PREG_SPLIT_DELIM_CAPTURE);
 
 			$content_length = count($content_split);
 			$id_tag = 0;
