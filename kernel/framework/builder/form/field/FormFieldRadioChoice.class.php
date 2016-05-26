@@ -54,16 +54,22 @@ class FormFieldRadioChoice extends AbstractFormFieldChoice
 		$template = $this->get_template_to_use();
 
 		$this->assign_common_template_variables($template);
-
+		
+		$has_value = false;
 		foreach ($this->get_options() as $option)
 		{
 			$template->assign_block_vars('fieldelements', array(
 				'ELEMENT' => $option->display()->render(),
 			));
+			if ($option->is_active())
+				$has_value = true;
 		}
 		
-		$template->put('C_HIDE_FOR_ATTRIBUTE', true);
-
+		$template->put_all(array(
+			'C_HIDE_FOR_ATTRIBUTE' => true,
+			'C_REQUIRED_AND_HAS_VALUE' => $this->is_required() && $has_value
+		));
+		
 		return $template;
 	}
 

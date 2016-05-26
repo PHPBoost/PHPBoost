@@ -99,7 +99,7 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 		$this->active = $value;
 	}
 	
-	protected function is_active()
+	public function is_active()
 	{
 		if (isset($this->active))
 		{
