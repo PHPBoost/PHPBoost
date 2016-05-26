@@ -186,10 +186,6 @@ class MediaDisplayCategoryController extends ModuleController
 			DispatchManager::redirect($error_controller);
 		}
 		
-		$notation = new Notation();
-		$notation->set_module_name('media');
-		$notation->set_notation_scale($config->get_notation_scale());
-		
 		$result = PersistenceContext::get_querier()->select("SELECT v.id, v.iduser, v.name, v.timestamp, v.counter, v.infos, v.contents, mb.display_name, mb.groups, mb.level, notes.average_notes, com.number_comments
 			FROM " . PREFIX . "media AS v
 			LEFT JOIN " . DB_TABLE_MEMBER . " AS mb ON v.iduser = mb.user_id
@@ -212,8 +208,11 @@ class MediaDisplayCategoryController extends ModuleController
 		
 		while ($row = $result->fetch())
 		{
+			$notation = new Notation();
+			$notation->set_module_name('media');
+			$notation->set_notation_scale($config->get_notation_scale());
 			$notation->set_id_in_module($row['id']);
-			
+				
 			$group_color = User::get_group_color($row['groups'], $row['level']);
 			
 			$this->tpl->assign_block_vars('file', array(
