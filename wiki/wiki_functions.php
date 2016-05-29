@@ -30,32 +30,52 @@ if (defined('PHPBOOST') !== true)	exit;
 define('WIKI_MENU_MAX_DEPTH', 5);
 
 //Interprétation du BBCode en ajoutant la balise [link]
-function wiki_parse($var)
+function wiki_parse($contents)
 {
-	//On force le langage de formatage à BBCode
-	$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
-	$parser = $content_manager->get_parser();
+	if (ModulesManager::is_module_installed('BBCode') & ModulesManager::is_module_activated('BBCode'))
+	{
+		$parser = new WikiBBCodeParser();
+	}
+	else
+	{
+		//On force le langage de formatage à BBCode
+		$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
+
+		$parser = $content_manager->get_parser();
+		$contents = preg_replace('`\[link=([a-z0-9+#-_]+)\](.+)\[/link\]`isU', '<a href="/wiki/$1">$2</a>', $contents);
+	}
 	
-	$parser->set_content($var);
+	$parser->set_content($contents);
 	$parser->parse();
 	
 	//Parse la balise link
-	return preg_replace('`\[link=([a-z0-9+#-_]+)\](.+)\[/link\]`isU', '<a href="/wiki/$1">$2</a>', $parser->get_content());
+	return $parser->get_content();
 }
 
 //Retour au BBCode en tenant compte de [link]
-function wiki_unparse($var)
+function wiki_unparse($contents)
 {
 	//Unparse de la balise link
-	$var = preg_replace('`<a href="/wiki/([a-z0-9+#-_]+)">(.*)</a>`sU', "[link=$1]$2[/link]", $var);
+	$contents = preg_replace('`<a href="/wiki/([a-z0-9+#-_]+)">(.*)</a>`sU', "[link=$1]$2[/link]", $contents);
 	
 	//On force le langage de formatage à BBCode
 	$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
 	$unparser = $content_manager->get_unparser();
-    $unparser->set_content($var);
+    $unparser->set_content($contents);
     $unparser->parse();
 	
 	return $unparser->get_content();
+}
+
+//Second parse -> à l'affichage
+function wiki_second_parse($contents)
+{
+	$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
+	$second_parser = $content_manager->get_second_parser();
+	$second_parser->set_content(wiki_unparse($contents));
+	$second_parser->parse();
+	
+	return $second_parser->get_content();
 }
 
 //Fonction de correction dans le cas où il n'y a pas de rewriting (balise link considére par défaut le rewriting activé)
