@@ -239,7 +239,7 @@ if ($id_edit > 0)
 	{
 		$tpl->put('message_helper', MessageHelper::display($LANG['pages_notice_previewing'], MessageHelper::NOTICE));
 		$tpl->assign_block_vars('previewing', array(
-			'PREVIEWING' => pages_second_parse(stripslashes(pages_parse($contents))),
+			'PREVIEWING' => pages_second_parse(pages_parse($contents)),
 			'TITLE' => stripslashes($title)
 		));
 	}

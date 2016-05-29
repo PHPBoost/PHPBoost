@@ -112,10 +112,24 @@ function pages_find_subcats(&$array, $id_cat)
 //Fonction "parse" pour les pages laissant passer le html tout en remplaçant les caractères spéciaux par leurs entités html correspondantes
 function pages_parse($contents)
 {
-	$contents = FormatingHelper::strparse(stripslashes($contents));
-	$contents = preg_replace('`\[link=([a-z0-9+#-]+)\](.+)\[/link\]`isU', '<a href="/pages/$1">$2</a>', $contents);
+	if (ModulesManager::is_module_installed('BBCode') & ModulesManager::is_module_activated('BBCode'))
+	{
+		$parser = new PagesBBCodeParser();
+	}
+	else
+	{
+		//On force le langage de formatage à BBCode
+		$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
+
+		$parser = $content_manager->get_parser();
+		$contents = preg_replace('`\[link=([a-z0-9+#-_]+)\](.+)\[/link\]`isU', '<a href="/pages/$1">$2</a>', $contents);
+	}
 	
-	return (string) $contents;
+	$parser->set_content($contents);
+	$parser->parse();
+	
+	//Parse la balise link
+	return $parser->get_content();
 }
 
 //Fonction unparse
@@ -128,12 +142,17 @@ function pages_unparse($contents)
 //Second parse -> à l'affichage
 function pages_second_parse($contents)
 {
-	if (!ServerEnvironmentConfig::load()->is_url_rewriting_enabled()) //Pas de rewriting	
+	if (!ServerEnvironmentConfig::load()->is_url_rewriting_enabled()) //Pas de rewriting
 	{
-			$contents = preg_replace('`<a href="/pages/([a-z0-9+#-]+)">(.*)</a>`sU', '<a href="/pages/pages.php?title=$1">$2</a>', $contents);
+		$contents = preg_replace('`<a href="/pages/([a-z0-9+#-]+)">(.*)</a>`sU', '<a href="/pages/pages.php?title=$1">$2</a>', $contents);
 	}
-	$contents = FormatingHelper::second_parse(stripslashes($contents));
-	return $contents;
+	
+	$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
+	$second_parser = $content_manager->get_second_parser();
+	$second_parser->set_content($contents);
+	$second_parser->parse();
+	
+	return $second_parser->get_content();
 }
 
 //On remplace la balise link
