@@ -16,7 +16,7 @@
 }
 
 .name_title {
-	margin-right: 92px;
+	margin-right: 45%;
 }
 
 div[id*="AdminContactFieldFormController_possible_values_"] {
@@ -31,11 +31,18 @@ div[id*="AdminContactFieldFormController_possible_values_"] .form-field-checkbox
 
 input[id*="field_name_AdminContactFieldFormController_possible_values_"] {
 	margin-bottom: 5px;
-	width: calc(100% - 75px);
+	width: 45%;
 }
 
 input[id*="field_email_AdminContactFieldFormController_possible_values_"] {
 	margin-bottom: 5px;
+	width: 40%;
+}
+
+select[id*="field_recipient_"] {
+	width: 40%;
+	height: 37px;
+	margin-bottom: 4px;
 }
 
 #add-AdminContactFieldFormController_possible_values i[class*="fa-plus"] {
