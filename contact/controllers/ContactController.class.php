@@ -210,7 +210,7 @@ class ContactController extends ModuleController
 		}
 		else if ($subject_field->get_field_type() != 'ContactShortTextField')
 		{
-			$recipient = $subjects[$this->form->get_value('f_subject')->get_raw_value()]['recipient'];
+			$recipient = $this->form->get_value('f_subject')->get_raw_value() ? $subjects[$this->form->get_value('f_subject')->get_raw_value()]['recipient'] : MailServiceConfig::load()->get_default_mail_sender() . ';' . Mail::SENDER_ADMIN;
 			$recipients_mails = explode(';', $recipients[$recipient]['email']);
 			foreach ($recipients_mails as $mail_address)
 			{
