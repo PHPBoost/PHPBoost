@@ -57,7 +57,7 @@ if (ServerConfiguration::get_phpversion() > Updates::PHP_MIN_VERSION_UPDATES)
 		$update = unserialize($update_alert->get_properties());
 		if ($update_type == '' || $update->get_type() == $update_type)
 		{
-			if ($update->check_compatibility())
+			if ($update->check_compatibility() && $update_alert->get_status() != Event::EVENT_STATUS_PROCESSED)
 			{
 				$updates[] = $update;
 			}
