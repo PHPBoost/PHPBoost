@@ -184,7 +184,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 	$tpl->put_all(array(
 		'ID' => $page_infos['id'],
 		'TITLE' => stripslashes(stripslashes($page_infos['title'])),
-		'CONTENTS' => pages_second_parse($page_infos['contents']),
+		'CONTENTS' => stripslashes(FormatingHelper::second_parse($page_infos['contents'])),
 		'COUNT_HITS' => $page_infos['count_hits'] ? sprintf($LANG['page_hits'], $page_infos['hits'] + 1) : '&nbsp;',
 		'L_LINKS' => $LANG['pages_links_list'],
 		'L_PAGE_OUTILS' => $LANG['pages_links_list']
