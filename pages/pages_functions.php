@@ -112,7 +112,7 @@ function pages_find_subcats(&$array, $id_cat)
 //Fonction "parse" pour les pages laissant passer le html tout en remplaçant les caractères spéciaux par leurs entités html correspondantes
 function pages_parse($contents)
 {
-	if (ModulesManager::is_module_installed('BBCode') & ModulesManager::is_module_activated('BBCode'))
+	if (ModulesManager::is_module_installed('BBCode') && ModulesManager::is_module_activated('BBCode'))
 	{
 		$parser = new PagesBBCodeParser();
 	}

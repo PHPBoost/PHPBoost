@@ -157,7 +157,7 @@ class AdminShoutboxConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(5, 1000))
 		));
 		
-		if (ModulesManager::is_module_installed('BBCode'))
+		if (ModulesManager::is_module_installed('BBCode') && ModulesManager::is_module_activated('BBCode'))
 		{
 			$fieldset->add_field(new FormFieldCheckbox('shout_bbcode_enabled', $this->lang['config.shout_bbcode_enabled'], $this->config->is_shout_bbcode_enabled()));
 		}
@@ -237,7 +237,7 @@ class AdminShoutboxConfigController extends AdminModuleController
 		else
 			$this->config->disable_shout_max_messages_number();
 		
-		if (ModulesManager::is_module_installed('BBCode'))
+		if (ModulesManager::is_module_installed('BBCode') && ModulesManager::is_module_activated('BBCode'))
 		{
 			if ($this->form->get_value('shout_bbcode_enabled'))
 				$this->config->enable_shout_bbcode();

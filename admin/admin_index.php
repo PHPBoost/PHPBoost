@@ -83,10 +83,10 @@ $header_logo_path = $customize_interface->get_header_logo_path();
 
 
 //Check if modules are installed for quicklinks
-$module_database_installed = ModulesManager::is_module_installed('database');
-$module_customization_installed = ModulesManager::is_module_installed('customization');
-$module_articles_installed = ModulesManager::is_module_installed('articles');
-$module_news_installed = ModulesManager::is_module_installed('news');
+$module_database_installed = ModulesManager::is_module_installed('database') && ModulesManager::is_module_activated('database');
+$module_customization_installed = ModulesManager::is_module_installed('customization') && ModulesManager::is_module_activated('customization');
+$module_articles_installed = ModulesManager::is_module_installed('articles') && ModulesManager::is_module_activated('articles');
+$module_news_installed = ModulesManager::is_module_installed('news') && ModulesManager::is_module_activated('news');
 
 $tpl->put_all(array(
 	'L_QUICK_ACCESS' => $LANG['quick_access'],
