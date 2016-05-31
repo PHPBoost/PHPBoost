@@ -53,7 +53,7 @@ class ReCaptcha extends Captcha
 	
 	public function is_available()
 	{
-		return @fsockopen("www.google.com", 80) !== false;
+		return Url::check_url_validity('www.google.com');
 	}
 	
 	public function is_valid()
