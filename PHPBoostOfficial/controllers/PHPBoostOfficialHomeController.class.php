@@ -62,7 +62,7 @@ class PHPBoostOfficialHomeController extends ModuleController
 		
 		$this->build_partners_view();
 		
-		if (ModulesManager::is_module_installed('GoogleAnalytics') & ModulesManager::is_module_activated('GoogleAnalytics'))
+		if (ModulesManager::is_module_installed('GoogleAnalytics') && ModulesManager::is_module_activated('GoogleAnalytics'))
 		{
 			$identifier = GoogleAnalyticsConfig::load()->get_identifier();
 			$this->view->put_all(array(

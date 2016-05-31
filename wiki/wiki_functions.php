@@ -32,7 +32,7 @@ define('WIKI_MENU_MAX_DEPTH', 5);
 //Interprétation du BBCode en ajoutant la balise [link]
 function wiki_parse($contents)
 {
-	if (ModulesManager::is_module_installed('BBCode') & ModulesManager::is_module_activated('BBCode'))
+	if (ModulesManager::is_module_installed('BBCode') && ModulesManager::is_module_activated('BBCode'))
 	{
 		$parser = new WikiBBCodeParser();
 	}

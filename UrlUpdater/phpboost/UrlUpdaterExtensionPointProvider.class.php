@@ -36,6 +36,8 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 
 	public function url_mappings()
 	{
+		$this->urls_mappings = array();
+		
 		$db_querier = PersistenceContext::get_querier();
 		
 		$phpboost_4_1_release_date = new Date('2014-07-15');
@@ -43,7 +45,7 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 		if (GeneralConfig::load()->get_site_install_date()->is_anterior_to($phpboost_4_1_release_date))
 		{
 			// Articles
-			if (ModulesManager::is_module_installed('articles') && class_exists('ArticlesService'))
+			if (ModulesManager::is_module_installed('articles') && ModulesManager::is_module_activated('articles') && class_exists('ArticlesService'))
 			{
 				$this->urls_mappings[] = new UrlMapping('^articles/articles.php$', '/articles/', 'L,R=301');
 				
@@ -57,7 +59,7 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 			}
 			
 			// Calendar
-			if (ModulesManager::is_module_installed('calendar') && class_exists('CalendarService'))
+			if (ModulesManager::is_module_installed('calendar') && ModulesManager::is_module_activated('calendar') && class_exists('CalendarService'))
 			{
 				$this->urls_mappings[] = new UrlMapping('^calendar/calendar$', '/calendar/', 'L,R=301');
 				$this->urls_mappings[] = new UrlMapping('^calendar/calendar-([0-9]+)-([0-9]+)-([0-9]+)-?([0-9]*).php$', '/calendar/$3-$2-$1/', 'L,R=301');
@@ -85,7 +87,7 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 		}
 		
 		// Download
-		if (ModulesManager::is_module_installed('download') && class_exists('DownloadService'))
+		if (ModulesManager::is_module_installed('download') && ModulesManager::is_module_activated('download') && class_exists('DownloadService'))
 		{
 			$this->urls_mappings[] = new UrlMapping('^download/download\.php$', '/download/', 'L,R=301');
 			
@@ -112,7 +114,7 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 		}
 		
 		// FAQ
-		if (ModulesManager::is_module_installed('faq') && class_exists('FaqService'))
+		if (ModulesManager::is_module_installed('faq') && ModulesManager::is_module_activated('faq') && class_exists('FaqService'))
 		{
 			$this->urls_mappings[] = new UrlMapping('^faq/faq\.php$', '/faq/', 'L,R=301');
 			
@@ -125,13 +127,13 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 		}
 		
 		// Shoutbox
-		if (ModulesManager::is_module_installed('shoutbox') && class_exists('ShoutboxService'))
+		if (ModulesManager::is_module_installed('shoutbox') && ModulesManager::is_module_activated('shoutbox') && class_exists('ShoutboxService'))
 		{
 			$this->urls_mappings[] = new UrlMapping('^shoutbox/shoutbox\.php$', '/shoutbox/', 'L,R=301');
 		}
 		
 		// Web
-		if (ModulesManager::is_module_installed('web') && class_exists('WebService'))
+		if (ModulesManager::is_module_installed('web') && ModulesManager::is_module_activated('web') && class_exists('WebService'))
 		{
 			$this->urls_mappings[] = new UrlMapping('^web/web\.php$', '/web/', 'L,R=301');
 			

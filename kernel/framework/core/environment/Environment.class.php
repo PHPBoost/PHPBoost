@@ -282,7 +282,7 @@ class Environment
 
 	private static function optimize_database_tables(Date $current_date)
 	{
-		if (ModulesManager::is_module_installed('database'))
+		if (ModulesManager::is_module_installed('database') && ModulesManager::is_module_activated('database'))
 		{
 			$database_config = DatabaseConfig::load();
 			if ($database_config->is_database_tables_optimization_enabled())
