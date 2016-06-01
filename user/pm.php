@@ -134,6 +134,7 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 			$pmtomail_field = ExtendedFieldsCache::load()->get_extended_field_by_field_name('user_pmtomail');
 			if (!empty($pmtomail_field) && $pmtomail_field['display'])
 			{
+				$contents = $contents . '<br /><br /><a href="' . GeneralConfig::load()->get_complete_site_url() . '/user/pm' . url('.php?id=' . $pm_convers_id, '-0-' . $pm_convers_id . '.php', '&') . '#m' . $pm_msg_id . '">' . $LANG['pm_conversation_link'] . '</a>';
 				$send_mail = 0;
 				try {
 					$send_mail = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER_EXTENDED_FIELDS, 'user_pmtomail', 'WHERE user_id = :id', array('id' => $user_id_dest));
@@ -341,6 +342,7 @@ elseif ($pm_post && !empty($pm_id_get) && empty($pm_edit) && empty($pm_del)) //E
 			$pmtomail_field = ExtendedFieldsCache::load()->get_extended_field_by_field_name('user_pmtomail');
 			if (!empty($pmtomail_field) && $pmtomail_field['display'])
 			{
+				$contents = $contents . '<br /><br /><a href="' . GeneralConfig::load()->get_complete_site_url() . '/user/pm' . url('.php?id=' . $pm_id_get . $last_page, '-0-' . $pm_id_get . $last_page_rewrite . '.php', '&') . '#m' . $pm_msg_id . '">' . $LANG['pm_conversation_link'] . '</a>';
 				$send_email = 0;
 				try {
 					$send_email = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER_EXTENDED_FIELDS, 'user_pmtomail', 'WHERE user_id = :id', array('id' => $user_id_dest));

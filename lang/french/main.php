@@ -234,6 +234,7 @@ $LANG['pm_track'] = 'Non lu par le destinataire';
 $LANG['recipient'] = 'Destinataire';
 $LANG['post_new_convers'] = 'Créer une nouvelle conversation';
 $LANG['new_pm'] = 'Nouveau message privé';
+$LANG['pm_conversation_link'] = 'Consulter la conversation';
 $LANG['read'] = 'Lu';
 $LANG['not_read'] = 'Non lu';
 $LANG['last_message'] = 'Dernier message';
