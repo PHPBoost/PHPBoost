@@ -81,8 +81,8 @@ class UserUrlBuilder
 	
 	public static function personnal_message($user_id = 0)
 	{
-		$param = !empty($user_id) ? url('.php?pm=' . $user_id, '-' . $user_id . '.php') : '.php';
-		return new Url(self::$dispatcher . '/pm' . url('.php?pm=' . $user_id, '-' . $user_id . '.php'));
+		$param = !empty($user_id) ? url('.php?pm=' . $user_id, '-' . $user_id) : '.php';
+		return new Url(self::$dispatcher . '/pm' . url('.php?pm=' . $user_id, '-' . $user_id));
 	}
 	
 	public static function upload_files_panel()
