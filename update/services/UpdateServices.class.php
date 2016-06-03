@@ -268,7 +268,7 @@ class UpdateServices
 				foreach ($possible_values as $value)
 				{
 					$new_possible_values[preg_replace('/\s+/', '', $value)] = array(
-						'is_default' => $value == $row['default_values'],
+						'is_default' => $value == $row['default_value'],
 						'title' => $value
 					);
 				}
