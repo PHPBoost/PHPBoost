@@ -166,8 +166,13 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('		Header set Connection keep-alive');
 		$this->add_line('		# Disable your PHP version number from showing up in HTTP headers for added security.');
 		$this->add_line('		Header unset X-Powered-By');
-		$this->add_line('		# Tell the browser to attempt the HTTPS version first');
-		$this->add_line('		Header set Strict-Transport-Security "max-age=31536000; includeSubDomains"');
+		
+		if ($this->general_config->is_site_url_https())
+		{
+			$this->add_line('		# Tell the browser to attempt the HTTPS version first');
+			$this->add_line('		Header set Strict-Transport-Security "max-age=31536000; includeSubDomains"');
+		}
+		
 		$this->add_line('		# Don\'t allow any pages to be framed externally - Defends against CSRF');
 		$this->add_line('		Header set X-Frame-Options SAMEORIGIN');
 		$this->add_line('		# Control Cross-Domain Policies');
@@ -199,7 +204,7 @@ class HtaccessFileCache implements CacheData
 	{
 		$this->add_section('Core');
 
-		$this->add_rewrite_rule('^user/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})\.php$', 'user/pm.php?pm=$1&id=$2&p=$3&quote=$4');
+		$this->add_rewrite_rule('^user/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})$', 'user/pm.php?pm=$1&id=$2&p=$3&quote=$4');
 
 		$eps = AppContext::get_extension_provider_service();
 		$mappings = $eps->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT);
