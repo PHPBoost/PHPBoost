@@ -64,10 +64,26 @@ class ReCaptcha extends Captcha
 			
 			if ($request->has_postparameter('g-recaptcha-response'))
 			{
-				$response = @file_get_contents(self::$_siteVerifyUrl . "?secret=" . $this->config->get_secret_key() . "&response=" . $request->get_postvalue('g-recaptcha-response', '') . "&remoteip=" . $_SERVER['REMOTE_ADDR']);
+				$validation_url = self::$_siteVerifyUrl . "?secret=" . $this->config->get_secret_key() . "&response=" . $request->get_postvalue('g-recaptcha-response', '');
+				
+				$server_configuration = new ServerConfiguration();
+				if ($server_configuration->has_curl_library())
+				{
+					$curl = curl_init();
+					curl_setopt($curl, CURLOPT_URL, $validation_url);
+					curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+					curl_setopt($curl, CURLOPT_TIMEOUT, 15);
+					curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
+					curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, true); 
+					$response = curl_exec($curl);
+				}
+				else
+				{
+					$response = @file_get_contents($validation_url);
+				}
 				$response = json_decode($response, true);
 				
-				if ($response['success'] === true)
+				if ($response['success'] == true)
 					return true;
 				else
 					$this->recaptcha_error = isset($response['error-codes'][0]) ? $response['error-codes'][0] : null;
