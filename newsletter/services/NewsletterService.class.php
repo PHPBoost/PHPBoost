@@ -47,10 +47,10 @@ class NewsletterService
 		{
 			if (in_array($id, $streams))
 			{
-				//Send mail
-				NewsletterMailFactory::send_mail(self::list_subscribers_by_stream($id), $language_type, NewsletterConfig::load()->get_mail_sender(), $subject, $contents);
 				//Add archive
 				NewsletterDAO::add_archive($id, $subject, $contents, $language_type);
+				//Send mail
+				NewsletterMailFactory::send_mail(self::list_subscribers_by_stream($id), $language_type, NewsletterConfig::load()->get_mail_sender(), $subject, $contents);
 			}
 		}
 	}

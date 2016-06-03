@@ -31,18 +31,37 @@
 abstract class AbstractNewsletterMail implements NewsletterMailType
 {
 	private $lang;
-	private $querier;
 	
 	public function __construct()
 	{
 		$this->lang = LangLoader::get('common', 'newsletter');
-		$this->querier = PersistenceContext::get_querier();
 	}
 	
 	/**
 	 * {@inheritdoc}
 	 */
-	public function send_mail($subscribers, $sender, $subject, $contents){}
+	public function send_mail($subscribers, $sender, $subject, $contents)
+	{
+		$mail = new Mail();
+		$mail->set_sender($sender);
+		$mail->set_subject($subject);
+		$mail->set_content($contents);
+		
+		foreach ($subscribers as $values)
+		{
+			$mail_subscriber = !empty($values['mail']) ? $values['mail'] : NewsletterDAO::get_mail_for_member($values['user_id']);
+			
+			if (!empty($mail_subscriber))
+			{
+				$mail->add_recipient($mail_subscriber);
+				
+				//TODO gestion des erreurs
+				AppContext::get_mail_service()->try_to_send($mail);
+				
+				$mail->clear_recipients();
+			}
+		}
+	}
 	
 	/**
 	 * {@inheritdoc}
