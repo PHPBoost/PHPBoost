@@ -523,12 +523,12 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			{
 				$title = retrieve(POST, 'title', '');
 				$subtitle = retrieve(POST, 'desc', '');
-				$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+				$contents = retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED);
 				$type = $is_modo ? retrieve(POST, 'type', 0) : 0;
 
 				if (!empty($title) && !empty($contents))
 				{
-					$Forumfct->Update_topic($idt_get, $id_m, $title, $subtitle, $contents, $type, $user_id_msg); //Mise à jour du topic.
+					$Forumfct->Update_topic($idt_get, $id_m, $title, $subtitle, addslashes($contents), $type, $user_id_msg); //Mise à jour du topic.
 
 					//Mise à jour du sondage en plus du topic.
 					$del_poll = retrieve(POST, 'del_poll', false);
