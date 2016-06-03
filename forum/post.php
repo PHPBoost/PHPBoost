@@ -429,7 +429,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				AppContext::get_response()->redirect( url(HOST . SCRIPT . '?error=flood&id=' . $id_get . '&idt=' . $idt_get, '', '&') . '#message_helper');
 		}
 
-		$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+		$contents = retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED);
 
 		//Si le topic n'est pas vérrouilé on ajoute le message.
 		if ($topic['status'] != 0 || $is_modo)
@@ -452,19 +452,19 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					
 					if (AppContext::get_current_user()->get_editor() == 'TinyMCE')
 					{
-						$new_content = FormatingHelper::second_parse($last_message_content) . '<br /><br />-------------------------------------------<br /><em>' . $LANG['edit_on'] . ' ' . $now->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) . '</em><br /><br />' . FormatingHelper::second_parse($contents);
+						$new_content = $last_message_content . '<br /><br />-------------------------------------------<br /><em>' . $LANG['edit_on'] . ' ' . $now->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) . '</em><br /><br />' . FormatingHelper::strparse($contents);
 					}
 					else
 					{
-						$new_content = FormatingHelper::second_parse($last_message_content) . '
+						$new_content = $last_message_content . '
 
 -------------------------------------------
 <em>' . $LANG['edit_on'] . ' ' . $now->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) . '</em>
 
-' . FormatingHelper::second_parse($contents);
+' . FormatingHelper::strparse($contents);
 					}
 					
-					$Forumfct->Update_msg($idt_get, $topic['last_msg_id'], FormatingHelper::unparse(stripslashes($new_content)), $topic['last_user_id']); //Mise à jour du topic.
+					$Forumfct->Update_msg($idt_get, $topic['last_msg_id'], FormatingHelper::unparse(addslashes($new_content)), $topic['last_user_id']); //Mise à jour du topic.
 					$last_msg_id = $topic['last_msg_id'];
 				}
 				else
@@ -754,7 +754,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					'FORUM_NAME' => $config->get_forum_name(),
 					'TITLE' => stripslashes($topic['title']),
 					'DESC' => stripslashes($topic['subtitle']),
-					'CONTENTS' => FormatingHelper::unparse(stripslashes($contents)),
+					'CONTENTS' => FormatingHelper::unparse($contents),
 					'POLL_QUESTION' => !empty($poll['question']) ? stripslashes($poll['question']) : '',
 					'SELECTED_SIMPLE' => 'checked="ckecked"',
 					'MODULE_DATA_PATH' => $module_data_path,
@@ -829,10 +829,10 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
 			if ($update && retrieve(POST, 'edit_msg', false))
 			{
-				$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+				$contents = retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED);
 				if (!empty($contents))
 				{
-					$nbr_msg_before = $Forumfct->Update_msg($idt_get, $id_m, $contents, $user_id_msg);
+					$nbr_msg_before = $Forumfct->Update_msg($idt_get, $id_m, addslashes($contents), $user_id_msg);
 
 					//Calcul de la page sur laquelle se situe le message.
 					$msg_page = ceil( ($nbr_msg_before + 1) / $config->get_number_messages_per_page() );
@@ -860,7 +860,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					'P_UPDATE' => url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
 					'FORUM_NAME' => $config->get_forum_name(),
 					'DESC' => stripslashes($topic['subtitle']),
-					'CONTENTS' => FormatingHelper::unparse(stripslashes($contents)),
+					'CONTENTS' => FormatingHelper::unparse($contents),
 					'KERNEL_EDITOR' => $editor->display(),
 					'U_ACTION' => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m . '&amp;token=' . AppContext::get_session()->get_token()),
 					'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $category->get_name() . '</a>',
