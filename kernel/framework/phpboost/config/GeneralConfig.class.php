@@ -51,6 +51,11 @@ class GeneralConfig extends AbstractConfigData
 		return $this->get_property(self::SITE_URL) . $this->get_property(self::SITE_PATH);
 	}
 
+	public function is_site_url_https()
+	{
+		return substr($this->get_property(self::SITE_URL), 0, 8) == "https://";
+	}
+
 	/**
 	 * @param string $url The URL must begin with a protocol (for instance http://) and must not end with a slash.
 	 */

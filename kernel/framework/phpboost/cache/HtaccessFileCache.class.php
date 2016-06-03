@@ -166,8 +166,13 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('		Header set Connection keep-alive');
 		$this->add_line('		# Disable your PHP version number from showing up in HTTP headers for added security.');
 		$this->add_line('		Header unset X-Powered-By');
-		$this->add_line('		# Tell the browser to attempt the HTTPS version first');
-		$this->add_line('		Header set Strict-Transport-Security "max-age=31536000; includeSubDomains"');
+		
+		if ($this->general_config->is_site_url_https())
+		{
+			$this->add_line('		# Tell the browser to attempt the HTTPS version first');
+			$this->add_line('		Header set Strict-Transport-Security "max-age=31536000; includeSubDomains"');
+		}
+		
 		$this->add_line('		# Don\'t allow any pages to be framed externally - Defends against CSRF');
 		$this->add_line('		Header set X-Frame-Options SAMEORIGIN');
 		$this->add_line('		# Control Cross-Domain Policies');
