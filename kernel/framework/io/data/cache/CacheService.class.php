@@ -83,7 +83,7 @@ class CacheService
 		{
 			foreach ($folder->get_folders() as $f)
 			{
-				$f->delete();
+				$this->delete_files($f, self::$all_files_regex_without_extensions, true);
 			}
 		}
 	}
