@@ -30,10 +30,6 @@ class ReCaptchaSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		return AppContext::get_captcha_service()->uninstall_captcha('ReCaptcha');
-	}
-	
-	public function uninstall()
-	{
 		$this->delete_configuration();
 	}
 	
