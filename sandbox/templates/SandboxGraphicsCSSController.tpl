@@ -13,13 +13,13 @@
 			<h5>h5. {@css.title} 5</h5>
 			<h6>h6. {@css.title} 6</h6><br />
 		</div>
-		
+
 		<h5>{@css.specific_titles}</h5><br />
 		<div class="content">
-			<h2 class="formatter-title">{@css.title} 2</h2><br />
-			<h3 class="formatter-title">{@css.title} 3</h3><br />
-			<h4 class="formatter-title">{@css.title} 4</h4><br />
-			<h5 class="formatter-title">{@css.title} 1</h5><br /><br />
+			<h2 class="formatter-title">{@css.title} 1</h2><br />
+			<h3 class="formatter-title">{@css.title} 2</h3><br />
+			<h4 class="formatter-title">{@css.title} 3</h4><br />
+			<h5 class="formatter-title">{@css.title} 4</h5><br /><br />
 		</div>
 
 		<h5>{@css.styles}</h5><br />
@@ -82,7 +82,7 @@
 				<li>{@css.element} 2</li>
 				<li>{@css.element} 3</li>
 			</ol>
-			
+
 			<ul class="formatter-ul">
 				<li class="formatter-li">{@css.element} bbcode 1</li>
 				<li class="formatter-li">{@css.element} bbcode 2</li>
@@ -123,7 +123,7 @@
 				<div class="progressbar" style="width:100%"></div>
 			</div>
 		</div><br />
-		
+
 		<br />
 		<h5>{@css.explorer}</h5>
 		<div class="content">
@@ -178,7 +178,7 @@
 				</select>
 			</div>
 		</div>
-		<br/></br>		
+		<br/></br>
 		<h5>{@css.button}</h5>
 		<div class="content center">
 			<button type="submit" class="button">{@css.button}</button>
@@ -192,7 +192,7 @@
 			<button type="submit" class="basic-button">{@css.button} basic-button</button>
 			<button type="submit" class="basic-button alt">{@css.button} basic-button.alt</button>
 		</div>
-		<br/></br>	
+		<br/></br>
 		<h5>{@css.sortable}</h5>
 		<br/></br>
 		<div class="content">
@@ -445,7 +445,7 @@
 				<div class="message-message">
 					<div itemprop="text" class="message-content" class="content">{@css.messages.content}</div>
 				</div>
-				
+
 			</div>
 		</div>
 	</div>
