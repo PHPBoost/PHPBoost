@@ -74,13 +74,13 @@ class ReCaptcha extends Captcha
 					curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 					curl_setopt($curl, CURLOPT_TIMEOUT, 15);
 					curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
-					curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, true); 
 					$response = curl_exec($curl);
 				}
 				else
 				{
 					$response = @file_get_contents($validation_url);
 				}
+				
 				$response = json_decode($response, true);
 				
 				if ($response['success'] == true)
