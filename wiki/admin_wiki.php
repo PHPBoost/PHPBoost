@@ -74,7 +74,7 @@ $tpl->put_all(array(
 	'HIDE_CATEGORIES_ON_INDEX' => !$config->are_categories_displayed_on_index() ? 'checked="checked"' : '',
 	'DISPLAY_CATEGORIES_ON_INDEX' => $config->are_categories_displayed_on_index() ? 'checked="checked"' : '',
 	'NUMBER_ARTICLES_ON_INDEX' => $config->get_number_articles_on_index(),
-	'DESCRIPTION' => wiki_unparse($config->get_index_text()),
+	'DESCRIPTION' => FormatingHelper::unparse($config->get_index_text()),
 	'L_UPDATE' => $LANG['update'],
 	'L_RESET' => $LANG['reset'],
 	'L_PREVIEW' => $LANG['preview'],

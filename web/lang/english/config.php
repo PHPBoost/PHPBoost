@@ -35,9 +35,9 @@ $lang['root_category_description'] = 'Welcome to the web links section of the we
 One category and one link were created to show you how this module works. Here are some tips to get started on this module.
 <br /><br /> 
 <ul class="formatter-ul">
-	<li class="formatter-li"> To configure or customize the module homepage your module, go into the <a href="' . WebUrlBuilder::configuration()->rel() . '">module administration</a></li>
-	<li class="formatter-li"> To create categories, <a href="' . WebUrlBuilder::add_category()->rel() . '">clic here</a></li>
-	<li class="formatter-li"> To create links, <a href="' . WebUrlBuilder::add()->rel() . '">clic here</a></li>
+	<li class="formatter-li"> To configure or customize the module homepage your module, go into the <a href="' . WebUrlBuilder::configuration()->relative() . '">module administration</a></li>
+	<li class="formatter-li"> To create categories, <a href="' . WebUrlBuilder::add_category()->relative() . '">clic here</a></li>
+	<li class="formatter-li"> To create links, <a href="' . WebUrlBuilder::add()->relative() . '">clic here</a></li>
 </ul>
 <br />To learn more, don \'t hesitate to consult the documentation for the module on <a href="http://www.phpboost.com">PHPBoost</a> website.';
 ?>
