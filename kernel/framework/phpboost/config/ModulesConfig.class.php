@@ -53,57 +53,57 @@ class ModulesConfig extends AbstractConfigData
 		return $this->get_property(self::$modules_property);
 	}
 
-    /**
-     * @desc Returns the requested module
-     * @param $module_id the id of the module
-     * @return Module the requested module
-     */
+	/**
+	 * @desc Returns the requested module
+	 * @param $module_id the id of the module
+	 * @return Module the requested module
+	 */
 	public function get_module($module_id)
 	{
 		$modules = $this->get_property(self::$modules_property);
-		return $modules[$module_id];
+		return isset($modules[$module_id]) ? $modules[$module_id] : null;
 	}
 
-    /**
-     * @desc Sets the modules list
-     * @param Module[string] $modules_list The modules list
-     */
-    public function set_modules(array $modules)
-    {
-        $this->set_property(self::$modules_property, $modules);
-    }
+	/**
+	 * @desc Sets the modules list
+	 * @param Module[string] $modules_list The modules list
+	 */
+	public function set_modules(array $modules)
+	{
+		$this->set_property(self::$modules_property, $modules);
+	}
 
-    /**
-     * @desc Install a new module
-     * @param Module $modules The module to add (~ install)
-     */
-    public function add_module(Module $module)
-    {
-        $modules = $this->get_property(self::$modules_property);
-        $modules[$module->get_id()] = $module;
-        $this->set_property(self::$modules_property, $modules);
-    }
+	/**
+	 * @desc Install a new module
+	 * @param Module $modules The module to add (~ install)
+	 */
+	public function add_module(Module $module)
+	{
+		$modules = $this->get_property(self::$modules_property);
+		$modules[$module->get_id()] = $module;
+		$this->set_property(self::$modules_property, $modules);
+	}
 
-    public function remove_module(Module $module)
-    {
-        $modules = $this->get_property(self::$modules_property);
-        unset($modules[$module->get_id()]);
-        $this->set_property(self::$modules_property, $modules);
-    }
+	public function remove_module(Module $module)
+	{
+		$modules = $this->get_property(self::$modules_property);
+		unset($modules[$module->get_id()]);
+		$this->set_property(self::$modules_property, $modules);
+	}
 
-    public function remove_module_by_id($module_id)
-    {
-        $modules = $this->get_property(self::$modules_property);
-        unset($modules[$module_id]);
-        $this->set_property(self::$modules_property, $modules);
-    }
+	public function remove_module_by_id($module_id)
+	{
+		$modules = $this->get_property(self::$modules_property);
+		unset($modules[$module_id]);
+		$this->set_property(self::$modules_property, $modules);
+	}
 	
 	public function update(Module $module)
 	{
 		$modules = $this->get_property(self::$modules_property);
-        $modules[$module->get_id()] = $module;
+		$modules[$module->get_id()] = $module;
 
-        $this->set_property(self::$modules_property, $modules);
+		$this->set_property(self::$modules_property, $modules);
 	}
 
 	/**
