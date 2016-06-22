@@ -180,7 +180,7 @@ if ($contribution_id > 0)
 		'CREATION_DATE' => $contribution_creation_date->format(Date::FORMAT_DAY_MONTH_YEAR),
 		'MODULE' => $contribution->get_module_name(),
 		'U_CONTRIBUTOR_PROFILE' => UserUrlBuilder::profile($contribution->get_poster_id())->rel(),
-		'FIXING_URL' => Url::to_relative($contribution->get_fixing_url())
+		'FIXING_URL' => Url::to_rel($contribution->get_fixing_url())
 	));
 	
 	//Si la contribution a été traitée
