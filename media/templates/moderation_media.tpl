@@ -1,8 +1,8 @@
 		# IF C_DISPLAY #
-		<form action="moderation_media.php" method="post" class="fieldset-content">
+		<form action="moderation_media.php" method="post">
 			<fieldset class="fieldset-submit">
 				<legend>{L_FILTER}</legend>
-				<div id="form" class="center">
+				<div id="form" class="center fieldset-content">
 					{L_DISPLAY_FILE}&nbsp;
 					<select name="state" id="state" class="nav" onchange="change_order()">
 							<option value="all"{SELECTED_ALL}>{L_ALL}</option>
@@ -13,6 +13,7 @@
 					&nbsp;{L_INCLUDE_SUB_CATS}&nbsp;
 					<input type="checkbox" name="sub_cats" value="1"{SUB_CATS}>
 				</div>
+				<div class="spacer">&nbsp;</div>
 				<div class="fieldset-inset">
 					<input type="hidden" name="token" value="{TOKEN}">
 					<button type="submit" name="filter" value="true" class="submit">{L_SUBMIT}</button>
@@ -28,10 +29,18 @@
 				var item = new Array({JS_ARRAY});
 				
 				if (type == "delete")
-					confirm ('{L_CONFIRM_DELETE_ALL}');
-
-				for (var i=0; i < item.length; i++)
-					document.getElementById(type + item[i]).checked = 'checked';
+				{
+					if (confirm ('{L_CONFIRM_DELETE_ALL}'))
+					{
+						for (var i=0; i < item.length; i++)
+							document.getElementById(type + item[i]).checked = 'checked';
+					}
+				}
+				else
+				{
+					for (var i=0; i < item.length; i++)
+						document.getElementById(type + item[i]).checked = 'checked';
+				}
 			}
 			
 			function pointer (id)
@@ -100,7 +109,7 @@
 								<input type="radio" name="action[{files.ID}]" value="unaprobed"{files.UNAPROBED} # IF NOT files.UNAPROBED #disabled="disabled" # ENDIF #/>
 							</td>
 							<td class="{files.COLOR}">
-								<input type="radio" id="delete{files.ID}" name="action[{files.ID}]" value="delete" onclick="return confirm('{L_CONFIRM_DELETE}');">
+								<input type="radio" id="delete{files.ID}" name="action[{files.ID}]" value="delete" data-confirmation="delete-element">
 							</td>
 						</tr>
 						# END files #
