@@ -21,6 +21,13 @@
 			<label for="menu_element_{ID}_name">{L_NAME}</label> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name">
 			<label for="menu_element_{ID}_url">{L_URL}</label> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url">
 			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)">
+			<script>
+			<!--
+				jQuery(document).ready(function() {
+					image_preview(this,menu_element_{ID}_image_preview);
+				});
+			-->
+			</script>
 			<span class="preview"><img src="# IF C_IMG #{REL_IMG}# ENDIF #" id="menu_element_{ID}_image_preview" /></span>
 			<div class="sortable-actions">
 				<a href="" title="{L_MORE}" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});return false;"><i class="fa fa-cog"></i></a>
@@ -28,7 +35,7 @@
 			</div>
 		</div>
 		<div class="spacer"></div>
-		<fieldset id="menu_element_{ID}_properties" style="display:none;">
+		<fieldset id="menu_element_{ID}_properties"# IF C_AUTH_MENU_HIDDEN # style="display:none;"# ENDIF #>
 			<legend>{L_PROPERTIES}</legend>
 			<div class="form-element">
 				<label>{L_AUTHORIZATIONS}</label>
@@ -56,6 +63,13 @@
 			<label for="menu_element_{ID}_name">{L_NAME}</label> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name">
 			<label for="menu_element_{ID}_url">{L_URL}</label> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url">
 			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)">
+			<script>
+			<!--
+				jQuery(document).ready(function() {
+					image_preview(this,menu_element_{ID}_image_preview);
+				});
+			-->
+			</script>
 			<span class="preview"><img src="# IF C_IMG #{REL_IMG}# ENDIF #" id="menu_element_{ID}_image_preview" /></span>
 			<div class="sortable-actions">
 				<a href="" title="{L_MORE}" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});return false;"><i class="fa fa-cog"></i></a>
@@ -63,7 +77,7 @@
 			</div>
 		</div>
 		<div class="spacer"></div>
-		<fieldset id="menu_element_{ID}_properties" style="display:none;">
+		<fieldset id="menu_element_{ID}_properties"# IF C_AUTH_MENU_HIDDEN # style="display:none;"# ENDIF #>
 			<legend>{L_PROPERTIES}</legend>
 			<div class="form-element">
 				<label>{L_AUTHORIZATIONS}</label>

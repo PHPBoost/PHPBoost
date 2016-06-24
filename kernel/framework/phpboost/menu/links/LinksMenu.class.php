@@ -125,58 +125,73 @@ class LinksMenu extends LinksMenuElement
 	*/
 	public function display($template = false, $mode = LinksMenuElement::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
 	{
-		 // Get the good Template object
-		if (!is_object($template) || !($template instanceof Template))
-		{
-			$tpl = new FileTemplate('framework/menus/links.tpl');
-		}
-		else
-		{
-			$tpl = $template;
-		}
-		$original_tpl = clone $tpl;
-
-		// Children assignment
-		foreach ($this->elements as $element)
-		{   // We use a new Tpl to avoid overwrite issues
-			$tpl->assign_block_vars('elements', array('DISPLAY' => $element->display(clone $original_tpl, $mode)));
-		}
-
-		// Menu assignment
-		parent::_assign($tpl, $mode);
-		$tpl->put_all(array(
-			'C_MENU' => true,
-			'C_NEXT_MENU' => $this->depth > 0,
-			'C_FIRST_MENU' => $this->depth == 0,
-			'C_HAS_CHILD' => count($this->elements) > 0,
-			'C_HIDDEN_WITH_SMALL_SCREENS' => $this->hidden_with_small_screens,
-			'DEPTH' => $this->depth
-		));
+		$is_displayed = true;
 		
-		if ($this->type == self::AUTOMATIC_MENU)
+		foreach ($this->get_filters() as $key => $filter) 
 		{
-			$tpl->put_all(array(
-				'C_MENU_CONTAINER' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
-				'C_MENU_HORIZONTAL' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__HEADER, Menu::BLOCK_POSITION__SUB_HEADER, Menu::BLOCK_POSITION__TOP_CENTRAL, Menu::BLOCK_POSITION__BOTTOM_CENTRAL)),
-				'C_MENU_VERTICAL' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
-				'C_MENU_STATIC' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__TOP_FOOTER, Menu::BLOCK_POSITION__FOOTER)),
-				'C_MENU_LEFT' => $this->get_block() == Menu::BLOCK_POSITION__LEFT,
-				'C_MENU_RIGHT' => $this->get_block() == Menu::BLOCK_POSITION__RIGHT
-			));
-		}
-		else
-		{
-			$tpl->put_all(array(
-				'C_MENU_CONTAINER' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
-				'C_MENU_HORIZONTAL' => $this->type == self::HORIZONTAL_MENU,
-				'C_MENU_VERTICAL' => $this->type == self::VERTICAL_MENU,
-				'C_MENU_STATIC' => $this->type == self::STATIC_MENU,
-				'C_MENU_LEFT' => $this->get_block() == Menu::BLOCK_POSITION__LEFT,
-				'C_MENU_RIGHT' => $this->get_block() == Menu::BLOCK_POSITION__RIGHT
-			));
+			if ($filter->match())
+			{
+				$is_displayed = false;
+				break;
+			}
 		}
 		
-		return $tpl->render();
+		if ($is_displayed)
+		{
+			// Get the good Template object
+			if (!is_object($template) || !($template instanceof Template))
+			{
+				$tpl = new FileTemplate('framework/menus/links.tpl');
+			}
+			else
+			{
+				$tpl = $template;
+			}
+			$original_tpl = clone $tpl;
+
+			// Children assignment
+			foreach ($this->elements as $element)
+			{   // We use a new Tpl to avoid overwrite issues
+				$tpl->assign_block_vars('elements', array('DISPLAY' => $element->display(clone $original_tpl, $mode)));
+			}
+
+			// Menu assignment
+			parent::_assign($tpl, $mode);
+			$tpl->put_all(array(
+				'C_MENU' => true,
+				'C_NEXT_MENU' => $this->depth > 0,
+				'C_FIRST_MENU' => $this->depth == 0,
+				'C_HAS_CHILD' => count($this->elements) > 0,
+				'C_HIDDEN_WITH_SMALL_SCREENS' => $this->hidden_with_small_screens,
+				'DEPTH' => $this->depth
+			));
+			
+			if ($this->type == self::AUTOMATIC_MENU)
+			{
+				$tpl->put_all(array(
+					'C_MENU_CONTAINER' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
+					'C_MENU_HORIZONTAL' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__HEADER, Menu::BLOCK_POSITION__SUB_HEADER, Menu::BLOCK_POSITION__TOP_CENTRAL, Menu::BLOCK_POSITION__BOTTOM_CENTRAL)),
+					'C_MENU_VERTICAL' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
+					'C_MENU_STATIC' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__TOP_FOOTER, Menu::BLOCK_POSITION__FOOTER)),
+					'C_MENU_LEFT' => $this->get_block() == Menu::BLOCK_POSITION__LEFT,
+					'C_MENU_RIGHT' => $this->get_block() == Menu::BLOCK_POSITION__RIGHT
+				));
+			}
+			else
+			{
+				$tpl->put_all(array(
+					'C_MENU_CONTAINER' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
+					'C_MENU_HORIZONTAL' => $this->type == self::HORIZONTAL_MENU,
+					'C_MENU_VERTICAL' => $this->type == self::VERTICAL_MENU,
+					'C_MENU_STATIC' => $this->type == self::STATIC_MENU,
+					'C_MENU_LEFT' => $this->get_block() == Menu::BLOCK_POSITION__LEFT,
+					'C_MENU_RIGHT' => $this->get_block() == Menu::BLOCK_POSITION__RIGHT
+				));
+			}
+			
+			return $tpl->render();
+		}
+		return '';
 	}
 
 

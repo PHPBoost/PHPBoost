@@ -121,6 +121,7 @@ abstract class LinksMenuElement extends Menu
 		
 		$template->put_all(array(
 			'C_MENU' => false,
+			'C_DISPLAY_AUTH' => AppContext::get_current_user()->check_auth($this->get_auth(), Menu::MENU_AUTH_BIT),
 			'TITLE' => $this->title,
 			'DEPTH' => $this->depth,
 			'PARENT_DEPTH' => $this->depth - 1,
@@ -136,6 +137,7 @@ abstract class LinksMenuElement extends Menu
 		if ($mode)
 		{
 			$template->put_all(array(
+				'C_AUTH_MENU_HIDDEN' => $this->get_auth() == array('r-1' => Menu::MENU_AUTH_BIT, 'r0' => Menu::MENU_AUTH_BIT, 'r1' => Menu::MENU_AUTH_BIT),
 				'AUTH_FORM' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, $this->get_auth(), array(), 'menu_element_' . $this->uid . '_auth')
 			));
 		}

@@ -86,7 +86,18 @@ class ModuleMiniMenu extends Menu
 	
 	public function display()
 	{
-		if ($this->is_displayed())
+		$is_displayed = true;
+		
+		foreach ($this->get_filters() as $key => $filter) 
+		{
+			if ($filter->match())
+			{
+				$is_displayed = false;
+				break;
+			}
+		}
+		
+		if ($is_displayed && $this->is_displayed())
 		{
 			$template = $this->get_template_to_use();
 			MenuService::assign_positions_conditions($template, $this->get_block());

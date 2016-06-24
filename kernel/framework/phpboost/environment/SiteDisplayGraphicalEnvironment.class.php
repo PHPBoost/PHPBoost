@@ -194,7 +194,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 						break;
 						
 						case Menu::BLOCK_POSITION__SUB_HEADER:
-							$template->put('C_MENUS_SUB_HEADER_CONTENT', true);
+							$template->put('C_MENUS_SUB_HEADER_CONTENT', $menu_content);
 							$template->assign_block_vars('menus_sub_header', array('MENU' => $menu_content));
 						break;
 						
@@ -209,17 +209,17 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 						break;
 						
 						case Menu::BLOCK_POSITION__TOP_CENTRAL:
-							$template->put('C_MENUS_TOPCENTRAL_CONTENT', true);
+							$template->put('C_MENUS_TOPCENTRAL_CONTENT', $menu_content);
 							$template->assign_block_vars('menus_top_central', array('MENU' => $menu_content));
 						break;
 						
 						case Menu::BLOCK_POSITION__BOTTOM_CENTRAL:
-							$template->put('C_MENUS_BOTTOM_CENTRAL_CONTENT', true);
+							$template->put('C_MENUS_BOTTOM_CENTRAL_CONTENT', $menu_content);
 							$template->assign_block_vars('menus_bottom_central', array('MENU' => $menu_content));
 						break;
 						
 						case Menu::BLOCK_POSITION__TOP_FOOTER:
-							$template->put('C_MENUS_TOP_FOOTER_CONTENT', true);
+							$template->put('C_MENUS_TOP_FOOTER_CONTENT', $menu_content);
 							$template->assign_block_vars('menus_top_footer', array('MENU' => $menu_content));
 						break;
 						
