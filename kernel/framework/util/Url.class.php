@@ -653,8 +653,29 @@ class Url
      */
 	public static function is_current_url($check_url, $real_url = false)
 	{
-		$site_path = GeneralConfig::load()->get_default_site_path();
+		$general_config = GeneralConfig::load();
+		
+		$site_path = $general_config->get_default_site_path();
 		$current_url = str_replace($site_path, '', REWRITED_SCRIPT);
+		
+		$other_home_page = trim($general_config->get_other_home_page(), '/');
+		$path = trim($current_url, '/');
+		
+		if (!empty($path) || (!empty($other_home_page) && $path == $other_home_page))
+		{
+			$module_name = explode('/', $path);
+			$running_module_name = $module_name[0];
+		}
+		else
+		{
+			$module_home_page = $general_config->get_module_home_page();
+			if (empty($other_home_page) && !empty($module_home_page))
+				$running_module_name = $module_home_page;
+			else
+				$running_module_name = '';
+		}
+		
+		$current_url = $running_module_name . $current_url;
 		
 		if ($real_url)
 		{

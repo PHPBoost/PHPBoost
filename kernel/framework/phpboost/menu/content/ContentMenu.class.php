@@ -55,15 +55,30 @@ class ContentMenu extends Menu
 	 */
 	public function display()
 	{
-		$tpl = new FileTemplate('framework/menus/content.tpl');
-		$tpl->put_all(array(
-			'C_DISPLAY_TITLE' => $this->display_title,
-			'C_VERTICAL_BLOCK' => ($this->get_block() == Menu::BLOCK_POSITION__LEFT || $this->get_block() == Menu::BLOCK_POSITION__RIGHT),
-			'TITLE' => $this->title,
-			'CONTENT' => FormatingHelper::second_parse($this->content),
-			'C_HIDDEN_WITH_SMALL_SCREENS' => $this->hidden_with_small_screens
-		));
-		return $tpl->render();
+		$is_displayed = true;
+		
+		foreach ($this->get_filters() as $key => $filter) 
+		{
+			if ($filter->match())
+			{
+				$is_displayed = false;
+				break;
+			}
+		}
+		
+		if ($is_displayed)
+		{
+			$tpl = new FileTemplate('framework/menus/content.tpl');
+			$tpl->put_all(array(
+				'C_DISPLAY_TITLE' => $this->display_title,
+				'C_VERTICAL_BLOCK' => ($this->get_block() == Menu::BLOCK_POSITION__LEFT || $this->get_block() == Menu::BLOCK_POSITION__RIGHT),
+				'TITLE' => $this->title,
+				'CONTENT' => FormatingHelper::second_parse($this->content),
+				'C_HIDDEN_WITH_SMALL_SCREENS' => $this->hidden_with_small_screens
+			));
+			return $tpl->render();
+		}
+		return '';
 	}
 
 	## Setters ##

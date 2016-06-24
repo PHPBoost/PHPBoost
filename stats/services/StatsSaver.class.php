@@ -152,7 +152,7 @@ class StatsSaver
 			'k-meleon' => 'k-meleon',
 			'icab' => 'icab',
 			'ncsa mosaic'=> 'ncsa mosaic',
-			'amaya'	=> 'amaya',
+			'amaya' => 'amaya',
 			'omniweb' => 'omniweb',
 			'hotjava' => 'hotjava',
 			'browsex' => 'browsex',
@@ -217,9 +217,9 @@ class StatsSaver
 					$os = $name;
 					break;
 				}
-			}		
+			}
 			self::write_stats('os', $os);
-		}		
+		}
 		
 		########### Détection de la langue utilisateur ###########
 		if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE']))

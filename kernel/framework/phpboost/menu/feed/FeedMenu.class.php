@@ -123,9 +123,22 @@ class FeedMenu extends Menu
 	
 	public function display()
 	{
-		return Feed::get_parsed($this->module_id, $this->name, $this->category,
-		    self::get_template($this->get_title(), $this->get_block(), $this->hidden_with_small_screens), $this->number, $this->begin_at
-		);
+		$is_displayed = true;
+		
+		foreach ($this->get_filters() as $key => $filter) 
+		{
+			if ($filter->match())
+			{
+				$is_displayed = false;
+				break;
+			}
+		}
+		
+		if ($is_displayed)
+		{
+			return Feed::get_parsed($this->module_id, $this->name, $this->category, self::get_template($this->get_title(), $this->get_block(), $this->hidden_with_small_screens), $this->number, $this->begin_at);
+		}
+		return '';
 	}
 
 }
