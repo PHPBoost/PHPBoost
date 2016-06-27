@@ -86,13 +86,14 @@ class ModuleMiniMenu extends Menu
 	
 	public function display()
 	{
-		$is_displayed = true;
+		$filters = $this->get_filters();
+		$is_displayed = empty($filters) || $filters[0]->get_pattern() == '/';
 		
-		foreach ($this->get_filters() as $key => $filter) 
+		foreach ($filters as $key => $filter) 
 		{
-			if ($filter->match())
+			if ($filter->get_pattern() != '/' && $filter->match())
 			{
-				$is_displayed = false;
+				$is_displayed = true;
 				break;
 			}
 		}
