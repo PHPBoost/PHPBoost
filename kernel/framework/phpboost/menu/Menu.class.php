@@ -159,7 +159,7 @@ abstract class Menu
 	 */
 	public function check_auth()
 	{
-		return empty($this->auth) || AppContext::get_current_user()->check_auth($this->auth, self::MENU_AUTH_BIT);
+		return $this->auth === null || AppContext::get_current_user()->check_auth($this->auth, self::MENU_AUTH_BIT);
 	}
 	
 	## Setters ##
