@@ -64,8 +64,20 @@ class CachedMenu
 	
 	public static function need_cached_string(Menu $menu)
 	{
-		return $menu instanceof SearchModuleMiniMenu || $menu instanceof LinksMenu;
-		//return !($menu instanceof ModuleMiniMenu);
+		$cached_link_menu = false;
+		if ($menu instanceof LinksMenu)
+		{
+			$cached_link_menu = true;
+			foreach ($menu->get_children() as $child)
+			{
+				if ($child->get_auth() != array('r-1' => Menu::MENU_AUTH_BIT, 'r0' => Menu::MENU_AUTH_BIT, 'r1' => Menu::MENU_AUTH_BIT))
+				{
+					$cached_link_menu = false;
+					break;
+				}
+			}
+		}
+		return $menu instanceof SearchModuleMiniMenu || $cached_link_menu || $menu->get_auth() === null;
 	}
 }
 ?>

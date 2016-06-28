@@ -137,7 +137,7 @@ class LinksMenu extends LinksMenuElement
 			}
 		}
 		
-		if ($is_displayed)
+		if ($is_displayed && $this->check_auth())
 		{
 			// Get the good Template object
 			if (!is_object($template) || !($template instanceof Template))
@@ -152,8 +152,12 @@ class LinksMenu extends LinksMenuElement
 
 			// Children assignment
 			foreach ($this->elements as $element)
-			{   // We use a new Tpl to avoid overwrite issues
-				$tpl->assign_block_vars('elements', array('DISPLAY' => $element->display(clone $original_tpl, $mode)));
+			{
+				if ($element->check_auth())
+				{
+					// We use a new Tpl to avoid overwrite issues
+					$tpl->assign_block_vars('elements', array('DISPLAY' => $element->display(clone $original_tpl, $mode)));
+				}
 			}
 
 			// Menu assignment
@@ -214,7 +218,8 @@ class LinksMenu extends LinksMenuElement
 
 		// Children assignment
 		foreach ($this->elements as $element)
-		{   // We use a new Tpl to avoid overwrite issues
+		{
+			// We use a new Tpl to avoid overwrite issues
 			$tpl->assign_block_vars('elements', array('DISPLAY' => $element->cache_export(clone $original_tpl)));
 		}
 
