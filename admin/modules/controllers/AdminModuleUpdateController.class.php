@@ -37,7 +37,7 @@ class AdminModuleUpdateController extends AdminController
 		$this->init();
 		$this->upload_form();
 		
-		$this->upgrade_module($request->get_string('module_id', ''));
+		$this->upgrade_module($request);
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -112,8 +112,19 @@ class AdminModuleUpdateController extends AdminController
 		));
 	}
 	
-	private function upgrade_module($module_id)
+	private function upgrade_module(HTTPRequestCustom $request)
 	{
+		$module_id = '';
+		$installed_modules = ModulesManager::get_installed_modules_map();
+		
+		foreach ($installed_modules as $module)
+		{
+			if ($request->get_string('upgrade-' . $module->get_id(), ''))
+			{
+				$module_id = $module->get_id();
+			}
+		}
+		
 		if (!empty($module_id))
 		{
 			switch (ModulesManager::upgrade_module($module_id))

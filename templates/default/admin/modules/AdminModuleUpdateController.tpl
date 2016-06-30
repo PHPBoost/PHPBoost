@@ -29,7 +29,6 @@
 						</td>
 						<td>
 							<button type="submit" class="submit" name="upgrade-{modules_upgradable.ID}" value="true">{@modules.upgrade_module}</button>
-							<input type="hidden" name="module_id" value="{modules_upgradable.ID}">
 						</td>
 					</tr>
 					# END modules_upgradable #
