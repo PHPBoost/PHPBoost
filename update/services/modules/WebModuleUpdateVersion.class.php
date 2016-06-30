@@ -46,6 +46,8 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 		if (!in_array(PREFIX . 'web_cats', $tables))
 			$this->update_cats_table();
 		
+		$this->update_comments();
+		
 		$this->delete_old_files();
 	}
 	
@@ -154,6 +156,26 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 				'special_authorizations' => 0,
 				'image' => $row['image'] == 'web.png' ? '/web/web.png' : $row['image']
 			), 'WHERE id = :id', array('id' => $row['id']));
+		}
+		$result->dispose();
+	}
+	
+	private function update_comments()
+	{
+		$result = $this->querier->select('SELECT web.id, web.rewrited_name, web.id_category, cat.rewrited_name AS cat_rewrited_name, id_topic
+		FROM ' . WebSetup::$web_table . ' web
+		JOIN ' . WebSetup::$web_cats_table . ' cat ON cat.id = web.id_category
+		JOIN ' . PREFIX . 'comments_topic com ON com.id_in_module = web.id
+		WHERE com.module_id = \'web\'
+		ORDER BY web.id ASC');
+		
+		while ($row = $result->fetch())
+		{
+			$this->querier->update(PREFIX . 'comments_topic',
+				array('path' => '/web/?url=/'.$row['id_category'].'-'.$row['cat_rewrited_name'].'/'.$row['id'].'-'.$row['rewrited_name']),
+				'WHERE id_topic=:id_topic',
+				array('id_topic' => $row['id_topic'])
+			);
 		}
 		$result->dispose();
 	}

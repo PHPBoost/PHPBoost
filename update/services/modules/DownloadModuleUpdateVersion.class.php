@@ -46,6 +46,8 @@ class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 		if (!in_array(PREFIX . 'download_cats', $tables))
 			$this->update_cats_table();
 		
+		$this->update_comments();
+		
 		$this->delete_old_files();
 	}
 	
@@ -145,6 +147,26 @@ class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 				'special_authorizations' => (int)!empty($row['auth']),
 				'image' => $row['image'] == 'download.png' ? '/download/download.png' : $row['image']
 			), 'WHERE id = :id', array('id' => $row['id']));
+		}
+		$result->dispose();
+	}
+	
+	private function update_comments()
+	{
+		$result = $this->querier->select('SELECT download.id, download.rewrited_name, download.id_category, cat.rewrited_name AS cat_rewrited_name, id_topic
+		FROM ' . DownloadSetup::$download_table . ' download
+		JOIN ' . DownloadSetup::$download_cats_table . ' cat ON cat.id = download.id_category
+		JOIN ' . PREFIX . 'comments_topic com ON com.id_in_module = download.id
+		WHERE com.module_id = \'download\'
+		ORDER BY download.id ASC');
+		
+		while ($row = $result->fetch())
+		{
+			$this->querier->update(PREFIX . 'comments_topic',
+				array('path' => '/download/?url=/'.$row['id_category'].'-'.$row['cat_rewrited_name'].'/'.$row['id'].'-'.$row['rewrited_name']),
+				'WHERE id_topic=:id_topic',
+				array('id_topic' => $row['id_topic'])
+			);
 		}
 		$result->dispose();
 	}
