@@ -120,9 +120,10 @@ class CLIAddUserCommand implements CLICommand
 			$user->set_email($this->email);
 			$auth_method = new PHPBoostAuthenticationMethod($this->login, $this->password);
 			$auth_method->set_association_parameters($this->get_real_value($this->approbation, $this->approbation_possible_values));
-			UserService::create($user, $auth_method);
-			
-			CLIOutput::writeln('User added successfull');
+			if (UserService::create($user, $auth_method))
+				CLIOutput::writeln('User added successfull');
+			else
+				CLIOutput::writeln('User ' . $this->login . ' already exists!');
 		}
 	}
 	
