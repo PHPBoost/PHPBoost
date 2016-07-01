@@ -116,6 +116,7 @@ class AdminReCaptchaConfig extends AdminModuleController
 			$this->config->enable_recaptchav2();
 			$this->config->set_site_key($this->form->get_value('site_key'));
 			$this->config->set_secret_key($this->form->get_value('secret_key'));
+		}
 		else
 			$this->config->disable_recaptchav2();
 		
