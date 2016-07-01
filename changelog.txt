@@ -1,159 +1,18 @@
 #################################################################################
-#                           PHPBoost 5.0 Changelog                              #
+#                           PHPBoost 5.1 Changelog                              #
 #################################################################################
 
 ===================================== Noyau ======================================
 
-[*] Suppression de l'ancienne classe SQL
-[*] Suppression de l'ancien système de Tpl
-[*] Suppression de l'ancien système de catégories
-[*] Suppression de l'ancien système de cache
-[*] Suppression de la classe UserDisplayResponse
-[*] Refonte de la balise Title HTML (création d'un format standardisé dans PHPBoost :
-	[*] Titre de la page - Nom de la section ou du module - Nom du site
-	[*] Titre de la page - Nom du site (dans le cas ou c'est une page sans module)
-	[*] Nom du site - Description du site (pour la page d'accueil)
-[*] Suppression des mots clés du site qui ne sont plus utilisés pour le référencement
-[*] Les modules auxquels l'utilisateur n'a pas le droit de contribuer ne sont plus affichés dans le panneau de contribution
-[*] [color=red]Nouveauté:[/color] Générateur automatique de tableaux avec gestion de la pagination, filtres, tris.
-[*] [color=red]Nouveauté:[/color] Possibilité de mettre en place un site complètement en HTTPS
-[*] [color=red]Nouveauté:[/color] Message d'avertissement affiché aux administrateurs si les dossiers install ou update sont présent avec possibilité de les supprimer via un bouton (sauf pour une installation locale)
-
-[*] Nouveau système de session et de connexion :
-	[*] Suppression du champ Pseudo, remplacé par Nom d'affichage
-	[*] Connexion interne avec l'adresse email ou un login que l'on peut choisir
-	[*] Connexion avec un compte Facebook et/ou Google paramétrable dans l'administration
-	[*] Possibilité de gérer ses types de connexion dans le profil
-	[*] Regroupement des fonctionnalités de l'édition du profil de l'admin dans l'édition d'un membre en front
-
-[b]Administration[/b]
-[*] Passage de la configuration de la maintenance, des smileys et des fichiers en MVC (simplification de l'interface)
-[*] Refonte de la partie Rapport système avec ajout de différentes informations concernant les options APC et une partie avec des conseils
-[*] Conseils affichés sur la page d'accueil de l'administration
-[*] Possibilité de définir le contenu du fichier robots.txt dans la configuration avancée
-[*] Possibilité de configurer l'optimisation automatique des tables de la base de données dans la configuration avancée
-[*] Suppression de la clé de déverrouillage de l'administration
-[*] Possibilité de définir le nombre de flux affichés dans les menus de flux
-[*] Possibilité de masquer les menus en version mobile
-
-[b]Profil[/b]
-[*] Lors de l'affichage du profil un champ texte court de type email ou site web est automatiquement affiché sous forme de bouton avec une icône pour certaines marques
-
-[b]Sécurité[/b]
-[*] Possibilité de choisir la longueur minimale des mots de passe pour les comptes internes dans la configuration des membres
-[*] Possibilité de définir la complexité des mots de passe
-
 [b]Graphisme[/b]
-[*] Refonte de l'affichage de la barre BBCode, amélioration de son ergonomie et suppression de la Pop-up "Tous les smileys"
-[*] Mise à jour de la librairie d'icônes Font-Awesome
-[*] Intégration de Lightcase (lightbox responsive)
-[*] Design responsive pour le thème base (support mobile et version tablette)
-[*] Refonte de la gestion des liens : suppression des types de menu de liens et création d'un menu de lien qui s'adapte automatiquement à l'emplacement
-[*] Refonte de l'administration en responsive
-
-[b]Divers[/b]
-[*] Suppression du lecteur DewPlayer et utilisation de la balise audio HTML5
-[*] Suppression du module PHPBoostCaptcha du projet PHPBoost (il ne sera plus maintenu)
-
+[*] Ajout d'un bouton "Haut de page" lors du scroll vers le bas de la page (#1411)
+[*] Gestion cache TPL par template pour permettre une personnalisation plus poussée (#1480)
 
 =================================== Modules =====================================
 
-[b]Articles[/b]
-[*] Possibilité de désactiver la notation
-[*] Possibilité d'acéder aux condensés d'articles pour les visiteurs même si une catégorie est réservée aux membres
-[*] Affichage des sources lors de l'affichage des catégories d'articles
-
 [b]BBCode[/b]
-[*] Possibilité de choisir la police d'écriture
-
-[b]Calendrier[/b]
-[*] [color=red]Nouveauté :[/color] Tableau permettant de lister les événements avec possibilité de filtrer par date
-[*] [color=red]Nouveauté :[/color] Ajout d'une légende sous le calendrier quand il y a des événements
-
-[b]Discussion[/b]
-[*] [color=red]Nouveauté :[/color] Passage du module en MVC
-[*] [color=red]Nouveauté :[/color] Refonte de la partie mini module en ajax
-[*] [color=red]Nouveauté :[/color] Ajout d'une option pour afficher afficher ou non la date dans le mini module
-[*] [color=red]Nouveauté :[/color] Ajout d'une option pour envoyer un message lors de l'appui sur la touche entrée du mini module
-[*] [color=red]Nouveauté :[/color] Ajout d'une option pour afficher une mini barre BBCode (Smileys, gras, italique, souligné, barré) dans le mini module si le module BBCode est activé (activée par défaut)
-[*] [color=red]Nouveauté :[/color] Possibilité de mettre un délai de rafraîchissement de la discussion inférieur à 1 minute (exemple : 0.5 pour 30 secondes)
-
-[b]FAQ[/b]
-[*] [color=red]Nouveauté :[/color] Passage du module en MVC
-[*] [color=red]Nouveauté :[/color] Mise en place du nouveau système de catégories
-[*] [color=red]Nouveauté :[/color] Ajout des contributions
-[*] [color=red]Nouveauté :[/color] Nettoyage de la configuration
-[*] [color=red]Nouveauté :[/color] Refonte graphique
-[*] [color=red]Nouveauté :[/color] Ajout du module dans le plan du site
-[*] [color=red]Nouveauté :[/color] Possibilité de réorganiser les questions dans les catégories en drag & drop pour les utilisateurs ayant le droit de modération
-[*] Ajout des microdonnées pour améliorer le référencement
-
-[b]Forum[/b]
-[*] [color=red]Nouveauté :[/color] Mise en place du nouveau système de catégories
-[*] Optimisation de la configuration
-[*] Affichage automatique des champs du profil de type email ou site web dans les informations de l'utilisateur dans les topics
-[*] Possibilité de cacher le détail des messages des topics aux visiteurs tout en leur laissant accès à la liste des topics
-[*] Possibilité d'empêcher le double post (le nouveau message d'un utilisateur est ajouté au dernier s'il est le dernier à avoir posté dans le topic)
-
-[b]Galerie[/b]
-[*] [color=red]Nouveauté :[/color] Mise en place du nouveau système de catégories
-
-[b]Installation[/b]
-[*] Activation automatique du cache APCu si celui-ci est disponible sur le serveur
-
-[b]Liens Web[/b]
-[*] [color=red]Nouveauté :[/color] Passage du module en MVC
-[*] [color=red]Nouveauté :[/color] Mise en place du nouveau système de catégories
-[*] [color=red]Nouveauté :[/color] Ajout des contributions
-[*] [color=red]Nouveauté :[/color] Possibilité d'ajouter des mots clés
-[*] [color=red]Nouveauté :[/color] Refonte des formulaires (plus intuitifs)
-[*] [color=red]Nouveauté :[/color] Nettoyage de la configuration
-[*] [color=red]Nouveauté :[/color] Refonte graphique
-[*] [color=red]Nouveauté :[/color] Ajout du module dans le plan du site
-[*] [color=red]Nouveauté :[/color] Ajout des flux RSS
-[*] [color=red]Nouveauté :[/color] Ajout de la recherche
-[*] [color=red]Nouveauté :[/color] Possibilité de signaler les liens morts
-[*] [color=red]Nouveauté :[/color] Possibilité de définir des sites partenaires
-[*] [color=red]Nouveauté :[/color] Menu pour afficher la liste des partenaires (possibilité de les classer par note, nombre de visites, nombre de commentaires depuis la configuration)
-[*] [color=red]Nouveauté :[/color] Possibilité d'activer/désactiver les commentaires et la notation globalement
-[*] [color=red]Nouveauté :[/color] Possibilité de choisir la date de parution des liens
-[*] Possibilité d'acéder aux descriptions pour les visiteurs même si une catégorie est réservée aux membres
-[*] Ajout des microdonnées pour améliorer le référencement
-
-[b]Multimédia[/b]
-[*] [color=red]Nouveauté :[/color] Mise en place du nouveau système de catégories
-[*] Optimisation de la configuration
-
-[b]News[/b]
-[*] Affichage des sources lors de l'affichage des catégories de news
-[*] Possibilité d'acéder aux condensés de news pour les visiteurs même si une catégorie est réservée aux membres
-[*] Possibilité de récupérer la date de création d'une news avec le jour, le mois et l'année séparés dans le template pour plus de personnalisation
-
-[b]Newsletter[/b]
-[*] Ajout de la possibilité de supprimer une archive
-
-[b]Personnalisation[/b]
-[*] [color=red]Nouveauté :[/color] Possibilité de personnaliser les fichiers css des modules
-[*] [color=red]Nouveauté :[/color] Possibilité de personnaliser les fichiers templates du thème (body.tpl et frame.tpl) et ceux des modules
+[*] fonction [member][/member] (#1483)
+[*] Réécriture des liens avec la balise ancre si nécessaire (#1457)
 
 [b]ReCaptcha[/b]
-[*] Ajout d'une page de configuration pour entrer les identifiants permettant de mettre en place ReCaptcha v2
-
-[b]Téléchargements[/b]
-[*] [color=red]Nouveauté :[/color] Passage du module en MVC
-[*] [color=red]Nouveauté :[/color] Mise en place du nouveau système de catégories
-[*] [color=red]Nouveauté :[/color] Possibilité d'ajouter des mots clés
-[*] [color=red]Nouveauté :[/color] Refonte des formulaires (plus intuitifs)
-[*] [color=red]Nouveauté :[/color] Nettoyage de la configuration
-[*] [color=red]Nouveauté :[/color] Refonte graphique
-[*] [color=red]Nouveauté :[/color] Calcul automatique de la taille des fichiers
-[*] [color=red]Nouveauté :[/color] Menu pour afficher la liste des fichiers les plus téléchargés (possibilité de les classer par note, nombre de téléchargements, date d'ajout depuis la configuration)
-[*] [color=red]Nouveauté :[/color] Possibilité d'activer/désactiver les commentaires, la notation et l'affichage de l'auteur globalement
-[*] Possibilité d'acéder aux descriptions des fichiers pour les visiteurs même si une catégorie est réservée aux membres
-[*] Ajout des microdonnées pour améliorer le référencement
-
-[b]TinyMCE[/b]
-[*] Mise à jour du module (TinyMCE version 4.3.2)
-
-[b]Script de migration[/b]
-[*] Vérification automatique de la présence de la nouvelle version par le noyau, et redirection vers le script d'update
+[*] Ajout d'une option dans la configuration pour activer ou non ReCaptcha v2

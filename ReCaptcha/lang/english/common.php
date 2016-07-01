@@ -37,7 +37,8 @@ $lang['audio_captcha'] = 'Get an audio test';
 $lang['captcha_help'] = 'Help';
 
 $lang['config.title'] = 'ReCaptcha configuration';
-$lang['config.recaptcha-explain'] = 'If you want to use ReCaptcha v2, go to <a href="' . ReCaptcha::$_signupUrl . '">' . ReCaptcha::$_signupUrl . '</a> to create your ids. If the ids are not filled, the old version of ReCaptcha will be used.';
+$lang['config.recaptcha-explain'] = 'If you want to use ReCaptcha v2, go to <a href="' . ReCaptcha::$_signupUrl . '">' . ReCaptcha::$_signupUrl . '</a> to create your ids.';
+$lang['config.recaptchav2_enabled'] = 'Enable ReCaptcha v2';
 $lang['config.site_key'] = 'Site key';
 $lang['config.secret_key'] = 'Secret key';
 ?>

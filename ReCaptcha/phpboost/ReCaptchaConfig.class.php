@@ -30,8 +30,24 @@
  */
 class ReCaptchaConfig extends AbstractConfigData
 {
+	const RECAPTCHAV2_ENABLED = 'recaptchav2_enabled';
 	const SITE_KEY = 'site_key';
 	const SECRET_KEY = 'secret_key';
+	
+	public function is_recaptchav2_enabled()
+	{
+		return $this->get_property(self::RECAPTCHAV2_ENABLED);
+	}
+	
+	public function enable_recaptchav2()
+	{
+		$this->set_property(self::RECAPTCHAV2_ENABLED, true);
+	}
+	
+	public function disable_recaptchav2()
+	{
+		$this->set_property(self::RECAPTCHAV2_ENABLED, false);
+	}
 	
 	public function get_site_key()
 	{
@@ -59,6 +75,7 @@ class ReCaptchaConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
+			self::RECAPTCHAV2_ENABLED => false,
 			self::SITE_KEY => '',
 			self::SECRET_KEY => ''
 		);

@@ -55,6 +55,8 @@ class AdminReCaptchaConfig extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
+			$this->form->get_field_by_id('site_key')->set_hidden(!$this->config->is_recaptchav2_enabled());
+			$this->form->get_field_by_id('secret_key')->set_hidden(!$this->config->is_recaptchav2_enabled());
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 		
@@ -78,13 +80,25 @@ class AdminReCaptchaConfig extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldFree('explain', '', $this->lang['config.recaptcha-explain']));
 		
+		$fieldset->add_field(new FormFieldCheckbox('recaptchav2_enabled', $this->lang['config.recaptchav2_enabled'], $this->config->is_recaptchav2_enabled(),
+			array('events' => array('click' => '
+				if (HTMLForms.getField("recaptchav2_enabled").getValue()) {
+					HTMLForms.getField("site_key").enable();
+					HTMLForms.getField("secret_key").enable();
+				} else {
+					HTMLForms.getField("site_key").disable();
+					HTMLForms.getField("secret_key").disable();
+				}')
+			)
+		));
+		
 		$fieldset->add_field(new FormFieldTextEditor('site_key', $this->lang['config.site_key'], $this->config->get_site_key(),
-			array('required' => true),
+			array('required' => true, 'hidden' => !$this->config->is_recaptchav2_enabled()),
 			array(new FormFieldConstraintLengthMin(30))
 		));
 		
 		$fieldset->add_field(new FormFieldPasswordEditor('secret_key', $this->lang['config.secret_key'], $this->config->get_secret_key(),
-			array('required' => true),
+			array('required' => true, 'hidden' => !$this->config->is_recaptchav2_enabled()),
 			array(new FormFieldConstraintLengthMin(30))
 		));
 		
@@ -97,8 +111,13 @@ class AdminReCaptchaConfig extends AdminModuleController
 	
 	private function save()
 	{
-		$this->config->set_site_key($this->form->get_value('site_key'));
-		$this->config->set_secret_key($this->form->get_value('secret_key'));
+		if ($this->form->get_value('recaptchav2_enabled'))
+		{
+			$this->config->enable_recaptchav2();
+			$this->config->set_site_key($this->form->get_value('site_key'));
+			$this->config->set_secret_key($this->form->get_value('secret_key'));
+		else
+			$this->config->disable_recaptchav2();
 		
 		ReCaptchaConfig::save();
 	}
