@@ -10,6 +10,9 @@
 
 =================================== Modules =====================================
 
+[b]Articles[/b]
+[*] Ouverture d'un article en cliquant sur son image (#1604)
+
 [b]BBCode[/b]
 [*] fonction [member][/member] (#1483)
 [*] Réécriture des liens avec la balise ancre si nécessaire (#1457)
