@@ -130,7 +130,7 @@ class MemberExtendedFieldsService
 					try {
 						$data[$extended_field['field_name']] = $member_extended_field->get_instance()->get_data($this->form, $member_extended_field);
 					} catch (MemberExtendedFieldErrorsMessageException $e) {
-						throw new MemberExtendedFieldErrorsMessageException($e->getMessage());
+						unset($data[$extended_field['field_name']]);
 					}
 				}
 			}

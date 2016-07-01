@@ -222,7 +222,7 @@ class UserRegistrationController extends AbstractController
 			$this->tpl->put('MSG', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
 		}
 		
-		if (!$has_error)
+		if (!$has_error && $user_id)
 		{
 			UserRegistrationService::send_email_confirmation($user_id, $user->get_email(), $this->form->get_value('display_name'), $login, $this->form->get_value('password'), $registration_pass);
 			

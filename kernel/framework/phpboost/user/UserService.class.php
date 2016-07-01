@@ -47,41 +47,45 @@ class UserService
 	 */
 	public static function create(User $user, AuthenticationMethod $auth_method, $extended_fields = array())
 	{
-		$result = self::$querier->insert(DB_TABLE_MEMBER, array(
-			'display_name' => TextHelper::htmlspecialchars($user->get_display_name()),
-			'level' => $user->get_level(),
-			'groups' => implode('|', $user->get_groups()),
-			'email' => $user->get_email(),
-			'show_email' => (int)$user->get_show_email(),
-			'locale' => $user->get_locale(),
-			'timezone' => $user->get_timezone(),
-			'theme' => $user->get_theme(),
-			'editor' => $user->get_editor(),
-			'registration_date' => time()
-		));
+		if (!self::user_exists('WHERE display_name = :display_name', array('display_name' => TextHelper::htmlspecialchars($user->get_display_name())))
+		{
+			$result = self::$querier->insert(DB_TABLE_MEMBER, array(
+				'display_name' => TextHelper::htmlspecialchars($user->get_display_name()),
+				'level' => $user->get_level(),
+				'groups' => implode('|', $user->get_groups()),
+				'email' => $user->get_email(),
+				'show_email' => (int)$user->get_show_email(),
+				'locale' => $user->get_locale(),
+				'timezone' => $user->get_timezone(),
+				'theme' => $user->get_theme(),
+				'editor' => $user->get_editor(),
+				'registration_date' => time()
+			));
 
-		$user_id = $result->get_last_inserted_id();
-		$auth_method->associate($user_id);
-		
-		if ($extended_fields instanceof MemberExtendedFieldsService)
-		{
-			$fields_data = $extended_fields->get_data($user_id);
+			$user_id = $result->get_last_inserted_id();
+			$auth_method->associate($user_id);
+			
+			if ($extended_fields instanceof MemberExtendedFieldsService)
+			{
+				$fields_data = $extended_fields->get_data($user_id);
+			}
+			elseif (!is_array($extended_fields))
+			{
+				$fields_data = array();
+			}
+			else
+			{
+				$fields_data = $extended_fields;
+			}
+			
+			$fields_data['user_id'] = $user_id;
+			self::$querier->insert(DB_TABLE_MEMBER_EXTENDED_FIELDS, $fields_data);
+			
+			self::regenerate_cache();
+			
+			return $user_id;
 		}
-		elseif (!is_array($extended_fields))
-		{
-			$fields_data = array();
-		}
-		else
-		{
-			$fields_data = $extended_fields;
-		}
-		
-		$fields_data['user_id'] = $user_id;
-		self::$querier->insert(DB_TABLE_MEMBER_EXTENDED_FIELDS, $fields_data);
-		
-		self::regenerate_cache();
-		
-		return $user_id;
+		return false;
 	}
 	
 	public static function delete_by_id($user_id)
