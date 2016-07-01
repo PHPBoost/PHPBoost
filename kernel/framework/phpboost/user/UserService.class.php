@@ -47,7 +47,7 @@ class UserService
 	 */
 	public static function create(User $user, AuthenticationMethod $auth_method, $extended_fields = array())
 	{
-		if (!self::user_exists('WHERE display_name = :display_name', array('display_name' => TextHelper::htmlspecialchars($user->get_display_name())))
+		if (!self::user_exists('WHERE display_name = :display_name', array('display_name' => TextHelper::htmlspecialchars($user->get_display_name()))))
 		{
 			$result = self::$querier->insert(DB_TABLE_MEMBER, array(
 				'display_name' => TextHelper::htmlspecialchars($user->get_display_name()),
