@@ -164,10 +164,12 @@ function shoutbox_refresh_messages_box() {
 	</p>
 </form>
 # ELSE #
-<div class="spacer"></div>
-<span class="warning">{@error.post.unauthorized}</span>
-<p class="shout-spacing">
-	<a href="" onclick="shoutbox_refresh_messages_box();return false;" id="shoutbox-refresh" title="${LangLoader::get_message('refresh', 'main')}"><i class="fa fa-refresh"></i></a>
-</p>
+	# IF C_DISPLAY_NO_WRITE_AUTHORIZATION_MESSAGE #
+	<div class="spacer"></div>
+	<span class="warning">{@error.post.unauthorized}</span>
+	<p class="shout-spacing">
+		<a href="" onclick="shoutbox_refresh_messages_box();return false;" id="shoutbox-refresh" title="${LangLoader::get_message('refresh', 'main')}"><i class="fa fa-refresh"></i></a>
+	</p>
+	# ENDIF #
 # ENDIF #
 <a class="small" href="${relative_url(ShoutboxUrlBuilder::home())}" title="">{@archives}</a>

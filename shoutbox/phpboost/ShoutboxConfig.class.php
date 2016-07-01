@@ -35,6 +35,7 @@ class ShoutboxConfig extends AbstractConfigData
 	const MAX_MESSAGES_NUMBER = 'max_messages_number';
 	const MAX_LINKS_NUMBER_PER_MESSAGE_ENABLED = 'max_links_number_per_message_enabled';
 	const MAX_LINKS_NUMBER_PER_MESSAGE = 'max_links_number_per_message';
+	const NO_WRITE_AUTHORIZATION_MESSAGE_DISPLAYED = 'no_write_authorization_message_displayed';
 	const FORBIDDEN_FORMATTING_TAGS = 'forbidden_formatting_tags';
 	const AUTOMATIC_REFRESH_ENABLED = 'automatic_refresh_enabled';
 	const REFRESH_DELAY = 'refresh_delay';
@@ -103,6 +104,21 @@ class ShoutboxConfig extends AbstractConfigData
 	public function set_max_links_number_per_message($nbr_links)
 	{
 		$this->set_property(self::MAX_LINKS_NUMBER_PER_MESSAGE, $nbr_links);
+	}
+	
+	public function display_no_write_authorization_message()
+	{
+		$this->set_property(self::NO_WRITE_AUTHORIZATION_MESSAGE_DISPLAYED, true);
+	}
+	
+	public function hide_no_write_authorization_message()
+	{
+		$this->set_property(self::NO_WRITE_AUTHORIZATION_MESSAGE_DISPLAYED, false);
+	}
+	
+	public function is_no_write_authorization_message_displayed()
+	{
+		return $this->get_property(self::NO_WRITE_AUTHORIZATION_MESSAGE_DISPLAYED);
 	}
 	
 	public function get_forbidden_formatting_tags()
@@ -228,6 +244,7 @@ class ShoutboxConfig extends AbstractConfigData
 			self::MAX_MESSAGES_NUMBER => 200,
 			self::MAX_LINKS_NUMBER_PER_MESSAGE_ENABLED => true,
 			self::MAX_LINKS_NUMBER_PER_MESSAGE => 2,
+			self::NO_WRITE_AUTHORIZATION_MESSAGE_DISPLAYED => true,
 			self::FORBIDDEN_FORMATTING_TAGS => array(
 				'title', 'style', 'url', 'img','quote',
 				'hide', 'list', 'color', 'bgcolor', 'font',

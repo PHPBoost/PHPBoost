@@ -13,6 +13,9 @@
 [b]Articles[/b]
 [*] Ouverture d'un article en cliquant sur son image (#1604)
 
+[b]Discussion[/b]
+[*] Ajout d'une option dans la configuration pour afficher ou non le message d'avertissement pour les utilisateurs qui n'ont pas le droit d'écriture (#1577)
+
 [b]BBCode[/b]
 [*] fonction [member][/member] (#1483)
 [*] Réécriture des liens avec la balise ancre si nécessaire (#1457)

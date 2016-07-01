@@ -111,7 +111,8 @@ class ShoutboxHomeController extends ModuleController
 		}
 		else
 		{
-			$this->view->put('MSG', MessageHelper::display($this->lang['error.post.unauthorized'], MessageHelper::WARNING));
+			if (ShoutboxConfig::load()->is_no_write_authorization_message_displayed())
+				$this->view->put('MSG', MessageHelper::display($this->lang['error.post.unauthorized'], MessageHelper::WARNING));
 		}
 		
 		return $this->view;

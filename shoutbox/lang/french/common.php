@@ -43,6 +43,7 @@ $lang['config.max_messages_number_enabled'] = 'Limiter le nombre de messages dan
 $lang['config.max_messages_number'] = 'Nombre de messages maximum à conserver';
 $lang['config.max_links_number_per_message_enabled'] = 'Limiter le nombre de liens dans les messages';
 $lang['config.max_links_number_per_message'] = 'Nombre de liens maximum dans un message';
+$lang['config.no_write_authorization_message_displayed'] = 'Afficher un message pour les utilisateurs qui n\'ont pas l\'autorisation d\'ajouter un message';
 $lang['config.shoutbox_menu'] = 'Menu discussion';
 $lang['config.automatic_refresh_enabled'] = 'Activer le rafraichissement automatique de la discussion';
 $lang['config.refresh_delay'] = 'Délai de rafraichissement';

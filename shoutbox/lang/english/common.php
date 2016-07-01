@@ -43,6 +43,7 @@ $lang['config.max_messages_number_enabled'] = 'Limit messages number in the arch
 $lang['config.max_messages_number'] = 'Maximum number of message to keep';
 $lang['config.max_links_number_per_message_enabled'] = 'Limit links number in messages';
 $lang['config.max_links_number_per_message'] = 'Max links number in a message';
+$lang['config.no_write_authorization_message_displayed'] = 'Display a message for unauthorized writing users';
 $lang['config.shoutbox_menu'] = 'Shoutbox menu';
 $lang['config.automatic_refresh_enabled'] = 'Enable the automatic refresh of the discussion';
 $lang['config.refresh_delay'] = 'Refresh delay';

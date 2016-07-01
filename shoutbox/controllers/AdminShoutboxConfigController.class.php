@@ -119,6 +119,8 @@ class AdminShoutboxConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 20))
 		));
 		
+		$fieldset->add_field(new FormFieldCheckbox('no_write_authorization_message_displayed', $this->lang['config.no_write_authorization_message_displayed'], $this->config->is_no_write_authorization_message_displayed()));
+		
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_formatting_tags', LangLoader::get_message('config.forbidden-tags', 'admin-common'), $this->config->get_forbidden_formatting_tags(), $this->generate_forbidden_formatting_tags_option(),
 			array('size' => 10)
 		));
@@ -207,6 +209,11 @@ class AdminShoutboxConfigController extends AdminModuleController
 		}
 		else
 			$this->config->disable_max_links_number_per_message();
+		
+		if ($this->form->get_value('no_write_authorization_message_displayed'))
+			$this->config->display_no_write_authorization_message();
+		else
+			$this->config->hide_no_write_authorization_message();
 		
 		$forbidden_formatting_tags = array();
 		foreach ($this->form->get_value('forbidden_formatting_tags') as $field => $option)
