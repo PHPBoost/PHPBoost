@@ -237,14 +237,13 @@ class ContentSecondParser extends AbstractParser
 	 * @return string The content if it's a member or a generic message.
 	 */
 	private function callback_member_tag($matches)
-    	{
-        	if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
-        	{
-            		return $matches[1];
-        	}
-        	
-        	return LangLoader::get_message('bbcode_member', 'status-messages-common');
-    	}
+	{
+		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
+		{
+			return $matches[1];
+		}
+		return MessageHelper::display(LangLoader::get_message('bbcode_member', 'status-messages-common'), MessageHelper::WARNING)->render();
+	}
 	
 	/**
 	 * @static
@@ -253,14 +252,13 @@ class ContentSecondParser extends AbstractParser
 	 * @return string The content if it's a moderator or a generic message.
 	 */
 	private function callback_moderator_tag($matches)
-    	{
-        	if (AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL))
-        	{
-            		return $matches[1];
-        	}
-        	
-        	return LangLoader::get_message('bbcode_moderator', 'status-messages-common');
-    	}
+	{
+		if (AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL))
+		{
+			return $matches[1];
+		}
+		return MessageHelper::display(LangLoader::get_message('bbcode_moderator', 'status-messages-common'), MessageHelper::WARNING)->render();
+	}
 	
 	/**
 	 * @static
