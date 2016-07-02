@@ -77,7 +77,7 @@ class CachedMenu
 				}
 			}
 		}
-		return $menu instanceof SearchModuleMiniMenu || $cached_link_menu || $menu->get_auth() === null;
+		return $cached_link_menu || $menu->get_auth() === null;
 	}
 }
 ?>
