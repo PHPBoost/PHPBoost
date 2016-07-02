@@ -226,7 +226,7 @@ class Authorizations
 		//Listing des membres autorisés.
 		if ($advanced_auth)
 		{
-			$result = PersistenceContext::get_querier()->select_rows(DB_TABLE_MEMBER, array('user_id, display_name'), 'WHERE user_id=:user_ids', array('user_ids' => str_replace('m', '', array_keys($array_auth_members))));
+			$result = PersistenceContext::get_querier()->select_rows(DB_TABLE_MEMBER, array('user_id, display_name'), 'WHERE user_id IN :user_ids', array('user_ids' => str_replace('m', '', array_keys($array_auth_members))));
 			while ($row = $result->fetch())
 			{
 				$tpl->assign_block_vars('members_list', array(
