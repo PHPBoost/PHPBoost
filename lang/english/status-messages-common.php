@@ -107,6 +107,6 @@ $lang['user.auth.passwd_flood'] = ':remaining_tries tries are remaining. After t
 $lang['user.auth.passwd_flood_max'] = 'You have failed, too many authentication attempts, your account is locked for 5 minutes.';
 
 //BBcode
-$lang['bbcode_member'] = 'You need to be member to see this message';
-$lang['bbcode_moderator'] = 'You need to be moderator to see this message';
+$lang['bbcode_member'] = 'Message for members';
+$lang['bbcode_moderator'] = 'Message for moderators';
 ?>

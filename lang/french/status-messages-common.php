@@ -107,6 +107,6 @@ $lang['user.auth.passwd_flood'] = 'Il vous reste :remaining_tries essai(s) après
 $lang['user.auth.passwd_flood_max'] = 'Vous avez épuisé tous vos essais de connexion, votre compte est verrouillé pendant 5 minutes.';
 
 //BBcode
-$lang['bbcode_member'] = 'Vous devez être un membre pour voir le message';
-$lang['bbcode_moderator'] = 'Vous devez être un moderateur pour voir le message';
+$lang['bbcode_member'] = 'Message destiné aux membres';
+$lang['bbcode_moderator'] = 'Message destiné aux modérateurs';
 ?>
