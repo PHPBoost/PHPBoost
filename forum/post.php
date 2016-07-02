@@ -83,7 +83,14 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 	$Forumfct = new Forum();
 
 	//Mod anti-flood
-	$check_time = (ContentManagementConfig::load()->is_anti_flood_enabled() && AppContext::get_current_user()->get_id() != -1) ? PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'MAX(timestamp) as timestamp', 'WHERE user_id = :user_id', array('user_id' => AppContext::get_current_user()->get_id())) : false;
+	$check_time = false;
+	
+	if (ContentManagementConfig::load()->is_anti_flood_enabled() && AppContext::get_current_user()->get_id() != -1)
+	{
+		try {
+			$check_time = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'MAX(timestamp) as timestamp', 'WHERE user_id = :user_id', array('user_id' => AppContext::get_current_user()->get_id()));
+		} catch (RowNotFoundException $e) {}
+	}
 
 	//Affichage de l'arborescence des catégories.
 	$i = 0;
@@ -446,7 +453,10 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 					$last_page = ($last_page > 1) ? '&pt=' . $last_page : '';
 					
-					$last_message_content = PersistenceContext::get_querier()->get_column_value(PREFIX . 'forum_msg', 'contents', 'WHERE id = :id', array('id' => $topic['last_msg_id']));
+					$last_message_content = '';
+					try {
+						$last_message_content = PersistenceContext::get_querier()->get_column_value(PREFIX . 'forum_msg', 'contents', 'WHERE id = :id', array('id' => $topic['last_msg_id']));
+					} catch (RowNotFoundException $e) {}
 					
 					$now = new Date();
 					
@@ -487,7 +497,12 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		$id_m = retrieve(GET, 'idm', 0);
 		$update = retrieve(GET, 'update', false);
 		
-		$id_first = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'MIN(id)', 'WHERE idtopic = :idtopic', array('idtopic' => $idt_get));
+		try {
+			$id_first = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'MIN(id)', 'WHERE idtopic = :idtopic', array('idtopic' => $idt_get));
+		} catch (RowNotFoundException $e) {
+			$error_controller = PHPBoostErrors::unexisting_element();
+			DispatchManager::redirect($error_controller);
+		}
 		
 		if (empty($id_get) || empty($id_first)) //Topic/message inexistant.
 		{
@@ -506,7 +521,11 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		if ($id_first == $id_m)
 		{
 			//User_id du message correspondant à l'utilisateur connecté => autorisation.
-			$user_id_msg = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'user_id', 'WHERE id = :id', array('id' => $id_m));
+			$user_id_msg = 0;
+			try {
+				$user_id_msg = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'user_id', 'WHERE id = :id', array('id' => $id_m));
+			} catch (RowNotFoundException $e) {}
+			
 			$check_auth = false;
 			if ($user_id_msg == AppContext::get_current_user()->get_id())
 				$check_auth = true;
@@ -672,8 +691,11 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			{
 				$tpl = new FileTemplate('forum/forum_post.tpl');
 
-				$contents = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'contents', 'WHERE id = :id', array('id' => $id_first));
-
+				$contents = '';
+				try {
+					$contents = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'contents', 'WHERE id = :id', array('id' => $id_first));
+				} catch (RowNotFoundException $e) {}
+				
 				//Gestion des erreurs à l'édition.
 				$get_error_e = retrieve(GET, 'errore', '');
 				if ($get_error_e == 'incomplete_t')
@@ -814,7 +836,11 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		elseif ($id_m > $id_first)
 		{
 			//User_id du message correspondant à l'utilisateur connecté => autorisation.
-			$user_id_msg = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'user_id', 'WHERE id = :id', array('id' => $id_m));
+			$user_id_msg = 0;
+			try {
+				$user_id_msg = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'user_id', 'WHERE id = :id', array('id' => $id_m));
+			} catch (RowNotFoundException $e) {}
+			
 			$check_auth = false;
 			if ($user_id_msg == AppContext::get_current_user()->get_id())
 				$check_auth = true;
@@ -849,8 +875,11 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			{
 				$tpl = new FileTemplate('forum/forum_edit_msg.tpl');
 				
-
-				$contents = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'contents', 'WHERE id = :id', array('id' => $id_m));
+				$contents = '';
+				try {
+					$contents = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'contents', 'WHERE id = :id', array('id' => $id_m));
+				} catch (RowNotFoundException $e) {}
+				
 				//Gestion des erreurs à l'édition.
 				$get_error_e = retrieve(GET, 'errore', '');
 				if ($get_error_e == 'incomplete')
