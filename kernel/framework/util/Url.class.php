@@ -238,6 +238,9 @@ class Url
 	 */
 	public static function check_url_validity($url)
 	{
+		if (empty($url))
+			return false;
+		
 		$status = 0;
 		
 		if (!($url instanceof Url))

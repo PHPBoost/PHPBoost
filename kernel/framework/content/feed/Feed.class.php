@@ -292,9 +292,13 @@ class Feed
 		if ($feed_data_cache_file_exists)
 		{
 			include $feed_data_cache_file;
-			$feed = new Feed($module_id, $name);
-			$feed->load_data($__feed_object);
-			return $feed->export($template, $number, $begin_at);
+			if ($__feed_object)
+			{
+				$feed = new Feed($module_id, $name);
+				$feed->load_data($__feed_object);
+				return $feed->export($template, $number, $begin_at);
+			}
+			return '';
 		}
 		else
 		{
