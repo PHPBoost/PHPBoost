@@ -43,7 +43,7 @@ class MenuStringFilter extends Filter
 		{
 			$pattern = substr($this->pattern, 0, -10);
 			$pattern = empty($pattern) ? $pattern : '/' . $pattern;
-			return Url::is_current_url($pattern . '/', true) || Url::is_current_url($pattern . '/index.php', true);
+			return Url::is_current_url($pattern . '/', true) || Url::is_current_url($this->pattern);
 		}
 		else
 			return Url::is_current_url($this->pattern);
