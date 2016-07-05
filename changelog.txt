@@ -22,3 +22,7 @@
 
 [b]ReCaptcha[/b]
 [*] Ajout d'une option dans la configuration pour activer ou non ReCaptcha v2
+
+[b]Rapport de bugs[/b]
+[*] Affichage d'un message de succès lors de la soumission d'un bug (#1520)
+[*] Possibilité d'afficher uniquement leurs propres bugs aux membres qui n'ont pas l'autorisation de modération (#1520)

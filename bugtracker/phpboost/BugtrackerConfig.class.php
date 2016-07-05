@@ -39,6 +39,7 @@ class BugtrackerConfig extends AbstractConfigData
 	const STATS_TOP_POSTERS_ENABLED = 'stats_top_posters_enabled';
 	const STATS_TOP_POSTERS_NUMBER = 'stats_top_posters_number';
 	const PROGRESS_BAR_ENABLED = 'progress_bar_enabled';
+	const RESTRICT_DISPLAY_TO_OWN_ELEMENTS_ENABLED = 'restrict_display_to_own_elements_enabled';
 	const ADMIN_ALERTS_ENABLED = 'admin_alerts_enabled';
 	const ADMIN_ALERTS_LEVELS = 'admin_alerts_levels';
 	const ADMIN_ALERTS_FIX_ACTION = 'admin_alerts_fix_action';
@@ -143,6 +144,21 @@ class BugtrackerConfig extends AbstractConfigData
 	public function is_roadmap_enabled()
 	{
 		return $this->get_property(self::ROADMAP_ENABLED);
+	}
+	
+	public function enable_restrict_display_to_own_elements()
+	{
+		$this->set_property(self::RESTRICT_DISPLAY_TO_OWN_ELEMENTS_ENABLED, true);
+	}
+	
+	public function disable_restrict_display_to_own_elements_enabled()
+	{
+		$this->set_property(self::RESTRICT_DISPLAY_TO_OWN_ELEMENTS_ENABLED, false);
+	}
+	
+	public function is_restrict_display_to_own_elements_enabled()
+	{
+		return $this->get_property(self::RESTRICT_DISPLAY_TO_OWN_ELEMENTS_ENABLED);
 	}
 	
 	public function is_roadmap_displayed()
@@ -817,6 +833,7 @@ class BugtrackerConfig extends AbstractConfigData
 			self::STATS_TOP_POSTERS_ENABLED => true,
 			self::STATS_TOP_POSTERS_NUMBER => 10,
 			self::PROGRESS_BAR_ENABLED => true,
+			self::RESTRICT_DISPLAY_TO_OWN_ELEMENTS_ENABLED => false,
 			self::ADMIN_ALERTS_ENABLED => true,
 			self::ADMIN_ALERTS_LEVELS => array('2', '3'),
 			self::ADMIN_ALERTS_FIX_ACTION => self::FIX,

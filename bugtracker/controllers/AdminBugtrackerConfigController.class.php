@@ -119,6 +119,10 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			array('description' => $this->lang['explain.roadmap'])
 		));
 		
+		$fieldset->add_field(new FormFieldCheckbox('restrict_display_to_own_elements_enabled', $this->lang['config.restrict_display_to_own_elements_enabled'], $this->config->is_restrict_display_to_own_elements_enabled(),
+			array('description' => $this->lang['config.restrict_display_to_own_elements_enabled.explain'])
+		));
+		
 		$fieldset = new FormFieldsetHTML('progress_bar', $this->lang['config.progress_bar']);
 		$form->add_fieldset($fieldset);
 		
@@ -606,6 +610,11 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			$this->config->enable_roadmap();
 		else
 			$this->config->disable_roadmap();
+		
+		if ($this->form->get_value('restrict_display_to_own_elements_enabled'))
+			$this->config->enable_restrict_display_to_own_elements();
+		else
+			$this->config->disable_restrict_display_to_own_elements();
 		
 		if ($this->form->get_value('progress_bar_displayed'))
 		{

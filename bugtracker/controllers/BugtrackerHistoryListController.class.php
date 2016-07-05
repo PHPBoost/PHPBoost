@@ -30,6 +30,7 @@ class BugtrackerHistoryListController extends ModuleController
 	private $lang;
 	private $view;
 	private $bug;
+	private $config;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -47,12 +48,11 @@ class BugtrackerHistoryListController extends ModuleController
 		$current_page = $request->get_getint('page', 1);
 		
 		//Configuration load
-		$config = BugtrackerConfig::load();
-		$types = $config->get_types();
-		$categories = $config->get_categories();
-		$severities = $config->get_severities();
-		$priorities = $config->get_priorities();
-		$versions = $config->get_versions();
+		$types = $this->config->get_types();
+		$categories = $this->config->get_categories();
+		$severities = $this->config->get_severities();
+		$priorities = $this->config->get_priorities();
+		$versions = $this->config->get_versions();
 		
 		$history_lines_number = BugtrackerService::count_history($this->bug->get_id());
 		$pagination = $this->get_pagination($history_lines_number, $current_page);
@@ -164,11 +164,12 @@ class BugtrackerHistoryListController extends ModuleController
 		
 		$this->view = new FileTemplate('bugtracker/BugtrackerHistoryListController.tpl');
 		$this->view->add_lang($this->lang);
+		$this->config = BugtrackerConfig::load();
 	}
 	
 	private function check_authorizations()
 	{
-		if (!BugtrackerAuthorizationsService::check_authorizations()->read())
+		if (!BugtrackerAuthorizationsService::check_authorizations()->read() || ($this->config->is_restrict_display_to_own_elements_enabled() && !BugtrackerAuthorizationsService::check_authorizations()->moderation() && $this->bug->get_author_user()->get_id() != AppContext::get_current_user()->get_id() && !$this->bug->is_fixed()))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
@@ -177,7 +178,7 @@ class BugtrackerHistoryListController extends ModuleController
 	
 	private function get_pagination($history_lines_number, $page)
 	{
-		$pagination = new ModulePagination($page, $history_lines_number, (int)BugtrackerConfig::load()->get_items_per_page());
+		$pagination = new ModulePagination($page, $history_lines_number, (int)$this->config->get_items_per_page());
 		$pagination->set_url(BugtrackerUrlBuilder::history($this->bug->get_id(), '%d'));
 		
 		if ($pagination->current_page_is_empty() && $page > 1)

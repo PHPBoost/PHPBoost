@@ -30,6 +30,7 @@ class BugtrackerDetailController extends ModuleController
 	private $lang;
 	private $view;
 	private $bug;
+	private $config;
 	private $current_user;
 	
 	public function execute(HTTPRequestCustom $request)
@@ -45,13 +46,11 @@ class BugtrackerDetailController extends ModuleController
 	
 	private function build_view($request)
 	{
-		//Configuration load
-		$config = BugtrackerConfig::load();
-		$types = $config->get_types();
-		$categories = $config->get_categories();
-		$severities = $config->get_severities();
-		$priorities = $config->get_priorities();
-		$versions = $config->get_versions_detected();
+		$types = $this->config->get_types();
+		$categories = $this->config->get_categories();
+		$severities = $this->config->get_severities();
+		$priorities = $this->config->get_priorities();
+		$versions = $this->config->get_versions_detected();
 		
 		$user_assigned = $this->bug->get_assigned_to_id() && UserService::user_exists("WHERE user_id=:user_id", array('user_id' => $this->bug->get_assigned_to_id())) ? UserService::get_user($this->bug->get_assigned_to_id()) : '';
 		$user_assigned_group_color = $user_assigned ? User::get_group_color($user_assigned->get_groups(), $user_assigned->get_level(), true) : '';
@@ -100,11 +99,12 @@ class BugtrackerDetailController extends ModuleController
 		
 		$this->view = new FileTemplate('bugtracker/BugtrackerDetailController.tpl');
 		$this->view->add_lang($this->lang);
+		$this->config = BugtrackerConfig::load();
 	}
 	
 	private function check_authorizations()
 	{
-		if (!BugtrackerAuthorizationsService::check_authorizations()->read())
+		if (!BugtrackerAuthorizationsService::check_authorizations()->read() || ($this->config->is_restrict_display_to_own_elements_enabled() && !BugtrackerAuthorizationsService::check_authorizations()->moderation() && $this->bug->get_author_user()->get_id() != AppContext::get_current_user()->get_id() && !$this->bug->is_fixed()))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);

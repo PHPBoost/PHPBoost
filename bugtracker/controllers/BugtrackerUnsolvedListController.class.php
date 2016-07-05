@@ -104,10 +104,12 @@ class BugtrackerUnsolvedListController extends ModuleController
 		FROM " . BugtrackerSetup::$bugtracker_table . " b
 		LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = b.author_id
 		WHERE status <> '" . Bug::FIXED . "' AND status <> '" . Bug::REJECTED . "'" .
+		($config->is_restrict_display_to_own_elements_enabled() && !BugtrackerAuthorizationsService::check_authorizations()->moderation() ? "AND b.author_id = :user_id" : "") .
 		$select_filters . "
 		ORDER BY " . $field_bdd . " " . $mode . "
 		LIMIT :number_items_per_page OFFSET :display_from",
 			array(
+				'user_id' => AppContext::get_current_user()->get_id(),
 				'number_items_per_page' => $pagination->get_number_items_per_page(),
 				'display_from' => $pagination->get_display_from()
 			)
@@ -162,6 +164,9 @@ class BugtrackerUnsolvedListController extends ModuleController
 			'LINK_BUG_DATE_TOP' 			=> BugtrackerUrlBuilder::unsolved('date', 'top', $current_page, $filter, $filter_id)->rel(),
 			'LINK_BUG_DATE_BOTTOM' 			=> BugtrackerUrlBuilder::unsolved('date', 'bottom', $current_page, $filter, $filter_id)->rel()
 		));
+		
+		if ($config->is_restrict_display_to_own_elements_enabled() && !BugtrackerAuthorizationsService::check_authorizations()->moderation() && !AppContext::get_current_user()->is_guest())
+			$this->view->put('MSG', MessageHelper::display($this->lang['warning.restrict_display_to_own_elements_enabled'], MessageHelper::WARNING));
 		
 		return $this->view;
 	}

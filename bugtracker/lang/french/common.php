@@ -214,6 +214,8 @@ $lang['config.enable_stats_top_posters'] = 'Afficher la liste des membres qui on
 $lang['config.stats_top_posters_number'] = 'Nombre d\'utilisateurs affichés';
 $lang['config.progress_bar'] = 'Barre de progression';
 $lang['config.enable_progress_bar'] = 'Afficher la barre de progression des bugs';
+$lang['config.restrict_display_to_own_elements_enabled'] = 'Restreindre l\'affichage des bugs';
+$lang['config.restrict_display_to_own_elements_enabled.explain'] = 'N\'affiche que les bugs déclarés par l\'utilisateur s\'il n\'a pas les droits de modération';
 $lang['config.status.new'] = 'Pourcentage d\'un Nouveau bug';
 $lang['config.status.pending'] = 'Pourcentage d\'un bug En attente';
 $lang['config.status.assigned'] = 'Pourcentage d\'un bug Assigné';
@@ -284,4 +286,8 @@ $lang['success.reopen'] = 'Le bug a été ré-ouvert';
 $lang['success.assigned'] = 'Le bug a été assigné';
 $lang['success.pending'] = 'Le bug a été mis en attente';
 $lang['success.add.filter'] = 'Le filtre a été ajouté';
+$lang['success.add.details'] = '<p>Votre demande sera traitée dans les plus brefs délais. Un retour vous sera fait si nécessaire en commentaire (vous en recevrez également une copie dans votre messagerie privée).</p><p>Merci d\'avoir participé à la vie du site !</p>';
+
+//Warning
+$lang['warning.restrict_display_to_own_elements_enabled'] = 'Seuls les bugs que vous avez déclaré sont affichés dans la liste.';
 ?>

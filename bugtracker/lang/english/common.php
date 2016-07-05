@@ -214,6 +214,8 @@ $lang['config.enable_stats_top_posters'] = 'Display top posters list';
 $lang['config.stats_top_posters_number'] = 'Number user displayed';
 $lang['config.progress_bar'] = 'Progress bar';
 $lang['config.enable_progress_bar'] = 'Enable progress bar';
+$lang['config.restrict_display_to_own_elements_enabled'] = 'Restrict bugs display';
+$lang['config.restrict_display_to_own_elements_enabled.explain'] = 'Displays only bugs declared by the current user if no moderation permissions';
 $lang['config.status.new'] = 'Percent of a New bug';
 $lang['config.status.pending'] = 'Percent of a Pending bug';
 $lang['config.status.assigned'] = 'Percent of an Assigned bug';
@@ -284,4 +286,8 @@ $lang['success.reopen'] = 'The bug has been reopen';
 $lang['success.assigned'] = 'The bug has been assigned';
 $lang['success.pending'] = 'The bug has been put on hold';
 $lang['success.add.filter'] = 'The filter has been added';
+$lang['success.add.details'] = '<p>Your request will be taken into account as soon as possible. Comments will be added if necessary (you will receive a copy in your private messages box).</p><p>Thank you for participating in the life of the site!</p>';
+
+//Warning
+$lang['warning.restrict_display_to_own_elements_enabled'] = 'Only your own reported bugs are displayed on this list.';
 ?>

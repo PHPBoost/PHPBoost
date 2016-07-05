@@ -548,7 +548,14 @@ class BugtrackerFormController extends ModuleController
 		Feed::clear_cache('bugtracker');
 		BugtrackerStatsCache::invalidate();
 		
-		AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : BugtrackerUrlBuilder::unsolved()), StringVars::replace_vars($this->is_new_bug ? $this->lang['success.add'] : $this->lang['success.edit'], array('id' => $bug->get_id())));
+		if ($this->is_new_bug)
+		{
+			DispatchManager::redirect(new BugtrackerBugSubmitSuccessController($bug->get_id()));
+		}
+		else
+		{
+			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : BugtrackerUrlBuilder::unsolved()), StringVars::replace_vars($this->lang['success.edit'], array('id' => $bug->get_id())));
+		}
 	}
 	
 	private function generate_response(View $tpl)
