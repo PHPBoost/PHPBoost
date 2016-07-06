@@ -112,13 +112,13 @@ function pages_find_subcats(&$array, $id_cat)
 //Fonction "parse" pour les pages laissant passer le html tout en remplaçant les caractères spéciaux par leurs entités html correspondantes
 function pages_parse($contents)
 {
-	if (ModulesManager::is_module_installed('BBCode') && ModulesManager::is_module_activated('BBCode'))
+	if (ModulesManager::is_module_installed('BBCode') && ModulesManager::is_module_activated('BBCode') && AppContext::get_current_user()->get_editor() == 'BBCode')
 	{
 		$parser = new PagesBBCodeParser();
 	}
 	else
 	{
-		//On force le langage de formatage à BBCode
+		//On utilise le langage de l'utilisateur s'il n'utilise pas le BBCode
 		$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
 
 		$parser = $content_manager->get_parser();
