@@ -678,7 +678,7 @@ class Url
 				$running_module_name = '';
 		}
 		
-		$current_url = $running_module_name . $current_url;
+		$current_url = ($current_url == '/' && $running_module_name) ? '/' . $running_module_name . '/' : $current_url;
 		
 		if ($real_url)
 		{
