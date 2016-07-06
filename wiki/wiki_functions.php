@@ -32,13 +32,13 @@ define('WIKI_MENU_MAX_DEPTH', 5);
 //Interprétation du BBCode en ajoutant la balise [link]
 function wiki_parse($contents)
 {
-	if (ModulesManager::is_module_installed('BBCode') && ModulesManager::is_module_activated('BBCode'))
+	if (ModulesManager::is_module_installed('BBCode') && ModulesManager::is_module_activated('BBCode') && AppContext::get_current_user()->get_editor() == 'BBCode')
 	{
 		$parser = new WikiBBCodeParser();
 	}
 	else
 	{
-		//On force le langage de formatage à BBCode
+		//On utilise le langage de l'utilisateur s'il n'utilise pas le BBCode
 		$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
 
 		$parser = $content_manager->get_parser();
