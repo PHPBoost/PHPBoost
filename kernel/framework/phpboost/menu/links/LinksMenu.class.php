@@ -151,12 +151,14 @@ class LinksMenu extends LinksMenuElement
 			$original_tpl = clone $tpl;
 
 			// Children assignment
+			$elements_number = 0;
 			foreach ($this->elements as $element)
 			{
 				if ($element->check_auth())
 				{
 					// We use a new Tpl to avoid overwrite issues
 					$tpl->assign_block_vars('elements', array('DISPLAY' => $element->display(clone $original_tpl, $mode)));
+					$elements_number++;
 				}
 			}
 
@@ -166,7 +168,7 @@ class LinksMenu extends LinksMenuElement
 				'C_MENU' => true,
 				'C_NEXT_MENU' => $this->depth > 0,
 				'C_FIRST_MENU' => $this->depth == 0,
-				'C_HAS_CHILD' => count($this->elements) > 0,
+				'C_HAS_CHILD' => $elements_number,
 				'C_HIDDEN_WITH_SMALL_SCREENS' => $this->hidden_with_small_screens,
 				'DEPTH' => $this->depth
 			));
