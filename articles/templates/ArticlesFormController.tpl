@@ -5,6 +5,9 @@
 		var page = prompt('{@articles.form.add_page.title}', '');
 
 		if (page) {
+			# IF C_TINYMCE_EDITOR #
+			tinymce.activeEditor.execCommand('mceInsertContent', false, '[page]' + page + '[/page]');
+			# ELSE #
 			var textarea = document.getElementById('ArticlesFormController_contents');
 			var start = textarea.selectionStart;
 			var end = textarea.selectionEnd;
@@ -21,8 +24,7 @@
 
 			textarea.selectionStart = start + insert_value.length;
 			textarea.selectionEnd = start + insert_value.length;
-			
-			# IF C_TINYMCE_EDITOR # setTinyMceContent(document.getElementById('ArticlesFormController_contents').value + insert_value); # ENDIF #
+			# ENDIF #
 		}
 	}
 	
