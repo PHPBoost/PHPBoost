@@ -112,16 +112,18 @@ class AdminModuleUpdateController extends AdminController
 		));
 	}
 	
-	private function upgrade_module(HTTPRequestCustom $request)
+	private function upgrade_module(HTTPRequestCustom $request, $module_id = '')
 	{
-		$module_id = '';
-		$installed_modules = ModulesManager::get_installed_modules_map();
-		
-		foreach ($installed_modules as $module)
+		if (empty($module_id))
 		{
-			if ($request->get_string('upgrade-' . $module->get_id(), ''))
+			$installed_modules = ModulesManager::get_installed_modules_map();
+			
+			foreach ($installed_modules as $module)
 			{
-				$module_id = $module->get_id();
+				if ($request->get_string('upgrade-' . $module->get_id(), ''))
+				{
+					$module_id = $module->get_id();
+				}
 			}
 		}
 		
@@ -162,54 +164,78 @@ class AdminModuleUpdateController extends AdminController
 		
 		if ($is_writable)
 		{
-			$file = $this->form->get_value('file');
-			if ($file !== null)
+			$uploaded_file = $this->form->get_value('file');
+			if ($uploaded_file !== null)
 			{
-				$modules_id = $file->get_name_without_extension();
-				if (ModulesManager::is_module_installed($modules_id))
+				$upload = new Upload($modules_folder);
+				$upload->disableContentCheck();
+				if ($upload->file('upload_module_file', '`([A-Za-z0-9-_]+)\.(gz|zip)+$`i', false, 100000000, false))
 				{
-					$upload = new Upload($modules_folder);
-					$upload->disableContentCheck();
-					if ($upload->file('upload_module_file', '`([A-Za-z0-9-_]+)\.(gz|zip)+$`i', false, 100000000, false))
+					$archive = $modules_folder . $upload->get_filename();
+					if ($upload->get_extension() == 'gz')
 					{
-						$archive_path = $modules_folder . $upload->get_filename();
-						if ($upload->get_extension() == 'gz')
-						{
-							include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pcltar.lib.php');
-							PclTarExtract($upload->get_filename(), $modules_folder);
-							
-							$file = new File($archive_path);
-							$file->delete();
-						}
-						else if ($upload->get_extension() == 'zip')
-						{
-							include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pclzip.lib.php');
-							$zip = new PclZip($archive_path);
-							$zip->extract(PCLZIP_OPT_PATH, $modules_folder, PCLZIP_OPT_SET_CHMOD, 0755);
-							
-							$file = new File($archive_path);
-							$file->delete();
-						}
-						else
-						{
-							$this->view->put('MSG', MessageHelper::display($this->lang['modules.upload_invalid_format'], MessageHelper::NOTICE, 4));
-						}
-						
-						$this->upgrade_module($modules_id);
+						include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pcltar.lib.php');
+						$archive_content = PclTarList($upload->get_filename());
 					}
 					else
 					{
-						$this->view->put('MSG', MessageHelper::display($this->lang['modules.upload_error'], MessageHelper::NOTICE, 4));
+						include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pclzip.lib.php');
+						$zip = new PclZip($archive);
+						$archive_content = $zip->listContent();
 					}
+					
+					$archive_root_content = array();
+					$required_files = array('/config.ini');
+					foreach ($archive_content as $element)
+					{
+						if (substr($element['filename'], -1) == '/')
+							$element['filename'] = substr($element['filename'], 0, -1);
+						if (substr_count($element['filename'], '/') == 0)
+							$archive_root_content[] = array('filename' => $element['filename'], 'folder' => ((isset($element['folder']) && $element['folder'] == 1) || (isset($element['typeflag']) && $element['typeflag'] == 5)));
+						if (isset($archive_root_content[0]))
+						{
+							$name_in_archive = str_replace($archive_root_content[0]['filename'] . '/', '/', $element['filename']);
+							
+							if (in_array($name_in_archive, $required_files))
+							{
+								unset($required_files[array_search($name_in_archive, $required_files)]);
+							}
+						}
+					}
+					
+					if (count($archive_root_content) == 1 && $archive_root_content[0]['folder'] && empty($required_files))
+					{
+						$module_id = $archive_root_content[0]['filename'];
+						if (ModulesManager::is_module_installed($module_id))
+						{
+							if ($upload->get_extension() == 'gz')
+								PclTarExtract($upload->get_filename(), $modules_folder);
+							else
+								$zip->extract(PCLZIP_OPT_PATH, $modules_folder, PCLZIP_OPT_SET_CHMOD, 0755);
+							
+							$this->upgrade_module(AppContext::get_request(), $modules_id);
+						}
+						else
+						{
+							$this->view->put('MSG', MessageHelper::display($this->lang['modules.not_installed_module'], MessageHelper::NOTICE));
+						}
+					}
+					else
+					{
+						$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('error.invalid_archive_content', 'status-messages-common'), MessageHelper::NOTICE));
+					}
+					
+					$uploaded_file = new File($archive);
+					$uploaded_file->delete();
 				}
 				else
 				{
-					$this->view->put('MSG', MessageHelper::display($this->lang['modules.not_installed_module'], MessageHelper::NOTICE, 4));
+					$this->view->put('MSG', MessageHelper::display($this->lang['modules.upload_invalid_format'], MessageHelper::NOTICE));
 				}
 			}
 			else
 			{
-				$this->view->put('MSG', MessageHelper::display($this->lang['modules.upload_error'], MessageHelper::NOTICE, 4));
+				$this->view->put('MSG', MessageHelper::display($this->lang['modules.upload_error'], MessageHelper::NOTICE));
 			}
 		}
 	}
