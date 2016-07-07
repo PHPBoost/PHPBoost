@@ -38,7 +38,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		
 		$this->init();
 		
-		$this->check_pending_article();
+		$this->check_pending_article($request);
 		
 		$this->build_view($request);
 		
@@ -75,7 +75,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		return $this->article;
 	}
 	
-	private function check_pending_article()
+	private function check_pending_article(HTTPRequestCustom $request)
 	{
 		if (!$this->article->is_published())
 		{
@@ -83,10 +83,14 @@ class ArticlesDisplayArticlesController extends ModuleController
 		}
 		else
 		{
-			$this->article->set_number_view($this->article->get_number_view() + 1);
-			ArticlesService::update_number_view($this->article);
+			if ($request->get_url_referrer() && !strstr($request->get_url_referrer(), ArticlesUrlBuilder::display_article($this->article->get_category()->get_id(), $this->article->get_category()->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->rel()))
+			{
+				$this->article->set_number_view($this->article->get_number_view() + 1);
+				ArticlesService::update_number_view($this->article);
+			}
 		}
 	}
+	
 	private function build_view(HTTPRequestCustom $request)
 	{
 		$current_page = $request->get_getint('page', 1);
@@ -162,7 +166,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 	private function build_pages_pagination($current_page, $nbr_pages, $array_page)
 	{
 		if ($nbr_pages > 1)
-		{	
+		{
 			$pagination = $this->get_pagination($nbr_pages, $current_page);
 			
 			if ($current_page > 1 && $current_page <= $nbr_pages)
