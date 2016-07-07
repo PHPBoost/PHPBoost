@@ -203,7 +203,7 @@ class AdminModuleAddController extends AdminController
 					}
 					
 					$archive_root_content = array();
-					$required_files = array('/config.ini', '/index.php');
+					$required_files = array('/config.ini');
 					foreach ($archive_content as $element)
 					{
 						if (substr($element['filename'], -1) == '/')
