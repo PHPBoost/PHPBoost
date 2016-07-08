@@ -388,10 +388,11 @@ class DownloadFormController extends ModuleController
 			$corresponding_contributions = ContributionService::find_by_criteria('download', $id);
 			if (count($corresponding_contributions) > 0)
 			{
-				$downloadfile_contribution = $corresponding_contributions[0];
-				$downloadfile_contribution->set_status(Event::EVENT_STATUS_PROCESSED);
-				
-				ContributionService::save_contribution($downloadfile_contribution);
+				foreach ($corresponding_contributions as $contribution)
+				{
+					$contribution->set_status(Event::EVENT_STATUS_PROCESSED);
+					ContributionService::save_contribution($contribution);
+				}
 			}
 		}
 		$downloadfile->set_id($id);

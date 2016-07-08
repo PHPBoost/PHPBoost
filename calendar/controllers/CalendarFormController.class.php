@@ -464,10 +464,11 @@ class CalendarFormController extends ModuleController
 			$corresponding_contributions = ContributionService::find_by_criteria('calendar', $id_event);
 			if (count($corresponding_contributions) > 0)
 			{
-				$event_contribution = $corresponding_contributions[0];
-				$event_contribution->set_status(Event::EVENT_STATUS_PROCESSED);
-
-				ContributionService::save_contribution($event_contribution);
+				foreach ($corresponding_contributions as $contribution)
+				{
+					$contribution->set_status(Event::EVENT_STATUS_PROCESSED);
+					ContributionService::save_contribution($contribution);
+				}
 			}
 		}
 		$event->set_id($id_event);

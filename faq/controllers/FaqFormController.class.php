@@ -244,10 +244,11 @@ class FaqFormController extends ModuleController
 			$corresponding_contributions = ContributionService::find_by_criteria('faq', $id);
 			if (count($corresponding_contributions) > 0)
 			{
-				$faq_question_contribution = $corresponding_contributions[0];
-				$faq_question_contribution->set_status(Event::EVENT_STATUS_PROCESSED);
-				
-				ContributionService::save_contribution($faq_question_contribution);
+				foreach ($corresponding_contributions as $contribution)
+				{
+					$contribution->set_status(Event::EVENT_STATUS_PROCESSED);
+					ContributionService::save_contribution($contribution);
+				}
 			}
 		}
 		$faq_question->set_id($id);

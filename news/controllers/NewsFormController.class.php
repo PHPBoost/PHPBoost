@@ -374,10 +374,11 @@ class NewsFormController extends ModuleController
 			$corresponding_contributions = ContributionService::find_by_criteria('news', $id_news);
 			if (count($corresponding_contributions) > 0)
 			{
-				$news_contribution = $corresponding_contributions[0];
-				$news_contribution->set_status(Event::EVENT_STATUS_PROCESSED);
-
-				ContributionService::save_contribution($news_contribution);
+				foreach ($corresponding_contributions as $contribution)
+				{
+					$contribution->set_status(Event::EVENT_STATUS_PROCESSED);
+					ContributionService::save_contribution($contribution);
+				}
 			}
 		}
 		$news->set_id($id_news);

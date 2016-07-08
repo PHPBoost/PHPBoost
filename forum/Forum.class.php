@@ -555,12 +555,11 @@ class Forum
 		$corresponding_contributions = ContributionService::find_by_criteria('forum', $id_alert, 'alert');
 		if (count($corresponding_contributions) > 0)
 		{
-			$file_contribution = $corresponding_contributions[0];
-			//The contribution is now processed
-			$file_contribution->set_status(Event::EVENT_STATUS_PROCESSED);
-
-			//We save the contribution
-			ContributionService::save_contribution($file_contribution);
+			foreach ($corresponding_contributions as $contribution)
+			{
+				$contribution->set_status(Event::EVENT_STATUS_PROCESSED);
+				ContributionService::save_contribution($contribution);
+			}
 		}
 	}
 

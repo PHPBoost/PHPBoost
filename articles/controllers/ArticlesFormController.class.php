@@ -441,10 +441,11 @@ class ArticlesFormController extends ModuleController
 			$corresponding_contributions = ContributionService::find_by_criteria('articles', $id_article);
 			if (count($corresponding_contributions) > 0)
 			{
-				$article_contribution = $corresponding_contributions[0];
-				$article_contribution->set_status(Event::EVENT_STATUS_PROCESSED);
-
-				ContributionService::save_contribution($article_contribution);
+				foreach ($corresponding_contributions as $contribution)
+				{
+					$contribution->set_status(Event::EVENT_STATUS_PROCESSED);
+					ContributionService::save_contribution($contribution);
+				}
 			}
 		}
 		$article->set_id($id_article);

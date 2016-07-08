@@ -394,10 +394,11 @@ elseif ($submit)
 
 			if (count($corresponding_contributions) > 0)
 			{
-				$media_contribution = $corresponding_contributions[0];
-				$media_contribution->set_status(Event::EVENT_STATUS_PROCESSED);
-
-				ContributionService::save_contribution($media_contribution);
+				foreach ($corresponding_contributions as $contribution)
+				{
+					$contribution->set_status(Event::EVENT_STATUS_PROCESSED);
+					ContributionService::save_contribution($contribution);
+				}
 			}
 		}
 
