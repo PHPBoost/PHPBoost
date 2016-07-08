@@ -83,10 +83,13 @@ class WebFormController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->common_lang['form.name'], $this->get_weblink()->get_name(), array('required' => true)));
 		
-		$search_category_children_options = new SearchCategoryChildrensOptions();
-		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
-		$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
-		$fieldset->add_field(WebService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_weblink()->get_id_category(), $search_category_children_options));
+		if (WebService::get_categories_manager()->get_categories_cache()->has_categories())
+		{
+			$search_category_children_options = new SearchCategoryChildrensOptions();
+			$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
+			$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
+			$fieldset->add_field(WebService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_weblink()->get_id_category(), $search_category_children_options));
+		}
 		
 		$fieldset->add_field(new FormFieldUrlEditor('url', $this->common_lang['form.url'], $this->get_weblink()->get_url()->absolute(), array('required' => true)));
 		
@@ -255,7 +258,10 @@ class WebFormController extends ModuleController
 		
 		$weblink->set_name($this->form->get_value('name'));
 		$weblink->set_rewrited_name(Url::encode_rewrite($weblink->get_name()));
-		$weblink->set_id_category($this->form->get_value('id_category')->get_raw_value());
+		
+		if (WebService::get_categories_manager()->get_categories_cache()->has_categories())
+			$weblink->set_id_category($this->form->get_value('id_category')->get_raw_value());
+		
 		$weblink->set_url(new Url($this->form->get_value('url')));
 		$weblink->set_contents($this->form->get_value('contents'));
 		$weblink->set_short_contents(($this->form->get_value('short_contents_enabled') ? $this->form->get_value('short_contents') : ''));

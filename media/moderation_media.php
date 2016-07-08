@@ -207,10 +207,6 @@ else
 	}
 	$result->dispose();
 	
-	$search_category_children_options = new SearchCategoryChildrensOptions();
-	$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
-	$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
-	
 	$tpl->put_all(array(
 		'C_DISPLAY' => true,
 		'C_PAGINATION' => $pagination->has_several_pages(),
@@ -225,7 +221,6 @@ else
 		'L_FUNAPROBED' => $MEDIA_LANG['unaprobed'],
 		'SELECTED_UNAPROBED' => $db_where === MEDIA_STATUS_UNAPROBED ? ' selected="selected"' : '',
 		'L_CATEGORIES' => $MEDIA_LANG['from_cats'],
-		'CATEGORIES_TREE' => MediaService::get_categories_manager()->get_select_categories_form_field('idcat', LangLoader::get_message('form.category', 'common'), $cat, $search_category_children_options)->display()->render(),
 		'L_INCLUDE_SUB_CATS' => $MEDIA_LANG['include_sub_cats'],
 		'SUB_CATS' => is_null($sub_cats) ? ' checked="checked"' : ($sub_cats ? ' checked="checked"' : ''),
 		'L_MODO_PANEL' => $LANG['modo_panel'],

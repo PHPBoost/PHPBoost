@@ -105,10 +105,13 @@ class ArticlesFormController extends ModuleController
 			));
 		}
 
-		$search_category_children_options = new SearchCategoryChildrensOptions();
-		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
-		$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
-		$fieldset->add_field(ArticlesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_article()->get_id_category(), $search_category_children_options));
+		if (ArticlesService::get_categories_manager()->get_categories_cache()->has_categories())
+		{
+			$search_category_children_options = new SearchCategoryChildrensOptions();
+			$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
+			$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
+			$fieldset->add_field(ArticlesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_article()->get_id_category(), $search_category_children_options));
+		}
 		
 		$fieldset->add_field(new FormFieldCheckbox('enable_description', $this->lang['articles.form.description_enabled'], $this->get_article()->get_description_enabled(), 
 			array('description' => StringVars::replace_vars($this->lang['articles.form.description_enabled.description'], 
@@ -311,7 +314,10 @@ class ArticlesFormController extends ModuleController
 		$article = $this->get_article();
 		
 		$article->set_title($this->form->get_value('title'));
-		$article->set_id_category($this->form->get_value('id_category')->get_raw_value());
+		
+		if (ArticlesService::get_categories_manager()->get_categories_cache()->has_categories())
+			$article->set_id_category($this->form->get_value('id_category')->get_raw_value());
+		
 		$article->set_description(($this->form->get_value('enable_description') ? $this->form->get_value('description') : ''));
 		$article->set_contents($this->form->get_value('contents'));
 		

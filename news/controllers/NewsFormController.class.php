@@ -96,10 +96,13 @@ class NewsFormController extends ModuleController
 			), array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`i'))));
 		}
 		
-		$search_category_children_options = new SearchCategoryChildrensOptions();
-		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
-		$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
-		$fieldset->add_field(NewsService::get_categories_manager()->get_select_categories_form_field('id_cat', $this->common_lang['form.category'], $this->get_news()->get_id_cat(), $search_category_children_options));
+		if (NewsService::get_categories_manager()->get_categories_cache()->has_categories())
+		{
+			$search_category_children_options = new SearchCategoryChildrensOptions();
+			$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
+			$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
+			$fieldset->add_field(NewsService::get_categories_manager()->get_select_categories_form_field('id_cat', $this->common_lang['form.category'], $this->get_news()->get_id_cat(), $search_category_children_options));
+		}
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->common_lang['form.contents'], $this->get_news()->get_contents(), array('rows' => 15, 'required' => true)));
 		
@@ -252,7 +255,10 @@ class NewsFormController extends ModuleController
 		$news = $this->get_news();
 		
 		$news->set_name($this->form->get_value('name'));
-		$news->set_id_cat($this->form->get_value('id_cat')->get_raw_value());
+		
+		if (NewsService::get_categories_manager()->get_categories_cache()->has_categories())
+			$news->set_id_cat($this->form->get_value('id_cat')->get_raw_value());
+		
 		$news->set_contents($this->form->get_value('contents'));
 		$news->set_short_contents(($this->form->get_value('enable_short_contents') ? $this->form->get_value('short_contents') : ''));
 		$news->set_picture(new Url($this->form->get_value('picture')));

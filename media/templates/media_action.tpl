@@ -67,6 +67,7 @@
 						<label for="name">* {L_TITLE}</label>
 						<div class="form-field"><input type="text" maxlength="100" class="field-large" id="name" name="name" value="{NAME}"></div>
 					</div>
+					# IF C_CATEGORIES #
 					<div class="form-element">
 						<label for="category">${LangLoader::get_message('form.category', 'common')}</label>
 						<div class="form-field">
@@ -75,6 +76,7 @@
 							</select>
 						</div>
 					</div>
+					# ENDIF #
 					<div class="form-element" id="width_dl">
 						<label for="width">{L_WIDTH}</label>
 						<div class="form-field"><input type="number" min="10" max="5000" maxlength="4" id="width" name="width" value="{WIDTH}"></div>

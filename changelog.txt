@@ -4,6 +4,9 @@
 
 ===================================== Noyau ======================================
 
+[b]Catégories[/b]
+[*] Affichage du choix des catégories dans les formulaires uniquement s'il y a au moins une catégorie
+
 [b]Graphisme[/b]
 [*] Ajout d'un bouton "Haut de page" lors du scroll vers le bas de la page (#1411)
 [*] Gestion cache TPL par template pour permettre une personnalisation plus poussée (#1480)

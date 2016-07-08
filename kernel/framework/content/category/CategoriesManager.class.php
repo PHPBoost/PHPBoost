@@ -212,7 +212,6 @@ class CategoriesManager
 			{
 				throw new CategoryNotFoundException($id);
 			}
-				
 		}
 	}
 	

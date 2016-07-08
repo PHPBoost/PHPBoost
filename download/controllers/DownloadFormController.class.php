@@ -86,10 +86,13 @@ class DownloadFormController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->common_lang['form.name'], $this->get_downloadfile()->get_name(), array('required' => true)));
 		
-		$search_category_children_options = new SearchCategoryChildrensOptions();
-		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
-		$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
-		$fieldset->add_field(DownloadService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_downloadfile()->get_id_category(), $search_category_children_options));
+		if (DownloadService::get_categories_manager()->get_categories_cache()->has_categories())
+		{
+			$search_category_children_options = new SearchCategoryChildrensOptions();
+			$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
+			$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
+			$fieldset->add_field(DownloadService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_downloadfile()->get_id_category(), $search_category_children_options));
+		}
 		
 		$fieldset->add_field(new FormFieldUploadFile('url', $this->common_lang['form.url'], $this->get_downloadfile()->get_url()->relative(), array('required' => true)));
 		
@@ -261,7 +264,10 @@ class DownloadFormController extends ModuleController
 		
 		$downloadfile->set_name($this->form->get_value('name'));
 		$downloadfile->set_rewrited_name(Url::encode_rewrite($downloadfile->get_name()));
-		$downloadfile->set_id_category($this->form->get_value('id_category')->get_raw_value());
+		
+		if (DownloadService::get_categories_manager()->get_categories_cache()->has_categories())
+			$downloadfile->set_id_category($this->form->get_value('id_category')->get_raw_value());
+		
 		$downloadfile->set_url(new Url($this->form->get_value('url')));
 		$downloadfile->set_contents($this->form->get_value('contents'));
 		$downloadfile->set_short_contents(($this->form->get_value('short_contents_enabled') ? $this->form->get_value('short_contents') : ''));

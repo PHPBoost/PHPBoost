@@ -84,10 +84,13 @@ class CalendarFormController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldTextEditor('title', $common_lang['form.title'], $event_content->get_title(), array('required' => true)));
 
-		$search_category_children_options = new SearchCategoryChildrensOptions();
-		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
-		$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
-		$fieldset->add_field(CalendarService::get_categories_manager()->get_select_categories_form_field('category_id', LangLoader::get_message('category', 'categories-common'), $event_content->get_category_id(), $search_category_children_options));
+		if (CalendarService::get_categories_manager()->get_categories_cache()->has_categories())
+		{
+			$search_category_children_options = new SearchCategoryChildrensOptions();
+			$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
+			$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
+			$fieldset->add_field(CalendarService::get_categories_manager()->get_select_categories_form_field('category_id', LangLoader::get_message('category', 'categories-common'), $event_content->get_category_id(), $search_category_children_options));
+		}
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('contents', $common_lang['form.contents'], $event_content->get_contents(), array('rows' => 15, 'required' => true)));
 		
@@ -256,7 +259,10 @@ class CalendarFormController extends ModuleController
 		
 		$event_content->set_title($this->form->get_value('title'));
 		$event_content->set_rewrited_title(Url::encode_rewrite($this->form->get_value('title')));
-		$event_content->set_category_id($this->form->get_value('category_id')->get_raw_value());
+		
+		if (CalendarService::get_categories_manager()->get_categories_cache()->has_categories())
+			$event_content->set_category_id($this->form->get_value('category_id')->get_raw_value());
+		
 		$event_content->set_contents($this->form->get_value('contents'));
 		$event_content->set_location($this->form->get_value('location'));
 		

@@ -148,6 +148,11 @@ abstract class CategoriesCache implements CacheData
 		throw new CategoryNotFoundException($id);
 	}
 	
+	public function has_categories()
+	{
+		return count($this->categories) > 1;
+	}
+	
 	/**
 	 * Loads and returns the categories cached data.
 	 * @return CategoriesCache The cached data
