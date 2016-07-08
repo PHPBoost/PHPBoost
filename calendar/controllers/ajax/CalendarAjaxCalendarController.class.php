@@ -139,7 +139,7 @@ class CalendarAjaxCalendarController extends AbstractController
 						'title' => $title . (!empty($title) ? '
 ' : '') . ($event['type'] != 'BIRTHDAY' ? (($j == $start_date->get_day() && $month == $start_date->get_month() && $year == $start_date->get_year()) ? $start_date->get_hours() . 'h' . $start_date->get_minutes() . ' : ' : '') : LangLoader::get_message('calendar.labels.birthday_title', 'common', 'calendar') . ' ') . $event['title'],
 						'type' => $event['type'],
-						'color' => ($event['type'] == 'BIRTHDAY' ? $config->get_birthday_color() : ($event['id_category'] != Category::ROOT_CATEGORY && $categories[$event['id_category']]->get_color() ? $categories[$event['id_category']]->get_color() : $config->get_event_color())),
+						'color' => ($event['type'] == 'BIRTHDAY' ? $config->get_birthday_color() : ($event['id_category'] != Category::ROOT_CATEGORY && isset($categories[$event['id_category']]) && $categories[$event['id_category']]->get_color() ? $categories[$event['id_category']]->get_color() : $config->get_event_color())),
 						'id_category' => $event['id_category'],
 					);
 					
@@ -159,7 +159,7 @@ class CalendarAjaxCalendarController extends AbstractController
 					}
 					else
 					{
-						if (!isset($events_legends_list[$event['id_category']]))
+						if (isset($categories[$event['id_category']]) && !isset($events_legends_list[$event['id_category']]))
 						{
 							$events_legends_list[$j] = array(
 								'name' => $categories[$event['id_category']]->get_name(),
