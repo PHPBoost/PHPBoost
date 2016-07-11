@@ -54,7 +54,13 @@ $lang['contribution.description.explain'] = 'Expliquez les raisons de votre cont
 $lang['contribution.confirmed'] = 'Votre contribution a bien été enregistrée.';
 $lang['contribution.confirmed.messages'] = '<p>Vous pourrez la suivre dans le <a href="' . UserUrlBuilder::contribution_panel()->rel() . '">panneau de contribution</a> 
 et éventuellement discuter avec les validateurs si leur choix n\'est pas franc.</p><p>Merci d\'avoir participé à la vie du site !</p>';
-
+$lang['contribution.pm.title'] = 'La contribution <strong>:title</strong> a été commentée';
+$lang['contribution.pm.contents'] = ':author a ajouté un commentaire à la contribution <strong>:title</strong>.<br />
+<br />
+Commentaire :<br />
+:comment<br />
+<br />
+<a href=":contribution_url">Accéder à la contribution</a>';
 
 //User fields
 $lang['display_name'] = 'Nom d\'affichage';

@@ -156,10 +156,6 @@ if ($contribution_id > 0)
 	$comments_topic->set_id_in_module($contribution_id);
 	$comments_topic->set_url(new Url('/user/contribution_panel.php?id='. $contribution_id));
 
-	//For PHP 4 :(
-	$contribution_creation_date = $contribution->get_creation_date();
-	$contribution_fixing_date = $contribution->get_fixing_date();
-	
 	$contributor = PersistenceContext::get_querier()->select('SELECT *
 		FROM ' . DB_TABLE_MEMBER . ' member
 		WHERE user_id = :user_id', array('user_id' => $contribution->get_poster_id()))->fetch();
@@ -177,7 +173,7 @@ if ($contribution_id > 0)
 		'CONTRIBUTOR_LEVEL_CLASS' => UserService::get_level_class($contributor['level']),
 		'CONTRIBUTOR_GROUP_COLOR' => $contributor_group_color,
 		'COMMENTS' => CommentsService::display($comments_topic)->render(),
-		'CREATION_DATE' => $contribution_creation_date->format(Date::FORMAT_DAY_MONTH_YEAR),
+		'CREATION_DATE' => $contribution->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR),
 		'MODULE' => $contribution->get_module_name(),
 		'U_CONTRIBUTOR_PROFILE' => UserUrlBuilder::profile($contribution->get_poster_id())->rel(),
 		'FIXING_URL' => Url::to_rel($contribution->get_fixing_url())
@@ -198,7 +194,7 @@ if ($contribution_id > 0)
 			'FIXER' => $fixer['display_name'],
 			'FIXER_LEVEL_CLASS' => UserService::get_level_class($fixer['level']),
 			'FIXER_GROUP_COLOR' => $fixer_group_color,
-			'FIXING_DATE' => $contribution_fixing_date->format(Date::FORMAT_DAY_MONTH_YEAR),
+			'FIXING_DATE' => $contribution->get_fixing_date()->format(Date::FORMAT_DAY_MONTH_YEAR),
 			'U_FIXER_PROFILE' => UserUrlBuilder::profile($contribution->get_fixer_id())->rel()
 		));
 	}

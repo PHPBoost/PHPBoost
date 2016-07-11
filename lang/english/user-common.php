@@ -54,6 +54,13 @@ $lang['contribution.description.explain'] = 'Explain the reasons of your contrib
 $lang['contribution.confirmed'] = 'Your contribution has been saved.';
 $lang['contribution.confirmed.messages'] = '<p>You can follow it into the <a href="' . UserUrlBuilder::contribution_panel()->rel() . '">contribution panel</a> 
 and possibly discuss with the validators if their choice is not straightforward.</p><p>Thank you for participating in the life of the site!</p>';
+$lang['contribution.pm.title'] = 'The contribution <strong>:title</strong> has been commented';
+$lang['contribution.pm.contents'] = ':author add a comment to the contribution <strong>:title</strong>.<br />
+<br />
+Comment :<br />
+:comment<br />
+<br />
+<a href=":contribution_url">See the contribution</a>';
 
 
 //User fields
