@@ -7,25 +7,28 @@
 [b]Catégories[/b]
 [*] Affichage du choix des catégories dans les formulaires uniquement s'il y a au moins une catégorie
 
+[b]Contributions[/b]
+[*] [color=red]Nouveauté :[/color] Envoi d'un MP lors d'un commentaire sur une contribution
+
 [b]Graphisme[/b]
-[*] Ajout d'un bouton "Haut de page" lors du scroll vers le bas de la page (#1411)
-[*] Gestion cache TPL par template pour permettre une personnalisation plus poussée (#1480)
+[*] Ajout d'un bouton "Haut de page" lors du scroll vers le bas de la page ([url=/bugtracker/detail/1411-bouton-haut-de-page]#1411[/url])
+[*] Gestion cache TPL par template pour permettre une personnalisation plus poussée ([url=/bugtracker/detail/1480-gestion-cache-tpl-par-template]#1480[/url])
 
 =================================== Modules =====================================
 
 [b]Articles[/b]
-[*] Ouverture d'un article en cliquant sur son image (#1604)
+[*] Ouverture d'un article en cliquant sur son image ([url=/bugtracker/detail/1604-ouverture-article-par-son-image]#1604[/url])
 
 [b]Discussion[/b]
-[*] Ajout d'une option dans la configuration pour afficher ou non le message d'avertissement pour les utilisateurs qui n'ont pas le droit d'écriture (#1577)
+[*] Ajout d'une option dans la configuration pour afficher ou non le message d'avertissement pour les utilisateurs qui n'ont pas le droit d'écriture ([url=/bugtracker/detail/1577-module-discussion-et-invite]#1577[/url])
 
 [b]BBCode[/b]
-[*] fonction [member][/member] (#1483)
-[*] Réécriture des liens avec la balise ancre si nécessaire (#1457)
+[*] fonction [member][/member] ([url=/bugtracker/detail/1483-fonction-bbcode-member-member]#1483[/url])
+[*] Réécriture des liens avec la balise ancre si nécessaire ([url=/bugtracker/detail/1457-balise-ancre-et-fonctionnement-balise-link]#1457[/url])
 
 [b]ReCaptcha[/b]
 [*] Ajout d'une option dans la configuration pour activer ou non ReCaptcha v2
 
 [b]Rapport de bugs[/b]
-[*] Affichage d'un message de succès lors de la soumission d'un bug (#1520)
-[*] Possibilité d'afficher uniquement leurs propres bugs aux membres qui n'ont pas l'autorisation de modération (#1520)
+[*] Affichage d'un message de succès lors de la soumission d'un bug ([url=/bugtracker/detail/1520-redirection-et-autorisation-d-un-bug]#1520[/url])
+[*] Possibilité d'afficher uniquement leurs propres bugs aux membres qui n'ont pas l'autorisation de modération ([url=/bugtracker/detail/1520-redirection-et-autorisation-d-un-bug]#1520[/url])
