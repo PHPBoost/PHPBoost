@@ -70,8 +70,6 @@ class TinyMCEParser extends ContentFormattingParser
 	 */
 	public function parse()
 	{
-		$this->content = TextHelper::html_entity_decode($this->content);
-		
 		//On supprime d'abord toutes les occurences de balises CODE que nous réinjecterons à la fin pour ne pas y toucher
 		if (!in_array('code', $this->forbidden_tags))
 		{
@@ -319,22 +317,48 @@ class TinyMCEParser extends ContentFormattingParser
 		//On supprime tous les retours à la ligne ajoutés par TinyMCE (seuls les nouveaux paragraphes (<p>) compteront)
 		$this->content = str_replace('\r\n', '\n', $this->content);
 		$this->content = preg_replace('`\s*\n+\s*`isU', "\n", $this->content);
-
+		
 		$array_preg = array();
 		$array_preg_replace = array();
-
-		//Background color tag
-		if (!in_array('bgcolor', $this->forbidden_tags))
-		{
-			array_push($array_preg, '`&lt;span style="background-color: *([#a-z0-9]+);"&gt;(.+)&lt;/span&gt;`isU');
-			array_push($array_preg_replace, '<span style="background-color: $1;">$2</span>');
-		}
+		
+		//Colors, underline and strike replacement
 		//Color tag
 		if (!in_array('color', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;span style="(.+)?color: *([#a-z0-9]+);(.+)?"&gt;(.+)&lt;/span&gt;`isU');
-			array_push($array_preg_replace, '<span style="color:$2;">&lt;span style="$1$3"&gt;$4&lt;/span&gt;</span>');
+			array_push($array_preg, '`&lt;span style="color: *([#a-f0-9]+);"&gt;(.+)&lt;/span&gt;`isU');
+			array_push($array_preg_replace, '<span style="color:$1;">$2</span>');
 		}
+		//Background color tag
+		if (!in_array('bgcolor', $this->forbidden_tags))
+		{
+			array_push($array_preg, '`&lt;span style="background-color: *([#a-f0-9]+);"&gt;(.+)&lt;/span&gt;`isU');
+			array_push($array_preg_replace, '<span style="background-color:$1;">$2</span>');
+		}
+		//Underline tag
+		if (!in_array('u', $this->forbidden_tags))
+		{
+			array_push($array_preg, '`&lt;span style="text-decoration: underline;"&gt;(.+)&lt;/span&gt;`isU');
+			array_push($array_preg_replace, '<span style="text-decoration: underline;">$1</span>');
+		}
+		//Strike tag
+		if (!in_array('s', $this->forbidden_tags))
+		{
+			array_push($array_preg, '`&lt;span style="text-decoration: line-through;"&gt;(.+)&lt;/span&gt;`isU');
+			array_push($array_preg_replace, '<s>$1</s>');
+			array_push($array_preg, '`&lt;s&gt;(.+)&lt;/s&gt;`isU');
+			array_push($array_preg_replace, '<s>$1</s>');
+		}
+		
+		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
+		
+		//On dissocie les styles des span et div
+		$this->content = preg_replace_callback('`&lt;span style="color: *([#a-f0-9]+); background-color: *([#a-f0-9]+);( text-decoration: line-through;| text-decoration: underline;)?"&gt;(.*)&lt;/span&gt;`isU', array($this, 'parse_span_color_and_background_style'), $this->content );
+		$this->content = preg_replace_callback('`&lt;span style="([^;]*); ([^"]*)"&gt;(.*)&lt;/span&gt;`isU', array($this, 'parse_span_style'), $this->content );
+		$this->content = preg_replace_callback('`&lt;div style="([^;]*); ([^"]*)"&gt;(.*)&lt;/div&gt;`isU', array($this, 'parse_div_style'), $this->content );
+		
+		$array_preg = array();
+		$array_preg_replace = array();
+
 		//Strong tag
 		if (!in_array('b', $this->forbidden_tags))
 		{
@@ -346,20 +370,6 @@ class TinyMCEParser extends ContentFormattingParser
 		{
 			array_push($array_preg, '`&lt;em&gt;(.+)&lt;/em&gt;`isU');
 			array_push($array_preg_replace, '<em>$1</em>');
-		}
-		//Underline tag
-		if (!in_array('u', $this->forbidden_tags))
-		{
-			array_push($array_preg, '`&lt;span style="( *)?text-decoration: underline;( *)?"&gt;(.+)&lt;/span&gt;`isU');
-			array_push($array_preg_replace, '<span style="text-decoration: underline;">$3</span>');
-		}
-		//Strike tag
-		if (!in_array('s', $this->forbidden_tags))
-		{
-			array_push($array_preg, '`&lt;span style="( *)?text-decoration: line-through;( *)?"&gt;(.+)&lt;/span&gt;`isU');
-			array_push($array_preg_replace, '<s>$3</s>');
-			array_push($array_preg, '`&lt;s&gt;(.+)&lt;/s&gt;`isU');
-			array_push($array_preg_replace, '<s>$1</s>');
 		}
 		//Link tag
 		if (!in_array('url', $this->forbidden_tags))
@@ -409,12 +419,6 @@ class TinyMCEParser extends ContentFormattingParser
 		{
 			$this->content = preg_replace_callback('`&lt;video(?: style="([^"]+)")?(?: controls="([^"]+)")? width="([^"]+)" height="([^"]+)"(?: controls="([^"]+)")?&gt;\s?&lt;source src="(.*)" /&gt;&lt;/video&gt;`is', array($this, 'parse_movie_tag'), $this->content);
 		}
-		//Align tag
-		if (!in_array('align', $this->forbidden_tags))
-		{
-			array_push($array_preg, '`&lt;p style="text-align: (left|right|center|justify);"&gt;(.+)&lt;/p&gt;`isU');
-			array_push($array_preg_replace, '<p style="text-align:$1">$2</p>' . "\n");
-		}
 		//Anchor tag
 		if (!in_array('anchor', $this->forbidden_tags))
 		{
@@ -449,14 +453,23 @@ class TinyMCEParser extends ContentFormattingParser
 			array_push($array_preg, '`&lt;span class="(success|question|notice|warning|error)"&gt;(.+)&lt;/span&gt;`isU');
 			array_push($array_preg_replace, '<span class="$1">$2</span>');
 		}
-
+		//Align tag
+		if (!in_array('align', $this->forbidden_tags))
+		{
+			array_push($array_preg, '`&lt;p style="text-align: (left|right|center|justify);"&gt;(.+)&lt;/p&gt;`isU');
+			array_push($array_preg_replace, '<p style="text-align:$1">$2</p>' . "\n");
+		}
+		
 		//Replacement
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 
 		//List tag
 		if (!in_array('list', $this->forbidden_tags))
 		{
-			while (preg_match('`&lt;o|ul&gt;(.+)&lt;/o|ul&gt;`isU', $this->content))
+			//On doit repasser plusieurs fois pour que ça soit pris en compte (comportement un peu bizarre)
+			//Par mesure de sécurité on s'arrête à 10
+			$nbr_list_parsing = 0;
+			while (preg_match('`&lt;o|ul&gt;(.+)&lt;/o|ul&gt;`isU', $this->content) && $nbr_list_parsing++ < 10)
 			{
 				$this->content = preg_replace('`&lt;ul&gt;(.+)&lt;/ul&gt;`isU', '<ul class="formatter-ul">' . "\n" .'$1</ul>', $this->content);
 				$this->content = preg_replace('`&lt;ol&gt;(.+)&lt;/ol&gt;`isU', '<ol class="formatter-ol">' . "\n" .'$1</ol>', $this->content);
@@ -478,9 +491,9 @@ class TinyMCEParser extends ContentFormattingParser
 			//On doit repasser plusieurs fois pour que ça soit pris en compte (comportement un peu bizarre)
 			//Par mesure de sécurité on s'arrête à 10
 			$nbr_size_parsing = 0;
-			while (preg_match('`&lt;span style="(.*)font-size: ([0-9a-z-]+);(.*)"&gt;(.+)&lt;/span&gt;`isU', $this->content) && $nbr_size_parsing++ < 10)
+			while (preg_match('`&lt;span style="font-size: ([0-9a-z-]+);"&gt;(.+)&lt;/span&gt;`isU', $this->content) && $nbr_size_parsing++ < 10)
 			{
-				$this->content = preg_replace_callback('`&lt;span style="(.*)font-size: ([0-9a-z-]+);(.*)"&gt;(.+)&lt;/span&gt;`isU', array($this, 'parse_size_tag'), $this->content);
+				$this->content = preg_replace_callback('`&lt;span style="font-size: ([0-9a-z-]+);"&gt;(.+)&lt;/span&gt;`isU', array($this, 'parse_size_tag'), $this->content);
 			}
 		}
 
@@ -515,11 +528,12 @@ class TinyMCEParser extends ContentFormattingParser
 			//Tant qu'il existe des occurences de cette balise à travailler, on les traite
 			//Sécurité : on traite au maximum 10 fois pour éviter les boucles infinies éventuelles
 			$nbr_font_parsing = 0;
-			while (preg_match('`&lt;span style="(.*)font-family: (.*);(.*)"&gt;(.*)&lt;/span&gt;`isU', $this->content) && $nbr_font_parsing++ < 10)
+			while (preg_match('`&lt;span style="font-family: (.*);"&gt;(.*)&lt;/span&gt;`isU', $this->content) && $nbr_font_parsing++ < 10)
 			{
-				$this->content = preg_replace_callback('`&lt;span style="(.*)font-family: (.*);(.*)"&gt;(.*)&lt;/span&gt;`isU', array($this, 'parse_font_tag'), $this->content );
+				$this->content = preg_replace_callback('`&lt;span style="font-family: (.*);"&gt;(.*)&lt;/span&gt;`isU', array($this, 'parse_font_tag'), $this->content );
 			}
 		}
+		
 	}
 
 	/**
@@ -696,6 +710,88 @@ class TinyMCEParser extends ContentFormattingParser
 			$this->parse_feed_tag();
 		}
 	}
+	
+	/**
+	 * @desc Dissociates color and background-color in span style.
+	 * @param string[] $matches The matched elements
+	 * @return string The dissociated span string
+	 */
+	private function parse_span_color_and_background_style($matches)
+	{
+		return '<span style="color:' . $matches[1] . ';"><span style="background-color:' . $matches[2] . ';">' . $matches[4] . '</span></span>';
+	}
+	
+	/**
+	 * @desc Dissociates each span style.
+	 * @param string[] $matches The matched elements
+	 * @return string The dissociated span string
+	 */
+	private function parse_span_style($matches)
+	{
+		$span = $matches[3];
+		$styles = array_merge(array($matches[1]), explode(';', $matches[2]));
+		
+		if (count($styles) > 1)
+		{
+			if (in_array('text-decoration: line-through', $styles))
+				unset($styles[array_search('text-decoration: line-through', $styles)]);
+			if (in_array('text-decoration: underline', $styles))
+				unset($styles[array_search('text-decoration: underline', $styles)]);
+		}
+		
+		foreach ($styles as $style)
+		{
+			if (strstr($style, 'font-size:'))
+				$style = str_replace('pt', 'px');
+			if (strstr($style, 'font-family:'))
+			{
+				$font = explode(' ', $style);
+				if (self::$fonts_array[$font[0]])
+					$style = 'font-family: ' . self::$fonts_array[$font[0]];
+				else
+					$style = '';
+			}
+			if ($style)
+				$span = '<span style="' . trim($style) . ';">' . $span . '</span>';
+		}
+		return $span;
+	}
+	
+	/**
+	 * @desc Dissociates each div style.
+	 * @param string[] $matches The matched elements
+	 * @return string The dissociated div string
+	 */
+	private function parse_div_style($matches)
+	{
+		$span = $matches[3];
+		$styles = array_merge(array($matches[1]), explode(';', $matches[2]));
+		
+		if (count($styles) > 1)
+		{
+			if (in_array('text-decoration: line-through', $styles))
+				unset($styles[array_search('text-decoration: line-through', $styles)]);
+			if (in_array('text-decoration: underline', $styles))
+				unset($styles[array_search('text-decoration: underline', $styles)]);
+		}
+		
+		foreach ($styles as $style)
+		{
+			if(strstr($style, 'font-size:'))
+				$style = str_replace('pt', 'px');
+			if (strstr($style, 'font-family:'))
+			{
+				$font = explode(' ', $style);
+				if (self::$fonts_array[$font[0]])
+					$style = 'font-family: ' . self::$fonts_array[$font[0]];
+				else
+					$style = '';
+			}
+			if ($style)
+				$div = '<div style="' . trim($style) . ';">' . $div . '</div>';
+		}
+		return $div;
+	}
 
 	/**
 	 * @desc Parses the wikipedia links. This tag is a BBCode one.
@@ -862,7 +958,7 @@ class TinyMCEParser extends ContentFormattingParser
 	{
 		$size = 0;
 		//We retrieve the size (in pt)
-		switch ($matches[2])
+		switch ($matches[1])
 		{
 			case '5pt':
 				$size = 5;
@@ -897,7 +993,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//If the size is known, we put the HTML code and convert the size into pixels
 		if ($size > 0)
 		{
-			return '<span style="font-size: ' . $size . 'px;">' . $matches[4] . '</span>';
+			return '<span style="font-size: ' . $size . 'px;">' . $matches[2] . '</span>';
 		}
 		else
 		{
@@ -914,13 +1010,13 @@ class TinyMCEParser extends ContentFormattingParser
 	 */
 	private function parse_font_tag($matches)
 	{
-		if (!empty(self::$fonts_array[$matches[2]]))
+		if (!empty(self::$fonts_array[$matches[1]]))
 		{
-			return '<span style="font-family: ' . self::$fonts_array[$matches[2]] . ';">' . $matches[4] . '</span>';
+			return '<span style="font-family: ' . self::$fonts_array[$matches[1]] . ';">' . $matches[2] . '</span>';
 		}
 		else
 		{
-			return $matches[4];
+			return $matches[2];
 		}
 	}
 
