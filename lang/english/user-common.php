@@ -67,6 +67,7 @@ Comment :<br />
 $lang['display_name'] = 'Display name';
 $lang['display_name.explain'] = 'Display name on each item you add.';
 $lang['login'] = 'Login';
+$lang['login.explain'] = 'Email address or your customized login if you chose one.';
 $lang['login.custom'] = 'Choose a login';
 $lang['login.custom.explain'] = 'Default, you must log in with your email address.';
 $lang['password'] = 'Password';
