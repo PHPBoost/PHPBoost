@@ -30,7 +30,7 @@
  * @author Kévin MASSY
  * @desc
  */
-abstract class AbstractDeleteCategoryController extends AdminModuleController
+abstract class AbstractDeleteCategoryController extends ModuleController
 {
 	/**
 	 * @var HTMLForm
@@ -45,6 +45,8 @@ abstract class AbstractDeleteCategoryController extends AdminModuleController
 
 	public function execute(HTTPRequestCustom $request)
 	{
+		$this->check_authorizations();
+		
 		$this->init();
 		
 		try {
@@ -184,15 +186,29 @@ abstract class AbstractDeleteCategoryController extends AdminModuleController
 	}
 	
 	/**
-	 * @return string id category for edit it
-	 */
-	abstract protected function get_id_category();
-	
-	/**
 	 * @param View $view
 	 * @return Response
 	 */
-	abstract protected function generate_response(View $view);
+	protected function generate_response(View $view)
+	{
+		$response = new SiteDisplayResponse($view);
+
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->get_title(), $this->get_module_home_page_title());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url($this->get_delete_category_url($this->get_category()));
+		
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->get_module_home_page_title(), $this->get_module_home_page_url());
+		
+		$breadcrumb->add($this->get_title(), $this->get_delete_category_url($this->get_category()));
+		
+		return $response;
+	}
+	
+	/**
+	 * @return string id of the category to edit / delete
+	 */
+	abstract protected function get_id_category();
 	
 	/**
 	 * @return CategoriesManager
@@ -203,5 +219,26 @@ abstract class AbstractDeleteCategoryController extends AdminModuleController
 	 * @return Url
 	 */
 	abstract protected function get_categories_management_url();
+	
+	/**
+	 * @param int $category Category
+	 * @return Url
+	 */
+	abstract protected function get_delete_category_url(Category $category);
+	
+	/**
+	 * @return Url
+	 */
+	abstract protected function get_module_home_page_url();
+	
+	/**
+	 * @return string module home page title
+	 */
+	abstract protected function get_module_home_page_title();
+	
+	/**
+	 * @return boolean Authorization to manage categories
+	 */
+	abstract protected function check_authorizations();
 }
 ?>

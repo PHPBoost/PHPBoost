@@ -170,4 +170,5 @@ $lang['authorizations.read'] = 'Read permission';
 $lang['authorizations.write'] = 'Write permission';
 $lang['authorizations.contribution'] = 'Contribution permission';
 $lang['authorizations.moderation'] = 'Moderation permission';
+$lang['authorizations.categories_management'] = 'Categories management permission';
 ?>
