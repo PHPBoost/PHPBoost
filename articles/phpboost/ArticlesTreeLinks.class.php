@@ -35,19 +35,19 @@ class ArticlesTreeLinks implements ModuleTreeLinksExtensionPoint
 		$lang = LangLoader::get('common', 'articles');
 		$tree = new ModuleTreeLinks();
 		
-		$manage_categories_link = new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), ArticlesUrlBuilder::manage_categories());
-		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), ArticlesUrlBuilder::manage_categories()));
-		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('category.add', 'categories-common'), ArticlesUrlBuilder::add_category(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY))));
+		$manage_categories_link = new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), ArticlesUrlBuilder::manage_categories(), ArticlesAuthorizationsService::check_authorizations()->manage_categories());
+		$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), ArticlesUrlBuilder::manage_categories(), ArticlesAuthorizationsService::check_authorizations()->manage_categories()));
+		$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('category.add', 'categories-common'), ArticlesUrlBuilder::add_category(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY)), ArticlesAuthorizationsService::check_authorizations()->manage_categories()));
 		$tree->add_link($manage_categories_link);
-	
-		$manage_articles_link = new AdminModuleLink($lang['articles_management'], ArticlesUrlBuilder::manage_articles());
-		$manage_articles_link->add_sub_link(new AdminModuleLink($lang['articles_management'], ArticlesUrlBuilder::manage_articles()));
-		$manage_articles_link->add_sub_link(new AdminModuleLink($lang['articles.add'], ArticlesUrlBuilder::add_article(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY))));
+		
+		$manage_articles_link = new ModuleLink($lang['articles_management'], ArticlesUrlBuilder::manage_articles(), ArticlesAuthorizationsService::check_authorizations()->moderation());
+		$manage_articles_link->add_sub_link(new ModuleLink($lang['articles_management'], ArticlesUrlBuilder::manage_articles(), ArticlesAuthorizationsService::check_authorizations()->moderation()));
+		$manage_articles_link->add_sub_link(new ModuleLink($lang['articles.add'], ArticlesUrlBuilder::add_article(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY)), ArticlesAuthorizationsService::check_authorizations()->moderation()));
 		$tree->add_link($manage_articles_link);
 		
 		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin-common'), ArticlesUrlBuilder::configuration()));
 
-		if (!AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+		if (!ArticlesAuthorizationsService::check_authorizations()->moderation())
 		{
 			$tree->add_link(new ModuleLink($lang['articles.add'], ArticlesUrlBuilder::add_article(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY)), ArticlesAuthorizationsService::check_authorizations()->write() || ArticlesAuthorizationsService::check_authorizations()->contribution()));
 		}

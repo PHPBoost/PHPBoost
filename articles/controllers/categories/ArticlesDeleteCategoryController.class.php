@@ -27,9 +27,9 @@
 
 class ArticlesDeleteCategoryController extends AbstractDeleteCategoryController
 {
-	protected function generate_response(View $view)
+	protected function get_id_category()
 	{
-		return new AdminArticlesDisplayResponse($view, $this->get_title());
+		return AppContext::get_request()->get_getint('id', 0);
 	}
 	
 	protected function get_categories_manager()
@@ -37,14 +37,33 @@ class ArticlesDeleteCategoryController extends AbstractDeleteCategoryController
 		return ArticlesService::get_categories_manager();
 	}
 	
-	protected function get_id_category()
-	{
-		return AppContext::get_request()->get_getint('id', 0);
-	}
-	
 	protected function get_categories_management_url()
 	{
 		return ArticlesUrlBuilder::manage_categories();
+	}
+	
+	protected function get_delete_category_url(Category $category)
+	{
+		return ArticlesUrlBuilder::delete_category($category->get_id());
+	}
+	
+	protected function get_module_home_page_url()
+	{
+		return ArticlesUrlBuilder::home();
+	}
+	
+	protected function get_module_home_page_title()
+	{
+		return LangLoader::get_message('articles', 'common', 'articles');
+	}
+	
+	protected function check_authorizations()
+	{
+		if (!ArticlesAuthorizationsService::check_authorizations()->manage_categories())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 }
 ?>

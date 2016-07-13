@@ -153,7 +153,8 @@ class AdminArticlesConfigController extends AdminModuleController
 			new ActionAuthorization($common_lang['authorizations.read'], Category::READ_AUTHORIZATIONS),
 			new ActionAuthorization($common_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
 			new ActionAuthorization($common_lang['authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
-			new ActionAuthorization($common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS)
+			new ActionAuthorization($common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
+			new ActionAuthorization($common_lang['authorizations.categories_management'], Category::CATEGORIES_MANAGEMENT_AUTHORIZATIONS)
 		));
 		
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);

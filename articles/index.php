@@ -37,13 +37,13 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('AdminArticlesConfigController', '`^/admin(?:/config)?/?$`'),
 
 	//Manage categories
-	new UrlControllerMapper('ArticlesCategoriesManageController', '`^/admin/categories/?$`'),
-	new UrlControllerMapper('ArticlesCategoriesFormController', '`^/admin/categories/add/?([0-9]+)?/?$`', array('id_parent')),
-	new UrlControllerMapper('ArticlesCategoriesFormController', '`^/admin/categories/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('ArticlesDeleteCategoryController', '`^/admin/categories/([0-9]+)/delete/?$`', array('id')),
+	new UrlControllerMapper('ArticlesCategoriesManageController', '`^/categories/?$`'),
+	new UrlControllerMapper('ArticlesCategoriesFormController', '`^/categories/add/?([0-9]+)?/?$`', array('id_parent')),
+	new UrlControllerMapper('ArticlesCategoriesFormController', '`^/categories/([0-9]+)/edit/?$`', array('id')),
+	new UrlControllerMapper('ArticlesDeleteCategoryController', '`^/categories/([0-9]+)/delete/?$`', array('id')),
 
 	//Manage articles
-	new UrlControllerMapper('AdminArticlesManageController', '`^/admin/manage/?$`'),
+	new UrlControllerMapper('ArticlesManageController', '`^/manage/?$`'),
 	new UrlControllerMapper('ArticlesFormController', '`^/add/?([0-9]+)?/?$`', array('id_category')),
 	new UrlControllerMapper('ArticlesFormController', '`^(?:/([0-9]+))/edit/?([0-9]+)?/?$`', array('id', 'page')),
 	new UrlControllerMapper('ArticlesDeleteController', '`^/([0-9]+)/delete/?$`', array('id')),

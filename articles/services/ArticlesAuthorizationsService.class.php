@@ -59,6 +59,11 @@ class ArticlesAuthorizationsService
 		return $this->is_authorized(Category::MODERATION_AUTHORIZATIONS);
 	}
 	
+	public function manage_categories()
+	{
+		return $this->is_authorized(Category::CATEGORIES_MANAGEMENT_AUTHORIZATIONS);
+	}
+	
 	private function is_authorized($bit, $mode = Authorizations::AUTH_CHILD_PRIORITY)
 	{
 		$auth = ArticlesService::get_categories_manager()->get_heritated_authorizations($this->id_category, $bit, $mode);
