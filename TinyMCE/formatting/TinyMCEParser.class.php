@@ -742,7 +742,7 @@ class TinyMCEParser extends ContentFormattingParser
 		foreach ($styles as $style)
 		{
 			if (strstr($style, 'font-size:'))
-				$style = str_replace('pt', 'px');
+				$style = str_replace('pt', 'px', $style);
 			if (strstr($style, 'font-family:'))
 			{
 				$font = explode(' ', $style);
@@ -778,7 +778,7 @@ class TinyMCEParser extends ContentFormattingParser
 		foreach ($styles as $style)
 		{
 			if(strstr($style, 'font-size:'))
-				$style = str_replace('pt', 'px');
+				$style = str_replace('pt', 'px', $style);
 			if (strstr($style, 'font-family:'))
 			{
 				$font = explode(' ', $style);
