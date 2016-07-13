@@ -33,7 +33,7 @@ class DownloadAuthorizationsService
 {
 	public $id_category;
 	
-	const DISPLAY_DOWNLOAD_LINK_AUTHORIZATIONS = 16;
+	const DISPLAY_DOWNLOAD_LINK_AUTHORIZATIONS = 32;
 	
 	public static function check_authorizations($id_category = Category::ROOT_CATEGORY)
 	{
@@ -65,6 +65,11 @@ class DownloadAuthorizationsService
 	public function display_download_link()
 	{
 		return $this->is_authorized(self::DISPLAY_DOWNLOAD_LINK_AUTHORIZATIONS);
+	}
+	
+	public function manage_categories()
+	{
+		return $this->is_authorized(Category::CATEGORIES_MANAGEMENT_AUTHORIZATIONS);
 	}
 	
 	private function is_authorized($bit, $mode = Authorizations::AUTH_CHILD_PRIORITY)

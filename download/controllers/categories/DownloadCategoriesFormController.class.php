@@ -31,9 +31,9 @@
 
 class DownloadCategoriesFormController extends AbstractRichCategoriesFormController
 {
-	protected function generate_response(View $view)
+	protected function get_id_category()
 	{
-		return new AdminDownloadDisplayResponse($view, $this->get_title());
+		return AppContext::get_request()->get_getint('id', 0);
 	}
 	
 	protected function get_categories_manager()
@@ -41,14 +41,38 @@ class DownloadCategoriesFormController extends AbstractRichCategoriesFormControl
 		return DownloadService::get_categories_manager();
 	}
 	
-	protected function get_id_category()
-	{
-		return AppContext::get_request()->get_getint('id', 0);
-	}
-	
 	protected function get_categories_management_url()
 	{
 		return DownloadUrlBuilder::manage_categories();
+	}
+	
+	protected function get_add_category_url()
+	{
+		return DownloadUrlBuilder::add_category(AppContext::get_request()->get_getint('id_parent', 0));
+	}
+	
+	protected function get_edit_category_url(Category $category)
+	{
+		return DownloadUrlBuilder::edit_category($category->get_id());
+	}
+	
+	protected function get_module_home_page_url()
+	{
+		return DownloadUrlBuilder::home();
+	}
+	
+	protected function get_module_home_page_title()
+	{
+		return LangLoader::get_message('module_title', 'common', 'download');
+	}
+	
+	protected function check_authorizations()
+	{
+		if (!DownloadAuthorizationsService::check_authorizations()->manage_categories())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 }
 ?>

@@ -36,19 +36,19 @@ class DownloadTreeLinks implements ModuleTreeLinksExtensionPoint
 		$lang = LangLoader::get('common', 'download');
 		$tree = new ModuleTreeLinks();
 		
-		$manage_categories_link = new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), DownloadUrlBuilder::manage_categories());
-		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), DownloadUrlBuilder::manage_categories()));
-		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('category.add', 'categories-common'), DownloadUrlBuilder::add_category(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY))));
+		$manage_categories_link = new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), DownloadUrlBuilder::manage_categories(), DownloadAuthorizationsService::check_authorizations()->manage_categories());
+		$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), DownloadUrlBuilder::manage_categories(), DownloadAuthorizationsService::check_authorizations()->manage_categories()));
+		$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('category.add', 'categories-common'), DownloadUrlBuilder::add_category(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY)), DownloadAuthorizationsService::check_authorizations()->manage_categories()));
 		$tree->add_link($manage_categories_link);
 		
-		$manage_link = new AdminModuleLink($lang['download.manage'], DownloadUrlBuilder::manage());
-		$manage_link->add_sub_link(new AdminModuleLink($lang['download.manage'], DownloadUrlBuilder::manage()));
-		$manage_link->add_sub_link(new AdminModuleLink($lang['download.actions.add'], DownloadUrlBuilder::add(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY))));
+		$manage_link = new ModuleLink($lang['download.manage'], DownloadUrlBuilder::manage(), DownloadAuthorizationsService::check_authorizations()->moderation());
+		$manage_link->add_sub_link(new ModuleLink($lang['download.manage'], DownloadUrlBuilder::manage(), DownloadAuthorizationsService::check_authorizations()->moderation()));
+		$manage_link->add_sub_link(new ModuleLink($lang['download.actions.add'], DownloadUrlBuilder::add(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY)), DownloadAuthorizationsService::check_authorizations()->moderation()));
 		$tree->add_link($manage_link);
 		
 		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin-common'), DownloadUrlBuilder::configuration()));
 		
-		if (!AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+		if (!DownloadAuthorizationsService::check_authorizations()->moderation())
 		{
 			$tree->add_link(new ModuleLink($lang['download.actions.add'], DownloadUrlBuilder::add(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY)), DownloadAuthorizationsService::check_authorizations()->write() || DownloadAuthorizationsService::check_authorizations()->contribution()));
 		}

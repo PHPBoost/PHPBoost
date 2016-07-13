@@ -6,6 +6,7 @@
 
 [b]Catégories[/b]
 [*] Affichage du choix des catégories dans les formulaires uniquement s'il y a au moins une catégorie
+[*] Déplacement de la gestion des catégories dans la partie front ([url=/bugtracker/detail/1185-mini-panneau-d-administration]#1185[/url])
 
 [b]Contributions[/b]
 [*] [color=red]Nouveauté :[/color] Envoi d'un MP lors d'un commentaire sur une contribution

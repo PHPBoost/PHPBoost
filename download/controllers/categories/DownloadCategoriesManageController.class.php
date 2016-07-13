@@ -31,11 +31,6 @@
 
 class DownloadCategoriesManageController extends AbstractCategoriesManageController
 {
-	protected function generate_response(View $view)
-	{
-		return new AdminDownloadDisplayResponse($view, $this->get_title());
-	}
-	
 	protected function get_categories_manager()
 	{
 		return DownloadService::get_categories_manager();
@@ -54,6 +49,30 @@ class DownloadCategoriesManageController extends AbstractCategoriesManageControl
 	protected function get_delete_category_url(Category $category)
 	{
 		return DownloadUrlBuilder::delete_category($category->get_id());
+	}
+	
+	protected function get_categories_management_url()
+	{
+		return DownloadUrlBuilder::manage_categories();
+	}
+	
+	protected function get_module_home_page_url()
+	{
+		return DownloadUrlBuilder::home();
+	}
+	
+	protected function get_module_home_page_title()
+	{
+		return LangLoader::get_message('module_title', 'common', 'download');
+	}
+	
+	protected function check_authorizations()
+	{
+		if (!DownloadAuthorizationsService::check_authorizations()->manage_categories())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 }
 ?>

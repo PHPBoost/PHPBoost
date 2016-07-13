@@ -36,15 +36,15 @@ require_once PATH_TO_ROOT . '/kernel/init.php';
 $url_controller_mappers = array(
 	//Config
 	new UrlControllerMapper('AdminDownloadConfigController', '`^/admin(?:/config)?/?$`'),
-	new UrlControllerMapper('AdminDownloadManageController', '`^/admin/manage/?$`'),
 	
 	//Categories
-	new UrlControllerMapper('DownloadCategoriesManageController', '`^/admin/categories/?$`'),
-	new UrlControllerMapper('DownloadCategoriesFormController', '`^/admin/categories/add/?([0-9]+)?/?$`', array('id_parent')),
-	new UrlControllerMapper('DownloadCategoriesFormController', '`^/admin/categories/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('DownloadDeleteCategoryController', '`^/admin/categories/([0-9]+)/delete/?$`', array('id')),
+	new UrlControllerMapper('DownloadCategoriesManageController', '`^/categories/?$`'),
+	new UrlControllerMapper('DownloadCategoriesFormController', '`^/categories/add/?([0-9]+)?/?$`', array('id_parent')),
+	new UrlControllerMapper('DownloadCategoriesFormController', '`^/categories/([0-9]+)/edit/?$`', array('id')),
+	new UrlControllerMapper('DownloadDeleteCategoryController', '`^/categories/([0-9]+)/delete/?$`', array('id')),
 	
 	//Management
+	new UrlControllerMapper('DownloadManageController', '`^/manage/?$`'),
 	new UrlControllerMapper('DownloadFormController', '`^/add/?([0-9]+)?/?$`', array('id_category')),
 	new UrlControllerMapper('DownloadFormController', '`^/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('DownloadDeleteController', '`^/([0-9]+)/delete/?$`', array('id')),
