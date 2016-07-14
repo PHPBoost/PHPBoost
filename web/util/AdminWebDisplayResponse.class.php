@@ -38,10 +38,6 @@ class AdminWebDisplayResponse extends AdminMenuDisplayResponse
 		$lang = LangLoader::get('common', 'web');
 		$this->set_title($lang['module_title']);
 		
-		$this->add_link(LangLoader::get_message('categories.management', 'categories-common'), WebUrlBuilder::manage_categories());
-		$this->add_link(LangLoader::get_message('category.add', 'categories-common'), WebUrlBuilder::add_category());
-		$this->add_link($lang['web.management'], WebUrlBuilder::manage());
-		$this->add_link($lang['web.actions.add'], WebUrlBuilder::add());
 		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), WebUrlBuilder::configuration());
 		
 		$env = $this->get_graphical_environment();

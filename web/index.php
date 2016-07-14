@@ -36,15 +36,15 @@ require_once PATH_TO_ROOT . '/kernel/init.php';
 $url_controller_mappers = array(
 	//Config
 	new UrlControllerMapper('AdminWebConfigController', '`^/admin(?:/config)?/?$`'),
-	new UrlControllerMapper('AdminWebManageController', '`^/admin/manage/?$`'),
 	
 	//Categories
-	new UrlControllerMapper('WebCategoriesManageController', '`^/admin/categories/?$`'),
-	new UrlControllerMapper('WebCategoriesFormController', '`^/admin/categories/add/?([0-9]+)?/?$`', array('id_parent')),
-	new UrlControllerMapper('WebCategoriesFormController', '`^/admin/categories/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('WebDeleteCategoryController', '`^/admin/categories/([0-9]+)/delete/?$`', array('id')),
+	new UrlControllerMapper('WebCategoriesManageController', '`^/categories/?$`'),
+	new UrlControllerMapper('WebCategoriesFormController', '`^/categories/add/?([0-9]+)?/?$`', array('id_parent')),
+	new UrlControllerMapper('WebCategoriesFormController', '`^/categories/([0-9]+)/edit/?$`', array('id')),
+	new UrlControllerMapper('WebDeleteCategoryController', '`^/categories/([0-9]+)/delete/?$`', array('id')),
 	
 	//Management
+	new UrlControllerMapper('WebManageController', '`^/manage/?$`'),
 	new UrlControllerMapper('WebFormController', '`^/add/?([0-9]+)?/?$`', array('id_category')),
 	new UrlControllerMapper('WebFormController', '`^/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('WebDeleteController', '`^/([0-9]+)/delete/?$`', array('id')),

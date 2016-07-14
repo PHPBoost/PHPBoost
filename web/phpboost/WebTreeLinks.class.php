@@ -36,19 +36,19 @@ class WebTreeLinks implements ModuleTreeLinksExtensionPoint
 		$lang = LangLoader::get('common', 'web');
 		$tree = new ModuleTreeLinks();
 		
-		$manage_categories_link = new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), WebUrlBuilder::manage_categories());
-		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), WebUrlBuilder::manage_categories()));
-		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('category.add', 'categories-common'), WebUrlBuilder::add_category(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY))));
+		$manage_categories_link = new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), WebUrlBuilder::manage_categories(), WebAuthorizationsService::check_authorizations()->manage_categories());
+		$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), WebUrlBuilder::manage_categories(), WebUrlBuilder::manage_categories(), WebAuthorizationsService::check_authorizations()->manage_categories()));
+		$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('category.add', 'categories-common'), WebUrlBuilder::add_category(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY)), WebUrlBuilder::manage_categories(), WebAuthorizationsService::check_authorizations()->manage_categories()));
 		$tree->add_link($manage_categories_link);
 		
-		$manage_link = new AdminModuleLink($lang['web.manage'], WebUrlBuilder::manage());
-		$manage_link->add_sub_link(new AdminModuleLink($lang['web.manage'], WebUrlBuilder::manage()));
-		$manage_link->add_sub_link(new AdminModuleLink($lang['web.actions.add'], WebUrlBuilder::add(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY))));
+		$manage_link = new ModuleLink($lang['web.manage'], WebUrlBuilder::manage(), WebAuthorizationsService::check_authorizations()->moderation());
+		$manage_link->add_sub_link(new ModuleLink($lang['web.manage'], WebUrlBuilder::manage(), WebAuthorizationsService::check_authorizations()->moderation()));
+		$manage_link->add_sub_link(new ModuleLink($lang['web.actions.add'], WebUrlBuilder::add(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY)), WebAuthorizationsService::check_authorizations()->moderation()));
 		$tree->add_link($manage_link);
 		
 		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin-common'), WebUrlBuilder::configuration()));
 		
-		if (!AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+		if (!WebAuthorizationsService::check_authorizations()->moderation())
 		{
 			$tree->add_link(new ModuleLink($lang['web.actions.add'], WebUrlBuilder::add(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY)), WebAuthorizationsService::check_authorizations()->write() || WebAuthorizationsService::check_authorizations()->contribution()));
 		}
