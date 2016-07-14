@@ -30,11 +30,6 @@
  */
 class NewsletterStreamsManageController extends AbstractCategoriesManageController
 {
-	protected function generate_response(View $view)
-	{
-		return new AdminNewsletterDisplayResponse($view, $this->get_title());
-	}
-	
 	protected function get_categories_manager()
 	{
 		return NewsletterService::get_streams_manager();
@@ -55,6 +50,21 @@ class NewsletterStreamsManageController extends AbstractCategoriesManageControll
 		return NewsletterUrlBuilder::delete_stream($category->get_id());
 	}
 	
+	protected function get_categories_management_url()
+	{
+		return NewsletterUrlBuilder::manage_streams();
+	}
+	
+	protected function get_module_home_page_url()
+	{
+		return NewsletterUrlBuilder::home();
+	}
+	
+	protected function get_module_home_page_title()
+	{
+		return LangLoader::get_message('newsletter', 'common', 'newsletter');
+	}
+	
 	protected function get_title()
 	{
 		return LangLoader::get_message('newsletter.streams', 'common', 'newsletter');
@@ -63,6 +73,15 @@ class NewsletterStreamsManageController extends AbstractCategoriesManageControll
 	protected function get_delete_confirmation_message()
 	{
 		return LangLoader::get_message('stream.message.delete_confirmation', 'common', 'newsletter');
+	}
+	
+	protected function check_authorizations()
+	{
+		if (!NewsletterAuthorizationsService::check_authorizations()->manage_streams())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 }
 ?>

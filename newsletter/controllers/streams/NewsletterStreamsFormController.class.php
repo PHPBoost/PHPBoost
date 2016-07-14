@@ -30,9 +30,9 @@
  */
 class NewsletterStreamsFormController extends AbstractRichCategoriesFormController
 {
-	protected function generate_response(View $view)
+	protected function get_id_category()
 	{
-		return new AdminNewsletterDisplayResponse($view, $this->get_title());
+		return AppContext::get_request()->get_getint('id', 0);
 	}
 	
 	protected function get_categories_manager()
@@ -40,14 +40,29 @@ class NewsletterStreamsFormController extends AbstractRichCategoriesFormControll
 		return NewsletterService::get_streams_manager();
 	}
 	
-	protected function get_id_category()
-	{
-		return AppContext::get_request()->get_getint('id', 0);
-	}
-	
 	protected function get_categories_management_url()
 	{
 		return NewsletterUrlBuilder::manage_streams();
+	}
+	
+	protected function get_add_category_url()
+	{
+		return NewsletterUrlBuilder::add_stream();
+	}
+	
+	protected function get_edit_category_url(Category $category)
+	{
+		return NewsletterUrlBuilder::edit_stream($category->get_id());
+	}
+	
+	protected function get_module_home_page_url()
+	{
+		return NewsletterUrlBuilder::home();
+	}
+	
+	protected function get_module_home_page_title()
+	{
+		return LangLoader::get_message('newsletter', 'common', 'newsletter');
 	}
 	
 	protected function get_title()
@@ -75,6 +90,15 @@ class NewsletterStreamsFormController extends AbstractRichCategoriesFormControll
 			new ActionAuthorization($lang['auth.create-newsletter'], NewsletterAuthorizationsService::AUTH_CREATE_NEWSLETTERS),
 			new ActionAuthorization($lang['auth.archives-read'], NewsletterAuthorizationsService::AUTH_READ_ARCHIVES)
 		));
+	}
+	
+	protected function check_authorizations()
+	{
+		if (!NewsletterAuthorizationsService::check_authorizations()->manage_streams())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 }
 ?>

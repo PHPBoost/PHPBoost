@@ -34,8 +34,6 @@ class AdminNewsletterDisplayResponse extends AdminMenuDisplayResponse
 		$lang = LangLoader::get('common', 'newsletter');
 		$this->set_title($lang['newsletter']);
 		
-		$this->add_link($lang['newsletter.streams'], NewsletterUrlBuilder::manage_streams());
-		$this->add_link($lang['stream.add'], NewsletterUrlBuilder::add_stream());
 		$this->add_link(LangLoader::get_message('configuration', 'admin'), NewsletterUrlBuilder::configuration());
 
 		$env = $this->get_graphical_environment();

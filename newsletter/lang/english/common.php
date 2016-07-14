@@ -66,6 +66,7 @@ $lang['auth.subscribers-read'] = 'Subscribers read authorizations';
 $lang['auth.subscribers-moderation'] = 'Subscribers moderation authorizations';
 $lang['auth.subscribe'] = 'Authorizations to register for newsletters';
 $lang['auth.create-newsletter'] = 'Add newsletter authorizations';
+$lang['auth.manage-streams'] = 'Streams management authorizations';
 
 //Subscribe
 $lang['subscribe.mail'] = 'Mail';

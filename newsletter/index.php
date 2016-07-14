@@ -34,10 +34,10 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('AdminNewsletterConfigController', '`^/admin(?:/config)?/?$`'),
 	
 	//Streams
-	new UrlControllerMapper('NewsletterStreamsManageController', '`^/admin/streams/?$`'),
-	new UrlControllerMapper('NewsletterStreamsFormController', '`^/admin/stream/add/?$`'),
-	new UrlControllerMapper('NewsletterStreamsFormController', '`^/admin/stream/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('NewsletterDeleteStreamController', '`^/admin/stream/([0-9]+)/delete/?$`', array('id')),
+	new UrlControllerMapper('NewsletterStreamsManageController', '`^/streams/?$`'),
+	new UrlControllerMapper('NewsletterStreamsFormController', '`^/stream/add/?$`'),
+	new UrlControllerMapper('NewsletterStreamsFormController', '`^/stream/([0-9]+)/edit/?$`', array('id')),
+	new UrlControllerMapper('NewsletterDeleteStreamController', '`^/stream/([0-9]+)/delete/?$`', array('id')),
 	
 	//Newsletter
 	new UrlControllerMapper('HomeAddNewsletterController', '`^/add/?$`'),

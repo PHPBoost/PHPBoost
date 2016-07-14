@@ -86,7 +86,8 @@ class AdminNewsletterConfigController extends AdminModuleController
 			new ActionAuthorization($this->lang['auth.subscribers-moderation'], NewsletterAuthorizationsService::AUTH_MODERATION_SUBSCRIBERS),
 			new ActionAuthorization($this->lang['auth.create-newsletter'], NewsletterAuthorizationsService::AUTH_CREATE_NEWSLETTERS),
 			new ActionAuthorization($this->lang['auth.archives-read'], NewsletterAuthorizationsService::AUTH_READ_ARCHIVES),
-			new ActionAuthorization($this->lang['auth.archives-moderation'], NewsletterAuthorizationsService::AUTH_MODERATION_ARCHIVES)
+			new ActionAuthorization($this->lang['auth.archives-moderation'], NewsletterAuthorizationsService::AUTH_MODERATION_ARCHIVES),
+			new ActionAuthorization($this->lang['auth.manage-streams'], NewsletterAuthorizationsService::AUTH_MANAGE_STREAMS)
 		));
 		
 		$auth_settings->build_from_auth_array($newsletter_config->get_authorizations());

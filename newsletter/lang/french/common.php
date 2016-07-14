@@ -66,6 +66,7 @@ $lang['auth.subscribers-read'] = 'Autorisations de lecture de la liste des inscr
 $lang['auth.subscribers-moderation'] = 'Autorisations de modéreration des inscrits';
 $lang['auth.subscribe'] = 'Autorisations de s\'enregistrer aux newsletters';
 $lang['auth.create-newsletter'] = 'Autorisations de créer une newsletter';
+$lang['auth.manage-streams'] = 'Autorisations de gérer les flux';
 
 //Subscribe
 $lang['subscribe.mail'] = 'Mail';

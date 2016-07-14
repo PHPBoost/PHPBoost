@@ -41,6 +41,7 @@ class NewsletterAuthorizationsService
 	const AUTH_CREATE_NEWSLETTERS = 16;
 	const AUTH_READ_ARCHIVES = 32;
 	const AUTH_MODERATION_ARCHIVES = 64;
+	const AUTH_MANAGE_STREAMS = 128;
 	
 	public function __construct($id_stream = null)
 	{
@@ -167,6 +168,18 @@ class NewsletterAuthorizationsService
 		else
 		{
 			return $this->get_error(self::AUTH_MODERATION_ARCHIVES);
+		}
+	}
+	
+	public function manage_streams()
+	{
+		if ($this->is_error == false)
+		{
+			return $this->get_authorizations(self::AUTH_MANAGE_STREAMS);
+		}
+		else
+		{
+			return $this->get_error(self::AUTH_MANAGE_STREAMS);
 		}
 	}
 	

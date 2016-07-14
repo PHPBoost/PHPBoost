@@ -57,7 +57,7 @@ class NewsletterUrlBuilder
 	 */
 	public static function manage_streams()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/streams/');
+		return DispatchManager::get_url(self::$dispatcher, '/streams/');
 	}
 	
 	/**
@@ -65,7 +65,7 @@ class NewsletterUrlBuilder
 	 */
 	public static function add_stream()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/stream/add/');
+		return DispatchManager::get_url(self::$dispatcher, '/stream/add/');
 	}
 	
 	/**
@@ -73,7 +73,7 @@ class NewsletterUrlBuilder
 	 */
 	public static function edit_stream($id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/stream/' . $id .'/edit/');
+		return DispatchManager::get_url(self::$dispatcher, '/stream/' . $id .'/edit/');
 	}
 	
 	/**
@@ -81,7 +81,7 @@ class NewsletterUrlBuilder
 	 */
 	public static function delete_stream($id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/stream/' . $id .'/delete/');
+		return DispatchManager::get_url(self::$dispatcher, '/stream/' . $id .'/delete/');
 	}
 	
 	/**
