@@ -31,9 +31,9 @@
 
 class FaqCategoriesFormController extends AbstractRichCategoriesFormController
 {
-	protected function generate_response(View $view)
+	protected function get_id_category()
 	{
-		return new AdminFaqDisplayResponse($view, $this->get_title());
+		return AppContext::get_request()->get_getint('id', 0);
 	}
 	
 	protected function get_categories_manager()
@@ -41,14 +41,38 @@ class FaqCategoriesFormController extends AbstractRichCategoriesFormController
 		return FaqService::get_categories_manager();
 	}
 	
-	protected function get_id_category()
-	{
-		return AppContext::get_request()->get_getint('id', 0);
-	}
-	
 	protected function get_categories_management_url()
 	{
 		return FaqUrlBuilder::manage_categories();
+	}
+	
+	protected function get_add_category_url()
+	{
+		return FaqUrlBuilder::add_category(AppContext::get_request()->get_getint('id_parent', 0));
+	}
+	
+	protected function get_edit_category_url(Category $category)
+	{
+		return FaqUrlBuilder::edit_category($category->get_id());
+	}
+	
+	protected function get_module_home_page_url()
+	{
+		return FaqUrlBuilder::home();
+	}
+	
+	protected function get_module_home_page_title()
+	{
+		return LangLoader::get_message('module_title', 'common', 'faq');
+	}
+	
+	protected function check_authorizations()
+	{
+		if (!FaqAuthorizationsService::check_authorizations()->manage_categories())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 }
 ?>

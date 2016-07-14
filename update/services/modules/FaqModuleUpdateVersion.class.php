@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       DownloadModuleUpdateVersion.class.php
+ *                       FaqModuleUpdateVersion.class.php
  *                            -------------------
  *   begin                : May 22, 2014
  *   copyright            : (C) 2014 Julien BRISWALTER
@@ -25,11 +25,11 @@
  *
  ###################################################*/
 
-class DownloadModuleUpdateVersion extends ModuleUpdateVersion
+class FaqModuleUpdateVersion extends ModuleUpdateVersion
 {
 	public function __construct()
 	{
-		parent::__construct('download');
+		parent::__construct('faq');
 	}
 	
 	public function execute()
@@ -39,7 +39,7 @@ class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 	
 	private function delete_old_files()
 	{
-		$file = new File(Url::to_rel('/' . $this->module_id . '/controllers/AdminDownloadManageController.class.php'));
+		$file = new File(Url::to_rel('/' . $this->module_id . '/controllers/AdminFaqManageController.class.php'));
 		$file->delete();
 	}
 }

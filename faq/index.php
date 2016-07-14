@@ -36,15 +36,15 @@ require_once PATH_TO_ROOT . '/kernel/init.php';
 $url_controller_mappers = array(
 	//Config
 	new UrlControllerMapper('AdminFaqConfigController', '`^/admin(?:/config)?/?$`'),
-	new UrlControllerMapper('AdminFaqManageController', '`^/admin/manage/?$`'),
 	
 	//Categories
-	new UrlControllerMapper('FaqCategoriesManageController', '`^/admin/categories/?$`'),
-	new UrlControllerMapper('FaqCategoriesFormController', '`^/admin/categories/add/?([0-9]+)?/?$`', array('id_parent')),
-	new UrlControllerMapper('FaqCategoriesFormController', '`^/admin/categories/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('FaqDeleteCategoryController', '`^/admin/categories/([0-9]+)/delete/?$`', array('id')),
+	new UrlControllerMapper('FaqCategoriesManageController', '`^/categories/?$`'),
+	new UrlControllerMapper('FaqCategoriesFormController', '`^/categories/add/?([0-9]+)?/?$`', array('id_parent')),
+	new UrlControllerMapper('FaqCategoriesFormController', '`^/categories/([0-9]+)/edit/?$`', array('id')),
+	new UrlControllerMapper('FaqDeleteCategoryController', '`^/categories/([0-9]+)/delete/?$`', array('id')),
 	
 	//Management
+	new UrlControllerMapper('FaqManageController', '`^/manage/?$`'),
 	new UrlControllerMapper('FaqFormController', '`^/add/?([0-9]+)?/?$`', array('id_category')),
 	new UrlControllerMapper('FaqFormController', '`^/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('FaqDeleteController', '`^/([0-9]+)/delete/?$`', array('id')),

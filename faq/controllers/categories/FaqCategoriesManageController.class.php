@@ -31,11 +31,6 @@
 
 class FaqCategoriesManageController extends AbstractCategoriesManageController
 {
-	protected function generate_response(View $view)
-	{
-		return new AdminFaqDisplayResponse($view, $this->get_title());
-	}
-	
 	protected function get_categories_manager()
 	{
 		return FaqService::get_categories_manager();
@@ -54,6 +49,30 @@ class FaqCategoriesManageController extends AbstractCategoriesManageController
 	protected function get_delete_category_url(Category $category)
 	{
 		return FaqUrlBuilder::delete_category($category->get_id());
+	}
+	
+	protected function get_categories_management_url()
+	{
+		return FaqUrlBuilder::manage_categories();
+	}
+	
+	protected function get_module_home_page_url()
+	{
+		return FaqUrlBuilder::home();
+	}
+	
+	protected function get_module_home_page_title()
+	{
+		return LangLoader::get_message('module_title', 'common', 'faq');
+	}
+	
+	protected function check_authorizations()
+	{
+		if (!FaqAuthorizationsService::check_authorizations()->manage_categories())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 }
 ?>
