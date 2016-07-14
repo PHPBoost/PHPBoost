@@ -35,9 +35,9 @@ class NewsletterTreeLinks implements ModuleTreeLinksExtensionPoint
 		$lang = LangLoader::get('common', 'newsletter');
 		$tree = new ModuleTreeLinks();
 		
-		$manage_newsletter_link = new AdminModuleLink($lang['newsletter.streams.manage'], NewsletterUrlBuilder::manage_streams());
-		$manage_newsletter_link->add_sub_link(new AdminModuleLink($lang['newsletter.streams.manage'], NewsletterUrlBuilder::manage_streams()));
-		$manage_newsletter_link->add_sub_link(new AdminModuleLink($lang['stream.add'], NewsletterUrlBuilder::add_stream()));
+		$manage_newsletter_link = new ModuleLink($lang['newsletter.streams.manage'], NewsletterUrlBuilder::manage_streams(), NewsletterAuthorizationsService::default_authorizations()->manage_streams());
+		$manage_newsletter_link->add_sub_link(new ModuleLink($lang['newsletter.streams.manage'], NewsletterUrlBuilder::manage_streams(), NewsletterAuthorizationsService::default_authorizations()->manage_streams()));
+		$manage_newsletter_link->add_sub_link(new ModuleLink($lang['stream.add'], NewsletterUrlBuilder::add_stream(), NewsletterAuthorizationsService::default_authorizations()->manage_streams()));
 		$tree->add_link($manage_newsletter_link);
 		
 		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), NewsletterUrlBuilder::configuration()));

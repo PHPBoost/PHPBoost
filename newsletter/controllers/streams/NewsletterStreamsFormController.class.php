@@ -94,7 +94,7 @@ class NewsletterStreamsFormController extends AbstractRichCategoriesFormControll
 	
 	protected function check_authorizations()
 	{
-		if (!NewsletterAuthorizationsService::check_authorizations()->manage_streams())
+		if (!NewsletterAuthorizationsService::default_authorizations()->manage_streams())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
