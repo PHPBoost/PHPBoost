@@ -193,8 +193,6 @@ else
 		'L_REQUIRE_QUALITY' => $LANG['require_quality'],
 		'L_GALLERY_MANAGEMENT' => LangLoader::get_message('gallery.management', 'common', 'gallery'),
 		'L_GALLERY_PICS_ADD' => LangLoader::get_message('gallery.actions.add', 'common', 'gallery'),
-		'L_GALLERY_CAT_MANAGEMENT' => LangLoader::get_message('categories.management', 'categories-common'),
-		'L_GALLERY_CAT_ADD' => LangLoader::get_message('category.add', 'categories-common'),
 		'L_GALLERY_CONFIG' => $LANG['gallery_config'],
 		'L_CONFIG_CONFIG' => LangLoader::get_message('general-config', 'admin-config-common'),
 		'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),

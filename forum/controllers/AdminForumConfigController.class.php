@@ -166,6 +166,7 @@ class AdminForumConfigController extends AdminModuleController
 			new ActionAuthorization($this->lang['authorizations.flood'], ForumAuthorizationsService::FLOOD_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['authorizations.hide_edition_mark'], ForumAuthorizationsService::HIDE_EDITION_MARK_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['authorizations.unlimited_topics_tracking'], ForumAuthorizationsService::UNLIMITED_TOPICS_TRACKING_AUTHORIZATIONS),
+			new ActionAuthorization($common_lang['authorizations.categories_management'], ForumAuthorizationsService::CATEGORIES_MANAGEMENT_AUTHORIZATIONS)
 		));
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());

@@ -128,8 +128,6 @@ else
 		'END_THUMB' => 0,
 		'L_GALLERY_MANAGEMENT' => LangLoader::get_message('gallery.management', 'common', 'gallery'),
 		'L_GALLERY_PICS_ADD' => LangLoader::get_message('gallery.actions.add', 'common', 'gallery'),
-		'L_GALLERY_CAT_MANAGEMENT' => LangLoader::get_message('categories.management', 'categories-common'),
-		'L_GALLERY_CAT_ADD' => LangLoader::get_message('category.add', 'categories-common'),
 		'L_GALLERY_CONFIG' => $LANG['gallery_config'],
 		'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 		'L_FILE_FORBIDDEN_CHARS' => $LANG['file_forbidden_chars'],

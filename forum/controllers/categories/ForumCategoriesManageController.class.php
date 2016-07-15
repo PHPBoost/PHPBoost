@@ -27,11 +27,6 @@
 
 class ForumCategoriesManageController extends AbstractCategoriesManageController
 {
-	protected function generate_response(View $view)
-	{
-		return new AdminForumDisplayResponse($view, $this->get_title());
-	}
-
 	protected function get_categories_manager()
 	{
 		return ForumService::get_categories_manager();
@@ -65,6 +60,30 @@ class ForumCategoriesManageController extends AbstractCategoriesManageController
 	protected function get_delete_category_url(Category $category)
 	{
 		return ForumUrlBuilder::delete_category($category->get_id());
+	}
+	
+	protected function get_categories_management_url()
+	{
+		return ForumUrlBuilder::manage_categories();
+	}
+	
+	protected function get_module_home_page_url()
+	{
+		return ForumUrlBuilder::home();
+	}
+	
+	protected function get_module_home_page_title()
+	{
+		return LangLoader::get_message('module_title', 'common', 'forum');
+	}
+	
+	protected function check_authorizations()
+	{
+		if (!ForumAuthorizationsService::check_authorizations()->manage_categories())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 }
 ?>

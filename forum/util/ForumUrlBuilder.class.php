@@ -46,7 +46,7 @@ class ForumUrlBuilder
 	 */
 	public static function add_category()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/add/');
+		return DispatchManager::get_url(self::$dispatcher, '/categories/add/');
 	}
 	
 	/**
@@ -54,7 +54,7 @@ class ForumUrlBuilder
 	 */
 	public static function edit_category($id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/' . $id . '/edit/');
+		return DispatchManager::get_url(self::$dispatcher, '/categories/' . $id . '/edit/');
 	}
 	
 	/**
@@ -62,7 +62,7 @@ class ForumUrlBuilder
 	 */
 	public static function delete_category($id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/' . $id . '/delete/');
+		return DispatchManager::get_url(self::$dispatcher, '/categories/' . $id . '/delete/');
 	}
 	
 	/**
@@ -70,7 +70,7 @@ class ForumUrlBuilder
 	 */
 	public static function manage_categories()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/');
+		return DispatchManager::get_url(self::$dispatcher, '/categories/');
 	}
 	
 	/**

@@ -38,8 +38,6 @@ class AdminForumDisplayResponse extends AdminMenuDisplayResponse
 		$lang = LangLoader::get('common', 'forum');
 		$this->set_title($lang['module_title']);
 		
-		$this->add_link(LangLoader::get_message('categories.management', 'categories-common'), ForumUrlBuilder::manage_categories());
-		$this->add_link(LangLoader::get_message('category.add', 'categories-common'), ForumUrlBuilder::add_category());
 		$this->add_link($lang['forum.ranks_management'], ForumUrlBuilder::manage_ranks());
 		$this->add_link($lang['forum.actions.add_rank'], ForumUrlBuilder::add_rank());
 		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), ForumUrlBuilder::configuration());

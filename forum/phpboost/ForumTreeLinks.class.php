@@ -35,9 +35,9 @@ class ForumTreeLinks implements ModuleTreeLinksExtensionPoint
 		$lang = LangLoader::get('common', 'forum');
 		$tree = new ModuleTreeLinks();
 		
-		$manage_categories_link = new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), ForumUrlBuilder::manage_categories());
-		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), ForumUrlBuilder::manage_categories()));
-		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('category.add', 'categories-common'), ForumUrlBuilder::add_category()));
+		$manage_categories_link = new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), ForumUrlBuilder::manage_categories(), ForumAuthorizationsService::check_authorizations()->manage_categories());
+		$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), ForumUrlBuilder::manage_categories(), ForumAuthorizationsService::check_authorizations()->manage_categories()));
+		$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('category.add', 'categories-common'), ForumUrlBuilder::add_category(), ForumAuthorizationsService::check_authorizations()->manage_categories()));
 		$tree->add_link($manage_categories_link);
 		
 		$manage_ranks_link = new AdminModuleLink($lang['forum.manage_ranks'], ForumUrlBuilder::manage_ranks());
@@ -47,7 +47,7 @@ class ForumTreeLinks implements ModuleTreeLinksExtensionPoint
 		
 		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin-common'), ForumUrlBuilder::configuration()));
 		
-		$tree->add_link(new AdminModuleLink(LangLoader::get_message('moderation_panel', 'main'), ForumUrlBuilder::moderation_panel()));
+		$tree->add_link(new ModuleLink(LangLoader::get_message('moderation_panel', 'main'), ForumUrlBuilder::moderation_panel(), ForumAuthorizationsService::check_authorizations()->moderation()));
 		
 		return $tree;
 	}

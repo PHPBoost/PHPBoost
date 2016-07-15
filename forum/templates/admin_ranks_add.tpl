@@ -31,13 +31,6 @@
 				<i class="fa fa-bars"></i> {L_FORUM_MANAGEMENT}
 			</a>
 			<ul>
-				<li>
-					<a href="${relative_url(ForumUrlBuilder::manage_categories())}" class="quick-link">{L_CAT_MANAGEMENT}</a>
-				</li>
-				<li>
-					<a href="${relative_url(ForumUrlBuilder::add_category())}" class="quick-link">{L_ADD_CAT}</a>
-				</li>
-				<li>
 					<a href="admin_ranks.php" class="quick-link">{L_FORUM_RANKS_MANAGEMENT}</a>
 				</li>
 				<li>

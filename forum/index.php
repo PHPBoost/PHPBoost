@@ -34,10 +34,10 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('AdminForumConfigController', '`^/admin(?:/config)?/?$`'),
 	
 	//Categories
-	new UrlControllerMapper('ForumCategoriesManageController', '`^/admin/categories/?$`'),
-	new UrlControllerMapper('ForumCategoriesFormController', '`^/admin/categories/add/?$`'),
-	new UrlControllerMapper('ForumCategoriesFormController', '`^/admin/categories/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('ForumDeleteCategoryController', '`^/admin/categories/([0-9]+)/delete/?$`', array('id')),
+	new UrlControllerMapper('ForumCategoriesManageController', '`^/categories/?$`'),
+	new UrlControllerMapper('ForumCategoriesFormController', '`^/categories/add/?$`'),
+	new UrlControllerMapper('ForumCategoriesFormController', '`^/categories/([0-9]+)/edit/?$`', array('id')),
+	new UrlControllerMapper('ForumDeleteCategoryController', '`^/categories/([0-9]+)/delete/?$`', array('id')),
 	
 	new UrlControllerMapper('ForumHomeController', '`^/?$`'),
 );

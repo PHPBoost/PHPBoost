@@ -113,8 +113,6 @@ else //Sinon on rempli le formulaire
 		'L_REQUIRE_RANK_NAME' => $LANG['require_rank_name'],
 		'L_REQUIRE_NBR_MSG_RANK' => $LANG['require_nbr_msg_rank'],
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
-		'L_CAT_MANAGEMENT' => $LANG['cat_management'],
-		'L_ADD_CAT' => $LANG['cat_add'],
 		'L_FORUM_RANKS_MANAGEMENT' => LangLoader::get_message('forum.ranks_management', 'common', 'forum'),
 		'L_FORUM_ADD_RANKS' => LangLoader::get_message('forum.actions.add_rank', 'common', 'forum'),
 		'L_UPLOAD_RANKS' => $LANG['upload_rank'],
