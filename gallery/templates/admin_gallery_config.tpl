@@ -213,7 +213,7 @@
 									<input type="radio" # IF C_NOTATION_ENABLED #checked="checked" # ENDIF #name="notation_enabled" id="notation_enabled" value="1">
 									<label for="notation_enabled"></label>
 								</div>
-								<span class="form-field-radio-span">{L_ENABLED}</span>								
+								<span class="form-field-radio-span">{L_ENABLED}</span>
 								<div class="form-field-radio">
 									<input type="radio" # IF NOT C_NOTATION_ENABLED #checked="checked" # ENDIF #name="notation_enabled" id="notation_enabled_2" value="0" />
 									<label for="notation_enabled_2"></label>
@@ -228,7 +228,7 @@
 									<input type="radio" # IF C_NOTES_NUMBER_DISPLAYED #checked="checked" # ENDIF #name="notes_number_displayed" id="notes_number_displayed" value="1" />
 									<label for="notes_number_displayed"></label>
 								</div>
-								<span class="form-field-radio-span">{L_YES}</span>	
+								<span class="form-field-radio-span">{L_YES}</span>
 								<div class="form-field-radio">
 									<input type="radio" # IF NOT C_NOTES_NUMBER_DISPLAYED #checked="checked" # ENDIF #name="notes_number_displayed" id="notes_number_displayed_2" value="0" />
 									<label for="notes_number_displayed_2"></label>
@@ -340,6 +340,10 @@
 						<div class="form-element">
 							<label>{L_AUTH_MODERATION}</label>
 							<div class="form-field">{AUTH_MODERATION}</div>
+						</div>
+						<div class="form-element">
+							<label>${LangLoader::get_message('authorizations.categories_management', 'common')}</label>
+							<div class="form-field">{AUTH_MANAGE_CATEGORIES}</div>
 						</div>
 					</div>
 				</fieldset>

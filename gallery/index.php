@@ -38,10 +38,10 @@ $url_controller_mappers = array(
 	//new UrlControllerMapper('AdminGalleryConfigController', '`^/admin(?:/config)?/?$`'),
 	
 	//Categories
-	new UrlControllerMapper('GalleryCategoriesManageController', '`^/admin/categories/?$`'),
-	new UrlControllerMapper('GalleryCategoriesFormController', '`^/admin/categories/add/?$`'),
-	new UrlControllerMapper('GalleryCategoriesFormController', '`^/admin/categories/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('GalleryDeleteCategoryController', '`^/admin/categories/([0-9]+)/delete/?$`', array('id')),
+	new UrlControllerMapper('GalleryCategoriesManageController', '`^/categories/?$`'),
+	new UrlControllerMapper('GalleryCategoriesFormController', '`^/categories/add/?$`'),
+	new UrlControllerMapper('GalleryCategoriesFormController', '`^/categories/([0-9]+)/edit/?$`', array('id')),
+	new UrlControllerMapper('GalleryDeleteCategoryController', '`^/categories/([0-9]+)/delete/?$`', array('id')),
 	
 	new UrlControllerMapper('GalleryDisplayCategoryController', '`^/?$`'),
 );

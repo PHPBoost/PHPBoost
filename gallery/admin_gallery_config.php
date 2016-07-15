@@ -175,6 +175,7 @@ else
 		'AUTH_READ' => Authorizations::generate_select(Category::READ_AUTHORIZATIONS, $config->get_authorizations()),
 		'AUTH_WRITE' => Authorizations::generate_select(Category::WRITE_AUTHORIZATIONS, $config->get_authorizations()),
 		'AUTH_MODERATION' => Authorizations::generate_select(Category::MODERATION_AUTHORIZATIONS, $config->get_authorizations()),
+		'AUTH_MANAGE_CATEGORIES' => Authorizations::generate_select(Category::CATEGORIES_MANAGEMENT_AUTHORIZATIONS, $config->get_authorizations()),
 		'L_AUTH_READ' => $LANG['auth_read'],
 		'L_AUTH_WRITE' => $LANG['auth_upload'],
 		'L_AUTH_MODERATION' => $LANG['auth_edit'],

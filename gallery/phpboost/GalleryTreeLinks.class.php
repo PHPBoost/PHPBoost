@@ -35,9 +35,9 @@ class GalleryTreeLinks implements ModuleTreeLinksExtensionPoint
 		$lang = LangLoader::get('common', 'gallery');
 		$tree = new ModuleTreeLinks();
 		
-		$manage_categories_link = new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), GalleryUrlBuilder::manage_categories());
-		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), GalleryUrlBuilder::manage_categories()));
-		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('category.add', 'categories-common'), GalleryUrlBuilder::add_category()));
+		$manage_categories_link = new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), GalleryUrlBuilder::manage_categories(), GalleryAuthorizationsService::check_authorizations()->manage_categories());
+		$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), GalleryUrlBuilder::manage_categories(), GalleryAuthorizationsService::check_authorizations()->manage_categories()));
+		$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('category.add', 'categories-common'), GalleryUrlBuilder::add_category(), GalleryAuthorizationsService::check_authorizations()->manage_categories()));
 		$tree->add_link($manage_categories_link);
 		
 		$manage_gallery_link = new AdminModuleLink($lang['gallery.manage'], GalleryUrlBuilder::manage());

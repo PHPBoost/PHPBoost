@@ -48,7 +48,7 @@ class MediaCategoriesFormController extends AbstractRichCategoriesFormController
 	
 	protected function get_add_category_url()
 	{
-		return MediaUrlBuilder::add_category(AppContext::get_request()->get_getint('id_parent', 0));
+		return MediaUrlBuilder::add_category();
 	}
 	
 	protected function get_edit_category_url(Category $category)
