@@ -103,7 +103,7 @@ class BugtrackerSolvedListController extends ModuleController
 		FROM " . BugtrackerSetup::$bugtracker_table . " b
 		LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = b.author_id
 		WHERE (status = '" . Bug::FIXED . "' OR status = '" . Bug::REJECTED . "')" .
-		($config->is_restrict_display_to_own_elements_enabled() && !BugtrackerAuthorizationsService::check_authorizations()->moderation() ? "AND b.author_id = :user_id" : "") .
+		($config->is_restrict_display_to_own_elements_enabled() && !BugtrackerAuthorizationsService::check_authorizations()->moderation() ? "AND b.author_id = :user_id " : "") .
 		$select_filters . "
 		ORDER BY " . $field_bdd . " " . $mode . "
 		LIMIT :number_items_per_page OFFSET :display_from",
