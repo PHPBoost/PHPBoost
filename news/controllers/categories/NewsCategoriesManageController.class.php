@@ -30,11 +30,6 @@
  */
 class NewsCategoriesManageController extends AbstractCategoriesManageController
 {
-	protected function generate_response(View $view)
-	{
-		return new AdminNewsDisplayResponse($view, $this->get_title());
-	}
-	
 	protected function get_categories_manager()
 	{
 		return NewsService::get_categories_manager();
@@ -53,6 +48,30 @@ class NewsCategoriesManageController extends AbstractCategoriesManageController
 	protected function get_delete_category_url(Category $category)
 	{
 		return NewsUrlBuilder::delete_category($category->get_id());
+	}
+	
+	protected function get_categories_management_url()
+	{
+		return NewsUrlBuilder::manage_categories();
+	}
+	
+	protected function get_module_home_page_url()
+	{
+		return NewsUrlBuilder::home();
+	}
+	
+	protected function get_module_home_page_title()
+	{
+		return LangLoader::get_message('news', 'common', 'news');
+	}
+	
+	protected function check_authorizations()
+	{
+		if (!NewsAuthorizationsService::check_authorizations()->manage_categories())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 }
 ?>

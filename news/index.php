@@ -32,15 +32,15 @@ require_once PATH_TO_ROOT . '/kernel/init.php';
 $url_controller_mappers = array(
 	//Admin
 	new UrlControllerMapper('AdminNewsConfigController', '`^/admin(?:/config)?/?$`'),
-	new UrlControllerMapper('AdminNewsManageController', '`^/admin/manage/?$`'),
 	
 	//Categories
-	new UrlControllerMapper('NewsCategoriesManageController', '`^/admin/categories/?$`'),
-	new UrlControllerMapper('NewsCategoriesFormController', '`^/admin/categories/add/?([0-9]+)?/?$`', array('id_parent')),
-	new UrlControllerMapper('NewsCategoriesFormController', '`^/admin/categories/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('NewsDeleteCategoryController', '`^/admin/categories/([0-9]+)/delete/?$`', array('id')),
+	new UrlControllerMapper('NewsCategoriesManageController', '`^/categories/?$`'),
+	new UrlControllerMapper('NewsCategoriesFormController', '`^/categories/add/?([0-9]+)?/?$`', array('id_parent')),
+	new UrlControllerMapper('NewsCategoriesFormController', '`^/categories/([0-9]+)/edit/?$`', array('id')),
+	new UrlControllerMapper('NewsDeleteCategoryController', '`^/categories/([0-9]+)/delete/?$`', array('id')),
 	
 	//Manage News
+	new UrlControllerMapper('NewsManageController', '`^/manage/?$`'),
 	new UrlControllerMapper('NewsFormController', '`^/add/?([0-9]+)?/?$`', array('id_category')),
 	new UrlControllerMapper('NewsFormController', '`^/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('NewsDeleteController', '`^/([0-9]+)/delete/?$`', array('id')),

@@ -43,27 +43,27 @@ class NewsUrlBuilder
 	public static function add_category($id_parent = null)
 	{
 		$id_parent = !empty($id_parent) ? $id_parent . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/add/' . $id_parent);
+		return DispatchManager::get_url(self::$dispatcher, '/categories/add/' . $id_parent);
 	}
 	
 	public static function edit_category($id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/'. $id .'/edit/');
+		return DispatchManager::get_url(self::$dispatcher, '/categories/'. $id .'/edit/');
 	}
 	
 	public static function delete_category($id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/'. $id .'/delete/');
+		return DispatchManager::get_url(self::$dispatcher, '/categories/'. $id .'/delete/');
 	}
 	
 	public static function manage_categories()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/');
+		return DispatchManager::get_url(self::$dispatcher, '/categories/');
 	}
 	
 	public static function manage_news()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/manage/');
+		return DispatchManager::get_url(self::$dispatcher, '/manage/');
 	}
 	
 	public static function category_syndication($id)

@@ -35,19 +35,19 @@ class NewsTreeLinks implements ModuleTreeLinksExtensionPoint
 		$lang = LangLoader::get('common', 'news');
 		$tree = new ModuleTreeLinks();
 		
-		$manage_categories_link = new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), NewsUrlBuilder::manage_categories());
-		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), NewsUrlBuilder::manage_categories()));
-		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('category.add', 'categories-common'), NewsUrlBuilder::add_category(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY))));
+		$manage_categories_link = new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), NewsUrlBuilder::manage_categories(), NewsAuthorizationsService::check_authorizations()->manage_categories());
+		$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), NewsUrlBuilder::manage_categories(), NewsAuthorizationsService::check_authorizations()->manage_categories()));
+		$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('category.add', 'categories-common'), NewsUrlBuilder::add_category(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY)), NewsAuthorizationsService::check_authorizations()->manage_categories()));
 		$tree->add_link($manage_categories_link);
 	
-		$manage_news_link = new AdminModuleLink($lang['news.manage'], NewsUrlBuilder::manage_news());
-		$manage_news_link->add_sub_link(new AdminModuleLink($lang['news.manage'], NewsUrlBuilder::manage_news()));
-		$manage_news_link->add_sub_link(new AdminModuleLink($lang['news.add'], NewsUrlBuilder::add_news(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY))));
+		$manage_news_link = new ModuleLink($lang['news.manage'], NewsUrlBuilder::manage_news(), NewsAuthorizationsService::check_authorizations()->moderation());
+		$manage_news_link->add_sub_link(new ModuleLink($lang['news.manage'], NewsUrlBuilder::manage_news(), NewsAuthorizationsService::check_authorizations()->moderation()));
+		$manage_news_link->add_sub_link(new ModuleLink($lang['news.add'], NewsUrlBuilder::add_news(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY)), NewsAuthorizationsService::check_authorizations()->moderation()));
 		$tree->add_link($manage_news_link);
 		
 		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin-common'), NewsUrlBuilder::configuration()));
 	
-		if (!AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+		if (!NewsAuthorizationsService::check_authorizations()->moderation())
 		{
 			$tree->add_link(new ModuleLink($lang['news.add'], NewsUrlBuilder::add_news(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY)), NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->contribution()));
 		}

@@ -37,10 +37,6 @@ class AdminNewsDisplayResponse extends AdminMenuDisplayResponse
 		$lang = LangLoader::get('common', 'news');
 		$this->set_title($lang['news']);
 
-		$this->add_link(LangLoader::get_message('categories.management', 'categories-common'), NewsUrlBuilder::manage_categories());
-		$this->add_link(LangLoader::get_message('category.add', 'categories-common'), NewsUrlBuilder::add_category());
-		$this->add_link($lang['news.management'], NewsUrlBuilder::manage_news());
-		$this->add_link($lang['news.add'], NewsUrlBuilder::add_news());
 		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), NewsUrlBuilder::configuration());
 		
 		$env = $this->get_graphical_environment();
