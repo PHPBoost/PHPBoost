@@ -38,10 +38,10 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('AdminMediaConfigController', '`^/admin(?:/config)?/?$`'),
 	
 	//Categories
-	new UrlControllerMapper('MediaCategoriesManageController', '`^/admin/categories/?$`'),
-	new UrlControllerMapper('MediaCategoriesFormController', '`^/admin/categories/add/?$`'),
-	new UrlControllerMapper('MediaCategoriesFormController', '`^/admin/categories/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('MediaDeleteCategoryController', '`^/admin/categories/([0-9]+)/delete/?$`', array('id')),
+	new UrlControllerMapper('MediaCategoriesManageController', '`^/categories/?$`'),
+	new UrlControllerMapper('MediaCategoriesFormController', '`^/categories/add/?$`'),
+	new UrlControllerMapper('MediaCategoriesFormController', '`^/categories/([0-9]+)/edit/?$`', array('id')),
+	new UrlControllerMapper('MediaDeleteCategoryController', '`^/categories/([0-9]+)/delete/?$`', array('id')),
 	
 	new UrlControllerMapper('MediaDisplayCategoryController', '`^/?$`'),
 );

@@ -35,19 +35,19 @@ class MediaTreeLinks implements ModuleTreeLinksExtensionPoint
 		$lang = LangLoader::get('common', 'media');
 		$tree = new ModuleTreeLinks();
 		
-		$manage_categories_link = new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), MediaUrlBuilder::manage_categories());
-		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), MediaUrlBuilder::manage_categories()));
-		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('category.add', 'categories-common'), MediaUrlBuilder::add_category()));
+		$manage_categories_link = new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), MediaUrlBuilder::manage_categories(), MediaAuthorizationsService::check_authorizations()->manage_categories());
+		$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), MediaUrlBuilder::manage_categories(), MediaAuthorizationsService::check_authorizations()->manage_categories()));
+		$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('category.add', 'categories-common'), MediaUrlBuilder::add_category(), MediaAuthorizationsService::check_authorizations()->manage_categories()));
 		$tree->add_link($manage_categories_link);
 		
-		$manage_media_link = new AdminModuleLink($lang['media.manage'], MediaUrlBuilder::manage());
-		$manage_media_link->add_sub_link(new AdminModuleLink($lang['media.manage'], MediaUrlBuilder::manage()));
-		$manage_media_link->add_sub_link(new AdminModuleLink($lang['media.actions.add'], MediaUrlBuilder::add()));
+		$manage_media_link = new ModuleLink($lang['media.manage'], MediaUrlBuilder::manage(), MediaAuthorizationsService::check_authorizations()->moderation());
+		$manage_media_link->add_sub_link(new ModuleLink($lang['media.manage'], MediaUrlBuilder::manage(), MediaAuthorizationsService::check_authorizations()->moderation()));
+		$manage_media_link->add_sub_link(new ModuleLink($lang['media.actions.add'], MediaUrlBuilder::add(), MediaAuthorizationsService::check_authorizations()->moderation()));
 		$tree->add_link($manage_media_link);
 		
 		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin-common'), MediaUrlBuilder::configuration()));
 		
-		if (!AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+		if (!MediaAuthorizationsService::check_authorizations()->moderation())
 		{
 			$tree->add_link(new ModuleLink($lang['media.actions.add'], MediaUrlBuilder::add(), MediaAuthorizationsService::check_authorizations()->write() || MediaAuthorizationsService::check_authorizations()->contribution()));
 		}

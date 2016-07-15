@@ -31,11 +31,6 @@
 
 class MediaCategoriesManageController extends AbstractCategoriesManageController
 {
-	protected function generate_response(View $view)
-	{
-		return new AdminMediaDisplayResponse($view, $this->get_title());
-	}
-	
 	protected function get_categories_manager()
 	{
 		return MediaService::get_categories_manager();
@@ -54,6 +49,30 @@ class MediaCategoriesManageController extends AbstractCategoriesManageController
 	protected function get_delete_category_url(Category $category)
 	{
 		return MediaUrlBuilder::delete_category($category->get_id());
+	}
+	
+	protected function get_categories_management_url()
+	{
+		return MediaUrlBuilder::manage_categories();
+	}
+	
+	protected function get_module_home_page_url()
+	{
+		return MediaUrlBuilder::home();
+	}
+	
+	protected function get_module_home_page_title()
+	{
+		return LangLoader::get_message('module_title', 'common', 'media');
+	}
+	
+	protected function check_authorizations()
+	{
+		if (!MediaAuthorizationsService::check_authorizations()->manage_categories())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 }
 ?>

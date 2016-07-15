@@ -31,9 +31,9 @@
 
 class MediaCategoriesFormController extends AbstractRichCategoriesFormController
 {
-	protected function generate_response(View $view)
+	protected function get_id_category()
 	{
-		return new AdminMediaDisplayResponse($view, $this->get_title());
+		return AppContext::get_request()->get_getint('id', 0);
 	}
 	
 	protected function get_categories_manager()
@@ -41,14 +41,29 @@ class MediaCategoriesFormController extends AbstractRichCategoriesFormController
 		return MediaService::get_categories_manager();
 	}
 	
-	protected function get_id_category()
-	{
-		return AppContext::get_request()->get_getint('id', 0);
-	}
-	
 	protected function get_categories_management_url()
 	{
 		return MediaUrlBuilder::manage_categories();
+	}
+	
+	protected function get_add_category_url()
+	{
+		return MediaUrlBuilder::add_category(AppContext::get_request()->get_getint('id_parent', 0));
+	}
+	
+	protected function get_edit_category_url(Category $category)
+	{
+		return MediaUrlBuilder::edit_category($category->get_id());
+	}
+	
+	protected function get_module_home_page_url()
+	{
+		return MediaUrlBuilder::home();
+	}
+	
+	protected function get_module_home_page_title()
+	{
+		return LangLoader::get_message('module_title', 'common', 'media');
 	}
 	
 	protected function get_options_fields(FormFieldset $fieldset)
@@ -67,6 +82,15 @@ class MediaCategoriesFormController extends AbstractRichCategoriesFormController
 	{
 		parent::set_properties();
 		$this->get_category()->set_content_type($this->form->get_value('content_type')->get_raw_value());
+	}
+	
+	protected function check_authorizations()
+	{
+		if (!MediaAuthorizationsService::check_authorizations()->manage_categories())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 }
 ?>
