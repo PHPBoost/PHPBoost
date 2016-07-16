@@ -67,23 +67,23 @@ if (!empty($member) || !empty($insert_member) || !empty($add_member_auth) || !em
 			}
 			elseif (!empty($insert_member))
 			{
-				echo '<a href="#" onclick="document.getElementById(\'login\').value = \'' . addslashes($row['display_name']) .'\';return false">' . addslashes($row['display_name']) . '</a><br />';
+				echo '<a href="#" onclick="document.getElementById(\'login\').value = \'' . addslashes($row['display_name']) .'\';return false">' . $row['display_name'] . '</a><br />';
 			}
 			elseif (!empty($add_member_auth))
 			{
-				echo '<a href="javascript:XMLHttpRequest_add_member_auth(\'' . addslashes($divid) . '\', ' . $row['user_id'] . ', \'' . addslashes($row['display_name']) . '\', \'' . addslashes($LANG['alert_member_already_auth']) . '\');">' . addslashes($row['display_name']) . '</a><br />';
+				echo '<a href="javascript:XMLHttpRequest_add_member_auth(\'' . addslashes($divid) . '\', ' . $row['user_id'] . ', \'' . addslashes($row['display_name']) . '\', \'' . addslashes($LANG['alert_member_already_auth']) . '\');">' . $row['display_name'] . '</a><br />';
 			}
 			elseif (!empty($admin_member))
 			{
-				echo '<a href="' . UserUrlBuilder::profile($row['user_id'])->rel() . '">' . addslashes($row['display_name']) . '</a><br />';
+				echo '<a href="' . UserUrlBuilder::profile($row['user_id'])->rel() . '">' . $row['display_name'] . '</a><br />';
 			}
 			if (!empty($warning_member))
 			{
-				echo '<a href="admin_members_punishment.php?action=users&amp;id=' . $row['user_id'] . '">' . addslashes($row['display_name']) . '</a><br />';
+				echo '<a href="admin_members_punishment.php?action=users&amp;id=' . $row['user_id'] . '">' . $row['display_name'] . '</a><br />';
 			}
 			elseif (!empty($punish_member))
 			{
-				echo '<a href="admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] . '">' . addslashes($row['display_name']) . '</a><br />';
+				echo '<a href="admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] . '">' . $row['display_name'] . '</a><br />';
 			}
 			$i++;
 		}

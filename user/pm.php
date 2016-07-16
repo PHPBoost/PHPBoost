@@ -120,7 +120,7 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 		//On essaye de récupérer le user_id, si le membre n'a pas cliqué une fois la recherche AJAX terminée.
 		$user_id_dest = 0;
 		try {
-			$user_id_dest = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name = :name', array('name' => $login));
+			$user_id_dest = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name = :name', array('name' => stripslashes($login)));
 		} catch (RowNotFoundException $ex) {}
 		
 		if (!empty($user_id_dest) && $user_id_dest != $current_user->get_id())
