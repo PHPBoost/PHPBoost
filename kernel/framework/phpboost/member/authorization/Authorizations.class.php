@@ -299,12 +299,13 @@ class Authorizations
 		if ($mode == self::AUTH_PARENT_PRIORITY)
 		{
 			$parent_guest_auth = isset($parent['r-1']) ? $parent['r-1'] : 0;
+			$parent_member_auth = isset($parent['r0']) ? $parent['r0'] : 0;
 			
 			foreach ($parent as $key => $value)
 			{
-				if ($bit = ($value & $auth_bit) || $parent_guest_auth)
+				if ($bit = ($value & $auth_bit) || $parent_guest_auth || $parent_member_auth)
 				{
-					if (!empty($child[$key]) || ($parent_guest_auth && !empty($child['r-1'])))
+					if (!empty($child[$key]) || ($parent_guest_auth && !empty($child['r-1'])) || ($parent_member_auth && !empty($child['r0'])))
 					{
 						$merged[$key] = $auth_bit;
 					}
@@ -324,6 +325,10 @@ class Authorizations
 				if (!empty($value) || ($parent_guest_auth && !empty($merged['r-1'])))
 				{
 					$merged[$key] = $parent_guest_auth;
+				}
+				if (!empty($value) || ($parent_member_auth && !empty($merged['r0'])))
+				{
+					$merged[$key] = $parent_member_auth;
 				}
 			}
 		}
