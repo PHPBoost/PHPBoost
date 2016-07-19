@@ -109,11 +109,11 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	protected function unparse_simple_tags()
 	{
 		$array_str = array(
-			'<br />', '<strong>', '</strong>', '<em>', '</em>', '<strike>', '</strike>', '<s>', '</s>', '<hr class="bb_hr" />', '<sup>', '</sup>',
+			'<br />', '<strong>', '</strong>', '<em>', '</em>', '<strike>', '</strike>', '<s>', '</s>', '<sup>', '</sup>',
 			'<sub>', '</sub>', '<pre>', '</pre>'
 			);
 		$array_str_replace = array(
-			' ', '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '[s]', '[/s]', '[line]', '[sup]', '[/sup]', '[sub]', '[/sub]', '[pre]', '[/pre]'
+			' ', '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '[s]', '[/s]', '[sup]', '[/sup]', '[sub]', '[/sub]', '[pre]', '[/pre]'
 		);
 		$this->content = str_replace($array_str, $array_str_replace, $this->content);
 		
@@ -127,7 +127,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			'`<p class="float-(left|right)">(.*)</p>`isU',
 			'`<span id="([a-z0-9_-]+)" class="anchor"></span>`isU',
 			'`<span id="([a-z0-9_-]+)">(.*)</span>`isU',
-			'`<acronym title="([^"]+)" class="bb_acronym">(.*)</acronym>`isU',
+			'`<acronym title="([^"]+)" class="formatter-acronym">(.*)</acronym>`isU',
 			'`<abbr title="([^"]+)">(.*)</abbr>`isU',
 			'`<a href="mailto:(.*)">(.*)</a>`isU',
 			'`<a(?: title="([^"]+)?")? href="([^"]+)"(?: target="([^"]+)")?>(.*)</a>`isU',
@@ -138,6 +138,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			'`<h5 class="formatter-title">(.*)</h5>`isU',
 			'`<h6 class="formatter-title">(.*)</h6>`isU',
 			'`<span class="(success|question|notice|warning|error)">(.*)</span>`isU',
+			'`<hr(?: class="([^"]+)?")? />`isU',
 			'`<audio controls><source src="(.*)" /></audio>`isU',
 			'`<script><!--\s{1,5}insertSoundPlayer\("([^"]+)"\);\s{1,5}--></script>`sU',
 			'`\[\[MEDIA\]\]insertSoundPlayer\(\'([^\']+)\'\);\[\[/MEDIA\]\]`sU',
@@ -174,6 +175,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			"[title=4]$1[/title]",
 			"[title=5]$1[/title]",
 			"[style=$1]$2[/style]",
+			"[line]",
 			"[sound]$1[/sound]",
 			"[sound]$1[/sound]",
 			"[sound]$1[/sound]",
@@ -206,7 +208,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		
 		##Callbacks
 		//Image
-		$this->content = preg_replace_callback('`<img src="([^"]+)" alt="([^"]*)?"(?: title="([^"]*)")?(?: style="([^"]+)")?(?: class="[^"]+")? />`iU', array($this, 'unparse_img'), $this->content);
+		$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)?")?(?: title="([^"]+)?")?(?: style="([^"]+)?")?(?: class="([^"]+)?")? />`iU', array($this, 'unparse_img'), $this->content);
 
 		//Fieldset
 		while (preg_match('`<fieldset class="formatter-fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', $this->content))
