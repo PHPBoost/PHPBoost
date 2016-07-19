@@ -40,19 +40,19 @@ class CalendarTreeLinks implements ModuleTreeLinksExtensionPoint
 		$lang = LangLoader::get('common', 'calendar');
 		$tree = new ModuleTreeLinks();
 		
-		$manage_categories_link = new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), CalendarUrlBuilder::manage_categories());
-		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), CalendarUrlBuilder::manage_categories()));
-		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('category.add', 'categories-common'), CalendarUrlBuilder::add_category()));
+		$manage_categories_link = new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), CalendarUrlBuilder::manage_categories(), CalendarAuthorizationsService::check_authorizations()->manage_categories());
+		$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), CalendarUrlBuilder::manage_categories(), CalendarAuthorizationsService::check_authorizations()->manage_categories()));
+		$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('category.add', 'categories-common'), CalendarUrlBuilder::add_category(), CalendarAuthorizationsService::check_authorizations()->manage_categories()));
 		$tree->add_link($manage_categories_link);
 		
-		$manage_events_link = new AdminModuleLink($lang['calendar.manage'], CalendarUrlBuilder::manage_events());
-		$manage_events_link->add_sub_link(new AdminModuleLink($lang['calendar.manage'], CalendarUrlBuilder::manage_events()));
-		$manage_events_link->add_sub_link(new AdminModuleLink($lang['calendar.titles.add_event'], CalendarUrlBuilder::add_event($year, $month, $day)));
+		$manage_events_link = new ModuleLink($lang['calendar.manage'], CalendarUrlBuilder::manage_events(), CalendarAuthorizationsService::check_authorizations()->moderation());
+		$manage_events_link->add_sub_link(new ModuleLink($lang['calendar.manage'], CalendarUrlBuilder::manage_events(), CalendarAuthorizationsService::check_authorizations()->moderation()));
+		$manage_events_link->add_sub_link(new ModuleLink($lang['calendar.titles.add_event'], CalendarUrlBuilder::add_event($year, $month, $day), CalendarAuthorizationsService::check_authorizations()->moderation()));
 		$tree->add_link($manage_events_link);
 		
 		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin-common'), CalendarUrlBuilder::configuration()));
 		
-		if (!AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+		if (!CalendarAuthorizationsService::check_authorizations()->moderation())
 		{
 			$tree->add_link(new ModuleLink($lang['calendar.titles.add_event'], CalendarUrlBuilder::add_event($year, $month, $day), CalendarAuthorizationsService::check_authorizations()->write() || CalendarAuthorizationsService::check_authorizations()->contribution()));
 		}

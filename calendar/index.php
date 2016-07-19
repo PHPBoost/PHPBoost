@@ -30,20 +30,20 @@ define('PATH_TO_ROOT', '..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
-	//Categories
-	new UrlControllerMapper('CalendarCategoriesManageController', '`^/admin/categories/?$`'),
-	new UrlControllerMapper('CalendarCategoriesFormController', '`^/admin/categories/add/?$`'),
-	new UrlControllerMapper('CalendarCategoriesFormController', '`^/admin/categories/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('CalendarDeleteCategoryController', '`^/admin/categories/([0-9]+)/delete/?$`', array('id')),
-	
 	//Admin
-	new UrlControllerMapper('AdminCalendarManageEventsController', '`^/admin/manage/?$`'),
 	new UrlControllerMapper('AdminCalendarConfigController', '`^/admin(?:/config)?/?$`'),
+	
+	//Categories
+	new UrlControllerMapper('CalendarCategoriesManageController', '`^/categories/?$`'),
+	new UrlControllerMapper('CalendarCategoriesFormController', '`^/categories/add/?$`'),
+	new UrlControllerMapper('CalendarCategoriesFormController', '`^/categories/([0-9]+)/edit/?$`', array('id')),
+	new UrlControllerMapper('CalendarDeleteCategoryController', '`^/categories/([0-9]+)/delete/?$`', array('id')),
 	
 	//Display events
 	new UrlControllerMapper('CalendarDisplayEventController', '`^/([0-9]+)-([a-z0-9-_]+)/([0-9]+)-([a-z0-9-_]+)/?$`', array('id_category', 'rewrited_name_category', 'id', 'rewrited_name')),
 	
 	//Manage events
+	new UrlControllerMapper('CalendarManageEventsController', '`^/manage/?$`'),
 	new UrlControllerMapper('CalendarFormController', '`^/add/?([0-9]+)?/?([0-9]+)?/?([0-9]+)?/?([0-9]+)?/?([0-9]+)?/?$`', array('year', 'month', 'day', 'id_category')),
 	new UrlControllerMapper('CalendarFormController', '`^/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('CalendarDeleteController', '`^/([0-9]+)/delete/?$`', array('id')),

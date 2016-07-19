@@ -49,7 +49,7 @@ class CalendarUrlBuilder
 	 */
 	public static function manage_events()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/manage/');
+		return DispatchManager::get_url(self::$dispatcher, '/manage/');
 	}
 	
 	/**
@@ -57,7 +57,7 @@ class CalendarUrlBuilder
 	 */
 	public static function add_category()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/add/');
+		return DispatchManager::get_url(self::$dispatcher, '/categories/add/');
 	}
 	
 	/**
@@ -65,7 +65,7 @@ class CalendarUrlBuilder
 	 */
 	public static function edit_category($id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/'. $id .'/edit/');
+		return DispatchManager::get_url(self::$dispatcher, '/categories/'. $id .'/edit/');
 	}
 	
 	/**
@@ -73,7 +73,7 @@ class CalendarUrlBuilder
 	 */
 	public static function delete_category($id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/'. $id .'/delete/');
+		return DispatchManager::get_url(self::$dispatcher, '/categories/'. $id .'/delete/');
 	}
 	
 	/**
@@ -81,7 +81,7 @@ class CalendarUrlBuilder
 	 */
 	public static function manage_categories()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/');
+		return DispatchManager::get_url(self::$dispatcher, '/categories/');
 	}
 	
 	/**
