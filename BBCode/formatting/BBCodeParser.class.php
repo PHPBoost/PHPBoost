@@ -272,7 +272,7 @@ class BBCodeParser extends ContentFormattingParser
 
 			//Line tag
 			if ($parse_line)
-			$this->content = str_replace('[line]', '<hr class="bb_hr" />', $this->content);
+			$this->content = str_replace('[line]', '<hr class="formatter-hr" />', $this->content);
 
 			//Title tag
 			if (!in_array('title', $this->forbidden_tags))

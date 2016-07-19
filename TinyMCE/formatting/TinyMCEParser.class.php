@@ -157,7 +157,8 @@ class TinyMCEParser extends ContentFormattingParser
 		//Border ?
 		if (preg_match('`border="([0-9]+)"`iU', $table_properties, $temp_array))
 		{
-			$style_properties .= 'border:' . $temp_array[1] . 'px;';
+			if ($temp_array[1] > 0)
+				$style_properties .= 'border:' . $temp_array[1] . ';';
 		}
 
 		//Width ?
@@ -268,7 +269,7 @@ class TinyMCEParser extends ContentFormattingParser
 			$col_style = ' style="' . $col_style . '"';
 		}
 
-		return '<' . $tag . ' class="formatter-table-' . $bbcode_tag . '"' . $col_new_properties . $col_style . '>' . $matches[3] . '</' . $tag . '>';
+		return '<' . $tag . ' class="formatter-table-' . $bbcode_tag . '"' . $col_new_properties . $col_style . '>' . ltrim($matches[3]) . '</' . $tag . '>';
 	}
 
 	/**
@@ -512,7 +513,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//Line tag
 		if (!in_array('line', $this->forbidden_tags))
 		{
-			$this->content = str_replace('&lt;hr /&gt;', '<hr class="formatter-hr" />', $this->content);
+			$this->content = preg_replace('`&lt;hr(?: class="([^"]+)?")? /&gt;`isU', '<hr class="formatter-hr" />', $this->content);
 		}
 
 		//Quote tag
@@ -559,8 +560,8 @@ class TinyMCEParser extends ContentFormattingParser
 			//Cols
 			while (preg_match('`&lt;td|h([^&]*)&gt;(.+)&lt;/td|h&gt;`is', $this->content))
 			{
-				$this->content = preg_replace_callback('`&lt;(td)([^&]*)&gt;(.+)&lt;/td&gt;`isU', array($this, 'parse_col_tag'), $this->content);
-				$this->content = preg_replace_callback('`&lt;(th)([^&]*)&gt;(.+)&lt;/th&gt;`isU', array($this, 'parse_col_tag'), $this->content);
+				$this->content = preg_replace_callback('`&lt;(td)([^&]*)&gt;(.+)?&lt;/td&gt;`isU', array($this, 'parse_col_tag'), $this->content);
+				$this->content = preg_replace_callback('`&lt;(th)([^&]*)&gt;(.+)?&lt;/th&gt;`isU', array($this, 'parse_col_tag'), $this->content);
 			}
 		}
 	}

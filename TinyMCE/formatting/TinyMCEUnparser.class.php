@@ -86,14 +86,14 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			"\t", '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '€', '‚', 'ƒ',
 			'„', '…', '†', '‡', 'ˆ', '‰', 'Š', '‹', 'Œ', 'Ž',
 			'‘', '’', '“', '”', '•', '–', '—',  '˜', '™', 'š',
-			'›', 'œ', 'ž', 'Ÿ', '<li class="formatter-li">', '</table>', '<tr class="formatter-table-row">'
+			'›', 'œ', 'ž', 'Ÿ'
 		);
 
 		$array_str_replace = array(
 			'&nbsp;&nbsp;&nbsp;', '<strong>', '</strong>', '<em>', '</em>', '<s>', '</s>', '&#8364;', '&#8218;', '&#402;', '&#8222;',
 			'&#8230;', '&#8224;', '&#8225;', '&#710;', '&#8240;', '&#352;', '&#8249;', '&#338;', '&#381;',
 			'&#8216;', '&#8217;', '&#8220;', '&#8221;', '&#8226;', '&#8211;', '&#8212;', '&#732;', '&#8482;',
-			'&#353;', '&#8250;', '&#339;', '&#382;', '&#376;', '<li>', '</tbody></table>', '<tr>'
+			'&#353;', '&#8250;', '&#339;', '&#382;', '&#376;'
 		);
 
 		$this->content = str_replace($array_str, $array_str_replace, $this->content);
@@ -156,31 +156,35 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			'`<span id="([a-z0-9_-]+)"></span>`isU',
 			'`<span id="([a-z0-9_-]+)" class="anchor"></span>`isU',
 			'`<span id="([a-z0-9_-]+)">(.*)</span>`isU',
-			"`<h1 class=\"formatter-title\">(.*)</h1>(?:[\s]*){0,}`isU",
-			"`<h2 class=\"formatter-title\">(.*)</h2>(?:[\s]*){0,}`isU",
-			"`<h3 class=\"formatter-title\">(.*)</h3>(?:[\s]*){0,}`isU",
-			"`<h4 class=\"formatter-title\">(.*)</h4>(?:[\s]*){0,}`isU",
-			"`<h5 class=\"formatter-title\">(.*)</h5>(?:[\s]*){0,}`isU",
-			"`<h6 class=\"formatter-title\">(.*)</h6>(?:[\s]*){0,}`isU",
+			'`<h1(?: class="([^"]+)?")?>(.*)</h1>(?:[\s]*){0,}`isU',
+			'`<h2(?: class="([^"]+)?")?>(.*)</h2>(?:[\s]*){0,}`isU',
+			'`<h3(?: class="([^"]+)?")?>(.*)</h3>(?:[\s]*){0,}`isU',
+			'`<h4(?: class="([^"]+)?")?>(.*)</h4>(?:[\s]*){0,}`isU',
+			'`<h5(?: class="([^"]+)?")?>(.*)</h5>(?:[\s]*){0,}`isU',
+			'`<h6(?: class="([^"]+)?")?>(.*)</h6>(?:[\s]*){0,}`isU',
 			'`<span style="background-color:([^;]+);">(.+)</span>`isU',
 			'`<span style="color:([^;]+);">(.+)</span>`isU',
 			'`<p style="text-align:(left|center|right|justify)">(.*)</p>`isU',
-			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU'
+			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
+			'`<td(?: class="([^"]+)?")?></td>`isU',
+			'`<th(?: class="([^"]+)?")?></th>`isU'
 			);
 			$array_preg_replace = array(
 			"<a id=\"$1\"></a>",
 			"<a id=\"$1\"></a>",
 			"<a title=\"$1\" name=\"$1\">$2</a>",
-			"<h1>$1</h1>",
-			"<h1>$1</h1>",
-			"<h2>$1</h2>",
-			"<h3>$1</h3>",
-			"<h4>$1</h4>",
-			"<h5>$1</h5>",
+			"<h1>$2</h1>",
+			"<h1>$2</h1>",
+			"<h2>$2</h2>",
+			"<h3>$2</h3>",
+			"<h4>$2</h4>",
+			"<h5>$2</h5>",
 			'<span style="background-color: $1;">$2</span>',
 			'<span style="color: $1;">$2</span>',
 			"<p style=\"text-align: $1;\">$2</p>",
-			"<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"$2\" height=\"$3\"><param name=\"movie\" value=\"$1\" /><param name=\"quality\" value=\"high\" /><param name=\"menu\" value=\"false\" /><param name=\"wmode\" value=\"\" /><embed src=\"$1\" wmode=\"\" quality=\"high\" menu=\"false\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"$2\" height=\"$3\"></embed></object>"
+			"<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"$2\" height=\"$3\"><param name=\"movie\" value=\"$1\" /><param name=\"quality\" value=\"high\" /><param name=\"menu\" value=\"false\" /><param name=\"wmode\" value=\"\" /><embed src=\"$1\" wmode=\"\" quality=\"high\" menu=\"false\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"$2\" height=\"$3\"></embed></object>",
+			'<td> </td>',
+			'<th> </th>'
 			);
 
 			$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
@@ -189,19 +193,28 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			while (preg_match('`<table class="formatter-table"( style="([^"]+)")?>`i', $this->content))
 			{
 				$this->content = preg_replace('`<table class="formatter-table"( style="([^"]+)")?>`i', "<table border=\"0\"$1><tbody>", $this->content);
+				$this->content = preg_replace('`</table>`i', "</tbody></table>", $this->content);
 				$this->content = preg_replace('`<td class="formatter-table-col"( colspan="[^"]+")?( rowspan="[^"]+")?( style="[^"]+")?>`i', "<td$1$2$3>", $this->content);
-				$this->content = preg_replace('`<th class="formatter-table-col"( colspan="[^"]+")?( rowspan="[^"]+")?( style="[^"]+")?>`i', "<th$1$2$3>", $this->content);
+				$this->content = preg_replace('`<tr class="formatter-table-row"( style="[^"]+")?>`i', "<tr$1>", $this->content);
+				$this->content = preg_replace('`<th class="formatter-table-head"( colspan="[^"]+")?( rowspan="[^"]+")?( style="[^"]+")?>`i', "<th$1$2$3>", $this->content);
 			}
 
 			//Listes
 			while (preg_match('`<ul( style="[^"]+")? class="formatter-ul">`i', $this->content))
 			{
 				$this->content = preg_replace('`<ul( style="[^"]+")? class="formatter-ul">`i', "<ul$1>", $this->content);
+			}
+			while (preg_match('`<ol( style="[^"]+")? class="formatter-ol">`i', $this->content))
+			{
 				$this->content = preg_replace('`<ol( style="[^"]+")? class="formatter-ol">`i', "<ol$1>", $this->content);
+			}
+			while (preg_match('`<li( style="[^"]+")? class="formatter-li">`i', $this->content))
+			{
+				$this->content = preg_replace('`<li( style="[^"]+")? class="formatter-li">`i', "<li$1>", $this->content);
 			}
 			
 			//Trait horizontal
-			$this->content = str_replace('<hr class="formatter-hr" />', '<hr />', $this->content);
+			$this->content = preg_replace('`<hr(?: class="([^"]+)?")? />`i', '<hr />', $this->content);
 
 			//Balise size
 			$this->content = preg_replace_callback('`<span style="font-size: ([0-9-]+)px;">(.+)</span>`isU', array($this, 'unparse_size_tag'), $this->content);
