@@ -136,8 +136,9 @@ class UserService
 				$fields_data = $extended_fields;
 			else
 				$fields_data = array();
-				
-			self::$querier->update(DB_TABLE_MEMBER_EXTENDED_FIELDS, $fields_data, $condition, $parameters);
+			
+			if ($fields_data)
+				self::$querier->update(DB_TABLE_MEMBER_EXTENDED_FIELDS, $fields_data, $condition, $parameters);
 		}
 		
 		SessionData::recheck_cached_data_from_user_id($user->get_id());
