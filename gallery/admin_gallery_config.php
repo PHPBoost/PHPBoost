@@ -90,7 +90,7 @@ if ($valid)
 	$config->set_scroll_type(retrieve(POST, 'scroll_type', GalleryConfig::VERTICAL_DYNAMIC_SCROLL));
 	$config->set_pics_number_in_mini(retrieve(POST, 'pics_number_in_mini', 8));
 	$config->set_mini_pics_speed(retrieve(POST, 'mini_pics_speed', 6));
-	$config->set_authorizations(Authorizations::build_auth_array_from_form(Category::READ_AUTHORIZATIONS, Category::WRITE_AUTHORIZATIONS, Category::MODERATION_AUTHORIZATIONS));
+	$config->set_authorizations(Authorizations::build_auth_array_from_form(Category::READ_AUTHORIZATIONS, Category::WRITE_AUTHORIZATIONS, Category::MODERATION_AUTHORIZATIONS, Category::CATEGORIES_MANAGEMENT_AUTHORIZATIONS));
 	
 	GalleryConfig::save();
 	GalleryService::get_categories_manager()->regenerate_cache();
