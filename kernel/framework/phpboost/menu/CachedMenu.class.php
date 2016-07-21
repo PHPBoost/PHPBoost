@@ -62,25 +62,9 @@ class CachedMenu
 		return !empty($this->cached_string);
 	}
 	
-	public static function has_custom_authorizations(LinksMenu $menu)
-	{
-		foreach ($menu->get_children() as $child)
-		{
-			if ($child->get_auth() !== array('r-1' => Menu::MENU_AUTH_BIT, 'r0' => Menu::MENU_AUTH_BIT, 'r1' => Menu::MENU_AUTH_BIT))
-			{
-				return true;
-			}
-			if ($child instanceof LinksMenu)
-			{
-				return self::has_custom_authorizations($child);
-			}
-		}
-		return false;
-	}
-	
 	public static function need_cached_string(Menu $menu)
 	{
-		return ($menu instanceof LinksMenu && !self::has_custom_authorizations($menu)) || $menu->get_auth() === null;
+		return (!$menu instanceof LinksMenu) && (!$menu instanceof ConnectModuleMiniMenu);
 	}
 }
 ?>
