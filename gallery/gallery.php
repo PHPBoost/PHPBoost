@@ -232,7 +232,6 @@ elseif ($g_add)
 	}
 	
 	$search_category_children_options = new SearchCategoryChildrensOptions();
-	$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 	$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
 	
 	$tpl->put_all(array(

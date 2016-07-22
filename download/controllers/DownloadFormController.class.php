@@ -89,8 +89,8 @@ class DownloadFormController extends ModuleController
 		if (DownloadService::get_categories_manager()->get_categories_cache()->has_categories())
 		{
 			$search_category_children_options = new SearchCategoryChildrensOptions();
-			$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 			$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
+			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
 			$fieldset->add_field(DownloadService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_downloadfile()->get_id_category(), $search_category_children_options));
 		}
 		

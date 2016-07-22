@@ -166,8 +166,8 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 	}
 	
 	$search_category_children_options = new SearchCategoryChildrensOptions();
-	$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 	$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
+	$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
 	
 	$media = '';
 	

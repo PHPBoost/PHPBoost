@@ -377,7 +377,7 @@ class CategoriesManager
 			{
 				if ($category->get_id() !== Category::ROOT_CATEGORY)
 				{
-					$result = Authorizations::merge_auth($result, $category->get_authorizations(), $bit, $mode);
+					$result = Authorizations::merge_auth($result, $category->has_special_authorizations() ? $category->get_authorizations() : $result, $bit, $mode);
 				}
 			}
 		}
