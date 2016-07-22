@@ -97,8 +97,8 @@ class NewsFormController extends ModuleController
 		}
 		
 		$search_category_children_options = new SearchCategoryChildrensOptions();
-		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 		$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
+		$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
 		$fieldset->add_field(NewsService::get_categories_manager()->get_select_categories_form_field('id_cat', $this->common_lang['form.category'], $this->get_news()->get_id_cat(), $search_category_children_options));
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->common_lang['form.contents'], $this->get_news()->get_contents(), array('rows' => 15, 'required' => true)));

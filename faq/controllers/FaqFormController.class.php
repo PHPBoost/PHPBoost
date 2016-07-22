@@ -84,8 +84,8 @@ class FaqFormController extends ModuleController
 		$fieldset->add_field(new FormFieldTextEditor('question', $this->lang['faq.form.question'], $this->get_faq_question()->get_question(), array('required' => true)));
 		
 		$search_category_children_options = new SearchCategoryChildrensOptions();
-		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 		$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
+			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
 		$fieldset->add_field(FaqService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_faq_question()->get_id_category(), $search_category_children_options));
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('answer', $this->lang['faq.form.answer'], $this->get_faq_question()->get_answer(), array('rows' => 15, 'required' => true)));

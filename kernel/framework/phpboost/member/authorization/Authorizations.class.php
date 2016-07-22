@@ -305,7 +305,7 @@ class Authorizations
 			{
 				if ($bit = ($value & $auth_bit) || $parent_guest_auth || $parent_member_auth)
 				{
-					if (!empty($child[$key]) || ($parent_guest_auth && !empty($child['r-1'])) || ($parent_member_auth && !empty($child['r0'])))
+					if (!empty($child[$key]) || ($parent_guest_auth && !empty($child['r-1'])) || ($parent_guest_auth && !empty($child['r-1']) && $parent_member_auth && !empty($child['r0'])))
 					{
 						$merged[$key] = $auth_bit;
 					}
@@ -326,7 +326,7 @@ class Authorizations
 				{
 					$merged[$key] = $parent_guest_auth;
 				}
-				if (!empty($value) || ($parent_member_auth && !empty($merged['r0'])))
+				if (!empty($value) || ($parent_guest_auth && !empty($merged['r-1']) && $parent_member_auth && !empty($merged['r0'])))
 				{
 					$merged[$key] = $parent_member_auth;
 				}
