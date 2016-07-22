@@ -125,11 +125,11 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 
 		if ($where == 'all')         // All
 			return "SELECT ".
-			$args['id_search']." AS `id_search`,
-				MIN(msg.id) AS `id_content`,
-				t.title AS `title`,
-				MAX(( 2 * FT_SEARCH_RELEVANCE(t.title, '" . $search."') + FT_SEARCH_RELEVANCE(msg.contents, '" . $search."') ) / 3) * " . $weight . " AS `relevance`,
-				CONCAT('" . PATH_TO_ROOT . "/forum/topic.php?id=', t.id, '#m', msg.id) AS `link`
+			$args['id_search']." AS id_search,
+				MIN(msg.id) AS id_content,
+				t.title AS title,
+				MAX(( 2 * FT_SEARCH_RELEVANCE(t.title, '" . $search."') + FT_SEARCH_RELEVANCE(msg.contents, '" . $search."') ) / 3) * " . $weight . " AS relevance,
+				CONCAT('" . PATH_TO_ROOT . "/forum/topic.php?id=', t.id, '#m', msg.id) AS link
 			FROM " . PREFIX . "forum_msg msg
 			JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
 			JOIN " . PREFIX . "forum_cats c ON c.id_parent != 0 AND c.id = t.idcat
@@ -141,11 +141,11 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 
 		if ($where == 'contents')    // Contents
 			return "SELECT ".
-			$args['id_search']." AS `id_search`,
-				MIN(msg.id) AS `id_content`,
-				t.title AS `title`,
-				MAX(FT_SEARCH_RELEVANCE(msg.contents, '" . $search."')) * " . $weight . " AS `relevance`,
-				CONCAT('" . PATH_TO_ROOT . "/forum/topic.php?id=', t.id, '#m', msg.id) AS `link`
+			$args['id_search']." AS id_search,
+				MIN(msg.id) AS id_content,
+				t.title AS title,
+				MAX(FT_SEARCH_RELEVANCE(msg.contents, '" . $search."')) * " . $weight . " AS relevance,
+				CONCAT('" . PATH_TO_ROOT . "/forum/topic.php?id=', t.id, '#m', msg.id) AS link
 			FROM " . PREFIX . "forum_msg msg
 			JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
 			JOIN " . PREFIX . "forum_cats c ON c.id_parent != 0 AND c.id = t.idcat
@@ -155,11 +155,11 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			LIMIT " . FORUM_MAX_SEARCH_RESULTS;
 		else                                         // Title only
 		return "SELECT ".
-		$args['id_search']." AS `id_search`,
-				msg.id AS `id_content`,
-				t.title AS `title`,
-				FT_SEARCH_RELEVANCE(t.title, '" . $search."') * " . $weight . " AS `relevance`,
-				CONCAT('" . PATH_TO_ROOT . "/forum/topic.php?id=', t.id, '#m', msg.id) AS `link`
+		$args['id_search']." AS id_search,
+				msg.id AS id_content,
+				t.title AS title,
+				FT_SEARCH_RELEVANCE(t.title, '" . $search."') * " . $weight . " AS relevance,
+				CONCAT('" . PATH_TO_ROOT . "/forum/topic.php?id=', t.id, '#m', msg.id) AS link
 			FROM " . PREFIX . "forum_msg msg
 			JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
 			JOIN " . PREFIX . "forum_cats c ON c.id_parent != 0 AND c.id = t.idcat
