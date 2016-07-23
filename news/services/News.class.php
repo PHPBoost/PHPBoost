@@ -395,7 +395,7 @@ class News
 			'C_PICTURE' => $this->has_picture(),
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			'C_AUTHOR_DISPLAYED' => $news_config->get_author_displayed(),
-			'C_READ_MORE' => !$this->get_short_contents_enabled() && $description != $contents && strlen($description) >= $news_config->get_number_character_to_cut(),
+			'C_READ_MORE' => !$this->get_short_contents_enabled() && $description != @strip_tags($contents, '<br><br/>') && strlen($description) > $news_config->get_number_character_to_cut(),
 			'C_SOURCES' => $nbr_sources > 0,
 			'C_DIFFERED' => $this->approbation_type == self::APPROVAL_DATE,
 
