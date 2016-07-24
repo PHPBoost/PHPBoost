@@ -151,7 +151,7 @@ class BugtrackerConfig extends AbstractConfigData
 		$this->set_property(self::RESTRICT_DISPLAY_TO_OWN_ELEMENTS_ENABLED, true);
 	}
 	
-	public function disable_restrict_display_to_own_elements_enabled()
+	public function disable_restrict_display_to_own_elements()
 	{
 		$this->set_property(self::RESTRICT_DISPLAY_TO_OWN_ELEMENTS_ENABLED, false);
 	}
