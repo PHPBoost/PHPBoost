@@ -338,6 +338,11 @@ elseif ($pm_post && !empty($pm_id_get) && empty($pm_edit) && empty($pm_del)) //E
 			//Envoi du message privé.
 			$pm_msg_id = PrivateMsg::send($user_id_dest, $pm_id_get, $contents, $current_user->get_id(), $status);
 			
+			//Calcul de la page vers laquelle on redirige.
+			$last_page = ceil( ($convers['nbr_msg'] + 1) / 25);
+			$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
+			$last_page = ($last_page > 1) ? '&p=' . $last_page : '';
+			
 			//Envoi d'un mail si l'utilisateur a activé l'option
 			$pmtomail_field = ExtendedFieldsCache::load()->get_extended_field_by_field_name('user_pmtomail');
 			if (!empty($pmtomail_field) && $pmtomail_field['display'])
@@ -359,11 +364,6 @@ elseif ($pm_post && !empty($pm_id_get) && empty($pm_edit) && empty($pm_del)) //E
 						AppContext::get_mail_service()->send_from_properties($email_dest, $LANG['new_pm'] . ' : ' . stripslashes($convers['title']), $contents);
 				}
 			}
-			
-			//Calcul de la page vers laquelle on redirige.
-			$last_page = ceil( ($convers['nbr_msg'] + 1) / 25);
-			$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
-			$last_page = ($last_page > 1) ? '&p=' . $last_page : '';
 			
 			AppContext::get_response()->redirect('/user/pm' . url('.php?id=' . $pm_id_get . $last_page, '-0-' . $pm_id_get . $last_page_rewrite . '.php', '&') . '#m' . $pm_msg_id);
 		}
