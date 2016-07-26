@@ -104,5 +104,10 @@ class ContentMenu extends Menu
 	 * @return string the menu content
 	 */
 	public function get_content() { return $this->content; }
+	
+	public function need_cached_string()
+	{
+		return true;
+	}
 }
 ?>

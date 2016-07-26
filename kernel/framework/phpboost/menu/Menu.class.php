@@ -105,8 +105,17 @@ abstract class Menu
 	 */
 	public function __construct($title)
 	{
-	   $this->title = TextHelper::strprotect($title, TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE);
-	   $this->filters[] = new MenuStringFilter('/');
+		$this->title = TextHelper::strprotect($title, TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE);
+		$this->filters[] = new MenuStringFilter('/');
+	}
+	
+	/**
+	 * @desc Check if the menu needs to be cached
+	 * @return bool true if the menu need to be cached
+	 */
+	public function need_cached_string()
+	{
+		return false;
 	}
 	
 	/**
@@ -124,7 +133,7 @@ abstract class Menu
 	{
 		return $this->display();
 	}
-		
+	
 	/**
 	 * @param int $id Set the Menu database id
 	 */
