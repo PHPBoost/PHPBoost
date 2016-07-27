@@ -33,3 +33,4 @@
 [b]Rapport de bugs[/b]
 [*] Affichage d'un message de succès lors de la soumission d'un bug ([url=/bugtracker/detail/1520-redirection-et-autorisation-d-un-bug]#1520[/url])
 [*] Possibilité d'afficher uniquement leurs propres bugs aux membres qui n'ont pas l'autorisation de modération ([url=/bugtracker/detail/1520-redirection-et-autorisation-d-un-bug]#1520[/url])
+[*] Possibilité de rechercher un bug en entrant son id dans la recherche du site
