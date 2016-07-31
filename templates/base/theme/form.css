@@ -137,8 +137,12 @@ fieldset.fieldset-submit legend {
 
 .horizontal-fieldset-desc,
 .horizontal-fieldset-element  {
-	display: inline-table;
+	display: inline-block;
 	vertical-align: middle;
+}
+
+.horizontal-fieldset-desc + .horizontal-fieldset-element {
+	max-width: 100%;
 }
 
 .horizontal-fieldset-element .form-field-select {
