@@ -42,6 +42,39 @@ if (!$permissions['/cache']->is_writable() || !$permissions['/cache/tpl']->is_wr
 	die('Cache folder is not writable (/cache)');
 }
 
+if ($_GET || $_POST)
+{
+	$arguments_list = $_POST ? $_POST : $_GET;
+	
+	if (!empty($arguments_list))
+	{
+		$argv = array('phpboost', 'update');
+		$update_requested = false;
+		foreach ($arguments_list as $id => $arg)
+		{
+			if ($id == 'update' && !empty($arg))
+			{
+				$update_requested = true;
+				break;
+			}
+		}
+		
+		if ($update_requested)
+		{
+			$launcher = new CLILauncher($argv);
+			$result = $launcher->launch();
+			if ($result)
+			{
+				exit(0);
+			}
+			else
+			{
+				exit(1);
+			}
+		}
+	}
+}
+
 $url_controller_mappers = array(
 	new UrlControllerMapper('UpdateIntroductionController', '`^(?:/introduction)?/?$`'),
 	new UrlControllerMapper('UpdateServerConfigController', '`^/server/?$`'),

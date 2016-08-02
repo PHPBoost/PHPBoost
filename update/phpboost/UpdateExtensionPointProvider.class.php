@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                          InstallExtensionPointProvider.class.php
+ *                          UpdateExtensionPointProvider.class.php
  *                            -------------------
- *   begin                : February 06, 2010
- *   copyright            : (C) 2010 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
+ *   begin                : July 31, 2016
+ *   copyright            : (C) 2016 Julien BRISWALTER
+ *   email                : j1.seth@phpboost.com
  *
  *
  ###################################################
@@ -25,16 +25,16 @@
  *
  ###################################################*/
 
-class InstallExtensionPointProvider extends ExtensionPointProvider
+class UpdateExtensionPointProvider extends ExtensionPointProvider
 {
 	public function __construct()
 	{
-		parent::__construct('install');
+		parent::__construct('update');
 	}
 	
 	public function commands()
 	{
-		return new CLICommandsList(array('install' => 'CLIInstallCommand'));
+		return new CLICommandsList(array('update' => 'CLIUpdateCommand'));
 	}
 }
 ?>
