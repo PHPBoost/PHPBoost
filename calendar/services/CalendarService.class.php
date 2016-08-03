@@ -256,7 +256,7 @@ class CalendarService
 		WHERE approved = 1
 		AND ((start_date BETWEEN :first_month_day AND :last_month_day) OR (end_date BETWEEN :first_month_day AND :last_month_day) OR (:first_month_day BETWEEN start_date AND end_date)) 
 		AND id_category IN :authorized_categories)
-		ORDER BY start_date ASC", array(
+		ORDER BY type ASC, start_date ASC", array(
 			'month' => $month,
 			'year' => $year,
 			'first_month_day' => mktime(0, 0, 0, $month, 1, $year),
