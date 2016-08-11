@@ -207,9 +207,9 @@ class ContentSecondParser extends AbstractParser
 	{
 		$line_number = !empty($matches[2]);
 		$inline_code = !empty($matches[3]);
-		
+
 		$content_to_highlight = $matches[4];
-		
+
 		if (strlen($content_to_highlight) > self::MAX_CODE_LENGTH)
 		{
 			return '<div class="error">' . LangLoader::get_message('code_too_long_error', 'editor-common') . '</div>';
@@ -220,11 +220,11 @@ class ContentSecondParser extends AbstractParser
 
 		if (!$inline_code && !empty($matches[1]))
 		{
-			$contents = '<span class="formatter-code">' . sprintf(LangLoader::get_message('code_langage', 'main'), strtoupper($matches[1])) . '</span><div class="code">' . $contents .'</div>';
+			$contents = '<div class="formatter-container formatter-code code-' . $matches[1] . '"><span class="formatter-title">' . sprintf(LangLoader::get_message('code_langage', 'main'), strtoupper($matches[1])) . '</span><div class="formatter-content">' . $contents .'</div></div>';
 		}
 		else if (!$inline_code && empty($matches[1]))
 		{
-			$contents = '<span class="formatter-code">' . LangLoader::get_message('code_tag', 'main') . '</span><div class="code">' . $contents . '</div>';
+			$contents = '<div class="formatter-container formatter-code"><span class="formatter-title">' . LangLoader::get_message('code_tag', 'main') . '</span><div class="formatter-content">' . $contents . '</div></div>';
 		}
 		
 		return $contents;

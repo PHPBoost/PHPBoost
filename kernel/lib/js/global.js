@@ -330,25 +330,44 @@ function strpos(haystack, needle)
 		return i >= 0 ? i : false;
 }
 
+//Add information hide balise
+jQuery(document).ready(function(){
+	var IDCODE = 1;
+	jQuery('.formatter-hide').each( function(){
+		jQuery(this).append('<span id="hide-message-' + IDCODE + '" class="hide-message">Ce message est cach\é, cliquer pour afficher son contenu</span>');
+		IDCODE = IDCODE + 1;
+	} );
+} );	
+
 //Affichage/Masquage de la balise hide.
-function bb_hide(div2)
+function bb_hide(divcontainer)
 {
-	var divs = div2.getElementsByTagName('div');
-	var div3 = divs[0];
-	if (div3.style.visibility == 'visible')
-	{
-		div3.style.visibility = 'hidden';
-		div2.style.height = '10px';
-		div2.style.overflow = 'hidden';
-	}
-	else
-	{	
-		div3.style.visibility = 'visible';
-		div2.style.height = 'auto';
-		div2.style.overflow = 'auto';
-	}
-	
-	return true;
+	jQuery(divcontainer).toggleClass('formatter-show');
+}
+
+//Add button "Copy to clipboard" on Coding balise
+jQuery(document).ready(function(){
+	var IDCODE = 1;
+	jQuery('.formatter-code').each( function(){
+		jQuery(this).prepend('<span title="Copy to Clipboard" id="copy-code-' + IDCODE + '" class="copy-code" onclick="copy_code_clipboard(this)"><i class="fa fa-code"></i></span>');
+		jQuery(this).children(".formatter-content").attr("id", 'copy-code-' + IDCODE + '-content');
+		IDCODE = IDCODE + 1;
+	} );
+} );	
+
+//Copy to clipboard
+function copy_code_clipboard(spancontainer)
+{
+	var ElementtoCopy = document.querySelector('#' + spancontainer.id + '-content');  
+
+	var range = document.createRange() // create new range object
+	range.selectNodeContents(ElementtoCopy) // set range to encompass desired element text
+	var selection = window.getSelection() // get Selection object from currently user selected text
+	selection.removeAllRanges() // unselect any user selected text (if any)
+	selection.addRange(range) // add range to Selection object to select it
+
+	try { var successful = document.execCommand('copy'); } 
+	catch(err) { console.log('Oops, unable to copy'); }	
 }
 
 //Barre de progression, 

@@ -297,14 +297,15 @@ class BBCodeParser extends ContentFormattingParser
 			//Quote tag
 			if (!in_array('quote', $this->forbidden_tags))
 			{
-				$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`sU', '<span class="formatter-blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$1</div>');
-				$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`sU', '<span class="formatter-blockquote">$1:</span><div class="blockquote">$2</div>');
+				$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`sU', '<div class="formatter-container formatter-blockquote"><span class="formatter-title">' . $LANG['quotation'] . ' :</span><div class="formatter-content">$1</div></div>');
+				$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`sU', '<div class="formatter-container formatter-blockquote"><span class="formatter-title">$1 :</span><div class="formatter-content">$2</div></div>');
 			}
 
 			//Hide tag
 			if (!in_array('hide', $this->forbidden_tags))
 			{
-				$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<span class="formatter-hide">' . LangLoader::get_message('hidden', 'common') . ':</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>');
+				$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<div class="formatter-container formatter-hide" onclick="bb_hide(this)"><span class="formatter-title">' . LangLoader::get_message('hidden', 'common') . ' :</span><div class="formatter-content">$1</div></div>');
+				$this->_parse_imbricated('[hide=', '`\[hide=([^\]]+)\](.+)\[/hide\]`sU', '<div class="formatter-container formatter-hide" onclick="bb_hide(this)"><span class="formatter-title">$1 :</span><div class="formatter-content">$2</div></div>');
 			}
 
 			//Indent tag
@@ -316,14 +317,14 @@ class BBCodeParser extends ContentFormattingParser
 			//Block tag
 			if (!in_array('block', $this->forbidden_tags))
 			{
-				$this->_parse_imbricated('[block]', '`\[block\](.+)\[/block\]`sU', '<div class="formatter-block">$1</div>');
-				$this->_parse_imbricated('[block style=', '`\[block style="([^"]+)"\](.+)\[/block\]`sU', '<div class="formatter-block" style="$1">$2</div>');
+				$this->_parse_imbricated('[block]', '`\[block\](.+)\[/block\]`sU', '<div class="formatter-container formatter-block">$1</div>');
+				$this->_parse_imbricated('[block style=', '`\[block style="([^"]+)"\](.+)\[/block\]`sU', '<div class="formatter-container formatter-block" style="$1">$2</div>');
 			}
 
 			//Fieldset tag
 			if (!in_array('fieldset', $this->forbidden_tags))
 			{
-				$this->_parse_imbricated('[fieldset', '`\[fieldset(?: legend="(.*)")?(?: style="([^"]*)")?\](.+)\[/fieldset\]`sU', '<fieldset class="formatter-fieldset" style="$2"><legend>$1</legend>$3</fieldset>');
+				$this->_parse_imbricated('[fieldset', '`\[fieldset(?: legend="(.*)")?(?: style="([^"]*)")?\](.+)\[/fieldset\]`sU', '<fieldset class="formatter-container formatter-fieldset" style="$2"><legend>$1</legend><div class="formatter-content">$3</div></fieldset>');
 			}
 
 			// Feed tag
