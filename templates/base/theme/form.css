@@ -18,7 +18,6 @@ button,
 	background-color: #F9F9F9;
 	border: 1px solid #CCCCCC;
 	border-color: #E1E1E1 #E1E1E1 #BFBFBF #CFCFCF;
-	border-radius: 4px;
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0 2px rgba(0, 0, 0, 0.05);
 	color: #333333;
 	text-align: center;
@@ -65,7 +64,6 @@ button.submit:hover {
 	margin: 1px;
 	padding: 1px 6px;
 	background-color: #2F5B8A;
-	border-radius: 2px;
 	font-weight: bold;
 	text-align: center;	
 	color: #FFFFFF;
@@ -89,14 +87,9 @@ button.submit:hover {
 	white-space: nowrap;
 }
 
-.field-button input {
-	border-radius: 4px 0 0 4px;
-}
-
 .field-button button {
 	margin-left: -1px;
 	padding: 4px 8px;
-	border-radius: 0 4px 4px 0;
 	font-size: 11px;
 }
 
@@ -196,7 +189,6 @@ select {
 	padding: 4px 18px 4px 6px;
 	background-color: #FFFFFF;
 	border: 1px solid #CCCCCC;
-	border-radius: 4px;
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
 	color: #555555;
 }
@@ -501,7 +493,6 @@ textarea {
 	margin-left: -29px;
 	padding: 5px 5px 6px 5px;
 	border-width: 0 0 0 1px;
-	border-radius: 0 4px 4px 0;
 }
 
 .advanced-auth-input-result {
@@ -511,7 +502,6 @@ textarea {
 }
 
 .bbcode ~ .form-field-textarea textarea {
-	border-radius: 0 0 4px 4px;
 	border-width: 0 1px 1px 1px;
 }
 
@@ -555,7 +545,6 @@ textarea {
 	background-color: #FEFEFE;
 	border: 1px solid #EAEAEA;
 	box-shadow: 1px 3px 6px rgba(0, 0, 0, 0.3);
-	border-radius: 3px;
 	font-size: 0.8em;
 	font-weight: bold;
 	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);

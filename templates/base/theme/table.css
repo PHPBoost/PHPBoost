@@ -33,9 +33,6 @@ table thead th {
 	font-weight: normal;
 }
 
-table thead th:first-child { border-top-left-radius: 3px;  }
-table thead th:last-child  { border-top-right-radius: 3px; }
-
 table thead th a 		{ color: #E5E6E6; }
 table thead th a:hover 	{ color: #FFFFFF; }
 
@@ -91,12 +88,10 @@ table tfoot tr th {
 
 table tfoot tr th:first-child {
 	border-left: 1px solid #D1D2D4;
-	border-bottom-left-radius: 3px;
 }
 
 table tfoot tr th:last-child {
 	border-right: 1px solid #D1D2D4;
-	border-bottom-right-radius: 3px;
 }
 
 table tfoot tr th:only-child {
@@ -123,9 +118,6 @@ table.formatter-table th.formatter-table-head {
 	text-align: center;
 	font-weight: normal;
 }
-
-table.formatter-table th.formatter-table-head:first-child { border-top-left-radius: 3px;  }
-table.formatter-table th.formatter-table-head:last-child  { border-top-right-radius: 3px; }
 
 table.formatter-table th.formatter-table-head a 	  {	color: #E5E6E6; }
 table.formatter-table th.formatter-table-head a:hover {	color: #FFFFFF; }
@@ -192,13 +184,6 @@ table.bt thead th {
 
 table.bt thead th:first-child{
 	display: block;
-	border-radius: 0;
-}
-
-@media (min-width:769px){
-	table.bt thead th:first-child {
-		border-radius: 3px 3px 0 0;
-	}
 }
 
 table.bt tbody td {

@@ -103,7 +103,6 @@ h5.formatter-title {
 	border: 1px solid #999999;
 	z-index: 10;
 	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-	border-radius: 3px;
 }
 
 .calendar-block {
@@ -120,7 +119,6 @@ h5.formatter-title {
 .calendar-block .date-select-container {
 	background-color: #F5F5F5;
 	padding: 2px 0;
-	border-radius: 3px 3px 0 0;
 }
 
 .calendar-block .date-select-previous {
@@ -172,7 +170,6 @@ h5.formatter-title {
 .calendar-block .date-picker thead tr th {
 	border-top: 1px solid #CCCCCC;
 	padding: 5px 0;
-	border-radius: 0;
 	background-color: #FFFFFF;
 	font-weight: bold;
 	color: #666666;
@@ -199,9 +196,6 @@ h5.formatter-title {
 	border-bottom: none;
 }
 
-.calendar-block .date-picker tbody tr:last-child td:first-child { border-radius: 0 0 0 2px; }
-.calendar-block .date-picker tbody tr:last-child td:last-child	{ border-radius: 0 0 2px 0; }
-
 td.calendar-week {
 	border-right: 1px solid #BBBBBB;
 }
@@ -221,7 +215,6 @@ td.calendar-week {
 	margin: 0;
 	background-color: #F3F3F3;
 	border: 1px solid #AAAAAA;
-	border-radius: 3px;
 	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -272,7 +265,6 @@ td.calendar-week {
 	max-height: 500px;
 	background-color: #FAFAFA;
 	border: 1px solid #DDDDDD;
-	border-radius: 3px;
 	overflow: auto;
 }
 
@@ -299,8 +291,8 @@ td.calendar-week {
 	margin: -20px auto 0 auto;
 	background-color: #FDFDFD;
 	border: 1px solid #EEEEEE;
-	border-radius: 3px;
 }
+
 .formatter-show .hide-message {
 	display: none;
 }
@@ -309,6 +301,7 @@ td.calendar-week {
 	float: right;
 	padding: 4px 4px;
 	color: #999999;
+	cursor: copy;
 }
 
 /* --- les autres element bbcode --- */
@@ -363,7 +356,6 @@ td.calendar-week {
 	width: 100px;
 	background-color: #FFFFFF;
 	border: 1px solid #CCCCCC;
-	border-radius: 4px;
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
 	overflow: auto;
 }
@@ -373,7 +365,6 @@ td.calendar-week {
 	position: relative;
 	margin: 4px 0 10px;
 	background-color: #F5F5F5;
-	border-radius: 3px;
 	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
@@ -386,12 +377,11 @@ td.calendar-week {
 }
 
 .progressbar {
-	border-radius: 3px 0 0 3px;
 	box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
 }
 
 .progressbar[style*="100"] {
-	border-radius: 3px 3px 3px 3px;
+
 }
 
 .progressbar-container .progressbar {
@@ -475,7 +465,6 @@ div.message-helper-small {
 	padding: 10px 10px 10px 40px;
 	height: auto;
 	border: 1px solid #FFFFFF;
-	border-radius: 4px;
 	line-height: 20px;
 	text-align: left;
 	overflow: hidden;
@@ -530,7 +519,6 @@ div.message-helper-small {
 	padding: 6px;
 	background-color: #FAFAFA;
 	border: 1px solid #DDDDDD;
-	border-radius: 3px;
 	color: #444444;
 }
 
@@ -624,7 +612,6 @@ a.social-connect {
 	width: 30px;
 	height: 30px;
 	vertical-align: top;
-	border-radius:4px;
 	color: #DEDEDE;
 	text-align: center;
 }

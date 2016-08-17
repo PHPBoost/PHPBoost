@@ -87,11 +87,6 @@ header .cssmenu { display: inline-block; }
 	margin: 0 5px 0 0;
 	vertical-align: bottom;
 }
-
-#top-header .cssmenu ul > li:first-child > .cssmenu-title 				{ border-radius: 0 5px 0 0;   }
-#top-header .cssmenu ul > li:last-child > .cssmenu-title  				{ border-radius: 0 0 5px 5px; }
-#top-header .cssmenu ul > li.has-sub:first-child:hover > .cssmenu-title { border-radius: 0 0 0 0;     }
-#top-header .cssmenu ul > li.has-sub:last-child:hover > .cssmenu-title  { border-radius: 0 0 0;       }
 	
 .cssmenu.small-screen {
 	width: 100%;
@@ -145,7 +140,6 @@ div.cssmenu-group {
 	padding: 2px 8px;
 	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%,rgba(56, 56, 56, 0.18) 100%);
 	background-color: #FFFFFF;
-	border-radius: 4px;
 	border: 1px solid #999999;
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) #B3B3B3 rgba(0, 0, 0, 0.25);
 	color: #444444;
@@ -260,14 +254,6 @@ div.cssmenu-group .cssmenu-title {
 	border-right: 1px solid #EEEEEE;
 }
 
-header .cssmenu-horizontal > ul > li:hover {
-	border-radius : 5px 5px 5px 5px;
-}
-
-header .cssmenu-horizontal > ul > li.has-sub:hover {
-	border-radius : 5px 5px 0 0;
-}
-
 .cssmenu-left > ul > li,
 .cssmenu-right > ul > li {
 	float: none;
@@ -358,12 +344,10 @@ aside .cssmenu-right.cssmenu-static li:hover > ul 	{ right: 0;		top: 0;		}
 }
 
 .cssmenu-group > ul > li:first-child {
-	border-radius: 4px 0 0 4px;
 	border-left: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .cssmenu-group > ul > li:last-child {
-    border-radius: 0 4px 4px 0;
 	border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -392,21 +376,12 @@ aside .cssmenu-right.cssmenu-static li:hover > ul 	{ right: 0;		top: 0;		}
 	float: left;
 	width: auto;
 	background: transparent;
-	border-radius: 0;
 	border: none;
 	clear: both;
 }
 
 .cssmenu.cssmenu-group.small-screen > ul > li > .cssmenu-title {
 	padding: 10px 12px;
-}
-
-.cssmenu-group.small-screen > ul > li:first-child {
-	border-radius: 4px 4px 0 0;
-}
-
-.cssmenu-group.small-screen > ul > li:last-child {
-	border-radius: 0 0 4px 4px;
 }
 
 /* --- Variante cssmenu-actionslinks --- */
@@ -738,7 +713,6 @@ header .cssmenu ul ul li .cssmenu-title							{ background-color: #333333;	}
 	background-color: #FFFFFF;
 	border: 1px solid #999999;
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1)  #B3B3B3 rgba(0, 0, 0, 0.25);
-	border-radius: 4px;
 	font-family: FontAwesome;
 	font-style: normal;
 	font-weight: normal;
@@ -799,7 +773,6 @@ header .cssmenu ul ul li .cssmenu-title							{ background-color: #333333;	}
 	padding: 5px 0;
 	width: 170px;
 	background-color: #FFFFFF;
-	border-radius: 3px;
 	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 	border: 1px solid #AAAAAA;
 	font-size: 11px;

@@ -332,7 +332,6 @@ nav#breadcrumb ol li:not(.current):after {
 	z-index: 10;
 	display: none;
 	background-color: rgba(15, 15, 16, 0.8);
-	border-radius: 2px;
 }
 
 #scroll-to-top {
