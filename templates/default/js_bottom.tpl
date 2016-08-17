@@ -35,5 +35,9 @@
 			jQuery('#table3').basictable();
 			jQuery('#table4').basictable();
 			jQuery('#table5').basictable();
+
+			var L_HIDE_MESSAGE = ${escapejs(LangLoader::get_message('tag_hide', 'editor-common'))};
+			var L_COPYTOCLIPBOARD = ${escapejs(LangLoader::get_message('tag_copytoclipboard', 'editor-common'))};
+
 		-->
 		</script>

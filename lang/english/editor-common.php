@@ -72,6 +72,8 @@ $lang['format_youtube'] = 'Youtube';
 $lang['format_lightbox'] = 'LightBox';
 $lang['format_charmap'] = 'Special chars';
 $lang['format_insertdatetime'] = 'Insert date/time';
+$lang['tag_hide'] = 'This message is hidden, click here to reveal its contents.';
+$lang['tag_copytoclipboard'] = 'Copy to Clipboard';
 
 //Errors
 $lang['is_default_editor'] = 'The editor you want to uninstall or disable is set by default, you must select another default editor first';

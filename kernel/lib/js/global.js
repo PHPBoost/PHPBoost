@@ -334,7 +334,7 @@ function strpos(haystack, needle)
 jQuery(document).ready(function(){
 	var IDCODE = 1;
 	jQuery('.formatter-hide').each( function(){
-		jQuery(this).append('<span id="hide-message-' + IDCODE + '" class="hide-message">Ce message est cach\é, cliquer pour afficher son contenu</span>');
+		jQuery(this).append('<span id="hide-message-' + IDCODE + '" class="hide-message">' + L_HIDE_MESSAGE + '</span>');
 		IDCODE = IDCODE + 1;
 	} );
 } );	
@@ -349,7 +349,7 @@ function bb_hide(divcontainer)
 jQuery(document).ready(function(){
 	var IDCODE = 1;
 	jQuery('.formatter-code').each( function(){
-		jQuery(this).prepend('<span title="Copy to Clipboard" id="copy-code-' + IDCODE + '" class="copy-code" onclick="copy_code_clipboard(this)"><i class="fa fa-code"></i></span>');
+		jQuery(this).prepend('<span title="' + L_COPYTOCLIPBOARD + '" id="copy-code-' + IDCODE + '" class="copy-code" onclick="copy_code_clipboard(this)"><i class="fa fa-code"></i></span>');
 		jQuery(this).children(".formatter-content").attr("id", 'copy-code-' + IDCODE + '-content');
 		IDCODE = IDCODE + 1;
 	} );
