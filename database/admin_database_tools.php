@@ -90,7 +90,7 @@ if (!empty($table) && $action == 'data')
 	}
 
 	//On éxécute la requête
-	$query = 'SELECT * FROM ' . $table . ' LIMIT ' . $pagination->get_number_items_per_page() . ' OFFSET ' . $pagination->get_display_from();
+	$query = 'SELECT * FROM ' . $table . ' ORDER BY 1 ' . ' LIMIT ' . $pagination->get_number_items_per_page() . ' OFFSET ' . $pagination->get_display_from();
 	$result = PersistenceContext::get_querier()->select($query);
 	$i = 1;
 	while ($row = $result->fetch())
