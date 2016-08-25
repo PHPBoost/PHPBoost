@@ -206,28 +206,62 @@ td.calendar-week {
 	border-right: 1px solid #BBBBBB;
 }
 
-/* --- les blocs bbcode --- */
-.bbcode-block-container {
-	position: absolute;
-	text-align: center;
-	margin: 0;
-	padding: 0;
-	z-index: 20;
-	top: 26px;
-	left: -4px;
+/* --- les blocs de quote, de code ou caches --- */
+.formatter-container {
+	position: relative;
+	display: block;
+	margin: auto;
+	width: 93%;
+	color: #444444;
 }
 
-.bbcode-block {
-	background: #F3F3F3;
-	border-radius: 3px;
-	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-	border: 1px solid #AAAAAA;
-	margin: 0;
+.formatter-content-title {
+	font-weight: bold;
 }
 
-.bbcode-block a {
-	cursor: pointer;
-	text-decoration: none;
+.formatter-content {
+	margin: 0;
+	padding: 8px;
+	max-height: 500px;
+	background-color: #FAFAFA;
+	border: 1px solid #DDDDDD;
+	overflow: auto;
+}
+
+.formatter-hide .formatter-content {
+	height: 10px;
+	overflow: hidden;
+	visibility: hidden;
+}
+
+.formatter-show .formatter-content {
+	height: auto;
+	overflow: auto;
+	visibility: visible;
+}
+
+.formatter-hide .hide-message {
+	display: block;
+	font-style: italic;
+	font-weight: normal;
+	font-size: 0.8em;
+	color: #BBBBBB;
+	padding: 4px 8px;
+	width: 100%;
+	margin: -20px auto 0 auto;
+	background-color: #FDFDFD;
+	border: 1px solid #EEEEEE;
+}
+
+.formatter-show .hide-message {
+	display: none;
+}
+
+.copy-code {
+	float: right;
+	padding: 4px 4px;
+	color: #999999;
+	cursor: copy;
 }
 
 /* --- Le selecteur de couleur --- */

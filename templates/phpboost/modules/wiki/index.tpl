@@ -12,7 +12,7 @@
 					<div class="pbt-header-content">
 						<p class="pbt-header-title">Bienvenue dans la documentation de PHPBoost.</p>
 						<span class="pbt-header-desc">
-						<br />Que vous soyez un utilisateur débutant ou confirmé, nous espérons que vous trouverez sur ces pages toutes les informations dont vous avez besoin. Dans le cas contraire, utilisez le <a href="{PATH_TO_ROOT}/forum/">Forum du projet</a> pour votre demande d'information.</span>
+						<br />Que vous soyez un utilisateur dÃ©butant ou confirmÃ©, nous espÃ©rons que vous trouverez sur ces pages toutes les informations dont vous avez besoin. Dans le cas contraire, utilisez le <a href="{PATH_TO_ROOT}/forum/">Forum du projet</a> pour votre demande d'information.</span>
 					</div>
 				</div>
 				
@@ -26,11 +26,11 @@
 						<ul class="pbt-wiki-section-list pbt-content-about">
 							<li>
 								<i class="fa fa-file-text"></i>
-								<a href="{PATH_TO_ROOT}/wiki/presentation-de-phpboost">Présentation de PHPBoost</a>
+								<a href="{PATH_TO_ROOT}/wiki/presentation-de-phpboost">PrÃ©sentation de PHPBoost</a>
 							</li>
 							<li>
 								<i class="fa fa-file-text"></i>
-								<a href="{PATH_TO_ROOT}/download/">Télécharger PHPBoost</a>
+								<a href="{PATH_TO_ROOT}/download/">TÃ©lÃ©charger PHPBoost</a>
 							</li>
 							<li>
 								<i class="fa fa-file-text"></i>
@@ -53,11 +53,11 @@
 							</li>
 							<li>
 								<i class="fa fa-file-text"></i>
-								<a href="{PATH_TO_ROOT}/wiki/structure-d-un-theme">Structure d'un thème</a>
+								<a href="{PATH_TO_ROOT}/wiki/structure-d-un-theme">Structure d'un thÃ¨me</a>
 							</li>
 							<li>
 								<i class="fa fa-file-text"></i>
-								<a href="{PATH_TO_ROOT}/wiki/creer-un-module">Créer un module</a>
+								<a href="{PATH_TO_ROOT}/wiki/creer-un-module">CrÃ©er un module</a>
 							</li>
 						</ul>
 					</div>
@@ -67,7 +67,7 @@
 				<section class="pbt-wiki-section">
 					<header>
 						<h2>
-							<a href="{PATH_TO_ROOT}/wiki/presentation-de-phpboost">Présentation de PHPBoost</a>
+							<a href="{PATH_TO_ROOT}/wiki/presentation-de-phpboost">PrÃ©sentation de PHPBoost</a>
 							<span class="more">Tout savoir sur le projet</span>
 						</h2>
 					</header>
@@ -76,18 +76,18 @@
 						<ul class="pbt-wiki-section-list">
 							<li>
 								<i class="fa fa-file-text"></i>
-								<a href="{PATH_TO_ROOT}/wiki/presentation-de-phpboost">Présentation de PHPBoost</a>
+								<a href="{PATH_TO_ROOT}/wiki/presentation-de-phpboost">PrÃ©sentation de PHPBoost</a>
 								<span class="more"> - Tout savoir sur le projet</span>
 							</li>
 							<li>
 								<i class="fa fa-file-text"></i>
 								<a href="{PATH_TO_ROOT}/wiki/phpboost-4-1">PHPBoost 4.1</a>
-								<span class="more"> - Les nouveautés de la version 4.1 de PHPBoost</span>
+								<span class="more"> - Les nouveautÃ©s de la version 4.1 de PHPBoost</span>
 							</li>
 							<li>
 								<i class="fa fa-file-text"></i>
 								<a href="{PATH_TO_ROOT}/wiki/phpboost-4-0">PHPBoost 4.0</a>
-								<span class="more"> - Les nouveautés de la version 4.0 de PHPBoost</span>
+								<span class="more"> - Les nouveautÃ©s de la version 4.0 de PHPBoost</span>
 							</li>
 						</ul>
 						
@@ -95,7 +95,7 @@
 						<ul class="pbt-wiki-section-list">
 							<li>
 								<i class="fa fa-file-text"></i>
-								<a href="{PATH_TO_ROOT}/wiki/liste-des-modules-supportes-et-contenus-dans-votre-distribution">Liste des modules supportés et contenus dans votre distribution</a>
+								<a href="{PATH_TO_ROOT}/wiki/liste-des-modules-supportes-et-contenus-dans-votre-distribution">Liste des modules supportÃ©s et contenus dans votre distribution</a>
 							</li>
 						</ul>
 					</div>
@@ -106,26 +106,26 @@
 					<header>
 						<h2>
 							<a href="{PATH_TO_ROOT}/wiki/installation-et-migration-de-phpboost">Installation et migration de PHPBoost</a>
-							<span class="more">Installer et migrer PHPBoost très facilement</span>
+							<span class="more">Installer et migrer PHPBoost trÃ¨s facilement</span>
 						</h2>
 					</header>
 					<div class="content">
-						<p class="more">Les catégories</p>
+						<p class="more">Les catÃ©gories</p>
 						<ul class="pbt-wiki-section-list">
 							<li>
 								<i class="fa fa-folder-open"></i>
 								<a href="{PATH_TO_ROOT}/wiki/installation-de-phpboost">Installation de PHPBoost</a>
-								<span class="more"> - Obtenir une documentation détaillée sur l'installation de PHPBoost</span>
+								<span class="more"> - Obtenir une documentation dÃ©taillÃ©e sur l'installation de PHPBoost</span>
 							</li>
 							<li>
 								<i class="fa fa-folder-open"></i>
-								<a href="{PATH_TO_ROOT}/wiki/changement-d-hebergement-ou-de-serveur">Changement d'hébergement ou de serveur</a>
-								<span class="more"> - Changer de serveur sans aucun problème</span>
+								<a href="{PATH_TO_ROOT}/wiki/changement-d-hebergement-ou-de-serveur">Changement d'hÃ©bergement ou de serveur</a>
+								<span class="more"> - Changer de serveur sans aucun problÃ¨me</span>
 							</li>
 							<li>
 								<i class="fa fa-folder-open"></i>
 								<a href="{PATH_TO_ROOT}/wiki/migrer-son-site-vers-une-nouvelle-version">Migrer son site vers une nouvelle version</a>
-								<span class="more"> - Passer aux nouvelles versions majeures pour obtenir plus de fonctionnalités</span>
+								<span class="more"> - Passer aux nouvelles versions majeures pour obtenir plus de fonctionnalitÃ©s</span>
 							</li>
 						</ul>
 					</div>
@@ -140,22 +140,22 @@
 						</h2>
 					</header>
 					<div class="content">
-						<p class="more">Les catégories</p>
+						<p class="more">Les catÃ©gories</p>
 						<ul class="pbt-wiki-section-list">
 							<li>
 								<i class="fa fa-folder-open"></i>
 								<a href="{PATH_TO_ROOT}/wiki/panneau-d-administration">Panneau d'administration</a>
-								<span class="more"> - Documentation relative à l'administration et à son utilisation</span>
+								<span class="more"> - Documentation relative Ã  l'administration et Ã  son utilisation</span>
 							</li>
 							<li>
 								<i class="fa fa-folder-open"></i>
 								<a href="{PATH_TO_ROOT}/wiki/panneau-de-contribution">Panneau de contribution</a>
-								<span class="more"> - Laisser vos membres intéragir avec votre site</span>
+								<span class="more"> - Laisser vos membres intÃ©ragir avec votre site</span>
 							</li>
 							<li>
 								<i class="fa fa-folder-open"></i>
-								<a href="{PATH_TO_ROOT}/wiki/panneau-de-moderation">Panneau de modération</a>
-								<span class="more"> - Tout savoir sur la modération de PHPBoost</span>
+								<a href="{PATH_TO_ROOT}/wiki/panneau-de-moderation">Panneau de modÃ©ration</a>
+								<span class="more"> - Tout savoir sur la modÃ©ration de PHPBoost</span>
 							</li>
 							<li>
 								<i class="fa fa-folder-open"></i>
@@ -183,22 +183,22 @@
 						</h2>
 					</header>
 					<div class="content">
-						<p class="more">Les catégories</p>
+						<p class="more">Les catÃ©gories</p>
 						<ul class="pbt-wiki-section-list">
 							<li>
 								<i class="fa fa-folder-open"></i>
-								<a href="{PATH_TO_ROOT}/wiki/structure-d-un-theme">Structure un thème</a>
-								<span class="more"> - De A à Z</span>
+								<a href="{PATH_TO_ROOT}/wiki/structure-d-un-theme">Structure un thÃ¨me</a>
+								<span class="more"> - De A Ã  Z</span>
 							</li>
 							<li>
 								<i class="fa fa-folder-open"></i>
-								<a href="{PATH_TO_ROOT}/wiki/personnaliser-un-theme">Personnaliser un thème</a>
-								<span class="more"> - Modifier un thème existant</span>
+								<a href="{PATH_TO_ROOT}/wiki/personnaliser-un-theme">Personnaliser un thÃ¨me</a>
+								<span class="more"> - Modifier un thÃ¨me existant</span>
 							</li>
 							<li>
 								<i class="fa fa-folder-open"></i>
-								<a href="{PATH_TO_ROOT}/wiki/migrer-un-theme-vers-une-nouvelle-version">Migrer un thème vers une nouvelle version</a>
-								<span class="more"> - Faire évoluer votre thème</span>
+								<a href="{PATH_TO_ROOT}/wiki/migrer-un-theme-vers-une-nouvelle-version">Migrer un thÃ¨me vers une nouvelle version</a>
+								<span class="more"> - Faire Ã©voluer votre thÃ¨me</span>
 							</li>
 						</ul>
 					</div>
@@ -208,27 +208,27 @@
 				<section class="pbt-wiki-section">
 					<header>
 						<h2>
-							<a href="{PATH_TO_ROOT}/wiki/developper-avec-phpboost">Développer avec PHPBoost</a>
-							<span class="more">Créer des modules et du contenu dynamique</span>
+							<a href="{PATH_TO_ROOT}/wiki/developper-avec-phpboost">DÃ©velopper avec PHPBoost</a>
+							<span class="more">CrÃ©er des modules et du contenu dynamique</span>
 						</h2>
 					</header>
 					<div class="content">
-						<p class="more">Les catégories</p>
+						<p class="more">Les catÃ©gories</p>
 						<ul class="pbt-wiki-section-list">
 							<li>
 								<i class="fa fa-folder-open"></i>
-								<a href="{PATH_TO_ROOT}/wiki/creer-un-module">Créer un module</a>
-								<span class="more"> - Tout savoir sur la création d'un module</span>
+								<a href="{PATH_TO_ROOT}/wiki/creer-un-module">CrÃ©er un module</a>
+								<span class="more"> - Tout savoir sur la crÃ©ation d'un module</span>
 							</li>
 							<li>
 								<i class="fa fa-folder-open"></i>
-								<a href="{PATH_TO_ROOT}/wiki/creer-un-menu">Créer un menu</a>
-								<span class="more"> - Tout savoir sur la création d'un menu</span>
+								<a href="{PATH_TO_ROOT}/wiki/creer-un-menu">CrÃ©er un menu</a>
+								<span class="more"> - Tout savoir sur la crÃ©ation d'un menu</span>
 							</li>
 							<li>
 								<i class="fa fa-folder-open"></i>
 								<a href="{PATH_TO_ROOT}/wiki/migrer-un-module-vers-une-nouvelle-version">Migrer un module vers une nouvelle version</a>
-								<span class="more"> - Faire évoluer votre module</span>
+								<span class="more"> - Faire Ã©voluer votre module</span>
 							</li>
 						</ul>
 						
@@ -236,17 +236,17 @@
 						<ul class="pbt-wiki-section-list">
 							<li>
 								<i class="fa fa-file-text"></i>
-								<a href="{PATH_TO_ROOT}/wiki/conventions-de-developpement">Conventions de développement</a>
-								<span class="more"> - Styles de développement adoptés sur le projet PHPBoost</span>
+								<a href="{PATH_TO_ROOT}/wiki/conventions-de-developpement">Conventions de dÃ©veloppement</a>
+								<span class="more"> - Styles de dÃ©veloppement adoptÃ©s sur le projet PHPBoost</span>
 							</li>
 							<li>
 								<i class="fa fa-file-text"></i>
-								<a href="{PATH_TO_ROOT}/wiki/debogage-dans-phpboost">Débogage dans PHPBoost</a>
-								<span class="more"> - Les outils mis à disposition pour déboger votre code</span>
+								<a href="{PATH_TO_ROOT}/wiki/debogage-dans-phpboost">DÃ©bogage dans PHPBoost</a>
+								<span class="more"> - Les outils mis Ã  disposition pour dÃ©boger votre code</span>
 							</li>
 							<li>
 								<i class="fa fa-file-text"></i>
-								<a href="{PATH_TO_ROOT}/wiki/constantes-chargees-avec-l-environnement-phpboost">Constantes chargées avec l'environnement PHPBoost</a>
+								<a href="{PATH_TO_ROOT}/wiki/constantes-chargees-avec-l-environnement-phpboost">Constantes chargÃ©es avec l'environnement PHPBoost</a>
 							</li>
 							<li>
 								<i class="fa fa-file-text"></i>
@@ -280,17 +280,17 @@
 							</li>
 							<li>
 								<i class="fa fa-file-text"></i>
-								<a href="{PATH_TO_ROOT}/wiki/integrer-les-boutons-des-reseaux-sociaux">Intégrer les boutons des réseaux sociaux</a>
-								<span class="more"> - Ajouter les liens de "like" et de partage de vos réseaux sociaux préférés</span>
+								<a href="{PATH_TO_ROOT}/wiki/integrer-les-boutons-des-reseaux-sociaux">IntÃ©grer les boutons des rÃ©seaux sociaux</a>
+								<span class="more"> - Ajouter les liens de "like" et de partage de vos rÃ©seaux sociaux prÃ©fÃ©rÃ©s</span>
 							</li>
 							<li>
 								<i class="fa fa-file-text"></i>
-								<a href="{PATH_TO_ROOT}/wiki/ajouter-des-images-sur-les-categories-du-forum">Ajouter des images sur les catégries du forum</a>
+								<a href="{PATH_TO_ROOT}/wiki/ajouter-des-images-sur-les-categories-du-forum">Ajouter des images sur les catÃ©gries du forum</a>
 								<span class="more"> - Personnaliser votre forum</span>
 							</li>
 							<li>
 								<i class="fa fa-file-text"></i>
-								<a href="{PATH_TO_ROOT}/wiki/homecustom-ajout-d-elements-recuperes-dans-la-base-de-donnee">Ajouter des élements récupérés dans la base de donnée sur votre page d'accueil</a>
+								<a href="{PATH_TO_ROOT}/wiki/homecustom-ajout-d-elements-recuperes-dans-la-base-de-donnee">Ajouter des Ã©lements rÃ©cupÃ©rÃ©s dans la base de donnÃ©e sur votre page d'accueil</a>
 								<span class="more"> - Mettre en avant le contenu de votre site</span>
 							</li>
 							<li>
