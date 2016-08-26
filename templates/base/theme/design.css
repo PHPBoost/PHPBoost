@@ -36,6 +36,7 @@ header#header {
 
 /* --- Partie superieure du header --- */
 div#top-header {
+	position: relative;
 	display: flex;
 	display: -ms-flexbox;
 	display: -webkit-flex;
@@ -294,16 +295,11 @@ footer#footer .footer-infos span {
 div#compteur {
 	position: absolute;
 	right: 0;
-	margin-right: 15px;
+	bottom : 1em;
+	margin-right: 10px;
 	font-size: 0.9em;
-	color: #E9ECD9;
+	color: #F9FCFF;
 	text-align: right;
-}
-
-@media (min-width: 769px) {
-	div#compteur {
-		top: 100px;
-	}
 }
 
 /* --- Barre de lien rapide --- */

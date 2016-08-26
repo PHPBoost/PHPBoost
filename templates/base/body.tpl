@@ -15,6 +15,20 @@
 			# END menus_header #
 		# ENDIF #
 		</div>
+
+		# IF C_COMPTEUR #
+		<div id="compteur" class="hidden-small-screens">
+			<div class="compteur-total">
+				<span class="text-strong">{L_VISIT} : </span>
+				{COMPTEUR_TOTAL}
+			</div>
+			<div class="compteur-today">
+				<span class="text-strong">{L_TODAY} : </span>
+				{COMPTEUR_DAY}
+			</div>
+		</div>
+		# ENDIF #
+
 	</div>
 	<div id="sub-header">
 		<div id="sub-header-content">
@@ -30,14 +44,6 @@
 </header>
 
 <div id="global">
-	# IF C_COMPTEUR #
-	<div id="compteur">
-		<span class="text-strong">{L_VISIT} : </span>{COMPTEUR_TOTAL}
-		<br />
-		<span class="text-strong">{L_TODAY} : </span>{COMPTEUR_DAY}
-	</div>
-	# ENDIF #
-
 	# IF C_MENUS_LEFT_CONTENT #
 	<aside id="menu-left">
 		# START menus_left #
