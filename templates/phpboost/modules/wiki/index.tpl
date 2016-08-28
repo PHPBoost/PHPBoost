@@ -285,7 +285,7 @@
 							</li>
 							<li>
 								<i class="fa fa-file-text"></i>
-								<a href="{PATH_TO_ROOT}/wiki/ajouter-des-images-sur-les-categories-du-forum">Ajouter des images sur les catégries du forum</a>
+								<a href="{PATH_TO_ROOT}/wiki/ajouter-des-images-sur-les-categories-du-forum">Ajouter des images sur les catégories du forum</a>
 								<span class="more"> - Personnaliser votre forum</span>
 							</li>
 							<li>
