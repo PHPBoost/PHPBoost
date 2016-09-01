@@ -344,5 +344,9 @@ $lang['mail.success'] = 'L\'email a été envoyé';
 //Tempalte
 $lang['string_template.result'] = 'Temps de génération du template sans cache : :non_cached_time secondes<br />Temps de génération du template avec cache : :cached_time secondes<br />Longueur de la chaîne : :string_length caractères.';
 
+//Wiki
+$lang['wiki.module'] = 'Module Wiki';
+$lang['wiki.table.of.contents'] = 'Table des matières';
+$lang['wiki.contents'] = 'Contenu du wiki';
 
 ?>

@@ -582,3 +582,36 @@
 	</div>
 	<footer></footer>
 </section>
+
+
+<h2>{@wiki.module}</h2><br />
+<section>
+	<header></header>
+	<div class="content" style="overflow: hidden;">
+		<article>
+			<header>
+				<h3>{@wiki.table.of.contents}</h3>
+			</header>
+			<div class="content">
+				# START wikimenu #
+					<div class="wiki-summary">
+						<div class="wiki-summary-title">{@wiki.table.of.contents}</div>
+						{wikimenu.MENU}
+					</div>
+				# END wikimenu #
+			</div>
+			<footer></footer>
+		</article>
+		<article>
+			<header>
+				<h3>{@wiki.contents}</h3>
+			</header>
+			<div class="content">
+				{WIKI_CONTENTS}
+			</div>
+			<footer></footer>
+		</article>
+	</div>
+	<footer></footer>
+</section>
+
