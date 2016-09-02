@@ -61,9 +61,10 @@ class SandboxGraphicsCSSController extends ModuleController
 			$this->view->assign_block_vars('messages', array('VIEW' => $message));
 		}
 
-		if ( ModulesManager::is_module_installed( "wiki" ) )
+		if (ModulesManager::is_module_installed('wiki')  && ModulesManager::is_module_activated('wiki'))
 		{
-			include_once('../wiki/wiki_functions.php');	
+			include_once('../wiki/wiki_functions.php');
+			
 			//On crée le menu des paragraphes et on enregistre le menu
 			$contents = wiki_parse("
 				-- Paragraphe 1 --
@@ -89,22 +90,12 @@ class SandboxGraphicsCSSController extends ModuleController
 				-- Pararaphe 2 --
 				-- Pararaphe 3 --
 			");
-			$menu = '';
 			
-			$menu_list = wiki_explode_menu($contents);
-			$menu = wiki_display_menu($menu_list);
-
-			if (!empty($menu))
-			{
-				$this->view->assign_block_vars('wikimenu', array(
-					'MENU' => $menu
-				));
-			}
-
-			$this->view->put_all(array(
-				'WIKI_CONTENTS'  =>  FormatingHelper::second_parse(wiki_no_rewrite($contents))
+			$this->view->assign_block_vars('wikimenu', array(
+				'MENU' => wiki_display_menu(wiki_explode_menu($contents))
 			));
 
+			$this->view->put('WIKI_CONTENTS', FormatingHelper::second_parse(wiki_no_rewrite($contents)));
 		}
 
 		$pagination = new ModulePagination(2, 15, 5);
