@@ -3,10 +3,10 @@
 
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
-		<title>{TITLE}</title>
+		<title><![CDATA[{TITLE}]]></title>
 		<atom:link href="{U_LINK}" rel="self" type="application/rss+xml"/>
 		<link>{HOST}</link>
-		<description>{DESC}</description>
+		<description><![CDATA[{DESC}]]></description>
 		<copyright>(C) 2005-{THIS_YEAR} PHPBoost</copyright>
 		<language>{LANG}</language>
 		<generator>PHPBoost</generator>
