@@ -57,7 +57,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('ArticlesDisplayCategoryController', '`^(?:/([0-9]+)-([a-z0-9-_]+))?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?([0-9]+)?/?$`', array('id_category', 'rewrited_name', 'field', 'sort', 'page', 'subcategories_page')),
 	
 	//Utilities
-	new UrlControllerMapper('ArticlesPrintArticlesController', '`^/print/([0-9-]+)-([a-z0-9-_]+)/?$`', array('id', 'rewrited_title'))
+	new UrlControllerMapper('ArticlesPrintArticlesController', '`^/print/([0-9]+)-([a-z0-9-_]+)/?$`', array('id', 'rewrited_title'))
 );
 
 DispatchManager::dispatch($url_controller_mappers);
