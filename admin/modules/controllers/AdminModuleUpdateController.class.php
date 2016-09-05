@@ -213,7 +213,7 @@ class AdminModuleUpdateController extends AdminController
 							else
 								$zip->extract(PCLZIP_OPT_PATH, $modules_folder, PCLZIP_OPT_SET_CHMOD, 0755);
 							
-							$this->upgrade_module(AppContext::get_request(), $modules_id);
+							$this->upgrade_module(AppContext::get_request(), $module_id);
 						}
 						else
 						{
