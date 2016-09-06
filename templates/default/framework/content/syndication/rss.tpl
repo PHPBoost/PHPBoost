@@ -13,10 +13,10 @@
 		
 		# START item #
 		<item>
-			<title>{item.TITLE}</title>
+			<title><![CDATA[{item.TITLE}]]></title>
 			<link>{item.U_LINK}</link>
 			<guid>{item.U_GUID}</guid>
-			<description>{item.DESC}</description>
+			<description><![CDATA[{item.DESC}]]></description>
 			<pubDate>{item.DATE_RFC822}</pubDate>
 			# IF item.C_ENCLOSURE #
 			<enclosure url="{item.ENCLOSURE_URL}" length="{item.ENCLOSURE_LENGHT}" type="{item.ENCLOSURE_TYPE}" />
