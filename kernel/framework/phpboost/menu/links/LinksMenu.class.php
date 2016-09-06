@@ -126,7 +126,7 @@ class LinksMenu extends LinksMenuElement
 	public function display($template = false, $mode = LinksMenuElement::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
 	{
 		$filters = $this->get_filters();
-		$is_displayed = empty($filters) || $filters[0]->get_pattern() == '/';
+		$is_displayed = empty($filters) || $filters[0]->get_pattern() == '/' || $mode != LinksMenuElement::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING;
 		
 		foreach ($filters as $key => $filter) 
 		{
