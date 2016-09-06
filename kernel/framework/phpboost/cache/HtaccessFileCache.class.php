@@ -367,7 +367,7 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('# Tools');
 		$this->add_line('RewriteCond %{HTTP_USER_AGENT} ^(Dart.?Communications|Enfish|htdig|Java|larbin) [NC,OR]');
 		$this->add_line('RewriteCond %{HTTP_USER_AGENT} (FrontPage|Indy.?Library|RPT\-HTTPClient) [NC,OR]');
-		$this->add_line('RewriteCond %{HTTP_USER_AGENT} ^(libwww|lwp|libwww-perl.*|PHP|Python|www\.thatrobotsite\.com|webbandit|Wget|Zeus) [NC,OR]');
+		$this->add_line('RewriteCond %{HTTP_USER_AGENT} ^(libwww|lwp|libwww-perl.*|PHP|Python|www\.thatrobotsite\.com|webbandit|Zeus) [NC,OR]');
 		$this->add_line('RewriteCond %{HTTP_USER_AGENT} ^(Microsoft|MFC).(Data|Internet|URL|WebDAV|Foundation).(Access|Explorer|Control|MiniRedir|Class) [NC,OR]');
 		$this->add_line('# Unknown');
 		$this->add_line('RewriteCond %{HTTP_USER_AGENT} ^(Crawl_Application|Lachesis|Nutscrape) [NC,OR]');
