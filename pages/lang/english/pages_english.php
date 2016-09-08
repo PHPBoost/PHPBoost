@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : August 18, 2007
  *   last modified		: October 3rd, 2009 - JMNaylor
- *   copyright            : (C) 2007 Benoît Sautel
+ *   copyright            : (C) 2007 BenoÃ®t Sautel
  *   email                : ben.popeye@phpboost.com
  *
  *  
@@ -31,7 +31,7 @@
 #                                                           English                                                                             #
  ####################################################
 
-//Généralités
+//GÃ©nÃ©ralitÃ©s
 $LANG['pages'] = 'Pages';
 
 $LANG['page_hits'] = 'This page has been seen %d times';
@@ -51,7 +51,7 @@ $LANG['pages_config'] = 'Configuration';
 $LANG['pages_management'] = 'Pages management';
 $LANG['pages_manage'] = 'Manage pages';
 
-//Création / édition d'une page
+//CrÃ©ation / Ã©dition d'une page
 $LANG['pages_edition'] = 'Editing a page';
 $LANG['pages_creation'] = 'Creating a page';
 $LANG['pages_edit_page'] = 'Edition of the page <em>%s</em>';

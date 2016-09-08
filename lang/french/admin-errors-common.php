@@ -31,13 +31,13 @@
 
 $lang = array(
 	'errors' => 'Erreurs',
-	'logged_errors' => 'Erreurs archivées',
-	'logged_errors_list' => 'Liste des erreurs archivées',
+	'logged_errors' => 'Erreurs archivÃ©es',
+	'logged_errors_list' => 'Liste des erreurs archivÃ©es',
 	'clear_list' => 'Vider la liste',
 	'logged_errors_clear_confirmation' => 'Effacer toutes les erreurs ?',
 	'404_errors' => 'Erreurs 404',
 	'404_list' => 'Liste des erreurs 404',
-	'404_error_requested_url' => 'Url demandée',
+	'404_error_requested_url' => 'Url demandÃ©e',
 	'404_error_from_url' => 'Url de provenance',
 	'404_error_times' => 'Nombre',
 );

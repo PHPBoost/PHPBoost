@@ -30,14 +30,14 @@
  #						French						#
  ####################################################
 
-$lang['root_category_description'] = 'Bienvenue dans l\'espace multimédia du site !
+$lang['root_category_description'] = 'Bienvenue dans l\'espace multimÃ©dia du site !
 <br /><br />
-Une catégorie et un fichier multimédia ont été créés pour vous montrer comment fonctionne ce module. Voici quelques conseils pour bien débuter sur ce module.
+Une catÃ©gorie et un fichier multimÃ©dia ont Ã©tÃ© crÃ©Ã©s pour vous montrer comment fonctionne ce module. Voici quelques conseils pour bien dÃ©buter sur ce module.
 <br /><br /> 
 <ul class="formatter-ul">
 	<li class="formatter-li"> Pour configurer ou personnaliser l\'accueil de votre module, rendez vous dans l\'<a href="' . MediaUrlBuilder::configuration()->relative() . '">administration du module</a></li>
-	<li class="formatter-li"> Pour créer des catégories, <a href="' . MediaUrlBuilder::add_category()->relative() . '">cliquez ici</a> </li>
-	<li class="formatter-li"> Pour créer des fichiers multimédias, <a href="' . MediaUrlBuilder::add()->relative() . '">cliquez ici</a></li>
+	<li class="formatter-li"> Pour crÃ©er des catÃ©gories, <a href="' . MediaUrlBuilder::add_category()->relative() . '">cliquez ici</a> </li>
+	<li class="formatter-li"> Pour crÃ©er des fichiers multimÃ©dias, <a href="' . MediaUrlBuilder::add()->relative() . '">cliquez ici</a></li>
 </ul>
-<br />Pour en savoir plus, n\'hésitez pas à consulter la documentation du module sur le site de <a href="http://www.phpboost.com">PHPBoost</a>.';
+<br />Pour en savoir plus, n\'hÃ©sitez pas Ã  consulter la documentation du module sur le site de <a href="http://www.phpboost.com">PHPBoost</a>.';
 ?>

@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                :  September 27, 2007
  *   last modified		: August 1st, 2009 - Forensic
- *   copyright            : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *  
@@ -76,7 +76,7 @@ $LANG['colors'] = 'Colors';
 $LANG['calendar'] = 'Calendar';
 $LANG['events'] = 'Events';
 
-//Sites référents.
+//Sites rÃ©fÃ©rents.
 $LANG['total_visit'] = 'Total visits';
 $LANG['average_visit'] = 'Average visits';
 $LANG['trend'] = 'Trend';
@@ -116,7 +116,7 @@ $stats_array_browsers = array(
 	'other' => array('Autres', '../other.png')
 	);
 
-	//Système d'exploitation.
+	//SystÃ¨me d'exploitation.
 	global $stats_array_os;
 	$stats_array_os = array(
 	'android' => array('Android', 'android.png'),

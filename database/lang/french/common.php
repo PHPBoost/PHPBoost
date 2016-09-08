@@ -30,14 +30,14 @@
  #						French						#
  ####################################################
 
-$lang['module_title'] = 'Base de données';
-$lang['module_config_title'] = 'Configuration du module base de données';
+$lang['module_title'] = 'Base de donnÃ©es';
+$lang['module_config_title'] = 'Configuration du module base de donnÃ©es';
 
-$lang['database.actions.database_management'] = 'Gestion base de données';
-$lang['database.actions.db_sql_queries'] = 'Requêtes SQL';
+$lang['database.actions.database_management'] = 'Gestion base de donnÃ©es';
+$lang['database.actions.db_sql_queries'] = 'RequÃªtes SQL';
 
 //config
-$lang['config.database-tables-optimization-enabled'] = 'Activer l\'optimisation automatique des tables de la base de données';
+$lang['config.database-tables-optimization-enabled'] = 'Activer l\'optimisation automatique des tables de la base de donnÃ©es';
 $lang['config.database-tables-optimization-day'] = 'Jour de l\'optimisation';
-$lang['config.database-tables-optimization-day.explain'] = 'Optimisation exécutée dans la nuit';
+$lang['config.database-tables-optimization-day.explain'] = 'Optimisation exÃ©cutÃ©e dans la nuit';
 ?>

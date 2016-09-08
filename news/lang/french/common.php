@@ -35,32 +35,32 @@ $lang['news'] = 'News';
 $lang['news.add'] = 'Ajouter une news';
 $lang['news.edit'] = 'Modifier une news';
 $lang['news.pending'] = 'News en attente';
-$lang['news.manage'] = 'Gérer les news';
+$lang['news.manage'] = 'GÃ©rer les news';
 $lang['news.management'] = 'Gestion des news';
 
 $lang['news.seo.description.root'] = 'Toutes les news du site :site.';
 $lang['news.seo.description.tag'] = 'Toutes les news sur le sujet :subject.';
 $lang['news.seo.description.pending'] = 'Toutes les news en attente.';
 
-$lang['news.form.short_contents'] = 'Condensé de la news';
-$lang['news.form.short_contents.description'] = 'Pour que le condensé de la news soit affiché, veuillez activer l\'option dans la configuration du module';
-$lang['news.form.short_contents.enabled'] = 'Personnaliser le condensé de la news';
-$lang['news.form.short_contents.enabled.description'] = 'Si non coché, la news est automatiquement coupée à :number caractères et le formatage du texte supprimé.';
-$lang['news.form.top_list'] = 'Placer la news en tête de liste';
-$lang['news.form.contribution.explain'] = 'Vous n\'êtes pas autorisé à créer une news, cependant vous pouvez en proposer une.';
+$lang['news.form.short_contents'] = 'CondensÃ© de la news';
+$lang['news.form.short_contents.description'] = 'Pour que le condensÃ© de la news soit affichÃ©, veuillez activer l\'option dans la configuration du module';
+$lang['news.form.short_contents.enabled'] = 'Personnaliser le condensÃ© de la news';
+$lang['news.form.short_contents.enabled.description'] = 'Si non cochÃ©, la news est automatiquement coupÃ©e Ã  :number caractÃ¨res et le formatage du texte supprimÃ©.';
+$lang['news.form.top_list'] = 'Placer la news en tÃªte de liste';
+$lang['news.form.contribution.explain'] = 'Vous n\'Ãªtes pas autorisÃ© Ã  crÃ©er une news, cependant vous pouvez en proposer une.';
 
 //Administration
 $lang['admin.config.number_columns_display_news'] = 'Nombre de colonnes pour afficher les news';
-$lang['admin.config.display_condensed'] = 'Afficher le condensé de la news et non la news entière';
-$lang['admin.config.display_descriptions_to_guests'] = 'Afficher le condensé des news aux visiteurs s\'ils n\'ont pas l\'autorisation de lecture';
-$lang['admin.config.number_character_to_cut'] = 'Nombre de caractères pour couper la news';
+$lang['admin.config.display_condensed'] = 'Afficher le condensÃ© de la news et non la news entiÃ¨re';
+$lang['admin.config.display_descriptions_to_guests'] = 'Afficher le condensÃ© des news aux visiteurs s\'ils n\'ont pas l\'autorisation de lecture';
+$lang['admin.config.number_character_to_cut'] = 'Nombre de caractÃ¨res pour couper la news';
 $lang['admin.config.news_suggestions_enabled'] = 'Activer l\'affichage des suggestions';
 
 //Feed name
-$lang['feed.name'] = 'Actualités';
+$lang['feed.name'] = 'ActualitÃ©s';
 
 //Messages
-$lang['news.message.success.add'] = 'La news <b>:name</b> a été ajoutée';
-$lang['news.message.success.edit'] = 'La news <b>:name</b> a été modifiée';
-$lang['news.message.success.delete'] = 'La news <b>:name</b> a été supprimée';
+$lang['news.message.success.add'] = 'La news <b>:name</b> a Ã©tÃ© ajoutÃ©e';
+$lang['news.message.success.edit'] = 'La news <b>:name</b> a Ã©tÃ© modifiÃ©e';
+$lang['news.message.success.delete'] = 'La news <b>:name</b> a Ã©tÃ© supprimÃ©e';
 ?>

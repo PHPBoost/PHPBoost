@@ -28,7 +28,7 @@
  ####################################################
  #                     English                      #
  ####################################################
- 
+
 $lang['bb_smileys'] = 'Smilies';
 $lang['bb_bold'] = 'Bold: [b]text[/b]';
 $lang['bb_italic'] = 'Italic: [i]text[/i]';
@@ -67,7 +67,7 @@ $lang['bb_sub'] = 'Sub [sub]text[/sub]';
 $lang['bb_anchor'] = 'Anchor somewhere in the page [anchor=x]text[/anchor]';
 $lang['bb_sound'] = 'Sound [sound]url sound[/sound]';
 $lang['bb_movie'] = 'Movie [movie=width,height]url movie[/movie]';
-$lang['bb_youtube'] = 'Insert youtube vidéo : [youtube=width,height]url youtube[/youtube]';
+$lang['bb_youtube'] = 'Insert youtube vidï¿½o : [youtube=width,height]url youtube[/youtube]';
 $lang['bb_help'] = 'BBcode help';
 $lang['bb_upload'] = 'Attach files';
 $lang['bb_url_prompt'] = 'Link address?';

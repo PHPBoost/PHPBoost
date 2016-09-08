@@ -30,14 +30,14 @@
  ####################################################
  
 $lang['advises'] = 'Conseils';
-$lang['advises.modules_management'] = '<a href="' . AdminModulesUrlBuilder::list_installed_modules()->rel() . '">Désactivez ou désinstallez les modules</a> que vous n\'utilisez pas pour économiser les ressources du site.';
-$lang['advises.check_modules_authorizations'] = 'Vérifiez les autorisations d\'accès de tous vos modules et menus avant de mettre le site en ligne pour éviter que les visiteurs ou des utilisateurs non autorisés aient accès à des sections protégées du site.';
-$lang['advises.disable_debug_mode'] = '<a href="' . AdminConfigUrlBuilder::advanced_config()->rel() . '">Désactivez le mode debug</a> pour ne pas afficher les erreurs aux utilisateurs (les erreurs sont quand même logguées dans les <a href="' . AdminErrorsUrlBuilder::logged_errors()->rel() . '">Erreurs archivées</a>).';
-$lang['advises.enable_url_rewriting'] = '<a href="' . AdminConfigUrlBuilder::advanced_config()->rel() . '">Activez la réécriture des URL</a> pour que les URL de votre site soient plus lisibles (très utile pour le référencement).';
+$lang['advises.modules_management'] = '<a href="' . AdminModulesUrlBuilder::list_installed_modules()->rel() . '">DÃ©sactivez ou dÃ©sinstallez les modules</a> que vous n\'utilisez pas pour Ã©conomiser les ressources du site.';
+$lang['advises.check_modules_authorizations'] = 'VÃ©rifiez les autorisations d\'accÃ¨s de tous vos modules et menus avant de mettre le site en ligne pour Ã©viter que les visiteurs ou des utilisateurs non autorisÃ©s aient accÃ¨s Ã  des sections protÃ©gÃ©es du site.';
+$lang['advises.disable_debug_mode'] = '<a href="' . AdminConfigUrlBuilder::advanced_config()->rel() . '">DÃ©sactivez le mode debug</a> pour ne pas afficher les erreurs aux utilisateurs (les erreurs sont quand mÃªme logguÃ©es dans les <a href="' . AdminErrorsUrlBuilder::logged_errors()->rel() . '">Erreurs archivÃ©es</a>).';
+$lang['advises.enable_url_rewriting'] = '<a href="' . AdminConfigUrlBuilder::advanced_config()->rel() . '">Activez la rÃ©Ã©criture des URL</a> pour que les URL de votre site soient plus lisibles (trÃ¨s utile pour le rÃ©fÃ©rencement).';
 $lang['advises.enable_output_gz'] = '<a href="' . AdminConfigUrlBuilder::advanced_config()->rel() . '">Activez la compression des pages</a> pour gagner en performance.';
 $lang['advises.enable_apcu_cache'] = '<a href="' . AdminCacheUrlBuilder::configuration()->rel() . '">Activez le cache APCu</a> pour permettre de charger le cache en RAM sur le serveur et non sur le disque-dur et ainsi gagner d\'avantage en performance.';
-$lang['advises.upgrade_php_version'] = 'Mettez à jour votre version PHP pour passer en 5.6 (qui est la dernière version stable) si votre hébergeur le permet.';
-$lang['advises.save_database'] = 'Pensez à sauvegarder votre base de données régulièrement.';
-$lang['advises.optimize_database_tables'] = '<a href="' . AdminConfigUrlBuilder::advanced_config()->rel() . '">Activez l\'optimisation automatique des tables</a> ou optimisez de temps en temps vos tables dans le module <strong>Base de données</strong> (s\'il est installé) ou dans votre outil de gestion de base de donnée pour récupérer de la place perdue en base.';
-$lang['advises.password_security'] = 'Augmentez la complexité et la longueur des mots de passe dans la <a href="' . AdminMembersUrlBuilder::configuration()->rel() . '">configuration des membres</a> pour renforcer la sécurité.';
+$lang['advises.upgrade_php_version'] = 'Mettez Ã  jour votre version PHP pour passer en 5.6 (qui est la derniÃ¨re version stable) si votre hÃ©bergeur le permet.';
+$lang['advises.save_database'] = 'Pensez Ã  sauvegarder votre base de donnÃ©es rÃ©guliÃ¨rement.';
+$lang['advises.optimize_database_tables'] = '<a href="' . AdminConfigUrlBuilder::advanced_config()->rel() . '">Activez l\'optimisation automatique des tables</a> ou optimisez de temps en temps vos tables dans le module <strong>Base de donnÃ©es</strong> (s\'il est installÃ©) ou dans votre outil de gestion de base de donnÃ©e pour rÃ©cupÃ©rer de la place perdue en base.';
+$lang['advises.password_security'] = 'Augmentez la complexitÃ© et la longueur des mots de passe dans la <a href="' . AdminMembersUrlBuilder::configuration()->rel() . '">configuration des membres</a> pour renforcer la sÃ©curitÃ©.';
 ?>

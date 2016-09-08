@@ -34,15 +34,15 @@ $lang['quick_links'] = 'Liens rapides';
 $lang['management'] = 'Gestion';
 $lang['add'] = 'Ajouter';
 $lang['configuration'] = 'Configuration';
-$lang['updates'] = 'Mises à jour';
+$lang['updates'] = 'Mises Ã  jour';
 
 $lang['administration'] = 'Administration';
 
-$lang['administration.configuration.general'] = 'Configuration générale';
-$lang['administration.configuration.advanced'] = 'Configuration avancée';
+$lang['administration.configuration.general'] = 'Configuration gÃ©nÃ©rale';
+$lang['administration.configuration.advanced'] = 'Configuration avancÃ©e';
 $lang['administration.configuration.mail'] = 'Envoi de mail';
 
-$lang['administration.themes'] = 'Thèmes';
+$lang['administration.themes'] = 'ThÃ¨mes';
 $lang['administration.langs'] = 'Langues';
 $lang['administration.smileys'] = 'Smileys';
 $lang['administration.alerts'] = 'Alertes';
@@ -58,12 +58,12 @@ $lang['tools.cache'] = 'Cache';
 $lang['tools.cache.syndication'] = 'Syndication';
 $lang['tools.cache.css'] = 'CSS';
 
-$lang['tools.errors-archived'] = 'Erreurs archivées';
+$lang['tools.errors-archived'] = 'Erreurs archivÃ©es';
 $lang['tools.404-errors-archived'] = 'Erreurs 404';
 
 $lang['tools.server'] = 'Serveur';
 $lang['tools.server.phpinfo'] = 'PHP info';
-$lang['tools.server.system-report'] = 'Rapport système';
+$lang['tools.server.system-report'] = 'Rapport systÃ¨me';
 
 $lang['users'] = 'Utilisateurs';
 $lang['users.punishement'] = 'Sanction';

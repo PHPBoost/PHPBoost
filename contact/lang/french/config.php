@@ -32,9 +32,9 @@
 
 $lang['contact_fieldset_title'] = 'Contacter les gestionnaires du site';
 $lang['mail_address'] = 'Adresse mail';
-$lang['mail_address_explain'] = 'Votre adresse mail doit être valide pour que vous puissiez obtenir une réponse';
+$lang['mail_address_explain'] = 'Votre adresse mail doit Ãªtre valide pour que vous puissiez obtenir une rÃ©ponse';
 $lang['contact_subject'] = 'Objet';
-$lang['contact_subject_explain'] = 'Résumez en quelques mot l\'objet de votre demande';
+$lang['contact_subject_explain'] = 'RÃ©sumez en quelques mot l\'objet de votre demande';
 $lang['contact_recipients'] = 'Destinataire(s)';
 $lang['contact_recipients_admins'] = 'Administrateurs';
 $lang['message'] = 'Message';

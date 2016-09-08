@@ -27,60 +27,60 @@
 
 
  ####################################################
- #						French						#
+ #		French				    #
  ####################################################
 
-$lang['module_title'] = 'Téléchargements';
-$lang['module_config_title'] = 'Configuration des téléchargements';
+$lang['module_title'] = 'TÃ©lÃ©chargements';
+$lang['module_config_title'] = 'Configuration des tÃ©lÃ©chargements';
 
 $lang['download.actions.add'] = 'Ajouter un fichier';
 $lang['download.add'] = 'Ajout d\'un fichier';
 $lang['download.edit'] = 'Modification d\'un fichier';
 $lang['download.pending'] = 'Fichiers en attente';
-$lang['download.manage'] = 'Gérer les fichiers';
+$lang['download.manage'] = 'GÃ©rer les fichiers';
 $lang['download.management'] = 'Gestion des fichiers';
 
-$lang['most_downloaded_files'] = 'Meilleurs téléchargements';
-$lang['last_download_files'] = 'Derniers fichiers en téléchargement';
-$lang['download'] = 'Télécharger';
-$lang['downloaded_times'] = 'Téléchargé :number_downloads fois';
-$lang['downloads_number'] = 'Nombre de téléchargements';
+$lang['most_downloaded_files'] = 'Meilleurs tÃ©lÃ©chargements';
+$lang['last_download_files'] = 'Derniers fichiers en tÃ©lÃ©chargement';
+$lang['download'] = 'TÃ©lÃ©charger';
+$lang['downloaded_times'] = 'TÃ©lÃ©chargÃ© :number_downloads fois';
+$lang['downloads_number'] = 'Nombre de tÃ©lÃ©chargements';
 $lang['file_infos'] = 'Informations sur le fichier';
 $lang['file'] = 'Fichier';
 $lang['files'] = 'Fichiers';
 
 //config
-$lang['config.category_display_type'] = 'Affichage des informations dans les catégories';
-$lang['config.category_display_type.display_summary'] = 'Résumé';
+$lang['config.category_display_type'] = 'Affichage des informations dans les catÃ©gories';
+$lang['config.category_display_type.display_summary'] = 'RÃ©sumÃ©';
 $lang['config.category_display_type.display_all_content'] = 'Tout le contenu';
 $lang['config.category_display_type.display_table'] = 'Tableau';
-$lang['config.display_descriptions_to_guests'] = 'Afficher le résumé des fichiers aux visiteurs s\'ils n\'ont pas l\'autorisation de lecture';
-$lang['config.downloaded_files_menu'] = 'Menu téléchargements';
+$lang['config.display_descriptions_to_guests'] = 'Afficher le rÃ©sumÃ© des fichiers aux visiteurs s\'ils n\'ont pas l\'autorisation de lecture';
+$lang['config.downloaded_files_menu'] = 'Menu tÃ©lÃ©chargements';
 $lang['config.sort_type'] = 'Ordre d\'affichage des fichiers';
-$lang['config.sort_type.explain'] = 'Sens décroissant';
-$lang['config.files_number_in_menu'] = 'Nombre de fichiers affichés maximum';
-$lang['config.limit_oldest_file_day_in_menu'] = 'Limiter l\'âge des fichiers dans le menu';
+$lang['config.sort_type.explain'] = 'Sens dÃ©croissant';
+$lang['config.files_number_in_menu'] = 'Nombre de fichiers affichÃ©s maximum';
+$lang['config.limit_oldest_file_day_in_menu'] = 'Limiter l\'Ã¢ge des fichiers dans le menu';
 $lang['config.oldest_file_day_in_menu'] = 'Age maximum (en jours)';
 
 //authorizations
-$lang['authorizations.display_download_link'] = 'Autorisation d\'afficher le lien de téléchargement';
+$lang['authorizations.display_download_link'] = 'Autorisation d\'afficher le lien de tÃ©lÃ©chargement';
 
 //SEO
 $lang['download.seo.description.tag'] = 'Tous les fichiers sur le sujet :subject.';
 $lang['download.seo.description.pending'] = 'Tous les fichiers en attente.';
 
 //contribution
-$lang['download.form.contribution.explain'] = 'Vous n\'êtes pas autorisé à ajouter un fichier, cependant vous pouvez en proposer un.';
+$lang['download.form.contribution.explain'] = 'Vous n\'Ãªtes pas autorisÃ© Ã  ajouter un fichier, cependant vous pouvez en proposer un.';
 
 //Form
-$lang['download.form.reset_number_downloads'] = 'Réinitialiser le nombre de téléchargements';
+$lang['download.form.reset_number_downloads'] = 'RÃ©initialiser le nombre de tÃ©lÃ©chargements';
 $lang['download.form.author_display_name_enabled'] = 'Personnaliser le nom de l\'auteur';
 $lang['download.form.author_display_name'] = 'Nom de l\'auteur';
 
 //Messages
-$lang['download.message.success.add'] = 'Le fichier <b>:name</b> a été ajouté';
-$lang['download.message.success.edit'] = 'Le fichier <b>:name</b> a été modifié';
-$lang['download.message.success.delete'] = 'Le fichier <b>:name</b> a été supprimé';
-$lang['download.message.error.file_not_found'] = 'Fichier introuvable, le lien est peut-être mort.';
-$lang['download.message.warning.unauthorized_to_download_file'] = 'Vous n\'êtes pas autorisé à télécharger le fichier.';
+$lang['download.message.success.add'] = 'Le fichier <b>:name</b> a Ã©tÃ© ajoutÃ©';
+$lang['download.message.success.edit'] = 'Le fichier <b>:name</b> a Ã©tÃ© modifiÃ©';
+$lang['download.message.success.delete'] = 'Le fichier <b>:name</b> a Ã©tÃ© supprimÃ©';
+$lang['download.message.error.file_not_found'] = 'Fichier introuvable, le lien est peut-Ãªtre mort.';
+$lang['download.message.warning.unauthorized_to_download_file'] = 'Vous n\'Ãªtes pas autorisÃ© Ã  tÃ©lÃ©charger le fichier.';
 ?>

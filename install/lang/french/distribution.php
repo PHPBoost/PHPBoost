@@ -26,8 +26,8 @@
  ###################################################*/
 
 $lang = array(
-	'distribution.name' => 'Développement',
-	'distribution.description' => 'Vous êtes sur le point d\'installer la version de développement de PHPBoost.
-<p>Cette version n\'est pas stable et n\'est donc pas à utiliser en production sur un site.</p>'
+	'distribution.name' => 'DÃ©veloppement',
+	'distribution.description' => 'Vous Ãªtes sur le point d\'installer la version de dÃ©veloppement de PHPBoost.
+<p>Cette version n\'est pas stable et n\'est donc pas Ã  utiliser en production sur un site.</p>'
 );
 ?>

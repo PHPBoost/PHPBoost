@@ -34,82 +34,82 @@ $lang['module_title'] = 'Calendrier';
 $lang['module_config_title'] = 'Configuration du calendrier';
 
 //Messages divers
-$lang['calendar.notice.no_current_action'] = 'Aucun événement pour cette date';
-$lang['calendar.notice.no_pending_event'] = 'Aucun événement en attente';
-$lang['calendar.notice.suscribe.event_date_expired'] = 'L\'événement est terminé, vous ne pouvez pas vous inscrire.';
-$lang['calendar.notice.unsuscribe.event_date_expired'] = 'L\'événement est terminé, vous ne pouvez pas vous désinscrire.';
+$lang['calendar.notice.no_current_action'] = 'Aucun Ã©vÃ©nement pour cette date';
+$lang['calendar.notice.no_pending_event'] = 'Aucun Ã©vÃ©nement en attente';
+$lang['calendar.notice.suscribe.event_date_expired'] = 'L\'Ã©vÃ©nement est terminÃ©, vous ne pouvez pas vous inscrire.';
+$lang['calendar.notice.unsuscribe.event_date_expired'] = 'L\'Ã©vÃ©nement est terminÃ©, vous ne pouvez pas vous dÃ©sinscrire.';
 
 //Titres
-$lang['calendar.titles.add_event'] = 'Ajouter un événement';
-$lang['calendar.titles.delete_event'] = 'Supprimer l\'événement';
+$lang['calendar.titles.add_event'] = 'Ajouter un Ã©vÃ©nement';
+$lang['calendar.titles.delete_event'] = 'Supprimer l\'Ã©vÃ©nement';
 $lang['calendar.titles.delete_occurrence'] = 'L\'occurrence';
-$lang['calendar.titles.delete_all_events_of_the_serie'] = 'Tous les événements de la série';
-$lang['calendar.titles.event_edition'] = 'Edition de l\'événement';
-$lang['calendar.titles.event_removal'] = 'Suppression de l\'événement';
-$lang['calendar.titles.events_of'] = 'Evénements du';
-$lang['calendar.titles.event'] = 'Evénement';
-$lang['calendar.titles.recurrence'] = 'Récurrence';
-$lang['calendar.titles.repetition'] = 'Répétition';
-$lang['calendar.pending'] = 'Evénements en attente';
-$lang['calendar.manage'] = 'Gérer les événements';
-$lang['calendar.events_list'] = 'Liste des événements';
+$lang['calendar.titles.delete_all_events_of_the_serie'] = 'Tous les Ã©vÃ©nements de la sÃ©rie';
+$lang['calendar.titles.event_edition'] = 'Edition de l\'Ã©vÃ©nement';
+$lang['calendar.titles.event_removal'] = 'Suppression de l\'Ã©vÃ©nement';
+$lang['calendar.titles.events_of'] = 'EvÃ©nements du';
+$lang['calendar.titles.event'] = 'EvÃ©nement';
+$lang['calendar.titles.recurrence'] = 'RÃ©currence';
+$lang['calendar.titles.repetition'] = 'RÃ©pÃ©tition';
+$lang['calendar.pending'] = 'EvÃ©nements en attente';
+$lang['calendar.manage'] = 'GÃ©rer les Ã©vÃ©nements';
+$lang['calendar.events_list'] = 'Liste des Ã©vÃ©nements';
 
 //Labels
 $lang['calendar.labels.location'] = 'Adresse';
-$lang['calendar.labels.created_by'] = 'Créé par';
-$lang['calendar.labels.registration_authorized'] = 'Activer l\'inscription des membres à l\'événement';
+$lang['calendar.labels.created_by'] = 'CrÃ©Ã© par';
+$lang['calendar.labels.registration_authorized'] = 'Activer l\'inscription des membres Ã  l\'Ã©vÃ©nement';
 $lang['calendar.labels.max_registered_members'] = 'Nombre de participants maximum';
-$lang['calendar.labels.max_registered_members.explain'] = '0 pour illimité';
+$lang['calendar.labels.max_registered_members.explain'] = '0 pour illimitÃ©';
 $lang['calendar.labels.remaining_place'] = 'Plus qu\'une place disponible !';
 $lang['calendar.labels.remaining_places'] = 'Il ne reste que :missing_number places !';
-$lang['calendar.labels.max_participants_reached'] = 'Le nombre de participants maximum a été atteint.';
-$lang['calendar.labels.last_registration_date_enabled'] = 'Définir une date limite d\'inscription';
-$lang['calendar.labels.last_registration_date'] = 'Dernière date d\'inscription';
+$lang['calendar.labels.max_participants_reached'] = 'Le nombre de participants maximum a Ã©tÃ© atteint.';
+$lang['calendar.labels.last_registration_date_enabled'] = 'DÃ©finir une date limite d\'inscription';
+$lang['calendar.labels.last_registration_date'] = 'DerniÃ¨re date d\'inscription';
 $lang['calendar.labels.remaining_day'] = 'Dernier jour pour s\'inscrire !';
 $lang['calendar.labels.remaining_days'] = 'Il ne reste que :days_left jours pour s\'inscrire !';
-$lang['calendar.labels.registration_closed'] = 'Les inscriptions pour cet événement sont terminées.';
-$lang['calendar.labels.repeat_type'] = 'Répéter';
-$lang['calendar.labels.repeat_number'] = 'Nombre de répétitions';
+$lang['calendar.labels.registration_closed'] = 'Les inscriptions pour cet Ã©vÃ©nement sont terminÃ©es.';
+$lang['calendar.labels.repeat_type'] = 'RÃ©pÃ©ter';
+$lang['calendar.labels.repeat_number'] = 'Nombre de rÃ©pÃ©titions';
 $lang['calendar.labels.repeat_times'] = 'fois';
 $lang['calendar.labels.repeat.never'] = 'Jamais';
-$lang['calendar.labels.events_number'] = ':events_number événements';
-$lang['calendar.labels.one_event'] = '1 événement';
-$lang['calendar.labels.start_date'] = 'Date de début';
+$lang['calendar.labels.events_number'] = ':events_number Ã©vÃ©nements';
+$lang['calendar.labels.one_event'] = '1 Ã©vÃ©nement';
+$lang['calendar.labels.start_date'] = 'Date de dÃ©but';
 $lang['calendar.labels.end_date'] = 'Date de fin';
-$lang['calendar.labels.contribution.explain'] = 'Vous n\'êtes pas autorisé à créer un événement, cependant vous pouvez en proposer un.';
+$lang['calendar.labels.contribution.explain'] = 'Vous n\'Ãªtes pas autorisÃ© Ã  crÃ©er un Ã©vÃ©nement, cependant vous pouvez en proposer un.';
 $lang['calendar.labels.birthday'] = 'Anniversaire';
 $lang['calendar.labels.birthday_title'] = 'Anniversaire de';
 $lang['calendar.labels.participants'] = 'Participants';
 $lang['calendar.labels.no_one'] = 'Personne';
 $lang['calendar.labels.suscribe'] = 'S\'inscrire';
-$lang['calendar.labels.unsuscribe'] = 'Se désinscrire';
+$lang['calendar.labels.unsuscribe'] = 'Se dÃ©sinscrire';
 
 //Administration
-$lang['calendar.config.events.management'] = 'Gestion des événements';
+$lang['calendar.config.events.management'] = 'Gestion des Ã©vÃ©nements';
 $lang['calendar.config.category.color'] = 'Couleur';
-$lang['calendar.config.items_number_per_page'] = 'Nombre d\'événements affichés par page';
-$lang['calendar.config.event_color'] = 'Couleur des événements';
+$lang['calendar.config.items_number_per_page'] = 'Nombre d\'Ã©vÃ©nements affichÃ©s par page';
+$lang['calendar.config.event_color'] = 'Couleur des Ã©vÃ©nements';
 $lang['calendar.config.members_birthday_enabled'] = 'Afficher les anniversaires des membres';
 $lang['calendar.config.birthday_color'] = 'Couleur des anniversaires';
 
 $lang['calendar.authorizations.display_registered_users'] = 'Autorisation d\'afficher la liste des inscrits';
-$lang['calendar.authorizations.register'] = 'Autorisation de s\'inscrire à l\'événement';
+$lang['calendar.authorizations.register'] = 'Autorisation de s\'inscrire Ã  l\'Ã©vÃ©nement';
 
 //SEO
-$lang['calendar.seo.description.root'] = 'Tous les événements du site :site.';
-$lang['calendar.seo.description.pending'] = 'Tous les événements en attente.';
+$lang['calendar.seo.description.root'] = 'Tous les Ã©vÃ©nements du site :site.';
+$lang['calendar.seo.description.pending'] = 'Tous les Ã©vÃ©nements en attente.';
 
 //Feed name
-$lang['calendar.feed.name'] = 'Evénements';
+$lang['calendar.feed.name'] = 'EvÃ©nements';
 
 //Messages
-$lang['calendar.message.success.add'] = 'L\'événement <b>:title</b> a été ajouté';
-$lang['calendar.message.success.edit'] = 'L\'événement <b>:title</b> a été modifié';
-$lang['calendar.message.success.delete'] = 'L\'événement <b>:title</b> a été supprimé';
+$lang['calendar.message.success.add'] = 'L\'Ã©vÃ©nement <b>:title</b> a Ã©tÃ© ajoutÃ©';
+$lang['calendar.message.success.edit'] = 'L\'Ã©vÃ©nement <b>:title</b> a Ã©tÃ© modifiÃ©';
+$lang['calendar.message.success.delete'] = 'L\'Ã©vÃ©nement <b>:title</b> a Ã©tÃ© supprimÃ©';
 
 //Erreurs
-$lang['calendar.error.e_invalid_date'] = 'La date entrée est invalide';
-$lang['calendar.error.e_invalid_start_date'] = 'La date de début entrée est invalide';
-$lang['calendar.error.e_invalid_end_date'] = 'La date de fin entrée est invalide';
-$lang['calendar.error.e_user_born_field_disabled'] = 'Le champ <b>Date de naissance</b> n\'est pas affiché dans le profil des membres. Veuillez activer l\'affichage du champ dans la <a href="' . AdminExtendedFieldsUrlBuilder::fields_list()->rel() . '">Gestion des champs du profils</a> pour permettre aux membres de renseigner leur date de naissance et afficher leur date d\'anniversaire dans le calendrier.';
+$lang['calendar.error.e_invalid_date'] = 'La date entrÃ©e est invalide';
+$lang['calendar.error.e_invalid_start_date'] = 'La date de dÃ©but entrÃ©e est invalide';
+$lang['calendar.error.e_invalid_end_date'] = 'La date de fin entrÃ©e est invalide';
+$lang['calendar.error.e_user_born_field_disabled'] = 'Le champ <b>Date de naissance</b> n\'est pas affichÃ© dans le profil des membres. Veuillez activer l\'affichage du champ dans la <a href="' . AdminExtendedFieldsUrlBuilder::fields_list()->rel() . '">Gestion des champs du profils</a> pour permettre aux membres de renseigner leur date de naissance et afficher leur date d\'anniversaire dans le calendrier.';
 ?>

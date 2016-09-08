@@ -30,20 +30,20 @@
  #						French						#
  ####################################################
 
-$lang['module_title'] = 'Multimédia';
-$lang['module_config_title'] = 'Configuration du module multimédia';
+$lang['module_title'] = 'MultimÃ©dia';
+$lang['module_config_title'] = 'Configuration du module multimÃ©dia';
 
-$lang['media.actions.add'] = 'Ajouter un fichier multimédia';
-$lang['media.manage'] = 'Gérer les fichiers multimédia';
-$lang['media.management'] = 'Gestion des fichiers multimédia';
+$lang['media.actions.add'] = 'Ajouter un fichier multimÃ©dia';
+$lang['media.manage'] = 'GÃ©rer les fichiers multimÃ©dia';
+$lang['media.management'] = 'Gestion des fichiers multimÃ©dia';
 
-$lang['content_type'] = 'Types de fichiers autorisés';
-$lang['content_type.music_and_video'] = 'Musique & Vidéo';
+$lang['content_type'] = 'Types de fichiers autorisÃ©s';
+$lang['content_type.music_and_video'] = 'Musique & VidÃ©o';
 $lang['content_type.music'] = 'Musique';
-$lang['content_type.video'] = 'Vidéo';
+$lang['content_type.video'] = 'VidÃ©o';
 
 //config
-$lang['config.max_video_width'] = 'Largeur maximale d\'une vidéo';
-$lang['config.max_video_height'] = 'Hauteur maximale d\'une vidéo';
-$lang['config.root_category_content_type'] = 'Types de fichiers autorisés dans la racine des fichiers multimédia';
+$lang['config.max_video_width'] = 'Largeur maximale d\'une vidÃ©o';
+$lang['config.max_video_height'] = 'Hauteur maximale d\'une vidÃ©o';
+$lang['config.root_category_content_type'] = 'Types de fichiers autorisÃ©s dans la racine des fichiers multimÃ©dia';
 ?>

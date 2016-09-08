@@ -35,7 +35,7 @@ $lang['default.cat.phpboost.description'] = 'Des questions sur PHPBoost ?';
 $lang['default.cat.dictionary.name'] = 'Dictionnaire';
 $lang['default.cat.dictionary.description'] = '';
 $lang['default.question.what_is_phpboost'] = 'Qu\'est-ce que PHPBoost ?';
-$lang['default.answer.what_is_phpboost'] = 'PHPBoost est un CMS (Content Management System ou système de gestion de contenu) français. Ce logiciel permet à n\'importe qui de créer son site de façon très simple, tout est assisté. Conçu pour satisfaire les débutants, il devrait aussi ravir les utilisateurs expérimentés qui souhaiteraient pousser son fonctionnement ou encore développer leurs propres modules.';
+$lang['default.answer.what_is_phpboost'] = 'PHPBoost est un CMS (Content Management System ou systÃ¨me de gestion de contenu) franÃ§ais. Ce logiciel permet Ã  n\'importe qui de crÃ©er son site de faÃ§on trÃ¨s simple, tout est assistÃ©. ConÃ§u pour satisfaire les dÃ©butants, il devrait aussi ravir les utilisateurs expÃ©rimentÃ©s qui souhaiteraient pousser son fonctionnement ou encore dÃ©velopper leurs propres modules.';
 $lang['default.question.what_is_a_cms'] = 'Qu\'est ce qu\'un CMS ?';
-$lang['default.answer.what_is_a_cms'] = 'C\'est un système de gestion de contenu ou SGC en français (en anglais :  Content Management Systems).';
+$lang['default.answer.what_is_a_cms'] = 'C\'est un systÃ¨me de gestion de contenu ou SGC en franÃ§ais (en anglais :  Content Management Systems).';
 ?>

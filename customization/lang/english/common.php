@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           admin-customization-common.php
+ *                           common.php
  *                            -------------------
  *   begin                : August 31, 2011
  *   copyright            : (C) 2011 Kevin MASSY

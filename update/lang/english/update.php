@@ -32,7 +32,7 @@
 
 
 $lang = array(
-	//Variables générales
+	//Variables gÃ©nÃ©rales
 	'update.title' => 'PHPBoost Update',
 	'steps.list' => 'Steps list',
 	'step.list.introduction' => 'Preamble',
@@ -86,7 +86,7 @@ $lang = array(
 	'folder.isNotWritable' => 'Not writable',
 	'folders.chmod.error' => 'Some directories seem to be missing and/or not writable. You need to create the missing directories or make the directories writable.',
 
-//Base de données
+//Base de donnÃ©es
 	'step.dbConfig.title' => 'Database settings',
 	'db.parameters.config' => 'Database connection parameters',
 	'db.parameters.config.explanation' => '<p>This step will generate a configuration file that contains the database settings and database tables will also be created at the same time. If you don\'t know your database settings, you might be able to find them in your host panel or need to ask for them from your host support.</p>',
@@ -158,8 +158,8 @@ $lang = array(
 						<fieldset>
 							<legend>Credits</legend>
 							<ul>
-								<li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, founder of PHPBoost project and developer retired</li>
-								<li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, developer retired</li>
+								<li><strong>RÃ©gis VIARRE</strong> <em>(alias CrowkaiT)</em>, founder of PHPBoost project and developer retired</li>
+								<li><strong>BenoÃ®t SAUTEL</strong> <em>(alias ben.popeye)</em>, developer retired</li>
 								<li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, developer retired</li>
 								<li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, developer</li>
 								<li><strong>Julien BRISWALTER</strong> <em>(alias j1.seth)</em>, developer</li>

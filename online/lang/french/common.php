@@ -36,14 +36,14 @@ $lang['module_config_title'] = 'Configuration du module en ligne';
 $lang['online.home'] = 'Accueil';
 $lang['online'] = 'En ligne';
 $lang['online.location'] = 'Localisation';
-$lang['online.last_update'] = 'Dernière mise à jour';
+$lang['online.last_update'] = 'DerniÃ¨re mise Ã  jour';
 
 $lang['online_user'] = 'utilisateur en ligne';
 $lang['online_users'] = 'utilisateurs en ligne';
 
 //Admin
-$lang['admin.nbr-displayed'] = 'Nombre d\'utilisateurs en ligne affichés dans le menu';
-$lang['admin.nbr-members-per-page'] = 'Nombre d\'utilisateurs affichés par page';
+$lang['admin.nbr-displayed'] = 'Nombre d\'utilisateurs en ligne affichÃ©s dans le menu';
+$lang['admin.nbr-members-per-page'] = 'Nombre d\'utilisateurs affichÃ©s par page';
 $lang['admin.display-order'] = 'Ordre d\'affichage';
 $lang['admin.authorizations.read'] = 'Autorisation d\'afficher la liste des membres en ligne';
 ?>

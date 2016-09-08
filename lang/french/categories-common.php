@@ -29,30 +29,30 @@
  #                     French                       #
  ####################################################
 
-$lang['category'] = 'Catégorie';
-$lang['categories'] = 'Catégories';
+$lang['category'] = 'CatÃ©gorie';
+$lang['categories'] = 'CatÃ©gories';
 
-$lang['sub_category'] = 'Sous-catégorie';
-$lang['sub_categories'] = 'Sous-catégories';
+$lang['sub_category'] = 'Sous-catÃ©gorie';
+$lang['sub_categories'] = 'Sous-catÃ©gories';
 
 //Management
-$lang['categories.management'] = 'Gestion des catégories';
-$lang['categories.manage'] = 'Gérer les catégories';
-$lang['category.add'] = 'Ajouter une catégorie';
-$lang['category.edit'] = 'Modifier une catégorie';
-$lang['category.delete'] = 'Supprimer une catégorie';
+$lang['categories.management'] = 'Gestion des catÃ©gories';
+$lang['categories.manage'] = 'GÃ©rer les catÃ©gories';
+$lang['category.add'] = 'Ajouter une catÃ©gorie';
+$lang['category.edit'] = 'Modifier une catÃ©gorie';
+$lang['category.delete'] = 'Supprimer une catÃ©gorie';
 
 //Form
-$lang['category.form.authorizations.description'] = 'Les autorisations générales du module s\'appliquent par défaut. Vous pouvez appliquer des permissions particulières.';
+$lang['category.form.authorizations.description'] = 'Les autorisations gÃ©nÃ©rales du module s\'appliquent par dÃ©faut. Vous pouvez appliquer des permissions particuliÃ¨res.';
 
 //Delete category
-$lang['delete.description'] = 'Vous êtes sur le point de supprimer la catégorie. Deux solutions s\'offrent à vous. Vous pouvez soit déplacer l\'ensemble de son contenu (éléments et sous catégories) dans une autre catégorie soit supprimer l\'ensemble de la catégorie. <strong>Attention, cette action est irréversible !</strong>';
+$lang['delete.description'] = 'Vous Ãªtes sur le point de supprimer la catÃ©gorie. Deux solutions s\'offrent Ã  vous. Vous pouvez soit dÃ©placer l\'ensemble de son contenu (Ã©lÃ©ments et sous catÃ©gories) dans une autre catÃ©gorie soit supprimer l\'ensemble de la catÃ©gorie. <strong>Attention, cette action est irrÃ©versible !</strong>';
 $lang['delete.category_and_content'] = 'Supprimer tout le contenu';
-$lang['delete.move_in_other_cat'] = 'Déplacer le contenu dans :';
+$lang['delete.move_in_other_cat'] = 'DÃ©placer le contenu dans :';
 
 //Messages
-$lang['category.message.success.add'] = 'La catégorie <b>:name</b> a été ajoutée';
-$lang['category.message.success.edit'] = 'La catégorie <b>:name</b> a été modifiée';
-$lang['category.message.success.delete'] = 'La catégorie <b>:name</b> a été supprimée';
-$lang['category.message.delete_confirmation'] = 'Voulez-vous vraiment supprimer la catégorie :name ?';
+$lang['category.message.success.add'] = 'La catÃ©gorie <b>:name</b> a Ã©tÃ© ajoutÃ©e';
+$lang['category.message.success.edit'] = 'La catÃ©gorie <b>:name</b> a Ã©tÃ© modifiÃ©e';
+$lang['category.message.success.delete'] = 'La catÃ©gorie <b>:name</b> a Ã©tÃ© supprimÃ©e';
+$lang['category.message.delete_confirmation'] = 'Voulez-vous vraiment supprimer la catÃ©gorie :name ?';
 ?>

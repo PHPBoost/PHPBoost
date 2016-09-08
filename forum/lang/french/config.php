@@ -31,7 +31,7 @@
  ####################################################
 
 $lang['default.forum_name'] = GeneralConfig::load()->get_site_name() . ' forum';
-$lang['default.message_before_topic_title'] = '[Réglé]';
-$lang['default.message_when_topic_is_unsolved'] = 'Sujet réglé ?';
-$lang['default.message_when_topic_is_solved'] = 'Sujet non réglé ?';
+$lang['default.message_before_topic_title'] = '[RÃ©glÃ©]';
+$lang['default.message_when_topic_is_unsolved'] = 'Sujet rÃ©glÃ© ?';
+$lang['default.message_when_topic_is_solved'] = 'Sujet non rÃ©glÃ© ?';
 ?>

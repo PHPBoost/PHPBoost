@@ -33,7 +33,7 @@
 $lang['types.anomaly'] = 'Anomalie';
 $lang['types.evolution'] = 'Evolution';
 
-//Catégories
+//CatÃ©gories
 $lang['categories.kernel'] = 'Noyau';
 $lang['categories.module'] = 'Module';
 $lang['categories.graphism'] = 'Graphisme';
@@ -44,10 +44,10 @@ $lang['severities.minor'] = 'Mineur';
 $lang['severities.major'] = 'Majeur';
 $lang['severities.critical'] = 'Bloquant';
 
-//Priorités
-$lang['priorities.very_low'] = 'Très basse';
+//PrioritÃ©s
+$lang['priorities.very_low'] = 'TrÃ¨s basse';
 $lang['priorities.low'] = 'Basse';
 $lang['priorities.normal'] = 'Normale';
-$lang['priorities.high'] = 'Elevée';
+$lang['priorities.high'] = 'ElevÃ©e';
 $lang['priorities.urgent'] = 'Urgente';
 ?>

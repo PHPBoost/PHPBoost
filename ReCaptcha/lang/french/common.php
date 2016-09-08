@@ -29,7 +29,7 @@
 #						French						#
 #####################################################
 
-$lang['incorrect_sol'] = 'Le mot entré ne correspondait pas à celui qui était affiché. Veuillez réessayer.';
+$lang['incorrect_sol'] = 'Le mot entrÃ© ne correspondait pas Ã  celui qui Ã©tait affichÃ©. Veuillez rÃ©essayer.';
 $lang['type_the_answer_here'] = 'Saisissez la valeur ...';
 $lang['refresh_captcha'] = 'Changer le code';
 $lang['image_captcha'] = 'Obtenir une image';
@@ -37,8 +37,8 @@ $lang['audio_captcha'] = 'Obtenir un test audio';
 $lang['captcha_help'] = 'Aide';
 
 $lang['config.title'] = 'Configuration de ReCaptcha';
-$lang['config.recaptcha-explain'] = 'Si vous souhaitez utiliser ReCaptcha v2, rendez-vous sur <a href="' . ReCaptcha::$_signupUrl . '">' . ReCaptcha::$_signupUrl . '</a> pour créer vos identifiants.';
+$lang['config.recaptcha-explain'] = 'Si vous souhaitez utiliser ReCaptcha v2, rendez-vous sur <a href="' . ReCaptcha::$_signupUrl . '">' . ReCaptcha::$_signupUrl . '</a> pour crÃ©er vos identifiants.';
 $lang['config.recaptchav2_enabled'] = 'Activer ReCaptcha v2';
-$lang['config.site_key'] = 'Clé du site';
-$lang['config.secret_key'] = 'Clé secrète';
+$lang['config.site_key'] = 'ClÃ© du site';
+$lang['config.secret_key'] = 'ClÃ© secrÃ¨te';
 ?>

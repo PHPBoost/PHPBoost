@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                                 english.php
+ *                                 langswitcher_common.php
  *                            -------------------
  *   begin                : August 24, 2009
- *   copyright            : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre RÃ©gis
  *   email                : mickaelhemri@gmail.com
  *
  *

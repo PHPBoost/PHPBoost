@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : October 14, 2007
  *   last modified		: October 3rd, 2009 - JMNaylor
- *   copyright            : (C) 2007 Benoît Sautel
+ *   copyright            : (C) 2007 BenoÃ®t Sautel
  *   email                : ben.popeye@phpboost.com
  *
  *  
@@ -31,7 +31,7 @@
 #                                                           English                                                                             #
  ####################################################
 
-//Généralités
+//GÃ©nÃ©ralitÃ©s
 $LANG['wiki'] = 'Wiki';
 $LANG['wiki_article_hits'] = 'This page has been seen %d times';
 $LANG['wiki_history'] = 'History';
@@ -82,7 +82,7 @@ $LANG['wiki_help_url'] = 'http://www.phpboost.com/wiki/';
 $LANG['wiki_paragraph_name'] = 'Please enter a paragraph name';
 $LANG['wiki_paragraph_name_example'] = 'Paragraph title';
 
-//Restrictions d'accès
+//Restrictions d'accÃ¨s
 $LANG['wiki_member_restriction'] = 'This article is protected, only members can edit it.';
 $LANG['wiki_modo_restriction'] = 'This article is protected, only moderators can edit it.';
 $LANG['wiki_admin_restriction'] = 'This article is protected, only administrators can edit it.';
@@ -98,7 +98,7 @@ $LANG['groups'] = 'Groups';
 $LANG['wiki_explain_restore_default_auth'] = 'Don\'t take into account any particular restriction to this article; permissions of this article will be global permissions.';
 $LANG['wiki_restore_default_auth'] = 'Default permissions';
 
-//Catégories
+//CatÃ©gories
 $LANG['wiki_last_articles_list'] = 'Last updated articles :';
 $LANG['wiki_cats_list'] = 'List of main categories';
 $LANG['wiki_articles_of_this_cat'] = 'Articles of this category';
@@ -132,7 +132,7 @@ $LANG['wiki_status_list'] = array(
 	array('Article discussion', '<span class="error">This article was a subject of discussion and its content seems to be incorrect. You can eventually read discussions and maybe use your knowledge to complete it.</span>')
 );
 
-//Déplacement de l'article
+//DÃ©placement de l'article
 $LANG['wiki_moving_article'] = 'Moving of an article';
 $LANG['wiki_moving_this_article'] = 'Moving of the article: %s';
 $LANG['wiki_change_cat'] = 'Change category';

@@ -43,8 +43,8 @@ $lang['admin.config.max_links'] = 'Nombre de liens maximum dans le message';
 $lang['admin.authorizations.read']  = 'Autorisation d\'afficher le livre d\'or';
 
 //Messages
-$lang['guestbook.message.success.delete'] = 'Le message a été supprimé';
+$lang['guestbook.message.success.delete'] = 'Le message a Ã©tÃ© supprimÃ©';
 
 //Errors
-$lang['error.post.unauthorized'] = 'Vous n\'êtes pas autorisé à ajouter un message !';
+$lang['error.post.unauthorized'] = 'Vous n\'Ãªtes pas autorisÃ© Ã  ajouter un message !';
 ?>

@@ -32,124 +32,124 @@
 
 
 $lang = array(
-	//Variables générales
-	'update.title' => 'Mise à jour de PHPBoost',
-	'steps.list' => 'Liste des étapes',
-	'step.list.introduction' => 'Préambule',
+	//Variables gÃ©nÃ©rales
+	'update.title' => 'Mise Ã  jour de PHPBoost',
+	'steps.list' => 'Liste des Ã©tapes',
+	'step.list.introduction' => 'PrÃ©ambule',
 	'step.list.license' => 'Licence',
 	'step.list.server' => 'Configuration du serveur',
-	'step.list.database' => 'Configuration base de données',
+	'step.list.database' => 'Configuration base de donnÃ©es',
 	'step.list.website' => 'Configuration du site',
-	'step.list.execute' => 'Mise à jour',
-	'step.list.end' => 'Fin de la mise à jour',
-	'installation.progression' => 'Progression de la mise à jour',
+	'step.list.execute' => 'Mise Ã  jour',
+	'step.list.end' => 'Fin de la mise Ã  jour',
+	'installation.progression' => 'Progression de la mise Ã  jour',
 	'language.change' => 'Changer de langue',
 	'change' => 'Changer',
-	'step.previous' => 'Etape précédente',
+	'step.previous' => 'Etape prÃ©cÃ©dente',
 	'step.next' => 'Etape suivante',
 	'yes' => 'Oui',
 	'no' => 'Non',
 	'unknown' => 'Inconnu',
-	'generatedBy' => 'Généré par %s',
-	'poweredBy' => 'Boosté par',
+	'generatedBy' => 'GÃ©nÃ©rÃ© par %s',
+	'poweredBy' => 'BoostÃ© par',
 	'phpboost.rights' => '',
-	'phpboost.slogan' => 'Créez votre site internet facilement et gratuitement !',
+	'phpboost.slogan' => 'CrÃ©ez votre site internet facilement et gratuitement !',
 	'phpboost.logo' => 'Logo PHPBoost',
 
 //Introduction
-	'step.introduction.title' => 'Préambule',
-	'step.introduction.message' => 'Bienvenue dans l\'assistant de mise à jour de PHPBoost',
-	'step.introduction.explanation' => '<p>Merci d\'avoir accordé votre confiance à PHPBoost pour créer votre site web.</p>
-<p>Pour mettre à jour PHPBoost vous devez disposer d\'un minimum d\'informations concernant votre hébergement qui devraient être fournies par votre hébergeur. La mise à jour est entièrement automatisée, elle ne devrait prendre que quelques minutes. Cliquez sur la flèche ci-dessous pour démarrer le processus de mise à jour.</p>',
-	'step.introduction.maintenance_notice' => '<div class="notice">Votre site va automatiquement être placé en maintenance. Pensez à désactiver la maintenance lorsque vous aurez vérifié que tout fonctionne correctement.</div>',
-	'step.introduction.team_signature' => '<p>Cordialement, l\'équipe PHPBoost</p>',
+	'step.introduction.title' => 'PrÃ©ambule',
+	'step.introduction.message' => 'Bienvenue dans l\'assistant de mise Ã  jour de PHPBoost',
+	'step.introduction.explanation' => '<p>Merci d\'avoir accordÃ© votre confiance Ã  PHPBoost pour crÃ©er votre site web.</p>
+<p>Pour mettre Ã  jour PHPBoost vous devez disposer d\'un minimum d\'informations concernant votre hÃ©bergement qui devraient Ãªtre fournies par votre hÃ©bergeur. La mise Ã  jour est entiÃ¨rement automatisÃ©e, elle ne devrait prendre que quelques minutes. Cliquez sur la flÃ¨che ci-dessous pour dÃ©marrer le processus de mise Ã  jour.</p>',
+	'step.introduction.maintenance_notice' => '<div class="notice">Votre site va automatiquement Ãªtre placÃ© en maintenance. Pensez Ã  dÃ©sactiver la maintenance lorsque vous aurez vÃ©rifiÃ© que tout fonctionne correctement.</div>',
+	'step.introduction.team_signature' => '<p>Cordialement, l\'Ã©quipe PHPBoost</p>',
 
 //Configuration du serveur
-	'step.server.title' => 'Vérification de la configuration du serveur',
-	'step.server.explanation' => '<p>Avant de commencer la mise à jour de PHPBoost, la configuration de votre serveur va être vérifiée afin d\'établir sa compatibilité avec PHPBoost.</p>
-<div class="notice">Veillez à ce que chaque condition obligatoire soit vérifiée sans quoi vous risquez d\'avoir des problèmes en utilisant le logiciel.</div>
-<p>En cas de problème n\'hésitez pas à poser vos questions sur le <a href="http://www.phpboost.com/forum/">forum de support</a>.</p>',
+	'step.server.title' => 'VÃ©rification de la configuration du serveur',
+	'step.server.explanation' => '<p>Avant de commencer la mise Ã  jour de PHPBoost, la configuration de votre serveur va Ãªtre vÃ©rifiÃ©e afin d\'Ã©tablir sa compatibilitÃ© avec PHPBoost.</p>
+<div class="notice">Veillez Ã  ce que chaque condition obligatoire soit vÃ©rifiÃ©e sans quoi vous risquez d\'avoir des problÃ¨mes en utilisant le logiciel.</div>
+<p>En cas de problÃ¨me n\'hÃ©sitez pas Ã  poser vos questions sur le <a href="http://www.phpboost.com/forum/">forum de support</a>.</p>',
 	'php.version' => 'Version de PHP',
-	'php.version.check' => 'PHP supérieur à :min_php_version',
-	'php.version.check.explanation' => '<span style="font-weight:bold;color:red;">Obligatoire :</span> Pour faire fonctionner PHPBoost, votre serveur doit être équipé d\'une version supérieure ou égale à PHP :min_php_version. Sans cela il vous sera impossible de le faire fonctionner correctement, contactez votre hébergeur ou migrez vers un serveur plus récent.',
+	'php.version.check' => 'PHP supÃ©rieur Ã  :min_php_version',
+	'php.version.check.explanation' => '<span style="font-weight:bold;color:red;">Obligatoire :</span> Pour faire fonctionner PHPBoost, votre serveur doit Ãªtre Ã©quipÃ© d\'une version supÃ©rieure ou Ã©gale Ã  PHP :min_php_version. Sans cela il vous sera impossible de le faire fonctionner correctement, contactez votre hÃ©bergeur ou migrez vers un serveur plus rÃ©cent.',
 	'php.extensions' => 'Extensions',
-	'php.extensions.check' => 'Optionnel : L\'activation de ces extensions permet d\'apporter des fonctionnalités supplémentaires mais n\'est en aucun cas indispensable.',
+	'php.extensions.check' => 'Optionnel : L\'activation de ces extensions permet d\'apporter des fonctionnalitÃ©s supplÃ©mentaires mais n\'est en aucun cas indispensable.',
 	'php.extensions.check.gdLibrary' => 'Librairie GD',
-	'php.extensions.check.gdLibrary.explanation' => 'Librairie utilisée pour générer des images. Utile par exemple pour la protection anti robots ou les diagrammes des statistiques du site. Certains modules peuvent également s\'en servir.',
+	'php.extensions.check.gdLibrary.explanation' => 'Librairie utilisÃ©e pour gÃ©nÃ©rer des images. Utile par exemple pour la protection anti robots ou les diagrammes des statistiques du site. Certains modules peuvent Ã©galement s\'en servir.',
 	'server.urlRewriting' => 'URL Rewriting',
-	'server.urlRewriting.explanation' => 'Réécriture des adresses des pages qui les rend plus lisibles et plus propices au référencement sur les moteurs de recherche',
+	'server.urlRewriting.explanation' => 'RÃ©Ã©criture des adresses des pages qui les rend plus lisibles et plus propices au rÃ©fÃ©rencement sur les moteurs de recherche',
 	'folders.chmod' => 'Autorisations des dossiers',
-	'folders.chmod.check' => '<span style="font-weight:bold;color:red;">Obligatoire :</span> PHPBoost nécessite que certains dossiers soient inscriptibles. Si votre serveur le permet, leurs autorisations sont changées de façon automatique. Cependant certains serveurs empêchent la modification automatique des autorisations, il faut donc faire la manipulation manuellement, pour cela voir la <a href="http://www.phpboost.com/wiki/changer-le-chmod-d-un-dossier" title="Documentation PHPBoost : Changer le chmod">documentation PHPBoost</a> ou contactez votre hébergeur.',
-	'folders.chmod.refresh' => 'Revérifier les dossiers',
+	'folders.chmod.check' => '<span style="font-weight:bold;color:red;">Obligatoire :</span> PHPBoost nÃ©cessite que certains dossiers soient inscriptibles. Si votre serveur le permet, leurs autorisations sont changÃ©es de faÃ§on automatique. Cependant certains serveurs empÃªchent la modification automatique des autorisations, il faut donc faire la manipulation manuellement, pour cela voir la <a href="http://www.phpboost.com/wiki/changer-le-chmod-d-un-dossier" title="Documentation PHPBoost : Changer le chmod">documentation PHPBoost</a> ou contactez votre hÃ©bergeur.',
+	'folders.chmod.refresh' => 'RevÃ©rifier les dossiers',
 	'folder.exists' => 'Existant',
 	'folder.doesNotExist' => 'Inexistant',
 	'folder.isWritable' => 'Inscriptible',
 	'folder.isNotWritable' => 'Non inscriptible',
-	'folders.chmod.error' => 'Les répertoires ne sont pas tous existants et/ou inscriptibles. Merci de le faire à la main pour pouvoir continuer.',
+	'folders.chmod.error' => 'Les rÃ©pertoires ne sont pas tous existants et/ou inscriptibles. Merci de le faire Ã  la main pour pouvoir continuer.',
 
-//Base de données
-	'step.dbConfig.title' => 'Configuration base de données',
-	'db.parameters.config' => 'Paramètres de connexion à la base de données',
-	'db.parameters.config.explanation' => '<p>Cette étape permet de générer le fichier de configuration qui retiendra les identifiants de connexion à votre base de données. Si vous ne connaissez pas les informations ci-dessous, contactez votre hébergeur qui vous les transmettra.</p>',
-	'dbms.parameters' => 'Paramètres d\'accès au <acronym title="Système de Gestion de Base de Données">SGBD</acronym>',
-	'dbms.host' => 'Nom de l\'hôte',
-	'dbms.host.explanation' => 'URL du serveur qui gère la base de données, <em>localhost</em> la plupart du temps.',
+//Base de donnÃ©es
+	'step.dbConfig.title' => 'Configuration base de donnÃ©es',
+	'db.parameters.config' => 'ParamÃ¨tres de connexion Ã  la base de donnÃ©es',
+	'db.parameters.config.explanation' => '<p>Cette Ã©tape permet de gÃ©nÃ©rer le fichier de configuration qui retiendra les identifiants de connexion Ã  votre base de donnÃ©es. Si vous ne connaissez pas les informations ci-dessous, contactez votre hÃ©bergeur qui vous les transmettra.</p>',
+	'dbms.parameters' => 'ParamÃ¨tres d\'accÃ¨s au <acronym title="SystÃ¨me de Gestion de Base de DonnÃ©es">SGBD</acronym>',
+	'dbms.host' => 'Nom de l\'hÃ´te',
+	'dbms.host.explanation' => 'URL du serveur qui gÃ¨re la base de donnÃ©es, <em>localhost</em> la plupart du temps.',
 	'dbms.port' => 'Port du serveur',
-	'dbms.port.explanation' => 'Port du serveur qui gère la base de données, <em>3306</em> la plupart du temps.',
+	'dbms.port.explanation' => 'Port du serveur qui gÃ¨re la base de donnÃ©es, <em>3306</em> la plupart du temps.',
 	'dbms.login' => 'Identifiant',
-	'dbms.login.explanation' => 'Fourni par l\'hébergeur',
+	'dbms.login.explanation' => 'Fourni par l\'hÃ©bergeur',
 	'dbms.password' => 'Mot de passe',
-	'dbms.password.explanation' => 'Fourni par l\'hébergeur',
-	'schema.properties' => 'Propriétés de la base de données',
-	'schema' => 'Nom de la base de données',
-	'schema.tablePrefix' => 'Préfixe des tables',
-	'schema.tablePrefix.explanation' => 'Par défaut <em>phpboost_</em>. A changer si vous avez installé plusieurs fois PHPBoost dans la même base de données.',
+	'dbms.password.explanation' => 'Fourni par l\'hÃ©bergeur',
+	'schema.properties' => 'PropriÃ©tÃ©s de la base de donnÃ©es',
+	'schema' => 'Nom de la base de donnÃ©es',
+	'schema.tablePrefix' => 'PrÃ©fixe des tables',
+	'schema.tablePrefix.explanation' => 'Par dÃ©faut <em>phpboost_</em>. A changer si vous avez installÃ© plusieurs fois PHPBoost dans la mÃªme base de donnÃ©es.',
 	'db.config.check' => 'Essayer',
-	'db.connection.success' => 'La connexion à la base de données a été effectuée avec succès. Vous pouvez poursuivre l\'installation',
-	'db.connection.error' => 'Impossible de se connecter à la base de données. Merci de vérifier vos paramètres.',
-	'db.creation.error' => 'La base de données que vous avez indiquée n\'existe pas.',
-	'db.unknown.error' => 'Une erreur inconnue a été rencontrée.',
-	'db.required.host' => 'Vous devez renseigner le nom de l\'hôte !',
+	'db.connection.success' => 'La connexion Ã  la base de donnÃ©es a Ã©tÃ© effectuÃ©e avec succÃ¨s. Vous pouvez poursuivre l\'installation',
+	'db.connection.error' => 'Impossible de se connecter Ã  la base de donnÃ©es. Merci de vÃ©rifier vos paramÃ¨tres.',
+	'db.creation.error' => 'La base de donnÃ©es que vous avez indiquÃ©e n\'existe pas.',
+	'db.unknown.error' => 'Une erreur inconnue a Ã©tÃ© rencontrÃ©e.',
+	'db.required.host' => 'Vous devez renseigner le nom de l\'hÃ´te !',
 	'db.required.port' => 'Vous devez renseigner le port !',
 	'db.required.login' => 'Vous devez renseigner l\'identifiant de connexion !',
-	'db.required.schema' => 'Vous devez renseigner le nom de la base de données !',
-	'db.unexisting_database' => 'La base de donnée n\'existe pas. Veuillez vérifier vos paramètres.',
+	'db.required.schema' => 'Vous devez renseigner le nom de la base de donnÃ©es !',
+	'db.unexisting_database' => 'La base de donnÃ©e n\'existe pas. Veuillez vÃ©rifier vos paramÃ¨tres.',
 	'phpboost.notInstalled' => 'Installation inexistante',
-	'phpboost.notInstalled.explanation' => '<p>La base de données sur laquelle vous souhaitez mettre à jour PHPBoost ne contient pas d\'installation.</p>
-	<p> Veuillez vérifier que vous avez bien saisi le bon préfixe et la bonne base de données.</p>',
+	'phpboost.notInstalled.explanation' => '<p>La base de donnÃ©es sur laquelle vous souhaitez mettre Ã  jour PHPBoost ne contient pas d\'installation.</p>
+	<p> Veuillez vÃ©rifier que vous avez bien saisi le bon prÃ©fixe et la bonne base de donnÃ©es.</p>',
 
 //Execute update
-	'congratulations' => 'Félicitations !',
-	'step.execute.title' => 'Exécuter la mise à jour',
-	'step.execute.message' => 'Mise à jour du site',
-	'step.execute.explanation' => 'Cette étape va convertir votre site PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' vers PHPBoost ' . UpdateServices::NEW_KERNEL_VERSION . '.
+	'congratulations' => 'FÃ©licitations !',
+	'step.execute.title' => 'ExÃ©cuter la mise Ã  jour',
+	'step.execute.message' => 'Mise Ã  jour du site',
+	'step.execute.explanation' => 'Cette Ã©tape va convertir votre site PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' vers PHPBoost ' . UpdateServices::NEW_KERNEL_VERSION . '.
 	<br /><br />
-	Attention cette étape est irréversible, veuillez par précaution sauvegarder votre base de données au préalable !',
+	Attention cette Ã©tape est irrÃ©versible, veuillez par prÃ©caution sauvegarder votre base de donnÃ©es au prÃ©alable !',
 	
 	'finish.message' => '<fieldset>
-							<legend>PHPBoost est désormais mis à jour!</legend>
-							<p class="success">La mise à jour de PHPBoost s\'est déroulée avec succès. L\'équipe PHPBoost vous remercie de lui avoir fait confiance et est heureuse de vous compter parmi ses utilisateurs.</p>
-							<p>Nous vous conseillons de vous tenir au courant de l\'évolution de PHPBoost via le site de la communauté francophone, <a href="http://www.phpboost.com">www.phpboost.com</a>. Vous serez automatiquement averti dans le panneau d\'administration de l\'arrivée de nouvelles mises à jour. Il est fortement conseillé de tenir votre système à jour afin de profiter des dernières nouveautés et de corriger les éventuelles failles ou erreurs.</p>
-							<p class="warning">Par mesure de sécurité nous vous conseillons fortement de supprimer le dossier <b>update</b> et tout ce qu\'il contient, des personnes mal intentionnées pourraient relancer le script de mise à jour et écraser certaines de vos données ! Une option vous sera proposée une fois connecté sur le site pour effectuer cette suppression.</p>
-							<p>N\'oubliez pas la <a href="http://www.phpboost.com/wiki/">documentation</a> qui vous guidera dans l\'utilisation de PHPBoost ainsi que la <a href="http://www.phpboost.com/faq/"><acronym title="Foire Aux Questions">FAQ</acronym></a> qui répond aux questions les plus fréquentes.</p>
-							<p>En cas de problème, rendez-vous sur le <a href="http://www.phpboost.com/forum/">forum du support de PHPBoost</a>.</p>
+							<legend>PHPBoost est dÃ©sormais mis Ã  jour!</legend>
+							<p class="success">La mise Ã  jour de PHPBoost s\'est dÃ©roulÃ©e avec succÃ¨s. L\'Ã©quipe PHPBoost vous remercie de lui avoir fait confiance et est heureuse de vous compter parmi ses utilisateurs.</p>
+							<p>Nous vous conseillons de vous tenir au courant de l\'Ã©volution de PHPBoost via le site de la communautÃ© francophone, <a href="http://www.phpboost.com">www.phpboost.com</a>. Vous serez automatiquement averti dans le panneau d\'administration de l\'arrivÃ©e de nouvelles mises Ã  jour. Il est fortement conseillÃ© de tenir votre systÃ¨me Ã  jour afin de profiter des derniÃ¨res nouveautÃ©s et de corriger les Ã©ventuelles failles ou erreurs.</p>
+							<p class="warning">Par mesure de sÃ©curitÃ© nous vous conseillons fortement de supprimer le dossier <b>update</b> et tout ce qu\'il contient, des personnes mal intentionnÃ©es pourraient relancer le script de mise Ã  jour et Ã©craser certaines de vos donnÃ©es ! Une option vous sera proposÃ©e une fois connectÃ© sur le site pour effectuer cette suppression.</p>
+							<p>N\'oubliez pas la <a href="http://www.phpboost.com/wiki/">documentation</a> qui vous guidera dans l\'utilisation de PHPBoost ainsi que la <a href="http://www.phpboost.com/faq/"><acronym title="Foire Aux Questions">FAQ</acronym></a> qui rÃ©pond aux questions les plus frÃ©quentes.</p>
+							<p>En cas de problÃ¨me, rendez-vous sur le <a href="http://www.phpboost.com/forum/">forum du support de PHPBoost</a>.</p>
 						</fieldset>
 						<fieldset>
 							<legend>Remerciements</legend>
-							<h2>Membres de la communauté</h2>
-								<p>Merci à tous les membres de la communauté qui nous encouragent au quotidien et contribuent à la qualité du logiciel que ce soit en suggérant des nouvelles fonctionnalités ou en signalant des dysfonctionnements, ce qui permet d\'aboutir entre autres à un CMS stable et efficace.</p>
-								<p>Merci aux membres des équipes de PHPBoost et particulièrement à <strong>soupaloignon</strong> de l\'équipe communication, <strong>aiglobulles</strong>, <strong>55 Escape</strong>, <strong>Micman</strong> et <strong>Dramaturge</strong> pour la documentation, <strong>ElenWii</strong> et <strong>babsolune</strong> pour les graphismes et <strong>benflovideo</strong> pour la modération de la communauté.</p>
+							<h2>Membres de la communautÃ©</h2>
+								<p>Merci Ã  tous les membres de la communautÃ© qui nous encouragent au quotidien et contribuent Ã  la qualitÃ© du logiciel que ce soit en suggÃ©rant des nouvelles fonctionnalitÃ©s ou en signalant des dysfonctionnements, ce qui permet d\'aboutir entre autres Ã  un CMS stable et efficace.</p>
+								<p>Merci aux membres des Ã©quipes de PHPBoost et particuliÃ¨rement Ã  <strong>soupaloignon</strong> de l\'Ã©quipe communication, <strong>aiglobulles</strong>, <strong>55 Escape</strong>, <strong>Micman</strong> et <strong>Dramaturge</strong> pour la documentation, <strong>ElenWii</strong> et <strong>babsolune</strong> pour les graphismes et <strong>benflovideo</strong> pour la modÃ©ration de la communautÃ©.</p>
 								<h2>Projets</h2>
-								<p>PHPBoost utilise différents outils afin d\'élargir ses fonctionnalités sans augmenter trop le temps de développement. Ces outils sont tous libres, distribués sous la licence GNU/GPL pour la plupart.</p>
+								<p>PHPBoost utilise diffÃ©rents outils afin d\'Ã©largir ses fonctionnalitÃ©s sans augmenter trop le temps de dÃ©veloppement. Ces outils sont tous libres, distribuÃ©s sous la licence GNU/GPL pour la plupart.</p>
 								<ul>
-									<li><a href="https://notepad-plus-plus.org/fr">Notepad++</a> et <a href="http://sublimetext.com">Sublime Text</a> : Editeurs de texte puissants utilisés pour le développement de PHPBoost.</li>
+									<li><a href="https://notepad-plus-plus.org/fr">Notepad++</a> et <a href="http://sublimetext.com">Sublime Text</a> : Editeurs de texte puissants utilisÃ©s pour le dÃ©veloppement de PHPBoost.</li>
 									<li><a href="http://www.phpconcept.net/pclzip/">PCLZIP</a> : Librairie permettant de travailler sur des archives au format Zip.</li>
-									<li><a href="http://www.xm1math.net/phpmathpublisher/index_fr.html">PHPMathPublisher</a> : Ensemble de fonctions permettant de mettre en forme des formules mathématiques à partir d\'une syntaxe proche de celle du <a href="http://fr.wikipedia.org/wiki/LaTeX">LaTeX</a>.</li>
-									<li><a href="http://www.tinymce.com">TinyMCE</a> : Editeur <acronym title="What You See Is What You Get">WYSIWYG</acronym> permettant la mise en page à la volée.</li>
+									<li><a href="http://www.xm1math.net/phpmathpublisher/index_fr.html">PHPMathPublisher</a> : Ensemble de fonctions permettant de mettre en forme des formules mathÃ©matiques Ã  partir d\'une syntaxe proche de celle du <a href="http://fr.wikipedia.org/wiki/LaTeX">LaTeX</a>.</li>
+									<li><a href="http://www.tinymce.com">TinyMCE</a> : Editeur <acronym title="What You See Is What You Get">WYSIWYG</acronym> permettant la mise en page Ã  la volÃ©e.</li>
 									<li><a href="http://qbnz.com/highlighter/">GeSHi</a> : Colorateur de code source dans de nombreux langages informatiques.</li>
 									<li><a href="http://jquery.com">jQuery</a> : Framework Javascript et <acronym title="Asynchronous Javascript And XML">AJAX</acronym></li>
-									<li><a href="http://flowplayer.org">Flowplayer</a> : lecteur vidéo au format flash</li>
-									<li><a href="http://fontawesome.io">Font Awesome</a> : librairie d\'icônes</li>
+									<li><a href="http://flowplayer.org">Flowplayer</a> : lecteur vidÃ©o au format flash</li>
+									<li><a href="http://fontawesome.io">Font Awesome</a> : librairie d\'icÃ´nes</li>
 									<li><a href="http://cornel.bopp-art.com/lightcase/">Lightcase.js</a> : Lightbox responsive</li>
 									<li><a href="https://github.com/cssmenumaker/jQuery-Plugin-Responsive-Drop-Down">CssMenuMaker.js</a> : Menus responsive</li>
 									<li><a href="http://www.jerrylow.com/basictable/">BasicTable.js</a> : Tables responsive</li>
@@ -157,16 +157,16 @@ $lang = array(
 							</div>
 						</fieldset>
 						<fieldset>
-							<legend>Crédits</legend>
+							<legend>CrÃ©dits</legend>
 							<ul>
-								<li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, fondateur du projet PHPBoost et développeur retraité</li>
-								<li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, développeur retraité</li>
-								<li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, développeur retraité</li>
-								<li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, développeur</li>
-								<li><strong>Julien BRISWALTER</strong> <em>(alias j1.seth)</em>, développeur</li>
+								<li><strong>RÃ©gis VIARRE</strong> <em>(alias CrowkaiT)</em>, fondateur du projet PHPBoost et dÃ©veloppeur retraitÃ©</li>
+								<li><strong>BenoÃ®t SAUTEL</strong> <em>(alias ben.popeye)</em>, dÃ©veloppeur retraitÃ©</li>
+								<li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, dÃ©veloppeur retraitÃ©</li>
+								<li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, dÃ©veloppeur</li>
+								<li><strong>Julien BRISWALTER</strong> <em>(alias j1.seth)</em>, dÃ©veloppeur</li>
 							</ul>
 						</fieldset>',
-	'site.index' => 'Aller à l\'accueil du site',
+	'site.index' => 'Aller Ã  l\'accueil du site',
 	'admin.index' => 'Aller dans le panneau d\'administration'
 );
 ?>

@@ -30,11 +30,11 @@
  ####################################################
  
 $lang['maintain_type'] = 'Mettre le site en maintenance';
-$lang['maintain_type.during'] = 'Moins d\'une journée';
+$lang['maintain_type.during'] = 'Moins d\'une journÃ©e';
 $lang['maintain_type.until'] = 'Plusieurs jours';
-$lang['maintain_type.unlimited'] = 'Pour une durée non spécifiée';
-$lang['display_duration'] = 'Afficher la durée de la maintenance';
-$lang['display_duration_for_admin'] = 'Afficher la durée de la maintenance à l\'administrateur';
-$lang['maintain_text'] = 'Texte à afficher lorsque la maintenance du site est en cours';
-$lang['maintain_authorization'] = 'Autorisation d\'accès au site durant la maintenance';
+$lang['maintain_type.unlimited'] = 'Pour une durÃ©e non spÃ©cifiÃ©e';
+$lang['display_duration'] = 'Afficher la durÃ©e de la maintenance';
+$lang['display_duration_for_admin'] = 'Afficher la durÃ©e de la maintenance Ã  l\'administrateur';
+$lang['maintain_text'] = 'Texte Ã  afficher lorsque la maintenance du site est en cours';
+$lang['maintain_authorization'] = 'Autorisation d\'accÃ¨s au site durant la maintenance';
 ?>

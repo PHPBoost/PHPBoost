@@ -37,28 +37,28 @@ $lang['faq.actions.add'] = 'Ajouter une question';
 $lang['faq.add'] = 'Ajout d\'une question';
 $lang['faq.edit'] = 'Modification d\'une question';
 $lang['faq.pending'] = 'Questions en attente';
-$lang['faq.manage'] = 'Gérer les questions';
+$lang['faq.manage'] = 'GÃ©rer les questions';
 $lang['faq.management'] = 'Gestion de la FAQ';
 
-$lang['faq.random_question'] = 'Question aléatoire';
+$lang['faq.random_question'] = 'Question alÃ©atoire';
 $lang['faq.questions'] = 'Questions';
 
 //config
-$lang['config.display_type.answers_hidden'] = 'Cliquer sur les questions pour afficher les réponses';
-$lang['config.display_type.display_all_answers'] = 'Afficher toutes les réponses';
+$lang['config.display_type.answers_hidden'] = 'Cliquer sur les questions pour afficher les rÃ©ponses';
+$lang['config.display_type.display_all_answers'] = 'Afficher toutes les rÃ©ponses';
 
 //SEO
 $lang['faq.seo.description.pending'] = 'Toutes les questions en attente.';
 
 //contribution
-$lang['faq.form.contribution.explain'] = 'Vous n\'êtes pas autorisé à ajouter une question, cependant vous pouvez en proposer une.';
+$lang['faq.form.contribution.explain'] = 'Vous n\'Ãªtes pas autorisÃ© Ã  ajouter une question, cependant vous pouvez en proposer une.';
 
 //form
 $lang['faq.form.question'] = 'Question';
-$lang['faq.form.answer'] = 'Réponse';
+$lang['faq.form.answer'] = 'RÃ©ponse';
 
 //Messages
-$lang['faq.message.success.add'] = 'La question <b>:question</b> a été ajoutée';
-$lang['faq.message.success.edit'] = 'La question <b>:question</b> a été modifiée';
-$lang['faq.message.success.delete'] = 'La question <b>:question</b> a été supprimée';
+$lang['faq.message.success.add'] = 'La question <b>:question</b> a Ã©tÃ© ajoutÃ©e';
+$lang['faq.message.success.edit'] = 'La question <b>:question</b> a Ã©tÃ© modifiÃ©e';
+$lang['faq.message.success.delete'] = 'La question <b>:question</b> a Ã©tÃ© supprimÃ©e';
 ?>

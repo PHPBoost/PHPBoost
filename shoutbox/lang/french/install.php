@@ -31,6 +31,6 @@
 
 $lang = array(
     'shoutbox_login' => 'PHPBoost',
-    'shoutbox_contents' => 'L\'équipe de PHPBoost vous souhaite la bienvenue !'
+    'shoutbox_contents' => 'L\'Ã©quipe de PHPBoost vous souhaite la bienvenue !'
 );
 ?>

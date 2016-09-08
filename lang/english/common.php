@@ -155,7 +155,7 @@ $lang['form.picture.preview'] = 'Picture preview';
 $lang['form.sources'] = 'Sources';
 $lang['form.source.name'] = 'Source name';
 $lang['form.source.url'] = 'Source address';
-$lang['form.captcha'] = 'Code de vérification';
+$lang['form.captcha'] = 'Code de vÃ©rification';
 
 $lang['suggestions'] = 'Suggestions';
 

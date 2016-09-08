@@ -3,7 +3,7 @@
  *                                 themeswitcher_common.php
  *                            -------------------
  *   begin                : August 24, 2009
- *   copyright            : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre RÃ©gis
  *   email                : mickaelhemri@gmail.com
  *
  *
@@ -30,6 +30,6 @@
 #                     French                        #
  ####################################################
 
-$LANG['switch_theme'] = 'Changer le thème';
-$LANG['defaut_theme'] = 'Thème par défaut';
+$LANG['switch_theme'] = 'Changer le thÃ¨me';
+$LANG['defaut_theme'] = 'ThÃ¨me par dÃ©faut';
 ?>

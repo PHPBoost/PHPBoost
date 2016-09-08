@@ -30,8 +30,8 @@
  #                    French                        #
  ####################################################
 
-$lang['default.cat.name'] = 'Catégorie de test';
+$lang['default.cat.name'] = 'CatÃ©gorie de test';
 $lang['default.cat.description'] = 'Fichiers de test';
-$lang['default.downloadfile.name'] = 'Logo du module téléchargements';
-$lang['default.downloadfile.content'] = 'Logo du module téléchargements de PHPBoost.';
+$lang['default.downloadfile.name'] = 'Logo du module tÃ©lÃ©chargements';
+$lang['default.downloadfile.content'] = 'Logo du module tÃ©lÃ©chargements de PHPBoost.';
 ?>

@@ -32,10 +32,10 @@
 $lang['date_format'] = 'AAAA-MM-JJ';
 $lang['date_format_day_month'] = 'd/m';
 $lang['date_format_day_month_year'] = 'd/m/Y';
-$lang['date_format_day_month_year_hour_minute'] = 'd/m/Y \à H\hi';
+$lang['date_format_day_month_year_hour_minute'] = 'd/m/Y \Ã  H\hi';
 $lang['date_format_day_month_year_long'] = 'j F Y';
 $lang['date_format_day_month_year_text'] = 'l j F Y';
-$lang['date_format_day_month_year_hour_minute_text'] = 'l j F Y \à H\hi';
+$lang['date_format_day_month_year_hour_minute_text'] = 'l j F Y \Ã  H\hi';
 
 $lang['unit.hour'] = 'h';
 $lang['unit.seconds'] = 's';
@@ -48,17 +48,17 @@ $lang['every_month'] = 'Tous les mois';
 $lang['every_year'] = 'Tous les ans';
 
 $lang['january'] = 'Janvier';
-$lang['february'] = 'Février';
+$lang['february'] = 'FÃ©vrier';
 $lang['march'] = 'Mars';
 $lang['april'] = 'Avril';
 $lang['may'] = 'Mai';
 $lang['june'] = 'Juin';
 $lang['july'] = 'Juillet';
-$lang['august'] = 'Août';
+$lang['august'] = 'AoÃ»t';
 $lang['september'] = 'Septembre';
 $lang['october'] = 'Octobre';
 $lang['november'] = 'Novembre';
-$lang['december'] = 'Décembre';
+$lang['december'] = 'DÃ©cembre';
 
 $lang['monday_mini'] = 'Lu';
 $lang['tuesday_mini'] = 'Ma';
@@ -97,7 +97,7 @@ $lang['week'] = 'semaine';
 $lang['weeks'] = 'semaines';
 $lang['month'] = 'mois';
 $lang['months'] = 'mois';
-$lang['year'] = 'année';
-$lang['years'] = 'années';
+$lang['year'] = 'annÃ©e';
+$lang['years'] = 'annÃ©es';
 
 ?>

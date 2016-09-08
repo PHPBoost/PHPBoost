@@ -32,39 +32,39 @@
 $lang = array();
 
 // Title 
-$lang['themes.theme_management'] = 'Gestion des thèmes';
-$lang['themes.add_theme'] = 'Ajouter un thème';
-$lang['themes.update_theme'] = 'Mettre à jour un thème';
-$lang['themes.delete_theme'] = 'Suppression ou désactivation d\'un thème';
-$lang['themes.installed_theme'] = 'Thèmes installés';
+$lang['themes.theme_management'] = 'Gestion des thÃ¨mes';
+$lang['themes.add_theme'] = 'Ajouter un thÃ¨me';
+$lang['themes.update_theme'] = 'Mettre Ã  jour un thÃ¨me';
+$lang['themes.delete_theme'] = 'Suppression ou dÃ©sactivation d\'un thÃ¨me';
+$lang['themes.installed_theme'] = 'ThÃ¨mes installÃ©s';
 
 //Theme
 $lang['themes.name'] = 'Nom';
 $lang['themes.description'] = 'Description';
 $lang['themes.author'] = 'Auteur';
-$lang['themes.compatibility'] = 'Compatibilité';
+$lang['themes.compatibility'] = 'CompatibilitÃ©';
 $lang['themes.authorization'] = 'Autorisations';
 $lang['themes.html_version'] = 'Version HTML';
 $lang['themes.css_version'] = 'Version CSS';
 $lang['themes.main_color'] = 'Couleurs dominantes';
 $lang['themes.variable-width'] = 'Extensible';
 $lang['themes.width'] = 'Largeur';
-$lang['themes.bot_informed'] = 'Non renseigné';
-$lang['themes.view_real_preview'] = 'Voir en taille réelle';
-$lang['themes.default_theme_explain'] = 'Le thème par défaut ne peut pas être désinstallé, désactivé ou réservé';
-$lang['themes.themes_available'] = 'Thèmes disponibles';
+$lang['themes.bot_informed'] = 'Non renseignÃ©';
+$lang['themes.view_real_preview'] = 'Voir en taille rÃ©elle';
+$lang['themes.default_theme_explain'] = 'Le thÃ¨me par dÃ©faut ne peut pas Ãªtre dÃ©sinstallÃ©, dÃ©sactivÃ© ou rÃ©servÃ©';
+$lang['themes.themes_available'] = 'ThÃ¨mes disponibles';
 
 //Themes management
 $lang['themes.install_theme'] = 'Installer';
 
 //Upload
-$lang['themes.upload_theme'] = 'Uploader un thème';
-$lang['themes.upload_description'] = 'L\'archive uploadée doit être au format zip ou gzip';
+$lang['themes.upload_theme'] = 'Uploader un thÃ¨me';
+$lang['themes.upload_description'] = 'L\'archive uploadÃ©e doit Ãªtre au format zip ou gzip';
 
 //Messages
 $lang['themes.upload_invalid_format'] = 'Le format de l\'archive n\'est pas valide';
 $lang['themes.upload_error'] = 'Erreur avec l\'upload du fichier';
 
 //Delete theme
-$lang['themes.drop_files'] = 'Supprimer tous les fichiers du thème';
+$lang['themes.drop_files'] = 'Supprimer tous les fichiers du thÃ¨me';
 ?>

@@ -35,44 +35,44 @@ $lang['module'] = 'Module';
 //Title
 $lang['modules.module_management'] = 'Gestion des modules';
 $lang['modules.add_module'] = 'Ajouter un module';
-$lang['modules.update_module'] = 'Mettre à jour un module';
-$lang['modules.delete_module'] = 'Suppression ou désactivation d\'un module';
-$lang['modules.installed_modules'] = 'Modules installés';
+$lang['modules.update_module'] = 'Mettre Ã  jour un module';
+$lang['modules.delete_module'] = 'Suppression ou dÃ©sactivation d\'un module';
+$lang['modules.installed_modules'] = 'Modules installÃ©s';
 
 //Upload
 $lang['modules.upload_module'] = 'Uploader un module';
-$lang['modules.upload_description'] = 'L\'archive uploadée doit être au format zip ou gzip';
+$lang['modules.upload_description'] = 'L\'archive uploadÃ©e doit Ãªtre au format zip ou gzip';
 
 //Module
 $lang['modules.name'] = 'Nom';
 $lang['modules.description'] = 'Description';
 $lang['modules.author'] = 'Auteur';
-$lang['modules.compatibility'] = 'Compatibilité';
+$lang['modules.compatibility'] = 'CompatibilitÃ©';
 $lang['modules.php_version'] = 'Version PHP';
-$lang['modules.url_rewrite_rules'] = 'Règles de réécriture d\'URL';
+$lang['modules.url_rewrite_rules'] = 'RÃ¨gles de rÃ©Ã©criture d\'URL';
 $lang['modules.page_admin'] = 'Administration';
 $lang['modules.modules_available'] = 'Modules disponibles';
-$lang['modules.installed_activated_modules'] = 'Modules installés et activés';
-$lang['modules.installed_not_activated_modules'] = 'Modules désactivés';
+$lang['modules.installed_activated_modules'] = 'Modules installÃ©s et activÃ©s';
+$lang['modules.installed_not_activated_modules'] = 'Modules dÃ©sactivÃ©s';
 
 //Module management
 $lang['modules.install_module'] = 'Installer';
-$lang['modules.authorization'] = 'Autorisation d\'accès';
+$lang['modules.authorization'] = 'Autorisation d\'accÃ¨s';
 
 //Messages
-$lang['modules.upload_success'] = 'L\'archive a été uploadée avec succès';
+$lang['modules.upload_success'] = 'L\'archive a Ã©tÃ© uploadÃ©e avec succÃ¨s';
 $lang['modules.upload_invalid_format'] = 'Le format de l\'archive n\'est pas valide';
-$lang['modules.already_installed'] = 'Ce module est déjà installé';
+$lang['modules.already_installed'] = 'Ce module est dÃ©jÃ  installÃ©';
 $lang['modules.upload_error'] = 'Il y a eu une erreur lors de l\'upload';
-$lang['modules.module_not_upgradable'] = 'Ce module ne peut pas être mis à jour';
-$lang['modules.not_installed_module'] = 'Ce module n\'est pas installé !';
-$lang['modules.updates_available'] = 'Mises à jour disponibles';
+$lang['modules.module_not_upgradable'] = 'Ce module ne peut pas Ãªtre mis Ã  jour';
+$lang['modules.not_installed_module'] = 'Ce module n\'est pas installÃ© !';
+$lang['modules.updates_available'] = 'Mises Ã  jour disponibles';
 $lang['modules.config_conflict'] = 'Conflit avec la configuration du module, installation impossible!';
-$lang['modules.not_compatible'] = 'Ce module n\'est pas compatible avec la version actuelle de PHPBoost vérifiez la disponibilité d\'une nouvelle version sur <a href="http://www.phpboost.com/download">le site de PHPBoost</a>.';
+$lang['modules.not_compatible'] = 'Ce module n\'est pas compatible avec la version actuelle de PHPBoost vÃ©rifiez la disponibilitÃ© d\'une nouvelle version sur <a href="http://www.phpboost.com/download">le site de PHPBoost</a>.';
 
 //Delete module
 $lang['modules.drop_files'] = 'Supprimer tous les fichiers du module';
 
 //Update
-$lang['modules.upgrade_module'] = 'Mettre à jour';
+$lang['modules.upgrade_module'] = 'Mettre Ã  jour';
 ?>

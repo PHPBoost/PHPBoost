@@ -30,9 +30,9 @@
  ####################################################
 
 $lang['configuration'] = 'Configuration';
-$lang['config.items_number_per_page'] = 'Nombre d\'éléments affichés par page';
-$lang['config.categories_number_per_page'] = 'Nombre de catégories maximum affichées par page';
-$lang['config.columns_number_per_line'] = 'Nombre de catégories affichées par ligne';
+$lang['config.items_number_per_page'] = 'Nombre d\'Ã©lÃ©ments affichÃ©s par page';
+$lang['config.categories_number_per_page'] = 'Nombre de catÃ©gories maximum affichÃ©es par page';
+$lang['config.columns_number_per_line'] = 'Nombre de catÃ©gories affichÃ©es par ligne';
 $lang['config.author_displayed'] = 'Afficher le nom de l\'auteur';
 $lang['config.comments_enabled'] = 'Activer les commentaires';
 $lang['config.notation_enabled'] = 'Activer la notation';
@@ -42,7 +42,7 @@ $lang['config.display_type'] = 'Type d\'affichage';
 $lang['config.display_type.block'] = 'Affichage en bloc';
 $lang['config.display_type.list'] = 'Affichage en liste';
 $lang['config.display_type.inline'] = 'Affichage en ligne';
-$lang['config.root_category_description'] = 'Description de la catégorie racine';
+$lang['config.root_category_description'] = 'Description de la catÃ©gorie racine';
 
-$lang['config.authorizations.explain'] = 'Autorisations globales du module. Vous pouvez changer ces autorisations localement sur chaque catégorie.';
+$lang['config.authorizations.explain'] = 'Autorisations globales du module. Vous pouvez changer ces autorisations localement sur chaque catÃ©gorie.';
 ?>

@@ -31,33 +31,33 @@
  ####################################################
 
 $lang['cat.name'] = 'Test';
-$lang['cat.description'] = 'Catégorie de test';
+$lang['cat.description'] = 'CatÃ©gorie de test';
 $lang['news.title'] = 'Votre site sous PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version();
-$lang['news.content'] = 'Votre site boosté par PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' est bien installé. Afin de vous aider à le prendre en main, 
-l\'accueil de chaque module contient un message pour vous guider dans vos premiers pas. Voici également quelques recommandations supplémentaires que nous vous proposons de lire avec attention : <br />
+$lang['news.content'] = 'Votre site boostÃ© par PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' est bien installÃ©. Afin de vous aider Ã  le prendre en main, 
+l\'accueil de chaque module contient un message pour vous guider dans vos premiers pas. Voici Ã©galement quelques recommandations supplÃ©mentaires que nous vous proposons de lire avec attention : <br />
 <br />
-<h2 class="formatter-title">N\'oubliez pas de supprimer le répertoire "install"</h2><br />
+<h2 class="formatter-title">N\'oubliez pas de supprimer le rÃ©pertoire "install"</h2><br />
 <br />
-Supprimez le répertoire /install à la racine de votre site pour des raisons de sécurité afin que personne ne puisse recommencer l\'installation.<br />
+Supprimez le rÃ©pertoire /install Ã  la racine de votre site pour des raisons de sÃ©curitÃ© afin que personne ne puisse recommencer l\'installation.<br />
 <br />
 <h2 class="formatter-title">Administrez votre site</h2><br />
 <br />
-Accédez au <a href="' . UserUrlBuilder::administration()->rel() . '">panneau d\'administration de votre site</a> afin de le paramétrer comme vous le souhaitez!  Pour cela : <br />
+AccÃ©dez au <a href="' . UserUrlBuilder::administration()->rel() . '">panneau d\'administration de votre site</a> afin de le paramÃ©trer comme vous le souhaitez!  Pour cela : <br />
 <br />
 <ul class="formatter-ul">
-<li class="formatter-li"><a href="' . AdminMaintainUrlBuilder::maintain()->rel() . '">Mettez votre site en maintenance</a> en attendant que vous le configuriez à votre guise.
-</li><li class="formatter-li">Rendez vous à la <a href="' . AdminConfigUrlBuilder::general_config()->rel() . '">Configuration générale du site</a>.
-</li><li class="formatter-li"><a href="' . AdminModulesUrlBuilder::list_installed_modules()->rel() . '">Configurez les modules</a> disponibles et donnez leur les droits d\'accès (si vous n\'avez pas installé le pack complet, tous les modules sont disponibles sur le site de <a href="http://www.phpboost.com/download/">phpboost.com</a> dans la section téléchargement).
-</li><li class="formatter-li"><a href="' . AdminContentUrlBuilder::content_configuration()->rel() . '">Choisissez le langage de formatage du contenu</a> par défaut du site.
+<li class="formatter-li"><a href="' . AdminMaintainUrlBuilder::maintain()->rel() . '">Mettez votre site en maintenance</a> en attendant que vous le configuriez Ã  votre guise.
+</li><li class="formatter-li">Rendez vous Ã  la <a href="' . AdminConfigUrlBuilder::general_config()->rel() . '">Configuration gÃ©nÃ©rale du site</a>.
+</li><li class="formatter-li"><a href="' . AdminModulesUrlBuilder::list_installed_modules()->rel() . '">Configurez les modules</a> disponibles et donnez leur les droits d\'accÃ¨s (si vous n\'avez pas installÃ© le pack complet, tous les modules sont disponibles sur le site de <a href="http://www.phpboost.com/download/">phpboost.com</a> dans la section tÃ©lÃ©chargement).
+</li><li class="formatter-li"><a href="' . AdminContentUrlBuilder::content_configuration()->rel() . '">Choisissez le langage de formatage du contenu</a> par dÃ©faut du site.
 </li><li class="formatter-li"><a href="' . AdminMembersUrlBuilder::configuration()->rel() . '">Configurez l\'inscription des membres</a>.
-</li><li class="formatter-li"><a href="' . AdminThemeUrlBuilder::list_installed_theme()->rel() . '">Choisissez le thème par défaut de votre site</a> pour changer l\'apparence de votre site (vous pouvez en obtenir d\'autres sur le site de <a href="http://www.phpboost.com/download/">phpboost.com</a>).
-</li><li class="formatter-li">Avant de donner l\'accès de votre site à vos visiteurs, prenez un peu de temps pour y mettre du contenu.
-</li><li class="formatter-li">Enfin <a href="' . AdminMaintainUrlBuilder::maintain()->rel() . '">désactivez la maintenance</a> de votre site afin qu\'il soit visible par vos visiteurs.<br />
+</li><li class="formatter-li"><a href="' . AdminThemeUrlBuilder::list_installed_theme()->rel() . '">Choisissez le thÃ¨me par dÃ©faut de votre site</a> pour changer l\'apparence de votre site (vous pouvez en obtenir d\'autres sur le site de <a href="http://www.phpboost.com/download/">phpboost.com</a>).
+</li><li class="formatter-li">Avant de donner l\'accÃ¨s de votre site Ã  vos visiteurs, prenez un peu de temps pour y mettre du contenu.
+</li><li class="formatter-li">Enfin <a href="' . AdminMaintainUrlBuilder::maintain()->rel() . '">dÃ©sactivez la maintenance</a> de votre site afin qu\'il soit visible par vos visiteurs.<br />
 </li></ul><br />
 <br />
-<h2 class="formatter-title">Que faire si vous rencontrez un problème ?</h2><br />
+<h2 class="formatter-title">Que faire si vous rencontrez un problÃ¨me ?</h2><br />
 <br />
-N\'hésitez pas à consulter <a href="http://www.phpboost.com/wiki/">la documentation de PHPBoost</a> ou à poser vos question sur le <a href="http://www.phpboost.com/forum/">forum d\'entraide</a>.<br /> <br />
+N\'hÃ©sitez pas Ã  consulter <a href="http://www.phpboost.com/wiki/">la documentation de PHPBoost</a> ou Ã  poser vos question sur le <a href="http://www.phpboost.com/forum/">forum d\'entraide</a>.<br /> <br />
 <br />
-<p class="float-right">Toute l\'équipe de PHPBoost vous remercie d\'utiliser son logiciel pour créer votre site web !</p>';
+<p class="float-right">Toute l\'Ã©quipe de PHPBoost vous remercie d\'utiliser son logiciel pour crÃ©er votre site web !</p>';
 ?>

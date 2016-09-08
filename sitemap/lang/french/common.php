@@ -27,14 +27,14 @@
 
 $lang = array();
 $lang['sitemap'] = 'Plan du site';
-$lang['sitemap_xml_could_not_been_written'] = 'Le fichier sitemap.xml généré par le module sitemap n\'a pas pu être écrit probablement à cause d\'un problème d\'autorisation à la racine du site.';
-$lang['general_config'] = 'Configuration générale';
-$lang['generation_failed'] = 'La génération du fichier sitemap.xml à la racine de votre site n\'a pas pu être menée à bien, probablement à cause d\'un problème d\'autorisation en écriture.<br />
-Veuillez essayer de créer manuellement à la racine de votre serveur un fichier sitemap.xml vide, et réessayez de le régénérer.';
-$lang['generation_succeeded'] = 'Votre fichier sitemap.xml a été régénéré avec succès';
-$lang['try_again'] = 'Réessayer';
-$lang['auto_generate_xml_file'] = 'Générer automatiquement le fichier sitemap.xml';
-$lang['xml_file_life_time'] = 'Durée de vie du fichier sitemap.xml';
+$lang['sitemap_xml_could_not_been_written'] = 'Le fichier sitemap.xml gÃ©nÃ©rÃ© par le module sitemap n\'a pas pu Ãªtre Ã©crit probablement Ã  cause d\'un problÃ¨me d\'autorisation Ã  la racine du site.';
+$lang['general_config'] = 'Configuration gÃ©nÃ©rale';
+$lang['generation_failed'] = 'La gÃ©nÃ©ration du fichier sitemap.xml Ã  la racine de votre site n\'a pas pu Ãªtre menÃ©e Ã  bien, probablement Ã  cause d\'un problÃ¨me d\'autorisation en Ã©criture.<br />
+Veuillez essayer de crÃ©er manuellement Ã  la racine de votre serveur un fichier sitemap.xml vide, et rÃ©essayez de le rÃ©gÃ©nÃ©rer.';
+$lang['generation_succeeded'] = 'Votre fichier sitemap.xml a Ã©tÃ© rÃ©gÃ©nÃ©rÃ© avec succÃ¨s';
+$lang['try_again'] = 'RÃ©essayer';
+$lang['auto_generate_xml_file'] = 'GÃ©nÃ©rer automatiquement le fichier sitemap.xml';
+$lang['xml_file_life_time'] = 'DurÃ©e de vie du fichier sitemap.xml';
 $lang['xml_file_life_time_explain'] = 'En jours';
-$lang['generate_xml_file'] = 'Générer le fichier sitemap.xml';
+$lang['generate_xml_file'] = 'GÃ©nÃ©rer le fichier sitemap.xml';
 ?>

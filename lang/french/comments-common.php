@@ -31,20 +31,20 @@
 
 $lang['comments'] = 'Commentaires';
 $lang['comment'] = 'Commentaire';
-$lang['comments.not-authorized.post'] = 'Vous n\'êtes pas autorisé à poster un commentaire';
-$lang['comments.not-authorized.read'] = 'Vous n\'êtes pas autorisé à voir les commentaires';
+$lang['comments.not-authorized.post'] = 'Vous n\'Ãªtes pas autorisÃ© Ã  poster un commentaire';
+$lang['comments.not-authorized.read'] = 'Vous n\'Ãªtes pas autorisÃ© Ã  voir les commentaires';
 
-$lang['comment.locked'] = 'Commentaires bloqués, vous ne pouvez pas poster de commentaire';
+$lang['comment.locked'] = 'Commentaires bloquÃ©s, vous ne pouvez pas poster de commentaire';
 
 $lang['comment.add'] = 'Ajouter un commentaire';
 $lang['comment.edit'] = 'Editer un commentaire';
 
 $lang['lock'] = 'Verrouiller';
-$lang['unlock'] = 'Déverrouiller';
+$lang['unlock'] = 'DÃ©verrouiller';
 
 $lang['allComments'] = 'Voir les autres commentaires';
 
-$lang['comments.user.read-only'] = 'Vous êtes actuellement en lecture seule, vous ne pouvez pas poster de commentaire pour le moment';
+$lang['comments.user.read-only'] = 'Vous Ãªtes actuellement en lecture seule, vous ne pouvez pas poster de commentaire pour le moment';
 
 $lang['view-topic'] = 'Voir le topic';
 

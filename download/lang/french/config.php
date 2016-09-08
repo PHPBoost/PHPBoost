@@ -27,17 +27,17 @@
 
 
  ####################################################
- #						French						#
+ #			French			    #
  ####################################################
 
-$lang['root_category_description'] = 'Bienvenue dans l\'espace de téléchargement du site !
+$lang['root_category_description'] = 'Bienvenue dans l\'espace de tÃ©lÃ©chargement du site !
 <br /><br />
-Une catégorie et un fichier ont été créés pour vous montrer comment fonctionne ce module. Voici quelques conseils pour bien débuter sur ce module.
+Une catÃ©gorie et un fichier ont Ã©tÃ© crÃ©Ã©s pour vous montrer comment fonctionne ce module. Voici quelques conseils pour bien dÃ©buter sur ce module.
 <br /><br /> 
 <ul class="formatter-ul">
 	<li class="formatter-li"> Pour configurer ou personnaliser l\'accueil de votre module, rendez vous dans l\'<a href="' . DownloadUrlBuilder::configuration()->relative() . '">administration du module</a></li>
-	<li class="formatter-li"> Pour créer des catégories, <a href="' . DownloadUrlBuilder::add_category()->relative() . '">cliquez ici</a> </li>
-	<li class="formatter-li"> Pour ajouter des fichiers en téléchargement, <a href="' . DownloadUrlBuilder::add()->relative() . '">cliquez ici</a></li>
+	<li class="formatter-li"> Pour crÃ©er des catÃ©gories, <a href="' . DownloadUrlBuilder::add_category()->relative() . '">cliquez ici</a> </li>
+	<li class="formatter-li"> Pour ajouter des fichiers en tÃ©lÃ©chargement, <a href="' . DownloadUrlBuilder::add()->relative() . '">cliquez ici</a></li>
 </ul>
-<br />Pour en savoir plus, n\'hésitez pas à consulter la documentation du module sur le site de <a href="http://www.phpboost.com">PHPBoost</a>.';
+<br />Pour en savoir plus, n\'hÃ©sitez pas Ã  consulter la documentation du module sur le site de <a href="http://www.phpboost.com">PHPBoost</a>.';
 ?>

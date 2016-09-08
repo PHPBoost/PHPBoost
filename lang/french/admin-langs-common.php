@@ -35,25 +35,25 @@ $lang = array();
 $lang['langs'] = 'Langues';
 $lang['langs.langs_management'] = 'Gestion des langues';
 $lang['langs.add_lang'] = 'Ajouter une langue';
-$lang['langs.update_lang'] = 'Mettre à jour une langue';
-$lang['langs.delete_lang'] = 'Suppression ou désactivation d\'une langue';
-$lang['langs.installed_langs'] = 'Langues installées';
+$lang['langs.update_lang'] = 'Mettre Ã  jour une langue';
+$lang['langs.delete_lang'] = 'Suppression ou dÃ©sactivation d\'une langue';
+$lang['langs.installed_langs'] = 'Langues installÃ©es';
 
 //Themes management
 $lang['langs.install_lang'] = 'Installer';
 
 //Uninstall
 $lang['langs.drop_files'] = 'Supprimer tous les fichiers de la langue';
-$lang['langs.default_lang_explain'] = 'La langue par défaut ne peut pas être désinstallée, désactivée ou réservée';
+$lang['langs.default_lang_explain'] = 'La langue par dÃ©faut ne peut pas Ãªtre dÃ©sinstallÃ©e, dÃ©sactivÃ©e ou rÃ©servÃ©e';
 
 $lang['langs.upload_lang'] = 'Uploader une langue';
-$lang['langs.upload_description'] = 'L\'archive uploadée doit être au format zip ou gzip';
+$lang['langs.upload_description'] = 'L\'archive uploadÃ©e doit Ãªtre au format zip ou gzip';
 
-$lang['langs.not_installed'] = 'Langues non installées';
+$lang['langs.not_installed'] = 'Langues non installÃ©es';
 $lang['langs.name'] = 'Nom';
 $lang['langs.authorizations'] = 'Autorisations';
-$lang['langs.activated'] = 'Activé';
-$lang['langs.compatibility'] = 'Compatibilité';
+$lang['langs.activated'] = 'ActivÃ©';
+$lang['langs.compatibility'] = 'CompatibilitÃ©';
 $lang['langs.author'] = 'Auteur';
 $lang['langs.description'] = 'Description';
 

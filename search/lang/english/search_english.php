@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : January 27, 2008
  *   last modified		: August 1st, 2009 - Forensic
- *   copyright            : (C) 2008 Rouchon Loïc
+ *   copyright            : (C) 2008 Rouchon LoÃ¯c
  *   email                : horn@phpboost.com
  *
  *  
@@ -31,7 +31,7 @@
 #                     English                      #
 ####################################################
 
-//Généralités
+//GÃ©nÃ©ralitÃ©s
 $LANG['title_search'] = 'Search';
 $LANG['search_results'] = 'Search results';
 $LANG['warning_length_string_searched'] = 'The size of the string you\'re searching for must be at least 4 characters long!';
