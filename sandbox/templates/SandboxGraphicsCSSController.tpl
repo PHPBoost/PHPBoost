@@ -198,13 +198,13 @@
 		<div class="content">
 			<ul class="sortable-block">
 				<li class="sortable-element">
-					<div class="sortable-selector" title="Déplacer"></div>
+					<div class="sortable-selector" title="DÃ©placer"></div>
 					<div class="sortable-title">
 						<span><a>{@css.static.sortable}</a></span>
 					</div>
 				</li>
 				<li class="sortable-element dragged" style="position: relative;">
-					<div class="sortable-selector" title="Déplacer"></div>
+					<div class="sortable-selector" title="DÃ©placer"></div>
 					<div class="sortable-title">
 						<span><a>{@css.moved.sortable}</a></span>
 					</div>

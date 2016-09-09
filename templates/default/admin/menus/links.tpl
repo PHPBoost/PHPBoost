@@ -29,7 +29,7 @@ function build_menu_elements_tree() {
 
 function toggleProperties(id) {
 	if (jQuery("#menu_element_" + id + "_properties").is(':hidden'))
-	{   //Si les propriétés sont repliées, on les affiche
+	{   //Si les propriÃ©tÃ©s sont repliÃ©es, on les affiche
 		jQuery("#menu_element_" + id + "_properties").fadeIn();
 		jQuery("#menu_element_" + id + "_more_image").html('<i class="fa fa-minus"></i>');
 	}

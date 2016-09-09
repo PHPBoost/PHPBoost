@@ -1,5 +1,5 @@
 # IF C_PREVIEW #
-<div class="notice">Prévisualisation</div>
+<div class="notice">PrÃ©visualisation</div>
 # ENDIF #
 
 # IF C_RESULT #
