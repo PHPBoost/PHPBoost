@@ -115,7 +115,6 @@ class Feed
 		
 		if (!empty($this->data))
 		{
-			$desc = TextHelper::htmlspecialchars($this->data->get_desc());
 			$tpl->put_all(array(
 				'DATE' => $this->data->get_date(),
 				'DATE_RFC822' => $this->data->get_date_rfc2822(),
@@ -125,27 +124,28 @@ class Feed
 				'TITLE' => $this->data->get_title(),
 				'U_LINK' => $this->data->get_link(),
 				'HOST' => $this->data->get_host(),
-				'DESC' => ContentSecondParser::export_html_text($desc),
-				'RAW_DESC' => $desc,
+				'DESC' => ContentSecondParser::export_html_text($this->data->get_desc()),
+				'RAW_DESC' => TextHelper::htmlspecialchars($this->data->get_desc()),
 				'LANG' => $this->data->get_lang()
 			));
 
 			$items = $this->data->subitems($number, $begin_at);
 			foreach ($items as $item)
 			{
-				$desc = TextHelper::htmlspecialchars($item->get_desc());
 				$enclosure = $item->get_enclosure();
 				$tpl->assign_block_vars('item', array(
 					'TITLE' => $item->get_title(),
 					'U_LINK' => $item->get_link(),
 					'U_GUID' => $item->get_guid(),
-					'DESC' => ContentSecondParser::export_html_text($desc),
-					'RAW_DESC' => $desc,
+					'DESC' => ContentSecondParser::export_html_text($item->get_desc()),
+					'RAW_DESC' => TextHelper::htmlspecialchars($item->get_desc()),
 					'DATE' => $item->get_date(),
 					'DATE_RFC822' => $item->get_date_rfc2822(),
 					'DATE_RFC3339' => $item->get_date_iso8601(),
+					'DATE_HOUR' => $item->get_hours(),
+					'DATE_MINUTES' => $item->get_minutes(),
 					'DATE_TEXT' => $item->get_date_text(),
-					'C_IMG' => ($item->get_image_url() != '') ? true : false,
+					'C_IMG' => ($item->get_image_url() != ''),
 					'U_IMG' => $item->get_image_url(),
 					'C_ENCLOSURE' => $enclosure !== null,
 					'ENCLOSURE_LENGHT' => $enclosure !== null ? $enclosure->get_lenght() : '',
