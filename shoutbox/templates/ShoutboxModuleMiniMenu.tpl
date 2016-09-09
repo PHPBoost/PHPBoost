@@ -87,22 +87,12 @@ function shoutbox_refresh_messages_box() {
 			jQuery('#shoutbox-refresh').html('<i class="fa fa-spin fa-spinner"></i>');
 		},
 		success: function(returnData){
-			jQuery('#shoutbox-messages-container').html(returnData.messages);
+			jQuery('#shoutbox-messages-container').html(returnData);
 
 			jQuery('#shoutbox-refresh').html('<i class="fa fa-refresh"></i>');
 		},
 		error: function(e){
-			messages = e.responseText;
-			
-			if (messages.substring(2, 10) == "messages") {
-				messages = messages.replace(/\\(.?)/g, function (s, n1){switch (n1){case '\\':return '\\';case '0':return '\u0000';case '':return '';default:return n1;}});
-				messages = messages.replace(/>nn</g, '><');
-                                messages = messages.replace(/<br \/>n/g, '<br \/>');
-				messages = messages.slice(14);
-				messages = messages.slice(0, -3);
-
-				jQuery('#shoutbox-messages-container').html(messages);
-			}
+			jQuery('#shoutbox-messages-container').html(e.responseText);
 			
 			jQuery('#shoutbox-refresh').html('<i class="fa fa-refresh"></i>');
 		}

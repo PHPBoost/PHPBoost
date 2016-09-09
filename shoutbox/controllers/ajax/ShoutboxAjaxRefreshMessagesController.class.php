@@ -33,7 +33,7 @@ class ShoutboxAjaxRefreshMessagesController extends AbstractController
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->build_view();
-		return new JSONResponse(array('messages' => $this->view->render()));
+		return new SiteNodisplayResponse($this->view);
 	}
 	
 	private function build_view()
@@ -57,7 +57,7 @@ class ShoutboxAjaxRefreshMessagesController extends AbstractController
 			$shoutbox_message = new ShoutboxMessage();
 			$shoutbox_message->set_properties($row);
 			
-			$this->view->assign_block_vars('messages', array_merge($shoutbox_message->get_array_tpl_vars()));
+			$this->view->assign_block_vars('messages', $shoutbox_message->get_array_tpl_vars());
 		}
 		$result->dispose();
 	}
