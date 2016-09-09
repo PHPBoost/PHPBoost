@@ -106,7 +106,7 @@ function shoutbox_refresh_messages_box() {
 
 <div id="shoutbox-messages-container"# IF C_HORIZONTAL # class="shout-horizontal" # ENDIF #># INCLUDE SHOUTBOX_MESSAGES #</div>
 # IF C_DISPLAY_FORM #
-<form action="" method="post">
+<form action="#" method="post">
 	# IF NOT C_MEMBER #
 	<div class="spacer"></div>
 	<label for="shout-pseudo"><span class="small">${LangLoader::get_message('form.name', 'common')}</span></label>
