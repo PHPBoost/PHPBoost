@@ -133,7 +133,7 @@ class WebFormController extends ModuleController
 		
 		$other_fieldset->add_field(WebService::get_keywords_manager()->get_form_field($this->get_weblink()->get_id(), 'keywords', $this->common_lang['form.keywords'], array('description' => $this->common_lang['form.keywords.description'])));
 		
-		if (!$this->is_contributor_member())
+		if (WebAuthorizationsService::check_authorizations($this->get_weblink()->get_id_category())->moderation())
 		{
 			$publication_fieldset = new FormFieldsetHTML('publication', $this->common_lang['form.approbation']);
 			$form->add_fieldset($publication_fieldset);

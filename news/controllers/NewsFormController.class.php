@@ -129,7 +129,7 @@ class NewsFormController extends ModuleController
 		
 		$other_fieldset->add_field(new NewsFormFieldSelectSources('sources', $this->common_lang['form.sources'], $this->get_news()->get_sources()));
 		
-		if (!$this->is_contributor_member())
+		if (NewsAuthorizationsService::check_authorizations($this->get_news()->get_id_cat())->moderation())
 		{
 			$publication_fieldset = new FormFieldsetHTML('publication', $this->common_lang['form.approbation']);
 			$form->add_fieldset($publication_fieldset);

@@ -150,7 +150,7 @@ class ArticlesFormController extends ModuleController
 
 		$other_fieldset->add_field(new ArticlesFormFieldSelectSources('sources', $this->common_lang['form.sources'], $this->get_article()->get_sources()));
 
-		if (!$this->is_contributor_member())
+		if (ArticlesAuthorizationsService::check_authorizations($this->get_article()->get_id_category())->moderation())
 		{
 			$publication_fieldset = new FormFieldsetHTML('publication', $this->common_lang['form.approbation']);
 			$form->add_fieldset($publication_fieldset);
