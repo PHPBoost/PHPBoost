@@ -439,13 +439,17 @@ class SessionData
 
 	private static function init_from_row($user_id, $session_id, array $row)
 	{
+		$fixed_cached_data = preg_replace_callback( '!s:(\d+):"(.*?)";!', function($match) {
+			return ($match[1] == strlen($match[2])) ? $match[0] : 's:' . strlen($match[2]) . ':"' . $match[2] . '";';
+		}, $row['cached_data']);
+		
 		$data = new SessionData($user_id, $session_id);
 		$data->token = $row['token'];
 		$data->timestamp = $row['timestamp'];
 		$data->ip = $row['ip'];
 		$data->location_script = $row['location_script'];
 		$data->location_title = $row['location_title'];
-		$data->cached_data = unserialize($row['cached_data']);
+		$data->cached_data = unserialize($fixed_cached_data);
 		$data->data = unserialize($row['data']);
 		return $data;
 	}
