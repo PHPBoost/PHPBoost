@@ -113,6 +113,7 @@ class MemberExtendedFieldsService
 	 */
 	public function get_data($user_id)
 	{
+		$has_error = $error = false;
 		$data = array();
 		$extended_fields_displayed = PersistenceContext::get_querier()->row_exists(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, 'WHERE display=1');
 		if ($extended_fields_displayed)
@@ -130,12 +131,17 @@ class MemberExtendedFieldsService
 					try {
 						$data[$extended_field['field_name']] = $member_extended_field->get_instance()->get_data($this->form, $member_extended_field);
 					} catch (MemberExtendedFieldErrorsMessageException $e) {
-						unset($data[$extended_field['field_name']]);
+						$has_error = true;
+						$error = $e->getMessage();
 					}
 				}
 			}
 		}
-		return $data;
+		
+		if (!$has_error)
+			return $data;
+		else
+			throw new MemberExtendedFieldErrorsMessageException($error);
 	}
 	
 	/**

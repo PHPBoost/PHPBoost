@@ -119,7 +119,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		
 		if (empty($authorized_pictures_extensions))
 		{
-			return new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('e_upload_invalid_format', 'errors'));
+			throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('extended_field.avatar_upload_invalid_format', 'status-messages-common'));
 		}
 		
 		if ($form->get_value('link_avatar'))
@@ -139,14 +139,14 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 						$this->delete_old_avatar($member_extended_field);
 						return $directory;
 					}
-					throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('e_upload_max_dimension', 'errors'));
+					throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('extended_field.avatar_upload_max_dimension', 'status-messages-common'));
 				}
 				$this->delete_old_avatar($member_extended_field);
 				return $form->get_value('link_avatar');
 			}
 			else
 			{
-				throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('e_upload_invalid_format', 'errors'));
+				throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('extended_field.avatar_upload_invalid_format', 'status-messages-common'));
 			}
 		}
 		elseif (!empty($avatar))
@@ -163,8 +163,8 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 					$explode = explode('.', $avatar->get_name());
 					$extension = array_pop($explode);
 					
-					if (!in_array($extension, $authorized_pictures_extensions))
-						return new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('e_upload_invalid_format', 'errors'));
+					if (!preg_match('`(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`i', $extension))
+						throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('extended_field.avatar_upload_invalid_format', 'status-messages-common'));
 					
 					$explode = explode('.', $avatar->get_name());
 					$name = $explode[0];
@@ -176,7 +176,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 						$this->delete_old_avatar($member_extended_field);
 						return $directory;
 					} catch (UnsupportedOperationException $e) {
-						throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('e_upload_invalid_format', 'errors'));
+						throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('extended_field.avatar_upload_invalid_format', 'status-messages-common'));
 					}
 				}
 				else

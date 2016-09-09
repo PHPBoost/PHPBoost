@@ -105,4 +105,8 @@ $lang['user.not_authorized_during_maintain'] = 'Vous n\'avez pas l\'autorisation
 $lang['user.not_exists'] = 'L\'utilisateur n\'existe pas !';
 $lang['user.auth.passwd_flood'] = 'Il vous reste :remaining_tries essai(s) après cela il vous faudra attendre 5 minutes pour obtenir 2 nouveaux essais (10min pour 5)!';
 $lang['user.auth.passwd_flood_max'] = 'Vous avez épuisé tous vos essais de connexion, votre compte est verrouillé pendant 5 minutes.';
+
+//Extended fields
+$lang['extended_field.avatar_upload_invalid_format'] = 'Format du fichier invalide pour l\'avatar';
+$lang['extended_field.avatar_upload_max_dimension'] = 'Dimensions maximales du fichier dépassées pour l\'avatar';
 ?>
