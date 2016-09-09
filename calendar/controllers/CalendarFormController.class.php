@@ -159,7 +159,7 @@ class CalendarFormController extends ModuleController
 		$auth_setter = new FormFieldAuthorizationsSetter('register_authorizations', $auth_settings, array('hidden' => !$event_content->is_registration_authorized()));
 		$fieldset->add_field($auth_setter);
 		
-		if (!$this->is_contributor_member())
+		if (CalendarAuthorizationsService::check_authorizations($event_content->get_category_id())->moderation())
 		{
 			$fieldset->add_field(new FormFieldCheckbox('approved', $common_lang['form.approve'], $event_content->is_approved()));
 		}

@@ -90,7 +90,7 @@ class FaqFormController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('answer', $this->lang['faq.form.answer'], $this->get_faq_question()->get_answer(), array('rows' => 15, 'required' => true)));
 		
-		if (!$this->is_contributor_member())
+		if (FaqAuthorizationsService::check_authorizations($this->get_faq_question()->get_id_category())->moderation())
 		{
 			$fieldset->add_field(new FormFieldCheckbox('approved', $this->common_lang['form.approve'], $this->get_faq_question()->is_approved()));
 		}
