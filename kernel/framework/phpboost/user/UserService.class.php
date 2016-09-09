@@ -63,11 +63,15 @@ class UserService
 			));
 
 			$user_id = $result->get_last_inserted_id();
-			$auth_method->associate($user_id);
 			
 			if ($extended_fields instanceof MemberExtendedFieldsService)
 			{
-				$fields_data = $extended_fields->get_data($user_id);
+				try {
+					$fields_data = $extended_fields->get_data($user_id);
+				} catch (MemberExtendedFieldErrorsMessageException $e) {
+					self::$querier->delete(DB_TABLE_MEMBER, 'WHERE user_id=:user_id', array('user_id' => $user_id));
+					throw new MemberExtendedFieldErrorsMessageException($e->getMessage());
+				}
 			}
 			elseif (!is_array($extended_fields))
 			{
@@ -78,6 +82,7 @@ class UserService
 				$fields_data = $extended_fields;
 			}
 			
+			$auth_method->associate($user_id);
 			$fields_data['user_id'] = $user_id;
 			self::$querier->insert(DB_TABLE_MEMBER_EXTENDED_FIELDS, $fields_data);
 			
@@ -131,7 +136,13 @@ class UserService
 		if ($extended_fields !== null)
 		{
 			if ($extended_fields instanceof MemberExtendedFieldsService)
-				$fields_data = $extended_fields->get_data($user->get_id());
+			{
+				try {
+					$fields_data = $extended_fields->get_data($user->get_id());
+				} catch (MemberExtendedFieldErrorsMessageException $e) {
+					throw new MemberExtendedFieldErrorsMessageException($e->getMessage());
+				}
+			}
 			elseif (is_array($extended_fields))
 				$fields_data = $extended_fields;
 			else
