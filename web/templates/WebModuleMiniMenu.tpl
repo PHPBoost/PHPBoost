@@ -1,4 +1,4 @@
-<div id="module-mini-web" class="center">
+<div id="module-mini-web-partners" class="center">
 # IF C_PARTNERS #
 	# START partners #
 	<a href="{partners.U_VISIT}" title="{partners.NAME}">
