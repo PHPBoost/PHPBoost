@@ -64,7 +64,7 @@ class MySQLDBConnection implements DBConnection
 		{
 			$this->link = $mysqli_link;
 			$this->select_database($db_connection_data['database']);
-			$this->execute("SET NAMES 'latin1'");
+			$this->execute("SET NAMES UTF8");
 		}
 		else
 		{

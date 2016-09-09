@@ -137,7 +137,7 @@ class TextHelper
 		addcslashes($string, '"')) . $bounds;
 	}
 	
-	public static function htmlspecialchars($string, $flags = null, $encoding = 'windows-1252', $double_encode = true)
+	public static function htmlspecialchars($string, $flags = null, $encoding = 'UTF-8', $double_encode = true)
 	{
 		if ($flags === null)
 		{
@@ -155,7 +155,7 @@ class TextHelper
 		return htmlspecialchars_decode($string, $flags);
 	}
 	
-	public static function htmlentities($string, $flags = null, $encoding = 'windows-1252', $double_encode = true)
+	public static function htmlentities($string, $flags = null, $encoding = 'UTF-8', $double_encode = true)
 	{
 		if ($flags === null)
 		{
@@ -164,7 +164,7 @@ class TextHelper
 		return htmlentities($string, $flags, $encoding, $double_encode);
 	}
 	
-	public static function html_entity_decode($string, $flags = null, $encoding = 'windows-1252')
+	public static function html_entity_decode($string, $flags = null, $encoding = 'UTF-8')
 	{
 		if ($flags === null)
 		{

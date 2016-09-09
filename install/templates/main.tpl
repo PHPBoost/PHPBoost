@@ -3,7 +3,7 @@ ${resources('install/install')}
 <html lang="{L_XML_LANGUAGE}">
 	<head>
 		<title>{@installation.title} - {STEP_TITLE}</title>
-		<meta charset="windows-1252" />
+		<meta charset="UTF-8" />
 		<meta name="description" content="PHPBoost" />
 		<meta name="robots" content="noindex, follow" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">

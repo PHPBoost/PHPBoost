@@ -33,23 +33,23 @@
  */
 class JSONResponse implements Response
 {
-    private $json;
+	private $json;
 
-    public function __construct(array $json_object)
-    {
-        $session = AppContext::get_session();
-        $session->no_session_location();
-        $session->update_location('');
+	public function __construct(array $json_object)
+	{
+		$session = AppContext::get_session();
+		$session->no_session_location();
+		$session->update_location('');
 
-        $this->json = json_encode($json_object);
-    }
+		$this->json = json_encode($json_object);
+	}
 
-    public function send()
-    {
-        $response = AppContext::get_response();
-        $response->set_header('Content-type', 'application/json; charset=windows-1252');
-        echo $this->json;
-    }
+	public function send()
+	{
+		$response = AppContext::get_response();
+		$response->set_header('Content-type', 'application/json; charset=UTF-8');
+		echo $this->json;
+	}
 }
 
 ?>

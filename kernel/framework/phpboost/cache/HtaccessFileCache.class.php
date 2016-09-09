@@ -44,6 +44,8 @@ class HtaccessFileCache implements CacheData
 		$this->htaccess_file_content = '';
 		$this->general_config = GeneralConfig::load();
 		
+		$this->set_default_charset();
+		
 		$this->add_free_php56();
 		
 		$this->add_disable_signatures_protection();
@@ -99,6 +101,12 @@ class HtaccessFileCache implements CacheData
 	{
 		$this->add_empty_line();
 		$this->add_line('# ' . $name . ' #');
+	}
+	
+	private function set_default_charset()
+	{
+		$this->add_section('Charset');
+		$this->add_line('AddDefaultCharset UTF-8');
 	}
 	
 	private function get_domain($hostname)
