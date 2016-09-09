@@ -237,8 +237,9 @@ class Upload
 	 */
 	private static function clean_filename($string)
 	{
-		$string = strtolower(TextHelper::html_entity_decode($string));
-		$string = strtr($string, ' àáâãäåçèéêëìíîïðñòóôõöùúûüýÿ', '-aaaaaaceeeeiiiionooooouuuuyy');
+		$string = preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', strtolower($string));
+		$string = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $string);
+		$string = preg_replace('#&[^;]+;#', '', $string);
 		$string = preg_replace('`([^a-z0-9-]|[\s])`', '_', $string);
 		$string = preg_replace('`[_]{2,}`', '_', $string);
 		$string = trim($string, ' _');
