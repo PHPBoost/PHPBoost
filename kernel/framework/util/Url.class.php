@@ -223,7 +223,7 @@ class Url
 	public static function encode_rewrite($url)
 	{
 		$url = strtolower(TextHelper::html_entity_decode($url));
-		$url = strtr($url, ' абвгдезийклмнопртуфхцщъыьэя', '-aaaaaaceeeeiiiioooooouuuuyy');
+		$url = strtr($url, ' àáâãäåçèéêëìíîïðòóôõöùúûüýÿ', '-aaaaaaceeeeiiiioooooouuuuyy');
 		$url = preg_replace('`([^a-z0-9]|[\s])`', '-', $url);
 		$url = preg_replace('`[-]{2,}`', '-', $url);
 		$url = trim($url, ' -');
