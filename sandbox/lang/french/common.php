@@ -341,7 +341,7 @@ $lang['mail.smtp.secure_protocol.tls'] = 'TLS';
 $lang['mail.smtp.secure_protocol.ssl'] = 'SSL';
 $lang['mail.success'] = 'L\'email a été envoyé';
 
-//Tempalte
+//Template
 $lang['string_template.result'] = 'Temps de génération du template sans cache : :non_cached_time secondes<br />Temps de génération du template avec cache : :cached_time secondes<br />Longueur de la chaîne : :string_length caractères.';
 
 //Wiki
