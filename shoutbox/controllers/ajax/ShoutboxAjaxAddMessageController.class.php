@@ -31,9 +31,8 @@ class ShoutboxAjaxAddMessageController extends AbstractController
 	{
 		if ($this->check_authorizations())
 		{
-			$pseudo = TextHelper::strprotect(utf8_decode($request->get_string('pseudo', '')));
-			$contents = TextHelper::htmlentities($request->get_string('contents', ''), ENT_COMPAT, 'UTF-8');
-			$contents = TextHelper::htmlspecialchars_decode(TextHelper::html_entity_decode($contents, ENT_COMPAT, 'windows-1252'));
+			$pseudo = $request->get_string('pseudo', '');
+			$contents = $request->get_string('contents', '');
 			
 			if ($pseudo && $contents)
 			{

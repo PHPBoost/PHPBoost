@@ -111,16 +111,25 @@ class MemberExtendedField
 	}
 	
 	public function set_properties($properties)
-	{	
+	{
 		$this->name = $properties['name'];
 		$this->field_name = $properties['field_name'];
 		$this->description = $properties['description'];
 		$this->field_type = $properties['field_type'];
 		$this->value = $properties['value'];
-		$this->possible_values = is_array($properties['possible_values']) ? $properties['possible_values'] : unserialize($properties['possible_values']);
 		$this->default_value = $properties['default_value'];
 		$this->required = $properties['required'];
 		$this->regex = $properties['regex'];
+		
+		if (!is_array($properties['possible_values']))
+		{
+			$fixed_possible_values = preg_replace_callback( '!s:(\d+):"(.*?)";!', function($match) {
+				return ($match[1] == strlen($match[2])) ? $match[0] : 's:' . strlen($match[2]) . ':"' . $match[2] . '";';
+			}, $properties['possible_values']);
+			$this->possible_values = unserialize($fixed_possible_values);
+		}
+		else
+			$this->possible_values = $properties['possible_values'];
 	}
 	
 	public function get_instance()
