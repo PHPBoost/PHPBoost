@@ -247,7 +247,11 @@ class UpdateServices
 	
 	private function update_kernel_tables()
 	{
-		// Mise à jour des tables du noyau
+		// Mise à jour des tables du noyau - conversion en utf8
+		foreach (self::$db_utils->list_tables() as $table_name)
+		{
+			self::$db_querier->inject('ALTER TABLE `' . $table_name . '` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci');
+		}
 	}
 	
 	public function update_kernel_version()
