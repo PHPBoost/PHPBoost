@@ -32,6 +32,7 @@ class CalendarEventContent
 	private $title;
 	private $rewrited_title;
 	private $contents;
+	private $picture_url;
 	
 	private $location;
 	
@@ -111,6 +112,22 @@ class CalendarEventContent
 	public function get_contents()
 	{
 		return $this->contents;
+	}
+	
+	public function set_picture(Url $picture)
+	{
+		$this->picture_url = $picture;
+	}
+
+	public function get_picture()
+	{
+		return $this->picture_url;
+	}
+	
+	public function has_picture()
+	{
+		$picture = $this->picture_url->rel();
+		return !empty($picture);
 	}
 	
 	public function set_location($location)
@@ -261,6 +278,7 @@ class CalendarEventContent
 			'title' => $this->get_title(),
 			'rewrited_title' => $this->get_rewrited_title(),
 			'contents' => $this->get_contents(),
+			'picture_url' => $this->get_picture()->relative(),
 			'location' => $this->get_location(),
 			'approved' => (int)$this->is_approved(),
 			'creation_date' => (int)$this->get_creation_date()->get_timestamp(),
@@ -281,6 +299,7 @@ class CalendarEventContent
 		$this->title = $properties['title'];
 		$this->rewrited_title = $properties['rewrited_title'];
 		$this->contents = $properties['contents'];
+		$this->set_picture(new Url($properties['picture_url']));
 		$this->location = $properties['location'];
 		
 		if ($properties['approved'])
@@ -317,6 +336,7 @@ class CalendarEventContent
 		$this->category_id = $category_id;
 		$this->author_user = AppContext::get_current_user();
 		$this->creation_date = new Date();
+		$this->picture_url = new Url('');
 		
 		$this->registration_authorized = false;
 		$this->max_registered_members = 0;

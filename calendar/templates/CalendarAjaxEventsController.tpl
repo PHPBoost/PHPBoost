@@ -30,6 +30,7 @@
 								<meta itemprop="discussionUrl" content="{event.U_COMMENTS}">
 								<meta itemprop="interactionCount" content="{event.NUMBER_COMMENTS} UserComments">
 								# ENDIF #
+								# IF event.C_HAS_PICTURE #<img itemprop="thumbnailUrl" src="{event.PICTURE}" alt="{event.TITLE}" /># ENDIF #
 								<div itemprop="text">{event.CONTENTS}</div>
 
 								# IF event.C_LOCATION #
