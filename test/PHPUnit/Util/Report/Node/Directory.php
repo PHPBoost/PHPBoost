@@ -311,7 +311,7 @@ class PHPUnit_Util_Report_Node_Directory extends PHPUnit_Util_Report_Node
      * @param integer $lowUpperBound
      * @param integer $highLowerBound
      */
-    public function render($target, $title, $charset = 'ISO-8859-1', $lowUpperBound = 35, $highLowerBound = 70)
+    public function render($target, $title, $charset = 'UTF-8', $lowUpperBound = 35, $highLowerBound = 70)
     {
         $this->doRender(
           $target, $title, $charset, $lowUpperBound, $highLowerBound

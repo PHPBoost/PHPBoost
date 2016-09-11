@@ -2,7 +2,7 @@
 <html lang="{L_XML_LANGUAGE}">
 	<head>
 		<title>{TITLE}</title>
-		<meta charset="windows-1252" />
+		<meta charset="UTF-8" />
 		# IF C_DESCRIPTION #<meta name="description" content="{SITE_DESCRIPTION}" /># ENDIF #
 		<meta name="generator" content="PHPBoost" />
 		# IF C_CANONICAL_URL #<link rel="canonical" href="{U_CANONICAL}" /># ENDIF #

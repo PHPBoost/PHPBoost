@@ -82,7 +82,7 @@ abstract class PHPUnit_Util_Report
      * @param  integer                      $lowUpperBound
      * @param  integer                      $highLowerBound
      */
-    public static function render(PHPUnit_Framework_TestResult $result, $target, $title = '', $charset = 'ISO-8859-1', $yui = TRUE, $highlight = FALSE, $lowUpperBound = 35, $highLowerBound = 70)
+    public static function render(PHPUnit_Framework_TestResult $result, $target, $title = '', $charset = 'UTF-8', $yui = TRUE, $highlight = FALSE, $lowUpperBound = 35, $highLowerBound = 70)
     {
         $target = PHPUnit_Util_Filesystem::getDirectory($target);
 
