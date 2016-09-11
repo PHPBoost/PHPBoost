@@ -27,14 +27,30 @@
 
 class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 {
+	private $db_utils;
+	
 	public function __construct()
 	{
 		parent::__construct('calendar');
+		$this->db_utils = PersistenceContext::get_dbms_utils();
 	}
 	
 	public function execute()
 	{
+		$tables = $this->db_utils->list_tables(true);
+		
+		if (in_array(PREFIX . 'calendar_events_content', $tables))
+			$this->update_events_content_table();
+		
 		$this->delete_old_files();
+	}
+	
+	private function update_events_content_table()
+	{
+		$columns = $this->db_utils->desc_table(PREFIX . 'calendar_events_content');
+		
+		if (!isset($columns['picture_url']))
+			$this->db_utils->add_column(PREFIX . 'calendar_events_content', 'picture_url', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"));
 	}
 	
 	private function delete_old_files()
