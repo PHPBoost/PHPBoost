@@ -42,7 +42,7 @@
 	
 			</header>
 			<div class="content">
-				# IF C_PICTURE #<img itemprop="thumbnailUrl" src="{U_PICTURE}" alt="{NAME}" title="{NAME}" class="right" /># ENDIF #
+				# IF C_PICTURE #<img itemprop="thumbnailUrl" src="{U_PICTURE}" alt="{NAME}" title="{NAME}" class="news-picture" /># ENDIF #
 	
 				<div itemprop="text">{CONTENTS}</div>
 			</div>
