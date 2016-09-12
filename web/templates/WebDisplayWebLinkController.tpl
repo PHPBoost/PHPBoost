@@ -9,7 +9,7 @@
 		# IF NOT C_VISIBLE #
 			# INCLUDE NOT_VISIBLE_MESSAGE #
 		# ENDIF #
-		<article id="article-web-{ID}" itemscope="itemscope" itemtype="http://schema.org/CreativeWork" class="article-web# IF C_IS_PARTNER # web-partner# ENDIF ## IF C_IS_PRIVILEGED_PARTNER # web-privileged-partner# ENDIF #">
+		<article id="article-web-{ID}" itemscope="itemscope" itemtype="http://schema.org/CreativeWork" class="article-web# IF C_IS_PARTNER # web-friends# ENDIF ## IF C_IS_PRIVILEGED_PARTNER # web-privileged-friends# ENDIF #">
 			<header>
 				<h2>
 					<span id="name" itemprop="name">{NAME}</span>
