@@ -3,7 +3,7 @@
  *                          BBCodeEditor.class.php
  *                            -------------------
  *   begin                : July 5 2008
- *   copyright            : (C) 2008 Régis Viarre
+ *   copyright            : (C) 2008 RÃ©gis Viarre
  *   email                : crowkait@phpboost.com
  *
  *
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>
  * @desc This class provides an interface editor for contents.
  * @package {@package}
  */
@@ -87,6 +87,11 @@ class BBCodeEditor extends ContentEditor
 			'L_BB_LIGHTBOX' => $bbcode_lang['bb_lightbox'],
 			'L_BB_QUOTE' => $bbcode_lang['bb_quote'],
 			'L_BB_HIDE' => $bbcode_lang['bb_hide'],
+			'L_BB_MEMBER' => $bbcode_lang['bb_member'],
+			'L_BB_MODERATOR' => $bbcode_lang['bb_moderator'],
+			'L_BB_HIDE_ALL' => $bbcode_lang['bb_hide_all'],
+			'L_BB_VIEW_MEMBER' => $bbcode_lang['bb_hide_view_member'],
+			'L_BB_VIEW_MODERATOR' => $bbcode_lang['bb_hide_view_moderator'],
 			'L_BB_COLOR' => $bbcode_lang['bb_color'],
 			'L_BB_SIZE' => $bbcode_lang['bb_size'],
 			'L_BB_FONT' => $bbcode_lang['bb_font'],

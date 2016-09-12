@@ -194,6 +194,14 @@
 	font-weight: bold;
 }
 
+.bbcode-block-size {
+	width: 40px;
+}
+
+.bbcode-block-hide {
+	width: 90px;
+}
+
 .bbcode-block .form-element {
 	margin: 2px 7px;
 }
