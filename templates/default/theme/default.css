@@ -259,6 +259,7 @@ ul.pagination .current-page {
 
 .loading-preview {
 	position: absolute;
+	z-index: 10;
 	margin: 90px auto auto auto;
 	width: 100%;
 	text-align: center;
