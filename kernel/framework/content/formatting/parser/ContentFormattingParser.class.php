@@ -27,7 +27,7 @@
 
 /**
  * @package {@package}
- * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @author BenoÃ®t Sautel <ben.popeye@phpboost.com>
  * @desc This class is abstract. It contains tools that are usefull for implement a content parser.
  */
 abstract class ContentFormattingParser extends AbstractParser
@@ -117,11 +117,11 @@ abstract class ContentFormattingParser extends AbstractParser
 	protected function split_imbricated_tag(&$content, $tag, $attributes)
 	{
 		$content = self::preg_split_safe_recurse($content, $tag, $attributes);
-		//1 élément représente les inter tag, un les attributs tag et l'autre le contenu
+		//1 Ã©lÃ©ment reprÃ©sente les inter tag, un les attributs tag et l'autre le contenu
 		$nbr_occur = count($content);
 		for ($i = 0; $i < $nbr_occur; $i++)
 		{
-			//C'est le contenu d'un tag, il contient un sous tag donc on éclate
+			//C'est le contenu d'un tag, il contient un sous tag donc on Ã©clate
 			if (($i % 3) === 2 && preg_match('`\[' . $tag . '(?:' . $attributes . ')?\].+\[/' . $tag . '\]`s', $content[$i]))
 			{
 				self::split_imbricated_tag($content[$i], $tag, $attributes);
@@ -144,12 +144,12 @@ abstract class ContentFormattingParser extends AbstractParser
 	 */
 	protected static function preg_split_safe_recurse($content, $tag, $attributes)
 	{
-		// Définitions des index de position de début des tags valides
+		// DÃ©finitions des index de position de dÃ©but des tags valides
 		$index_tags = self::index_tags($content, $tag, $attributes);
 		$size = count($index_tags);
 		$parsed = array();
 
-		// Stockage de la chaîne avant le premier tag dans le cas ou il y a au moins une balise ouvrante
+		// Stockage de la chaÃ®ne avant le premier tag dans le cas ou il y a au moins une balise ouvrante
 		if ($size >= 1)
 		{
 			array_push($parsed, substr($content, 0, $index_tags[0]));
@@ -162,7 +162,7 @@ abstract class ContentFormattingParser extends AbstractParser
 		for ($i = 0; $i < $size; $i++)
 		{
 			$current_index = $index_tags[$i];
-			// Calcul de la sous-chaîne pour l'expression régulière
+			// Calcul de la sous-chaÃ®ne pour l'expression rÃ©guliÃ¨re
 			if ($i == ($size - 1))
 			{
 				$sub_str = substr($content, $current_index);
@@ -172,32 +172,32 @@ abstract class ContentFormattingParser extends AbstractParser
 				$sub_str = substr($content, $current_index, $index_tags[$i + 1] - $current_index);
 			}
 
-			// Mise en place de l'éclatement de la sous-chaine
+			// Mise en place de l'Ã©clatement de la sous-chaine
 			$mask = '`\[' . $tag . '(' . $attributes . ')?\](.*)\[/' . $tag . '\](.+)?`s';
 			$local_parsed = preg_split($mask, $sub_str, -1, PREG_SPLIT_DELIM_CAPTURE);
 
 			if (count($local_parsed) == 1)
 			{
-				// Remplissage des résultats
+				// Remplissage des rÃ©sultats
 				$parsed[count($parsed) - 1] .= $local_parsed[0]; // Ce n'est pas un tag
 			}
 			else
 			{
-				// Remplissage des résultats
+				// Remplissage des rÃ©sultats
 				array_push($parsed, $local_parsed[1]);  // attributs du tag
 				array_push($parsed, $local_parsed[2]);  // contenu du tag
 			}
 
-			// Chaine après le tag
+			// Chaine aprÃ¨s le tag
 			if ($i < ($size - 1))
 			{
-				// On prend la chaine après le tag de fermeture courant jusqu'au prochain tag d'ouverture
+				// On prend la chaine aprÃ¨s le tag de fermeture courant jusqu'au prochain tag d'ouverture
 				$current_tag_len = strlen('[' . $tag . $local_parsed[1] . ']' . $local_parsed[2] . '[/' . $tag . ']');
 				$end_pos = $index_tags[$i + 1] - ($current_index + $current_tag_len);
 				array_push($parsed, substr($local_parsed[3], 0, $end_pos ));
 			}
 			elseif (isset($local_parsed[3]))
-			{   // c'est la fin, il n'y a pas d'autre tag ouvrant après
+			{   // c'est la fin, il n'y a pas d'autre tag ouvrant aprÃ¨s
 				array_push($parsed, $local_parsed[3]);
 			}
 		}
@@ -220,10 +220,10 @@ abstract class ContentFormattingParser extends AbstractParser
 
 		while (($pos = strpos($content, '[' . $tag, $pos + 1)) !== false)
 		{
-			// nombre de tags de fermeture déjà rencontrés
+			// nombre de tags de fermeture dÃ©jÃ  rencontrÃ©s
 			$nb_close_tags = substr_count(substr($content, 0, ($pos + strlen('['.$tag))), '[/'.$tag.']');
 
-			// Si on trouve un tag d'ouverture, on sauvegarde sa position uniquement si il y a autant + 1 de tags fermés avant et on itère sur le suivant
+			// Si on trouve un tag d'ouverture, on sauvegarde sa position uniquement si il y a autant + 1 de tags fermÃ©s avant et on itÃ¨re sur le suivant
 			if ($nb_open_tags == $nb_close_tags)
 			{
 				$open_tag = substr($content, $pos, (strpos($content, ']', $pos + 1) + 1 - $pos));
@@ -248,7 +248,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	 */
 	protected function pick_up_tag($tag, $arguments = '')
 	{
-		//On éclate le contenu selon les tags (avec imbrication bien qu'on ne les gèrera pas => ça permettra de faire [code][code]du code[/code][/code])
+		//On Ã©clate le contenu selon les tags (avec imbrication bien qu'on ne les gÃ¨rera pas => Ã§a permettra de faire [code][code]du code[/code][/code])
 		$split_code = $this->preg_split_safe_recurse($this->content, $tag, $arguments);
 
 		$num_codes = count($split_code);
@@ -257,14 +257,14 @@ abstract class ContentFormattingParser extends AbstractParser
 		{
 			$this->content = '';
 			$id_code = 0;
-			//On balaye le tableau trouvé
+			//On balaye le tableau trouvÃ©
 			for ($i = 0; $i < $num_codes; $i++)
 			{
 				//Contenu inter tags
 				if ($i % 3 == 0)
 				{
 					$this->content .= $split_code[$i];
-					//Si on n'est pas après la dernière balise fermante, on met une balise de signalement de la position du tag
+					//Si on n'est pas aprÃ¨s la derniÃ¨re balise fermante, on met une balise de signalement de la position du tag
 					if ($i < $num_codes - 1)
 					{
 						$this->content .= '[' . strtoupper($tag) . '_TAG_' . $id_code++ . ']';
@@ -273,7 +273,7 @@ abstract class ContentFormattingParser extends AbstractParser
 				//Contenu des balises
 				elseif ($i % 3 == 2)
 				{
-					//Enregistrement dans le tableau du contenu des tags à isoler
+					//Enregistrement dans le tableau du contenu des tags Ã  isoler
 					$this->array_tags[$tag][] = '[' . $tag . $split_code[$i - 1] . ']' . str_replace('<br />', "\n", $split_code[$i]) . '[/' . $tag . ']';
 				}
 			}
@@ -287,7 +287,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	 */
 	protected function reimplant_tag($tag)
 	{
-		//Si cette balise a  été isolée
+		//Si cette balise a  Ã©tÃ© isolÃ©e
 		if (!array_key_exists($tag, $this->array_tags))
 		{
 			return false;
@@ -295,13 +295,13 @@ abstract class ContentFormattingParser extends AbstractParser
 
 		$num_code = count($this->array_tags[$tag]);
 
-		//On réinjecte tous les contenus des balises
+		//On rÃ©injecte tous les contenus des balises
 		for ($i = 0; $i < $num_code; $i++)
 		{
 			$this->content = str_replace('[' . strtoupper($tag) . '_TAG_' . $i . ']', $this->array_tags[$tag][$i], $this->content);
 		}
 
-		//On efface tout ce qu'on a prélevé du array
+		//On efface tout ce qu'on a prÃ©levÃ© du array
 		$this->array_tags[$tag] = array();
 
 		return true;

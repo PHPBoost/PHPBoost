@@ -73,7 +73,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//On supprime d'abord toutes les occurences de balises CODE que nous réinjecterons à la fin pour ne pas y toucher
 		if (!in_array('code', $this->forbidden_tags))
 		{
-			$this->pick_up_tag('code', '=[A-Za-z0-9#+-]+(?:,[01]){0,2}');
+			$this->pick_up_tag('code', '=[A-Za-z0-9#+-_.\s]+(?:,[01]){0,2}');
 		}
 
 		//On prélève tout le code HTML afin de ne pas l'altérer

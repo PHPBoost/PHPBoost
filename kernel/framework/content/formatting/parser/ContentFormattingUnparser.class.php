@@ -27,7 +27,7 @@
 
 /**
  * @package {@package}
- * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @author BenoÃ®t Sautel <ben.popeye@phpboost.com>
  * @desc This class is an abstract class. It contains the common elements needed by all the unparsers of PHPBoost.
  */
 abstract class ContentFormattingUnparser extends AbstractParser
@@ -46,7 +46,7 @@ abstract class ContentFormattingUnparser extends AbstractParser
 	*/
 	protected function unparse_html($action)
 	{
-		//Prélèvement du HTML
+		//PrÃ©lÃ¨vement du HTML
 		if ($action == self::PICK_UP)
 		{
 			$mask = '`<!-- START HTML -->' . "\n" . '(.+)' . "\n" . '<!-- END HTML -->`sU';
@@ -76,12 +76,12 @@ abstract class ContentFormattingUnparser extends AbstractParser
 					}
 				}
 
-				//On protège le code HTML à l'affichage qui vient non protégé de la base de données
+				//On protÃ¨ge le code HTML Ã  l'affichage qui vient non protÃ©gÃ© de la base de donnÃ©es
 				$this->array_tags['html_unparse'] = array_map(create_function('$var', 'return TextHelper::htmlspecialchars($var, ENT_NOQUOTES);'), $this->array_tags['html_unparse']);
 			}
 			return true;
 		}
-		//Réinsertion du HTML
+		//RÃ©insertion du HTML
 		else
 		{
 			if (!array_key_exists('html_unparse', $this->array_tags))
@@ -109,10 +109,10 @@ abstract class ContentFormattingUnparser extends AbstractParser
 	 */
 	protected function unparse_code($action)
 	{
-		//Prélèvement du HTML
+		//PrÃ©lÃ¨vement du HTML
 		if ($action == self::PICK_UP)
 		{
-			$mask = '`\[\[CODE(=[A-Za-z0-9#+-]+(?:,(?:0|1)(?:,1)?)?)?\]\]' . '(.+)' . '\[\[/CODE\]\]`sU';
+			$mask = '`\[\[CODE(=[A-Za-z0-9#+-_.\s]+(?:,(?:0|1)(?:,1)?)?)?\]\]' . '(.+)' . '\[\[/CODE\]\]`sU';
 			$content_split = preg_split($mask, str_replace('&nbsp;', '&amp;nbsp;', $this->content), -1, PREG_SPLIT_DELIM_CAPTURE);
 
 			$content_length = count($content_split);
@@ -141,7 +141,7 @@ abstract class ContentFormattingUnparser extends AbstractParser
 			}
 			return true;
 		}
-		//Réinsertion du HTML
+		//RÃ©insertion du HTML
 		else
 		{
 			if (!array_key_exists('code_unparse', $this->array_tags))

@@ -59,7 +59,7 @@ class ContentSecondParser extends AbstractParser
 		//Balise code
 		if (strpos($this->content, '[[CODE') !== false)
 		{
-			$this->content = preg_replace_callback('`\[\[CODE(?:=([A-Za-z0-9#+-]+))?(?:,(0|1)(?:,(0|1))?)?\]\](.+)\[\[/CODE\]\]`sU', array($this, 'callbackhighlight_code'), $this->content);
+			$this->content = preg_replace_callback('`\[\[CODE(?:=([A-Za-z0-9#+-_.\s]+))?(?:,(0|1)(?:,(0|1))?)?\]\](.+)\[\[/CODE\]\]`sU', array($this, 'callbackhighlight_code'), $this->content);
 		}
 		
 		//Balise member
@@ -213,14 +213,45 @@ class ContentSecondParser extends AbstractParser
 		if (strlen($content_to_highlight) > self::MAX_CODE_LENGTH)
 		{
 			return '<div class="error">' . LangLoader::get_message('code_too_long_error', 'editor-common') . '</div>';
-		
 		}
 
-		$contents = $this->highlight_code($content_to_highlight, $matches[1], $line_number, $inline_code);
+		if (!empty($matches[1])) {
+			$info = new SplFileInfo($matches[1]);
+			$extension = $info->getExtension();
+			$extension = strtolower($extension);
+			
+			if ($extension == 'js' || $extension == 'jquery')
+			{
+				$extension = "javascript";
+			}
+			else if ($extension && strtolower($extension)!='tpl') 
+			{
+				require_once(PATH_TO_ROOT . '/kernel/lib/php/geshi/geshi.php');
+				$Geshi = new GeSHi();
+				$Geshi->set_language($extension);
+				if ($Geshi->error())
+				{
+					$extension = "text";
+				}
+			}
+		}
+
+		if ($extension != "")
+		{
+			$typecode = strtoupper($extension);
+			$title = $matches[1] .' : ';
+		}
+		else
+		{
+			$typecode = strtoupper($matches[1]);
+			$title = sprintf(LangLoader::get_message('code_langage', 'main'), strtoupper($matches[1]));
+		}
+
+		$contents = $this->highlight_code($content_to_highlight, $typecode, $line_number, $inline_code);
 
 		if (!$inline_code && !empty($matches[1]))
 		{
-			$contents = '<div class="formatter-container formatter-code code-' . $matches[1] . '"><span class="formatter-title">' . sprintf(LangLoader::get_message('code_langage', 'main'), strtoupper($matches[1])) . '</span><div class="formatter-content">' . $contents .'</div></div>';
+			$contents = '<div class="formatter-container formatter-code code-' . $typecode . '"><span class="formatter-title">' . $title . '</span><div class="formatter-content">' . $contents .'</div></div>';
 		}
 		else if (!$inline_code && empty($matches[1]))
 		{
