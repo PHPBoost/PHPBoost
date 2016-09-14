@@ -41,6 +41,8 @@ class NewsDisplayNewsController extends ModuleController
 		
 		$this->init();
 		
+		$this->count_number_view($request);
+		
 		$this->build_view();
 		
 		return $this->generate_response();
@@ -71,6 +73,22 @@ class NewsDisplayNewsController extends ModuleController
 				$this->news = new News();
 		}
 		return $this->news;
+	}
+	
+	private function count_number_view(HTTPRequestCustom $request)
+	{
+		if (!$this->news->is_visible())
+		{
+			$this->tpl->put('NOT_VISIBLE_MESSAGE', MessageHelper::display(LangLoader::get_message('element.not_visible', 'status-messages-common'), MessageHelper::WARNING));
+		}
+		else
+		{
+			if ($request->get_url_referrer() && !strstr($request->get_url_referrer(), NewsUrlBuilder::display_news($this->news->get_category()->get_id(), $this->news->get_category()->get_rewrited_name(), $this->news->get_id(), $this->news->get_rewrited_name())->rel()))
+			{
+				$this->news->set_number_view($this->news->get_number_view() + 1);
+				NewsService::update_number_view($this->news);
+			}
+		}
 	}
 	
 	private function build_view()

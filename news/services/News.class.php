@@ -46,6 +46,7 @@ class News
 	private $creation_date;
 	private $updated_date;
 	private $author_user;
+	private $number_view;
 
 	private $picture_url;
 	private $sources;
@@ -243,6 +244,16 @@ class News
 		return $this->author_user;
 	}
 	
+	public function set_number_view($number_view)
+	{
+		$this->number_view = $number_view;
+	}
+
+	public function get_number_view()
+	{
+		return $this->number_view;
+	}
+	
 	public function set_picture(Url $picture)
 	{
 		$this->picture_url = $picture;
@@ -319,6 +330,7 @@ class News
 			'creation_date' => $this->get_creation_date()->get_timestamp(),
 			'updated_date' => $this->get_updated_date() !== null ? $this->get_updated_date()->get_timestamp() : 0,
 			'author_user_id' => $this->get_author_user()->get_id(),
+			'number_view' => $this->get_number_view(),
 			'picture_url' => $this->get_picture()->relative(),
 			'sources' => serialize($this->get_sources())
 		);
@@ -332,6 +344,7 @@ class News
 		$this->rewrited_name = $properties['rewrited_name'];
 		$this->contents = $properties['contents'];
 		$this->short_contents = $properties['short_contents'];
+		$this->number_view = $properties['number_view'];
 		$this->approbation_type = $properties['approbation_type'];
 		$this->start_date = !empty($properties['start_date']) ? new Date($properties['start_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->end_date = !empty($properties['end_date']) ? new Date($properties['end_date'], Timezone::SERVER_TIMEZONE) : null;
@@ -395,6 +408,7 @@ class News
 			'C_PICTURE' => $this->has_picture(),
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			'C_AUTHOR_DISPLAYED' => $news_config->get_author_displayed(),
+			'C_NB_VIEW_ENABLED' => $news_config->get_nb_view_enabled(),
 			'C_READ_MORE' => !$this->get_short_contents_enabled() && $description != @strip_tags($contents, '<br><br/>') && strlen($description) > $news_config->get_number_character_to_cut(),
 			'C_SOURCES' => $nbr_sources > 0,
 			'C_DIFFERED' => $this->approbation_type == self::APPROVAL_DATE,
@@ -423,7 +437,7 @@ class News
 			'C_COMMENTS' => !empty($number_comments),
 			'L_COMMENTS' => CommentsService::get_lang_comments('news', $this->id),
 			'NUMBER_COMMENTS' => CommentsService::get_number_comments('news', $this->id),
-			
+			'NUMBER_VIEW' => $this->get_number_view(),
 			//Category
 			'C_ROOT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY,
 			'CATEGORY_ID' => $category->get_id(),

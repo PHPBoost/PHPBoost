@@ -119,6 +119,8 @@ class AdminNewsConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->admin_common_lang['config.author_displayed'], $this->config->get_author_displayed()));
 		
+		$fieldset->add_field(new FormFieldCheckbox('nb_view_enabled', $this->lang['admin.config.news_number_view_enabled'], $this->config->get_nb_view_enabled()));
+		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->admin_common_lang['config.display_type'], $this->config->get_display_type(),
 			array(
 				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display_type.block'], NewsConfig::DISPLAY_BLOCK),
@@ -172,6 +174,7 @@ class AdminNewsConfigController extends AdminModuleController
 		$this->config->set_comments_enabled($this->form->get_value('comments_enabled'));
 		$this->config->set_news_suggestions_enabled($this->form->get_value('news_suggestions_enabled'));
 		$this->config->set_author_displayed($this->form->get_value('author_displayed'));
+		$this->config->set_nb_view_enabled($this->form->get_value('nb_view_enabled'));
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		NewsConfig::save();

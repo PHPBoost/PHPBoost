@@ -55,6 +55,7 @@ $lang['admin.config.display_condensed'] = 'Display the condensed news instead of
 $lang['admin.config.display_descriptions_to_guests'] = 'Display condensed news to guests if they don\'t have read authorization';
 $lang['admin.config.number_character_to_cut'] = 'Caracters number to cut the news';
 $lang['admin.config.news_suggestions_enabled'] = 'Enable suggestions display';
+$lang['admin.config.news_number_view_enabled'] = 'Enable number of view display';
 
 //Feed name
 $lang['feed.name'] = 'News';

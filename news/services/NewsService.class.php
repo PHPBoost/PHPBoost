@@ -68,6 +68,11 @@ class NewsService
 		return $news;
 	}
 	
+	public static function update_number_view(News $news)
+	{
+		self::$db_querier->update(NewsSetup::$news_table, array('number_view' => $news->get_number_view()), 'WHERE id=:id', array('id' => $news->get_id()));
+	}
+	
 	public static function get_authorized_categories($current_id_category)
 	{
 		$search_category_children_options = new SearchCategoryChildrensOptions();
