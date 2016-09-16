@@ -27,14 +27,30 @@
 
 class NewsModuleUpdateVersion extends ModuleUpdateVersion
 {
+	private $db_utils;
+	
 	public function __construct()
 	{
 		parent::__construct('news');
+		$this->db_utils = PersistenceContext::get_dbms_utils();
 	}
 	
 	public function execute()
 	{
+		$tables = $this->db_utils->list_tables(true);
+		
+		if (in_array(PREFIX . 'news', $tables))
+			$this->update_news_table();
+		
 		$this->delete_old_files();
+	}
+	
+	private function update_news_table()
+	{
+		$columns = $this->db_utils->desc_table(PREFIX . 'news');
+		
+		if (!isset($columns['number_view']))
+			$this->db_utils->add_column(PREFIX . 'news', 'number_view', array('type' => 'integer', 'length' => 11, 'default' => 0));
 	}
 	
 	private function delete_old_files()
