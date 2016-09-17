@@ -228,4 +228,15 @@ $lang['extended-field.field.entertainement-explain'] = '';
 
 $lang['extended-field.field.biography'] = 'Biographie';
 $lang['extended-field.field.biography-explain'] = '';
+
+//Cookies bar
+$lang['cookiebar.cookie'] = 'Cookie';
+$lang['cookiebar.about-cookie'] = 'A propos des Cookies';
+$lang['cookiebar-message.notracking']  = 'En poursuivant votre navigation sur ce site internet, vous acceptez l\’utilisation de Cookie afin de gérer votre connexion, vos préférences, ainsi que l\'enregistrement de statistiques anonymes des visites';
+$lang['cookiebar-message.tracking']  = 'En poursuivant votre navigation sur ce site internet, vous acceptez l\’utilisation de Cookie ou autres traceurs pour vous proposer une navigation adaptée (publicité ciblées, partage réseaux sociaux, etc...).';
+$lang['cookiebar.understand']  = 'J\'ai compris';
+$lang['cookiebar.allowed']  = 'Autoriser';
+$lang['cookiebar.declined']  = 'Bloquer';
+$lang['cookiebar.more']  = 'En savoir plus';
+
 ?>

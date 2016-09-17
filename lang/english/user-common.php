@@ -229,4 +229,13 @@ $lang['extended-field.field.entertainement-explain'] = '';
 
 $lang['extended-field.field.biography'] = 'Biography';
 $lang['extended-field.field.biography-explain'] = 'A few lines describing you';
+
+//Cookies Bar
+$lang['cookiebar-message.notracking']  = 'If you continuing your visit to this website, you agree to use Cookie to manage your connection, your preferences, and to save anonymous visits statistics';
+$lang['cookiebar-message.tracking']  = 'If you continuing your visit to this website, you agree to use cookie or other tracers to offer a suitable navigation (targeted advertising, social media sharing , more ...).';
+$lang['cookiebar.understand']  = 'Ok';
+$lang['cookiebar.allowed']  = 'Allowed';
+$lang['cookiebar.declined']  = 'Declined';
+$lang['cookiebar.more']  = 'Learn more';
+
 ?>

@@ -550,7 +550,7 @@ function bb_hide_block(bbfield, field, stop)
 	}
 }
 
-//Scroll to Top or Bottom
+// Gestion de la position du scroll (scroll-to-top + cookie-bar)
 jQuery(document).ready(function(){
 	jQuery(window).scroll(function(){
 		if ($(this).scrollTop() > 800) {
@@ -558,8 +558,16 @@ jQuery(document).ready(function(){
 		} else {
 			jQuery('#scroll-to-top').fadeOut();
 		}
+
+		if ($(this).scrollTop() > 1) {
+			jQuery('#cookie-bar-container').addClass('fixed');
+		} 
+		else {
+			jQuery('#cookie-bar-container').removeClass('fixed');
+		}
 	});
 
+//Scroll to Top or Bottom
 	jQuery('#scroll-to-top').click(function(){
 		jQuery('html, body').animate({scrollTop : 0},1200);
 		return false;
@@ -569,3 +577,31 @@ jQuery(document).ready(function(){
 		return false;
 	});
 });
+
+//Gestion Cookie BBCode et Cookiebar
+//Envoi le cookie au client.
+function sendCookie(name, value, delai = 1)
+{
+	var date = new Date();
+	if (delai > 13) { delai = 13 }			//Le cookie ne peut pas dépasser les 13mois de validité.
+
+	date.setMonth(date.getMonth() + delai); //1 mois de validité par défaut.
+	document.cookie = name + '=' + value + '; expires = ' + date.toGMTString() + '; path = "/"';
+}
+
+//Récupère la valeur du cookie.
+function getCookie(name) 
+{
+	start = document.cookie.indexOf(name + "=")
+	if( start >= 0 ) 
+	{
+		start += name.length + 1;
+		end = document.cookie.indexOf(';', start);
+		
+		if( end < 0 ) 
+			end = document.cookie.length;
+		
+		return document.cookie.substring(start, end);
+	}
+	return '';
+}

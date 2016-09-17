@@ -1,0 +1,210 @@
+/* -- Profile User -- */
+/* ------------------ */
+ul#profile-container {
+	margin: 30px auto;
+	width: 99%;
+	list-style-type: none;
+}
+
+ul#profile-container li {
+	margin-right: 2px;
+	padding: 10px;
+	text-align: center;
+}
+
+.preview-img {
+	max-height: 180px;
+	vertical-align: top;
+}
+
+.user-agreement {
+	width: 90%;
+	max-width: none;
+	max-height: 250px;
+	overflow-y: auto !important;
+}
+
+
+/* -- Contribution -- */ 
+/* ------------------ */
+#module-user-contribution-list hr {
+	margin: 20px 0;
+}
+
+.module-contribution-element {
+	float: left;
+	margin: 20px 0;
+	text-align: center;
+}
+
+.unprocessed-contribution {
+	margin: auto;
+	width: 300px;
+	overflow: hidden;
+	text-align: center;
+}
+
+.unprocessed-contribution div {
+	float: left;
+	width: 50%;
+}
+
+#module-user-moderation-panel .content {
+	padding-bottom: 75px;
+}
+
+#module-user-moderation-panel .bt td:before {
+	display: none;
+}
+
+#module-user-moderation-panel .bt-content {
+	display: block;
+	width: 100%;
+	text-align: center;
+}
+
+.contribution-module-container {
+	float: left;
+	margin: 20px 0;
+	text-align: center;
+}
+
+.convers-announce {
+	padding-right: 0;
+}
+
+.convers-title {
+	width: 50%;
+	text-align: left;
+}
+
+table.announce-legend td {
+	width: 33%;
+}
+
+@media (min-width: 769px) {
+	.post-pm {
+		margin: auto;
+		width: 80%;
+	}
+}
+
+.available-modules-msg {
+	margin-bottom: 15px;
+	text-align: center;
+}
+
+
+/* -- Error 403/404 -- */ 
+/* ------------------- */
+#module-user-error-403 .content,
+#module-user-error-404 .content {
+	text-align: center;
+	font-size: 1.5em;
+}
+
+#module-user-error-403 .fa-warning:before,
+#module-user-error-404 .fa-warning:before {
+	content: "\f071"; 
+}
+
+#module-user-error-403 .fa-warning,
+#module-user-error-404 .fa-warning {
+	display: block;
+	margin: 40px auto 20px auto;
+	color: #C19954;
+}
+
+#module-user-error-403 .message-error,
+#module-user-error-404 .message-error {
+	padding: 20px 0;
+}
+
+#module-user-error-403 .type-error,
+#module-user-error-404 .type-error {
+	padding: 10px 0;
+}
+
+
+/* --   Cookie Bar  -- */ 
+/* ------------------- */
+.cookiebar-container {
+	z-index: 100;
+	left: 0;
+	right: 0;
+	top: 0;
+	padding: 7px 20px;
+	background-color: #F2F2F2;
+	border-bottom: 1px solid #E2E2E2;
+	font-size: 0.9em;
+	text-align: center;
+}
+
+.cookiebar-container.fixed {
+	position: fixed;
+}
+
+.cookiebar-content {
+	text-align: justify;
+}
+
+@media (min-width: 769px) {
+	.cookiebar-content {
+		display: inline-block;
+		max-width: calc(100% - 250px);
+		vertical-align: middle;
+	}
+
+	.cookiebar-actions {
+		display: inline-block;
+		width: 250px;
+	}
+}
+
+@media (max-width: 768px) {
+	.cookiebar-content {
+		margin-bottom: 5px;
+	}
+
+	.cookiebar-actions {
+		margin: 15px 0 5px 0;
+	}
+}
+
+.cookiebar-button {
+	margin: 0 5px 0 5px;
+	border-radius: 4px;
+	color: #FEFEFE;
+}
+
+@media (max-width: 768px) {
+	.cookiebar-button {
+		margin: 0 10px 0 10px;
+	}
+}
+
+.cookiebar-button-understand		{ background-color: #337AB7; border-color: #2E6DA4; }
+.cookiebar-button-understand:hover { background-color: #2E6DA4; }
+
+.cookiebar-button-allowed 			{ background-color: #5CB85C; border-color: #4CAE4C; }
+.cookiebar-button-allowed:hover 	{ background-color: #4CAE4C; }
+
+.cookiebar-button-declined 		{ background-color: #E84E40; border-color: #CE271A; }
+.cookiebar-button-declined:hover 	{ background-color: #CE271A; }
+
+@media (max-width: 468px) {
+	.cookiebar-more {
+		display: block;
+		margin: 10px 0 5px 0;
+	}
+}
+
+.aboutcookie-title {
+	font-size: 1.3em;
+	line-height: 1.3em;
+	font-weight: bold
+}
+
+.aboutcookie-title + p {
+	margin: 0px 0 20px 0px;
+}

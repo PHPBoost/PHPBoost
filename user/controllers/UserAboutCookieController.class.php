@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                              UserExtensionPointProvider.class.php
+ *                       UserAboutCookie.class.php
  *                            -------------------
- *   begin                : October 09, 2011
- *   copyright            : (C) 2011 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
+*   begin                : September 18, 2016
+ *   copyright            : (C) 2016 Genet Arnaud
+ *   email                : elenwii@phpboost.com
  *
  *
  ###################################################
@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,40 +25,30 @@
  *
  ###################################################*/
 
-class UserExtensionPointProvider extends ExtensionPointProvider
+class UserAboutCookieController extends AbstractController
 {
-   public function __construct()
-    {
-        parent::__construct('user');
-    }
+	private $lang;
+	private $template;
 
-	public function css_files()
+	public function execute(HTTPRequestCustom $request)
 	{
-		$module_css_files = new ModuleCssFiles();
-		$module_css_files->adding_always_displayed_file('user.css');
-		return $module_css_files;
+		$this->init();	
+		return $this->build_response($this->template);
 	}
 
-	public function commands()
-    {
-    	return new CLICommandsList(array('user' => 'CLIUserManagementCommand'));
-    }
-    
-	public function user()
+	private function init()
 	{
-		return new UserUserExtensionPoint();
+		$this->template = new FileTemplate('user/aboutcookie.tpl');
+		$this->lang = LangLoader::get('user-common');
+		$this->template->add_lang($this->lang);
 	}
-	
-	public function url_mappings()
+
+	private function build_response(View $view)
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/user/index.php', '([\w/-_]*)$')));
-	}
-	
-	public function comments()
-	{
-		return new CommentsTopics(array(
-			new UserEventsCommentsTopic()
-		));
+		$response = new SiteDisplayResponse($view);
+		$graphical_env = $response->get_graphical_environment();
+		$graphical_env->set_page_title($this->lang['cookiebar.about-cookie']);
+		return $response;
 	}
 }
 ?>

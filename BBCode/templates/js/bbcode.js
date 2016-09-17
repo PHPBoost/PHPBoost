@@ -189,31 +189,6 @@ function insertbbcode_select2(id_select, field)
 	return;
 }
 
-//Envoi le cookie au client.
-function sendCookie(name, value)
-{
-	var date = new Date();
-	date.setMonth(date.getMonth() + 1); //1 mois de validité.
-	document.cookie = name + '=' + value + '; expires = ' + date.toGMTString() + '; path = "/"';
-}
-
-//Récupère la valeur du cookie.
-function getCookie(name) 
-{
-	start = document.cookie.indexOf(name + "=")
-	if( start >= 0 ) 
-	{
-		start += name.length + 1;
-		end = document.cookie.indexOf(';', start);
-		
-		if( end < 0 ) 
-			end = document.cookie.length;
-		
-		return document.cookie.substring(start, end);
-	}
-	return '';
-}
-
 //Conserve la configuration de la barre bbcode.
 function set_bbcode_preference(divID)
 {
