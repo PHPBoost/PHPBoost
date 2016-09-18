@@ -17,5 +17,8 @@
 		<span class="aboutcookie-title">{HOW_CONTROL_COOKIES}</span>
 		<p>{HOW_CONTROL_COOKIES_EXPLAIN}</p>
 	</div>
-	<footer> <a href="/user/profile" title="{CHANGE_CHOICE_COOKIES}">{CHANGE_CHOICE_COOKIES}</a> </footer>
+	<footer>
+		<!-- A n'afficher que si la cookie barre est active -->
+		<a href="{U_VIEW_PROFILE}/edit" title="{CHANGE_CHOICE_COOKIES}">{CHANGE_CHOICE_COOKIES}</a>
+	</footer>
 </section>

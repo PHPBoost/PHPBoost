@@ -232,6 +232,7 @@ $lang['extended-field.field.biography-explain'] = 'A few lines describing you';
 
 //Cookies Bar
 $lang['cookiebar.cookie'] = 'Cookie';
+$lang['cookiebar.cookie.management'] = 'Cookies management';
 $lang['cookiebar-message.notracking']  = 'If you continuing your visit to this website, you agree to use Cookie to manage your connection, your preferences, and to save anonymous visits statistics';
 $lang['cookiebar-message.tracking']  = 'If you continuing your visit to this website, you agree to use cookie or other tracers to offer a suitable navigation (targeted advertising, social media sharing , more ...).';
 $lang['cookiebar-message.aboutcookie']  = 'The PHPBoost Kernel not use any tracking cookies. However, using google-analytics module or social-media buttons need some tracking cookies';

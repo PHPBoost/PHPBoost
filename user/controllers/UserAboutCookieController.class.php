@@ -29,6 +29,7 @@ class UserAboutCookieController extends AbstractController
 {
 	private $lang;
 	private $template;
+	private $user;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -41,6 +42,7 @@ class UserAboutCookieController extends AbstractController
 		$this->template = new FileTemplate('user/aboutcookie.tpl');
 		$this->lang = LangLoader::get('user-common');
 		$this->template->add_lang($this->lang);
+		$this->user = AppContext::get_current_user();
 	}
 
 	private function build_response(View $view)
@@ -50,6 +52,7 @@ class UserAboutCookieController extends AbstractController
 		$graphical_env->set_page_title($this->lang['cookiebar.about-cookie']);
 
 		$this->template->put_all(array(
+			'U_VIEW_PROFILE' => UserUrlBuilder::profile($this->user->get_id())->rel(),
 			'COOKIES' => $this->lang['cookiebar.cookies'],
 			'COOKIES_EXPLAIN' => $this->lang['cookiebar.cookies-explain'],
 			'WHAT_A_COOKIES' => $this->lang['cookiebar.what-a-cookies'],
