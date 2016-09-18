@@ -172,3 +172,18 @@ footer#footer span {
 .powered-by {
 	font-size: 1em;
 }
+
+@media (min-width: 769px) {
+	.cookiebar-container {
+		margin-left: 230px;
+	}
+
+	.cookiebar-container .cookiebar-content {
+		vertical-align: top;
+	}
+
+	.cookiebar-more {
+		display: block;
+		margin-top: 5px;
+	}
+}

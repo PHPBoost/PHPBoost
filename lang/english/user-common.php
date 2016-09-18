@@ -231,11 +231,29 @@ $lang['extended-field.field.biography'] = 'Biography';
 $lang['extended-field.field.biography-explain'] = 'A few lines describing you';
 
 //Cookies Bar
+$lang['cookiebar.cookie'] = 'Cookie';
 $lang['cookiebar-message.notracking']  = 'If you continuing your visit to this website, you agree to use Cookie to manage your connection, your preferences, and to save anonymous visits statistics';
 $lang['cookiebar-message.tracking']  = 'If you continuing your visit to this website, you agree to use cookie or other tracers to offer a suitable navigation (targeted advertising, social media sharing , more ...).';
+$lang['cookiebar-message.aboutcookie']  = 'The PHPBoost Kernel not use any tracking cookies. However, using google-analytics module or social-media buttons need some tracking cookies';
 $lang['cookiebar.understand']  = 'Ok';
 $lang['cookiebar.allowed']  = 'Allowed';
 $lang['cookiebar.declined']  = 'Declined';
 $lang['cookiebar.more']  = 'Learn more';
 
+$lang['cookiebar.about-cookie'] = 'About Cookies';
+$lang['cookiebar.cookies'] = 'Cookies';
+$lang['cookiebar.cookies-explain'] = 'To make this site work properly, we sometimes place small data files called cookies on your device.<br /> Most big websites do this too.';
+$lang['cookiebar.what-a-cookies'] = 'What are cookies ?';
+$lang['cookiebar.what-a-cookies-explain'] = 'A cookie is a small text file that a website saves on your computer or mobile device when you visit the site. It enables the website to remember your actions and preferences (such as login, language, font size and other display preferences) over a period of time, so you don’t have to keep re-entering them whenever you come back to the site or browse from one page to another.';
+$lang['cookiebar.technical-phpboost-cookies'] = 'PHPBoost Technical Cookies : ';
+$lang['cookiebar.technical-phpboost-cookies-explain'] = 'PHPBoost use technical cookie to <br /> 
+- manage login (essential if you want to connect),<br />
+- save BBCode preferences (not essential, but you will have to re-open extend BBCode à each visit),<br />
+- record anonymous statistics for website (note essenial, but allows webmasters to know how visit website.)';
+$lang['cookiebar.other-cookies'] = 'Others cookies :';
+$lang['cookiebar.other-cookies-explain'] = '-';
+$lang['cookiebar.how-control-cookies'] = 'How to control cookies ?';
+$lang['cookiebar.how-control-cookies-explain'] = 'You can control and/or delete cookies as you wish – for details, see <a href="http://www.aboutcookies.org/" title="A propos des Cookies">aboutcookies.org/</a>. <br />
+You can delete all cookies that are already on your computer and you can set most browsers to prevent them from being placed. If you do this, however, you may have to manually adjust some preferences every time you visit a site and some services and functionalities may not work..';
+$lang['cookiebar.change-choice'] = 'Change your preferences';
 ?>

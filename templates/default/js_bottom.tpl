@@ -37,4 +37,6 @@
 
 -->
 </script>
+
+//Il faut englober avec le IF cookiebar enable
 <script src="{PATH_TO_ROOT}/user/templates/js/cookiebar.js"></script>

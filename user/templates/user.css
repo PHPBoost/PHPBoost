@@ -183,13 +183,13 @@ table.announce-legend td {
 	}
 }
 
-.cookiebar-button-understand		{ background-color: #337AB7; border-color: #2E6DA4; }
-.cookiebar-button-understand:hover { background-color: #2E6DA4; }
+.cookiebar-button-understand 		{ background-color: #337AB7; border-color: #2E6DA4; }
+.cookiebar-button-understand:hover 	{ background-color: #2E6DA4; }
 
 .cookiebar-button-allowed 			{ background-color: #5CB85C; border-color: #4CAE4C; }
 .cookiebar-button-allowed:hover 	{ background-color: #4CAE4C; }
 
-.cookiebar-button-declined 		{ background-color: #E84E40; border-color: #CE271A; }
+.cookiebar-button-declined 			{ background-color: #E84E40; border-color: #CE271A; }
 .cookiebar-button-declined:hover 	{ background-color: #CE271A; }
 
 @media (max-width: 468px) {

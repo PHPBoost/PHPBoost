@@ -444,11 +444,11 @@ input[type=color] {
 
 /* --- bouton radio --- */
 .form-field-radio-span {
-	padding-right: 15px;
+	padding-left: 20px;
 }
 
 .form-field-radio{
-	display: inline-block;
+	display: block;
 	margin: 10px 0;
 }
 

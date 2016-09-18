@@ -119,5 +119,20 @@ $lang = array(
 	'advanced-config.debug-mode.type.normal' => 'Normal',
 	'advanced-config.debug-mode.type.strict' => 'Strict',
 	'advanced-config.debug-display-database-query-enabled' => 'Enable display and monitoring SQL queries',
+
+	//Cookie Bar
+	'advanced-config.cookiebar-config' => 'Warning Cookies configuration',
+	'advanced-config.cookiebar-more' => 'The law requires that site managers and application providers, inform users and get their consent before activate cookies or other tracers.',
+	'advanced-config.cookiebar-activation' => 'activation of the warning cookies',
+	'advanced-config.cookiebar-activation.desc' => 'We recommend that you keep the warning activated to be sure to respect the law',
+	'advanced-config.cookiebar-duration' => 'Cookie duration',
+	'advanced-config.cookiebar-duration.desc' => 'Cookie lifetime can\'t by more than 13 months',
+	'advanced-config.cookiebar-tracking.choice' => 'Choose your mode',
+	'advanced-config.cookiebar-tracking.track' => 'Using Cookie tracers',
+	'advanced-config.cookiebar-tracking.notrack' => 'Using only technicals PHPBoost cookies',
+	'advanced-config.cookiebar-content' => 'Message displayed in the warning bar',
+	'advanced-config.cookiebar-content.explain' => 'You can customize the message, but you must specify if you are using tracking cookies',
+	'advanced-config.cookiebar-aboutcookie' => 'Message displayed in the page "Learn more"',
+	'advanced-config.cookiebar-aboutcookie.explain' => 'You can customize the message, but you must describe tracking cookies you use',
 );
 ?>

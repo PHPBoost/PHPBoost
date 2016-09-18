@@ -31,6 +31,7 @@ class AdminAdvancedConfigController extends AdminController
 	private $general_config;
 	private $server_environment_config;
 	private $sessions_config;
+	private $cookiebar_config;
 	private $form;
 	private $submit_button;
 
@@ -68,6 +69,7 @@ class AdminAdvancedConfigController extends AdminController
 		$this->general_config = GeneralConfig::load();
 		$this->server_environment_config = ServerEnvironmentConfig::load();
 		$this->sessions_config = SessionsConfig::load();
+		//ElenWii : $this->cookiebar_config = CookieBarConfig::load();
 	}
 
 	private function build_form()
@@ -141,7 +143,56 @@ class AdminAdvancedConfigController extends AdminController
 			array('description' => $this->lang['advanced-config.active-session-duration.explain'], 'required' => true),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i', '', $this->lang['advanced-config.integer-required']))
 		));
-		
+
+		$cookiebar_config_fieldset = new FormFieldsetHTML('cookiebar_config', $this->lang['advanced-config.cookiebar-config']);
+		$form->add_fieldset($cookiebar_config_fieldset);
+
+		$cookiebar_config_fieldset->set_description($this->lang['advanced-config.cookiebar-more']);
+		$cookiebar_config_fieldset->add_field(new FormFieldCheckbox('cookiebar_activation', $this->lang['advanced-config.cookiebar-activation'], FormFieldCheckbox::CHECKED, array('description' => $this->lang['advanced-config.cookiebar-activation.desc'])
+			));
+
+		$cookiebar_config_fieldset->add_field(new FormFieldNumberEditor('cookiebar_duration', $this->lang['advanced-config.cookiebar-duration'], 12,
+			array(
+				'description' 	=> $this->lang['advanced-config.cookiebar-duration.desc'],
+				'required' 		=> true,
+				'min'			=> 1,
+				'max' 			=> 13
+			),
+			array(new FormFieldConstraintRegex('`^[0-9]+$`i'), new FormFieldConstraintIntegerRange(1, 13))
+		));
+
+		//ElenWii : Je n'arrive pas à changer le contenu du textarea 'cookiebar_content' lorsque l'on clique sur le radio. 
+		//ElenWii : Je ne sais pas comment gerer le reset du contenu du coup.
+		//ElenWii : Il faut gerer la sauvegarde dans la base de données et la récupération des variables dans la base de données.
+		$cookiebar_config_fieldset->add_field(new FormFieldRadioChoice('cookiebar_tracking_choice', $this->lang['advanced-config.cookiebar-tracking.choice'], 0,
+			array(
+				new FormFieldRadioChoiceOption($this->lang['advanced-config.cookiebar-tracking.notrack'], 0),
+				new FormFieldRadioChoiceOption($this->lang['advanced-config.cookiebar-tracking.track'], 1)
+			),
+			array('events' => array('click' => 
+				'if (HTMLForms.getField("cookiebar_tracking_choice").getValue() == 0) {
+					HTMLForms.getField("cookiebar_content") = '.LangLoader::get_message('cookiebar-message.notracking', 'user-common').';
+				} else { 
+					HTMLForms.getField("cookiebar_content") = '.LangLoader::get_message('cookiebar-message.tracking', 'user-common').';
+				}'
+			))
+		));
+
+		$cookiebar_config_fieldset->add_field(new FormFieldMultiLineTextEditor('cookiebar_content', $this->lang['advanced-config.cookiebar-content'], stripslashes(LangLoader::get_message('cookiebar-message.notracking', 'user-common')),
+			array(
+				'rows' => 7,
+				'description' => $this->lang['advanced-config.cookiebar-content.explain']
+			)
+		));
+
+		$cookiebar_config_fieldset->add_field(new FormFieldRichTextEditor('cookiebar_aboutcookie_content', $this->lang['advanced-config.cookiebar-aboutcookie'], stripslashes(LangLoader::get_message('cookiebar-message.aboutcookie', 'user-common')),
+			array(
+				'rows' => 7,
+				'description' => $this->lang['advanced-config.cookiebar-aboutcookie.explain']
+			)
+		));	
+
+
 		$miscellaneous_fieldset = new FormFieldsetHTML('miscellaneous', $this->lang['advanced-config.miscellaneous']);
 		$form->add_fieldset($miscellaneous_fieldset);
 		
@@ -214,6 +265,9 @@ class AdminAdvancedConfigController extends AdminController
 		}
 		
 		ServerEnvironmentConfig::save();
+
+		//ElenWii CookieBarConfig::save();
+
 		$this->clear_cache();
 		
 		if ($this->form->get_value('debug_mode_enabled'))

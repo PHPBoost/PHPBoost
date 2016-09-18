@@ -2,7 +2,7 @@
 /*##################################################
  *                       UserAboutCookie.class.php
  *                            -------------------
-*   begin                : September 18, 2016
+ *   begin                : September 18, 2016
  *   copyright            : (C) 2016 Genet Arnaud
  *   email                : elenwii@phpboost.com
  *
@@ -48,6 +48,20 @@ class UserAboutCookieController extends AbstractController
 		$response = new SiteDisplayResponse($view);
 		$graphical_env = $response->get_graphical_environment();
 		$graphical_env->set_page_title($this->lang['cookiebar.about-cookie']);
+
+		$this->template->put_all(array(
+			'COOKIES' => $this->lang['cookiebar.cookies'],
+			'COOKIES_EXPLAIN' => $this->lang['cookiebar.cookies-explain'],
+			'WHAT_A_COOKIES' => $this->lang['cookiebar.what-a-cookies'],
+			'WHAT_A_COOKIES_EXPLAIN' => $this->lang['cookiebar.what-a-cookies-explain'],
+			'TECHNICAL_PHPBOOST_COOKIES' => $this->lang['cookiebar.technical-phpboost-cookies'],
+			'TECHNICAL_PHPBOOST_COOKIES_EXPLAIN' => $this->lang['cookiebar.technical-phpboost-cookies-explain'],
+			'OTHER_COOKIES' => $this->lang['cookiebar.other-cookies'],
+			'OTHER_COOKIES_EXPLAIN' => $this->lang['cookiebar.other-cookies-explain'],
+			'HOW_CONTROL_COOKIES' => $this->lang['cookiebar.how-control-cookies'],
+			'HOW_CONTROL_COOKIES_EXPLAIN' => $this->lang['cookiebar.how-control-cookies-explain'],
+			'CHANGE_CHOICE_COOKIES' => $this->lang['cookiebar.change-choice']
+		));
 		return $response;
 	}
 }
