@@ -71,6 +71,7 @@ $LANG['show_topic_track'] = 'Tracked threads';
 $LANG['no_msg_not_read'] = 'No message unread';
 $LANG['show_not_reads'] = 'Unread messages';
 $LANG['show_last_read'] = 'Last messages read';
+$LANG['show_no_answer'] = 'No answer messages';
 $LANG['no_last_read'] = 'message read';
 $LANG['last_message'] = 'Last message';
 $LANG['last_messages'] = 'Last messages';

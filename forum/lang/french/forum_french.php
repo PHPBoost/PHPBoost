@@ -70,6 +70,7 @@ $LANG['show_topic_track'] = 'Sujets suivis';
 $LANG['no_msg_not_read'] = 'Aucun message non lu';
 $LANG['show_not_reads'] = 'Messages non lus';
 $LANG['show_last_read'] = 'Derniers messages lus';
+$LANG['show_no_answer'] = 'Messages sans réponse';
 $LANG['no_last_read'] = 'message lu';
 $LANG['last_message'] = 'Dernier message';
 $LANG['last_messages'] = 'Derniers messages';

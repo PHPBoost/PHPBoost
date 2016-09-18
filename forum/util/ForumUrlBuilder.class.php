@@ -120,5 +120,14 @@ class ForumUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/');
 	}
+
+	/**
+	 * @return Url
+	 */
+	public static function show_no_answer()
+	{
+		return new Url('/forum/noanswer.php');
+	}
+
 }
 ?>

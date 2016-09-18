@@ -36,6 +36,7 @@ $lang['module_config_title'] = 'Configuration du module forum';
 $lang['forum.actions.add_rank'] = 'Ajouter un rang';
 $lang['forum.manage_ranks'] = 'Gérer les rangs';
 $lang['forum.ranks_management'] = 'Gestion des rangs';
+$lang['forum.no_answer'] = 'Messages sans réponse';
 
 $lang['xml_forum_desc'] = 'Derniers sujets du forum';
 $lang['go_top'] = 'Remonter';
