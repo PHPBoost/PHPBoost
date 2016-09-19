@@ -1,0 +1,394 @@
+/*--------------------------------------
+			connect_mini.css
+			Module connect
+--------------------------------------*/
+
+/* classe generique */
+#command-bar {
+	position: absolute;
+	z-index: 50;
+	top: 0;
+	width: 100%;
+	background-color: rgba(255, 255, 255, 0.15);
+}
+
+@media (max-width: 768px) {
+	#command-bar {
+		background-color: rgba(255, 255, 255, 0.03);
+	}
+}
+
+#connect-menu {
+	position: relative;
+	margin: 0 auto;
+}
+
+
+#connect-menu ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+#connect-menu a {
+	color: #1E5083;
+	text-decoration: none;
+}
+
+@media (min-width: 769px) {
+	#connect-menu a {
+		color: #DEDEDE;
+	}
+}
+
+i.alert {
+	color: #9F3F0E;
+}
+
+.fa-connect:before {
+	content: "\f085";
+}
+
+#connect-menu .horizontal-fieldset {
+	margin: 0 auto;
+	min-height: 28px;
+}
+
+#connect-menu div.connect-content {
+	text-align: center;
+	margin: auto;
+}
+
+/* affichage du message de bienvenue */
+.connect-welcome {
+	overflow: hidden;
+	text-align: right;
+	color: #E3F3F3;
+	font-style: Italic;
+	padding: 7px 10px 0 5px;
+	height: 28px;
+	float: left;
+	z-index: 11;
+}
+
+.connect-welcome .modo,
+.connect-welcome .admin,
+.connect-welcome .member {
+	color: #E0F3FF;
+	font-weight: normal;
+	text-shadow: rgba(0, 0, 0, 0.1) 0 1px 1px;
+	text-transform: capitalize;
+}
+
+/* Bouton responsive */
+#connect-menu .js-menu-button {
+	display: none;
+	z-index: 11;
+}
+
+#connect-menu .js-menu-button i {
+	width: 15px;
+	vertical-align: top;
+}
+
+@media (max-width: 768px) {
+	#connect-menu .js-menu-button {
+		display: inline-block;
+		padding: 5px 10px 5px 10px;
+		float: right;
+	}
+
+	#connect-menu .disconnected .js-menu-button {
+		float: none;
+	}
+}
+
+/* Bouton du mode deconnecte */
+#connect-menu button {
+	transition: 0.3s ease-out;
+}
+
+#connect-menu button#btn-connect:hover,
+#connect-menu button#btn-register:hover {
+	transition: 0.3s ease-out;
+	color: #EFEFEF;
+}
+
+#connect-menu button#btn-connect {
+	background-color: #168661;
+	border-color: #096A4A;
+	color: #7CCAB0;
+}
+#connect-menu button#btn-connect:hover {
+	background-color: #2F9674;
+	border-color: #168661;
+}
+
+#connect-menu button#btn-register {
+	background-color: #1E5083;
+	border-color: #1E5083;
+	color: #81A4C8;
+}
+#connect-menu button#btn-register:hover {
+	background-color: #366493;
+	border-color: #1E5083;
+}
+
+#connect-menu .connect-content input {
+	margin: auto;
+}
+
+@media (min-width: 769px) {
+	#connect-menu button {
+		margin-top: 1px;
+	}
+}
+
+@media (max-width: 768px) {
+	#connect-menu.active button.submit {
+		display: block;
+		padding: 10px 20px;
+		margin: 10px auto 0 auto;
+		width: 90%;
+	}
+
+	#connect-menu button {
+		display: block;
+	}
+}
+
+/* Mot de passe oublie */ 
+@media (min-width: 769px) {
+	#connect-menu .forgot-pass {
+		display: inline-block;
+		padding: 0 0 0 5px;
+		vertical-align: middle;
+		color: #E0F3FF;
+	}
+	#connect-menu .forgot-pass:hover {
+		color: #F1F1F1;
+	}
+}
+
+@media (max-width: 768px) {
+	#connect-menu.disconnected .forgot-pass {
+		padding: 15px 20px 20px 20px;
+		display: block;
+	}
+	#connect-menu.disconnected .forgot-pass:hover {
+		text-decoration: underline;
+	}
+}
+
+
+
+/* Affichage des elements */
+@media (min-width: 769px) {
+	#connect-menu ul.connect-content {
+		text-align: center;
+		float: right;
+		margin-right: 30px;
+	}
+
+	ul.connect-content > li {
+		border-left: 1px solid rgba(255, 255, 255, 0.30);
+		border-right: 1px solid rgba(255, 255, 255, 0.20);
+	}
+
+	ul.connect-content > li:first-child { border-left: none;  }
+	ul.connect-content > li:last-child  { border-right: none; }
+
+	.connect-menu-container {
+		position: relative;
+		float:left;
+		height: 28px;
+		width: 35px;
+		padding: 6px 2px 0 0;
+		border-right: 1px solid rgba(255, 255, 255, 0.20);
+		color: #FFFFFF;
+		transition: 0.3s ease-out;
+		transition-delay: 0.3s;
+	}
+	.connect-menu-container:hover {
+		background-color: #373737;
+		transition: 0.3s ease-out;
+	}
+
+	.connect-disconnect {
+		border-left: 1px solid rgba(255, 255, 255, 0.30);
+		height: 28px;
+		float: left;
+	}
+
+	.connect-disconnect i {
+		padding: 6px 10px 5px 10px;
+		color: #FFFFFF;
+	}
+
+	#connect-menu ul.connect-connected {
+		position: absolute;
+		opacity: 0.1;
+		z-index: 50;
+		top: -200px;
+		left: -220px;
+		width: 280px;
+		background-color: #373737;
+		padding: 5px;
+		text-align: left;
+		transition: opacity 0.3s ease-out 0.3s, top 0s ease-out 0.3s;
+	}
+
+	#connect-menu li.connect-menu-container:hover ul.connect-connected {
+		transition: opacity 0.3s ease-out;
+		opacity: 1;
+		top: 28px;
+	}
+
+	ul.connect-connected > li {
+		padding: 2px 0;
+	}
+
+	ul.connect-connected a {
+		color: #FFFFFF;
+	}
+
+	.connect-avatar {
+		height: 100px;
+		width: 90px;
+		margin: 5px 5px 0 0;
+		float: left;
+	}
+
+	.connect-avatar img {
+		overflow: visible;
+	}
+
+	#connect-menu form {
+		display: inline-block;
+	}
+}
+
+@media (max-width: 768px) {
+	#connect-menu.disconnected .horizontal-fieldset {
+		text-align: center;
+	}
+
+	.connect-content {
+		position: absolute;
+		left: -9999px;
+		z-index: 10;
+		height: 0;
+		overflow: hidden;
+		transition: height 0.6s;
+	}
+
+ 	#connect-menu.active .fa-bars:before {
+		content: "\f00d";
+	}
+
+	#connect-menu.active .connect-content {
+		left: 0;
+		top: 28px;
+		height: auto;
+		width: 100%;
+		background-color: #86A6C7;
+		transition: height 0.1s;
+		border-bottom: 1px solid #366493;
+	}
+	
+	#connect-menu.active .fa-connect {
+		display: none;
+	}
+
+	#connect-menu.active li {
+		width: 100%;
+		text-align: left;
+		padding-top: 5px;
+	}
+
+	#connect-menu.active .connect-menu-container {
+		padding: 0;
+	}
+
+	#connect-menu.active .connect-connected {
+		border-top: 1px solid #81A4C8;
+	}
+
+	#connect-menu.active .connect-connected span,
+	#connect-menu.active .connect-content .connect-welcome {
+		display: none;
+	}
+	
+	#connect-menu.active .connect-connected li:hover,
+	#connect-menu.active .connect-disconnect a:hover {
+		background-color: rgba(255, 255, 255, 0.2);
+	}
+	
+	#connect-menu.active .connect-connected li a,
+	#connect-menu.active .connect-disconnect a {
+		display: block;
+		padding: 7px 5px 7px 10px;
+	}
+
+	#connect-menu.active .connect-connected li a i.fa {
+		vertical-align: top;
+	}
+	
+	#connect-menu.active .connect-content form {
+		padding: 10px 10px 0 10px;
+	}
+
+	#connect-menu .connect-content form #btn-register {
+		margin-top: 0;
+	}
+	
+	#connect-menu.active .connect-content input {
+		display: inline-block;
+		padding: 10px 20px;
+	}
+
+	#connect-menu.active .connect-content input#autoconnect {
+		margin-bottom: 4px;
+	}
+
+	#connect-menu.active .connect-content form span {
+		padding: 5px 0 0 5px;
+	}
+
+	#connect-menu.active .connect-content input#login,
+	#connect-menu.active .connect-content input#password {
+		width: 100%;
+		margin-bottom: 10px;
+	}
+}
+
+/* Partie Sociale */
+.social-connect-container {
+	margin: 0 10px;
+}
+
+#connect-menu a.social-connect {
+	color: #DEDEDE;
+	margin: 10px auto;
+}
+
+@media (min-width: 769px) {
+	#connect-menu a.social-connect {
+		margin: 2px auto;
+	}
+
+	.social-connect-container {
+		display: inline-block;
+	}
+}
+
+@media (max-width: 769px) {
+	#connect-menu a.social-connect {
+		height: 40px;
+		padding: 10px;
+		width: 90%;
+	}
+	
+	#connect-menu a.fb 		{ border: 1px solid #224389; }
+	#connect-menu a.google 	{ border: 1px solid #B12715; }
+}

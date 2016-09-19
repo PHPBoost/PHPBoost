@@ -1,0 +1,58 @@
+.faq-answer-container {
+	height: auto;
+	padding: 10px 5px 10px  0;
+}
+
+.faq-answer-container > div {
+	line-height: 1.32em;
+}
+
+.article-faq {
+	background-image: linear-gradient(to bottom, #FFFFFF 50%, #FAFAFA 100%);
+	border: 1px solid #D6DEE7;
+	padding: 0;
+	margin: 0 0 6px 0;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+	transition: box-shadow 0.2s;
+	display: table;
+	width: 100%;
+}
+.article-faq:hover {
+	border: 1px solid #d0d8e1;
+	box-shadow: 0 0 5px #EAEAEA;
+	background-image: linear-gradient(to bottom, #FFFFFF 25%, #F2F5F8 100%);
+}
+
+.faq-question-element {
+	padding: 8px 5px 5px 10px;
+	margin: 0;
+}
+
+.question-title {
+	display: inline-block;
+	border: none;
+	overflow: initial;
+}
+
+.faq-question-element .question-title {
+	margin-left: 5px;
+}
+
+.sortable-title .question-title span {
+	font-size: 1.9rem;
+}
+
+/* hack pour l'ancre */
+.question-anchor {
+	margin-top: -10px;
+	padding-top: 10px;
+}
+
+.article-faq footer {
+	margin: 0;
+	padding: 0;
+}
+
+#questions-titles-list hr {
+	margin: 20px 0;
+}
