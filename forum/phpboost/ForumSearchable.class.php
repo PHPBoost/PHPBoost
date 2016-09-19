@@ -194,7 +194,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			msg.idtopic AS topic_id,
 			msg.timestamp AS date,
 			t.title AS title,
-			m.display_name AS login,
+			m.display_name,
 			ext_field.user_avatar AS avatar,
 			s.user_id AS connect,
 			msg.contents AS contents
@@ -242,7 +242,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			'TITLE' => stripslashes($result_data['title']),
 			'DATE' => Date::to_format($result_data['date'], 'd/m/y'),
 			'CONTENTS' => FormatingHelper::second_parse(stripslashes($result_data['contents'])),
-			'USER_AVATAR' => '<img src="' . (UserAccountsConfig::load()->is_default_avatar_enabled() && !empty($result_data['avatar']) ? $result_data['avatar'] : PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name()) . '" alt="' . LangLoader::get_message('avatar', 'user-common') . '" class="message-avatar"/>'
+			'USER_AVATAR' => '<img src="' . (UserAccountsConfig::load()->is_default_avatar_enabled() && !empty($result_data['avatar']) ? Url::to_rel($result_data['avatar']) : PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name()) . '" alt="' . LangLoader::get_message('avatar', 'user-common') . '" class="message-avatar"/>'
 		));
 
 			return $tpl->render();
