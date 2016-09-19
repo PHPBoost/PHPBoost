@@ -36,7 +36,7 @@ $lang['module_config_title'] = 'Forum module configuration';
 $lang['forum.actions.add_rank'] = 'Add a rank';
 $lang['forum.manage_ranks'] = 'Manage ranks';
 $lang['forum.ranks_management'] = 'Ranks management';
-$lang['forum.no_answer'] = 'No answer topics';
+$lang['forum.no_answer'] = 'Topics without answer';
 
 $lang['xml_forum_desc'] = 'Last forum thread';
 $lang['go_top'] = 'Go top';
