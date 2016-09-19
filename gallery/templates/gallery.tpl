@@ -313,7 +313,7 @@
 						<p class="center" id="pics_max"></p>
 						
 						# IF C_GALLERY_PICS_MAX #
-							<p class="pics-max"><a href="{U_IMG_MAX}" data-lightbox="formatter"><img src="{U_IMG_MAX}" alt="{U_IMG_MAX}" /></a></p>
+							<p class="pics-max"><a href="{U_IMG_MAX}" data-lightbox="formatter"><img src="{U_IMG_MAX}" alt="{CLEARED_NAME}" /></a></p>
 							<div class="options">
 								<h6>{L_INFORMATIONS}</h6>
 								# IF C_TITLE_ENABLED #

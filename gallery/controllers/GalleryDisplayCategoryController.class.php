@@ -359,6 +359,7 @@ class GalleryDisplayCategoryController extends ModuleController
 						'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
 						'ID' => $info_pics['id'],
 						'NAME' => '<span id="fi_' . $info_pics['id'] . '">' . stripslashes($info_pics['name']) . '</span> <span id="fi' . $info_pics['id'] . '"></span>',
+						'CLEARED_NAME' => stripslashes($info_pics['name']),
 						'POSTOR' => '<a class="small ' . UserService::get_level_class($info_pics['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($info_pics['user_id'])->rel() .'">' . $info_pics['display_name'] . '</a>',
 						'DATE' => Date::to_format($info_pics['timestamp'], Date::FORMAT_DAY_MONTH_YEAR),
 						'VIEWS' => ($info_pics['views'] + 1),
