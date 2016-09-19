@@ -329,7 +329,7 @@ class ContentSecondParser extends AbstractParser
 		return "<object type=\"application/x-shockwave-flash\" data=\"" . $matches[1] . "\" width=\"" . $matches[2] . "\" height=\"" . $matches[3] . "\">" .
 			"<param name=\"allowScriptAccess\" value=\"never\" />" .
 			"<param name=\"play\" value=\"true\" />" .
-			"<param name=\"movie\" value=\"" . $matches[1] . "\" />" .
+			"<param name=\"movie\" value=\"" . Url::to_rel($matches[1]) . "\" />" .
 			"<param name=\"menu\" value=\"false\" />" .
 			"<param name=\"quality\" value=\"high\" />" .
 			"<param name=\"scalemode\" value=\"noborder\" />" .
@@ -346,7 +346,7 @@ class ContentSecondParser extends AbstractParser
 	private static function process_movie_tag($matches)
 	{
 		$id = 'movie_' . AppContext::get_uid();
-		return '<a class="video-player" href="' . $matches[1] . '" style="display:block;margin:auto;width:' . $matches[2] . 'px;height:' . $matches[3] . 'px;" id="' . $id .  '"></a><br />' .
+		return '<a class="video-player" href="' . Url::to_rel($matches[1]) . '" style="display:block;margin:auto;width:' . $matches[2] . 'px;height:' . $matches[3] . 'px;" id="' . $id .  '"></a><br />' .
 			'<script><!--' . "\n" .
 			'insertMoviePlayer(\'' . $id . '\');' .
 			"\n" . '--></script>';
@@ -360,7 +360,7 @@ class ContentSecondParser extends AbstractParser
 	private static function process_sound_tag($matches)
 	{
 		//Balise son
-		return '<audio controls><source src="'. $matches[1] .'" /></audio>';
+		return '<audio controls><source src="'. Url::to_rel($matches[1]) .'" /></audio>';
 	}
 	
 	private static function process_youtube_tag($matches)
