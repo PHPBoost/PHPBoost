@@ -583,8 +583,6 @@ jQuery(document).ready(function(){
 function sendCookie(name, value, delai = 1)
 {
 	var date = new Date();
-	if (delai > 13) { delai = 13 }			//Le cookie ne peut pas dépasser les 13mois de validité.
-
 	date.setMonth(date.getMonth() + delai); //1 mois de validité par défaut.
 	document.cookie = name + '=' + value + '; expires = ' + date.toGMTString() + '; path = "/"';
 }
@@ -604,4 +602,9 @@ function getCookie(name)
 		return document.cookie.substring(start, end);
 	}
 	return '';
+}
+
+//Supprime le cookie.
+function eraseCookie(name) {
+	sendCookie(name,"",-1);
 }
