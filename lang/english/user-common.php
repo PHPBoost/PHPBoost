@@ -245,7 +245,7 @@ $lang['cookiebar.about-cookie'] = 'About Cookies';
 $lang['cookiebar.cookies'] = 'Cookies';
 $lang['cookiebar.cookies-explain'] = 'To make this site work properly, we sometimes place small data files called cookies on your device.<br /> Most big websites do this too.';
 $lang['cookiebar.what-a-cookies'] = 'What are cookies ?';
-$lang['cookiebar.what-a-cookies-explain'] = 'A cookie is a small text file that a website saves on your computer or mobile device when you visit the site. It enables the website to remember your actions and preferences (such as login, language, font size and other display preferences) over a period of time, so you don’t have to keep re-entering them whenever you come back to the site or browse from one page to another.';
+$lang['cookiebar.what-a-cookies-explain'] = 'A cookie is a small text file that a website saves on your computer or mobile device when you visit the site. It enables the website to remember your actions and preferences (such as login, language, font size and other display preferences) over a period of time, so you don\'t have to keep re-entering them whenever you come back to the site or browse from one page to another.';
 $lang['cookiebar.technical-phpboost-cookies'] = 'PHPBoost Technical Cookies : ';
 $lang['cookiebar.technical-phpboost-cookies-explain'] = 'PHPBoost use technical cookie to <br /> 
 - manage login (essential if you want to connect),<br />

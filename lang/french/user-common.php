@@ -232,8 +232,8 @@ $lang['extended-field.field.biography-explain'] = '';
 //Cookies bar
 $lang['cookiebar.cookie'] = 'Cookie';
 $lang['cookiebar.cookie.management'] = 'Gestion des Cookies';
-$lang['cookiebar-message.notracking']  = 'En poursuivant votre navigation sur ce site internet, vous acceptez l\’utilisation de Cookie afin de gérer votre connexion, vos préférences, ainsi que l\'enregistrement de statistiques anonymes des visites';
-$lang['cookiebar-message.tracking']  = 'En poursuivant votre navigation sur ce site internet, vous acceptez l\’utilisation de Cookie ou autres traceurs pour vous proposer une navigation adaptée (publicité ciblées, partage réseaux sociaux, etc...).';
+$lang['cookiebar-message.notracking']  = 'En poursuivant votre navigation sur ce site internet, vous acceptez l\'utilisation de Cookie afin de gérer votre connexion, vos préférences, ainsi que l\'enregistrement de statistiques anonymes des visites';
+$lang['cookiebar-message.tracking']  = 'En poursuivant votre navigation sur ce site internet, vous acceptez l\'utilisation de Cookie ou autres traceurs pour vous proposer une navigation adaptée (publicité ciblées, partage réseaux sociaux, etc...).';
 $lang['cookiebar-message.aboutcookie']  = 'Le noyau de PHPBoost n\'utilise aucun système de traceurs. En revanche, l\'utilisation du module google analytics et des boutons réseaux sociaux, nécessite des cookies traceurs';
 $lang['cookiebar.understand']  = 'J\'ai compris';
 $lang['cookiebar.allowed']  = 'Autoriser';
