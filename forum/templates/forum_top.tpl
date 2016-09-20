@@ -75,7 +75,7 @@
 			timeout_forum = setTimeout('forum_display_block(\'' + forumid + '\')', delay_forum);
 		}
 	}
-	-- ></script>
+	--></script>
 <section id="module-forum">
 	<header id="forum-top">
 
@@ -96,7 +96,7 @@
 				<ul>
 					<li>
 						<span class="cssmenu-title">
-							<i class="fa fa-showmymsg"></i><a class="small" title="{L_SHOW_MY_MSG}" href="{U_SHOW_MY_MSG}">{L_SHOW_MY_MSG}</a>
+							<i class="fa fa-showmymsg"></i> <a class="small" title="{L_SHOW_MY_MSG}" href="{U_SHOW_MY_MSG}">{L_SHOW_MY_MSG}</a>
 						</span>
 					</li>
 					<li>

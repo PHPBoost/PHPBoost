@@ -15,7 +15,7 @@
 			<ul>
 				<li>
 					<span class="cssmenu-title">
-						<i class="fa fa-showmymsg"></i><a class="small" title="{L_SHOW_MY_MSG}" href="{U_SHOW_MY_MSG}">{L_SHOW_MY_MSG}</a>
+						<i class="fa fa-showmymsg"></i> <a class="small" title="{L_SHOW_MY_MSG}" href="{U_SHOW_MY_MSG}">{L_SHOW_MY_MSG}</a>
 					</span>
 				</li>
 				<li>
@@ -77,7 +77,7 @@
 	<script>
 		<!--
 		jQuery("#cssmenu-forum-bottom-link").menumaker({ title: " ${LangLoader::get_message('forum.links', 'common', 'forum')} ", format: "multitoggle", breakpoint: 768, menu_static: false });
-		-- >
+		-->
 	</script>
 
 	<div class="forum-online">
