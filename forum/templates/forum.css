@@ -37,8 +37,8 @@ header#forum-top .forum-links {
 
 .forum-links .cssmenu .menu-button::after {
 	border-color: #999999;
- }
- 
+}
+
 .forum-links .cssmenu .menu-button::before {
     background-color: #999999;
 }
@@ -49,7 +49,7 @@ header .forum-links .cssmenu .menu-button.menu-opened:after,
 header .forum-links .cssmenu .menu-button.menu-opened:before {
     background-color: #999999;
 }
-		
+
 .forum-links .cssmenu{
 	margin-top: 5px;
 }
@@ -114,8 +114,8 @@ article footer ul.pagination {
 	margin: 10px auto auto auto;
 	width: 80%;
 }
-	
-	
+
+
 @media (max-width: 768px) {
 	.forum-poll-table td {
 		text-align: left;
@@ -262,7 +262,7 @@ a.forum-link-pseudo:hover {
 		width: 300px !important;
 		overflow: visible !important;
 	}
-	
+
 	.forum-notread {
 		padding: 8px 4px;
 	}
@@ -283,27 +283,27 @@ a.forum-link-pseudo:hover {
 	border-top: none;
 	border-radius: 0 0 5px 5px;
 }
-	
+
 table.bt tbody tr:last-child td {
 	border-bottom: none;
 }
-	
+
 table.bt tbody tr:last-child td:last-child {
 	border-bottom: 1px solid #D1D2D4;
 }
 
 /* --- taille des colonnes --- */
 @media (min-width: 980px) {
-	
+
 	.td20P 	{ width: 20%; }
 	.td25P 	{ width: 25%; }
 	.td33P 	{ width: 33%; }
 	.td66P 	{ width: 66%; }
-	
+
 	.td25 	{width: 25px;}
 	.td70 	{width: 70px;}
 	.td100 	{width: 100px;}
-	
+
 	.forum-mass-modo 		{ width: 25px;  }
 	.forum-fixed-topic 		{ width: 30px;  }
 	.forum-announce-topic 	{ width: 30px;  }
@@ -315,11 +315,11 @@ table.bt tbody tr:last-child td:last-child {
 	.forum-mail 			{ width: 50px;  }
 	.forum-delete 			{ width: 85px;  }
 	.forum-last-topic 		{ width: 150px; }
-	
+
 	td.forum-last-topic {
 		font-size: 0.8em;
 	}
-	
+
 	td.forum-topic {
 		text-align: left;
 	}
@@ -532,7 +532,7 @@ a.msg-link-pseudo:hover {
 	td.forum-author {
 		display: none !important;
 	}
-	
+
 	td.forum-last-topic {
 		margin-bottom: 3px;
 		border-bottom: 1px solid #D1D2D4;
@@ -545,7 +545,7 @@ a.msg-link-pseudo:hover {
 		-ms-flex-direction: column; 
 		-webkit-flex-direction: column;
 	}
-	
+
 	.msg-top {
 		flex-direction: row;
 		-ms-flex-direction: row; 
@@ -554,7 +554,7 @@ a.msg-link-pseudo:hover {
 		background-color: #4D4C50;
 		color: #FFFFFF;
 	}
-	
+
 	.msg-top-row {
 		flex: 1 0 auto;
 		-ms-flex: 1 0 auto;
@@ -564,56 +564,56 @@ a.msg-link-pseudo:hover {
 		-webkit-flex-order: 2;
 		text-align: center;
 	}
-	
+
 	a.msg-link-pseudo {
 		font-size: 1.2em;
 	}
-	
+
 	.msg-avatar-mbr {
 		order: 1;
 		-ms-flex-order: 1;
 		-webkit-flex-order: 1;
 	}
-	
+
 	.msg-avatar-mbr img {
 		max-width: 60px;
 	}
-	
+
 	.msg-contents-container,
 	.msg-contents-container2 {
 		width: 100%;
 	}
-	
+
 	.msg-contents-info {
 		background: transparent;
 		color: inherit;
 		font-size: 0.7em;
 		text-align: right;
 	}
-	
+
 	.msg-contents-info span {
 		float: none !important;
 	}
-	
+
 	.msg-contents-info a {
 		padding: 0 4px;
 		color: inherit;
 	}
-	
+
 	.msg-contents-info .float-right a {
 		padding: 8px;
 	}
-	
+
 	.msg-sign span a,
 	.msg-sign2 span a {
 		padding: 3px;
 	}
-	
+
 	.msg-info-mbr,
 	.msg-sign-mbr {
 		display: none;
 	}
-	
+
 	.msg-contents,
 	.msg-sign,
 	.msg-sign2 {
@@ -648,6 +648,16 @@ a.msg-link-pseudo:hover {
 .fa-mail-not-track:before 		{ content: "\f003"; color: #000000; }
 .fa-lastview:before 			{ content: "\f017"; color: #334455; }
 .fa-notread:before 				{ content: "\f0f6"; color: #334455; }
+.fa-showmymsg:before 			{ content: "\f1d7"; color: #F57900; }
+
+.showmymsg{
+	font-size: 14px;
+	color: black;
+	background-color: #fcaf3e;
+	border-radius: 8px;
+	padding: 2px;
+	margin: 2px;
+}
 
 /* -- footer ==================================================================== */
 footer#forum-bottom {
