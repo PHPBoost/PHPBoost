@@ -96,7 +96,7 @@
 				<ul>
 					<li>
 						<span class="cssmenu-title">
-							<i class="fa fa-showmymsg"></i><a class="small" title="{L_SHOW_MY_MSG}" href="{U_SHOW_MY_MSG}"><span class="showmymsg">{L_SHOW_MY_MSG}</span></a>
+							<i class="fa fa-showmymsg"></i><a class="small" title="{L_SHOW_MY_MSG}" href="{U_SHOW_MY_MSG}">{L_SHOW_MY_MSG}</a>
 						</span>
 					</li>
 					<li>

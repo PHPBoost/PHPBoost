@@ -650,15 +650,6 @@ a.msg-link-pseudo:hover {
 .fa-notread:before 				{ content: "\f0f6"; color: #334455; }
 .fa-showmymsg:before 			{ content: "\f1d7"; color: #F57900; }
 
-.showmymsg{
-	font-size: 14px;
-	color: black;
-	background-color: #fcaf3e;
-	border-radius: 8px;
-	padding: 2px;
-	margin: 2px;
-}
-
 /* -- footer ==================================================================== */
 footer#forum-bottom {
 	margin: 15px 0 5px 0;

@@ -102,3 +102,5 @@ $vars_tpl = array(
 
 $tpl_top->put_all($vars_tpl);
 $tpl_bottom->put_all($vars_tpl);
+
+?>
