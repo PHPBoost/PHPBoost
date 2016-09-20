@@ -5,6 +5,12 @@
 	width: 100%;
 }
 
+@media (max-width: 481px) {
+	#top-header-content #module-mini-search-form {
+		display: none;
+	}
+}
+
 #mini-search-form-container {
 	margin: 0 auto;
 }
