@@ -3,7 +3,7 @@
  *                                membermsg.php
  *                            -------------------
  *   begin                : April 19, 2007
- *   copyright            : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *  
@@ -37,7 +37,7 @@ $view_msg = retrieve(GET, 'id', 0);
 if (!empty($view_msg)) //Affichage de tous les messages du membre
 {
 	$_NBR_ELEMENTS_PER_PAGE = 10;
-	$ranks_cache = ForumRanksCache::load()->get_ranks(); //Récupère les rangs en cache.
+	$ranks_cache = ForumRanksCache::load()->get_ranks(); //RÃ©cupÃ¨re les rangs en cache.
 	$extended_fields_cache = ExtendedFieldsCache::load();
 	$displayed_extended_fields = $extended_fields_cache->get_websites_or_emails_extended_field_field_types();
 	$extended_fields_to_recover_list = '';
@@ -102,12 +102,12 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	));
 	while ($row = $result->fetch())
 	{
-		//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
+		//On encode l'url pour un Ã©ventuel rewriting, c'est une opÃ©ration assez gourmande
 		$rewrited_cat_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['name']) : '';
-		//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
+		//On encode l'url pour un Ã©ventuel rewriting, c'est une opÃ©ration assez gourmande
 		$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['title']) : '';
 		
-		//Ajout du marqueur d'édition si activé.
+		//Ajout du marqueur d'Ã©dition si activÃ©.
 		$edit_mark = ($row['timestamp_edit'] > 0 && $config->is_edit_mark_enabled()) ? '<span class="edit-pseudo">' . $LANG['edit_by'] . ' <a href="'. UserUrlBuilder::profile($row['user_id_edit'])->rel() .'">' . $row['login_edit'] . '</a> ' . $LANG['on'] . ' ' . Date::to_format($row['timestamp_edit'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '</span><br />' : '';
 		
 		$group_color = User::get_group_color($row['groups'], $row['level']);
@@ -116,13 +116,13 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		$user_rank = ($row['level'] === '0') ? $LANG['member'] : $LANG['guest'];
 		$user_group = $user_rank;
 		$user_rank_icon = '';
-		if ($row['level'] === '2') //Rang spécial (admins).  
+		if ($row['level'] === '2') //Rang spÃ©cial (admins).  
 		{
 			$user_rank = $ranks_cache[-2]['name'];
 			$user_group = $user_rank;
 			$user_rank_icon = $ranks_cache[-2]['icon'];
 		}
-		elseif ($row['level'] === '1') //Rang spécial (modos).  
+		elseif ($row['level'] === '1') //Rang spÃ©cial (modos).  
 		{
 			$user_rank = $ranks_cache[-1]['name'];
 			$user_group = $user_rank;
@@ -141,7 +141,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		}
 		
 		$theme = AppContext::get_current_user()->get_theme();
-		//Image associée au rang.
+		//Image associÃ©e au rang.
 		if (file_exists(TPL_PATH_TO_ROOT . '/templates/' . $theme . '/modules/forum/images/ranks/' . $user_rank_icon))
 		{
 			$rank_img = TPL_PATH_TO_ROOT . '/templates/' . $theme . '/modules/forum/images/ranks/' . $user_rank_icon;

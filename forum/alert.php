@@ -3,7 +3,7 @@
  *                                alert.php
  *                            -------------------
  *   begin                : August 7, 2006
- *   copyright            : (C) 2006 Viarre Régis / Sautel Benoît
+ *   copyright            : (C) 2006 Viarre RÃ©gis / Sautel BenoÃ®t
  *   email                : crowkait@phpboost.com / ben.popeye@phpboost.com
  *
  *
@@ -54,7 +54,7 @@ require_once('../kernel/header.php');
 if (empty($alert) && empty($alert_post) || empty($topic['idcat']))
 	AppContext::get_response()->redirect('/forum/index' . url('.php'));
 
-if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Si c'est un invité
+if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Si c'est un invitÃ©
 {
 	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
@@ -65,7 +65,7 @@ $tpl = new FileTemplate('forum/forum_alert.tpl');
 //On fait un formulaire d'alerte
 if (!empty($alert) && empty($alert_post))
 {
-	//On vérifie qu'une alerte sur le même sujet n'ait pas été postée
+	//On vÃ©rifie qu'une alerte sur le mÃªme sujet n'ait pas Ã©tÃ© postÃ©e
 	$nbr_alert = PersistenceContext::get_querier()->count(PREFIX . 'forum_alerts', 'WHERE idtopic=:idtopic AND status = 0', array('idtopic' => $alert));
 	if (empty($nbr_alert)) //On affiche le formulaire
 	{
@@ -89,7 +89,7 @@ if (!empty($alert) && empty($alert_post))
 			'ID_ALERT' => $alert,
 		));
 	}
-	else //Une alerte a déjà été postée
+	else //Une alerte a dÃ©jÃ  Ã©tÃ© postÃ©e
 	{
 		$tpl->put_all(array(
 			'L_ALERT' => $LANG['alert_topic'],
@@ -112,7 +112,7 @@ if (!empty($alert_post))
 		'URL_TOPIC' => 'topic' . url('.php?id=' . $alert_post, '-' . $alert_post . '-' . Url::encode_rewrite($topic_name) . '.php')
 	));
 
-	//On vérifie qu'une alerte sur le même sujet n'ait pas été postée
+	//On vÃ©rifie qu'une alerte sur le mÃªme sujet n'ait pas Ã©tÃ© postÃ©e
 	$nbr_alert = PersistenceContext::get_querier()->count(PREFIX . 'forum_alerts', 'WHERE idtopic=:idtopic AND status = 0', array('idtopic' => $alert_post));
 	if (empty($nbr_alert)) //On enregistre
 	{
@@ -128,7 +128,7 @@ if (!empty($alert_post))
 			'MSG' => str_replace('%title', $topic_name, $LANG['alert_success'])
 		));
 	}
-	else //Une alerte a déjà été postée
+	else //Une alerte a dÃ©jÃ  Ã©tÃ© postÃ©e
 	{
 		$tpl->assign_block_vars('alert_confirm', array(
 			'MSG' => $LANG['alert_topic_already_done']

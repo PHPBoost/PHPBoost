@@ -3,7 +3,7 @@
  *                               move.php
  *                            -------------------
  *   begin                : October 30, 2005
- *   copyright            : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -34,15 +34,15 @@ require_once('../kernel/header.php');
 
 $request = AppContext::get_request();
 
-$id_get = $request->get_getint('id', 0); //Id du topic à déplacer.
-$id_post = $request->get_postint('id', 0); //Id du topic à déplacer.
-$id_get_msg = $request->get_getint('idm', 0); //Id du message à partir duquel il faut scinder le topic.
-$id_post_msg = $request->get_postint('idm', 0); //Id du message à partir duquel il faut scinder le topic.
+$id_get = $request->get_getint('id', 0); //Id du topic Ã  dÃ©placer.
+$id_post = $request->get_postint('id', 0); //Id du topic Ã  dÃ©placer.
+$id_get_msg = $request->get_getint('idm', 0); //Id du message Ã  partir duquel il faut scinder le topic.
+$id_post_msg = $request->get_postint('idm', 0); //Id du message Ã  partir duquel il faut scinder le topic.
 $error_get = $request->get_getvalue('error', '');  //Gestion des erreurs.
-$post_topic = $request->get_postvalue('post_topic', ''); //Création du topic scindé.
-$preview_topic = $request->get_postvalue('prw_t', ''); //Prévisualisation du topic scindé.
+$post_topic = $request->get_postvalue('post_topic', ''); //CrÃ©ation du topic scindÃ©.
+$preview_topic = $request->get_postvalue('prw_t', ''); //PrÃ©visualisation du topic scindÃ©.
 
-if (!empty($id_get)) //Déplacement du sujet.
+if (!empty($id_get)) //DÃ©placement du sujet.
 {
 	$tpl = new FileTemplate('forum/forum_move.tpl');
 
@@ -53,7 +53,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 		DispatchManager::redirect($error_controller);
 	}
 	
-	if (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation()) //Accès en édition
+	if (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation()) //AccÃ¨s en Ã©dition
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -66,7 +66,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 		DispatchManager::redirect($error_controller);
 	}
 	
-	//Listing des catégories disponibles, sauf celle qui va être supprimée.
+	//Listing des catÃ©gories disponibles, sauf celle qui va Ãªtre supprimÃ©e.
 	$search_category_children_options = new SearchCategoryChildrensOptions();
 	$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 	$categories_tree = ForumService::get_categories_manager()->get_select_categories_form_field('cats', '', Category::ROOT_CATEGORY, $search_category_children_options);
@@ -132,19 +132,19 @@ if (!empty($id_get)) //Déplacement du sujet.
 		
 	$tpl->display();
 }
-elseif (!empty($id_post)) //Déplacement du topic
+elseif (!empty($id_post)) //DÃ©placement du topic
 {
 	$idcat = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'idcat', 'WHERE id = :id', array('id' => $id_post));
-	if (ForumAuthorizationsService::check_authorizations($idcat)->moderation()) //Accès en édition
+	if (ForumAuthorizationsService::check_authorizations($idcat)->moderation()) //AccÃ¨s en Ã©dition
 	{
-		$to = retrieve(POST, 'to', $idcat); //Catégorie cible.
+		$to = retrieve(POST, 'to', $idcat); //CatÃ©gorie cible.
 		$category_to = ForumService::get_categories_manager()->get_categories_cache()->get_category($to);
 		if (!empty($to) && $category_to->get_id_parent() != Category::ROOT_CATEGORY && $idcat != $to)
 		{
 			//Instanciation de la class du forum.
 			$Forumfct = new Forum();
 
-			$Forumfct->Move_topic($id_post, $idcat, $to); //Déplacement du topic
+			$Forumfct->Move_topic($id_post, $idcat, $to); //DÃ©placement du topic
 			
 			AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $id_post, '-' .$id_post  . '.php', '&'));
 		}
@@ -161,7 +161,7 @@ elseif (!empty($id_post)) //Déplacement du topic
 		DispatchManager::redirect($error_controller);
 	}
 }
-elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //Choix de la nouvelle catégorie, titre, sous-titre du topic à scinder.
+elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //Choix de la nouvelle catÃ©gorie, titre, sous-titre du topic Ã  scinder.
 {
 	$tpl = new FileTemplate('forum/forum_post.tpl');
 
@@ -181,7 +181,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		DispatchManager::redirect($error_controller);
 	}
 	
-	if (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation()) //Accès en édition
+	if (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation()) //AccÃ¨s en Ã©dition
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -202,9 +202,9 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		DispatchManager::redirect($error_controller);
 	}
 	
-	$to = retrieve(POST, 'to', $cat['id']); //Catégorie cible.
+	$to = retrieve(POST, 'to', $cat['id']); //CatÃ©gorie cible.
 
-	//Listing des catégories disponibles, sauf celle qui va être supprimée.
+	//Listing des catÃ©gories disponibles, sauf celle qui va Ãªtre supprimÃ©e.
 	$search_category_children_options = new SearchCategoryChildrensOptions();
 	$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 	$categories_tree = ForumService::get_categories_manager()->get_select_categories_form_field('cats', '', Category::ROOT_CATEGORY, $search_category_children_options);
@@ -317,7 +317,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 				));
 				$nbr_poll_field++;
 			}
-			elseif ($i <= 5) //On complète s'il y a moins de 5 réponses.
+			elseif ($i <= 5) //On complÃ¨te s'il y a moins de 5 rÃ©ponses.
 			{
 				$tpl->assign_block_vars('answers_poll', array(
 					'ID' => $i,
@@ -327,7 +327,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 			}
 		}
 
-		//Type de réponses du sondage.
+		//Type de rÃ©ponses du sondage.
 		$poll_type = retrieve(POST, 'poll_type', 0);
 
 		$vars_tpl = array_merge($vars_tpl, array(
@@ -401,9 +401,9 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 		DispatchManager::redirect($error_controller);
 	}
 	
-	$to = retrieve(POST, 'to', 0); //Catégorie cible.
+	$to = retrieve(POST, 'to', 0); //CatÃ©gorie cible.
 
-	if (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation()) //Accès en édition
+	if (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation()) //AccÃ¨s en Ã©dition
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -426,7 +426,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 		$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
 		$type = retrieve(POST, 'type', 0);
 
-		//Requête de "scindage" du topic.
+		//RequÃªte de "scindage" du topic.
 		if (!empty($to) && !empty($contents) && !empty($title))
 		{
 			//Instanciation de la class du forum.

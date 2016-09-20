@@ -1,4 +1,4 @@
-		<span id="go_top"></span>
+		<span id="go-top"></span>
 
 		# INCLUDE forum_top #
 		
@@ -15,9 +15,15 @@
 
 				# START list #
 				<div class="msg-position">
+					<div class="msg-title">
+						{list.U_FORUM_CAT} &raquo; {list.U_TITLE_T}
+						<span class="float-right">
+							<a href="#go-top" title="go top"><i class="fa fa-arrow-up"></i></a> 
+							<a href="#go-bottom" title="go bottom"><i class="fa fa-arrow-down"></i></a>
+						</span>
+					</div>
 					<div class="msg-container">
 						<div class="msg-top">
-							
 							<div class="msg-top-row">
 								<div class="msg-pseudo-mbr">
 									{list.USER_ONLINE} # IF NOT list.C_GUEST #<a class="forum-link-pseudo {list.LEVEL_CLASS}" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}" # ENDIF # href="{list.U_USER_PROFILE}" title="{list.USER_PSEUDO}">{list.USER_PSEUDO}</a># ELSE # {list.USER_PSEUDO} # ENDIF #
@@ -44,11 +50,7 @@
 								<span class="float-left">
 									&nbsp;&nbsp;<span id="m{list.ID}"></span><a href="{PATH_TO_ROOT}/forum/topic{list.U_VARS_ANCRE}#m{list.ID}" title="{list.DATE}"><i class="fa fa-hand-o-right"></i></a> {list.DATE}
 								</span>
-								<span class="float-right">
-									{list.U_FORUM_CAT} &raquo; {list.U_TITLE_T}
-									<a href="#go_top" title="go top"><i class="fa fa-arrow-up"></i></a> 
-									<a href="#go_bottom" title="go bottom"><i class="fa fa-arrow-down"></i></a>
-								</span>
+
 							</div>
 							<div class="msg-contents">
 								<div class="msg-contents-overflow">
@@ -89,7 +91,7 @@
 			</footer>
 		</article>
 		
-		<span id="go_bottom"></span>
+		<span id="go-bottom"></span>
 		
 		# INCLUDE forum_bottom #
 		

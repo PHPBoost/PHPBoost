@@ -3,7 +3,7 @@
  *                             forum_begin.php
  *                            -------------------
  *   begin                : March 26, 2008
- *   copyright            : (C) 2008 RÈgis Viarre, Lo√Øc Rouchon
+ *   copyright            : (C) 2008 R√©gis Viarre, Lo√É¬Øc Rouchon
  *   email                : crowkait@phpboost.com, loic.rouchon@phpboost.com
  *
  *
@@ -26,20 +26,20 @@
  ###################################################*/
 
 if (defined('PHPBOOST') !== true)
-    exit;
+	exit;
 
 //Historique.
 define('H_DELETE_MSG', 'delete_msg'); //Suppression d'un message.
 define('H_DELETE_TOPIC', 'delete_topic'); //Suppression d'un sujet.
 define('H_LOCK_TOPIC', 'lock_topic'); //Verrouillage d'un sujet.
-define('H_UNLOCK_TOPIC', 'unlock_topic'); //DÈverrouillage d'un sujet.
-define('H_MOVE_TOPIC', 'move_topic'); //DÈplacement d'un sujet.
+define('H_UNLOCK_TOPIC', 'unlock_topic'); //D√©verrouillage d'un sujet.
+define('H_MOVE_TOPIC', 'move_topic'); //D√©placement d'un sujet.
 define('H_CUT_TOPIC', 'cut_topic'); //Scindement d'un sujet.
 define('H_SET_WARNING_USER', 'set_warning_user'); //Modification pourcentage avertissement.
 define('H_BAN_USER', 'ban_user'); //Modification pourcentage avertissement.
 define('H_EDIT_MSG', 'edit_msg'); //Edition message d'un membre.
 define('H_EDIT_TOPIC', 'edit_topic'); //Edition sujet d'un membre.
-define('H_SOLVE_ALERT', 'solve_alert'); //RÈsolution d'une alerte.
+define('H_SOLVE_ALERT', 'solve_alert'); //R√©solution d'une alerte.
 define('H_WAIT_ALERT', 'wait_alert'); //Mise en attente d'une alerte.
 define('H_DEL_ALERT', 'del_alert'); //Suppression d'une alerte.
 define('H_READONLY_USER', 'readonly_user'); //Modification lecture seule d'un membre.

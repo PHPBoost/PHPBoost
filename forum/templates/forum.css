@@ -437,6 +437,12 @@ a.msg-link-pseudo:hover {
 	background-color: #4D4C50;
 }
 
+#article-forum-membermsg .msg-pseudo-mbr,
+#article-forum-membermsg .msg-pseudo-mbr a {
+	background-color: #F0F3FF;
+	color: #555555;
+}
+
 .msg-info-mbr { /* Case des informations du membre */
 	padding: 4px;
 	font-size: 10px;
@@ -467,10 +473,26 @@ a.msg-link-pseudo:hover {
 }
 
 /* --- info case du message ---*/
+.msg-title {
+	padding: 4px;
+	background-color: #4D4C50;
+}
+
+.msg-title,
+.msg-title a {
+	color: #E8EAEB;
+}
+
 .msg-contents-info {
 	padding: 4px;
 	background-color: #4D4C50;
 	color: #E8EAEB;
+}
+
+#article-forum-membermsg .msg-contents-info,
+#article-forum-membermsg .msg-contents-info a {
+	background-color: #F0F3FF;
+	color: #555555;
 }
 
 /* Case du message */
@@ -648,7 +670,7 @@ a.msg-link-pseudo:hover {
 .fa-mail-not-track:before 		{ content: "\f003"; color: #000000; }
 .fa-lastview:before 			{ content: "\f017"; color: #334455; }
 .fa-notread:before 				{ content: "\f0f6"; color: #334455; }
-.fa-showmymsg:before 			{ content: "\f1d7"; color: #F57900; }
+.fa-showmymsg:before 			{ content: "\f0e6"; color: #334455; }
 
 /* -- footer ==================================================================== */
 footer#forum-bottom {

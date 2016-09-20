@@ -3,7 +3,7 @@
  *                     ForumExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : Februar 24, 2008
- *   copyright            : (C) 2007 Régis Viarre, Loic Rouchon
+ *   copyright            : (C) 2007 RÃ©gis Viarre, Loic Rouchon
  *   email                : crowkait@phpboost.com, loic.rouchon@phpboost.com
  *
  *

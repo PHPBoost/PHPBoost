@@ -3,7 +3,7 @@
  *                               admin_ranks.php
  *                            -------------------
  *   begin                : October 30, 2005
- *   copyright            : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  * 
@@ -38,7 +38,7 @@ $del = $request->get_getint('del', 0);
 
 $valid = $request->get_postvalue('valid', false);
 
-//Si c'est confirmé on execute
+//Si c'est confirmÃ© on execute
 if ($valid)
 {
 	$result = PersistenceContext::get_querier()->select("SELECT id, special 
@@ -65,7 +65,7 @@ elseif (!empty($del) && !empty($get_id)) //Suppression du rang.
 	//On supprime dans la bdd.
 	PersistenceContext::get_querier()->delete(PREFIX . 'forum_ranks', 'WHERE id=:id', array('id' => $get_id));
 
-	###### Régénération du cache des rangs #######
+	###### RÃ©gÃ©nÃ©ration du cache des rangs #######
 	ForumRanksCache::invalidate();
 	
 	AppContext::get_response()->redirect(HOST . SCRIPT);
@@ -90,7 +90,7 @@ else //Sinon on rempli le formulaire
 		'L_ADD' => LangLoader::get_message('add', 'common')
 	));
 
-	//On recupère les images des groupes
+	//On recupÃ¨re les images des groupes
 	
 	$rank_options_array = array();
 	$image_folder_path = new Folder(PATH_TO_ROOT . '/forum/templates/images/ranks');

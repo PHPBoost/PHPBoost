@@ -3,7 +3,7 @@
  *                                stats.php
  *                            -------------------
  *   begin                : March 28, 2007
- *   copyright            : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *  
@@ -82,10 +82,10 @@ $vars_tpl = array(
 	'L_ANSWERS' => $LANG['forum_nbr_answers'],
 );
 
-//Vérification des autorisations.
+//VÃ©rification des autorisations.
 $authorized_categories = ForumService::get_authorized_categories(Category::ROOT_CATEGORY);
 
-//Dernières réponses
+//DerniÃ¨res rÃ©ponses
 $result = PersistenceContext::get_querier()->select("SELECT t.id, t.title, c.id as cid, c.auth
 FROM " . PREFIX . "forum_topics t
 LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
@@ -121,7 +121,7 @@ while ($row = $result->fetch())
 }
 $result->dispose();
 
-//Les plus répondus
+//Les plus rÃ©pondus
 $result = PersistenceContext::get_querier()->select("SELECT t.id, t.title, c.id as cid, c.auth
 FROM " . PREFIX . "forum_topics t
 LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat

@@ -3,7 +3,7 @@
  *                               admin_forum_config.php
  *                            -------------------
  *   begin                : October 30, 2005
- *   copyright            : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  * 
@@ -44,10 +44,10 @@ if ($add)
 	
 	if (!empty($name) && $msg >= 0)
 	{
-		//On insere le nouveau lien, tout en précisant qu'il s'agit d'un lien ajouté et donc supprimable
+		//On insere le nouveau lien, tout en prÃ©cisant qu'il s'agit d'un lien ajoutÃ© et donc supprimable
 		PersistenceContext::get_querier()->insert(PREFIX . "forum_ranks", array('name' => $name, 'msg' => $msg, 'icon' => $icon, 'special' => 0));
 		
-		###### Régénération du cache des rangs #######
+		###### RÃ©gÃ©nÃ©ration du cache des rangs #######
 		ForumRanksCache::invalidate();
 		
 		AppContext::get_response()->redirect('/forum/admin_ranks.php');	
@@ -57,14 +57,14 @@ if ($add)
 }
 elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 {
-	//Si le dossier n'est pas en écriture on tente un CHMOD 777
+	//Si le dossier n'est pas en Ã©criture on tente un CHMOD 777
 	@clearstatcache();
 	$dir = PATH_TO_ROOT . '/forum/templates/images/ranks/';
 	if (!is_writable($dir))
 		$is_writable = @chmod($dir, 0777);
 	
 	$error = '';
-	if (is_writable($dir)) //Dossier en écriture, upload possible
+	if (is_writable($dir)) //Dossier en Ã©criture, upload possible
 	{
 		$authorized_pictures_extensions = FileUploadConfig::load()->get_authorized_picture_extensions();
 		
@@ -96,7 +96,7 @@ else //Sinon on rempli le formulaire
 	if ($get_error == 'incomplete')
 		$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
 	
-	//On recupère les images des groupes
+	//On recupÃ¨re les images des groupes
 	$rank_options = '<option value="">--</option>';
 	
 	

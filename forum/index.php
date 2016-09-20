@@ -3,7 +3,7 @@
  *                                index.php
  *                            -------------------
  *   begin                : October 25, 2005
- *   copyright            : (C) 2005 Viarre Régis / Sautel Benoît
+ *   copyright            : (C) 2005 Viarre RÃ©gis / Sautel BenoÃ®t
  *   email                : crowkait@phpboost.com / ben.popeye@phpboost.com
  *
  *
