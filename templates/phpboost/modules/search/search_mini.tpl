@@ -27,7 +27,7 @@
 		
 		resizeWindows = function() {
 				if ( $(window).innerWidth() < 481 && small_screen != true) {
-					$('#menu-right').prepend('<div id="module-mini-search" class="module-mini-container"><div class="module-mini-top"><h5 class="sub-title">Effectué une recherche</h5></div><div id="module-mini-contents-search" class="module-mini-contents"></div><div class="module-mini-bottom"></div></div>');
+					$('#menu-right').prepend('<div id="module-mini-search" class="module-mini-container"><div class="module-mini-top"><h5 class="sub-title">Effectuer une recherche</h5></div><div id="module-mini-contents-search" class="module-mini-contents"></div><div class="module-mini-bottom"></div></div>');
 					$('#module-mini-contents-search').prepend($('#module-mini-search-form'));
 					small_screen = true;
 				}
