@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       UserAboutCookie.class.php
+ *                       UserAboutCookieController.class.php
  *                            -------------------
  *   begin                : September 18, 2016
  *   copyright            : (C) 2016 Genet Arnaud
@@ -29,42 +29,33 @@ class UserAboutCookieController extends AbstractController
 {
 	private $lang;
 	private $template;
-	private $user;
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();	
+		$this->init();
 		return $this->build_response($this->template);
 	}
 
 	private function init()
 	{
-		$this->template = new FileTemplate('user/aboutcookie.tpl');
+		$this->template = new FileTemplate('user/UserAboutCookieController.tpl');
 		$this->lang = LangLoader::get('user-common');
 		$this->template->add_lang($this->lang);
-		$this->user = AppContext::get_current_user();
 	}
 
 	private function build_response(View $view)
 	{
+		$config = CookieBarConfig::load();
+		
 		$response = new SiteDisplayResponse($view);
 		$graphical_env = $response->get_graphical_environment();
-		$graphical_env->set_page_title($this->lang['cookiebar.about-cookie']);
-
+		$graphical_env->set_page_title($config->get_cookiebar_aboutcookie_title());
+		
 		$this->template->put_all(array(
-			'U_VIEW_PROFILE' => UserUrlBuilder::profile($this->user->get_id())->rel(),
-			'COOKIES' => $this->lang['cookiebar.cookies'],
-			'COOKIES_EXPLAIN' => $this->lang['cookiebar.cookies-explain'],
-			'WHAT_A_COOKIES' => $this->lang['cookiebar.what-a-cookies'],
-			'WHAT_A_COOKIES_EXPLAIN' => $this->lang['cookiebar.what-a-cookies-explain'],
-			'TECHNICAL_PHPBOOST_COOKIES' => $this->lang['cookiebar.technical-phpboost-cookies'],
-			'TECHNICAL_PHPBOOST_COOKIES_EXPLAIN' => $this->lang['cookiebar.technical-phpboost-cookies-explain'],
-			'OTHER_COOKIES' => $this->lang['cookiebar.other-cookies'],
-			'OTHER_COOKIES_EXPLAIN' => $this->lang['cookiebar.other-cookies-explain'],
-			'HOW_CONTROL_COOKIES' => $this->lang['cookiebar.how-control-cookies'],
-			'HOW_CONTROL_COOKIES_EXPLAIN' => $this->lang['cookiebar.how-control-cookies-explain'],
-			'CHANGE_CHOICE_COOKIES' => $this->lang['cookiebar.change-choice']
+			'ABOUTCOOKIE_TITLE' => $config->get_cookiebar_aboutcookie_title(),
+			'ABOUTCOOKIE_CONTENT' => FormatingHelper::second_parse($config->get_cookiebar_aboutcookie_content())
 		));
+		
 		return $response;
 	}
 }

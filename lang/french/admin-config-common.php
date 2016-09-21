@@ -124,9 +124,10 @@ $lang = array(
 	'advanced-config.cookiebar-duration.desc' => 'La loi limite la durée de vie à 13 mois maximum',
 	'advanced-config.cookiebar-tracking.choice' => 'Choisissez votre mode de fonctionnement',
 	'advanced-config.cookiebar-tracking.track' => 'Utilisation de cookie traceurs',
-	'advanced-config.cookiebar-tracking.notrack' => 'Utilisation des cookies techniques PHPBoost',
+	'advanced-config.cookiebar-tracking.notrack' => 'Utilisation de cookies techniques',
 	'advanced-config.cookiebar-content' => 'Message affiché dans la bar d\'avertissement',
 	'advanced-config.cookiebar-content.explain' => 'Vous pouvez personnaliser le message, mais celui doit impérativement préciser si vous utilisez des cookies traceurs',
+	'advanced-config.cookiebar-aboutcookie-title' => 'Titre de la page "En savoir plus"',
 	'advanced-config.cookiebar-aboutcookie' => 'Message affiché dans la page "En savoir plus"',
 	'advanced-config.cookiebar-aboutcookie.explain' => 'Vous pouvez personnaliser le message en indiquant les cookies traceurs que vous utilisez',
 

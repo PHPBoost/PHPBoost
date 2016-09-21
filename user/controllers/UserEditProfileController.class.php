@@ -119,7 +119,7 @@ class UserEditProfileController extends AbstractController
 	private function build_form()
 	{
 		$security_config = SecurityConfig::load();
-		//ElenWii : $cookiebar_config = CookieBarConfig::load();
+		
 		$activated_auth_types = AuthenticationService::get_activated_types_authentication();
 		
 		$form = new HTMLForm(__CLASS__);
@@ -269,14 +269,6 @@ class UserEditProfileController extends AbstractController
 			
 			$fieldset_punishment->add_field(new FormFieldMemberSanction('user_ban', $this->lang['banned'], $this->user->get_delay_banned()));
 		}
-
-		//ElenWii : A Afficher uniquement si la barre cookie est active.
-		$fieldset_cookiebar = new FormFieldsetHTML('cookiebar_management', $this->lang['cookiebar.cookie.management']);
-		$form->add_fieldset($fieldset_cookiebar);
-		//ElenWii : récuperer tracking ou untracking en fonction de l'admin
-		$fieldset_cookiebar->set_description(stripslashes($this->lang['cookiebar-message.notracking']));
-
-		//ElenWii : Il faut ajouter des boutons ou autres pour modifier les cookies "pbt-cookiebar-viewed' et 'pbt-cookiebar-choice'
 
 		$this->member_extended_fields_service->display_form_fields($this->user->get_id());
 		

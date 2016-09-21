@@ -128,10 +128,11 @@ $lang = array(
 	'advanced-config.cookiebar-duration' => 'Cookie duration',
 	'advanced-config.cookiebar-duration.desc' => 'Cookie lifetime can\'t by more than 13 months',
 	'advanced-config.cookiebar-tracking.choice' => 'Choose your mode',
-	'advanced-config.cookiebar-tracking.track' => 'Using Cookie tracers',
-	'advanced-config.cookiebar-tracking.notrack' => 'Using only technicals PHPBoost cookies',
+	'advanced-config.cookiebar-tracking.track' => 'Using tracking cookies',
+	'advanced-config.cookiebar-tracking.notrack' => 'Using only technicals cookies',
 	'advanced-config.cookiebar-content' => 'Message displayed in the warning bar',
 	'advanced-config.cookiebar-content.explain' => 'You can customize the message, but you must specify if you are using tracking cookies',
+	'advanced-config.cookiebar-aboutcookie-title' => 'Title of the page "Learn more"',
 	'advanced-config.cookiebar-aboutcookie' => 'Message displayed in the page "Learn more"',
 	'advanced-config.cookiebar-aboutcookie.explain' => 'You can customize the message, but you must describe tracking cookies you use',
 );
