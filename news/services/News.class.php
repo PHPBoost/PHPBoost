@@ -398,6 +398,7 @@ class News
 			'C_READ_MORE' => !$this->get_short_contents_enabled() && $description != $contents && strlen($description) >= $news_config->get_number_character_to_cut(),
 			'C_SOURCES' => $nbr_sources > 0,
 			'C_DIFFERED' => $this->approbation_type == self::APPROVAL_DATE,
+			'C_TOP_LIST' => $this->top_list_enabled(),
 
 			//News
 			'ID' => $this->id,
