@@ -243,7 +243,7 @@ $lang['cookiebar-message.aboutcookie']  = 'To make this site work properly, we s
 		It enables the website to remember your actions and preferences (such as login, language, font size and other display preferences) over a period of time, so you don\'t have to keep re-entering them whenever you come back to the site or browse from one page to another.
 
 		<h2 class="formatter-title">Technical Cookies : </h2>
-		' . GeneralConfig::load()->get_site_name() . ' use technical cookie to <br /> 
+		' . GeneralConfig::load()->get_site_name() . ' use technical cookie to :<br /> 
 <ul class="formatter-ul">
 <li class="formatter-li"> manage login (essential if you want to connect),
 </li><li class="formatter-li"> save BBCode preferences (not essential, but you will have to re-open extend BBCode à each visit),
@@ -251,12 +251,11 @@ $lang['cookiebar-message.aboutcookie']  = 'To make this site work properly, we s
 </li></ul>
 
 		<h2 class="formatter-title">Others cookies :</h2>
-		You can control and/or delete cookies as you wish – for details, see <a href="http://www.aboutcookies.org" title="About Cookies">aboutcookies.org/</a>. <br />
-You can delete all cookies that are already on your computer and you can set most browsers to prevent them from being placed. If you do this, however, you may have to manually adjust some preferences every time you visit a site and some services and functionalities may not work.
-
+		' . GeneralConfig::load()->get_site_name() . ' does not use any tracking cookies. However, using google-analytics module or social-media buttons need some tracking cookies
 		<h2 class="formatter-title">How to control cookies ?</h2>
+		You can control and/or delete cookies as you wish – for details, see <a href="http://www.aboutcookies.org" title="About Cookies">aboutcookies.org</a>. <br />
+You can delete all cookies that are already on your computer and you can set most browsers to prevent them from being placed. If you do this, however, you may have to manually adjust some preferences every time you visit a site and some services and functionalities may not work.		
 ';
-//$lang['cookiebar-message.aboutcookie'] = GeneralConfig::load()->get_site_name() . ' does not use any tracking cookies. However, using google-analytics module or social-media buttons need some tracking cookies';
 $lang['cookiebar.understand']  = 'Ok';
 $lang['cookiebar.allowed']  = 'Allowed';
 $lang['cookiebar.declined']  = 'Declined';

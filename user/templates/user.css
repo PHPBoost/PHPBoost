@@ -208,3 +208,12 @@ table.announce-legend td {
 .aboutcookie-title + p {
 	margin: 0px 0 20px 0px;
 }
+
+footer#cookiebar-change-choice {
+	margin-top: 10px;
+	text-align: center;
+}
+
+.cookiebar-change-choice-link {
+	text-align: center;
+} 

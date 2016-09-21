@@ -242,7 +242,7 @@ $lang['cookiebar-message.aboutcookie']  = 'Pour assurer le bon fonctionnement de
 Il permet à ces sites de mémoriser vos actions et préférences (nom d\'utilisateur, langue, taille des caractères et autres paramètres d\'affichage) pendant un temps donné, pour que vous n\'ayez pas à réindiquer ces informations à chaque fois vous consultez ces sites ou naviguez d\'une page à une autre.<br />
 
 		<h2 class="formatter-title">Les cookies techniques : </h2>
-		De base, ' . GeneralConfig::load()->get_site_name() . ' utilise les cookies pour <br />
+		De base, ' . GeneralConfig::load()->get_site_name() . ' utilise les cookies pour :<br />
 <ul class="formatter-ul">
 <li class="formatter-li"> gérer le système d\'identification (indispensable si vous souhaitez vous connectez),
 </li><li class="formatter-li"> sauvegarder les préférences de la BBCode (pas indispensable, mais vous devrez ré-ouvrir la BBCode à chaque visite),
@@ -250,13 +250,13 @@ Il permet à ces sites de mémoriser vos actions et préférences (nom d\'utilis
 </li></ul>
 
 		<h2 class="formatter-title">Les autres cookies :</h2>
-		Vous pouvez contrôler et/ou supprimer des cookies comme vous le souhaitez.<br />
-Pour en savoir plus, consultez le site web <a href="http://www.aboutcookies.org" title="A propos des Cookies">aboutcookies.org/</a>.<br />
-Vous avez la possibilité de supprimer tous les cookies déjà stockés sur votre ordinateur et de configurer la plupart des navigateurs pour qu\'ils les bloquent. Toutefois, dans ce cas, vous devrez peut-être indiquer vous-mêmes certaines préférences chaque fois que vous vous rendrez sur le site, et certains services et fonctionnalités risquent de ne pas être accessibles.
+		' . GeneralConfig::load()->get_site_name() . ' n\'utilise aucun système de traceurs. En revanche, l\'utilisation du module google analytics et des boutons réseaux sociaux, nécessite des cookies traceurs
 
 		<h2 class="formatter-title">Comment contrôler les cookies ?</h2>
+		Vous pouvez contrôler et/ou supprimer des cookies comme vous le souhaitez.<br />
+Pour en savoir plus, consultez le site web <a href="http://www.aboutcookies.org" title="A propos des Cookies">aboutcookies.org</a>.<br />
+Vous avez la possibilité de supprimer tous les cookies déjà stockés sur votre ordinateur et de configurer la plupart des navigateurs pour qu\'ils les bloquent. Toutefois, dans ce cas, vous devrez peut-être indiquer vous-mêmes certaines préférences chaque fois que vous vous rendrez sur le site, et certains services et fonctionnalités risquent de ne pas être accessibles.
 ';
-//$lang['cookiebar-message.aboutcookie']  = GeneralConfig::load()->get_site_name() . ' n\'utilise aucun système de traceurs. En revanche, l\'utilisation du module google analytics et des boutons réseaux sociaux, nécessite des cookies traceurs';
 $lang['cookiebar.understand']  = 'J\'ai compris';
 $lang['cookiebar.allowed']  = 'Autoriser';
 $lang['cookiebar.declined']  = 'Bloquer';
