@@ -59,7 +59,7 @@ class InstallDBConfigController extends InstallController
 			$host = $this->form->get_value('host');
 			$port = $this->form->get_value('port');
 			$login = $this->form->get_value('login');
-			$password = $this->form->get_value('password');
+			$password = TextHelper::html_entity_decode($this->form->get_value('password'));
 			$schema = $this->form->get_value('schema');
 			$tables_prefix = $this->form->get_value('tablesPrefix');
 			$this->handle_form($host, $port, $login, $password, $schema, $tables_prefix);
