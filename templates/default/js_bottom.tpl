@@ -1,4 +1,3 @@
-
 <script>
 <!-- 
 	jQuery('[data-confirmation]').each(function() {
@@ -15,12 +14,12 @@
 		jQuery('a[data-lightbox^=formatter]').attr('data-rel', 'lightcase:collection');
 		jQuery('a[data-rel^=lightcase]').lightcase({
 			labels : {
-				'errorMessage' : ${escapejs(LangLoader::get_message('element.unexist', 'status-messages-common'))},
+				'errorMessage'    : ${escapejs(LangLoader::get_message('element.unexist', 'status-messages-common'))},
 				'sequenceInfo.of' : ' ' + ${escapejs(TextHelper::lowercase_first(LangLoader::get_message('of', 'common')))} + ' ',
-				'close' : ${escapejs(LangLoader::get_message('close', 'main'))},
-				'navigator.prev' : ${escapejs(LangLoader::get_message('previous', 'common'))},
-				'navigator.next' : ${escapejs(LangLoader::get_message('next', 'common'))},
-				'navigator.play' : ${escapejs(LangLoader::get_message('play', 'common'))},
+				'close'           : ${escapejs(LangLoader::get_message('close', 'main'))},
+				'navigator.prev'  : ${escapejs(LangLoader::get_message('previous', 'common'))},
+				'navigator.next'  : ${escapejs(LangLoader::get_message('next', 'common'))},
+				'navigator.play'  : ${escapejs(LangLoader::get_message('play', 'common'))},
 				'navigator.pause' : ${escapejs(LangLoader::get_message('pause', 'common'))}
 			},
 			maxHeight: window.innerHeight,
@@ -38,5 +37,6 @@
 -->
 </script>
 
-//Il faut englober avec le IF cookiebar enable
+# IF C_COOKIEBAR_ENABLED #
 <script src="{PATH_TO_ROOT}/user/templates/js/cookiebar.js"></script>
+# ENDIF #
