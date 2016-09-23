@@ -69,6 +69,8 @@ $lang['login'] = 'Identifiant de connexion';
 $lang['login.explain'] = 'Adresse email ou votre login personnalisé si vous en avez choisi un.';
 $lang['login.custom'] = 'Choisir un identifiant de connexion';
 $lang['login.custom.explain'] = 'Par défaut, vous devez vous connecter avec votre adresse email.';
+$lang['password.custom'] = 'Définir un mot de passe';
+$lang['password.custom.explain'] = 'Par défaut un mot de passe est généré automatiquement';
 $lang['password'] = 'Mot de passe';
 $lang['password.new'] = 'Nouveau mot de passe';
 $lang['password.old'] = 'Ancien mot de passe';
@@ -169,6 +171,8 @@ Vous pouvez dès à présent vous connecter au site à l\'aide des identifiants 
 
 $lang['registration.pending-approval'] = 'Un nouveau membre s\'est inscrit. Son compte doit être approuvé avant de pouvoir être utilisé.';
 $lang['registration.subject-mail'] = 'Confirmation d\'inscription sur :site_name';
+$lang['registration.lost-password-link'] = 'Si vous perdez votre mot de passe, vous pouvez en générer un nouveau à partir de ce lien : :lost_password_link';
+$lang['registration.password'] = 'Mot de passe : :password';
 $lang['registration.content-mail'] = 'Cher(e) :pseudo,
 
 Tout d\'abord, merci de vous être inscrit sur :site_name. Vous faites parti dès maintenant des membres du site.
@@ -179,7 +183,7 @@ Pour vous connecter, il vous faudra retenir votre identifiant et votre mot de pa
 Nous vous rappelons vos identifiants.
 
 Identifiant : :login
-Mot de passe : :password
+:lost_password_link
 
 :accounts_validation_explain
 

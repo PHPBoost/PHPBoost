@@ -97,14 +97,26 @@ class AdminMemberAddController extends AdminController
 			array('required' => true, 'hidden' => true, 'maxlength' => 25),
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists())
 		));
+		
+		$fieldset->add_field(new FormFieldCheckbox('custom_password', $this->lang['password.custom'], false,
+			array('description' => $this->lang['password.custom.explain'], 'events' => array('click' => '
+				if (HTMLForms.getField("custom_password").getValue()) {
+					HTMLForms.getField("password").enable();
+					HTMLForms.getField("password_bis").enable();
+				} else {
+					HTMLForms.getField("password").disable();
+					HTMLForms.getField("password_bis").disable();
+				}')
+			)
+		));
 
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '',
-			array('required' => true),
+			array('required' => true, 'hidden' => true),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));
 		
 		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '',
-			array('required' => true),
+			array('required' => true, 'hidden' => true),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));
 		
@@ -136,13 +148,28 @@ class AdminMemberAddController extends AdminController
 		$user->set_email($this->form->get_value('email'));
 		
 		$login = $this->form->get_value('email');
-		if ($this->form->get_value('custom_login', false))
+		if ($this->form->get_value('custom_login'))
 		{
 			$login = $this->form->get_value('login');
 		}
 		
-		$auth_method = new PHPBoostAuthenticationMethod($login, $this->form->get_value('password'));
-		UserService::create($user, $auth_method);
+		if ($this->form->get_value('custom_password'))
+		{
+			$password = $this->form->get_value('password');
+		}
+		else
+		{
+			$password = KeyGenerator::generate_key(8);
+		}
+		
+		$auth_method = new PHPBoostAuthenticationMethod($login, $password);
+		$user_id = UserService::create($user, $auth_method);
+		
+		if ($user_id)
+		{
+			$registration_pass = UserAccountsConfig::load()->get_member_accounts_validation_method() == UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION ? KeyGenerator::generate_key(15) : '';
+			UserRegistrationService::send_email_confirmation($user_id, $user->get_email(), $user->get_display_name(), $login, $password, $registration_pass, true);
+		}
 		
 		return $user->get_display_name();
 	}

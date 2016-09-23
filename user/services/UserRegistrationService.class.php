@@ -27,14 +27,18 @@
 
 class UserRegistrationService
 {
-	public static function send_email_confirmation($user_id, $email, $pseudo, $login, $password, $registration_pass)
+	public static function send_email_confirmation($user_id, $email, $pseudo, $login, $password, $registration_pass, $admin_creation = false)
 	{
 		$lang = LangLoader::get('user-common');
 		$user_accounts_config = UserAccountsConfig::load();
 		$general_config = GeneralConfig::load();
 		$site_name = $general_config->get_site_name();
 		$subject = StringVars::replace_vars($lang['registration.subject-mail'], array('site_name' => $site_name));
-
+		if ($admin_creation)
+			$lost_password_link = StringVars::replace_vars($lang['registration.password'], array('password' => $password));
+		else
+			$lost_password_link = StringVars::replace_vars($lang['registration.lost-password-link'], array('lost_password_link' => UserUrlBuilder::forget_password()->absolute()));
+		
 		switch ($user_accounts_config->get_member_accounts_validation_method())
 		{
 			case UserAccountsConfig::AUTOMATIC_USER_ACCOUNTS_VALIDATION:
@@ -43,7 +47,7 @@ class UserRegistrationService
 					'site_name' => $site_name,
 					'host' => $general_config->get_complete_site_url(),
 					'login' => $login,
-					'password' => $password,
+					'lost_password_link' => $lost_password_link,
 					'accounts_validation_explain' => $lang['registration.email.automatic-validation'],
 					'signature' => MailServiceConfig::load()->get_mail_signature()
 				);
@@ -56,7 +60,7 @@ class UserRegistrationService
 					'site_name' => $site_name,
 					'host' => $general_config->get_complete_site_url(),
 					'login' => $login,
-					'password' => $password,
+					'lost_password_link' => $lost_password_link,
 					'accounts_validation_explain' => 
 				StringVars::replace_vars(
 				$lang['registration.email.mail-validation'],
@@ -82,7 +86,7 @@ class UserRegistrationService
 					'site_name' => $site_name,
 					'host' => $general_config->get_complete_site_url(),
 					'login' => $login,
-					'password' => $password,
+					'lost_password_link' => $lost_password_link,
 					'accounts_validation_explain' => $lang['registration.email.administrator-validation'],
 					'signature' => MailServiceConfig::load()->get_mail_signature()
 				);

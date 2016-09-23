@@ -70,6 +70,8 @@ $lang['login'] = 'Login';
 $lang['login.explain'] = 'Email address or your customized login if you chose one.';
 $lang['login.custom'] = 'Choose a login';
 $lang['login.custom.explain'] = 'Default, you must log in with your email address.';
+$lang['password.custom'] = 'Define a password';
+$lang['password.custom.explain'] = 'The password is automatically generated per default';
 $lang['password'] = 'Password';
 $lang['password.new'] = 'New password';
 $lang['password.old'] = 'Old password';
@@ -170,6 +172,8 @@ You can now login to the site using the credentials provided in the previous ema
 
 $lang['registration.pending-approval'] = 'A new member has registered. His account must be approved before it can be used.';
 $lang['registration.subject-mail'] = 'Confirmation of registration :site_name';
+$lang['registration.lost-password-link'] = 'If you loose your password, you can generate a new one from this link :lost_password_link';
+$lang['registration.password'] = 'Password : :password';
 $lang['registration.content-mail'] = 'Dear(e) :pseudo,
 
 First of all, thank you for being registered on :site_name. Now you are part of the site members.
@@ -180,7 +184,7 @@ To connect, you must retain your username and password.
 Here are your identifiers.
 
 Login : :login
-Password : :password
+:lost_password_link
 
 :accounts_validation_explain
 
