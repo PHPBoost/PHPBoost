@@ -90,6 +90,7 @@ $lang['form.doesnt_match_integer_min'] = 'La valeur saisie doit être supérieur
 $lang['form.doesnt_match_integer_max'] = 'La valeur saisie doit être inférieure ou égale à :upper_bound';
 $lang['form.doesnt_match_medium_password_regex'] = 'Le mot de passe doit comporter au moins une minuscule et une majuscule ou une minuscule et un chiffre';
 $lang['form.doesnt_match_strong_password_regex'] = 'Le mot de passe doit comporter au moins une minuscule, une majuscule et un chiffre';
+$lang['form.doesnt_match_very_strong_password_regex'] = 'Le mot de passe doit comporter au moins une minuscule, une majuscule, un chiffre et un caractère spécial';
 $lang['form.invalid_url'] = 'L\'url n\'est pas valide';
 $lang['form.invalid_picture'] = 'Le fichier indiqué n\'est pas une image';
 $lang['form.unexisting_file'] = 'Le fichier n\'a pas été trouvé, son adresse doit être incorrecte';

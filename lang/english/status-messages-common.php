@@ -90,6 +90,7 @@ $lang['form.doesnt_match_integer_min'] = 'The entered value must be superior or 
 $lang['form.doesnt_match_integer_max'] = 'The entered value must be inferior or equal to :upper_bound';
 $lang['form.doesnt_match_medium_password_regex'] = 'The password must contain at least one lower case letter and one upper case letter or one lower case letter and a digit';
 $lang['form.doesnt_match_strong_password_regex'] = 'The password must contain at least one lower case letter, one upper case letter and a digit';
+$lang['form.doesnt_match_very_strong_password_regex'] = 'The password must contain at least one lower case letter, one upper case letter, one digit and a special character';
 $lang['form.invalid_url'] = 'The url is not valid';
 $lang['form.invalid_picture'] = 'The file is not a picture';
 $lang['form.unexisting_file'] = 'The file has not been found, its url must be incorrect';

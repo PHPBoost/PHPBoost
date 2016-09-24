@@ -37,6 +37,7 @@ class SecurityConfig extends AbstractConfigData
 	const PASSWORD_STRENGTH_WEAK = 'weak';
 	const PASSWORD_STRENGTH_MEDIUM = 'medium';
 	const PASSWORD_STRENGTH_STRONG = 'strong';
+	const PASSWORD_STRENGTH_VERY_STRONG = 'very_strong';
 	
 	public function get_internal_password_min_length()
 	{

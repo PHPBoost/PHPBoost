@@ -137,7 +137,8 @@ class AdminMemberConfigController extends AdminController
 			array(
 				new FormFieldSelectChoiceOption($this->lang['security.config.internal-password-strength.weak'], SecurityConfig::PASSWORD_STRENGTH_WEAK),
 				new FormFieldSelectChoiceOption($this->lang['security.config.internal-password-strength.medium'], SecurityConfig::PASSWORD_STRENGTH_MEDIUM),
-				new FormFieldSelectChoiceOption($this->lang['security.config.internal-password-strength.strong'], SecurityConfig::PASSWORD_STRENGTH_STRONG)
+				new FormFieldSelectChoiceOption($this->lang['security.config.internal-password-strength.strong'], SecurityConfig::PASSWORD_STRENGTH_STRONG),
+				new FormFieldSelectChoiceOption($this->lang['security.config.internal-password-strength.very-strong'], SecurityConfig::PASSWORD_STRENGTH_VERY_STRONG)
 			)
 		));
 		

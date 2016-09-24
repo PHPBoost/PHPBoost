@@ -68,6 +68,7 @@ $lang['security.config.internal-password-strength'] = 'Passwords strength';
 $lang['security.config.internal-password-strength.weak'] = 'Weak';
 $lang['security.config.internal-password-strength.medium'] = 'Medium (letters and digits)';
 $lang['security.config.internal-password-strength.strong'] = 'Strong (lower case, upper case and digits)';
+$lang['security.config.internal-password-strength.very-strong'] = 'Very strong (lower case, upper case, digits and special characters)';
 $lang['security.config.login-and-email-forbidden-in-password'] = 'Forbid email and login in password';
 
 //Authentication Configuration

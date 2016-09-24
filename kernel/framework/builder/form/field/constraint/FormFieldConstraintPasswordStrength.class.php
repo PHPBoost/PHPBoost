@@ -33,15 +33,22 @@ class FormFieldConstraintPasswordStrength extends FormFieldConstraintRegex
 {
 	// Must be at least 6 characters
 	private static $weak_strength_regex = '/^(?=.{6,}).*$/';
-	// Must containt at least upper case letters and lower case letters or soit lower case letters and digits
+	// Must containt at least upper case letters and lower case letters or lower case letters and digits
 	private static $medium_strength_regex = '/^(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$/';
 	// Must containt at least upper case letters, lower case letters and digits
-	private static $strong_strength_regex = '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\*]).*$/';
+	private static $strong_strength_regex = '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).*$/';
+	// Must containt at least upper case letters, lower case letters, digits and special characters
+	private static $very_strong_strength_regex = '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\*]).*$/';
 	
 	public function __construct($error_message = '')
 	{
 		switch (SecurityConfig::load()->get_internal_password_strength())
 		{
+			case SecurityConfig::PASSWORD_STRENGTH_VERY_STRONG :
+				$regex = self::$very_strong_strength_regex;
+				$error_message = empty($error_message) ? LangLoader::get_message('form.doesnt_match_very_strong_password_regex', 'status-messages-common') : $error_message;
+				break;
+			
 			case SecurityConfig::PASSWORD_STRENGTH_STRONG :
 				$regex = self::$strong_strength_regex;
 				$error_message = empty($error_message) ? LangLoader::get_message('form.doesnt_match_strong_password_regex', 'status-messages-common') : $error_message;
@@ -74,6 +81,11 @@ class FormFieldConstraintPasswordStrength extends FormFieldConstraintRegex
 	public function get_password_strong_strength_regex()
 	{
 		return self::$strong_strength_regex;
+	}
+
+	public function get_password_very_strong_strength_regex()
+	{
+		return self::$very_strong_strength_regex;
 	}
 }
 

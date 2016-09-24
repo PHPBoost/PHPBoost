@@ -106,7 +106,8 @@ class InstallWebsiteConfigController extends InstallController
 			array(
 				new FormFieldSelectChoiceOption($admin_user_lang['security.config.internal-password-strength.weak'], SecurityConfig::PASSWORD_STRENGTH_WEAK),
 				new FormFieldSelectChoiceOption($admin_user_lang['security.config.internal-password-strength.medium'], SecurityConfig::PASSWORD_STRENGTH_MEDIUM),
-				new FormFieldSelectChoiceOption($admin_user_lang['security.config.internal-password-strength.strong'], SecurityConfig::PASSWORD_STRENGTH_STRONG)
+				new FormFieldSelectChoiceOption($admin_user_lang['security.config.internal-password-strength.strong'], SecurityConfig::PASSWORD_STRENGTH_STRONG),
+				new FormFieldSelectChoiceOption($admin_user_lang['security.config.internal-password-strength.very-strong'], SecurityConfig::PASSWORD_STRENGTH_VERY_STRONG)
 			)
 		));
 		
