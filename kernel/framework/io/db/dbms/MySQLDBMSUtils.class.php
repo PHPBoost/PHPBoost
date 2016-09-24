@@ -136,8 +136,10 @@ class MySQLDBMSUtils implements DBMSUtils
 
 	public function create_table($table_name, array $fields, array $options = array())
 	{
-		// Force charset
-		$options['charset'] = 'UTF8';
+		// Force charset to utf8 if not set
+		if (!isset($options['charset']) || empty($options['charset']))
+			$options['charset'] = 'UTF8';
+		
 		foreach ($this->get_platform()->getCreateTableSql($table_name, $fields, $options) as $query)
 		{
 			$this->inject($query);

@@ -28,7 +28,7 @@
 class StatsSetup extends DefaultModuleSetup
 {
 	private static $db_utils;
-	public static $stats_table;		
+	public static $stats_table;
 	public static $stats_referer_table;
 	
 	public static function __static()
@@ -97,7 +97,8 @@ class StatsSetup extends DefaultModuleSetup
 			'primary' => array('id'),
 			'indexes' => array(
 				'url' => array('type' => 'key', 'fields' => array('url', 'relative_url'))
-			)
+			),
+			'charset' => 'latin1'
 		);
 		self::$db_utils->create_table(self::$stats_referer_table, $fields, $options);
 	}
