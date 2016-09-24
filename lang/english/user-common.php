@@ -242,23 +242,22 @@ $lang['cookiebar-message.tracking']  = 'If you continuing your visit to this web
 $lang['cookiebar-message.aboutcookie.title']  = 'About Cookies';
 $lang['cookiebar-message.aboutcookie']  = 'To make this site work properly, we sometimes place small data files called cookies on your device.<br />Most big websites do this too.
 
-		<h2 class="formatter-title">What are cookies ?</h2>
-		A cookie is a small text file that a website saves on your computer or mobile device when you visit the site.<br />
-		It enables the website to remember your actions and preferences (such as login, language, font size and other display preferences) over a period of time, so you don\'t have to keep re-entering them whenever you come back to the site or browse from one page to another.
+<h2 class="formatter-title">What are cookies ?</h2>
+A cookie is a small text file that a website saves on your computer or mobile device when you visit the site.<br />
+It enables the website to remember your actions and preferences (such as login, language, font size and other display preferences) over a period of time, so you don\'t have to keep re-entering them whenever you come back to the site or browse from one page to another.
 
-		<h2 class="formatter-title">Technical Cookies : </h2>
-		' . GeneralConfig::load()->get_site_name() . ' use technical cookie to :<br /> 
+<h2 class="formatter-title">Technical Cookies : </h2>
+' . GeneralConfig::load()->get_site_name() . ' use technical cookie to :<br /> 
 <ul class="formatter-ul">
 <li class="formatter-li"> manage login (essential if you want to connect),
 </li><li class="formatter-li"> save BBCode preferences (not essential, but you will have to re-open extend BBCode à each visit),
 </li><li class="formatter-li"> record anonymous statistics for website (note essenial, but allows webmasters to know how visit website.)
 </li></ul>
-
-		<h2 class="formatter-title">Others cookies :</h2>
-		' . GeneralConfig::load()->get_site_name() . ' does not use any tracking cookies. However, using google-analytics module or social-media buttons need some tracking cookies
-		<h2 class="formatter-title">How to control cookies ?</h2>
-		You can control and/or delete cookies as you wish – for details, see <a href="http://www.aboutcookies.org" title="About Cookies">aboutcookies.org</a>. <br />
-You can delete all cookies that are already on your computer and you can set most browsers to prevent them from being placed. If you do this, however, you may have to manually adjust some preferences every time you visit a site and some services and functionalities may not work.		
+<h2 class="formatter-title">Others cookies :</h2>
+' . GeneralConfig::load()->get_site_name() . ' does not use any tracking cookies. However, using google-analytics module or social-media buttons need some tracking cookies
+<h2 class="formatter-title">How to control cookies ?</h2>
+You can control and/or delete cookies as you wish – for details, see <a title="About Cookies" href="http://www.aboutcookies.org">aboutcookies.org</a>. <br />
+You can delete all cookies that are already on your computer and you can set most browsers to prevent them from being placed. If you do this, however, you may have to manually adjust some preferences every time you visit a site and some services and functionalities may not work.
 ';
 $lang['cookiebar.understand']  = 'Ok';
 $lang['cookiebar.allowed']  = 'Allowed';
