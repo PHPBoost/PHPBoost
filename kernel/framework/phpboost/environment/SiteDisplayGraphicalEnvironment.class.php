@@ -68,15 +68,15 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		}
 		
 		$template->put_all(array(
-			'MAINTAIN' => $this->display_site_maintenance(),
-			'SITE_NAME' => GeneralConfig::load()->get_site_name(),
-			'SITE_SLOGAN' => GeneralConfig::load()->get_site_slogan(),
-			'C_HEADER_LOGO' => !empty($header_logo_path),
-			'HEADER_LOGO' => Url::to_rel($header_logo_path),
-		    'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version(),
-			'CONTENT' => $content,
-			'ACTIONS_MENU' => ModuleTreeLinksService::display_actions_menu(),
-			'L_POWERED_BY' => self::$main_lang['powered_by'],
+			'MAINTAIN'         => $this->display_site_maintenance(),
+			'SITE_NAME'        => GeneralConfig::load()->get_site_name(),
+			'SITE_SLOGAN'      => GeneralConfig::load()->get_site_slogan(),
+			'C_HEADER_LOGO'    => !empty($header_logo_path),
+			'HEADER_LOGO'      => Url::to_rel($header_logo_path),
+			'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version(),
+			'CONTENT'          => $content,
+			'ACTIONS_MENU'     => ModuleTreeLinksService::display_actions_menu(),
+			'L_POWERED_BY'     => self::$main_lang['powered_by'],
 			'L_PHPBOOST_RIGHT' => self::$main_lang['phpboost_right'],
 		));
 		
@@ -89,12 +89,12 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		{
 			$template->put_all(array(
 				'C_DISPLAY_BENCH' => true,
-				'BENCH' => AppContext::get_bench()->to_string(),
-				'REQ' => PersistenceContext::get_querier()->get_executed_requests_count(),
-				'MEMORY_USED' => AppContext::get_bench()->get_memory_php_used(),
-				'L_REQ' => self::$main_lang['sql_req'],
-				'L_ACHIEVED' => self::$main_lang['achieved'],
-				'L_UNIT_SECOND' => LangLoader::get_message('unit.seconds', 'date-common')
+				'BENCH'           => AppContext::get_bench()->to_string(),
+				'REQ'             => PersistenceContext::get_querier()->get_executed_requests_count(),
+				'MEMORY_USED'     => AppContext::get_bench()->get_memory_php_used(),
+				'L_REQ'           => self::$main_lang['sql_req'],
+				'L_ACHIEVED'      => self::$main_lang['achieved'],
+				'L_UNIT_SECOND'   => LangLoader::get_message('unit.seconds', 'date-common')
 			));
 		}
 		
@@ -103,11 +103,11 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			$theme_configuration = $theme->get_configuration();
 			$template->put_all(array(
 				'C_DISPLAY_AUTHOR_THEME' => true,
-				'L_THEME' => self::$main_lang['theme'],
-				'L_THEME_NAME' => $theme_configuration->get_name(),
-				'L_BY' => strtolower(self::$main_lang['by']),
-				'L_THEME_AUTHOR' => $theme_configuration->get_author_name(),
-				'U_THEME_AUTHOR_LINK' => $theme_configuration->get_author_link(),
+				'L_THEME'                => self::$main_lang['theme'],
+				'L_THEME_NAME'           => $theme_configuration->get_name(),
+				'L_BY'                   => strtolower(self::$main_lang['by']),
+				'L_THEME_AUTHOR'         => $theme_configuration->get_author_name(),
+				'U_THEME_AUTHOR_LINK'    => $theme_configuration->get_author_link(),
 			));
 		}
 		
@@ -123,30 +123,35 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		
 		$js_top_tpl = new FileTemplate('js_top.tpl');
 		$js_top_tpl->put_all(array(
-			'C_COOKIEBAR_ENABLED' => $cookiebar_config->is_cookiebar_enabled(),
-			'COOKIEBAR_DURATION' => $cookiebar_config->get_cookiebar_duration(),
+			'C_COOKIEBAR_ENABLED'     => $cookiebar_config->is_cookiebar_enabled(),
+			'COOKIEBAR_DURATION'      => $cookiebar_config->get_cookiebar_duration(),
 			'COOKIEBAR_TRACKING_MODE' => $cookiebar_config->get_cookiebar_tracking_mode(),
-			'COOKIEBAR_CONTENT' => TextHelper::to_js_string($cookiebar_config->get_cookiebar_content())
+			'COOKIEBAR_CONTENT'       => TextHelper::to_js_string($cookiebar_config->get_cookiebar_content())
+		));
+
+		$js_bottom_tpl = new FileTemplate('js_bottom.tpl');
+		$js_bottom_tpl->put_all(array(
+			'C_COOKIEBAR_ENABLED' => $cookiebar_config->is_cookiebar_enabled()
 		));
 		
 		$seo_meta_data = $this->get_seo_meta_data();
 		$description = $seo_meta_data->get_full_description();
 		$template->put_all(array(
 			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
-			'C_FAVICON' => $customization_config->favicon_exists(),
-			'C_CANONICAL_URL' => $seo_meta_data->canonical_link_exists(),
-			'C_DESCRIPTION' => !empty($description),
-			'FAVICON' => Url::to_rel($customization_config->get_favicon_path()),
-			'FAVICON_TYPE' => $customization_config->favicon_type(),
-			'TITLE' => $seo_meta_data->get_full_title(),
-			'SITE_DESCRIPTION' => $description,
-			'U_CANONICAL' => $seo_meta_data->get_canonical_link(),
-			'L_XML_LANGUAGE' => self::$main_lang['xml_lang'],
-			'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version(),
-			'MODULES_CSS' => $this->get_modules_css_files_html_code(),
-			'JS_TOP' => $js_top_tpl,
-			'JS_BOTTOM' => new FileTemplate('js_bottom.tpl'),
-			'BODY' => $body_template
+			'C_FAVICON'           => $customization_config->favicon_exists(),
+			'C_CANONICAL_URL'     => $seo_meta_data->canonical_link_exists(),
+			'C_DESCRIPTION'       => !empty($description),
+			'FAVICON'             => Url::to_rel($customization_config->get_favicon_path()),
+			'FAVICON_TYPE'        => $customization_config->favicon_type(),
+			'TITLE'               => $seo_meta_data->get_full_title(),
+			'SITE_DESCRIPTION'    => $description,
+			'U_CANONICAL'         => $seo_meta_data->get_canonical_link(),
+			'L_XML_LANGUAGE'      => self::$main_lang['xml_lang'],
+			'PHPBOOST_VERSION'    => GeneralConfig::load()->get_phpboost_major_version(),
+			'MODULES_CSS'         => $this->get_modules_css_files_html_code(),
+			'JS_TOP'              => $js_top_tpl,
+			'JS_BOTTOM'           => $js_bottom_tpl,
+			'BODY'                => $body_template
 		));
 		
 		$template->display(true);
@@ -163,11 +168,11 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			$compteur_day = !empty($compteur['total']) ? $compteur['total'] : '1';
 
 			$template->put_all(array(
-				'L_VISIT' => self::$main_lang['guest_s'],
-				'L_TODAY' => LangLoader::get_message('today', 'date-common'),
-				'C_COMPTEUR' => true,
+				'L_VISIT'        => self::$main_lang['guest_s'],
+				'L_TODAY'        => LangLoader::get_message('today', 'date-common'),
+				'C_COMPTEUR'     => true,
 				'COMPTEUR_TOTAL' => $compteur_total,
-				'COMPTEUR_DAY' => $compteur_day
+				'COMPTEUR_DAY'   => $compteur_day
 			));
 		}
 	}
@@ -290,10 +295,12 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				Date::to_format($end_timestamp, 's', Timezone::SITE_TIMEZONE));
 
 				$array_now = array(
-				Date::to_format(time(), 'Y', Timezone::SITE_TIMEZONE), (Date::to_format(time(), 'n',
-				Timezone::SITE_TIMEZONE) - 1), Date::to_format(time(), 'j', Timezone::SITE_TIMEZONE),
-				Date::to_format(time(), 'G', Timezone::SITE_TIMEZONE), Date::to_format(time(), 'i',
-				Timezone::SITE_TIMEZONE), Date::to_format(time(), 's', Timezone::SITE_TIMEZONE));
+				Date::to_format(time(), 'Y', Timezone::SITE_TIMEZONE), 
+				(Date::to_format(time(), 'n', Timezone::SITE_TIMEZONE) - 1),
+				Date::to_format(time(), 'j', Timezone::SITE_TIMEZONE),
+				Date::to_format(time(), 'G', Timezone::SITE_TIMEZONE),
+				Date::to_format(time(), 'i', Timezone::SITE_TIMEZONE),
+				Date::to_format(time(), 's', Timezone::SITE_TIMEZONE));
 			}
 			else //Délai indéterminé.
 			{
@@ -303,18 +310,18 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			}
 
 			$template->put_all(array(
-				'C_ALERT_MAINTAIN' => true,
-				'C_MAINTAIN_DELAY' => true,
-				'UNSPECIFIED' => $maintenance_config->is_unlimited_maintenance() ? 0 : 1,
-				'DELAY' => isset($array_delay[$key_delay]) ? $array_delay[$key_delay] : '0',
+				'C_ALERT_MAINTAIN'        => true,
+				'C_MAINTAIN_DELAY'        => true,
+				'UNSPECIFIED'             => $maintenance_config->is_unlimited_maintenance() ? 0 : 1,
+				'DELAY'                   => isset($array_delay[$key_delay]) ? $array_delay[$key_delay] : '0',
 				'MAINTAIN_RELEASE_FORMAT' => implode(',', $array_release),
-				'MAINTAIN_NOW_FORMAT' => implode(',', $array_now),
-				'L_MAINTAIN_DELAY' => self::$main_lang['maintain_delay'],
-				'L_LOADING' => self::$main_lang['loading'],
-				'L_DAYS' => $date_lang['days'],
-				'L_HOURS' => $date_lang['hours'],
-				'L_MIN' => $date_lang['minutes'],
-				'L_SEC' => $date_lang['seconds'],
+				'MAINTAIN_NOW_FORMAT'     => implode(',', $array_now),
+				'L_MAINTAIN_DELAY'        => self::$main_lang['maintain_delay'],
+				'L_LOADING'               => self::$main_lang['loading'],
+				'L_DAYS'                  => $date_lang['days'],
+				'L_HOURS'                 => $date_lang['hours'],
+				'L_MIN'                   => $date_lang['minutes'],
+				'L_SEC'                   => $date_lang['seconds']
 			));
 		}
 		return $template;
