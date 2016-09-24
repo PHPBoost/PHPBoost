@@ -36,7 +36,7 @@ class FormFieldConstraintPasswordStrength extends FormFieldConstraintRegex
 	// Must containt at least upper case letters and lower case letters or soit lower case letters and digits
 	private static $medium_strength_regex = '/^(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$/';
 	// Must containt at least upper case letters, lower case letters and digits
-	private static $strong_strength_regex = '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\*]).*$/';
+	private static $strong_strength_regex = '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).*$/';
 	
 	public function __construct($error_message = '')
 	{
