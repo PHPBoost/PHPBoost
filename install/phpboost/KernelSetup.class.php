@@ -295,10 +295,10 @@ class KernelSetup
 		$options = array(
 			'primary' => array('id'),
 			'indexes' => array(
-				'unique' => array('type' => 'unique', 'fields' => array('requested_url', 'from_url')
+				'unique' => array('type' => 'unique', 'fields' => array('requested_url', 'from_url'))
 			),
 			'charset' => 'latin1'
-		));
+		);
 		self::$db_utils->create_table(self::$errors_404_table, $fields, $options);
 	}
 
