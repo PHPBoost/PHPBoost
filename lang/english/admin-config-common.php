@@ -123,7 +123,7 @@ $lang = array(
 	//Cookie Bar
 	'advanced-config.cookiebar-config' => 'Warning Cookies configuration',
 	'advanced-config.cookiebar-more' => 'The law requires that site managers and application providers, inform users and get their consent before activate cookies or other tracers.',
-	'advanced-config.cookiebar-activation' => 'activation of the warning cookies',
+	'advanced-config.cookiebar-activation' => 'Activation of the warning cookies',
 	'advanced-config.cookiebar-activation.desc' => 'We recommend that you keep the warning activated to be sure to respect the law',
 	'advanced-config.cookiebar-duration' => 'Cookie duration',
 	'advanced-config.cookiebar-duration.desc' => 'Cookie lifetime can\'t by more than 13 months',

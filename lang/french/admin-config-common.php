@@ -118,7 +118,7 @@ $lang = array(
 	//Cookie Bar
 	'advanced-config.cookiebar-config' => 'Configuration des avertissement des cookies',
 	'advanced-config.cookiebar-more' => 'La loi impose désormais aux responsables de sites et aux fournisseurs de solutions d\'informer les internautes et de recueillir leur consentement avant l\'insertion de cookies ou autres traceurs. ',
-	'advanced-config.cookiebar-activation' => 'activation de l\'avertissement des cookies',
+	'advanced-config.cookiebar-activation' => 'Activation de l\'avertissement des cookies',
 	'advanced-config.cookiebar-activation.desc' => 'Nous vous recommendons de laisser l\'alerte afin d\'être certain de respecter la loi',
 	'advanced-config.cookiebar-duration' => 'Durée du cookie',
 	'advanced-config.cookiebar-duration.desc' => 'La loi limite la durée de vie à 13 mois maximum',
