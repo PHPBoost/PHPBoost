@@ -138,7 +138,7 @@ $lang = array(
 							<legend>Remerciements</legend>
 							<h2>Membres de la communauté</h2>
 								<p>Merci à tous les membres de la communauté qui nous encouragent au quotidien et contribuent à la qualité du logiciel que ce soit en suggérant des nouvelles fonctionnalités ou en signalant des dysfonctionnements, ce qui permet d\'aboutir entre autres à un CMS stable et efficace.</p>
-								<p>Merci aux membres des équipes de PHPBoost et particulièrement à <strong>soupaloignon</strong> de l\'équipe communication, <strong>aiglobulles</strong>, <strong>55 Escape</strong>, <strong>Micman</strong> et <strong>Dramaturge</strong> pour la documentation, <strong>ElenWii</strong> et <strong>babsolune</strong> pour les graphismes et <strong>benflovideo</strong> pour la modération de la communauté.</p>
+								<p>Merci aux membres des équipes de PHPBoost et particulièrement à <strong>benflovideo</strong> de l\'équipe communication, <strong>PaperToss</strong> et <strong>mipel</strong> pour la documentation, <strong>ElenWii</strong> et <strong>babsolune</strong> pour les graphismes et <strong>benflovideo</strong> et <strong>mipel</strong> pour la modération de la communauté.</p>
 								<h2>Projets</h2>
 								<p>PHPBoost utilise différents outils afin d\'élargir ses fonctionnalités sans augmenter trop le temps de développement. Ces outils sont tous libres, distribués sous la licence GNU/GPL pour la plupart.</p>
 								<ul>
@@ -162,7 +162,7 @@ $lang = array(
 								<li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, fondateur du projet PHPBoost et développeur retraité</li>
 								<li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, développeur retraité</li>
 								<li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, développeur retraité</li>
-								<li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, développeur</li>
+								<li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, développeur retraité</li>
 								<li><strong>Julien BRISWALTER</strong> <em>(alias j1.seth)</em>, développeur</li>
 							</ul>
 						</fieldset>',
