@@ -2198,7 +2198,7 @@
   clip: auto;
 }
 
-/* Config spécifique PHPBoost */
+/* Config spÃ©cifique PHPBoost */
 .fa {
   vertical-align: middle;
 }
@@ -2279,14 +2279,14 @@
   content: "\f1c6";
 }
 .fa-upload-other:before { /* copie fa-file-o */
-  content: "f016";
+  content: "\f016";
 }
 .fa-upload-sheet:before { /* copie fa-file-excel-o */
-  content: "f1c3";
+  content: "\f1c3";
 }
 .fa-upload-slide:before { /* copie fa-file-powerpoint-o */
-  content: "f1c4";
+  content: "\f1c4";
 }
 .fa-upload-doc:before { /* copie fa-file-word-o */
-  content: "f1c2";
+  content: "\f1c2";
 } 
