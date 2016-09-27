@@ -111,7 +111,7 @@ class CookieBarConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::COOKIEBAR_ENABLED => false,
+			self::COOKIEBAR_ENABLED => true,
 			self::COOKIEBAR_DURATION => 12,
 			self::COOKIEBAR_TRACKING_MODE => self::NOTRACKING_COOKIE,
 			self::COOKIEBAR_CONTENT => LangLoader::get_message('cookiebar-message.notracking', 'user-common'),

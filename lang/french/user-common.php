@@ -237,23 +237,23 @@ $lang['extended-field.field.biography-explain'] = '';
 $lang['cookiebar.cookie'] = 'Cookie';
 $lang['cookiebar.cookie.management'] = 'Gestion des Cookies';
 $lang['cookiebar-message.notracking']  = 'En poursuivant votre navigation sur ce site internet, vous acceptez l\'utilisation de Cookies afin de gérer votre connexion, vos préférences, ainsi que l\'enregistrement de statistiques anonymes des visites.';
-$lang['cookiebar-message.tracking']  = 'En poursuivant votre navigation sur ce site internet, vous acceptez l\'utilisation de Cookies ou autres traceurs pour vous proposer une navigation adaptée (publicité ciblées, partage réseaux sociaux, etc...).';
+$lang['cookiebar-message.tracking']  = 'En poursuivant votre navigation sur ce site internet, vous acceptez l\'utilisation de Cookies ou autres traceurs pour vous proposer une navigation adaptée (publicités ciblées, partage réseaux sociaux, etc...).';
 $lang['cookiebar-message.aboutcookie.title']  = 'A propos des Cookies';
 $lang['cookiebar-message.aboutcookie']  = 'Pour assurer le bon fonctionnement de ce site, nous devons parfois enregistrer de petits fichiers de données sur l\'équipement de nos utilisateurs.<br />La majorité des sites web font de même.
 
 <h2 class="formatter-title">Qu\'est-ce qu\'un cookie ?</h2>
 Un cookie est un petit fichier texte que les sites web sauvegardent sur votre ordinateur ou appareil mobile lorsque vous les consultez.<br />
-Il permet à ces sites de mémoriser vos actions et préférences (nom d\'utilisateur, langue, taille des caractères et autres paramètres d\'affichage) pendant un temps donné, pour que vous n\'ayez pas à réindiquer ces informations à chaque fois vous consultez ces sites ou naviguez d\'une page à une autre.<br />
+Il permet à ces sites de mémoriser vos actions et préférences (nom d\'utilisateur, langue, taille des caractères et autres paramètres d\'affichage) pendant un temps donné, pour que vous n\'ayez pas à réindiquer ces informations à chaque fois que vous consultez ces sites ou naviguez d\'une page à une autre.<br />
 
 <h2 class="formatter-title">Les cookies techniques : </h2>
 De base, ' . GeneralConfig::load()->get_site_name() . ' utilise les cookies pour :<br />
 <ul class="formatter-ul">
-<li class="formatter-li"> gérer le système d\'identification (indispensable si vous souhaitez vous connectez),
+<li class="formatter-li"> gérer le système d\'identification (indispensable si vous souhaitez vous connecter),
 </li><li class="formatter-li"> sauvegarder les préférences de la BBCode (pas indispensable, mais vous devrez ré-ouvrir la BBCode à chaque visite),
-</li><li class="formatter-li"> enregistrer des statistiques anonymes pour le site web (pas indispensable, mais permet aux webmasters de savoir combien de visite réalise le siteweb).
+</li><li class="formatter-li"> enregistrer des statistiques anonymes pour le site web (pas indispensable, mais permet aux webmasters de savoir combien de visites concernent le site).
 </li></ul>
 <h2 class="formatter-title">Les autres cookies :</h2>
-' . GeneralConfig::load()->get_site_name() . ' n\'utilise aucun système de traceurs. En revanche, l\'utilisation du module google analytics et des boutons réseaux sociaux, nécessite des cookies traceurs
+' . GeneralConfig::load()->get_site_name() . ' n\'utilise aucun système de traceurs. En revanche, l\'utilisation du module google analytics et des boutons réseaux sociaux, nécessite des cookies traceurs.
 
 <h2 class="formatter-title">Comment contrôler les cookies ?</h2>
 Vous pouvez contrôler et/ou supprimer des cookies comme vous le souhaitez.<br />
@@ -266,5 +266,5 @@ $lang['cookiebar.declined']  = 'Bloquer';
 $lang['cookiebar.more']  = 'En savoir plus';
 
 $lang['cookiebar.cookies'] = 'Cookies';
-$lang['cookiebar.change-choice'] = 'Modifer vos préférences';
+$lang['cookiebar.change-choice'] = 'Modifier vos préférences';
 ?>
