@@ -55,6 +55,9 @@ class AdminContentConfigController extends AdminController
 		{
 			$this->save();
 			$this->form->get_field_by_id('forbidden_tags')->set_selected_options($this->content_formatting_config->get_forbidden_tags());
+			$this->form->get_field_by_id('new_content_duration')->set_hidden(!$this->content_management_config->is_new_content_enabled());
+			$this->form->get_field_by_id('new_content_unauthorized_modules')->set_hidden(!$this->content_management_config->is_new_content_enabled());
+			$this->form->get_field_by_id('new_content_unauthorized_modules')->set_selected_options($this->content_management_config->get_new_content_unauthorized_modules());
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 
@@ -65,10 +68,10 @@ class AdminContentConfigController extends AdminController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-contents-common');
+		$this->lang                      = LangLoader::get('admin-contents-common');
 		$this->content_formatting_config = ContentFormattingConfig::load();
 		$this->content_management_config = ContentManagementConfig::load();
-		$this->user_accounts_config = UserAccountsConfig::load();
+		$this->user_accounts_config      = UserAccountsConfig::load();
 	}
 
 	private function build_form()
@@ -118,6 +121,29 @@ class AdminContentConfigController extends AdminController
 			$this->generate_captcha_available_option(), array('description' => $this->lang['content.config.captcha-used-explain'])
 		));
 		
+		$fieldset = new FormFieldsetHTML('tagnew_config', $this->lang['content.config.new-content-config']);
+		$form->add_fieldset($fieldset);
+		
+		$fieldset->add_field(new FormFieldCheckbox('new_content_enabled', $this->lang['content.config.new-content'], $this->content_management_config->is_new_content_enabled(),
+			array('description' => $this->lang['content.config.new-content-explain'], 'events' => array('click' => '
+				if (HTMLForms.getField("new_content_enabled").getValue()) {
+					HTMLForms.getField("new_content_duration").enable();
+					HTMLForms.getField("new_content_unauthorized_modules").enable();
+				} else {
+					HTMLForms.getField("new_content_duration").disable();
+					HTMLForms.getField("new_content_unauthorized_modules").disable();
+				}')
+			)
+		));
+
+		$fieldset->add_field(new FormFieldNumberEditor('new_content_duration', $this->lang['content.config.new-content-duration'], $this->content_management_config->get_new_content_duration(),
+			array('min' => 1, 'required' => true, 'description' => $this->lang['content.config.new-content-duration-explain'], 'hidden' => !$this->content_management_config->is_new_content_enabled()),
+			array(new FormFieldConstraintRegex('`^[0-9]+$`i'), new FormFieldConstraintIntegerRange(1, 9999))
+		));
+
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('new_content_unauthorized_modules', $this->lang['content.config.new-content-module'], $this->content_management_config->get_new_content_unauthorized_modules(), $this->generate_new_content_option(), array('size' => 12, 'description' => $this->lang['content.config.new-content-module-explain'], 'hidden' => !$this->content_management_config->is_new_content_enabled())
+		));
+
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
@@ -133,6 +159,7 @@ class AdminContentConfigController extends AdminController
 		foreach ($this->form->get_value('forbidden_tags') as $field => $option)
 		{
 			$forbidden_tags[] = $option->get_raw_value();
+
 		}
 	 	$this->content_formatting_config->set_forbidden_tags($forbidden_tags);
 		ContentFormattingConfig::save();
@@ -144,6 +171,22 @@ class AdminContentConfigController extends AdminController
 		
 		$this->content_management_config->set_anti_flood_duration($this->form->get_value('delay_flood'));
 		$this->content_management_config->set_used_captcha_module($this->form->get_value('captcha_used')->get_raw_value());
+
+		if ($this->form->get_value('new_content_enabled'))
+		{
+			$this->content_management_config->set_new_content_enabled(true);
+			$this->content_management_config->set_new_content_duration($this->form->get_value('new_content_duration'));
+
+			$unauthorized_modules = array();
+			foreach ($this->form->get_value('new_content_unauthorized_modules') as $field => $option)
+			{
+				$unauthorized_modules[] = $option->get_raw_value();
+			}
+			$this->content_management_config->set_new_content_unauthorized_modules($unauthorized_modules);
+		}
+		else
+			$this->content_management_config->set_new_content_enabled(false);
+		
 		ContentManagementConfig::save();
 		
 		$this->user_accounts_config->set_max_private_messages_number($this->form->get_value('max_pm_number'));
@@ -160,7 +203,24 @@ class AdminContentConfigController extends AdminController
 		}
 		return $options;
 	}
-	
+
+	private function generate_new_content_option()
+	{
+		$options = array();
+
+		$provider_service = AppContext::get_extension_provider_service();
+		$search_extensions_point_modules = array_keys($provider_service->get_extension_point(NewContentExtensionPoint::EXTENSION_POINT));
+
+		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $id => $module)
+		{	
+			if (in_array($module->get_id(), $search_extensions_point_modules))
+			{
+				$options[] = new FormFieldSelectChoiceOption($module->get_configuration()->get_name(), $module->get_id());
+			}
+		}
+		return $options;
+	}
+
 	private function generate_captcha_available_option()
 	{
 		$options = array();

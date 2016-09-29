@@ -30,15 +30,15 @@
  */
 class CookieBarConfig extends AbstractConfigData
 {
-	const COOKIEBAR_ENABLED = 'cookiebar_enabled';
-	const COOKIEBAR_DURATION = 'cookiebar_duration';
-	const COOKIEBAR_TRACKING_MODE = 'cookiebar_tracking_mode';
-	const COOKIEBAR_CONTENT = 'cookiebar_content';
-	const COOKIEBAR_ABOUTCOOKIE_TITLE = 'cookiebar_aboutcookie_title';
+	const COOKIEBAR_ENABLED             = 'cookiebar_enabled';
+	const COOKIEBAR_DURATION            = 'cookiebar_duration';
+	const COOKIEBAR_TRACKING_MODE       = 'cookiebar_tracking_mode';
+	const COOKIEBAR_CONTENT             = 'cookiebar_content';
+	const COOKIEBAR_ABOUTCOOKIE_TITLE   = 'cookiebar_aboutcookie_title';
 	const COOKIEBAR_ABOUTCOOKIE_CONTENT = 'cookiebar_aboutcookie_content';
 	
-	const NOTRACKING_COOKIE = 'notracking';
-	const TRACKING_COOKIE = 'tracking';
+	const NOTRACKING_COOKIE             = 'notracking';
+	const TRACKING_COOKIE               = 'tracking';
 	
 	public function enable_cookiebar()
 	{
@@ -111,11 +111,11 @@ class CookieBarConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::COOKIEBAR_ENABLED => true,
-			self::COOKIEBAR_DURATION => 12,
-			self::COOKIEBAR_TRACKING_MODE => self::NOTRACKING_COOKIE,
-			self::COOKIEBAR_CONTENT => LangLoader::get_message('cookiebar-message.notracking', 'user-common'),
-			self::COOKIEBAR_ABOUTCOOKIE_TITLE => LangLoader::get_message('cookiebar-message.aboutcookie.title', 'user-common'),
+			self::COOKIEBAR_ENABLED             => true,
+			self::COOKIEBAR_DURATION            => 12,
+			self::COOKIEBAR_TRACKING_MODE       => self::NOTRACKING_COOKIE,
+			self::COOKIEBAR_CONTENT             => LangLoader::get_message('cookiebar-message.notracking', 'user-common'),
+			self::COOKIEBAR_ABOUTCOOKIE_TITLE   => LangLoader::get_message('cookiebar-message.aboutcookie.title', 'user-common'),
 			self::COOKIEBAR_ABOUTCOOKIE_CONTENT => LangLoader::get_message('cookiebar-message.aboutcookie', 'user-common')
 		);
 	}

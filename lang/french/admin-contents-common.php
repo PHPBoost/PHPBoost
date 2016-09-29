@@ -71,4 +71,12 @@ $lang['comments.config.approbation'] = 'Approbation des commentaires';
 $lang['comments.config.approbation.auto'] = 'Automatiquement';
 $lang['comments.config.approbation.moderator'] = 'Modérateur';
 $lang['comments.config.approbation.administrator'] = 'Administrateur';
+
+$lang['content.config.new-content'] = 'Activer le tag sur les nouveaux élements';
+$lang['content.config.new-content-config'] = 'Gestion du tag "new-content"';
+$lang['content.config.new-content-explain'] = 'Cette option permet d\'identifier les derniers élements ajoutés';
+$lang['content.config.new-content-duration'] = 'Durée d\'affichage du tag';
+$lang['content.config.new-content-duration-explain'] = 'En jours. 15 jours par défaut.';
+$lang['content.config.new-content-module'] = 'Selection des modules';
+$lang['content.config.new-content-module-explain'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer le tag';
 ?>

@@ -71,4 +71,12 @@ $lang['comments.config.approbation'] = 'Comments approbation';
 $lang['comments.config.approbation.auto'] = 'Automatic';
 $lang['comments.config.approbation.moderator'] = 'Moderator';
 $lang['comments.config.approbation.administrator'] = 'Administrator';
+
+$lang['content.config.new-content'] = 'Activate new content tag';
+$lang['content.config.new-content-config'] = 'Management new content tag';
+$lang['content.config.new-content-explain'] = 'This option allows to identify newly added elements.';
+$lang['content.config.new-content-duration'] = 'Tag display time';
+$lang['content.config.new-content-duration-explain'] = 'In days. 15 days by default.';
+$lang['content.config.new-content-module'] = 'Select Modules';
+$lang['content.config.new-content-module-explain'] = 'Select modules in which you doesn\'t want this tag';
 ?>

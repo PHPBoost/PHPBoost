@@ -65,6 +65,7 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 	public function set_selected_options(array $selected_options)
 	{
 		$value = array();
+
 		foreach ($selected_options as $option)
 		{
 			if (is_string($option))
