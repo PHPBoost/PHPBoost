@@ -122,14 +122,14 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$this->build_keywords_view();
 		
 		$page_name = (isset($array_page[1][$current_page-1]) && $array_page[1][$current_page-1] != '&nbsp;') ? $array_page[1][($current_page-1)] : '';
-		
+
 		$this->tpl->put_all(array_merge($this->article->get_tpl_vars(), array(
 			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
 			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
-			'KERNEL_NOTATION' => NotationService::display_active_image($this->article->get_notation()),
-			'CONTENTS' => isset($article_contents_clean[$current_page-1]) ? FormatingHelper::second_parse($article_contents_clean[$current_page-1]) : '',
-			'PAGE_NAME' => $page_name,
-			'U_EDIT_ARTICLE' => $page_name !== '' ? ArticlesUrlBuilder::edit_article($this->article->get_id(), $current_page)->rel() : ArticlesUrlBuilder::edit_article($this->article->get_id())->rel(),
+			'KERNEL_NOTATION'    => NotationService::display_active_image($this->article->get_notation()),
+			'CONTENTS'           => isset($article_contents_clean[$current_page-1]) ? FormatingHelper::second_parse($article_contents_clean[$current_page-1]) : '',
+			'PAGE_NAME'          => $page_name,
+			'U_EDIT_ARTICLE'     => $page_name !== '' ? ArticlesUrlBuilder::edit_article($this->article->get_id(), $current_page)->rel() : ArticlesUrlBuilder::edit_article($this->article->get_id())->rel()
 		)));
 		
 		$this->build_pages_pagination($current_page, $nbr_pages, $array_page);

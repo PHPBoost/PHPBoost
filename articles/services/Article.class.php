@@ -344,23 +344,23 @@ class Article
 	public function get_properties()
 	{
 		return array(
-			'id' => $this->get_id(),
-			'id_category' => $this->get_id_category(),
-			'title' => $this->get_title(),
-			'rewrited_title' => $this->get_rewrited_title(),
-			'description' => $this->get_description(),
-			'contents' => $this->get_contents(),
-			'picture_url' => $this->get_picture()->relative(),
-			'number_view' => $this->get_number_view(),
-			'author_user_id' => $this->get_author_user()->get_id(),
+			'id'                    => $this->get_id(),
+			'id_category'           => $this->get_id_category(),
+			'title'                 => $this->get_title(),
+			'rewrited_title'        => $this->get_rewrited_title(),
+			'description'           => $this->get_description(),
+			'contents'              => $this->get_contents(),
+			'picture_url'           => $this->get_picture()->relative(),
+			'number_view'           => $this->get_number_view(),
+			'author_user_id'        => $this->get_author_user()->get_id(),
 			'author_name_displayed' => $this->get_author_name_displayed(),
-			'published' => $this->get_publishing_state(),
+			'published'             => $this->get_publishing_state(),
 			'publishing_start_date' => $this->get_publishing_start_date() !== null ? $this->get_publishing_start_date()->get_timestamp() : 0,
-			'publishing_end_date' => $this->get_publishing_end_date() !== null ? $this->get_publishing_end_date()->get_timestamp() : 0,
-			'date_created' => $this->get_date_created()->get_timestamp(),
-			'date_updated' => $this->get_date_updated() !== null ? $this->get_date_updated()->get_timestamp() : 0,
-			'notation_enabled' => $this->get_notation_enabled(),
-			'sources' => serialize($this->get_sources())
+			'publishing_end_date'   => $this->get_publishing_end_date() !== null ? $this->get_publishing_end_date()->get_timestamp() : 0,
+			'date_created'          => $this->get_date_created()->get_timestamp(),
+			'date_updated'          => $this->get_date_updated() !== null ? $this->get_date_updated()->get_timestamp() : 0,
+			'notation_enabled'      => $this->get_notation_enabled(),
+			'sources'               => serialize($this->get_sources())
 		);
 	}
 
@@ -431,78 +431,86 @@ class Article
 	
 	public function get_tpl_vars()
 	{
-		$category = $this->get_category();
-		$description = $this->get_real_description();
-		$user = $this->get_author_user();
+		$category         = $this->get_category();
+		$description      = $this->get_real_description();
+		$user             = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
-		$sources = $this->get_sources();
-		$nbr_sources = count($sources);
+		$sources          = $this->get_sources();
+		$nbr_sources      = count($sources);
+		$new_content      = new ArticlesNewContent();
+		$date_new_content = '';
+
+		if ( $this->date_updated != null )
+			$date_new_content = $this->date_updated()->format(Date::FORMAT_TIMESTAMP);
+		else
+			$date_new_content = $this->get_date_created()->format(Date::FORMAT_TIMESTAMP);
 		
 		return array(
 			//Conditions
-			'C_EDIT' => $this->is_authorized_to_edit(),
-			'C_DELETE' => $this->is_authorized_to_delete(),
-			'C_HAS_PICTURE' => $this->has_picture(),
-			'C_USER_GROUP_COLOR' => !empty($user_group_color),
-			'C_PUBLISHED' => $this->is_published(),
+			'C_EDIT'                          => $this->is_authorized_to_edit(),
+			'C_DELETE'                        => $this->is_authorized_to_delete(),
+			'C_HAS_PICTURE'                   => $this->has_picture(),
+			'C_USER_GROUP_COLOR'              => !empty($user_group_color),
+			'C_PUBLISHED'                     => $this->is_published(),
 			'C_PUBLISHING_START_AND_END_DATE' => $this->publishing_start_date != null && $this->publishing_end_date != null,
-			'C_PUBLISHING_START_DATE' => $this->publishing_start_date != null,
-			'C_PUBLISHING_END_DATE' => $this->publishing_end_date != null,
-			'C_DATE_UPDATED' => $this->date_updated != null,
-			'C_AUTHOR_DISPLAYED' => $this->get_author_name_displayed(),
-			'C_NOTATION_ENABLED' => $this->get_notation_enabled(),
-			'C_READ_MORE' => !$this->get_description_enabled() && $description != @strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>') && strlen($description) > ArticlesConfig::load()->get_number_character_to_cut(),
-			'C_SOURCES' => $nbr_sources > 0,
-			'C_DIFFERED' => $this->published == self::PUBLISHED_DATE,
-			
+			'C_PUBLISHING_START_DATE'         => $this->publishing_start_date != null,
+			'C_PUBLISHING_END_DATE'           => $this->publishing_end_date != null,
+			'C_DATE_UPDATED'                  => $this->date_updated != null,
+			'C_AUTHOR_DISPLAYED'              => $this->get_author_name_displayed(),
+			'C_NOTATION_ENABLED'              => $this->get_notation_enabled(),
+			'C_READ_MORE'                     => !$this->get_description_enabled() && $description != @strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>') && strlen($description) > ArticlesConfig::load()->get_number_character_to_cut(),
+			'C_SOURCES'                       => $nbr_sources > 0,
+			'C_DIFFERED'                      => $this->published == self::PUBLISHED_DATE,
+			'C_NEW_CONTENT'                   => $new_content->check_if_new_content($date_new_content),
+
 			//Articles
-			'ID' => $this->get_id(),
-			'TITLE' => $this->get_title(),
-			'DATE' => $this->get_date_created()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT),
-			'DATE_DAY' => $this->get_date_created()->get_day(),
-			'DATE_MONTH' => $this->get_date_created()->get_month(),
-			'DATE_YEAR' => $this->get_date_created()->get_year(),
-			'DATE_ISO8601' => $this->get_date_created()->format(Date::FORMAT_ISO8601),
-			'DATE_SHORT' => $this->get_date_created()->format(Date::FORMAT_DAY_MONTH_YEAR),
-			'STATUS' => $this->get_status(),
-			'PUBLISHING_START_DATE' => $this->publishing_start_date != null ? $this->publishing_start_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : '',
+			'ID'                            => $this->get_id(),
+			'TITLE'                         => $this->get_title(),
+			'DATE'                          => $this->get_date_created()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT),
+			'DATE_DAY'                      => $this->get_date_created()->get_day(),
+			'DATE_MONTH'                    => $this->get_date_created()->get_month(),
+			'DATE_YEAR'                     => $this->get_date_created()->get_year(),
+			'DATE_ISO8601'                  => $this->get_date_created()->format(Date::FORMAT_ISO8601),
+			'DATE_SHORT'                    => $this->get_date_created()->format(Date::FORMAT_DAY_MONTH_YEAR),
+			'STATUS'                        => $this->get_status(),
+			'PUBLISHING_START_DATE'         => $this->publishing_start_date != null ? $this->publishing_start_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : '',
 			'PUBLISHING_START_DATE_ISO8601' => $this->publishing_start_date != null ? $this->publishing_start_date->format(Date::FORMAT_ISO8601) : '',
-			'PUBLISHING_END_DATE' => $this->publishing_end_date != null ? $this->publishing_end_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : '',
-			'PUBLISHING_END_DATE_ISO8601' => $this->publishing_end_date != null ? $this->publishing_end_date->format(Date::FORMAT_ISO8601) : '',
-			'DATE_UPDATED' => $this->date_updated != null ? $this->date_updated->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
-			'DATE_UPDATED_DAY' => $this->date_updated != null ? $this->date_updated->get_day() : '',
-			'DATE_UPDATED_MONTH' => $this->date_updated != null ? $this->date_updated->get_month() : '',
-			'DATE_UPDATED_YEAR' => $this->date_updated != null ? $this->date_updated->get_year() : '',
-			'DATE_UPDATED_ISO8601' => $this->date_updated != null ? $this->date_updated->format(Date::FORMAT_ISO8601) : '',
-			'DATE_UPDATED_SHORT' => $this->date_updated != null ? $this->date_updated->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
-			'L_COMMENTS' => CommentsService::get_number_and_lang_comments('articles', $this->get_id()),
-			'NUMBER_COMMENTS' => CommentsService::get_number_comments('articles', $this->get_id()),
-			'NUMBER_VIEW' => $this->get_number_view(),
-			'NOTE' => $this->get_notation()->get_number_notes() > 0 ? NotationService::display_static_image($this->get_notation()) : '&nbsp;',
-			'C_AUTHOR_EXIST' => $user->get_id() !== User::VISITOR_LEVEL,
-			'PSEUDO' => $user->get_display_name(),
-			'DESCRIPTION' => $description,
-			'PICTURE' => $this->get_picture()->rel(),
-			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
-			'USER_GROUP_COLOR' => $user_group_color,
+			'PUBLISHING_END_DATE'           => $this->publishing_end_date != null ? $this->publishing_end_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : '',
+			'PUBLISHING_END_DATE_ISO8601'   => $this->publishing_end_date != null ? $this->publishing_end_date->format(Date::FORMAT_ISO8601) : '',
+			'DATE_UPDATED'                  => $this->date_updated != null ? $this->date_updated->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
+			'DATE_UPDATED_DAY'              => $this->date_updated != null ? $this->date_updated->get_day() : '',
+			'DATE_UPDATED_MONTH'            => $this->date_updated != null ? $this->date_updated->get_month() : '',
+			'DATE_UPDATED_YEAR'             => $this->date_updated != null ? $this->date_updated->get_year() : '',
+			'DATE_UPDATED_ISO8601'          => $this->date_updated != null ? $this->date_updated->format(Date::FORMAT_ISO8601) : '',
+			'DATE_UPDATED_SHORT'            => $this->date_updated != null ? $this->date_updated->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
+			'L_COMMENTS'                    => CommentsService::get_number_and_lang_comments('articles', $this->get_id()),
+			'NUMBER_COMMENTS'               => CommentsService::get_number_comments('articles', $this->get_id()),
+			'NUMBER_VIEW'                   => $this->get_number_view(),
+			'NOTE'                          => $this->get_notation()->get_number_notes() > 0 ? NotationService::display_static_image($this->get_notation()) : '&nbsp;',
+			'C_AUTHOR_EXIST'                => $user->get_id() !== User::VISITOR_LEVEL,
+			'PSEUDO'                        => $user->get_display_name(),
+			'DESCRIPTION'                   => $description,
+			'PICTURE'                       => $this->get_picture()->rel(),
+			'USER_LEVEL_CLASS'              => UserService::get_level_class($user->get_level()),
+			'USER_GROUP_COLOR'              => $user_group_color,
 			
 			//Category
-			'C_ROOT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY,
-			'CATEGORY_ID' => $category->get_id(),
-			'CATEGORY_NAME' => $category->get_name(),
+			'C_ROOT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY,
+			'CATEGORY_ID'          => $category->get_id(),
+			'CATEGORY_NAME'        => $category->get_name(),
 			'CATEGORY_DESCRIPTION' => $category->get_description(),
-			'CATEGORY_IMAGE' => $category->get_image()->rel(),
-			'U_EDIT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY ? ArticlesUrlBuilder::configuration()->rel() : ArticlesUrlBuilder::edit_category($category->get_id())->rel(),
+			'CATEGORY_IMAGE'       => $category->get_image()->rel(),
+			'U_EDIT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY ? ArticlesUrlBuilder::configuration()->rel() : ArticlesUrlBuilder::edit_category($category->get_id())->rel(),
 			
 			//Links
-			'U_COMMENTS' => ArticlesUrlBuilder::display_comments_article($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->rel(),
-			'U_AUTHOR' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
-			'U_CATEGORY' => ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
-			'U_ARTICLE' => ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->rel(),
-			'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($this->id, AppContext::get_request()->get_getint('page', 1))->rel(),
+			'U_COMMENTS'       => ArticlesUrlBuilder::display_comments_article($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->rel(),
+			'U_AUTHOR'         => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
+			'U_CATEGORY'       => ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
+			'U_ARTICLE'        => ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->rel(),
+			'U_EDIT_ARTICLE'   => ArticlesUrlBuilder::edit_article($this->id, AppContext::get_request()->get_getint('page', 1))->rel(),
 			'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($this->id)->rel(),
-			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($category->get_id())->rel(),
-			'U_PRINT_ARTICLE' => ArticlesUrlBuilder::print_article($this->get_id(), $this->get_rewrited_title())->rel()
+			'U_SYNDICATION'    => ArticlesUrlBuilder::category_syndication($category->get_id())->rel(),
+			'U_PRINT_ARTICLE'  => ArticlesUrlBuilder::print_article($this->get_id(), $this->get_rewrited_title())->rel()
 		);
 	}
 }

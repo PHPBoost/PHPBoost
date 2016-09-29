@@ -81,5 +81,11 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/articles/index.php')));
 	}
+
+	public function newcontent()
+	{
+		return new ArticlesNewContent();
+	}
+
 }
 ?>

@@ -7,7 +7,7 @@
 	</header>
 	<div class="content">
 		# INCLUDE NOT_VISIBLE_MESSAGE #
-		<article itemscope="itemscope" itemtype="http://schema.org/Article" id="article-articles-{ID}" class="article-articles">
+		<article itemscope="itemscope" itemtype="http://schema.org/Article" id="article-articles-{ID}" class="article-articles# IF C_NEW_CONTENT # new-content# ENDIF #">
 			<header>
 				<h2>
 					<span itemprop="name">{TITLE}</span>
