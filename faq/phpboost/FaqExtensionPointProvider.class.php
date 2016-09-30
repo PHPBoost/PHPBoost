@@ -77,5 +77,10 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/faq/index.php')));
 	}
+	
+	public function newcontent()
+	{
+		return new FaqNewContent();
+	}
 }
 ?>

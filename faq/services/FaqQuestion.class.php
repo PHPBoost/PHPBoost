@@ -214,12 +214,14 @@ class FaqQuestion
 		$category = $this->get_category();
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
+		$new_content = new FaqNewContent();
 		
 		return array(
 			'C_APPROVED' => $this->is_approved(),
 			'C_EDIT' => $this->is_authorized_to_edit(),
 			'C_DELETE' => $this->is_authorized_to_delete(),
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
+			'C_NEW_CONTENT' => $new_content->check_if_is_new_content($this->get_creation_date()->get_timestamp()),
 			
 			//Question
 			'ID' => $this->id,

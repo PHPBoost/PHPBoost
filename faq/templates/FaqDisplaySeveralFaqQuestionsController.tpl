@@ -199,7 +199,7 @@ jQuery(document).ready(function() {
 		<div id="questions-titles-list">
 			<ol>
 			# START questions #
-				<li id="title-question-{questions.ID}">
+				<li id="title-question-{questions.ID}"# IF questions.C_NEW_CONTENT # class="new-content"# ENDIF #>
 					<a href="#question{questions.ID}">{questions.QUESTION}</a>
 				</li>
 			# END questions #
@@ -215,7 +215,7 @@ jQuery(document).ready(function() {
 			<fieldset id="questions-management">
 				<ul id="questions-list" class="sortable-block">
 					# START questions #
-					<li class="sortable-element" id="list-{questions.ID}" data-id="{questions.ID}">
+					<li class="sortable-element# IF questions.C_NEW_CONTENT # new-content# ENDIF #" id="list-{questions.ID}" data-id="{questions.ID}">
 						<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
 						<div class="sortable-title">
 							<h3 class="question-title">
@@ -278,7 +278,7 @@ jQuery(document).ready(function() {
 		</form>
 		# ELSE #
 			# START questions #
-			<article id="article-faq-{questions.ID}" itemscope="itemscope" itemtype="http://schema.org/CreativeWork" class="article-faq article-several">
+			<article id="article-faq-{questions.ID}" itemscope="itemscope" itemtype="http://schema.org/CreativeWork" class="article-faq article-several# IF questions.C_NEW_CONTENT # new-content# ENDIF #">
 				<header class="faq-question-element">
 					<h3 class="question-title">
 						# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
