@@ -54,7 +54,7 @@
 					# START downloadfiles #
 					<tr>
 						<td>
-							<a href="{downloadfiles.U_LINK}" itemprop="name">{downloadfiles.NAME}</a>
+							<a href="{downloadfiles.U_LINK}" itemprop="name"# IF downloadfiles.C_NEW_CONTENT # class="new-content"# ENDIF #>{downloadfiles.NAME}</a>
 						</td>
 						<td>
 							# IF downloadfiles.C_KEYWORDS #
@@ -97,7 +97,7 @@
 			</table>
 		# ELSE #
 			# START downloadfiles #
-			<article id="article-download-{downloadfiles.ID}" class="article-download article-several# IF C_CATEGORY_DISPLAYED_SUMMARY # block# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+			<article id="article-download-{downloadfiles.ID}" class="article-download article-several# IF C_CATEGORY_DISPLAYED_SUMMARY # block# ENDIF ## IF downloadfiles.C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 				<header>
 					<h2>
 						<span class="actions">

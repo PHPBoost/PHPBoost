@@ -88,5 +88,10 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/download/index.php')));
 	}
+
+	public function newcontent()
+	{
+		return new DownloadNewContent();
+	}
 }
 ?>

@@ -9,7 +9,7 @@
 		# IF NOT C_VISIBLE #
 			# INCLUDE NOT_VISIBLE_MESSAGE #
 		# ENDIF #
-		<article itemscope="itemscope" itemtype="http://schema.org/CreativeWork" id="article-download-{ID}" class="article-download">
+		<article itemscope="itemscope" itemtype="http://schema.org/CreativeWork" id="article-download-{ID}" class="article-download# IF C_NEW_CONTENT # new-content# ENDIF #">
 			<header>
 				<h2>
 					<span id="name" itemprop="name">{NAME}</span>

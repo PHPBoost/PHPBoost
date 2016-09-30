@@ -453,6 +453,7 @@ class DownloadFile
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		$number_comments = CommentsService::get_number_comments('download', $this->id);
+		$new_content = new DownloadNewContent();
 		
 		return array(
 			'C_VISIBLE' => $this->is_visible(),
@@ -465,6 +466,7 @@ class DownloadFile
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			'C_UPDATED_DATE' => $this->has_updated_date(),
 			'C_DIFFERED' => $this->approbation_type == self::APPROVAL_DATE,
+			'C_NEW_CONTENT' => $new_content->check_if_is_new_content($this->get_updated_date() !== null ? $this->get_updated_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()),
 			
 			//Downloadlink
 			'ID' => $this->id,
