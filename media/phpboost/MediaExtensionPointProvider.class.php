@@ -78,5 +78,10 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/media/index.php')));
 	}
+
+	public function newcontent()
+	{
+		return new MediaNewContent();
+	}
 }
 ?>

@@ -214,11 +214,14 @@ class MediaDisplayCategoryController extends ModuleController
 			$notation->set_id_in_module($row['id']);
 			
 			$group_color = User::get_group_color($row['groups'], $row['level']);
+
+			$new_content = new MediaNewContent();
 			
 			$this->tpl->assign_block_vars('file', array(
 				'ID' => $row['id'],
 				'NAME' => $row['name'],
 				'IMG_NAME' => str_replace('"', '\"', $row['name']),
+				'C_NEW_CONTENT' => $new_content->check_if_is_new_content($row['timestamp']),
 				'C_DESCRIPTION' => !empty($row['contents']),
 				'DESCRIPTION' => FormatingHelper::second_parse(stripslashes($row['contents'])),
 				'POSTER' => $MEDIA_LANG['media_added_by'] . ' : ' . !empty($row['display_name']) ? '<a href="' . UserUrlBuilder::profile($row['iduser'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : $LANG['guest'],

@@ -98,6 +98,8 @@ elseif ($id_media > 0)
 	$nbr_notes = $media['number_notes'];
 	
 	$group_color = User::get_group_color($media['groups'], $media['level']);
+
+	$new_content = new MediaNewContent();
 	
 	$tpl->put_all(array(
 		'ID' => $id_media,
@@ -106,6 +108,7 @@ elseif ($id_media > 0)
 		'C_MODO' => MediaAuthorizationsService::check_authorizations($media['idcat'])->moderation(),
 		'C_DISPLAY_NOTATION' => $config->is_notation_enabled(),
 		'C_DISPLAY_COMMENTS' => $config->are_comments_enabled(),
+		'C_NEW_CONTENT' => $new_content->check_if_is_new_content($media['timestamp']),
 		'ID_MEDIA' => $id_media,
 		'NAME' => $media['name'],
 		'CONTENTS' => FormatingHelper::second_parse(stripslashes($media['contents'])),
