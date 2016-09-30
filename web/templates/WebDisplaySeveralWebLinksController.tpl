@@ -55,7 +55,7 @@
 					# START weblinks #
 					<tr>
 						<td>
-							<a href="{weblinks.U_LINK}" itemprop="name">{weblinks.NAME}</a>
+							<a href="{weblinks.U_LINK}" itemprop="name"# IF weblinks.C_NEW_CONTENT # class="new-content"# ENDIF#>{weblinks.NAME}</a>
 						</td>
 						<td>
 							# IF weblinks.C_KEYWORDS #
@@ -95,7 +95,7 @@
 			</table>
 		# ELSE #
 			# START weblinks #
-			<article id="article-web-{weblinks.ID}" class="article-web article-several# IF C_CATEGORY_DISPLAYED_SUMMARY # block# IF weblinks.C_IS_PARTNER # web-friends# ENDIF ## IF weblinks.C_IS_PRIVILEGED_PARTNER # web-privileged-friends# ENDIF #" # ENDIF #itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+			<article id="article-web-{weblinks.ID}" class="article-web article-several# IF C_CATEGORY_DISPLAYED_SUMMARY # block# IF weblinks.C_IS_PARTNER # web-friends# ENDIF ## IF weblinks.C_IS_PRIVILEGED_PARTNER # web-privileged-friends# ENDIF ## IF weblinks.C_NEW_CONTENT # new-content# ENDIF#" # ENDIF #itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 				<header>
 					<h2>
 						<span class="actions">

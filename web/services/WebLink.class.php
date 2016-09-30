@@ -418,6 +418,7 @@ class WebLink
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		$number_comments = CommentsService::get_number_comments('web', $this->id);
+		$new_content= new WebNewContent();
 		
 		return array(
 			'C_VISIBLE' => $this->is_visible(),
@@ -429,6 +430,7 @@ class WebLink
 			'C_HAS_PARTNER_PICTURE' => $this->has_partner_picture(),
 			'C_IS_PRIVILEGED_PARTNER' => $this->is_privileged_partner(),
 			'C_DIFFERED' => $this->approbation_type == self::APPROVAL_DATE,
+			'C_NEW_CONTENT' => $new_content->check_if_is_new_content($this->get_creation_date()->get_timestamp()),
 			
 			//Weblink
 			'ID' => $this->id,

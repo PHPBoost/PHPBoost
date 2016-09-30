@@ -88,5 +88,10 @@ class WebExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/web/index.php')));
 	}
+
+	public function newcontent()
+	{
+		return new WebNewContent();
+	}
 }
 ?>
