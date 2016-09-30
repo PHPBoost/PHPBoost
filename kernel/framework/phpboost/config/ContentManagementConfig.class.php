@@ -104,8 +104,8 @@ class ContentManagementConfig extends AbstractConfigData
 			self::ANTI_FLOOD_DURATION              => 7,
 			self::USED_CAPTCHA_MODULE              => 'ReCaptcha',
 			self::NEW_CONTENT_ENABLED              => true,
-			self::NEW_CONTENT_DURATION             => 15,
-			self::NEW_CONTENT_UNAUTHORIZED_MODULES => array()	
+			self::NEW_CONTENT_DURATION             => 5,
+			self::NEW_CONTENT_UNAUTHORIZED_MODULES => array()
 		);
 	}
 

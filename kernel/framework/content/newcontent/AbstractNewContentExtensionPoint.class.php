@@ -36,28 +36,19 @@ abstract class AbstractNewContentExtensionPoint implements NewContentExtensionPo
 		$this->content_management_config = ContentManagementConfig::load();
 	}
 
-	public function check_if_new_content($date)
+	public function check_if_is_new_content($date)
 	{
-		if ( $this->get_autorized_module($this->id) && $this->check_date($date))
-			return true;
-		else
-			return false;
+		return $this->get_autorized_module($this->id) && $this->check_date($date);
 	}
 
 	public function get_autorized_module($module)
 	{
-		if ($this->content_management_config->is_new_content_enabled() && !in_array($module, $this->content_management_config->get_new_content_unauthorized_modules()))
-			return true;
-		else
-			return false;
+		return $this->content_management_config->is_new_content_enabled() && !in_array($module, $this->content_management_config->get_new_content_unauthorized_modules());
 	}
 
 	public function check_date($date)
 	{
-		if ( date('m', time() - $date) < $this->content_management_config->get_new_content_duration())
-			return true;
-		else
-			return false;
+		return date('m', time() - $date) < $this->content_management_config->get_new_content_duration();
 	}
 }
 ?>

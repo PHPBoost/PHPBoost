@@ -438,12 +438,6 @@ class Article
 		$sources          = $this->get_sources();
 		$nbr_sources      = count($sources);
 		$new_content      = new ArticlesNewContent();
-		$date_new_content = '';
-
-		if ( $this->date_updated != null )
-			$date_new_content = $this->date_updated()->format(Date::FORMAT_TIMESTAMP);
-		else
-			$date_new_content = $this->get_date_created()->format(Date::FORMAT_TIMESTAMP);
 		
 		return array(
 			//Conditions
@@ -461,7 +455,7 @@ class Article
 			'C_READ_MORE'                     => !$this->get_description_enabled() && $description != @strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>') && strlen($description) > ArticlesConfig::load()->get_number_character_to_cut(),
 			'C_SOURCES'                       => $nbr_sources > 0,
 			'C_DIFFERED'                      => $this->published == self::PUBLISHED_DATE,
-			'C_NEW_CONTENT'                   => $new_content->check_if_new_content($date_new_content),
+			'C_NEW_CONTENT'                   => $new_content->check_if_is_new_content($this->date_updated != null ? $this->date_updated()->get_timestamp() : $this->get_date_created()->get_timestamp()),
 
 			//Articles
 			'ID'                            => $this->get_id(),

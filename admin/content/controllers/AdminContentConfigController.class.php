@@ -141,7 +141,8 @@ class AdminContentConfigController extends AdminController
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'), new FormFieldConstraintIntegerRange(1, 9999))
 		));
 
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('new_content_unauthorized_modules', $this->lang['content.config.new-content-module'], $this->content_management_config->get_new_content_unauthorized_modules(), $this->generate_new_content_option(), array('size' => 12, 'description' => $this->lang['content.config.new-content-module-explain'], 'hidden' => !$this->content_management_config->is_new_content_enabled())
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('new_content_unauthorized_modules', $this->lang['content.config.new-content-module'], $this->content_management_config->get_new_content_unauthorized_modules(), $this->generate_new_content_option(),
+			array('size' => 12, 'description' => $this->lang['content.config.new-content-module-explain'], 'hidden' => !$this->content_management_config->is_new_content_enabled())
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -159,7 +160,6 @@ class AdminContentConfigController extends AdminController
 		foreach ($this->form->get_value('forbidden_tags') as $field => $option)
 		{
 			$forbidden_tags[] = $option->get_raw_value();
-
 		}
 	 	$this->content_formatting_config->set_forbidden_tags($forbidden_tags);
 		ContentFormattingConfig::save();
@@ -209,11 +209,11 @@ class AdminContentConfigController extends AdminController
 		$options = array();
 
 		$provider_service = AppContext::get_extension_provider_service();
-		$search_extensions_point_modules = array_keys($provider_service->get_extension_point(NewContentExtensionPoint::EXTENSION_POINT));
+		$new_content_extensions_point_modules = array_keys($provider_service->get_extension_point(NewContentExtensionPoint::EXTENSION_POINT));
 
 		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $id => $module)
-		{	
-			if (in_array($module->get_id(), $search_extensions_point_modules))
+		{
+			if (in_array($module->get_id(), $new_content_extensions_point_modules))
 			{
 				$options[] = new FormFieldSelectChoiceOption($module->get_configuration()->get_name(), $module->get_id());
 			}

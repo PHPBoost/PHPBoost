@@ -29,7 +29,7 @@ interface NewContentExtensionPoint extends ExtensionPoint
 {
 	const EXTENSION_POINT = 'newcontent';
 
-	function check_if_new_content($date);
+	function check_if_is_new_content($date);
 
 	function get_autorized_module($module);
 
