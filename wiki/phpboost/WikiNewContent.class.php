@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                              wikiExtensionPointProvider.class.php
+ *                      WikiNewContent.class.php
  *                            -------------------
- *   begin                : Februar 24, 2008
- *   copyright            : (C) 2008 Loïc ROUCHON
- *   email                : loic.rouchon@phpboost.com
+ *   begin                : September 29, 2016
+ *   copyright            : (C) 2016 Arnaud GENET
+ *   email                : elenwii@phpboost.com
  *
  *
  ###################################################
@@ -25,54 +25,14 @@
  *
  ###################################################*/
 
-class WikiExtensionPointProvider extends ExtensionPointProvider
+/**
+ * @author Arnaud Genet <elenwii@phpboost.com>
+ */
+class WikiNewContent extends AbstractNewContentExtensionPoint
 {
 	public function __construct()
 	{
 		parent::__construct('wiki');
 	}
-	
-	public function comments()
-	{
-		return new CommentsTopics(array(new WikiCommentsTopic()));
-	}
-	
-	public function css_files()
-	{
-		$module_css_files = new ModuleCssFiles();
-		$module_css_files->adding_running_module_displayed_file('wiki.css');
-		return $module_css_files;
-	}
-
-	public function feeds()
-	{
-		return new WikiFeedProvider();
-	}
-
-	public function home_page()
-	{
-		return new WikiHomePageExtensionPoint();
-	}
-	
-	public function search()
-	{
-		return new WikiSearchable();
-	}
-
-	public function sitemap()
-	{
-		return new WikiSitemapExtensionPoint();
-	}
-	
-	public function tree_links()
-	{
-		return new WikiTreeLinks();
-	}
-
-	public function newcontent()
-	{
-		return new WikiNewContent();
-	}
-
 }
 ?>

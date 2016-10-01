@@ -43,7 +43,7 @@ $parse_redirection = false;
 if (!empty($encoded_title)) //Si on connait son titre
 {
 	try {
-		$article_infos = PersistenceContext::get_querier()->select_single_row_query("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, a.defined_status, com_topic.number_comments, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
+		$article_infos = PersistenceContext::get_querier()->select_single_row_query("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, a.defined_status, com_topic.number_comments, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content, c.timestamp
 		FROM " . PREFIX . "wiki_articles a
 		LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
 		LEFT JOIN " . PREFIX . "wiki_favorites f ON f.id_article = a.id
@@ -77,7 +77,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 elseif (!empty($id_contents))
 {
 	try {
-		$article_infos = PersistenceContext::get_querier()->select_single_row_query("SELECT a.title, a.encoded_title, a.id, c.id_contents, a.id_cat, a.is_cat, a.defined_status, a.undefined_status, com_topic.number_comments, f.id AS id_favorite, c.menu, c.content
+		$article_infos = PersistenceContext::get_querier()->select_single_row_query("SELECT a.title, a.encoded_title, a.id, c.id_contents, a.id_cat, a.is_cat, a.defined_status, a.undefined_status, com_topic.number_comments, f.id AS id_favorite, c.menu, c.content, c.timestamp
 		FROM " . PREFIX . "wiki_contents c
 		LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.id_article
 		LEFT JOIN " . PREFIX . "wiki_favorites f ON f.id_article = a.id
@@ -160,6 +160,8 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 		'MENU' => $article_infos['menu']
 	));
 	
+	$new_content = new WikiNewContent();
+
 	$tpl->put_all(array(
 		'ID' => $article_infos['id'],
 		'ID_CAT' => $article_infos['id_cat'],
@@ -169,6 +171,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 		'L_SUB_CATS' => $LANG['wiki_subcats'],
 		'L_SUB_ARTICLES' => $LANG['wiki_subarticles'],
 		'L_TABLE_OF_CONTENTS' => $LANG['wiki_table_of_contents'],
+		'C_NEW_CONTENT' => $new_content->check_if_is_new_content($article_infos['timestamp'])
 	));
 	if ($article_infos['is_cat'] == 1 && $id_contents == 0) //Catégorie non archivée
 	{

@@ -1,4 +1,4 @@
-		<article id="article-wiki-{ID}" class="article-wiki">
+		<article id="article-wiki-{ID}" class="article-wiki# IF C_NEW_CONTENT # new-content# ENDIF #">
 			<header>
 				<h1>
 					<a href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}" class="fa fa-syndication"></a>
