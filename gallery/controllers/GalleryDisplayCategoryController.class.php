@@ -55,10 +55,10 @@ class GalleryDisplayCategoryController extends ModuleController
 		
 		load_module_lang('gallery');
 		$g_idpics = retrieve(GET, 'id', 0);
-		$g_views = retrieve(GET, 'views', false);
-		$g_notes = retrieve(GET, 'notes', false);
-		$g_sort = retrieve(GET, 'sort', '');
-		$g_sort = !empty($g_sort) ? 'sort=' . $g_sort : '';
+		$g_views  = retrieve(GET, 'views', false);
+		$g_notes  = retrieve(GET, 'notes', false);
+		$g_sort   = retrieve(GET, 'sort', '');
+		$g_sort   = !empty($g_sort) ? 'sort=' . $g_sort : '';
 		
 		//Récupération du mode d'ordonnement.
 		if (preg_match('`([a-z]+)_([a-z]+)`', $g_sort, $array_match))
@@ -519,12 +519,14 @@ class GalleryDisplayCategoryController extends ModuleController
 					$group_color = User::get_group_color($row['groups'], $row['level']);
 					
 					$comments_topic->set_id_in_module($row['id']);
+					$new_content = new GalleryNewContent();
 					
 					$html_protected_name = $row['name'];
 					$this->tpl->assign_block_vars('pics_list', array(
 						'C_IMG_APROB' => $row['aprob'] == 1,
 						'C_OPEN_TR' => is_int($j++/$nbr_column_pics),
 						'C_CLOSE_TR' => is_int($j/$nbr_column_pics),
+						'C_NEW_CONTENT' => $new_content->check_if_is_new_content($row['timestamp']),
 						'ID' => $row['id'],
 						'APROB' => $row['aprob'],
 						'PATH' => $row['path'],

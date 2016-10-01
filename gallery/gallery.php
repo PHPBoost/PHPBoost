@@ -33,14 +33,14 @@ require_once('../kernel/header.php');
 $config = GalleryConfig::load();
 
 $g_idpics = retrieve(GET, 'id', 0);
-$g_del = retrieve(GET, 'del', 0);
-$g_move = retrieve(GET, 'move', 0);
-$g_add = retrieve(GET, 'add', false);
-$g_page = retrieve(GET, 'p', 1);
-$g_views = retrieve(GET, 'views', false);
-$g_notes = retrieve(GET, 'notes', false);
-$g_sort = retrieve(GET, 'sort', '');
-$g_sort = !empty($g_sort) ? 'sort=' . $g_sort : '';
+$g_del    = retrieve(GET, 'del', 0);
+$g_move   = retrieve(GET, 'move', 0);
+$g_add    = retrieve(GET, 'add', false);
+$g_page   = retrieve(GET, 'p', 1);
+$g_views  = retrieve(GET, 'views', false);
+$g_notes  = retrieve(GET, 'notes', false);
+$g_sort   = retrieve(GET, 'sort', '');
+$g_sort   = !empty($g_sort) ? 'sort=' . $g_sort : '';
 
 //Récupération du mode d'ordonnement.
 if (preg_match('`([a-z]+)_([a-z]+)`', $g_sort, $array_match))
