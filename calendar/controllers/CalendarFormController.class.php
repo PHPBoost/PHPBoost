@@ -94,6 +94,8 @@ class CalendarFormController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('contents', $common_lang['form.contents'], $event_content->get_contents(), array('rows' => 15, 'required' => true)));
 		
+		$fieldset->add_field(new FormFieldUploadPictureFile('picture', $this->lang['calendar.labels.picture'], $event_content->get_picture()->relative()));
+		
 		$fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->lang['calendar.labels.start_date'], $this->get_event()->get_start_date(), array('required' => true)));
 		
 		$fieldset->add_field($end_date = new FormFieldDateTime('end_date', $this->lang['calendar.labels.end_date'], $this->get_event()->get_end_date(), array('required' => true)));
@@ -264,6 +266,7 @@ class CalendarFormController extends ModuleController
 			$event_content->set_category_id($this->form->get_value('category_id')->get_raw_value());
 		
 		$event_content->set_contents($this->form->get_value('contents'));
+		$event_content->set_picture(new Url($this->form->get_value('picture')));
 		$event_content->set_location($this->form->get_value('location'));
 		
 		if (!$this->is_contributor_member() && $this->form->get_value('approved'))

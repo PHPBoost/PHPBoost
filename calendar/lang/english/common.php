@@ -56,6 +56,7 @@ $lang['calendar.events_list'] = 'Events list';
 //Labels
 $lang['calendar.labels.location'] = 'Location';
 $lang['calendar.labels.created_by'] = 'Created by';
+$lang['calendar.labels.picture'] = 'Add a picture';
 $lang['calendar.labels.registration_authorized'] = 'Active members registration for the event';
 $lang['calendar.labels.remaining_place'] = 'Only one place left!';
 $lang['calendar.labels.remaining_places'] = 'Only :missing_number places left!';

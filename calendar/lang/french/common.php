@@ -57,6 +57,7 @@ $lang['calendar.events_list'] = 'Liste des événements';
 //Labels
 $lang['calendar.labels.location'] = 'Adresse';
 $lang['calendar.labels.created_by'] = 'Créé par';
+$lang['calendar.labels.picture'] = 'Ajouter une image';
 $lang['calendar.labels.registration_authorized'] = 'Activer l\'inscription des membres à l\'événement';
 $lang['calendar.labels.max_registered_members'] = 'Nombre de participants maximum';
 $lang['calendar.labels.max_registered_members.explain'] = '0 pour illimité';
