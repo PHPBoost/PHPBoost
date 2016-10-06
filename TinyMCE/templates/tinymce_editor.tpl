@@ -79,9 +79,6 @@ tinymce.init({
 		"searchreplace wordcount visualblocks visualchars fullscreen insertdatetime media",
 		"table contextmenu directionality smileys paste textcolor colorpicker textpattern imagetools"
 	],
-	external_plugins: {"nanospell": '{PATH_TO_ROOT}/TinyMCE/templates/js/tinymce/plugins/nanospell/plugin.js'},
-	nanospell_server: "php",
-	nanospell_dictionary: "fr, en",
 	
 	# IF C_TOOLBAR #toolbar1: "{TOOLBAR}",# ENDIF #
 
