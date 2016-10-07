@@ -269,7 +269,7 @@ class WebFormController extends ModuleController
 		$weblink->set_partner_picture(new Url($this->form->get_value('partner_picture')));
 		$weblink->set_privileged_partner($this->form->get_value('privileged_partner'));
 		
-		if ($this->is_contributor_member())
+		if (!WebAuthorizationsService::check_authorizations($weblink->get_id_category())->moderation())
 		{
 			if ($weblink->get_id() === null )
 				$weblink->set_creation_date(new Date());
