@@ -80,7 +80,7 @@ class NewsFormController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->common_lang['form.name'], $this->get_news()->get_name(), array('required' => true)));
 
-		if (!$this->is_contributor_member())
+		if (NewsAuthorizationsService::check_authorizations($this->get_news()->get_id_cat())->moderation())
 		{
 			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', $this->common_lang['form.rewrited_name.personalize'], $this->get_news()->rewrited_name_is_personalized(), array(
 			'events' => array('click' => '
@@ -285,7 +285,7 @@ class NewsFormController extends ModuleController
 		
 		$news->set_sources($this->form->get_value('sources'));
 		
-		if ($this->is_contributor_member())
+		if (!NewsAuthorizationsService::check_authorizations($news->get_id_cat())->moderation())
 		{
 			if ($news->get_id() === null)
 				$news->set_creation_date(new Date());

@@ -389,6 +389,7 @@ class News
 	{
 		$this->id_cat = $id_cat;
 		$this->approbation_type = self::APPROVAL_NOW;
+		$this->author_user = AppContext::get_current_user();
 		$this->start_date = new Date();
 		$this->end_date = new Date();
 		$this->creation_date = new Date();
