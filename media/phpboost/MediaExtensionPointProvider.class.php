@@ -59,6 +59,11 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 		return new MediaHomePageExtensionPoint();
 	}
 	
+	public function newcontent()
+	{
+		return new MediaNewContent();
+	}
+	
 	public function search()
 	{
 		return new MediaSearchable();
@@ -77,11 +82,6 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 	public function url_mappings()
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/media/index.php')));
-	}
-
-	public function newcontent()
-	{
-		return new MediaNewContent();
 	}
 }
 ?>

@@ -38,7 +38,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 	private $submit_button;
 	private $config;
 	
-	private $max_input = 50;
+	private $max_input = 150;
 	
 	public function execute(HTTPRequestCustom $request)
 	{

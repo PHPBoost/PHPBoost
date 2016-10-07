@@ -35,11 +35,6 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 		parent::__construct('articles');
 	}
 	
-	public function home_page()
-	{
-		return new ArticlesHomePageExtensionPoint();
-	}
-	
 	public function comments()
 	{
 		return new CommentsTopics(array(new ArticlesCommentsTopic()));
@@ -55,6 +50,16 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 	public function feeds()
 	{
 		return new ArticlesFeedProvider();
+	}
+	
+	public function home_page()
+	{
+		return new ArticlesHomePageExtensionPoint();
+	}
+	
+	public function newcontent()
+	{
+		return new ArticlesNewContent();
 	}
 	
 	public function scheduled_jobs()
@@ -81,11 +86,5 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/articles/index.php')));
 	}
-
-	public function newcontent()
-	{
-		return new ArticlesNewContent();
-	}
-
 }
 ?>

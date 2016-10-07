@@ -64,6 +64,11 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 		return new ModuleMenus(array(new DownloadModuleMiniMenu()));
 	}
 	
+	public function newcontent()
+	{
+		return new DownloadNewContent();
+	}
+	
 	public function scheduled_jobs()
 	{
 		return new DownloadScheduledJobs();
@@ -87,11 +92,6 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 	public function url_mappings()
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/download/index.php')));
-	}
-
-	public function newcontent()
-	{
-		return new DownloadNewContent();
 	}
 }
 ?>

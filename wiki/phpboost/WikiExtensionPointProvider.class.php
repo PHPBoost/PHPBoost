@@ -43,7 +43,7 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 		$module_css_files->adding_running_module_displayed_file('wiki.css');
 		return $module_css_files;
 	}
-
+	
 	public function feeds()
 	{
 		return new WikiFeedProvider();
@@ -52,6 +52,11 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 	public function home_page()
 	{
 		return new WikiHomePageExtensionPoint();
+	}
+	
+	public function newcontent()
+	{
+		return new WikiNewContent();
 	}
 	
 	public function search()
@@ -68,11 +73,5 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new WikiTreeLinks();
 	}
-
-	public function newcontent()
-	{
-		return new WikiNewContent();
-	}
-
 }
 ?>

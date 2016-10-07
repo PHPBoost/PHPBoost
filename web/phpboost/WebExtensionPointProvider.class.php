@@ -64,6 +64,11 @@ class WebExtensionPointProvider extends ExtensionPointProvider
 		return new ModuleMenus(array(new WebModuleMiniMenu()));
 	}
 	
+	public function newcontent()
+	{
+		return new WebNewContent();
+	}
+	
 	public function scheduled_jobs()
 	{
 		return new WebScheduledJobs();
@@ -87,11 +92,6 @@ class WebExtensionPointProvider extends ExtensionPointProvider
 	public function url_mappings()
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/web/index.php')));
-	}
-
-	public function newcontent()
-	{
-		return new WebNewContent();
 	}
 }
 ?>

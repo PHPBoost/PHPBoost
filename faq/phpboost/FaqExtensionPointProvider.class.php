@@ -57,6 +57,11 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new ModuleMenus(array(new FaqModuleMiniMenu()));
 	}
+	
+	public function newcontent()
+	{
+		return new FaqNewContent();
+	}
         
 	public function search()
 	{
@@ -76,11 +81,6 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
 	public function url_mappings()
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/faq/index.php')));
-	}
-	
-	public function newcontent()
-	{
-		return new FaqNewContent();
 	}
 }
 ?>

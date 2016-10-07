@@ -61,6 +61,11 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 		return new ModuleMenus(array(new GalleryModuleMiniMenu()));
 	}
 	
+	public function newcontent()
+	{
+		return new GalleryNewContent();
+	}
+	
 	public function sitemap()
 	{
 		return new GallerySitemapExtensionPoint();
@@ -74,11 +79,6 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 	public function url_mappings()
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/gallery/index.php')));
-	}
-
-	public function newcontent()
-	{
-		return new GalleryNewContent();
 	}
 }
 ?>
