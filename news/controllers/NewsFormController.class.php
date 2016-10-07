@@ -68,6 +68,7 @@ class NewsFormController extends ModuleController
 	{
 		$this->lang = LangLoader::get('common', 'news');
 		$this->common_lang = LangLoader::get('common');
+		$this->config = NewsConfig::load();
 	}
 	
 	private function build_form(HTTPRequestCustom $request)
@@ -79,7 +80,7 @@ class NewsFormController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->common_lang['form.name'], $this->get_news()->get_name(), array('required' => true)));
 
-		if (NewsAuthorizationsService::check_authorizations($this->get_news()->get_id_cat())->moderation())
+		if (!$this->is_contributor_member())
 		{
 			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', $this->common_lang['form.rewrited_name.personalize'], $this->get_news()->rewrited_name_is_personalized(), array(
 			'events' => array('click' => '
@@ -119,6 +120,22 @@ class NewsFormController extends ModuleController
 			'hidden' => !$this->get_news()->get_short_contents_enabled(),
 			'description' => !NewsConfig::load()->get_display_condensed_enabled() ? '<span class="color-alert">' . $this->lang['news.form.short_contents.description'] . '</span>' : ''
 		)));
+		
+		if ($this->config->get_author_displayed() == true)
+		{
+			$fieldset->add_field(new FormFieldCheckbox('author_display_name_enabled', $this->lang['news.form.author_display_name_enabled'], $this->get_news()->is_author_display_name_enabled(), 
+				array('events' => array('click' => '
+				if (HTMLForms.getField("author_display_name_enabled").getValue()) {
+					HTMLForms.getField("author_display_name").enable();
+				} else { 
+					HTMLForms.getField("author_display_name").disable();
+				}'))
+			));
+			
+			$fieldset->add_field(new FormFieldTextEditor('author_display_name', $this->lang['news.form.author_display_name'], $this->get_news()->get_author_display_name(), array(
+				'hidden' => !$this->get_news()->is_author_display_name_enabled(),
+			)));
+		}
 
 		$other_fieldset = new FormFieldsetHTML('other', $this->common_lang['form.other']);
 		$form->add_fieldset($other_fieldset);
@@ -263,9 +280,12 @@ class NewsFormController extends ModuleController
 		$news->set_short_contents(($this->form->get_value('enable_short_contents') ? $this->form->get_value('short_contents') : ''));
 		$news->set_picture(new Url($this->form->get_value('picture')));
 		
+		if ($this->config->get_author_displayed() == true)
+			$news->set_author_display_name(($this->form->get_value('author_display_name') && $this->form->get_value('author_display_name') !== $news->get_author_user()->get_display_name() ? $this->form->get_value('author_display_name') : ''));
+		
 		$news->set_sources($this->form->get_value('sources'));
 		
-		if (!NewsAuthorizationsService::check_authorizations($news->get_id_cat())->moderation())
+		if ($this->is_contributor_member())
 		{
 			if ($news->get_id() === null)
 				$news->set_creation_date(new Date());

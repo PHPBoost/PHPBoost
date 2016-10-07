@@ -47,6 +47,8 @@ class News
 	private $updated_date;
 	private $author_user;
 	private $number_view;
+	private $author_display_name;
+	private $author_display_name_enabled;
 
 	private $picture_url;
 	private $sources;
@@ -244,6 +246,21 @@ class News
 		return $this->author_user;
 	}
 	
+	public function get_author_display_name()
+	{
+		return $this->author_display_name;
+	}
+	
+	public function set_author_display_name($author_display_name)
+	{
+		$this->author_display_name = $author_display_name;
+	}
+	
+	public function is_author_display_name_enabled()
+	{
+		return $this->author_display_name_enabled;
+	}
+	
 	public function set_number_view($number_view)
 	{
 		$this->number_view = $number_view;
@@ -329,6 +346,7 @@ class News
 			'top_list_enabled' => (int)$this->top_list_enabled(),
 			'creation_date' => $this->get_creation_date()->get_timestamp(),
 			'updated_date' => $this->get_updated_date() !== null ? $this->get_updated_date()->get_timestamp() : 0,
+			'author_display_name' => $this->get_author_display_name(),
 			'author_user_id' => $this->get_author_user()->get_id(),
 			'number_view' => $this->get_number_view(),
 			'picture_url' => $this->get_picture()->relative(),
@@ -362,6 +380,9 @@ class News
 			$user->init_visitor_user();
 			
 		$this->set_author_user($user);
+		
+		$this->author_display_name = !empty($properties['author_display_name']) ? $properties['author_display_name'] : $this->author_user->get_display_name();
+		$this->author_display_name_enabled = !empty($properties['author_display_name']);
 	}
 	
 	public function init_default_properties($id_cat = Category::ROOT_CATEGORY)
@@ -374,6 +395,8 @@ class News
 		$this->sources = array();
 		$this->picture_url = new Url(self::DEFAULT_PICTURE);
 		$this->end_date_enabled = false;
+		$this->author_display_name = $this->author_user->get_display_name();
+		$this->author_display_name_enabled = false;
 	}
 	
 	public function clean_start_and_end_date()
@@ -409,6 +432,7 @@ class News
 			'C_PICTURE' => $this->has_picture(),
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			'C_AUTHOR_DISPLAYED' => $news_config->get_author_displayed(),
+			'C_CUSTOM_AUTHOR_DISPLAY_NAME' => $this->is_author_display_name_enabled(),
 			'C_NB_VIEW_ENABLED' => $news_config->get_nb_view_enabled(),
 			'C_READ_MORE' => !$this->get_short_contents_enabled() && $description != @strip_tags($contents, '<br><br/>') && strlen($description) > $news_config->get_number_character_to_cut(),
 			'C_SOURCES' => $nbr_sources > 0,
@@ -432,6 +456,7 @@ class News
 			'DIFFERED_START_DATE_YEAR' =>  $this->start_date ? $this->start_date->get_year() : '',
 			'DIFFERED_START_DATE_ISO8601' => $this->start_date ? $this->start_date->format(Date::FORMAT_ISO8601) : '',
 			'STATUS' => $this->get_status(),
+			'CUSTOM_AUTHOR_DISPLAY_NAME' => $this->author_display_name,
 			'C_AUTHOR_EXIST' => $user->get_id() !== User::VISITOR_LEVEL,
 			'PSEUDO' => $user->get_display_name(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
