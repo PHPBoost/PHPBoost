@@ -85,7 +85,7 @@ class FaqFormController extends ModuleController
 		
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
-			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
+		$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
 		$fieldset->add_field(FaqService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_faq_question()->get_id_category(), $search_category_children_options));
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('answer', $this->lang['faq.form.answer'], $this->get_faq_question()->get_answer(), array('rows' => 15, 'required' => true)));
@@ -189,7 +189,7 @@ class FaqFormController extends ModuleController
 			$faq_question->set_q_order($number_questions_in_category + 1);
 		}
 		
-		if (!$this->is_contributor_member() && $this->form->get_value('approved'))
+		if (FaqAuthorizationsService::check_authorizations($faq_question->get_id_category())->moderation() && $this->form->get_value('approved'))
 			$faq_question->approve();
 		else
 			$faq_question->unapprove();

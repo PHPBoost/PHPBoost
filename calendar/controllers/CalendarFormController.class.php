@@ -260,7 +260,7 @@ class CalendarFormController extends ModuleController
 		$event_content->set_contents($this->form->get_value('contents'));
 		$event_content->set_location($this->form->get_value('location'));
 		
-		if (!$this->is_contributor_member() && $this->form->get_value('approved'))
+		if (CalendarAuthorizationsService::check_authorizations($event_content->get_category_id())->moderation() && $this->form->get_value('approved'))
 			$event_content->approve();
 		else
 			$event_content->unapprove();

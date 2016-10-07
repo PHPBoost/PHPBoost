@@ -275,12 +275,12 @@ class DownloadFormController extends ModuleController
 		
 		$downloadfile->set_size($file_size);
 		
-		if ($this->get_downloadfile()->get_id() !== null && $downloadfile->get_number_downloads() > 0 && $this->form->get_value('reset_number_downloads'))
+		if ($downloadfile->get_id() !== null && $downloadfile->get_number_downloads() > 0 && $this->form->get_value('reset_number_downloads'))
 		{
 			$downloadfile->set_number_downloads(0);
 		}
 		
-		if ($this->is_contributor_member())
+		if (!DownloadAuthorizationsService::check_authorizations($downloadfile->get_id_category())->moderation())
 		{
 			$downloadfile->set_approbation_type(DownloadFile::NOT_APPROVAL);
 			$downloadfile->clean_start_and_end_date();

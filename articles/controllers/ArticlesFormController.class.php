@@ -86,7 +86,7 @@ class ArticlesFormController extends ModuleController
 			array('required' => true)
 		));
 
-		if (!$this->is_contributor_member())
+		if (ArticlesAuthorizationsService::check_authorizations($this->get_article()->get_id_category())->moderation())
 		{
 			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_title', $this->common_lang['form.rewrited_name.personalize'], $this->get_article()->rewrited_title_is_personalized(),
 				array('events' => array('click' =>'
@@ -323,7 +323,7 @@ class ArticlesFormController extends ModuleController
 		
 		$article->set_sources($this->form->get_value('sources'));
 		
-		if ($this->is_contributor_member())
+		if (!ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->moderation())
 		{
 			if ($article->get_id() === null)
 				$article->set_date_created(new Date());
