@@ -58,6 +58,24 @@ class SearchConfig extends AbstractConfigData
 	}
 
 	/**
+	 * Returns all the search providers weighting sorted by localized name
+	 * @return string[] The sorted search providers weighting
+	 */
+	public function get_weightings_sorted_by_localized_name()
+	{
+		$modules_weighting = self::get_weightings()->get_modules_weighting();
+		$weightings_sorted_by_localized_name = array();
+		
+		foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as $id => $module)
+		{
+			if (in_array($module->get_id(), array_keys($modules_weighting)))
+				$weightings_sorted_by_localized_name[$module->get_id()] = $modules_weighting[$module->get_id()];
+		}
+		
+		return $weightings_sorted_by_localized_name;
+	}
+
+	/**
 	 * Returns the number of result per page to display
 	 * @return int the number of result per page to display
 	 */

@@ -47,11 +47,13 @@ if ($valid)
 {
 	if (!$weighting)
 	{
+		$authorized_modules = retrieve(POST, 'authorized_modules', array());
+		$authorized_modules = !empty($authorized_modules) ? explode(',', $authorized_modules[0]) : $authorized_modules;
 		$config = SearchConfig::load();
 		$config->set_nb_results_per_page(retrieve(POST, 'nb_results_p', 15));
 		$config->set_cache_lifetime(retrieve(POST, 'cache_time', 15));
 		$config->set_cache_max_uses(retrieve(POST, 'max_use', 200));
-		$config->set_unauthorized_providers(retrieve(POST, 'authorized_modules', array()));
+		$config->set_unauthorized_providers($authorized_modules);
 		$config->set_authorizations(Authorizations::build_auth_array_from_form(SearchAuthorizationsService::READ_AUTHORIZATIONS));
 		SearchConfig::save();
 
@@ -110,7 +112,7 @@ else
 				$tpl->assign_block_vars('authorized_modules', array(
 					'MODULE' => $module->get_id(),
 					'SELECTED' => $selected,
-					'L_MODULE_NAME' => ucfirst($module_configuration->get_name())
+					'L_MODULE_NAME' => $module_configuration->get_name()
 				));
 			}
 		}
@@ -136,11 +138,11 @@ else
 	}
 	else
 	{
-		foreach ($config->get_weightings()->get_modules_weighting() as $module_id => $weighting)
+		foreach ($config->get_weightings_sorted_by_localized_name() as $module_id => $weighting)
 		{
 			$tpl->assign_block_vars('weights', array(
 				'MODULE' => $module_id,
-				'L_MODULE_NAME' => ucfirst(ModulesManager::get_module($module_id)->get_configuration()->get_name()),
+				'L_MODULE_NAME' => ModulesManager::get_module($module_id)->get_configuration()->get_name(),
 				'WEIGHT' => $weighting
 			));
 		}
