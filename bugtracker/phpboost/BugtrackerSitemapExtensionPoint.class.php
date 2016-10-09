@@ -69,7 +69,8 @@ class BugtrackerSitemapExtensionPoint implements SitemapExtensionPoint
 			if ($config->is_roadmap_enabled() && $config->get_versions())
 				$module_map->add(new SitemapLink($lang['titles.roadmap'], BugtrackerUrlBuilder::roadmap()));
 			
-			$module_map->add(new SitemapLink($lang['titles.stats'], BugtrackerUrlBuilder::stats()));
+			if ($config->are_stats_enabled())
+				$module_map->add(new SitemapLink($lang['titles.stats'], BugtrackerUrlBuilder::stats()));
 		}
 		
 		return $module_map;
