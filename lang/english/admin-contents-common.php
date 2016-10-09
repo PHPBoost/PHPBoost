@@ -55,6 +55,9 @@ $lang['comments'] = 'Comments';
 $lang['comments.config'] = 'Comments configuration';
 $lang['comments.management'] = 'Comments management';
 
+$lang['comments.config.enabled'] = 'Enabled comments';
+$lang['comments.config.comments-module'] = 'Select modules';
+$lang['comments.config.comments-module-explain'] = 'Select modules in which you doesn\'t want comments';
 $lang['comments.config.number-comments-display'] = 'Number of comments to display by default';
 $lang['comments.config.order-display-comments'] = 'Ordre comments display';
 $lang['comments.config.order-display-comments.asc'] = 'Oldest to newest';

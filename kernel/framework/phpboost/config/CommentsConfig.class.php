@@ -30,15 +30,37 @@
  */
 class CommentsConfig extends AbstractConfigData
 {
-	const AUTHORIZATIONS = 'authorizations';
-	const NUMBER_COMMENTS_DISPLAY = 'number_comments_per_page';
-	const FORBIDDEN_TAGS = 'forbidden_tags';
-	const MAX_LINKS_COMMENT = 'max_links_comment';
-	const ORDER_DISPLAY_COMMENTS = 'order_display_comments';
+	const COMMENTS_ENABLED             = 'comments';
+	const COMMENTS_UNAUTHORIZED_MODULE = 'comments_unauthorized_modules';
+	const AUTHORIZATIONS               = 'authorizations';
+	const NUMBER_COMMENTS_DISPLAY      = 'number_comments_per_page';
+	const FORBIDDEN_TAGS               = 'forbidden_tags';
+	const MAX_LINKS_COMMENT            = 'max_links_comment';
+	const ORDER_DISPLAY_COMMENTS       = 'order_display_comments';
 	
-	const ASC_ORDER = 'ASC';
-	const DESC_ORDER = 'DESC';
+	const ASC_ORDER                    = 'ASC';
+	const DESC_ORDER                   = 'DESC';
+
+	public function are_comments_enabled()
+	{
+		return $this->get_property(self::COMMENTS_ENABLED);
+	}
 	
+	public function set_comments_enabled($enabled)
+	{
+		$this->set_property(self::COMMENTS_ENABLED, $enabled);
+	}
+
+	public function get_comments_unauthorized_modules()
+	{
+		return $this->get_property(self::COMMENTS_UNAUTHORIZED_MODULE);
+	}
+	
+	public function set_comments_unauthorized_modules(array $modules)
+	{
+		$this->set_property(self::COMMENTS_UNAUTHORIZED_MODULE, $modules);
+	}
+
 	public function get_authorizations()
 	{
 		return $this->get_property(self::AUTHORIZATIONS);
@@ -112,11 +134,13 @@ class CommentsConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::AUTHORIZATIONS => array('r1' => 7, 'r0' => 3, 'r-1' => 3),
-			self::NUMBER_COMMENTS_DISPLAY => 15,
-			self::FORBIDDEN_TAGS => array(),
-			self::MAX_LINKS_COMMENT => 2,
-			self::ORDER_DISPLAY_COMMENTS => self::DESC_ORDER
+			self::COMMENTS_ENABLED             => true,
+			self::COMMENTS_UNAUTHORIZED_MODULE => array(),
+			self::AUTHORIZATIONS               => array('r1' => 7, 'r0' => 3, 'r-1' => 3),
+			self::NUMBER_COMMENTS_DISPLAY      => 15,
+			self::FORBIDDEN_TAGS               => array(),
+			self::MAX_LINKS_COMMENT            => 2,
+			self::ORDER_DISPLAY_COMMENTS       => self::DESC_ORDER
 		);
 	}
 
