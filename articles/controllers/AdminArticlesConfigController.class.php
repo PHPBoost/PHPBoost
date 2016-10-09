@@ -121,9 +121,7 @@ class AdminArticlesConfigController extends AdminModuleController
 			array('min' => 3, 'max' => 20, 'required' => true, 'hidden' => !$this->config->is_notation_enabled()),
 			array(new FormFieldConstraintIntegerRange(3, 20))
 		));
-		
-		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->admin_common_lang['config.comments_enabled'], $this->config->are_comments_enabled()));
-		
+			
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['articles_configuration.display_type'], $this->config->get_display_type(),
 			array(
 				new FormFieldSelectChoiceOption($this->lang['articles_configuration.display_type.mosaic'], ArticlesConfig::DISPLAY_MOSAIC),
@@ -194,16 +192,7 @@ class AdminArticlesConfigController extends AdminModuleController
 		}
 		else
 			$this->config->disable_notation();
-		
-		if ($this->form->get_value('comments_enabled'))
-		{
-			$this->config->enable_comments();
-		}
-		else
-		{
-			$this->config->disable_comments();
-		}
-		
+				
 		if ($this->form->get_value('display_descriptions_to_guests'))
 		{
 			$this->config->display_descriptions_to_guests();
