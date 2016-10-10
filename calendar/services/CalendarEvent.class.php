@@ -168,6 +168,8 @@ class CalendarEvent
 		
 		$registration_days_left = $this->content->get_last_registration_date() && time() < $this->content->get_last_registration_date()->get_timestamp() ? (int)(($this->content->get_last_registration_date()->get_timestamp() - time()) /3600 /24) : 0;
 		
+		$new_content = new CalendarNewContent();
+
 		return array(
 			'C_APPROVED' => $this->content->is_approved(),
 			'C_EDIT' => $this->is_authorized_to_edit(),
@@ -186,7 +188,7 @@ class CalendarEvent
 			'C_REGISTRATION_DAYS_LEFT' => !empty($registration_days_left) && $registration_days_left <= 5,
 			'C_AUTHOR_GROUP_COLOR' => !empty($author_group_color),
 			'C_AUTHOR_EXIST' => $author->get_id() !== User::VISITOR_LEVEL,
-			
+
 			//Event
 			'ID' => $this->id,
 			'CONTENT_ID' => $this->content->get_id(),
@@ -216,6 +218,7 @@ class CalendarEvent
 			'AUTHOR_GROUP_COLOR' => $author_group_color,
 			'L_MISSING_PARTICIPANTS' => $missing_participants_number > 1 ? StringVars::replace_vars($lang['calendar.labels.remaining_places'], array('missing_number' => $missing_participants_number)) : $lang['calendar.labels.remaining_place'],
 			'L_REGISTRATION_DAYS_LEFT' => $registration_days_left > 1 ? StringVars::replace_vars($lang['calendar.labels.remaining_days'], array('days_left' => $registration_days_left)) : $lang['calendar.labels.remaining_day'],
+			'C_NEW_CONTENT' => $new_content->check_if_is_new_content($this->content->get_creation_date()->get_timestamp()),
 			
 			//Category
 			'C_ROOT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY,

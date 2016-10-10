@@ -9,7 +9,7 @@
 		# IF NOT C_APPROVED #
 			# INCLUDE NOT_VISIBLE_MESSAGE #
 		# ENDIF #
-		<article itemscope="itemscope" itemtype="http://schema.org/Event" id="article-calendar-{ID}" class="article-calendar">
+		<article itemscope="itemscope" itemtype="http://schema.org/Event" id="article-calendar-{ID}" class="article-calendar# IF C_NEW_CONTENT # new-content# ENDIF #">
 			<header>
 				<h2>
 					<span itemprop="name">{TITLE}</span>
