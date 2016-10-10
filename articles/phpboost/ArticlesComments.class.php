@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                      ArticlesContents.class.php
+ *                      ArticlesComments.class.php
  *                            -------------------
  *   begin                : September 29, 2016
  *   copyright            : (C) 2016 Arnaud GENET
