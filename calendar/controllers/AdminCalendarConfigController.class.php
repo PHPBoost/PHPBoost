@@ -84,9 +84,7 @@ class AdminCalendarConfigController extends AdminModuleController
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
-		
-		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', LangLoader::get_message('config.comments_enabled', 'admin-common'), $this->config->are_comments_enabled()));
-		
+				
 		$fieldset->add_field(new FormFieldColorPicker('event_color', $this->lang['calendar.config.event_color'], $this->config->get_event_color(),
 			array(),
 			array(new FormFieldConstraintRegex('`^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$`i'))
@@ -142,12 +140,7 @@ class AdminCalendarConfigController extends AdminModuleController
 	private function save()
 	{
 		$this->config->set_items_number_per_page($this->form->get_value('items_number_per_page'));
-		
-		if ($this->form->get_value('comments_enabled'))
-			$this->config->enable_comments();
-		else
-			$this->config->disable_comments();
-		
+				
 		$this->config->set_event_color($this->form->get_value('event_color'));
 		
 		if ($this->form->get_value('members_birthday_enabled'))

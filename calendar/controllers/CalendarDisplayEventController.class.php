@@ -91,8 +91,9 @@ class CalendarDisplayEventController extends ModuleController
 				'C_LAST_PARTICIPANT' => $i == $participants_number
 			)));
 		}
-		
-		if (CalendarConfig::load()->are_comments_enabled())
+
+		$comments_config = new CalendarComments();
+		if ($comments_config->are_comments_enabled())
 		{
 			$comments_topic = new CalendarCommentsTopic($event);
 			$comments_topic->set_id_in_module($event->get_id());
