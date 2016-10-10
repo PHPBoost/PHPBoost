@@ -221,7 +221,7 @@ class UserCommentsController extends AbstractController
 		$extensions_point = array_keys(CommentsProvidersService::get_extension_point());
 		$modules = array(new FormFieldSelectChoiceOption(LangLoader::get_message('view_all_comments', 'admin'), ''));
 		
-		foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as $module)
+		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $module)
 		{
 			if (in_array($module->get_id(), $extensions_point))
 			{

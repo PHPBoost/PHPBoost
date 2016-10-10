@@ -211,7 +211,7 @@ function get_feeds_children(Array $children, $module_id, $feed_type, $feed_url_e
 
 $feeds_modules = AppContext::get_extension_provider_service()->get_providers(FeedProvider::EXTENSION_POINT);
 
-foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as $id => $module)
+foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $id => $module)
 {
 	if (array_key_exists($module->get_id(), $feeds_modules))
 	{

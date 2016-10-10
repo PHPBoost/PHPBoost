@@ -99,7 +99,7 @@ else
 		$provider_service = AppContext::get_extension_provider_service();
 		$search_extensions_point_modules = array_keys($provider_service->get_extension_point(SearchableExtensionPoint::EXTENSION_POINT));
 		
-		foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as $id => $module)
+		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $id => $module)
 		{
 			if (in_array($module->get_id(), $search_extensions_point_modules))
 			{

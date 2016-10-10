@@ -200,7 +200,7 @@ class AdminGeneralConfigController extends AdminController
 		$providers = array_keys(AppContext::get_extension_provider_service()->get_providers(HomePageExtensionPoint::EXTENSION_POINT));
 		$options = array(new FormFieldSelectChoiceOption($this->lang['general-config.other_start_page'], 'other'));
 		
-		$installed_modules = ModulesManager::get_installed_modules_map_sorted_by_localized_name();
+		$installed_modules = ModulesManager::get_activated_modules_map_sorted_by_localized_name();
 		foreach ($installed_modules as $id => $module)
 		{
 			if (in_array($module->get_id(), $providers))

@@ -178,7 +178,7 @@ class Sitemap
 	private function build_modules_maps($auth_mode = self::AUTH_PUBLIC)
 	{
 		$providers = AppContext::get_extension_provider_service()->get_providers(SitemapExtensionPoint::EXTENSION_POINT);
-		foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as $id => $module)
+		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $id => $module)
 		{
 			if (array_key_exists($module->get_id(), $providers))
 			{
