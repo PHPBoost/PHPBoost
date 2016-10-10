@@ -90,7 +90,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 				$result = PersistenceContext::get_querier()->select("SELECT g.id, g.name, g.path, g.width, g.height, g.idcat, gc.auth
 				FROM " . GallerySetup::$gallery_table . " g
 				LEFT JOIN " . GallerySetup::$gallery_cats_table . " gc on gc.id = g.idcat
-				WHERE g.aprob = 1 AND gc.aprob = 1
+				WHERE g.aprob = 1
 				ORDER BY RAND()
 				LIMIT " . $config->get_pics_number_in_mini());
 				while($row = $result->fetch())
