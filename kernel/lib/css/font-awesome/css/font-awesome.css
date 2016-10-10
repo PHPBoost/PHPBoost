@@ -2289,4 +2289,7 @@
 }
 .fa-upload-doc:before { /* copie fa-file-word-o */
   content: "\f1c2";
-} 
+}
+.fa-profil:before { /* copie fa-tachometer */
+  content: "\f0e4";
+}

@@ -1,6 +1,6 @@
 <section id="module-user-home">
 	<header>
-		<h1>{@profile}</h1>
+		<h1>{@dashboard}</h1>
 	</header>
 	<div class="content">
 		<p class="center text-strong">{@welcome} {PSEUDO}</p>

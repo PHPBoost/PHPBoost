@@ -63,13 +63,13 @@
 	# ELSE #
 		<div id="connect-menu" class="module-mini-container connected">
 			<div class="module-mini-top">
-				<h5 class="sub-title">{L_PROFIL}</h5>
+				<h5 class="sub-title">{L_PRIVATE_PROFIL}</h5>
 			</div>
 			<div class="module-mini-contents vertical-fieldset">
 				<ul class="connect-content">
 					<li>
-						<i class="fa fa-user"></i>
-						<a href="${relative_url(UserUrlBuilder::home_profile())}" class="small"> {L_PRIVATE_PROFIL}</a>
+						<i class="fa fa-profil"></i>
+						<a href="${relative_url(UserUrlBuilder::home_profile())}" class="small"> {L_PROFIL}</a>
 					</li>
 					<li>
 						<i class="fa fa-envelope# IF C_HAS_PM # blink# ENDIF #"></i>
@@ -134,11 +134,11 @@
 	# ELSE #
 	<div id="connect-menu" class="connected">
 		<div class="horizontal-fieldset">
-			<a href="" class="js-menu-button" onclick="open_submenu('connect-menu');return false;" title="{L_PROFIL}"><i class="fa fa-bars # IF NUMBER_TOTAL_ALERT # blink alert# ENDIF #"></i> {L_PROFIL}</a>
+			<a href="" class="js-menu-button" onclick="open_submenu('connect-menu');return false;" title="{L_PROFIL}"><i class="fa fa-bars # IF NUMBER_TOTAL_ALERT # blink alert# ENDIF #"></i> {L_PRIVATE_PROFIL}</a>
 			<ul class="connect-content">
 				<li>
-					<i class="fa fa-user"></i>
-					<a href="${relative_url(UserUrlBuilder::home_profile())}" class="small"> {L_PRIVATE_PROFIL}</a>
+					<i class="fa fa-profil"></i>
+					<a href="${relative_url(UserUrlBuilder::home_profile())}" class="small"> {L_PROFIL}</a>
 				</li>
 				<li>
 					<i class="fa fa-envelope# IF C_HAS_PM # blink# ENDIF #"></i>

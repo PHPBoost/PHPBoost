@@ -34,6 +34,7 @@ $lang['users'] = 'Utilisateurs';
 $lang['profile'] = 'Profil';
 $lang['profile_of'] = 'Profil de :name';
 $lang['profile.edit'] = 'Edition du profil';
+$lang['dashboard'] = 'Tableau de bord';
 $lang['messages'] = 'Messages de l\'utilisateur';
 $lang['maintain'] = 'Maintenance';
 $lang['welcome'] = 'Bienvenue';
