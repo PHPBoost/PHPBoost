@@ -140,7 +140,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			'C_NO_ARTICLE_AVAILABLE' => $result->get_rows_count() == 0,
 			'C_MOSAIC' => $config->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
 			'C_ARTICLES_CAT' => false,
-			'C_COMMENTS_ENABLED' => $comments_config->check_if_comments_are_enabled(),
+			'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
 			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
 			'C_ARTICLES_FILTERS' => true,
 			'CATEGORY_NAME' => $this->get_keyword()->get_name()

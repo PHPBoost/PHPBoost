@@ -36,7 +36,7 @@ abstract class AbstractCommentsExtensionPoint implements CommentsExtensionPoint
 		$this->comments_config = CommentsConfig::load();
 	}
 
-	public function check_if_comments_are_enabled()
+	public function are_comments_enabled()
 	{
 		return $this->comments_config->are_comments_enabled() && !in_array($this->id, $this->comments_config->get_comments_unauthorized_modules());
 	}

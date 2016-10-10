@@ -55,8 +55,8 @@ $lang['comments'] = 'Commentaires';
 $lang['comments.config'] = 'Configuration des commentaires';
 $lang['comments.management'] = 'Gestion des commentaires';
 
-$lang['comments.config.enabled'] = 'activer les commentaires';
-$lang['comments.config.comments-module'] = 'Selection des modules';
+$lang['comments.config.enabled'] = 'Activer les commentaires';
+$lang['comments.config.comments-module'] = 'Modules interdits';
 $lang['comments.config.comments-module-explain'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer les commentaires';
 $lang['comments.config.number-comments-display'] = 'Nombre de commentaires à afficher par défaut';
 $lang['comments.config.order-display-comments'] = 'Ordre d\'affichage des commentaires';
