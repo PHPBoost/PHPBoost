@@ -178,29 +178,29 @@ class AdminGeneralConfigController extends AdminController
 	}
 	
 	private function construct_javascript_picture_theme()
-    {
-    	$text = 'var theme = new Array;' . "\n";
-    	$activated_themes = ThemesManager::get_activated_themes_map();
-    	foreach ($activated_themes as $theme)
-    	{
-   			$text .= 'theme["' . $theme->get_id() . '"] = "' . $this->get_picture_theme($theme->get_id()) . '";' . "\n";
-   		}
-    	return $text;
-    }
-    
+	{
+		$text = 'var theme = new Array;' . "\n";
+		$activated_themes = ThemesManager::get_activated_themes_map();
+		foreach ($activated_themes as $theme)
+		{
+			$text .= 'theme["' . $theme->get_id() . '"] = "' . $this->get_picture_theme($theme->get_id()) . '";' . "\n";
+		}
+		return $text;
+	}
+	
 	private function get_picture_theme($theme_id = null)
-    {
-        $theme_id = $theme_id !== null ? $theme_id : $this->user_accounts_config->get_default_theme();
-        $picture = ThemesManager::get_theme($theme_id)->get_configuration()->get_first_picture();
-    	return Url::to_rel('/templates/' . $theme_id . '/' . $picture);
-    }
+	{
+		$theme_id = $theme_id !== null ? $theme_id : $this->user_accounts_config->get_default_theme();
+		$picture = ThemesManager::get_theme($theme_id)->get_configuration()->get_first_picture();
+		return Url::to_rel('/templates/' . $theme_id . '/' . $picture);
+	}
 
 	private function list_modules_home_page()
 	{
 		$providers = array_keys(AppContext::get_extension_provider_service()->get_providers(HomePageExtensionPoint::EXTENSION_POINT));
 		$options = array(new FormFieldSelectChoiceOption($this->lang['general-config.other_start_page'], 'other'));
 		
-		$installed_modules = ModulesManager::get_installed_modules_map_sorted_by_localized_name();
+		$installed_modules = ModulesManager::get_activated_modules_map_sorted_by_localized_name();
 		foreach ($installed_modules as $id => $module)
 		{
 			if (in_array($module->get_id(), $providers))

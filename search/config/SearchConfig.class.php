@@ -66,7 +66,7 @@ class SearchConfig extends AbstractConfigData
 		$modules_weighting = self::get_weightings()->get_modules_weighting();
 		$weightings_sorted_by_localized_name = array();
 		
-		foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as $id => $module)
+		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $id => $module)
 		{
 			if (in_array($module->get_id(), array_keys($modules_weighting)))
 				$weightings_sorted_by_localized_name[$module->get_id()] = $modules_weighting[$module->get_id()];
@@ -155,7 +155,7 @@ class SearchConfig extends AbstractConfigData
 	{
 		$modules_without_read_authorization[] = array();
 		
-		foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as $id => $module)
+		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $id => $module)
 		{
 			$authorizations_class = ucfirst($module->get_id()) . 'AuthorizationsService';
 			if (class_exists($authorizations_class) && method_exists($authorizations_class, 'check_authorizations') && method_exists($authorizations_class, 'read') && !$authorizations_class::check_authorizations()->read())
