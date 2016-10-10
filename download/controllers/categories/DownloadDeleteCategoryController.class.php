@@ -50,5 +50,10 @@ class DownloadDeleteCategoryController extends AbstractDeleteCategoryController
 	{
 		return DownloadUrlBuilder::manage_categories();
 	}
+	
+	protected function clear_cache()
+	{
+		return DownloadCache::invalidate();
+	}
 }
 ?>

@@ -46,5 +46,10 @@ class CalendarDeleteCategoryController extends AbstractDeleteCategoryController
 	{
 		return CalendarUrlBuilder::manage_categories();
 	}
+	
+	protected function clear_cache()
+	{
+		return CalendarCurrentMonthEventsCache::invalidate();
+	}
 }
 ?>

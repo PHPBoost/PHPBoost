@@ -50,5 +50,10 @@ class WebDeleteCategoryController extends AbstractDeleteCategoryController
 	{
 		return WebUrlBuilder::manage_categories();
 	}
+	
+	protected function clear_cache()
+	{
+		return WebCache::invalidate();
+	}
 }
 ?>

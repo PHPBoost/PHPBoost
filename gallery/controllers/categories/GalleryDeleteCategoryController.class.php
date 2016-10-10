@@ -50,5 +50,10 @@ class GalleryDeleteCategoryController extends AbstractDeleteCategoryController
 	{
 		return GalleryUrlBuilder::manage_categories();
 	}
+	
+	protected function clear_cache()
+	{
+		return GalleryMiniMenuCache::invalidate();
+	}
 }
 ?>

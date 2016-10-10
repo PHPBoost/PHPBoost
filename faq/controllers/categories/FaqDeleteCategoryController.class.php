@@ -50,5 +50,10 @@ class FaqDeleteCategoryController extends AbstractDeleteCategoryController
 	{
 		return FaqUrlBuilder::manage_categories();
 	}
+	
+	protected function clear_cache()
+	{
+		return FaqCache::invalidate();
+	}
 }
 ?>
