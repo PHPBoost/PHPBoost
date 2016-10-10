@@ -39,7 +39,6 @@ class ArticlesConfig extends AbstractConfigData
 	const DESCRIPTIONS_DISPLAYED_TO_GUESTS = 'descriptions_displayed_to_guests';
 	const NOTATION_ENABLED = 'notation_enabled';
 	const NOTATION_SCALE = 'notation_scale';
-	const COMMENTS_ENABLED = 'comments_enable'; 
 	const DATE_UPDATED_DISPLAYED = 'date_updated_displayed';
 	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
         
@@ -155,21 +154,6 @@ class ArticlesConfig extends AbstractConfigData
 		return $this->get_property(self::CATS_ICON_ENABLED);
 	}
 	
-	public function enable_comments()
-	{
-		$this->set_property(self::COMMENTS_ENABLED, true);
-	}
-	
-	public function disable_comments()
-	{
-		$this->set_property(self::COMMENTS_ENABLED, false);
-	}
-	
-	public function are_comments_enabled()
-	{
-		return $this->get_property(self::COMMENTS_ENABLED);
-	}
-	
 	public function get_date_updated_displayed()
 	{
 		return $this->get_property(self::DATE_UPDATED_DISPLAYED);
@@ -219,7 +203,6 @@ class ArticlesConfig extends AbstractConfigData
 			self::NUMBER_CHARACTER_TO_CUT => 128,
 			self::CATS_ICON_ENABLED => false,
 			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,
-			self::COMMENTS_ENABLED => true,
 			self::DATE_UPDATED_DISPLAYED => false,
 			self::NOTATION_ENABLED => true,
 			self::NOTATION_SCALE => 5,
