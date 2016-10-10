@@ -60,6 +60,7 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 		if (empty($children) && !$this->get_category_items_exists($category))
 		{
 			$this->get_categories_manager()->delete($this->get_category()->get_id());
+			$this->clear_cache();
 			AppContext::get_response()->redirect($this->get_categories_management_url(), StringVars::replace_vars($this->get_success_message(), array('name' => $this->get_category()->get_name())));
 		}
 	
@@ -92,6 +93,7 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 				$categories_cache = $this->get_categories_manager()->get_categories_cache()->get_class();
 				$categories_cache::invalidate();
 			}
+			$this->clear_cache();
 			AppContext::get_response()->redirect($this->get_categories_management_url(), StringVars::replace_vars($this->get_success_message(), array('name' => $this->get_category()->get_name())));
 		}
 		
@@ -183,6 +185,14 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 	protected function get_success_message()
 	{
 		return $this->lang['category.message.success.delete'];
+	}
+	
+	/**
+	 * @return Clear elements cache if any
+	 */
+	protected function clear_cache()
+	{
+		return true;
 	}
 	
 	/**

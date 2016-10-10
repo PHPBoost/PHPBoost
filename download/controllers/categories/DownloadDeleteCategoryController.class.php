@@ -61,6 +61,11 @@ class DownloadDeleteCategoryController extends AbstractDeleteCategoryController
 		return LangLoader::get_message('module_title', 'common', 'download');
 	}
 	
+	protected function clear_cache()
+	{
+		return DownloadCache::invalidate();
+	}
+	
 	protected function check_authorizations()
 	{
 		if (!DownloadAuthorizationsService::check_authorizations()->manage_categories())

@@ -57,6 +57,11 @@ class CalendarDeleteCategoryController extends AbstractDeleteCategoryController
 		return LangLoader::get_message('module_title', 'common', 'calendar');
 	}
 	
+	protected function clear_cache()
+	{
+		return CalendarCurrentMonthEventsCache::invalidate();
+	}
+	
 	protected function check_authorizations()
 	{
 		if (!CalendarAuthorizationsService::check_authorizations()->manage_categories())

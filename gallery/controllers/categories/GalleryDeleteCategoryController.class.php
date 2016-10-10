@@ -61,6 +61,11 @@ class GalleryDeleteCategoryController extends AbstractDeleteCategoryController
 		return LangLoader::get_message('module_title', 'common', 'gallery');
 	}
 	
+	protected function clear_cache()
+	{
+		return GalleryMiniMenuCache::invalidate();
+	}
+	
 	protected function check_authorizations()
 	{
 		if (!GalleryAuthorizationsService::check_authorizations()->manage_categories())

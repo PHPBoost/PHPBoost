@@ -61,6 +61,11 @@ class FaqDeleteCategoryController extends AbstractDeleteCategoryController
 		return LangLoader::get_message('module_title', 'common', 'faq');
 	}
 	
+	protected function clear_cache()
+	{
+		return FaqCache::invalidate();
+	}
+	
 	protected function check_authorizations()
 	{
 		if (!FaqAuthorizationsService::check_authorizations()->manage_categories())

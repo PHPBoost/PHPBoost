@@ -61,6 +61,11 @@ class WebDeleteCategoryController extends AbstractDeleteCategoryController
 		return LangLoader::get_message('module_title', 'common', 'web');
 	}
 	
+	protected function clear_cache()
+	{
+		return WebCache::invalidate();
+	}
+	
 	protected function check_authorizations()
 	{
 		if (!WebAuthorizationsService::check_authorizations()->manage_categories())
