@@ -31,6 +31,7 @@ load_module_lang('gallery'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 $config = GalleryConfig::load();
+$comments_config = new GalleryComments();
 
 $request = AppContext::get_request();
 
@@ -64,10 +65,6 @@ if ($valid)
 		$config->enable_title();
 	else
 		$config->disable_title();
-	if (retrieve(POST, 'comments_enabled', ''))
-		$config->enable_comments();
-	else
-		$config->disable_comments();
 	if (retrieve(POST, 'notation_enabled', ''))
 		$config->enable_notation();
 	else
@@ -140,7 +137,7 @@ else
 	$tpl->put_all(array(
 		'C_LOGO_ENABLED' => $config->is_logo_enabled(),
 		'C_TITLE_ENABLED' => $config->is_title_enabled(),
-		'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
+		'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
 		'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
 		'C_NOTES_NUMBER_DISPLAYED' => $config->are_notes_number_displayed(),
 		'C_VIEWS_COUNTER_ENABLED' => $config->is_views_counter_enabled(),

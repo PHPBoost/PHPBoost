@@ -71,6 +71,7 @@ class GalleryDisplayCategoryController extends ModuleController
 		
 		$comments_topic = new GalleryCommentsTopic();
 		$config = GalleryConfig::load();
+		$comments_config = new GalleryComments();
 		$category = $this->get_category();
 		
 		$subcategories = GalleryService::get_categories_manager()->get_categories_cache()->get_children($category->get_id(), GalleryService::get_authorized_categories($category->get_id()));
@@ -355,7 +356,7 @@ class GalleryDisplayCategoryController extends ModuleController
 						'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),
 						'C_VIEWS_COUNTER_ENABLED' => $config->is_views_counter_enabled(),
 						'C_TITLE_ENABLED' => $config->is_title_enabled(),
-						'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
+						'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
 						'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
 						'ID' => $info_pics['id'],
 						'NAME' => '<span id="fi_' . $info_pics['id'] . '">' . stripslashes($info_pics['name']) . '</span> <span id="fi' . $info_pics['id'] . '"></span>',
@@ -414,7 +415,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					}
 	
 					//Commentaires
-					if (AppContext::get_request()->get_getint('com', 0) == 0 && $config->are_comments_enabled())
+					if (AppContext::get_request()->get_getint('com', 0) == 0 && $comments_config->are_comments_enabled())
 					{
 						$this->tpl->put_all(array(
 							'COMMENTS' => CommentsService::display($comments_topic)->render()
@@ -442,7 +443,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					'C_PICTURE_NAME_DISPLAYED' => $config->is_title_enabled(),
 					'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),
 					'C_VIEWS_COUNTER_ENABLED' => $config->is_views_counter_enabled(),
-					'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
+					'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
 					'C_PAGINATION' => $pagination->has_several_pages(),
 					'PAGINATION' => $pagination->display(),
 					'L_EDIT' => LangLoader::get_message('edit', 'common'),

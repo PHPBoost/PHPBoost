@@ -186,21 +186,6 @@
 							</div>
 						</div>
 						<div class="form-element">
-							<label for="comments_enabled">{L_COMMENTS_ENABLED}</label>
-							<div class="form-field">
-								<div class="form-field-radio">
-									<input type="radio" # IF C_COMMENTS_ENABLED #checked="checked" # ENDIF #name="comments_enabled" id="comments_enabled" value="1"> 
-									<label for="comments_enabled"></label>
-								</div>
-								<span class="form-field-radio-span">{L_ENABLED}</span>
-								<div class="form-field-radio">
-									<input type="radio" # IF NOT C_COMMENTS_ENABLED #checked="checked" # ENDIF #name="comments_enabled" id="comments_enabled_2" value="0">
-									<label for="comments_enabled_2"></label>
-								</div>
-								<span class="form-field-radio-span">{L_DISABLED}</span><label> </label>
-							</div>
-						</div>
-						<div class="form-element">
 							<label for="notation_enabled">{L_NOTATION_ENABLED}</label>
 							<div class="form-field">
 								<div class="form-field-radio">

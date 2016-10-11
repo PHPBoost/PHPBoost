@@ -43,7 +43,6 @@ class GalleryConfig extends AbstractConfigData
 	const PICS_NUMBER_PER_PAGE = 'pics_number_per_page';
 	const NOTATION_SCALE = 'notation_scale';
 	const TITLE_ENABLED = 'title_enabled';
-	const COMMENTS_ENABLED = 'comments_enabled';
 	const NOTATION_ENABLED = 'notation_enabled';
 	const NOTES_NUMBER_DISPLAYED = 'notes_number_displayed';
 	const VIEWS_COUNTER_ENABLED = 'views_counter_enabled';
@@ -238,21 +237,6 @@ class GalleryConfig extends AbstractConfigData
 		return $this->get_property(self::TITLE_ENABLED);
 	}
 	
-	public function enable_comments()
-	{
-		$this->set_property(self::COMMENTS_ENABLED, true);
-	}
-	
-	public function disable_comments()
-	{
-		$this->set_property(self::COMMENTS_ENABLED, false);
-	}
-	
-	public function are_comments_enabled()
-	{
-		return $this->get_property(self::COMMENTS_ENABLED);
-	}
-	
 	public function enable_notation()
 	{
 		$this->set_property(self::NOTATION_ENABLED, true);
@@ -402,7 +386,6 @@ class GalleryConfig extends AbstractConfigData
 			self::PICS_NUMBER_PER_PAGE => 16,
 			self::NOTATION_SCALE => 5,
 			self::TITLE_ENABLED => true,
-			self::COMMENTS_ENABLED => true,
 			self::NOTATION_ENABLED => true,
 			self::NOTES_NUMBER_DISPLAYED => true,
 			self::VIEWS_COUNTER_ENABLED => true,
