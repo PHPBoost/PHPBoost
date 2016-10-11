@@ -56,6 +56,7 @@ class WebDisplayPendingWebLinksController extends ModuleController
 	{
 		$now = new Date();
 		$config = WebConfig::load();
+		$comments_config = new WebContents();
 		$authorized_categories = WebService::get_authorized_categories(Category::ROOT_CATEGORY);
 		$mode = $request->get_getstring('sort', WebUrlBuilder::DEFAULT_SORT_MODE);
 		$field = $request->get_getstring('field', WebUrlBuilder::DEFAULT_SORT_FIELD);
@@ -102,11 +103,11 @@ class WebDisplayPendingWebLinksController extends ModuleController
 			'C_PENDING' => true,
 			'C_CATEGORY_DISPLAYED_SUMMARY' => $config->is_category_displayed_summary(),
 			'C_CATEGORY_DISPLAYED_TABLE' => $config->is_category_displayed_table(),
-			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
+			'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
 			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
-			'TABLE_COLSPAN' => 3 + (int)$config->are_comments_enabled() + (int)$config->is_notation_enabled()
+			'TABLE_COLSPAN' => 3 + (int)$comments_config->are_comments_enabled() + (int)$config->is_notation_enabled()
 		));
 		
 		while ($row = $result->fetch())

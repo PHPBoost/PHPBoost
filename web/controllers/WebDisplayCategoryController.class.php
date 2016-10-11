@@ -59,6 +59,7 @@ class WebDisplayCategoryController extends ModuleController
 	private function build_view(HTTPRequestCustom $request)
 	{
 		$now = new Date();
+		$comments_config = new WebComments();
 		$mode = $request->get_getstring('sort', WebUrlBuilder::DEFAULT_SORT_MODE);
 		$field = $request->get_getstring('field', WebUrlBuilder::DEFAULT_SORT_FIELD);
 		$page = AppContext::get_request()->get_getint('page', 1);
@@ -143,7 +144,7 @@ class WebDisplayCategoryController extends ModuleController
 			'C_CATEGORY_DISPLAYED_SUMMARY' => $this->config->is_category_displayed_summary(),
 			'C_CATEGORY_DISPLAYED_TABLE' => $this->config->is_category_displayed_table(),
 			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
-			'C_COMMENTS_ENABLED' => $this->config->are_comments_enabled(),
+			'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
 			'C_NOTATION_ENABLED' => $this->config->is_notation_enabled(),
 			'C_MODERATE' => WebAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
@@ -155,7 +156,7 @@ class WebDisplayCategoryController extends ModuleController
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
 			'CATS_COLUMNS_WIDTH' => $cats_columns_width,
 			'PAGINATION' => $pagination->display(),
-			'TABLE_COLSPAN' => 3 + (int)$this->config->are_comments_enabled() + (int)$this->config->is_notation_enabled(),
+			'TABLE_COLSPAN' => 3 + (int)$comments_config->are_comments_enabled() + (int)$this->config->is_notation_enabled(),
 			'ID_CAT' => $this->get_category()->get_id(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),

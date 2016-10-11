@@ -118,8 +118,6 @@ class AdminWebConfigController extends AdminModuleController
 			array('hidden' => $this->config->get_category_display_type() == WebConfig::DISPLAY_ALL_CONTENT)
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->admin_common_lang['config.comments_enabled'], $this->config->are_comments_enabled()));
-		
 		$fieldset->add_field(new FormFieldCheckbox('notation_enabled', $this->admin_common_lang['config.notation_enabled'], $this->config->is_notation_enabled(), array(
 			'events' => array('click' => '
 				if (HTMLForms.getField("notation_enabled").getValue()) {
@@ -207,11 +205,6 @@ class AdminWebConfigController extends AdminModuleController
 				$this->config->hide_descriptions_to_guests();
 			}
 		}
-		
-		if ($this->form->get_value('comments_enabled'))
-			$this->config->enable_comments();
-		else
-			$this->config->disable_comments();
 		
 		if ($this->form->get_value('notation_enabled'))
 		{

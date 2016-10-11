@@ -36,7 +36,6 @@ class WebConfig extends AbstractConfigData
 	const COLUMNS_NUMBER_PER_LINE = 'columns_number_per_line';
 	const CATEGORY_DISPLAY_TYPE = 'category_display_type';
 	const DESCRIPTIONS_DISPLAYED_TO_GUESTS = 'descriptions_displayed_to_guests';
-	const COMMENTS_ENABLED = 'comments_enabled';
 	const NOTATION_ENABLED = 'notation_enabled';
 	const NOTATION_SCALE = 'notation_scale';
 	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
@@ -117,22 +116,7 @@ class WebConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::DESCRIPTIONS_DISPLAYED_TO_GUESTS);
 	}
-	
-	public function enable_comments()
-	{
-		$this->set_property(self::COMMENTS_ENABLED, true);
-	}
-	
-	public function disable_comments()
-	{
-		$this->set_property(self::COMMENTS_ENABLED, false);
-	}
-	
-	public function are_comments_enabled()
-	{
-		return $this->get_property(self::COMMENTS_ENABLED);
-	}
-	
+		
 	public function enable_notation()
 	{
 		$this->set_property(self::NOTATION_ENABLED, true);
@@ -229,7 +213,6 @@ class WebConfig extends AbstractConfigData
 			self::COLUMNS_NUMBER_PER_LINE => 3,
 			self::CATEGORY_DISPLAY_TYPE => self::DISPLAY_SUMMARY,
 			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,
-			self::COMMENTS_ENABLED => true,
 			self::NOTATION_ENABLED => true,
 			self::NOTATION_SCALE => 5,
 			self::ROOT_CATEGORY_DESCRIPTION => LangLoader::get_message('root_category_description', 'config', 'web'),
