@@ -56,6 +56,7 @@ class NewsDisplayPendingNewsController extends ModuleController
 		$now = new Date();
 		$authorized_categories = NewsService::get_authorized_categories(Category::ROOT_CATEGORY);
 		$news_config = NewsConfig::load();
+		$comments_config = new NewsComments();
 		
 		$condition = 'WHERE id_category IN :authorized_categories
 		' . (!NewsAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
@@ -84,7 +85,7 @@ class NewsDisplayPendingNewsController extends ModuleController
 			'C_DISPLAY_BLOCK_TYPE' => $news_config->get_display_type() == NewsConfig::DISPLAY_BLOCK,
 			'C_DISPLAY_LIST_TYPE' => $news_config->get_display_type() == NewsConfig::DISPLAY_LIST,
 			'C_DISPLAY_CONDENSED_CONTENT' => $news_config->get_display_condensed_enabled(),
-			'C_COMMENTS_ENABLED' => $news_config->get_comments_enabled(),
+			'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
 			
 			'C_NEWS_NO_AVAILABLE' => $result->get_rows_count() == 0,
 			'C_PENDING_NEWS' => true,

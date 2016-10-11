@@ -95,14 +95,15 @@ class NewsDisplayNewsController extends ModuleController
 	{
 		$news = $this->get_news();
 		$news_config = NewsConfig::load();
+		$comments_config = new NewsComments();
 		$category = $news->get_category();
 		
 		$this->tpl->put_all(array_merge($news->get_array_tpl_vars(), array(
-			'C_COMMENTS_ENABLED' => $news_config->get_comments_enabled(),
+			'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
 			'NOT_VISIBLE_MESSAGE' => MessageHelper::display(LangLoader::get_message('element.not_visible', 'status-messages-common'), MessageHelper::WARNING)
 		)));
 		
-		if (NewsConfig::load()->get_comments_enabled())
+		if ($comments_config->are_comments_enabled())
 		{
 			$comments_topic = new NewsCommentsTopic($news);
 			$comments_topic->set_id_in_module($news->get_id());
