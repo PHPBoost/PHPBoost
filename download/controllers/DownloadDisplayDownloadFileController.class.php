@@ -77,6 +77,7 @@ class DownloadDisplayDownloadFileController extends ModuleController
 	private function build_view()
 	{
 		$config = DownloadConfig::load();
+		$comments_config = new DownloadComments();
 		$downloadfile = $this->get_downloadfile();
 		$category = $downloadfile->get_category();
 		
@@ -85,7 +86,7 @@ class DownloadDisplayDownloadFileController extends ModuleController
 		
 		$this->tpl->put_all(array_merge($downloadfile->get_array_tpl_vars(), array(
 			'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),
-			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
+			'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
 			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
 			'C_KEYWORDS' => $has_keywords,
 			'C_DISPLAY_DOWNLOAD_LINK' => DownloadAuthorizationsService::check_authorizations()->display_download_link(),
@@ -93,7 +94,7 @@ class DownloadDisplayDownloadFileController extends ModuleController
 			'UNAUTHORIZED_TO_DOWNLOAD_MESSAGE' => MessageHelper::display($this->lang['download.message.warning.unauthorized_to_download_file'], MessageHelper::WARNING)
 		)));
 		
-		if ($config->are_comments_enabled())
+		if ($comments_config->are_comments_enabled())
 		{
 			$comments_topic = new DownloadCommentsTopic($downloadfile);
 			$comments_topic->set_id_in_module($downloadfile->get_id());

@@ -37,7 +37,6 @@ class DownloadConfig extends AbstractConfigData
 	const CATEGORY_DISPLAY_TYPE = 'category_display_type';
 	const DESCRIPTIONS_DISPLAYED_TO_GUESTS = 'descriptions_displayed_to_guests';
 	const AUTHOR_DISPLAYED = 'author_displayed';
-	const COMMENTS_ENABLED = 'comments_enabled';
 	const NOTATION_ENABLED = 'notation_enabled';
 	const NOTATION_SCALE = 'notation_scale';
 	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
@@ -134,22 +133,7 @@ class DownloadConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::AUTHOR_DISPLAYED);
 	}
-	
-	public function enable_comments()
-	{
-		$this->set_property(self::COMMENTS_ENABLED, true);
-	}
-	
-	public function disable_comments()
-	{
-		$this->set_property(self::COMMENTS_ENABLED, false);
-	}
-	
-	public function are_comments_enabled()
-	{
-		return $this->get_property(self::COMMENTS_ENABLED);
-	}
-	
+		
 	public function enable_notation()
 	{
 		$this->set_property(self::NOTATION_ENABLED, true);
@@ -277,7 +261,6 @@ class DownloadConfig extends AbstractConfigData
 			self::CATEGORY_DISPLAY_TYPE => self::DISPLAY_SUMMARY,
 			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,
 			self::AUTHOR_DISPLAYED => true,
-			self::COMMENTS_ENABLED => true,
 			self::NOTATION_ENABLED => true,
 			self::NOTATION_SCALE => 5,
 			self::ROOT_CATEGORY_DESCRIPTION => LangLoader::get_message('root_category_description', 'config', 'download'),

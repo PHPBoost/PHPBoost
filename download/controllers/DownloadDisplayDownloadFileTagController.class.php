@@ -58,6 +58,7 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 	{
 		$now = new Date();
 		$config = DownloadConfig::load();
+		$comments_config = new DownloadComments();
 		$authorized_categories = DownloadService::get_authorized_categories(Category::ROOT_CATEGORY);
 		$mode = $request->get_getstring('sort', DownloadUrlBuilder::DEFAULT_SORT_MODE);
 		$field = $request->get_getstring('field', DownloadUrlBuilder::DEFAULT_SORT_FIELD);
@@ -120,12 +121,12 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 			'C_MORE_THAN_ONE_FILE' => $result->get_rows_count() > 1,
 			'C_CATEGORY_DISPLAYED_SUMMARY' => $config->is_category_displayed_summary(),
 			'C_CATEGORY_DISPLAYED_TABLE' => $config->is_category_displayed_table(),
-			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
+			'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
 			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
 			'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
-			'TABLE_COLSPAN' => 4 + (int)$config->are_comments_enabled() + (int)$config->is_notation_enabled(),
+			'TABLE_COLSPAN' => 4 + (int)$comments_config->are_comments_enabled() + (int)$config->is_notation_enabled(),
 			'CATEGORY_NAME' => $this->get_keyword()->get_name()
 		));
 		
