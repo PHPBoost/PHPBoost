@@ -50,6 +50,7 @@ class MediaDisplayCategoryController extends ModuleController
 		require_once(PATH_TO_ROOT . '/media/media_constant.php');
 		load_module_lang('media');
 		$config = MediaConfig::load();
+		$comments_config = new MediaComments();
 		
 		//Contenu de la catégorie
 		$page = AppContext::get_request()->get_getint('p', 1);
@@ -151,7 +152,7 @@ class MediaDisplayCategoryController extends ModuleController
 
 		$this->tpl->put_all(array(
 			'C_DISPLAY_NOTATION' => $config->is_notation_enabled(),
-			'C_DISPLAY_COMMENTS' => $config->are_comments_enabled(),
+			'C_DISPLAY_COMMENTS' => $comments_config->are_comments_enabled(),
 			'L_ALPHA' => $MEDIA_LANG['sort_title'],
 			'L_DATE' => LangLoader::get_message('date', 'date-common'),
 			'L_NBR' => $MEDIA_LANG['sort_popularity'],

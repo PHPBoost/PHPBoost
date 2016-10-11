@@ -151,7 +151,9 @@
 							# INCLUDE media_format #
 						</div>
 		
+						# IF C_DISPLAY_COMMENTS #
 						{COMMENTS}
+						# ENDIF #
 					</div>
 					<footer></footer>
 				</article>

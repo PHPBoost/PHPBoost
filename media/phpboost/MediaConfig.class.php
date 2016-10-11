@@ -35,7 +35,6 @@ class MediaConfig extends AbstractConfigData
 	const CATEGORIES_NUMBER_PER_PAGE = 'categories_number_per_page';
 	const COLUMNS_NUMBER_PER_LINE = 'columns_number_per_line';
 	const AUTHOR_DISPLAYED = 'author_displayed';
-	const COMMENTS_ENABLED = 'comments_enabled';
 	const NOTATION_ENABLED = 'notation_enabled';
 	const NOTATION_SCALE = 'notation_scale';
 	const MAX_VIDEO_WIDTH = 'max_video_width';
@@ -91,21 +90,6 @@ class MediaConfig extends AbstractConfigData
 	public function is_author_displayed()
 	{
 		return $this->get_property(self::AUTHOR_DISPLAYED);
-	}
-	
-	public function enable_comments()
-	{
-		$this->set_property(self::COMMENTS_ENABLED, true);
-	}
-	
-	public function disable_comments()
-	{
-		$this->set_property(self::COMMENTS_ENABLED, false);
-	}
-	
-	public function are_comments_enabled()
-	{
-		return $this->get_property(self::COMMENTS_ENABLED);
 	}
 	
 	public function enable_notation()
@@ -208,7 +192,6 @@ class MediaConfig extends AbstractConfigData
 			self::CATEGORIES_NUMBER_PER_PAGE => 10,
 			self::COLUMNS_NUMBER_PER_LINE => 2,
 			self::AUTHOR_DISPLAYED => true,
-			self::COMMENTS_ENABLED => true,
 			self::NOTATION_ENABLED => true,
 			self::NOTATION_SCALE => 5,
 			self::MAX_VIDEO_WIDTH => 900,

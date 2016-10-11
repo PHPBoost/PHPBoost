@@ -51,6 +51,7 @@ elseif ($id_media > 0)
 {
 	$tpl = new FileTemplate('media/media.tpl');
 	$config = MediaConfig::load();
+	$comments_config = new MediaComments();
 	
 	try {
 		$media = PersistenceContext::get_querier()->select_single_row_query("SELECT v.*, mb.display_name, mb.groups, mb.level, notes.average_notes, notes.number_notes, note.note
@@ -107,7 +108,7 @@ elseif ($id_media > 0)
 		'C_ROOT_CATEGORY' => $media['idcat'] == Category::ROOT_CATEGORY,
 		'C_MODO' => MediaAuthorizationsService::check_authorizations($media['idcat'])->moderation(),
 		'C_DISPLAY_NOTATION' => $config->is_notation_enabled(),
-		'C_DISPLAY_COMMENTS' => $config->are_comments_enabled(),
+		'C_DISPLAY_COMMENTS' => $comments_config->are_comments_enabled(),
 		'C_NEW_CONTENT' => $new_content->check_if_is_new_content($media['timestamp']),
 		'ID_MEDIA' => $id_media,
 		'NAME' => $media['name'],
