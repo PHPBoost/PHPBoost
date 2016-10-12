@@ -54,9 +54,9 @@ class Application
 
 	private $description = '';
 	private $new_features = array();
-	private $improvments = array();
+	private $improvements = array();
 	private $bug_corrections = array();
-	private $security_improvments = array();
+	private $security_improvements = array();
 
 	private $warning_level = null;
 	private $warning = null;
@@ -153,9 +153,9 @@ class Application
 		$this->description = utf8_decode((string) $this->description[0]);
 
 		$this->new_features = array();
-		$this->improvments = array();
+		$this->improvements = array();
 		$this->bug_corrections = array();
-		$this->security_improvments = array();
+		$this->security_improvements = array();
 
 		$novelties = $xml_desc->xpath('whatsnew/new');
 		foreach ($novelties  as $novelty )
@@ -164,14 +164,14 @@ class Application
 			$type = isset($attributes['type']) ? $attributes['type'] : 'feature';
 			switch ($type)
 			{
-				case 'improvment':
-					$this->improvments[] = utf8_decode((string) $novelty);
+				case 'improvement':
+					$this->improvements[] = utf8_decode((string) $novelty);
 					break;
 				case 'bug':
 					$this->bug_corrections[] = utf8_decode((string) $novelty);
 					break;
 				case 'security':
-					$this->security_improvments[] = utf8_decode((string) $novelty);
+					$this->security_improvements[] = utf8_decode((string) $novelty);
 					break;
 				default:
 					$this->new_features[] = utf8_decode((string) $novelty);
@@ -284,17 +284,17 @@ class Application
 	 */
 	public function get_new_features() { return $this->new_features; }
 	/**
-	 * @desc Accessor of Improvments Text
+	 * @desc Accessor of improvements Text
 	 */
-	public function get_improvments() { return $this->improvments; }
+	public function get_improvements() { return $this->improvements; }
 	/**
 	 * @desc Accessor of Bug Corrections Text
 	 */
 	public function get_bug_corrections() { return $this->bug_corrections; }
 	/**
-	 * @desc Accessor of Security Improvments
+	 * @desc Accessor of Security improvements
 	 */
-	public function get_security_improvments() { return $this->security_improvments; }
+	public function get_security_improvements() { return $this->security_improvements; }
 	/**
 	 * @desc Accessor of Warning level
 	 */

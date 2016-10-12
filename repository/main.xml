@@ -155,10 +155,10 @@
 				<new type="feature">Refonte du module Liens Web</new>
 				<new type="feature">Refonte du module Téléchargements</new>
 				<new type="feature">Framework javascript jQuery</new>
-				<new type="improvment">Optimisation du kernel et du thème pour affichage plus rapide</new>
-				<new type="improvment">Thème de base responsive, il s'adapte automatiquement à tout type d'écran</new>
-				<new type="improvment">Amélioration du référencement</new>
-				<new type="improvment">Amélioration de la sécurité</new>
+				<new type="improvement">Optimisation du kernel et du thème pour affichage plus rapide</new>
+				<new type="improvement">Thème de base responsive, il s'adapte automatiquement à tout type d'écran</new>
+				<new type="improvement">Amélioration du référencement</new>
+				<new type="improvement">Amélioration de la sécurité</new>
 			</whatsnew>
 		</version>
 		<version num="4.1.7" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/01/08">
@@ -273,9 +273,9 @@
 			</description>
 			<whatsnew>
 				<new type="bug">Plusieurs corrections de bugs.</new>
-				<new type="improvment">Amélioration du module statistique</new>
-				<new type="improvment">Ajout de la possibilité de ne pas afficher l'auteur dans les news</new>
-				<new type="improvment">Amélioration du référencement</new>
+				<new type="improvement">Amélioration du module statistique</new>
+				<new type="improvement">Ajout de la possibilité de ne pas afficher l'auteur dans les news</new>
+				<new type="improvement">Amélioration du référencement</new>
 			</whatsnew>
 		</version>
 		<version num="4.1.0" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2014/07/15">
@@ -294,9 +294,9 @@
 				<new type="feature">Refonte du module contact</new>
 				<new type="feature">Refonte du module news</new>
 				<new type="feature">Refonte du module articles</new>
-				<new type="improvment">Optimisation du kernel et du thème pour affichage plus rapide</new>
+				<new type="improvement">Optimisation du kernel et du thème pour affichage plus rapide</new>
 				<new type="feature">Un nouveau script de migration, il est maintenant beaucoup plus facile de migrer d'une version à une autre !</new>
-				<new type="improvment">Amélioration du référencement</new>
+				<new type="improvement">Amélioration du référencement</new>
 			</whatsnew>
 		</version>
 		<version num="4.0.6" language="french" localized_language="Français" name="Noyau" priority="medium" security-update="false" pubdate="2013/11/04">
@@ -613,7 +613,7 @@
 				<new type="feature">Système de menus puissant</new>
 				<new type="feature">Système d'alertes</new>
 				<new type="security">Amélioration de la sécurité</new>
-				<new type="improvment">Système de flux RSS entièrement remanié supportant désormais l'ATOM pouvant être utilisé via les Templates</new>
+				<new type="improvement">Système de flux RSS entièrement remanié supportant désormais l'ATOM pouvant être utilisé via les Templates</new>
 				<new type="bug">Nombreux bugs corrigés</new>
 			</whatsnew>
 		</version>

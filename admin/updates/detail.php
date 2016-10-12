@@ -52,15 +52,15 @@ if ($app !== null && $app->check_compatibility())
 {
     $authors = $app->get_authors();
     $new_features = $app->get_new_features();
-    $improvments = $app->get_improvments();
+    $improvements = $app->get_improvements();
     $bug_corrections = $app->get_bug_corrections();
-    $security_improvments = $app->get_security_improvments();
+    $security_improvements = $app->get_security_improvements();
     
     $nb_authors = count($authors);
-    $has_new_feature = count($new_features) > 0 ? true : false;
-    $has_improvments = count($improvments) > 0 ? true : false;
-    $has_bug_corrections = count($bug_corrections) > 0 ? true : false;
-    $has_security_improvments = count($security_improvments) > 0 ? true : false;
+    $has_new_feature = count($new_features) > 0;
+    $has_improvements = count($improvements) > 0;
+    $has_bug_corrections = count($bug_corrections) > 0;
+    $has_security_improvements = count($security_improvements) > 0;
     
     switch ($update->get_priority())
     {
@@ -91,19 +91,19 @@ if ($app !== null && $app->check_compatibility())
         'PRIORITY_CSS_CLASS' => 'row_' . $priority,
         'L_AUTHORS' => $nb_authors > 1 ? $LANG['authors'] : $LANG['author'],
         'L_NEW_FEATURES' => $LANG['new_features'],
-        'L_IMPROVMENTS' => $LANG['improvments'],
+        'L_IMPROVEMENTS' => $LANG['improvements'],
         'L_FIXED_BUGS' => $LANG['fixed_bugs'],
-        'L_SECURITY_IMPROVMENTS' => $LANG['security_improvments'],
+        'L_SECURITY_IMPROVEMENTS' => $LANG['security_improvements'],
         'L_DOWNLOAD' => $LANG['app_update__download'],
         'L_DOWNLOAD_PACK' => $LANG['app_update__download_pack'],
         'L_UPDATE_PACK' => $LANG['app_update__update_pack'],
         'L_WARNING' => $LANG['warning'],
         'L_APP_UPDATE_MESSAGE' => $update ->get_entitled(),
         'C_NEW_FEATURES' => $has_new_feature,
-        'C_IMPROVMENTS' => $has_improvments,
+        'C_IMPROVEMENTS' => $has_improvements,
         'C_BUG_CORRECTIONS' => $has_bug_corrections,
-        'C_SECURITY_IMPROVMENTS' => $has_security_improvments,
-        'C_NEW' => $has_new_feature || $has_improvments || $has_bug_corrections || $has_security_improvments
+        'C_SECURITY_IMPROVEMENTS' => $has_security_improvements,
+        'C_NEW' => $has_new_feature || $has_improvements || $has_bug_corrections || $has_security_improvements
     ));
     
     foreach ($authors as $author)
@@ -112,14 +112,14 @@ if ($app !== null && $app->check_compatibility())
     foreach ($new_features as $new_feature)
         $tpl->assign_block_vars('new_features', array('description' => $new_feature));
         
-    foreach ($improvments as $improvment)
-        $tpl->assign_block_vars('improvments', array('description' => $improvment));
+    foreach ($improvements as $improvement)
+        $tpl->assign_block_vars('improvements', array('description' => $improvement));
     
     foreach ($bug_corrections as $bug_correction)
         $tpl->assign_block_vars('bugs', array('description' => $bug_correction));
     
-    foreach ($security_improvments as $security_improvment)
-        $tpl->assign_block_vars('security', array('description' => $security_improvment));
+    foreach ($security_improvements as $security_improvement)
+        $tpl->assign_block_vars('security', array('description' => $security_improvement));
 }
 else
 {

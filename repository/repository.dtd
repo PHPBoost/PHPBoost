@@ -38,7 +38,7 @@
 
 <!ELEMENT whatsnew (new+)>
 <!ELEMENT new (#PCDATA)>
-<!ATTLIST new type (feature|improvment|bug|security) "feature">
+<!ATTLIST new type (feature|improvement|bug|security) "feature">
 
 <!ELEMENT warning (#PCDATA)>
 <!ATTLIST warning level (low|medium|high) "low">
