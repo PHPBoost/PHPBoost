@@ -173,8 +173,6 @@ class HtaccessFileCache implements CacheData
 			$this->add_line('		Header set Strict-Transport-Security "max-age=31536000; includeSubDomains"');
 		}
 		
-		$this->add_line('		# Don\'t allow any pages to be framed externally - Defends against CSRF');
-		$this->add_line('		Header set X-Frame-Options SAMEORIGIN');
 		$this->add_line('		# Control Cross-Domain Policies');
 		$this->add_line('		Header set X-Permitted-Cross-Domain-Policies "master-only"');
 		$this->add_line('		# Turn on IE8-IE9 XSS prevention tools');

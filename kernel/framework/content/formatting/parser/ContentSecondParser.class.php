@@ -282,18 +282,17 @@ class ContentSecondParser extends AbstractParser
 	/**
 	 * Inserts the javascript calls for the sound tag.
 	 * @param $matches The matched elements
-	 * @return The movie insertion code containing javascrpt calls
+	 * @return The movie insertion code containing javascript calls
 	 */
 	private static function process_sound_tag($matches)
 	{
-		//Balise son
 		return '<audio controls><source src="'. Url::to_rel($matches[1]) .'" /></audio>';
 	}
 	
 	private static function process_youtube_tag($matches)
 	{
 		$matches[1] = str_replace(array('/watch?v=', '/embed/'), '/v/', $matches[1]);
-		return self::process_swf_tag($matches);
+		return '<iframe class="player-youtube" type="text/html" width="' . $matches[2] . '" height="' . $matches[3] . '" src="' . Url::to_rel($matches[1]) . '" frameborder="0"></iframe>';
 	}
 	
 	private function parse_feed_tag()
