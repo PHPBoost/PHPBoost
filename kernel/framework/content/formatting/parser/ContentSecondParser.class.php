@@ -292,7 +292,7 @@ class ContentSecondParser extends AbstractParser
 	private static function process_youtube_tag($matches)
 	{
 		$matches[1] = str_replace(array('/watch?v=', '/embed/'), '/v/', $matches[1]);
-		return '<iframe class="player-youtube" type="text/html" width="' . $matches[2] . '" height="' . $matches[3] . '" src="' . Url::to_rel($matches[1]) . '" frameborder="0"></iframe>';
+		return '<iframe class="player-youtube" type="text/html" width="' . $matches[2] . '" height="' . $matches[3] . '" src="' . Url::to_rel($matches[1]) . '" frameborder="0" allowfullscreen></iframe>';
 	}
 	
 	private function parse_feed_tag()
