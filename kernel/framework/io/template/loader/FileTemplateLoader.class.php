@@ -167,20 +167,32 @@ class FileTemplateLoader implements TemplateLoader
 		$this->default_templates_folder = PATH_TO_ROOT . '/templates/default/';
 		$this->theme_templates_folder = PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/';
 
-		if (empty($this->module) || in_array($this->module, array('admin', 'framework') ))
+		if (empty($this->module) || !strpos($this->filepath, '/'))
 		{
-			// Kernel - Templates priority order
-			//      /templates/$theme/default/.../$file.tpl
-			//      /templates/default/.../$file.tpl
-			$this->get_kernel_paths();
+			$this->get_template_paths();
 		}
-		else
+		else if (!in_array($this->module, array('default', 'admin', 'framework') ))
 		{
 			// Module - Templates priority order
 			//      /templates/$theme/modules/$module/$file.tpl
 			//      /$module/templates/$file.tpl
 			$this->get_module_paths();
 		}
+		else
+		{
+			// Kernel - Templates priority order
+			//      /templates/$theme/default/.../$file.tpl
+			//      /templates/default/.../$file.tpl
+			$this->get_kernel_paths();
+		}
+	}
+
+	private function get_template_paths()
+	{
+		$this->get_template_real_filepaths_and_data_path(array(
+			$this->theme_templates_folder . $this->filepath,
+			$this->default_templates_folder . $this->filepath
+		));
 	}
 
 	private function get_kernel_paths()
@@ -210,7 +222,7 @@ class FileTemplateLoader implements TemplateLoader
 				break;
 			}
 		}
-
+		
 		foreach ($paths as $path)
 		{
 			if (file_exists($path))
