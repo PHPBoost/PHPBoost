@@ -56,7 +56,7 @@ class WebDisplayPendingWebLinksController extends ModuleController
 	{
 		$now = new Date();
 		$config = WebConfig::load();
-		$comments_config = new WebContents();
+		$comments_config = new WebComments();
 		$authorized_categories = WebService::get_authorized_categories(Category::ROOT_CATEGORY);
 		$mode = $request->get_getstring('sort', WebUrlBuilder::DEFAULT_SORT_MODE);
 		$field = $request->get_getstring('field', WebUrlBuilder::DEFAULT_SORT_FIELD);

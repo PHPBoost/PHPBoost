@@ -191,7 +191,7 @@ class AdminCommentsConfigController extends AdminController
 
 		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $id => $module)
 		{
-			if (in_array($module->get_id(), $comments_extensions_point_modules))
+			if (class_exists(ucfirst($module->get_id()) . 'Comments') && in_array($module->get_id(), $comments_extensions_point_modules))
 			{
 				$options[] = new FormFieldSelectChoiceOption($module->get_configuration()->get_name(), $module->get_id());
 			}
