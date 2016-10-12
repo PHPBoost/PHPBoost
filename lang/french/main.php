@@ -241,6 +241,7 @@ $LANG['last_message'] = 'Dernier message';
 $LANG['mark_pm_as_read'] = 'Marquer tous les messages privés comme lus';
 $LANG['participants'] = 'Participant(s)';
 $LANG['quote_last_msg'] = 'Reprise du message précédent';
+$LANG['select_all_messages'] = 'Sélectionner tous les messages';
 
 //Gestion des fichiers
 $LANG['confim_del_file'] = 'Supprimer ce fichier ?';
