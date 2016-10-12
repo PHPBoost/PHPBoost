@@ -462,7 +462,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					
 					if (AppContext::get_current_user()->get_editor() == 'TinyMCE')
 					{
-						$new_content = $last_message_content . '<br /><br />-------------------------------------------<br /><em>' . $LANG['edit_on'] . ' ' . $now->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) . '</em><br /><br />' . FormatingHelper::strparse($contents);
+						$new_content = $last_message_content . '<br /><br />-------------------------------------------<br /><em>' . $LANG['edit_on'] . ' ' . $now->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) . '</em><br /><br />' . $contents;
 					}
 					else
 					{
@@ -471,11 +471,25 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 -------------------------------------------
 <em>' . $LANG['edit_on'] . ' ' . $now->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) . '</em>
 
-' . FormatingHelper::strparse($contents);
+' . $contents;
 					}
 					
 					$Forumfct->Update_msg($idt_get, $topic['last_msg_id'], FormatingHelper::unparse(addslashes($new_content)), $topic['last_user_id']); //Mise à jour du topic.
 					$last_msg_id = $topic['last_msg_id'];
+					
+					$last_timestamp = time();
+					//Mise à jour de la date du dernier message du topic pour marquer le message comme non lu chez les autres membres
+					PersistenceContext::get_querier()->update(PREFIX . "forum_topics", array('last_timestamp' => $last_timestamp), 'WHERE id = :idtopic', array('idtopic' => $idt_get));
+					
+					//On met à jour le last_topic_id dans la catégorie dans le lequel le message a été posté et ses parents
+					$categories = array_keys(ForumService::get_categories_manager()->get_parents($topic['idcat'], true));
+					PersistenceContext::get_querier()->update(ForumSetup::$forum_cats_table, array('last_topic_id' => $idt_get), 'WHERE id IN :categories_id', array('categories_id' => $categories));
+					
+					//On supprime les marqueurs de messages lus pour ce message.
+					PersistenceContext::get_querier()->delete(PREFIX . 'forum_view', 'WHERE idtopic=:id AND last_view_id=:id_message', array('id' => $idt_get, 'id_message' => $last_msg_id));
+					
+					//On marque le topic comme lu pour le posteur
+					mark_topic_as_read($idt_get, $last_msg_id, $last_timestamp);
 				}
 				else
 					$last_msg_id = $Forumfct->Add_msg($idt_get, $topic['idcat'], $contents, $topic['title'], $last_page, $last_page_rewrite);
