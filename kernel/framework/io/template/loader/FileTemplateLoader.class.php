@@ -46,7 +46,6 @@ class FileTemplateLoader implements TemplateLoader
 
 	private $module;
 	private $file;
-	private $folder;
 
 	private $default_templates_folder;
 	private $theme_templates_folder;
@@ -158,32 +157,28 @@ class FileTemplateLoader implements TemplateLoader
 		 $module = forum
 		 $filename = forum_topic.tpl
 		 $file = forum_topic.tpl
-		 $folder =
-		 $this->filepath = /news/framework/content/syndication/last_news.tpl
-		 $this->filepath = news/framework/content/syndication/menu.tpl
-		 $module = news
-		 $filename = menu.tpl
-		 $file = framework/content/syndication/menu.tpl
-		 $folder = framework/content/syndication
 		 */
 
 		$i = strpos($this->filepath, '/');
 		$this->module = substr($this->filepath, 0, $i);
 		$this->file = trim(substr($this->filepath, $i), '/');
-		$this->folder = trim(substr($this->file, 0, strpos($this->file, '/')), '/');
 		$this->filename = trim(substr($this->filepath, strrpos($this->filepath, '/')));
 
 		$this->default_templates_folder = PATH_TO_ROOT . '/templates/default/';
 		$this->theme_templates_folder = PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/';
 
 		if (empty($this->module) || in_array($this->module, array('admin', 'framework') ))
-		{   // Kernel - Templates priority order
-			//      /templates/$theme/.../$file.tpl
+		{
+			// Kernel - Templates priority order
+			//      /templates/$theme/default/.../$file.tpl
 			//      /templates/default/.../$file.tpl
 			$this->get_kernel_paths();
 		}
 		else
-		{   // Module - Templates
+		{
+			// Module - Templates priority order
+			//      /templates/$theme/modules/$module/$file.tpl
+			//      /$module/templates/$file.tpl
 			$this->get_module_paths();
 		}
 	}
@@ -191,37 +186,17 @@ class FileTemplateLoader implements TemplateLoader
 	private function get_kernel_paths()
 	{
 		$this->get_template_real_filepaths_and_data_path(array(
-		$this->theme_templates_folder . $this->filepath,
-		$this->default_templates_folder . $this->filepath
+			$this->theme_templates_folder . 'default/' . $this->filepath,
+			$this->default_templates_folder . $this->filepath
 		));
 	}
 
 	private function get_module_paths()
 	{
-		$theme_module_templates_folder = $this->theme_templates_folder . 'modules/' . $this->module . '/';
-		$module_templates_folder = PATH_TO_ROOT . '/' . $this->module . '/templates/';
-
-		if ($this->folder == 'framework')
-		{   // Framework - Templates priority order
-			//      /templates/$theme/modules/$module/framework/.../$file.tpl
-			//      /templates/$theme/framework/.../$file.tpl
-			//      /$module/templates/framework/.../$file.tpl
-			//      /templates/default/framework/.../$file.tpl
-
-			$this->get_template_real_filepaths_and_data_path(array(
-			$theme_module_templates_folder . $this->file,
-			$module_templates_folder . 'framework/' . $this->file,
-			$this->theme_templates_folder . $this->filepath,
-			$this->default_templates_folder . $this->file
-			));
-		}
-		else
-		{
-			$this->get_template_real_filepaths_and_data_path(array(
-			$theme_module_templates_folder . $this->file,
-			$module_templates_folder . $this->file
-			));
-		}
+		$this->get_template_real_filepaths_and_data_path(array(
+			$this->theme_templates_folder . 'modules/' . $this->module . '/' . $this->file,
+			PATH_TO_ROOT . '/' . $this->module . '/templates/' . $this->file
+		));
 	}
 
 	private function get_template_real_filepaths_and_data_path($paths)
