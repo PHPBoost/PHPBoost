@@ -722,9 +722,10 @@ textarea#writing_pad_content {
 	float: left;
 }
 
-.form-element-preview {
+.form-element-preview, .form-element-reset {
 	margin: 5px auto 0 auto;
 	text-align: center;
+	display: inline;
 }
 
 .form-element-auth .form-field {

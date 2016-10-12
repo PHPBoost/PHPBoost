@@ -35,6 +35,8 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 	 * @var ContentFormattingFactory
 	 */
 	private $formatter = null;
+	
+	private $reset_value = null;
 
 	/**
 	 * @desc Constructs a rich text edit field.
@@ -74,16 +76,32 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 
 		$template->put_all(array(
 			'C_EDITOR_ENABLED' => true,
+			'C_RESET_BUTTON_ENABLED' => $this->reset_value !== null,
 			'EDITOR' => $editor->display(),
 			'EDITOR_NAME' => strtolower($this->formatter->get_name()),
 			'VALUE' => $this->get_raw_value(),
-			'PREVIEW_BUTTON' => $this->get_preview_button_code()
+			'PREVIEW_BUTTON' => $this->get_preview_button_code(),
+			'RESET_BUTTON' => $this->get_reset_button_code()
 		));
 	}
 
 	private function get_preview_button_code()
 	{
 		return '<button type="button" class="small" onclick="XMLHttpRequest_preview(\'' . $this->get_html_id() . '\');">' . LangLoader::get_message('preview', 'main') . '</button>';
+	}
+
+	private function get_reset_button_code()
+	{
+		return '<script>
+		<!--
+			function XMLHttpRequest_reset_' . $this->get_html_id() . '()
+			{
+				' . (AppContext::get_current_user()->get_editor() == 'TinyMCE' ? 'setTinyMceContent(' . TextHelper::to_js_string($this->unparse_value($this->reset_value)) . ');' : 
+				'HTMLForms.getField("' . $this->get_id() . '").setValue(' . TextHelper::to_js_string($this->unparse_value($this->reset_value)) . ');') . '
+			}
+		-->
+		</script>
+		<button type="button" class="small" onclick="XMLHttpRequest_reset_' . $this->get_html_id() . '();">' . LangLoader::get_message('reset', 'main') . '</button>';
 	}
 
 	/**
@@ -162,6 +180,10 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 					{
 						throw new FormBuilderException('The value associated to the formatter attribute must be an instance of the ContentFormattingFactory class');
 					}
+					break;
+				case 'reset_value':
+					$this->reset_value = $value;
+					unset($field_options['reset_value']);
 					break;
 			}
 		}
