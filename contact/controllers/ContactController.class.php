@@ -85,7 +85,10 @@ class ContactController extends ModuleController
 		$tpl = new FileTemplate('contact/ContactMap.tpl');
 		$marker = $this->config->get_map_marker();
 		$nb_markers = count($marker);
-		$tpl->put('C_MARKER', $nb_markers > 0);
+		$tpl->put_all(array(
+			'C_MARKER' => $nb_markers > 0,
+			'C_ONE_MARKER' => $nb_markers == 1
+		));
 		
 		$i = 1;
 		foreach ($marker as $id => $options)

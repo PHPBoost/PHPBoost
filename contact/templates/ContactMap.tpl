@@ -12,6 +12,44 @@
 <script src="https://maps.google.com/maps/api/js?key=AIzaSyDa_Ph-ORGTmXcYdNjw7MS5svx_6W7t_5A"></script>
 <script src="{PATH_TO_ROOT}/contact/templates/js/Leaflet.GoogleMutant.js"></script>
  
+		
+# IF C_ONE_MARKER #
+<script>
+	var lat = # START places #{places.MAP_LATITUDE}# END places #;
+	var lng = # START places #{places.MAP_LONGITUDE}# END places #;
+	var popup = # START places #'{places.MAP_POPUP}'# END places #;
+	
+	var map = L.map('map').setView([lat, lng], 14);
+	var marker = L.marker([lat, lng]).addTo(map);
+	marker.bindPopup(popup);
+	
+	var osm = new L.TileLayer('http://\{s\}.tile.openstreetmap.org/\{z\}/\{x\}/\{y\}.png');
+	var ocm = new L.TileLayer('http://\{s\}.tile.thunderforest.com/cycle/\{z\}/\{x\}/\{y\}.png');
+	var olm = new L.TileLayer('http://\{s\}.tile.thunderforest.com/landscape/\{z\}/\{x\}/\{y\}.png');
+	var otm = new L.TileLayer('http://\{s\}.tile.thunderforest.com/transport/\{z\}/\{x\}/\{y\}.png');
+	var oom = new L.TileLayer('http://\{s\}.tile.thunderforest.com/outdoors/\{z\}/\{x\}/\{y\}.png');
+	var gglt = new L.gridLayer.googleMutant({type: 'terrain'}) ;
+	var ggls = new L.gridLayer.googleMutant({type: 'satellite'}) ;
+	var gglr = new L.gridLayer.googleMutant({type: 'roadmap'}) ;
+	var gglh = new L.gridLayer.googleMutant({type: 'hybrid'}) ;
+	
+	var multiplelayers = {
+		'OpenStreetMap':osm,
+		'OpenCycleMap':ocm,
+		'OpenLandingMap':olm,
+		'OpenTransportMap':otm,
+		'OpenOutdoorsMap':oom,
+		'Google terrain':gglt,
+		'Google satellite':ggls,
+		'Google roadmap':gglr,
+		'Google hybrid':gglh,
+		};
+	
+	map.addLayer(osm);	
+	L.control.layers(multiplelayers).addTo(map);
+</script>
+			
+		# ELSE #
 <script>
 <!--
 jQuery(document).ready(function() {
@@ -29,6 +67,7 @@ jQuery(document).ready(function() {
 	var ggls = new L.gridLayer.googleMutant({type: 'satellite'}) ;
 	var gglr = new L.gridLayer.googleMutant({type: 'roadmap'}) ;
 	var gglh = new L.gridLayer.googleMutant({type: 'hybrid'}) ;
+	
 
 	
 	var layer = L.geoJson().addTo(map);
@@ -39,21 +78,10 @@ jQuery(document).ready(function() {
 			map.spin(false);
     }, 2000);
 		
-		
-			
 		// liste des markers
 		var markers = new L.FeatureGroup();
 		var marker = new Array();
 		var markersData = [
-			# IF C_ONE_MARKER #
-			# START places #
-			[
-				'{places.MAP_POPUP}',
-				{places.MAP_LATITUDE},
-				{places.MAP_LONGITUDE},
-			]		
-			# END places #
-			# ELSE #
 			# START places #
 			[
 				'{places.MAP_POPUP}',
@@ -61,7 +89,6 @@ jQuery(document).ready(function() {
 				{places.MAP_LONGITUDE},
 			],		
 			# END places #
-			# ENDIF #
 		];	
 		
 		if(markersData.length > 0) {
@@ -75,9 +102,9 @@ jQuery(document).ready(function() {
 				markers.addLayer(marker);
 			}
 		
-		var bounds = markers.getBounds();
-		map.fitBounds(bounds);
-		map.addLayer(markers)
+			var bounds = markers.getBounds();
+			map.fitBounds(bounds);
+			map.addLayer(markers)
 		}
 	//add on the map
 	map.addLayer(osm);
@@ -97,6 +124,7 @@ jQuery(document).ready(function() {
 });
 -->
 </script>
+# ENDIF #
 	
 
 			<div id="map-container">
