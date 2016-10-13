@@ -124,6 +124,28 @@ class AdminContactConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldCheckbox('sender_acknowledgment_enabled', $this->lang['admin.config.sender_acknowledgment_enabled'], $this->config->is_sender_acknowledgment_enabled()));
 		
+		$map_fieldset = new FormFieldsetHTML('configuration', $this->lang['admin.config.map.add']);
+		$form->add_fieldset($map_fieldset);
+		
+		$map_fieldset->add_field(new FormFieldCheckbox('map_enabled', $this->lang['admin.config.map_enabled'], $this->config->is_map_enabled(),
+			array('events' => array('click' => '
+				if (HTMLForms.getField("map_enabled").getValue()) {
+					HTMLForms.getField("map_coord").enable();
+					HTMLForms.getField("map_marker").enable();
+				} else {
+					HTMLForms.getField("map_coord").disable();
+					HTMLForms.getField("map_marker").disable();
+				}'))
+		));
+		
+		$map_fieldset->add_field(new FormFieldFree('map_coord', $this->lang['admin.config.map.coord.desc'], $this->lang['admin.config.map.coord.url'],
+			array('hidden' => !$this->config->is_map_enabled())
+		));
+		
+		$map_fieldset->add_field(new ContactFormFieldMarkerConfig('map_marker', $this->lang['admin.config.map.marker'], $this->config->get_map_marker(),
+			array('hidden' => !$this->config->is_map_enabled())
+		));
+		
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', LangLoader::get_message('authorizations', 'common'));
 		$form->add_fieldset($fieldset_authorizations);
 		
@@ -169,6 +191,14 @@ class AdminContactConfigController extends AdminModuleController
 			$this->config->enable_sender_acknowledgment();
 		else
 			$this->config->disable_sender_acknowledgment();
+		
+		if ($this->form->get_value('map_enabled'))
+		{
+			$this->config->enable_map();
+			$this->config->set_map_marker($this->form->get_value('map_marker'));
+		}
+		else
+			$this->config->disable_map();
 		
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		
