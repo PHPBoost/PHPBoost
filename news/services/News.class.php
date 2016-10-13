@@ -396,6 +396,7 @@ class News
 		$this->sources = array();
 		$this->picture_url = new Url(self::DEFAULT_PICTURE);
 		$this->end_date_enabled = false;
+		$this->number_view = 0;
 		$this->author_display_name = $this->author_user->get_display_name();
 		$this->author_display_name_enabled = false;
 	}
