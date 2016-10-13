@@ -1,3 +1,4 @@
+# IF C_MARKER #
 <!-- JavaScript -->
 <script charset="utf-8">var PATH_TO_ROOT = "{PATH_TO_ROOT}";</script>
 
@@ -8,7 +9,7 @@
 <script src="{PATH_TO_ROOT}/contact/templates/js/spin.min.js"></script>
 
 <!-- Map Layers -->
-<script src="https://maps.google.com/maps/api/js?v=3&amp;sensor=false"></script>
+<script src="https://maps.google.com/maps/api/js?key=AIzaSyDa_Ph-ORGTmXcYdNjw7MS5svx_6W7t_5A"></script>
 <script src="{PATH_TO_ROOT}/contact/templates/js/Leaflet.GoogleMutant.js"></script>
  
 <script>
@@ -44,6 +45,15 @@ jQuery(document).ready(function() {
 		var markers = new L.FeatureGroup();
 		var marker = new Array();
 		var markersData = [
+			# IF C_ONE_MARKER #
+			# START places #
+			[
+				'{places.MAP_POPUP}',
+				{places.MAP_LATITUDE},
+				{places.MAP_LONGITUDE},
+			]		
+			# END places #
+			# ELSE #
 			# START places #
 			[
 				'{places.MAP_POPUP}',
@@ -51,6 +61,7 @@ jQuery(document).ready(function() {
 				{places.MAP_LONGITUDE},
 			],		
 			# END places #
+			# ENDIF #
 		];	
 		
 		if(markersData.length > 0) {
@@ -92,5 +103,5 @@ jQuery(document).ready(function() {
 				<div id="map"></div>
 			</div>
 		
-		
+# ENDIF #		
 			

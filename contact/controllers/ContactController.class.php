@@ -84,7 +84,10 @@ class ContactController extends ModuleController
 	{
 		$tpl = new FileTemplate('contact/ContactMap.tpl');
 		$marker = $this->config->get_map_marker();
+		$nb_markers = count($marker);
+		$tpl->put('C_MARKER', $nb_markers > 0);
 		
+		$i = 1;
 		foreach ($marker as $id => $options)
 		{
 			$tpl->assign_block_vars('places', array(
@@ -92,6 +95,7 @@ class ContactController extends ModuleController
 				'MAP_LONGITUDE' => $options['longitude'],
 				'MAP_POPUP' => $options['popup'],
 			));
+			$i++;
 		}
 		$this->view->put('MAP', $tpl);
 	}
