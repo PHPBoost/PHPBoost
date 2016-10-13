@@ -74,7 +74,26 @@ class ContactController extends ModuleController
 			'C_INFORMATIONS_BOTTOM' => $this->config->are_informations_enabled() && $this->config->are_informations_bottom(),
 			'C_INFORMATIONS_SIDE' => $this->config->are_informations_enabled() && ($this->config->are_informations_left() || $this->config->are_informations_right()),
 			'INFORMATIONS' => FormatingHelper::second_parse($this->config->get_informations()),
+			'C_MAP_ENABLE' => $this->config->is_map_enabled(),
 		));
+		
+		$this->build_map_view();
+	}
+	
+	public function build_map_view()
+	{
+		$tpl = new FileTemplate('contact/ContactMap.tpl');
+		$marker = $this->config->get_map_marker();
+		
+		foreach ($marker as $id => $options)
+		{
+			$tpl->assign_block_vars('places', array(
+				'MAP_LATITUDE' => $options['latitude'],
+				'MAP_LONGITUDE' => $options['longitude'],
+				'MAP_POPUP' => $options['popup'],
+			));
+		}
+		$this->view->put('MAP', $tpl);
 	}
 	
 	private function init()

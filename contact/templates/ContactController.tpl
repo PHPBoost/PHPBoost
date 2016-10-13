@@ -24,7 +24,13 @@
 			# IF C_INFORMATIONS_SIDE #
 			<div class="# IF C_INFORMATIONS_LEFT #float-right# ELSE #float-left# ENDIF # form-side">
 			# ENDIF #
+		
+			# IF C_MAP_ENABLE #
+				# INCLUDE MAP #
+			# ENDIF #
+			
 			# INCLUDE FORM #
+			
 			# IF C_INFORMATIONS_SIDE #
 			</div>
 			# ENDIF #

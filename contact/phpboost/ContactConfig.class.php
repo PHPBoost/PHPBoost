@@ -48,6 +48,10 @@ class ContactConfig extends AbstractConfigData
 	const RIGHT = 'right';
 	const BOTTOM = 'bottom';
 	
+	const MAP_ENABLED = 'map_enabled';
+	const MAP_MARKER = 'map_marker';
+	const MAP_ZOOM = 'map_zoom';
+	
 	public function get_title()
 	{
 		return $this->get_property(self::TITLE);
@@ -111,6 +115,31 @@ class ContactConfig extends AbstractConfigData
 	public function are_informations_bottom()
 	{
 		return $this->get_property(self::INFORMATIONS_POSITION) == self::BOTTOM;
+	}
+	
+	public function enable_map()
+	{
+		$this->set_property(self::MAP_ENABLED, true);
+	}
+	
+	public function disable_map()
+	{
+		$this->set_property(self::MAP_ENABLED, false);
+	}
+	
+	public function is_map_enabled()
+	{
+		return $this->get_property(self::MAP_ENABLED);
+	}
+	
+	public function get_map_marker()
+	{
+		return $this->get_property(self::MAP_MARKER);
+	}
+	
+	public function set_map_marker($map_marker) 
+	{
+		$this->set_property(self::MAP_MARKER, $map_marker);
 	}
 	
 	public function enable_tracking_number()
@@ -266,6 +295,8 @@ class ContactConfig extends AbstractConfigData
 			self::INFORMATIONS_ENABLED => false,
 			self::INFORMATIONS => '',
 			self::INFORMATIONS_POSITION => self::TOP,
+			self::MAP_ENABLED => false,
+			self::MAP_MARKER => array(),
 			self::TRACKING_NUMBER_ENABLED => false,
 			self::DATE_IN_TRACKING_NUMBER_ENABLED => true,
 			self::SENDER_ACKNOWLEDGMENT_ENABLED => false,

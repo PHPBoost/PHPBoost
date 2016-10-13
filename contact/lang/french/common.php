@@ -61,6 +61,16 @@ $lang['admin.config.sender_acknowledgment_enabled'] = 'Envoyer une copie du mail
 $lang['admin.authorizations.read']  = 'Autorisation d\'afficher le formulaire de contact';
 $lang['admin.authorizations.display_field']  = 'Autorisation d\'afficher le champ';
 
+//Map
+$lang['admin.config.map.add'] = 'Localisation sur une map <span class="smaller">(avec <i class="fa fa-map-marker"></i> markers)</span>';
+$lang['admin.config.map_enabled'] = 'Afficher la map';
+$lang['admin.config.map.coord.desc'] = 'Récupérer les coordonnées gps';
+$lang['admin.config.map.coord.url'] = '<a href="http://www.coordonnees-gps.fr/" target="_blank">coordonnees-gps.fr <i class="fa fa-share-square-o"></i></a>';
+$lang['admin.config.map.marker'] = 'Ajouter un marker';
+$lang['form.latitude'] = 'Latitude';
+$lang['form.longitude'] = 'Longitude';
+$lang['form.popup'] = 'Texte popup';
+
 //Fields
 $lang['admin.fields.manage'] = 'Gestion des champs';
 $lang['admin.fields.manage.page_title'] = 'Gestion des champs du formulaire du module contact';
