@@ -36,6 +36,7 @@ class ContactConfig extends AbstractConfigData
 	const INFORMATIONS_ENABLED = 'informations_enabled';
 	const INFORMATIONS = 'informations';
 	const INFORMATIONS_POSITION = 'informations_position';
+	const MAP_POSITION = 'map_position';
 	const TRACKING_NUMBER_ENABLED = 'tracking_number_enabled';
 	const DATE_IN_TRACKING_NUMBER_ENABLED = 'date_in_tracking_number_enabled';
 	const SENDER_ACKNOWLEDGMENT_ENABLED = 'sender_acknowledgment_enabled';
@@ -47,6 +48,9 @@ class ContactConfig extends AbstractConfigData
 	const TOP = 'top';
 	const RIGHT = 'right';
 	const BOTTOM = 'bottom';
+	
+	const MAP_TOP = 'map_top';
+	const MAP_BOTTOM = 'map_bottom';
 	
 	const MAP_ENABLED = 'map_enabled';
 	const MAP_MARKER = 'map_marker';
@@ -130,6 +134,26 @@ class ContactConfig extends AbstractConfigData
 	public function is_map_enabled()
 	{
 		return $this->get_property(self::MAP_ENABLED);
+	}
+	
+	public function get_map_position()
+	{
+		return $this->get_property(self::MAP_POSITION);
+	}
+	
+	public function set_map_position($value) 
+	{
+		$this->set_property(self::MAP_POSITION, $value);
+	}
+	
+	public function is_map_bottom()
+	{
+		return $this->get_property(self::MAP_POSITION) == self::MAP_BOTTOM;
+	}
+	
+	public function is_map_top()
+	{
+		return $this->get_property(self::MAP_POSITION) == self::MAP_TOP;
 	}
 	
 	public function get_map_marker()
@@ -296,6 +320,7 @@ class ContactConfig extends AbstractConfigData
 			self::INFORMATIONS => '',
 			self::INFORMATIONS_POSITION => self::TOP,
 			self::MAP_ENABLED => false,
+			self::MAP_POSITION => self::MAP_TOP,
 			self::MAP_MARKER => array(),
 			self::TRACKING_NUMBER_ENABLED => false,
 			self::DATE_IN_TRACKING_NUMBER_ENABLED => true,
