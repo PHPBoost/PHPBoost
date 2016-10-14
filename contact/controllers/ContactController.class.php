@@ -75,6 +75,9 @@ class ContactController extends ModuleController
 			'C_INFORMATIONS_SIDE' => $this->config->are_informations_enabled() && ($this->config->are_informations_left() || $this->config->are_informations_right()),
 			'INFORMATIONS' => FormatingHelper::second_parse($this->config->get_informations()),
 			'C_MAP_ENABLE' => $this->config->is_map_enabled(),
+			'C_MAP_TOP' => $this->config->is_map_enabled() && $this->config->is_map_top(),
+			'C_MAP_BOTTOM' => $this->config->is_map_enabled() && $this->config->is_map_bottom(),
+			
 		));
 		
 		$this->build_map_view();

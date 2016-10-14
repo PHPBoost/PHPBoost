@@ -6,6 +6,13 @@
 		# INCLUDE MSG #
 		
 		# IF NOT C_MAIL_SENT #
+		
+			# IF C_MAP_ENABLE #
+				# IF C_MAP_TOP #
+					# INCLUDE MAP #
+				# ENDIF #
+			# ENDIF #
+			
 			# IF C_INFORMATIONS_TOP #
 			<p>{INFORMATIONS}</p>
 			<div class="spacer"></div>
@@ -23,10 +30,6 @@
 			
 			# IF C_INFORMATIONS_SIDE #
 			<div class="# IF C_INFORMATIONS_LEFT #float-right# ELSE #float-left# ENDIF # form-side">
-			# ENDIF #
-		
-			# IF C_MAP_ENABLE #
-				# INCLUDE MAP #
 			# ENDIF #
 			
 			# INCLUDE FORM #
@@ -50,6 +53,13 @@
 			<p>{INFORMATIONS}</p>
 			<div class="spacer"></div>
 			# ENDIF #
+		
+			# IF C_MAP_ENABLE #
+				# IF C_MAP_BOTTOM #
+					# INCLUDE MAP #
+				# ENDIF #
+			# ENDIF #
+			
 		# ELSE #
 			<div class="spacer"></div>
 			<div class="center"><a href="">{@contact.send_another_mail}</a></div>

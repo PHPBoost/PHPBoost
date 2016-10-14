@@ -64,6 +64,9 @@ $lang['admin.authorizations.display_field']  = 'Permission to display the field'
 //Map
 $lang['admin.config.map.add'] = 'Location on a map <span class="smaller">(with <i class="fa fa-map-marker"></i> markers)</span>';
 $lang['admin.config.map_enabled'] = 'Display the map';
+$lang['admin.config.map_position'] = 'Position of the map';
+$lang['admin.config.map.position_top'] = 'Above the form';
+$lang['admin.config.map.position_bottom'] = 'Below the form';
 $lang['admin.config.map.coord.desc'] = 'Get the GPS coordinates';
 $lang['admin.config.map.coord.url'] = '<a href="http://www.coordonnees-gps.fr/" target="_blank">coordonnees-gps.fr <i class="fa fa-share-square-o"></i></a>';
 $lang['admin.config.map.marker'] = 'Add a marker';
