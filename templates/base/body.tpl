@@ -104,16 +104,17 @@
 	<div class="spacer"></div>
 </div>
 
-# IF C_MENUS_TOP_FOOTER_CONTENT #
-<div id="top-footer">
-	# START menus_top_footer #
-	{menus_top_footer.MENU}
-	# END menus_top_footer #
-	<div class="spacer"></div>
-</div>
-# ENDIF #
-
 <footer id="footer">
+
+	# IF C_MENUS_TOP_FOOTER_CONTENT #
+	<div id="top-footer">
+		# START menus_top_footer #
+		{menus_top_footer.MENU}
+		# END menus_top_footer #
+		<div class="spacer"></div>
+	</div>
+	# ENDIF #
+
 	# IF C_MENUS_FOOTER_CONTENT #
 	<div class="footer-content">
 		# START menus_footer #

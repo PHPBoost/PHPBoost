@@ -14,19 +14,19 @@
 
 /* --- Les liens du site --- */
 a {
-	color: #4372AA;
+	color: #366493;
 	text-decoration: none;
 }
 
 a:hover {
-	color: #2D4D73;
+	color: #021B34;
 	text-decoration: underline;
 }
 
 /* --- Couleur des liens --- */
-a.admin  { color: #FFA34F; }
-a.modo   { color: #006699; }
-a.member { color: #000000; }
+a.admin  { color: #E27B47; }
+a.modo   { color: #2F9674; }
+a.member { color: #021B34; }
 
 /* --- Couleur de texte --- */
 .color-alert 		{ color: #B22222; }

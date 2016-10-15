@@ -18,40 +18,40 @@ table {
 /* --- Entete du tableau --- */
 table caption {
 	margin: 5px 0 5px 20px;
-	border-bottom: 1px solid #D1D2D5;
-	color: #757679;
+	border-bottom: 1px solid #DDDDDD;
+	color: #777777;
 	font-size: 13px;
 	text-align: left;
 }
 
 table thead th {
 	padding: 8px;
-	background-color: #4D4C50;
-	color: #E5E6E6;
+	background-color: #444444;
+	color: #F1F1F1;
 	font-size: 1.1em;
 	text-align: center;
 	font-weight: normal;
 }
 
-table thead th a 		{ color: #E5E6E6; }
+table thead th a 		{ color: #EEEEEE; }
 table thead th a:hover 	{ color: #FFFFFF; }
 
 /* --- Contenu du tableau --- */
 table tbody td {
 	padding: 8px;
-	background-color: #F5F5F5;
-	border-top: 1px solid #D1D2D4;
-	border-left: 1px solid #D1D2D4;
-	color: #676A74;
+	background-color: #F1F1F1;
+	border-top: 1px solid #DDDDDD;
+	border-left: 1px solid #DDDDDD;
+	color: #777777;
 	text-align: center;
 }
 
 tr:nth-child(even) td {
-	background-color: #FFFFFF;
+	background-color: #FAFAFA;
 }
 
 table tbody tr:last-child td {
-	border-bottom: 1px solid #D1D2D4;
+	border-bottom: 1px solid #DDDDDD;
 }
 
 table.bt tbody tr:last-child td {
@@ -59,11 +59,11 @@ table.bt tbody tr:last-child td {
 }
 
 table.bt tbody tr:last-child td:last-child {
-	border-bottom: 1px solid #D1D2D4;
+	border-bottom: 1px solid #DDDDDD;
 }
 
 table tbody tr td:last-child {
-	border-right: 1px solid #D1D2D4;
+	border-right: 1px solid #DDDDDD;
 }
 
 table tbody tr.no-separator td {
@@ -75,23 +75,23 @@ table tbody tr td.no-separator {
 }
 
 table tbody tr td.no-separator:first-child {
-	border-left: 1px solid #D1D2D4;
+	border-left: 1px solid #DDDDDD;
 }
 
 /* --- Pied de tableau --- */
 table tfoot tr th {
 	padding: 8px;
 	background-color: #F0F0F0;
-	border-bottom: 1px solid #D1D2D4;
+	border-bottom: 1px solid #DDDDDD;
 	color: #AAAAAA;
 }
 
 table tfoot tr th:first-child {
-	border-left: 1px solid #D1D2D4;
+	border-left: 1px solid #DDDDDD;
 }
 
 table tfoot tr th:last-child {
-	border-right: 1px solid #D1D2D4;
+	border-right: 1px solid #DDDDDD;
 }
 
 table tfoot tr th:only-child {
@@ -105,6 +105,7 @@ table tfoot tr th * {
 table tfoot tr th a {
 	color: #676A74;
 }
+
 table tfoot tr th select {
 	padding: 2px 5px;
 }
@@ -112,15 +113,15 @@ table tfoot tr th select {
 /* --- Patch thead tableaux formates --- */
 table.formatter-table th.formatter-table-head {
 	padding: 8px;
-	background-color: #4D4C50;
-	color: #E5E6E6;
+	background-color: #444444;
+	color: #F1F1F1;
 	font-size: 1.4em;
 	text-align: center;
 	font-weight: normal;
 }
 
-table.formatter-table th.formatter-table-head a 	  {	color: #E5E6E6; }
-table.formatter-table th.formatter-table-head a:hover {	color: #FFFFFF; }
+table.formatter-table th.formatter-table-head a 	  {	color: #F1F1F1; }
+table.formatter-table th.formatter-table-head a:hover {	color: #FAFAFA; }
 
 table.formatter-table th.formatter-table-head p {
 	margin-bottom: 0;
@@ -154,14 +155,14 @@ table.mini td a {
 
 /* --- Pagination footer tableaux --- */
 table tfoot nav.pagination a {
-	color: #8B8D90;
+	color: #777777;
 	text-decoration: none;
 	padding: 3px 3px;
 
 }
 
 table tfoot nav.pagination a span.current-page {
-	color: #CED0D0;
+	color: #555555;
 	text-decoration: none;
 }
 
@@ -189,13 +190,13 @@ table.bt thead th:first-child{
 table.bt tbody td {
 	display: block;
 	width: 100%;
-	border-right: 1px solid #D1D2D4;
+	border-right: 1px solid #DDDDDD;
 	text-align: left;
 	vertical-align: top;
 }
 
 table.bt tbody td.no-separator {
-	border-left: 1px solid #D1D2D4;
+	border-left: 1px solid #DDDDDD;
 }
 
 table.bt tbody td:before {

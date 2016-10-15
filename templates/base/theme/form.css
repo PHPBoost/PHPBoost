@@ -15,28 +15,31 @@ button,
 	padding: 0.3em 1em;
 	height: auto;
 	background-image: linear-gradient(to bottom,  rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.10) 100%);
-	background-color: #F9F9F9;
-	border: 1px solid #CCCCCC;
-	border-color: #E1E1E1 #E1E1E1 #BFBFBF #CFCFCF;
+	background-color: #F1F1F1;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #E1E1E1 #D1D1D1 #C9C9C9 #DDDDDD;
+	border-radius: 1px;
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0 2px rgba(0, 0, 0, 0.05);
-	color: #333333;
+	color: #777777;
 	text-align: center;
 	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
-	white-space: nowrap;	
+	white-space: nowrap;
+	transition: all 0.2s linear;
 }
 
 button:hover,
 .button-hover {
-	background-color: #FDFDFD;
-	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0 2px rgba(0, 0, 0, 0.1);
-	transition: all 0.1s linear;
+	background-color: #F9F9F9;
+	transition: all 0.3s linear;
 }
 
 button:active,
 .button-active {
-	background-color: #F1F1F1;
-	border: 1px solid #DDDDDD;
+	background-color: #F5F5F5;
+	border-color: #DDDDDD;
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0 2px rgba(0, 0, 0, 0.05);
+	transition: all 0.2s linear;
 }
 
 /* --- Petit bouton --- */
@@ -48,14 +51,16 @@ button.small,
 
 /* --- Bouton de formulaire --- */
 button.submit {
-	background-color: #3B6B9F;
-	border-color: #366393;
-	color: #FEFEFE;
+	background-color: #366493;
+	border-color: #1E5083;
+	color: #F1F1F1;
+	text-shadow: none;
 }
 
 button.submit:hover {
-	background-color: #366393;
-	border-color: #315A86;
+	background-color: #517BA6;
+	border-color: #366493;
+	color: #FFFFFF;
 }
 
 /* --- Bouton basic --- */
@@ -63,22 +68,23 @@ button.submit:hover {
 	display: inline-block;
 	margin: 1px;
 	padding: 1px 6px;
-	background-color: #2F5B8A;
+	border: none;
 	font-weight: bold;
-	text-align: center;	
 	color: #FFFFFF;
-	
 }
 
 .basic-button:hover {
-	background-color: #3D6997;
-	color: #FFFFFF;
+	color: #FAFAFA;
 	text-decoration: none;
 }
 
+/* --- Bouton basic avec couleur de base --- */
+.basic-button 			{ background-color: #366493; }
+.basic-button:hover 	{ background-color: #517BA6; }
+
 /* --- Bouton basic avec couleur alternative --- */
-.basic-button.alt 		{ background-color: #AAAAAA; }
-.basic-button.alt:hover { background-color: #BBBBBB; }
+.basic-button.alt 		{ background-color: #E2A447; }
+.basic-button.alt:hover { background-color: #FFC672; }
 
 /* --- field button --- */
 .field-button {
@@ -700,7 +706,7 @@ div.field-required:after {
 .form-field-radio-button.field-required:after,
 .form-field-multiple-checkbox.field-required:after {
 	top: 4px;
-	right: -10px;
+	right: -16px;
 }
 
 .form-field-radio {

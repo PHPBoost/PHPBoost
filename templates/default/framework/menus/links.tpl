@@ -5,14 +5,14 @@
 		# IF C_MENU_CONTAINER # <!-- Open mini-module-container -->
 		<div class="module-mini-container# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF #">
 			<div class="module-mini-top hidden-small-screens">
-				<h3 class="menu-vertical-{DEPTH}">
+				<h5 class="menu-vertical-{DEPTH}">
 					# IF RELATIVE_URL #
 						<a href="{REL_URL}" title="{TITLE}" class="cssmenu-title">
 						# IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF #{TITLE}</a>
 					# ELSE #
 						# IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF #{TITLE}
 					# ENDIF #
-				</h3>
+				</h5>
 			</div>
 			<div class="module-mini-contents">
 		# ENDIF #

@@ -43,7 +43,7 @@ article {
 /* --- Titre d'une page ou d'un element d'un module --- */
 section header h1,
 article header h1 {
-	border-bottom: 1px solid #336397;
+	border-bottom: 1px solid #366493;
 }
 section header h1 a:hover {
 	text-decoration: none;
@@ -52,13 +52,13 @@ section header h1 a:hover {
 section header h2,
 article header h2 {
 	margin-left: 15px;
-	border-bottom: 1px solid #336397;
+	border-bottom: 1px solid #366493;
 }
 
 section header h3,
 article header h3 {
 	margin-left: 15px;
-	border-bottom: 1px solid #336397;
+	border-bottom: 1px solid #366493;
 }
 
 @media (min-width: 769px) {
@@ -135,10 +135,10 @@ header span.actions a {
 .medium-block,
 .small-block {
 	padding: 0.8em;
-	background-color: #F2F8FF;
+	background-color: #FBFDFF;
 	border-style: solid;
 	border-width: 2px 1px 1px 1px;
-	border-color: #366393 #CCCCCC #99B1CB #CCCCCC;
+	border-color: #366493 #F1F1F1 #F1F1F1 #F1F1F1;
 }
 
 .block .content,
@@ -232,36 +232,39 @@ ul.pagination-block li a {
 
 ul.pagination-block li a {
 	background-image: linear-gradient(to bottom,  rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.10) 100%);
-	background-color: #F9F9F9;
-	border: 1px solid #CCCCCC;
-	border-color: #E1E1E1 #E1E1E1 #BFBFBF #CFCFCF;
+	background-color: #FAFAFA;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #E1E1E1 #D1D1D1 #C9C9C9 #DDDDDD;
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0 2px rgba(0, 0, 0, 0.05);
-	color: #333333;
+	color: #777777;
 	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
+	transition: all 0.2s linear;
 }
 
 ul.pagination-block li a:hover {
 	background-color: #FDFDFD;
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0 2px rgba(0, 0, 0, 0.1);
 	transition: all 0.1s linear;
+	transition: all 0.2s linear;
 }
 
 ul.pagination-block li a:active {
 	background-color: #F1F1F1;
 	border: 1px solid #DDDDDD;
-	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0 2px rgba(0, 0, 0, 0.05);
+	transition: all 0.2s linear;
 }
 
 ul.pagination-block li a.current-page {
-	background-color: #3B6B9F;
-	border-color: #366393;
-	color: #FEFEFE;
+	background-color: #366493;
+	border-color: #1E5083;
+	color: #F1F1F1;
 	text-decoration: none;
 }
 
 ul.pagination-block li a.current-page:hover {
-	background-color: #366393;
-	border-color: #315A86;
+	background-color: #517BA6;
+	border-color: #366493;
 }
 
 ul.pagination-block-bis li a.prev-page,
@@ -461,6 +464,7 @@ ul.pagination-block-bis li a.next-page:hover {
 	min-height: 24px;
 	list-style-type: none;
 	list-style-position: outside;
+	color: #777777;
 }
 
 .sortable-block .sortable-element {
@@ -469,13 +473,13 @@ ul.pagination-block-bis li a.next-page:hover {
 	padding: 0;
 	width: 100%;
 	background-color: #FFFFFF;
-	border: 1px solid #D6DEE7;
+	border: 1px solid #DDDDDD;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
 	transition: box-shadow 0.2s;	
 }
 
 .sortable-block .sortable-element:hover {
-	border: 1px solid #d0d8e1;
+	border: 1px solid #DDDDDD;
 	box-shadow: 0 0 5px #EAEAEA;
 }
 
@@ -485,7 +489,7 @@ ul.pagination-block-bis li a.next-page:hover {
 		position: relative;
 		width: 20px;
 		opacity: 0.3;
-		background-color: #81A4C8;
+		background-color: #888888;
 		transition: opacity 1s;
 		cursor: move;
 	}
@@ -510,16 +514,23 @@ ul.pagination-block-bis li a.next-page:hover {
 
 .sortable-block .sortable-title {
 	padding: 8px 5px 5px 10px;
-	background-image: linear-gradient(to bottom, #FFFFFF 50%, #FAFAFA 100%);
+	background-image: linear-gradient(to bottom,  rgba(255, 255, 255, 0.2) 35%, rgba(0, 0, 0, 0.1) 100%);
+	background-color: #FFFFFF;
+	transition: all 0.2s linear;
 }
 
 .sortable-block .sortable-title:hover {
-	background-image: linear-gradient(to bottom, #FFFFFF 25%, #F2F5F8 100%);
+	background-color: #FAFAFA;
+	transition: all 0.2s linear;
 }
 
 .sortable-block .sortable-title > span {
 	font-size: 1.5em;
 	font-weight: bold;
+}
+
+.sortable-block .sortable-title a {
+	color: #555555;
 }
 
 .sortable-block .sortable-title span.cat-desc {
@@ -591,9 +602,6 @@ body.dragging * {
 .module-mini-container {
 	margin: 0 0 10px 0;
 	padding: 5px;
-	background-color: #FFFFFF;
-	border: 1px #BEBEBE solid;
-	border-bottom: 2px #99B1CB solid;
 	border-spacing: 1px;
 	clear: both;
 }
@@ -601,13 +609,12 @@ body.dragging * {
 .module-mini-top {
 	padding: 0.2em 0 0.2em 0;
 	min-height: 24px;
-	border-bottom: 2px #336397 solid;
+	border-bottom: 2px #366493 solid;
 	text-align: center;
 }
 
-.module-mini-container h5,
-.module-mini-container h3 {
-	color: #515C68;
+.module-mini-container h5 {
+	color: #366493;
 }
 
 .module-mini-contents {
