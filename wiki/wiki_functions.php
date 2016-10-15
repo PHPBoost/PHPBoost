@@ -25,47 +25,39 @@
  *
  ###################################################*/
 
-if (defined('PHPBOOST') !== true)	exit;
+if (defined('PHPBOOST') !== true) exit;
 
 define('WIKI_MENU_MAX_DEPTH', 5);
 
-//Interprétation du BBCode en ajoutant la balise [link]
+//Parsing en ajoutant la balise [link]
 function wiki_parse($contents)
 {
-	if (ModulesManager::is_module_installed('BBCode') && ModulesManager::is_module_activated('BBCode') && AppContext::get_current_user()->get_editor() == 'BBCode')
-	{
-		$parser = new WikiBBCodeParser();
-	}
-	else
-	{
-		//On utilise le langage de l'utilisateur s'il n'utilise pas le BBCode
-		$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
-
-		$parser = $content_manager->get_parser();
-		$contents = preg_replace('`\[link=([a-z0-9+#-_]+)\](.+)\[/link\]`isU', '<a href="/wiki/$1">$2</a>', $contents);
-	}
+	$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
+	$parser = $content_manager->get_parser();
 	
+	//Parse la balise link
+	$parser->add_module_special_tag('`\[link=([a-z0-9+#-_]+)\](.+)\[/link\]`isU', '<a href="/wiki/$1">$2</a>');
 	$parser->set_content($contents);
 	$parser->parse();
 	
-	//Parse la balise link
 	return $parser->get_content();
 }
 
-//Retour au BBCode en tenant compte de [link]
+//Unparsing en tenant compte de [link]
 function wiki_unparse($contents)
 {
-	//Unparse de la balise link
-	$contents = preg_replace('`<a href="/wiki/([a-z0-9+#-_]+)">(.*)</a>`sU', "[link=$1]$2[/link]", $contents);
-	
-	//On force le langage de formatage à BBCode
 	$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
 	$unparser = $content_manager->get_unparser();
-    $unparser->set_content($contents);
-    $unparser->parse();
+	
+	//Unparse la balise link
+	$unparser->add_module_special_tag('`<a href="/wiki/([a-z0-9+#-_]+)">(.*)</a>`sU', '[link=$1]$2[/link]');
+	$unparser->set_content($contents);
+	$unparser->parse();
 	
 	return $unparser->get_content();
 }
+
+
 
 //Second parse -> à l'affichage
 function wiki_second_parse($contents)
