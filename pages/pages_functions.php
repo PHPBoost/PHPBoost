@@ -109,34 +109,32 @@ function pages_find_subcats(&$array, $id_cat)
 	}
 }
 
-//Fonction "parse" pour les pages laissant passer le html tout en remplaçant les caractères spéciaux par leurs entités html correspondantes
+//Parsing en ajoutant la balise [link]
 function pages_parse($contents)
 {
-	if (ModulesManager::is_module_installed('BBCode') && ModulesManager::is_module_activated('BBCode') && AppContext::get_current_user()->get_editor() == 'BBCode')
-	{
-		$parser = new PagesBBCodeParser();
-	}
-	else
-	{
-		//On utilise le langage de l'utilisateur s'il n'utilise pas le BBCode
-		$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
-
-		$parser = $content_manager->get_parser();
-		$contents = preg_replace('`\[link=([a-z0-9+#-_]+)\](.+)\[/link\]`isU', '<a href="/pages/$1">$2</a>', $contents);
-	}
+	$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
+	$parser = $content_manager->get_parser();
 	
+	//Parse la balise link
+	$parser->add_module_special_tag('`\[link=([a-z0-9+#-_]+)\](.+)\[/link\]`isU', '<a href="/pages/$1">$2</a>');
 	$parser->set_content($contents);
 	$parser->parse();
 	
-	//Parse la balise link
 	return $parser->get_content();
 }
 
-//Fonction unparse
+//Unparsing en tenant compte de [link]
 function pages_unparse($contents)
 {
-	$contents = link_unparse(stripslashes($contents));
-	return FormatingHelper::unparse($contents);
+	$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
+	$unparser = $content_manager->get_unparser();
+	
+	//Unparse la balise link
+	$unparser->add_module_special_tag('`<a href="/pages/([a-z0-9+#-_]+)">(.*)</a>`sU', '[link=$1]$2[/link]');
+	$unparser->set_content($contents);
+	$unparser->parse();
+	
+	return $unparser->get_content();
 }
 
 //Second parse -> à l'affichage
@@ -153,13 +151,6 @@ function pages_second_parse($contents)
 	$second_parser->parse();
 	
 	return $second_parser->get_content();
-}
-
-//On remplace la balise link
-function link_unparse($contents)
-{
-	$contents = is_array($contents) ? $contents[0] : $contents;
-	return preg_replace('`<a href="/pages/([a-z0-9+#-]+)">(.*)</a>`sU', "[link=$1]$2[/link]", $contents);
 }
 
 function build_pages_cat_children($cats_tree, $cats, $id_parent = 0)

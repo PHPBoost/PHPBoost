@@ -113,6 +113,9 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 				'<p>' . $this->content . '</p>'
 			);
 		}
+
+		//Module eventual special tags replacement
+		$this->unparse_module_special_tags();
 		
 		//Unparsing tags unsupported by TinyMCE, those are in BBCode
 		$this->unparse_bbcode_tags();
@@ -144,6 +147,16 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		
 		$this->content = preg_replace('`<img src="[\./]*/images/smileys/([^"]+)" title="([^"]+)" alt="([^"]+)" class="smiley" />`i',
 		'<img title="$2" src="' . PATH_TO_ROOT . '/images/smileys/$1" alt="$3" border="0" />', $this->content);
+	}
+	
+	/**
+	 * @desc Unparsed module special tags if any.
+	 * The special tags are [link] for module pages or wiki for example.
+	 */
+	protected function unparse_module_special_tags()
+	{
+		foreach ($this->get_module_special_tags() as $pattern => $replacement)
+			$this->content = preg_replace($pattern, $replacement, $this->content);
 	}
 
 	/**

@@ -57,9 +57,12 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		//Smilies
 		$this->unparse_smilies();
 
+		//Module eventual special tags replacement
+		$this->unparse_module_special_tags();
+
 		//Remplacement des balises simples
 		$this->unparse_simple_tags();
-
+		
 		//Unparsage de la balise table.
 		if (strpos($this->content, '<table class="formatter-table"') !== false)
 		{
@@ -100,6 +103,16 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			}
 			$this->content = preg_replace($smiley_img_url, $smiley_code, $this->content);
 		}
+	}
+	
+	/**
+	 * @desc Unparsed module special tags if any.
+	 * The special tags are [link] for module pages or wiki for example.
+	 */
+	protected function unparse_module_special_tags()
+	{
+		foreach ($this->get_module_special_tags() as $pattern => $replacement)
+			$this->content = preg_replace($pattern, $replacement, $this->content);
 	}
 
 	/**

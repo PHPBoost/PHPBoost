@@ -51,6 +51,11 @@ abstract class AbstractParser implements FormattingParser
 	 * @var string Path of the page in which has been written the content to parse.
 	 */
 	protected $page_path = '';
+	
+	/**
+	 * @var string[] List of the tags to add from a module. Allows to add a tag [link] from pages or wiki from example
+	 */
+	protected $module_special_tags = array();
 
 	/**
 	 * @desc Builds a Parser object.
@@ -107,6 +112,22 @@ abstract class AbstractParser implements FormattingParser
 	public function get_page_path()
 	{
 		return $this->page_path;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function add_module_special_tag($pattern, $replacement)
+	{
+		$this->module_special_tags[$pattern] = $replacement;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_module_special_tags()
+	{
+		return $this->module_special_tags;
 	}
 
 	/**

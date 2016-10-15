@@ -79,9 +79,12 @@ class BBCodeParser extends ContentFormattingParser
 		$this->content = nl2br($this->content);
 		$this->content = str_replace(array(' <br />', ' <br>', ' <br/>'), '<br />', $this->content);
 		
+		//Module eventual special tags replacement
+		$this->parse_module_special_tags();
+
 		// BBCode simple tags
 		$this->parse_simple_tags();
-
+		
 		//Tableaux
 		if (!in_array('table', $this->forbidden_tags) && strpos($this->content, '[table') !== false)
 		{
@@ -94,15 +97,15 @@ class BBCodeParser extends ContentFormattingParser
 			$this->parse_list();
 		}
 
+		parent::parse();
+
 		//On remet le code HTML mis de côté
 		if (!empty($this->array_tags['html']))
 		{
 			$this->array_tags['html'] = array_map(create_function('$string', 'return str_replace("[html]", "<!-- START HTML -->\n", str_replace("[/html]", "\n<!-- END HTML -->", $string));'), $this->array_tags['html']);
 			$this->reimplant_tag('html');
 		}
-
-		parent::parse();
-			
+		
 		//On réinsère les fragments de code qui ont été prévelevés pour ne pas les considérer
 		if (!empty($this->array_tags['code']))
 		{
@@ -159,6 +162,16 @@ class BBCodeParser extends ContentFormattingParser
 			}
 			$this->content = preg_replace($smiley_code, $smiley_img_url, $this->content);
 		}
+	}
+	
+	/**
+	 * @desc Parses module special tags if any.
+	 * The special tags are [link] for module pages or wiki for example.
+	 */
+	protected function parse_module_special_tags()
+	{
+		foreach ($this->get_module_special_tags() as $pattern => $replacement)
+			$this->content = preg_replace($pattern, $replacement, $this->content);
 	}
 
 	/**
