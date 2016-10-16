@@ -306,7 +306,11 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		);
 
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
-
+		
+		##Callbacks
+		//FA Icon
+		$this->content = preg_replace_callback('`<i class="fa fa-([a-z0-9-]+)( fa-[a-z0-9-]+)?( fa-[a-z0-9-]+)?( fa-[a-z0-9-]+)?"></i>`iU', array($this, 'unparse_fa'), $this->content);
+		
 		##Remplacement des balises imbriquées
 
 		//Texte caché
@@ -325,8 +329,6 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 
 		//Liens Wikipédia
 		$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link">(.*)</a>`sU', array($this, 'unparse_wikipedia_link'), $this->content);
-
-
 	}
 
 	/**
@@ -436,6 +438,15 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			}
 		}
 		return '<img' . $style . ' src="' . $matches[1] . '" alt="' . $alt . '" ' . $params . '/>';
+	}
+
+	private function unparse_fa($matches)
+	{
+		$icon2 = !empty($matches[2]) ? '=' . str_replace(' fa-', '', $matches[2]) : '';
+		$icon3 = !empty($matches[3]) ? (!empty($matches[2]) ? ',' : '=') . str_replace(' fa-', '', $matches[3]) : '';
+		$icon4 = !empty($matches[4]) ? (!empty($matches[2]) || !empty($matches[3]) ? ',' : '=') . str_replace(' fa-', '', $matches[4]) : '';
+		
+		return '[fa' . $icon2 . $icon3 . $icon4 . ']' . $matches[1] . '[/fa]';
 	}
 
 	/**

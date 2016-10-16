@@ -224,6 +224,9 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		##Callbacks
 		//Image
 		$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)?")?(?: title="([^"]+)?")?(?: style="([^"]+)?")?(?: class="([^"]+)?")? />`iU', array($this, 'unparse_img'), $this->content);
+		
+		//FA Icon
+		$this->content = preg_replace_callback('`<i class="fa fa-([a-z0-9-]+)( fa-[a-z0-9-]+)?( fa-[a-z0-9-]+)?( fa-[a-z0-9-]+)?"></i>`iU', array($this, 'unparse_fa'), $this->content);
 
 		//Fieldset
 		while (preg_match('`<fieldset class="formatter-container formatter-fieldset" style="([^"]*)"><legend>(.*)</legend><div class="formatter-content">(.+)</div></fieldset>`sU', $this->content))
@@ -245,7 +248,16 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		$style = !empty($matches[4]) ? ' style="' . $matches[4] . '"' : '';
 		$class = !empty($matches[5]) ? ' class="' . $matches[5] . '"' : '';
 
-		return '[img' . $alt . $title . $style . $class. ']' . $matches[1] . '[/img]';
+		return '[img' . $alt . $title . $style . $class . ']' . $matches[1] . '[/img]';
+	}
+
+	private function unparse_fa($matches)
+	{
+		$icon2 = !empty($matches[2]) ? '=' . str_replace(' fa-', '', $matches[2]) : '';
+		$icon3 = !empty($matches[3]) ? (!empty($matches[2]) ? ',' : '=') . str_replace(' fa-', '', $matches[3]) : '';
+		$icon4 = !empty($matches[4]) ? (!empty($matches[2]) || !empty($matches[3]) ? ',' : '=') . str_replace(' fa-', '', $matches[4]) : '';
+		
+		return '[fa' . $icon2 . $icon3 . $icon4 . ']' . $matches[1] . '[/fa]';
 	}
 
 	/**

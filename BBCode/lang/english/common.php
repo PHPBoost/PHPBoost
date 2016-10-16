@@ -81,6 +81,7 @@ $lang['bb_text'] = 'Text';
 $lang['bb_script'] = 'Script';
 $lang['bb_web'] = 'Web';
 $lang['bb_prog'] = 'Programming';
+$lang['bb_fa'] = 'Font Awesome Icon [fa]icon name[/fa]';
 $lang['bb_more'] = 'Display/Hide other functions';
 
 $lang['lines'] = 'Number of rows';

@@ -212,7 +212,8 @@ class ContentFormattingService
         	'youtube' => $editor_lang['format_youtube'],
         	'lightbox' => $editor_lang['format_lightbox'],
         	'charmap' => $editor_lang['format_charmap'],
-        	'insertdatetime' => $editor_lang['format_insertdatetime']
+        	'insertdatetime' => $editor_lang['format_insertdatetime'],
+        	'fa' => $editor_lang['format_fa']
         );
     }
 }
