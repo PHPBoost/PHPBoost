@@ -36,6 +36,7 @@ class BBCodeEditor extends ContentEditor
 	 * @var Usefull to know if we have to include all the necessary JS includes
 	 */
 	private static $editor_already_included = false;
+	private $icon_fa = array( "arrow-down",  "arrow-up", "arrow-left", "arrow-right", "arrows", "ban", "unban", "bar-chart", "bars", "bell", "book", "calendar", "caret-left", "caret-right", "clipboard", "clock-o", "cloud-upload", "download", "code", "code-fork", "cog", "cogs", "comment", "comment-o", "comments-o", "cube", "cubes", "delete", "edit", "remove", "envelope", "envelope-o", "eraser", "check", "success", "error", "warning", "question", "forbidden", "info-circle", "eye", "eye-slash", "facebook", "fast-forward",  "filter", "flag", "flag-o", "folder", "folder-open", "gavel", "gears", "globe", "google-plus", "hand-o-right", "heart", "home", "key", "legal", "lightbulb-o", "list-ul", "lock", "magic", "minus", "plus", "move", "picture-o", "print", "profil", "quote-right", "refresh", "save", "search", "share-square-o", "sign-in", "sign-out", "smile-o", "sort", "sort-alpha-asc", "sort-amount-asc", "sort-amount-desc", "spinner", "star", "star-half-empty", "star-o", "syndication", "tag", "tags", "tasks", "th", "ticket", "undo", "unlink", "file", "file-o", "file-text", "file-text-o", "user", "users", "offline", "online", "male", "female",  "volume-up", "wrench");
 
 	function __construct()
 	{
@@ -125,6 +126,7 @@ class BBCodeEditor extends ContentEditor
 			'L_CONTAINER' => $bbcode_lang['bb_container'],
 			'L_BLOCK' => $bbcode_lang['bb_block'],
 			'L_FIELDSET' => $bbcode_lang['bb_fieldset'],
+			'L_PARAGRAPH' => $bbcode_lang['bb_paragraph'],
 			'L_STYLE' => $LANG['style'],
 			'L_QUESTION' => $LANG['question'],
 			'L_NOTICE' => $LANG['notice'],
@@ -154,7 +156,7 @@ class BBCodeEditor extends ContentEditor
 				$forbidden_tag = 'block';
 
 			$template->put_all(array(
-				'AUTH_' . strtoupper($forbidden_tag) => 'style="opacity:0.3;filter:alpha(opacity=30);cursor:default;"',
+				'AUTH_' . strtoupper($forbidden_tag) => ' bbcode-forbidden',
 				'DISABLED_' . strtoupper($forbidden_tag) => 'return false;'
 			));
 		}
@@ -164,6 +166,13 @@ class BBCodeEditor extends ContentEditor
 			$template->assign_block_vars('smileys', array(
 				'URL' => TPL_PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley'],
 				'CODE' => addslashes($code_smile),
+			));
+		}
+
+		foreach ($this->icon_fa as $key => $value)
+		{ 
+			$template->assign_block_vars('code_fa', array(
+				'CODE' => $value
 			));
 		}
 

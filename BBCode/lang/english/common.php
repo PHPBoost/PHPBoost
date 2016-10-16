@@ -55,6 +55,7 @@ $lang['bb_html'] = 'Html code [html]code[/html]';
 $lang['bb_container'] = 'Container';
 $lang['bb_block'] = 'Block';
 $lang['bb_fieldset'] = 'Fieldset';
+$lang['bb_paragraph'] = 'Paragraph';
 $lang['bb_style'] = 'Style [style=x]text[/style]';
 $lang['bb_hide'] = 'Hidden Text';
 $lang['bb_member'] = 'Member';

@@ -130,18 +130,26 @@
 	content: " ";
 }
 
-.block-smileys {
-	width: 150px;
-	height: 150px;
-	padding: 2px 0px 2px 3px;
-	overflow-y: scroll;
+.bbcode-block-smileys,
+.bbcode-block-fa {
+	max-height: 200px;
+	padding: 4px 0px 2px 3px;
+	overflow-y: auto;
+	text-align: left;
 }
 
-.block-smileys li {
+.bbcode-block-smileys li,
+.bbcode-block-fa li {
 	display: inline-block;
 }
 
-.block-smileys li a {
+.bbcode-block-fa li {
+	padding: 1px 2px;
+	width: 20px;
+}
+
+.bbcode-block-smileys li a,
+.bbcode-block-fa li a {
 	display: block;
 }
 
@@ -236,6 +244,14 @@
 .bbcode-block-message 	{ width: 110px; }
 .bbcode-block-table 	{ width: 160px; }
 .bbcode-block-code 		{ width: 130px; }
+.bbcode-block-smileys   { width: 188px; }
+.bbcode-block-fa        { width: 272px; }
+
+.bbcode-forbidden,
+.bbcode-forbidden i {
+	opacity: 0.3 !important;
+	cursor: not-allowed !important;
+}
 
 /* Icones de la barre BBCode */
 .bbcode a,
@@ -285,6 +301,7 @@
 .bbcode-icon-html:before        { content: "\f13b"; }
 .bbcode-icon-help:before        { content: "\f059"; }
 .bbcode-icon-upload:before      { content: "\f0ee"; }
+.bbcode-icon-fa:before          { content: "\f024"; }
 
 /* Icones modifications size or color */
 .bbcode-icon-math:before {
