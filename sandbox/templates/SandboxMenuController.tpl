@@ -8,7 +8,7 @@
 				</div>
 			</div>
 			<div id="top-header-content">
-				<nav id="horizontal_scrolling_top" class="cssmenu cssmenu-horizontal">
+				<nav id="horizontal-scrolling-top" class="cssmenu cssmenu-horizontal">
 					<ul class="level-0">
 						<li>
 							<a class="cssmenu-title" href="#" title="{@css.menu.element}">{@css.menu.element}</a>
@@ -62,12 +62,12 @@
 						</li>						
 					</ul>
 				</nav>
-				<script>jQuery("#horizontal_scrolling_top").menumaker({ title: "{@css.menu.horizontal.top}", format: "multitoggle", breakpoint: 768 }); </script>
+				<script>jQuery("#horizontal-scrolling-top").menumaker({ title: "{@css.menu.horizontal.top}", format: "multitoggle", breakpoint: 768 }); </script>
 			</div>
 		</div>
 		<div id="sub-header">
 			<div id="sub-header-content">
-				<nav id="horizontal_sub_header" class="cssmenu cssmenu-horizontal">
+				<nav id="horizontal-sub-header" class="cssmenu cssmenu-horizontal">
 					<ul class="level-0">
 						<li class="has-sub">
 							<span class="cssmenu-title" href="#" title="{@css.menu.sub.element}">{@css.menu.sub.element}</span>
@@ -121,7 +121,7 @@
 						</li>						
 					</ul>
 				</nav>
-				<script>jQuery("#horizontal_sub_header").menumaker({ title: "{@css.menu.horizontal.sub.header}", format: "multitoggle", breakpoint: 768 }); </script>
+				<script>jQuery("#horizontal-sub-header").menumaker({ title: "{@css.menu.horizontal.sub.header}", format: "multitoggle", breakpoint: 768 }); </script>
 			</div>
 			<div class="spacer"></div>
 		</div>
@@ -136,7 +136,7 @@
 					<h3>{@css.menu.vertical.scrolling}</h3>
 				</div>
 				<div class="module-mini-contents">
-					<nav id="vertical_scrolling_left" class="cssmenu cssmenu-vertical cssmenu-left">
+					<nav id="vertical-scrolling-left" class="cssmenu cssmenu-vertical cssmenu-left">
 						<ul class="level-0">
 							<li>
 								<a class="cssmenu-title" href="#" title="{@css.menu.element}">{@css.menu.element}</a>
@@ -190,7 +190,7 @@
 							</li>						
 						</ul>
 					</nav>
-					<script>jQuery("#vertical_scrolling_left").menumaker({ title: "{@css.menu.vertical.scrolling.left}", format: "multitoggle", breakpoint: 768 }); </script>
+					<script>jQuery("#vertical-scrolling-left").menumaker({ title: "{@css.menu.vertical.scrolling.left}", format: "multitoggle", breakpoint: 768 }); </script>
 				</div>
 				<div class="module-mini-bottom"></div>					
 			</div>
@@ -200,7 +200,7 @@
 					<h3>{@css.menu.vertical.img}</h3>
 				</div>
 				<div class="module-mini-contents">
-					<nav id="vertical_img" class="cssmenu cssmenu-vertical cssmenu-left">
+					<nav id="vertical-img" class="cssmenu cssmenu-vertical cssmenu-left">
 						<ul class="level-0">
 							<li>
 								<a class="cssmenu-title" href="#" title="{@css.menu.element}">
@@ -229,7 +229,7 @@
 													
 						</ul>
 					</nav>
-					<script>jQuery("#vertical_img").menumaker({ title: "{@css.menu.vertical.img}", format: "multitoggle", breakpoint: 768 }); </script>
+					<script>jQuery("#vertical-img").menumaker({ title: "{@css.menu.vertical.img}", format: "multitoggle", breakpoint: 768 }); </script>
 				</div>
 				<div class="module-mini-bottom"></div>					
 			</div>			
@@ -238,7 +238,7 @@
 		<div id="main" class="main-with-left main-with-right" role="main">
 				
 			<div id="top-content">
-				<nav id="horizontal_scrolling" class="cssmenu cssmenu-horizontal">
+				<nav id="horizontal-scrolling" class="cssmenu cssmenu-horizontal">
 					<ul class="level-0">
 						<li>
 							<a class="cssmenu-title" href="#" title="{@css.menu.element}">{@css.menu.element}</a>
@@ -292,13 +292,13 @@
 						</li>						
 					</ul>
 				</nav>
-				<script>jQuery("#horizontal_scrolling").menumaker({ title: "{@css.menu.horizontal.scrolling}", format: "multitoggle", breakpoint: 768 }); </script>
+				<script>jQuery("#horizontal-scrolling").menumaker({ title: "{@css.menu.horizontal.scrolling}", format: "multitoggle", breakpoint: 768 }); </script>
 					
 			</div>
 				
 			<div id="main-content">
 					
-				<menu id="sandbox_actionslinks" class="cssmenu cssmenu-right cssmenu-actionslinks">
+				<menu id="sandbox-actionslinks" class="cssmenu cssmenu-right cssmenu-actionslinks">
 					<ul class="level-0">
 						<li class="has-sub">
 							<span class="cssmenu-title" href="#" title="{@css.menu.actionslinks.sandbox}">{@css.menu.actionslinks.sandbox}</span>
@@ -342,7 +342,7 @@
 						</li>		
 					</ul>
 				</menu>
-				<script>jQuery("#sandbox_actionslinks").menumaker({ title: "{@css.menu.actionslinks}", format: "multitoggle", breakpoint: 768 }); </script>
+				<script>jQuery("#sandbox-actionslinks").menumaker({ title: "{@css.menu.actionslinks}", format: "multitoggle", breakpoint: 768 }); </script>
 				
 				<nav id="breadcrumb" itemprop="breadcrumb">
 					<ol>
@@ -379,7 +379,7 @@
 				</article>	
 			</div>
 			<div id="bottom-content">
-				<nav id="sandbox_group" class="cssmenu cssmenu-group">
+				<nav id="sandbox-group" class="cssmenu cssmenu-group">
 					<ul class="level-0">
 						<li>
 							<a class="cssmenu-title" href="#" title="{@css.menu.element}">{@css.menu.element}</a>
@@ -395,7 +395,7 @@
 						</li>						
 					</ul>
 				</nav>
-				<script>jQuery("#sandbox_group").menumaker({ title: "{@css.menu.group}", format: "multitoggle", breakpoint: 768 }); </script>					
+				<script>jQuery("#sandbox-group").menumaker({ title: "{@css.menu.group}", format: "multitoggle", breakpoint: 768 }); </script>					
 			</div>
 		</div>
 			
@@ -405,7 +405,7 @@
 					<h3>{@css.menu.vertical.scrolling}</h3>
 				</div>
 				<div class="module-mini-contents">
-					<nav id="vertical_scrolling_right" class="cssmenu cssmenu-vertical cssmenu-right">
+					<nav id="vertical-scrolling-right" class="cssmenu cssmenu-vertical cssmenu-right">
 						<ul class="level-0">
 							<li>
 								<a class="cssmenu-title" href="#" title="{@css.menu.element}">{@css.menu.element}</a>
@@ -459,7 +459,7 @@
 							</li>						
 						</ul>
 					</nav>
-					<script>jQuery("#vertical_scrolling_right").menumaker({ title: "{@css.menu.vertical.scrolling.right}", format: "multitoggle", breakpoint: 768 }); </script>				
+					<script>jQuery("#vertical-scrolling-right").menumaker({ title: "{@css.menu.vertical.scrolling.right}", format: "multitoggle", breakpoint: 768 }); </script>				
 				</div>
 				<div class="module-mini-bottom"></div>					
 			</div>				
@@ -467,51 +467,52 @@
 		
 		
 	</div>
-				
-	<div id="top-footer">
-		<nav id="sandbox_static" class="cssmenu cssmenu-static">
-			<ul class="level-0">
-				<li class="has-sub">
-					<span class="cssmenu-title" href="#" title="{@css.menu.sub.element}">{@css.menu.sub.element}</span>
-					<ul class="level-1">
-						<li>
-							<a class="cssmenu-title" href="#" title="{@css.menu.element}">{@css.menu.element}</a>
-						</li>
-						<li>
-							<a class="cssmenu-title" href="#" title="{@css.menu.element}">{@css.menu.element}</a>
-						</li>
-					</ul>
-				</li>
-				<li class="has-sub">
-					<span class="cssmenu-title" href="#" title="{@css.menu.sub.element}">{@css.menu.sub.element}</span>
-					<ul class="level-1">
-						<li>
-							<a class="cssmenu-title" href="#" title="{@css.menu.element}">{@css.menu.element}</a>
-						</li>
-						<li>
-							<a class="cssmenu-title" href="#" title="{@css.menu.element}">{@css.menu.element}</a>
-						</li>
-					</ul>
-				</li>
-				<li class="has-sub">
-					<span class="cssmenu-title" href="#" title="{@css.menu.sub.element}">{@css.menu.sub.element}</span>
-					<ul class="level-1">
-						<li>
-							<a class="cssmenu-title" href="#" title="{@css.menu.element}">{@css.menu.element}</a>
-						</li>
-						<li>
-							<a class="cssmenu-title" href="#" title="{@css.menu.element}">{@css.menu.element}</a>
-						</li>
-					</ul>
-				</li>						
-			</ul>
-		</nav>
-		<script>jQuery("#sandbox_static").menumaker({ title: "{@css.menu.static}", format: "multitoggle", breakpoint: 768, static: true }); </script>				
-	</div>
-	
+					
 	<footer id="footer">
+
+		<div id="top-footer">
+			<nav id="sandbox-static" class="cssmenu cssmenu-static">
+				<ul class="level-0">
+					<li class="has-sub">
+						<span class="cssmenu-title" href="#" title="{@css.menu.sub.element}">{@css.menu.sub.element}</span>
+						<ul class="level-1">
+							<li>
+								<a class="cssmenu-title" href="#" title="{@css.menu.element}">{@css.menu.element}</a>
+							</li>
+							<li>
+								<a class="cssmenu-title" href="#" title="{@css.menu.element}">{@css.menu.element}</a>
+							</li>
+						</ul>
+					</li>
+					<li class="has-sub">
+						<span class="cssmenu-title" href="#" title="{@css.menu.sub.element}">{@css.menu.sub.element}</span>
+						<ul class="level-1">
+							<li>
+								<a class="cssmenu-title" href="#" title="{@css.menu.element}">{@css.menu.element}</a>
+							</li>
+							<li>
+								<a class="cssmenu-title" href="#" title="{@css.menu.element}">{@css.menu.element}</a>
+							</li>
+						</ul>
+					</li>
+					<li class="has-sub">
+						<span class="cssmenu-title" href="#" title="{@css.menu.sub.element}">{@css.menu.sub.element}</span>
+						<ul class="level-1">
+							<li>
+								<a class="cssmenu-title" href="#" title="{@css.menu.element}">{@css.menu.element}</a>
+							</li>
+							<li>
+								<a class="cssmenu-title" href="#" title="{@css.menu.element}">{@css.menu.element}</a>
+							</li>
+						</ul>
+					</li>						
+				</ul>
+			</nav>
+			<script>jQuery("#sandbox-static").menumaker({ title: "{@css.menu.static}", format: "multitoggle", breakpoint: 768, static: true }); </script>				
+		</div>
+	
 		<div class="footer-content">
-			<nav id="sandbox_static_footer" class="cssmenu cssmenu-static">
+			<nav id="sandbox-static-footer" class="cssmenu cssmenu-static">
 			<ul class="level-0">
 				<li class="has-sub">
 					<span class="cssmenu-title" href="#" title="{@css.menu.sub.element}">{@css.menu.sub.element}</span>
@@ -548,6 +549,6 @@
 				</li>						
 			</ul>
 		</nav>
-		<script>jQuery("#sandbox_static_footer").menumaker({ title: "{@css.menu.static.footer}", format: "multitoggle", breakpoint: 768, static: true }); </script>	
+		<script>jQuery("#sandbox-static-footer").menumaker({ title: "{@css.menu.static.footer}", format: "multitoggle", breakpoint: 768, static: true }); </script>	
 		</div>
 	</footer>
