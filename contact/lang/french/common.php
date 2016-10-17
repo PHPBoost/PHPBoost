@@ -68,7 +68,7 @@ $lang['admin.config.map_position'] = 'Position de la map';
 $lang['admin.config.map.position_top'] = 'Au-dessus du formulaire';
 $lang['admin.config.map.position_bottom'] = 'En dessous du formulaire';
 $lang['admin.config.map.coord.desc'] = 'Récupérer les coordonnées gps';
-$lang['admin.config.map.coord.url'] = '<a href="http://www.coordonnees-gps.fr/" target="_blank">coordonnees-gps.fr <i class="fa fa-share-square-o"></i></a>';
+$lang['admin.config.map.coord.url'] = '<a href="http://www.gpsfrance.net/adresse-vers-coordonnees-gps" target="_blank">gpsfrance.net <i class="fa fa-share-square-o"></i></a>';
 $lang['admin.config.map.marker'] = 'Ajouter un marker';
 $lang['form.latitude'] = 'Latitude';
 $lang['form.longitude'] = 'Longitude';
