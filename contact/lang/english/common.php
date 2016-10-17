@@ -67,6 +67,7 @@ $lang['admin.config.map_enabled'] = 'Display the map';
 $lang['admin.config.map_position'] = 'Position of the map';
 $lang['admin.config.map.position_top'] = 'Above the form';
 $lang['admin.config.map.position_bottom'] = 'Below the form';
+$lang['admin.config.map.coord.explain'] = 'You can enter the coordinates of your location below (headquarters, offices, schedules ...). In the "Marker text" field enter the name of the location, it will appear on the map if you click the location marker.';
 $lang['admin.config.map.coord.desc'] = 'Get the GPS coordinates';
 $lang['admin.config.map.coord.url'] = '<a href="http://www.gpsfrance.net/adresse-vers-coordonnees-gps" target="_blank">gpsfrance.net <i class="fa fa-share-square-o"></i></a>';
 $lang['admin.config.map.marker'] = 'Add a marker';
