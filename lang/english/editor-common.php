@@ -36,6 +36,7 @@ $lang['format_bold'] = 'Bold';
 $lang['format_italic'] = 'Italic';
 $lang['format_underline'] = 'Underline';
 $lang['format_strike'] = 'Strike';
+$lang['format_paragraph'] = 'Paragraph';
 $lang['format_title'] = 'Title';
 $lang['format_style'] = 'Style';
 $lang['format_url'] = 'Link';

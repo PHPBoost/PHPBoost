@@ -213,7 +213,8 @@ class ContentFormattingService
         	'lightbox' => $editor_lang['format_lightbox'],
         	'charmap' => $editor_lang['format_charmap'],
         	'insertdatetime' => $editor_lang['format_insertdatetime'],
-        	'fa' => $editor_lang['format_fa']
+        	'fa' => $editor_lang['format_fa'],
+        	'p' => $editor_lang['format_paragraph']
         );
     }
 }

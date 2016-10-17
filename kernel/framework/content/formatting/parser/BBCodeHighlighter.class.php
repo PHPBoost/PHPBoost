@@ -77,7 +77,7 @@ class BBCodeHighlighter extends AbstractParser
 		$this->content = str_replace('[*]', '<span style="color:' . self::$bbcode_list_item_color . ';">[*]</span>', $this->content);
 
 		//Simple tags (whitout parameter)
-		$simple_tags = array('b', 'i', 'u', 's', 'sup', 'sub', 'pre', 'math', 'quote', 'block', 'fieldset', 'sound', 'url', 'img', 'mail', 'code',  'tr', 'html', 'row', 'indent', 'hide', 'mail', 'fa');
+		$simple_tags = array('b', 'i', 'u', 's', 'p', 'sup', 'sub', 'pre', 'math', 'quote', 'block', 'fieldset', 'sound', 'url', 'img', 'mail', 'code',  'tr', 'html', 'row', 'indent', 'hide', 'mail', 'fa');
 
 		foreach ($simple_tags as $tag)
 		{
