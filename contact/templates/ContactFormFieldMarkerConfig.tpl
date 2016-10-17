@@ -13,13 +13,13 @@ ContactFormFieldSelectMarker.prototype = {
 
 			jQuery('<div/>', {'id' : id}).appendTo('#input_fields_' + this.id_input);
 			
-			jQuery('<input/> ', {type : 'text', id : 'field_latitude_' + id, class : 'contact-form-marker', name : 'field_latitude_' + id, placeholder : '{@form.latitude}'}).appendTo('#' + id);
+			jQuery('<input/> ', {type : 'text', id : 'field_latitude_' + id, name : 'field_latitude_' + id, class : 'contact-form-marker', pattern : '', placeholder : '{@form.latitude}'}).appendTo('#' + id);
 			jQuery('#' + id).append(' ');
 			
-			jQuery('<input/> ', {type : 'text', id : 'field_longitude_' + id, class : 'contact-form-marker', name : 'field_longitude_' + id, placeholder : '{@form.longitude}'}).appendTo('#' + id);
+			jQuery('<input/> ', {type : 'text', id : 'field_longitude_' + id, name : 'field_longitude_' + id, class : 'contact-form-marker', pattern : '', placeholder : '{@form.longitude}'}).appendTo('#' + id);
 			jQuery('#' + id).append(' ');
 			
-			jQuery('<input/> ', {type : 'text', id : 'field_popup_' + id, class : 'contact-form-marker', name : 'field_popup_' + id, placeholder : '{@form.popup}'}).appendTo('#' + id);
+			jQuery('<input/> ', {type : 'text', id : 'field_popup_' + id, name : 'field_popup_' + id, class : 'contact-form-marker', placeholder : '{@form.popup}'}).appendTo('#' + id);
 			jQuery('#' + id).append(' ');
 			
 			jQuery('<a/> ', {href : 'javascript:ContactFormFieldSelectMarker.delete_field('+ this.integer +');'}).html('<i class="fa fa-delete"></i>').appendTo('#' + id);
@@ -47,8 +47,8 @@ var ContactFormFieldSelectMarker = new ContactFormFieldSelectMarker();
 <div id="input_fields_${escape(ID)}">
 # START fieldelements #
 	<div id="${escape(ID)}_{fieldelements.ID}">
-		<input class="contact-form-marker" type="text" name="field_latitude_${escape(ID)}_{fieldelements.ID}" id="field_latitude_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.LATITUDE}" placeholder="{@form.latitude}"/>
-		<input class="contact-form-marker" type="text" name="field_longitude_${escape(ID)}_{fieldelements.ID}" id="field_longitude_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.LONGITUDE}" placeholder="{@form.longitude}"/>
+		<input class="contact-form-marker" type="text" name="field_latitude_${escape(ID)}_{fieldelements.ID}" id="field_latitude_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.LATITUDE}" pattern="" placeholder="{@form.latitude}"/>
+		<input class="contact-form-marker" type="text" name="field_longitude_${escape(ID)}_{fieldelements.ID}" id="field_longitude_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.LONGITUDE}" pattern="" placeholder="{@form.longitude}"/>
 		<input class="contact-form-marker" type="text" name="field_popup_${escape(ID)}_{fieldelements.ID}" id="field_popup_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.POPUP}" placeholder="{@form.popup}"/>
 		<a href="javascript:ContactFormFieldSelectMarker.delete_field({fieldelements.ID});" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
 		<div class="spacer"></div>
