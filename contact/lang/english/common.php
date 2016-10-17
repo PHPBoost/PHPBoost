@@ -72,7 +72,7 @@ $lang['admin.config.map.coord.url'] = '<a href="http://www.gpsfrance.net/adresse
 $lang['admin.config.map.marker'] = 'Add a marker';
 $lang['form.latitude'] = 'Latitude';
 $lang['form.longitude'] = 'Longitude';
-$lang['form.popup'] = 'Popup text';
+$lang['form.marker_text'] = 'Marker text';
 
 //Fields
 $lang['admin.fields.manage'] = 'Fields management';

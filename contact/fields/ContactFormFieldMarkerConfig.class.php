@@ -94,19 +94,20 @@ class ContactFormFieldMarkerConfig extends AbstractFormField
 		for ($i = 0; $i < $this->max_input; $i++)
 		{
 			$field_popup_id = 'field_popup_' . $this->get_html_id() . '_' . $i;
-			if ($request->has_postparameter($field_popup_id))
+			$field_latitude_id = 'field_latitude_' . $this->get_html_id() . '_' . $i;
+			$field_longitude_id = 'field_longitude_' . $this->get_html_id() . '_' . $i;
+			
+			if ($request->has_postparameter($field_popup_id) && $request->has_postparameter($field_latitude_id) && $request->has_postparameter($field_longitude_id))
 			{
-				$field_latitude_id = 'field_latitude_' . $this->get_html_id() . '_' . $i;
-				$field_latitude = $request->get_poststring($field_latitude_id);
-				$field_longitude_id = 'field_longitude_' . $this->get_html_id() . '_' . $i;
-				$field_longitude = $request->get_poststring($field_longitude_id);
 				$field_popup = $request->get_poststring($field_popup_id);
+				$field_latitude = $request->get_poststring($field_latitude_id);
+				$field_longitude = $request->get_poststring($field_longitude_id);
 				
-				if (!empty($field_popup))
+				if (!empty($field_popup) && !empty($field_latitude) && !empty($field_longitude))
 					$values[] = array(
+						'popup' => $field_popup,
 						'latitude' => $field_latitude,
-						'longitude' => $field_longitude,
-						'popup' => $field_popup
+						'longitude' => $field_longitude
 					);
 			}
 		}

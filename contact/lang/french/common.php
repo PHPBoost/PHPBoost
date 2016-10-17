@@ -62,17 +62,17 @@ $lang['admin.authorizations.read']  = 'Autorisation d\'afficher le formulaire de
 $lang['admin.authorizations.display_field']  = 'Autorisation d\'afficher le champ';
 
 //Map
-$lang['admin.config.map.add'] = 'Localisation sur une map <span class="smaller">(avec <i class="fa fa-map-marker"></i> markers)</span>';
+$lang['admin.config.map.add'] = 'Localisation sur une map <span class="smaller">(avec <i class="fa fa-map-marker"></i> pointeurs)</span>';
 $lang['admin.config.map_enabled'] = 'Afficher la map';
 $lang['admin.config.map_position'] = 'Position de la map';
 $lang['admin.config.map.position_top'] = 'Au-dessus du formulaire';
 $lang['admin.config.map.position_bottom'] = 'En dessous du formulaire';
 $lang['admin.config.map.coord.desc'] = 'Récupérer les coordonnées gps';
 $lang['admin.config.map.coord.url'] = '<a href="http://www.gpsfrance.net/adresse-vers-coordonnees-gps" target="_blank">gpsfrance.net <i class="fa fa-share-square-o"></i></a>';
-$lang['admin.config.map.marker'] = 'Ajouter un marker';
+$lang['admin.config.map.marker'] = 'Ajouter un pointeur';
 $lang['form.latitude'] = 'Latitude';
 $lang['form.longitude'] = 'Longitude';
-$lang['form.popup'] = 'Texte popup';
+$lang['form.marker_text'] = 'Texte du pointeur';
 
 //Fields
 $lang['admin.fields.manage'] = 'Gestion des champs';
