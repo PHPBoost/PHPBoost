@@ -77,6 +77,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		$now = new Date();
 		$config = ArticlesConfig::load();
 		$comments_config = new ArticlesComments();
+		$notation_config = new ArticlesNotation();
 
 		$mode = $request->get_getstring('sort', 'desc');
 		$field = $request->get_getstring('field', 'date');
@@ -141,7 +142,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			'C_MOSAIC' => $config->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
 			'C_ARTICLES_CAT' => false,
 			'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
-			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
+			'C_NOTATION_ENABLED' => $notation_config->is_notation_enabled(),
 			'C_ARTICLES_FILTERS' => true,
 			'CATEGORY_NAME' => $this->get_keyword()->get_name()
 		));

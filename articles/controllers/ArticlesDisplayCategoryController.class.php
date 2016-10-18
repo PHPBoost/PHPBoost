@@ -116,11 +116,12 @@ class ArticlesDisplayCategoryController extends ModuleController
 		)));
 		
 		$comments_config = new ArticlesComments();
+		$notation_config = new ArticlesNotation();
 
 		$this->view->put_all(array(
 			'C_MOSAIC' => $this->config->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
 			'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
-			'C_NOTATION_ENABLED' => $this->config->is_notation_enabled(),
+			'C_NOTATION_ENABLED' => $notation_config->is_notation_enabled(),
 			'C_ARTICLES_FILTERS' => true,
 			'C_DISPLAY_CATS_ICON' => $this->config->are_cats_icon_enabled(),
 			'C_PAGINATION' => $pagination->has_several_pages(),

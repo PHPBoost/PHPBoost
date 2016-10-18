@@ -37,8 +37,6 @@ class ArticlesConfig extends AbstractConfigData
 
 	const CATS_ICON_ENABLED = 'cats_icon_enabled';
 	const DESCRIPTIONS_DISPLAYED_TO_GUESTS = 'descriptions_displayed_to_guests';
-	const NOTATION_ENABLED = 'notation_enabled';
-	const NOTATION_SCALE = 'notation_scale';
 	const DATE_UPDATED_DISPLAYED = 'date_updated_displayed';
 	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
         
@@ -115,31 +113,6 @@ class ArticlesConfig extends AbstractConfigData
 		return $this->get_property(self::DESCRIPTIONS_DISPLAYED_TO_GUESTS);
 	}
 	
-	public function enable_notation()
-	{
-		$this->set_property(self::NOTATION_ENABLED, true);
-	}
-	
-	public function disable_notation()
-	{
-		$this->set_property(self::NOTATION_ENABLED, false);
-	}
-	
-	public function is_notation_enabled()
-	{
-		return $this->get_property(self::NOTATION_ENABLED);
-	}
-	
-	public function get_notation_scale()
-	{
-		return $this->get_property(self::NOTATION_SCALE);
-	}
-	
-	public function set_notation_scale($notation_scale) 
-	{
-		$this->set_property(self::NOTATION_SCALE, $notation_scale);
-	}
-	
 	public function enable_cats_icon() 
 	{
 		$this->set_property(self::CATS_ICON_ENABLED, true);
@@ -204,8 +177,6 @@ class ArticlesConfig extends AbstractConfigData
 			self::CATS_ICON_ENABLED => false,
 			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,
 			self::DATE_UPDATED_DISPLAYED => false,
-			self::NOTATION_ENABLED => true,
-			self::NOTATION_SCALE => 5,
 			self::DISPLAY_TYPE => self::DISPLAY_MOSAIC,
 			self::ROOT_CATEGORY_DESCRIPTION => LangLoader::get_message('root_category_description', 'config', 'articles'),
 			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13),

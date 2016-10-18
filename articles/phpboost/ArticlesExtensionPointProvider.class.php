@@ -61,6 +61,11 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new ArticlesNewContent();
 	}
+
+	public function notation()
+	{
+		return new ArticlesNotation();
+	}
 	
 	public function scheduled_jobs()
 	{

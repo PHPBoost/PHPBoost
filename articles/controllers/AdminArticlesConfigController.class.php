@@ -60,7 +60,6 @@ class AdminArticlesConfigController extends AdminModuleController
 		{
 			$this->save();
 			$this->form->get_field_by_id('number_cols_display_cats')->set_hidden(!$this->config->are_cats_icon_enabled());
-			$this->form->get_field_by_id('notation_scale')->set_hidden(!$this->config->is_notation_enabled());
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 		}
 		
@@ -107,21 +106,6 @@ class AdminArticlesConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('notation_enabled', $this->admin_common_lang['config.notation_enabled'], $this->config->is_notation_enabled(), array(
-			'events' => array('click' => '
-				if (HTMLForms.getField("notation_enabled").getValue()) {
-					HTMLForms.getField("notation_scale").enable();
-				} else {
-					HTMLForms.getField("notation_scale").disable();
-				}'
-			)
-		)));
-		
-		$fieldset->add_field(new FormFieldNumberEditor('notation_scale', $this->admin_common_lang['config.notation_scale'], $this->config->get_notation_scale(),
-			array('min' => 3, 'max' => 20, 'required' => true, 'hidden' => !$this->config->is_notation_enabled()),
-			array(new FormFieldConstraintIntegerRange(3, 20))
-		));
-			
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['articles_configuration.display_type'], $this->config->get_display_type(),
 			array(
 				new FormFieldSelectChoiceOption($this->lang['articles_configuration.display_type.mosaic'], ArticlesConfig::DISPLAY_MOSAIC),
@@ -182,16 +166,6 @@ class AdminArticlesConfigController extends AdminModuleController
 		
 		$this->config->set_number_categories_per_page($this->form->get_value('number_categories_per_page'));
 		$this->config->set_number_character_to_cut($this->form->get_value('number_character_to_cut', $this->config->get_number_character_to_cut()));
-
-		if ($this->form->get_value('notation_enabled'))
-		{
-			$this->config->enable_notation();
-			$this->config->set_notation_scale($this->form->get_value('notation_scale'));
-			if ($this->form->get_value('notation_scale') != $this->config->get_notation_scale())
-				NotationService::update_notation_scale('articles', $this->config->get_notation_scale(), $this->form->get_value('notation_scale'));
-		}
-		else
-			$this->config->disable_notation();
 				
 		if ($this->form->get_value('display_descriptions_to_guests'))
 		{

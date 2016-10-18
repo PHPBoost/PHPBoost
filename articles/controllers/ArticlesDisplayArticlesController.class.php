@@ -96,6 +96,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$current_page = $request->get_getint('page', 1);
 		$config = ArticlesConfig::load();
 		$comments_config = new ArticlesComments();
+		$notation_config = new ArticlesNotation();
 		
 		$this->category = $this->article->get_category();
 		
@@ -126,7 +127,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 
 		$this->tpl->put_all(array_merge($this->article->get_tpl_vars(), array(
 			'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
-			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
+			'C_NOTATION_ENABLED' => $notation_config->is_notation_enabled(),
 			'KERNEL_NOTATION'    => NotationService::display_active_image($this->article->get_notation()),
 			'CONTENTS'           => isset($article_contents_clean[$current_page-1]) ? FormatingHelper::second_parse($article_contents_clean[$current_page-1]) : '',
 			'PAGE_NAME'          => $page_name,
