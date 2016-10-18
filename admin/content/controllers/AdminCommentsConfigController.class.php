@@ -28,6 +28,7 @@
 class AdminCommentsConfigController extends AdminController
 {
 	private $lang;
+	private $admin_common_lang;
 	/**
 	 * @var HTMLForm
 	 */
@@ -67,8 +68,9 @@ class AdminCommentsConfigController extends AdminController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-contents-common');
-		$this->configuration = CommentsConfig::load();
+		$this->lang              = LangLoader::get('admin-contents-common');
+		$this->admin_common_lang = LangLoader::get('admin-common');
+		$this->configuration     = CommentsConfig::load();
 	}
 
 	private function build_form()
@@ -117,8 +119,8 @@ class AdminCommentsConfigController extends AdminController
 			array('size' => 10, 'hidden' => !$this->configuration->are_comments_enabled())
 		));
 
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('comments_unauthorized_modules', $this->lang['comments.config.comments-module'], $this->configuration->get_comments_unauthorized_modules(), $this->generate_comments_option(),
-			array('size' => 12, 'description' => $this->lang['comments.config.comments-module-explain'], 'hidden' => !$this->configuration->are_comments_enabled())
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('comments_unauthorized_modules', $this->admin_common_lang['config.forbidden-module'], $this->configuration->get_comments_unauthorized_modules(), $this->generate_unauthorized_module_option(CommentsExtensionPoint::EXTENSION_POINT),
+			array('size' => 12, 'description' => $this->admin_common_lang['config.comments.forbidden-module-explain'], 'hidden' => !$this->configuration->are_comments_enabled())
 		));
 
 		$fieldset = new FormFieldsetHTML('authorization', $this->lang['comments.config.authorization']);
@@ -182,16 +184,16 @@ class AdminCommentsConfigController extends AdminController
 		return $options;
 	}
 
-	private function generate_comments_option()
+	private function generate_unauthorized_module_option($type)
 	{
 		$options = array();
 
 		$provider_service = AppContext::get_extension_provider_service();
-		$comments_extensions_point_modules = array_keys($provider_service->get_extension_point(CommentsExtensionPoint::EXTENSION_POINT));
+		$extensions_point_modules = array_keys($provider_service->get_extension_point($type));
 
 		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $id => $module)
 		{
-			if (class_exists(ucfirst($module->get_id()) . 'Comments') && in_array($module->get_id(), $comments_extensions_point_modules))
+			if (in_array($module->get_id(), $extensions_point_modules))
 			{
 				$options[] = new FormFieldSelectChoiceOption($module->get_configuration()->get_name(), $module->get_id());
 			}
