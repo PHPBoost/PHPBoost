@@ -151,6 +151,7 @@ class LinksMenu extends LinksMenuElement
 			$original_tpl = clone $tpl;
 
 			// Children assignment
+			$menu_with_submenu = false;
 			$elements_number = 0;
 			foreach ($this->elements as $element)
 			{
@@ -160,12 +161,17 @@ class LinksMenu extends LinksMenuElement
 					$tpl->assign_block_vars('elements', array('DISPLAY' => $element->display(clone $original_tpl, $mode)));
 					$elements_number++;
 				}
+				if (get_class($element) == self::LINKS_MENU__CLASS) 
+				{
+					$menu_with_submenu = true;
+				}
 			}
 
 			// Menu assignment
 			parent::_assign($tpl, $mode);
 			$tpl->put_all(array(
 				'C_MENU' => true,
+				'C_MENU_WITH_SUBMENU' => $menu_with_submenu,
 				'C_NEXT_MENU' => $this->depth > 0,
 				'C_FIRST_MENU' => $this->depth == 0,
 				'C_HAS_CHILD' => $elements_number,
@@ -219,19 +225,28 @@ class LinksMenu extends LinksMenuElement
 		$original_tpl = clone $tpl;
 
 		// Children assignment
+		$menu_with_submenu = false;
+		$elements_number = 0;
 		foreach ($this->elements as $element)
 		{
 			// We use a new Tpl to avoid overwrite issues
 			$tpl->assign_block_vars('elements', array('DISPLAY' => $element->cache_export(clone $original_tpl)));
+			$elements_number++;
+			if (get_class($element) == self::LINKS_MENU__CLASS) 
+			{
+				$menu_with_submenu = true;
+			}
 		}
 
 		// Menu assignment
 		parent::_assign($tpl, LinksMenuElement::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING);
 		$tpl->put_all(array(
 			'C_MENU' => true,
+			'C_MENU_WITH_SUBMENU' => $menu_with_submenu,
 			'C_NEXT_MENU' => $this->depth > 0,
 			'C_FIRST_MENU' => $this->depth == 0,
-			'C_HAS_CHILD' => count($this->elements) > 0,
+			'C_HAS_CHILD' => $elements_number,
+			'C_HIDDEN_WITH_SMALL_SCREENS' => $this->hidden_with_small_screens,
 			'DEPTH' => $this->depth,
 			'ID' => '##.#GET_UID#.##',
 			'ID_VAR' => '##.#GET_UID_VAR#.##'
