@@ -60,7 +60,6 @@ class AdminContactConfigController extends AdminModuleController
 			$this->form->get_field_by_id('date_in_tracking_number_enabled')->set_hidden(!$this->config->is_tracking_number_enabled());
 			$this->form->get_field_by_id('map_position')->set_hidden(!$this->config->is_map_enabled());
 			$this->form->get_field_by_id('map_coord')->set_hidden(!$this->config->is_map_enabled());
-			$this->form->get_field_by_id('map_coord_explain')->set_hidden(!$this->config->is_map_enabled());
 			$this->form->get_field_by_id('map_marker')->set_hidden(!$this->config->is_map_enabled());
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
@@ -136,12 +135,10 @@ class AdminContactConfigController extends AdminModuleController
 				if (HTMLForms.getField("map_enabled").getValue()) {
 					HTMLForms.getField("map_position").enable();
 					HTMLForms.getField("map_coord").enable();
-					HTMLForms.getField("map_coord_explain").enable();
 					HTMLForms.getField("map_marker").enable();
 				} else {
 					HTMLForms.getField("map_position").disable();
 					HTMLForms.getField("map_coord").disable();
-					HTMLForms.getField("map_coord_explain").disable();
 					HTMLForms.getField("map_marker").disable();
 				}'))
 		));
@@ -154,11 +151,7 @@ class AdminContactConfigController extends AdminModuleController
 			array('hidden' => !$this->config->is_map_enabled())
 			));
 		
-		$map_fieldset->add_field(new FormFieldFree('map_coord', $this->lang['admin.config.map.coord.desc'], $this->lang['admin.config.map.coord.url'],
-			array('hidden' => !$this->config->is_map_enabled())
-		));
-		
-		$map_fieldset->add_field(new FormFieldFree('map_coord_explain', '', $this->lang['admin.config.map.coord.explain'],
+		$map_fieldset->add_field(new FormFieldFree('map_coord', '', $this->lang['admin.config.map.coord.desc'],
 			array('hidden' => !$this->config->is_map_enabled())
 		));
 		

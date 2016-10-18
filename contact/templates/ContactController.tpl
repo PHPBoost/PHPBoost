@@ -7,15 +7,15 @@
 		
 		# IF NOT C_MAIL_SENT #
 		
+			# IF C_INFORMATIONS_TOP #
+			<p>{INFORMATIONS}</p>
+			<div class="spacer"></div>
+			# ENDIF #
+			
 			# IF C_MAP_ENABLE #
 				# IF C_MAP_TOP #
 					# INCLUDE MAP #
 				# ENDIF #
-			# ENDIF #
-			
-			# IF C_INFORMATIONS_TOP #
-			<p>{INFORMATIONS}</p>
-			<div class="spacer"></div>
 			# ENDIF #
 			
 			# IF C_INFORMATIONS_SIDE #
