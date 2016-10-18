@@ -56,8 +56,6 @@ $lang['comments.config'] = 'Configuration des commentaires';
 $lang['comments.management'] = 'Gestion des commentaires';
 
 $lang['comments.config.enabled'] = 'Activer les commentaires';
-$lang['comments.config.comments-module'] = 'Modules interdits';
-$lang['comments.config.comments-module-explain'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer les commentaires';
 $lang['comments.config.number-comments-display'] = 'Nombre de commentaires à afficher par défaut';
 $lang['comments.config.order-display-comments'] = 'Ordre d\'affichage des commentaires';
 $lang['comments.config.order-display-comments.asc'] = 'Du plus ancien au plus récent';
@@ -79,7 +77,7 @@ $lang['content.config.new-content'] = 'Activer le tag sur les nouveaux élements
 $lang['content.config.new-content-config'] = 'Gestion du tag "new-content"';
 $lang['content.config.new-content-explain'] = 'Cette option permet d\'identifier les derniers élements ajoutés';
 $lang['content.config.new-content-duration'] = 'Durée d\'affichage du tag';
-$lang['content.config.new-content-duration-explain'] = 'En jours. 15 jours par défaut.';
-$lang['content.config.new-content-module'] = 'Selection des modules';
-$lang['content.config.new-content-module-explain'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer le tag';
+$lang['content.config.new-content-duration-explain'] = 'En jours. 5 jours par défaut.';
+
+$lang['notation.config'] = 'Configuration de la notation';
 ?>

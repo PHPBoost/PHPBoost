@@ -45,4 +45,9 @@ $lang['config.display_type.inline'] = 'Affichage en ligne';
 $lang['config.root_category_description'] = 'Description de la catégorie racine';
 
 $lang['config.authorizations.explain'] = 'Autorisations globales du module. Vous pouvez changer ces autorisations localement sur chaque catégorie.';
+
+$lang['config.forbidden-module'] = 'Modules interdits';
+$lang['config.comments.forbidden-module-explain'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer les commentaires';
+$lang['config.notation.forbidden-module-explain'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer la notation';
+$lang['config.new-content.forbidden-module-explain'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer les tags de nouveau contenu';
 ?>

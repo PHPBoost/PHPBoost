@@ -28,6 +28,7 @@
 class AdminContentConfigController extends AdminController
 {
 	private $lang;
+	private $admin_common_lang;
 	/**
 	 * @var HTMLForm
 	 */
@@ -58,6 +59,9 @@ class AdminContentConfigController extends AdminController
 			$this->form->get_field_by_id('new_content_duration')->set_hidden(!$this->content_management_config->is_new_content_enabled());
 			$this->form->get_field_by_id('new_content_unauthorized_modules')->set_hidden(!$this->content_management_config->is_new_content_enabled());
 			$this->form->get_field_by_id('new_content_unauthorized_modules')->set_selected_options($this->content_management_config->get_new_content_unauthorized_modules());
+			$this->form->get_field_by_id('notation_scale')->set_hidden(!$this->content_management_config->is_notation_enabled());
+			$this->form->get_field_by_id('notation_unauthorized_modules')->set_hidden(!$this->content_management_config->is_notation_enabled());
+			$this->form->get_field_by_id('notation_unauthorized_modules')->set_selected_options($this->content_management_config->get_notation_unauthorized_modules());
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 
@@ -69,6 +73,7 @@ class AdminContentConfigController extends AdminController
 	private function init()
 	{
 		$this->lang                      = LangLoader::get('admin-contents-common');
+		$this->admin_common_lang         = LangLoader::get('admin-common');
 		$this->content_formatting_config = ContentFormattingConfig::load();
 		$this->content_management_config = ContentManagementConfig::load();
 		$this->user_accounts_config      = UserAccountsConfig::load();
@@ -141,8 +146,32 @@ class AdminContentConfigController extends AdminController
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'), new FormFieldConstraintIntegerRange(1, 9999))
 		));
 
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('new_content_unauthorized_modules', $this->lang['content.config.new-content-module'], $this->content_management_config->get_new_content_unauthorized_modules(), $this->generate_new_content_option(),
-			array('size' => 12, 'description' => $this->lang['content.config.new-content-module-explain'], 'hidden' => !$this->content_management_config->is_new_content_enabled())
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('new_content_unauthorized_modules', $this->admin_common_lang['config.forbidden-module'], $this->content_management_config->get_new_content_unauthorized_modules(), $this->generate_unauthorized_module_option(NewContentExtensionPoint::EXTENSION_POINT),
+			array('size' => 12, 'description' => $this->admin_common_lang['config.new-content.forbidden-module-explain'], 'hidden' => !$this->content_management_config->is_new_content_enabled())
+		));
+
+		$fieldset = new FormFieldsetHTML('notation_config', $this->lang['notation.config']);
+		$form->add_fieldset($fieldset);
+
+		$fieldset->add_field(new FormFieldCheckbox('notation_enabled', $this->admin_common_lang['config.notation_enabled'], $this->content_management_config->is_notation_enabled(), array(
+			'events' => array('click' => '
+				if (HTMLForms.getField("notation_enabled").getValue()) {
+					HTMLForms.getField("notation_scale").enable();
+					HTMLForms.getField("notation_unauthorized_modules").enable();
+				} else {
+					HTMLForms.getField("notation_scale").disable();
+					HTMLForms.getField("notation_unauthorized_modules").disable();
+				}'
+			)
+		)));
+		
+		$fieldset->add_field(new FormFieldNumberEditor('notation_scale', $this->admin_common_lang['config.notation_scale'], $this->content_management_config->get_notation_scale(),
+			array('min' => 3, 'max' => 20, 'required' => true, 'hidden' => !$this->content_management_config->is_notation_enabled()),
+			array(new FormFieldConstraintIntegerRange(3, 20))
+		));
+
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('notation_unauthorized_modules', $this->admin_common_lang['config.forbidden-module'], $this->content_management_config->get_notation_unauthorized_modules(), $this->generate_unauthorized_module_option(NotationExtensionPoint::EXTENSION_POINT),
+			array('size' => 12, 'description' => $this->admin_common_lang['config.notation.forbidden-module-explain'], 'hidden' => !$this->content_management_config->is_notation_enabled())
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -186,6 +215,22 @@ class AdminContentConfigController extends AdminController
 		}
 		else
 			$this->content_management_config->set_new_content_enabled(false);
+
+
+		if ($this->form->get_value('notation_enabled'))
+		{
+			$this->content_management_config->set_notation_enabled(true);
+			$this->content_management_config->set_notation_scale($this->form->get_value('notation_scale'));
+
+			$unauthorized_modules = array();
+			foreach ($this->form->get_value('notation_unauthorized_modules') as $field => $option)
+			{
+				$unauthorized_modules[] = $option->get_raw_value();
+			}
+			$this->content_management_config->set_notation_unauthorized_modules($unauthorized_modules);
+		}
+		else
+			$this->content_management_config->set_notation_enabled(false);
 		
 		ContentManagementConfig::save();
 		
@@ -204,16 +249,16 @@ class AdminContentConfigController extends AdminController
 		return $options;
 	}
 
-	private function generate_new_content_option()
+	private function generate_unauthorized_module_option($type)
 	{
 		$options = array();
 
 		$provider_service = AppContext::get_extension_provider_service();
-		$new_content_extensions_point_modules = array_keys($provider_service->get_extension_point(NewContentExtensionPoint::EXTENSION_POINT));
+		$extensions_point_modules = array_keys($provider_service->get_extension_point($type));
 
 		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $id => $module)
 		{
-			if (in_array($module->get_id(), $new_content_extensions_point_modules))
+			if (in_array($module->get_id(), $extensions_point_modules))
 			{
 				$options[] = new FormFieldSelectChoiceOption($module->get_configuration()->get_name(), $module->get_id());
 			}

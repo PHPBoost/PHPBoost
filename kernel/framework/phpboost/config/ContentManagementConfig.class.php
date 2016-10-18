@@ -36,6 +36,10 @@ class ContentManagementConfig extends AbstractConfigData
 	const NEW_CONTENT_ENABLED              = 'new_content';
 	const NEW_CONTENT_DURATION             = 'new_content_duration';
 	const NEW_CONTENT_UNAUTHORIZED_MODULES = 'new_content_unauthorized_modules';
+	const NOTATION_ENABLED                 = 'new_notation';
+	const NOTATION_SCALE                   = 'notation_scale';
+	const NOTATION_UNAUTHORIZED_MODULES    = 'notation_unauthorized_modules';
+
 	
 	public function is_anti_flood_enabled()
 	{
@@ -97,6 +101,36 @@ class ContentManagementConfig extends AbstractConfigData
 		$this->set_property(self::NEW_CONTENT_UNAUTHORIZED_MODULES, $modules);
 	}
 
+	public function is_notation_enabled()
+	{
+		return $this->get_property(self::NOTATION_ENABLED);
+	}
+	
+	public function set_notation_enabled($enabled)
+	{
+		$this->set_property(self::NOTATION_ENABLED, $enabled);
+	}
+
+	public function get_notation_scale()
+	{
+		return $this->get_property(self::NOTATION_SCALE);
+	}
+	
+	public function set_notation_scale($scale)
+	{
+		$this->set_property(self::NOTATION_SCALE, $scale);
+	}
+
+	public function get_notation_unauthorized_modules()
+	{
+		return $this->get_property(self::NOTATION_UNAUTHORIZED_MODULES);
+	}
+	
+	public function set_notation_unauthorized_modules(array $modules)
+	{
+		$this->set_property(self::NOTATION_UNAUTHORIZED_MODULES, $modules);
+	}
+
 	protected function get_default_values()
 	{
 		return array(
@@ -105,7 +139,10 @@ class ContentManagementConfig extends AbstractConfigData
 			self::USED_CAPTCHA_MODULE              => 'ReCaptcha',
 			self::NEW_CONTENT_ENABLED              => true,
 			self::NEW_CONTENT_DURATION             => 5,
-			self::NEW_CONTENT_UNAUTHORIZED_MODULES => array()
+			self::NEW_CONTENT_UNAUTHORIZED_MODULES => array(),
+			self::NOTATION_ENABLED                 => true,
+			self::NOTATION_SCALE                   => 5,
+			self::NOTATION_UNAUTHORIZED_MODULES    => array()
 		);
 	}
 

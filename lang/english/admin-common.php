@@ -45,4 +45,9 @@ $lang['config.display_type.inline'] = 'Display inline';
 $lang['config.root_category_description'] = 'Root category description';
 
 $lang['config.authorizations.explain'] = 'Global module authorizations. You can change these authorizations on each category.';
+
+$lang['config.forbidden-module'] = 'Forbidden modules';
+$lang['config.comments.forbidden-module-explain'] = 'Select modules in which you do not want to enable comments';
+$lang['config.notation.forbidden-module-explain'] = 'Select modules in which you do not want to enable notation';
+$lang['config.new-content.forbidden-module-explain'] = 'Select modules in which you do not want to enable new-content tag';
 ?>
