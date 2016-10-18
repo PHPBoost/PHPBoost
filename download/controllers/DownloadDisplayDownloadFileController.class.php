@@ -78,6 +78,7 @@ class DownloadDisplayDownloadFileController extends ModuleController
 	{
 		$config = DownloadConfig::load();
 		$comments_config = new DownloadComments();
+		$notation_config = new DownloadNotation();
 		$downloadfile = $this->get_downloadfile();
 		$category = $downloadfile->get_category();
 		
@@ -87,7 +88,7 @@ class DownloadDisplayDownloadFileController extends ModuleController
 		$this->tpl->put_all(array_merge($downloadfile->get_array_tpl_vars(), array(
 			'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),
 			'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
-			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
+			'C_NOTATION_ENABLED' => $notation_config->is_notation_enabled(),
 			'C_KEYWORDS' => $has_keywords,
 			'C_DISPLAY_DOWNLOAD_LINK' => DownloadAuthorizationsService::check_authorizations()->display_download_link(),
 			'NOT_VISIBLE_MESSAGE' => MessageHelper::display(LangLoader::get_message('element.not_visible', 'status-messages-common'), MessageHelper::WARNING),

@@ -68,6 +68,11 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new DownloadNewContent();
 	}
+
+	public function notation()
+	{
+		return new DownloadNotation();
+	}
 	
 	public function scheduled_jobs()
 	{

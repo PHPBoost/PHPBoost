@@ -64,6 +64,7 @@ class DownloadDisplayCategoryController extends ModuleController
 		$page = AppContext::get_request()->get_getint('page', 1);
 		$subcategories_page = AppContext::get_request()->get_getint('subcategories_page', 1);
 		$comments_config = new DownloadComments();
+		$notation_config = new DownloadNotation();
 		
 		$subcategories = DownloadService::get_categories_manager()->get_categories_cache()->get_children($this->get_category()->get_id(), DownloadService::get_authorized_categories($this->get_category()->get_id()));
 		$subcategories_pagination = $this->get_subcategories_pagination(count($subcategories), $this->config->get_categories_number_per_page(), $field, $mode, $page, $subcategories_page);
@@ -152,7 +153,7 @@ class DownloadDisplayCategoryController extends ModuleController
 			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
 			'C_AUTHOR_DISPLAYED' => $this->config->is_author_displayed(),
 			'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
-			'C_NOTATION_ENABLED' => $this->config->is_notation_enabled(),
+			'C_NOTATION_ENABLED' => $notation_config->is_notation_enabled(),
 			'C_MODERATION' => DownloadAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_CATEGORY' => true,
@@ -163,7 +164,7 @@ class DownloadDisplayCategoryController extends ModuleController
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
 			'CATS_COLUMNS_WIDTH' => $cats_columns_width,
 			'PAGINATION' => $pagination->display(),
-			'TABLE_COLSPAN' => 4 + (int)$comments_config->are_comments_enabled() + (int)$this->config->is_notation_enabled(),
+			'TABLE_COLSPAN' => 4 + (int)$comments_config->are_comments_enabled() + (int)$notation_config->is_notation_enabled(),
 			'ID_CAT' => $this->get_category()->get_id(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),

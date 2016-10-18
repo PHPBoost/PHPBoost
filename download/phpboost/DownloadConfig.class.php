@@ -37,8 +37,6 @@ class DownloadConfig extends AbstractConfigData
 	const CATEGORY_DISPLAY_TYPE = 'category_display_type';
 	const DESCRIPTIONS_DISPLAYED_TO_GUESTS = 'descriptions_displayed_to_guests';
 	const AUTHOR_DISPLAYED = 'author_displayed';
-	const NOTATION_ENABLED = 'notation_enabled';
-	const NOTATION_SCALE = 'notation_scale';
 	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
 	const SORT_TYPE = 'sort_type';
 	const FILES_NUMBER_IN_MENU = 'files_number_in_menu';
@@ -133,32 +131,7 @@ class DownloadConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::AUTHOR_DISPLAYED);
 	}
-		
-	public function enable_notation()
-	{
-		$this->set_property(self::NOTATION_ENABLED, true);
-	}
-	
-	public function disable_notation()
-	{
-		$this->set_property(self::NOTATION_ENABLED, false);
-	}
-	
-	public function is_notation_enabled()
-	{
-		return $this->get_property(self::NOTATION_ENABLED);
-	}
-	
-	public function get_notation_scale()
-	{
-		return $this->get_property(self::NOTATION_SCALE);
-	}
-	
-	public function set_notation_scale($value)
-	{
-		$this->set_property(self::NOTATION_SCALE, $value);
-	}
-	
+
 	public function get_root_category_description()
 	{
 		return $this->get_property(self::ROOT_CATEGORY_DESCRIPTION);
@@ -261,8 +234,6 @@ class DownloadConfig extends AbstractConfigData
 			self::CATEGORY_DISPLAY_TYPE => self::DISPLAY_SUMMARY,
 			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,
 			self::AUTHOR_DISPLAYED => true,
-			self::NOTATION_ENABLED => true,
-			self::NOTATION_SCALE => 5,
 			self::ROOT_CATEGORY_DESCRIPTION => LangLoader::get_message('root_category_description', 'config', 'download'),
 			self::SORT_TYPE => DownloadFile::SORT_NUMBER_DOWNLOADS,
 			self::FILES_NUMBER_IN_MENU => 5,
