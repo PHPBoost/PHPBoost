@@ -40,5 +40,11 @@ abstract class AbstractNotationExtensionPoint implements NotationExtensionPoint
 	{
 		return $this->ContentManagementConfig->is_notation_enabled() && !in_array($this->id, $this->ContentManagementConfig->get_notation_unauthorized_modules());
 	}
+
+	public function get_notation_scale()
+	{
+		return $this->ContentManagementConfig->get_notation_scale();
+	}
+
 }
 ?>
