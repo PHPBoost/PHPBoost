@@ -60,7 +60,6 @@ class AdminMediaConfigController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->form->get_field_by_id('notation_scale')->set_hidden(!$this->config->is_notation_enabled());
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 		
@@ -99,22 +98,7 @@ class AdminMediaConfigController extends AdminModuleController
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->admin_common_lang['config.author_displayed'], $this->config->is_author_displayed()));
-		
-		$fieldset->add_field(new FormFieldCheckbox('notation_enabled', $this->admin_common_lang['config.notation_enabled'], $this->config->is_notation_enabled(), array(
-			'events' => array('click' => '
-				if (HTMLForms.getField("notation_enabled").getValue()) {
-					HTMLForms.getField("notation_scale").enable();
-				} else {
-					HTMLForms.getField("notation_scale").disable();
-				}'
-			)
-		)));
-		
-		$fieldset->add_field(new FormFieldNumberEditor('notation_scale', $this->admin_common_lang['config.notation_scale'], $this->config->get_notation_scale(), 
-			array('min' => 3, 'max' => 20, 'required' => true, 'hidden' => !$this->config->is_notation_enabled()),
-			array(new FormFieldConstraintIntegerRange(3, 20))
-		));
-		
+						
 		$fieldset->add_field(new FormFieldNumberEditor('max_video_width', $this->lang['config.max_video_width'], $this->config->get_max_video_width(), 
 			array('min' => 50, 'max' => 2000, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(50, 2000))
@@ -171,16 +155,6 @@ class AdminMediaConfigController extends AdminModuleController
 			$this->config->display_author();
 		else
 			$this->config->hide_author();
-				
-		if ($this->form->get_value('notation_enabled'))
-		{
-			$this->config->enable_notation();
-			$this->config->set_notation_scale($this->form->get_value('notation_scale'));
-			if ($this->form->get_value('notation_scale') != $this->config->get_notation_scale())
-				NotationService::update_notation_scale('media', $this->config->get_notation_scale(), $this->form->get_value('notation_scale'));
-		}
-		else
-			$this->config->disable_notation();
 		
 		$this->config->set_max_video_width($this->form->get_value('max_video_width'));
 		$this->config->set_max_video_height($this->form->get_value('max_video_height'));

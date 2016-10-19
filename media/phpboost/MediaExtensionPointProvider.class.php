@@ -63,6 +63,11 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new MediaNewContent();
 	}
+
+	public function notation()
+	{
+		return new MediaNotation();
+	}
 	
 	public function search()
 	{

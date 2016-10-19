@@ -35,8 +35,6 @@ class MediaConfig extends AbstractConfigData
 	const CATEGORIES_NUMBER_PER_PAGE = 'categories_number_per_page';
 	const COLUMNS_NUMBER_PER_LINE = 'columns_number_per_line';
 	const AUTHOR_DISPLAYED = 'author_displayed';
-	const NOTATION_ENABLED = 'notation_enabled';
-	const NOTATION_SCALE = 'notation_scale';
 	const MAX_VIDEO_WIDTH = 'max_video_width';
 	const MAX_VIDEO_HEIGHT = 'max_video_height';
 	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
@@ -90,31 +88,6 @@ class MediaConfig extends AbstractConfigData
 	public function is_author_displayed()
 	{
 		return $this->get_property(self::AUTHOR_DISPLAYED);
-	}
-	
-	public function enable_notation()
-	{
-		$this->set_property(self::NOTATION_ENABLED, true);
-	}
-	
-	public function disable_notation()
-	{
-		$this->set_property(self::NOTATION_ENABLED, false);
-	}
-	
-	public function is_notation_enabled()
-	{
-		return $this->get_property(self::NOTATION_ENABLED);
-	}
-	
-	public function get_notation_scale()
-	{
-		return $this->get_property(self::NOTATION_SCALE);
-	}
-	
-	public function set_notation_scale($value)
-	{
-		$this->set_property(self::NOTATION_SCALE, $value);
 	}
 	
 	public function get_max_video_width()
@@ -192,8 +165,6 @@ class MediaConfig extends AbstractConfigData
 			self::CATEGORIES_NUMBER_PER_PAGE => 10,
 			self::COLUMNS_NUMBER_PER_LINE => 2,
 			self::AUTHOR_DISPLAYED => true,
-			self::NOTATION_ENABLED => true,
-			self::NOTATION_SCALE => 5,
 			self::MAX_VIDEO_WIDTH => 900,
 			self::MAX_VIDEO_HEIGHT => 570,
 			self::ROOT_CATEGORY_DESCRIPTION => LangLoader::get_message('root_category_description', 'config', 'media'),

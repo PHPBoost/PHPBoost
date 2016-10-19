@@ -51,6 +51,7 @@ class MediaDisplayCategoryController extends ModuleController
 		load_module_lang('media');
 		$config = MediaConfig::load();
 		$comments_config = new MediaComments();
+		$notation_config = new MediaNotation();
 		
 		//Contenu de la catégorie
 		$page = AppContext::get_request()->get_getint('p', 1);
@@ -151,7 +152,7 @@ class MediaDisplayCategoryController extends ModuleController
 		}
 
 		$this->tpl->put_all(array(
-			'C_DISPLAY_NOTATION' => $config->is_notation_enabled(),
+			'C_DISPLAY_NOTATION' => $notation_config->is_notation_enabled(),
 			'C_DISPLAY_COMMENTS' => $comments_config->are_comments_enabled(),
 			'L_ALPHA' => $MEDIA_LANG['sort_title'],
 			'L_DATE' => LangLoader::get_message('date', 'date-common'),
@@ -211,7 +212,7 @@ class MediaDisplayCategoryController extends ModuleController
 		{
 			$notation = new Notation();
 			$notation->set_module_name('media');
-			$notation->set_notation_scale($config->get_notation_scale());
+			$notation->set_notation_scale($notation_config->get_notation_scale());
 			$notation->set_id_in_module($row['id']);
 			
 			$group_color = User::get_group_color($row['groups'], $row['level']);
