@@ -69,6 +69,11 @@ class WebExtensionPointProvider extends ExtensionPointProvider
 		return new WebNewContent();
 	}
 	
+	public function notation()
+	{
+		return new WebNotation();
+	}
+	
 	public function scheduled_jobs()
 	{
 		return new WebScheduledJobs();

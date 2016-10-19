@@ -61,7 +61,6 @@ class AdminWebConfigController extends AdminModuleController
 		{
 			$this->save();
 			$this->form->get_field_by_id('display_descriptions_to_guests')->set_hidden($this->config->get_category_display_type() == WebConfig::DISPLAY_ALL_CONTENT);
-			$this->form->get_field_by_id('notation_scale')->set_hidden(!$this->config->is_notation_enabled());
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 		
@@ -116,21 +115,6 @@ class AdminWebConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldCheckbox('display_descriptions_to_guests', $this->lang['config.display_descriptions_to_guests'], $this->config->are_descriptions_displayed_to_guests(),
 			array('hidden' => $this->config->get_category_display_type() == WebConfig::DISPLAY_ALL_CONTENT)
-		));
-		
-		$fieldset->add_field(new FormFieldCheckbox('notation_enabled', $this->admin_common_lang['config.notation_enabled'], $this->config->is_notation_enabled(), array(
-			'events' => array('click' => '
-				if (HTMLForms.getField("notation_enabled").getValue()) {
-					HTMLForms.getField("notation_scale").enable();
-				} else {
-					HTMLForms.getField("notation_scale").disable();
-				}'
-			)
-		)));
-		
-		$fieldset->add_field(new FormFieldNumberEditor('notation_scale', $this->admin_common_lang['config.notation_scale'], $this->config->get_notation_scale(), 
-			array('min' => 3, 'max' => 20, 'required' => true, 'hidden' => !$this->config->is_notation_enabled()),
-			array(new FormFieldConstraintIntegerRange(3, 20))
 		));
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->admin_common_lang['config.root_category_description'], $this->config->get_root_category_description(), 
@@ -205,16 +189,6 @@ class AdminWebConfigController extends AdminModuleController
 				$this->config->hide_descriptions_to_guests();
 			}
 		}
-		
-		if ($this->form->get_value('notation_enabled'))
-		{
-			$this->config->enable_notation();
-			$this->config->set_notation_scale($this->form->get_value('notation_scale'));
-			if ($this->form->get_value('notation_scale') != $this->config->get_notation_scale())
-				NotationService::update_notation_scale('web', $this->config->get_notation_scale(), $this->form->get_value('notation_scale'));
-		}
-		else
-			$this->config->disable_notation();
 		
 		$this->config->set_root_category_description($this->form->get_value('root_category_description'));
 		$this->config->set_sort_type($this->form->get_value('sort_type')->get_raw_value());

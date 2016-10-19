@@ -78,6 +78,7 @@ class WebDisplayWebLinkController extends ModuleController
 	{
 		$config = WebConfig::load();
 		$comments_config = new WebComments();
+		$notation_config = new WebNotation();
 		$weblink = $this->get_weblink();
 		$category = $weblink->get_category();
 		
@@ -86,7 +87,7 @@ class WebDisplayWebLinkController extends ModuleController
 		
 		$this->tpl->put_all(array_merge($weblink->get_array_tpl_vars(), array(
 			'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
-			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
+			'C_NOTATION_ENABLED' => $notation_config->is_notation_enabled(),
 			'C_KEYWORDS' => $has_keywords,
 			'NOT_VISIBLE_MESSAGE' => MessageHelper::display(LangLoader::get_message('element.not_visible', 'status-messages-common'), MessageHelper::WARNING)
 		)));

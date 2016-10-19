@@ -374,8 +374,9 @@ class WebLink
 		$this->set_author_user($user);
 		
 		$notation = new Notation();
+		$notation_config = new WebNotation();
 		$notation->set_module_name('web');
-		$notation->set_notation_scale(WebConfig::load()->get_notation_scale());
+		$notation->set_notation_scale($notation_config->get_notation_scale());
 		$notation->set_id_in_module($properties['id']);
 		$notation->set_number_notes($properties['number_notes']);
 		$notation->set_average_notes($properties['average_notes']);
