@@ -136,7 +136,7 @@
 					<h3>{@css.menu.vertical.scrolling}</h3>
 				</div>
 				<div class="module-mini-contents">
-					<nav id="vertical-scrolling-left" class="cssmenu cssmenu-vertical cssmenu-left">
+					<nav id="vertical-scrolling-left" class="cssmenu cssmenu-vertical cssmenu-left cssmenu-with-submenu">
 						<ul class="level-0">
 							<li>
 								<a class="cssmenu-title" href="#" title="{@css.menu.element}">{@css.menu.element}</a>
@@ -405,7 +405,7 @@
 					<h3>{@css.menu.vertical.scrolling}</h3>
 				</div>
 				<div class="module-mini-contents">
-					<nav id="vertical-scrolling-right" class="cssmenu cssmenu-vertical cssmenu-right">
+					<nav id="vertical-scrolling-right" class="cssmenu cssmenu-vertical cssmenu-right cssmenu-with-submenu">
 						<ul class="level-0">
 							<li>
 								<a class="cssmenu-title" href="#" title="{@css.menu.element}">{@css.menu.element}</a>
