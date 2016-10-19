@@ -146,7 +146,7 @@ class AdminCommentsConfigController extends AdminController
 		if ($this->form->get_value('comments_enabled'))
 		{
 			$this->configuration->set_comments_enabled(true);
-					
+			
 			$this->configuration->set_number_comments_display($this->form->get_value('number_comments_display'));
 			
 			$forbidden_tags = array();
@@ -178,7 +178,7 @@ class AdminCommentsConfigController extends AdminController
 		$options = array();
 		$available_tags = AppContext::get_content_formatting_service()->get_available_tags();
 		foreach ($available_tags as $identifier => $name)
-		{	
+		{
 			$options[] = new FormFieldSelectChoiceOption($name, $identifier);
 		}
 		return $options;
@@ -187,13 +187,13 @@ class AdminCommentsConfigController extends AdminController
 	private function generate_unauthorized_module_option($type)
 	{
 		$options = array();
-
+		
 		$provider_service = AppContext::get_extension_provider_service();
 		$extensions_point_modules = array_keys($provider_service->get_extension_point($type));
-
+		
 		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $id => $module)
 		{
-			if (in_array($module->get_id(), $extensions_point_modules))
+			if (class_exists(ucfirst($module->get_id()) . 'Comments') && in_array($module->get_id(), $extensions_point_modules))
 			{
 				$options[] = new FormFieldSelectChoiceOption($module->get_configuration()->get_name(), $module->get_id());
 			}
