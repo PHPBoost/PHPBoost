@@ -224,7 +224,7 @@ class AdminContentConfigController extends AdminController
 			{
 				foreach (AppContext::get_extension_provider_service()->get_extension_point(NotationExtensionPoint::EXTENSION_POINT) as $module_id => $module_notation)
 				{
-					$module_notation->update_notation_scale($this->content_management_config->get_notation_scale(), $this->form->get_value('notation_scale'));
+					$module_notation->update_notation_scale($module_id, $this->content_management_config->get_notation_scale(), $this->form->get_value('notation_scale'));
 				}
 				$this->content_management_config->set_notation_scale($this->form->get_value('notation_scale'));
 			}

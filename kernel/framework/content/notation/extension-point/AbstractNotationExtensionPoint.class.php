@@ -46,6 +46,9 @@ abstract class AbstractNotationExtensionPoint implements NotationExtensionPoint
 		return $this->ContentManagementConfig->get_notation_scale();
 	}
 	
-	abstract public function update_notation_scale($old_notation_scale, $new_notation_scale);
+	public function update_notation_scale($module_id, $old_notation_scale, $new_notation_scale)
+	{
+		NotationService::update_notation_scale($module_id, $old_notation_scale, $new_notation_scale);
+	}
 }
 ?>

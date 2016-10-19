@@ -34,10 +34,5 @@ class ArticlesNotation extends AbstractNotationExtensionPoint
 	{
 		parent::__construct('articles');
 	}
-	
-	public function update_notation_scale($old_notation_scale, $new_notation_scale)
-	{
-		NotationService::update_notation_scale('articles', $old_notation_scale, $new_notation_scale);
-	}
 }
 ?>

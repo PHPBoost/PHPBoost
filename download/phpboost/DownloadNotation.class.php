@@ -34,10 +34,5 @@ class DownloadNotation extends AbstractNotationExtensionPoint
 	{
 		parent::__construct('download');
 	}
-	
-	public function update_notation_scale($old_notation_scale, $new_notation_scale)
-	{
-		NotationService::update_notation_scale('download', $old_notation_scale, $new_notation_scale);
-	}
 }
 ?>
