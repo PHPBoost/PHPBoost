@@ -65,6 +65,11 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new GalleryNewContent();
 	}
+
+	public function notation()
+	{
+		return new GalleryNotation();
+	}
 	
 	public function sitemap()
 	{

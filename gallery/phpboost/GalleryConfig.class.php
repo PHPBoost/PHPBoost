@@ -41,9 +41,7 @@ class GalleryConfig extends AbstractConfigData
 	const CATEGORIES_NUMBER_PER_PAGE = 'categories_number_per_page';
 	const COLUMNS_NUMBER = 'columns_number';
 	const PICS_NUMBER_PER_PAGE = 'pics_number_per_page';
-	const NOTATION_SCALE = 'notation_scale';
 	const TITLE_ENABLED = 'title_enabled';
-	const NOTATION_ENABLED = 'notation_enabled';
 	const NOTES_NUMBER_DISPLAYED = 'notes_number_displayed';
 	const VIEWS_COUNTER_ENABLED = 'views_counter_enabled';
 	const AUTHOR_DISPLAYED = 'author_displayed';
@@ -212,16 +210,6 @@ class GalleryConfig extends AbstractConfigData
 		$this->set_property(self::PICS_NUMBER_PER_PAGE, $value);
 	}
 	
-	public function get_notation_scale()
-	{
-		return $this->get_property(self::NOTATION_SCALE);
-	}
-	
-	public function set_notation_scale($value) 
-	{
-		$this->set_property(self::NOTATION_SCALE, $value);
-	}
-	
 	public function enable_title()
 	{
 		$this->set_property(self::TITLE_ENABLED, true);
@@ -235,21 +223,6 @@ class GalleryConfig extends AbstractConfigData
 	public function is_title_enabled()
 	{
 		return $this->get_property(self::TITLE_ENABLED);
-	}
-	
-	public function enable_notation()
-	{
-		$this->set_property(self::NOTATION_ENABLED, true);
-	}
-	
-	public function disable_notation()
-	{
-		$this->set_property(self::NOTATION_ENABLED, false);
-	}
-	
-	public function is_notation_enabled()
-	{
-		return $this->get_property(self::NOTATION_ENABLED);
 	}
 	
 	public function display_notes_number()
@@ -384,9 +357,7 @@ class GalleryConfig extends AbstractConfigData
 			self::CATEGORIES_NUMBER_PER_PAGE => 10,
 			self::COLUMNS_NUMBER => 4,
 			self::PICS_NUMBER_PER_PAGE => 16,
-			self::NOTATION_SCALE => 5,
 			self::TITLE_ENABLED => true,
-			self::NOTATION_ENABLED => true,
 			self::NOTES_NUMBER_DISPLAYED => true,
 			self::VIEWS_COUNTER_ENABLED => true,
 			self::AUTHOR_DISPLAYED => true,

@@ -37,10 +37,6 @@
 				alert("{L_REQUIRE_IMG_P}");
 				return false;
 			}
-			if(document.getElementById('notation_scale').value == "" || document.getElementById('notation_scale').value < 3 || document.getElementById('notation_scale').value > 20) {
-				alert("{L_REQUIRE_NOTATION_SCALE}");
-				return false;
-			}
 			
 			return true;
 		}
@@ -186,21 +182,6 @@
 							</div>
 						</div>
 						<div class="form-element">
-							<label for="notation_enabled">{L_NOTATION_ENABLED}</label>
-							<div class="form-field">
-								<div class="form-field-radio">
-									<input type="radio" # IF C_NOTATION_ENABLED #checked="checked" # ENDIF #name="notation_enabled" id="notation_enabled" value="1">
-									<label for="notation_enabled"></label>
-								</div>
-								<span class="form-field-radio-span">{L_ENABLED}</span>
-								<div class="form-field-radio">
-									<input type="radio" # IF NOT C_NOTATION_ENABLED #checked="checked" # ENDIF #name="notation_enabled" id="notation_enabled_2" value="0" />
-									<label for="notation_enabled_2"></label>
-								</div>
-								<span class="form-field-radio-span">{L_DISABLED}</span>
-							</div>
-						</div>
-						<div class="form-element">
 							<label for="notes_number_displayed">{L_NOTES_NUMBER_DISPLAYED}</label>
 							<div class="form-field">
 								<div class="form-field-radio">
@@ -213,12 +194,6 @@
 									<label for="notes_number_displayed_2"></label>
 								</div>
 								<span class="form-field-radio-span">{L_NO}</span>
-							</div>
-						</div>
-						<div class="form-element">
-							<label for="notation_scale">* {L_NOTATION_SCALE} <span class="field-description">{L_NOTATION_SCALE_EXPLAIN}</span></label>
-							<div class="form-field">
-								<input type="number" min="3" max="20" name="notation_scale" id="notation_scale" value="{NOTATION_SCALE}" />
 							</div>
 						</div>
 					</div>

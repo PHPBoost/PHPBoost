@@ -72,6 +72,7 @@ class GalleryDisplayCategoryController extends ModuleController
 		$comments_topic = new GalleryCommentsTopic();
 		$config = GalleryConfig::load();
 		$comments_config = new GalleryComments();
+		$notation_config = new GalleryNotation();
 		$category = $this->get_category();
 		
 		$subcategories = GalleryService::get_categories_manager()->get_categories_cache()->get_children($category->get_id(), GalleryService::get_authorized_categories($category->get_id()));
@@ -310,14 +311,14 @@ class GalleryDisplayCategoryController extends ModuleController
 					}
 					$result->dispose();
 					
-					$activ_note = ($config->is_notation_enabled() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) );
+					$activ_note = ($notation_config->is_notation_enabled() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) );
 					if ($activ_note)
 					{
 						//Affichage notation.
 						$notation = new Notation();
 						$notation->set_module_name('gallery');
 						$notation->set_id_in_module($info_pics['id']);
-						$notation->set_notation_scale($config->get_notation_scale());
+						$notation->set_notation_scale($notation_config->get_notation_scale());
 						$notation->set_number_notes($info_pics['number_notes']);
 						$notation->set_average_notes($info_pics['average_notes']);
 						$notation->set_user_already_noted(!empty($info_pics['note']));
@@ -357,7 +358,7 @@ class GalleryDisplayCategoryController extends ModuleController
 						'C_VIEWS_COUNTER_ENABLED' => $config->is_views_counter_enabled(),
 						'C_TITLE_ENABLED' => $config->is_title_enabled(),
 						'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
-						'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
+						'C_NOTATION_ENABLED' => $notation_config->is_notation_enabled(),
 						'ID' => $info_pics['id'],
 						'NAME' => '<span id="fi_' . $info_pics['id'] . '">' . stripslashes($info_pics['name']) . '</span> <span id="fi' . $info_pics['id'] . '"></span>',
 						'CLEARED_NAME' => stripslashes($info_pics['name']),
@@ -511,7 +512,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					
 					$notation = new Notation();
 					$notation->set_module_name('gallery');
-					$notation->set_notation_scale($config->get_notation_scale());
+					$notation->set_notation_scale($notation_config->get_notation_scale());
 					$notation->set_id_in_module($row['id']);
 					$notation->set_number_notes( $row['number_notes']);
 					$notation->set_average_notes($row['average_notes']);
@@ -536,7 +537,7 @@ class GalleryDisplayCategoryController extends ModuleController
 						'VIEWS' => $row['views'],
 						'L_VIEWS' => $row['views'] > 1 ? $LANG['views'] : $LANG['view'],
 						'L_COMMENTS' => CommentsService::get_number_and_lang_comments('gallery', $row['id']),
-						'KERNEL_NOTATION' => $config->is_notation_enabled() && $is_connected ? NotationService::display_active_image($notation) : NotationService::display_static_image($notation),
+						'KERNEL_NOTATION' => $notation_config->is_notation_enabled() && $is_connected ? NotationService::display_active_image($notation) : NotationService::display_static_image($notation),
 						'CAT' => $cat_list,
 						'ONCLICK' => $onclick,
 						'RENAME' => $html_protected_name,

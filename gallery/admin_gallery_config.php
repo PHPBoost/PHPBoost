@@ -58,17 +58,11 @@ if ($valid)
 	$config->set_categories_number_per_page(retrieve(POST, 'categories_number_per_page', 10));
 	$config->set_columns_number(retrieve(POST, 'columns_number', 4));
 	$config->set_pics_number_per_page(retrieve(POST, 'pics_number_per_page', 16));
-	if (retrieve(POST, 'notation_scale', 5) != $config->get_notation_scale())
-		NotationService::update_notation_scale('gallery', $config->get_notation_scale(), retrieve(POST, 'notation_scale', 5));
-	$config->set_notation_scale(retrieve(POST, 'notation_scale', 5));
+
 	if (retrieve(POST, 'title_enabled', ''))
 		$config->enable_title();
 	else
 		$config->disable_title();
-	if (retrieve(POST, 'notation_enabled', ''))
-		$config->enable_notation();
-	else
-		$config->disable_notation();
 	if (retrieve(POST, 'display_notes_number', ''))
 		$config->display_notes_number();
 	else
@@ -138,7 +132,6 @@ else
 		'C_LOGO_ENABLED' => $config->is_logo_enabled(),
 		'C_TITLE_ENABLED' => $config->is_title_enabled(),
 		'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
-		'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
 		'C_NOTES_NUMBER_DISPLAYED' => $config->are_notes_number_displayed(),
 		'C_VIEWS_COUNTER_ENABLED' => $config->is_views_counter_enabled(),
 		'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),
@@ -159,7 +152,6 @@ else
 		'CATEGORIES_NUMBER_PER_PAGE' => $config->get_categories_number_per_page(),
 		'COLUMNS_NUMBER' => $config->get_columns_number(),
 		'PICS_NUMBER_PER_PAGE' => $config->get_pics_number_per_page(),
-		'NOTATION_SCALE' => $config->get_notation_scale(),
 		'MEMBER_MAX_PICS_NUMBER' => $config->get_member_max_pics_number(),
 		'MODERATOR_MAX_PICS_NUMBER' => $config->get_moderator_max_pics_number(),
 		'PICS_NUMBER_IN_MINI' => $config->get_pics_number_in_mini(),
@@ -183,7 +175,6 @@ else
 		'L_REQUIRE_MAX_HEIGHT' => $LANG['require_height_max'],
 		'L_REQUIRE_MAX_WIDTH' => $LANG['require_width_max'],
 		'L_REQUIRE_MAX_WEIGHT' => $LANG['require_weight_max'],
-		'L_REQUIRE_NOTATION_SCALE' => $LANG['require_notation_scale'],
 		'L_REQUIRE_CAT_P' => $LANG['require_cat_p'],
 		'L_REQUIRE_ROW' => $LANG['require_row'],
 		'L_REQUIRE_IMG_P' => $LANG['require_img_p'],
@@ -225,10 +216,7 @@ else
 		'L_VIEWS_COUNTER_ENABLED' => $LANG['compt_views'],
 		'L_VIEWS_COUNTER_ENABLED_EXPLAIN' => $LANG['compt_views_explain'],
 		'L_COMMENTS_ENABLED' => $LANG['activ_com'],
-		'L_NOTATION_ENABLED' => $LANG['activ_note'],
 		'L_NOTES_NUMBER_DISPLAYED' => $LANG['display_nbrnote'],
-		'L_NOTATION_SCALE' => $LANG['note_max'],
-		'L_NOTATION_SCALE_EXPLAIN' => $LANG['note_max_explain'],
 		'L_IMG_PROTECT' => $LANG['img_protect'],
 		'L_LOGO_ENABLED' => $LANG['activ_logo'],
 		'L_LOGO_ENABLED_EXPLAIN' => $LANG['activ_logo_explain'],
