@@ -31,7 +31,6 @@ load_module_lang('gallery'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 $config = GalleryConfig::load();
-$comments_config = new GalleryComments();
 
 $request = AppContext::get_request();
 
@@ -131,7 +130,6 @@ else
 	$tpl->put_all(array(
 		'C_LOGO_ENABLED' => $config->is_logo_enabled(),
 		'C_TITLE_ENABLED' => $config->is_title_enabled(),
-		'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
 		'C_NOTES_NUMBER_DISPLAYED' => $config->are_notes_number_displayed(),
 		'C_VIEWS_COUNTER_ENABLED' => $config->is_views_counter_enabled(),
 		'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),
@@ -215,7 +213,6 @@ else
 		'L_DISABLED' => LangLoader::get_message('disabled', 'common'),
 		'L_VIEWS_COUNTER_ENABLED' => $LANG['compt_views'],
 		'L_VIEWS_COUNTER_ENABLED_EXPLAIN' => $LANG['compt_views_explain'],
-		'L_COMMENTS_ENABLED' => $LANG['activ_com'],
 		'L_NOTES_NUMBER_DISPLAYED' => $LANG['display_nbrnote'],
 		'L_IMG_PROTECT' => $LANG['img_protect'],
 		'L_LOGO_ENABLED' => $LANG['activ_logo'],

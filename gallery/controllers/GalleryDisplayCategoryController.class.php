@@ -445,6 +445,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),
 					'C_VIEWS_COUNTER_ENABLED' => $config->is_views_counter_enabled(),
 					'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
+					'C_NOTATION_ENABLED' => $notation_config->is_notation_enabled(),
 					'C_PAGINATION' => $pagination->has_several_pages(),
 					'PAGINATION' => $pagination->display(),
 					'L_EDIT' => LangLoader::get_message('edit', 'common'),
