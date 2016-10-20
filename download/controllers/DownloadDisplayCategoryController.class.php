@@ -34,6 +34,7 @@ class DownloadDisplayCategoryController extends ModuleController
 	private $lang;
 	private $tpl;
 	private $config;
+	private $notation_config;
 	
 	private $category;
 	
@@ -54,6 +55,7 @@ class DownloadDisplayCategoryController extends ModuleController
 		$this->tpl = new FileTemplate('download/DownloadDisplaySeveralDownloadFilesController.tpl');
 		$this->tpl->add_lang($this->lang);
 		$this->config = DownloadConfig::load();
+		$this->notation_config = new DownloadNotation();
 	}
 	
 	private function build_view(HTTPRequestCustom $request)
@@ -64,7 +66,6 @@ class DownloadDisplayCategoryController extends ModuleController
 		$page = AppContext::get_request()->get_getint('page', 1);
 		$subcategories_page = AppContext::get_request()->get_getint('subcategories_page', 1);
 		$comments_config = new DownloadComments();
-		$notation_config = new DownloadNotation();
 		
 		$subcategories = DownloadService::get_categories_manager()->get_categories_cache()->get_children($this->get_category()->get_id(), DownloadService::get_authorized_categories($this->get_category()->get_id()));
 		$subcategories_pagination = $this->get_subcategories_pagination(count($subcategories), $this->config->get_categories_number_per_page(), $field, $mode, $page, $subcategories_page);
@@ -153,7 +154,7 @@ class DownloadDisplayCategoryController extends ModuleController
 			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
 			'C_AUTHOR_DISPLAYED' => $this->config->is_author_displayed(),
 			'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
-			'C_NOTATION_ENABLED' => $notation_config->is_notation_enabled(),
+			'C_NOTATION_ENABLED' => $this->notation_config->is_notation_enabled(),
 			'C_MODERATION' => DownloadAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_CATEGORY' => true,
@@ -164,7 +165,7 @@ class DownloadDisplayCategoryController extends ModuleController
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
 			'CATS_COLUMNS_WIDTH' => $cats_columns_width,
 			'PAGINATION' => $pagination->display(),
-			'TABLE_COLSPAN' => 4 + (int)$comments_config->are_comments_enabled() + (int)$notation_config->is_notation_enabled(),
+			'TABLE_COLSPAN' => 4 + (int)$comments_config->are_comments_enabled() + (int)$this->notation_config->is_notation_enabled(),
 			'ID_CAT' => $this->get_category()->get_id(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),
@@ -202,16 +203,20 @@ class DownloadDisplayCategoryController extends ModuleController
 		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $common_lang['sort_by']));
 		$form->add_fieldset($fieldset);
 		
+		$sort_options = array(
+			new FormFieldSelectChoiceOption($common_lang['form.date.update'], 'updated_date'),
+			new FormFieldSelectChoiceOption($common_lang['form.date.creation'], 'date'),
+			new FormFieldSelectChoiceOption($common_lang['form.name'], 'name'),
+			new FormFieldSelectChoiceOption($this->lang['downloads_number'], 'download'),
+			new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'], 'com'),
+			new FormFieldSelectChoiceOption($common_lang['author'], 'author')
+		);
+		
+		if ($this->notation_config->is_notation_enabled())
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'], 'note');
+		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, 
-			array(
-				new FormFieldSelectChoiceOption($common_lang['form.date.update'], 'updated_date'),
-				new FormFieldSelectChoiceOption($common_lang['form.date.creation'], 'date'),
-				new FormFieldSelectChoiceOption($common_lang['form.name'], 'name'),
-				new FormFieldSelectChoiceOption($this->lang['downloads_number'], 'download'),
-				new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'], 'com'),
-				new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'], 'note'),
-				new FormFieldSelectChoiceOption($common_lang['author'], 'author')
-			), 
+			$sort_options,
 			array('events' => array('change' => 'document.location = "'. DownloadUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 		
