@@ -32,6 +32,8 @@ class ArticlesDisplayCategoryController extends ModuleController
 {
 	private $lang;
 	private $config;
+	private $comments_config;
+	private $notation_config;
 	private $category;
 	
 	public function execute(HTTPRequestCustom $request)
@@ -51,6 +53,8 @@ class ArticlesDisplayCategoryController extends ModuleController
 		$this->view = new FileTemplate('articles/ArticlesDisplaySeveralArticlesController.tpl');
 		$this->view->add_lang($this->lang);
 		$this->config = ArticlesConfig::load();
+		$this->comments_config = new ArticlesComments();
+		$this->notation_config = new ArticlesNotation();
 	}
 	
 	private function build_view()
@@ -114,14 +118,11 @@ class ArticlesDisplayCategoryController extends ModuleController
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
 		)));
-		
-		$comments_config = new ArticlesComments();
-		$notation_config = new ArticlesNotation();
 
 		$this->view->put_all(array(
 			'C_MOSAIC' => $this->config->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
-			'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
-			'C_NOTATION_ENABLED' => $notation_config->is_notation_enabled(),
+			'C_COMMENTS_ENABLED' => $this->comments_config->are_comments_enabled(),
+			'C_NOTATION_ENABLED' => $this->notation_config->is_notation_enabled(),
 			'C_ARTICLES_FILTERS' => true,
 			'C_DISPLAY_CATS_ICON' => $this->config->are_cats_icon_enabled(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
@@ -223,16 +224,21 @@ class ArticlesDisplayCategoryController extends ModuleController
 		
 		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $common_lang['sort_by']));
 		$form->add_fieldset($fieldset);
-		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, 
-			array(
-				new FormFieldSelectChoiceOption($common_lang['form.date.creation'], 'date'),
-				new FormFieldSelectChoiceOption($common_lang['form.title'], 'title'),
-				new FormFieldSelectChoiceOption($common_lang['sort_by.number_views'], 'view'),
-				new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'], 'com'),
-				new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'], 'note'),
-				new FormFieldSelectChoiceOption($common_lang['author'], 'author')
-			), 
+
+		$sort_options = array(
+			new FormFieldSelectChoiceOption($common_lang['form.date.creation'], 'date'),
+			new FormFieldSelectChoiceOption($common_lang['form.title'], 'title'),
+			new FormFieldSelectChoiceOption($common_lang['sort_by.number_views'], 'view'),
+			new FormFieldSelectChoiceOption($common_lang['author'], 'author')
+		);
+
+		if ($this->comments_config->are_comments_enabled())
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'], 'com');
+
+		if ($this->notation_config->is_notation_enabled())
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'], 'note');
+
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_options, 
 			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 		

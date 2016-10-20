@@ -87,7 +87,6 @@ class ArticlesSetup extends DefaultModuleSetup
 			'publishing_end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'date_created' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'date_updated' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'notation_enabled' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
 			'sources' => array('type' => 'text', 'length' => 65000),
 		);
 		$options = array(
@@ -145,7 +144,6 @@ class ArticlesSetup extends DefaultModuleSetup
 			'publishing_end_date' => 0,
 			'date_created' => time(),
 			'date_updated' => 0,
-			'notation_enabled' => Article::NOTATION_ENABLED,
 			'sources' => serialize(array())
 		));
 	}

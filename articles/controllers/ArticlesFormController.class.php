@@ -139,8 +139,6 @@ class ArticlesFormController extends ModuleController
 		$form->add_fieldset($other_fieldset);
 
 		$other_fieldset->add_field(new FormFieldCheckbox('author_name_displayed', LangLoader::get_message('config.author_displayed', 'admin-common'), $this->get_article()->get_author_name_displayed()));
-
-		$other_fieldset->add_field(new FormFieldCheckbox('notation_enabled', LangLoader::get_message('config.notation_enabled', 'admin-common'), $this->get_article()->get_notation_enabled()));
 		
 		$other_fieldset->add_field(new FormFieldUploadPictureFile('picture', $this->common_lang['form.picture'], $this->get_article()->get_picture()->relative()));
 
@@ -323,8 +321,6 @@ class ArticlesFormController extends ModuleController
 		
 		$author_name_displayed = $this->form->get_value('author_name_displayed') ? $this->form->get_value('author_name_displayed') : Article::AUTHOR_NAME_NOTDISPLAYED;
 		$article->set_author_name_displayed($author_name_displayed);
-		$notation_enabled = $this->form->get_value('notation_enabled') ? $this->form->get_value('notation_enabled') : Article::NOTATION_DISABLED;
-		$article->set_notation_enabled($notation_enabled);
 		$article->set_picture(new Url($this->form->get_value('picture')));
 		
 		$article->set_sources($this->form->get_value('sources'));

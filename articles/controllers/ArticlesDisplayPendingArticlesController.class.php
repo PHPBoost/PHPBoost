@@ -65,9 +65,6 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, array(
 				new FormFieldSelectChoiceOption($common_lang['form.date.creation'], 'date'),
 				new FormFieldSelectChoiceOption($common_lang['form.title'], 'title'),
-				new FormFieldSelectChoiceOption($common_lang['sort_by.number_views'], 'view'),
-				new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'], 'com'),
-				new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'], 'note'),
 				new FormFieldSelectChoiceOption($common_lang['author'], 'author')
 			), array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_pending_articles()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
@@ -100,15 +97,6 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		{
 			case 'title':
 				$sort_field = 'title';
-				break;
-			case 'view':
-				$sort_field = 'number_view';
-				break;
-			case 'com':
-				$sort_field = 'number_comments';
-				break;
-			case 'note':
-				$sort_field = 'average_notes';
 				break;
 			case 'author':
 				$sort_field = 'display_name';

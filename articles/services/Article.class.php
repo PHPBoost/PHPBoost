@@ -39,7 +39,6 @@ class Article
 	private $picture_url;
 	private $number_view;
 
-	private $notation_enabled;
 	private $author_name_displayed;
 	private $author_user;
 	private $notation;
@@ -57,9 +56,6 @@ class Article
 	const NOT_PUBLISHED = 0;
 	const PUBLISHED_NOW = 1;
 	const PUBLISHED_DATE = 2;
-
-	const NOTATION_DISABLED = 0;
-	const NOTATION_ENABLED = 1;
 
 	const AUTHOR_NAME_NOTDISPLAYED = 0;
 	const AUTHOR_NAME_DISPLAYED = 1;
@@ -178,16 +174,6 @@ class Article
 	public function get_number_view()
 	{
 		return $this->number_view;
-	}
-
-	public function get_notation_enabled()
-	{
-		return $this->notation_enabled;
-	}
-
-	public function set_notation_enabled($enabled) 
-	{
-		$this->notation_enabled = $enabled;
 	}
 
 	public function get_author_name_displayed()
@@ -359,7 +345,6 @@ class Article
 			'publishing_end_date'   => $this->get_publishing_end_date() !== null ? $this->get_publishing_end_date()->get_timestamp() : 0,
 			'date_created'          => $this->get_date_created()->get_timestamp(),
 			'date_updated'          => $this->get_date_updated() !== null ? $this->get_date_updated()->get_timestamp() : 0,
-			'notation_enabled'      => $this->get_notation_enabled(),
 			'sources'               => serialize($this->get_sources())
 		);
 	}
@@ -381,7 +366,6 @@ class Article
 		$this->end_date_enabled = !empty($properties['publishing_end_date']);
 		$this->set_date_created(new Date($properties['date_created'], Timezone::SERVER_TIMEZONE));
 		$this->date_updated = !empty($properties['date_updated']) ? new Date($properties['date_updated'], Timezone::SERVER_TIMEZONE) : null;
-		$this->set_notation_enabled($properties['notation_enabled']);
 		$this->set_sources(!empty($properties['sources']) ? unserialize($properties['sources']) : array());
 		
 		$user = new User();
@@ -412,7 +396,6 @@ class Article
 		$this->publishing_start_date = new Date();
 		$this->publishing_end_date = new Date();
 		$this->date_created = new Date();
-		$this->notation_enabled = self::NOTATION_ENABLED;
 		$this->sources = array();
 		$this->picture_url = new Url(self::DEFAULT_PICTURE);
 		$this->number_view = 0;
@@ -454,7 +437,7 @@ class Article
 			'C_PUBLISHING_END_DATE'           => $this->publishing_end_date != null,
 			'C_DATE_UPDATED'                  => $this->date_updated != null,
 			'C_AUTHOR_DISPLAYED'              => $this->get_author_name_displayed(),
-			'C_NOTATION_ENABLED'              => $notation_config->is_notation_enabled() && $this->get_notation_enabled(),
+			'C_NOTATION_ENABLED'              => $notation_config->is_notation_enabled(),
 			'C_READ_MORE'                     => !$this->get_description_enabled() && $description != @strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>') && strlen($description) > ArticlesConfig::load()->get_number_character_to_cut(),
 			'C_SOURCES'                       => $nbr_sources > 0,
 			'C_DIFFERED'                      => $this->published == self::PUBLISHED_DATE,
