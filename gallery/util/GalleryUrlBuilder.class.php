@@ -114,7 +114,7 @@ class GalleryUrlBuilder
 	// TODO : supprimer ce qui est en dessous si possible
 	public static function get_link_item($idcat, $id, $com = null, $sort = null)
 	{
-		return Url::to_absolute('/gallery/gallery' . url('.php?cat=' . $idcat . '&id=' . $id . (!empty($com) ? '&com=' . $com : '') . (!empty($sort) ? '&sort=' . $sort : ''),
+		return Url::to_rel('/gallery/gallery' . url('.php?cat=' . $idcat . '&id=' . $id . (!empty($com) ? '&com=' . $com : '') . (!empty($sort) ? '&sort=' . $sort : ''),
 			'-' . $idcat . '-' . $id . '.php' . (!empty($com) ? '?com=' . $com : '') . (!empty($sort) ? '&sort=' . $sort : '')));
 	}
 	
@@ -123,7 +123,7 @@ class GalleryUrlBuilder
 		if (!empty($name))
 			$name = '+' . Url::encode_rewrite($name);
 			
-		return Url::to_absolute('/gallery/gallery'.url('.php?cat='.$id, '-'.$id.$name.'.php'));
+		return Url::to_rel('/gallery/gallery'.url('.php?cat='.$id, '-'.$id.$name.'.php'));
 	}
 	
 	public static function get_link_cat_add($id, $error = null, $token = null)
@@ -132,7 +132,7 @@ class GalleryUrlBuilder
 			$error = '&error='. $error;
 		if (!empty($token))
 			$token = '&token='. $token;
-		return Url::to_absolute('/gallery/gallery'.url(
+		return Url::to_rel('/gallery/gallery'.url(
 			'.php?add=1&cat='. $id . $error . $token,
 			'-'. $id .'.php?add=1'. $error . $token,
 			'&'));
