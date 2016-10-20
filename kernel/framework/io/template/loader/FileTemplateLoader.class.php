@@ -47,6 +47,7 @@ class FileTemplateLoader implements TemplateLoader
 	private $module;
 	private $file;
 
+	private $templates_folder;
 	private $default_templates_folder;
 	private $theme_templates_folder;
 
@@ -164,14 +165,15 @@ class FileTemplateLoader implements TemplateLoader
 		$this->file = trim(substr($this->filepath, $i), '/');
 		$this->filename = trim(substr($this->filepath, strrpos($this->filepath, '/')));
 
-		$this->default_templates_folder = PATH_TO_ROOT . '/templates/default/';
-		$this->theme_templates_folder = PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/';
+		$this->templates_folder = PATH_TO_ROOT . '/templates/';
+		$this->default_templates_folder = $this->templates_folder . 'default/';
+		$this->theme_templates_folder = $this->templates_folder . AppContext::get_current_user()->get_theme() . '/';
 
 		if (empty($this->module) || !strpos($this->filepath, '/'))
 		{
 			$this->get_template_paths();
 		}
-		else if (!in_array($this->module, array('default', 'admin', 'framework') ))
+		else if (!in_array($this->module, array('default', 'admin', 'framework')))
 		{
 			// Module - Templates priority order
 			//      /templates/$theme/modules/$module/$file.tpl
@@ -199,7 +201,7 @@ class FileTemplateLoader implements TemplateLoader
 	{
 		$this->get_template_real_filepaths_and_data_path(array(
 			$this->theme_templates_folder . 'default/' . $this->filepath,
-			$this->default_templates_folder . $this->filepath
+			($this->module == 'default' ? $this->templates_folder : $this->default_templates_folder) . $this->filepath
 		));
 	}
 
