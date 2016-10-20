@@ -47,6 +47,8 @@ class AdminWebConfigController extends AdminModuleController
 	 * @var WebConfig
 	 */
 	private $config;
+	private $comments_config;
+	private $notation_config;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -72,6 +74,8 @@ class AdminWebConfigController extends AdminModuleController
 	private function init()
 	{
 		$this->config = WebConfig::load();
+		$this->comments_config = new WebComments();
+		$this->notation_config = new WebNotation();
 		$this->lang = LangLoader::get('common', 'web');
 		$this->admin_common_lang = LangLoader::get('admin-common');
 	}
@@ -123,15 +127,20 @@ class AdminWebConfigController extends AdminModuleController
 		
 		$fieldset = new FormFieldsetHTML('menu', $this->lang['config.partners_menu']);
 		$form->add_fieldset($fieldset);
-		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_type', $this->lang['config.sort_type'], $this->config->get_sort_type(),
-			array(
-				new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.alphabetic', 'common'), WebLink::SORT_ALPHABETIC),
-				new FormFieldSelectChoiceOption(LangLoader::get_message('form.date.creation', 'common'), WebLink::SORT_DATE),
-				new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.best_note', 'common'), WebLink::SORT_NOTATION),
-				new FormFieldSelectChoiceOption($this->lang['config.sort_type.visits'], WebLink::SORT_NUMBER_VISITS),
-				new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.number_comments', 'common'), WebLink::SORT_NUMBER_COMMENTS)
-			),
+
+		$sort_options = array(
+			new FormFieldSelectChoiceOption(LangLoader::get_message('form.date.creation', 'common'), WebLink::SORT_DATE),
+			new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.alphabetic', 'common'), WebLink::SORT_ALPHABETIC),
+			new FormFieldSelectChoiceOption($this->lang['config.sort_type.visits'], WebLink::SORT_NUMBER_VISITS)
+		);
+
+		if ($this->comments_config->are_comments_enabled())
+			$sort_options[] = new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.number_comments', 'common'), WebLink::SORT_NUMBER_COMMENTS);
+	
+		if ($this->notation_config->is_notation_enabled())
+			$sort_options[] = new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.best_note', 'common'), WebLink::SORT_NOTATION);
+
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_type', $this->lang['config.sort_type'], $this->config->get_sort_type(), $sort_options,
 			array('description' => $this->lang['config.sort_type.explain'])
 		));
 		

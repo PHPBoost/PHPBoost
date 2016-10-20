@@ -34,6 +34,8 @@ class WebDisplayCategoryController extends ModuleController
 	private $lang;
 	private $tpl;
 	private $config;
+	private $comments_config;
+	private $notation_config;
 	
 	private $category;
 	
@@ -54,13 +56,15 @@ class WebDisplayCategoryController extends ModuleController
 		$this->tpl = new FileTemplate('web/WebDisplaySeveralWebLinksController.tpl');
 		$this->tpl->add_lang($this->lang);
 		$this->config = WebConfig::load();
+		$this->comments_config = new WebComments();
+		$this->notation_config = new WebNotation();
+
 	}
 	
 	private function build_view(HTTPRequestCustom $request)
 	{
 		$now = new Date();
-		$comments_config = new WebComments();
-		$notation_config = new WebNotation();
+		
 		$mode = $request->get_getstring('sort', WebUrlBuilder::DEFAULT_SORT_MODE);
 		$field = $request->get_getstring('field', WebUrlBuilder::DEFAULT_SORT_FIELD);
 		$page = AppContext::get_request()->get_getint('page', 1);
@@ -145,8 +149,8 @@ class WebDisplayCategoryController extends ModuleController
 			'C_CATEGORY_DISPLAYED_SUMMARY' => $this->config->is_category_displayed_summary(),
 			'C_CATEGORY_DISPLAYED_TABLE' => $this->config->is_category_displayed_table(),
 			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
-			'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
-			'C_NOTATION_ENABLED' => $notation_config->is_notation_enabled(),
+			'C_COMMENTS_ENABLED' => $this->comments_config->are_comments_enabled(),
+			'C_NOTATION_ENABLED' => $this->notation_config->is_notation_enabled(),
 			'C_MODERATE' => WebAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_CATEGORY' => true,
@@ -157,7 +161,7 @@ class WebDisplayCategoryController extends ModuleController
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
 			'CATS_COLUMNS_WIDTH' => $cats_columns_width,
 			'PAGINATION' => $pagination->display(),
-			'TABLE_COLSPAN' => 3 + (int)$comments_config->are_comments_enabled() + (int)$notation_config->is_notation_enabled(),
+			'TABLE_COLSPAN' => 3 + (int)$this->comments_config->are_comments_enabled() + (int)$this->notation_config->is_notation_enabled(),
 			'ID_CAT' => $this->get_category()->get_id(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),
@@ -193,15 +197,20 @@ class WebDisplayCategoryController extends ModuleController
 		
 		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $common_lang['sort_by']));
 		$form->add_fieldset($fieldset);
-		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, 
-			array(
-				new FormFieldSelectChoiceOption($common_lang['form.date.creation'], 'date'),
-				new FormFieldSelectChoiceOption($common_lang['form.name'], 'name'),
-				new FormFieldSelectChoiceOption($this->lang['config.sort_type.visits'], 'visits'),
-				new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'], 'com'),
-				new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'], 'note')
-			), 
+
+		$sort_options = array(
+			new FormFieldSelectChoiceOption($common_lang['form.date.creation'], 'date'),
+			new FormFieldSelectChoiceOption($common_lang['form.name'], 'name'),
+			new FormFieldSelectChoiceOption($this->lang['config.sort_type.visits'], 'visits')
+		);
+
+		if ($this->comments_config->are_comments_enabled())
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'], 'com');
+	
+		if ($this->notation_config->is_notation_enabled())
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'], 'note');
+	
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_options, 
 			array('events' => array('change' => 'document.location = "'. WebUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 		
