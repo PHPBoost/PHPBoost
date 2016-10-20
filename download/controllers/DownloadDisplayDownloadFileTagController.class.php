@@ -35,6 +35,10 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 	private $lang;
 	
 	private $keyword;
+
+	private $config;
+	private $comments_config;
+	private $notation_config;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -52,14 +56,15 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 		$this->lang = LangLoader::get('common', 'download');
 		$this->tpl = new FileTemplate('download/DownloadDisplaySeveralDownloadFilesController.tpl');
 		$this->tpl->add_lang($this->lang);
+		$this->config = DownloadConfig::load();
+		$this->notation_config = new DownloadNotation();
+		$this->comments_config = new DownloadComments();
 	}
 	
 	public function build_view(HTTPRequestCustom $request)
 	{
 		$now = new Date();
-		$config = DownloadConfig::load();
-		$comments_config = new DownloadComments();
-		$notation_config = new DownloadNotation();
+				
 		$authorized_categories = DownloadService::get_authorized_categories(Category::ROOT_CATEGORY);
 		$mode = $request->get_getstring('sort', DownloadUrlBuilder::DEFAULT_SORT_MODE);
 		$field = $request->get_getstring('field', DownloadUrlBuilder::DEFAULT_SORT_FIELD);
@@ -120,14 +125,14 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 		$this->tpl->put_all(array(
 			'C_FILES' => $result->get_rows_count() > 0,
 			'C_MORE_THAN_ONE_FILE' => $result->get_rows_count() > 1,
-			'C_CATEGORY_DISPLAYED_SUMMARY' => $config->is_category_displayed_summary(),
-			'C_CATEGORY_DISPLAYED_TABLE' => $config->is_category_displayed_table(),
-			'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
-			'C_NOTATION_ENABLED' => $download_config->is_notation_enabled(),
-			'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),
+			'C_CATEGORY_DISPLAYED_SUMMARY' => $this->config->is_category_displayed_summary(),
+			'C_CATEGORY_DISPLAYED_TABLE' => $this->config->is_category_displayed_table(),
+			'C_COMMENTS_ENABLED' => $this->comments_config->are_comments_enabled(),
+			'C_NOTATION_ENABLED' => $this->notation_config->is_notation_enabled(),
+			'C_AUTHOR_DISPLAYED' => $this->config->is_author_displayed(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
-			'TABLE_COLSPAN' => 4 + (int)$comments_config->are_comments_enabled() + (int)$download_config->is_notation_enabled(),
+			'TABLE_COLSPAN' => 4 + (int)$this->comments_config->are_comments_enabled() + (int)$this->notation_config->is_notation_enabled(),
 			'CATEGORY_NAME' => $this->get_keyword()->get_name()
 		));
 		
@@ -159,17 +164,22 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 		
 		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $common_lang['sort_by']));
 		$form->add_fieldset($fieldset);
+
+		$sort_options = array(
+			new FormFieldSelectChoiceOption($common_lang['form.date.update'], 'updated_date'),
+			new FormFieldSelectChoiceOption($common_lang['form.date.creation'], 'date'),
+			new FormFieldSelectChoiceOption($common_lang['form.name'], 'name'),
+			new FormFieldSelectChoiceOption($this->lang['downloads_number'], 'download'),
+			new FormFieldSelectChoiceOption($common_lang['author'], 'author')
+		);
+
+		if ($this->comments_config->are_comments_enabled())
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'], 'com');
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, 
-			array(
-				new FormFieldSelectChoiceOption($common_lang['form.date.update'], 'updated_date'),
-				new FormFieldSelectChoiceOption($common_lang['form.date.creation'], 'date'),
-				new FormFieldSelectChoiceOption($common_lang['form.name'], 'name'),
-				new FormFieldSelectChoiceOption($this->lang['downloads_number'], 'download'),
-				new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'], 'com'),
-				new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'], 'note'),
-				new FormFieldSelectChoiceOption($common_lang['author'], 'author')
-			), 
+		if ($this->notation_config->is_notation_enabled())
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'], 'note');
+
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_options, 
 			array('events' => array('change' => 'document.location = "'. DownloadUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 		

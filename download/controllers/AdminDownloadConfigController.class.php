@@ -47,6 +47,8 @@ class AdminDownloadConfigController extends AdminModuleController
 	 * @var DownloadConfig
 	 */
 	private $config;
+	private $comments_config;
+	private $notation_config;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -73,6 +75,8 @@ class AdminDownloadConfigController extends AdminModuleController
 	private function init()
 	{
 		$this->config = DownloadConfig::load();
+		$this->comments_config = new DownloadComments();
+		$this->notation_config = new DownloadNotation();
 		$this->lang = LangLoader::get('common', 'download');
 		$this->admin_common_lang = LangLoader::get('admin-common');
 	}
@@ -126,14 +130,22 @@ class AdminDownloadConfigController extends AdminModuleController
 		
 		$fieldset = new FormFieldsetHTML('menu', $this->lang['config.downloaded_files_menu']);
 		$form->add_fieldset($fieldset);
-		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_type', $this->lang['config.sort_type'], $this->config->get_sort_type(),
-			array(
-				new FormFieldSelectChoiceOption(LangLoader::get_message('form.date.update', 'common'), DownloadFile::SORT_UPDATED_DATE),
-				new FormFieldSelectChoiceOption(LangLoader::get_message('form.date.creation', 'common'), DownloadFile::SORT_DATE),
-				new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.best_note', 'common'), DownloadFile::SORT_NOTATION),
-				new FormFieldSelectChoiceOption($this->lang['downloads_number'], DownloadFile::SORT_NUMBER_DOWNLOADS)
-			),
+
+		$sort_options = array(
+			new FormFieldSelectChoiceOption(LangLoader::get_message('form.date.update', 'common'), DownloadFile::SORT_UPDATED_DATE),
+			new FormFieldSelectChoiceOption(LangLoader::get_message('form.date.creation', 'common'), DownloadFile::SORT_DATE),
+			new FormFieldSelectChoiceOption(LangLoader::get_message('form.name', 'common'), DownloadFile::SORT_ALPHABETIC),
+			new FormFieldSelectChoiceOption($this->lang['downloads_number'], DownloadFile::SORT_NUMBER_DOWNLOADS),
+			new FormFieldSelectChoiceOption(LangLoader::get_message('author', 'common'), DownloadFile::SORT_AUTHOR)
+		);
+
+		if ($this->comments_config->are_comments_enabled())
+			$sort_options[] = new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.number_comments', 'common'), DownloadFile::SORT_NUMBER_COMMENTS);
+	
+		if ($this->notation_config->is_notation_enabled())
+			$sort_options[] = new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.best_note', 'common'), DownloadFile::SORT_NOTATION);
+
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_type', $this->lang['config.sort_type'], $this->config->get_sort_type(), $sort_options,
 			array('description' => $this->lang['config.sort_type.explain'])
 		));
 		

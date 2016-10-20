@@ -57,15 +57,15 @@ class DownloadFile
 	private $notation;
 	private $keywords;
 	
-	const SORT_ALPHABETIC = 'name';
-	const SORT_AUTHOR = 'display_name';
-	const SORT_DATE = 'creation_date';
-	const SORT_UPDATED_DATE = 'updated_date';
-	const SORT_NOTATION = 'average_notes';
-	const SORT_NUMBER_COMMENTS = 'number_comments';
+	const SORT_ALPHABETIC       = 'name';
+	const SORT_AUTHOR           = 'display_name';
+	const SORT_DATE             = 'creation_date';
+	const SORT_UPDATED_DATE     = 'updated_date';
+	const SORT_NOTATION         = 'average_notes';
+	const SORT_NUMBER_COMMENTS  = 'number_comments';
 	const SORT_NUMBER_DOWNLOADS = 'number_downloads';
 	
-	const ASC = 'ASC';
+	const ASC  = 'ASC';
 	const DESC = 'DESC';
 	
 	const NOT_APPROVAL = 0;
