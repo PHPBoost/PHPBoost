@@ -27,14 +27,32 @@
 
 class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 {
+	private $querier;
+	private $db_utils;
+	
 	public function __construct()
 	{
 		parent::__construct('articles');
+		$this->querier = PersistenceContext::get_querier();
+		$this->db_utils = PersistenceContext::get_dbms_utils();
 	}
 	
 	public function execute()
 	{
+		$tables = $this->db_utils->list_tables(true);
+		
+		if (in_array(PREFIX . 'articles', $tables))
+			$this->update_articles_table();
+		
 		$this->delete_old_files();
+	}
+	
+	private function update_articles_table()
+	{
+		$columns = $this->db_utils->desc_table(PREFIX . 'articles');
+		
+		if (isset($columns['notation_enabled']))
+			$this->db_utils->drop_column(PREFIX . 'articles', 'notation_enabled');
 	}
 	
 	private function delete_old_files()
