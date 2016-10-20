@@ -171,7 +171,7 @@ class AdminContentConfigController extends AdminController
 		));
 
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('notation_unauthorized_modules', $this->admin_common_lang['config.forbidden-module'], $this->content_management_config->get_notation_unauthorized_modules(), $this->generate_unauthorized_module_option(NotationExtensionPoint::EXTENSION_POINT),
-			array('size' => 12, 'description' => $this->admin_common_lang['config.notation.forbidden-module-explain'], 'hidden' => !$this->content_management_config->is_notation_enabled())
+			array('size' => 6, 'description' => $this->admin_common_lang['config.notation.forbidden-module-explain'], 'hidden' => !$this->content_management_config->is_notation_enabled())
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
