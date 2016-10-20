@@ -48,8 +48,8 @@
 								<option value="alpha"{SELECTED_ALPHA}>{L_ALPHA}</option>
 								<option value="date"{SELECTED_DATE}>{L_DATE}</option>
 								<option value="nbr"{SELECTED_NBR}>{L_NBR}</option>
-								<option value="note"{SELECTED_NOTE}>{L_NOTE}</option>
-								<option value="com"{SELECTED_COM}>{L_COM}</option>
+								# IF C_DISPLAY_NOTATION #<option value="note"{SELECTED_NOTE}>{L_NOTE}</option># ENDIF #
+								# IF C_DISPLAY_COMMENTS #<option value="com"{SELECTED_COM}>{L_COM}</option># ENDIF #
 							</select>
 							<select name="mode" id="mode" class="nav" onchange="change_order()">
 								<option value="asc"{SELECTED_ASC}>{L_ASC}</option>
