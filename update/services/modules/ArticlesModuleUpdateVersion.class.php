@@ -53,6 +53,9 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 		
 		if (isset($columns['notation_enabled']))
 			$this->db_utils->drop_column(PREFIX . 'articles', 'notation_enabled');
+		
+		if (!isset($columns['author_custom_name']))
+			$this->db_utils->add_column(PREFIX . 'news', 'author_custom_name', array('type' =>  'string', 'length' => 255, 'default' => "''"));
 	}
 	
 	private function delete_old_files()
