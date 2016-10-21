@@ -51,8 +51,8 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 		
 		if (!isset($columns['number_view']))
 			$this->db_utils->add_column(PREFIX . 'news', 'number_view', array('type' => 'integer', 'length' => 11, 'default' => 0));
-		if (!isset($columns['author_display_name']))
-			$this->db_utils->add_column(PREFIX . 'news', 'author_display_name', array('type' =>  'string', 'length' => 255, 'default' => "''"));
+		if (!isset($columns['author_custom_name']))
+			$this->db_utils->add_column(PREFIX . 'news', 'author_custom_name', array('type' =>  'string', 'length' => 255, 'default' => "''"));
 	}
 	
 	private function delete_old_files()
