@@ -27,14 +27,39 @@
 
 class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 {
+	private $querier;
+	private $db_utils;
+	
 	public function __construct()
 	{
 		parent::__construct('download');
+		$this->querier = PersistenceContext::get_querier();
+		$this->db_utils = PersistenceContext::get_dbms_utils();
 	}
 	
 	public function execute()
 	{
+		$tables = $this->db_utils->list_tables(true);
+		
+		if (in_array(PREFIX . 'download', $tables))
+			$this->update_download_table();
+		
 		$this->delete_old_files();
+	}
+	
+	private function update_download_table()
+	{
+		$columns = $this->db_utils->desc_table(PREFIX . 'download');
+		
+		$rows_change = array(
+			'author_display_name' => 'author_custom_name VARCHAR(255)'
+		);
+		
+		foreach ($rows_change as $old_name => $new_name)
+		{
+			if (isset($columns[$old_name]))
+				$this->querier->inject('ALTER TABLE ' . PREFIX . 'download CHANGE ' . $old_name . ' ' . $new_name);
+		}
 	}
 	
 	private function delete_old_files()
