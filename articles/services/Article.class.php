@@ -39,6 +39,8 @@ class Article
 	private $picture_url;
 	private $number_view;
 
+	private $author_custom_name;
+	private $author_custom_name_enabled;
 	private $author_name_displayed;
 	private $author_user;
 	private $notation;
@@ -195,6 +197,21 @@ class Article
 	{
 	    return $this->author_user;
 	}
+	
+	public function get_author_custom_name()
+	{
+		return $this->author_custom_name;
+	}
+	
+	public function set_author_custom_name($author_custom_name)
+	{
+		$this->author_custom_name = $author_custom_name;
+	}
+	
+	public function is_author_custom_name_enabled()
+	{
+		return $this->author_custom_name_enabled;
+	}
 
 	public function set_notation(Notation $notation)
 	{
@@ -338,6 +355,7 @@ class Article
 			'contents'              => $this->get_contents(),
 			'picture_url'           => $this->get_picture()->relative(),
 			'number_view'           => $this->get_number_view(),
+			'author_custom_name' 	=> $this->get_author_custom_name(),
 			'author_user_id'        => $this->get_author_user()->get_id(),
 			'author_name_displayed' => $this->get_author_name_displayed(),
 			'published'             => $this->get_publishing_state(),
@@ -376,6 +394,9 @@ class Article
 			
 		$this->set_author_user($user);
 		
+		$this->author_custom_name = !empty($properties['author_custom_name']) ? $properties['author_custom_name'] : $this->author_user->get_display_name();
+		$this->author_custom_name_enabled = !empty($properties['author_custom_name']);
+		
 		$notation = new Notation();
 		$notation_config = new ArticlesNotation();
 
@@ -392,6 +413,7 @@ class Article
 	{
 		$this->id_category = $id_category;
 		$this->author_name_displayed = self::AUTHOR_NAME_DISPLAYED;
+		$this->author_user = AppContext::get_current_user();
 		$this->published = self::PUBLISHED_NOW;
 		$this->publishing_start_date = new Date();
 		$this->publishing_end_date = new Date();
@@ -399,6 +421,8 @@ class Article
 		$this->sources = array();
 		$this->picture_url = new Url(self::DEFAULT_PICTURE);
 		$this->number_view = 0;
+		$this->author_custom_name = $this->author_user->get_display_name();
+		$this->author_custom_name_enabled = false;
 	}
 
 	public function clean_publishing_start_and_end_date()
@@ -437,6 +461,7 @@ class Article
 			'C_PUBLISHING_END_DATE'           => $this->publishing_end_date != null,
 			'C_DATE_UPDATED'                  => $this->date_updated != null,
 			'C_AUTHOR_DISPLAYED'              => $this->get_author_name_displayed(),
+			'C_AUTHOR_CUSTOM_NAME' 			  => $this->is_author_custom_name_enabled(),
 			'C_NOTATION_ENABLED'              => $notation_config->is_notation_enabled(),
 			'C_READ_MORE'                     => !$this->get_description_enabled() && $description != @strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>') && strlen($description) > ArticlesConfig::load()->get_number_character_to_cut(),
 			'C_SOURCES'                       => $nbr_sources > 0,
@@ -467,6 +492,7 @@ class Article
 			'NUMBER_COMMENTS'               => CommentsService::get_number_comments('articles', $this->get_id()),
 			'NUMBER_VIEW'                   => $this->get_number_view(),
 			'NOTE'                          => $this->get_notation()->get_number_notes() > 0 ? NotationService::display_static_image($this->get_notation()) : '&nbsp;',
+			'AUTHOR_CUSTOM_NAME' 			=> $this->author_custom_name,
 			'C_AUTHOR_EXIST'                => $user->get_id() !== User::VISITOR_LEVEL,
 			'PSEUDO'                        => $user->get_display_name(),
 			'DESCRIPTION'                   => $description,

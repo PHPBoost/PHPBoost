@@ -49,8 +49,8 @@ class DownloadFile
 	private $creation_date;
 	private $updated_date;
 	private $author_user;
-	private $author_display_name;
-	private $author_display_name_enabled;
+	private $author_custom_name;
+	private $author_custom_name_enabled;
 	
 	private $picture_url;
 	private $number_downloads;
@@ -268,19 +268,19 @@ class DownloadFile
 		$this->author_user = $user;
 	}
 	
-	public function get_author_display_name()
+	public function get_author_custom_name()
 	{
-		return $this->author_display_name;
+		return $this->author_custom_name;
 	}
 	
-	public function set_author_display_name($author_display_name)
+	public function set_author_custom_name($author_custom_name)
 	{
-		$this->author_display_name = $author_display_name;
+		$this->author_custom_name = $author_custom_name;
 	}
 	
-	public function is_author_display_name_enabled()
+	public function is_author_custom_name_enabled()
 	{
-		return $this->author_display_name_enabled;
+		return $this->author_custom_name_enabled;
 	}
 	
 	public function get_picture()
@@ -364,7 +364,7 @@ class DownloadFile
 			'end_date' => $this->get_end_date() !== null ? $this->get_end_date()->get_timestamp() : 0,
 			'creation_date' => $this->get_creation_date()->get_timestamp(),
 			'updated_date' => $this->get_updated_date() !== null ? $this->get_updated_date()->get_timestamp() : $this->get_creation_date()->get_timestamp(),
-			'author_display_name' => $this->get_author_display_name(),
+			'author_custom_name' => $this->get_author_custom_name(),
 			'author_user_id' => $this->get_author_user()->get_id(),
 			'number_downloads' => $this->get_number_downloads(),
 			'picture_url' => $this->get_picture()->relative()
@@ -398,6 +398,9 @@ class DownloadFile
 		
 		$this->set_author_user($user);
 		
+		$this->author_custom_name = !empty($properties['author_custom_name']) ? $properties['author_custom_name'] : $this->author_user->get_display_name();
+		$this->author_custom_name_enabled = !empty($properties['author_custom_name']);
+		
 		$notation = new Notation();
 		$notation_config = new DownloadNotation();
 		$notation->set_module_name('download');
@@ -407,9 +410,6 @@ class DownloadFile
 		$notation->set_average_notes($properties['average_notes']);
 		$notation->set_user_already_noted(!empty($properties['note']));
 		$this->notation = $notation;
-		
-		$this->author_display_name = !empty($properties['author_display_name']) ? $properties['author_display_name'] : $this->author_user->get_display_name();
-		$this->author_display_name_enabled = !empty($properties['author_display_name']);
 		
 		$units = array(LangLoader::get_message('unit.bytes', 'common'), LangLoader::get_message('unit.kilobytes', 'common'), LangLoader::get_message('unit.megabytes', 'common'), LangLoader::get_message('unit.gigabytes', 'common'));
 		$power = $this->size > 0 ? floor(log($this->size, 1024)) : 0;
@@ -429,8 +429,8 @@ class DownloadFile
 		$this->number_downloads = 0;
 		$this->picture_url = new Url(self::DEFAULT_PICTURE);
 		$this->end_date_enabled = false;
-		$this->author_display_name = $this->author_user->get_display_name();
-		$this->author_display_name_enabled = false;
+		$this->author_custom_name = $this->author_user->get_display_name();
+		$this->author_custom_name_enabled = false;
 	}
 	
 	public function clean_start_and_end_date()
@@ -463,7 +463,7 @@ class DownloadFile
 			'C_READ_MORE' => !$this->is_short_contents_enabled() && $description != @strip_tags($contents, '<br><br/>') && strlen($description) > DownloadConfig::NUMBER_CARACTERS_BEFORE_CUT,
 			'C_SIZE' => !empty($this->size),
 			'C_PICTURE' => $this->has_picture(),
-			'C_CUSTOM_AUTHOR_DISPLAY_NAME' => $this->is_author_display_name_enabled(),
+			'C_AUTHOR_CUSTOM_NAME' => $this->is_author_custom_name_enabled(),
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			'C_UPDATED_DATE' => $this->has_updated_date(),
 			'C_DIFFERED' => $this->approbation_type == self::APPROVAL_DATE,
@@ -489,7 +489,7 @@ class DownloadFile
 			'UPDATED_DATE' => $this->updated_date !== null ? $this->updated_date->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
 			'UPDATED_DATE_ISO8601' => $this->updated_date !== null ? $this->updated_date->format(Date::FORMAT_ISO8601) : '',
 			'STATUS' => $this->get_status(),
-			'CUSTOM_AUTHOR_DISPLAY_NAME' => $this->author_display_name,
+			'AUTHOR_CUSTOM_NAME' => $this->author_custom_name,
 			'C_AUTHOR_EXIST' => $user->get_id() !== User::VISITOR_LEVEL,
 			'PSEUDO' => $user->get_display_name(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),

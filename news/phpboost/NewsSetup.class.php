@@ -86,7 +86,7 @@ class NewsSetup extends DefaultModuleSetup
 			'number_view' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'top_list_enabled' => array('type' => 'boolean', 'notnull' => 1, 'notnull' => 1, 'default' => 0),
 			'picture_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'author_display_name' => array('type' =>  'string', 'length' => 255, 'default' => "''"),
+			'author_custom_name' => array('type' =>  'string', 'length' => 255, 'default' => "''"),
 			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'sources' => array('type' => 'text', 'length' => 65000),
 		);
@@ -144,7 +144,7 @@ class NewsSetup extends DefaultModuleSetup
 			'number_view' => 0,
 			'top_list_enabled' => 0,
 			'picture_url' => '',
-			'author_display_name' => '',
+			'author_custom_name' => '',
 			'author_user_id' => 1,
 			'sources' => serialize(array())
 		));

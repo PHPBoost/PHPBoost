@@ -180,8 +180,8 @@
 							# IF C_AUTHOR_DISPLAYED #
 								<span class="text-strong">${LangLoader::get_message('author', 'common')} : </span>
 								<span>
-									# IF downloadfiles.C_CUSTOM_AUTHOR_DISPLAY_NAME #
-										{downloadfiles.CUSTOM_AUTHOR_DISPLAY_NAME}
+									# IF downloadfiles.C_AUTHOR_CUSTOM_NAME #
+										{downloadfiles.AUTHOR_CUSTOM_NAME}
 									# ELSE #
 										# IF downloadfiles.C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="small {downloadfiles.USER_LEVEL_CLASS}" href="{downloadfiles.U_AUTHOR_PROFILE}" # IF downloadfiles.C_USER_GROUP_COLOR # style="color:{downloadfiles.USER_GROUP_COLOR}" # ENDIF #>{downloadfiles.PSEUDO}</a># ELSE #{downloadfiles.PSEUDO}# ENDIF #  
 									# ENDIF #

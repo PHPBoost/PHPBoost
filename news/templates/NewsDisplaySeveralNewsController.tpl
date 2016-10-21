@@ -29,8 +29,8 @@
 					<div class="more">
 						# IF news.C_AUTHOR_DISPLAYED #
 							${LangLoader::get_message('by', 'common')}
-							# IF news.C_CUSTOM_AUTHOR_DISPLAY_NAME #
-								{news.CUSTOM_AUTHOR_DISPLAY_NAME}
+							# IF news.C_AUTHOR_CUSTOM_NAME #
+								{news.AUTHOR_CUSTOM_NAME}
 							# ELSE #
 								# IF news.C_AUTHOR_EXIST #<a itemprop="author" class="{news.USER_LEVEL_CLASS}" href="{news.U_AUTHOR_PROFILE}"# IF news.C_USER_GROUP_COLOR # style="color:{news.USER_GROUP_COLOR}"# ENDIF #>{news.PSEUDO}</a>, # ELSE #{news.PSEUDO}# ENDIF #
 							# ENDIF #

@@ -71,8 +71,8 @@
 					# IF C_AUTHOR_DISPLAYED #
 						<span class="text-strong">${LangLoader::get_message('author', 'common')} : </span>
 						<span>
-							# IF C_CUSTOM_AUTHOR_DISPLAY_NAME #
-								{CUSTOM_AUTHOR_DISPLAY_NAME}
+							# IF C_AUTHOR_CUSTOM_NAME #
+								{AUTHOR_CUSTOM_NAME}
 							# ELSE #
 								# IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="small {USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #{PSEUDO}# ENDIF #  
 							# ENDIF #

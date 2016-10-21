@@ -123,17 +123,17 @@ class NewsFormController extends ModuleController
 		
 		if ($this->config->get_author_displayed() == true)
 		{
-			$fieldset->add_field(new FormFieldCheckbox('author_display_name_enabled', $this->lang['news.form.author_display_name_enabled'], $this->get_news()->is_author_display_name_enabled(), 
+			$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->lang['news.form.author_custom_name_enabled'], $this->get_news()->is_author_custom_name_enabled(), 
 				array('events' => array('click' => '
-				if (HTMLForms.getField("author_display_name_enabled").getValue()) {
-					HTMLForms.getField("author_display_name").enable();
+				if (HTMLForms.getField("author_custom_name_enabled").getValue()) {
+					HTMLForms.getField("author_custom_name").enable();
 				} else { 
-					HTMLForms.getField("author_display_name").disable();
+					HTMLForms.getField("author_custom_name").disable();
 				}'))
 			));
 			
-			$fieldset->add_field(new FormFieldTextEditor('author_display_name', $this->lang['news.form.author_display_name'], $this->get_news()->get_author_display_name(), array(
-				'hidden' => !$this->get_news()->is_author_display_name_enabled(),
+			$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->lang['news.form.author_custom_name'], $this->get_news()->get_author_custom_name(), array(
+				'hidden' => !$this->get_news()->is_author_custom_name_enabled(),
 			)));
 		}
 
@@ -281,7 +281,7 @@ class NewsFormController extends ModuleController
 		$news->set_picture(new Url($this->form->get_value('picture')));
 		
 		if ($this->config->get_author_displayed() == true)
-			$news->set_author_display_name(($this->form->get_value('author_display_name') && $this->form->get_value('author_display_name') !== $news->get_author_user()->get_display_name() ? $this->form->get_value('author_display_name') : ''));
+			$news->set_author_custom_name(($this->form->get_value('author_custom_name') && $this->form->get_value('author_custom_name') !== $news->get_author_user()->get_display_name() ? $this->form->get_value('author_custom_name') : ''));
 		
 		$news->set_sources($this->form->get_value('sources'));
 		

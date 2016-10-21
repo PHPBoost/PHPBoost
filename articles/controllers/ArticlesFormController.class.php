@@ -135,6 +135,22 @@ class ArticlesFormController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldActionLink('add_page', $this->lang['articles.form.add_page'] , 'javascript:bbcode_page();', 'fa-pagebreak'));
 		
+		if ($this->get_article()->get_author_name_displayed() == true)
+		{
+			$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->lang['articles.form.author_custom_name_enabled'], $this->get_article()->is_author_custom_name_enabled(), 
+				array('events' => array('click' => '
+				if (HTMLForms.getField("author_custom_name_enabled").getValue()) {
+					HTMLForms.getField("author_custom_name").enable();
+				} else { 
+					HTMLForms.getField("author_custom_name").disable();
+				}'))
+			));
+			
+			$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->lang['articles.form.author_custom_name'], $this->get_article()->get_author_custom_name(), array(
+				'hidden' => !$this->get_article()->is_author_custom_name_enabled(),
+			)));
+		}
+		
 		$other_fieldset = new FormFieldsetHTML('other', $this->common_lang['form.other']);
 		$form->add_fieldset($other_fieldset);
 
@@ -322,6 +338,9 @@ class ArticlesFormController extends ModuleController
 		$author_name_displayed = $this->form->get_value('author_name_displayed') ? $this->form->get_value('author_name_displayed') : Article::AUTHOR_NAME_NOTDISPLAYED;
 		$article->set_author_name_displayed($author_name_displayed);
 		$article->set_picture(new Url($this->form->get_value('picture')));
+		
+		if ($this->get_article()->get_author_name_displayed() == true)
+			$article->set_author_custom_name(($this->form->get_value('author_custom_name') && $this->form->get_value('author_custom_name') !== $article->get_author_user()->get_display_name() ? $this->form->get_value('author_custom_name') : ''));
 		
 		$article->set_sources($this->form->get_value('sources'));
 		

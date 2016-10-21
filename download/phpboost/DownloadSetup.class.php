@@ -87,7 +87,7 @@ class DownloadSetup extends DefaultModuleSetup
 			'end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'updated_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'author_display_name' => array('type' =>  'string', 'length' => 255, 'default' => "''"),
+			'author_custom_name' => array('type' =>  'string', 'length' => 255, 'default' => "''"),
 			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'number_downloads' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'picture_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''")
@@ -146,7 +146,7 @@ class DownloadSetup extends DefaultModuleSetup
 			'end_date' => 0,
 			'creation_date' => time(),
 			'updated_date' => time(),
-			'author_display_name' => '',
+			'author_custom_name' => '',
 			'author_user_id' => 1,
 			'number_downloads' => 0,
 			'picture_url' => '/download/download.png'

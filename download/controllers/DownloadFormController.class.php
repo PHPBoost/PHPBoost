@@ -118,17 +118,17 @@ class DownloadFormController extends ModuleController
 		
 		if ($this->config->is_author_displayed())
 		{
-			$fieldset->add_field(new FormFieldCheckbox('author_display_name_enabled', $this->lang['download.form.author_display_name_enabled'], $this->get_downloadfile()->is_author_display_name_enabled(), 
+			$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->lang['download.form.author_custom_name_enabled'], $this->get_downloadfile()->is_author_custom_name_enabled(), 
 				array('events' => array('click' => '
-				if (HTMLForms.getField("author_display_name_enabled").getValue()) {
-					HTMLForms.getField("author_display_name").enable();
+				if (HTMLForms.getField("author_custom_name_enabled").getValue()) {
+					HTMLForms.getField("author_custom_name").enable();
 				} else { 
-					HTMLForms.getField("author_display_name").disable();
+					HTMLForms.getField("author_custom_name").disable();
 				}'))
 			));
 			
-			$fieldset->add_field(new FormFieldTextEditor('author_display_name', $this->lang['download.form.author_display_name'], $this->get_downloadfile()->get_author_display_name(), array(
-				'hidden' => !$this->get_downloadfile()->is_author_display_name_enabled(),
+			$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->lang['download.form.author_custom_name'], $this->get_downloadfile()->get_author_custom_name(), array(
+				'hidden' => !$this->get_downloadfile()->is_author_custom_name_enabled(),
 			)));
 		}
 		
@@ -274,7 +274,7 @@ class DownloadFormController extends ModuleController
 		$downloadfile->set_picture(new Url($this->form->get_value('picture')));
 		
 		if ($this->config->is_author_displayed())
-			$downloadfile->set_author_display_name(($this->form->get_value('author_display_name') && $this->form->get_value('author_display_name') !== $downloadfile->get_author_user()->get_display_name() ? $this->form->get_value('author_display_name') : ''));
+			$downloadfile->set_author_custom_name(($this->form->get_value('author_custom_name') && $this->form->get_value('author_custom_name') !== $downloadfile->get_author_user()->get_display_name() ? $this->form->get_value('author_custom_name') : ''));
 		
 		$file_size = Url::get_url_file_size($downloadfile->get_url());
 		$file_size = (empty($file_size) && $downloadfile->get_size()) ? $downloadfile->get_size() : $file_size;
