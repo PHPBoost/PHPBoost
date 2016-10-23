@@ -466,7 +466,12 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					}
 					else
 					{
-						$new_content = $last_message_content . ' ------------------------------------------- <em>' . $LANG['edit_on'] . ' ' . $now->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) . '</em> ' . $contents;
+						$new_content = $last_message_content . '
+
+-------------------------------------------
+<em>' . $LANG['edit_on'] . ' ' . $now->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) . '</em>
+
+' . $contents;
 					}
 					
 					$Forumfct->Update_msg($idt_get, $topic['last_msg_id'], FormatingHelper::unparse(addslashes($new_content)), $topic['last_user_id']); //Mise à jour du topic.
