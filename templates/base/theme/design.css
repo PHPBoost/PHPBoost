@@ -281,16 +281,12 @@ div.block-container {
 div#top-content {
 	margin: 0 0 2% 0;
 	padding: 0.1em 0.8em;
-	background-color: #FFFFFF;
-	border: 1px solid #BEBEBE;
 }
 
 /* --- Emplacement au dessus du pied de page --- */
 div#bottom-content {
 	margin: 2% 0 0 0;
 	padding: 0.1em 0.8em;
-	background-color: #FFFFFF;
-	border: 1px solid #BEBEBE;
 }
 
 

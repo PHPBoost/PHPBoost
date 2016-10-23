@@ -220,8 +220,8 @@ jQuery(document).ready(function() {
 						<div class="sortable-title">
 							<h3 class="question-title">
 								# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
-								<a href="" onclick="show_answer({questions.ID});return false;" title=""><i id="question{questions.ID}" class="fa fa-caret-right question-anchor"></i></a>
-								<a href="" onclick="show_answer({questions.ID});return false;" title="">{questions.QUESTION}</a>
+								<a href="" onclick="show_answer({questions.ID});return false;" title="{questions.L_SHOW_ANSWER}"><i id="question{questions.ID}" class="fa fa-caret-right question-anchor"></i></a>
+								<a href="" onclick="show_answer({questions.ID});return false;" title="{questions.QUESTION}">{questions.QUESTION}</a>
 								# ELSE #
 								<i id="question{questions.ID}" class="fa fa-caret-right question-anchor"></i>
 								<span>{questions.QUESTION}</span>
@@ -282,8 +282,8 @@ jQuery(document).ready(function() {
 				<header class="faq-question-element">
 					<h3 class="question-title">
 						# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
-						<a href="" onclick="show_answer({questions.ID});return false;" title=""><i id="question{questions.ID}" class="fa fa-caret-right question-anchor"></i></a>
-						<a href="" onclick="show_answer({questions.ID});return false;" title=""><span itemprop="name">{questions.QUESTION}</span></a>
+						<a href="" onclick="show_answer({questions.ID});return false;" title="{questions.L_SHOW_ANSWER}"><i id="question{questions.ID}" class="fa fa-caret-right question-anchor"></i></a>
+						<a href="" onclick="show_answer({questions.ID});return false;" title="{questions.QUESTION}"><span itemprop="name">{questions.QUESTION}</span></a>
 						# ELSE #
 						<i id="question{questions.ID}" class="fa fa-caret-right question-anchor"></i>
 						<span itemprop="name">{questions.QUESTION}</span>
@@ -291,7 +291,7 @@ jQuery(document).ready(function() {
 					</h3>
 					
 					<span class="actions">
-						<a href="{questions.U_LINK}" title=""><i class="fa fa-flag"></i></a>
+						<a href="{questions.U_LINK}" title="{questions.L_LINK_QUESTION}"><i class="fa fa-flag"></i></a>
 						# IF questions.C_EDIT #
 						<a href="{questions.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
 						# ENDIF #

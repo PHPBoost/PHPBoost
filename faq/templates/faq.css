@@ -12,15 +12,14 @@
 	margin: 0 0 6px 0;
 	padding: 0;
 	width: 100%;
-	background-image: linear-gradient(to bottom, #FFFFFF 50%, #FAFAFA 100%);
-	border: 1px solid #D6DEE7;
-	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
-	transition: box-shadow 0.2s;
+	border-color: #517BA6;
+	border-style: solid;
+	border-width: 0 0 0 3px;
+	transition: all 0.2s;
 }
 .article-faq:hover {
-	background-image: linear-gradient(to bottom, #FFFFFF 25%, #F2F5F8 100%);
-	border: 1px solid #D0D8E1;
-	box-shadow: 0 0 5px #EAEAEA;
+	border-color: #366493;
+	transition: all 0.2s;
 }
 
 .faq-question-element {

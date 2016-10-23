@@ -45,7 +45,7 @@ section header h1,
 article header h1 {
 	border-bottom: 1px solid #366493;
 }
-section header h1 a:hover {
+section header a:hover {
 	text-decoration: none;
 }
 
@@ -472,15 +472,15 @@ ul.pagination-block-bis li a.next-page:hover {
 	margin-bottom: 6px;
 	padding: 0;
 	width: 100%;
-	background-color: #FFFFFF;
-	border: 1px solid #DDDDDD;
-	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
-	transition: box-shadow 0.2s;	
+	border-color: #517BA6;
+	border-style: solid;
+	border-width: 0 0 0 3px;
+	transition: all 0.2s;	
 }
 
 .sortable-block .sortable-element:hover {
-	border: 1px solid #DDDDDD;
-	box-shadow: 0 0 5px #EAEAEA;
+	border-color: #366493;
+	transition: all 0.2s;
 }
 
 @media (min-width:769px){ 
@@ -488,9 +488,8 @@ ul.pagination-block-bis li a.next-page:hover {
 		display: table-cell;
 		position: relative;
 		width: 20px;
-		opacity: 0.3;
-		background-color: #888888;
-		transition: opacity 1s;
+		opacity: 0.2;
+		transition: opacity 0.3s;
 		cursor: move;
 	}
 	
@@ -499,24 +498,23 @@ ul.pagination-block-bis li a.next-page:hover {
 		content: "\f047";
 		top: 34%;
 		left: 4px;
-		color: #FFFFFF;
+		color: #517BA6;
 		font-family: fontawesome;
 	}
 }
 
 .sortable-block .sortable-element:hover .sortable-actions {
 	opacity: 1;
+	transition: opacity 0.3s;
 }
 
 .sortable-block .sortable-element:hover .sortable-selector {
-	opacity: 0.6;
+	opacity: 1;
+	transition: opacity 0.3s;
 }
 
 .sortable-block .sortable-title {
 	padding: 8px 5px 5px 10px;
-	background-image: linear-gradient(to bottom,  rgba(255, 255, 255, 0.2) 35%, rgba(0, 0, 0, 0.1) 100%);
-	background-color: #FFFFFF;
-	transition: all 0.2s linear;
 }
 
 .sortable-block .sortable-title:hover {
@@ -550,7 +548,7 @@ ul.pagination-block-bis li a.next-page:hover {
 .sortable-block .sortable-actions {
 	float: right;
 	padding: 3px 3px;
-	opacity: 0.5;
+	opacity: 0.2;
 	transition: opacity 0.2s;
 }
 

@@ -61,4 +61,6 @@ $lang['faq.form.answer'] = 'Answer';
 $lang['faq.message.success.add'] = 'The question <b>:question</b> has been added';
 $lang['faq.message.success.edit'] = 'The question <b>:question</b> has been modified';
 $lang['faq.message.success.delete'] = 'The question <b>:question</b> has been deleted';
+$lang['faq.message.show.answer'] = 'Show the answer';
+$lang['faq.message.link.question'] = 'Question\'s Link';
 ?>

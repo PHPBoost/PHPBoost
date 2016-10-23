@@ -37,6 +37,7 @@ class FaqQuestion
 	private $question;
 	private $rewrited_question;
 	private $answer;
+	private $lang;
 	
 	private $creation_date;
 	private $author_user;
@@ -215,6 +216,7 @@ class FaqQuestion
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		$new_content = new FaqNewContent();
+		$this->lang = LangLoader::get('common', 'faq');
 		
 		return array(
 			'C_APPROVED' => $this->is_approved(),
@@ -233,6 +235,8 @@ class FaqQuestion
 			'PSEUDO' => $user->get_display_name(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,
+			'L_SHOW_ANSWER' => $this->lang['faq.message.show.answer'],
+			'L_LINK_QUESTION' => $this->lang['faq.message.link.question'],
 			
 			//Category
 			'C_ROOT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY,
