@@ -138,7 +138,7 @@ class Article
 		else
 		{
 			$clean_contents = preg_split('`\[page\].+\[/page\](.*)`Us', FormatingHelper::second_parse($this->contents), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-			return substr(@strip_tags($clean_contents[0], '<br><br/>'), 0, ArticlesConfig::load()->get_number_character_to_cut());
+			return mb_substr(@strip_tags($clean_contents[0], '<br><br/>'), 0, ArticlesConfig::load()->get_number_character_to_cut());
 		}
 	}
 	
@@ -463,7 +463,7 @@ class Article
 			'C_AUTHOR_DISPLAYED'              => $this->get_author_name_displayed(),
 			'C_AUTHOR_CUSTOM_NAME' 			  => $this->is_author_custom_name_enabled(),
 			'C_NOTATION_ENABLED'              => $notation_config->is_notation_enabled(),
-			'C_READ_MORE'                     => !$this->get_description_enabled() && $description != @strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>') && strlen($description) > ArticlesConfig::load()->get_number_character_to_cut(),
+			'C_READ_MORE'                     => !$this->get_description_enabled() && $description != @strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>') && mb_strlen($description) > ArticlesConfig::load()->get_number_character_to_cut(),
 			'C_SOURCES'                       => $nbr_sources > 0,
 			'C_DIFFERED'                      => $this->published == self::PUBLISHED_DATE,
 			'C_NEW_CONTENT'                   => $new_content->check_if_is_new_content($this->date_updated != null ? $this->date_updated->get_timestamp() : $this->get_date_created()->get_timestamp()),
