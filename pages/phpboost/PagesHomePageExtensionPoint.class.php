@@ -70,9 +70,9 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 		{
 			if ($cat['id_parent'] == 0)
 			{
-				//Autorisation particulière ?
+				//Autorisation particuliÃ¨re ?
 				$special_auth = !empty($cat['auth']);
-				//Vérification de l'autorisation d'éditer la page
+				//VÃ©rification de l'autorisation d'Ã©diter la page
 				if (($special_auth && AppContext::get_current_user()->check_auth($cat['auth'], READ_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)))
 				{
 					$root .= '<li><a href="javascript:open_cat(' . $key . '); show_pages_cat_contents(' . $cat['id_parent'] . ', 0);"><i class="fa fa-folder"></i>' . stripslashes($cat['title']) . '</a></li>';
@@ -86,10 +86,10 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 			ORDER BY is_cat DESC, title ASC");
 		while ($row = $result->fetch())
 		{
-			//Autorisation particulière ?
+			//Autorisation particuliÃ¨re ?
 			$special_auth = !empty($row['auth']);
 			$array_auth = unserialize($row['auth']);
-			//Vérification de l'autorisation d'éditer la page
+			//VÃ©rification de l'autorisation d'Ã©diter la page
 			if (($special_auth && AppContext::get_current_user()->check_auth($array_auth, READ_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)))
 			{
 				$root .= '<li><a href="' . PagesUrlBuilder::get_link_item($row['encoded_title']) . '"><i class="fa fa-file"></i>' . stripslashes($row['title']) . '</a></li>';

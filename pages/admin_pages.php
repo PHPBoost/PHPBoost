@@ -38,7 +38,7 @@ $request = AppContext::get_request();
 
 $update = $request->get_postvalue('update', false);
 
-if ($update)  //Mise à jour
+if ($update)  //Mise Ã  jour
 {
 	$pages_config->set_authorizations(Authorizations::build_auth_array_from_form(READ_PAGE, EDIT_PAGE, READ_COM));
 	$pages_config->set_count_hits_activated(retrieve(POST, 'count_hits', false));
@@ -46,7 +46,7 @@ if ($update)  //Mise à jour
 
 	PagesConfig::save();
 	
-	###### Régénération du cache #######
+	###### RÃ©gÃ©nÃ©ration du cache #######
 	PagesCategoriesCache::invalidate();
 	
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);

@@ -30,7 +30,7 @@ class PagesSearchable extends AbstractSearchableExtensionPoint
 {
 	public function get_search_request($args)
 	/**
-	 *  Renvoie la requête de recherche
+	 *  Renvoie la requÃªte de recherche
 	 */
 	{
 		$search = $args['search'];

@@ -19,11 +19,11 @@ $config_authorizations = $pages_config->get_authorizations();
 
 $categories = PagesCategoriesCache::load()->get_categories();
 
-//Listage des répertoires dont le répertoire parent est connu
+//Listage des rÃ©pertoires dont le rÃ©pertoire parent est connu
 if ($id_cat != 0)
 {	
 	echo '<ul>';
-	//On sélectionne les répetoires dont l'id parent est connu
+	//On sÃ©lectionne les rÃ©petoires dont l'id parent est connu
 	$result = PersistenceContext::get_querier()->select("SELECT c.id, p.title, p.encoded_title, p.auth
 	FROM " . PREFIX . "pages_cats c
 	LEFT JOIN " . PREFIX . "pages p ON p.id = c.id_page
@@ -33,14 +33,14 @@ if ($id_cat != 0)
 	));
 	while ($row = $result->fetch())
 	{
-		//Autorisation particulière ?
+		//Autorisation particuliÃ¨re ?
 		$special_auth = !empty($row['auth']);
-		//Vérification de l'autorisation d'éditer la page
+		//VÃ©rification de l'autorisation d'Ã©diter la page
 		if (($special_auth && AppContext::get_current_user()->check_auth($row['auth'], READ_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)))
 		{
-			//On compte le nombre de catégories présentes pour savoir si on donne la possibilité de faire un sous dossier
+			//On compte le nombre de catÃ©gories prÃ©sentes pour savoir si on donne la possibilitÃ© de faire un sous dossier
 			$sub_cats_number = PersistenceContext::get_querier()->count(PREFIX . "pages_cats", 'WHERE id_parent=:id_parent', array('id_parent' => $row['id']));
-			//Si cette catégorie contient des sous catégories, on propose de voir son contenu
+			//Si cette catÃ©gorie contient des sous catÃ©gories, on propose de voir son contenu
 			if ($sub_cats_number > 0)
 				echo '<li class="sub"><a class="parent" href="javascript:show_pages_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="fa fa-plus-square-o" id="img2_' . $row['id'] . '"></i><i class="fa fa-folder" id="img_' . $row['id'] . '"></i></a><a id="class_' . $row['id'] . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . stripslashes($row['title']) . '</a><span id="cat_' . $row['id'] . '"></span></li>';
 			else //Sinon on n'affiche pas le "+"
@@ -76,14 +76,14 @@ elseif (!empty($open_cat) || $root == 1)
 {
 	$open_cat = $root == 1 ? 0 : $open_cat;
 	$return = '<ul>';
-	//Liste des catégories dans cette catégorie
+	//Liste des catÃ©gories dans cette catÃ©gorie
 	foreach ($categories as $key => $cat)
 	{
 		if ($cat['id_parent'] == $open_cat)
 		{
-			//Autorisation particulière ?
+			//Autorisation particuliÃ¨re ?
 			$special_auth = !empty($cat['auth']);
-			//Vérification de l'autorisation d'éditer la page
+			//VÃ©rification de l'autorisation d'Ã©diter la page
 			if (($special_auth && AppContext::get_current_user()->check_auth($cat['auth'], READ_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)))
 			{
 				$return .= '<li><a href="javascript:open_cat(' . $key . '); show_pages_cat_contents(' . $cat['id_parent'] . ', 0);"><i class="fa fa-folder"></i>' . stripslashes($cat['title']) . '</a></li>';
@@ -98,9 +98,9 @@ elseif (!empty($open_cat) || $root == 1)
 	));
 	while ($row = $result->fetch())
 	{
-		//Autorisation particulière ?
+		//Autorisation particuliÃ¨re ?
 		$special_auth = !empty($row['auth']);
-		//Vérification de l'autorisation d'éditer la page
+		//VÃ©rification de l'autorisation d'Ã©diter la page
 		if (($special_auth && AppContext::get_current_user()->check_auth(unserialize($row['auth']), READ_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)))
 		{
 			$return .= '<li><a href="' . PATH_TO_ROOT . url('/pages/pages.php?title=' . $row['encoded_title'], '/pages/' . $row['encoded_title']) . '"><i class="fa fa-file"></i>' . stripslashes($row['title']) . '</a></li>';

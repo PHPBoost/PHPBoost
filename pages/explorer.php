@@ -45,9 +45,9 @@ foreach (PagesCategoriesCache::load()->get_categories() as $key => $cat)
 {
 	if ($cat['id_parent'] == 0)
 	{
-		//Autorisation particulière ?
+		//Autorisation particuliÃ¨re ?
 		$special_auth = !empty($cat['auth']);
-		//Vérification de l'autorisation d'éditer la page
+		//VÃ©rification de l'autorisation d'Ã©diter la page
 		if (($special_auth && AppContext::get_current_user()->check_auth($cat['auth'], READ_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)))
 		{
 			$template->assign_block_vars('list_cats', array(
@@ -65,10 +65,10 @@ $result = PersistenceContext::get_querier()->select("SELECT title, id, encoded_t
 	ORDER BY is_cat DESC, title ASC");
 while ($row = $result->fetch())
 {
-	//Autorisation particulière ?
+	//Autorisation particuliÃ¨re ?
 	$special_auth = !empty($row['auth']);
 	$array_auth = unserialize($row['auth']);
-	//Vérification de l'autorisation d'éditer la page
+	//VÃ©rification de l'autorisation d'Ã©diter la page
 	if (($special_auth && AppContext::get_current_user()->check_auth($array_auth, READ_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)))
 	{
 		$template->assign_block_vars('list_files', array(

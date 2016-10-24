@@ -45,7 +45,7 @@ $del_cat = retrieve(GET, 'del_cat', 0);
 $id_page = $id_page > 0 ? $id_page : $del_cat;
 $del_cat_post = retrieve(GET, 'del_cat', 0);
 $report_cat = retrieve(GET, 'report_cat', 0);
-$remove_action = retrieve(POST, 'action', ''); //Action à faire lors de la suppression
+$remove_action = retrieve(POST, 'action', ''); //Action Ã  faire lors de la suppression
 $create_redirection = retrieve(POST, 'create_redirection', false);
 
 $db_querier = PersistenceContext::get_querier();
@@ -64,10 +64,10 @@ if (!empty($new_title) && $id_rename_post > 0)
 		DispatchManager::redirect($error_controller);
 	}
 	
-	//Autorisation particulière ?
+	//Autorisation particuliÃ¨re ?
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
-	//Vérification de l'autorisation de renommer la page
+	//VÃ©rification de l'autorisation de renommer la page
 	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
 		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 	
@@ -77,7 +77,7 @@ if (!empty($new_title) && $id_rename_post > 0)
 	//On peut enregistrer
 	if ($num_rows_same_title == 0 && $encoded_title != $page_infos['encoded_title'])
 	{
-		//On doit créer une redirection automatique
+		//On doit crÃ©er une redirection automatique
 		if ($create_redirection)
 		{
 			$db_querier->update(PREFIX . 'pages', array('title' => $new_title, 'encoded_title' => $encoded_title), 'WHERE id = :id', array('id' => $id_rename_post));
@@ -87,7 +87,7 @@ if (!empty($new_title) && $id_rename_post > 0)
 			$db_querier->update(PREFIX . 'pages', array('title' => $new_title, 'encoded_title' => $encoded_title), 'WHERE id = :id', array('id' => $id_rename_post));
 		AppContext::get_response()->redirect(url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 	}
-	//le titre réel change mais pas celui encodé
+	//le titre rÃ©el change mais pas celui encodÃ©
 	elseif ($num_rows_same_title > 0 && $encoded_title == $page_infos['encoded_title'])
 	{
 		$db_querier->update(PREFIX . 'pages', array('title' => $new_title), 'WHERE id = :id', array('id' => $id_rename_post));
@@ -106,10 +106,10 @@ elseif (!empty($redirection_name) && $id_new_post > 0)
 		DispatchManager::redirect($error_controller);
 	}
 	
-	//Autorisation particulière ?
+	//Autorisation particuliÃ¨re ?
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
-	//Vérification de l'autorisation de renommer la page
+	//VÃ©rification de l'autorisation de renommer la page
 	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
 		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 	
@@ -128,7 +128,7 @@ elseif (!empty($redirection_name) && $id_new_post > 0)
 //Suppression des redirections
 elseif ($del_redirection > 0)
 {
-	//Vérification de la validité du jeton
+	//VÃ©rification de la validitÃ© du jeton
 	AppContext::get_session()->csrf_get_protect();
 
 	try {
@@ -138,10 +138,10 @@ elseif ($del_redirection > 0)
 		DispatchManager::redirect($error_controller);
 	}
 	
-	//Autorisation particulière ?
+	//Autorisation particuliÃ¨re ?
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
-	//Vérification de l'autorisation de renommer la page
+	//VÃ©rification de l'autorisation de renommer la page
 	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
 		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 		
@@ -151,7 +151,7 @@ elseif ($del_redirection > 0)
 		
 	AppContext::get_response()->redirect(HOST . DIR . url('/pages/action.php?id=' . $page_infos['redirect'], '', '&'));
 }
-//Suppression d'une catégorie
+//Suppression d'une catÃ©gorie
 elseif ($del_cat_post > 0 && $report_cat >= 0)
 {
 	$remove_action = ($remove_action == 'move_all') ? 'move_all' : 'remove_all';
@@ -171,30 +171,30 @@ elseif ($del_cat_post > 0 && $report_cat >= 0)
 	}
 
 	$sub_cats = array();
-	//On fait un tableau contenant la liste des sous catégories de cette catégorie
+	//On fait un tableau contenant la liste des sous catÃ©gories de cette catÃ©gorie
 	pages_find_subcats($sub_cats, $page_infos['id_cat']);
-	$sub_cats[] = $page_infos['id_cat']; //On rajoute la catégorie que l'on supprime
+	$sub_cats[] = $page_infos['id_cat']; //On rajoute la catÃ©gorie que l'on supprime
 	$id_to_delete = implode($sub_cats, ', ');
 	
-	if ($remove_action == 'move_all') //Vérifications préliminaires si on va tout supprimer
+	if ($remove_action == 'move_all') //VÃ©rifications prÃ©liminaires si on va tout supprimer
 	{
-		//Si on ne la déplace pas dans une de ses catégories filles
-		if (($report_cat > 0 && in_array($report_cat, $sub_cats)) || $report_cat == $page_infos['id_cat'])//Si on veut reporter dans une catégorie parente
+		//Si on ne la dÃ©place pas dans une de ses catÃ©gories filles
+		if (($report_cat > 0 && in_array($report_cat, $sub_cats)) || $report_cat == $page_infos['id_cat'])//Si on veut reporter dans une catÃ©gorie parente
 		{
 			AppContext::get_response()->redirect('/pages/' . url('action.php?del_cat=' . $del_cat_post . '&error=e_cat_contains_cat#message_helper', '','&'));
 		}
 	}
 	
-	if ($remove_action == 'remove_all') //On supprime le contenu de la catégorie
+	if ($remove_action == 'remove_all') //On supprime le contenu de la catÃ©gorie
 	{
-		//Suppression des pages contenues par cette catégorie
+		//Suppression des pages contenues par cette catÃ©gorie
 		$db_querier->delete(PREFIX . 'pages', 'WHERE id_cat=:id', array('id' => $id_to_delete));
 		$db_querier->delete(PREFIX . 'pages_cats', 'WHERE id=:id', array('id' => $id_to_delete));
 		
 		CommentsService::delete_comments_topic_module('pages', $id_to_delete);
 		PagesCategoriesCache::invalidate();
 		
-		//On redirige soit vers l'article parent soit vers la catégorie
+		//On redirige soit vers l'article parent soit vers la catÃ©gorie
 		if (array_key_exists($page_infos['id_cat'], $categories) && $categories[$categories['id_cat']]['id_parent'] > 0)
 		{
 			$title = $categories[$categories[$page_infos['id_cat']]['id_parent']]['title'];
@@ -203,9 +203,9 @@ elseif ($del_cat_post > 0 && $report_cat >= 0)
 		else
 			AppContext::get_response()->redirect('/pages/' . url('pages.php', '', '&'));
 	}
-	elseif ($remove_action == 'move_all') //On déplace le contenu de la catégorie
+	elseif ($remove_action == 'move_all') //On dÃ©place le contenu de la catÃ©gorie
 	{
-		//Quoi qu'il arrive on supprime l'article associé
+		//Quoi qu'il arrive on supprime l'article associÃ©
 		$db_querier->delete(PREFIX . 'pages', 'WHERE id_cat=:id', array('id' => $del_cat_post));
 		$db_querier->delete(PREFIX . 'pages_cats', 'WHERE id_cat=:id', array('id' => $page_infos['id_cat']));
 		
@@ -232,10 +232,10 @@ if ($id_page > 0)
 		DispatchManager::redirect($error_controller);
 	}
 	
-	//Autorisation particulière ?
+	//Autorisation particuliÃ¨re ?
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
-	//Vérification de l'autorisation de renommer la page
+	//VÃ©rification de l'autorisation de renommer la page
 	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
 		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 	
@@ -274,10 +274,10 @@ if ($del_cat > 0)
 		DispatchManager::redirect($error_controller);
 	}
 	
-	//Autorisation particulière ?
+	//Autorisation particuliÃ¨re ?
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
-	//Vérification de l'autorisation de renommer la page
+	//VÃ©rification de l'autorisation de renommer la page
 	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
 		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 	
@@ -342,13 +342,13 @@ elseif ($id_rename > 0)
 	));
 	$tpl->assign_block_vars('rename', array());
 	
-	//Erreur : la page existe déjà
+	//Erreur : la page existe dÃ©jÃ 
 	if ($error == 'title_already_exists')
 	{
 		$tpl->put('message_helper', MessageHelper::display($LANG['pages_already_exists'], MessageHelper::WARNING));
 	}
 }
-//Création d'une redirection
+//CrÃ©ation d'une redirection
 elseif ($id_new > 0)
 {
 	$tpl->put_all(array(
@@ -359,7 +359,7 @@ elseif ($id_new > 0)
 		'L_SUBMIT' => $LANG['submit'],
 	));
 	$tpl->assign_block_vars('new', array());
-	//Erreur : la page existe déjà
+	//Erreur : la page existe dÃ©jÃ 
 	if ($error == 'title_already_exists')
 	{
 		$tpl->put('message_helper', MessageHelper::display($LANG['pages_already_exists'], MessageHelper::WARNING));
@@ -423,7 +423,7 @@ else
 	
 	while ($row = $result->fetch())
 	{
-		//Autorisation particulière ?
+		//Autorisation particuliÃ¨re ?
 		$special_auth = !empty($row['auth']);
 		$array_auth = unserialize($row['auth']);
 		$tpl->assign_block_vars('redirections.list', array(

@@ -1,4 +1,4 @@
-//Tableau contenant l'état de chaque catégorie
+//Tableau contenant l'Ã©tat de chaque catÃ©gorie
 var cat_status = new Array();
 
 //AJAX: fonction d'interaction avec le serveur
@@ -12,12 +12,12 @@ function show_pages_cat_contents(id_cat, display_select_link)
 	   xhr_object = new XMLHttpRequest();
 	else if(window.ActiveXObject) // Internet Explorer
 	   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-	else // XMLHttpRequest non supporté par le navigateur
+	else // XMLHttpRequest non supportÃ© par le navigateur
 	    return;
 		
 	if( id_cat > 0 )
 	{
-		//Si le dossier est fermé on l'ouvre sinon on le ferme
+		//Si le dossier est fermÃ© on l'ouvre sinon on le ferme
 		if( cat_status[id_cat] == undefined  )
 		{
 			data = "id_cat=" + id_cat;
@@ -67,7 +67,7 @@ function select_cat(id_cat)
 	   xhr_object = new XMLHttpRequest();
 	else if(window.ActiveXObject) // Internet Explorer
 	   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-	else // XMLHttpRequest non supporté par le navigateur
+	else // XMLHttpRequest non supportÃ© par le navigateur
 	    return;
 		
 	if( id_cat >= 0 && id_cat != selected_cat )
@@ -93,7 +93,7 @@ function select_cat(id_cat)
 	}
 }
 
-//Fonction d'affichage du contenu d'une catégorie
+//Fonction d'affichage du contenu d'une catÃ©gorie
 function open_cat(id_cat)
 {
 	var xhr_object = null;
@@ -104,7 +104,7 @@ function open_cat(id_cat)
 	   xhr_object = new XMLHttpRequest();
 	else if(window.ActiveXObject) // Internet Explorer
 	   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-	else // XMLHttpRequest non supporté par le navigateur
+	else // XMLHttpRequest non supportÃ© par le navigateur
 	    return;
 		
 	if( id_cat >= 0 && id_cat != selected_cat )
