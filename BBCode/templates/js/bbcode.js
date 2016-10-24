@@ -2,7 +2,7 @@
  *                                bbcode.js
  *                            -------------------
  *   begin                : August 01, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright          : (C) 2005 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -63,7 +63,7 @@ function simple_insert(open_balise, close_balise, field)
 	return;
 }
 
-//Récupération de la sélection sur netscape, ajout des balises autour.
+//RÃ©cupÃ©ration de la sÃ©lection sur netscape, ajout des balises autour.
 function netscape_sel(target, open_balise, close_balise)
 {
 	var sel_length = target.textLength;
@@ -99,18 +99,18 @@ function netscape_sel(target, open_balise, close_balise)
 		target.focus();
 	}
 	
-	target.scrollTop = scroll; //Remet à la bonne position le textarea.
+	target.scrollTop = scroll; //Remet Ã  la bonne position le textarea.
 
 	return;
 }
 
-//Récupération de la sélection sur IE, ajout des balises autour.
+//RÃ©cupÃ©ration de la sÃ©lection sur IE, ajout des balises autour.
 function ie_sel(target, open_balise, close_balise)
 {
 	selText = false;
 	var scroll = target.scrollTop; //Position verticale.
 	
-	selection = document.selection.createRange().text; // Sélection
+	selection = document.selection.createRange().text; // SÃ©lection
 
 	if( close_balise != "" && selection == "" && close_balise != "smile" )
 		document.selection.createRange().text = open_balise + close_balise;
@@ -119,18 +119,18 @@ function ie_sel(target, open_balise, close_balise)
 	else
 		document.selection.createRange().text = open_balise + selection + close_balise;		
 	
-	target.scrollTop = scroll; //Remet à la bonne position le textarea.
+	target.scrollTop = scroll; //Remet Ã  la bonne position le textarea.
 	selText = '';
 	
 	return;
 }
 
-//Fonction de remplacement des caractères spéciaux
+//Fonction de remplacement des caractÃ¨res spÃ©ciaux
 function url_encode_rewrite(link_name)
 {
 	link_name = link_name.toLowerCase(link_name);
 	
-	var chars_special = new Array(/ /g, /é/g, /è/g, /ê/g, /à/g, /â/g, /ù/g, /ü/g, /û/g, /ï/g, /î/g, /ô/g, /ç/g);
+	var chars_special = new Array(/ /g, /Ã©/g, /Ã¨/g, /Ãª/g, /Ã /g, /Ã¢/g, /Ã¹/g, /Ã¼/g, /Ã»/g, /Ã¯/g, /Ã®/g, /Ã´/g, /Ã§/g);
 	var chars_replace = new Array("-", "e", "e", "e", "a", "a", "u", "u", "u", "i", "i", "o", "c");
 	var nbr_chars = chars_special.length;
 	for( var i = 0; i < nbr_chars; i++)
@@ -143,11 +143,11 @@ function url_encode_rewrite(link_name)
 	return link_name.replace(/(^\s*)|(\s*$)/g,'').replace(/(^-)|(-$)/g,'');
 }
 
-//Fonction d'insertion du BBcode dans le champs, tient compte du navigateur utilisé.
+//Fonction d'insertion du BBcode dans le champs, tient compte du navigateur utilisÃ©.
 function insertbbcode(open_balise, close_balise, field)
 {
 	var area = document.getElementById(field);
-	var nav = navigator.appName; //Recupère le nom du navigateur
+	var nav = navigator.appName; //RecupÃ¨re le nom du navigateur
 
 	area.focus();
 
@@ -169,7 +169,7 @@ function insertbbcode_select(id_select, close_balise, field)
 	if( select.value != '' )
 		insertbbcode('[' + id_select + '=' + select.value + ']', close_balise, field);
 	
-	//On remet la valeur par défaut.
+	//On remet la valeur par dÃ©faut.
 	select.options[0].selected = true;
 	
 	return;
@@ -183,7 +183,7 @@ function insertbbcode_select2(id_select, field)
 	if( select.value != '' )
 		insertbbcode('[' + select.value + ']', '[/' + select.value + ']', field);
 	
-	//On remet la valeur par défaut.
+	//On remet la valeur par dÃ©faut.
 	select.options[0].selected = true;
 	
 	return;

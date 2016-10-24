@@ -156,8 +156,8 @@ class BBCodeEditor extends ContentEditor
 				$forbidden_tag = 'block';
 
 			$template->put_all(array(
-				'AUTH_' . strtoupper($forbidden_tag) => ' bbcode-forbidden',
-				'DISABLED_' . strtoupper($forbidden_tag) => 'return false;'
+				'AUTH_' . mb_strtoupper($forbidden_tag) => ' bbcode-forbidden',
+				'DISABLED_' . mb_strtoupper($forbidden_tag) => 'return false;'
 			));
 		}
 
