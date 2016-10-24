@@ -3,7 +3,7 @@
  *                               begin.php
  *                            -------------------
  *   begin                : Februar 08, 2006
- *   copyright            : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *

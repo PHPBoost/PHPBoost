@@ -3,7 +3,7 @@
  *                        content_xmlhttprequest.php
  *                            -------------------
  *   begin                : January, 25 2007
- *   copyright            : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -34,7 +34,7 @@ include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 $page_path_to_root = retrieve(REQUEST, 'path_to_root', '');
 $page_path = retrieve(REQUEST, 'page_path', '');
 
-//Quel éditeur utiliser ? Si ce n'est pas précisé on prend celui par défaut de l'utilisateur
+//Quel Ã©diteur utiliser ? Si ce n'est pas prÃ©cisÃ© on prend celui par dÃ©faut de l'utilisateur
 $editor = retrieve(REQUEST, 'editor', ContentFormattingConfig::load()->get_default_editor());
 
 $contents = stripslashes(retrieve(POST, 'contents', ''));
@@ -58,7 +58,7 @@ if (!empty($forbidden_tags))
 
 $parser->parse();
 
-//On parse la deuxième couche (code, math etc) pour afficher
+//On parse la deuxiÃ¨me couche (code, math etc) pour afficher
 $second_parser = $formatting_factory->get_second_parser();
 $second_parser->set_content($parser->get_content());
 $second_parser->set_path_to_root($page_path_to_root);

@@ -31,8 +31,8 @@ require_once(PATH_TO_ROOT . '/kernel/begin.php');
 AppContext::get_session()->no_session_location();
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
-$login = substr(retrieve(POST, 'login', ''), 0, 25);
-$display_name = substr(retrieve(POST, 'display_name', ''), 0, 100);
+$login = mb_substr(retrieve(POST, 'login', ''), 0, 25);
+$display_name = mb_substr(retrieve(POST, 'display_name', ''), 0, 100);
 $email = retrieve(POST, 'mail', '');
 $user_id = retrieve(POST, 'user_id', '');
 

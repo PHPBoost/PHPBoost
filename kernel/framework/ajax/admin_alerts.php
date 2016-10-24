@@ -34,7 +34,7 @@ require_once(PATH_TO_ROOT . '/kernel/begin.php');
 AppContext::get_session()->no_session_location();
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
-//On vérifie la validité du jeton
+//On vÃ©rifie la validitÃ© du jeton
 AppContext::get_session()->csrf_get_protect();
 
 if (!AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))

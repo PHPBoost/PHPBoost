@@ -3,7 +3,7 @@
  *                          header_no_display.php
  *                            -------------------
  *   begin                : August 14, 2005
- *   copyright            : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *

@@ -3,7 +3,7 @@
  *                         member_xmlhttprequest.php
  *                            -------------------
  *   begin                : January, 25 2007
- *   copyright            : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -87,7 +87,7 @@ if (!empty($member) || !empty($insert_member) || !empty($add_member_auth) || !em
 			}
 			$i++;
 		}
-		if ($i == 0) //Aucun membre trouvé.
+		if ($i == 0) //Aucun membre trouvÃ©.
 		{
 			echo $LANG['no_result'];
 		}
@@ -124,7 +124,7 @@ elseif (!empty($warning_user) || !empty($punish_user) || !empty($ban_user)) //Re
 			$i++;
 		}
 
-		if ($i == 0) //Aucun membre trouvé.
+		if ($i == 0) //Aucun membre trouvÃ©.
 		{
 			echo $LANG['no_result'];
 		}
