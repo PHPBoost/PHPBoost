@@ -150,7 +150,7 @@ class Search
 				// Executes last insertions queries
 				if ($nbReqInsert > 0)
 				{
-					$this->db_querier->inject("INSERT INTO " . SearchSetup::$search_index_table . " (id_user, module, search, options, last_search_use, times_used) VALUES " . substr($reqInsert, 0, strlen($reqInsert) - 1) . "");
+					$this->db_querier->inject("INSERT INTO " . SearchSetup::$search_index_table . " (id_user, module, search, options, last_search_use, times_used) VALUES " . mb_substr($reqInsert, 0, mb_strlen($reqInsert) - 1) . "");
 				}
 
 				// Checks and retrieves cache meta-informations
@@ -161,7 +161,7 @@ class Search
 					'id_user' => $this->id_user
 				));
 				while ($row = $result->fetch())
-				{   // Ajout des résultats s'ils font partie de la liste des modules à traiter
+				{   // Ajout des rÃ©sultats s'ils font partie de la liste des modules Ã  traiter
 					$this->id_search[$row['module']] = $row['id_search'];
 				}
 				$result->dispose();
@@ -408,8 +408,8 @@ class Search
 	 */
 	private function get_modules_conditions($modules)
 	/**
-	 *  Génère les conditions de la clause WHERE pour limiter les requêtes
-	 *  aux seuls modules avec les bonnes options de recherches concernés.
+	 *  GÃ©nÃ¨re les conditions de la clause WHERE pour limiter les requÃªtes
+	 *  aux seuls modules avec les bonnes options de recherches concernÃ©s.
 	 */
 	{
 		$nbModules = count($modules);

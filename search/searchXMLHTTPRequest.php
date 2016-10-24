@@ -3,7 +3,7 @@
 *                         searchXMLHTTPRequest.php
 *                            -------------------
 *   begin                : January 27, 2008
-*   copyright            : (C) 2008 Rouchon Loïc
+*   copyright            : (C) 2008 Rouchon LoÃ¯c
 *   email                : horn@phpboost.com
 *
 *
@@ -34,7 +34,7 @@ load_module_lang('search');
 $request = AppContext::get_request();
 
 $search_txt = retrieve(POST, 'q', '');
-$module_id = strtolower(retrieve(POST, 'moduleName', ''));
+$module_id = mb_strtolower(retrieve(POST, 'moduleName', ''));
 $id_search = retrieve(POST, 'idSearch', -1);
 $selected_modules = retrieve(POST, 'searched_modules', array());
 //------------------------------------------------------------- Other includes
@@ -60,19 +60,19 @@ if (($id_search >= 0) && ($module_id != ''))
 				$search_modules[] = $extension_point;
 		}
 		
-		// Ajout du paramètre search à tous les modules
+		// Ajout du paramÃ¨tre search Ã  tous les modules
 		foreach ($search_modules as $id => $extension_point)
 			$modules_args[$id] = array('search' => $search_txt);
 		
-		// Ajout de la liste des paramètres de recherches spécifiques à chaque module
+		// Ajout de la liste des paramÃ¨tres de recherches spÃ©cifiques Ã  chaque module
 		foreach ($search_modules as $id => $extension_point)
 		{
 			if ($form_module->has_search_options())
 			{
-				// Récupération de la liste des paramètres
+				// RÃ©cupÃ©ration de la liste des paramÃ¨tres
 				$form_module_args = $extension_point->get_search_args();
-				// Ajout des paramètres optionnels sans les sécuriser.
-				// Ils sont sécurisés à l'intérieur de chaque module.
+				// Ajout des paramÃ¨tres optionnels sans les sÃ©curiser.
+				// Ils sont sÃ©curisÃ©s Ã  l'intÃ©rieur de chaque module.
 				foreach ($form_module_args as $arg)
 				{
 					if ($request->has_postparameter($arg))

@@ -3,7 +3,7 @@
  *                               index.php
  *                            -------------------
  *   begin                : January 27, 2008
- *   copyright            : (C) 2008 Rouchon Loïc
+ *   copyright            : (C) 2008 Rouchon LoÃ¯c
  *   email                : horn@phpboost.com
  *
  *

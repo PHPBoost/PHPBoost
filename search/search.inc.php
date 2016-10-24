@@ -3,7 +3,7 @@
 *                               search.inc.php
 *                            -------------------
 *   begin                : february 5, 2008
-*   copyright            : (C) 2008 Rouchon Loïc
+*   copyright            : (C) 2008 Rouchon LoÃ¯c
 *   email                : horn@phpboost.com
 *
 *
@@ -32,7 +32,7 @@ $config = SearchConfig::load();
 define ('NB_RESULTS_PER_PAGE', $config->get_nb_results_per_page());
 
 /**
- *  Exécute la recherche
+ *  ExÃ©cute la recherche
  */
 function execute_search($search, &$search_modules, &$modules_args, &$results)
 {
@@ -54,8 +54,8 @@ function execute_search($search, &$search_modules, &$modules_args, &$results)
 }
 
 /**
- *  Exécute la recherche si les résultats ne sont pas dans le cache et
- *  renvoie les résultats.
+ *  ExÃ©cute la recherche si les rÃ©sultats ne sont pas dans le cache et
+ *  renvoie les rÃ©sultats.
  */
 function get_search_results($search_string, &$search_modules, &$modules_args, &$results, &$ids_search, $just_insert = false)
 {
@@ -98,7 +98,7 @@ function get_html_results(&$results, &$html_results, &$results_name)
 	
 	if (!$display_all_results)
 	{
-		$provider = $provider_service->get_provider(strtolower($results_name));
+		$provider = $provider_service->get_provider(mb_strtolower($results_name));
 		$extension_point = $provider->get_extension_point(SearchableExtensionPoint::EXTENSION_POINT);
 		$results_data = array();
 		$personnal_parse_results = $extension_point->has_customized_results();

@@ -129,7 +129,7 @@ foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as
 
 				$tpl->assign_block_vars('forms', array(
 					'MODULE_NAME' => $module->get_id(),
-					'L_MODULE_NAME' => ucfirst($module_configuration->get_name()),
+					'L_MODULE_NAME' => TextHelper::uppercase_first($module_configuration->get_name()),
 					'C_SEARCH_FORM' => true,
 					'C_SELECTED' => count($selected_modules) == 1 ? in_array($module->get_id(), $selected_modules) : false,
 					'SEARCH_FORM' => $search_extensions_point[$module->get_id()]->get_search_form($modules_args[$module->get_id()])
@@ -139,7 +139,7 @@ foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as
 			{
 				$tpl->assign_block_vars('forms', array(
 					'MODULE_NAME' => $module->get_id(),
-					'L_MODULE_NAME' => ucfirst($module_configuration->get_name()),
+					'L_MODULE_NAME' => TextHelper::uppercase_first($module_configuration->get_name()),
 					'C_SEARCH_FORM' => false,
 					'C_SELECTED' => count($selected_modules) == 1 ? in_array($module->get_id(), $selected_modules) : false,
 					'SEARCH_FORM' => $LANG['search_no_options']
@@ -160,7 +160,7 @@ foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as
 			
 			$tpl->assign_block_vars('searched_modules', array(
 				'MODULE' => $module->get_id(),
-				'L_MODULE_NAME' => ucfirst($module_configuration->get_name()),
+				'L_MODULE_NAME' => TextHelper::uppercase_first($module_configuration->get_name()),
 				'SELECTED' => $selected
 			));
 		}
@@ -208,7 +208,7 @@ if (!empty($search))
 	{
 		$tpl->assign_block_vars('results', array(
 			'MODULE_NAME' => $module_id,
-			'L_MODULE_NAME' => ucfirst(ModulesManager::get_module($module_id)->get_configuration()->get_name()),
+			'L_MODULE_NAME' => TextHelper::uppercase_first(ModulesManager::get_module($module_id)->get_configuration()->get_name()),
 			'ID_SEARCH' => $idsSearch[$module_id]
 		));
 	}
