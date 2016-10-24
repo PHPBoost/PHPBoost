@@ -42,7 +42,7 @@ switch ($bread_crumb_key)
 				$Bread_crumb->add(stripslashes($article_infos['title']), url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
 			$id_cat = (int)$article_infos['id_cat'];
 		}
-		if (!empty($id_cat)  && is_array($categories)) //CatÈgories infinies
+		if (!empty($id_cat)  && is_array($categories)) //Cat√©gories infinies
 		{
 			$id = $id_cat; //Premier id
 			do
@@ -66,7 +66,7 @@ switch ($bread_crumb_key)
 		$Bread_crumb->add(stripslashes($article_infos['title']), url('wiki.php?title=' . $article_infos['encoded_title']), $article_infos['encoded_title']);
 
 		$id_cat = (int)$article_infos['id_cat'];
-		if (!empty($id_cat)  && is_array($categories)) //CatÈgories infinies
+		if (!empty($id_cat)  && is_array($categories)) //Cat√©gories infinies
 		{
 			$id = $id_cat; //Premier id
 			do
@@ -105,7 +105,7 @@ switch ($bread_crumb_key)
 			$Bread_crumb->add(stripslashes($article_infos['title']), url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
 			
 		$id_cat = !empty($article_infos['id_cat']) ? (int)$article_infos['id_cat'] : 0;
-		if ($id_cat > 0 && is_array($categories)) //CatÈgories infinies
+		if ($id_cat > 0 && is_array($categories)) //Cat√©gories infinies
 		{
 			$id = $id_cat;
 			do

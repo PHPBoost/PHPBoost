@@ -37,11 +37,11 @@ $root = $request->get_getint('root', 0);
 
 $categories = WikiCategoriesCache::load()->get_categories();
 
-//Listage des répertoires dont le répertoire parent est connu
+//Listage des rÃ©pertoires dont le rÃ©pertoire parent est connu
 if ($id_cat != 0)
 {
 	echo '<ul class="no-list">';
-	//On sélectionne les répetoires dont l'id parent est connu
+	//On sÃ©lectionne les rÃ©petoires dont l'id parent est connu
 	$result = PersistenceContext::get_querier()->select("SELECT c.id, a.title, a.encoded_title
 	FROM " . PREFIX . "wiki_cats c
 	LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.article_id
@@ -51,9 +51,9 @@ if ($id_cat != 0)
 	));
 	while ($row = $result->fetch())
 	{
-		//On compte le nombre de catégories présentes pour savoir si on donne la possibilité de faire un sous dossier
+		//On compte le nombre de catÃ©gories prÃ©sentes pour savoir si on donne la possibilitÃ© de faire un sous dossier
 		$sub_cats_number = PersistenceContext::get_querier()->count(PREFIX . "wiki_cats", 'WHERE id_parent = :id', array('id' => $row['id']));
-		//Si cette catégorie contient des sous catégories, on propose de voir son contenu
+		//Si cette catÃ©gorie contient des sous catÃ©gories, on propose de voir son contenu
 		if ($sub_cats_number > 0)
 			echo '<li class="sub"><a class="parent" href="javascript:show_wiki_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="fa fa-plus-square-o" id="img2_' . $row['id'] . '"></i><i class="fa fa-folder" id ="img_' . $row['id'] . '"></i></a><a id="class_' . $row['id'] . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . stripslashes($row['title']) . '</a><span id="cat_' . $row['id'] . '"></span></li>';
 		else //Sinon on n'affiche pas le "+"
@@ -88,7 +88,7 @@ elseif (!empty($open_cat) || $root == 1)
 {
 	$open_cat = $root == 1 ? 0 : $open_cat;
 	$return = '<ul class="no-list">';
-	//Liste des catégories dans cette catégorie
+	//Liste des catÃ©gories dans cette catÃ©gorie
 	foreach ($categories as $key => $cat)
 	{
 		if ($cat['id_parent'] == $open_cat)

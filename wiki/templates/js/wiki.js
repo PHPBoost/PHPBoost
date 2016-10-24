@@ -1,4 +1,4 @@
-		//Tableau contenant l'état de chaque catégorie
+		//Tableau contenant l'Ã©tat de chaque catÃ©gorie
 		var cat_status = new Array();
 
 		//AJAX: fonction d'interaction avec le serveur
@@ -12,12 +12,12 @@
 			   xhr_object = new XMLHttpRequest();
 			else if(window.ActiveXObject) // Internet Explorer
 			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-			else // XMLHttpRequest non supporté par le navigateur
+			else // XMLHttpRequest non supportÃ© par le navigateur
 			    return;
 				
 			if( id_cat > 0 )
 			{
-				//Si le dossier est fermé on l'ouvre sinon on le ferme
+				//Si le dossier est fermÃ© on l'ouvre sinon on le ferme
 				if( cat_status[id_cat] == undefined  )
 				{
 					data = "id_cat=" + id_cat;
@@ -67,7 +67,7 @@
 			   xhr_object = new XMLHttpRequest();
 			else if(window.ActiveXObject) // Internet Explorer
 			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-			else // XMLHttpRequest non supporté par le navigateur
+			else // XMLHttpRequest non supportÃ© par le navigateur
 			    return;
 				
 			if( id_cat >= 0 && id_cat != selected_cat )
@@ -139,7 +139,7 @@
 			return;
 		}
 
-		//Récupération de la sélection sur netscape, ajout des balises autour.
+		//RÃ©cupÃ©ration de la sÃ©lection sur netscape, ajout des balises autour.
 		function netscape_sel_paragraph(id, target, open_balise, close_balise)
 		{
 			var sel_length = target.textLength;
@@ -177,19 +177,19 @@
 					}
 				}
 				
-				target.scrollTop = scroll; //Remet à la bonne position le textarea.
+				target.scrollTop = scroll; //Remet Ã  la bonne position le textarea.
 			}
 			
 			return;
 		}
 
-		//Récupération de la sélection sur IE, ajout des balises autour.
+		//RÃ©cupÃ©ration de la sÃ©lection sur IE, ajout des balises autour.
 		function ie_sel_paragraph(id, target, open_balise, close_balise)
 		{
 			selText = false;
 			var scroll = target.scrollTop; //Position verticale.
 			
-			selection = document.selection.createRange().text; // Sélection
+			selection = document.selection.createRange().text; // SÃ©lection
 			
 			var title = selection != "" ? selection : prompt(enter_paragraph_name, title_paragraph);
 
@@ -204,18 +204,18 @@
 						document.selection.createRange().text = "\n" + open_balise + ' ' + selection + ' ' + close_balise + "\n";
 				}
 				
-				target.scrollTop = scroll; //Remet à la bonne position le textarea.
+				target.scrollTop = scroll; //Remet Ã  la bonne position le textarea.
 				selText = '';
 			}
 			
 			return;
 		}
 
-		//Fonction d'insertion du BBcode dans le champs, tient compte du navigateur utilisé.
+		//Fonction d'insertion du BBcode dans le champs, tient compte du navigateur utilisÃ©.
 		function insert_paragraph_title(id, open_balise, close_balise, field)
 		{
 			var area = document.getElementById(field);
-			var nav = navigator.appName; //Recupère le nom du navigateur
+			var nav = navigator.appName; //RecupÃ¨re le nom du navigateur
 
 			area.focus();
 
@@ -229,7 +229,7 @@
 			return;
 		}
 
-		//Fonction d'affichage du contenu d'une catégorie
+		//Fonction d'affichage du contenu d'une catÃ©gorie
 		function open_cat(id_cat)
 		{
 			var xhr_object = null;
@@ -240,7 +240,7 @@
 			   xhr_object = new XMLHttpRequest();
 			else if(window.ActiveXObject) // Internet Explorer
 			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-			else // XMLHttpRequest non supporté par le navigateur
+			else // XMLHttpRequest non supportÃ© par le navigateur
 			    return;
 				
 			if( id_cat >= 0 && id_cat != selected_cat )

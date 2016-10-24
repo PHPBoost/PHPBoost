@@ -52,7 +52,7 @@ class WikiFeedProvider implements FeedProvider
 		$categories = WikiCategoriesCache::load()->get_categories();
 		$config = WikiConfig::load();
 		$parameters = array('limit' => 20);
-		if (($idcat > 0) && array_key_exists($idcat, $categories))//CatÈgorie
+		if (($idcat > 0) && array_key_exists($idcat, $categories))//Cat√©gorie
 		{
 			$desc = sprintf($LANG['wiki_rss_cat'], stripslashes($categories[$idcat]['title']));
 			$where = 'AND a.id_cat = :idcat';

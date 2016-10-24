@@ -40,7 +40,7 @@ $display_categories_on_index = $request->get_postvalue('display_categories_on_in
 $hits_counter = $request->get_postvalue('hits_counter', false);
 
 $index_text = stripslashes(wiki_parse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED)));
-if ($update) //Mise à jour
+if ($update) //Mise Ã  jour
 {
 	$config->set_wiki_name(TextHelper::strprotect(retrieve(POST, 'wiki_name', $LANG['wiki'], TSTRING_AS_RECEIVED), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE));
 	$config->set_number_articles_on_index(retrieve(POST, 'number_articles_on_index', 0));
@@ -56,13 +56,13 @@ if ($update) //Mise à jour
 	
 	WikiConfig::save();
 	
-	//Régénération du cache
+	//RÃ©gÃ©nÃ©ration du cache
 	WikiCategoriesCache::invalidate();
 }
 
 $tpl = new FileTemplate('wiki/admin_wiki.tpl');
 
-//On travaille uniquement en BBCode, on force le langage de l'éditeur
+//On travaille uniquement en BBCode, on force le langage de l'Ã©diteur
 $content_editor = AppContext::get_content_formatting_service()->get_default_factory();
 $editor = $content_editor->get_editor();
 $editor->set_identifier('contents');

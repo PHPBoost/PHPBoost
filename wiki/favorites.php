@@ -46,7 +46,7 @@ $remove_favorite = retrieve(GET, 'del', 0);
 
 if ($add_favorite > 0)//Ajout d'un favori
 {
-	//on vérifie que l'article existe
+	//on vÃ©rifie que l'article existe
 	try {
 		$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . "wiki_articles", array('encoded_title'), 'WHERE id = :id', array('id' => $add_favorite));
 	} catch (RowNotFoundException $e) {
@@ -63,15 +63,15 @@ if ($add_favorite > 0)//Ajout d'un favori
 		PersistenceContext::get_querier()->insert(PREFIX . "wiki_favorites", array('id_article' => $add_favorite, 'user_id' => AppContext::get_current_user()->get_id()));
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
-	else //Erreur: l'article est déjà en favoris
+	else //Erreur: l'article est dÃ©jÃ  en favoris
 		AppContext::get_response()->redirect('/wiki/' . url('favorites.php?error=e_already_favorite', '', '&') . '#message_helper');
 }
 elseif ($remove_favorite > 0)
 {
-    //Vérification de la validité du jeton
+    //VÃ©rification de la validitÃ© du jeton
     AppContext::get_session()->csrf_get_protect();
     
-	//on vérifie que l'article existe
+	//on vÃ©rifie que l'article existe
 	try {
 		$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . "wiki_articles", array('encoded_title'), 'WHERE id = :id', array('id' => $remove_favorite));
 	} catch (RowNotFoundException $e) {
@@ -90,7 +90,7 @@ elseif ($remove_favorite > 0)
 		PersistenceContext::get_querier()->delete(PREFIX . 'wiki_favorites', 'WHERE id_article=:id AND user_id=:user_id', array('id' => $remove_favorite, 'user_id' => AppContext::get_current_user()->get_id()));
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
-	else //Erreur: l'article est déjà en favoris
+	else //Erreur: l'article est dÃ©jÃ  en favoris
 		AppContext::get_response()->redirect('/wiki/' . url('favorites.php?error=e_no_favorite', '', '&') . '#message_helper');
 }
 else

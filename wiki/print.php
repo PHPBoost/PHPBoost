@@ -31,10 +31,10 @@ $config = WikiConfig::load();
 
 include('../wiki/wiki_functions.php');
 
-//Id de l'article à afficher en version imprimable
+//Id de l'article Ã  afficher en version imprimable
 $article_id = retrieve(GET, 'id', 0);
 
-//Requêtes préliminaires utiles par la suite
+//RequÃªtes prÃ©liminaires utiles par la suite
 if ($article_id > 0) //Si on connait son titre
 {
 	$result = PersistenceContext::get_querier()->select("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, a.defined_status, com_topic.number_comments, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
@@ -49,7 +49,7 @@ if ($article_id > 0) //Si on connait son titre
 	$article_infos = $result->fetch();
 	$result->dispose();
 
-	if (!empty($article_infos['redirect']))//Si on est redirigé
+	if (!empty($article_infos['redirect']))//Si on est redirigÃ©
 	{
 		$id_redirection = $article_infos['id'];
 		

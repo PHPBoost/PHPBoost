@@ -27,7 +27,7 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-//On charge le template associé
+//On charge le template associÃ©
 $jstools_tpl = new FileTemplate('wiki/wiki_js_tools.tpl');
 
 $jstools_tpl->put_all(array(

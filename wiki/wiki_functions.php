@@ -57,7 +57,7 @@ function wiki_unparse($contents)
 	return $unparser->get_content();
 }
 
-//Second parse -> à l'affichage
+//Second parse -> Ã  l'affichage
 function wiki_second_parse($contents)
 {
 	$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
@@ -68,7 +68,7 @@ function wiki_second_parse($contents)
 	return $second_parser->get_content();
 }
 
-//Fonction de correction dans le cas où il n'y a pas de rewriting (balise link considére par défaut le rewriting activé)
+//Fonction de correction dans le cas oÃ¹ il n'y a pas de rewriting (balise link considÃ©re par dÃ©faut le rewriting activÃ©)
 function wiki_no_rewrite($var)
 {
 	if (!ServerEnvironmentConfig::load()->is_url_rewriting_enabled()) //Pas de rewriting
@@ -82,7 +82,7 @@ function remove_chapter_number_in_rewrited_title($title)
 	return Url::encode_rewrite(preg_replace('`((?:[0-9 ]+)|(?:[IVXCL ]+))[\.-](.*)`iU', '$2', $title));
 }
 
-//Fonction de décomposition récursive (passage par référence pour la variable content qui passe de chaîne à tableau de chaînes (5 niveaux maximum)
+//Fonction de dÃ©composition rÃ©cursive (passage par rÃ©fÃ©rence pour la variable content qui passe de chaÃ®ne Ã  tableau de chaÃ®nes (5 niveaux maximum)
 function wiki_explode_menu(&$content)
 {
 	$lines = explode("\n", $content);
@@ -108,7 +108,7 @@ function wiki_explode_menu(&$content)
 				//Now we wait one of its children or its brother
 				$max_level_expected = min($level + 1, WIKI_MENU_MAX_DEPTH + 1);
 				
-				//Réinsertion
+				//RÃ©insertion
 				$class_level = $level - 1;
 				$line = '<h' . $class_level . ' class="wiki_paragraph' .  $class_level . '" id="paragraph_' . Url::encode_rewrite($title_name) . '">' . TextHelper::htmlspecialchars($title_name) .'</h' . $class_level . '><br />' . "\n";
 			}
@@ -120,7 +120,7 @@ function wiki_explode_menu(&$content)
 	return $list;
 }
 
-//Fonction d'affichage récursive
+//Fonction d'affichage rÃ©cursive
 function wiki_display_menu($menu_list)
 {
 	if (count($menu_list) == 0) //Aucun titre de paragraphe
@@ -148,9 +148,9 @@ function wiki_display_menu($menu_list)
 		}
 		else
 		{
-			if (substr($menu, strlen($menu) - 4, 4) == '<li>')
+			if (mb_substr($menu, mb_strlen($menu) - 4, 4) == '<li>')
 			{
-				$menu = substr($menu, 0, strlen($menu) - 4);
+				$menu = mb_substr($menu, 0, mb_strlen($menu) - 4);
 			}
 			$menu .= str_repeat('</li></ol>', $last_level - $current_level) . '</li><li>' . $title_link;
 		}
@@ -158,16 +158,16 @@ function wiki_display_menu($menu_list)
 	}
 	
 	//End
-	if (substr($menu, strlen($menu) - 4, 4) == '<li>')
+	if (mb_substr($menu, mb_strlen($menu) - 4, 4) == '<li>')
 	{
-		$menu = substr($menu, 0, strlen($menu) - 4);
+		$menu = mb_substr($menu, 0, mb_strlen($menu) - 4);
 	}
 	$menu .= str_repeat('</li></ol>', $last_level);
 	
 	return $menu;
 }
 
-//Catégories (affichage si on connait la catégorie et qu'on veut reformer l'arborescence)
+//CatÃ©gories (affichage si on connait la catÃ©gorie et qu'on veut reformer l'arborescence)
 function display_wiki_cat_explorer($id, &$cats, $display_select_link = 1)
 {
 	$categories = WikiCategoriesCache::load()->get_categories();
@@ -175,7 +175,7 @@ function display_wiki_cat_explorer($id, &$cats, $display_select_link = 1)
 	if ($id > 0)
 	{
 		$id_cat = $id;
-		//On remonte l'arborescence des catégories afin de savoir quelle catégorie développer
+		//On remonte l'arborescence des catÃ©gories afin de savoir quelle catÃ©gorie dÃ©velopper
 		do
 		{
 			$cats[] = (int)$categories[$id_cat]['id_parent'];
@@ -185,10 +185,10 @@ function display_wiki_cat_explorer($id, &$cats, $display_select_link = 1)
 	}
 	
 
-	//Maintenant qu'on connait l'arborescence on part du début
+	//Maintenant qu'on connait l'arborescence on part du dÃ©but
 	$cats_list = '<ul class="no-list">' . show_wiki_cat_contents(0, $cats, $id, $display_select_link) . '</ul>';
 	
-	//On liste les catégories ouvertes pour la fonction javascript
+	//On liste les catÃ©gories ouvertes pour la fonction javascript
 	$opened_cats_list = '';
 	foreach ($cats as $key => $value)
 	{
@@ -203,16 +203,16 @@ function display_wiki_cat_explorer($id, &$cats, $display_select_link = 1)
 	' . $cats_list;
 }
 
-//Fonction récursive pour l'affichage des catégories
+//Fonction rÃ©cursive pour l'affichage des catÃ©gories
 function show_wiki_cat_contents($id_cat, $cats, $id, $display_select_link)
 {
 	$line = '';
 	foreach (WikiCategoriesCache::load()->get_categories() as $key => $cat)
 	{
-		//Si la catégorie appartient à la catégorie explorée
+		//Si la catÃ©gorie appartient Ã  la catÃ©gorie explorÃ©e
 		if ($cat['id_parent']  == $id_cat)
 		{
-			if (in_array($key, $cats)) //Si cette catégorie contient notre catégorie, on l'explore
+			if (in_array($key, $cats)) //Si cette catÃ©gorie contient notre catÃ©gorie, on l'explore
 			{
 				$line .= '<li class="sub"><a class="parent" href="javascript:show_wiki_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="fa fa-minus-square-o" id="img2_' . $key . '"></i><i class="fa fa-folder-open" id="img_' . $key . '"></i></a><a id="class_' . $key . '" class="' . ($key == $id ? 'selected' : '') . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . stripslashes($cat['title']) . '</a><span id="cat_' . $key . '">
 				<ul class="no-list">'
@@ -220,9 +220,9 @@ function show_wiki_cat_contents($id_cat, $cats, $id, $display_select_link)
 			}
 			else
 			{
-				//On compte le nombre de catégories présentes pour savoir si on donne la possibilité de faire un sous dossier
+				//On compte le nombre de catÃ©gories prÃ©sentes pour savoir si on donne la possibilitÃ© de faire un sous dossier
 				$sub_cats_number = PersistenceContext::get_querier()->count(PREFIX . "wiki_cats", 'WHERE id_parent = :id', array('id' => $key));
-				//Si cette catégorie contient des sous catégories, on propose de voir son contenu
+				//Si cette catÃ©gorie contient des sous catÃ©gories, on propose de voir son contenu
 				if ($sub_cats_number > 0)
 					$line .= '<li class="sub"><a class="parent" href="javascript:show_wiki_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="fa fa-plus-square-o" id="img2_' . $key . '"></i><i class="fa fa-folder" id="img_' . $key . '"></i></a><a id="class_' . $key . '" class="' . ($key == $id ? 'selected' : '') . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . stripslashes($cat['title']) . '</a><span id="cat_' . $key . '"></span></li>';
 				else //Sinon on n'affiche pas le "+"
@@ -233,16 +233,16 @@ function show_wiki_cat_contents($id_cat, $cats, $id, $display_select_link)
 	return "\n" . $line;
 }
 
-//Fonction qui détermine toutes les sous-catégories d'une catégorie (récursive)
+//Fonction qui dÃ©termine toutes les sous-catÃ©gories d'une catÃ©gorie (rÃ©cursive)
 function wiki_find_subcats(&$array, $id_cat)
 {
-	//On parcourt les catégories et on détermine les catégories filles
+	//On parcourt les catÃ©gories et on dÃ©termine les catÃ©gories filles
 	foreach (WikiCategoriesCache::load()->get_categories() as $key => $value)
 	{
 		if ($value['id_parent'] == $id_cat)
 		{
 			$array[] = $key;
-			//On rappelle la fonction pour la catégorie fille
+			//On rappelle la fonction pour la catÃ©gorie fille
 			wiki_find_subcats($array, $key);
 		}
 	}

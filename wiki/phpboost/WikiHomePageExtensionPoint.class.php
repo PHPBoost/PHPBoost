@@ -89,7 +89,7 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 				));
 			}
 		}
-		//Affichage de toutes les catégories si c'est activé
+		//Affichage de toutes les catÃ©gories si c'est activÃ©
 		if ($config->are_categories_displayed_on_index())
 		{
 			$tpl->assign_block_vars('cat_list', array(
@@ -98,7 +98,7 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 			$i = 0;
 			foreach (WikiCategoriesCache::load()->get_categories() as $id => $cat)
 			{
-				//Si c'est une catégorie mère
+				//Si c'est une catÃ©gorie mÃ¨re
 				if ($cat['id_parent'] == 0)
 				{
 					$tpl->assign_block_vars('cat_list.list', array(

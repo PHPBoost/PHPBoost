@@ -61,7 +61,7 @@ if ($id_auth > 0) //Autorisations de l'article
 		DispatchManager::redirect($error_controller);
 	} 
 }
-elseif ($wiki_status > 0)//On s'intéresse au statut de l'article
+elseif ($wiki_status > 0)//On s'intÃ©resse au statut de l'article
 {
 	define('TITLE', $LANG['wiki_status_management']);
 	
@@ -81,7 +81,7 @@ elseif ($wiki_status > 0)//On s'intéresse au statut de l'article
 		DispatchManager::redirect($error_controller);
 	} 
 }
-elseif ($move > 0) //Déplacement d'article
+elseif ($move > 0) //DÃ©placement d'article
 {
 	define('TITLE', $LANG['wiki_moving_article']);
 	
@@ -172,7 +172,7 @@ elseif (AppContext::get_request()->has_getparameter('com') && $idcom > 0)
 		DispatchManager::redirect($error_controller);
 	} 
 }
-elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
+elseif ($del_article > 0) //Suppression d'un article ou d'une catÃ©gorie
 {
 	try {
 		$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $del_article));
@@ -200,7 +200,7 @@ require_once('../kernel/header.php');
 
 $tpl = new FileTemplate('wiki/property.tpl');
 
-if ($random)//Recherche d'une page aléatoire
+if ($random)//Recherche d'une page alÃ©atoire
 {
 	$page = '';
 	try {
@@ -214,14 +214,14 @@ if ($random)//Recherche d'une page aléatoire
 }
 elseif ($id_auth > 0) //gestion du niveau d'autorisation
 {
-	$array_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : $config->get_authorizations(); //Récupération des tableaux des autorisations et des groupes.
+	$array_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : $config->get_authorizations(); //RÃ©cupÃ©ration des tableaux des autorisations et des groupes.
 	
 	$tpl->assign_block_vars('auth', array(
 		'L_TITLE' => sprintf($LANG['wiki_auth_management_article'], stripslashes($article_infos['title'])),
 		'ID' => $id_auth
 	));
 	
-	//On assigne les variables pour le POST en précisant l'idurl.
+	//On assigne les variables pour le POST en prÃ©cisant l'idurl.
 	$tpl->put_all(array(
 		'SELECT_RESTORE_ARCHIVE' => Authorizations::generate_select(WIKI_RESTORE_ARCHIVE, $array_auth),
 		'SELECT_DELETE_ARCHIVE' => Authorizations::generate_select(WIKI_DELETE_ARCHIVE, $array_auth),
@@ -250,7 +250,7 @@ elseif ($wiki_status > 0)
 		'DEFINED' => ($article_infos['defined_status'] >= 0  ? 'checked="checked"' : ''),
 	));
 	
-	//On fait une liste des statuts définis
+	//On fait une liste des statuts dÃ©finis
 	$tpl->assign_block_vars('status.list', array(
 		'L_STATUS' => $LANG['wiki_no_status'],
 		'ID_STATUS' => 0,
@@ -269,7 +269,7 @@ elseif ($wiki_status > 0)
 		));
 	}
 }
-elseif ($move > 0) //On déplace l'article
+elseif ($move > 0) //On dÃ©place l'article
 {
 	$cats = array();
 	$cat_list = display_wiki_cat_explorer($article_infos['id_cat'], $cats, 1);
@@ -359,7 +359,7 @@ elseif ($redirect > 0) //Redirections de l'article
 	));
 	$result->dispose();
 }
-elseif ($create_redirection > 0) //Création d'une redirection
+elseif ($create_redirection > 0) //CrÃ©ation d'une redirection
 {
 	$tpl->put_all(array(
 		'L_REDIRECTION_NAME' => $LANG['wiki_redirection_name'],
@@ -389,14 +389,14 @@ elseif (AppContext::get_request()->has_getparameter('com') && $idcom > 0) //Affi
 		'COMMENTS' => CommentsService::display($comments_topic)->render()
 	));
 }
-elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
+elseif ($del_article > 0) //Suppression d'un article ou d'une catÃ©gorie
 {	
 	if (empty($article_infos['title']))//Si l'article n'existe pas
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php'));
 	
 	if ($article_infos['is_cat'] == 0)//C'est un article on ne s'en occupe pas ici, on redirige vers l'article en question
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
-	else //Catégorie
+	else //CatÃ©gorie
 	{
 		$cats = array();
 		$cat_list = display_wiki_cat_explorer($article_infos['id_cat'], $cats);
@@ -443,7 +443,7 @@ elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
 else
 	AppContext::get_response()->redirect('/wiki/' . url('wiki.php'));
 
-//On travaille uniquement en BBCode, on force le langage de l'éditeur
+//On travaille uniquement en BBCode, on force le langage de l'Ã©diteur
 $content_editor = AppContext::get_content_formatting_service()->get_default_factory();
 $editor = $content_editor->get_editor();
 $editor->set_identifier('contents');
