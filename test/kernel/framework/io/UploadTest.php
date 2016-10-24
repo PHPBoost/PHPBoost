@@ -87,7 +87,7 @@ class UploadTest extends PHPBoostUnitTestCase
 //		$ret = $up->_clean_filename('TEST PHP');
 //		self::assertEquals($ret, 'test_php');
 //		
-//		$ret = $up->_clean_filename(' éèêàâùüûïîôç');
+//		$ret = $up->_clean_filename(' Ã©Ã¨ÃªÃ Ã¢Ã¹Ã¼Ã»Ã¯Ã®Ã´Ã§');
 //		self::assertEquals($ret, 'eeeaauuuiioc');
 //		
 //		$ret = $up->_clean_filename('a"\'#_{}()');
