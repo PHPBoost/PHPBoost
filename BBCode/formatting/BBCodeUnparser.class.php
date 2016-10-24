@@ -121,15 +121,6 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	 */
 	protected function unparse_simple_tags()
 	{
-		$array_str = array(
-			'<br />', '<strong>', '</strong>', '<em>', '</em>', '<strike>', '</strike>', '<s>', '</s>', '<p>', '</p>', '<sup>', '</sup>',
-			'<sub>', '</sub>', '<pre>', '</pre>'
-			);
-		$array_str_replace = array(
-			'', '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '[s]', '[/s]',  '[p]', '[/p]', '[sup]', '[/sup]', '[sub]', '[/sub]', '[pre]', '[/pre]'
-		);
-		$this->content = str_replace($array_str, $array_str_replace, $this->content);
-		
 		$array_preg = array(
 			'`<span style="text-decoration: underline;">(.*)</span>`isU',
 			'`<span style="color:([^;]+);">(.*)</span>`isU',
@@ -204,7 +195,16 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			"[lightbox=$1]$2[/lightbox]"
 		);
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
-			
+		
+		$array_str = array(
+			'<br />', '<strong>', '</strong>', '<em>', '</em>', '<strike>', '</strike>', '<s>', '</s>', '<p>', '</p>', '<sup>', '</sup>',
+			'<sub>', '</sub>', '<pre>', '</pre>'
+			);
+		$array_str_replace = array(
+			'', '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '[s]', '[/s]',  '[p]', '[/p]', '[sup]', '[/sup]', '[sub]', '[/sub]', '[pre]', '[/pre]'
+		);
+		$this->content = str_replace($array_str, $array_str_replace, $this->content);
+		
 		##Nested tags
 		//Quotes
 		$this->_parse_imbricated('<div class="formatter-container formatter-blockquote"><span class="formatter-title">', '`<div class="formatter-container formatter-blockquote"><span class="formatter-title">(.*) :</span><div class="formatter-content">(.*)</div></div>`isU', '[quote]$2[/quote]', $this->content);
