@@ -3,7 +3,7 @@
  *                           FormField.class.php
  *                            -------------------
  *   begin                : April 28, 2009
- *   copyright            : (C) 2009 Viarre Régis
+ *   copyright            : (C) 2009 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  ###################################################

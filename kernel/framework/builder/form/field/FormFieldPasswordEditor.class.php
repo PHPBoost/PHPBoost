@@ -3,7 +3,7 @@
  *                             FormFieldPasswordEditor.class.php
  *                            -------------------
  *   begin                : Februar 04, 2010
- *   copyright            : (C) 2010 Viarre Régis
+ *   copyright            : (C) 2010 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  ###################################################
@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>
  * @desc This class manage single-line password fields.
  * @package {@package}
  */
@@ -88,7 +88,7 @@ class FormFieldPasswordEditor extends AbstractFormField
 	{
 		foreach ($field_options as $attribute => $value)
 		{
-			$attribute = strtolower($attribute);
+			$attribute = mb_strtolower($attribute);
 			switch ($attribute)
 			{
 				case 'size' :

@@ -78,7 +78,7 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 			'C_EDITOR_ENABLED' => true,
 			'C_RESET_BUTTON_ENABLED' => $this->reset_value !== null,
 			'EDITOR' => $editor->display(),
-			'EDITOR_NAME' => strtolower($this->formatter->get_name()),
+			'EDITOR_NAME' => mb_strtolower($this->formatter->get_name()),
 			'VALUE' => $this->get_raw_value(),
 			'PREVIEW_BUTTON' => $this->get_preview_button_code(),
 			'RESET_BUTTON' => $this->get_reset_button_code()
@@ -167,7 +167,7 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 	{
 		foreach($field_options as $attribute => $value)
 		{
-			$attribute = strtolower($attribute);
+			$attribute = mb_strtolower($attribute);
 			switch ($attribute)
 			{
 				case 'formatter':

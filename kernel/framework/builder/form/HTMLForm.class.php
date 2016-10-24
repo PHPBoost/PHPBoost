@@ -3,7 +3,7 @@
  *                             Form.class.php
  *                            -------------------
  *   begin                : April 28, 2009
- *   copyright            : (C) 2009 Viarre Régis
+ *   copyright            : (C) 2009 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  ###################################################
@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>
  * @desc This class enables you to handle all the operations regarding forms. Indeed, you build a
  * form using object components (fieldsets, fields, buttons) and it's able to display, to retrieve
  * the posted values and also validate the entered data from constraints you define. The validation

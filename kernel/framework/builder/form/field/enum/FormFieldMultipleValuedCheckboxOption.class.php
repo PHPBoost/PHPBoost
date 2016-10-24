@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>
  * @desc This class represents an option for the FormFieldMultipleCheckbox
  * @package {@package}
  */

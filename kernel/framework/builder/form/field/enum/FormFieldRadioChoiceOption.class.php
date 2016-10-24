@@ -3,7 +3,7 @@
  *                        FormFieldRadioOption.class.php
  *                            -------------------
  *   begin                : May 01, 2009
- *   copyright            : (C) 2009 Viarre Régis
+ *   copyright            : (C) 2009 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  ###################################################
@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>
  * @desc This class manage radio input field options.
  * @package {@package}
  */

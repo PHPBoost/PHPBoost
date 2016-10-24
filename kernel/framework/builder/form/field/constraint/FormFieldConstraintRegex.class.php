@@ -57,10 +57,10 @@ class FormFieldConstraintRegex extends AbstractFormFieldConstraint
 	private function parse_js_regex($regex)
 	{
 		$delimiter = $regex[0];
-		$end_delimiter_position = strrpos($regex, $delimiter);
-		$js_regex = substr($regex, 1, $end_delimiter_position - 1);
+		$end_delimiter_position = mb_strrpos($regex, $delimiter);
+		$js_regex = mb_substr($regex, 1, $end_delimiter_position - 1);
 		
-		$js_options_chars = str_split(substr($regex, $end_delimiter_position + 1));
+		$js_options_chars = str_split(mb_substr($regex, $end_delimiter_position + 1));
 		$js_options = '';
 		foreach ($js_options_chars as $option)
 		{

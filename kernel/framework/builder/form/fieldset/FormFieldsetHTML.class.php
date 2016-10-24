@@ -3,7 +3,7 @@
  *                       FormFieldsetHTML.class.php
  *                            -------------------
  *   begin                : May 01, 2009
- *   copyright            : (C) 2009 Viarre Régis
+ *   copyright            : (C) 2009 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  ###################################################
@@ -27,7 +27,7 @@
 /**
  * @package {@package}
  * @desc
- * @author Régis Viarre <crowkait@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>
  */
 class FormFieldsetHTML extends AbstractFormFieldset
 {
@@ -39,7 +39,7 @@ class FormFieldsetHTML extends AbstractFormFieldset
      */
     public function __construct($id, $name = '', $options = array())
     {
-    	parent::__construct($id, $options);
+        parent::__construct($id, $options);
         $this->title = $name;
     }
 
@@ -53,8 +53,8 @@ class FormFieldsetHTML extends AbstractFormFieldset
         $template = $this->get_template_to_use();
 
         $template->put_all(array(
-        	'C_TITLE' => !empty($this->title),
-			'L_TITLE' => $this->title
+            'C_TITLE' => !empty($this->title),
+            'L_TITLE' => $this->title
         ));
 
         $this->assign_template_fields($template);

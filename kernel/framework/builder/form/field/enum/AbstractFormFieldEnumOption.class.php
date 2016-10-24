@@ -150,7 +150,7 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 	{
 		foreach($field_choice_options as $attribute => $value)
 		{
-			$attribute = strtolower($attribute);
+			$attribute = mb_strtolower($attribute);
 			switch ($attribute)
 			{
 				case 'disable':

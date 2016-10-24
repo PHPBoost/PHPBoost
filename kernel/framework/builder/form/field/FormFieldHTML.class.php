@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>
  * @desc This class manage free contents fields.
  * It provides you additionnal field options :
  * <ul>

@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>
  * @desc Abstract class that proposes a default implementation for the FormField interface.
  * @package {@package}
  */
@@ -376,7 +376,7 @@ abstract class AbstractFormField implements FormField
 	{
 		foreach($field_options as $attribute => $value)
 		{
-			$attribute = strtolower($attribute);
+			$attribute = mb_strtolower($attribute);
 			switch ($attribute)
 			{
 				case 'description':

@@ -58,7 +58,7 @@ abstract class AbstractFormFieldset implements FormFieldset
 	{
 		foreach($options as $attribute => $value)
 		{
-			$attribute = strtolower($attribute);
+			$attribute = mb_strtolower($attribute);
 			switch ($attribute)
 			{
 				case 'description':

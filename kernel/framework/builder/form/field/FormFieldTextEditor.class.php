@@ -3,7 +3,7 @@
  *                             FormFieldTextEditor.class.php
  *                            -------------------
  *   begin                : April 28, 2009
- *   copyright            : (C) 2009 Viarre Régis
+ *   copyright            : (C) 2009 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  ###################################################
@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>
  * @desc This class manage single-line text fields.
  * @package {@package}
  */
@@ -95,7 +95,7 @@ class FormFieldTextEditor extends AbstractFormField
 	{
 		foreach ($field_options as $attribute => $value)
 		{
-			$attribute = strtolower($attribute);
+			$attribute = mb_strtolower($attribute);
 			switch ($attribute)
 			{
 				case 'size':
@@ -116,7 +116,7 @@ class FormFieldTextEditor extends AbstractFormField
 	 */
 	public function get_value()
 	{
-		return substr($this->value, 0, $this->maxlength);
+		return mb_substr($this->value, 0, $this->maxlength);
 	}
 
 	protected function get_default_template()

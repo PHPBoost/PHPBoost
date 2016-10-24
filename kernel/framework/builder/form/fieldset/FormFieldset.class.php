@@ -27,11 +27,11 @@
 /**
  * @package {@package}
  * @desc
- * @author Régis Viarre <crowkait@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>
  */
 interface FormFieldset extends FormElement
 {
-	function get_id();
+    function get_id();
     /**
      * @desc Adds a list in the container
      * @param FormField $field The field to add

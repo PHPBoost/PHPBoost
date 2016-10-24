@@ -3,7 +3,7 @@
  *                             FormBuilderException.class.php
  *                            -------------------
  *   begin                : December 19, 2009
- *   copyright            : (C) 2009 Régis Viarre, Benoit Sautel, Loic Rouchon
+ *   copyright            : (C) 2009 RÃ©gis Viarre, Benoit Sautel, Loic Rouchon
  *   email                : crowkait@phpboost.com, ben.popeye@phpboost.com, loic.rouchon@phpboost.com
  *
  ###################################################
@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author Régis Viarre <crowkait@phpboost.com>, Benoit Sautel <ben.popeye@phpboost.com>, Loic Rouchon <loic.rouchon@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>, Benoit Sautel <ben.popeye@phpboost.com>, Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc
  * @package {@package}
  */

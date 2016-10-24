@@ -3,7 +3,7 @@
  *		       FormFieldUploadFile.class.php
  *                            -------------------
  *   begin                : December 10, 2013
- *   copyright            : (C) 2013 Kévin MASSY
+ *   copyright            : (C) 2013 KÃ©vin MASSY
  *   email                : kevin.massy@phpboost.com
  *
  *
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Kévin MASSY <kevin.massy@phpboost.com>
+ * @author KÃ©vin MASSY <kevin.massy@phpboost.com>
  * @desc This class manage single-line text fields with a link to access the upload modal form.
  * @package {@package}
  */

@@ -3,7 +3,7 @@
  *                         FormFieldConstraintNotEmpty.class.php
  *                            -------------------
  *   begin                : December 19, 2009
- *   copyright            : (C) 2009 Régis Viarre, Loic Rouchon
+ *   copyright            : (C) 2009 RÃ©gis Viarre, Loic Rouchon
  *   email                : crowkait@phpboost.com, loic.rouchon@phpboost.com
  *
  ###################################################
@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author Régis Viarre <crowkait@phpboost.com>, Loic Rouchon <loic.rouchon@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>, Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc 
  * @package {@package}
  */ 
@@ -45,7 +45,7 @@ class FormFieldConstraintNotEmpty extends AbstractFormFieldConstraint
 	public function validate(FormField $field)
 	{
 		$value = $field->get_value();
-		$this->set_validation_error_message(StringVars::replace_vars($this->error_message, array('name' => strtolower($field->get_label()))));
+		$this->set_validation_error_message(StringVars::replace_vars($this->error_message, array('name' => mb_strtolower($field->get_label()))));
 		
 		if ($value instanceof FormFieldEnumOption) {
 			return $value->get_raw_value() !== null && $value->get_raw_value() != '';
@@ -61,7 +61,7 @@ class FormFieldConstraintNotEmpty extends AbstractFormFieldConstraint
 	public function get_js_validation(FormField $field)
 	{
 		return 'notEmptyFormFieldValidator(' . TextHelper::to_js_string($field->get_id()) .
-			', ' . TextHelper::to_js_string(StringVars::replace_vars($this->error_message, array('name' => strtolower($field->get_label())))) .')';
+			', ' . TextHelper::to_js_string(StringVars::replace_vars($this->error_message, array('name' => mb_strtolower($field->get_label())))) .')';
 	}
 }
 

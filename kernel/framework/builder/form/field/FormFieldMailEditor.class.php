@@ -3,7 +3,7 @@
  *                             FormFieldMailEditor.class.php
  *                            -------------------
  *   begin                : April 28, 2009
- *   copyright            : (C) 2009 Viarre Régis
+ *   copyright            : (C) 2009 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  ###################################################
@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>
  * @desc This class manages a mail address.
  * @package {@package}
  */
@@ -97,7 +97,7 @@ class FormFieldMailEditor extends FormFieldTextEditor
 	{
 		foreach ($field_options as $attribute => $value)
 		{
-			$attribute = strtolower($attribute);
+			$attribute = mb_strtolower($attribute);
 			switch ($attribute)
 			{
 				case 'multiple':

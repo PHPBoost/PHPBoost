@@ -3,7 +3,7 @@
  *                         FormFieldConstraintLengthRange.class.php
  *                            -------------------
  *   begin                : December 19, 2009
- *   copyright            : (C) 2009 Régis Viarre, Loic Rouchon
+ *   copyright            : (C) 2009 RÃ©gis Viarre, Loic Rouchon
  *   email                : crowkait@phpboost.com, loic.rouchon@phpboost.com
  *
  ###################################################
@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author Régis Viarre <crowkait@phpboost.com>, Loic Rouchon <loic.rouchon@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>, Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc 
  * @package {@package}
  */ 
@@ -49,7 +49,7 @@ class FormFieldConstraintLengthRange extends AbstractFormFieldConstraint
 	
 	public function validate(FormField $field)
 	{
-		$value = strlen($field->get_value());
+		$value = mb_strlen($field->get_value());
 		$is_required = $field->is_required();
 		if (!empty($value) || $is_required)
 		{

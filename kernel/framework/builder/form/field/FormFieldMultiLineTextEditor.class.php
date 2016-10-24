@@ -3,7 +3,7 @@
  *                       FormFieldMultiLineTextEditor.class.php
  *                            -------------------
  *   begin                : April 28, 2009
- *   copyright            : (C) 2009 Viarre Régis
+ *   copyright            : (C) 2009 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  ###################################################
@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>
  * @desc This class manage multi-line text fields, but the text can't be formatted.
  * @package {@package}
  */
@@ -38,8 +38,8 @@ class FormFieldMultiLineTextEditor extends AbstractFormField
      * @desc Constructs a multi line text edit.
      * In addition to the FormField parameters, there are these ones:
      * <ul>
-     * 	<li>rows: the number of rows of the texarea</li>
-     * 	<li>cols: the number of cols of the textarea</li>
+     *  <li>rows: the number of rows of the texarea</li>
+     *  <li>cols: the number of cols of the textarea</li>
      * </ul>
      * @param string $id Field id
      * @param string $label Field label
@@ -68,8 +68,8 @@ class FormFieldMultiLineTextEditor extends AbstractFormField
     private function assign_textarea_template_variables(Template $template)
     {
         $template->put_all(array(
-			'ROWS' => $this->rows,
-			'COLS' => $this->cols
+            'ROWS' => $this->rows,
+            'COLS' => $this->cols
         ));
     }
 
@@ -77,7 +77,7 @@ class FormFieldMultiLineTextEditor extends AbstractFormField
     {
         foreach($field_options as $attribute => $value)
         {
-            $attribute = strtolower($attribute);
+            $attribute = mb_strtolower($attribute);
             switch ($attribute)
             {
                 case 'rows':

@@ -70,7 +70,7 @@ class FormFieldThemesSelect extends FormFieldSimpleSelectChoice
     {
         foreach ($field_options as $attribute => $value)
         {
-            $attribute = strtolower($attribute);
+            $attribute = mb_strtolower($attribute);
             switch ($attribute)
             {
 				case 'check_authorizations' :

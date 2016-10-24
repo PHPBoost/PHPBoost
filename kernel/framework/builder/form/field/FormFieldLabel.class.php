@@ -3,7 +3,7 @@
  *                             FormFieldFree.class.php
  *                            -------------------
  *   begin                : September 19, 2009
- *   copyright            : (C) 2009 Viarre Régis
+ *   copyright            : (C) 2009 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  ###################################################
@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>
  * @desc This class manage free contents fields.
  * It provides you additionnal field options :
  * <ul>

@@ -3,7 +3,7 @@
  *                         FormFieldConstraintIntegerMax.class.php
  *                            -------------------
  *   begin                : December 20, 2009
- *   copyright            : (C) 2009 Régis Viarre
+ *   copyright            : (C) 2009 RÃ©gis Viarre
  *   email                : crowkait@phpboost.com
  *
  ###################################################
@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author Régis Viarre <crowkait@phpboost.com>, Loic Rouchon <loic.rouchon@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>, Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc 
  * @package {@package}
  */ 

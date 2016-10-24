@@ -3,7 +3,7 @@
  *                             FormFieldFilePicker.class.php
  *                            -------------------
  *   begin                : April 28, 2009
- *   copyright            : (C) 2009 Viarre Régis
+ *   copyright            : (C) 2009 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  ###################################################
@@ -25,11 +25,11 @@
  ###################################################*/
 
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>
  * @desc This class manage file input fields.
  * It provides you additionnal field options :
  * <ul>
- * 	<li>size : The size for the field</li>
+ *  <li>size : The size for the field</li>
  * </ul>
  * @package {@package}
  */
@@ -37,16 +37,16 @@ class FormFieldFilePicker extends AbstractFormField
 {
     private $max_size = 0;
     private static $tpl_src = '<input name="max_file_size" value="{MAX_FILE_SIZE}" type="hidden">
-		<input type="file" name="${escape(NAME)}" id="${escape(HTML_ID)}" # IF C_DISABLED # disabled="disabled" # ENDIF #>
-		<script>
-		<!--
+        <input type="file" name="${escape(NAME)}" id="${escape(HTML_ID)}" # IF C_DISABLED # disabled="disabled" # ENDIF #>
+        <script>
+        <!--
         jQuery("#${escape(HTML_ID)}").parents("form:first")[0].enctype = "multipart/form-data";
-		-->
-		</script>';
+        -->
+        </script>';
 
     public function __construct($id, $label, array $field_options = array(), array $constraints = array())
     {
-		parent::__construct($id, $label, null, $field_options, $constraints);
+        parent::__construct($id, $label, null, $field_options, $constraints);
         $this->set_css_form_field_class('form-field-file');
     }
 
@@ -59,17 +59,17 @@ class FormFieldFilePicker extends AbstractFormField
 
         $file_field_tpl = new StringTemplate(self::$tpl_src);
         $file_field_tpl->put_all(array(
-			'MAX_FILE_SIZE' => $this->get_max_file_size(),
-			'NAME' => $this->get_html_id(),
-			'ID' => $this->get_id(),
-			'HTML_ID' => $this->get_html_id(),
-			'C_DISABLED' => $this->is_disabled()
+            'MAX_FILE_SIZE' => $this->get_max_file_size(),
+            'NAME' => $this->get_html_id(),
+            'ID' => $this->get_id(),
+            'HTML_ID' => $this->get_html_id(),
+            'C_DISABLED' => $this->is_disabled()
         ));
 
         $this->assign_common_template_variables($template);
 
         $template->assign_block_vars('fieldelements', array(
-			'ELEMENT' => $file_field_tpl->render()
+            'ELEMENT' => $file_field_tpl->render()
         ));
 
         return $template;
@@ -91,7 +91,7 @@ class FormFieldFilePicker extends AbstractFormField
     {
         foreach($field_options as $attribute => $value)
         {
-            $attribute = strtolower($attribute);
+            $attribute = mb_strtolower($attribute);
             switch ($attribute)
             {
                 case 'max_size':
