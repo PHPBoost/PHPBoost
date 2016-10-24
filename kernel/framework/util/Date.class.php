@@ -255,6 +255,18 @@ class Date
 	}
 	
 	/**
+	 * @desc Returns first charaters (3 per default) of the month name
+	 * @param $characters_number The characters number requested (usually 2 or 3)
+	 * @param $timezone The timezone in which you want this value
+	 * @return string The first letters of the month name
+	 */
+	public function get_month_text($characters_number = 3, $timezone = Timezone::USER_TIMEZONE)
+	{
+		$this->compute_server_user_difference($timezone);
+		return ucfirst(substr(self::transform_date($this->date_time->format('F')), 0, $characters_number));
+	}
+	
+	/**
 	 * @desc Returns the week number of the date
 	 * @param $timezone The timezone in which you want this value
 	 * @return string The week number
@@ -285,6 +297,18 @@ class Date
 	{
 		$this->compute_server_user_difference($referential_timezone);
 		$this->date_time->setDate($this->get_year(), $this->get_month(), $day);
+	}
+	
+	/**
+	 * @desc Returns first charaters (2 per default) of the day of week name
+	 * @param $characters_number The characters number requested (usually 2 or 3)
+	 * @param $timezone The timezone in which you want this value
+	 * @return string The first letters of the day name
+	 */
+	public function get_day_text($characters_number = 2, $timezone = Timezone::USER_TIMEZONE)
+	{
+		$this->compute_server_user_difference($timezone);
+		return ucfirst(substr(self::transform_date($this->date_time->format('l')), 0, $characters_number));
 	}
 	
 	/**
