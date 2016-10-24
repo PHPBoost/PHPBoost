@@ -3,7 +3,7 @@
  *                               admin_gallery_config.php
  *                            -------------------
  *   begin                : August,17 2005
- *   copyright            : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -37,7 +37,7 @@ $request = AppContext::get_request();
 $valid = $request->get_postvalue('valid', false);
 $gallery_cache = $request->get_postvalue('gallery_cache', false);
 
-//Si c'est confirmé on execute
+//Si c'est confirmÃ© on execute
 if ($valid)
 {
 	$config->set_mini_max_width(retrieve(POST, 'mini_max_width', 150));
@@ -85,14 +85,14 @@ if ($valid)
 	GalleryConfig::save();
 	GalleryService::get_categories_manager()->regenerate_cache();
 	
-	###### Régénération du cache de la gallery #######
+	###### RÃ©gÃ©nÃ©ration du cache de la gallery #######
 	GalleryMiniMenuCache::invalidate();
 	
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 elseif ($gallery_cache) //Suppression des miniatures.
 {
-	//Recréaction miniatures, et inscrustation du logo sur image.
+	//RecrÃ©action miniatures, et inscrustation du logo sur image.
 	$Gallery = new Gallery();
 	$Gallery->Clear_cache();
 	
@@ -104,7 +104,7 @@ else
 {
 	$tpl = new FileTemplate('gallery/admin_gallery_config.tpl');
 
-	//Vitesse de défilement des miniatures.
+	//Vitesse de dÃ©filement des miniatures.
 	$mini_pics_speed = '';
 	for ($i = 1; $i <= 10; $i++)
 	{
@@ -112,7 +112,7 @@ else
 		$mini_pics_speed .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 	}
 
-	//Type de défilemennt
+	//Type de dÃ©filemennt
 	$scroll_types = '';
 	$array_scroll = array(
 		GalleryConfig::STATIC_SCROLL => $LANG['static_scroll'],

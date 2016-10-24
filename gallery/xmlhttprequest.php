@@ -3,7 +3,7 @@
  *                               xmlhttprequest.php
  *                            -------------------
  *   begin                : August 30, 2007
- *   copyright            : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -51,11 +51,11 @@ if (!empty($increment_view))
 	if (empty($g_idpics) || (!empty($g_idcat) && !isset($categories[$g_idcat])))
 		exit;
 	
-	//Niveau d'autorisation de la catégorie
+	//Niveau d'autorisation de la catÃ©gorie
 	if (!GalleryAuthorizationsService::check_authorizations($g_idcat)->read())
 		exit;
 
-	//Mise à jour du nombre de vues.
+	//Mise Ã  jour du nombre de vues.
 	PersistenceContext::get_querier()->inject("UPDATE " . GallerySetup::$gallery_table . " SET views = views + 1 WHERE idcat = :idcat AND id = :id", array('idcat' => $g_idcat, 'id' => $g_idpics));
 }
 else
@@ -102,7 +102,7 @@ else
 			if (!empty($id_file))
 			{
 				echo $Gallery->Aprob_pics($id_file);
-				//Régénération du cache des photos aléatoires.
+				//RÃ©gÃ©nÃ©ration du cache des photos alÃ©atoires.
 				GalleryMiniMenuCache::invalidate();
 				GalleryCategoriesCache::invalidate();
 			}

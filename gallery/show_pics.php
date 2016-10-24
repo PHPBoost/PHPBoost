@@ -3,7 +3,7 @@
  *                               show_pics.php
  *                            -------------------
  *   begin                : August 12, 2005
- *   copyright            : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -34,14 +34,14 @@ $g_idpics = retrieve(GET, 'id', 0);
 
 if (!empty($g_idpics))
 {
-	//Niveau d'autorisation de la catégorie
+	//Niveau d'autorisation de la catÃ©gorie
 	if (!GalleryAuthorizationsService::check_authorizations($id_category)->read())
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 
-	//Mise à jour du nombre de vues.
+	//Mise Ã  jour du nombre de vues.
 	PersistenceContext::get_querier()->inject("UPDATE " . GallerySetup::$gallery_table . " SET views = views + 1 WHERE idcat = :idcat AND id = :id", array('idcat' => $id_category, 'id' => $g_idpics));
 
 	try {
@@ -61,7 +61,7 @@ $Gallery = new Gallery();
 }
 else
 {
-	die($LANG['no_random_img']); //Echec paramètres images incorrects.
+	die($LANG['no_random_img']); //Echec paramÃ¨tres images incorrects.
 }
 
 require_once('../kernel/footer_no_display.php');

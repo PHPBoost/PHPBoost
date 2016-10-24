@@ -3,7 +3,7 @@
  *                              gallery_auth.php
  *                            -------------------
  *   begin                : October 18, 2007
- *   copyright            : (C) 2007 Viarre régis
+ *   copyright            : (C) 2007 Viarre rÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -30,7 +30,7 @@ if (defined('PHPBOOST') !== true)
 
 load_module_lang('gallery'); //Chargement de la langue du module.
 
-//Création de l'arborescence des catégories.
+//CrÃ©ation de l'arborescence des catÃ©gories.
 $module_title = LangLoader::get_message('module_title', 'common', 'gallery');
 $Bread_crumb->add($module_title, GalleryUrlBuilder::home());
 

@@ -174,7 +174,7 @@ class GalleryDisplayCategoryController extends ModuleController
 			'L_DELETE' => LangLoader::get_message('delete', 'common'),
 			'L_SUBMIT' => $LANG['submit'],
 			'L_ALREADY_VOTED' => $LANG['already_vote'],
-			'L_ORDER_BY' => LangLoader::get_message('sort_by', 'common') . (isset($LANG[$g_type]) ? ' ' . strtolower($LANG[$g_type]) : ''),
+			'L_ORDER_BY' => LangLoader::get_message('sort_by', 'common') . (isset($LANG[$g_type]) ? ' ' . mb_strtolower($LANG[$g_type]) : ''),
 			'L_DIRECTION' => $LANG['direction'],
 			'L_DISPLAY' => LangLoader::get_message('display', 'common'),
 			'U_INDEX' => url('.php'),

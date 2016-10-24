@@ -3,7 +3,7 @@
  *                               admin_gallery_add.php
  *                            -------------------
  *   begin                : August 17, 2005
- *   copyright            : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -61,13 +61,13 @@ if (isset($_FILES['gallery']) && $idcat_post) //Upload
 	else
 		$error = 'e_upload_invalid_format';
 	
-	if ($error != '') //Erreur, on arrête ici
+	if ($error != '') //Erreur, on arrÃªte ici
 		AppContext::get_response()->redirect('/gallery/admin_gallery_add.php?error=' . $error . ($idcat_post ? '&cat=' . $idcat_post : '') . '#message_helper');
 	else
 	{
 		$path = $dir . $Upload->get_filename();
 		$error = $Upload->check_img($config->get_max_width(), $config->get_max_height(), Upload::DELETE_ON_ERROR);
-		if (!empty($error)) //Erreur, on arrête ici
+		if (!empty($error)) //Erreur, on arrÃªte ici
 			AppContext::get_response()->redirect('/gallery/admin_gallery_add.php?error=' . $error . ($idcat_post ? '&cat=' . $idcat_post : '') . '#message_helper');
 		else
 		{
@@ -81,7 +81,7 @@ if (isset($_FILES['gallery']) && $idcat_post) //Upload
 			if ($Gallery->get_error() != '')
 				AppContext::get_response()->redirect('/gallery/admin_gallery_add.php?error=' . $Gallery->get_error() . ($idcat_post ? '&cat=' . $idcat_post : '') . '#message_helper');
 
-			//Régénération du cache des photos aléatoires.
+			//RÃ©gÃ©nÃ©ration du cache des photos alÃ©atoires.
 			GalleryMiniMenuCache::invalidate();
 			GalleryCategoriesCache::invalidate();
 		}
@@ -95,7 +95,7 @@ elseif ($valid && !empty($nbr_pics_post)) //Ajout massif d'images par ftp.
 	{
 		$activ = trim($request->get_postvalue($i . 'activ', ''));
 		$uniq = trim($request->get_postvalue($i . 'uniq', ''));
-		if ($activ && !empty($uniq)) //Sélectionné.
+		if ($activ && !empty($uniq)) //SÃ©lectionnÃ©.
 		{
 			$name = TextHelper::strprotect($request->get_postvalue($i . 'name', ''));
 			$cat = NumberHelper::numeric($request->get_postint($i . 'cat', 0));
@@ -112,7 +112,7 @@ elseif ($valid && !empty($nbr_pics_post)) //Ajout massif d'images par ftp.
 		}
 	}
 
-	//Régénération du cache des photos aléatoires.
+	//RÃ©gÃ©nÃ©ration du cache des photos alÃ©atoires.
 	GalleryMiniMenuCache::invalidate();
 	GalleryCategoriesCache::invalidate();
 
@@ -128,7 +128,7 @@ else
 	if (in_array($get_error, $array_error))
 		$tpl->put('message_helper', MessageHelper::display($LANG[$get_error], MessageHelper::WARNING));
 
-	//Affichage de la photo uploadée.
+	//Affichage de la photo uploadÃ©e.
 	if (!empty($add_pic))
 	{
 		$categories = GalleryService::get_categories_manager()->get_categories_cache()->get_categories();
@@ -192,10 +192,10 @@ else
 			FROM " . GallerySetup::$gallery_table);
 			while ($row = $result->fetch())
 			{
-				//On recherche les clées correspondante à celles trouvée dans la bdd.
+				//On recherche les clÃ©es correspondante Ã  celles trouvÃ©e dans la bdd.
 				$key = array_search($row['path'], $array_pics);
 				if ($key !== false)
-					unset($array_pics[$key]); //On supprime ces clées du tableau.
+					unset($array_pics[$key]); //On supprime ces clÃ©es du tableau.
 			}
 			$result->dispose();
 
@@ -206,7 +206,7 @@ else
 			$column_width_pics = floor(100/$nbr_column_pics);
 			$selectbox_width = floor(100-(10*$nbr_column_pics));
 			
-			//Liste des catégories.
+			//Liste des catÃ©gories.
 			$search_category_children_options = new SearchCategoryChildrensOptions();
 			$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
@@ -243,7 +243,7 @@ else
 				$width = 150;
 				if (function_exists('getimagesize')) //On verifie l'existence de la fonction getimagesize.
 				{
-					// On recupère la hauteur et la largeur de l'image.
+					// On recupÃ¨re la hauteur et la largeur de l'image.
 					list($width_source, $height_source) = @getimagesize($rep . $pics);
 
 					$height_max = 150;
@@ -271,17 +271,17 @@ else
 					}
 				}
 
-				//On genère le tableau pour x colonnes
+				//On genÃ¨re le tableau pour x colonnes
 				$tr_start = is_int($j / $nbr_column_pics) ? '<tr>' : '';
 				$j++;
 				$tr_end = is_int($j / $nbr_column_pics) ? '</tr>' : '';
 
-				//On raccourci le nom du fichier pour ne pas déformer l'administration.
-				$name = strlen($pics) > 20 ? substr($pics, 0, 20) . '...' : $pics;
+				//On raccourci le nom du fichier pour ne pas dÃ©former l'administration.
+				$name = mb_strlen($pics) > 20 ? mb_substr($pics, 0, 20) . '...' : $pics;
 
-				//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
+				//Si la miniature n'existe pas (cache vidÃ©) on regÃ©nÃ¨re la miniature Ã  partir de l'image en taille rÃ©elle.
 				if (!file_exists('pics/thumbnails/' . $pics) && file_exists('pics/' . $pics))
-					$Gallery->Resize_pics('pics/' . $pics); //Redimensionnement + création miniature
+					$Gallery->Resize_pics('pics/' . $pics); //Redimensionnement + crÃ©ation miniature
 				
 				$categories_tree = GalleryService::get_categories_manager()->get_select_categories_form_field($j . 'cat', '', Category::ROOT_CATEGORY, $search_category_children_options);
 				$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
@@ -304,7 +304,7 @@ else
 				));
 			}
 
-			//Création des cellules du tableau si besoin est.
+			//CrÃ©ation des cellules du tableau si besoin est.
 			while (!is_int($j/$nbr_column_pics))
 			{
 				$j++;

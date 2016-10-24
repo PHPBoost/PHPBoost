@@ -68,9 +68,9 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 		if (isset($array_random_pics) && $array_random_pics !== array())
 		{
 			$gallery_mini = array();
-			shuffle($array_random_pics); //On mÈlange les ÈlÈments du tableau.
+			shuffle($array_random_pics); //On m√©lange les √©l√©ments du tableau.
 	
-			//VÈrification des autorisations.
+			//V√©rification des autorisations.
 			$break = 0;
 			foreach ($array_random_pics as $array_pics_info)
 			{
@@ -83,7 +83,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 					break;
 			}
 	
-			//Aucune photo ne correspond, on fait une requÍte pour vÈrifier.
+			//Aucune photo ne correspond, on fait une requ√™te pour v√©rifier.
 			if (count($gallery_mini) == 0)
 			{
 				$array_random_pics = array();
@@ -98,7 +98,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 					$array_random_pics[] = $row;
 				}
 	
-				//VÈrification des autorisations.
+				//V√©rification des autorisations.
 				$break = 0;
 				foreach ($array_random_pics as $key => $array_pics_info)
 				{
@@ -137,11 +137,11 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 	
 			foreach ($gallery_mini as $key => $row)
 			{
-				//Si la miniature n'existe pas (cache vidÈ) on regÈnËre la miniature ‡ partir de l'image en taille rÈelle.
+				//Si la miniature n'existe pas (cache vid√©) on reg√©n√®re la miniature √† partir de l'image en taille r√©elle.
 				if (!is_file(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path']))
-					$Gallery->Resize_pics(PATH_TO_ROOT . '/gallery/pics/' . $row['path']); //Redimensionnement + crÈation miniature
+					$Gallery->Resize_pics(PATH_TO_ROOT . '/gallery/pics/' . $row['path']); //Redimensionnement + cr√©ation miniature
 	
-				// On recupËre la hauteur et la largeur de l'image.
+				// On recup√®re la hauteur et la largeur de l'image.
 				if ($row['width'] == 0 || $row['height'] == 0)
 					list($row['width'], $row['height']) = @getimagesize(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path']);
 				if ($row['width'] == 0 || $row['height'] == 0)

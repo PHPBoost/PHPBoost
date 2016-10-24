@@ -3,7 +3,7 @@
  *                               gallery.class.php
  *                            -------------------
  *   begin                : August 16, 2005
- *   copyright            : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -46,7 +46,7 @@ class Gallery
 			list($width, $height) = $this->get_resize_properties($width_s, $height_s, $width_max, $height_max);
 			
 			$source = false;
-			switch ($ext) //Création de l'image suivant l'extension.
+			switch ($ext) //CrÃ©ation de l'image suivant l'extension.
 			{
 				case 'jpg':
 				case 'jpeg':
@@ -71,7 +71,7 @@ class Gallery
 			}
 			else
 			{
-				//Préparation de l'image redimensionnée.
+				//PrÃ©paration de l'image redimensionnÃ©e.
 				if (!function_exists('imagecreatetruecolor'))
 				{	
 					$thumbnail = @imagecreate($width, $height);
@@ -103,7 +103,7 @@ class Gallery
 				}
 			}
 			
-			//Création de l'image.
+			//CrÃ©ation de l'image.
 			if (empty($this->error))
 				$this->create_pics($thumbnail, $source, $path, $ext);
 		}
@@ -115,7 +115,7 @@ class Gallery
 		}
 	}
 	
-	//Création de l'image.
+	//CrÃ©ation de l'image.
 	public function Create_pics($thumbnail, $source, $path, $ext)
 	{
 		// Make the background transparent
@@ -133,7 +133,7 @@ class Gallery
 		else 
 			$this->error = 'e_no_graphic_support';
 
-		switch ($ext) //Création de l'image suivant l'extension.
+		switch ($ext) //CrÃ©ation de l'image suivant l'extension.
 		{
 			case 'jpg':
 			case 'jpeg':
@@ -163,7 +163,7 @@ class Gallery
 			
 			if ($width_s <= $width && $height_s <= $height)
 			{
-				switch ($ext_s) //Création de l'image suivant l'extension.
+				switch ($ext_s) //CrÃ©ation de l'image suivant l'extension.
 				{
 					case 'jpg':
 					case 'jpeg':
@@ -189,7 +189,7 @@ class Gallery
 				}
 				else
 				{
-					switch ($ext) //Création de l'image suivant l'extension.
+					switch ($ext) //CrÃ©ation de l'image suivant l'extension.
 					{
 						case 'jpg':
 						case 'jpeg':
@@ -207,7 +207,7 @@ class Gallery
 					
 					if (function_exists('imagecopymerge'))
 					{
-						// On veut placer le logo en bas à droite, on calcule les coordonnées où on doit placer le logo sur la photo
+						// On veut placer le logo en bas Ã  droite, on calcule les coordonnÃ©es oÃ¹ on doit placer le logo sur la photo
 						$destination_x = $width - $width_s - $config->get_logo_horizontal_distance();
 						$destination_y =  $height - $height_s - $config->get_logo_vertical_distance();
 						
@@ -219,7 +219,7 @@ class Gallery
 						imagealphablending($destination, false); // turn off the alpha blending to keep the alpha channel
 						imagesavealpha($destination, true);
 						
-						switch ($ext) //Création de l'image suivant l'extension.
+						switch ($ext) //CrÃ©ation de l'image suivant l'extension.
 						{
 							case 'jpg':
 							case 'jpeg':
@@ -246,7 +246,7 @@ class Gallery
 			readfile($path); //On affiche simplement.
 	}
 	
-	//Insertion base de donnée
+	//Insertion base de donnÃ©e
 	public function Add_pics($idcat, $name, $path, $user_id)
 	{
 		list($width, $height, $weight, $ext) = $this->Arg_pics('pics/' . $path);
@@ -285,7 +285,7 @@ class Gallery
 	public function Rename_pics($id_pics, $name, $previous_name)
 	{
 		PersistenceContext::get_querier()->update(GallerySetup::$gallery_table, array('name' => $name), 'WHERE id = :id', array('id' => $id_pics));
-		return stripslashes((strlen(TextHelper::html_entity_decode($name)) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($name), 0, 22)) . PATH_TO_ROOT . '.' : $name);
+		return stripslashes((mb_strlen(TextHelper::html_entity_decode($name)) > 22) ? TextHelper::htmlentities(mb_substr(TextHelper::html_entity_decode($name), 0, 22)) . PATH_TO_ROOT . '.' : $name);
 	}
 	
 	//Approuve une image.
@@ -310,13 +310,13 @@ class Gallery
 		return $aprob;
 	}
 	
-	//Déplacement d'une image.
+	//DÃ©placement d'une image.
 	public function Move_pics($id_pics, $id_move)
 	{
 		PersistenceContext::get_querier()->update(GallerySetup::$gallery_table, array('idcat' => $id_move), 'WHERE id = :id', array('id' => $id_pics));
 	}
 	
-	//Vérifie si le membre peut uploader une image
+	//VÃ©rifie si le membre peut uploader une image
 	public function Auth_upload_pics($user_id, $level)
 	{
 		$config = GalleryConfig::load();
@@ -344,7 +344,7 @@ class Gallery
 	{
 		global $LANG;
 		
-		//Vérification du chargement de la librairie GD.
+		//VÃ©rification du chargement de la librairie GD.
 		if (!@extension_loaded('gd')) 
 		{
 			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
@@ -358,7 +358,7 @@ class Gallery
 			$weight = @filesize($path);
 			$weight = !empty($weight) ? $weight : 0;
 			
-			//On prepare les valeurs de remplacement, pour détérminer le type de l'image.
+			//On prepare les valeurs de remplacement, pour dÃ©tÃ©rminer le type de l'image.
 			$array_type = array( 1 => 'gif', 2 => 'jpg', 3 => 'png', 4 => 'jpeg');
 			if (isset($array_type[$type]))
 				return array($width, $height, $weight, $array_type[$type]);
@@ -372,7 +372,7 @@ class Gallery
 		}
 	}
 	
-	//Compte le nombre d'images uploadée par un membre.
+	//Compte le nombre d'images uploadÃ©e par un membre.
 	public function get_nbr_upload_pics($user_id)
 	{
 		return PersistenceContext::get_querier()->count(GallerySetup::$gallery_table, 'WHERE user_id=:user_id', array('user_id' => $user_id));
@@ -433,10 +433,10 @@ class Gallery
 		return $header;
 	}
 	
-	//Vidange des miniatures du FTP et de la bdd => régénérée plus tard lors des affichages..
+	//Vidange des miniatures du FTP et de la bdd => rÃ©gÃ©nÃ©rÃ©e plus tard lors des affichages..
 	public function Clear_cache()
 	{
-		//On recupère les dossier des thèmes contenu dans le dossier images/smiley.
+		//On recupÃ¨re les dossier des thÃ¨mes contenu dans le dossier images/smiley.
 		$thumb_folder_path = new Folder('./pics/thumbnails/');
 		foreach ($thumb_folder_path->get_files('`\.(png|jpg|jpeg|bmp|gif)$`i') as $thumbs)
 			$this->delete_file('./pics/thumbnails/' . $thumbs->get_name());
@@ -447,14 +447,14 @@ class Gallery
 	{
 		if (function_exists('unlink'))
 			return @unlink($path); //On supprime le fichier.
-		else //Fonction désactivée.
+		else //Fonction dÃ©sactivÃ©e.
 		{
 			$this->error = 'e_delete_thumbnails';
 			return false;
 		}
 	}
 	
-	//Création de l'image d'erreur
+	//CrÃ©ation de l'image d'erreur
 	private function _create_pics_error($path, $width, $height)
 	{
 		global $LANG; 
