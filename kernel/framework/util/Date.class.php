@@ -263,7 +263,7 @@ class Date
 	public function get_month_text($characters_number = 3, $timezone = Timezone::USER_TIMEZONE)
 	{
 		$this->compute_server_user_difference($timezone);
-		return ucfirst(substr(self::transform_date($this->date_time->format('F')), 0, $characters_number));
+		return ucfirst(mb_substr(self::transform_date($this->date_time->format('F')), 0, $characters_number));
 	}
 	
 	/**
@@ -300,15 +300,15 @@ class Date
 	}
 	
 	/**
-	 * @desc Returns first charaters (2 per default) of the day of week name
+	 * @desc Returns first charaters (3 per default) of the day of week name
 	 * @param $characters_number The characters number requested (usually 2 or 3)
 	 * @param $timezone The timezone in which you want this value
 	 * @return string The first letters of the day name
 	 */
-	public function get_day_text($characters_number = 2, $timezone = Timezone::USER_TIMEZONE)
+	public function get_day_text($characters_number = 3, $timezone = Timezone::USER_TIMEZONE)
 	{
 		$this->compute_server_user_difference($timezone);
-		return ucfirst(substr(self::transform_date($this->date_time->format('l')), 0, $characters_number));
+		return ucfirst(mb_substr(self::transform_date($this->date_time->format('l')), 0, $characters_number));
 	}
 	
 	/**
@@ -473,6 +473,34 @@ class Date
 	{
 		$default = @date_default_timezone_get();
         @date_default_timezone_set($default);
+	}
+
+	/**
+	 * @desc Calculates and return date formats to use many variables in the TPL.
+	 * @param Date $date The concerned date
+	 * @param string $date_label The purpose of the date
+	 * @return string[] true if the date is correct and false otherwise.
+	 */
+	public static function get_array_tpl_vars($date, $date_label)
+	{
+		if ($date == null || !$date instanceof Date || empty($date_label))
+			return array();
+		
+		$date_label = strtoupper($date_label);
+		return array(
+			$date_label					=> $date->format(Date::FORMAT_DAY_MONTH_YEAR),
+			$date_label . '_TIMESTAMP'	=> $date->get_timestamp(),
+			$date_label . '_SHORT'		=> $date->format(Date::FORMAT_DAY_MONTH_YEAR),
+			$date_label . '_SHORT_TEXT'	=> $date->format(Date::FORMAT_DAY_MONTH_YEAR_TEXT),
+			$date_label . '_FULL'		=> $date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
+			$date_label . '_DAY'		=> $date->get_day(),
+			$date_label . '_DAY_TEXT'	=> $date->get_day_text(), // 3 first characters of day name
+			$date_label . '_MONTH'		=> $date->get_month(),
+			$date_label . '_MONTH_TEXT'	=> $date->get_month_text(), // 3 first characters of month name
+			$date_label . '_YEAR'		=> $date->get_year(),
+			$date_label . '_DAY_MONTH'	=> $date->format(Date::FORMAT_DAY_MONTH),
+			$date_label . '_ISO8601'	=> $date->format(Date::FORMAT_ISO8601)
+		);
 	}
 
 	/**

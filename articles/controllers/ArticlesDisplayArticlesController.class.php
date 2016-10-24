@@ -125,7 +125,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		
 		$page_name = (isset($array_page[1][$current_page-1]) && $array_page[1][$current_page-1] != '&nbsp;') ? $array_page[1][($current_page-1)] : '';
 
-		$this->tpl->put_all(array_merge($this->article->get_tpl_vars(), array(
+		$this->tpl->put_all(array_merge($this->article->get_array_tpl_vars(), array(
 			'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
 			'C_NOTATION_ENABLED' => $notation_config->is_notation_enabled(),
 			'KERNEL_NOTATION'    => NotationService::display_active_image($this->article->get_notation()),

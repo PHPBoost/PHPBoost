@@ -438,7 +438,7 @@ class Article
 		$this->end_date_enabled = false;
 	}
 	
-	public function get_tpl_vars()
+	public function get_array_tpl_vars()
 	{
 		$category         = $this->get_category();
 		$description      = $this->get_real_description();
@@ -449,7 +449,7 @@ class Article
 		$new_content      = new ArticlesNewContent();
 		$notation_config  = new ArticlesNotation();
 		
-		return array(
+		return array_merge(Date::get_array_tpl_vars($this->date_created, 'date'), Date::get_array_tpl_vars($this->date_updated, 'date_updated'), Date::get_array_tpl_vars($this->publishing_start_date, 'publishing_start_date'), Date::get_array_tpl_vars($this->publishing_end_date, 'publishing_end_date'), array(
 			//Conditions
 			'C_EDIT'                          => $this->is_authorized_to_edit(),
 			'C_DELETE'                        => $this->is_authorized_to_delete(),
@@ -471,23 +471,7 @@ class Article
 			//Articles
 			'ID'                            => $this->get_id(),
 			'TITLE'                         => $this->get_title(),
-			'DATE'                          => $this->get_date_created()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT),
-			'DATE_DAY'                      => $this->get_date_created()->get_day(),
-			'DATE_MONTH'                    => $this->get_date_created()->get_month(),
-			'DATE_YEAR'                     => $this->get_date_created()->get_year(),
-			'DATE_ISO8601'                  => $this->get_date_created()->format(Date::FORMAT_ISO8601),
-			'DATE_SHORT'                    => $this->get_date_created()->format(Date::FORMAT_DAY_MONTH_YEAR),
 			'STATUS'                        => $this->get_status(),
-			'PUBLISHING_START_DATE'         => $this->publishing_start_date != null ? $this->publishing_start_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : '',
-			'PUBLISHING_START_DATE_ISO8601' => $this->publishing_start_date != null ? $this->publishing_start_date->format(Date::FORMAT_ISO8601) : '',
-			'PUBLISHING_END_DATE'           => $this->publishing_end_date != null ? $this->publishing_end_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : '',
-			'PUBLISHING_END_DATE_ISO8601'   => $this->publishing_end_date != null ? $this->publishing_end_date->format(Date::FORMAT_ISO8601) : '',
-			'DATE_UPDATED'                  => $this->date_updated != null ? $this->date_updated->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
-			'DATE_UPDATED_DAY'              => $this->date_updated != null ? $this->date_updated->get_day() : '',
-			'DATE_UPDATED_MONTH'            => $this->date_updated != null ? $this->date_updated->get_month() : '',
-			'DATE_UPDATED_YEAR'             => $this->date_updated != null ? $this->date_updated->get_year() : '',
-			'DATE_UPDATED_ISO8601'          => $this->date_updated != null ? $this->date_updated->format(Date::FORMAT_ISO8601) : '',
-			'DATE_UPDATED_SHORT'            => $this->date_updated != null ? $this->date_updated->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
 			'L_COMMENTS'                    => CommentsService::get_number_and_lang_comments('articles', $this->get_id()),
 			'NUMBER_COMMENTS'               => CommentsService::get_number_comments('articles', $this->get_id()),
 			'NUMBER_VIEW'                   => $this->get_number_view(),
@@ -517,7 +501,7 @@ class Article
 			'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($this->id)->rel(),
 			'U_SYNDICATION'    => ArticlesUrlBuilder::category_syndication($category->get_id())->rel(),
 			'U_PRINT_ARTICLE'  => ArticlesUrlBuilder::print_article($this->get_id(), $this->get_rewrited_title())->rel()
-		);
+		));
 	}
 }
 ?>

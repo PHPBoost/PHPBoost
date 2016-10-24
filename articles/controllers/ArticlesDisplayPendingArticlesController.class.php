@@ -158,7 +158,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 				
 				$this->build_keywords_view($article);
 				
-				$this->view->assign_block_vars('articles', $article->get_tpl_vars());
+				$this->view->assign_block_vars('articles', $article->get_array_tpl_vars());
 				$this->build_sources_view($article);
 			}
 		}
