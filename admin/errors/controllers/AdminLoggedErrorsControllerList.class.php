@@ -154,7 +154,7 @@ class AdminLoggedErrorsControllerList extends AdminController
 			}
 		}
 		
-		return array_reverse($array_errinfo); //Tri en sens inverse car enregistrement à la suite dans le fichier de log
+		return array_reverse($array_errinfo); //Tri en sens inverse car enregistrement Ã  la suite dans le fichier de log
 	}
 }
 ?>

@@ -3,7 +3,7 @@
  *                                 MenuAdminService.class.php
  *                            -------------------
  *   begin                : December, 29 2010
- *   copyright            : (C) 2010 Régis Viarre
+ *   copyright            : (C) 2010 RÃ©gis Viarre
  *   email                : crowkait@phpboost.com
  *
  *
@@ -88,7 +88,7 @@ class MenuAdminService
 			
 			$filter_infos = explode('/', $filter_pattern);
 			$module_name = $filter_infos[0];
-			$regex = substr(strstr($filter_pattern, '/'), 1);
+			$regex = mb_substr(mb_strstr($filter_pattern, '/'), 1);
 		
 			$tpl_filter->assign_block_vars('filters', array(
 				'ID' => $key,

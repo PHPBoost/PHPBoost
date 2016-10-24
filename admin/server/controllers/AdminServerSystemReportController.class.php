@@ -140,7 +140,7 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 		foreach (PHPBoostFoldersPermissions::get_permissions() as $key => $folder)
 		{
 			$fieldset->add_field(new FormFieldFree(str_replace('/', '_', $key), $key, $folder->is_writable() ? $picture_yes : $picture_no));
-			$directories_summerization .= $key . str_repeat('	', 5 - (strlen($key) / 8)) . ": " . (int)($folder->is_writable()) . "
+			$directories_summerization .= $key . str_repeat('	', 5 - (mb_strlen($key) / 8)) . ": " . (int)($folder->is_writable()) . "
 ";
 		}
 		
@@ -179,7 +179,7 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 		if ($maintenance_config->is_under_maintenance())
 			$fieldset->add_field(new FormFieldFree('check_modules_authorizations', '', MessageHelper::display($lang['advises.check_modules_authorizations'], MessageHelper::SUCCESS)->render()));
 		
-		if (!strstr($general_config->get_site_url(), 'localhost') && !strstr($general_config->get_site_url(), '127.0.0.1') && !$maintenance_config->is_under_maintenance() && Debug::is_debug_mode_enabled())
+		if (!mb_strstr($general_config->get_site_url(), 'localhost') && !mb_strstr($general_config->get_site_url(), '127.0.0.1') && !$maintenance_config->is_under_maintenance() && Debug::is_debug_mode_enabled())
 			$fieldset->add_field(new FormFieldFree('disable_debug_mode', '', MessageHelper::display($lang['advises.disable_debug_mode'], MessageHelper::WARNING)->render()));
 		
 		if ($url_rewriting_available && !$server_environment_config->is_url_rewriting_enabled())

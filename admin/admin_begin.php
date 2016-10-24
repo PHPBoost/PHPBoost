@@ -3,7 +3,7 @@
  *                               admin_begin.php
  *                            -------------------
  *   begin                : June 20, 2005
- *   copyright            : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -34,6 +34,6 @@ require_once(PATH_TO_ROOT . '/lang/' . AppContext::get_current_user()->get_local
 
 if (!AppContext::get_current_user()->is_admin())
 {
-	DispatchManager::redirect(new UserLoginController(UserLoginController::ADMIN_LOGIN, substr(REWRITED_SCRIPT, strlen(GeneralConfig::load()->get_site_path()))));
+	DispatchManager::redirect(new UserLoginController(UserLoginController::ADMIN_LOGIN, mb_substr(REWRITED_SCRIPT, mb_strlen(GeneralConfig::load()->get_site_path()))));
 }
 ?>

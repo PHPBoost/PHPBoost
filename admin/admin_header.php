@@ -3,7 +3,7 @@
  *                             admin_header.php
  *                            -------------------
  *   begin                : June 20, 2005
- *   copyright            : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *

@@ -3,7 +3,7 @@
  *                               admin_files.php
  *                            -------------------
  *   begin                : March 06, 2007
- *   copyright            : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre RÃ©gis
  *   email                : crowkait@gmail.com
  *
  *
@@ -61,11 +61,11 @@ if ($parent_folder) //Changement de dossier
 	else
 		AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $parent_folder['id_parent']);
 }
-elseif ($home_folder) //Retour à la racine.
+elseif ($home_folder) //Retour Ã  la racine.
 	AppContext::get_response()->redirect('/admin/admin_files.php');
 elseif (!empty($_FILES['upload_file']['name']) && $folder) //Ajout d'un fichier.
 {
-	//Si le dossier n'est pas en écriture on tente un CHMOD 777
+	//Si le dossier n'est pas en Ã©criture on tente un CHMOD 777
 	@clearstatcache();
 	$dir = PATH_TO_ROOT . '/upload/';
 	if (!is_writable($dir))
@@ -73,12 +73,12 @@ elseif (!empty($_FILES['upload_file']['name']) && $folder) //Ajout d'un fichier.
 	
 	@clearstatcache();
 	$error = '';
-	if (is_writable($dir)) //Dossier en écriture, upload possible
+	if (is_writable($dir)) //Dossier en Ã©criture, upload possible
 	{
 		$Upload = new Upload($dir);
 		$Upload->file('upload_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', FileUploadConfig::load()->get_authorized_extensions())) . ')+$`i', Upload::UNIQ_NAME);
 		
-		if ($Upload->get_error() != '') //Erreur, on arrête ici
+		if ($Upload->get_error() != '') //Erreur, on arrÃªte ici
 			AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $folder . '&erroru=' . $Upload->get_error() . '#message_helper');
 		else //Insertion dans la bdd
 		{
@@ -130,7 +130,7 @@ elseif (!empty($del_file)) //Suppression d'un fichier
 	
 	AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $folder . ($folder_member > 0 ? '&fm=' . $folder_member : ''));
 }
-elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
+elseif (!empty($move_folder) && $to != -1) //DÃ©placement d'un dossier
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
@@ -165,7 +165,7 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 			
 	AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $to);
 }
-elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
+elseif (!empty($move_file) && $to != -1) //DÃ©placement d'un fichier
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
@@ -236,7 +236,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 		$folder_member = -1;
 	
 	$is_folder = !empty($move_folder);
-	//Affichage du dossier/fichier à déplacer
+	//Affichage du dossier/fichier Ã  dÃ©placer
 	if ($is_folder)
 	{
 		try {
@@ -280,7 +280,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 			list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT .'/upload/' . $info_move['path']);
 			$size_img = ' (' . $width_source . 'x' . $height_source . ')';
 			
-			//On affiche l'image réelle si elle n'est pas trop grande.
+			//On affiche l'image rÃ©elle si elle n'est pas trop grande.
 			if ($width_source < 350 && $height_source < 350) 
 			{
 				$display_real_img = true;
@@ -440,7 +440,7 @@ else
 	//Affichage des dossiers
 	while ($row = $result->fetch())
 	{
-		$name_cut = (strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];	
+		$name_cut = (mb_strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlentities(mb_substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];	
 		
 		$template->assign_block_vars('folder', array(
 			'C_MEMBER_FOLDER' => $show_member,
@@ -483,7 +483,7 @@ else
 		//Affichage des fichiers contenu dans le dossier
 		while ($row = $result->fetch())
 		{
-			$name_cut = (strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
+			$name_cut = (mb_strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlentities(mb_substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 		
 			$get_img_mimetype = Uploads::get_img_mimetype($row['type']);
 			$size_img = '';
@@ -517,7 +517,7 @@ else
 			}
 			
 			$template->assign_block_vars('files', array(
-				'C_RECENT_FILE' => $row['timestamp'] > ($now->get_timestamp() - (15 * 60)),  // Ficher ajouté il y a moins de 15 minutes
+				'C_RECENT_FILE' => $row['timestamp'] > ($now->get_timestamp() - (15 * 60)),  // Ficher ajoutÃ© il y a moins de 15 minutes
 				'ID' => $row['id'],
 				'IMG' => $get_img_mimetype['img'],
 				'URL' => $link,

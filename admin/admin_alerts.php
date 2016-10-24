@@ -33,7 +33,7 @@ $template = new FileTemplate('admin/admin_alerts.tpl');
 
 define('NUM_ALERTS_PER_PAGE', 20);
 
-//Gestion des critères de tri
+//Gestion des critÃ¨res de tri
 $criteria = retrieve(GET, 'criteria', 'current_status');
 $order = retrieve(GET, 'order', 'asc');
 

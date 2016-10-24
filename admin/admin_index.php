@@ -3,7 +3,7 @@
  *                              admin_index.php
  *                            -------------------
  *   begin                : June 20, 2005
- *   copyright            : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *   
@@ -156,7 +156,7 @@ ORDER BY s.timestamp DESC", array(
 ));
 while ($row = $result->fetch())
 {
-	//On vérifie que la session ne correspond pas à un robot.
+	//On vÃ©rifie que la session ne correspond pas Ã  un robot.
 	$robot = Robots::get_robot_by_ip($row['ip']);
 
 	switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 

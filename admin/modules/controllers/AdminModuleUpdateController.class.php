@@ -92,7 +92,7 @@ class AdminModuleUpdateController extends AdminController
 				
 				$this->view->assign_block_vars('modules_upgradable', array(
 					'ID' => $module->get_id(),
-					'NAME' => ucfirst($configuration->get_name()),
+					'NAME' => TextHelper::uppercase_first($configuration->get_name()),
 					'ICON' => $module->get_id(),
 					'VERSION' => $configuration->get_version(),
 					'AUTHOR' => !empty($author_email) ? '<a href="mailto:' . $author_email . '">' . $author . '</a>' : $author,
@@ -188,9 +188,9 @@ class AdminModuleUpdateController extends AdminController
 					$required_files = array('/config.ini');
 					foreach ($archive_content as $element)
 					{
-						if (substr($element['filename'], -1) == '/')
-							$element['filename'] = substr($element['filename'], 0, -1);
-						if (substr_count($element['filename'], '/') == 0)
+						if (mb_substr($element['filename'], -1) == '/')
+							$element['filename'] = mb_substr($element['filename'], 0, -1);
+						if (mb_substr_count($element['filename'], '/') == 0)
 							$archive_root_content[] = array('filename' => $element['filename'], 'folder' => ((isset($element['folder']) && $element['folder'] == 1) || (isset($element['typeflag']) && $element['typeflag'] == 5)));
 						if (isset($archive_root_content[0]))
 						{

@@ -3,7 +3,7 @@
  *                               admin_groups.php
  *                            -------------------
  *   begin                : June 01, 2006
- *   copyright            : (C) 2006 Viarre Régis
+ *   copyright            : (C) 2006 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -51,7 +51,7 @@ if ($valid && !empty($idgroup_post)) //Modification du groupe.
 	$auth_flood = retrieve(POST, 'auth_flood', 1);
 	$pm_group_limit = retrieve(POST, 'pm_group_limit', 75);
 	$color_group = retrieve(POST, 'color_group', '');
-	$color_group = substr($color_group, 0, 1) == '#' ? substr($color_group, 1) : $color_group;
+	$color_group = mb_substr($color_group, 0, 1) == '#' ? mb_substr($color_group, 1) : $color_group;
 	$delete_group_color = (bool)retrieve(POST, 'delete_group_color', false);
 	
 	if ($delete_group_color)
@@ -62,7 +62,7 @@ if ($valid && !empty($idgroup_post)) //Modification du groupe.
 	$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);
 	PersistenceContext::get_querier()->update(DB_TABLE_GROUP, array('name' => $name, 'img' => $img, 'color' => $color_group, 'auth' => serialize($group_auth)), 'WHERE id = :id', array('id' => $idgroup_post));
 	
-	GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
+	GroupsCache::invalidate(); //On rÃ©gÃ©nÃ¨re le fichier de cache des groupes
 	
 	AppContext::get_response()->redirect('/admin/admin_groups.php?id=' . $idgroup_post);
 }
@@ -73,7 +73,7 @@ elseif ($valid && $add_post) //ajout  du groupe.
 	$auth_flood = retrieve(POST, 'auth_flood', 1);
 	$pm_group_limit = retrieve(POST, 'pm_group_limit', 75);
 	$color_group = retrieve(POST, 'color_group', '');
-	$color_group = substr($color_group, 0, 1) == '#' ? substr($color_group, 1) : $color_group;
+	$color_group = mb_substr($color_group, 0, 1) == '#' ? mb_substr($color_group, 1) : $color_group;
 	$data_group_limit = $data_group_limit ? NumberHelper::numeric($data_group_limit, 'float') * 1024 : '5120';
 	
 	if (!empty($name))
@@ -84,7 +84,7 @@ elseif ($valid && $add_post) //ajout  du groupe.
 			$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);
 			$result = PersistenceContext::get_querier()->insert(DB_TABLE_GROUP, array('name' => $name, 'img' => $img, 'color' => $color_group, 'auth' => serialize($group_auth), 'members' => ''));
 			
-			GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
+			GroupsCache::invalidate(); //On rÃ©gÃ©nÃ¨re le fichier de cache des groupes
 			
 			AppContext::get_response()->redirect('/admin/admin_groups.php?id=' . $result->get_last_inserted_id());
 		}
@@ -108,13 +108,13 @@ elseif (!empty($idgroup) && $del_group) //Suppression du groupe.
 		foreach ($array_members as $key => $user_id)
 		{
 			if (!empty($user_id) && UserService::user_exists('WHERE user_id=:user_id', array('user_id' => $user_id)))
-				GroupsService::remove_member($user_id, $idgroup); //Mise à jour des membres étant dans le groupe supprimé.
+				GroupsService::remove_member($user_id, $idgroup); //Mise Ã  jour des membres Ã©tant dans le groupe supprimÃ©.
 		}
 	}
 	
 	PersistenceContext::get_querier()->delete(DB_TABLE_GROUP, 'WHERE id=:id', array('id' => $idgroup));
 	
-	GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
+	GroupsCache::invalidate(); //On rÃ©gÃ©nÃ¨re le fichier de cache des groupes
 	
 	AppContext::get_response()->redirect(HOST . DIR . '/admin/admin_groups.php');
 }
@@ -130,7 +130,7 @@ elseif (!empty($idgroup) && $add_mbr) //Ajout du membre au groupe.
 	
 	if (!empty($user_id))
 	{
-		if (GroupsService::add_member($user_id, $idgroup)) //Succès.
+		if (GroupsService::add_member($user_id, $idgroup)) //SuccÃ¨s.
 		{
 			GroupsCache::invalidate();
 			SessionData::recheck_cached_data_from_user_id($user_id);
@@ -157,7 +157,7 @@ elseif ($del_mbr && !empty($user_id) && !empty($idgroup)) //Suppression du membr
 }
 elseif (!empty($_FILES['upload_groups']['name'])) //Upload
 {
-	//Si le dossier n'est pas en écriture on tente un CHMOD 777
+	//Si le dossier n'est pas en Ã©criture on tente un CHMOD 777
 	@clearstatcache();
 	$dir = PATH_TO_ROOT .'/images/group/';
 	if (!is_writable($dir))
@@ -167,7 +167,7 @@ elseif (!empty($_FILES['upload_groups']['name'])) //Upload
 	
 	@clearstatcache();
 	$error = '';
-	if (is_writable($dir)) //Dossier en écriture, upload possible
+	if (is_writable($dir)) //Dossier en Ã©criture, upload possible
 	{
 		$authorized_pictures_extensions = FileUploadConfig::load()->get_authorized_picture_extensions();
 		
@@ -189,7 +189,7 @@ elseif (!empty($_FILES['upload_groups']['name'])) //Upload
 	$error = !empty($error) ? '&error=' . $error : '';
 	AppContext::get_response()->redirect(HOST . SCRIPT . '?add=1' . $error);
 }
-elseif (!empty($idgroup)) //Interface d'édition du groupe.
+elseif (!empty($idgroup)) //Interface d'Ã©dition du groupe.
 {
 	$template = new FileTemplate('admin/admin_groups_management2.tpl');
 	
@@ -213,7 +213,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 			$template->put('message_helper', MessageHelper::display($LANG['e_already_group'], MessageHelper::NOTICE));
 		}
 		
-		//On recupère les dossier des images des groupes.
+		//On recupÃ¨re les dossier des images des groupes.
 		$img_groups = '<option value="">--</option>';
 		$image_folder_path = new Folder(PATH_TO_ROOT . '/images/group');
 		foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`i') as $image)
@@ -234,7 +234,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 			'AUTH_FLOOD_DISABLED' => $array_group['auth_flood'] == 0 ? 'checked="checked"' : '',
 			'PM_GROUP_LIMIT' => $array_group['pm_group_limit'],
 			'DATA_GROUP_LIMIT' => NumberHelper::round($array_group['data_group_limit']/1024, 2),
-			'COLOR_GROUP' => (substr($group['color'], 0, 1) != '#' ? '#' : '') . $group['color'],
+			'COLOR_GROUP' => (mb_substr($group['color'], 0, 1) != '#' ? '#' : '') . $group['color'],
 			'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
 			'L_REQUIRE_LOGIN' => $LANG['require_name'],
 			'L_CONFIRM_DEL_USER_GROUP' => LangLoader::get_message('confirm.delete', 'status-messages-common'),
@@ -319,7 +319,7 @@ elseif ($add) //Interface d'ajout du groupe.
 		$template->put('message_helper', MessageHelper::display(LangLoader::get_message('element.already_exists', 'status-messages-common'), MessageHelper::NOTICE));
 	}
 	
-	//On recupère les dossier des images des groupes contenu dans le dossier /images/group.
+	//On recupÃ¨re les dossier des images des groupes contenu dans le dossier /images/group.
 	$img_groups = '<option value="" selected="selected">--</option>';
 
 	$img_groups = '<option value="">--</option>';

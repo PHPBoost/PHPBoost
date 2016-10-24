@@ -232,7 +232,7 @@ foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as
 		}
 		
 		$urls = array_merge($root, $urls);
-		$tpl->assign_block_vars('modules', array('NAME' => ucfirst($module->get_configuration()->get_name())));
+		$tpl->assign_block_vars('modules', array('NAME' => TextHelper::uppercase_first($module->get_configuration()->get_name())));
 		
 		foreach ($urls as $url)
 		{
