@@ -111,7 +111,7 @@ class APCDataStore implements DataStore
 			}
 			if (self::$website_id === false)
 			{
-				self::$website_id = substr(md5(realpath(PATH_TO_ROOT)), 0, 10);
+				self::$website_id = mb_substr(md5(realpath(PATH_TO_ROOT)), 0, 10);
 				$file = new File($website_id_cache_file);
 				$file->write(self::$website_id);
 				$file->close();

@@ -348,7 +348,7 @@ class HTTPRequestCustom
 
 	public function get_is_ajax_request()
 	{
-		return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+		return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && mb_strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 	}
 
 	private static function get_http_host()
@@ -358,7 +358,7 @@ class HTTPRequestCustom
 
 	public function get_is_https()
 	{
-		return isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off';
+		return isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) && mb_strtolower($_SERVER['HTTPS']) != 'off';
 	}
 
 	public function get_is_localhost()

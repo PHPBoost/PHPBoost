@@ -53,13 +53,13 @@ class UploadedFile
 	public function get_name_without_extension()
 	{
 		$name = $this->get_name();
-		return substr($name, 0, strpos($name, '.'));
+		return mb_substr($name, 0, strpos($name, '.'));
 	}
 
 	public function get_extension()
 	{
 		$filename = $this->get_name();
-		return strtolower(substr(strrchr($filename, '.'), 1));
+		return mb_strtolower(mb_substr(mb_strrchr($filename, '.'), 1));
 	}
 	
 	public function get_mime_type()

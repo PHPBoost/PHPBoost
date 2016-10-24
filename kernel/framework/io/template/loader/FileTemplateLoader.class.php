@@ -161,9 +161,9 @@ class FileTemplateLoader implements TemplateLoader
 		 */
 
 		$i = strpos($this->filepath, '/');
-		$this->module = substr($this->filepath, 0, $i);
-		$this->file = trim(substr($this->filepath, $i), '/');
-		$this->filename = trim(substr($this->filepath, strrpos($this->filepath, '/')));
+		$this->module = mb_substr($this->filepath, 0, $i);
+		$this->file = trim(mb_substr($this->filepath, $i), '/');
+		$this->filename = trim(mb_substr($this->filepath, mb_strrpos($this->filepath, '/')));
 
 		$this->templates_folder = PATH_TO_ROOT . '/templates/';
 		$this->default_templates_folder = $this->templates_folder . 'default/';
@@ -242,7 +242,7 @@ class FileTemplateLoader implements TemplateLoader
 
 	private function convert_to_tpl_path($path_to_root_filepath)
 	{
-		return TPL_PATH_TO_ROOT . substr($path_to_root_filepath, strlen(PATH_TO_ROOT));
+		return TPL_PATH_TO_ROOT . mb_substr($path_to_root_filepath, mb_strlen(PATH_TO_ROOT));
 	}
 
 	/**

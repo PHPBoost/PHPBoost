@@ -590,9 +590,9 @@ abstract class AbstractPlatform
 
 		$type = '';
 		if (isset($definition['type'])) {
-			switch (strtolower($definition['type'])) {
+			switch (mb_strtolower($definition['type'])) {
 				case 'unique':
-					$type = strtoupper($definition['type']) . ' ';
+					$type = mb_strtoupper($definition['type']) . ' ';
 					break;
 				default:
 					throw DoctrineException::unknownIndexType($definition['type']);
@@ -866,8 +866,8 @@ abstract class AbstractPlatform
 		$type   = '';
 
 		if (isset($definition['type'])) {
-			if (strtolower($definition['type']) == 'unique') {
-				$type = strtoupper($definition['type']) . ' ';
+			if (mb_strtolower($definition['type']) == 'unique') {
+				$type = mb_strtoupper($definition['type']) . ' ';
 			} else {
 				throw DoctrineException::unknownIndexType($definition['type']);
 			}
@@ -1012,7 +1012,7 @@ abstract class AbstractPlatform
 	 */
 	public function getForeignKeyReferentialActionSql($action)
 	{
-		$upper = strtoupper($action);
+		$upper = mb_strtoupper($action);
 		switch ($upper) {
 			case 'CASCADE':
 			case 'SET NULL':

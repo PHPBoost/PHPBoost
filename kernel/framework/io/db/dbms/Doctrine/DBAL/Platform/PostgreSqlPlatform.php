@@ -181,7 +181,7 @@ class PostgreSqlPlatform extends AbstractPlatform
 		$match = '';
 		if ( ! is_null($operator)) {
 			$field = is_null($field) ? '' : $field.' ';
-			$operator = strtoupper($operator);
+			$operator = mb_strtoupper($operator);
 			switch ($operator) {
 				// case insensitive
 				case 'ILIKE':
@@ -805,7 +805,7 @@ class PostgreSqlPlatform extends AbstractPlatform
 	 */
 	public function getSqlResultCasing($column)
 	{
-		return strtolower($column);
+		return mb_strtolower($column);
 	}
 
 	public function getDateTimeFormatString()

@@ -61,12 +61,12 @@ class TemplateRenderingException extends Exception
 	{
 		$position = $this->input->tell();
 		$string = $this->input->entire_string();
-		$str_to_position = substr($string, 0, $position);
+		$str_to_position = mb_substr($string, 0, $position);
 
-		$this->tpl_line = substr_count($string, "\n", 0, $position) + 1;
-		$last_line_index = strrpos($str_to_position, "\n");
-		$line_content = substr($str_to_position, $last_line_index + 1);
-		$this->offset = strlen($line_content);
+		$this->tpl_line = mb_substr_count($string, "\n", 0, $position) + 1;
+		$last_line_index = mb_strrpos($str_to_position, "\n");
+		$line_content = mb_substr($str_to_position, $last_line_index + 1);
+		$this->offset = mb_strlen($line_content);
 	}
 }
 ?>

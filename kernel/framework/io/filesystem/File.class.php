@@ -27,7 +27,7 @@
 
 /**
  * @package {@package}
- * @author Benoît Sautel <ben.popeye@phpboost.com> Nicolas Duhamel <akhenathon2@gmail.com>
+ * @author BenoÃ®t Sautel <ben.popeye@phpboost.com> Nicolas Duhamel <akhenathon2@gmail.com>
  * @desc This class represents a text file which can be read and written.
  */
 class File extends FileSystemElement
@@ -73,7 +73,7 @@ class File extends FileSystemElement
 	public function get_name_without_extension()
 	{
 		$name = $this->get_name();
-		return substr($name, 0, strpos($name, '.'));
+		return mb_substr($name, 0, strpos($name, '.'));
 	}
 	
 	/**
@@ -83,7 +83,7 @@ class File extends FileSystemElement
 	public function get_extension()
 	{
 		$name = $this->get_name();
-		return substr(strrchr($name,'.'), 1);
+		return mb_substr(mb_strrchr($name,'.'), 1);
 	}
 	
 	/**
@@ -318,11 +318,11 @@ class File extends FileSystemElement
 
 	private function write_data($data)
 	{
-		$bytes_to_write = strlen($data);
+		$bytes_to_write = mb_strlen($data);
 		$bytes_written = 0;
 		while ($bytes_written < $bytes_to_write)
 		{
-			$bytes = fwrite($this->file_descriptor, substr($data, $bytes_written, self::$BUFFER_SIZE));
+			$bytes = fwrite($this->file_descriptor, mb_substr($data, $bytes_written, self::$BUFFER_SIZE));
 			if ($bytes === false || $bytes == 0)
 			{
 				break;

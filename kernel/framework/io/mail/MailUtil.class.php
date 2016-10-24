@@ -27,7 +27,7 @@
 
 /** 
  * @package {@package}
- * @author Benoit Sautel <ben.popeye@phpboost.com>, Régis Viarre <crowkait@phpboost.com>
+ * @author Benoit Sautel <ben.popeye@phpboost.com>, RÃ©gis Viarre <crowkait@phpboost.com>
  * @desc This class provides you utilities for emails.
  */
 class MailUtil

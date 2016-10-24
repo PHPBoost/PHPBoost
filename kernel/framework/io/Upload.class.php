@@ -201,10 +201,10 @@ class Upload
 	{
 		$filename = $this->original_filename;
 		
-		$this->extension = strtolower(substr(strrchr($filename, '.'), 1));
-		if (strrpos($filename, '.') !== FALSE)
+		$this->extension = mb_strtolower(mb_substr(mb_strrchr($filename, '.'), 1));
+		if (mb_strrpos($filename, '.') !== FALSE)
 		{
-			$filename = substr($filename, 0, strrpos($filename, '.'));
+			$filename = mb_substr($filename, 0, mb_strrpos($filename, '.'));
 		}
 		$filename = str_replace('.', '_', $filename);
 		$filename = self::clean_filename($filename);
@@ -237,7 +237,7 @@ class Upload
 	 */
 	private static function clean_filename($string)
 	{
-		$string = preg_replace('#&([a-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', strtolower(TextHelper::htmlentities($string)));
+		$string = preg_replace('#&([a-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', mb_strtolower(TextHelper::htmlentities($string)));
 		$string = preg_replace('#&([a-z]{2})(?:lig);#', '\1', $string);
 		$string = preg_replace('`([^a-z0-9-]|[\s])`', '_', $string);
 		$string = preg_replace('`[_]{2,}`', '_', $string);

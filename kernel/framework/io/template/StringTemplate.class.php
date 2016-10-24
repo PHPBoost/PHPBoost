@@ -76,7 +76,7 @@ class StringTemplate extends AbstractTemplate
 		}
 		else
 		{
-			if (strlen($content) > 200)
+			if (mb_strlen($content) > 200)
 			{
 				return true;
 			}

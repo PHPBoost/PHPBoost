@@ -28,7 +28,7 @@
 /**
  * @package {@package}
  * @abstract
- * @author Benoît Sautel <ben.popeye@phpboost.com> Nicolas Duhamel <akhenathon2@gmail.com>
+ * @author BenoÃ®t Sautel <ben.popeye@phpboost.com> Nicolas Duhamel <akhenathon2@gmail.com>
  * @desc This class represents any file system element.
  */
 abstract class FileSystemElement

@@ -27,7 +27,7 @@
 
 /**
  * @package {@package}
- * @author Loic Rouchon <loic.rouchon@phpboost.com> Régis Viarre <crowkait@phpboost.com>
+ * @author Loic Rouchon <loic.rouchon@phpboost.com> RÃ©gis Viarre <crowkait@phpboost.com>
  * @desc This class is a default implementation of the Template interface using a TemplateLoader,
  * a TemplateData and a TemplateParser.
  */

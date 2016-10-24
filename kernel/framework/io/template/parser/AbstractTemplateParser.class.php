@@ -65,8 +65,8 @@ abstract class AbstractTemplateParser implements TemplateParser
 
 		if ($split_index > 0)
 		{
-			$prefix = substr($varname, 0, $split_index);
-			$tiny_var = substr($varname, $split_index + 1);
+			$prefix = mb_substr($varname, 0, $split_index);
+			$tiny_var = mb_substr($varname, $split_index + 1);
 			switch ($prefix)
 			{
 				case 'L':

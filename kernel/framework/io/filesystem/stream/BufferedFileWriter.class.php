@@ -57,7 +57,7 @@ class BufferedFileWriter implements FileWriter
 	
 	private function will_exceed_buffer_size($content)
 	{
-		return strlen($this->buffer) + strlen($content) > $this->buffer_max_size;
+		return mb_strlen($this->buffer) + mb_strlen($content) > $this->buffer_max_size;
 	}
 	
 	public function flush()

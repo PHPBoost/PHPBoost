@@ -57,8 +57,8 @@ class BufferedFileReader implements FileReader
 	private function read_packet()
 	{
 		$buffer = $this->file->read($this->offset_in_file, $this->buffer_max_size);
-		$buffer_size = strlen($buffer);
-		$this->offset_in_file += strlen($buffer);
+		$buffer_size = mb_strlen($buffer);
+		$this->offset_in_file += mb_strlen($buffer);
 		if ($buffer_size == 0)
 		{
 			$this->reached_end_of_file = true;
