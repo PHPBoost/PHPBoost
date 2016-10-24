@@ -27,7 +27,7 @@
  ###################################################*/
 
 /**
- * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @author BenoÃ®t Sautel <ben.popeye@phpboost.com>
  * @desc This class represents a section of a site map.
  */
 class SitemapSection extends SitemapElement

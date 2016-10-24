@@ -27,7 +27,7 @@
  ###################################################*/
 
 /**
- * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @author BenoÃ®t Sautel <ben.popeye@phpboost.com>
  * @desc Describes the map of the site. Can be exported according to any text form by using a template configuration.
  * A site map contains some links, some link sections and some module maps (which also contain links and sections).
  */

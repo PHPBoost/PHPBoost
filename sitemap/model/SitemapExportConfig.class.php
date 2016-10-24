@@ -27,7 +27,7 @@
  ###################################################*/
 
 /**
- * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @author BenoÃ®t Sautel <ben.popeye@phpboost.com>
  * @desc Configuration used to export a Sitemap. It contains some Template objects
  * which are used to export each kind of elements of a sitemap.
  * Using different configurations will enable you for example to export in HTML code to be

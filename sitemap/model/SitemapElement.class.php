@@ -27,7 +27,7 @@
  ###################################################*/
 
 /**
- * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @author BenoÃ®t Sautel <ben.popeye@phpboost.com>
  * @desc This abstract is the root of every object which can be contained by a Sitemap object.
  * Some SitemapElements objects can contain one or many SitemapElement objects therefore the elements
  * can be represented by a tree an each element has a depth in the tree.

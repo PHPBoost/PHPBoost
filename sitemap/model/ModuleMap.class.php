@@ -27,7 +27,7 @@
  ###################################################*/
 
 /**
- * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @author BenoÃ®t Sautel <ben.popeye@phpboost.com>
  * @desc The ModuleMap class represents the map of a module. It has a description
  * (generally the module description) and contains some elements which can be
  * some simple links or some sections (which can match the categories for example).
