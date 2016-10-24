@@ -41,12 +41,12 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 			$tpl = new FileTemplate('connect/connect_mini.tpl');
 			$user = AppContext::get_current_user();
 			MenuService::assign_positions_conditions($tpl, $this->get_block());
-			if ($user->check_level(User::MEMBER_LEVEL)) //Connecté.
+			if ($user->check_level(User::MEMBER_LEVEL)) //ConnectÃ©.
 			{
 				$unread_contributions = UnreadContributionsCache::load();
 		
 				//Vaut 0 si l'utilisateur n'a aucune contribution. Est > 0 si on connait le nombre de contributions
-				//Vaut -1 si l'utilisateur a au moins une contribution (mais on ne sait pas combien à cause des recoupements entre les groupes)
+				//Vaut -1 si l'utilisateur a au moins une contribution (mais on ne sait pas combien Ã  cause des recoupements entre les groupes)
 				$contribution_number = 0;
 		
 				if ($user->check_level(User::ADMIN_LEVEL))
@@ -138,7 +138,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 					'L_FORGOT_PASS' => LangLoader::get_message('forget-password', 'user-common'),
 					'L_REGISTER' => LangLoader::get_message('register', 'user-common'),
 					'U_CONNECT' => UserUrlBuilder::connect()->rel(),
-					'SITE_REWRITED_SCRIPT' => substr(REWRITED_SCRIPT, strlen(GeneralConfig::load()->get_site_path()))
+					'SITE_REWRITED_SCRIPT' => mb_substr(REWRITED_SCRIPT, mb_strlen(GeneralConfig::load()->get_site_path()))
 				));
 			}
 		
