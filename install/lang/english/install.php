@@ -192,7 +192,7 @@ First of all, thank you for powering your website with PHPBoost software, we hop
 Here is your login and password (don\'t lose them, you will need them to setup your website) :
 
 Login: %s
-Password: %s
+If you loose your password, you can generate a new one from this link %s
 
 Best regards,
 The PHPBoost Team.',

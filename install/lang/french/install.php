@@ -193,7 +193,7 @@ Tout d\'abord, merci d\'avoir choisi PHPBoost pour réaliser votre site, nous es
 Voici vos identifiants (ne les perdez pas, ils vous seront utiles pour administrer votre site et ne pourront plus être récupérés).
 
 Identifiant: %s
-Password: %s
+Si vous perdez votre mot de passe, vous pouvez en générer un nouveau à partir de ce lien %s
 
 Cordialement l\'équipe PHPBoost.',
 

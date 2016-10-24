@@ -447,7 +447,7 @@ class InstallationServices
 	{
 		$general_config = GeneralConfig::load();
 		AppContext::get_mail_service()->send_from_properties($email, $this->messages['admin.created.email.object'], sprintf($this->messages['admin.created.email.unlockCode'], stripslashes($login),
-		stripslashes($login), $password, $general_config->get_site_url() . $general_config->get_site_path()));
+		stripslashes($login), UserUrlBuilder::forget_password()->absolute(), $general_config->get_site_url() . $general_config->get_site_path()));
 	}
 
 	private function connect_admin($user_id, $auto_connect)
