@@ -59,14 +59,14 @@ class QuestionCaptcha extends Captcha
 			$question = new QuestionCaptchaQuestion();
 			$question->set_properties(self::$questions[$question_id]);
 			
-			return in_array(trim(strtolower($answer)), $question->get_formated_answers());
+			return in_array(trim(mb_strtolower($answer)), $question->get_formated_answers());
 		}
 		return false;
 	}
 	
 	public function display()
 	{
-		$question_id = array_rand(self::$questions); //Question aléatoire
+		$question_id = array_rand(self::$questions); //Question alÃ©atoire
 		
 		$question = new QuestionCaptchaQuestion();
 		$question->set_properties(self::$questions[$question_id]);

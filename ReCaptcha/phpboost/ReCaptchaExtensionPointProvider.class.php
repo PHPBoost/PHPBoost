@@ -3,7 +3,7 @@
  *                    ReCaptchaExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : February 27, 2012
- *   copyright            : (C) 2013 Kévin MASSY
+ *   copyright            : (C) 2013 KÃ©vin MASSY
  *   email                : kevin.massy@phpboost.com
  *
  *

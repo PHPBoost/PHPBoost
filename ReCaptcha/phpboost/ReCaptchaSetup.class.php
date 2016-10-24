@@ -3,7 +3,7 @@
  *                             ReCaptchaSetup.class.php
  *                            -------------------
  *   begin                : December 20, 2013
- *   copyright            : (C) 2013 Kévin MASSY
+ *   copyright            : (C) 2013 KÃ©vin MASSY
  *   email                : kevin.massy@phpboost.com
  *
  *
