@@ -3,7 +3,7 @@
  *                             FormatingHelper.class.php
  *                            -------------------
  *   begin                : Januar 21, 2010
- *   copyright            : (C) 2010 Régis Viarre
+ *   copyright            : (C) 2010 RÃ©gis Viarre
  *   email                : crowkait@phpboost.com
  *
  ###################################################
@@ -26,7 +26,7 @@
 
 /**
  * @desc Formating helper
- * @author Régis Viarre <crowkait@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>
  * @package {@package}
  */
 class FormatingHelper 
@@ -44,7 +44,7 @@ class FormatingHelper
 	{
 		$parser = AppContext::get_content_formatting_service()->get_default_parser();
 	
-		//On assigne le contenu à interpréter. Il supprime les antislashes d'échappement seulement si ils ont été ajoutés par magic_quotes
+		//On assigne le contenu Ã  interprÃ©ter. Il supprime les antislashes d'Ã©chappement seulement si ils ont Ã©tÃ© ajoutÃ©s par magic_quotes
 		$parser->set_content($content);
 	
 		//Si il y a des balises interdites, on lui signale
@@ -55,7 +55,7 @@ class FormatingHelper
 		//Au travail maintenant !
 		$parser->parse();
 	
-		//Renvoie le résultat. Echappe par défaut les caractères critiques afin d'être envoyé en base de données
+		//Renvoie le rÃ©sultat. Echappe par dÃ©faut les caractÃ¨res critiques afin d'Ãªtre envoyÃ© en base de donnÃ©es
 		$result = $parser->get_content();
 		if ($addslashes)
 		{

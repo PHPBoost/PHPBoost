@@ -85,7 +85,7 @@ class TextHelper
 	 */
 	public static function wordwrap_html($str, $lenght, $cut_char = '<br />', $cut = true)
 	{
-		$str = wordwrap(TextHelper::html_entity_decode($str), $lenght, $cut_char, $cut);
+		$str = TextHelper::utf8_wordwrap(TextHelper::html_entity_decode($str), $lenght, $cut_char, $cut);
 		return str_replace('&lt;br /&gt;', '<br />', self::htmlspecialchars($str, ENT_NOQUOTES));
 	}
 
@@ -103,11 +103,11 @@ class TextHelper
 	{
 		if ($end == '')
 		{
-			return self::htmlspecialchars(substr(self::html_entity_decode($str), $start), ENT_NOQUOTES);
+			return self::htmlspecialchars(mb_substr(self::html_entity_decode($str), $start), ENT_NOQUOTES);
 		}
 		else
 		{
-			return self::htmlspecialchars(substr(self::html_entity_decode($str), $start, $end), ENT_NOQUOTES);
+			return self::htmlspecialchars(mb_substr(self::html_entity_decode($str), $start, $end), ENT_NOQUOTES);
 		}
 	}
 
@@ -175,12 +175,16 @@ class TextHelper
 	
 	public static function lowercase_first($string)
 	{
-		return lcfirst($string);
+		$first_letter = mb_strtolower(mb_substr($string, 0, 1));
+		$string_end = mb_substr($string, 1, mb_strlen($string));
+		return $first_letter . $string_end;
 	}
 	
 	public static function uppercase_first($string)
 	{
-		return ucfirst($string);
+		$first_letter = mb_strtoupper(mb_substr($string, 0, 1));
+		$string_end = mb_substr($string, 1, mb_strlen($string));
+		return $first_letter . $string_end;
 	}
 
 	/**
@@ -213,5 +217,37 @@ class TextHelper
 
 		return true;
 	}
+/**
+ * Wraps a UTF-8 string to a given number of characters
+ *
+ * @param string $string the input string
+ * @param int $width the column width
+ * @param string $break the line is broken using the optional break parameter
+ * @param string $cut not used for the moment
+ * @return string the given string wrapped at the specified column
+ */
+	function utf8_wordwrap($string, $width = 75, $break = "\n", $cut = true)
+	{
+		$lines = array();
+		while (!empty($string))
+		{
+			// We got a line with a break in it somewhere before the end
+			if (preg_match('%^(.{1,'.$width.'})(?:\s|$)%', $string, $matches))
+			{
+				// Add this line to the output
+				$lines[] = $matches[1];
+				// Trim it off the input ready for the next go
+				$string = mb_substr($string, mb_strlen($matches[0]));
+			}
+			// Just take the next $width characters
+			else
+			{
+				$lines[] = mb_substr($string, 0, $width);
+				// Trim it off the input ready for the next go
+				$string = mb_substr($string, $width);
+			}
+		}
+		return implode($break, $lines);
+	}	
 }
 ?>

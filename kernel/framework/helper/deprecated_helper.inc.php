@@ -3,7 +3,7 @@
  *                             deprecated_helper.inc.php
  *                            -------------------
  *   begin                : Januar 22, 2010
- *   copyright            : (C) 2010 RÈgis Viarre
+ *   copyright            : (C) 2010 R√©gis Viarre
  *   email                : crowkait@phpboost.com
  *
  *
@@ -130,11 +130,11 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $fla
 		case TINTEGER:
 			return (int)$var;
 		case TSTRING:
-			return TextHelper::strprotect($var); //Chaine protÈgÈe.
+			return TextHelper::strprotect($var); //Chaine prot√©g√©e.
 		case TSTRING_UNCHANGE:
-			return trim((string)$var); //Chaine non protÈgÈe.
+			return trim((string)$var); //Chaine non prot√©g√©e.
 		case TSTRING_PARSE:
-			return FormatingHelper::strparse($var); //Chaine parsÈe.
+			return FormatingHelper::strparse($var); //Chaine pars√©e.
 		case TBOOL:
 			return (bool)$var;
 		case TUNSIGNED_INT:
@@ -144,7 +144,7 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $fla
 			$var = (double)$var;
 			return $var > 0.0 ? $var : max(0.0, $default_value);
 		case TSTRING_HTML:
-			return TextHelper::strprotect($var, TextHelper::HTML_NO_PROTECT); //Chaine non protÈgÈe pour l'html.
+			return TextHelper::strprotect($var, TextHelper::HTML_NO_PROTECT); //Chaine non prot√©g√©e pour l'html.
 		case TSTRING_AS_RECEIVED:
 			return (string)$var;
 		case TARRAY:
@@ -168,7 +168,7 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $fla
  */
 function url($url, $mod_rewrite = '', $ampersand = '&amp;')
 {
-	if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !empty($mod_rewrite)) //Activation du mod rewrite => cookies activÈs.
+	if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !empty($mod_rewrite)) //Activation du mod rewrite => cookies activ√©s.
 	{
 		return $mod_rewrite;
 	}
@@ -235,7 +235,7 @@ function load_ini_file($dir_path, $require_dir, $ini_name = 'config.ini')
 	return $result;
 }
 
-//Cherche un dossier s'il n'est pas trouvÈ, on parcourt le dossier passÈ en argument ‡ la recherche du premier dossier.
+//Cherche un dossier s'il n'est pas trouv√©, on parcourt le dossier pass√© en argument √† la recherche du premier dossier.
 /**
  * @deprecated
  * @desc Finds a folder according to the user language. You find the file in a folder in which there is one folder per lang.

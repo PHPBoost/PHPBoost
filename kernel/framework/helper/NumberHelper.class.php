@@ -3,7 +3,7 @@
  *                             NumberHelper.class.php
  *                            -------------------
  *   begin                : Januar 24, 2010
- *   copyright            : (C) 2010 Régis Viarre
+ *   copyright            : (C) 2010 RÃ©gis Viarre
  *   email                : crowkait@phpboost.com
  *
  *
@@ -27,7 +27,7 @@
 
 /**
  * @desc Number helper
- * @author Régis Viarre <crowkait@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>
  * @package {@package}
  */
 class NumberHelper 

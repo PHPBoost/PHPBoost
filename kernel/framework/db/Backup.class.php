@@ -3,7 +3,7 @@
  *                             Backup.class.php
  *                            -------------------
  *   begin                : July 23, 2006
- *   copyright            : (C) 2005 Benoit Sautel / Régis Viarre
+ *   copyright            : (C) 2005 Benoit Sautel / RÃ©gis Viarre
  *   email                : ben.popeye@gmail.com / crowkait@phpboost.com
  *
  *
@@ -28,12 +28,12 @@
 /**
  * @deprecated
  * @package {@package}
- * @author Benoît Sautel ben.popeye@gmail.com / Régis Viarre crowkait@phpboost.com
+ * @author BenoÃ®t Sautel ben.popeye@gmail.com / RÃ©gis Viarre crowkait@phpboost.com
  * @desc This class helps you to generate the backup file of your data base.
  */
 class Backup
 {
-	//TODO attributs à mettre en private après remplacement des accès direct dans les fichiers concernés.
+	//TODO attributs Ã  mettre en private aprÃ¨s remplacement des accÃ¨s direct dans les fichiers concernÃ©s.
 	/**
 	 * @var string[] List of the tables used by PHPBoost.
 	 */
@@ -51,8 +51,8 @@ class Backup
 	public function __construct()
 	{
 		$this->list_db_tables(); //Liste toutes les tables de PHPBoost.
-		//On modifie le temps d'exécution maximal si le serveur le permet
-		//parce que les opérations sont longues
+		//On modifie le temps d'exÃ©cution maximal si le serveur le permet
+		//parce que les opÃ©rations sont longues
 		Environment::try_to_increase_max_execution_time();
 		
 		$this->db_querier = PersistenceContext::get_querier();
@@ -124,7 +124,7 @@ class Backup
 
 		foreach ($this->tables as $id => $table_info)
 		{
-			if ($all_tables || in_array($table_info['name'], $tables)) //Table demandée
+			if ($all_tables || in_array($table_info['name'], $tables)) //Table demandÃ©e
 			{
 				$rows_number = PersistenceContext::get_querier()->count($table_info['name']);
 				if ($rows_number > 0)
@@ -138,7 +138,7 @@ class Backup
 					$result = $this->db_querier->select('SELECT * FROM ' . $table_info['name']);
 					while ($row = $result->fetch())
 					{
-						if ($i % 10 == 0) //Toutes les 10 entrées on reforme une requête
+						if ($i % 10 == 0) //Toutes les 10 entrÃ©es on reforme une requÃªte
 						{
 							$this->backup_script .= ";\n";
 							$this->backup_script .= "INSERT INTO " . $table_info['name'] . " (";
@@ -244,8 +244,8 @@ class Backup
 		$structure = array();
 		$structure['fields'] = array();
 		$structure['index'] = array();
-		$struct = substr(strstr($this->backup_script, '('), 1);
-		$struct = substr($struct, 0, strrpos($struct, ')'));
+		$struct = mb_substr(mb_strstr($this->backup_script, '('), 1);
+		$struct = mb_substr($struct, 0, mb_strrpos($struct, ')'));
 		$array_struct = explode(",\n", $struct);
 		foreach ($array_struct as $field)
 		{
@@ -253,7 +253,7 @@ class Backup
 			$name = isset($match[1]) ? $match[1] : '';
 			if (strpos($field, 'KEY') !== false)
 			{
-				$type = trim(substr($field, 0, strpos($field, 'KEY') + 3));
+				$type = trim(mb_substr($field, 0, strpos($field, 'KEY') + 3));
 				preg_match('!\(([a-z_`,]+)\)!i', $field, $match);
 				$index_fields = isset($match[1]) ? str_replace('`', '', $match[1]) : '';
 				$structure['index'][] = array('name' => $name, 'fields' => $index_fields, 'type' => $type);

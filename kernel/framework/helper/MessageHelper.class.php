@@ -3,7 +3,7 @@
  *                             MessageHelper.class.php
  *                            -------------------
  *   begin                : Januar 07, 2011
- *   copyright            : (C) 2011 Régis Viarre
+ *   copyright            : (C) 2011 RÃ©gis Viarre
  *   email                : crowkait@phpboost.com
  *
  *
@@ -27,7 +27,7 @@
 
 /**
  * @desc Message Helper
- * @author Régis Viarre <crowkait@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>
  * @package {@package}
  */
 class MessageHelper 
