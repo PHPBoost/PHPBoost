@@ -83,7 +83,7 @@ class NewsDisplayNewsController extends ModuleController
 		}
 		else
 		{
-			if ($request->get_url_referrer() && !strstr($request->get_url_referrer(), NewsUrlBuilder::display_news($this->news->get_category()->get_id(), $this->news->get_category()->get_rewrited_name(), $this->news->get_id(), $this->news->get_rewrited_name())->rel()))
+			if ($request->get_url_referrer() && !mb_strstr($request->get_url_referrer(), NewsUrlBuilder::display_news($this->news->get_category()->get_id(), $this->news->get_category()->get_rewrited_name(), $this->news->get_id(), $this->news->get_rewrited_name())->rel()))
 			{
 				$this->news->set_number_view($this->news->get_number_view() + 1);
 				NewsService::update_number_view($this->news);

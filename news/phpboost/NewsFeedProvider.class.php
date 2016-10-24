@@ -3,7 +3,7 @@
  *                          NewsFeedProvider.class.php
  *                            -------------------
  *   begin                : February 22, 2012
- *   copyright            : (C) 2013 Kévin MASSY
+ *   copyright            : (C) 2013 KÃ©vin MASSY
  *   email                : kevin.massy@phpboost.com
  *
  *
