@@ -80,9 +80,9 @@ class UrlSerializedParameter
 		$this->query_args = array();
 		$uri = $_SERVER['REQUEST_URI'];
 		$params_string_begin = strpos($uri, '?');
-		if ($params_string_begin !== false && strlen($uri) > $params_string_begin)
+		if ($params_string_begin !== false && mb_strlen($uri) > $params_string_begin)
 		{
-			$params_string = substr($uri, $params_string_begin + 1);
+			$params_string = mb_substr($uri, $params_string_begin + 1);
 			parse_str($params_string, $this->query_args);
 			unset($this->query_args[$this->arg_id]);
 		}

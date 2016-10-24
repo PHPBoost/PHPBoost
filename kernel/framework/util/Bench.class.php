@@ -3,7 +3,7 @@
  *                               Bench.class.php
  *                            -------------------
  *   begin                : March 14, 2006
- *   copyright            : (C) 2005 Régis Viarre, Loic Rouchon
+ *   copyright            : (C) 2005 RÃ©gis Viarre, Loic Rouchon
  *   email                : crowkait@phpboost.com, loic.rouchon@phpboost.com
  *
  ###################################################

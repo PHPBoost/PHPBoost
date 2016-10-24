@@ -105,8 +105,8 @@ class Url
 				}
 				else
 				{
-					$anchor = substr($url, $pos);
-					$url = substr($url, 0, $pos);
+					$anchor = mb_substr($url, $pos);
+					$url = mb_substr($url, 0, $pos);
 				}
 			}
 
@@ -124,7 +124,7 @@ class Url
 			if (!strpos($url, '://'))
 			{
 				$this->is_relative = true;
-				if (substr($url, 0, 1) == '/')
+				if (mb_substr($url, 0, 1) == '/')
 				{   // Relative url from the website root (good form)
 					$this->url = $url;
 				}
@@ -205,11 +205,11 @@ class Url
 	public function root_to_local()
 	{
 		$local_path = $this->server_url;
-		$local_path = substr(trim($local_path, '/'), strlen(trim(GeneralConfig::load()->get_site_path(), '/')));
-		$file_begun = strrpos($local_path, '/');
+		$local_path = mb_substr(trim($local_path, '/'), mb_strlen(trim(GeneralConfig::load()->get_site_path(), '/')));
+		$file_begun = mb_strrpos($local_path, '/');
 		if ($file_begun >= 0)
 		{
-			$local_path = substr($local_path, 0, $file_begun) . '/';
+			$local_path = mb_substr($local_path, 0, $file_begun) . '/';
 		}
 
 		return '/' . ltrim($local_path, '/');
@@ -222,7 +222,7 @@ class Url
 	 */
 	public static function encode_rewrite($url)
 	{
-		$url = preg_replace('#&([a-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', strtolower(TextHelper::htmlentities($url)));
+		$url = preg_replace('#&([a-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', mb_strtolower(TextHelper::htmlentities($url)));
 		$url = preg_replace('#&([a-z]{2})(?:lig);#', '\1', $url);
 		$url = preg_replace('`([^a-z0-9]|[\s])`', '-', $url);
 		$url = preg_replace('`[-]{2,}`', '-', $url);
@@ -333,8 +333,8 @@ class Url
 		if (($pos = strpos($url, '?')) !== false)
 		{
 			// Backup url arguments inn order to restore them after compression
-			$args = substr($url, $pos);
-			$url = substr($url, 0, $pos);
+			$args = mb_substr($url, $pos);
+			$url = mb_substr($url, 0, $pos);
 		}
 		$url = preg_replace(array('`([^:]|^)/+`', '`(?<!\.)\./`'), array('$1/', ''), $url);
 

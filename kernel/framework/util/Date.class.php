@@ -263,7 +263,7 @@ class Date
 	public function get_month_text($characters_number = 3, $timezone = Timezone::USER_TIMEZONE)
 	{
 		$this->compute_server_user_difference($timezone);
-		return ucfirst(mb_substr(self::transform_date($this->date_time->format('F')), 0, $characters_number));
+		return Texthelper::uppercase_first(mb_substr(self::transform_date($this->date_time->format('F')), 0, $characters_number));
 	}
 	
 	/**
@@ -308,7 +308,7 @@ class Date
 	public function get_day_text($characters_number = 3, $timezone = Timezone::USER_TIMEZONE)
 	{
 		$this->compute_server_user_difference($timezone);
-		return ucfirst(mb_substr(self::transform_date($this->date_time->format('l')), 0, $characters_number));
+		return Texthelper::uppercase_first(mb_substr(self::transform_date($this->date_time->format('l')), 0, $characters_number));
 	}
 	
 	/**
@@ -486,7 +486,7 @@ class Date
 		if ($date == null || !$date instanceof Date || empty($date_label))
 			return array();
 		
-		$date_label = strtoupper($date_label);
+		$date_label = mb_strtoupper($date_label);
 		return array(
 			$date_label					=> $date->format(Date::FORMAT_DAY_MONTH_YEAR),
 			$date_label . '_TIMESTAMP'	=> $date->get_timestamp(),
@@ -527,7 +527,7 @@ class Date
 			$date_lang['july'], $date_lang['august'], $date_lang['september'], $date_lang['october'], $date_lang['november'], $date_lang['december'],
 			$date_lang['monday'], $date_lang['tuesday'], $date_lang['wednesday'], $date_lang['thursday'], $date_lang['friday'], $date_lang['saturday'], $date_lang['sunday'], 
 		);
-		return str_replace($search, $replace, strtolower($date));
+		return str_replace($search, $replace, mb_strtolower($date));
 	}
 }
 ?>

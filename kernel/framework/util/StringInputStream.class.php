@@ -39,7 +39,7 @@ class StringInputStream
 	public function __construct($string)
 	{
 		$this->stream = $string;
-		$this->length = strlen($this->stream);
+		$this->length = mb_strlen($this->stream);
 	}
 
 	public function has_next()
@@ -82,7 +82,7 @@ class StringInputStream
 
 	public function assert_next($pattern, $options = '', array &$matches = null)
 	{
-		$subject = substr($this->stream, $this->index + 1);
+		$subject = mb_substr($this->stream, $this->index + 1);
 		return preg_match('`^(?:' . $pattern . ')`' . $options, $subject, $matches);
 	}
 
@@ -90,7 +90,7 @@ class StringInputStream
 	{
 		if ($this->assert_next($pattern, $options, $matches))
 		{
-			$this->move(strlen($matches[0]));
+			$this->move(mb_strlen($matches[0]));
 			return true;
 		}
 		return false;
@@ -128,11 +128,11 @@ class StringInputStream
 	{
 		$old_index = $this->index;
 		$this->safe_move($delta);
-		$str = substr($this->stream, $this->index);
+		$str = mb_substr($this->stream, $this->index);
 		$this->seek($old_index);
 		if ($max_length > 0)
 		{
-			return substr($str, 0, $max_length);
+			return mb_substr($str, 0, $max_length);
 		}
 		return $str;
 	}
