@@ -3,7 +3,7 @@
  *                              admin_database_tools.php
  *                            -------------------
  *   begin                : August 06, 2008
- *   copyright            : (C) 2008 SViarre Régis
+ *   copyright            : (C) 2008 SViarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *  
@@ -35,7 +35,7 @@ $action = retrieve(GET, 'action', '');
 
 $tpl = new FileTemplate('database/admin_database_tools.tpl');
 
-//outils de sauvegarde de la base de données
+//outils de sauvegarde de la base de donnÃ©es
 
 $backup = new Backup();
 
@@ -61,7 +61,7 @@ if (!empty($table) && $action == 'data')
 	
 	$nbr_lines = PersistenceContext::get_querier()->count($table);
 	
-	//On crée une pagination (si activé) si le nombre de news est trop important.
+	//On crÃ©e une pagination (si activÃ©) si le nombre de news est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbr_lines, $_NBR_ELEMENTS_PER_PAGE);
 	$pagination->set_url(new Url('/database/admin_database_tools.php?table=' . $table . '&amp;action=data&amp;p=%d'));
@@ -74,7 +74,7 @@ if (!empty($table) && $action == 'data')
 	
 	$table_structure = $backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
 	
-	//Détection de la clée primaire.
+	//DÃ©tection de la clÃ©e primaire.
 	$primary_key = '';
 	foreach ($table_structure['fields'] as $fields_info)
 	{
@@ -89,14 +89,14 @@ if (!empty($table) && $action == 'data')
 		}
 	}
 
-	//On éxécute la requête
+	//On Ã©xÃ©cute la requÃªte
 	$query = 'SELECT * FROM ' . $table . ' ORDER BY 1 ' . ' LIMIT ' . $pagination->get_number_items_per_page() . ' OFFSET ' . $pagination->get_display_from();
 	$result = PersistenceContext::get_querier()->select($query);
 	$i = 1;
 	while ($row = $result->fetch())
 	{
 		$tpl->assign_block_vars('line', array());
-		//Premier passage: on liste le nom des champs sélectionnés
+		//Premier passage: on liste le nom des champs sÃ©lectionnÃ©s
 		if ($i == 1)
 		{
 			foreach ($row as $field_name => $field_value)
@@ -157,7 +157,7 @@ elseif (!empty($table) && $action == 'delete')
 		
 	AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table . '&action=data');
 }
-elseif (!empty($table) && $action == 'update') //Mise à jour.
+elseif (!empty($table) && $action == 'update') //Mise Ã  jour.
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
@@ -166,7 +166,7 @@ elseif (!empty($table) && $action == 'update') //Mise à jour.
 	$value = retrieve(GET, 'value', '');
 	$field = retrieve(GET, 'field', '');
 	$submit = retrieve(POST, 'submit', '');
-	if (!empty($submit)) //On exécute une requête
+	if (!empty($submit)) //On exÃ©cute une requÃªte
 	{
 		$infos = array();
 		foreach ($table_structure['fields'] as $fields_info)
@@ -190,7 +190,7 @@ elseif (!empty($table) && $action == 'update') //Mise à jour.
 			'L_EXECUTE' => $LANG['db_submit_query']
 		));
 		
-		//On éxécute la requête
+		//On Ã©xÃ©cute la requÃªte
 		$row = PersistenceContext::get_querier()->select_single_row($table, array('*'), 'WHERE '. $field .'=:value', array('value' => $value));
 
 		//On parse les valeurs de sortie
@@ -208,16 +208,16 @@ elseif (!empty($table) && $action == 'update') //Mise à jour.
 		}
 	}
 }
-elseif (!empty($table) && $action == 'insert') //Mise à jour.
+elseif (!empty($table) && $action == 'insert') //Mise Ã  jour.
 {
 	$table_structure = $backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
 	
 	$submit = retrieve(POST, 'submit', '');
-	if (!empty($submit)) //On exécute une requête
+	if (!empty($submit)) //On exÃ©cute une requÃªte
 	{
 		AppContext::get_session()->csrf_get_protect(); //Protection csrf
 		
-		//Détection de la clée primaire.
+		//DÃ©tection de la clÃ©e primaire.
 		$primary_key = '';
 		foreach ($table_structure['fields'] as $fields_info)
 		{
@@ -234,7 +234,7 @@ elseif (!empty($table) && $action == 'insert') //Mise à jour.
 		$infos = array();
 		foreach ($table_structure['fields'] as $fields_info)
 		{
-			if ($fields_info['name'] == $primary_key  && empty($field_value)) //Clée primaire vide => on ignore.
+			if ($fields_info['name'] == $primary_key  && empty($field_value)) //ClÃ©e primaire vide => on ignore.
 				continue;
 			$infos[$fields_info['name']] = retrieve(POST, $fields_info['name'], '', TSTRING_HTML);
 		}
@@ -299,7 +299,7 @@ elseif (!empty($table) && $action == 'query')
 		'C_DATABASE_TABLE_QUERY' => true
 	));
 
-	if (!empty($query)) //On exécute une requête
+	if (!empty($query)) //On exÃ©cute une requÃªte
 	{
 		AppContext::get_session()->csrf_get_protect(); //Protection csrf
 		
@@ -307,16 +307,16 @@ elseif (!empty($table) && $action == 'query')
 			'C_QUERY_RESULT' => true
 		));
 		
-		$lower_query = strtolower($query);
-		if (strtolower(substr($query, 0, 6)) == 'select') //il s'agit d'une requête de sélection
+		$lower_query = mb_strtolower($query);
+		if (mb_strtolower(mb_substr($query, 0, 6)) == 'select') //il s'agit d'une requÃªte de sÃ©lection
 		{
-			//On éxécute la requête
+			//On exÃ©cute la requÃªte
 			$result = PersistenceContext::get_querier()->select(str_replace('phpboost_', PREFIX, $query));
 			$i = 1;
 			while ($row = $result->fetch())
 			{
 				$tpl->assign_block_vars('line', array());
-				//Premier passage: on liste le nom des champs sélectionnés
+				//Premier passage: on liste le nom des champs sÃ©lectionnÃ©s
 				if ($i == 1)
 				{
 					foreach ($row as $field_name => $field_value)
@@ -335,7 +335,7 @@ elseif (!empty($table) && $action == 'query')
 			}
 			$result->dispose();
 		}
-		elseif (substr($lower_query, 0, 11) == 'insert into' || substr($lower_query, 0, 6) == 'update' || substr($lower_query, 0, 11) == 'delete from' || substr($lower_query, 0, 11) == 'alter table'  || substr($lower_query, 0, 8) == 'truncate' || substr($lower_query, 0, 10) == 'drop table') //Requêtes d'autres types
+		elseif (mb_substr($lower_query, 0, 11) == 'insert into' || mb_substr($lower_query, 0, 6) == 'update' || mb_substr($lower_query, 0, 11) == 'delete from' || mb_substr($lower_query, 0, 11) == 'alter table'  || mb_substr($lower_query, 0, 8) == 'truncate' || mb_substr($lower_query, 0, 10) == 'drop table') //RequÃªtes d'autres types
 		{
 			$result = PersistenceContext::get_querier()->inject(str_replace('phpboost_', PREFIX, $query));
 			$affected_rows = $result->get_affected_rows();
@@ -364,7 +364,7 @@ elseif (!empty($table))
 	foreach ($table_structure['fields'] as $fields_info)
 	{
 		$primary_key = false;
-		foreach ($table_structure['index'] as $index_info) //Détection de la clée primaire.
+		foreach ($table_structure['index'] as $index_info) //DÃ©tection de la clÃ©e primaire.
 		{
 			if ($index_info['type'] == 'PRIMARY KEY' && in_array($fields_info['name'], explode(',', $index_info['fields'])))
 			{
