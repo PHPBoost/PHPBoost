@@ -26,9 +26,9 @@
  ###################################################*/
 
 //Nom de la distribution
-define('DISTRIBUTION_NAME', 'Développement');
+define('DISTRIBUTION_NAME', 'DÃ©veloppement');
 
 //Description de la distribution
-define('DISTRIBUTION_DESCRIPTION', 'Vous êtes sur le point d\'installer la version de développement de PHPBoost.
-<p>Cette version n\'est pas stable et n\'est donc pas à utiliser en production sur un site.</p>');
+define('DISTRIBUTION_DESCRIPTION', 'Vous Ãªtes sur le point d\'installer la version de dÃ©veloppement de PHPBoost.
+<p>Cette version n\'est pas stable et n\'est donc pas Ã  utiliser en production sur un site.</p>');
 ?>

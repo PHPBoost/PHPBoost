@@ -28,6 +28,6 @@
 $lang = array(
 	'distribution.name' => 'Pack complet',
 	'distribution.description' => '<p>Vous allez installer la distribution <strong>Pack complet</strong> de PHPBoost.</p>
-<p>Cette distribution contient l\'ensemble des modules officiels publiés par l\'équipe de développement de PHPBoost. Elle devrait répondre à une grande variété de besoins grâce à la diversité de ses modules.</p>'
+<p>Cette distribution contient l\'ensemble des modules officiels publiÃ©s par l\'Ã©quipe de dÃ©veloppement de PHPBoost. Elle devrait rÃ©pondre Ã  une grande variÃ©tÃ© de besoins grÃ¢ce Ã  la diversitÃ© de ses modules.</p>'
 );
 ?>

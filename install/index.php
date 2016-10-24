@@ -73,7 +73,7 @@ if ($_GET || $_POST)
 		
 		if (!$has_ws_locale)
 		{
-			$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+			$lang = mb_substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 			switch ($lang)
 			{
 				case 'fr':
