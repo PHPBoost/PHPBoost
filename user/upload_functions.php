@@ -27,13 +27,13 @@
 
 if (defined('PHPBOOST') !== true)	exit;
 
-//Catégories (affichage si on connait la catégorie et qu'on veut reformer l'arborescence)
+//CatÃ©gories (affichage si on connait la catÃ©gorie et qu'on veut reformer l'arborescence)
 function display_cat_explorer($id, &$cats, $display_select_link = 1, $user_id)
 {
 	if ($id > 0)
 	{
 		$id_cat = $id;
-		//On remonte l'arborescence des catégories afin de savoir quelle catégorie développer
+		//On remonte l'arborescence des catÃ©gories afin de savoir quelle catÃ©gorie dÃ©velopper
 		do
 		{
 			$id_cat = -1;
@@ -47,10 +47,10 @@ function display_cat_explorer($id, &$cats, $display_select_link = 1, $user_id)
 		while ($id_cat > 0);
 	}
 
-	//Maintenant qu'on connait l'arborescence on part du début
+	//Maintenant qu'on connait l'arborescence on part du dÃ©but
 	$cats_list = '<ul class="upload-cat-list">' . show_cat_contents(0, $cats, $id, $display_select_link, $user_id) . '</ul>';
 	
-	//On liste les catégories ouvertes pour la fonction javascript
+	//On liste les catÃ©gories ouvertes pour la fonction javascript
 	$opened_cats_list = '';
 	foreach ($cats as $key => $row)
 	{
@@ -66,7 +66,7 @@ function display_cat_explorer($id, &$cats, $display_select_link = 1, $user_id)
 	
 }
 
-//Fonction récursive pour l'affichage des catégories
+//Fonction rÃ©cursive pour l'affichage des catÃ©gories
 function show_cat_contents($id_cat, $cats, $id, $display_select_link, $user_id)
 {
 	$line = '';
@@ -80,7 +80,7 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link, $user_id)
 	));
 	while ($row = $result->fetch())
 	{
-		if (in_array($row['id'], $cats)) //Si cette catégorie contient notre catégorie, on l'explore
+		if (in_array($row['id'], $cats)) //Si cette catÃ©gorie contient notre catÃ©gorie, on l'explore
 		{
 			$line .= '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="fa fa-minus-square-o" id="img2_' . $row['id'] . '"></a> <a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="fa fa-folder-open" id="img_' . $row['id'] . '"></a>&nbsp;<span id="class_' . $row['id'] . '" class="' . ($row['id'] == $id ? 'upload-selected-cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span><span id="cat_' . $row['id'] . '">
 			<ul class="upload-cat-explorer">'
@@ -88,11 +88,11 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link, $user_id)
 		}
 		else
 		{
-			//On compte le nombre de catégories présentes pour savoir si on donne la possibilité de faire un sous dossier
+			//On compte le nombre de catÃ©gories prÃ©sentes pour savoir si on donne la possibilitÃ© de faire un sous dossier
 			$sub_cats_number = PersistenceContext::get_querier()->count(DB_TABLE_UPLOAD_CAT, 'WHERE id_parent = :id', array(
 				'id' => $row['id']
 			));
-			//Si cette catégorie contient des sous catégories, on propose de voir son contenu
+			//Si cette catÃ©gorie contient des sous catÃ©gories, on propose de voir son contenu
 			if ($sub_cats_number > 0)
 				$line .= '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="fa fa-plus-square-o" id="img2_' . $row['id'] . '"></a> <a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="fa fa-folder" id="img_' . $row['id'] . '"></a>&nbsp;<span id="class_' . $row['id'] . '" class="' . ($row['id'] == $id ? 'upload-selected-cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>';
 			else //Sinon on n'affiche pas le "+"
@@ -103,7 +103,7 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link, $user_id)
 	return "\n" . $line;
 }
 
-//Fonction qui détermine toutes les sous-catégories d'une catégorie (récursive)
+//Fonction qui dÃ©termine toutes les sous-catÃ©gories d'une catÃ©gorie (rÃ©cursive)
 function upload_find_subcats(&$array, $id_cat, $user_id)
 {
 	$result = PersistenceContext::get_querier()->select("SELECT id
@@ -115,7 +115,7 @@ function upload_find_subcats(&$array, $id_cat, $user_id)
 	while ($row = $result->fetch())
 	{
 		$array[] = $row['id'];
-		//On rappelle la fonction pour la catégorie fille
+		//On rappelle la fonction pour la catÃ©gorie fille
 		upload_find_subcats($array, $row['id'], $user_id);
 	}
 	$result->dispose();

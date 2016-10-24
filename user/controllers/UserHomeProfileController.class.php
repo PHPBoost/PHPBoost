@@ -85,7 +85,7 @@ class UserHomeProfileController extends AbstractController
 		$unread_contributions = UnreadContributionsCache::load();
 
 		//Vaut 0 si l'utilisateur n'a aucune contribution. Est > 0 si on connait le nombre de contributions
-		//Vaut -1 si l'utilisateur a au moins une contribution (mais on ne sait pas combien à cause des recoupements entre les groupes)
+		//Vaut -1 si l'utilisateur a au moins une contribution (mais on ne sait pas combien Ã  cause des recoupements entre les groupes)
 		$contribution_number = 0;
 
 		if ($this->user->check_level(User::ADMIN_LEVEL))

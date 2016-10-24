@@ -23,7 +23,7 @@
  ###################################################*/
 
 require_once('../kernel/begin.php');
-AppContext::get_session()->no_session_location(); //Ne réactualise pas l'emplacement du visiteur/membre
+AppContext::get_session()->no_session_location(); //Ne rÃ©actualise pas l'emplacement du visiteur/membre
 require_once('../kernel/header_no_display.php');
 
 $request = AppContext::get_request();
@@ -36,11 +36,11 @@ $open_cat = retrieve(POST, 'open_cat', 0);
 $root = $request->get_getvalue('root', false);
 
 
-//Listage des répertoires dont le répertoire parent est connu
+//Listage des rÃ©pertoires dont le rÃ©pertoire parent est connu
 if ($id_cat != 0)
 {
 	echo '<ul class="upload-cat-explorer">';
-	//On sélectionne les répertoires dont l'id parent est connu
+	//On sÃ©lectionne les rÃ©pertoires dont l'id parent est connu
 	$result = PersistenceContext::get_querier()->select("SELECT id, id_parent, name
 		FROM " . PREFIX . "upload_cat
 		WHERE id_parent = :id
@@ -50,9 +50,9 @@ if ($id_cat != 0)
 	
 	while ($row = $result->fetch())
 	{
-		//On compte le nombre de catégories présentes pour savoir si on donne la possibilité de faire un sous dossier
+		//On compte le nombre de catÃ©gories prÃ©sentes pour savoir si on donne la possibilitÃ© de faire un sous dossier
 		$sub_cats_number = PersistenceContext::get_querier()->count(DB_TABLE_UPLOAD_CAT, 'WHERE id_parent = :id_parent', array('id_parent' => $row['id']));
-		//Si cette catégorie contient des sous catégories, on propose de voir son contenu
+		//Si cette catÃ©gorie contient des sous catÃ©gories, on propose de voir son contenu
 		if ($sub_cats_number > 0)
 			echo '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="fa fa-plus-square-o" id="img2_' . $row['id'] . '"></a> <a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="fa fa-folder" id="img_' . $row['id'] . '"></a>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>';
 		else //Sinon on n'affiche pas le "+"

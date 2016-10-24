@@ -3,7 +3,7 @@
  *                           contribution_panel.php
  *                            -------------------
  *   begin                : July 21, 2008
- *   copyright            : (C) 2008 Benoît Sautel
+ *   copyright            : (C) 2008 BenoÃ®t Sautel
  *   email                : ben.popeye@phpboost.com
  *
  *  
@@ -27,7 +27,7 @@
 
 require_once('../kernel/begin.php');
 
-if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Si il n'est pas member (les invités n'ont rien à faire ici)
+if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Si il n'est pas member (les invitÃ©s n'ont rien Ã  faire ici)
 {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
@@ -86,7 +86,7 @@ elseif ($id_to_update > 0)
 	   DispatchManager::redirect($error_controller);
     }
 	
-	//Récupération des éléments de la contribution
+	//RÃ©cupÃ©ration des Ã©lÃ©ments de la contribution
 	$entitled = retrieve(POST, 'entitled', '', TSTRING_UNCHANGE);
 	$description = stripslashes(retrieve(POST, 'contents', '', TSTRING_PARSE));	
 	$status = retrieve(POST, 'status', Event::EVENT_STATUS_UNREAD);
@@ -94,11 +94,11 @@ elseif ($id_to_update > 0)
 	//Si le titre n'est pas vide
 	if (!empty($entitled))
 	{
-		//Mise à jour de l'objet contribution
+		//Mise Ã  jour de l'objet contribution
 		$contribution->set_entitled($entitled);
 		$contribution->set_description($description);
 		
-		//Changement de statut ? On regarde si la contribution a été réglée
+		//Changement de statut ? On regarde si la contribution a Ã©tÃ© rÃ©glÃ©e
 		if ($status == Event::EVENT_STATUS_PROCESSED && $contribution->get_status() != Event::EVENT_STATUS_PROCESSED)
 		{
 			$contribution->set_fixer_id(AppContext::get_current_user()->get_id());
@@ -107,7 +107,7 @@ elseif ($id_to_update > 0)
 		
 		$contribution->set_status($status);
 		
-		//Enregistrement en base de données
+		//Enregistrement en base de donnÃ©es
 		ContributionService::save_contribution($contribution);
 		
 		AppContext::get_response()->redirect(UserUrlBuilder::contribution_panel($contribution->get_id()));
@@ -119,7 +119,7 @@ elseif ($id_to_update > 0)
 //Suppression d'une contribution
 elseif ($id_to_delete > 0)
 {
-	//Vérification de la validité du jeton
+	//VÃ©rification de la validitÃ© du jeton
     AppContext::get_session()->csrf_get_protect();
 	
 	$contribution = new Contribution();
@@ -179,7 +179,7 @@ if ($contribution_id > 0)
 		'FIXING_URL' => Url::to_rel($contribution->get_fixing_url())
 	));
 	
-	//Si la contribution a été traitée
+	//Si la contribution a Ã©tÃ© traitÃ©e
 	if ($contribution->get_status() == Event::EVENT_STATUS_PROCESSED)
 	{
 		$fixer = PersistenceContext::get_querier()->select('SELECT *
@@ -256,7 +256,7 @@ else
 	
 	$page = AppContext::get_request()->get_getint('p', 1);
 	
-	//Gestion des critères de tri
+	//Gestion des critÃ¨res de tri
 	$criteria = retrieve(GET, 'criteria', 'current_status');
 	$order = retrieve(GET, 'order', 'asc');
 
@@ -267,7 +267,7 @@ else
 	//On liste les contributions
 	foreach (ContributionService::get_all_contributions($criteria, $order) as $this_contribution)
 	{
-		//Obligé de faire une variable temp à cause de php4.
+		//ObligÃ© de faire une variable temp Ã  cause de php4.
 		$creation_date = $this_contribution->get_creation_date();
 		$fixing_date = $this_contribution->get_fixing_date();
 		
@@ -336,7 +336,7 @@ else
 		$contribution_interface = $module->get_configuration()->get_contribution_interface();
 		
 		$authorized = true;
-		$authorizations_class = ucfirst($module->get_id()) . 'AuthorizationsService';
+		$authorizations_class = TextHelper::uppercase_first($module->get_id()) . 'AuthorizationsService';
 		if (class_exists($authorizations_class) && method_exists($authorizations_class, 'check_authorizations') && method_exists($authorizations_class, 'contribution') && !$authorizations_class::check_authorizations()->contribution())
 			$authorized = false;
 		
