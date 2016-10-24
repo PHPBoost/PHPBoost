@@ -312,17 +312,17 @@ class TinyMCEParser extends ContentFormattingParser
 
 		$array_preg = array(
 			'`&lt;p&gt;\s*&nbsp;\s*&lt;/p&gt;\s*`',
+			'`&lt;p&gt;&nbsp;&lt;/p&gt;\s*`',
+			'`&lt;p&gt;&nbsp;&nbsp;&lt;/p&gt;\s*`',
 			'`&lt;div&gt;(.+)&lt;/div&gt;`isU',
-			'`&lt;p&gt;(.+)&lt;/p&gt;`isU',
-			'`&lt;/p&gt;[\s]*`i',
-			'`&lt;p&gt;(.+)&lt;/p&gt;`'
+			'`&lt;/p&gt;[\s]*`i'
 		);
 		$array_preg_replace = array(
 			'',
+			'',
+			'',
 			'$1' . "<br />",
-			'$1' . "<br />",
-			'&lt;/p&gt;',
-			'$1'
+			'&lt;/p&gt;'
 		);
 
 		//Replacement
@@ -384,6 +384,12 @@ class TinyMCEParser extends ContentFormattingParser
 		{
 			array_push($array_preg, '`&lt;em&gt;(.+)&lt;/em&gt;`isU');
 			array_push($array_preg_replace, '<em>$1</em>');
+		}
+		//Paragraph tag
+		if (!in_array('p', $this->forbidden_tags))
+		{
+			array_push($array_preg, '`&lt;p&gt;(.+)&lt;/p&gt;`isU');
+			array_push($array_preg_replace, '<p>$1</p>');
 		}
 		//Link tag
 		if (!in_array('url', $this->forbidden_tags))
@@ -618,6 +624,7 @@ class TinyMCEParser extends ContentFormattingParser
 			'i' => '`\[i\](.+)\[/i\]`isU',
 			'u' => '`\[u\](.+)\[/u\]`isU',
 			's' => '`\[s\](.+)\[/s\]`isU',
+			'p' => '`\[p\](.+)\[/p\]`isU',
 			'pre' => '`\[pre\](.+)\[/pre\]`isU',
 			'float' => '`\[float=(left|right)\](.+)\[/float\]`isU',
 			'acronym' => '`\[acronym=([^\n[\]<]+)\](.*)\[/acronym\]`isU',
@@ -637,6 +644,7 @@ class TinyMCEParser extends ContentFormattingParser
 			'i' => "<em>$1</em>",
 			'u' => "<span style=\"text-decoration: underline;\">$1</span>",
 			's' => "<s>$1</s>",
+			'p' => "<p>$1</p>",
 			'pre' => "<pre>$1</pre>",
 			'float' => "<p class=\"float-$1\">$2</p>",
 			'acronym' => "<abbr title=\"$1\">$2</abbr>",
