@@ -55,26 +55,26 @@ class ModulesCssFilesService
 	
 	public static function get_css_files_running_module_displayed()
 	{
+		$css_files = array();
+		$theme_id = AppContext::get_current_user()->get_theme();
 		$module_id = Environment::get_running_module_name();
 		if (array_key_exists($module_id, self::$modules_css_files))
 		{
 			$module_css_files = self::$modules_css_files[$module_id];
 			$module_css_files_running_module_displayed = $module_css_files->get_css_files_running_module_displayed();
-			if (!empty($module_css_files_running_module_displayed))
+			
+			foreach ($module_css_files_running_module_displayed as $css_file_options)
 			{
-				$theme_id = AppContext::get_current_user()->get_theme();
-				$css_files = array();
-				foreach ($module_css_files_running_module_displayed as $css_file)
+				if (!empty($css_file_options['css_file']))
 				{
-					$css_files[] = self::get_real_path_css_file($theme_id, $module_id, $css_file);
+					$module = !empty($css_file_options['module_id']) ? $css_file_options['module_id'] : Environment::get_running_module_name();
+					$css_files[] = self::get_real_path_css_file($theme_id, $module, $css_file_options['css_file']);
 				}
-				return $css_files;
 			}
-			return array();
 		}
-		return array();
+		return $css_files;
 	}
-		
+	
 	private static function get_real_path_css_file($theme_id, $module_id, $css_file)
 	{
 		if (file_exists(PATH_TO_ROOT . '/templates/' . $theme_id . '/modules/' . $module_id . '/' . $css_file))

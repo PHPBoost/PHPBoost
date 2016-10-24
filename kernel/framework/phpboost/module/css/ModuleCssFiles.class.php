@@ -61,9 +61,9 @@ class ModuleCssFiles implements CssFilesExtensionPoint
 	 * @desc Adding css files to display on all pages
 	 * @param string $css_file containing css file name
 	 */
-	public function adding_running_module_displayed_file($css_file)
+	public function adding_running_module_displayed_file($css_file, $module_id = '')
 	{
-		$this->css_files_running_module_displayed[] = $css_file;
+		$this->css_files_running_module_displayed[] = array('css_file' => $css_file, 'module_id' => $module_id);
 	}
 	
 	public function get_css_files_running_module_displayed()
