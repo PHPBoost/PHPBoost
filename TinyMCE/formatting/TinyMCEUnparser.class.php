@@ -81,12 +81,12 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		//Smilies
 		$this->unparse_smilies();
 		
-		//Remplacement des caractères de word
+		//Remplacement des caractÃ¨res de word
 		$array_str = array(
-			"\t", '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '€', '‚', 'ƒ',
-			'„', '…', '†', '‡', 'ˆ', '‰', 'Š', '‹', 'Œ', 'Ž',
-			'‘', '’', '“', '”', '•', '–', '—',  '˜', '™', 'š',
-			'›', 'œ', 'ž', 'Ÿ'
+			"\t", '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', 'â‚¬', 'â€š', 'Æ’',
+			'â€ž', 'â€¦', 'â€ ', 'â€¡', 'Ë†', 'â€°', 'Å ', 'â€¹', 'Å’', 'Å½',
+			'â€˜', 'â€™', 'â€œ', 'â€', 'â€¢', 'â€“', 'â€”',  'Ëœ', 'â„¢', 'Å¡',
+			'â€º', 'Å“', 'Å¾', 'Å¸'
 		);
 
 		$array_str_replace = array(
@@ -311,9 +311,9 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		//FA Icon
 		$this->content = preg_replace_callback('`<i class="fa fa-([a-z0-9-]+)( fa-[a-z0-9-]+)?( fa-[a-z0-9-]+)?( fa-[a-z0-9-]+)?"></i>`iU', array($this, 'unparse_fa'), $this->content);
 		
-		##Remplacement des balises imbriquées
+		##Remplacement des balises imbriquÃ©es
 
-		//Texte caché
+		//Texte cachÃ©
 		$this->_parse_imbricated('<div class="formatter-container formatter-hide" onclick="bb_hide(this)"><span class="formatter-title">', '`<div class="formatter-container formatter-hide" onclick="bb_hide\(this\)"><span class="formatter-title">(.*) :</span><div class="formatter-content">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
 		$this->_parse_imbricated('<div class="formatter-container formatter-hide" onclick="bb_hide(this)"><span class="formatter-title title-perso">', '`<div class="formatter-container formatter-hide" onclick="bb_hide\(this\)"><span class="formatter-title title-perso">(.*) :</span><div class="formatter-content">(.*)</div></div>`sU', '[hide=$1]$2[/hide]', $this->content);
 
@@ -327,7 +327,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			$this->content = preg_replace_callback('`<fieldset class="formatter-container formatter-fieldset" style="([^"]*)"><legend>(.*)</legend><div class="formatter-content">(.+)</div></fieldset>`sU', array($this, 'unparse_fieldset'), $this->content);
 		}
 
-		//Liens Wikipédia
+		//Liens WikipÃ©dia
 		$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link">(.*)</a>`sU', array($this, 'unparse_wikipedia_link'), $this->content);
 	}
 
@@ -381,7 +381,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	 */
 	private function unparse_wikipedia_link($matches)
 	{
-		//On est dans la langue par défaut
+		//On est dans la langue par dÃ©faut
 		if ($matches[1] == LangLoader::get_message('wikipedia_subdomain', 'editor-common'))
 		{
 			$lang = '';
@@ -391,7 +391,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			$lang = $matches[1];
 		}
 			
-		//L'intitulé du lien est différent du nom de l'article
+		//L'intitulÃ© du lien est diffÃ©rent du nom de l'article
 		if ($matches[2] != $matches[3])
 		{
 			$page_name = $matches[2];

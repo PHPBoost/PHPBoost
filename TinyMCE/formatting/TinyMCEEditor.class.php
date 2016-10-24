@@ -3,7 +3,7 @@
  *                             TinyMCEEditor.class.php
  *                            -------------------
  *   begin                : July 5 2008
- *   copyright            : (C) 2008 Régis Viarre
+ *   copyright            : (C) 2008 RÃ©gis Viarre
  *   email                : crowkait@phpboost.com
  *
  *
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>
  * @desc This class provides an interface editor for contents.
  * @package {@package}
  */
@@ -61,7 +61,7 @@ class TinyMCEEditor extends ContentEditor
 		
 		$displayed_icons_number = 0;
 		$toolbar = array();
-		foreach ($this->array_tags as $tag => $tinymce_tag) //Balises autorisées.
+		foreach ($this->array_tags as $tag => $tinymce_tag) //Balises autorisÃ©es.
 		{
 			$tag = preg_replace('`[0-9]`', '', $tag);
 			if (!in_array($tag, $this->forbidden_tags))
@@ -76,7 +76,7 @@ class TinyMCEEditor extends ContentEditor
 		}
 		$toolbar = implode(',', $toolbar);
 		
-		$language = substr(AppContext::get_current_user()->get_locale(), 0, 2);
+		$language = mb_substr(AppContext::get_current_user()->get_locale(), 0, 2);
 		switch ($language) {
 			case 'fr' : $language = 'fr_FR';
 						break;
