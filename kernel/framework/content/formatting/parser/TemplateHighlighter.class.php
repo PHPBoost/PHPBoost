@@ -27,7 +27,7 @@
 
 /**
  * @package {@package}
- * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @author BenoÃ®t Sautel <ben.popeye@phpboost.com>
  * @desc This is a syntax highlighter for the PHPBoost template syntax.
  */
 class TemplateHighlighter extends AbstractParser
@@ -58,7 +58,7 @@ class TemplateHighlighter extends AbstractParser
 
 		$geshi = new GeSHi($this->content, 'html');
 
-		if ($line_number) //Affichage des numéros de lignes.
+		if ($line_number) //Affichage des numÃ©ros de lignes.
 		{
 			$geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
 		}

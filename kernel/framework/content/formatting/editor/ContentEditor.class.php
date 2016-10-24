@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                         	ContentEditor.class.php
+ *                          ContentEditor.class.php
  *                            -------------------
  *   begin                : July 5 2008
- *   copyright            : (C) 2008 Régis Viarre
+ *   copyright            : (C) 2008 RÃ©gis Viarre
  *   email                : crowkait@phpboost.com
  *
  *
@@ -27,7 +27,7 @@
 
 /**
  * @package {@package}
- * @author Régis Viarre <crowkait@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>
  * @desc Abstract class for editors content.
  */
 abstract class ContentEditor
@@ -43,45 +43,45 @@ abstract class ContentEditor
     }
 
     /**
-	 * @desc Set the forbidden tags
-	 * @param array List of forbidden tags.
-	 */
+     * @desc Set the forbidden tags
+     * @param array List of forbidden tags.
+     */
     public function set_forbidden_tags($forbidden_tags)
     {
         $this->forbidden_tags = $forbidden_tags;
     }
 
     /**
-	 * @desc Get the fordidden tags.
-	 * @return array List of forbidden tags.
-	 */
+     * @desc Get the fordidden tags.
+     * @return array List of forbidden tags.
+     */
     public function get_forbidden_tags()
     {
         return $this->forbidden_tags;
     }
 
     /**
-	 * @desc Set the html identifier of the textarea field which contain the content to edit.
-	 * @param string The html identifier.
-	 */
+     * @desc Set the html identifier of the textarea field which contain the content to edit.
+     * @param string The html identifier.
+     */
     public function set_identifier($identifier)
     {
         $this->identifier = $identifier;
     }
 
     /**
-	 * @desc Set an alternative template for the editor.
-	 * @param Template $template.
-	 */
+     * @desc Set an alternative template for the editor.
+     * @param Template $template.
+     */
     public function set_template($template)
     {
         $this->template = $template;
     }
 
     /**
-	 * @desc Get the template used for the editor.
-	 * @return Template The template
-	 */
+     * @desc Get the template used for the editor.
+     * @return Template The template
+     */
     public function get_template()
     {
         return $this->template;

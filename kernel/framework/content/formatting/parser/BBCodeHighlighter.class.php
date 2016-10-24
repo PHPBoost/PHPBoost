@@ -27,7 +27,7 @@
 
 /**
  * @package {@package}
- * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @author BenoÃ®t Sautel <ben.popeye@phpboost.com>
  * @desc This class is a highlighter for the PHPBoost BBCode language.
  * It supplies the highlighted code written in XHTML.
  */

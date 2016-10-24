@@ -119,7 +119,7 @@ class ContentSecondParser extends AbstractParser
 		$contents = TextHelper::htmlspecialchars_decode($contents);
 		
 		//BBCode PHPBoost
-		if (strtolower($language) == 'bbcode')
+		if (mb_strtolower($language) == 'bbcode')
 		{
 			$bbcode_highlighter = new BBCodeHighlighter();
 			$bbcode_highlighter->set_content($contents);
@@ -127,7 +127,7 @@ class ContentSecondParser extends AbstractParser
 			$contents = $bbcode_highlighter->get_content();
 		}
 		//Templates PHPBoost
-		elseif (strtolower($language) == 'tpl' || strtolower($language) == 'template')
+		elseif (mb_strtolower($language) == 'tpl' || mb_strtolower($language) == 'template')
 		{
 			require_once(PATH_TO_ROOT . '/kernel/lib/php/geshi/geshi.php');
 
@@ -136,7 +136,7 @@ class ContentSecondParser extends AbstractParser
 			$template_highlighter->parse($line_number ? GESHI_NORMAL_LINE_NUMBERS : GESHI_NO_LINE_NUMBERS, $inline_code);
 			$contents = $template_highlighter->get_content();
 		}
-		elseif ( strtolower($language) == 'plain')
+		elseif ( mb_strtolower($language) == 'plain')
 		{
 			$plain_code_highlighter = new PlainCodeHighlighter();
 			$plain_code_highlighter->set_content($contents);
@@ -195,7 +195,7 @@ class ContentSecondParser extends AbstractParser
 
 		$content_to_highlight = $matches[4];
 
-		if (strlen($content_to_highlight) > self::MAX_CODE_LENGTH)
+		if (mb_strlen($content_to_highlight) > self::MAX_CODE_LENGTH)
 		{
 			return '<div class="error">' . LangLoader::get_message('code_too_long_error', 'editor-common') . '</div>';
 		}
@@ -203,13 +203,13 @@ class ContentSecondParser extends AbstractParser
 		if (!empty($matches[1])) {
 			$info = new SplFileInfo($matches[1]);
 			$extension = $info->getExtension();
-			$extension = strtolower($extension);
+			$extension = mb_strtolower($extension);
 			
 			if ($extension == 'js' || $extension == 'jquery')
 			{
 				$extension = "javascript";
 			}
-			else if ($extension && strtolower($extension)!='tpl') 
+			else if ($extension && mb_strtolower($extension)!='tpl') 
 			{
 				require_once(PATH_TO_ROOT . '/kernel/lib/php/geshi/geshi.php');
 				$Geshi = new GeSHi();
@@ -223,13 +223,13 @@ class ContentSecondParser extends AbstractParser
 
 		if ($extension != "")
 		{
-			$typecode = strtoupper($extension);
+			$typecode = mb_strtoupper($extension);
 			$title = $matches[1] .' : ';
 		}
 		else
 		{
-			$typecode = strtoupper($matches[1]);
-			$title = sprintf(LangLoader::get_message('code_langage', 'main'), strtoupper($matches[1]));
+			$typecode = mb_strtoupper($matches[1]);
+			$title = sprintf(LangLoader::get_message('code_langage', 'main'), mb_strtoupper($matches[1]));
 		}
 
 		$contents = $this->highlight_code($content_to_highlight, $typecode, $line_number, $inline_code);

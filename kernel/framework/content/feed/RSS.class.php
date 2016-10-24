@@ -3,7 +3,7 @@
  *                              Rss.class.php
  *                            -------------------
  *   begin                : March 10, 2005
- *   copyright            : (C) 2005 Régis Viarre, Loic Rouchon
+ *   copyright            : (C) 2005 RÃ©gis Viarre, Loic Rouchon
  *   email                : crowkait@phpboost.com, loic.rouchon@phpboost.com
  *
  *
@@ -33,8 +33,8 @@
  */
 class RSS extends Feed
 {
-	private static $default_rss_template = 'framework/content/syndication/rss.tpl';
-	
+    private static $default_rss_template = 'framework/content/syndication/rss.tpl';
+    
     ## Public Methods ##
     /**
      * @desc Builds a new RSS object
@@ -72,23 +72,23 @@ class RSS extends Feed
                 for ($i = 1; $i <= $nbItems; $i++)
                 {
                     $pubDate = strtotime($date[1]);
-					
-					$item = new FeedItem();
+                    
+                    $item = new FeedItem();
                     
                     $item->set_title(preg_match('`<title>(.*)</title>`is', $expParsed[$i], $title) ? $title[1] : '');
                     $item->set_link(preg_match('`<link>(.*)</link>`is', $expParsed[$i], $url) ? $url[1] : '');
                     $item->set_guid(preg_match('`<guid>(.*)</guid>`is', $expParsed[$i], $guid) ? $guid[1] : '');
                     $item->set_desc(preg_match('`<desc>(.*)</desc>`is', $expParsed[$i], $desc) ? $desc[1] : '');
                     $item->set_date(preg_match('`<pubDate>(.*)</pubDate>`is', $expParsed[$i], $date) ? new Date(strtotime($date[1]), Timezone::SERVER_TIMEZONE) : null);
-					
+                    
                     $enclosure = preg_match('`<enclosure url="(.*)" length="(.*)" type="(.*)" />`is', $expParsed[$i]);
                     if ($enclosure)
                     {
-                    	$enclosure_item = new FeedItemEnclosure();
-                    	$enclosure_item->set_lenght($enclosure[2]);
-                    	$enclosure_item->set_type($enclosure[3]);
-                    	$enclosure_item->set_url($enclosure[1]);
-                    	$item->set_enclosure($enclosure_item);
+                        $enclosure_item = new FeedItemEnclosure();
+                        $enclosure_item->set_lenght($enclosure[2]);
+                        $enclosure_item->set_type($enclosure[3]);
+                        $enclosure_item->set_url($enclosure[1]);
+                        $item->set_enclosure($enclosure_item);
                     }
                     
                     $this->data->add_item($item);

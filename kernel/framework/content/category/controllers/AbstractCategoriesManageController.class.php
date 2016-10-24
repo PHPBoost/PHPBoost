@@ -3,7 +3,7 @@
  *                             AbstractCategoriesManageController.class.php
  *                            -------------------
  *   begin                : February 11, 2013
- *   copyright            : (C) 2013 Kévin MASSY
+ *   copyright            : (C) 2013 KÃ©vin MASSY
  *   email                : kevin.massy@phpboost.com
  *
  *
@@ -27,7 +27,7 @@
 
 /**
  * @package {@package}
- * @author Kévin MASSY
+ * @author KÃ©vin MASSY
  * @desc
  */
 abstract class AbstractCategoriesManageController extends ModuleController
@@ -81,7 +81,7 @@ abstract class AbstractCategoriesManageController extends ModuleController
 				if (method_exists($category, 'get_description'))
 				{
 					$description = FormatingHelper::second_parse($category->get_description());
-					$description = strlen($description) > 250 ? substr(@strip_tags($description, '<br><br/>'), 0, 250) . '...' : $description;
+					$description = mb_strlen($description) > 250 ? mb_substr(@strip_tags($description, '<br><br/>'), 0, 250) . '...' : $description;
 				}
 				
 				$description_exists = method_exists($category, 'get_description');

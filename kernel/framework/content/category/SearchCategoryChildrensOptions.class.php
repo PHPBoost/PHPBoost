@@ -3,7 +3,7 @@
  *                             SearchCategoryChildrensOptions.class.php
  *                            -------------------
  *   begin                : February 06, 2013
- *   copyright            : (C) 2013 Kévin MASSY
+ *   copyright            : (C) 2013 KÃ©vin MASSY
  *   email                : kevin.massy@phpboost.com
  *
  *
@@ -27,7 +27,7 @@
 
 /**
  * @package {@package}
- * @author Kévin MASSY
+ * @author KÃ©vin MASSY
  * @desc This class allows you to manage options of children used in CategoriesManager::get_children() and CategoriesManager::get_select_categories_form_field().
  * You will be able to manage one or more permission bits, exclude certain categories disable recursive search of one, several or all categories
  */

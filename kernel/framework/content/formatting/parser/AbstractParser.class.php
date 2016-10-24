@@ -3,7 +3,7 @@
  *                         AbstractParser.class.php
  *                            -------------------
  *   begin                : November 29, 2007
- *   copyright            : (C) 2007 Régis Viarre, Benoit Sautel, Loic Rouchon
+ *   copyright            : (C) 2007 RÃ©gis Viarre, Benoit Sautel, Loic Rouchon
  *   email                : crowkait@phpboost.com, ben.popeye@phpboost.com, loic.rouchon@phpboost.com
  *
  *
@@ -27,7 +27,7 @@
 
 /**
  * @package {@package}
- * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @author BenoÃ®t Sautel <ben.popeye@phpboost.com>
  * @desc This class is the basis of all the formatting processings that exist in PHPBoost.
  */
 abstract class AbstractParser implements FormattingParser
@@ -138,7 +138,7 @@ abstract class AbstractParser implements FormattingParser
 	 */
 	protected function _parse_imbricated($match, $regex, $replace)
 	{
-		$nbr_match = substr_count($this->content, $match);
+		$nbr_match = mb_substr_count($this->content, $match);
 		for ($i = 0; $i < $nbr_match; $i++)
 		{
 			$this->content = preg_replace($regex, $replace, $this->content);

@@ -70,7 +70,7 @@ class TwitterTweeterShare extends AbstractShare
 		else
 		{
 			// TODO change for a new function
-			return substr(AppContext::get_current_user()->get_locale(), 2);
+			return mb_substr(AppContext::get_current_user()->get_locale(), 2);
 		}
 	}
 	

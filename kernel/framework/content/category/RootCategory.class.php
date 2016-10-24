@@ -3,7 +3,7 @@
  *                          RootCategory.class.php
  *                            -------------------
  *   begin                : January 31, 2013
- *   copyright            : (C) 2013 Kévin MASSY
+ *   copyright            : (C) 2013 KÃ©vin MASSY
  *   email                : kevin.massy@phpboost.com
  *
  *

@@ -3,7 +3,7 @@
  *                          CategoriesItemsParameters.class.php
  *                            -------------------
  *   begin                : February 18, 2013
- *   copyright            : (C) 2013 Kévin MASSY
+ *   copyright            : (C) 2013 KÃ©vin MASSY
  *   email                : kevin.massy@phpboost.com
  *
  *
@@ -27,7 +27,7 @@
 
 /**
  * @package {@package}
- * @author Kévin MASSY
+ * @author KÃ©vin MASSY
  * @desc This class allows you to inquire the table that stores the items and the database field that contains the ID of the category in which it is located
  */
 class CategoriesItemsParameters

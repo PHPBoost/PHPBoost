@@ -3,7 +3,7 @@
  *                     SitemapCategoriesModule.class.php
  *                            -------------------
  *   begin                : February 19, 2013
- *   copyright            : (C) 2013 Kévin MASSY
+ *   copyright            : (C) 2013 KÃ©vin MASSY
  *   email                : kevin.massy@phpboost.com
  *
  *

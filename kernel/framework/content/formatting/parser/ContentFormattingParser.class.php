@@ -152,7 +152,7 @@ abstract class ContentFormattingParser extends AbstractParser
 		// Stockage de la chaîne avant le premier tag dans le cas ou il y a au moins une balise ouvrante
 		if ($size >= 1)
 		{
-			array_push($parsed, substr($content, 0, $index_tags[0]));
+			array_push($parsed, mb_substr($content, 0, $index_tags[0]));
 		}
 		else
 		{
@@ -165,11 +165,11 @@ abstract class ContentFormattingParser extends AbstractParser
 			// Calcul de la sous-chaîne pour l'expression régulière
 			if ($i == ($size - 1))
 			{
-				$sub_str = substr($content, $current_index);
+				$sub_str = mb_substr($content, $current_index);
 			}
 			else
 			{
-				$sub_str = substr($content, $current_index, $index_tags[$i + 1] - $current_index);
+				$sub_str = mb_substr($content, $current_index, $index_tags[$i + 1] - $current_index);
 			}
 
 			// Mise en place de l'éclatement de la sous-chaine
@@ -192,9 +192,9 @@ abstract class ContentFormattingParser extends AbstractParser
 			if ($i < ($size - 1))
 			{
 				// On prend la chaine après le tag de fermeture courant jusqu'au prochain tag d'ouverture
-				$current_tag_len = strlen('[' . $tag . $local_parsed[1] . ']' . $local_parsed[2] . '[/' . $tag . ']');
+				$current_tag_len = mb_strlen('[' . $tag . $local_parsed[1] . ']' . $local_parsed[2] . '[/' . $tag . ']');
 				$end_pos = $index_tags[$i + 1] - ($current_index + $current_tag_len);
-				array_push($parsed, substr($local_parsed[3], 0, $end_pos ));
+				array_push($parsed, mb_substr($local_parsed[3], 0, $end_pos ));
 			}
 			elseif (isset($local_parsed[3]))
 			{   // c'est la fin, il n'y a pas d'autre tag ouvrant après
@@ -221,12 +221,12 @@ abstract class ContentFormattingParser extends AbstractParser
 		while (($pos = strpos($content, '[' . $tag, $pos + 1)) !== false)
 		{
 			// nombre de tags de fermeture déjà rencontrés
-			$nb_close_tags = substr_count(substr($content, 0, ($pos + strlen('['.$tag))), '[/'.$tag.']');
+			$nb_close_tags = mb_substr_count(mb_substr($content, 0, ($pos + mb_strlen('['.$tag))), '[/'.$tag.']');
 
 			// Si on trouve un tag d'ouverture, on sauvegarde sa position uniquement si il y a autant + 1 de tags fermés avant et on itère sur le suivant
 			if ($nb_open_tags == $nb_close_tags)
 			{
-				$open_tag = substr($content, $pos, (strpos($content, ']', $pos + 1) + 1 - $pos));
+				$open_tag = mb_substr($content, $pos, (strpos($content, ']', $pos + 1) + 1 - $pos));
 				$match = preg_match('`\[' . $tag . '(' . $attributes . ')?\]`', $open_tag);
 				if ($match == 1)
 				{
@@ -267,7 +267,7 @@ abstract class ContentFormattingParser extends AbstractParser
 					//Si on n'est pas après la dernière balise fermante, on met une balise de signalement de la position du tag
 					if ($i < $num_codes - 1)
 					{
-						$this->content .= '[' . strtoupper($tag) . '_TAG_' . $id_code++ . ']';
+						$this->content .= '[' . mb_strtoupper($tag) . '_TAG_' . $id_code++ . ']';
 					}
 				}
 				//Contenu des balises
@@ -298,7 +298,7 @@ abstract class ContentFormattingParser extends AbstractParser
 		//On réinjecte tous les contenus des balises
 		for ($i = 0; $i < $num_code; $i++)
 		{
-			$this->content = str_replace('[' . strtoupper($tag) . '_TAG_' . $i . ']', $this->array_tags[$tag][$i], $this->content);
+			$this->content = str_replace('[' . mb_strtoupper($tag) . '_TAG_' . $i . ']', $this->array_tags[$tag][$i], $this->content);
 		}
 
 		//On efface tout ce qu'on a prélevé du array

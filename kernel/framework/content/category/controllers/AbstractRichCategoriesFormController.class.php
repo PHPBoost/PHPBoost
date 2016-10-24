@@ -3,7 +3,7 @@
  *                             AbstractRichCategoriesFormController.class.php
  *                            -------------------
  *   begin                : February 07, 2013
- *   copyright            : (C) 2013 Kévin MASSY
+ *   copyright            : (C) 2013 KÃ©vin MASSY
  *   email                : kevin.massy@phpboost.com
  *
  *
@@ -27,7 +27,7 @@
 
 /**
  * @package {@package}
- * @author Kévin MASSY
+ * @author KÃ©vin MASSY
  * @desc
  */
 abstract class AbstractRichCategoriesFormController extends AbstractCategoriesFormController

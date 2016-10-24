@@ -3,7 +3,7 @@
  *                             CategoriesManager.class.php
  *                            -------------------
  *   begin                : January 29, 2013
- *   copyright            : (C) 2013 Kévin MASSY
+ *   copyright            : (C) 2013 KÃ©vin MASSY
  *   email                : kevin.massy@phpboost.com
  *
  *
@@ -27,7 +27,7 @@
 
 /**
  * @package {@package}
- * @author Kévin MASSY
+ * @author KÃ©vin MASSY
  * @desc This class allows you to easily integrate a complete system of categories in its script. 
  * It needs to have its first instantiation of a parameter child object CategoriesCache and as the second parameter to have a CategoriesItemsParameters object.
  */
