@@ -87,7 +87,7 @@ class Forum
 				$pseudo_pm = $LANG['guest'];
 			}
 			$next_msg_link = '/forum/topic' . url('.php?id=' . $idtopic . $last_page, '-' . $idtopic . $last_page_rewrite . '.php') . ($previous_msg_id ? '#m' . $previous_msg_id : '');
-			$preview_contents = substr($contents, 0, 300);
+			$preview_contents = mb_substr($contents, 0, 300);
 
 
 			//Récupération des membres suivant le sujet.

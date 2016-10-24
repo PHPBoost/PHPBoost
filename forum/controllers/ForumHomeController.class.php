@@ -183,7 +183,7 @@ class ForumHomeController extends ModuleController
 						}
 	
 						$last_topic_title = (($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '') . ' ' . $row['title'];
-						$last_topic_title = stripslashes((strlen(TextHelper::html_entity_decode($last_topic_title)) > 20) ? TextHelper::substr_html($last_topic_title, 0, 20) . '...' : $last_topic_title);
+						$last_topic_title = stripslashes((mb_strlen(TextHelper::html_entity_decode($last_topic_title)) > 20) ? TextHelper::substr_html($last_topic_title, 0, 20) . '...' : $last_topic_title);
 						$row['login'] = !empty($row['login']) ? $row['login'] : $LANG['guest'];
 						$group_color = User::get_group_color($row['groups'], $row['user_level']);
 						
@@ -294,7 +294,7 @@ class ForumHomeController extends ModuleController
 			'L_DISPLAY_UNREAD_MSG' => $LANG['show_not_reads'],
 			'L_MARK_AS_READ' => $LANG['mark_as_read'],
 			'L_TOTAL_POST' => $LANG['nbr_message'],
-			'L_DISTRIBUTED' => strtolower($LANG['distributed']),
+			'L_DISTRIBUTED' => mb_strtolower($LANG['distributed']),
 			'L_AND' => $LANG['and'],
 			'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
 			'L_ADMIN' => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
@@ -302,7 +302,7 @@ class ForumHomeController extends ModuleController
 			'L_MEMBER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
 			'L_GUEST' => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
 			'L_AND' => $LANG['and'],
-			'L_ONLINE' => strtolower($LANG['online'])
+			'L_ONLINE' => mb_strtolower($LANG['online'])
 		);
 		
 		$this->view->put_all($vars_tpl);

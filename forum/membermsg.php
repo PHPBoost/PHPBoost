@@ -201,7 +201,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 			'USER_WARNING' => $row['warning_percentage'],
 			'USER_PM' => !$is_guest && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? '<a href="'. UserUrlBuilder::personnal_message($row['user_id'])->rel() . '" class="basic-button smaller">MP</a>' : '',
 			'USER_ONLINE' => '<i class="fa ' . (!empty($row['connect']) ? 'fa-online' : 'fa-offline') . '"></i>',
-			'USER_PSEUDO' => !empty($row['display_name']) ? wordwrap(TextHelper::html_entity_decode($row['display_name']), 13, '<br />', 1) : $LANG['guest'],
+			'USER_PSEUDO' => !empty($row['display_name']) ? TextHelper::utf8_wordwrap(TextHelper::html_entity_decode($row['display_name']), 13, '<br />') : $LANG['guest'],
 			'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 			'GROUP_COLOR' => $group_color,
 			'U_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
@@ -222,7 +222,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 				{
 					foreach (MemberShortTextExtendedField::$brands_pictures_list as $id => $parameters)
 					{
-						if (strstr($row[$field_type], $id))
+						if (mb_strstr($row[$field_type], $id))
 							$button = '<a href="mailto:' . $row[$field_type] . '" class="basic-button smaller"><i class="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
 					}
 				}
@@ -232,7 +232,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 					
 					foreach (MemberShortTextExtendedField::$brands_pictures_list as $id => $parameters)
 					{
-						if (strstr($row[$field_type], $id))
+						if (mb_strstr($row[$field_type], $id))
 							$button = '<a href="' . $row[$field_type] . '" class="basic-button smaller"><i class="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
 					}
 				}
@@ -264,7 +264,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		'L_MEMBER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
 		'L_GUEST' => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
 		'L_AND' => $LANG['and'],
-		'L_ONLINE' => strtolower($LANG['online'])
+		'L_ONLINE' => mb_strtolower($LANG['online'])
 	);
 		
 	$tpl->put_all($vars_tpl);

@@ -109,7 +109,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 		'L_MEMBER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
 		'L_GUEST' => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
 		'L_AND' => $LANG['and'],
-		'L_ONLINE' => strtolower($LANG['online']),
+		'L_ONLINE' => mb_strtolower($LANG['online']),
 		'FORUM_NAME' => $config->get_forum_name() . ' : ' . $LANG['move_topic'],
 		'ID' => $id_get,
 		'TITLE' => stripslashes($topic['title']),
@@ -373,7 +373,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		'L_MEMBER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
 		'L_GUEST' => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
 		'L_AND' => $LANG['and'],
-		'L_ONLINE' => strtolower($LANG['online'])
+		'L_ONLINE' => mb_strtolower($LANG['online'])
 	));
 
 	$tpl->put_all($vars_tpl);

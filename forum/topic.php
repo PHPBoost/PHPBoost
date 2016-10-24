@@ -454,7 +454,7 @@ while ( $row = $result->fetch() )
 			{
 				foreach (MemberShortTextExtendedField::$brands_pictures_list as $id => $parameters)
 				{
-					if (strstr($row[$field_type], $id))
+					if (mb_strstr($row[$field_type], $id))
 						$button = '<a href="mailto:' . $row[$field_type] . '" class="basic-button smaller"><i class="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
 				}
 			}
@@ -464,7 +464,7 @@ while ( $row = $result->fetch() )
 				
 				foreach (MemberShortTextExtendedField::$brands_pictures_list as $id => $parameters)
 				{
-					if (strstr($row[$field_type], $id))
+					if (mb_strstr($row[$field_type], $id))
 						$button = '<a href="' . $row[$field_type] . '" class="basic-button smaller"><i class="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
 				}
 			}
@@ -538,7 +538,7 @@ $vars_tpl = array_merge($vars_tpl, array(
 	'L_MEMBER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
 	'L_GUEST' => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
 	'L_AND' => $LANG['and'],
-	'L_ONLINE' => strtolower($LANG['online']),
+	'L_ONLINE' => mb_strtolower($LANG['online']),
 ));
 
 //Récupération du message quoté.

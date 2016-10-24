@@ -7,7 +7,7 @@ header#forum-top {
 	margin: 5px 0 15px 0;
 	padding: 8px;
 	background-color: #EEEEEE;
-	border-radius: 5px;
+	border: 1px solid #DDDDDD;
 }
 
 header#forum-top h1 {
@@ -150,7 +150,6 @@ article footer ul.pagination {
 	margin: 0 4px ;
 	width: 99%;
 	border-top: none;
-	border-radius: 0 0 4px 4px;
 }
 
 /* --- creation de topic --- */
@@ -164,7 +163,6 @@ article header {
 	padding: 8px;
 	background-color: #EEEEEE;
 	border: 1px solid #DDDDDD;
-	border-radius: 3px;
 }
 
 article header h2 {
@@ -210,7 +208,6 @@ article footer {
 	min-height: 33px;
 	background-color: #EEEEEE;
 	border: 1px solid #DDDDDD;
-	border-radius: 3px;
 }
 
 article footer a {
@@ -281,7 +278,6 @@ a.forum-link-pseudo:hover {
 	width: 99%;
 	min-height: 150px;
 	border-top: none;
-	border-radius: 0 0 5px 5px;
 }
 
 table.bt tbody tr:last-child td {
@@ -678,7 +674,6 @@ footer#forum-bottom {
 	padding: 8px;
 	background-color: #EEEEEE;
 	border: 1px solid #DDDDDD;
-	border-radius: 3px;
 }
 
 footer#forum-bottom .forum-links {

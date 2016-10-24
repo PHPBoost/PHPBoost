@@ -218,7 +218,7 @@ $vars_tpl = array(
 	'L_MEMBER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
 	'L_GUEST' => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
 	'L_AND' => $LANG['and'],
-	'L_ONLINE' => strtolower($LANG['online']),
+	'L_ONLINE' => mb_strtolower($LANG['online']),
 
 	'C_PAGINATION' => $pagination->has_several_pages(),
 	'FORUM_NAME' => $config->get_forum_name(),
