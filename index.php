@@ -3,7 +3,7 @@
  *                                index.php
  *                            -------------------
  *   begin                : August 23 2007
- *   copyright            : (C) 2007 Régis Viarre
+ *   copyright            : (C) 2007 RÃ©gis Viarre
  *   email                : crowkait@phpboost.com
  *
  *
