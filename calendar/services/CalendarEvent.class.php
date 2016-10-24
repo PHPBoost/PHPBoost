@@ -170,7 +170,7 @@ class CalendarEvent
 		
 		$new_content = new CalendarNewContent();
 
-		return array(
+		return array_merge(Date::get_array_tpl_vars($this->start_date, 'start_date'), Date::get_array_tpl_vars($this->end_date, 'end_date'), array(
 			'C_APPROVED' => $this->content->is_approved(),
 			'C_EDIT' => $this->is_authorized_to_edit(),
 			'C_DELETE' => $this->is_authorized_to_delete(),
@@ -196,20 +196,6 @@ class CalendarEvent
 			'CONTENTS' => FormatingHelper::second_parse($this->content->get_contents()),
 			'PICTURE' => $this->content->get_picture()->rel(),
 			'LOCATION' => $this->content->get_location(),
-			'START_DATE' => $this->start_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-			'START_DATE_DAY' => $this->start_date->get_day(),
-			'START_DATE_MONTH' => $this->start_date->get_month(),
-			'START_DATE_YEAR' => $this->start_date->get_year(),
-			'START_DATE_HOUR' => $this->start_date->get_hours(),
-			'START_DATE_MINUTE' => $this->start_date->get_minutes(),
-			'START_DATE_ISO8601' => $this->start_date->format(Date::FORMAT_ISO8601),
-			'END_DATE' => $this->end_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-			'END_DATE_DAY' => $this->end_date->get_day(),
-			'END_DATE_MONTH' => $this->end_date->get_month(),
-			'END_DATE_YEAR' => $this->end_date->get_year(),
-			'END_DATE_HOUR' => $this->end_date->get_hours(),
-			'END_DATE_MINUTE' => $this->end_date->get_minutes(),
-			'END_DATE_ISO8601' => $this->end_date->format(Date::FORMAT_ISO8601),
 			'NUMBER_COMMENTS' => CommentsService::get_number_comments('calendar', $this->id),
 			'L_COMMENTS' => CommentsService::get_number_and_lang_comments('calendar', $this->id),
 			'REPEAT_NUMBER' => $this->content->get_repeat_number(),
@@ -235,7 +221,7 @@ class CalendarEvent
 			'U_SUSCRIBE' => CalendarUrlBuilder::suscribe_event($this->id)->rel(),
 			'U_UNSUSCRIBE' => CalendarUrlBuilder::unsuscribe_event($this->id)->rel(),
 			'U_COMMENTS' => CalendarUrlBuilder::display_event_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->content->get_rewrited_title())->rel()
-		);
+		));
 	}
 	
 	private function round_to_five_minutes($timestamp)

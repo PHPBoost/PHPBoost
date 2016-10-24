@@ -499,6 +499,8 @@ class Date
 			$date_label . '_MONTH_TEXT'	=> $date->get_month_text(), // 3 first characters of month name
 			$date_label . '_YEAR'		=> $date->get_year(),
 			$date_label . '_DAY_MONTH'	=> $date->format(Date::FORMAT_DAY_MONTH),
+			$date_label . '_HOUR'		=> $date->get_hours(),
+			$date_label . '_MINUTE'		=> $date->get_minutes(),
 			$date_label . '_ISO8601'	=> $date->format(Date::FORMAT_ISO8601)
 		);
 	}
