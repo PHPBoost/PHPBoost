@@ -3,7 +3,7 @@
  *                    SandboxExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : February 13, 2012
- *   copyright            : (C) 2013 Kévin MASSY
+ *   copyright            : (C) 2013 KÃ©vin MASSY
  *   email                : kevin.massy@phpboost.com
  *
  *
