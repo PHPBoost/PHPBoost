@@ -3,7 +3,7 @@
  *                           admin_poll_config.php
  *                            -------------------
  *   begin                : June 21, 2005
- *   copyright            : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -51,7 +51,7 @@ if ($valid)
 	
 	PollConfig::save();
 	
-	###### Régénération du cache des sondages #######
+	###### RÃ©gÃ©nÃ©ration du cache des sondages #######
 	PollMiniMenuCache::invalidate();
 	
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);

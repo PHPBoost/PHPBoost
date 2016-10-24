@@ -97,7 +97,7 @@ class PollConfig extends AbstractConfigData
 	{
 		return array(
 			self::COOKIE_NAME => 'poll',
-			self::COOKIE_LENGHT => 30, //La durée du cookie est de 30 jours par défaut
+			self::COOKIE_LENGHT => 30, //La durÃ©e du cookie est de 30 jours par dÃ©faut
 			self::DISPLAY_RESULTS_BEFORE_POLLS_END => true,
 			self::DISPLAYED_IN_MINI_MODULE_LIST => array('1'),
 			self::AUTHORIZATIONS => array('r-1' => 3, 'r0' => 3, 'r1' => 3)

@@ -3,7 +3,7 @@
  *                               poll.php
  *                            -------------------
  *   begin                : July 14, 2005
- *   copyright            : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
   *
@@ -48,11 +48,11 @@ if (!empty($poll_id))
 	}
 }
 
-$archives = retrieve(GET, 'archives', false); //On vérifie si on est sur les archives
-$show_result = retrieve(GET, 'r', false); //Affichage des résultats.
+$archives = retrieve(GET, 'archives', false); //On vÃ©rifie si on est sur les archives
+$show_result = retrieve(GET, 'r', false); //Affichage des rÃ©sultats.
 $now = new Date(Date::DATE_NOW, Timezone::USER_TIMEZONE);
 
-//Récupération des éléments de configuration
+//RÃ©cupÃ©ration des Ã©lÃ©ments de configuration
 $config_cookie_name = $poll_config->get_cookie_name();
 $config_cookie_lenght = $poll_config->get_cookie_lenght_in_seconds();
 $config_displayed_in_mini_module_list = $poll_config->get_displayed_in_mini_module_list();
@@ -79,19 +79,19 @@ if ($valid && !empty($poll['id']) && !$archives)
 				$check_cookie = false;
 				
 				$array_cookie[] = $poll['id']; //Ajout nouvelle valeur.
-				$value_cookie = implode('/', $array_cookie); //On retransforme le tableau en chaîne.
+				$value_cookie = implode('/', $array_cookie); //On retransforme le tableau en chaÃ®ne.
 	
 				AppContext::get_response()->set_cookie(new HTTPCookie($config_cookie_name, $value_cookie, time() + $config_cookie_lenght));
 			}
 		}
-		else //Génération d'un cookie.
+		else //GÃ©nÃ©ration d'un cookie.
 		{
 			$check_cookie = false;
 			AppContext::get_response()->set_cookie(new HTTPCookie($config_cookie_name, $poll['id'], time() + $config_cookie_lenght));
 		}
 		
 		$check_bdd = true;
-		if (Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $poll_config->get_authorizations(), PollAuthorizationsService::WRITE_AUTHORIZATIONS)) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
+		if (Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $poll_config->get_authorizations(), PollAuthorizationsService::WRITE_AUTHORIZATIONS)) //AutorisÃ© aux visiteurs, on filtre par ip => fiabilitÃ© moyenne.
 		{
 			//Injection de l'adresse ip du visiteur dans la bdd.
 			$ip = PersistenceContext::get_querier()->count(PREFIX . "poll_ip", 'WHERE ip = :ip AND idpoll = :id', array('ip' => AppContext::get_request()->get_ip_address(), 'id' => $poll['id']));
@@ -102,7 +102,7 @@ if ($valid && !empty($poll['id']) && !$archives)
 				$check_bdd = false;
 			}
 		}
-		else //Autorisé aux membres, on filtre par le user_id => fiabilité 100%.
+		else //AutorisÃ© aux membres, on filtre par le user_id => fiabilitÃ© 100%.
 		{
 			//Injection de l'adresse ip du visiteur dans la bdd.
 			$nbr_votes = PersistenceContext::get_querier()->count(PREFIX . "poll_ip", 'WHERE user_id = :user_id AND idpoll = :id', array('user_id' => AppContext::get_current_user()->get_id(), 'id' => $poll['id']));
@@ -118,10 +118,10 @@ if ($valid && !empty($poll['id']) && !$archives)
 		if ($check_bdd || $check_cookie)
 			AppContext::get_response()->redirect(PATH_TO_ROOT . '/poll/poll' . url('.php?id=' . $poll['id'] . '&error=e_already_vote', '-' . $poll['id'] . '.php?error=e_already_vote', '&') . '#message_helper');
 		
-		//Récupération du vote.
+		//RÃ©cupÃ©ration du vote.
 		$check_answer = false;
 		$array_votes = explode('|', $poll['votes']);
-		if ($poll['type'] == '1') //Réponse unique.
+		if ($poll['type'] == '1') //RÃ©ponse unique.
 		{
 			$id_answer = retrieve(POST, 'radio', -1);
 			if (isset($array_votes[$id_answer]))
@@ -130,9 +130,9 @@ if ($valid && !empty($poll['id']) && !$archives)
 				$check_answer = true;
 			}
 		}
-		else //Réponses multiples.
+		else //RÃ©ponses multiples.
 		{
-			//On boucle pour vérifier toutes les réponses du sondage.
+			//On boucle pour vÃ©rifier toutes les rÃ©ponses du sondage.
 			$nbr_answer = count($array_votes);
 			for ($i = 0; $i < $nbr_answer; $i++)
 			{
@@ -148,10 +148,10 @@ if ($valid && !empty($poll['id']) && !$archives)
 		{
 			PersistenceContext::get_querier()->update(PREFIX . "poll", array('votes' => implode('|', $array_votes)), 'WHERE id = :id', array('id' => $poll['id']));
 			
-			if (in_array($poll['id'], $config_displayed_in_mini_module_list) ) //Vote effectué du mini poll => mise à jour du cache du mini poll.
+			if (in_array($poll['id'], $config_displayed_in_mini_module_list) ) //Vote effectuÃ© du mini poll => mise Ã  jour du cache du mini poll.
 				PollMiniMenuCache::invalidate();
 				
-			//Tout s'est bien déroulé, on redirige vers la page des resultats.
+			//Tout s'est bien dÃ©roulÃ©, on redirige vers la page des resultats.
 			AppContext::get_response()->redirect(PATH_TO_ROOT . '/poll/poll' . url('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'));
 		}	
 		else //Vote blanc
@@ -164,16 +164,16 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 {
 	$tpl = new FileTemplate('poll/poll.tpl');
 
-	//Résultats
+	//RÃ©sultats
 	$check_bdd = false;
-	if (Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $poll_config->get_authorizations(), PollAuthorizationsService::WRITE_AUTHORIZATIONS)) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
+	if (Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $poll_config->get_authorizations(), PollAuthorizationsService::WRITE_AUTHORIZATIONS)) //AutorisÃ© aux visiteurs, on filtre par ip => fiabilitÃ© moyenne.
 	{
 		//Injection de l'adresse ip du visiteur dans la bdd.
 		$ip = PersistenceContext::get_querier()->count(PREFIX . "poll_ip", 'WHERE ip = :ip AND idpoll = :id', array('ip' => AppContext::get_request()->get_ip_address(), 'id' => $poll['id']));
 		if (!empty($ip))
 			$check_bdd = true;
 	}
-	else //Autorisé aux membres, on filtre par le user_id => fiabilité 100%.
+	else //AutorisÃ© aux membres, on filtre par le user_id => fiabilitÃ© 100%.
 	{
 		//Injection de l'adresse ip du visiteur dans la bdd.
 		$nbr_votes = PersistenceContext::get_querier()->count(PREFIX . "poll_ip", 'WHERE user_id = :user_id AND idpoll = :id', array('user_id' => AppContext::get_current_user()->get_id(), 'id' => $poll['id']));
@@ -205,7 +205,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 	{
 		$array_cookie = explode('/', AppContext::get_request()->get_cookie($config_cookie_name));
 	}
-	if ($show_result || in_array($poll['id'], $array_cookie) === true || $check_bdd) //Résultats
+	if ($show_result || in_array($poll['id'], $array_cookie) === true || $check_bdd) //RÃ©sultats
 	{
 		$array_answer = explode('|', $poll['answers']);
 		$array_vote = explode('|', $poll['votes']);
@@ -236,7 +236,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 			'L_DELETE' => LangLoader::get_message('delete', 'common')
 		));
 		
-		$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //Empêche la division par 0.
+		$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //EmpÃªche la division par 0.
 		$array_poll = array_combine($array_answer, $array_vote);
 		foreach ($array_poll as $answer => $nbrvote)
 		{
@@ -310,7 +310,7 @@ elseif ($archives) //Archives.
 	
 	$nbrarchives = PersistenceContext::get_querier()->count(PREFIX . "poll", 'WHERE archive = 1 AND visible = 1');
 	
-	//On crée une pagination si le nombre de sondages est trop important.
+	//On crÃ©e une pagination si le nombre de sondages est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbrarchives, $_NBR_ELEMENTS_PER_PAGE);
 	$pagination->set_url(new Url('/poll/poll.php?p=%d'));
@@ -333,7 +333,7 @@ elseif ($archives) //Archives.
 		'L_DELETE' => LangLoader::get_message('delete', 'common')
 	));	
 	
-	//On recupère les sondages archivés.
+	//On recupÃ¨re les sondages archivÃ©s.
 	$result = PersistenceContext::get_querier()->select("SELECT id, question, votes, answers, type, timestamp
 	FROM " . PREFIX . "poll
 	WHERE archive = 1 AND visible = 1
@@ -350,7 +350,7 @@ elseif ($archives) //Archives.
 		$array_vote = explode('|', $row['votes']);
 		
 		$sum_vote = array_sum($array_vote);
-		$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //Empêche la division par 0.
+		$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //EmpÃªche la division par 0.
 
 		$tpl->assign_block_vars('list', array(
 			'ID' => $row['id'],

@@ -66,12 +66,12 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 		//Chargement de la langue du module.
 		load_module_lang('poll');
 		$rand = array_rand($polls);
-		$poll_mini = $polls[$rand]; //Sondage aléatoire.
+		$poll_mini = $polls[$rand]; //Sondage alÃ©atoire.
 		
 		$tpl = new FileTemplate('poll/poll_mini.tpl');
 		
-		#####################Résultats######################
-		//Si le cookie existe, on redirige vers les resulats, sinon on prend en compte le vote (vérification par ip plus tard).
+		#####################RÃ©sultats######################
+		//Si le cookie existe, on redirige vers les resulats, sinon on prend en compte le vote (vÃ©rification par ip plus tard).
 		$array_cookie = array();
 		if (AppContext::get_request()->has_cookieparameter($config_cookie_name))
 		{
