@@ -3,7 +3,7 @@
  *                           LinksMenuLink.class.php
  *                            -------------------
  *   begin                : July 08, 2008
- *   copyright            : (C) 2008 Régis Viarre; Loic Rouchon
+ *   copyright            : (C) 2008 RÃ©gis Viarre; Loic Rouchon
  *   email                : crowkait@phpboost.com; loic.rouchon@phpboost.com
  *
  *

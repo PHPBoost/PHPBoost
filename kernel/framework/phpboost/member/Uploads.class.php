@@ -3,7 +3,7 @@
  *                             Uploads.class.php
  *                            -------------------
  *   begin                : April 18, 2007
- *   copyright            : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -70,7 +70,7 @@ class Uploads
 		}
 		$result->dispose();
 		
-		//Suppression des entrées dans la base de données
+		//Suppression des entrÃ©es dans la base de donnÃ©es
 		self::$db_querier->delete(DB_TABLE_UPLOAD_CAT, 'WHERE user_id = :user_id', array('user_id' => $user_id));
 		self::$db_querier->delete(DB_TABLE_UPLOAD, 'WHERE user_id = :user_id', array('user_id' => $user_id));
 	}
@@ -91,7 +91,7 @@ class Uploads
 		}
 		$result->dispose();
 		
-		//Suppression des entrées dans la base de données
+		//Suppression des entrÃ©es dans la base de donnÃ©es
 		self::$db_querier->delete(DB_TABLE_UPLOAD_CAT, 'WHERE id = :id', array('id' => $id_folder));
 		
 		self::$db_querier->delete(DB_TABLE_UPLOAD, 'WHERE idcat = :idcat', array('idcat' => $id_folder));
@@ -112,7 +112,7 @@ class Uploads
 	//Suppression d'un fichier
 	public static function Del_file($id_file, $user_id, $admin = false)
 	{	
-		if ($admin) //Administration, on ne vérifie pas l'appartenance.
+		if ($admin) //Administration, on ne vÃ©rifie pas l'appartenance.
 		{
 			$name = self::$db_querier->get_column_value(DB_TABLE_UPLOAD, 'path', 'WHERE id = :id', array('id' => $id_file));
 			self::$db_querier->delete(DB_TABLE_UPLOAD, 'WHERE id = :id', array('id' => $id_file));
@@ -151,25 +151,25 @@ class Uploads
 			$info_folder = self::$db_querier->select_single_row(PREFIX . "upload_cat", array("id_parent", "user_id"), 'WHERE id=:id', array('id' => $id_folder));
 		} catch (RowNotFoundException $e) {}
 		
-		//Vérification de l'unicité du nom du dossier.
+		//VÃ©rification de l'unicitÃ© du nom du dossier.
 		$check_folder = self::$db_querier->count(DB_TABLE_UPLOAD_CAT, 'WHERE id_parent = :id_parent AND name = :name AND id <> :id AND user_id = :user_id', array('id_parent' => $info_folder['id_parent'], 'name' => $name, 'id' => $id_folder, 'user_id' => $user_id));
 		if ($check_folder > 0 || preg_match('`/|\.|\\\|"|<|>|\||\?`', stripslashes($name)))
 			return '';
 		
-		if ($admin) //Administration, on ne vérifie pas l'appartenance.
+		if ($admin) //Administration, on ne vÃ©rifie pas l'appartenance.
 		{
 			self::$db_querier->update(DB_TABLE_UPLOAD_CAT, array('name' => $name), 'WHERE id = :id', array('id' => $id_folder));
-			return stripslashes((strlen(TextHelper::html_entity_decode($name)) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($name), 0, 22)) . '...' : $name);
+			return stripslashes((mb_strlen(TextHelper::html_entity_decode($name)) > 22) ? TextHelper::htmlentities(mb_substr(TextHelper::html_entity_decode($name), 0, 22)) . '...' : $name);
 		}
 		else
 		{
 			if ($user_id == $info_folder['user_id'])
 			{
 				self::$db_querier->update(DB_TABLE_UPLOAD_CAT, array('name' => $name), 'WHERE id = :id', array('id' => $id_folder));
-				return stripslashes((strlen(TextHelper::html_entity_decode($name)) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($name), 0, 22)) . '...' : $name);
+				return stripslashes((mb_strlen(TextHelper::html_entity_decode($name)) > 22) ? TextHelper::htmlentities(mb_substr(TextHelper::html_entity_decode($name), 0, 22)) . '...' : $name);
 			}
 		}
-		return stripslashes((strlen(TextHelper::html_entity_decode($previous_name)) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($previous_name), 0, 22)) . '...' : $previous_name);
+		return stripslashes((mb_strlen(TextHelper::html_entity_decode($previous_name)) > 22) ? TextHelper::htmlentities(mb_substr(TextHelper::html_entity_decode($previous_name), 0, 22)) . '...' : $previous_name);
 	}
 	
 	//Renomme un fichier virtuel
@@ -183,33 +183,33 @@ class Uploads
 			$info_cat = self::$db_querier->select_single_row(PREFIX . "upload", array("idcat", "user_id"), 'WHERE id=:id', array('id' => $id_file));
 		} catch (RowNotFoundException $e) {}
 		
-		//Vérification de l'unicité du nom du fichier.
+		//VÃ©rification de l'unicitÃ© du nom du fichier.
 		$check_file = self::$db_querier->count(DB_TABLE_UPLOAD, 'WHERE idcat = :idcat AND name = :name AND id <> :id AND user_id = :user_id', array('idcat' => $info_cat['idcat'], 'name' => $name, 'id' => $id_file, 'user_id' => $user_id));
 		if ($check_file > 0 || preg_match('`/|\\\|"|<|>|\||\?`', stripslashes($name)))
 			return '/';
 			
-		if ($admin) //Administration, on ne vérifie pas l'appartenance.
+		if ($admin) //Administration, on ne vÃ©rifie pas l'appartenance.
 		{
 			self::$db_querier->update(DB_TABLE_UPLOAD, array('name' => $name), 'WHERE id = :id', array('id' => $id_file));
-			return stripslashes((strlen(TextHelper::html_entity_decode($name)) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($name), 0, 22)) . '...' : $name);
+			return stripslashes((mb_strlen(TextHelper::html_entity_decode($name)) > 22) ? TextHelper::htmlentities(mb_substr(TextHelper::html_entity_decode($name), 0, 22)) . '...' : $name);
 		}
 		else
 		{
 			if ($user_id == $info_cat['user_id'])
 			{
 				self::$db_querier->update(DB_TABLE_UPLOAD, array('name' => $name), 'WHERE id = :id', array('id' => $id_file));
-				return stripslashes((strlen(TextHelper::html_entity_decode($name)) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($name), 0, 22)) . '...' : $name);
+				return stripslashes((mb_strlen(TextHelper::html_entity_decode($name)) > 22) ? TextHelper::htmlentities(mb_substr(TextHelper::html_entity_decode($name), 0, 22)) . '...' : $name);
 			}
 		}
-		return stripslashes((strlen(TextHelper::html_entity_decode($previous_name)) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($previous_name), 0, 22)) . '...' : $previous_name);
+		return stripslashes((mb_strlen(TextHelper::html_entity_decode($previous_name)) > 22) ? TextHelper::htmlentities(mb_substr(TextHelper::html_entity_decode($previous_name), 0, 22)) . '...' : $previous_name);
 	}
 		
-	//Déplacement dun dossier.
+	//DÃ©placement dun dossier.
 	public static function Move_folder($move, $to, $user_id, $admin = false)
 	{
-		if ($admin) //Administration, on ne vérifie pas l'appartenance.
+		if ($admin) //Administration, on ne vÃ©rifie pas l'appartenance.
 		{
-			//Changement de propriètaire du fichier.
+			//Changement de propriÃ¨taire du fichier.
 			$change_user_id = self::$db_querier->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $to));
 			if (empty($change_user_id))
 				$change_user_id = -1;
@@ -219,14 +219,14 @@ class Uploads
 		}
 		else
 		{
-			if ($to == 0) //Déplacement dossier racine du membre.
+			if ($to == 0) //DÃ©placement dossier racine du membre.
 			{
 				$get_mbr_folder = self::$db_querier->get_column_value(DB_TABLE_UPLOAD_CAT, 'id', 'WHERE user_id = :user_id', array('user_id' => $user_id));
 				self::$db_querier->update(DB_TABLE_UPLOAD_CAT, array('id_parent' => $get_mbr_folder), 'WHERE id = :id AND user_id = :user_id', array('id' => $move, 'user_id' => $user_id));
 				return '';
 			}
 			
-			//Vérification de l'appartenance du dossier de destination.
+			//VÃ©rification de l'appartenance du dossier de destination.
 			$check_user_id_move = self::$db_querier->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $move));
 			$check_user_id_to = self::$db_querier->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $to));
 			if ($user_id == $check_user_id_move && $user_id == $check_user_id_to)
@@ -239,12 +239,12 @@ class Uploads
 		}
 	}
 	
-	//Déplacement dun fichier.
+	//DÃ©placement dun fichier.
 	public static function Move_file($move, $to, $user_id, $admin = false)
 	{
-		if ($admin) //Administration, on ne vérifie pas l'appartenance.
+		if ($admin) //Administration, on ne vÃ©rifie pas l'appartenance.
 		{
-			//Changement de propriètaire du fichier.
+			//Changement de propriÃ¨taire du fichier.
 			$change_user_id = self::$db_querier->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $to));
 			if (empty($change_user_id))
 				$change_user_id = -1;
@@ -253,14 +253,14 @@ class Uploads
 		}
 		else
 		{
-			if ($to == 0) //Déplacement dossier racine du membre.
+			if ($to == 0) //DÃ©placement dossier racine du membre.
 			{
 				$get_mbr_folder = self::$db_querier->get_column_value(DB_TABLE_UPLOAD_CAT, 'id', 'WHERE user_id = :user_id AND id_parent = 0', array('user_id' => $user_id));
 				self::$db_querier->update(DB_TABLE_UPLOAD, array('idcat' => $get_mbr_folder), 'WHERE id = :id AND user_id = :user_id', array('id' => $move, 'user_id' => $user_id));
 				return '';
 			}
 
-			//Vérification de l'appartenance du dossier de destination.
+			//VÃ©rification de l'appartenance du dossier de destination.
 			$check_user_id_move = self::$db_querier->get_column_value(DB_TABLE_UPLOAD, 'user_id', 'WHERE id = :id', array('id' => $move));
 			$check_user_id_to = self::$db_querier->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $to));
 			if ($user_id == $check_user_id_move && $user_id == $check_user_id_to)
@@ -273,22 +273,22 @@ class Uploads
 		}
 	}
 	
-	//Fonction qui détermine toutes les sous-catégories d'une catégorie (récursive)
+	//Fonction qui dÃ©termine toutes les sous-catÃ©gories d'une catÃ©gorie (rÃ©cursive)
 	public static function Find_subfolder($array_folders, $id_cat, &$array_child_folder)
 	{
-		//On parcourt les catégories et on déterminer les catégories filles
+		//On parcourt les catÃ©gories et on dÃ©terminer les catÃ©gories filles
 		foreach ($array_folders as $key => $value)
 		{
 			if ($value == $id_cat)
 			{
 				$array_child_folder[] = $key;
-				//On rappelle la fonction pour la catégorie fille
+				//On rappelle la fonction pour la catÃ©gorie fille
 				self::Find_subfolder($array_folders, $key, $array_child_folder);
 			}
 		}
 	}
 	
-	//Récupération du répertoire courant (administration).
+	//RÃ©cupÃ©ration du rÃ©pertoire courant (administration).
 	public static function get_admin_url($id_folder, $pwd, $member_link = '')
 	{
 		$parent_folder = array(
@@ -309,7 +309,7 @@ class Uploads
 			return ($parent_folder['user_id'] == '-1') ? $pwd . '/<a href="admin_files.php?f=' . $id_folder . '">' . $parent_folder['name'] . '</a>' : $pwd . '/' . $member_link . '<a href="admin_files.php?f=' . $id_folder . '">' . $parent_folder['name'] . '</a>';
 	}
 	
-	//Récupération du répertoire courant.
+	//RÃ©cupÃ©ration du rÃ©pertoire courant.
 	public static function get_url($id_folder, $pwd, $popup)
 	{
 		$parent_folder = array(
@@ -329,7 +329,7 @@ class Uploads
 			return $pwd . '/<a href="' . url('upload.php?f=' . $id_folder . $popup) . '">' . $parent_folder['name'] . '</a>';
 	}
 	
-	//Récupération de la taille totale utilisée par un membre.
+	//RÃ©cupÃ©ration de la taille totale utilisÃ©e par un membre.
 	public static function Member_memory_used($user_id)
 	{
 		return self::$db_querier->get_column_value(DB_TABLE_UPLOAD, 'SUM(size)', 'WHERE user_id = :user_id', array('user_id' => $user_id));
@@ -338,7 +338,7 @@ class Uploads
 	//Conversion mimetype -> image.
 	public static function get_img_mimetype($type)
 	{	
-		$filetype = sprintf(LangLoader::get_message('file_type', 'main'), strtoupper($type));
+		$filetype = sprintf(LangLoader::get_message('file_type', 'main'), mb_strtoupper($type));
 		switch ($type)
 		{
 			//Images
@@ -353,7 +353,7 @@ class Uploads
 			case 'ico':
 			case 'tif':
 			$img = 'fa-upload-picture fa-2x';
-			$filetype = sprintf(LangLoader::get_message('image_type', 'main'), strtoupper($type));
+			$filetype = sprintf(LangLoader::get_message('image_type', 'main'), mb_strtoupper($type));
 			break;
 			//Archives
 			case 'rar':
@@ -361,7 +361,7 @@ class Uploads
 			case 'zip':
 			case '7z':
 			$img = 'fa-upload-zip fa-2x';
-			$filetype = sprintf(LangLoader::get_message('zip_type', 'main'), strtoupper($type));
+			$filetype = sprintf(LangLoader::get_message('zip_type', 'main'), mb_strtoupper($type));
 			break;
 			//Pdf
 			case 'pdf':
@@ -374,7 +374,7 @@ class Uploads
 			case 'ogg':
 			case 'mp3':
 			$img = 'fa-upload-audio fa-2x';
-			$filetype = sprintf(LangLoader::get_message('audio_type', 'main'), strtoupper($type));
+			$filetype = sprintf(LangLoader::get_message('audio_type', 'main'), mb_strtoupper($type));
 			break;
 			//Sripts
 			case 'html':
@@ -385,7 +385,7 @@ class Uploads
 			case 'swf':
 			$img = 'fa-upload-script fa-2x';
 			break;
-			//Vidéos
+			//VidÃ©os
 			case 'wmv':
 			case 'avi':
 			case 'mp4':
@@ -428,7 +428,7 @@ class Uploads
 			//Default
 			default:
 			$img = 'fa-upload-other fa-2x';
-			$filetype = sprintf(LangLoader::get_message('document_type', 'main'), strtoupper($type));
+			$filetype = sprintf(LangLoader::get_message('document_type', 'main'), mb_strtoupper($type));
 		}
 		
 		return array('img' => $img, 'filetype' => $filetype);

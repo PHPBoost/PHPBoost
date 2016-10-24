@@ -3,7 +3,7 @@
  *                             MenuStringFilter.class.php
  *                            -------------------
  *   begin                : March 06, 2011
- *   copyright            : (C) 2011 Régis Viarre
+ *   copyright            : (C) 2011 RÃ©gis Viarre
  *   email                : crowkait@phpboost.com
  *
  *
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>
  * @desc This class represents a filter based on string comparison
  * @package {@package}
  */
@@ -39,9 +39,9 @@ class MenuStringFilter extends Filter
 	
 	public function match()
 	{
-		if (substr($this->pattern, -10) == '/index.php')
+		if (mb_substr($this->pattern, -10) == '/index.php')
 		{
-			return Url::is_current_url('/' . substr($this->pattern, 0, -9), true) || Url::is_current_url($this->pattern);
+			return Url::is_current_url('/' . mb_substr($this->pattern, 0, -9), true) || Url::is_current_url($this->pattern);
 		}
 		else
 			return Url::is_current_url($this->pattern);

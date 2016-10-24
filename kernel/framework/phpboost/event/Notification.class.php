@@ -3,7 +3,7 @@
  *                          Notification.class.php
  *                            -------------------
  *   begin                : August 30, 2013
- *   copyright            : (C) 2013 Kévin MASSY
+ *   copyright            : (C) 2013 KÃ©vin MASSY
  *   email                : kevin.massy@phpboost.com
  *
  *
@@ -27,7 +27,7 @@
 
 /**
  * @package {@package}
- * @author Kévin MASSY <kevin.massy@phpboost.com>
+ * @author KÃ©vin MASSY <kevin.massy@phpboost.com>
  * @desc 
  */
 class Notification extends Event

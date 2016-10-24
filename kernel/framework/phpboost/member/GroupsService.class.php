@@ -3,7 +3,7 @@
  *                          GroupsService.class.php
  *                            -------------------
  *   begin                : May 18, 2007
- *   copyright            : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -25,13 +25,13 @@
  *
  ###################################################*/
 
-define('ADMIN_NOAUTH_DEFAULT', false); //Admin non obligatoirement sélectionné.
+define('ADMIN_NOAUTH_DEFAULT', false); //Admin non obligatoirement sÃ©lectionnÃ©.
 define('GROUP_DEFAULT_IDSELECT', '');
 define('GROUP_DISABLE_SELECT', 'disabled="disabled" ');
-define('GROUP_DISABLED_ADVANCED_AUTH', true); //Désactivation des autorisations avancées.
+define('GROUP_DISABLED_ADVANCED_AUTH', true); //DÃ©sactivation des autorisations avancÃ©es.
 
 /**
- * @author Régis VIARRE <crowkait@phpboost.com>
+ * @author RÃ©gis VIARRE <crowkait@phpboost.com>
  * @desc This class provides methods to manage user in groups.
  * @package {@package}
  */
@@ -52,10 +52,10 @@ class GroupsService
 	 */
 	public static function add_member($user_id, $idgroup)
 	{
-		//On insère le groupe au champ membre.
+		//On insÃ¨re le groupe au champ membre.
 		$user_groups = self::$db_querier->get_column_value(DB_TABLE_MEMBER, 'groups', 'WHERE user_id = :user_id', array('user_id' => $user_id));
 		$user_groups = explode('|', $user_groups);
-		if (!in_array($idgroup, $user_groups)) //Le membre n'appartient pas déjà au groupe.
+		if (!in_array($idgroup, $user_groups)) //Le membre n'appartient pas dÃ©jÃ  au groupe.
 		{
 			array_push($user_groups, $idgroup);
 			self::$db_querier->update(DB_TABLE_MEMBER, array('groups' => (trim(implode('|', $user_groups), '|'))), 'WHERE user_id = :user_id', array('user_id' => $user_id));
@@ -65,10 +65,10 @@ class GroupsService
 			return false;
 		}
 
-		//On insère le membre dans le groupe.
+		//On insÃ¨re le membre dans le groupe.
 		$group_members = self::$db_querier->get_column_value(DB_TABLE_GROUP, 'members', 'WHERE id = :id', array('id' => $idgroup));
 		$group_members = explode('|', $group_members);
-		if (!in_array($user_id, $group_members)) //Le membre n'appartient pas déjà au groupe.
+		if (!in_array($user_id, $group_members)) //Le membre n'appartient pas dÃ©jÃ  au groupe.
 		{
 			array_push($group_members, $user_id);
 			self::$db_querier->update(DB_TABLE_GROUP, array('members' => (trim(implode('|', $group_members), '|'))), 'WHERE id = :id', array('id' => $idgroup));
@@ -88,11 +88,11 @@ class GroupsService
 	 */
 	public static function edit_member($user_id, $array_user_groups)
 	{
-		//Récupération des groupes précédent du membre.
+		//RÃ©cupÃ©ration des groupes prÃ©cÃ©dent du membre.
 		$user_groups_old = self::$db_querier->get_column_value(DB_TABLE_MEMBER, 'groups', 'WHERE user_id = :user_id', array('user_id' => $user_id));
 		$array_user_groups_old = explode('|', $user_groups_old);
 
-		//Insertion du différentiel positif des groupes précédent du membre et ceux choisis dans la table des groupes.
+		//Insertion du diffÃ©rentiel positif des groupes prÃ©cÃ©dent du membre et ceux choisis dans la table des groupes.
 		$array_diff_pos = array_diff($array_user_groups, $array_user_groups_old);
 		foreach ($array_diff_pos as $key => $idgroup)
 		{
@@ -102,7 +102,7 @@ class GroupsService
 			}
 		}
 
-		//Insertion du différentiel négatif des groupes précédent du membre et ceux choisis dans la table des groupes.
+		//Insertion du diffÃ©rentiel nÃ©gatif des groupes prÃ©cÃ©dent du membre et ceux choisis dans la table des groupes.
 		$array_diff_neg = array_diff($array_user_groups_old, $array_user_groups);
 		foreach ($array_diff_neg as $key => $idgroup)
 		{

@@ -3,7 +3,7 @@
  *                          Contribution.class.php
  *                            -------------------
  *   begin                : July 21, 2008
- *   copyright            : (C) 2008 Benoît Sautel
+ *   copyright            : (C) 2008 BenoÃ®t Sautel
  *   email                : ben.popeye@phpboost.com
  *
  *
@@ -32,7 +32,7 @@
 
 /**
  * @package {@package}
- * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @author BenoÃ®t Sautel <ben.popeye@phpboost.com>
  * @desc This class represents a contribution made by a user to complete the content of the website.
  * All the contributions are managed in the contribution panel.
  */

@@ -214,7 +214,7 @@ class ExtendedField
 	
 	public static function rewrite_field_name($field_name)
 	{
-		$field = strtolower($field_name);
+		$field = mb_strtolower($field_name);
 		$field = Url::encode_rewrite($field);
 		$field = str_replace('-', '_', $field);
 		return 'f_' . $field;

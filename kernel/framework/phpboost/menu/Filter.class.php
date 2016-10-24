@@ -3,7 +3,7 @@
  *                             Filter.class.php
  *                            -------------------
  *   begin                : March 06, 2011
- *   copyright            : (C) 2011 Régis Viarre
+ *   copyright            : (C) 2011 RÃ©gis Viarre
  *   email                : crowkait@phpboost.com
  *
  *
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>
  * @desc This class represents an abstract filter
  * @abstract
  * @package {@package}

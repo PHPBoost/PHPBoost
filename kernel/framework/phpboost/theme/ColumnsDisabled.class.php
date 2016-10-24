@@ -126,7 +126,7 @@ class ColumnsDisabled
 	{
 		foreach($disable_columns as $columns)
 		{
-			$attribute = trim(strtolower($columns));
+			$attribute = trim(mb_strtolower($columns));
 			switch ($columns)
 			{
 				case 'header':

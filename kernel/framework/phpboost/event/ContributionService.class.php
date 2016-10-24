@@ -95,7 +95,7 @@ class ContributionService
 		LEFT JOIN " . DB_TABLE_MEMBER . " poster_member ON poster_member.user_id = c.poster_id
 		LEFT JOIN " . DB_TABLE_MEMBER . " fixer_member ON fixer_member.user_id = c.fixer_id
 		WHERE contribution_type = :contribution_type
-		ORDER BY " . $criteria . " " . strtoupper($order) . ", creation_date DESC", array(
+		ORDER BY " . $criteria . " " . mb_strtoupper($order) . ", creation_date DESC", array(
 			'contribution_type' => self::CONTRIBUTION_TYPE
 		));
 		while ($row = $result->fetch())
@@ -299,10 +299,10 @@ class ContributionService
 					}
 				}
 				//Members
-				elseif (substr($profile, 0, 1) == 'm')
+				elseif (mb_substr($profile, 0, 1) == 'm')
 				{
 					//If this member has not already an entry and he can see that contribution
-					if (empty($array_result[$profile]) && Authorizations::check_auth(USER_TYPE, (int)substr($profile, 1), $this_auth, Contribution::CONTRIBUTION_AUTH_BIT))
+					if (empty($array_result[$profile]) && Authorizations::check_auth(USER_TYPE, (int)mb_substr($profile, 1), $this_auth, Contribution::CONTRIBUTION_AUTH_BIT))
 					{
 						$array_result[$profile] = 1;
 					}

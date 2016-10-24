@@ -27,7 +27,7 @@
 
 /**
  * @package {@package}
- * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @author BenoÃ®t Sautel <ben.popeye@phpboost.com>
  * @desc This class is used to represent the bread crumb displayed on each page of the website.
  * It enables the user to locate himself in the whole site.
  * A bread crumb can look like this: Home >> My module >> First level category >> Second level category >>
@@ -53,7 +53,7 @@ class BreadCrumb
     {
         if (!empty($text))
         {
-        	$url = $target instanceof Url ? $target->rel() : $target;
+            $url = $target instanceof Url ? $target->rel() : $target;
             $this->array_links[] = array($text, $url);
             return true;
         }
@@ -89,19 +89,19 @@ class BreadCrumb
         {
             $this->add($this->get_page_title(), REWRITED_SCRIPT);
         }
-		
+        
         $tpl->put_all(array(
-			'START_PAGE' => TPL_PATH_TO_ROOT . '/',
-			'L_INDEX' 	 => LangLoader::get_message('home', 'main')
+            'START_PAGE' => TPL_PATH_TO_ROOT . '/',
+            'L_INDEX'    => LangLoader::get_message('home', 'main')
         ));
         
         $output = array_slice($this->array_links, -1, 1);
         foreach ($this->array_links as $key => $array)
         {
             $tpl->assign_block_vars('link_bread_crumb', array(
-            	'C_CURRENT' => $output[0] == $array,
-				'URL' 	=> $array[1],
-				'TITLE' => $array[0]
+                'C_CURRENT' => $output[0] == $array,
+                'URL'   => $array[1],
+                'TITLE' => $array[0]
             ));
         }
     }
@@ -116,7 +116,7 @@ class BreadCrumb
     
     public function get_links()
     {
-    	return $this->array_links;
+        return $this->array_links;
     }
     
     /**
@@ -125,12 +125,12 @@ class BreadCrumb
      */
     public function set_graphical_environment(SiteDisplayGraphicalEnvironment $env)
     {
-    	$this->graphical_environment = $env;
+        $this->graphical_environment = $env;
     }
     
     private function get_page_title()
     {
-    	return $this->graphical_environment->get_page_title();
+        return $this->graphical_environment->get_page_title();
     }
 }
 ?>

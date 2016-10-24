@@ -141,7 +141,7 @@ class MemberShortTextExtendedField extends AbstractMemberExtendedField
 			
 			foreach (self::$brands_pictures_list as $id => $parameters)
 			{
-				if (strstr($value, $id))
+				if (mb_strstr($value, $id))
 					$displayed_value = '<a href="mailto:' . $value . '" class="basic-button smaller"><i class="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
 			}
 		}
@@ -151,7 +151,7 @@ class MemberShortTextExtendedField extends AbstractMemberExtendedField
 			
 			foreach (self::$brands_pictures_list as $id => $parameters)
 			{
-				if (strstr($value, $id))
+				if (mb_strstr($value, $id))
 					$displayed_value = '<a href="' . $value . '" class="basic-button smaller"><i class="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
 			}
 		}

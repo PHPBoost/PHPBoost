@@ -3,7 +3,7 @@
  *                              Event.class.php
  *                            -------------------
  *   begin                : July 21, 2008
- *   copyright            : (C) 2008 Benoît Sautel
+ *   copyright            : (C) 2008 BenoÃ®t Sautel
  *   email                : ben.popeye@phpboost.com
  *
  *
@@ -28,7 +28,7 @@
 /**
  * @abstract
  * @package {@package}
- * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @author BenoÃ®t Sautel <ben.popeye@phpboost.com>
  * @desc It's the common part between two types of event existing now in PHPBoost:
  * <ul>
  * 	<li>User contribution managed into the contribution panel</li>

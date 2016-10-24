@@ -83,19 +83,19 @@ class CurrentUser extends User
 	
 	public function check_auth($array_auth_groups, $authorization_bit)
 	{
-		//Si il s'agit d'un administrateur, étant donné qu'il a tous les droits, on renvoie systématiquement vrai
+		//Si il s'agit d'un administrateur, Ã©tant donnÃ© qu'il a tous les droits, on renvoie systÃ©matiquement vrai
 		if ($this->check_level(User::ADMIN_LEVEL))
 		{
 			return true;
 		}
 
-		//Si le tableau d'autorisation n'est pas valide, on renvoie faux pour des raisons de sécurité
+		//Si le tableau d'autorisation n'est pas valide, on renvoie faux pour des raisons de sÃ©curitÃ©
 		if (!is_array($array_auth_groups))
 		{
 			return false;
 		}
 
-		//Enfin, on regarde si le rang, le groupe ou son identifiant lui donnent l'autorisation sur le bit demandé
+		//Enfin, on regarde si le rang, le groupe ou son identifiant lui donnent l'autorisation sur le bit demandÃ©
 		return (bool)($this->sum_auth_groups($array_auth_groups) & (int)$authorization_bit);
 	}
 	
@@ -106,7 +106,7 @@ class CurrentUser extends User
 			return false;
 		}
 
-		//Récupére les autorisations de tout les groupes dont le membre fait partie.
+		//RÃ©cupÃ©re les autorisations de tout les groupes dont le membre fait partie.
 		$array_user_auth_groups = $this->array_group_intersect($this->groups_auth);
 		$max_auth = $max_value_compare;
 		foreach ($array_user_auth_groups as $idgroup => $group_auth)
@@ -172,7 +172,7 @@ class CurrentUser extends User
 	
 	private function sum_auth_groups($array_auth_groups)
 	{
-		//Rï¿½cupï¿½re les autorisations de tout les groupes dont le membre fait partie.
+		//RÃ¯Â¿Â½cupÃ¯Â¿Â½re les autorisations de tout les groupes dont le membre fait partie.
 		$array_user_auth_groups = $this->array_group_intersect($array_auth_groups);
 		$max_auth = 0;
 		foreach ($array_user_auth_groups as $idgroup => $group_auth)
@@ -195,7 +195,7 @@ class CurrentUser extends User
 					$array_user_auth_groups[$idgroup] = $auth_group;
 				}
 			}
-			elseif (substr($idgroup, 0, 1) == 'r') //Rang
+			elseif (mb_substr($idgroup, 0, 1) == 'r') //Rang
 			{
 				if ($this->get_level() >= (int)str_replace('r', '', $idgroup))
 				{

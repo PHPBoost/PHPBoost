@@ -247,12 +247,12 @@ class User
 		$group_color = '';
 		$groups_cache = GroupsCache::load();
 
-		foreach ($user_groups as $idgroup) //Récupération du premier groupe.
+		foreach ($user_groups as $idgroup) //RÃ©cupÃ©ration du premier groupe.
 		{
 			if ($groups_cache->group_exists($idgroup))
 			{
 				$group = $groups_cache->get_group($idgroup);
-				$group_color = (!empty($group['color']) && $level == 0) ? (substr($group['color'], 0, 1) != '#' ? '#' : '') . $group['color'] : '';
+				$group_color = (!empty($group['color']) && $level == 0) ? (mb_substr($group['color'], 0, 1) != '#' ? '#' : '') . $group['color'] : '';
 			}
 		}
 		return $group_color;

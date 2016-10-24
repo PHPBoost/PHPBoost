@@ -487,7 +487,7 @@ class ModulesManager
 	 */
 	private static function get_module_setup($module_id)
 	{
-		$module_setup_classname = ucfirst($module_id) . 'Setup';
+		$module_setup_classname = TextHelper::uppercase_first($module_id) . 'Setup';
 		if (self::module_setup_exists($module_setup_classname))
 		{
 			return new $module_setup_classname();

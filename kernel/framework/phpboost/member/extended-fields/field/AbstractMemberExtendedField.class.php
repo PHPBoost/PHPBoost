@@ -128,7 +128,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 	{
 		foreach($names as $name)
 		{
-			$name = strtolower($name);
+			$name = mb_strtolower($name);
 			switch ($name)
 			{
 				case 'name':

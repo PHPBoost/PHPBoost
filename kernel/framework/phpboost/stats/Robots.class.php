@@ -142,7 +142,7 @@ class Robots
 			'Exalead'
 		);
 		
-		//Ip de l'utilisateur au format numérique.
+		//Ip de l'utilisateur au format numÃ©rique.
 		$user_ip = !empty($user_ip) ? $user_ip : AppContext::get_request()->get_ip_address();
 		$user_ip = ip2long($user_ip);
 
@@ -153,7 +153,7 @@ class Robots
 			$start_ip = ip2long($start_ip);
 			$end_ip = ip2long($end_ip);
 			
-			//Comparaison pour chaque partie de l'ip, si l'une d'entre elle est fausse l'instruction est stopée.
+			//Comparaison pour chaque partie de l'ip, si l'une d'entre elle est fausse l'instruction est stopÃ©e.
 			if ($user_ip >= $start_ip && $user_ip <= $end_ip)
 			{
 				return $array_robots[$i]; //On retourne le nom du robot d'exploration.

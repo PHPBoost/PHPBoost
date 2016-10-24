@@ -3,7 +3,7 @@
  *		             AuthenticationConfig.class.php
  *                            -------------------
  *   begin                : August 27, 2014
- *   copyright            : (C) 2014 Kévin MASSY
+ *   copyright            : (C) 2014 KÃ©vin MASSY
  *   email                : kevin.massy@phpboost.com
  *
  *
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Kévin MASSY <kevin.massy@phpboost.com>
+ * @author KÃ©vin MASSY <kevin.massy@phpboost.com>
  */
 class AuthenticationConfig extends AbstractConfigData
 {

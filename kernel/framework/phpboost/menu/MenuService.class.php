@@ -533,7 +533,7 @@ class MenuService
 		if ($class != Menu::MENU__CLASS)
 		{
 			$conditions[] = 'class=:class';
-			$parameters['class'] = strtolower($class);
+			$parameters['class'] = mb_strtolower($class);
 		}
 		if ($block != Menu::BLOCK_POSITION__ALL)
 		{
@@ -596,7 +596,7 @@ class MenuService
 		else 
 		{
 			$fixed_object = preg_replace_callback( '!s:(\d+):"(.*?)";!', function($match) {
-				return ($match[1] == strlen($match[2])) ? $match[0] : 's:' . strlen($match[2]) . ':"' . $match[2] . '";';
+				return ($match[1] == mb_strlen($match[2])) ? $match[0] : 's:' . mb_strlen($match[2]) . ':"' . $match[2] . '";';
 			}, $db_result['object']);
 			
 			$menu = unserialize($fixed_object);

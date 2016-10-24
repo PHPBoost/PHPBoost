@@ -190,11 +190,11 @@ class ModuleConfiguration
 		$links_format = preg_replace('` ?=> ?`', '=', $links_format);
 		$links_format = preg_replace(' ?, ?', ',', $links_format) . ' ';
 		list($key, $value, $open, $cursor, $check_value, $admin_links) = array('', '', '', 0, false, array());
-		$string_length = strlen($links_format);
-		while ($cursor < $string_length) //Parcours linéaire.
+		$string_length = mb_strlen($links_format);
+		while ($cursor < $string_length) //Parcours linÃ©aire.
 		{
-			$char = substr($links_format, $cursor, 1);
-			if (!$check_value) //On récupère la clé.
+			$char = mb_substr($links_format, $cursor, 1);
+			if (!$check_value) //On rÃ©cupÃ¨re la clÃ©.
 			{
 				if ($char != '=')
 				{
@@ -205,20 +205,20 @@ class ModuleConfiguration
 					$check_value =  true;
 				}
 			}
-			else //On récupère la valeur associé à la clé, une fois celle-ci récupérée.
+			else //On rÃ©cupÃ¨re la valeur associÃ© Ã  la clÃ©, une fois celle-ci rÃ©cupÃ©rÃ©e.
 			{
-				if ($char == '(') //On marque l'ouverture de la parenthèse.
+				if ($char == '(') //On marque l'ouverture de la parenthÃ¨se.
 				{
 					$open = $key;
 				}
 
-				if ($char != ',' && $char != '(' && $char != ')' && ($cursor+1) < $string_length) //Si ce n'est pas un caractère délimiteur, on la fin => on concatène.
+				if ($char != ',' && $char != '(' && $char != ')' && ($cursor+1) < $string_length) //Si ce n'est pas un caractÃ¨re dÃ©limiteur, on la fin => on concatÃ¨ne.
 				{
 					$value .= $char;
 				}
 				else
 				{
-					if (!empty($open) && !empty($value)) //On insère dans la clé marqué précédemment à l'ouveture de la parenthèse.
+					if (!empty($open) && !empty($value)) //On insÃ¨re dans la clÃ© marquÃ© prÃ©cÃ©demment Ã  l'ouveture de la parenthÃ¨se.
 					{
 						$admin_links[$open][$key] = $value;
 					}
@@ -231,7 +231,7 @@ class ModuleConfiguration
 				if ($char == ')')
 				{
 					$open = ''; //On supprime le marqueur.
-					$cursor++; //On avance le curseur pour faire sauter la virugle après la parenthèse.
+					$cursor++; //On avance le curseur pour faire sauter la virugle aprÃ¨s la parenthÃ¨se.
 				}
 			}
 			$cursor++;

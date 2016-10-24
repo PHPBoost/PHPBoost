@@ -188,7 +188,7 @@ class ExtensionPointProviderService
 
 	private function compute_provider_classname($provider_id)
 	{
-		return ucfirst($provider_id) . self::EXTENSION_POINT_PROVIDER_SUFFIX;
+		return TextHelper::uppercase_first($provider_id) . self::EXTENSION_POINT_PROVIDER_SUFFIX;
 	}
 
 	private function try_to_reload_modules_providers($provider_id)

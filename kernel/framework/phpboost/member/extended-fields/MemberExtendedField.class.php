@@ -124,7 +124,7 @@ class MemberExtendedField
 		if (!is_array($properties['possible_values']))
 		{
 			$fixed_possible_values = preg_replace_callback( '!s:(\d+):"(.*?)";!', function($match) {
-				return ($match[1] == strlen($match[2])) ? $match[0] : 's:' . strlen($match[2]) . ':"' . $match[2] . '";';
+				return ($match[1] == mb_strlen($match[2])) ? $match[0] : 's:' . mb_strlen($match[2]) . ':"' . $match[2] . '";';
 			}, $properties['possible_values']);
 			$this->possible_values = unserialize($fixed_possible_values);
 		}

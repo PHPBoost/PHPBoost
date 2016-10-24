@@ -3,7 +3,7 @@
  *                             PrivateMsg.class.php
  *                            -------------------
  *   begin                : April 02, 2007
- *   copyright            : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -26,17 +26,17 @@
  ###################################################*/
 
 /**
- * @author Régis VIARRE <crowkait@phpboost.com>
+ * @author RÃ©gis VIARRE <crowkait@phpboost.com>
  * @desc This class provides methods to manage private message.
  * @package {@package}
  */
 class PrivateMsg
 {
-	const NOCHECK_PM_BOX = false; //Pas de vérification de l'espace libre de la boite de mp.
-	const CHECK_PM_BOX = true; //Vérification de l'espace libre de la boite de mp.
-	const SYSTEM_PM = true; //Message privé envoyé par le système.
-	const DEL_PM_CONVERS = true; //Suppression de la conversation complète.
-	const UPDATE_MBR_PM = false;  //Met à jour le nombre de mp du membre.
+	const NOCHECK_PM_BOX = false; //Pas de vÃ©rification de l'espace libre de la boite de mp.
+	const CHECK_PM_BOX = true; //VÃ©rification de l'espace libre de la boite de mp.
+	const SYSTEM_PM = true; //Message privÃ© envoyÃ© par le systÃ¨me.
+	const DEL_PM_CONVERS = true; //Suppression de la conversation complÃ¨te.
+	const UPDATE_MBR_PM = false;  //Met Ã  jour le nombre de mp du membre.
 
 	private static $db_querier;
 	
@@ -74,7 +74,7 @@ class PrivateMsg
 		return $total_pm;
 	}
 	
-	//Envoi d'une conversation + le message privé associé.
+	//Envoi d'une conversation + le message privÃ© associÃ©.
 	/**
 	 * @desc Starts a conversation with another member.
 	 * @param int $pm_to The member's user id destination.
@@ -85,7 +85,7 @@ class PrivateMsg
 	 */
 	public static function start_conversation($pm_to, $pm_objet, $pm_contents, $pm_from, $system_pm = false)
 	{
-		//Message privé envoyé par le système => user_id = -1
+		//Message privÃ© envoyÃ© par le systÃ¨me => user_id = -1
 		if ($system_pm)
 		{
 			$pm_from = '-1';
@@ -114,7 +114,7 @@ class PrivateMsg
 	 */
 	public static function send($pm_to, $pm_idconvers, $pm_contents, $pm_from, $pm_status, $check_pm_before_send = true)
 	{		
-		//On vérifie qu'un message n'a pas été posté entre temps.
+		//On vÃ©rifie qu'un message n'a pas Ã©tÃ© postÃ© entre temps.
 		if ($check_pm_before_send)
 		{
 			$info_convers = self::$db_querier->select_single_row(DB_TABLE_PM_TOPIC, array("last_user_id", "user_view_pm"), 'WHERE id=:id', array('id' => $pm_idconvers));
@@ -132,7 +132,7 @@ class PrivateMsg
 		//On modifie le statut de la conversation.
 		self::$db_querier->inject("UPDATE " . DB_TABLE_PM_TOPIC . "  SET user_view_pm = user_view_pm + 1, nbr_msg = nbr_msg + 1, last_user_id = '" . $pm_from . "', last_msg_id = '" . $pm_msg_id . "', last_timestamp = '" . time() . "' WHERE id = '" . $pm_idconvers . "'");
 		
-		//Mise à jour du compteur de mp du destinataire.
+		//Mise Ã  jour du compteur de mp du destinataire.
 		self::$db_querier->inject("UPDATE " . DB_TABLE_MEMBER . " SET unread_pm = unread_pm + 1 WHERE user_id = '" . $pm_to . "'");
 		
 		SessionData::recheck_cached_data_from_user_id($pm_to);
@@ -152,29 +152,29 @@ class PrivateMsg
 		$info_convers = self::$db_querier->select_single_row(DB_TABLE_PM_TOPIC, array("user_view_pm", "last_user_id"), 'WHERE id=:id', array('id' => $pm_idconvers));
 		if ($pm_update && $info_convers['last_user_id'] != $pm_userid)
 		{
-			//Mise à jour du compteur de mp du destinataire.
+			//Mise Ã  jour du compteur de mp du destinataire.
 			if ($info_convers['user_view_pm'] > 0)
 				self::$db_querier->inject("UPDATE " . DB_TABLE_MEMBER . " SET unread_pm = unread_pm - '" . $info_convers['user_view_pm'] . "' WHERE user_id = '" . $pm_userid . "'");
 		}
 		
 		if ($pm_expd) //Expediteur.
 		{
-			if ($pm_del) //Supprimé par les deux membres => Supprime la conversation et les messages associés.
+			if ($pm_del) //SupprimÃ© par les deux membres => Supprime la conversation et les messages associÃ©s.
 			{
 				self::$db_querier->delete(DB_TABLE_PM_TOPIC, 'WHERE id = :id', array('id' => $pm_idconvers));
 				self::$db_querier->delete(DB_TABLE_PM_MSG, 'WHERE idconvers = :id', array('id' => $pm_idconvers));
 			}
-			else //Mise à jour du statut de la conversation, afin de ne plus l'afficher au membre ayant décidé de la supprimer.
+			else //Mise Ã  jour du statut de la conversation, afin de ne plus l'afficher au membre ayant dÃ©cidÃ© de la supprimer.
 				self::$db_querier->update(DB_TABLE_PM_TOPIC, array('user_convers_status' => 1), 'WHERE id = :id', array('id' => $pm_idconvers));
 		}
 		else //Destinataire
 		{
-			if ($pm_del) //Supprimé par les deux membres => Supprime la conversation et les messages associés.
+			if ($pm_del) //SupprimÃ© par les deux membres => Supprime la conversation et les messages associÃ©s.
 			{
 				self::$db_querier->delete(DB_TABLE_PM_TOPIC, 'WHERE id = :id', array('id' => $pm_idconvers));
 				self::$db_querier->delete(DB_TABLE_PM_MSG, 'WHERE idconvers = :id', array('id' => $pm_idconvers));
 			}
-			else //Mise à jour du statut de la conversation, afin de ne plus l'afficher au membre ayant décidé de la supprimer.
+			else //Mise Ã  jour du statut de la conversation, afin de ne plus l'afficher au membre ayant dÃ©cidÃ© de la supprimer.
 				self::$db_querier->update(DB_TABLE_PM_TOPIC, array('user_convers_status' => 2), 'WHERE id = :id', array('id' => $pm_idconvers));
 		}
 		SessionData::recheck_cached_data_from_user_id($pm_userid);
@@ -197,11 +197,11 @@ class PrivateMsg
 		
 		if (!empty($pm_max_id))
 		{
-			//Mise à jour de la conversation.
+			//Mise Ã  jour de la conversation.
 			$user_view_pm = self::$db_querier->get_column_value(DB_TABLE_PM_TOPIC, 'user_view_pm', 'WHERE id = :id', array('id' => $pm_idconvers));
 			self::$db_querier->inject("UPDATE " . DB_TABLE_PM_TOPIC . "  SET nbr_msg = nbr_msg - 1, user_view_pm = '" . ($user_view_pm - 1) . "', last_user_id = '" . $pm_last_msg['user_id'] . "', last_msg_id = '" . $pm_max_id . "', last_timestamp = '" . $pm_last_msg['timestamp'] . "' WHERE id = '" . $pm_idconvers . "'");
 		
-			//Mise à jour du compteur de mp du destinataire.
+			//Mise Ã  jour du compteur de mp du destinataire.
 			self::$db_querier->inject("UPDATE " . DB_TABLE_MEMBER . " SET unread_pm = unread_pm - 1 WHERE user_id = '" . $pm_to . "'");
 		}
 		SessionData::recheck_cached_data_from_user_id($pm_to);
