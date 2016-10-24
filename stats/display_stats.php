@@ -3,7 +3,7 @@
  *                            display_stats.php
  *                            -------------------
  *   begin                : August 26, 2007
- *   copyright            : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -46,7 +46,7 @@ $get_pages_month = retrieve(GET, 'pages_month', false);
 $get_pages_year = retrieve(GET, 'pages_year', false);
 
 include_once(PATH_TO_ROOT . '/kernel/begin.php');
-AppContext::get_session()->no_session_location(); //Ne réactualise pas l'emplacement du visiteur/membre
+AppContext::get_session()->no_session_location(); //Ne rÃ©actualise pas l'emplacement du visiteur/membre
 load_module_lang('stats'); //Chargement de la langue du module.
 
 $Stats = new ImagesStats();
@@ -71,9 +71,9 @@ if ($get_visit_month)
 	}
 	$result->dispose();
 
-	//Nombre de jours pour chaque mois (gestion des années bissextiles)
+	//Nombre de jours pour chaque mois (gestion des annÃ©es bissextiles)
 	$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
-	//Complément des jours manquant.
+	//ComplÃ©ment des jours manquant.
 	$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
 	for ($i = 1; $i <= $array_month[$month - 1]; $i++)
 	{
@@ -83,7 +83,7 @@ if ($get_visit_month)
 		}
 	}
 	$Stats->load_data($array_stats, 'histogram', 5);
-	//Tracé de l'histogramme.
+	//TracÃ© de l'histogramme.
 	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('days', 'date-common'), $LANG['guest_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
 }
 elseif ($get_visit_year)
@@ -104,7 +104,7 @@ elseif ($get_visit_year)
 	}
 	$result->dispose();
 
-	//Complément des mois manquant
+	//ComplÃ©ment des mois manquant
 	for ($i = 1; $i <= 12; $i++)
 	{
 		if (!isset($array_stats[$i]))
@@ -113,7 +113,7 @@ elseif ($get_visit_year)
 		}
 	}
 	$Stats->load_data($array_stats, 'histogram', 5);
-	//Tracé de l'histogramme.
+	//TracÃ© de l'histogramme.
 	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('month', 'date-common'), $LANG['guest_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
 }
 elseif ($get_pages_day)
@@ -135,7 +135,7 @@ elseif ($get_pages_day)
 		}
 	}
 
-	//Complément des heures manquantes.
+	//ComplÃ©ment des heures manquantes.
 	for ($i = 0; $i <= 23; $i++)
 	{
 		if (!isset($array_stats[$i]))
@@ -144,7 +144,7 @@ elseif ($get_pages_day)
 		}
 	}
 	$Stats->load_data($array_stats, 'histogram', 5);
-	//Tracé de l'histogramme.
+	//TracÃ© de l'histogramme.
 	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('hours', 'date-common'), $LANG['page_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
 }
 elseif ($get_pages_month)
@@ -166,9 +166,9 @@ elseif ($get_pages_month)
 	}
 	$result->dispose();
 
-	//Nombre de jours pour chaque mois (gestion des années bissextiles)
+	//Nombre de jours pour chaque mois (gestion des annÃ©es bissextiles)
 	$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
-	//Complément des jours manquant.
+	//ComplÃ©ment des jours manquant.
 	$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
 	for ($i = 1; $i <= $array_month[$month - 1]; $i++)
 	{
@@ -178,7 +178,7 @@ elseif ($get_pages_month)
 		}
 	}
 	$Stats->load_data($array_stats, 'histogram', 5);
-	//Tracé de l'histogramme.
+	//TracÃ© de l'histogramme.
 	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('days', 'date-common'), $LANG['page_s']), NO_DRAW_LEGEND, NO_DRAW_VALUES, 8);
 }
 elseif ($get_pages_year)
@@ -199,7 +199,7 @@ elseif ($get_pages_year)
 	}
 	$result->dispose();
 
-	//Complément des mois manquant
+	//ComplÃ©ment des mois manquant
 	for ($i = 1; $i <= 12; $i++)
 	{
 		if (!isset($array_stats[$i]))
@@ -208,7 +208,7 @@ elseif ($get_pages_year)
 		}
 	}
 	$Stats->load_data($array_stats, 'histogram', 5);
-	//Tracé de l'histogramme.
+	//TracÃ© de l'histogramme.
 	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('month', 'date-common'), $LANG['page_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
 }
 elseif ($get_brw) //Navigateurs.
@@ -349,7 +349,7 @@ elseif ($get_bot)
 			$array_info = explode('/', $value);
 			if (isset($array_info[0]) && isset($array_info[1]))
 			{
-				$name = ucwords($array_info[0]);
+				$name = mb_convert_case($array_info[0], MB_CASE_TITLE);
 				if (array_key_exists($name, $stats_array))
 				{
 					$stats_array[$name] = ($stats_array[$name] + $array_info[1]);
@@ -361,7 +361,7 @@ elseif ($get_bot)
 			}
 			else if (isset($array_info[0]))
 			{
-				$name = ucwords($key);
+				$name = mb_convert_case($key, MB_CASE_TITLE);
 				if (array_key_exists($name, $stats_array))
 				{
 					$stats_array[$name] = ($stats_array[$name] + $array_info[0]);

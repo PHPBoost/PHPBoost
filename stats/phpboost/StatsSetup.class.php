@@ -3,7 +3,7 @@
  *                             StatsSetup.class.php
  *                            -------------------
  *   begin                : January 06, 2013
- *   copyright            : (C) 2013 Kévin MASSY
+ *   copyright            : (C) 2013 KÃ©vin MASSY
  *   email                : kevin.massy@phpboost.com
  *
  *

@@ -3,7 +3,7 @@
  *                             ImagesStats.class.php
  *                            -------------------
  *   begin                : August 27, 2007
- *   copyright            : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -44,9 +44,9 @@ class ImagesStats
 {
 	public  $array_color_stats = array(array(224, 118, 27), array(48, 149, 53), array(254, 249, 52), array(102, 133, 237), array(204, 42, 38), array(53, 144, 189), array(102, 102, 153), array(236, 230, 208), array(213, 171, 1), array(182, 0, 51), array(193, 73, 0), array(25, 119, 128), array(182, 181, 177), array(102, 133, 237));	//Tableau des couleurs.
 	private $nbr_color = 14;
-	public  $data_stats; //Tableau des données.
-	public $nbr_entry; //Nombre d'entrée à traiter.
-	public $array_allocated_color = array(); //Tableau des couleurs allouées.
+	public  $data_stats; //Tableau des donnÃ©es.
+	public $nbr_entry; //Nombre d'entrÃ©e Ã  traiter.
+	public $array_allocated_color = array(); //Tableau des couleurs allouÃ©es.
 	public $color_index = 0; //Couleur courante.
 	private $decimal = 1; //Arrondi
 
@@ -61,13 +61,13 @@ class ImagesStats
 		$this->decimal = $decimal;
 		if ($draw_type == 'ellipse')
 		{
-			//Nombre total d'entrées
+			//Nombre total d'entrÃ©es
 			$this->nbr_entry = array_sum($array_stats);
 			if ($this->nbr_entry == 0)
 				$this->data_stats = array(LangLoader::get_message('other', 'main') => 360);
 			else
 			{
-				//On classe le tableau par ordre décroissant de hits
+				//On classe le tableau par ordre dÃ©croissant de hits
 				arsort($array_stats);
 
 				//Conversion valeur vers angle.
@@ -103,21 +103,21 @@ class ImagesStats
 			$h_ellipse = $h_arc/2;
 
 			list($x_ellipse, $y_ellipse, $x_legend_extend, $y_legend_extend) = array(0, 0, 0, 0);
-			if ($draw_legend) //Tracé de la légende de l'ellipse.
+			if ($draw_legend) //TracÃ© de la lÃ©gende de l'ellipse.
 			{
 				$x_legend_extend = 260;
 				$y_legend_extend = 120;
 			}
-			if ($draw_percent) //Tracé des pourcentages autour de l'ellipse, calcul du décallage horizontal/vertical de l'ellipse.
+			if ($draw_percent) //TracÃ© des pourcentages autour de l'ellipse, calcul du dÃ©callage horizontal/vertical de l'ellipse.
 			{
 				$array_size_ttf = imagettfbbox($font_size, 0, $font, '99.9%');
 				$x_ellipse = abs($array_size_ttf[2] - $array_size_ttf[0]) + 5;
-				$x_ellipse += ($x_ellipse * 10)/100; //Marge de 10% supplémentaire.
+				$x_ellipse += ($x_ellipse * 10)/100; //Marge de 10% supplÃ©mentaire.
 				$y_ellipse = abs($array_size_ttf[7] - $array_size_ttf[1]) + 30;
 				$y_ellipse += ($y_ellipse * 12)/100;
 			}
 
-			// Création de l'image
+			// CrÃ©ation de l'image
 			$image = imagecreatetruecolor($w_arc + $x_legend_extend, $h_arc + $height_3d + $y_legend_extend);
 			$background = imagecolorallocate($image, 243, 243, 243);
 			$border = imagecolorallocate($image, 117, 119, 131);
@@ -125,7 +125,7 @@ class ImagesStats
 			imagefilledrectangle($image, 0, 0, $w_arc + $x_legend_extend, $h_arc + $height_3d + $y_legend_extend, $border);
 			imagefilledrectangle($image, 1, 1, $w_arc + $x_legend_extend - 2, $h_arc + $height_3d + $y_legend_extend - 2, $background);
 
-			// Création de l'effet 3D
+			// CrÃ©ation de l'effet 3D
 			for ($i = ($h_ellipse + $height_3d); $i >= $h_ellipse; $i--)
 			{
 				$angle = 0;
@@ -153,7 +153,7 @@ class ImagesStats
 					imagefilledarc($image, $w_ellipse + $x_ellipse, $h_ellipse + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_value), $get_color, IMG_ARC_PIE);
 					imagefilledarc($image, $w_ellipse + $x_ellipse, $h_ellipse + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_value), $get_shadow_color, IMG_ARC_NOFILL);
 
-					//Calcul des coordonées cartésiennes.
+					//Calcul des coordonÃ©es cartÃ©siennes.
 					$angle_tmp = (2*$angle + $angle_value) / 2;
 					$angle_string = deg2rad($angle_tmp);
 					$x_string = ($w_ellipse * 1.2) * cos($angle_string) + $w_ellipse + $x_ellipse;
@@ -186,8 +186,8 @@ class ImagesStats
 				imagefilledarc($image, $w_ellipse + $x_ellipse, $h_ellipse + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_other), $get_shadow_color, IMG_ARC_NOFILL);
 			}
 
-			//Légende
-			if ($draw_legend) //Tracé de la légende de l'ellipse.
+			//LÃ©gende
+			if ($draw_legend) //TracÃ© de la lÃ©gende de l'ellipse.
 			{
 				$x_legend_extend = $w_arc + (2 * $x_ellipse) + 10;
 				$y_legend_extend = 10;
@@ -199,12 +199,12 @@ class ImagesStats
 					$get_color = $this->array_allocated_color[$this->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 					if ($i < 8)
 					{
-						//Carré de couleur.
+						//CarrÃ© de couleur.
 						imagefilledrectangle($image, $x_legend_extend + 6, $y_legend_extend + (16*$i) + 7, $x_legend_extend + 18, $y_legend_extend + (16*$i) + 19, $black);
 						imagefilledrectangle($image, $x_legend_extend + 7, $y_legend_extend + (16*$i) + 8, $x_legend_extend + 17, $y_legend_extend + (16*$i) + 18, $get_color);
 
 						//Texte
-						$text = ucfirst(substr($name_value, 0, 14)) . ' (' . (($angle_value != 360) ? NumberHelper::round(($angle_value/3.6), 1) . '%' : '100%') . ')';
+						$text = TextHelper::uppercase_first(mb_substr($name_value, 0, 14)) . ' (' . (($angle_value != 360) ? NumberHelper::round(($angle_value/3.6), 1) . '%' : '100%') . ')';
 
 						imagettftext($image, $font_size, 0, $x_legend_extend + 24, $y_legend_extend + (16*$i) + 17, $black, $font, $text);
 						$i++;
@@ -249,13 +249,13 @@ class ImagesStats
 			$max_element = max($this->data_stats);
 			$max_element = max(array($max_element, 1));
 			list($x_histo, $y_histo, $x_legend_extend, $y_legend_extend) = array(0, 0, 0, 0);
-			if ($draw_legend) //Tracé de la légende.
+			if ($draw_legend) //TracÃ© de la lÃ©gende.
 			{
 				$x_legend_extend = 172;
 				$y_legend_extend = 0;
 			}
 
-			// Création de l'image
+			// CrÃ©ation de l'image
 			$image = imagecreatetruecolor($w_histo + $x_legend_extend, $h_histo + $y_legend_extend);
 			$background = imagecolorallocate($image, 243, 243, 243);
 			$border = imagecolorallocate($image, 117, 119, 131);
@@ -263,8 +263,8 @@ class ImagesStats
 			imagefilledrectangle($image, 0, 0, $w_histo + $x_legend_extend, $h_histo + $y_legend_extend, $border);
 			imagefilledrectangle($image, 1, 1, $w_histo + $x_legend_extend - 3, $h_histo + $y_legend_extend - 3, $background);
 
-			//Légende
-			if ($draw_legend) //Tracé de la légende.
+			//LÃ©gende
+			if ($draw_legend) //TracÃ© de la lÃ©gende.
 			{
 				$white = imagecolorallocate($image, 255, 255, 255);
 				$shadow = imagecolorallocate($image, 125, 121, 118);
@@ -283,7 +283,7 @@ class ImagesStats
 					$get_color = $this->array_allocated_color[$this->image_color_allocate_dark($image)];
 					if ($i < 8)
 					{
-						//Carré de couleur.
+						//CarrÃ© de couleur.
 						imagerectangle($image, $x_legend_extend + 6, $y_legend_extend + (16*$i) + 7, $x_legend_extend + 18, $y_legend_extend + (16*$i) + 19, $black);
 						imagefilledrectangle($image, $x_legend_extend + 7, $y_legend_extend + (16*$i) + 8, $x_legend_extend + 17, $y_legend_extend + (16*$i) + 18, $get_color);
 
@@ -296,7 +296,7 @@ class ImagesStats
 				}
 			}
 
-			//Génération de l'histogramme.
+			//GÃ©nÃ©ration de l'histogramme.
 			$margin = 21;
 			$array_size_ttf = imagettfbbox($font_size, 0, $font, $max_element);
 			$x_histo = abs($array_size_ttf[2] - $array_size_ttf[0]) + $margin;
@@ -322,7 +322,7 @@ class ImagesStats
 				{
 					if ($i < 15 )
 					{
-						//Lignes pointillées
+						//Lignes pointillÃ©es
 						imagesetstyle($image, array($border_dashed, $border_dashed, $border_dashed, $histo_background, $histo_background, $histo_background));
 						imageline($image, $x_histo, $scale_pos, $w_histo - $margin, $scale_pos, IMG_COLOR_STYLED);
 					}
@@ -344,7 +344,7 @@ class ImagesStats
 				$scale_pos += $scale_iteration;
 			}
 
-			//Echelle horizontale, et tracé des barres.
+			//Echelle horizontale, et tracÃ© des barres.
 			$this->color_index = 5;
 			$color_bar = imagecolorallocate($image, 68, 113, 165);
 			$color_bar_dark = imagecolorallocate($image, 99, 136, 177);
@@ -411,7 +411,7 @@ class ImagesStats
 				$i++;
 			}
 
-			//Légende des axes
+			//LÃ©gende des axes
 			$scale_legend = array_map("ucfirst", $scale_legend);
 			$scale_legend = array_map(create_function('$a', 'return "("  . $a . ")";'), $scale_legend);
 			if (isset($scale_legend[0]))

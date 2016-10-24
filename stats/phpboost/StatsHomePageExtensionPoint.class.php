@@ -190,7 +190,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			}
 			$result->dispose();
 		}
-		elseif ($visit || $visit_year) //Visites par jour classées par mois.
+		elseif ($visit || $visit_year) //Visites par jour classÃ©es par mois.
 		{
 			//On affiche les visiteurs totaux et du jour
 			$compteur = array('nbr_ip' => 0, 'total' => 0);
@@ -213,25 +213,25 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			));
 			
 			$time = Date::to_format(Date::DATE_NOW, 'Ym');
-			$current_year = substr($time, 0, 4);
-			$current_month = substr($time, 4, 2);
+			$current_year = mb_substr($time, 0, 4);
+			$current_month = mb_substr($time, 4, 2);
 			
 			$month = retrieve(GET, 'm', (int)$current_month);
 			$year = retrieve(GET, 'y', (int)$current_year);
 			if ($visit_year)
 				$year = $visit_year;
 			
-			//Gestion des mois pour s'adapter au array défini dans lang/main.php
+			//Gestion des mois pour s'adapter au array dÃ©fini dans lang/main.php
 			$array_l_months = array($date_lang['january'], $date_lang['february'], $date_lang['march'], $date_lang['april'], $date_lang['may'], $date_lang['june'],
 			$date_lang['july'], $date_lang['august'], $date_lang['september'], $date_lang['october'], $date_lang['november'], $date_lang['december']);
 
-			if (!empty($visit_year)) //Visites par mois classées par ans.
+			if (!empty($visit_year)) //Visites par mois classÃ©es par ans.
 			{
-				//Années précédente et suivante
+				//AnnÃ©es prÃ©cÃ©dente et suivante
 				$next_year = $visit_year + 1;
 				$previous_year = $visit_year - 1;
 
-				//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
+				//On va chercher le nombre de jours prÃ©sents dans la table, ainsi que le record mensuel
 				$info = array('max_month' => 0, 'sum_month' => 0, 'nbr_month' => 0);
 				try {
 					$info = $this->db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(nbr) as max_month', 'SUM(nbr) as sum_month', 'COUNT(DISTINCT(stats_month)) as nbr_month'), 'WHERE stats_year=:year GROUP BY stats_year', array('year' => $visit_year));
@@ -251,7 +251,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					'U_PREVIOUS_LINK' => url('.php?year=' . $previous_year)
 				));
 
-				//Année maximale
+				//AnnÃ©e maximale
 				$info_year = array('max_year' => 0, 'min_year' => 0);
 				try {
 					$info_year = $this->db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
@@ -273,7 +273,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						'GRAPH_RESULT' => '<img src="display_stats.php?visit_year=1&amp;year=' . $visit_year . '" alt="' . $LANG['total_visit'] . '" />'
 					));
 					
-					//On fait la liste des visites journalières
+					//On fait la liste des visites journaliÃ¨res
 					$result = $this->db_querier->select("SELECT stats_month, SUM(nbr) AS total
 						FROM " . StatsSetup::$stats_table . "
 						WHERE stats_year = :stats_year
@@ -282,7 +282,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					));
 					while ($row = $result->fetch())
 					{
-						//On affiche les stats numériquement dans un tableau en dessous
+						//On affiche les stats numÃ©riquement dans un tableau en dessous
 						$tpl->assign_block_vars('value', array(
 							'U_DETAILS' => '<a href="stats' . url('.php?m=' . $row['stats_month'] . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
 							'NBR' => $row['total']
@@ -347,7 +347,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						$tpl->assign_block_vars('values.head', array(
 						));
 							
-						//On affiche les stats numériquement dans un tableau en dessous
+						//On affiche les stats numÃ©riquement dans un tableau en dessous
 						$tpl->assign_block_vars('value', array(
 							'U_DETAILS' => '<a href="stats' . url('.php?m=' . $row['stats_month'] . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
 							'NBR' => $row['total']
@@ -358,7 +358,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					}
 					$result->dispose();
 
-					//Génération des td manquants.
+					//GÃ©nÃ©ration des td manquants.
 					$date_day = isset($date_day) ? $date_day : 1;
 					for	($i = $last_month; $i < 12; $i++)
 					{
@@ -371,7 +371,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					foreach ($array_l_months as $value)
 					{
 						$tpl->assign_block_vars('legend', array(
-							'LEGEND' => (in_array($i, $months_not_empty)) ? '<a href="stats' . url('.php?m=' . $i . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . substr($value, 0, 3) . '</a>' : substr($value, 0, 3)
+							'LEGEND' => (in_array($i, $months_not_empty)) ? '<a href="stats' . url('.php?m=' . $i . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . mb_substr($value, 0, 3) . '</a>' : mb_substr($value, 0, 3)
 						));
 						$i++;
 					}
@@ -379,17 +379,17 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			}
 			else
 			{
-				//Nombre de jours pour chaque mois (gestion des années bissextiles)
+				//Nombre de jours pour chaque mois (gestion des annÃ©es bissextiles)
 				$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 				$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
 						
-				//Mois précédent et suivant
+				//Mois prÃ©cÃ©dent et suivant
 				$next_month = ($month < 12) ? $month + 1 : 1;
 				$next_year = ($month < 12) ? $year : $year + 1;
 				$previous_month = ($month > 1) ? $month - 1 : 12;
 				$previous_year = ($month > 1) ? $year : $year - 1;
 				
-				//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
+				//On va chercher le nombre de jours prÃ©sents dans la table, ainsi que le record mensuel
 				$info = array('max_nbr' => 0, 'min_day' => 0, 'sum_nbr' => 0, 'avg_nbr' => 0);
 				try {
 					$info = $this->db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(nbr) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(nbr) as sum_nbr', 'AVG(nbr) as avg_nbr'), 'WHERE stats_year=:year AND stats_month=:month GROUP BY stats_month', array('year' => $year, 'month' => $month));
@@ -418,7 +418,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$months .= '<option value="' . $i . '"' . $selected . '>' . $array_l_months[$i - 1] . '</option>';
 				}
 				
-				//Année maximale
+				//AnnÃ©e maximale
 				$info_year = array('max_year' => 0, 'min_year' => 0);
 				try {
 					$info_year = $this->db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
@@ -442,7 +442,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						'GRAPH_RESULT' => '<img src="display_stats.php?visit_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="' . $LANG['total_visit'] . '" />'
 					));
 					
-					//On fait la liste des visites journalières
+					//On fait la liste des visites journaliÃ¨res
 					$result = $this->db_querier->select("SELECT nbr, stats_day AS day
 						FROM " . StatsSetup::$stats_table . "
 						WHERE stats_year = :year AND stats_month = :month
@@ -454,7 +454,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					{
 						$date_day = ($row['day'] < 10) ? 0 . $row['day'] : $row['day'];
 						
-						//On affiche les stats numériquement dans un tableau en dessous
+						//On affiche les stats numÃ©riquement dans un tableau en dessous
 						$tpl->assign_block_vars('value', array(
 							'U_DETAILS' => $date_day . '/' . sprintf('%02d', $month) . '/' . $year,
 							'NBR' => $row['nbr']
@@ -464,7 +464,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				}
 				else
 				{
-					//Mois selectionné.
+					//Mois selectionnÃ©.
 					if (!empty($month) && !empty($year))
 					{
 						$tpl->put_all(array(
@@ -475,7 +475,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						$month = ($month < 10) ? '0' . $month : $month;
 						unset($i);
 						
-						//On fait la liste des visites journalières
+						//On fait la liste des visites journaliÃ¨res
 						$j = 0;
 						$result = $this->db_querier->select("SELECT nbr, stats_day AS day
 							FROM " . StatsSetup::$stats_table . "
@@ -486,7 +486,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						));
 						while ($row = $result->fetch())
 						{
-							//Complétion des jours précédent le premier enregistrement du mois.
+							//ComplÃ©tion des jours prÃ©cÃ©dent le premier enregistrement du mois.
 							if ($j == 0)
 							{
 								for ($z = 1; $z < $row['day']; $z++)
@@ -524,7 +524,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 								
 							$date_day = ($row['day'] < 10) ? 0 . $row['day'] : $row['day'];
 								
-							//On affiche les stats numériquement dans un tableau en dessous
+							//On affiche les stats numÃ©riquement dans un tableau en dessous
 							$tpl->assign_block_vars('value', array(
 								'U_DETAILS' => $date_day . '/' . sprintf('%02d', $month) . '/' . $year,
 								'NBR' => $row['nbr']
@@ -534,7 +534,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						}
 						$result->dispose();
 						
-						//Génération des td manquants.
+						//GÃ©nÃ©ration des td manquants.
 						$date_day = isset($date_day) ? $date_day : 1;
 						for	($i = $date_day; $i < ($array_month[$month - 1] - 1); $i++)
 						{
@@ -554,12 +554,12 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				}
 			}
 		}
-		elseif ($pages || $pages_year) //Pages par jour classées par mois.
+		elseif ($pages || $pages_year) //Pages par jour classÃ©es par mois.
 		{
 			$time = Date::to_format(Date::DATE_NOW, 'Ymj');
-			$current_year = substr($time, 0, 4);
-			$current_month = substr($time, 4, 2);
-			$current_day = substr($time, 6, 2);
+			$current_year = mb_substr($time, 0, 4);
+			$current_month = mb_substr($time, 4, 2);
+			$current_day = mb_substr($time, 6, 2);
 
 			$day = retrieve(GET, 'd', (int)$current_day);
 			$month = retrieve(GET, 'm', (int)$current_month);
@@ -582,7 +582,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			
 			if (empty($pages_year))
 			{
-				//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
+				//On va chercher le nombre de jours prÃ©sents dans la table, ainsi que le record mensuel
 				$info = array('max_nbr' => 0, 'min_day' => 0, 'sum_nbr' => 0, 'avg_nbr' => 0);
 				try {
 					$info = $this->db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(pages) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(pages) as sum_nbr', 'AVG(pages) as avg_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month', 'pages'), $condition, array('year' => $year, 'month' => $month, 'day' => $day));
@@ -606,17 +606,17 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				'L_SUBMIT' => $LANG['submit']
 			));
 
-			//Gestion des mois pour s'adapter au array défini dans lang/main.php
+			//Gestion des mois pour s'adapter au array dÃ©fini dans lang/main.php
 			$array_l_months = array($date_lang['january'], $date_lang['february'], $date_lang['march'], $date_lang['april'], $date_lang['may'], $date_lang['june'],
 			$date_lang['july'], $date_lang['august'], $date_lang['september'], $date_lang['october'], $date_lang['november'], $date_lang['december']);
 
-			if (!empty($pages_year)) //Visites par mois classées par ans.
+			if (!empty($pages_year)) //Visites par mois classÃ©es par ans.
 			{
-				//Années précédente et suivante
+				//AnnÃ©es prÃ©cÃ©dente et suivante
 				$next_year = $pages_year + 1;
 				$previous_year = $pages_year - 1;
 				
-				//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
+				//On va chercher le nombre de jours prÃ©sents dans la table, ainsi que le record mensuel
 				$info = array('max_nbr' => 0, 'sum_nbr' => 0, 'nbr_month' => 0);
 				try {
 					$info = $this->db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(pages) as max_nbr', 'SUM(pages) as sum_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month'), 'WHERE stats_year = :year AND pages_detail <> \'\' GROUP BY stats_year', array('year' => $pages_year));
@@ -636,7 +636,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					'U_PREVIOUS_LINK' => url('.php?pages_year=' . $previous_year)
 				));
 
-				//Année maximale
+				//AnnÃ©e maximale
 				$info_year = array('max_year' => 0, 'min_year' => 0);
 				try {
 					$info_year = $this->db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
@@ -659,7 +659,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						'GRAPH_RESULT' => '<img src="display_stats.php?pages_year=1&amp;year=' . $pages_year . '" alt="' . $LANG['total_visit'] . '" />'
 					));
 					
-					//On fait la liste des visites journalières
+					//On fait la liste des visites journaliÃ¨res
 					$result = $this->db_querier->select("SELECT  stats_month, SUM(pages) AS total
 						FROM " . StatsSetup::$stats_table . "
 						WHERE stats_year = :stats_year
@@ -668,7 +668,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					));
 					while ($row = $result->fetch())
 					{
-						//On affiche les stats numériquement dans un tableau en dessous
+						//On affiche les stats numÃ©riquement dans un tableau en dessous
 						$tpl->assign_block_vars('value', array(
 							'U_DETAILS' => '<a href="stats' . url('.php?m=' . $row['stats_month'] . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
 							'NBR' => $row['total']
@@ -732,7 +732,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						$tpl->assign_block_vars('values.head', array(
 						));
 						
-						//On affiche les stats numériquement dans un tableau en dessous
+						//On affiche les stats numÃ©riquement dans un tableau en dessous
 						$tpl->assign_block_vars('value', array(
 							'U_DETAILS' => '<a href="stats' . url('.php?m=' . $row['stats_month'] . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
 							'NBR' => $row['total']
@@ -743,7 +743,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					}
 					$result->dispose();
 
-					//Génération des td manquants.
+					//GÃ©nÃ©ration des td manquants.
 					$date_day = isset($date_day) ? $date_day : 1;
 					for	($i = $last_month; $i < 12; $i++)
 					{
@@ -756,7 +756,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					foreach ($array_l_months as $value)
 					{
 						$tpl->assign_block_vars('legend', array(
-							'LEGEND' => (in_array($i, $months_not_empty)) ? '<a href="stats' . url('.php?m=' . $i . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . substr($value, 0, 3) . '</a>' : substr($value, 0, 3)
+							'LEGEND' => (in_array($i, $months_not_empty)) ? '<a href="stats' . url('.php?m=' . $i . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . mb_substr($value, 0, 3) . '</a>' : mb_substr($value, 0, 3)
 						));
 						$i++;
 					}
@@ -764,11 +764,11 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			}
 			elseif (retrieve(GET, 'd', false))
 			{
-				//Nombre de jours pour chaque mois (gestion des années bissextiles)
+				//Nombre de jours pour chaque mois (gestion des annÃ©es bissextiles)
 				$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 				$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
 				
-				//Mois précédent et suivant
+				//Mois prÃ©cÃ©dent et suivant
 				$check_day = $day < $array_month[$month-1];
 				$next_day = $check_day ? $day + 1 : 1;
 				$next_month = (!$check_day && $month < 12) ? $month + 1 : $month;
@@ -806,7 +806,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$months .= '<option value="' . $i . '"' . $selected . '>' . $array_l_months[$i - 1] . '</option>';
 				}
 				
-				//Année maximale
+				//AnnÃ©e maximale
 				$info_year = array('max_year' => 0, 'min_year' => 0);
 				try {
 					$info_year = $this->db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
@@ -828,7 +828,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					'GRAPH_RESULT' => '<img src="display_stats.php?pages_day=1&amp;year=' . $year . '&amp;month=' . $month . '&amp;day=' . $day . '" alt="' . $LANG['total_visit'] . '" />'
 				));
 				
-				//On fait la liste des visites journalières
+				//On fait la liste des visites journaliÃ¨res
 				$result = $this->db_querier->select("SELECT pages, stats_day, stats_month, stats_year
 					FROM " . StatsSetup::$stats_table . "
 					WHERE stats_year = :stats_year AND stats_month = :stats_month
@@ -840,7 +840,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				{
 					$date_day = ($row['stats_day'] < 10) ? 0 . $row['stats_day'] : $row['stats_day'];
 					
-					//On affiche les stats numériquement dans un tableau en dessous
+					//On affiche les stats numÃ©riquement dans un tableau en dessous
 					$tpl->assign_block_vars('value', array(
 						'U_DETAILS' => '<a href="stats' . url('.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year'] . '&amp;pages=1', '-pages.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year']) . '#stats">' . $date_day . '/' . sprintf('%02d', $row['stats_month']) . '/' . $row['stats_year'] . '</a>',
 						'NBR' => $row['pages']
@@ -850,11 +850,11 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			}
 			else
 			{
-				//Nombre de jours pour chaque mois (gestion des années bissextiles)
+				//Nombre de jours pour chaque mois (gestion des annÃ©es bissextiles)
 				$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 				$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
 						
-				//Mois précédent et suivant
+				//Mois prÃ©cÃ©dent et suivant
 				$next_month = ($month < 12) ? $month + 1 : 1;
 				$next_year = ($month < 12) ? $year : $year + 1;
 				$previous_month = ($month > 1) ? $month - 1 : 12;
@@ -883,7 +883,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$months .= '<option value="' . $i . '"' . $selected . '>' . $array_l_months[$i - 1] . '</option>';
 				}
 				
-				//Année maximale
+				//AnnÃ©e maximale
 				$info_year = array('max_year' => 0, 'min_year' => 0);
 				try {
 					$info_year = $this->db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
@@ -907,7 +907,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						'GRAPH_RESULT' => '<img src="display_stats.php?pages_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="' . $LANG['total_visit'] . '" />'
 					));
 					
-					//On fait la liste des visites journalières
+					//On fait la liste des visites journaliÃ¨res
 					$result = $this->db_querier->select("SELECT pages, stats_day, stats_month, stats_year
 						FROM " . StatsSetup::$stats_table . "
 						WHERE stats_year = :stats_year AND stats_month = :stats_month
@@ -919,7 +919,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					{
 						$date_day = ($row['stats_day'] < 10) ? 0 . $row['stats_day'] : $row['stats_day'];
 						
-						//On affiche les stats numériquement dans un tableau en dessous
+						//On affiche les stats numÃ©riquement dans un tableau en dessous
 						$tpl->assign_block_vars('value', array(
 							'U_DETAILS' => '<a href="stats' . url('.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year'] . '&amp;pages=1', '-pages.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year']) . '#stats">' . $date_day . '/' . sprintf('%02d', $row['stats_month']) . '/' . $row['stats_year'] . '</a>',
 							'NBR' => $row['pages']
@@ -929,7 +929,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				}
 				else
 				{
-					//Mois selectionné.
+					//Mois selectionnÃ©.
 					if (!empty($month) && !empty($year))
 					{
 						$tpl->put_all(array(
@@ -940,7 +940,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						$month = ($month < 10) ? '0' . $month : $month;
 						unset($i);
 						
-						//On fait la liste des visites journalières
+						//On fait la liste des visites journaliÃ¨res
 						$j = 0;
 						$result = $this->db_querier->select("SELECT pages, stats_day AS day, stats_month, stats_year
 							FROM " . StatsSetup::$stats_table . "
@@ -951,7 +951,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						));
 						while ($row = $result->fetch())
 						{
-							//Complétion des jours précédent le premier enregistrement du mois.
+							//ComplÃ©tion des jours prÃ©cÃ©dent le premier enregistrement du mois.
 							if ($j == 0)
 							{
 								for ($z = 1; $z < $row['day']; $z++)
@@ -989,7 +989,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 								
 							$date_day = ($row['day'] < 10) ? 0 . $row['day'] : $row['day'];
 								
-							//On affiche les stats numériquement dans un tableau en dessous
+							//On affiche les stats numÃ©riquement dans un tableau en dessous
 							$tpl->assign_block_vars('value', array(
 								'U_DETAILS' => $date_day . '/' . sprintf('%02d', $row['stats_month']) . '/' . $row['stats_year'],
 								'NBR' => $row['pages']
@@ -999,7 +999,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						}
 						$result->dispose();
 						
-						//Génération des td manquants.
+						//GÃ©nÃ©ration des td manquants.
 						$date_day = isset($date_day) ? $date_day : 1;
 						for	($i = $date_day; $i < ($array_month[$month - 1] - 1); $i++)
 						{
@@ -1177,10 +1177,10 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				
 			$Stats->load_data(StatsSaver::retrieve_stats($stats_menu), 'ellipse', 5);
 			
-			//Tri décroissant.
+			//Tri dÃ©croissant.
 			arsort($Stats->data_stats);
 			
-			//Traitement des données.
+			//Traitement des donnÃ©es.
 			$array_stats_tmp = array();
 			$array_order = array();
 			$percent_other = 0;

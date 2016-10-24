@@ -3,7 +3,7 @@
  *                          member_xmlhttprequest.php
  *                            -------------------
  *   begin                : January, 25 2007
- *   copyright            : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *

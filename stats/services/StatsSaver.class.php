@@ -3,7 +3,7 @@
  *                                StatsSaver.class.php
  *                            -------------------
  *   begin                : July 23, 2008
- *   copyright            : (C) 2008 Viarre Régis
+ *   copyright            : (C) 2008 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *  
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Viarre Régis crowkait@phpboost.com
+ * @author Viarre RÃ©gis crowkait@phpboost.com
  * @desc 
  * @package {@package}
  */
@@ -40,7 +40,7 @@ class StatsSaver
 		$referer = parse_url(AppContext::get_request()->get_url_referrer());
 		if (!empty($referer))
 		{
-			########### Détection des mots clés ###########
+			########### DÃ©tection des mots clÃ©s ###########
 			$is_search_engine = false;
 			$search_engine = $query_param = '';
 			if (!empty($referer['host']))
@@ -82,7 +82,7 @@ class StatsSaver
 				{
 					$pattern = '/' . $query_param . '=(.*?)&/si';
 					preg_match($pattern, $query, $matches);
-					$keyword = TextHelper::strprotect(utf8_decode(urldecode(strtolower($matches[1]))));
+					$keyword = TextHelper::strprotect(utf8_decode(urldecode(mb_strtolower($matches[1]))));
 					
 					$check_search_engine = PersistenceContext::get_querier()->count(StatsSetup::$stats_referer_table, 'WHERE url = :url AND relative_url = :keyword', array('url' => $search_engine, 'keyword' => $keyword));
 					if (!empty($keyword))
@@ -97,12 +97,12 @@ class StatsSaver
 			elseif (!empty($referer['host']))
 			{
 				$referer['scheme'] = !empty($referer['scheme']) ? $referer['scheme'] : 'http';
-				########### Détection du site de provenance ###########
+				########### DÃ©tection du site de provenance ###########
 				$url = addslashes($referer['scheme'] . '://' . $referer['host']);
 				if (strpos($url, HOST) === false)
 				{
 					$referer['path'] = !empty($referer['path']) ? $referer['path'] : '';
-					$relative_url = addslashes(((substr($referer['path'], 0, 1) == '/') ? $referer['path'] : ('/' . $referer['path'])) . (!empty($referer['query']) ? '?' . $referer['query'] : '') . (!empty($referer['fragment']) ? '#' . $referer['fragment'] : ''));
+					$relative_url = addslashes(((mb_substr($referer['path'], 0, 1) == '/') ? $referer['path'] : ('/' . $referer['path'])) . (!empty($referer['query']) ? '?' . $referer['query'] : '') . (!empty($referer['fragment']) ? '#' . $referer['fragment'] : ''));
 					
 					$check_url = PersistenceContext::get_querier()->count(StatsSetup::$stats_referer_table, 'WHERE url = :url AND relative_url = :relative_url', array('url' => $url, 'relative_url' => $relative_url));
 					if (!empty($check_url))
@@ -130,7 +130,7 @@ class StatsSaver
 		foreach ($array_stats_img as $key => $value)
 			@unlink(PATH_TO_ROOT . '/cache/' . $value);
 		
-		########### Détection des navigateurs ###########
+		########### DÃ©tection des navigateurs ###########
 		$array_browser = array(
 			'opera' => 'opera',
 			'firefox' => 'firefox',
@@ -175,7 +175,7 @@ class StatsSaver
 			self::write_stats('browsers', $browser);
 		}
 		
-		########### Détection des systèmes d'exploitation ###########
+		########### DÃ©tection des systÃ¨mes d'exploitation ###########
 		$array_os = array(
 			'android' => 'android',
 			'iphone|ipad' => 'ios',
@@ -221,17 +221,17 @@ class StatsSaver
 			self::write_stats('os', $os);
 		}
 		
-		########### Détection de la langue utilisateur ###########
+		########### DÃ©tection de la langue utilisateur ###########
 		if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE']))
 		{
 			$user_lang = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
-			$favorite_lang = !empty($user_lang[0]) ? strtolower($user_lang[0]) : '';
+			$favorite_lang = !empty($user_lang[0]) ? mb_strtolower($user_lang[0]) : '';
 			if (strpos($favorite_lang, '-') !== false)
 				$favorite_lang = preg_replace('`[a-z]{2}\-([a-z]{2})`i', '$1', $favorite_lang);
 			$lang = str_replace(array('en', 'cs', 'sv', 'fa', 'ja', 'ko', 'he', 'da', 'gb'), array('uk', 'cz', 'se', 'ir', 'jp', 'kr', 'il', 'dk', 'uk'), $favorite_lang);
-			$lang = substr($lang, 0, 2);
+			$lang = mb_substr($lang, 0, 2);
 			
-			if (!empty($lang)) //On ignore ceux qui n'ont pas renseigné le champs.
+			if (!empty($lang)) //On ignore ceux qui n'ont pas renseignÃ© le champs.
 			{
 				$wlang = 'other';
 				if (Countries::is_available($lang))
@@ -293,10 +293,10 @@ class StatsSaver
 		{		
 			$line = file($file_path);
 			$stats_array = unserialize($line[0]);
-			if (isset($stats_array[strtolower($stats_item)]))
-				$stats_array[strtolower($stats_item)]++;
+			if (isset($stats_array[mb_strtolower($stats_item)]))
+				$stats_array[mb_strtolower($stats_item)]++;
 			else
-				$stats_array[strtolower($stats_item)] = 1;
+				$stats_array[mb_strtolower($stats_item)] = 1;
 			
 			$file = @fopen($file_path, 'r+');	
 			fwrite($file, serialize($stats_array));
