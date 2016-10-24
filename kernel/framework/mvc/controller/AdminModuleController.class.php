@@ -31,7 +31,7 @@ abstract class AdminModuleController extends AbstractController
 	{
 		if (!AppContext::get_current_user()->is_admin())
 		{
-			return new UserLoginController(UserLoginController::ADMIN_LOGIN, substr(REWRITED_SCRIPT, strlen(GeneralConfig::load()->get_site_path())));
+			return new UserLoginController(UserLoginController::ADMIN_LOGIN, mb_substr(REWRITED_SCRIPT, mb_strlen(GeneralConfig::load()->get_site_path())));
 		}
 		else if (ModulesManager::is_module_installed(Environment::get_running_module_name()))
 		{
