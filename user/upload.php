@@ -427,7 +427,7 @@ else
 	));
 	while ($row = $result->fetch())
 	{
-		$name_cut = (mb_strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlentities(mb_substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
+		$name_cut = (mb_strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlspecialchars(mb_substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 		
 		$tpl->assign_block_vars('folder', array(
 			'ID' => $row['id'],
@@ -453,7 +453,7 @@ else
 	));
 	while ($row = $result->fetch())
 	{
-		$name_cut = (mb_strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlentities(mb_substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
+		$name_cut = (mb_strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlspecialchars(mb_substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 		
 		$get_img_mimetype = Uploads::get_img_mimetype($row['type']);
 		$size_img = '';
@@ -491,7 +491,7 @@ else
 		}
 		$is_bbcode_editor = ($editor == 'BBCode');
 		$displayed_code = $is_bbcode_editor ? $bbcode : '/upload/' . $row['path'];
-		$inserted_code = !empty($parse) ? (!empty($no_path) ? $link : PATH_TO_ROOT . $link) : ($is_bbcode_editor ? addslashes($bbcode) : TextHelper::htmlentities($tinymce));
+		$inserted_code = !empty($parse) ? (!empty($no_path) ? $link : PATH_TO_ROOT . $link) : ($is_bbcode_editor ? addslashes($bbcode) : TextHelper::htmlspecialchars($tinymce));
 		$tpl->assign_block_vars('files', array(
 			'C_RECENT_FILE' => $row['timestamp'] > ($now->get_timestamp() - (15 * 60)),  // Ficher ajouté il y a moins de 15 minutes
 			'ID' => $row['id'],

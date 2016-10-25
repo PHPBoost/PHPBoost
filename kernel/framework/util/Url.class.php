@@ -222,7 +222,7 @@ class Url
 	 */
 	public static function encode_rewrite($url)
 	{
-		$url = preg_replace('#&([a-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', mb_strtolower(TextHelper::htmlentities($url)));
+		$url = preg_replace('#&([a-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', mb_strtolower(TextHelper::htmlspecialchars($url)));
 		$url = preg_replace('#&([a-z]{2})(?:lig);#', '\1', $url);
 		$url = preg_replace('`([^a-z0-9]|[\s])`', '-', $url);
 		$url = preg_replace('`[-]{2,}`', '-', $url);
@@ -577,14 +577,8 @@ class Url
 				$a_regex .= '[^"]+)(")`isU';
 				$regex[] = $a_regex;
 			}
-			//'`(<script>.*insert(?:Sound|Movie|Swf)Player\(")(/[^"]+)(".*</script>)`sU';
-			$a_regex = '`(<script><!--\s*insert(?:Sound|Movie|Swf)Player\\(")(';
-			if ($only_match_relative)
-			{
-				$a_regex .= '/';
-			}
-			$a_regex .= '[^"]+)("\\)\s*--></script>)`isU';
-			$regex[] = $a_regex;
+			
+			$regex[] = '`(<script><!--\s*insert(?:Sound|Movie|Swf|Youtube)Player\\(")(' . ($only_match_relative ? '/' : '') . '[^"]+)("\\)\s*--></script>)`isU';
 
 			// Update regex cache
 			if ($only_match_relative)

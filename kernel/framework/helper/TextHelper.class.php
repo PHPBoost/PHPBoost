@@ -155,15 +155,6 @@ class TextHelper
 		return htmlspecialchars_decode($string, $flags);
 	}
 	
-	public static function htmlentities($string, $flags = null, $encoding = 'UTF-8', $double_encode = true)
-	{
-		if ($flags === null)
-		{
-			$flags = ENT_COMPAT;
-		}
-		return htmlentities($string, $flags, $encoding, $double_encode);
-	}
-	
 	public static function html_entity_decode($string, $flags = null, $encoding = 'UTF-8')
 	{
 		if ($flags === null)
@@ -217,15 +208,16 @@ class TextHelper
 
 		return true;
 	}
-/**
- * Wraps a UTF-8 string to a given number of characters
- *
- * @param string $string the input string
- * @param int $width the column width
- * @param string $break the line is broken using the optional break parameter
- * @param string $cut not used for the moment
- * @return string the given string wrapped at the specified column
- */
+	
+	/**
+	 * Wraps a UTF-8 string to a given number of characters
+	 *
+	 * @param string $string the input string
+	 * @param int $width the column width
+	 * @param string $break the line is broken using the optional break parameter
+	 * @param string $cut not used for the moment
+	 * @return string the given string wrapped at the specified column
+	 */
 	function utf8_wordwrap($string, $width = 75, $break = "\n", $cut = true)
 	{
 		$lines = array();
@@ -248,6 +240,6 @@ class TextHelper
 			}
 		}
 		return implode($break, $lines);
-	}	
+	}
 }
 ?>

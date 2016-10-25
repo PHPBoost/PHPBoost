@@ -382,7 +382,7 @@ else
 				if (!file_exists('pics/thumbnails/' . $row['path']))
 					$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
 
-				$name_cut = (mb_strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlentities(mb_substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
+				$name_cut = (mb_strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlspecialchars(mb_substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 
 				//On reccourci le nom s'il est trop long pour éviter de déformer l'administration.
 				$name = TextHelper::html_entity_decode($row['name']);

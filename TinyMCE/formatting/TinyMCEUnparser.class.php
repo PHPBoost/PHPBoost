@@ -339,7 +339,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	private static function clear_html_and_code_tag($var)
 	{
 		$var = str_replace("\n", '<br />', $var);
-		return TextHelper::htmlentities($var, ENT_NOQUOTES);
+		return TextHelper::htmlspecialchars($var, ENT_NOQUOTES);
 	}
 
 	/**

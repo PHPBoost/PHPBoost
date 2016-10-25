@@ -67,7 +67,7 @@ class GalleryFeedProvider implements FeedProvider
 			
 			foreach ($results as $row)
 			{
-				$link = TextHelper::htmlentities(GalleryUrlBuilder::get_link_item($row['idcat'], $row['id']));
+				$link = TextHelper::htmlspecialchars(GalleryUrlBuilder::get_link_item($row['idcat'], $row['id']));
 				
 				$item = new FeedItem();
 				$item->set_title($row['name']);

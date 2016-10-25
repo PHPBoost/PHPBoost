@@ -94,7 +94,7 @@ if ($calendar_type == 'date')
 	{
 		$selected = ($month == $i) ? 'selected="selected"' : '';
 		$tpl->assign_block_vars('month', array(
-			'MONTH' => '<option value="' . $i . '" ' . $selected . '>' . TextHelper::htmlentities($array_l_month[$i - 1]) . '</option>'
+			'MONTH' => '<option value="' . $i . '" ' . $selected . '>' . TextHelper::htmlspecialchars($array_l_month[$i - 1]) . '</option>'
 		));
 	}
 	for ($i = 1900; $i <= 2037; $i++)
