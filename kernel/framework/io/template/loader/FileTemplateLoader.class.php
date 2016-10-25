@@ -140,7 +140,7 @@ class FileTemplateLoader implements TemplateLoader
 	 */
 	private function compute_real_file_path()
 	{
-		if (strpos($this->filepath, '/') === 0)
+		if (mb_strpos($this->filepath, '/') === 0)
 		{
 			// Load the file from its absolute location
 			// (Not overlaodable)
@@ -160,7 +160,7 @@ class FileTemplateLoader implements TemplateLoader
 		 $file = forum_topic.tpl
 		 */
 
-		$i = strpos($this->filepath, '/');
+		$i = mb_strpos($this->filepath, '/');
 		$this->module = mb_substr($this->filepath, 0, $i);
 		$this->file = trim(mb_substr($this->filepath, $i), '/');
 		$this->filename = trim(mb_substr($this->filepath, mb_strrpos($this->filepath, '/')));
@@ -169,7 +169,7 @@ class FileTemplateLoader implements TemplateLoader
 		$this->default_templates_folder = $this->templates_folder . 'default/';
 		$this->theme_templates_folder = $this->templates_folder . AppContext::get_current_user()->get_theme() . '/';
 
-		if (empty($this->module) || !strpos($this->filepath, '/'))
+		if (empty($this->module) || !mb_strpos($this->filepath, '/'))
 		{
 			$this->get_template_paths();
 		}

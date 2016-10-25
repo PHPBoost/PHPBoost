@@ -79,7 +79,7 @@ class UrlSerializedParameter
 	{
 		$this->query_args = array();
 		$uri = $_SERVER['REQUEST_URI'];
-		$params_string_begin = strpos($uri, '?');
+		$params_string_begin = mb_strpos($uri, '?');
 		if ($params_string_begin !== false && mb_strlen($uri) > $params_string_begin)
 		{
 			$params_string = mb_substr($uri, $params_string_begin + 1);

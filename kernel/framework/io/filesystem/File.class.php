@@ -73,7 +73,7 @@ class File extends FileSystemElement
 	public function get_name_without_extension()
 	{
 		$name = $this->get_name();
-		return mb_substr($name, 0, strpos($name, '.'));
+		return mb_substr($name, 0, mb_strpos($name, '.'));
 	}
 	
 	/**

@@ -63,7 +63,7 @@ class LoopTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 		$loop_var = $this->get_tmp_var_name($loop_name);
 		$this->output->write('\';foreach(' . TemplateSyntaxElement::DATA . '->');
-		if (strpos($loop_name, '.') === false)
+		if (mb_strpos($loop_name, '.') === false)
 		{
 			$this->output->write('get_block(\'' . $name . '\')');
 		}

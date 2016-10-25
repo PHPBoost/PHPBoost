@@ -32,7 +32,7 @@ class PHPBoostIndexController extends AbstractController
 		$general_config = GeneralConfig::load();
 		
 		$other_home_page = $general_config->get_other_home_page();
-		if (strpos($other_home_page, '/index.php') !== false)
+		if (mb_strpos($other_home_page, '/index.php') !== false)
 		{
 			AppContext::get_response()->redirect(UserUrlBuilder::home());
 		}

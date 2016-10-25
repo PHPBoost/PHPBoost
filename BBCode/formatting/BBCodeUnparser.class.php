@@ -64,13 +64,13 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		$this->unparse_simple_tags();
 		
 		//Unparsage de la balise table.
-		if (strpos($this->content, '<table class="formatter-table"') !== false)
+		if (mb_strpos($this->content, '<table class="formatter-table"') !== false)
 		{
 			$this->unparse_table();
 		}
 
 		//Unparsage de la balise table.
-		if (strpos($this->content, '<li class="formatter-li"') !== false)
+		if (mb_strpos($this->content, '<li class="formatter-li"') !== false)
 		{
 			$this->unparse_list();
 		}
@@ -266,19 +266,19 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	protected function unparse_table()
 	{
 		//On boucle pour parcourir toutes les imbrications
-		while (strpos($this->content, '<table class="formatter-table"') !== false)
+		while (mb_strpos($this->content, '<table class="formatter-table"') !== false)
 		{
 			$this->content = preg_replace('`<table class="formatter-table"([^>]*)>(.*)</table>`sU', '[table$1]$2[/table]', $this->content);
 		}
-		while (strpos($this->content, '<tr class="formatter-table-row"') !== false)
+		while (mb_strpos($this->content, '<tr class="formatter-table-row"') !== false)
 		{
 			$this->content = preg_replace('`<tr class="formatter-table-row"([^>]*)>(.*)</tr>`sU', '[row$1]$2[/row]', $this->content);
 		}
-		while (strpos($this->content, '<th class="formatter-table-head"') !== false)
+		while (mb_strpos($this->content, '<th class="formatter-table-head"') !== false)
 		{
 			$this->content = preg_replace('`<th class="formatter-table-head"([^>]*)>(.*)</th>`sU', '[head$1]$2[/head]', $this->content);
 		}
-		while (strpos($this->content, '<td class="formatter-table-col"') !== false)
+		while (mb_strpos($this->content, '<td class="formatter-table-col"') !== false)
 		{
 			$this->content = preg_replace('`<td class="formatter-table-col"([^>]*)>(.*)</td>`sU', '[col$1]$2[/col]', $this->content);
 		}
@@ -290,15 +290,15 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	protected function unparse_list()
 	{
 		//On boucle tant qu'il y a de l'imbrication
-		while (strpos($this->content, '<ul class="formatter-ul">') !== false)
+		while (mb_strpos($this->content, '<ul class="formatter-ul">') !== false)
 		{
 			$this->content = preg_replace('`<ul( style="[^"]+")? class="formatter-ul">(.*)</ul>`sU', '[list$1]$2[/list]', $this->content);
 		}
-		while (strpos($this->content, '<ol class="formatter-ol">') !== false)
+		while (mb_strpos($this->content, '<ol class="formatter-ol">') !== false)
 		{
 			$this->content = preg_replace('`<ol( style="[^"]+")? class="formatter-ol">(.*)</ol>`sU', '[list=ordered$1]$2[/list]', $this->content);
 		}
-		while (strpos($this->content, '<li class="formatter-li">') !== false)
+		while (mb_strpos($this->content, '<li class="formatter-li">') !== false)
 		{
 			$this->content = preg_replace('`<li class="formatter-li">(.*)</li>`isU', '[*]$1', $this->content);
 		}

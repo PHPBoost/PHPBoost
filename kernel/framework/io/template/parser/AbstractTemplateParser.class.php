@@ -61,7 +61,7 @@ abstract class AbstractTemplateParser implements TemplateParser
 		$method = 'var';
 		$tiny_varname = $varname;
 
-		$split_index = strpos($varname, '_');
+		$split_index = mb_strpos($varname, '_');
 
 		if ($split_index > 0)
 		{

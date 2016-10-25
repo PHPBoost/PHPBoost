@@ -251,9 +251,9 @@ class Backup
 		{
 			preg_match('!`([a-z_]+)`!i', $field, $match);
 			$name = isset($match[1]) ? $match[1] : '';
-			if (strpos($field, 'KEY') !== false)
+			if (mb_strpos($field, 'KEY') !== false)
 			{
-				$type = trim(mb_substr($field, 0, strpos($field, 'KEY') + 3));
+				$type = trim(mb_substr($field, 0, mb_strpos($field, 'KEY') + 3));
 				preg_match('!\(([a-z_`,]+)\)!i', $field, $match);
 				$index_fields = isset($match[1]) ? str_replace('`', '', $match[1]) : '';
 				$structure['index'][] = array('name' => $name, 'fields' => $index_fields, 'type' => $type);
@@ -262,11 +262,11 @@ class Backup
 			{
 				preg_match('!` ([a-z0-9()]+)!i', $field, $match);
 				$type = isset($match[1]) ? $match[1] : '';
-				$attribute = strpos($field, 'unsigned') !== false ? 'unsigned' : '';
-				$null = strpos($field, 'NOT NULL') !== false ? false : true;
+				$attribute = mb_strpos($field, 'unsigned') !== false ? 'unsigned' : '';
+				$null = mb_strpos($field, 'NOT NULL') !== false ? false : true;
 				preg_match('`default (.+)`i', $field, $match);
 				$default = isset($match[1]) ? str_replace("'", '', $match[1]) : '';
-				$extra = strpos($field, 'auto_increment') !== false ? 'auto_increment' : '';
+				$extra = mb_strpos($field, 'auto_increment') !== false ? 'auto_increment' : '';
 				$structure['fields'][] = array('name' => $name, 'type' => $type, 'attribute' => $attribute, 'null' => $null, 'default' => $default, 'extra' => $extra);
 			}
 		}

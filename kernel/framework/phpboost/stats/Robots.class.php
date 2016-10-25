@@ -63,43 +63,43 @@ class Robots
 
 		if (!empty($user_agent))
 		{
-			if (strpos($user_agent, 'google') !== false)
+			if (mb_strpos($user_agent, 'google') !== false)
 			{
 				return 'Google';
 			}
-			elseif (strpos($user_agent, 'bing') !== false)
+			elseif (mb_strpos($user_agent, 'bing') !== false)
 			{
 				return 'Bing';
 			}
-			elseif (strpos($user_agent, 'yahoo') !== false)
+			elseif (mb_strpos($user_agent, 'yahoo') !== false)
 			{
 				return 'Yahoo';
 			}
-			elseif (strpos($user_agent, 'yandex') !== false)
+			elseif (mb_strpos($user_agent, 'yandex') !== false)
 			{
 				return 'Yandex';
 			}
-			elseif (strpos($user_agent, 'baidu') !== false)
+			elseif (mb_strpos($user_agent, 'baidu') !== false)
 			{
 				return 'Baidu';
 			}
-			elseif (strpos($user_agent, 'exabot') !== false)
+			elseif (mb_strpos($user_agent, 'exabot') !== false)
 			{
 				return 'Exalead';
 			}
-			elseif (strpos($user_agent, 'voila') !== false)
+			elseif (mb_strpos($user_agent, 'voila') !== false)
 			{
 				return 'Voila';
 			}
-			elseif (strpos($user_agent, 'gigablast') !== false)
+			elseif (mb_strpos($user_agent, 'gigablast') !== false)
 			{
 				return 'Gigablast';
 			}
-			elseif (strpos($user_agent, 'w3c') !== false)
+			elseif (mb_strpos($user_agent, 'w3c') !== false)
 			{
 				return 'W3C';
 			}
-			elseif (strpos($user_agent, 'ahrefs') !== false)
+			elseif (mb_strpos($user_agent, 'ahrefs') !== false)
 			{
 				return 'Ahrefs';
 			}

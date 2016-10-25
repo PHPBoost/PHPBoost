@@ -86,13 +86,13 @@ class BBCodeParser extends ContentFormattingParser
 		$this->parse_simple_tags();
 		
 		//Tableaux
-		if (!in_array('table', $this->forbidden_tags) && strpos($this->content, '[table') !== false)
+		if (!in_array('table', $this->forbidden_tags) && mb_strpos($this->content, '[table') !== false)
 		{
 			$this->parse_table();
 		}
 
 		//Listes
-		if (!in_array('list', $this->forbidden_tags)&& strpos($this->content, '[list') !== false)
+		if (!in_array('list', $this->forbidden_tags)&& mb_strpos($this->content, '[list') !== false)
 		{
 			$this->parse_list();
 		}
@@ -442,7 +442,7 @@ class BBCodeParser extends ContentFormattingParser
 					if (is_array($content[$i]))
 					$this->parse_imbricated_list($content[$i]);
 
-					if (strpos($content[$i], '[*]') !== false) //Si il contient au moins deux éléments
+					if (mb_strpos($content[$i], '[*]') !== false) //Si il contient au moins deux éléments
 					{
 						//Nettoyage des listes (retours à la ligne)
 						$content[$i] = preg_replace_callback('`\[\*\]((?:\s|<br />)+)`', array('BBCodeParser', 'clear_html_br'), $content[$i]);

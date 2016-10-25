@@ -64,7 +64,7 @@ class StatsSaver
 				
 				foreach ($engines as $engine => $param)
 				{
-					if (strpos($referer['host'], $engine) !== false)
+					if (mb_strpos($referer['host'], $engine) !== false)
 					{
 						$is_search_engine = true;
 						$search_engine = $engine;
@@ -78,7 +78,7 @@ class StatsSaver
 			{
 				$query = !empty($referer['query']) ? $referer['query'] . '&' : '';
 				
-				if (strpos($query, $query_param . '=') !==  false)
+				if (mb_strpos($query, $query_param . '=') !==  false)
 				{
 					$pattern = '/' . $query_param . '=(.*?)&/si';
 					preg_match($pattern, $query, $matches);
@@ -99,7 +99,7 @@ class StatsSaver
 				$referer['scheme'] = !empty($referer['scheme']) ? $referer['scheme'] : 'http';
 				########### Détection du site de provenance ###########
 				$url = addslashes($referer['scheme'] . '://' . $referer['host']);
-				if (strpos($url, HOST) === false)
+				if (mb_strpos($url, HOST) === false)
 				{
 					$referer['path'] = !empty($referer['path']) ? $referer['path'] : '';
 					$relative_url = addslashes(((mb_substr($referer['path'], 0, 1) == '/') ? $referer['path'] : ('/' . $referer['path'])) . (!empty($referer['query']) ? '?' . $referer['query'] : '') . (!empty($referer['fragment']) ? '#' . $referer['fragment'] : ''));
@@ -122,7 +122,7 @@ class StatsSaver
 		//Inclusion une fois par jour et par visiteur.
 		$_SERVER['HTTP_USER_AGENT'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
 		
-		if (strpos($_SERVER['HTTP_USER_AGENT'], 'libwww') !== false) //Evite les bots.
+		if (mb_strpos($_SERVER['HTTP_USER_AGENT'], 'libwww') !== false) //Evite les bots.
 			return;
 		
 		//Suppression des images de statistiques en cache.
@@ -226,7 +226,7 @@ class StatsSaver
 		{
 			$user_lang = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
 			$favorite_lang = !empty($user_lang[0]) ? mb_strtolower($user_lang[0]) : '';
-			if (strpos($favorite_lang, '-') !== false)
+			if (mb_strpos($favorite_lang, '-') !== false)
 				$favorite_lang = preg_replace('`[a-z]{2}\-([a-z]{2})`i', '$1', $favorite_lang);
 			$lang = str_replace(array('en', 'cs', 'sv', 'fa', 'ja', 'ko', 'he', 'da', 'gb'), array('uk', 'cz', 'se', 'ir', 'jp', 'kr', 'il', 'dk', 'uk'), $favorite_lang);
 			$lang = mb_substr($lang, 0, 2);

@@ -68,7 +68,7 @@ class CommentsUrlBuilder
 	
 	private static function build_url($comment_path, $parameters)
 	{
-		if (strpos($comment_path, '?') === false)
+		if (mb_strpos($comment_path, '?') === false)
 		{
 			return new Url($comment_path . '?' . $parameters);
 		}

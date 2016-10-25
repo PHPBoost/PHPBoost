@@ -57,7 +57,7 @@ class ContentSecondParser extends AbstractParser
 		$this->content = preg_replace_callback('`(src|href)="/([A-Za-z0-9#+-_\./]+)"`sU', array($this, 'callbackrelative_url'), $this->content);
 		
 		//Balise code
-		if (strpos($this->content, '[[CODE') !== false)
+		if (mb_strpos($this->content, '[[CODE') !== false)
 		{
 			$this->content = preg_replace_callback('`\[\[CODE(?:=([A-Za-z0-9#+-_.\s]+))?(?:,(0|1)(?:,(0|1))?)?\]\](.+)\[\[/CODE\]\]`sU', array($this, 'callbackhighlight_code'), $this->content);
 		}
@@ -75,13 +75,13 @@ class ContentSecondParser extends AbstractParser
         	}
 		
 		//Media
-		if (strpos($this->content, '[[MEDIA]]') !== false)
+		if (mb_strpos($this->content, '[[MEDIA]]') !== false)
 		{
 			$this->process_media_insertion();
 		}
 
 		//Balise latex.
-		if (strpos($this->content, '[[MATH]]') !== false)
+		if (mb_strpos($this->content, '[[MATH]]') !== false)
 		{
 			$server_config = new ServerConfiguration();
 			if ($server_config->has_gd_library())

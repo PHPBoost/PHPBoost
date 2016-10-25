@@ -58,7 +58,7 @@ class NotationService
 
 			$average_notes = $notation->get_average_notes();
 			$int = intval($average_notes);
-			$decimal = floatval('0.' . mb_substr($average_notes, strpos($average_notes, '.') + 1));
+			$decimal = floatval('0.' . mb_substr($average_notes, mb_strpos($average_notes, '.') + 1));
 
 			for ($i = 1; $i <= $notation->get_notation_scale(); $i++)
 			{				
@@ -120,7 +120,7 @@ class NotationService
 
 			$average_notes = $notation->get_average_notes();
 			$int = intval($average_notes);
-			$decimal = floatval('0.' . mb_substr($average_notes, strpos($average_notes, '.') + 1));
+			$decimal = floatval('0.' . mb_substr($average_notes, mb_strpos($average_notes, '.') + 1));
 
 			for ($i = 1; $i <= $notation->get_notation_scale(); $i++)
 			{				

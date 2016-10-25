@@ -96,7 +96,7 @@ class DefaultTemplateData implements TemplateData
 	public function assign_block_vars($block_name, array $array_vars, array $subtemplates = array())
 	{
 		$current_block = null;
-		if (strpos($block_name, '.') !== false) // nested block
+		if (mb_strpos($block_name, '.') !== false) // nested block
 		{
 			$blocks = explode('.', $block_name);
 			$blockcount = count($blocks) - 1;

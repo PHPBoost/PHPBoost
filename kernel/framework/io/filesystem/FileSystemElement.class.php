@@ -85,7 +85,7 @@ abstract class FileSystemElement
 	 */
 	public function get_name()
 	{
-		if (strpos($this->path, '/') !== false)
+		if (mb_strpos($this->path, '/') !== false)
 		{
 			$parts = explode('/', trim($this->path, '/'));
 			return $parts[count($parts) - 1];

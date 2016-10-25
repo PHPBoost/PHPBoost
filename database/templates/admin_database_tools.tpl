@@ -310,7 +310,7 @@
 				//V�rification de la requ�te => alerte si elle contient un des mots cl�s DELETE, DROP ou TRUNCATE.
 				for(i = 0; i < keyword.length; i++)
 				{
-					if( typeof(strpos(query_lowercase, keyword[i])) != 'boolean' )
+					if( typeof(mb_strpos(query_lowercase, keyword[i])) != 'boolean' )
 					{
 						check_query = true;
 						break;
