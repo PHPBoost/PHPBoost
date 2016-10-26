@@ -149,7 +149,9 @@ class GuestbookMessage
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		
-		return array(
+		return array_merge(
+			Date::get_array_tpl_vars($this->creation_date, 'date'),
+			array(
 			'C_EDIT' => $this->is_authorized_edit(),
 			'C_DELETE' => $this->is_authorized_delete(),
 			'C_AUTHOR_EXIST' => $user->get_id() != User::VISITOR_LEVEL,
@@ -158,11 +160,6 @@ class GuestbookMessage
 			//Message
 			'ID' => $this->id,
 			'CONTENTS' => FormatingHelper::second_parse($this->contents),
-			'DATE' => $this->creation_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT),
-			'DATE_DAY' => $this->creation_date->get_day(),
-			'DATE_MONTH' => $this->creation_date->get_month(),
-			'DATE_YEAR' => $this->creation_date->get_year(),
-			'DATE_ISO8601' => $this->creation_date->format(Date::FORMAT_ISO8601),
 			'PSEUDO' => $this->login ? $this->login : $user->get_display_name(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,
@@ -171,7 +168,7 @@ class GuestbookMessage
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
 			'U_EDIT' => GuestbookUrlBuilder::edit($this->id, $page)->rel(),
 			'U_DELETE' => GuestbookUrlBuilder::delete($this->id)->rel()
-		);
+		));
 	}
 }
 ?>

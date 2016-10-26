@@ -218,7 +218,9 @@ class FaqQuestion
 		$new_content = new FaqNewContent();
 		$this->lang = LangLoader::get('common', 'faq');
 		
-		return array(
+		return array_merge(
+			Date::get_array_tpl_vars($this->creation_date, 'date'),
+			array(
 			'C_APPROVED' => $this->is_approved(),
 			'C_EDIT' => $this->is_authorized_to_edit(),
 			'C_DELETE' => $this->is_authorized_to_delete(),
@@ -229,8 +231,6 @@ class FaqQuestion
 			'ID' => $this->id,
 			'QUESTION' => $this->question,
 			'ANSWER' => FormatingHelper::second_parse($this->answer),
-			'DATE' => $this->creation_date->format(Date::FORMAT_DAY_MONTH_YEAR),
-			'DATE_ISO8601' => $this->creation_date->format(Date::FORMAT_ISO8601),
 			'C_AUTHOR_EXIST' => $user->get_id() !== User::VISITOR_LEVEL,
 			'PSEUDO' => $user->get_display_name(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
@@ -252,7 +252,7 @@ class FaqQuestion
 			'U_CATEGORY' => FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
 			'U_EDIT' => FaqUrlBuilder::edit($this->id)->rel(),
 			'U_DELETE' => FaqUrlBuilder::delete($this->id)->rel()
-		);
+		));
 	}
 }
 ?>

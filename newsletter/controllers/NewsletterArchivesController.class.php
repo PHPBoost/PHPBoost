@@ -118,14 +118,19 @@ class NewsletterArchivesController extends ModuleController
 		while ($row = $result->fetch())
 		{
 			$stream = NewsletterStreamsCache::load()->get_stream($row['stream_id']);
-			$this->view->assign_block_vars('archives_list', array(
+
+			$date = new Date($row['timestamp'], Timezone::SERVER_TIMEZONE);
+
+			$this->view->assign_block_vars('archives_list', array_merge(
+				Date::get_array_tpl_vars($date, 'date'), 
+				array(
 				'STREAM_NAME' => $stream->get_name(),
 				'SUBJECT' => $row['subject'],
-				'DATE' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR),
 				'NBR_SUBSCRIBERS' => $row['nbr_subscribers'],
 				'U_VIEW_STREAM' => NewsletterUrlBuilder::archives($stream->get_id(), $this->stream->get_rewrited_name())->rel(),
 				'U_VIEW_ARCHIVE' => NewsletterUrlBuilder::archive($row['id'])->rel(),
 				'U_DELETE_ARCHIVE' => NewsletterUrlBuilder::delete_archive($row['id'], $stream->get_id())->rel()
+				)
 			));
 		}
 		$result->dispose();

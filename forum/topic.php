@@ -402,7 +402,15 @@ while ( $row = $result->fetch() )
 	
 	$user_sign_field = $extended_fields_cache->get_extended_field_by_field_name('user_sign');
 	
-	$tpl->assign_block_vars('msg', array(
+	$topic_date           = new Date($row['timestamp'], Timezone::SERVER_TIMEZONE);
+	$topic_edit_date      = new Date($row['timestamp_edit'], Timezone::SERVER_TIMEZONE);
+	$user_registered_date = new Date($row['registered'], Timezone::SERVER_TIMEZONE);
+
+	$tpl->assign_block_vars('msg', array_merge(
+		Date::get_array_tpl_vars($topic_date,'topic_date'),
+		Date::get_array_tpl_vars($topic_edit_date,'topic_edit_date'),
+		Date::get_array_tpl_vars($user_registered_date,'user_registered_date'),
+		array(
 		'ID' => $row['id'],
 		'CLASS_COLOR' => ($j%2 == 0) ? '' : 2,
 		'FORUM_ONLINE_STATUT_USER' => !empty($row['connect']) ? 'online' : 'offline',
@@ -440,6 +448,7 @@ while ( $row = $result->fetch() )
 		'U_VARS_ANCRE' => url('.php?id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '') . $rewrited_title . '.php'),
 		'U_VARS_QUOTE' => url('.php?quote=' . $row['id'] . '&amp;id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '-0') . '-0-' . $row['id'] . $rewrited_title . '.php'),
 		'USER_PM' => !$is_guest && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? '<a href="'. UserUrlBuilder::personnal_message($row['user_id'])->rel() . '" class="basic-button smaller">MP</a>' : '',
+		)
 	));
 	
 	foreach ($displayed_extended_fields as $field_type)

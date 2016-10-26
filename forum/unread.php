@@ -135,9 +135,9 @@ while ($row = $result->fetch())
 	$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['title']) : '';
 	
 	//Affichage du dernier message posté.
-	$last_group_color = User::get_group_color($row['last_user_groups'], $row['last_user_level']);
-	$last_msg = '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite .  $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><i class="fa fa-hand-o-right"></i></a>' . ' ' . $LANG['on'] . ' ' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br /> ' . $LANG['by'] . ' ' . (!empty($row['last_login']) ? '<a class="small '.UserService::get_level_class($row['last_user_level']).'"' . (!empty($last_group_color) ? ' style="color:' . $last_group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['last_user_id'])->rel() .'">' . $row['last_login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>');
 	
+	$last_msg = '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite .  $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><i class="fa fa-hand-o-right"></i></a>' . ' ' . $LANG['on'] . ' ' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br /> ' . $LANG['by'] . ' ' . (!empty($row['last_login']) ? '<a class="small '.UserService::get_level_class($row['last_user_level']).'"' . (!empty($last_group_color) ? ' style="color:' . $last_group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['last_user_id'])->rel() .'">' . $row['last_login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>');
+
 	//Ancre ajoutée aux messages non lus.	
 	$new_ancre = '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><i class="fa fa-hand-o-right"></i></a>';
 	
@@ -146,9 +146,14 @@ while ($row = $result->fetch())
 	$topic_pagination = new ModulePagination($page, $row['nbr_msg'], $config->get_number_messages_per_page(), Pagination::LIGHT_PAGINATION);
 	$topic_pagination->set_url(new Url('/forum/topic' . url('.php?id=' . $row['id'] . '&amp;pt=%d', '-' . $row['id'] . '-%d' . $rewrited_title . '.php')));
 	
-	$group_color = User::get_group_color($row['groups'], $row['user_level']);
+	$group_color      = User::get_group_color($row['groups'], $row['user_level']);
+	$last_group_color = User::get_group_color($row['last_user_groups'], $row['last_user_level']);
 	
-	$tpl->assign_block_vars('topics', array(
+	$last_msg_date = new Date($row['last_timestamp'], Timezone::SERVER_TIMEZONE);
+
+	$tpl->assign_block_vars('topics', array_merge(
+		Date::get_array_tpl_vars($last_msg_date, 'last_msg_date'),
+		array(
 		'C_PAGINATION' => $topic_pagination->has_several_pages(),
 		'C_IMG_POLL' => !empty($row['question']),
 		'C_IMG_TRACK' => !empty($row['idtrack']),
@@ -165,8 +170,14 @@ while ($row = $result->fetch())
 		'MSG' => ($row['nbr_msg'] - 1),
 		'VUS' => $row['nbr_views'],
 		'U_TOPIC_VARS' => url('.php?id=' . $row['id'], '-' . $row['id'] . $rewrited_title . '.php'),
-		'U_LAST_MSG' => $last_msg,
 		'L_DISPLAY_MSG' => ($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '',
+		'LAST_MSG_URL' => "topic" . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id,
+		'C_LAST_MSG_GUEST' => !empty($row['last_login']),
+		'LAST_MSG_USER_PROFIL' => UserUrlBuilder::profile($row['last_user_id'])->rel(),
+		'LAST_MSG_USER_LOGIN' => $row['last_login'],
+		'LAST_MSG_USER_LEVEL' => " " . UserService::get_level_class($row['last_user_level']),
+		'LAST_MSG_USER_GROUP_COLOR' => (!empty($last_group_color) ? ' style="color:' . $last_group_color . '"' : '')
+		)
 	));	
 }
 $result->dispose();

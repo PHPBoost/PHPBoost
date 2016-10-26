@@ -216,7 +216,9 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 		$results_displayed = $poll_config->are_results_displayed_before_polls_end() && !empty($poll['end']) ? $now->get_timestamp() > $poll_end_date->get_timestamp : true;
 		
 		$sum_vote = array_sum($array_vote);
-		$tpl->put_all(array(
+		$tpl->put_all(array_merge(
+			Date::get_array_tpl_vars($poll_creation_date,'date'),
+			array(
 			'C_POLL_VIEW' => true,
 			'C_POLL_RESULTS' => true,
 			'C_IS_ADMIN' => $is_admin,
@@ -224,7 +226,6 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 			'C_NO_VOTE' => !$is_admin && (empty($nbr_votes) && empty($ip)),
 			'IDPOLL' => $poll['id'],
 			'QUESTION' => stripslashes($poll['question']),
-			'DATE' => $poll_creation_date->format(Date::FORMAT_DAY_MONTH_YEAR),
 			'VOTES' => $sum_vote,
 			'L_POLL' => $LANG['poll'],
 			'L_BACK_POLL' => $LANG['poll_back'],
@@ -234,6 +235,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 			'L_RESULTS_NOT_DISPLAYED_YET' => StringVars::replace_vars($LANG['e_results_not_displayed_yet'], array('end_date' => $poll_end_date->format(Date::FORMAT_DAY_MONTH_YEAR))),
 			'L_EDIT' => LangLoader::get_message('edit', 'common'),
 			'L_DELETE' => LangLoader::get_message('delete', 'common')
+			)
 		));
 		
 		$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //Empêche la division par 0.
@@ -252,7 +254,11 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 	}
 	else //Questions.
 	{
-		$tpl->put_all(array(
+		$date = new Date($poll['timestamp'], Timezone::SERVER_TIMEZONE);
+
+		$tpl->put_all(array_merge(
+			Date::get_array_tpl_vars($date,'date'), 
+			array(
 			'C_POLL_VIEW' => true,
 			'C_POLL_QUESTION' => true,
 			'C_IS_ADMIN' => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
@@ -261,7 +267,6 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 			'VOTES' => 0,
 			'ID_R' => url('.php?id=' . $poll['id'] . '&amp;r=1', '-' . $poll['id'] . '-1.php'),
 			'QUESTION' => stripslashes($poll['question']),
-			'DATE' => Date::to_format($poll['timestamp'], Date::FORMAT_DAY_MONTH_YEAR),
 			'U_POLL_ACTION' => url('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'),
 			'U_POLL_RESULT' => url('.php?id=' . $poll['id'] . '&amp;r=1', '-' . $poll['id'] . '-1.php'),
 			'L_POLL' => $LANG['poll'],
@@ -271,6 +276,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 			'L_EDIT' => LangLoader::get_message('edit', 'common'),
 			'L_DELETE' => LangLoader::get_message('delete', 'common'),
 			'L_ON' => $LANG['on']
+			)
 		));
 	
 		$z = 0;
@@ -352,14 +358,16 @@ elseif ($archives) //Archives.
 		$sum_vote = array_sum($array_vote);
 		$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //Empêche la division par 0.
 
-		$tpl->assign_block_vars('list', array(
+		$tpl->assign_block_vars('list', array_merge(
+			Date::get_array_tpl_vars(Date::DATE_NOW, 'date'),
+			array(
 			'ID' => $row['id'],
 			'QUESTION' => stripslashes($row['question']),
 			'EDIT' => '<a href="' . PATH_TO_ROOT . '/poll/admin_poll' . url('.php?id=' . $row['id']) . '" title="' . LangLoader::get_message('edit', 'common') . '" class="fa fa-edit"></a>',
 			'DEL' => '&nbsp;&nbsp;<a href="' . PATH_TO_ROOT . '/poll/admin_poll' . url('.php?delete=1&amp;id=' . $row['id']) . '" title="' . LangLoader::get_message('delete', 'common') . '" class="fa fa-delete" data-confirmation="delete-element"></a>',
-			'VOTE' => $sum_vote,
-			'DATE' => Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),			
+			'VOTE' => $sum_vote,		
 			'L_VOTE' => (($sum_vote > 1 ) ? $LANG['poll_vote_s'] : $LANG['poll_vote'])
+			)
 		));		
 
 		$array_poll = array_combine($array_answer, $array_vote);

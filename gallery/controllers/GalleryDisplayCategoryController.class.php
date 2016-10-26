@@ -350,8 +350,10 @@ class GalleryDisplayCategoryController extends ModuleController
 					
 					$group_color = User::get_group_color($info_pics['groups'], $info_pics['level']);
 					
+					$date = new DATE($info_pics['timestamp'], Timezone::SERVER_TIMEZONE);
+
 					//Affichage de l'image et de ses informations.
-					$this->tpl->put_all(array(
+					$this->tpl->put_all(array_merge(Date::get_array_tpl_vars($date,'date') ,array(
 						'C_GALLERY_PICS_MAX' => true,
 						'C_GALLERY_PICS_MODO' => $is_modo,
 						'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),
@@ -363,7 +365,6 @@ class GalleryDisplayCategoryController extends ModuleController
 						'NAME' => '<span id="fi_' . $info_pics['id'] . '">' . stripslashes($info_pics['name']) . '</span> <span id="fi' . $info_pics['id'] . '"></span>',
 						'CLEARED_NAME' => stripslashes($info_pics['name']),
 						'POSTOR' => '<a class="small ' . UserService::get_level_class($info_pics['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($info_pics['user_id'])->rel() .'">' . $info_pics['display_name'] . '</a>',
-						'DATE' => Date::to_format($info_pics['timestamp'], Date::FORMAT_DAY_MONTH_YEAR),
 						'VIEWS' => ($info_pics['views'] + 1),
 						'DIMENSION' => $info_pics['width'] . ' x ' . $info_pics['height'],
 						'SIZE' => NumberHelper::round($info_pics['weight']/1024, 1),
@@ -400,7 +401,7 @@ class GalleryDisplayCategoryController extends ModuleController
 						'U_RIGHT_THUMBNAILS' => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics) ? '<span id="display_right"><a href="javascript:display_thumbnails(\'right\')"><i class="fa fa-arrow-right fa-2x"></i></a></span>' : '<span id="display_right"></span>',
 						'U_COMMENTS' => GalleryUrlBuilder::get_link_item($info_pics['idcat'],$info_pics['id'],0,$g_sort) .'#comments-list',
 						'U_IMG_MAX' => 'show_pics.php?id=' . $info_pics['id'] . '&amp;cat=' . $info_pics['idcat']
-					));
+					)));
 	
 					//Affichage de la liste des miniatures sous l'image.
 					$i = 0;

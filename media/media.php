@@ -103,7 +103,9 @@ elseif ($id_media > 0)
 
 	$new_content = new MediaNewContent();
 	
-	$tpl->put_all(array(
+	$date = new Date($media['timestamp'], Timezone::SERVER_TIMEZONE);
+
+	$tpl->put_all(array_merge(Date::get_array_tpl_vars($date, 'date'), array(
 		'ID' => $id_media,
 		'C_DISPLAY_MEDIA' => true,
 		'C_ROOT_CATEGORY' => $media['idcat'] == Category::ROOT_CATEGORY,
@@ -122,7 +124,6 @@ elseif ($id_media > 0)
 		'L_DATE' => LangLoader::get_message('date', 'date-common'),
 		'L_SIZE' => $LANG['size'],
 		'L_MEDIA_INFOS' => $MEDIA_LANG['media_infos'],
-		'DATE' => Date::to_format($media['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 		'L_MODO_PANEL' => $LANG['modo_panel'],
 		'L_UNAPROBED' => $MEDIA_LANG['unaprobed_media_short'],
 		'HEIGHT_P' => $media['height'] + 50,
@@ -135,7 +136,7 @@ elseif ($id_media > 0)
 		'U_POPUP_MEDIA' => url('media_popup.php?id=' . $id_media),
 		'CATEGORY_NAME' => $media['idcat'] == Category::ROOT_CATEGORY ? LangLoader::get_message('module_title', 'common', 'media') : MediaService::get_categories_manager()->get_categories_cache()->get_category($media['idcat'])->get_name(),
 		'U_EDIT_CATEGORY' => $media['idcat'] == Category::ROOT_CATEGORY ? MediaUrlBuilder::configuration()->rel() : MediaUrlBuilder::edit_category($media['idcat'])->rel()
-	));
+	)));
 	
 	if (empty($mime_type_tpl[$media['mime_type']]))
 	{

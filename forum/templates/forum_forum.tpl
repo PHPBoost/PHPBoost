@@ -156,7 +156,14 @@
 							{topics.VUS}
 						</td>
 						<td class="forum-last-topic">
-							{topics.U_LAST_MSG}
+							<a href={topics.LAST_MSG_URL} title="{topics.TITLE}"><i class="fa fa-hand-o-right"></i></a> ${LangLoader::get_message('on', 'main')} {topics.LAST_MSG_DATE_FULL}
+							<br />
+							${LangLoader::get_message('by', 'main')}
+							# IF topics.C_LAST_MSG_GUEST #
+							<a href="{topics.LAST_MSG_USER_PROFIL}" class="small{topics.LAST_MSG_USER_LEVEL}"{topics.LAST_MSG_USER_GROUP_COLOR} >{topics.LAST_MSG_USER_LOGIN}</a>
+							# ELSE #
+								<em>${LangLoader::get_message('guest', 'main')}</em>
+							# ENDIF #
 						</td>
 					</tr>
 					# END topics #

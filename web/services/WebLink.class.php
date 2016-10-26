@@ -421,7 +421,10 @@ class WebLink
 		$number_comments = CommentsService::get_number_comments('web', $this->id);
 		$new_content= new WebNewContent();
 		
-		return array(
+		return array_merge(
+			Date::get_array_tpl_vars($this->creation_date, 'date'),
+			Date::get_array_tpl_vars($this->start_date, 'differed_start_date'),
+			array(
 			'C_VISIBLE' => $this->is_visible(),
 			'C_EDIT' => $this->is_authorized_to_edit(),
 			'C_DELETE' => $this->is_authorized_to_delete(),
@@ -439,16 +442,6 @@ class WebLink
 			'URL' => $this->url->absolute(),
 			'CONTENTS' => $contents,
 			'DESCRIPTION' => $description,
-			'DATE' => $this->creation_date->format(Date::FORMAT_DAY_MONTH_YEAR),
-			'DATE_DAY' => $this->creation_date->get_day(),
-			'DATE_MONTH' => $this->creation_date->get_month(),
-			'DATE_YEAR' => $this->creation_date->get_year(),
-			'DATE_ISO8601' => $this->creation_date->format(Date::FORMAT_ISO8601),
-			'DIFFERED_START_DATE' => $this->start_date ? $this->start_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) : '',
-			'DIFFERED_START_DATE_DAY' => $this->start_date ? $this->start_date->get_day() : '',
-			'DIFFERED_START_DATE_MONTH' => $this->start_date ? $this->start_date->get_month() : '',
-			'DIFFERED_START_DATE_YEAR' =>  $this->start_date ? $this->start_date->get_year() : '',
-			'DIFFERED_START_DATE_ISO8601' => $this->start_date ? $this->start_date->format(Date::FORMAT_ISO8601) : '',
 			'STATUS' => $this->get_status(),
 			'C_AUTHOR_EXIST' => $user->get_id() !== User::VISITOR_LEVEL,
 			'PSEUDO' => $user->get_display_name(),
@@ -481,6 +474,7 @@ class WebLink
 			'U_DELETE' => WebUrlBuilder::delete($this->id)->rel(),
 			'U_PARTNER_PICTURE' => $this->partner_picture->rel(),
 			'U_COMMENTS' => WebUrlBuilder::display_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->rel()
+			)
 		);
 	}
 }

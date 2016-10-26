@@ -322,8 +322,10 @@ else
 				
 				$group_color = User::get_group_color($info_pics['groups'], $info_pics['level']);
 				
+				$date = new Date($info_pics['timestamp'], Timezone::SERVER_TIMEZONE);
+
 				//Affichage de l'image et de ses informations.
-				$tpl->assign_block_vars('pics.pics_max', array(
+				$tpl->assign_block_vars('pics.pics_max', array_merge(Date::get_array_tpl_vars($date, 'date'), array(
 					'C_APPROVED' => $info_pics['aprob'],
 					'C_PREVIOUS' => ($pos_pics > 0),
 					'C_NEXT' => ($pos_pics < ($i - 1)),
@@ -334,7 +336,6 @@ else
 					'PICTURE_NAME' => stripslashes($info_pics['name']),
 					'NAME' => '<span id="fi_' . $info_pics['id'] . '">' . stripslashes($info_pics['name']) . '</span> <span id="fi' . $info_pics['id'] . '"></span>',
 					'POSTOR' => '<a class="' . UserService::get_level_class($info_pics['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($info_pics['user_id'])->rel() .'">' . $info_pics['display_name'] . '</a>',
-					'DATE' => Date::to_format($info_pics['timestamp'], Date::FORMAT_DAY_MONTH_YEAR),
 					'VIEWS' => ($info_pics['views'] + 1),
 					'DIMENSION' => $info_pics['width'] . ' x ' . $info_pics['height'],
 					'SIZE' => NumberHelper::round($info_pics['weight']/1024, 1),
@@ -347,7 +348,7 @@ else
 					'U_MOVE' => '.php?id=' . $info_pics['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value',
 					'U_PREVIOUS' => '<a href="admin_gallery.php?cat=' . $id_category . '&amp;id=' . $id_previous . '#pics_max" class="fa fa-arrow-left fa-2x"></a> <a href="admin_gallery.php?cat=' . $id_category . '&amp;id=' . $id_previous . '#pics_max">' . $LANG['previous'] . '</a>',
 					'U_NEXT' => '<a href="admin_gallery.php?cat=' . $id_category . '&amp;id=' . $id_next . '#pics_max">' . $LANG['next'] . '</a> <a href="admin_gallery.php?cat=' . $id_category . '&amp;id=' . $id_next . '#pics_max" class="fa fa-arrow-right fa-2x"></a>'
-				));
+				)));
 
 				//Affichage de la liste des miniatures sous l'image.
 				$i = 0;

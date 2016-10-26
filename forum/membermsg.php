@@ -183,8 +183,14 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 			$posted_msg = (!$is_guest) ? '<a href="' . PATH_TO_ROOT . '/forum/membermsg' . url('.php?id=' . $row['user_id'], '') . '" class="small">' . $LANG['message'] . '</a>: 0' : $LANG['message'] . ': 0';
 		
 		$user_sign_field = $extended_fields_cache->get_extended_field_by_field_name('user_sign');
+
+		$topic_date           = new Date($row['timestamp'], Timezone::SERVER_TIMEZONE);
+		$user_registered_date = new Date($row['registered'], Timezone::SERVER_TIMEZONE);
 		
-		$tpl->assign_block_vars('list', array(
+		$tpl->assign_block_vars('list', array_merge(
+			Date::get_array_tpl_vars($topic_date,'topic_date'),
+			Date::get_array_tpl_vars($user_registered_date,'user_registered_date'),
+			array(
 			'C_GROUP_COLOR' => !empty($group_color),
 			'C_GUEST' => empty($row['display_name']),
 			'CONTENTS' => FormatingHelper::second_parse(stripslashes($row['contents'])),
@@ -208,6 +214,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 			'U_VARS_ANCRE' => url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php'),
 			'U_FORUM_CAT' => '<a class="forum-mbrmsg-links" href="' . PATH_TO_ROOT . '/forum/forum' . url('.php?id=' . $row['idcat'], '-' . $row['idcat'] . $rewrited_cat_title . '.php') . '">' . $row['name'] . '</a>',
 			'U_TITLE_T' => '<a class="forum-mbrmsg-links" href="' . PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php') . '">' . stripslashes($row['title']) . '</a>'
+			)
 		));
 		
 		foreach ($displayed_extended_fields as $field_type)

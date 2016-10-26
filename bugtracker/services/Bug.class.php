@@ -375,7 +375,10 @@ class Bug
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		$number_comments = CommentsService::get_number_comments('bugtracker', $this->id);
 		
-		return array(
+		return array_merge(
+			Date::get_array_tpl_vars($this->submit_date, 'submit_date'),
+			Date::get_array_tpl_vars($this->fix_date, 'fix_date'),
+			array(
 			'C_PROGRESS' => $config->is_progress_bar_displayed(),
 			'C_FIX_DATE' => $this->fix_date != null,
 			'C_FIXED_IN' => $this->detected_in,
@@ -391,10 +394,6 @@ class Bug
 			'ID' => $this->id,
 			'TITLE' => $this->title,
 			'CONTENTS' => FormatingHelper::second_parse($this->contents),
-			'SUBMIT_DATE_SHORT' => $this->submit_date->format(Date::FORMAT_DAY_MONTH_YEAR),
-			'SUBMIT_DATE' => $this->submit_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-			'FIX_DATE_SHORT' => $this->fix_date !== null ? $this->fix_date->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
-			'FIX_DATE' => $this->fix_date !== null ? $this->fix_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : '',
 			'TYPE' => (isset($types[$this->type])) ? stripslashes($types[$this->type]) : $lang['notice.none'],
 			'CATEGORY' => (isset($categories[$this->category])) ? stripslashes($categories[$this->category]) : $lang['notice.none_e'],
 			'SEVERITY' => (isset($severities[$this->severity])) ? stripslashes($severities[$this->severity]['name']) : $lang['notice.none'],
@@ -413,7 +412,7 @@ class Bug
 			'U_LINK' => BugtrackerUrlBuilder::detail($this->id . '-' . $this->rewrited_title)->rel(),
 			'U_HISTORY' => BugtrackerUrlBuilder::history($this->id)->rel(),
 			'U_COMMENTS' => BugtrackerUrlBuilder::detail($this->id . '-' . $this->rewrited_title . '#comments-list')->rel()
-		);
+		));
 	}
 }
 ?>

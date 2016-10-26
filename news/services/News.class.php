@@ -427,7 +427,10 @@ class News
 		$nbr_sources = count($sources);
 		$new_content = new NewsNewContent();
 		
-		return array(
+		return array_merge(
+			Date::get_array_tpl_vars($this->creation_date,'date'),
+			Date::get_array_tpl_vars($this->start_date,'differed_start_date'),
+			array(
 			'C_VISIBLE' => $this->is_visible(),
 			'C_EDIT' => $this->is_authorized_to_edit(),
 			'C_DELETE' => $this->is_authorized_to_delete(),
@@ -447,16 +450,6 @@ class News
 			'NAME' => $this->name,
 			'CONTENTS' => $contents,
 			'DESCRIPTION' => $description,
-			'DATE' => $this->creation_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT),
-			'DATE_DAY' => $this->creation_date->get_day(),
-			'DATE_MONTH' => $this->creation_date->get_month(),
-			'DATE_YEAR' => $this->creation_date->get_year(),
-			'DATE_ISO8601' => $this->creation_date->format(Date::FORMAT_ISO8601),
-			'DIFFERED_START_DATE' => $this->start_date ? $this->start_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) : '',
-			'DIFFERED_START_DATE_DAY' => $this->start_date ? $this->start_date->get_day() : '',
-			'DIFFERED_START_DATE_MONTH' => $this->start_date ? $this->start_date->get_month() : '',
-			'DIFFERED_START_DATE_YEAR' =>  $this->start_date ? $this->start_date->get_year() : '',
-			'DIFFERED_START_DATE_ISO8601' => $this->start_date ? $this->start_date->format(Date::FORMAT_ISO8601) : '',
 			'STATUS' => $this->get_status(),
 			'AUTHOR_CUSTOM_NAME' => $this->author_custom_name,
 			'C_AUTHOR_EXIST' => $user->get_id() !== User::VISITOR_LEVEL,
@@ -484,7 +477,7 @@ class News
 			'U_DELETE' => NewsUrlBuilder::delete_news($this->id)->rel(),
 			'U_PICTURE' => $this->get_picture()->rel(),
 			'U_COMMENTS' => NewsUrlBuilder::display_comments_news($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->rel()
-		);
+		));
 	}
 }
 ?>
