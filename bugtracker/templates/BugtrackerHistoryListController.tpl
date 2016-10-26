@@ -45,7 +45,7 @@
 				{history.NEW_VALUE}
 			</td>
 			<td>
-				{history.UPDATE_DATE}
+				{history.UPDATE_DATE_FULL}
 			</td>
 			<td>
 				{history.COMMENT}

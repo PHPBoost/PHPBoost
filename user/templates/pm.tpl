@@ -190,7 +190,7 @@
 								<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
 								# ENDIF #
 							</span>
-							<span>{pm.msg.DATE}</span>
+							<span>${LangLoader::get_message('on', 'main')} {pm.msg.DATE_FULL}</span>
 						</div>
 
 						<div class="message-message">

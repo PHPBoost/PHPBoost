@@ -132,19 +132,20 @@ class BugtrackerHistoryListController extends ModuleController
 			
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 			
-			$this->view->assign_block_vars('history', array(
+			$this->view->assign_block_vars('history', array_merge(
+				Date::get_array_tpl_vars($update_date,'update_date'),
+				array(
 				'C_UPDATER_GROUP_COLOR'	=> !empty($user_group_color),
 				'C_UPDATER_EXIST'		=> $user->get_id() !== User::VISITOR_LEVEL,
 				'UPDATED_FIELD'			=> (!empty($row['updated_field']) ? $this->lang['labels.fields.' . $row['updated_field']] : $this->lang['notice.none']),
 				'OLD_VALUE'				=> stripslashes($old_value),
 				'NEW_VALUE'				=> stripslashes($new_value),
 				'COMMENT'				=> $row['change_comment'],
-				'UPDATE_DATE_SHORT'		=> $update_date->format(Date::FORMAT_DAY_MONTH_YEAR),
-				'UPDATE_DATE'			=> $update_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 				'UPDATER'				=> $user->get_display_name(),
 				'UPDATER_LEVEL_CLASS'	=> UserService::get_level_class($user->get_level()),
 				'UPDATER_GROUP_COLOR'	=> $user_group_color,
-				'LINK_UPDATER_PROFILE'	=> UserUrlBuilder::profile($user->get_id())->rel(),
+				'LINK_UPDATER_PROFILE'	=> UserUrlBuilder::profile($user->get_id())->rel()
+				)
 			));
 		}
 		$result->dispose();

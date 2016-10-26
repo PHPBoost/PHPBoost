@@ -754,23 +754,24 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		
 		$group_color = User::get_group_color($row['groups'], $row['level']);
 		
-		$tpl->assign_block_vars('pm.msg', array(
+		$date = new Date($row['timestamp'],Timezone::SERVER_TIMEZONE);
+		
+		$tpl->assign_block_vars('pm.msg', array_merge(
+			Date::get_array_tpl_vars($date,'date'),
+			array(
 			'C_MODERATION_TOOLS' => ($row['id'] === $convers['last_msg_id']) && !$row['view_status'], //Dernier mp éditable. et si le destinataire ne la pas encore lu
 			'C_VISITOR' => $is_admin,
 			'C_AVATAR' => $row['user_avatar'] || ($user_accounts_config->is_default_avatar_enabled()),
 			'C_GROUP_COLOR' => !empty($group_color),
-			
 			'ID' => $row['id'],
 			'CONTENTS' => FormatingHelper::second_parse($row['contents']),
-			'DATE' => $LANG['on'] . ' ' . Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 			'USER_AVATAR' => $user_avatar,
 			'PSEUDO' => $is_admin ? $LANG['admin'] : (!empty($row['display_name']) ? $row['display_name'] : $LANG['guest']),
 			'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 			'GROUP_COLOR' => $group_color,
-		
 			'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
-			
-			'L_LEVEL' => (($row['warning_percentage'] < '100' || (time() - $row['delay_banned']) < 0) ? UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1') : LangLoader::get_message('banned', 'user-common')),
+			'L_LEVEL' => (($row['warning_percentage'] < '100' || (time() - $row['delay_banned']) < 0) ? UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1') : LangLoader::get_message('banned', 'user-common'))
+			)
 		));
 		
 		//Marqueur de suivis du sujet.

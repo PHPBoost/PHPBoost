@@ -35,7 +35,7 @@
 					<a href="{users.U_LOCATION}">{users.TITLE_LOCATION}</a>
 				</td>
 				<td>
-					{users.LAST_UPDATE}
+					{users.LAST_UPDATE_DATE_FULL}
 				</td>
 			</tr>
 			# END users #

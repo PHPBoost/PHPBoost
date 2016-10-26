@@ -161,8 +161,11 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 	));
 	
 	$new_content = new WikiNewContent();
+	$date = new Date($article_infos['timestamp'], Timezone::SERVER_TIMEZONE);
 
-	$tpl->put_all(array(
+	$tpl->put_all(array_merge(
+		Date::get_array_tpl_vars($date,'date'),
+		array(
 		'ID' => $article_infos['id'],
 		'ID_CAT' => $article_infos['id_cat'],
 		'TITLE' => stripslashes($article_infos['title']),
@@ -172,7 +175,9 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 		'L_SUB_ARTICLES' => $LANG['wiki_subarticles'],
 		'L_TABLE_OF_CONTENTS' => $LANG['wiki_table_of_contents'],
 		'C_NEW_CONTENT' => $new_content->check_if_is_new_content($article_infos['timestamp'])
+		)
 	));
+	
 	if ($article_infos['is_cat'] == 1 && $id_contents == 0) //Catégorie non archivée
 	{
 		//On liste les articles de la catégorie et ses sous catégories

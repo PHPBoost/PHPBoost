@@ -72,7 +72,7 @@ class OnlineHomeController extends ModuleController
 			if ($user->get_level() != User::VISITOR_LEVEL) 
 			{
 				$this->view->assign_block_vars('users', array_merge(
-					Date::get_array_tpl_vars($user->get_last_update(), 'last_update')
+					Date::get_array_tpl_vars($user->get_last_update(), 'last_update_date'),
 					array(
 					'C_AVATAR' => $user->has_avatar(),
 					'C_GROUP_COLOR' => !empty($group_color),
