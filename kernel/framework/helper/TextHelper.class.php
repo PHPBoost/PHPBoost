@@ -218,7 +218,7 @@ class TextHelper
 	 * @param string $cut not used for the moment
 	 * @return string the given string wrapped at the specified column
 	 */
-	function static utf8_wordwrap($string, $width = 75, $break = "\n", $cut = true)
+	public static function utf8_wordwrap($string, $width = 75, $break = "\n", $cut = true)
 	{
 		$lines = array();
 		while (!empty($string))
