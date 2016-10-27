@@ -170,7 +170,10 @@ class CalendarEvent
 		
 		$new_content = new CalendarNewContent();
 
-		return array_merge(Date::get_array_tpl_vars($this->start_date, 'start_date'), Date::get_array_tpl_vars($this->end_date, 'end_date'), array(
+		return array_merge(
+			Date::get_array_tpl_vars($this->start_date, 'start_date'),
+			Date::get_array_tpl_vars($this->end_date, 'end_date'),
+			array(
 			'C_APPROVED' => $this->content->is_approved(),
 			'C_EDIT' => $this->is_authorized_to_edit(),
 			'C_DELETE' => $this->is_authorized_to_delete(),
@@ -221,7 +224,8 @@ class CalendarEvent
 			'U_SUSCRIBE' => CalendarUrlBuilder::suscribe_event($this->id)->rel(),
 			'U_UNSUSCRIBE' => CalendarUrlBuilder::unsuscribe_event($this->id)->rel(),
 			'U_COMMENTS' => CalendarUrlBuilder::display_event_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->content->get_rewrited_title())->rel()
-		));
+			)
+		);
 	}
 	
 	private function round_to_five_minutes($timestamp)

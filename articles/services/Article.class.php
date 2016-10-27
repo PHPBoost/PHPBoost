@@ -449,7 +449,12 @@ class Article
 		$new_content      = new ArticlesNewContent();
 		$notation_config  = new ArticlesNotation();
 		
-		return array_merge(Date::get_array_tpl_vars($this->date_created, 'date'), Date::get_array_tpl_vars($this->date_updated, 'date_updated'), Date::get_array_tpl_vars($this->publishing_start_date, 'publishing_start_date'), Date::get_array_tpl_vars($this->publishing_end_date, 'publishing_end_date'), array(
+		return array_merge(
+			Date::get_array_tpl_vars($this->date_created, 'date'),
+			Date::get_array_tpl_vars($this->date_updated, 'date_updated'),
+			Date::get_array_tpl_vars($this->publishing_start_date, 'publishing_start_date'),
+			Date::get_array_tpl_vars($this->publishing_end_date, 'publishing_end_date'),
+			array(
 			//Conditions
 			'C_EDIT'                          => $this->is_authorized_to_edit(),
 			'C_DELETE'                        => $this->is_authorized_to_delete(),
@@ -501,7 +506,8 @@ class Article
 			'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($this->id)->rel(),
 			'U_SYNDICATION'    => ArticlesUrlBuilder::category_syndication($category->get_id())->rel(),
 			'U_PRINT_ARTICLE'  => ArticlesUrlBuilder::print_article($this->get_id(), $this->get_rewrited_title())->rel()
-		));
+			)
+		);
 	}
 }
 ?>

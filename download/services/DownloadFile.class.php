@@ -456,7 +456,11 @@ class DownloadFile
 		$number_comments = CommentsService::get_number_comments('download', $this->id);
 		$new_content = new DownloadNewContent();
 		
-		return array_merge(Date::get_array_tpl_vars($this->creation_date, 'date'), Date::get_array_tpl_vars($this->updated_date, 'updated_date'), Date::get_array_tpl_vars($this->start_date, 'differed_start_date'), array(
+		return array_merge(
+			Date::get_array_tpl_vars($this->creation_date, 'date'),
+			Date::get_array_tpl_vars($this->updated_date, 'updated_date'),
+			Date::get_array_tpl_vars($this->start_date, 'differed_start_date'),
+			array(
  			'C_VISIBLE' => $this->is_visible(),
 			'C_EDIT' => $this->is_authorized_to_edit(),
 			'C_DELETE' => $this->is_authorized_to_delete(),
@@ -508,7 +512,8 @@ class DownloadFile
 			'U_DELETE' => DownloadUrlBuilder::delete($this->id)->rel(),
 			'U_PICTURE' => $this->get_picture()->rel(),
 			'U_COMMENTS' => DownloadUrlBuilder::display_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->rel()
-		));
+			)
+		);
 	}
 }
 ?>
