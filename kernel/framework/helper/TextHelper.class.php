@@ -234,6 +234,16 @@ class TextHelper
 		else
 			return mb_strstr($string, $needle);
 	}
+	
+	public static function substr_count($string, $needle, $offset = '', $length = '')
+	{
+		if ($offset != '' && $length != '')
+			return mb_substr_count($string, $needle, $offset, $length);
+		else if ($offset != '')
+			return mb_substr_count($string, $needle, $offset);
+		else
+			return mb_substr_count($string, $needle);
+	}
 
 	/**
 	 * @desc Checks if a string contains less than a defined number of links (used to prevent SPAM).
