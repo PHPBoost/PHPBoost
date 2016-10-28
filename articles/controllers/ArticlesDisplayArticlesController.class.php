@@ -83,7 +83,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		}
 		else
 		{
-			if ($request->get_url_referrer() && !mb_strstr($request->get_url_referrer(), ArticlesUrlBuilder::display_article($this->article->get_category()->get_id(), $this->article->get_category()->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->rel()))
+			if ($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), ArticlesUrlBuilder::display_article($this->article->get_category()->get_id(), $this->article->get_category()->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->rel()))
 			{
 				$this->article->set_number_view($this->article->get_number_view() + 1);
 				ArticlesService::update_number_view($this->article);

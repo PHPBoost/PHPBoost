@@ -164,41 +164,41 @@ class TextHelper
 		return html_entity_decode($string, $flags, $encoding);
 	}
 	
-	public static function strtolower(string $string)
+	public static function strtolower($string)
 	{
 		return mb_strtolower($string);
 	}
 	
-	public static function strtoupper(string $string)
+	public static function strtoupper($string)
 	{
 		return mb_strtoupper($string);
 	}
 	
-	public static function lowercase_first(string $string)
+	public static function lowercase_first($string)
 	{
 		$first_letter = self::strtolower(TextHelper::substr($string, 0, 1));
 		$string_end = TextHelper::substr($string, 1, self::strlen($string));
 		return $first_letter . $string_end;
 	}
 	
-	public static function uppercase_first(string $string)
+	public static function uppercase_first($string)
 	{
 		$first_letter = self::strtoupper(TextHelper::substr($string, 0, 1));
 		$string_end = TextHelper::substr($string, 1, self::strlen($string));
 		return $first_letter . $string_end;
 	}
 	
-	public static function strlen(string $string)
+	public static function strlen($string)
 	{
 		return mb_strlen($string);
 	}
 	
-	public static function strpos(string $string, $substring)
+	public static function strpos($string, $substring)
 	{
 		return mb_strpos($string, $substring);
 	}
 	
-	public static function substr(string $string, int $start, $length = '')
+	public static function substr($string, $start, $length = '')
 	{
 		if ($length != '')
 			return mb_substr($string, $start, $length);
@@ -206,12 +206,12 @@ class TextHelper
 			return mb_substr($string, $start);
 	}
 	
-	public static function strrchr(string $string, $needle)
+	public static function strrchr($string, $needle)
 	{
 		return mb_strrchr($string, $needle);
 	}
 	
-	public static function strripos(string $string, int $needle, $offset = '')
+	public static function strripos($string, $needle, $offset = '')
 	{
 		if ($offset != '')
 			return mb_strrpos($string, $needle, $offset);
@@ -219,12 +219,20 @@ class TextHelper
 			return mb_strrpos($string, $needle);
 	}
 	
-	public static function strrpos(string $string, int $needle, $offset = '')
+	public static function strrpos($string, $needle, $offset = '')
 	{
 		if ($offset != '')
 			return mb_strrpos($string, $needle, $offset);
 		else
 			return mb_strrpos($string, $needle);
+	}
+	
+	public static function strstr($string, $needle, $before_needle = '')
+	{
+		if ($before_needle != '')
+			return mb_strstr($string, $needle, $before_needle);
+		else
+			return mb_strstr($string, $needle);
 	}
 
 	/**

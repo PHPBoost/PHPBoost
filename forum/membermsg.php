@@ -229,7 +229,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 				{
 					foreach (MemberShortTextExtendedField::$brands_pictures_list as $id => $parameters)
 					{
-						if (mb_strstr($row[$field_type], $id))
+						if (TextHelper::strstr($row[$field_type], $id))
 							$button = '<a href="mailto:' . $row[$field_type] . '" class="basic-button smaller"><i class="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
 					}
 				}
@@ -239,7 +239,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 					
 					foreach (MemberShortTextExtendedField::$brands_pictures_list as $id => $parameters)
 					{
-						if (mb_strstr($row[$field_type], $id))
+						if (TextHelper::strstr($row[$field_type], $id))
 							$button = '<a href="' . $row[$field_type] . '" class="basic-button smaller"><i class="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
 					}
 				}

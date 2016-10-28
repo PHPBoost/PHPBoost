@@ -59,7 +59,7 @@ class ArticlesDeleteController extends ModuleController
 		Feed::clear_cache('articles');
 		ArticlesCategoriesCache::invalidate();
 		
-		AppContext::get_response()->redirect(($request->get_url_referrer() && !mb_strstr($request->get_url_referrer(), ArticlesUrlBuilder::display_article($article->get_category()->get_id(), $article->get_category()->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title())->rel()) ? $request->get_url_referrer() : ArticlesUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('articles.message.success.delete', 'common', 'articles'), array('title' => $article->get_title())));
+		AppContext::get_response()->redirect(($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), ArticlesUrlBuilder::display_article($article->get_category()->get_id(), $article->get_category()->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title())->rel()) ? $request->get_url_referrer() : ArticlesUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('articles.message.success.delete', 'common', 'articles'), array('title' => $article->get_title())));
 	}
 	
 	private function get_article(HTTPRequestCustom $request)

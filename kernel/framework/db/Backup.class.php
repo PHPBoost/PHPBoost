@@ -244,7 +244,7 @@ class Backup
 		$structure = array();
 		$structure['fields'] = array();
 		$structure['index'] = array();
-		$struct = TextHelper::substr(mb_strstr($this->backup_script, '('), 1);
+		$struct = TextHelper::substr(TextHelper::strstr($this->backup_script, '('), 1);
 		$struct = TextHelper::substr($struct, 0, TextHelper::strrpos($struct, ')'));
 		$array_struct = explode(",\n", $struct);
 		foreach ($array_struct as $field)
