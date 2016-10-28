@@ -442,7 +442,7 @@ class BBCodeParser extends ContentFormattingParser
 					if (is_array($content[$i]))
 					$this->parse_imbricated_list($content[$i]);
 
-					if (mb_strpos($content[$i], '[*]') !== false) //Si il contient au moins deux éléments
+					if (TextHelper::strpos($content[$i], '[*]') !== false) //Si il contient au moins deux éléments
 					{
 						//Nettoyage des listes (retours à la ligne)
 						$content[$i] = preg_replace_callback('`\[\*\]((?:\s|<br />)+)`', array('BBCodeParser', 'clear_html_br'), $content[$i]);
