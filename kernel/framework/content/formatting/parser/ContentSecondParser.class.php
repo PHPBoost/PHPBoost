@@ -64,15 +64,15 @@ class ContentSecondParser extends AbstractParser
 		
 		//Balise member
 		if (stripos($this->content, '[MEMBER]') !== false)
-        	{
-            		$this->content = preg_replace_callback('`\[MEMBER\](.+)\[/MEMBER\]`isU', array($this, 'callback_member_tag'), $this->content);
-        	}
+		{
+			$this->content = preg_replace_callback('`\[MEMBER\](.+)\[/MEMBER\]`isU', array($this, 'callback_member_tag'), $this->content);
+		}
 		
 		//Balise moderator
 		if (stripos($this->content, '[MODERATOR]') !== false)
-        	{
-            		$this->content = preg_replace_callback('`\[MODERATOR\](.+)\[/MODERATOR\]`isU', array($this, 'callback_moderator_tag'), $this->content);
-        	}
+		{
+			$this->content = preg_replace_callback('`\[MODERATOR\](.+)\[/MODERATOR\]`isU', array($this, 'callback_moderator_tag'), $this->content);
+		}
 		
 		//Media
 		if (mb_strpos($this->content, '[[MEDIA]]') !== false)
@@ -330,11 +330,17 @@ class ContentSecondParser extends AbstractParser
 	 */
 	private static function process_movie_tag($matches)
 	{
-		$id = 'movie_' . AppContext::get_uid();
-		return '<a class="video-player" href="' . Url::to_rel($matches[1]) . '" style="display:block;margin:auto;width:' . $matches[2] . 'px;height:' . $matches[3] . 'px;" id="' . $id .  '"></a><br />' .
-			'<script><!--' . "\n" .
-			'insertMoviePlayer(\'' . $id . '\');' .
-			"\n" . '--></script>';
+		$sources = '';
+		$video_files = explode(',', $matches[1]);
+		
+		foreach ($video_files as $video)
+		{
+			$type = new FileType($video);
+			if ($type->is_video())
+				$sources .= '<source src="' . Url::to_rel($video) . '" type="video/' . pathinfo($video, PATHINFO_EXTENSION) . '" />';
+		}
+		
+		return '<video class="video-player" width="' . $matches[2] . '" height="' . $matches[3] . '" controls>' . $sources . '</video>';
 	}
 
 	/**
@@ -344,13 +350,14 @@ class ContentSecondParser extends AbstractParser
 	 */
 	private static function process_sound_tag($matches)
 	{
-		return '<audio controls><source src="' . Url::to_rel($matches[1]) . '" /></audio>';
+		return '<audio class="audio-player" controls><source src="' . Url::to_rel($matches[1]) . '" /></audio>';
 	}
 	
 	private static function process_youtube_tag($matches)
 	{
-		$matches[1] = str_replace(array('/watch?v=', '/embed/'), '/v/', $matches[1]);
-		return '<iframe class="player-youtube" type="text/html" width="' . $matches[2] . '" height="' . $matches[3] . '" src="' . Url::to_rel($matches[1]) . '" frameborder="0" allowfullscreen></iframe>';
+		return '<video class="youtube-player" width="' . $matches[2] . '" height="' . $matches[3] . '" controls>
+			<source src="' . $matches[1] . '" type="video/mp4" />
+		</video>';
 	}
 	
 	private function parse_feed_tag()

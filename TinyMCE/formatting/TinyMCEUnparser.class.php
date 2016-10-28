@@ -297,7 +297,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			"<video style=\"float: $1;\" width=\"$3\" height=\"$4\" controls=\"controls\"><source src=\"$2\" /></video>",
 			"<video style=\"display: block; margin-left: auto; margin-right: auto;\" width=\"$2\" height=\"$3\" controls=\"controls\"><source src=\"$1\" /></video>",
 			"<video width=\"$2\" height=\"$3\" controls=\"controls\"><source src=\"$1\" /></video>",
-			"<iframe src=\"$1\" width=\"$2\" height=\"$3\" allowfullscreen=\"allowfullscreen\"></iframe>",
+			"<video class=\"youtube-player\" width=\"$2\" height=\"$3\" controls><source src=\"$1\" type=\"video/mp4\" /></video>",
 			"[html]$1[/html]",
 			"[math]$1[/math]",
 			"[float=$1]$2[/float]",

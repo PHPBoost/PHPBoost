@@ -463,7 +463,8 @@ class UpdateServices
 	
 	private function delete_old_files_kernel()
 	{
-		
+		$file = new File(Url::to_rel('/kernel/lib/flash/flowplayer/flowplayer.js'));
+		$file->delete();
 	}
 	
 	private function delete_old_files_lang()

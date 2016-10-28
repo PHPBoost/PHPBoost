@@ -427,6 +427,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//Youtube tag
 		if (!in_array('youtube', $this->forbidden_tags))
 		{
+			$this->content = preg_replace_callback('`&lt;video class=\"youtube-player\" width="([^"]+)" height="([^"]+)" controls &gt;&lt;source src="([^"]+)"  type=\"video/mp4\" /&gt;&lt;/video&gt;`is', array($this, 'parse_youtube_tag'), $this->content);
 			$this->content = preg_replace_callback('`&lt;iframe src="(?:https?:)?//www.youtube.com/(.*)" width="([^"]+)" height="([^"]+)"(?: frameborder="0")?(?: allowfullscreen="allowfullscreen")?&gt;(.+)?&lt;/iframe&gt;`isU', array($this, 'parse_youtube_tag'), $this->content);
 		}
 		//Flash tag
