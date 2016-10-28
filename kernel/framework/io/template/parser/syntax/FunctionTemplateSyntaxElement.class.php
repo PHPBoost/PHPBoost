@@ -106,7 +106,7 @@ class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function is_php_function($prefix)
 	{
-		return mb_strtoupper($prefix) == 'PHP';
+		return TextHelper::strtoupper($prefix) == 'PHP';
 	}
 }
 

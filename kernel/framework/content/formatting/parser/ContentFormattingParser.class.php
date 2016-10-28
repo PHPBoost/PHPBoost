@@ -267,7 +267,7 @@ abstract class ContentFormattingParser extends AbstractParser
 					//Si on n'est pas après la dernière balise fermante, on met une balise de signalement de la position du tag
 					if ($i < $num_codes - 1)
 					{
-						$this->content .= '[' . mb_strtoupper($tag) . '_TAG_' . $id_code++ . ']';
+						$this->content .= '[' . TextHelper::strtoupper($tag) . '_TAG_' . $id_code++ . ']';
 					}
 				}
 				//Contenu des balises
@@ -298,7 +298,7 @@ abstract class ContentFormattingParser extends AbstractParser
 		//On réinjecte tous les contenus des balises
 		for ($i = 0; $i < $num_code; $i++)
 		{
-			$this->content = str_replace('[' . mb_strtoupper($tag) . '_TAG_' . $i . ']', $this->array_tags[$tag][$i], $this->content);
+			$this->content = str_replace('[' . TextHelper::strtoupper($tag) . '_TAG_' . $i . ']', $this->array_tags[$tag][$i], $this->content);
 		}
 
 		//On efface tout ce qu'on a prélevé du array

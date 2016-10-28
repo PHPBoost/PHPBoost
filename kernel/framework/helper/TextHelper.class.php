@@ -169,16 +169,21 @@ class TextHelper
 		return mb_strtolower($string);
 	}
 	
+	public static function strtoupper($string)
+	{
+		return mb_strtoupper($string);
+	}
+	
 	public static function lowercase_first($string)
 	{
-		$first_letter = TextHelper::strtolower(mb_substr($string, 0, 1));
+		$first_letter = self::strtolower(mb_substr($string, 0, 1));
 		$string_end = mb_substr($string, 1, self::strlen($string));
 		return $first_letter . $string_end;
 	}
 	
 	public static function uppercase_first($string)
 	{
-		$first_letter = mb_strtoupper(mb_substr($string, 0, 1));
+		$first_letter = self::strtoupper(mb_substr($string, 0, 1));
 		$string_end = mb_substr($string, 1, self::strlen($string));
 		return $first_letter . $string_end;
 	}

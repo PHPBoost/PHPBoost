@@ -338,7 +338,7 @@ class Uploads
 	//Conversion mimetype -> image.
 	public static function get_img_mimetype($type)
 	{	
-		$filetype = sprintf(LangLoader::get_message('file_type', 'main'), mb_strtoupper($type));
+		$filetype = sprintf(LangLoader::get_message('file_type', 'main'), TextHelper::strtoupper($type));
 		switch ($type)
 		{
 			//Images
@@ -353,7 +353,7 @@ class Uploads
 			case 'ico':
 			case 'tif':
 			$img = 'fa-upload-picture fa-2x';
-			$filetype = sprintf(LangLoader::get_message('image_type', 'main'), mb_strtoupper($type));
+			$filetype = sprintf(LangLoader::get_message('image_type', 'main'), TextHelper::strtoupper($type));
 			break;
 			//Archives
 			case 'rar':
@@ -361,7 +361,7 @@ class Uploads
 			case 'zip':
 			case '7z':
 			$img = 'fa-upload-zip fa-2x';
-			$filetype = sprintf(LangLoader::get_message('zip_type', 'main'), mb_strtoupper($type));
+			$filetype = sprintf(LangLoader::get_message('zip_type', 'main'), TextHelper::strtoupper($type));
 			break;
 			//Pdf
 			case 'pdf':
@@ -374,7 +374,7 @@ class Uploads
 			case 'ogg':
 			case 'mp3':
 			$img = 'fa-upload-audio fa-2x';
-			$filetype = sprintf(LangLoader::get_message('audio_type', 'main'), mb_strtoupper($type));
+			$filetype = sprintf(LangLoader::get_message('audio_type', 'main'), TextHelper::strtoupper($type));
 			break;
 			//Sripts
 			case 'html':
@@ -428,7 +428,7 @@ class Uploads
 			//Default
 			default:
 			$img = 'fa-upload-other fa-2x';
-			$filetype = sprintf(LangLoader::get_message('document_type', 'main'), mb_strtoupper($type));
+			$filetype = sprintf(LangLoader::get_message('document_type', 'main'), TextHelper::strtoupper($type));
 		}
 		
 		return array('img' => $img, 'filetype' => $filetype);

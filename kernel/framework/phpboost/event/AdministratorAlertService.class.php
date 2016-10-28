@@ -171,7 +171,7 @@ class AdministratorAlertService
 		$result = self::$db_querier->select("SELECT id, entitled, fixing_url, current_status, creation_date, identifier, id_in_module, type, priority, description
 		FROM " . DB_TABLE_EVENTS  . "
 		WHERE contribution_type = " . ADMINISTRATOR_ALERT_TYPE . "
-		ORDER BY " . $criteria . " " . mb_strtoupper($order) . "
+		ORDER BY " . $criteria . " " . TextHelper::strtoupper($order) . "
 		LIMIT :pagination_number OFFSET :display_from", array(
 			'pagination_number' => $number,
 			'display_from' => $begin

@@ -486,7 +486,7 @@ class Date
 		if ($date == null || !$date instanceof Date || empty($date_label))
 			return array();
 		
-		$date_label = mb_strtoupper($date_label);
+		$date_label = TextHelper::strtoupper($date_label);
 		return array(
 			$date_label					=> $date->format(Date::FORMAT_DAY_MONTH_YEAR),
 			$date_label . '_TIMESTAMP'	=> $date->get_timestamp(),

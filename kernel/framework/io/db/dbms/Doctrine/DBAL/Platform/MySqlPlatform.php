@@ -90,7 +90,7 @@ class MySqlPlatform extends AbstractPlatform
         $match = '';
         if ( ! is_null($operator)) {
             $field = is_null($field) ? '' : $field.' ';
-            $operator = mb_strtoupper($operator);
+            $operator = TextHelper::strtoupper($operator);
             switch ($operator) {
                 // case insensitive
                 case 'ILIKE':
@@ -831,7 +831,7 @@ class MySqlPlatform extends AbstractPlatform
                 }
 
                 if (isset($field['sorting'])) {
-                    $sort = mb_strtoupper($field['sorting']);
+                    $sort = TextHelper::strtoupper($field['sorting']);
                     switch ($sort) {
                         case 'ASC':
                         case 'DESC':

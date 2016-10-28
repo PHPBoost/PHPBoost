@@ -181,7 +181,7 @@ class PostgreSqlPlatform extends AbstractPlatform
 		$match = '';
 		if ( ! is_null($operator)) {
 			$field = is_null($field) ? '' : $field.' ';
-			$operator = mb_strtoupper($operator);
+			$operator = TextHelper::strtoupper($operator);
 			switch ($operator) {
 				// case insensitive
 				case 'ILIKE':

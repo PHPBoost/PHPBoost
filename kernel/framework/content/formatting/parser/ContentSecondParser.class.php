@@ -223,13 +223,13 @@ class ContentSecondParser extends AbstractParser
 
 		if ($extension != "")
 		{
-			$typecode = mb_strtoupper($extension);
+			$typecode = TextHelper::strtoupper($extension);
 			$title = $matches[1] .' : ';
 		}
 		else
 		{
-			$typecode = mb_strtoupper($matches[1]);
-			$title = sprintf(LangLoader::get_message('code_langage', 'main'), mb_strtoupper($matches[1]));
+			$typecode = TextHelper::strtoupper($matches[1]);
+			$title = sprintf(LangLoader::get_message('code_langage', 'main'), TextHelper::strtoupper($matches[1]));
 		}
 
 		$contents = $this->highlight_code($content_to_highlight, $typecode, $line_number, $inline_code);

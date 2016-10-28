@@ -165,7 +165,7 @@ class CLIInstallCommand implements CLICommand
 
 	private function show_parameter_section($name)
 	{
-		CLIOutput::writeln(mb_strtoupper($name));
+		CLIOutput::writeln(TextHelper::strtoupper($name));
 	}
 
 	private function check_env()
