@@ -185,7 +185,7 @@ if ($action == 'punish')
 		//Durée de la sanction.
 		$date_lang = LangLoader::get('date-common');
 		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000); 	
-		$array_sanction = array(LangLoader::get_message('no', 'common'), '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], '10 ' . mb_strtolower($date_lang['years'])); 
+		$array_sanction = array(LangLoader::get_message('no', 'common'), '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], '10 ' . TextHelper::strtolower($date_lang['years'])); 
 
 		$diff = ($member['delay_readonly'] - time());	
 		$key_sanction = 0;
@@ -206,7 +206,7 @@ if ($action == 'punish')
 		foreach ($array_time as $key => $time)
 		{
 			$selected = ($key_sanction == $key) ? 'selected="selected"' : '' ;
-			$select .= '<option value="' . $time . '" ' . $selected . '>' . mb_strtolower($array_sanction[$key]) . '</option>';
+			$select .= '<option value="' . $time . '" ' . $selected . '>' . TextHelper::strtolower($array_sanction[$key]) . '</option>';
 		}	
 		
 		$group_color = User::get_group_color($member['groups'], $member['level']);

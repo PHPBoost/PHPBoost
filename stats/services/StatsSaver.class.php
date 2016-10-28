@@ -82,7 +82,7 @@ class StatsSaver
 				{
 					$pattern = '/' . $query_param . '=(.*?)&/si';
 					preg_match($pattern, $query, $matches);
-					$keyword = TextHelper::strprotect(utf8_decode(urldecode(mb_strtolower($matches[1]))));
+					$keyword = TextHelper::strprotect(utf8_decode(urldecode(TextHelper::strtolower($matches[1]))));
 					
 					$check_search_engine = PersistenceContext::get_querier()->count(StatsSetup::$stats_referer_table, 'WHERE url = :url AND relative_url = :keyword', array('url' => $search_engine, 'keyword' => $keyword));
 					if (!empty($keyword))
@@ -225,7 +225,7 @@ class StatsSaver
 		if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE']))
 		{
 			$user_lang = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
-			$favorite_lang = !empty($user_lang[0]) ? mb_strtolower($user_lang[0]) : '';
+			$favorite_lang = !empty($user_lang[0]) ? TextHelper::strtolower($user_lang[0]) : '';
 			if (mb_strpos($favorite_lang, '-') !== false)
 				$favorite_lang = preg_replace('`[a-z]{2}\-([a-z]{2})`i', '$1', $favorite_lang);
 			$lang = str_replace(array('en', 'cs', 'sv', 'fa', 'ja', 'ko', 'he', 'da', 'gb'), array('uk', 'cz', 'se', 'ir', 'jp', 'kr', 'il', 'dk', 'uk'), $favorite_lang);
@@ -293,10 +293,10 @@ class StatsSaver
 		{		
 			$line = file($file_path);
 			$stats_array = unserialize($line[0]);
-			if (isset($stats_array[mb_strtolower($stats_item)]))
-				$stats_array[mb_strtolower($stats_item)]++;
+			if (isset($stats_array[TextHelper::strtolower($stats_item)]))
+				$stats_array[TextHelper::strtolower($stats_item)]++;
 			else
-				$stats_array[mb_strtolower($stats_item)] = 1;
+				$stats_array[TextHelper::strtolower($stats_item)] = 1;
 			
 			$file = @fopen($file_path, 'r+');	
 			fwrite($file, serialize($stats_array));

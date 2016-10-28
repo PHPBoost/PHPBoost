@@ -408,7 +408,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		foreach ($array_time as $key => $time)
 		{
 			$selected = ( $key_sanction == $key ) ? 'selected="selected"' : '' ;
-			$select .= '<option value="' . $time . '" ' . $selected . '>' . mb_strtolower($array_sanction[$key]) . '</option>';
+			$select .= '<option value="' . $time . '" ' . $selected . '>' . TextHelper::strtolower($array_sanction[$key]) . '</option>';
 		}
 
 		array_pop($array_sanction);
@@ -736,7 +736,7 @@ $vars_tpl = array_merge($vars_tpl, array(
 	'L_MEMBER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
 	'L_GUEST' => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
 	'L_AND' => $LANG['and'],
-	'L_ONLINE' => mb_strtolower($LANG['online']),
+	'L_ONLINE' => TextHelper::strtolower($LANG['online']),
 	'L_FORUM_INDEX' => $LANG['forum_index'],
 	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "forum-' + this.options[this.selectedIndex].value + '.php"),
 	'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),

@@ -782,7 +782,7 @@ class MySqlPlatform extends AbstractPlatform
     {
         $type = '';
         if (isset($definition['type'])) {
-            switch (mb_strtolower($definition['type'])) {
+            switch (TextHelper::strtolower($definition['type'])) {
                 case 'fulltext':
                     $type = 'FULLTEXT KEY';
                		break;

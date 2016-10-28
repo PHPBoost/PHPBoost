@@ -298,7 +298,7 @@ else
 		if ($row['start'] > 0)
 			$visible .= Date::to_format($row['start'], Date::FORMAT_DAY_MONTH_YEAR);
 		if ($row['end'] > 0 && $row['start'] > 0)
-			$visible .= ' ' . mb_strtolower($LANG['until']) . ' ' . Date::to_format($row['end'], Date::FORMAT_DAY_MONTH_YEAR);
+			$visible .= ' ' . TextHelper::strtolower($LANG['until']) . ' ' . Date::to_format($row['end'], Date::FORMAT_DAY_MONTH_YEAR);
 		elseif ($row['end'] > 0)
 			$visible .= $LANG['until'] . ' ' . Date::to_format($row['end'], Date::FORMAT_DAY_MONTH_YEAR);
 		

@@ -59,7 +59,7 @@ class QuestionCaptcha extends Captcha
 			$question = new QuestionCaptchaQuestion();
 			$question->set_properties(self::$questions[$question_id]);
 			
-			return in_array(trim(mb_strtolower($answer)), $question->get_formated_answers());
+			return in_array(trim(TextHelper::strtolower($answer)), $question->get_formated_answers());
 		}
 		return false;
 	}

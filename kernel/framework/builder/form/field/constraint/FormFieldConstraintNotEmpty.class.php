@@ -45,7 +45,7 @@ class FormFieldConstraintNotEmpty extends AbstractFormFieldConstraint
 	public function validate(FormField $field)
 	{
 		$value = $field->get_value();
-		$this->set_validation_error_message(StringVars::replace_vars($this->error_message, array('name' => mb_strtolower($field->get_label()))));
+		$this->set_validation_error_message(StringVars::replace_vars($this->error_message, array('name' => TextHelper::strtolower($field->get_label()))));
 		
 		if ($value instanceof FormFieldEnumOption) {
 			return $value->get_raw_value() !== null && $value->get_raw_value() != '';
@@ -61,7 +61,7 @@ class FormFieldConstraintNotEmpty extends AbstractFormFieldConstraint
 	public function get_js_validation(FormField $field)
 	{
 		return 'notEmptyFormFieldValidator(' . TextHelper::to_js_string($field->get_id()) .
-			', ' . TextHelper::to_js_string(StringVars::replace_vars($this->error_message, array('name' => mb_strtolower($field->get_label())))) .')';
+			', ' . TextHelper::to_js_string(StringVars::replace_vars($this->error_message, array('name' => TextHelper::strtolower($field->get_label())))) .')';
 	}
 }
 

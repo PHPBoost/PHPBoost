@@ -122,7 +122,7 @@ class ImageResizer
 		$explode = explode('/', $directory);
 		$name_and_extension = array_pop($explode);
 		$explode = explode('.', $name_and_extension);
-		return mb_strtolower(array_pop($explode));
+		return TextHelper::strtolower(array_pop($explode));
 	}
 	
 	private function create_image(Image $image, $create_picture, $directory)

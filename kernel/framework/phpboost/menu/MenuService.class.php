@@ -533,7 +533,7 @@ class MenuService
 		if ($class != Menu::MENU__CLASS)
 		{
 			$conditions[] = 'class=:class';
-			$parameters['class'] = mb_strtolower($class);
+			$parameters['class'] = TextHelper::strtolower($class);
 		}
 		if ($block != Menu::BLOCK_POSITION__ALL)
 		{

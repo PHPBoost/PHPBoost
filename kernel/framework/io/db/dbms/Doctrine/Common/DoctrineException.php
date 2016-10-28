@@ -102,7 +102,7 @@ class DoctrineException extends Exception
             $message = sprintf($message, $arguments);
         } else {
             $dumper  = 'string_var_export';
-            $message = mb_strtolower(preg_replace('~(?<=\\w)([A-Z])~', '_$1', $method));
+            $message = TextHelper::strtolower(preg_replace('~(?<=\\w)([A-Z])~', '_$1', $method));
             $message = TextHelper::uppercase_first(str_replace('_', ' ', $message))
                      . ' (' . implode(', ', array_map($dumper, $arguments)) . ')';
         }

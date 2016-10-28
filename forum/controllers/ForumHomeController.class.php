@@ -294,7 +294,7 @@ class ForumHomeController extends ModuleController
 			'L_DISPLAY_UNREAD_MSG' => $LANG['show_not_reads'],
 			'L_MARK_AS_READ' => $LANG['mark_as_read'],
 			'L_TOTAL_POST' => $LANG['nbr_message'],
-			'L_DISTRIBUTED' => mb_strtolower($LANG['distributed']),
+			'L_DISTRIBUTED' => TextHelper::strtolower($LANG['distributed']),
 			'L_AND' => $LANG['and'],
 			'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
 			'L_ADMIN' => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
@@ -302,7 +302,7 @@ class ForumHomeController extends ModuleController
 			'L_MEMBER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
 			'L_GUEST' => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
 			'L_AND' => $LANG['and'],
-			'L_ONLINE' => mb_strtolower($LANG['online'])
+			'L_ONLINE' => TextHelper::strtolower($LANG['online'])
 		);
 		
 		$this->view->put_all($vars_tpl);

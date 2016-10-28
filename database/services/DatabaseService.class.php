@@ -34,7 +34,7 @@ class DatabaseService
 	 */
 	public static function indent_query($query)
 	{
-		$query = ' ' . mb_strtolower($query) . ' ';
+		$query = ' ' . TextHelper::strtolower($query) . ' ';
 
 		//Suppression des espaces en trop.
 		$query = preg_replace('`(\s){2,}(\s){2,}`', '$1', $query);
@@ -59,7 +59,7 @@ class DatabaseService
 	 */
 	public static function highlight_query($query)
 	{
-		$query = ' ' . mb_strtolower($query) . ' ';
+		$query = ' ' . TextHelper::strtolower($query) . ' ';
 
 		//Suppression des espaces en trop.
 		$query = preg_replace('`(\s){2,}(\s){2,}`', '$1', $query);

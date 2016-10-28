@@ -95,7 +95,7 @@ abstract class AbstractContactField implements ContactFieldType
 	{
 		foreach($names as $name)
 		{
-			$name = mb_strtolower($name);
+			$name = TextHelper::strtolower($name);
 			switch ($name)
 			{
 				case 'name':

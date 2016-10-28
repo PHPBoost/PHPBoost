@@ -805,7 +805,7 @@ class PostgreSqlPlatform extends AbstractPlatform
 	 */
 	public function getSqlResultCasing($column)
 	{
-		return mb_strtolower($column);
+		return TextHelper::strtolower($column);
 	}
 
 	public function getDateTimeFormatString()

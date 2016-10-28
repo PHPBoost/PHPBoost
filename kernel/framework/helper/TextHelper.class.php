@@ -164,9 +164,14 @@ class TextHelper
 		return html_entity_decode($string, $flags, $encoding);
 	}
 	
+	public static function strtolower($string)
+	{
+		return mb_strtolower($string);
+	}
+	
 	public static function lowercase_first($string)
 	{
-		$first_letter = mb_strtolower(mb_substr($string, 0, 1));
+		$first_letter = TextHelper::strtolower(mb_substr($string, 0, 1));
 		$string_end = mb_substr($string, 1, self::strlen($string));
 		return $first_letter . $string_end;
 	}

@@ -118,7 +118,7 @@ class PHPBoostOfficialVersions extends AbstractFormField
 	{
 		foreach($field_options as $attribute => $value)
 		{
-			$attribute = mb_strtolower($attribute);
+			$attribute = TextHelper::strtolower($attribute);
 			switch ($attribute)
 			{
 				 case 'max_input':

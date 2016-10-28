@@ -590,7 +590,7 @@ abstract class AbstractPlatform
 
 		$type = '';
 		if (isset($definition['type'])) {
-			switch (mb_strtolower($definition['type'])) {
+			switch (TextHelper::strtolower($definition['type'])) {
 				case 'unique':
 					$type = mb_strtoupper($definition['type']) . ' ';
 					break;
@@ -866,7 +866,7 @@ abstract class AbstractPlatform
 		$type   = '';
 
 		if (isset($definition['type'])) {
-			if (mb_strtolower($definition['type']) == 'unique') {
+			if (TextHelper::strtolower($definition['type']) == 'unique') {
 				$type = mb_strtoupper($definition['type']) . ' ';
 			} else {
 				throw DoctrineException::unknownIndexType($definition['type']);

@@ -222,7 +222,7 @@ class Url
 	 */
 	public static function encode_rewrite($url)
 	{
-		$url = preg_replace('#&([a-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', mb_strtolower(TextHelper::htmlspecialchars($url)));
+		$url = preg_replace('#&([a-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', TextHelper::strtolower(TextHelper::htmlspecialchars($url)));
 		$url = preg_replace('#&([a-z]{2})(?:lig);#', '\1', $url);
 		$url = preg_replace('`([^a-z0-9]|[\s])`', '-', $url);
 		$url = preg_replace('`[-]{2,}`', '-', $url);

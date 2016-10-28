@@ -60,7 +60,7 @@ class QuestionCaptchaQuestion
 		foreach ($this->answers as $answer)
 		{
 			if (!empty($answer))
-				$answers[] = trim(mb_strtolower($answer));
+				$answers[] = trim(TextHelper::strtolower($answer));
 		}
 		
 		return $answers;

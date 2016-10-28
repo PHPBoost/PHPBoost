@@ -307,8 +307,8 @@ elseif (!empty($table) && $action == 'query')
 			'C_QUERY_RESULT' => true
 		));
 		
-		$lower_query = mb_strtolower($query);
-		if (mb_strtolower(mb_substr($query, 0, 6)) == 'select') //il s'agit d'une requête de sélection
+		$lower_query = TextHelper::strtolower($query);
+		if (TextHelper::strtolower(mb_substr($query, 0, 6)) == 'select') //il s'agit d'une requête de sélection
 		{
 			//On exécute la requête
 			$result = PersistenceContext::get_querier()->select(str_replace('phpboost_', PREFIX, $query));

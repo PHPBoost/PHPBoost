@@ -527,7 +527,7 @@ class Date
 			$date_lang['july'], $date_lang['august'], $date_lang['september'], $date_lang['october'], $date_lang['november'], $date_lang['december'],
 			$date_lang['monday'], $date_lang['tuesday'], $date_lang['wednesday'], $date_lang['thursday'], $date_lang['friday'], $date_lang['saturday'], $date_lang['sunday'], 
 		);
-		return str_replace($search, $replace, mb_strtolower($date));
+		return str_replace($search, $replace, TextHelper::strtolower($date));
 	}
 }
 ?>

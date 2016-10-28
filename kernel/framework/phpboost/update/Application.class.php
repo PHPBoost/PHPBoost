@@ -118,7 +118,7 @@ class Application
 		}
 
 		$this->security_update = self::get_attribute($xml_desc, 'security-update');
-		$this->security_update = mb_strtolower($this->security_update) == 'true' ? true : false;
+		$this->security_update = TextHelper::strtolower($this->security_update) == 'true' ? true : false;
 
 		$this->priority = self::get_attribute($xml_desc, 'priority');
 		switch ($this->priority)

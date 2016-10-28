@@ -34,7 +34,7 @@ load_module_lang('search');
 $request = AppContext::get_request();
 
 $search_txt = retrieve(POST, 'q', '');
-$module_id = mb_strtolower(retrieve(POST, 'moduleName', ''));
+$module_id = TextHelper::strtolower(retrieve(POST, 'moduleName', ''));
 $id_search = retrieve(POST, 'idSearch', -1);
 $selected_modules = retrieve(POST, 'searched_modules', array());
 //------------------------------------------------------------- Other includes

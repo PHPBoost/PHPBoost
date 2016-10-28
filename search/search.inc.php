@@ -98,7 +98,7 @@ function get_html_results(&$results, &$html_results, &$results_name)
 	
 	if (!$display_all_results)
 	{
-		$provider = $provider_service->get_provider(mb_strtolower($results_name));
+		$provider = $provider_service->get_provider(TextHelper::strtolower($results_name));
 		$extension_point = $provider->get_extension_point(SearchableExtensionPoint::EXTENSION_POINT);
 		$results_data = array();
 		$personnal_parse_results = $extension_point->has_customized_results();

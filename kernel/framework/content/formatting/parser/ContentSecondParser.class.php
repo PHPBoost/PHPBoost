@@ -119,7 +119,7 @@ class ContentSecondParser extends AbstractParser
 		$contents = TextHelper::htmlspecialchars_decode($contents);
 		
 		//BBCode PHPBoost
-		if (mb_strtolower($language) == 'bbcode')
+		if (TextHelper::strtolower($language) == 'bbcode')
 		{
 			$bbcode_highlighter = new BBCodeHighlighter();
 			$bbcode_highlighter->set_content($contents);
@@ -127,7 +127,7 @@ class ContentSecondParser extends AbstractParser
 			$contents = $bbcode_highlighter->get_content();
 		}
 		//Templates PHPBoost
-		elseif (mb_strtolower($language) == 'tpl' || mb_strtolower($language) == 'template')
+		elseif (TextHelper::strtolower($language) == 'tpl' || TextHelper::strtolower($language) == 'template')
 		{
 			require_once(PATH_TO_ROOT . '/kernel/lib/php/geshi/geshi.php');
 
@@ -136,7 +136,7 @@ class ContentSecondParser extends AbstractParser
 			$template_highlighter->parse($line_number ? GESHI_NORMAL_LINE_NUMBERS : GESHI_NO_LINE_NUMBERS, $inline_code);
 			$contents = $template_highlighter->get_content();
 		}
-		elseif ( mb_strtolower($language) == 'plain')
+		elseif ( TextHelper::strtolower($language) == 'plain')
 		{
 			$plain_code_highlighter = new PlainCodeHighlighter();
 			$plain_code_highlighter->set_content($contents);
@@ -203,13 +203,13 @@ class ContentSecondParser extends AbstractParser
 		if (!empty($matches[1])) {
 			$info = new SplFileInfo($matches[1]);
 			$extension = $info->getExtension();
-			$extension = mb_strtolower($extension);
+			$extension = TextHelper::strtolower($extension);
 			
 			if ($extension == 'js' || $extension == 'jquery')
 			{
 				$extension = "javascript";
 			}
-			else if ($extension && mb_strtolower($extension)!='tpl') 
+			else if ($extension && TextHelper::strtolower($extension)!='tpl') 
 			{
 				require_once(PATH_TO_ROOT . '/kernel/lib/php/geshi/geshi.php');
 				$Geshi = new GeSHi();
