@@ -1235,7 +1235,7 @@ else
 				$robots_visits_number = $robots_visits_number + $array_info[0];
 				if (isset($array_info[0]) && isset($array_info[1]))
 				{
-					$name = mb_convert_case($array_info[0], MB_CASE_TITLE);
+					$name = TextHelper::convert_case($array_info[0], MB_CASE_TITLE);
 					if (array_key_exists($name, $stats_array))
 					{
 						$stats_array[$name] = ($stats_array[$name] + $array_info[1]);
@@ -1247,7 +1247,7 @@ else
 				}
 				else if (isset($array_info[0]))
 				{
-					$name = mb_convert_case($key, MB_CASE_TITLE);
+					$name = TextHelper::convert_case($key, MB_CASE_TITLE);
 					if (array_key_exists($name, $stats_array))
 					{
 						$stats_array[$name] = ($stats_array[$name] + $array_info[0]);

@@ -244,6 +244,14 @@ class TextHelper
 		else
 			return mb_substr_count($string, $needle);
 	}
+	
+	public static function convert_case($string, $mode, $encoding = '')
+	{
+		if ($encoding != '')
+			return mb_convert_case($string, $mode, $encoding);
+		else
+			return mb_convert_case($string, $mode);
+	}
 
 	/**
 	 * @desc Checks if a string contains less than a defined number of links (used to prevent SPAM).
