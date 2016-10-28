@@ -93,7 +93,7 @@ class Image extends FileSystemElement
 	public function get_name()
 	{
 		$filename = $this->get_name_and_extension();
-		return mb_substr($filename, 0, mb_strpos($filename, '.'));
+		return mb_substr($filename, 0, TextHelper::strpos($filename, '.'));
 	}
 	
 	public function get_folder_image()

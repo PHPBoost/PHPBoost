@@ -70,7 +70,7 @@ class SqlitePlatform extends AbstractPlatform
      */
     public static function locateImpl($substr, $str)
     {
-        return mb_strpos($str, $substr);
+        return TextHelper::strpos($str, $substr);
     }
 
     public static function sha1Impl($str)

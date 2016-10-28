@@ -63,43 +63,43 @@ class Robots
 
 		if (!empty($user_agent))
 		{
-			if (mb_strpos($user_agent, 'google') !== false)
+			if (TextHelper::strpos($user_agent, 'google') !== false)
 			{
 				return 'Google';
 			}
-			elseif (mb_strpos($user_agent, 'bing') !== false)
+			elseif (TextHelper::strpos($user_agent, 'bing') !== false)
 			{
 				return 'Bing';
 			}
-			elseif (mb_strpos($user_agent, 'yahoo') !== false)
+			elseif (TextHelper::strpos($user_agent, 'yahoo') !== false)
 			{
 				return 'Yahoo';
 			}
-			elseif (mb_strpos($user_agent, 'yandex') !== false)
+			elseif (TextHelper::strpos($user_agent, 'yandex') !== false)
 			{
 				return 'Yandex';
 			}
-			elseif (mb_strpos($user_agent, 'baidu') !== false)
+			elseif (TextHelper::strpos($user_agent, 'baidu') !== false)
 			{
 				return 'Baidu';
 			}
-			elseif (mb_strpos($user_agent, 'exabot') !== false)
+			elseif (TextHelper::strpos($user_agent, 'exabot') !== false)
 			{
 				return 'Exalead';
 			}
-			elseif (mb_strpos($user_agent, 'voila') !== false)
+			elseif (TextHelper::strpos($user_agent, 'voila') !== false)
 			{
 				return 'Voila';
 			}
-			elseif (mb_strpos($user_agent, 'gigablast') !== false)
+			elseif (TextHelper::strpos($user_agent, 'gigablast') !== false)
 			{
 				return 'Gigablast';
 			}
-			elseif (mb_strpos($user_agent, 'w3c') !== false)
+			elseif (TextHelper::strpos($user_agent, 'w3c') !== false)
 			{
 				return 'W3C';
 			}
-			elseif (mb_strpos($user_agent, 'ahrefs') !== false)
+			elseif (TextHelper::strpos($user_agent, 'ahrefs') !== false)
 			{
 				return 'Ahrefs';
 			}

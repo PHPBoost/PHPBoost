@@ -160,10 +160,10 @@ class Upload
 	private function check_file_content($file) {
 		$file_content = file_get_contents($file);
 		
-		if (mb_strpos($file_content, "<?php") === false) {
+		if (TextHelper::strpos($file_content, "<?php") === false) {
 			return true;
 		}
-		if (mb_strpos($file_content, "<?") === false) {
+		if (TextHelper::strpos($file_content, "<?") === false) {
 			return true;
 		}
 
@@ -183,8 +183,8 @@ class Upload
 		if (!empty($regexp))
 		{
 			//Valide, sinon supprimé
-			if (preg_match($regexp, $this->original_filename) && mb_strpos($this->original_filename, '.php') === false
-				 && mb_strpos($this->original_filename, '.phtml') === false) {//Valide, sinon supprimé
+			if (preg_match($regexp, $this->original_filename) && TextHelper::strpos($this->original_filename, '.php') === false
+				 && TextHelper::strpos($this->original_filename, '.phtml') === false) {//Valide, sinon supprimé
 				return true;
 			}
 			return false;

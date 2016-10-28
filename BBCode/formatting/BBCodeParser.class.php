@@ -86,13 +86,13 @@ class BBCodeParser extends ContentFormattingParser
 		$this->parse_simple_tags();
 		
 		//Tableaux
-		if (!in_array('table', $this->forbidden_tags) && mb_strpos($this->content, '[table') !== false)
+		if (!in_array('table', $this->forbidden_tags) && TextHelper::strpos($this->content, '[table') !== false)
 		{
 			$this->parse_table();
 		}
 
 		//Listes
-		if (!in_array('list', $this->forbidden_tags)&& mb_strpos($this->content, '[list') !== false)
+		if (!in_array('list', $this->forbidden_tags)&& TextHelper::strpos($this->content, '[list') !== false)
 		{
 			$this->parse_list();
 		}

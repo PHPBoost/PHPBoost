@@ -93,7 +93,7 @@ class Url
 			}
 
 			$anchor = '';
-			if (($pos = mb_strpos($url, '#')) !== false)
+			if (($pos = TextHelper::strpos($url, '#')) !== false)
 			{
 				// Backup url arguments in order to restore them after compression
 				if ($pos == 0)
@@ -115,13 +115,13 @@ class Url
 				$this->url = $url;
 				return;
 			}
-			else if (mb_strpos($url, 'www.') === 0)
+			else if (TextHelper::strpos($url, 'www.') === 0)
 			{   // If the url begins with 'www.', it's an absolute one
 				$url = 'http://' . $url;
 			}
 
 			$url = preg_replace('`^https?://' . AppContext::get_request()->get_site_domain_name() . GeneralConfig::load()->get_site_path() . '`', '/', self::compress($url));
-			if (!mb_strpos($url, '://'))
+			if (!TextHelper::strpos($url, '://'))
 			{
 				$this->is_relative = true;
 				if (mb_substr($url, 0, 1) == '/')
@@ -330,7 +330,7 @@ class Url
 	public static function compress($url)
 	{
 		$args = '';
-		if (($pos = mb_strpos($url, '?')) !== false)
+		if (($pos = TextHelper::strpos($url, '?')) !== false)
 		{
 			// Backup url arguments inn order to restore them after compression
 			$args = mb_substr($url, $pos);
@@ -678,7 +678,7 @@ class Url
 		{
 			return $current_url == $check_url;
 		}
-		return mb_strpos($current_url, $check_url) !== false;
+		return TextHelper::strpos($current_url, $check_url) !== false;
 	}
 }
 ?>

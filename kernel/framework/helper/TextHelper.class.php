@@ -192,6 +192,11 @@ class TextHelper
 	{
 		return mb_strlen($string);
 	}
+	
+	public static function strpos($string, $substring)
+	{
+		return mb_strpos($string, $substring);
+	}
 
 	/**
 	 * @desc Checks if a string contains less than a defined number of links (used to prevent SPAM).

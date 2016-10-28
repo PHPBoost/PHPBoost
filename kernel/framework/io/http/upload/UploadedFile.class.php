@@ -53,7 +53,7 @@ class UploadedFile
 	public function get_name_without_extension()
 	{
 		$name = $this->get_name();
-		return mb_substr($name, 0, mb_strpos($name, '.'));
+		return mb_substr($name, 0, TextHelper::strpos($name, '.'));
 	}
 
 	public function get_extension()

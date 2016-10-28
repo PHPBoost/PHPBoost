@@ -255,7 +255,7 @@ function find_require_dir($dir_path, $require_dir, $fatal_error = true)
 		{
 			while (!is_bool($dir = readdir($dh)))
 			{
-				if (mb_strpos($dir, '.') === false  )
+				if (TextHelper::strpos($dir, '.') === false  )
 				{
 					closedir($dh);
 					return $dir;

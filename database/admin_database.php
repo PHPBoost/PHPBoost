@@ -290,7 +290,7 @@ elseif ($action == 'restore')
 		{
 			while (($file = readdir($dh)) !== false)
 			{
-				if (mb_strpos($file, '.sql') !== false)
+				if (TextHelper::strpos($file, '.sql') !== false)
 				{
 					$filelist[filemtime($dir . '/' . $file)] = array('file_name' => $file, 'weight' => NumberHelper::round(filesize($dir . '/' . $file)/1048576, 1) . ' ' . LangLoader::get_message('unit.megabytes', 'common'), 'file_date' => Date::to_format(filemtime($dir . '/' . $file), Date::FORMAT_DAY_MONTH_YEAR));
 					$i++;

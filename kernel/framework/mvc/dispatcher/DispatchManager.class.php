@@ -86,7 +86,7 @@ class DispatchManager
 			{
 				$dispatcher .= '/';
 			}
-			if (mb_strpos($url, '?') !== false)
+			if (TextHelper::strpos($url, '?') !== false)
 			{
 				$exploded = explode('?', $url, 2);
 				$exploded[1] = str_replace('?', '&', $exploded[1]);
