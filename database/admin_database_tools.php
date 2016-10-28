@@ -308,7 +308,7 @@ elseif (!empty($table) && $action == 'query')
 		));
 		
 		$lower_query = TextHelper::strtolower($query);
-		if (TextHelper::strtolower(mb_substr($query, 0, 6)) == 'select') //il s'agit d'une requête de sélection
+		if (TextHelper::strtolower(TextHelper::substr($query, 0, 6)) == 'select') //il s'agit d'une requête de sélection
 		{
 			//On exécute la requête
 			$result = PersistenceContext::get_querier()->select(str_replace('phpboost_', PREFIX, $query));
@@ -335,7 +335,7 @@ elseif (!empty($table) && $action == 'query')
 			}
 			$result->dispose();
 		}
-		elseif (mb_substr($lower_query, 0, 11) == 'insert into' || mb_substr($lower_query, 0, 6) == 'update' || mb_substr($lower_query, 0, 11) == 'delete from' || mb_substr($lower_query, 0, 11) == 'alter table'  || mb_substr($lower_query, 0, 8) == 'truncate' || mb_substr($lower_query, 0, 10) == 'drop table') //Requêtes d'autres types
+		elseif (TextHelper::substr($lower_query, 0, 11) == 'insert into' || TextHelper::substr($lower_query, 0, 6) == 'update' || TextHelper::substr($lower_query, 0, 11) == 'delete from' || TextHelper::substr($lower_query, 0, 11) == 'alter table'  || TextHelper::substr($lower_query, 0, 8) == 'truncate' || TextHelper::substr($lower_query, 0, 10) == 'drop table') //Requêtes d'autres types
 		{
 			$result = PersistenceContext::get_querier()->inject(str_replace('phpboost_', PREFIX, $query));
 			$affected_rows = $result->get_affected_rows();

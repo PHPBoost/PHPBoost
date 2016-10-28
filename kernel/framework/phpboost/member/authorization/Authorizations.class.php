@@ -208,7 +208,7 @@ class Authorizations
 		{
 			foreach ($array_auth as $type => $auth)
 			{
-				if (mb_substr($type, 0, 1) == 'm')
+				if (TextHelper::substr($type, 0, 1) == 'm')
 				{
 					if (array_key_exists($type, $array_auth) && ((int)$array_auth[$type] & (int)$auth_bit) !== 0)
 						$array_auth_members[$type] = $auth;

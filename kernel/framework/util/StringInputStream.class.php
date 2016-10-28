@@ -82,7 +82,7 @@ class StringInputStream
 
 	public function assert_next($pattern, $options = '', array &$matches = null)
 	{
-		$subject = mb_substr($this->stream, $this->index + 1);
+		$subject = TextHelper::substr($this->stream, $this->index + 1);
 		return preg_match('`^(?:' . $pattern . ')`' . $options, $subject, $matches);
 	}
 
@@ -128,11 +128,11 @@ class StringInputStream
 	{
 		$old_index = $this->index;
 		$this->safe_move($delta);
-		$str = mb_substr($this->stream, $this->index);
+		$str = TextHelper::substr($this->stream, $this->index);
 		$this->seek($old_index);
 		if ($max_length > 0)
 		{
-			return mb_substr($str, 0, $max_length);
+			return TextHelper::substr($str, 0, $max_length);
 		}
 		return $str;
 	}

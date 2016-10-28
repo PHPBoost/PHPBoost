@@ -138,7 +138,7 @@ abstract class AbstractParser implements FormattingParser
 	 */
 	protected function _parse_imbricated($match, $regex, $replace)
 	{
-		$nbr_match = mb_substr_count($this->content, $match);
+		$nbr_match = TextHelper::substr_count($this->content, $match);
 		for ($i = 0; $i < $nbr_match; $i++)
 		{
 			$this->content = preg_replace($regex, $replace, $this->content);

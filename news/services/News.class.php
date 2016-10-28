@@ -136,7 +136,7 @@ class News
 		{
 			return FormatingHelper::second_parse($this->short_contents);
 		}
-		return mb_substr(@strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>'), 0, NewsConfig::load()->get_number_character_to_cut());
+		return TextHelper::substr(@strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>'), 0, NewsConfig::load()->get_number_character_to_cut());
 	}
 		
 	public function get_short_contents_enabled()

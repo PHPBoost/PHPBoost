@@ -103,11 +103,11 @@ class TextHelper
 	{
 		if ($end == '')
 		{
-			return self::htmlspecialchars(mb_substr(self::html_entity_decode($str), $start), ENT_NOQUOTES);
+			return self::htmlspecialchars(TextHelper::substr(self::html_entity_decode($str), $start), ENT_NOQUOTES);
 		}
 		else
 		{
-			return self::htmlspecialchars(mb_substr(self::html_entity_decode($str), $start, $end), ENT_NOQUOTES);
+			return self::htmlspecialchars(TextHelper::substr(self::html_entity_decode($str), $start, $end), ENT_NOQUOTES);
 		}
 	}
 
@@ -164,38 +164,46 @@ class TextHelper
 		return html_entity_decode($string, $flags, $encoding);
 	}
 	
-	public static function strtolower($string)
+	public static function strtolower(string $string)
 	{
 		return mb_strtolower($string);
 	}
 	
-	public static function strtoupper($string)
+	public static function strtoupper(string $string)
 	{
 		return mb_strtoupper($string);
 	}
 	
-	public static function lowercase_first($string)
+	public static function lowercase_first(string $string)
 	{
-		$first_letter = self::strtolower(mb_substr($string, 0, 1));
-		$string_end = mb_substr($string, 1, self::strlen($string));
+		$first_letter = self::strtolower(TextHelper::substr($string, 0, 1));
+		$string_end = TextHelper::substr($string, 1, self::strlen($string));
 		return $first_letter . $string_end;
 	}
 	
-	public static function uppercase_first($string)
+	public static function uppercase_first(string $string)
 	{
-		$first_letter = self::strtoupper(mb_substr($string, 0, 1));
-		$string_end = mb_substr($string, 1, self::strlen($string));
+		$first_letter = self::strtoupper(TextHelper::substr($string, 0, 1));
+		$string_end = TextHelper::substr($string, 1, self::strlen($string));
 		return $first_letter . $string_end;
 	}
 	
-	public static function strlen($string)
+	public static function strlen(string $string)
 	{
 		return mb_strlen($string);
 	}
 	
-	public static function strpos($string, $substring)
+	public static function strpos(string $string, $substring)
 	{
 		return mb_strpos($string, $substring);
+	}
+	
+	public static function substr(string $string, int $start, $length = '')
+	{
+		if ($length != '')
+			return mb_substr($string, $start, $length);
+		else
+			return mb_substr($string, $start);
 	}
 
 	/**
@@ -249,14 +257,14 @@ class TextHelper
 				// Add this line to the output
 				$lines[] = $matches[1];
 				// Trim it off the input ready for the next go
-				$string = mb_substr($string, self::strlen($matches[0]));
+				$string = TextHelper::substr($string, self::strlen($matches[0]));
 			}
 			// Just take the next $width characters
 			else
 			{
-				$lines[] = mb_substr($string, 0, $width);
+				$lines[] = TextHelper::substr($string, 0, $width);
 				// Trim it off the input ready for the next go
-				$string = mb_substr($string, $width);
+				$string = TextHelper::substr($string, $width);
 			}
 		}
 		return implode($break, $lines);

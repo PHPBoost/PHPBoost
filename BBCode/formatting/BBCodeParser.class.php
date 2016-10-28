@@ -447,10 +447,10 @@ class BBCodeParser extends ContentFormattingParser
 						//Nettoyage des listes (retours à la ligne)
 						$content[$i] = preg_replace_callback('`\[\*\]((?:\s|<br />)+)`', array('BBCodeParser', 'clear_html_br'), $content[$i]);
 						$content[$i] = preg_replace_callback('`((?:\s|<br />)+)\[\*\]`', array('BBCodeParser', 'clear_html_br'), $content[$i]);
-						if (mb_substr($content[$i - 1], 0, 8) == '=ordered')
+						if (TextHelper::substr($content[$i - 1], 0, 8) == '=ordered')
 						{
 							$list_tag = 'ol';
-							$content[$i - 1] = mb_substr($content[$i - 1], 8);
+							$content[$i - 1] = TextHelper::substr($content[$i - 1], 8);
 						}
 						else
 						{

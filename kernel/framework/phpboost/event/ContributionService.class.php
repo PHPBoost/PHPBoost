@@ -299,10 +299,10 @@ class ContributionService
 					}
 				}
 				//Members
-				elseif (mb_substr($profile, 0, 1) == 'm')
+				elseif (TextHelper::substr($profile, 0, 1) == 'm')
 				{
 					//If this member has not already an entry and he can see that contribution
-					if (empty($array_result[$profile]) && Authorizations::check_auth(USER_TYPE, (int)mb_substr($profile, 1), $this_auth, Contribution::CONTRIBUTION_AUTH_BIT))
+					if (empty($array_result[$profile]) && Authorizations::check_auth(USER_TYPE, (int)TextHelper::substr($profile, 1), $this_auth, Contribution::CONTRIBUTION_AUTH_BIT))
 					{
 						$array_result[$profile] = 1;
 					}

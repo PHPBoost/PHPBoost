@@ -116,7 +116,7 @@ class FormFieldTextEditor extends AbstractFormField
 	 */
 	public function get_value()
 	{
-		return mb_substr($this->value, 0, $this->maxlength);
+		return TextHelper::substr($this->value, 0, $this->maxlength);
 	}
 
 	protected function get_default_template()

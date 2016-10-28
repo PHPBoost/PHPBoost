@@ -228,8 +228,8 @@ else
 		));
 
 		$time = Date::to_format(Date::DATE_NOW, 'Ym');
-		$current_year = mb_substr($time, 0, 4);
-		$current_month = mb_substr($time, 4, 2);
+		$current_year = TextHelper::substr($time, 0, 4);
+		$current_month = TextHelper::substr($time, 4, 2);
 
 		$month = retrieve(GET, 'm', (int)$current_month);
 		$year = retrieve(GET, 'y', (int)$current_year);
@@ -376,7 +376,7 @@ else
 				foreach ($array_l_months as $value)
 				{
 					$tpl->assign_block_vars('legend', array(
-						'LEGEND' => (in_array($i, $months_not_empty)) ? '<a href="admin_stats' . url('.php?m=' . $i . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . mb_substr($value, 0, 3) . '</a>' : mb_substr($value, 0, 3)
+						'LEGEND' => (in_array($i, $months_not_empty)) ? '<a href="admin_stats' . url('.php?m=' . $i . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . TextHelper::substr($value, 0, 3) . '</a>' : TextHelper::substr($value, 0, 3)
 					));
 					$i++;
 				}
@@ -563,9 +563,9 @@ else
 	elseif ($pages || $pages_year) //Pages par jour classées par mois.
 	{
 		$time = Date::to_format(Date::DATE_NOW, 'Ymj');
-		$current_year = mb_substr($time, 0, 4);
-		$current_month = mb_substr($time, 4, 2);
-		$current_day = mb_substr($time, 6, 2);
+		$current_year = TextHelper::substr($time, 0, 4);
+		$current_month = TextHelper::substr($time, 4, 2);
+		$current_day = TextHelper::substr($time, 6, 2);
 
 		$day = retrieve(GET, 'd', (int)$current_day);
 		$month = retrieve(GET, 'm', (int)$current_month);
@@ -749,7 +749,7 @@ else
 				foreach ($array_l_months as $value)
 				{
 					$tpl->assign_block_vars('legend', array(
-						'LEGEND' => (in_array($i, $months_not_empty)) ? '<a href="admin_stats' . url('.php?m=' . $i . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . mb_substr($value, 0, 3) . '</a>' : mb_substr($value, 0, 3)
+						'LEGEND' => (in_array($i, $months_not_empty)) ? '<a href="admin_stats' . url('.php?m=' . $i . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . TextHelper::substr($value, 0, 3) . '</a>' : TextHelper::substr($value, 0, 3)
 					));
 					$i++;
 				}

@@ -244,8 +244,8 @@ class Backup
 		$structure = array();
 		$structure['fields'] = array();
 		$structure['index'] = array();
-		$struct = mb_substr(mb_strstr($this->backup_script, '('), 1);
-		$struct = mb_substr($struct, 0, mb_strrpos($struct, ')'));
+		$struct = TextHelper::substr(mb_strstr($this->backup_script, '('), 1);
+		$struct = TextHelper::substr($struct, 0, mb_strrpos($struct, ')'));
 		$array_struct = explode(",\n", $struct);
 		foreach ($array_struct as $field)
 		{
@@ -253,7 +253,7 @@ class Backup
 			$name = isset($match[1]) ? $match[1] : '';
 			if (TextHelper::strpos($field, 'KEY') !== false)
 			{
-				$type = trim(mb_substr($field, 0, TextHelper::strpos($field, 'KEY') + 3));
+				$type = trim(TextHelper::substr($field, 0, TextHelper::strpos($field, 'KEY') + 3));
 				preg_match('!\(([a-z_`,]+)\)!i', $field, $match);
 				$index_fields = isset($match[1]) ? str_replace('`', '', $match[1]) : '';
 				$structure['index'][] = array('name' => $name, 'fields' => $index_fields, 'type' => $type);

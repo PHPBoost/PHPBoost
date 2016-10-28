@@ -148,9 +148,9 @@ function wiki_display_menu($menu_list)
 		}
 		else
 		{
-			if (mb_substr($menu, TextHelper::strlen($menu) - 4, 4) == '<li>')
+			if (TextHelper::substr($menu, TextHelper::strlen($menu) - 4, 4) == '<li>')
 			{
-				$menu = mb_substr($menu, 0, TextHelper::strlen($menu) - 4);
+				$menu = TextHelper::substr($menu, 0, TextHelper::strlen($menu) - 4);
 			}
 			$menu .= str_repeat('</li></ol>', $last_level - $current_level) . '</li><li>' . $title_link;
 		}
@@ -158,9 +158,9 @@ function wiki_display_menu($menu_list)
 	}
 	
 	//End
-	if (mb_substr($menu, TextHelper::strlen($menu) - 4, 4) == '<li>')
+	if (TextHelper::substr($menu, TextHelper::strlen($menu) - 4, 4) == '<li>')
 	{
-		$menu = mb_substr($menu, 0, TextHelper::strlen($menu) - 4);
+		$menu = TextHelper::substr($menu, 0, TextHelper::strlen($menu) - 4);
 	}
 	$menu .= str_repeat('</li></ol>', $last_level);
 	

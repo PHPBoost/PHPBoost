@@ -29,7 +29,7 @@ require_once('../admin/admin_begin.php');
 
 //On regarde si on doit lire un fichier
 $read_file = retrieve(GET, 'read_file', '', TSTRING_UNCHANGE);
-if (!empty($read_file) && mb_substr($read_file, -4) == '.sql')
+if (!empty($read_file) && TextHelper::substr($read_file, -4) == '.sql')
 {
 	//Si le fichier existe on le lit
 	if (is_file(PATH_TO_ROOT .'/cache/backup/' . $read_file))
@@ -101,7 +101,7 @@ if (!empty($query))
 		));
 	
 		$lower_query = TextHelper::strtolower($query);
-		if (TextHelper::strtolower(mb_substr($query, 0, 6)) == 'select') //il s'agit d'une requête de sélection
+		if (TextHelper::strtolower(TextHelper::substr($query, 0, 6)) == 'select') //il s'agit d'une requête de sélection
 		{
 			//On éxécute la requête
 			try {
@@ -139,7 +139,7 @@ if (!empty($query))
 			}
 			
 		}
-		elseif (mb_substr($lower_query, 0, 11) == 'insert into' || mb_substr($lower_query, 0, 6) == 'update' || mb_substr($lower_query, 0, 11) == 'delete from' || mb_substr($lower_query, 0, 11) == 'alter table'  || mb_substr($lower_query, 0, 8) == 'truncate' || mb_substr($lower_query, 0, 10) == 'drop table') //Requêtes d'autres types
+		elseif (TextHelper::substr($lower_query, 0, 11) == 'insert into' || TextHelper::substr($lower_query, 0, 6) == 'update' || TextHelper::substr($lower_query, 0, 11) == 'delete from' || TextHelper::substr($lower_query, 0, 11) == 'alter table'  || TextHelper::substr($lower_query, 0, 8) == 'truncate' || TextHelper::substr($lower_query, 0, 10) == 'drop table') //Requêtes d'autres types
 		{
 			try {
 				$result = PersistenceContext::get_querier()->inject(str_replace('phpboost_', PREFIX, $query));

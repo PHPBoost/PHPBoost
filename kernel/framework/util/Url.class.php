@@ -105,8 +105,8 @@ class Url
 				}
 				else
 				{
-					$anchor = mb_substr($url, $pos);
-					$url = mb_substr($url, 0, $pos);
+					$anchor = TextHelper::substr($url, $pos);
+					$url = TextHelper::substr($url, 0, $pos);
 				}
 			}
 
@@ -124,7 +124,7 @@ class Url
 			if (!TextHelper::strpos($url, '://'))
 			{
 				$this->is_relative = true;
-				if (mb_substr($url, 0, 1) == '/')
+				if (TextHelper::substr($url, 0, 1) == '/')
 				{   // Relative url from the website root (good form)
 					$this->url = $url;
 				}
@@ -205,11 +205,11 @@ class Url
 	public function root_to_local()
 	{
 		$local_path = $this->server_url;
-		$local_path = mb_substr(trim($local_path, '/'), TextHelper::strlen(trim(GeneralConfig::load()->get_site_path(), '/')));
+		$local_path = TextHelper::substr(trim($local_path, '/'), TextHelper::strlen(trim(GeneralConfig::load()->get_site_path(), '/')));
 		$file_begun = mb_strrpos($local_path, '/');
 		if ($file_begun >= 0)
 		{
-			$local_path = mb_substr($local_path, 0, $file_begun) . '/';
+			$local_path = TextHelper::substr($local_path, 0, $file_begun) . '/';
 		}
 
 		return '/' . ltrim($local_path, '/');
@@ -333,8 +333,8 @@ class Url
 		if (($pos = TextHelper::strpos($url, '?')) !== false)
 		{
 			// Backup url arguments inn order to restore them after compression
-			$args = mb_substr($url, $pos);
-			$url = mb_substr($url, 0, $pos);
+			$args = TextHelper::substr($url, $pos);
+			$url = TextHelper::substr($url, 0, $pos);
 		}
 		$url = preg_replace(array('`([^:]|^)/+`', '`(?<!\.)\./`'), array('$1/', ''), $url);
 

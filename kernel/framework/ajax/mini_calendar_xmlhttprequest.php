@@ -114,14 +114,14 @@ if ($calendar_type == 'date')
 
 	//Génération du calendrier. 
    
-	$month = ($month < 10 && mb_substr($month, 0, 1) != 0) ? '0' . $month : $month;
+	$month = ($month < 10 && TextHelper::substr($month, 0, 1) != 0) ? '0' . $month : $month;
 	$j = 1;
 	$last_day = ($month_day + $first_day);
 	for ($i = 1; $i <= 42; $i++)
 	{
 		if ($i >= $first_day && $i < $last_day)
 		{
-			$date = StringVars::replace_vars(':year-:month-:day', array('year' => $year, 'month' => $month, 'day' => ($j < 10 && mb_substr($j, 0, 1) != 0) ? '0' . $j : $j));
+			$date = StringVars::replace_vars(':year-:month-:day', array('year' => $year, 'month' => $month, 'day' => ($j < 10 && TextHelper::substr($j, 0, 1) != 0) ? '0' . $j : $j));
 			$class ='';
 			if ( (($i % 7) == 6) || (($i % 7) == 0)) 
 			{ 

@@ -233,7 +233,7 @@ class ArticlesFormController extends ModuleController
 				$article_contents = $this->article->get_contents();
 				
 				//If article doesn't begin with a page, we insert one
-				if (mb_substr(trim($article_contents), 0, 6) != '[page]')
+				if (TextHelper::substr(trim($article_contents), 0, 6) != '[page]')
 				{
 					$article_contents = '[page]&nbsp;[/page]' . $article_contents;
 				}

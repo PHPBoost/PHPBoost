@@ -53,7 +53,7 @@ class GeneralConfig extends AbstractConfigData
 
 	public function is_site_url_https()
 	{
-		return mb_substr($this->get_property(self::SITE_URL), 0, 8) == "https://";
+		return TextHelper::substr($this->get_property(self::SITE_URL), 0, 8) == "https://";
 	}
 
 	/**

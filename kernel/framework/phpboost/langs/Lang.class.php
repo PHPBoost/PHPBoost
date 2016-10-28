@@ -53,7 +53,7 @@ class Lang
     
     public function get_identifier()
     {
-    	return mb_substr($this->id, 1, 2);
+    	return TextHelper::substr($this->id, 1, 2);
     }
 
     public function is_activated()

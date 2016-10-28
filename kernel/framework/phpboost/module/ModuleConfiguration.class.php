@@ -193,7 +193,7 @@ class ModuleConfiguration
 		$string_length = TextHelper::strlen($links_format);
 		while ($cursor < $string_length) //Parcours linéaire.
 		{
-			$char = mb_substr($links_format, $cursor, 1);
+			$char = TextHelper::substr($links_format, $cursor, 1);
 			if (!$check_value) //On récupère la clé.
 			{
 				if ($char != '=')

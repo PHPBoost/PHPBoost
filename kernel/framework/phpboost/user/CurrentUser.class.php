@@ -195,7 +195,7 @@ class CurrentUser extends User
 					$array_user_auth_groups[$idgroup] = $auth_group;
 				}
 			}
-			elseif (mb_substr($idgroup, 0, 1) == 'r') //Rang
+			elseif (TextHelper::substr($idgroup, 0, 1) == 'r') //Rang
 			{
 				if ($this->get_level() >= (int)str_replace('r', '', $idgroup))
 				{

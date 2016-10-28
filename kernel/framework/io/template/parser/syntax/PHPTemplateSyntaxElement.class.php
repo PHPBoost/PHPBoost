@@ -54,7 +54,7 @@ class PHPTemplateSyntaxElement extends AbstractTemplateSyntaxElement
         $this->output->write('\';$_ob_length=ob_get_length();');
         $this->output->write($php);
         $this->output->write('if(ob_get_length()>$_ob_length){$_content=ob_get_clean();' . TemplateSyntaxElement::RESULT .
-            '.=mb_substr($_content, $_ob_length);echo mb_substr($_content, 0, $_ob_length);}');
+            '.=TextHelper::substr($_content, $_ob_length);echo TextHelper::substr($_content, 0, $_ob_length);}');
         $this->output->write(TemplateSyntaxElement::RESULT . '.=\'');
 	}
 }

@@ -152,7 +152,7 @@ abstract class ContentFormattingParser extends AbstractParser
 		// Stockage de la chaîne avant le premier tag dans le cas ou il y a au moins une balise ouvrante
 		if ($size >= 1)
 		{
-			array_push($parsed, mb_substr($content, 0, $index_tags[0]));
+			array_push($parsed, TextHelper::substr($content, 0, $index_tags[0]));
 		}
 		else
 		{
@@ -165,11 +165,11 @@ abstract class ContentFormattingParser extends AbstractParser
 			// Calcul de la sous-chaîne pour l'expression régulière
 			if ($i == ($size - 1))
 			{
-				$sub_str = mb_substr($content, $current_index);
+				$sub_str = TextHelper::substr($content, $current_index);
 			}
 			else
 			{
-				$sub_str = mb_substr($content, $current_index, $index_tags[$i + 1] - $current_index);
+				$sub_str = TextHelper::substr($content, $current_index, $index_tags[$i + 1] - $current_index);
 			}
 
 			// Mise en place de l'éclatement de la sous-chaine
@@ -194,7 +194,7 @@ abstract class ContentFormattingParser extends AbstractParser
 				// On prend la chaine après le tag de fermeture courant jusqu'au prochain tag d'ouverture
 				$current_tag_len = TextHelper::strlen('[' . $tag . $local_parsed[1] . ']' . $local_parsed[2] . '[/' . $tag . ']');
 				$end_pos = $index_tags[$i + 1] - ($current_index + $current_tag_len);
-				array_push($parsed, mb_substr($local_parsed[3], 0, $end_pos ));
+				array_push($parsed, TextHelper::substr($local_parsed[3], 0, $end_pos ));
 			}
 			elseif (isset($local_parsed[3]))
 			{   // c'est la fin, il n'y a pas d'autre tag ouvrant après
@@ -221,12 +221,12 @@ abstract class ContentFormattingParser extends AbstractParser
 		while (($pos = TextHelper::strpos($content, '[' . $tag, $pos + 1)) !== false)
 		{
 			// nombre de tags de fermeture déjà rencontrés
-			$nb_close_tags = mb_substr_count(mb_substr($content, 0, ($pos + TextHelper::strlen('['.$tag))), '[/'.$tag.']');
+			$nb_close_tags = TextHelper::substr_count(TextHelper::substr($content, 0, ($pos + TextHelper::strlen('['.$tag))), '[/'.$tag.']');
 
 			// Si on trouve un tag d'ouverture, on sauvegarde sa position uniquement si il y a autant + 1 de tags fermés avant et on itère sur le suivant
 			if ($nb_open_tags == $nb_close_tags)
 			{
-				$open_tag = mb_substr($content, $pos, (TextHelper::strpos($content, ']', $pos + 1) + 1 - $pos));
+				$open_tag = TextHelper::substr($content, $pos, (TextHelper::strpos($content, ']', $pos + 1) + 1 - $pos));
 				$match = preg_match('`\[' . $tag . '(' . $attributes . ')?\]`', $open_tag);
 				if ($match == 1)
 				{

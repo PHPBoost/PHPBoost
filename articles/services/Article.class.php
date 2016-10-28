@@ -138,7 +138,7 @@ class Article
 		else
 		{
 			$clean_contents = preg_split('`\[page\].+\[/page\](.*)`Us', FormatingHelper::second_parse($this->contents), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-			return mb_substr(@strip_tags($clean_contents[0], '<br><br/>'), 0, ArticlesConfig::load()->get_number_character_to_cut());
+			return TextHelper::substr(@strip_tags($clean_contents[0], '<br><br/>'), 0, ArticlesConfig::load()->get_number_character_to_cut());
 		}
 	}
 	

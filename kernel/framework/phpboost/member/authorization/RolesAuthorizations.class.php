@@ -147,7 +147,7 @@ class RolesAuthorizations
 			{
 				if ($role[0] == 'm')
 				{
-					$this->users[] = (int)mb_substr($role, 1);
+					$this->users[] = (int)TextHelper::substr($role, 1);
 				}
 			}
 		}

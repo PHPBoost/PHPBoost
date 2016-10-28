@@ -34,6 +34,6 @@ require_once(PATH_TO_ROOT . '/lang/' . AppContext::get_current_user()->get_local
 
 if (!AppContext::get_current_user()->is_admin())
 {
-	DispatchManager::redirect(new UserLoginController(UserLoginController::ADMIN_LOGIN, mb_substr(REWRITED_SCRIPT, TextHelper::strlen(GeneralConfig::load()->get_site_path()))));
+	DispatchManager::redirect(new UserLoginController(UserLoginController::ADMIN_LOGIN, TextHelper::substr(REWRITED_SCRIPT, TextHelper::strlen(GeneralConfig::load()->get_site_path()))));
 }
 ?>

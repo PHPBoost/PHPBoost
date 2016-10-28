@@ -82,7 +82,7 @@ class UrlSerializedParameter
 		$params_string_begin = TextHelper::strpos($uri, '?');
 		if ($params_string_begin !== false && TextHelper::strlen($uri) > $params_string_begin)
 		{
-			$params_string = mb_substr($uri, $params_string_begin + 1);
+			$params_string = TextHelper::substr($uri, $params_string_begin + 1);
 			parse_str($params_string, $this->query_args);
 			unset($this->query_args[$this->arg_id]);
 		}

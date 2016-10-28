@@ -88,7 +88,7 @@ class MenuAdminService
 			
 			$filter_infos = explode('/', $filter_pattern);
 			$module_name = $filter_infos[0];
-			$regex = mb_substr(mb_strstr($filter_pattern, '/'), 1);
+			$regex = TextHelper::substr(mb_strstr($filter_pattern, '/'), 1);
 		
 			$tpl_filter->assign_block_vars('filters', array(
 				'ID' => $key,

@@ -312,9 +312,9 @@ class MySQLDBMSUtils implements DBMSUtils
 		$query = '';
 		while (($line = $reader->read_line()) !== null)
 		{
-			if (!empty($line) && mb_substr($line, 0, 2) !== '--')
+			if (!empty($line) && TextHelper::substr($line, 0, 2) !== '--')
 			{
-				if (mb_substr($line, -1) == ';')
+				if (TextHelper::substr($line, -1) == ';')
 				{
 					if (empty($query))
 					{

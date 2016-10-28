@@ -51,7 +51,7 @@ if ($valid && !empty($idgroup_post)) //Modification du groupe.
 	$auth_flood = retrieve(POST, 'auth_flood', 1);
 	$pm_group_limit = retrieve(POST, 'pm_group_limit', 75);
 	$color_group = retrieve(POST, 'color_group', '');
-	$color_group = mb_substr($color_group, 0, 1) == '#' ? mb_substr($color_group, 1) : $color_group;
+	$color_group = TextHelper::substr($color_group, 0, 1) == '#' ? TextHelper::substr($color_group, 1) : $color_group;
 	$delete_group_color = (bool)retrieve(POST, 'delete_group_color', false);
 	
 	if ($delete_group_color)
@@ -73,7 +73,7 @@ elseif ($valid && $add_post) //ajout  du groupe.
 	$auth_flood = retrieve(POST, 'auth_flood', 1);
 	$pm_group_limit = retrieve(POST, 'pm_group_limit', 75);
 	$color_group = retrieve(POST, 'color_group', '');
-	$color_group = mb_substr($color_group, 0, 1) == '#' ? mb_substr($color_group, 1) : $color_group;
+	$color_group = TextHelper::substr($color_group, 0, 1) == '#' ? TextHelper::substr($color_group, 1) : $color_group;
 	$data_group_limit = $data_group_limit ? NumberHelper::numeric($data_group_limit, 'float') * 1024 : '5120';
 	
 	if (!empty($name))
@@ -234,7 +234,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 			'AUTH_FLOOD_DISABLED' => $array_group['auth_flood'] == 0 ? 'checked="checked"' : '',
 			'PM_GROUP_LIMIT' => $array_group['pm_group_limit'],
 			'DATA_GROUP_LIMIT' => NumberHelper::round($array_group['data_group_limit']/1024, 2),
-			'COLOR_GROUP' => (mb_substr($group['color'], 0, 1) != '#' ? '#' : '') . $group['color'],
+			'COLOR_GROUP' => (TextHelper::substr($group['color'], 0, 1) != '#' ? '#' : '') . $group['color'],
 			'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
 			'L_REQUIRE_LOGIN' => $LANG['require_name'],
 			'L_CONFIRM_DEL_USER_GROUP' => LangLoader::get_message('confirm.delete', 'status-messages-common'),

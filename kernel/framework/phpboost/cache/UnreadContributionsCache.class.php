@@ -199,11 +199,11 @@ class UnreadContributionsCache implements CacheData
 			{
 				if ($profile[0] == 'g')
 				{
-					$this->add_group_with_unread_contributions((int) mb_substr($profile, 1));
+					$this->add_group_with_unread_contributions((int) TextHelper::substr($profile, 1));
 				}
 				else if ($profile[0] == 'm')
 				{
-					$this->add_user_with_unread_contributions((int) mb_substr($profile, 1));
+					$this->add_user_with_unread_contributions((int) TextHelper::substr($profile, 1));
 				}
 			}
 		}

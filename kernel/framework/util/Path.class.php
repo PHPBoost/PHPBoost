@@ -81,11 +81,11 @@ class Path
 		$class_file = self::uniformize_path($class_file);
 		if (($i = TextHelper::strpos($class_file, '.')) !== false)
 		{
-			$class_file = mb_substr($class_file, 0, $i);
+			$class_file = TextHelper::substr($class_file, 0, $i);
 		}
 		if (($i = mb_strrpos($class_file, '/')) !== false)
 		{
-			$class_file = mb_substr($class_file, $i + 1);
+			$class_file = TextHelper::substr($class_file, $i + 1);
 		}
 		return $class_file;
 	}

@@ -39,7 +39,7 @@ class KeyGenerator
 		}
 		else
 		{
-			return mb_substr(self::string_hash(uniqid(mt_rand(), true), false), 0, $length);
+			return TextHelper::substr(self::string_hash(uniqid(mt_rand(), true), false), 0, $length);
 		}
 	}
 	

@@ -76,7 +76,7 @@ class TinyMCEEditor extends ContentEditor
 		}
 		$toolbar = implode(',', $toolbar);
 		
-		$language = mb_substr(AppContext::get_current_user()->get_locale(), 0, 2);
+		$language = TextHelper::substr(AppContext::get_current_user()->get_locale(), 0, 2);
 		switch ($language) {
 			case 'fr' : $language = 'fr_FR';
 						break;

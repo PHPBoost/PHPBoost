@@ -102,7 +102,7 @@ class StatsSaver
 				if (TextHelper::strpos($url, HOST) === false)
 				{
 					$referer['path'] = !empty($referer['path']) ? $referer['path'] : '';
-					$relative_url = addslashes(((mb_substr($referer['path'], 0, 1) == '/') ? $referer['path'] : ('/' . $referer['path'])) . (!empty($referer['query']) ? '?' . $referer['query'] : '') . (!empty($referer['fragment']) ? '#' . $referer['fragment'] : ''));
+					$relative_url = addslashes(((TextHelper::substr($referer['path'], 0, 1) == '/') ? $referer['path'] : ('/' . $referer['path'])) . (!empty($referer['query']) ? '?' . $referer['query'] : '') . (!empty($referer['fragment']) ? '#' . $referer['fragment'] : ''));
 					
 					$check_url = PersistenceContext::get_querier()->count(StatsSetup::$stats_referer_table, 'WHERE url = :url AND relative_url = :relative_url', array('url' => $url, 'relative_url' => $relative_url));
 					if (!empty($check_url))
@@ -229,7 +229,7 @@ class StatsSaver
 			if (TextHelper::strpos($favorite_lang, '-') !== false)
 				$favorite_lang = preg_replace('`[a-z]{2}\-([a-z]{2})`i', '$1', $favorite_lang);
 			$lang = str_replace(array('en', 'cs', 'sv', 'fa', 'ja', 'ko', 'he', 'da', 'gb'), array('uk', 'cz', 'se', 'ir', 'jp', 'kr', 'il', 'dk', 'uk'), $favorite_lang);
-			$lang = mb_substr($lang, 0, 2);
+			$lang = TextHelper::substr($lang, 0, 2);
 			
 			if (!empty($lang)) //On ignore ceux qui n'ont pas renseigné le champs.
 			{

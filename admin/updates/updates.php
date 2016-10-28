@@ -91,14 +91,14 @@ if (ServerConfiguration::get_phpversion() > Updates::PHP_MIN_VERSION_UPDATES)
 		
 		$short_description = $update->get_description();
 		$maxlength = 300;
-		$length = TextHelper::strlen($short_description) > $maxlength ?  $maxlength + TextHelper::strpos(mb_substr($short_description, $maxlength), ' ') : 0;
+		$length = TextHelper::strlen($short_description) > $maxlength ?  $maxlength + TextHelper::strpos(TextHelper::substr($short_description, $maxlength), ' ') : 0;
 		$length = $length > ($maxlength * 1.1) ? $maxlength : $length;
 		
 		$tpl->assign_block_vars('apps', array(
 			'type' => $update->get_type(),
 			'name' => $update->get_name(),
 			'version' => $update->get_version(),
-			'short_description' => ($length > 0 ? mb_substr($short_description, 0, $length) . '...' : $short_description),
+			'short_description' => ($length > 0 ? TextHelper::substr($short_description, 0, $length) . '...' : $short_description),
 			'identifier' => $update->get_identifier(),
 			'L_PRIORITY' => $LANG[$priority],
 			'download_url' => $update->get_download_url(),

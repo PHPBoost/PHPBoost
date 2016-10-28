@@ -137,7 +137,7 @@ elseif ($valid && !empty($id_post)) //inject
 		}
 		$votes = trim($votes, '|');
 		
-		PersistenceContext::get_querier()->update(PREFIX . "poll", array('question' => $question, 'answers' => mb_substr($answers, 0, TextHelper::strlen($answers) - 1), 'votes' => $votes, 'type' => $type, 'archive' => $archive, 'visible' => $visible, 'start' => $start_timestamp, 'end' => $start_timestamp, 'timestamp' => $timestamp), 'WHERE id = :id', array('id' => $id_post));
+		PersistenceContext::get_querier()->update(PREFIX . "poll", array('question' => $question, 'answers' => TextHelper::substr($answers, 0, TextHelper::strlen($answers) - 1), 'votes' => $votes, 'type' => $type, 'archive' => $archive, 'visible' => $visible, 'start' => $start_timestamp, 'end' => $start_timestamp, 'timestamp' => $timestamp), 'WHERE id = :id', array('id' => $id_post));
 		
 		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 	}
@@ -292,7 +292,7 @@ else
 		$archive = ( $row['archive'] == 1) ?  LangLoader::get_message('yes', 'common') : LangLoader::get_message('no', 'common');
 		
 		//On reccourci le lien si il est trop long pour éviter de déformer l'administration.
-		$question = stripslashes(TextHelper::strlen($row['question']) > 45 ? mb_substr($row['question'], 0, 45) . '...' : $row['question']);
+		$question = stripslashes(TextHelper::strlen($row['question']) > 45 ? TextHelper::substr($row['question'], 0, 45) . '...' : $row['question']);
 		
 		$visible = '';
 		if ($row['start'] > 0)

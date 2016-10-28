@@ -58,9 +58,9 @@ class FormFieldConstraintRegex extends AbstractFormFieldConstraint
 	{
 		$delimiter = $regex[0];
 		$end_delimiter_position = mb_strrpos($regex, $delimiter);
-		$js_regex = mb_substr($regex, 1, $end_delimiter_position - 1);
+		$js_regex = TextHelper::substr($regex, 1, $end_delimiter_position - 1);
 		
-		$js_options_chars = str_split(mb_substr($regex, $end_delimiter_position + 1));
+		$js_options_chars = str_split(TextHelper::substr($regex, $end_delimiter_position + 1));
 		$js_options = '';
 		foreach ($js_options_chars as $option)
 		{

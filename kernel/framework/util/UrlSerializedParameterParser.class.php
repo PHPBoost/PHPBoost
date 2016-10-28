@@ -199,7 +199,7 @@ class UrlSerializedParameterParser
 
 	private function get_remaining_args()
 	{
-		return mb_substr($this->args, $this->args_index);
+		return TextHelper::substr($this->args, $this->args_index);
 	}
 
 	private function serialize_parameters($parameters)

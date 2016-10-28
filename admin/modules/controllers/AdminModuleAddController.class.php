@@ -206,9 +206,9 @@ class AdminModuleAddController extends AdminController
 					$required_files = array('/config.ini');
 					foreach ($archive_content as $element)
 					{
-						if (mb_substr($element['filename'], -1) == '/')
-							$element['filename'] = mb_substr($element['filename'], 0, -1);
-						if (mb_substr_count($element['filename'], '/') == 0)
+						if (TextHelper::substr($element['filename'], -1) == '/')
+							$element['filename'] = TextHelper::substr($element['filename'], 0, -1);
+						if (TextHelper::substr_count($element['filename'], '/') == 0)
 							$archive_root_content[] = array('filename' => $element['filename'], 'folder' => ((isset($element['folder']) && $element['folder'] == 1) || (isset($element['typeflag']) && $element['typeflag'] == 5)));
 						if (isset($archive_root_content[0]))
 						{

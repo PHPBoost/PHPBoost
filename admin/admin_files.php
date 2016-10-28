@@ -440,7 +440,7 @@ else
 	//Affichage des dossiers
 	while ($row = $result->fetch())
 	{
-		$name_cut = (TextHelper::strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlspecialchars(mb_substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
+		$name_cut = (TextHelper::strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlspecialchars(TextHelper::substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 		
 		$template->assign_block_vars('folder', array(
 			'C_MEMBER_FOLDER' => $show_member,
@@ -483,7 +483,7 @@ else
 		//Affichage des fichiers contenu dans le dossier
 		while ($row = $result->fetch())
 		{
-			$name_cut = (TextHelper::strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlspecialchars(mb_substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
+			$name_cut = (TextHelper::strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlspecialchars(TextHelper::substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 		
 			$get_img_mimetype = Uploads::get_img_mimetype($row['type']);
 			$size_img = '';
