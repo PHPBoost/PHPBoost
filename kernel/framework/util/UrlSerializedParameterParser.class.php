@@ -44,7 +44,7 @@ class UrlSerializedParameterParser
 	public function __construct($args)
 	{
 		$this->args = $args;
-		$this->args_length = mb_strlen($this->args);
+		$this->args_length = TextHelper::strlen($this->args);
 		$this->parse();
 	}
 
@@ -89,7 +89,7 @@ class UrlSerializedParameterParser
 		$matches = array();
 		preg_match(self::$param_name_regex, $this->get_remaining_args(), $matches);
 		$name = $matches[1];
-		$this->consume_chars(mb_strlen($name) + 1);
+		$this->consume_chars(TextHelper::strlen($name) + 1);
 		return $name;
 	}
 

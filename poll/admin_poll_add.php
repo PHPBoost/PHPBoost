@@ -107,7 +107,7 @@ if ($valid)
 			}
 		}
 
-		PersistenceContext::get_querier()->insert(PREFIX . "poll", array('question' => $question, 'answers' => mb_substr($answers, 0, mb_strlen($answers) - 1), 'votes' => mb_substr($votes, 0, mb_strlen($votes) - 1), 'type' => $type, 'archive' => $archive, 'timestamp' => $timestamp, 'visible' => $visible, 'start' => $start_timestamp, 'end' => $start_timestamp, 'user_id' => AppContext::get_current_user()->get_id()));
+		PersistenceContext::get_querier()->insert(PREFIX . "poll", array('question' => $question, 'answers' => mb_substr($answers, 0, TextHelper::strlen($answers) - 1), 'votes' => mb_substr($votes, 0, TextHelper::strlen($votes) - 1), 'type' => $type, 'archive' => $archive, 'timestamp' => $timestamp, 'visible' => $visible, 'start' => $start_timestamp, 'end' => $start_timestamp, 'user_id' => AppContext::get_current_user()->get_id()));
 		
 		AppContext::get_response()->redirect('/poll/admin_poll.php');
 	}

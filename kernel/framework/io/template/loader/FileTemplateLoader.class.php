@@ -242,7 +242,7 @@ class FileTemplateLoader implements TemplateLoader
 
 	private function convert_to_tpl_path($path_to_root_filepath)
 	{
-		return TPL_PATH_TO_ROOT . mb_substr($path_to_root_filepath, mb_strlen(PATH_TO_ROOT));
+		return TPL_PATH_TO_ROOT . mb_substr($path_to_root_filepath, TextHelper::strlen(PATH_TO_ROOT));
 	}
 
 	/**

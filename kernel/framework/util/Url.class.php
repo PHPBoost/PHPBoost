@@ -205,7 +205,7 @@ class Url
 	public function root_to_local()
 	{
 		$local_path = $this->server_url;
-		$local_path = mb_substr(trim($local_path, '/'), mb_strlen(trim(GeneralConfig::load()->get_site_path(), '/')));
+		$local_path = mb_substr(trim($local_path, '/'), TextHelper::strlen(trim(GeneralConfig::load()->get_site_path(), '/')));
 		$file_begun = mb_strrpos($local_path, '/');
 		if ($file_begun >= 0)
 		{

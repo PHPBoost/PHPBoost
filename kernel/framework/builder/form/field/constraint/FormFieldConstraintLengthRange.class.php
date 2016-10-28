@@ -49,7 +49,7 @@ class FormFieldConstraintLengthRange extends AbstractFormFieldConstraint
 	
 	public function validate(FormField $field)
 	{
-		$value = mb_strlen($field->get_value());
+		$value = TextHelper::strlen($field->get_value());
 		$is_required = $field->is_required();
 		if (!empty($value) || $is_required)
 		{

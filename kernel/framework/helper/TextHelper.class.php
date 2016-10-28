@@ -85,7 +85,7 @@ class TextHelper
 	 */
 	public static function wordwrap_html($str, $lenght, $cut_char = '<br />', $cut = true)
 	{
-		$str = TextHelper::utf8_wordwrap(TextHelper::html_entity_decode($str), $lenght, $cut_char, $cut);
+		$str = self::utf8_wordwrap(self::html_entity_decode($str), $lenght, $cut_char, $cut);
 		return str_replace('&lt;br /&gt;', '<br />', self::htmlspecialchars($str, ENT_NOQUOTES));
 	}
 
@@ -167,15 +167,20 @@ class TextHelper
 	public static function lowercase_first($string)
 	{
 		$first_letter = mb_strtolower(mb_substr($string, 0, 1));
-		$string_end = mb_substr($string, 1, mb_strlen($string));
+		$string_end = mb_substr($string, 1, self::strlen($string));
 		return $first_letter . $string_end;
 	}
 	
 	public static function uppercase_first($string)
 	{
 		$first_letter = mb_strtoupper(mb_substr($string, 0, 1));
-		$string_end = mb_substr($string, 1, mb_strlen($string));
+		$string_end = mb_substr($string, 1, self::strlen($string));
 		return $first_letter . $string_end;
+	}
+	
+	public static function strlen($string)
+	{
+		return mb_strlen($string);
 	}
 
 	/**
@@ -229,7 +234,7 @@ class TextHelper
 				// Add this line to the output
 				$lines[] = $matches[1];
 				// Trim it off the input ready for the next go
-				$string = mb_substr($string, mb_strlen($matches[0]));
+				$string = mb_substr($string, self::strlen($matches[0]));
 			}
 			// Just take the next $width characters
 			else

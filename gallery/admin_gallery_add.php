@@ -277,7 +277,7 @@ else
 				$tr_end = is_int($j / $nbr_column_pics) ? '</tr>' : '';
 
 				//On raccourci le nom du fichier pour ne pas déformer l'administration.
-				$name = mb_strlen($pics) > 20 ? mb_substr($pics, 0, 20) . '...' : $pics;
+				$name = TextHelper::strlen($pics) > 20 ? mb_substr($pics, 0, 20) . '...' : $pics;
 
 				//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
 				if (!file_exists('pics/thumbnails/' . $pics) && file_exists('pics/' . $pics))

@@ -464,7 +464,7 @@ class DownloadFile
  			'C_VISIBLE' => $this->is_visible(),
 			'C_EDIT' => $this->is_authorized_to_edit(),
 			'C_DELETE' => $this->is_authorized_to_delete(),
-			'C_READ_MORE' => !$this->is_short_contents_enabled() && $description != @strip_tags($contents, '<br><br/>') && mb_strlen($description) > DownloadConfig::NUMBER_CARACTERS_BEFORE_CUT,
+			'C_READ_MORE' => !$this->is_short_contents_enabled() && $description != @strip_tags($contents, '<br><br/>') && TextHelper::strlen($description) > DownloadConfig::NUMBER_CARACTERS_BEFORE_CUT,
 			'C_SIZE' => !empty($this->size),
 			'C_PICTURE' => $this->has_picture(),
 			'C_AUTHOR_CUSTOM_NAME' => $this->is_author_custom_name_enabled(),

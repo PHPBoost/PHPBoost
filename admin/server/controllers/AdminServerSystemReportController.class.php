@@ -140,7 +140,7 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 		foreach (PHPBoostFoldersPermissions::get_permissions() as $key => $folder)
 		{
 			$fieldset->add_field(new FormFieldFree(str_replace('/', '_', $key), $key, $folder->is_writable() ? $picture_yes : $picture_no));
-			$directories_summerization .= $key . str_repeat('	', 5 - (mb_strlen($key) / 8)) . ": " . (int)($folder->is_writable()) . "
+			$directories_summerization .= $key . str_repeat('	', 5 - (TextHelper::strlen($key) / 8)) . ": " . (int)($folder->is_writable()) . "
 ";
 		}
 		

@@ -183,7 +183,7 @@ class ForumHomeController extends ModuleController
 						}
 	
 						$last_topic_title = (($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '') . ' ' . $row['title'];
-						$last_topic_title = stripslashes((mb_strlen(TextHelper::html_entity_decode($last_topic_title)) > 20) ? TextHelper::substr_html($last_topic_title, 0, 20) . '...' : $last_topic_title);
+						$last_topic_title = stripslashes((TextHelper::strlen(TextHelper::html_entity_decode($last_topic_title)) > 20) ? TextHelper::substr_html($last_topic_title, 0, 20) . '...' : $last_topic_title);
 						$row['login'] = !empty($row['login']) ? $row['login'] : $LANG['guest'];
 						$group_color = User::get_group_color($row['groups'], $row['user_level']);
 						

@@ -190,7 +190,7 @@ class ModuleConfiguration
 		$links_format = preg_replace('` ?=> ?`', '=', $links_format);
 		$links_format = preg_replace(' ?, ?', ',', $links_format) . ' ';
 		list($key, $value, $open, $cursor, $check_value, $admin_links) = array('', '', '', 0, false, array());
-		$string_length = mb_strlen($links_format);
+		$string_length = TextHelper::strlen($links_format);
 		while ($cursor < $string_length) //Parcours linéaire.
 		{
 			$char = mb_substr($links_format, $cursor, 1);

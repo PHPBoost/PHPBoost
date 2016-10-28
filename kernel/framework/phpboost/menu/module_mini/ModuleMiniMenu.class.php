@@ -66,7 +66,7 @@ class ModuleMiniMenu extends Menu
 	{
 		$class_name = get_class($this);
 		$module_name = mb_strstr($class_name, self::MODULE_MINI_MENU__CLASS, true);
-		$module_name = mb_strlen(preg_replace('/[a-z]*/', '', $module_name)) > 1 ? $module_name : mb_strtolower($module_name); //Pour les modules qui ont plus de 2 majuscules on les garde, sinon on les enlève
+		$module_name = TextHelper::strlen(preg_replace('/[a-z]*/', '', $module_name)) > 1 ? $module_name : mb_strtolower($module_name); //Pour les modules qui ont plus de 2 majuscules on les garde, sinon on les enlève
 		
 		$module = ModulesManager::get_module($module_name);
 		

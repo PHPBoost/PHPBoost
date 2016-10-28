@@ -88,7 +88,7 @@ class DefaultTemplateRenderer implements TemplateRenderer
 	{
 		$template_code = $loader->load();
 		// Removes the <?php and the ? > tags
-		return mb_substr($template_code, 6, mb_strlen($template_code) - 9);
+		return mb_substr($template_code, 6, TextHelper::strlen($template_code) - 9);
 	}
 }
 

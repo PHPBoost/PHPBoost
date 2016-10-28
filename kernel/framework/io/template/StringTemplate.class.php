@@ -76,7 +76,7 @@ class StringTemplate extends AbstractTemplate
 		}
 		else
 		{
-			if (mb_strlen($content) > 200)
+			if (TextHelper::strlen($content) > 200)
 			{
 				return true;
 			}

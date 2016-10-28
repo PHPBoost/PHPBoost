@@ -318,7 +318,7 @@ class File extends FileSystemElement
 
 	private function write_data($data)
 	{
-		$bytes_to_write = mb_strlen($data);
+		$bytes_to_write = TextHelper::strlen($data);
 		$bytes_written = 0;
 		while ($bytes_written < $bytes_to_write)
 		{

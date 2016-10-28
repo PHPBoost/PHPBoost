@@ -39,7 +39,7 @@ class StringInputStream
 	public function __construct($string)
 	{
 		$this->stream = $string;
-		$this->length = mb_strlen($this->stream);
+		$this->length = TextHelper::strlen($this->stream);
 	}
 
 	public function has_next()
@@ -90,7 +90,7 @@ class StringInputStream
 	{
 		if ($this->assert_next($pattern, $options, $matches))
 		{
-			$this->move(mb_strlen($matches[0]));
+			$this->move(TextHelper::strlen($matches[0]));
 			return true;
 		}
 		return false;

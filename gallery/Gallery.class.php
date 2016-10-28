@@ -285,7 +285,7 @@ class Gallery
 	public function Rename_pics($id_pics, $name, $previous_name)
 	{
 		PersistenceContext::get_querier()->update(GallerySetup::$gallery_table, array('name' => $name), 'WHERE id = :id', array('id' => $id_pics));
-		return stripslashes((mb_strlen(TextHelper::html_entity_decode($name)) > 22) ? TextHelper::htmlspecialchars(mb_substr(TextHelper::html_entity_decode($name), 0, 22)) . PATH_TO_ROOT . '.' : $name);
+		return stripslashes((TextHelper::strlen(TextHelper::html_entity_decode($name)) > 22) ? TextHelper::htmlspecialchars(mb_substr(TextHelper::html_entity_decode($name), 0, 22)) . PATH_TO_ROOT . '.' : $name);
 	}
 	
 	//Approuve une image.

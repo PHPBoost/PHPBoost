@@ -138,7 +138,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 					'L_FORGOT_PASS' => LangLoader::get_message('forget-password', 'user-common'),
 					'L_REGISTER' => LangLoader::get_message('register', 'user-common'),
 					'U_CONNECT' => UserUrlBuilder::connect()->rel(),
-					'SITE_REWRITED_SCRIPT' => mb_substr(REWRITED_SCRIPT, mb_strlen(GeneralConfig::load()->get_site_path()))
+					'SITE_REWRITED_SCRIPT' => mb_substr(REWRITED_SCRIPT, TextHelper::strlen(GeneralConfig::load()->get_site_path()))
 				));
 			}
 		

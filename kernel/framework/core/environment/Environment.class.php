@@ -323,7 +323,7 @@ class Environment
 
 	public static function compute_running_module_name()
 	{
-		$path = mb_substr(REWRITED_SCRIPT, mb_strlen(DIR));
+		$path = mb_substr(REWRITED_SCRIPT, TextHelper::strlen(DIR));
 		$path = trim($path, '/');
 		
 		$general_config = GeneralConfig::load();

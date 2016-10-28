@@ -56,7 +56,7 @@ class SandboxStringTemplateController extends ModuleController
 		$bench_cached->stop();
 		
 		$this->view->put_all(array(
-			'RESULT' => StringVars::replace_vars($this->lang['string_template.result'], array('non_cached_time' => $bench_non_cached->to_string(5), 'cached_time' => $bench_cached->to_string(5), 'string_length' => mb_strlen($this->test)))
+			'RESULT' => StringVars::replace_vars($this->lang['string_template.result'], array('non_cached_time' => $bench_non_cached->to_string(5), 'cached_time' => $bench_cached->to_string(5), 'string_length' => TextHelper::strlen($this->test)))
 		));
 		
 		return $this->generate_response();

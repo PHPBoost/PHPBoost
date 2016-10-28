@@ -195,7 +195,7 @@ class ContentSecondParser extends AbstractParser
 
 		$content_to_highlight = $matches[4];
 
-		if (mb_strlen($content_to_highlight) > self::MAX_CODE_LENGTH)
+		if (TextHelper::strlen($content_to_highlight) > self::MAX_CODE_LENGTH)
 		{
 			return '<div class="error">' . LangLoader::get_message('code_too_long_error', 'editor-common') . '</div>';
 		}

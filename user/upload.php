@@ -427,7 +427,7 @@ else
 	));
 	while ($row = $result->fetch())
 	{
-		$name_cut = (mb_strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlspecialchars(mb_substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
+		$name_cut = (TextHelper::strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlspecialchars(mb_substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 		
 		$tpl->assign_block_vars('folder', array(
 			'ID' => $row['id'],
@@ -453,7 +453,7 @@ else
 	));
 	while ($row = $result->fetch())
 	{
-		$name_cut = (mb_strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlspecialchars(mb_substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
+		$name_cut = (TextHelper::strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlspecialchars(mb_substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 		
 		$get_img_mimetype = Uploads::get_img_mimetype($row['type']);
 		$size_img = '';

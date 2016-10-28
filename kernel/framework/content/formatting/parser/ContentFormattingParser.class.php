@@ -192,7 +192,7 @@ abstract class ContentFormattingParser extends AbstractParser
 			if ($i < ($size - 1))
 			{
 				// On prend la chaine après le tag de fermeture courant jusqu'au prochain tag d'ouverture
-				$current_tag_len = mb_strlen('[' . $tag . $local_parsed[1] . ']' . $local_parsed[2] . '[/' . $tag . ']');
+				$current_tag_len = TextHelper::strlen('[' . $tag . $local_parsed[1] . ']' . $local_parsed[2] . '[/' . $tag . ']');
 				$end_pos = $index_tags[$i + 1] - ($current_index + $current_tag_len);
 				array_push($parsed, mb_substr($local_parsed[3], 0, $end_pos ));
 			}
@@ -221,7 +221,7 @@ abstract class ContentFormattingParser extends AbstractParser
 		while (($pos = mb_strpos($content, '[' . $tag, $pos + 1)) !== false)
 		{
 			// nombre de tags de fermeture déjà rencontrés
-			$nb_close_tags = mb_substr_count(mb_substr($content, 0, ($pos + mb_strlen('['.$tag))), '[/'.$tag.']');
+			$nb_close_tags = mb_substr_count(mb_substr($content, 0, ($pos + TextHelper::strlen('['.$tag))), '[/'.$tag.']');
 
 			// Si on trouve un tag d'ouverture, on sauvegarde sa position uniquement si il y a autant + 1 de tags fermés avant et on itère sur le suivant
 			if ($nb_open_tags == $nb_close_tags)

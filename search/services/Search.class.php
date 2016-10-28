@@ -150,7 +150,7 @@ class Search
 				// Executes last insertions queries
 				if ($nbReqInsert > 0)
 				{
-					$this->db_querier->inject("INSERT INTO " . SearchSetup::$search_index_table . " (id_user, module, search, options, last_search_use, times_used) VALUES " . mb_substr($reqInsert, 0, mb_strlen($reqInsert) - 1) . "");
+					$this->db_querier->inject("INSERT INTO " . SearchSetup::$search_index_table . " (id_user, module, search, options, last_search_use, times_used) VALUES " . mb_substr($reqInsert, 0, TextHelper::strlen($reqInsert) - 1) . "");
 				}
 
 				// Checks and retrieves cache meta-informations

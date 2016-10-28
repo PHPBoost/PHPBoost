@@ -97,7 +97,7 @@ class FormFieldAuthorizationsSetter extends AbstractFormField
 		$auth_array = array();
 		foreach ($values as $role_htlm_id)
 		{
-			$role = mb_substr($role_htlm_id, mb_strlen($action->get_bit()) - 1);
+			$role = mb_substr($role_htlm_id, TextHelper::strlen($action->get_bit()) - 1);
 			$auth_array[$role_htlm_id] = 1;
 		}
 		return $auth_array;

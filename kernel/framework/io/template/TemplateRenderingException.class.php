@@ -66,7 +66,7 @@ class TemplateRenderingException extends Exception
 		$this->tpl_line = mb_substr_count($string, "\n", 0, $position) + 1;
 		$last_line_index = mb_strrpos($str_to_position, "\n");
 		$line_content = mb_substr($str_to_position, $last_line_index + 1);
-		$this->offset = mb_strlen($line_content);
+		$this->offset = TextHelper::strlen($line_content);
 	}
 }
 ?>
