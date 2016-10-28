@@ -174,14 +174,14 @@ class TextHelper
 		return mb_strtoupper($string);
 	}
 	
-	public static function lowercase_first($string)
+	public static function lcfirst($string)
 	{
 		$first_letter = self::strtolower(TextHelper::substr($string, 0, 1));
 		$string_end = TextHelper::substr($string, 1, self::strlen($string));
 		return $first_letter . $string_end;
 	}
 	
-	public static function uppercase_first($string)
+	public static function ucfirst($string)
 	{
 		$first_letter = self::strtoupper(TextHelper::substr($string, 0, 1));
 		$string_end = TextHelper::substr($string, 1, self::strlen($string));

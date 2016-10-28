@@ -157,7 +157,7 @@ class SearchConfig extends AbstractConfigData
 		
 		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $id => $module)
 		{
-			$authorizations_class = TextHelper::uppercase_first($module->get_id()) . 'AuthorizationsService';
+			$authorizations_class = TextHelper::ucfirst($module->get_id()) . 'AuthorizationsService';
 			if (class_exists($authorizations_class) && method_exists($authorizations_class, 'check_authorizations') && method_exists($authorizations_class, 'read') && !$authorizations_class::check_authorizations()->read())
 				$modules_without_read_authorization[] = $module->get_id();
 		}

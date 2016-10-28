@@ -64,8 +64,8 @@ class CalendarEventsListController extends ModuleController
 		$table_model->set_caption($this->lang['calendar.events_list']);
 		$table_model->add_permanent_filter('parent_id = 0');
 		
-		$table_model->add_filter(new HTMLTableDateTimeGreaterThanOrEqualsToSQLFilter('start_date', 'filter1', $this->lang['calendar.labels.start_date'] . ' ' . TextHelper::lowercase_first(LangLoader::get_message('minimum', 'common'))));
-		$table_model->add_filter(new HTMLTableDateTimeLessThanOrEqualsToSQLFilter('start_date', 'filter2', $this->lang['calendar.labels.start_date'] . ' ' . TextHelper::lowercase_first(LangLoader::get_message('maximum', 'common'))));
+		$table_model->add_filter(new HTMLTableDateTimeGreaterThanOrEqualsToSQLFilter('start_date', 'filter1', $this->lang['calendar.labels.start_date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('minimum', 'common'))));
+		$table_model->add_filter(new HTMLTableDateTimeLessThanOrEqualsToSQLFilter('start_date', 'filter2', $this->lang['calendar.labels.start_date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('maximum', 'common'))));
 		
 		$table = new HTMLTable($table_model);
 		$table->set_filters_fieldset_class_HTML();

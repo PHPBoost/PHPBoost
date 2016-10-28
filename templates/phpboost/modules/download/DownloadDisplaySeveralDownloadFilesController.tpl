@@ -138,7 +138,7 @@
 							<img itemprop="thumbnailUrl" src="# IF sub_categories_list.C_CATEGORY_IMAGE #{sub_categories_list.CATEGORY_IMAGE}# ELSE #{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif# ENDIF #" alt="{sub_categories_list.CATEGORY_NAME}" class="subcat-img" />
 						</span>
 						<span class="subcat-title">{sub_categories_list.CATEGORY_NAME}</span>
-						<span class="subcat-more">{sub_categories_list.DOWNLOADFILES_NUMBER} # IF sub_categories_list.C_MORE_THAN_ONE_DOWNLOADFILE #${TextHelper::lowercase_first(LangLoader::get_message('files', 'common', 'download'))}# ELSE #${TextHelper::lowercase_first(LangLoader::get_message('file', 'common', 'download'))}# ENDIF #</span>
+						<span class="subcat-more">{sub_categories_list.DOWNLOADFILES_NUMBER} # IF sub_categories_list.C_MORE_THAN_ONE_DOWNLOADFILE #${TextHelper::lcfirst(LangLoader::get_message('files', 'common', 'download'))}# ELSE #${TextHelper::lcfirst(LangLoader::get_message('file', 'common', 'download'))}# ENDIF #</span>
 					</a>
 				</div>
 				# END sub_categories_list #
@@ -422,7 +422,7 @@
 					<img itemprop="thumbnailUrl" src="# IF sub_categories_list.C_CATEGORY_IMAGE #{sub_categories_list.CATEGORY_IMAGE}# ELSE #{PATH_TO_ROOT}/templates/{THEME}/theme/images/transparent.gif# ENDIF #" alt="{sub_categories_list.CATEGORY_NAME}" id="subcat-img-{sub_categories_list.CATEGORY_ID}" class="subcat-img" />
 				</span>
 				<span class="subcat-title">{sub_categories_list.CATEGORY_NAME}</span>
-				<span class="subcat-more">{sub_categories_list.DOWNLOADFILES_NUMBER} # IF sub_categories_list.C_MORE_THAN_ONE_DOWNLOADFILE #${TextHelper::lowercase_first(LangLoader::get_message('files', 'common', 'download'))}# ELSE #${TextHelper::lowercase_first(LangLoader::get_message('file', 'common', 'download'))}# ENDIF #</span>
+				<span class="subcat-more">{sub_categories_list.DOWNLOADFILES_NUMBER} # IF sub_categories_list.C_MORE_THAN_ONE_DOWNLOADFILE #${TextHelper::lcfirst(LangLoader::get_message('files', 'common', 'download'))}# ELSE #${TextHelper::lcfirst(LangLoader::get_message('file', 'common', 'download'))}# ENDIF #</span>
 			</a>
 		</div>
 		# END sub_categories_list #

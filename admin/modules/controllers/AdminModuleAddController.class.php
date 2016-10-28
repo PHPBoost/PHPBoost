@@ -101,7 +101,7 @@ class AdminModuleAddController extends AdminController
 			
 			$this->view->assign_block_vars('available', array(
 				'ID' => $module->get_id(),
-				'NAME' => TextHelper::uppercase_first($configuration->get_name()),
+				'NAME' => TextHelper::ucfirst($configuration->get_name()),
 				'ICON' => $module->get_id(),
 				'VERSION' => $configuration->get_version(),
 				'AUTHOR' => !empty($author_email) ? '<a href="mailto:' . $author_email . '">' . $author . '</a>' : $author,

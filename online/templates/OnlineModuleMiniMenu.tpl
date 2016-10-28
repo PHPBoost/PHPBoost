@@ -1,4 +1,4 @@
-<span class="smaller">{TOTAL_VISITOR_CONNECTED} {L_VISITOR}, {TOTAL_MEMBER_CONNECTED} {L_MEMBER}, {TOTAL_MODERATOR_CONNECTED} {L_MODO}, {TOTAL_ADMINISTRATOR_CONNECTED} {L_ADMIN} ${TextHelper::lowercase_first(LangLoader::get_message('online', 'common', 'online'))}.</span>
+<span class="smaller">{TOTAL_VISITOR_CONNECTED} {L_VISITOR}, {TOTAL_MEMBER_CONNECTED} {L_MEMBER}, {TOTAL_MODERATOR_CONNECTED} {L_MODO}, {TOTAL_ADMINISTRATOR_CONNECTED} {L_ADMIN} ${TextHelper::lcfirst(LangLoader::get_message('online', 'common', 'online'))}.</span>
 
 <div class="online-users-container">
 	# START users #

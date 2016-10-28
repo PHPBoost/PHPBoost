@@ -1267,7 +1267,7 @@ else
 			foreach ($Stats->data_stats as $key => $angle_value)
 			{
 					$array_color = $Stats->array_allocated_color[$Stats->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
-					$name = TextHelper::uppercase_first($key);
+					$name = TextHelper::ucfirst($key);
 					$tpl->assign_block_vars('list', array(
 						'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
 						'VIEWS' => NumberHelper::round(($angle_value * $Stats->nbr_entry)/360, 0),

@@ -101,7 +101,7 @@
 # ENDIF #
 
 <div class="float-right">
-	${LangLoader::get_message('by', 'common')} # IF C_AUTHOR_EXIST #<a href="{U_AUTHOR_PROFILE}" class="{AUTHOR_LEVEL_CLASS}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #{AUTHOR}# ENDIF #, ${TextHelper::lowercase_first(LangLoader::get_message('the', 'common'))} {SUBMIT_DATE_FULL}
+	${LangLoader::get_message('by', 'common')} # IF C_AUTHOR_EXIST #<a href="{U_AUTHOR_PROFILE}" class="{AUTHOR_LEVEL_CLASS}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #{AUTHOR}# ENDIF #, ${TextHelper::lcfirst(LangLoader::get_message('the', 'common'))} {SUBMIT_DATE_FULL}
 </div>
 
 <div class="spacer"></div>

@@ -263,7 +263,7 @@ class Date
 	public function get_month_text($characters_number = 3, $timezone = Timezone::USER_TIMEZONE)
 	{
 		$this->compute_server_user_difference($timezone);
-		return Texthelper::uppercase_first(TextHelper::substr(self::transform_date($this->date_time->format('F')), 0, $characters_number));
+		return Texthelper::ucfirst(TextHelper::substr(self::transform_date($this->date_time->format('F')), 0, $characters_number));
 	}
 	
 	/**
@@ -308,7 +308,7 @@ class Date
 	public function get_day_text($characters_number = 3, $timezone = Timezone::USER_TIMEZONE)
 	{
 		$this->compute_server_user_difference($timezone);
-		return Texthelper::uppercase_first(TextHelper::substr(self::transform_date($this->date_time->format('l')), 0, $characters_number));
+		return Texthelper::ucfirst(TextHelper::substr(self::transform_date($this->date_time->format('l')), 0, $characters_number));
 	}
 	
 	/**

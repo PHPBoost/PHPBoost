@@ -15,7 +15,7 @@
 		jQuery('a[data-rel^=lightcase]').lightcase({
 			labels : {
 				'errorMessage'    : ${escapejs(LangLoader::get_message('element.unexist', 'status-messages-common'))},
-				'sequenceInfo.of' : ' ' + ${escapejs(TextHelper::lowercase_first(LangLoader::get_message('of', 'common')))} + ' ',
+				'sequenceInfo.of' : ' ' + ${escapejs(TextHelper::lcfirst(LangLoader::get_message('of', 'common')))} + ' ',
 				'close'           : ${escapejs(LangLoader::get_message('close', 'main'))},
 				'navigator.prev'  : ${escapejs(LangLoader::get_message('previous', 'common'))},
 				'navigator.next'  : ${escapejs(LangLoader::get_message('next', 'common'))},
