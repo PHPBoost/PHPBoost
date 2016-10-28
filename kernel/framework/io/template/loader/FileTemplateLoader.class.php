@@ -163,7 +163,7 @@ class FileTemplateLoader implements TemplateLoader
 		$i = TextHelper::strpos($this->filepath, '/');
 		$this->module = TextHelper::substr($this->filepath, 0, $i);
 		$this->file = trim(TextHelper::substr($this->filepath, $i), '/');
-		$this->filename = trim(TextHelper::substr($this->filepath, mb_strrpos($this->filepath, '/')));
+		$this->filename = trim(TextHelper::substr($this->filepath, TextHelper::strrpos($this->filepath, '/')));
 
 		$this->templates_folder = PATH_TO_ROOT . '/templates/';
 		$this->default_templates_folder = $this->templates_folder . 'default/';

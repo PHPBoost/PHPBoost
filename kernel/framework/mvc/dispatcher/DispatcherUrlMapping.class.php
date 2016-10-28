@@ -33,7 +33,7 @@ class DispatcherUrlMapping extends UrlMapping
 	 */
 	public function __construct($dispatcher_name, $match = '([\w/_-]*)$')
 	{
-		$dispatcher_path = '^' . ltrim(TextHelper::substr($dispatcher_name, 0, mb_strrpos($dispatcher_name, '/') + 1), '/');
+		$dispatcher_path = '^' . ltrim(TextHelper::substr($dispatcher_name, 0, TextHelper::strrpos($dispatcher_name, '/') + 1), '/');
 		$from = $dispatcher_path . $match;
 		$to = $dispatcher_name . '?url=/$1'; 
 		parent::__construct($from, $to);

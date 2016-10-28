@@ -210,6 +210,22 @@ class TextHelper
 	{
 		return mb_strrchr($string, $needle);
 	}
+	
+	public static function strripos(string $string, int $needle, $offset = '')
+	{
+		if ($offset != '')
+			return mb_strrpos($string, $needle, $offset);
+		else
+			return mb_strrpos($string, $needle);
+	}
+	
+	public static function strrpos(string $string, int $needle, $offset = '')
+	{
+		if ($offset != '')
+			return mb_strrpos($string, $needle, $offset);
+		else
+			return mb_strrpos($string, $needle);
+	}
 
 	/**
 	 * @desc Checks if a string contains less than a defined number of links (used to prevent SPAM).

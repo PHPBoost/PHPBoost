@@ -54,7 +54,7 @@ class I18NMessages
         $module = '';
         $filename = '';
         $resource = trim($resource, '/');
-        $slash_idx = mb_strrpos($resource, '/');
+        $slash_idx = TextHelper::strrpos($resource, '/');
         if ($slash_idx > -1)
         {
             $module = TextHelper::substr($resource, 0, $slash_idx);

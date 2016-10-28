@@ -88,7 +88,7 @@ class DoctrineException extends Exception
     public static function __callStatic($method, $arguments = array())
     {
         $class = get_called_class();
-        $messageKey = TextHelper::substr($class, mb_strrpos($class, '\\') + 1) . "#$method";
+        $messageKey = TextHelper::substr($class, TextHelper::strrpos($class, '\\') + 1) . "#$method";
 
         $end = end($arguments);
         $innerException = null;

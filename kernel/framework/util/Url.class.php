@@ -206,7 +206,7 @@ class Url
 	{
 		$local_path = $this->server_url;
 		$local_path = TextHelper::substr(trim($local_path, '/'), TextHelper::strlen(trim(GeneralConfig::load()->get_site_path(), '/')));
-		$file_begun = mb_strrpos($local_path, '/');
+		$file_begun = TextHelper::strrpos($local_path, '/');
 		if ($file_begun >= 0)
 		{
 			$local_path = TextHelper::substr($local_path, 0, $file_begun) . '/';

@@ -83,7 +83,7 @@ class Path
 		{
 			$class_file = TextHelper::substr($class_file, 0, $i);
 		}
-		if (($i = mb_strrpos($class_file, '/')) !== false)
+		if (($i = TextHelper::strrpos($class_file, '/')) !== false)
 		{
 			$class_file = TextHelper::substr($class_file, $i + 1);
 		}
