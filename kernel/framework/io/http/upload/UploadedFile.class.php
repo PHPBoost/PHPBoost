@@ -59,7 +59,7 @@ class UploadedFile
 	public function get_extension()
 	{
 		$filename = $this->get_name();
-		return TextHelper::strtolower(TextHelper::substr(mb_strrchr($filename, '.'), 1));
+		return TextHelper::strtolower(TextHelper::substr(TextHelper::strrchr($filename, '.'), 1));
 	}
 	
 	public function get_mime_type()

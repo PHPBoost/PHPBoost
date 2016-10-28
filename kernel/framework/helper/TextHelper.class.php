@@ -205,6 +205,11 @@ class TextHelper
 		else
 			return mb_substr($string, $start);
 	}
+	
+	public static function strrchr(string $string, $needle)
+	{
+		return mb_strrchr($string, $needle);
+	}
 
 	/**
 	 * @desc Checks if a string contains less than a defined number of links (used to prevent SPAM).

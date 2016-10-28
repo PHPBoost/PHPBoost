@@ -83,7 +83,7 @@ class File extends FileSystemElement
 	public function get_extension()
 	{
 		$name = $this->get_name();
-		return TextHelper::substr(mb_strrchr($name,'.'), 1);
+		return TextHelper::substr(TextHelper::strrchr($name,'.'), 1);
 	}
 	
 	/**

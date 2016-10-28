@@ -201,7 +201,7 @@ class Upload
 	{
 		$filename = $this->original_filename;
 		
-		$this->extension = TextHelper::strtolower(TextHelper::substr(mb_strrchr($filename, '.'), 1));
+		$this->extension = TextHelper::strtolower(TextHelper::substr(TextHelper::strrchr($filename, '.'), 1));
 		if (mb_strrpos($filename, '.') !== FALSE)
 		{
 			$filename = TextHelper::substr($filename, 0, mb_strrpos($filename, '.'));
