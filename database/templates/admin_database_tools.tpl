@@ -142,10 +142,10 @@
 								{L_TABLE_DATA}
 							</th>
 							<th>
-								{L_TABLE_INDEX}								
+								{L_TABLE_INDEX}
 							</th>
 							<th>
-								{L_TABLE_FREE}								
+								{L_TABLE_FREE}
 							</th>
 							<th>
 								{L_TABLE_TOTAL}
@@ -310,7 +310,7 @@
 				//V�rification de la requ�te => alerte si elle contient un des mots cl�s DELETE, DROP ou TRUNCATE.
 				for(i = 0; i < keyword.length; i++)
 				{
-					if( typeof(TextHelper::strpos(query_lowercase, keyword[i])) != 'boolean' )
+					if( typeof(strpos(query_lowercase, keyword[i])) != 'boolean' )
 					{
 						check_query = true;
 						break;
