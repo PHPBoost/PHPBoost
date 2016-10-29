@@ -384,7 +384,7 @@ class Article
 		$this->end_date_enabled = !empty($properties['publishing_end_date']);
 		$this->set_date_created(new Date($properties['date_created'], Timezone::SERVER_TIMEZONE));
 		$this->date_updated = !empty($properties['date_updated']) ? new Date($properties['date_updated'], Timezone::SERVER_TIMEZONE) : null;
-		$this->set_sources(!empty($properties['sources']) ? unserialize($properties['sources']) : array());
+		$this->set_sources(!empty($properties['sources']) ? TextHelper::unserialize($properties['sources']) : array());
 		
 		$user = new User();
 		if (!empty($properties['user_id']))

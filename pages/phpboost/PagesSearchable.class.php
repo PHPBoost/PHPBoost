@@ -65,7 +65,7 @@ class PagesSearchable extends AbstractSearchableExtensionPoint
 		{
 			if ( !empty($row['auth']) )
 			{
-				$auth = unserialize($row['auth']);
+				$auth = TextHelper::unserialize($row['auth']);
 				if ( !AppContext::get_current_user()->check_auth($auth, READ_PAGE) )
 				{
 					unset($row['auth']);

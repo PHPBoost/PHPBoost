@@ -51,7 +51,7 @@ class GalleryMiniMenuCache implements CacheData
 		
 		while ($row = $result->fetch())
 		{
-			$row['auth'] = ($row['idcat'] == 0) ? $config->get_authorizations() : unserialize(stripslashes($row['auth']));
+			$row['auth'] = ($row['idcat'] == 0) ? $config->get_authorizations() : TextHelper::unserialize(stripslashes($row['auth']));
 			//Calcul des dimensions avec respect des proportions.
 			list($row['width'], $row['height']) = $Gallery->get_resize_properties($row['width'], $row['height']);
 			

@@ -222,7 +222,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 			$selected = ($file == $group['img']) ? ' selected="selected"' : '';
 			$img_groups .= '<option value="' . $file . '"' . $selected . '>' . $file . '</option>';
 		}
-		$array_group = unserialize(stripslashes($group['auth']));
+		$array_group = TextHelper::unserialize(stripslashes($group['auth']));
 			
 		$template->put_all(array(
 			'NAME' => $group['name'],

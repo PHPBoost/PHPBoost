@@ -63,7 +63,7 @@ class FileSystemDataStore implements DataStore
 	{
 		$file = $this->get_file($name);
 		$content = $file->read();
-		$data = unserialize($content);
+		$data = TextHelper::unserialize($content);
 		return $data;
 	}
 

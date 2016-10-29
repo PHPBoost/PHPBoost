@@ -101,7 +101,7 @@ elseif (!empty($open_cat) || $root == 1)
 		//Autorisation particulière ?
 		$special_auth = !empty($row['auth']);
 		//Vérification de l'autorisation d'éditer la page
-		if (($special_auth && AppContext::get_current_user()->check_auth(unserialize($row['auth']), READ_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)))
+		if (($special_auth && AppContext::get_current_user()->check_auth(TextHelper::unserialize($row['auth']), READ_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)))
 		{
 			$return .= '<li><a href="' . PATH_TO_ROOT . url('/pages/pages.php?title=' . $row['encoded_title'], '/pages/' . $row['encoded_title']) . '"><i class="fa fa-file"></i>' . stripslashes($row['title']) . '</a></li>';
 		}

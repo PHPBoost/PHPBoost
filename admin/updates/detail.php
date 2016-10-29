@@ -45,7 +45,7 @@ $app = null;
 
 if (($update = AdministratorAlertService::find_by_identifier($identifier, 'updates')) !== null)
 {
-    $app = unserialize($update->get_properties());
+    $app = TextHelper::unserialize($update->get_properties());
 }
 
 if ($app !== null && $app->check_compatibility())

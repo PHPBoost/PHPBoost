@@ -47,7 +47,7 @@ class PagesCategoriesCache implements CacheData
 		
 		while ($row = $result->fetch())
 		{
-			$row['auth'] = unserialize($row['auth']);
+			$row['auth'] = TextHelper::unserialize($row['auth']);
 			$this->categories[$row['id']] = $row;
 		}
 	}

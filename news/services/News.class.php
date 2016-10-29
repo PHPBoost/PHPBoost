@@ -371,7 +371,7 @@ class News
 		$this->creation_date = new Date($properties['creation_date'], Timezone::SERVER_TIMEZONE);
 		$this->updated_date = !empty($properties['updated_date']) ? new Date($properties['updated_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->picture_url = new Url($properties['picture_url']);
-		$this->sources = !empty($properties['sources']) ? unserialize($properties['sources']) : array();
+		$this->sources = !empty($properties['sources']) ? TextHelper::unserialize($properties['sources']) : array();
 
 		$user = new User();
 		if (!empty($properties['user_id']))

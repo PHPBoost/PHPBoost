@@ -83,7 +83,7 @@ class PagesFeedProvider implements FeedProvider
 			$item->set_guid($link);
 			$item->set_desc(preg_replace('`\[page\](.+)\[/page\]`U', '<br /><strong>$1</strong><hr />', FormatingHelper::second_parse($row['contents'])));
 			$item->set_date(new Date($row['timestamp'], Timezone::SERVER_TIMEZONE));
-			$item->set_auth(empty($row['auth']) ? $pages_config->get_authorizations() : unserialize($row['auth']));
+			$item->set_auth(empty($row['auth']) ? $pages_config->get_authorizations() : TextHelper::unserialize($row['auth']));
 
 			$data->add_item($item);
 		}

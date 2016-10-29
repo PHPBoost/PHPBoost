@@ -124,7 +124,7 @@ elseif ($get_pages_day)
 
 	$array_stats = $pages_details = array();
 	try {
-		$pages_details = unserialize((string)PersistenceContext::get_querier()->get_column_value(StatsSetup::$stats_table, 'pages_detail', 'WHERE stats_year = :year AND stats_month = :month AND stats_day = :day', array('year' => $year, 'month' => $month, 'day' => $day)));
+		$pages_details = TextHelper::unserialize((string)PersistenceContext::get_querier()->get_column_value(StatsSetup::$stats_table, 'pages_detail', 'WHERE stats_year = :year AND stats_month = :month AND stats_day = :day', array('year' => $year, 'month' => $month, 'day' => $day)));
 	} catch (RowNotFoundException $e) {}
 	
 	if (is_array($pages_details))

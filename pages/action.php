@@ -66,7 +66,7 @@ if (!empty($new_title) && $id_rename_post > 0)
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
-	$array_auth = unserialize($page_infos['auth']);
+	$array_auth = TextHelper::unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
 		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
@@ -108,7 +108,7 @@ elseif (!empty($redirection_name) && $id_new_post > 0)
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
-	$array_auth = unserialize($page_infos['auth']);
+	$array_auth = TextHelper::unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
 		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
@@ -140,7 +140,7 @@ elseif ($del_redirection > 0)
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
-	$array_auth = unserialize($page_infos['auth']);
+	$array_auth = TextHelper::unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
 		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
@@ -162,8 +162,8 @@ elseif ($del_cat_post > 0 && $report_cat >= 0)
 		DispatchManager::redirect($error_controller);
 	}
 	
-	$general_auth = empty($page_infos['auth']) ? true : false;
-	$array_auth = !empty($page_infos['auth']) ? unserialize($page_infos['auth']) : array();
+	$general_auth = empty($page_infos['auth']);
+	$array_auth = !empty($page_infos['auth']) ? TextHelper::unserialize($page_infos['auth']) : array();
 	if (!((!$general_auth || AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)) && ($general_auth || AppContext::get_current_user()->check_auth($array_auth , EDIT_PAGE))))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
@@ -234,7 +234,7 @@ if ($id_page > 0)
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
-	$array_auth = unserialize($page_infos['auth']);
+	$array_auth = TextHelper::unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
 		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
@@ -276,7 +276,7 @@ if ($del_cat > 0)
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
-	$array_auth = unserialize($page_infos['auth']);
+	$array_auth = TextHelper::unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
 		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
@@ -425,7 +425,7 @@ else
 	{
 		//Autorisation particulière ?
 		$special_auth = !empty($row['auth']);
-		$array_auth = unserialize($row['auth']);
+		$array_auth = TextHelper::unserialize($row['auth']);
 		$tpl->assign_block_vars('redirections.list', array(
 			'REDIRECTION_TITLE' => '<a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . stripslashes($row['title']) . '</a>',
 			'REDIRECTION_TARGET' => '<a href="' . url('pages.php?title=' . $row['page_encoded_title'], $row['page_encoded_title']) . '">' . $row['page_title'] . '</a>',

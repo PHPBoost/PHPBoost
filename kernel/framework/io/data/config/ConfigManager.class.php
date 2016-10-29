@@ -106,7 +106,7 @@ class ConfigManager
 			throw new ConfigNotFoundException($name);
 		}
 
-		$required_value = @unserialize($result['value']);
+		$required_value = TextHelper::unserialize($result['value']);
 		if ($required_value === false)
 		{
 			throw new ConfigNotFoundException($name);

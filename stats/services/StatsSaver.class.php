@@ -271,7 +271,7 @@ class StatsSaver
 	{
 		$file = @fopen(PATH_TO_ROOT . '/stats/cache/' . $file_path . '.txt', 'r');
 		$stats_array = @fgets($file);
-		$stats_array = !empty($stats_array) ? unserialize($stats_array) : array();
+		$stats_array = !empty($stats_array) ? TextHelper::unserialize($stats_array) : array();
 		@fclose($file);
 		
 		return $stats_array;
@@ -290,15 +290,15 @@ class StatsSaver
 			@fclose($file);
 		}
 		if (is_file($file_path) && is_writable($file_path))
-		{		
+		{
 			$line = file($file_path);
-			$stats_array = unserialize($line[0]);
+			$stats_array = TextHelper::unserialize($line[0]);
 			if (isset($stats_array[TextHelper::strtolower($stats_item)]))
 				$stats_array[TextHelper::strtolower($stats_item)]++;
 			else
 				$stats_array[TextHelper::strtolower($stats_item)] = 1;
 			
-			$file = @fopen($file_path, 'r+');	
+			$file = @fopen($file_path, 'r+');
 			fwrite($file, serialize($stats_array));
 			fclose($file);
 		}

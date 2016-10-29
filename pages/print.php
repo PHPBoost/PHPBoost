@@ -60,7 +60,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 		
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
-	$array_auth = unserialize($page_infos['auth']);
+	$array_auth = TextHelper::unserialize($page_infos['auth']);
 
 	//Vérification de l'autorisation de voir la page
 	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($pages_config->get_authorizations(), READ_PAGE)))

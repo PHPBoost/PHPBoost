@@ -252,6 +252,19 @@ class TextHelper
 		else
 			return mb_convert_case($string, $mode);
 	}
+	
+	public static function unserialize($string)
+	{
+		$string = preg_replace_callback(
+			'!s:(\d+):"(.*?)";!s',
+			function ($matches) {
+				if ( isset( $matches[2] ) )
+					return 's:'.strlen($matches[2]).':"'.$matches[2].'";';
+			},
+			$string
+		);
+		return unserialize($string);
+	}
 
 	/**
 	 * @desc Checks if a string contains less than a defined number of links (used to prevent SPAM).

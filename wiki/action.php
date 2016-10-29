@@ -111,8 +111,8 @@ if ($id_change_status > 0)
 		DispatchManager::redirect($error_controller);
 	}
 	
-	$general_auth = empty($article_infos['auth']) ? true : false;
-	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
+	$general_auth = empty($article_infos['auth']);
+	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
 	
 	if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_STATUS)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_STATUS))))
 	{
@@ -140,8 +140,8 @@ elseif ($move > 0) //Déplacement d'un article
 	if ( empty($article_infos['encoded_title']))//Ce n'est pas un article ou une catégorie
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php', '', '&'));
 		
-	$general_auth = empty($article_infos['auth']) ? true : false;
-	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
+	$general_auth = empty($article_infos['auth']);
+	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
 	
 	if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_MOVE)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_MOVE))))
 	{
@@ -186,9 +186,9 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 		DispatchManager::redirect($error_controller);
 	}
 	
-	$general_auth = empty($article_infos['auth']) ? true : false;
-	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
-	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
+	$general_auth = empty($article_infos['auth']);
+	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
+	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
 
 	if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_RENAME)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_RENAME))))
 	{
@@ -262,8 +262,8 @@ elseif ($del_redirection > 0)//Supprimer une redirection
 			DispatchManager::redirect($error_controller);
 		}
 		
-		$general_auth = empty($article_infos['auth']) ? true : false;
-		$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
+		$general_auth = empty($article_infos['auth']);
+		$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
 	
 		if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_REDIRECT)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_REDIRECT))))
 		{
@@ -284,8 +284,8 @@ elseif ($create_redirection > 0 && !empty($redirection_title))
 		DispatchManager::redirect($error_controller);
 	}
 	
-	$general_auth = empty($article_infos['auth']) ? true : false;
-	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
+	$general_auth = empty($article_infos['auth']);
+	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
 
 	if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_REDIRECT)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_REDIRECT))))
 	{
@@ -321,8 +321,8 @@ elseif (!empty($restore)) //on restaure un ancien article
 			DispatchManager::redirect($error_controller);
 		}
 		
-		$general_auth = empty($article_infos['auth']) ? true : false;
-		$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
+		$general_auth = empty($article_infos['auth']);
+		$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
 	
 		if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_DELETE_ARCHIVE)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_DELETE_ARCHIVE))))
 		{
@@ -361,7 +361,7 @@ elseif ($del_archive > 0)
 	}
 	
 	$general_auth = empty($article_infos['auth']);
-	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
+	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
 
 	if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_DELETE_ARCHIVE)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_DELETE_ARCHIVE))))
 	{
@@ -386,8 +386,8 @@ elseif ($del_article > 0) //Suppression d'un article
 		DispatchManager::redirect($error_controller);
 	}
 	
-	$general_auth = empty($article_infos['auth']) ? true : false;
-	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
+	$general_auth = empty($article_infos['auth']);
+	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
 
 	if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_DELETE)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_DELETE))))
 	{
@@ -422,8 +422,8 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 		DispatchManager::redirect($error_controller);
 	}
 	
-	$general_auth = empty($article_infos['auth']) ? true : false;
-	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
+	$general_auth = empty($article_infos['auth']);
+	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
 
 	if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_DELETE)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_DELETE))))
 	{

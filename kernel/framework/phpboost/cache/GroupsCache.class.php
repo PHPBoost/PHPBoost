@@ -50,7 +50,7 @@ class GroupsCache implements CacheData
 				'name' => $row['name'],
 				'img' => $row['img'],
 				'color' => $row['color'],
-				'auth' => unserialize(stripslashes($row['auth'])),
+				'auth' => TextHelper::unserialize(stripslashes($row['auth'])),
 				'members' => explode('|', $row['members'])
 			);
 		}

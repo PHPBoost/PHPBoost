@@ -599,7 +599,7 @@ class MenuService
 				return ($match[1] == TextHelper::strlen($match[2])) ? $match[0] : 's:' . TextHelper::strlen($match[2]) . ':"' . $match[2] . '";';
 			}, $db_result['object']);
 			
-			$menu = unserialize($fixed_object);
+			$menu = TextHelper::unserialize($fixed_object);
 		}
 		
 		// Synchronize the object and the database

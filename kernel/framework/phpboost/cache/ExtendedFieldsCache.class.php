@@ -43,12 +43,12 @@ class ExtendedFieldsCache implements CacheData
 		$result = $querier->select_rows(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, array('*'), 'ORDER BY position');
 		while ($row = $result->fetch())
 		{
-			$auth = unserialize($row['auth']);
+			$auth = TextHelper::unserialize($row['auth']);
 			
 			$fixed_possible_values = preg_replace_callback( '!s:(\d+):"(.*?)";!', function($match) {
 				return ($match[1] == TextHelper::strlen($match[2])) ? $match[0] : 's:' . TextHelper::strlen($match[2]) . ':"' . $match[2] . '";';
 			}, $row['possible_values']);
-			$possible_values = unserialize($fixed_possible_values);
+			$possible_values = TextHelper::unserialize($fixed_possible_values);
 			
 			$this->extended_fields[$row['id']] = array(
 				'id' => $row['id'],

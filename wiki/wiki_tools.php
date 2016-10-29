@@ -35,7 +35,7 @@ $tools_tpl = new FileTemplate('wiki/wiki_tools.tpl');
 //Définition du tableau comprenant les autorisation de chaque groupe
 if (!empty($article_infos['auth']))
 {
-	$article_auth = unserialize($article_infos['auth']);
+	$article_auth = TextHelper::unserialize($article_infos['auth']);
 	$general_auth = false;
 }
 else

@@ -104,8 +104,8 @@ if (!empty($contents)) //On enregistre un article
 			}
 			
 			//Autorisations
-			$general_auth = empty($article_infos['auth']) ? true : false;
-			$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
+			$general_auth = empty($article_infos['auth']);
+			$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
 			if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_EDIT)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_EDIT))))
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
@@ -202,7 +202,7 @@ if ($id_edit > 0)//On édite
 	
 	//Autorisations
 	$general_auth = empty($article_infos['auth']);
-	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
+	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
 	if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_EDIT)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_EDIT))))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();

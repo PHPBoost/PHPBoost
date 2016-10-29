@@ -36,7 +36,7 @@ class PagesCommentsTopic extends CommentsTopic
 	{
 		require_once(PATH_TO_ROOT .'/'. $this->get_module_id() . '/pages_defines.php');
 		
-		$page_authorizations = unserialize($this->get_page_authorizations());
+		$page_authorizations = TextHelper::unserialize($this->get_page_authorizations());
 		
 		$authorizations = new CommentsAuthorizations();
 		if (!empty($page_authorizations))

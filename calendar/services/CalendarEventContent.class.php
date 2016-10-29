@@ -315,7 +315,7 @@ class CalendarEventContent
 		$this->max_registered_members = $properties['max_registered_members'];
 		$this->last_registration_date_enabled = !empty($properties['last_registration_date']);
 		$this->last_registration_date = !empty($properties['last_registration_date']) ? new Date($properties['last_registration_date'], Timezone::SERVER_TIMEZONE) : null;
-		$this->register_authorizations = unserialize($properties['register_authorizations']);
+		$this->register_authorizations = TextHelper::unserialize($properties['register_authorizations']);
 		
 		$this->creation_date = new Date($properties['creation_date'], Timezone::SERVER_TIMEZONE);
 		

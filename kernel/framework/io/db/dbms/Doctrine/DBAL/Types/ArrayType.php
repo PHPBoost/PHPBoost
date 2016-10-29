@@ -19,7 +19,7 @@ class ArrayType extends Type
 
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-        return unserialize($value);
+        return TextHelper::unserialize($value);
     }
 
     public function getName()

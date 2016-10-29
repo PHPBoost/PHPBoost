@@ -175,7 +175,7 @@ class Category
 		$this->set_rewrited_name($properties['rewrited_name']);
 		$this->set_order($properties['c_order']);
 		$this->set_special_authorizations($properties['special_authorizations']);
-		$this->set_authorizations(!empty($properties['auth']) ? unserialize($properties['auth']) : array());
+		$this->set_authorizations(!empty($properties['auth']) ? TextHelper::unserialize($properties['auth']) : array());
 		$this->set_id_parent($properties['id_parent']);
 	}
 	

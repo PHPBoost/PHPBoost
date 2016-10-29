@@ -247,13 +247,13 @@ class ContactField
 		$this->description = $properties['description'];
 		$this->field_type = $properties['field_type'];
 		$this->default_value = $properties['default_value'];
-		$this->possible_values = !empty($properties['possible_values']) ? unserialize($properties['possible_values']) : array();
+		$this->possible_values = !empty($properties['possible_values']) ? TextHelper::unserialize($properties['possible_values']) : array();
 		$this->required = (bool)$properties['required'];
 		$this->displayed = (bool)$properties['displayed'];
 		$this->regex = $properties['regex'];
 		$this->readonly = (bool)$properties['readonly'];
 		$this->deletable = (bool)$properties['deletable'];
-		$this->authorization = !empty($properties['authorization']) ? unserialize($properties['authorization']) : array();
+		$this->authorization = !empty($properties['authorization']) ? TextHelper::unserialize($properties['authorization']) : array();
 	}
 }
 ?>

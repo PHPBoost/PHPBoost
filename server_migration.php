@@ -38,7 +38,7 @@ $config_file = PATH_TO_ROOT . '/cache/CacheManager-kernel-general-config.data';
  
 if (file_exists($config_file))
 {
-	$general_config = unserialize(file_get_contents($config_file));
+	$general_config = TextHelper::unserialize(file_get_contents($config_file));
 }
 else
 {

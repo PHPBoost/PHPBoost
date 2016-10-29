@@ -43,7 +43,7 @@ class AutoConnectData
 
 	public static function get_user_id_from_cookie($cookie_content)
 	{
-		$autoconnect = @unserialize($cookie_content);
+		$autoconnect = TextHelper::unserialize($cookie_content);
 		if ($autoconnect === false || empty($autoconnect['user_id']) || empty($autoconnect['key']))
 		{
 			throw new UnexpectedValueException('invalid autoconnect cookie content: "' . $cookie_content . '"');

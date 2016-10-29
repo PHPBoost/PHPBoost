@@ -72,8 +72,8 @@ elseif ($wiki_status > 0)//On s'intéresse au statut de l'article
 		DispatchManager::redirect($error_controller);
 	}
 	
-	$general_auth = empty($article_infos['auth']) ? true : false;
-	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
+	$general_auth = empty($article_infos['auth']);
+	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
 	
 	if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_STATUS)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_STATUS))))
 	{
@@ -92,8 +92,8 @@ elseif ($move > 0) //Déplacement d'article
 		DispatchManager::redirect($error_controller);
 	}
 	
-	$general_auth = empty($article_infos['auth']) ? true : false;
-	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
+	$general_auth = empty($article_infos['auth']);
+	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
 	
 	if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_MOVE)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_MOVE))))
 	{
@@ -112,8 +112,8 @@ elseif ($rename > 0) //Renommer l'article
 		DispatchManager::redirect($error_controller);
 	}
 	
-	$general_auth = empty($article_infos['auth']) ? true : false;
-	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
+	$general_auth = empty($article_infos['auth']);
+	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
 	
 	if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_RENAME)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_RENAME))))
 	{
@@ -144,8 +144,8 @@ elseif ($redirect > 0 || $create_redirection > 0)//Redirection
 	
 	define('TITLE', $LANG['wiki_redirections_management']);
 	
-	$general_auth = empty($article_infos['auth']) ? true : false;
-	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
+	$general_auth = empty($article_infos['auth']);
+	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
 	
 	if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_REDIRECT)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_REDIRECT))))
 	{
@@ -163,8 +163,8 @@ elseif (AppContext::get_request()->has_getparameter('com') && $idcom > 0)
 	}
 	
 	define('TITLE', $LANG['wiki_article_com']);
-	$general_auth = empty($article_infos['auth']) ? true : false;
-	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
+	$general_auth = empty($article_infos['auth']);
+	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
 	
 	if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_COM)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_COM))))
 	{
@@ -183,8 +183,8 @@ elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
 	
 	define('TITLE', $LANG['wiki_remove_cat']);
 	
-	$general_auth = empty($article_infos['auth']) ? true : false;
-	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
+	$general_auth = empty($article_infos['auth']);
+	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
 	if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_DELETE)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_DELETE))))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
@@ -214,7 +214,7 @@ if ($random)//Recherche d'une page aléatoire
 }
 elseif ($id_auth > 0) //gestion du niveau d'autorisation
 {
-	$array_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : $config->get_authorizations(); //Récupération des tableaux des autorisations et des groupes.
+	$array_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : $config->get_authorizations(); //Récupération des tableaux des autorisations et des groupes.
 	
 	$tpl->assign_block_vars('auth', array(
 		'L_TITLE' => sprintf($LANG['wiki_auth_management_article'], stripslashes($article_infos['title'])),

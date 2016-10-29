@@ -83,7 +83,7 @@ class MemberExtendedFieldsService
 			));
 			while ($extended_field = $result->fetch())
 			{
-				if (AppContext::get_current_user()->check_auth(unserialize($extended_field['auth']), ExtendedField::READ_PROFILE_AUTHORIZATION))
+				if (AppContext::get_current_user()->check_auth(TextHelper::unserialize($extended_field['auth']), ExtendedField::READ_PROFILE_AUTHORIZATION))
 				{
 					$value = !empty($extended_field[$extended_field['field_name']]) ? $extended_field[$extended_field['field_name']] : $extended_field['default_value'];
 					$extended_field['value'] = $value;
@@ -180,7 +180,7 @@ class MemberExtendedFieldsService
 		));
 		while ($extended_field = $result->fetch())
 		{
-			if (AppContext::get_current_user()->check_auth(unserialize($extended_field['auth']), ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION))
+			if (AppContext::get_current_user()->check_auth(TextHelper::unserialize($extended_field['auth']), ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION))
 			{
 				$value = !empty($extended_field[$extended_field['field_name']]) ? $extended_field[$extended_field['field_name']] : $extended_field['default_value'];
 				$extended_field['value'] = $value;

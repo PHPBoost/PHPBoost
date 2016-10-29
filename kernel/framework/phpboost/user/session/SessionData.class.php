@@ -414,7 +414,7 @@ class SessionData
 	 */
 	public static function from_cookie($cookie_content)
 	{
-		$values = @unserialize($cookie_content);
+		$values = TextHelper::unserialize($cookie_content);
 		if ($values === false || empty($values[self::$KEY_USER_ID]) || empty($values[self::$KEY_SESSION_ID]))
 		{
 			throw new UnexpectedValueException('invalid session data cookie content: "' . $cookie_content . '"');
@@ -449,8 +449,8 @@ class SessionData
 		$data->ip = $row['ip'];
 		$data->location_script = $row['location_script'];
 		$data->location_title = $row['location_title'];
-		$data->cached_data = unserialize($fixed_cached_data);
-		$data->data = unserialize($row['data']);
+		$data->cached_data = TextHelper::unserialize($fixed_cached_data);
+		$data->data = TextHelper::unserialize($row['data']);
 		return $data;
 	}
 

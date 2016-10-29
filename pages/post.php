@@ -115,7 +115,7 @@ if (!empty($contents))
 			
 			//Autorisation particulière ?
 			$special_auth = !empty($page_infos['auth']);
-			$array_auth = unserialize($page_infos['auth']);
+			$array_auth = TextHelper::unserialize($page_infos['auth']);
 			//Vérification de l'autorisation d'éditer la page
 			if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
 				AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
@@ -205,7 +205,7 @@ elseif ($del_article > 0)
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
-	$array_auth = unserialize($page_infos['auth']);
+	$array_auth = TextHelper::unserialize($page_infos['auth']);
 	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
 		AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
 		
@@ -227,7 +227,7 @@ if ($id_edit > 0)
 {
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
-	$array_auth = unserialize($page_infos['auth']);
+	$array_auth = TextHelper::unserialize($page_infos['auth']);
 	//Vérification de l'autorisation d'éditer la page
 	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
 		AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
@@ -305,7 +305,7 @@ else
 }
 
 if (!empty($page_infos['auth']))
-	$array_auth = unserialize($page_infos['auth']);
+	$array_auth = TextHelper::unserialize($page_infos['auth']);
 else
 	$array_auth = $config_authorizations;
 

@@ -88,7 +88,7 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 		{
 			//Autorisation particulière ?
 			$special_auth = !empty($row['auth']);
-			$array_auth = unserialize($row['auth']);
+			$array_auth = TextHelper::unserialize($row['auth']);
 			//Vérification de l'autorisation d'éditer la page
 			if (($special_auth && AppContext::get_current_user()->check_auth($array_auth, READ_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)))
 			{
