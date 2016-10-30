@@ -164,7 +164,7 @@ class ConfigManager
 	
 	private static function save_in_db($name, ConfigData $data)
 	{
-		$serialized_data = serialize($data);
+		$serialized_data = TextHelper::serialize($data);
 
 		$update = PersistenceContext::get_querier()->inject('UPDATE ' . DB_TABLE_CONFIGS . ' SET value = :value WHERE name = :name', array('value' => $serialized_data, 'name' => $name));
 

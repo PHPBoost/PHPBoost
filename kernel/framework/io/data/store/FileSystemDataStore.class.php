@@ -81,7 +81,7 @@ class FileSystemDataStore implements DataStore
 	public function store($id, $data)
 	{
 		$file = $this->get_file($id);
-		$data_to_write = serialize($data);
+		$data_to_write = TextHelper::serialize($data);
 		$file->open(File::WRITE);
 		$file->lock();
 		$file->write($data_to_write);

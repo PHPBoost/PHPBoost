@@ -52,13 +52,13 @@ class ExtendedFieldsDatabaseService
 				'field_name' => $extended_field->get_field_name(),
 				'description' => TextHelper::htmlspecialchars($extended_field->get_description()),
 				'field_type' => $extended_field->get_field_type(),
-				'possible_values' => serialize($extended_field->get_possible_values()),
+				'possible_values' => TextHelper::serialize($extended_field->get_possible_values()),
 				'default_value' => TextHelper::htmlspecialchars($extended_field->get_default_value()),
 				'required' => (int)$extended_field->get_required(),
 				'display' => (int)$extended_field->get_display(),
 				'regex' => TextHelper::htmlspecialchars($extended_field->get_regex()),
 				'freeze' => (int)$extended_field->get_is_freeze(),
-				'auth' => serialize($extended_field->get_authorization()),
+				'auth' => TextHelper::serialize($extended_field->get_authorization()),
 		));
 	}
 	
@@ -79,13 +79,13 @@ class ExtendedFieldsDatabaseService
 				'field_name' => $extended_field->get_field_name(),
 				'description' => TextHelper::htmlspecialchars($extended_field->get_description()),
 				'field_type' => $extended_field->get_field_type(),
-				'possible_values' => serialize($extended_field->get_possible_values()),
+				'possible_values' => TextHelper::serialize($extended_field->get_possible_values()),
 				'default_value' => TextHelper::htmlspecialchars($extended_field->get_default_value()),
 				'required' => (int)$extended_field->get_required(),
 				'display' => (int)$extended_field->get_display(),
 				'regex' => TextHelper::htmlspecialchars($extended_field->get_regex()),
 				'freeze' => (int)$extended_field->get_is_freeze(),
-				'auth' => serialize($extended_field->get_authorization()),
+				'auth' => TextHelper::serialize($extended_field->get_authorization()),
 				'id' => $extended_field->get_id(),
 		));
 		

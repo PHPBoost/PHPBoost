@@ -286,7 +286,7 @@ class StatsSaver
 		if (!file_exists($file_path)) 
 		{
 			$file = @fopen($file_path, 'w+');
-			@fwrite($file, serialize(array()));
+			@fwrite($file, TextHelper::serialize(array()));
 			@fclose($file);
 		}
 		if (is_file($file_path) && is_writable($file_path))
@@ -299,7 +299,7 @@ class StatsSaver
 				$stats_array[TextHelper::strtolower($stats_item)] = 1;
 			
 			$file = @fopen($file_path, 'r+');
-			fwrite($file, serialize($stats_array));
+			fwrite($file, TextHelper::serialize($stats_array));
 			fclose($file);
 		}
 	}

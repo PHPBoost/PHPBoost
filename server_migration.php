@@ -50,7 +50,7 @@ if (isset($_POST['url']) && isset($_POST['path']))
 {
 	$general_config->set_site_url($_POST['url']);
 	$general_config->set_site_path($_POST['path']);
-	file_put_contents($config_file, serialize($general_config));
+	file_put_contents($config_file, TextHelper::serialize($general_config));
  
 	echo 'Success';
 }

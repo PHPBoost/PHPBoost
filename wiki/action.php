@@ -82,7 +82,7 @@ if ($id_auth > 0)
 	{
 		//Génération du tableau des droits.
 		$array_auth_all = Authorizations::build_auth_array_from_form(WIKI_RESTORE_ARCHIVE, WIKI_DELETE_ARCHIVE, WIKI_EDIT, WIKI_DELETE, WIKI_RENAME, WIKI_REDIRECT, WIKI_MOVE, WIKI_STATUS, WIKI_COM);
-		$db_querier->update(PREFIX . "wiki_articles", array('auth' => serialize($array_auth_all)), 'WHERE id = :id', array('id' => $id_auth));
+		$db_querier->update(PREFIX . "wiki_articles", array('auth' => TextHelper::serialize($array_auth_all)), 'WHERE id = :id', array('id' => $id_auth));
 	}
 
 	//Redirection vers l'article

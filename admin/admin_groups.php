@@ -60,7 +60,7 @@ if ($valid && !empty($idgroup_post)) //Modification du groupe.
 	$data_group_limit = $data_group_limit ? NumberHelper::numeric($data_group_limit, 'float') * 1024 : '5120';
 		
 	$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);
-	PersistenceContext::get_querier()->update(DB_TABLE_GROUP, array('name' => $name, 'img' => $img, 'color' => $color_group, 'auth' => serialize($group_auth)), 'WHERE id = :id', array('id' => $idgroup_post));
+	PersistenceContext::get_querier()->update(DB_TABLE_GROUP, array('name' => $name, 'img' => $img, 'color' => $color_group, 'auth' => TextHelper::serialize($group_auth)), 'WHERE id = :id', array('id' => $idgroup_post));
 	
 	GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
 	
@@ -82,7 +82,7 @@ elseif ($valid && $add_post) //ajout  du groupe.
 		{
 			//Insertion
 			$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);
-			$result = PersistenceContext::get_querier()->insert(DB_TABLE_GROUP, array('name' => $name, 'img' => $img, 'color' => $color_group, 'auth' => serialize($group_auth), 'members' => ''));
+			$result = PersistenceContext::get_querier()->insert(DB_TABLE_GROUP, array('name' => $name, 'img' => $img, 'color' => $color_group, 'auth' => TextHelper::serialize($group_auth), 'members' => ''));
 			
 			GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
 			

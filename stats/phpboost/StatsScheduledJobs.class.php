@@ -66,7 +66,7 @@ class StatsScheduledJobs extends AbstractScheduledJobExtensionPoint
 		
 		//We update the stats table: the number of visits today
 		PersistenceContext::get_querier()->update(StatsSetup::$stats_table, 
-			array('nbr' => $total_visit, 'pages' => array_sum($pages_displayed), 'pages_detail' => serialize($pages_displayed)), 
+			array('nbr' => $total_visit, 'pages' => array_sum($pages_displayed), 'pages_detail' => TextHelper::serialize($pages_displayed)), 
 		'WHERE id=:id', array('id' => $last_stats));
 	}
 	

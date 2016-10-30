@@ -230,13 +230,13 @@ class ContactField
 			'description' => $this->get_description(),
 			'field_type' => $this->get_field_type(),
 			'default_value' => $this->get_default_value(),
-			'possible_values' => serialize($this->get_possible_values()),
+			'possible_values' => TextHelper::serialize($this->get_possible_values()),
 			'required' => (int)$this->is_required(),
 			'displayed' => (int)$this->is_displayed(),
 			'regex' => $this->get_regex(),
 			'readonly' => (int)$this->is_readonly(),
 			'deletable' => (int)$this->is_deletable(),
-			'authorization' => serialize($this->get_authorization())
+			'authorization' => TextHelper::serialize($this->get_authorization())
 		);
 	}
 	

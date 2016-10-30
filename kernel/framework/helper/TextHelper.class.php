@@ -253,17 +253,27 @@ class TextHelper
 			return mb_convert_case($string, $mode);
 	}
 	
+	// public static function unserialize($string)
+	// {
+		// $string = preg_replace_callback(
+			// '!s:(\d+):"(.*?)";!s',
+			// function ($matches) {
+				// if ( isset( $matches[2] ) )
+					// return 's:'.strlen($matches[2]).':"'.$matches[2].'";';
+			// },
+			// $string
+		// );
+		// return unserialize($string);
+	// }
+	
+	public static function serialize($string)
+	{
+		return base64_encode(serialize($string));
+	}
+	
 	public static function unserialize($string)
 	{
-		$string = preg_replace_callback(
-			'!s:(\d+):"(.*?)";!s',
-			function ($matches) {
-				if ( isset( $matches[2] ) )
-					return 's:'.strlen($matches[2]).':"'.$matches[2].'";';
-			},
-			$string
-		);
-		return unserialize($string);
+		return unserialize(base64_decode($string));
 	}
 
 	/**

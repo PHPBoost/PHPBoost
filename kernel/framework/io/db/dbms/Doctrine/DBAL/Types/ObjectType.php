@@ -14,7 +14,7 @@ class ObjectType extends Type
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
-        return serialize($value);
+        return TextHelper::serialize($value);
     }
 
     public function convertToPHPValue($value, AbstractPlatform $platform)

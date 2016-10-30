@@ -363,7 +363,7 @@ class Article
 			'publishing_end_date'   => $this->get_publishing_end_date() !== null ? $this->get_publishing_end_date()->get_timestamp() : 0,
 			'date_created'          => $this->get_date_created()->get_timestamp(),
 			'date_updated'          => $this->get_date_updated() !== null ? $this->get_date_updated()->get_timestamp() : 0,
-			'sources'               => serialize($this->get_sources())
+			'sources'               => TextHelper::serialize($this->get_sources())
 		);
 	}
 

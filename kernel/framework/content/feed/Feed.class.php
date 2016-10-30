@@ -240,7 +240,7 @@ class Feed
 		if ($data instanceof FeedData)
 		{
 			$file = new File(FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php');
-			$file->write('<?php $__feed_object = unserialize(' . var_export($data->serialize(), true) . '); ?>');
+			$file->write('<?php $__feed_object = TextHelper::unserialize(' . var_export($data->serialize(), true) . '); ?>');
 			$file->close();
 			return true;
 		}

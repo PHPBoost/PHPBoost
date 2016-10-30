@@ -163,7 +163,7 @@ class Category
 			'rewrited_name' => TextHelper::htmlspecialchars($this->get_rewrited_name()),
 			'c_order' => $this->get_order(),
 			'special_authorizations' => (int)$this->has_special_authorizations(),
-			'auth' => !$this->auth_is_empty() ? serialize($this->get_authorizations()) : '',
+			'auth' => !$this->auth_is_empty() ? TextHelper::serialize($this->get_authorizations()) : '',
 			'id_parent' => $this->get_id_parent()
 		);
 	}

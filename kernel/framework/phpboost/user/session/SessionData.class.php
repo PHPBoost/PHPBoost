@@ -177,11 +177,11 @@ class SessionData
 			$columns = array();
 			if ($this->cached_data_modified)
 			{
-				$columns['cached_data'] = serialize($this->cached_data);
+				$columns['cached_data'] = TextHelper::serialize($this->cached_data);
 			}
 			if ($this->data_modified)
 			{
-				$columns['data'] = serialize($this->data);
+				$columns['data'] = TextHelper::serialize($this->data);
 			}
 			$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
 			$parameters = array('user_id' => $this->user_id, 'session_id' => $this->session_id);
@@ -223,8 +223,8 @@ class SessionData
 			'token' => $this->token,
 			'timestamp' => $this->timestamp,
 			'ip' => $this->ip,
-			'cached_data' => serialize($this->cached_data),
-			'data' => serialize($this->data)
+			'cached_data' => TextHelper::serialize($this->cached_data),
+			'data' => TextHelper::serialize($this->data)
 		);
 		$row = PersistenceContext::get_querier()->insert(DB_TABLE_SESSIONS, $columns);
 	}
@@ -237,7 +237,7 @@ class SessionData
 
 	private function get_serialized_content()
 	{
-		return serialize(array(self::$KEY_USER_ID => $this->user_id, self::$KEY_SESSION_ID => $this->session_id));
+		return TextHelper::serialize(array(self::$KEY_USER_ID => $this->user_id, self::$KEY_SESSION_ID => $this->session_id));
 	}
 
 	public function no_session_location()

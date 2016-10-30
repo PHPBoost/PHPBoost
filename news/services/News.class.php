@@ -350,7 +350,7 @@ class News
 			'author_user_id' => $this->get_author_user()->get_id(),
 			'number_view' => $this->get_number_view(),
 			'picture_url' => $this->get_picture()->relative(),
-			'sources' => serialize($this->get_sources())
+			'sources' => TextHelper::serialize($this->get_sources())
 		);
 	}
 	

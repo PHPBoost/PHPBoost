@@ -146,7 +146,7 @@ class ArticlesSetup extends DefaultModuleSetup
 			'publishing_end_date' => 0,
 			'date_created' => time(),
 			'date_updated' => 0,
-			'sources' => serialize(array())
+			'sources' => TextHelper::serialize(array())
 		));
 	}
 }

@@ -131,7 +131,7 @@ class MenuService
 		$id_menu = $menu->get_id();
 		$columns = array(
 			'title' => $menu->get_title(),
-			'object' => serialize($menu),
+			'object' => TextHelper::serialize($menu),
 			'class' => get_class($menu),
 			'enabled' => (int) $menu->is_enabled(),
 			'block' => $block,

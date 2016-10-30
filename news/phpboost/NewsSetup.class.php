@@ -146,7 +146,7 @@ class NewsSetup extends DefaultModuleSetup
 			'picture_url' => '',
 			'author_custom_name' => '',
 			'author_user_id' => 1,
-			'sources' => serialize(array())
+			'sources' => TextHelper::serialize(array())
 		));
 	}
 }

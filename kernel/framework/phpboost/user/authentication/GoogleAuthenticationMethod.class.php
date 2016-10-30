@@ -78,7 +78,7 @@ class GoogleAuthenticationMethod extends AuthenticationMethod
 			'user_id' => $user_id,
 			'method' => self::AUTHENTICATION_METHOD,
 			'identifier' => $data['id'],
-			'data' => serialize($data)
+			'data' => TextHelper::serialize($data)
 		);
 		try {
 			$this->querier->insert(DB_TABLE_AUTHENTICATION_METHOD, $authentication_method_columns);

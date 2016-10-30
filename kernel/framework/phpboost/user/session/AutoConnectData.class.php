@@ -129,7 +129,7 @@ class AutoConnectData
 
 	private function get_serialized_content()
 	{
-		return serialize(array('user_id' => $this->user_id, 'key' => $this->key));
+		return TextHelper::serialize(array('user_id' => $this->user_id, 'key' => $this->key));
 	}
 }
 ?>

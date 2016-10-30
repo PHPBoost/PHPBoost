@@ -134,7 +134,7 @@ class FeedData
     
     public function serialize()
     {
-        return serialize($this);
+        return TextHelper::serialize($this);
     }
     
     
