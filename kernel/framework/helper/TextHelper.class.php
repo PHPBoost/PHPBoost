@@ -214,9 +214,9 @@ class TextHelper
 	public static function strripos($string, $needle, $offset = '')
 	{
 		if ($offset != '')
-			return mb_strrpos($string, $needle, $offset);
+			return mb_strripos($string, $needle, $offset);
 		else
-			return mb_strrpos($string, $needle);
+			return mb_strripos($string, $needle);
 	}
 	
 	public static function strrpos($string, $needle, $offset = '')
