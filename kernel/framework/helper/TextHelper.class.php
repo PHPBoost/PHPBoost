@@ -190,20 +190,20 @@ class TextHelper
 	
 	public static function strlen($string)
 	{
-		return mb_strlen($string);
+		return strlen($string);
 	}
 	
 	public static function strpos($string, $substring)
 	{
-		return mb_strpos($string, $substring);
+		return strpos($string, $substring);
 	}
 	
 	public static function substr($string, $start, $length = '')
 	{
 		if ($length != '')
-			return mb_substr($string, $start, $length);
+			return substr($string, $start, $length);
 		else
-			return mb_substr($string, $start);
+			return substr($string, $start);
 	}
 	
 	public static function strrchr($string, $needle)
@@ -268,12 +268,12 @@ class TextHelper
 	
 	public static function serialize($string)
 	{
-		return base64_encode(serialize($string));
+		return serialize($string);
 	}
 	
 	public static function unserialize($string)
 	{
-		return unserialize(base64_decode($string));
+		return unserialize($string);
 	}
 
 	/**
