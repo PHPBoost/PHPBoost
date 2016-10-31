@@ -119,7 +119,14 @@ class Environment
 		set_error_handler(array(new ErrorHandler(), 'handle'));
 		set_exception_handler(array(new RawExceptionHandler(), 'handle'));
 		Date::set_default_timezone();
-		mb_internal_encoding ('UTF-8');
+		
+		//setup php for working with Unicode data
+		mb_internal_encoding('UTF-8');
+		mb_regex_encoding('UTF-8');
+		mb_http_output('UTF-8');
+		mb_http_input('UTF-8');
+		mb_language('uni');
+		ob_start('mb_output_handler');
 		
 		@ini_set('open_basedir', NULL);
 	}
