@@ -512,7 +512,7 @@
 					if ($(_self.objectData.url)) {
 						_self._showContent($object);
 					} else {
-						_self.error();
+						_self.on('error');
 					}
 					break;
 				case 'ajax':
@@ -532,7 +532,7 @@
 								_self._showContent($object);
 							},
 							error: function (jqXHR, textStatus, errorThrown) {
-								_self.error();
+								_self.on('error');
 							}
 						})
 					);
@@ -544,19 +544,19 @@
 					if (typeof($object.get(0).canPlayType) === 'function' || _self.objects.case.find('video').length === 0) {
 						_self._showContent($object);
 					} else {
-						_self.error();
+						_self.on('error');
 					}
 					break;
 				default:
 					if (_self.objectData.url) {
-						$object.load(function () {
+						$object.on('load',function () {
 							_self._showContent($object);
 						});
-						$object.error(function () {
-							_self.error();
+						$object.on('error',function () {
+							_self.on('error');
 						});
 					} else {
-						_self.error();
+						_self.on('error');
 					}
 					break;
 			}
@@ -1689,7 +1689,7 @@
 
 			_self.objects.loading.hide();
 			_self.objects.overlay.hide();
-			_self.objects.case.hide();
+			_self.objects.case.hide(); 
 			_self.objects.prev.hide();
 			_self.objects.next.hide();
 			_self.objects.play.hide();
@@ -1767,7 +1767,7 @@
 		} else if (typeof method === 'object' || !method) {
 			return _self.init.apply(this, arguments);
 		} else {
-			$.error('Method ' + method + ' does not exist on jQuery.lightcase');
+			$.on('error','Method ' + method + ' does not exist on jQuery.lightcase');
 		}
 	};
 })(jQuery);
