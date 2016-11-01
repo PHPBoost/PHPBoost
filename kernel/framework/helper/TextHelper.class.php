@@ -176,15 +176,15 @@ class TextHelper
 	
 	public static function lcfirst($string)
 	{
-		$first_letter = self::strtolower(TextHelper::substr($string, 0, 1));
-		$string_end = TextHelper::substr($string, 1, self::strlen($string));
+		$first_letter = self::strtolower(self::substr($string, 0, 1));
+		$string_end = self::substr($string, 1, self::strlen($string));
 		return $first_letter . $string_end;
 	}
 	
 	public static function ucfirst($string)
 	{
-		$first_letter = self::strtoupper(TextHelper::substr($string, 0, 1));
-		$string_end = TextHelper::substr($string, 1, self::strlen($string));
+		$first_letter = self::strtoupper(self::substr($string, 0, 1));
+		$string_end = self::substr($string, 1, self::strlen($string));
 		return $first_letter . $string_end;
 	}
 	
@@ -255,14 +255,11 @@ class TextHelper
 	
 	public static function serialize($string)
 	{
-		return base64_encode(serialize($string));
+		return serialize($string);
 	}
 	
 	public static function unserialize($string)
 	{
-		if (mb_detect_encoding($string, 'BASE64') !== false)
-			$string = base64_decode($string);
-		
 		return unserialize($string);
 	}
 
