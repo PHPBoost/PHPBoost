@@ -62,7 +62,7 @@ div.event-display-dates {
 
 /* Couleur des differents evenements */
 table tbody tr td.calendar-none    { background-color: #FFFFFF; }
-table tbody tr td.calendar-today   { background-color: #81A4C8; }
+table tbody tr td.calendar-today   { background-color: #7CCAB0; }
 table tbody tr td.calendar-other   { background-color: #F1F1F1; }
 table tbody tr td.calendar-weekend { background-color: #FFE3B6; }
 

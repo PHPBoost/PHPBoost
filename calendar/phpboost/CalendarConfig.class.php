@@ -107,8 +107,8 @@ class CalendarConfig extends AbstractConfigData
 		return array(
 			self::ITEMS_NUMBER_PER_PAGE => 15,
 			self::MEMBERS_BIRTHDAY_ENABLED => false,
-			self::EVENT_COLOR => '#dbe5ee',
-			self::BIRTHDAY_COLOR => '#f77c91',
+			self::EVENT_COLOR => '#81A4C8',
+			self::BIRTHDAY_COLOR => '#8F8ACF',
 			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 15)
 		);
 	}
