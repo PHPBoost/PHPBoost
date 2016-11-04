@@ -8,6 +8,16 @@
 		# IF C_CANONICAL_URL #<link rel="canonical" href="{U_CANONICAL}" /># ENDIF #
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
+		<!-- Favicon -->
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+		<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+		<link rel="manifest" href="/manifest.json">
+		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#2b5797">
+		<meta name="msapplication-TileColor" content="#2b5797">
+		<meta name="msapplication-TileImage" content="/mstile-144x144.png">
+		<meta name="theme-color" content="#FFFFFF">
+
 		<!-- Theme CSS -->
 		# IF C_CSS_CACHE_ENABLED #
 		<link rel="stylesheet" href="${CSSCacheManager::get_css_path('/templates/default/theme/default.css;/kernel/lib/css/font-awesome/css/font-awesome.css;/templates/{THEME}/theme/design.css;/templates/{THEME}/theme/content.css;/templates/{THEME}/theme/table.css;/templates/{THEME}/theme/form.css;/templates/{THEME}/theme/global.css;/templates/{THEME}/theme/cssmenu.css')}" type="text/css" media="screen, print" />
