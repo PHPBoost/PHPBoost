@@ -41,7 +41,7 @@ class ForumHomeController extends ModuleController
 	{
 		global $LANG, $config, $nbr_msg_not_read, $tpl_top, $tpl_bottom;
 		
-		$id_get = retrieve(GET, 'id', 0);
+		$id_get = (int)retrieve(GET, 'id', 0);
 		$categories_cache = ForumService::get_categories_manager()->get_categories_cache();
 		
 		try {
