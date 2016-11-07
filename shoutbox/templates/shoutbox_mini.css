@@ -15,6 +15,19 @@
 	margin: 10px 0 10px 0;
 }
 
+.shout-pseudo.not-connected {
+	width: 90%;
+}
+
+.shout-form-container {
+	margin: 2px 0 5px 0;
+	text-align: center;
+}
+
+.shout-form-container label {
+	display: block;
+}
+
 #module-mini-shoutbox textarea,
 #module-mini-shoutbox textarea:valid {
 	width: 90%;

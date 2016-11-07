@@ -107,16 +107,18 @@ function shoutbox_refresh_messages_box() {
 <div id="shoutbox-messages-container"# IF C_HORIZONTAL # class="shout-horizontal" # ENDIF #># INCLUDE SHOUTBOX_MESSAGES #</div>
 # IF C_DISPLAY_FORM #
 <form action="#" method="post">
-	# IF NOT C_MEMBER #
-	<div class="spacer"></div>
-	<label for="shout-pseudo"><span class="small">${LangLoader::get_message('form.name', 'common')}</span></label>
-	<input maxlength="25" type="text" name="shout-pseudo" id="shout-pseudo" value="${LangLoader::get_message('visitor', 'user-common')}">
-	# ELSE #
-	<input type="hidden" name="shout-pseudo" id="shout-pseudo" value="{SHOUTBOX_PSEUDO}">
-	# ENDIF #
-	<br />
-	# IF C_VERTICAL #<label for="shout-contents"><span class="small">${LangLoader::get_message('message', 'main')}</span></label># ENDIF #
-	<textarea id="shout-contents" name="shout-contents"# IF C_VALIDATE_ONKEYPRESS_ENTER # onkeypress="if(event.keyCode==13){shoutbox_add_message();}"# ENDIF # rows="# IF C_VERTICAL #4# ELSE #2# ENDIF #" cols="16"></textarea>
+	<div class="shout-form-container shout-pseudo-container">
+		# IF NOT C_MEMBER #
+		<label for="shout-pseudo"><span class="small">${LangLoader::get_message('form.name', 'common')}</span></label>
+		<input maxlength="25" type="text" name="shout-pseudo" id="shout-pseudo" class="shout-pseudo not-connected" value="	${LangLoader::get_message('visitor', 'user-common')}">
+		# ELSE #
+		<input type="hidden" name="shout-pseudo" id="shout-pseudo" class="shout-pseudo connected" value="{SHOUTBOX_PSEUDO}">
+		# ENDIF #
+	</div>
+	<div class="shout-form-container shout-contents-container">
+		<label for="shout-contents"><span class="small">${LangLoader::get_message('message', 'main')}</span></label>
+		<textarea id="shout-contents" name="shout-contents"# IF C_VALIDATE_ONKEYPRESS_ENTER # onkeypress="if(event.keyCode==13){shoutbox_add_message();}"# ENDIF # rows="2" cols="16"></textarea>
+	</div>
 	<div id="shoutbox-bbcode-container" class="shout-spacing">
 		# IF C_DISPLAY_SHOUT_BBCODE #
 		<ul>
