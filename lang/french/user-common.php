@@ -234,6 +234,10 @@ $lang['extended-field.field.entertainement-explain'] = '';
 $lang['extended-field.field.biography'] = 'Biographie';
 $lang['extended-field.field.biography-explain'] = '';
 
+//Scroll to
+$lang['scroll-to.top'] = 'haut de la page';
+$lang['scroll-to.bottom'] = 'bas de la page';
+
 //Cookies bar
 $lang['cookiebar.cookie'] = 'Cookie';
 $lang['cookiebar.cookie.management'] = 'Gestion des Cookies';

@@ -235,6 +235,10 @@ $lang['extended-field.field.entertainement-explain'] = '';
 $lang['extended-field.field.biography'] = 'Biography';
 $lang['extended-field.field.biography-explain'] = 'A few lines describing you';
 
+//Scroll to
+$lang['scroll-to.top'] = 'Scroll to Top';
+$lang['scroll-to.bottom'] = 'Scroll to Bottom';
+
 //Cookies Bar
 $lang['cookiebar.cookie'] = 'Cookie';
 $lang['cookiebar.cookie.management'] = 'Cookies management';
