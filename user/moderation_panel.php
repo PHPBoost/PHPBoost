@@ -279,7 +279,7 @@ else if ($action == 'warning')
 				{
 					MemberSanctionManager::caution($id_get, $new_warning_level, MemberSanctionManager::NO_SEND_CONFIRMATION, $warning_contents);
 				}
-				SessionData::recheck_cached_data_from_user_id($user_id);
+				SessionData::recheck_cached_data_from_user_id($id_get);
 			}
 		}
 		
