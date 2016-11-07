@@ -3,7 +3,7 @@
  *                            moderation_panel.php
  *                            -------------------
  *   begin                : March 20, 2007
- *   copyright            : (C) 2007 Viarre RÈgis
+ *   copyright            : (C) 2007 Viarre R√©gis
  *   email                :  crowkait@phpboost.com
  *
  *  
@@ -51,7 +51,7 @@ switch ($action)
 define('TITLE', $LANG['moderation_panel']);
 require_once('../kernel/header.php');
 
-if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL)) //Si il n'est pas modÈrateur
+if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL)) //Si il n'est pas mod√©rateur
 {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
@@ -82,7 +82,7 @@ if ($action == 'punish')
 	$readonly = retrieve(POST, 'new_info', 0);
 	$readonly = $readonly > 0 ? (time() + $readonly) : 0;
 	$readonly_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
-	if (!empty($id_get) && $valid_user) //On met ‡  jour le niveau d'avertissement
+	if (!empty($id_get) && $valid_user) //On met √†  jour le niveau d'avertissement
 	{
 		if ($id_get != AppContext::get_current_user()->get_id())
 		{
@@ -109,7 +109,7 @@ if ($action == 'punish')
 		'U_ACTION' => UserUrlBuilder::moderation_panel('punish')->rel()
 	));
 	
-	if (empty($id_get)) //On liste les membres qui ont dÈj‡ un avertissement
+	if (empty($id_get)) //On liste les membres qui ont d√©j√† un avertissement
 	{
 		if ($search_member)
 		{
@@ -180,9 +180,9 @@ if ($action == 'punish')
 			DispatchManager::redirect($error_controller);
 		}
 		
-		//On crÈe le formulaire select
+		//On cr√©e le formulaire select
 		$select = '';
-		//DurÈe de la sanction.
+		//Dur√©e de la sanction.
 		$date_lang = LangLoader::get('date-common');
 		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000); 	
 		$array_sanction = array(LangLoader::get_message('no', 'common'), '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], '10 ' . strtolower($date_lang['years'])); 
@@ -239,7 +239,7 @@ if ($action == 'punish')
 			'} else' . "\n" .
 			'	document.getElementById(\'action_contents\').disabled = \'disabled\';' . "\n" .
 			'document.getElementById(\'action_info\').innerHTML = replace_value;',
-			'REGEX'=> '/[0-9]+ [a-zÈËÍA-Z]+/',
+			'REGEX'=> '/[0-9]+ [a-z√©√®√™A-Z]+/',
 			'U_PM' => url('.php?pm='. $id_get, '-' . $id_get . '.php'),
 			'U_ACTION_INFO' => UserUrlBuilder::moderation_panel('punish', $id_get)->rel() . '&amp;token=' . AppContext::get_session()->get_token(),
 			'U_PROFILE' => UserUrlBuilder::profile($id_get)->rel(),
@@ -256,7 +256,7 @@ else if ($action == 'warning')
 {
 	$new_warning_level = retrieve(POST, 'new_info', 0);
 	$warning_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
-	if ($new_warning_level >= 0 && $new_warning_level <= 100 && AppContext::get_request()->has_postparameter('new_info') && !empty($id_get) && $valid_user) //On met ‡  jour le niveau d'avertissement
+	if ($new_warning_level >= 0 && $new_warning_level <= 100 && AppContext::get_request()->has_postparameter('new_info') && !empty($id_get) && $valid_user) //On met √†  jour le niveau d'avertissement
 	{
 		try {
 			$info_mbr = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id', 'level', 'email'), 'WHERE user_id=:id', array('id' => $id_get));
@@ -265,12 +265,12 @@ else if ($action == 'warning')
 			DispatchManager::redirect($error_controller);
 		}
 		
-		//ModÈrateur ne peux avertir l'admin (logique non?).
+		//Mod√©rateur ne peux avertir l'admin (logique non?).
 		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)))
 		{
-			if ($new_warning_level <= 100) //Ne peux pas mettre des avertissements supÈrieurs ‡ 100.
+			if ($new_warning_level <= 100) //Ne peux pas mettre des avertissements sup√©rieurs √† 100.
 			{
-				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-mÍme.
+				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-m√™me.
 				if ($id_get != AppContext::get_current_user()->get_id())
 				{
 					MemberSanctionManager::caution($id_get, $new_warning_level, MemberSanctionManager::SEND_MP, $warning_contents);				
@@ -279,7 +279,7 @@ else if ($action == 'warning')
 				{
 					MemberSanctionManager::caution($id_get, $new_warning_level, MemberSanctionManager::NO_SEND_CONFIRMATION, $warning_contents);
 				}
-				SessionData::recheck_cached_data_from_user_id($user_id);
+				SessionData::recheck_cached_data_from_user_id($id_get);
 			}
 		}
 		
@@ -295,7 +295,7 @@ else if ($action == 'warning')
 		'U_ACTION' => UserUrlBuilder::moderation_panel('warning')->rel() . '&amp;' . AppContext::get_session()->get_token()
 	));
 	
-	if (empty($id_get)) //On liste les membres qui ont dÈj‡ un avertissement
+	if (empty($id_get)) //On liste les membres qui ont d√©j√† un avertissement
 	{
 		if ($search_member)
 		{
@@ -364,7 +364,7 @@ else if ($action == 'warning')
 			DispatchManager::redirect($error_controller);
 		}
 		
-		//On crÈe le formulaire select
+		//On cr√©e le formulaire select
 		$select = '';
 		$j = 0;
 		for ($j = 0; $j <=10; $j++)
@@ -434,7 +434,7 @@ else
 		'U_ACTION' => UserUrlBuilder::moderation_panel('ban')->rel() . '&amp;token=' . AppContext::get_session()->get_token()
 	));
 	
-	if (empty($id_get)) //On liste les membres qui ont dÈj‡ un avertissement
+	if (empty($id_get)) //On liste les membres qui ont d√©j√† un avertissement
 	{
 		if ($search_member)
 		{
