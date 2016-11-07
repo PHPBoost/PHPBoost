@@ -1,3 +1,5 @@
+<script src="{PATH_TO_ROOT}/kernel/lib/js/lightcase/lightcase.js"></script>
+
 <script>
 <!-- 
 	jQuery('[data-confirmation]').each(function() {
