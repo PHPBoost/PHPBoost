@@ -23,4 +23,5 @@
 -->
 </script>
 
+<script src="{PATH_TO_ROOT}/kernel/lib/js/jquery/jquery.js"></script>
 <script src="{PATH_TO_ROOT}/kernel/lib/js/global.js"></script>
