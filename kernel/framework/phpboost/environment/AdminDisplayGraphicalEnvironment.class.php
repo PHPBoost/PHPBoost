@@ -120,10 +120,11 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		
 		$customization_config = CustomizationConfig::load();
 		$cookiebar_config = CookieBarConfig::load();
+		$maintenance_config = MaintenanceConfig::load();
 		
 		$js_top_tpl = new FileTemplate('js_top.tpl');
 		$js_top_tpl->put_all(array(
-			'C_COOKIEBAR_ENABLED'     => $cookiebar_config->is_cookiebar_enabled(),
+			'C_COOKIEBAR_ENABLED'     => $cookiebar_config->is_cookiebar_enabled() && !$maintenance_config->is_under_maintenance(),
 			'COOKIEBAR_DURATION'      => $cookiebar_config->get_cookiebar_duration(),
 			'COOKIEBAR_TRACKING_MODE' => $cookiebar_config->get_cookiebar_tracking_mode(),
 			'COOKIEBAR_CONTENT'       => TextHelper::to_js_string($cookiebar_config->get_cookiebar_content())
@@ -131,7 +132,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 		$js_bottom_tpl = new FileTemplate('js_bottom.tpl');
 		$js_bottom_tpl->put_all(array(
-			'C_COOKIEBAR_ENABLED' => $cookiebar_config->is_cookiebar_enabled()
+			'C_COOKIEBAR_ENABLED' => $cookiebar_config->is_cookiebar_enabled() && !$maintenance_config->is_under_maintenance()
 		));
 		
 		$template->put_all(array(
