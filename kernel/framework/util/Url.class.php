@@ -110,7 +110,7 @@ class Url
 				}
 			}
 
-			if (preg_match('`^[a-z0-9]+\:(?!//).+`iu', $url) > 0)
+			if (preg_match('`^[a-z0-9]+\:(?!//).+`iU', $url) > 0)
 			{	// This is a special protocol link and we don't try to convert it.
 				$this->url = $url;
 				return;
@@ -574,11 +574,11 @@ class Url
 				{
 					$a_regex .= '/';
 				}
-				$a_regex .= '[^"]+)(")`isu';
+				$a_regex .= '[^"]+)(")`isU';
 				$regex[] = $a_regex;
 			}
 			
-			$regex[] = '`(<script><!--\s*insert(?:Sound|Movie|Swf|Youtube)Player\\(")(' . ($only_match_relative ? '/' : '') . '[^"]+)("\\)\s*--></script>)`isu';
+			$regex[] = '`(<script><!--\s*insert(?:Sound|Movie|Swf|Youtube)Player\\(")(' . ($only_match_relative ? '/' : '') . '[^"]+)("\\)\s*--></script>)`isU';
 
 			// Update regex cache
 			if ($only_match_relative)

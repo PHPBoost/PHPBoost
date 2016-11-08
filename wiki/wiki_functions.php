@@ -36,7 +36,7 @@ function wiki_parse($contents)
 	$parser = $content_manager->get_parser();
 	
 	//Parse la balise link
-	$parser->add_module_special_tag('`\[link=([a-z0-9+#-_]+)\](.+)\[/link\]`isu', '<a href="/wiki/$1">$2</a>');
+	$parser->add_module_special_tag('`\[link=([a-z0-9+#-_]+)\](.+)\[/link\]`isU', '<a href="/wiki/$1">$2</a>');
 	$parser->set_content($contents);
 	$parser->parse();
 	
@@ -50,7 +50,7 @@ function wiki_unparse($contents)
 	$unparser = $content_manager->get_unparser();
 	
 	//Unparse la balise link
-	$unparser->add_module_special_tag('`<a href="/wiki/([a-z0-9+#-_]+)">(.*)</a>`su', '[link=$1]$2[/link]');
+	$unparser->add_module_special_tag('`<a href="/wiki/([a-z0-9+#-_]+)">(.*)</a>`sU', '[link=$1]$2[/link]');
 	$unparser->set_content($contents);
 	$unparser->parse();
 	
@@ -72,14 +72,14 @@ function wiki_second_parse($contents)
 function wiki_no_rewrite($var)
 {
 	if (!ServerEnvironmentConfig::load()->is_url_rewriting_enabled()) //Pas de rewriting
-		return preg_replace('`<a href="/wiki/([a-z0-9+#-]+)">(.*)</a>`su', '<a href="/wiki/wiki.php?title=$1">$2</a>', $var);
+		return preg_replace('`<a href="/wiki/([a-z0-9+#-]+)">(.*)</a>`sU', '<a href="/wiki/wiki.php?title=$1">$2</a>', $var);
 	else
 		return $var;
 }
 
 function remove_chapter_number_in_rewrited_title($title)
 {
-	return Url::encode_rewrite(preg_replace('`((?:[0-9 ]+)|(?:[IVXCL ]+))[\.-](.*)`iu', '$2', $title));
+	return Url::encode_rewrite(preg_replace('`((?:[0-9 ]+)|(?:[IVXCL ]+))[\.-](.*)`iU', '$2', $title));
 }
 
 //Fonction de décomposition récursive (passage par référence pour la variable content qui passe de chaîne à tableau de chaînes (5 niveaux maximum)

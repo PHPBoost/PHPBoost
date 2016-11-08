@@ -81,9 +81,9 @@ class BBCodeHighlighter extends AbstractParser
 
 		foreach ($simple_tags as $tag)
 		{
-			while (preg_match('`\[' . $tag . '\](.*)\[/' . $tag . '\]`isu', $this->content))
+			while (preg_match('`\[' . $tag . '\](.*)\[/' . $tag . '\]`isU', $this->content))
 			{
-				$this->content = preg_replace('`\[' . $tag . '\](.*)\[/' . $tag . '\]`isu', '<span style="color:' . self::$bbcode_tag_color . ';">/[/' . $tag . '/]/</span>$1<span style="color:' . self::$bbcode_tag_color . ';">/[//' . $tag . '/]/</span>', $this->content);
+				$this->content = preg_replace('`\[' . $tag . '\](.*)\[/' . $tag . '\]`isU', '<span style="color:' . self::$bbcode_tag_color . ';">/[/' . $tag . '/]/</span>$1<span style="color:' . self::$bbcode_tag_color . ';">/[//' . $tag . '/]/</span>', $this->content);
 			}
 		}
 
@@ -92,9 +92,9 @@ class BBCodeHighlighter extends AbstractParser
 
 		foreach ($tags_with_simple_property as $tag)
 		{
-			while (preg_match('`\[' . $tag . '=([^\]]+)\](.*)\[/' . $tag . '\]`isu', $this->content))
+			while (preg_match('`\[' . $tag . '=([^\]]+)\](.*)\[/' . $tag . '\]`isU', $this->content))
 			{
-				$this->content = preg_replace('`\[' . $tag . '=([^\]]+)\](.*)\[/' . $tag . '\]`isu', '<span style="color:' . self::$bbcode_tag_color . ';">/[/' . $tag . '</span>=<span style="color:' . self::$bbcode_param_color . ';">$1</span><span style="color:' . self::$bbcode_tag_color . ';">/]/</span>$2<span style="color:' . self::$bbcode_tag_color . ';">/[//' . $tag . '/]/</span>', $this->content);
+				$this->content = preg_replace('`\[' . $tag . '=([^\]]+)\](.*)\[/' . $tag . '\]`isU', '<span style="color:' . self::$bbcode_tag_color . ';">/[/' . $tag . '</span>=<span style="color:' . self::$bbcode_param_color . ';">$1</span><span style="color:' . self::$bbcode_tag_color . ';">/]/</span>$2<span style="color:' . self::$bbcode_tag_color . ';">/[//' . $tag . '/]/</span>', $this->content);
 			}
 		}
 
@@ -103,9 +103,9 @@ class BBCodeHighlighter extends AbstractParser
 
 		foreach ($tags_with_many_parameters as $tag)
 		{
-			while (preg_match('`\[(' . $tag . ')([^\]]*)\](.*)\[/' . $tag . '\]`isu', $this->content))
+			while (preg_match('`\[(' . $tag . ')([^\]]*)\](.*)\[/' . $tag . '\]`isU', $this->content))
 			{
-				$this->content = preg_replace_callback('`\[(' . $tag . ')([^\]]*)\](.*)\[/' . $tag . '\]`isu', array($this, 'highlight_bbcode_tag_with_many_parameters'), $this->content);
+				$this->content = preg_replace_callback('`\[(' . $tag . ')([^\]]*)\](.*)\[/' . $tag . '\]`isU', array($this, 'highlight_bbcode_tag_with_many_parameters'), $this->content);
 			}
 		}
 
@@ -132,7 +132,7 @@ class BBCodeHighlighter extends AbstractParser
 		$content = $matches[3];
 		$tag_name = $matches[1];
 
-		$matches[2] = preg_replace('`([a-z]+)="([^"]*)"`isu', '<span style="color:' . self::$bbcode_param_name_color . '">$1</span>=<span style="color:' . self::$bbcode_param_color . '">"$2"</span>', $matches[2]);
+		$matches[2] = preg_replace('`([a-z]+)="([^"]*)"`isU', '<span style="color:' . self::$bbcode_param_name_color . '">$1</span>=<span style="color:' . self::$bbcode_param_color . '">"$2"</span>', $matches[2]);
 
 		return '<span style="color:' . self::$bbcode_tag_color . '">/[/' . $tag_name . '</span>' .$matches[2] . '<span style="color:' . self::$bbcode_tag_color . '">/]/</span>' . $content . '<span style="color:' . self::$bbcode_tag_color . '">/[//' . $tag_name . '/]/</span>';
 	}

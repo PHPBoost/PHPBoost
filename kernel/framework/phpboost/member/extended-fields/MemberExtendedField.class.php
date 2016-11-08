@@ -123,7 +123,7 @@ class MemberExtendedField
 		
 		if (!is_array($properties['possible_values']))
 		{
-			$fixed_possible_values = preg_replace_callback( '!s:(\d+):"(.*?)";!u', function($match) {
+			$fixed_possible_values = preg_replace_callback( '!s:(\d+):"(.*?)";!', function($match) {
 				return ($match[1] == TextHelper::strlen($match[2])) ? $match[0] : 's:' . TextHelper::strlen($match[2]) . ':"' . $match[2] . '";';
 			}, $properties['possible_values']);
 			$this->possible_values = TextHelper::unserialize($fixed_possible_values);

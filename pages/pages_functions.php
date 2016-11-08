@@ -116,7 +116,7 @@ function pages_parse($contents)
 	$parser = $content_manager->get_parser();
 	
 	//Parse la balise link
-	$parser->add_module_special_tag('`\[link=([a-z0-9+#-_]+)\](.+)\[/link\]`isu', '<a href="/pages/$1">$2</a>');
+	$parser->add_module_special_tag('`\[link=([a-z0-9+#-_]+)\](.+)\[/link\]`isU', '<a href="/pages/$1">$2</a>');
 	$parser->set_content($contents);
 	$parser->parse();
 	
@@ -130,7 +130,7 @@ function pages_unparse($contents)
 	$unparser = $content_manager->get_unparser();
 	
 	//Unparse la balise link
-	$unparser->add_module_special_tag('`<a href="/pages/([a-z0-9+#-_]+)">(.*)</a>`su', '[link=$1]$2[/link]');
+	$unparser->add_module_special_tag('`<a href="/pages/([a-z0-9+#-_]+)">(.*)</a>`sU', '[link=$1]$2[/link]');
 	$unparser->set_content($contents);
 	$unparser->parse();
 	
@@ -142,7 +142,7 @@ function pages_second_parse($contents)
 {
 	if (!ServerEnvironmentConfig::load()->is_url_rewriting_enabled()) //Pas de rewriting
 	{
-		$contents = preg_replace('`<a href="/pages/([a-z0-9+#-]+)">(.*)</a>`su', '<a href="/pages/pages.php?title=$1">$2</a>', $contents);
+		$contents = preg_replace('`<a href="/pages/([a-z0-9+#-]+)">(.*)</a>`sU', '<a href="/pages/pages.php?title=$1">$2</a>', $contents);
 	}
 	
 	$content_manager = AppContext::get_content_formatting_service()->get_default_factory();

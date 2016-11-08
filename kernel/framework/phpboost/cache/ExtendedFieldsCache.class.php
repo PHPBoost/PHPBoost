@@ -45,7 +45,7 @@ class ExtendedFieldsCache implements CacheData
 		{
 			$auth = TextHelper::unserialize($row['auth']);
 			
-			$fixed_possible_values = preg_replace_callback( '!s:(\d+):"(.*?)";!u', function($match) {
+			$fixed_possible_values = preg_replace_callback( '!s:(\d+):"(.*?)";!', function($match) {
 				return ($match[1] == TextHelper::strlen($match[2])) ? $match[0] : 's:' . TextHelper::strlen($match[2]) . ':"' . $match[2] . '";';
 			}, $row['possible_values']);
 			$possible_values = TextHelper::unserialize($fixed_possible_values);

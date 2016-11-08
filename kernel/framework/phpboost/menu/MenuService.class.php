@@ -595,7 +595,7 @@ class MenuService
 		}
 		else 
 		{
-			$fixed_object = preg_replace_callback( '!s:(\d+):"(.*?)";!u', function($match) {
+			$fixed_object = preg_replace_callback( '!s:(\d+):"(.*?)";!', function($match) {
 				return ($match[1] == TextHelper::strlen($match[2])) ? $match[0] : 's:' . TextHelper::strlen($match[2]) . ':"' . $match[2] . '";';
 			}, $db_result['object']);
 			
