@@ -378,10 +378,22 @@ class HTTPRequestCustom
 	{
 		return 'http' . ($this->get_is_https() ? 's' : '') . '://' . self::get_http_host();
 	}
-
+	
+	// get full site domain url
 	public function get_site_domain_name()
 	{
 		return self::get_http_host();
+	}
+	
+	// get site domain name (without host)
+	function get_domain_name()
+	{
+		$pieces = parse_url(self::get_site_url());
+		$domain = isset($pieces['host']) ? $pieces['host'] : '';
+		if (preg_match('/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/iu', $domain, $regs))
+			return $regs['domain'];
+		
+		return false;
 	}
 
 	public function get_user_agent()
