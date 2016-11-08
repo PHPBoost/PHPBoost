@@ -121,7 +121,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//On réinsère les fragments de code qui ont été prélevés pour ne pas les considérer
 		if (!empty($this->array_tags['code']))
 		{
-			$this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isU\', \'[[CODE$1]]$2[[/CODE]]\', TextHelper::htmlspecialchars($string, ENT_NOQUOTES));'), $this->array_tags['code']);
+			$this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isu\', \'[[CODE$1]]$2[[/CODE]]\', TextHelper::htmlspecialchars($string, ENT_NOQUOTES));'), $this->array_tags['code']);
 
 			//If we don't protect the HTML code inserted into the tags code and HTML TinyMCE will parse it!
 			$this->array_tags['code'] = array_map(array($this, 'clear_html_and_code_tag'), $this->array_tags['code']);
@@ -158,26 +158,26 @@ class TinyMCEParser extends ContentFormattingParser
 		$temp_array = array();
 
 		//Border ?
-		if (preg_match('`border="([0-9]+)"`iU', $table_properties, $temp_array))
+		if (preg_match('`border="([0-9]+)"`iu', $table_properties, $temp_array))
 		{
 			if ($temp_array[1] > 0)
 				$style_properties .= 'border:' . $temp_array[1] . ';';
 		}
 
 		//Width ?
-		if (preg_match('`width="([0-9]+)"`iU', $table_properties, $temp_array))
+		if (preg_match('`width="([0-9]+)"`iu', $table_properties, $temp_array))
 		{
 			$style_properties .= 'width:' . $temp_array[1] . 'px;';
 		}
 
 		//Height ?
-		if (preg_match('`height="([0-9]+)"`iU', $table_properties, $temp_array))
+		if (preg_match('`height="([0-9]+)"`iu', $table_properties, $temp_array))
 		{
 			$style_properties .= 'height:' . $temp_array[1] . 'px;';
 		}
 
 		//Alignment
-		if (preg_match('`align="([^"]+)"`iU', $table_properties, $temp_array))
+		if (preg_match('`align="([^"]+)"`iu', $table_properties, $temp_array))
 		{
 			if ($temp_array[1] == 'center')
 			{
@@ -190,7 +190,7 @@ class TinyMCEParser extends ContentFormattingParser
 		}
 
 		//Style ?
-		if (preg_match('`style="([^"]+)"`iU', $table_properties, $temp_array))
+		if (preg_match('`style="([^"]+)"`iu', $table_properties, $temp_array))
 		{
 			$style_properties .= $temp_array[1];
 		}
@@ -211,13 +211,13 @@ class TinyMCEParser extends ContentFormattingParser
 
 		$temp_array = array();
 		//Alignment
-		if (preg_match('`align="([^"]+)"`iU', $col_properties, $temp_array))
+		if (preg_match('`align="([^"]+)"`iu', $col_properties, $temp_array))
 		{
 			$col_style .= 'text-align:' . $temp_array[1] . ';';
 		}
 
 		//Style ?
-		if (preg_match('`style="([^"]+)"`iU', $col_properties, $temp_array))
+		if (preg_match('`style="([^"]+)"`iu', $col_properties, $temp_array))
 		{
 			$col_style .= ' style="' . $temp_array[1] . ' ' . $col_style . '"';
 		}
@@ -245,25 +245,25 @@ class TinyMCEParser extends ContentFormattingParser
 		$temp_array = array();
 
 		//Colspan ?
-		if (preg_match('`colspan="([0-9]+)"`iU', $col_properties, $temp_array))
+		if (preg_match('`colspan="([0-9]+)"`iu', $col_properties, $temp_array))
 		{
 			$col_new_properties .= ' colspan="' . $temp_array[1] . '"';
 		}
 
 		//Rowspan ?
-		if (preg_match('`rowspan="([0-9]+)"`iU', $col_properties, $temp_array))
+		if (preg_match('`rowspan="([0-9]+)"`iu', $col_properties, $temp_array))
 		{
 			$col_new_properties .= ' rowspan="' . $temp_array[1] . '"';
 		}
 
 		//Alignment
-		if (preg_match('`align="([^"]+)"`iU', $col_properties, $temp_array))
+		if (preg_match('`align="([^"]+)"`iu', $col_properties, $temp_array))
 		{
 			$col_style .= 'text-align:' . $temp_array[1] . ';';
 		}
 
 		//Style ?
-		if (preg_match('`style="([^"]+)"`iU', $col_properties, $temp_array))
+		if (preg_match('`style="([^"]+)"`iu', $col_properties, $temp_array))
 		{
 			$col_style .= ' style="' . $temp_array[1] . ' ' . $col_style . '"';
 		}
@@ -314,7 +314,7 @@ class TinyMCEParser extends ContentFormattingParser
 			'`&lt;p&gt;\s*&nbsp;\s*&lt;/p&gt;\s*`',
 			'`&lt;p&gt;&nbsp;&lt;/p&gt;\s*`',
 			'`&lt;p&gt;&nbsp;&nbsp;&lt;/p&gt;\s*`',
-			'`&lt;div&gt;(.+)&lt;/div&gt;`isU',
+			'`&lt;div&gt;(.+)&lt;/div&gt;`isu',
 			'`&lt;/p&gt;[\s]*`i'
 		);
 		$array_preg_replace = array(
@@ -330,7 +330,7 @@ class TinyMCEParser extends ContentFormattingParser
 
 		//On supprime tous les retours à la ligne ajoutés par TinyMCE (seuls les nouveaux paragraphes (<p>) compteront)
 		$this->content = str_replace('\r\n', '\n', $this->content);
-		$this->content = preg_replace('`\s*\n+\s*`isU', "\n", $this->content);
+		$this->content = preg_replace('`\s*\n+\s*`isu', "\n", $this->content);
 		
 		$array_preg = array();
 		$array_preg_replace = array();
@@ -339,36 +339,36 @@ class TinyMCEParser extends ContentFormattingParser
 		//Color tag
 		if (!in_array('color', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;span style="color: *([#a-f0-9]+);"&gt;(.+)&lt;/span&gt;`isU');
+			array_push($array_preg, '`&lt;span style="color: *([#a-f0-9]+);"&gt;(.+)&lt;/span&gt;`isu');
 			array_push($array_preg_replace, '<span style="color:$1;">$2</span>');
 		}
 		//Background color tag
 		if (!in_array('bgcolor', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;span style="background-color: *([#a-f0-9]+);"&gt;(.+)&lt;/span&gt;`isU');
+			array_push($array_preg, '`&lt;span style="background-color: *([#a-f0-9]+);"&gt;(.+)&lt;/span&gt;`isu');
 			array_push($array_preg_replace, '<span style="background-color:$1;">$2</span>');
 		}
 		//Underline tag
 		if (!in_array('u', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;span style="text-decoration: underline;"&gt;(.+)&lt;/span&gt;`isU');
+			array_push($array_preg, '`&lt;span style="text-decoration: underline;"&gt;(.+)&lt;/span&gt;`isu');
 			array_push($array_preg_replace, '<span style="text-decoration: underline;">$1</span>');
 		}
 		//Strike tag
 		if (!in_array('s', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;span style="text-decoration: line-through;"&gt;(.+)&lt;/span&gt;`isU');
+			array_push($array_preg, '`&lt;span style="text-decoration: line-through;"&gt;(.+)&lt;/span&gt;`isu');
 			array_push($array_preg_replace, '<s>$1</s>');
-			array_push($array_preg, '`&lt;s&gt;(.+)&lt;/s&gt;`isU');
+			array_push($array_preg, '`&lt;s&gt;(.+)&lt;/s&gt;`isu');
 			array_push($array_preg_replace, '<s>$1</s>');
 		}
 		
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 		
 		//On dissocie les styles des span et div
-		$this->content = preg_replace_callback('`&lt;span style="color: *([#a-f0-9]+); background-color: *([#a-f0-9]+);( text-decoration: line-through;| text-decoration: underline;)?"&gt;(.*)&lt;/span&gt;`isU', array($this, 'parse_span_color_and_background_style'), $this->content );
-		$this->content = preg_replace_callback('`&lt;span style="([^;]*); ([^"]*)"&gt;(.*)&lt;/span&gt;`isU', array($this, 'parse_span_style'), $this->content );
-		$this->content = preg_replace_callback('`&lt;div style="([^;]*); ([^"]*)"&gt;(.*)&lt;/div&gt;`isU', array($this, 'parse_div_style'), $this->content );
+		$this->content = preg_replace_callback('`&lt;span style="color: *([#a-f0-9]+); background-color: *([#a-f0-9]+);( text-decoration: line-through;| text-decoration: underline;)?"&gt;(.*)&lt;/span&gt;`isu', array($this, 'parse_span_color_and_background_style'), $this->content );
+		$this->content = preg_replace_callback('`&lt;span style="([^;]*); ([^"]*)"&gt;(.*)&lt;/span&gt;`isu', array($this, 'parse_span_style'), $this->content );
+		$this->content = preg_replace_callback('`&lt;div style="([^;]*); ([^"]*)"&gt;(.*)&lt;/div&gt;`isu', array($this, 'parse_div_style'), $this->content );
 		
 		$array_preg = array();
 		$array_preg_replace = array();
@@ -376,108 +376,108 @@ class TinyMCEParser extends ContentFormattingParser
 		//Strong tag
 		if (!in_array('b', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;strong&gt;(.+)&lt;/strong&gt;`isU');
+			array_push($array_preg, '`&lt;strong&gt;(.+)&lt;/strong&gt;`isu');
 			array_push($array_preg_replace, '<strong>$1</strong>');
 		}
 		//Italic tag
 		if (!in_array('i', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;em&gt;(.+)&lt;/em&gt;`isU');
+			array_push($array_preg, '`&lt;em&gt;(.+)&lt;/em&gt;`isu');
 			array_push($array_preg_replace, '<em>$1</em>');
 		}
 		//Paragraph tag
 		if (!in_array('p', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;p&gt;(.+)&lt;/p&gt;`isU');
+			array_push($array_preg, '`&lt;p&gt;(.+)&lt;/p&gt;`isu');
 			array_push($array_preg_replace, '<p>$1</p>');
 		}
 		//Link tag
 		if (!in_array('url', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;a(?: title="([^"]+)")? href="(' . Url::get_wellformness_regex() . ')"&gt;(.+)&lt;/a&gt;`sU');
+			array_push($array_preg, '`&lt;a(?: title="([^"]+)")? href="(' . Url::get_wellformness_regex() . ')"&gt;(.+)&lt;/a&gt;`su');
 			array_push($array_preg_replace, '<a title="$1" href="$2">$3</a>');
-			array_push($array_preg, '`&lt;a title="" href="(' . Url::get_wellformness_regex() . ')"&gt;(.+)&lt;/a&gt;`sU');
+			array_push($array_preg, '`&lt;a title="" href="(' . Url::get_wellformness_regex() . ')"&gt;(.+)&lt;/a&gt;`su');
 			array_push($array_preg_replace, '<a title="" href="$1">$2</a>');
 		}
 		//Link tag with target
 		if (!in_array('url', $this->forbidden_tags))
 		{
 
-			array_push($array_preg, '`&lt;a(?: title="([^"]+)")? href="(' . Url::get_wellformness_regex() . ')" target="_blank"&gt;(.+)&lt;/a&gt;`sU');
+			array_push($array_preg, '`&lt;a(?: title="([^"]+)")? href="(' . Url::get_wellformness_regex() . ')" target="_blank"&gt;(.+)&lt;/a&gt;`su');
 			array_push($array_preg_replace, '<a title="$1" href="$2" target="_blank">$3</a>');
 		}
 		//Sub tag
 		if (!in_array('sub', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;sub&gt;(.+)&lt;/sub&gt;`isU');
+			array_push($array_preg, '`&lt;sub&gt;(.+)&lt;/sub&gt;`isu');
 			array_push($array_preg_replace, '<sub>$1</sub>');
 		}
 		//Sup tag
 		if (!in_array('sup', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;sup&gt;(.+)&lt;/sup&gt;`isU');
+			array_push($array_preg, '`&lt;sup&gt;(.+)&lt;/sup&gt;`isu');
 			array_push($array_preg_replace, '<sup>$1</sup>');
 		}
 		//Pre tag
 		if (!in_array('pre', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;pre&gt;(.+)(<br />[\s]*)*&lt;/pre&gt;`isU');
+			array_push($array_preg, '`&lt;pre&gt;(.+)(<br />[\s]*)*&lt;/pre&gt;`isu');
 			array_push($array_preg_replace, '<pre>$1</pre>');
 		}
 		//Youtube tag
 		if (!in_array('youtube', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`&lt;video class=\"youtube-player\" width="([^"]+)" height="([^"]+)" controls &gt;&lt;source src="([^"]+)"  type=\"video/mp4\" /&gt;&lt;/video&gt;`is', array($this, 'parse_youtube_tag'), $this->content);
-			$this->content = preg_replace_callback('`&lt;iframe src="(?:https?:)?//www.youtube.com/(.*)" width="([^"]+)" height="([^"]+)"(?: frameborder="0")?(?: allowfullscreen="allowfullscreen")?&gt;(.+)?&lt;/iframe&gt;`isU', array($this, 'parse_youtube_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;video class=\"youtube-player\" width="([^"]+)" height="([^"]+)" controls &gt;&lt;source src="([^"]+)"  type=\"video/mp4\" /&gt;&lt;/video&gt;`isu', array($this, 'parse_youtube_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="(?:https?:)?//www.youtube.com/(.*)" width="([^"]+)" height="([^"]+)"(?: frameborder="0")?(?: allowfullscreen="allowfullscreen")?&gt;(.+)?&lt;/iframe&gt;`isu', array($this, 'parse_youtube_tag'), $this->content);
 		}
 		//Flash tag
 		if (!in_array('swf', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`&lt;video(?: style="([^"]+)")?(?: controls="([^"]+)")? width="([^"]+)" height="([^"]+)"(?: controls="([^"]+)")?&gt;\s?&lt;source src="(.*).flv" /&gt;&lt;/video&gt;`is', array($this, 'parse_swf_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;video(?: style="([^"]+)")?(?: controls="([^"]+)")? width="([^"]+)" height="([^"]+)"(?: controls="([^"]+)")?&gt;\s?&lt;source src="(.*).flv" /&gt;&lt;/video&gt;`isu', array($this, 'parse_swf_tag'), $this->content);
 		}
 		//Movie tag
 		if (!in_array('movie', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`&lt;video(?: style="([^"]+)")?(?: controls="([^"]+)")? width="([^"]+)" height="([^"]+)"(?: controls="([^"]+)")?&gt;\s?&lt;source src="(.*)" /&gt;&lt;/video&gt;`is', array($this, 'parse_movie_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;video(?: style="([^"]+)")?(?: controls="([^"]+)")? width="([^"]+)" height="([^"]+)"(?: controls="([^"]+)")?&gt;\s?&lt;source src="(.*)" /&gt;&lt;/video&gt;`isu', array($this, 'parse_movie_tag'), $this->content);
 		}
 		//Anchor tag
 		if (!in_array('anchor', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;a id="([^"]+)" class="mce-item-anchor"?&gt;&lt;/a&gt;`isU');
+			array_push($array_preg, '`&lt;a id="([^"]+)" class="mce-item-anchor"?&gt;&lt;/a&gt;`isu');
 			array_push($array_preg_replace, '<span id="$1" class="anchor"></span>');
-			array_push($array_preg, '`&lt;a(?: class="[^"]+")?(?: title="[^"]+")?(?: name="[^"]+")? id="([^"]+)"&gt;(.*)&lt;/a&gt;`isU');
+			array_push($array_preg, '`&lt;a(?: class="[^"]+")?(?: title="[^"]+")?(?: name="[^"]+")? id="([^"]+)"&gt;(.*)&lt;/a&gt;`isu');
 			array_push($array_preg_replace, '<span id="$1" class="anchor">$2</span>');
 		}
 		//Title tag
 		if (!in_array('title', $this->forbidden_tags))
 		{
 			//Title 1
-			array_push($array_preg, '`&lt;h1[^&]*&gt;(.+)&lt;/h1&gt;`isU');
+			array_push($array_preg, '`&lt;h1[^&]*&gt;(.+)&lt;/h1&gt;`isu');
 			array_push($array_preg_replace, '<h2 class="formatter-title">$1</h2>');
 			//Title 2
-			array_push($array_preg, '`&lt;h2[^&]*&gt;(.+)&lt;/h2&gt;`isU');
+			array_push($array_preg, '`&lt;h2[^&]*&gt;(.+)&lt;/h2&gt;`isu');
 			array_push($array_preg_replace, '<h3 class="formatter-title">$1</h3>');
 			//Title 3
-			array_push($array_preg, '`&lt;h3[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h3&gt;`isU');
+			array_push($array_preg, '`&lt;h3[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h3&gt;`isu');
 			array_push($array_preg_replace, '<h4 class="formatter-title">$1</h4>');
 			//Title 4
-			array_push($array_preg, '`&lt;h4[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h4&gt;`isU');
+			array_push($array_preg, '`&lt;h4[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h4&gt;`isu');
 			array_push($array_preg_replace, '<h5 class="formatter-title">$1</h5>');
 			//Title 5
-			array_push($array_preg, '`&lt;h5[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h5&gt;`isU');
+			array_push($array_preg, '`&lt;h5[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h5&gt;`isu');
 			array_push($array_preg_replace, '<h6 class="formatter-title">$1</h6>');
 		}
 		
 		//Style tag
 		if (!in_array('style', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;span class="(success|question|notice|warning|error)"&gt;(.+)&lt;/span&gt;`isU');
+			array_push($array_preg, '`&lt;span class="(success|question|notice|warning|error)"&gt;(.+)&lt;/span&gt;`isu');
 			array_push($array_preg_replace, '<span class="$1">$2</span>');
 		}
 		//Align tag
 		if (!in_array('align', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;p style="text-align: (left|right|center|justify);"&gt;(.+)&lt;/p&gt;`isU');
+			array_push($array_preg, '`&lt;p style="text-align: (left|right|center|justify);"&gt;(.+)&lt;/p&gt;`isu');
 			array_push($array_preg_replace, '<p style="text-align:$1">$2</p>' . "\n");
 		}
 		
@@ -490,11 +490,11 @@ class TinyMCEParser extends ContentFormattingParser
 			//On doit repasser plusieurs fois pour que ça soit pris en compte (comportement un peu bizarre)
 			//Par mesure de sécurité on s'arrête à 10
 			$nbr_list_parsing = 0;
-			while (preg_match('`&lt;o|ul&gt;(.+)&lt;/o|ul&gt;`isU', $this->content) && $nbr_list_parsing++ < 10)
+			while (preg_match('`&lt;o|ul&gt;(.+)&lt;/o|ul&gt;`isu', $this->content) && $nbr_list_parsing++ < 10)
 			{
-				$this->content = preg_replace('`&lt;ul&gt;(.+)&lt;/ul&gt;`isU', '<ul class="formatter-ul">' . "\n" .'$1</ul>', $this->content);
-				$this->content = preg_replace('`&lt;ol&gt;(.+)&lt;/ol&gt;`isU', '<ol class="formatter-ol">' . "\n" .'$1</ol>', $this->content);
-				$this->content = preg_replace('`&lt;li&gt;(.*)&lt;/li&gt;`isU', '<li class="formatter-li">$1</li>' . "\n", $this->content);
+				$this->content = preg_replace('`&lt;ul&gt;(.+)&lt;/ul&gt;`isu', '<ul class="formatter-ul">' . "\n" .'$1</ul>', $this->content);
+				$this->content = preg_replace('`&lt;ol&gt;(.+)&lt;/ol&gt;`isu', '<ol class="formatter-ol">' . "\n" .'$1</ol>', $this->content);
+				$this->content = preg_replace('`&lt;li&gt;(.*)&lt;/li&gt;`isu', '<li class="formatter-li">$1</li>' . "\n", $this->content);
 			}
 		}
 
@@ -512,34 +512,34 @@ class TinyMCEParser extends ContentFormattingParser
 			//On doit repasser plusieurs fois pour que ça soit pris en compte (comportement un peu bizarre)
 			//Par mesure de sécurité on s'arrête à 10
 			$nbr_size_parsing = 0;
-			while (preg_match('`&lt;span style="font-size: ([0-9a-z-]+);"&gt;(.+)&lt;/span&gt;`isU', $this->content) && $nbr_size_parsing++ < 10)
+			while (preg_match('`&lt;span style="font-size: ([0-9a-z-]+);"&gt;(.+)&lt;/span&gt;`isu', $this->content) && $nbr_size_parsing++ < 10)
 			{
-				$this->content = preg_replace_callback('`&lt;span style="font-size: ([0-9a-z-]+);"&gt;(.+)&lt;/span&gt;`isU', array($this, 'parse_size_tag'), $this->content);
+				$this->content = preg_replace_callback('`&lt;span style="font-size: ([0-9a-z-]+);"&gt;(.+)&lt;/span&gt;`isu', array($this, 'parse_size_tag'), $this->content);
 			}
 		}
 
 		//image tag
 		if (!in_array('img', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`&lt;img(?: style="([^"]+)")? src="([^"]+)"(?: alt="([^"]+)")?((?: ?[a-z]+="[^"]*")*) /&gt;`is', array($this, 'parse_img'), $this->content);
+			$this->content = preg_replace_callback('`&lt;img(?: style="([^"]+)")? src="([^"]+)"(?: alt="([^"]+)")?((?: ?[a-z]+="[^"]*")*) /&gt;`isu', array($this, 'parse_img'), $this->content);
 		}
 
 		//indent tag
 		if (!in_array('indent', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`&lt;p style="padding-left: ([0-9]+)px;"&gt;(.+)&lt;/p&gt;`isU', array($this, 'parse_indent_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;p style="padding-left: ([0-9]+)px;"&gt;(.+)&lt;/p&gt;`isu', array($this, 'parse_indent_tag'), $this->content);
 		}
 
 		//Line tag
 		if (!in_array('line', $this->forbidden_tags))
 		{
-			$this->content = preg_replace('`&lt;hr(?: class="([^"]+)?")? /&gt;`isU', '<hr class="formatter-hr" />', $this->content);
+			$this->content = preg_replace('`&lt;hr(?: class="([^"]+)?")? /&gt;`isu', '<hr class="formatter-hr" />', $this->content);
 		}
 
 		//Quote tag
 		if (!in_array('quote', $this->forbidden_tags))
 		{
-			$this->content = preg_replace('`(.)(?:\s*<br />\s*)?\s*&lt;blockquote&gt;\s*(?:&lt;p&gt;)?(.+)(?:<br />[\s]*)*\s*(&lt;/p&gt;)?&lt;/blockquote&gt;`isU', '$1<div class="formatter-container formatter-blockquote"><span class="formatter-title">' . $LANG['quotation'] . ' :</span><div class="formatter-content">$2</div></div>', $this->content);
+			$this->content = preg_replace('`(.)(?:\s*<br />\s*)?\s*&lt;blockquote&gt;\s*(?:&lt;p&gt;)?(.+)(?:<br />[\s]*)*\s*(&lt;/p&gt;)?&lt;/blockquote&gt;`isu', '$1<div class="formatter-container formatter-blockquote"><span class="formatter-title">' . $LANG['quotation'] . ' :</span><div class="formatter-content">$2</div></div>', $this->content);
 		}
 
 		//Font tag
@@ -549,9 +549,9 @@ class TinyMCEParser extends ContentFormattingParser
 			//Tant qu'il existe des occurences de cette balise à travailler, on les traite
 			//Sécurité : on traite au maximum 10 fois pour éviter les boucles infinies éventuelles
 			$nbr_font_parsing = 0;
-			while (preg_match('`&lt;span style="font-family: (.*);"&gt;(.*)&lt;/span&gt;`isU', $this->content) && $nbr_font_parsing++ < 10)
+			while (preg_match('`&lt;span style="font-family: (.*);"&gt;(.*)&lt;/span&gt;`isu', $this->content) && $nbr_font_parsing++ < 10)
 			{
-				$this->content = preg_replace_callback('`&lt;span style="font-family: (.*);"&gt;(.*)&lt;/span&gt;`isU', array($this, 'parse_font_tag'), $this->content );
+				$this->content = preg_replace_callback('`&lt;span style="font-family: (.*);"&gt;(.*)&lt;/span&gt;`isu', array($this, 'parse_font_tag'), $this->content );
 			}
 		}
 		
@@ -565,7 +565,7 @@ class TinyMCEParser extends ContentFormattingParser
 		$content_contains_table = false;
 		while (preg_match('`&lt;table([^&]*)&gt;(.+)&lt;/table&gt;`is', $this->content))
 		{
-			$this->content = preg_replace_callback('`&lt;table([^&]*)&gt;(.+)&lt;/table&gt;`isU', array($this, 'parse_table_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;table([^&]*)&gt;(.+)&lt;/table&gt;`isu', array($this, 'parse_table_tag'), $this->content);
 			$content_contains_table = true;
 		}
 
@@ -574,14 +574,14 @@ class TinyMCEParser extends ContentFormattingParser
 			//Rows
 			while (preg_match('`&lt;tr([^&]*)&gt;(.+)&lt;/tr&gt;`is', $this->content))
 			{
-				$this->content = preg_replace_callback('`&lt;tr([^&]*)&gt;(.+)&lt;/tr&gt;`isU', array($this, 'parse_row_tag'), $this->content);
+				$this->content = preg_replace_callback('`&lt;tr([^&]*)&gt;(.+)&lt;/tr&gt;`isu', array($this, 'parse_row_tag'), $this->content);
 			}
 
 			//Cols
 			while (preg_match('`&lt;td|h([^&]*)&gt;(.+)&lt;/td|h&gt;`is', $this->content))
 			{
-				$this->content = preg_replace_callback('`&lt;(td)([^&]*)&gt;(.+)?&lt;/td&gt;`isU', array($this, 'parse_col_tag'), $this->content);
-				$this->content = preg_replace_callback('`&lt;(th)([^&]*)&gt;(.+)?&lt;/th&gt;`isU', array($this, 'parse_col_tag'), $this->content);
+				$this->content = preg_replace_callback('`&lt;(td)([^&]*)&gt;(.+)?&lt;/td&gt;`isu', array($this, 'parse_col_tag'), $this->content);
+				$this->content = preg_replace_callback('`&lt;(th)([^&]*)&gt;(.+)?&lt;/th&gt;`isu', array($this, 'parse_col_tag'), $this->content);
 			}
 		}
 	}
@@ -621,23 +621,23 @@ class TinyMCEParser extends ContentFormattingParser
 		global $LANG;
 
 		$array_preg = array(
-			'b' => '`\[b\](.+)\[/b\]`isU',
-			'i' => '`\[i\](.+)\[/i\]`isU',
-			'u' => '`\[u\](.+)\[/u\]`isU',
-			's' => '`\[s\](.+)\[/s\]`isU',
-			'p' => '`\[p\](.+)\[/p\]`isU',
-			'pre' => '`\[pre\](.+)\[/pre\]`isU',
-			'float' => '`\[float=(left|right)\](.+)\[/float\]`isU',
-			'acronym' => '`\[acronym=([^\n[\]<]+)\](.*)\[/acronym\]`isU',
-			'style' => '`\[style=(success|question|notice|warning|error)\](.+)\[/style\]`isU',
-			'swf' => '`\[swf=([0-9]{1,3}),([0-9]{1,3})\]([a-z0-9_+.:?/=#%@&;,-]*)\[/swf\]`iU',
-			'movie' => '`\[movie=([0-9]{1,3}),([0-9]{1,3})\]([a-z0-9_+.:?/=#%@&;,-]*)\[/movie\]`iU',
-			'sound' => '`\[sound\]([a-z0-9_+.:?/=#%@&;,-]*)\[/sound\]`iU',
-			'math' => '`\[math\](.+)\[/math\]`iU',
-			'url' => '`(\s+)(' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ')(\s|<+)`sU',
-			'url2' => '`(\s+)(www\.' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_NOT_USED) . ')(\s|<+)`sU',
+			'b' => '`\[b\](.+)\[/b\]`isu',
+			'i' => '`\[i\](.+)\[/i\]`isu',
+			'u' => '`\[u\](.+)\[/u\]`isu',
+			's' => '`\[s\](.+)\[/s\]`isu',
+			'p' => '`\[p\](.+)\[/p\]`isu',
+			'pre' => '`\[pre\](.+)\[/pre\]`isu',
+			'float' => '`\[float=(left|right)\](.+)\[/float\]`isu',
+			'acronym' => '`\[acronym=([^\n[\]<]+)\](.*)\[/acronym\]`isu',
+			'style' => '`\[style=(success|question|notice|warning|error)\](.+)\[/style\]`isu',
+			'swf' => '`\[swf=([0-9]{1,3}),([0-9]{1,3})\]([a-z0-9_+.:?/=#%@&;,-]*)\[/swf\]`iu',
+			'movie' => '`\[movie=([0-9]{1,3}),([0-9]{1,3})\]([a-z0-9_+.:?/=#%@&;,-]*)\[/movie\]`iu',
+			'sound' => '`\[sound\]([a-z0-9_+.:?/=#%@&;,-]*)\[/sound\]`iu',
+			'math' => '`\[math\](.+)\[/math\]`iu',
+			'url' => '`(\s+)(' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ')(\s|<+)`su',
+			'url2' => '`(\s+)(www\.' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_NOT_USED) . ')(\s|<+)`su',
 			'mail' => '`(\s+)([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})(\s+)`i',
-			'lightbox' => '`\[lightbox=((?!javascript:)' . Url::get_wellformness_regex() . ')\]([^\n\r\t\f]+)\[/lightbox\]`isU',
+			'lightbox' => '`\[lightbox=((?!javascript:)' . Url::get_wellformness_regex() . ')\]([^\n\r\t\f]+)\[/lightbox\]`isu',
 		);
 
 		$array_preg_replace = array(
@@ -675,7 +675,7 @@ class TinyMCEParser extends ContentFormattingParser
 				//Balise interdite : on la supprime
 				if (in_array($tag, $other_tags))
 				{
-					$array_preg[$tag] = '`\[' . $tag . '.*\](.+)\[/' . $tag . '\]`isU';
+					$array_preg[$tag] = '`\[' . $tag . '.*\](.+)\[/' . $tag . '\]`isu';
 					$array_preg_replace[$tag] = "$1";
 				}
 				else
@@ -693,47 +693,47 @@ class TinyMCEParser extends ContentFormattingParser
 		//FA tag
 		if (!in_array('fa', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`\[fa(=[a-z0-9-]+)?(,[a-z0-9-]+)?(,[a-z0-9-]+)?\]([a-z0-9-]+)\[/fa\]`iU', array($this, 'parse_fa'), $this->content);
+			$this->content = preg_replace_callback('`\[fa(=[a-z0-9-]+)?(,[a-z0-9-]+)?(,[a-z0-9-]+)?\]([a-z0-9-]+)\[/fa\]`iu', array($this, 'parse_fa'), $this->content);
 		}
 
 		##Nested tags
 		//Hide tag
 		if (!in_array('hide', $this->forbidden_tags))
 		{
-			$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<div class="formatter-container formatter-hide" onclick="bb_hide(this)"><span class="formatter-title">' . LangLoader::get_message('hidden', 'common') . ' :</span><div class="formatter-content">$1</div></div>', $this->content);
-			$this->_parse_imbricated('[hide=', '`\[hide=([^\]]+)\](.+)\[/hide\]`sU', '<div class="formatter-container formatter-hide" onclick="bb_hide(this)"><span class="formatter-title title-perso">$1 :</span><div class="formatter-content">$2</div></div>', $this->content);
+			$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`su', '<div class="formatter-container formatter-hide" onclick="bb_hide(this)"><span class="formatter-title">' . LangLoader::get_message('hidden', 'common') . ' :</span><div class="formatter-content">$1</div></div>', $this->content);
+			$this->_parse_imbricated('[hide=', '`\[hide=([^\]]+)\](.+)\[/hide\]`su', '<div class="formatter-container formatter-hide" onclick="bb_hide(this)"><span class="formatter-title title-perso">$1 :</span><div class="formatter-content">$2</div></div>', $this->content);
 		}
 
 		//Block tag
 		if (!in_array('block', $this->forbidden_tags))
 		{
-			$this->_parse_imbricated('[block]', '`\[block\](.+)\[/block\]`sU', '<div class="formatter-container formatter-block">$1</div>', $this->content);
-			$this->_parse_imbricated('[block style=', '`\[block style="([^"]+)"\](.+)\[/block\]`sU', '<div class="formatter-container formatter-block" style="$1">$2</div>', $this->content);
+			$this->_parse_imbricated('[block]', '`\[block\](.+)\[/block\]`su', '<div class="formatter-container formatter-block">$1</div>', $this->content);
+			$this->_parse_imbricated('[block style=', '`\[block style="([^"]+)"\](.+)\[/block\]`su', '<div class="formatter-container formatter-block" style="$1">$2</div>', $this->content);
 		}
 
 		//Fieldset tag
 		if (!in_array('fieldset', $this->forbidden_tags))
 		{
-			$this->_parse_imbricated('[fieldset', '`\[fieldset(?: legend="(.*)")?(?: style="([^"]*)")?\](.+)\[/fieldset\]`sU', '<fieldset class="formatter-container formatter-fieldset" style="$2"><legend>$1</legend><div class="formatter-content">$3</div></fieldset>', $this->content);
+			$this->_parse_imbricated('[fieldset', '`\[fieldset(?: legend="(.*)")?(?: style="([^"]*)")?\](.+)\[/fieldset\]`su', '<fieldset class="formatter-container formatter-fieldset" style="$2"><legend>$1</legend><div class="formatter-content">$3</div></fieldset>', $this->content);
 		}
 
 		//Wikipedia tag
 		if (!in_array('wikipedia', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`\[wikipedia(?: page="([^"]+)")?(?: lang="([a-z]+)")?\](.+)\[/wikipedia\]`isU', array($this, 'parse_wikipedia_links'), $this->content);
+			$this->content = preg_replace_callback('`\[wikipedia(?: page="([^"]+)")?(?: lang="([a-z]+)")?\](.+)\[/wikipedia\]`isu', array($this, 'parse_wikipedia_links'), $this->content);
 		}
 
 		//Hide tag  //Code en doublon ?
 		if (!in_array('hide', $this->forbidden_tags))
 		{
-			$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<span class="formatter-hide">' . LangLoader::get_message('hidden', 'common') . ' :</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>', $this->content);
+			$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`su', '<span class="formatter-hide">' . LangLoader::get_message('hidden', 'common') . ' :</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>', $this->content);
 		}
 
 		//Quote tag (this tag is managed by TinyMCE but it can also be used in BBCode syntax)
 		if (!in_array('quote', $this->forbidden_tags))
 		{
-			$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`sU', '<div class="formatter-container formatter-blockquote"><span class="formatter-title">' . $LANG['quotation'] . ' :</span><div class="formatter-content">$1</div></div>', $this->content);
-			$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`sU', '<div class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">$1 :</span><div class="formatter-content">$2</div></div>', $this->content);
+			$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`su', '<div class="formatter-container formatter-blockquote"><span class="formatter-title">' . $LANG['quotation'] . ' :</span><div class="formatter-content">$1</div></div>', $this->content);
+			$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`su', '<div class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">$1 :</span><div class="formatter-content">$2</div></div>', $this->content);
 		}
 		
 		if (!in_array('feed', $this->forbidden_tags))
@@ -926,16 +926,16 @@ class TinyMCEParser extends ContentFormattingParser
 		$alt = !empty($matches[3]) ? $matches[3] : '';
 		$style = !empty($matches[1]) ? $matches[1] : '';
 		
-		if (preg_match('`width:.?([0-9]+)px;`iU', $style, $temp_array))
+		if (preg_match('`width:.?([0-9]+)px;`iu', $style, $temp_array))
 		{
 			$width = $temp_array[1];
-			$style = preg_replace('`width:.?' . $width . 'px;`iU', '', $style);
+			$style = preg_replace('`width:.?' . $width . 'px;`iu', '', $style);
 		}
 		
-		if (preg_match('`height:.?([0-9]+)px;`iU', $style, $temp_array))
+		if (preg_match('`height:.?([0-9]+)px;`iu', $style, $temp_array))
 		{
 			$height = $temp_array[1];
-			$style = preg_replace('`height:.?' . $height . 'px;`iU', '', $style);
+			$style = preg_replace('`height:.?' . $height . 'px;`iu', '', $style);
 		}
 		$style = explode(';', $style);
 		

@@ -54,24 +54,24 @@ class ContentSecondParser extends AbstractParser
 	public function parse()
 	{
 		//Relative url parsing
-		$this->content = preg_replace_callback('`(src|href)="/([A-Za-z0-9#+-_\./]+)"`sU', array($this, 'callbackrelative_url'), $this->content);
+		$this->content = preg_replace_callback('`(src|href)="/([A-Za-z0-9#+-_\./]+)"`su', array($this, 'callbackrelative_url'), $this->content);
 		
 		//Balise code
 		if (TextHelper::strpos($this->content, '[[CODE') !== false)
 		{
-			$this->content = preg_replace_callback('`\[\[CODE(?:=([A-Za-z0-9#+-_.\s]+))?(?:,(0|1)(?:,(0|1))?)?\]\](.+)\[\[/CODE\]\]`sU', array($this, 'callbackhighlight_code'), $this->content);
+			$this->content = preg_replace_callback('`\[\[CODE(?:=([A-Za-z0-9#+-_.\s]+))?(?:,(0|1)(?:,(0|1))?)?\]\](.+)\[\[/CODE\]\]`su', array($this, 'callbackhighlight_code'), $this->content);
 		}
 		
 		//Balise member
 		if (stripos($this->content, '[MEMBER]') !== false)
 		{
-			$this->content = preg_replace_callback('`\[MEMBER\](.+)\[/MEMBER\]`isU', array($this, 'callback_member_tag'), $this->content);
+			$this->content = preg_replace_callback('`\[MEMBER\](.+)\[/MEMBER\]`isu', array($this, 'callback_member_tag'), $this->content);
 		}
 		
 		//Balise moderator
 		if (stripos($this->content, '[MODERATOR]') !== false)
 		{
-			$this->content = preg_replace_callback('`\[MODERATOR\](.+)\[/MODERATOR\]`isU', array($this, 'callback_moderator_tag'), $this->content);
+			$this->content = preg_replace_callback('`\[MODERATOR\](.+)\[/MODERATOR\]`isu', array($this, 'callback_moderator_tag'), $this->content);
 		}
 		
 		//Media
@@ -87,7 +87,7 @@ class ContentSecondParser extends AbstractParser
 			if ($server_config->has_gd_library())
 			{
 				require_once PATH_TO_ROOT . '/kernel/lib/php/mathpublisher/mathpublisher.php';
-				$this->content = preg_replace_callback('`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU', array($this, 'math_code'), $this->content);
+				$this->content = preg_replace_callback('`\[\[MATH\]\](.+)\[\[/MATH\]\]`su', array($this, 'math_code'), $this->content);
 			}
 		}
 		
@@ -295,13 +295,13 @@ class ContentSecondParser extends AbstractParser
 	private function process_media_insertion()
 	{
 		//Swf
-		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSwfPlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isU', array('ContentSecondParser', 'process_swf_tag'), $this->content);
+		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSwfPlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isu', array('ContentSecondParser', 'process_swf_tag'), $this->content);
 		//Movie
-		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isU', array('ContentSecondParser', 'process_movie_tag'), $this->content);
+		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isu', array('ContentSecondParser', 'process_movie_tag'), $this->content);
 		//Sound
-		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSoundPlayer\(\'([^\']+)\'\);\[\[/MEDIA\]\]`isU', array('ContentSecondParser', 'process_sound_tag'), $this->content);
+		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSoundPlayer\(\'([^\']+)\'\);\[\[/MEDIA\]\]`isu', array('ContentSecondParser', 'process_sound_tag'), $this->content);
 		//Youtube
-		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertYoutubePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isU', array('ContentSecondParser', 'process_youtube_tag'), $this->content);
+		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertYoutubePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isu', array('ContentSecondParser', 'process_youtube_tag'), $this->content);
 	}
 
 	/**

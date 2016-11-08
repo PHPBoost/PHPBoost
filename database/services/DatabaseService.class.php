@@ -44,7 +44,7 @@ class DatabaseService
 
 		//Case des mots clés.
 		$key_words = array('select', 'update', 'delete', 'insert into', 'truncate', 'alter', 'table', 'status', 'set', 'drop', 'from', 'values', 'count', 'distinct', 'having', 'left', 'right', 'join', 'natural', 'outer', 'inner', 'between', 'where', 'group by', 'order by', 'limit', 'union', 'or', 'and', 'not', 'in', 'as', 'on', 'all', 'any', 'like', 'concat', 'substring', 'collate', 'collation', 'primary', 'key', 'default', 'null', 'exists', 'status', 'show');
-		$query = preg_replace_callback('`\b(' . implode('|', $key_words) . ')+\b`', create_function('$matches','return TextHelper::strtoupper($matches[1]);'), $query);
+		$query = preg_replace_callback('`\b(' . implode('|', $key_words) . ')+\b`u', create_function('$matches','return TextHelper::strtoupper($matches[1]);'), $query);
 
 		//Suppression des espaces en trop.
 		$query = preg_replace('`(\s){2,}(\s){2,}`', '$1', $query);
@@ -72,7 +72,7 @@ class DatabaseService
 
 		//Coloration des mots clés.
 		$key_words = array('select', 'update', 'delete', 'insert into', 'truncate', 'alter', 'table', 'status', 'set', 'drop', 'from', 'values', 'count', 'distinct', 'having', 'left', 'right', 'join', 'natural', 'outer', 'inner', 'between', 'where', 'group by', 'order by', 'limit', 'union', 'or', 'and', 'not', 'in', 'as', 'on', 'all', 'any', 'like', 'concat', 'substring', 'collate', 'collation', 'primary', 'key', 'default', 'null', 'exists', 'status', 'show');
-		$query = preg_replace_callback('`\b(' . implode('|', $key_words) . ')+\b`', create_function('$matches','return \'<span class="db-keywords-color">\' . TextHelper::strtoupper($matches[1]) . \'</span>\';'), $query);
+		$query = preg_replace_callback('`\b(' . implode('|', $key_words) . ')+\b`u', create_function('$matches','return \'<span class="db-keywords-color">\' . TextHelper::strtoupper($matches[1]) . \'</span>\';'), $query);
 
 		//Coloration finale.
 		$query = preg_replace('`\'(.+)\'`U', '<span class="db-text-color">\'$1\'</span>', $query); //Coloration du texte échappé.
