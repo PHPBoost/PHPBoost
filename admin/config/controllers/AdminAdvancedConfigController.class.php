@@ -49,13 +49,16 @@ class AdminAdvancedConfigController extends AdminController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
+
+			$this->form->get_field_by_id('redirection_www_mode')->set_hidden(!$this->server_environment_config->is_redirection_www_enabled());
 			$this->form->get_field_by_id('cookiebar_duration')->set_hidden(!$this->cookiebar_config->is_cookiebar_enabled());
 			$this->form->get_field_by_id('cookiebar_tracking_mode')->set_hidden(!$this->cookiebar_config->is_cookiebar_enabled());
 			$this->form->get_field_by_id('cookiebar_content')->set_hidden(!$this->cookiebar_config->is_cookiebar_enabled());
 			$this->form->get_field_by_id('cookiebar_aboutcookie_title')->set_hidden(!$this->cookiebar_config->is_cookiebar_enabled());
-			$this->form->get_field_by_id('cookiebar_aboutcookie_content')->set_hidden(!$this->cookiebar_config->is_cookiebar_enabled());
+			/*$this->form->get_field_by_id('cookiebar_aboutcookie_content')->set_hidden(!$this->cookiebar_config->is_cookiebar_enabled());*/
 			$this->form->get_field_by_id('debug_mode_type')->set_hidden(!Debug::is_debug_mode_enabled());
 			$this->form->get_field_by_id('display_database_query_enabled')->set_hidden(!Debug::is_debug_mode_enabled());
+
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 
@@ -118,6 +121,58 @@ class AdminAdvancedConfigController extends AdminController
 		$htaccess_manual_content_fieldset = new FormFieldsetHTML('htaccess_manual_content', $this->lang['advanced-config.htaccess-manual-content']);
 		$form->add_fieldset($htaccess_manual_content_fieldset);
 		
+		if (AppContext::get_request()->get_is_localhost())
+		{
+			$redirection_www_disabled = true;
+			$this->server_environment_config->disabled_redirection_www(); /*Disabling is forced*/
+			$redirection_www_enabled_explain = '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.redirection_www_enabled.local'] . '</span>';
+		}	
+		else if (false) /* En attente de la gestion des sous domaine */
+		{
+			$redirection_www_disabled = true;
+			$this->server_environment_config->disabled_redirection_www(); /*Disabling is forced*/
+			$redirection_www_enabled_explain = '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.redirection_www_enabled.subdomain'] . '</span>';
+		}
+		else
+		{
+			$redirection_www_disabled = false;
+			$redirection_www_enabled_explain = '';
+		}
+		
+		$htaccess_manual_content_fieldset->add_field( new FormFieldCheckbox('redirection_www_enabled', $this->lang['advanced-config.redirection_www_enabled'], $this->server_environment_config->is_redirection_www_enabled(), 
+			array(
+				'description' => $redirection_www_enabled_explain, 'disabled' => $redirection_www_disabled, 
+				'events' => array('click' => '
+				if (HTMLForms.getField("redirection_www_enabled").getValue()) {
+					HTMLForms.getField("redirection_www_mode").enable();
+				} else {
+					HTMLForms.getField("redirection_www_mode").disable();
+				}')
+			)
+		));
+
+		$htaccess_manual_content_fieldset->add_field( new FormFieldSimpleSelectChoice('redirection_www_mode', $this->lang['advanced-config.redirection_www_mode'], $this->server_environment_config->get_redirection_www_mode(),
+			array(
+				new FormFieldSelectChoiceOption($this->lang['advanced-config.redirection_www.with_www'], ServerEnvironmentConfig::REDIRECTION_WWW_WITH_WWW),
+				new FormFieldSelectChoiceOption($this->lang['advanced-config.redirection_www.without_www'], ServerEnvironmentConfig::REDIRECTION_WWW_WITHOUT_WWW)
+			),
+			array('hidden' => !$this->server_environment_config->is_redirection_www_enabled())
+		));
+		
+		if (AppContext::get_request()->get_is_https())
+		{
+			$redirection_https_disabled = false;
+			$redirection_https_enabled_explain = $this->lang['advanced-config.redirection_https_enabled.explain'];
+		}	
+		else
+		{
+			$redirection_https_disabled = true;
+			$this->server_environment_config->disabled_redirection_https(); /*Disabling is forced*/
+			$redirection_https_enabled_explain = '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.redirection_https_enabled.explain-disable']. '</span>';
+		}
+
+		$htaccess_manual_content_fieldset->add_field( new FormFieldCheckbox('redirection_https_enabled', $this->lang['advanced-config.redirection_https_enabled'], $this->server_environment_config->is_redirection_https_enabled(), array('description' => $redirection_https_enabled_explain, 'disabled' => $redirection_https_disabled)));
+
 		$htaccess_manual_content_fieldset->add_field(new FormFieldMultiLineTextEditor('htaccess_manual_content', $this->lang['advanced-config.htaccess-manual-content'], $this->server_environment_config->get_htaccess_manual_content(),
 			array('rows' => 7, 'description' => $this->lang['advanced-config.htaccess-manual-content.explain'])
 		));
@@ -198,9 +253,9 @@ class AdminAdvancedConfigController extends AdminController
 			array('required' => true, 'hidden' => !$this->cookiebar_config->is_cookiebar_enabled())
 		));
 
-		$cookiebar_config_fieldset->add_field(new FormFieldRichTextEditor('cookiebar_aboutcookie_content', $this->lang['advanced-config.cookiebar-aboutcookie'], $this->cookiebar_config->get_cookiebar_aboutcookie_content(),
+		/*$cookiebar_config_fieldset->add_field(new FormFieldRichTextEditor('cookiebar_aboutcookie_content', $this->lang['advanced-config.cookiebar-aboutcookie'], $this->cookiebar_config->get_cookiebar_aboutcookie_content(),
 			array('rows' => 7, 'description' => $this->lang['advanced-config.cookiebar-aboutcookie.explain'], 'required' => true, 'hidden' => !$this->cookiebar_config->is_cookiebar_enabled(), 'reset_value' => LangLoader::get_message('cookiebar-message.aboutcookie', 'user-common'))
-		));
+		));*/
 
 		$miscellaneous_fieldset = new FormFieldsetHTML('miscellaneous', $this->lang['advanced-config.miscellaneous']);
 		$form->add_fieldset($miscellaneous_fieldset);
@@ -262,7 +317,19 @@ class AdminAdvancedConfigController extends AdminController
 		{
 			$this->server_environment_config->set_url_rewriting_enabled($this->form->get_value('url_rewriting_enabled'));
 		}
-		
+		if ($this->form->get_value('redirection_www_enabled'))
+		{
+			$this->server_environment_config->enabled_redirection_www();
+			$this->server_environment_config->set_redirection_www_mode($this->form->get_value('redirection_www_mode')->get_raw_value());
+		}
+		else
+			$this->server_environment_config->disabled_redirection_www();
+
+		if ($this->form->get_value('redirection_https_enabled'))
+			$this->server_environment_config->enabled_redirection_https();
+		else
+			$this->server_environment_config->disabled_redirection_https();
+
 		$this->server_environment_config->set_htaccess_manual_content(TextHelper::html_entity_decode($this->form->get_value('htaccess_manual_content')));
 		
 		$robots_file = new File(PATH_TO_ROOT . '/robots.txt');
