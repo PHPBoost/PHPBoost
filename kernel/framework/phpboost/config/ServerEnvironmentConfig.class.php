@@ -30,9 +30,14 @@
  */
 class ServerEnvironmentConfig extends AbstractConfigData
 {
-	const URL_REWRITING_ENABLED = 'url_rewriting_enabled';
-	const HTACCESS_MANUAL_CONTENT = 'htaccess_manual_content';
-	const OUTPUT_GZIPING_ENABLED = 'output_gziping_enabled';
+	const URL_REWRITING_ENABLED       = 'url_rewriting_enabled';
+	const REDIRECTION_WWW_ENABLED     = 'redirection_www_enabled';
+	const REDIRECTION_WWW_MODE        = 'redirection_www_mode';
+	const REDIRECTION_WWW_WITH_WWW    = 'with_www';
+	const REDIRECTION_WWW_WITHOUT_WWW = 'without_www';
+	const REDIRECTION_HTTPS_ENABLED   = 'redirection_https_enabled';
+	const HTACCESS_MANUAL_CONTENT     = 'htaccess_manual_content';
+	const OUTPUT_GZIPING_ENABLED      = 'output_gziping_enabled';
 
 	public function is_url_rewriting_enabled()
 	{
@@ -55,6 +60,46 @@ class ServerEnvironmentConfig extends AbstractConfigData
 		return $this->get_property(self::HTACCESS_MANUAL_CONTENT);
 	}
 
+	public function is_redirection_www_enabled()
+	{
+		return $this->get_property(self::REDIRECTION_WWW_ENABLED);
+	}
+
+	public function enabled_redirection_www()
+	{
+		return $this->set_property(self::REDIRECTION_WWW_ENABLED, true);
+	}
+
+	public function disabled_redirection_www()
+	{
+		return $this->set_property(self::REDIRECTION_WWW_ENABLED, false);
+	}
+
+	public function get_redirection_www_mode()
+	{
+		return $this->get_property(self::REDIRECTION_WWW_MODE);
+	}
+
+	public function set_redirection_www_mode($value)
+	{
+		return $this->set_property(self::REDIRECTION_WWW_MODE, $value);
+	}	
+
+	public function is_redirection_https_enabled()
+	{
+		return $this->get_property(self::REDIRECTION_HTTPS_ENABLED);
+	}
+
+	public function enabled_redirection_https()
+	{
+		return $this->set_property(self::REDIRECTION_HTTPS_ENABLED, true);
+	}
+
+	public function disabled_redirection_https()
+	{
+		return $this->set_property(self::REDIRECTION_HTTPS_ENABLED, false);
+	}
+
 	public function set_htaccess_manual_content($content)
 	{
 		$this->set_property(self::HTACCESS_MANUAL_CONTENT, $content);
@@ -73,9 +118,12 @@ class ServerEnvironmentConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::URL_REWRITING_ENABLED => false,
-			self::HTACCESS_MANUAL_CONTENT => '',
-			self::OUTPUT_GZIPING_ENABLED => false
+			self::URL_REWRITING_ENABLED     => false,
+			self::REDIRECTION_WWW_ENABLED   => false,
+			self::REDIRECTION_WWW_MODE      => self::REDIRECTION_WWW_WITH_WWW,
+			self::REDIRECTION_HTTPS_ENABLED => false,
+			self::HTACCESS_MANUAL_CONTENT   => '',
+			self::OUTPUT_GZIPING_ENABLED    => false
 		);
 	}
 
