@@ -105,7 +105,7 @@
 	# IF C_USER_NOTCONNECTED #
 	<div id="connect-menu" class="not-connected">
 		<div class="horizontal-fieldset">
-			<a href="" class="js-menu-button" onclick="open_submenu('connect-menu');return false;" title="{L_CONNECT}"><i class="fa fa-sign-in"></i> {L_CONNECT}</a>
+			<a href="" class="js-menu-button" onclick="open_submenu('connect-menu');return false;" title="{L_CONNECT}"><i class="fa fa-sign-in"></i> <span>{L_CONNECT}</span></a>
 			<div class="connect-content">
 				<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();">
 					<input type="text" id="login" name="login" title="{L_PSEUDO}" placeholder="{L_PSEUDO}" class="connect-form">
@@ -134,7 +134,7 @@
 	# ELSE #
 	<div id="connect-menu" class="connected">
 		<div class="horizontal-fieldset">
-			<a href="" class="js-menu-button" onclick="open_submenu('connect-menu');return false;" title="{L_PROFIL}"><i class="fa fa-bars # IF NUMBER_TOTAL_ALERT # blink alert# ENDIF #"></i> {L_PRIVATE_PROFIL}</a>
+			<a href="" class="js-menu-button" onclick="open_submenu('connect-menu');return false;" title="{L_PROFIL}"><i class="fa fa-bars # IF NUMBER_TOTAL_ALERT # blink alert# ENDIF #"></i><span>{L_PRIVATE_PROFIL}</span></a>
 			<ul class="connect-content">
 				<li>
 					<i class="fa fa-profil"></i>
