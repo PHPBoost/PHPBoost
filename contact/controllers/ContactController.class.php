@@ -39,6 +39,14 @@ class ContactController extends ModuleController
 	private $submit_button;
 	private $config;
 	
+	private function init()
+	{
+		$this->lang = LangLoader::get('common', 'contact');
+		$this->view = new FileTemplate('contact/ContactController.tpl');
+		$this->view->add_lang($this->lang);
+		$this->config = ContactConfig::load();
+	}
+	
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
@@ -53,6 +61,7 @@ class ContactController extends ModuleController
 	public function build_view()
 	{
 		$this->build_form();
+		$this->build_map_view();
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -77,10 +86,7 @@ class ContactController extends ModuleController
 			'C_MAP_ENABLE' => $this->config->is_map_enabled(),
 			'C_MAP_TOP' => $this->config->is_map_enabled() && $this->config->is_map_top(),
 			'C_MAP_BOTTOM' => $this->config->is_map_enabled() && $this->config->is_map_bottom(),
-			
-		));
-		
-		$this->build_map_view();
+		));		
 	}
 	
 	public function build_map_view()
@@ -89,6 +95,7 @@ class ContactController extends ModuleController
 		$marker = $this->config->get_map_marker();
 		$nb_markers = count($marker);
 		$tpl->put_all(array(
+			'GMAP_API_KEY' => $this->config->get_gmap_api_key(),
 			'C_MARKER' => $nb_markers > 0,
 			'C_ONE_MARKER' => $nb_markers == 1
 		));
@@ -104,14 +111,6 @@ class ContactController extends ModuleController
 			$i++;
 		}
 		$this->view->put('MAP', $tpl);
-	}
-	
-	private function init()
-	{
-		$this->lang = LangLoader::get('common', 'contact');
-		$this->view = new FileTemplate('contact/ContactController.tpl');
-		$this->view->add_lang($this->lang);
-		$this->config = ContactConfig::load();
 	}
 	
 	private function build_form()

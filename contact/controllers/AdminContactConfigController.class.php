@@ -58,6 +58,7 @@ class AdminContactConfigController extends AdminModuleController
 			$this->form->get_field_by_id('informations_position')->set_hidden(!$this->config->are_informations_enabled());
 			$this->form->get_field_by_id('informations')->set_hidden(!$this->config->are_informations_enabled());
 			$this->form->get_field_by_id('date_in_tracking_number_enabled')->set_hidden(!$this->config->is_tracking_number_enabled());
+			$this->form->get_field_by_id('gmap_api_key')->set_hidden(!$this->config->is_map_enabled());
 			$this->form->get_field_by_id('map_position')->set_hidden(!$this->config->is_map_enabled());
 			$this->form->get_field_by_id('map_coord')->set_hidden(!$this->config->is_map_enabled());
 			$this->form->get_field_by_id('map_marker')->set_hidden(!$this->config->is_map_enabled());
@@ -133,14 +134,20 @@ class AdminContactConfigController extends AdminModuleController
 		$map_fieldset->add_field(new FormFieldCheckbox('map_enabled', $this->lang['admin.config.map_enabled'], $this->config->is_map_enabled(),
 			array('events' => array('click' => '
 				if (HTMLForms.getField("map_enabled").getValue()) {
+					HTMLForms.getField("gmap_api_key").enable();
 					HTMLForms.getField("map_position").enable();
 					HTMLForms.getField("map_coord").enable();
 					HTMLForms.getField("map_marker").enable();
 				} else {
 					HTMLForms.getField("map_position").disable();
+					HTMLForms.getField("gmap_api_key").disable();
 					HTMLForms.getField("map_coord").disable();
 					HTMLForms.getField("map_marker").disable();
 				}'))
+		));
+		
+		$map_fieldset->add_field(new FormFieldTextEditor('gmap_api_key', $this->lang['gmap.api.key'], $this->config->get_gmap_api_key(),
+			array('description' => $this->lang['gmap.api.key.desc'], 'hidden' => !$this->config->is_map_enabled())
 		));
 		
 		$map_fieldset->add_field(new FormFieldSimpleSelectChoice('map_position', $this->lang['admin.config.map_position'], $this->config->get_map_position(),
@@ -208,6 +215,7 @@ class AdminContactConfigController extends AdminModuleController
 		if ($this->form->get_value('map_enabled'))
 		{
 			$this->config->enable_map();
+			$this->config->set_gmap_api_key($this->form->get_value('gmap_api_key'));
 			$this->config->set_map_position($this->form->get_value('map_position')->get_raw_value());
 			$this->config->set_map_marker($this->form->get_value('map_marker'));
 		}

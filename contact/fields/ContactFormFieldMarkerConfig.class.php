@@ -41,6 +41,7 @@ class ContactFormFieldMarkerConfig extends AbstractFormField
 	function display()
 	{
 		$template = $this->get_template_to_use();
+		$config = ContactConfig::load();
 
 		$tpl = new FileTemplate('contact/ContactFormFieldMarkerConfig.tpl');
 		$tpl->add_lang(LangLoader::get('common', 'contact'));
@@ -48,7 +49,8 @@ class ContactFormFieldMarkerConfig extends AbstractFormField
 		$tpl->put_all(array(
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_html_id(),
-			'C_DISABLED' => $this->is_disabled()
+			'C_DISABLED' => $this->is_disabled(),
+			'GMAP_API_KEY' => $config->get_gmap_api_key()
 		));
 
 		$this->assign_common_template_variables($template);

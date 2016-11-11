@@ -49,6 +49,8 @@ class ContactConfig extends AbstractConfigData
 	const RIGHT = 'right';
 	const BOTTOM = 'bottom';
 	
+	const GMAP_API_KEY = 'gmap_api_key';
+	
 	const MAP_TOP = 'map_top';
 	const MAP_BOTTOM = 'map_bottom';
 	
@@ -134,6 +136,16 @@ class ContactConfig extends AbstractConfigData
 	public function is_map_enabled()
 	{
 		return $this->get_property(self::MAP_ENABLED);
+	}
+	
+	public function get_gmap_api_key()
+	{
+		return $this->get_property(self::GMAP_API_KEY);
+	}
+	
+	public function set_gmap_api_key($gmap_api_key)
+	{
+		$this->set_property(self::GMAP_API_KEY, $gmap_api_key);
 	}
 	
 	public function get_map_position()
@@ -327,7 +339,8 @@ class ContactConfig extends AbstractConfigData
 			self::SENDER_ACKNOWLEDGMENT_ENABLED => false,
 			self::LAST_TRACKING_NUMBER => 0,
 			self::FIELDS => self::init_fields_array(),
-			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 1, 'r1' => 1)
+			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 1, 'r1' => 1),
+			self::GMAP_API_KEY => ''
 		);
 	}
 	

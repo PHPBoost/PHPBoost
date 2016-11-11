@@ -9,7 +9,7 @@
 <script src="{PATH_TO_ROOT}/contact/templates/js/spin.min.js"></script>
 
 <!-- Map Layers -->
-<script src="https://maps.google.com/maps/api/js?key=AIzaSyDa_Ph-ORGTmXcYdNjw7MS5svx_6W7t_5A"></script>
+<script src="https://maps.google.com/maps/api/js?key={GMAP_API_KEY}"></script>
 <script src="{PATH_TO_ROOT}/contact/templates/js/Leaflet.GoogleMutant.js"></script>
  
 	# IF C_ONE_MARKER #

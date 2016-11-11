@@ -72,6 +72,8 @@ $lang['admin.config.map.marker'] = 'Add a marker';
 $lang['form.latitude'] = 'Latitude';
 $lang['form.longitude'] = 'Longitude';
 $lang['form.marker_text'] = 'Marker text';
+$lang['gmap.api.key'] = 'Your google map api key';
+$lang['gmap.api.key.desc'] = 'To get a google map api key, <a href="https://console.developers.google.com/flows/enableapi?apiid=maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend,places_backend&reusekey=true&hl=En" target="_blank">follow this link</a>';
 
 //Fields
 $lang['admin.fields.manage'] = 'Fields management';

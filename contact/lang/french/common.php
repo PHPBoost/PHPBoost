@@ -72,6 +72,8 @@ $lang['admin.config.map.marker'] = 'Ajouter un pointeur';
 $lang['form.latitude'] = 'Latitude';
 $lang['form.longitude'] = 'Longitude';
 $lang['form.marker_text'] = 'Texte du pointeur';
+$lang['gmap.api.key'] = 'Votre clé api google map';
+$lang['gmap.api.key.desc'] = 'Pour obtenir une clé google map, <a href="https://console.developers.google.com/flows/enableapi?apiid=maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend,places_backend&reusekey=true&hl=Fr" target="_blank">suivez ce lien</a>';
 
 //Fields
 $lang['admin.fields.manage'] = 'Gestion des champs';
