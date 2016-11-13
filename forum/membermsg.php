@@ -6,14 +6,14 @@
  *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *  
+ *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,13 +25,13 @@
  *
  ###################################################*/
 
-require_once('../kernel/begin.php'); 
+require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
 define('TITLE', $LANG['title_forum']);
-require_once('../kernel/header.php'); 
+require_once('../kernel/header.php');
 
 $view_msg = retrieve(GET, 'id', 0);
 if (!empty($view_msg)) //Affichage de tous les messages du membre
@@ -45,13 +45,14 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	{
 		$extended_fields_to_recover_list .= 'ext_field.' . $field_type . ', ';
 	}
-	
+
 	$tpl = new FileTemplate('forum/forum_membermsg.tpl');
-	
+
 	$authorized_categories = ForumService::get_authorized_categories(Category::ROOT_CATEGORY);
-	
+
 	$nbr_msg = 0;
-	
+
+if(ForumAuthorizationsService::check_authorizations()->read_topics_content()){
 	try {
 		$row = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as nbr_msg
 		FROM " . PREFIX . "forum_msg msg
@@ -62,7 +63,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		));
 		$nbr_msg = $row['nbr_msg'];
 	} catch (RowNotFoundException $e) {}
-	
+
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbr_msg, $_NBR_ELEMENTS_PER_PAGE, Pagination::LIGHT_PAGINATION);
 	$pagination->set_url(new Url('/forum/membermsg.php?id=' . $view_msg . '&amp;p=%d'));
@@ -81,7 +82,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		'L_FORUM_INDEX' => $LANG['forum_index'],
 		'U_FORUM_VIEW_MSG' => url('.php?id=' . $view_msg)
 	));
-	
+
 	$result = PersistenceContext::get_querier()->select("SELECT msg.id, msg.user_id, msg.idtopic, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, m2.display_name AS login_edit, m.groups, t.title, t.status, t.idcat, c.name, m.display_name, m.level, m.email, m.show_email, m.registration_date AS registered, m.posted_msg, m.warning_percentage, m.delay_banned, s.user_id AS connect, msg.contents, ext_field.user_avatar, m.posted_msg, ext_field.user_sign, " . $extended_fields_to_recover_list . "m.warning_percentage, m.delay_readonly, m.delay_banned 
 	FROM " . PREFIX . "forum_msg msg
 	LEFT JOIN " . PREFIX . "forum_topics t ON msg.idtopic = t.id
@@ -106,12 +107,12 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		$rewrited_cat_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['name']) : '';
 		//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
 		$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['title']) : '';
-		
+
 		//Ajout du marqueur d'édition si activé.
 		$edit_mark = ($row['timestamp_edit'] > 0 && $config->is_edit_mark_enabled()) ? '<span class="edit-pseudo">' . $LANG['edit_by'] . ' <a href="'. UserUrlBuilder::profile($row['user_id_edit'])->rel() .'">' . $row['login_edit'] . '</a> ' . $LANG['on'] . ' ' . Date::to_format($row['timestamp_edit'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '</span><br />' : '';
-		
+
 		$group_color = User::get_group_color($row['groups'], $row['level']);
-		
+
 		//Rang de l'utilisateur.
 		$user_rank = ($row['level'] === '0') ? $LANG['member'] : $LANG['guest'];
 		$user_group = $user_rank;
@@ -139,7 +140,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 				}
 			}
 		}
-		
+
 		$theme = AppContext::get_current_user()->get_theme();
 		//Image associée au rang.
 		if (file_exists(TPL_PATH_TO_ROOT . '/templates/' . $theme . '/modules/forum/images/ranks/' . $user_rank_icon))
@@ -151,7 +152,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 			$rank_img = TPL_PATH_TO_ROOT . '/forum/templates/images/ranks/' . $user_rank_icon;
 		}
 		$user_assoc_img = !empty($user_rank_icon) ? '<img src="' . $rank_img . '" alt="' . $LANG['rank'] . '" />' : '';
-		
+
 		//Affichage des groupes du membre.
 		if (!empty($row['groups'])) 
 		{
@@ -160,7 +161,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 			foreach (GroupsService::get_groups() as $idgroup => $array_group_info)
 			{
 				$group_color = User::get_group_color($idgroup);
-				
+
 				if (is_numeric(array_search($idgroup, $array_user_groups)))
 					$user_groups .= !empty($array_group_info['img']) ? '<a href="' . UserUrlBuilder::group($idgroup)->rel() . '"' . ($group_color ? ' style="color:' . $group_color . '"' : '') . '><img src="../images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/></a><br />' : $LANG['group'] . ': <a href="' . UserUrlBuilder::group($idgroup)->rel() . '"' . ($group_color ? ' style="color:' . $group_color . '"' : '') . '>' . $array_group_info['name'] . '</a><br />';
 			}
@@ -169,21 +170,21 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 			$user_groups = $LANG['group'] . ': ' . $user_group;
 
 		$user_accounts_config = UserAccountsConfig::load();
-		
+
 		//Avatar
 		if (empty($row['user_avatar'])) 
 			$user_avatar = ($user_accounts_config->is_default_avatar_enabled() == '1') ? '<img src="../templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  $user_accounts_config->get_default_avatar_name() . '" alt="' . LangLoader::get_message('avatar', 'user-common') . '" />' : '';
 		else
 			$user_avatar = '<img src="' . Url::to_rel($row['user_avatar']) . '" alt="' . LangLoader::get_message('avatar', 'user-common') . '" />';
-			
+
 		//Affichage du nombre de message.
 		if ($row['posted_msg'] >= 1)
 			$posted_msg = '<a href="'. UserUrlBuilder::messages($row['user_id'])->rel() . '" class="small">' . $LANG['message_s'] . '</a>: ' . $row['posted_msg'];
 		else
 			$posted_msg = (!$is_guest) ? '<a href="' . PATH_TO_ROOT . '/forum/membermsg' . url('.php?id=' . $row['user_id'], '') . '" class="small">' . $LANG['message'] . '</a>: 0' : $LANG['message'] . ': 0';
-		
+
 		$user_sign_field = $extended_fields_cache->get_extended_field_by_field_name('user_sign');
-		
+
 		$tpl->assign_block_vars('list', array(
 			'C_GROUP_COLOR' => !empty($group_color),
 			'C_GUEST' => empty($row['display_name']),
@@ -209,15 +210,15 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 			'U_FORUM_CAT' => '<a class="forum-mbrmsg-links" href="' . PATH_TO_ROOT . '/forum/forum' . url('.php?id=' . $row['idcat'], '-' . $row['idcat'] . $rewrited_cat_title . '.php') . '">' . $row['name'] . '</a>',
 			'U_TITLE_T' => '<a class="forum-mbrmsg-links" href="' . PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php') . '">' . stripslashes($row['title']) . '</a>'
 		));
-		
+
 		foreach ($displayed_extended_fields as $field_type)
 		{
 			$field = $extended_fields_cache->get_extended_field_by_field_name($field_type);
-			
+
 			if (!empty($row[$field_type]) && !empty($field) && $field['display'])
 			{
 				$button = '';
-				
+
 				if ($field['regex'] == 4)
 				{
 					foreach (MemberShortTextExtendedField::$brands_pictures_list as $id => $parameters)
@@ -229,14 +230,14 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 				else if ($field['regex'] == 5)
 				{
 					$button = '<a href="' . $row[$field_type] . '" class="basic-button smaller">' . LangLoader::get_message('regex.website', 'admin-user-common') . '</a>';
-					
+
 					foreach (MemberShortTextExtendedField::$brands_pictures_list as $id => $parameters)
 					{
 						if (strstr($row[$field_type], $id))
 							$button = '<a href="' . $row[$field_type] . '" class="basic-button smaller"><i class="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
 					}
 				}
-				
+
 				$tpl->assign_block_vars('list.ext_fields', array(
 					'BUTTON' => $button
 				));
@@ -244,7 +245,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		}
 	}
 	$result->dispose();
-	
+}
 	//Listes les utilisateurs en lignes.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" ."/forum/membermsg.php%'");
 
@@ -266,14 +267,14 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		'L_AND' => $LANG['and'],
 		'L_ONLINE' => strtolower($LANG['online'])
 	);
-		
+
 	$tpl->put_all($vars_tpl);
 	$tpl_top->put_all($vars_tpl);
 	$tpl_bottom->put_all($vars_tpl);
-		
+
 	$tpl->put('forum_top', $tpl_top);
 	$tpl->put('forum_bottom', $tpl_bottom);
-		
+
 	$tpl->display();
 }
 else
