@@ -72,7 +72,7 @@ if ($valid)
 		$config->enable_notation();
 	else
 		$config->disable_notation();
-	if (retrieve(POST, 'display_notes_number', ''))
+	if (retrieve(POST, 'notes_number_displayed', ''))
 		$config->display_notes_number();
 	else
 		$config->hide_notes_number();
