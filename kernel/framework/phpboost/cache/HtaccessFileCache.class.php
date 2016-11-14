@@ -136,8 +136,15 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('Options -Multiviews');
 		$this->add_section('Prevent viewing of .htaccess file');
 		$this->add_line('<Files .htaccess>');
-		$this->add_line('	order allow,deny');
-		$this->add_line('	deny from all');
+		$this->add_line('	# Apache ≥ 2.3');
+		$this->add_line('	<IfModule mod_authz_core.c>');
+		$this->add_line('		Require all denied');
+		$this->add_line('	</IfModule>');
+		$this->add_line('	# Apache 2.2');
+		$this->add_line('	<IfModule !mod_authz_core.c>');
+		$this->add_line('		Order Allow,Deny');
+		$this->add_line('		Deny from all');
+		$this->add_line('	</IfModule>');
 		$this->add_line('</Files>');
 	}
 	
