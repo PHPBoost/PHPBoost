@@ -63,7 +63,7 @@ if ($parent_folder) //Changement de dossier
 }
 elseif ($home_folder) //Retour à la racine.
 	AppContext::get_response()->redirect('/admin/admin_files.php');
-elseif (!empty($_FILES['upload_file']['name']) && $folder) //Ajout d'un fichier.
+elseif (!empty($_FILES['upload_file']['name'])) //Ajout d'un fichier.
 {
 	//Si le dossier n'est pas en écriture on tente un CHMOD 777
 	@clearstatcache();
