@@ -51,7 +51,8 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	$authorized_categories = ForumService::get_authorized_categories(Category::ROOT_CATEGORY);
 	
 	$nbr_msg = 0;
-	
+
+if(ForumAuthorizationsService::check_authorizations()->read_topics_content()){
 	try {
 		$row = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as nbr_msg
 		FROM " . PREFIX . "forum_msg msg
@@ -251,7 +252,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		}
 	}
 	$result->dispose();
-	
+}
 	//Listes les utilisateurs en lignes.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" ."/forum/membermsg.php%'");
 
