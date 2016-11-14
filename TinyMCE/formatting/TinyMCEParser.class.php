@@ -311,11 +311,11 @@ class TinyMCEParser extends ContentFormattingParser
 			), $this->content);
 
 		$array_preg = array(
-			'`&lt;p&gt;\s*&nbsp;\s*&lt;/p&gt;\s*`',
-			'`&lt;p&gt;&nbsp;&lt;/p&gt;\s*`',
-			'`&lt;p&gt;&nbsp;&nbsp;&lt;/p&gt;\s*`',
-			'`&lt;div&gt;(.+)&lt;/div&gt;`isU',
-			'`&lt;/p&gt;[\s]*`i'
+			'`&lt;p&gt;\s*&nbsp;\s*&lt;/p&gt;\s*`u',
+			'`&lt;p&gt;&nbsp;&lt;/p&gt;\s*`u',
+			'`&lt;p&gt;&nbsp;&nbsp;&lt;/p&gt;\s*`u',
+			'`&lt;div&gt;(.+)&lt;/div&gt;`isuU',
+			'`&lt;/p&gt;[\s]*`iu'
 		);
 		$array_preg_replace = array(
 			'',
@@ -339,25 +339,25 @@ class TinyMCEParser extends ContentFormattingParser
 		//Color tag
 		if (!in_array('color', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;span style="color: *([#a-f0-9]+);"&gt;(.+)&lt;/span&gt;`isU');
+			array_push($array_preg, '`&lt;span style="color: *([#a-f0-9]+);"&gt;(.+)&lt;/span&gt;`isuU');
 			array_push($array_preg_replace, '<span style="color:$1;">$2</span>');
 		}
 		//Background color tag
 		if (!in_array('bgcolor', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;span style="background-color: *([#a-f0-9]+);"&gt;(.+)&lt;/span&gt;`isU');
+			array_push($array_preg, '`&lt;span style="background-color: *([#a-f0-9]+);"&gt;(.+)&lt;/span&gt;`isuU');
 			array_push($array_preg_replace, '<span style="background-color:$1;">$2</span>');
 		}
 		//Underline tag
 		if (!in_array('u', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;span style="text-decoration: underline;"&gt;(.+)&lt;/span&gt;`isU');
+			array_push($array_preg, '`&lt;span style="text-decoration: underline;"&gt;(.+)&lt;/span&gt;`isuU');
 			array_push($array_preg_replace, '<span style="text-decoration: underline;">$1</span>');
 		}
 		//Strike tag
 		if (!in_array('s', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;span style="text-decoration: line-through;"&gt;(.+)&lt;/span&gt;`isU');
+			array_push($array_preg, '`&lt;span style="text-decoration: line-through;"&gt;(.+)&lt;/span&gt;`isuU');
 			array_push($array_preg_replace, '<s>$1</s>');
 			array_push($array_preg, '`&lt;s&gt;(.+)&lt;/s&gt;`isuU');
 			array_push($array_preg_replace, '<s>$1</s>');
@@ -376,7 +376,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//Strong tag
 		if (!in_array('b', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;strong&gt;(.+)&lt;/strong&gt;`isU');
+			array_push($array_preg, '`&lt;strong&gt;(.+)&lt;/strong&gt;`isuU');
 			array_push($array_preg_replace, '<strong>$1</strong>');
 		}
 		//Italic tag
@@ -403,7 +403,7 @@ class TinyMCEParser extends ContentFormattingParser
 		if (!in_array('url', $this->forbidden_tags))
 		{
 
-			array_push($array_preg, '`&lt;a(?: title="([^"]+)")? href="(' . Url::get_wellformness_regex() . ')" target="_blank"&gt;(.+)&lt;/a&gt;`sU');
+			array_push($array_preg, '`&lt;a(?: title="([^"]+)")? href="(' . Url::get_wellformness_regex() . ')" target="_blank"&gt;(.+)&lt;/a&gt;`suU');
 			array_push($array_preg_replace, '<a title="$1" href="$2" target="_blank">$3</a>');
 		}
 		//Sub tag
@@ -621,23 +621,23 @@ class TinyMCEParser extends ContentFormattingParser
 		global $LANG;
 
 		$array_preg = array(
-			'b' => '`\[b\](.+)\[/b\]`isU',
-			'i' => '`\[i\](.+)\[/i\]`isU',
-			'u' => '`\[u\](.+)\[/u\]`isU',
-			's' => '`\[s\](.+)\[/s\]`isU',
-			'p' => '`\[p\](.+)\[/p\]`isU',
-			'pre' => '`\[pre\](.+)\[/pre\]`isU',
-			'float' => '`\[float=(left|right)\](.+)\[/float\]`isU',
-			'acronym' => '`\[acronym=([^\n[\]<]+)\](.*)\[/acronym\]`isU',
-			'style' => '`\[style=(success|question|notice|warning|error)\](.+)\[/style\]`isU',
-			'swf' => '`\[swf=([0-9]{1,3}),([0-9]{1,3})\]([a-z0-9_+.:?/=#%@&;,-]*)\[/swf\]`iU',
-			'movie' => '`\[movie=([0-9]{1,3}),([0-9]{1,3})\]([a-z0-9_+.:?/=#%@&;,-]*)\[/movie\]`iU',
-			'sound' => '`\[sound\]([a-z0-9_+.:?/=#%@&;,-]*)\[/sound\]`iU',
-			'math' => '`\[math\](.+)\[/math\]`iU',
-			'url' => '`(\s+)(' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ')(\s|<+)`sU',
-			'url2' => '`(\s+)(www\.' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_NOT_USED) . ')(\s|<+)`sU',
-			'mail' => '`(\s+)([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})(\s+)`i',
-			'lightbox' => '`\[lightbox=((?!javascript:)' . Url::get_wellformness_regex() . ')\]([^\n\r\t\f]+)\[/lightbox\]`isU',
+			'b' => '`\[b\](.+)\[/b\]`isuU',
+			'i' => '`\[i\](.+)\[/i\]`isuU',
+			'u' => '`\[u\](.+)\[/u\]`isuU',
+			's' => '`\[s\](.+)\[/s\]`isuU',
+			'p' => '`\[p\](.+)\[/p\]`isuU',
+			'pre' => '`\[pre\](.+)\[/pre\]`isuU',
+			'float' => '`\[float=(left|right)\](.+)\[/float\]`isuU',
+			'acronym' => '`\[acronym=([^\n[\]<]+)\](.*)\[/acronym\]`isuU',
+			'style' => '`\[style=(success|question|notice|warning|error)\](.+)\[/style\]`isuU',
+			'swf' => '`\[swf=([0-9]{1,3}),([0-9]{1,3})\]([a-z0-9_+.:?/=#%@&;,-]*)\[/swf\]`iuU',
+			'movie' => '`\[movie=([0-9]{1,3}),([0-9]{1,3})\]([a-z0-9_+.:?/=#%@&;,-]*)\[/movie\]`iuU',
+			'sound' => '`\[sound\]([a-z0-9_+.:?/=#%@&;,-]*)\[/sound\]`iuU',
+			'math' => '`\[math\](.+)\[/math\]`iuU',
+			'url' => '`(\s+)(' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ')(\s|<+)`suU',
+			'url2' => '`(\s+)(www\.' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_NOT_USED) . ')(\s|<+)`suU',
+			'mail' => '`(\s+)([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})(\s+)`iu',
+			'lightbox' => '`\[lightbox=((?!javascript:)' . Url::get_wellformness_regex() . ')\]([^\n\r\t\f]+)\[/lightbox\]`isuU',
 		);
 
 		$array_preg_replace = array(
@@ -675,7 +675,7 @@ class TinyMCEParser extends ContentFormattingParser
 				//Balise interdite : on la supprime
 				if (in_array($tag, $other_tags))
 				{
-					$array_preg[$tag] = '`\[' . $tag . '.*\](.+)\[/' . $tag . '\]`isU';
+					$array_preg[$tag] = '`\[' . $tag . '.*\](.+)\[/' . $tag . '\]`isuU';
 					$array_preg_replace[$tag] = "$1";
 				}
 				else
