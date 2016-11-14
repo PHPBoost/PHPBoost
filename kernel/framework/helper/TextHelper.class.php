@@ -200,7 +200,7 @@ class TextHelper
 	
 	public static function substr($string, $start, $length = '')
 	{
-		if ($length != '')
+		if (is_int($length))
 			return substr($string, $start, $length);
 		else
 			return substr($string, $start);
@@ -213,7 +213,7 @@ class TextHelper
 	
 	public static function strripos($string, $needle, $offset = '')
 	{
-		if ($offset != '')
+		if (is_int($offset))
 			return mb_strripos($string, $needle, $offset);
 		else
 			return mb_strripos($string, $needle);
@@ -221,7 +221,7 @@ class TextHelper
 	
 	public static function strrpos($string, $needle, $offset = '')
 	{
-		if ($offset != '')
+		if (is_int($offset))
 			return mb_strrpos($string, $needle, $offset);
 		else
 			return mb_strrpos($string, $needle);
@@ -229,7 +229,7 @@ class TextHelper
 	
 	public static function strstr($string, $needle, $before_needle = '')
 	{
-		if ($before_needle != '')
+		if (is_int($before_needle))
 			return mb_strstr($string, $needle, $before_needle);
 		else
 			return mb_strstr($string, $needle);
@@ -237,9 +237,9 @@ class TextHelper
 	
 	public static function substr_count($string, $needle, $offset = '', $length = '')
 	{
-		if ($offset != '' && $length != '')
+		if (is_int($offset) && is_int($length))
 			return mb_substr_count($string, $needle, $offset, $length);
-		else if ($offset != '')
+		else if (is_int($offset))
 			return mb_substr_count($string, $needle, $offset);
 		else
 			return mb_substr_count($string, $needle);
