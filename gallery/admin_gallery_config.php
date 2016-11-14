@@ -62,7 +62,7 @@ if ($valid)
 		$config->enable_title();
 	else
 		$config->disable_title();
-	if (retrieve(POST, 'display_notes_number', ''))
+	if (retrieve(POST, 'notes_number_displayed', ''))
 		$config->display_notes_number();
 	else
 		$config->hide_notes_number();
