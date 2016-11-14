@@ -109,10 +109,10 @@ class ArticlesDisplayArticlesController extends ModuleController
 		}
 		
 		//Removing [page] bbcode
-		$article_contents_clean = preg_split('`\[page\].+\[/page\](.*)`Us', $article_contents, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+		$article_contents_clean = preg_split('`\[page\].+\[/page\](.*)`usU', $article_contents, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 		
 		//Retrieving pages 
-		preg_match_all('`\[page\]([^[]+)\[/page\]`U', $article_contents, $array_page);
+		preg_match_all('`\[page\]([^[]+)\[/page\]`uU', $article_contents, $array_page);
 
 		$nbr_pages = count($array_page[1]);
 		

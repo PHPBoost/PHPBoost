@@ -103,8 +103,8 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		{
 			$this->content = preg_replace(
 				array(
-					'`\s*</p>`i',
-					'`<p>\s*`i',
+					'`\s*</p>`iu',
+					'`<p>\s*`iu',
 				),
 				array(
 					'</p>',
@@ -142,10 +142,10 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	 */
 	private function unparse_smilies()
 	{
-		$this->content = preg_replace('`<img src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" class="smiley" />`i',
+		$this->content = preg_replace('`<img src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" class="smiley" />`iu',
 		'<img title="$2" src="' . PATH_TO_ROOT . '/images/smileys/$1" alt="$2" border="0" />', $this->content);
 		
-		$this->content = preg_replace('`<img src="[\./]*/images/smileys/([^"]+)" title="([^"]+)" alt="([^"]+)" class="smiley" />`i',
+		$this->content = preg_replace('`<img src="[\./]*/images/smileys/([^"]+)" title="([^"]+)" alt="([^"]+)" class="smiley" />`iu',
 		'<img title="$2" src="' . PATH_TO_ROOT . '/images/smileys/$1" alt="$3" border="0" />', $this->content);
 	}
 	
@@ -166,21 +166,21 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	{
 		//Preg_replace.
 		$array_preg = array(
-			'`<span id="([a-z0-9_-]+)"></span>`isU',
-			'`<span id="([a-z0-9_-]+)" class="anchor"></span>`isU',
-			'`<span id="([a-z0-9_-]+)">(.*)</span>`isU',
-			'`<h1(?: class="([^"]+)?")?>(.*)</h1>(?:[\s]*){0,}`isU',
-			'`<h2(?: class="([^"]+)?")?>(.*)</h2>(?:[\s]*){0,}`isU',
-			'`<h3(?: class="([^"]+)?")?>(.*)</h3>(?:[\s]*){0,}`isU',
-			'`<h4(?: class="([^"]+)?")?>(.*)</h4>(?:[\s]*){0,}`isU',
-			'`<h5(?: class="([^"]+)?")?>(.*)</h5>(?:[\s]*){0,}`isU',
-			'`<h6(?: class="([^"]+)?")?>(.*)</h6>(?:[\s]*){0,}`isU',
-			'`<span style="background-color:([^;]+);">(.+)</span>`isU',
-			'`<span style="color:([^;]+);">(.+)</span>`isU',
-			'`<p style="text-align:(left|center|right|justify)">(.*)</p>`isU',
-			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
-			'`<td(?: class="([^"]+)?")?></td>`isU',
-			'`<th(?: class="([^"]+)?")?></th>`isU'
+			'`<span id="([a-z0-9_-]+)"></span>`isuU',
+			'`<span id="([a-z0-9_-]+)" class="anchor"></span>`isuU',
+			'`<span id="([a-z0-9_-]+)">(.*)</span>`isuU',
+			'`<h1(?: class="([^"]+)?")?>(.*)</h1>(?:[\s]*){0,}`isuU',
+			'`<h2(?: class="([^"]+)?")?>(.*)</h2>(?:[\s]*){0,}`isuU',
+			'`<h3(?: class="([^"]+)?")?>(.*)</h3>(?:[\s]*){0,}`isuU',
+			'`<h4(?: class="([^"]+)?")?>(.*)</h4>(?:[\s]*){0,}`isuU',
+			'`<h5(?: class="([^"]+)?")?>(.*)</h5>(?:[\s]*){0,}`isuU',
+			'`<h6(?: class="([^"]+)?")?>(.*)</h6>(?:[\s]*){0,}`isuU',
+			'`<span style="background-color:([^;]+);">(.+)</span>`isuU',
+			'`<span style="color:([^;]+);">(.+)</span>`isuU',
+			'`<p style="text-align:(left|center|right|justify)">(.*)</p>`isuU',
+			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isuU',
+			'`<td(?: class="([^"]+)?")?></td>`isuU',
+			'`<th(?: class="([^"]+)?")?></th>`isuU'
 			);
 			$array_preg_replace = array(
 			"<a id=\"$1\"></a>",
@@ -203,51 +203,51 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 
 			//Tableaux
-			while (preg_match('`<table class="formatter-table"( style="([^"]+)")?>`i', $this->content))
+			while (preg_match('`<table class="formatter-table"( style="([^"]+)")?>`iu', $this->content))
 			{
-				$this->content = preg_replace('`<table class="formatter-table"( style="([^"]+)")?>`i', "<table border=\"0\"$1><tbody>", $this->content);
-				$this->content = preg_replace('`</table>`i', "</tbody></table>", $this->content);
-				$this->content = preg_replace('`<td class="formatter-table-col"( colspan="[^"]+")?( rowspan="[^"]+")?( style="[^"]+")?>`i', "<td$1$2$3>", $this->content);
-				$this->content = preg_replace('`<tr class="formatter-table-row"( style="[^"]+")?>`i', "<tr$1>", $this->content);
-				$this->content = preg_replace('`<th class="formatter-table-head"( colspan="[^"]+")?( rowspan="[^"]+")?( style="[^"]+")?>`i', "<th$1$2$3>", $this->content);
+				$this->content = preg_replace('`<table class="formatter-table"( style="([^"]+)")?>`iu', "<table border=\"0\"$1><tbody>", $this->content);
+				$this->content = preg_replace('`</table>`iu', "</tbody></table>", $this->content);
+				$this->content = preg_replace('`<td class="formatter-table-col"( colspan="[^"]+")?( rowspan="[^"]+")?( style="[^"]+")?>`iu', "<td$1$2$3>", $this->content);
+				$this->content = preg_replace('`<tr class="formatter-table-row"( style="[^"]+")?>`iu', "<tr$1>", $this->content);
+				$this->content = preg_replace('`<th class="formatter-table-head"( colspan="[^"]+")?( rowspan="[^"]+")?( style="[^"]+")?>`iu', "<th$1$2$3>", $this->content);
 			}
 
 			//Listes
-			while (preg_match('`<ul( style="[^"]+")? class="formatter-ul">`i', $this->content))
+			while (preg_match('`<ul( style="[^"]+")? class="formatter-ul">`iu', $this->content))
 			{
-				$this->content = preg_replace('`<ul( style="[^"]+")? class="formatter-ul">`i', "<ul$1>", $this->content);
+				$this->content = preg_replace('`<ul( style="[^"]+")? class="formatter-ul">`iu', "<ul$1>", $this->content);
 			}
-			while (preg_match('`<ol( style="[^"]+")? class="formatter-ol">`i', $this->content))
+			while (preg_match('`<ol( style="[^"]+")? class="formatter-ol">`iu', $this->content))
 			{
-				$this->content = preg_replace('`<ol( style="[^"]+")? class="formatter-ol">`i', "<ol$1>", $this->content);
+				$this->content = preg_replace('`<ol( style="[^"]+")? class="formatter-ol">`iu', "<ol$1>", $this->content);
 			}
-			while (preg_match('`<li( style="[^"]+")? class="formatter-li">`i', $this->content))
+			while (preg_match('`<li( style="[^"]+")? class="formatter-li">`iu', $this->content))
 			{
-				$this->content = preg_replace('`<li( style="[^"]+")? class="formatter-li">`i', "<li$1>", $this->content);
+				$this->content = preg_replace('`<li( style="[^"]+")? class="formatter-li">`iu', "<li$1>", $this->content);
 			}
 			
 			//Trait horizontal
-			$this->content = preg_replace('`<hr(?: class="([^"]+)?")? />`i', '<hr />', $this->content);
+			$this->content = preg_replace('`<hr(?: class="([^"]+)?")? />`iu', '<hr />', $this->content);
 
 			//Balise size
-			$this->content = preg_replace_callback('`<span style="font-size: ([0-9-]+)px;">(.+)</span>`isU', array($this, 'unparse_size_tag'), $this->content);
+			$this->content = preg_replace_callback('`<span style="font-size: ([0-9-]+)px;">(.+)</span>`isuU', array($this, 'unparse_size_tag'), $this->content);
 
 			//Citations
-			$this->content = preg_replace('`<div class="formatter-container formatter-blockquote"><span class="formatter-title">' . LangLoader::get_message('quotation', 'main') . ':</span><div class="formatter-content">(.*)</div></div>`isU', "\n" . '<blockquote><p>$1</p></blockquote>', $this->content);
+			$this->content = preg_replace('`<div class="formatter-container formatter-blockquote"><span class="formatter-title">' . LangLoader::get_message('quotation', 'main') . ':</span><div class="formatter-content">(.*)</div></div>`isuU', "\n" . '<blockquote><p>$1</p></blockquote>', $this->content);
 			$this->_parse_imbricated('<div class="formatter-container formatter-blockquote"><span class="formatter-title">', '`<div class="formatter-container formatter-blockquote"><span class="formatter-title">(.*) :</span><div class="formatter-content">(.*)</div></div>`isU', '[quote]$2[/quote]', $this->content);
 			$this->_parse_imbricated('<div class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">', '`<div class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">(.*) :</span><div class="formatter-content">(.*)</div></div>`isU', '[quote=$1]$2[/quote]', $this->content);
 
 			//Balise indentation
-			$this->content = preg_replace('`(?:<p>\s*</p>)?\s*<p>\s*<div class="indent">(.+)</div>\s*</p>`isU', "\n" . '<p style="padding-left: 30px;">$1</p>', $this->content);
+			$this->content = preg_replace('`(?:<p>\s*</p>)?\s*<p>\s*<div class="indent">(.+)</div>\s*</p>`isuU', "\n" . '<p style="padding-left: 30px;">$1</p>', $this->content);
 
 			//Police
-			$this->content = preg_replace_callback('`<span style="font-family: ([ a-z0-9,_-]+);">(.*)</span>`isU', array($this, 'unparse_font'), $this->content );
+			$this->content = preg_replace_callback('`<span style="font-family: ([ a-z0-9,_-]+);">(.*)</span>`isuU', array($this, 'unparse_font'), $this->content );
 			
 			//Image
-			$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)")?(?: style="([^"]*)")? />`isU', array($this, 'unparse_img'), $this->content );
+			$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)")?(?: style="([^"]*)")? />`isuU', array($this, 'unparse_img'), $this->content );
 			
 			// Feed
-			$this->content = preg_replace('`\[\[FEED([^\]]*)\]\](.+)\[\[/FEED\]\]`U', '[feed$1]$2[/feed]', $this->content);
+			$this->content = preg_replace('`\[\[FEED([^\]]*)\]\](.+)\[\[/FEED\]\]`uU', '[feed$1]$2[/feed]', $this->content);
 	}
 
 	/**
@@ -309,7 +309,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		
 		##Callbacks
 		//FA Icon
-		$this->content = preg_replace_callback('`<i class="fa fa-([a-z0-9-]+)( fa-[a-z0-9-]+)?( fa-[a-z0-9-]+)?( fa-[a-z0-9-]+)?"></i>`iU', array($this, 'unparse_fa'), $this->content);
+		$this->content = preg_replace_callback('`<i class="fa fa-([a-z0-9-]+)( fa-[a-z0-9-]+)?( fa-[a-z0-9-]+)?( fa-[a-z0-9-]+)?"></i>`iuU', array($this, 'unparse_fa'), $this->content);
 		
 		##Remplacement des balises imbriquées
 
@@ -322,13 +322,13 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		$this->_parse_imbricated('<div class="formatter-container formatter-block style=', '`<div class="formatter-container formatter-block style="([^"]+)">(.+)</div>`sU', '[block style="$1"]$2[/block]', $this->content);
 
 		//Bloc de formulaire
-		while (preg_match('`<fieldset class="formatter-container formatter-fieldset" style="([^"]*)"><legend>(.*)</legend><div class="formatter-content">(.+)</div></fieldset>`sU', $this->content))
+		while (preg_match('`<fieldset class="formatter-container formatter-fieldset" style="([^"]*)"><legend>(.*)</legend><div class="formatter-content">(.+)</div></fieldset>`suU', $this->content))
 		{
-			$this->content = preg_replace_callback('`<fieldset class="formatter-container formatter-fieldset" style="([^"]*)"><legend>(.*)</legend><div class="formatter-content">(.+)</div></fieldset>`sU', array($this, 'unparse_fieldset'), $this->content);
+			$this->content = preg_replace_callback('`<fieldset class="formatter-container formatter-fieldset" style="([^"]*)"><legend>(.*)</legend><div class="formatter-content">(.+)</div></fieldset>`suU', array($this, 'unparse_fieldset'), $this->content);
 		}
 
 		//Liens Wikipédia
-		$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link">(.*)</a>`sU', array($this, 'unparse_wikipedia_link'), $this->content);
+		$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link">(.*)</a>`suU', array($this, 'unparse_wikipedia_link'), $this->content);
 	}
 
 	/**

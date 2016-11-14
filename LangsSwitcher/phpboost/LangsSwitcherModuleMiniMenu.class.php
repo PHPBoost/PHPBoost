@@ -76,7 +76,7 @@ class LangsSwitcherModuleMiniMenu extends ModuleMiniMenu
 					$user->update_lang($lang->get_id());
 				}
 			}
-			$query_string = preg_replace('`switchlang=[^&]+`', '', QUERY_STRING);
+			$query_string = preg_replace('`switchlang=[^&]+`u', '', QUERY_STRING);
 			AppContext::get_response()->redirect(trim(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : '')));
 		}
 

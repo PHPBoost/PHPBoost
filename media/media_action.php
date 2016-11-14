@@ -325,7 +325,7 @@ elseif ($submit)
 			$host_ok = array_merge($host_ok['audio'], $host_ok['video']);
 		}
 
-		$url_media = preg_replace('`\?.*`', '', $media['url']);
+		$url_media = preg_replace('`\?.*`u', '', $media['url']);
 		
 		if (($pathinfo = pathinfo($url_media)) && !empty($pathinfo['extension']))
 		{

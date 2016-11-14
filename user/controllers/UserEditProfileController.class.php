@@ -185,7 +185,7 @@ class UserEditProfileController extends AbstractController
 			)
 		));
 
-		$connect_fieldset->add_field($login = new FormFieldTextEditor('login', $this->lang['login'], ($has_custom_login ? $this->internal_auth_infos['login'] : preg_replace('/\s+/', '', $this->user->get_display_name())),
+		$connect_fieldset->add_field($login = new FormFieldTextEditor('login', $this->lang['login'], ($has_custom_login ? $this->internal_auth_infos['login'] : preg_replace('/\s+/u', '', $this->user->get_display_name())),
 			array('required' => true, 'hidden' => $more_than_one_authentication_type || !$has_custom_login, 'maxlength' => 25),
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists($this->user->get_id()))
 		));

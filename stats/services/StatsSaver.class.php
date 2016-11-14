@@ -166,7 +166,7 @@ class StatsSaver
 			$browser = 'other';
 			foreach ($array_browser as $regex => $name)
 			{
-				if (preg_match('`' . $regex . '`i', $_SERVER['HTTP_USER_AGENT']))
+				if (preg_match('`' . $regex . '`iu', $_SERVER['HTTP_USER_AGENT']))
 				{
 					$browser = $name;
 					break;
@@ -212,7 +212,7 @@ class StatsSaver
 			$os = 'other';
 			foreach ($array_os as $regex => $name)
 			{
-				if (preg_match('`' . $regex . '`i', $_SERVER['HTTP_USER_AGENT']))
+				if (preg_match('`' . $regex . '`iu', $_SERVER['HTTP_USER_AGENT']))
 				{
 					$os = $name;
 					break;
@@ -227,7 +227,7 @@ class StatsSaver
 			$user_lang = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
 			$favorite_lang = !empty($user_lang[0]) ? TextHelper::strtolower($user_lang[0]) : '';
 			if (TextHelper::strpos($favorite_lang, '-') !== false)
-				$favorite_lang = preg_replace('`[a-z]{2}\-([a-z]{2})`i', '$1', $favorite_lang);
+				$favorite_lang = preg_replace('`[a-z]{2}\-([a-z]{2})`iu', '$1', $favorite_lang);
 			$lang = str_replace(array('en', 'cs', 'sv', 'fa', 'ja', 'ko', 'he', 'da', 'gb'), array('uk', 'cz', 'se', 'ir', 'jp', 'kr', 'il', 'dk', 'uk'), $favorite_lang);
 			$lang = TextHelper::substr($lang, 0, 2);
 			

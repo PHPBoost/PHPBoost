@@ -219,7 +219,7 @@ class ErrorHandler
 
 	private static function clean_error_string($message)
 	{
-		return preg_replace("`(\n)+`", '<br />', preg_replace("`\r|\n|\t`", "\n", $message));
+		return preg_replace("`(\n)+`u", '<br />', preg_replace("`\r|\n|\t`u", "\n", $message));
 	}
 
 	/**

@@ -43,7 +43,7 @@ $g_sort   = retrieve(GET, 'sort', '');
 $g_sort   = !empty($g_sort) ? 'sort=' . $g_sort : '';
 
 //Récupération du mode d'ordonnement.
-if (preg_match('`([a-z]+)_([a-z]+)`', $g_sort, $array_match))
+if (preg_match('`([a-z]+)_([a-z]+)`u', $g_sort, $array_match))
 {
 	$g_type = $array_match[1];
 	$g_mode = $array_match[2];

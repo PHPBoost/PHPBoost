@@ -175,7 +175,7 @@ elseif ($action == 'restore')
 		$file = TextHelper::strprotect($del);
 		$file_path = PATH_TO_ROOT .'/cache/backup/' . $file;
 		//Si le fichier existe
-		if (preg_match('`[^/]+\.sql$`', $file) && is_file($file_path))
+		if (preg_match('`[^/]+\.sql$`u', $file) && is_file($file_path))
 		{
 			if (@unlink($file_path))
 				AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=unlink_success', '', '&'));
@@ -194,7 +194,7 @@ elseif ($action == 'restore')
 		
 		$file = TextHelper::strprotect($file);
 		$file_path = PATH_TO_ROOT .'/cache/backup/' . $file;
-		if (preg_match('`[^/]+\.sql$`', $file) && is_file($file_path))
+		if (preg_match('`[^/]+\.sql$`u', $file) && is_file($file_path))
 		{
 			Environment::try_to_increase_max_execution_time();
 			$db_utils = PersistenceContext::get_dbms_utils();
@@ -210,7 +210,7 @@ elseif ($action == 'restore')
 	//Fichier envoyé par post
 	elseif (!empty($post_file))
 	{
-		if ($post_file['size'] < 10485760 && preg_match('`[^/]+\.sql$`', $post_file['name']))
+		if ($post_file['size'] < 10485760 && preg_match('`[^/]+\.sql$`u', $post_file['name']))
 		{
 			$file_path = PATH_TO_ROOT .'/cache/backup/' . $post_file['name'];
 			if (!is_file($file_path) && move_uploaded_file($post_file['tmp_name'], $file_path))

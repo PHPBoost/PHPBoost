@@ -72,14 +72,14 @@ function wiki_second_parse($contents)
 function wiki_no_rewrite($var)
 {
 	if (!ServerEnvironmentConfig::load()->is_url_rewriting_enabled()) //Pas de rewriting
-		return preg_replace('`<a href="/wiki/([a-z0-9+#-]+)">(.*)</a>`sU', '<a href="/wiki/wiki.php?title=$1">$2</a>', $var);
+		return preg_replace('`<a href="/wiki/([a-z0-9+#-]+)">(.*)</a>`suU', '<a href="/wiki/wiki.php?title=$1">$2</a>', $var);
 	else
 		return $var;
 }
 
 function remove_chapter_number_in_rewrited_title($title)
 {
-	return Url::encode_rewrite(preg_replace('`((?:[0-9 ]+)|(?:[IVXCL ]+))[\.-](.*)`iU', '$2', $title));
+	return Url::encode_rewrite(preg_replace('`((?:[0-9 ]+)|(?:[IVXCL ]+))[\.-](.*)`iuU', '$2', $title));
 }
 
 //Fonction de décomposition récursive (passage par référence pour la variable content qui passe de chaîne à tableau de chaînes (5 niveaux maximum)
@@ -99,7 +99,7 @@ function wiki_explode_menu(&$content)
 			$matches = array();
 			
 			//If the line contains a title
-			if (preg_match('`^(?:<br />)?\s*[\-]{' . $level . '}[\s]+(.+)[\s]+[\-]{' . $level . '}(?:<br />)?\s*$`', $line, $matches))
+			if (preg_match('`^(?:<br />)?\s*[\-]{' . $level . '}[\s]+(.+)[\s]+[\-]{' . $level . '}(?:<br />)?\s*$`u', $line, $matches))
 			{
 				$title_name = strip_tags(TextHelper::html_entity_decode($matches[1]));
 				

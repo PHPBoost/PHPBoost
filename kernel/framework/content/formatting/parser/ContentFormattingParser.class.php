@@ -122,7 +122,7 @@ abstract class ContentFormattingParser extends AbstractParser
 		for ($i = 0; $i < $nbr_occur; $i++)
 		{
 			//C'est le contenu d'un tag, il contient un sous tag donc on éclate
-			if (($i % 3) === 2 && preg_match('`\[' . $tag . '(?:' . $attributes . ')?\].+\[/' . $tag . '\]`s', $content[$i]))
+			if (($i % 3) === 2 && preg_match('`\[' . $tag . '(?:' . $attributes . ')?\].+\[/' . $tag . '\]`su', $content[$i]))
 			{
 				self::split_imbricated_tag($content[$i], $tag, $attributes);
 			}
@@ -173,7 +173,7 @@ abstract class ContentFormattingParser extends AbstractParser
 			}
 
 			// Mise en place de l'éclatement de la sous-chaine
-			$mask = '`\[' . $tag . '(' . $attributes . ')?\](.*)\[/' . $tag . '\](.+)?`s';
+			$mask = '`\[' . $tag . '(' . $attributes . ')?\](.*)\[/' . $tag . '\](.+)?`su';
 			$local_parsed = preg_split($mask, $sub_str, -1, PREG_SPLIT_DELIM_CAPTURE);
 
 			if (count($local_parsed) == 1)
@@ -227,7 +227,7 @@ abstract class ContentFormattingParser extends AbstractParser
 			if ($nb_open_tags == $nb_close_tags)
 			{
 				$open_tag = TextHelper::substr($content, $pos, (TextHelper::strpos($content, ']', $pos + 1) + 1 - $pos));
-				$match = preg_match('`\[' . $tag . '(' . $attributes . ')?\]`', $open_tag);
+				$match = preg_match('`\[' . $tag . '(' . $attributes . ')?\]`u', $open_tag);
 				if ($match == 1)
 				{
 					$tag_pos[count($tag_pos)] = $pos;
@@ -310,7 +310,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	protected function parse_feed_tag()
 	{
 		$this->content = str_replace(array('[[FEED', '[[/FEED]]'), array('\[\[FEED', '\[\[/FEED\]\]'), $this->content);
-		$this->content = preg_replace('`\[feed((?: [a-z]+="[^"]+")*)\]([a-z]+)\[/feed\]`U', '[[FEED$1]]$2[[/FEED]]', $this->content);
+		$this->content = preg_replace('`\[feed((?: [a-z]+="[^"]+")*)\]([a-z]+)\[/feed\]`uU', '[[FEED$1]]$2[[/FEED]]', $this->content);
 		$this->content = str_replace(array('\[\[FEED', '\[\[/FEED\]\]'), array('[[FEED', '[[/FEED]]'), $this->content);
 	}
 }

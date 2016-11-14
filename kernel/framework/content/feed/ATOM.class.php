@@ -57,26 +57,26 @@ class ATOM extends Feed
         if (($file = @file_get_contents($url)) !== false)
         {
             $this->data = new FeedData();
-            if (preg_match('`<entry>(.*)</entry>`is', $file))
+            if (preg_match('`<entry>(.*)</entry>`isu', $file))
             {
                 $expParsed = explode('<entry>', $file);
                 $nbItems = (count($expParsed) - 1) > $nbItems ? $nbItems : count($expParsed) - 1;
                 
-                $this->data->set_date(preg_match('`<updated>(.*)</updated>`is', $expParsed[0], $var) ? $var[1] : '');
-                $this->data->set_title(preg_match('`<title>(.*)</title>`is', $expParsed[0], $var) ? $var[1] : '');
-                $this->data->set_link(preg_match('`<link href="(.*)"/>`is', $expParsed[0], $var) ? $var[1] : '');
-                $this->data->set_host(preg_match('`<link href="(.*)"/>`is', $expParsed[0], $var) ? $var[1] : '');
+                $this->data->set_date(preg_match('`<updated>(.*)</updated>`isu', $expParsed[0], $var) ? $var[1] : '');
+                $this->data->set_title(preg_match('`<title>(.*)</title>`isu', $expParsed[0], $var) ? $var[1] : '');
+                $this->data->set_link(preg_match('`<link href="(.*)"/>`isu', $expParsed[0], $var) ? $var[1] : '');
+                $this->data->set_host(preg_match('`<link href="(.*)"/>`isu', $expParsed[0], $var) ? $var[1] : '');
                 
                 for ($i = 1; $i <= $nbItems; $i++)
                 {
 					$item = new FeedItem();
-                    $item->set_title(preg_match('`<title>(.*)</title>`is', $expParsed[$i], $title) ? $title[1] : '');
-                    $item->set_link(preg_match('`<link href="(.*)"/>`is', $expParsed[$i], $url) ? $url[1] : '');
-                    $item->set_guid(preg_match('`<id>(.*)</id>`is', $expParsed[$i], $guid) ? $guid[1] : '');
-                    $item->set_desc(preg_match('`<summary>(.*)</summary>`is', $expParsed[$i], $desc) ? $desc[1] : '');
-                    $item->set_date(preg_match('`<updated>(.*)</updated>`is', $expParsed[$i], $date) ? new Date(strtotime($date[1]), Timezone::SERVER_TIMEZONE) : null);
+                    $item->set_title(preg_match('`<title>(.*)</title>`isu', $expParsed[$i], $title) ? $title[1] : '');
+                    $item->set_link(preg_match('`<link href="(.*)"/>`isu', $expParsed[$i], $url) ? $url[1] : '');
+                    $item->set_guid(preg_match('`<id>(.*)</id>`isu', $expParsed[$i], $guid) ? $guid[1] : '');
+                    $item->set_desc(preg_match('`<summary>(.*)</summary>`isu', $expParsed[$i], $desc) ? $desc[1] : '');
+                    $item->set_date(preg_match('`<updated>(.*)</updated>`isu', $expParsed[$i], $date) ? new Date(strtotime($date[1]), Timezone::SERVER_TIMEZONE) : null);
                     
-                 	$enclosure = preg_match('`<enclosure rel="enclosure" url="(.*)" length="(.*)" type="(.*)" />`is', $expParsed[$i]);
+                 	$enclosure = preg_match('`<enclosure rel="enclosure" url="(.*)" length="(.*)" type="(.*)" />`isu', $expParsed[$i]);
                     if ($enclosure)
                     {
                     	$enclosure_item = new FeedItemEnclosure();

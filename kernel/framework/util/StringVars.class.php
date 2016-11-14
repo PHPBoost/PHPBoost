@@ -54,7 +54,7 @@ class StringVars
     public function replace($string, array $parameters)
     {
     	$this->parameters = $parameters;
-        return preg_replace_callback('`:([a-z][\w_]+)`i', array($this, 'replace_var'), $string);
+        return preg_replace_callback('`:([a-z][\w_]+)`iu', array($this, 'replace_var'), $string);
     }
     
     private function replace_var($captures)

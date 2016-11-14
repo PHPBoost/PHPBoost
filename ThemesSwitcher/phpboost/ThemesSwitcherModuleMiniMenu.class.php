@@ -76,7 +76,7 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
 					$user->update_theme($theme->get_id());
 				}
 			}
-			$query_string = preg_replace('`switchtheme=[^&]+`', '', QUERY_STRING);
+			$query_string = preg_replace('`switchtheme=[^&]+`u', '', QUERY_STRING);
 			AppContext::get_response()->redirect(trim(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : '')));
 		}
 		

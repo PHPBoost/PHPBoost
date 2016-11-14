@@ -103,7 +103,7 @@ class FormFieldPossibleValues extends AbstractFormField
 			{
 				if ($request->get_poststring($field_name))
 				{
-					$values[preg_replace('/\s+/', '', $request->get_poststring($field_name))] = array(
+					$values[preg_replace('/\s+/u', '', $request->get_poststring($field_name))] = array(
 						'is_default' => $default_field == $i,
 						'title' => addslashes($request->get_poststring($field_name))
 					);

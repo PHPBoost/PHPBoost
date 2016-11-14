@@ -73,7 +73,7 @@ if (!empty($contents)) //On enregistre un article
 	$menu = '';
 	
 	//Si on détecte la syntaxe des menus alors on lance les fonctions, sinon le menu sera vide et non affiché
-	if (preg_match('`[\-]{2,6}`isU', $contents))
+	if (preg_match('`[\-]{2,6}`isuU', $contents))
 	{
 		$menu_list = wiki_explode_menu($contents); //On éclate le menu en tableaux
 		$menu = wiki_display_menu($menu_list); //On affiche le menu
@@ -223,7 +223,7 @@ if ($id_edit > 0)//On édite
 		for ($i = 1; $i <= 5; $i++)
 		{
 			$string_regex .= '-';
-			$contents = preg_replace('`[\r\n]+<(?:div|h[1-5]) class="wiki_paragraph' .  $i . '" id=".+">(.+)</(?:div|h[1-5])><br />[\r\n]+`sU', (AppContext::get_current_user()->get_editor() == 'TinyMCE' ? '<br />' : "\n") . $string_regex . ' $1 '. $string_regex . (AppContext::get_current_user()->get_editor() == 'TinyMCE' ? '<br/>' : ''), "\n" . $contents . "\n");
+			$contents = preg_replace('`[\r\n]+<(?:div|h[1-5]) class="wiki_paragraph' .  $i . '" id=".+">(.+)</(?:div|h[1-5])><br />[\r\n]+`suU', (AppContext::get_current_user()->get_editor() == 'TinyMCE' ? '<br />' : "\n") . $string_regex . ' $1 '. $string_regex . (AppContext::get_current_user()->get_editor() == 'TinyMCE' ? '<br/>' : ''), "\n" . $contents . "\n");
 		}
 		$contents = trim($contents);
 	}

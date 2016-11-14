@@ -110,7 +110,7 @@ class Url
 				}
 			}
 
-			if (preg_match('`^[a-z0-9]+\:(?!//).+`iU', $url) > 0)
+			if (preg_match('`^[a-z0-9]+\:(?!//).+`iuU', $url) > 0)
 			{	// This is a special protocol link and we don't try to convert it.
 				$this->url = $url;
 				return;
@@ -120,7 +120,7 @@ class Url
 				$url = 'http://' . $url;
 			}
 
-			$url = preg_replace('`^https?://' . AppContext::get_request()->get_site_domain_name() . GeneralConfig::load()->get_site_path() . '`', '/', self::compress($url));
+			$url = preg_replace('`^https?://' . AppContext::get_request()->get_site_domain_name() . GeneralConfig::load()->get_site_path() . '`u', '/', self::compress($url));
 			if (!TextHelper::strpos($url, '://'))
 			{
 				$this->is_relative = true;
@@ -222,10 +222,10 @@ class Url
 	 */
 	public static function encode_rewrite($url)
 	{
-		$url = preg_replace('#&([a-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', TextHelper::strtolower(TextHelper::htmlspecialchars($url)));
-		$url = preg_replace('#&([a-z]{2})(?:lig);#', '\1', $url);
-		$url = preg_replace('`([^a-z0-9]|[\s])`', '-', $url);
-		$url = preg_replace('`[-]{2,}`', '-', $url);
+		$url = preg_replace('#&([a-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#u', '\1', TextHelper::strtolower(TextHelper::htmlspecialchars($url)));
+		$url = preg_replace('#&([a-z]{2})(?:lig);#u', '\1', $url);
+		$url = preg_replace('`([^a-z0-9]|[\s])`u', '-', $url);
+		$url = preg_replace('`[-]{2,}`u', '-', $url);
 		$url = trim($url, ' -');
 		
 		return $url;
@@ -270,7 +270,7 @@ class Url
 				
 				if (isset($file_headers[0]))
 				{
-					if(preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/', $file_headers[0], $matches))
+					if(preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/u', $file_headers[0], $matches))
 						$status = (int)$matches[1];
 				}
 				else
@@ -310,7 +310,7 @@ class Url
 				if (isset($file_headers[0]))
 				{
 					$status = 0;
-					if(preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/', $file_headers[0], $matches))
+					if(preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/u', $file_headers[0], $matches))
 						$status = (int)$matches[1];
 					
 					if ($status == self::STATUS_OK && isset($file_headers['Content-Length']))
@@ -336,15 +336,15 @@ class Url
 			$args = TextHelper::substr($url, $pos);
 			$url = TextHelper::substr($url, 0, $pos);
 		}
-		$url = preg_replace(array('`([^:]|^)/+`', '`(?<!\.)\./`'), array('$1/', ''), $url);
+		$url = preg_replace(array('`([^:]|^)/+`', '`(?<!\.)\./`u'), array('$1/', ''), $url);
 
 		do
 		{
-			$url = preg_replace('`/?[^/]+/\.\.`', '', $url);
+			$url = preg_replace('`/?[^/]+/\.\.`u', '', $url);
 
 		}
-		while (preg_match('`/?[^/]+/\.\.`', $url) > 0);
-		return preg_replace('`^//`', '/', $url) . $args;
+		while (preg_match('`/?[^/]+/\.\.`u', $url) > 0);
+		return preg_replace('`^//`', '/u', $url) . $args;
 	}
 
 	/**
@@ -511,7 +511,7 @@ class Url
 	$args = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, $anchor = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, $forbid_js = true)
 	{
 		return (bool) preg_match('`^' . self::get_wellformness_regex($protocol, $user, $domain,
-		$folders, $file, $args, $anchor, $forbid_js) . '$`i', $url);
+		$folders, $file, $args, $anchor, $forbid_js) . '$`iu', $url);
 	}
 
 	/**

@@ -48,7 +48,7 @@ class PlainCodeHighlighter extends AbstractParser
 	 */
 	public function parse()
 	{
-		$this->content = preg_replace('`\[highlight\](.*)\[/highlight\]`iSU', '<span style="' . self::HIGHLIGHTING_STYLE . '">$1</span>', $this->content);
+		$this->content = preg_replace('`\[highlight\](.*)\[/highlight\]`iSuU', '<span style="' . self::HIGHLIGHTING_STYLE . '">$1</span>', $this->content);
 	}
 }
 ?>

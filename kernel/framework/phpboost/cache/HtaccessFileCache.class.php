@@ -111,7 +111,7 @@ class HtaccessFileCache implements CacheData
 	
 	private function get_domain($hostname)
 	{
-		preg_match("/[a-z0-9\-]{1,63}\.[a-z\.]{2,6}$/", parse_url($hostname, PHP_URL_HOST), $_domain_tld);
+		preg_match("/[a-z0-9\-]{1,63}\.[a-z\.]{2,6}$/u", parse_url($hostname, PHP_URL_HOST), $_domain_tld);
 		return isset($_domain_tld[0]) ? $_domain_tld[0] : '';
 	}
 	

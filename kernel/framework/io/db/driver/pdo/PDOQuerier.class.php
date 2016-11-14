@@ -62,7 +62,7 @@ class PDOQuerier extends AbstractSQLQuerier
 		$keys_to_remove = array();
 		foreach (array_keys($parameters) as $key)
 		{
-			if (!preg_match('`:' . $key . '[^\w]|$`i', $query))
+			if (!preg_match('`:' . $key . '[^\w]|$`iu', $query))
 			{
 				$keys_to_remove[] = $key;
 			}

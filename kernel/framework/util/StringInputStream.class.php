@@ -83,7 +83,7 @@ class StringInputStream
 	public function assert_next($pattern, $options = '', array &$matches = null)
 	{
 		$subject = TextHelper::substr($this->stream, $this->index + 1);
-		return preg_match('`^(?:' . $pattern . ')`' . $options, $subject, $matches);
+		return preg_match('`^(?:' . $pattern . ')`u' . $options, $subject, $matches);
 	}
 
 	public function consume_next($pattern, $options = '', array &$matches = null)

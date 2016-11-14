@@ -221,22 +221,22 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		
 		##Callbacks
 		//Image
-		$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)?")?(?: title="([^"]+)?")?(?: style="([^"]+)?")?(?: class="([^"]+)?")? />`iU', array($this, 'unparse_img'), $this->content);
+		$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)?")?(?: title="([^"]+)?")?(?: style="([^"]+)?")?(?: class="([^"]+)?")? />`iuU', array($this, 'unparse_img'), $this->content);
 		
 		//FA Icon
-		$this->content = preg_replace_callback('`<i class="fa fa-([a-z0-9-]+)( fa-[a-z0-9-]+)?( fa-[a-z0-9-]+)?( fa-[a-z0-9-]+)?"></i>`iU', array($this, 'unparse_fa'), $this->content);
+		$this->content = preg_replace_callback('`<i class="fa fa-([a-z0-9-]+)( fa-[a-z0-9-]+)?( fa-[a-z0-9-]+)?( fa-[a-z0-9-]+)?"></i>`iuU', array($this, 'unparse_fa'), $this->content);
 
 		//Fieldset
-		while (preg_match('`<fieldset class="formatter-container formatter-fieldset" style="([^"]*)"><legend>(.*)</legend><div class="formatter-content">(.+)</div></fieldset>`sU', $this->content))
+		while (preg_match('`<fieldset class="formatter-container formatter-fieldset" style="([^"]*)"><legend>(.*)</legend><div class="formatter-content">(.+)</div></fieldset>`suU', $this->content))
 		{
-			$this->content = preg_replace_callback('`<fieldset class="formatter-container formatter-fieldset" style="([^"]*)"><legend>(.*)</legend><div class="formatter-content">(.+)</div></fieldset>`sU', array($this, 'unparse_fieldset'), $this->content);
+			$this->content = preg_replace_callback('`<fieldset class="formatter-container formatter-fieldset" style="([^"]*)"><legend>(.*)</legend><div class="formatter-content">(.+)</div></fieldset>`suU', array($this, 'unparse_fieldset'), $this->content);
 		}
 
 		//Wikipedia link
-		$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link">(.*)</a>`sU', array($this, 'unparse_wikipedia_link'), $this->content);
+		$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link">(.*)</a>`suU', array($this, 'unparse_wikipedia_link'), $this->content);
 		
 		// Feed
-		$this->content = preg_replace('`\[\[FEED([^\]]*)\]\](.+)\[\[/FEED\]\]`U', '[feed$1]$2[/feed]', $this->content);
+		$this->content = preg_replace('`\[\[FEED([^\]]*)\]\](.+)\[\[/FEED\]\]`uU', '[feed$1]$2[/feed]', $this->content);
 	}
 
 	private function unparse_img($matches)
@@ -266,19 +266,19 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		//On boucle pour parcourir toutes les imbrications
 		while (TextHelper::strpos($this->content, '<table class="formatter-table"') !== false)
 		{
-			$this->content = preg_replace('`<table class="formatter-table"([^>]*)>(.*)</table>`sU', '[table$1]$2[/table]', $this->content);
+			$this->content = preg_replace('`<table class="formatter-table"([^>]*)>(.*)</table>`suU', '[table$1]$2[/table]', $this->content);
 		}
 		while (TextHelper::strpos($this->content, '<tr class="formatter-table-row"') !== false)
 		{
-			$this->content = preg_replace('`<tr class="formatter-table-row"([^>]*)>(.*)</tr>`sU', '[row$1]$2[/row]', $this->content);
+			$this->content = preg_replace('`<tr class="formatter-table-row"([^>]*)>(.*)</tr>`suU', '[row$1]$2[/row]', $this->content);
 		}
 		while (TextHelper::strpos($this->content, '<th class="formatter-table-head"') !== false)
 		{
-			$this->content = preg_replace('`<th class="formatter-table-head"([^>]*)>(.*)</th>`sU', '[head$1]$2[/head]', $this->content);
+			$this->content = preg_replace('`<th class="formatter-table-head"([^>]*)>(.*)</th>`suU', '[head$1]$2[/head]', $this->content);
 		}
 		while (TextHelper::strpos($this->content, '<td class="formatter-table-col"') !== false)
 		{
-			$this->content = preg_replace('`<td class="formatter-table-col"([^>]*)>(.*)</td>`sU', '[col$1]$2[/col]', $this->content);
+			$this->content = preg_replace('`<td class="formatter-table-col"([^>]*)>(.*)</td>`suU', '[col$1]$2[/col]', $this->content);
 		}
 	}
 
@@ -290,15 +290,15 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		//On boucle tant qu'il y a de l'imbrication
 		while (TextHelper::strpos($this->content, '<ul class="formatter-ul">') !== false)
 		{
-			$this->content = preg_replace('`<ul( style="[^"]+")? class="formatter-ul">(.*)</ul>`sU', '[list$1]$2[/list]', $this->content);
+			$this->content = preg_replace('`<ul( style="[^"]+")? class="formatter-ul">(.*)</ul>`suU', '[list$1]$2[/list]', $this->content);
 		}
 		while (TextHelper::strpos($this->content, '<ol class="formatter-ol">') !== false)
 		{
-			$this->content = preg_replace('`<ol( style="[^"]+")? class="formatter-ol">(.*)</ol>`sU', '[list=ordered$1]$2[/list]', $this->content);
+			$this->content = preg_replace('`<ol( style="[^"]+")? class="formatter-ol">(.*)</ol>`suU', '[list=ordered$1]$2[/list]', $this->content);
 		}
 		while (TextHelper::strpos($this->content, '<li class="formatter-li">') !== false)
 		{
-			$this->content = preg_replace('`<li class="formatter-li">(.*)</li>`isU', '[*]$1', $this->content);
+			$this->content = preg_replace('`<li class="formatter-li">(.*)</li>`isuU', '[*]$1', $this->content);
 		}
 	}
 

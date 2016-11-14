@@ -39,7 +39,7 @@ class ServerConfiguration
 	{
 		$system_phpversion = phpversion();
 		$matches = array();
-		if (preg_match('`^([0-9]+(?:\.[0-9]+){0,2})`', $system_phpversion, $matches))
+		if (preg_match('`^([0-9]+(?:\.[0-9]+){0,2})`u', $system_phpversion, $matches))
 		{
 			return $matches[1];
 		}

@@ -72,7 +72,7 @@ elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 		{
 			$Upload = new Upload($dir);
 			$Upload->disableContentCheck();
-			if (!$Upload->file('upload_ranks', '`([a-z0-9_ -])+\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`i'))
+			if (!$Upload->file('upload_ranks', '`([a-z0-9_ -])+\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`iu'))
 				$error = $Upload->get_error();
 		}
 		else

@@ -106,7 +106,7 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 				
 				if ($request->get_poststring($field_title) && $email)
 				{
-					$id = $i < $nb_recipients ? $recipients_keys[$i] : preg_replace('/\s+/', '', $request->get_poststring($field_name));
+					$id = $i < $nb_recipients ? $recipients_keys[$i] : preg_replace('/\s+/u', '', $request->get_poststring($field_name));
 					$values[$id] = array(
 						'is_default' => $request->get_postint($field_is_default, 0),
 						'title' => addslashes($request->get_poststring($field_title)),

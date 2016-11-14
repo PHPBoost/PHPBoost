@@ -32,7 +32,7 @@ class AdminServerPHPInfoController extends AdminController
 		ob_start();
 		phpinfo();
 		$phpinfo = ob_get_contents();
-		$phpinfo = preg_replace('`^.*<body>`is', '', $phpinfo);
+		$phpinfo = preg_replace('`^.*<body>`isu', '', $phpinfo);
 		$phpinfo = str_replace(array('class="e"', 'class="v"', '<table border="0" cellpadding="3" width="600">', '</body></html>'), 
 		array('', 'style="overflow:auto;"',  '<table style="table-layout:fixed;">', ''), $phpinfo);
 		ob_end_clean();

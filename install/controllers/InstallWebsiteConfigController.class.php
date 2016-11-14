@@ -223,7 +223,7 @@ class InstallWebsiteConfigController extends InstallController
 		{
 			$server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
 		}
-		$server_path = trim(preg_replace('`/install$`', '', dirname($server_path)));
+		$server_path = trim(preg_replace('`/install$`u', '', dirname($server_path)));
 		return $server_path = ($server_path == '/') ? '' : $server_path;
 	}
 

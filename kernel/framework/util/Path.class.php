@@ -39,7 +39,7 @@ class Path
 	{
 		if (empty(self::$fs_root_directory))
 		{
-			self::$fs_root_directory = preg_replace('`^(.+)/kernel/framework/util/?$`i', '$1',
+			self::$fs_root_directory = preg_replace('`^(.+)/kernel/framework/util/?$`iu', '$1',
 			self::real_path(dirname(__FILE__)));
 		}
 		return self::$fs_root_directory;

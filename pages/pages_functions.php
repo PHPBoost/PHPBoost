@@ -142,7 +142,7 @@ function pages_second_parse($contents)
 {
 	if (!ServerEnvironmentConfig::load()->is_url_rewriting_enabled()) //Pas de rewriting
 	{
-		$contents = preg_replace('`<a href="/pages/([a-z0-9+#-]+)">(.*)</a>`sU', '<a href="/pages/pages.php?title=$1">$2</a>', $contents);
+		$contents = preg_replace('`<a href="/pages/([a-z0-9+#-]+)">(.*)</a>`suU', '<a href="/pages/pages.php?title=$1">$2</a>', $contents);
 	}
 	
 	$content_manager = AppContext::get_content_formatting_service()->get_default_factory();

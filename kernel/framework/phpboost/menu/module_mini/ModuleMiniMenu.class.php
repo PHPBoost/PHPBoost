@@ -81,7 +81,7 @@ class ModuleMiniMenu extends Menu
 		
 		$localized_module_name = !empty($module) ? $module->get_configuration()->get_name() : '';
 		
-		return !empty($localized_module_name) ? (!preg_match('/^' . Langloader::get_message('admin.main_menu', 'main') . ' /', $localized_module_name) ? Langloader::get_message('admin.main_menu', 'main') . ' ' : '') . $localized_module_name : $class_name;
+		return !empty($localized_module_name) ? (!preg_match('/^' . Langloader::get_message('admin.main_menu', 'main') . ' /u', $localized_module_name) ? Langloader::get_message('admin.main_menu', 'main') . ' ' : '') . $localized_module_name : $class_name;
 	}
 	
 	public function display()

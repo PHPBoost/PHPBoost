@@ -51,7 +51,7 @@ class AdminCustomizeEditorCSSFilesController extends AdminModuleController
 		$id_module = '';
 		$file_selected = $request->get_value('file_name', '');
 		
-		if (preg_match('`/`', $file_selected))
+		if (preg_match('`/`u', $file_selected))
 		{
 			$split = explode('/', $file_selected);
 			$id_module = $split[0];

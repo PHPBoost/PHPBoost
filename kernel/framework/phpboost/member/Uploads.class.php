@@ -46,7 +46,7 @@ class Uploads
 	public static function Add_folder($id_parent, $user_id, $name)
 	{
 		$check_folder = self::$db_querier->count(DB_TABLE_UPLOAD_CAT, 'WHERE name = :name AND id_parent = :id_parent AND user_id = :user_id', array('name' => $name, 'id_parent' => $id_parent, 'user_id' => $user_id));
-		if (!empty($check_folder) || preg_match('`/|\.|\\\|"|<|>|\||\?`', stripslashes($name)))
+		if (!empty($check_folder) || preg_match('`/|\.|\\\|"|<|>|\||\?`u', stripslashes($name)))
 			return 0;
 			
 		$result = self::$db_querier->insert(DB_TABLE_UPLOAD_CAT, array('id_parent' => $id_parent, 'user_id' => $user_id, 'name' => $name));
@@ -153,7 +153,7 @@ class Uploads
 		
 		//Vérification de l'unicité du nom du dossier.
 		$check_folder = self::$db_querier->count(DB_TABLE_UPLOAD_CAT, 'WHERE id_parent = :id_parent AND name = :name AND id <> :id AND user_id = :user_id', array('id_parent' => $info_folder['id_parent'], 'name' => $name, 'id' => $id_folder, 'user_id' => $user_id));
-		if ($check_folder > 0 || preg_match('`/|\.|\\\|"|<|>|\||\?`', stripslashes($name)))
+		if ($check_folder > 0 || preg_match('`/|\.|\\\|"|<|>|\||\?`u', stripslashes($name)))
 			return '';
 		
 		if ($admin) //Administration, on ne vérifie pas l'appartenance.
@@ -185,7 +185,7 @@ class Uploads
 		
 		//Vérification de l'unicité du nom du fichier.
 		$check_file = self::$db_querier->count(DB_TABLE_UPLOAD, 'WHERE idcat = :idcat AND name = :name AND id <> :id AND user_id = :user_id', array('idcat' => $info_cat['idcat'], 'name' => $name, 'id' => $id_file, 'user_id' => $user_id));
-		if ($check_file > 0 || preg_match('`/|\\\|"|<|>|\||\?`', stripslashes($name)))
+		if ($check_file > 0 || preg_match('`/|\\\|"|<|>|\||\?`u', stripslashes($name)))
 			return '/';
 			
 		if ($admin) //Administration, on ne vérifie pas l'appartenance.

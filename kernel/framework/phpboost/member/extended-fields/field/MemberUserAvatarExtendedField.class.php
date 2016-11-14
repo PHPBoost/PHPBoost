@@ -124,7 +124,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		
 		if ($form->get_value('link_avatar'))
 		{
-			if (preg_match('`([A-Za-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`i', $form->get_value('link_avatar')))
+			if (preg_match('`([A-Za-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`iu', $form->get_value('link_avatar')))
 			{
 				$image = new Image($form->get_value('link_avatar'));
 	
@@ -163,7 +163,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 					$explode = explode('.', $avatar->get_name());
 					$extension = array_pop($explode);
 					
-					if (!preg_match('`(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`i', $extension))
+					if (!preg_match('`(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`iu', $extension))
 						throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('extended_field.avatar_upload_invalid_format', 'status-messages-common'));
 					
 					$explode = explode('.', $avatar->get_name());
@@ -183,7 +183,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 				{
 					$Upload = new Upload(PATH_TO_ROOT . $dir);
 					
-					$Upload->file($form->get_html_id() . '_upload_avatar', '`([A-Za-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`i', Upload::UNIQ_NAME, $user_accounts_config->get_max_avatar_weight() * 1024);
+					$Upload->file($form->get_html_id() . '_upload_avatar', '`([A-Za-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`iu', Upload::UNIQ_NAME, $user_accounts_config->get_max_avatar_weight() * 1024);
 					$upload_error = $Upload->get_error();
 					
 					if (!empty($upload_error))

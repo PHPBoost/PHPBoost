@@ -57,7 +57,7 @@ class UrlSerializedParameterEncoder
 
 	private static function encode_name($key)
 	{
-		if (is_string($key) && preg_match('`^[a-z][a-z0-9]*$`i', $key))
+		if (is_string($key) && preg_match('`^[a-z][a-z0-9]*$`iu', $key))
 		{
 			return $key . ':';
 		}

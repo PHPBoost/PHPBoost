@@ -249,22 +249,22 @@ class Backup
 		$array_struct = explode(",\n", $struct);
 		foreach ($array_struct as $field)
 		{
-			preg_match('!`([a-z_]+)`!i', $field, $match);
+			preg_match('!`([a-z_]+)`!iu', $field, $match);
 			$name = isset($match[1]) ? $match[1] : '';
 			if (TextHelper::strpos($field, 'KEY') !== false)
 			{
 				$type = trim(TextHelper::substr($field, 0, TextHelper::strpos($field, 'KEY') + 3));
-				preg_match('!\(([a-z_`,]+)\)!i', $field, $match);
+				preg_match('!\(([a-z_`,]+)\)!iu', $field, $match);
 				$index_fields = isset($match[1]) ? str_replace('`', '', $match[1]) : '';
 				$structure['index'][] = array('name' => $name, 'fields' => $index_fields, 'type' => $type);
 			}
 			else
 			{
-				preg_match('!` ([a-z0-9()]+)!i', $field, $match);
+				preg_match('!` ([a-z0-9()]+)!iu', $field, $match);
 				$type = isset($match[1]) ? $match[1] : '';
 				$attribute = TextHelper::strpos($field, 'unsigned') !== false ? 'unsigned' : '';
 				$null = TextHelper::strpos($field, 'NOT NULL') !== false ? false : true;
-				preg_match('`default (.+)`i', $field, $match);
+				preg_match('`default (.+)`iu', $field, $match);
 				$default = isset($match[1]) ? str_replace("'", '', $match[1]) : '';
 				$extra = TextHelper::strpos($field, 'auto_increment') !== false ? 'auto_increment' : '';
 				$structure['fields'][] = array('name' => $name, 'type' => $type, 'attribute' => $attribute, 'null' => $null, 'default' => $default, 'extra' => $extra);

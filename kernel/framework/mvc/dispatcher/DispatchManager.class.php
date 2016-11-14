@@ -82,7 +82,7 @@ class DispatchManager
 		else
 		{
 			$dispatcher = $dispatcher_url->relative();
-			if (!preg_match('`(?:\.php)|/$`', $dispatcher))
+			if (!preg_match('`(?:\.php)|/$`u', $dispatcher))
 			{
 				$dispatcher .= '/';
 			}
@@ -103,7 +103,7 @@ class DispatchManager
 
 	private static function get_dispatcher_path($dispatcher_name)
 	{
-		return preg_replace('`(.*/)[a-z0-9]+\.php`','$1', $dispatcher_name);
+		return preg_replace('`(.*/)[a-z0-9]+\.php`u','$1', $dispatcher_name);
 	}
 
 	private static function handle_dispatch_exception($exception)

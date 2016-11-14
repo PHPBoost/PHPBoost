@@ -55,7 +55,7 @@ class TextHelper
 		{
 			$var = self::htmlspecialchars($var);
 			//While we aren't in UTF8 encoding, we have to use HTML entities to display some special chars, we accept them.
-			$var = preg_replace('`&amp;((?:#[0-9]{2,5})|(?:[a-z0-9]{2,8}));`i', "&$1;", $var);
+			$var = preg_replace('`&amp;((?:#[0-9]{2,5})|(?:[a-z0-9]{2,8}));`iu', "&$1;", $var);
 		}
 
 		switch ($addslashes)
@@ -279,11 +279,11 @@ class TextHelper
 
 		if ($has_html_links)
 		{
-			$nbr_link = preg_match_all('`<a href="(?:ftp|https?)://`', $contents, $array);
+			$nbr_link = preg_match_all('`<a href="(?:ftp|https?)://`u', $contents, $array);
 		}
 		else
 		{
-			$nbr_link = preg_match_all('`(?:ftp|https?)://`', $contents, $array);
+			$nbr_link = preg_match_all('`(?:ftp|https?)://`u', $contents, $array);
 		}
 
 		if ($nbr_link !== false && $nbr_link > $max_nbr)
@@ -309,7 +309,7 @@ class TextHelper
 		while (!empty($string))
 		{
 			// We got a line with a break in it somewhere before the end
-			if (preg_match('%^(.{1,'.$width.'})(?:\s|$)%', $string, $matches))
+			if (preg_match('%^(.{1,'.$width.'})(?:\s|$)%u', $string, $matches))
 			{
 				// Add this line to the output
 				$lines[] = $matches[1];

@@ -74,7 +74,7 @@ class ArticlesPrintArticlesController extends ModuleController
 	
 	private function build_view()
 	{
-		$contents = preg_replace('`\[page\](.*)\[/page\]`', '<h2>$1</h2>', $this->article->get_contents());
+		$contents = preg_replace('`\[page\](.*)\[/page\]`u', '<h2>$1</h2>', $this->article->get_contents());
 		$this->view->put_all(array(
 			'PAGE_TITLE' => $this->lang['articles.print.article'] . ' - ' . $this->article->get_title() . ' - ' . GeneralConfig::load()->get_site_name(),
 			'TITLE' => $this->article->get_title(),

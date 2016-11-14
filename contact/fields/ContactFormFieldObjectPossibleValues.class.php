@@ -139,7 +139,7 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 				$field_recipient = 'field_recipient_' . $this->get_html_id() . '_' . $i;
 				if ($request->get_poststring($field_title))
 				{
-					$values[preg_replace('/\s+/', '', $request->get_poststring($field_name))] = array(
+					$values[preg_replace('/\s+/u', '', $request->get_poststring($field_name))] = array(
 						'is_default'	=> $request->get_postint($field_is_default, 0),
 						'title'	=> addslashes($request->get_poststring($field_title)),
 						'recipient'	=> $request->get_poststring($field_recipient)

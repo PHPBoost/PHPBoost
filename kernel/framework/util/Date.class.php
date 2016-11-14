@@ -72,13 +72,13 @@ class Date
 	{
 		$date_timezone = Timezone::get_timezone($referencial_timezone);
 
-		if (preg_match('`^([0-9]+)$`i', $time))
+		if (preg_match('`^([0-9]+)$`iu', $time))
 		{
 			$this->date_time = new DateTime();
 			$this->date_time->setTimezone($date_timezone);
 			$this->date_time->setTimestamp($time);
 		}
-		else if (preg_match('`^-([0-9]+)$`i', $time))
+		else if (preg_match('`^-([0-9]+)$`iu', $time))
 		{
 			$this->date_time = new DateTime('@' . $time, $date_timezone);
 		}

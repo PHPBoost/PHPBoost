@@ -103,7 +103,7 @@ class Robots
 			{
 				return 'Ahrefs';
 			}
-			elseif (preg_match('`(http:\/\/|bot|spider|crawl)+`i', $user_agent))
+			elseif (preg_match('`(http:\/\/|bot|spider|crawl)+`iu', $user_agent))
 			{
 				return 'unknow_bot';
 			}

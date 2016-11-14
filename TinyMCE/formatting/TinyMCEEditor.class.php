@@ -63,7 +63,7 @@ class TinyMCEEditor extends ContentEditor
 		$toolbar = array();
 		foreach ($this->array_tags as $tag => $tinymce_tag) //Balises autorisées.
 		{
-			$tag = preg_replace('`[0-9]`', '', $tag);
+			$tag = preg_replace('`[0-9]`u', '', $tag);
 			if (!in_array($tag, $this->forbidden_tags))
 			{
 				if ($tag != 'insertfile' || ($tag == 'insertfile' && AppContext::get_current_user()->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), FileUploadConfig::AUTH_FILES_BIT)))
@@ -102,7 +102,7 @@ class TinyMCEEditor extends ContentEditor
 			'FORBIDDEN_TAGS' => implode(',', $this->forbidden_tags),
 			'L_REQUIRE_TEXT' => LangLoader::get_message('require_text', 'main'),
 			'C_TOOLBAR' => !empty($toolbar),
-			'TOOLBAR' => preg_replace('`\|(,\|)+`', '|', trim($toolbar, ',')),
+			'TOOLBAR' => preg_replace('`\|(,\|)+`u', '|', trim($toolbar, ',')),
 			'LANGUAGE' => $language
 		));
 		

@@ -90,7 +90,7 @@ class CSSFileOptimizer
 			$cleared_file_content = $this->delete_comments($this->content);
 			$content = str_replace(array("\r\n", "\n", "\r", "\t", "  "), ' ', $cleared_file_content);
 			$content = str_replace(array("( ", " )", ", "), array("(", ")", ","), $content);
-			$content = preg_replace(array('`\s*{\s*`', '`\s*}\s*`', '`\s*:\s*`', '`\s*;\s*`'), array('{', '}', ':', ';'), $content);
+			$content = preg_replace(array('`\s*{\s*`', '`\s*}\s*`u', '`\s*:\s*`', '`\s*;\s*`u'), array('{', '}', ':', ';'), $content);
 		}
 
 		$this->content = trim($content);
@@ -137,8 +137,8 @@ class CSSFileOptimizer
 
 	private function delete_comments($value)
 	{
-		$value = preg_replace('<!\-\- [\/\ a-zA-Z]* \-\->', '', $value);
-		$value = preg_replace('#/\*.*?\*/#s', '', $value);
+		$value = preg_replace('<!\-\- [\/\ a-zA-Z]* \-\->u', '', $value);
+		$value = preg_replace('#/\*.*?\*/#su', '', $value);
 		return $value;
 	}
 
