@@ -234,8 +234,8 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 
 			//Citations
 			$this->content = preg_replace('`<div class="formatter-container formatter-blockquote"><span class="formatter-title">' . LangLoader::get_message('quotation', 'main') . ':</span><div class="formatter-content">(.*)</div></div>`isuU', "\n" . '<blockquote><p>$1</p></blockquote>', $this->content);
-			$this->_parse_imbricated('<div class="formatter-container formatter-blockquote"><span class="formatter-title">', '`<div class="formatter-container formatter-blockquote"><span class="formatter-title">(.*) :</span><div class="formatter-content">(.*)</div></div>`isU', '[quote]$2[/quote]', $this->content);
-			$this->_parse_imbricated('<div class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">', '`<div class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">(.*) :</span><div class="formatter-content">(.*)</div></div>`isU', '[quote=$1]$2[/quote]', $this->content);
+			$this->_parse_imbricated('<div class="formatter-container formatter-blockquote"><span class="formatter-title">', '`<div class="formatter-container formatter-blockquote"><span class="formatter-title">(.*) :</span><div class="formatter-content">(.*)</div></div>`isuU', '[quote]$2[/quote]', $this->content);
+			$this->_parse_imbricated('<div class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">', '`<div class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">(.*) :</span><div class="formatter-content">(.*)</div></div>`isuU', '[quote=$1]$2[/quote]', $this->content);
 
 			//Balise indentation
 			$this->content = preg_replace('`(?:<p>\s*</p>)?\s*<p>\s*<div class="indent">(.+)</div>\s*</p>`isuU', "\n" . '<p style="padding-left: 30px;">$1</p>', $this->content);
@@ -314,12 +314,12 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		##Remplacement des balises imbriquées
 
 		//Texte caché
-		$this->_parse_imbricated('<div class="formatter-container formatter-hide" onclick="bb_hide(this)"><span class="formatter-title">', '`<div class="formatter-container formatter-hide" onclick="bb_hide\(this\)"><span class="formatter-title">(.*) :</span><div class="formatter-content">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
-		$this->_parse_imbricated('<div class="formatter-container formatter-hide" onclick="bb_hide(this)"><span class="formatter-title title-perso">', '`<div class="formatter-container formatter-hide" onclick="bb_hide\(this\)"><span class="formatter-title title-perso">(.*) :</span><div class="formatter-content">(.*)</div></div>`sU', '[hide=$1]$2[/hide]', $this->content);
+		$this->_parse_imbricated('<div class="formatter-container formatter-hide" onclick="bb_hide(this)"><span class="formatter-title">', '`<div class="formatter-container formatter-hide" onclick="bb_hide\(this\)"><span class="formatter-title">(.*) :</span><div class="formatter-content">(.*)</div></div>`suU', '[hide]$2[/hide]', $this->content);
+		$this->_parse_imbricated('<div class="formatter-container formatter-hide" onclick="bb_hide(this)"><span class="formatter-title title-perso">', '`<div class="formatter-container formatter-hide" onclick="bb_hide\(this\)"><span class="formatter-title title-perso">(.*) :</span><div class="formatter-content">(.*)</div></div>`suU', '[hide=$1]$2[/hide]', $this->content);
 
 		//Bloc HTML
-		$this->_parse_imbricated('<div class="formatter-container formatter-block"', '`<div class="formatter-container formatter-block">(.+)</div>`sU', '[block]$1[/block]', $this->content);
-		$this->_parse_imbricated('<div class="formatter-container formatter-block style=', '`<div class="formatter-container formatter-block style="([^"]+)">(.+)</div>`sU', '[block style="$1"]$2[/block]', $this->content);
+		$this->_parse_imbricated('<div class="formatter-container formatter-block"', '`<div class="formatter-container formatter-block">(.+)</div>`suU', '[block]$1[/block]', $this->content);
+		$this->_parse_imbricated('<div class="formatter-container formatter-block style=', '`<div class="formatter-container formatter-block style="([^"]+)">(.+)</div>`suU', '[block style="$1"]$2[/block]', $this->content);
 
 		//Bloc de formulaire
 		while (preg_match('`<fieldset class="formatter-container formatter-fieldset" style="([^"]*)"><legend>(.*)</legend><div class="formatter-content">(.+)</div></fieldset>`suU', $this->content))

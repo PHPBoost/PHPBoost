@@ -50,7 +50,7 @@ function wiki_unparse($contents)
 	$unparser = $content_manager->get_unparser();
 	
 	//Unparse la balise link
-	$unparser->add_module_special_tag('`<a href="/wiki/([a-z0-9+#-_]+)">(.*)</a>`sU', '[link=$1]$2[/link]');
+	$unparser->add_module_special_tag('`<a href="/wiki/([a-z0-9+#-_]+)">(.*)</a>`suU', '[link=$1]$2[/link]');
 	$unparser->set_content($contents);
 	$unparser->parse();
 	
