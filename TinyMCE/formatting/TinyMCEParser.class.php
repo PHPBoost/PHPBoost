@@ -563,7 +563,7 @@ class TinyMCEParser extends ContentFormattingParser
 	private function parse_tables()
 	{
 		$content_contains_table = false;
-		while (preg_match('`&lt;table([^&]*)&gt;(.+)&lt;/table&gt;`is', $this->content))
+		while (preg_match('`&lt;table([^&]*)&gt;(.+)&lt;/table&gt;`isu', $this->content))
 		{
 			$this->content = preg_replace_callback('`&lt;table([^&]*)&gt;(.+)&lt;/table&gt;`isuU', array($this, 'parse_table_tag'), $this->content);
 			$content_contains_table = true;
@@ -572,13 +572,13 @@ class TinyMCEParser extends ContentFormattingParser
 		if ($content_contains_table)
 		{
 			//Rows
-			while (preg_match('`&lt;tr([^&]*)&gt;(.+)&lt;/tr&gt;`is', $this->content))
+			while (preg_match('`&lt;tr([^&]*)&gt;(.+)&lt;/tr&gt;`isu', $this->content))
 			{
 				$this->content = preg_replace_callback('`&lt;tr([^&]*)&gt;(.+)&lt;/tr&gt;`isuU', array($this, 'parse_row_tag'), $this->content);
 			}
 
 			//Cols
-			while (preg_match('`&lt;td|h([^&]*)&gt;(.+)&lt;/td|h&gt;`is', $this->content))
+			while (preg_match('`&lt;td|h([^&]*)&gt;(.+)&lt;/td|h&gt;`isu', $this->content))
 			{
 				$this->content = preg_replace_callback('`&lt;(td)([^&]*)&gt;(.+)?&lt;/td&gt;`isuU', array($this, 'parse_col_tag'), $this->content);
 				$this->content = preg_replace_callback('`&lt;(th)([^&]*)&gt;(.+)?&lt;/th&gt;`isuU', array($this, 'parse_col_tag'), $this->content);
@@ -926,7 +926,7 @@ class TinyMCEParser extends ContentFormattingParser
 		$alt = !empty($matches[3]) ? $matches[3] : '';
 		$style = !empty($matches[1]) ? $matches[1] : '';
 		
-		if (preg_match('`width:.?([0-9]+)px;`iU', $style, $temp_array))
+		if (preg_match('`width:.?([0-9]+)px;`iuU', $style, $temp_array))
 		{
 			$width = $temp_array[1];
 			$style = preg_replace('`width:.?' . $width . 'px;`iuU', '', $style);

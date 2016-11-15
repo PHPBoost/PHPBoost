@@ -117,7 +117,7 @@ class AdminSmileysFormController extends AdminController
 				
 				$upload = new Upload($this->smileys_path);
 				
-				if ($upload->file('upload_smiley_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`i'))
+				if ($upload->file('upload_smiley_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`iu'))
 				{
 					// TODO : gérer les archives de smileys (possibilité d'uploader un zip + case à cocher si on veut créer directement chaque smiley avec :nom_du_smiley comme code)
 				}
@@ -212,7 +212,7 @@ class AdminSmileysFormController extends AdminController
 	{
 		$smileys_array = $options = array();
 		$folder_phpboost_smileys = new Folder($this->smileys_path);
-		foreach ($folder_phpboost_smileys->get_files('`\.(png|jpg|bmp|gif)$`i') as $smileys)
+		foreach ($folder_phpboost_smileys->get_files('`\.(png|jpg|bmp|gif)$`iu') as $smileys)
 			$smileys_array[] = $smileys->get_name();
 		
 		if (!$this->smiley['idsmiley'])

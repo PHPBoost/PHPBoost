@@ -183,7 +183,7 @@ class AdminThemesNotInstalledListController extends AdminController
 			if ($uploaded_file !== null)
 			{
 				$upload = new Upload($folder_phpboost_themes);
-				if ($upload->file('upload_theme_file', '`([A-Za-z0-9-_]+)\.(gz|zip)+$`i'))
+				if ($upload->file('upload_theme_file', '`([A-Za-z0-9-_]+)\.(gz|zip)+$`iu'))
 				{
 					$archive = $folder_phpboost_themes . $upload->get_filename();
 					

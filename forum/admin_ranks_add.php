@@ -101,7 +101,7 @@ else //Sinon on rempli le formulaire
 	
 	
 	$image_folder_path = new Folder(PATH_TO_ROOT . '/forum/templates/images/ranks/');
-	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`i') as $image)
+	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`iu') as $image)
 	{
 		$file = $image->get_name();
 		$rank_options .= '<option value="' . $file . '">' . $file . '</option>';

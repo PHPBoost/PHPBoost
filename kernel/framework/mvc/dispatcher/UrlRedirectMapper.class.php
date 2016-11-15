@@ -41,7 +41,7 @@ class UrlRedirectMapper extends AbstractUrlMapper
 	 * and capturing the controller method parameters. By default, match the empty url <code>/</code>
 	 * @throws NoSuchControllerException
 	 */
-	public function __construct($redirect_url, $capture_regex = '`^/?$`')
+	public function __construct($redirect_url, $capture_regex = '`^/?$`u')
 	{
 		$this->redirect_url = $redirect_url;
 		parent::__construct($capture_regex);

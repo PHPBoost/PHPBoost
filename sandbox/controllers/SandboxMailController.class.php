@@ -94,7 +94,7 @@ class SandboxMailController extends ModuleController
 		$fieldset = new FormFieldsetHTML('smtp_configuration', $this->lang['mail.smtp_configuration'], array('disabled' => true));
 		$this->form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('smtp_host', $this->lang['mail.smtp.host'], '', array('disabled' => true), array(new FormFieldConstraintRegex('`^[a-z0-9-]+(?:\.[a-z0-9-]+)*$`i'))));
+		$fieldset->add_field(new FormFieldTextEditor('smtp_host', $this->lang['mail.smtp.host'], '', array('disabled' => true), array(new FormFieldConstraintRegex('`^[a-z0-9-]+(?:\.[a-z0-9-]+)*$`iu'))));
 		$fieldset->add_field(new FormFieldTextEditor('smtp_port', $this->lang['mail.smtp.port'], 25, array('disabled' => true), array(new FormFieldConstraintIntegerRange(0, 65535))));
 		$fieldset->add_field(new FormFieldTextEditor('smtp_login', $this->lang['mail.smtp.login'], '', array('disabled' => true), array(new FormFieldConstraintNotEmpty())));
 		$fieldset->add_field(new FormFieldPasswordEditor('smtp_password', $this->lang['mail.smtp.password'], '', array('disabled' => true)));

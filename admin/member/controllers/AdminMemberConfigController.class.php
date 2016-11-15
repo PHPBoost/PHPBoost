@@ -118,7 +118,7 @@ class AdminMemberConfigController extends AdminController
 		
 		$fieldset->add_field(new FormFieldNumberEditor('unactivated_accounts_timeout', $this->lang['members.config.unactivated-accounts-timeout'], (int)$this->user_accounts_config->get_unactivated_accounts_timeout(),
 			array('min' => 1, 'max' => 365, 'description' => $this->lang['members.config.unactivated-accounts-timeout-explain'], 'hidden' => !$this->user_accounts_config->is_registration_enabled() || $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'))
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('allow_users_to_change_display_name', $this->lang['members.config.allow_users_to_change_display_name'], $this->user_accounts_config->are_users_allowed_to_change_display_name()));
@@ -130,7 +130,7 @@ class AdminMemberConfigController extends AdminController
 		
 		$fieldset->add_field(new FormFieldNumberEditor('internal_password_min_length', $this->lang['security.config.internal-password-min-length'], $this->security_config->get_internal_password_min_length(),
 			array('min' => 6, 'max' => 30),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i'), new FormFieldConstraintIntegerRange(6, 30))
+			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'), new FormFieldConstraintIntegerRange(6, 30))
 		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('internal_password_strength', $this->lang['security.config.internal-password-strength'], $this->security_config->get_internal_password_strength(),
@@ -205,17 +205,17 @@ class AdminMemberConfigController extends AdminController
 		
 		$fieldset->add_field(new FormFieldNumberEditor('maximal_width_avatar', $this->lang['members.config.maximal-width-avatar'], $this->user_accounts_config->get_max_avatar_width(),
 			array('description' => $this->lang['members.config.maximal-width-avatar-explain']),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'))
 		));
 		
 		$fieldset->add_field(new FormFieldNumberEditor('maximal_height_avatar', $this->lang['members.config.maximal-height-avatar'], $this->user_accounts_config->get_max_avatar_height(),
 			array('description' => $this->lang['members.config.maximal-height-avatar-explain']),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'))
 		));
 		
 		$fieldset->add_field(new FormFieldNumberEditor('maximal_weight_avatar', $this->lang['members.config.maximal-weight-avatar'], $this->user_accounts_config->get_max_avatar_weight(),
 			array('description' => $this->lang['members.config.maximal-weight-avatar-explain']),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'))
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('default_avatar_activation', $this->lang['members.config.default-avatar-activation'], $this->user_accounts_config->is_default_avatar_enabled(),

@@ -173,7 +173,7 @@ class AdminLangsNotInstalledListController extends AdminController
 			if ($uploaded_file !== null)
 			{
 				$upload = new Upload($folder_phpboost_langs);
-				if ($upload->file('upload_lang_file', '`([a-z0-9()_-])+\.(gz|zip)+$`i'))
+				if ($upload->file('upload_lang_file', '`([a-z0-9()_-])+\.(gz|zip)+$`iu'))
 				{
 					$archive = $folder_phpboost_langs . $upload->get_filename();
 					

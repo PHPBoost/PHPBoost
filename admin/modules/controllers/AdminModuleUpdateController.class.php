@@ -169,7 +169,7 @@ class AdminModuleUpdateController extends AdminController
 			{
 				$upload = new Upload($modules_folder);
 				$upload->disableContentCheck();
-				if ($upload->file('upload_module_file', '`([A-Za-z0-9-_]+)\.(gz|zip)+$`i', false, 100000000, false))
+				if ($upload->file('upload_module_file', '`([A-Za-z0-9-_]+)\.(gz|zip)+$`iu', false, 100000000, false))
 				{
 					$archive = $modules_folder . $upload->get_filename();
 					if ($upload->get_extension() == 'gz')

@@ -99,7 +99,7 @@ class InstallWebsiteConfigController extends InstallController
 		
 		$fieldset->add_field(new FormFieldNumberEditor('internal_password_min_length', $admin_user_lang['security.config.internal-password-min-length'], $this->security_config->get_internal_password_min_length(),
 			array('min' => 6, 'max' => 30),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i'), new FormFieldConstraintIntegerRange(6, 30))
+			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'), new FormFieldConstraintIntegerRange(6, 30))
 		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('internal_password_strength', $admin_user_lang['security.config.internal-password-strength'], $this->security_config->get_internal_password_strength(),

@@ -130,7 +130,7 @@ elseif (!empty($_FILES['upload_file']['name']) && AppContext::get_request()->has
 			$weight_max = $unlimited_data ? 100000000 : ($group_limit - $member_memory_used);
 			
 			$Upload = new Upload($dir);
-			$Upload->file('upload_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $files_upload_config->get_authorized_extensions())) . ')+$`i', Upload::UNIQ_NAME, $weight_max);
+			$Upload->file('upload_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $files_upload_config->get_authorized_extensions())) . ')+$`iu', Upload::UNIQ_NAME, $weight_max);
 			
 			if ($Upload->get_error() != '') //Erreur, on arrête ici
 			{

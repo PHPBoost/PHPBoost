@@ -107,7 +107,7 @@ class AdminContentConfigController extends AdminController
 		
 		$fieldset->add_field(new FormFieldNumberEditor('max_pm_number', $this->lang['content.config.max-pm-number'], $this->user_accounts_config->get_max_private_messages_number(),
 			array('required' => true, 'description' => $this->lang['content.config.max-pm-number-explain']),
-			array(new FormFieldConstraintRegex('`^([0-9]+)$`i', '', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
+			array(new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('anti_flood_enabled', $this->lang['content.config.anti-flood-enabled'], $this->content_management_config->is_anti_flood_enabled(),
@@ -116,7 +116,7 @@ class AdminContentConfigController extends AdminController
 		
 		$fieldset->add_field(new FormFieldNumberEditor('delay_flood', $this->lang['content.config.delay-flood'], $this->content_management_config->get_anti_flood_duration(), array(
 			'required' => true, 'description' => $this->lang['content.config.delay-flood-explain']),
-			array(new FormFieldConstraintRegex('`^([0-9]+)$`i', '', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
+			array(new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
 		));
 		
 		$fieldset = new FormFieldsetHTML('captcha', $this->lang['content.config.captcha']);
@@ -143,7 +143,7 @@ class AdminContentConfigController extends AdminController
 
 		$fieldset->add_field(new FormFieldNumberEditor('new_content_duration', $this->lang['content.config.new-content-duration'], $this->content_management_config->get_new_content_duration(),
 			array('min' => 1, 'required' => true, 'description' => $this->lang['content.config.new-content-duration-explain'], 'hidden' => !$this->content_management_config->is_new_content_enabled()),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i'), new FormFieldConstraintIntegerRange(1, 9999))
+			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'), new FormFieldConstraintIntegerRange(1, 9999))
 		));
 
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('new_content_unauthorized_modules', $this->admin_common_lang['config.forbidden-module'], $this->content_management_config->get_new_content_unauthorized_modules(), $this->generate_unauthorized_module_option(NewContentExtensionPoint::EXTENSION_POINT),

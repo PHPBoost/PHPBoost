@@ -49,7 +49,7 @@ class CSSFileOptimizer
 
 	public function __construct()
 	{
-		$this->regex_search_files_path = "`url\([\'\"]?([^';}]+)[\'\"]?\)`";
+		$this->regex_search_files_path = "`url\([\'\"]?([^';}]+)[\'\"]?\)`u";
 		$this->replace_value_files_path = 'url(\':path/'. str_replace('\'', '', '$1') .'\')';
 	}
 

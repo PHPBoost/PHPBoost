@@ -92,7 +92,7 @@ abstract class AbstractPHPMailerMailService implements MailService
 
 	public function get_mail_checking_regex()
 	{
-		return '`^' . self::$regex . '$`i';
+		return '`^' . self::$regex . '$`iu';
 	}
 
 	public function get_mail_checking_raw_regex()

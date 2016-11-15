@@ -164,7 +164,7 @@ class HTMLTableParameters
 	{
 		if (isset($this->parameters['sort']) && is_string($this->parameters['sort']))
 		{
-			$regex = '`(' . HTMLTableSortingRule::ASC . '|' . HTMLTableSortingRule::DESC . ')(\w+)`';
+			$regex = '`(' . HTMLTableSortingRule::ASC . '|' . HTMLTableSortingRule::DESC . ')(\w+)`u';
 			$param = array();
 			if (preg_match($regex, $this->parameters['sort'], $param))
 			{

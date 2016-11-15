@@ -36,7 +36,7 @@ function wiki_parse($contents)
 	$parser = $content_manager->get_parser();
 	
 	//Parse la balise link
-	$parser->add_module_special_tag('`\[link=([a-z0-9+#-_]+)\](.+)\[/link\]`isU', '<a href="/wiki/$1">$2</a>');
+	$parser->add_module_special_tag('`\[link=([a-z0-9+#-_]+)\](.+)\[/link\]`isuU', '<a href="/wiki/$1">$2</a>');
 	$parser->set_content($contents);
 	$parser->parse();
 	

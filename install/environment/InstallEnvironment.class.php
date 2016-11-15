@@ -86,7 +86,7 @@ class InstallEnvironment extends Environment
 			//We try to load another lang
 
 			$distribution_folder = new Folder('distribution');
-			$distribution_files = $distribution_folder->get_files('`distribution_[a-z_-]+\.php`i');
+			$distribution_files = $distribution_folder->get_files('`distribution_[a-z_-]+\.php`iu');
 			if (count($distribution_files) > 0)
 			{
 				include('distribution/distribution_' . $distribution_files[0]->get_name() . '.php');

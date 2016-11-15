@@ -102,7 +102,7 @@ class SandboxFormController extends ModuleController
 		// SINGLE LINE TEXT
 		$fieldset->add_field(new FormFieldTextEditor('text', $this->lang['form.input.text'], $this->lang['form.input.text.lorem'], array(
 			'maxlength' => 25, 'description' => $this->lang['form.input.text.desc']),
-			array(new FormFieldConstraintRegex('`^[a-z0-9_ ]+$`i'))
+			array(new FormFieldConstraintRegex('`^[a-z0-9_ ]+$`iu'))
 		));
 		$fieldset->add_field(new FormFieldTextEditor('textdisabled', $this->lang['form.input.text.disabled'], '', array(
 			'maxlength' => 25, 'description' => $this->lang['form.input.text.disabled.desc'], 'disabled' => true)

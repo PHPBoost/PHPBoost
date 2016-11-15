@@ -175,7 +175,7 @@ elseif (!empty($_FILES['upload_groups']['name'])) //Upload
 		{
 			$Upload = new Upload($dir);
 			$Upload->disableContentCheck();
-			if (!$Upload->file('upload_groups', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`i'))
+			if (!$Upload->file('upload_groups', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`iu'))
 			{
 				$error = $Upload->get_error();
 			}
@@ -216,7 +216,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 		//On recupère les dossier des images des groupes.
 		$img_groups = '<option value="">--</option>';
 		$image_folder_path = new Folder(PATH_TO_ROOT . '/images/group');
-		foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`i') as $image)
+		foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`iu') as $image)
 		{
 			$file = $image->get_name();
 			$selected = ($file == $group['img']) ? ' selected="selected"' : '';
@@ -324,7 +324,7 @@ elseif ($add) //Interface d'ajout du groupe.
 
 	$img_groups = '<option value="">--</option>';
 	$image_folder_path = new Folder(PATH_TO_ROOT . '/images/group');
-	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`i') as $image)
+	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`iu') as $image)
 	{
 		$file = $image->get_name();
 		$img_groups .= '<option value="' . $file . '">' . $file . '</option>';

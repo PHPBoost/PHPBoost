@@ -51,7 +51,7 @@ class FormFieldMailEditor extends FormFieldTextEditor
 		if (isset($field_options['multiple']))
 		{
 			$simple_regex = AppContext::get_mail_service()->get_mail_checking_raw_regex();
-			$constraints[] = new FormFieldConstraintRegex('`^' . $simple_regex . '(?:,' . $simple_regex . ')*$`i');
+			$constraints[] = new FormFieldConstraintRegex('`^' . $simple_regex . '(?:,' . $simple_regex . ')*$`iu');
 		}
 		else
 		{

@@ -438,7 +438,7 @@ class Gallery
 	{
 		//On recupère les dossier des thèmes contenu dans le dossier images/smiley.
 		$thumb_folder_path = new Folder('./pics/thumbnails/');
-		foreach ($thumb_folder_path->get_files('`\.(png|jpg|jpeg|bmp|gif)$`i') as $thumbs)
+		foreach ($thumb_folder_path->get_files('`\.(png|jpg|jpeg|bmp|gif)$`iu') as $thumbs)
 			$this->delete_file('./pics/thumbnails/' . $thumbs->get_name());
 	}
 	

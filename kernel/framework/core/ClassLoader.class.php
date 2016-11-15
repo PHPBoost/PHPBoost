@@ -143,7 +143,7 @@ class ClassLoader
 
 		if ($recursive)
 		{
-			$folders = $folder->get_folders('`^[a-z]{1}.*$`i');
+			$folders = $folder->get_folders('`^[a-z]{1}.*$`iu');
 			foreach ($folders as $a_folder)
 			{
 				if (!in_array($a_folder->get_path_from_root(), self::$exclude_paths)

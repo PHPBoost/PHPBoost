@@ -574,11 +574,11 @@ class Url
 				{
 					$a_regex .= '/';
 				}
-				$a_regex .= '[^"]+)(")`isU';
+				$a_regex .= '[^"]+)(")`isuU';
 				$regex[] = $a_regex;
 			}
 			
-			$regex[] = '`(<script><!--\s*insert(?:Sound|Movie|Swf|Youtube)Player\\(")(' . ($only_match_relative ? '/' : '') . '[^"]+)("\\)\s*--></script>)`isU';
+			$regex[] = '`(<script><!--\s*insert(?:Sound|Movie|Swf|Youtube)Player\\(")(' . ($only_match_relative ? '/' : '') . '[^"]+)("\\)\s*--></script>)`isuU';
 
 			// Update regex cache
 			if ($only_match_relative)

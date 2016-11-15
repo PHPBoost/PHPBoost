@@ -31,7 +31,7 @@
  */
 class FormFieldConstraintUrl extends FormFieldConstraintRegex
 {
-	private static $regex = '`^((https?|ftp)://[^ ]+)|(/[^ ]+)$`';
+	private static $regex = '`^((https?|ftp)://[^ ]+)|(/[^ ]+)$`u';
 	
 	public function __construct($error_message = '')
 	{

@@ -122,7 +122,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 		$idcat_post = retrieve(POST, '_cat', 0);
 		$name_post = retrieve(POST, 'name', '', TSTRING_AS_RECEIVED);
 
-		if (!$Upload->file('gallery', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`i', Upload::UNIQ_NAME, $config->get_max_weight()))
+		if (!$Upload->file('gallery', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`iu', Upload::UNIQ_NAME, $config->get_max_weight()))
 			$error = $Upload->get_error();
 	}
 	else

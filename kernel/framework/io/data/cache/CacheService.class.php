@@ -27,7 +27,7 @@
 
 class CacheService
 {
-	private static $all_files_regex_without_extensions = '`^\.|.*\.log|apc.php|debug.php`i';
+	private static $all_files_regex_without_extensions = '`^\.|.*\.log|apc.php|debug.php`iu';
 
 	private static $cache_folder;
 	private static $tpl_cache_folder;

@@ -31,7 +31,7 @@
  */
 class FormFieldConstraintPictureFile extends FormFieldConstraintRegex
 {
-	private static $regex = '/\.(png|gif|jpg|jpeg|tiff|ico|svg)$/i';
+	private static $regex = '/\.(png|gif|jpg|jpeg|tiff|ico|svg)$/iu';
 	
 	public function __construct($error_message = '')
 	{

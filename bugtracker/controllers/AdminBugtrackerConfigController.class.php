@@ -107,12 +107,12 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldColorPicker('fixed_bug_color', $this->lang['config.fixed_bug_color_label'], $this->config->get_fixed_bug_color(),
 			array(),
-			array(new FormFieldConstraintRegex('`^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$`i'))
+			array(new FormFieldConstraintRegex('`^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$`iu'))
 		));
 		
 		$fieldset->add_field(new FormFieldColorPicker('rejected_bug_color', $this->lang['config.rejected_bug_color_label'], $this->config->get_rejected_bug_color(),
 			array(),
-			array(new FormFieldConstraintRegex('`^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$`i'))
+			array(new FormFieldConstraintRegex('`^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$`iu'))
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('roadmap_enabled', $this->lang['config.enable_roadmap'], $this->config->is_roadmap_enabled(),
@@ -209,7 +209,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldNumberEditor('stats_top_posters_number', $this->lang['config.stats_top_posters_number'], (int)$this->config->get_stats_top_posters_number(), array(
 			'min' => 1, 'required' => true, 'hidden' => !$this->config->are_stats_top_posters_enabled()),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'))
 		));
 		
 		$fieldset = new FormFieldsetHTML('pm', $this->lang['config.pm']);

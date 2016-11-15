@@ -191,17 +191,17 @@ class AdminAdvancedConfigController extends AdminController
 		
 		$sessions_config_fieldset->add_field(new FormFieldTextEditor('cookie_name', $this->lang['advanced-config.cookie-name'], $this->sessions_config->get_cookie_name(),
 			array('required' => true),
-			array(new FormFieldConstraintRegex('`^[A-Za-z0-9]+$`i', '', $this->lang['advanced-config.cookie-name.style-wrong']))
+			array(new FormFieldConstraintRegex('`^[A-Za-z0-9]+$`iu', '', $this->lang['advanced-config.cookie-name.style-wrong']))
 		));
 		
 		$sessions_config_fieldset->add_field(new FormFieldNumberEditor('session_duration', $this->lang['advanced-config.cookie-duration'], $this->sessions_config->get_session_duration(),
 			array('description' => $this->lang['advanced-config.cookie-duration.explain'], 'required' => true),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i', '', $this->lang['advanced-config.integer-required']))
+			array(new FormFieldConstraintRegex('`^[0-9]+$`iu', '', $this->lang['advanced-config.integer-required']))
 		));
 		
 		$sessions_config_fieldset->add_field(new FormFieldNumberEditor('active_session_duration', $this->lang['advanced-config.active-session-duration'], $this->sessions_config->get_active_session_duration(),
 			array('description' => $this->lang['advanced-config.active-session-duration.explain'], 'required' => true),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i', '', $this->lang['advanced-config.integer-required']))
+			array(new FormFieldConstraintRegex('`^[0-9]+$`iu', '', $this->lang['advanced-config.integer-required']))
 		));
 
 		$cookiebar_config_fieldset = new FormFieldsetHTML('cookiebar_config', $this->lang['advanced-config.cookiebar-config']);
@@ -228,7 +228,7 @@ class AdminAdvancedConfigController extends AdminController
 
 		$cookiebar_config_fieldset->add_field(new FormFieldNumberEditor('cookiebar_duration', $this->lang['advanced-config.cookiebar-duration'], $this->cookiebar_config->get_cookiebar_duration(),
 			array('min' => 1, 'max' => 13, 'required' => true, 'description' => $this->lang['advanced-config.cookiebar-duration.desc'], 'hidden' => !$this->cookiebar_config->is_cookiebar_enabled()),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i'), new FormFieldConstraintIntegerRange(1, 13))
+			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'), new FormFieldConstraintIntegerRange(1, 13))
 		));
 
 		$cookiebar_config_fieldset->add_field(new FormFieldSimpleSelectChoice('cookiebar_tracking_mode', $this->lang['advanced-config.cookiebar-tracking.choice'], $this->cookiebar_config->get_cookiebar_tracking_mode(),

@@ -43,7 +43,7 @@ class UrlControllerMapper extends AbstractUrlMapper
      * @param string $parameters_names the names of the parameters in the capture order
 	 * @throws NoSuchControllerException
 	 */
-	public function __construct($classname, $capture_regex = '`^/?$`', $parameters_names = array())
+	public function __construct($classname, $capture_regex = '`^/?$`u', $parameters_names = array())
 	{
 		$this->classname =& $classname;
 		$this->parameters_names = $parameters_names;

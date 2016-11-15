@@ -50,7 +50,7 @@ class MailUtil
 	 */
 	public static function get_mail_checking_regex()
 	{
-		return '`^' . self::$regex . '$`i';
+		return '`^' . self::$regex . '$`iu';
 	}
 
 	/**

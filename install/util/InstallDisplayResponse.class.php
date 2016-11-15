@@ -90,7 +90,7 @@ class InstallDisplayResponse extends AbstractResponse
 		
 		$lang_dir = new Folder(PATH_TO_ROOT . '/lang');
 		$langs = array();
-		foreach ($lang_dir->get_folders('`^[a-z_-]+$`i') as $folder)
+		foreach ($lang_dir->get_folders('`^[a-z_-]+$`iu') as $folder)
 		{
 			$info_lang = load_ini_file(PATH_TO_ROOT . '/lang/', $folder->get_name());
 			if (!empty($info_lang['name']))

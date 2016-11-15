@@ -133,7 +133,7 @@ class ForumCategoriesFormController extends AbstractCategoriesFormController
 		$fieldset->add_field(new FormFieldTextEditor('rewrited_name', $this->common_lang['form.rewrited_name'], $this->get_category()->get_rewrited_name(), array(
 			'description' => $this->common_lang['form.rewrited_name.description'], 
 			'hidden' => !$this->get_category()->rewrited_name_is_personalized()
-		), array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`i'))));
+		), array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))));
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('description', $this->common_lang['form.description'], $this->get_category()->get_description(),
 			array('hidden' => $this->get_category()->get_type() == ForumCategory::TYPE_CATEGORY)

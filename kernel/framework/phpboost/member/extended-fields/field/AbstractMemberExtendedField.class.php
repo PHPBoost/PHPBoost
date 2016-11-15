@@ -105,13 +105,13 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 			switch ($value)
 			{
 				case 2:
-					return new FormFieldConstraintRegex('`^[a-zA-Z]+$`i');
+					return new FormFieldConstraintRegex('`^[a-zA-Z]+$`iu');
 					break;
 				case 3:
-					return new FormFieldConstraintRegex('`^[a-zA-Z0-9]+$`i');
+					return new FormFieldConstraintRegex('`^[a-zA-Z0-9]+$`iu');
 					break;
 				case 7:
-					return new FormFieldConstraintRegex('`^[a-zA-Zàáâãäåçèéêëìíîïðòóôõöùúûüýÿ-]+$`i');
+					return new FormFieldConstraintRegex('`^[a-zA-Zàáâãäåçèéêëìíîïðòóôõöùúûüýÿ-]+$`iu');
 					break;
 			}
 		}

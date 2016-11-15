@@ -31,7 +31,7 @@
  */
 class FormFieldConstraintTel extends FormFieldConstraintRegex
 {
-	private static $regex = '/^(\+[0-9]+( |-)?|0)?[0-9]( |-)?([0-9]{2}( |-)?){4}$/';
+	private static $regex = '/^(\+[0-9]+( |-)?|0)?[0-9]( |-)?([0-9]{2}( |-)?){4}$/u';
 	private static $js_regex = '^(\\\+[0-9]+( |-)?|0)?[0-9]( |-)?([0-9]{2}( |-)?){4}$';
 	
 	public function __construct($error_message = '')

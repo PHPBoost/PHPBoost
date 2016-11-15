@@ -183,7 +183,7 @@ else
 	{
 		$array_pics = array();
 		$image_folder_path = new Folder('./pics/');
-		foreach ($image_folder_path->get_files('`.*\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $image)
+		foreach ($image_folder_path->get_files('`.*\.(png|jpg|bmp|gif|jpeg|tiff)$`iu') as $image)
 			$array_pics[] = $image->get_name();
 
 		if (is_array($array_pics))

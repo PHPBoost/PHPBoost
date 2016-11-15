@@ -239,7 +239,7 @@ if ($action == 'punish')
 			'} else' . "\n" .
 			'	document.getElementById(\'action_contents\').disabled = \'disabled\';' . "\n" .
 			'document.getElementById(\'action_info\').innerHTML = replace_value;',
-			'REGEX'=> '/[0-9]+ [a-zéèêA-Z]+/',
+			'REGEX'=> '/[0-9]+ [a-zéèêA-Z]+/u',
 			'U_PM' => url('.php?pm='. $id_get, '-' . $id_get . '.php'),
 			'U_ACTION_INFO' => UserUrlBuilder::moderation_panel('punish', $id_get)->rel() . '&amp;token=' . AppContext::get_session()->get_token(),
 			'U_PROFILE' => UserUrlBuilder::profile($id_get)->rel(),
@@ -388,7 +388,7 @@ else if ($action == 'warning')
 			'INFO' => $LANG['user_warning_level'] . ': ' . $member['warning_percentage'] . '%',
 			'SELECT' => $select,
 			'REPLACE_VALUE' => 'contents = contents.replace(regex, \' \' + replace_value + \'%\');' . "\n" . 'document.getElementById(\'action_info\').innerHTML = \'' . addslashes($LANG['user_warning_level']) . ': \' + replace_value + \'%\';',
-			'REGEX'=> '/ [0-9]+%/',
+			'REGEX'=> '/ [0-9]+%/u',
 			'U_ACTION_INFO' => UserUrlBuilder::moderation_panel('warning', $id_get)->rel() . '&amp;token=' . AppContext::get_session()->get_token(),
 			'U_PM' => UserUrlBuilder::personnal_message($id_get)->rel(),
 			'U_PROFILE' => UserUrlBuilder::profile($id_get)->rel(),

@@ -265,7 +265,7 @@ elseif ($get_lang)
 	{
 		foreach ($stats_array_lang as $regex => $array_country)
 		{
-			if (preg_match('`' . $regex . '`', $name))
+			if (preg_match('`' . $regex . '`u', $name))
 			{
 				if ($name != 'other')
 				{

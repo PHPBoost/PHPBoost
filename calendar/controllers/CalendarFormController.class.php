@@ -140,7 +140,7 @@ class CalendarFormController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldNumberEditor('max_registered_members', $this->lang['calendar.labels.max_registered_members'], $event_content->get_max_registered_members(),
 			array('description' => $this->lang['calendar.labels.max_registered_members.explain'], 'hidden' => !$event_content->is_registration_authorized()),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'))
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('last_registration_date_enabled', $this->lang['calendar.labels.last_registration_date_enabled'], $event_content->is_last_registration_date_enabled(),array(

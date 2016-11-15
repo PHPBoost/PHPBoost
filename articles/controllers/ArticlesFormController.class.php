@@ -101,7 +101,7 @@ class ArticlesFormController extends ModuleController
 			$fieldset->add_field(new FormFieldTextEditor('rewrited_title', $this->common_lang['form.rewrited_name'], $this->get_article()->get_rewrited_title(),
 				array('description' => $this->common_lang['form.rewrited_name.description'],
 				      'hidden' => !$this->get_article()->rewrited_title_is_personalized()),
-				array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`i'))
+				array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))
 			));
 		}
 
