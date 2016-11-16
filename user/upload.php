@@ -224,7 +224,7 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 			}
 		}
 		else
-			AppContext::get_response()->redirect(HOST . DIR . url('/userr/upload.php?movefd=' . $move_folder . '&f=0&error=folder_contains_folder&' . $popup_noamp, '', '&'));
+			AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?movefd=' . $move_folder . '&f=0&error=folder_contains_folder&' . $popup_noamp, '', '&'));
 	}
 	else
 	{
