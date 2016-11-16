@@ -3,7 +3,7 @@
  *                               upload.php
  *                            -------------------
  *   begin                : July, 07 2007
- *   copyright            : (C) 2007 Viarre RÃ©gis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -104,7 +104,7 @@ if (!empty($parent_folder)) //Changement de dossier
 	else
 		AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=' . $parent_folder . '&' . $popup_noamp, '', '&'));
 }
-elseif ($home_folder) //Retour Ã  la racine.
+elseif ($home_folder) //Retour à  la racine.
 	AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?' . $popup_noamp, '', '&'));
 elseif (!empty($_FILES['upload_file']['name']) && AppContext::get_request()->has_getparameter('f')) //Ajout d'un fichier.
 {
@@ -118,21 +118,21 @@ elseif (!empty($_FILES['upload_file']['name']) && AppContext::get_request()->has
 		$error = 'e_max_data_reach';
 	else
 	{
-		//Si le dossier n'est pas en Ã©criture on tente un CHMOD 777
+		//Si le dossier n'est pas en écriture on tente un CHMOD 777
 		@clearstatcache();
 		$dir = PATH_TO_ROOT . '/upload/';
 		if (!is_writable($dir))
 			$is_writable = (@chmod($dir, 0777));
 		
 		@clearstatcache();
-		if (is_writable($dir)) //Dossier en Ã©criture, upload possible
+		if (is_writable($dir)) //Dossier en écriture, upload possible
 		{
 			$weight_max = $unlimited_data ? 100000000 : ($group_limit - $member_memory_used);
 			
 			$Upload = new Upload($dir);
 			$Upload->file('upload_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $files_upload_config->get_authorized_extensions())) . ')+$`i', Upload::UNIQ_NAME, $weight_max);
 			
-			if ($Upload->get_error() != '') //Erreur, on arrÃªte ici
+			if ($Upload->get_error() != '') //Erreur, on arrête ici
 			{
 				$error = $Upload->get_error();
 				if ($Upload->get_error() == 'e_upload_max_weight')
@@ -493,7 +493,7 @@ else
 		$displayed_code = $is_bbcode_editor ? $bbcode : '/upload/' . $row['path'];
 		$inserted_code = !empty($parse) ? (!empty($no_path) ? $link : PATH_TO_ROOT . $link) : ($is_bbcode_editor ? addslashes($bbcode) : TextHelper::htmlentities($tinymce));
 		$tpl->assign_block_vars('files', array(
-			'C_RECENT_FILE' => $row['timestamp'] > ($now->get_timestamp() - (15 * 60)),  // Ficher ajoutÃ© il y a moins de 15 minutes
+			'C_RECENT_FILE' => $row['timestamp'] > ($now->get_timestamp() - (2 * 60)),  // Fichier ajouté il y a moins de 2 minutes
 			'ID' => $row['id'],
 			'IMG' => $get_img_mimetype['img'],
 			'URL' => PATH_TO_ROOT . $link,
