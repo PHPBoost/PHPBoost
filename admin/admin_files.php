@@ -517,7 +517,7 @@ else
 			}
 			
 			$template->assign_block_vars('files', array(
-				'C_RECENT_FILE' => $row['timestamp'] > ($now->get_timestamp() - (15 * 60)),  // Ficher ajouté il y a moins de 15 minutes
+				'C_RECENT_FILE' => $row['timestamp'] > ($now->get_timestamp() - (2 * 60)),  // Ficher ajouté il y a moins de 2 minutes
 				'ID' => $row['id'],
 				'IMG' => $get_img_mimetype['img'],
 				'URL' => $link,
