@@ -344,7 +344,7 @@ class Url
 
 		}
 		while (preg_match('`/?[^/]+/\.\.`u', $url) > 0);
-		return preg_replace('`^//`', '/u', $url) . $args;
+		return preg_replace('`^//`u', '/', $url) . $args;
 	}
 
 	/**
