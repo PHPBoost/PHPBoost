@@ -336,7 +336,7 @@ class Url
 			$args = TextHelper::substr($url, $pos);
 			$url = TextHelper::substr($url, 0, $pos);
 		}
-		$url = preg_replace(array('`([^:]|^)/+`', '`(?<!\.)\./`u'), array('$1/', ''), $url);
+		$url = preg_replace(array('`([^:]|^)/+`u', '`(?<!\.)\./`u'), array('$1/', ''), $url);
 
 		do
 		{
@@ -344,7 +344,7 @@ class Url
 
 		}
 		while (preg_match('`/?[^/]+/\.\.`u', $url) > 0);
-		return preg_replace('`^//`u', '/', $url) . $args;
+		return preg_replace('`^//`', '/', $url) . $args;
 	}
 
 	/**
