@@ -493,7 +493,7 @@ else
 		$displayed_code = $is_bbcode_editor ? $bbcode : '/upload/' . $row['path'];
 		$inserted_code = !empty($parse) ? (!empty($no_path) ? $link : PATH_TO_ROOT . $link) : ($is_bbcode_editor ? addslashes($bbcode) : TextHelper::htmlspecialchars($tinymce));
 		$tpl->assign_block_vars('files', array(
-			'C_RECENT_FILE' => $row['timestamp'] > ($now->get_timestamp() - (3 * 60)),  // Ficher ajouté il y a moins de 3 minutes
+			'C_RECENT_FILE' => $row['timestamp'] > ($now->get_timestamp() - (2 * 60)),  // Ficher ajouté il y a moins de 2 minutes
 			'ID' => $row['id'],
 			'IMG' => $get_img_mimetype['img'],
 			'URL' => PATH_TO_ROOT . $link,
