@@ -106,65 +106,68 @@ class CalendarAjaxCalendarController extends AbstractController
 		
 		foreach ($events as $event)
 		{
-			$start_date = new Date($event['start_date'], Timezone::SERVER_TIMEZONE);
-			$end_date = new Date($event['end_date'], Timezone::SERVER_TIMEZONE);
-			
-			if (($end_date->get_month() > $start_date->get_month() || $end_date->get_year() > $start_date->get_year()) && $month == $start_date->get_month())
+			if (CalendarAuthorizationsService::check_authorizations($event['id_category'])->read())
 			{
-				$first_event_day = $start_date->get_day();
-				$last_event_day = $array_month[$month - 1];
-			}
-			else if (($end_date->get_month() > $start_date->get_month() || $end_date->get_year() > $start_date->get_year()) && $month == $end_date->get_month())
-			{
-				$first_event_day = 1;
-				$last_event_day = $end_date->get_day();
-			}
-			else if (($end_date->get_month() > $start_date->get_month() || $end_date->get_year() > $start_date->get_year()) && $month > $start_date->get_month() && $month < $end_date->get_month())
-			{
-				$first_event_day = 1;
-				$last_event_day = $array_month[$month - 1];
-			}
-			else
-			{
-				$first_event_day = $start_date->get_day();
-				$last_event_day = $end_date->get_day();
-			}
-			
-			for ($j = $first_event_day ; $j <= $last_event_day ; $j++)
-			{
-				if ($event['type'] == 'EVENT' || $event['type'] == 'BIRTHDAY')
+				$start_date = new Date($event['start_date'], Timezone::SERVER_TIMEZONE);
+				$end_date = new Date($event['end_date'], Timezone::SERVER_TIMEZONE);
+				
+				if (($end_date->get_month() > $start_date->get_month() || $end_date->get_year() > $start_date->get_year()) && $month == $start_date->get_month())
 				{
-					$title = isset($array_events[$j]['title']) ? $array_events[$j]['title'] : '';
-					$array_events[$j] = array(
-						'title' => $title . (!empty($title) ? '
-' : '') . ($event['type'] != 'BIRTHDAY' ? (($j == $start_date->get_day() && $month == $start_date->get_month() && $year == $start_date->get_year()) ? $start_date->get_hours() . 'h' . $start_date->get_minutes() . ' : ' : '') : LangLoader::get_message('calendar.labels.birthday_title', 'common', 'calendar') . ' ') . $event['title'],
-						'type' => $event['type'],
-						'color' => ($event['type'] == 'BIRTHDAY' ? $config->get_birthday_color() : ($event['id_category'] != Category::ROOT_CATEGORY && isset($categories[$event['id_category']]) && $categories[$event['id_category']]->get_color() ? $categories[$event['id_category']]->get_color() : $config->get_event_color())),
-						'id_category' => $event['id_category'],
-					);
-					
-					if ($event['type'] == 'BIRTHDAY')
+					$first_event_day = $start_date->get_day();
+					$last_event_day = $array_month[$month - 1];
+				}
+				else if (($end_date->get_month() > $start_date->get_month() || $end_date->get_year() > $start_date->get_year()) && $month == $end_date->get_month())
+				{
+					$first_event_day = 1;
+					$last_event_day = $end_date->get_day();
+				}
+				else if (($end_date->get_month() > $start_date->get_month() || $end_date->get_year() > $start_date->get_year()) && $month > $start_date->get_month() && $month < $end_date->get_month())
+				{
+					$first_event_day = 1;
+					$last_event_day = $array_month[$month - 1];
+				}
+				else
+				{
+					$first_event_day = $start_date->get_day();
+					$last_event_day = $end_date->get_day();
+				}
+				
+				for ($j = $first_event_day ; $j <= $last_event_day ; $j++)
+				{
+					if ($event['type'] == 'EVENT' || $event['type'] == 'BIRTHDAY')
 					{
-						$events_legends_list[$j] = array(
-							'name' => LangLoader::get_message('calendar.labels.birthday', 'common', 'calendar'),
-							'color' => $config->get_birthday_color()
+						$title = isset($array_events[$j]['title']) ? $array_events[$j]['title'] : '';
+						$array_events[$j] = array(
+							'title' => $title . (!empty($title) ? '
+	' : '') . ($event['type'] != 'BIRTHDAY' ? (($j == $start_date->get_day() && $month == $start_date->get_month() && $year == $start_date->get_year()) ? $start_date->get_hours() . 'h' . $start_date->get_minutes() . ' : ' : '') : LangLoader::get_message('calendar.labels.birthday_title', 'common', 'calendar') . ' ') . $event['title'],
+							'type' => $event['type'],
+							'color' => ($event['type'] == 'BIRTHDAY' ? $config->get_birthday_color() : ($event['id_category'] != Category::ROOT_CATEGORY && isset($categories[$event['id_category']]) && $categories[$event['id_category']]->get_color() ? $categories[$event['id_category']]->get_color() : $config->get_event_color())),
+							'id_category' => $event['id_category'],
 						);
-					}
-					else if ($event['type'] == 'EVENT' && $event['id_category'] == Category::ROOT_CATEGORY)
-					{
-						$events_legends_list[$j] = array(
-							'name' => LangLoader::get_message('calendar.titles.event', 'common', 'calendar'),
-							'color' => $config->get_event_color()
-						);
-					}
-					else
-					{
-						if (isset($categories[$event['id_category']]) && !isset($events_legends_list[$event['id_category']]))
+						
+						if ($event['type'] == 'BIRTHDAY')
 						{
 							$events_legends_list[$j] = array(
-								'name' => $categories[$event['id_category']]->get_name(),
-								'color' => $categories[$event['id_category']]->get_color()
+								'name' => LangLoader::get_message('calendar.labels.birthday', 'common', 'calendar'),
+								'color' => $config->get_birthday_color()
 							);
+						}
+						else if ($event['type'] == 'EVENT' && $event['id_category'] == Category::ROOT_CATEGORY)
+						{
+							$events_legends_list[$j] = array(
+								'name' => LangLoader::get_message('calendar.titles.event', 'common', 'calendar'),
+								'color' => $config->get_event_color()
+							);
+						}
+						else
+						{
+							if (isset($categories[$event['id_category']]) && !isset($events_legends_list[$event['id_category']]))
+							{
+								$events_legends_list[$j] = array(
+									'name' => $categories[$event['id_category']]->get_name(),
+									'color' => $categories[$event['id_category']]->get_color()
+								);
+							}
 						}
 					}
 				}

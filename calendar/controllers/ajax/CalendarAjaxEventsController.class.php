@@ -69,6 +69,7 @@ class CalendarAjaxEventsController extends AbstractController
 		$day = $this->day ? $this->day : $request->get_int('calendar_ajax_day', 1);
 		
 		$array_l_month = array($date_lang['january'], $date_lang['february'], $date_lang['march'], $date_lang['april'], $date_lang['may'], $date_lang['june'], $date_lang['july'], $date_lang['august'], $date_lang['september'], $date_lang['october'], $date_lang['november'], $date_lang['december']);
+		$events_number = 0;
 		
 		$result = $db_querier->select("SELECT *
 		FROM " . CalendarSetup::$calendar_events_table . " event
@@ -87,11 +88,13 @@ class CalendarAjaxEventsController extends AbstractController
 			$event = new CalendarEvent();
 			$event->set_properties($row);
 			
-			$events_list[$event->get_id()] = $event;
+			if (CalendarAuthorizationsService::check_authorizations($event->get_content()->get_category_id())->read())
+			{
+				$events_list[$event->get_id()] = $event;
+				$events_number++;
+			}
 		}
 		$result->dispose();
-		
-		$events_number = $result->get_rows_count();
 		
 		$this->view->put_all(array(
 			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
