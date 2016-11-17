@@ -44,6 +44,8 @@ class HtaccessFileCache implements CacheData
 		$this->htaccess_file_content = '';
 		$this->general_config = GeneralConfig::load();
 		
+		$this->disallow_scripts_execution();
+		
 		$this->set_default_charset();
 		
 		$this->add_free_php56();
@@ -103,23 +105,25 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('# ' . $name . ' #');
 	}
 	
+	private function disallow_scripts_execution()
+	{
+		$this->add_section('Disallow scripts execution');
+		$this->add_line('Options -ExecCGI');
+		$this->add_line('AddHandler cgi-script .pl .py .jsp .asp .htm .shtml .sh .cgi');
+	}
+	
 	private function set_default_charset()
 	{
 		$this->add_section('Charset');
 		$this->add_line('AddDefaultCharset UTF-8');
 	}
 	
-	private function get_domain($hostname)
-	{
-		preg_match("/[a-z0-9\-]{1,63}\.[a-z\.]{2,6}$/u", parse_url($hostname, PHP_URL_HOST), $_domain_tld);
-		return isset($_domain_tld[0]) ? $_domain_tld[0] : '';
-	}
-	
 	private function add_free_php56()
 	{
-		if($this->get_domain($this->general_config->get_site_url()) == 'free.fr')
+		$domain = AppContext::get_request()->get_domain_name();
+		if($domain == 'free.fr')
 		{
-			$this->add_section('Enable PHP5.6 on '. $this->get_domain($this->general_config->get_site_url()) .' hosting');
+			$this->add_section('Enable PHP5.6 on ' . $domain . ' hosting');
 			$this->add_line('php56 1');
 		}
 	}
