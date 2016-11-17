@@ -386,7 +386,7 @@ class HTTPRequestCustom
 	}
 	
 	// get site domain name (without host)
-	function get_domain_name()
+	public function get_domain_name()
 	{
 		$pieces = parse_url(self::get_site_url());
 		$domain = isset($pieces['host']) ? $pieces['host'] : '';
@@ -394,6 +394,11 @@ class HTTPRequestCustom
 			return $regs['domain'];
 		
 		return false;
+	}
+	
+	public function get_is_subdomain()
+	{
+		return $this->get_site_domain_name() != $this->get_site_domain_name() && !preg_match('/www./u', this->get_site_domain_name());
 	}
 
 	public function get_user_agent()

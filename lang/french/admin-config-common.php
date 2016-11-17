@@ -85,15 +85,15 @@ $lang = array(
 	'advanced-config.site_timezone-explain' => 'Permet d\'ajuster l\'heure à votre localisation',
 	
 	'advanced-config.redirection_www_enabled' => 'Activation de la redirection de domaine',
-	'advanced-config.redirection_www_enabled.local' => 'La redirection n\'est pas active pour les sites en local, l\'activation est désactivée',
-	'advanced-config.redirection_www_enabled.subdomain' => 'La redirection n\'est pas active pour les sites en sous domaine, l\'activation est désactivée',
-	'advanced-config.redirection_www_mode' => 'Selectionner le mode de redirection',
+	'advanced-config.redirection_www_enabled.local' => 'La redirection ne peut pas être activée sur les sites en local',
+	'advanced-config.redirection_www_enabled.subdomain' => 'La redirection ne peut pas être activée pour les sites en sous-domaine',
+	'advanced-config.redirection_www_mode' => 'Mode de redirection',
 	'advanced-config.redirection_www.with_www' => 'Redirige les urls ' .  AppContext::get_request()->get_domain_name() . ' vers www.'. AppContext::get_request()->get_site_domain_name(),
 	'advanced-config.redirection_www.without_www' => 'Redirige les urls www.' .  AppContext::get_request()->get_domain_name() . ' vers '. AppContext::get_request()->get_site_domain_name(),
 
-	'advanced-config.redirection_https_enabled' => 'Activation de la redirection https',
-	'advanced-config.redirection_https_enabled.explain' => 'Redirige les urls en http vers https',
-	'advanced-config.redirection_https_enabled.explain-disable' => 'Votre site n\'utilise actuellement pas le protocole https, l\'activation est désactivée',
+	'advanced-config.redirection_https_enabled' => 'Activation de la redirection HTTPS',
+	'advanced-config.redirection_https_enabled.explain' => 'Redirige les urls HTTP vers HTTPS',
+	'advanced-config.redirection_https_enabled.explain-disable' => 'Votre site n\'utilise actuellement pas le protocole HTTPS, activation de ce mode impossible',
 
 	'advanced-config.url-rewriting' => 'Activation de la réécriture des urls',
 	'advanced-config.url-rewriting.explain' => 'L\'activation de la réécriture des urls permet d\'obtenir des urls bien plus simples et claires sur votre site. Ces adresses seront donc bien mieux compréhensibles pour vos visiteurs, mais surtout pour les robots d\'indexation. Votre référencement sera grandement optimisé grâce à cette option.<br /><br />Cette option n\'est malheureusement pas disponible chez tous les hébergeurs. Cette page va vous permettre de tester si votre serveur supporte la réécriture des urls. Si après le test vous tombez sur des erreurs serveur, ou pages blanches, c\'est que votre serveur ne le supporte pas. Supprimez alors le fichier <strong>.htaccess</strong> à la racine de votre site via accès FTP à votre serveur, puis revenez sur cette page et désactivez la réécriture.',

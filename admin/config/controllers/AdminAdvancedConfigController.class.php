@@ -40,7 +40,7 @@ class AdminAdvancedConfigController extends AdminController
 		$this->load_lang();
 		$this->load_config();
 		
-		$this->build_form();
+		$this->build_form($request);
 
 		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		
@@ -80,7 +80,7 @@ class AdminAdvancedConfigController extends AdminController
 		$this->cookiebar_config = CookieBarConfig::load();
 	}
 
-	private function build_form()
+	private function build_form(HTTPRequestCustom $request)
 	{
 		$form = new HTMLForm(__CLASS__);
 		
@@ -121,12 +121,12 @@ class AdminAdvancedConfigController extends AdminController
 		$htaccess_manual_content_fieldset = new FormFieldsetHTML('htaccess_manual_content', $this->lang['advanced-config.htaccess-manual-content']);
 		$form->add_fieldset($htaccess_manual_content_fieldset);
 		
-		if (AppContext::get_request()->get_is_localhost())
+		if ($request->get_is_localhost())
 		{
 			$redirection_www_disabled = true;
 			$this->server_environment_config->disabled_redirection_www(); /*Disabling is forced*/
 			$redirection_www_enabled_explain = '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.redirection_www_enabled.local'] . '</span>';
-		}	
+		}
 		else if (false) /* En attente de la gestion des sous domaine */
 		{
 			$redirection_www_disabled = true;
@@ -159,11 +159,11 @@ class AdminAdvancedConfigController extends AdminController
 			array('hidden' => !$this->server_environment_config->is_redirection_www_enabled())
 		));
 		
-		if (AppContext::get_request()->get_is_https())
+		if ($request->get_is_https())
 		{
 			$redirection_https_disabled = false;
 			$redirection_https_enabled_explain = $this->lang['advanced-config.redirection_https_enabled.explain'];
-		}	
+		}
 		else
 		{
 			$redirection_https_disabled = true;

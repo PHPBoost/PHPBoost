@@ -83,15 +83,16 @@ $lang = array(
 	'advanced-config.site_timezone' => 'Timezone',
 	'advanced-config.site_timezone-explain' => 'Choose the time that refers to your location',
 
-	'advanced-config.redirection_www_enabled' => 'Activation of domain redirection',
-	'advanced-config.redirection_www_enabled.local' => 'Redirection is not active in local host, activation is disabled',
-	'advanced-config.redirection_www_enabled.subdomain' => 'Redirection is not active with sub-domain, activation is disabled',
-	'advanced-config.redirection_www_mode' => 'Select redirection mode',
+	'advanced-config.redirection_www_enabled' => 'Domain redirection activation',
+	'advanced-config.redirection_www_enabled.local' => 'Redirection can not be activated in local host',
+	'advanced-config.redirection_www_enabled.subdomain' => 'Redirection can not be activated with sub-domain',
+	'advanced-config.redirection_www_mode' => 'Redirection mode',
 	'advanced-config.redirection_www.with_www' => 'Redirect urls ' .  AppContext::get_request()->get_domain_name() . ' to www.'. AppContext::get_request()->get_site_domain_name(),
 	'advanced-config.redirection_www.without_www' => 'Redirect urls www.' .  AppContext::get_request()->get_domain_name() . ' to '. AppContext::get_request()->get_site_domain_name(),
-	'advanced-config.redirection_https_enabled' => 'Activation of \'https\' redirection',
-	'advanced-config.redirection_https_enabled.explain' => 'Redirect urls in http to https',
-	'advanced-config.redirection_https_enabled.explain-disable' => 'Your website doesn\'t use https protocole, activation is disabled',
+	'advanced-config.redirection_https_enabled' => 'Enable HTTPS redirection',
+	'advanced-config.redirection_https_enabled.explain' => 'Redirect urls HTTP to HTTPS',
+	'advanced-config.redirection_https_enabled.explain-disable' => 'Your website doesn\'t use HTTPS protocol, mod activation is unavailable',
+	
 	'advanced-config.url-rewriting' => 'Enable URL rewriting',
 	'advanced-config.url-rewriting.explain' => 'Activation of URL rewriting makes URLs much simpler and clearer on your website. 
 		Your referencing will be largely optimized with this option.<br /><br />

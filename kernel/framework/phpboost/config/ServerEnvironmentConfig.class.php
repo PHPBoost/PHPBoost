@@ -80,6 +80,11 @@ class ServerEnvironmentConfig extends AbstractConfigData
 		return $this->get_property(self::REDIRECTION_WWW_MODE);
 	}
 
+	public function is_redirection_www_mode_with_www()
+	{
+		return $this->get_property(self::REDIRECTION_WWW_MODE) == self::REDIRECTION_WWW_WITH_WWW;
+	}
+
 	public function set_redirection_www_mode($value)
 	{
 		return $this->set_property(self::REDIRECTION_WWW_MODE, $value);

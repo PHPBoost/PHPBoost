@@ -67,7 +67,7 @@ class HtaccessFileCache implements CacheData
 			
 			$this->add_file_and_sql_injections_protections();
 			
-			$this->force_https_if_available();
+			$this->force_redirection_if_available();
 			
 			$this->add_bandwidth_protection();
 			
@@ -322,12 +322,24 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('RewriteRule .* - [F,L]');
 	}
 	
-	private function force_https_if_available()
+	private function force_redirection_if_available()
 	{
-		// TODO : mettre une option dans la configuration avancée pour le paramétrer
-		//$this->add_section('Force to use HTTPS if available');
-		//$this->add_line('RewriteCond %{HTTPS} off');
-		//$this->add_line('RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}');
+		$server_environment_config = ServerEnvironmentConfig::load();
+		$domain = AppContext::get_request()->get_domain_name();
+		
+		if ($server_environment_config->is_redirection_www_enabled())
+		{
+			$this->add_section('Site redirection to www');
+			$this->add_line('RewriteCond %{HTTP_HOST} ^' . $domain . ' [NC]');
+			$this->add_line('RewriteRule ^/?(.*) http' . ($server_environment_config->is_redirection_https_enabled() ? 's' : '') . '://' . ($server_environment_config->is_redirection_www_mode_with_www() ? 'www.' . $domain : AppContext::get_request()->get_site_domain_name()) . '/$1 [L,R=301]');
+		}
+		
+		if ($server_environment_config->is_redirection_https_enabled() && !$server_environment_config->is_redirection_www_enabled())
+		{
+			$this->add_section('Force to use HTTPS if available');
+			$this->add_line('RewriteCond %{HTTPS} !=on');
+			$this->add_line('RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R=301,L]');
+		}
 	}
 	
 	private function add_bandwidth_protection()
