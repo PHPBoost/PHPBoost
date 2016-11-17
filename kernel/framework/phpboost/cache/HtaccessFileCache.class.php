@@ -44,6 +44,8 @@ class HtaccessFileCache implements CacheData
 		$this->htaccess_file_content = '';
 		$this->general_config = GeneralConfig::load();
 		
+		$this->disallow_scripts_execution();
+		
 		$this->add_free_php56();
 		
 		$this->add_disable_signatures_protection();
@@ -99,6 +101,13 @@ class HtaccessFileCache implements CacheData
 	{
 		$this->add_empty_line();
 		$this->add_line('# ' . $name . ' #');
+	}
+	
+	private function disallow_scripts_execution()
+	{
+		$this->add_section('Disallow scripts execution');
+		$this->add_line('Options -ExecCGI');
+		$this->add_line('AddHandler cgi-script .pl .py .jsp .asp .htm .shtml .sh .cgi');
 	}
 	
 	private function get_domain($hostname)
