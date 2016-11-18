@@ -42,6 +42,8 @@ $lang['news.seo.description.root'] = 'Toutes les news du site :site.';
 $lang['news.seo.description.tag'] = 'Toutes les news sur le sujet :subject.';
 $lang['news.seo.description.pending'] = 'Toutes les news en attente.';
 
+$lang['news.view'] = 'vues';
+
 $lang['news.form.short_contents'] = 'Condensé de la news';
 $lang['news.form.short_contents.description'] = 'Pour que le condensé de la news soit affiché, veuillez activer l\'option dans la configuration du module';
 $lang['news.form.short_contents.enabled'] = 'Personnaliser le condensé de la news';
