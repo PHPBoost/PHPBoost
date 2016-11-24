@@ -106,7 +106,7 @@ class ContactController extends ModuleController
 			$tpl->assign_block_vars('places', array(
 				'MAP_LATITUDE' => $options['latitude'],
 				'MAP_LONGITUDE' => $options['longitude'],
-				'MAP_POPUP' => $options['popup'],
+				'MAP_POPUP' => str_replace("'", "`", $options['popup']),
 			));
 			$i++;
 		}
