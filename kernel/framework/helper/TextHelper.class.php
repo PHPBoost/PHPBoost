@@ -193,9 +193,20 @@ class TextHelper
 		return strlen($string);
 	}
 	
-	public static function strpos($string, $substring)
+	public static function strpos($string, $substring, $offset ='')
 	{
-		return strpos($string, $substring);
+		if (is_int($offset))
+			return mb_strpos($string, $substring, $offset);
+		else
+			return mb_strpos($string, $substring);
+	}
+	
+	public static function stripos($string, $substring, $offset ='')
+	{
+		if (is_int($offset))
+			return mb_stripos($string, $substring, $offset);
+		else
+			return mb_stripos($string, $substring);
 	}
 	
 	public static function substr($string, $start, $length = '')
