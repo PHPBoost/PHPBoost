@@ -448,7 +448,7 @@ input[type=color] {
 }
 
 .form-field-radio{
-	display: block;
+	display: inline-block;
 	margin: 10px 0;
 }
 
