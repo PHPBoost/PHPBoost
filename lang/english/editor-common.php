@@ -75,7 +75,8 @@ $lang['format_charmap'] = 'Special chars';
 $lang['format_insertdatetime'] = 'Insert date/time';
 $lang['format_fa'] = 'Font Awesome Icon';
 
-$lang['tag_hide'] = 'This message is hidden, click here to reveal its contents.';
+$lang['tag_hide_message'] = 'This message is hidden, click here to reveal its contents.';
+$lang['tag_hide_hideblock'] = 'Click here to hide this message.';
 $lang['tag_copytoclipboard'] = 'Copy to Clipboard';
 
 //Errors

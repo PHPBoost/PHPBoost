@@ -325,8 +325,8 @@ class BBCodeParser extends ContentFormattingParser
 			//Hide tag
 			if (!in_array('hide', $this->forbidden_tags))
 			{
-				$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`suU', '<div class="formatter-container formatter-hide" onclick="bb_hide(this)"><span class="formatter-title">' . LangLoader::get_message('hidden', 'common') . ' :</span><div class="formatter-content">$1</div></div>');
-				$this->_parse_imbricated('[hide=', '`\[hide=([^\]]+)\](.+)\[/hide\]`suU', '<div class="formatter-container formatter-hide" onclick="bb_hide(this)"><span class="formatter-title title-perso">$1 :</span><div class="formatter-content">$2</div></div>');
+				$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`suU', '<div class="formatter-container formatter-hide"><span class="formatter-title">' . LangLoader::get_message('hidden', 'common') . ' :</span><div class="formatter-content">$1</div></div>');
+				$this->_parse_imbricated('[hide=', '`\[hide=([^\]]+)\](.+)\[/hide\]`suU', '<div class="formatter-container formatter-hide"><span class="formatter-title title-perso">$1 :</span><div class="formatter-content">$2</div></div>');
 			}
 
 			//Indent tag

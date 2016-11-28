@@ -323,23 +323,37 @@ function strpos(haystack, needle)
 jQuery(document).ready(function(){
 	var IDCODE = 1;
 	jQuery('.formatter-hide').each( function(){
+		jQuery(this).attr('id','formatter-hide-container-' + IDCODE);
+		jQuery(this).attr('onClick', 'bb_hide(' + IDCODE + ', 1);');
 		jQuery(this).append('<span id="hide-message-' + IDCODE + '" class="hide-message">' + L_HIDE_MESSAGE + '</span>');
 		IDCODE = IDCODE + 1;
 	} );
 } );	
 
 //Affichage/Masquage de la balise hide.
-function bb_hide(divcontainer)
+function bb_hide(idcode, show)
 {
-	jQuery(divcontainer).toggleClass('formatter-show');
+	event.stopPropagation();
+	jQuery('#formatter-hide-container-' + idcode).toggleClass('formatter-show');
+	if (show == 1)
+	{
+		jQuery('#formatter-hide-container-' + idcode).children('.formatter-content').prepend('<span title="' + L_HIDE_HIDEBLOCK + '" class="formatter-hide-close-button" onclick="bb_hide(' + idcode + ', 0);"><i class="fa fa-close"></i> ' + L_HIDE_HIDEBLOCK + '</span>');
+		jQuery('#formatter-hide-container-' + idcode).removeAttr('onClick');
+	}
+	else
+	{
+		jQuery('#formatter-hide-container-' + idcode).children('.formatter-content').children('.formatter-hide-close-button').remove();
+		jQuery('#formatter-hide-container-' + idcode).attr('onClick', 'bb_hide(' + idcode + ', 1);');
+	}
 }
+
 
 //Add button "Copy to clipboard" on Coding balise
 jQuery(document).ready(function(){
 	var IDCODE = 1;
 	jQuery('.formatter-code').each( function(){
 		jQuery(this).prepend('<span title="' + L_COPYTOCLIPBOARD + '" id="copy-code-' + IDCODE + '" class="copy-code" onclick="copy_code_clipboard(this)"><i class="fa fa-code"></i></span>');
-		jQuery(this).children(".formatter-content").attr("id", 'copy-code-' + IDCODE + '-content');
+		jQuery(this).children('.formatter-content').attr("id", 'copy-code-' + IDCODE + '-content');
 		IDCODE = IDCODE + 1;
 	} );
 } );	

@@ -75,7 +75,8 @@ $lang['format_charmap'] = 'Caractères spéciaux';
 $lang['format_insertdatetime'] = 'Insérer date/heure';
 $lang['format_fa'] = 'Icône Font Awesome';
 
-$lang['tag_hide'] = 'Ce message est caché, cliquer ici pour afficher son contenu.';
+$lang['tag_hide_message'] = 'Ce message est caché, cliquer ici pour afficher son contenu.';
+$lang['tag_hide_hideblock'] = 'Cliquer ici pour cacher le message.';
 $lang['tag_copytoclipboard'] = 'Copier vers le presse-papier';
 
 //Errors

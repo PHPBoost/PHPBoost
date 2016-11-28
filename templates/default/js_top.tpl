@@ -7,8 +7,10 @@
 	var LANG         = "{LANG}";
 
 	//Variables BBCode
-	var L_HIDE_MESSAGE    = ${escapejs(LangLoader::get_message('tag_hide', 'editor-common'))};
+	var L_HIDE_MESSAGE    = ${escapejs(LangLoader::get_message('tag_hide_message', 'editor-common'))};
+	var L_HIDE_HIDEBLOCK  = ${escapejs(LangLoader::get_message('tag_hide_hideblock', 'editor-common'))};
 	var L_COPYTOCLIPBOARD = ${escapejs(LangLoader::get_message('tag_copytoclipboard', 'editor-common'))};
+
 
 	# IF C_COOKIEBAR_ENABLED #
 	var COOKIEBAR_DURATION        = {COOKIEBAR_DURATION};
