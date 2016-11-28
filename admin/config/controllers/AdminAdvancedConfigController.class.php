@@ -55,7 +55,7 @@ class AdminAdvancedConfigController extends AdminController
 			$this->form->get_field_by_id('cookiebar_tracking_mode')->set_hidden(!$this->cookiebar_config->is_cookiebar_enabled());
 			$this->form->get_field_by_id('cookiebar_content')->set_hidden(!$this->cookiebar_config->is_cookiebar_enabled());
 			$this->form->get_field_by_id('cookiebar_aboutcookie_title')->set_hidden(!$this->cookiebar_config->is_cookiebar_enabled());
-			/*$this->form->get_field_by_id('cookiebar_aboutcookie_content')->set_hidden(!$this->cookiebar_config->is_cookiebar_enabled());*/
+			$this->form->get_field_by_id('cookiebar_aboutcookie_content')->set_hidden(!$this->cookiebar_config->is_cookiebar_enabled());
 			$this->form->get_field_by_id('debug_mode_type')->set_hidden(!Debug::is_debug_mode_enabled());
 			$this->form->get_field_by_id('display_database_query_enabled')->set_hidden(!Debug::is_debug_mode_enabled());
 
@@ -253,9 +253,9 @@ class AdminAdvancedConfigController extends AdminController
 			array('required' => true, 'hidden' => !$this->cookiebar_config->is_cookiebar_enabled())
 		));
 
-		/*$cookiebar_config_fieldset->add_field(new FormFieldRichTextEditor('cookiebar_aboutcookie_content', $this->lang['advanced-config.cookiebar-aboutcookie'], $this->cookiebar_config->get_cookiebar_aboutcookie_content(),
+		$cookiebar_config_fieldset->add_field(new FormFieldRichTextEditor('cookiebar_aboutcookie_content', $this->lang['advanced-config.cookiebar-aboutcookie'], $this->cookiebar_config->get_cookiebar_aboutcookie_content(),
 			array('rows' => 7, 'description' => $this->lang['advanced-config.cookiebar-aboutcookie.explain'], 'required' => true, 'hidden' => !$this->cookiebar_config->is_cookiebar_enabled(), 'reset_value' => LangLoader::get_message('cookiebar-message.aboutcookie', 'user-common'))
-		));*/
+		));
 
 		$miscellaneous_fieldset = new FormFieldsetHTML('miscellaneous', $this->lang['advanced-config.miscellaneous']);
 		$form->add_fieldset($miscellaneous_fieldset);
