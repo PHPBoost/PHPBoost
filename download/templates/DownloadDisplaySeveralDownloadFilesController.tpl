@@ -45,6 +45,7 @@
 						<th class="col-small">${LangLoader::get_message('form.keywords', 'common')}</th>
 						<th class="col-small">${LangLoader::get_message('form.date.creation', 'common')}</th>
 						<th class="col-small">{@downloads_number}</th>
+						# IF C_NB_VIEW_ENABLED #<th>{@download.number.view}</th># ENDIF #
 						# IF C_NOTATION_ENABLED #<th>${LangLoader::get_message('note', 'common')}</th># ENDIF #
 						# IF C_COMMENTS_ENABLED #<th class="col-small">${LangLoader::get_message('comments', 'comments-common')}</th># ENDIF #
 						# IF C_MODERATION #<th class="col-smaller"></th># ENDIF #
@@ -71,6 +72,11 @@
 						<td>
 							{downloadfiles.NUMBER_DOWNLOADS}
 						</td>
+						# IF C_NB_VIEW_ENABLED #
+						<td>
+							{downloadfiles.NUMBER_VIEW}
+						</td>							
+						# ENDIF #
 						# IF C_NOTATION_ENABLED #
 						<td>
 							{downloadfiles.STATIC_NOTATION}
@@ -119,6 +125,7 @@
 					<div class="more">
 						<i class="fa fa-download" title="{downloadfiles.L_DOWNLOADED_TIMES}"></i>
 						<span title="{downloadfiles.L_DOWNLOADED_TIMES}">{downloadfiles.NUMBER_DOWNLOADS}</span>
+						# IF C_NB_VIEW_ENABLED # | <span title="{downloadfiles.NUMBER_VIEW} {@download.view}"><i class="fa fa-eye""></i> {downloadfiles.NUMBER_VIEW}</span># ENDIF #
 						# IF C_COMMENTS_ENABLED #
 							| <i class="fa fa-comment" title="${LangLoader::get_message('comments', 'comments-common')}"></i>
 							# IF downloadfiles.C_COMMENTS # {downloadfiles.NUMBER_COMMENTS} # ENDIF # {downloadfiles.L_COMMENTS}
@@ -168,6 +175,7 @@
 							<span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} : </span><span><time datetime="# IF NOT downloadfiles.C_DIFFERED #{downloadfiles.DATE_ISO8601}# ELSE #{downloadfiles.DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT downloadfiles.C_DIFFERED #{downloadfiles.DATE}# ELSE #{downloadfiles.DIFFERED_START_DATE}# ENDIF #</time></span><br/>
 							# IF C_UPDATED_DATE #<span class="text-strong">${LangLoader::get_message('form.date.update', 'common')} : </span><span><time datetime="{downloadfiles.UPDATED_DATE_ISO8601}" itemprop="dateModified">{downloadfiles.UPDATED_DATE}</time></span><br/># ENDIF #
 							<span class="text-strong">{@downloads_number} : </span><span>{downloadfiles.NUMBER_DOWNLOADS}</span><br/>
+							# IF C_NB_VIEW_ENABLED #<span class="text-strong">{@download.number.view} : </span><span title="{downloadfiles.NUMBER_VIEW} {@download.view}">{downloadfiles.NUMBER_VIEW}</span><br/># ENDIF #
 							# IF NOT C_CATEGORY #<span class="text-strong">${LangLoader::get_message('category', 'categories-common')} : </span><span><a itemprop="about" class="small" href="{downloadfiles.U_CATEGORY}">{downloadfiles.CATEGORY_NAME}</a></span><br/># ENDIF #
 							# IF downloadfiles.C_KEYWORDS #
 								<span class="text-strong">${LangLoader::get_message('form.keywords', 'common')} : </span>

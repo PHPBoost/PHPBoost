@@ -49,6 +49,9 @@ $lang['file_infos'] = 'File informations';
 $lang['file'] = 'File';
 $lang['files'] = 'Files';
 
+$lang['download.view'] = 'views';
+$lang['download.number.view'] = 'Number of views';
+
 //config
 $lang['config.category_display_type'] = 'Displayed informations in categories';
 $lang['config.category_display_type.display_summary'] = 'Summary';
@@ -61,6 +64,7 @@ $lang['config.sort_type.explain'] = 'Descending mode';
 $lang['config.files_number_in_menu'] = 'Max files displayed number';
 $lang['config.limit_oldest_file_day_in_menu'] = 'Limit files age in menu';
 $lang['config.oldest_file_day_in_menu'] = 'Maximum age (in days)';
+$lang['admin.config.download_number_view_enabled'] = 'Enable number of view display';
 
 //authorizations
 $lang['authorizations.display_download_link'] = 'Display download link permission';

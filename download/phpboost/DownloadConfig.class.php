@@ -37,6 +37,7 @@ class DownloadConfig extends AbstractConfigData
 	const CATEGORY_DISPLAY_TYPE = 'category_display_type';
 	const DESCRIPTIONS_DISPLAYED_TO_GUESTS = 'descriptions_displayed_to_guests';
 	const AUTHOR_DISPLAYED = 'author_displayed';
+	const NB_VIEW_ENABLED = 'nb_view_enabled';
 	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
 	const SORT_TYPE = 'sort_type';
 	const FILES_NUMBER_IN_MENU = 'files_number_in_menu';
@@ -131,6 +132,16 @@ class DownloadConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::AUTHOR_DISPLAYED);
 	}
+	
+	public function get_nb_view_enabled()
+	{
+		return $this->get_property(self::NB_VIEW_ENABLED);
+	}
+
+	public function set_nb_view_enabled($nb_view_enabled)
+	{
+		$this->set_property(self::NB_VIEW_ENABLED, $nb_view_enabled);
+	}
 
 	public function get_root_category_description()
 	{
@@ -160,6 +171,11 @@ class DownloadConfig extends AbstractConfigData
 	public function is_sort_type_number_downloads()
 	{
 		return $this->get_property(self::SORT_TYPE) == DownloadFile::SORT_NUMBER_DOWNLOADS;
+	}
+	
+	public function is_sort_type_number_views()
+	{
+		return $this->get_property(self::SORT_TYPE) == DownloadFile::SORT_NUMBER_VIEWS;
 	}
 	
 	public function is_sort_type_notation()
@@ -234,6 +250,7 @@ class DownloadConfig extends AbstractConfigData
 			self::CATEGORY_DISPLAY_TYPE => self::DISPLAY_SUMMARY,
 			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,
 			self::AUTHOR_DISPLAYED => true,
+			self::NB_VIEW_ENABLED => false,
 			self::ROOT_CATEGORY_DESCRIPTION => LangLoader::get_message('root_category_description', 'config', 'download'),
 			self::SORT_TYPE => DownloadFile::SORT_NUMBER_DOWNLOADS,
 			self::FILES_NUMBER_IN_MENU => 5,

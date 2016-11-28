@@ -42,6 +42,8 @@ class DownloadDisplayDownloadFileController extends ModuleController
 		
 		$this->init();
 		
+		$this->count_number_view($request);
+		
 		$this->build_view();
 		
 		return $this->generate_response();
@@ -72,6 +74,22 @@ class DownloadDisplayDownloadFileController extends ModuleController
 				$this->downloadfile = new DownloadFile();
 		}
 		return $this->downloadfile;
+	}
+	
+	private function count_number_view(HTTPRequestCustom $request)
+	{
+		if (!$this->downloadfile->is_visible())
+		{
+			$this->tpl->put('NOT_VISIBLE_MESSAGE', MessageHelper::display(LangLoader::get_message('element.not_visible', 'status-messages-common'), MessageHelper::WARNING));
+		}
+		else
+		{
+			if ($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), DownloadUrlBuilder::display($this->downloadfile->get_category()->get_id(), $this->downloadfile->get_category()->get_rewrited_name(), $this->downloadfile->get_id(), $this->downloadfile->get_rewrited_name())->rel()))
+			{
+				$this->downloadfile->set_number_view($this->downloadfile->get_number_view() + 1);
+				DownloadService::update_number_view($this->downloadfile);
+			}
+		}
 	}
 	
 	private function build_view()

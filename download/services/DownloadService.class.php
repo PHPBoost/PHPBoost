@@ -80,6 +80,11 @@ class DownloadService
 		self::$db_querier->update(DownloadSetup::$download_table, array('number_downloads' => $downloadfile->get_number_downloads()), 'WHERE id=:id', array('id' => $downloadfile->get_id()));
 	}
 	
+	public static function update_number_view(DownloadFile $downloadfile)
+	{
+		self::$db_querier->update(DownloadSetup::$download_table, array('number_view' => $downloadfile->get_number_view()), 'WHERE id=:id', array('id' => $downloadfile->get_id()));
+	}
+	
 	 /**
 	 * @desc Delete an entry.
 	 * @param string $condition : Restriction to apply to the list

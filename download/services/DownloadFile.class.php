@@ -48,6 +48,7 @@ class DownloadFile
 	
 	private $creation_date;
 	private $updated_date;
+	private $number_view;
 	private $author_user;
 	private $author_custom_name;
 	private $author_custom_name_enabled;
@@ -64,6 +65,7 @@ class DownloadFile
 	const SORT_NOTATION         = 'average_notes';
 	const SORT_NUMBER_COMMENTS  = 'number_comments';
 	const SORT_NUMBER_DOWNLOADS = 'number_downloads';
+	const SORT_NUMBER_VIEWS 	= 'number_view';
 	
 	const ASC  = 'ASC';
 	const DESC = 'DESC';
@@ -283,6 +285,16 @@ class DownloadFile
 		return $this->author_custom_name_enabled;
 	}
 	
+	public function set_number_view($number_view)
+	{
+		$this->number_view = $number_view;
+	}
+
+	public function get_number_view()
+	{
+		return $this->number_view;
+	}
+	
 	public function get_picture()
 	{
 		return $this->picture_url;
@@ -367,6 +379,7 @@ class DownloadFile
 			'author_custom_name' => $this->get_author_custom_name(),
 			'author_user_id' => $this->get_author_user()->get_id(),
 			'number_downloads' => $this->get_number_downloads(),
+			'number_view' => $this->get_number_view(),
 			'picture_url' => $this->get_picture()->relative()
 		);
 	}
@@ -381,6 +394,7 @@ class DownloadFile
 		$this->size = $properties['size'];
 		$this->contents = $properties['contents'];
 		$this->short_contents = $properties['short_contents'];
+		$this->number_view = $properties['number_view'];
 		$this->approbation_type = $properties['approbation_type'];
 		$this->start_date = !empty($properties['start_date']) ? new Date($properties['start_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->end_date = !empty($properties['end_date']) ? new Date($properties['end_date'], Timezone::SERVER_TIMEZONE) : null;
@@ -427,6 +441,7 @@ class DownloadFile
 		$this->end_date = new Date();
 		$this->creation_date = new Date();
 		$this->number_downloads = 0;
+		$this->number_view = 0;
 		$this->picture_url = new Url(self::DEFAULT_PICTURE);
 		$this->end_date_enabled = false;
 		$this->author_custom_name = $this->author_user->get_display_name();
@@ -455,6 +470,7 @@ class DownloadFile
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		$number_comments = CommentsService::get_number_comments('download', $this->id);
 		$new_content = new DownloadNewContent();
+		$config = DownloadConfig::load();
 		
 		return array_merge(
 			Date::get_array_tpl_vars($this->creation_date, 'date'),
@@ -468,6 +484,7 @@ class DownloadFile
 			'C_SIZE' => !empty($this->size),
 			'C_PICTURE' => $this->has_picture(),
 			'C_AUTHOR_CUSTOM_NAME' => $this->is_author_custom_name_enabled(),
+			'C_NB_VIEW_ENABLED' => $config->get_nb_view_enabled(),
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			'C_UPDATED_DATE' => $this->has_updated_date(),
 			'C_DIFFERED' => $this->approbation_type == self::APPROVAL_DATE,
@@ -486,6 +503,7 @@ class DownloadFile
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,
 			'NUMBER_DOWNLOADS' => $this->number_downloads,
+			'NUMBER_VIEW' => $this->get_number_view(),
 			'L_DOWNLOADED_TIMES' => StringVars::replace_vars(LangLoader::get_message('downloaded_times', 'common', 'download'), array('number_downloads' => $this->number_downloads)),
 			'STATIC_NOTATION' => NotationService::display_static_image($this->get_notation()),
 			'NOTATION' => NotationService::display_active_image($this->get_notation()),

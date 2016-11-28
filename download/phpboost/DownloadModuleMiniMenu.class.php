@@ -74,7 +74,8 @@ class DownloadModuleMiniMenu extends ModuleMiniMenu
 			'C_FILES' => !empty($downloadfiles),
 			'C_SORT_BY_DATE' => $config->is_sort_type_date(),
 			'C_SORT_BY_NOTATION' => $config->is_sort_type_notation(),
-			'C_SORT_BY_NUMBER_DOWNLOADS' => $config->is_sort_type_number_downloads()
+			'C_SORT_BY_NUMBER_DOWNLOADS' => $config->is_sort_type_number_downloads(),
+			'C_SORT_BY_NUMBER_VIEWS' => $config->is_sort_type_number_views()
 		));
 		
 		$displayed_position = 1;

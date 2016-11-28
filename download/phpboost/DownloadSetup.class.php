@@ -85,6 +85,7 @@ class DownloadSetup extends DefaultModuleSetup
 			'approbation_type' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'number_view' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'updated_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'author_custom_name' => array('type' =>  'string', 'length' => 255, 'default' => "''"),
@@ -149,6 +150,7 @@ class DownloadSetup extends DefaultModuleSetup
 			'author_custom_name' => '',
 			'author_user_id' => 1,
 			'number_downloads' => 0,
+			'number_view' => 0,
 			'picture_url' => '/download/download.png'
 		));
 	}

@@ -156,6 +156,7 @@ class DownloadDisplayCategoryController extends ModuleController
 			'C_AUTHOR_DISPLAYED' => $this->config->is_author_displayed(),
 			'C_COMMENTS_ENABLED' => $this->comments_config->are_comments_enabled(),
 			'C_NOTATION_ENABLED' => $this->notation_config->is_notation_enabled(),
+			'C_NB_VIEW_ENABLED' => $this->config->get_nb_view_enabled(),
 			'C_MODERATION' => DownloadAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_CATEGORY' => true,

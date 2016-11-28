@@ -124,6 +124,8 @@ class AdminDownloadConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->admin_common_lang['config.author_displayed'], $this->config->is_author_displayed()));
 		
+		$fieldset->add_field(new FormFieldCheckbox('nb_view_enabled', $this->lang['admin.config.download_number_view_enabled'], $this->config->get_nb_view_enabled()));
+		
 		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->admin_common_lang['config.root_category_description'], $this->config->get_root_category_description(), 
 			array('rows' => 8, 'cols' => 47)
 		));
@@ -136,6 +138,7 @@ class AdminDownloadConfigController extends AdminModuleController
 			new FormFieldSelectChoiceOption(LangLoader::get_message('form.date.creation', 'common'), DownloadFile::SORT_DATE),
 			new FormFieldSelectChoiceOption(LangLoader::get_message('form.name', 'common'), DownloadFile::SORT_ALPHABETIC),
 			new FormFieldSelectChoiceOption($this->lang['downloads_number'], DownloadFile::SORT_NUMBER_DOWNLOADS),
+			new FormFieldSelectChoiceOption($this->lang['download.number.view'], DownloadFile::SORT_NUMBER_VIEWS),
 			new FormFieldSelectChoiceOption(LangLoader::get_message('author', 'common'), DownloadFile::SORT_AUTHOR)
 		);
 
@@ -218,6 +221,7 @@ class AdminDownloadConfigController extends AdminModuleController
 		else
 			$this->config->hide_author();
 						
+		$this->config->set_nb_view_enabled($this->form->get_value('nb_view_enabled'));
 		$this->config->set_root_category_description($this->form->get_value('root_category_description'));
 		$this->config->set_sort_type($this->form->get_value('sort_type')->get_raw_value());
 		$this->config->set_files_number_in_menu($this->form->get_value('files_number_in_menu'));

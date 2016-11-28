@@ -49,6 +49,9 @@ $lang['file_infos'] = 'Informations sur le fichier';
 $lang['file'] = 'Fichier';
 $lang['files'] = 'Fichiers';
 
+$lang['download.view'] = 'vues';
+$lang['download.number.view'] = 'Nombre de vues';
+
 //config
 $lang['config.category_display_type'] = 'Affichage des informations dans les catégories';
 $lang['config.category_display_type.display_summary'] = 'Résumé';
@@ -61,6 +64,7 @@ $lang['config.sort_type.explain'] = 'Sens décroissant';
 $lang['config.files_number_in_menu'] = 'Nombre de fichiers affichés maximum';
 $lang['config.limit_oldest_file_day_in_menu'] = 'Limiter l\'âge des fichiers dans le menu';
 $lang['config.oldest_file_day_in_menu'] = 'Age maximum (en jours)';
+$lang['admin.config.download_number_view_enabled'] = 'Activer l\'affichage du nombre de vues';
 
 //authorizations
 $lang['authorizations.display_download_link'] = 'Autorisation d\'afficher le lien de téléchargement';
