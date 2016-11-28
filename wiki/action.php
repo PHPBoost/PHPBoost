@@ -33,24 +33,24 @@ $config = WikiConfig::load();
 
 require('../wiki/wiki_auth.php');
 
-$id_auth = retrieve(POST, 'id_auth', 0);
-$id_status = retrieve(POST, 'id_status', 0);
+$id_auth = (int)retrieve(POST, 'id_auth', 0);
+$id_status = (int)retrieve(POST, 'id_status', 0);
 $type_status = retrieve(POST, 'status', '');
-$id_change_status = retrieve(POST, 'id_change_status', 0);
+$id_change_status = (int)retrieve(POST, 'id_change_status', 0);
 $contents = wiki_parse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED));
-$move = retrieve(POST, 'id_to_move', 0);
-$new_cat = retrieve(POST, 'new_cat', 0);
-$id_to_rename = retrieve(POST, 'id_to_rename', 0);
+$move = (int)retrieve(POST, 'id_to_move', 0);
+$new_cat = (int)retrieve(POST, 'new_cat', 0);
+$id_to_rename = (int)retrieve(POST, 'id_to_rename', 0);
 $new_title = retrieve(POST, 'new_title', '');
-$create_redirection_while_renaming = retrieve(POST, 'create_redirection_while_renaming', false);
-$create_redirection = retrieve(POST, 'create_redirection', 0);
+$create_redirection_while_renaming = (bool)retrieve(POST, 'create_redirection_while_renaming', false);
+$create_redirection = (int)retrieve(POST, 'create_redirection', 0);
 $redirection_title = retrieve(POST, 'redirection_title', '');
-$del_redirection = retrieve(GET, 'del_redirection', 0);
-$restore = retrieve(GET, 'restore', 0);
-$del_archive = retrieve(GET, 'del_contents', 0);
-$del_article = retrieve(GET, 'del_article', 0);
-$del_to_remove = retrieve(POST, 'id_to_remove', 0);
-$report_cat = retrieve(POST, 'report_cat', 0);
+$del_redirection = (int)retrieve(GET, 'del_redirection', 0);
+$restore = (int)retrieve(GET, 'restore', 0);
+$del_archive = (int)retrieve(GET, 'del_contents', 0);
+$del_article = (int)retrieve(GET, 'del_article', 0);
+$del_to_remove = (int)retrieve(POST, 'id_to_remove', 0);
+$report_cat = (int)retrieve(POST, 'report_cat', 0);
 $remove_action = retrieve(POST, 'action', ''); //Action à faire lors de la suppression
 
 $db_querier = PersistenceContext::get_querier();

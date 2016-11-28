@@ -33,19 +33,19 @@ require_once('../admin/admin_header.php');
 
 $request = AppContext::get_request();
 
-$add = $request->get_postvalue('add', false);
+$add = $request->get_postbool('add', false);
 
 //Ajout du rang.
 if ($add)
 {
-	$name = retrieve(POST, 'name', '');
-	$msg = retrieve(POST, 'msg', 0);    
-	$icon = retrieve(POST, 'icon', ''); 
+	$name = $request->get_poststring('name', '');
+	$msg_number = $request->get_postint('msg', 0);    
+	$icon = $request->get_poststring('icon', ''); 
 	
-	if (!empty($name) && $msg >= 0)
+	if (!empty($name) && $msg_number >= 0)
 	{
 		//On insere le nouveau lien, tout en précisant qu'il s'agit d'un lien ajouté et donc supprimable
-		PersistenceContext::get_querier()->insert(PREFIX . "forum_ranks", array('name' => $name, 'msg' => $msg, 'icon' => $icon, 'special' => 0));
+		PersistenceContext::get_querier()->insert(PREFIX . "forum_ranks", array('name' => $name, 'msg' => $msg_number, 'icon' => $icon, 'special' => 0));
 		
 		###### Régénération du cache des rangs #######
 		ForumRanksCache::invalidate();
@@ -89,7 +89,7 @@ else //Sinon on rempli le formulaire
 	$template = new FileTemplate('forum/admin_ranks_add.tpl');
 
 	//Gestion erreur.
-	$get_error = retrieve(GET, 'error', '');
+	$get_error = $request->get_poststring('error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable');
 	if (in_array($get_error, $array_error))
 		$template->put('message_helper', MessageHelper::display($LANG[$get_error], MessageHelper::WARNING));

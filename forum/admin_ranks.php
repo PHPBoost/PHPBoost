@@ -36,7 +36,7 @@ $request = AppContext::get_request();
 $get_id = $request->get_getint('id', 0);
 $del = $request->get_getint('del', 0);
 
-$valid = $request->get_postvalue('valid', false);
+$valid = $request->get_postbool('valid', false);
 
 //Si c'est confirmé on execute
 if ($valid)
@@ -45,12 +45,12 @@ if ($valid)
 	FROM " . PREFIX . "forum_ranks");
 	while ($row = $result->fetch())
 	{
-		$name = retrieve(POST, $row['id'] . 'name', '');
-		$msg = retrieve(POST, $row['id'] . 'msg', 0);
-		$icon = retrieve(POST, $row['id'] . 'icon', '');
+		$name = $request->get_poststring($row['id'] . 'name', '');
+		$msg_number = $request->get_postint($row['id'] . 'msg', 0);    
+		$icon = $request->get_poststring($row['id'] . 'icon', ''); 
 
 		if (!empty($name) && $row['special'] != 1)
-			PersistenceContext::get_querier()->update(PREFIX . "forum_ranks", array('name' => $name, 'msg' => $msg, 'icon' => $icon), ' WHERE id = :id', array('id' => $row['id']));
+			PersistenceContext::get_querier()->update(PREFIX . "forum_ranks", array('name' => $name, 'msg' => $msg_number, 'icon' => $icon), ' WHERE id = :id', array('id' => $row['id']));
 		else
 			PersistenceContext::get_querier()->update(PREFIX . "forum_ranks", array('name' => $name, 'icon' => $icon), ' WHERE id = :id', array('id' => $row['id']));
 	}

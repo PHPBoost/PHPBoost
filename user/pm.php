@@ -41,20 +41,20 @@ if (!$current_user->check_level(User::MEMBER_LEVEL))
 
 $request = AppContext::get_request();
 
-$pm_get = retrieve(GET, 'pm', 0);
-$pm_id_get = retrieve(GET, 'id', 0);
-$pm_del_convers = retrieve(GET, 'del_convers', false);
-$quote_get = retrieve(GET, 'quote', 0);
-$page = retrieve(GET, 'p', 0);
-$post = retrieve(GET, 'post', false);
-$pm_edit = retrieve(GET, 'edit', 0);
-$pm_del = retrieve(GET, 'del', 0);
-$read = retrieve(GET, 'read', false);
-$convers = retrieve(POST, 'convers', false);
-$prw_convers = retrieve(POST, 'prw_convers', false);
-$prw = retrieve(POST, 'prw', false);
-$pm_post = retrieve(POST, 'pm', false);
-$edit_pm = retrieve(POST, 'edit_pm', false);
+$pm_get = (int)retrieve(GET, 'pm', 0);
+$pm_id_get = (int)retrieve(GET, 'id', 0);
+$pm_del_convers = (bool)retrieve(GET, 'del_convers', false);
+$quote_get = (int)retrieve(GET, 'quote', 0);
+$page = (int)retrieve(GET, 'p', 0);
+$post = (bool)retrieve(GET, 'post', false);
+$pm_edit = (int)retrieve(GET, 'edit', 0);
+$pm_del = (int)retrieve(GET, 'del', 0);
+$read = (bool)retrieve(GET, 'read', false);
+$convers = (bool)retrieve(POST, 'convers', false);
+$prw_convers = (bool)retrieve(POST, 'prw_convers', false);
+$prw = (bool)retrieve(POST, 'prw', false);
+$pm_post = (bool)retrieve(POST, 'pm', false);
+$edit_pm = (bool)retrieve(POST, 'edit_pm', false);
 
 $editor = AppContext::get_content_formatting_service()->get_default_editor();
 $editor->set_identifier('contents');
@@ -715,7 +715,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	//Message non lu par autre membre que user_id view_status => 0.
 	//Message lu par autre membre que user_id view_status => 1.
 	$is_guest_in_convers = false;
-	$page = retrieve(GET, 'p', 0); //Redéfinition de la variable $page pour prendre en compte les redirections.
+	$page = (int)retrieve(GET, 'p', 0); //Redéfinition de la variable $page pour prendre en compte les redirections.
 	$quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 	$i = 0;
 	$j = 0;

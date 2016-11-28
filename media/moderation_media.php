@@ -133,8 +133,8 @@ else
 	if ($filter)
 	{
 		$state = retrieve(POST, 'state', 'all', TSTRING);
-		$cat = retrieve(POST, 'idcat', 0, TINTEGER);
-		$sub_cats = retrieve(POST, 'sub_cats', false, TBOOL);
+		$cat = (int)retrieve(POST, 'idcat', 0, TINTEGER);
+		$sub_cats = (bool)retrieve(POST, 'sub_cats', false, TBOOL);
 		
 		if ($state == "visible")
 		{

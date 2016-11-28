@@ -31,8 +31,8 @@ require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
-$id = retrieve(REQUEST, 'id', 0);
-$id_post = retrieve(POST, 'id', 0);
+$id = (int)retrieve(REQUEST, 'id', 0);
+$id_post = (int)retrieve(POST, 'id', 0);
 
 $action = retrieve(REQUEST, 'action', '');
 $action_post = retrieve(POST, 'action', '');

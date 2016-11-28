@@ -32,7 +32,9 @@ $config = WikiConfig::load();
 include('../wiki/wiki_functions.php');
 
 //Id de l'article à afficher en version imprimable
-$article_id = retrieve(GET, 'id', 0);
+$request = AppContext::get_request();
+
+$article_id = $request->get_getint('id', 0);
 
 //Requêtes préliminaires utiles par la suite
 if ($article_id > 0) //Si on connait son titre

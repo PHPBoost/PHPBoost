@@ -31,7 +31,7 @@ require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
-$id = retrieve(GET, 'id', 0);
+$id = (int)retrieve(GET, 'id', 0);
 $switchtheme = retrieve(GET, 'theme', '');
 $name_theme = !empty($switchtheme) ? $switchtheme : AppContext::get_current_user()->get_theme();
 $theme_post = retrieve(POST, 'theme', '');

@@ -29,7 +29,7 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$id_get = retrieve(GET, 'id', 0);
+$id_get = (int)retrieve(GET, 'id', 0);
 
 $is_modo = ForumAuthorizationsService::check_authorizations($id_get)->moderation();
 
@@ -70,13 +70,13 @@ require_once('../kernel/header.php');
 $new_get = retrieve(GET, 'new', '');
 $idt_get = retrieve(GET, 'idt', '');
 $error_get = retrieve(GET, 'error', '');
-$previs = retrieve(POST, 'prw', false); //Prévisualisation des messages.
-$post_topic = retrieve(POST, 'post_topic', false);
+$previs = (bool)retrieve(POST, 'prw', false); //Prévisualisation des messages.
+$post_topic = (bool)retrieve(POST, 'post_topic', false);
 $preview_topic = retrieve(POST, 'prw_t', '');
 
 $editor = AppContext::get_content_formatting_service()->get_default_editor();
 $editor->set_identifier('contents');
-	
+
 //Niveau d'autorisation de la catégorie
 if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 {
@@ -166,7 +166,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 			if ($is_modo)
-				$type = retrieve(POST, 'type', 0);
+				$type = (int)retrieve(POST, 'type', 0);
 			else
 				$type = 0;
 
@@ -201,7 +201,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					$question = retrieve(POST, 'question', '');
 					if (!empty($question))
 					{
-						$poll_type = retrieve(POST, 'poll_type', 0);
+						$poll_type = (int)retrieve(POST, 'poll_type', 0);
 						$poll_type = ($poll_type == 0 || $poll_type == 1) ? $poll_type : 0;
 
 						$answers = array();
@@ -238,7 +238,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 			$question = retrieve(POST, 'question', '', TSTRING_UNCHANGE);
 
-			$type = retrieve(POST, 'type', 0);
+			$type = (int)retrieve(POST, 'type', 0);
 
 			if (!$is_modo)
 				$type = ( $type == 1 || $type == 0 ) ? $type : 0;
@@ -280,7 +280,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			}
 
 			//Type de réponses du sondage.
-			$poll_type = retrieve(POST, 'poll_type', 0);
+			$poll_type = (int)retrieve(POST, 'poll_type', 0);
 
 			$vars_tpl = array(
 				'FORUM_NAME' => $config->get_forum_name(),
@@ -508,8 +508,8 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		if (!ForumAuthorizationsService::check_authorizations($id_get)->write())
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
-		$id_m = retrieve(GET, 'idm', 0);
-		$update = retrieve(GET, 'update', false);
+		$id_m = (int)retrieve(GET, 'idm', 0);
+		$update = (bool)retrieve(GET, 'update', false);
 		
 		try {
 			$id_first = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'MIN(id)', 'WHERE idtopic = :idtopic', array('idtopic' => $idt_get));
@@ -557,21 +557,21 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				$title = retrieve(POST, 'title', '');
 				$subtitle = retrieve(POST, 'desc', '');
 				$contents = retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED);
-				$type = $is_modo ? retrieve(POST, 'type', 0) : 0;
+				$type = $is_modo ? (int)retrieve(POST, 'type', 0) : 0;
 
 				if (!empty($title) && !empty($contents))
 				{
 					$Forumfct->Update_topic($idt_get, $id_m, $title, $subtitle, addslashes($contents), $type, $user_id_msg); //Mise à jour du topic.
 
 					//Mise à jour du sondage en plus du topic.
-					$del_poll = retrieve(POST, 'del_poll', false);
+					$del_poll = (bool)retrieve(POST, 'del_poll', false);
 					$question = retrieve(POST, 'question', '');
 					if (!empty($question) && !$del_poll) //Enregistrement du sondage.
 					{
 						//Mise à jour si le sondage existe, sinon création.
 						$check_poll = PersistenceContext::get_querier()->count(PREFIX . 'forum_poll', 'WHERE idtopic=:idtopic', array('idtopic' => $idt_get));
 
-						$poll_type = retrieve(POST, 'poll_type', 0);
+						$poll_type = (int)retrieve(POST, 'poll_type', 0);
 						$poll_type = ($poll_type == 0 || $poll_type == 1) ? $poll_type : 0;
 
 						$answers = array();
@@ -609,7 +609,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 				$question = retrieve(POST, 'question', '', TSTRING_UNCHANGE);
 
-				$type = retrieve(POST, 'type', 0);
+				$type = (int)retrieve(POST, 'type', 0);
 				if (!$is_modo)
 					$type = ($type == 1 || $type == 0) ? $type : 0;
 				else
@@ -650,7 +650,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				}
 
 				//Type de réponses du sondage.
-				$poll_type = retrieve(POST, 'poll_type', 0);
+				$poll_type = (int)retrieve(POST, 'poll_type', 0);
 
 				$vars_tpl = array(
 					'FORUM_NAME' => $config->get_forum_name(),
@@ -867,7 +867,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				DispatchManager::redirect($error_controller);
 			}
 
-			if ($update && retrieve(POST, 'edit_msg', false))
+			if ($update && (bool)retrieve(POST, 'edit_msg', false))
 			{
 				$contents = retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED);
 				if (!empty($contents))

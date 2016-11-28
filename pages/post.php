@@ -37,8 +37,8 @@ if (AppContext::get_current_user()->is_readonly())
 
 $request = AppContext::get_request();
 
-$id_edit = retrieve(GET, 'id', 0);
-$id_edit_post = retrieve(POST, 'id_edit', 0);
+$id_edit = (int)retrieve(GET, 'id', 0);
+$id_edit_post = (int)retrieve(POST, 'id_edit', 0);
 $id_edit = $id_edit > 0 ? $id_edit : $id_edit_post;
 $title = retrieve(POST, 'title', '');
 $contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
@@ -46,10 +46,10 @@ $count_hits = (int)($request->has_postparameter('count_hits') && $request->get_v
 $enable_com = (int)($request->has_postparameter('comments_activated') && $request->get_value('comments_activated') == 'on');
 $own_auth = retrieve(POST, 'own_auth', '');
 $is_cat = (int)($request->has_postparameter('is_cat') && $request->get_value('is_cat') == 'on');
-$id_cat = retrieve(POST, 'id_cat', 0);
+$id_cat = (int)retrieve(POST, 'id_cat', 0);
 $display_print_link = (int)($request->has_postparameter('display_print_link') && $request->get_value('display_print_link') == 'on');
-$preview = retrieve(POST, 'preview', false);
-$del_article = retrieve(GET, 'del', 0);
+$preview = (bool)retrieve(POST, 'preview', false);
+$del_article = (int)retrieve(GET, 'del', 0);
 
 //Configuration des authorisations
 $config_authorizations = $pages_config->get_authorizations();

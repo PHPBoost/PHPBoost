@@ -39,15 +39,15 @@ if ($valid)
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	$question = retrieve(POST, 'question', '');
-	$type = retrieve(POST, 'type', 1);
-	$archive = retrieve(POST, 'archive', 0);
+	$type = (int)retrieve(POST, 'type', 1);
+	$archive = (int)retrieve(POST, 'archive', 0);
 	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNCHANGE);
 	$start = retrieve(POST, 'start', '', TSTRING_UNCHANGE);
 	$end = retrieve(POST, 'end', '', TSTRING_UNCHANGE);
 	$hour = retrieve(POST, 'hour', '', TSTRING_UNCHANGE);
 	$min = retrieve(POST, 'min', '', TSTRING_UNCHANGE);	
-	$get_visible = retrieve(POST, 'visible', 0);
-	$poll_type = retrieve(POST, 'poll_type', 0);
+	$get_visible = (int)retrieve(POST, 'visible', 0);
+	$poll_type = (int)retrieve(POST, 'poll_type', 0);
 	
 	//On verifie les conditions!
 	if (!empty($question))

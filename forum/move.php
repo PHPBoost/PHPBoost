@@ -137,7 +137,7 @@ elseif (!empty($id_post)) //Déplacement du topic
 	$idcat = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'idcat', 'WHERE id = :id', array('id' => $id_post));
 	if (ForumAuthorizationsService::check_authorizations($idcat)->moderation()) //Accès en édition
 	{
-		$to = retrieve(POST, 'to', $idcat); //Catégorie cible.
+		$to = (int)retrieve(POST, 'to', $idcat); //Catégorie cible.
 		$category_to = ForumService::get_categories_manager()->get_categories_cache()->get_category($to);
 		if (!empty($to) && $category_to->get_id_parent() != Category::ROOT_CATEGORY && $idcat != $to)
 		{
@@ -202,7 +202,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		DispatchManager::redirect($error_controller);
 	}
 	
-	$to = retrieve(POST, 'to', $cat['id']); //Catégorie cible.
+	$to = (int)retrieve(POST, 'to', $cat['id']); //Catégorie cible.
 
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.
 	$search_category_children_options = new SearchCategoryChildrensOptions();
@@ -298,7 +298,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		$subtitle = retrieve(POST, 'desc', '', TSTRING_UNCHANGE);
 		$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 		$question = retrieve(POST, 'question', '', TSTRING_UNCHANGE);
-		$type = retrieve(POST, 'type', 0);
+		$type = (int)retrieve(POST, 'type', 0);
 
 		$checked_normal = ($type == 0) ? 'checked="ckecked"' : '';
 		$checked_postit = ($type == 1) ? 'checked="ckecked"' : '';
@@ -328,7 +328,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		}
 
 		//Type de réponses du sondage.
-		$poll_type = retrieve(POST, 'poll_type', 0);
+		$poll_type = (int)retrieve(POST, 'poll_type', 0);
 
 		$vars_tpl = array_merge($vars_tpl, array(
 			'TITLE' => $title,
@@ -401,7 +401,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 		DispatchManager::redirect($error_controller);
 	}
 	
-	$to = retrieve(POST, 'to', 0); //Catégorie cible.
+	$to = (int)retrieve(POST, 'to', 0); //Catégorie cible.
 
 	if (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation()) //Accès en édition
 	{
@@ -424,7 +424,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 		$title = retrieve(POST, 'title', '');
 		$subtitle = retrieve(POST, 'desc', '');
 		$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
-		$type = retrieve(POST, 'type', 0);
+		$type = (int)retrieve(POST, 'type', 0);
 
 		//Requête de "scindage" du topic.
 		if (!empty($to) && !empty($contents) && !empty($title))
@@ -438,7 +438,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 			$question = retrieve(POST, 'question', '');
 			if (!empty($question))
 			{
-				$poll_type = retrieve(POST, 'poll_type', 0);
+				$poll_type = (int)retrieve(POST, 'poll_type', 0);
 				$poll_type = ($poll_type == 0 || $poll_type == 1) ? $poll_type : 0;
 
 				$answers = array();

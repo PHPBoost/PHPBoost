@@ -33,10 +33,11 @@ $Bread_crumb->add($config->get_forum_name(), 'index.php');
 $Bread_crumb->add($LANG['show_last_read'], '');
 
 define('TITLE', $LANG['show_last_read']);
-require_once('../kernel/header.php'); 
+require_once('../kernel/header.php');
+$request = AppContext::get_request();
 
 //Redirection changement de catégorie.
-$change_cat = retrieve(POST, 'change_cat', '');
+$change_cat = $request->get_postint('change_cat', 0);
 if (!empty($change_cat))
 {
 	$new_cat = '';

@@ -31,22 +31,22 @@ include_once('pages_functions.php');
 
 define('TITLE', $LANG['pages_redirections']);
 
-$id_redirection = retrieve(GET, 'id', 0);
-$id_rename = retrieve(GET, 'rename', 0);
-$id_rename_post = retrieve(POST, 'id_rename', 0);
-$id_new = retrieve(GET, 'new', 0);
-$id_new_post = retrieve(POST, 'id_new', 0);
-$del_redirection = retrieve(GET, 'del', 0);
+$id_redirection = (int)retrieve(GET, 'id', 0);
+$id_rename = (int)retrieve(GET, 'rename', 0);
+$id_rename_post = (int)retrieve(POST, 'id_rename', 0);
+$id_new = (int)retrieve(GET, 'new', 0);
+$id_new_post = (int)retrieve(POST, 'id_new', 0);
+$del_redirection = (int)retrieve(GET, 'del', 0);
 $id_page = $id_redirection > 0 ? $id_redirection : ($id_new > 0 ? $id_new : $id_rename);
 $new_title = retrieve(POST, 'new_title', '');
 $redirection_name = retrieve(POST, 'redirection_name', '');
 $error = retrieve(GET, 'error', '');
-$del_cat = retrieve(GET, 'del_cat', 0);
+$del_cat = (int)retrieve(GET, 'del_cat', 0);
 $id_page = $id_page > 0 ? $id_page : $del_cat;
-$del_cat_post = retrieve(GET, 'del_cat', 0);
-$report_cat = retrieve(GET, 'report_cat', 0);
+$del_cat_post = (int)retrieve(GET, 'del_cat', 0);
+$report_cat = (int)retrieve(GET, 'report_cat', 0);
 $remove_action = retrieve(POST, 'action', ''); //Action à faire lors de la suppression
-$create_redirection = retrieve(POST, 'create_redirection', false);
+$create_redirection = (bool)retrieve(POST, 'create_redirection', false);
 
 $db_querier = PersistenceContext::get_querier();
 

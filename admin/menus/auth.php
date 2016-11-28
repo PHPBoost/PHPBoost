@@ -31,8 +31,8 @@ require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
-$id = retrieve(REQUEST, 'id', 0);
-$post = retrieve(POST, 'id', -1) >= 0 ? true : false;
+$id = (int)retrieve(REQUEST, 'id', 0);
+$post = (int)retrieve(POST, 'id', -1) >= 0;
 
 $menu = MenuService::load($id);
 

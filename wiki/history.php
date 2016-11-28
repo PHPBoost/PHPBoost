@@ -29,7 +29,7 @@ require_once('../kernel/begin.php');
 load_module_lang('wiki');
 $config = WikiConfig::load();
 
-$id_article = retrieve(GET, 'id', 0);
+$id_article = (int)retrieve(GET, 'id', 0);
 $field = retrieve(GET, 'field', '');
 $order = retrieve(GET, 'order', '');
 

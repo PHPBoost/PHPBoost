@@ -30,7 +30,7 @@ require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
 $action = retrieve(GET, 'action', '');
-$id_get = retrieve(GET, 'id', 0);
+$id_get = (int)retrieve(GET, 'id', 0);
 $new_status = retrieve(GET, 'new_status', '');
 $get_del = retrieve(GET, 'del', '');
 
@@ -266,7 +266,7 @@ if ($action == 'alert') //Gestion des alertes
 }
 elseif ($action == 'punish') //Gestion des utilisateurs
 {
-	$readonly = retrieve(POST, 'new_info', 0);
+	$readonly = (int)retrieve(POST, 'new_info', 0);
 	$readonly = $readonly > 0 ? (time() + $readonly) : 0;
 	$readonly_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
 	if (!empty($id_get) && retrieve(POST, 'valid_user', false)) //On met à  jour le niveau d'avertissement
@@ -459,9 +459,9 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 }
 elseif ($action == 'warning') //Gestion des utilisateurs
 {
-	$new_warning_level = retrieve(POST, 'new_info', 0);
+	$new_warning_level = (int)retrieve(POST, 'new_info', 0);
 	$warning_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
-	if ($new_warning_level >= 0 && $new_warning_level <= 100 && !empty($id_get) && retrieve(POST, 'valid_user', false)) //On met à  jour le niveau d'avertissement
+	if ($new_warning_level >= 0 && $new_warning_level <= 100 && !empty($id_get) && (bool)retrieve(POST, 'valid_user', false)) //On met à  jour le niveau d'avertissement
 	{
 		try {
 			$info_mbr = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id', 'level', 'email'), 'WHERE user_id=:id', array('id' => $id_get));
@@ -629,7 +629,7 @@ elseif (retrieve(GET, 'del_h', false) && AppContext::get_current_user()->check_l
 }
 else //Panneau de modération
 {
-	$get_more = retrieve(GET, 'more', 0);
+	$get_more = (int)retrieve(GET, 'more', 0);
 
 	$tpl->put_all(array(
 		'C_FORUM_MODO_MAIN' => true,

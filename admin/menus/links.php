@@ -31,12 +31,12 @@ require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
-$menu_id = retrieve(REQUEST, 'id', 0);
+$menu_id = (int)retrieve(REQUEST, 'id', 0);
 $action = retrieve(GET, 'action', '');
 
 if ($action == 'save')
 {   // Save a Menu (New / Edit)
-	$menu_uid = retrieve(POST, 'menu_uid', 0);
+	$menu_uid = (int)retrieve(POST, 'menu_uid', 0);
 	
 	//Properties of the menu we are creating/editing
 	$type = retrieve(POST, 'menu_element_' . $menu_uid . '_type', LinksMenu::AUTOMATIC_MENU);

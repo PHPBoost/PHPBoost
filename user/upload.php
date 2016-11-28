@@ -71,15 +71,15 @@ if (!AppContext::get_current_user()->check_auth($files_upload_config->get_author
 	DispatchManager::redirect($error_controller);
 }
 
-$folder = retrieve(GET, 'f', 0);
-$parent_folder = retrieve(GET, 'fup', 0);
-$home_folder = retrieve(GET, 'root', false);
-$del_folder = retrieve(GET, 'delf', 0);
-$del_file = retrieve(GET, 'del', 0);
+$folder = (int)retrieve(GET, 'f', 0);
+$parent_folder = (int)retrieve(GET, 'fup', 0);
+$home_folder = (bool)retrieve(GET, 'root', false);
+$del_folder = (int)retrieve(GET, 'delf', 0);
+$del_file = (int)retrieve(GET, 'del', 0);
 $get_error = retrieve(GET, 'error', '');
 $get_l_error = retrieve(GET, 'erroru', '');
-$move_folder = retrieve(GET, 'movefd', 0);
-$move_file = retrieve(GET, 'movefi', 0);
+$move_folder = (int)retrieve(GET, 'movefd', 0);
+$move_file = (int)retrieve(GET, 'movefi', 0);
 $to = retrieve(POST, 'new_cat', -1);
 
 if (!empty($parent_folder)) //Changement de dossier

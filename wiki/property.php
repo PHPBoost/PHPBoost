@@ -32,15 +32,15 @@ $config = WikiConfig::load();
 
 require_once('../wiki/wiki_auth.php');
 
-$random = retrieve(GET, 'random', false);
-$id_auth = retrieve(GET, 'auth', 0);
-$wiki_status = retrieve(GET, 'status', 0);
-$move = retrieve(GET, 'move', 0);
-$rename = retrieve(GET, 'rename', 0);
-$redirect = retrieve(GET, 'redirect', 0);
-$create_redirection = retrieve(GET, 'create_redirection', 0);
-$idcom = retrieve(GET, 'idcom', 0);
-$del_article = retrieve(GET, 'del', 0);
+$random = (bool)retrieve(GET, 'random', false);
+$id_auth = (int)retrieve(GET, 'auth', 0);
+$wiki_status = (int)retrieve(GET, 'status', 0);
+$move = (int)retrieve(GET, 'move', 0);
+$rename = (int)retrieve(GET, 'rename', 0);
+$redirect = (int)retrieve(GET, 'redirect', 0);
+$create_redirection = (int)retrieve(GET, 'create_redirection', 0);
+$idcom = (int)retrieve(GET, 'idcom', 0);
+$del_article = (int)retrieve(GET, 'del', 0);
 
 $categories = WikiCategoriesCache::load()->get_categories();
 

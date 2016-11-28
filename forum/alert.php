@@ -29,8 +29,10 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$alert = retrieve(GET, 'id', 0);
-$alert_post = retrieve(POST, 'id', 0);
+$request = AppContext::get_request();
+
+$alert = $request->get_getint('id', 0);
+$alert_post = $request->get_postint('id', 0);
 $topic_id = !empty($alert) ? $alert : $alert_post;
 
 try {
@@ -116,7 +118,7 @@ if (!empty($alert_post))
 	$nbr_alert = PersistenceContext::get_querier()->count(PREFIX . 'forum_alerts', 'WHERE idtopic=:idtopic AND status = 0', array('idtopic' => $alert_post));
 	if (empty($nbr_alert)) //On enregistre
 	{
-		$alert_title = retrieve(POST, 'title', '');
+		$alert_title = $request->get_poststring('title', '');
 		$alert_contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
 
 		//Instanciation de la class du forum.

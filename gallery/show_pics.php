@@ -29,8 +29,9 @@
 require_once('../kernel/begin.php');
 require_once('../gallery/gallery_begin.php');
 require_once('../kernel/header_no_display.php');
+$request = AppContext::get_request();
 
-$g_idpics = retrieve(GET, 'id', 0);
+$g_idpics = $request->get_getint('id', 0);
 
 if (!empty($g_idpics))
 {

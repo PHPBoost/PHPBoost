@@ -34,7 +34,7 @@ include('../wiki/wiki_functions.php');
 //Titre de l'article
 $encoded_title = retrieve(GET, 'title', '');
 //numéro de l'article (utile pour les archives)
-$id_contents = retrieve(GET, 'id_contents', 0);
+$id_contents = (int)retrieve(GET, 'id_contents', 0);
 
 $num_rows = 0;
 $parse_redirection = false;

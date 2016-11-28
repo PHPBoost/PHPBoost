@@ -31,14 +31,14 @@ $Bread_crumb->add($config->get_forum_name(), 'index.php');
 require_once('../kernel/header_no_display.php');
 
 //Variable GET.
-$idt_get = retrieve(GET, 'id', 0);
-$idm_get = retrieve(GET, 'idm', 0);
-$del = retrieve(GET, 'del', false);
+$idt_get = (int)retrieve(GET, 'id', 0);
+$idm_get = (int)retrieve(GET, 'idm', 0);
+$del = (bool)retrieve(GET, 'del', false);
 $alert = retrieve(GET, 'a', '');
-$read = retrieve(GET, 'read', false);
-$msg_d = retrieve(GET, 'msg_d', false);
+$read = (bool)retrieve(GET, 'read', false);
+$msg_d = (bool)retrieve(GET, 'msg_d', false);
 $lock_get = retrieve(GET, 'lock', '');
-$page_get = retrieve(GET, 'p', 1);
+$page_get = (int)retrieve(GET, 'p', 1);
 
 $track = retrieve(GET, 't', '');
 $untrack = retrieve(GET, 'ut', '');
@@ -47,7 +47,7 @@ $untrack_pm = retrieve(GET, 'utp', '');
 $track_mail = retrieve(GET, 'tm', '');
 $untrack_mail = retrieve(GET, 'utm', '');
 
-$poll = retrieve(POST, 'valid_forum_poll', false); //Sondage forum.
+$poll = (bool)retrieve(POST, 'valid_forum_poll', false); //Sondage forum.
 $massive_action_type = retrieve(POST, 'action_type', ''); //Opération de masse.
 
 $Forumfct = new Forum();
@@ -188,7 +188,7 @@ elseif (!empty($idt_get))
 
 			if ($info_poll['type'] == 0) //Réponse simple.
 			{
-				$id_answer = retrieve(POST, 'forumpoll', 0);
+				$id_answer = (int)retrieve(POST, 'forumpoll', 0);
 				if (isset($array_votes[$id_answer]))
 					$array_votes[$id_answer]++;
 			}
@@ -251,7 +251,7 @@ elseif (!empty($track) && AppContext::get_current_user()->check_level(User::MEMB
 }
 elseif (!empty($untrack) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Retrait du sujet, aux sujets suivis.
 {
-	$tracking_type = retrieve(GET, 'trt', 0);
+	$tracking_type = (int)retrieve(GET, 'trt', 0);
 	$Forumfct->Untrack_topic($untrack, $tracking_type); //Retrait du sujet aux sujets suivis.
 
 	AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $untrack, '-' . $untrack . '.php', '&') . '#go_bottom');

@@ -33,9 +33,10 @@ $Bread_crumb->add($config->get_forum_name(), 'index.php');
 $Bread_crumb->add($LANG['show_not_reads'], '');
 define('TITLE', $LANG['show_not_reads']);
 require_once('../kernel/header.php'); 
+$request = AppContext::get_request();
 
 //Redirection changement de catégorie.
-$change_cat = retrieve(POST, 'change_cat', '');
+$change_cat = $request->get_postint('change_cat', 0);
 if (!empty($change_cat))
 {
 	$new_cat = '';
@@ -52,7 +53,7 @@ if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Réserv�
 
 $tpl = new FileTemplate('forum/forum_forum.tpl');
 
-$idcat_unread = retrieve(GET, 'cat', 0);
+$idcat_unread = $request->get_getint('cat', 0);
 
 //Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
 $max_time_msg = forum_limit_time_msg();

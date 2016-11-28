@@ -33,15 +33,12 @@ $Bread_crumb->add($config->get_forum_name(), 'index.php');
 $Bread_crumb->add($LANG['show_topic_track'], '');
 define('TITLE', $LANG['show_topic_track']);
 require_once('../kernel/header.php');
-
-$page = retrieve(GET, 'p', 1);
-
 $request = AppContext::get_request();
 
-$valid = $request->get_postvalue('valid', false);
+$page = $request->get_getint('p', 1);
 
 //Redirection changement de catégorie.
-$change_cat = retrieve(POST, 'change_cat', '');
+$change_cat = $request->get_postint('change_cat', 0);
 if (!empty($change_cat))
 {
 	$new_cat = '';
@@ -53,8 +50,8 @@ if (!empty($change_cat))
 
 if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Réservé aux membres.
 	AppContext::get_response()->redirect(UserUrlBuilder::connect());
-	
-if ($valid)
+
+if ($request->get_postvalue('valid', false))
 {
 	$result = PersistenceContext::get_querier()->select('SELECT t.id, tr.pm, tr.mail
 	FROM ' . PREFIX . 'forum_topics t

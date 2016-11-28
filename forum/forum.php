@@ -28,8 +28,9 @@
 require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
+$request = AppContext::get_request();
 
-$id_get = retrieve(GET, 'id', 0);
+$id_get = $request->get_getint('id', 0);
 $categories_cache = ForumService::get_categories_manager()->get_categories_cache();
 
 //Vérification de l'existance de la catégorie.
@@ -83,7 +84,7 @@ else
 require_once('../kernel/header.php'); 
 
 //Redirection changement de catégorie.
-$change_cat = retrieve(POST, 'change_cat', '');
+$change_cat = $request->get_postint('change_cat', 0);
 if (!empty($change_cat))
 {
 	$new_cat = '';

@@ -31,9 +31,9 @@ $Bread_crumb->add($LANG['user_s'], UserUrlBuilder::home()->rel());
 $Bread_crumb->add($LANG['moderation_panel'], UserUrlBuilder::moderation_panel()->rel());
 
 $action = retrieve(GET, 'action', 'warning', TSTRING_UNCHANGE);
-$id_get = retrieve(GET, 'id', 0);
-$valid_user = retrieve(POST, 'valid_user', false);
-$search_member = retrieve(POST, 'search_member', false);
+$id_get = (int)retrieve(GET, 'id', 0);
+$valid_user = (bool)retrieve(POST, 'valid_user', false);
+$search_member = (bool)retrieve(POST, 'search_member', false);
 
 switch ($action)
 {
@@ -79,7 +79,7 @@ $editor->set_identifier('action_contents');
 if ($action == 'punish')
 {
 	//Gestion des utilisateurs
-	$readonly = retrieve(POST, 'new_info', 0);
+	$readonly = (int)retrieve(POST, 'new_info', 0);
 	$readonly = $readonly > 0 ? (time() + $readonly) : 0;
 	$readonly_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
 	if (!empty($id_get) && $valid_user) //On met à  jour le niveau d'avertissement
@@ -254,7 +254,7 @@ if ($action == 'punish')
 }
 else if ($action == 'warning')
 {
-	$new_warning_level = retrieve(POST, 'new_info', 0);
+	$new_warning_level = (int)retrieve(POST, 'new_info', 0);
 	$warning_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
 	if ($new_warning_level >= 0 && $new_warning_level <= 100 && AppContext::get_request()->has_postparameter('new_info') && !empty($id_get) && $valid_user) //On met à  jour le niveau d'avertissement
 	{

@@ -33,10 +33,10 @@ if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Si il n'
 	DispatchManager::redirect($error_controller);
 } 
 
-$contribution_id = retrieve(GET, 'id', 0);
-$id_to_delete = retrieve(GET, 'del', 0);
-$id_to_update = retrieve(POST, 'idedit', 0);
-$id_update = retrieve(GET, 'edit', 0);
+$contribution_id = (int)retrieve(GET, 'id', 0);
+$id_to_delete = (int)retrieve(GET, 'del', 0);
+$id_to_update = (int)retrieve(POST, 'idedit', 0);
+$id_update = (int)retrieve(GET, 'edit', 0);
 
 
 if ($contribution_id > 0)

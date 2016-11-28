@@ -32,9 +32,10 @@ if (defined('PHPBOOST') !== true)
 }
 
 load_module_lang('media');
+$request = AppContext::get_request();
 
-$id_media = retrieve(GET, 'id', 0);
-$id_cat = retrieve(GET, 'cat', 0);
+$id_media = $request->get_getint('id', 0);
+$id_cat = $request->get_getint('cat', 0);
 
 require_once('media_constant.php');
 

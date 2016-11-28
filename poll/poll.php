@@ -30,10 +30,9 @@ require_once('../poll/poll_begin.php');
 require_once('../kernel/header.php'); 
 
 $poll = array();
-$poll_id = retrieve(GET, 'id', 0);
-
 $request = AppContext::get_request();
 
+$poll_id = $request->get_getint('id', 0);
 $valid = $request->get_postvalue('valid_poll', false);
 
 $now = new Date();
@@ -48,8 +47,8 @@ if (!empty($poll_id))
 	}
 }
 
-$archives = retrieve(GET, 'archives', false); //On vérifie si on est sur les archives
-$show_result = retrieve(GET, 'r', false); //Affichage des résultats.
+$archives = (bool)retrieve(GET, 'archives', false); //On vérifie si on est sur les archives
+$show_result = (bool)retrieve(GET, 'r', false); //Affichage des résultats.
 $now = new Date(Date::DATE_NOW, Timezone::USER_TIMEZONE);
 
 //Récupération des éléments de configuration

@@ -26,9 +26,10 @@
  ###################################################*/
 
 require_once('../kernel/begin.php'); 
+$request = AppContext::get_request();
 
-$encoded_title = retrieve(GET, 'title', '');
-$id_com = retrieve(GET, 'id', 0);
+$encoded_title = $request->get_getstring('title', '');
+$id_com = $request->get_getint('id', 0);
 
 include_once('pages_begin.php');
 include_once('pages_functions.php');

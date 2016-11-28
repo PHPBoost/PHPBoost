@@ -28,11 +28,11 @@ require_once('../kernel/header_no_display.php');
 
 $request = AppContext::get_request();
 
-$id_cat = retrieve(POST, 'id_cat', 0);
+$id_cat = $request->get_postint('id_cat', 0);
 $select_cat = $request->get_getvalue('select_cat', false);
-$selected_cat = retrieve(POST, 'selected_cat', 0);
+$selected_cat = $request->get_postint('selected_cat', 0);
 $display_select_link = $request->get_getint('display_select_link', 0);
-$open_cat = retrieve(POST, 'open_cat', 0);
+$open_cat = $request->get_postint('open_cat', 0);
 $root = $request->get_getvalue('root', false);
 
 

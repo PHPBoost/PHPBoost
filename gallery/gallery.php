@@ -32,13 +32,13 @@ require_once('../kernel/header.php');
 
 $config = GalleryConfig::load();
 
-$g_idpics = retrieve(GET, 'id', 0);
-$g_del    = retrieve(GET, 'del', 0);
-$g_move   = retrieve(GET, 'move', 0);
-$g_add    = retrieve(GET, 'add', false);
-$g_page   = retrieve(GET, 'p', 1);
-$g_views  = retrieve(GET, 'views', false);
-$g_notes  = retrieve(GET, 'notes', false);
+$g_idpics = (int)retrieve(GET, 'id', 0);
+$g_del    = (int)retrieve(GET, 'del', 0);
+$g_move   = (int)retrieve(GET, 'move', 0);
+$g_add    = (bool)retrieve(GET, 'add', false);
+$g_page   = (int)retrieve(GET, 'p', 1);
+$g_views  = (bool)retrieve(GET, 'views', false);
+$g_notes  = (bool)retrieve(GET, 'notes', false);
 $g_sort   = retrieve(GET, 'sort', '');
 $g_sort   = !empty($g_sort) ? 'sort=' . $g_sort : '';
 
@@ -119,7 +119,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 		$Upload = new Upload($dir);
 
 		$idpic = 0;
-		$idcat_post = retrieve(POST, '_cat', 0);
+		$idcat_post = (int)retrieve(POST, '_cat', 0);
 		$name_post = retrieve(POST, 'name', '', TSTRING_AS_RECEIVED);
 
 		if (!$Upload->file('gallery', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`iu', Upload::UNIQ_NAME, $config->get_max_weight()))

@@ -32,7 +32,7 @@ require_once('../forum/forum_tools.php');
 $request = AppContext::get_request();
 
 //Redirection changement de catégorie.
-$change_cat = retrieve(POST, 'change_cat', '');
+$change_cat = $request->get_postint('change_cat', 0);
 if (!empty($change_cat))
 {
 	$new_cat = '';

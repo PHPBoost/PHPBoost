@@ -28,6 +28,8 @@
 if (defined('PHPBOOST') !== true)
 	exit;
 
+$request = AppContext::get_request();
+
 ############### Header du forum ################
 $tpl_top = new FileTemplate('forum/forum_top.tpl');
 $tpl_bottom = new FileTemplate('forum/forum_bottom.tpl');
@@ -45,7 +47,7 @@ if (!$is_guest) {
 	//Si on est sur un topic, on le supprime dans la requête => si ce topic n'était pas lu il ne sera plus dans la liste car désormais lu.
 	$clause_topic = '';
 	if (TextHelper::strpos(SCRIPT, '/forum/topic.php') !== false) {
-		$id_get = retrieve(GET, 'id', 0);
+		$id_get = $request->get_getint('id', 0);
 		$clause_topic = " AND t.id != '" . $id_get . "'";
 	}
 

@@ -33,17 +33,17 @@ define('PATH_TO_ROOT', '..');
 
 include_once(PATH_TO_ROOT . '/kernel/init.php');
 
-$get_brw = retrieve(GET, 'browsers', false);
-$get_os = retrieve(GET, 'os', false);
-$get_lang = retrieve(GET, 'lang', false);
-$get_bot = retrieve(GET, 'bot', false);
-$get_theme = retrieve(GET, 'theme', false);
-$get_sex = retrieve(GET, 'sex', false);
-$get_visit_month = retrieve(GET, 'visit_month', false);
-$get_visit_year = retrieve(GET, 'visit_year', false);
-$get_pages_day = retrieve(GET, 'pages_day', false);
-$get_pages_month = retrieve(GET, 'pages_month', false);
-$get_pages_year = retrieve(GET, 'pages_year', false);
+$get_brw = (bool)retrieve(GET, 'browsers', false);
+$get_os = (bool)retrieve(GET, 'os', false);
+$get_lang = (bool)retrieve(GET, 'lang', false);
+$get_bot = (bool)retrieve(GET, 'bot', false);
+$get_theme = (bool)retrieve(GET, 'theme', false);
+$get_sex = (bool)retrieve(GET, 'sex', false);
+$get_visit_month = (bool)retrieve(GET, 'visit_month', false);
+$get_visit_year = (bool)retrieve(GET, 'visit_year', false);
+$get_pages_day = (bool)retrieve(GET, 'pages_day', false);
+$get_pages_month = (bool)retrieve(GET, 'pages_month', false);
+$get_pages_year = (bool)retrieve(GET, 'pages_year', false);
 
 include_once(PATH_TO_ROOT . '/kernel/begin.php');
 AppContext::get_session()->no_session_location(); //Ne réactualise pas l'emplacement du visiteur/membre

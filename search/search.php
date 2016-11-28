@@ -45,7 +45,7 @@ $unsecure_search = stripslashes(retrieve(REQUEST, 'q', ''));
 $search_in = retrieve(POST, 'search_in', 'all');
 $selected_modules = retrieve(POST, 'searched_modules', '');
 $selected_modules = !empty($selected_modules) ? explode(',', $selected_modules) : array();
-$query_mode = retrieve(POST, 'query_mode', true);
+$query_mode = (bool)retrieve(POST, 'query_mode', true);
 
 if ($search_in !== 'all')
 {

@@ -42,10 +42,10 @@ $request = AppContext::get_request();
 
 $submit = $request->get_postvalue('submit', false);
 
-$unvisible = retrieve(GET, 'unvisible', 0, TINTEGER);
-$add = retrieve(GET, 'add', 0, TINTEGER);
-$edit = retrieve(GET, 'edit', 0, TINTEGER);
-$delete = retrieve(GET, 'del', 0, TINTEGER);
+$unvisible = (int)retrieve(GET, 'unvisible', 0, TINTEGER);
+$add = (int)retrieve(GET, 'add', 0, TINTEGER);
+$edit = (int)retrieve(GET, 'edit', 0, TINTEGER);
+$delete = (int)retrieve(GET, 'del', 0, TINTEGER);
 
 // Modification du statut du fichier.
 if ($unvisible > 0)
@@ -278,15 +278,15 @@ elseif ($submit)
 	AppContext::get_session()->csrf_get_protect();
 	
 	$media = array(
-		'idedit' => retrieve(POST, 'idedit', 0, TINTEGER),
+		'idedit' => (int)retrieve(POST, 'idedit', 0, TINTEGER),
 		'name' => stripslashes(retrieve(POST, 'name', '', TSTRING)),
 		'idcat' => MediaService::get_categories_manager()->get_categories_cache()->has_categories() ? retrieve(POST, 'idcat', 0, TINTEGER) : Category::ROOT_CATEGORY,
 		'width' => min(retrieve(POST, 'width', $config->get_max_video_width(), TINTEGER), $config->get_max_video_width()),
 		'height' => min(retrieve(POST, 'height', $config->get_max_video_height(), TINTEGER), $config->get_max_video_height()),
 		'url' => retrieve(POST, 'u_media', '', TSTRING),
 		'contents' => retrieve(POST, 'contents', '', TSTRING_PARSE),
-		'approved' => retrieve(POST, 'approved', 0, TBOOL),
-		'contrib' => retrieve(POST, 'contrib', 0, TBOOL),
+		'approved' => (bool)retrieve(POST, 'approved', false, TBOOL),
+		'contrib' => (bool)retrieve(POST, 'contrib', false, TBOOL),
 		'counterpart' => retrieve(POST, 'counterpart', '', TSTRING_PARSE)
 	);
 	

@@ -41,19 +41,19 @@ define('TITLE', $LANG['wiki_contribuate']);
 $bread_crumb_key = 'wiki_post';
 require_once('../wiki/wiki_bread_crumb.php');
 
-$is_cat = (int)retrieve(POST, 'is_cat', false);
-$is_cat_get = (int)(retrieve(GET, 'type', '') == 'cat');
+$is_cat = (bool)retrieve(POST, 'is_cat', false);
+$is_cat_get = (bool)(retrieve(GET, 'type', '') == 'cat');
 $is_cat = $is_cat > 0 ? $is_cat : $is_cat_get;
-$id_edit = retrieve(POST, 'id_edit', 0);
+$id_edit = (int)retrieve(POST, 'id_edit', 0);
 $title = retrieve(POST, 'title', '');
 $encoded_title = retrieve(GET, 'title', '');
 $contents = wiki_parse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED));
 $contents_preview = retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED);
-$id_cat = retrieve(GET, 'id_parent', 0);
-$new_id_cat = retrieve(POST, 'id_cat', 0);
+$id_cat = (int)retrieve(GET, 'id_parent', 0);
+$new_id_cat = (int)retrieve(POST, 'id_cat', 0);
 $id_cat = $id_cat > 0 ? $id_cat : $new_id_cat;
-$preview = retrieve(POST, 'preview', false);
-$id_edit_get = retrieve(GET, 'id', 0);
+$preview = (bool)retrieve(POST, 'preview', false);
+$id_edit_get = (int)retrieve(GET, 'id', 0);
 $id_edit = $id_edit > 0 ? $id_edit : $id_edit_get;
 
 require_once('../kernel/header.php'); 

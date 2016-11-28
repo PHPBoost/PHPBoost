@@ -54,9 +54,9 @@ class GalleryDisplayCategoryController extends ModuleController
 		global $LANG, $Bread_crumb;
 		
 		load_module_lang('gallery');
-		$g_idpics = retrieve(GET, 'id', 0);
-		$g_views  = retrieve(GET, 'views', false);
-		$g_notes  = retrieve(GET, 'notes', false);
+		$g_idpics = (int)retrieve(GET, 'id', 0);
+		$g_views  = (bool)retrieve(GET, 'views', false);
+		$g_notes  = (bool)retrieve(GET, 'notes', false);
 		$g_sort   = retrieve(GET, 'sort', '');
 		$g_sort   = !empty($g_sort) ? 'sort=' . $g_sort : '';
 		

@@ -202,7 +202,7 @@ elseif (!empty($msg_d))
 		echo ($topic['display_msg']) ? 2 : 1;
 	}
 }
-elseif (retrieve(GET, 'warning_moderation_panel', false) || retrieve(GET, 'punish_moderation_panel', false)) //Recherche d'un membre
+elseif ((bool)retrieve(GET, 'warning_moderation_panel', false) || (bool)retrieve(GET, 'punish_moderation_panel', false)) //Recherche d'un membre
 {
 	$login = TextHelper::strprotect(utf8_decode(AppContext::get_request()->get_postvalue('login', '')));
 	$login = str_replace('*', '%', $login);

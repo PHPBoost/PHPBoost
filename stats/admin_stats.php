@@ -231,8 +231,8 @@ else
 		$current_year = TextHelper::substr($time, 0, 4);
 		$current_month = TextHelper::substr($time, 4, 2);
 
-		$month = retrieve(GET, 'm', (int)$current_month);
-		$year = retrieve(GET, 'y', (int)$current_year);
+		$month = (int)retrieve(GET, 'm', (int)$current_month);
+		$year = (int)retrieve(GET, 'y', (int)$current_year);
 		if ($visit_year)
 		$year = $visit_year;
 
@@ -567,22 +567,22 @@ else
 		$current_month = TextHelper::substr($time, 4, 2);
 		$current_day = TextHelper::substr($time, 6, 2);
 
-		$day = retrieve(GET, 'd', (int)$current_day);
-		$month = retrieve(GET, 'm', (int)$current_month);
+		$day = (int)retrieve(GET, 'd', (int)$current_day);
+		$month = (int)retrieve(GET, 'm', (int)$current_month);
 		if ($pages_year)
 		{
 			$condition = 'WHERE stats_year=:year AND pages_detail <> \'\' GROUP BY stats_month';
 			$year = $pages_year;
 		}
-		elseif (retrieve(GET, 'd', false))
+		elseif ((bool)retrieve(GET, 'd', false))
 		{
 			$condition = 'WHERE stats_year=:year AND stats_month=:month AND stats_day=:day AND pages_detail <> \'\' GROUP BY stats_month';
-			$year = retrieve(GET, 'y', (int)$current_year);
+			$year = (int)retrieve(GET, 'y', (int)$current_year);
 		}
 		else
 		{
 			$condition = 'WHERE stats_year=:year AND stats_month=:month AND pages_detail <> \'\' GROUP BY stats_month';
-			$year = retrieve(GET, 'y', (int)$current_year);
+			$year = (int)retrieve(GET, 'y', (int)$current_year);
 		}
 		
 		if (empty($pages_year))

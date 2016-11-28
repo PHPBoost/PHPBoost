@@ -31,9 +31,10 @@ require_once('../forum/forum_tools.php');
 
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
 define('TITLE', $LANG['title_forum']);
-require_once('../kernel/header.php'); 
+require_once('../kernel/header.php');
+$request = AppContext::get_request();
 
-$view_msg = retrieve(GET, 'id', 0);
+$view_msg = $request->get_getint('id', 0);
 if (!empty($view_msg)) //Affichage de tous les messages du membre
 {
 	$_NBR_ELEMENTS_PER_PAGE = 10;

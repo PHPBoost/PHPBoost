@@ -48,8 +48,8 @@ if ($valid && !empty($idgroup_post)) //Modification du groupe.
 {
 	$name = retrieve(POST, 'name', '');
 	$img = retrieve(POST, 'img', '');
-	$auth_flood = retrieve(POST, 'auth_flood', 1);
-	$pm_group_limit = retrieve(POST, 'pm_group_limit', 75);
+	$auth_flood = (int)retrieve(POST, 'auth_flood', 1);
+	$pm_group_limit = (int)retrieve(POST, 'pm_group_limit', 75);
 	$color_group = retrieve(POST, 'color_group', '');
 	$color_group = TextHelper::substr($color_group, 0, 1) == '#' ? TextHelper::substr($color_group, 1) : $color_group;
 	$delete_group_color = (bool)retrieve(POST, 'delete_group_color', false);
@@ -70,8 +70,8 @@ elseif ($valid && $add_post) //ajout  du groupe.
 {
 	$name = retrieve(POST, 'name', '');
 	$img = retrieve(POST, 'img', '');
-	$auth_flood = retrieve(POST, 'auth_flood', 1);
-	$pm_group_limit = retrieve(POST, 'pm_group_limit', 75);
+	$auth_flood = (int)retrieve(POST, 'auth_flood', 1);
+	$pm_group_limit = (int)retrieve(POST, 'pm_group_limit', 75);
 	$color_group = retrieve(POST, 'color_group', '');
 	$color_group = TextHelper::substr($color_group, 0, 1) == '#' ? TextHelper::substr($color_group, 1) : $color_group;
 	$data_group_limit = $data_group_limit ? NumberHelper::numeric($data_group_limit, 'float') * 1024 : '5120';
