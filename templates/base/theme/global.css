@@ -327,6 +327,7 @@ td.calendar-week {
 
 .formatter-ul {
 	text-align: left;
+	list-style-position: inside;
 }
 
 /* --- les listes numerotees --- */
