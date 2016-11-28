@@ -51,6 +51,9 @@ class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		$columns = $this->db_utils->desc_table(PREFIX . 'download');
 		
+		if (!isset($columns['number_view']))
+			$this->db_utils->add_column(PREFIX . 'download', 'number_view', array('type' => 'integer', 'length' => 11, 'default' => 0));
+		
 		$rows_change = array(
 			'author_display_name' => 'author_custom_name VARCHAR(255)'
 		);
