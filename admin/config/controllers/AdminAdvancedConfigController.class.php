@@ -127,7 +127,7 @@ class AdminAdvancedConfigController extends AdminController
 			$this->server_environment_config->disabled_redirection_www(); /*Disabling is forced*/
 			$redirection_www_enabled_explain = '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.redirection_www_enabled.local'] . '</span>';
 		}
-		else if (false) /* En attente de la gestion des sous domaine */
+		else if ($request->get_is_subdomain())
 		{
 			$redirection_www_disabled = true;
 			$this->server_environment_config->disabled_redirection_www(); /*Disabling is forced*/

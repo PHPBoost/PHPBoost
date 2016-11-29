@@ -88,8 +88,8 @@ $lang = array(
 	'advanced-config.redirection_www_enabled.local' => 'La redirection ne peut pas être activée sur les sites en local',
 	'advanced-config.redirection_www_enabled.subdomain' => 'La redirection ne peut pas être activée pour les sites en sous-domaine',
 	'advanced-config.redirection_www_mode' => 'Mode de redirection',
-	'advanced-config.redirection_www.with_www' => 'Redirige les urls ' .  AppContext::get_request()->get_domain_name() . ' vers www.'. AppContext::get_request()->get_site_domain_name(),
-	'advanced-config.redirection_www.without_www' => 'Redirige les urls www.' .  AppContext::get_request()->get_domain_name() . ' vers '. AppContext::get_request()->get_site_domain_name(),
+	'advanced-config.redirection_www.with_www' => 'Redirige les urls ' . AppContext::get_request()->get_site_domain_name() . ' vers www.'. AppContext::get_request()->get_site_domain_name(),
+	'advanced-config.redirection_www.without_www' => 'Redirige les urls www.' . AppContext::get_request()->get_site_domain_name(). ' vers '. AppContext::get_request()->get_site_domain_name(),
 
 	'advanced-config.redirection_https_enabled' => 'Activation de la redirection HTTPS',
 	'advanced-config.redirection_https_enabled.explain' => 'Redirige les urls HTTP vers HTTPS',
