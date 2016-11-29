@@ -209,9 +209,9 @@ function XMLHttpRequest_preview(field)
 				</a>
 				<div class="bbcode-block-container" style="display:none;" id="bb-block11{FIELD}">
 					<ul class="bbcode-block bbcode-block-list bbcode-block-hide" onmouseover="bb_hide_block('11', '{FIELD}', 1);" onmouseout="bb_hide_block('11', '{FIELD}', 0);">
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[hide] ', '[/hide]', '{FIELD}');bb_hide_block('11', '{FIELD}', 0);return false;" title="{L_BB_HIDE_ALL} "> {L_BB_HIDE} </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[hide]', '[/hide]', '{FIELD}');bb_hide_block('11', '{FIELD}', 0);return false;" title="{L_BB_HIDE_ALL} "> {L_BB_HIDE} </a></li>
 						<li><a href="" onclick="{DISABLED_B}insertbbcode('[member]', '[/member]', '{FIELD}');bb_hide_block('11', '{FIELD}', 0);return false;" title="{L_BB_VIEW_MEMBER}"> {L_BB_MEMBER} </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[moderator]  ', '[/moderator]', '{FIELD}');bb_hide_block('11', '{FIELD}', 0);return false;" title="{L_BB_VIEW_MODERATOR}  "> {L_BB_MODERATOR} </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[moderator]', '[/moderator]', '{FIELD}');bb_hide_block('11', '{FIELD}', 0);return false;" title="{L_BB_VIEW_MODERATOR}  "> {L_BB_MODERATOR} </a></li>
 					</ul>
 				</div>
 			</li>
@@ -222,11 +222,11 @@ function XMLHttpRequest_preview(field)
 				</a>
 				<div class="bbcode-block-container" style="display:none;" id="bb-block4{FIELD}">
 					<ul class="bbcode-block bbcode-block-list bbcode-block-message" onmouseover="bb_hide_block('4', '{FIELD}', 1);" onmouseout="bb_hide_block('4', '{FIELD}', 0);">
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=success] ', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;" title="{L_SUCCESS}"> {L_SUCCESS} </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=success]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;" title="{L_SUCCESS}"> {L_SUCCESS} </a></li>
 						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=question]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;" title="{L_QUESTION}"> {L_QUESTION} </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=notice]  ', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;" title="{L_NOTICE}"> {L_NOTICE} </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=warning] ', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;" title="{L_WARNING}"> {L_WARNING} </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=error]   ', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;" title="{L_ERROR}"> {L_ERROR} </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=notice]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;" title="{L_NOTICE}"> {L_NOTICE} </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=warning]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;" title="{L_WARNING}"> {L_WARNING} </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=error]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;" title="{L_ERROR}"> {L_ERROR} </a></li>
 					</ul>
 				</div>
 			</li>

@@ -315,8 +315,8 @@ e,b)},traverse:function(a){d.each(this.items||[],function(b){(b=d.data(this,"sub
 //Recherche d'une chaîne dans une autre.
 function strpos(haystack, needle)
 {
-		var i = haystack.indexOf(needle, 0); // returns -1
-		return i >= 0 ? i : false;
+	var i = haystack.indexOf(needle, 0); // returns -1
+	return i >= 0 ? i : false;
 }
 
 //Add information hide balise
@@ -324,26 +324,26 @@ jQuery(document).ready(function(){
 	var IDCODE = 1;
 	jQuery('.formatter-hide').each( function(){
 		jQuery(this).attr('id','formatter-hide-container-' + IDCODE);
-		jQuery(this).attr('onClick', 'bb_hide(' + IDCODE + ', 1);');
-		jQuery(this).append('<span id="hide-message-' + IDCODE + '" class="hide-message">' + L_HIDE_MESSAGE + '</span>');
+		jQuery(this).removeClass('no-js');
+		jQuery(this).attr('onClick', 'bb_hide(' + IDCODE + ', 1, event);');
+		jQuery(this).children('.formatter-content').before('<span id="formatter-hide-message-' + IDCODE + '" class="formatter-hide-message">' + L_HIDE_MESSAGE + '</span>');
+		jQuery(this).children('.formatter-content').before('<span id="formatter-hide-close-button-' + IDCODE + '" class="formatter-hide-close-button" "title="' + L_HIDE_HIDEBLOCK + '" onclick="bb_hide(' + IDCODE + ', 0, event);"><i class="fa fa-close"></i><span class="formatter-hide-close-button-txt">' + L_HIDE_HIDEBLOCK + '</span></span>');
 		IDCODE = IDCODE + 1;
 	} );
 } );	
 
-//Affichage/Masquage de la balise hide.
-function bb_hide(idcode, show)
+//Hide / show hide balise content
+function bb_hide(idcode = 0, show = 0, event)
 {
 	event.stopPropagation();
 	jQuery('#formatter-hide-container-' + idcode).toggleClass('formatter-show');
 	if (show == 1)
 	{
-		jQuery('#formatter-hide-container-' + idcode).children('.formatter-content').prepend('<span title="' + L_HIDE_HIDEBLOCK + '" class="formatter-hide-close-button" onclick="bb_hide(' + idcode + ', 0);"><i class="fa fa-close"></i> ' + L_HIDE_HIDEBLOCK + '</span>');
 		jQuery('#formatter-hide-container-' + idcode).removeAttr('onClick');
 	}
 	else
 	{
-		jQuery('#formatter-hide-container-' + idcode).children('.formatter-content').children('.formatter-hide-close-button').remove();
-		jQuery('#formatter-hide-container-' + idcode).attr('onClick', 'bb_hide(' + idcode + ', 1);');
+		jQuery('#formatter-hide-container-' + idcode).attr('onClick', 'bb_hide(' + idcode + ', 1, event);');
 	}
 }
 
@@ -352,16 +352,16 @@ function bb_hide(idcode, show)
 jQuery(document).ready(function(){
 	var IDCODE = 1;
 	jQuery('.formatter-code').each( function(){
-		jQuery(this).prepend('<span title="' + L_COPYTOCLIPBOARD + '" id="copy-code-' + IDCODE + '" class="copy-code" onclick="copy_code_clipboard(this)"><i class="fa fa-code"></i></span>');
+		jQuery(this).prepend('<span id="copy-code-' + IDCODE + '" class="copy-code" title="' + L_COPYTOCLIPBOARD + '" onclick="copy_code_clipboard(' + IDCODE + ')"><i class="fa fa-clipboard"><span class="copy-code-txt">' + L_COPYTOCLIPBOARD + '</span></i></span>');
 		jQuery(this).children('.formatter-content').attr("id", 'copy-code-' + IDCODE + '-content');
 		IDCODE = IDCODE + 1;
 	} );
 } );	
 
 //Copy to clipboard
-function copy_code_clipboard(spancontainer)
+function copy_code_clipboard(idcode)
 {
-	var ElementtoCopy = document.querySelector('#' + spancontainer.id + '-content');  
+	var ElementtoCopy = document.querySelector('#copy-code-' + idcode + '-content');  
 
 	var range = document.createRange() // create new range object
 	range.selectNodeContents(ElementtoCopy) // set range to encompass desired element text
@@ -369,8 +369,12 @@ function copy_code_clipboard(spancontainer)
 	selection.removeAllRanges() // unselect any user selected text (if any)
 	selection.addRange(range) // add range to Selection object to select it
 
-	try { var successful = document.execCommand('copy'); } 
-	catch(err) { console.log('Oops, unable to copy'); }	
+	try { 
+		var successful = document.execCommand('copy');
+	} 
+	catch(err) {
+		console.log('Oops, unable to copy');
+	}	
 }
 
 //Barre de progression, 
@@ -586,7 +590,7 @@ jQuery(document).ready(function(){
 		}
 	});
 
-//Scroll to Top or Bottom
+	//Scroll to Top or Bottom
 	jQuery('#scroll-to-top').click(function(){
 		jQuery('html, body').animate({scrollTop : 0},1200);
 		return false;
