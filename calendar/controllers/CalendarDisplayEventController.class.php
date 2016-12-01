@@ -109,10 +109,23 @@ class CalendarDisplayEventController extends ModuleController
 	private function check_authorizations()
 	{
 		$event = $this->get_event();
-		if (!CalendarAuthorizationsService::check_authorizations($event->get_content()->get_category_id())->read() && (!(CalendarAuthorizationsService::check_authorizations($event->get_content()->get_category_id())->write() || (CalendarAuthorizationsService::check_authorizations($event->get_content()->get_category_id())->contribution() && !$event->get_content()->is_approved())) && $event->get_content()->get_author_user()->get_id() != AppContext::get_current_user()->get_id()))
+		
+		if (!$event->get_content()->is_approved())
 		{
-			$error_controller = PHPBoostErrors::user_not_authorized();
-			DispatchManager::redirect($error_controller);
+			$current_user = AppContext::get_current_user();
+			if ((!CalendarAuthorizationsService::check_authorizations($event->get_content()->get_category_id())->moderation() && !CalendarAuthorizationsService::check_authorizations($event->get_content()->get_category_id())->write() && (!CalendarAuthorizationsService::check_authorizations($event->get_content()->get_category_id())->contribution() || $event->get_content()->get_author_user()->get_id() != $current_user->get_id())) || ($current_user->get_id() == User::VISITOR_LEVEL))
+			{
+				$error_controller = PHPBoostErrors::user_not_authorized();
+				DispatchManager::redirect($error_controller);
+			}
+		}
+		else
+		{
+			if (!CalendarAuthorizationsService::check_authorizations($event->get_content()->get_category_id())->read())
+			{
+				$error_controller = PHPBoostErrors::user_not_authorized();
+				DispatchManager::redirect($error_controller);
+			}
 		}
 	}
 	

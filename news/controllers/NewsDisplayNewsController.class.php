@@ -220,25 +220,26 @@ class NewsDisplayNewsController extends ModuleController
 	{
 		$news = $this->get_news();
 		
-		$not_authorized = !NewsAuthorizationsService::check_authorizations($news->get_id_cat())->moderation() && (!NewsAuthorizationsService::check_authorizations($news->get_id_cat())->write() && $news->get_author_user()->get_id() != AppContext::get_current_user()->get_id());
+		$current_user = AppContext::get_current_user();
+		$not_authorized = !NewsAuthorizationsService::check_authorizations($news->get_id_cat())->moderation() && !NewsAuthorizationsService::check_authorizations($news->get_id_cat())->write() && (!NewsAuthorizationsService::check_authorizations($news->get_id_cat())->contribution() || $news->get_author_user()->get_id() != $current_user->get_id());
 		
 		switch ($news->get_approbation_type()) {
 			case News::APPROVAL_NOW:
-				if (!NewsAuthorizationsService::check_authorizations($news->get_id_cat())->read() && $not_authorized)
+				if (!NewsAuthorizationsService::check_authorizations($news->get_id_cat())->read())
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);
 				}
 			break;
 			case News::NOT_APPROVAL:
-				if ($not_authorized)
+				if ($not_authorized || ($current_user->get_id() == User::VISITOR_LEVEL))
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);
 				}
 			break;
 			case News::APPROVAL_DATE:
-				if (!$news->is_visible() && $not_authorized)
+				if (!$news->is_visible() || !NewsAuthorizationsService::check_authorizations($news->get_id_cat())->read())
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);
