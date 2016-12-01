@@ -123,25 +123,26 @@ class WebDisplayWebLinkController extends ModuleController
 	{
 		$weblink = $this->get_weblink();
 		
-		$not_authorized = !WebAuthorizationsService::check_authorizations($weblink->get_id_category())->moderation() && (!WebAuthorizationsService::check_authorizations($weblink->get_id_category())->write() && $weblink->get_author_user()->get_id() != AppContext::get_current_user()->get_id());
+		$current_user = AppContext::get_current_user();
+		$not_authorized = !WebAuthorizationsService::check_authorizations($weblink->get_id_category())->moderation() && !WebAuthorizationsService::check_authorizations($weblink->get_id_category())->write() && (!WebAuthorizationsService::check_authorizations($weblink->get_id_category())->contribution() || $weblink->get_author_user()->get_id() != $current_user->get_id());
 		
 		switch ($weblink->get_approbation_type()) {
 			case WebLink::APPROVAL_NOW:
-				if (!WebAuthorizationsService::check_authorizations($weblink->get_id_category())->read() && $not_authorized)
+				if (!WebAuthorizationsService::check_authorizations($weblink->get_id_category())->read())
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);
 				}
 			break;
 			case WebLink::NOT_APPROVAL:
-				if ($not_authorized)
+				if ($not_authorized || ($current_user->get_id() == User::VISITOR_LEVEL))
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);
 				}
 			break;
 			case WebLink::APPROVAL_DATE:
-				if (!$weblink->is_visible() && $not_authorized)
+				if (!$weblink->is_visible() || !WebAuthorizationsService::check_authorizations($weblink->get_id_category())->read())
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);
