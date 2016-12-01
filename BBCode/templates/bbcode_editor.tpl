@@ -429,7 +429,7 @@ function XMLHttpRequest_preview(field)
 
 		<ul id="bbcode-container-help" class="bbcode-container bbcode-container-more">
 			<li class="bbcode-elements">
-				<a href="https://www.phpboost.com/wiki/bbcode" title="{L_BB_HELP}" target="_blank">
+				<a href="https://www.phpboost.com/wiki/bbcode" title="{L_BB_HELP}" target="_blank" rel="noopener">
 					<i class="fa bbcode-icon-help"></i>
 				</a>
 			</li>
