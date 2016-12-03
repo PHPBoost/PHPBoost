@@ -44,7 +44,7 @@ class HtaccessFileCache implements CacheData
 		$this->htaccess_file_content = '';
 		$this->general_config = GeneralConfig::load();
 		
-		$this->disallow_scripts_execution();
+		//$this->disallow_scripts_execution();
 		
 		$this->add_free_php56();
 		
