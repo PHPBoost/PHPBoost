@@ -39,9 +39,7 @@ $lang['contact.form.message'] = 'Message';
 $lang['contact.send_another_mail'] = 'Send another mail';
 $lang['contact.tracking_number'] = 'tracking number';
 $lang['contact.acknowledgment_title'] = 'Confirmation';
-$lang['contact.acknowledgment'] = 'Your message has been successfully sent.
-
-';
+$lang['contact.acknowledgment'] = 'Your message has been successfully sent.';
 
 //Admin
 $lang['admin.config.title'] = 'Form title';
@@ -67,13 +65,15 @@ $lang['admin.config.map_enabled'] = 'Display the map';
 $lang['admin.config.map_position'] = 'Position of the map';
 $lang['admin.config.map.position_top'] = 'Above the form';
 $lang['admin.config.map.position_bottom'] = 'Below the form';
-$lang['admin.config.map.coord.desc'] = 'You can enter the coordinates of your location below (headquarters, offices, schedules ...). In the "Marker text" field enter the name of the location, it will appear on the map if you click the location marker. You can get the GPS  (Latitude and Longitude) coordonates on <a href="http://www.gpsfrance.net/adresse-vers-coordonnees-gps">gpsfrance.net <i class="fa fa-share-square-o"></i></a>.';
 $lang['admin.config.map.marker'] = 'Add a marker';
+$lang['form.gps.add.desc'] = 'Click on map to add automated coords';
+$lang['form.gps.center.map'] = '{lat: 52.295042, lng: -1.516113}'; // England
 $lang['form.latitude'] = 'Latitude';
 $lang['form.longitude'] = 'Longitude';
 $lang['form.marker_text'] = 'Marker text';
 $lang['gmap.api.key'] = 'Your google map api key';
-$lang['gmap.api.key.desc'] = 'To get a google map api key, <a href="https://console.developers.google.com/flows/enableapi?apiid=maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend,places_backend&reusekey=true&hl=En">follow this link</a>';
+$lang['gmap.api.key.desc'] = 'To get a google map api key, <a href="https://console.developers.google.com/flows/enableapi?apiid=maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend,places_backend&reusekey=true&hl=En">follow this link</a>.
+<br /><span style="color: #CC0000">This key is essential to define markers</span>';
 
 //Fields
 $lang['admin.fields.manage'] = 'Fields management';

@@ -39,9 +39,7 @@ $lang['contact.form.message'] = 'Message';
 $lang['contact.send_another_mail'] = 'Envoyer un autre email';
 $lang['contact.tracking_number'] = 'Numéro de suivi';
 $lang['contact.acknowledgment_title'] = 'Confirmation';
-$lang['contact.acknowledgment'] = 'Votre message a été envoyé correctement.
-
-';
+$lang['contact.acknowledgment'] = 'Votre message a été envoyé correctement.';
 
 //Admin
 $lang['admin.config.title'] = 'Titre du formulaire';
@@ -67,13 +65,16 @@ $lang['admin.config.map_enabled'] = 'Afficher la map';
 $lang['admin.config.map_position'] = 'Position de la map';
 $lang['admin.config.map.position_top'] = 'Au-dessus du formulaire';
 $lang['admin.config.map.position_bottom'] = 'En dessous du formulaire';
-$lang['admin.config.map.coord.desc'] = 'Vous pouvez saisir les coordonnées de votre situation géographique ci-dessous (siège social, bureaux, annexes ...). Dans le champ "Texte du pointeur" indiquez le nom de l\'emplacement, il apparaîtra sur la carte si vous cliquez sur le repère de position. Vous pouvez récupérer les coordonnées GPS (Latitude et Longitude) sur le site <a href="http://www.gpsfrance.net/adresse-vers-coordonnees-gps">gpsfrance.net <i class="fa fa-share-square-o"></i></a>.';
+$lang['admin.config.map.condition'] = '<span class="error">Vous devez renseigner la clé pour configurer les pointeurs</span>';
 $lang['admin.config.map.marker'] = 'Ajouter un pointeur';
+$lang['form.gps.add.desc'] = 'Cliquez sur la map pour ajouter les coordonnées automatiquement';
+$lang['form.gps.center.map'] = '{lat: 46.52863469527167, lng: 2.43896484375}'; // France
 $lang['form.latitude'] = 'Latitude';
 $lang['form.longitude'] = 'Longitude';
 $lang['form.marker_text'] = 'Texte du pointeur';
 $lang['gmap.api.key'] = 'Votre clé api google map';
-$lang['gmap.api.key.desc'] = 'Pour obtenir une clé google map, <a href="https://console.developers.google.com/flows/enableapi?apiid=maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend,places_backend&reusekey=true&hl=Fr">suivez ce lien</a>';
+$lang['gmap.api.key.desc'] = 'Pour obtenir une clé google map, <a href="https://console.developers.google.com/flows/enableapi?apiid=maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend,places_backend&reusekey=true&hl=Fr">suivez ce lien</a>.
+<br /><span style="color: #CC0000">Cette clé est indispensable pour définir les pointeurs</span>';
 
 //Fields
 $lang['admin.fields.manage'] = 'Gestion des champs';
