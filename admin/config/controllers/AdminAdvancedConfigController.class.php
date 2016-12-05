@@ -51,6 +51,7 @@ class AdminAdvancedConfigController extends AdminController
 			$this->save();
 
 			$this->form->get_field_by_id('redirection_www_mode')->set_hidden(!$this->server_environment_config->is_redirection_www_enabled());
+			$this->form->get_field_by_id('hsts_security_enabled')->set_hidden(!$this->server_environment_config->is_redirection_https_enabled());
 			$this->form->get_field_by_id('cookiebar_duration')->set_hidden(!$this->cookiebar_config->is_cookiebar_enabled());
 			$this->form->get_field_by_id('cookiebar_tracking_mode')->set_hidden(!$this->cookiebar_config->is_cookiebar_enabled());
 			$this->form->get_field_by_id('cookiebar_content')->set_hidden(!$this->cookiebar_config->is_cookiebar_enabled());
@@ -120,7 +121,7 @@ class AdminAdvancedConfigController extends AdminController
 		
 		$htaccess_manual_content_fieldset = new FormFieldsetHTML('htaccess_manual_content', $this->lang['advanced-config.htaccess-manual-content']);
 		$form->add_fieldset($htaccess_manual_content_fieldset);
-		
+
 		if ($request->get_is_localhost())
 		{
 			$redirection_www_disabled = true;
@@ -161,17 +162,32 @@ class AdminAdvancedConfigController extends AdminController
 		
 		if ($request->get_is_https())
 		{
-			$redirection_https_disabled = false;
+			$redirection_https_disabled = false; /* Checkbox while be activated*/
 			$redirection_https_enabled_explain = $this->lang['advanced-config.redirection_https_enabled.explain'];
 		}
 		else
 		{
-			$redirection_https_disabled = true;
-			$this->server_environment_config->disabled_redirection_https(); /*Disabling is forced*/
+			$redirection_https_disabled = true; /* Checkbox is forced to deactivate*/
+			$this->server_environment_config->disabled_redirection_https(); /* HTTPS is forced to deactivate */
+			$this->server_environment_config->disabled_hsts_security(); /* HSTS is forced to deactivate */
 			$redirection_https_enabled_explain = '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.redirection_https_enabled.explain-disable']. '</span>';
 		}
 
-		$htaccess_manual_content_fieldset->add_field( new FormFieldCheckbox('redirection_https_enabled', $this->lang['advanced-config.redirection_https_enabled'], $this->server_environment_config->is_redirection_https_enabled(), array('description' => $redirection_https_enabled_explain, 'disabled' => $redirection_https_disabled)));
+		$htaccess_manual_content_fieldset->add_field( new FormFieldCheckbox('redirection_https_enabled', $this->lang['advanced-config.redirection_https_enabled'], $this->server_environment_config->is_redirection_https_enabled(), array(
+			'description' => $redirection_https_enabled_explain,
+			'disabled' => $redirection_https_disabled,
+			'events' => array('click' => '
+				if (HTMLForms.getField("redirection_https_enabled").getValue()) {
+					HTMLForms.getField("hsts_security_enabled").enable();
+				} else {
+					HTMLForms.getField("hsts_security_enabled").disable();
+				}')
+			)));
+
+		$htaccess_manual_content_fieldset->add_field( new FormFieldCheckbox('hsts_security_enabled', $this->lang['advanced-config.hsts_security_enabled'], $this->server_environment_config->is_hsts_security_enabled(), array(
+			'description' => $this->lang['advanced-config.hsts_security.explain'],
+			'hidden' => !$this->server_environment_config->is_redirection_https_enabled(),
+			)));
 
 		$htaccess_manual_content_fieldset->add_field(new FormFieldMultiLineTextEditor('htaccess_manual_content', $this->lang['advanced-config.htaccess-manual-content'], $this->server_environment_config->get_htaccess_manual_content(),
 			array('rows' => 7, 'description' => $this->lang['advanced-config.htaccess-manual-content.explain'])
@@ -326,9 +342,19 @@ class AdminAdvancedConfigController extends AdminController
 			$this->server_environment_config->disabled_redirection_www();
 
 		if ($this->form->get_value('redirection_https_enabled'))
+		{
 			$this->server_environment_config->enabled_redirection_https();
+			if ($this->form->get_value('hsts_security_enabled'))
+				$this->server_environment_config->enabled_hsts_security();
+			else
+				$this->server_environment_config->disabled_hsts_security();
+		}
 		else
+		{
 			$this->server_environment_config->disabled_redirection_https();
+			$this->server_environment_config->disabled_hsts_security();
+		}
+		
 
 		$this->server_environment_config->set_htaccess_manual_content(TextHelper::html_entity_decode($this->form->get_value('htaccess_manual_content')));
 		

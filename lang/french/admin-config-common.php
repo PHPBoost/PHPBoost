@@ -94,7 +94,8 @@ $lang = array(
 	'advanced-config.redirection_https_enabled' => 'Activation de la redirection HTTPS',
 	'advanced-config.redirection_https_enabled.explain' => 'Redirige les urls HTTP vers HTTPS',
 	'advanced-config.redirection_https_enabled.explain-disable' => 'Votre site n\'utilise actuellement pas le protocole HTTPS, activation de ce mode impossible',
-
+	'advanced-config.hsts_security_enabled' => 'Activation la fonctionnalité HSTS',
+	'advanced-config.hsts_security.explain' => 'HTTP Strict Transport Security (souvent abrégé par HSTS) est un dispositif de sécurité par lequel un site web peut déclarer aux navigateurs qu\'ils doivent communiquer avec lui en utilisant exclusivement le protocole HTTPS, au lieu du HTTP.<br /><span class="text-strong color-notavailable">Il est fortement recommandé de ne pas activer l\'option si le passage en https n\'est pas définitif.</span>',
 	'advanced-config.url-rewriting' => 'Activation de la réécriture des urls',
 	'advanced-config.url-rewriting.explain' => 'L\'activation de la réécriture des urls permet d\'obtenir des urls bien plus simples et claires sur votre site. Ces adresses seront donc bien mieux compréhensibles pour vos visiteurs, mais surtout pour les robots d\'indexation. Votre référencement sera grandement optimisé grâce à cette option.<br /><br />Cette option n\'est malheureusement pas disponible chez tous les hébergeurs. Cette page va vous permettre de tester si votre serveur supporte la réécriture des urls. Si après le test vous tombez sur des erreurs serveur, ou pages blanches, c\'est que votre serveur ne le supporte pas. Supprimez alors le fichier <strong>.htaccess</strong> à la racine de votre site via accès FTP à votre serveur, puis revenez sur cette page et désactivez la réécriture.',
 	

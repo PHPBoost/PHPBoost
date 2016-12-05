@@ -36,6 +36,7 @@ class ServerEnvironmentConfig extends AbstractConfigData
 	const REDIRECTION_WWW_WITH_WWW    = 'with_www';
 	const REDIRECTION_WWW_WITHOUT_WWW = 'without_www';
 	const REDIRECTION_HTTPS_ENABLED   = 'redirection_https_enabled';
+	const HSTS_SECURITY_ENABLED       = 'hsts_security_enabled';
 	const HTACCESS_MANUAL_CONTENT     = 'htaccess_manual_content';
 	const OUTPUT_GZIPING_ENABLED      = 'output_gziping_enabled';
 
@@ -105,6 +106,21 @@ class ServerEnvironmentConfig extends AbstractConfigData
 		return $this->set_property(self::REDIRECTION_HTTPS_ENABLED, false);
 	}
 
+	public function is_hsts_security_enabled()
+	{
+		return $this->get_property(self::HSTS_SECURITY_ENABLED);
+	}
+
+	public function enabled_hsts_security()
+	{
+		return $this->set_property(self::HSTS_SECURITY_ENABLED, true);
+	}
+
+	public function disabled_hsts_security()
+	{
+		return $this->set_property(self::HSTS_SECURITY_ENABLED, false);
+	}
+
 	public function set_htaccess_manual_content($content)
 	{
 		$this->set_property(self::HTACCESS_MANUAL_CONTENT, $content);
@@ -127,6 +143,7 @@ class ServerEnvironmentConfig extends AbstractConfigData
 			self::REDIRECTION_WWW_ENABLED   => false,
 			self::REDIRECTION_WWW_MODE      => self::REDIRECTION_WWW_WITH_WWW,
 			self::REDIRECTION_HTTPS_ENABLED => false,
+			self::HSTS_SECURITY_ENABLED     => false,
 			self::HTACCESS_MANUAL_CONTENT   => '',
 			self::OUTPUT_GZIPING_ENABLED    => false
 		);
