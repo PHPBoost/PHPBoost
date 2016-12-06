@@ -100,7 +100,7 @@ class AdminAdvancedConfigController extends AdminController
 		if ($request->get_is_localhost() || $request->get_is_subdomain())
 		{
 			$redirection_www_disabled = true;
-			$this->server_environment_config->disabled_redirection_www(); /*Disabling is forced*/
+			$this->server_environment_config->disable_redirection_www(); /*Disabling is forced*/
 			$redirection_www_enabled_explain = '<span class="text-strong color-notavailable">' . ($request->get_is_localhost() ? $this->lang['advanced-config.redirection_www_enabled.local'] : $this->lang['advanced-config.redirection_www_enabled.subdomain']) . '</span>';
 		}
 		else
