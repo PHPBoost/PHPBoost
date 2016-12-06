@@ -37,6 +37,7 @@ class ServerEnvironmentConfig extends AbstractConfigData
 	const REDIRECTION_WWW_WITHOUT_WWW = 'without_www';
 	const REDIRECTION_HTTPS_ENABLED   = 'redirection_https_enabled';
 	const HSTS_SECURITY_ENABLED       = 'hsts_security_enabled';
+	const HSTS_SECURITY_DURATION      = 'hsts_security_duration';
 	const HTACCESS_MANUAL_CONTENT     = 'htaccess_manual_content';
 	const OUTPUT_GZIPING_ENABLED      = 'output_gziping_enabled';
 
@@ -121,6 +122,16 @@ class ServerEnvironmentConfig extends AbstractConfigData
 		return $this->set_property(self::HSTS_SECURITY_ENABLED, false);
 	}
 
+	public function get_hsts_security_duration()
+	{
+		return $this->get_property(self::HSTS_SECURITY_DURATION);
+	}
+	
+	public function set_hsts_security_duration($value)
+	{
+		return $this->set_property(self::HSTS_SECURITY_DURATION, $value);
+	}
+	
 	public function set_htaccess_manual_content($content)
 	{
 		$this->set_property(self::HTACCESS_MANUAL_CONTENT, $content);
@@ -144,6 +155,7 @@ class ServerEnvironmentConfig extends AbstractConfigData
 			self::REDIRECTION_WWW_MODE      => self::REDIRECTION_WWW_WITH_WWW,
 			self::REDIRECTION_HTTPS_ENABLED => false,
 			self::HSTS_SECURITY_ENABLED     => false,
+			self::HSTS_SECURITY_DURATION    => 3600,
 			self::HTACCESS_MANUAL_CONTENT   => '',
 			self::OUTPUT_GZIPING_ENABLED    => false
 		);
