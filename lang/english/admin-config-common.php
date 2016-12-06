@@ -94,6 +94,8 @@ $lang = array(
 	'advanced-config.redirection_https_enabled.explain-disable' => 'Your website doesn\'t use HTTPS protocol, mod activation is unavailable',
 	'advanced-config.hsts_security_enabled' => 'Enabled HSTS security',
 	'advanced-config.hsts_security.explain' => 'HTTP Strict Transport Security (HSTS) is a web security policy mechanism which allows web servers to declare that web browsers should only interact with it using secure HTTPS connections, and never via the insecure HTTP protocol.<br /><span class="text-strong color-notavailable">It is strongly recommended that you do not enable this option if switching to https is temporary.</span>',
+	'advanced-config.hsts_security_duration' => 'HSTS Security renewal time',
+	'advanced-config.hsts_security_duration.explain' =>  '3600 seconds recommended',
 	'advanced-config.url-rewriting' => 'Enable URL rewriting',
 	'advanced-config.url-rewriting.explain' => 'Activation of URL rewriting makes URLs much simpler and clearer on your website. 
 		Your referencing will be largely optimized with this option.<br /><br />
