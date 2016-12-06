@@ -52,6 +52,7 @@ class AdminAdvancedConfigController extends AdminController
 
 			$this->form->get_field_by_id('redirection_www_mode')->set_hidden(!$this->server_environment_config->is_redirection_www_enabled());
 			$this->form->get_field_by_id('hsts_security_enabled')->set_hidden(!$this->server_environment_config->is_redirection_https_enabled());
+			$this->form->get_field_by_id('hsts_security_duration')->set_hidden(!$this->server_environment_config->is_hsts_security_enabled());
 			$this->form->get_field_by_id('cookiebar_duration')->set_hidden(!$this->cookiebar_config->is_cookiebar_enabled());
 			$this->form->get_field_by_id('cookiebar_tracking_mode')->set_hidden(!$this->cookiebar_config->is_cookiebar_enabled());
 			$this->form->get_field_by_id('cookiebar_content')->set_hidden(!$this->cookiebar_config->is_cookiebar_enabled());
@@ -181,14 +182,34 @@ class AdminAdvancedConfigController extends AdminController
 					HTMLForms.getField("hsts_security_enabled").enable();
 				} else {
 					HTMLForms.getField("hsts_security_enabled").disable();
+					HTMLForms.getField("hsts_security_enabled").setValue(false);
+					HTMLForms.getField("hsts_security_duration").disable();
 				}')
-			)));
+			)
+		));
 
 		$htaccess_manual_content_fieldset->add_field( new FormFieldCheckbox('hsts_security_enabled', $this->lang['advanced-config.hsts_security_enabled'], $this->server_environment_config->is_hsts_security_enabled(), array(
 			'description' => $this->lang['advanced-config.hsts_security.explain'],
 			'hidden' => !$this->server_environment_config->is_redirection_https_enabled(),
-			)));
+			'events' => array('click' => '
+				if (HTMLForms.getField("hsts_security_enabled").getValue()) {
+					HTMLForms.getField("hsts_security_duration").enable();
+				} else {
+					HTMLForms.getField("hsts_security_duration").disable();
+				}')
+			)
+		));
 
+		$htaccess_manual_content_fieldset->add_field(new FormFieldNumberEditor('hsts_security_duration', $this->lang['advanced-config.hsts_security_duration'], $this->server_environment_config->get_hsts_security_duration(), array(
+			'min' => 1,
+			'max' => 31540000,
+			'required' => true,
+			'description' => $this->lang['advanced-config.hsts_security_duration.explain'],
+			'required' => true,
+			'hidden' => !$this->server_environment_config->is_hsts_security_enabled()),
+			array(new FormFieldConstraintRegex('`^[0-9]+$`iu', '', $this->lang['advanced-config.integer-required']))
+		));
+		
 		$htaccess_manual_content_fieldset->add_field(new FormFieldMultiLineTextEditor('htaccess_manual_content', $this->lang['advanced-config.htaccess-manual-content'], $this->server_environment_config->get_htaccess_manual_content(),
 			array('rows' => 7, 'description' => $this->lang['advanced-config.htaccess-manual-content.explain'])
 		));
