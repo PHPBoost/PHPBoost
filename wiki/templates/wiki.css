@@ -118,15 +118,9 @@ ul.no-list a i.fa {
 	margin-bottom: -6px;
 }
 
-.wiki-edit .bbcode-containers {
+.wiki-bbcode .bbcode-containers {
 	border-radius: 0;
 	border-top: none;
-}
-
-.wiki-edit .wiki-bbcode .bbcode-containers {
-	border-radius: 4px 4px 0 0;
-	border-top: 1px solid #BBBBBB;
-	border-bottom: none;
 }
 
 .bbcode li.bbcode-elements > a.bbcode-wiki-insert {
@@ -139,4 +133,8 @@ ul.no-list a i.fa {
 
 .wiki-tools-container {
 	margin-bottom: 25px;
+}
+
+#wiki-link-container li {
+	margin: 0 3px 0 0;
 }
