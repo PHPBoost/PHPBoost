@@ -108,7 +108,10 @@ class AdminAdvancedConfigController extends AdminController
 			$redirection_www_disabled = false;
 			$redirection_www_enabled_explain = '';
 		}
-		
+
+		$htaccess_manual_content_fieldset = new FormFieldsetHTML('htaccess_manual_content', $this->lang['advanced-config.htaccess-manual-content']);
+		$form->add_fieldset($htaccess_manual_content_fieldset);
+
 		$htaccess_manual_content_fieldset->add_field( new FormFieldCheckbox('redirection_www_enabled', $this->lang['advanced-config.redirection_www_enabled'], $this->server_environment_config->is_redirection_www_enabled(), 
 			array(
 				'description' => $redirection_www_enabled_explain, 'disabled' => $redirection_www_disabled, 
@@ -137,8 +140,8 @@ class AdminAdvancedConfigController extends AdminController
 		else
 		{
 			$redirection_https_disabled = true; /* Checkbox is forced to deactivate*/
-			$this->server_environment_config->disabled_redirection_https(); /* HTTPS is forced to deactivate */
-			$this->server_environment_config->disabled_hsts_security(); /* HSTS is forced to deactivate */
+			$this->server_environment_config->disable_redirection_https(); /* HTTPS is forced to deactivate */
+			$this->server_environment_config->disable_hsts_security(); /* HSTS is forced to deactivate */
 			$redirection_https_enabled_explain = '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.redirection_https_enabled.explain-disable']. '</span>';
 		}
 
@@ -170,12 +173,16 @@ class AdminAdvancedConfigController extends AdminController
 
 		$htaccess_manual_content_fieldset->add_field(new FormFieldNumberEditor('hsts_security_duration', $this->lang['advanced-config.hsts_security_duration'], $this->server_environment_config->get_config_hsts_security_duration(), array(
 			'min' => 1,
-			'max' => 365,
+			'max' => 30,
 			'required' => true,
 			'description' => $this->lang['advanced-config.hsts_security_duration.explain'],
 			'required' => true,
 			'hidden' => !$this->server_environment_config->is_hsts_security_enabled()),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu', '', $this->lang['advanced-config.integer-required']))
+		));
+		
+		$htaccess_manual_content_fieldset->add_field(new FormFieldMultiLineTextEditor('htaccess_manual_content', $this->lang['advanced-config.htaccess-manual-content'], $this->server_environment_config->get_htaccess_manual_content(),
+			array('rows' => 7, 'description' => $this->lang['advanced-config.htaccess-manual-content.explain'])
 		));
 		
 		$fieldset->add_field(new FormFieldTimezone('site_timezone', $this->lang['advanced-config.site_timezone'], $this->general_config->get_site_timezone(),
@@ -200,13 +207,6 @@ class AdminAdvancedConfigController extends AdminController
 		} catch (UnsupportedOperationException $ex) {
 			$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(), array('description' => '<span class="text-strong color-unknown">' . $this->lang['advanced-config.config.unknown'] . '</span>')));
  		}
-		
-		$htaccess_manual_content_fieldset = new FormFieldsetHTML('htaccess_manual_content', $this->lang['advanced-config.htaccess-manual-content']);
-		$form->add_fieldset($htaccess_manual_content_fieldset);
-
-		$htaccess_manual_content_fieldset->add_field(new FormFieldMultiLineTextEditor('htaccess_manual_content', $this->lang['advanced-config.htaccess-manual-content'], $this->server_environment_config->get_htaccess_manual_content(),
-			array('rows' => 7, 'description' => $this->lang['advanced-config.htaccess-manual-content.explain'])
-		));
 		
 		$robots_file = new File(PATH_TO_ROOT . '/robots.txt');
 		$robots_content = $robots_file->exists() ? $robots_file->read() : '';

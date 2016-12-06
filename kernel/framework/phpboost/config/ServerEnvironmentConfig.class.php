@@ -118,7 +118,7 @@ class ServerEnvironmentConfig extends AbstractConfigData
 	
 	public function set_hsts_security_duration($value)
 	{
-		return $this->set_property(self::HSTS_SECURITY_DURATION, ($value * (24 * 60 * 60)));
+		return $this->set_property(self::HSTS_SECURITY_DURATION, ($value * (24 * 60 * 60))); // hour, minute, second
 	}
 
 	public function get_config_hsts_security_duration()
@@ -160,7 +160,7 @@ class ServerEnvironmentConfig extends AbstractConfigData
 			self::REDIRECTION_WWW_MODE      => self::REDIRECTION_WWW_WITH_WWW,
 			self::REDIRECTION_HTTPS_ENABLED => false,
 			self::HSTS_SECURITY_ENABLED     => false,
-			self::HSTS_SECURITY_DURATION    => 31536000, // 365 days per default
+			self::HSTS_SECURITY_DURATION    => 2592000, // 30 days per default
 			self::HTACCESS_MANUAL_CONTENT   => '',
 			self::OUTPUT_GZIPING_ENABLED    => false
 		);
