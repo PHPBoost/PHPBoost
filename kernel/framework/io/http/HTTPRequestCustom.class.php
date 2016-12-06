@@ -398,7 +398,7 @@ class HTTPRequestCustom
 	
 	public function get_is_subdomain()
 	{
-		return $this->get_site_domain_name() != $this->get_site_domain_name() && !preg_match('/www./u', $this->get_site_domain_name());
+		return $this->get_site_domain_name() != $this->get_domain_name() && !preg_match('/www./u', $this->get_site_domain_name());
 	}
 
 	public function get_user_agent()

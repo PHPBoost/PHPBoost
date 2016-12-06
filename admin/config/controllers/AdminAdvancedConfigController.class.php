@@ -97,43 +97,11 @@ class AdminAdvancedConfigController extends AdminController
 			array('description' => $this->lang['advanced-config.site_path-explain'])
 		));
 		
-		$fieldset->add_field(new FormFieldTimezone('site_timezone', $this->lang['advanced-config.site_timezone'], $this->general_config->get_site_timezone(),
-			array('description' => $this->lang['advanced-config.site_timezone-explain'])
-		));
-		
-		$url_rewriting_fieldset = new FormFieldsetHTML('url_rewriting', $this->lang['advanced-config.url-rewriting']);
-		$form->add_fieldset($url_rewriting_fieldset);
-		
-		$url_rewriting_fieldset->set_description($this->lang['advanced-config.url-rewriting.explain']);
-		
-		$server_configuration = new ServerConfiguration();
-		try {
-			if ($server_configuration->has_url_rewriting())
-			{
-				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(), array('description' => '<span class="text-strong color-available">' . $this->lang['advanced-config.config.available'] . '</span>')));
-			}
-			else
-			{
-				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], FormFieldCheckbox::UNCHECKED, array('disabled' => true, 'description' => '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.config.not-available'] . '</span>')));
-			}
-		} catch (UnsupportedOperationException $ex) {
-			$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(), array('description' => '<span class="text-strong color-unknown">' . $this->lang['advanced-config.config.unknown'] . '</span>')));
- 		}
-		
-		$htaccess_manual_content_fieldset = new FormFieldsetHTML('htaccess_manual_content', $this->lang['advanced-config.htaccess-manual-content']);
-		$form->add_fieldset($htaccess_manual_content_fieldset);
-
-		if ($request->get_is_localhost())
+		if ($request->get_is_localhost() || $request->get_is_subdomain())
 		{
 			$redirection_www_disabled = true;
 			$this->server_environment_config->disabled_redirection_www(); /*Disabling is forced*/
-			$redirection_www_enabled_explain = '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.redirection_www_enabled.local'] . '</span>';
-		}
-		else if ($request->get_is_subdomain())
-		{
-			$redirection_www_disabled = true;
-			$this->server_environment_config->disabled_redirection_www(); /*Disabling is forced*/
-			$redirection_www_enabled_explain = '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.redirection_www_enabled.subdomain'] . '</span>';
+			$redirection_www_enabled_explain = '<span class="text-strong color-notavailable">' . ($request->get_is_localhost() ? $this->lang['advanced-config.redirection_www_enabled.local'] : $this->lang['advanced-config.redirection_www_enabled.subdomain']) . '</span>';
 		}
 		else
 		{
@@ -200,9 +168,9 @@ class AdminAdvancedConfigController extends AdminController
 			)
 		));
 
-		$htaccess_manual_content_fieldset->add_field(new FormFieldNumberEditor('hsts_security_duration', $this->lang['advanced-config.hsts_security_duration'], $this->server_environment_config->get_hsts_security_duration(), array(
+		$htaccess_manual_content_fieldset->add_field(new FormFieldNumberEditor('hsts_security_duration', $this->lang['advanced-config.hsts_security_duration'], $this->server_environment_config->get_config_hsts_security_duration(), array(
 			'min' => 1,
-			'max' => 31540000,
+			'max' => 365,
 			'required' => true,
 			'description' => $this->lang['advanced-config.hsts_security_duration.explain'],
 			'required' => true,
@@ -210,6 +178,32 @@ class AdminAdvancedConfigController extends AdminController
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu', '', $this->lang['advanced-config.integer-required']))
 		));
 		
+		$fieldset->add_field(new FormFieldTimezone('site_timezone', $this->lang['advanced-config.site_timezone'], $this->general_config->get_site_timezone(),
+			array('description' => $this->lang['advanced-config.site_timezone-explain'])
+		));
+		
+		$url_rewriting_fieldset = new FormFieldsetHTML('url_rewriting', $this->lang['advanced-config.url-rewriting']);
+		$form->add_fieldset($url_rewriting_fieldset);
+		
+		$url_rewriting_fieldset->set_description($this->lang['advanced-config.url-rewriting.explain']);
+		
+		$server_configuration = new ServerConfiguration();
+		try {
+			if ($server_configuration->has_url_rewriting())
+			{
+				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(), array('description' => '<span class="text-strong color-available">' . $this->lang['advanced-config.config.available'] . '</span>')));
+			}
+			else
+			{
+				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], FormFieldCheckbox::UNCHECKED, array('disabled' => true, 'description' => '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.config.not-available'] . '</span>')));
+			}
+		} catch (UnsupportedOperationException $ex) {
+			$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(), array('description' => '<span class="text-strong color-unknown">' . $this->lang['advanced-config.config.unknown'] . '</span>')));
+ 		}
+		
+		$htaccess_manual_content_fieldset = new FormFieldsetHTML('htaccess_manual_content', $this->lang['advanced-config.htaccess-manual-content']);
+		$form->add_fieldset($htaccess_manual_content_fieldset);
+
 		$htaccess_manual_content_fieldset->add_field(new FormFieldMultiLineTextEditor('htaccess_manual_content', $this->lang['advanced-config.htaccess-manual-content'], $this->server_environment_config->get_htaccess_manual_content(),
 			array('rows' => 7, 'description' => $this->lang['advanced-config.htaccess-manual-content.explain'])
 		));
@@ -354,29 +348,32 @@ class AdminAdvancedConfigController extends AdminController
 		{
 			$this->server_environment_config->set_url_rewriting_enabled($this->form->get_value('url_rewriting_enabled'));
 		}
+		
 		if ($this->form->get_value('redirection_www_enabled'))
 		{
-			$this->server_environment_config->enabled_redirection_www();
+			$this->server_environment_config->enable_redirection_www();
 			$this->server_environment_config->set_redirection_www_mode($this->form->get_value('redirection_www_mode')->get_raw_value());
 		}
 		else
-			$this->server_environment_config->disabled_redirection_www();
+			$this->server_environment_config->disable_redirection_www();
 
 		if ($this->form->get_value('redirection_https_enabled'))
 		{
-			$this->server_environment_config->enabled_redirection_https();
+			$this->server_environment_config->enable_redirection_https();
 			if ($this->form->get_value('hsts_security_enabled'))
-				$this->server_environment_config->enabled_hsts_security();
+			{
+				$this->server_environment_config->enable_hsts_security();
+				$this->server_environment_config->set_hsts_security_duration($this->form->get_value('hsts_security_duration'));
+			}
 			else
-				$this->server_environment_config->disabled_hsts_security();
+				$this->server_environment_config->disable_hsts_security();
 		}
 		else
 		{
-			$this->server_environment_config->disabled_redirection_https();
-			$this->server_environment_config->disabled_hsts_security();
+			$this->server_environment_config->disable_redirection_https();
+			$this->server_environment_config->disable_hsts_security();
 		}
 		
-
 		$this->server_environment_config->set_htaccess_manual_content(TextHelper::html_entity_decode($this->form->get_value('htaccess_manual_content')));
 		
 		$robots_file = new File(PATH_TO_ROOT . '/robots.txt');

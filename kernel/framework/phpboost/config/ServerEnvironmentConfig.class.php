@@ -51,28 +51,17 @@ class ServerEnvironmentConfig extends AbstractConfigData
 		$this->set_property(self::URL_REWRITING_ENABLED, $enabled);
 	}
 
-	private function htaccess_exists()
-	{
-		$file = new File(PATH_TO_ROOT . '/.htaccess');
-		return $file->exists();
-	}
-
-	public function get_htaccess_manual_content()
-	{
-		return $this->get_property(self::HTACCESS_MANUAL_CONTENT);
-	}
-
 	public function is_redirection_www_enabled()
 	{
 		return $this->get_property(self::REDIRECTION_WWW_ENABLED);
 	}
 
-	public function enabled_redirection_www()
+	public function enable_redirection_www()
 	{
 		return $this->set_property(self::REDIRECTION_WWW_ENABLED, true);
 	}
 
-	public function disabled_redirection_www()
+	public function disable_redirection_www()
 	{
 		return $this->set_property(self::REDIRECTION_WWW_ENABLED, false);
 	}
@@ -90,19 +79,19 @@ class ServerEnvironmentConfig extends AbstractConfigData
 	public function set_redirection_www_mode($value)
 	{
 		return $this->set_property(self::REDIRECTION_WWW_MODE, $value);
-	}	
+	}
 
 	public function is_redirection_https_enabled()
 	{
 		return $this->get_property(self::REDIRECTION_HTTPS_ENABLED);
 	}
 
-	public function enabled_redirection_https()
+	public function enable_redirection_https()
 	{
 		return $this->set_property(self::REDIRECTION_HTTPS_ENABLED, true);
 	}
 
-	public function disabled_redirection_https()
+	public function disable_redirection_https()
 	{
 		return $this->set_property(self::REDIRECTION_HTTPS_ENABLED, false);
 	}
@@ -112,12 +101,12 @@ class ServerEnvironmentConfig extends AbstractConfigData
 		return $this->get_property(self::HSTS_SECURITY_ENABLED);
 	}
 
-	public function enabled_hsts_security()
+	public function enable_hsts_security()
 	{
 		return $this->set_property(self::HSTS_SECURITY_ENABLED, true);
 	}
 
-	public function disabled_hsts_security()
+	public function disable_hsts_security()
 	{
 		return $this->set_property(self::HSTS_SECURITY_ENABLED, false);
 	}
@@ -129,7 +118,23 @@ class ServerEnvironmentConfig extends AbstractConfigData
 	
 	public function set_hsts_security_duration($value)
 	{
-		return $this->set_property(self::HSTS_SECURITY_DURATION, $value);
+		return $this->set_property(self::HSTS_SECURITY_DURATION, ($value * (24 * 60 * 60)));
+	}
+
+	public function get_config_hsts_security_duration()
+	{
+		return ($this->get_property(self::HSTS_SECURITY_DURATION) / (24 * 60 * 60));
+	}
+
+	private function htaccess_exists()
+	{
+		$file = new File(PATH_TO_ROOT . '/.htaccess');
+		return $file->exists();
+	}
+
+	public function get_htaccess_manual_content()
+	{
+		return $this->get_property(self::HTACCESS_MANUAL_CONTENT);
 	}
 	
 	public function set_htaccess_manual_content($content)
@@ -155,7 +160,7 @@ class ServerEnvironmentConfig extends AbstractConfigData
 			self::REDIRECTION_WWW_MODE      => self::REDIRECTION_WWW_WITH_WWW,
 			self::REDIRECTION_HTTPS_ENABLED => false,
 			self::HSTS_SECURITY_ENABLED     => false,
-			self::HSTS_SECURITY_DURATION    => 3600,
+			self::HSTS_SECURITY_DURATION    => 31536000, // 365 days per default
 			self::HTACCESS_MANUAL_CONTENT   => '',
 			self::OUTPUT_GZIPING_ENABLED    => false
 		);

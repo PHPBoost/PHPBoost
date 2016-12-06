@@ -35,6 +35,7 @@ class HtaccessFileCache implements CacheData
 {
 	private $htaccess_file_content = '';
 	private $general_config;
+	private $server_environment_config;
 
 	/**
 	 * {@inheritdoc}
@@ -43,6 +44,7 @@ class HtaccessFileCache implements CacheData
 	{
 		$this->htaccess_file_content = '';
 		$this->general_config = GeneralConfig::load();
+		$this->server_environment_config = ServerEnvironmentConfig::load();
 		
 		$this->set_default_charset();
 		
@@ -56,7 +58,7 @@ class HtaccessFileCache implements CacheData
 		
 		$this->add_http_headers();
 		
-		if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
+		if ($this->server_environment_config->is_url_rewriting_enabled())
 		{
 			$this->enable_rewrite_rules();
 			
@@ -177,10 +179,10 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('		# Disable your PHP version number from showing up in HTTP headers for added security.');
 		$this->add_line('		Header unset X-Powered-By');
 		
-		if ($this->general_config->is_site_url_https())
+		if ($this->server_environment_config->is_redirection_https_enabled() && $this->server_environment_config->is_hsts_security_enabled())
 		{
 			$this->add_line('		# Tell the browser to attempt the HTTPS version first');
-			$this->add_line('		Header set Strict-Transport-Security "max-age=31536000; includeSubDomains"');
+			$this->add_line('		Header set Strict-Transport-Security "max-age=' . $this->server_environment_config->get_hsts_security_duration() . '; includeSubDomains"');
 		}
 		
 		$this->add_line('		# Don\'t allow any pages to be framed externally - Defends against CSRF');
@@ -319,17 +321,16 @@ class HtaccessFileCache implements CacheData
 	
 	private function force_redirection_if_available()
 	{
-		$server_environment_config = ServerEnvironmentConfig::load();
 		$domain = AppContext::get_request()->get_domain_name();
 		
-		if ($server_environment_config->is_redirection_www_enabled())
+		if ($this->server_environment_config->is_redirection_www_enabled())
 		{
 			$this->add_section('Site redirection to www');
 			$this->add_line('RewriteCond %{HTTP_HOST} ^' . $domain . ' [NC]');
-			$this->add_line('RewriteRule ^/?(.*) http' . ($server_environment_config->is_redirection_https_enabled() ? 's' : '') . '://' . ($server_environment_config->is_redirection_www_mode_with_www() ? 'www.' . $domain : AppContext::get_request()->get_site_domain_name()) . '/$1 [L,R=301]');
+			$this->add_line('RewriteRule ^/?(.*) http' . ($this->server_environment_config->is_redirection_https_enabled() ? 's' : '') . '://' . ($this->server_environment_config->is_redirection_www_mode_with_www() ? 'www.' . $domain : AppContext::get_request()->get_site_domain_name()) . '/$1 [L,R=301]');
 		}
 		
-		if ($server_environment_config->is_redirection_https_enabled() && !$server_environment_config->is_redirection_www_enabled())
+		if ($this->server_environment_config->is_redirection_https_enabled() && !$this->server_environment_config->is_redirection_www_enabled())
 		{
 			$this->add_section('Force to use HTTPS if available');
 			$this->add_line('RewriteCond %{HTTPS} !=on');
@@ -522,7 +523,7 @@ class HtaccessFileCache implements CacheData
 
 	private function add_manual_content()
 	{
-		$manual_content = ServerEnvironmentConfig::load()->get_htaccess_manual_content();
+		$manual_content = $this->server_environment_config->get_htaccess_manual_content();
 		if (!empty($manual_content))
 		{
 			$this->add_section('Manual content');
