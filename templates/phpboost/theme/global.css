@@ -539,6 +539,11 @@ div.message-helper-small {
 	margin: 5px;
 }
 
+.upload-element-picture {
+	max-width: 40px;
+	max-height: 40px;
+}
+
 .upload-address-bar {
 	background: #FAFAFA;
 	border: 1px solid #DDDDDD;

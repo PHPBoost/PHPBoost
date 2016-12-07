@@ -555,6 +555,11 @@ div.message-helper-small {
 	margin: 5px;
 }
 
+.upload-element-picture {
+	max-width: 40px;
+	max-height: 40px;
+}
+
 .upload-address-bar {
 	margin: 0 25px;
 	padding: 6px;

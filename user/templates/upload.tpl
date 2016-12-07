@@ -368,8 +368,14 @@
 	
 					# START files #	
 					<div class="upload-elements-file">
+						# IF files.C_IMG #
+						<a href="{files.URL}" data-lightbox="formatter" data-rel="lightcase:collection" title="{files.TITLE}">
+							<img src="{files.URL}" alt="{files.TITLE}" class="upload-element-picture" />
+						</a><span id="fi1{files.ID}">{files.NAME}</span><span id="fi{files.ID}"></span><br />
+						# ELSE #
 						<i class="fa {files.IMG}"></i>
 						<a class="# IF files.C_RECENT_FILE #upload-recent-file# END IF #" href="{files.URL}" title="{files.TITLE}"{files.LIGHTBOX}><span id="fi1{files.ID}">{files.NAME}</span></a><span id="fi{files.ID}"></span><br />
+						# ENDIF #
 						{files.BBCODE}<br />
 						<span class="text-strong">{files.FILETYPE}</span><br />
 						<span class="text-strong">{files.SIZE}</span><br />

@@ -993,6 +993,12 @@ div.container-block-absolute > div {
 
 
 /* -- Systeme d'Upload ========================================== */
+
+.upload-element-picture {
+	max-width: 40px;
+	max-height: 40px;
+}
+
 .upload-address-bar {
 	margin: 0 25px;
 	padding: 6px;
