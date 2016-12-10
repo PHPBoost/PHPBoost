@@ -145,7 +145,7 @@ class DownloadDisplayDownloadFileController extends ModuleController
 				}
 			break;
 			case DownloadFile::APPROVAL_DATE:
-				if (!$downloadfile->is_visible() || !DownloadAuthorizationsService::check_authorizations($downloadfile->get_id_category())->read())
+				if (!$downloadfile->is_visible() && !DownloadAuthorizationsService::check_authorizations($downloadfile->get_id_category())->read())
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);
