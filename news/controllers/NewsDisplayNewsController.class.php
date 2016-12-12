@@ -220,7 +220,7 @@ class NewsDisplayNewsController extends ModuleController
 				}
 			break;
 			case News::APPROVAL_DATE:
-				if (!$news->is_visible() || !NewsAuthorizationsService::check_authorizations($news->get_id_cat())->read())
+				if (!$news->is_visible() && !NewsAuthorizationsService::check_authorizations($news->get_id_cat())->read())
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);
