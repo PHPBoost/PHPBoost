@@ -41,8 +41,8 @@ define('TITLE', $LANG['wiki_contribuate']);
 $bread_crumb_key = 'wiki_post';
 require_once('../wiki/wiki_bread_crumb.php');
 
-$is_cat = (bool)retrieve(POST, 'is_cat', false);
-$is_cat_get = (bool)(retrieve(GET, 'type', '') == 'cat');
+$is_cat = (int)retrieve(POST, 'is_cat', false);
+$is_cat_get = (int)(retrieve(GET, 'type', '') == 'cat');
 $is_cat = $is_cat > 0 ? $is_cat : $is_cat_get;
 $id_edit = (int)retrieve(POST, 'id_edit', 0);
 $title = retrieve(POST, 'title', '');
