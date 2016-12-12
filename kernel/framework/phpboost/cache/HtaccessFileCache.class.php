@@ -140,27 +140,27 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('Options +FollowSymLinks');
 		$this->add_line('Options -Multiviews');
 		$this->add_section('Prevent viewing of .htaccess file');
-	if($this->get_domain($this->general_config->get_site_url())=='free.fr')
-	{
-		$this->add_line('<Files .htaccess>');
-		$this->add_line('    Order Allow,Deny');
-		$this->add_line('    Deny from all');
-		$this->add_line('</Files>');
-	}
-	else
-	{
-		$this->add_line('<Files .htaccess>');
-		$this->add_line('    # Apache ??? 2.3');
-		$this->add_line('    <IfModule mod_authz_core.c>');
-		$this->add_line('        Require all denied');
-		$this->add_line('    </IfModule>');
-		$this->add_line('    # Apache 2.2');
-		$this->add_line('    <IfModule !mod_authz_core.c>');
-		$this->add_line('        Order Allow,Deny');
-		$this->add_line('        Deny from all');
-		$this->add_line('    </IfModule>');
-		$this->add_line('</Files>');
-	}
+		if (AppContext::get_request()->get_domain_name() == 'free.fr')
+		{
+			$this->add_line('<Files .htaccess>');
+			$this->add_line('    Order Allow,Deny');
+			$this->add_line('    Deny from all');
+			$this->add_line('</Files>');
+		}
+		else
+		{
+			$this->add_line('<Files .htaccess>');
+			$this->add_line('    # Apache ??? 2.3');
+			$this->add_line('    <IfModule mod_authz_core.c>');
+			$this->add_line('        Require all denied');
+			$this->add_line('    </IfModule>');
+			$this->add_line('    # Apache 2.2');
+			$this->add_line('    <IfModule !mod_authz_core.c>');
+			$this->add_line('        Order Allow,Deny');
+			$this->add_line('        Deny from all');
+			$this->add_line('    </IfModule>');
+			$this->add_line('</Files>');
+		}
 	}
 	
 	private function add_server_protections()
