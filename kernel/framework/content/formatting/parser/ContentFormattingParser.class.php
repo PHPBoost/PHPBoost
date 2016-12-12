@@ -165,7 +165,7 @@ abstract class ContentFormattingParser extends AbstractParser
 			// Calcul de la sous-chaîne pour l'expression régulière
 			if ($i == ($size - 1))
 			{
-				$sub_str = TextHelper::substr($content, $current_index);
+				$sub_str = substr($content, $current_index);
 			}
 			else
 			{
@@ -218,7 +218,7 @@ abstract class ContentFormattingParser extends AbstractParser
 		$nb_open_tags = 0;
 		$tag_pos = array();
 
-		while (($pos = TextHelper::strpos($content, '[' . $tag, $pos + 1)) !== false)
+		while (($pos = strpos($content, '[' . $tag, $pos + 1)) !== false)
 		{
 			// nombre de tags de fermeture déjà rencontrés
 			$nb_close_tags = TextHelper::substr_count(TextHelper::substr($content, 0, ($pos + TextHelper::strlen('['.$tag))), '[/'.$tag.']');
@@ -226,7 +226,7 @@ abstract class ContentFormattingParser extends AbstractParser
 			// Si on trouve un tag d'ouverture, on sauvegarde sa position uniquement si il y a autant + 1 de tags fermés avant et on itère sur le suivant
 			if ($nb_open_tags == $nb_close_tags)
 			{
-				$open_tag = TextHelper::substr($content, $pos, (TextHelper::strpos($content, ']', $pos + 1) + 1 - $pos));
+				$open_tag = TextHelper::substr($content, $pos, (strpos($content, ']', $pos + 1) + 1 - $pos));
 				$match = preg_match('`\[' . $tag . '(' . $attributes . ')?\]`u', $open_tag);
 				if ($match == 1)
 				{
