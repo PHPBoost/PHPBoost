@@ -112,7 +112,7 @@ abstract class ContentFormattingUnparser extends AbstractParser
 		//Prélèvement du HTML
 		if ($action == self::PICK_UP)
 		{
-			$mask = '`\[\[CODE(=[A-Za-z0-9#+-_.\s]+(?:,(?:0|1)(?:,1)?)?)?\]\]' . '(.+)' . '\[\[/CODE\]\]`suU';
+			$mask = '`\[\[CODE(=[^,\s]+(?:,(?:0|1)(?:,1)?)?)?\]\]' . '(.+)' . '\[\[/CODE\]\]`suU';
 			$content_split = preg_split($mask, str_replace('&nbsp;', '&amp;nbsp;', $this->content), -1, PREG_SPLIT_DELIM_CAPTURE);
 
 			$content_length = count($content_split);

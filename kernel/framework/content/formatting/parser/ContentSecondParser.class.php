@@ -59,7 +59,7 @@ class ContentSecondParser extends AbstractParser
 		//Balise code
 		if (TextHelper::strpos($this->content, '[[CODE') !== false)
 		{
-			$this->content = preg_replace_callback('`\[\[CODE(?:=([A-Za-z0-9#+-_.\s]+))?(?:,(0|1)(?:,(0|1))?)?\]\](.+)\[\[/CODE\]\]`suU', array($this, 'callbackhighlight_code'), $this->content);
+			$this->content = preg_replace_callback('`\[\[CODE(?:=([^,\s]+))?(?:,(0|1)(?:,(0|1))?)?\]\](.+)\[\[/CODE\]\]`suU', array($this, 'callbackhighlight_code'), $this->content);
 		}
 		
 		//Balise member
