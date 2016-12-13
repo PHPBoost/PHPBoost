@@ -68,18 +68,41 @@ h1, h2, h3, h4, h5, h6 {
 /* --- Les Titres bbcode --- */
 .formatter-title {
 	display: inline-block;
-	margin: 0.5rem 0;
+	margin: 1.5rem 0 1rem 0;
+	border-color: #366393;
 }
 
-h2.formatter-title {  }
-h3.formatter-title { margin-left: 1.5rem; }
-h4.formatter-title { margin-left: 3rem; }
-h5.formatter-title { margin-left: 5rem; }
+h2.formatter-title { 
+	border-bottom-style: solid;
+	border-bottom-width: 3px;
+	font-weight: bold;
+	margin-top: 3rem;
+}
 
-h4.formatter-title,
+h3.formatter-title {
+	border-bottom-style: solid;
+	border-bottom-width: 2px;
+}
+
+h4.formatter-title {
+	text-decoration: underline;
+}
+
 h5.formatter-title {
-	border-bottom: 1px solid #366393;
+	font-style: italic;
+	text-decoration: underline;
 }
+
+h6.formatter-title {
+	font-style: italic;
+}
+
+h2.formatter-title { margin-left: 0; }
+h3.formatter-title { margin-left: 1rem; }
+h4.formatter-title { margin-left: 2rem; }
+h5.formatter-title { margin-left: 3rem; }
+h6.formatter-title { margin-left: 4rem; }
+
 
 
 /* -- Mise en forme du contenu -- */

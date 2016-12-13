@@ -220,10 +220,10 @@ if ($id_edit > 0)//On édite
 	if (!empty($article_contents['menu'])) //On reforme les paragraphes
 	{
 		$string_regex = '-';
-		for ($i = 1; $i <= 5; $i++)
+		for ($i = 2; $i <= 6; $i++)
 		{
 			$string_regex .= '-';
-			$contents = preg_replace('`[\r\n]+<(?:div|h[1-5]) class="wiki_paragraph' .  $i . '" id=".+">(.+)</(?:div|h[1-5])><br />[\r\n]+`suU', (AppContext::get_current_user()->get_editor() == 'TinyMCE' ? '<br />' : "\n") . $string_regex . ' $1 '. $string_regex . (AppContext::get_current_user()->get_editor() == 'TinyMCE' ? '<br/>' : ''), "\n" . $contents . "\n");
+			$contents = preg_replace('`[\r\n]+<(?:div|h[2-6]) class="formatter-title wiki-paragraph-' .  $i . '" id=".+">(.+)</(?:div|h[2-6])><br />[\r\n]+`suU', (AppContext::get_current_user()->get_editor() == 'TinyMCE' ? '<br />' : "\n") . $string_regex . ' $1 '. $string_regex . (AppContext::get_current_user()->get_editor() == 'TinyMCE' ? '<br/>' : ''), "\n" . $contents . "\n");
 		}
 		$contents = trim($contents);
 	}

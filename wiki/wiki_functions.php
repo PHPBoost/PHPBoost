@@ -27,7 +27,7 @@
 
 if (defined('PHPBOOST') !== true)	exit;
 
-define('WIKI_MENU_MAX_DEPTH', 5);
+define('WIKI_MENU_MAX_DEPTH', 6);
 
 //Parsing en ajoutant la balise [link]
 function wiki_parse($contents)
@@ -109,8 +109,7 @@ function wiki_explode_menu(&$content)
 				$max_level_expected = min($level + 1, WIKI_MENU_MAX_DEPTH + 1);
 				
 				//Réinsertion
-				$class_level = $level - 1;
-				$line = '<h' . $class_level . ' class="wiki_paragraph' .  $class_level . '" id="paragraph_' . Url::encode_rewrite($title_name) . '">' . TextHelper::htmlspecialchars($title_name) .'</h' . $class_level . '><br />' . "\n";
+				$line = '<h' . $level . ' class="formatter-title wiki-paragraph-' .  $level . '" id="paragraph-' . Url::encode_rewrite($title_name) . '">' . TextHelper::htmlspecialchars($title_name) .'</h' . $level . '><br />' . "\n";
 			}
 		}
 	}
@@ -136,11 +135,11 @@ function wiki_display_menu($menu_list)
 		$current_level = $title[0];
 		
 		$title_name = stripslashes($title[1]);
-		$title_link = '<a href="#paragraph_' . Url::encode_rewrite($title_name) . '">' . TextHelper::htmlspecialchars($title_name) . '</a>';
+		$title_link = '<a href="#paragraph-' . Url::encode_rewrite($title_name) . '">' . TextHelper::htmlspecialchars($title_name) . '</a>';
 		
 		if ($current_level > $last_level)
 		{
-			$menu .= '<ol class="wiki_list_' . $current_level . '"><li>' . $title_link;
+			$menu .= '<ol class="wiki-list wiki-list-' . $current_level . '"><li>' . $title_link;
 		}
 		elseif ($current_level == $last_level)
 		{
