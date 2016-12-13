@@ -144,7 +144,7 @@ class WebDisplayWebLinkController extends ModuleController
 				}
 			break;
 			case WebLink::APPROVAL_DATE:
-				if (!$weblink->is_visible() || !WebAuthorizationsService::check_authorizations($weblink->get_id_category())->read())
+				if (!$weblink->is_visible() && !WebAuthorizationsService::check_authorizations($weblink->get_id_category())->read())
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);
