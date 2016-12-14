@@ -82,7 +82,7 @@ class UserViewProfileController extends AbstractController
 		$registration_date = new Date($this->user_infos['registration_date']);
 		$fieldset->add_field(new FormFieldFree('registered_on', $this->lang['registration_date'], $registration_date ? $registration_date->format(Date::FORMAT_DAY_MONTH_YEAR) : ''));
 		
-		$fieldset->add_field(new FormFieldFree('nbr_msg', $this->lang['number-messages'], $this->user_infos['posted_msg'] . '<br>' . '<a href="' . UserUrlBuilder::messages($user_id)->rel() . '">'. $this->lang['messages'] .'</a>'));
+		$fieldset->add_field(new FormFieldFree('nbr_msg', $this->lang['number-messages'], $this->user_infos['posted_msg'] . '<br />' . '<a href="' . UserUrlBuilder::messages($user_id)->rel() . '">'. $this->lang['messages'] .'</a>'));
 		
 		$last_connection_date = !empty($this->user_infos['last_connection_date']) ? Date::to_format($this->user_infos['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('never', 'main');
 		$fieldset->add_field(new FormFieldFree('last_connect', $this->lang['last_connection'], $last_connection_date));
