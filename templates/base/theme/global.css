@@ -103,7 +103,9 @@ h4.formatter-title { margin-left: 2rem; }
 h5.formatter-title { margin-left: 3rem; }
 h6.formatter-title { margin-left: 4rem; }
 
-
+br + .formatter-title {
+	margin-top: 0;
+}
 
 /* -- Mise en forme du contenu -- */
 /* ------------------------------ */
