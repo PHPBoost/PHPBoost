@@ -517,7 +517,7 @@ else
 			}
 			
 			$template->assign_block_vars('files', array(
-				'C_IMG' => $get_img_mimetype['img'] == 'fa-upload-picture fa-2x',
+				'C_IMG' => $get_img_mimetype['img'] == 'fa-upload-picture fa-2x' && FileUploadConfig::load()->get_display_file_thumbnail(),
 				'C_RECENT_FILE' => $row['timestamp'] > ($now->get_timestamp() - (2 * 60)),  // Ficher ajouté il y a moins de 2 minutes
 				'ID' => $row['id'],
 				'IMG' => $get_img_mimetype['img'],

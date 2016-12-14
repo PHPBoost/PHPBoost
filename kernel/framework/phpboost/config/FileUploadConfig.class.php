@@ -33,6 +33,7 @@ class FileUploadConfig extends AbstractConfigData
 	const AUTHORIZATION_ENABLE_INTERFACE_FILES = 'authorization_enable_interface_files';
 	const MAXIMUM_SIZE_UPLOAD = 'maximum_size_upload';
 	const ENABLE_BANDWIDTH_PROTECTION = 'enable_bandwidth_protect';
+	const DISPLAY_FILE_THUMBNAIL = 'display_file_thumbnail';
 	const AUTHORIZED_EXTENSIONS = 'authorized_extensions';
 	const AUTH_FILES_BIT = 0x01;
 	
@@ -71,6 +72,16 @@ class FileUploadConfig extends AbstractConfigData
 		$this->set_property(self::ENABLE_BANDWIDTH_PROTECTION, $value);
 	}
 	
+	public function get_display_file_thumbnail()
+	{
+		return $this->get_property(self::DISPLAY_FILE_THUMBNAIL);
+	}
+	
+	public function set_display_file_thumbnail($value)
+	{
+		$this->set_property(self::DISPLAY_FILE_THUMBNAIL, $value);
+	}
+	
 	public function get_authorized_extensions()
 	{
 		return $this->get_property(self::AUTHORIZED_EXTENSIONS);
@@ -101,6 +112,7 @@ class FileUploadConfig extends AbstractConfigData
 			self::AUTHORIZATION_ENABLE_INTERFACE_FILES => array('r0' => 1, 'r1' => 1),
 			self::MAXIMUM_SIZE_UPLOAD => 512,
 			self::ENABLE_BANDWIDTH_PROTECTION => true,
+			self::DISPLAY_FILE_THUMBNAIL => true,
 			self::AUTHORIZED_EXTENSIONS => array(
 				'jpg', 'jpeg', 'bmp', 'gif', 'png', 'tif', 'svg', 'ico', 'nef',
 				'rar', 'zip', 'gz', '7z',

@@ -148,6 +148,8 @@ $LANG['files_text'] = 'Textes';
 $LANG['files_media'] = 'Media';
 $LANG['files_prog'] = 'Programation';
 $LANG['files_misc'] = 'Miscellaneous';
+$LANG['files_thumb'] = 'Display the thumbnails in the manager';
+$LANG['files_thumb_explain'] = 'For picture type files';
 
 //Gestion des menus
 $LANG['menus_management'] = 'Menu management';

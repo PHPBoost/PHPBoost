@@ -88,6 +88,10 @@ class AdminFilesConfigController extends AdminController
 			array('description' => $this->lang['bandwidth_protect_explain'])
 		));
 		
+		$fieldset->add_field(new FormFieldCheckbox('display_file_thumbnail', $this->lang['files_thumb'], $this->file_upload_config->get_display_file_thumbnail(),
+			array('description' => $this->lang['files_thumb_explain'])
+		));
+		
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('authorized_extensions', $this->lang['auth_extensions'], $this->file_upload_config->get_authorized_extensions(),
 			$extensions['authorized_extensions_select'], array('size' => 12)
 		));
@@ -112,6 +116,8 @@ class AdminFilesConfigController extends AdminController
 			$this->file_upload_config->set_enable_bandwidth_protect(true);
 		else
 			$this->file_upload_config->set_enable_bandwidth_protect(false);
+		
+		$this->file_upload_config->set_display_file_thumbnail($this->form->get_value('display_file_thumbnail'));
 		
 		$authorized_extensions = $this->form->get_value('authorized_extensions');
 		$authorized_extensions = array();
