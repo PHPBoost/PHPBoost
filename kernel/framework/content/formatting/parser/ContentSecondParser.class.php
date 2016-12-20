@@ -335,7 +335,8 @@ class ContentSecondParser extends AbstractParser
 		
 		foreach ($video_files as $video)
 		{
-			$type = new FileType($video);
+			$video_file = new File($video);
+			$type = new FileType($video_file);
 			if ($type->is_video())
 				$sources .= '<source src="' . Url::to_rel($video) . '" type="video/' . pathinfo($video, PATHINFO_EXTENSION) . '" />';
 		}
