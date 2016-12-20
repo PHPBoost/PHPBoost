@@ -5,9 +5,6 @@ div.calendar-content {
 /* Affichage du mois en cours */
 div.calendar-top-container {
 	padding: 4px;
-	background-color: #EEEEEE;
-	border: 1px solid #DDDDDD;
-	border-radius: 3px;
 }
 
 div.calendar-top-content {
@@ -16,7 +13,6 @@ div.calendar-top-content {
 
 div.calendar-top-container a,
 div.calendar-top-container a:hover {
-	color: #666666;
 	cursor: pointer;
 }
 
@@ -60,15 +56,8 @@ div.event-display-dates {
 	}
 }
 
-/* Couleur des differents evenements */
-table tbody tr td.calendar-none    { background-color: #FFFFFF; }
-table tbody tr td.calendar-today   { background-color: #7CCAB0; }
-table tbody tr td.calendar-other   { background-color: #F1F1F1; }
-table tbody tr td.calendar-weekend { background-color: #FFE3B6; }
-
 #module-calendar table tbody tr td.calendar-week {
 	width: 8%;
-	border-right: 1px solid #AAAAAA;
 }
 
 /* Affichage de du titre de l'evenement dans le tableau de l'administration */

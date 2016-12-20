@@ -31,16 +31,9 @@
 #module-mini-shoutbox textarea,
 #module-mini-shoutbox textarea:valid {
 	width: 90%;
-	border-color: #CCCCCC;
 }
 
 #shoutbox-bbcode-container ul {
 	margin: 0;
 	padding: 0;
 }
-
-#shoutbox-bbcode-container ul li {
-	display: inline-block;
-	border: none;
-}
-

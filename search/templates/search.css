@@ -11,16 +11,14 @@ div#forms-selection {
 div#forms-selection a {
 	display: block;
 	padding: 2px 8px;
-	color: #888888;
 	text-decoration: none;
 }
 div#forms-selection a:hover {
-	background-color: #DDDDDD;
+	background-color: rgba(0, 0, 0, 0.2);
 }
 
 div#forms-selection a.SFL-current {
-	background-color: #DFDFDF;
-	color: #333333;
+	background-color: rgba(0, 0, 0, 0.1);
 }
 
 div.SpecializedForm {

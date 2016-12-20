@@ -12,13 +12,6 @@
 	margin: 0 0 6px 0;
 	padding: 0;
 	width: 100%;
-	border-color: #517BA6;
-	border-style: solid;
-	border-width: 0 0 0 3px;
-	transition: all 0.2s;
-}
-.article-faq:hover {
-	border-color: #366493;
 	transition: all 0.2s;
 }
 
@@ -29,7 +22,6 @@
 
 .question-title {
 	display: inline-block;
-	border: none;
 	overflow: initial;
 }
 

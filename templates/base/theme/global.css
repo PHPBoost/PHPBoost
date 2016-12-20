@@ -212,10 +212,10 @@ h6.formatter-title { margin-left: 4rem; }
 .calendar-block .date-picker tbody td:first-child { border-left: none;  }
 .calendar-block .date-picker tbody td:last-child  { border-right: none; }
 
-.calendar-block .date-picker tbody td.calendar-none		{ background-color: #FFFFFF; }
-.calendar-block .date-picker tbody td.calendar-today 	{ background-color: #B5E5B9; }
-.calendar-block .date-picker tbody td.calendar-event 	{ background-color: #DBE5EE; }
-.calendar-block .date-picker tbody td.calendar-weekend 	{ background-color: #FFE3B6; }
+tbody td.calendar-none		{ background-color: #FFFFFF; }
+tbody td.calendar-today 	{ background-color: #B5E5B9; }
+tbody td.calendar-event 	{ background-color: #DBE5EE; }
+tbody td.calendar-weekend 	{ background-color: #FFE3B6; }
 
 .calendar-block .date-picker tbody tr:last-child td {
 	border-bottom: none;

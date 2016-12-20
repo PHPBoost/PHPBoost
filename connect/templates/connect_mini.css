@@ -40,11 +40,6 @@ ul.connect-content {
 	text-align: center;
 }
 
-#connect-menu div.horizontal-fieldset ul li,
-#connect-menu div.horizontal-fieldset ul li a {
-	color: #FFFFFF;
-}
-
 #connect-menu div.horizontal-fieldset ul li > i {
 	vertical-align: 0;
 }
@@ -97,22 +92,12 @@ div.connect-register i {
 }
 
 /* Mot de passe oublie */ 
-#connect-menu .vertical-fieldset .forgot-pass {
-	color: #999999;
-}
-#connect-menu .vertical-fieldset .forgot-pass:hover {
-	color: #555555;
-}
 
 @media (min-width: 769px) {
 	#connect-menu .forgot-pass {
 		display: inline-block;
 		padding: 0 0 0 5px;
 		vertical-align: middle;
-		color: #E0F3FF;
-	}
-	#connect-menu .forgot-pass:hover {
-		color: #F1F1F1;
 	}
 }
 
@@ -151,7 +136,6 @@ div.connect-register i {
 	}
 
 	#connect-menu .horizontal-fieldset a {
-		color: #FFFFFF;
 		text-decoration: none;
 	}
 
