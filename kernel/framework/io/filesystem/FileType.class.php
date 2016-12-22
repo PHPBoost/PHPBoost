@@ -34,7 +34,7 @@ class FileType
 	private $file;
 	private $extensions_image = array('png', 'gif', 'jpg', 'jpeg', 'bmp', 'tiff', 'ico', 'svg');
 	private $extensions_audio = array('mp3', 'wav', 'raw', 'flac');
-	private $extensions_video = array('mpeg', 'mp4', 'wmv', 'flv', 'ogv', 'webm');
+	private $extensions_video = array('mpeg', 'mp4', 'wmv', 'flv', 'ogg', 'ogv', 'webm');
 	
 	public function __construct(File $file)
 	{
