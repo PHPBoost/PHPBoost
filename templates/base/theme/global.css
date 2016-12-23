@@ -580,11 +580,6 @@ div.message-helper-small {
 	margin: 5px;
 }
 
-.upload-element-picture {
-	max-width: 100px;
-	max-height: 100px;
-}
-
 .upload-address-bar {
 	margin: 0 25px;
 	padding: 6px;
@@ -620,6 +615,12 @@ div.message-helper-small {
 
 .upload-elements-repertory {
 	height: 60px;
+}
+
+.upload-element-picture {
+	max-width: 190px;
+	max-height: 100px;
+	display: block;
 }
 
 a.upload-recent-file {
