@@ -604,6 +604,7 @@ div.message-helper-small {
 .upload-elements-container {
 	margin: 10px 0 0 20px;
 	overflow: hidden;
+	text-align: left;
 }
 
 .upload-elements-file,
@@ -614,13 +615,40 @@ div.message-helper-small {
 }
 
 .upload-elements-repertory {
-	height: 60px;
+	line-height: 64px;
+	width: 180px;
+	text-align: center;
+	border: 1px solid #366493;
+	background-color: #aec7e1;
+}
+
+.upload-elements-file {
+	width: 180px;
+}
+
+.upload-elements-file input {
+	width: 100%;
+}
+
+.upload-element-name {
+	width: 100%;
+	text-align: center;
 }
 
 .upload-element-picture {
-	max-width: 190px;
-	max-height: 100px;
+	width: 100%;
+	height: 100px;
 	display: block;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+.upload-element-icon {
+	width: 100%;
+	line-height: 100px;
+	text-align: center;
+	border: 1px solid #d9d9d9;
 }
 
 a.upload-recent-file {

@@ -296,7 +296,7 @@
 					# ELSE #
 						# START folder #
 							<div class="upload-elements-repertory">
-								<a href="admin_files.php{folder.U_FOLDER}"><i class="fa # IF folder.C_MEMBER_FOLDER #fa-users# ELSE #fa-folder# ENDIF # fa-2x"></i></a>
+								<a href="admin_files.php{folder.U_FOLDER}"><i class="fa # IF folder.C_MEMBER_FOLDER #fa-users# ELSE #fa-folder# ENDIF # fa-2x"></i></a><br />
 								<span id="f{folder.ID}"><a href="admin_files.php{folder.U_FOLDER}" class="com">{folder.NAME}</a></span><br />
 								{folder.RENAME_FOLDER}
 								# IF NOT folder.C_MEMBERS_FOLDER #<a href="admin_files.php?{folder.DEL_TYPE}={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{FOLDERM_ID}" title="{folder.L_TYPE_DEL_FOLDER}" data-confirmation="# IF folder.C_MEMBER_FOLDER #{L_CONFIRM_EMPTY_FOLDER}# ELSE #delete-element# ENDIF #"><i class="fa fa-delete"></i></a># ENDIF #
@@ -306,23 +306,28 @@
 						# END folder #
 						<span id="new-folder"></span>
 
-						# START files #
+						# START files #	
 						<div class="upload-elements-file">
 							# IF files.C_IMG #
 							<a href="{files.URL}" data-lightbox="formatter" data-rel="lightcase:collection" title="{files.TITLE}" class="# IF files.C_RECENT_FILE #upload-recent-file# END IF #">
-								<img src="{files.URL}" alt="{files.TITLE}" class="upload-element-picture" /> <span id="fi1{files.ID}">{files.NAME}</span><span id="fi{files.ID}"></span>
-							</a><br />
-							# ELSE #
-							<i class="fa {files.IMG}"></i>
-							<a class="# IF files.C_RECENT_FILE #upload-recent-file# END IF #" href="{files.URL}" title="{files.TITLE}"{files.LIGHTBOX}><span id="fi1{files.ID}">{files.NAME}</span></a><span id="fi{files.ID}"></span><br />
+								<div class="upload-element-picture" style="background-image: url({files.URL})"></div>
+								<div class="upload-element-name" id="fi1{files.ID}">{files.NAME}<span id="fi{files.ID}"></span></div>
+							</a>
+							# ELSE #	
+							<a class="# IF files.C_RECENT_FILE #upload-recent-file# END IF #" href="{files.URL}" title="{files.TITLE}"{files.LIGHTBOX}>
+								<div class="upload-element-icon"><i class="fa {files.IMG}"></i></div>
+								<div class="upload-element-name" id="fi1{files.ID}">{files.NAME}<span id="fi{files.ID}"></span></div>
+							</a>
 							# ENDIF #
 							{files.BBCODE}<br />
 							<span class="text-strong">{files.FILETYPE}</span><br />
-							<span class="text-strong">{files.SIZE}</span><br />
-							{files.RENAME_FILE}
-							<a href="admin_files.php?del={files.ID}&amp;f={FOLDER_ID}&amp;fm={USER_ID}&amp;token={TOKEN}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
-							<a href="admin_files{files.U_MOVE}" title="{L_MOVETO}" class="fa fa-move"></a>
-							{files.INSERT}
+							<span class="float-right">
+								{files.RENAME_FILE}
+								<a href="upload.php?del={files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
+								<a href="upload{files.U_MOVE}" title="{L_MOVETO}" class="fa fa-move"></a>
+								{files.INSERT}							
+							</span>
+							<span class="text-strong">{files.SIZE}</span>
 							<span id="imgf{files.ID}"></span>
 						</div>
 						# END files #

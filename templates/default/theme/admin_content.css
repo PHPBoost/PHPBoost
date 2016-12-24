@@ -1015,6 +1015,10 @@ div.container-block-absolute > div {
 	width: 70%;
 }
 
+.upload-elements-container {
+	text-align: left;
+}
+
 .upload-elements-file,
 .upload-elements-repertory {
 	display: inline-block;
@@ -1023,13 +1027,40 @@ div.container-block-absolute > div {
 }
 
 .upload-elements-repertory {
-	height: 60px;
+	line-height: 64px;
+	width: 180px;
+	text-align: center;
+	border: 1px solid #366493;
+	background-color: #aec7e1;
+}
+
+.upload-elements-file {
+	width: 180px;
+}
+
+.upload-elements-file input {
+	width: 100%;
+}
+
+.upload-element-name {
+	width: 100%;
+	text-align: center;
 }
 
 .upload-element-picture {
-	max-width: 190px;
-	max-height: 100px;
+	width: 100%;
+	height: 100px;
 	display: block;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+.upload-element-icon {
+	width: 100%;
+	line-height: 100px;
+	text-align: center;
+	border: 1px solid #d9d9d9;
 }
 
 a.upload-recent-file {
