@@ -358,10 +358,16 @@
 						<div class="upload-elements-repertory">
 							<a href="upload.php?f={folder.ID}{POPUP}" class="fa # IF folder.C_MEMBER_FOLDER #fa-users # ELSE #fa-folder # ENDIF #fa-2x"></a><br />
 							<span id="f{folder.ID}"><a href="upload.php?f={folder.ID}{POPUP}">{folder.NAME}</a></span><br />
-							{folder.RENAME_FOLDER}
-							<a href="upload.php?delf={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" title="{folder.L_TYPE_DEL_FOLDER}"  class="fa fa-delete" data-confirmation="delete-element"></a>
-							<a href="upload{folder.U_MOVE}" title="{L_MOVETO}" class="fa fa-move"></a>
-							<span id="img{folder.ID}"></span>
+							<div class="upload-repertory-controls">
+								{folder.RENAME_FOLDER}
+								<span>
+									<a href="upload.php?delf={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" title="{folder.L_TYPE_DEL_FOLDER}"  class="fa fa-delete" data-confirmation="delete-element"></a>
+								</span>
+								<span>
+									<a href="upload{folder.U_MOVE}" title="{L_MOVETO}" class="fa fa-move"></a>
+								</span>
+								<span id="img{folder.ID}"></span>
+							</div>
 						</div>
 					# END folder #
 	
@@ -378,14 +384,14 @@
 							<div class="upload-element-name" id="fi1{files.ID}">{files.NAME}<span id="fi{files.ID}"></span></div>
 						</a>
 						# ENDIF #
-						{files.BBCODE}<br />
-						<span class="text-strong">{files.FILETYPE}</span><br />
-						<span class="float-right">
+						{files.BBCODE}
+						<div class="upload-file-controls">
 							{files.RENAME_FILE}
 							<a href="upload.php?del={files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
 							<a href="upload{files.U_MOVE}" title="{L_MOVETO}" class="fa fa-move"></a>
 							{files.INSERT}							
-						</span>
+						</div>
+						<span class="text-strong">{files.FILETYPE}</span><br />
 						<span class="text-strong">{files.SIZE}</span>
 						<span id="imgf{files.ID}"></span>
 					</div>

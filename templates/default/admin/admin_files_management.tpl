@@ -298,10 +298,16 @@
 							<div class="upload-elements-repertory">
 								<a href="admin_files.php{folder.U_FOLDER}"><i class="fa # IF folder.C_MEMBER_FOLDER #fa-users# ELSE #fa-folder# ENDIF # fa-2x"></i></a><br />
 								<span id="f{folder.ID}"><a href="admin_files.php{folder.U_FOLDER}" class="com">{folder.NAME}</a></span><br />
-								{folder.RENAME_FOLDER}
-								# IF NOT folder.C_MEMBERS_FOLDER #<a href="admin_files.php?{folder.DEL_TYPE}={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{FOLDERM_ID}" title="{folder.L_TYPE_DEL_FOLDER}" data-confirmation="# IF folder.C_MEMBER_FOLDER #{L_CONFIRM_EMPTY_FOLDER}# ELSE #delete-element# ENDIF #"><i class="fa fa-delete"></i></a># ENDIF #
-								# IF folder.C_TYPEFOLDER #<a href="admin_files{folder.U_MOVE}" title="{L_MOVETO}"><i class="fa fa-move"></i></a># ENDIF #
-								<span id="img{folder.ID}"></span>
+								<div class="upload-repertory-controls">
+									{folder.RENAME_FOLDER}
+									<span>
+										# IF NOT folder.C_MEMBERS_FOLDER #<a href="admin_files.php?{folder.DEL_TYPE}={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{FOLDERM_ID}" title="{folder.L_TYPE_DEL_FOLDER}" data-confirmation="# IF folder.C_MEMBER_FOLDER #{L_CONFIRM_EMPTY_FOLDER}# ELSE #delete-element# ENDIF #"><i class="fa fa-delete"></i></a># ENDIF #
+									</span>
+									<span>
+										# IF folder.C_TYPEFOLDER #<a href="admin_files{folder.U_MOVE}" title="{L_MOVETO}"><i class="fa fa-move"></i></a># ENDIF #
+									</span>								
+									<span id="img{folder.ID}"></span>
+								</div>
 							</div>
 						# END folder #
 						<span id="new-folder"></span>
@@ -319,14 +325,14 @@
 								<div class="upload-element-name" id="fi1{files.ID}">{files.NAME}<span id="fi{files.ID}"></span></div>
 							</a>
 							# ENDIF #
-							{files.BBCODE}<br />
-							<span class="text-strong">{files.FILETYPE}</span><br />
-							<span class="float-right">
+							{files.BBCODE}
+							<div class="upload-file-controls">
 								{files.RENAME_FILE}
 								<a href="upload.php?del={files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
 								<a href="upload{files.U_MOVE}" title="{L_MOVETO}" class="fa fa-move"></a>
 								{files.INSERT}							
-							</span>
+							</div>
+							<span class="text-strong">{files.FILETYPE}</span><br />
 							<span class="text-strong">{files.SIZE}</span>
 							<span id="imgf{files.ID}"></span>
 						</div>

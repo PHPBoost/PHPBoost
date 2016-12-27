@@ -1027,11 +1027,21 @@ div.container-block-absolute > div {
 }
 
 .upload-elements-repertory {
-	line-height: 64px;
+	line-height: 50px;
 	width: 180px;
 	text-align: center;
 	border: 1px solid #366493;
 	background-color: #aec7e1;
+}
+
+.upload-repertory-controls {
+	font-size: 0;
+}
+
+.upload-repertory-controls span {
+	font-size: 1.6rem;
+	width: calc(100% / 3);
+	display: inline-block;
 }
 
 .upload-elements-file {
@@ -1061,6 +1071,18 @@ div.container-block-absolute > div {
 	line-height: 100px;
 	text-align: center;
 	border: 1px solid #d9d9d9;
+}
+
+.upload-file-controls {
+	font-size: 0;
+}
+
+.upload-file-controls a {
+	font-size: 1.6rem;
+	width: calc(100% / 3);
+	display: inline-block;
+	text-align: center;
+	padding: 3px 0;
 }
 
 a.upload-recent-file {
