@@ -197,6 +197,17 @@ header span.actions a {
 	}
 }
 
+/* ---- Friends content ---- */
+.content-friends {
+	border-width: 7px 1px 1px 1px;
+	border-top-color: #103B67;
+}
+
+.content-privileged-friends {
+	border-width: 7px 1px 1px 1px;
+	border-top-color: #E2BE47;
+}
+
 
 /* -- Pagination des pages -- */
 /* -------------------------- */
