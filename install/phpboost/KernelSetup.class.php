@@ -549,7 +549,7 @@ class KernelSetup
 		self::$db_querier->insert(self::$visit_counter_table, array(
 			'id' => 1,
 			'ip' => '',
-			'time' => time(),
+			'time' => gmdate_format('Y-m-d',time()),
 			'total' => 0
 		));
 	}
