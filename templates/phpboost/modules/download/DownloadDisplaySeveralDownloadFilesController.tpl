@@ -3,12 +3,12 @@
 	$(document).ready(function(){
 		
 		/* Tableaux contenant les numeros associes a chaque type de categories */
-		var updates 		= [36, 39, 41, 45];
-		var prev_releases 	= [27, 35, 40];
-		var last_release	= [44];
-		var tools			= [26];
-		var modules 		= [29, 34, 38, 43, 47];
-		var templates 		= [30, 37, 42, 46];
+		var updates 		= [36, 39, 41, 45, 61];
+		var prev_releases 	= [27, 35, 40, 44];
+		var last_release	= [60];
+		var tools		= [26];
+		var modules 		= [29, 34, 38, 43, 47, 62];
+		var templates 		= [30, 37, 42, 46, 63];
 
 		/* Images que l on souhaite afficher en grand */
 		var img_modules  = "{PATH_TO_ROOT}/templates/{THEME}/theme/images/modules.jpg";
