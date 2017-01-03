@@ -360,22 +360,24 @@ img.pbt-logo {
 	height: 128px;
 }
 
-.download-subcat-element .subcat-img 		{ background-position: -1px -76px; 		}
+.download-subcat-element .subcat-img 		{ background-position: -1px -76px; 	}
 .download-subcat-updates .subcat-img 		{ background-position: -130px -76px; 	}
 .download-subcat-templates .subcat-img 		{ background-position: -259px -76px; 	}
 .download-subcat-modules .subcat-img 		{ background-position: -388px -76px; 	}
-.download-subcat-last-release .subcat-img 	{ background-position: -1px -76px; 		}
+.download-subcat-next-release .subcat-img 	{ background-position: -1px -76px; 	}
+.download-subcat-last-release .subcat-img 	{ background-position: -1px -76px; 	}
 .download-subcat-prev-releases .subcat-img 	{ background-position: -517px -76px; 	}
-.download-subcat-tools .subcat-img 			{ background-position: -646px -76px; 	}
+.download-subcat-tools .subcat-img 		{ background-position: -646px -76px; 	}
 
 
-.download-subcat-element .subcat-content 		{ background-color: #81A4C8; border-color:#366493;  }
-.download-subcat-templates .subcat-content 		{ background-color: #7CCAB0; border-color: #2F9674; }
-.download-subcat-modules .subcat-content 		{ background-color: #FFD79C; border-color: #E2A447; }
-.download-subcat-prev-releases .subcat-content 	{ background-color: #81A4C8; border-color:#366493;  }
-.download-subcat-last-release .subcat-content 	{ background-color: #81A4C8; border-color:#366493;  }
-.download-subcat-updates .subcat-content 		{ background-color: #FFBF9C; border-color:#E27B47;  }
-.download-subcat-tools .subcat-content 			{ background-color: #FFBF9C; border-color:#E27B47;  }
+.download-subcat-element .subcat-content 	{ background-color: #81A4C8; border-color: #366493; }
+.download-subcat-templates .subcat-content 	{ background-color: #7CCAB0; border-color: #2F9674; }
+.download-subcat-modules .subcat-content 	{ background-color: #FFD79C; border-color: #E2A447; }
+.download-subcat-prev-releases .subcat-content 	{ background-color: #81A4C8; border-color: #366493; }
+.download-subcat-last-release .subcat-content 	{ background-color: #81A4C8; border-color: #366493; }
+.download-subcat-next-release .subcat-content 	{ background-color: #81A4C8; border-color: #366493; }
+.download-subcat-updates .subcat-content 	{ background-color: #FFBF9C; border-color: #E27B47; }
+.download-subcat-tools .subcat-content 		{ background-color: #FFBF9C; border-color: #E27B47; }
 
 .download-subcat-element .subcat-title {
 	display: block;
