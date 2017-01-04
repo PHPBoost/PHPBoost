@@ -217,6 +217,14 @@ class TextHelper
 			return substr($string, $start);
 	}
 	
+	public static function mb_substr($string, $start, $length = '')
+	{
+		if (is_int($length))
+			return mb_substr($string, $start, $length);
+		else
+			return mb_substr($string, $start);
+	}
+	
 	public static function strrchr($string, $needle)
 	{
 		return mb_strrchr($string, $needle);
