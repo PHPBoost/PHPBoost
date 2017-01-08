@@ -120,12 +120,12 @@ class Environment
 		set_exception_handler(array(new RawExceptionHandler(), 'handle'));
 		Date::set_default_timezone();
 		
-		//setup php for working with Unicode data
-		mb_internal_encoding('UTF-8');
-		mb_regex_encoding('UTF-8');
-		mb_http_output('UTF-8');
-		mb_http_input('UTF-8');
-		mb_language('uni');
+		//check (if function is enabled) and setup php for working with Unicode data
+		if (function_exists('mb_internal_encoding')) { mb_internal_encoding('UTF-8'); }
+		if (function_exists('mb_regex_encoding')) { mb_regex_encoding('UTF-8'); }
+		if (function_exists('mb_http_output')) { mb_http_output('UTF-8'); }
+		if (function_exists('mb_http_input')) { mb_http_input('UTF-8'); }
+		if (function_exists('mb_language')) { mb_language('uni'); }
 		ob_start('mb_output_handler');
 		
 		@ini_set('open_basedir', NULL);
