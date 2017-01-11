@@ -1,0 +1,106 @@
+#news-tags-container,
+#news-sources-container,
+#news-suggested-container {
+	margin: 15px 15px 15px 30px;
+}
+
+.news-tags-title,
+.news-sources-title,
+.news-suggested-title {
+	font-weight: bold;
+}
+
+.news-separator { 
+	margin: 20px auto 20px auto;
+	width: 70%;
+}
+
+.navigation-link-previous 	{ float: left;  }
+.navigation-link-next 		{ float: right; }
+
+.navigation-link-previous i { margin-right: 5px; }
+.navigation-link-next i 	{ margin-left: 5px;  }
+
+
+/* Permettre l'affichage des boutons style accueil dans les news */
+div#p-link {
+    overflow: hidden;
+    width: 400px;
+}
+div#p-link {
+    margin: 0 auto;
+    padding: 15px auto;
+    width: 100%;
+}
+div.btn-ddl {
+    background: rgba(0, 0, 0, 0) linear-gradient(to bottom, #366493 40%, #1e5083 175%) repeat scroll 0 0;
+    border: 1px solid #1e5083;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+}
+div.btn-ddl:hover {
+    background: #1e5083 none repeat scroll 0 0;
+}
+div.p-link-btn {
+    border-radius: 4px;
+    display: inline-block;
+    margin: 0 0 0 25px;
+}
+div.btn-ddl a {
+    width: 200px;
+}
+div.p-link-btn a {
+    display: block;
+    height: 52px;
+    opacity: 0.97;
+}
+div.p-link-btn a:hover {
+    text-decoration: none;
+}
+p.p-link-title {
+    color: #ffffff;
+    font-size: 1.3em;
+    line-height: 1em;
+    margin-bottom: 0;
+    padding: 12px 0 0 10px;
+    text-transform: uppercase;
+}
+div.btn-ddl i {
+    color: #1e3752;
+    margin: 16px 12px 0 0;
+}
+div.p-link-btn i {
+    float: right;
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3), 1px 1px 1px rgba(255, 255, 255, 0.1);
+}
+p.ddl-com {
+    color: #c4994d;
+}
+p.p-link-com {
+    font-size: 11px;
+    line-height: 1em;
+    margin-bottom: 0;
+    padding-left: 13px;
+    text-transform: lowercase;
+}
+div.btn-try {
+    background: rgba(0, 0, 0, 0) linear-gradient(to bottom, #2f9674 40%, #168661 175%) repeat scroll 0 0;
+    border: 1px solid #096a4a;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+}
+div.btn-try:hover {
+    background: #168661 none repeat scroll 0 0;
+}
+div.btn-try a {
+    width: 164px;
+}
+div.btn-try i {
+    color: #204519;
+    margin: 14px 12px 0 0;
+}
+div.p-link-btn i {
+    float: right;
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3), 1px 1px 1px rgba(255, 255, 255, 0.1);
+}
+p.try-com {
+    color: #b3aeae;
+}
