@@ -190,6 +190,7 @@ class ContentSecondParser extends AbstractParser
 	 */
 	private function callbackhighlight_code($matches)
 	{
+		$extension = "";
 		$line_number = !empty($matches[2]);
 		$inline_code = !empty($matches[3]);
 
