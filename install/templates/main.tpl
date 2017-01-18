@@ -6,7 +6,7 @@ ${resources('install/install')}
 		<meta charset="UTF-8" />
 		<meta name="description" content="PHPBoost" />
 		<meta name="robots" content="noindex, follow" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/default.css" type="text/css" media="screen, print" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/kernel/lib/css/font-awesome/css/font-awesome.css" />
