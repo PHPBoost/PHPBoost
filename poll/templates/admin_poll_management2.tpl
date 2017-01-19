@@ -26,7 +26,7 @@
 			if( document.getElementById('v'+i) )
 				document.getElementById('v'+i).innerHTML = '<label><input class="poll-vote" type="text" name="v'+i+'" value="" /> 0.0%</label><br /><span id="v'+i2+'"></span>';
 			if( document.getElementById('s'+i) )
-				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<span id="s'+i2+'"><a href="javascript:add_field('+i2+', '+i_max+')"><i class="fa fa-plus"></i></a></span>' : '';
+				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<span id="s'+i2+'"><a href="javascript:add_field('+i2+', '+i_max+')" title="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus"></i></a></span>' : '';
 		}
 		
 		-->
@@ -123,7 +123,7 @@
 												<script>
 												<!--
 													if( {MAX_ID} < 19 )
-														document.write('<span id="s{MAX_ID}"><a href="javascript:add_field({MAX_ID}, 19)"><i class="fa fa-plus"></i></a></span>');
+														document.write('<span id="s{MAX_ID}"><a href="javascript:add_field({MAX_ID}, 19)" title="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus"></i></a></span>');
 												-->
 												</script>
 												
