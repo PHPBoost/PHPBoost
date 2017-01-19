@@ -288,18 +288,12 @@ else
 		{
 			$module_data_path = PATH_TO_ROOT . '/wiki/templates';
 			$sub_cats_number = PersistenceContext::get_querier()->count(PREFIX . "wiki_cats", 'WHERE id_parent = :id', array('id' => $row['id']));
-			if ($sub_cats_number > 0)
-			{	
-				$tpl->assign_block_vars('create.list', array(
-					'DIRECTORY' => '<li class="sub"><a class="parent" href="javascript:show_wiki_cat_contents(' . $row['id'] . ', 1);"><i class="fa fa-plus-square-o" id="img2_' . $row['id'] . '"></i><i class="fa fa-folder" id ="img_' . $row['id'] . '"></i></a><a id="class_' . $row['id'] . '" href="javascript:select_cat(' . $row['id'] . ');">' . stripslashes($row['title']) . '</a><span id="cat_' . $row['id'] . '"></span></li>'
-				));
-			}
-			else
-			{
-				$tpl->assign_block_vars('create.list', array(
-					'DIRECTORY' => '<li class="sub"><a id="class_' . $row['id'] . '" href="javascript:select_cat(' . $row['id'] . ');"><i class="fa fa-folder"></i>' . stripslashes($row['title']) . '</a><span id="cat_' . $row['id'] . '"></span></li>'
-				));
-			}
+			$tpl->assign_block_vars('create.list', array(
+				'ID' => $row['id'],
+				'TITLE' => stripslashes($row['title']),
+				'C_SUB_CAT' => $sub_cats_number > 0 ? true : false
+			));
+
 		}
 		$result->dispose();
 		$tpl->put_all(array(

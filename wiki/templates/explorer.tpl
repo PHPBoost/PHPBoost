@@ -16,13 +16,13 @@
 						# START list #
 						<li class="sub">
 							# IF list.U_FOLDER #
-								<a class="parent" href="javascript:show_wiki_cat_contents({list.ID}, 0);"><i class="fa fa-plus-square-o" id="img2_{list.ID}"></i><i id ="img_{list.ID}" class="fa fa-folder" ></i></a>
+								<a class="parent" href="javascript:show_wiki_cat_contents({list.ID}, 0);"><i class="fa fa-plus-square-o" id="img-subfolder-{list.ID}"></i><i id="img-folder-{list.ID}" class="fa fa-folder"></i></a>
 								<a id="class_{list.ID}" href="javascript:open_cat({list.ID});">{list.TITLE}</a>
 							# ELSE #
 								<a id="class_{list.ID}" href="javascript:open_cat({list.ID});"><i class="fa fa-folder"></i>{list.TITLE}</a>
 							# ENDIF #
 
-							<span id="cat_{list.ID}"></span>
+							<span id="cat-{list.ID}"></span>
 						</li>
 						# END list #
 						{CAT_LIST}
@@ -33,7 +33,7 @@
 	</div>
 	<div class="files">
 		<h2>{L_CATS}</h2>
-		<div class="content" id="cat_contents">
+		<div class="content" id="cat-contents">
 			<ul>
 				# START list_cats #
 				<li>

@@ -64,7 +64,18 @@
 										<ul>
 											# START create.list #
 											<li class="sub">
-												{create.list.DIRECTORY}
+												<li class="sub">
+													# IF create.list.C_SUB_CAT #
+													<a class="parent" href="javascript:show_wiki_cat_contents({create.list.ID}, 1);" title="${LangLoader::get_message('display', 'common')}">
+														<i class="fa fa-plus-square-o" id="img-subfolder-{create.list.ID}"></i>
+														<i class="fa fa-folder" id ="img-folder-{create.list.ID}"></i>
+													</a>
+													<a id="class_{create.list.ID}" href="javascript:select_cat({create.list.ID});">{create.list.TITLE}</a>
+													# ELSE #
+													<a id="class_{create.list.ID}" href="javascript:select_cat({create.list.ID});"><i class="fa fa-folder"></i>{create.list.TITLE}</a>
+													# ENDIF #
+													<span id="cat-{create.list.ID}"></span>
+												</li>
 											</li>
 											# END create.list #
 											{CAT_LIST}
