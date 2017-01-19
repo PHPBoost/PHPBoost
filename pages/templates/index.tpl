@@ -18,10 +18,21 @@
 				<h2>{L_CATS}</h2>
 				<div class="content">
 					<ul>
-						<li><a id="class_0" class="{CAT_0}" href="javascript:open_cat(0);"><i class="fa fa-folder"></i>{L_ROOT}</a>
+						<li><a id="class-0" class="{CAT_0}" href="javascript:open_cat(0);"><i class="fa fa-folder"></i>{L_ROOT}</a>
 							<ul>
 								# START list #
-									{list.DIRECTORY}
+									<li class="sub">
+										# IF list.C_SUB_CAT #
+											<a class="parent" href="javascript:show_pages_cat_contents({list.ID}, 1);" title="${LangLoader::get_message('display', 'common')}">
+												<i class="fa fa-plus-square-o" id="img-subfolder-{list.ID}"></i>
+												<i class="fa fa-folder" id ="img-folder-{list.ID}"></i>
+											</a>
+											<a id="class_{list.ID}" href="javascript:select_cat({list.ID});">{list.TITLE}</a>
+										# ELSE #
+											<a id="class_{list.ID}" href="javascript:select_cat({list.ID});"><i class="fa fa-folder"></i>{list.TITLE}</a>
+										# ENDIF #
+										<span id="cat-{list.ID}"></span>
+									</li>
 								# END list #
 								{CAT_LIST}
 							</ul>
@@ -31,7 +42,7 @@
 			</div>
 			<div class="files">
 				<h2>{L_EXPLORER}</h2>
-				<div class="content" id="cat_contents">
+				<div class="content" id="cat-contents">
 					<ul>
 						{ROOT_CONTENTS}
 					</ul>

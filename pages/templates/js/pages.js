@@ -27,10 +27,10 @@ function show_pages_cat_contents(id_cat, display_select_link)
 			{
 				if( xhr_object.readyState == 4 ) 
 				{
-					document.getElementById("cat_" + id_cat).innerHTML = xhr_object.responseText;
-					document.getElementById("img_" + id_cat).className = 'fa fa-folder-open';
-					if( document.getElementById("img2_" + id_cat) )
-						document.getElementById("img2_" + id_cat).className = 'fa fa-minus-square-o';
+					document.getElementById("cat-" + id_cat).innerHTML = xhr_object.responseText;
+					document.getElementById("img-folder-" + id_cat).className = 'fa fa-folder-open';
+					if( document.getElementById("img-subfolder-" + id_cat) )
+						document.getElementById("img-subfolder-" + id_cat).className = 'fa fa-minus-square-o';
 					cat_status[id_cat] = 1;
 				}
 			}
@@ -40,18 +40,18 @@ function show_pages_cat_contents(id_cat, display_select_link)
 		}	
 		else if( cat_status[id_cat] == 0 )
 		{
-			document.getElementById("cat_" + id_cat).style.display = 'block';
-			document.getElementById("img_" + id_cat).className = 'fa fa-folder-open';
-			if( document.getElementById("img2_" + id_cat) )
-				document.getElementById("img2_" + id_cat).className = 'fa fa-minus-square-o';
+			document.getElementById("cat-" + id_cat).style.display = 'block';
+			document.getElementById("img-folder-" + id_cat).className = 'fa fa-folder-open';
+			if( document.getElementById("img-subfolder-" + id_cat) )
+				document.getElementById("img-subfolder-" + id_cat).className = 'fa fa-minus-square-o';
 			cat_status[id_cat] = 1;
 		}
 		else
 		{
-			document.getElementById("cat_" + id_cat).style.display = 'none';
-			document.getElementById("img_" + id_cat).className = 'fa fa-folder';
-			if( document.getElementById("img2_" + id_cat) )
-				document.getElementById("img2_" + id_cat).className = 'fa fa-plus-square-o';
+			document.getElementById("cat-" + id_cat).style.display = 'none';
+			document.getElementById("img-folder-" + id_cat).className = 'fa fa-folder';
+			if( document.getElementById("img-subfolder-" + id_cat) )
+				document.getElementById("img-subfolder-" + id_cat).className = 'fa fa-plus-square-o';
 			cat_status[id_cat] = 0;
 		}
 	}
@@ -81,8 +81,8 @@ function select_cat(id_cat)
 			if( xhr_object.readyState == 4 ) 
 			{
 				document.getElementById("id_cat").value = id_cat;
-				document.getElementById("class_" + id_cat).className = "selected";
-				document.getElementById("class_" + selected_cat).className = "";
+				document.getElementById("class-" + id_cat).className = "selected";
+				document.getElementById("class-" + selected_cat).className = "";
 				selected_cat = id_cat;
 			}
 		}
@@ -117,9 +117,9 @@ function open_cat(id_cat)
 		{
 			if( xhr_object.readyState == 4 ) 
 			{
-				document.getElementById("cat_contents").innerHTML = xhr_object.responseText;
-				document.getElementById("class_" + id_cat).className = "selected";
-				document.getElementById("class_" + selected_cat).className = "";
+				document.getElementById("cat-contents").innerHTML = xhr_object.responseText;
+				document.getElementById("class-" + id_cat).className = "selected";
+				document.getElementById("class-" + selected_cat).className = "";
 				selected_cat = id_cat;
 			}
 		}

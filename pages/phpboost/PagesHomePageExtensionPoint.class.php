@@ -117,18 +117,11 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 		while ($row = $result->fetch())
 		{
 			$sub_cats_number = PersistenceContext::get_querier()->count(PREFIX . "pages_cats", 'WHERE id_parent=:id_parent', array('id_parent' => $row['id']));
-			if ($sub_cats_number > 0)
-			{	
-				$tpl->assign_block_vars('list', array(
-					'DIRECTORY' => '<li class="sub"><a class="parent" href="javascript:show_pages_cat_contents(' . $row['id'] . ', 0);"><i class="fa fa-plus-square-o" id="img2_' . $row['id'] . '"></i><i class="fa fa-folder" id ="img_' . $row['id'] . '"></i></a><a id="class_' . $row['id'] . '" href="javascript:open_cat(' . $row['id'] . ');">' . stripslashes($row['title']) . '</a><span id="cat_' . $row['id'] . '"></li>'
-				));
-			}
-			else
-			{
-				$tpl->assign_block_vars('list', array(
-					'DIRECTORY' => '<li class="sub"><a id="class_' . $row['id'] . '" href="javascript:open_cat(' . $row['id'] . ');"><i class="fa fa-folder"></i>' . stripslashes($row['title']) . '</a><span id="cat_' . $row['id'] . '"></span></li>'
-				));
-			}
+            $tpl->assign_block_vars('list', array(
+                'ID' => $row['id'],
+                'TITLE' => stripslashes($row['title']),
+                'C_SUB_CAT' => $sub_cats_number > 0 ? true : false
+            ));
 		}
 		$result->dispose();
 
