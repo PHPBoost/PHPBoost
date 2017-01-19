@@ -91,4 +91,4 @@ var ContactFormFieldSelectMarker = new ContactFormFieldSelectMarker();
 	</div>
 # END fieldelements #
 </div>
-<a href="javascript:ContactFormFieldSelectMarker.add_field();" id="add-${escape(ID)}"><i class="fa fa-plus"></i></a> 
+<a href="javascript:ContactFormFieldSelectMarker.add_field();" id="add-${escape(ID)}" class="contact-form-marker-more" title="${LangLoader::get_message('add', 'common')}" ><i class="fa fa-plus"></i></a> 

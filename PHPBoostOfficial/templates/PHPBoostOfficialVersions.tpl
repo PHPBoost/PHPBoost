@@ -57,4 +57,4 @@ var PHPBoostOfficialVersions = new PHPBoostOfficialVersions();
 	</div>
 # END fieldelements #
 </div>
-<a href="" onclick="PHPBoostOfficialVersions.add();return false;" id="add-${escape(HTML_ID)}"><i class="fa fa-plus"></i></a>
+<a href="" onclick="PHPBoostOfficialVersions.add();return false;" id="add-${escape(HTML_ID)}" class="field-version-number-more-value" title="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus"></i></a>

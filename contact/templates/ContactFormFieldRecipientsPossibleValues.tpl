@@ -58,4 +58,4 @@ var ContactFormFieldRecipientsPossibleValues = new ContactFormFieldRecipientsPos
 	</div>
 # END fieldelements #
 </div>
-<a href="javascript:ContactFormFieldRecipientsPossibleValues.add();" id="add-${escape(HTML_ID)}"><i class="fa fa-plus"></i></a>
+<a href="javascript:ContactFormFieldRecipientsPossibleValues.add();" id="add-${escape(HTML_ID)}" class="form-field-checkbox-more-value" title="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus"></i></a>
