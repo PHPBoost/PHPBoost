@@ -21,7 +21,7 @@
 								# START list #
 								<li class="sub">
 									# IF list.U_FOLDER #
-										<a class="parent" href="javascript:show_wiki_cat_contents({list.ID}, 0);"><i class="fa fa-plus-square-o" id="img2_{list.ID}"></i><i id ="img_{list.ID}" class="fa fa-folder" ></i></a>
+										<a class="parent" href="javascript:show_pages_cat_contents({list.ID}, 0);"><i class="fa fa-plus-square-o" id="img2_{list.ID}"></i><i id ="img_{list.ID}" class="fa fa-folder" ></i></a>
 										<a id="class_{list.ID}" href="javascript:open_cat({list.ID});">{list.TITLE}</a>
 									# ELSE #
 										<a id="class_{list.ID}" href="javascript:open_cat({list.ID});"><i class="fa fa-folder"></i>{list.TITLE}</a>
@@ -42,7 +42,7 @@
 					<ul>
 						# START list_cats #
 						<li>
-							<a class="explorer-list-cat-link" href="javascript:open_cat({list_cats.KEY}); show_wiki_cat_contents({list_cats.ID_PARENT}, 0);"><i class="fa fa-folder"></i>{list_cats.TITLE}</a>
+							<a class="explorer-list-cat-link" href="javascript:open_cat({list_cats.KEY}); show_pages_cat_contents({list_cats.ID_PARENT}, 0);"><i class="fa fa-folder"></i>{list_cats.TITLE}</a>
 						</li>
 						# END list_cats #
 						# START list_files #
