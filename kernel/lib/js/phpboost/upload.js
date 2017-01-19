@@ -82,8 +82,8 @@ function select_cat(id_cat)
 			if( xhr_object.readyState == 4 ) 
 			{
 				document.getElementById("id_cat").value = id_cat;
-				document.getElementById("class_" + id_cat).className = "upload-selected-cat";
-				document.getElementById("class_" + selected_cat).className = "";
+				document.getElementById("class-" + id_cat).className = "upload-selected-cat";
+				document.getElementById("class-" + selected_cat).className = "";
 				selected_cat = id_cat;
 			}
 		}

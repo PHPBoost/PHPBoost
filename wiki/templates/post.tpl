@@ -60,7 +60,7 @@
 						<div class="cats">
 							<div class="content">
 								<ul>
-									<li><a class="{CAT_0}" id="class_0" href="javascript:select_cat(0);"><i class="fa fa-folder"></i>{L_DO_NOT_SELECT_ANY_CAT}</a>
+									<li><a class="{CAT_0}" id="class-0" href="javascript:select_cat(0);"><i class="fa fa-folder"></i>{L_DO_NOT_SELECT_ANY_CAT}</a>
 										<ul>
 											# START create.list #
 											<li class="sub">
@@ -70,9 +70,9 @@
 														<i class="fa fa-plus-square-o" id="img-subfolder-{create.list.ID}"></i>
 														<i class="fa fa-folder" id ="img-folder-{create.list.ID}"></i>
 													</a>
-													<a id="class_{create.list.ID}" href="javascript:select_cat({create.list.ID});">{create.list.TITLE}</a>
+													<a id="class-{create.list.ID}" href="javascript:select_cat({create.list.ID});">{create.list.TITLE}</a>
 													# ELSE #
-													<a id="class_{create.list.ID}" href="javascript:select_cat({create.list.ID});"><i class="fa fa-folder"></i>{create.list.TITLE}</a>
+													<a id="class-{create.list.ID}" href="javascript:select_cat({create.list.ID});"><i class="fa fa-folder"></i>{create.list.TITLE}</a>
 													# ENDIF #
 													<span id="cat-{create.list.ID}"></span>
 												</li>

@@ -57,7 +57,7 @@
 										var selected_cat = {SELECTED_CAT};
 									-->
 									</script>
-									<span><a href="javascript:select_cat(0);"><i class="fa fa-home"></i> <span id="class_0" class="{CAT_0}">{L_ROOT}</span></a></span>
+									<span><a href="javascript:select_cat(0);"><i class="fa fa-home"></i> <span id="class-0" class="{CAT_0}">{L_ROOT}</span></a></span>
 									<br />
 									{FOLDERS}
 							</div>

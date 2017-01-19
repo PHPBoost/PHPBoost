@@ -132,10 +132,10 @@
 						<h2>{@css.explorer}</h2>
 					<div class="content">
 						<ul>
-							<li><a id="class_0" href="#"><i class="fa fa-folder"></i>{@css.root}</a>
+							<li><a id="class-0" href="#"><i class="fa fa-folder"></i>{@css.root}</a>
 								<ul>
-									<li class="sub"><a id="class_1" href="#"><i class="fa fa-folder"></i>{@css.cat} 1</a><span id="cat_1"></span></li>
-									<li class="sub"><a class="parent" href="javascript:show_cat_contents(2, 0);"><span class="fa fa-minus-square-o" id="img2_2"></span><span class="fa fa-folder-open" id ="img_2"></span></a><a class="selected" id="class_2" href="#">{@css.cat} 2</a>
+									<li class="sub"><a id="class-1" href="#"><i class="fa fa-folder"></i>{@css.cat} 1</a><span id="cat_1"></span></li>
+									<li class="sub"><a class="parent" href="javascript:show_cat_contents(2, 0);"><span class="fa fa-minus-square-o" id="img2_2"></span><span class="fa fa-folder-open" id ="img_2"></span></a><a class="selected" id="class-2" href="#">{@css.cat} 2</a>
 									<span id="cat_2">
 										<ul>
 											<li class="sub"><a href="#"><i class="fa fa-folder"></i>{@css.cat} 3</a></li>

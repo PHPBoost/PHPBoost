@@ -82,7 +82,7 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link, $user_id)
 	{
 		if (in_array($row['id'], $cats)) //Si cette catégorie contient notre catégorie, on l'explore
 		{
-			$line .= '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="fa fa-minus-square-o" id="img2_' . $row['id'] . '"></a> <a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="fa fa-folder-open" id="img_' . $row['id'] . '"></a>&nbsp;<span id="class_' . $row['id'] . '" class="' . ($row['id'] == $id ? 'upload-selected-cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span><span id="cat_' . $row['id'] . '">
+			$line .= '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="fa fa-minus-square-o" id="img2_' . $row['id'] . '"></a> <a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="fa fa-folder-open" id="img_' . $row['id'] . '"></a>&nbsp;<span id="class-' . $row['id'] . '" class="' . ($row['id'] == $id ? 'upload-selected-cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span><span id="cat_' . $row['id'] . '">
 			<ul class="upload-cat-explorer">'
 			. show_cat_contents($row['id'], $cats, $id, $display_select_link, $user_id) . '</ul></span></li>';
 		}
@@ -94,9 +94,9 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link, $user_id)
 			));
 			//Si cette catégorie contient des sous catégories, on propose de voir son contenu
 			if ($sub_cats_number > 0)
-				$line .= '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="fa fa-plus-square-o" id="img2_' . $row['id'] . '"></a> <a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="fa fa-folder" id="img_' . $row['id'] . '"></a>&nbsp;<span id="class_' . $row['id'] . '" class="' . ($row['id'] == $id ? 'upload-selected-cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>';
+				$line .= '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="fa fa-plus-square-o" id="img2_' . $row['id'] . '"></a> <a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="fa fa-folder" id="img_' . $row['id'] . '"></a>&nbsp;<span id="class-' . $row['id'] . '" class="' . ($row['id'] == $id ? 'upload-selected-cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>';
 			else //Sinon on n'affiche pas le "+"
-				$line .= '<li class="upload-no-sub-cat"><i class="fa fa-folder"></i>&nbsp;<span id="class_' . $row['id'] . '" class="' . ($row['id'] == $id ? 'upload-selected-cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span></li>';
+				$line .= '<li class="upload-no-sub-cat"><i class="fa fa-folder"></i>&nbsp;<span id="class-' . $row['id'] . '" class="' . ($row['id'] == $id ? 'upload-selected-cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span></li>';
 		}
 	}
 	$result->dispose();

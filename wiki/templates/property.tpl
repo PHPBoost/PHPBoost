@@ -177,7 +177,7 @@
 					<div class="form-field content">
 						<ul>
 							<li>
-								<a id="class_0" class="{move.CAT_0}" href="javascript:select_cat(0);"><i class="fa fa-folder"></i> {L_DO_NOT_SELECT_ANY_CAT}</a>
+								<a id="class-0" class="{move.CAT_0}" href="javascript:select_cat(0);"><i class="fa fa-folder"></i> {L_DO_NOT_SELECT_ANY_CAT}</a>
 								{move.CATS}
 							</li>
 						</ul>
@@ -342,7 +342,7 @@
 				<div class="form-element">
 					<label>{L_SELECT_CAT}</label>
 					<div class="form-field">
-						<span class="futur-cat-pages"><a href="javascript:select_cat(0);"><i class="fa fa-folder"></i> <span id="class_0" class="{remove.CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
+						<span class="futur-cat-pages"><a href="javascript:select_cat(0);"><i class="fa fa-folder"></i> <span id="class-0" class="{remove.CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
 						<br />
 						{remove.CATS}
 					</div>

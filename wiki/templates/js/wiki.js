@@ -82,8 +82,8 @@
 					{
 						document.getElementById("selected_cat").innerHTML = xhr_object.responseText;
 						document.getElementById("id_cat").value = id_cat;
-						document.getElementById("class_" + id_cat).className = "selected";
-						document.getElementById("class_" + selected_cat).className = "";
+						document.getElementById("class-" + id_cat).className = "selected";
+						document.getElementById("class-" + selected_cat).className = "";
 						selected_cat = id_cat;
 					}
 				}
@@ -254,8 +254,8 @@
 					if( xhr_object.readyState == 4 ) 
 					{
 						document.getElementById("cat-contents").innerHTML = xhr_object.responseText;
-						document.getElementById("class_" + id_cat).className = "selected";
-						document.getElementById("class_" + selected_cat).className = "";
+						document.getElementById("class-" + id_cat).className = "selected";
+						document.getElementById("class-" + selected_cat).className = "";
 						selected_cat = id_cat;
 					}
 				}
