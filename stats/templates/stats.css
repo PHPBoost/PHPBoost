@@ -12,7 +12,7 @@
 }
 
 #menustats ul {
-	height: 0;
+	height: auto;
 	opacity: 0;
 	visibility: hidden;
 	list-style-type: none;

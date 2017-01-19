@@ -1051,7 +1051,6 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				$tpl->assign_block_vars('referer_list', array(
 					'ID' => $row['id'],
 					'URL' => $row['url'],
-					'IMG_MORE' => '<a class="fa fa-plus-square-o" style="cursor:pointer;" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" id="img_url' . $row['id'] . '"></a>',
 					'NBR_LINKS' => $row['count'],
 					'TOTAL_VISIT' => $row['total_visit'],
 					'AVERAGE_VISIT' => $trend_parameters['average'],
@@ -1106,7 +1105,6 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				$tpl->assign_block_vars('keyword_list', array(
 					'ID' => $row['id'],
 					'KEYWORD' => $row['relative_url'],
-					'IMG_MORE' => '<a class="fa fa-plus-square-o" style="cursor:pointer;" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" id="img_url' . $row['id'] . '"></a>',
 					'NBR_LINKS' => $row['count'],
 					'TOTAL_VISIT' => $row['total_visit'],
 					'AVERAGE_VISIT' => $trend_parameters['average'],
