@@ -14,13 +14,15 @@ stats/cache/*
 upload/*
 update/update_followed.txt
 HomeCustom
+CMSMigrant
 
 !templates
-# Ignore le répertoire des thèmes:
+# Ignore le rÃ©pertoire des thÃ¨mes:
 templates/*.*
 templates/*
 
-# Sauf les thèmes suivants :
+# Sauf les thÃ¨mes suivants :
 !templates/base
 !templates/default
 !templates/phpboost
+
