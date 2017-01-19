@@ -1,14 +1,18 @@
 <script>
 <!--
 function display_description(id){
-	jQuery('#desc_explain' + id).toggle(300, function(){
+	var SHOW = ${escapejs(LangLoader::get_message('display', 'common'))};
+	var HIDE = ${escapejs(LangLoader::get_message('hide', 'common'))};
+
+	jQuery('#desc-explain-' + id).toggle(300, function(){
 		if (jQuery(this).css('display') == 'block'){
-			jQuery('#picture_desc' + id)[0].className = 'fa fa-minus';
+			jQuery('#picture-desc-' + id).attr('title', HIDE);
 		}
 		else{
-			jQuery('#picture_desc' + id)[0].className = 'fa fa-plus';
-			
+			jQuery('#picture-desc-' + id).attr('title', SHOW);
 		}
+		jQuery('#picture-desc-' + id).children().toggleClass('fa-minus');
+		jQuery('#picture-desc-' + id).children().toggleClass('fa-plus');
 	});
 }
 -->
@@ -39,13 +43,15 @@ function display_description(id){
 					<span class="text-strong">{modules_not_activated.NAME}</span> <em>({modules_not_activated.VERSION})</em>
 				</td>
 				<td>
-					<div id="desc_explain{modules_not_activated.ID}" class="left" style="display: none;">
+					<div id="desc-explain-{modules_not_activated.ID}" class="left" style="display: none;">
 						<span class="text-strong">{@modules.author} :</span> # IF modules_not_activated.C_AUTHOR #<a href="mailto:{modules_not_activated.AUTHOR_EMAIL}">{modules_not_activated.AUTHOR}</a># ELSE #{modules_not_activated.AUTHOR}# ENDIF # # IF modules_not_activated.C_AUTHOR_WEBSITE #<a href="{modules_not_activated.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
 						<span class="text-strong">{@modules.description} :</span> {modules_not_activated.DESCRIPTION}<br />
 						<span class="text-strong">{@modules.compatibility} :</span> PHPBoost {modules_not_activated.COMPATIBILITY}<br />
 						<span class="text-strong">{@modules.php_version} :</span> {modules_not_activated.PHP_VERSION}
 					</div>
-					<div class="center"><a href="" onclick="javascript:display_description('{modules_not_activated.ID}'); return false;" class="fa fa-plus" id="picture_desc{modules_not_activated.ID}"></a></div>
+					<div class="center">
+						<a href="" onclick="javascript:display_description('{modules_not_activated.ID}'); return false;" id="picture-desc-{modules_not_activated.ID}" class="description-displayed" title="${LangLoader::get_message('display', 'common')}"><i class="fa fa-plus"></i></a>
+					</div>
 				</td>
 				<td class="input-radio">
 					<div class="form-field-radio">
@@ -92,13 +98,13 @@ function display_description(id){
 					<span class="text-strong">{modules_activated.NAME}</span> <em>({modules_activated.VERSION})</em>
 				</td>
 				<td>
-					<div id="desc_explain{modules_activated.ID}" class="left" style="display:none;">
+					<div id="desc-explain-{modules_activated.ID}" class="left" style="display: none;">
 						<span class="text-strong">{@modules.name} :</span> # IF modules_activated.C_AUTHOR #<a href="mailto:{modules_activated.AUTHOR_EMAIL}">{modules_activated.AUTHOR}</a># ELSE #{modules_activated.AUTHOR}# ENDIF # # IF modules_activated.C_AUTHOR_WEBSITE #<a href="{modules_activated.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
 						<span class="text-strong">{@modules.description} :</span> {modules_activated.DESCRIPTION}<br />
 						<span class="text-strong">{@modules.compatibility} :</span> PHPBoost {modules_activated.COMPATIBILITY}<br />
 						<span class="text-strong">{@modules.php_version} :</span> {modules_activated.PHP_VERSION}
 					</div>
-					<div class="center"><a href="" onclick="javascript:display_description('{modules_activated.ID}'); return false;" class="fa fa-plus" id="picture_desc{modules_activated.ID}"></a></div>
+					<div class="center"><a href="" onclick="javascript:display_description('{modules_activated.ID}'); return false;" id="picture-desc-{modules_activated.ID}" class="description-displayed" title="${LangLoader::get_message('display', 'common')}"><i class="fa fa-plus"></i></a></div>
 				</td>
 				<td class="input-radio">
 					<div class="form-field-radio">

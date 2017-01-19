@@ -28,7 +28,7 @@ var MultipleFilePicker = new MultipleFilePicker();
 	<input type="file" name="${escape(HTML_ID)}_1" id="${escape(HTML_ID)}_1"# IF C_DISABLED # disabled="disabled"# ENDIF #><br />
 	<input name="max_file_size" value="{MAX_FILE_SIZE}" type="hidden">
 </div>
-<a href="javascript:MultipleFilePicker.add_file_input();" class="fa fa-plus" id="add_${escape(HTML_ID)}"></a>
+<a href="javascript:MultipleFilePicker.add_file_input();" id="add_${escape(HTML_ID)}" class="input-file-more" title="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus"></i></a>
 <script>
 <!--
 jQuery('#input_files_list_${escape(HTML_ID)}').parents('form')[0].enctype = "multipart/form-data";
