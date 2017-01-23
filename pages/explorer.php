@@ -73,7 +73,7 @@ while ($row = $result->fetch())
 	{
 		$template->assign_block_vars('list_files', array(
 			'TITLE' => stripslashes($row['title']),
-			'URL_FILE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
+			'URL_FILE' => url('pages.php?title=' . $row['encoded_title'], $row['encoded_title'])
 		));
 	}
 }
