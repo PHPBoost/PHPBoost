@@ -54,4 +54,4 @@ var FormFieldMultipleAutocompleter = new FormFieldMultipleAutocompleter();
 	</div>
 # END fieldelements #
 </div>
-<a href="javascript:FormFieldMultipleAutocompleter.add_field();" class="fa fa-plus" id="add-${escape(HTML_ID)}"></a>
+<a href="javascript:FormFieldMultipleAutocompleter.add_field();" class="fa fa-plus" id="add-${escape(HTML_ID)}" title="${LangLoader::get_message('add', 'common')}"></a>

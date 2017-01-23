@@ -194,7 +194,7 @@
 										
 										<p class="center" id="add_poll_field_link">
 											# IF C_ADD_POLL_FIELD #
-											<a title="plus" href="" onclick="add_poll_field({NBR_POLL_FIELD});return false;"><i class="fa fa-plus"></i></a>
+											<a title="${LangLoader::get_message('add', 'common')}" href="" onclick="add_poll_field({NBR_POLL_FIELD});return false;"><i class="fa fa-plus"></i></a>
 											# ENDIF #
 										</p>
 									</div>

@@ -67,4 +67,4 @@ var ContactFormFieldObjectPossibleValues = new ContactFormFieldObjectPossibleVal
 	</div>
 # END fieldelements #
 </div>
-<a href="javascript:ContactFormFieldObjectPossibleValues.add();" id="add-${escape(HTML_ID)}"><i class="fa fa-plus"></i></a>
+<a href="javascript:ContactFormFieldObjectPossibleValues.add();" id="add-${escape(HTML_ID)}"><i class="fa fa-plus" title="${LangLoader::get_message('add', 'common')}"></i></a>

@@ -49,4 +49,4 @@ var QuestionCaptchaFormFieldQuestions = new QuestionCaptchaFormFieldQuestions();
 	</div>
 # END fieldelements #
 </div>
-<a href="javascript:QuestionCaptchaFormFieldQuestions.add_question();" class="fa fa-plus" id="add_${escape(HTML_ID)}"></a> 
+<a href="javascript:QuestionCaptchaFormFieldQuestions.add_question();" class="fa fa-plus" id="add_${escape(HTML_ID)}" title="${LangLoader::get_message('add', 'common')}"></a> 

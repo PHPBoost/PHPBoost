@@ -54,4 +54,4 @@ var FormFieldPossibleValues = new FormFieldPossibleValues();
 	</div>
 # END fieldelements #
 </div>
-<a href="javascript:FormFieldPossibleValues.add_field();" class="fa fa-plus" id="add_${escape(HTML_ID)}"></a>
+<a href="javascript:FormFieldPossibleValues.add_field();" class="fa fa-plus" id="add_${escape(HTML_ID)}" title="${LangLoader::get_message('add', 'common')}"></a>

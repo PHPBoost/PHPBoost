@@ -45,7 +45,7 @@ function display_description(id){
 						<span class="text-strong">{@modules.compatibility} :</span> PHPBoost {modules_not_activated.COMPATIBILITY}<br />
 						<span class="text-strong">{@modules.php_version} :</span> {modules_not_activated.PHP_VERSION}
 					</div>
-					<div class="center"><a href="" onclick="javascript:display_description('{modules_not_activated.ID}'); return false;" class="fa fa-plus" id="picture_desc{modules_not_activated.ID}"></a></div>
+					<div class="center"><a href="" onclick="javascript:display_description('{modules_not_activated.ID}'); return false;" class="fa fa-plus" id="picture_desc{modules_not_activated.ID}" title="${LangLoader::get_message('display', 'common')}"></a></div>
 				</td>
 				<td class="input-radio">
 					<div class="form-field-radio">
@@ -98,7 +98,7 @@ function display_description(id){
 						<span class="text-strong">{@modules.compatibility} :</span> PHPBoost {modules_activated.COMPATIBILITY}<br />
 						<span class="text-strong">{@modules.php_version} :</span> {modules_activated.PHP_VERSION}
 					</div>
-					<div class="center"><a href="" onclick="javascript:display_description('{modules_activated.ID}'); return false;" class="fa fa-plus" id="picture_desc{modules_activated.ID}"></a></div>
+					<div class="center"><a href="" onclick="javascript:display_description('{modules_activated.ID}'); return false;" class="fa fa-plus" id="picture_desc{modules_activated.ID}" title="${LangLoader::get_message('display', 'common')}"></a></div>
 				</td>
 				<td class="input-radio">
 					<div class="form-field-radio">

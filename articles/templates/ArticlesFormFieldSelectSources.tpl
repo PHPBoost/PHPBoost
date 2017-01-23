@@ -48,4 +48,4 @@ var ArticlesFormFieldSelectSources = new ArticlesFormFieldSelectSources();
 		</div>
 # END fieldelements #
 </div>
-<a href="javascript:ArticlesFormFieldSelectSources.add_field();" id="add-${escape(ID)}"><i class="fa fa-plus"></i></a> 
+<a href="javascript:ArticlesFormFieldSelectSources.add_field();" id="add-${escape(ID)}"><i class="fa fa-plus" title="${LangLoader::get_message('add', 'common')}"></i></a> 
