@@ -165,7 +165,7 @@ $lang['registration.pending-approval'] = 'Un nouveau membre s\'est inscrit. Son 
 $lang['registration.subject-mail'] = 'Confirmation d\'inscription sur :site_name';
 $lang['registration.content-mail'] = 'Cher(e) :pseudo,
 
-Tout d\'abord, merci de vous être inscrit sur :site_name. Vous faites parti dès maintenant des membres du site.
+Tout d\'abord, merci de vous être inscrit sur :site_name. Vous faites partie dès maintenant des membres du site.
 En vous inscrivant sur :site_name, vous obtenez un accès à la zone membre qui vous offre plusieurs avantages. Vous pourrez, entre autre, être reconnu automatiquement sur tout le site, pour poster des messages, modifier la langue et/ou le thème par défaut, éditer votre profil, accéder à des catégories réservées aux membres... Bref vous accédez à toute la communauté du site.
 
 Pour vous connecter, il vous faudra retenir votre identifiant et votre mot de passe.
