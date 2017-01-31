@@ -69,7 +69,7 @@ $lang['display_name.explain'] = 'Nom affiché sur chacun des éléments que vous
 $lang['login'] = 'Identifiant de connexion';
 $lang['login.explain'] = 'Adresse email ou votre login personnalisé si vous en avez choisi un.';
 $lang['login.custom'] = 'Choisir un identifiant de connexion';
-$lang['login.custom.explain'] = 'Par défaut, vous devez vous connecter avec votre adresse email.';
+$lang['login.custom.explain'] = '<span class="color-alert">Par défaut, vous devez vous connecter avec votre adresse email.</span>';
 $lang['password.custom'] = 'Définir un mot de passe';
 $lang['password.custom.explain'] = 'Par défaut un mot de passe est généré automatiquement';
 $lang['password'] = 'Mot de passe';
@@ -115,6 +115,7 @@ $lang['twitter-connect'] = 'Se connecter avec Twitter';
 
 $lang['internal_connection'] = 'Connexion interne';
 $lang['create_internal_connection'] = 'Créer un compte interne';
+$lang['edit_internal_connection'] = 'Editer votre compte interne';
 $lang['fb_connection'] = 'Connexion par Facebook';
 $lang['google_connection'] = 'Connexion par Google';
 $lang['associate_account'] = 'Associer votre compte';

@@ -70,7 +70,7 @@ $lang['display_name.explain'] = 'Display name on each item you add.';
 $lang['login'] = 'Login';
 $lang['login.explain'] = 'Email address or your customized login if you chose one.';
 $lang['login.custom'] = 'Choose a login';
-$lang['login.custom.explain'] = 'Default, you must log in with your email address.';
+$lang['login.custom.explain'] = '<span class="color-alert">Default, you must log in with your email address.</span>';
 $lang['password.custom'] = 'Define a password';
 $lang['password.custom.explain'] = 'The password is automatically generated per default';
 $lang['password'] = 'Password';
@@ -116,6 +116,7 @@ $lang['twitter-connect'] = 'Connect with Twitter';
 
 $lang['internal_connection'] = 'Internal connection';
 $lang['create_internal_connection'] = 'Create internal connection';
+$lang['edit_internal_connection'] = 'Edit your internal connection';
 $lang['fb_connection'] = 'Facebook connection';
 $lang['google_connection'] = 'Google connection';
 $lang['associate_account'] = 'Associate your account';

@@ -162,12 +162,15 @@ class UserEditProfileController extends AbstractController
 		$form->add_fieldset($connect_fieldset);
 		
 		$more_than_one_authentication_type = count($activated_auth_types) > 1;
+		$internal_auth_connected = in_array(PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD, $this->user_auth_types);
+
 		$has_custom_login = $this->internal_auth_infos['login'] && $this->user->get_email() !== $this->internal_auth_infos['login'];
+
 		if ($more_than_one_authentication_type)
 		{
-			if (in_array(PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD, $this->user_auth_types))
+			if ($internal_auth_connected)
 			{
-				$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['internal_connection'] . ' <i class="fa fa-success"></i>', '<a  href="" onclick="javascript:HTMLForms.getField(\'custom_login\').enable();'. ($has_custom_login ? 'HTMLForms.getField(\'login\').enable();HTMLForms.getField(\'custom_login\').setValue(true);' : '') . 'HTMLForms.getField(\'password\').enable();HTMLForms.getField(\'password_bis\').enable();' . ($this->user->get_id() == AppContext::get_current_user()->get_id() ? 'HTMLForms.getField(\'old_password\').enable();' : '') . 'return false;">' . LangLoader::get_message('edit', 'common') . '</a>'));
+				$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['internal_connection'] . ' <i class="fa fa-success"></i>', LangLoader::get_message('edit_internal_connection', 'user-common')));
 			}
 			else
 			{
@@ -176,34 +179,40 @@ class UserEditProfileController extends AbstractController
 		}
 
 		$connect_fieldset->add_field(new FormFieldCheckbox('custom_login', $this->lang['login.custom'], $has_custom_login,
-			array('description'=> $this->lang['login.custom.explain'], 'hidden' => $more_than_one_authentication_type, 'events' => array('click' => '
-				if (HTMLForms.getField("custom_login").getValue()) {
-					HTMLForms.getField("login").enable();
-				} else {
-					HTMLForms.getField("login").disable();
-				}')
+			array(	'description'=> $this->lang['login.custom.explain'], 
+					'hidden' => !$internal_auth_connected,
+					'events' => array('click' => '
+						if (HTMLForms.getField("custom_login").getValue()) {
+							HTMLForms.getField("login").enable();
+						} else {
+							HTMLForms.getField("login").disable();
+						}'
+					)
 			)
 		));
 
 		$connect_fieldset->add_field($login = new FormFieldTextEditor('login', $this->lang['login'], ($has_custom_login ? $this->internal_auth_infos['login'] : preg_replace('/\s+/u', '', $this->user->get_display_name())),
-			array('required' => true, 'hidden' => $more_than_one_authentication_type || !$has_custom_login, 'maxlength' => 25),
+			array(	'required' => true, 
+					'hidden' => !$internal_auth_connected || !$has_custom_login,
+					'maxlength' => 25
+				),
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists($this->user->get_id()))
 		));
 
 		if ($this->user->get_id() == AppContext::get_current_user()->get_id())
 		{
 			$connect_fieldset->add_field(new FormFieldPasswordEditor('old_password', $this->lang['password.old'], '', array(
-				'description' => $this->lang['password.old.explain'], 'hidden' => $more_than_one_authentication_type))
+				'description' => $this->lang['password.old.explain'], 'hidden' => !$internal_auth_connected))
 			);
 		}
 		
 		$connect_fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '',
-			array('description' => StringVars::replace_vars($this->lang['password.explain'], array('number' => $security_config->get_internal_password_min_length())), 'hidden' => $more_than_one_authentication_type),
+			array('description' => StringVars::replace_vars($this->lang['password.explain'], array('number' => $security_config->get_internal_password_min_length())), 'hidden' => !$internal_auth_connected),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));
 		
 		$connect_fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '',
-			array('hidden' => $more_than_one_authentication_type),
+			array('hidden' => !$internal_auth_connected),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));
 
