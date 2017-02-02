@@ -48,7 +48,7 @@ $id_edit = (int)retrieve(POST, 'id_edit', 0);
 $title = retrieve(POST, 'title', '');
 $encoded_title = retrieve(GET, 'title', '');
 $contents = wiki_parse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED));
-$contents_preview = retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED);
+$contents_preview = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 $id_cat = (int)retrieve(GET, 'id_parent', 0);
 $new_id_cat = (int)retrieve(POST, 'id_cat', 0);
 $id_cat = $id_cat > 0 ? $id_cat : $new_id_cat;
@@ -316,7 +316,7 @@ $tpl->put_all(array(
 	'TITLE' => $is_cat == 1 ? ($id_edit == 0 ? $LANG['wiki_create_cat'] : sprintf($LANG['wiki_edit_cat'], stripslashes($article_infos['title']))) : ($id_edit == 0 ? $LANG['wiki_create_article'] : sprintf($LANG['wiki_edit_article'], stripslashes($article_infos['title']))),
 	'KERNEL_EDITOR' => $editor->display(),
 	'ID_CAT' => $id_edit ? $article_infos['id_cat'] : '',
-	'CONTENTS' => $id_edit ? wiki_unparse($contents) : $contents_preview,
+	'CONTENTS' => ($id_edit && $contents_preview) || !$id_edit ? $contents_preview : wiki_unparse($contents),
 	'ID_EDIT' => $id_edit,
 	'IS_CAT' => $is_cat,
 	'ID_CAT' => $id_cat,
