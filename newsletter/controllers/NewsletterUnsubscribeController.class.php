@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                         NewsletterUnSubscribeController.class.php
+ *                         NewsletterUnsubscribeController.class.php
  *                            -------------------
  *   begin                : March 13, 2011
  *   copyright            : (C) 2011 Kevin MASSY
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class NewsletterUnSubscribeController extends ModuleController
+class NewsletterUnsubscribeController extends ModuleController
 {
 	private $lang;
 	private $view;
@@ -86,9 +86,7 @@ class NewsletterUnSubscribeController extends ModuleController
 		)));
 
 		$newsletter_subscribe = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? NewsletterService::get_member_id_streams(AppContext::get_current_user()->get_id()) : array();
-		$fieldset->add_field(new FormFieldMultipleCheckbox('choice', $this->lang['unsubscribe.newsletter_choice'], $newsletter_subscribe, $this->get_streams(),
-			array('required' => true)
-		));
+		$fieldset->add_field(new FormFieldMultipleCheckbox('choice', $this->lang['unsubscribe.newsletter_choice'], $newsletter_subscribe, $this->get_streams()));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
