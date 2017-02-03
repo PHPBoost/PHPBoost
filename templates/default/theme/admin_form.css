@@ -444,7 +444,7 @@ input[type=color] {
 
 /* --- bouton radio --- */
 .form-field-radio-span {
-	padding-left: 20px;
+	padding-right: 15px;
 }
 
 .form-field-radio{
