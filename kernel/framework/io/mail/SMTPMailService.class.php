@@ -40,7 +40,7 @@ class SMTPMailService extends AbstractPHPMailerMailService
 	protected function set_send_settings(PHPMailer $mailer)
 	{
 		$mailer->IsSMTP();
-		$mailer->SMTPDebug = 1;
+		$mailer->SMTPDebug = 0;
 		$mailer->SMTPAuth = true;
 		$mailer->Timeout = 1;
 		$auth_mode = $this->configuration->get_auth_mode();
