@@ -489,7 +489,7 @@ textarea {
 
 .advanced-auth-input {
 	margin-left: 5px;
-	width: 144px;
+	width: auto;
 }
 
 .advanced-auth-input input {

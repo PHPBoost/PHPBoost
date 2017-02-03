@@ -64,11 +64,14 @@ footer#footer 				{ background-color: #81A4C8; }
 div#top-header, div#global 	{ border-color: #E1E1E1; }
 footer#footer 				{ border-color: #366493; }
 
+
 body 						{ color: #021B34; }
 a#site-name 				{ color: #366493; }
 span#site-slogan 			{ color: #81A4C8; }
 div#sub-header,
 div#sub-header a 			{ color: #FFFFFF; }
+footer .footer-infos span 	{ color: #366493; }
+footer .footer-infos span a { color: #021B34; }
 
 /* -- En-tete de page - Header -- */
 /* ------------------------------ */
@@ -263,7 +266,7 @@ aside#menu-right {
 }
 
 div#top-footer {
-	padding: 2% 0;
+	padding: 0.5em 0;
 }
 
 
@@ -314,7 +317,6 @@ footer#footer .footer-infos {
 }
 
 footer#footer .footer-infos span {
-	color: #FFFFFF;
 	font-size: 0.8em;
 }
 
