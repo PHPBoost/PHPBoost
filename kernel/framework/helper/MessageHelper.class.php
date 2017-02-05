@@ -45,6 +45,7 @@ class MessageHelper
 	public static function display($content, $type, $timeout = 0, $display_small = false)
 	{
 		$tpl = new FileTemplate('framework/helper/message.tpl');
+		$group_only = false;
 		
 		switch ($type)
 		{
@@ -81,8 +82,9 @@ class MessageHelper
 				$image     = 'error_admin_only';
 			break;
 			default:
-				$css_class = $type . ' ' . self::GROUP;
-				$image     = 'error_' . $type . '_' . self::GROUP;
+				$css_class  = $type . ' ' . self::GROUP;
+				$image      = 'error_' . $type . '_' . self::GROUP;
+				$group_only = true;
 		}
 		
 		$tpl->put_all(array(
@@ -91,7 +93,11 @@ class MessageHelper
 			'MESSAGE_IMG'       => $image,
 			'MESSAGE_CONTENT'   => $content,
 			'C_TIMEOUT'         => $timeout > 0,
-			'TIMEOUT'           => $timeout * 1000
+			'TIMEOUT'           => $timeout * 1000,
+			'C_MEMBER_ONLY'     => $type == self::MEMBER_ONLY,
+			'C_MODERATOR_ONLY'  => $type == self::MODERATOR_ONLY,
+			'C_ADMIN_ONLY'      => $type == self::ADMIN_ONLY,
+			'C_GROUP_ONLY'      => $group_only
 		));
 		
 		return $tpl;
