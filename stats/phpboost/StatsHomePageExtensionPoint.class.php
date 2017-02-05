@@ -1141,7 +1141,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				));
 				$stats_menu = 'browsers';
 				$array_stats_info = $stats_array_browsers;
-				$path = '../images/stats/browsers/';
+				$path = 'browsers/';
 			}
 			elseif (!empty($os))
 			{
@@ -1154,7 +1154,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				));
 				$stats_menu = 'os';
 				$array_stats_info = $stats_array_os;
-				$path = '../images/stats/os/';
+				$path = 'os/';
 			}
 			elseif (!empty($user_lang))
 			{
@@ -1167,7 +1167,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				));
 				$stats_menu = 'lang';
 				$array_stats_info = $stats_array_lang;
-				$path = '../images/stats/countries/';
+				$path = 'countries/';
 			}
 			
 			
@@ -1194,7 +1194,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				}
 				else
 				{
-					$stats_img = !empty($array_stats_info[$value_name][1]) ? '<img src="' . $path . $array_stats_info[$value_name][1] . '" alt="' . $array_stats_info[$value_name][0] . '" />' : '-';
+					$stats_img = !empty($array_stats_info[$value_name][1]) ? '<img src="' . TPL_PATH_TO_ROOT . '/images/stats/' . $path . $array_stats_info[$value_name][1] . '" alt="' . $array_stats_info[$value_name][0] . '" />' : '-';
 					$name_stats = $array_stats_info[$value_name][0];
 				}
 				

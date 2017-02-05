@@ -102,7 +102,10 @@ class InstallDisplayResponse extends AbstractResponse
 				);
 				if ($folder->get_name() == $lang)
 				{
-					$this->full_view->put('LANG_IDENTIFIER', $info_lang['identifier']);
+					$this->full_view->put_all(array(
+						'LANG_IDENTIFIER' => $info_lang['identifier'],
+						'LANG_NAME' => $info_lang['name'])
+					);
 				}
 			}
 		}

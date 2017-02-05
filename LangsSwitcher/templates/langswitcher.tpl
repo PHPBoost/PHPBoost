@@ -6,7 +6,7 @@
 					<option value="{langs.IDNAME}"{langs.SELECTED}>{langs.NAME}</option>
 				# END langs #
 				</select>
-				<img src="{IMG_LANG_IDENTIFIER}" alt="{DEFAULT_LANG}" />
+				<img src="{PATH_TO_ROOT}/images/stats/countries/{LANG_IDENTIFIER}.png" alt="{LANG_NAME}" />
 			</p>
 			<a href="?switchlang={DEFAULT_LANG}">{@default_lang}</a>
 	</form>

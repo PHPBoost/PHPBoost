@@ -96,7 +96,8 @@ class LangsSwitcherModuleMiniMenu extends ModuleMiniMenu
 		$lang_identifier = str_replace('en', 'uk', LangLoader::get_message('xml_lang', 'main'));
 		$tpl->put_all(array(
 			'DEFAULT_LANG' => UserAccountsConfig::load()->get_default_lang(),
-			'IMG_LANG_IDENTIFIER' => TPL_PATH_TO_ROOT . '/images/stats/countries/' . $lang_identifier . '.png',
+			'LANG_IDENTIFIER' => $lang_identifier,
+			'LANG_NAME' => $lang->get_configuration()->get_name()
 		));
 		
 		return $tpl;
