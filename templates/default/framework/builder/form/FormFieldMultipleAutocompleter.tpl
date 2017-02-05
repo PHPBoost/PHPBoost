@@ -17,7 +17,7 @@ FormFieldMultipleAutocompleter.prototype.add_field = function () {
 		
 		this.load_autocompleter('field_' + id);
 		
-		jQuery('<a/>', {href : 'javascript:FormFieldMultipleAutocompleter.delete_field('+ this.integer +');'}).html('<i class="fa fa-delete"></i>').appendTo('#menu_element_' + id + '_actions');
+		jQuery('<a/>', {href : 'javascript:FormFieldMultipleAutocompleter.delete_field('+ this.integer +');'}).html('<i class="fa fa-delete"></i>').appendTo('#' + id);
 		
 		this.integer++;
 	}
