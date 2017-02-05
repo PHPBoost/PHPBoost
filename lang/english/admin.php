@@ -135,7 +135,7 @@ $LANG['explain_archive_upload'] = 'Archive file must be ZIP or GZIP format';
 
 //Gestion des fichiers
 $LANG['auth_files'] = 'Authorization required for file interface activation';
-$LANG['size_limit'] = 'Upload size limit';
+$LANG['size_limit'] = 'Files storage area size for each member';
 $LANG['size_limit_explain'] = 'In MB';
 $LANG['bandwidth_protect'] = 'Bandwidth protection';
 $LANG['bandwidth_protect_explain'] = 'Access forbidden for external websites to upload folder contents';
@@ -224,7 +224,7 @@ $LANG['groups_add'] = 'Add a group';
 $LANG['auth_flood'] = 'Allowed to flood';
 $LANG['pm_group_limit'] = 'Private messages limit';
 $LANG['pm_group_limit_explain'] = 'Set -1 for no limit';
-$LANG['data_group_limit'] = 'Data upload limit';
+$LANG['data_group_limit'] = 'Files storage area size';
 $LANG['data_group_limit_explain'] = 'In MB. Set -1 for no limit';
 $LANG['color_group'] = 'Associated color of the group';
 $LANG['delete_color_group'] = 'Delete associated color of the group';

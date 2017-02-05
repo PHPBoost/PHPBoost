@@ -111,7 +111,7 @@ class CurrentUser extends User
 		$max_auth = $max_value_compare;
 		foreach ($array_user_auth_groups as $idgroup => $group_auth)
 		{
-			if ($group_auth[$key_auth] == -1)
+			if ($group_auth[$key_auth] < 0)
 			{
 				return -1;
 			}
