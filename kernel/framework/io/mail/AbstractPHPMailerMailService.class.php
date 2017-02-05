@@ -25,6 +25,7 @@
  *
  ###################################################*/
 
+include_once PATH_TO_ROOT.'/kernel/lib/php/phpmailer/PHPMailerAutoload.php';
 include_once PATH_TO_ROOT . '/kernel/lib/php/phpmailer/class.phpmailer.php';
 
 abstract class AbstractPHPMailerMailService implements MailService
