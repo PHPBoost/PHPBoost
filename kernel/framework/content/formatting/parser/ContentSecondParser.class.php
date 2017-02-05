@@ -259,7 +259,7 @@ class ContentSecondParser extends AbstractParser
 		{
 			return $matches[1];
 		}
-		return MessageHelper::display(LangLoader::get_message('bbcode_member', 'status-messages-common'), MessageHelper::WARNING)->render();
+		return MessageHelper::display(LangLoader::get_message('bbcode_member', 'status-messages-common'), MessageHelper::MEMBER_ONLY)->render();
 	}
 	
 	/**
@@ -274,7 +274,7 @@ class ContentSecondParser extends AbstractParser
 		{
 			return $matches[1];
 		}
-		return MessageHelper::display(LangLoader::get_message('bbcode_moderator', 'status-messages-common'), MessageHelper::WARNING)->render();
+		return MessageHelper::display(LangLoader::get_message('bbcode_moderator', 'status-messages-common'), MessageHelper::MODERATOR_ONLY)->render();
 	}
 	
 	/**

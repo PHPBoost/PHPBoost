@@ -32,11 +32,15 @@
  */
 class MessageHelper 
 {
-	const SUCCESS = 'success';
-	const NOTICE = 'notice';
-	const WARNING = 'warning';
-	const ERROR = 'error';
-	const QUESTION = 'question';
+	const SUCCESS        = 'success';
+	const NOTICE         = 'notice';
+	const WARNING        = 'warning';
+	const ERROR          = 'error';
+	const QUESTION       = 'question';
+	const MEMBER_ONLY    = 'member_only';
+	const MODERATOR_ONLY = 'moderator_only';
+	const ADMIN_ONLY     = 'admin_only';
+	const GROUP          = 'group_only';
 	
 	public static function display($content, $type, $timeout = 0, $display_small = false)
 	{
@@ -46,33 +50,48 @@ class MessageHelper
 		{
 			case self::SUCCESS:
 				$css_class = 'success';
-				$image = 'error_success';
+				$image     = 'error_success';
 			break;
 			case self::NOTICE:
 				$css_class = 'notice';
-				$image = 'error_notice';
+				$image     = 'error_notice';
 			break;
 			case self::WARNING:
 				$css_class = 'warning';
-				$image = 'error_warning';
+				$image     = 'error_warning';
 			break;
 			case self::ERROR:
 				$css_class = 'error';
-				$image = 'error_fatal';
+				$image     = 'error_fatal';
 			break;
 			case self::QUESTION:
 				$css_class = 'question';
-				$image = 'error_question';
+				$image     = 'error_question';
 			break;
+			case self::MEMBER_ONLY:
+				$css_class = 'member-only';
+				$image     = 'error_member_only';
+			break;
+			case self::MODERATOR_ONLY:
+				$css_class = 'modo-only';
+				$image     = 'error_modo_only';
+			break;
+			case self::ADMIN_ONLY:
+				$css_class = 'admin_only';
+				$image     = 'error_admin_only';
+			break;
+			default:
+				$css_class = $type . ' ' . self::GROUP;
+				$image     = 'error_' . $type . '_' . self::GROUP;
 		}
 		
 		$tpl->put_all(array(
-			'ID' => KeyGenerator::generate_key(4),
+			'ID'                => KeyGenerator::generate_key(4),
 			'MESSAGE_CSS_CLASS' => $css_class . ($display_small ? ' message-helper-small' : ''),
-			'MESSAGE_IMG' => $image,
-			'MESSAGE_CONTENT' => $content,
-			'C_TIMEOUT' => $timeout > 0,
-			'TIMEOUT' => $timeout * 1000
+			'MESSAGE_IMG'       => $image,
+			'MESSAGE_CONTENT'   => $content,
+			'C_TIMEOUT'         => $timeout > 0,
+			'TIMEOUT'           => $timeout * 1000
 		));
 		
 		return $tpl;
