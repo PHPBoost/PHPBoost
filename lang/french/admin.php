@@ -135,7 +135,7 @@ $LANG['explain_archive_upload'] = 'L\'archive uploadée doit être au format zip
 
 //Gestion des fichiers
 $LANG['auth_files'] = 'Autorisation requise pour l\'activation de l\'interface de fichiers';
-$LANG['size_limit'] = 'Taille maximale des uploads autorisés aux membres';
+$LANG['size_limit'] = 'Taille de l\'espace de stockage des fichiers pour chaque membre';
 $LANG['size_limit_explain'] = 'En Mo';
 $LANG['bandwidth_protect'] = 'Protection de la bande passante';
 $LANG['bandwidth_protect_explain'] = 'Interdiction d\'accès aux fichiers du répertoire upload depuis un autre serveur';
@@ -224,7 +224,7 @@ $LANG['groups_add'] = 'Ajouter un groupe';
 $LANG['auth_flood'] = 'Autorisation de flooder';
 $LANG['pm_group_limit'] = 'Limite de messages privés';
 $LANG['pm_group_limit_explain'] = 'Mettre -1 pour illimité';
-$LANG['data_group_limit'] = 'Limite de données uploadables';
+$LANG['data_group_limit'] = 'Taille de l\'espace de stockage des fichiers';
 $LANG['data_group_limit_explain'] = 'En Mo. Mettre -1 pour illimité';
 $LANG['color_group'] = 'Couleur associée au groupe';
 $LANG['delete_color_group'] = 'Supprimer la couleur associée au groupe';
