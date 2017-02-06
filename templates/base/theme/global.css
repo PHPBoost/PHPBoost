@@ -520,10 +520,11 @@ li.small-block .fa-stack {
 
 /* -- Les messages d erreurs -- */
 /* ---------------------------- */
-div.message-helper-small {
-	width: 50%;
-}
-
+.error,
+.notice,
+.warning,
+.success,
+.question,
 .message-helper {
 	position: relative;
 	display: block;
@@ -536,6 +537,11 @@ div.message-helper-small {
 	overflow: hidden;
 }
 
+.error:before,
+.notice:before,
+.warning:before,
+.success:before,
+.question:before,
 .message-helper:before {
 	position: absolute;
 	left: 6px;
@@ -549,6 +555,10 @@ div.message-helper-small {
 	text-align: center;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+.message-helper-small {
+	width: 50%;
 }
 
 .error:before       { content: "\f00d"; }
