@@ -134,7 +134,7 @@ class CalendarDeleteController extends ModuleController
 		{
 			if (!$this->event->belongs_to_a_serie() || count($events_list) == 1)
 			{
-				CalendarService::delete_event_content('WHERE id = :id', array('id' => $this->event->get_parent_id()));
+				CalendarService::delete_event_content('WHERE id = :id', array('id' => $this->event->get_id()));
 			}
 			
 			//Delete event
