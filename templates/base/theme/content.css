@@ -1,4 +1,4 @@
-/* --------------------------------------
+﻿/* --------------------------------------
 		content.css
 Contient les elements : 
  - conteneurs generaux, elements de module,
@@ -257,7 +257,6 @@ ul.pagination-block li a:hover {
 	background-color: #FDFDFD;
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0 2px rgba(0, 0, 0, 0.1);
 	transition: all 0.1s linear;
-	transition: all 0.2s linear;
 }
 
 ul.pagination-block li a:active {
