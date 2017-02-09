@@ -42,39 +42,28 @@ abstract class CategoriesCache implements CacheData
 		{
 			$category = new $category_class();
 			$category->set_properties($row);
-			$category->set_elements_number($categories_cache->get_category_elements_number($category->get_id()));
 			
 			if (!$category->has_special_authorizations())
-			{
 				$category->set_authorizations($root_category->get_authorizations());
-			}
 			
 			$this->categories[$row['id']] = $category;
+		}
+		$result->dispose();
+
+		foreach ($this->categories as &$category)
+		{
+			$category->set_elements_number($categories_cache->get_category_elements_number($category->get_id()));
 			
 			if ($category->get_id_parent() != Category::ROOT_CATEGORY)
 			{
-				$current_category_elements_number = $category->get_elements_number();
 				$id_parent = $category->get_id_parent();
 				while ($id_parent != Category::ROOT_CATEGORY)
 				{
-					$parent_elements_number = $this->categories[$id_parent]->get_elements_number();
-					
-					if (is_array($current_category_elements_number))
-					{
-						foreach ($current_category_elements_number as $element_id => $elements_number)
-						{
-							$parent_elements_number[$element_id] = $parent_elements_number[$element_id] + $elements_number;
-						}
-						$this->categories[$id_parent]->set_elements_number($parent_elements_number);
-					}
-					else
-						$this->categories[$id_parent]->set_elements_number($parent_elements_number + $current_category_elements_number);
-					
+					$this->categories[$id_parent]->set_elements_number((int)$this->categories[$id_parent]->get_elements_number() + $category->get_elements_number());
 					$id_parent = $this->categories[$id_parent]->get_id_parent();
 				}
 			}
 		}
-		$result->dispose();
 	}
 	
 	abstract public function get_table_name();
