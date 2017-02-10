@@ -423,7 +423,7 @@ class WebLink
 			'C_VISIBLE' => $this->is_visible(),
 			'C_EDIT' => $this->is_authorized_to_edit(),
 			'C_DELETE' => $this->is_authorized_to_delete(),
-			'C_READ_MORE' => !$this->is_short_contents_enabled() && $description != $contents && strlen($description) >= WebConfig::NUMBER_CARACTERS_BEFORE_CUT,
+			'C_READ_MORE' => !$this->is_short_contents_enabled() || $description != $contents || strlen($description) >= WebConfig::NUMBER_CARACTERS_BEFORE_CUT,
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			'C_IS_PARTNER' => $this->is_partner(),
 			'C_HAS_PARTNER_PICTURE' => $this->has_partner_picture(),
