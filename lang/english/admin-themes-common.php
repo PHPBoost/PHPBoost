@@ -59,7 +59,7 @@ $lang['themes.themes_available'] = 'Available themes';
 $lang['themes.install_theme'] = 'Install';
 
 //Warnings
-$lang['themes.add_warnings_before_install'] = '<span class="warning">A theme must be enabled, disabled, installed, or deleted only
+$lang['themes.warning_before_install'] = '<span class="warning">A theme must be enabled, disabled, installed, or deleted only
       from this page. <br />Don\'t remove it directly from the FTP &/or the database.</span>';
 
 //Upload

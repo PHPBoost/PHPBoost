@@ -40,7 +40,7 @@ $lang['modules.delete_module'] = 'Delete or deactivate a module';
 $lang['modules.installed_modules'] = 'Installed modules';
 
 //Warnings
-$lang['modules.add_warnings_before_install'] = '<span class="warning">A module must be enabled, disabled, installed, or deleted only
+$lang['modules.warning_before_install'] = '<span class="warning">A module must be enabled, disabled, installed, or deleted only
       from this page. <br />Don\'t remove it directly from the FTP &/or the database.</span>';
 
 //Upload

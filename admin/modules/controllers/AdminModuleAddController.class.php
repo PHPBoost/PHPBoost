@@ -81,7 +81,7 @@ class AdminModuleAddController extends AdminController
 		$fieldset = new FormFieldsetHTML('upload', $this->lang['modules.upload_module']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldFree('warnings', '', $this->lang['modules.add_warnings_before_install']));
+		$fieldset->add_field(new FormFieldFree('warnings', '', $this->lang['modules.warning_before_install']));
         $fieldset->add_field(new FormFieldFilePicker('file', $this->lang['modules.upload_description']));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();

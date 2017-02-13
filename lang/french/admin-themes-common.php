@@ -58,7 +58,7 @@ $lang['themes.themes_available'] = 'Thèmes disponibles';
 $lang['themes.install_theme'] = 'Installer';
 
 //Avertissements
-$lang['themes.add_warnings_before_install'] = '<span class="warning">Un thème doit être activé, désactivé, installé ou supprimé uniquement 
+$lang['themes.warning_before_install'] = '<span class="warning">Un thème doit être activé, désactivé, installé ou supprimé uniquement 
        depuis cette page.<br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span>';
 
 //Upload
