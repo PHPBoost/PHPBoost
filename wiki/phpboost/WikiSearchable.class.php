@@ -77,7 +77,7 @@ class WikiSearchable extends AbstractSearchableExtensionPoint
 				FROM " . PREFIX . "wiki_articles a
 				LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id
 				WHERE ( FT_SEARCH(a.title, '".$args['search']."') OR MATCH(c.content, '".$args['search']."') )";
-		if ( $args['WikiWhere'] == 'contents' )
+		else if ( $args['WikiWhere'] == 'contents' )
 		$req = "SELECT ".
 		$args['id_search']." AS id_search,
 				a.id AS id_content,
