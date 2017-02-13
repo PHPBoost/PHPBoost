@@ -39,6 +39,10 @@ $lang['modules.update_module'] = 'Update a module';
 $lang['modules.delete_module'] = 'Delete or deactivate a module';
 $lang['modules.installed_modules'] = 'Installed modules';
 
+//Warnings
+$lang['modules.warning_before_install'] = '<span class="warning">A module must be enabled, disabled, installed, or deleted only
+      from this page. <br />Don\'t remove it directly from the FTP &/or the database.</span>';
+
 //Upload
 $lang['modules.upload_module'] = 'Install a module';
 $lang['modules.upload_description'] = 'The file must be uploaded as a zip or gzip archive';
