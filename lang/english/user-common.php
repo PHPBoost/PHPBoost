@@ -106,6 +106,7 @@ $lang['twitter-connect'] = 'Connect with Twitter';
 
 $lang['internal_connection'] = 'Internal connection';
 $lang['create_internal_connection'] = 'Create internal connection';
+$lang['edit_internal_connection'] = 'Edit your internal connection';
 $lang['fb_connection'] = 'Facebook connection';
 $lang['google_connection'] = 'Google connection';
 $lang['associate_account'] = 'Associate your account';

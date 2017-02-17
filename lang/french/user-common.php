@@ -106,6 +106,7 @@ $lang['twitter-connect'] = 'Se connecter avec Twitter';
 
 $lang['internal_connection'] = 'Connexion interne';
 $lang['create_internal_connection'] = 'Créer un compte interne';
+$lang['edit_internal_connection'] = 'Editer votre compte interne';
 $lang['fb_connection'] = 'Connexion par Facebook';
 $lang['google_connection'] = 'Connexion par Google';
 $lang['associate_account'] = 'Associer votre compte';
