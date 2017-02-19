@@ -355,18 +355,13 @@ footer#footer .footer-infos a:hover {
 
 /* --- Compteur de visite --- */
 div#compteur {
-	color: #E9ECD9;
 	position: absolute;
 	right: 0;
+	bottom : 1em;
+	margin-right: 10px;
 	font-size: 0.9em;
-	margin-right: 15px;
+	color: #F9FCFF;
 	text-align: right;
-}
-
-@media (min-width: 769px) {
-	div#compteur {
-		top: 100px;
-	}
 }
 
 /* --- Barre d'outils --- */

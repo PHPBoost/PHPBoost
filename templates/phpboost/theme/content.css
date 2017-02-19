@@ -7,10 +7,8 @@ Contient les elements :
  - gestion des categories,
  - mini-module,
  - message postes,
- - profile user,
  - maintenance,
- - contribution,
- - erreur 403/404.
+
 -----------------------------------------*/
 
 
@@ -54,7 +52,7 @@ article header h1 {
 
 	text-align: left;
 }
-section header h1 a:hover {
+section header: ; a:hover {
 	text-decoration: none;
 }
 
@@ -209,6 +207,18 @@ a.read-more {
 		margin: 1em 0;
 	}
 }
+
+/* ---- Friends content ---- */
+.content-friends {
+	border-width: 7px 1px 1px 1px;
+	border-top-color: #103B67;
+}
+
+.content-privileged-friends {
+	border-width: 7px 1px 1px 1px;
+	border-top-color: #E2BE47;
+}
+
 
 /* -- Pagination des pages -- */
 /* -------------------------- */
@@ -470,27 +480,28 @@ ul.pagination-block-bis li a.next-page:hover {
 }
 
 .sortable-block {
-	list-style-type: none;
-	list-style-position: outside;
 	margin: 0;
 	padding: 0;
 	min-height: 24px;
+	list-style-type: none;
+	list-style-position: outside;
+	color: #777777;
 }
 
 .sortable-block .sortable-element {
-	background-color: #FFFFFF;
-	border: 1px solid #D6DEE7;
-	padding: 0;
-	margin-bottom: 6px;
-	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
-	transition: box-shadow 0.2s;
 	display: table;
+	margin-bottom: 6px;
+	padding: 0;
 	width: 100%;
+	border-color: #517BA6;
+	border-style: solid;
+	border-width: 0 0 0 3px;
+	transition: all 0.2s;	
 }
 
 .sortable-block .sortable-element:hover {
-	border: 1px solid #d0d8e1;
-	box-shadow: 0 0 5px #EAEAEA;
+	border-color: #366493;
+	transition: all 0.2s;
 }
 
 @media (min-width:769px){ 
@@ -498,9 +509,8 @@ ul.pagination-block-bis li a.next-page:hover {
 		display: table-cell;
 		position: relative;
 		width: 20px;
-		background-color: #81A4C8;
-		opacity: 0.3;
-		transition: opacity 1s;
+		opacity: 0.2;
+		transition: opacity 0.3s;
 		cursor: move;
 	}
 	
@@ -509,31 +519,37 @@ ul.pagination-block-bis li a.next-page:hover {
 		content: "\f047";
 		top: 34%;
 		left: 4px;
-		color: #FFFFFF;
+		color: #517BA6;
 		font-family: fontawesome;
 	}
 }
 
 .sortable-block .sortable-element:hover .sortable-actions {
 	opacity: 1;
+	transition: opacity 0.3s;
 }
 
 .sortable-block .sortable-element:hover .sortable-selector {
-	opacity: 0.6;
+	opacity: 1;
+	transition: opacity 0.3s;
 }
 
 .sortable-block .sortable-title {
-	background-image: linear-gradient(to bottom, #FFFFFF 50%, #FAFAFA 100%);
 	padding: 8px 5px 5px 10px;
 }
 
 .sortable-block .sortable-title:hover {
-	background-image: linear-gradient(to bottom, #FFFFFF 25%, #F2F5F8 100%);
+	background-color: #FAFAFA;
+	transition: all 0.2s linear;
 }
 
 .sortable-block .sortable-title > span {
 	font-size: 1.5em;
 	font-weight: bold;
+}
+
+.sortable-block .sortable-title a {
+	color: #555555;
 }
 
 .sortable-block .sortable-title span.cat-desc {
@@ -553,18 +569,18 @@ ul.pagination-block-bis li a.next-page:hover {
 .sortable-block .sortable-actions {
 	float: right;
 	padding: 3px 3px;
-	opacity: 0.5;
+	opacity: 0.2;
 	transition: opacity 0.2s;
 }
 
 .sortable-block .sortable-element hr {
-	background-color: #999999;
 	margin-top: 5px;
+	background-color: #999999;
 }
 
 .sortable-block .sortable-element label {
-	color: #1F507F;
 	margin-left: 14px;
+	color: #1F507F;
 }
 
 .sortable-block .sortable-actions img,
@@ -580,7 +596,8 @@ ul.pagination-block-bis li a.next-page:hover {
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
 }
 
-body.dragging, body.dragging * {
+body.dragging,
+body.dragging * {
 	cursor: move !important;
 }
 
@@ -588,16 +605,16 @@ body.dragging, body.dragging * {
 	margin: 10px 0;
 	padding-top: 5px;
 	height: 30px;
+	opacity: 0.6;
 	border: 1px dashed #AAAAAA;
-	border-radius: 5px;
 	text-align: center;
 	color: #AAAAAA;
-	opacity: 0.6;
 }
 
 .preview img {
 	overflow: hidden;
 }
+
 
 /* -- Modules minis -- */
 /* ------------------- */
@@ -924,33 +941,6 @@ i.message-announce-new {
 }
 
 
-/* -- User Profile -- */
-/* ------------------ */
-ul#profile-container {
-	width: 99%;
-	margin: 30px auto;
-	list-style-type: none;
-}
-
-ul#profile-container li {
-	margin-right: 2px;
-	padding: 10px;
-	text-align: center;
-}
-
-.preview-img {
-	vertical-align: top;
-	max-height: 180px;
-}
-
-.user-agreement {
-	max-width: none;
-	width: 90%;
-	max-height: 250px;
-	overflow-y: auto !important;
-}
-
-
 /* -- Maintain -- */ 
 /* -------------------- */
 #maintain {
@@ -985,106 +975,4 @@ div#message-maintain .warning {
 
 div#release {
 	margin-top: 20px;
-}
-
-
-
-/* -- Contribution -- */ 
-/* ------------------ */
-#module-user-contribution-list hr {
-	margin: 20px 0;
-}
-
-.module-contribution-element {
-	float: left;
-	text-align: center;
-	margin: 20px 0;
-}
-
-.unprocessed-contribution {
-	text-align: center;
-	margin: auto;
-	width: 300px;
-	overflow: hidden;
-}
-
-.unprocessed-contribution div {
-	float: left;
-	width: 50%;
-}
-
-#module-user-moderation-panel .content {
-	padding-bottom: 75px;
-}
-
-#module-user-moderation-panel .bt td:before {
-	display: none;
-}
-
-#module-user-moderation-panel .bt-content {
-	width: 100%;
-	text-align: center;
-	display: block;
-}
-
-.contribution-module-container {
-	float: left;
-	text-align: center;
-	margin: 20px 0;
-}
-
-.convers-announce {
-	padding-right: 0;
-}
-
-.convers-title {
-	width: 50%;
-	text-align: left;
-}
-
-table.announce-legend td {
-	width: 33%;
-}
-
-@media (min-width: 769px) {
-	.post-pm {
-		margin: auto;
-		width: 80%;
-	}
-}
-
-.available-modules-msg {
-	text-align: center;
-	margin-bottom: 15px;
-}
-
-
-/* -- Error 403/404 -- */ 
-/* ------------------- */
-#module-user-error-403 .content,
-#module-user-error-404 .content {
-	text-align: center;
-	font-size: 1.5em;
-}
-
-#module-user-error-403 .fa-warning:before,
-#module-user-error-404 .fa-warning:before {
-	content: "\f071"; 
-}
-
-#module-user-error-403 .fa-warning,
-#module-user-error-404 .fa-warning {
-	color: #C19954;
-	display: block;
-	margin: 40px auto 20px auto;
-}
-
-#module-user-error-403 .message-error,
-#module-user-error-404 .message-error {
-	padding: 20px 0;
-}
-
-#module-user-error-403 .type-error,
-#module-user-error-404 .type-error {
-	padding: 10px 0;
 }

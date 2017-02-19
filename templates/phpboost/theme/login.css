@@ -41,3 +41,7 @@ div#global {
 #connect {
 	margin-bottom: 40px;
 }
+
+.cookiebar-container {
+    position: fixed;
+}

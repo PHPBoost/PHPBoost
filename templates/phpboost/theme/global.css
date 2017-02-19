@@ -222,25 +222,32 @@ td.calendar-week {
 .formatter-content {
 	margin: 0;
 	padding: 8px;
-	max-height: 500px;
 	background-color: #FAFAFA;
 	border: 1px solid #DDDDDD;
-	overflow: auto;
 }
 
 .formatter-hide .formatter-content {
-	height: 10px;
+	height: 0;
+	max-height: 0;
+	padding: 0;
 	overflow: hidden;
 	visibility: hidden;
+	transform: scaleY(0);
+	transition: transform 0.15s linear;
+	transform-origin: 50% 0;
 }
 
-.formatter-show .formatter-content {
+.formatter-show .formatter-content,
+.formatter-hide.no-js:hover .formatter-content {
 	height: auto;
+	max-height: 500px;
+	padding: 8px;
 	overflow: auto;
 	visibility: visible;
+	transform: scaleY(1);
 }
 
-.formatter-hide .hide-message {
+.formatter-hide .formatter-hide-message {
 	display: block;
 	font-style: italic;
 	font-weight: normal;
@@ -248,20 +255,57 @@ td.calendar-week {
 	color: #BBBBBB;
 	padding: 4px 8px;
 	width: 100%;
-	margin: -20px auto 0 auto;
+	margin: 0 auto 0 auto;
 	background-color: #FDFDFD;
 	border: 1px solid #EEEEEE;
+	cursor: pointer;
 }
 
-.formatter-show .hide-message {
+.formatter-show .formatter-hide-message {
 	display: none;
+}
+
+.formatter-hide-close-button {
+	position: absolute;
+	display: none;
+	top: 1rem;
+	right: 0;
+	color: #BBBBBB;
+	font-size: 0.8em;
+	font-style: italic;
+	cursor: pointer;
+	transition: all 0.3s linear;
+}
+
+.formatter-hide-close-button-txt {
+	padding: 0 0 0 3px;
+}
+
+.formatter-show .formatter-hide-close-button {
+	display: block;
+}
+
+.formatter-hide-close-button:hover {
+	color: #444444;
+	transition: all 0.3s linear;
+}
+
+.formatter-code .formatter-title {
+	margin: 1rem 0 0.5rem 0;
 }
 
 .copy-code {
 	float: right;
-	padding: 4px 4px;
-	color: #999999;
+	padding: 1rem 0 0 0;
+	color: #BBBBBB;
+	font-size: 0.8em;
+	font-style: italic;
 	cursor: copy;
+	transition: all 0.3s linear;
+}
+
+.copy-code-txt {
+	padding: 0 0 0 3px;
 }
 
 /* --- Le selecteur de couleur --- */

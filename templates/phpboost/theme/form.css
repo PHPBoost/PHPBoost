@@ -491,7 +491,7 @@ textarea {
 
 .advanced-auth-input {
 	margin-left: 5px;
-	width: 144px;
+	width: auto;
 }
 
 .advanced-auth-input input {
@@ -710,7 +710,7 @@ div.field-required:after {
 .form-field-radio-button.field-required:after,
 .form-field-multiple-checkbox.field-required:after {
 	top: 4px;
-	right: -10px;
+	right: -16px;
 }
 
 .form-field-radio {
