@@ -328,8 +328,8 @@
 							{files.BBCODE}
 							<div class="upload-file-controls">
 								{files.RENAME_FILE}
-								<a href="upload.php?del={files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
-								<a href="upload{files.U_MOVE}" title="{L_MOVETO}" class="fa fa-move"></a>
+								<a href="admin_files.php?del={files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
+								<a href="admin_files{files.U_MOVE}" title="{L_MOVETO}" class="fa fa-move"></a>
 								{files.INSERT}							
 							</div>
 							<span class="text-strong">{files.FILETYPE}</span><br />
