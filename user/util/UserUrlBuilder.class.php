@@ -150,6 +150,11 @@ class UserUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/login/?disconnect=true&amp;token=' . AppContext::get_session()->get_token());
 	}
 	
+	public static function aboutcookie()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/aboutcookie/');
+	}
+	
 	public static function administration()
 	{
 		return new Url('/admin/');

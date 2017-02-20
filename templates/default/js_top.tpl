@@ -21,6 +21,7 @@
 	var L_COOKIEBAR_DECLINED      = ${escapejs(LangLoader::get_message('cookiebar.declined', 'user-common'))};
 	var L_COOKIEBAR_MORE          = ${escapejs(LangLoader::get_message('cookiebar.more', 'user-common'))};
 	var L_COOKIEBAR_CHANGE_CHOICE = ${escapejs(LangLoader::get_message('cookiebar.change-choice', 'user-common'))};
+	var U_COOKIEBAR_ABOUTCOOKIE   = ${UserUrlBuilder::aboutcookie()};
 	# ENDIF #
 -->
 </script>

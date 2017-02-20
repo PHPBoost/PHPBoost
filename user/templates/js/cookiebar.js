@@ -17,7 +17,7 @@ function showCookieBar() {
 
 	if (getCookie('pbt-cookiebar-viewed') == "")
 	{
-		$('body').prepend('<div class="cookiebar-container" id="cookiebar-container"><div class="cookiebar-content" id="cookiebar-content">' + L_COOKIEBAR_CONTENT + '</div><div class="cookiebar-actions">' + L_BUTTON + ' <span class="cookiebar-more"><a href=" ' + PATH_TO_ROOT + '/user/aboutcookie">' + L_COOKIEBAR_MORE + '</a></span></div></div>')
+		$('body').prepend('<div class="cookiebar-container" id="cookiebar-container"><div class="cookiebar-content" id="cookiebar-content">' + L_COOKIEBAR_CONTENT + '</div><div class="cookiebar-actions">' + L_BUTTON + ' <span class="cookiebar-more"><a href="' + U_COOKIEBAR_ABOUTCOOKIE + '">' + L_COOKIEBAR_MORE + '</a></span></div></div>')
 
 		//Si cookie accepté on sauvegarde le choix
 		$('#cookiebar-button-allowed').click(function(e){
