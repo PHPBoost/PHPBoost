@@ -317,12 +317,14 @@
 							# IF files.C_IMG #
 							<a href="{files.URL}" data-lightbox="formatter" data-rel="lightcase:collection" title="{files.TITLE}" class="# IF files.C_RECENT_FILE #upload-recent-file# END IF #">
 								<div class="upload-element-picture" style="background-image: url({files.URL})"></div>
-								<div class="upload-element-name" id="fi1{files.ID}">{files.NAME}<span id="fi{files.ID}"></span></div>
+								<div class="upload-element-name" id="fi1{files.ID}">{files.NAME}</div>
+								<span id="fi{files.ID}"></span>
 							</a>
 							# ELSE #	
 							<a class="# IF files.C_RECENT_FILE #upload-recent-file# END IF #" href="{files.URL}" title="{files.TITLE}"{files.LIGHTBOX}>
 								<div class="upload-element-icon"><i class="fa {files.IMG}"></i></div>
-								<div class="upload-element-name" id="fi1{files.ID}">{files.NAME}<span id="fi{files.ID}"></span></div>
+								<div class="upload-element-name" id="fi1{files.ID}">{files.NAME}</div>
+								<span id="fi{files.ID}"></span>
 							</a>
 							# ENDIF #
 							{files.BBCODE}
