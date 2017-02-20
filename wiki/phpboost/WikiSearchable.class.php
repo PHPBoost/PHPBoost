@@ -41,7 +41,7 @@ class WikiSearchable extends AbstractSearchableExtensionPoint
 		$tpl = new FileTemplate('wiki/wiki_search_form.tpl');
 
 		if ( !isset($args['WikiWhere']) || !in_array($args['WikiWhere'], explode(',','title,contents,all')) )
-		$args['WikiWhere'] = 'title';
+		$args['WikiWhere'] = 'all';
 
 		$tpl->put_all(Array(
 			'L_WHERE' => $LANG['wiki_search_where'],
@@ -64,7 +64,7 @@ class WikiSearchable extends AbstractSearchableExtensionPoint
 	{
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
 		if ( !isset($args['WikiWhere']) || !in_array($args['WikiWhere'], explode(',','title,contents,all')) )
-		$args['WikiWhere'] = 'title';
+		$args['WikiWhere'] = 'all';
 
 		if ( $args['WikiWhere'] == 'all' )
 		$req = "SELECT ".
@@ -76,7 +76,7 @@ class WikiSearchable extends AbstractSearchableExtensionPoint
 				CONCAT('" . PATH_TO_ROOT . "/wiki/wiki.php?title=',a.encoded_title) AS link
 				FROM " . PREFIX . "wiki_articles a
 				LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id
-				WHERE ( FT_SEARCH(a.title, '".$args['search']."') OR MATCH(c.content, '".$args['search']."') )";
+				WHERE ( FT_SEARCH(a.title, '".$args['search']."') OR FT_SEARCH(c.content, '".$args['search']."') )";
 		else if ( $args['WikiWhere'] == 'contents' )
 		$req = "SELECT ".
 		$args['id_search']." AS id_search,
