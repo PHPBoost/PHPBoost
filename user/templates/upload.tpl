@@ -160,7 +160,7 @@
 				{
 					if( xhr_object.responseText > 0 )
 					{
-						document.getElementById('new-folder' + divid).innerHTML = '<a href="upload.php?f=' + xhr_object.responseText + '{POPUP}"><i class="fa fa-folder fa-2x"></i></a>&nbsp;<span id="f' + xhr_object.responseText + '"><a href="upload.php?f=' + xhr_object.responseText + '{POPUP}">' + name + '</a></span><br /><span id="fhref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="fa fa-edit"></a></span>&nbsp;<a href="upload.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>&nbsp;<a href="upload.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}{POPUP}" title="{L_MOVETO}" class="fa fa-move"></a><span id="img' + xhr_object.responseText + '"></span>';
+						document.getElementById('new-folder' + divid).innerHTML = '<a href="upload.php?f=' + xhr_object.responseText + '{POPUP}"><i class="fa fa-folder fa-2x"></i></a><br /> &nbsp;<span id="f' + xhr_object.responseText + '"><a href="upload.php?f=' + xhr_object.responseText + '{POPUP}">' + name + '</a></span><br /> <div class="upload-repertory-controls"><span id="fhref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="fa fa-edit"></a></span>&nbsp;<span><a href="upload.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a></span>&nbsp;<span><a href="upload.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}{POPUP}" title="{L_MOVETO}" class="fa fa-move"></a></span><span id="img' + xhr_object.responseText + '"></span></div>';
 						var total_folder = document.getElementById('total-folder').innerHTML;
 						total_folder++;
 						document.getElementById('total-folder').innerHTML = total_folder;
@@ -349,10 +349,11 @@
 			
 			<legend>{L_FOLDER_CONTENT}</legend>
 			
-			<div class="upload-elements-container" id="new-folder">
+			<div class="upload-elements-container">
 			
 				# IF C_EMPTY_FOLDER #
 					<div id="empty-folder" class="notice">{L_EMPTY_FOLDER}</div>
+					<span id="new-folder"></span>
 				# ELSE #
 					# START folder #
 						<div class="upload-elements-repertory">
@@ -370,22 +371,21 @@
 							</div>
 						</div>
 					# END folder #
+					<span id="new-folder"></span>
 	
 					# START files #	
 					<div class="upload-elements-file">
 						# IF files.C_IMG #
 						<a href="{files.URL}" data-lightbox="formatter" data-rel="lightcase:collection" title="{files.TITLE}" class="# IF files.C_RECENT_FILE #upload-recent-file# END IF #">
 							<div class="upload-element-picture" style="background-image: url({files.URL})"></div>
-							<div class="upload-element-name" id="fi1{files.ID}">{files.NAME}</div>
-							<span id="fi{files.ID}"></span>
 						</a>
 						# ELSE #	
 						<a class="# IF files.C_RECENT_FILE #upload-recent-file# END IF #" href="{files.URL}" title="{files.TITLE}"{files.LIGHTBOX}>
 							<div class="upload-element-icon"><i class="fa {files.IMG}"></i></div>
-							<div class="upload-element-name" id="fi1{files.ID}">{files.NAME}</div>
-							<span id="fi{files.ID}"></span>
 						</a>
 						# ENDIF #
+						<div class="upload-element-name" id="fi1{files.ID}">{files.NAME}</div>
+						<span id="fi{files.ID}"></span>
 						{files.BBCODE}
 						<div class="upload-file-controls">
 							{files.RENAME_FILE}
