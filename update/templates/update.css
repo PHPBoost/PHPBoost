@@ -190,6 +190,7 @@ article {
 }
 
 .next-step .fieldset-inset {
+	overflow: visible;
 	padding: 0;
 }
 
