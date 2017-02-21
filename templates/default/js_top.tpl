@@ -11,7 +11,7 @@
 	var L_HIDE_HIDEBLOCK  = ${escapejs(LangLoader::get_message('tag_hide_hideblock', 'editor-common'))};
 	var L_COPYTOCLIPBOARD = ${escapejs(LangLoader::get_message('tag_copytoclipboard', 'editor-common'))};
 
-
+	//Variables CookieBar
 	# IF C_COOKIEBAR_ENABLED #
 	var COOKIEBAR_DURATION        = {COOKIEBAR_DURATION};
 	var COOKIEBAR_TRACKING_MODE   = '{COOKIEBAR_TRACKING_MODE}';
