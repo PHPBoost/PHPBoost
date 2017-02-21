@@ -132,6 +132,8 @@ class ErrorHandler
 
 	private function display()
 	{
+		AppContext::get_response()->set_status_code(503);
+		
 		if ($this->fatal)
 		{
 			AppContext::get_response()->clean_output();
