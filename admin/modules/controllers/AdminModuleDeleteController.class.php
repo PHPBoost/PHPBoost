@@ -83,6 +83,7 @@ class AdminModuleDeleteController extends AdminController
 		$form = new HTMLForm(__CLASS__);
 		
 		$fieldset = new FormFieldsetHTML('delete_module', $this->lang['modules.delete_module']);
+        $fieldset->add_field(new FormFieldFree('warnings', '', $this->lang['modules.warning_before_install']));
 		$form->add_fieldset($fieldset);
 	
 		$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->lang['modules.drop_files'], '0',

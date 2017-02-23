@@ -23,6 +23,7 @@ function display_description(id){
 # END errors #
 
 <form action="{REWRITED_SCRIPT}" method="post">
+        ${LangLoader::get_message('modules.warning_before_install', 'admin-modules-common')}
 	<table id="table">
 		<caption>{@modules.installed_not_activated_modules}</caption>
 		# IF C_MODULES_NOT_ACTIVATED #
