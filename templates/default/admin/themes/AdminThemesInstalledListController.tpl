@@ -1,4 +1,5 @@
 <form action="{REWRITED_SCRIPT}" method="post">
+    ${LangLoader::get_message('themes.warning_before_install', 'admin-themes-common')}
 	<table id="table">
 		<caption>{@themes.installed_theme}</caption>
 		<thead>
