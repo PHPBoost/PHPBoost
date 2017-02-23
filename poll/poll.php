@@ -162,6 +162,9 @@ if ($valid && !empty($poll['id']) && !$archives)
 elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 {
 	$tpl = new FileTemplate('poll/poll.tpl');
+	
+	$Bread_crumb->add($LANG['poll'], PATH_TO_ROOT . '/poll');
+	$Bread_crumb->add(stripslashes($poll['question']), '');
 
 	//Résultats
 	$check_bdd = false;
