@@ -510,6 +510,18 @@ jQuery(document).ready(function(){
 	}
 });
 
+//Affiche le lecteur vidéo avec la bonne URL, largeur et hauteur
+playerflowPlayerRequired = false;
+function insertMoviePlayer(id)
+{
+	if (!playerflowPlayerRequired)
+	{
+		include(PATH_TO_ROOT + '/kernel/lib/flash/flowplayer/flowplayer.js');
+		playerflowPlayerRequired = true;
+	}
+	flowPlayerDisplay(id);
+}
+
 //Construit le lecteur à partir du moment où son code a été interprété par l'interpréteur javascript
 function flowPlayerDisplay(id)
 {

@@ -334,15 +334,26 @@ class ContentSecondParser extends AbstractParser
 		$sources = '';
 		$video_files = explode(',', $matches[1]);
 		
-		foreach ($video_files as $video)
+		if (pathinfo($video_files[0], PATHINFO_EXTENSION) == 'flv')
 		{
-			$video_file = new File($video);
-			$type = new FileType($video_file);
-			if ($type->is_video())
-				$sources .= '<source src="' . Url::to_rel($video) . '" type="video/' . pathinfo($video, PATHINFO_EXTENSION) . '" />';
+			$id = 'movie_' . AppContext::get_uid();
+			return '<a class="video-player" href="' . Url::to_rel($matches[1]) . '" style="display:block;margin:auto;width:' . $matches[2] . 'px;height:' . $matches[3] . 'px;" id="' . $id .  '"></a><br />' .
+			'<script><!--' . "\n" .
+			'insertMoviePlayer(\'' . $id . '\');' .
+			"\n" . '--></script>';
 		}
-		
-		return '<video class="video-player" width="' . $matches[2] . '" height="' . $matches[3] . '" controls>' . $sources . '</video>';
+		else
+		{
+			foreach ($video_files as $video)
+			{
+				$video_file = new File($video);
+				$type = new FileType($video_file);
+				if ($type->is_video())
+					$sources .= '<source src="' . Url::to_rel($video) . '" type="video/' . pathinfo($video, PATHINFO_EXTENSION) . '" />';
+			}
+			
+			return '<video class="video-player" width="' . $matches[2] . '" height="' . $matches[3] . '" controls>' . $sources . '</video>';
+		}
 	}
 
 	/**
