@@ -6,12 +6,13 @@
 
 			<div class="content center">
 				{L_POLL_MAIN}
-				<br /><br />
 				# START list #
-				<a href="{PATH_TO_ROOT}/poll/poll{list.U_POLL_ID}">{list.QUESTION}</a>
-				<br />  
-				<a href="{PATH_TO_ROOT}/poll/poll{list.U_POLL_ID}"><img src="{PATH_TO_ROOT}/poll/poll.png" alt="{list.QUESTION}" title="{list.QUESTION}" /></a> 
-				<br /><br />
+				<div class="poll-question-container">
+					<a id="poll-question-{list.U_POLL_ID}" class="poll-question" href="{PATH_TO_ROOT}/poll/poll{list.U_POLL_ID}">
+						{list.QUESTION}<br />
+						<img src="{PATH_TO_ROOT}/poll/poll.png" alt="{list.QUESTION}" title="{list.QUESTION}"/>
+					</a> 
+				</div>
 				# END list #
 				
 				<p class="center">{U_ARCHIVE}</p>
