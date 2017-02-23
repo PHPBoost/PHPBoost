@@ -172,6 +172,7 @@ Vous pouvez dès à présent vous connecter au site à l\'aide des identifiants 
 :signature';
 
 $lang['registration.pending-approval'] = 'Un nouveau membre s\'est inscrit. Son compte doit être approuvé avant de pouvoir être utilisé.';
+$lang['registration.not-approved'] = 'Votre compte doit être approuvé par un administrateur avant de pouvoir être utilisé.';
 $lang['registration.subject-mail'] = 'Confirmation d\'inscription sur :site_name';
 $lang['registration.lost-password-link'] = 'Si vous perdez votre mot de passe, vous pouvez en générer un nouveau à partir de ce lien : :lost_password_link';
 $lang['registration.password'] = 'Mot de passe : :password';

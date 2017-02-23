@@ -173,6 +173,7 @@ You can now login to the site using the credentials provided in the previous ema
 :signature';
 
 $lang['registration.pending-approval'] = 'A new member has registered. His account must be approved before it can be used.';
+$lang['registration.not-approved'] = 'Your account must be approved by an administrator before it can be used.';
 $lang['registration.subject-mail'] = 'Confirmation of registration :site_name';
 $lang['registration.lost-password-link'] = 'If you loose your password, you can generate a new one from this link :lost_password_link';
 $lang['registration.password'] = 'Password : :password';

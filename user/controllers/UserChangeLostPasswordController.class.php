@@ -40,14 +40,15 @@ class UserChangeLostPasswordController extends AbstractController
 		$user_id = PHPBoostAuthenticationMethod::change_password_pass_exists($change_password_pass);
 		if (!$user_id)
 		{
-			AppContext::get_response()->redirect(Environment::get_home_page());
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
 		}
 		
 		$this->build_form();
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
-			$this->change_password($user_id, $change_password_pass, $this->form->get_value('password'));
+			$this->change_password($user_id, $this->form->get_value('password'));
 		}
 		
 		$this->tpl->put('FORM', $this->form->display());
@@ -57,7 +58,7 @@ class UserChangeLostPasswordController extends AbstractController
 
 	private function init()
 	{
-		$this->tpl = new StringTemplate('# INCLUDE FORM #');
+		$this->tpl = new StringTemplate('# INCLUDE ERROR_MESSAGE ## INCLUDE FORM #');
 		$this->lang = LangLoader::get('user-common');
 		$this->tpl->add_lang($this->lang);
 	}
@@ -87,18 +88,53 @@ class UserChangeLostPasswordController extends AbstractController
 		$this->form = $form;
 	}
 
-	private function change_password($user_id, $change_password_pass, $password)
+	private function change_password($user_id, $password)
 	{
-		PHPBoostAuthenticationMethod::update_auth_infos($user_id, null, null, KeyGenerator::string_hash($password), null, '');
-
-		$session = AppContext::get_session();
-		if ($session != null)
-		{
-			Session::delete($session);
-		}
-		AppContext::set_session(Session::create($user_id, true));
+		$maintain_config = MaintenanceConfig::load();
 		
-		AppContext::get_response()->redirect(Environment::get_home_page());
+		PHPBoostAuthenticationMethod::update_auth_infos($user_id, null, null, KeyGenerator::string_hash($password), null, '');
+		
+		$auth_infos = array();
+		try {
+			$auth_infos = PHPBoostAuthenticationMethod::get_auth_infos($user_id);
+		} catch (RowNotFoundException $e) {
+		}
+		
+		if (!empty($auth_infos) && $auth_infos['login'])
+		{
+			$authentication = new PHPBoostAuthenticationMethod($auth_infos['login'], $password);
+			$user_id = AuthenticationService::authenticate($authentication);
+			
+			$current_user = CurrentUser::from_session();
+			
+			if ($user_id && $maintain_config->is_under_maintenance() && !$current_user->check_auth($maintain_config->get_auth(), MaintenanceConfig::ACCESS_WHEN_MAINTAIN_ENABLED_AUTHORIZATIONS))
+			{
+				$session = AppContext::get_session();
+				Session::delete($session);
+				$this->tpl->put('ERROR_MESSAGE', MessageHelper::display(LangLoader::get_message('user.not_authorized_during_maintain', 'status-messages-common'), MessageHelper::NOTICE));
+			}
+			else
+			{
+				if ($user_id)
+				{
+					AppContext::get_response()->redirect(Environment::get_home_page());
+				}
+				if ($authentication->has_error())
+				{
+					$session = AppContext::get_session();
+					Session::delete($session);
+					
+					$this->tpl->put('ERROR_MESSAGE', MessageHelper::display($authentication->get_error_msg(), MessageHelper::NOTICE));
+				}
+			}
+		}
+		else
+		{
+			$session = AppContext::get_session();
+			Session::delete($session);
+			
+			AppContext::get_response()->redirect(Environment::get_home_page());
+		}
 	}
 	
 	private function build_response(View $view, $key)
