@@ -170,14 +170,25 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 			$match = false;
 		}
 		
-		$remaining_attempts = $this->get_remaining_attemps();
-		if ($remaining_attempts > 0)
-		{
-			$this->error_msg = StringVars::replace_vars(LangLoader::get_message('user.auth.passwd_flood', 'status-messages-common'), array('remaining_tries' => $remaining_attempts));
+		$auth_infos = array();
+		try {
+			$auth_infos = PHPBoostAuthenticationMethod::get_auth_infos($user_id);
+		} catch (RowNotFoundException $e) {
 		}
+		
+		if (!empty($auth_infos) && !$auth_infos['approved'])
+			$this->error_msg = LangLoader::get_message('registration.not-approved', 'user-common');
 		else
 		{
-			$this->error_msg = LangLoader::get_message('user.auth.passwd_flood_max', 'status-messages-common');
+			$remaining_attempts = $this->get_remaining_attemps();
+			if ($remaining_attempts > 0)
+			{
+				$this->error_msg = StringVars::replace_vars(LangLoader::get_message('user.auth.passwd_flood', 'status-messages-common'), array('remaining_tries' => $remaining_attempts));
+			}
+			else
+			{
+				$this->error_msg = LangLoader::get_message('user.auth.passwd_flood_max', 'status-messages-common');
+			}
 		}
 		
 		if ($match)

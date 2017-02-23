@@ -163,6 +163,7 @@ Vous pouvez dès à présent vous connecter au site à l\'aide des identifiants four
 :signature';
 
 $lang['registration.pending-approval'] = 'Un nouveau membre s\'est inscrit. Son compte doit être approuvé avant de pouvoir être utilisé.';
+$lang['registration.not-approved'] = 'Votre compte doit être approuvé par un administrateur avant de pouvoir être utilisé.';
 $lang['registration.subject-mail'] = 'Confirmation d\'inscription sur :site_name';
 $lang['registration.content-mail'] = 'Cher(e) :pseudo,
 
