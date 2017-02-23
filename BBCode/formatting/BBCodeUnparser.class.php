@@ -155,6 +155,8 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			'`\[\[MATH\]\](.+)\[\[/MATH\]\]`suU',
 			'`<a href="([^"]+)" rel="lightbox\[2\]">(.*)</a>`isuU',
 			'`<a href="([^"]+)" data-lightbox="formatter">(.*)</a>`isuU',
+			'`\[\[MEMBER\]\](.+)\[\[/MEMBER\]\]`suU',
+			'`\[\[MODERATOR\]\](.+)\[\[/MODERATOR\]\]`suU',
 		);
 
 		$array_preg_replace = array(
@@ -190,7 +192,9 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			"[youtube=$2,$3]$1[/youtube]",
 			"[math]$1[/math]",
 			"[lightbox=$1]$2[/lightbox]",
-			"[lightbox=$1]$2[/lightbox]"
+			"[lightbox=$1]$2[/lightbox]",
+			"[member]$1[/member]",
+			"[moderator]$1[/moderator]",
 		);
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 		

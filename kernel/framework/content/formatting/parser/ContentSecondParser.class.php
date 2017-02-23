@@ -63,15 +63,15 @@ class ContentSecondParser extends AbstractParser
 		}
 		
 		//Balise member
-		if (stripos($this->content, '[MEMBER]') !== false)
+		if (stripos($this->content, '[[MEMBER]]') !== false)
 		{
-			$this->content = preg_replace_callback('`\[MEMBER\](.+)\[/MEMBER\]`isuU', array($this, 'callback_member_tag'), $this->content);
+			$this->content = preg_replace_callback('`\[\[MEMBER\]\](.+)\[\[/MEMBER\]\]`suU', array($this, 'callback_member_tag'), $this->content);
 		}
 		
 		//Balise moderator
-		if (stripos($this->content, '[MODERATOR]') !== false)
+		if (stripos($this->content, '[[MODERATOR]]') !== false)
 		{
-			$this->content = preg_replace_callback('`\[MODERATOR\](.+)\[/MODERATOR\]`isuU', array($this, 'callback_moderator_tag'), $this->content);
+			$this->content = preg_replace_callback('`\[\[MODERATOR\]\](.+)\[\[/MODERATOR\]\]`suU', array($this, 'callback_moderator_tag'), $this->content);
 		}
 		
 		//Media

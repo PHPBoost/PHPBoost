@@ -214,6 +214,8 @@ class BBCodeParser extends ContentFormattingParser
 			'youtube1' => '`\[youtube=([0-9]{1,3}),([0-9]{1,3})\](((?:[./]+|(?:https?|ftps?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/youtube\]`iuU',
 			'youtube2' => '`\[youtube\](((?:[./]+|(?:https?|ftps?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/youtube\]`iuU',
 			'lightbox' => '`\[lightbox=((?!javascript:)' . Url::get_wellformness_regex() . ')\]([^\n\r\t\f]+)\[/lightbox\]`isuU',
+			'member' => '`\[member\](.*)\[/member\]`isuU',
+			'moderator' => '`\[moderator\](.*)\[/moderator\]`isuU',
 		);
 
 		$array_preg_replace = array(
@@ -247,6 +249,8 @@ class BBCodeParser extends ContentFormattingParser
 			'youtube1' => '[[MEDIA]]insertYoutubePlayer(\'$3\', $1, $2);[[/MEDIA]]',
 			'youtube2' => '[[MEDIA]]insertYoutubePlayer(\'$1\', 560, 315);[[/MEDIA]]',
 			'lightbox' => '<a href="$1" data-lightbox="formatter">$2</a>',
+			'member' => '[[MEMBER]]$1[[/MEMBER]]',
+			'moderator' => '[[MODERATOR]]$1[[/MODERATOR]]',
 		);
 
 			$parse_line = true;

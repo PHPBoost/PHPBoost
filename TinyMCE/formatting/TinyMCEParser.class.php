@@ -638,6 +638,8 @@ class TinyMCEParser extends ContentFormattingParser
 			'url2' => '`(\s+)(www\.' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_NOT_USED) . ')(\s|<+)`suU',
 			'mail' => '`(\s+)([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})(\s+)`iu',
 			'lightbox' => '`\[lightbox=((?!javascript:)' . Url::get_wellformness_regex() . ')\]([^\n\r\t\f]+)\[/lightbox\]`isuU',
+			'member' => '`\[member\](.*)\[/member\]`isuU',
+			'moderator' => '`\[moderator\](.*)\[/moderator\]`isuU',
 		);
 
 		$array_preg_replace = array(
@@ -658,6 +660,8 @@ class TinyMCEParser extends ContentFormattingParser
 			'url2' => "$1<a href=\"http://$2\">$2</a>$3",
 			'mail' => "$1<a href=\"mailto:$2\">$2</a>$3",
 			'lightbox' => '<a href="$1" data-lightbox="formatter">$2</a>',
+			'member' => '[[MEMBER]]$1[[/MEMBER]]',
+			'moderator' => '[[MODERATOR]]$1[[/MODERATOR]]',
 		);
 
 		//Suppression des remplacements des balises interdites.
