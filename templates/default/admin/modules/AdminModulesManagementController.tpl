@@ -48,7 +48,8 @@ function display_description(id){
 						<span class="text-strong">{@modules.author} :</span> # IF modules_not_activated.C_AUTHOR #<a href="mailto:{modules_not_activated.AUTHOR_EMAIL}">{modules_not_activated.AUTHOR}</a># ELSE #{modules_not_activated.AUTHOR}# ENDIF # # IF modules_not_activated.C_AUTHOR_WEBSITE #<a href="{modules_not_activated.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
 						<span class="text-strong">{@modules.description} :</span> {modules_not_activated.DESCRIPTION}<br />
 						<span class="text-strong">{@modules.compatibility} :</span> PHPBoost {modules_not_activated.COMPATIBILITY}<br />
-						<span class="text-strong">{@modules.php_version} :</span> {modules_not_activated.PHP_VERSION}
+						<span class="text-strong">{@modules.php_version} :</span> {modules_not_activated.PHP_VERSION}<br />
+						# IF modules_not_activated.C_DOCUMENTATION #<a class="basic-button smaller" href="{modules_not_activated.DOCUMENTATION}">{@module.documentation}</a># ENDIF #		
 					</div>
 					<div class="center">
 						<a href="" onclick="javascript:display_description('{modules_not_activated.ID}'); return false;" id="picture-desc-{modules_not_activated.ID}" class="description-displayed" title="${LangLoader::get_message('display', 'common')}"><i class="fa fa-plus"></i></a>
@@ -103,7 +104,8 @@ function display_description(id){
 						<span class="text-strong">{@modules.name} :</span> # IF modules_activated.C_AUTHOR #<a href="mailto:{modules_activated.AUTHOR_EMAIL}">{modules_activated.AUTHOR}</a># ELSE #{modules_activated.AUTHOR}# ENDIF # # IF modules_activated.C_AUTHOR_WEBSITE #<a href="{modules_activated.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
 						<span class="text-strong">{@modules.description} :</span> {modules_activated.DESCRIPTION}<br />
 						<span class="text-strong">{@modules.compatibility} :</span> PHPBoost {modules_activated.COMPATIBILITY}<br />
-						<span class="text-strong">{@modules.php_version} :</span> {modules_activated.PHP_VERSION}
+						<span class="text-strong">{@modules.php_version} :</span> {modules_activated.PHP_VERSION}<br />
+						# IF modules_activated.C_DOCUMENTATION #<a class="basic-button smaller" href="{modules_activated.DOCUMENTATION}">{@module.documentation}</a># ENDIF #
 					</div>
 					<div class="center"><a href="" onclick="javascript:display_description('{modules_activated.ID}'); return false;" id="picture-desc-{modules_activated.ID}" class="description-displayed" title="${LangLoader::get_message('display', 'common')}"><i class="fa fa-plus"></i></a></div>
 				</td>

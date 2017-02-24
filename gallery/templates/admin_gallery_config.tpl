@@ -57,6 +57,9 @@
 				<li>
 					<a href="admin_gallery_config.php" class="quick-link">{L_GALLERY_CONFIG}</a>
 				</li>
+				<li>
+					<a href="${relative_url(GalleryUrlBuilder::documentation())}" class="quick-link">${LangLoader::get_message('module.documentation', 'admin-modules-common')}</a>
+				</li>
 			</ul>
 		</nav>
 		

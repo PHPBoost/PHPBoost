@@ -48,5 +48,13 @@ class PagesUrlBuilder
 		return PATH_TO_ROOT . self::PREFIX.url(
 			'pages.php?id='.$id.'&com=0');
 	}
+	
+	/**
+	 * @return Url
+	 */
+	public static function documentation()
+	{
+		return new Url (ModulesManager::get_module('pages')->get_configuration()->get_documentation());
+	}
 }
 ?>

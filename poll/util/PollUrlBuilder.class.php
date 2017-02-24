@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                             WikiUrlBuilder.class.php
- *                            -------------------
- *   begin                : February 2, 2014
- *   copyright            : (C) 2015 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
+ *   SearchUrlBuilder.class.php
+ *   ---------------------------
+ *   begin                :  2017/02/24
+ *   copyright            : (C) 2017 Xela
+ *   email                : xela@phpboost.com
  *
  *
  *###################################################
@@ -26,48 +26,16 @@
  *###################################################
  */
 
-class WikiUrlBuilder
+class PollUrlBuilder
 {
-	private static $dispatcher = '/wiki';
-	
-	/**
-	 * @return Url
-	 */
-	public static function configuration()
-	{
-		return new Url('/wiki/admin_wiki.php');
-	}
-	
-	/**
-	 * @return Url
-	 */
-	public static function add_category()
-	{
-		return new Url('/wiki/post.php?type=cat');
-	}
-	
-	/**
-	 * @return Url
-	 */
-	public static function add()
-	{
-		return new Url('/wiki/post.php');
-	}
-	
-	/**
-	 * @return Url
-	 */
-	public static function home()
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/');
-	}
+	private static $dispatcher = '/poll';
 	
 	/**
 	 * @return Url
 	 */
 	public static function documentation()
 	{
-		return new Url (ModulesManager::get_module('wiki')->get_configuration()->get_documentation());
+		return new Url (ModulesManager::get_module('poll')->get_configuration()->get_documentation());
 	}
 }
 ?>

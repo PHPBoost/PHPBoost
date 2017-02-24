@@ -1,3 +1,13 @@
+<nav id="admin-quick-menu">
+			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_STATS}">
+				<i class="fa fa-bars"></i> {L_STATS}
+				</a>
+				<ul>
+					<li>
+					<a href="${relative_url(StatsUrlBuilder::documentation())}" class="quick-link">${LangLoader::get_message('module.documentation', 'admin-modules-common')}</a>
+					</li>
+				</ul>
+			</nav> 	
 	<div id="admin-contents" style="margin-left:0;padding:10px">
 		<fieldset>
 			<legend>{L_STATS}</legend>

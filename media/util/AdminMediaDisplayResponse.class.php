@@ -39,6 +39,7 @@ class AdminMediaDisplayResponse extends AdminMenuDisplayResponse
 		$this->set_title($lang['module_title']);
 		
 		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), MediaUrlBuilder::configuration());
+		$this->add_link(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('media')->get_configuration()->get_documentation());
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page, $lang['module_title']);

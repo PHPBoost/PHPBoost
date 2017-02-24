@@ -55,6 +55,8 @@ class DownloadTreeLinks implements ModuleTreeLinksExtensionPoint
 		
 		$tree->add_link(new ModuleLink($lang['download.pending'], DownloadUrlBuilder::display_pending(), DownloadAuthorizationsService::check_authorizations()->write() || DownloadAuthorizationsService::check_authorizations()->contribution() || DownloadAuthorizationsService::check_authorizations()->moderation()));
 		
+		$tree->add_link(new ModuleLink(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('download')->get_configuration()->get_documentation(), DownloadAuthorizationsService::check_authorizations()->write() || DownloadAuthorizationsService::check_authorizations()->contribution() || DownloadAuthorizationsService::check_authorizations()->moderation()));
+		
 		return $tree;
 	}
 }

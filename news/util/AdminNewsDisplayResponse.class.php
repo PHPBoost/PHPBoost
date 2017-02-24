@@ -38,6 +38,7 @@ class AdminNewsDisplayResponse extends AdminMenuDisplayResponse
 		$this->set_title($lang['news']);
 
 		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), NewsUrlBuilder::configuration());
+		$this->add_link(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('news')->get_configuration()->get_documentation());
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page, $lang['news']);

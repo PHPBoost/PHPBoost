@@ -35,6 +35,7 @@ class AdminNewsletterDisplayResponse extends AdminMenuDisplayResponse
 		$this->set_title($lang['newsletter']);
 		
 		$this->add_link(LangLoader::get_message('configuration', 'admin'), NewsletterUrlBuilder::configuration());
+		$this->add_link(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('newsletter')->get_configuration()->get_documentation());
 
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page, $lang['newsletter']);

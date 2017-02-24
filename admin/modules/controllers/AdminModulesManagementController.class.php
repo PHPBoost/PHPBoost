@@ -62,6 +62,7 @@ class AdminModulesManagementController extends AdminController
 			$author = $configuration->get_author();
 			$author_email = $configuration->get_author_email();
 			$author_website = $configuration->get_author_website();
+			$documentation = $configuration->get_documentation();
 			
 			if (!in_array($module, $modules_activated))
 			{
@@ -78,7 +79,9 @@ class AdminModulesManagementController extends AdminController
 					'DESCRIPTION' => $configuration->get_description(),
 					'COMPATIBILITY' => $configuration->get_compatibility(),
 					'PHP_VERSION' => $configuration->get_php_version(),
-					'C_MODULE_ACTIVE' => $module->is_activated()
+					'C_MODULE_ACTIVE' => $module->is_activated(),
+					'C_DOCUMENTATION' => !empty($documentation),
+					'DOCUMENTATION' => $documentation
 				));
 			}
 			else 
@@ -96,7 +99,9 @@ class AdminModulesManagementController extends AdminController
 					'DESCRIPTION' => $configuration->get_description(),
 					'COMPATIBILITY' => $configuration->get_compatibility(),
 					'PHP_VERSION' => $configuration->get_php_version(),
-					'C_MODULE_ACTIVE' => $module->is_activated()
+					'C_MODULE_ACTIVE' => $module->is_activated(),
+					'C_DOCUMENTATION' => !empty($documentation),
+					'DOCUMENTATION' => $documentation
 				));
 			}
 		}

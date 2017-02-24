@@ -52,6 +52,8 @@ class MediaTreeLinks implements ModuleTreeLinksExtensionPoint
 			$tree->add_link(new ModuleLink($lang['media.actions.add'], MediaUrlBuilder::add(), MediaAuthorizationsService::check_authorizations()->write() || MediaAuthorizationsService::check_authorizations()->contribution()));
 		}
 		
+		$tree->add_link(new ModuleLink(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('media')->get_configuration()->get_documentation(), MediaAuthorizationsService::check_authorizations()->write() || MediaAuthorizationsService::check_authorizations()->contribution() || MediaAuthorizationsService::check_authorizations()->moderation()));
+		
 		return $tree;
 	}
 }

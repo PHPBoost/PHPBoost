@@ -38,6 +38,7 @@ class AdminArticlesDisplayResponse extends AdminMenuDisplayResponse
 		$this->set_title($lang['articles']);
 		
 		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), ArticlesUrlBuilder::configuration());
+		$this->add_link(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('articles')->get_configuration()->get_documentation());
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page, $lang['articles']);

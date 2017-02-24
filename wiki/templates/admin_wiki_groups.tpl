@@ -9,6 +9,9 @@
 				<li>
 					<a href="admin_wiki_groups.php" class="quick-link">{L_WIKI_GROUPS}</a>
 				</li>
+				<li>
+				<a href="${relative_url(WikiUrlBuilder::documentation())}" class="quick-link">${LangLoader::get_message('module.documentation', 'admin-modules-common')}</a>
+				</li>
 		</ul>
 </nav>
 

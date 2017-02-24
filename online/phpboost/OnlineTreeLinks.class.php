@@ -35,6 +35,7 @@ class OnlineTreeLinks implements ModuleTreeLinksExtensionPoint
 		$tree = new ModuleTreeLinks();
 		
 		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin-common'), OnlineUrlBuilder::configuration()));
+		$tree->add_link(new ModuleLink(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('online')->get_configuration()->get_documentation()));
 		
 		return $tree;
 	}

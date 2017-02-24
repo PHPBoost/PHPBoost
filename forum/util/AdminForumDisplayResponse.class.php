@@ -41,6 +41,7 @@ class AdminForumDisplayResponse extends AdminMenuDisplayResponse
 		$this->add_link($lang['forum.ranks_management'], ForumUrlBuilder::manage_ranks());
 		$this->add_link($lang['forum.actions.add_rank'], ForumUrlBuilder::add_rank());
 		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), ForumUrlBuilder::configuration());
+		$this->add_link(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('forum')->get_configuration()->get_documentation());
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page, $lang['module_title']);

@@ -58,6 +58,7 @@ $lang['modules.page_admin'] = 'Administration';
 $lang['modules.modules_available'] = 'Modules disponibles';
 $lang['modules.installed_activated_modules'] = 'Modules installés et activés';
 $lang['modules.installed_not_activated_modules'] = 'Modules désactivés';
+$lang['module.documentation'] = 'Documentation';
 
 //Module management
 $lang['modules.install_module'] = 'Installer';

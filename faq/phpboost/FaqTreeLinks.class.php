@@ -55,6 +55,8 @@ class FaqTreeLinks implements ModuleTreeLinksExtensionPoint
 		
 		$tree->add_link(new ModuleLink($lang['faq.pending'], FaqUrlBuilder::display_pending(), FaqAuthorizationsService::check_authorizations()->write() || FaqAuthorizationsService::check_authorizations()->contribution() || FaqAuthorizationsService::check_authorizations()->moderation()));
 		
+		$tree->add_link(new ModuleLink(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('faq')->get_configuration()->get_documentation(), FaqAuthorizationsService::check_authorizations()->write() || FaqAuthorizationsService::check_authorizations()->contribution() || FaqAuthorizationsService::check_authorizations()->moderation()));
+		
 		return $tree;
 	}
 }

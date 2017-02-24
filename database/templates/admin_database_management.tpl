@@ -12,6 +12,9 @@
 					<li>
 						<a href="${relative_url(DatabaseUrlBuilder::configuration())}" class="quick-link">${LangLoader::get_message('configuration', 'admin-common')}</a>
 					</li>
+					<li>
+						<a href="${relative_url(DatabaseUrlBuilder::documentation())}" class="quick-link">${LangLoader::get_message('module.documentation', 'admin-modules-common')}</a>
+					</li>
 				</ul>
 		</nav>
 		

@@ -52,6 +52,8 @@ class GalleryTreeLinks implements ModuleTreeLinksExtensionPoint
 			$tree->add_link(new ModuleLink($lang['gallery.actions.add'], GalleryUrlBuilder::add(AppContext::get_request()->get_getstring('id_category', 0)), GalleryAuthorizationsService::check_authorizations()->write()));
 		}
 		
+		$tree->add_link(new ModuleLink(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('gallery')->get_configuration()->get_documentation(), GalleryAuthorizationsService::check_authorizations()->write()));
+		
 		return $tree;
 	}
 }

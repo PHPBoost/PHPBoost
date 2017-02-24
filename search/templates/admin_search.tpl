@@ -29,6 +29,9 @@
 				<li>
 					<a href="admin_search.php?weighting=true" class="quick-link">{L_SEARCH_CONFIG_WEIGHTING}</a>
 				</li>
+				<li>
+					<a href="${relative_url(SearchUrlBuilder::documentation())}" class="quick-link">${LangLoader::get_message('module.documentation', 'admin-modules-common')}</a>
+				</li>
 			</ul>
 		</nav>
 

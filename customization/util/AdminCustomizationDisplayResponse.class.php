@@ -38,6 +38,7 @@ class AdminCustomizationDisplayResponse extends AdminMenuDisplayResponse
 		$this->add_link($lang['customization.favicon'], AdminCustomizeUrlBuilder::customize_favicon());
 		$this->add_link($lang['customization.editor.css-files'], AdminCustomizeUrlBuilder::editor_css_file());
 		$this->add_link($lang['customization.editor.tpl-files'], AdminCustomizeUrlBuilder::editor_tpl_file());
+		$this->add_link(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('customization')->get_configuration()->get_documentation());
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

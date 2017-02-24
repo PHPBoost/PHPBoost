@@ -55,6 +55,8 @@ class PagesTreeLinks implements ModuleTreeLinksExtensionPoint
 		$tree->add_link(new ModuleLink($LANG['pages_redirection_manage'], new Url('/pages/action.php'), $current_user->check_auth($config->get_authorizations(), EDIT_PAGE)));
 		$tree->add_link(new ModuleLink($LANG['pages_explorer'], new Url('/pages/explorer.php'), $current_user->check_auth($config->get_authorizations(), EDIT_PAGE)));
 		
+		$tree->add_link(new ModuleLink(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('pages')->get_configuration()->get_documentation(), $current_user->check_auth($config->get_authorizations(), EDIT_PAGE)));
+		
 		return $tree;
 	}
 }

@@ -36,6 +36,7 @@ class AdminSitemapResponse extends AdminMenuDisplayResponse
 		
 		$this->add_link($lang['general_config'], SitemapUrlBuilder::get_general_config());
 		$this->add_link($lang['generate_xml_file'], SitemapUrlBuilder::get_xml_file_generation());
+		$this->add_link(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('sitemap')->get_configuration()->get_documentation());
 	}
 }
 ?>

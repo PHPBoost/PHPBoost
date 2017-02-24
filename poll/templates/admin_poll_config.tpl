@@ -39,6 +39,9 @@
 				<li>
 					<a href="admin_poll_config.php" class="quick-link">{L_POLL_CONFIG}</a>
 				</li>
+				<li>
+					<a href="${relative_url(PollUrlBuilder::documentation())}" class="quick-link">${LangLoader::get_message('module.documentation', 'admin-modules-common')}</a>
+				</li>
 			</ul>
 		</nav> 
 		

@@ -44,6 +44,8 @@ class NewsletterTreeLinks implements ModuleTreeLinksExtensionPoint
 		
 		$tree->add_link(new ModuleLink($lang['newsletter-add'], NewsletterUrlBuilder::add_newsletter(), NewsletterAuthorizationsService::default_authorizations()->create_newsletters()));
 		$tree->add_link(new ModuleLink($lang['newsletter.archives'], NewsletterUrlBuilder::archives(), NewsletterAuthorizationsService::default_authorizations()->read_archives()));
+		
+		$tree->add_link(new ModuleLink(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('newsletter')->get_configuration()->get_documentation(), NewsletterAuthorizationsService::default_authorizations()->create_newsletters() || NewsletterUrlBuilder::archives(), NewsletterAuthorizationsService::default_authorizations()->read_archives()));
 	
 		return $tree;
 	}

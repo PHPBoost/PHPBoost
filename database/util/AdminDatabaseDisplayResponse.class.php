@@ -41,6 +41,7 @@ class AdminDatabaseDisplayResponse extends AdminMenuDisplayResponse
 		$this->add_link($lang['database.actions.database_management'], DatabaseUrlBuilder::database_management());
 		$this->add_link($lang['database.actions.db_sql_queries'], DatabaseUrlBuilder::db_sql_queries());
 		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), DatabaseUrlBuilder::configuration());
+		$this->add_link(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('database')->get_configuration()->get_documentation());
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page, $lang['module_title']);

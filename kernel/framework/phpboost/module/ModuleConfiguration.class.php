@@ -49,6 +49,7 @@ class ModuleConfiguration
 	private $home_page;
 	private $contribution_interface;
 	private $url_rewrite_rules;
+	private $documentation;
 
 	public function __construct($config_ini_file, $desc_ini_file)
 	{
@@ -140,6 +141,11 @@ class ModuleConfiguration
 	{
 		return $this->url_rewrite_rules;
 	}
+	
+	public function get_documentation()
+	{
+	return $this->documentation;
+	}
 
 	private function load_configuration($config_ini_file)
 	{
@@ -159,6 +165,7 @@ class ModuleConfiguration
 		$this->home_page = !empty($config['home_page']) ? $config['home_page'] : '';
 		$this->contribution_interface = !empty($config['contribution_interface']) ? $config['contribution_interface'] : '';
 		$this->url_rewrite_rules = !empty($config['rewrite_rules']) ? $config['rewrite_rules'] : array();
+		$this->documentation=$config['documentation'];
 	}
 
 	private function load_description($desc_ini_file)

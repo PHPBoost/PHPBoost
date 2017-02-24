@@ -53,6 +53,7 @@ class WikiTreeLinks implements ModuleTreeLinksExtensionPoint
 		}
 		
 		$tree->add_link(new ModuleLink($LANG['wiki_explorer_short'], new Url('/wiki/explorer.php')));
+		$tree->add_link(new ModuleLink(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('wiki')->get_configuration()->get_documentation(), $current_user->check_auth($config->get_authorizations(), WIKI_CREATE_CAT) || $current_user->check_auth($config->get_authorizations(), WIKI_CREATE_CAT)));
 		
 		return $tree;
 	}

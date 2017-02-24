@@ -37,6 +37,7 @@ class AdminContactDisplayResponse extends AdminMenuDisplayResponse
 		$this->add_link($lang['admin.fields.manage'], ContactUrlBuilder::manage_fields());
 		$this->add_link(LangLoader::get_message('fields.action.add_field', 'admin-user-common'), ContactUrlBuilder::add_field());
 		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), ContactUrlBuilder::configuration());
+		$this->add_link(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('contact')->get_configuration()->get_documentation());
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page, $lang['module_title']);
