@@ -13,7 +13,8 @@
 }
  
 .media-content object,
-.media-content embed  {
+.media-content embed, 
+.media-content video {
 	position: absolute;
 	top: 0;
 	left: 0;
