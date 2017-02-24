@@ -34,7 +34,7 @@ class SandboxHomeController extends ModuleController
 	{
 		$this->init();
 		
-		$this->view->put('WELCOME_MESSAGE', FormatingHelper::second_parse($this->lang['welcome_message']));
+		$this->view->put('WELCOME_MESSAGE', FormatingHelper::second_parse($this->lang['welcome.message']));
 		
 		return $this->generate_response();
 	}
@@ -50,7 +50,7 @@ class SandboxHomeController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['module_title']);
+		$graphical_environment->set_page_title($this->lang['module.title']);
 		
 		return $response;
 	}

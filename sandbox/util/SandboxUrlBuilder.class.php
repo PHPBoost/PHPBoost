@@ -44,6 +44,14 @@ class SandboxUrlBuilder
 	/**
 	 * @return Url
 	 */
+	public static function form()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/form');
+	}
+	
+	/**
+	 * @return Url
+	 */
 	public static function css()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/css');
@@ -52,9 +60,9 @@ class SandboxUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function form()
+	public static function bbcode()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/form');
+		return DispatchManager::get_url(self::$dispatcher, '/bbcode');
 	}
 	
 	/**
@@ -68,9 +76,9 @@ class SandboxUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function mail()
+	public static function menu()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/mail');
+		return DispatchManager::get_url(self::$dispatcher, '/menu');
 	}
 	
 	/**
@@ -84,17 +92,17 @@ class SandboxUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function template()
+	public static function mail()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/template');
+		return DispatchManager::get_url(self::$dispatcher, '/mail');
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function menu()
+	public static function template()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/menu');
+		return DispatchManager::get_url(self::$dispatcher, '/template');
 	}
 }
 ?>

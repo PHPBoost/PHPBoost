@@ -30,34 +30,54 @@
  #						French						#
  ####################################################
 
-// --- Titre
-$lang['module_title'] = 'Bac à sable';
+// --- Titre du module
 
-// --- Welcome
+$lang['module.title'] = 'Bac à sable';
 
-$lang['title.form_builder'] = 'Formulaires';
-$lang['title.table_builder'] = 'Tableaux';
-$lang['title.icons'] = 'Icônes';
+// --- Page d'accueil
+
+$lang['title.form.builder'] = 'Formulaires';
 $lang['title.css'] = 'CSS';
-$lang['title.menu'] = 'Cssmenu';
-$lang['title.mail_sender'] = 'Envoi de mail';
-$lang['title.string_template'] = 'Génération de template';
+$lang['title.bbcode'] = 'BBCode';
+$lang['title.menu'] = 'Menus Cssmenu';
+$lang['title.icons'] = 'Icônes Font-Awesome';
+$lang['title.table.builder'] = 'Tableaux';
+$lang['title.mail.sender'] = 'Envoi de mail';
+$lang['title.string.template'] = 'Génération de template';
 
-$lang['welcome_message'] = 'Bienvenue dans le module Bac à sable.<br /><br />
-Vous pouvez ici tester plusieurs parties du framework PHPBoost :<br />
-<ul>
-<li>Le rendu des différents champs utilisables avec le <a href="' . SandboxUrlBuilder::form()->absolute() . '">constructeur de formulaires</a></li>
-<li>La <a href="' . SandboxUrlBuilder::table()->absolute() . '">génération de tableaux dynamiques</a></li>
-<li>La <a href="' . SandboxUrlBuilder::icons()->absolute() . '">liste des icônes</a> de la librairie Font Awesome utilisées dans les modules</li>
-<li>Le rendu des principales <a href="' . SandboxUrlBuilder::css()->absolute() . '">classes CSS</a></li>
-<li>Le rendu des menus cssmenu <a href="' . SandboxUrlBuilder::menu()->absolute() . '">menus cssmenu</a></li>
-<li>L\'<a href="' . SandboxUrlBuilder::mail()->absolute() . '">envoi de mails</a></li>
-<li>La <a href="' . SandboxUrlBuilder::template()->absolute() . '">génération de template</a> avec ou sans cache</li>
+$lang['welcome.message'] = '<p>Bienvenue dans le module Bac à sable.</p>
+<br />
+<p>Vous pouvez ici tester plusieurs parties du framework PHPBoost :</p>
+<ul class="sandbox-home-list">
+<li><i class="fa fa-fw fa-asterisk"></i> Le rendu des différents champs utilisables avec le <a href="' . SandboxUrlBuilder::form()->absolute() . '" title="formulaires">constructeur de formulaires</a></li>
+<li><i class="fa fa-fw fa-css3"></i> Le rendu des principales <a href="' . SandboxUrlBuilder::css()->absolute() . '" title="Classes CSS">classes CSS</a></li>
+<li><i class="fa fa-fw fa-file-code-o"></i> Le rendu des styles spécifiques du <a href="' . SandboxUrlBuilder::bbcode()->absolute() . '" title="Styles BBCode">BBCode</a></li>
+<li><i class="fa fa-fw fa-flag-o"></i> Un tutoriel sur l\'utilisation des icônes de la librairie <a href="' . SandboxUrlBuilder::icons()->absolute() . '" title="Icônes Font-Awesome">Font Awesome</a></li>
+<li><i class="fa fa-fw fa-list"></i> Le rendu des <a href="' . SandboxUrlBuilder::menu()->absolute() . '" title="Menus de navigation">menus de navigation cssmenu</a></li>
+<li><i class="fa fa-fw fa-table"></i> La génération de <a href="' . SandboxUrlBuilder::table()->absolute() . '" title="Tableaux">tableaux dynamiques</a></li>
+<li><i class="fa fa-fw fa-at"></i> L\'<a href="' . SandboxUrlBuilder::mail()->absolute() . '" title="Emails">envoi d\'emails</a></li>
+<li><i class="fa fa-fw fa-code"></i> La <a href="' . SandboxUrlBuilder::template()->absolute() . '" title="Génération de Thème">génération de template</a> avec ou sans cache</li>
 </ul>
 <br />
 ';
 
-// --- Form
+// --- Framework lorem
+
+$lang['framework.lorem.mini'] = 'Etiam hendrerit, tortor et faucibus dapibus, eros orci porta eros, in facilisis ipsum ipsum at nisl';
+$lang['framework.lorem.medium'] = 'Fusce vitae consequat nisl. Fusce vestibulum porta ipsum ac consectetur. Duis finibus mauris eu feugiat congue.
+Aenean aliquam accumsan ipsum, ac dapibus dui ultricies non. In hac habitasse platea dictumst. Aenean mi nibh, varius vel lacus at, tincidunt luctus eros.
+In hac habitasse platea dictumst. Vestibulum luctus lorem nisl, et hendrerit lectus dapibus ut. Phasellus sit amet nisl tortor.
+Aenean pulvinar tellus nulla, sit amet mattis nisl semper eu. Phasellus efficitur nisi a laoreet dignissim. Aliquam erat volutpat.';
+$lang['framework.lorem.large'] = ' Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut hendrerit odio urna, blandit pharetra elit
+scelerisque tempor. Nulla dapibus felis orci, at consectetur orci auctor eget. Donec eros lectus, mollis eget auctor vel, convallis ac mauris.
+Cras imperdiet, erat ac semper volutpat, libero orci varius mi, et ullamcorper quam urna vitae augue. Maecenas maximus vitae diam vel porta.
+Pellentesque dignissim dolor eu neque aliquet viverra. Maecenas tincidunt, mi non gravida tincidunt, lectus elit gravida massa,
+sed viverra tortor diam pretium metus. In hac habitasse platea dictumst. Ut velit turpis, sollicitudin non risus et, pretium efficitur leo.
+Integer elementum faucibus finibus. Nullam et felis sit amet felis blandit iaculis. Vestibulum massa arcu, finibus id enim ac, commodo aliquam metus.
+Vestibulum feugiat urna nunc, et eleifend velit posuere ac. Vestibulum sagittis tempus nunc, sit amet dignissim ipsum sollicitudin eget.';
+
+
+// --- Formulaires
 
 $lang['form.title'] = 'Formulaire';
 $lang['form.desc'] = 'Ceci est une description';
@@ -140,80 +160,28 @@ $lang['form.horizontal.desc'] = 'Formulaire horizontal';
 $lang['form.preview'] = 'Prévisualiser';
 $lang['form.button'] = 'Bouton';
 
-// --- Cssmenu
-
-$lang['css.menu.site.title'] = 'Menus cssmenu';
-$lang['css.menu.site.slogan'] = 'Bac à sable - le design des cssmenu';
-$lang['css.menu.breadcrumb.index'] = 'Accueil';
-$lang['css.menu.breadcrumb.sandbox'] = 'Bac à sable';
-$lang['css.menu.breadcrumb.cssmenu'] = 'cssmenu';
-$lang['css.menu.h2'] = 'Les différents menus cssmenu';
-$lang['css.menu.element'] = 'Item du menu';
-$lang['css.menu.sub.element'] = 'Sous menu';
-$lang['css.menu.horizontal.sub.header'] = 'Menu de sous-entête';
-$lang['css.menu.sub.admin'] = 'Administration';
-$lang['css.menu.horizontal.top'] = 'Menu horizontal Header';
-$lang['css.menu.horizontal.scrolling'] = 'Menu horizontal déroulant';
-$lang['css.menu.vertical.scrolling'] = 'Menu vertical scroll';
-$lang['css.menu.vertical.img'] = 'Menu avec images';
-$lang['css.menu.vertical.scrolling.left'] = 'Menu vert scroll à gauche';
-$lang['css.menu.vertical.scrolling.right'] = 'Menu vert scroll à droite';
-$lang['css.menu.actionslinks.sandbox'] = 'Bac à sable';
-$lang['css.menu.actionslinks.index'] = 'Accueil';
-$lang['css.menu.actionslinks.form'] = 'Formulaires';
-$lang['css.menu.actionslinks.css'] = 'CSS';
-$lang['css.menu.actionslinks.menu'] = 'Cssmenu';
-$lang['css.menu.actionslinks.icons'] = 'Icônes';
-$lang['css.menu.actionslinks.table'] = 'Tableaux';
-$lang['css.menu.actionslinks.template'] = 'Génération de templates';
-$lang['css.menu.actionslinks.mail'] = 'Envoi de mail';
-$lang['css.menu.actionslinks'] = 'Menu options des modules';
-$lang['css.menu.group'] = 'Menu groupes';
-$lang['css.menu.static'] = 'Menu statique';
-$lang['css.menu.static.footer'] = 'Menu statique pied de page';
-
-// --- lorem ipsum pour Cssmenu
-
-$lang['css.menu.content'] = 'Cette page a un design spécifique de manière à afficher tous les types de menus en fonction des emplacements potentiels susceptibles d\'être utilisés';
-$lang['lorem.ipsum'] = ' Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis condimentum eros. Vestibulum fermentum eleifend consectetur.
-Nulla efficitur molestie vulputate. Sed finibus dolor in est faucibus egestas. Nullam odio elit, rutrum ut tempor in, elementum ut nisi.
-Nunc placerat convallis dolor, vitae semper justo placerat vel. Nulla porta quis nisl vitae commodo. Aliquam et tortor viverra, porttitor nulla nec,
-pretium ligula. Sed eleifend consequat tincidunt.';
-
-// --- Icônes
-
-$lang['css.icon.sample'] = 'Quelques exemples';
-$lang['css.icon.social'] = 'Réseaux sociaux';
-$lang['css.icon.screen'] = 'Ecrans';
-$lang['css.icon.icon'] = 'Icône';
-$lang['css.icon.name'] = 'Nom';
-$lang['css.icon.code'] = 'Code';
-$lang['css.icon.list'] = 'La liste complète des icônes et de leur code associé : ';
-
-$lang['css.icon.howto'] = 'Comment ça marche ?';
-$lang['css.icon.howto.explain'] = 'Font-Awesome est une icon-font, une police de caractère qui permet d\'afficher des icônes simplement';
-$lang['css.icon.howto.update'] = 'Elle est implémentée depuis la version 4.1 de PHPBoost. Chaque mise à jour de Font-Awesome est implémentée dans la mise à jour de PHPBoost qui suit.';
-$lang['css.icon.howto.html'] = 'En html';
-$lang['css.icon.howto.html.class'] = 'On utilise le nom de l\'icône en tant que classe : ';
-$lang['css.icon.howto.html.class.result.i'] = 'Nous donnera l\'icône "edit" suivi du texte : ';
-$lang['css.icon.howto.html.class.result.a'] = 'Nous donnera le lien précédé de l\'icône "globe" : ';
-$lang['css.icon.howto.html.class.result.all'] = 'Il en est de même pour tout type de balise html.';
-$lang['css.icon.howto.css'] = 'En CSS';
-$lang['css.icon.howto.css.class'] = 'Il faut définir votre classe, puis le code de votre icône en tant que contenu du ::before ou du ::after de la classe :';
-$lang['css.icon.howto.css.css.code'] = 'Code CSS :';
-$lang['css.icon.howto.css.html.code'] = 'Code HTML :';
-$lang['css.icon.howto.variants'] = 'Les variantes';
-$lang['css.icon.howto.variants.explain'] = 'Font-Awesome propose une panoplie de variantes telles que la taille de l\'icône, l\'animation, la rotation, l\'empilement et bien d\'autres.';
-$lang['css.icon.howto.variants.list'] = 'Leur fonctionnement est expliqué ici (anglais) : ';
-$lang['css.icon.howto.variants.spinner'] = 'Nous donnera l\'icone "spinner", défini en pulsation et faisant 2 fois sa taille initiale : ';
-
 // --- CSS
 
-//Typogrphie
-$lang['css.typography'] = 'Typographie';
+// Pages
+$lang['css.page.title'] = 'Titre de la page';
+$lang['css.more'] = 'Auteur | Date de création | Nombre de commentaires ...';
+$lang['css.picture'] = 'Image';
+
+$lang['css.options'] = 'Options';
+$lang['css.options.sort_by'] = 'Trier selon';
+$lang['css.options.sort_by.alphabetical'] = 'Alphabétique';
+$lang['css.options.sort_by.size'] = 'Taille';
+$lang['css.options.sort_by.date'] = 'Date';
+$lang['css.options.sort_by.popularity'] = 'Vues';
+$lang['css.options.sort_by.note'] = 'Note';
+$lang['css.modules_menus.direction.up'] = 'Croissant';
+$lang['css.modules_menus.direction.down'] = 'Décroissant';
+
+
+// Typogrphie
+$lang['css.title.typography'] = 'Typographie';
 $lang['css.titles'] = 'Titres';
 $lang['css.title'] = 'Titre';
-$lang['css.specific_titles'] = 'Titres spécifiques (BBCode)';
 
 $lang['css.styles'] = 'Styles';
 $lang['css.text_bold'] = 'Texte en gras';
@@ -221,31 +189,32 @@ $lang['css.text_italic'] = 'Texte en italique';
 $lang['css.text_underline'] = 'Texte souligné';
 $lang['css.text_strike'] = 'Texte barré';
 
-$lang['css.sizes'] = 'Tailles';
-$lang['css.link'] = 'Lien';
-$lang['css.link_smaller'] = 'Lien en très petit';
-$lang['css.link_small'] = 'Lien en petit';
-$lang['css.link_big'] = 'Lien en grand';
-$lang['css.link_bigger'] = 'Lien en plus grand';
-$lang['css.link_biggest'] = 'Lien très grand';
+$lang['css.title.sizes'] = 'Tailles de texte';
+$lang['css.text'] = 'Texte';
+$lang['css.text.smaller'] = 'Texte en très petit';
+$lang['css.text.small'] = 'Texte en petit';
+$lang['css.text.big'] = 'Texte en grand';
+$lang['css.text.bigger'] = 'Texte en plus grand';
+$lang['css.text.biggest'] = 'Texte très grand';
+$lang['css.link'] = 'Lien hypertext';
 
 $lang['css.rank_color'] = 'Couleur selon rang de l\'utilisateur';
 $lang['css.admin'] = 'Administrateur';
 $lang['css.modo'] = 'Modérateur';
 $lang['css.member'] = 'Membre';
 
-//Divers
+// Divers
 $lang['css.miscellaneous'] = 'Divers';
 $lang['css.main_actions_icons'] = 'Icônes des principales actions';
 $lang['css.rss_feed'] = 'Flux RSS';
-$lang['css.edit'] = 'Editer';
+$lang['css.edit'] = 'Éditer';
 $lang['css.delete'] = 'Supprimer';
 $lang['css.delete.confirm'] = 'Supprimer (contrôle automatique JS avec confirmation de suppression)';
 $lang['css.delete.confirm.custom'] = 'Supprimer (contrôle automatique JS avec confirmation personnalisée)';
 $lang['css.delete.custom_message'] = 'Message personnalisé';
 
 $lang['css.lists'] = 'Listes';
-$lang['css.element'] = 'Elément';
+$lang['css.element'] = 'Élément';
 
 $lang['css.progress_bar'] = 'Barre de progression';
 $lang['css.progress_bar.util_infos'] = 'Informations utiles';
@@ -257,23 +226,14 @@ $lang['css.tree'] = 'Arborescence';
 $lang['css.cat'] = 'Catégorie';
 $lang['css.file'] = 'Fichier';
 
-$lang['css.options'] = 'Options';
-$lang['css.options.sort_by'] = 'Trier selon';
-$lang['css.options.sort_by.alphabetical'] = 'Alphabétique';
-$lang['css.options.sort_by.size'] = 'Taille';
-$lang['css.options.sort_by.date'] = 'Date';
-$lang['css.options.sort_by.popularity'] = 'Popularité';
-$lang['css.options.sort_by.note'] = 'Note';
-
-$lang['css.modules_menus.direction.up'] = 'Croissant';
-$lang['css.modules_menus.direction.down'] = 'Décroissant';
-
 $lang['css.button'] = 'Boutons';
+$lang['css.button.other'] = 'Autres boutons';
 
 $lang['css.sortable'] = 'Sortable Drag & Drop';
 $lang['css.static.sortable'] = 'Sortable positionné';
 $lang['css.moved.sortable'] = 'Sortable en mouvement';
 $lang['css.dropzone'] = 'déplacer ici';
+$lang['css.sortable.move'] = 'Déplacer';
 
 //Blockquote
 $lang['css.quote'] = 'Citation';
@@ -286,37 +246,152 @@ $lang['css.pagination'] = 'Pagination';
 
 //Tables
 $lang['css.table'] = 'Tableau';
-$lang['css.table_description'] = 'Description du tableau';
+$lang['css.table.description'] = 'Description du tableau';
 $lang['css.table.name'] = 'Nom';
 $lang['css.table.description'] = 'Description';
 $lang['css.table.author'] = 'Auteur';
 $lang['css.table.test'] = 'Test';
-$lang['css.specific.table'] = 'Tableau spécifique (bbcode)';
 $lang['css.table.header'] = 'Entête';
+$lang['css.table.sort.up'] = 'Trier par ordre croissant';
+$lang['css.table.sort.down'] = 'Trier par ordre décroissant';
 
 //Messages
-$lang['css.messages_and_coms'] = 'Messages et commentaires';
+$lang['css.messages.and.coms'] = 'Messages et commentaires';
 $lang['css.messages.login'] = 'admin';
 $lang['css.messages.level'] = 'Administrateur';
 $lang['css.messages.date'] = '05/09/2013 à 15h37';
 $lang['css.messages.content'] = 'Ceci est un commentaire';
-$lang['css.error_messages'] = 'Messages d\'erreurs';
 
-$lang['css.message_success'] = 'Ceci est un message de succès';
-$lang['css.message_notice'] = 'Ceci est un message d\'information';
-$lang['css.message_warning'] = 'Ceci est un message d\'avertissement';
-$lang['css.message_error'] = 'Ceci est un message d\'erreur';
-$lang['css.message_question'] = 'Ceci est une question, est-ce que l\'affichage sur deux lignes fonctionne correctement ?';
+$lang['css.alert.messages'] = 'Messages d\'alerte';
+$lang['css.message.success'] = 'Ceci est un message de succès';
+$lang['css.message.notice'] = 'Ceci est un message d\'information';
+$lang['css.message.warning'] = 'Ceci est un message d\'avertissement';
+$lang['css.message.error'] = 'Ceci est un message d\'erreur';
+$lang['css.message.question'] = 'Ceci est une question:<br /> est-ce que l\'affichage sur deux lignes fonctionne correctement ?';
 
-//Pages
-$lang['css.page'] = 'Page';
-$lang['css.page.title'] = 'Titre de la page';
-$lang['css.page.subtitle'] = 'Sous-Titre';
-$lang['css.page.subsubtitle'] = 'Sous-Sous-Titre';
+//Blocs
 $lang['css.blocks'] = 'Blocs';
-$lang['css.block.title'] = 'Titre du bloc';
-$lang['css.blocks.medium'] = 'Blocs (2 sur une ligne)';
-$lang['css.blocks.small'] = 'Blocs (3 sur une ligne)';
+$lang['css.block.title'] = 'Titre de l\'article';
+$lang['css.blocks.large'] = '1 par ligne (.block)';
+$lang['css.blocks.medium'] = '2 par ligne (.medium-block)';
+$lang['css.blocks.small'] = '3 par ligne (.small-block)';
+
+// --- Styles spécifiques du BBCode
+
+$lang['bbcode.title.typography'] = 'Typographie';
+
+$lang['bbcode.titles'] = 'Titres';
+$lang['bbcode.title_1'] = 'Titre 1';
+$lang['bbcode.title_2'] = 'Titre 2';
+$lang['bbcode.title_3'] = 'Titre 3';
+$lang['bbcode.title_4'] = 'Titre 4';
+
+$lang['bbcode.title.lists'] = 'Listes';
+$lang['bbcode.element'] = 'Elément';
+$lang['bbcode.element_1'] = 'Elément 1';
+$lang['bbcode.element_2'] = 'Elément 2';
+$lang['bbcode.element_3'] = 'Elément 3';
+
+$lang['bbcode.title.blocks'] = 'Blocs';
+$lang['bbcode.paragraph'] = 'Paragraphe';
+$lang['bbcode.block'] = 'Bloc';
+$lang['bbcode.fieldset'] = 'Bloc champ';
+$lang['bbcode.legend'] = 'Légende du bloc champ';
+
+$lang['bbcode.title.media'] = 'Media';
+$lang['bbcode.image'] = 'Image';
+$lang['bbcode.lightbox'] = 'Lightbox';
+$lang['bbcode.youtube'] = 'Youtube';
+$lang['bbcode.movie'] = 'Movie';
+$lang['bbcode.flash'] = 'SWF';
+$lang['bbcode.flash.alert'] = 'Votre navigateur ne supporte pas Adobe Flash';
+$lang['bbcode.audio'] = 'Sound';
+
+$lang['bbcode.title.code'] = 'Blocs code';
+$lang['bbcode.quote'] = 'Citation';
+$lang['bbcode.hidden'] = 'Caché';
+$lang['bbcode.code.php'] = 'Code';
+
+$lang['bbcode.title.table'] = 'Tableaux';
+$lang['bbcode.table.header'] = 'Entête';
+$lang['bbcode.table.name'] = 'Nom';
+$lang['bbcode.table.description'] = 'Description';
+
+// --- Wiki
+$lang['wiki.conditions'] = 'Vous devez porter le module wiki dans votre thème pour que cette visualisation soit active.';
+$lang['wiki.module'] = 'Module Wiki';
+$lang['wiki.table.of.contents'] = 'Table des matières';
+$lang['wiki.contents'] = 'Contenu du wiki';
+
+// --- Icônes Font-Awesome
+
+$lang['iconfa.sample'] = 'Quelques exemples';
+$lang['iconfa.social'] = 'Réseaux sociaux';
+$lang['iconfa.screen'] = 'Ecrans';
+$lang['iconfa.icon'] = 'Icône';
+$lang['iconfa.name'] = 'Nom';
+$lang['iconfa.code'] = 'Code';
+$lang['iconfa.list'] = 'La liste complète des icônes et de leur code associé : ';
+
+$lang['iconfa.howto'] = 'Comment ça marche ?';
+$lang['iconfa.howto.explain'] = 'Font-Awesome est une icon-font, une police de caractère qui permet d\'afficher des icônes simplement';
+$lang['iconfa.howto.update'] = 'Elle est implémentée depuis la version 4.1 de PHPBoost. Chaque mise à jour de Font-Awesome est implémentée dans la mise à jour suivante de PHPBoost.';
+$lang['iconfa.howto.html'] = 'En html';
+$lang['iconfa.howto.html.class'] = 'On utilise le nom de l\'icône en tant que classe : ';
+$lang['iconfa.howto.html.class.result.i'] = 'Nous donnera l\'icône "edit" suivi du texte : ';
+$lang['iconfa.howto.html.class.result.a'] = 'Nous donnera le lien précédé de l\'icône "globe" : ';
+$lang['iconfa.howto.html.class.result.all'] = 'Il en est de même pour tout type de balise html.';
+$lang['iconfa.howto.css'] = 'En CSS';
+$lang['iconfa.howto.css.class'] = 'Il faut définir votre classe, puis le code de votre icône en tant que contenu du ::before ou du ::after de la classe :';
+$lang['iconfa.howto.css.css.code'] = 'Code CSS :';
+$lang['iconfa.howto.css.html.code'] = 'Code HTML :';
+$lang['iconfa.howto.bbcode'] = 'En BBCode';
+$lang['iconfa.howto.bbcode.some.icons'] = 'Les icônes les plus utilisées dans PHPBoost sont déjà implémentées dans le menu bbcode. Vous pouvez les sélectionner en cliquant sur l\'icône du menu:';
+$lang['iconfa.howto.bbcode.tag'] = 'Si l\'icône que vous désirez utiliser n\'apparait pas dans la liste, vous pouvez utiliser la balise [fa] comme suit:';
+$lang['iconfa.howto.bbcode.icon.name'] = '[fa]nom de l\'icône[/fa]';
+$lang['iconfa.howto.bbcode.icon.test'] = 'Par exemple, [fa]cubes[/fa] nous donnera l\'icône:';
+$lang['iconfa.howto.bbcode.icon.variants'] = 'Les variantes (cf paragraphe suivant) sont possibles en BBCode et sont expliquées dans la documentation de PHPBoost.';
+$lang['iconfa.howto.variants'] = 'Les variantes';
+$lang['iconfa.howto.variants.explain'] = 'Font-Awesome propose une panoplie de variantes telles que la taille de l\'icône, l\'animation, la rotation, l\'empilement et bien d\'autres.';
+$lang['iconfa.howto.variants.list'] = 'Leur fonctionnement est expliqué ici (anglais) : ';
+$lang['iconfa.howto.variants.spinner'] = 'Nous donnera l\'icone "spinner", défini en rotation et faisant 2 fois sa taille initiale : ';
+
+// --- Cssmenu
+
+$lang['cssmenu.site.title'] = 'Menus de navigation Cssmenu';
+$lang['cssmenu.site.slogan'] = 'Bac à sable - le design des cssmenu';
+$lang['cssmenu.breadcrumb.index'] = 'Accueil';
+$lang['cssmenu.breadcrumb.sandbox'] = 'Bac à sable';
+$lang['cssmenu.breadcrumb.cssmenu'] = 'cssmenu';
+$lang['cssmenu.h2'] = 'Les différents menus cssmenu';
+$lang['cssmenu.element'] = 'Item du menu';
+$lang['cssmenu.sub.element'] = 'Sous menu';
+$lang['cssmenu.horizontal.sub.header'] = 'Menu de sous-entête';
+$lang['cssmenu.sub.admin'] = 'Administration';
+$lang['cssmenu.horizontal.top'] = 'Menu horizontal Header';
+$lang['cssmenu.horizontal.scrolling'] = 'Menu horizontal déroulant';
+$lang['cssmenu.vertical.scrolling'] = 'Menu vertical déroulant';
+$lang['cssmenu.vertical.img'] = 'Menu avec images';
+$lang['cssmenu.vertical.scrolling.left'] = 'Menu vertical déroulant à gauche';
+$lang['cssmenu.vertical.scrolling.right'] = 'Menu vertical déroulant à droite';
+$lang['cssmenu.actionslinks.sandbox'] = 'Bac à sable';
+$lang['cssmenu.actionslinks.index'] = 'Accueil';
+$lang['cssmenu.actionslinks.form'] = 'Formulaires';
+$lang['cssmenu.actionslinks.css'] = 'CSS';
+$lang['cssmenu.actionslinks.bbcode'] = 'BBCode';
+$lang['cssmenu.actionslinks.menu'] = 'Cssmenu';
+$lang['cssmenu.actionslinks.icons'] = 'Icônes';
+$lang['cssmenu.actionslinks.table'] = 'Tableaux';
+$lang['cssmenu.actionslinks.mail'] = 'Envoi de mail';
+$lang['cssmenu.actionslinks.template'] = 'Génération de templates';
+$lang['cssmenu.actionslinks'] = 'Menu options des modules';
+$lang['cssmenu.group'] = 'Menu groupes';
+$lang['cssmenu.static'] = 'Menu statique';
+$lang['cssmenu.static.footer'] = 'Menu statique pied de page';
+
+$lang['cssmenu.warning'] = 'Cette page a un design spécifique de manière à afficher tous les types de menus en fonction des emplacements potentiels susceptibles d\'être utilisés.
+Il peut être mal adapté si votre design ne respecte pas l\'arborescence et les noms des classes/id du thème Base.';
+
 
 // --- Mail
 
@@ -343,10 +418,5 @@ $lang['mail.success'] = 'L\'email a été envoyé';
 
 //Template
 $lang['string_template.result'] = 'Temps de génération du template sans cache : :non_cached_time secondes<br />Temps de génération du template avec cache : :cached_time secondes<br />Longueur de la chaîne : :string_length caractères.';
-
-//Wiki
-$lang['wiki.module'] = 'Module Wiki';
-$lang['wiki.table.of.contents'] = 'Table des matières';
-$lang['wiki.contents'] = 'Contenu du wiki';
 
 ?>

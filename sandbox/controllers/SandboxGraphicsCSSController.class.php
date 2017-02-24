@@ -49,53 +49,16 @@ class SandboxGraphicsCSSController extends ModuleController
 	private function build_view()
 	{
 		$messages = array(
-			MessageHelper::display($this->lang['css.message_success'], MessageHelper::SUCCESS),
-			MessageHelper::display($this->lang['css.message_notice'], MessageHelper::NOTICE),
-			MessageHelper::display($this->lang['css.message_warning'], MessageHelper::WARNING),
-			MessageHelper::display($this->lang['css.message_error'], MessageHelper::ERROR),
-			MessageHelper::display($this->lang['css.message_question'], MessageHelper::QUESTION)
+			MessageHelper::display($this->lang['css.message.success'], MessageHelper::SUCCESS),
+			MessageHelper::display($this->lang['css.message.notice'], MessageHelper::NOTICE),
+			MessageHelper::display($this->lang['css.message.warning'], MessageHelper::WARNING),
+			MessageHelper::display($this->lang['css.message.error'], MessageHelper::ERROR),
+			MessageHelper::display($this->lang['css.message.question'], MessageHelper::QUESTION)
 		);
 		
 		foreach ($messages as $message)
 		{
 			$this->view->assign_block_vars('messages', array('VIEW' => $message));
-		}
-
-		if (ModulesManager::is_module_installed('wiki')  && ModulesManager::is_module_activated('wiki'))
-		{
-			include_once('../wiki/wiki_functions.php');
-			
-			//On crée le menu des paragraphes et on enregistre le menu
-			$contents = wiki_parse("
-				-- Paragraphe 1 --
-				Contenu du paragraphe 1.
-				--- paragraphe 1.1 ---
-				Contenu du paragraphe 1.1.
-				---- paragraphe 1.1.1 ----
-				Contenu du paragraphe 1.1.1.
-				----- paragraphe 1.1.1.1 -----
-				Contenu du paragraphe 1.1.1.1.
-				------ paragraphe 1.1.1.1.1 ------
-				Contenu du paragraphe 1.1.1.1.1.
-				------ paragraphe 1.1.1.1.2 ------
-				Contenu du paragraphe 1.1.1.1.2.
-				-----  paragraphe 1.1.1.2 -----
-				Contenu du paragraphe 1.1.1.2.
-				---- paragraphe 1.1.2 ----
-				Contenu du paragraphe 1.1.2.
-
-				--- paragraphe 1.2 ---
-				Contenu du paragraphe 1.2.
-
-				-- Pararaphe 2 --
-				-- Pararaphe 3 --
-			");
-			
-			$this->view->assign_block_vars('wikimenu', array(
-				'MENU' => wiki_display_menu(wiki_explode_menu($contents))
-			));
-
-			$this->view->put('WIKI_CONTENTS', FormatingHelper::second_parse(wiki_no_rewrite($contents)));
 		}
 
 		$pagination = new ModulePagination(2, 15, 5);
@@ -107,10 +70,10 @@ class SandboxGraphicsCSSController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['title.css'], $this->lang['module_title']);
+		$graphical_environment->set_page_title($this->lang['title.css'], $this->lang['module.title']);
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], SandboxUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['module.title'], SandboxUrlBuilder::home()->rel());
 		$breadcrumb->add($this->lang['title.css'], SandboxUrlBuilder::css()->rel());
 		
 		return $response;

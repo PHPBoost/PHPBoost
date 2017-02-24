@@ -65,7 +65,7 @@ class SandboxStringTemplateController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'sandbox');
-		$this->view = new StringTemplate('{RESULT}');
+		$this->view = new FileTemplate('sandbox/SandboxStringTemplateController.tpl');
 		$this->view->add_lang($this->lang);
 	}
 
@@ -103,11 +103,11 @@ class SandboxStringTemplateController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['title.string_template'], $this->lang['module_title']);
+		$graphical_environment->set_page_title($this->lang['title.string.template'], $this->lang['module.title']);
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], SandboxUrlBuilder::home()->rel());
-		$breadcrumb->add($this->lang['title.string_template'], SandboxUrlBuilder::mail()->rel());
+		$breadcrumb->add($this->lang['module.title'], SandboxUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['title.string.template'], SandboxUrlBuilder::mail()->rel());
 		
 		return $response;
 	}

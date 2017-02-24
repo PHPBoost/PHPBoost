@@ -53,6 +53,7 @@ class SandboxExtensionPointProvider extends ExtensionPointProvider
 	public function css_files()
 	{
 		$module_css_files = new ModuleCssFiles();
+		$module_css_files->adding_running_module_displayed_file('sandbox.css');
 		$module_css_files->adding_running_module_displayed_file('wiki.css', 'wiki');
 		return $module_css_files;
 	}

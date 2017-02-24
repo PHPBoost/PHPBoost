@@ -35,13 +35,14 @@ class SandboxTreeLinks implements ModuleTreeLinksExtensionPoint
 		$lang = LangLoader::get('common', 'sandbox');
 		$tree = new ModuleTreeLinks();
 		
-		$tree->add_link(new ModuleLink($lang['title.form_builder'], SandboxUrlBuilder::form()));
+		$tree->add_link(new ModuleLink($lang['title.form.builder'], SandboxUrlBuilder::form()));
 		$tree->add_link(new ModuleLink($lang['title.css'], SandboxUrlBuilder::css()));
+		$tree->add_link(new ModuleLink($lang['title.bbcode'], SandboxUrlBuilder::bbcode()));
 		$tree->add_link(new ModuleLink($lang['title.menu'], SandboxUrlBuilder::menu()));
 		$tree->add_link(new ModuleLink($lang['title.icons'], SandboxUrlBuilder::icons()));
-		$tree->add_link(new ModuleLink($lang['title.table_builder'], SandboxUrlBuilder::table()));
-		$tree->add_link(new ModuleLink($lang['title.string_template'], SandboxUrlBuilder::template()));
-		$tree->add_link(new ModuleLink($lang['title.mail_sender'], SandboxUrlBuilder::mail()));
+		$tree->add_link(new ModuleLink($lang['title.table.builder'], SandboxUrlBuilder::table()));
+		$tree->add_link(new ModuleLink($lang['title.mail.sender'], SandboxUrlBuilder::mail()));
+		$tree->add_link(new ModuleLink($lang['title.string.template'], SandboxUrlBuilder::template()));
 		
 		return $tree;
 	}

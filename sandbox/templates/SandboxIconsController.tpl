@@ -7,21 +7,21 @@
 
 <section>
 	<header>
-		<h1>{@title.icons}</h1>
+		<h1>{@module.title} - {@title.icons}</h1>
 	</header>
 	
-	<article>
+	<article class="content">
 		<header>
-			<h2>{@css.icon.sample}</h2>
+			<h2>{@iconfa.sample}</h2>
 		</header>
-		<div class="content">	
+		<div>	
 			<table>
-				<caption>{@css.icon.social}</caption>
+				<caption>{@iconfa.social}</caption>
 				<thead>
 					<tr>
-						<th>{@css.icon.icon}</th>
-						<th>{@css.icon.name}</th>
-						<th>{@css.icon.code}</th>
+						<th>{@iconfa.icon}</th>
+						<th>{@iconfa.name}</th>
+						<th>{@iconfa.code}</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -36,12 +36,12 @@
 			</table>
 			
 			<table>
-				<caption>{@css.icon.screen}</caption>
+				<caption>{@iconfa.screen}</caption>
 				<thead>
 					<tr>
-						<th>{@css.icon.icon}</th>
-						<th>{@css.icon.name}</th>
-						<th>{@css.icon.code}</th>
+						<th>{@iconfa.icon}</th>
+						<th>{@iconfa.name}</th>
+						<th>{@iconfa.code}</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -55,51 +55,59 @@
 				</tbody>
 			</table>
 		</div>
-		<footer>{@css.icon.list}<a class="basic-button" href="https://fortawesome.github.io/Font-Awesome/cheatsheet/" title="Font-Awesome">Cheatsheet Font-Awesome</a></footer>
+		<footer>{@iconfa.list}<a class="basic-button" href="https://fortawesome.github.io/Font-Awesome/cheatsheet/" title="Font-Awesome">Cheatsheet Font-Awesome</a></footer>
 	</article>
 	
 	<article>
 		<header>
-			<h2>{@css.icon.howto}</h2>
+			<h2>{@iconfa.howto}</h2>
 		</header>
 		<div class="content">
-			<p>{@css.icon.howto.explain}</p>
-			<p>{@css.icon.howto.update}</p>		
+			<p>{@iconfa.howto.explain}</p>
+			<p>{@iconfa.howto.update}</p>		
 			
 			<br />
-			<h3>{@css.icon.howto.html}</h3>
-			<p>{@css.icon.howto.html.class}</p>
+			<h3>{@iconfa.howto.html}</h3>
+			<p>{@iconfa.howto.html.class}</p>
 			<div class="code">
 				<pre><span><</span><span>i class="fa fa-edit"><</span>/i> Edition</pre>
 			</div>			
-			<p>{@css.icon.howto.html.class.result.i}<i class="fa fa-edit"></i> Edition</p>
+			<p>{@iconfa.howto.html.class.result.i}<i class="fa fa-edit"></i> Edition</p>
 			<div class="code">
 				<pre><span><</span>a class="fa fa-globe" href="http://www.phpboost.com">PHPBoost<<span>/a></span></pre>
 			</div>
-			<p>{@css.icon.howto.html.class.result.a}<a class="fa fa-globe" href="http://www.phpboost.com">PHPBoost</a></p>
-			<p>{@css.icon.howto.html.class.result.all}</p>
+			<p>{@iconfa.howto.html.class.result.a}<a class="fa fa-globe" href="http://www.phpboost.com">PHPBoost</a></p>
+			<p>{@iconfa.howto.html.class.result.all}</p>
 			
 			<br />
-			<h3>{@css.icon.howto.css}</h3>
-			<p>{@css.icon.howto.css.class}</p>
-			<span class="formatter-code">{@css.icon.howto.css.css.code}</span>
+			<h3>{@iconfa.howto.css}</h3>
+			<p>{@iconfa.howto.css.class}</p>
+			<span class="formatter-code">{@iconfa.howto.css.css.code}</span>
 			<div class="code">
 				<pre>.success { ... }<br /><br />.success::before {<br /> content: "\f00c";<br /> font-family: FontAwesome; <br />}</pre>				
 			</div>
-			<span class="formatter-code">{@css.icon.howto.css.html.code}</span>
+			<span class="formatter-code">{@iconfa.howto.css.html.code}</span>
 			<div class="code">
-				<pre><span>div class="success">{@css.message_success}<<span>/div></span></pre>
+				<pre><<span>div class="success">{@css.message.success}<<span>/div></span></pre>
 			</div>
-			<div class="success">{@css.message_success}</div>
+			<div class="success">{@css.message.success}</div>
 			
 			<br />
-			<h3>{@css.icon.howto.variants}</h3>
-			<p>{@css.icon.howto.variants.explain}</p>
-			<p>{@css.icon.howto.variants.list}<a class="basic-button" href="https://fortawesome.github.io/Font-Awesome/examples/">Font-Awesome/examples</a></p>
+			<h3>{@iconfa.howto.bbcode}</h3>
+			<p>{@iconfa.howto.bbcode.some.icons} <i class="fa fa-flag-o"></i></p>
+			<p>{@iconfa.howto.bbcode.tag}</p>
+			<p>{@iconfa.howto.bbcode.icon.name}</p>
+			<p>{@iconfa.howto.bbcode.icon.test} <i class="fa fa-cubes"></i></p>
+			<p>{@iconfa.howto.bbcode.icon.variants}</p>
+			
+			<br />
+			<h3>{@iconfa.howto.variants}</h3>
+			<p>{@iconfa.howto.variants.explain}</p>
+			<p>{@iconfa.howto.variants.list}<a class="basic-button" href="https://fortawesome.github.io/Font-Awesome/examples/">Font-Awesome/examples</a></p>
 			<div class="code">
-				<pre><<span>i class="fa fa-spinner fa-pulse fa-2x><</span>/i></pre>
+				<pre><<span>i class="fa fa-spinner fa-spin fa-2x><</span>/i></pre>
 			</div>
-			<p>{@css.icon.howto.variants.spinner}<i class="fa fa-spinner fa-pulse fa-2x"></i></p>
+			<p>{@iconfa.howto.variants.spinner}<i class="fa fa-spinner fa-spin fa-2x"></i></p>
 		</div>
 	</article>
 	

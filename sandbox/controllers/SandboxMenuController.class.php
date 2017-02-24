@@ -55,29 +55,14 @@ class SandboxMenuController extends ModuleController
 	
 	private function build_view()
 	{
-		$messages = array(
-			MessageHelper::display($this->lang['css.message_success'], MessageHelper::SUCCESS),
-			MessageHelper::display($this->lang['css.message_notice'], MessageHelper::NOTICE),
-			MessageHelper::display($this->lang['css.message_warning'], MessageHelper::WARNING),
-			MessageHelper::display($this->lang['css.message_error'], MessageHelper::ERROR),
-			MessageHelper::display($this->lang['css.message_question'], MessageHelper::QUESTION)
-		);
 		
-		foreach ($messages as $message)
-		{
-			$this->view->assign_block_vars('messages', array('VIEW' => $message));
-		}
-		
-		$pagination = new ModulePagination(2, 15, 5);
-		$pagination->set_url(new Url('#%d'));
-		$this->view->put('PAGINATION', $pagination->display());
 	}
 	
 	private function generate_response()
 	{
 		$response = new SiteDisplayFrameResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['title.menu'], $this->lang['module_title']);
+		$graphical_environment->set_page_title($this->lang['title.menu'], $this->lang['module.title']);
 		
 		return $response;
 	}
