@@ -81,7 +81,7 @@ class AdminModulesManagementController extends AdminController
 					'PHP_VERSION' => $configuration->get_php_version(),
 					'C_MODULE_ACTIVE' => $module->is_activated(),
 					'C_DOCUMENTATION' => !empty($documentation),
-					'DOCUMENTATION' => $documentation
+					'L_DOCUMENTATION' => $documentation
 				));
 			}
 			else 
@@ -101,7 +101,7 @@ class AdminModulesManagementController extends AdminController
 					'PHP_VERSION' => $configuration->get_php_version(),
 					'C_MODULE_ACTIVE' => $module->is_activated(),
 					'C_DOCUMENTATION' => !empty($documentation),
-					'DOCUMENTATION' => $documentation
+					'L_DOCUMENTATION' => $documentation
 				));
 			}
 		}
