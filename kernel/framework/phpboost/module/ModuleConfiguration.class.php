@@ -175,6 +175,7 @@ class ModuleConfiguration
 		$this->name = $desc['name'];
 		$this->description = $desc['desc'];
 		$this->admin_links = !empty($desc['admin_links']) ? $this->parse_ini_array($desc['admin_links']) : array();
+		$this->documentation = !empty($desc['documentation']) ? $desc['documentation'] : '';
 	}
 
 	private function check_parse_ini_file($parse_result, $ini_file)
