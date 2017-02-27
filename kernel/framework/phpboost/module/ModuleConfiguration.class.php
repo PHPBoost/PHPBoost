@@ -165,7 +165,6 @@ class ModuleConfiguration
 		$this->home_page = !empty($config['home_page']) ? $config['home_page'] : '';
 		$this->contribution_interface = !empty($config['contribution_interface']) ? $config['contribution_interface'] : '';
 		$this->url_rewrite_rules = !empty($config['rewrite_rules']) ? $config['rewrite_rules'] : array();
-		$this->documentation = !empty($config['documentation']) ? $config['documentation'] : '';
 	}
 
 	private function load_description($desc_ini_file)
