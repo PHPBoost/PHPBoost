@@ -40,7 +40,7 @@ class WikiSearchable extends AbstractSearchableExtensionPoint
 
 		$tpl = new FileTemplate('wiki/wiki_search_form.tpl');
 
-		if ( !isset($args['WikiWhere']) || !in_array($args['WikiWhere'], explode(',','title,contents,all')) )
+		if ( !isset($args['WikiWhere']) || !in_array($args['WikiWhere'], array('title', 'contents', 'all')) )
 		$args['WikiWhere'] = 'all';
 
 		$tpl->put_all(Array(
@@ -63,39 +63,45 @@ class WikiSearchable extends AbstractSearchableExtensionPoint
 	public function get_search_request($args)
 	{
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
-		if ( !isset($args['WikiWhere']) || !in_array($args['WikiWhere'], explode(',','title,contents,all')) )
+		if ( !isset($args['WikiWhere']) || !in_array($args['WikiWhere'], array('title', 'contents', 'all')) )
 		$args['WikiWhere'] = 'all';
 
 		if ( $args['WikiWhere'] == 'all' )
 		$req = "SELECT ".
-		$args['id_search']." AS id_search,
+				$args['id_search']." AS id_search,
 				a.id AS id_content,
 				a.title AS title,
-				( 4 * FT_SEARCH_RELEVANCE(a.title, '".$args['search']."') +
-				FT_SEARCH_RELEVANCE(c.content, '".$args['search']."') ) / 5 * " . $weight . " AS relevance,
+				( 2 * FT_SEARCH_RELEVANCE(a.title, '".$args['search']."') +
+				FT_SEARCH_RELEVANCE(c.content, '".$args['search']."') ) / 3 * " . $weight . " AS relevance,
 				CONCAT('" . PATH_TO_ROOT . "/wiki/wiki.php?title=',a.encoded_title) AS link
 				FROM " . PREFIX . "wiki_articles a
 				LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id
-				WHERE ( FT_SEARCH(a.title, '".$args['search']."') OR FT_SEARCH(c.content, '".$args['search']."') )";
+				WHERE ( FT_SEARCH(a.title, '".$args['search']."') OR FT_SEARCH(c.content, '".$args['search']."') )
+				ORDER BY relevance DESC
+				LIMIT 100 OFFSET 0";
 		else if ( $args['WikiWhere'] == 'contents' )
 		$req = "SELECT ".
-		$args['id_search']." AS id_search,
+				$args['id_search']." AS id_search,
 				a.id AS id_content,
 				a.title AS title,
 				FT_SEARCH_RELEVANCE(c.content, '".$args['search']."') * " . $weight . " AS relevance,
 				CONCAT('" . PATH_TO_ROOT . "/wiki/wiki.php?title=',a.encoded_title) AS link
 				FROM " . PREFIX . "wiki_articles a
 				LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id
-				WHERE FT_SEARCH(c.content, '".$args['search']."')";
+				WHERE FT_SEARCH(c.content, '".$args['search']."')
+				ORDER BY relevance DESC
+				LIMIT 100 OFFSET 0";
 		else
 		$req = "SELECT ".
-		$args['id_search']." AS id_search,
+				$args['id_search']." AS id_search,
 				id AS id_content,
 				title AS title,
 				((FT_SEARCH_RELEVANCE(title, '".$args['search']."') )* " . $weight . ") AS relevance,
 				CONCAT('" . PATH_TO_ROOT . "/wiki/wiki.php?title=',encoded_title) AS link
 				FROM " . PREFIX . "wiki_articles
-				WHERE FT_SEARCH(title, '".$args['search']."')";
+				WHERE FT_SEARCH(title, '".$args['search']."')
+				ORDER BY relevance DESC
+				LIMIT 100 OFFSET 0";
 
 		return $req;
 	}
