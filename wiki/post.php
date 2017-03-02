@@ -81,8 +81,10 @@ if (!empty($contents)) //On enregistre un article
 	
 	if ($preview)//Prévisualisation
 	{
+		$preview_contents = preg_replace(array('`<br />`suU', '`action="(.*)"`suU'), '', wiki_parse($contents)); // suppression des actions des formulaires HTML pour eviter les problemes de parsing
+
 		$tpl->assign_block_vars('preview', array(
-			'CONTENTS' => FormatingHelper::second_parse(wiki_no_rewrite(stripslashes($contents))),
+			'CONTENTS' => TextHelper::html_entity_decode(FormatingHelper::second_parse(stripslashes(wiki_no_rewrite($preview_contents)))),
 			'TITLE' => stripslashes($title)
 		));
 		if (!empty($menu))
