@@ -237,9 +237,10 @@ if ($id_edit > 0)
 		$tpl->put('message_helper', MessageHelper::display($LANG['pages_cat_contains_cat'], MessageHelper::WARNING));
 	elseif ($error == 'preview')
 	{
+		$contents = preg_replace('`action="(.*)"`suU', '', pages_parse($contents)); // suppression des actions des formulaires HTML pour eviter les problemes de parsing
 		$tpl->put('message_helper', MessageHelper::display($LANG['pages_notice_previewing'], MessageHelper::NOTICE));
 		$tpl->assign_block_vars('previewing', array(
-			'PREVIEWING' => pages_second_parse(pages_parse($contents)),
+			'PREVIEWING' => pages_second_parse($contents),
 			'TITLE' => stripslashes($title)
 		));
 	}
@@ -273,9 +274,10 @@ else
 		$tpl->put('message_helper', MessageHelper::display($LANG['pages_already_exists'], MessageHelper::WARNING));
 	elseif ($error == 'preview')
 	{
+		$contents = preg_replace('`action="(.*)"`suU', '', pages_parse($contents)); // suppression des actions des formulaires HTML pour eviter les problemes de parsing
 		$tpl->put('message_helper', MessageHelper::display($LANG['pages_notice_previewing'], MessageHelper::NOTICE));
 		$tpl->assign_block_vars('previewing', array(
-			'PREVIEWING' => pages_second_parse(stripslashes(pages_parse($contents))),
+			'PREVIEWING' => pages_second_parse(stripslashes($contents)),
 			'TITLE' => stripslashes($title)
 		));
 	}
