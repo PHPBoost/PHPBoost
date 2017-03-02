@@ -462,11 +462,11 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					
 					if (AppContext::get_current_user()->get_editor() == 'TinyMCE')
 					{
-						$new_content = $last_message_content . '<br /><br />-------------------------------------------<br /><em>' . $LANG['edit_on'] . ' ' . $now->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) . '</em><br /><br />' . $contents;
+						$new_content = TextHelper::html_entity_decode($last_message_content) . '<br /><br />-------------------------------------------<br /><em>' . $LANG['edit_on'] . ' ' . $now->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) . '</em><br /><br />' . $contents;
 					}
 					else
 					{
-						$new_content = $last_message_content . '
+						$new_content = TextHelper::html_entity_decode($last_message_content) . '
 
 -------------------------------------------
 <em>' . $LANG['edit_on'] . ' ' . $now->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) . '</em>
