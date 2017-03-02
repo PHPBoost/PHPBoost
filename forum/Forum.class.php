@@ -87,7 +87,13 @@ class Forum
 				$pseudo_pm = $LANG['guest'];
 			}
 			$next_msg_link = '/forum/topic' . url('.php?id=' . $idtopic . $last_page, '-' . $idtopic . $last_page_rewrite . '.php') . ($previous_msg_id ? '#m' . $previous_msg_id : '');
-			$preview_contents = substr($contents, 0, 300);
+			
+			$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
+			$parser = $content_manager->get_parser();
+			$parser->set_content($contents);
+			$parser->parse();
+			
+			$preview_contents = $parser->get_content();
 
 
 			//Récupération des membres suivant le sujet.
@@ -105,10 +111,11 @@ class Forum
 				//Envoi un Mail à ceux dont le last_view_id est le message précedent.
 				if ($row['last_view_id'] == $previous_msg_id && $row['mail'] == '1')
 				{
+					$mail_contents = FormatingHelper::second_parse($preview_contents);
 					AppContext::get_mail_service()->send_from_properties(
 						$row['email'], 
 						$LANG['forum_mail_title_new_post'], 
-						sprintf($LANG['forum_mail_new_post'], $row['display_name'], $title_subject, AppContext::get_current_user()->get_display_name(), $preview_contents, HOST . DIR . $next_msg_link, HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=1', 1)
+						nl2br(sprintf($LANG['forum_mail_new_post'], $row['display_name'], $title_subject, AppContext::get_current_user()->get_display_name(), $mail_contents, HOST . DIR . $next_msg_link, HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=1', 1))
 					);
 				}
 				
