@@ -5,7 +5,7 @@
  * @author		Cornel Boppart <cornel@bopp-art.com>
  * @copyright	Author
  *
- * @version		2.3.4 (29/12/2015)
+ * @version		2.3.6 (20/12/2016)
  */
 
 ;(function ($) {
@@ -64,6 +64,7 @@
 				shrinkFactor: .75,
 				overlayOpacity: .9,
 				slideshow: false,
+				slideshowAutoStart: true,
 				timeout: 5000,
 				swipe: true,
 				useKeys: true,
@@ -163,7 +164,10 @@
 				onFinish: {},
 				onClose: {},
 				onCleanup: {}
-			}, options);
+			}, 
+			options,
+			// Load options from data-lc-options attribute
+			_self.origin.data ? _self.origin.data('lc-options') : {});
 
 			// Call onInit hook functions
 			_self._callHooks(_self.settings.onInit);
@@ -300,7 +304,7 @@
 					_self._devicePixelRatio() >= src.density &&
 					src.density >= density &&
 					// Check viewport width
-					_self._matchMedia()('screen and (min-width:' + src.width + 'px)') &&
+					_self._matchMedia()('screen and (min-width:' + src.width + 'px)').matches &&
 					src.width >= width
 				) {
 					width = src.width;
@@ -549,10 +553,10 @@
 					break;
 				default:
 					if (_self.objectData.url) {
-						$object.on('load',function () {
+						$object.on('load', function () {
 							_self._showContent($object);
 						});
-						$object.on('error',function () {
+						$object.on('error', function () {
 							_self.on('error');
 						});
 					} else {
@@ -645,13 +649,13 @@
 			if (_self.settings.forceWidth) {
 				dimensions.maxWidth = dimensions.objectWidth;
 			} else if ($object.attr(_self._prefixAttributeName('max-width'))) {
-				dimensions.maxWidth =  $object.attr(_self._prefixAttributeName('max-width'));
+				dimensions.maxWidth = $object.attr(_self._prefixAttributeName('max-width'));
 			}
 
 			if (_self.settings.forceHeight) {
 				dimensions.maxHeight = dimensions.objectHeight;
 			} else if ($object.attr(_self._prefixAttributeName('max-height'))) {
-				dimensions.maxHeight =  $object.attr(_self._prefixAttributeName('max-height'));
+				dimensions.maxHeight = $object.attr(_self._prefixAttributeName('max-height'));
 			}
 
 			_self._adjustDimensions($object, dimensions);
@@ -903,8 +907,11 @@
 
 			// If slideshow is enabled, show play/pause and start timeout.
 			if (_self.isSlideshowEnabled()) {
-				// Only start the timeout if slideshow is not pausing
-				if (!_self.objects.nav.hasClass(_self.settings.classPrefix + 'paused')) {
+				// Only start the timeout if slideshow autostart is enabled and slideshow is not pausing
+				if (
+					(_self.settings.slideshowAutoStart === true || _self.isSlideshowStarted) &&
+					!_self.objects.nav.hasClass(_self.settings.classPrefix + 'paused')
+				) {
 					_self._startTimeout();
 				} else {
 					_self._stopTimeout();
@@ -1038,6 +1045,8 @@
 		 * @return	{void}
 		 */
 		_startTimeout: function () {
+			_self.isSlideshowStarted = true;
+
 			_self.objects.play.hide();
 			_self.objects.pause.show();
 
@@ -1441,16 +1450,25 @@
 				$document = $(document),
 				offset = {
 					'top': $window.scrollTop(),
-					'left':  $window.scrollLeft()
+					'left': $window.scrollLeft()
 				};
 
 			_self.cache.scrollPosition = _self.cache.scrollPosition || {};
 
-			if ($document.width() > $window.width()) {
-				_self.cache.scrollPosition.left = offset.left;
+			if (!_self._assertContentInvisible()) {
+				_self.cache.cacheScrollPositionSkipped = true;
 			}
-			if ($document.height() > $window.height()) {
-				_self.cache.scrollPosition.top = offset.top;
+			else if (_self.cache.cacheScrollPositionSkipped) {
+				delete _self.cache.cacheScrollPositionSkipped;
+				_self._restoreScrollPosition();
+			}
+			else {
+				if ($document.width() > $window.width()) {
+					_self.cache.scrollPosition.left = offset.left;
+				}
+				if ($document.height() > $window.height()) {
+					_self.cache.scrollPosition.top = offset.top;
+				}
 			}
 		},
 
@@ -1479,6 +1497,7 @@
 		 */
 		_watchScrollInteraction: function () {
 			$(window).scroll(_self._cacheScrollPosition);
+			$(window).resize(_self._cacheScrollPosition);
 		},
 
 		/**
@@ -1488,6 +1507,16 @@
 		 */
 		_unwatchScrollInteraction: function () {
 			$(window).off('scroll', _self._cacheScrollPosition);
+			$(window).off('resize', _self._cacheScrollPosition);
+		},
+
+		/**
+		 * Ensures that site content is invisible or has not height.
+		 *
+		 * @return	{boolean}
+		 */
+		_assertContentInvisible: function () {
+			return $($('body').children().not('[id*=' + _self.settings.idPrefix + ']').get(0)).height() > 0;
 		},
 
 		/**
@@ -1585,6 +1614,7 @@
 
 			if (_self.isSlideshowEnabled()) {
 				_self._stopTimeout();
+				_self.isSlideshowStarted = false;
 				_self.objects.nav.removeClass(_self.settings.classPrefix + 'paused');
 			}
 
@@ -1689,7 +1719,7 @@
 
 			_self.objects.loading.hide();
 			_self.objects.overlay.hide();
-			_self.objects.case.hide(); 
+			_self.objects.case.hide();
 			_self.objects.prev.hide();
 			_self.objects.next.hide();
 			_self.objects.play.hide();
