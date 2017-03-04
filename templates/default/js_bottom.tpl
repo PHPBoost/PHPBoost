@@ -36,6 +36,9 @@
 	jQuery('#table4').basictable();
 	jQuery('#table5').basictable();
 
+	jQuery(function() {
+		jQuery(".lined").linedtextarea();
+	});
 -->
 </script>
 

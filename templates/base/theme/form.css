@@ -739,3 +739,54 @@ div.field-required:after {
 .autocomplete-no-suggestion {
 	text-align: center;
 }
+
+/* --- Lined textarea --- */
+.linedwrap {
+	max-width: 100%;
+}
+
+.linedtextarea {
+	display: inline-block;
+	margin: 0;
+	padding: 0 0 0 10px;
+	width: calc(100% - 60px);
+	height: 100%;
+	background-color: #FFFFFF;
+}
+
+.linedtextarea textarea,
+.linedwrap .codelines .lineno {
+	font-size: 10pt;
+	font-family: monospace;
+	line-height: normal !important;
+}
+
+.linedtextarea textarea {
+	margin: 0;
+	padding: 5px 0 0 0;
+	width: 100% !important;
+	height: 100%;
+	border: 0;
+}
+
+.linedwrap .lines {
+	display: inline-block;
+	overflow: hidden;
+	margin-top: 0;
+	padding: 5px 0 0 0;
+	width: 50px;
+	height: 100%;
+	background-color: #FFFFFF;
+	border-right: 1px solid #C0C0C0;
+}
+
+.linedwrap .codelines .lineno {
+	padding: 0.0em 0.5em 0 0;
+	text-align: right;
+	color: #AAAAAA;
+	white-space: nowrap;
+}
+
+.linedwrap .codelines .lineselect {
+	color: red;
+}
