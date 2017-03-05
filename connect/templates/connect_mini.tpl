@@ -37,7 +37,7 @@
 				<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();" class="form-element">
 					<label>{L_PSEUDO}<br /><input type="text" id="login" name="login" title="{L_PSEUDO}" placeholder="{L_PSEUDO}" maxlength="25"></label>
 					<label>{L_PASSWORD}<br /><input type="password" id="password" name="password" title="{L_PASSWORD}" placeholder="{L_PASSWORD}" maxlength="30"></label>
-					<label>{L_AUTOCONNECT} <input checked="checked" type="checkbox" name="autoconnect"></label>
+					<label>{L_AUTOCONNECT} <input checked="checked" type="checkbox" name="autoconnect" title="{L_AUTOCONNECT}"></label>
 					<input type="hidden" name="redirect" value="{SITE_REWRITED_SCRIPT}">
 					<input type="hidden" name="token" value="{TOKEN}">
 					<button type="submit" name="authenticate" value="internal" class="submit">{L_CONNECT}</button>
@@ -110,7 +110,7 @@
 				<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();">
 					<input type="text" id="login" name="login" title="{L_PSEUDO}" placeholder="{L_PSEUDO}" class="connect-form">
 					<input type="password" id="password" name="password" class="connect-form" title="{L_PASSWORD}" placeholder="{L_PASSWORD}">
-					<input checked="checked" type="checkbox" name="autoconnect">
+					<input checked="checked" type="checkbox" name="autoconnect" title="{L_AUTOCONNECT}">
 					<input type="hidden" name="redirect" value="{SITE_REWRITED_SCRIPT}">
 					<input type="hidden" name="token" value="{TOKEN}">
 					<button type="submit" name="authenticate" value="internal" class="submit">{L_CONNECT}</button>
