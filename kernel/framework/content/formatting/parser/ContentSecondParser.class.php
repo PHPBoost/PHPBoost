@@ -253,7 +253,17 @@ class ContentSecondParser extends AbstractParser
 	 */
 	private static function process_swf_tag($matches)
 	{
-		return "<object type=\"application/x-shockwave-flash\" data=\"" . $matches[1] . "\" width=\"" . $matches[2] . "\" height=\"" . $matches[3] . "\">" .
+		if (pathinfo($matches[1], PATHINFO_EXTENSION) == 'flv')
+		{
+			$id = 'movie_' . AppContext::get_uid();
+			return '<a class="video-player" href="' . Url::to_rel($matches[1]) . '" style="display:block;margin:auto;width:' . $matches[2] . 'px;height:' . $matches[3] . 'px;" id="' . $id .  '"></a><br />' .
+			'<script><!--' . "\n" .
+			'insertMoviePlayer(\'' . $id . '\');' .
+			"\n" . '--></script>';
+		}
+		else
+		{
+			return "<object type=\"application/x-shockwave-flash\" data=\"" . $matches[1] . "\" width=\"" . $matches[2] . "\" height=\"" . $matches[3] . "\">" .
 			"<param name=\"allowScriptAccess\" value=\"never\" />" .
 			"<param name=\"play\" value=\"true\" />" .
 			"<param name=\"movie\" value=\"" . Url::to_rel($matches[1]) . "\" />" .
@@ -263,6 +273,7 @@ class ContentSecondParser extends AbstractParser
 			"<param name=\"wmode\" value=\"transparent\" />" .
 			"<param name=\"bgcolor\" value=\"#000000\" />" .
 			"</object>";
+		}
 	}
 
 	/**
@@ -291,9 +302,9 @@ class ContentSecondParser extends AbstractParser
 	
 	private static function process_youtube_tag($matches)
 	{
-		return '<video class="youtube-player" width="' . $matches[2] . '" height="' . $matches[3] . '" controls>
-			<source src="' . $matches[1] . '" type="video/mp4" />
-		</video>';
+		preg_match("/(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+/", $matches[1], $url_matches);
+		$video_id = $url_matches[0];
+		return '<iframe class="youtube-player" type="text/html" width="' . $matches[2] . '" height="' . $matches[3] . '" src="http://www.youtube.com/embed/' . $video_id . '" frameborder="0" allowfullscreen></iframe>';
 	}
 	
 	private function parse_feed_tag()
