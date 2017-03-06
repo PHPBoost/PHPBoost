@@ -394,7 +394,7 @@ class ContentSecondParser extends AbstractParser
 	
 	private static function process_youtube_tag($matches)
 	{
-		preg_match("/(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+/", $matches[1], $url_matches);
+		preg_match("#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#", $matches[1], $url_matches);
 		$video_id = $url_matches[0];
 		return '<iframe class="youtube-player" type="text/html" width="' . $matches[2] . '" height="' . $matches[3] . '" src="http://www.youtube.com/embed/' . $video_id . '" frameborder="0" allowfullscreen></iframe>';
 	}
