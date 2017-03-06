@@ -47,80 +47,94 @@ $stats_keyword = $request->get_getint('stats_keyword', 0);
 if (!empty($stats_referer)) //Recherche d'un membre pour envoyer le mp.
 {
 	$idurl = $request->get_getint('id', 0);
-	$url = $db_querier->get_column_value(StatsSetup::$stats_referer_table, 'url', 'WHERE id = :id', array('id' => $idurl));
+	$url = '';
 	
-	$result = $db_querier->select("SELECT url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
-		FROM " . StatsSetup::$stats_referer_table . "
-		WHERE url = :url AND type = 0
-		ORDER BY total_visit DESC", array(
-			'url' => $url
-	));
-	while ($row = $result->fetch())
+	try {
+		$url = $db_querier->get_column_value(StatsSetup::$stats_referer_table, 'url', 'WHERE id = :id', array('id' => $idurl));
+	} catch (RowNotFoundException $e) {}
+	
+	if ($url)
 	{
-		$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
-		
-		echo '<table>
-			<tbody>
-				<tr>
-					<td class="no-separator">
-						<a href="' . $row['url'] . $row['relative_url'] . '">' . $row['relative_url'] . '</a>
-					</td>
-					<td class="no-separator" style="width:60px;">
-						' . $row['total_visit'] . '
-					</td>
-					<td class="no-separator" style="width:60px;">
-						' . $trend_parameters['average'] . '
-					</td>
-					<td class="no-separator" style="width:96px;">
-						' . Date::to_format($row['last_update'], Date::FORMAT_DAY_MONTH_YEAR) . '
-					</td>
-					<td class="no-separator" style="width:95px;">
-						' . ($trend_parameters['picture'] ? '<i class="fa fa-trend-' . $trend_parameters['picture'] . '"></i> ' : '') . '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)
-					</td>
-				</tr>
-			</tbody>
-		</table>';
+		$result = $db_querier->select("SELECT url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
+			FROM " . StatsSetup::$stats_referer_table . "
+			WHERE url = :url AND type = 0
+			ORDER BY total_visit DESC", array(
+				'url' => $url
+		));
+		while ($row = $result->fetch())
+		{
+			$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
+			
+			echo '<table>
+				<tbody>
+					<tr>
+						<td class="no-separator">
+							<a href="' . $row['url'] . $row['relative_url'] . '">' . $row['relative_url'] . '</a>
+						</td>
+						<td class="no-separator" style="width:60px;">
+							' . $row['total_visit'] . '
+						</td>
+						<td class="no-separator" style="width:60px;">
+							' . $trend_parameters['average'] . '
+						</td>
+						<td class="no-separator" style="width:96px;">
+							' . Date::to_format($row['last_update'], Date::FORMAT_DAY_MONTH_YEAR) . '
+						</td>
+						<td class="no-separator" style="width:95px;">
+							' . ($trend_parameters['picture'] ? '<i class="fa fa-trend-' . $trend_parameters['picture'] . '"></i> ' : '') . '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)
+						</td>
+					</tr>
+				</tbody>
+			</table>';
+		}
+		$result->dispose();
 	}
-	$result->dispose();
 }
 elseif (!empty($stats_keyword)) //Recherche d'un membre pour envoyer le mp.
 {
 	$idkeyword = $request->get_getint('id', 0);
-	$keyword = $db_querier->get_column_value(StatsSetup::$stats_referer_table, 'relative_url', 'WHERE id = :id', array('id' => $idkeyword));
+	$keyword = '';
 	
-	$result = $db_querier->select("SELECT url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
-		FROM " . StatsSetup::$stats_referer_table. "
-		WHERE relative_url = :url AND type = 1
-		ORDER BY total_visit DESC", array(
-			'url' => $keyword
-	));
-	while ($row = $result->fetch())
+	try {
+		$keyword = $db_querier->get_column_value(StatsSetup::$stats_referer_table, 'relative_url', 'WHERE id = :id', array('id' => $idkeyword));
+	} catch (RowNotFoundException $e) {}
+	
+	if ($keyword)
 	{
-		$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
-		
-		echo '<table>
-			<tbody>
-				<tr>
-					<td class="no-separator">
-						' . $row['url'] . '
-					</td>
-					<td class="no-separator" style="width:70px;">
-						' . $row['total_visit'] . '
-					</td>
-					<td class="no-separator" style="width:60px;">
-						' . $trend_parameters['average'] . '
-					</td>
-					<td class="no-separator" style="width:96px;">
-						' . Date::to_format($row['last_update'], Date::FORMAT_DAY_MONTH_YEAR) . '
-					</td>
-					<td class="no-separator" style="width:95px;">
-						' . ($trend_parameters['picture'] ? '<i class="fa fa-trend-' . $trend_parameters['picture'] . '"></i> ' : '') . '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)
-					</td>
-				</tr>
-			</tbody>
-		</table>';
+		$result = $db_querier->select("SELECT url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
+			FROM " . StatsSetup::$stats_referer_table. "
+			WHERE relative_url = :url AND type = 1
+			ORDER BY total_visit DESC", array(
+				'url' => $keyword
+		));
+		while ($row = $result->fetch())
+		{
+			$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
+			
+			echo '<table>
+				<tbody>
+					<tr>
+						<td class="no-separator">
+							' . $row['url'] . '
+						</td>
+						<td class="no-separator" style="width:70px;">
+							' . $row['total_visit'] . '
+						</td>
+						<td class="no-separator" style="width:60px;">
+							' . $trend_parameters['average'] . '
+						</td>
+						<td class="no-separator" style="width:96px;">
+							' . Date::to_format($row['last_update'], Date::FORMAT_DAY_MONTH_YEAR) . '
+						</td>
+						<td class="no-separator" style="width:95px;">
+							' . ($trend_parameters['picture'] ? '<i class="fa fa-trend-' . $trend_parameters['picture'] . '"></i> ' : '') . '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)
+						</td>
+					</tr>
+				</tbody>
+			</table>';
+		}
+		$result->dispose();
 	}
-	$result->dispose();
 }
 
 include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
