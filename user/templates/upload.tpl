@@ -16,7 +16,7 @@
 			myField.value += myValue;
 		}
 	}
-	function insert_popup(code) 
+	function insert_popup(code)
 	{
 		# IF C_TINYMCE_EDITOR #
 		if (opener == null)
@@ -26,9 +26,9 @@
 		# ELSE #
 		var field = opener.document.getElementById("{FIELD}");
 		# ENDIF #
-		
+
 		var field_type = field.tagName.toLowerCase();
-		
+
 		if (field_type == 'input')
 		{
 			field.value = code;
@@ -42,7 +42,7 @@
 			field.scrollTop(field.prop("selectionStart"));
 			# ENDIF #
 		}
-		
+
 		field.focus();
 	}
 	function close_popup()
@@ -63,24 +63,24 @@
 	}
 	var hide_folder = false;
 	var empty_folder = 0;
-	
+
 	function display_new_folder()
 	{
 		if( document.getElementById('empty-folder') )
-				document.getElementById('empty-folder').style.display = 'none';	
-		
+				document.getElementById('empty-folder').style.display = 'none';
+
 		if ( typeof this.divid == 'undefined' )
 			this.divid = 0;
 		else
 			this.divid++;
-			
+
 		if( !hide_folder )
 		{
 			document.getElementById('new-folder').innerHTML += '<div class="upload-elements-repertory" id="new-folder' + divid + '"><i class="fa fa-folder fa-2x"></i> <input type="text" name="folder_name" id="folder_name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + divid + ');"></div>';
 			document.getElementById('folder_name').focus();
 		}
 		else
-		{	
+		{
 			document.getElementById('new-folder' + (divid - 1)).style.display = 'block';
 			document.getElementById('new-folder' + (divid - 1)).innerHTML = '<div class="upload-elements-repertory" id="new-folder' + divid + '"><i class="fa fa-folder fa-2x"></i> <input type="text" name="folder_name" id="folder_name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + (divid - 1) + ');"></div>';
 			document.getElementById('folder_name').focus();
@@ -91,16 +91,16 @@
 	function display_rename_folder(id, previous_name, previous_cut_name)
 	{
 		if( document.getElementById('f' + id) )
-		{	
+		{
 			document.getElementById('f' + id).innerHTML = '<input type="text" name="finput' + id + '" id="finput' + id + '" value="' + previous_name + '" onblur="rename_folder(\'' + id + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + previous_cut_name.replace(/\'/g, "\\\'") + '\');">';
 			document.getElementById('finput' + id).focus();
 		}
-	}		
+	}
 	function rename_folder(id_folder, previous_name, previous_cut_name)
 	{
 		var name = document.getElementById('finput' + id_folder).value;
 		var regex = /\/|\.|\\|\||\?|<|>|\"/;
-		
+
 		document.getElementById('img' + id_folder).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 		if( name != '' && regex.test(name) ) //interdiction des caractères spéciaux dans la nom.
 		{
@@ -113,9 +113,9 @@
 			name2 = escape_xmlhttprequest(name);
 			data = "id_folder=" + id_folder + "&name=" + name2 + "&previous_name=" + previous_name;
 			var xhr_object = xmlhttprequest_init('../kernel/framework/ajax/uploads_xmlhttprequest.php?token={TOKEN}&rename_folder=1');
-			xhr_object.onreadystatechange = function() 
+			xhr_object.onreadystatechange = function()
 			{
-				if( xhr_object.readyState == 4 && xhr_object.status == 200 ) 
+				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 				{
 					if( xhr_object.responseText != '' )
 					{
@@ -123,7 +123,7 @@
 						document.getElementById('fhref' + id_folder).innerHTML = '<a href="javascript:display_rename_folder(\'' + id_folder + '\', \'' + xhr_object.responseText.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="fa fa-edit"></a>';
 					}
 					else
-					{	
+					{
 						alert("{L_FOLDER_ALREADY_EXIST}");
 						document.getElementById('f' + id_folder).innerHTML = '<a href="upload.php?f=' + id_folder + '{POPUP}">' + previous_cut_name + '</a>';
 					}
@@ -134,7 +134,7 @@
 			}
 			xmlhttprequest_sender(xhr_object, data);
 		}
-	}	
+	}
 	function add_folder(id_parent, user_id, divid)
 	{
 		var name = document.getElementById("folder_name").value;
@@ -154,9 +154,9 @@
 			name2 = escape_xmlhttprequest(name);
 			data = "name=" + name2 + "&user_id=" + user_id + "&id_parent=" + id_parent;
 			var xhr_object = xmlhttprequest_init('../kernel/framework/ajax/uploads_xmlhttprequest.php?token={TOKEN}&new_folder=1');
-			xhr_object.onreadystatechange = function() 
+			xhr_object.onreadystatechange = function()
 			{
-				if( xhr_object.readyState == 4 && xhr_object.status == 200 ) 
+				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 				{
 					if( xhr_object.responseText > 0 )
 					{
@@ -164,11 +164,11 @@
 						var total_folder = document.getElementById('total-folder').innerHTML;
 						total_folder++;
 						document.getElementById('total-folder').innerHTML = total_folder;
-						
+
 						empty_folder++;
 					}
 					else
-					{	
+					{
 						alert("{L_FOLDER_ALREADY_EXIST}");
 						document.getElementById('new-folder' + divid).innerHTML = '';
 						document.getElementById('new-folder' + divid).style.display = 'none';
@@ -190,13 +190,13 @@
 	function display_rename_file(id, previous_name, previous_cut_name)
 	{
 		if( document.getElementById('fi' + id) )
-		{	
+		{
 			document.getElementById('fi1' + id).style.display = 'none';
 			document.getElementById('fi' + id).style.display = 'inline';
 			document.getElementById('fi' + id).innerHTML = '<input type="text" name="fiinput' + id + '" id="fiinput' + id + '" value="' + previous_name + '" onblur="rename_file(\'' + id + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + previous_cut_name.replace(/\'/g, "\\\'") + '\');">';
 			document.getElementById('fiinput' + id).focus();
 		}
-	}	
+	}
 	function rename_file(id_file, previous_name, previous_cut_name)
 	{
 		var name = document.getElementById("fiinput" + id_file).value;
@@ -215,9 +215,9 @@
 			name2 = escape_xmlhttprequest(name);
 			data = "id_file=" + id_file + "&name=" + name2 + "&previous_name=" + previous_cut_name;
 			var xhr_object = xmlhttprequest_init('../kernel/framework/ajax/uploads_xmlhttprequest.php?token={TOKEN}&rename_file=1');
-			xhr_object.onreadystatechange = function() 
+			xhr_object.onreadystatechange = function()
 			{
-				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' ) 
+				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
 				{
 					if( xhr_object.responseText == '/' )
 					{
@@ -244,20 +244,20 @@
 			}
 			xmlhttprequest_sender(xhr_object, data);
 		}
-	}	
+	}
 	var delay = 1000; //Délai après lequel le bloc est automatiquement masqué, après le départ de la souris.
 	var timeout;
 	var displayed = false;
 	var previous_block;
-	
+
 	//Affiche le bloc.
 	function upload_display_block(divID)
 	{
 		var i;
-		
+
 		if( timeout )
 			clearTimeout(timeout);
-		
+
 		var block = document.getElementById('move' + divID);
 		if( block.style.display == 'none' )
 		{
@@ -277,14 +277,14 @@
 	function upload_hide_block(idfield, stop)
 	{
 		if( stop && timeout )
-		{	
+		{
 			clearTimeout(timeout);
 		}
 		else if( displayed )
 		{
 			clearTimeout(timeout);
 			timeout = setTimeout('upload_display_block(\'' + idfield + '\')', delay);
-		}	
+		}
 	}
 	var selected = 0;
 	function select_div(id)
@@ -292,7 +292,7 @@
 		if( document.getElementById(id) )
 		{
 			if( selected == 0 )
-			{	
+			{
 				document.getElementById(id).select();
 				selected = 1;
 			}
@@ -301,16 +301,16 @@
 				document.getElementById(id).blur();
 				selected = 0;
 			}
-		}	
+		}
 	}
 	-->
 	</script>
-	
+
 	<section id="module-user-upload">
 		<header>
 			<h1>{L_FILES_ACTION}</h1>
 		</header>
-		
+
 		<div class="content">
 
 			<div id="new-file">
@@ -329,11 +329,11 @@
 					</fieldset>
 				</form>
 			</div>
-			
+
 			<div class="upload-address-bar">
 				<a href="upload.php?root=1{POPUP}"><i class="fa fa-home"></i> {L_ROOT}</a>{URL}
 			</div>
-			
+
 			<div class="upload-address-bar-links">
 				<a href="upload.php?fup={FOLDER_ID}{POPUP}">
 					<i class="fa fa-level-up"></i> {L_FOLDER_UP}
@@ -346,11 +346,11 @@
 				</a>
 			</div>
 			<div class="spacer"></div>
-			
+
 			<legend>{L_FOLDER_CONTENT}</legend>
-			
+
 			<div class="upload-elements-container">
-			
+
 				# IF C_EMPTY_FOLDER #
 					<div id="empty-folder" class="notice">{L_EMPTY_FOLDER}</div>
 					<span id="new-folder"></span>
@@ -372,26 +372,26 @@
 						</div>
 					# END folder #
 					<span id="new-folder"></span>
-	
-					# START files #	
+
+					# START files #
 					<div class="upload-elements-file">
 						# IF files.C_IMG #
-						<a href="{files.URL}" data-lightbox="formatter" data-rel="lightcase:collection" title="{files.TITLE}" class="# IF files.C_RECENT_FILE #upload-recent-file# END IF #">
+						<a href="{files.URL}" data-lightbox="formatter" data-rel="lightcase:collection" title="{files.TITLE}">
 							<div class="upload-element-picture" style="background-image: url({files.URL})"></div>
 						</a>
-						# ELSE #	
+						# ELSE #
 						<a class="# IF files.C_RECENT_FILE #upload-recent-file# END IF #" href="{files.URL}" title="{files.TITLE}"{files.LIGHTBOX}>
 							<div class="upload-element-icon"><i class="fa {files.IMG}"></i></div>
 						</a>
 						# ENDIF #
-						<div class="upload-element-name" id="fi1{files.ID}">{files.NAME}</div>
+						<div class="upload-element-name# IF files.C_RECENT_FILE # upload-recent-file# ENDIF #" id="fi1{files.ID}">{files.NAME}</div>
 						<span id="fi{files.ID}"></span>
 						{files.BBCODE}
 						<div class="upload-file-controls">
 							{files.RENAME_FILE}
 							<a href="upload.php?del={files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
 							<a href="upload{files.U_MOVE}" title="{L_MOVETO}" class="fa fa-move"></a>
-							{files.INSERT}							
+							{files.INSERT}
 						</div>
 						<span class="text-strong">{files.FILETYPE}</span><br />
 						<span class="text-strong">{files.SIZE}</span>
@@ -406,9 +406,9 @@
 					{L_DATA} : <strong>{TOTAL_SIZE}</strong>
 				</div>
 			</div>
-						
+
 		</div>
-		
+
 		<footer>
 			# IF C_DISPLAY_CLOSE_BUTTON #
 			<fieldset class="fieldset-submit">
@@ -417,5 +417,5 @@
 			</fieldset>
 			# ENDIF #
 		</footer>
-		
+
 	</section>

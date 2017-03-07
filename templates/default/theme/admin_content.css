@@ -1,8 +1,8 @@
 
-/* --- ###################################################################### 
+/* --- ######################################################################
  *
  *                            admin_content.css
- *                            
+ *
  *            Contient la mise en forme des pages specifiques aux modules
  *            - conteneur de page
  *            - pagination
@@ -12,7 +12,7 @@
  *            - pages des bases de donnees
  *            - pages des statistiques
  *            - pages des menus
- * 
+ *
  * --- ###################################################################### ---*/
 
 
@@ -230,8 +230,8 @@ ul.pagination-block-bis li a.next-page:hover {
 	.small-block {
 		width: 33.33%;
 	}
-	
-	/* Affiche 2 blocs côte à côte */	
+
+	/* Affiche 2 blocs côte à côte */
 	.medium-block {
 		width: 50%;
 	}
@@ -385,7 +385,7 @@ ul.pagination-block-bis li a.next-page:hover {
 		transition: opacity 1s;
 		cursor: move;
 	}
-	
+
 	.sortable-selector:after {
 		position: absolute;
 		top: 28%;
@@ -410,7 +410,7 @@ ul.pagination-block-bis li a.next-page:hover {
 		width: 20px;
 		opacity: .6;
 	}
-	
+
 	.sortable-block .sortable-element:hover .sortable-selector {
 		opacity: 1;
 	}
@@ -508,7 +508,7 @@ div.index-logo {
 	height: 90px;
 	background-image: url('images/logo.png');
 	background-repeat: no-repeat;
-	background-position: center ; 
+	background-position: center ;
 	background-size: cover;
 }
 
@@ -533,7 +533,7 @@ div.index-logo {
 	.welcome {
 		padding:10px;
 	}
-	
+
 	.welcome-desc{
 		float: left;
 		margin-left: 20px;
@@ -898,10 +898,10 @@ div.container-block-absolute > div {
 }
 
 @media (min-width: 769px) {
-	.menus-block-container > div.menus-block-move-top a			{ opacity: 0; }	
+	.menus-block-container > div.menus-block-move-top a			{ opacity: 0; }
 	.menus-block-container > div.menus-block-move-bot a			{ opacity: 0; }
-	.menus-block-container:hover > div.menus-block-move-top a	{ opacity: 1; }	
-	.menus-block-container:hover > div.menus-block-move-bot a	{ opacity: 1; }	
+	.menus-block-container:hover > div.menus-block-move-top a	{ opacity: 1; }
+	.menus-block-container:hover > div.menus-block-move-bot a	{ opacity: 1; }
 }
 
 .menu-spacer {
@@ -979,12 +979,12 @@ div.container-block-absolute > div {
 		float: left;
 		width: 220px;
 	}
-	
+
 	.menus-management-column > div:nth-child(3)  {
 		float: right;
 		width: 220px;
 	}
-	
+
 	.menus-management-central {
 		float: left;
 		width: calc(100% - 440px);
@@ -1085,7 +1085,7 @@ div.container-block-absolute > div {
 	padding: 3px 0;
 }
 
-a.upload-recent-file {
+.upload-recent-file {
 	color: #BA4B49;
 }
 
