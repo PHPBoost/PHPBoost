@@ -127,7 +127,7 @@ $lang = array(
 	Attention cette étape est irréversible, veuillez par précaution sauvegarder votre base de données au préalable !',
 	
 	'finish.message' => '<fieldset>
-							<legend>PHPBoost est désormais mis à jour!</legend>
+							<legend>PHPBoost est désormais mis à jour !</legend>
 							<p class="success">La mise à jour de PHPBoost s\'est déroulée avec succès. L\'équipe PHPBoost vous remercie de lui avoir fait confiance et est heureuse de vous compter parmi ses utilisateurs.</p>
 							<p>Nous vous conseillons de vous tenir au courant de l\'évolution de PHPBoost via le site de la communauté francophone, <a href="http://www.phpboost.com">www.phpboost.com</a>. Vous serez automatiquement averti dans le panneau d\'administration de l\'arrivée de nouvelles mises à jour. Il est fortement conseillé de tenir votre système à jour afin de profiter des dernières nouveautés et de corriger les éventuelles failles ou erreurs.</p>
 							<p class="warning">Par mesure de sécurité nous vous conseillons fortement de supprimer le dossier <b>update</b> et tout ce qu\'il contient, des personnes mal intentionnées pourraient relancer le script de mise à jour et écraser certaines de vos données ! Une option vous sera proposée une fois connecté sur le site pour effectuer cette suppression.</p>

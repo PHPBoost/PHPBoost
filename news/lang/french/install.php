@@ -42,7 +42,7 @@ Supprimez le répertoire /install à la racine de votre site pour des raisons de
 <br />
 <h2 class="formatter-title">Administrez votre site</h2><br />
 <br />
-Accédez au <a href="' . UserUrlBuilder::administration()->rel() . '">panneau d\'administration de votre site</a> afin de le paramétrer comme vous le souhaitez!  Pour cela : <br />
+Accédez au <a href="' . UserUrlBuilder::administration()->rel() . '">panneau d\'administration de votre site</a> afin de le paramétrer comme vous le souhaitez !  Pour cela : <br />
 <br />
 <ul class="formatter-ul">
 <li class="formatter-li"><a href="' . AdminMaintainUrlBuilder::maintain()->rel() . '">Mettez votre site en maintenance</a> en attendant que vous le configuriez à votre guise.

@@ -53,7 +53,7 @@ $lang = array(
 	'generatedBy' => 'Powered by %s',
 	'poweredBy' => 'Powered by',
 	'phpboost.rights' => '',
-	'phpboost.slogan' => 'Create your website easily and for free!',
+	'phpboost.slogan' => 'Create your website easily and for free !',
 	'phpboost.logo' => 'PHPBoost logo',
 
 //Introduction
@@ -104,15 +104,15 @@ $lang = array(
 	'schema.explanation' => 'Provided by your host. If that database doesn\'t exist, PHPBoost will try to create it.',
 	'schema.tablePrefix' => 'Prefix for tables in database',
 	'schema.tablePrefix.explanation' => 'Default value is <em>phpboost_</em>. You will need to change this value if you want to install PHPBoost several times in the same database.',
-	'db.config.check' => 'Try to establish database connection!',
+	'db.config.check' => 'Try to establish database connection !',
 	'db.connection.success' => 'The connection to the database has been established successfully. You can proceed to the next step.',
 	'db.connection.error' => 'Could not connect to the database. Please check the settings you have entered.',
 	'db.creation.error' => 'The database name you entered doesn\'t exist.',
 	'db.unknown.error' => 'An unknown error has occured.',
-	'db.required.host' => 'You must enter database hostname!',
-	'db.required.port' => 'You must enter database port!',
-	'db.required.login' => 'You must enter database username!',
-	'db.required.schema' => 'You must enter database name!',
+	'db.required.host' => 'You must enter database hostname !',
+	'db.required.port' => 'You must enter database port !',
+	'db.required.login' => 'You must enter database username !',
+	'db.required.schema' => 'You must enter database name !',
 	'db.unexisting_database' => 'The database doesn\'t exists. Check parameters',
 	'phpboost.notInstalled' => 'Unexisting installation',
 	'phpboost.notInstalled.explanation' => '<p>The database on which you want to update PHPBoost contains no installation.</p>
@@ -130,7 +130,7 @@ $lang = array(
 							<legend>PHPBoost is now updated and ready to run !</legend>
 							<p class="success">The update of PHPBoost has been powered successfully. The PHPBoost Team thanks you for using its software and is proud to count you among its users.</p>
 							<p>Keep yourself informed about the evolution of PHPBoost by visiting our website, <a href="http://www.phpboost.com">www.phpboost.com</a>. You will be warned in the administration panel when updates are available. We strongly recommend to keep your website up to date so you can take advantage of the latest features and correct any flaws or errors.</p>
-							<p class="warning">For security reasons we also recommand you to delete the <b>update</b> folder and all its contents, hackers could manage to run the update script and you could lose data! An option will be offered once connected to the site to perform this deletion.</p>
+							<p class="warning">For security reasons we also recommand you to delete the <b>update</b> folder and all its contents, hackers could manage to run the update script and you could lose data ! An option will be offered once connected to the site to perform this deletion.</p>
 							<p>Don\'t forget the <a href="http://www.phpboost.com/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="http://www.phpboost.com/faq/"><acronym title="Frequently Asked Questions">FAQ</acronym></a>.</p>
 							<p>If you have any problem please go to the <a href="http://www.phpboost.com/forum/">support forum of PHPBoost</a>.</p>
 						</fieldset>
