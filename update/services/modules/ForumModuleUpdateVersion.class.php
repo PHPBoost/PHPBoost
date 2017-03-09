@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                       FaqModuleUpdateVersion.class.php
+ *                       ForumModuleUpdateVersion.class.php
  *                            -------------------
- *   begin                : May 22, 2014
- *   copyright            : (C) 2014 Julien BRISWALTER
+ *   begin                : March 09, 2017
+ *   copyright            : (C) 2017 Julien BRISWALTER
  *   email                : j1.seth@phpboost.com
  *
  *
@@ -25,24 +25,22 @@
  *
  ###################################################*/
 
-class FaqModuleUpdateVersion extends ModuleUpdateVersion
+class ForumModuleUpdateVersion extends ModuleUpdateVersion
 {
 	private $querier;
 	
 	public function __construct()
 	{
-		parent::__construct('faq');
+		parent::__construct('forum');
 		$this->querier = PersistenceContext::get_querier();
 	}
 	
 	public function execute()
 	{
-		if (ModulesManager::is_module_installed('faq'))
+		if (ModulesManager::is_module_installed('forum'))
 		{
 			$this->update_content();
 		}
-		
-		$this->delete_old_files();
 	}
 	
 	public function update_content()
@@ -50,24 +48,31 @@ class FaqModuleUpdateVersion extends ModuleUpdateVersion
 		$unparser = new OldBBCodeUnparser();
 		$parser = new BBCodeParser();
 		
-		$result = $this->querier->select('SELECT id, answer FROM ' . PREFIX . 'faq');
+		$result = $this->querier->select('SELECT id, contents FROM ' . PREFIX . 'forum_alerts');
 		
 		while($row = $result->fetch())
 		{
-			$unparser->set_content($row['answer']);
+			$unparser->set_content($row['contents']);
 			$unparser->parse();
 			$parser->parse($unparser->get_content());
 			
-			if ($parser->get_content() != $row['answer'])
-				$this->querier->update(PREFIX . 'faq', array('answer' => $parser->get_content()), 'WHERE id=:id', array('id', $row['id']));
+			if ($parser->get_content() != $row['contents'])
+				$this->querier->update(PREFIX . 'forum_alerts', array('contents' => $parser->get_content()), 'WHERE id=:id', array('id', $row['id']));
 		}
 		$result->dispose();
-	}
-	
-	private function delete_old_files()
-	{
-		$file = new File(Url::to_rel('/' . $this->module_id . '/controllers/AdminFaqManageController.class.php'));
-		$file->delete();
+		
+		$result = $this->querier->select('SELECT id, contents FROM ' . PREFIX . 'forum_msg');
+		
+		while($row = $result->fetch())
+		{
+			$unparser->set_content($row['contents']);
+			$unparser->parse();
+			$parser->parse($unparser->get_content());
+			
+			if ($parser->get_content() != $row['contents'])
+				$this->querier->update(PREFIX . 'forum_msg', array('contents' => $parser->get_content()), 'WHERE id=:id', array('id', $row['id']));
+		}
+		$result->dispose();
 	}
 }
 ?>

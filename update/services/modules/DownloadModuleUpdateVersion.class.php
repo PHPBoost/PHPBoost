@@ -39,10 +39,15 @@ class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 	
 	public function execute()
 	{
-		$tables = $this->db_utils->list_tables(true);
-		
-		if (in_array(PREFIX . 'download', $tables))
-			$this->update_download_table();
+		if (ModulesManager::is_module_installed('download'))
+		{
+			$tables = $this->db_utils->list_tables(true);
+			
+			if (in_array(PREFIX . 'download', $tables))
+				$this->update_download_table();
+			
+			$this->update_content();
+		}
 		
 		$this->delete_old_files();
 	}
@@ -63,6 +68,25 @@ class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 			if (isset($columns[$old_name]))
 				$this->querier->inject('ALTER TABLE ' . PREFIX . 'download CHANGE ' . $old_name . ' ' . $new_name);
 		}
+	}
+	
+	public function update_content()
+	{
+		$unparser = new OldBBCodeUnparser();
+		$parser = new BBCodeParser();
+		
+		$result = $this->querier->select('SELECT id, contents FROM ' . PREFIX . 'download');
+		
+		while($row = $result->fetch())
+		{
+			$unparser->set_content($row['contents']);
+			$unparser->parse();
+			$parser->parse($unparser->get_content());
+			
+			if ($parser->get_content() != $row['contents'])
+				$this->querier->update(PREFIX . 'download', array('contents' => $parser->get_content()), 'WHERE id=:id', array('id', $row['id']));
+		}
+		$result->dispose();
 	}
 	
 	private function delete_old_files()

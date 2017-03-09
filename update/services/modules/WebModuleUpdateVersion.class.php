@@ -27,14 +27,41 @@
 
 class WebModuleUpdateVersion extends ModuleUpdateVersion
 {
+	private $querier;
+	
 	public function __construct()
 	{
 		parent::__construct('web');
+		$this->querier = PersistenceContext::get_querier();
 	}
 	
 	public function execute()
 	{
+		if (ModulesManager::is_module_installed('web'))
+		{
+			$this->update_content();
+		}
+		
 		$this->delete_old_files();
+	}
+	
+	public function update_content()
+	{
+		$unparser = new OldBBCodeUnparser();
+		$parser = new BBCodeParser();
+		
+		$result = $this->querier->select('SELECT id, contents FROM ' . PREFIX . 'web');
+		
+		while($row = $result->fetch())
+		{
+			$unparser->set_content($row['contents']);
+			$unparser->parse();
+			$parser->parse($unparser->get_content());
+			
+			if ($parser->get_content() != $row['contents'])
+				$this->querier->update(PREFIX . 'web', array('contents' => $parser->get_content()), 'WHERE id=:id', array('id', $row['id']));
+		}
+		$result->dispose();
 	}
 	
 	private function delete_old_files()

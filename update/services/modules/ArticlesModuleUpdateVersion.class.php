@@ -39,10 +39,15 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 	
 	public function execute()
 	{
-		$tables = $this->db_utils->list_tables(true);
-		
-		if (in_array(PREFIX . 'articles', $tables))
-			$this->update_articles_table();
+		if (ModulesManager::is_module_installed('articles'))
+		{
+			$tables = $this->db_utils->list_tables(true);
+			
+			if (in_array(PREFIX . 'articles', $tables))
+				$this->update_articles_table();
+			
+			$this->update_content();
+		}
 		
 		$this->delete_old_files();
 	}
@@ -56,6 +61,25 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 		
 		if (!isset($columns['author_custom_name']))
 			$this->db_utils->add_column(PREFIX . 'articles', 'author_custom_name', array('type' =>  'string', 'length' => 255, 'default' => "''"));
+	}
+	
+	public function update_content()
+	{
+		$unparser = new OldBBCodeUnparser();
+		$parser = new BBCodeParser();
+		
+		$result = $this->querier->select('SELECT id, contents FROM ' . PREFIX . 'articles');
+		
+		while($row = $result->fetch())
+		{
+			$unparser->set_content($row['contents']);
+			$unparser->parse();
+			$parser->parse($unparser->get_content());
+			
+			if ($parser->get_content() != $row['contents'])
+				$this->querier->update(PREFIX . 'articles', array('contents' => $parser->get_content()), 'WHERE id=:id', array('id', $row['id']));
+		}
+		$result->dispose();
 	}
 	
 	private function delete_old_files()

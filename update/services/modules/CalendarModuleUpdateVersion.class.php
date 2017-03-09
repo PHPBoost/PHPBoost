@@ -27,20 +27,27 @@
 
 class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 {
+	private $querier;
 	private $db_utils;
 	
 	public function __construct()
 	{
 		parent::__construct('calendar');
+		$this->querier = PersistenceContext::get_querier();
 		$this->db_utils = PersistenceContext::get_dbms_utils();
 	}
 	
 	public function execute()
 	{
-		$tables = $this->db_utils->list_tables(true);
-		
-		if (in_array(PREFIX . 'calendar_events_content', $tables))
-			$this->update_events_content_table();
+		if (ModulesManager::is_module_installed('calendar'))
+		{
+			$tables = $this->db_utils->list_tables(true);
+			
+			if (in_array(PREFIX . 'calendar_events_content', $tables))
+				$this->update_events_content_table();
+			
+			$this->update_content();
+		}
 		
 		$this->delete_old_files();
 	}
@@ -51,6 +58,25 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 		
 		if (!isset($columns['picture_url']))
 			$this->db_utils->add_column(PREFIX . 'calendar_events_content', 'picture_url', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"));
+	}
+	
+	public function update_content()
+	{
+		$unparser = new OldBBCodeUnparser();
+		$parser = new BBCodeParser();
+		
+		$result = $this->querier->select('SELECT id, contents FROM ' . PREFIX . 'calendar_events_content');
+		
+		while($row = $result->fetch())
+		{
+			$unparser->set_content($row['contents']);
+			$unparser->parse();
+			$parser->parse($unparser->get_content());
+			
+			if ($parser->get_content() != $row['contents'])
+				$this->querier->update(PREFIX . 'calendar_events_content', array('contents' => $parser->get_content()), 'WHERE id=:id', array('id', $row['id']));
+		}
+		$result->dispose();
 	}
 	
 	private function delete_old_files()

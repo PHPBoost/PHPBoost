@@ -224,6 +224,9 @@ class UpdateServices
 		// Mise à jour des langues
 		$this->update_langs();
 		
+		// Mise à jour du contenu
+		$this->update_content();
+		
 		// Installation du module UrlUpdater pour la réécriture des Url des modules mis à jour
 		ModulesManager::install_module('UrlUpdater');
 		
@@ -246,9 +249,9 @@ class UpdateServices
 	}
 	
 	private function update_kernel_tables()
-	{
+	{ 
 		// Mise à jour des tables du noyau - conversion en utf8
-		foreach (self::$db_utils->list_tables() as $table_name)
+		foreach (self::$db_utils->list_tables(true) as $table_name)
 		{
 			if (!in_array($table_name, array(PREFIX . 'errors_404', PREFIX . 'stats_referer')))
 			{
@@ -366,6 +369,40 @@ class UpdateServices
 		}
 	}
 	
+	public function update_content()
+	{
+		$unparser = new OldBBCodeUnparser();
+		$parser = new BBCodeParser();
+		
+		// Update comments messages if needed
+		$result = self::$db_querier->select('SELECT id, message FROM ' . PREFIX . 'comments');
+		
+		while($row = $result->fetch())
+		{
+			$unparser->set_content($row['message']);
+			$unparser->parse();
+			$parser->parse($unparser->get_content());
+			
+			if ($parser->get_content() != $row['message'])
+				self::$db_querier->update(PREFIX . 'comments', array('message' => $parser->get_content()), 'WHERE id=:id', array('id', $row['id']));
+		}
+		$result->dispose();
+		
+		// Update pm contents if needed
+		$result = self::$db_querier->select('SELECT id, contents FROM ' . PREFIX . 'pm_msg');
+		
+		while($row = $result->fetch())
+		{
+			$unparser->set_content($row['contents']);
+			$unparser->parse();
+			$parser->parse($unparser->get_content());
+			
+			if ($parser->get_content() != $row['contents'])
+				self::$db_querier->update(PREFIX . 'pm_msg', array('contents' => $parser->get_content()), 'WHERE id=:id', array('id', $row['id']));
+		}
+		$result->dispose();
+	}
+	
 	private function get_class($directory, $pattern, $type)
 	{
 		$classes = array();
@@ -466,8 +503,7 @@ class UpdateServices
 	
 	private function delete_old_files_kernel()
 	{
-		$file = new File(Url::to_rel('/kernel/lib/flash/flowplayer/flowplayer.js'));
-		$file->delete();
+		
 	}
 	
 	private function delete_old_files_lang()
