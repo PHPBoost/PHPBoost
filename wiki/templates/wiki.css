@@ -5,15 +5,15 @@
 .wiki-paragraph-5 {}
 
 .wiki-list {
-	margin: 0.5rem 0 0 2rem;
+	margin: 0.5em 0 0 2.6em;
 }
 
 .wiki-list-1 > li {
-	margin-top: 5px;
+	margin: 0.3em 0 0 0;
 }
 
 .wiki-list-1 { list-style-type: upper-roman; 	}
-.wiki-list-2 { list-style-type: decimal; 		}
+.wiki-list-2 { list-style-type: decimal; 	}
 .wiki-list-3 { list-style-type: upper-alpha; 	}
 .wiki-list-4 { list-style-type: lower-alpha; 	}
 .wiki-list-5 { list-style-type: lower-greek; 	}
