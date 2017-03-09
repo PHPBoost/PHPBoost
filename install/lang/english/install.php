@@ -33,7 +33,7 @@
 
 $lang = array(
    'chmod.cache.notWritable' => '<h1>PHPBoost installation</h1>
-<p><strong>Warning</strong> : the folders cache and cache/tpl must exist and be writable. Please create and/or set them the right CHMOD (777) to be able to continue the installation.</p>
+<p><strong>Warning</strong>: the folders cache and cache/tpl must exist and be writable. Please create and/or set them the right CHMOD (777) to be able to continue the installation.</p>
 <p>Once it is done, please refresh the page to continue or click <a href="">here</a>.</p>',
 
 // General variables
@@ -51,7 +51,7 @@ $lang = array(
 	'documentation' => 'Documentation',
 	'documentation.link' => 'http://www.phpboost.com/wiki/install-phpboost',
 	'installation.restart' => 'Restart the installation',
-	'installation.confirmRestart' => 'Are you sure you want to restart the installation ?',
+	'installation.confirmRestart' => 'Are you sure you want to restart the installation?',
 	'language.change' => 'Change language',
 	'change' => 'Change',
     'step.previous' => 'Previous step',
@@ -62,7 +62,7 @@ $lang = array(
 	'generatedBy' => 'Powered by %s',
 	'poweredBy' => 'Powered by',
 	'phpboost.rights' => '',
-	'phpboost.slogan' => 'Create your website easily and for free !',
+	'phpboost.slogan' => 'Create your website easily and for free!',
 	'phpboost.logo' => 'PHPBoost logo',
 
 
@@ -73,7 +73,7 @@ $lang = array(
 <p>Before starting installation, be sure to have to hand Database information provided by your hosting company. The installation is automatic and should take only a few minutes of your time.  To start the installation process, please click on the green arrow down below.</p>
 <p>Best regards, the PHPBoost team</p>',
 	'step.welcome.distribution' => ':distribution Distribution',
-	'step.welcome.distribution.explanation' => '<p>There are several distributions which allow you to setup easily their website according to your needs. PHPBoost will install the kernel and modules according to the chosen distribution. After the installation is complete, you will be able to change settings and add/remove modules. </p>',
+	'step.welcome.distribution.explanation' => '<p>There are several distributions which allow you to setup easily their website according to your needs. PHPBoost will install the kernel and modules according to the chosen distribution. After the installation is complete, you will be able to change settings and add/remove modules.</p>',
 	'start_install' => 'Start installation',
 
 // License
@@ -82,7 +82,7 @@ $lang = array(
 	'step.license.require.agreement' => 'You must accept the GNU/GPL license terms to install PHPBoost.',
 	'step.license.terms.title' => 'License terms',
 	'step.license.please_agree' => 'I have read and understand the End-user License Terms which applies to this software',
-	'step.license.submit.alert' => 'You have to agree to the end-user license by checking the form !',
+	'step.license.submit.alert' => 'You have to agree to the end-user license by checking the form!',
 
 // Server setup
 	'step.server.title' => 'Looking up server configuration...',
@@ -90,15 +90,15 @@ $lang = array(
 <div class="notice">It is very important that each required fields are checked, otherwise you might have trouble using the software.</div>',
 	'php.version' => 'PHP version',
 	'php.version.check' => 'PHP higher than :min_php_version',
-	'php.version.check.explanation' => '<span style="font-weight:bold;color:red;">Required:</span> To run PHPBoost, your server must run PHP :min_php_version or higher. Below that, you might have issues with some modules.',
+	'php.version.check.explanation' => '<span style="font-weight: bold;color: red;">Required:</span> To run PHPBoost, your server must run PHP :min_php_version or higher. Below that, you might have issues with some modules.',
 	'php.extensions' => 'Extensions',
-	'php.extensions.check' => '<span style="font-weight:bold;">Optional :</span> The activation of these extensions will provide additional features but it is not essential to its operation.',
+	'php.extensions.check' => '<span style="font-weight: bold;">Optional:</span> The activation of these extensions will provide additional features but it is not essential to its operation.',
 	'php.extensions.check.gdLibrary' => 'GD library',
 	'php.extensions.check.gdLibrary.explanation' => 'Library used to generate pictures such as Robot Protection, Statistics Graphics and much more.',
 	'server.urlRewriting' => 'URL Rewriting',
 	'server.urlRewriting.explanation' => 'Not only does it rewrite URLs, but it helps a lot with search engine robots.',
 	'folders.chmod' => 'Directories permissions',
-	'folders.chmod.check' => '<span style="font-weight:bold;color:red;">Required:</span> PHPBoost needs to change permissions of several directories to make them writable. If your hosting company allows it, it will be done automatically. However, you might need to do it by yourself to make the installation work. If you don\'t know how to change permissions of a directory, you can find help on your host website.',
+	'folders.chmod.check' => '<span style="font-weight: bold;color: red;">Required:</span> PHPBoost needs to change permissions of several directories to make them writable. If your hosting company allows it, it will be done automatically. However, you might need to do it by yourself to make the installation work. If you don\'t know how to change permissions of a directory, you can find help on your host website.',
 	'folders.chmod.refresh' => 'Double-check directories permissions',
 	'folder.exists' => 'Found',
 	'folder.doesNotExist' => 'Not found',
@@ -124,16 +124,16 @@ $lang = array(
 	'schema.explanation' => 'Provided by your host. If that database doesn\'t exist, PHPBoost will try to create it.',
 	'schema.tablePrefix' => 'Prefix for tables in database',
 	'schema.tablePrefix.explanation' => 'Default value is <em>phpboost_</em>. You will need to change this value if you want to install PHPBoost several times in the same database.',
-	'db.config.check' => 'Try to establish database connection !',
+	'db.config.check' => 'Try to establish database connection!',
 	'db.connection.success' => 'The connection to the database has been established successfully. You can proceed to the next step.',
 	'db.connection.error' => 'Could not connect to the database. Please check the settings you have entered.',
 	'db.creation.error' => 'The database name you entered doesn\'t exist and we can\'t create it for you. You need to manually create the database.',
 	'db.unknown.error' => 'An unknown error has occured.',
-	'phpboost.alreadyInstalled.alert' => 'A PHPBoost installation has been found on this database with the prefix you entered. <span style="font-weight:bold;">If you proceed, all the data in this database will be lost.</span>',
-	'db.required.host' => 'You must enter database hostname !',
-	'db.required.port' => 'You must enter database port !',
-	'db.required.login' => 'You must enter database username !',
-	'db.required.schema' => 'You must enter database name !',
+	'phpboost.alreadyInstalled.alert' => 'A PHPBoost installation has been found on this database with the prefix you entered. <span style="font-weight: bold;">If you proceed, all the data in this database will be lost.</span>',
+	'db.required.host' => 'You must enter database hostname!',
+	'db.required.port' => 'You must enter database port!',
+	'db.required.login' => 'You must enter database username!',
+	'db.required.schema' => 'You must enter database name!',
 	'phpboost.alreadyInstalled' => 'Existing installation',
 	'phpboost.alreadyInstalled.explanation' => '<p>The database name you entered contains a PHPBoost installation with the same table prefix.</p>
 <p>If you proceed with the installation, all the data in your database will be lost. If you want to install another PHPBoost, you absolutely need to use another table prefix.</p>',
@@ -154,11 +154,11 @@ $lang = array(
 	'website.timezone' => 'System timezone',
 	'website.timezone.explanation' => 'The default value is the server one. You will be able to change this value later in the administration panel.',
 	'website.description' => 'Website description',
-	'website.description.explanation' => '<span style="font-weight:bold;">Optional:</span> Useful for search engine optimization',
-	'website.host.required' => 'You must enter your website\'s url !',
-	'website.name.required' => 'You must enter your website\'s name !',
-	'website.host.warning' => 'The website address you entered doesn\'t match your server address. Are you sure you want to keep to proceed ?',
-	'website.path.warning' => 'The website path you entered doesn\'t correspond to path powered by the server, are you sure you want to keep the path you entered ?',
+	'website.description.explanation' => '<span style="font-weight: bold;">Optional:</span> Useful for search engine optimization',
+	'website.host.required' => 'You must enter your website\'s url!',
+	'website.name.required' => 'You must enter your website\'s name!',
+	'website.host.warning' => 'The website address you entered doesn\'t match your server address. Are you sure you want to keep to proceed?',
+	'website.path.warning' => 'The website path you entered doesn\'t correspond to path powered by the server, are you sure you want to keep the path you entered?',
 //	'site_config_mail_signature' => 'Best regards, the site team.',
 
 // Administration
@@ -174,22 +174,22 @@ $lang = array(
 	'admin.password.repeat' => 'Confirm administrator password',
 	'admin.email' => 'Contact e-mail address',
 	'admin.email.explanation' => 'Must be valid to receive unlock administration code.',
-	'admin.login.required' => 'You must enter a username !',
+	'admin.login.required' => 'You must enter a username!',
 	'admin.login.length' => 'Your username is too short (at least 3 characters)',
-	'admin.password.required' => ' You must enter a password !',
+	'admin.password.required' => ' You must enter a password!',
 	'admin.password.length' => 'Your password is too short (at least :number characters)',
-	'admin.confirmPassword.required' => 'You must confirm your password !',
+	'admin.confirmPassword.required' => 'You must confirm your password!',
 	'admin.passwords.mismatch' => 'The passwords you entered did not match.',
-	'admin.email.required' => 'You must enter an e-mail address !',
+	'admin.email.required' => 'You must enter an e-mail address!',
 	'admin.email.invalid' => 'The email address you entered is invalid.',
 	'admin.connectAfterInstall' => 'Log me on at the end of the installation',
 	'admin.autoconnect' => 'Log me on automatically each visit',
-	'admin.created.email.object' => 'PHPBoost : message to be preserved',
+	'admin.created.email.object' => 'PHPBoost: message to be preserved',
 	'admin.created.email.unlockCode' => 'Dear %s,
 
 First of all, thank you for powering your website with PHPBoost software, we hope you will be satisfied. If you have any problems ask your questions on the PHPBoost support forum : http://www.phpboost.com/forum/
 
-Here is your login and password (don\'t lose them, you will need them to setup your website) :
+Here is your login and password (don\'t lose them, you will need them to setup your website):
 
 Login: %s
 If you loose your password, you can generate a new one from this link %s
@@ -198,14 +198,14 @@ Best regards,
 The PHPBoost Team.',
 
 // End of installation
-	'congratulations' => 'Congratulations !',
+	'congratulations' => 'Congratulations!',
     'step.finish.title' => 'End of installation',
 	'finish.message' => '<fieldset>
-                            <legend>PHPBoost is now installed and ready to run !</legend>
+                            <legend>PHPBoost is now installed and ready to run!</legend>
 							<div class="fielset-inset">
 								<p class="success">The installation of PHPBoost has been powered successfully. The PHPBoost Team thanks you for using its software and is proud to count you among its users.</p>
 								<p>Keep yourself informed about the evolution of PHPBoost by visiting our website, <a href="http://www.phpboost.com">www.phpboost.com</a>. You will be warned in the administration panel when updates are available. We strongly recommend to keep your website up to date so you can take advantage of the latest features and correct any flaws or errors.</p>
-								<p class="warning">For security reasons we also recommand you to delete the <b>install</b> folder and all its content. Hackers could manage to run the installation script and you could lose data ! An option will be offered once connected to the site to perform this deletion.</p>
+								<p class="warning">For security reasons we also recommand you to delete the <b>install</b> folder and all its content. Hackers could manage to run the installation script and you could lose data! An option will be offered once connected to the site to perform this deletion.</p>
 								<p>Don\'t forget to consult the <a href="http://www.phpboost.com/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="http://www.phpboost.com/faq/"><acronym title="Frequently Asked Questions">FAQ</acronym></a>.</p>
 								<p>If you have any problem please go to the <a href="http://www.phpboost.com/forum/">support forum of PHPBoost</a>.</p>
 							</div>
@@ -219,17 +219,17 @@ The PHPBoost Team.',
 								<h2>Other projects</h2>
 								<p>PHPBoost uses different tools allowing it to enlarge its features panel enough implying the development time rising. Most of these tools are under GNU/GPL license.</p>
 								<ul>
-									<li><a href="https://notepad-plus-plus.org">Notepad++</a> and <a href="http://www.sublimetext.com">Sublime Text</a> : Very powerful text editors used for the whole development, thanks a lot !</li>
-									<li><a href="http://www.phpconcept.net/pclzip/">PCLZIP by PHPConcept</a> : PHP library which manage work with zip files.</li>
-									<li><a href="http://www.xm1math.net/phpmathpublisher/">PHPMathPublisher</a> : Functions which permit us to interpret LaTeX language and export it to pictures viewable by a web browser.</li>
-									<li><a href="http://www.tinymce.com">TinyMCE</a> : TinyMCE is a <acronym title="What You See Is What You Get">WYSIWYG</acronym> editor which allows users to see their text formatting in real time.</li>
-									<li><a href="http://qbnz.com/highlighter/">GeSHi</a> : Generic Syntax Highlighter used to highlight the source code of many programming languages.</li>
-									<li><a href="http://jquery.com">jQuery</a> : Javascript and <acronym title="Asynchronous Javascript And XML">AJAX</acronym> Framework</li>
-									<li><a href="http://flowplayer.org">Flowplayer</a> : flash video reader</li>
-									<li><a href="http://fontawesome.io">Font Awesome</a> : icons librairy</li>
-									<li><a href="http://cornel.bopp-art.com/lightcase/">Lightcase.js</a> : responsive Lightbox</li>
-									<li><a href="https://github.com/cssmenumaker/jQuery-Plugin-Responsive-Drop-Down">CssMenuMaker.js</a> : Menus responsive</li>
-									<li><a href="http://www.jerrylow.com/basictable/">BasicTable.js</a> : Tables responsive</li>
+									<li><a href="https://notepad-plus-plus.org">Notepad++</a> and <a href="http://www.sublimetext.com">Sublime Text</a>: Very powerful text editors used for the whole development, thanks a lot!</li>
+									<li><a href="http://www.phpconcept.net/pclzip/">PCLZIP by PHPConcept</a>: PHP library which manage work with zip files.</li>
+									<li><a href="http://www.xm1math.net/phpmathpublisher/">PHPMathPublisher</a>: Functions which permit us to interpret LaTeX language and export it to pictures viewable by a web browser.</li>
+									<li><a href="http://www.tinymce.com">TinyMCE</a>: TinyMCE is a <acronym title="What You See Is What You Get">WYSIWYG</acronym> editor which allows users to see their text formatting in real time.</li>
+									<li><a href="http://qbnz.com/highlighter/">GeSHi</a>: Generic Syntax Highlighter used to highlight the source code of many programming languages.</li>
+									<li><a href="http://jquery.com">jQuery</a>: Javascript and <acronym title="Asynchronous Javascript And XML">AJAX</acronym> Framework</li>
+									<li><a href="http://flowplayer.org">Flowplayer</a>: flash video reader</li>
+									<li><a href="http://fontawesome.io">Font Awesome</a>: icons librairy</li>
+									<li><a href="http://cornel.bopp-art.com/lightcase/">Lightcase.js</a>: responsive Lightbox</li>
+									<li><a href="https://github.com/cssmenumaker/jQuery-Plugin-Responsive-Drop-Down">CssMenuMaker.js</a>: Menus responsive</li>
+									<li><a href="http://www.jerrylow.com/basictable/">BasicTable.js</a>: Tables responsive</li>
 								</ul>
 							</div>
                         </fieldset>
