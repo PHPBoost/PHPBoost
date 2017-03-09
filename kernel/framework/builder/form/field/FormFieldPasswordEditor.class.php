@@ -33,9 +33,7 @@ class FormFieldPasswordEditor extends AbstractFormField
 {
 	private $size = 30;
 	private $maxlength = 255;
-	private static $tpl_src = '<input type="password" size="{SIZE}" maxlength="{MAX_LENGTH}" name="${escape(NAME)}"
-	id="${escape(HTML_ID)}" value="${escape(VALUE)}" class="${escape(CLASS)}" # IF C_DISABLED # disabled="disabled" # ENDIF # />';
-
+	
 	/**
 	 * @desc Constructs a FormFieldPasswordEditor.
 	 * It has these options in addition to the AbstractFormField ones:
@@ -62,7 +60,7 @@ class FormFieldPasswordEditor extends AbstractFormField
 	{
 		$template = $this->get_template_to_use();
 
-		$field_tpl = new StringTemplate(self::$tpl_src);
+		$field_tpl = new FileTemplate('framework/builder/form/fieldelements/FormFieldPasswordEditor.tpl');
 
 		$this->assign_common_template_variables($template);
 
