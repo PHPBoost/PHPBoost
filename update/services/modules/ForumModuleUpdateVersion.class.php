@@ -57,7 +57,7 @@ class ForumModuleUpdateVersion extends ModuleUpdateVersion
 			$parser->parse($unparser->get_content());
 			
 			if ($parser->get_content() != $row['contents'])
-				$this->querier->update(PREFIX . 'forum_alerts', array('contents' => $parser->get_content()), 'WHERE id=:id', array('id', $row['id']));
+				$this->querier->update(PREFIX . 'forum_alerts', array('contents' => $parser->get_content()), 'WHERE id=:id', array('id' => $row['id']));
 		}
 		$result->dispose();
 		
@@ -70,7 +70,7 @@ class ForumModuleUpdateVersion extends ModuleUpdateVersion
 			$parser->parse($unparser->get_content());
 			
 			if ($parser->get_content() != $row['contents'])
-				$this->querier->update(PREFIX . 'forum_msg', array('contents' => $parser->get_content()), 'WHERE id=:id', array('id', $row['id']));
+				$this->querier->update(PREFIX . 'forum_msg', array('contents' => $parser->get_content()), 'WHERE id=:id', array('id' => $row['id']));
 		}
 		$result->dispose();
 	}

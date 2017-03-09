@@ -384,7 +384,7 @@ class UpdateServices
 			$parser->parse($unparser->get_content());
 			
 			if ($parser->get_content() != $row['message'])
-				self::$db_querier->update(PREFIX . 'comments', array('message' => $parser->get_content()), 'WHERE id=:id', array('id', $row['id']));
+				self::$db_querier->update(PREFIX . 'comments', array('message' => $parser->get_content()), 'WHERE id=:id', array('id' => $row['id']));
 		}
 		$result->dispose();
 		
@@ -398,7 +398,7 @@ class UpdateServices
 			$parser->parse($unparser->get_content());
 			
 			if ($parser->get_content() != $row['contents'])
-				self::$db_querier->update(PREFIX . 'pm_msg', array('contents' => $parser->get_content()), 'WHERE id=:id', array('id', $row['id']));
+				self::$db_querier->update(PREFIX . 'pm_msg', array('contents' => $parser->get_content()), 'WHERE id=:id', array('id' => $row['id']));
 		}
 		$result->dispose();
 	}

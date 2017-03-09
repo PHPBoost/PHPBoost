@@ -59,7 +59,7 @@ class FaqModuleUpdateVersion extends ModuleUpdateVersion
 			$parser->parse($unparser->get_content());
 			
 			if ($parser->get_content() != $row['answer'])
-				$this->querier->update(PREFIX . 'faq', array('answer' => $parser->get_content()), 'WHERE id=:id', array('id', $row['id']));
+				$this->querier->update(PREFIX . 'faq', array('answer' => $parser->get_content()), 'WHERE id=:id', array('id' => $row['id']));
 		}
 		$result->dispose();
 	}

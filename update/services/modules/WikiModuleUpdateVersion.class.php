@@ -50,16 +50,16 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 		$unparser = new OldBBCodeUnparser();
 		$parser = new BBCodeParser();
 		
-		$result = $this->querier->select('SELECT id, contents FROM ' . PREFIX . 'wiki');
+		$result = $this->querier->select('SELECT id_contents, content FROM ' . PREFIX . 'wiki_contents');
 		
 		while($row = $result->fetch())
 		{
-			$unparser->set_content($row['contents']);
+			$unparser->set_content($row['content']);
 			$unparser->parse();
 			$parser->parse($unparser->get_content());
 			
-			if ($parser->get_content() != $row['contents'])
-				$this->querier->update(PREFIX . 'wiki', array('contents' => $parser->get_content()), 'WHERE id=:id', array('id', $row['id']));
+			if ($parser->get_content() != $row['content'])
+				$this->querier->update(PREFIX . 'wiki_contents', array('content' => $parser->get_content()), 'WHERE id_contents=:id', array('id' => $row['id']));
 		}
 		$result->dispose();
 	}

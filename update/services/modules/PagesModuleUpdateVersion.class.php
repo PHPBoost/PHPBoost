@@ -59,7 +59,7 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 			$parser->parse($unparser->get_content());
 			
 			if ($parser->get_content() != $row['contents'])
-				$this->querier->update(PREFIX . 'pages', array('contents' => $parser->get_content()), 'WHERE id=:id', array('id', $row['id']));
+				$this->querier->update(PREFIX . 'pages', array('contents' => $parser->get_content()), 'WHERE id=:id', array('id' => $row['id']));
 		}
 		$result->dispose();
 	}
