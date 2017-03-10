@@ -31,7 +31,6 @@
  */
 class FormFieldsetVertical extends AbstractFormFieldset
 {
-    private static $tpl_src = '# INCLUDE ADD_FIELDSET_JS #<div class="vertical-fieldset" id="${escape(HTML_ID)}" # IF C_DISABLED # style="display:none;" # ENDIF #># IF C_DESCRIPTION #<p>${escape(DESCRIPTION)}</p># ENDIF ## START elements # # INCLUDE elements.ELEMENT # # END elements #</div>';
 
     public function __construct($id, $options = array())
     {
@@ -52,7 +51,7 @@ class FormFieldsetVertical extends AbstractFormFieldset
 
     protected function get_default_template()
     {
-        return new StringTemplate(self::$tpl_src);
+        return new FileTemplate('framework/builder/form/fieldelements/FormFieldsetVertical.tpl');
     }
 }
 ?>

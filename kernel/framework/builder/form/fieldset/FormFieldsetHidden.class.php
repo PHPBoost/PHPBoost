@@ -31,7 +31,6 @@
  */
 class FormFieldsetHidden extends AbstractFormFieldset
 {
-    private static $tpl_src = '# INCLUDE ADD_FIELDSET_JS #<div style="display:none;" id="${escape(HTML_ID)}"># START elements #	 # INCLUDE elements.ELEMENT # # END elements #</div>';
 
     public function __construct($id, $options = array())
     {
@@ -52,7 +51,7 @@ class FormFieldsetHidden extends AbstractFormFieldset
 
     protected function get_default_template()
     {
-        return new StringTemplate(self::$tpl_src);
+        return new FileTemplate('framework/builder/form/fieldelements/FormFieldsetHidden.tpl');
     }
 }
 ?>
