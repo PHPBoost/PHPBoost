@@ -58,7 +58,7 @@ class FormFieldRangeEditor extends FormFieldNumberEditor
 	{
 		$template = $this->get_template_to_use();
 
-		$field = new StringTemplate('framework/builder/form/fieldelements/FormFieldRangeEditor.tpl');
+		$field = new FileTemplate('framework/builder/form/fieldelements/FormFieldRangeEditor.tpl');
 
 		$field->put_all(array(
 			'C_MIN' => $this->min !== null,

@@ -44,7 +44,7 @@ class FormFieldColorPicker extends AbstractFormField
 	{
 		$template = $this->get_template_to_use();
 		
-		$field = new StringTemplate('framework/builder/form/fieldelements/FormFieldColorPicker.tpl');
+		$field = new FileTemplate('framework/builder/form/fieldelements/FormFieldColorPicker.tpl');
 		
 		$field->put_all(array(
 			'NAME' => $this->get_html_id(),

@@ -64,7 +64,7 @@ class FormFieldNumberEditor extends AbstractFormField
 	{
 		$template = $this->get_template_to_use();
 
-		$field = new StringTemplate('framework/builder/form/fieldelements/FormFieldNumberEditor.tpl');
+		$field = new FileTemplate('framework/builder/form/fieldelements/FormFieldNumberEditor.tpl');
 
 		$field->put_all(array(
 			'C_MIN' => $this->min !== null,

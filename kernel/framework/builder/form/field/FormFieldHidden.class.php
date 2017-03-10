@@ -60,7 +60,7 @@ class FormFieldHidden extends AbstractFormField
 
     protected function get_default_template()
     {
-        return new StringTemplate('framework/builder/form/fieldelements/FormFieldHidden.tpl');
+        return new FileTemplate('framework/builder/form/fieldelements/FormFieldHidden.tpl');
     }
 }
 ?>

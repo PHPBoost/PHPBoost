@@ -61,7 +61,7 @@ class FormFieldTextEditor extends AbstractFormField
 	{
 		$template = $this->get_template_to_use();
 
-		$field = new StringTemplate('framework/builder/form/fieldelements/FormFieldTextEditor.tpl');
+		$field = new FileTemplate('framework/builder/form/fieldelements/FormFieldTextEditor.tpl');
 
 		$field->put_all(array(
 			'SIZE' => $this->size,

@@ -42,7 +42,7 @@ class FormFieldRadioChoiceOption extends AbstractFormFieldEnumOption
 	public function display()
 	{
 		
-		$tpl = new StringTemplate('framework/builder/form/fieldelements/FormFieldRadioChoiceOption.tpl');
+		$tpl = new FileTemplate('framework/builder/form/fieldelements/FormFieldRadioChoiceOption.tpl');
 		
 		$tpl->put_all(array(
 			'ID' => $this->get_option_id(),

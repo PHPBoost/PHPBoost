@@ -138,7 +138,7 @@ class FormFieldMultipleCheckbox extends AbstractFormField
 			);
 		}
 		
-		$tpl = new StringTemplate('framework/builder/form/fieldelements/FormFieldMultipleCheckbox.tpl');
+		$tpl = new FileTemplate('framework/builder/form/fieldelements/FormFieldMultipleCheckbox.tpl');
 		$tpl->put_all(array('choice' => $rows));
 
 		return $tpl;

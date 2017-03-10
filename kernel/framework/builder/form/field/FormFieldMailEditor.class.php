@@ -67,7 +67,7 @@ class FormFieldMailEditor extends FormFieldTextEditor
 	{
 		$template = $this->get_template_to_use();
 
-		$field = new StringTemplate('framework/builder/form/fieldelements/FormFieldMailEditor.tpl');
+		$field = new FileTemplate('framework/builder/form/fieldelements/FormFieldMailEditor.tpl');
 
 		$field->put_all(array(
 			'SIZE' => $this->size,

@@ -50,7 +50,7 @@ class FormFieldFilePicker extends AbstractFormField
     {
         $template = $this->get_template_to_use();
 
-        $file_field_tpl = new StringTemplate('framework/builder/form/fieldelements/FormFieldFilePicker.tpl');
+        $file_field_tpl = new FileTemplate('framework/builder/form/fieldelements/FormFieldFilePicker.tpl');
         $file_field_tpl->put_all(array(
             'MAX_FILE_SIZE' => $this->get_max_file_size(),
             'NAME' => $this->get_html_id(),

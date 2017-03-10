@@ -72,7 +72,7 @@ class FormFieldSimpleSelectChoice extends AbstractFormFieldChoice
 	private function get_html_code()
 	{
 
-		$tpl = new StringTemplate('framework/builder/form/fieldelements/FormFieldSimpleSelectChoice.tpl');
+		$tpl = new FileTemplate('framework/builder/form/fieldelements/FormFieldSimpleSelectChoice.tpl');
 
 		$tpl->put_all(array(
 			'NAME' => $this->get_html_id(),

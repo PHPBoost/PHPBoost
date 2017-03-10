@@ -59,7 +59,7 @@ class FormFieldShortMultiLineTextEditor extends FormFieldMultiLineTextEditor
     {
         $template = $this->get_template_to_use();
 
-        $field = new StringTemplate('framework/builder/form/fieldelements/FormFieldShortMultiLineTextEditor.tpl');
+        $field = new FileTemplate('framework/builder/form/fieldelements/FormFieldShortMultiLineTextEditor.tpl');
 
         $field->put_all(array(
 			'ROWS' => $this->rows,

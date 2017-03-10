@@ -47,7 +47,7 @@ class FormFieldSelectChoiceOption extends AbstractFormFieldEnumOption
 	public function display()
 	{
 		
-		$tpl = new StringTemplate('framework/builder/form/fieldelements/FormFieldSelectChoiceOption.tpl');
+		$tpl = new FileTemplate('framework/builder/form/fieldelements/FormFieldSelectChoiceOption.tpl');
 		$tpl->put_all(array(
 			'VALUE' => $this->get_raw_value(),
 			'C_SELECTED' => $this->is_active(),

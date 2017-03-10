@@ -55,7 +55,7 @@ class FormFieldSelectChoiceGroupOption extends AbstractFormFieldEnumOption
 	public function display()
 	{
 
-		$tpl = new StringTemplate('framework/builder/form/fieldelements/FormFieldSelectChoiceGroupOption.tpl');
+		$tpl = new FileTemplate('framework/builder/form/fieldelements/FormFieldSelectChoiceGroupOption.tpl');
 		$tpl->put_all(array(
 			'LABEL' => $this->get_label()
 		));
