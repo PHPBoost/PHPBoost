@@ -31,7 +31,6 @@
  */
 class FormFieldHidden extends AbstractFormField
 {
-    private static $tpl_src = '<input type="hidden" id="${escape(HTML_ID)}" name="${escape(HTML_ID)}" value="${escape(VALUE)}">';
 
     public function __construct($id, $value)
     {
@@ -61,7 +60,7 @@ class FormFieldHidden extends AbstractFormField
 
     protected function get_default_template()
     {
-        return new StringTemplate(self::$tpl_src);
+        return new StringTemplate('framework/builder/form/fieldelements/FormFieldHidden.tpl');
     }
 }
 ?>

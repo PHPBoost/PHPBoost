@@ -71,11 +71,8 @@ class FormFieldSimpleSelectChoice extends AbstractFormFieldChoice
 
 	private function get_html_code()
 	{
-		$tpl_src = '<select name="${escape(NAME)}" id="${escape(HTML_ID)}" class="${escape(CSS_CLASS)}" # IF C_DISABLED # disabled="disabled" # ENDIF # >' .
-			'# START options # # INCLUDE options.OPTION # # END options #' .
-			'</select>';
 
-		$tpl = new StringTemplate($tpl_src);
+		$tpl = new StringTemplate('framework/builder/form/fieldelements/FormFieldSimpleSelectChoice.tpl');
 
 		$tpl->put_all(array(
 			'NAME' => $this->get_html_id(),

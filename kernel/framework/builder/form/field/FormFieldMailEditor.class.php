@@ -36,7 +36,6 @@ class FormFieldMailEditor extends FormFieldTextEditor
 	 * @var boolean
 	 */
 	private $multiple = false;
-	protected static $tpl_src = '<input type="{TYPE}" size="{SIZE}" maxlength="{MAX_LENGTH}" name="${escape(NAME)}" id="${escape(HTML_ID)}" value="{VALUE}" class="# IF C_READONLY #low-opacity # ENDIF #${escape(CLASS)}" # IF C_PATTERN # pattern="{PATTERN}" # ENDIF # # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_READONLY # readonly="readonly" # ENDIF # # IF C_MULTIPLE # multiple="multiple" # ENDIF #>';
 	
 	/**
 	 * @desc Constructs a FormFieldMailEditor.
@@ -68,7 +67,7 @@ class FormFieldMailEditor extends FormFieldTextEditor
 	{
 		$template = $this->get_template_to_use();
 
-		$field = new StringTemplate(self::$tpl_src);
+		$field = new StringTemplate('framework/builder/form/fieldelements/FormFieldMailEditor.tpl');
 
 		$field->put_all(array(
 			'SIZE' => $this->size,

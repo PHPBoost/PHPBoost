@@ -1,0 +1,1 @@
+<input type="hidden" id="${escape(HTML_ID)}" name="${escape(HTML_ID)}" value="${escape(VALUE)}" />

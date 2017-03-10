@@ -30,7 +30,6 @@
  */
 class FormFieldColorPicker extends AbstractFormField
 {
-	private static $tpl_src = '<input type="color" name="${escape(NAME)}" id="${escape(HTML_ID)}" value="${escape(VALUE)}" pattern="#[A-Fa-f0-9]{6}" placeholder="#000000" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_HIDDEN # style="display:none;" # ENDIF #>';
 	
 	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
 	{
@@ -45,7 +44,7 @@ class FormFieldColorPicker extends AbstractFormField
 	{
 		$template = $this->get_template_to_use();
 		
-		$field = new StringTemplate(self::$tpl_src);
+		$field = new StringTemplate('framework/builder/form/fieldelements/FormFieldColorPicker.tpl');
 		
 		$field->put_all(array(
 			'NAME' => $this->get_html_id(),

@@ -36,13 +36,6 @@
 class FormFieldFilePicker extends AbstractFormField
 {
     private $max_size = 0;
-    private static $tpl_src = '<input name="max_file_size" value="{MAX_FILE_SIZE}" type="hidden">
-        <input type="file" name="${escape(NAME)}" id="${escape(HTML_ID)}" # IF C_DISABLED # disabled="disabled" # ENDIF #>
-        <script>
-        <!--
-        jQuery("#${escape(HTML_ID)}").parents("form:first")[0].enctype = "multipart/form-data";
-        -->
-        </script>';
 
     public function __construct($id, $label, array $field_options = array(), array $constraints = array())
     {
@@ -57,7 +50,7 @@ class FormFieldFilePicker extends AbstractFormField
     {
         $template = $this->get_template_to_use();
 
-        $file_field_tpl = new StringTemplate(self::$tpl_src);
+        $file_field_tpl = new StringTemplate('framework/builder/form/fieldelements/FormFieldFilePicker.tpl');
         $file_field_tpl->put_all(array(
             'MAX_FILE_SIZE' => $this->get_max_file_size(),
             'NAME' => $this->get_html_id(),

@@ -36,8 +36,6 @@ class FormFieldNumberEditor extends AbstractFormField
 	protected $max = 0;
 	protected $step = 0;
 	protected $pattern = '[0-9]*';
-	protected static $tpl_src = '<input type="{TYPE}"# IF C_MIN # min="{MIN}"# ENDIF ## IF C_MAX # max="{MAX}"# ENDIF ## IF C_STEP # step="{STEP}"# ENDIF # name="${escape(NAME)}" id="${escape(HTML_ID)}" value="{VALUE}"
-	class="# IF C_READONLY #low-opacity # ENDIF #${escape(CLASS)}" # IF C_PLACEHOLDER # placeholder="{PLACEHOLDER}" # ENDIF # # IF C_PATTERN # pattern="{PATTERN}" # ENDIF # # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_READONLY # readonly="readonly" # ENDIF #>';
 
 	/**
 	 * @desc Constructs a FormFieldNumberEditor.
@@ -66,7 +64,7 @@ class FormFieldNumberEditor extends AbstractFormField
 	{
 		$template = $this->get_template_to_use();
 
-		$field = new StringTemplate(self::$tpl_src);
+		$field = new StringTemplate('framework/builder/form/fieldelements/FormFieldNumberEditor.tpl');
 
 		$field->put_all(array(
 			'C_MIN' => $this->min !== null,
