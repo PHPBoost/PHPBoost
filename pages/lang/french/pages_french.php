@@ -89,7 +89,7 @@ $LANG['pages_explain'] = 'Vous êtes sur le panneau de contrôle des pages. Vous
 <p>Vous utilisez l\'éditeur que vous avez choisi dans votre profil pour mettre en forme les pages. Pour insérer du code HTML, utilisez la balise BBCode suivante :<br /><div class="code">[html]code html[/html]</div></p>
 <p>La balise est la même que vous utilisiez l\'éditeur BBCode ou TinyMCE.</p><br />
 <p>Pour faire des liens entre les différentes pages, il suffit d\'utiliser la balise BBCode suivante :<br /><div class="code">[link=titre-de-la-page]Lien vers la page[/link]</div></p>
-<p>Cette balise existe que sur ce module.</p>
+<p>Cette balise existe uniquement sur les modules pages et wiki.</p>
 <div class="warning">Pour des raisons de sécurité il est interdit d\'insérer du code PHP dans les pages.</div>';
 $LANG['pages_redirections'] = 'Gestion des redirections';
 $LANG['pages_num_pages'] = '%d page(s) existantes';
