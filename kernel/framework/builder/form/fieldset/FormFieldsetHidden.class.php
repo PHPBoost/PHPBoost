@@ -51,7 +51,7 @@ class FormFieldsetHidden extends AbstractFormFieldset
 
     protected function get_default_template()
     {
-        return new FileTemplate('framework/builder/form/fieldelements/FormFieldsetHidden.tpl');
+        return new FileTemplate('framework/builder/form/fieldsetelements/FormFieldsetHidden.tpl');
     }
 }
 ?>
