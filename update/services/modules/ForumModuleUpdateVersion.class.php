@@ -67,7 +67,8 @@ class ForumModuleUpdateVersion extends ModuleUpdateVersion
 		{
 			$unparser->set_content($row['contents']);
 			$unparser->parse();
-			$parser->parse($unparser->get_content());
+			$parser->set_content($unparser->get_content());
+			$parser->parse();
 			
 			if ($parser->get_content() != $row['contents'])
 				$this->querier->update(PREFIX . 'forum_msg', array('contents' => $parser->get_content()), 'WHERE id=:id', array('id' => $row['id']));
