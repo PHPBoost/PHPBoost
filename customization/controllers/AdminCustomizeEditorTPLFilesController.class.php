@@ -128,7 +128,7 @@ class AdminCustomizeEditorTPLFilesController extends AdminModuleController
 				if ($this->tpl_file->exists())
 				{
 					$file_editor_fieldset->add_field(new FormFieldMultiLineTextEditor('tpl_file', $this->lang['customization.editor.files.content'], $this->tpl_file->read(),
-						array('rows' => 30)
+						array('rows' => 30, 'class' => "lined")
 					));
 				}
 			}
