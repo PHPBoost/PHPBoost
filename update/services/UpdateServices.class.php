@@ -253,7 +253,7 @@ class UpdateServices
 		// Mise à jour des tables du noyau - conversion en utf8
 		foreach (self::$db_utils->list_tables(true) as $table_name)
 		{
-			if (!in_array($table_name, array(PREFIX . 'errors_404', PREFIX . 'stats_referer')))
+			if (!in_array($table_name, array(PREFIX . 'configs', PREFIX . 'errors_404', PREFIX . 'stats_referer')))
 			{
 				self::$db_querier->inject('ALTER TABLE `' . $table_name . '` CONVERT TO CHARACTER SET utf8');
 				self::$db_querier->inject('ALTER TABLE `' . $table_name . '` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci');
