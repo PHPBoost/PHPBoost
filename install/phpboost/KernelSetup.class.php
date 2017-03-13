@@ -248,7 +248,9 @@ class KernelSetup
 			'primary' => array('id'),
 			'indexes' => array(
 				'name' => array('type' => 'unique', 'fields' => 'name')
-		));
+			),
+			'charset' => 'latin1'
+		);
 		self::$db_utils->create_table(self::$configs_table, $fields, $options);
 	}
 
