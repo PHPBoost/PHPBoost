@@ -61,7 +61,7 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 	{
 		if ($serialize)
 		{
-			return TextHelper::unserialize($this->querier->get_column_value(DB_TABLE_CONFIGS, 'value', 'WHERE name = :config_name', array('config_name' => $this->get_config_name())));
+			return unserialize($this->querier->get_column_value(DB_TABLE_CONFIGS, 'value', 'WHERE name = :config_name', array('config_name' => $this->get_config_name())));
 		}
 		return $this->querier->get_column_value(DB_TABLE_CONFIGS, 'value', 'WHERE name = :config_name', array('config_name' => $this->get_config_name()));
 	}
