@@ -172,7 +172,6 @@ class UpdateServices
 		$db_connection_data = $this->initialize_db_connection($dbms, $host, $port, $database, $login,
 		$password, $tables_prefix);
 		$this->write_connection_config_file($db_connection_data, $tables_prefix);
-		$this->generate_cache();
 		$this->generate_update_token();
 		return true;
 	}
@@ -194,8 +193,6 @@ class UpdateServices
 	public function execute()
 	{
 		$this->get_update_token();
-		
-		AppContext::get_cache_service()->clear_cache();
 		
 		Environment::try_to_increase_max_execution_time();
 		
@@ -233,7 +230,6 @@ class UpdateServices
 		// Fin de la mise à jour : régénération du cache
 		$this->delete_update_token();
 		$this->generate_cache();
-		HtaccessFileCache::regenerate();
 	}
 	
 	public function put_site_under_maintenance()
@@ -307,13 +303,6 @@ class UpdateServices
 				$message = $e->getMessage();
 			}
 			$this->add_error_to_file($class['type'] . ' ' . $object->get_module_id(), $success, $message);
-		}
-		
-		AppContext::get_cache_service()->clear_cache();
-		
-		if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
-		{
-			HtaccessFileCache::regenerate();
 		}
 	}
 	
@@ -421,6 +410,11 @@ class UpdateServices
 	{
 		AppContext::get_cache_service()->clear_cache();
 		AppContext::init_extension_provider_service();
+		
+		if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
+		{
+			HtaccessFileCache::regenerate();
+		}
 	}
 	
 	private function add_error_to_file($step_name, $success, $message)
