@@ -351,11 +351,11 @@ class UpdateServices
 		if (empty($active_langs_number))
 		{
 			LangsManager::install('french');
-			
-			$user_accounts_config = UserAccountsConfig::load();
-			$user_accounts_config->set_default_lang('french');
-			UserAccountsConfig::save();
 		}
+		
+		$user_accounts_config = UserAccountsConfig::load();
+		$user_accounts_config->set_default_lang(LangLoader::get_locale());
+		UserAccountsConfig::save();
 	}
 	
 	public function update_content()
