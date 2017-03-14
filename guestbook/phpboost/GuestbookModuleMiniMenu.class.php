@@ -58,25 +58,30 @@ class GuestbookModuleMiniMenu extends ModuleMiniMenu
 		$tpl->put('U_GUESTBOOK',GuestbookUrlBuilder::home()->rel());
 		
 		$guestbook_cache = GuestbookMessagesCache::load();
-		$random_message = $guestbook_cache->get_message(array_rand($guestbook_cache->get_messages()));
+		$messages = $guestbook_cache->get_messages();
 		
-		if ($random_message !== null)
+		if (!empty($messages))
 		{
-			$user_group_color = User::get_group_color($random_message['groups'], $random_message['level']);
-			
-			$tpl->put_all(array(
-				'C_ANY_MESSAGE_GUESTBOOK' => true,
-				'C_USER_GROUP_COLOR' => !empty($user_group_color),
-				'C_MORE_CONTENTS' => strlen($random_message['contents']) >= 200,
-				'C_VISITOR' => empty($random_message['user_id']),
-				'CONTENTS' => $random_message['contents'],
-				'SHORT_CONTENTS' => nl2br(TextHelper::substr_html($random_message['contents'], 0, 200)),
-				'USER_PSEUDO' => $random_message['login'],
-				'USER_LEVEL_CLASS' => UserService::get_level_class($random_message['level']),
-				'USER_GROUP_COLOR' => $user_group_color,
-				'U_MESSAGE' => GuestbookUrlBuilder::home($random_message['page'], $random_message['id'])->rel(),
-				'U_PROFILE' => UserUrlBuilder::profile($random_message['user_id'])->rel(),
-			));
+			$random_message = $guestbook_cache->get_message(array_rand($messages));
+
+			if ($random_message !== null)
+			{
+				$user_group_color = User::get_group_color($random_message['groups'], $random_message['level']);
+
+				$tpl->put_all(array(
+					'C_ANY_MESSAGE_GUESTBOOK' => true,
+					'C_USER_GROUP_COLOR' => !empty($user_group_color),
+					'C_MORE_CONTENTS' => strlen($random_message['contents']) >= 200,
+					'C_VISITOR' => empty($random_message['user_id']),
+					'CONTENTS' => $random_message['contents'],
+					'SHORT_CONTENTS' => nl2br(TextHelper::substr_html($random_message['contents'], 0, 200)),
+					'USER_PSEUDO' => $random_message['login'],
+					'USER_LEVEL_CLASS' => UserService::get_level_class($random_message['level']),
+					'USER_GROUP_COLOR' => $user_group_color,
+					'U_MESSAGE' => GuestbookUrlBuilder::home($random_message['page'], $random_message['id'])->rel(),
+					'U_PROFILE' => UserUrlBuilder::profile($random_message['user_id'])->rel(),
+				));
+			}
 		}
 		
 		return $tpl->render();
