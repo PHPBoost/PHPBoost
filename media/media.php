@@ -147,13 +147,23 @@ elseif ($id_media > 0)
 		$media_tpl = new FileTemplate('media/' . $mime_type_tpl[$media['mime_type']]);
 	}
 	
+	if (!empty($media['poster']))
+	{
+		$poster_type = new FileType(new File($media['poster']));
+		
+		$media_tpl->put_all(array(
+			'C_POSTER' => $poster_type->is_picture(),
+			'POSTER' => $media['poster']
+		));
+	}
+	
 	$media_tpl->put_all(array(
 		'URL' => $media['url'],
 		'MIME' => $media['mime_type'],
 		'WIDTH' => $media['width'],
 		'HEIGHT' => $media['height']
 	));
-		
+	
 	$tpl->put('media_format', $media_tpl);
 	
 	//Affichage commentaires.

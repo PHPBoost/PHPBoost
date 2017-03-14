@@ -64,6 +64,7 @@ $MEDIA_LANG = array(
 'media_moderation' => 'Modération',
 'media_name' => 'Titre du fichier multimédia',
 'media_url' => 'Lien du fichier multimédia',
+'media_poster' => 'Image d\'illustration',
 'media_width' => 'Largeur de la vidéo',
 'notice_contribution' => 'Vous n\'êtes pas autorisé à ajouter un fichier multimédia, cependant vous pouvez proposer un fichier multimédia. Votre contribution suivra le parcours classique et sera traitée dans la panneau de contribution de PHPBoost. Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.',
 'require_name' => 'Vous devez donnez un titre à ce fichier multimédia !',

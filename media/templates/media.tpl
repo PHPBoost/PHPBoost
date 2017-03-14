@@ -74,13 +74,14 @@
 								</header>
 								<div class="content">
 									# IF file.C_DESCRIPTION #
+										# IF file.C_HAS_PICTURE #<a href="{file.U_MEDIA_LINK}"><img itemprop="thumbnailUrl" src="{file.PICTURE}" alt="{file.NAME}" /></a># ENDIF #
 										<div class="media-desc">
 										{file.DESCRIPTION}
 										</div>
 									# ENDIF #
 									<div class="spacer"></div>
 									<div class="smaller">
-										{L_BY} {file.POSTER}
+										{L_BY} {file.AUTHOR}
 										<br />
 										{file.COUNT}
 										<br />

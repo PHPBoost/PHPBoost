@@ -79,6 +79,7 @@ class MediaSetup extends DefaultModuleSetup
 			'infos' => array('type' => 'integer', 'length' => 6, 'notnull' => 1, 'default' => 0),
 			'width' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 100),
 			'height' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 100),
+			'poster' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'counter' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 		);
 		$options = array(

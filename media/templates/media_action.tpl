@@ -65,7 +65,7 @@
 					<legend>{L_PAGE_TITLE}</legend>
 					<div class="form-element">
 						<label for="name">* {L_TITLE}</label>
-						<div class="form-field"><input type="text" maxlength="100" class="field-large" id="name" name="name" value="{NAME}"></div>
+						<div class="form-field"><input type="text" maxlength="100" class="field-large" id="name" name="name" value="{NAME}" /></div>
 					</div>
 					# IF C_CATEGORIES #
 					<div class="form-element">
@@ -79,15 +79,24 @@
 					# ENDIF #
 					<div class="form-element" id="width_dl">
 						<label for="width">{L_WIDTH}</label>
-						<div class="form-field"><input type="number" min="10" max="5000" maxlength="4" id="width" name="width" value="{WIDTH}"></div>
+						<div class="form-field"><input type="number" min="10" max="5000" maxlength="4" id="width" name="width" value="{WIDTH}" /></div>
 					</div>
 					<div class="form-element" id="height_dl">
 						<label for="height">{L_HEIGHT}</label>
-						<div class="form-field"><input type="number" min="10" max="5000" id="height" name="height" value="{HEIGHT}"></div>
+						<div class="form-field"><input type="number" min="10" max="5000" id="height" name="height" value="{HEIGHT}" /></div>
 					</div>
 					<div class="form-element">
 						<label for="u_media">* {L_U_MEDIA}</label>
-						<div class="form-field"><input type="text" maxlength="500" class="field-large" id="u_media" name="u_media" value="{U_MEDIA}" placeholder="http://"></div>
+						<div class="form-field"><input type="text" maxlength="500" class="field-large" id="u_media" name="u_media" value="{U_MEDIA}" placeholder="http://" /></div>
+					</div>
+					<div class="form-element">
+						<label for="poster">{L_POSTER}</label>
+						<div class="form-field# IF C_AUTH_UPLOAD # form-field-upload-file# ENDIF #">
+						<input type="text" maxlength="255" class="field-large" id="poster" name="poster" value="{POSTER}" />
+						# IF C_AUTH_UPLOAD #
+							<a title="${LangLoader::get_message('files_management', 'main')}" href="" class="fa fa-cloud-upload fa-2x" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=poster&amp;parse=true&amp;no_path=true', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"></a>
+						# ENDIF #
+						</div>
 					</div>
 					<div class="form-element-textarea">
 						<label for="contents" id="preview_content">{L_CONTENTS}</label>
@@ -100,7 +109,7 @@
 					<div class="form-element">
 						<label>{L_APPROVED}</label>
 						<div class="form-field">
-							<input type="checkbox" name="approved" id="approved"{APPROVED}>
+							<input type="checkbox" name="approved" id="approved"{APPROVED} />
 						</div>
 					</div>
 					# ENDIF #
@@ -121,9 +130,9 @@
 
 				<fieldset class="fieldset-submit">
 					<legend>{L_SUBMIT}</legend>
-					<input type="hidden" name="idedit" value="{IDEDIT}">
-					<input type="hidden" name="contrib" value="{C_CONTRIBUTION}">
-					<input type="hidden" name="token" value="{TOKEN}">
+					<input type="hidden" name="idedit" value="{IDEDIT}" />
+					<input type="hidden" name="contrib" value="{C_CONTRIBUTION}" />
+					<input type="hidden" name="token" value="{TOKEN}" />
 					<button type="submit" name="submit" value="true" class="submit">{L_SUBMIT}</button>
 					<button type="button" onclick="XMLHttpRequest_preview(); return false;">{L_PREVIEW}</button>
 					<button type="reset" value="true">{L_RESET}</button>

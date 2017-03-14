@@ -134,11 +134,13 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 	
 	$tpl->put_all(array(
 		'C_ADD_MEDIA' => true,
+		'C_AUTH_UPLOAD' => FileUploadConfig::load()->is_authorized_to_access_interface_files(),
 		'U_TARGET' => url('media_action.php'),
 		'L_TITLE' => $MEDIA_LANG['media_name'],
 		'L_WIDTH' => $MEDIA_LANG['media_width'],
 		'L_HEIGHT' => $MEDIA_LANG['media_height'],
 		'L_U_MEDIA' => $MEDIA_LANG['media_url'],
+		'L_POSTER' => $MEDIA_LANG['media_poster'],
 		'L_CONTENTS' => $MEDIA_LANG['media_description'],
 		'KERNEL_EDITOR' => $editor->display(),
 		'L_APPROVED' => $MEDIA_LANG['media_approved'],
@@ -209,6 +211,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 			'WIDTH' => $media['width'],
 			'HEIGHT' => $media['height'],
 			'U_MEDIA' => $media['url'],
+			'POSTER' => $media['poster'],
 			'DESCRIPTION' => FormatingHelper::unparse(stripslashes($media['contents'])),
 			'APPROVED' => ($media['infos'] & MEDIA_STATUS_APROBED) !== 0 ? ' checked="checked"' : '',
 			'C_APROB' => ($media['infos'] & MEDIA_STATUS_APROBED) === 0,
@@ -245,6 +248,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 			'WIDTH' => '425',
 			'HEIGHT' => '344',
 			'U_MEDIA' => '',
+			'POSTER' => '',
 			'DESCRIPTION' => '',
 			'APPROVED' => 'checked="checked"',
 			'C_APROB' => false,
@@ -284,6 +288,7 @@ elseif ($submit)
 		'width' => min(retrieve(POST, 'width', $config->get_max_video_width(), TINTEGER), $config->get_max_video_width()),
 		'height' => min(retrieve(POST, 'height', $config->get_max_video_height(), TINTEGER), $config->get_max_video_height()),
 		'url' => retrieve(POST, 'u_media', '', TSTRING),
+		'poster' => retrieve(POST, 'poster', '', TSTRING),
 		'contents' => retrieve(POST, 'contents', '', TSTRING_PARSE),
 		'approved' => (bool)retrieve(POST, 'approved', false, TBOOL),
 		'contrib' => (bool)retrieve(POST, 'contrib', false, TBOOL),
@@ -386,7 +391,7 @@ elseif ($submit)
 	// Édition
 	if ($media['idedit'] && MediaAuthorizationsService::check_authorizations($media['idcat'])->moderation())
 	{
-		PersistenceContext::get_querier()->update(PREFIX . "media", array('idcat' => $media['idcat'], 'name' => $media['name'], 'url' => $media['url'], 'contents' => $media['contents'], 'infos' => (MediaAuthorizationsService::check_authorizations($media['idcat'])->write() ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']), 'WHERE id = :id', array('id' => $media['idedit']));
+		PersistenceContext::get_querier()->update(PREFIX . "media", array('idcat' => $media['idcat'], 'name' => $media['name'], 'url' => $media['url'], 'poster' => $media['poster'], 'contents' => $media['contents'], 'infos' => (MediaAuthorizationsService::check_authorizations($media['idcat'])->write() ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']), 'WHERE id = :id', array('id' => $media['idedit']));
 
 		if ($media['approved'])
 		{
@@ -412,7 +417,7 @@ elseif ($submit)
 	// Ajout
 	elseif (!$media['idedit'] && (($auth_write = MediaAuthorizationsService::check_authorizations($media['idcat'])->write()) || MediaAuthorizationsService::check_authorizations($media['idcat'])->contribution()))
 	{
-		$result = PersistenceContext::get_querier()->insert(PREFIX . "media", array('idcat' => $media['idcat'], 'iduser' => AppContext::get_current_user()->get_id(), 'timestamp' => time(), 'name' => $media['name'], 'contents' => $media['contents'], 'url' => $media['url'], 'mime_type' => $media['mime_type'], 'infos' => (MediaAuthorizationsService::check_authorizations($media['idcat'])->write() ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']));
+		$result = PersistenceContext::get_querier()->insert(PREFIX . "media", array('idcat' => $media['idcat'], 'iduser' => AppContext::get_current_user()->get_id(), 'timestamp' => time(), 'name' => $media['name'], 'contents' => $media['contents'], 'url' => $media['url'], 'poster' => $media['poster'], 'mime_type' => $media['mime_type'], 'infos' => (MediaAuthorizationsService::check_authorizations($media['idcat'])->write() ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']));
 
 		$new_id_media = $result->get_last_inserted_id();
 		// Feeds Regeneration

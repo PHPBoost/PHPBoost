@@ -188,7 +188,7 @@ class MediaDisplayCategoryController extends ModuleController
 			DispatchManager::redirect($error_controller);
 		}
 		
-		$result = PersistenceContext::get_querier()->select("SELECT v.id, v.iduser, v.name, v.timestamp, v.counter, v.infos, v.contents, mb.display_name, mb.groups, mb.level, notes.average_notes, com.number_comments
+		$result = PersistenceContext::get_querier()->select("SELECT v.id, v.iduser, v.name, v.timestamp, v.counter, v.infos, v.poster, v.contents, mb.display_name, mb.groups, mb.level, notes.average_notes, com.number_comments
 			FROM " . PREFIX . "media AS v
 			LEFT JOIN " . DB_TABLE_MEMBER . " AS mb ON v.iduser = mb.user_id
 			LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON v.id = notes.id_in_module AND notes.module_name = 'media'
@@ -219,14 +219,25 @@ class MediaDisplayCategoryController extends ModuleController
 
 			$new_content = new MediaNewContent();
 			
-			$this->tpl->assign_block_vars('file', array(
+			$poster_infos = array();
+			if (!empty($row['poster']))
+			{
+				$poster_type = new FileType(new File($row['poster']));
+				
+				$poster_infos = array(
+					'C_HAS_PICTURE' => $poster_type->is_picture(),
+					'PICTURE' => $row['poster']
+				);
+			}
+			
+			$this->tpl->assign_block_vars('file', array_merge($poster_infos, array(
 				'ID' => $row['id'],
 				'NAME' => $row['name'],
 				'IMG_NAME' => str_replace('"', '\"', $row['name']),
 				'C_NEW_CONTENT' => $new_content->check_if_is_new_content($row['timestamp']),
 				'C_DESCRIPTION' => !empty($row['contents']),
 				'DESCRIPTION' => FormatingHelper::second_parse(stripslashes($row['contents'])),
-				'POSTER' => $MEDIA_LANG['media_added_by'] . ' : ' . !empty($row['display_name']) ? '<a href="' . UserUrlBuilder::profile($row['iduser'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : $LANG['guest'],
+				'AUTHOR' => $MEDIA_LANG['media_added_by'] . ' : ' . !empty($row['display_name']) ? '<a href="' . UserUrlBuilder::profile($row['iduser'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : $LANG['guest'],
 				'DATE' => sprintf($MEDIA_LANG['add_on_date'], Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR)),
 				'COUNT' => sprintf($MEDIA_LANG['view_n_times'], $row['counter']),
 				'NOTE' => NotationService::display_static_image($notation),
@@ -235,7 +246,7 @@ class MediaDisplayCategoryController extends ModuleController
 				'U_ADMIN_EDIT_MEDIA' => PATH_TO_ROOT . url('/media/media_action.php?edit=' . $row['id']),
 				'U_ADMIN_DELETE_MEDIA' => PATH_TO_ROOT . url('/media/media_action.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
 				'U_COM_LINK' => '<a href="'. PATH_TO_ROOT .'/media/media' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '-' . $this->get_category()->get_id() . '+' . Url::encode_rewrite($row['name']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('media', $row['id']) . '</a>'
-			));
+			)));
 		}
 		$result->dispose();
 	}

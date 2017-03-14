@@ -65,6 +65,7 @@ $MEDIA_LANG = array(
 'media_moderation' => 'Moderation',
 'media_name' => 'Title multimedia file',
 'media_url' => 'Link multimedia file',
+'media_poster' => 'Illustration picture',
 'media_width' => 'Width video',
 'notice_contribution' => 'You aren\'t authorized to create a file, however you can contribute by submitting a file. Your contribution will be processed by an validator. It will happen in the contribution panel.',
 'require_name' => 'Please enter a title for your multimedia file!',
