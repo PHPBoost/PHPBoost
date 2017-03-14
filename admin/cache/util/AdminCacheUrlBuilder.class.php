@@ -38,7 +38,7 @@ class AdminCacheUrlBuilder
 	 */
     public static function clear_cache()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/data');
+		return DispatchManager::get_url(self::$dispatcher, '/data', true);
 	}
 	
 	/**
@@ -46,7 +46,7 @@ class AdminCacheUrlBuilder
 	 */
     public static function configuration()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/config');
+		return DispatchManager::get_url(self::$dispatcher, '/config', true);
 	}
 	
 	/**
@@ -54,7 +54,7 @@ class AdminCacheUrlBuilder
 	 */
     public static function clear_css_cache()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/css');
+		return DispatchManager::get_url(self::$dispatcher, '/css', true);
 	}
 	
 	/**
@@ -62,7 +62,7 @@ class AdminCacheUrlBuilder
 	 */
     public static function clear_syndication_cache()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/syndication');
+		return DispatchManager::get_url(self::$dispatcher, '/syndication', true);
 	}
 }
 ?>
