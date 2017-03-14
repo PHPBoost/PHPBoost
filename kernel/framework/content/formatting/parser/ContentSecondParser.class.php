@@ -314,6 +314,8 @@ class ContentSecondParser extends AbstractParser
 		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSwfPlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_swf_tag'), $this->content);
 		//Movie
 		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_movie_tag'), $this->content);
+		//Movie with poster
+		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+), ([^\']+)\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_movie_tag'), $this->content);
 		//Sound
 		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSoundPlayer\(\'([^\']+)\'\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_sound_tag'), $this->content);
 		//Youtube
@@ -370,6 +372,13 @@ class ContentSecondParser extends AbstractParser
 		}
 		else
 		{
+			$poster = '';
+			if (!empty($matches[4]))
+			{
+				$poster_type = new FileType(new File($matches[4]));
+				$poster = $poster_type->is_picture() ? ' poster="' . $matches[4] . '"' : '';
+			}
+			
 			foreach ($video_files as $video)
 			{
 				$video_file = new File($video);
@@ -378,7 +387,7 @@ class ContentSecondParser extends AbstractParser
 					$sources .= '<source src="' . Url::to_rel($video) . '" type="video/' . pathinfo($video, PATHINFO_EXTENSION) . '" />';
 			}
 			
-			return '<video class="video-player" width="' . $matches[2] . '" height="' . $matches[3] . '" controls>' . $sources . '</video>';
+			return '<video class="video-player" width="' . $matches[2] . '" height="' . $matches[3] . '"' . $poster . ' controls>' . $sources . '</video>';
 		}
 	}
 
@@ -396,7 +405,7 @@ class ContentSecondParser extends AbstractParser
 	{
 		preg_match("#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#", $matches[1], $url_matches);
 		$video_id = $url_matches[0];
-		return '<iframe class="youtube-player" type="text/html" width="' . $matches[2] . '" height="' . $matches[3] . '" src="http://www.youtube.com/embed/' . $video_id . '" frameborder="0" allowfullscreen></iframe>';
+		return '<iframe class="youtube-player" type="text/html" width="' . $matches[2] . '" height="' . $matches[3] . '" src="https://www.youtube.com/embed/' . $video_id . '" frameborder="0" allowfullscreen></iframe>';
 	}
 	
 	private function parse_feed_tag()

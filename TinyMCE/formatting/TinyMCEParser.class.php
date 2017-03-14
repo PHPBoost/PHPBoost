@@ -427,8 +427,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//Youtube tag
 		if (!in_array('youtube', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`&lt;video class=\"youtube-player\" width="([^"]+)" height="([^"]+)" controls &gt;&lt;source src="([^"]+)"  type=\"video/mp4\" /&gt;&lt;/video&gt;`isu', array($this, 'parse_youtube_tag'), $this->content);
-			$this->content = preg_replace_callback('`&lt;iframe src="(?:https?:)?//www.youtube.com/(.*)" width="([^"]+)" height="([^"]+)"(?: frameborder="0")?(?: allowfullscreen="allowfullscreen")?&gt;(.+)?&lt;/iframe&gt;`isuU', array($this, 'parse_youtube_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="/www.youtube.com/embed/([^"]+)" width="([^"]+)" height="([^"]+)" frameborder="0" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_youtube_tag'), $this->content);
 		}
 		//Flash tag
 		if (!in_array('swf', $this->forbidden_tags))
@@ -632,6 +631,7 @@ class TinyMCEParser extends ContentFormattingParser
 			'style' => '`\[style=(success|question|notice|warning|error)\](.+)\[/style\]`isuU',
 			'swf' => '`\[swf=([0-9]{1,3}),([0-9]{1,3})\]([a-z0-9_+.:?/=#%@&;,-]*)\[/swf\]`iuU',
 			'movie' => '`\[movie=([0-9]{1,3}),([0-9]{1,3})\]([a-z0-9_+.:?/=#%@&;,-]*)\[/movie\]`iuU',
+			'movie2' => '`\[movie=([0-9]{1,3}),([0-9]{1,3}),([a-z0-9_+.:?/=#%@&;,-]*)\]([a-z0-9_+.:?/=#%@&;,-]*)\[/movie\]`iuU',
 			'sound' => '`\[sound\]([a-z0-9_+.:?/=#%@&;,-]*)\[/sound\]`iuU',
 			'math' => '`\[math\](.+)\[/math\]`iuU',
 			'url' => '`(\s+)(' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ')(\s|<+)`suU',
@@ -654,6 +654,7 @@ class TinyMCEParser extends ContentFormattingParser
 			'style' => "<span class=\"$1\">$2</span>",
 			'swf' => "[[MEDIA]]insertSwfPlayer('$3', $1, $2);[[/MEDIA]]",
 			'movie' => "[[MEDIA]]insertMoviePlayer('$3', $1, $2);[[/MEDIA]]",
+			'movie2' => '[[MEDIA]]insertMoviePlayer(\'$4\', $1, $2, $3);[[/MEDIA]]',
 			'sound' => "[[MEDIA]]insertSoundPlayer('$1');[[/MEDIA]]",
 			'math' => '[[MATH]]$1[[/MATH]]',
 			'url' => "$1<a href=\"$2\">$2</a>$3",
@@ -871,7 +872,7 @@ class TinyMCEParser extends ContentFormattingParser
 	
 	private function parse_youtube_tag($matches)
 	{
-		return '[[MEDIA]]insertYoutubePlayer(\'https://www.youtube.com/' . $matches[1] . '\', ' . $matches[2] . ', ' . $matches[3] . ');[[/MEDIA]]';
+		return '[[MEDIA]]insertYoutubePlayer(\'https://www.youtube.com/embed/' . $matches[1] . '\', ' . $matches[2] . ', ' . $matches[3] . ');[[/MEDIA]]';
 	}
 	
 	private function parse_swf_tag($matches)
