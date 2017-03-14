@@ -65,6 +65,9 @@ class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 		
 		foreach ($rows_change as $old_name => $new_name)
 		{
+			if (isset($columns[$old_name]) && isset($columns[$new_name]))
+				$this->db_utils->drop_column(PREFIX . 'download', $columns[$new_name]);
+			
 			if (isset($columns[$old_name]))
 				$this->querier->inject('ALTER TABLE ' . PREFIX . 'download CHANGE ' . $old_name . ' ' . $new_name);
 		}
