@@ -577,7 +577,7 @@ class BugtrackerFormController extends ModuleController
 		}
 		else
 		{
-			$body_view = BugtrackerViews::build_body_view($tpl, 'edit', $bug->get_id());
+			$body_view = BugtrackerViews::build_body_view($tpl, 'edit', $bug->get_id(), $this->bug->get_type());
 			
 			$response = new SiteDisplayResponse($body_view);
 			$graphical_environment = $response->get_graphical_environment();

@@ -30,10 +30,11 @@
  */
 class BugtrackerViews
 {
-	public static function build_body_view(View $view, $current_page, $bug_id = 0)
+	public static function build_body_view(View $view, $current_page, $bug_id = 0, $bug_type = "")
 	{
 		$lang = LangLoader::get('common', 'bugtracker');
 		$config = BugtrackerConfig::load();
+		$types = $config->get_types();
 		
 		$body_view = new FileTemplate('bugtracker/BugtrackerBody.tpl');
 		$body_view->add_lang($lang);
@@ -46,7 +47,7 @@ class BugtrackerViews
 			'C_SOLVED'					=> $current_page == 'solved',
 			'C_ROADMAP'					=> $current_page == 'roadmap',
 			'C_STATS'					=> $current_page == 'stats',
-			'TITLE'						=> $lang['titles.' . $current_page] . (in_array($current_page, array('change_status', 'history', 'detail', 'edit')) ? ' #' . $bug_id : ''),
+			'TITLE'						=> $lang['titles.' . $current_page] . (in_array($current_page, array('change_status', 'history', 'detail', 'edit')) ? " : " . $types[$bug_type] . ' #'  .$bug_id : ''),
 			'TEMPLATE'					=> $view,
 			'U_SYNDICATION_UNSOLVED'	=> SyndicationUrlBuilder::rss('bugtracker', 0)->rel(),
 			'U_SYNDICATION_SOLVED'		=> SyndicationUrlBuilder::rss('bugtracker', 1)->rel()

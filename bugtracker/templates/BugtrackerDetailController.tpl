@@ -21,7 +21,7 @@
 </script>
 <fieldset>
 	<legend>
-		{@titles.bugs_treatment_state}
+		{@titles.bugs_treatment_state} :
 	</legend>
 	# IF C_PROGRESS #
 	<div class="form-element">
@@ -51,12 +51,12 @@
 </fieldset>
 
 <fieldset>
-	<legend>{TITLE}</legend>
+	<legend>{@labels.fields.title} : {TITLE}</legend>
 	<div class="content">{CONTENTS}</div>
 </fieldset>
 
 <fieldset>
-	<legend>{@titles.bugs_infos}</legend>
+	<legend>{@titles.bugs_infos} :</legend>
 	# IF NOT C_EMPTY_TYPES #
 	<div class="form-element">
 		<label>{@labels.fields.type}</label>

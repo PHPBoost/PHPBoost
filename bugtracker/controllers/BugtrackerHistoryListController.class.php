@@ -196,7 +196,7 @@ class BugtrackerHistoryListController extends ModuleController
 		$request = AppContext::get_request();
 		$page = $request->get_int('page', 1);
 		
-		$body_view = BugtrackerViews::build_body_view($view, 'history', $this->bug->get_id());
+		$body_view = BugtrackerViews::build_body_view($view, 'history', $this->bug->get_id(), $this->bug->get_type());
 		
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();
