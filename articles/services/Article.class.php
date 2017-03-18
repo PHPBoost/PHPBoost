@@ -472,7 +472,7 @@ class Article
 			'C_READ_MORE'                     => !$this->get_description_enabled() || $description != @strip_tags($contents, '<br><br/>') || TextHelper::strlen($contents) > ArticlesConfig::load()->get_number_character_to_cut(),
 			'C_SOURCES'                       => $nbr_sources > 0,
 			'C_DIFFERED'                      => $this->published == self::PUBLISHED_DATE,
-			'C_NEW_CONTENT'                   => $new_content->check_if_is_new_content($this->date_updated != null ? $this->date_updated->get_timestamp() : $this->get_date_created()->get_timestamp()),
+			'C_NEW_CONTENT'                   => $new_content->check_if_is_new_content($this->publishing_start_date != null ? $this->publishing_start_date->get_timestamp() : $this->get_date_created()->get_timestamp()) && $this->is_published(),
 
 			//Articles
 			'ID'                            => $this->get_id(),

@@ -434,7 +434,7 @@ class WebLink
 			'C_HAS_PARTNER_PICTURE' => $this->has_partner_picture(),
 			'C_IS_PRIVILEGED_PARTNER' => $this->is_privileged_partner(),
 			'C_DIFFERED' => $this->approbation_type == self::APPROVAL_DATE,
-			'C_NEW_CONTENT' => $new_content->check_if_is_new_content($this->get_creation_date()->get_timestamp()),
+			'C_NEW_CONTENT' => $new_content->check_if_is_new_content($this->get_start_date() != null ? $this->get_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_visible(),
 			
 			//Weblink
 			'ID' => $this->id,
