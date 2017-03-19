@@ -46,7 +46,7 @@ class FormButtonReset implements FormButton
 	 */
 	public function display()
 	{
-		$template = new StringTemplate('<button type="reset" value="true">{L_RESET}</button>');
+		$template = new FileTemplate('framework/builder/form/button/FormButtonReset.tpl');
 		
 		$template->put_all(array(
 			'L_RESET' => $this->value

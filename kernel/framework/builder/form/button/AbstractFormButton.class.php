@@ -94,7 +94,7 @@ abstract class AbstractFormButton implements FormButton
 
 	protected function get_template()
 	{
-		return new StringTemplate('<button type="${TYPE}" name="${HTML_NAME}" class="${CSS_CLASS}" onclick="${escape(ONCLICK_ACTION)}"# IF C_DATA_CONFIRMATION # data-confirmation="${escape(DATA_CONFIRMATION)}"# ENDIF # value="true">{LABEL}</button>');
+		return new FileTemplate('framework/builder/form/button/DefaultFormButton.tpl');
 	}
 	
 	public function set_css_class($css_class)
