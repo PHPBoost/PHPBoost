@@ -43,7 +43,7 @@ class SpanHTMLElement extends AbstractHTMLElement
 
 	public function display()
 	{
-		$tpl = new StringTemplate('<span # IF C_HAS_CSS_CLASSES #class="{CSS_CLASSES}"# ENDIF ## START attributs # {attributs.TYPE}="{attributs.VALUE}"# END attributs #>{CONTENT}</span>');
+		$tpl = new FileTemplate('framework/builder/element/SpanHTMLElement.tpl');
 
 		$tpl->put_all(array(
 			'C_HAS_CSS_CLASSES' => $this->has_css_class(),

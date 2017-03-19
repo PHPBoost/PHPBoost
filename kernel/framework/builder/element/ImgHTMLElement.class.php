@@ -48,7 +48,7 @@ class ImgHTMLElement extends AbstractHTMLElement
 
 	public function display()
 	{
-		$tpl = new StringTemplate('<img src="{URL}" # START attributs # {attributs.TYPE}="{attributs.VALUE}"# END attributs ## IF C_HAS_CSS_CLASSES #class="{CSS_CLASSES}"# ENDIF #>');
+		$tpl = new FileTemplate('framework/builder/element/ImgHTMLElement.tpl');
 
 		$tpl->put_all(array(
 			'C_HAS_CSS_CLASSES' => $this->has_css_class(),

@@ -50,7 +50,7 @@ class LinkHTMLElement extends AbstractHTMLElement
 
 	public function display()
 	{
-		$tpl = new StringTemplate('<a href="{URL}" # IF C_HAS_CSS_CLASSES #class="{CSS_CLASSES}"# ENDIF ## START attributs # {attributs.TYPE}="{attributs.VALUE}"# END attributs #>{CONTENT}</a>');
+		$tpl = new FileTemplate('framework/builder/element/LinkHTMLElement.tpl');
 
 		$tpl->put_all(array(
 			'C_HAS_CSS_CLASSES' => $this->has_css_class(),
