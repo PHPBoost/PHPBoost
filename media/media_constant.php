@@ -31,7 +31,7 @@ define('MEDIA_STATUS_UNAPROBED', 0);
 define('MEDIA_STATUS_UNVISIBLE', 1);
 define('MEDIA_STATUS_APROBED', 2);
 
-// Type de fichier autorisés.
+// Type de fichier autorisÃ©s.
 $mime_type = array(
 	'audio' => array(
 		'mp3' => 'audio/mpeg',

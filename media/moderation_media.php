@@ -126,7 +126,7 @@ if ($submit)
 }
 else
 {
-	// Filtre pour le panneau de modération.
+	// Filtre pour le panneau de modÃ©ration.
 	$js_array = array();
 	$authorized_categories = MediaService::get_authorized_categories(!empty($cat) ? $cat : Category::ROOT_CATEGORY);
 	
@@ -164,7 +164,7 @@ else
 	
 	$categories_cache = MediaService::get_categories_manager()->get_categories_cache();
 	
-	//On crée une pagination si le nombre de fichier est trop important.
+	//On crÃ©e une pagination si le nombre de fichier est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbr_media, $NUMBER_ELEMENTS_PER_PAGE);
 	$pagination->set_url(new Url('/media/moderation_media.php?p=%d'));
