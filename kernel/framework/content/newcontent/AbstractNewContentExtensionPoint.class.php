@@ -48,7 +48,7 @@ abstract class AbstractNewContentExtensionPoint implements NewContentExtensionPo
 
 	public function check_date($date)
 	{
-		return date('j', time() - $date) <= $this->content_management_config->get_new_content_duration();
+		return (time() - $date) <= $this->content_management_config->get_new_content_duration()*86400;
 	}
 }
 ?>
