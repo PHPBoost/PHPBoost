@@ -26,7 +26,7 @@
  ###################################################*/
 
 class ConnectModuleMiniMenu extends ModuleMiniMenu
-{    
+{
 	public function get_default_block()
 	{
 		return self::BLOCK_POSITION__SUB_HEADER;
@@ -111,8 +111,10 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 					'U_USER_PROFILE' => UserUrlBuilder::profile($user->get_id())->rel(),
 					'U_USER_PM' => UserUrlBuilder::personnal_message($user->get_id())->rel(),
 					'U_AVATAR_IMG' => Url::to_rel($user_avatar),
-					'L_NBR_PM' => ($user->get_unread_pm() > 0 ? ($user->get_unread_pm() . ' ' . (($user->get_unread_pm() > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['private_messaging']),
+					'L_NBR_PM'  => $user->get_unread_pm() > 0 ? ($user->get_unread_pm() . ' ' . ($user->get_unread_pm() > 1 ? $LANG['message_s'] : $LANG['message'])) : $LANG['private_messaging'],
+					'L_MESSAGE' => $user->get_unread_pm() > 1 ? $LANG['message_s'] : $LANG['message'],
 					'L_PROFIL' => LangLoader::get_message('dashboard', 'user-common'),
+					'L_PM_PANEL' => $LANG['private_messaging'],
 					'L_ADMIN_PANEL' => $LANG['admin_panel'],
 					'L_MODO_PANEL' => $LANG['modo_panel'],
 					'L_PRIVATE_PROFIL' => $LANG['my_private_profile'],
