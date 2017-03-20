@@ -61,7 +61,7 @@ class UpdateVersionExecuteController extends UpdateController
 
 	private function add_navigation(Template $view)
 	{
-		$form = new HTMLForm('continueForm', '#error', false);
+		$form = new HTMLForm('continueForm', '', false);
 		
 		$action_fieldset = new FormFieldsetSubmit('actions');
 		$back = new FormButtonLinkCssImg($this->lang['step.previous'], UpdateServices::database_config_file_checked() ? UpdateUrlBuilder::server_configuration() : UpdateUrlBuilder::database(), 'fa fa-arrow-left');
