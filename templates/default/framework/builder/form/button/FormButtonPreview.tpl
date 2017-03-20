@@ -1,0 +1,1 @@
+<button type="button" class="small" onclick="XMLHttpRequest_preview('{HTML_ID}');">${LangLoader::get_message('preview', 'main')}</button>

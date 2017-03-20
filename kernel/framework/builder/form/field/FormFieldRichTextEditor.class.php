@@ -87,7 +87,11 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 
 	private function get_preview_button_code()
 	{
-		return '<button type="button" class="small" onclick="XMLHttpRequest_preview(\'' . $this->get_html_id() . '\');">' . LangLoader::get_message('preview', 'main') . '</button>';
+		$template = new FileTemplate('framework/builder/form/button/FormButtonPreview.tpl');
+		
+		$template->put('HTML_ID', $this->get_html_id());
+		
+		return $template->render();
 	}
 
 	private function get_reset_button_code()
