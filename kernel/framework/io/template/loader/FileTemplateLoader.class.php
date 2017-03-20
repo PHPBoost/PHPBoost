@@ -193,6 +193,7 @@ class FileTemplateLoader implements TemplateLoader
 	{
 		$this->get_template_real_filepaths_and_data_path(array(
 			$this->theme_templates_folder . $this->filepath,
+			$this->theme_templates_folder . 'default/' . $this->filepath,
 			$this->default_templates_folder . $this->filepath
 		));
 	}
