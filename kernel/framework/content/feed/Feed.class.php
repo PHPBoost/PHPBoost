@@ -264,7 +264,7 @@ class Feed
 	{
 		if (!($template instanceof Template))
 		{
-			$template = new FileTemplate($module_id . '/framework/content/syndication/feed.tpl');
+			$template = new FileTemplate('framework/content/syndication/feed.tpl');
 			if (gettype($template) == 'array')
 			{
 				$template->put_all($template);
