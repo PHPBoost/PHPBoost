@@ -850,6 +850,10 @@ div.container-block-absolute > div {
 	display: block;
 }
 
+#container-central .menus-block-container:hover .module-mini-container {
+	display: none;
+}
+
 .menus-block-top {
 	margin-bottom: 5px;
 }
@@ -938,7 +942,8 @@ div.container-block-absolute > div {
 }
 
 #container-central .menus-block-container {
-	float: left;
+	display: inline-block;
+    vertical-align: top;
 	margin: 0 5px 5px 5px;
 }
 

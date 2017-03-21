@@ -90,10 +90,6 @@ header span.actions a {
 	font-size: 1.2em;
 }
 
-header span.actions a {
-	font-size: 1.2rem;
-}
-
 .more {
 	padding: 10px 5px 0;
 	font-size: 11px;
@@ -799,7 +795,7 @@ article .message-user-infos .message-user-group {
 	}
 
 	.message-message {
-		background-color: none;
+		background-color: transparent;
 		border: none;
 	}
 
@@ -832,8 +828,8 @@ article .message-user-infos .message-user-group {
 
 	.message-user-infos img {
 		padding: 3px;
-		background-color: #fff;
-		box-shadow: 0 1px 9px #e0e0e0,inset 0 0 2px rgba(215,215,215,0.75);
+		background-color: #FFFFFF;
+		box-shadow: 0 1px 9px #e0e0e0,inset 0 0 2px rgba(215, 215, 215, 0.75);
 	}
 
 	.message-date {
