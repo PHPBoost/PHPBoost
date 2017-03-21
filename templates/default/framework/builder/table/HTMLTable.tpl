@@ -1,5 +1,5 @@
 # IF C_FILTERS #
-<div id="filters_{TABLE_ID}" style="border:1px #aaa solid;">
+<div id="filters-{TABLE_ID}" class="html-table-filters">
    <script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/UrlSerializedParameterEncoder.js"></script>
 	# INCLUDE filters #
 </div>
@@ -36,7 +36,7 @@
 	<tfoot>
 		<tr>
 			<th colspan="{NUMBER_OF_COLUMNS}">
-				<div style="float:left;">
+				<div class="html-table-nbr-elements">
 					<span>
 						{NUMBER_OF_ELEMENTS}
 					</span>

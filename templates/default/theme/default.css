@@ -86,7 +86,7 @@ ul, ol {
 	margin-bottom: 10px;
 }
 
-ul.no-list {
+.no-list {
 	list-style: none;
 }
 
@@ -174,27 +174,27 @@ img.left, img.right {
 }
 
 /* Fieldsets */
-div.vertical-fieldset,
-div.horizontal-fieldset {
+.vertical-fieldset,
+.horizontal-fieldset {
 	margin: 20px 0;
 }
 
-div.vertical-fieldset .form-element,
-div.horizontal-fieldset .form-element {
+.vertical-fieldset .form-element,
+.horizontal-fieldset .form-element {
 	margin: 0 5px 0 5px;
 }
 
-div.horizontal-fieldset .form-element label {
+.horizontal-fieldset .form-element label {
 	display: inline;
 }
 
-div.horizontal-fieldset .form-field {
+.horizontal-fieldset .form-field {
 	display: block;
 	width: 100%;
 }
 
-div.vertical-fieldset .form-element label,
-div.horizontal-fieldset .form-element label {
+.vertical-fieldset .form-element label,
+.horizontal-fieldset .form-element label {
 	width: auto;
 	vertical-align: middle;
 	font-weight: bold;
@@ -279,6 +279,14 @@ ul.pagination .current-page {
 table.table-fixed {
 	table-layout: fixed;
 	width: 100%;
+}
+
+.html-table-filters {
+	border: 1px #AAAAAA solid;
+}
+
+.html-table-nbr-elements {
+	float: left;
 }
 
 /* Effet Blink
