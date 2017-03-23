@@ -114,7 +114,7 @@ class HTTPResponseCustom
 		{
 			$url = new Url($url);
 		}
-		$url = $url->rel();
+		$url = $url->absolute();
 		
 		if (!empty($message))
 		{
