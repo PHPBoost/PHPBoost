@@ -74,7 +74,7 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 		$result = $this->querier->select('SELECT id, sources FROM ' . PREFIX . 'news');
 		while($row = $result->fetch())
 		{
-			$this->querier->update(PREFIX . 'news', array('sources' => self::recount_serialized_bytes($row['sources'])), 'WHERE id=:id', array('id' => $row['id']));
+			$this->querier->update(PREFIX . 'news', array('sources' => UpdateServices::recount_serialized_bytes($row['sources'])), 'WHERE id=:id', array('id' => $row['id']));
 		}
 		$result->dispose();
 	}
