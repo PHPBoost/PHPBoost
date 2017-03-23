@@ -47,6 +47,8 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 				$this->update_articles_table();
 			
 			$this->update_content();
+			
+			$this->update_serialized_data();
 		}
 		
 		$this->delete_old_files();
@@ -66,6 +68,16 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 	public function update_content()
 	{
 		UpdateServices::update_table_content(PREFIX . 'articles');
+	}
+	
+	public function update_serialized_data()
+	{
+		$result = $this->querier->select('SELECT id, sources FROM ' . PREFIX . 'articles');
+		while($row = $result->fetch())
+		{
+			$this->querier->update(PREFIX . 'articles', array('sources' => self::recount_serialized_bytes($row['sources'])), 'WHERE id=:id', array('id' => $row['id']));
+		}
+		$result->dispose();
 	}
 	
 	private function delete_old_files()
