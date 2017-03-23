@@ -59,19 +59,19 @@ class UpdateServices
 	/**
 	 * @var File
 	 */
-	private $update_followed_file;
+	private $update_log_file;
 	
 	/**
 	 * @var string[string]
 	 */
 	private $messages;
 	
-	public function __construct($locale = '', $delete_update_followed_file = true)
+	public function __construct($locale = '', $delete_update_log_file = true)
 	{
 		$this->token = new File(PATH_TO_ROOT . '/cache/.update_token');
-		$this->update_followed_file = new File(PATH_TO_ROOT . '/update/update_followed.txt');
-		if ($delete_update_followed_file)
-			$this->update_followed_file->delete();
+		$this->update_log_file = new File(PATH_TO_ROOT . '/update/update_log.txt');
+		if ($delete_update_log_file)
+			$this->update_log_file->delete();
 		
 		self::$db_utils = PersistenceContext::get_dbms_utils();
 		self::$db_querier = PersistenceContext::get_querier();
@@ -219,11 +219,14 @@ class UpdateServices
 		// Mise à jour des thèmes
 		$this->update_themes();
 		
-		// Mise à jour des langues
-		$this->update_langs();
-		
 		// Mise à jour du contenu
 		$this->update_content();
+		
+		// Mise à jour du contenu serialisé pour le passage en UTF-8
+		$this->update_serialized_data();
+		
+		// Mise à jour des langues
+		$this->update_langs();
 		
 		// Installation du module UrlUpdater pour la réécriture des Url des modules mis à jour
 		ModulesManager::install_module('UrlUpdater');
@@ -397,7 +400,68 @@ class UpdateServices
 		$result->dispose();
 		
 		$object = new self('', false);
-		$object->add_information_to_file('table ' . $table, ': ' . $selected_rows . ' selected contents for update, ' . $updated_content . ' updated');
+		$object->add_information_to_file('table ' . $table, ': ' . $updated_content . ' contents updated');
+	}
+	
+	public function update_serialized_data()
+	{
+		// Update configs table
+		$result = self::$db_querier->select('SELECT id, value FROM ' . PREFIX . 'configs');
+		while($row = $result->fetch())
+		{
+			self::$db_querier->update(PREFIX . 'configs', array('value' => self::recount_serialized_bytes($row['value'])), 'WHERE id=:id', array('id' => $row['id']));
+		}
+		$result->dispose();
+		
+		// Update member_extended_fields_list table
+		$result = self::$db_querier->select('SELECT id, possible_values FROM ' . PREFIX . 'member_extended_fields_list');
+		while($row = $result->fetch())
+		{
+			self::$db_querier->update(PREFIX . 'member_extended_fields_list', array('possible_values' => self::recount_serialized_bytes($row['possible_values'])), 'WHERE id=:id', array('id' => $row['id']));
+		}
+		$result->dispose();
+		
+		// Update menus table
+		$result = self::$db_querier->select('SELECT id, object FROM ' . PREFIX . 'menus');
+		while($row = $result->fetch())
+		{
+			self::$db_querier->update(PREFIX . 'menus', array('object' => self::recount_serialized_bytes($row['object'])), 'WHERE id=:id', array('id' => $row['id']));
+		}
+		$result->dispose();
+	}
+	
+	public static function recount_serialized_bytes($text)
+	{
+		mb_internal_encoding("UTF-8");
+		mb_regex_encoding("UTF-8");
+
+		mb_ereg_search_init($text, 's:[0-9]+:"');
+
+		$offset = 0;
+
+		while(preg_match('/s:([0-9]+):"/u', $text, $matches, PREG_OFFSET_CAPTURE, $offset) ||
+			  preg_match('/s:([0-9]+):"/u', $text, $matches, PREG_OFFSET_CAPTURE, ++$offset)) {
+			$number = $matches[1][0];
+			$pos = $matches[1][1];
+
+			$digits = strlen("$number");
+			$pos_chars = mb_strlen(substr($text, 0, $pos)) + 2 + $digits;
+
+			$str = mb_substr($text, $pos_chars, $number);
+
+			$new_number = strlen($str);
+			$new_digits = strlen($new_number);
+
+			if($number != $new_number) {
+				// Change stored number
+				$text = substr_replace($text, $new_number, $pos, $digits);
+				$pos += $new_digits - $digits;
+			}
+
+			$offset = $pos + 2 + $new_number;
+		}
+
+		return $text;
 	}
 	
 	private function get_class($directory, $pattern, $type)
@@ -428,12 +492,12 @@ class UpdateServices
 	private function add_error_to_file($step_name, $success, $message)
 	{
 		$success_message = $success ? 'Ok !' : 'Error :';
-		$this->update_followed_file->append($step_name . ' ' . $success_message . ' ' . $message. "\r\n");
+		$this->update_log_file->append($step_name . ' ' . $success_message . ' ' . $message. "\r\n");
 	}
 	
-	private function add_information_to_file($step_name, $message)
+	public function add_information_to_file($step_name, $message)
 	{
-		$this->update_followed_file->append($step_name . ' ' . $message . "\r\n");
+		$this->update_log_file->append($step_name . ' ' . $message . "\r\n");
 	}
 	
 	public function generate_update_token()
