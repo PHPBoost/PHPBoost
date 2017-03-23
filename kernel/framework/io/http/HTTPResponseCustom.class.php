@@ -3,7 +3,7 @@
  *                             HTTPResponseCustom.class.php
  *                            -------------------
  *   begin                : Januar 23, 2010
- *   copyright            : (C) 2010 Régis Viarre
+ *   copyright            : (C) 2010 RÃ©gis Viarre
  *   email                : crowkait@phpboost.com
  *
  *
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
+ * @author RÃ©gis Viarre <crowkait@phpboost.com>
  * @desc Manages response via the HTTP protocol
  * @package {@package}
  */
@@ -115,7 +115,7 @@ class HTTPResponseCustom
 		{
 			$url = new Url($url);
 		}
-		$url = $url->rel();
+		$url = $url->absolute();
 		
 		if (!empty($message))
 		{
