@@ -52,6 +52,9 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 		
 		$result = $this->querier->select('SELECT id_contents, content FROM ' . PREFIX . 'wiki_contents');
 		
+		$selected_rows = $result->get_rows_count();
+		$updated_content = 0;
+		
 		while($row = $result->fetch())
 		{
 			$unparser->set_content($row['content']);
@@ -60,9 +63,15 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 			$parser->parse();
 			
 			if ($parser->get_content() != $row['content'])
+			{
 				$this->querier->update(PREFIX . 'wiki_contents', array('content' => $parser->get_content()), 'WHERE id_contents=:id', array('id' => $row['id']));
+				$updated_content++;
+			}
 		}
 		$result->dispose();
+		
+		$object = new UpdateServices('', false);
+		$object->add_information_to_file('table ' . PREFIX . 'wiki_contents', ': ' . $updated_content . ' contents updated');
 	}
 	
 	private function delete_old_files()
