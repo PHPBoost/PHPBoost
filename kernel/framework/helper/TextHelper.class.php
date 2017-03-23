@@ -195,18 +195,26 @@ class TextHelper
 	
 	public static function strpos($string, $substring, $offset ='')
 	{
-		if (is_int($offset))
-			return mb_strpos($string, $substring, $offset);
-		else
-			return mb_strpos($string, $substring);
+		if (!empty($substring))
+		{
+			if (is_int($offset))
+				return mb_strpos($string, $substring, $offset);
+			else
+				return mb_strpos($string, $substring);
+		}
+		return false;
 	}
 	
 	public static function stripos($string, $substring, $offset ='')
 	{
-		if (is_int($offset))
-			return mb_stripos($string, $substring, $offset);
-		else
-			return mb_stripos($string, $substring);
+		if (!empty($substring))
+		{
+			if (is_int($offset))
+				return mb_stripos($string, $substring, $offset);
+			else
+				return mb_stripos($string, $substring);
+		}
+		return false;
 	}
 	
 	public static function substr($string, $start, $length = '')
