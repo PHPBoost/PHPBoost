@@ -65,22 +65,7 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 	
 	public function update_content()
 	{
-		$unparser = new OldBBCodeUnparser();
-		$parser = new BBCodeParser();
-		
-		$result = $this->querier->select('SELECT id, contents FROM ' . PREFIX . 'articles');
-		
-		while($row = $result->fetch())
-		{
-			$unparser->set_content($row['contents']);
-			$unparser->parse();
-			$parser->set_content($unparser->get_content());
-			$parser->parse();
-			
-			if ($parser->get_content() != $row['contents'])
-				$this->querier->update(PREFIX . 'articles', array('contents' => $parser->get_content()), 'WHERE id=:id', array('id' => $row['id']));
-		}
-		$result->dispose();
+		UpdateServices::update_table_content(PREFIX . 'articles');
 	}
 	
 	private function delete_old_files()

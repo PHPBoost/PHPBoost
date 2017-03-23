@@ -66,11 +66,12 @@ class UpdateServices
 	 */
 	private $messages;
 	
-	public function __construct($locale = '')
+	public function __construct($locale = '', $delete_update_followed_file = true)
 	{
 		$this->token = new File(PATH_TO_ROOT . '/cache/.update_token');
 		$this->update_followed_file = new File(PATH_TO_ROOT . '/update/update_followed.txt');
-		$this->update_followed_file->delete();
+		if ($delete_update_followed_file)
+			$this->update_followed_file->delete();
 		
 		self::$db_utils = PersistenceContext::get_dbms_utils();
 		self::$db_querier = PersistenceContext::get_querier();
@@ -249,7 +250,7 @@ class UpdateServices
 		// Mise à jour des tables du noyau - conversion en utf8
 		foreach (self::$db_utils->list_tables(true) as $table_name)
 		{
-			if (!in_array($table_name, array(PREFIX . 'configs', PREFIX . 'errors_404', PREFIX . 'stats_referer')))
+			if (!in_array($table_name, array(PREFIX . 'errors_404', PREFIX . 'stats_referer')))
 			{
 				self::$db_querier->inject('ALTER TABLE `' . $table_name . '` CONVERT TO CHARACTER SET utf8');
 				self::$db_querier->inject('ALTER TABLE `' . $table_name . '` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci');
@@ -360,36 +361,43 @@ class UpdateServices
 	
 	public function update_content()
 	{
+		// Update comments messages if needed
+		self::update_table_content(PREFIX . 'comments', 'message');
+		
+		// Update pm contents if needed
+		self::update_table_content(PREFIX . 'pm_msg');
+	}
+	
+	public static function update_table_content($table, $contents = 'contents', $id = 'id')
+	{
 		$unparser = new OldBBCodeUnparser();
 		$parser = new BBCodeParser();
 		
-		// Update comments messages if needed
-		$result = self::$db_querier->select('SELECT id, message FROM ' . PREFIX . 'comments');
+		$result = self::$db_querier->select('SELECT ' . $id . ', ' . $contents . '
+			FROM ' . $table . '
+			WHERE (' . $contents . ' LIKE "%formatter-blockquote%" OR ' . $contents . ' LIKE "%formatter-hide%" OR ' . $contents . ' LIKE "%formatter-code%" OR ' . $contents . ' LIKE "%formatter-block%" OR ' . $contents . ' LIKE "%formatter-fieldset%")'
+		);
+		
+		$selected_rows = $result->get_rows_count();
+		$updated_content = 0;
 		
 		while($row = $result->fetch())
 		{
-			$unparser->set_content($row['message']);
+			$unparser->set_content($row[$contents]);
 			$unparser->parse();
-			$parser->parse($unparser->get_content());
+			$parser->set_content($unparser->get_content());
+			$parser->parse();
 			
-			if ($parser->get_content() != $row['message'])
-				self::$db_querier->update(PREFIX . 'comments', array('message' => $parser->get_content()), 'WHERE id=:id', array('id' => $row['id']));
+			if ($parser->get_content() != $row[$contents])
+			{
+				self::$db_querier->update($table, array($contents => $parser->get_content()), 'WHERE ' . $id . '=:id', array('id' => $row[$id]));
+				$updated_content++;
+			}
 		}
 		$result->dispose();
 		
-		// Update pm contents if needed
-		$result = self::$db_querier->select('SELECT id, contents FROM ' . PREFIX . 'pm_msg');
-		
-		while($row = $result->fetch())
-		{
-			$unparser->set_content($row['contents']);
-			$unparser->parse();
-			$parser->parse($unparser->get_content());
-			
-			if ($parser->get_content() != $row['contents'])
-				self::$db_querier->update(PREFIX . 'pm_msg', array('contents' => $parser->get_content()), 'WHERE id=:id', array('id' => $row['id']));
-		}
-		$result->dispose();
+		$object = new self('', false);
+		$object->add_information_to_file('table ' . $table, ': ' . $selected_rows . ' selected contents for update, ' . $updated_content . ' updated');
 	}
 	
 	private function get_class($directory, $pattern, $type)
@@ -420,12 +428,12 @@ class UpdateServices
 	private function add_error_to_file($step_name, $success, $message)
 	{
 		$success_message = $success ? 'Ok !' : 'Error :';
-		$this->update_followed_file->append($step_name.' '.$success_message.' '. $message. "\r\n");
+		$this->update_followed_file->append($step_name . ' ' . $success_message . ' ' . $message. "\r\n");
 	}
 	
 	private function add_information_to_file($step_name, $message)
 	{
-		$this->update_followed_file->append($step_name.' '. $message. "\r\n");
+		$this->update_followed_file->append($step_name . ' ' . $message . "\r\n");
 	}
 	
 	public function generate_update_token()

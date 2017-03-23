@@ -47,22 +47,7 @@ class FaqModuleUpdateVersion extends ModuleUpdateVersion
 	
 	public function update_content()
 	{
-		$unparser = new OldBBCodeUnparser();
-		$parser = new BBCodeParser();
-		
-		$result = $this->querier->select('SELECT id, answer FROM ' . PREFIX . 'faq');
-		
-		while($row = $result->fetch())
-		{
-			$unparser->set_content($row['answer']);
-			$unparser->parse();
-			$parser->set_content($unparser->get_content());
-			$parser->parse();
-			
-			if ($parser->get_content() != $row['answer'])
-				$this->querier->update(PREFIX . 'faq', array('answer' => $parser->get_content()), 'WHERE id=:id', array('id' => $row['id']));
-		}
-		$result->dispose();
+		UpdateServices::update_table_content(PREFIX . 'faq', 'answer');
 	}
 	
 	private function delete_old_files()
