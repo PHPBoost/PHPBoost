@@ -136,7 +136,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 			'`<span style="background-color:([^;]+);">(.*)</span>`isU',
 			'`<span style="font-size: ([0-9]+)px;">(.*)</span>`isU',
 			'`<span style="font-family: ([ a-z0-9,_-]+);">(.*)</span>`isU',
-			'`<p style="text-align:(left|center|right|justify)">(.*)</p>`isU',
+			'`<p style="text-align:(left|center|right|justify);?">(.*)</p>`isU',
 			'`<p class="float-(left|right)">(.*)</p>`isU',
 			'`<span id="([a-z0-9_-]+)" class="anchor"></span>`isU',
 			'`<span id="([a-z0-9_-]+)">(.*)</span>`isU',

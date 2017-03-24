@@ -127,7 +127,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			'`<span style="background-color:([^;]+);">(.*)</span>`isuU',
 			'`<span style="font-size: ([0-9]+)px;">(.*)</span>`isuU',
 			'`<span style="font-family: ([ a-z0-9,_-]+);">(.*)</span>`isuU',
-			'`<p style="text-align:(left|center|right|justify)">(.*)</p>`isuU',
+			'`<p style="text-align:(left|center|right|justify);?">(.*)</p>`isuU',
 			'`<p class="float-(left|right)">(.*)</p>`isuU',
 			'`<span id="([a-z0-9_-]+)" class="anchor"></span>`isuU',
 			'`<span id="([a-z0-9_-]+)">(.*)</span>`isuU',
