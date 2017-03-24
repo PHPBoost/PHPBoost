@@ -28,6 +28,7 @@
 class NewsletterHomeController extends ModuleController
 {
 	private $lang;
+	private $full_view;
 	private $view;
 	private $nbr_streams_per_page = 25;
 
@@ -39,7 +40,7 @@ class NewsletterHomeController extends ModuleController
 		
 		$this->build_form($request);
 
-		return $this->build_response($this->view);
+		return $this->build_response($this->full_view);
 	}
 
 	private function build_form($request)
@@ -85,6 +86,8 @@ class NewsletterHomeController extends ModuleController
 		));
 		
 		$result->dispose();
+		
+		$this->full_view->put('TEMPLATE', $this->view);
 	}
 	
 	private function check_authorizations()
@@ -98,6 +101,8 @@ class NewsletterHomeController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'newsletter');
+		$this->full_view = new FileTemplate('newsletter/NewsletterBody.tpl');
+		$this->full_view->add_lang($this->lang);
 		$this->view = new FileTemplate('newsletter/NewsletterHomeController.tpl');
 		$this->view->add_lang($this->lang);
 	}
@@ -121,10 +126,7 @@ class NewsletterHomeController extends ModuleController
 
 	private function build_response(View $view)
 	{
-		$body_view = new FileTemplate('newsletter/NewsletterBody.tpl');
-		$body_view->add_lang($this->lang);
-		$body_view->put('TEMPLATE', $view);
-		$response = new SiteDisplayResponse($body_view);
+		$response = new SiteDisplayResponse($view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
 		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->absolute());
 		$breadcrumb->add($this->lang['newsletter.list_newsletters'], NewsletterUrlBuilder::home()->absolute());
@@ -142,7 +144,7 @@ class NewsletterHomeController extends ModuleController
 		$object->check_authorizations();
 		$object->init();
 		$object->build_form(AppContext::get_request());
-		return $object->view;
+		return $object->full_view;
 	}
 }
 ?>
