@@ -25,10 +25,10 @@ function CheckForm() {
 				<div class="form-field"><input type="text" name="name" id="name" value="{NAME}"></div>
 			</div>
 			<div class="form-element">
-				<label for="name">{L_DISPLAY_TITLE}</label>
+				<label for="display_title">{L_DISPLAY_TITLE}</label>
 				<div class="form-field">
 					<div class="form-field-checkbox">
-						<input type="checkbox" id="display_title" name="display_title[]" value="display_title" {DISPLAY_TITLE_CHECKED} />
+						<input type="checkbox" id="display_title" name="display_title" value="display_title" {DISPLAY_TITLE_CHECKED} />
 						<label for="display_title"></label>
 					</div>
 				</div>
