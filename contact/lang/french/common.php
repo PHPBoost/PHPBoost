@@ -6,14 +6,14 @@
  *   copyright            : (C) 2013 Julien BRISWALTER
  *   email                : j1.seth@phpboost.com
  *
- *  
+ *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -67,11 +67,18 @@ $lang['admin.config.map.position_top'] = 'Au-dessus du formulaire';
 $lang['admin.config.map.position_bottom'] = 'En dessous du formulaire';
 $lang['admin.config.map.condition'] = '<span class="error">Vous devez renseigner la clé pour configurer les pointeurs</span>';
 $lang['admin.config.map.marker'] = 'Ajouter un pointeur';
-$lang['form.gps.add.desc'] = 'Cliquez sur la map pour ajouter les coordonnées automatiquement';
+$lang['form.gps.add.desc'] = 'Entrez une adresse complète et sélectionnez la dans la liste de prpositions';
+$lang['form.enter.address'] = 'Entrez une adresse complète et sélectionnez-la dans la liste de propositions qui apparaissent';
 $lang['form.gps.center.map'] = '{lat: 46.52863469527167, lng: 2.43896484375}'; // France
+$lang['form.gps.data'] = 'Coordonnées GPS';
 $lang['form.latitude'] = 'Latitude';
 $lang['form.longitude'] = 'Longitude';
-$lang['form.marker_text'] = 'Texte du pointeur';
+$lang['form.street.address'] = 'Adresse';
+$lang['form.street.number'] = 'N°';
+$lang['form.street.name'] = 'rue';
+$lang['form.postal.code'] = 'Code postal';
+$lang['form.locality'] = 'Ville';
+$lang['form.popup.title'] = 'Titre du pointeur';
 $lang['gmap.api.key'] = 'Votre clé api google map';
 $lang['gmap.api.key.desc'] = 'Pour obtenir une clé google map, <a href="https://console.developers.google.com/flows/enableapi?apiid=maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend,places_backend&reusekey=true&hl=Fr">suivez ce lien</a>.
 <br /><span style="color: #CC0000">Cette clé est indispensable pour définir les pointeurs</span>';
