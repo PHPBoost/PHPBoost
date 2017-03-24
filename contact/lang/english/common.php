@@ -6,14 +6,14 @@
  *   copyright            : (C) 2013 Julien BRISWALTER
  *   email                : j1.seth@phpboost.com
  *
- *  
+ *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -29,8 +29,8 @@
  ####################################################
  #						English						#
  ####################################################
- 
-//Title 
+
+//Title
 $lang['module_title'] = 'Contact';
 $lang['module_config_title'] = 'Contact module configuration';
 
@@ -66,14 +66,20 @@ $lang['admin.config.map_position'] = 'Position of the map';
 $lang['admin.config.map.position_top'] = 'Above the form';
 $lang['admin.config.map.position_bottom'] = 'Below the form';
 $lang['admin.config.map.marker'] = 'Add a marker';
-$lang['form.gps.add.desc'] = 'Click on map to add automated coords';
+$lang['form.enter.address'] = 'Type your address and select it in the list appearing';
 $lang['form.gps.center.map'] = '{lat: 52.295042, lng: -1.516113}'; // England
+$lang['form.gps.data'] = 'Location Coordinates';
 $lang['form.latitude'] = 'Latitude';
 $lang['form.longitude'] = 'Longitude';
+$lang['form.street.address'] = 'address';
+$lang['form.street.number'] = 'Street number';
+$lang['form.street.name'] = 'Street name';
+$lang['form.postal.code'] = 'Postal code';
+$lang['form.locality'] = 'Locality';
 $lang['form.marker_text'] = 'Marker text';
 $lang['gmap.api.key'] = 'Your google map api key';
-$lang['gmap.api.key.desc'] = 'To get a google map api key, <a href="https://console.developers.google.com/flows/enableapi?apiid=maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend,places_backend&reusekey=true&hl=En">follow this link</a>.
-<br /><span style="color: #CC0000">This key is essential to define markers</span>';
+$lang['gmap.api.key.desc'] = 'To get a free google map api key, <a href="https://console.developers.google.com/flows/enableapi?apiid=maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend,places_backend&reusekey=true&hl=En">follow this link</a>.
+<br /><span style="color: #CC0000">Enter your key then valid the form to access to the marker declaration</span>';
 
 //Fields
 $lang['admin.fields.manage'] = 'Fields management';

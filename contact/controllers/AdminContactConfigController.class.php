@@ -35,23 +35,23 @@ class AdminContactConfigController extends AdminModuleController
 	 * @var FormButtonSubmit
 	 */
 	private $submit_button;
-	
+
 	private $lang;
-	
+
 	/**
 	 * @var GuestbookConfig
 	 */
 	private $config;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
-		
+
 		$this->build_form();
-		
+
 		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
-		
+
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
@@ -62,29 +62,29 @@ class AdminContactConfigController extends AdminModuleController
 			$this->form->get_field_by_id('map_marker')->set_hidden(!$this->config->is_map_enabled());
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
-		
+
 		$tpl->put('FORM', $this->form->display());
-		
+
 		return new AdminContactDisplayResponse($tpl, $this->lang['module_config_title']);
 	}
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'contact');
 		$this->config = ContactConfig::load();
 	}
-	
+
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
-		
+
 		$fieldset = new FormFieldsetHTML('configuration', LangLoader::get_message('configuration', 'admin-common'));
 		$form->add_fieldset($fieldset);
-		
+
 		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['admin.config.title'], $this->config->get_title(),
 			array('maxlength' => 255, 'required' => true)
 		));
-		
+
 		$fieldset->add_field(new FormFieldCheckbox('informations_enabled', $this->lang['admin.config.informations_enabled'], $this->config->are_informations_enabled(),
 			array('description' => $this->lang['admin.config.informations.explain'], 'events' => array('click' => '
 				if (HTMLForms.getField("informations_enabled").getValue()) {
@@ -95,7 +95,7 @@ class AdminContactConfigController extends AdminModuleController
 					HTMLForms.getField("informations").disable();
 				}'))
 			));
-		
+
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('informations_position', $this->lang['admin.config.informations_position'], $this->config->get_informations_position(),
 			array(
 				new FormFieldSelectChoiceOption($this->lang['admin.config.informations.position_left'], ContactConfig::LEFT),
@@ -105,12 +105,12 @@ class AdminContactConfigController extends AdminModuleController
 				),
 			array('hidden' => !$this->config->are_informations_enabled())
 			));
-		
-		$fieldset->add_field(new FormFieldRichTextEditor('informations', $this->lang['admin.config.informations_content'], 
-			FormatingHelper::unparse($this->config->get_informations()), 
+
+		$fieldset->add_field(new FormFieldRichTextEditor('informations', $this->lang['admin.config.informations_content'],
+			FormatingHelper::unparse($this->config->get_informations()),
 			array('rows' => 8, 'cols' => 47, 'hidden' => !$this->config->are_informations_enabled())
 			));
-		
+
 		$fieldset->add_field(new FormFieldCheckbox('tracking_number_enabled', $this->lang['admin.config.tracking_number_enabled'], $this->config->is_tracking_number_enabled(),
 			array('events' => array('click' => '
 				if (HTMLForms.getField("tracking_number_enabled").getValue()) {
@@ -119,20 +119,20 @@ class AdminContactConfigController extends AdminModuleController
 					HTMLForms.getField("date_in_tracking_number_enabled").disable();
 				}'))
 			));
-		
+
 		$fieldset->add_field(new FormFieldCheckbox('date_in_tracking_number_enabled', $this->lang['admin.config.date_in_date_in_tracking_number_enabled'], $this->config->is_date_in_tracking_number_enabled(),
 			array('description' => $this->lang['admin.config.date_in_date_in_tracking_number_enabled.explain'], 'hidden' => !$this->config->is_tracking_number_enabled())
 		));
-		
+
 		$fieldset->add_field(new FormFieldCheckbox('sender_acknowledgment_enabled', $this->lang['admin.config.sender_acknowledgment_enabled'], $this->config->is_sender_acknowledgment_enabled()));
-		
+
 		$map_fieldset = new FormFieldsetHTML('configuration', $this->lang['admin.config.map.add']);
 		$form->add_fieldset($map_fieldset);
-		
+
 		$map_fieldset->add_field(new FormFieldTextEditor('gmap_api_key', $this->lang['gmap.api.key'], $this->config->get_gmap_api_key(),
 			array('description' => $this->lang['gmap.api.key.desc'])
 		));
-		
+
 		$map_fieldset->add_field(new FormFieldCheckbox('map_enabled', $this->lang['admin.config.map_enabled'], $this->config->is_map_enabled(),
 			array('events' => array('click' => '
 				if (HTMLForms.getField("map_enabled").getValue()) {
@@ -143,7 +143,7 @@ class AdminContactConfigController extends AdminModuleController
 					HTMLForms.getField("map_marker").disable();
 				}'))
 		));
-		
+
 		$map_fieldset->add_field(new FormFieldSimpleSelectChoice('map_position', $this->lang['admin.config.map_position'], $this->config->get_map_position(),
 			array(
 				new FormFieldSelectChoiceOption($this->lang['admin.config.map.position_top'], ContactConfig::MAP_TOP),
@@ -151,32 +151,32 @@ class AdminContactConfigController extends AdminModuleController
 				),
 			array('hidden' => !$this->config->is_map_enabled())
 		));
-		
+
 		$map_fieldset->add_field(new ContactFormFieldMarkerConfig('map_marker', $this->lang['admin.config.map.marker'], $this->config->get_map_marker(),
 			array('hidden' => !$this->config->is_map_enabled())
 		));
-		
+
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', LangLoader::get_message('authorizations', 'common'));
 		$form->add_fieldset($fieldset_authorizations);
-		
+
 		$auth_settings = new AuthorizationsSettings(array(
 			new ActionAuthorization($this->lang['admin.authorizations.read'], ContactAuthorizationsService::READ_AUTHORIZATIONS),
 			));
-		
+
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
 		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
-		
+
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
-		
+
 		$this->form = $form;
 	}
-	
+
 	private function save()
 	{
 		$this->config->set_title($this->form->get_value('title'));
-		
+
 		if ($this->form->get_value('informations_enabled'))
 		{
 			$this->config->enable_informations();
@@ -185,7 +185,7 @@ class AdminContactConfigController extends AdminModuleController
 		}
 		else
 			$this->config->disable_informations();
-		
+
 		if ($this->form->get_value('tracking_number_enabled'))
 		{
 			$this->config->enable_tracking_number();
@@ -196,12 +196,12 @@ class AdminContactConfigController extends AdminModuleController
 		}
 		else
 			$this->config->disable_tracking_number();
-		
+
 		if ($this->form->get_value('sender_acknowledgment_enabled'))
 			$this->config->enable_sender_acknowledgment();
 		else
 			$this->config->disable_sender_acknowledgment();
-		
+
 		if ($this->form->get_value('map_enabled'))
 		{
 			$this->config->enable_map();
@@ -211,9 +211,9 @@ class AdminContactConfigController extends AdminModuleController
 		}
 		else
 			$this->config->disable_map();
-		
+
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
-		
+
 		ContactConfig::save();
 	}
 }

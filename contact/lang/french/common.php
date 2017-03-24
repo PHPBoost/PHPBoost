@@ -60,15 +60,13 @@ $lang['admin.authorizations.read']  = 'Autorisation d\'afficher le formulaire de
 $lang['admin.authorizations.display_field']  = 'Autorisation d\'afficher le champ';
 
 //Map
-$lang['admin.config.map.add'] = 'Localisation sur une map <span class="smaller">(avec <i class="fa fa-map-marker"></i> pointeurs)</span>';
-$lang['admin.config.map_enabled'] = 'Afficher la map';
-$lang['admin.config.map_position'] = 'Position de la map';
+$lang['admin.config.map.add'] = 'Localisation sur une carte <span class="smaller">(avec <i class="fa fa-map-marker"></i> pointeurs)</span>';
+$lang['admin.config.map_enabled'] = 'Afficher la carte';
+$lang['admin.config.map_position'] = 'Position de la carte';
 $lang['admin.config.map.position_top'] = 'Au-dessus du formulaire';
 $lang['admin.config.map.position_bottom'] = 'En dessous du formulaire';
-$lang['admin.config.map.condition'] = '<span class="error">Vous devez renseigner la clé pour configurer les pointeurs</span>';
 $lang['admin.config.map.marker'] = 'Ajouter un pointeur';
-$lang['form.gps.add.desc'] = 'Entrez une adresse complète et sélectionnez la dans la liste de prpositions';
-$lang['form.enter.address'] = 'Entrez une adresse complète et sélectionnez-la dans la liste de propositions qui apparaissent';
+$lang['form.enter.address'] = 'Entrez une adresse complète et sélectionnez-la dans la liste de propositions qui apparait';
 $lang['form.gps.center.map'] = '{lat: 46.52863469527167, lng: 2.43896484375}'; // France
 $lang['form.gps.data'] = 'Coordonnées GPS';
 $lang['form.latitude'] = 'Latitude';
@@ -80,8 +78,8 @@ $lang['form.postal.code'] = 'Code postal';
 $lang['form.locality'] = 'Ville';
 $lang['form.popup.title'] = 'Titre du pointeur';
 $lang['gmap.api.key'] = 'Votre clé api google map';
-$lang['gmap.api.key.desc'] = 'Pour obtenir une clé google map, <a href="https://console.developers.google.com/flows/enableapi?apiid=maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend,places_backend&reusekey=true&hl=Fr">suivez ce lien</a>.
-<br /><span style="color: #CC0000">Cette clé est indispensable pour définir les pointeurs</span>';
+$lang['gmap.api.key.desc'] = 'Pour obtenir une clé google map gratuite, <a href="https://console.developers.google.com/flows/enableapi?apiid=maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend,places_backend&reusekey=true&hl=Fr">suivez ce lien</a>.
+<br /><span style="color: #CC0000">Entrez la clé puis validez le formulaire pour acceder à la déclaration des pointeurs</span>';
 
 //Fields
 $lang['admin.fields.manage'] = 'Gestion des champs';
