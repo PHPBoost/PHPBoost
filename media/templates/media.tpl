@@ -11,7 +11,7 @@
 						</div>
 					# ENDIF #
 				</header>
-				
+
 				# IF C_SUB_CATEGORIES #
 				<div class="subcat-container">
 					# START sub_categories_list #
@@ -31,7 +31,7 @@
 				# ELSE #
 					<div class="spacer"></div>
 				# ENDIF #
-				
+
 				<div class="content">
 					# IF C_FILES #
 						<div class="options" id="form">
@@ -57,7 +57,7 @@
 							</select>
 						</div>
 						<div class="spacer"></div>
-	
+
 						# START file #
 							<article id="article-media-{file.ID}" class="article-media article-several block# IF file.C_NEW_CONTENT # new-content# ENDIF #">
 								<header>
@@ -74,7 +74,7 @@
 								</header>
 								<div class="content">
 									# IF file.C_DESCRIPTION #
-										# IF file.C_HAS_PICTURE #<a href="{file.U_MEDIA_LINK}"><img itemprop="thumbnailUrl" src="{file.PICTURE}" alt="{file.NAME}" /></a># ENDIF #
+										# IF file.C_HAS_PICTURE #<a href="{file.U_MEDIA_LINK}"><img itemprop="thumbnailUrl" src="{file.PICTURE}" class="media-picture" alt="{file.NAME}" /></a># ENDIF #
 										<div class="media-desc">
 										{file.DESCRIPTION}
 										</div>
@@ -98,7 +98,7 @@
 							</article>
 						# END file #
 					# ENDIF #
-	
+
 					# IF C_DISPLAY_NO_FILE_MSG #
 						<div class="notice">${LangLoader::get_message('no_item_now', 'common')}</div>
 					# ENDIF #
@@ -118,7 +118,7 @@
 				<article id="article-media-{ID}" class="article-media# IF C_NEW_CONTENT # new-content# ENDIF #">
 					<header>
 						<h2>
-							{NAME} 
+							{NAME}
 							<span class="actions">
 								# IF C_DISPLAY_COMMENTS #
 									<a href="{U_COM}"><i class="fa fa-comments-o"></i> {L_COM}</a>
@@ -132,7 +132,7 @@
 						</h2>
 					</header>
 					<div class="content">
-					
+
 						<div class="options infos">
 							<h6>{L_MEDIA_INFOS}</h6>
 								<span class="text-strong">{L_DATE} : </span><span>{DATE}</span><br/>
@@ -142,16 +142,16 @@
 							<div class="center text-strong">{KERNEL_NOTATION}</div>
 							# ENDIF #
 						</div>
-						
+
 						<div class="media-desc">
 							{CONTENTS}
 						</div>
 						<div class="spacer"></div>
-						
+
 						<div class="media-content">
 							# INCLUDE media_format #
 						</div>
-		
+
 						# IF C_DISPLAY_COMMENTS #
 						{COMMENTS}
 						# ENDIF #

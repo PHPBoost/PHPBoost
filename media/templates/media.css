@@ -1,4 +1,14 @@
+.media-picture {
+	margin: 0 0 10px;
+}
 
+@media (min-width: 769px) {
+	.media-picture {
+		margin: 0 0 10px 10px;
+		max-width: 33%;
+		float: right;
+	}
+}
 .media-desc {
 	margin-top: 15px;
 	text-align: justify;
@@ -11,9 +21,9 @@
 	padding-top: 25px;
 	height: 0;
 }
- 
+
 .media-content object,
-.media-content embed, 
+.media-content embed,
 .media-content video {
 	position: absolute;
 	top: 0;
