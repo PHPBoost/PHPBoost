@@ -29,10 +29,10 @@ ContactFormFieldSelectMarker.prototype = {
 			jQuery('<label/> ', {text : '{@form.gps.data}'}).appendTo('.location-datas_' + id);
 			jQuery('#' + id).append(' ');
 
-			jQuery('<input/> ', {type : 'text', id : 'field_latitude_' + id, name : 'field_latitude_' + id, class : 'input-location-latlng', pattern : '-?\d{2,16}\.\d+', placeholder : '{@form.latitude}'}).appendTo('.location-datas_' + id);
+			jQuery('<input/> ', {type : 'text', id : 'field_latitude_' + id, name : 'field_latitude_' + id, class : 'input-location-latlng', placeholder : '{@form.latitude}'}).appendTo('.location-datas_' + id);
 			jQuery('#' + id).append(' ');
 
-			jQuery('<input/> ', {type : 'text', id : 'field_longitude_' + id, name : 'field_longitude_' + id, class : 'input-location-latlng', pattern : '-?\d{2,16}\.\d+', placeholder : '{@form.longitude}'}).appendTo('.location-datas_' + id);
+			jQuery('<input/> ', {type : 'text', id : 'field_longitude_' + id, name : 'field_longitude_' + id, class : 'input-location-latlng', placeholder : '{@form.longitude}'}).appendTo('.location-datas_' + id);
 			jQuery('#' + id).append(' ');
 
 			jQuery('<label/> ', {text : '{@form.street.address}'}).appendTo('.location-datas_' + id);
