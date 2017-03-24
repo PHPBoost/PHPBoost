@@ -120,7 +120,7 @@ class Url
 				$url = 'http://' . $url;
 			}
 
-			$url = preg_replace('`^https?://' . AppContext::get_request()->get_site_domain_name() . GeneralConfig::load()->get_site_path() . '`u', '/', self::compress($url));
+			$url = preg_replace('`^https?://' . AppContext::get_request()->get_site_domain_name() . GeneralConfig::load()->get_site_path() . '`uUi', '', self::compress($url));
 			if (!TextHelper::strpos($url, '://') && TextHelper::substr($url, 0, 2) != '//')
 			{
 				$this->is_relative = true;

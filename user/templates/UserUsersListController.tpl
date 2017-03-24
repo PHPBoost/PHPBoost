@@ -10,7 +10,7 @@
 					# INCLUDE SELECT_GROUP #
 				</td>
 			</tr>
-		</table>	
+		</table>
 		<br /><br />
 		# ENDIF #
 

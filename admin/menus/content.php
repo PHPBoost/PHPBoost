@@ -175,12 +175,13 @@ if ($edit)
 }
 else
 {
-   $tpl->put_all(array(
-	   'C_ENABLED' => true,
-	   'AUTH_MENUS' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, array(), array(-1 => true, 0 => true, 1 => true, 2 => true))
-   ));
+	$tpl->put_all(array(
+		'C_ENABLED' => true,
+		'AUTH_MENUS' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
+		'DISPLAY_TITLE_CHECKED' => 'checked="checked"'
+	));
    
-   // Create a new generic menu
+	// Create a new generic menu
 	$menu = new ContentMenu('');
 }
 

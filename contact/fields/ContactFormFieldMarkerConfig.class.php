@@ -32,7 +32,7 @@
 class ContactFormFieldMarkerConfig extends AbstractFormField
 {
 	private $max_input = 200;
-	
+
 	public function __construct($id, $label, array $value = array(), array $field_options = array(), array $constraints = array())
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
@@ -41,15 +41,15 @@ class ContactFormFieldMarkerConfig extends AbstractFormField
 	function display()
 	{
 		$template = $this->get_template_to_use();
-		$config = ContactConfig::load();
+		$config   = ContactConfig::load();
 
 		$tpl = new FileTemplate('contact/ContactFormFieldMarkerConfig.tpl');
 		$tpl->add_lang(LangLoader::get('common', 'contact'));
-		
+
 		$tpl->put_all(array(
-			'NAME' => $this->get_html_id(),
-			'ID' => $this->get_html_id(),
-			'C_DISABLED' => $this->is_disabled(),
+			'NAME'         => $this->get_html_id(),
+			'ID'           => $this->get_html_id(),
+			'C_DISABLED'   => $this->is_disabled(),
 			'GMAP_API_KEY' => $config->get_gmap_api_key()
 		));
 
@@ -59,10 +59,14 @@ class ContactFormFieldMarkerConfig extends AbstractFormField
 		foreach ($this->get_value() as $id => $options)
 		{
 			$tpl->assign_block_vars('fieldelements', array(
-				'ID' => $i,
-				'LATITUDE' => $options['latitude'],
-				'LONGITUDE' => $options['longitude'],
-				'POPUP' => $options['popup']
+				'ID'            => $i,
+				'LATITUDE'      => $options['latitude'],
+				'LONGITUDE'     => $options['longitude'],
+				'POPUP_TITLE'   => $options['popup_title'],
+				'STREET_NUMBER' => $options['street_number'],
+				'STREET_NAME'   => $options['street_name'],
+				'POSTAL_CODE'   => $options['postal_code'],
+				'LOCALITY'      => $options['locality']
 			));
 			$i++;
 		}
@@ -70,15 +74,19 @@ class ContactFormFieldMarkerConfig extends AbstractFormField
 		if ($i == 0)
 		{
 			$tpl->assign_block_vars('fieldelements', array(
-				'ID' => $i,
-				'LATITUDE' => '',
-				'LONGITUDE' => '',
-				'POPUP' => ''
+				'ID'            => $i,
+				'LATITUDE'      => '',
+				'LONGITUDE'     => '',
+				'POPUP_TITLE'   => '',
+				'STREET_NUMBER' => '',
+				'STREET_NAME'   => '',
+				'POSTAL_CODE'   => '',
+				'LOCALITY'      => '',
 			));
 		}
 
 		$tpl->put_all(array(
-			'MAX_INPUT' => $this->max_input,
+			'MAX_INPUT'  => $this->max_input,
 			'NBR_FIELDS' => $i == 0 ? 1 : $i
 		));
 
@@ -95,21 +103,33 @@ class ContactFormFieldMarkerConfig extends AbstractFormField
 		$values = array();
 		for ($i = 0; $i < $this->max_input; $i++)
 		{
-			$field_popup_id = 'field_popup_' . $this->get_html_id() . '_' . $i;
-			$field_latitude_id = 'field_latitude_' . $this->get_html_id() . '_' . $i;
-			$field_longitude_id = 'field_longitude_' . $this->get_html_id() . '_' . $i;
-			
-			if ($request->has_postparameter($field_popup_id) && $request->has_postparameter($field_latitude_id) && $request->has_postparameter($field_longitude_id))
+			$field_popup_title_id   = 'field_popup_title_' . $this->get_html_id() . '_' . $i;
+			$field_latitude_id      = 'field_latitude_' . $this->get_html_id() . '_' . $i;
+			$field_longitude_id     = 'field_longitude_' . $this->get_html_id() . '_' . $i;
+			$field_street_number_id = 'field_street_number_' . $this->get_html_id() . '_' . $i;
+			$field_street_name_id   = 'field_street_name_' . $this->get_html_id() . '_' . $i;
+			$field_postal_code_id   = 'field_postal_code_' . $this->get_html_id() . '_' . $i;
+			$field_locality_id      = 'field_locality_' . $this->get_html_id() . '_' . $i;
+
+			if ($request->has_postparameter($field_popup_title_id) && $request->has_postparameter($field_latitude_id) && $request->has_postparameter($field_longitude_id))
 			{
-				$field_popup = $request->get_poststring($field_popup_id);
-				$field_latitude = $request->get_poststring($field_latitude_id);
-				$field_longitude = $request->get_poststring($field_longitude_id);
-				
-				if (!empty($field_popup) && !empty($field_latitude) && !empty($field_longitude))
+				$field_popup_title   = $request->get_poststring($field_popup_title_id);
+				$field_latitude      = $request->get_poststring($field_latitude_id);
+				$field_longitude     = $request->get_poststring($field_longitude_id);
+				$field_street_number = $request->get_poststring($field_street_number_id);
+				$field_street_name   = $request->get_poststring($field_street_name_id);
+				$field_postal_code   = $request->get_poststring($field_postal_code_id);
+				$field_locality      = $request->get_poststring($field_locality_id);
+
+				if (!empty($field_popup_title) && !empty($field_latitude) && !empty($field_longitude))
 					$values[] = array(
-						'popup' => $field_popup,
-						'latitude' => $field_latitude,
-						'longitude' => $field_longitude
+						'popup_title'   => $field_popup_title,
+						'latitude'      => $field_latitude,
+						'longitude'     => $field_longitude,
+						'street_number' => $field_street_number,
+						'street_name'   => $field_street_name,
+						'postal_code'   => $field_postal_code,
+						'locality'      => $field_locality
 					);
 			}
 		}

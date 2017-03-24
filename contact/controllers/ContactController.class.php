@@ -38,7 +38,7 @@ class ContactController extends ModuleController
 	 */
 	private $submit_button;
 	private $config;
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'contact');
@@ -46,23 +46,23 @@ class ContactController extends ModuleController
 		$this->view->add_lang($this->lang);
 		$this->config = ContactConfig::load();
 	}
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
-		
+
 		$this->init();
-		
+
 		$this->build_view();
-		
+
 		return $this->generate_response();
 	}
-	
+
 	public function build_view()
 	{
 		$this->build_form();
 		$this->build_map_view();
-		
+
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			if ($this->send_mail())
@@ -73,9 +73,9 @@ class ContactController extends ModuleController
 			else
 				$this->view->put('MSG', MessageHelper::display($this->lang['message.error_mail'], MessageHelper::ERROR, 5));
 		}
-		
+
 		$this->view->put('FORM', $this->form->display());
-		
+
 		$this->view->put_all(array(
 			'C_INFORMATIONS_LEFT' => $this->config->are_informations_enabled() && $this->config->are_informations_left(),
 			'C_INFORMATIONS_TOP' => $this->config->are_informations_enabled() && $this->config->are_informations_top(),
@@ -86,9 +86,9 @@ class ContactController extends ModuleController
 			'C_MAP_ENABLE' => $this->config->is_map_enabled(),
 			'C_MAP_TOP' => $this->config->is_map_enabled() && $this->config->is_map_top(),
 			'C_MAP_BOTTOM' => $this->config->is_map_enabled() && $this->config->is_map_bottom(),
-		));		
+		));
 	}
-	
+
 	public function build_map_view()
 	{
 		$tpl = new FileTemplate('contact/ContactMap.tpl');
@@ -99,32 +99,36 @@ class ContactController extends ModuleController
 			'C_MARKER' => $nb_markers > 0,
 			'C_ONE_MARKER' => $nb_markers == 1
 		));
-		
+
 		$i = 1;
 		foreach ($marker as $id => $options)
 		{
 			$tpl->assign_block_vars('places', array(
 				'MAP_LATITUDE' => $options['latitude'],
 				'MAP_LONGITUDE' => $options['longitude'],
-				'MAP_POPUP' => str_replace("'", "`", $options['popup']),
+				'MAP_POPUP_TITLE' => str_replace("'", "`", $options['popup_title']),
+				'MAP_STREET_NUMBER' => $options['street_number'],
+				'MAP_STREET_NAME' => str_replace("'", "`", $options['street_name']),
+				'MAP_POSTAL_CODE' => $options['postal_code'],
+				'MAP_LOCALITY' => str_replace("'", "`", $options['locality']),
 			));
 			$i++;
 		}
 		$this->view->put('MAP', $tpl);
 	}
-	
+
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
-		
+
 		$fieldset = new FormFieldsetHTML('send_a_mail', $this->config->get_title());
 		$form->add_fieldset($fieldset);
-		
+
 		foreach($this->config->get_fields() as $id => $properties)
 		{
 			$field = new ContactField();
 			$field->set_properties($properties);
-			
+
 			if ($field->is_displayed() && $field->is_authorized())
 			{
 				if ($field->get_field_name() == 'f_sender_mail')
@@ -133,41 +137,41 @@ class ContactController extends ModuleController
 				ContactFieldsService::display_field($field);
 			}
 		}
-		
+
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
-		
+
 		$this->form = $form;
 	}
-	
+
 	private function send_mail()
 	{
 		$message = '';
 		$current_user = AppContext::get_current_user();
-		
+
 		$fields = $this->config->get_fields();
 		$recipients_field_id = $this->config->get_field_id_by_name('f_recipients');
 		$recipients_field = new ContactField();
 		$recipients_field->set_properties($fields[$recipients_field_id]);
 		$recipients = $recipients_field->get_possible_values();
 		$recipients['admins']['email'] = implode(';', MailServiceConfig::load()->get_administrators_mails());
-		
+
 		$subject_field_id = $this->config->get_field_id_by_name('f_subject');
 		$subject_field = new ContactField();
 		$subject_field->set_properties($fields[$subject_field_id]);
 		$subjects = $subject_field->get_possible_values();
-		
+
 		if ($subject_field->get_field_type() == 'ContactShortTextField')
 			$subject = $this->form->get_value('f_subject');
 		else
 			$subject = $this->form->get_value('f_subject')->get_raw_value();
-		
+
 		$display_message_title = false;
 		if ($this->config->is_tracking_number_enabled())
 		{
 			$now = new Date();
-			
+
 			$tracking_number = $this->config->get_last_tracking_number();
 			$tracking_number++;
 			$message .= $this->lang['contact.tracking_number'] . ' : ' . ($this->config->is_date_in_tracking_number_enabled() ? $now->get_year() . $now->get_month() . $now->get_day() . '-' : '') . $tracking_number . '
@@ -175,17 +179,17 @@ class ContactController extends ModuleController
 ';
 			$this->config->set_last_tracking_number($tracking_number);
 			ContactConfig::save();
-			
+
 			$subject = '[' . $tracking_number . '] ' . $subject;
-			
+
 			$display_message_title = true;
 		}
-		
+
 		foreach($this->config->get_fields() as $id => $properties)
 		{
 			$field = new ContactField();
 			$field->set_properties($properties);
-			
+
 			if ($field->is_displayed() && $field->is_authorized() && $field->is_deletable())
 			{
 				try{
@@ -196,23 +200,23 @@ class ContactController extends ModuleController
 				} catch(Exception $e) {
 					throw new Exception($e->getMessage());
 				}
-				
+
 				$display_message_title = true;
 			}
 		}
-		
+
 		if ($display_message_title)
 			$message .= $this->lang['contact.form.message'] . ':
 ';
-		
+
 		$message .= $this->form->get_value('f_message');
-		
+
 		$mail = new Mail();
 		$mail->set_sender(MailServiceConfig::load()->get_default_mail_sender(), $this->lang['module_title']);
 		$mail->set_reply_to($this->form->get_value('f_sender_mail'), $current_user->get_display_name());
 		$mail->set_subject($subject);
 		$mail->set_content(TextHelper::html_entity_decode($message));
-		
+
 		if ($recipients_field->is_displayed())
 		{
 			if (in_array($recipients_field->get_field_type(), array('ContactSimpleSelectField', 'ContactSimpleChoiceField')))
@@ -230,7 +234,7 @@ class ContactController extends ModuleController
 					}
 				}
 			}
-			
+
 			foreach ($recipients_mails as $mail_address)
 			{
 				$mail->add_recipient($mail_address);
@@ -253,9 +257,9 @@ class ContactController extends ModuleController
 				$mail->add_recipient($mail_address);
 			}
 		}
-		
+
 		$mail_service = AppContext::get_mail_service();
-		
+
 		if ($this->config->is_sender_acknowledgment_enabled())
 		{
 			$acknowledgment = new Mail();
@@ -263,13 +267,13 @@ class ContactController extends ModuleController
 			$acknowledgment->set_subject('[' . $this->lang['contact.acknowledgment_title'] . '] ' . $subject);
 			$acknowledgment->set_content($this->lang['contact.acknowledgment'] . $message);
 			$acknowledgment->add_recipient($this->form->get_value('f_sender_mail'));
-			
+
 			return $mail_service->try_to_send($mail) && $mail_service->try_to_send($acknowledgment);
 		}
-		
+
 		return $mail_service->try_to_send($mail);
 	}
-	
+
 	private function check_authorizations()
 	{
 		if (!ContactAuthorizationsService::check_authorizations()->read())
@@ -278,20 +282,20 @@ class ContactController extends ModuleController
 			DispatchManager::redirect($error_controller);
 		}
 	}
-	
+
 	private function generate_response()
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['module_title']);
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], ContactUrlBuilder::home());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ContactUrlBuilder::home());
-		
+
 		return $response;
 	}
-	
+
 	public static function get_view()
 	{
 		$object = new self();
