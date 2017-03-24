@@ -118,7 +118,7 @@ class UserExploreGroupsController extends AbstractController
 	{
 		$form = new HTMLForm('groups', '', false);
 
-		$fieldset = new FormFieldsetHorizontal('show_group');
+		$fieldset = new FormFieldsetHTML('show_group');
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('groups_select', $this->lang['groups.select'] . ' : ', $group_id_selected, $this->build_select_groups(), 
