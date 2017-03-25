@@ -24,24 +24,24 @@ ContactFormFieldSelectMarker.prototype = {
 
 			jQuery('<label/> ', {text : '{@form.gps.data} :'}).appendTo('.location-datas_' + id);
 
-			jQuery('<input/> ', {type : 'text', id : 'field_latitude_' + id, name : 'field_latitude_' + id, class : 'input-location-latlng', placeholder : '{@form.latitude}'}).appendTo('.location-datas_' + id);
+			jQuery('<input/> ', {type : 'text', id : 'field_latitude_' + id, name : 'field_latitude_' + id, 'data-location' : 'lat', class : 'input-location-latlng', placeholder : '{@form.latitude}'}).appendTo('.location-datas_' + id);
 			jQuery('#location-datas_' + id).append(' ');
 
-			jQuery('<input/> ', {type : 'text', id : 'field_longitude_' + id, name : 'field_longitude_' + id, class : 'input-location-latlng', placeholder : '{@form.longitude}'}).appendTo('.location-datas_' + id);
+			jQuery('<input/> ', {type : 'text', id : 'field_longitude_' + id, name : 'field_longitude_' + id, 'data-location' : 'lng', class : 'input-location-latlng', placeholder : '{@form.longitude}'}).appendTo('.location-datas_' + id);
 			jQuery('#location-datas_' + id).append(' ');
 
 			jQuery('<label/> ', {text : '{@form.street.address} :'}).appendTo('.location-datas_' + id);
 
-			jQuery('<input/> ', {type : 'number', id : 'field_street_number_' + id, name : 'field_street_number_' + id, class : 'input-location-number', placeholder : '{@form.street.number}'}).appendTo('.location-datas_' + id);
+			jQuery('<input/> ', {type : 'number', id : 'field_street_number_' + id, name : 'field_street_number_' + id, 'data-location' : 'street_number', class : 'input-location-number', placeholder : '{@form.street.number}'}).appendTo('.location-datas_' + id);
 			jQuery('#location-datas_' + id).append(' ');
 
-			jQuery('<input/> ', {type : 'text', id : 'field_street_name_' + id, name : 'field_street_name_' + id, class : 'input-location-text', placeholder : '{@form.street.name}'}).appendTo('.location-datas_' + id);
+			jQuery('<input/> ', {type : 'text', id : 'field_street_name_' + id, name : 'field_street_name_' + id, 'data-location' : 'route', class : 'input-location-text', placeholder : '{@form.street.name}'}).appendTo('.location-datas_' + id);
 			jQuery('#location-datas_' + id).append(' ');
 
-			jQuery('<input/> ', {type : 'number', id : 'field_postal_code_' + id, name : 'field_postal_code_' + id, class : 'input-location-number', placeholder : '{@form.postal.code}'}).appendTo('.location-datas_' + id);
+			jQuery('<input/> ', {type : 'number', id : 'field_postal_code_' + id, name : 'field_postal_code_' + id, 'data-location' : 'postal_code', class : 'input-location-number', placeholder : '{@form.postal.code}'}).appendTo('.location-datas_' + id);
 			jQuery('#location-datas_' + id).append(' ');
 
-			jQuery('<input/> ', {type : 'text', id : 'field_locality_' + id, name : 'field_locality_' + id, class : 'input-location-text', placeholder : '{@form.locality}'}).appendTo('.location-datas_' + id);
+			jQuery('<input/> ', {type : 'text', id : 'field_locality_' + id, name : 'field_locality_' + id, 'data-location' : 'locality', class : 'input-location-text', placeholder : '{@form.locality}'}).appendTo('.location-datas_' + id);
 			jQuery('#location-datas_' + id).append(' ');
 
 			jQuery('<script/>').html('jQuery(function(){ jQuery("#geocomplete_' + id + '").geocomplete({ details: ".map-location_' + id + '", detailsAttribute: "data-location", types: ["geocode", "establishment"] }); });').appendTo('#' + id);
@@ -75,7 +75,7 @@ var ContactFormFieldSelectMarker = new ContactFormFieldSelectMarker();
 		<input id="geocomplete_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.MAP_STREET_NUMBER} {fieldelements.MAP_STREET_NAME} {fieldelements.MAP_POSTAL_CODE} {fieldelements.MAP_LOCALITY}" placeholder="{@form.enter.address}" type="text"/>
 		<div class="location-datas_${escape(ID)}_{fieldelements.ID}">
 			<label>{@form.gps.data} : </label>
-			<input value="{fieldelements.MAP_LATITUDE}" name="field_latitude_${escape(ID)}_{fieldelements.ID}" id="field_latitude_${escape(ID)}_{fieldelements.ID}" placeholder="{@form.latitude}" type="text" class="input-location-latlng"/>
+			<input data-location="lat" value="{fieldelements.MAP_LATITUDE}" name="field_latitude_${escape(ID)}_{fieldelements.ID}" id="field_latitude_${escape(ID)}_{fieldelements.ID}" placeholder="{@form.latitude}" type="text" class="input-location-latlng"/>
 			<input data-location="lng" value="{fieldelements.MAP_LONGITUDE}" name="field_longitude_${escape(ID)}_{fieldelements.ID}" id="field_longitude_${escape(ID)}_{fieldelements.ID}" placeholder="{@form.longitude}" type="text" class="input-location-latlng"/>
 			<label>{@form.street.address} : </label>
 			<input data-location="street_number" value="{fieldelements.MAP_STREET_NUMBER}" name="field_street_number_${escape(ID)}_{fieldelements.ID}" id="field_street_number_${escape(ID)}_{fieldelements.ID}" placeholder="{@form.street.number}" type="number" class="input-location-number"/>
