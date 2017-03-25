@@ -150,7 +150,7 @@ elseif ($id_media > 0)
 	if (!empty($media['poster']))
 	{
 		$poster_type = new FileType(new File($media['poster']));
-		$picture_url = new Url($row['poster']);
+		$picture_url = new Url($media['poster']);
 		
 		$media_tpl->put_all(array(
 			'C_POSTER' => $poster_type->is_picture(),
