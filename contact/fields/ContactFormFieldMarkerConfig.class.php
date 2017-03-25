@@ -59,14 +59,14 @@ class ContactFormFieldMarkerConfig extends AbstractFormField
 		foreach ($this->get_value() as $id => $options)
 		{
 			$tpl->assign_block_vars('fieldelements', array(
-				'ID'            => $i,
-				'LATITUDE'      => $options['latitude'],
-				'LONGITUDE'     => $options['longitude'],
-				'POPUP_TITLE'   => $options['popup_title'],
-				'STREET_NUMBER' => $options['street_number'],
-				'STREET_NAME'   => $options['street_name'],
-				'POSTAL_CODE'   => $options['postal_code'],
-				'LOCALITY'      => $options['locality']
+				'ID'                => $i,
+				'POPUP_TITLE'       => $options['popup_title'],
+				'MAP_LATITUDE'      => $options['latitude'],
+				'MAP_LONGITUDE'     => $options['longitude'],
+				'MAP_STREET_NUMBER' => $options['street_number'],
+				'MAP_STREET_NAME'   => $options['street_name'],
+				'MAP_POSTAL_CODE'   => $options['postal_code'],
+				'MAP_LOCALITY'      => $options['locality']
 			));
 			$i++;
 		}
@@ -75,13 +75,13 @@ class ContactFormFieldMarkerConfig extends AbstractFormField
 		{
 			$tpl->assign_block_vars('fieldelements', array(
 				'ID'            => $i,
-				'LATITUDE'      => '',
-				'LONGITUDE'     => '',
 				'POPUP_TITLE'   => '',
-				'STREET_NUMBER' => '',
-				'STREET_NAME'   => '',
-				'POSTAL_CODE'   => '',
-				'LOCALITY'      => '',
+				'MAP_LATITUDE'      => '',
+				'MAP_LONGITUDE'     => '',
+				'MAP_STREET_NUMBER' => '',
+				'MAP_STREET_NAME'   => '',
+				'MAP_POSTAL_CODE'   => '',
+				'MAP_LOCALITY'      => '',
 			));
 		}
 

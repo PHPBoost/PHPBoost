@@ -33,6 +33,7 @@ $lang['advises'] = 'Advises';
 $lang['advises.modules_management'] = '<a href="' . AdminModulesUrlBuilder::list_installed_modules()->rel() . '">Disable or uninstall modules</a> you don\'t you to free ressources on the website.';
 $lang['advises.check_modules_authorizations'] = 'Check the authorizations of all your modules and menus before opening your website to avoit guest or unauthorized users accessing protected areas.';
 $lang['advises.disable_debug_mode'] = '<a href="' . AdminConfigUrlBuilder::advanced_config()->rel() . '">Disable debug mode</a> to hide errors to users (the errors are loggued in the <a href="' . AdminErrorsUrlBuilder::logged_errors()->rel() . '">Loggued errors</a>).';
+$lang['advises.disable_maintenance'] = '<a href="' . AdminMaintainUrlBuilder::maintain()->rel() . '">Disable maintenance</a> to allow the users to display your website.';
 $lang['advises.enable_url_rewriting'] = '<a href="' . AdminConfigUrlBuilder::advanced_config()->rel() . '">Enable URL rewriting</a> to have more readable urls (usefull for SEO).';
 $lang['advises.enable_output_gz'] = '<a href="' . AdminConfigUrlBuilder::advanced_config()->rel() . '">Enable Output pages compression</a> to gain performance.';
 $lang['advises.enable_apcu_cache'] = '<a href="' . AdminCacheUrlBuilder::configuration()->rel() . '">Enable APCu cache</a> to allow loading the cache in RAM on the server and not on the hard-drive and win a performance advantage.';
