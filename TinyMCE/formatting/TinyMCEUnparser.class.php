@@ -175,9 +175,9 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			'`<h4(?: class="([^"]+)?")?>(.*)</h4>(?:[\s]*){0,}`isuU',
 			'`<h5(?: class="([^"]+)?")?>(.*)</h5>(?:[\s]*){0,}`isuU',
 			'`<h6(?: class="([^"]+)?")?>(.*)</h6>(?:[\s]*){0,}`isuU',
-			'`<span style="background-color:([^;]+);">(.+)</span>`isuU',
-			'`<span style="color:([^;]+);">(.+)</span>`isuU',
-			'`<p style="text-align:(left|center|right|justify);?">(.*)</p>`isuU',
+			'`<span style="background-color: ?([^;]+);?">(.+)</span>`isuU',
+			'`<span style="color: ?([^;]+);?">(.+)</span>`isuU',
+			'`<p style="text-align: ?(left|center|right|justify);?">(.*)</p>`isuU',
 			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isuU',
 			'`<td(?: class="([^"]+)?")?></td>`isuU',
 			'`<th(?: class="([^"]+)?")?></th>`isuU'
