@@ -214,7 +214,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//Alignment
 		if (preg_match('`align="([^"]+)"`iU', $col_properties, $temp_array))
 		{
-			$col_style .= 'text-align:' . $temp_array[1] . ';';
+			$col_style .= 'text-align: ' . $temp_array[1] . ';';
 		}
 
 		//Style ?
@@ -260,7 +260,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//Alignment
 		if (preg_match('`align="([^"]+)"`iU', $col_properties, $temp_array))
 		{
-			$col_style .= 'text-align:' . $temp_array[1] . ';';
+			$col_style .= 'text-align: ' . $temp_array[1] . ';';
 		}
 
 		//Style ?
@@ -472,7 +472,7 @@ class TinyMCEParser extends ContentFormattingParser
 		if (!in_array('align', $this->forbidden_tags))
 		{
 			array_push($array_preg, '`&lt;p style="text-align: (left|right|center|justify);"&gt;(.+)&lt;/p&gt;`isU');
-			array_push($array_preg_replace, '<p style="text-align:$1">$2</p>' . "\n");
+			array_push($array_preg_replace, '<p style="text-align: $1;">$2</p>' . "\n");
 		}
 		
 		//Replacement
@@ -869,7 +869,7 @@ class TinyMCEParser extends ContentFormattingParser
 					$style = 'class="float-right"';
 					break;
 				case 'display: block; margin-left: auto; margin-right: auto;':
-					$style = 'style="text-align:center"';
+					$style = 'style="text-align: center;"';
 					break;
 				default:
 					break;
@@ -894,7 +894,7 @@ class TinyMCEParser extends ContentFormattingParser
 					$style = 'class="float-right"';
 					break;
 				case 'display: block; margin-left: auto; margin-right: auto;':
-					$style = 'style="text-align:center"';
+					$style = 'style="text-align: center;"';
 					break;
 				default:
 					break;
