@@ -122,12 +122,12 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	protected function unparse_simple_tags()
 	{
 		$array_preg = array(
-			'`<span style="text-decoration: underline;">(.*)</span>`isuU',
-			'`<span style="color:([^;]+);">(.*)</span>`isuU',
-			'`<span style="background-color:([^;]+);">(.*)</span>`isuU',
-			'`<span style="font-size: ([0-9]+)px;">(.*)</span>`isuU',
-			'`<span style="font-family: ([ a-z0-9,_-]+);">(.*)</span>`isuU',
-			'`<p style="text-align:(left|center|right|justify);?">(.*)</p>`isuU',
+			'`<span style="text-decoration: ?underline;?">(.*)</span>`isuU',
+			'`<span style="color: ?([^;]+);">(.*)</span>`isuU',
+			'`<span style="background-color: ?([^;]+);">(.*)</span>`isuU',
+			'`<span style="font-size: ?([0-9]+)px;?">(.*)</span>`isuU',
+			'`<span style="font-family: ?([ a-z0-9,_-]+);?">(.*)</span>`isuU',
+			'`<p style="text-align: ?(left|center|right|justify);?">(.*)</p>`isuU',
 			'`<p class="float-(left|right)">(.*)</p>`isuU',
 			'`<span id="([a-z0-9_-]+)" class="anchor"></span>`isuU',
 			'`<span id="([a-z0-9_-]+)">(.*)</span>`isuU',
@@ -221,9 +221,6 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		//Block
 		$this->_parse_imbricated('<div class="formatter-container formatter-block"', '`<div class="formatter-container formatter-block">(.+)</div>`suU', '[block]$1[/block]', $this->content);
 		$this->_parse_imbricated('<div class="formatter-container formatter-block" style=', '`<div class="formatter-container formatter-block" style="([^"]+)">(.+)</div>`suU', '[block style="$1"]$2[/block]', $this->content);
-
-		//Indentation
-		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`suU', '[indent]$1[/indent]', $this->content);
 		
 		##Callbacks
 		//Image
@@ -240,6 +237,9 @@ class BBCodeUnparser extends ContentFormattingUnparser
 
 		//Wikipedia link
 		$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link">(.*)</a>`suU', array($this, 'unparse_wikipedia_link'), $this->content);
+
+		//Indentation
+		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`suU', '[indent]$1[/indent]', $this->content);
 		
 		// Feed
 		$this->content = preg_replace('`\[\[FEED([^\]]*)\]\](.+)\[\[/FEED\]\]`uU', '[feed$1]$2[/feed]', $this->content);
