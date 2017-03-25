@@ -69,7 +69,7 @@ $lang['display_name.explain'] = 'Nom affiché sur chacun des éléments que vous
 $lang['login'] = 'Identifiant de connexion';
 $lang['login.explain'] = 'Adresse email ou votre login personnalisé si vous en avez choisi un.';
 $lang['login.custom'] = 'Choisir un identifiant de connexion';
-$lang['login.custom.explain'] = '<span class="color-alert">Par défaut, vous devez vous connecter avec votre adresse email.</span>';
+$lang['login.custom.explain'] = '<span class="color-alert">Si non coché, vous devrez vous connecter avec votre adresse email</span>';
 $lang['password.custom'] = 'Définir un mot de passe';
 $lang['password.custom.explain'] = 'Par défaut un mot de passe est généré automatiquement';
 $lang['password'] = 'Mot de passe';

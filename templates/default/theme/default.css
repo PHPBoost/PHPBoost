@@ -126,8 +126,10 @@ a.wikipedia-link:before {
 .right   { text-align: right !important; }
 .justify { text-align: justify !important; }
 
-.float-left, img.left   { float: left !important; }
-.float-right, img.right { float: right !important; }
+@media (min-width: 769px) {
+	.float-left, img.left   { float: left !important; }
+	.float-right, img.right { float: right !important; }
+}
 
 .hidden { display: none !important; }
 
