@@ -223,10 +223,11 @@ class MediaDisplayCategoryController extends ModuleController
 			if (!empty($row['poster']))
 			{
 				$poster_type = new FileType(new File($row['poster']));
+				$picture_url = new Url($row['poster']);
 				
 				$poster_infos = array(
 					'C_HAS_PICTURE' => $poster_type->is_picture(),
-					'PICTURE' => $row['poster']
+					'PICTURE' => $picture_url->rel()
 				);
 			}
 			
