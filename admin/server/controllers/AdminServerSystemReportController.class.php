@@ -182,6 +182,9 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 		if (!TextHelper::strstr($general_config->get_site_url(), 'localhost') && !TextHelper::strstr($general_config->get_site_url(), '127.0.0.1') && !$maintenance_config->is_under_maintenance() && Debug::is_debug_mode_enabled())
 			$fieldset->add_field(new FormFieldFree('disable_debug_mode', '', MessageHelper::display($lang['advises.disable_debug_mode'], MessageHelper::WARNING)->render()));
 		
+		if ($maintenance_config->is_under_maintenance())
+			$fieldset->add_field(new FormFieldFree('disable_maintenance', '', MessageHelper::display($lang['advises.disable_maintenance'], MessageHelper::NOTICE)->render()));
+		
 		if ($url_rewriting_available && !$server_environment_config->is_url_rewriting_enabled())
 			$fieldset->add_field(new FormFieldFree('enable_url_rewriting', '', MessageHelper::display($lang['advises.enable_url_rewriting'], MessageHelper::NOTICE)->render()));
 		
