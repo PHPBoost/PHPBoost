@@ -32,6 +32,6 @@
 
 $lang['question1_label'] = 'Combien font 4 + cinq ?';
 $lang['question1_answers'] = '9;neuf';
-$lang['question2_label'] = 'Combien y a-t-il de voyelles dans le mot PHPBoost ?';
-$lang['question2_answers'] = '2;deux';
+$lang['question2_label'] = 'Combien y a-t-il de voyelles dans le mot ordinateur ?';
+$lang['question2_answers'] = '5;cinq';
 ?>

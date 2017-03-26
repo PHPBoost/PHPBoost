@@ -32,6 +32,6 @@
 
 $lang['question1_label'] = 'What is 4 + five?';
 $lang['question1_answers'] = '9;nine';
-$lang['question2_label'] = 'How many vowels are in the word PHPBoost?';
-$lang['question2_answers'] = '2;two';
+$lang['question2_label'] = 'How many vowels are in the word computer?';
+$lang['question2_answers'] = '3;three';
 ?>
