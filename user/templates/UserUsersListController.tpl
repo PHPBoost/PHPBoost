@@ -4,14 +4,9 @@
 	</header>
 	<div class="content">
 		# IF C_ARE_GROUPS #
-		<table id="table2">
-			<tr>
-				<td class="valign-top">
-					# INCLUDE SELECT_GROUP #
-				</td>
-			</tr>
-		</table>
-		<br /><br />
+		<div class="options">
+			# INCLUDE SELECT_GROUP #
+		</div>
 		# ENDIF #
 
 		# INCLUDE table #
