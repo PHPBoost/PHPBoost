@@ -110,8 +110,8 @@ $stats_array_browsers = array(
 	'amigavoyager'=> array('Amigavoyager', ''),
 	'amiga-aweb'=> array('Amiga-aweb', ''),
 	'ibrowse' => array('Ibrowse', ''),
-	'phone' => array('Mobile', '../phone.png'),
-	'other' => array('Autres', '../other.png')
+	'phone' => array('Mobile', 'phone.png'),
+	'other' => array('Autres', 'other.png')
 );
 
 //Système d'exploitation.
@@ -140,8 +140,8 @@ $stats_array_os = array(
 	'wii' => array('Wii', 'wii.png'),
 	'psp' => array('PSP', 'psp.png'),
 	'playstation3' => array('Playstation 3', 'ps3.png'),
-	'phone' => array('Mobile', '../phone.png'),
-	'other' => array('Autres', '../other.png')
+	'phone' => array('Mobile', 'phone.png'),
+	'other' => array('Autres', 'other.png')
 );
 
 //Pays.
@@ -397,6 +397,6 @@ $stats_array_lang = array(
 	'zw' => array('Zimbabwe', 'zw.png'),
 	'tv' => array('Tuvalu', 'tv.png'),
 	'ws' => array('Western Samoa', 'ws.png'),
-	'other' => array('Autres', '../other.png')
+	'other' => array('Autres', 'other.png')
 );
 ?>
