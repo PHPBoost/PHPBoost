@@ -100,7 +100,7 @@ class AdminQuestionCaptchaConfig extends AdminModuleController
 		
 		$response = new AdminMenuDisplayResponse($tpl);
 		$response->set_title($title);
-		$response->add_link($this->lang['config.title'], DispatchManager::get_url('/QuestionCaptcha', '/admin/config/'));
+		$response->add_link($this->lang['config.title'], QuestionCaptchaUrlBuilder::configuration());
 		$env = $response->get_graphical_environment();
 		$env->set_page_title($title);
 		
