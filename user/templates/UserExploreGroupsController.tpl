@@ -3,15 +3,11 @@
 		<h1>{@groups}</h1>
 	</header>
 	<div class="content">
-		<table id="table">
-			<tr>
-				<td>
-					# INCLUDE SELECT_GROUP #
-				</td>
-			</tr>
-		</table>
+		<div class="options">
+			# INCLUDE SELECT_GROUP #
+		</div>
 
-		<table id="table2">
+		<table id="table">
 			<caption>
 				{GROUP_NAME}
 				# IF C_ADMIN #
