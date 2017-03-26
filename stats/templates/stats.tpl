@@ -235,7 +235,7 @@
 					<h2>{L_VISITORS}</h2>
 				</header>
 				<div class="block">
-					<p class="center">{MONTH} {U_YEAR}</p>
+					# IF U_YEAR #<div class="date-selector-filter">{MONTH} {U_YEAR}</div># ENDIF #
 					<div class="date-selector-container">
 						<p class="text-strong">{L_TOTAL}: {VISIT_TOTAL} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L_TODAY}: {VISIT_DAY}</p>
 						<a class="fa fa-arrow-left" href="stats{U_PREVIOUS_LINK}#stats"></a>&nbsp;&nbsp;&nbsp;&nbsp;

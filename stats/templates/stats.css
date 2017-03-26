@@ -137,3 +137,7 @@
 .average-head 		{ width: 60px; }
 .last-update-head 	{ width: 96px; }
 .trend-head 		{ width: 100px; }
+
+.date-selector-filter {
+	text-align: center;
+}
