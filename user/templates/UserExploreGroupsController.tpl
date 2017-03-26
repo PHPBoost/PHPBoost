@@ -8,7 +8,7 @@
 			# INCLUDE SELECT_GROUP #
 		</div>
 
-		<table id="table2">
+		<table id="table">
 			<caption>
 				{GROUP_NAME}
 				# IF C_ADMIN #
