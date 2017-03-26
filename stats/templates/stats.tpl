@@ -136,7 +136,7 @@
 								{templates.THEME} <span class="smaller">({templates.PERCENT}%)</span>
 							</td>
 							<td>
-								<div style="margin:auto;width:10px;margin:auto;height:10px;background:{templates.COLOR};border:1px solid black;"></div>
+								<div class="stats-color-square" style="background-color: {templates.COLOR};"></div>
 							</td>
 							<td>
 								{templates.NBR_THEME}
@@ -176,7 +176,7 @@
 								{sex.SEX} <span class="smaller">({sex.PERCENT}%)</span>
 							</td>
 							<td>
-								<div style="margin:auto;width:10px;margin:auto;height:10px;background:{sex.COLOR};border:1px solid black;"></div>
+								<div class="stats-color-square" style="background-color: {sex.COLOR};"></div>
 							</td>
 							<td>
 								{sex.NBR_MBR}
@@ -216,7 +216,7 @@
 							{top_poster.ID}
 						</td>
 						<td>
-							<a href="{top_poster.U_USER_PROFILE}" class="{top_poster.USER_LEVEL_CLASS}" # IF top_poster.C_USER_GROUP_COLOR # style="color:{top_poster.USER_GROUP_COLOR}" # ENDIF #>{top_poster.LOGIN}</a>
+							<a href="{top_poster.U_USER_PROFILE}" class="{top_poster.USER_LEVEL_CLASS}" # IF top_poster.C_USER_GROUP_COLOR # style="color: {top_poster.USER_GROUP_COLOR}" # ENDIF #>{top_poster.LOGIN}</a>
 						</td>
 						<td>
 							{top_poster.USER_POST}
@@ -236,7 +236,7 @@
 				</header>
 				<div class="block">
 					<p class="center">{MONTH} {U_YEAR}</p>
-					<div style="text-align:center;margin:auto">
+					<div class="date-selector-container">
 						<p class="text-strong">{L_TOTAL}: {VISIT_TOTAL} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L_TODAY}: {VISIT_DAY}</p>
 						<a class="fa fa-arrow-left" href="stats{U_PREVIOUS_LINK}#stats"></a>&nbsp;&nbsp;&nbsp;&nbsp;
 						# IF C_STATS_DAY #
@@ -281,12 +281,12 @@
 										<tbody>
 											# START values.head #
 											<tr>
-												<td style="margin-left:2px;width:10px;height:4px;background-image: url({PATH_TO_ROOT}/stats/templates/images/stats2.png); background-repeat:no-repeat;">
+												<td class="table-values-head">
 												</td>
 											</tr>
 											# END values.head #
 											<tr>
-												<td style="margin-left:2px;width:10px;height:{values.HEIGHT}px;background-image: url({PATH_TO_ROOT}/stats/templates/images/stats.png);background-repeat:repeat-y;padding:0px">
+												<td class="table-values" style="height: {values.HEIGHT}px;">
 												</td>
 											</tr>
 										</tbody>
@@ -375,7 +375,7 @@
 								{list.IMG}
 							</td>
 							<td class="no-separator">
-								<div style="width:10px;height:10px;margin:auto;background:{list.COLOR};border:1px solid black;"></div>
+								<div class="stats-color-square" style="background-color: {list.COLOR};"></div>
 							</td>
 							<td class="no-separator">
 								{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
@@ -413,7 +413,7 @@
 								{list.IMG}
 							</td>
 							<td class="no-separator">
-								<div style="width:10px;height:10px;margin:auto;background:{list.COLOR};border:1px solid black;"></div>
+								<div class="stats-color-square" style="background-color: {list.COLOR};"></div>
 							</td>
 							<td class="no-separator">
 								{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
@@ -452,7 +452,7 @@
 								{list.IMG}
 							</td>
 							<td class="no-separator">
-								<div style="width:10px;margin:auto;height:10px;background:{list.COLOR};border:1px solid black;"></div>
+								<div class="stats-color-square" style="background-color: {list.COLOR};"></div>
 							</td>
 							<td class="no-separator">
 								{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
@@ -520,16 +520,16 @@
 						<th>
 							{L_REFERER}
 						</th>
-						<th style="width:70px;">
+						<th class="total-head">
 							{L_TOTAL_VISIT}
 						</th>
-						<th style="width:60px;">
+						<th class="average-head">
 							{L_AVERAGE_VISIT}
 						</th>
-						<th style="width:96px;">
+						<th class="last-update-head">
 							{L_LAST_UPDATE}
 						</th>
-						<th style="width:100px;">
+						<th class="trend-head">
 							{L_TREND}
 						</th>
 					</tr>
@@ -564,7 +564,7 @@
 					</tr>
 					<tr>
 						<td colspan="5" >
-							<div id="url{referer_list.ID}" style="display:none;width:100%;"></div>
+							<div id="url{referer_list.ID}" style="display: none;width: 100%;"></div>
 						</td>
 					</tr>
 					# END referer_list #
@@ -622,16 +622,16 @@
 						<th>
 							{L_KEYWORD}
 						</th>
-						<th style="width:70px;">
+						<th class="total-head">
 							{L_TOTAL_VISIT}
 						</th>
-						<th style="width:60px;">
+						<th class="average-head">
 							{L_AVERAGE_VISIT}
 						</th>
-						<th style="width:96px;">
+						<th class="last-update-head">
 							{L_LAST_UPDATE}
 						</th>
-						<th style="width:100px;">
+						<th class="trend-head">
 							{L_TREND}
 						</th>
 					</tr>
@@ -666,7 +666,7 @@
 					</tr>
 					<tr>
 						<td colspan="5">
-							<div id="url{keyword_list.ID}" style="display:none;width:100%;"></div>
+							<div id="url{keyword_list.ID}" style="display: none;width: 100%;"></div>
 						</td>
 					</tr>
 					# END keyword_list #
