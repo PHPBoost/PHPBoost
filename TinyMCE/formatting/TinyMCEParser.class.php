@@ -728,12 +728,6 @@ class TinyMCEParser extends ContentFormattingParser
 			$this->content = preg_replace_callback('`\[wikipedia(?: page="([^"]+)")?(?: lang="([a-z]+)")?\](.+)\[/wikipedia\]`isuU', array($this, 'parse_wikipedia_links'), $this->content);
 		}
 
-		//Hide tag  //Code en doublon ?
-		if (!in_array('hide', $this->forbidden_tags))
-		{
-			$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`suU', '<span class="formatter-hide">' . LangLoader::get_message('hidden', 'common') . ' :</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>', $this->content);
-		}
-
 		//Quote tag (this tag is managed by TinyMCE but it can also be used in BBCode syntax)
 		if (!in_array('quote', $this->forbidden_tags))
 		{
