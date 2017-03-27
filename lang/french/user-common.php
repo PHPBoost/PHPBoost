@@ -109,9 +109,9 @@ $lang['banned'] = 'Banni';
 $lang['connection'] = 'Connexion';
 $lang['autoconnect'] = 'Connexion auto';
 $lang['disconnect'] = 'Se déconnecter';
-$lang['facebook-connect'] = 'Se connecter avec Facebook';
-$lang['google-connect'] = 'Se connecter avec Google+';
-$lang['twitter-connect'] = 'Se connecter avec Twitter';
+$lang['facebook-connect'] = 'Connexion Facebook';
+$lang['google-connect'] = 'Connexion Google+';
+$lang['twitter-connect'] = 'Connexion Twitter';
 
 $lang['internal_connection'] = 'Connexion interne';
 $lang['create_internal_connection'] = 'Créer un compte interne';
