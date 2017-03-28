@@ -71,8 +71,6 @@ class UpdateServices
 	 * @var string[string]
 	 */
 	private $messages;
-	private $install_date;
-	private $default_lang;
 	
 	public function __construct($locale = '', $delete_update_log_file = true)
 	{
@@ -93,9 +91,6 @@ class UpdateServices
 		
 		$this->general_config = GeneralConfig::load();
 		$this->user_accounts_config = UserAccountsConfig::load();
-		
-		$this->install_date = $this->general_config->get_site_install_date();
-		$this->default_lang = $this->user_accounts_config->get_default_lang();
 	}
 	
 	public function is_already_installed($tables_prefix)
@@ -244,9 +239,6 @@ class UpdateServices
 		
 		// Installation du module UrlUpdater pour la réécriture des Url des modules mis à jour
 		ModulesManager::install_module('UrlUpdater');
-		
-		// Restauration des informations
-		$this->restore_date_and_default_lang();
 		
 		// Fin de la mise à jour : régénération du cache
 		$this->delete_update_token();
@@ -458,16 +450,16 @@ class UpdateServices
 		{
 			$number = $matches[1][0];
 			$pos = $matches[1][1];
-
+			
 			$digits = strlen("$number");
 			$pos_chars = mb_strlen(substr($text, 0, $pos)) + 2 + $digits;
-
+			
 			$str = mb_substr($text, $pos_chars, $number);
 
 			$new_number = strlen($str);
 			$new_digits = strlen($new_number);
-
-			if ($number != $new_number)
+			
+			if ($number < $new_number)
 			{
 				// Change stored number
 				$text = substr_replace($text, $new_number, $pos, $digits);
@@ -478,14 +470,6 @@ class UpdateServices
 		}
 
 		return $text;
-	}
-	
-	private function restore_date_and_default_lang()
-	{
-		$this->user_accounts_config->set_default_lang($this->default_lang);
-		UserAccountsConfig::save();
-		$this->general_config->set_site_install_date($this->install_date);
-		GeneralConfig::save();
 	}
 	
 	private function get_class($directory, $pattern, $type)
