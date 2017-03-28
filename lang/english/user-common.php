@@ -107,12 +107,12 @@ $lang['no_member'] = 'No member in this group';
 $lang['caution'] = 'Caution';
 $lang['readonly'] = 'Read only';
 $lang['banned'] = 'Banned';
-$lang['connection'] = 'Connect';
+$lang['connection'] = 'Sign in';
 $lang['autoconnect'] = 'Auto connect';
-$lang['disconnect'] = 'Disconnect';
-$lang['facebook-connect'] = 'Connect with Facebook';
-$lang['google-connect'] = 'Connect with Google+';
-$lang['twitter-connect'] = 'Connect with Twitter';
+$lang['disconnect'] = 'Sign out';
+$lang['facebook-connect'] = 'Sign in with Facebook';
+$lang['google-connect'] = 'Sign in with Google+';
+$lang['twitter-connect'] = 'Sign in with Twitter';
 
 $lang['internal_connection'] = 'Internal connection';
 $lang['create_internal_connection'] = 'Create internal connection';
@@ -149,7 +149,7 @@ If you have problems, please contact the site administrator.
 :signature';
 
 //Registration 
-$lang['register'] = 'Sign up';
+$lang['register'] = 'Register';
 $lang['registration'] = 'Registration';
 
 $lang['registration.validation.mail.explain'] = 'You will need to activate your account in the email sent to you before beeing able to connect to the site';

@@ -333,8 +333,11 @@ jQuery(document).ready(function(){
 } );	
 
 //Hide / show hide balise content
-function bb_hide(idcode = 0, show = 0, event)
+function bb_hide(idcode, show, event)
 {
+	var idcode = (typeof idcode !== 'undefined') ? idcode : 0;
+	var show = (typeof show !== 'undefined') ? show : 0;
+
 	event.stopPropagation();
 	jQuery('#formatter-hide-container-' + idcode).toggleClass('formatter-show');
 	if (show == 1)
@@ -587,10 +590,11 @@ jQuery(document).ready(function(){
 
 //Gestion Cookie BBCode et Cookiebar
 //Envoi le cookie au client.
-function sendCookie(name, value, delai = 1)
+function sendCookie(name, value, delai)
 {
+	var delai = (typeof delai !== 'undefined') ? delai : 1; //1 mois de validité par défaut.
 	var date = new Date();
-	date.setMonth(date.getMonth() + delai); //1 mois de validité par défaut.
+	date.setMonth(date.getMonth() + delai); 
 	document.cookie = name + '=' + value + '; expires = ' + date.toGMTString() + '; path = "/"';
 }
 

@@ -406,6 +406,10 @@ ul.pagination-block-bis li a.next-page:hover {
 	color: #333333;
 }
 
+.options img {
+	margin: 0 0 5px 0;
+}
+
 .infos {
 	margin-left: 20px;
 }

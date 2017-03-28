@@ -37,3 +37,16 @@
 	margin: 0;
 	padding: 0;
 }
+
+.shoutbox-message-container {}
+.shoutbox-message-date {}
+
+.shoutbox-message {
+	font-size: 0.9em;
+}
+
+span.shoutbox-message-author {
+	text-decoration: italic;
+}
+
+.shoutbox-message-content {}
