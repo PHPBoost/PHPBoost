@@ -154,7 +154,13 @@ class NewsFormController extends ModuleController
 			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->common_lang['form.date.creation'], $this->get_news()->get_creation_date(),
 				array('required' => true)
 			));
-			
+
+			if (!$this->is_new_news)
+			{
+				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->common_lang['form.update.date.creation'], false, array('hidden' => $this->get_news()->get_approbation_type() != News::NOT_APPROVAL)
+				));
+			}
+
 			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('approbation_type', $this->common_lang['form.approbation'], $this->get_news()->get_approbation_type(),
 				array(
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.not'], News::NOT_APPROVAL),
@@ -296,7 +302,15 @@ class NewsFormController extends ModuleController
 		}
 		else
 		{
-			$news->set_creation_date($this->form->get_value('creation_date'));
+			if ($this->form->get_value('update_creation_date'))
+			{
+				$news->set_creation_date(new Date());
+			}
+			else
+			{
+				$news->set_creation_date($this->form->get_value('creation_date'));
+			}
+
 			$rewrited_name = $this->form->get_value('rewrited_name', '');
 			$rewrited_name = $this->form->get_value('personalize_rewrited_name') && !empty($rewrited_name) ? $rewrited_name : Url::encode_rewrite($news->get_name());
 			$news->set_rewrited_name($rewrited_name);
