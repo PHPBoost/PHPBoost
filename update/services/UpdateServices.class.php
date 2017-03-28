@@ -62,9 +62,17 @@ class UpdateServices
 	private $update_log_file;
 	
 	/**
+	 * @var Config
+	 */
+	private $general_config;
+	private $user_accounts_config;
+	
+	/**
 	 * @var string[string]
 	 */
 	private $messages;
+	private $install_date;
+	private $default_lang;
 	
 	public function __construct($locale = '', $delete_update_log_file = true)
 	{
@@ -82,6 +90,12 @@ class UpdateServices
 		}
 		
 		$this->messages = LangLoader::get('update', 'update');
+		
+		$this->general_config = GeneralConfig::load();
+		$this->user_accounts_config = UserAccountsConfig::load();
+		
+		$this->install_date = $this->general_config->get_site_install_date();
+		$this->default_lang = $this->user_accounts_config->get_default_lang();
 	}
 	
 	public function is_already_installed($tables_prefix)
@@ -219,17 +233,20 @@ class UpdateServices
 		// Mise à jour des thèmes
 		$this->update_themes();
 		
+		// Mise à jour des langues
+		$this->update_langs();
+		
 		// Mise à jour du contenu
 		$this->update_content();
 		
 		// Mise à jour du contenu serialisé pour le passage en UTF-8
 		$this->update_serialized_data();
 		
-		// Mise à jour des langues
-		$this->update_langs();
-		
 		// Installation du module UrlUpdater pour la réécriture des Url des modules mis à jour
 		ModulesManager::install_module('UrlUpdater');
+		
+		// Restauration des informations
+		$this->restore_date_and_default_lang();
 		
 		// Fin de la mise à jour : régénération du cache
 		$this->delete_update_token();
@@ -330,8 +347,7 @@ class UpdateServices
 		{
 			ThemesManager::install('base');
 			
-			$user_accounts_config = UserAccountsConfig::load();
-			$user_accounts_config->set_default_theme('base');
+			$this->user_accounts_config->set_default_theme('base');
 			UserAccountsConfig::save();
 		}
 	}
@@ -355,11 +371,10 @@ class UpdateServices
 		if (empty($active_langs_number))
 		{
 			LangsManager::install('french');
+			
+			$this->user_accounts_config->set_default_lang(LangLoader::get_locale());
+			UserAccountsConfig::save();
 		}
-		
-		$user_accounts_config = UserAccountsConfig::load();
-		$user_accounts_config->set_default_lang(LangLoader::get_locale());
-		UserAccountsConfig::save();
 	}
 	
 	public function update_content()
@@ -439,8 +454,8 @@ class UpdateServices
 
 		$offset = 0;
 
-		while(preg_match('/s:([0-9]+):"/u', $text, $matches, PREG_OFFSET_CAPTURE, $offset) ||
-			  preg_match('/s:([0-9]+):"/u', $text, $matches, PREG_OFFSET_CAPTURE, ++$offset)) {
+		while (preg_match('/s:([0-9]+):"/u', $text, $matches, PREG_OFFSET_CAPTURE, $offset) || preg_match('/s:([0-9]+):"/u', $text, $matches, PREG_OFFSET_CAPTURE, ++$offset))
+		{
 			$number = $matches[1][0];
 			$pos = $matches[1][1];
 
@@ -452,7 +467,8 @@ class UpdateServices
 			$new_number = strlen($str);
 			$new_digits = strlen($new_number);
 
-			if($number != $new_number) {
+			if ($number != $new_number)
+			{
 				// Change stored number
 				$text = substr_replace($text, $new_number, $pos, $digits);
 				$pos += $new_digits - $digits;
@@ -462,6 +478,14 @@ class UpdateServices
 		}
 
 		return $text;
+	}
+	
+	private function restore_date_and_default_lang()
+	{
+		$this->user_accounts_config->set_default_lang($this->default_lang);
+		UserAccountsConfig::save();
+		$this->general_config->set_site_install_date($this->install_date);
+		GeneralConfig::save();
 	}
 	
 	private function get_class($directory, $pattern, $type)
