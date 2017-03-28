@@ -64,7 +64,7 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 			
 			if ($parser->get_content() != $row['content'])
 			{
-				$this->querier->update(PREFIX . 'wiki_contents', array('content' => $parser->get_content()), 'WHERE id_contents=:id', array('id' => $row['id']));
+				$this->querier->update(PREFIX . 'wiki_contents', array('content' => $parser->get_content()), 'WHERE id_contents=:id', array('id' => $row['id_contents']));
 				$updated_content++;
 			}
 		}
