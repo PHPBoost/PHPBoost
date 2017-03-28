@@ -213,7 +213,7 @@ div.lc-title {
 
 div.lc-img {
 	float: left;
-	background-image: url('../../templates/phpboost/theme/images/sprite-phpboost.png');
+	background-image: url(../../templates/phpboost/theme/images/sprite-phpboost.png);
 	background-repeat: no-repeat;
 	height: 48px;
 	width: 48px;
@@ -631,7 +631,7 @@ img.pbt-icon {
 	bottom: 5px;
 	z-index: 10;
 	overflow: hidden;
-	background-image: url('../../templates/phpboost/theme/images/sprite-phpboost.png');
+	background-image: url(../../templates/phpboost/theme/images/sprite-phpboost.png);
 	background-repeat: no-repeat;
 	border: none!important; 
 	box-shadow: none;
@@ -768,7 +768,7 @@ img.pbt-logo {
 }
 
 .subcat-img { 
-	background-image: url('../../templates/phpboost/theme/images/sprite-phpboost.png');
+	background-image: url(../../templates/phpboost/theme/images/sprite-phpboost.png);
 	background-repeat: no-repeat;
 	width: 128px;
 	height: 128px;

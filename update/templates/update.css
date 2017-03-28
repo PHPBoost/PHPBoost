@@ -37,7 +37,7 @@ div#update-site-logo {
 	margin-bottom: 10px;
 	width: 25px;
 	height:25px;
-	background-image: url('images/logo.png');
+	background-image: url(images/logo.png);
 	background-repeat: no-repeat;
 	background-position: center ; 
 	background-size: cover;

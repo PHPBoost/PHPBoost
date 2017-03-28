@@ -190,7 +190,7 @@ img.pbt-icon {
 	bottom: 5px;
 	z-index: 10;
 	overflow: hidden;
-	background: url('../../theme/images/sprite-phpboost.png');
+	background: url(../../theme/images/sprite-phpboost.png);
 	border: none!important; 
 	box-shadow: none;	
 }
@@ -227,7 +227,7 @@ img.pbt-logo {
 .pbt-logo-pdk,
 .pbt-logo-updates,
 .pbt-logo-releases {
-	background-image: url('../../theme/images/sprite-phpboost.png');
+	background-image: url(../../theme/images/sprite-phpboost.png);
 	background-repeat: no-repeat;
 	width: 64px;
 	height: 64px;
@@ -354,7 +354,7 @@ img.pbt-logo {
 }
 
 .subcat-img { 
-	background-image: url('../../theme/images/sprite-phpboost.png');
+	background-image: url(../../theme/images/sprite-phpboost.png);
 	background-repeat: no-repeat;
 	width: 128px;
 	height: 128px;

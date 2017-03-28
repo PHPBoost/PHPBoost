@@ -33,7 +33,7 @@
 			<div id="sub-header-admin">
 				<div id="admin-link">
 					<h3 class="menu-title">
-						<div class="site-logo" # IF C_HEADER_LOGO #style="background-image: url('{HEADER_LOGO}');"# ENDIF #></div>
+						<div class="site-logo" # IF C_HEADER_LOGO #style="background-image: url({HEADER_LOGO});"# ENDIF #></div>
 						<span>{L_ADMIN_MAIN_MENU}</span>
 					</h3>
 					# INCLUDE subheader_menu #

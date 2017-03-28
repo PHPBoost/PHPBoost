@@ -100,7 +100,7 @@ h3.menu-title {
 		display: inline-block;		
 		height: 25px;
 		width: 25px;
-		background-image: url('images/logo.png');
+		background-image: url(images/logo.png);
 		background-repeat: no-repeat;
 		background-position: center ; 
 		background-size: cover;
