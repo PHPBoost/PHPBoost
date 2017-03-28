@@ -11,7 +11,7 @@ header#header-admin {
 		z-index: 3;
 		max-width: 230px;
 		width:250px;
-		max-height: none;	
+		max-height: none;
 		height:100%;
 		overflow: hidden;
 	}
@@ -45,7 +45,7 @@ div#update-site-logo {
 }
 
 a#site-name {
-	font-size: 1.8em;	
+	font-size: 1.8em;
 }
 
 #site-slogan {
@@ -257,6 +257,13 @@ article {
 
 #chmod .form-element {
 	padding: 2px;
+}
+
+/* --- execute --- */
+
+span#update-in-progress {
+	display: none;
+	text-align: center;
 }
 
 /* --- finish --- */

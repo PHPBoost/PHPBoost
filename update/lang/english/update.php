@@ -121,6 +121,7 @@ $lang = array(
 //Execute update
 	'congratulations' => 'Congratulations!',
 	'step.execute.title' => 'Execute update',
+	'step.execute.update_in_progress' => 'Update in progress',
 	'step.execute.message' => 'Site update',
 	'step.execute.explanation' => 'This step will convert your site PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' to ' . UpdateServices::NEW_KERNEL_VERSION . ' PHPBoost.
 	<br /><br />
