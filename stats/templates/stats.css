@@ -118,15 +118,15 @@
 }
 
 .table-values-head {
-	background-image: url({PATH_TO_ROOT}/stats/templates/images/stats2.png);
+	background-image: url(images/stats2.png);
 	background-repeat: no-repeat;
 	margin-left: 2px;
 	height: 4px;
 	width: 10px;	 
 }
 
-.table-value {
-	background-image: url({PATH_TO_ROOT}/stats/templates/images/stats.png);
+.table-values {
+	background-image: url(images/stats.png);
 	background-repeat: repeat-y;
 	margin-left: 2px;
 	width: 10px;
