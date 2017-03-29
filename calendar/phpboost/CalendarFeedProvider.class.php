@@ -65,8 +65,10 @@ class CalendarFeedProvider implements FeedProvider
 			LEFT JOIN '. CalendarSetup::$calendar_cats_table .' cat ON cat.id = event_content.id_category
 			WHERE approved = 1
 			AND id_category IN :cats_ids
-			ORDER BY start_date DESC', array(
-				'cats_ids' => $ids_categories
+			AND start_date > :timestamp_now
+			ORDER BY start_date ASC', array(
+				'cats_ids' => $ids_categories,
+				'timestamp_now' => $now->get_timestamp()
 			));
 			
 			while ($row = $result->fetch())
@@ -84,7 +86,7 @@ class CalendarFeedProvider implements FeedProvider
 				$item->set_guid($link);
 				$item->set_desc(FormatingHelper::second_parse($event->get_content()->get_contents()) . ($event->get_content()->get_location() ? '<br />' . $lang['calendar.labels.location'] . ' : ' . $event->get_content()->get_location() . '<br />' : '') . '<br />' . $lang['calendar.labels.start_date'] . ' : ' . $event->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />' . $lang['calendar.labels.end_date'] . ' : ' . $event->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE));
 				$item->set_date($event->get_start_date());
-				$item->set_image_url($row['picture_url']);
+				$item->set_image_url($event->get_content()->get_picture()->rel());
 				$item->set_auth(CalendarService::get_categories_manager()->get_heritated_authorizations($category->get_id(), Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
 				$data->add_item($item);
 			}
