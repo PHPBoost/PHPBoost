@@ -44,7 +44,7 @@ $request = AppContext::get_request();
 $stats_referer = $request->get_getint('stats_referer', 0);
 $stats_keyword = $request->get_getint('stats_keyword', 0);
 
-if (!empty($stats_referer)) //Recherche d'un membre pour envoyer le mp.
+if (!empty($stats_referer))
 {
 	$idurl = $request->get_getint('id', 0);
 	$url = '';
@@ -65,32 +65,27 @@ if (!empty($stats_referer)) //Recherche d'un membre pour envoyer le mp.
 		{
 			$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
 			
-			echo '<table>
-				<tbody>
-					<tr>
-						<td class="no-separator">
-							<a href="' . $row['url'] . $row['relative_url'] . '">' . $row['relative_url'] . '</a>
-						</td>
-						<td class="no-separator" style="width:60px;">
-							' . $row['total_visit'] . '
-						</td>
-						<td class="no-separator" style="width:60px;">
-							' . $trend_parameters['average'] . '
-						</td>
-						<td class="no-separator" style="width:96px;">
-							' . Date::to_format($row['last_update'], Date::FORMAT_DAY_MONTH_YEAR) . '
-						</td>
-						<td class="no-separator" style="width:95px;">
-							' . ($trend_parameters['picture'] ? '<i class="fa fa-trend-' . $trend_parameters['picture'] . '"></i> ' : '') . '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)
-						</td>
-					</tr>
-				</tbody>
-			</table>';
+			$tpl = new FileTemplate('stats/stats_tables.tpl');
+			
+			$tpl->put_all(array(
+				'C_REFERER' => true,
+				'FULL_URL' => $row['url'] . $row['relative_url'],
+				'RELATIVE_URL' => $row['url'] . $row['relative_url'],
+				'TOTAL_VISIT' => $row['total_visit'],
+				'AVERAGE' => $trend_parameters['average'],
+				'LAST_UPDATE' => Date::to_format($row['last_update'], Date::FORMAT_DAY_MONTH_YEAR),
+				'C_PICTURE' => !empty($trend_parameters['picture']),
+				'PICTURE' => $trend_parameters['picture'],
+				'SIGN' => $trend_parameters['sign'],
+				'TREND' => $trend_parameters['trend'],
+			));
+			
+			echo $tpl->display();
 		}
 		$result->dispose();
 	}
 }
-elseif (!empty($stats_keyword)) //Recherche d'un membre pour envoyer le mp.
+elseif (!empty($stats_keyword))
 {
 	$idkeyword = $request->get_getint('id', 0);
 	$keyword = '';
@@ -111,27 +106,20 @@ elseif (!empty($stats_keyword)) //Recherche d'un membre pour envoyer le mp.
 		{
 			$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
 			
-			echo '<table>
-				<tbody>
-					<tr>
-						<td class="no-separator">
-							' . $row['url'] . '
-						</td>
-						<td class="no-separator" style="width:70px;">
-							' . $row['total_visit'] . '
-						</td>
-						<td class="no-separator" style="width:60px;">
-							' . $trend_parameters['average'] . '
-						</td>
-						<td class="no-separator" style="width:96px;">
-							' . Date::to_format($row['last_update'], Date::FORMAT_DAY_MONTH_YEAR) . '
-						</td>
-						<td class="no-separator" style="width:95px;">
-							' . ($trend_parameters['picture'] ? '<i class="fa fa-trend-' . $trend_parameters['picture'] . '"></i> ' : '') . '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)
-						</td>
-					</tr>
-				</tbody>
-			</table>';
+			$tpl = new FileTemplate('stats/stats_tables.tpl');
+			
+			$tpl->put_all(array(
+				'FULL_URL' => $row['url'],
+				'TOTAL_VISIT' => $row['total_visit'],
+				'AVERAGE' => $trend_parameters['average'],
+				'LAST_UPDATE' => Date::to_format($row['last_update'], Date::FORMAT_DAY_MONTH_YEAR),
+				'C_PICTURE' => !empty($trend_parameters['picture']),
+				'PICTURE' => $trend_parameters['picture'],
+				'SIGN' => $trend_parameters['sign'],
+				'TREND' => $trend_parameters['trend'],
+			));
+			
+			echo $tpl->display();
 		}
 		$result->dispose();
 	}
