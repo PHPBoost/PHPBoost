@@ -577,7 +577,12 @@ class UpdateServices
 	
 	private function delete_old_files_kernel()
 	{
-		
+		$file = new File(Url::to_rel('/kernel/lib/css/font-awesome/fonts/fontawesome-webfont.eot'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/lib/css/font-awesome/fonts/fontawesome-webfont.svg'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/lib/css/font-awesome/fonts/fontawesome.otf'));
+		$file->delete();
 	}
 	
 	private function delete_old_files_lang()
