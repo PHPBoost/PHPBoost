@@ -177,7 +177,7 @@ section header h1 {
 article header h2 {
 	padding: 10px;
 	border-bottom: none;
-	font-weight: 400;
+	font-weight: normal;
 }
 
 article h3 {
