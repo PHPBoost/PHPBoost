@@ -65,8 +65,10 @@ class CalendarFeedProvider implements FeedProvider
 			LEFT JOIN '. CalendarSetup::$calendar_cats_table .' cat ON cat.id = event_content.id_category
 			WHERE approved = 1
 			AND id_category IN :cats_ids
-			ORDER BY start_date DESC', array(
-				'cats_ids' => $ids_categories
+			AND start_date > :timestamp_now
+			ORDER BY start_date ASC', array(
+				'cats_ids' => $ids_categories,
+				'timestamp_now' => $now->get_timestamp()
 			));
 			
 			while ($row = $result->fetch())
