@@ -1,5 +1,5 @@
 <?php
-/* ##################################################
+/*##################################################
  * 		                   QuestionCaptchaConfig.class.php
  *                            -------------------
  *   begin                : May 9, 2014
@@ -7,7 +7,7 @@
  *   email                : j1.seth@phpboost.com
  *
  *
-  ###################################################
+ ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-  ################################################### */
+ ################################################### */
 
 /**
  * @author Julien BRISWALTER <j1.seth@phpboost.com>
@@ -40,6 +40,11 @@ class QuestionCaptchaConfig extends AbstractConfigData
 	public function set_questions(Array $array)
 	{
 		$this->set_property(self::QUESTIONS, $array);
+	}
+
+	public function count_questions()
+	{
+		return count($this->get_questions());
 	}
 
 	private function init_questions_array()
@@ -89,11 +94,5 @@ class QuestionCaptchaConfig extends AbstractConfigData
 	{
 		ConfigManager::save('question-captcha', self::load(), 'config');
 	}
-
-	public function count_questions()
-	{
-		return count($this->get_questions());
-	}
-
 }
 ?>
