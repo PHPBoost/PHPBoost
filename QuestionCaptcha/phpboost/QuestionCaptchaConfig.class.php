@@ -1,5 +1,4 @@
 <?php
-
 /* ##################################################
  * 		                   QuestionCaptchaConfig.class.php
  *                            -------------------
@@ -29,66 +28,72 @@
 /**
  * @author Julien BRISWALTER <j1.seth@phpboost.com>
  */
-class QuestionCaptchaConfig extends AbstractConfigData {
+class QuestionCaptchaConfig extends AbstractConfigData
+{
+	const QUESTIONS = 'questions';
 
-    const QUESTIONS = 'questions';
+	public function get_questions()
+	{
+		return $this->get_property(self::QUESTIONS);
+	}
 
-    public function get_questions() {
-        return $this -> get_property(self::QUESTIONS);
-    }
+	public function set_questions(Array $array)
+	{
+		$this->set_property(self::QUESTIONS, $array);
+	}
 
-    public function set_questions(Array $array) {
-        $this -> set_property(self::QUESTIONS, $array);
-    }
+	private function init_questions_array()
+	{
+		$questions = array();
 
-    private function init_questions_array() {
-        $questions = array();
+		$lang = LangLoader::get('install', 'QuestionCaptcha');
 
-        $lang = LangLoader::get('install', 'QuestionCaptcha');
+		$question = new QuestionCaptchaQuestion();
+		$question->set_label($lang['question1_label']);
+		$question->set_answers(explode(';', $lang['question1_answers']));
 
-        $question = new QuestionCaptchaQuestion();
-        $question -> set_label($lang['question1_label']);
-        $question -> set_answers(explode(';', $lang['question1_answers']));
+		$questions[1] = $question->get_properties();
 
-        $questions[1] = $question -> get_properties();
+		$question = new QuestionCaptchaQuestion();
+		$question->set_label($lang['question2_label']);
+		$question->set_answers(explode(';', $lang['question2_answers']));
 
-        $question = new QuestionCaptchaQuestion();
-        $question -> set_label($lang['question2_label']);
-        $question -> set_answers(explode(';', $lang['question2_answers']));
+		$questions[2] = $question->get_properties();
 
-        $questions[2] = $question -> get_properties();
+		return $questions;
+	}
 
-        return $questions;
-    }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_default_values()
+	{
+		return array(
+			self::QUESTIONS => self::init_questions_array()
+		);
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function get_default_values() {
-        return array(
-            self::QUESTIONS => self::init_questions_array()
-        );
-    }
+	/**
+	 * Returns the configuration.
+	 * @return QuestionCaptchaConfig
+	 */
+	public static function load()
+	{
+		return ConfigManager::load(__CLASS__, 'question-captcha', 'config');
+	}
 
-    /**
-     * Returns the configuration.
-     * @return QuestionCaptchaConfig
-     */
-    public static function load() {
-        return ConfigManager::load(__CLASS__, 'question-captcha', 'config');
-    }
+	/**
+	 * Saves the configuration in the database. Has it become persistent.
+	 */
+	public static function save()
+	{
+		ConfigManager::save('question-captcha', self::load(), 'config');
+	}
 
-    /**
-     * Saves the configuration in the database. Has it become persistent.
-     */
-    public static function save() {
-        ConfigManager::save('question-captcha', self::load(), 'config');
-    }
-
-    public function count_questions() {
-        return count($this-> get_questions());
-    }
+	public function count_questions()
+	{
+		return count($this->get_questions());
+	}
 
 }
-
 ?>
