@@ -136,7 +136,7 @@ class ContentManagementConfig extends AbstractConfigData
 		return array(
 			self::ANTI_FLOOD_ENABLED               => false,
 			self::ANTI_FLOOD_DURATION              => 7,
-			self::USED_CAPTCHA_MODULE              => 'ReCaptcha',
+			self::USED_CAPTCHA_MODULE              => 'QuestionCaptcha',
 			self::NEW_CONTENT_ENABLED              => true,
 			self::NEW_CONTENT_DURATION             => 5,
 			self::NEW_CONTENT_UNAUTHORIZED_MODULES => array(),
