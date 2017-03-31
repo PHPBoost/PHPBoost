@@ -140,9 +140,11 @@
 					<div class="content">
 						<div class="options infos">
 							<div class="center">
-								# IF weblinks.C_HAS_PARTNER_PICTURE #
-									<img src="{weblinks.U_PARTNER_PICTURE}" alt="{weblinks.NAME}" itemprop="image" />
-									<div class="spacer"></div>
+								# IF weblinks.C_PARTNER #
+									# IF weblinks.C_HAS_PARTNER_PICTURE #
+										<img src="{weblinks.U_PARTNER_PICTURE}" alt="{weblinks.NAME}" itemprop="image" />
+										<div class="spacer"></div>
+									# ENDIF #
 								# ENDIF #
 								# IF weblinks.C_VISIBLE #
 									<a href="{weblinks.U_VISIT}" class="basic-button">
