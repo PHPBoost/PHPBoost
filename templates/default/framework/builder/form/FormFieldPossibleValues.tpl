@@ -1,9 +1,9 @@
 <script>
 <!--
 var FormFieldPossibleValues = function(){
-	this.integer = parseInt(${escapejs(NBR_FIELDS)});
+	this.integer = {NBR_FIELDS};
 	this.id_input = ${escapejs(HTML_ID)};
-	this.max_input = parseInt(${escapejs(MAX_INPUT)});
+	this.max_input = {MAX_INPUT};
 };
 
 FormFieldPossibleValues.prototype = {
