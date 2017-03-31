@@ -66,6 +66,10 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 				if ($file_type->is_picture())
 				{
 					$this->save($header_logo, $theme);
+					$header_logo_path = $this->get_header_logo_path($theme);
+					$header_logo_file = new File(PATH_TO_ROOT . $header_logo_path);
+					$picture = '<img src="' . Url::to_rel($header_logo_file->get_path()) . '" alt="' . $this->lang['customization.interface.logo.current'] . '" title="' . $this->lang['customization.interface.logo.current'] . '"/>';
+					$this->form->get_field_by_id('current_logo')->set_value($picture);
 					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 				}
 				else
@@ -76,6 +80,8 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 			elseif ($this->form->get_value('use_default_logo'))
 			{
 				$this->delete_pictures_saved($theme);
+				$this->form->get_field_by_id('current_logo')->set_value($this->lang['customization.interface.logo.current.null']);
+				$this->form->get_field_by_id('use_default_logo')->set_value(FormFieldCheckbox::UNCHECKED);
 				$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 			}
 		}
