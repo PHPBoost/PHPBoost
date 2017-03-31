@@ -58,7 +58,6 @@ ContactFormFieldSelectMarker.prototype = {
 	},
 	delete_field : function (id) {
 		var id = this.id_input + '_' + id;
-		console.log(id);
 		jQuery('#' + id).remove();
 		this.integer--;
 		jQuery('#add-' + this.id_input).show();
