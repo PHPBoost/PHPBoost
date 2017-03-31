@@ -147,7 +147,13 @@ class DownloadFormController extends ModuleController
 			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->common_lang['form.date.creation'], $this->get_downloadfile()->get_creation_date(),
 				array('required' => true)
 			));
-			
+
+			if (!$this->get_downloadfile()->is_visible())
+			{
+				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->common_lang['form.update.date.creation'], false, array('hidden' => $this->get_downloadfile()->get_status() != DownloadFile::NOT_APPROVAL)
+				));
+			}
+
 			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('approbation_type', $this->common_lang['form.approbation'], $this->get_downloadfile()->get_approbation_type(),
 				array(
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.not'], DownloadFile::NOT_APPROVAL),
@@ -293,7 +299,16 @@ class DownloadFormController extends ModuleController
 		}
 		else
 		{
-			$downloadfile->set_creation_date($this->form->get_value('creation_date'));
+			
+			if ($this->form->get_value('update_creation_date'))
+			{
+				$downloadfile->set_creation_date(new Date());
+			}
+			else
+			{
+				$downloadfile->set_creation_date($this->form->get_value('creation_date'));
+			}
+			
 			$downloadfile->set_approbation_type($this->form->get_value('approbation_type')->get_raw_value());
 			if ($downloadfile->get_approbation_type() == DownloadFile::APPROVAL_DATE)
 			{

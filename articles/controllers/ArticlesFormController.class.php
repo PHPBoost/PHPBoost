@@ -173,6 +173,12 @@ class ArticlesFormController extends ModuleController
 				array('required' => true)
 			));
 
+			if (!$this->get_article()->is_published())
+			{
+				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->common_lang['form.update.date.creation'], false, array('hidden' => $this->get_article()->get_status() != Article::NOT_PUBLISHED)
+				));
+			}
+
 			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('publishing_state', $this->common_lang['form.approbation'], $this->get_article()->get_publishing_state(),
 				array(
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.not'], Article::NOT_PUBLISHED),
@@ -355,7 +361,15 @@ class ArticlesFormController extends ModuleController
 		}
 		else
 		{
-			$article->set_date_created($this->form->get_value('date_created'));
+			if ($this->form->get_value('update_creation_date'))
+			{
+				$article->set_date_created(new Date());
+			}
+			else
+			{
+				$article->set_date_created($this->form->get_value('date_created'));
+			}
+
 			$rewrited_title = $this->form->get_value('rewrited_title', '');
 			$rewrited_title = $this->form->get_value('personalize_rewrited_title') && !empty($rewrited_title) ? $rewrited_title : Url::encode_rewrite($article->get_title());
 			$article->set_rewrited_title($rewrited_title);
