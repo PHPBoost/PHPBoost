@@ -147,7 +147,7 @@ if (!empty($id_get))
 			
 			if (!in_array($row['cid'], $is_sub_forum))
 			{
-				if ($row['nbr_msg'] !== '0')
+				if ((int)$row['nbr_msg'] > 0)
 				{
 					//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
 					if (!empty($row['last_view_id'])) //Calcul de la page du last_view_id réalisé dans topic.php
