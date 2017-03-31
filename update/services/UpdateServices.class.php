@@ -500,7 +500,7 @@ class UpdateServices
 			
 			if ($parser->get_content() != $content)
 			{
-				$menu->set_content($content);
+				$menu->set_content($parser->get_content());
 				MenuService::save($menu);
 				$updated_content++;
 			}
