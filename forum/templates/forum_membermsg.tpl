@@ -68,14 +68,6 @@
 										{list.ext_fields.BUTTON}
 									# END list.ext_fields #
 								</span>
-								<span class="float-right">
-									&nbsp;
-									# IF list.C_FORUM_MODERATOR # 
-									{list.USER_WARNING}%
-									<a href="moderation_forum{list.U_FORUM_WARNING}" title="{L_WARNING_MANAGEMENT}" class="fa fa-warning"></a>
-									<a href="moderation_forum{list.U_FORUM_PUNISHEMENT}" title="{L_PUNISHMENT_MANAGEMENT}" class="fa fa-lock"></a>
-									# ENDIF #
-								</span>&nbsp;
 							</div>
 						</div>
 					</div>
