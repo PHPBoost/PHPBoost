@@ -237,6 +237,9 @@ class UpdateServices
 		// Mise à jour du contenu serialisé pour le passage en UTF-8
 		$this->update_serialized_data();
 		
+		// Mise à jour du contenu des menus de contenu
+		$this->update_content_menus();
+		
 		// Installation du module UrlUpdater pour la réécriture des Url des modules mis à jour
 		ModulesManager::install_module('UrlUpdater');
 		
@@ -470,6 +473,45 @@ class UpdateServices
 		}
 
 		return $text;
+	}
+	
+	public static function update_content_menus()
+	{
+		$unparser = new OldBBCodeUnparser();
+		$parser = new BBCodeParser();
+		
+		$result = self::$db_querier->select('SELECT id
+			FROM ' . PREFIX . 'menus
+			WHERE class = \'ContentMenu\''
+		);
+		
+		$selected_rows = $result->get_rows_count();
+		$updated_content = 0;
+		
+		while($row = $result->fetch())
+		{
+			$menu = MenuService::load($row['id']);
+			$content = $menu->get_content();
+			
+			$unparser->set_content($content);
+			$unparser->parse();
+			$parser->set_content($unparser->get_content());
+			$parser->parse();
+			
+			if ($parser->get_content() != $content)
+			{
+				$menu->set_content($content);
+				MenuService::save($menu);
+				$updated_content++;
+			}
+		}
+		$result->dispose();
+		
+		if ($updated_content)
+			MenuService::generate_cache();
+		
+		$object = new self('', false);
+		$object->add_information_to_file('table ' . PREFIX . 'menus', ': ' . $updated_content . ' content menus updated');
 	}
 	
 	private function get_class($directory, $pattern, $type)
