@@ -116,8 +116,11 @@ class WebFormController extends ModuleController
 				if (HTMLForms.getField("partner").getValue()) {
 					HTMLForms.getField("partner_picture").enable();
 					HTMLForms.getField("privileged_partner").enable();
+					if (HTMLForms.getField("partner_picture").getValue())
+						jQuery("#' . __CLASS__ . '_partner_picture_preview").show();
 				} else {
 					HTMLForms.getField("partner_picture").disable();
+					jQuery("#' . __CLASS__ . '_partner_picture_preview").hide();
 					HTMLForms.getField("privileged_partner").disable();
 				}'
 			)
@@ -266,8 +269,11 @@ class WebFormController extends ModuleController
 		$weblink->set_contents($this->form->get_value('contents'));
 		$weblink->set_short_contents(($this->form->get_value('short_contents_enabled') ? $this->form->get_value('short_contents') : ''));
 		$weblink->set_partner($this->form->get_value('partner'));
-		$weblink->set_partner_picture(new Url($this->form->get_value('partner_picture')));
-		$weblink->set_privileged_partner($this->form->get_value('privileged_partner'));
+		if ($this->form->get_value('partner'))
+		{
+			$weblink->set_partner_picture(new Url($this->form->get_value('partner_picture')));
+			$weblink->set_privileged_partner($this->form->get_value('privileged_partner'));
+		}
 		
 		if (!WebAuthorizationsService::check_authorizations($weblink->get_id_category())->moderation())
 		{
