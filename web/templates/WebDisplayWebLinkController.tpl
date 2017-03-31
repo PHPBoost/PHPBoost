@@ -34,9 +34,11 @@
 			<div class="content">
 				<div class="options infos">
 					<div class="center">
-						# IF C_HAS_PARTNER_PICTURE #
-							<img src="{U_PARTNER_PICTURE}" alt="{NAME}" itemprop="image" />
-							<div class="spacer"></div>
+						# IF C_PARTNER #
+							# IF C_HAS_PARTNER_PICTURE #
+								<img src="{U_PARTNER_PICTURE}" alt="{NAME}" itemprop="image" />
+								<div class="spacer"></div>
+							# ENDIF #
 						# ENDIF #
 						# IF C_VISIBLE #
 							<a href="{U_VISIT}" class="basic-button">
