@@ -1,9 +1,9 @@
 <script>
 <!--
 var ArticlesFormFieldSelectSources = function(){
-	this.integer = ${escapejs(NBR_FIELDS)};
+	this.integer = {NBR_FIELDS};
 	this.id_input = ${escapejs(ID)};
-	this.max_input = ${escapejs(MAX_INPUT)};
+	this.max_input = {MAX_INPUT};
 };
 
 ArticlesFormFieldSelectSources.prototype = {
@@ -15,10 +15,10 @@ ArticlesFormFieldSelectSources.prototype = {
 
 			jQuery('<input/> ', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{@form.source.name}'}).appendTo('#' + id);
 			jQuery('#' + id).append(' ');
-			
+
 			jQuery('<input/> ', {type : 'url', id : 'field_value_' + id, name : 'field_value_' + id, class : 'field-large', placeholder : '{@form.source.url}'}).appendTo('#' + id);
 			jQuery('#' + id).append(' ');
-			
+
 			jQuery('<a/> ', {href : 'javascript:ArticlesFormFieldSelectSources.delete_field('+ this.integer +');'}).html('<i class="fa fa-delete"></i>').appendTo('#' + id);
 
 			this.integer++;
@@ -48,4 +48,4 @@ var ArticlesFormFieldSelectSources = new ArticlesFormFieldSelectSources();
 		</div>
 # END fieldelements #
 </div>
-<a href="javascript:ArticlesFormFieldSelectSources.add_field();" id="add-${escape(ID)}" class="field-source-more-value" title="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus"></i></a> 
+<a href="javascript:ArticlesFormFieldSelectSources.add_field();" id="add-${escape(ID)}" class="field-source-more-value" title="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus"></i></a>
