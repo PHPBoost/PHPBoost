@@ -29,7 +29,7 @@ class GalleryDisplayCategoryController extends ModuleController
 {
 	private $lang;
 	private $tpl;
-	
+
 	private $category;
 	private $db_querier;
 
@@ -37,29 +37,29 @@ class GalleryDisplayCategoryController extends ModuleController
 	{
 		$this->db_querier = PersistenceContext::get_querier();
 	}
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
-		
+
 		$this->init();
-		
+
 		$this->build_view();
-		
+
 		return $this->generate_response();
 	}
-	
+
 	private function build_view()
 	{
 		global $LANG, $Bread_crumb;
-		
+
 		load_module_lang('gallery');
 		$g_idpics = (int)retrieve(GET, 'id', 0);
 		$g_views  = (bool)retrieve(GET, 'views', false);
 		$g_notes  = (bool)retrieve(GET, 'notes', false);
 		$g_sort   = retrieve(GET, 'sort', '');
 		$g_sort   = !empty($g_sort) ? 'sort=' . $g_sort : '';
-		
+
 		//Récupération du mode d'ordonnement.
 		if (preg_match('`([a-z]+)_([a-z]+)`u', $g_sort, $array_match))
 		{
@@ -68,63 +68,63 @@ class GalleryDisplayCategoryController extends ModuleController
 		}
 		else
 			list($g_type, $g_mode) = array('date', 'desc');
-		
+
 		$comments_topic = new GalleryCommentsTopic();
 		$config = GalleryConfig::load();
 		$comments_config = new GalleryComments();
 		$notation_config = new GalleryNotation();
 		$category = $this->get_category();
-		
+
 		$subcategories = GalleryService::get_categories_manager()->get_categories_cache()->get_children($category->get_id(), GalleryService::get_authorized_categories($category->get_id()));
 		$elements_number = $category->get_elements_number();
-		
+
 		$Gallery = new Gallery();
-		
+
 		$nbr_pics = $elements_number['pics_aprob'];
 		$total_cat = count($subcategories);
-		
+
 		//On crée une pagination si le nombre de catégories est trop important.
 		$page = AppContext::get_request()->get_getint('p', 1);
 		$pagination = new ModulePagination($page, $total_cat, $config->get_categories_number_per_page());
 		$pagination->set_url(new Url('/gallery/gallery.php?p=%d&amp;cat=' . $category->get_id() . '&amp;id=' . $g_idpics . '&amp;' . $g_sort));
-		
+
 		if ($pagination->current_page_is_empty() && $page > 1)
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		//Colonnes des catégories.
 		$nbr_column_cats = ($total_cat > $config->get_columns_number()) ? $config->get_columns_number() : $total_cat;
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 		$column_width_cats = floor(100/$nbr_column_cats);
-	
+
 		//Colonnes des images.
 		$nbr_column_pics = ($nbr_pics > $config->get_columns_number()) ? $config->get_columns_number() : $nbr_pics;
 		$nbr_column_pics = !empty($nbr_column_pics) ? $nbr_column_pics : 1;
 		$column_width_pics = floor(100/$nbr_column_pics);
-	
+
 		$is_admin = AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
 		$is_modo = GalleryAuthorizationsService::check_authorizations($category->get_id())->moderation();
-		
+
 		$module_data_path = $this->tpl->get_pictures_data_path();
 		$rewrite_title = Url::encode_rewrite($category->get_name());
-		
+
 		##### Catégorie disponibles #####
 		$nbr_cat_displayed = 0;
 		if ($total_cat > 0 && empty($g_idpics))
 		{
 			$this->tpl->put('C_GALLERY_CATS', true);
-			
+
 			foreach ($subcategories as $id => $cat)
 			{
 				$nbr_cat_displayed++;
-				
+
 				if ($nbr_cat_displayed > $pagination->get_display_from() && $nbr_cat_displayed <= ($pagination->get_display_from() + $pagination->get_number_items_per_page()))
 				{
 					$category_image = $cat->get_image()->rel();
 					$elements_number = $cat->get_elements_number();
-					
+
 					$this->tpl->assign_block_vars('sub_categories_list', array(
 						'C_CATEGORY_IMAGE' => !empty($category_image),
 						'CATEGORY_ID' => $category->get_id(),
@@ -136,9 +136,9 @@ class GalleryDisplayCategoryController extends ModuleController
 				}
 			}
 		}
-		
+
 		$category_description = FormatingHelper::second_parse($category->get_description());
-		
+
 		$this->tpl->put_all(array(
 			'C_ROOT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY,
 			'C_CATEGORY_DESCRIPTION' => $category_description,
@@ -196,7 +196,7 @@ class GalleryDisplayCategoryController extends ModuleController
 			'L_NOTES' => LangLoader::get_message('notes', 'common'),
 			'L_COM' => $LANG['com_s']
 		));
-	
+
 		##### Affichage des photos #####
 		if ($nbr_pics > 0)
 		{
@@ -236,9 +236,9 @@ class GalleryDisplayCategoryController extends ModuleController
 				$g_sql_sort = ' ORDER BY g.views DESC';
 			elseif ($g_notes)
 				$g_sql_sort = ' ORDER BY notes.average_notes DESC';
-	
+
 			$this->tpl->put('C_GALLERY_PICS', true);
-			
+
 			//Affichage d'une photo demandée.
 			if (!empty($g_idpics))
 			{
@@ -257,11 +257,11 @@ class GalleryDisplayCategoryController extends ModuleController
 						'id' => $g_idpics
 					));
 				} catch (RowNotFoundException $e) {}
-				
+
 				if ($info_pics && !empty($info_pics['id']))
 				{
 					$Bread_crumb->add(stripslashes($info_pics['name']), PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $info_pics['idcat'] . '&amp;id=' . $info_pics['id'], '-' . $info_pics['idcat'] . '-' . $info_pics['id'] . '.php'));
-					
+
 					//Affichage miniatures.
 					$id_previous = 0;
 					$id_next = 0;
@@ -270,7 +270,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					list($i, $reach_pics_pos, $pos_pics, $thumbnails_before, $thumbnails_after, $start_thumbnails, $end_thumbnails) = array(0, false, 0, 0, 0, $nbr_pics_display_before, $nbr_pics_display_after);
 					$array_pics = array();
 					$array_js = 'var array_pics = new Array();';
-					$result = $this->db_querier->select("SELECT g.id, g.idcat, g.path
+					$result = $this->db_querier->select("SELECT g.id, g.idcat, g.path, g.name
 					FROM " . GallerySetup::$gallery_table . " g
 					WHERE g.idcat = :idcat AND g.aprob = 1
 					" . $g_sql_sort, array(
@@ -281,10 +281,11 @@ class GalleryDisplayCategoryController extends ModuleController
 						//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
 						if (!file_exists(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path']))
 							$Gallery->Resize_pics(PATH_TO_ROOT . '/gallery/pics/' . $row['path']); //Redimensionnement + création miniature
-	
+
 						//Affichage de la liste des miniatures sous l'image.
-						$array_pics[] = '<td class="center" style="height:' . ($config->get_mini_max_height() + 16) . 'px"><span id="thumb' . $i . '"><a href="gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;sort=' . $g_sort, '-' . $row['idcat'] . '-' . $row['id'] . '.php?sort=' . $g_sort) . '#pics_max' . '"><img src="pics/thumbnails/' . $row['path'] . '" alt="' . $row['path'] . '" /></a></span></td>';
-	
+						$array_pics[] = '<td class="center" style="height:' . ($config->get_mini_max_height() + 16) . 'px"><span id="thumb' . $i . '"><a href="gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;sort=' . $g_sort, '-' . $row['idcat'] . '-' . $row['id'] . '.php?sort=' . $g_sort) . '#pics_max' . '" title="' . stripslashes($row['name']) . '"><img src="pics/thumbnails/' . $row['path'] . '" alt="' . stripslashes($row['name']) . '" /></a></span></td>';
+
+
 						if ($row['id'] == $g_idpics)
 						{
 							$reach_pics_pos = true;
@@ -310,7 +311,7 @@ class GalleryDisplayCategoryController extends ModuleController
 						$i++;
 					}
 					$result->dispose();
-					
+
 					$activ_note = ($notation_config->is_notation_enabled() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) );
 					if ($activ_note)
 					{
@@ -328,12 +329,12 @@ class GalleryDisplayCategoryController extends ModuleController
 						$end_thumbnails += $nbr_pics_display_before - $thumbnails_before;
 					if ($thumbnails_after < $nbr_pics_display_after)
 						$start_thumbnails += $nbr_pics_display_after - $thumbnails_after;
-	
+
 					$html_protected_name = $info_pics['name'];
-	
+
 					$comments_topic->set_id_in_module($info_pics['id']);
 					$comments_topic->set_url(new Url('/gallery/gallery.php?cat='. $category->get_id() .'&id=' . $g_idpics . '&com=0'));
-					
+
 					//Liste des catégories.
 					$search_category_children_options = new SearchCategoryChildrensOptions();
 					$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
@@ -347,9 +348,9 @@ class GalleryDisplayCategoryController extends ModuleController
 					{
 						$cat_list .= $option->display()->render();
 					}
-					
+
 					$group_color = User::get_group_color($info_pics['groups'], $info_pics['level']);
-					
+
 					$date = new DATE($info_pics['timestamp'], Timezone::SERVER_TIMEZONE);
 
 					//Affichage de l'image et de ses informations.
@@ -395,14 +396,15 @@ class GalleryDisplayCategoryController extends ModuleController
 						'L_THUMBNAILS' => $LANG['thumbnails'],
 						'U_DEL' => url('gallery.php?del=' . $info_pics['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;cat=' . $category->get_id()),
 						'U_MOVE' => url('gallery.php?id=' . $info_pics['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value'),
-						'U_PREVIOUS' => ($pos_pics > 0) ? '<a href="' . GalleryUrlBuilder::get_link_item($category->get_id(),$id_previous) . '#pics_max"><i class="fa fa-arrow-left fa-2x"></i></a> <a href="' . GalleryUrlBuilder::get_link_item($category->get_id(),$id_previous) . '#pics_max">' . $LANG['previous'] . '</a>' : '',
-						'U_NEXT' => ($pos_pics < ($i - 1)) ? '<a href="' . GalleryUrlBuilder::get_link_item($category->get_id(),$id_next) . '#pics_max">' . $LANG['next'] . '</a> <a href="' . GalleryUrlBuilder::get_link_item($category->get_id(),$id_next) . '#pics_max"><i class="fa fa-arrow-right fa-2x"></i></a>' : '',
+						'U_PREVIOUS' => ($pos_pics > 0) ? GalleryUrlBuilder::get_link_item($category->get_id(),$id_previous) : '',
+						'U_NEXT' => ($pos_pics < ($i - 1)) ? GalleryUrlBuilder::get_link_item($category->get_id(),$id_next) : '',
 						'U_LEFT_THUMBNAILS' => (($pos_pics - $start_thumbnails) > 0) ? '<span id="display_left"><a href="javascript:display_thumbnails(\'left\')"><i class="fa fa-arrow-left fa-2x"></i></a></span>' : '<span id="display_left"></span>',
 						'U_RIGHT_THUMBNAILS' => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics) ? '<span id="display_right"><a href="javascript:display_thumbnails(\'right\')"><i class="fa fa-arrow-right fa-2x"></i></a></span>' : '<span id="display_right"></span>',
 						'U_COMMENTS' => GalleryUrlBuilder::get_link_item($info_pics['idcat'],$info_pics['id'],0,$g_sort) .'#comments-list',
-						'U_IMG_MAX' => 'show_pics.php?id=' . $info_pics['id'] . '&amp;cat=' . $info_pics['idcat']
+						'U_IMG_MAX' => 'show_pics.php?id=' . $info_pics['id'] . '&amp;cat=' . $info_pics['idcat'],
+						'U_IMG_LIGHTBOX' => 'pics/' .$info_pics['path']
 					)));
-	
+
 					//Affichage de la liste des miniatures sous l'image.
 					$i = 0;
 					foreach ($array_pics as $pics)
@@ -415,7 +417,7 @@ class GalleryDisplayCategoryController extends ModuleController
 						}
 						$i++;
 					}
-	
+
 					//Commentaires
 					if (AppContext::get_request()->get_getint('com', 0) == 0 && $comments_config->are_comments_enabled())
 					{
@@ -428,18 +430,18 @@ class GalleryDisplayCategoryController extends ModuleController
 			else
 			{
 				$sort = retrieve(GET, 'sort', '');
-				
+
 				//On crée une pagination si le nombre de photos est trop important.
 				$page = AppContext::get_request()->get_getint('pp', 1);
 				$pagination = new ModulePagination($page, $nbr_pics, $config->get_pics_number_per_page());
 				$pagination->set_url(new Url('/gallery/gallery.php?pp=%d' . (!empty($sort) ? '&amp;sort=' . $sort : '') . '&amp;cat=' . $category->get_id()));
-				
+
 				if ($pagination->current_page_is_empty() && $page > 1)
 				{
 					$error_controller = PHPBoostErrors::unexisting_page();
 					DispatchManager::redirect($error_controller);
 				}
-				
+
 				$this->tpl->put_all(array(
 					'C_GALLERY_MODO' => $is_modo,
 					'C_PICTURE_NAME_DISPLAYED' => $config->is_title_enabled(),
@@ -453,7 +455,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					'L_VIEW' => $LANG['view'],
 					'L_VIEWS' => $LANG['views']
 				));
-				
+
 				$is_connected = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL);
 				$j = 0;
 				$result = $this->db_querier->select("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.aprob, m.display_name, m.groups, m.level, notes.average_notes, notes.number_notes, note.note
@@ -475,7 +477,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
 					if (!file_exists(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path']))
 						$Gallery->Resize_pics(PATH_TO_ROOT . '/gallery/pics/' . $row['path']); //Redimensionnement + création miniature
-					
+
 					$onclick = '';
 					//Affichage de l'image en grand.
 					if ($config->get_pics_enlargement_mode() == GalleryConfig::FULL_SCREEN) //Ouverture en popup plein écran.
@@ -497,7 +499,7 @@ class GalleryDisplayCategoryController extends ModuleController
 						$onclick = true;
 						$display_link = url('gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], 'gallery-' . $row['idcat'] . '-' . $row['id'] . '.php') . '#pics_max';
 					}
-					
+
 					//Liste des catégories.
 					$search_category_children_options = new SearchCategoryChildrensOptions();
 					$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
@@ -511,7 +513,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					{
 						$cat_list .= $option->display()->render();
 					}
-					
+
 					$notation = new Notation();
 					$notation->set_module_name('gallery');
 					$notation->set_notation_scale($notation_config->get_notation_scale());
@@ -519,12 +521,12 @@ class GalleryDisplayCategoryController extends ModuleController
 					$notation->set_number_notes( $row['number_notes']);
 					$notation->set_average_notes($row['average_notes']);
 					$notation->set_user_already_noted(!empty($row['note']));
-					
+
 					$group_color = User::get_group_color($row['groups'], $row['level']);
-					
+
 					$comments_topic->set_id_in_module($row['id']);
 					$new_content = new GalleryNewContent();
-					
+
 					$html_protected_name = $row['name'];
 					$this->tpl->assign_block_vars('pics_list', array(
 						'C_IMG_APROB' => $row['aprob'] == 1,
@@ -554,7 +556,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					));
 				}
 				$result->dispose();
-	
+
 				//Création des cellules du tableau si besoin est.
 				while (!is_int($j/$nbr_column_pics))
 				{
@@ -566,14 +568,14 @@ class GalleryDisplayCategoryController extends ModuleController
 			}
 		}
 	}
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'gallery');
 		$this->tpl = new FileTemplate('gallery/gallery.tpl');
 		$this->tpl->add_lang($this->lang);
 	}
-	
+
 	private function get_category()
 	{
 		if ($this->category === null)
@@ -595,7 +597,7 @@ class GalleryDisplayCategoryController extends ModuleController
 		}
 		return $this->category;
 	}
-	
+
 	private function check_authorizations()
 	{
 		$id_cat = $this->get_category()->get_id();
@@ -605,34 +607,34 @@ class GalleryDisplayCategoryController extends ModuleController
 			DispatchManager::redirect($error_controller);
 		}
 	}
-	
+
 	private function generate_response()
 	{
 		$response = new SiteDisplayResponse($this->tpl);
-		
+
 		$graphical_environment = $response->get_graphical_environment();
-		
+
 		if ($this->get_category()->get_id() != Category::ROOT_CATEGORY)
 			$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['module_title']);
 		else
 			$graphical_environment->set_page_title($this->lang['module_title']);
-		
+
 		$graphical_environment->get_seo_meta_data()->set_description($this->get_category()->get_description());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(GalleryUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), AppContext::get_request()->get_getint('page', 1)));
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], GalleryUrlBuilder::home());
-		
+
 		$categories = array_reverse(GalleryService::get_categories_manager()->get_parents($this->get_category()->get_id(), true));
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id() != Category::ROOT_CATEGORY)
 				$breadcrumb->add($category->get_name(), GalleryUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 		}
-		
+
 		return $response;
 	}
-	
+
 	public static function get_view()
 	{
 		$object = new self();
