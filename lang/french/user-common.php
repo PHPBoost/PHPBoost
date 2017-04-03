@@ -49,7 +49,7 @@ $lang['external-auth.email-not-found'] = 'L\'adresse email de votre compte n\'a 
 
 //Contribution
 $lang['contribution'] = 'Contribution';
-$lang['contribution.explain'] = 'Votre contribution suivra le parcours classique et sera traitée dans le panneau de contribution. Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.';
+$lang['contribution.explain'] = 'Votre contribution suivra le parcours classique et sera traitée dans le panneau de contribution. <span class="color-alert text-strong">La modification est possible tant que la contribution n\'a pas été approuvée.</span> Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.';
 $lang['contribution.description'] = 'Complément de contribution';
 $lang['contribution.description.explain'] = 'Expliquez les raisons de votre contribution. Ce champ est facultatif mais il peut aider un approbateur à prendre sa décision.';
 $lang['contribution.confirmed'] = 'Votre contribution a bien été enregistrée.';

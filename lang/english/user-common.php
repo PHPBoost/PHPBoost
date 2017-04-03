@@ -49,7 +49,7 @@ $lang['external-auth.email-not-found'] = 'The email address of your account coul
 
 //Contribution
 $lang['contribution'] = 'Contribution';
-$lang['contribution.explain'] = 'Your contribution will be treated in the contribution panel. In the next field, you can justify your contribution to explain your demarche to a moderator.';
+$lang['contribution.explain'] = 'Your contribution will be treated in the contribution panel. <span class="color-alert text-strong">Amendment is possible until the contribution has been approved.</span> In the next field, you can justify your contribution to explain your demarche to a moderator.';
 $lang['contribution.description'] = 'Contribution counterpart';
 $lang['contribution.description.explain'] = 'Explain the reasons of your contribution. This field is not required but it may help the moderator to make his decision.';
 $lang['contribution.confirmed'] = 'Your contribution has been saved.';
