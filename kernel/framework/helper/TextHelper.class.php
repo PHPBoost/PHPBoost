@@ -110,6 +110,21 @@ class TextHelper
 			return self::htmlspecialchars(TextHelper::substr(self::html_entity_decode($str), $start, $end), ENT_NOQUOTES);
 		}
 	}
+	
+	/**
+	 * @desc Cut string to the desired length, ending with the last full word.
+     * @param string $string A PHP string to convert to cut
+     * @param int $length The desired length
+	 * @return string The substring
+	 */
+	function cut_string($string, $length)
+	{
+		if (strlen($string) <= $length)
+			return $string;
+		
+		$str = mb_substr($string, 0, $length + 1, 'UTF-8');
+		return substr($str, 0, strrpos($str, ' '));
+	}
 
 	/**
 	 * @desc Exports a variable to be used in a javascript script.

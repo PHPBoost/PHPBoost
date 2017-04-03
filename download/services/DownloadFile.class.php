@@ -175,7 +175,7 @@ class DownloadFile
 		{
 			return FormatingHelper::second_parse($this->short_contents);
 		}
-		return TextHelper::mb_substr(@strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>'), 0, (int)DownloadConfig::NUMBER_CARACTERS_BEFORE_CUT);
+		return TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>'), (int)DownloadConfig::NUMBER_CARACTERS_BEFORE_CUT);
 	}
 	
 	public function get_approbation_type()
