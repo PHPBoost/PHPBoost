@@ -117,7 +117,7 @@ class TextHelper
      * @param int $length The desired length
 	 * @return string The substring
 	 */
-	function cut_string($string, $length)
+	public static function cut_string($string, $length)
 	{
 		if (strlen($string) <= $length)
 			return $string;
