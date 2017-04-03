@@ -18,6 +18,9 @@
 .news-picture {
 	float: left;
 	padding: 10px;
+}
+
+img.news-picture {
 	max-width: 40%;
 }
 
