@@ -33,7 +33,7 @@
 		# IF NOT C_CATEGORY_DISPLAYED_TABLE #<div class="spacer"></div># ENDIF #
 	# ENDIF #
 	
-	<div class="content articles-container">
+	<div class="content elements-container">
 	# IF C_WEBLINKS #
 		# IF C_MORE_THAN_ONE_WEBLINK #
 			# INCLUDE SORT_FORM #

@@ -180,6 +180,10 @@ ul.pagination-block-bis li a.next-page:hover {
 /* --- Block ==================================================================== */
 .block {
 	padding: 0.8em;
+	background-color: #FBFDFF;
+	border-style: solid;
+	border-width: 2px 1px 1px 1px;
+	border-color: #366493 #F1F1F1 #F1F1F1 #F1F1F1;
 }
 
 .block .content {
@@ -198,7 +202,7 @@ ul.pagination-block-bis li a.next-page:hover {
 	margin: 0;
 }
 
-.articles-container {
+.elements-container {
 	display: flex;
 	display: -ms-flexbox;
 	display: -webkit-flex;
@@ -209,7 +213,7 @@ ul.pagination-block-bis li a.next-page:hover {
 	align-content: flex-start;
 }
 
-.articles-container article {
+.elements-container > .block {
 	flex: 0 1 auto;
 	-ms-flex: 0 1 auto;
 	-webkit-flex: 0 1 auto;
@@ -217,16 +221,19 @@ ul.pagination-block-bis li a.next-page:hover {
 
 /* Gestion en colonnes pour ecran large*/
 @media (min-width: 769px) {
-	.articles-container {
+	.elements-container {
 		flex-direction: row;
 		-ms-flex-direction: row;
 		-webkit-flex-direction: row;
 		margin-left: -5px; /* @{gutter} */ 
 	}
 
-	.block { margin-left: 5px; } /* @{gutter} */ 
+	.block { 
+		margin-left: 5px; /* @{gutter} */ 
+		width: 100%;
+	} 
 	
-	.columns-2 .block { width: calc(100% / 2 - 5px); } /* calc(100% * 1 / @{number} - @{gutter}); */ 
+	.columns-2 .block { width: calc(100% / 2 - 5px); } /* calc(100% / @{number} - @{gutter}); */ 
 	.columns-3 .block { width: calc(100% / 3 - 5px); }
 	.columns-4 .block { width: calc(100% / 4 - 5px); }
 	.columns-5 .block { width: calc(100% / 5 - 5px); }
@@ -243,6 +250,7 @@ ul.pagination-block-bis li a.next-page:hover {
 		width: 100%;
 	}	
 }
+
 
 /* --- Exploreur des catégories ================================================= */
 .explorer .cats,

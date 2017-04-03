@@ -123,7 +123,7 @@
 		<br /><br />
 		<fieldset>
 			<legend>{L_TEMPLATES}</legend>
-			<div class="fieldset-inset articles-container columns-2">
+			<div class="fieldset-inset elements-container columns-2">
 				<div class="block center">
 					<img class="fieldset-img" src="display_stats.php?theme=1" alt="{L_TEMPLATES}" />
 				</div>
@@ -166,7 +166,7 @@
 		# IF C_DISPLAY_SEX #
 		<fieldset>
 			<legend>{L_SEX}</legend>
-			<div class="fieldset-inset articles-container columns-2">
+			<div class="fieldset-inset elements-container columns-2">
 				<div class="block center"><div class="bargraph">{GRAPH_RESULT_SEX}</div></div>
 				<div class="block">
 					<table id="table3">
@@ -243,7 +243,7 @@
 		<form action="admin_stats.php#stats" method="get">
 			<fieldset>
 				<legend>{L_VISITORS} {MONTH} {U_YEAR}</legend>
-				<div class="fieldset-inset articles-container columns-2">
+				<div class="fieldset-inset elements-container columns-2">
 					<div class="block center">
 						<p class="text-strong">{L_TOTAL}: {VISIT_TOTAL} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L_TODAY}: {VISIT_DAY}</p>
 						<p class="center">
@@ -367,7 +367,7 @@
 		# IF C_STATS_BROWSERS #
 		<fieldset>
 			<legend>{L_BROWSERS}</legend>
-			<div class="fieldset-inset articles-container columns-2">
+			<div class="fieldset-inset elements-container columns-2">
 				<div class="block center">
 					<div class="bargraph">{GRAPH_RESULT}</div>
 				</div>
@@ -405,7 +405,7 @@
 		# IF C_STATS_OS #
 		<fieldset>
 			<legend>{L_OS}</legend>
-			<div class="fieldset-inset articles-container columns-2">
+			<div class="fieldset-inset elements-container columns-2">
 				<div class="block center">
 					<div class="bargraph">{GRAPH_RESULT}</div>
 				</div>
@@ -443,7 +443,7 @@
 		# IF C_STATS_LANG #
 		<fieldset>
 			<legend>{L_LANG}</legend>
-			<div class="fieldset-inset articles-container columns-2">
+			<div class="fieldset-inset elements-container columns-2">
 				<div class="block center">
 					<div class="bargraph">{GRAPH_RESULT}</div>
 				</div>
@@ -691,7 +691,7 @@
 		<form action="admin_stats.php?bot=1#stats" name="form" method="post" style="margin:auto;" onsubmit="return check_form();">
 			<fieldset>
 				<legend>{L_ROBOTS}</legend>
-				<div class="fieldset-inset articles-container columns-2">
+				<div class="fieldset-inset elements-container columns-2">
 					# IF C_ROBOTS_DATA #
 					<div class="block center">
 						<img class="fieldset-img" src="display_stats.php?bot=1" alt="{L_ROBOTS}" />

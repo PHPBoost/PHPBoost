@@ -110,7 +110,7 @@
 				</tbody>
 			</table>
 			
-			<div class="articles-container">
+			<div class="elements-container">
 				<h3>{L_TEMPLATES}</h3>
 				<div class="block">
 					{GRAPH_RESULT_THEME}
@@ -151,7 +151,7 @@
 			# IF C_DISPLAY_SEX #
 			<div class="spacer"></div>
 			
-			<div class="articles-container"
+			<div class="elements-container"
 				<h3>{L_SEX}</h3>
 				<div class="block">
 					{GRAPH_RESULT_SEX}
@@ -237,7 +237,7 @@
 				<header>
 					<h2>{L_VISITORS}</h2>
 				</header>
-				<div class="articles-container">
+				<div class="elements-container">
 					<div class="block block-xlarge">
 						# IF U_YEAR #<div class="date-selector-filter">{MONTH} {U_YEAR}</div># ENDIF #
 						<div class="date-selector-container">
@@ -361,7 +361,7 @@
 			<header>
 				<h2>{L_BROWSERS}</h2>
 			</header>
-			<div class="content articles-container">
+			<div class="content elements-container">
 				<div class="block">
 					{GRAPH_RESULT}
 				</div>
@@ -402,7 +402,7 @@
 			<header>
 				<h2>{L_OS}</h2>
 			</header>
-			<div class="articles-container">
+			<div class="elements-container">
 				<div class="block">
 					{GRAPH_RESULT}
 				</div>
@@ -443,7 +443,7 @@
 			<header>
 				<h2>{L_LANG}</h2>
 			</header>
-			<div class="articles-container">
+			<div class="elements-container">
 				<div class="block">
 					{GRAPH_RESULT}
 				</div>

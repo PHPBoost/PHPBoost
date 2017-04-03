@@ -59,7 +59,6 @@ class AdminArticlesConfigController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->form->get_field_by_id('number_cols_display_cats')->set_hidden(!$this->config->are_cats_icon_enabled());
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 		}
 		
@@ -92,14 +91,8 @@ class AdminArticlesConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('display_icon_cats', $this->lang['articles_configuration.display_icon_cats'], $this->config->are_cats_icon_enabled(), array(
-		'events' => array('click' => '
-			if (HTMLForms.getField("display_icon_cats").getValue()) {
-				HTMLForms.getField("number_cols_display_cats").enable();
-			} else { 
-				HTMLForms.getField("number_cols_display_cats").disable();
-			}'
-		))));
+		$fieldset->add_field(new FormFieldCheckbox('display_icon_cats', $this->lang['articles_configuration.display_icon_cats'], $this->config->are_cats_icon_enabled()
+		));
 		
 		$fieldset->add_field(new FormFieldNumberEditor('number_cols_display_cats', $this->lang['articles_configuration.number_cols_display_cats'], $this->config->get_number_cols_display_cats(), 
 			array('min' => 1, 'max' => 4, 'required' => true),
@@ -153,11 +146,11 @@ class AdminArticlesConfigController extends AdminModuleController
 	private function save()
 	{
 		$this->config->set_number_articles_per_page($this->form->get_value('number_articles_per_page'));
+		$this->config->set_number_cols_display_cats($this->form->get_value('number_cols_display_cats'));
 		
 		if ($this->form->get_value('display_icon_cats'))
 		{
 			$this->config->enable_cats_icon();
-			$this->config->set_number_cols_display_cats($this->form->get_value('number_cols_display_cats'));
 		}
 		else
 		{

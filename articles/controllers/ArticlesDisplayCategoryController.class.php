@@ -199,7 +199,6 @@ class ArticlesDisplayCategoryController extends ModuleController
 		
 		$nbr_column_cats = ($nbr_cat_displayed > $this->config->get_number_cols_display_cats()) ? $this->config->get_number_cols_display_cats() : $nbr_cat_displayed;
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
-		$cats_columns_width = floor(100 / $nbr_column_cats);
 		
 		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
 		
@@ -214,7 +213,8 @@ class ArticlesDisplayCategoryController extends ModuleController
 			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),
 			'CATEGORY_DESCRIPTION' => $category_description,
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
-			'CATS_COLUMNS_WIDTH' => $cats_columns_width
+			'C_SEVERAL_CATS_COLUMNS' => $nbr_column_cats > 1,
+			'NUMBER_CATS_COLUMNS' => $nbr_column_cats
 		));
 	}
 	

@@ -139,7 +139,9 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		)));
 
 		$this->build_sorting_form($field, $mode);
-		
+
+		$number_columns_display_articles = $this->config->get_number_cols_display_cats();
+
 		$this->view->put_all(array(
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
@@ -149,7 +151,9 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			'C_COMMENTS_ENABLED' => $this->comments_config->are_comments_enabled(),
 			'C_NOTATION_ENABLED' => $this->notation_config->is_notation_enabled(),
 			'C_ARTICLES_FILTERS' => true,
-			'CATEGORY_NAME' => $this->get_keyword()->get_name()
+			'CATEGORY_NAME' => $this->get_keyword()->get_name(),
+			'C_SEVERAL_COLUMNS' => $number_columns_display_articles > 1,
+			'NUMBER_COLUMNS' => $number_columns_display_articles
 		));
 		
 		while ($row = $result->fetch())

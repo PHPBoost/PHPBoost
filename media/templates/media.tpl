@@ -58,7 +58,7 @@
 				</div>
 				<div class="spacer"></div>
 					
-				<div class="content articles-container">
+				<div class="content elements-container">
 					# START file #
 					<article id="article-media-{file.ID}" class="article-media article-several block# IF file.C_NEW_CONTENT # new-content# ENDIF #">
 						<header>

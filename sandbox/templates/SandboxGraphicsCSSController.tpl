@@ -364,7 +364,7 @@
 		</article>
 
 		<h4>{@css.blocks.medium}</h4>
-		<div class="articles-container columns-2" style="overflow: hidden;">
+		<div class="elements-container columns-2" style="overflow: hidden;">
 			<article class="block">
 				<header>
 					<h3>{@css.block.title}</h3>
@@ -386,7 +386,7 @@
 		</div>
 
 		<h4>{@css.blocks.small}</h4>
-		<div class="articles-container columns-3" style="overflow: hidden;">
+		<div class="elements-container columns-3" style="overflow: hidden;">
 			<article class="block">
 				<header>
 					<h3>{@css.block.title}</h3>

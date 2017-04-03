@@ -133,6 +133,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		
 		$nbr_articles_pending = $result->get_rows_count();
 		
+
 		$this->build_form($field, $mode);
 		
 		$this->view->put_all(array(
@@ -143,12 +144,15 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		
 		if ($nbr_articles_pending > 0)
 		{
+			$number_columns_display_articles = $config->get_number_cols_display_cats();
 			$this->view->put_all(array(
 				'C_ARTICLES_FILTERS' => true,
 				'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
 				'C_NOTATION_ENABLED' => $notation_config->is_notation_enabled(),
 				'C_PAGINATION' => $pagination->has_several_pages(),
-				'PAGINATION' => $pagination->display()
+				'PAGINATION' => $pagination->display(),
+				'C_SEVERAL_COLUMNS' => $number_columns_display_articles > 1,
+				'NUMBER_COLUMNS' => $number_columns_display_articles
 			));
 			
 			while($row = $result->fetch())
