@@ -109,82 +109,85 @@
 					 </tr>
 				</tbody>
 			</table>
-				
-			<h3>{L_TEMPLATES}</h3>
-			<div class="medium-block">
-				{GRAPH_RESULT_THEME}
-			</div>
-			<div class="medium-block">
-				<table id="table2">
-					<thead>
-						<tr>
-							<th>
-								{L_TEMPLATES} 
-							</th>
-							<th>
-								{L_COLORS}
-							</th>
-							<th>
-								{L_USERS}
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						# START templates #
-						<tr>
-							<td>
-								{templates.THEME} <span class="smaller">({templates.PERCENT}%)</span>
-							</td>
-							<td>
-								<div class="stats-color-square" style="background-color: {templates.COLOR};"></div>
-							</td>
-							<td>
-								{templates.NBR_THEME}
-							</td>
-						</tr>
-						# END templates #
-					</tbody>
-				</table>
-			</div>
 			
+			<div class="articles-container">
+				<h3>{L_TEMPLATES}</h3>
+				<div class="block">
+					{GRAPH_RESULT_THEME}
+				</div>
+				<div class="block">
+					<table id="table2">
+						<thead>
+							<tr>
+								<th>
+									{L_TEMPLATES} 
+								</th>
+								<th>
+									{L_COLORS}
+								</th>
+								<th>
+									{L_USERS}
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							# START templates #
+							<tr>
+								<td>
+									{templates.THEME} <span class="smaller">({templates.PERCENT}%)</span>
+								</td>
+								<td>
+									<div class="stats-color-square" style="background-color: {templates.COLOR};"></div>
+								</td>
+								<td>
+									{templates.NBR_THEME}
+								</td>
+							</tr>
+							# END templates #
+						</tbody>
+					</table>
+				</div>
+			</div>
 			# IF C_DISPLAY_SEX #
 			<div class="spacer"></div>
 			
-			<h3>{L_SEX}</h3>
-			<div class="medium-block">
-				{GRAPH_RESULT_SEX}
-			</div>
-			<div class="medium-block">
-				<table id="table3">
-					<thead>
-						<tr>
-							<th>
-								{L_SEX} 
-							</th>
-							<th>
-								{L_COLORS}
-							</th>
-							<th>
-								{L_USERS}
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						# START sex #
-						<tr>
-							<td>
-								{sex.SEX} <span class="smaller">({sex.PERCENT}%)</span>
-							</td>
-							<td>
-								<div class="stats-color-square" style="background-color: {sex.COLOR};"></div>
-							</td>
-							<td>
-								{sex.NBR_MBR}
-							</td>
-						</tr>
-						# END sex #
-					</tbody>
-				</table>
+			<div class="articles-container"
+				<h3>{L_SEX}</h3>
+				<div class="block">
+					{GRAPH_RESULT_SEX}
+				</div>
+				<div class="block">
+					<table id="table3">
+						<thead>
+							<tr>
+								<th>
+									{L_SEX} 
+								</th>
+								<th>
+									{L_COLORS}
+								</th>
+								<th>
+									{L_USERS}
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							# START sex #
+							<tr>
+								<td>
+									{sex.SEX} <span class="smaller">({sex.PERCENT}%)</span>
+								</td>
+								<td>
+									<div class="stats-color-square" style="background-color: {sex.COLOR};"></div>
+								</td>
+								<td>
+									{sex.NBR_MBR}
+								</td>
+							</tr>
+							# END sex #
+						</tbody>
+					</table>
+				</div>
 			</div>
 			# ENDIF #
 			
@@ -234,117 +237,119 @@
 				<header>
 					<h2>{L_VISITORS}</h2>
 				</header>
-				<div class="block">
-					# IF U_YEAR #<div class="date-selector-filter">{MONTH} {U_YEAR}</div># ENDIF #
-					<div class="date-selector-container">
-						<p class="text-strong">{L_TOTAL}: {VISIT_TOTAL} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L_TODAY}: {VISIT_DAY}</p>
-						<a class="fa fa-arrow-left" href="stats{U_PREVIOUS_LINK}#stats"></a>&nbsp;&nbsp;&nbsp;&nbsp;
-						# IF C_STATS_DAY #
-						<select name="d">
-							{STATS_DAY}
-						</select>
-						# ENDIF #
-						# IF C_STATS_MONTH #
-						<select name="m">
-							{STATS_MONTH}
-						</select>
-						# ENDIF #
-						# IF C_STATS_YEAR #
-						<select name="y">
-							{STATS_YEAR}
-						</select>
-						# ENDIF #
-						
-						&nbsp;&nbsp;&nbsp;&nbsp;
-						<a class="fa fa-arrow-right" href="stats{U_NEXT_LINK}#stats"></a>
-						<br /><br />
-						<p>
-							<input type="hidden" name="{TYPE}" value="1">
-							<input type="hidden" name="token" value="{TOKEN}">
-							<button type="submit" name="date" value="true" class="submit">{L_SUBMIT}</button>
-						</p>
+				<div class="articles-container">
+					<div class="block block-xlarge">
+						# IF U_YEAR #<div class="date-selector-filter">{MONTH} {U_YEAR}</div># ENDIF #
+						<div class="date-selector-container">
+							<p class="text-strong">{L_TOTAL}: {VISIT_TOTAL} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L_TODAY}: {VISIT_DAY}</p>
+							<a class="fa fa-arrow-left" href="stats{U_PREVIOUS_LINK}#stats"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+							# IF C_STATS_DAY #
+							<select name="d">
+								{STATS_DAY}
+							</select>
+							# ENDIF #
+							# IF C_STATS_MONTH #
+							<select name="m">
+								{STATS_MONTH}
+							</select>
+							# ENDIF #
+							# IF C_STATS_YEAR #
+							<select name="y">
+								{STATS_YEAR}
+							</select>
+							# ENDIF #
+							
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<a class="fa fa-arrow-right" href="stats{U_NEXT_LINK}#stats"></a>
+							<br /><br />
+							<p>
+								<input type="hidden" name="{TYPE}" value="1">
+								<input type="hidden" name="token" value="{TOKEN}">
+								<button type="submit" name="date" value="true" class="submit">{L_SUBMIT}</button>
+							</p>
+						</div>
 					</div>
-				</div>
-				<div class="medium-block">
-					# IF C_STATS_NO_GD #
-					<table id="table2">
-						<tbody>
-							<tr>
-								<td></td>
-								<td>
-									{MAX_NBR}
-								</td>
+					<div class="block">
+						# IF C_STATS_NO_GD #
+						<table id="table2">
+							<tbody>
+								<tr>
+									<td></td>
+									<td>
+										{MAX_NBR}
+									</td>
 
-								# START values #
-								<td>
-									<table>
-										<tbody>
-											# START values.head #
-											<tr>
-												<td class="table-values-head">
-												</td>
-											</tr>
-											# END values.head #
-											<tr>
-												<td class="table-values" style="height: {values.HEIGHT}px;">
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</td>
-								# END values #
+									# START values #
+									<td>
+										<table>
+											<tbody>
+												# START values.head #
+												<tr>
+													<td class="table-values-head">
+													</td>
+												</tr>
+												# END values.head #
+												<tr>
+													<td class="table-values" style="height: {values.HEIGHT}px;">
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+									# END values #
 
-								# START end_td #
-									{end_td.END_TD}
-								# END end_td #
-							</tr>
-							<tr>
-								<td></td>
-								<td>
-									0
-								</td>
-								# START legend #
-								<td>
-									{legend.LEGEND}
-								</td>
-								# END legend #
-							</tr>
-							<tr>
-								<td colspan="{COLSPAN}"></td>
-							</tr>
-						</tbody>
-					</table>
-					<br />
-					# ENDIF #
-					{GRAPH_RESULT}
-					<p class="center">{L_TOTAL}: {SUM_NBR}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{L_AVERAGE}: {MOY_NBR}</p>
-					<p class="center">{U_VISITS_MORE}</p>
-				</div>
-				<div class="medium-block">
-					<table id="table">
-						<thead>
-							<tr>
-								<th>
-									{L_DAY}
-								</th>
-								<th>
-									{L_VISITS_DAY}
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							# START value #
-							<tr>
-								<td>
-									{value.U_DETAILS}
-								</td>
-								<td>
-									{value.NBR}
-								</td>
-							</tr>
-							# END value #
-						</tbody>
-					</table>
+									# START end_td #
+										{end_td.END_TD}
+									# END end_td #
+								</tr>
+								<tr>
+									<td></td>
+									<td>
+										0
+									</td>
+									# START legend #
+									<td>
+										{legend.LEGEND}
+									</td>
+									# END legend #
+								</tr>
+								<tr>
+									<td colspan="{COLSPAN}"></td>
+								</tr>
+							</tbody>
+						</table>
+						<br />
+						# ENDIF #
+						{GRAPH_RESULT}
+						<p class="center">{L_TOTAL}: {SUM_NBR}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{L_AVERAGE}: {MOY_NBR}</p>
+						<p class="center">{U_VISITS_MORE}</p>
+					</div>
+					<div class="block">
+						<table id="table">
+							<thead>
+								<tr>
+									<th>
+										{L_DAY}
+									</th>
+									<th>
+										{L_VISITS_DAY}
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								# START value #
+								<tr>
+									<td>
+										{value.U_DETAILS}
+									</td>
+									<td>
+										{value.NBR}
+									</td>
+								</tr>
+								# END value #
+							</tbody>
+						</table>
+					</div>
 				</div>
 				<div class="spacer"></div>
 			</article>
@@ -356,36 +361,39 @@
 			<header>
 				<h2>{L_BROWSERS}</h2>
 			</header>
-			<div class="medium-block">
-				{GRAPH_RESULT}
-			</div>
-			<div class="medium-block">
-				<table id="table">
-					<thead>
-						<tr>
-							<th>{L_BROWSERS}</th>
-							<th>{L_COLORS}</th>
-							<th>{L_PERCENTAGE}</th>
-						</tr>
-					</thead>
-					<tbody>
-						# START list #
-						<tr>
-							<td class="no-separator">
-								{list.IMG}
-							</td>
-							<td class="no-separator">
-								<div class="stats-color-square" style="background-color: {list.COLOR};"></div>
-							</td>
-							<td class="no-separator">
-								{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
-							</td>
-						</tr>
-						# END list #
-					</tbody>
-				</table>
+			<div class="content articles-container">
+				<div class="block">
+					{GRAPH_RESULT}
+				</div>
+				<div class="block">
+					<table id="table">
+						<thead>
+							<tr>
+								<th>{L_BROWSERS}</th>
+								<th>{L_COLORS}</th>
+								<th>{L_PERCENTAGE}</th>
+							</tr>
+						</thead>
+						<tbody>
+							# START list #
+							<tr>
+								<td class="no-separator">
+									{list.IMG}
+								</td>
+								<td class="no-separator">
+									<div class="stats-color-square" style="background-color: {list.COLOR};"></div>
+								</td>
+								<td class="no-separator">
+									{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
+								</td>
+							</tr>
+							# END list #
+						</tbody>
+					</table>
+				</div>
 			</div>
 			<div class="spacer"></div>
+
 		</article>
 		# ENDIF #
 
@@ -394,34 +402,36 @@
 			<header>
 				<h2>{L_OS}</h2>
 			</header>
-			<div class="medium-block">
-				{GRAPH_RESULT}
-			</div>
-			<div class="medium-block">
-				<table id="table">
-					<thead>
-						<tr>
-							<th>{L_OS}</th>
-							<th>{L_COLORS}</th>
-							<th>{L_PERCENTAGE}</th>
-						</tr>
-					</thead>
-					<tbody>
-						# START list #
-						<tr>
-							<td class="no-separator">
-								{list.IMG}
-							</td>
-							<td class="no-separator">
-								<div class="stats-color-square" style="background-color: {list.COLOR};"></div>
-							</td>
-							<td class="no-separator">
-								{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
-							</td>
-						</tr>
-						# END list #
-					</tbody>
-				</table>
+			<div class="articles-container">
+				<div class="block">
+					{GRAPH_RESULT}
+				</div>
+				<div class="block">
+					<table id="table">
+						<thead>
+							<tr>
+								<th>{L_OS}</th>
+								<th>{L_COLORS}</th>
+								<th>{L_PERCENTAGE}</th>
+							</tr>
+						</thead>
+						<tbody>
+							# START list #
+							<tr>
+								<td class="no-separator">
+									{list.IMG}
+								</td>
+								<td class="no-separator">
+									<div class="stats-color-square" style="background-color: {list.COLOR};"></div>
+								</td>
+								<td class="no-separator">
+									{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
+								</td>
+							</tr>
+							# END list #
+						</tbody>
+					</table>
+				</div>
 			</div>
 			<div class="spacer"></div>
 		</article>
@@ -433,34 +443,36 @@
 			<header>
 				<h2>{L_LANG}</h2>
 			</header>
-			<div class="medium-block">
-				{GRAPH_RESULT}
-			</div>
-			<div class="medium-block">
-				<table id="table">
-					<thead>
-						<tr>
-							<th>{L_LANG}</th>
-							<th>{L_COLORS}</th>
-							<th>{L_PERCENTAGE}</th>
-						</tr>
-					</thead>
-					<tbody>
-						# START list #
-						<tr>
-							<td class="no-separator">
-								{list.IMG}
-							</td>
-							<td class="no-separator">
-								<div class="stats-color-square" style="background-color: {list.COLOR};"></div>
-							</td>
-							<td class="no-separator">
-								{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
-							</td>
-						</tr>
-						# END list #
-					</tbody>
-				</table>
+			<div class="articles-container">
+				<div class="block">
+					{GRAPH_RESULT}
+				</div>
+				<div class="block">
+					<table id="table">
+						<thead>
+							<tr>
+								<th>{L_LANG}</th>
+								<th>{L_COLORS}</th>
+								<th>{L_PERCENTAGE}</th>
+							</tr>
+						</thead>
+						<tbody>
+							# START list #
+							<tr>
+								<td class="no-separator">
+									{list.IMG}
+								</td>
+								<td class="no-separator">
+									<div class="stats-color-square" style="background-color: {list.COLOR};"></div>
+								</td>
+								<td class="no-separator">
+									{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
+								</td>
+							</tr>
+							# END list #
+						</tbody>
+					</table>
+				</div>
 			</div>
 			<div class="spacer"></div>
 		</article>

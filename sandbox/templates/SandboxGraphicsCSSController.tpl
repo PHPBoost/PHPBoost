@@ -364,8 +364,8 @@
 		</article>
 
 		<h4>{@css.blocks.medium}</h4>
-		<div style="overflow: hidden;">
-			<article class="medium-block">
+		<div class="articles-container columns-2" style="overflow: hidden;">
+			<article class="block">
 				<header>
 					<h3>{@css.block.title}</h3>
 				</header>
@@ -374,7 +374,7 @@
 				</div>
 				<footer></footer>
 			</article>
-			<article class="medium-block">
+			<article class="block">
 				<header>
 					<h3>{@css.block.title}</h3>
 				</header>
@@ -386,8 +386,8 @@
 		</div>
 
 		<h4>{@css.blocks.small}</h4>
-		<div style="overflow: hidden;">
-			<article class="small-block">
+		<div class="articles-container columns-3" style="overflow: hidden;">
+			<article class="block">
 				<header>
 					<h3>{@css.block.title}</h3>
 				</header>
@@ -396,7 +396,7 @@
 				</div>
 				<footer></footer>
 			</article>
-			<article class="small-block">
+			<article class="block">
 				<header>
 					<h3>{@css.block.title}</h3>
 				</header>
@@ -405,7 +405,7 @@
 				</div>
 				<footer></footer>
 			</article>
-			<article class="small-block">
+			<article class="block">
 				<header>
 					<h3>{@css.block.title}</h3>
 				</header>

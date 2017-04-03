@@ -119,6 +119,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 			'display_from' => $pagination->get_display_from()
 		)));
 
+		$number_columns_display_articles = $this->config->get_number_cols_display_cats();
 		$this->view->put_all(array(
 			'C_MOSAIC' => $this->config->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
 			'C_COMMENTS_ENABLED' => $this->comments_config->are_comments_enabled(),
@@ -127,6 +128,8 @@ class ArticlesDisplayCategoryController extends ModuleController
 			'C_DISPLAY_CATS_ICON' => $this->config->are_cats_icon_enabled(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_NO_ARTICLE_AVAILABLE' => $result->get_rows_count() == 0,
+			'C_SEVERAL_COLUMNS' => $number_columns_display_articles > 1,
+			'NUMBER_COLUMNS' => $number_columns_display_articles,
 			'C_ONE_ARTICLE_AVAILABLE' => $result->get_rows_count() == 1,
 			'C_TWO_ARTICLES_AVAILABLE' => $result->get_rows_count() == 2,
 			'PAGINATION' => $pagination->display(),

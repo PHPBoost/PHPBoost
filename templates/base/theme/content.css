@@ -29,17 +29,6 @@ article {
 	}
 }
 
-/* --- articles --- */
-.article-several.block,
-.article-several.small-block,
-.article-several.medium-block {
-	clear: none!important;
-}
-
-.article-several {
-	clear: both;
-}
-
 /* --- Titre d'une page ou d'un element d'un module --- */
 section header h1,
 article header h1 {
@@ -127,9 +116,7 @@ header span.actions a {
 }
 
 /* --- Block --- */
-.block,
-.medium-block,
-.small-block {
+.block {
 	padding: 0.8em;
 	background-color: #FBFDFF;
 	border-style: solid;
@@ -137,20 +124,12 @@ header span.actions a {
 	border-color: #366493 #F1F1F1 #F1F1F1 #F1F1F1;
 }
 
-.block .content,
-.medium-block .content,
-.small-block .content {
+.block .content {
 	margin: 0;
 }
 
-.block h1,
-.medium-block h1,
-.small-block h1 {
+.block h1 {
 	border: none;
-}
-
-.block {
-	width: auto;
 }
 
 .block header {
@@ -161,37 +140,52 @@ header span.actions a {
 	margin: 0;
 }
 
-.medium-block,
-.small-block {
-	float: left;
-	margin: 1% 0.5%;
+.articles-container {
+	display: flex;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	flex-direction: column;
+	-ms-flex-direction: column;
+	-webkit-flex-direction: column;
+	flex-wrap: wrap;
+	align-content: flex-start;
 }
 
-/* ---- Affiche 2 blocs côte a côte ---- */
-.medium-block {
-	width: 49.00%;
+.articles-container article {
+	flex: 0 1 auto;
+	-ms-flex: 0 1 auto;
+	-webkit-flex: 0 1 auto;
 }
 
-/* ---- Affiche 3 blocs côte a côte ---- */
-.small-block {
-	width: 32.33%;
-}
-
-/* ---- Affiche des blocs en vertical ---- */
-@media (max-width: 480px) {
-	.small-block,
-	.medium-block {
-		width: 100%;
-		margin: 1% 0%;
+/* Gestion en colonnes pour ecran large*/
+@media (min-width: 769px) {
+	.articles-container {
+		flex-direction: row;
+		-ms-flex-direction: row;
+		-webkit-flex-direction: row;
+		margin-left: -5px; /* @{gutter} */ 
 	}
+
+	.block { margin-left: 5px; } /* @{gutter} */ 
+	
+	.columns-2 .block { width: calc(100% / 2 - 5px); } /* calc(100% * 1 / @{number} - @{gutter}); */ 
+	.columns-3 .block { width: calc(100% / 3 - 5px); }
+	.columns-4 .block { width: calc(100% / 4 - 5px); }
+	.columns-5 .block { width: calc(100% / 5 - 5px); }
+	.columns-6 .block { width: calc(100% / 6 - 5px); }
+	.columns-7 .block { width: calc(100% / 7 - 5px); }
+	
+	.block-xlarge { width: 100%!important; } /* Extension du bloc sur une ligne complète */
 }
 
+/* Gestion en ligne pour petit ecran */
 @media (max-width: 768px) {
 	.block {
+		margin-bottom: 5px;
 		width: 100%;
-		margin: 1em 0;
-	}
+	}	
 }
+
 
 /* ---- Friends content ---- */
 .content-friends {

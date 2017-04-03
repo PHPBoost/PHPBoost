@@ -1,6 +1,4 @@
-#module-stats .block,
-#module-stats .medium-block,
-#module-stats .small-block {
+#module-stats .block {
 	padding: 0.8em;
 	background: transparent;
 	border: none;

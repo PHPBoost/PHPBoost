@@ -178,63 +178,70 @@ ul.pagination-block-bis li a.next-page:hover {
 }
 
 /* --- Block ==================================================================== */
-.block .content,
-.medium-block .content,
-.small-block .content {
+.block {
+	padding: 0.8em;
+}
+
+.block .content {
 	margin: 0;
 }
 
-.block h1,
-.medium-block h1,
-.small-block h1 {
+.block h1 {
 	border: none;
 }
 
-.block {
-	width: auto;
-}
-
 .block header {
-	margin-bottom: 10px;
+	margin: 0 0 1% 0;
 }
 
 .block footer {
 	margin: 0;
 }
 
-.medium-block,
-.small-block {
-	display: inline-block;
-	margin: 0.5%;
-	vertical-align: top;
+.articles-container {
+	display: flex;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	flex-direction: column;
+	-ms-flex-direction: column;
+	-webkit-flex-direction: column;
+	flex-wrap: wrap;
+	align-content: flex-start;
 }
 
-.small-block,
-.medium-block {
-	float: left;
-	margin: 0;
-	width: 100%;
+.articles-container article {
+	flex: 0 1 auto;
+	-ms-flex: 0 1 auto;
+	-webkit-flex: 0 1 auto;
 }
 
-.medium-block select{
-	margin-bottom: 10px;
+/* Gestion en colonnes pour ecran large*/
+@media (min-width: 769px) {
+	.articles-container {
+		flex-direction: row;
+		-ms-flex-direction: row;
+		-webkit-flex-direction: row;
+		margin-left: -5px; /* @{gutter} */ 
+	}
+
+	.block { margin-left: 5px; } /* @{gutter} */ 
+	
+	.columns-2 .block { width: calc(100% / 2 - 5px); } /* calc(100% * 1 / @{number} - @{gutter}); */ 
+	.columns-3 .block { width: calc(100% / 3 - 5px); }
+	.columns-4 .block { width: calc(100% / 4 - 5px); }
+	.columns-5 .block { width: calc(100% / 5 - 5px); }
+	.columns-6 .block { width: calc(100% / 6 - 5px); }
+	.columns-7 .block { width: calc(100% / 7 - 5px); }
+	
+	.block-xlarge { width: 100%!important; } /* Extension du bloc sur une ligne complète */
 }
 
-@media (min-width: 981px) {
-	.small-block,
-	.medium-block {
-		float: left;
-	}
-
-	/* Affiche 3 blocs côte à côte */
-	.small-block {
-		width: 33.33%;
-	}
-
-	/* Affiche 2 blocs côte à côte */
-	.medium-block {
-		width: 50%;
-	}
+/* Gestion en ligne pour petit ecran */
+@media (max-width: 768px) {
+	.block {
+		margin-bottom: 5px;
+		width: 100%;
+	}	
 }
 
 /* --- Exploreur des catégories ================================================= */

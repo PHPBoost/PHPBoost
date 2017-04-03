@@ -272,9 +272,9 @@ $lang['css.message.question'] = 'Ceci est une question:<br /> est-ce que l\'affi
 //Blocs
 $lang['css.blocks'] = 'Blocs';
 $lang['css.block.title'] = 'Titre de l\'article';
-$lang['css.blocks.large'] = '1 par ligne (.block)';
-$lang['css.blocks.medium'] = '2 par ligne (.medium-block)';
-$lang['css.blocks.small'] = '3 par ligne (.small-block)';
+$lang['css.blocks.large'] = '1 par ligne (.columns-1)';
+$lang['css.blocks.medium'] = '2 par ligne (.columns-2)';
+$lang['css.blocks.small'] = '3 par ligne (.columns-3)';
 
 // --- Styles spécifiques du BBCode
 

@@ -31,7 +31,7 @@
 		# IF NOT C_CATEGORY_DISPLAYED_TABLE #<div class="spacer"></div># ENDIF #
 	# ENDIF #
 	
-	<div class="content">
+	<div class="content articles-container">
 	# IF C_FILES #
 		# IF C_MORE_THAN_ONE_FILE #
 			# INCLUDE SORT_FORM #

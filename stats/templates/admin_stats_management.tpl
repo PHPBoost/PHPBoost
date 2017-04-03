@@ -123,11 +123,11 @@
 		<br /><br />
 		<fieldset>
 			<legend>{L_TEMPLATES}</legend>
-			<div class="fieldset-inset">
-				<div class="medium-block center">
+			<div class="fieldset-inset articles-container columns-2">
+				<div class="block center">
 					<img class="fieldset-img" src="display_stats.php?theme=1" alt="{L_TEMPLATES}" />
 				</div>
-				<div class="medium-block">
+				<div class="block">
 					<table id="table2">
 						<thead>
 							<tr>
@@ -166,9 +166,9 @@
 		# IF C_DISPLAY_SEX #
 		<fieldset>
 			<legend>{L_SEX}</legend>
-			<div class="fieldset-inset">
-				<div class="medium-block center"><div class="bargraph">{GRAPH_RESULT_SEX}</div></div>
-				<div class="medium-block">
+			<div class="fieldset-inset articles-container columns-2">
+				<div class="block center"><div class="bargraph">{GRAPH_RESULT_SEX}</div></div>
+				<div class="block">
 					<table id="table3">
 						<thead>
 							<tr>
@@ -243,8 +243,8 @@
 		<form action="admin_stats.php#stats" method="get">
 			<fieldset>
 				<legend>{L_VISITORS} {MONTH} {U_YEAR}</legend>
-				<div class="fieldset-inset">
-					<div class="medium-block center">
+				<div class="fieldset-inset articles-container columns-2">
+					<div class="block center">
 						<p class="text-strong">{L_TOTAL}: {VISIT_TOTAL} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L_TODAY}: {VISIT_DAY}</p>
 						<p class="center">
 							<a class="fa fa-arrow-left" href="admin_stats{U_PREVIOUS_LINK}#stats"></a>&nbsp;
@@ -272,7 +272,7 @@
 						<input type="hidden" name="token" value="{TOKEN}">
 						&nbsp;&nbsp;&nbsp;&nbsp;
 					</div>
-					<div class="medium-block center">
+					<div class="block center">
 						# IF C_STATS_NO_GD #
 							<table id="table">
 								<tbody>
@@ -367,11 +367,11 @@
 		# IF C_STATS_BROWSERS #
 		<fieldset>
 			<legend>{L_BROWSERS}</legend>
-			<div class="fieldset-inset">
-				<div class="medium-block center">
+			<div class="fieldset-inset articles-container columns-2">
+				<div class="block center">
 					<div class="bargraph">{GRAPH_RESULT}</div>
 				</div>
-				<div class="medium-block">
+				<div class="block">
 					<table id="table">
 						<thead>
 							<tr>
@@ -405,11 +405,11 @@
 		# IF C_STATS_OS #
 		<fieldset>
 			<legend>{L_OS}</legend>
-			<div class="fieldset-inset">
-				<div class="medium-block center">
+			<div class="fieldset-inset articles-container columns-2">
+				<div class="block center">
 					<div class="bargraph">{GRAPH_RESULT}</div>
 				</div>
-				<div class="medium-block">
+				<div class="block">
 					<table id="table">
 						<thead>
 							<tr>
@@ -443,11 +443,11 @@
 		# IF C_STATS_LANG #
 		<fieldset>
 			<legend>{L_LANG}</legend>
-			<div class="fieldset-inset">
-				<div class="medium-block center">
+			<div class="fieldset-inset articles-container columns-2">
+				<div class="block center">
 					<div class="bargraph">{GRAPH_RESULT}</div>
 				</div>
-				<div class="medium-block">
+				<div class="block">
 					<table id="table">
 						<thead>
 							<tr>
@@ -691,13 +691,13 @@
 		<form action="admin_stats.php?bot=1#stats" name="form" method="post" style="margin:auto;" onsubmit="return check_form();">
 			<fieldset>
 				<legend>{L_ROBOTS}</legend>
-				<div class="fieldset-inset">
+				<div class="fieldset-inset articles-container columns-2">
 					# IF C_ROBOTS_DATA #
-					<div class="medium-block center">
+					<div class="block center">
 						<img class="fieldset-img" src="display_stats.php?bot=1" alt="{L_ROBOTS}" />
 					</div>
 					# ENDIF #
-					<div class="medium-block">
+					<div class="block">
 						<table id="table">
 							<thead>
 								<tr>

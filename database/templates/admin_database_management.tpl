@@ -36,13 +36,13 @@
 				</fieldset>
 				<fieldset>
 						<legend>{L_DB_RESTORE}</legend>
-						<div class="fieldset-inset">
-								<div class="db-restore medium-block">
+						<div class="fieldset-inset articles-container columns-2">
+								<div class="db-restore block">
 									{L_RESTORE_FROM_SERVER}
 										<br /><br />
 										<a href="admin_database.php?action=restore">{L_FILE_LIST}</a>
 								</div>
-								<div class="db-restore medium-block">
+								<div class="db-restore block">
 										{L_RESTORE_FROM_UPLOADED_FILE}
 										<br /><br />
 										<input type="file" class="file" name="file_sql">
@@ -151,16 +151,16 @@
 								<legend>{ACTION_FOR_SELECTION}</legend>
 								<div class="fieldset-inset">
 										<input type="hidden" name="token" value="{TOKEN}">
-										<ul class="center">
-											<li class="small-block">
+										<ul class="articles-container columns-3 center">
+											<li class="block">
 												<i class="fa fa-bar-chart fa-2x"></i> 
 												<button type="submit" name="optimize" value="true" class="submit">{L_OPTIMIZE}</button>
 											</li>
-											<li class="small-block">
+											<li class="block">
 												<i class="fa fa-cogs fa-2x"></i> 
 												<button type="submit" name="repair" value="true" class="submit">{L_REPAIR}</button>
 											</li>
-											<li class="small-block">
+											<li class="block">
 												<i class="fa fa-save fa-2x"></i> 
 												<button type="submit" name="backup" value="true" class="submit">{L_BACKUP}</button>
 											</li>

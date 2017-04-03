@@ -31,6 +31,7 @@
 	# IF C_SUBCATEGORIES_PAGINATION #<span class="center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
 	# ENDIF #
 	
+	
 	# IF C_NO_ARTICLE_AVAILABLE #
 		# IF NOT C_HIDE_NO_ITEM_MESSAGE #
 		<div class="center">
@@ -42,8 +43,9 @@
 			# INCLUDE FORM #
 		# ENDIF #
 		<div class="spacer"></div>
+		<div class="content articles-container# IF C_SEVERAL_COLUMNS # columns-{NUMBER_COLUMNS}# ENDIF#">
 			# START articles #
-				<article id="article-articles-{articles.ID}" class="article-articles article-several# IF C_MOSAIC # small-block# ENDIF ## IF C_ONE_ARTICLE_AVAILABLE # one-article# ENDIF ## IF C_TWO_ARTICLES_AVAILABLE # two-articles# ENDIF ## IF articles.C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+				<article id="article-articles-{articles.ID}" class="article-articles article-several# IF C_MOSAIC # block# ENDIF ## IF articles.C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 					<header>
 						<h2>
 							<a itemprop="url" href="{articles.U_ARTICLE}"><span itemprop="name">{articles.TITLE}</span></a>
@@ -97,6 +99,7 @@
 					<footer></footer>
 				</article>
 			# END articles #
+		</div>
 	# ENDIF #
 		<div class="spacer"></div>
 	<footer># IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #</footer>

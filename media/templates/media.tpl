@@ -32,77 +32,81 @@
 					<div class="spacer"></div>
 				# ENDIF #
 
-				<div class="content">
-					# IF C_FILES #
-						<div class="options" id="form">
-							<script>
-							<!--
-							function change_order()
-							{
-								window.location = "{TARGET_ON_CHANGE_ORDER}sort=" + document.getElementById("sort").value + "&mode=" + document.getElementById("mode").value;
-							}
-							-->
-							</script>
-							{L_ORDER_BY}
-							<select name="sort" id="sort" class="nav" onchange="change_order()">
-								<option value="alpha"{SELECTED_ALPHA}>{L_ALPHA}</option>
-								<option value="date"{SELECTED_DATE}>{L_DATE}</option>
-								<option value="nbr"{SELECTED_NBR}>{L_NBR}</option>
-								# IF C_DISPLAY_NOTATION #<option value="note"{SELECTED_NOTE}>{L_NOTE}</option># ENDIF #
-								# IF C_DISPLAY_COMMENTS #<option value="com"{SELECTED_COM}>{L_COM}</option># ENDIF #
-							</select>
-							<select name="mode" id="mode" class="nav" onchange="change_order()">
-								<option value="asc"{SELECTED_ASC}>{L_ASC}</option>
-								<option value="desc"{SELECTED_DESC}>{L_DESC}</option>
-							</select>
-						</div>
-						<div class="spacer"></div>
-
-						# START file #
-							<article id="article-media-{file.ID}" class="article-media article-several block# IF file.C_NEW_CONTENT # new-content# ENDIF #">
-								<header>
-									<h2>
-										<a href="{file.U_MEDIA_LINK}">{file.NAME}</a>
-										# IF C_MODO #
-										<span class="actions">
-											<a href="{file.U_ADMIN_UNVISIBLE_MEDIA}" class="fa fa-eye-slash" title="{L_UNAPROBED}"></a>
-											<a href="{file.U_ADMIN_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
-											<a href="{file.U_ADMIN_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
-										</span>
-										# ENDIF #
-									</h2>
-								</header>
-								<div class="content">
-									# IF file.C_DESCRIPTION #
-										# IF file.C_HAS_PICTURE #<a href="{file.U_MEDIA_LINK}"><img itemprop="thumbnailUrl" src="{file.PICTURE}" class="media-picture" alt="{file.NAME}" /></a># ENDIF #
-										<div class="media-desc">
-										{file.DESCRIPTION}
-										</div>
-									# ENDIF #
-									<div class="spacer"></div>
-									<div class="smaller">
-										{L_BY} {file.AUTHOR}
-										<br />
-										{file.COUNT}
-										<br />
-										# IF C_DISPLAY_COMMENTS #
-										{file.U_COM_LINK}
-										<br />
-										# ENDIF #
-										# IF C_DISPLAY_NOTATION #
-										{L_NOTE} {file.NOTE}
-										# ENDIF #
-									</div>
-								</div>
-								<footer></footer>
-							</article>
-						# END file #
-					# ENDIF #
-
-					# IF C_DISPLAY_NO_FILE_MSG #
-						<div class="notice">${LangLoader::get_message('no_item_now', 'common')}</div>
-					# ENDIF #
+				
+				# IF C_FILES #
+				<div class="options" id="form">
+					<script>
+					<!--
+					function change_order()
+					{
+						window.location = "{TARGET_ON_CHANGE_ORDER}sort=" + document.getElementById("sort").value + "&mode=" + document.getElementById("mode").value;
+					}
+					-->
+					</script>
+					{L_ORDER_BY}
+					<select name="sort" id="sort" class="nav" onchange="change_order()">
+						<option value="alpha"{SELECTED_ALPHA}>{L_ALPHA}</option>
+						<option value="date"{SELECTED_DATE}>{L_DATE}</option>
+						<option value="nbr"{SELECTED_NBR}>{L_NBR}</option>
+						# IF C_DISPLAY_NOTATION #<option value="note"{SELECTED_NOTE}>{L_NOTE}</option># ENDIF #
+						# IF C_DISPLAY_COMMENTS #<option value="com"{SELECTED_COM}>{L_COM}</option># ENDIF #
+					</select>
+					<select name="mode" id="mode" class="nav" onchange="change_order()">
+						<option value="asc"{SELECTED_ASC}>{L_ASC}</option>
+						<option value="desc"{SELECTED_DESC}>{L_DESC}</option>
+					</select>
 				</div>
+				<div class="spacer"></div>
+					
+				<div class="content articles-container">
+					# START file #
+					<article id="article-media-{file.ID}" class="article-media article-several block# IF file.C_NEW_CONTENT # new-content# ENDIF #">
+						<header>
+							<h2>
+								<a href="{file.U_MEDIA_LINK}">{file.NAME}</a>
+								# IF C_MODO #
+									<span class="actions">
+										<a href="{file.U_ADMIN_UNVISIBLE_MEDIA}" class="fa fa-eye-slash" title="{L_UNAPROBED}"></a>
+										<a href="{file.U_ADMIN_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
+										<a href="{file.U_ADMIN_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+									</span>
+								# ENDIF #
+							</h2>
+						</header>
+						<div class="content">
+						# IF file.C_DESCRIPTION #
+							# IF file.C_HAS_PICTURE #<a href="{file.U_MEDIA_LINK}"><img itemprop="thumbnailUrl" src="{file.PICTURE}" class="media-picture" alt="{file.NAME}" /></a># ENDIF #
+							<div class="media-desc">
+							{file.DESCRIPTION}
+							</div>
+						# ENDIF #
+							<div class="spacer"></div>
+							<div class="smaller">
+								{L_BY} {file.AUTHOR}
+								<br />
+								{file.COUNT}
+								<br />
+								# IF C_DISPLAY_COMMENTS #
+								{file.U_COM_LINK}
+								<br />
+								# ENDIF #
+								# IF C_DISPLAY_NOTATION #
+								{L_NOTE} {file.NOTE}
+								# ENDIF #
+							</div>
+						</div>
+						<footer></footer>
+					</article>
+					# END file #
+				</div>
+				# ENDIF #
+
+				# IF C_DISPLAY_NO_FILE_MSG #
+				<div class="content">
+					<div class="notice">${LangLoader::get_message('no_item_now', 'common')}</div>
+				</div>
+				# ENDIF #
+				
 				<footer># IF C_PAGINATION #<span class="center"># INCLUDE PAGINATION #</span># ENDIF #</footer>
 			</section>
 		# ENDIF #

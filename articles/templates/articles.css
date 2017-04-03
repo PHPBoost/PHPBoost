@@ -10,14 +10,6 @@
 	margin-bottom: 10px;
 }
 
-#module-articles .small-block {
-	min-height: 420px;
-}
-
-.article-articles.article-several.small-block {
-	padding: 1.2em;
-}
-
 .article-articles.article-several h2,
 .article-articles.article-several .more {
 	margin: 0;
@@ -43,16 +35,6 @@ span.contents + hr {
 
 .form-field-action-link i {
 	font-size: 2.3rem;
-}
-
-#module-articles .small-block.one-article {
-	width: 99%;
-}
-
-@media (min-width: 769px) {
-	#module-articles .small-block.two-articles {
-		width: 49%;
-	}
 }
 
 .fa-pagebreak:before { content: "\f0f6"; }

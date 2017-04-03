@@ -272,9 +272,9 @@ $lang['css.message.question'] = 'This is a question:<br /> is the two-lines disp
 //Blocs
 $lang['css.blocks'] = 'Blocks';
 $lang['css.block.title'] = 'Article title';
-$lang['css.blocks.large'] = '1 on one row (.block)';
-$lang['css.blocks.medium'] = '2 on one row (.medium-block)';
-$lang['css.blocks.small'] = '3 on one row (.small-block)';
+$lang['css.blocks.large'] = '1 on one row (.columns-1)';
+$lang['css.blocks.medium'] = '2 on one row (.columns-2)';
+$lang['css.blocks.small'] = '3 on one row (.columns-3)';
 
 // --- Styles spécifiques du BBCode
 
