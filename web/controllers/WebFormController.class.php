@@ -144,7 +144,13 @@ class WebFormController extends ModuleController
 			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->common_lang['form.date.creation'], $this->get_weblink()->get_creation_date(),
 				array('required' => true)
 			));
-			
+
+			if (!$this->get_weblink()->is_visible())
+			{
+				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->common_lang['form.update.date.creation'], false, array('hidden' => $this->get_weblink()->get_status() != WebLink::NOT_APPROVAL)
+				));
+			}
+
 			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('approbation_type', $this->common_lang['form.approbation'], $this->get_weblink()->get_approbation_type(),
 				array(
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.not'], WebLink::NOT_APPROVAL),
@@ -285,7 +291,14 @@ class WebFormController extends ModuleController
 		}
 		else
 		{
-			$weblink->set_creation_date($this->form->get_value('creation_date'));
+			if ($this->form->get_value('update_creation_date'))
+			{
+				$weblink->set_creation_date(new Date());
+			}
+			else
+			{
+				$weblink->set_creation_date($this->form->get_value('creation_date'));
+			}
 			$weblink->set_approbation_type($this->form->get_value('approbation_type')->get_raw_value());
 			if ($weblink->get_approbation_type() == WebLink::APPROVAL_DATE)
 			{
