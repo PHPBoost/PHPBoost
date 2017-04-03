@@ -47,6 +47,8 @@ class WebLink
 	private $creation_date;
 	private $author_user;
 	private $number_views;
+	private $picture_url;
+	
 	private $partner;
 	private $partner_picture;
 	private $privileged_partner;
@@ -66,6 +68,8 @@ class WebLink
 	const NOT_APPROVAL = 0;
 	const APPROVAL_NOW = 1;
 	const APPROVAL_DATE = 2;
+	
+	const DEFAULT_PICTURE = '';
 	
 	public function get_id()
 	{
@@ -246,6 +250,22 @@ class WebLink
 		$this->number_views = $number_views;
 	}
 	
+	public function get_picture()
+	{
+		return $this->picture_url;
+	}
+	
+	public function set_picture(Url $picture)
+	{
+		$this->picture_url = $picture;
+	}
+	
+	public function has_picture()
+	{
+		$picture = $this->picture_url->rel();
+		return !empty($picture);
+	}
+	
 	public function is_partner()
 	{
 		return $this->partner;
@@ -340,6 +360,7 @@ class WebLink
 			'creation_date' => $this->get_creation_date()->get_timestamp(),
 			'author_user_id' => $this->get_author_user()->get_id(),
 			'number_views' => $this->get_number_views(),
+			'picture_url' => $this->get_picture()->relative(),
 			'partner' => (int)$this->is_partner(),
 			'partner_picture' => $this->get_partner_picture()->relative(),
 			'privileged_partner' => (int)$this->is_privileged_partner()
@@ -361,6 +382,7 @@ class WebLink
 		$this->end_date_enabled = !empty($properties['end_date']);
 		$this->creation_date = new Date($properties['creation_date'], Timezone::SERVER_TIMEZONE);
 		$this->number_views = $properties['number_views'];
+		$this->picture_url = new Url($properties['picture_url']);
 		$this->partner = (bool)$properties['partner'];
 		$this->partner_picture = new Url($properties['partner_picture']);
 		$this->privileged_partner = (bool)$properties['privileged_partner'];
@@ -393,6 +415,7 @@ class WebLink
 		$this->end_date = new Date();
 		$this->creation_date = new Date();
 		$this->number_views = 0;
+		$this->picture_url = new Url(self::DEFAULT_PICTURE);
 		$this->url = new Url('');
 		$this->partner_picture = new Url('');
 		$this->end_date_enabled = false;
@@ -430,6 +453,7 @@ class WebLink
 			'C_DELETE' => $this->is_authorized_to_delete(),
 			'C_READ_MORE' => !$this->is_short_contents_enabled() || $description != @strip_tags($contents, '<br><br/>') || TextHelper::strlen($contents) > WebConfig::NUMBER_CARACTERS_BEFORE_CUT,
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
+			'C_PICTURE' => $this->has_picture(),
 			'C_IS_PARTNER' => $this->is_partner(),
 			'C_HAS_PARTNER_PICTURE' => $this->has_partner_picture(),
 			'C_IS_PRIVILEGED_PARTNER' => $this->is_privileged_partner(),
@@ -472,6 +496,7 @@ class WebLink
 			'U_CATEGORY' => WebUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
 			'U_EDIT' => WebUrlBuilder::edit($this->id)->rel(),
 			'U_DELETE' => WebUrlBuilder::delete($this->id)->rel(),
+			'U_PICTURE' => $this->get_picture()->rel(),
 			'U_PARTNER_PICTURE' => $this->partner_picture->rel(),
 			'U_COMMENTS' => WebUrlBuilder::display_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->rel()
 			)

@@ -134,7 +134,13 @@
 						<div class="spacer"></div>
 					</div>
 					<div class="content">
+						# IF weblinks.C_PICTURE #
+						<span class="web-picture">
+							<img src="{weblinks.U_PICTURE}" alt="{weblinks.NAME}" itemprop="image" />
+						</span>
+						# ENDIF #
 						{weblinks.DESCRIPTION}# IF weblinks.C_READ_MORE #... <a href="{weblinks.U_LINK}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
+						<div class="spacer"></div>
 					</div>
 				# ELSE #
 					<div class="content">
@@ -176,6 +182,11 @@
 								<div class="center">{weblinks.NOTATION}</div>
 							# ENDIF #
 						</div>
+						
+						# IF weblinks.C_PICTURE #
+							<img src="{weblinks.U_PICTURE}" alt="{weblinks.NAME}" itemprop="image" />
+							<div class="spacer"></div>
+						# ENDIF #
 						
 						<div itemprop="text">{weblinks.CONTENTS}</div>
 					</div>

@@ -73,6 +73,11 @@
 					# ENDIF #
 				</div>
 				
+				# IF C_PICTURE #
+					<img src="{U_PICTURE}" alt="{NAME}" itemprop="image" />
+					<div class="spacer"></div>
+				# ENDIF #
+				
 				<div itemprop="text">{CONTENTS}</div>
 			</div>
 			<aside>

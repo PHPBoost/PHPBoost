@@ -111,6 +111,8 @@ class WebFormController extends ModuleController
 		$other_fieldset = new FormFieldsetHTML('other', $this->common_lang['form.other']);
 		$form->add_fieldset($other_fieldset);
 		
+		$other_fieldset->add_field(new FormFieldUploadPictureFile('picture', $this->common_lang['form.picture'], $this->get_weblink()->get_picture()->relative()));
+		
 		$other_fieldset->add_field(new FormFieldCheckbox('partner', $this->lang['web.form.partner'], $this->get_weblink()->is_partner(), array(
 			'events' => array('click' => '
 				if (HTMLForms.getField("partner").getValue()) {
@@ -274,6 +276,8 @@ class WebFormController extends ModuleController
 		$weblink->set_url(new Url($this->form->get_value('url')));
 		$weblink->set_contents($this->form->get_value('contents'));
 		$weblink->set_short_contents(($this->form->get_value('short_contents_enabled') ? $this->form->get_value('short_contents') : ''));
+		$weblink->set_picture(new Url($this->form->get_value('picture')));
+		
 		$weblink->set_partner($this->form->get_value('partner'));
 		if ($this->form->get_value('partner'))
 		{

@@ -28,21 +28,36 @@
 class WebModuleUpdateVersion extends ModuleUpdateVersion
 {
 	private $querier;
+	private $db_utils;
 	
 	public function __construct()
 	{
 		parent::__construct('web');
 		$this->querier = PersistenceContext::get_querier();
+		$this->db_utils = PersistenceContext::get_dbms_utils();
 	}
 	
 	public function execute()
 	{
 		if (ModulesManager::is_module_installed('web'))
 		{
+			$tables = $this->db_utils->list_tables(true);
+			
+			if (in_array(PREFIX . 'web', $tables))
+				$this->update_web_table();
+			
 			$this->update_content();
 		}
 		
 		$this->delete_old_files();
+	}
+	
+	private function update_web_table()
+	{
+		$columns = $this->db_utils->desc_table(PREFIX . 'web');
+		
+		if (!isset($columns['picture_url']))
+			$this->db_utils->add_column(PREFIX . 'web', 'picture_url', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"));
 	}
 	
 	public function update_content()

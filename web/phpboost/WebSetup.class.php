@@ -87,6 +87,7 @@ class WebSetup extends DefaultModuleSetup
 			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'number_views' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'picture_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'partner' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'partner_picture' => array('type' => 'string', 'length' => 255, 'default' => "''"),
 			'privileged_partner' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0)

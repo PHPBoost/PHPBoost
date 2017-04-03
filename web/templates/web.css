@@ -1,0 +1,12 @@
+.web-picture {
+	display: block;
+	padding-bottom: 10px;
+	text-align: center;
+}
+
+@media (min-width: 480px) {
+	.web-picture {
+		float: right;
+		padding-left: 10px;
+	}
+}
