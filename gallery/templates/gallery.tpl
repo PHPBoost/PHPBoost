@@ -316,7 +316,7 @@
 						<p class="center" id="pics_max"></p>
 
 						# IF C_GALLERY_PICS_MAX #
-							<p class="pics-max"><a href="{U_IMG_LIGHTBOX}" data-lightbox="formatter"><img src="{U_IMG_MAX}" /></a></p>
+							<p class="pics-max"><a href="{U_IMG_LIGHTBOX}" data-lightbox="formatter"><img src="{U_IMG_MAX}" title="{NAME}" alt="" /></a></p>
 							<div class="options">
 								<h6>{L_INFORMATIONS}</h6>
 								# IF C_TITLE_ENABLED #
@@ -404,7 +404,7 @@
 								# IF pics_list.C_OPEN_TR #<tr># ENDIF #
 								<td class="valign-bottom# IF pics_list.C_NEW_CONTENT # new-content# ENDIF #" style="width:{COLUMN_WIDTH_PICS}%;">
 									<div id="pics{pics_list.ID}" class="thumbnails-list-container">
-										<a class="small" href="{pics_list.U_DISPLAY}" onclick="{pics_list.ONCLICK}" # IF NOT pics_list.ONCLICK # data-lightbox="formatter"# ENDIF #><img src="{pics_list.U_PICTURE}" title="{pics_list.NAME}" class="gallery-img" /></a>
+										<a class="small" href="{pics_list.U_DISPLAY}" onclick="{pics_list.ONCLICK}" # IF NOT pics_list.ONCLICK # data-lightbox="formatter"# ENDIF #><img src="{pics_list.U_PICTURE}" title="{pics_list.NAME}" alt="" class="gallery-img" /></a>
 									</div>
 
 									<div class="spacer"></div>
