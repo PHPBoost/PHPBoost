@@ -40,7 +40,6 @@ $id_get_msg = $request->get_getint('idm', 0); //Id du message à partir duquel i
 $id_post_msg = $request->get_postint('idm', 0); //Id du message à partir duquel il faut scinder le topic.
 $error_get = $request->get_getvalue('error', '');  //Gestion des erreurs.
 $post_topic = $request->get_postvalue('post_topic', ''); //Création du topic scindé.
-$preview_topic = $request->get_postvalue('prw_t', ''); //Prévisualisation du topic scindé.
 
 if (!empty($id_get)) //Déplacement du sujet.
 {
@@ -262,7 +261,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		'L_MULTIPLE' => $LANG['multiple_answer']
 	);
 
-	if (empty($post_topic) && empty($preview_topic))
+	if (empty($post_topic))
 	{
 		//Liste des choix des sondages => 20 maxi
 		$nbr_poll_field = 0;
@@ -290,69 +289,6 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 			'L_ANOUNCE' => $LANG['forum_announce'],
 			'C_FORUM_POST_TYPE' => true,
 			'C_ADD_POLL_FIELD' => true
-		));
-	}
-	elseif (!empty($preview_topic) && !empty($id_post_msg))
-	{
-		$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
-		$subtitle = retrieve(POST, 'desc', '', TSTRING_UNCHANGE);
-		$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
-		$question = retrieve(POST, 'question', '', TSTRING_UNCHANGE);
-		$type = (int)retrieve(POST, 'type', 0);
-
-		$checked_normal = ($type == 0) ? 'checked="ckecked"' : '';
-		$checked_postit = ($type == 1) ? 'checked="ckecked"' : '';
-		$checked_annonce = ($type == 2) ? 'checked="ckecked"' : '';
-
-		//Liste des choix des sondages => 20 maxi
-		$nbr_poll_field = 0;
-		for ($i = 0; $i < 20; $i++)
-		{
-			$answer = retrieve(POST, 'a'.$i, '', TSTRING_UNCHANGE);
-			if (!empty($answer))
-			{
-				$tpl->assign_block_vars('answers_poll', array(
-					'ID' => $i,
-					'ANSWER' => $answer
-				));
-				$nbr_poll_field++;
-			}
-			elseif ($i <= 5) //On complète s'il y a moins de 5 réponses.
-			{
-				$tpl->assign_block_vars('answers_poll', array(
-					'ID' => $i,
-					'ANSWER' => ''
-				));
-				$nbr_poll_field++;
-			}
-		}
-
-		//Type de réponses du sondage.
-		$poll_type = (int)retrieve(POST, 'poll_type', 0);
-
-		$vars_tpl = array_merge($vars_tpl, array(
-			'TITLE' => $title,
-			'DESC' => stripslashes($subtitle),
-			'CONTENTS' => $contents,
-			'QUESTION' => $question,
-			'IDM' => $id_post_msg,
-			'DATE' => $LANG['on'] . ' ' . Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-			'CONTENTS_PREVIEW' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents))),
-			'CHECKED_NORMAL' => $checked_normal,
-			'CHECKED_POSTIT' => $checked_postit,
-			'CHECKED_ANNONCE' => $checked_annonce,
-			'SELECTED_SIMPLE' => ($poll_type == 0) ? 'checked="ckecked"' : '',
-			'SELECTED_MULTIPLE' => ($poll_type == 1) ? 'checked="ckecked"' : '',
-			'NO_DISPLAY_POLL' => !empty($question) ? 'false' : 'true',
-			'NBR_POLL_FIELD' => $nbr_poll_field,
-			'C_FORUM_PREVIEW_MSG' => true,
-			'C_ADD_POLL_FIELD' => $nbr_poll_field <= 18,
-			'C_FORUM_POST_TYPE' => true,
-			'L_PREVIEW' => $LANG['preview'],
-			'L_TYPE' => '* ' . $LANG['type'],
-			'L_DEFAULT' => $LANG['default'],
-			'L_POST_IT' => $LANG['forum_postit'],
-			'L_ANOUNCE' => $LANG['forum_announce']
 		));
 	}
 

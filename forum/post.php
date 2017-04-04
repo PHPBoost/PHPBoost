@@ -70,9 +70,7 @@ require_once('../kernel/header.php');
 $new_get = retrieve(GET, 'new', '');
 $idt_get = retrieve(GET, 'idt', '');
 $error_get = retrieve(GET, 'error', '');
-$previs = (bool)retrieve(POST, 'prw', false); //Prévisualisation des messages.
 $post_topic = (bool)retrieve(POST, 'post_topic', false);
-$preview_topic = retrieve(POST, 'prw_t', '');
 
 $editor = AppContext::get_content_formatting_service()->get_default_editor();
 $editor->set_identifier('contents');
@@ -105,60 +103,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		$i++;
 	}
 
-	if ($previs) //Prévisualisation des messages
-	{
-		if (!ForumAuthorizationsService::check_authorizations($id_get)->write() || $locked_cat)
-			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
-
-		try {
-			$topic = PersistenceContext::get_querier()->select_single_row_query('SELECT idcat, title, subtitle
-			FROM ' . PREFIX . 'forum_topics
-			WHERE id=:id', array(
-				'id' => $idt_get
-			));
-		} catch (RowNotFoundException $e) {
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_unexist_topic_forum']);
-			DispatchManager::redirect($controller);
-		}
-
-		$tpl = new FileTemplate('forum/forum_edit_msg.tpl');
-
-		$contents = retrieve(POST, 'contents', '', TSTRING);
-		$post_update = retrieve(POST, 'p_update', '', TSTRING_UNCHANGE);
-
-		$update = !empty($post_update) ? $post_update : url('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token());
-		$submit = !empty($post_update) ? $LANG['update'] : $LANG['submit'];
-
-		$vars_tpl = array(
-			'P_UPDATE' => $post_update,
-			'FORUM_NAME' => $config->get_forum_name(),
-			'KERNEL_EDITOR' => $editor->display(),
-			'DESC' => stripslashes($topic['subtitle']),
-			'CONTENTS' => $contents,
-			'DATE' => $LANG['on'] . ' ' . Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-			'CONTENTS_PREVIEW' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents))),
-			'C_FORUM_PREVIEW_MSG' => true,
-			'U_ACTION' => 'post.php' . $update . '&amp;token=' . AppContext::get_session()->get_token(),
-			'U_FORUM_CAT' => $forum_cats,
-			'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . stripslashes($topic['title']) . '</a>',
-			'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
-			'L_REQUIRE_TEXT' => $LANG['require_text'],
-			'L_REQUIRE_TITLE' => $LANG['require_title'],
-			'L_FORUM_INDEX' => $LANG['forum_index'],
-			'L_EDIT_MESSAGE' => $LANG['preview'],
-			'L_MESSAGE' => $LANG['message'],
-			'L_SUBMIT' => $submit,
-			'L_PREVIEW' => $LANG['preview'],
-			'L_RESET' => $LANG['reset']
-		);
-
-		$tpl->put_all($vars_tpl);
-		
-		$tpl->put('forum_top', $tpl_top->display());
-		$tpl->display();
-		$tpl->put('forum_bottom', $tpl_bottom->display());
-	}
-	elseif ($new_get === 'topic' && empty($error_get)) //Nouveau topic.
+	if ($new_get === 'topic' && empty($error_get)) //Nouveau topic.
 	{
 		if ($post_topic && !empty($id_get))
 		{
@@ -225,108 +170,6 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			}
 			else //Verrouillé
 				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_locked&id=' . $id_get, '', '&') . '#message_helper');
-		}
-		elseif (!empty($preview_topic) && !empty($id_get))
-		{
-			if (!ForumAuthorizationsService::check_authorizations($id_get)->write() || $locked_cat)
-				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
-
-			$tpl = new FileTemplate('forum/forum_post.tpl');
-
-			$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
-			$subtitle = retrieve(POST, 'desc', '', TSTRING_UNCHANGE);
-			$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
-			$question = retrieve(POST, 'question', '', TSTRING_UNCHANGE);
-
-			$type = (int)retrieve(POST, 'type', 0);
-
-			if (!$is_modo)
-				$type = ( $type == 1 || $type == 0 ) ? $type : 0;
-			else
-			{
-				$tpl->put_all(array(
-					'C_FORUM_POST_TYPE' => true,
-					'CHECKED_NORMAL' => (($type == '0') ? 'checked="ckecked"' : ''),
-					'CHECKED_POSTIT' => (($type == '1') ? 'checked="ckecked"' : ''),
-					'CHECKED_ANNONCE' => (($type == '2') ? 'checked="ckecked"' : ''),
-					'L_TYPE' => '* ' . $LANG['type'],
-					'L_DEFAULT' => $LANG['default'],
-					'L_POST_IT' => $LANG['forum_postit'],
-					'L_ANOUNCE' => $LANG['forum_announce']
-				));
-			}
-
-			//Liste des choix des sondages => 20 maxi
-			$nbr_poll_field = 0;
-			for ($i = 0; $i < 20; $i++)
-			{
-				$answer = retrieve(POST, 'a'.$i, '');
-				if (!empty($answer))
-				{
-					$tpl->assign_block_vars('answers_poll', array(
-						'ID' => $i,
-						'ANSWER' => stripslashes($answer)
-					));
-					$nbr_poll_field++;
-				}
-			}
-			for ($i = $nbr_poll_field; $i < 5; $i++) //On complète s'il y a moins de 5 réponses.
-			{
-				$tpl->assign_block_vars('answers_poll', array(
-					'ID' => $i,
-					'ANSWER' => ''
-				));
-				$nbr_poll_field++;
-			}
-
-			//Type de réponses du sondage.
-			$poll_type = (int)retrieve(POST, 'poll_type', 0);
-
-			$vars_tpl = array(
-				'FORUM_NAME' => $config->get_forum_name(),
-				'TITLE' => stripslashes($title),
-				'DESC' => stripslashes($subtitle),
-				'CONTENTS' => $contents,
-				'KERNEL_EDITOR' => $editor->display(),
-				'POLL_QUESTION' => $question,
-				'IDTOPIC' => 0,
-				'SELECTED_SIMPLE' => ($poll_type == 0) ? 'checked="ckecked"' : '',
-				'SELECTED_MULTIPLE' => ($poll_type == 1) ? 'checked="ckecked"' : '',
-				'NO_DISPLAY_POLL' => 'true',
-				'NBR_POLL_FIELD' => $nbr_poll_field,
-				'DATE' => $LANG['on'] . ' ' . Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-				'CONTENTS_PREVIEW' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents))),
-				'C_FORUM_PREVIEW_MSG' => true,
-				'C_ADD_POLL_FIELD' => $nbr_poll_field <= 19,
-				'U_ACTION' => 'post.php' . url('?new=topic&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
-				'U_FORUM_CAT' => $forum_cats,
-				'U_TITLE_T' => '<a href="post' . url('.php?new=topic&amp;id=' . $id_get) . '">' . $title . '</a>',
-				'L_ACTION' => $LANG['forum_edit_subject'],
-				'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
-				'L_REQUIRE_TEXT' => $LANG['require_text'],
-				'L_REQUIRE_TITLE' => $LANG['require_title'],
-				'L_REQUIRE_TITLE_POLL' => $LANG['require_title_poll'],
-				'L_FORUM_INDEX' => $LANG['forum_index'],
-				'L_TITLE' => $LANG['title'],
-				'L_DESC' => $LANG['description'],
-				'L_MESSAGE' => $LANG['message'],
-				'L_SUBMIT' => $LANG['submit'],
-				'L_PREVIEW' => $LANG['preview'],
-				'L_RESET' => $LANG['reset'],
-				'L_POLL' => $LANG['poll'],
-				'L_OPEN_MENU_POLL' => $LANG['open_menu_poll'],
-				'L_QUESTION' => $LANG['question'],
-				'L_POLL_TYPE' => $LANG['poll_type'],
-				'L_ANSWERS' => $LANG['answers'],
-				'L_SINGLE' => $LANG['simple_answer'],
-				'L_MULTIPLE' => $LANG['multiple_answer']
-			);
-
-			$tpl->put_all($vars_tpl);
-			
-			$tpl->put('forum_top', $tpl_top->display());
-			$tpl->display();
-			$tpl->put('forum_bottom', $tpl_bottom->display());
 		}
 		else
 		{
@@ -599,107 +442,6 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				}
 				else
 					AppContext::get_response()->redirect('/forum/post' . url('.php?new=msg&idm=' . $id_m . '&id=' . $id_get . '&idt=' . $idt_get . '&errore=incomplete_t', '', '&') . '#message_helper');
-			}
-			elseif (!empty($preview_topic))
-			{
-				$tpl = new FileTemplate('forum/forum_post.tpl');
-				
-				$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
-				$subtitle = retrieve(POST, 'desc', '', TSTRING_UNCHANGE);
-				$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
-				$question = retrieve(POST, 'question', '', TSTRING_UNCHANGE);
-
-				$type = (int)retrieve(POST, 'type', 0);
-				if (!$is_modo)
-					$type = ($type == 1 || $type == 0) ? $type : 0;
-				else
-				{
-					$tpl->put_all(array(
-						'C_FORUM_POST_TYPE' => true,
-						'CHECKED_NORMAL' => (($type == 0) ? 'checked="ckecked"' : ''),
-						'CHECKED_POSTIT' => (($type == 1) ? 'checked="ckecked"' : ''),
-						'CHECKED_ANNONCE' => (($type == 2) ? 'checked="ckecked"' : ''),
-						'L_TYPE' => '* ' . $LANG['type'],
-						'L_DEFAULT' => $LANG['default'],
-						'L_POST_IT' => $LANG['forum_postit'],
-						'L_ANOUNCE' => $LANG['forum_announce']
-					));
-				}
-
-				//Liste des choix des sondages => 20 maxi
-				$nbr_poll_field = 0;
-				for ($i = 0; $i < 20; $i++)
-				{
-					$answer = retrieve(POST, 'a'.$i, '');
-					if (!empty($anwser))
-					{
-						$tpl->assign_block_vars('answers_poll', array(
-							'ID' => $i,
-							'ANSWER' => stripslashes($anwser)
-						));
-						$nbr_poll_field++;
-					}
-				}
-				for ($i = $nbr_poll_field; $i < 5; $i++) //On complète s'il y a moins de 5 réponses.
-				{
-					$tpl->assign_block_vars('answers_poll', array(
-						'ID' => $i,
-						'ANSWER' => ''
-					));
-					$nbr_poll_field++;
-				}
-
-				//Type de réponses du sondage.
-				$poll_type = (int)retrieve(POST, 'poll_type', 0);
-
-				$vars_tpl = array(
-					'FORUM_NAME' => $config->get_forum_name(),
-					'TITLE' => stripslashes($title),
-					'DESC' => stripslashes($subtitle),
-					'CONTENTS' => $contents,
-					'KERNEL_EDITOR' => $editor->display(),
-					'POLL_QUESTION' => $question,
-					'IDTOPIC' => 0,
-					'SELECTED_SIMPLE' => 'checked="ckecked"',
-					'NO_DISPLAY_POLL' => !empty($question) ? 'false' : 'true',
-					'NBR_POLL_FIELD' => $nbr_poll_field,
-					'SELECTED_SIMPLE' => ($poll_type == 0) ? 'checked="ckecked"' : '',
-					'SELECTED_MULTIPLE' => ($poll_type == 1) ? 'checked="ckecked"' : '',
-					'DATE' => $LANG['on'] . ' ' . Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-					'CONTENTS_PREVIEW' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents))),
-					'C_FORUM_PREVIEW_MSG' => true,
-					'C_DELETE_POLL' => $is_modo, //Suppression d'un sondage => modo uniquement.
-					'C_ADD_POLL_FIELD' => $nbr_poll_field <= 19,
-					'U_ACTION' => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m . '&amp;token=' . AppContext::get_session()->get_token()),
-					'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $category->get_name() . '</a>',
-					'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . $title . '</a>',
-					'L_ACTION' => $LANG['forum_edit_subject'],
-					'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
-					'L_REQUIRE_TEXT' => $LANG['require_text'],
-					'L_REQUIRE_TITLE' => $LANG['require_title'],
-					'L_REQUIRE_TITLE_POLL' => $LANG['require_title_poll'],
-					'L_FORUM_INDEX' => $LANG['forum_index'],
-					'L_TITLE' => $LANG['title'],
-					'L_DESC' => $LANG['description'],
-					'L_MESSAGE' => $LANG['message'],
-					'L_SUBMIT' => $LANG['update'],
-					'L_PREVIEW' => $LANG['preview'],
-					'L_RESET' => $LANG['reset'],
-					'L_POLL' => $LANG['poll'],
-					'L_OPEN_MENU_POLL' => $LANG['open_menu_poll'],
-					'L_QUESTION' => $LANG['question'],
-					'L_POLL_TYPE' => $LANG['poll_type'],
-					'L_ANSWERS' => $LANG['answers'],
-					'L_SINGLE' => $LANG['simple_answer'],
-					'L_MULTIPLE' => $LANG['multiple_answer'],
-					'L_DELETE_POLL' => $LANG['delete_poll']
-				);
-
-				$tpl->put_all($vars_tpl);
-				
-				$tpl->put('forum_top', $tpl_top->display());
-				$tpl->display();
-				$tpl->put('forum_bottom', $tpl_bottom->display());
 			}
 			else
 			{
