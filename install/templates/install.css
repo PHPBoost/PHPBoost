@@ -94,13 +94,21 @@ select {
 	padding-right: 8px;
 }
 
-.row-success {
-	background: #8AC77F;
+.row-next {}
+.row-success {}
+
+@media (min-width: 769px) {
+	.row-current {
+		border-left: 5px solid #FF9900;
+	}
 }
 
-.row-current {
-	background: #FF9900;
+@media (max-width: 768px) {
+	.row-current {
+		border-bottom: 3px solid #FF9900;
+	}
 }
+
 .cssmenu > ul > li.row-current > .cssmenu-title span {
 	color: #FFFFFF;
 }
