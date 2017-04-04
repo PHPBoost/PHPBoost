@@ -392,7 +392,7 @@ ul, ol {
 }
 
 .progressbar-container .progressbar {
-	height: 13px;
+	height: 14px;
 	background-color: #8ECF67;
 	transition: width .6s ease;
 }
