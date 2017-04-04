@@ -538,14 +538,14 @@
 @media screen and (max-width: 640px) {
 	/* line 4, ../scss/components/modules/_navigation.scss */
 	#lightcase-nav a[class*='lightcase-icon-'] {
-		bottom: 15px;
+		top: 91%;
 		font-size: 24px;
 	}
 }
 @media screen and (min-width: 641px) {
 	/* line 4, ../scss/components/modules/_navigation.scss */
 	#lightcase-nav a[class*='lightcase-icon-'] {
-		bottom: 50%;
+		top: 50%;
 		margin-bottom: -0.5em;
 	}
 	/* line 66, ../scss/components/modules/_navigation.scss */
