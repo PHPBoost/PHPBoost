@@ -66,7 +66,7 @@ class UpdateVersionExecuteController extends UpdateController
 		$action_fieldset = new FormFieldsetSubmit('actions');
 		$back = new FormButtonLinkCssImg($this->lang['step.previous'], UpdateServices::database_config_file_checked() ? UpdateUrlBuilder::server_configuration() : UpdateUrlBuilder::database(), 'fa fa-arrow-left');
 		$action_fieldset->add_element($back);
-		$this->submit = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'finish', 'jQuery(\'#update-in-progress\').show();');
+		$this->submit = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'finish', 'jQuery(\'#update-in-progress-container\').show();');
 		$action_fieldset->add_element($this->submit);
 		$form->add_fieldset($action_fieldset);
 		$view->put('SERVER_FORM', $form->display());
