@@ -1,13 +1,13 @@
 # IF C_QUESTIONS #
 <script>
-<!--
-# IF C_MODERATION #
-var FaqQuestions = function(id){
-	this.id = id;
-	this.questions_number = {QUESTIONS_NUMBER};
-};
+	<!--
+	# IF C_MODERATION #
+	var FaqQuestions = function(id){
+		this.id = id;
+		this.questions_number = {QUESTIONS_NUMBER};
+	};
 
-FaqQuestions.prototype = {
+	FaqQuestions.prototype = {
 	init_sortable : function() {
 		jQuery("ul#questions-list").sortable({
 			handle: '.sortable-selector',
@@ -37,17 +37,17 @@ FaqQuestions.prototype = {
 				jQuery("#move-down-" + sequence[i].id).show();
 		}
 	}
-};
+	};
 
-var FaqQuestion = function(id, faq_questions){
+	var FaqQuestion = function(id, faq_questions){
 	this.id = id;
 	this.FaqQuestions = faq_questions;
 	
 	if (FaqQuestions.questions_number > 1)
 		FaqQuestions.change_reposition_pictures();
-};
-
-FaqQuestion.prototype = {
+	};
+	
+	FaqQuestion.prototype = {
 	delete : function() {
 		if (confirm(${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))}))
 		{
@@ -81,20 +81,20 @@ FaqQuestion.prototype = {
 			});
 		}
 	}
-};
-
-var FaqQuestions = new FaqQuestions('questions-list');
-jQuery(document).ready(function() {
+	};
+	
+	var FaqQuestions = new FaqQuestions('questions-list');
+	jQuery(document).ready(function() {
 	FaqQuestions.init_sortable();
 	jQuery('li.sortable-element').on('mouseout',function(){
 		FaqQuestions.change_reposition_pictures();
 	});
-});
-# ELSE #
-var questions_number = {QUESTIONS_NUMBER};
-
-function delete_question(id_question)
-{
+	});
+	# ELSE #
+	var questions_number = {QUESTIONS_NUMBER};
+	
+	function delete_question(id_question)
+	{
 	if (confirm(${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))}))
 	{
 		jQuery.ajax({
@@ -119,12 +119,12 @@ function delete_question(id_question)
 			}
 		});
 	}
-}
-# ENDIF #
-
-# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
-function show_answer(id_question)
-{
+	}
+	# ENDIF #
+	
+	# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
+	function show_answer(id_question)
+	{
 	if (jQuery("#question" + id_question)) {
 		if(jQuery("#answer" + id_question).css('display') == 'none')
 		{
@@ -139,18 +139,18 @@ function show_answer(id_question)
 			jQuery("#question" + id_question).addClass('fa-caret-right');
 		}
 	}
-}
-
-jQuery(document).ready(function() {
+	}
+	
+	jQuery(document).ready(function() {
 	var anchor = window.location.hash;
 	var id_question;
 	 
 	id_question = anchor.substring(9,anchor.length);
 	if (anchor.substring(0,9) == "#question" && id_question.match(/^[0-9]+$/))
 		show_answer(id_question);
-});
-# ENDIF #
--->
+	});
+	# ENDIF #
+	-->
 </script>
 # ENDIF #
 # INCLUDE MSG #
@@ -168,9 +168,9 @@ jQuery(document).ready(function() {
 	</header>
 	
 	# IF C_SUB_CATEGORIES #
-	<div class="subcat-container">
+	<div class="subcat-container elements-container# IF C_SEVERAL_CATS_COLUMNS # columns-{NUMBER_CATS_COLUMNS}# ENDIF #">
 		# START sub_categories_list #
-		<div class="subcat-element" style="width:{CATS_COLUMNS_WIDTH}%;">
+		<div class="subcat-element block">
 			<div class="subcat-content">
 				# IF sub_categories_list.C_CATEGORY_IMAGE #<a itemprop="about" href="{sub_categories_list.U_CATEGORY}"><img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" /></a># ENDIF #
 				<br />
@@ -187,7 +187,7 @@ jQuery(document).ready(function() {
 	<div class="spacer"></div>
 	# ENDIF #
 	
-	<div class="content">
+	
 	# IF C_QUESTIONS #
 		# IF C_PENDING #
 			# IF C_MORE_THAN_ONE_QUESTION #
@@ -197,122 +197,122 @@ jQuery(document).ready(function() {
 		# ENDIF #
 		# IF NOT C_DISPLAY_TYPE_ANSWERS_HIDDEN #
 		<div id="questions-titles-list">
-			<ol>
-			# START questions #
-				<li id="title-question-{questions.ID}"# IF questions.C_NEW_CONTENT # class="new-content"# ENDIF #>
-					<a href="#question{questions.ID}">{questions.QUESTION}</a>
-				</li>
-			# END questions #
-			</ol>
-
-			<hr>
-
+				<ol>
+				# START questions #
+					<li id="title-question-{questions.ID}"# IF questions.C_NEW_CONTENT # class="new-content"# ENDIF #>
+						<a href="#question{questions.ID}">{questions.QUESTION}</a>
+					</li>
+				# END questions #
+				</ol>
+				<hr />
 		</div>
 		# ENDIF #
-		
-		# IF C_MODERATION #
-		<form action="{REWRITED_SCRIPT}" method="post" id="position-update-form" onsubmit="FaqQuestions.serialize_sortable();">
-			<fieldset id="questions-management">
-				<ul id="questions-list" class="sortable-block">
-					# START questions #
-					<li class="sortable-element# IF questions.C_NEW_CONTENT # new-content# ENDIF #" id="list-{questions.ID}" data-id="{questions.ID}">
-						<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
-						<div class="sortable-title">
-							<h3 class="question-title">
-								# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
-								<a href="" onclick="show_answer({questions.ID});return false;" title="{questions.L_SHOW_ANSWER}"><i id="question{questions.ID}" class="fa fa-caret-right question-anchor"></i></a>
-								<a href="" onclick="show_answer({questions.ID});return false;" title="{questions.QUESTION}">{questions.QUESTION}</a>
-								# ELSE #
-								<i id="question{questions.ID}" class="fa fa-caret-right question-anchor"></i>
-								<span>{questions.QUESTION}</span>
-								# ENDIF #
-							</h3>
-							<div class="sortable-actions">
-								# IF C_MORE_THAN_ONE_QUESTION #
-								<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{questions.ID}" onclick="return false;"><i class="fa fa-arrow-up"></i></a>
-								<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{questions.ID}" onclick="return false;"><i class="fa fa-arrow-down"></i></a>
-								# ENDIF #
-								<a href="{questions.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
-								<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete-{questions.ID}"><i class="fa fa-delete"></i></a>
+
+		<div class="content elements-container">
+			# IF C_MODERATION #
+			<form action="{REWRITED_SCRIPT}" method="post" id="position-update-form" onsubmit="FaqQuestions.serialize_sortable();">
+				<fieldset id="questions-management">
+					<ul id="questions-list" class="sortable-block">
+						# START questions #
+						<li class="sortable-element# IF questions.C_NEW_CONTENT # new-content# ENDIF #" id="list-{questions.ID}" data-id="{questions.ID}">
+							<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
+							<div class="sortable-title">
+								<h3 class="question-title">
+									# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
+									<a href="" onclick="show_answer({questions.ID});return false;" title="{questions.L_SHOW_ANSWER}"><i id="question{questions.ID}" class="fa fa-caret-right question-anchor"></i></a>
+									<a href="" onclick="show_answer({questions.ID});return false;" title="{questions.QUESTION}">{questions.QUESTION}</a>
+									# ELSE #
+									<i id="question{questions.ID}" class="fa fa-caret-right question-anchor"></i>
+									<span>{questions.QUESTION}</span>
+									# ENDIF #
+								</h3>
+								<div class="sortable-actions">
+									# IF C_MORE_THAN_ONE_QUESTION #
+									<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{questions.ID}" onclick="return false;"><i class="fa fa-arrow-up"></i></a>
+									<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{questions.ID}" onclick="return false;"><i class="fa fa-arrow-down"></i></a>
+									# ENDIF #
+									<a href="{questions.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+									<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete-{questions.ID}"><i class="fa fa-delete"></i></a>
+								</div>
+								<div id="answer{questions.ID}" class="faq-answer-container"# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN # style="display: none;"# ENDIF #>
+									<div itemprop="text">{questions.ANSWER}</div>
+								</div>
 							</div>
-							<div id="answer{questions.ID}" class="faq-answer-container"# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN # style="display: none;"# ENDIF #>
-								<div itemprop="text">{questions.ANSWER}</div>
-							</div>
-						</div>
-						<div class="spacer"></div>
-						<script>
-						<!--
-						jQuery(document).ready(function() {
-							var faq_question = new FaqQuestion({questions.ID}, FaqQuestions);
-							
-							jQuery('#delete-{questions.ID}').on('click',function(){
-								faq_question.delete();
+							<div class="spacer"></div>
+							<script>
+							<!--
+							jQuery(document).ready(function() {
+								var faq_question = new FaqQuestion({questions.ID}, FaqQuestions);
+								
+								jQuery('#delete-{questions.ID}').on('click',function(){
+									faq_question.delete();
+								});
+								
+								if (FaqQuestions.questions_number > 1) {
+									jQuery('#move-up-{questions.ID}').on('click',function(){
+										var li = jQuery(this).closest('li');
+										li.insertBefore( li.prev() );
+										FaqQuestions.change_reposition_pictures();
+									});
+									jQuery('#move-down-{questions.ID}').on('click',function(){
+										var li = jQuery(this).closest('li');
+										li.insertAfter( li.next() );
+										FaqQuestions.change_reposition_pictures();
+									});
+								}
 							});
-							
-							if (FaqQuestions.questions_number > 1) {
-								jQuery('#move-up-{questions.ID}').on('click',function(){
-									var li = jQuery(this).closest('li');
-									li.insertBefore( li.prev() );
-									FaqQuestions.change_reposition_pictures();
-								});
-								jQuery('#move-down-{questions.ID}').on('click',function(){
-									var li = jQuery(this).closest('li');
-									li.insertAfter( li.next() );
-									FaqQuestions.change_reposition_pictures();
-								});
-							}
-						});
-						-->
-						</script>
-					</li>
-					# END questions #
-				</ul>
-			</fieldset>
-			# IF C_MORE_THAN_ONE_QUESTION #
-			<fieldset class="fieldset-submit" id="position-update-button">
-				<button type="submit" name="submit" value="true" class="submit">${LangLoader::get_message('position.update', 'common')}</button>
-				<input type="hidden" name="token" value="{TOKEN}">
-				<input type="hidden" name="tree" id="tree" value="">
-			</fieldset>
-			# ENDIF #
-		</form>
-		# ELSE #
-			# START questions #
-			<article id="article-faq-{questions.ID}" itemscope="itemscope" itemtype="http://schema.org/CreativeWork" class="article-faq article-several# IF questions.C_NEW_CONTENT # new-content# ENDIF #">
-				<header class="faq-question-element">
-					<h3 class="question-title">
-						# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
-						<a href="" onclick="show_answer({questions.ID});return false;" title="{questions.L_SHOW_ANSWER}"><i id="question{questions.ID}" class="fa fa-caret-right question-anchor"></i></a>
-						<a href="" onclick="show_answer({questions.ID});return false;" title="{questions.QUESTION}"><span itemprop="name">{questions.QUESTION}</span></a>
-						# ELSE #
-						<i id="question{questions.ID}" class="fa fa-caret-right question-anchor"></i>
-						<span itemprop="name">{questions.QUESTION}</span>
-						# ENDIF #
-					</h3>
+							-->
+							</script>
+						</li>
+						# END questions #
+					</ul>
+				</fieldset>
+				# IF C_MORE_THAN_ONE_QUESTION #
+				<fieldset class="fieldset-submit" id="position-update-button">
+					<button type="submit" name="submit" value="true" class="submit">${LangLoader::get_message('position.update', 'common')}</button>
+					<input type="hidden" name="token" value="{TOKEN}">
+					<input type="hidden" name="tree" id="tree" value="">
+				</fieldset>
+				# ENDIF #
+			</form>
+			# ELSE #
+				# START questions #
+				<article id="article-faq-{questions.ID}" itemscope="itemscope" itemtype="http://schema.org/CreativeWork" class="article-faq article-several# IF questions.C_NEW_CONTENT # new-content# ENDIF #">
+					<header class="faq-question-element">
+						<h3 class="question-title">
+							# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
+							<a href="" onclick="show_answer({questions.ID});return false;" title="{questions.L_SHOW_ANSWER}"><i id="question{questions.ID}" class="fa fa-caret-right question-anchor"></i></a>
+							<a href="" onclick="show_answer({questions.ID});return false;" title="{questions.QUESTION}"><span itemprop="name">{questions.QUESTION}</span></a>
+							# ELSE #
+							<i id="question{questions.ID}" class="fa fa-caret-right question-anchor"></i>
+							<span itemprop="name">{questions.QUESTION}</span>
+							# ENDIF #
+						</h3>
+						
+						<span class="actions">
+							<a href="{questions.U_LINK}" title="{questions.L_LINK_QUESTION}"><i class="fa fa-flag"></i></a>
+							# IF questions.C_EDIT #
+							<a href="{questions.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+							# ENDIF #
+							# IF questions.C_DELETE #
+							<a href="" onclick="delete_question({questions.ID});return false;" title="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-delete"></i></a>
+							# ENDIF #
+						</span>
+						
+						<meta itemprop="url" content="{questions.U_LINK}">
+					</header>
 					
-					<span class="actions">
-						<a href="{questions.U_LINK}" title="{questions.L_LINK_QUESTION}"><i class="fa fa-flag"></i></a>
-						# IF questions.C_EDIT #
-						<a href="{questions.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
-						# ENDIF #
-						# IF questions.C_DELETE #
-						<a href="" onclick="delete_question({questions.ID});return false;" title="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-delete"></i></a>
-						# ENDIF #
-					</span>
-					
-					<meta itemprop="url" content="{questions.U_LINK}">
-				</header>
-				
-				<div class="content">
-					<div id="answer{questions.ID}" class="faq-answer-container"# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN # style="display: none;"# ENDIF #>
-						<div itemprop="text">{questions.ANSWER}</div>
+					<div class="content">
+						<div id="answer{questions.ID}" class="faq-answer-container"# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN # style="display: none;"# ENDIF #>
+							<div itemprop="text">{questions.ANSWER}</div>
+						</div>
 					</div>
-				</div>
-				
-				<footer></footer>
-			</article>
-			# END questions #
-		# ENDIF #
+					
+					<footer></footer>
+				</article>
+				# END questions #
+			# ENDIF #
+		</div>
 	# ENDIF #
 	# IF NOT C_HIDE_NO_ITEM_MESSAGE #
 		<div id="no-item-message"# IF C_QUESTIONS # style="display: none;"# ENDIF #>
@@ -321,6 +321,6 @@ jQuery(document).ready(function() {
 			</div>
 		</div>
 	# ENDIF #
-	</div>
+	
 	<footer></footer>
 </section>

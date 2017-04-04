@@ -88,9 +88,9 @@ class AdminNewsConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
-		$fieldset->add_field(new FormFieldNumberEditor('number_columns_display_news', $this->lang['admin.config.number_columns_display_news'], $this->config->get_number_columns_display_news(), 
-			array('min' => 1, 'max' => 4, 'required' => true),
-			array(new FormFieldConstraintIntegerRange(1, 4))
+		$fieldset->add_field(new FormFieldNumberEditor('number_columns_display_news', $this->admin_common_lang['config.columns_number_per_line'], $this->config->get_number_columns_display_news(), 
+			array('min' => 1, 'max' => 6, 'required' => true),
+			array(new FormFieldConstraintIntegerRange(1, 6))
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('display_condensed', $this->lang['admin.config.display_condensed'], $this->config->get_display_condensed_enabled(), array(

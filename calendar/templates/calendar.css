@@ -1,40 +1,40 @@
-div.calendar-content {
+.calendar-content {
 	padding: 6px;
 }
 
 /* Affichage du mois en cours */
-div.calendar-top-container {
+.calendar-top-container {
 	padding: 4px;
 }
 
-div.calendar-top-content {
+.calendar-top-content {
 	text-align: center;
 }
 
-div.calendar-top-container a,
-div.calendar-top-container a:hover {
+.calendar-top-container a,
+.calendar-top-container a:hover {
 	cursor: pointer;
 }
 
-div.calendar-top-l {
+.calendar-top-l {
 	float: left;
 	padding: 1px 0 0 25px;
 }
 
-div.calendar-top-r {
+.calendar-top-r {
 	float: right;
 	padding: 1px 25px 0 0;
 }
 
 /* Affichage des evenements */
-div.event-display-author {
+.event-display-author {
 	float: left;
 	padding-top: 4px;
 	padding-bottom: 4px;
 	font-size: 0.8em;
 }
 
-div.event-display-dates {
+.event-display-dates {
 	float: right;
 	padding: 4px;
 	width: 180px;
@@ -86,7 +86,7 @@ table tbody tr th.column-title {
 	margin: 5px 0 10px 0;
 }
 
-#module-mini-calendar #CalendarAjaxCalendarController_choose-date div.form-element {
+#module-mini-calendar #CalendarAjaxCalendarController_choose-date .form-element {
 	margin: 0;
 }
 

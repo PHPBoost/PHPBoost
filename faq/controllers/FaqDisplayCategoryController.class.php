@@ -89,9 +89,8 @@ class FaqDisplayCategoryController extends ModuleController
 			}
 		}
 		
-		$nbr_column_cats = ($nbr_cat_displayed > $config->get_columns_number_per_line()) ? $config->get_columns_number_per_line() : $nbr_cat_displayed;
-		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
-		$cats_columns_width = floor(100 / $nbr_column_cats);
+		$nbr_column_cats_per_line = ($nbr_cat_displayed > $config->get_columns_number_per_line()) ? $config->get_columns_number_per_line() : $nbr_cat_displayed;
+		$nbr_column_cats_per_line = !empty($nbr_column_cats_per_line) ? $nbr_column_cats_per_line : 1;
 		
 		$result = PersistenceContext::get_querier()->select('SELECT *
 		FROM '. FaqSetup::$faq_table .' faq
@@ -116,7 +115,8 @@ class FaqDisplayCategoryController extends ModuleController
 			'C_MODERATION' => FaqAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
-			'CATS_COLUMNS_WIDTH' => $cats_columns_width,
+			'C_SEVERAL_CATS_COLUMNS' => $nbr_column_cats_per_line > 1,
+			'NUMBER_CATS_COLUMNS' => $nbr_column_cats_per_line,
 			'ID_CAT' => $this->get_category()->get_id(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),

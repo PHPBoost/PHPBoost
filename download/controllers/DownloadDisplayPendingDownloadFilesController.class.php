@@ -101,12 +101,16 @@ class DownloadDisplayPendingDownloadFilesController extends ModuleController
 			'display_from' => $pagination->get_display_from()
 		)));
 		
+		$number_columns_display_per_line = $config->get_columns_number_per_line();
+
 		$this->tpl->put_all(array(
 			'C_FILES' => $result->get_rows_count() > 0,
 			'C_MORE_THAN_ONE_FILE' => $result->get_rows_count() > 1,
 			'C_PENDING' => true,
 			'C_CATEGORY_DISPLAYED_SUMMARY' => $config->is_category_displayed_summary(),
 			'C_CATEGORY_DISPLAYED_TABLE' => $config->is_category_displayed_table(),
+			'C_SEVERAL_COLUMNS' => $number_columns_display_per_line > 1,
+			'NUMBER_COLUMNS' => $number_columns_display_per_line,
 			'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
 			'C_NOTATION_ENABLED' => $notation_config->is_notation_enabled(),
 			'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),

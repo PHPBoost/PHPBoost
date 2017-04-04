@@ -45,7 +45,6 @@ $lang['articles.print.article'] = 'Print an article';
 
 //Articles configuration
 $lang['articles_configuration.display_icon_cats'] = 'Dipslay categories icon';
-$lang['articles_configuration.number_cols_display_cats'] = 'Number of columns to display categories';
 $lang['articles_configuration.number_character_to_cut'] = 'Maximum number of characters to cut the article\'s description';
 $lang['articles_configuration.display_type'] = 'Display type';
 $lang['articles_configuration.display_type.mosaic'] = 'Mosaic';

@@ -92,9 +92,8 @@ class DownloadDisplayCategoryController extends ModuleController
 			}
 		}
 		
-		$nbr_column_cats = ($nbr_cat_displayed > $this->config->get_columns_number_per_line()) ? $this->config->get_columns_number_per_line() : $nbr_cat_displayed;
-		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
-		$cats_columns_width = floor(100 / $nbr_column_cats);
+		$number_columns_cats_display_per_line_cats = ($nbr_cat_displayed > $this->config->get_columns_number_per_line()) ? $this->config->get_columns_number_per_line() : $nbr_cat_displayed;
+		$number_columns_cats_display_per_line_cats = !empty($number_columns_cats_display_per_line_cats) ? $number_columns_cats_display_per_line_cats : 1;
 		
 		$condition = 'WHERE id_category = :id_category
 		AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))';
@@ -146,13 +145,16 @@ class DownloadDisplayCategoryController extends ModuleController
 		)));
 		
 		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
-		
+		$number_columns_display_per_line = $this->config->get_columns_number_per_line();
+
 		$this->tpl->put_all(array(
 			'C_FILES' => $result->get_rows_count() > 0,
 			'C_MORE_THAN_ONE_FILE' => $result->get_rows_count() > 1,
 			'C_CATEGORY_DISPLAYED_SUMMARY' => $this->config->is_category_displayed_summary(),
 			'C_CATEGORY_DISPLAYED_TABLE' => $this->config->is_category_displayed_table(),
 			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
+			'C_SEVERAL_COLUMNS' => $number_columns_display_per_line > 1,
+			'NUMBER_COLUMNS' => $number_columns_display_per_line,
 			'C_AUTHOR_DISPLAYED' => $this->config->is_author_displayed(),
 			'C_COMMENTS_ENABLED' => $this->comments_config->are_comments_enabled(),
 			'C_NOTATION_ENABLED' => $this->notation_config->is_notation_enabled(),
@@ -165,7 +167,8 @@ class DownloadDisplayCategoryController extends ModuleController
 			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
 			'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
-			'CATS_COLUMNS_WIDTH' => $cats_columns_width,
+			'C_SEVERAL_CATS_COLUMNS' => $number_columns_cats_display_per_line_cats > 1,
+			'NUMBER_CATS_COLUMNS' => $number_columns_cats_display_per_line_cats,
 			'PAGINATION' => $pagination->display(),
 			'TABLE_COLSPAN' => 4 + (int)$this->comments_config->are_comments_enabled() + (int)$this->notation_config->is_notation_enabled(),
 			'ID_CAT' => $this->get_category()->get_id(),

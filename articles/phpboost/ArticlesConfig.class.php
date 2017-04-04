@@ -32,7 +32,7 @@ class ArticlesConfig extends AbstractConfigData
 {    
 	const NUMBER_ARTICLES_PER_PAGE = 'number_articles_per_page';
 	const NUMBER_CATEGORIES_PER_PAGE = 'number_categories_per_page';
-	const NUMBER_COLS_DISPLAY_CATS = 'number_cols_display_cats';
+	const NUMBER_COLS_DISPLAY_PER_LINE = 'number_cols_display_per_line';
 	const NUMBER_CHARACTER_TO_CUT = 'number_character_to_cut';
 
 	const CATS_ICON_ENABLED = 'cats_icon_enabled';
@@ -68,14 +68,14 @@ class ArticlesConfig extends AbstractConfigData
 		$this->set_property(self::NUMBER_CATEGORIES_PER_PAGE, $number);
 	}
 	
-	public function get_number_cols_display_cats()
+	public function get_number_cols_display_per_line()
 	{
-		return $this->get_property(self::NUMBER_COLS_DISPLAY_CATS);
+		return $this->get_property(self::NUMBER_COLS_DISPLAY_PER_LINE);
 	}
 
-	public function set_number_cols_display_cats($number) 
+	public function set_number_cols_display_per_line($number) 
 	{
-		$this->set_property(self::NUMBER_COLS_DISPLAY_CATS, $number);
+		$this->set_property(self::NUMBER_COLS_DISPLAY_PER_LINE, $number);
 	}
 
 	public function get_number_character_to_cut()
@@ -172,7 +172,7 @@ class ArticlesConfig extends AbstractConfigData
 		return array(
 			self::NUMBER_ARTICLES_PER_PAGE => 10,
 			self::NUMBER_CATEGORIES_PER_PAGE => 10,
-			self::NUMBER_COLS_DISPLAY_CATS => 2,
+			self::NUMBER_COLS_DISPLAY_PER_LINE => 2,
 			self::NUMBER_CHARACTER_TO_CUT => 128,
 			self::CATS_ICON_ENABLED => false,
 			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,

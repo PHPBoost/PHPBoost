@@ -90,15 +90,15 @@ class AdminArticlesConfigController extends AdminModuleController
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
-		
+
+		$fieldset->add_field(new FormFieldNumberEditor('number_cols_display_per_line', $this->admin_common_lang['config.columns_number_per_line'], $this->config->get_number_cols_display_per_line(), 
+			array('min' => 1, 'max' => 6, 'required' => true, 'description' => $this->admin_common_lang['config.columns_number_per_line.description']),
+			array(new FormFieldConstraintIntegerRange(1, 6))
+		));
+
 		$fieldset->add_field(new FormFieldCheckbox('display_icon_cats', $this->lang['articles_configuration.display_icon_cats'], $this->config->are_cats_icon_enabled()
 		));
-		
-		$fieldset->add_field(new FormFieldNumberEditor('number_cols_display_cats', $this->lang['articles_configuration.number_cols_display_cats'], $this->config->get_number_cols_display_cats(), 
-			array('min' => 1, 'max' => 4, 'required' => true),
-			array(new FormFieldConstraintIntegerRange(1, 4))
-		));
-		
+				
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['articles_configuration.display_type'], $this->config->get_display_type(),
 			array(
 				new FormFieldSelectChoiceOption($this->lang['articles_configuration.display_type.mosaic'], ArticlesConfig::DISPLAY_MOSAIC),
@@ -146,7 +146,7 @@ class AdminArticlesConfigController extends AdminModuleController
 	private function save()
 	{
 		$this->config->set_number_articles_per_page($this->form->get_value('number_articles_per_page'));
-		$this->config->set_number_cols_display_cats($this->form->get_value('number_cols_display_cats'));
+		$this->config->set_number_cols_display_per_line($this->form->get_value('number_cols_display_per_line'));
 		
 		if ($this->form->get_value('display_icon_cats'))
 		{

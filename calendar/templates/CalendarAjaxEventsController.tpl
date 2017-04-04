@@ -4,6 +4,7 @@
 				</header>
 
 				# IF C_EVENTS #
+				<div class="content elements-container">
 					# START event #
 					<article itemscope="itemscope" itemtype="http://schema.org/Event" id="article-calendar-{event.ID}" class="article-calendar article-several# IF event.C_NEW_CONTENT # new-content# ENDIF #">
 						<header>
@@ -90,6 +91,7 @@
 						<footer></footer>
 					</article>
 					# END event #
+				</div>
 				# ELSE #
 					<div class="center">
 						# IF C_PENDING_PAGE #{@calendar.notice.no_pending_event}# ELSE #{@calendar.notice.no_current_action}# ENDIF #

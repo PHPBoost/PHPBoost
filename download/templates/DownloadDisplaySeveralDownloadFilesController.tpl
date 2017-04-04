@@ -12,9 +12,9 @@
 	</header>
 	
 	# IF C_SUB_CATEGORIES #
-	<div class="subcat-container">
+	<div class="subcat-container elements-container# IF C_SEVERAL_CATS_COLUMNS # columns-{NUMBER_CATS_COLUMNS}# ENDIF #">
 		# START sub_categories_list #
-		<div class="subcat-element" style="width:{CATS_COLUMNS_WIDTH}%;">
+		<div class="subcat-element block">
 			<div class="subcat-content">
 				# IF sub_categories_list.C_CATEGORY_IMAGE #<a itemprop="about" href="{sub_categories_list.U_CATEGORY}"><img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" /></a># ENDIF #
 				<br />
@@ -120,7 +120,7 @@
 					<meta itemprop="interactionCount" content="{downloadfiles.NUMBER_COMMENTS} UserComments">
 					# ENDIF #
 				</header>
-				
+
 				# IF C_CATEGORY_DISPLAYED_SUMMARY #
 					<div class="more">
 						<i class="fa fa-download" title="{downloadfiles.L_DOWNLOADED_TIMES}"></i>

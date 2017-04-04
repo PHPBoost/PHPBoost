@@ -186,6 +186,11 @@ ul.pagination-block-bis li a.next-page:hover {
 	border-color: #366493 #F1F1F1 #F1F1F1 #F1F1F1;
 }
 
+.no-style .block {
+	backgroung-color: transparent!important;
+	border: none!important;
+}
+
 .block .content {
 	margin: 0;
 }
@@ -540,8 +545,8 @@ div.index-logo {
 	clear: both;
 }
 
-.quick-acces ul {
-	margin:0 0 20px 30px;
+.quick-access ul {
+	margin: 0 0 20px 30px;
 }
 
 @media (min-width: 980px) {

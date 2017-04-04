@@ -92,9 +92,8 @@ class MediaDisplayCategoryController extends ModuleController
 			}
 		}
 		
-		$nbr_column_cats = ($nbr_cat_displayed > $config->get_columns_number_per_line()) ? $config->get_columns_number_per_line() : $nbr_cat_displayed;
-		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
-		$cats_columns_width = floor(100 / $nbr_column_cats);
+		$nbr_column_cats_per_line = ($nbr_cat_displayed > $config->get_columns_number_per_line()) ? $config->get_columns_number_per_line() : $nbr_cat_displayed;
+		$nbr_column_cats_per_line = !empty($nbr_column_cats_per_line) ? $nbr_column_cats_per_line : 1;
 		
 		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
 		
@@ -108,7 +107,8 @@ class MediaDisplayCategoryController extends ModuleController
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
 			'L_UNAPROBED' => $MEDIA_LANG['unaprobed_media_short'],
 			'L_BY' => $MEDIA_LANG['media_added_by'],
-			'CATS_COLUMNS_WIDTH' => $cats_columns_width,
+			'C_SEVERAL_CATS_COLUMNS' => $nbr_column_cats_per_line > 1,
+			'NUMBER_CATS_COLUMNS' => $nbr_column_cats_per_line,
 			'CATEGORY_NAME' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('module_title', 'common', 'media') : $this->get_category()->get_name(),
 			'CATEGORY_DESCRIPTION' => $category_description,
 			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? MediaUrlBuilder::configuration()->rel() : MediaUrlBuilder::edit_category($this->get_category()->get_id())->rel(),
@@ -200,12 +200,16 @@ class MediaDisplayCategoryController extends ModuleController
 				'display_from' => $pagination->get_display_from()
 		)));
 		
+		$number_columns_display_per_line = $config->get_columns_number_per_line();
+
 		$this->tpl->put_all(array(
 			'C_FILES' => $result->get_rows_count() > 0,
 			'C_DISPLAY_NO_FILE_MSG' => $result->get_rows_count() == 0 && $this->get_category()->get_id() != Category::ROOT_CATEGORY,
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
-			'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'media-0-' . $this->get_category()->get_id() . '.php?' : 'media.php?cat=' . $this->get_category()->get_id() . '&'
+			'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'media-0-' . $this->get_category()->get_id() . '.php?' : 'media.php?cat=' . $this->get_category()->get_id() . '&',
+			'C_SEVERAL_COLUMNS' => $number_columns_display_per_line > 1,
+			'NUMBER_COLUMNS' => $number_columns_display_per_line
 		));
 		
 		while ($row = $result->fetch())

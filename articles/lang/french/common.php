@@ -45,7 +45,6 @@ $lang['articles.print.article'] = 'Impression d\'un article';
 
 //Articles configuration
 $lang['articles_configuration.display_icon_cats'] = 'Afficher l\'icône des catégories';
-$lang['articles_configuration.number_cols_display_cats'] = 'Nombre de colonnes à afficher pour les catégories';
 $lang['articles_configuration.number_character_to_cut'] = 'Nombre de caractères pour couper le condensé de l\'article';
 $lang['articles_configuration.display_type'] = 'Type d\'affichage des articles';
 $lang['articles_configuration.display_type.mosaic'] = 'Mosaïque';

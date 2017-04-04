@@ -116,11 +116,15 @@ class WebDisplayWebLinkTagController extends ModuleController
 			'display_from' => $pagination->get_display_from()
 		)));
 		
+		$number_columns_display_per_line = $this->config->get_columns_number_per_line();
+
 		$this->tpl->put_all(array(
 			'C_WEBLINKS' => $result->get_rows_count() > 0,
 			'C_MORE_THAN_ONE_WEBLINK' => $result->get_rows_count() > 1,
 			'C_CATEGORY_DISPLAYED_SUMMARY' => $this->config->is_category_displayed_summary(),
 			'C_CATEGORY_DISPLAYED_TABLE' => $this->config->is_category_displayed_table(),
+			'C_SEVERAL_COLUMNS' => $number_columns_display_per_line > 1,
+			'NUMBER_COLUMNS' => $number_columns_display_per_line,
 			'C_COMMENTS_ENABLED' => $this->comments_config->are_comments_enabled(),
 			'C_NOTATION_ENABLED' => $this->notation_config->is_notation_enabled(),
 			'C_PAGINATION' => $pagination->has_several_pages(),

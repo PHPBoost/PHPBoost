@@ -39,8 +39,8 @@
 			
 			<div class="quick-access">
 				<h2><i class="fa fa-angle-double-right"></i> {L_QUICK_ACCESS}</h2>
-				<div class="fieldset-inset">
-					<div class="small-block">
+				<div class="fieldset-inset elements-container columns-3 no-style">
+					<div class="block">
 						<h3><i class="fa fa-fw fa-cogs"></i> {L_SITE_MANAGEMENT}</h3>
 						<ul>
 							<li><a href="${relative_url(AdminConfigUrlBuilder::general_config())}" title="{L_GENERAL_CONFIG}">{L_GENERAL_CONFIG}</a></li>
@@ -50,7 +50,7 @@
 							# ENDIF #
 						</ul>
 					</div>
-					<div class="small-block">
+					<div class="block">
 						<h3><i class="fa fa-fw fa-picture-o"></i> {L_CUSTOMIZE_SITE}</h3>
 						<ul>
 							<li><a href="${relative_url(AdminThemeUrlBuilder::add_theme())}" title="{L_ADD_TEMPLATE}">{L_ADD_TEMPLATE}</a></li>
@@ -60,7 +60,7 @@
 							# ENDIF #
 						</ul>
 					</div>
-					<div class="small-block">
+					<div class="block">
 						<h3><i class="fa fa-fw fa-plus"></i> {L_ADD_CONTENT}</h3>
 						<ul>
 							<li><a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}" title="{L_MODULES_MANAGEMENT}">{L_MODULES_MANAGEMENT}</a></li>
@@ -74,110 +74,111 @@
 					</div>
 				</div>
 			</div>
-			
-			<div class="medium-block">
-				<div class="admin-index-alert">
-					<h2><i class="fa fa-bell"></i> {L_ADMIN_ALERTS}</h2>
-					<div class="fieldset-inset">
-						<div class="form-element">
-							# IF C_UNREAD_ALERTS #
-								<div class="warning">{L_UNREAD_ALERT}</div>
-							# ELSE #
-								<div class="success">{L_NO_UNREAD_ALERT}</div>
-							# ENDIF #
-						</div>
-						# IF C_UNREAD_ALERTS #
-						<p class="smaller center">
-							<a href="admin_alerts.php">{L_DISPLAY_ALL_ALERTS}</a>
-						</p>
-						# ENDIF #
-					</div>
-				</div>
-				<div class="admin-index-comments">
-					<h2><i class="fa fa-comment-o"></i> {L_LAST_COMMENTS}</h2>
-					<div class="fieldset-inset">
-						<div class="form-element">
-							# START comments_list #
-									<a href="{comments_list.U_LINK}">
-										<i class="fa fa-hand-o-right"></i>
-									</a>
-									<span class="smaller">{L_BY} {comments_list.U_PSEUDO}</span> : {comments_list.CONTENT}
-									<br /><br />
-							# END comments_list #
-							# IF C_NO_COM #
-							<p class="center"><em>{L_NO_COMMENT}</em></p>
-							# ENDIF #
-						</div>
-						# IF NOT C_NO_COM #<p class="smaller center"><a href="${relative_url(UserUrlBuilder::comments())}">{L_VIEW_ALL_COMMENTS}</a></p># ENDIF #
-					</div>
-				</div>
-				
-				<form action="admin_index.php" method="post">
-					<div class="admin-index-user-online">
-						<h2><i class="fa fa-user"></i> {L_USER_ONLINE}</h2>
-						<div class="fieldset-inset-user">
-							<div class="form-element">
-								<table id="table">
-									<thead>
-										<tr> 
-											<th>
-												{L_USER_ONLINE}
-											</th>
-											<th>
-												{L_USER_IP}
-											</th>
-											<th>
-												{L_LOCALISATION}
-											</th>
-											<th>
-												{L_LAST_UPDATE}
-											</th>
-										</tr>
-									</thead>
-									<tbody>
-										# START user #
-										<tr> 
-											<td>
-												{user.USER}
-											</td>
-											<td>
-												{user.USER_IP}
-											</td>
-											<td>
-												{user.WHERE}
-											</td>
-											<td>
-												{user.TIME}
-											</td>
-										</tr>
-										# END user #
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
-			
-			<div class="medium-block">
-				
-				# INCLUDE ADVISES #
-				
-				<form action="admin_index.php" method="post">
-					<div class="admin-index-writting-pad">
-						<h2><i class="fa fa-edit"></i> {L_WRITING_PAD}</h2>
+			<div class="elements-container columns-2 no-style">
+				<div class="block">
+					<div class="admin-index-alert">
+						<h2><i class="fa fa-bell"></i> {L_ADMIN_ALERTS}</h2>
 						<div class="fieldset-inset">
 							<div class="form-element">
-								<textarea id="writing_pad_content" name="writing_pad_content">{WRITING_PAD_CONTENT}</textarea> 
+								# IF C_UNREAD_ALERTS #
+									<div class="warning">{L_UNREAD_ALERT}</div>
+								# ELSE #
+									<div class="success">{L_NO_UNREAD_ALERT}</div>
+								# ENDIF #
 							</div>
-							<p class="center">
-								<button type="submit" class="submit" name="writingpad" value="true">{L_UPDATE}</button>
-								<button type="reset" value="true">{L_RESET}</button>
-								<input type="hidden" name="token" value="{TOKEN}">
+							# IF C_UNREAD_ALERTS #
+							<p class="smaller center">
+								<a href="admin_alerts.php">{L_DISPLAY_ALL_ALERTS}</a>
 							</p>
+							# ENDIF #
 						</div>
 					</div>
-				</form>
+					<div class="admin-index-comments">
+						<h2><i class="fa fa-comment-o"></i> {L_LAST_COMMENTS}</h2>
+						<div class="fieldset-inset">
+							<div class="form-element">
+								# START comments_list #
+										<a href="{comments_list.U_LINK}">
+											<i class="fa fa-hand-o-right"></i>
+										</a>
+										<span class="smaller">{L_BY} {comments_list.U_PSEUDO}</span> : {comments_list.CONTENT}
+										<br /><br />
+								# END comments_list #
+								# IF C_NO_COM #
+								<p class="center"><em>{L_NO_COMMENT}</em></p>
+								# ENDIF #
+							</div>
+							# IF NOT C_NO_COM #<p class="smaller center"><a href="${relative_url(UserUrlBuilder::comments())}">{L_VIEW_ALL_COMMENTS}</a></p># ENDIF #
+						</div>
+					</div>
+					
+					<form action="admin_index.php" method="post">
+						<div class="admin-index-user-online">
+							<h2><i class="fa fa-user"></i> {L_USER_ONLINE}</h2>
+							<div class="fieldset-inset-user">
+								<div class="form-element">
+									<table id="table">
+										<thead>
+											<tr> 
+												<th>
+													{L_USER_ONLINE}
+												</th>
+												<th>
+													{L_USER_IP}
+												</th>
+												<th>
+													{L_LOCALISATION}
+												</th>
+												<th>
+													{L_LAST_UPDATE}
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											# START user #
+											<tr> 
+												<td>
+													{user.USER}
+												</td>
+												<td>
+													{user.USER_IP}
+												</td>
+												<td>
+													{user.WHERE}
+												</td>
+												<td>
+													{user.TIME}
+												</td>
+											</tr>
+											# END user #
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				
+				<div class="block">
+					
+					# INCLUDE ADVISES #
+					
+					<form action="admin_index.php" method="post">
+						<div class="admin-index-writting-pad">
+							<h2><i class="fa fa-edit"></i> {L_WRITING_PAD}</h2>
+							<div class="fieldset-inset">
+								<div class="form-element">
+									<textarea id="writing_pad_content" name="writing_pad_content">{WRITING_PAD_CONTENT}</textarea> 
+								</div>
+								<p class="center">
+									<button type="submit" class="submit" name="writingpad" value="true">{L_UPDATE}</button>
+									<button type="reset" value="true">{L_RESET}</button>
+									<input type="hidden" name="token" value="{TOKEN}">
+								</p>
+							</div>
+						</div>
+					</form>
+				</div>
 			</div>
 			<div class="spacer"></div>
 		</div><!-- admin-contents -->
