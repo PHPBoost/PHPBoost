@@ -57,8 +57,8 @@ $lang = array(
 	'phpboost.logo' => 'PHPBoost logo',
 
 //Introduction
-	'step.welcome.title' => 'Preamble',
-	'step.welcome.message' => 'Welcome to PHPBoost update wizard',
+	'step.introduction.title' => 'Preamble',
+	'step.introduction.message' => 'Welcome to PHPBoost update wizard',
 	'step.introduction.explanation' => '<p>Thank you to have trusted PHPBoost to build your website.</p>
 <p>To install PHPBoost you need to have some informations about your hosting which would be provided by your hoster. The installation is absolutely automatic, il should take only a few minutes. Click on the right arrow to start the installation process.</p>',
 	'step.introduction.maintenance_notice' => '<div class="notice">Your site will automatically be placed in maintenance. Consider disabling maintenance when you have verified that everything works properly.</div>',
@@ -129,15 +129,18 @@ $lang = array(
 	
 	'finish.message' => '<fieldset>
 							<legend>PHPBoost is now updated and ready to run!</legend>
-							<p class="success">The update of PHPBoost has been powered successfully. The PHPBoost Team thanks you for using its software and is proud to count you among its users.</p>
-							<p>Keep yourself informed about the evolution of PHPBoost by visiting our website, <a href="http://www.phpboost.com">www.phpboost.com</a>. You will be warned in the administration panel when updates are available. We strongly recommend to keep your website up to date so you can take advantage of the latest features and correct any flaws or errors.</p>
-							<p class="warning">For security reasons we also recommand you to delete the <b>update</b> folder and all its contents, hackers could manage to run the update script and you could lose data! An option will be offered once connected to the site to perform this deletion.</p>
-							<p>Don\'t forget the <a href="http://www.phpboost.com/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="http://www.phpboost.com/faq/"><acronym title="Frequently Asked Questions">FAQ</acronym></a>.</p>
-							<p>If you have any problem please go to the <a href="http://www.phpboost.com/forum/">support forum of PHPBoost</a>.</p>
+							<div class="fielset-inset">
+								<p class="success">The update of PHPBoost has been powered successfully. The PHPBoost Team thanks you for using its software and is proud to count you among its users.</p>
+								<p>Keep yourself informed about the evolution of PHPBoost by visiting our website, <a href="http://www.phpboost.com">www.phpboost.com</a>. You will be warned in the administration panel when updates are available. We strongly recommend to keep your website up to date so you can take advantage of the latest features and correct any flaws or errors.</p>
+								<p class="warning">For security reasons we also recommand you to delete the <b>update</b> folder and all its contents, hackers could manage to run the update script and you could lose data! An option will be offered once connected to the site to perform this deletion.</p>
+								<p>Don\'t forget the <a href="http://www.phpboost.com/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="http://www.phpboost.com/faq/"><acronym title="Frequently Asked Questions">FAQ</acronym></a>.</p>
+								<p>If you have any problem please go to the <a href="http://www.phpboost.com/forum/">support forum of PHPBoost</a>.</p>
+							</div>
 						</fieldset>
 						<fieldset>
 							<legend>Thanks</legend>
-							<h2>Members</h2>
+							<div class="fielset-inset">
+								<h2>Members</h2>
 								<p>Thanks to all the members of the community who cheer us on daily and contribute to the software quality by reporting bugs and suggestion improvements, which allows to lead to a stable and powerful CMS.</p>
 								<p>Thanks to the members of our teams and particulary to <strong>benflovideo</strong> for communication team, <strong>PaperToss</strong>, <strong>mipel</strong>, <strong>olivierb</strong> and <strong>xela</strong> for the documentation writing, <strong>ElenWii</strong> and <strong>babsolune</strong> for the graphics, <strong>benflovideo</strong> and <strong>mipel</strong> for the moderation of the community and <strong>janus57</strong> for support in development and community help on the forum.</p>
 								<h2>Other projects</h2>
@@ -155,16 +158,19 @@ $lang = array(
 									<li><a href="https://github.com/cssmenumaker/jQuery-Plugin-Responsive-Drop-Down">CssMenuMaker.js</a>: Menus responsive</li>
 									<li><a href="http://www.jerrylow.com/basictable/">BasicTable.js</a>: Tables responsive</li>
 								</ul>
+							</div>
 						</fieldset>
 						<fieldset>
 							<legend>Credits</legend>
-							<ul>
-								<li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, founder of PHPBoost project and developer retired</li>
-								<li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, developer retired</li>
-								<li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, developer retired</li>
-								<li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, developer retired</li>
-								<li><strong>Julien BRISWALTER</strong> <em>(alias j1.seth)</em>, developer</li>
-							</ul>
+							<div class="fielset-inset">
+								<ul>
+									<li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, founder of PHPBoost project and developer retired</li>
+									<li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, developer retired</li>
+									<li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, developer retired</li>
+									<li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, developer retired</li>
+									<li><strong>Julien BRISWALTER</strong> <em>(alias j1.seth)</em>, developer</li>
+								</ul>
+							</div>
 						</fieldset>',
 	'site.index' => 'Go to the website',
 	'admin.index' => 'Go to the administration panel'

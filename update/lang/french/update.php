@@ -66,9 +66,8 @@ $lang = array(
 
 //Configuration du serveur
 	'step.server.title' => 'Vérification de la configuration du serveur',
-	'step.server.explanation' => '<p>Avant de commencer la mise à jour de PHPBoost, la configuration de votre serveur va être vérifiée afin d\'établir sa compatibilité avec PHPBoost.</p>
-<div class="notice">Veillez à ce que chaque condition obligatoire soit vérifiée sans quoi vous risquez d\'avoir des problèmes en utilisant le logiciel.</div>
-<p>En cas de problème n\'hésitez pas à poser vos questions sur le <a href="http://www.phpboost.com/forum/">forum de support</a>.</p>',
+	'step.server.explanation' => '<p>Avant de commencer la mise à jour de PHPBoost, la configuration de votre serveur va être vérifiée afin d\'établir sa compatibilité avec PHPBoost.</p><p>En cas de problème n\'hésitez pas à poser vos questions sur le <a href="http://www.phpboost.com/forum/">forum de support</a>.</p>
+<div class="notice">Veillez à ce que chaque condition obligatoire soit vérifiée sans quoi vous risquez d\'avoir des problèmes en utilisant le logiciel.</div>',
 	'php.version' => 'Version de PHP',
 	'php.version.check' => 'PHP supérieur à :min_php_version',
 	'php.version.check.explanation' => '<span style="font-weight:bold;color:red;">Obligatoire :</span> Pour faire fonctionner PHPBoost, votre serveur doit être équipé d\'une version supérieure ou égale à PHP :min_php_version. Sans cela il vous sera impossible de le faire fonctionner correctement, contactez votre hébergeur ou migrez vers un serveur plus récent.',
@@ -102,6 +101,7 @@ $lang = array(
 	'dbms.password.explanation' => 'Fourni par l\'hébergeur',
 	'schema.properties' => 'Propriétés de la base de données',
 	'schema' => 'Nom de la base de données',
+	'schema.explanation' => 'Fourni par l\'hébergeur. Si la base de données n\'existe pas, PHPBoost essayera de la créer.',
 	'schema.tablePrefix' => 'Préfixe des tables',
 	'schema.tablePrefix.explanation' => 'Par défaut <em>phpboost_</em>. A changer si vous avez installé plusieurs fois PHPBoost dans la même base de données.',
 	'db.config.check' => 'Essayer',
@@ -129,15 +129,18 @@ $lang = array(
 	
 	'finish.message' => '<fieldset>
 							<legend>PHPBoost est désormais mis à jour !</legend>
-							<p class="success">La mise à jour de PHPBoost s\'est déroulée avec succès. L\'équipe PHPBoost vous remercie de lui avoir fait confiance et est heureuse de vous compter parmi ses utilisateurs.</p>
-							<p>Nous vous conseillons de vous tenir au courant de l\'évolution de PHPBoost via le site de la communauté francophone, <a href="http://www.phpboost.com">www.phpboost.com</a>. Vous serez automatiquement averti dans le panneau d\'administration de l\'arrivée de nouvelles mises à jour. Il est fortement conseillé de tenir votre système à jour afin de profiter des dernières nouveautés et de corriger les éventuelles failles ou erreurs.</p>
-							<p class="warning">Par mesure de sécurité nous vous conseillons fortement de supprimer le dossier <b>update</b> et tout ce qu\'il contient, des personnes mal intentionnées pourraient relancer le script de mise à jour et écraser certaines de vos données ! Une option vous sera proposée une fois connecté sur le site pour effectuer cette suppression.</p>
-							<p>N\'oubliez pas la <a href="http://www.phpboost.com/wiki/">documentation</a> qui vous guidera dans l\'utilisation de PHPBoost ainsi que la <a href="http://www.phpboost.com/faq/"><acronym title="Foire Aux Questions">FAQ</acronym></a> qui répond aux questions les plus fréquentes.</p>
-							<p>En cas de problème, rendez-vous sur le <a href="http://www.phpboost.com/forum/">forum du support de PHPBoost</a>.</p>
+							<div class="fielset-inset">
+								<p class="success">La mise à jour de PHPBoost s\'est déroulée avec succès. L\'équipe PHPBoost vous remercie de lui avoir fait confiance et est heureuse de vous compter parmi ses utilisateurs.</p>
+								<p>Nous vous conseillons de vous tenir au courant de l\'évolution de PHPBoost via le site de la communauté francophone, <a href="http://www.phpboost.com">www.phpboost.com</a>. Vous serez automatiquement averti dans le panneau d\'administration de l\'arrivée de nouvelles mises à jour. Il est fortement conseillé de tenir votre système à jour afin de profiter des dernières nouveautés et de corriger les éventuelles failles ou erreurs.</p>
+								<p class="warning">Par mesure de sécurité nous vous conseillons fortement de supprimer le dossier <b>update</b> et tout ce qu\'il contient, des personnes mal intentionnées pourraient relancer le script de mise à jour et écraser certaines de vos données ! Une option vous sera proposée une fois connecté sur le site pour effectuer cette suppression.</p>
+								<p>N\'oubliez pas la <a href="http://www.phpboost.com/wiki/">documentation</a> qui vous guidera dans l\'utilisation de PHPBoost ainsi que la <a href="http://www.phpboost.com/faq/"><acronym title="Foire Aux Questions">FAQ</acronym></a> qui répond aux questions les plus fréquentes.</p>
+								<p>En cas de problème, rendez-vous sur le <a href="http://www.phpboost.com/forum/">forum du support de PHPBoost</a>.</p>
+							</div>
 						</fieldset>
 						<fieldset>
 							<legend>Remerciements</legend>
-							<h2>Membres de la communauté</h2>
+							<div class="fielset-inset">
+								<h2>Membres de la communauté</h2>
 								<p>Merci à tous les membres de la communauté qui nous encouragent au quotidien et contribuent à la qualité du logiciel que ce soit en suggérant des nouvelles fonctionnalités ou en signalant des dysfonctionnements, ce qui permet d\'aboutir entre autres à un CMS stable et efficace.</p>
 								<p>Merci aux membres des équipes de PHPBoost et particulièrement à <strong>benflovideo</strong> de l\'équipe communication, <strong>PaperToss</strong>, <strong>mipel</strong>, <strong>olivierb</strong> et <strong>xela</strong> pour la documentation, <strong>ElenWii</strong> et <strong>babsolune</strong> pour les graphismes, <strong>benflovideo</strong> et <strong>mipel</strong> pour la modération de la communauté et <strong>janus57</strong> pour l\'appui aux développements et à l\'aide de la communauté sur le forum.</p>
 								<h2>Projets</h2>
@@ -159,13 +162,15 @@ $lang = array(
 						</fieldset>
 						<fieldset>
 							<legend>Crédits</legend>
-							<ul>
-								<li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, fondateur du projet PHPBoost et développeur retraité</li>
-								<li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, développeur retraité</li>
-								<li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, développeur retraité</li>
-								<li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, développeur retraité</li>
-								<li><strong>Julien BRISWALTER</strong> <em>(alias j1.seth)</em>, développeur</li>
-							</ul>
+							<div class="fielset-inset">
+								<ul>
+									<li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, fondateur du projet PHPBoost et développeur retraité</li>
+									<li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, développeur retraité</li>
+									<li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, développeur retraité</li>
+									<li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, développeur retraité</li>
+									<li><strong>Julien BRISWALTER</strong> <em>(alias j1.seth)</em>, développeur</li>
+								</ul>
+							</div
 						</fieldset>',
 	'site.index' => 'Aller à l\'accueil du site',
 	'admin.index' => 'Aller dans le panneau d\'administration'

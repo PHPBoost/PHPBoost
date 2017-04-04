@@ -65,7 +65,6 @@ $lang = array(
 	'phpboost.slogan' => 'Create your website easily and for free!',
 	'phpboost.logo' => 'PHPBoost logo',
 
-
 // Introduction
 	'step.welcome.title' => 'Preamble',
 	'step.welcome.message' => 'Welcome to PHPBoost installation wizard',
