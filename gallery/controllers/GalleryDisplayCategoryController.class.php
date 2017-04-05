@@ -353,6 +353,9 @@ class GalleryDisplayCategoryController extends ModuleController
 
 					$date = new DATE($info_pics['timestamp'], Timezone::SERVER_TIMEZONE);
 
+					$info = new SplFileInfo($info_pics['path']);
+					$extension = $info->getExtension();
+
 					//Affichage de l'image et de ses informations.
 					$this->tpl->put_all(array_merge(Date::get_array_tpl_vars($date,'date') ,array(
 						'C_GALLERY_PICS_MAX' => true,
@@ -363,8 +366,7 @@ class GalleryDisplayCategoryController extends ModuleController
 						'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
 						'C_NOTATION_ENABLED' => $notation_config->is_notation_enabled(),
 						'ID' => $info_pics['id'],
-						'NAME' => '<span id="fi_' . $info_pics['id'] . '">' . stripslashes($info_pics['name']) . '</span> <span id="fi' . $info_pics['id'] . '"></span>',
-						'CLEARED_NAME' => stripslashes($info_pics['name']),
+						'NAME' => stripslashes($info_pics['name']),
 						'POSTOR' => '<a class="small ' . UserService::get_level_class($info_pics['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($info_pics['user_id'])->rel() .'">' . $info_pics['display_name'] . '</a>',
 						'VIEWS' => ($info_pics['views'] + 1),
 						'DIMENSION' => $info_pics['width'] . ' x ' . $info_pics['height'],
@@ -401,8 +403,7 @@ class GalleryDisplayCategoryController extends ModuleController
 						'U_LEFT_THUMBNAILS' => (($pos_pics - $start_thumbnails) > 0) ? '<span id="display_left"><a href="javascript:display_thumbnails(\'left\')"><i class="fa fa-arrow-left fa-2x"></i></a></span>' : '<span id="display_left"></span>',
 						'U_RIGHT_THUMBNAILS' => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics) ? '<span id="display_right"><a href="javascript:display_thumbnails(\'right\')"><i class="fa fa-arrow-right fa-2x"></i></a></span>' : '<span id="display_right"></span>',
 						'U_COMMENTS' => GalleryUrlBuilder::get_link_item($info_pics['idcat'],$info_pics['id'],0,$g_sort) .'#comments-list',
-						'U_IMG_MAX' => 'show_pics.php?id=' . $info_pics['id'] . '&amp;cat=' . $info_pics['idcat'],
-						'U_IMG_LIGHTBOX' => 'pics/' .$info_pics['path']
+						'U_IMG_MAX' => 'show_pics.php?id=' . $info_pics['id'] . '&amp;cat=' . $info_pics['idcat'] . '&amp;ext=.' . $extension
 					)));
 
 					//Affichage de la liste des miniatures sous l'image.
