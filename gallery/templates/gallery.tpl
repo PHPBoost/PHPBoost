@@ -316,11 +316,11 @@
 						<p class="center" id="pics_max"></p>
 
 						# IF C_GALLERY_PICS_MAX #
-							<p class="pics-max"><a href="{U_IMG_LIGHTBOX}" data-lightbox="formatter"><img src="{U_IMG_MAX}" title="{NAME}" alt="" /></a></p>
+							<p class="pics-max"><a href="{U_IMG_MAX}" data-lightbox="formatter"><img src="{U_IMG_MAX}" title="{NAME}" alt="" /></a></p>
 							<div class="options">
 								<h6>{L_INFORMATIONS}</h6>
 								# IF C_TITLE_ENABLED #
-									<span class="text-strong">{L_NAME} : </span><span>{NAME}</span><br/>
+									<span class="text-strong">{L_NAME} : </span><span id="fi_{ID}">{NAME}</span><span id="fi{ID}"></span><br/>
 								# ENDIF #
 								# IF C_AUTHOR_DISPLAYED #
 									<span class="text-strong">{L_POSTOR} : </span><span>{POSTOR}</span><br/>
