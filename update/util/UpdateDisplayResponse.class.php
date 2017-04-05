@@ -113,9 +113,14 @@ class UpdateDisplayResponse extends AbstractResponse
 			array('name' => $this->lang['step.list.execute'], 'img' => 'refresh'),
 			array('name' => $this->lang['step.list.end'], 'img' => 'check')
 		);
+		
+		if (UpdateServices::database_config_file_checked() && isset($steps[2]))
+			unset($steps[2]);
+		
 		$this->nb_steps = count($steps) - 1;
 
-		for ($i = 0; $i <= $this->nb_steps; $i++)
+		$i = 0;
+		foreach ($steps as $step)
 		{
 			if ($i < $this->current_step)
 			{
@@ -140,9 +145,11 @@ class UpdateDisplayResponse extends AbstractResponse
 
 			$this->full_view->assign_block_vars('step', array(
 				'CSS_CLASS' => $row_class,
-				'IMG' => $steps[$i]['img'],
-				'NAME' => $steps[$i]['name']
+				'IMG' => $step['img'],
+				'NAME' => $step['name']
 			));
+			
+			$i++;
 		}
 	}
 
