@@ -26,146 +26,129 @@
 	-->
 </script>
 
+<div id="module-connect" class="connect-menu# IF C_USER_NOTCONNECTED # not-connected# ELSE # connected# ENDIF## IF C_VERTICAL # module-mini-container vertical# ELSE # horizontal# ENDIF #">
+	# IF C_USER_NOTCONNECTED #
 
-# IF C_VERTICAL #
-	# IF C_USER_NOTCONNECTED #
-		<div id="connect-menu" class="module-mini-container not-connected">
-			<div class="module-mini-top">
-				<h5 class="sub-title">{L_CONNECT}</h5>
-			</div>
-			<div class="module-mini-contents vertical-fieldset">
+	# IF C_VERTICAL #
+	<div class="module-mini-top">
+		<h5 class="sub-title">{L_CONNECT}</h5>
+	</div>
+	<div class="module-mini-contents connect-contents">
+	# ELSE #
+	<div class="connect-contents">
+		<a href="" class="js-menu-button" onclick="open_submenu('module-connect');return false;" title="{L_CONNECT}"><i class="fa fa-sign-in"></i><span>{L_CONNECT}</span></a>
+	# ENDIF #
+		<div class="connect-containers">
+			<div class="connect-input-container# IF C_VERTICAL # vertical-fieldset# ELSE # horizontal-fieldset# ENDIF #" >
 				<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();" class="form-element">
-					<label>{L_PSEUDO}<br /><input type="text" id="login" name="login" title="{L_PSEUDO}" placeholder="{L_PSEUDO}" maxlength="25"></label>
-					<label>{L_PASSWORD}<br /><input type="password" id="password" name="password" title="{L_PASSWORD}" placeholder="{L_PASSWORD}" maxlength="30"></label>
-					<label>{L_AUTOCONNECT} <input checked="checked" type="checkbox" name="autoconnect" title="{L_AUTOCONNECT}"></label>
+					<label for="login">
+						<span>{L_PSEUDO}</span>
+						<input type="text" id="login" name="login" title="{L_PSEUDO}" placeholder="{L_PSEUDO}" maxlength="25">
+					</label>
+					<label for="password">
+						<span>{L_PASSWORD}</span>
+						<input type="password" id="password" name="password" title="{L_PASSWORD}" placeholder="{L_PASSWORD}" maxlength="30">
+					</label>
+					<label for="autoconnect">
+						<span>{L_AUTOCONNECT}</span>
+						<input checked="checked" type="checkbox" id="autoconnect" name="autoconnect" title="{L_AUTOCONNECT}">
+					</label>
 					<input type="hidden" name="redirect" value="{SITE_REWRITED_SCRIPT}">
 					<input type="hidden" name="token" value="{TOKEN}">
 					<button type="submit" name="authenticate" value="internal" class="submit">{L_CONNECT}</button>
 				</form>
-				<div class="connect-register">
-					# IF C_USER_REGISTER #
-						<a class="small" href="${relative_url(UserUrlBuilder::registration())}"><i class="fa fa-ticket"></i> {L_REGISTER}</a>
-						<br />
-						# IF C_FB_AUTH_ENABLED #
-						<a class="social-connect fb" href="${relative_url(UserUrlBuilder::connect('fb'))}" title="${LangLoader::get_message('facebook-connect', 'user-common')}"><i class="fa fa-facebook"></i><span>${LangLoader::get_message('facebook-connect', 'user-common')}</span></a>
-						# ENDIF #
-						# IF C_GOOGLE_AUTH_ENABLED #
-						<a class="social-connect google" href="${relative_url(UserUrlBuilder::connect('google'))}" title="${LangLoader::get_message('google-connect', 'user-common')}"><i class="fa fa-google-plus"></i><span>${LangLoader::get_message('google-connect', 'user-common')}</span></a>
-						# ENDIF #
-					# ENDIF #
-					<br />
-					<a class="forgot-pass small" href="${relative_url(UserUrlBuilder::forget_password())}"><i class="fa fa-question-circle"></i> {L_FORGOT_PASS}</a>
-				</div>
 			</div>
-			<div class="module-mini-bottom">
-			</div>
-		</div>
-	# ELSE #
-		<div id="connect-menu" class="module-mini-container connected">
-			<div class="module-mini-top">
-				<h5 class="sub-title">{L_PRIVATE_PROFIL}</h5>
-			</div>
-			<div class="module-mini-contents vertical-fieldset">
-				<ul class="connect-content">
-					<li>
-						<i class="fa fa-profil"></i>
-						<a href="${relative_url(UserUrlBuilder::home_profile())}" class="small"> {L_PROFIL}</a>
-					</li>
-					<li>
-						<i class="fa fa-envelope# IF C_HAS_PM # blink# ENDIF #"></i>
-						<a href="{U_USER_PM}" class="small"> {L_NBR_PM}</a>
-					</li>
-					# IF C_ADMIN_AUTH #
-					<li>
-						<i class="fa fa-wrench# IF C_UNREAD_ALERT # blink# ENDIF #"></i>
-						<a href="${relative_url(UserUrlBuilder::administration())}" class="small"> {L_ADMIN_PANEL}</a>
-					</li>
-					# ENDIF #
-					# IF C_MODERATOR_AUTH #
-					<li>
-						<i class="fa fa-legal"></i>
-						<a href="${relative_url(UserUrlBuilder::moderation_panel())}" class="small"> {L_MODO_PANEL}</a>
-					</li>
-					# ENDIF #
-					<li>
-						<i class="fa fa-file-text# IF C_UNREAD_CONTRIBUTION # blink# ENDIF #"></i>
-						<a href="${relative_url(UserUrlBuilder::contribution_panel())}" class="small"> {L_CONTRIBUTION_PANEL}</a>
-					</li>
-					<li>
-						<i class="fa fa-sign-out"></i>
-						<a href="${relative_url(UserUrlBuilder::disconnect())}" class="small"> {L_DISCONNECT}</a>
-					</li>
-				</ul>
-			</div>
-			<div class="module-mini-bottom">
-			</div>
-		</div>
-	# ENDIF #
-# ELSE #
-	# IF C_USER_NOTCONNECTED #
-	<div id="connect-menu" class="not-connected">
-		<div class="horizontal-fieldset">
-			<a href="" class="js-menu-button" onclick="open_submenu('connect-menu');return false;" title="{L_CONNECT}"><i class="fa fa-sign-in"></i> <span>{L_CONNECT}</span></a>
-			<div class="connect-content">
-				<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();">
-					<input type="text" id="login" name="login" title="{L_PSEUDO}" placeholder="{L_PSEUDO}" class="connect-form">
-					<input type="password" id="password" name="password" class="connect-form" title="{L_PASSWORD}" placeholder="{L_PASSWORD}">
-					<input checked="checked" type="checkbox" name="autoconnect" title="{L_AUTOCONNECT}">
-					<input type="hidden" name="redirect" value="{SITE_REWRITED_SCRIPT}">
+			
+			# IF C_USER_REGISTER #
+			<div class="connect-register-container">
+				# IF C_VERTICAL #
+				<a class="connect-register small" href="${relative_url(UserUrlBuilder::registration())}">
+					<i class="fa fa-ticket"></i><span>{L_REGISTER}</span>
+				</a>
+				# ELSE #
+				<form action="${relative_url(UserUrlBuilder::registration())}" method="post">
+					<button type="submit" name="register" value="true" class="submit">{L_REGISTER}</button>
 					<input type="hidden" name="token" value="{TOKEN}">
-					<button type="submit" name="authenticate" value="internal" class="submit">{L_CONNECT}</button>
 				</form>
-				# IF C_USER_REGISTER #
-					<form action="${relative_url(UserUrlBuilder::registration())}" method="post">
-						<button type="submit" name="register" value="true" class="submit">{L_REGISTER}</button>
-						<input type="hidden" name="token" value="{TOKEN}">
-					</form>
-					# IF C_FB_AUTH_ENABLED #
-					<a class="social-connect fb" href="${relative_url(UserUrlBuilder::connect('fb'))}" title="${LangLoader::get_message('facebook-connect', 'user-common')}"><i class="fa fa-facebook"></i><span>${LangLoader::get_message('facebook-connect', 'user-common')}</span></a>
-					# ENDIF #
-					# IF C_GOOGLE_AUTH_ENABLED #
-					<a class="social-connect google" href="${relative_url(UserUrlBuilder::connect('google'))}" title="${LangLoader::get_message('google-connect', 'user-common')}"><i class="fa fa-google-plus"></i><span>${LangLoader::get_message('google-connect', 'user-common')}</span></a>
-					# ENDIF #
 				# ENDIF #
-				<a class="forgot-pass small" href="${relative_url(UserUrlBuilder::forget_password())}">{L_FORGOT_PASS}</a>
+				# IF C_FB_AUTH_ENABLED #
+				<a class="social-connect fb" href="${relative_url(UserUrlBuilder::connect('fb'))}" title="${LangLoader::get_message('facebook-connect', 'user-common')}">
+					<i class="fa fa-facebook"></i><span>${LangLoader::get_message('facebook-connect', 'user-common')}</span>
+				</a>
+				# ENDIF #
+				# IF C_GOOGLE_AUTH_ENABLED #
+				<a class="social-connect google" href="${relative_url(UserUrlBuilder::connect('google'))}" title="${LangLoader::get_message('google-connect', 'user-common')}">
+					<i class="fa fa-google-plus"></i><span>${LangLoader::get_message('google-connect', 'user-common')}</span>
+				</a>
+				# ENDIF #
+			</div>
+			# ENDIF #
+			<div class="forget-pass-container">
+				<a class="forgot-pass small" href="${relative_url(UserUrlBuilder::forget_password())}">
+					<i class="fa fa-question-circle"></i><span>{L_FORGOT_PASS}</span>
+				</a>
 			</div>
 		</div>
 	</div>
-	# ELSE #
-	<div id="connect-menu" class="connected">
-		<div class="horizontal-fieldset">
-			<a href="" class="js-menu-button" onclick="open_submenu('connect-menu');return false;" title="{L_PROFIL}"><i class="fa fa-bars # IF NUMBER_TOTAL_ALERT # blink alert# ENDIF #"></i><span>{L_PRIVATE_PROFIL}</span></a>
-			<ul class="connect-content">
-				<li>
-					<i class="fa fa-profil"></i>
-					<a href="${relative_url(UserUrlBuilder::home_profile())}" class="small"> {L_PROFIL}</a>
-				</li>
-				<li>
-					<i class="fa fa-envelope# IF C_HAS_PM # blink# ENDIF #"></i>
-					<a href="{U_USER_PM}" class="small"> {L_NBR_PM}</a>
-				</li>
-				# IF C_ADMIN_AUTH #
-				<li>
-					<i class="fa fa-wrench# IF C_UNREAD_ALERT # blink# ENDIF #"></i>
-					<a href="${relative_url(UserUrlBuilder::administration())}" class="small"> {L_ADMIN_PANEL}# IF C_UNREAD_ALERT # ({NUMBER_UNREAD_ALERTS})# ENDIF #</a>
-				</li>
-				# ENDIF #
-				# IF C_MODERATOR_AUTH #
-				<li>
-					<i class="fa fa-legal"></i>
-					<a href="${relative_url(UserUrlBuilder::moderation_panel())}" class="small"> {L_MODO_PANEL}</a>
-				</li>
-				# ENDIF #
-				<li>
-					<i class="fa fa-file-text# IF C_UNREAD_CONTRIBUTION # blink# ENDIF #"></i>
-					<a href="${relative_url(UserUrlBuilder::contribution_panel())}" class="small"> {L_CONTRIBUTION_PANEL}# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION # ({NUMBER_UNREAD_CONTRIBUTIONS})# ENDIF #</a>
-				</li>
-				<li>
-					<i class="fa fa-sign-out"></i>
-					<a href="${relative_url(UserUrlBuilder::disconnect())}" class="small"> {L_DISCONNECT}</a>
-				</li>
-			</ul>
-		</div>
+	# IF C_VERTICAL #
+	<div class="module-mini-bottom">
+	</div>		 
+	# ENDIF #
+	
+
+	# ELSE # <!-- User Connected -->
+
+	# IF C_VERTICAL #
+	<div class="module-mini-top">
+		<h5 class="sub-title">{L_PRIVATE_PROFIL}</h5>
+	</div>
+	<div class="module-mini-contents connect-contents">
+	# ELSE # 
+	<div class="connect-contents">
+		<a href="" class="js-menu-button" onclick="open_submenu('module-connect');return false;" title="{L_PROFIL}">
+			<i class="fa fa-bars # IF NUMBER_TOTAL_ALERT # blink alert# ENDIF #"></i><span>{L_PRIVATE_PROFIL}</span>
+		</a>
+	# ENDIF #
+		<ul class="connect-elements-container">
+			<li class="connect-element connect-profil">
+				<a href="${relative_url(UserUrlBuilder::home_profile())}" class="small">
+					<i class="fa fa-profil"></i><span>{L_PROFIL}</span>
+				</a>
+						</li>
+			<li class="connect-element connect-pm# IF C_HAS_PM # connect-event# ENDIF #">
+				<a href="{U_USER_PM}" class="small">
+					<i class="fa fa-envelope# IF C_HAS_PM # blink# ENDIF #"></i><span>{L_PM_PANEL}</span># IF C_HAS_PM #<span class="blink">  ({NUMBER_PM})</span># ENDIF #
+				</a>
+			</li>
+			# IF C_ADMIN_AUTH #
+			<li class="connect-element connect-admin# IF C_UNREAD_ALERT # connect-event# ENDIF #">
+				<a href="${relative_url(UserUrlBuilder::administration())}" class="small">
+					<i class="fa fa-wrench# IF C_UNREAD_ALERT # blink# ENDIF #"></i><span>{L_ADMIN_PANEL}</span># IF C_UNREAD_ALERT #<span class="blink"> ({NUMBER_UNREAD_ALERTS})</span># ENDIF #
+				</a>
+			</li>
+			# ENDIF #
+			# IF C_MODERATOR_AUTH #
+			<li class="connect-element connect-modo">
+				<a href="${relative_url(UserUrlBuilder::moderation_panel())}" class="small">
+					<i class="fa fa-legal"></i><span>{L_MODO_PANEL}</span>
+				</a>
+			</li>
+			# ENDIF #
+			<li class="connect-element connect-contribution# IF C_UNREAD_CONTRIBUTION # connect-event# ENDIF #">
+				<a href="${relative_url(UserUrlBuilder::contribution_panel())}" class="small">
+					<i class="fa fa-file-text# IF C_UNREAD_CONTRIBUTION # blink# ENDIF #"></i><span>{L_CONTRIBUTION_PANEL}</span># IF C_UNREAD_CONTRIBUTION #<span class="blink"> ({NUMBER_UNREAD_CONTRIBUTIONS})</span># ENDIF #
+				</a>
+			</li>
+			<li class="connect-element connect-disconnect">
+				<a href="${relative_url(UserUrlBuilder::disconnect())}" class="small">
+					<i class="fa fa-sign-out"></i><span>{L_DISCONNECT}</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+	# IF C_VERTICAL #
+	<div class="module-mini-bottom">
 	</div>
 	# ENDIF #
-# ENDIF #
+	# ENDIF #
+</div>
