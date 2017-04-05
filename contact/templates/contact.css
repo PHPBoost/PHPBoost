@@ -35,20 +35,33 @@ div[id*="AdminContactFieldFormController_possible_values_"] {
 	clear: both;
 }
 
-div[id*="AdminContactFieldFormController_possible_values_"] .form-field-checkbox {
-	display: inline-block;
-	vertical-align: middle;
+@media (max-width: 768px) {
+	div[id*="AdminContactFieldFormController_possible_values_"] > .form-field-checkbox,
+	div[id*="AdminContactFieldFormController_possible_values_"] > input {
+		display: inline-block;
+	}
+
+	div[id*="AdminContactFieldFormController_possible_values_"] > .form-field-checkbox {
+		margin: 10px 0 20px 0; 
+	}
+
+	div[id*="AdminContactFieldFormController_possible_values_"] > input {
+		margin: 0 0 5px 0; 
+	}
 }
 
-input[id*="field_name_AdminContactFieldFormController_possible_values_"] {
-	margin-bottom: 5px;
-	width: 45%;
+@media (min-width: 769px) {
+	input[id*="field_name_AdminContactFieldFormController_possible_values_"] {
+		margin-bottom: 5px;
+		width: 45%;
+	}
+
+	input[id*="field_email_AdminContactFieldFormController_possible_values_"] {
+		margin-bottom: 5px;
+		width: 40%;
+	}
 }
 
-input[id*="field_email_AdminContactFieldFormController_possible_values_"] {
-	margin-bottom: 5px;
-	width: 40%;
-}
 
 select[id*="field_recipient_"] {
 	width: 40%;
