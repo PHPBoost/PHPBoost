@@ -6,6 +6,8 @@
  * @copyright	Author
  *
  * @version		2.3.6 (20/12/2016)
+ * @patch 1 by ElenWii : jQuery 3.1
+ * @patch 2 by ElenWii : Take into account show_pics.php?...&ext= for module gallery
  */
 
 ;(function ($) {
@@ -764,9 +766,14 @@
 
 					for (var i = 0; i < suffixArr.length; i++) {
 						var suffix = suffixArr[i].toLowerCase(),
-							regexp = new RegExp('\.(' + suffix + ')$', 'i'),
+							regexp = new RegExp('\.(' + suffix + ')$', 'i');
 							// Verify only the last 5 characters of the string
-							str = url.toLowerCase().split('?')[0].substr(-5);
+							// If url came from gallery, we will get the real file extension and not show_pics.php
+							if (url.indexOf("ext=") > 0) {
+								var str = url.toLowerCase().split('?')[1].substr(-5);
+							} else {
+								var str = url.toLowerCase().split('?')[0].substr(-5);
+							}
 
 						if (regexp.test(str) === true || (key === 'inline' && (url.indexOf(suffix) > -1))) {
 							return key;
