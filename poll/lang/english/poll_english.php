@@ -74,7 +74,7 @@ $LANG['e_results_not_displayed_yet'] = 'Results will be available at the end of 
  
 //Poll
 $LANG['poll'] = 'Polls';
-$LANG['mini_poll'] = 'Mini Poll';
+$LANG['mini_poll'] = 'Poll';
 $LANG['poll_main'] = 'This is the website "polls" module, so tell us your opinion.';
 $LANG['poll_back'] = 'Return to the poll(s)';
 $LANG['redirect_none'] = 'No poll available';

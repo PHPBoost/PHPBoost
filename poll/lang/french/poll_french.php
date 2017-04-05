@@ -73,7 +73,7 @@ $LANG['e_results_not_displayed_yet'] = 'Les résultats seront disponibles à la 
 
 //polls
 $LANG['poll'] = 'Sondages';
-$LANG['mini_poll'] = 'Mini sondage';
+$LANG['mini_poll'] = 'Sondage';
 $LANG['poll_main'] = 'Voici l\'espace de sondages du site, profitez en pour donner votre avis.';
 $LANG['poll_back'] = 'Retour au(x) sondage(s)';
 $LANG['redirect_none'] = 'Aucun sondage disponible';
