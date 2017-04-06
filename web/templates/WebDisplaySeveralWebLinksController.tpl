@@ -99,7 +99,7 @@
 		<article id="article-web-{weblinks.ID}" class="article-web article-several# IF C_CATEGORY_DISPLAYED_SUMMARY # block# IF weblinks.C_IS_PARTNER # content-friends# ENDIF ## IF weblinks.C_IS_PRIVILEGED_PARTNER # content-privileged-friends# ENDIF ## IF weblinks.C_NEW_CONTENT # new-content# ENDIF#" # ENDIF #itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 			<header>
 				<h2>
-						<span class="actions">
+					<span class="actions">
 						# IF weblinks.C_EDIT #<a href="{weblinks.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a># ENDIF #
 						# IF weblinks.C_DELETE #<a href="{weblinks.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a># ENDIF #
 					</span>
@@ -147,10 +147,12 @@
 			<div class="content">
 				<div class="options infos">
 					<div class="center">
-						# IF weblinks.C_PARTNER #
+						# IF weblinks.C_IS_PARTNER #
 							# IF weblinks.C_HAS_PARTNER_PICTURE #
+							<span class="web-partner-picture">
 								<img src="{weblinks.U_PARTNER_PICTURE}" alt="{weblinks.NAME}" itemprop="image" />
-								<div class="spacer"></div>
+							</span>
+							<div class="spacer"></div>
 							# ENDIF #
 						# ENDIF #
 						# IF weblinks.C_VISIBLE #
@@ -185,8 +187,9 @@
 				</div>
 						
 				# IF weblinks.C_PICTURE #
-				<img src="{weblinks.U_PICTURE}" alt="{weblinks.NAME}" itemprop="image" />
-				<div class="spacer"></div>
+				<span class="web-picture">
+					<img src="{weblinks.U_PICTURE}" alt="{weblinks.NAME}" itemprop="image" />
+				</span>
 				# ENDIF #
 						
 				<div itemprop="text">{weblinks.CONTENTS}</div>
