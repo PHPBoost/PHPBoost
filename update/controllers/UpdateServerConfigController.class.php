@@ -129,7 +129,7 @@ class UpdateServerConfigController extends UpdateController
 	}
 
 	/**
-	 * @return InstallDisplayResponse
+	 * @return UpdateDisplayResponse
 	 */
 	private function create_response()
 	{

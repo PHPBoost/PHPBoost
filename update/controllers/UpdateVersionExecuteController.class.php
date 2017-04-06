@@ -50,7 +50,7 @@ class UpdateVersionExecuteController extends UpdateController
 
 	/**
 	 * @param Template $view
-	 * @return InstallDisplayResponse
+	 * @return UpdateDisplayResponse
 	 */
 	private function create_response(Template $view)
 	{

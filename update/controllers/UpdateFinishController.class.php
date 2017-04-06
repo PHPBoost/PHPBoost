@@ -36,7 +36,7 @@ class UpdateFinishController extends UpdateController
 
 	/**
 	 * @param Template $view
-	 * @return InstallDisplayResponse
+	 * @return UpdateDisplayResponse
 	 */
 	private function create_response(View $view)
 	{

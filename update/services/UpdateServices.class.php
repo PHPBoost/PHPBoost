@@ -216,6 +216,9 @@ class UpdateServices
 		if (ModulesManager::is_module_installed('UrlUpdater'))
 			ModulesManager::uninstall_module('UrlUpdater');
 		
+		// Mise à jour du contenu serialisé pour le passage en UTF-8
+		$this->update_serialized_data();
+		
 		// Mise à jour des tables du noyau
 		$this->update_kernel_tables();
 		
@@ -233,9 +236,6 @@ class UpdateServices
 		
 		// Mise à jour du contenu
 		$this->update_content();
-		
-		// Mise à jour du contenu serialisé pour le passage en UTF-8
-		$this->update_serialized_data();
 		
 		// Mise à jour du contenu des menus de contenu
 		$this->update_content_menus();
@@ -306,8 +306,21 @@ class UpdateServices
 		$configs_module_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/modules/config/', self::$configuration_pattern, 'config');
 		$update_module_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/modules/', self::$module_pattern, 'module');
 		
-		$classes_list = array_merge($configs_module_class, $update_module_class);
-		foreach ($classes_list as $class)
+		foreach ($configs_module_class as $class)
+		{
+			try {
+				$object = new $class['name']();
+				$object->execute();
+				$success = true;
+				$message = '';
+			} catch (Exception $e) {
+				$success = false;
+				$message = $e->getMessage();
+			}
+			$this->add_error_to_file($class['type'] . ' ' . $object->get_config_name(), $success, $message);
+		}
+		
+		foreach ($update_module_class as $class)
 		{
 			try {
 				$object = new $class['name']();

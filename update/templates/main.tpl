@@ -78,7 +78,7 @@ ${resources('update/update')}
 								<li class="{step.CSS_CLASS}">
 									<span class="cssmenu-title">
 										<i class="fa fa-{step.IMG} fa-fw" title="${escape(step.NAME)}"></i><span>{step.NAME}</span>
-									</span>								
+									</span>
 								</li>
 							# END step #
 							</ul>

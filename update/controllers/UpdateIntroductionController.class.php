@@ -37,7 +37,7 @@ class UpdateIntroductionController extends UpdateController
 
 	/**
 	 * @param Template $view
-	 * @return InstallDisplayResponse
+	 * @return UpdateDisplayResponse
 	 */
 	private function create_response(Template $view)
 	{
