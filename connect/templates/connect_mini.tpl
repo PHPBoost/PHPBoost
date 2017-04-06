@@ -117,13 +117,13 @@
 						</li>
 			<li class="connect-element connect-pm# IF C_HAS_PM # connect-event# ENDIF #">
 				<a href="{U_USER_PM}" class="small">
-					<i class="fa fa-envelope# IF C_HAS_PM # blink# ENDIF #"></i><span>{L_PM_PANEL}</span># IF C_HAS_PM #<span class="blink">  ({NUMBER_PM})</span># ENDIF #
+					<i class="fa fa-envelope# IF C_HAS_PM # blink# ENDIF #"></i><span>{L_PM_PANEL}</span># IF C_HAS_PM #<span class="blink">({NUMBER_PM})</span># ENDIF #
 				</a>
 			</li>
 			# IF C_ADMIN_AUTH #
 			<li class="connect-element connect-admin# IF C_UNREAD_ALERT # connect-event# ENDIF #">
 				<a href="${relative_url(UserUrlBuilder::administration())}" class="small">
-					<i class="fa fa-wrench# IF C_UNREAD_ALERT # blink# ENDIF #"></i><span>{L_ADMIN_PANEL}</span># IF C_UNREAD_ALERT #<span class="blink"> ({NUMBER_UNREAD_ALERTS})</span># ENDIF #
+					<i class="fa fa-wrench# IF C_UNREAD_ALERT # blink# ENDIF #"></i><span>{L_ADMIN_PANEL}</span># IF C_UNREAD_ALERT #<span class="blink">({NUMBER_UNREAD_ALERTS})</span># ENDIF #
 				</a>
 			</li>
 			# ENDIF #
@@ -136,7 +136,7 @@
 			# ENDIF #
 			<li class="connect-element connect-contribution# IF C_UNREAD_CONTRIBUTION # connect-event# ENDIF #">
 				<a href="${relative_url(UserUrlBuilder::contribution_panel())}" class="small">
-					<i class="fa fa-file-text# IF C_UNREAD_CONTRIBUTION # blink# ENDIF #"></i><span>{L_CONTRIBUTION_PANEL}</span># IF C_UNREAD_CONTRIBUTION #<span class="blink"> ({NUMBER_UNREAD_CONTRIBUTIONS})</span># ENDIF #
+					<i class="fa fa-file-text# IF C_UNREAD_CONTRIBUTION # blink# ENDIF #"></i><span>{L_CONTRIBUTION_PANEL}</span># IF C_UNREAD_CONTRIBUTION #<span class="blink">({NUMBER_UNREAD_CONTRIBUTIONS})</span># ENDIF #
 				</a>
 			</li>
 			<li class="connect-element connect-disconnect">
