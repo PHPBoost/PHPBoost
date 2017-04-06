@@ -488,11 +488,15 @@ class GalleryDisplayCategoryController extends ModuleController
 					if (!file_exists(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path']))
 						$Gallery->Resize_pics(PATH_TO_ROOT . '/gallery/pics/' . $row['path']); //Redimensionnement + création miniature
 
-					$onclick = '';
+					$info = new SplFileInfo($row['path']);
+					$extension = $info->getExtension();
+					
+					$onclick = $onmousedown = '';
 					//Affichage de l'image en grand.
 					if ($config->get_pics_enlargement_mode() == GalleryConfig::FULL_SCREEN) //Ouverture en popup plein écran.
 					{
-						$display_link = PATH_TO_ROOT. '/gallery/pics/' . $row['path'] . '" onmousedown="increment_view(' . $row['id'] . ');" title="' . str_replace('"', '', stripslashes($row['name']));
+						$onmousedown = 'increment_view(' . $row['id'] . ');return false;';
+						$display_link = 'show_pics.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat'] . '&amp;ext=' . $extension;
 					}
 					elseif ($config->get_pics_enlargement_mode() == GalleryConfig::POPUP) //Ouverture en popup simple.
 					{
@@ -539,9 +543,6 @@ class GalleryDisplayCategoryController extends ModuleController
 
 					$html_protected_name = $row['name'];
 					
-					$info = new SplFileInfo($row['path']);
-					$extension = $info->getExtension();
-					
 					$this->tpl->assign_block_vars('pics_list', array(
 						'C_IMG_APROB' => $row['aprob'] == 1,
 						'C_OPEN_TR' => is_int($j++/$nbr_column_pics),
@@ -563,6 +564,7 @@ class GalleryDisplayCategoryController extends ModuleController
 						'KERNEL_NOTATION' => $notation_config->is_notation_enabled() && $is_connected ? NotationService::display_active_image($notation) : NotationService::display_static_image($notation),
 						'CAT' => $cat_list,
 						'ONCLICK' => $onclick,
+						'ONMOUSEDOWN' => $onmousedown,
 						'RENAME' => $html_protected_name,
 						'RENAME_CUT' => $html_protected_name,
 						'L_APROB_IMG' => ($row['aprob'] == 1) ? $LANG['unaprob'] : $LANG['aprob'],
