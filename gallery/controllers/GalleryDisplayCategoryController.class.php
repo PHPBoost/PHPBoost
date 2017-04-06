@@ -538,6 +538,10 @@ class GalleryDisplayCategoryController extends ModuleController
 					$new_content = new GalleryNewContent();
 
 					$html_protected_name = $row['name'];
+					
+					$info = new SplFileInfo($row['path']);
+					$extension = $info->getExtension();
+					
 					$this->tpl->assign_block_vars('pics_list', array(
 						'C_IMG_APROB' => $row['aprob'] == 1,
 						'C_OPEN_TR' => is_int($j++/$nbr_column_pics),
@@ -563,7 +567,7 @@ class GalleryDisplayCategoryController extends ModuleController
 						'RENAME_CUT' => $html_protected_name,
 						'L_APROB_IMG' => ($row['aprob'] == 1) ? $LANG['unaprob'] : $LANG['aprob'],
 						'U_PICTURE_LINK' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php'),
-						'U_PICTURE' => PATH_TO_ROOT.'/gallery/pics/thumbnails/' . $row['path'],
+						'U_PICTURE' => 'show_pics.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat'] . '&amp;ext=' . $extension,
 						'U_DEL' => url('gallery.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;cat=' . $category->get_id()),
 						'U_MOVE' => url('gallery.php?id=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value'),
 						'U_DISPLAY' => $display_link,
