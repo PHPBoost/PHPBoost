@@ -22,11 +22,11 @@
 	margin: 0 13px 0 15px;
 }
 
-.is_default_title {
+.is-default-title {
 	margin-right: 30px;
 }
 
-.name_title {
+.name-title {
 	margin-right: 45%;
 }
 
@@ -48,6 +48,10 @@ div[id*="AdminContactFieldFormController_possible_values_"] {
 	div[id*="AdminContactFieldFormController_possible_values_"] > input {
 		margin: 0 0 5px 0; 
 	}
+
+	.title-possible-value {
+		display: none; 
+	}
 }
 
 @media (min-width: 769px) {
@@ -60,13 +64,12 @@ div[id*="AdminContactFieldFormController_possible_values_"] {
 		margin-bottom: 5px;
 		width: 40%;
 	}
-}
 
-
-select[id*="field_recipient_"] {
-	width: 40%;
-	height: 37px;
-	margin-bottom: 4px;
+	select[id*="field_recipient_"] {
+		width: 40%;
+		height: 37px;
+		margin-bottom: 4px;
+	}
 }
 
 #add-AdminContactFieldFormController_possible_values i[class*="fa-plus"] {
