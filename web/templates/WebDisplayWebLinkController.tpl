@@ -34,10 +34,12 @@
 			<div class="content">
 				<div class="options infos">
 					<div class="center">
-						# IF C_PARTNER #
+						# IF C_IS_PARTNER #
 							# IF C_HAS_PARTNER_PICTURE #
+							<span class="web-partner-picture">
 								<img src="{U_PARTNER_PICTURE}" alt="{NAME}" itemprop="image" />
-								<div class="spacer"></div>
+							</span>
+							<div class="spacer"></div>
 							# ENDIF #
 						# ENDIF #
 						# IF C_VISIBLE #
@@ -74,8 +76,9 @@
 				</div>
 				
 				# IF C_PICTURE #
+				<span class="web-picture">
 					<img src="{U_PICTURE}" alt="{NAME}" itemprop="image" />
-					<div class="spacer"></div>
+				</span>
 				# ENDIF #
 				
 				<div itemprop="text">{CONTENTS}</div>
