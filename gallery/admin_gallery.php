@@ -160,10 +160,10 @@ else
 			{
 				//On genère le tableau pour $config->get_columns_number() colonnes
 				$multiple_x = $i / $nbr_column_cats;
-				$tr_start = is_int($multiple_x) ? '<tr>' : '';
+				$display_tr_start = is_int($multiple_x);
 				$i++;
 				$multiple_x = $i / $nbr_column_cats;
-				$tr_end = is_int($multiple_x) ? '</tr>' : '';
+				$display_tr_end = is_int($multiple_x);
 				
 				$category_image = $cat->get_image()->rel();
 				$elements_number = $cat->get_elements_number();
@@ -173,8 +173,8 @@ else
 					'IDCAT' => $cat->get_id(),
 					'CAT' => $cat->get_name(),
 					'IMG' => $category_image,
-					'TR_START' => $tr_start,
-					'TR_END' => $tr_end,
+					'C_DISPLAY_TR_START' => $display_tr_start,
+					'C_DISPLAY_TR_END' => $display_tr_end,
 					'L_NBR_PICS' => sprintf($LANG['nbr_pics_info_admin'], $elements_number['pics_aprob'], $elements_number['pics_unaprob'])
 				));
 			}
@@ -185,8 +185,8 @@ else
 		{
 			$i++;
 			$tpl->assign_block_vars('cat.end_td', array(
-				'TD_END' => '<td style="width:' . $column_width_cats . '%">&nbsp;</td>',
-				'TR_END' => (is_int($i/$nbr_column_cats)) ? '</tr>' : ''
+				'COLUMN_WIDTH_PICS' => $column_width_pics,
+				'C_DISPLAY_TR_END' => (is_int($i/$nbr_column_cats))
 			));
 		}
 	}
@@ -194,8 +194,11 @@ else
 	##### Affichage des photos #####
 	$tpl->assign_block_vars('pics', array(
 		'C_PICS_MAX' => $nbr_pics == 0 || !empty($idpics),
-		'EDIT' => !empty($id_category) ? '<a href="' . GalleryUrlBuilder::edit_category($id_category)->rel() . '" title="' . LangLoader::get_message('edit', 'common') . '" class="fa fa-edit"></a>' : '',
-		'PICS_MAX' => '<img src="show_pics.php?id=' . $idpics . '&amp;cat=' . $id_category . '" alt="' . $category->get_name() . '" />'
+		'C_EDIT' => !empty($id_category),
+		'ID' => $idpics,
+		'IDCAT' => $id_category,
+		'CATNAME' => $category->get_name(),
+		'U_EDIT_CATEGORY' => GalleryUrlBuilder::edit_category($id_category)->rel()
 	));
 	
 	if ($nbr_pics > 0)
@@ -212,6 +215,9 @@ else
 		}
 		
 		$tpl->put_all(array(
+			'L_BY' => $LANG['by'],
+			'L_PREVIOUS' => $LANG['previous'],
+			'L_NEXT' => $LANG['next'],
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display()
 		));
@@ -252,8 +258,14 @@ else
 						$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
 
 					//Affichage de la liste des miniatures sous l'image.
-					$array_pics[] = '<td class="center" style="height:' . ($config->get_mini_max_height() + 16) . 'px"><span id="thumb' . $i . '"><a href="admin_gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '#pics_max' . '"><img src="pics/thumbnails/' . $row['path'] . '" alt="' . $row['name'] . '" /></a></span></td>';
-
+					$array_pics[] = array(
+						'HEIGHT' => ($config->get_mini_max_height() + 16),
+						'ID' => $i,
+						'URL' => 'admin_gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '#pics_max',
+						'NAME' => stripslashes($row['name']),
+						'PATH' => $row['path']
+					);
+					
 					if ($row['id'] == $idpics)
 					{
 						$reach_pics_pos = true;
@@ -332,10 +344,17 @@ else
 					'C_LEFT_THUMBNAILS' => ($pos_pics - $start_thumbnails),
 					'C_RIGHT_THUMBNAILS' => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics),
 					'ID' => $info_pics['id'],
-					'IMG' => '<img src="show_pics.php?id=' . $idpics . '&amp;cat=' . $id_category . '" alt="' . $info_pics['name'] . '" />',
+					'ID_CATEGORY' => $id_category,
+					'ID_PREVIOUS' => $id_previous,
+					'ID_NEXT' => $id_next,
+					'TOKEN' => AppContext::get_session()->get_token(),
 					'PICTURE_NAME' => stripslashes($info_pics['name']),
-					'NAME' => '<span id="fi_' . $info_pics['id'] . '">' . stripslashes($info_pics['name']) . '</span> <span id="fi' . $info_pics['id'] . '"></span>',
-					'POSTOR' => '<a class="' . UserService::get_level_class($info_pics['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($info_pics['user_id'])->rel() .'">' . $info_pics['display_name'] . '</a>',
+					'C_POSTOR_EXIST' => !empty($info_pics['display_name']),
+					'POSTOR' => $info_pics['display_name'],
+					'POSTOR_LEVEL_CLASS' => UserService::get_level_class($info_pics['level']),
+					'C_POSTOR_GROUP_COLOR' => !empty($group_color),
+					'POSTOR_GROUP_COLOR' => $group_color,
+					'U_POSTOR_PROFILE' => UserUrlBuilder::profile($info_pics['user_id'])->rel(),
 					'VIEWS' => ($info_pics['views'] + 1),
 					'DIMENSION' => $info_pics['width'] . ' x ' . $info_pics['height'],
 					'SIZE' => NumberHelper::round($info_pics['weight']/1024, 1),
@@ -343,11 +362,7 @@ else
 					'COLSPAN_PICTURE' => (int)($pos_pics > 0) + (int)($pos_pics < ($i - 1)),
 					'CAT' => $cat_list,
 					'RENAME' => addslashes($info_pics['name']),
-					'RENAME_CUT' => addslashes($info_pics['name']),
-					'U_DEL' => 'php?del=' . $info_pics['id'] . '&amp;cat=' . $id_category . '&amp;token=' . AppContext::get_session()->get_token(),
-					'U_MOVE' => '.php?id=' . $info_pics['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value',
-					'U_PREVIOUS' => '<a href="admin_gallery.php?cat=' . $id_category . '&amp;id=' . $id_previous . '#pics_max" class="fa fa-arrow-left fa-2x"></a> <a href="admin_gallery.php?cat=' . $id_category . '&amp;id=' . $id_previous . '#pics_max">' . $LANG['previous'] . '</a>',
-					'U_NEXT' => '<a href="admin_gallery.php?cat=' . $id_category . '&amp;id=' . $id_next . '#pics_max">' . $LANG['next'] . '</a> <a href="admin_gallery.php?cat=' . $id_category . '&amp;id=' . $id_next . '#pics_max" class="fa fa-arrow-right fa-2x"></a>'
+					'RENAME_CUT' => addslashes($info_pics['name'])
 				)));
 
 				//Affichage de la liste des miniatures sous l'image.
@@ -356,9 +371,7 @@ else
 				{
 					if ($i >= ($pos_pics - $start_thumbnails) && $i <= ($pos_pics + $end_thumbnails))
 					{
-						$tpl->assign_block_vars('pics.pics_max.list_preview_pics', array(
-							'PICS' => $pics
-						));
+						$tpl->assign_block_vars('pics.pics_max.list_preview_pics', $pics);
 					}
 					$i++;
 				}
@@ -390,9 +403,9 @@ else
 				$name = TextHelper::strlen($name) > 20 ? TextHelper::substr($name, 0, 20) . '...' : $name;
 
 				//On genère le tableau pour x colonnes
-				$tr_start = is_int($j / $nbr_column_pics) ? '<tr>' : '';
+				$display_tr_start = is_int($j / $nbr_column_pics);
 				$j++;
-				$tr_end = is_int($j / $nbr_column_pics) ? '</tr>' : '';
+				$display_tr_end = is_int($j / $nbr_column_pics);
 
 				//Affichage de l'image en grand.
 				if ($config->get_pics_enlargement_mode() == GalleryConfig::FULL_SCREEN) //Ouverture en popup plein écran.
@@ -423,16 +436,22 @@ else
 				$tpl->assign_block_vars('pics.list', array(
 					'C_APPROVED' => $row['aprob'],
 					'ID' => $row['id'],
-					'IMG' => '<img src="pics/thumbnails/' . $row['path'] . '" alt="' . $name . '" />',
+					'ALT_NAME' => $name,
 					'PATH' => $row['path'],
 					'NAME' => stripslashes($name_cut),
 					'TITLE' => stripslashes($row['name']),
-					'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . LangLoader::get_message('edit', 'common') . '" class="fa fa-edit"></a></span>',
-					'TR_START' => $tr_start,
-					'TR_END' => $tr_end,
+					'PROTECTED_TITLE' => addslashes($row['name']),
+					'PROTECTED_NAME' => addslashes($name_cut),
+					'C_DISPLAY_TR_START' => $display_tr_start,
+					'C_DISPLAY_TR_END' => $display_tr_end,
 					'CAT' => $cat_list,
 					'U_DISPLAY' => $display_link,
-					'U_POSTOR' => $LANG['by'] . ' <a class="' . UserService::get_level_class($row['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'">' . $row['display_name'] . '</a>',
+					'C_POSTOR_EXIST' => !empty($row['display_name']),
+					'POSTOR' => $row['display_name'],
+					'POSTOR_LEVEL_CLASS' => UserService::get_level_class($row['level']),
+					'C_POSTOR_GROUP_COLOR' => !empty($group_color),
+					'POSTOR_GROUP_COLOR' => $group_color,
+					'U_POSTOR_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel()
 				));
 			}
 			$result->dispose();
@@ -442,8 +461,8 @@ else
 			{
 				$j++;
 				$tpl->assign_block_vars('pics.end_td_pics', array(
-					'TD_END' => '<td style="width:' . $column_width_pics . '%">&nbsp;</td>',
-					'TR_END' => (is_int($j/$nbr_column_pics)) ? '</tr>' : ''
+					'COLUMN_WIDTH_PICS' => $column_width_pics,
+					'C_DISPLAY_TR_END' => (is_int($j/$nbr_column_pics))
 				));
 			}
 		}

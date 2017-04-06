@@ -142,9 +142,11 @@ else
 		
 		$tpl->assign_block_vars('image_up', array(
 			'NAME' => stripslashes($imageup['name']),
-			'IMG' => '<a href="admin_gallery.php?cat=' . $imageup['idcat'] . '&amp;id=' . $add_pic . '#pics_max"><img src="pics/' . $imageup['path'] . '" alt="' . $imageup['name'] . '" /></a>',
+			'PATH' => $imageup['path'],
+			'U_IMG' => 'admin_gallery.php?cat=' . $imageup['idcat'] . '&amp;id=' . $add_pic . '#pics_max',
 			'L_SUCCESS_UPLOAD' => $LANG['success_upload_img'],
-			'U_CAT' => '<a href="admin_gallery.php?cat=' . $imageup['idcat'] . '">' . $categories[$imageup['idcat']]->get_name() . '</a>'
+			'CATNAME' => $categories[$imageup['idcat']]->get_name(),
+			'U_CAT' => 'admin_gallery.php?cat=' . $imageup['idcat']
 		));
 	}
 
@@ -272,9 +274,9 @@ else
 				}
 
 				//On genère le tableau pour x colonnes
-				$tr_start = is_int($j / $nbr_column_pics) ? '<tr>' : '';
+				$display_tr_start = is_int($j / $nbr_column_pics);
 				$j++;
-				$tr_end = is_int($j / $nbr_column_pics) ? '</tr>' : '';
+				$display_tr_end = is_int($j / $nbr_column_pics);
 
 				//On raccourci le nom du fichier pour ne pas déformer l'administration.
 				$name = TextHelper::strlen($pics) > 20 ? TextHelper::substr($pics, 0, 20) . '...' : $pics;
@@ -295,11 +297,10 @@ else
 				
 				$tpl->assign_block_vars('list', array(
 					'ID' => $j,
-					'THUMNAILS' => '<img src="pics/thumbnails/' .  $pics . '" alt="' .  $pics . '" />',
 					'NAME' => $pics,
 					'UNIQ_NAME' => $pics,
-					'TR_START' => $tr_start,
-					'TR_END' => $tr_end,
+					'C_DISPLAY_TR_START' => $display_tr_start,
+					'C_DISPLAY_TR_END' => $display_tr_end,
 					'CATEGORIES' => $categories_list,
 				));
 			}
@@ -309,8 +310,8 @@ else
 			{
 				$j++;
 				$tpl->assign_block_vars('end_td_pics', array(
-					'TD_END' => '<td style="width:' . $column_width_pics . '%;padding:0">&nbsp;</td>',
-					'TR_END' => (is_int($j/$nbr_column_pics)) ? '</tr>' : ''
+					'COLUMN_WIDTH_PICS' => $column_width_pics,
+					'C_DISPLAY_TR_END' => (is_int($j/$nbr_column_pics))
 				));
 			}
 		}

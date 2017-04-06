@@ -58,9 +58,9 @@
 								
 								<strong>{image_up.NAME}</strong>
 								<div class="spacer"></div>
-								{image_up.IMG}
+								<a href="{image_up.U_IMG}"><img src="pics/{image_up.PATH}" alt="{image_up.NAME}" /></a>
 								<div class="spacer"></div>
-								{image_up.U_CAT}
+								<a href="{image_up.U_CAT}" title="{image_up.CATNAME}">{image_up.CATNAME}</a>
 							</div>
 						# END image_up #
 						<span>{L_AUTH_EXTENSION}: <strong>{AUTH_EXTENSION} </strong></span>
@@ -115,11 +115,11 @@
 					</thead>
 					<tbody>
 						# START list #
-						{list.TR_START}
+						# IF list.C_DISPLAY_TR_START #<tr># ENDIF #
 							<td class="valign-bottom">
 								<div class="smaller">
 									<div class="thumnails-list-container">
-									{list.THUMNAILS}
+									<img src="pics/thumbnails/{list.NAME}" alt="{list.NAME}" />
 									</div>
 									<div class="spacer"></div>
 									<div>
@@ -144,13 +144,13 @@
 									</div>
 								</div>
 							</td>
-						{list.TR_END}
+						# IF list.C_DISPLAY_TR_END #</tr># ENDIF #
 						# END list #
 						
 						# START end_td_pics #
-							{end_td_pics.TD_END}
+							<td style="width:{end_td_pics.COLUMN_WIDTH_PICS}%;padding:0">&nbsp;</td>
 							
-						{end_td_pics.TR_END}
+						# IF end_td_pics.C_DISPLAY_TR_END #</tr># ENDIF #
 						# END end_td_pics #
 					</tbody>
 				</table>

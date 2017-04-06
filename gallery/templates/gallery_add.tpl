@@ -15,9 +15,9 @@
 						<br />
 						<strong>{image_up.NAME}</strong>
 						<br />
-						{image_up.IMG}
+						<a href="gallery.php?cat={image_up.ID_CAT}&amp;id={image_up.ID}#pics_max"><img src="pics/{image_up.PATH}" alt="{image_up.NAME}" /></a>
 						<br />
-						{image_up.U_CAT}
+						<a href="gallery.php?cat={image_up.ID_CAT}">{image_up.CAT_NAME}</a>
 						<br /><br />
 						# END image_up #
 						

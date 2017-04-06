@@ -283,9 +283,14 @@ class GalleryDisplayCategoryController extends ModuleController
 							$Gallery->Resize_pics(PATH_TO_ROOT . '/gallery/pics/' . $row['path']); //Redimensionnement + création miniature
 
 						//Affichage de la liste des miniatures sous l'image.
-						$array_pics[] = '<td class="center" style="height:' . ($config->get_mini_max_height() + 16) . 'px"><span id="thumb' . $i . '"><a href="gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;sort=' . $g_sort, '-' . $row['idcat'] . '-' . $row['id'] . '.php?sort=' . $g_sort) . '#pics_max' . '" title="' . stripslashes($row['name']) . '"><img src="pics/thumbnails/' . $row['path'] . '" alt="' . stripslashes($row['name']) . '" /></a></span></td>';
-
-
+						$array_pics[] = array(
+							'HEIGHT' => ($config->get_mini_max_height() + 16),
+							'ID' => $i,
+							'URL' => 'gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;sort=' . $g_sort, '-' . $row['idcat'] . '-' . $row['id'] . '.php?sort=' . $g_sort) . '#pics_max',
+							'NAME' => stripslashes($row['name']),
+							'PATH' => $row['path']
+						);
+						
 						if ($row['id'] == $g_idpics)
 						{
 							$reach_pics_pos = true;
@@ -351,8 +356,8 @@ class GalleryDisplayCategoryController extends ModuleController
 
 					$group_color = User::get_group_color($info_pics['groups'], $info_pics['level']);
 
-					$date = new DATE($info_pics['timestamp'], Timezone::SERVER_TIMEZONE);
-
+					$date = new Date($info_pics['timestamp'], Timezone::SERVER_TIMEZONE);
+					
 					$info = new SplFileInfo($info_pics['path']);
 					$extension = $info->getExtension();
 
@@ -367,7 +372,12 @@ class GalleryDisplayCategoryController extends ModuleController
 						'C_NOTATION_ENABLED' => $notation_config->is_notation_enabled(),
 						'ID' => $info_pics['id'],
 						'NAME' => stripslashes($info_pics['name']),
-						'POSTOR' => '<a class="small ' . UserService::get_level_class($info_pics['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($info_pics['user_id'])->rel() .'">' . $info_pics['display_name'] . '</a>',
+						'C_POSTOR_EXIST' => !empty($info_pics['display_name']),
+						'POSTOR' => $info_pics['display_name'],
+						'POSTOR_LEVEL_CLASS' => UserService::get_level_class($info_pics['level']),
+						'C_POSTOR_GROUP_COLOR' => !empty($group_color),
+						'POSTOR_GROUP_COLOR' => $group_color,
+						'U_POSTOR_PROFILE' => UserUrlBuilder::profile($info_pics['user_id'])->rel(),
 						'VIEWS' => ($info_pics['views'] + 1),
 						'DIMENSION' => $info_pics['width'] . ' x ' . $info_pics['height'],
 						'SIZE' => NumberHelper::round($info_pics['weight']/1024, 1),
@@ -400,10 +410,10 @@ class GalleryDisplayCategoryController extends ModuleController
 						'U_MOVE' => url('gallery.php?id=' . $info_pics['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value'),
 						'U_PREVIOUS' => ($pos_pics > 0) ? GalleryUrlBuilder::get_link_item($category->get_id(),$id_previous) : '',
 						'U_NEXT' => ($pos_pics < ($i - 1)) ? GalleryUrlBuilder::get_link_item($category->get_id(),$id_next) : '',
-						'U_LEFT_THUMBNAILS' => (($pos_pics - $start_thumbnails) > 0) ? '<span id="display_left"><a href="javascript:display_thumbnails(\'left\')"><i class="fa fa-arrow-left fa-2x"></i></a></span>' : '<span id="display_left"></span>',
-						'U_RIGHT_THUMBNAILS' => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics) ? '<span id="display_right"><a href="javascript:display_thumbnails(\'right\')"><i class="fa fa-arrow-right fa-2x"></i></a></span>' : '<span id="display_right"></span>',
+						'C_LEFT_THUMBNAILS' => (($pos_pics - $start_thumbnails) > 0),
+						'C_RIGHT_THUMBNAILS' => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics),
 						'U_COMMENTS' => GalleryUrlBuilder::get_link_item($info_pics['idcat'],$info_pics['id'],0,$g_sort) .'#comments-list',
-						'U_IMG_MAX' => 'show_pics.php?id=' . $info_pics['id'] . '&amp;cat=' . $info_pics['idcat'] . '&amp;ext=.' . $extension
+						'U_IMG_MAX' => 'show_pics.php?id=' . $info_pics['id'] . '&amp;cat=' . $info_pics['idcat'] . '&amp;ext=' . $extension
 					)));
 
 					//Affichage de la liste des miniatures sous l'image.
@@ -412,9 +422,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					{
 						if ($i >= ($pos_pics - $start_thumbnails) && $i <= ($pos_pics + $end_thumbnails))
 						{
-							$this->tpl->assign_block_vars('list_preview_pics', array(
-								'PICS' => $pics
-							));
+							$this->tpl->assign_block_vars('list_preview_pics', $pics);
 						}
 						$i++;
 					}
@@ -453,6 +461,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					'C_PAGINATION' => $pagination->has_several_pages(),
 					'PAGINATION' => $pagination->display(),
 					'L_EDIT' => LangLoader::get_message('edit', 'common'),
+					'L_BY' => $LANG['by'],
 					'L_VIEW' => $LANG['view'],
 					'L_VIEWS' => $LANG['views']
 				));
@@ -538,7 +547,12 @@ class GalleryDisplayCategoryController extends ModuleController
 						'APROB' => $row['aprob'],
 						'PATH' => $row['path'],
 						'NAME' => stripslashes($row['name']),
-						'POSTOR' => $LANG['by'] . (!empty($row['display_name']) ? ' <a class="small '.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'">' . $row['display_name'] . '</a>' : ' ' . $LANG['guest']),
+						'C_POSTOR_EXIST' => !empty($row['display_name']),
+						'POSTOR' => $row['display_name'],
+						'POSTOR_LEVEL_CLASS' => UserService::get_level_class($row['level']),
+						'C_POSTOR_GROUP_COLOR' => !empty($group_color),
+						'POSTOR_GROUP_COLOR' => $group_color,
+						'U_POSTOR_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 						'VIEWS' => $row['views'],
 						'L_VIEWS' => $row['views'] > 1 ? $LANG['views'] : $LANG['view'],
 						'L_COMMENTS' => CommentsService::get_number_and_lang_comments('gallery', $row['id']),
@@ -562,8 +576,8 @@ class GalleryDisplayCategoryController extends ModuleController
 				while (!is_int($j/$nbr_column_pics))
 				{
 					$this->tpl->assign_block_vars('end_table', array(
-						'TD_END' => '<td class="td-end" style="width:' . $column_width_pics . '%">&nbsp;</td>',
-						'TR_END' => (is_int(++$j/$nbr_column_pics)) ? '</tr>' : ''
+						'COLUMN_WIDTH_PICS' => $column_width_pics,
+						'C_DISPLAY_TR_END' => (is_int(++$j/$nbr_column_pics))
 					));
 				}
 			}

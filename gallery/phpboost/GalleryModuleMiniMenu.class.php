@@ -167,6 +167,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 		}
 	
 		$tpl->put_all(array(
+			'C_NO_RANDOM_PICS' => ($i == 0),
 			'ARRAY_PICS' => $array_pics_mini,
 			'HEIGHT_DIV' => $config->get_mini_max_height(),
 			'SUM_HEIGHT' => $sum_height + 10,
@@ -175,7 +176,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 			'SUM_WIDTH' => $sum_width + 30,
 			'HIDDEN_WIDTH' => ($config->get_mini_max_width() * 3) + 30,
 			'SCROLL_DELAY' => $config->get_mini_pics_speed()*1000,
-			'L_NO_RANDOM_PICS' => ($i == 0) ? '<br /><span class="smaller"><em>' . $LANG['no_random_img']  . '</em></span><br />' : '',
+			'L_NO_RANDOM_PICS' => $LANG['no_random_img'],
 			'L_GALLERY' => $LANG['gallery']
 		));
 		

@@ -320,10 +320,10 @@
 							<div class="options">
 								<h6>{L_INFORMATIONS}</h6>
 								# IF C_TITLE_ENABLED #
-									<span class="text-strong">{L_NAME} : </span><span id="fi_{ID}">{NAME}</span><span id="fi{ID}"></span><br/>
+									<span class="text-strong">{L_NAME} : </span><span><span id="fi_{ID}">{NAME}</span> <span id="fi{ID}"></span></span><br/>
 								# ENDIF #
 								# IF C_AUTHOR_DISPLAYED #
-									<span class="text-strong">{L_POSTOR} : </span><span>{POSTOR}</span><br/>
+									<span class="text-strong">{L_POSTOR} : </span><span># IF C_POSTOR_EXIST #<a class="small {POSTOR_LEVEL_CLASS}"# IF C_POSTOR_GROUP_COLOR # style="color:{POSTOR_GROUP_COLOR}"# ENDIF # href="{U_POSTOR_PROFILE}">{POSTOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #</span><br/>
 								# ENDIF #
 								# IF C_VIEWS_COUNTER_ENABLED #
 									<span class="text-strong">{L_VIEWS} : </span><span>{VIEWS}</span><br/>
@@ -373,15 +373,15 @@
 								<tbody>
 									<tr>
 										<td>
-											{U_LEFT_THUMBNAILS}
+											<span id="display_left"># IF C_LEFT_THUMBNAILS #<a href="javascript:display_thumbnails('left')"><i class="fa fa-arrow-left fa-2x"></i></a># ENDIF #</span>
 										</td>
 
 										# START list_preview_pics #
-											{list_preview_pics.PICS}
+											<td class="center" style="height:{list_preview_pics.HEIGHT}px"><span id="thumb{list_preview_pics.ID}"><a href="{list_preview_pics.URL}" title="{list_preview_pics.NAME}"><img src="pics/thumbnails/{list_preview_pics.PATH}" alt="{list_preview_pics.NAME}" /></a></span></td>
 										# END list_preview_pics #
 
 										<td>
-											{U_RIGHT_THUMBNAILS}
+											<span id="display_right"># IF C_RIGHT_THUMBNAILS #<a href="javascript:display_thumbnails('right')"><i class="fa fa-arrow-right fa-2x"># ENDIF #</span>
 										</td>
 									</tr>
 								</tbody>
@@ -413,7 +413,7 @@
 										# IF C_PICTURE_NAME_DISPLAYED #<a class="small" href="{pics_list.U_PICTURE_LINK}"><span id="fi_{pics_list.ID}">{pics_list.NAME}</span></a># ELSE #<span id="fi_{pics_list.ID}"></span># ENDIF # <span id="fi{pics_list.ID}"></span>
 										# IF C_AUTHOR_DISPLAYED #
 										<br />
-										{pics_list.POSTOR}
+										{L_BY} # IF pics_list.C_POSTOR_EXIST #<a class="small {pics_list.POSTOR_LEVEL_CLASS}"# IF pics_list.C_POSTOR_GROUP_COLOR # style="color:{pics_list.POSTOR_GROUP_COLOR}"# ENDIF # href="{pics_list.U_POSTOR_PROFILE}">{pics_list.POSTOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #
 										# ENDIF #
 										# IF C_VIEWS_COUNTER_ENABLED #
 										<br />
@@ -453,9 +453,9 @@
 							# END pics_list #
 
 							# START end_table #
-								{end_table.TD_END}
+								<td class="td-end" style="width:{end_table.COLUMN_WIDTH_PICS}%">&nbsp;</td>
 
-							{end_table.TR_END}
+							# IF end_table.C_DISPLAY_TR_END #</tr># ENDIF #
 							# END end_table #
 							</tbody>
 						</table>

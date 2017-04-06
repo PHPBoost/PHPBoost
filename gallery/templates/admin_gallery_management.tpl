@@ -225,7 +225,7 @@
 			# START pics #
 			<fieldset>
 				<legend>
-					{GALLERY} {pics.EDIT}
+					{GALLERY} # IF pics.C_EDIT #<a href="{pics.U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a># ENDIF #
 					# IF C_PAGINATION #
 					<p class="center">
 						# INCLUDE PAGINATION #
@@ -254,7 +254,7 @@
 						# ENDIF #
 						<tbody>
 						# START cat.list #
-						{cat.list.TR_START}
+						# IF cat.list.C_DISPLAY_TR_START #<tr># ENDIF #
 							<td class="valign-bottom" style="width:{COLUMN_WIDTH_CATS}%;">
 								<a href="admin_gallery.php?cat={cat.list.IDCAT}"># IF cat.list.C_IMG #<img itemprop="thumbnailUrl" src="{cat.list.IMG}" alt="{cat.list.CAT}" /># ENDIF #</a>
 								
@@ -263,12 +263,12 @@
 								<br />
 								<span class="smaller">{cat.list.L_NBR_PICS}</span> 
 							</td>
-						{cat.list.TR_END}
+						# IF cat.list.C_DISPLAY_TR_END #</tr># ENDIF #
 						# END cat.list #
 						
 						# START cat.end_td #
-							{cat.end_td.TD_END}
-						{cat.end_td.TR_END}
+							<td style="width:{cat.end_td.COLUMN_WIDTH_PICS}%;padding:0">&nbsp;</td>
+						# IF cat.end_td.C_DISPLAY_TR_END #</tr># ENDIF #
 						# END cat.end_td #
 						</tbody>
 					</table>
@@ -288,18 +288,18 @@
 							<tbody>
 								<tr>
 									<td id="pics_max" colspan="{pics.pics_max.COLSPAN_PICTURE}">
-										{pics.PICS_MAX}
+										<img src="show_pics.php?id={pics.ID}&amp;cat={pics.IDCAT}" alt="{pics.CATNAME}" />
 									</td>
 								</tr>
 								<tr>
 									# IF pics.pics_max.C_PREVIOUS #
 									<td class="left no-separator">
-										{pics.pics_max.U_PREVIOUS} 
+										<a href="admin_gallery.php?cat={pics.pics_max.ID_CATEGORY}&amp;id={pics.pics_max.ID_PREVIOUS}#pics_max" class="fa fa-arrow-left fa-2x"></a> <a href="admin_gallery.php?cat={pics.pics_max.ID_CATEGORY}&amp;id={pics.pics_max.ID_PREVIOUS}#pics_max">{L_PREVIOUS}</a>
 									</td>
 									# ENDIF #
 									# IF pics.pics_max.C_NEXT #
 									<td class="right no-separator">
-										{pics.pics_max.U_NEXT}
+										<a href="admin_gallery.php?cat={pics.pics_max.ID_CATEGORY}&amp;id={pics.pics_max.ID_NEXT}#pics_max">{L_NEXT}</a> <a href="admin_gallery.php?cat={pics.pics_max.ID_CATEGORY}&amp;id={pics.pics_max.ID_NEXT}#pics_max" class="fa fa-arrow-right fa-2x"></a>
 									</td>
 									# ENDIF #
 								</tr>
@@ -319,10 +319,10 @@
 							<tbody>
 								<tr>
 									<td class="smaller">
-										<strong>{L_NAME}:</strong> {pics.pics_max.NAME}
+										<strong>{L_NAME}:</strong> <span id="fi_{pics.pics_max.ID}">{pics.pics_max.PICTURE_NAME}</span> <span id="fi{pics.pics_max.ID}"></span>
 									</td>
 									<td class="smaller">
-										<strong>{L_POSTOR}:</strong> {pics.pics_max.POSTOR}
+										<strong>{L_POSTOR}:</strong> # IF pics.pics_max.C_POSTOR_EXIST #<a class="small {pics.pics_max.POSTOR_LEVEL_CLASS}"# IF pics.pics_max.C_POSTOR_GROUP_COLOR # style="color:{pics.pics_max.POSTOR_GROUP_COLOR}"# ENDIF # href="{pics.pics_max.U_POSTOR_PROFILE}">{pics.pics_max.POSTOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #
 									</td>
 								</tr>
 								<tr>
@@ -345,12 +345,12 @@
 									<td colspan="2" class="small">
 										&nbsp;&nbsp;&nbsp;<span id="fihref{pics.pics_max.ID}"><a href="javascript:display_rename_file('{pics.pics_max.ID}', '{pics.pics_max.RENAME}', '{pics.pics_max.RENAME_CUT}');" title="{L_EDIT}" class="fa fa-edit"></a>
 										
-										<a href="gallery{pics.pics_max.U_DEL}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a> 
+										<a href="gallery.php?del={pics.pics_max.ID}&amp;cat={pics.pics_max.ID_CATEGORY}&amp;token={pics.pics_max.TOKEN}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a> 
 							
 										<div id="move{pics.pics_max.ID}" class="move-pics-container">
 											<div class="bbcode-block move-pics-block" onmouseover="pics_hide_block({pics.pics_max.ID}, 1);" onmouseout="pics_hide_block({pics.pics_max.ID}, 0);">
 												<div>{L_MOVETO} :</div>
-												<select class="valign-middle" name="{pics.pics_max.ID}cat" onchange="document.location = 'gallery{pics.pics_max.U_MOVE}'">
+												<select class="valign-middle" name="{pics.pics_max.ID}cat" onchange="document.location = 'gallery.php?id={pics.pics_max.ID}&amp;token={pics.pics_max.TOKEN}&amp;move=' + this.options[this.selectedIndex].value">
 													{pics.pics_max.CAT}
 												</select>
 												<br /><br />
@@ -387,7 +387,7 @@
 									</td>
 									
 									# START pics.pics_max.list_preview_pics #
-										{pics.pics_max.list_preview_pics.PICS}
+										<td class="center" style="height:{pics.pics_max.list_preview_pics.HEIGHT}px"><span id="thumb{pics.pics_max.list_preview_pics.ID}"><a href="{pics.pics_max.list_preview_pics.URL}" title="{pics.pics_max.list_preview_pics.NAME}"><img src="pics/thumbnails/{pics.pics_max.list_preview_pics.PATH}" alt="{pics.pics_max.list_preview_pics.NAME}" /></a></span></td>
 									# END pics.pics_max.list_preview_pics #
 									
 									
@@ -408,24 +408,24 @@
 							<thead>
 								<tr>
 									<th colspan="{COLSPAN}">
-										{GALLERY} {pics.EDIT}
+										{GALLERY} # IF pics.C_EDIT #<a href="{pics.U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a># ENDIF #
 									</th>
 								</tr>
 							</thead>
 							<tbody>
 								# START pics.list #
-								{pics.list.TR_START}
+								# IF pics.list.C_DISPLAY_TR_START #<tr># ENDIF #
 									<td class="valign-bottom" style="width:{COLUMN_WIDTH_PICS}%;">
 										<div id="pics{pics.list.ID}" class="pics-list-element" style="height:{HEIGHT_MAX}px;">
-											<a class="small" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}" data-lightbox="2">{pics.list.IMG}</a></div>
+											<a class="small" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}" data-lightbox="2"><img src="pics/thumbnails/{pics.list.PATH}" alt="{pics.list.ALT_NAME}" /></a></div>
 										<div class="smaller">
 											<a class="com" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}"><span id="fi_{pics.list.ID}">{pics.list.NAME}</span></a> <span id="fi{pics.list.ID}"></span>
 											<br />
-											{pics.list.U_POSTOR}
+											{L_BY} # IF pics.list.C_POSTOR_EXIST #<a class="small {pics.list.POSTOR_LEVEL_CLASS}"# IF pics.list.C_POSTOR_GROUP_COLOR # style="color:{pics.list.POSTOR_GROUP_COLOR}"# ENDIF # href="{pics.list.U_POSTOR_PROFILE}">{pics.list.POSTOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #
 										</div>
 											
 										<div class="actions-container">
-											{pics.list.RENAME_FILE}
+											<span id="fihref{pics.list.ID}"><a href="javascript:display_rename_file('{pics.list.ID}', '{pics.list.PROTECTED_TITLE}', '{pics.list.PROTECTED_NAME}');" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a></span>
 											
 											<a href="admin_gallery.php?del={pics.list.ID}&amp;token={TOKEN}&amp;cat={CAT_ID}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
 								
@@ -444,12 +444,12 @@
 											&nbsp;<span id="img{pics.list.ID}"></span>
 										</div>
 									</td>
-								{pics.list.TR_END}
+								# IF pics.list.C_DISPLAY_TR_END #</tr># ENDIF #
 								# END pics.list #
 								
 								# START pics.end_td_pics #
-									{pics.end_td_pics.TD_END}
-								{pics.end_td_pics.TR_END}
+									<td style="width:{pics.end_td_pics.COLUMN_WIDTH_PICS}%;padding:0">&nbsp;</td>
+								# IF pics.end_td_pics.C_DISPLAY_TR_END #</tr># ENDIF #
 								# END pics.end_td_pics #
 								
 							</tbody>

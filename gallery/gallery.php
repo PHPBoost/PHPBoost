@@ -202,9 +202,11 @@ elseif ($g_add)
 		
 		$tpl->assign_block_vars('image_up', array(
 			'NAME' => stripslashes($imageup['name']),
-			'IMG' => '<a href="gallery.php?cat=' . $imageup['idcat'] . '&amp;id=' . $g_idpics . '#pics_max"><img src="pics/' . $imageup['path'] . '" alt="' . $imageup['name'] . '" /></a>',
 			'L_SUCCESS_UPLOAD' => $LANG['success_upload_img'],
-			'U_CAT' => '<a href="gallery.php?cat=' . $imageup['idcat'] . '">' . $categories[$imageup['idcat']]->get_name() . '</a>'
+			'ID' => $g_idpics,
+			'PATH' => $imageup['path'],
+			'ID_CAT' => $imageup['idcat'],
+			'CAT_NAME' => $categories[$imageup['idcat']]->get_name()
 		));
 	}
 
