@@ -1,12 +1,12 @@
-.web-picture {
+.web-picture,
+.web-partner-picture {
 	display: block;
 	padding-bottom: 10px;
-	text-align: center;
 }
 
-@media (min-width: 480px) {
-	.web-picture {
+@media (min-width: 769px) {
+	.article-several .web-picture {
 		float: right;
-		padding-left: 10px;
+		padding: 0 0 0 10px;
 	}
 }
