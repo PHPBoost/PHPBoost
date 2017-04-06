@@ -49,8 +49,12 @@ var ContactFormFieldObjectPossibleValues = new ContactFormFieldObjectPossibleVal
 </script>
 
 <div id="input_fields_${escape(HTML_ID)}">
-<div class="text-strong"><span class="is_default_title">${LangLoader::get_message('field.possible_values.is_default', 'admin-user-common')}</span><span class="name_title">{@field.possible_values.subject}</span><span>${LangLoader::get_message('field.possible_values.recipient', 'common', 'contact')}</span></div>
-# START fieldelements #
+	<div class="text-strong">
+		<span class="title-possible-value is-default-title">${LangLoader::get_message('field.possible_values.is_default', 'admin-user-common')}</span>
+		<span class="title-possible-value name-title">{@field.possible_values.subject}</span>
+		<span class="title-possible-value title-desc">${LangLoader::get_message('field.possible_values.recipient', 'common', 'contact')}</span>
+	</div>
+	# START fieldelements #
 	<div id="${escape(HTML_ID)}_{fieldelements.ID}">
 		<div class="form-field-checkbox">
 			<input type="checkbox" name="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" id="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" value="1"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF # class="per-default">
