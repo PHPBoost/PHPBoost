@@ -381,7 +381,7 @@
 										# END list_preview_pics #
 
 										<td>
-											<span id="display_right"># IF C_RIGHT_THUMBNAILS #<a href="javascript:display_thumbnails('right')"><i class="fa fa-arrow-right fa-2x"># ENDIF #</span>
+											<span id="display_right"># IF C_RIGHT_THUMBNAILS #<a href="javascript:display_thumbnails('right')"><i class="fa fa-arrow-right fa-2x"></i></a># ENDIF #</span>
 										</td>
 									</tr>
 								</tbody>
