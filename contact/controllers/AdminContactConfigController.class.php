@@ -39,7 +39,7 @@ class AdminContactConfigController extends AdminModuleController
 	private $lang;
 
 	/**
-	 * @var GuestbookConfig
+	 * @var ContactConfig
 	 */
 	private $config;
 

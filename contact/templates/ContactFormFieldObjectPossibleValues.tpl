@@ -13,10 +13,10 @@ ContactFormFieldObjectPossibleValues.prototype = {
 			
 			jQuery('<div/>', {'id' : id}).appendTo('#input_fields_' + this.id_input);
 			
-			jQuery('<div/>', {id : 'checkbox_' + this.integer, class: 'form-field-checkbox'}).appendTo('#' + id);
-			jQuery('<input/> ', {type : 'checkbox', id : 'field_is_default_' + this.id_input + this.integer, name : 'field_is_default_' + this.id_input, value : '1', 'class' : 'per-default'}).appendTo('#checkbox_' + this.integer);
-			jQuery('<label/> ', {for : 'field_is_default_' + this.id_input + this.integer}).appendTo('#checkbox_' + this.integer);
-			jQuery('#checkbox_' + this.integer).after(' ');
+			jQuery('<div/>', {id : 'radio_' + this.integer, class: 'form-field-radio'}).appendTo('#' + id);
+			jQuery('<input/> ', {type : 'radio', id : 'field_is_default_' + id, name : 'field_is_default_' + this.id_input, value : this.integer}).appendTo('#radio_' + this.integer);
+			jQuery('<label/> ', {for : 'field_is_default_' + id}).appendTo('#radio_' + this.integer);
+			jQuery('#radio_' + this.integer).after(' ');
 			
 			jQuery('<input/> ', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, required : "required", placeholder : '{@field.possible_values.subject}'}).appendTo('#' + id);
 			jQuery('#' + id).append(' ');
@@ -56,11 +56,10 @@ var ContactFormFieldObjectPossibleValues = new ContactFormFieldObjectPossibleVal
 	</div>
 	# START fieldelements #
 	<div id="${escape(HTML_ID)}_{fieldelements.ID}">
-		<div class="form-field-checkbox">
-			<input type="checkbox" name="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" id="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" value="1"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF # class="per-default">
+		<div class="form-field-radio">
+			<input type="radio" name="field_is_default_${escape(HTML_ID)}" id="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.ID}"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF #>
 			<label for="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}"></label>
 		</div>
-		
 		<input type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@field.possible_values.subject}">
 		<select id="field_recipient_${escape(HTML_ID)}_{fieldelements.ID}" name="field_recipient_${escape(HTML_ID)}_{fieldelements.ID}">
 			# START fieldelements.recipients_list #
@@ -71,4 +70,19 @@ var ContactFormFieldObjectPossibleValues = new ContactFormFieldObjectPossibleVal
 	</div>
 # END fieldelements #
 </div>
-<a href="javascript:ContactFormFieldObjectPossibleValues.add();" id="add-${escape(HTML_ID)}" class="form-field-checkbox-more" title="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus"></i></a>
+<a href="javascript:ContactFormFieldObjectPossibleValues.add();" id="add-${escape(HTML_ID)}" class="form-field-more-values" title="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus"></i></a>
+<a href="" onclick="return false;" id="uncheck_default_${escape(HTML_ID)}"# IF NOT C_HAS_DEFAULT_VALUE # style="display: none;"# ENDIF # title="${LangLoader::get_message('field.possible_values.delete_default', 'admin-user-common')}">${LangLoader::get_message('field.possible_values.delete_default', 'admin-user-common')}</a>
+<script>
+<!--
+jQuery(document).ready(function() {
+	jQuery("input[name=field_is_default_${escape(HTML_ID)}]").on('click',function(){
+		jQuery("#uncheck_default_${escape(HTML_ID)}").show();
+	});
+	
+	jQuery("#uncheck_default_${escape(HTML_ID)}").click(function() {
+		jQuery("input[name=field_is_default_${escape(HTML_ID)}]").prop("checked", false);
+		jQuery("#uncheck_default_${escape(HTML_ID)}").hide();
+	});
+});
+-->
+</script>

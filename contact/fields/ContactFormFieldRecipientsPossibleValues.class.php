@@ -48,11 +48,13 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 		
 		$this->assign_common_template_variables($template);
 		
+		$has_default = false;
 		$i = 0;
 		foreach ($this->get_value() as $name => $options)
 		{
 			if (!empty($options))
 			{
+				$has_default = $options['is_default'] ? true : $has_default;
 				$tpl->assign_block_vars('fieldelements', array(
 					'C_DELETABLE' => $i > 0,
 					'ID' => $i,
@@ -70,6 +72,7 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 			'C_DISABLED' => $this->is_disabled(),
 			'MAX_INPUT' => $this->max_input,
 		 	'NBR_FIELDS' => $i,
+			'C_HAS_DEFAULT_VALUE' => $has_default
 		));
 		
 		$template->assign_block_vars('fieldelements', array(

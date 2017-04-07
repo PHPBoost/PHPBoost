@@ -55,3 +55,18 @@ var FormFieldPossibleValues = new FormFieldPossibleValues();
 # END fieldelements #
 </div>
 <a href="javascript:FormFieldPossibleValues.add_field();" id="add_${escape(HTML_ID)}" class="form-field-more-values" title="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus"></i></a>
+<a href="" onclick="return false;" id="uncheck_default_${escape(HTML_ID)}"# IF NOT C_HAS_DEFAULT_VALUE # style="display: none;"# ENDIF # title="${LangLoader::get_message('field.possible_values.delete_default', 'admin-user-common')}">${LangLoader::get_message('field.possible_values.delete_default', 'admin-user-common')}</a>
+<script>
+<!--
+jQuery(document).ready(function() {
+	jQuery("input[name=field_is_default_${escape(HTML_ID)}]").on('click',function(){
+		jQuery("#uncheck_default_${escape(HTML_ID)}").show();
+	});
+	
+	jQuery("#uncheck_default_${escape(HTML_ID)}").click(function() {
+		jQuery("input[name=field_is_default_${escape(HTML_ID)}]").prop("checked", false);
+		jQuery("#uncheck_default_${escape(HTML_ID)}").hide();
+	});
+});
+-->
+</script>

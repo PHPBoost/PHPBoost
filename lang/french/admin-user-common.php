@@ -141,6 +141,7 @@ $lang['field.required'] = 'Champ requis';
 $lang['field.required_explain'] = 'Obligatoire dans le profil du membre et à son inscription.';
 $lang['field.possible-values'] = 'Valeurs possibles';
 $lang['field.possible_values.is_default'] = 'Par défaut';
+$lang['field.possible_values.delete_default'] = 'Supprimer la valeur par défaut';
 $lang['field.default-value'] = 'Valeur par défaut';
 $lang['field.read_authorizations'] = 'Autorisations de lecture du champ dans le profil';
 $lang['field.actions_authorizations'] = 'Autorisations de lecture du champ dans la création ou la modification d\'un profil';

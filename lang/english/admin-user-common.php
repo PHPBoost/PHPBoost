@@ -141,6 +141,7 @@ $lang['field.required'] = 'Required field';
 $lang['field.required_explain'] = 'Required in the member profile and registration area';
 $lang['field.possible-values'] = 'Possible values';
 $lang['field.possible_values.is_default'] = 'Is default';
+$lang['field.possible_values.delete_default'] = 'Delete default value';
 $lang['field.default-value'] = 'Default value';
 $lang['field.read_authorizations'] = 'Read permissions of the field in the profile';
 $lang['field.actions_authorizations'] = 'Read permissions of the field when creating or editing a profile';
