@@ -449,7 +449,7 @@ input[type=color] {
 
 .form-field-radio{
 	display: inline-block;
-	margin: 10px 0;
+	margin: 10px 0 20px 0;
 }
 
 .bt-content .form-field-radio {
@@ -498,6 +498,20 @@ input[type=color] {
 	background-color: #DDDDDD;
 	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.1) 100%);
 	transition: all 0.2s;
+}
+
+.form-field-more-values {
+	float: right;
+}
+
+@media (max-width: 768px) {
+	.is-default-title {
+		display: none; 
+	}
+
+	.form-field-values .form-field-radio {
+		vertical-align: middle;
+	}
 }
 
 /* on checked */

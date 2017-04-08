@@ -42,7 +42,7 @@ var FormFieldPossibleValues = new FormFieldPossibleValues();
 </script>
 
 <div id="input_fields_${escape(HTML_ID)}" class="form-field-values">
-<span class="text-strong">{@field.possible_values.is_default}</span>
+<span class="text-strong is-default-title">{@field.possible_values.is_default}</span>
 # START fieldelements #
 	<div id="${escape(HTML_ID)}_{fieldelements.ID}">
 		<div class="form-field-radio">
@@ -55,7 +55,7 @@ var FormFieldPossibleValues = new FormFieldPossibleValues();
 # END fieldelements #
 </div>
 <a href="javascript:FormFieldPossibleValues.add_field();" id="add_${escape(HTML_ID)}" class="form-field-more-values" title="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus"></i></a>
-<a href="" onclick="return false;" id="uncheck_default_${escape(HTML_ID)}"# IF NOT C_HAS_DEFAULT_VALUE # style="display: none;"# ENDIF # title="${LangLoader::get_message('field.possible_values.delete_default', 'admin-user-common')}">${LangLoader::get_message('field.possible_values.delete_default', 'admin-user-common')}</a>
+<a href="" onclick="return false;" id="uncheck_default_${escape(HTML_ID)}"# IF NOT C_HAS_DEFAULT_VALUE # style="display: none;"# ENDIF # title="${LangLoader::get_message('field.possible_values.delete_default', 'admin-user-common')}" class="small">${LangLoader::get_message('field.possible_values.delete_default', 'admin-user-common')}</a>
 <script>
 <!--
 jQuery(document).ready(function() {

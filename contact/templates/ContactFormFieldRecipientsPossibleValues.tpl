@@ -45,7 +45,7 @@ var ContactFormFieldRecipientsPossibleValues = new ContactFormFieldRecipientsPos
 </script>
 
 <div id="input_fields_${escape(HTML_ID)}">
-<span class="text-strong">{@field.possible_values.is_default}</span>
+<span class="text-strong is-default-title">{@field.possible_values.is_default}</span>
 # START fieldelements #
 	<div id="${escape(HTML_ID)}_{fieldelements.ID}">
 		<div class="form-field-checkbox">
