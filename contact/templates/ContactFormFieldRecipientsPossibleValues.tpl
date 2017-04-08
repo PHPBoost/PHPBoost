@@ -45,12 +45,13 @@ var ContactFormFieldRecipientsPossibleValues = new ContactFormFieldRecipientsPos
 </script>
 
 <div id="input_fields_${escape(HTML_ID)}">
-<span class="text-strong is-default-title">{@field.possible_values.is_default}</span>
+<span class="text-strong is-default-title hidden-small-screens">{@field.possible_values.is_default}</span>
 # START fieldelements #
 	<div id="${escape(HTML_ID)}_{fieldelements.ID}">
 		<div class="form-field-checkbox">
 			<input type="checkbox" name="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" id="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" value="1"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF # class="per-default">
 			<label for="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}"></label>
+			<span class="text-strong is-default-title hidden-large-screens">{@field.possible_values.is_default}</span>
 		</div>
 		<input type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@field.name}">
 		<input type="email" name="field_email_${escape(HTML_ID)}_{fieldelements.ID}" id="field_email_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.EMAIL}" placeholder="${LangLoader::get_message('field.possible_values.email', 'common', 'contact')}" multiple="multiple"# IF NOT fieldelements.C_DELETABLE # disabled="disabled"# ENDIF #>

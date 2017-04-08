@@ -49,7 +49,7 @@ var ContactFormFieldObjectPossibleValues = new ContactFormFieldObjectPossibleVal
 </script>
 
 <div id="input_fields_${escape(HTML_ID)}">
-	<div class="text-strong">
+	<div class="text-strong hidden-small-screens">
 		<span class="title-possible-value is-default-title">${LangLoader::get_message('field.possible_values.is_default', 'admin-user-common')}</span>
 		<span class="title-possible-value name-title">{@field.possible_values.subject}</span>
 		<span class="title-possible-value title-desc">${LangLoader::get_message('field.possible_values.recipient', 'common', 'contact')}</span>
@@ -59,6 +59,7 @@ var ContactFormFieldObjectPossibleValues = new ContactFormFieldObjectPossibleVal
 		<div class="form-field-radio">
 			<input type="radio" name="field_is_default_${escape(HTML_ID)}" id="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.ID}"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF #>
 			<label for="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}"></label>
+			<span class="text-strong is-default-title hidden-large-screens">${LangLoader::get_message('field.possible_values.is_default', 'admin-user-common')}</span>
 		</div>
 		<input type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@field.possible_values.subject}">
 		<select id="field_recipient_${escape(HTML_ID)}_{fieldelements.ID}" name="field_recipient_${escape(HTML_ID)}_{fieldelements.ID}">

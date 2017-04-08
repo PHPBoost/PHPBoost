@@ -447,9 +447,9 @@ input[type=color] {
 	padding-right: 15px;
 }
 
-.form-field-radio{
+.form-field-radio {
 	display: inline-block;
-	margin: 10px 0 20px 0;
+	margin: 10px 0 10px 0;
 }
 
 .bt-content .form-field-radio {
@@ -502,16 +502,6 @@ input[type=color] {
 
 .form-field-more-values {
 	float: right;
-}
-
-@media (max-width: 768px) {
-	.is-default-title {
-		display: none; 
-	}
-
-	.form-field-values .form-field-radio {
-		vertical-align: middle;
-	}
 }
 
 /* on checked */

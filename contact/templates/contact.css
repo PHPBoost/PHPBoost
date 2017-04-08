@@ -49,10 +49,19 @@ div[id*="AdminContactFieldFormController_possible_values_"] {
 		margin: 0 0 5px 0; 
 	}
 
-	.title-possible-value,
-	.is-default-title {
-		display: none; 
+	.form-field-checkbox .is-default-title {
+		margin: 0 0 0 40px;
 	}
+
+	.form-field-radio .is-default-title {
+		margin: 0 0 0 20px;
+	}
+
+	div[id*="AdminContactFieldFormController_possible_values_"] .form-field-radio {
+		vertical-align: middle;
+		margin: 10px 0 20px 0;
+	}
+
 }
 
 @media (min-width: 769px) {
