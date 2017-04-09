@@ -14,21 +14,24 @@ ContactFormFieldObjectPossibleValues.prototype = {
 			jQuery('<div/>', {'id' : id}).appendTo('#input_fields_' + this.id_input);
 			
 			jQuery('<div/>', {id : 'radio_' + this.integer, class: 'form-field-radio'}).appendTo('#' + id);
-			jQuery('<input/> ', {type : 'radio', id : 'field_is_default_' + id, name : 'field_is_default_' + this.id_input, value : this.integer}).appendTo('#radio_' + this.integer);
-			jQuery('<label/> ', {for : 'field_is_default_' + id}).appendTo('#radio_' + this.integer);
+			jQuery('<input/>', {type : 'radio', id : 'field_is_default_' + id, name : 'field_is_default_' + this.id_input, value : this.integer}).appendTo('#radio_' + this.integer);
+			jQuery('<label/>', {for : 'field_is_default_' + id}).appendTo('#radio_' + this.integer);
+			jQuery('<span/>', {class : 'is-default-title hidden-large-screens'}).html('${LangLoader::get_message('field.possible_values.is_default', 'admin-user-common')}').appendTo('#radio_' + this.integer);
 			jQuery('#radio_' + this.integer).after(' ');
 			
-			jQuery('<input/> ', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, required : "required", placeholder : '{@field.possible_values.subject}'}).appendTo('#' + id);
+			jQuery('<input/>', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, required : "required", placeholder : '{@field.possible_values.subject}'}).appendTo('#' + id);
 			jQuery('#' + id).append(' ');
 			
-			jQuery('<select/> ', {'id' : 'field_recipient_' + id, 'name' : 'field_recipient_' + id}).appendTo('#' + id);
+			jQuery('<select/>', {'id' : 'field_recipient_' + id, 'name' : 'field_recipient_' + id}).appendTo('#' + id);
 			jQuery('#' + id).append(' ');
 			
 			# START recipients_list #
-			jQuery('<option/> ', {'value' : ${escapejs(recipients_list.ID)}}).text(${escapejs(recipients_list.NAME)}).appendTo('#field_recipient_' + id);
+			jQuery('<option/>', {'value' : ${escapejs(recipients_list.ID)}}).text(${escapejs(recipients_list.NAME)}).appendTo('#field_recipient_' + id);
 			# END recipients_list #
 
-			jQuery('<a/> ', {href : 'javascript:ContactFormFieldObjectPossibleValues.delete('+ this.integer +');', title : "${LangLoader::get_message('delete', 'common')}"}).html('<i class="fa fa-delete"></i>').appendTo('#' + id);
+			jQuery('<a/>', {href : 'javascript:ContactFormFieldObjectPossibleValues.delete('+ this.integer +');', title : "${LangLoader::get_message('delete', 'common')}"}).html('<i class="fa fa-delete"></i>').appendTo('#' + id);
+			
+			jQuery('<script/>').html('jQuery("#field_is_default_' + id + '").on(\'click\',function(){ jQuery("#uncheck_default_${escape(HTML_ID)}").show(); });').appendTo('#' + id);
 			
 			this.integer++;
 		}
@@ -59,7 +62,7 @@ var ContactFormFieldObjectPossibleValues = new ContactFormFieldObjectPossibleVal
 		<div class="form-field-radio">
 			<input type="radio" name="field_is_default_${escape(HTML_ID)}" id="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.ID}"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF #>
 			<label for="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}"></label>
-			<span class="text-strong is-default-title hidden-large-screens">${LangLoader::get_message('field.possible_values.is_default', 'admin-user-common')}</span>
+			<span class="is-default-title hidden-large-screens">${LangLoader::get_message('field.possible_values.is_default', 'admin-user-common')}</span>
 		</div>
 		<input type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@field.possible_values.subject}">
 		<select id="field_recipient_${escape(HTML_ID)}_{fieldelements.ID}" name="field_recipient_${escape(HTML_ID)}_{fieldelements.ID}">
@@ -68,6 +71,13 @@ var ContactFormFieldObjectPossibleValues = new ContactFormFieldObjectPossibleVal
 			# END fieldelements.recipients_list #
 		</select>
 		<a href="javascript:ContactFormFieldObjectPossibleValues.delete({fieldelements.ID});" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
+		<script>
+		<!--
+		jQuery("#field_is_default_${escape(HTML_ID)}_{fieldelements.ID}").on('click',function(){
+			jQuery("#uncheck_default_${escape(HTML_ID)}").show();
+		});
+		-->
+		</script>
 	</div>
 # END fieldelements #
 </div>
@@ -76,10 +86,6 @@ var ContactFormFieldObjectPossibleValues = new ContactFormFieldObjectPossibleVal
 <script>
 <!--
 jQuery(document).ready(function() {
-	jQuery("input[name=field_is_default_${escape(HTML_ID)}]").on('click',function(){
-		jQuery("#uncheck_default_${escape(HTML_ID)}").show();
-	});
-	
 	jQuery("#uncheck_default_${escape(HTML_ID)}").click(function() {
 		jQuery("input[name=field_is_default_${escape(HTML_ID)}]").prop("checked", false);
 		jQuery("#uncheck_default_${escape(HTML_ID)}").hide();
