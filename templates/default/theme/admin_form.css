@@ -447,9 +447,17 @@ input[type=color] {
 	padding-right: 15px;
 }
 
-.form-field-radio {
-	display: inline-block;
-	margin: 10px 0 10px 0;
+@media (min-width: 769px) {
+	.form-field-radio {
+		display: inline-block;
+		margin: 10px 0 10px 0;
+	}
+}
+
+@media (max-width: 768px) {
+	.form-field-radio .is-default-title{
+		margin: 0 0 0 20px;
+	}
 }
 
 .bt-content .form-field-radio {
@@ -499,6 +507,17 @@ input[type=color] {
 	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.1) 100%);
 	transition: all 0.2s;
 }
+
+@media (max-width: 768px) {
+	.form-field-radio [type="radio"] + label:before {
+		top: 1px;
+	}
+
+	.form-field-radio [type="radio"] + label:after {
+		top: 3px;
+	}
+}
+
 
 .form-field-more-values {
 	float: right;

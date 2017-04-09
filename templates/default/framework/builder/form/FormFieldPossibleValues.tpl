@@ -45,7 +45,7 @@ var FormFieldPossibleValues = new FormFieldPossibleValues();
 </script>
 
 <div id="input_fields_${escape(HTML_ID)}" class="form-field-values">
-<span class="text-strong is-default-title">{@field.possible_values.is_default}</span>
+<span class="text-strong is-default-title hidden-small-screens">{@field.possible_values.is_default}</span>
 # START fieldelements #
 	<div id="${escape(HTML_ID)}_{fieldelements.ID}">
 		<div class="form-field-radio">
