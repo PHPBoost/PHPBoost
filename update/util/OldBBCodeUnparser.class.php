@@ -126,7 +126,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 			'<sub>', '</sub>', '<pre>', '</pre>'
 			);
 		$array_str_replace = array(
-			' ', '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '[s]', '[/s]', '[sup]', '[/sup]', '[sub]', '[/sub]', '[pre]', '[/pre]'
+			'&#13;', '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '[s]', '[/s]', '[sup]', '[/sup]', '[sub]', '[/sub]', '[pre]', '[/pre]'
 		);
 		$this->content = str_replace($array_str, $array_str_replace, $this->content);
 		
