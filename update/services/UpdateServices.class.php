@@ -490,7 +490,10 @@ class UpdateServices
 			$str = mb_substr($text, $pos_chars, $number);
 			
 			if (preg_match('/s:([0-9]+):"/u', $str))
-				$str = self::recount_serialized_bytes($str);
+			{
+				$fixed_str = self::recount_serialized_bytes($str);
+				$text = substr_replace($str, $fixed_str);
+			}
 			
 			$new_number = strlen($str);
 			$new_digits = strlen($new_number);
