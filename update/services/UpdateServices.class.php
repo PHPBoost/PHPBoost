@@ -492,7 +492,7 @@ class UpdateServices
 			if (preg_match('/s:([0-9]+):"/u', $str))
 			{
 				$fixed_str = self::recount_serialized_bytes($str);
-				$text = substr_replace($str, $fixed_str);
+				$text = str_replace($str, $fixed_str, $text);
 			}
 			
 			$new_number = strlen($str);
