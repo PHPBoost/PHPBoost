@@ -271,7 +271,7 @@ class UpdateServices
 			if (!in_array($table_name, array(PREFIX . 'errors_404', PREFIX . 'stats_referer')))
 			{
 				self::$db_querier->inject('ALTER TABLE `' . $table_name . '` CONVERT TO CHARACTER SET utf8');
-				self::$db_querier->inject('ALTER TABLE `' . $table_name . '` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci');
+				self::$db_querier->inject('ALTER TABLE `' . $table_name . '` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci');
 			}
 		}
 	}
