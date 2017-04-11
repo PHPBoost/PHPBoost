@@ -29,15 +29,13 @@ class ReCaptchaConfigUpdateVersion extends ConfigUpdateVersion
 {
 	public function __construct()
 	{
-		parent::__construct('ReCaptcha');
+		parent::__construct('recaptcha-config', false);
 	}
 	
 	protected function build_new_config()
 	{
-		$old_config = $this->get_old_config();
-		
 		$config = ReCaptchaConfig::load();
-		if ($old_config->get_site_key() && $old_config->get_secret_key())
+		if ($config->get_site_key() && $config->get_secret_key())
 			$config->enable_recaptchav2();
 		
 		ReCaptchaConfig::save();

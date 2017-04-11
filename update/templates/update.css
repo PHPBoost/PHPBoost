@@ -133,6 +133,10 @@ select {
 		display: block;
 	}
 	
+	.step-menu.cssmenu > ul > li.no-database-step {
+		width: calc(100% / 4);
+	}
+	
 	.step-menu.cssmenu > ul > li {
 		width: calc(100% / 5);
 	}

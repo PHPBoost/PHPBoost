@@ -29,18 +29,34 @@ class DownloadConfigUpdateVersion extends ConfigUpdateVersion
 {
 	public function __construct()
 	{
-		parent::__construct('download');
+		parent::__construct('download-config', false);
 	}
 	
 	protected function build_new_config()
 	{
-		$config = $this->get_old_config();
+		$old_config = $this->get_old_config();
 		
-		$download_config = DownloadConfig::load();
-		
-		$download_config->set_authorizations($this->build_authorizations($config['auth']));
-		
+		$config = DownloadConfig::load();
+		$config->set_property('authorizations', $old_config->get_property('authorizations'));
 		DownloadConfig::save();
+		
+		if (!$old_config->get_property('comments_enabled'))
+		{
+			$comments_config = CommentsConfig::load();
+			$unauthorized_modules = $comments_config->get_comments_unauthorized_modules();
+			$unauthorized_modules[] = 'download';
+			$comments_config->set_comments_unauthorized_modules($unauthorized_modules);
+			CommentsConfig::save();
+		}
+		
+		if (!$old_config->get_property('notation_enabled'))
+		{
+			$content_management_config = ContentManagementConfig::load();
+			$unauthorized_modules = $content_management_config->get_notation_unauthorized_modules();
+			$unauthorized_modules[] = 'download';
+			$content_management_config->set_notation_unauthorized_modules($unauthorized_modules);
+			ContentManagementConfig::save();
+		}
 		
 		return true;
 	}

@@ -45,27 +45,26 @@ class UpdateDisplayResponse extends AbstractResponse
 	public function __construct($step_number, $step_title, Template $view)
 	{
 		$this->load_language_resources();
-		$this->init_response($step_number, $view);
+		$this->init_response($view);
 		$env = new UpdateDisplayGraphicalEnvironment();
 		$this->add_language_bar();
-		$this->init_steps();
+		$this->init_steps($step_number);
 		$this->update_progress_bar();
 
 		$this->full_view->put_all(array(
 			'RESTART' => UpdateUrlBuilder::introduction()->rel(),
-            'STEP_TITLE' => $step_title,
-            'C_HAS_PREVIOUS_STEP' => false,
-            'C_HAS_NEXT_STEP' => false,
+			'STEP_TITLE' => $step_title,
+			'C_HAS_PREVIOUS_STEP' => false,
+			'C_HAS_NEXT_STEP' => false,
 			'L_XML_LANGUAGE' => LangLoader::get_message('xml_lang', 'main'),
-            'PROGRESSION' => floor(100 * $this->current_step / $this->nb_steps)
+			'PROGRESSION' => floor(100 * $this->current_step / $this->nb_steps)
 		));
 		
 		parent::__construct($env, $this->full_view);
 	}
 
-	public function init_response($step_number, Template $view)
+	public function init_response(Template $view)
 	{
-		$this->current_step = $step_number;
 		$this->full_view = new FileTemplate('update/main.tpl');
 		$this->full_view->put('UpdateStep', $view);
 		$this->full_view->add_lang($this->lang);
@@ -104,18 +103,30 @@ class UpdateDisplayResponse extends AbstractResponse
 		$this->full_view->put('lang', $langs);
 	}
 
-	private function init_steps()
+	private function init_steps($step_number)
 	{
+		$this->current_step = $step_number;
+		
 		$steps = array(
 			array('name' => $this->lang['step.list.introduction'], 'img' => 'home'),
-			array('name' => $this->lang['step.list.server'], 'img' => 'cog'),
-			array('name' => $this->lang['step.list.database'], 'img' => 'server'),
-			array('name' => $this->lang['step.list.execute'], 'img' => 'refresh'),
-			array('name' => $this->lang['step.list.end'], 'img' => 'check')
+			array('name' => $this->lang['step.list.server'], 'img' => 'cog')
 		);
 		
-		if (UpdateServices::database_config_file_checked() && isset($steps[2]))
-			unset($steps[2]);
+		if (!UpdateServices::database_config_file_checked())
+		{
+			$steps[] = array('name' => $this->lang['step.list.database'], 'img' => 'server');
+			$hide_database_page = false;
+		}
+		else
+		{
+			if ($this->current_step > 2)
+				$this->current_step--;
+			
+			$hide_database_page = true;
+		}
+		
+		$steps[] = array('name' => $this->lang['step.list.execute'], 'img' => 'refresh');
+		$steps[] = array('name' => $this->lang['step.list.end'], 'img' => 'check');
 		
 		$this->nb_steps = count($steps) - 1;
 
@@ -144,6 +155,7 @@ class UpdateDisplayResponse extends AbstractResponse
 			}
 
 			$this->full_view->assign_block_vars('step', array(
+				'C_NO_DATABASE_STEP_CLASS' => $hide_database_page,
 				'CSS_CLASS' => $row_class,
 				'IMG' => $step['img'],
 				'NAME' => $step['name']

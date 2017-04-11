@@ -75,7 +75,7 @@ ${resources('update/update')}
 						<nav class="cssmenu cssmenu-vertical step-menu">
 							<ul>
 							# START step #
-								<li class="{step.CSS_CLASS}">
+								<li class="{step.CSS_CLASS}# IF step.C_NO_DATABASE_STEP_CLASS # no-database-step# ENDIF #">
 									<span class="cssmenu-title">
 										<i class="fa fa-{step.IMG} fa-fw" title="${escape(step.NAME)}"></i><span>{step.NAME}</span>
 									</span>

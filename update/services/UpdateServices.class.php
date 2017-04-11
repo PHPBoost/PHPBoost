@@ -219,6 +219,9 @@ class UpdateServices
 		// Mise à jour du contenu serialisé pour le passage en UTF-8
 		$this->update_serialized_data();
 		
+		// Mise à jour des configurations
+		$this->update_configurations();
+		
 		// Mise à jour des tables du noyau
 		$this->update_kernel_tables();
 		
@@ -273,14 +276,35 @@ class UpdateServices
 		}
 	}
 	
-	public function update_kernel_version()
+	private function update_kernel_version()
 	{
 		$general_config = GeneralConfig::load();
 		$general_config->set_phpboost_major_version(self::NEW_KERNEL_VERSION);
 		GeneralConfig::save();
 	}
 	
-	public function update_modules()
+	private function update_configurations()
+	{
+		$configs_module_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/modules/config/', self::$configuration_pattern, 'config');
+		$configs_kernel_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/kernel/config/', self::$configuration_pattern, 'config');
+		
+		$configs_class = array_merge($configs_module_class, $configs_kernel_class);
+		foreach ($configs_class as $class)
+		{
+			try {
+				$object = new $class['name']();
+				$object->execute();
+				$success = true;
+				$message = '';
+			} catch (Exception $e) {
+				$success = false;
+				$message = $e->getMessage();
+			}
+			$this->add_error_to_file($class['type'] . ' ' . $object->get_config_name(), $success, $message);
+		}
+	}
+	
+	private function update_modules()
 	{
 		$modules_config = ModulesConfig::load();
 		foreach (ModulesManager::get_installed_modules_map() as $id => $module)
@@ -303,22 +327,7 @@ class UpdateServices
 		}
 		ModulesConfig::save();
 		
-		$configs_module_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/modules/config/', self::$configuration_pattern, 'config');
 		$update_module_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/modules/', self::$module_pattern, 'module');
-		
-		foreach ($configs_module_class as $class)
-		{
-			try {
-				$object = new $class['name']();
-				$object->execute();
-				$success = true;
-				$message = '';
-			} catch (Exception $e) {
-				$success = false;
-				$message = $e->getMessage();
-			}
-			$this->add_error_to_file($class['type'] . ' ' . $object->get_config_name(), $success, $message);
-		}
 		
 		foreach ($update_module_class as $class)
 		{
@@ -335,7 +344,7 @@ class UpdateServices
 		}
 	}
 	
-	public function update_themes()
+	private function update_themes()
 	{
 		$active_themes_number = 0;
 		foreach (ThemesManager::get_installed_themes_map() as $id => $theme)
@@ -364,7 +373,7 @@ class UpdateServices
 		}
 	}
 	
-	public function update_langs()
+	private function update_langs()
 	{
 		$active_langs_number = 0;
 		foreach (LangsManager::get_installed_langs_map() as $id => $lang)
@@ -479,7 +488,10 @@ class UpdateServices
 			$pos_chars = mb_strlen(substr($text, 0, $pos)) + 2 + $digits;
 			
 			$str = mb_substr($text, $pos_chars, $number);
-
+			
+			if (preg_match('/s:([0-9]+):"/u', $str))
+				$str = self::recount_serialized_bytes($str);
+			
 			$new_number = strlen($str);
 			$new_digits = strlen($new_number);
 			
@@ -539,13 +551,17 @@ class UpdateServices
 	{
 		$classes = array();
 		$folder = new Folder($directory);
-		foreach ($folder->get_files($pattern) as $file)
+		if ($folder->exists())
 		{
-			$classes[] = array(
-				'name' => $file->get_name_without_extension(),
-				'type' => $type
-			);
+			foreach ($folder->get_files($pattern) as $file)
+			{
+				$classes[] = array(
+					'name' => $file->get_name_without_extension(),
+					'type' => $type
+				);
+			}
 		}
+		
 		return $classes;
 	}
 	
@@ -605,12 +621,9 @@ class UpdateServices
 		{
 			@include_once(PATH_TO_ROOT . '/kernel/db/config.php');
 			
-			if (defined('PREFIX') && !empty($db_connection_data))
+			if (defined('PREFIX'))
 			{
-				if (!empty($db_connection_data['host']) && !empty($db_connection_data['login']) && !empty($db_connection_data['database']))
-				{
-					return true;
-				}
+				return true;
 			}
 		}
 		return false;
