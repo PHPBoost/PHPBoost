@@ -122,7 +122,7 @@ class TextHelper
 		if (strlen($string) <= $length)
 			return $string;
 		
-		$str = mb_substr($string, 0, $length + 1, 'UTF-8');
+		$str = mb_substr(str_replace('<br />', '<br/>', $string), 0, $length + 1, 'UTF-8');
 		return substr($str, 0, strrpos($str, ' '));
 	}
 
