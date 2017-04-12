@@ -439,7 +439,7 @@ class News
 			'C_AUTHOR_DISPLAYED' => $news_config->get_author_displayed(),
 			'C_AUTHOR_CUSTOM_NAME' => $this->is_author_custom_name_enabled(),
 			'C_NB_VIEW_ENABLED' => $news_config->get_nb_view_enabled(),
-			'C_READ_MORE' => !$this->get_short_contents_enabled() || $description != @strip_tags($contents, '<br><br/>') || TextHelper::strlen($contents) > $news_config->get_number_character_to_cut(),
+			'C_READ_MORE' => !$this->get_short_contents_enabled() && TextHelper::strlen($contents) > $news_config->get_number_character_to_cut() && $description != @strip_tags($contents, '<br><br/>'),
 			'C_SOURCES' => $nbr_sources > 0,
 			'C_DIFFERED' => $this->approbation_type == self::APPROVAL_DATE,
 			'C_TOP_LIST' => $this->top_list_enabled(),
