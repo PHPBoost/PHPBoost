@@ -469,7 +469,7 @@ class Article
 			'C_AUTHOR_DISPLAYED'              => $this->get_author_name_displayed(),
 			'C_AUTHOR_CUSTOM_NAME' 			  => $this->is_author_custom_name_enabled(),
 			'C_NOTATION_ENABLED'              => $notation_config->is_notation_enabled(),
-			'C_READ_MORE'                     => !$this->get_description_enabled() || TextHelper::strlen($contents) > ArticlesConfig::load()->get_number_character_to_cut() || $description != @strip_tags($contents, '<br><br/>'),
+			'C_READ_MORE'                     => !$this->get_description_enabled() && TextHelper::strlen($contents) > ArticlesConfig::load()->get_number_character_to_cut() && $description != @strip_tags($contents, '<br><br/>'),
 			'C_SOURCES'                       => $nbr_sources > 0,
 			'C_DIFFERED'                      => $this->published == self::PUBLISHED_DATE,
 			'C_NEW_CONTENT'                   => $new_content->check_if_is_new_content($this->publishing_start_date != null ? $this->publishing_start_date->get_timestamp() : $this->get_date_created()->get_timestamp()) && $this->is_published(),
