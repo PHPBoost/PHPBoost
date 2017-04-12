@@ -141,7 +141,7 @@ class MySQLDBMSUtils implements DBMSUtils
 			$options['charset'] = 'UTF8';
 		
 		// Force collate to utf8_general_ci if not set
-		if (!isset($options['collate']) || empty($options['collate']))
+		if ((!isset($options['collate']) || empty($options['collate'])) && strtolower($options['charset']) == 'utf8')
 			$options['collate'] = 'utf8_general_ci';
 		
 		foreach ($this->get_platform()->getCreateTableSql($table_name, $fields, $options) as $query)
