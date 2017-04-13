@@ -60,6 +60,9 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 		//Assign the lang file to the tpl
 		$tpl->add_lang(LangLoader::get('common', 'shoutbox'));
 		
+		//Assign common menu variables to the tpl
+		MenuService::assign_positions_conditions($tpl, $this->get_block());
+		
 		$config = ShoutboxConfig::load();
 		$forbidden_tags = array_flip($config->get_forbidden_formatting_tags());
 		

@@ -59,6 +59,9 @@ class FaqModuleMiniMenu extends ModuleMiniMenu
 		//Assign the lang file to the tpl
 		$tpl->add_lang(LangLoader::get('common', 'faq'));
 		
+		//Assign common menu variables to the tpl
+		MenuService::assign_positions_conditions($tpl, $this->get_block());
+		
 		//Load module cache
 		$faq_cache = FaqCache::load();
 		

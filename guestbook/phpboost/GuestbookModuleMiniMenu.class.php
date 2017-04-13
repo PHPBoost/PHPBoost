@@ -55,6 +55,9 @@ class GuestbookModuleMiniMenu extends ModuleMiniMenu
 		//Assign the lang file to the tpl
 		$tpl->add_lang(LangLoader::get('common', 'guestbook'));
 		
+		//Assign common menu variables to the tpl
+		MenuService::assign_positions_conditions($tpl, $this->get_block());
+		
 		$tpl->put('U_GUESTBOOK',GuestbookUrlBuilder::home()->rel());
 		
 		$guestbook_cache = GuestbookMessagesCache::load();

@@ -69,6 +69,7 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 		$poll_mini = $polls[$rand]; //Sondage aléatoire.
 		
 		$tpl = new FileTemplate('poll/poll_mini.tpl');
+		MenuService::assign_positions_conditions($tpl, $this->get_block());
 		
 		#####################Résultats######################
 		//Si le cookie existe, on redirige vers les resulats, sinon on prend en compte le vote (vérification par ip plus tard).

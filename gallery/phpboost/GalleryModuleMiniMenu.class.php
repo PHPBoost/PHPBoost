@@ -54,6 +54,8 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 		global $LANG;
 		$tpl = new FileTemplate('gallery/gallery_mini.tpl');
 		
+		MenuService::assign_positions_conditions($tpl, $this->get_block());
+		
 		//Chargement de la langue du module.
 		load_module_lang('gallery');
 		$config = GalleryConfig::load();

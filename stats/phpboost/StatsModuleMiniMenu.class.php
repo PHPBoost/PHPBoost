@@ -56,6 +56,7 @@ class StatsModuleMiniMenu extends ModuleMiniMenu
 		load_module_lang('stats');
 		
 		$tpl = new FileTemplate('stats/stats_mini.tpl');
+		MenuService::assign_positions_conditions($tpl, $this->get_block());
 		
 		$stats_cache = StatsCache::load();
 		$l_member_registered = ($stats_cache->get_stats_properties('nbr_members') > 1) ? $LANG['member_registered_s'] : $LANG['member_registered'];

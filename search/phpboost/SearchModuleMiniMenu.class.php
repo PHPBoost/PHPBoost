@@ -56,21 +56,13 @@ class SearchModuleMiniMenu extends ModuleMiniMenu
 	
 	public function get_menu_content()
 	{
-		$tpl = $this->get_content();
-		
-		$tpl->put('C_VERTICAL', $this->get_block() == Menu::BLOCK_POSITION__LEFT || $this->get_block() == Menu::BLOCK_POSITION__RIGHT);
-		
-		return $tpl->render();
-	}
-	
-	public function get_content()
-	{
 		global $LANG;
 		load_module_lang('search');
 		
 		$search = retrieve(REQUEST, 'q', '');
 		
 		$tpl = new FileTemplate('search/search_mini.tpl');
+		MenuService::assign_positions_conditions($tpl, $this->get_block());
 		
 		$tpl->put_all(Array(
 			'TEXT_SEARCHED' => !empty($search) ? stripslashes($search) : '',
@@ -81,7 +73,7 @@ class SearchModuleMiniMenu extends ModuleMiniMenu
 			'U_ADVANCED_SEARCH' => url(TPL_PATH_TO_ROOT . '/search/search.php')
 		));
 		
-		return $tpl;
+		return $tpl->render();
 	}
 	
 	public function display()
@@ -104,11 +96,7 @@ class SearchModuleMiniMenu extends ModuleMiniMenu
 			}
 			else
 			{
-				$tpl = $this->get_content();
-				MenuService::assign_positions_conditions($tpl, $this->get_block());
-				$this->assign_common_template_variables($tpl);
-				
-				return $tpl->render();
+				return $this->get_menu_content();
 			}
 		}
 		return '';

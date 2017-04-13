@@ -51,6 +51,7 @@ class CalendarModuleMiniMenu extends ModuleMiniMenu
 	{
 		$tpl = new FileTemplate('calendar/CalendarModuleMiniMenu.tpl');
 		$tpl->add_lang(LangLoader::get('common', 'calendar'));
+		MenuService::assign_positions_conditions($tpl, $this->get_block());
 		
 		$tpl->put('CALENDAR', CalendarAjaxCalendarController::get_view(true));
 		

@@ -54,22 +54,15 @@ class NewsletterModuleMiniMenu extends ModuleMiniMenu
 	
 	public function get_menu_content()
 	{
-		$tpl = $this->get_content();
-		
-		$tpl->put('C_VERTICAL', $this->get_block() == Menu::BLOCK_POSITION__LEFT || $this->get_block() == Menu::BLOCK_POSITION__RIGHT);
-		
-		return $tpl->render();
-	}
-	
-	public function get_content()
-	{
 		$tpl = new FileTemplate('newsletter/newsletter_mini.tpl');
 		
 		$tpl->add_lang(LangLoader::get('common', 'newsletter'));
 		
+		MenuService::assign_positions_conditions($tpl, $this->get_block());
+		
 		$tpl->put('USER_MAIL', AppContext::get_current_user()->get_email());
 		
-		return $tpl;
+		return $tpl->render();
 	}
 	
 	public function display()
@@ -92,11 +85,7 @@ class NewsletterModuleMiniMenu extends ModuleMiniMenu
 			}
 			else
 			{
-				$tpl = $this->get_content();
-				MenuService::assign_positions_conditions($tpl, $this->get_block());
-				$this->assign_common_template_variables($tpl);
-				
-				return $tpl->render();
+				return $this->get_menu_content();
 			}
 		}
 		return '';

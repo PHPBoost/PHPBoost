@@ -54,15 +54,6 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
 	
 	public function get_menu_content()
 	{
-		$tpl = $this->get_content();
-		
-		$tpl->put('C_VERTICAL', $this->get_block() == Menu::BLOCK_POSITION__LEFT || $this->get_block() == Menu::BLOCK_POSITION__RIGHT);
-		
-		return $tpl->render();
-	}
-	
-	public function get_content()
-	{
 		$user = AppContext::get_current_user();
 		
 		$theme_id = AppContext::get_request()->get_string('switchtheme', '');
@@ -82,6 +73,7 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
 		
 		$tpl = new FileTemplate('ThemesSwitcher/themeswitcher.tpl');
 		$tpl->add_lang(LangLoader::get('themeswitcher_common', 'ThemesSwitcher'));
+		MenuService::assign_positions_conditions($tpl, $this->get_block());
 		
 		foreach (ThemesManager::get_activated_and_authorized_themes_map() as $id => $theme)
 		{
@@ -95,7 +87,7 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
 		
 		$tpl->put('DEFAULT_THEME', UserAccountsConfig::load()->get_default_theme());
 		
-		return $tpl;
+		return $tpl->render();
 	}
 	
 	public function display()
@@ -118,11 +110,7 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
 			}
 			else
 			{
-				$tpl = $this->get_content();
-				
-				MenuService::assign_positions_conditions($tpl, $this->get_block());
-				
-				return $tpl->render();
+				return $this->get_menu_content();
 			}
 		}
 		return '';

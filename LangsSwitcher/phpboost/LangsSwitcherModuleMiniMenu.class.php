@@ -54,15 +54,6 @@ class LangsSwitcherModuleMiniMenu extends ModuleMiniMenu
 	
 	public function get_menu_content()
 	{
-		$tpl = $this->get_content();
-		
-		$tpl->put('C_VERTICAL', $this->get_block() == Menu::BLOCK_POSITION__LEFT || $this->get_block() == Menu::BLOCK_POSITION__RIGHT);
-		
-		return $tpl->render();
-	}
-	
-	public function get_content()
-	{
 		$user = AppContext::get_current_user();
 
 		$lang_id = AppContext::get_request()->get_string('switchlang', '');
@@ -82,6 +73,7 @@ class LangsSwitcherModuleMiniMenu extends ModuleMiniMenu
 
 		$tpl = new FileTemplate('LangsSwitcher/langswitcher.tpl');
 		$tpl->add_lang(LangLoader::get('langswitcher_common', 'LangsSwitcher'));
+		MenuService::assign_positions_conditions($tpl, $this->get_block());
 		
 		foreach(LangsManager::get_activated_and_authorized_langs_map() as $id => $lang)
 		{
@@ -100,7 +92,7 @@ class LangsSwitcherModuleMiniMenu extends ModuleMiniMenu
 			'LANG_NAME' => $lang->get_configuration()->get_name()
 		));
 		
-		return $tpl;
+		return $tpl->render();
 	}
 	
 	public function display()
@@ -123,11 +115,7 @@ class LangsSwitcherModuleMiniMenu extends ModuleMiniMenu
 			}
 			else
 			{
-				$tpl = $this->get_content();
-				
-				MenuService::assign_positions_conditions($tpl, $this->get_block());
-				
-				return $tpl->render();
+				return $this->get_menu_content();
 			}
 		}
 		return '';

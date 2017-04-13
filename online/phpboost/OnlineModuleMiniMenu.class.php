@@ -60,6 +60,8 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 		$lang = LangLoader::get('common', 'online');
 		$tpl->add_lang($lang);
 		
+		MenuService::assign_positions_conditions($tpl, $this->get_block());
+		
 		$online_config = OnlineConfig::load();
 		$condition = 'WHERE s.timestamp > :time ORDER BY '. $online_config->get_display_order_request();
 		$parameters = array(
