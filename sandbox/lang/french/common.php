@@ -149,6 +149,12 @@ $lang['form.file.picker'] = 'Fichier';
 $lang['form.multiple.file.picker'] = 'Plusieurs fichiers';
 $lang['form.file.upload'] = 'Lien vers un fichier';
 
+$lang['form.googlemap'] = 'Champs du module GoogleMaps';
+$lang['form.googlemap.simple_address'] = 'Adresse simple';
+$lang['form.googlemap.map_address'] = 'Adresse avec carte';
+$lang['form.googlemap.simple_marker'] = 'Marqueur';
+$lang['form.googlemap.multiple_markers'] = 'Marqueurs multiples';
+
 $lang['form.authorization'] = 'Autorisation';
 $lang['form.authorization.1'] = 'Action 1';
 $lang['form.authorization.1.desc'] = 'Autorisations pour l\'action 1';

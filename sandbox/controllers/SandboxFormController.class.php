@@ -256,7 +256,26 @@ class SandboxFormController extends ModuleController
 		
 		// UPLOAD FILE
 		$fieldset2->add_field(new FormFieldUploadFile('upload_file', $this->lang['form.file.upload'], '', array('required' => true)));
-
+		
+		// GOOGLE MAPS
+		if (ModulesManager::is_module_installed('GoogleMaps') && ModulesManager::is_module_activated('GoogleMaps') && GoogleMapsConfig::load()->get_api_key())
+		{
+			$fieldset_maps = new FormFieldsetHTML('fieldset_maps', $this->lang['form.googlemap']);
+			$form->add_fieldset($fieldset_maps);
+			
+			// SIMPLE ADDRESS
+			$fieldset_maps->add_field(new GoogleMapsFormFieldSimpleAddress('simple_address', $this->lang['form.googlemap.simple_address'], ''));
+			
+			// MAP ADDRESS
+			$fieldset_maps->add_field(new GoogleMapsFormFieldMapAddress('map_address', $this->lang['form.googlemap.map_address'], '', array('include_api' => false)));
+			
+			// SIMPLE MARKER
+			$fieldset_maps->add_field(new GoogleMapsFormFieldSimpleMarker('simple_marker', $this->lang['form.googlemap.simple_marker'], '', array('include_api' => false)));
+			
+			// MULTIPLE MARKERS
+			$fieldset_maps->add_field(new GoogleMapsFormFieldMultipleMarkers('multiple_markers', $this->lang['form.googlemap.multiple_markers'], '', array('include_api' => false)));
+		}
+		
 		// AUTH
 		$fieldset3 = new FormFieldsetHTML('fieldset3', $this->lang['form.authorization']);
 		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization($this->lang['form.authorization.1'], 1, $this->lang['form.authorization.1.desc']), new ActionAuthorization($this->lang['form.authorization.2'], 2)));

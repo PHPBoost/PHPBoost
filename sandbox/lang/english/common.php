@@ -149,6 +149,12 @@ $lang['form.file.picker'] = 'File picker';
 $lang['form.multiple.file.picker'] = 'Multiple file picker';
 $lang['form.file.upload'] = 'Link to file';
 
+$lang['form.googlemap'] = 'GoogleMaps modue fields';
+$lang['form.googlemap.simple_address'] = 'Simple Address';
+$lang['form.googlemap.map_address'] = 'Address with map';
+$lang['form.googlemap.simple_marker'] = 'Marker';
+$lang['form.googlemap.multiple_markers'] = 'Multiples markers';
+
 $lang['form.authorization'] = 'Authorization';
 $lang['form.authorization.1'] = 'Action 1';
 $lang['form.authorization.1.desc'] = 'Authorizations for l\'action 1';
