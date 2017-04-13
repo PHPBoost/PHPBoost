@@ -12,9 +12,9 @@
 			<div class="spacer"></div>
 			# ENDIF #
 			
-			# IF C_MAP_ENABLE #
+			# IF C_MAP_ENABLED #
 				# IF C_MAP_TOP #
-					# INCLUDE MAP #
+					{MAP}
 				# ENDIF #
 			# ENDIF #
 			
@@ -54,9 +54,9 @@
 			<div class="spacer"></div>
 			# ENDIF #
 		
-			# IF C_MAP_ENABLE #
+			# IF C_MAP_ENABLED #
 				# IF C_MAP_BOTTOM #
-					# INCLUDE MAP #
+					{MAP}
 				# ENDIF #
 			# ENDIF #
 			

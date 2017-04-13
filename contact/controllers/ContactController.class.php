@@ -61,7 +61,9 @@ class ContactController extends ModuleController
 	public function build_view()
 	{
 		$this->build_form();
-		$this->build_map_view();
+		
+		if ($this->config->is_map_enabled())
+			$this->build_map_view();
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -83,7 +85,7 @@ class ContactController extends ModuleController
 			'C_INFORMATIONS_BOTTOM' => $this->config->are_informations_enabled() && $this->config->are_informations_bottom(),
 			'C_INFORMATIONS_SIDE' => $this->config->are_informations_enabled() && ($this->config->are_informations_left() || $this->config->are_informations_right()),
 			'INFORMATIONS' => FormatingHelper::second_parse($this->config->get_informations()),
-			'C_MAP_ENABLE' => $this->config->is_map_enabled(),
+			'C_MAP_ENABLED' => $this->config->is_map_enabled(),
 			'C_MAP_TOP' => $this->config->is_map_enabled() && $this->config->is_map_top(),
 			'C_MAP_BOTTOM' => $this->config->is_map_enabled() && $this->config->is_map_bottom(),
 		));
@@ -91,30 +93,8 @@ class ContactController extends ModuleController
 
 	public function build_map_view()
 	{
-		$tpl = new FileTemplate('contact/ContactMap.tpl');
-		$marker = $this->config->get_map_marker();
-		$nb_markers = count($marker);
-		$tpl->put_all(array(
-			'GMAP_API_KEY' => $this->config->get_gmap_api_key(),
-			'C_MARKER' => $nb_markers > 0,
-			'C_ONE_MARKER' => $nb_markers == 1
-		));
-
-		$i = 1;
-		foreach ($marker as $id => $options)
-		{
-			$tpl->assign_block_vars('places', array(
-				'MAP_LATITUDE' => $options['latitude'],
-				'MAP_LONGITUDE' => $options['longitude'],
-				'MAP_POPUP_TITLE' => str_replace("'", "`", $options['popup_title']),
-				'MAP_STREET_NUMBER' => $options['street_number'],
-				'MAP_STREET_NAME' => str_replace("'", "`", $options['street_name']),
-				'MAP_POSTAL_CODE' => $options['postal_code'],
-				'MAP_LOCALITY' => str_replace("'", "`", $options['locality']),
-			));
-			$i++;
-		}
-		$this->view->put('MAP', $tpl);
+		$map = new GoogleMapsDisplayMap($this->config->get_map_markers());
+		$this->view->put('MAP', $map->display());
 	}
 
 	private function build_form()

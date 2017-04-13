@@ -59,7 +59,7 @@ class AdminContactConfigController extends AdminModuleController
 			$this->form->get_field_by_id('informations')->set_hidden(!$this->config->are_informations_enabled());
 			$this->form->get_field_by_id('date_in_tracking_number_enabled')->set_hidden(!$this->config->is_tracking_number_enabled());
 			$this->form->get_field_by_id('map_position')->set_hidden(!$this->config->is_map_enabled());
-			$this->form->get_field_by_id('map_marker')->set_hidden(!$this->config->is_map_enabled());
+			$this->form->get_field_by_id('map_markers')->set_hidden(!$this->config->is_map_enabled());
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 
@@ -126,21 +126,17 @@ class AdminContactConfigController extends AdminModuleController
 
 		$fieldset->add_field(new FormFieldCheckbox('sender_acknowledgment_enabled', $this->lang['admin.config.sender_acknowledgment_enabled'], $this->config->is_sender_acknowledgment_enabled()));
 
-		$map_fieldset = new FormFieldsetHTML('configuration', $this->lang['admin.config.map.add']);
+		$map_fieldset = new FormFieldsetHTML('map', $this->lang['admin.config.map.add'], array('disabled' => !$this->config->is_googlemaps_available()));
 		$form->add_fieldset($map_fieldset);
 
-		$map_fieldset->add_field(new FormFieldTextEditor('gmap_api_key', $this->lang['gmap.api.key'], $this->config->get_gmap_api_key(),
-			array('description' => $this->lang['gmap.api.key.desc'])
-		));
-
 		$map_fieldset->add_field(new FormFieldCheckbox('map_enabled', $this->lang['admin.config.map_enabled'], $this->config->is_map_enabled(),
-			array('events' => array('click' => '
+			array('hidden' => !$this->config->is_googlemaps_available(), 'events' => array('click' => '
 				if (HTMLForms.getField("map_enabled").getValue()) {
 					HTMLForms.getField("map_position").enable();
-					HTMLForms.getField("map_marker").enable();
+					HTMLForms.getField("map_markers").enable();
 				} else {
 					HTMLForms.getField("map_position").disable();
-					HTMLForms.getField("map_marker").disable();
+					HTMLForms.getField("map_markers").disable();
 				}'))
 		));
 
@@ -152,7 +148,7 @@ class AdminContactConfigController extends AdminModuleController
 			array('hidden' => !$this->config->is_map_enabled())
 		));
 
-		$map_fieldset->add_field(new ContactFormFieldMarkerConfig('map_marker', $this->lang['admin.config.map.marker'], $this->config->get_map_marker(),
+		$map_fieldset->add_field(new GoogleMapsFormFieldMultipleMarkers('map_markers', $this->lang['admin.config.map.markers'], $this->config->get_map_markers(),
 			array('hidden' => !$this->config->is_map_enabled())
 		));
 
@@ -201,16 +197,18 @@ class AdminContactConfigController extends AdminModuleController
 			$this->config->enable_sender_acknowledgment();
 		else
 			$this->config->disable_sender_acknowledgment();
-
-		if ($this->form->get_value('map_enabled'))
+		
+		if ($this->config->is_googlemaps_available())
 		{
-			$this->config->enable_map();
-			$this->config->set_gmap_api_key($this->form->get_value('gmap_api_key'));
-			$this->config->set_map_position($this->form->get_value('map_position')->get_raw_value());
-			$this->config->set_map_marker($this->form->get_value('map_marker'));
+			if ($this->form->get_value('map_enabled'))
+			{
+				$this->config->enable_map();
+				$this->config->set_map_position($this->form->get_value('map_position')->get_raw_value());
+				$this->config->set_map_markers($this->form->get_value('map_markers'));
+			}
+			else
+				$this->config->disable_map();
 		}
-		else
-			$this->config->disable_map();
 
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 

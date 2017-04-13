@@ -49,14 +49,11 @@ class ContactConfig extends AbstractConfigData
 	const RIGHT = 'right';
 	const BOTTOM = 'bottom';
 	
-	const GMAP_API_KEY = 'gmap_api_key';
-	
 	const MAP_TOP = 'map_top';
 	const MAP_BOTTOM = 'map_bottom';
 	
 	const MAP_ENABLED = 'map_enabled';
-	const MAP_MARKER = 'map_marker';
-	const MAP_ZOOM = 'map_zoom';
+	const MAP_MARKERS = 'map_markers';
 	
 	public function get_title()
 	{
@@ -123,6 +120,11 @@ class ContactConfig extends AbstractConfigData
 		return $this->get_property(self::INFORMATIONS_POSITION) == self::BOTTOM;
 	}
 	
+	public function is_googlemaps_available()
+	{
+		return ModulesManager::is_module_installed('GoogleMaps') && ModulesManager::is_module_activated('GoogleMaps') && GoogleMapsConfig::load()->get_api_key();
+	}
+	
 	public function enable_map()
 	{
 		$this->set_property(self::MAP_ENABLED, true);
@@ -135,17 +137,7 @@ class ContactConfig extends AbstractConfigData
 	
 	public function is_map_enabled()
 	{
-		return $this->get_property(self::MAP_ENABLED);
-	}
-	
-	public function get_gmap_api_key()
-	{
-		return $this->get_property(self::GMAP_API_KEY);
-	}
-	
-	public function set_gmap_api_key($gmap_api_key)
-	{
-		$this->set_property(self::GMAP_API_KEY, $gmap_api_key);
+		return $this->is_googlemaps_available() && $this->get_property(self::MAP_ENABLED);
 	}
 	
 	public function get_map_position()
@@ -168,14 +160,14 @@ class ContactConfig extends AbstractConfigData
 		return $this->get_property(self::MAP_POSITION) == self::MAP_TOP;
 	}
 	
-	public function get_map_marker()
+	public function get_map_markers()
 	{
-		return $this->get_property(self::MAP_MARKER);
+		return $this->get_property(self::MAP_MARKERS);
 	}
 	
-	public function set_map_marker($map_marker) 
+	public function set_map_markers($map_markers) 
 	{
-		$this->set_property(self::MAP_MARKER, $map_marker);
+		$this->set_property(self::MAP_MARKERS, $map_markers);
 	}
 	
 	public function enable_tracking_number()
@@ -333,14 +325,13 @@ class ContactConfig extends AbstractConfigData
 			self::INFORMATIONS_POSITION => self::TOP,
 			self::MAP_ENABLED => false,
 			self::MAP_POSITION => self::MAP_TOP,
-			self::MAP_MARKER => array(),
+			self::MAP_MARKERS => array(),
 			self::TRACKING_NUMBER_ENABLED => false,
 			self::DATE_IN_TRACKING_NUMBER_ENABLED => true,
 			self::SENDER_ACKNOWLEDGMENT_ENABLED => false,
 			self::LAST_TRACKING_NUMBER => 0,
 			self::FIELDS => self::init_fields_array(),
-			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 1, 'r1' => 1),
-			self::GMAP_API_KEY => ''
+			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 1, 'r1' => 1)
 		);
 	}
 	

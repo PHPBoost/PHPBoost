@@ -36,7 +36,6 @@ class ContactExtensionPointProvider extends ExtensionPointProvider
 	{
 		$module_css_files = new ModuleCssFiles();
 		$module_css_files->adding_running_module_displayed_file('contact.css');
-		$module_css_files->adding_running_module_displayed_file('leaflet.css');
 		return $module_css_files;
 	}
 
