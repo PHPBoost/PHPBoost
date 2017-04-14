@@ -4,12 +4,23 @@ ul#profile-container {
 	margin: 30px auto;
 	width: 99%;
 	list-style-type: none;
+	margin-left: -7px;
 }
 
 ul#profile-container li {
-	margin-right: 2px;
+	margin: 10px 0 0 7px;
 	padding: 10px;
 	text-align: center;
+}
+
+@media (min-width: 769px) {
+	ul#profile-container li {
+		width: calc(100% / 3 - 7px);
+	}
+
+	.profile-element-title {
+		display: block;
+	}
 }
 
 .preview-img {
