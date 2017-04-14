@@ -35,6 +35,6 @@ $lang['config.api.key.desc'] = '<a href="https://console.developers.google.com/f
 <br /><span style="color: #CC0000">Entrez la clé puis validez le formulaire pour accéder à la déclaration des pointeurs et/ou adresses dans les différents modules</span>';
 $lang['config.default_marker.position'] = 'Position du marqueur par défaut';
 
-$lang['form.marker.address'] = 'Entrez une adresse';
-$lang['form.marker.name'] = 'Entrez une description pour votre marqueur';
+$lang['form.marker.address'] = 'Adresse';
+$lang['form.marker.name'] = 'Description du marqueur';
 ?>

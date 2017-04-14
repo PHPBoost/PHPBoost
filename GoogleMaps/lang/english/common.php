@@ -35,6 +35,6 @@ $lang['config.api.key.desc'] = '<a href="https://console.developers.google.com/f
 <br /><span style="color: #CC0000">Enter your key then valid the form to access to the marker and/or address declaration in supported modules</span>';
 $lang['config.default_marker.position'] = 'Default marker position';
 
-$lang['form.marker.address'] = 'Type your address';
-$lang['form.marker.name'] = 'Type your marker description';
+$lang['form.marker.address'] = 'Address';
+$lang['form.marker.name'] = 'Marker description';
 ?>
