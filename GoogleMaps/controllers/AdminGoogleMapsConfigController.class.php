@@ -82,11 +82,6 @@ class AdminGoogleMapsConfigController extends AdminModuleController
 
 		$fieldset->add_field(new GoogleMapsFormFieldMapAddress('default_position', $this->lang['config.default_marker.position'], new GoogleMapsMarker($this->config->get_default_marker_latitude(), $this->config->get_default_marker_longitude(), $this->config->get_default_marker_address(), '', $this->config->get_default_zoom())));
 		
-		$fieldset->add_field(new FormFieldNumberEditor('default_zoom', $this->lang['config.default.zoom'], $this->config->get_default_zoom(),
-			array('min' => 1, 'max' => 22),
-			array(new FormFieldConstraintIntegerRange(1, 22))
-		));
-		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
@@ -104,7 +99,7 @@ class AdminGoogleMapsConfigController extends AdminModuleController
 		$this->config->set_default_marker_address($default_marker->get_address());
 		$this->config->set_default_marker_latitude($default_marker->get_latitude());
 		$this->config->set_default_marker_longitude($default_marker->get_longitude());
-		$this->config->set_default_zoom($this->form->get_value('default_zoom'));
+		$this->config->set_default_zoom($default_marker->get_zoom());
 		
 		GoogleMapsConfig::save();
 	}

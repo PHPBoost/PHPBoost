@@ -34,7 +34,6 @@ $lang['config.api.key'] = 'Your Google map api key';
 $lang['config.api.key.desc'] = '<a href="https://console.developers.google.com/flows/enableapi?apiid=maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend,places_backend&reusekey=true&hl=En">Follow this link</a> to get a free Google map api key.
 <br /><span style="color: #CC0000">Enter your key then valid the form to access to the marker and/or address declaration in supported modules</span>';
 $lang['config.default_marker.position'] = 'Default marker position';
-$lang['config.default.zoom'] = 'Default zoom';
 
 $lang['form.marker.address'] = 'Type your address';
 $lang['form.marker.name'] = 'Type your marker description';

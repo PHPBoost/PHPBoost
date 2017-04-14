@@ -34,7 +34,6 @@ $lang['config.api.key'] = 'Votre clé api Google map';
 $lang['config.api.key.desc'] = '<a href="https://console.developers.google.com/flows/enableapi?apiid=maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend,places_backend&reusekey=true&hl=Fr">Suivez ce lien</a> pour obtenir une clé Google map gratuite.
 <br /><span style="color: #CC0000">Entrez la clé puis validez le formulaire pour accéder à la déclaration des pointeurs et/ou adresses dans les différents modules</span>';
 $lang['config.default_marker.position'] = 'Position du marqueur par défaut';
-$lang['config.default.zoom'] = 'Zoom par défaut';
 
 $lang['form.marker.address'] = 'Entrez une adresse';
 $lang['form.marker.name'] = 'Entrez une description pour votre marqueur';
