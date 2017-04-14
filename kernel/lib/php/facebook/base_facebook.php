@@ -410,17 +410,15 @@ abstract class BaseFacebook
       return false;
     }
 
-    $response_params = array();
-    parse_str($access_token_response, $response_params);
-
-    if (!isset($response_params['access_token'])) {
+    $response = json_decode($access_token_response);
+    if (!isset($response->access_token)) {
       return false;
     }
 
     $this->destroySession();
 
     $this->setPersistentData(
-      'access_token', $response_params['access_token']
+      'access_token', $response->access_token
     );
   }
 
@@ -805,13 +803,11 @@ abstract class BaseFacebook
       return false;
     }
 
-    $response_params = array();
-    parse_str($access_token_response, $response_params);
-    if (!isset($response_params['access_token'])) {
+    $response = json_decode($access_token_response);
+    if (!isset($response->access_token)) {
       return false;
     }
-
-    return $response_params['access_token'];
+    return $response->access_token;
   }
 
   /**
