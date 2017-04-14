@@ -246,6 +246,9 @@ class UpdateServices
 		// Installation du module UrlUpdater pour la réécriture des Url des modules mis à jour
 		ModulesManager::install_module('UrlUpdater');
 		
+		// Installation du nouveau module GoogleMaps pour bénéficier des cartes et adresses dans les modules contact et calendrier
+		ModulesManager::install_module('GoogleMaps');
+		
 		// Fin de la mise à jour : régénération du cache
 		$this->delete_update_token();
 		$this->generate_cache();
