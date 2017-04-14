@@ -126,7 +126,7 @@ class AdminContactConfigController extends AdminModuleController
 
 		$fieldset->add_field(new FormFieldCheckbox('sender_acknowledgment_enabled', $this->lang['admin.config.sender_acknowledgment_enabled'], $this->config->is_sender_acknowledgment_enabled()));
 
-		$map_fieldset = new FormFieldsetHTML('map', $this->lang['admin.config.map.add'], array('disabled' => !$this->config->is_googlemaps_available()));
+		$map_fieldset = new FormFieldsetHTML('map', $this->lang['admin.config.map'], array('disabled' => !$this->config->is_googlemaps_available()));
 		$form->add_fieldset($map_fieldset);
 
 		$map_fieldset->add_field(new FormFieldCheckbox('map_enabled', $this->lang['admin.config.map_enabled'], $this->config->is_map_enabled(),

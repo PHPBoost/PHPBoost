@@ -60,12 +60,12 @@ $lang['admin.authorizations.read']  = 'Autorisation d\'afficher le formulaire de
 $lang['admin.authorizations.display_field']  = 'Autorisation d\'afficher le champ';
 
 //Map
-$lang['admin.config.map.add'] = 'Localisation sur une carte <span class="smaller">(avec <i class="fa fa-map-marker"></i> marqueurs)</span>';
+$lang['admin.config.map'] = 'Localisation sur une carte';
 $lang['admin.config.map_enabled'] = 'Afficher la carte';
 $lang['admin.config.map_position'] = 'Position de la carte';
 $lang['admin.config.map.position_top'] = 'Au-dessus du formulaire';
 $lang['admin.config.map.position_bottom'] = 'En dessous du formulaire';
-$lang['admin.config.map.markers'] = 'Ajouter un ou des pointeur(s)';
+$lang['admin.config.map.markers'] = 'Adresse(s)';
 
 //Fields
 $lang['admin.fields.manage'] = 'Gestion des champs';

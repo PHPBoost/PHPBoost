@@ -60,12 +60,12 @@ $lang['admin.authorizations.read']  = 'Permission to display the contact form';
 $lang['admin.authorizations.display_field']  = 'Permission to display the field';
 
 //Map
-$lang['admin.config.map.add'] = 'Location on a map <span class="smaller">(with <i class="fa fa-map-marker"></i> markers)</span>';
+$lang['admin.config.map'] = 'Location on a map';
 $lang['admin.config.map_enabled'] = 'Display the map';
 $lang['admin.config.map_position'] = 'Position of the map';
 $lang['admin.config.map.position_top'] = 'Above the form';
 $lang['admin.config.map.position_bottom'] = 'Below the form';
-$lang['admin.config.map.markers'] = 'Add one or many marker(s)';
+$lang['admin.config.map.markers'] = 'Address(es)';
 
 //Fields
 $lang['admin.fields.manage'] = 'Fields management';
