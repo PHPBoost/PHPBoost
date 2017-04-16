@@ -358,10 +358,10 @@ class UpdateServices
 			}
 			else
 			{
-				ThemesManager::uninstall($id);
-				
 				if ($this->user_accounts_config->get_default_theme() == $theme->get_id())
 					$this->user_accounts_config->set_default_theme('base');
+				
+				ThemesManager::uninstall($id);
 				
 				$this->add_information_to_file('theme ' . $id, 'has been uninstalled because : incompatible with new version');
 			}
@@ -387,10 +387,10 @@ class UpdateServices
 			}
 			else
 			{
-				LangsManager::uninstall($id);
-				
 				if ($this->user_accounts_config->get_default_lang() == $lang->get_id())
 					$this->user_accounts_config->set_default_lang(LangLoader::get_locale());
+				
+				LangsManager::uninstall($id);
 				
 				$this->add_information_to_file('lang ' . $id, 'has been uninstalled because : incompatible with new version');
 			}
