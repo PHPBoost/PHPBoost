@@ -150,6 +150,7 @@ class GalleryDisplayCategoryController extends ModuleController
 			'MAX_START' => 0,
 			'START_THUMB' => 0,
 			'END_THUMB' => 0,
+			'C_SEVERAL_CATS_COLUMNS' => $nbr_column_pics > 1,
 			'COLUMNS_NUMBER' => $nbr_column_pics,
 			'CATS_COLUMNS_WIDTH' => $column_width_cats,
 			'COLUMN_WIDTH_PICS' => $column_width_pics,
