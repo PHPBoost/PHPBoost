@@ -287,7 +287,7 @@
 			</header>
 
 			# IF C_SUB_CATEGORIES #
-			<div class="subcat-container elements-container# IF sub_categories_list.C_SEVERAL_CATS_COLUMNS # columns-{COLUMNS_NUMBER}# ENDIF #">
+			<div class="subcat-container elements-container# IF C_SEVERAL_CATS_COLUMNS # columns-{COLUMNS_NUMBER}# ENDIF #">
 				# START sub_categories_list #
 				<div class="subcat-element block">
 					<div class="subcat-content">
