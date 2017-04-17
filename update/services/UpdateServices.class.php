@@ -350,6 +350,7 @@ class UpdateServices
 	private function update_themes()
 	{
 		$active_themes_number = 0;
+		$default_theme_changed = false;
 		foreach (ThemesManager::get_installed_themes_map() as $id => $theme)
 		{
 			if ($theme->get_configuration()->get_compatibility() == self::NEW_KERNEL_VERSION)
@@ -359,7 +360,10 @@ class UpdateServices
 			else
 			{
 				if ($this->user_accounts_config->get_default_theme() == $theme->get_id())
+				{
 					$this->user_accounts_config->set_default_theme('base');
+					$default_theme_changed = true;
+				}
 				
 				ThemesManager::uninstall($id);
 				
@@ -367,18 +371,21 @@ class UpdateServices
 			}
 		}
 		
-		if (empty($active_themes_number))
+		if (empty($active_themes_number) || $default_theme_changed)
 		{
 			ThemesManager::install('base');
 			
 			$this->user_accounts_config->set_default_theme('base');
 			UserAccountsConfig::save();
+			
+			$this->add_information_to_file('theme base', 'has been installed and set to default because no other theme was compatible');
 		}
 	}
 	
 	private function update_langs()
 	{
 		$active_langs_number = 0;
+		$default_lang_changed = false;
 		foreach (LangsManager::get_installed_langs_map() as $id => $lang)
 		{
 			if ($lang->get_configuration()->get_compatibility() == self::NEW_KERNEL_VERSION)
@@ -388,7 +395,10 @@ class UpdateServices
 			else
 			{
 				if ($this->user_accounts_config->get_default_lang() == $lang->get_id())
+				{
 					$this->user_accounts_config->set_default_lang(LangLoader::get_locale());
+					$default_lang_changed = true;
+				}
 				
 				LangsManager::uninstall($id);
 				
@@ -396,12 +406,14 @@ class UpdateServices
 			}
 		}
 		
-		if (empty($active_langs_number))
+		if (empty($active_langs_number) || $default_lang_changed)
 		{
 			LangsManager::install(LangLoader::get_locale());
 			
 			$this->user_accounts_config->set_default_lang(LangLoader::get_locale());
 			UserAccountsConfig::save();
+			
+			$this->add_information_to_file('lang ' . LangLoader::get_locale(), 'has been installed and set to default because no other lang was compatible');
 		}
 	}
 	
