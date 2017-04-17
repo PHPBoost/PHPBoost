@@ -31,6 +31,9 @@
 			});	
 
 			$(this).removeClass("article-download-cats-" + cats_id);
+			
+			/* On surprime les sources des images de catégories*/
+			$( ".subcat-img" ).attr("src", img_default);
 
 			/* On applique les modifications en fonction du type de categories rencontre. */
 			if ( $.inArray(cats_id, updates) != -1 )
@@ -441,7 +444,7 @@
 		# ENDIF #
 
 		# START downloadfiles #
-		<article id="article-download-{downloadfiles.ID}" class="article-download article-several article-download-cats-{downloadfiles.CATEGORY_ID}" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+		<article id="article-download-{downloadfiles.ID}" class="article-download article-several article-download-cats-{downloadfiles.CATEGORY_ID}# IF downloadfiles.C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 			<header>
 				<h2>
 					<a href="{downloadfiles.U_LINK}" itemprop="name">{downloadfiles.NAME}</a>
@@ -466,13 +469,13 @@
 						<p class="pbt-info-title">{downloadfiles.NAME}</p>
 						<p class="pbt-info-desc">{downloadfiles.DESCRIPTION}</p>
 						# IF C_AUTHOR_DISPLAYED #
-							<p class="pbt-info-author">${LangLoader::get_message('by', 'common')} 
-							# IF downloadfiles.C_CUSTOM_AUTHOR_DISPLAY_NAME #
-								{downloadfiles.CUSTOM_AUTHOR_DISPLAY_NAME}
+						<p class="pbt-info-author">${LangLoader::get_message('by', 'common')} 
+							# IF downloadfiles.C_AUTHOR_CUSTOM_NAME #
+							{downloadfiles.AUTHOR_CUSTOM_NAME}
 							# ELSE #
-								{downloadfiles.PSEUDO}
+							# IF downloadfiles.C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="small {downloadfiles.USER_LEVEL_CLASS}" href="{downloadfiles.U_AUTHOR_PROFILE}" # IF downloadfiles.C_USER_GROUP_COLOR # style="color:{downloadfiles.USER_GROUP_COLOR}" # ENDIF #>{downloadfiles.PSEUDO}</a># ELSE #{downloadfiles.PSEUDO}# ENDIF #  
 							# ENDIF #
-							</p>
+						</p>
 						# ENDIF #
 					</div>
 				</a>

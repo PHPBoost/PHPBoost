@@ -649,6 +649,7 @@ a.msg-link-pseudo:hover {
 .fa-mail-not-track:before 		{ content: "\f003"; color: #000000; }
 .fa-lastview:before 			{ content: "\f017"; color: #334455; }
 .fa-notread:before 				{ content: "\f0f6"; color: #334455; }
+.fa-showmymsg:before 			{ content: "\f0e6"; color: #334455; }
 
 /* -- footer ==================================================================== */
 footer#forum-bottom {

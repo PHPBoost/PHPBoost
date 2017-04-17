@@ -198,13 +198,13 @@ jQuery(document).ready(function() {
 		<div id="questions-titles-list">
 			<ol>
 			# START questions #
-				<li id="title-question-{questions.ID}">
+				<li id="title-question-{questions.ID}"# IF questions.C_NEW_CONTENT # class="new-content"# ENDIF #>
 					<a href="#question{questions.ID}">{questions.QUESTION}</a>
 				</li>
 			# END questions #
 			</ol>
 
-			<hr>
+			<hr />
 
 		</div>
 		# ENDIF #
@@ -277,12 +277,12 @@ jQuery(document).ready(function() {
 		</form>
 		# ELSE #
 			# START questions #
-			<article id="article-faq-{questions.ID}" itemscope="itemscope" itemtype="http://schema.org/CreativeWork" class="article-faq article-several">
+			<article id="article-faq-{questions.ID}" itemscope="itemscope" itemtype="http://schema.org/CreativeWork" class="article-faq article-several# IF questions.C_NEW_CONTENT # new-content# ENDIF #">
 				<header class="faq-question-element">
 					<h3 class="question-title">
 						# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
-						<a href="" onclick="show_answer({questions.ID});return false;" title=""><i id="question{questions.ID}" class="fa fa-caret-right question-anchor"></i></a>
-						<a href="" onclick="show_answer({questions.ID});return false;" title=""><span itemprop="name">{questions.QUESTION}</span></a>
+						<a href="" onclick="show_answer({questions.ID});return false;" title="{questions.L_SHOW_ANSWER}"><i id="question{questions.ID}" class="fa fa-caret-right question-anchor"></i></a>
+						<a href="" onclick="show_answer({questions.ID});return false;" title="{questions.QUESTION}"><span it{questions.QUESTION}emprop="name">{questions.QUESTION}</span></a>
 						# ELSE #
 						<i id="question{questions.ID}" class="fa fa-caret-right question-anchor"></i>
 						<span itemprop="name">{questions.QUESTION}</span>
@@ -290,7 +290,7 @@ jQuery(document).ready(function() {
 					</h3>
 					
 					<span class="actions">
-						<a href="{questions.U_LINK}" title=""><i class="fa fa-flag"></i></a>
+						<a href="{questions.U_LINK}" title="{questions.L_LINK_QUESTION}"><i class="fa fa-flag"></i></a>
 						# IF questions.C_EDIT #
 						<a href="{questions.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
 						# ENDIF #
