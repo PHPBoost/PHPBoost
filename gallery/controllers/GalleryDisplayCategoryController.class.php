@@ -151,7 +151,7 @@ class GalleryDisplayCategoryController extends ModuleController
 			'START_THUMB' => 0,
 			'END_THUMB' => 0,
 			'C_SEVERAL_CATS_COLUMNS' => $nbr_column_cats > 1,
-			'COLUMNS_NUMBER' => $nbr_column_pics,
+			'COLUMNS_NUMBER' => $nbr_column_cats,
 			'CATS_COLUMNS_WIDTH' => $column_width_cats,
 			'COLUMN_WIDTH_PICS' => $column_width_pics,
 			'CATEGORY_DESCRIPTION' => $category_description,
