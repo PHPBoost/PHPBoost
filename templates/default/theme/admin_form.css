@@ -56,6 +56,17 @@ button.submit:hover {
 	border-color: #315A86;
 }
 
+/* --- Bouton submit avec couleur alternative --- */
+button.submit.alt 		{
+	background-color: #E27B47;
+	border-color: #C95A21;
+}
+
+button.submit.alt:hover {
+	background-color: #FFA172;
+	border-color: #E27B47;
+}
+
 button[type=reset] {
 	font-weight: bold;
 }
