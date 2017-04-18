@@ -206,9 +206,6 @@ class UpdateServices
 		
 		Environment::try_to_increase_max_execution_time();
 		
-		// Mise en maintenance du site s'il ne l'est pas déjà
-		$this->put_site_under_maintenance();
-		
 		// Suppression des fichiers qui ne sont plus présent dans la nouvelle version pour éviter les conflits
 		$this->delete_old_files();
 		
@@ -227,6 +224,9 @@ class UpdateServices
 		
 		// Mise à jour de la version du noyau
 		$this->update_kernel_version();
+		
+		// Mise en maintenance du site s'il ne l'est pas déjà
+		$this->put_site_under_maintenance();
 		
 		// Mise à jour des modules
 		$this->update_modules();
@@ -270,10 +270,8 @@ class UpdateServices
 		{
 			$maintenance_config->enable_maintenance();
 			$maintenance_config->set_unlimited_maintenance(true);
+			MaintenanceConfig::save();
 		}
-		
-		$maintenance_config->set_message(TextHelper::htmlspecialchars($maintenance_config->get_message()));
-		MaintenanceConfig::save();
 	}
 	
 	private function update_kernel_tables()
