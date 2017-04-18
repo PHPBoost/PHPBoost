@@ -208,13 +208,13 @@ else
 	elseif ($visit || $visit_year) //Visites par jour classées par mois.
 	{
 		//On affiche les visiteurs totaux et du jour
-		$compteur = array('nbr_ip' => 0, 'total' => 0);
+		$visit_counter = array('nbr_ip' => 0, 'total' => 0);
 		try {
-			$compteur = $db_querier->select_single_row(DB_TABLE_VISIT_COUNTER, array('ip AS nbr_ip', 'total'), 'WHERE id = :id', array('id' => 1));
+			$visit_counter = $db_querier->select_single_row(DB_TABLE_VISIT_COUNTER, array('ip AS nbr_ip', 'total'), 'WHERE id = :id', array('id' => 1));
 		} catch (RowNotFoundException $e) {}
 		
-		$compteur_total = !empty($compteur['nbr_ip']) ? $compteur['nbr_ip'] : '1';
-		$compteur_day = !empty($compteur['total']) ? $compteur['total'] : '1';
+		$visit_counter_total = !empty($visit_counter['nbr_ip']) ? $visit_counter['nbr_ip'] : 1;
+		$visit_counter_day = !empty($visit_counter['total']) ? $visit_counter['total'] : 1;
 
 		$tpl->put_all(array(
 			'L_TODAY' => $date_lang['today'],
@@ -255,8 +255,8 @@ else
 			$tpl->put_all(array(
 				'C_STATS_VISIT' => true,
 				'TYPE' => 'visit',
-				'VISIT_TOTAL' => $compteur_total,
-				'VISIT_DAY' => $compteur_day,
+				'VISIT_TOTAL' => $visit_counter_total,
+				'VISIT_DAY' => $visit_counter_day,
 				'YEAR' => $visit_year,
 				'COLSPAN' => 14,
 				'SUM_NBR' => $info['sum_month'],
@@ -403,8 +403,8 @@ else
 			$tpl->put_all(array(
 				'C_STATS_VISIT' => true,
 				'TYPE' => 'visit',
-				'VISIT_TOTAL' => $compteur_total,
-				'VISIT_DAY' => $compteur_day,
+				'VISIT_TOTAL' => $visit_counter_total,
+				'VISIT_DAY' => $visit_counter_day,
 				'COLSPAN' => $array_month[$month-1] + 2,
 				'SUM_NBR' => !empty($info['sum_nbr']) ? $info['sum_nbr'] : 0,
 				'MONTH' => $array_l_months[$month - 1],
@@ -595,10 +595,10 @@ else
 		}
 		
 		//On affiche les visiteurs totaux et du jour
-		$compteur_total = $db_querier->get_column_value(StatsSetup::$stats_table, 'SUM(pages)', '');
-		$compteur_day = array_sum(StatsSaver::retrieve_stats('pages')) + 1;
-		$compteur_total = $compteur_total + $compteur_day;
-		$compteur_day = !empty($compteur_day) ? $compteur_day : '1';
+		$pages_total = $db_querier->get_column_value(StatsSetup::$stats_table, 'SUM(pages)', '');
+		$pages_day = array_sum(StatsSaver::retrieve_stats('pages')) + 1;
+		$pages_total = $pages_total + $pages_day;
+		$pages_day = !empty($pages_day) ? $pages_day : 1;
 
 		$tpl->put_all(array(
 			'L_TODAY' => $date_lang['today'],
@@ -630,8 +630,8 @@ else
 			$tpl->put_all(array(
 				'C_STATS_VISIT' => true,
 				'TYPE' => 'pages',
-				'VISIT_TOTAL' => $compteur_total,
-				'VISIT_DAY' => $compteur_day,
+				'VISIT_TOTAL' => $pages_total,
+				'VISIT_DAY' => $pages_day,
 				'YEAR' => $pages_year,
 				'COLSPAN' => 13,
 				'SUM_NBR' => $info['sum_nbr'],
@@ -773,8 +773,8 @@ else
 			$tpl->put_all(array(
 				'C_STATS_VISIT' => true,
 				'TYPE' => 'pages',
-				'VISIT_TOTAL' => $compteur_total,
-				'VISIT_DAY' => $compteur_day,
+				'VISIT_TOTAL' => $pages_total,
+				'VISIT_DAY' => $pages_day,
 				'SUM_NBR' => !empty($info['sum_nbr']) ? $info['sum_nbr'] : 0,
 				'MONTH' => $array_l_months[$month - 1],
 				'MAX_NBR' => $info['max_nbr'],
@@ -857,8 +857,8 @@ else
 			$tpl->put_all(array(
 				'C_STATS_VISIT' => true,
 				'TYPE' => 'pages',
-				'VISIT_TOTAL' => $compteur_total,
-				'VISIT_DAY' => $compteur_day,
+				'VISIT_TOTAL' => $pages_total,
+				'VISIT_DAY' => $pages_day,
 				'COLSPAN' => $array_month[$month-1] + 2,
 				'SUM_NBR' => !empty($info['sum_nbr']) ? $info['sum_nbr'] : 0,
 				'MONTH' => $array_l_months[$month - 1],

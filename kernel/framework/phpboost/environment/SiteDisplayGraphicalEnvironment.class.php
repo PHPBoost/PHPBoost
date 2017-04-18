@@ -163,17 +163,14 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		//If the counter is to be displayed, we display it
 		if (GraphicalEnvironmentConfig::load()->is_visit_counter_enabled())
 		{
-			$compteur = PersistenceContext::get_querier()->select_single_row(DB_TABLE_VISIT_COUNTER, array('ip AS nbr_ip', 'total'), 'WHERE id = 1');
-
-			$compteur_total = !empty($compteur['nbr_ip']) ? $compteur['nbr_ip'] : '1';
-			$compteur_day = !empty($compteur['total']) ? $compteur['total'] : '1';
+			$visit_counter = PersistenceContext::get_querier()->select_single_row(DB_TABLE_VISIT_COUNTER, array('ip AS nbr_ip', 'total'), 'WHERE id = 1');
 
 			$template->put_all(array(
-				'L_VISIT'        => self::$main_lang['guest_s'],
-				'L_TODAY'        => LangLoader::get_message('today', 'date-common'),
-				'C_COMPTEUR'     => true,
-				'COMPTEUR_TOTAL' => $compteur_total,
-				'COMPTEUR_DAY'   => $compteur_day
+				'L_VISIT'             => self::$main_lang['guest_s'],
+				'L_TODAY'             => LangLoader::get_message('today', 'date-common'),
+				'C_VISIT_COUNTER'     => true,
+				'VISIT_COUNTER_TOTAL' => !empty($visit_counter['nbr_ip']) ? $visit_counter['nbr_ip'] : 1,
+				'VISIT_COUNTER_DAY'   => !empty($visit_counter['total']) ? $visit_counter['total'] : 1
 			));
 		}
 	}

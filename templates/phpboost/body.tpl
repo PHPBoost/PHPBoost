@@ -31,11 +31,11 @@
 	
 
 <div id="global">
-	# IF C_COMPTEUR #
-	<div id="compteur">
-		<span class="text-strong">{L_VISIT} : </span>{COMPTEUR_TOTAL}
+	# IF C_VISIT_COUNTER #
+	<div id="visit-counter">
+		<span class="text-strong">{L_VISIT} : </span>{VISIT_COUNTER_TOTAL}
 		<br />
-		<span class="text-strong">{L_TODAY} : </span>{COMPTEUR_DAY}
+		<span class="text-strong">{L_TODAY} : </span>{VISIT_COUNTER_DAY}
 	</div>
 	# ENDIF #
 

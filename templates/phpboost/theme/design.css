@@ -353,8 +353,8 @@ footer#footer .footer-infos a:hover {
 /* -- Elements specifiques PHPboost -- */
 /* ----------------------------------- */
 
-/* --- Compteur de visite --- */
-div#compteur {
+/* --- Compteur de visites --- */
+div#visit-counter {
 	position: absolute;
 	right: 0;
 	bottom : 1em;
