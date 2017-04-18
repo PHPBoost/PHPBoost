@@ -61,10 +61,7 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 	{
 		if ($serialize)
 		{
-			if (GeneralConfig::load()->get_phpboost_major_version() >= UpdateServices::NEW_KERNEL_VERSION)
-				return TextHelper::unserialize($this->querier->get_column_value(DB_TABLE_CONFIGS, 'value', 'WHERE name = :config_name', array('config_name' => $this->get_config_name())));
-			else
-				return unserialize($this->querier->get_column_value(DB_TABLE_CONFIGS, 'value', 'WHERE name = :config_name', array('config_name' => $this->get_config_name())));
+			return unserialize($this->querier->get_column_value(DB_TABLE_CONFIGS, 'value', 'WHERE name = :config_name', array('config_name' => $this->get_config_name())));
 		}
 		return $this->querier->get_column_value(DB_TABLE_CONFIGS, 'value', 'WHERE name = :config_name', array('config_name' => $this->get_config_name()));
 	}
