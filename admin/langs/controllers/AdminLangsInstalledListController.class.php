@@ -46,17 +46,20 @@ class AdminLangsInstalledListController extends AdminController
 		{
 			$configuration = $lang->get_configuration();
 			$authorizations = $lang->get_authorizations();
-			$default_lang = LangsManager::get_default_lang();
-
+			$author_email = $configuration->get_author_mail();
+			$author_website = $configuration->get_author_link();
+			
 			$this->view->assign_block_vars('langs_installed', array(
-				'C_IS_DEFAULT_LANG' => $lang->get_id() == $default_lang,
+				'C_AUTHOR_EMAIL' => !empty($author_email),
+				'C_AUTHOR_WEBSITE' => !empty($author_website),
+				'C_IS_DEFAULT_LANG' => $lang->get_id() == LangsManager::get_default_lang(),
 				'C_IS_ACTIVATED' => $lang->is_activated(),
 				'ID' => $lang->get_id(),
 				'NAME' => $configuration->get_name(),
 				'VERSION' => $configuration->get_version(),
-				'AUTHOR_NAME' => $configuration->get_author_name(),
-				'AUTHOR_WEBSITE' => $configuration->get_author_link(),
-				'AUTHOR_EMAIL' => $configuration->get_author_mail(),
+				'AUTHOR' => $configuration->get_author_name(),
+				'AUTHOR_EMAIL' => $author_email,
+				'AUTHOR_WEBSITE' => $author_website,
 				'COMPATIBILITY' => $configuration->get_compatibility(),
 				'AUTHORIZATIONS' => Authorizations::generate_select(Lang::ACCES_LANG, $authorizations, array(2 => true), $lang->get_id())
 			));

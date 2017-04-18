@@ -26,12 +26,7 @@
 						</td>
 						<td class="left">
 							<div id="desc_explain{langs_not_installed.ID}">
-								<span class="text-strong">{@langs.author} :</span> 
-								<a href="mailto:{langs_not_installed.AUTHOR_EMAIL}">{langs_not_installed.AUTHOR_NAME}</a>
-								# IF langs_not_installed.C_WEBSITE # 
-								<a href="{langs_not_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a>
-								# ENDIF #
-								<br />
+								<span class="text-strong">{@langs.author} :</span> # IF langs_not_installed.C_AUTHOR_EMAIL #<a href="mailto:{langs_not_installed.AUTHOR_EMAIL}">{langs_not_installed.AUTHOR}</a># ELSE #{langs_not_installed.AUTHOR}# ENDIF # # IF langs_not_installed.C_AUTHOR_WEBSITE #<a href="{langs_not_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
 								<span class="text-strong">{@langs.compatibility} :</span> PHPBoost {langs_not_installed.COMPATIBILITY}<br />
 							</div>
 						</td>

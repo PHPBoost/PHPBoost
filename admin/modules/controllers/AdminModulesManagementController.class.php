@@ -59,7 +59,6 @@ class AdminModulesManagementController extends AdminController
 		foreach ($modules_installed as $module)
 		{
 			$configuration = $module->get_configuration();
-			$author = $configuration->get_author();
 			$author_email = $configuration->get_author_email();
 			$author_website = $configuration->get_author_website();
 			$documentation = $configuration->get_documentation();
@@ -67,13 +66,13 @@ class AdminModulesManagementController extends AdminController
 			if (!in_array($module, $modules_activated))
 			{
 				$this->view->assign_block_vars('modules_not_activated', array(
-					'C_AUTHOR' => !empty($author),
+					'C_AUTHOR_EMAIL' => !empty($author_email),
 					'C_AUTHOR_WEBSITE' => !empty($author_website),
 					'ID' => $module->get_id(),
 					'NAME' => TextHelper::ucfirst($configuration->get_name()),
 					'ICON' => $module->get_id(),
 					'VERSION' => $module->get_installed_version(),
-					'AUTHOR' => $author,
+					'AUTHOR' => $configuration->get_author(),
 					'AUTHOR_EMAIL' => $author_email,
 					'AUTHOR_WEBSITE' => $author_website,
 					'DESCRIPTION' => $configuration->get_description(),
@@ -87,13 +86,13 @@ class AdminModulesManagementController extends AdminController
 			else 
 			{
 				$this->view->assign_block_vars('modules_activated', array(
-					'C_AUTHOR' => !empty($author),
+					'C_AUTHOR_EMAIL' => !empty($author_email),
 					'C_AUTHOR_WEBSITE' => !empty($author_website),
 					'ID' => $module->get_id(),
 					'NAME' => TextHelper::ucfirst($configuration->get_name()),
 					'ICON' => $module->get_id(),
 					'VERSION' => $module->get_installed_version(),
-					'AUTHOR' => $author,
+					'AUTHOR' => $configuration->get_author(),
 					'AUTHOR_EMAIL' => $author_email,
 					'AUTHOR_WEBSITE' => $author_website,
 					'DESCRIPTION' => $configuration->get_description(),

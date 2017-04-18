@@ -85,7 +85,7 @@ class AdminModuleAddController extends AdminController
         $fieldset->add_field(new FormFieldFilePicker('file', $this->lang['modules.upload_description']));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
-		$form->add_button($this->submit_button);	
+		$form->add_button($this->submit_button);
 		
 		$this->form = $form;
 	}
@@ -96,17 +96,19 @@ class AdminModuleAddController extends AdminController
 		foreach ($modules_not_installed as $id => $module)
 		{
 			$configuration = $module->get_configuration();
-			$author = $configuration->get_author();
 			$author_email = $configuration->get_author_email();
 			$author_website = $configuration->get_author_website();
 			
 			$this->view->assign_block_vars('available', array(
+				'C_AUTHOR_EMAIL' => !empty($author_email),
+				'C_AUTHOR_WEBSITE' => !empty($author_website),
 				'ID' => $module->get_id(),
 				'NAME' => TextHelper::ucfirst($configuration->get_name()),
 				'ICON' => $module->get_id(),
 				'VERSION' => $configuration->get_version(),
-				'AUTHOR' => !empty($author_email) ? '<a href="mailto:' . $author_email . '">' . $author . '</a>' : $author,
-				'AUTHOR_WEBSITE' => !empty($author_website) ? '<a href="' . $author_website . '" class="basic-button smaller">Web</a>' : '',
+				'AUTHOR' => $configuration->get_author(),
+				'AUTHOR_EMAIL' => $author_email,
+				'AUTHOR_WEBSITE' => $author_website,
 				'DESCRIPTION' => $configuration->get_description(),
 				'COMPATIBILITY' => $configuration->get_compatibility(),
 				'PHP_VERSION' => $configuration->get_php_version(),

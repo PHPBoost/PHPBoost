@@ -58,14 +58,18 @@ class AdminLangsNotInstalledListController extends AdminController
 		{
 			try {
 				$configuration = LangConfigurationManager::get($id);
+				$author_email = $configuration->get_author_mail();
+				$author_website = $configuration->get_author_link();
+				
 				$this->view->assign_block_vars('langs_not_installed', array(
-					'C_WEBSITE' => $configuration->get_author_link() !== '',
+					'C_AUTHOR_EMAIL' => !empty($author_email),
+					'C_AUTHOR_WEBSITE' => !empty($author_website),
 					'ID' => $id,
 					'NAME' => $configuration->get_name(),
 					'VERSION' => $configuration->get_version(),
-					'AUTHOR_NAME' => $configuration->get_author_name(),
-					'AUTHOR_WEBSITE' => $configuration->get_author_link(),
-					'AUTHOR_EMAIL' => $configuration->get_author_mail(),
+					'AUTHOR' => $configuration->get_author_name(),
+					'AUTHOR_EMAIL' => $author_email,
+					'AUTHOR_WEBSITE' => $author_website,
 					'COMPATIBILITY' => $configuration->get_compatibility(),
 					'AUTHORIZATIONS' => Authorizations::generate_select(Lang::ACCES_LANG, array('r-1' => 1, 'r0' => 1, 'r1' => 1), array(2 => true), $id)
 				));

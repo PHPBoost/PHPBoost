@@ -13,24 +13,19 @@
 		<tbody>
 			<tr> 
 				<td colspan="5">
-					# INCLUDE MSG #	
+					# INCLUDE MSG #
 					<span class="text-strong">{@langs.default_lang_explain}</span>
 				</td>
 			</tr>
 			# START langs_installed #
-				<tr> 	
-					<td>					
+				<tr>
+					<td>
 						<span id="lang-{langs_installed.ID}"></span>
 						<span class="text-strong">{langs_installed.NAME}</span> <span class="text-italic">({langs_installed.VERSION})</span>
 					</td>
 					<td class="left">
 						<div id="desc_explain{langs_installed.ID}">
-							<span class="text-strong">{@langs.author} :</span> 
-							<a href="mailto:{langs_installed.AUTHOR_EMAIL}">{langs_installed.AUTHOR_NAME}</a>
-							# IF langs_installed.C_WEBSITE # 
-							<a href="{langs_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a>
-							# ENDIF #
-							<br />
+							<span class="text-strong">{@langs.author} :</span> # IF langs_installed.C_AUTHOR_EMAIL #<a href="mailto:{langs_installed.AUTHOR_EMAIL}">{langs_installed.AUTHOR}</a># ELSE #{langs_installed.AUTHOR}# ENDIF # # IF langs_installed.C_AUTHOR_WEBSITE #<a href="{langs_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
 							<span class="text-strong">{@langs.compatibility} :</span> PHPBoost {langs_installed.COMPATIBILITY}<br />
 						</div>
 					</td>

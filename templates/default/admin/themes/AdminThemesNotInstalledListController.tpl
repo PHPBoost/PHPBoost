@@ -37,12 +37,7 @@
 						</td>
 						<td>
 							<div id="desc_explain{themes_not_installed.ID}" class="left">
-								<span class="text-strong">{@themes.author} :</span> 
-								<a href="mailto:{themes_not_installed.AUTHOR_EMAIL}">{themes_not_installed.AUTHOR_NAME}</a>
-								# IF themes_not_installed.C_WEBSITE # 
-								<a href="{themes_not_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a>
-								# ENDIF #
-								<br />
+								<span class="text-strong">{@themes.author} :</span> # IF themes_not_installed.C_AUTHOR_EMAIL #<a href="mailto:{themes_not_installed.AUTHOR_EMAIL}">{themes_not_installed.AUTHOR}</a># ELSE #{themes_not_installed.AUTHOR}# ENDIF # # IF themes_not_installed.C_AUTHOR_WEBSITE #<a href="{themes_not_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
 								<span class="text-strong">{@themes.description} :</span> {themes_not_installed.DESCRIPTION}<br />
 								<span class="text-strong">{@themes.compatibility} :</span> PHPBoost {themes_not_installed.COMPATIBILITY}<br />
 								<span class="text-strong">{@themes.html_version} :</span> {themes_not_installed.HTML_VERSION}<br />

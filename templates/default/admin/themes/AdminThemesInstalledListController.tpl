@@ -14,13 +14,13 @@
 		<tbody>
 			<tr> 
 				<td colspan="5">
-					# INCLUDE MSG #	
+					# INCLUDE MSG #
 					<span class="text-strong">{@themes.default_theme_explain}</span>
 				</td>
 			</tr>
 			# START themes_installed #
-				<tr> 	
-					<td>					
+				<tr>
+					<td>
 						<span id="theme-{themes_installed.ID}"></span>
 						<span class="text-strong">{themes_installed.NAME}</span> <em>({themes_installed.VERSION})</em>
 						<br /><br />
@@ -38,12 +38,7 @@
 					</td>
 					<td class="left">
 						<div id="desc_explain{themes_installed.ID}">
-							<span class="text-strong">{@themes.author} :</span> 
-							<a href="mailto:{themes_installed.AUTHOR_EMAIL}">{themes_installed.AUTHOR_NAME}</a>
-							# IF themes_installed.C_WEBSITE # 
-							<a href="{themes_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a>
-							# ENDIF #
-							<br />
+							<span class="text-strong">{@themes.author} :</span> # IF themes_installed.C_AUTHOR_EMAIL #<a href="mailto:{themes_installed.AUTHOR_EMAIL}">{themes_installed.AUTHOR}</a># ELSE #{themes_installed.AUTHOR}# ENDIF # # IF themes_installed.C_AUTHOR_WEBSITE #<a href="{themes_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
 							<span class="text-strong">{@themes.description} :</span> {themes_installed.DESCRIPTION}<br />
 							<span class="text-strong">{@themes.compatibility} :</span> PHPBoost {themes_installed.COMPATIBILITY}<br />
 							<span class="text-strong">{@themes.html_version} :</span> {themes_installed.HTML_VERSION}<br />

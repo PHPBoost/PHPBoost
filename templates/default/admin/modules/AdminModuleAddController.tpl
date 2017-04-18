@@ -25,7 +25,7 @@
 							<em>({available.VERSION})</em>
 						</td>
 						<td class="left">
-							<span class="text-strong">{@modules.author} :</span> {available.AUTHOR} {available.AUTHOR_WEBSITE}<br />
+							<span class="text-strong">{@modules.author} :</span> # IF available.C_AUTHOR_EMAIL #<a href="mailto:{available.AUTHOR_EMAIL}">{available.AUTHOR}</a># ELSE #{available.AUTHOR}# ENDIF # # IF available.C_AUTHOR_WEBSITE #<a href="{available.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
 							<span class="text-strong">{@modules.description} :</span> {available.DESCRIPTION}<br />
 							<span class="text-strong">{@modules.compatibility} :</span> PHPBoost {available.COMPATIBILITY}<br />
 						</td>

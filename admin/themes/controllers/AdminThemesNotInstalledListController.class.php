@@ -70,19 +70,22 @@ class AdminThemesNotInstalledListController extends AdminController
 		{
 			try {
 				$configuration = ThemeConfigurationManager::get($name);
+				$author_email = $configuration->get_author_mail();
+				$author_website = $configuration->get_author_link();
 				$pictures = $configuration->get_pictures();
 				$id_theme = $name;
 				
 				$this->view->assign_block_vars('themes_not_installed', array(
-					'C_WEBSITE' => $configuration->get_author_link() !== '',
+					'C_AUTHOR_EMAIL' => !empty($author_email),
+					'C_AUTHOR_WEBSITE' => !empty($author_website),
 					'C_PICTURES' => count($pictures) > 0,
 					'ID' => $id_theme,
 					'NAME' => $configuration->get_name(),
 					'VERSION' => $configuration->get_version(),
 					'MAIN_PICTURE' => count($pictures) > 0 ? Url::to_rel('/templates/' . $id_theme . '/' . current($pictures)) : '',
-					'AUTHOR_NAME' => $configuration->get_author_name(),
-					'AUTHOR_WEBSITE' => $configuration->get_author_link(),
-					'AUTHOR_EMAIL' => $configuration->get_author_mail(),
+					'AUTHOR' => $configuration->get_author_name(),
+					'AUTHOR_EMAIL' => $author_email,
+					'AUTHOR_WEBSITE' => $author_website,
 					'DESCRIPTION' => $configuration->get_description() !== '' ? $configuration->get_description() : $this->lang['themes.bot_informed'],
 					'COMPATIBILITY' => $configuration->get_compatibility(),
 					'AUTHORIZATIONS' => Authorizations::generate_select(Theme::ACCES_THEME, array('r-1' => 1, 'r0' => 1, 'r1' => 1), array(2 => true), $id_theme),

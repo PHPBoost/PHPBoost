@@ -46,21 +46,23 @@ class AdminThemesInstalledListController extends AdminController
 		{
 			$configuration = $theme->get_configuration();
 			$authorizations = $theme->get_authorizations();
-			$default_theme = ThemesManager::get_default_theme();
+			$author_email = $configuration->get_author_mail();
+			$author_website = $configuration->get_author_link();
 			$pictures = $configuration->get_pictures();
 			
 			$this->view->assign_block_vars('themes_installed', array(
-				'C_IS_DEFAULT_THEME' => $theme->get_id() == $default_theme,
+				'C_AUTHOR_EMAIL' => !empty($author_email),
+				'C_AUTHOR_WEBSITE' => !empty($author_website),
+				'C_IS_DEFAULT_THEME' => $theme->get_id() == ThemesManager::get_default_theme(),
 				'C_IS_ACTIVATED' => $theme->is_activated(),
-				'C_WEBSITE' => $configuration->get_author_link() !== '',
 				'C_PICTURES' => count($pictures) > 0,
 				'ID' => $theme->get_id(),
 				'NAME' => $configuration->get_name(),
 				'VERSION' => $configuration->get_version(),
 				'MAIN_PICTURE' => count($pictures) > 0 ? Url::to_rel('/templates/' . $theme->get_id() . '/' . current($pictures)) : '',
-				'AUTHOR_NAME' => $configuration->get_author_name(),
-				'AUTHOR_WEBSITE' => $configuration->get_author_link(),
-				'AUTHOR_EMAIL' => $configuration->get_author_mail(),
+				'AUTHOR' => $configuration->get_author_name(),
+				'AUTHOR_EMAIL' => $author_email,
+				'AUTHOR_WEBSITE' => $author_website,
 				'DESCRIPTION' => $configuration->get_description() !== '' ? $configuration->get_description() : $this->lang['themes.bot_informed'],
 				'COMPATIBILITY' => $configuration->get_compatibility(),
 				'AUTHORIZATIONS' => Authorizations::generate_select(Theme::ACCES_THEME, $authorizations, array(2 => true), $theme->get_id()),
