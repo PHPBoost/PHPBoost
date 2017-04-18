@@ -82,7 +82,7 @@ class AdminModuleUpdateController extends AdminController
 	private function build_view()
 	{
 		$modules_upgradable = 0;
-		foreach (ModulesManager::get_installed_modules_map() as $module)
+		foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as $module)
 		{
 			if (ModulesManager::module_is_upgradable($module->get_id()))
 			{

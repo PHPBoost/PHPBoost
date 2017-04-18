@@ -131,7 +131,12 @@ class AdminThemesNotInstalledListController extends AdminController
 				$themes_not_installed[] = $name;
 			}
 		}
-		sort($themes_not_installed);
+		
+		try {
+			usort($themes_not_installed, array(ThemesManager, 'callback_sort_themes_by_name'));
+		} catch (IOException $ex) {
+		}
+		
 		return $themes_not_installed;
 	}
 

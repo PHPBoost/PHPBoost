@@ -97,7 +97,12 @@ class AdminLangsNotInstalledListController extends AdminController
 				$langs_not_installed[] = $name;
 			}
 		}
-		sort($langs_not_installed);
+		
+		try {
+			usort($langs_not_installed, array(LangsManager, 'callback_sort_langs_by_name'));
+		} catch (IOException $ex) {
+		}
+		
 		return $langs_not_installed;
 	}
 	

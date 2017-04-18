@@ -140,7 +140,12 @@ class AdminModuleAddController extends AdminController
 				}
 			}
 		}
-		sort($modules_not_installed);
+		
+		try {
+			usort($modules_not_installed, array(ModulesManager, 'callback_sort_modules_by_name'));
+		} catch (IOException $ex) {
+		}
+		
 		return $modules_not_installed;
 	}
 	
