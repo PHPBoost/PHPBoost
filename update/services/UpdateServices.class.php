@@ -244,10 +244,18 @@ class UpdateServices
 		$this->update_content_menus();
 		
 		// Installation du module UrlUpdater pour la réécriture des Url des modules mis à jour
-		ModulesManager::install_module('UrlUpdater');
+		$folder = new Folder(PATH_TO_ROOT . '/UrlUpdater');
+		if ($folder->exists())
+			ModulesManager::install_module('UrlUpdater');
+		else
+			$this->add_information_to_file('module UrlUpdater', 'has not been installed because it was not on the FTP');
 		
 		// Installation du nouveau module GoogleMaps pour bénéficier des cartes et adresses dans les modules contact et calendrier
-		ModulesManager::install_module('GoogleMaps');
+		$folder = new Folder(PATH_TO_ROOT . '/GoogleMaps');
+		if ($folder->exists())
+			ModulesManager::install_module('GoogleMaps');
+		else
+			$this->add_information_to_file('module GoogleMaps', 'has not been installed because it was not on the FTP');
 		
 		// Fin de la mise à jour : régénération du cache
 		$this->delete_update_token();
@@ -262,8 +270,10 @@ class UpdateServices
 		{
 			$maintenance_config->enable_maintenance();
 			$maintenance_config->set_unlimited_maintenance(true);
-			MaintenanceConfig::save();
 		}
+		
+		$maintenance_config->set_message(TextHelper::htmlspecialchars($maintenance_config->get_message()));
+		MaintenanceConfig::save();
 	}
 	
 	private function update_kernel_tables()
@@ -373,7 +383,11 @@ class UpdateServices
 		
 		if (empty($active_themes_number) || $default_theme_changed)
 		{
-			ThemesManager::install('base');
+			$folder = new Folder(PATH_TO_ROOT . '/templates/base');
+			if ($folder->exists())
+				ThemesManager::install('base');
+			else
+				$this->add_information_to_file('theme base', 'has not been installed because it was not on the FTP');
 			
 			$this->user_accounts_config->set_default_theme('base');
 			UserAccountsConfig::save();
@@ -408,7 +422,12 @@ class UpdateServices
 		
 		if (empty($active_langs_number) || $default_lang_changed)
 		{
-			LangsManager::install(LangLoader::get_locale());
+			
+			$folder = new Folder(PATH_TO_ROOT . '/lang/' . LangLoader::get_locale());
+			if ($folder->exists())
+				LangsManager::install(LangLoader::get_locale());
+			else
+				$this->add_information_to_file('lang ' . LangLoader::get_locale(), 'has not been installed because it was not on the FTP');
 			
 			$this->user_accounts_config->set_default_lang(LangLoader::get_locale());
 			UserAccountsConfig::save();
