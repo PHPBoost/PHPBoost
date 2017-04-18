@@ -8,6 +8,16 @@
 
 <script>
 <!--
+# IF NOT C_ALWAYS_DISPLAY_MARKER #
+jQuery("#${escape(HTML_ID)}").on('blur',function(){
+	var marker = jQuery("#${escape(HTML_ID)}").geocomplete("marker");
+	if (jQuery("#${escape(HTML_ID)}").val())
+		marker.setVisible(true);
+	else
+		marker.setVisible(false);
+});
+# ENDIF #
+
 jQuery(function(){
 	# IF C_ADDRESS #
 	var address = "{ADDRESS}";
@@ -20,12 +30,12 @@ jQuery(function(){
 		location: # IF C_COORDONATES #[{LATITUDE}, {LONGITUDE}]# ELSE #address# ENDIF #,
 		types: ["geocode", "establishment"],
 		markerOptions: {
-			draggable: true
+			draggable: true# IF C_HIDE_MARKER #,
+			visible: false# ENDIF #
 		},
 		mapOptions: {
 			scrollwheel: true# IF C_ZOOM #,
-			zoom: {ZOOM}
-			# ENDIF #
+			zoom: {ZOOM}# ENDIF #
 		}
 	});
 	

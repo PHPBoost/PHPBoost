@@ -80,7 +80,9 @@ class AdminGoogleMapsConfigController extends AdminModuleController
 			array('description' => $this->lang['config.api.key.desc'])
 		));
 
-		$fieldset->add_field(new GoogleMapsFormFieldMapAddress('default_position', $this->lang['config.default_marker.position'], new GoogleMapsMarker($this->config->get_default_marker_latitude(), $this->config->get_default_marker_longitude(), $this->config->get_default_marker_address(), '', $this->config->get_default_zoom())));
+		$fieldset->add_field(new GoogleMapsFormFieldMapAddress('default_position', $this->lang['config.default_marker.position'], new GoogleMapsMarker($this->config->get_default_marker_address(), $this->config->get_default_marker_latitude(), $this->config->get_default_marker_longitude(), '', $this->config->get_default_zoom()),
+			array('description' => $this->lang['config.default_marker.position.description'], 'always_display_marker' => true)
+		));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);

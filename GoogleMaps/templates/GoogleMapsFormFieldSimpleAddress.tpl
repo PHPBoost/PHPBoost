@@ -3,11 +3,13 @@
 </div>
 
 <script>
+<!--
 jQuery(function(){
 	jQuery("#${escape(HTML_ID)}").geocomplete({
 		# IF C_ADDRESS #location: "{ADDRESS}"# ENDIF #
 	});
 });
+-->
 </script>
 
 # IF C_INCLUDE_API #

@@ -36,17 +36,17 @@ class GoogleMapsMarker
 	
 	/**
 	 * @desc Constructs a GoogleMapsMarker.
+	 * @param string $address Marker address
 	 * @param string $latitude Marker latitude
 	 * @param string $longitude Marker longitude
-	 * @param string $address Marker address
 	 * @param string $name Marker name
 	 * @param int $zoom Map zoom
 	 */
-	public function __construct($latitude = '', $longitude = '', $address = '', $name = '', $zoom = 0, $address_displayed_on_label = true)
+	public function __construct($address = '', $latitude = '', $longitude = '', $name = '', $zoom = 0, $address_displayed_on_label = true)
 	{
+		$this->address = $address;
 		$this->latitude = $latitude;
 		$this->longitude = $longitude;
-		$this->address = $address;
 		$this->name  = $name;
 		$this->zoom = $zoom;
 		$this->address_displayed_on_label = $address_displayed_on_label;

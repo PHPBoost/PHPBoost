@@ -29,7 +29,7 @@ GoogleMapsFormFieldMultipleMarkers.prototype = {
 			
 			jQuery('<div/>', {id : 'map_' + id, class: 'map-canvas'}).appendTo('#marker_' + id);
 			
-			jQuery('<script/>').html('jQuery(function(){ jQuery("#' + id + '").geocomplete({ map: "#map_' + id + '", location: [{DEFAULT_LATITUDE}, {DEFAULT_LONGITUDE}], types: ["geocode", "establishment"], markerOptions: { draggable: true }, mapOptions: { scrollwheel: true } }); jQuery("#' + id + '").bind("geocode:dragged", function(event, latLng){ jQuery("input[name=latitude_' + id + ']").val(latLng.lat()); jQuery("input[name=longitude_' + id + ']").val(latLng.lng()); }); jQuery("#' + id + '").bind("geocode:idle", function(event, latLng){ jQuery("input[name=latitude_' + id + ']").val(latLng.lat()); jQuery("input[name=longitude_' + id + ']").val(latLng.lng()); }); jQuery("#' + id + '").bind("geocode:zoom", function(event, value){ jQuery("input[name=zoom_' + id + ']").val(value); }); });').appendTo('#marker_' + id);
+			jQuery('<script/>').html('jQuery("#' + id + '").on('blur',function(){ var marker = jQuery("#' + id + '").geocomplete("marker"); if (jQuery("#' + id + '").val()) marker.setVisible(true); else marker.setVisible(false); }); jQuery(function(){ jQuery("#' + id + '").geocomplete({ map: "#map_' + id + '", location: [{DEFAULT_LATITUDE}, {DEFAULT_LONGITUDE}], types: ["geocode", "establishment"], markerOptions: { draggable: true, visible: false }, mapOptions: { scrollwheel: true } }); jQuery("#' + id + '").bind("geocode:dragged", function(event, latLng){ jQuery("input[name=latitude_' + id + ']").val(latLng.lat()); jQuery("input[name=longitude_' + id + ']").val(latLng.lng()); }); jQuery("#' + id + '").bind("geocode:idle", function(event, latLng){ jQuery("input[name=latitude_' + id + ']").val(latLng.lat()); jQuery("input[name=longitude_' + id + ']").val(latLng.lng()); }); jQuery("#' + id + '").bind("geocode:zoom", function(event, value){ jQuery("input[name=zoom_' + id + ']").val(value); }); });').appendTo('#marker_' + id);
 			
 			this.integer++;
 		}
@@ -63,6 +63,14 @@ var GoogleMapsFormFieldMultipleMarkers = new GoogleMapsFormFieldMultipleMarkers(
 		<div class="map-canvas" id="map_${escape(HTML_ID)}_{fieldelements.ID}"></div>
 		<script>
 		<!--
+		jQuery("#${escape(HTML_ID)}_{fieldelements.ID}").on('blur',function(){
+			var marker = jQuery("#${escape(HTML_ID)}_{fieldelements.ID}").geocomplete("marker");
+			if (jQuery("#${escape(HTML_ID)}_{fieldelements.ID}").val())
+				marker.setVisible(true);
+			else
+				marker.setVisible(false);
+		});
+		
 		jQuery(function(){
 			# IF fieldelements.C_ADDRESS #
 			var address = "{fieldelements.ADDRESS}";
@@ -75,12 +83,12 @@ var GoogleMapsFormFieldMultipleMarkers = new GoogleMapsFormFieldMultipleMarkers(
 				location: # IF fieldelements.C_COORDONATES #[{fieldelements.LATITUDE}, {fieldelements.LONGITUDE}]# ELSE #address# ENDIF #,
 				types: ["geocode", "establishment"],
 				markerOptions: {
-					draggable: true
+					draggable: true# IF NOT fieldelements.C_ADDRESS #,
+					visible: false# ENDIF #
 				},
 				mapOptions: {
 					scrollwheel: true# IF fieldelements.C_ZOOM #,
-					zoom: {fieldelements.ZOOM}
-					# ENDIF #
+					zoom: {fieldelements.ZOOM}# ENDIF #
 				}
 			});
 			

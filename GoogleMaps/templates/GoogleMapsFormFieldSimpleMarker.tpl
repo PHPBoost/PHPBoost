@@ -9,6 +9,14 @@
 
 <script>
 <!--
+jQuery("#${escape(HTML_ID)}").on('blur',function(){
+	var marker = jQuery("#${escape(HTML_ID)}").geocomplete("marker");
+	if (jQuery("#${escape(HTML_ID)}").val())
+		marker.setVisible(true);
+	else
+		marker.setVisible(false);
+});
+
 jQuery(function(){
 	# IF C_ADDRESS #
 	var address = "{ADDRESS}";
@@ -21,12 +29,12 @@ jQuery(function(){
 		location: # IF C_COORDONATES #[{LATITUDE}, {LONGITUDE}]# ELSE #address# ENDIF #,
 		types: ["geocode", "establishment"],
 		markerOptions: {
-			draggable: true
+			draggable: true# IF NOT C_ADDRESS #,
+			visible: false# ENDIF #
 		},
 		mapOptions: {
 			scrollwheel: true# IF C_ZOOM #,
-			zoom: {ZOOM}
-			# ENDIF #
+			zoom: {ZOOM}# ENDIF #
 		}
 	});
 	

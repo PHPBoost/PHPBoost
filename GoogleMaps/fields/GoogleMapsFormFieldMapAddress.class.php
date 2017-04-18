@@ -37,6 +37,11 @@ class GoogleMapsFormFieldMapAddress extends AbstractFormField
 	private $include_api = true;
 	
 	/**
+	 * @var Always display marker on the map or not
+	 */
+	private $always_display_marker = false;
+	
+	/**
 	 * @desc Constructs a GoogleMapsFormFieldSimpleAddress.
 	 * @param string $id Field identifier
 	 * @param string $label Field label
@@ -80,6 +85,8 @@ class GoogleMapsFormFieldMapAddress extends AbstractFormField
 		
 		$field_tpl->put_all(array_merge($marker->get_array_tpl_vars(), array(
 			'C_INCLUDE_API' => $this->include_api,
+			'C_ALWAYS_DISPLAY_MARKER' => $this->always_display_marker,
+			'C_HIDE_MARKER' => !$this->always_display_marker ? !$marker->get_address() : false,
 			'C_CLASS' => !empty($this->get_css_class()),
 			'API_KEY' => $config->get_api_key(),
 			'DEFAULT_LATITUDE' => $config->get_default_marker_latitude(),
@@ -131,6 +138,10 @@ class GoogleMapsFormFieldMapAddress extends AbstractFormField
 				case 'include_api':
 					$this->include_api = (bool)$value;
 					unset($field_options['include_api']);
+					break;
+				case 'always_display_marker':
+					$this->always_display_marker = (bool)$value;
+					unset($field_options['always_display_marker']);
 					break;
 			}
 		}

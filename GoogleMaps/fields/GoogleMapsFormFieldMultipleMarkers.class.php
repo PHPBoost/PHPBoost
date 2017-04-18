@@ -175,7 +175,7 @@ class GoogleMapsFormFieldMultipleMarkers extends AbstractFormField
 				$field_longitude_id = 'longitude_' . $this->get_html_id() . '_' . $i;
 				$field_zoom_id = 'zoom_' . $this->get_html_id() . '_' . $i;
 				
-				$marker = new GoogleMapsMarker($request->get_poststring($field_latitude_id), $request->get_poststring($field_longitude_id), $request->get_poststring($field_address_id), $request->get_poststring($field_name_id), $request->get_poststring($field_zoom_id));
+				$marker = new GoogleMapsMarker($request->get_poststring($field_address_id), $request->get_poststring($field_latitude_id), $request->get_poststring($field_longitude_id), $request->get_poststring($field_name_id), $request->get_poststring($field_zoom_id));
 				
 				$values[] = $marker->get_properties();
 			}
