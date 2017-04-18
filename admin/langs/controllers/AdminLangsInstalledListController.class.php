@@ -41,7 +41,7 @@ class AdminLangsInstalledListController extends AdminController
 	
 	private function build_view()
 	{
-		$installed_langs = LangsManager::get_installed_langs_map();
+		$installed_langs = LangsManager::get_installed_langs_map_sorted_by_localized_name();
 		foreach($installed_langs as $lang)
 		{
 			$configuration = $lang->get_configuration();

@@ -44,6 +44,20 @@ class ThemesManager
 		ksort($themes);
 		return $themes;
 	}
+
+	/**
+	 * @return Theme[string] the Themes map (name => theme) of the installed themes (activated or not)
+	 * sorted by name
+	 */
+	public static function get_installed_themes_map_sorted_by_localized_name()
+	{
+		$themes = self::get_installed_themes_map();
+		try {
+			usort($themes, array(__CLASS__, 'callback_sort_themes_by_name'));
+		} catch (IOException $ex) {
+		}
+		return $themes;
+	}
 	
 	public static function get_activated_themes_map()
 	{
@@ -56,6 +70,20 @@ class ThemesManager
 		ksort($activated_themes);
 		return $activated_themes;
 	}
+
+	/**
+	 * @return Theme[string] the Themes map (name => theme) of the installed themes (and activated)
+	 * sorted by name
+	 */
+	public static function get_activated_themes_map_sorted_by_localized_name()
+	{
+		$themes = self::get_activated_themes_map();
+		try {
+			usort($themes, array(__CLASS__, 'callback_sort_themes_by_name'));
+		} catch (IOException $ex) {
+		}
+		return $themes;
+	}
 	
 	public static function get_activated_and_authorized_themes_map()
 	{
@@ -67,6 +95,29 @@ class ThemesManager
 		}
 		ksort($themes);
 		return $themes;
+	}
+
+	/**
+	 * @return Theme[string] the Themes map (name => theme) of the installed themes (and activated and authorized)
+	 * sorted by name
+	 */
+	public static function get_activated_and_authorized_themes_map_sorted_by_localized_name()
+	{
+		$themes = self::get_activated_and_authorized_themes_map();
+		try {
+			usort($themes, array(__CLASS__, 'callback_sort_themes_by_name'));
+		} catch (IOException $ex) {
+		}
+		return $themes;
+	}
+	
+	public static function callback_sort_themes_by_name(Theme $theme1, Theme $theme2)
+	{
+		if ($theme1->get_configuration()->get_name() > $theme2->get_configuration()->get_name())
+		{
+			return 1;
+		}
+		return -1;
 	}
 	
 	public static function get_default_theme()

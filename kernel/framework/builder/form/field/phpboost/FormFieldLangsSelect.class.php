@@ -49,7 +49,7 @@ class FormFieldLangsSelect extends FormFieldSimpleSelectChoice
     private function generate_options()
 	{
 		$options = array();
-		foreach (LangsManager::get_activated_langs_map() as $lang)
+		foreach (LangsManager::get_activated_langs_map_sorted_by_localized_name() as $lang)
 		{
 			if ($this->check_authorizations)
 			{

@@ -75,7 +75,7 @@ class LangsSwitcherModuleMiniMenu extends ModuleMiniMenu
 		$tpl->add_lang(LangLoader::get('langswitcher_common', 'LangsSwitcher'));
 		MenuService::assign_positions_conditions($tpl, $this->get_block());
 		
-		foreach(LangsManager::get_activated_and_authorized_langs_map() as $id => $lang)
+		foreach(LangsManager::get_activated_and_authorized_langs_map_sorted_by_localized_name() as $id => $lang)
 		{
 			$selected = ($user->get_locale() == $id) ? ' selected="selected"' : '';
 			$tpl->assign_block_vars('langs', array(

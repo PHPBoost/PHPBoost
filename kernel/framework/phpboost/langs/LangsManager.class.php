@@ -38,6 +38,20 @@ class LangsManager
 	{
 		return LangsConfig::load()->get_langs();
 	}
+
+	/**
+	 * @return Lang[string] the Lang map (name => lang) of the installed langs (activated or not)
+	 * sorted by name
+	 */
+	public static function get_installed_langs_map_sorted_by_localized_name()
+	{
+		$langs = self::get_installed_langs_map();
+		try {
+			usort($langs, array(__CLASS__, 'callback_sort_langs_by_name'));
+		} catch (IOException $ex) {
+		}
+		return $langs;
+	}
 	
 	public static function get_activated_langs_map()
 	{
@@ -49,6 +63,20 @@ class LangsManager
 		}
 		return $activated_langs;
 	}
+
+	/**
+	 * @return Lang[string] the Langs map (name => lang) of the installed langs (and activated)
+	 * sorted by name
+	 */
+	public static function get_activated_langs_map_sorted_by_localized_name()
+	{
+		$langs = self::get_activated_langs_map();
+		try {
+			usort($langs, array(__CLASS__, 'callback_sort_langs_by_name'));
+		} catch (IOException $ex) {
+		}
+		return $langs;
+	}
 	
 	public static function get_activated_and_authorized_langs_map()
 	{
@@ -59,6 +87,29 @@ class LangsManager
 			}
 		}
 		return $langs;
+	}
+
+	/**
+	 * @return Lang[string] the Langs map (name => lang) of the installed langs (and activated and authorized)
+	 * sorted by name
+	 */
+	public static function get_activated_and_authorized_langs_map_sorted_by_localized_name()
+	{
+		$langs = self::get_activated_and_authorized_langs_map();
+		try {
+			usort($langs, array(__CLASS__, 'callback_sort_langs_by_name'));
+		} catch (IOException $ex) {
+		}
+		return $langs;
+	}
+	
+	public static function callback_sort_langs_by_name(Lang $lang1, Lang $lang2)
+	{
+		if ($lang1->get_configuration()->get_name() > $lang2->get_configuration()->get_name())
+		{
+			return 1;
+		}
+		return -1;
 	}
 	
 	public static function get_default_lang()

@@ -75,7 +75,7 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
 		$tpl->add_lang(LangLoader::get('themeswitcher_common', 'ThemesSwitcher'));
 		MenuService::assign_positions_conditions($tpl, $this->get_block());
 		
-		foreach (ThemesManager::get_activated_and_authorized_themes_map() as $id => $theme)
+		foreach (ThemesManager::get_activated_and_authorized_themes_map_sorted_by_localized_name() as $id => $theme)
 		{
 			$selected = ($user->get_theme() == $id) ? ' selected="selected"' : '';
 			$tpl->assign_block_vars('themes', array(

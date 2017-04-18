@@ -41,7 +41,7 @@ class AdminThemesInstalledListController extends AdminController
 	
 	private function build_view()
 	{
-		$installed_themes = ThemesManager::get_installed_themes_map();
+		$installed_themes = ThemesManager::get_installed_themes_map_sorted_by_localized_name();
 		foreach($installed_themes as $theme)
 		{
 			$configuration = $theme->get_configuration();
