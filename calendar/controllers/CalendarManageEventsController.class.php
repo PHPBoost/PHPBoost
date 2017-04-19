@@ -52,7 +52,9 @@ class CalendarManageEventsController extends AdminModuleController
 	
 	private function build_table()
 	{
-		$table_model = new SQLHTMLTableModel(CalendarSetup::$calendar_events_table, 'table', array(
+		$display_categories = CalendarService::get_categories_manager()->get_categories_cache()->has_categories();
+		
+		$columns = array(
 			new HTMLTableColumn(LangLoader::get_message('form.title', 'common'), 'title'),
 			new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
 			new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),
@@ -60,12 +62,17 @@ class CalendarManageEventsController extends AdminModuleController
 			new HTMLTableColumn($this->lang['calendar.titles.repetition']),
 			new HTMLTableColumn(LangLoader::get_message('status.approved', 'common'), 'approved'),
 			new HTMLTableColumn('')
-		), new HTMLTableSortingRule('start_date', HTMLTableSortingRule::DESC));
+		);
 		
-		$table = new HTMLTable($table_model);
+		if (!$display_categories)
+			unset($columns[1]);
+		
+		$table_model = new SQLHTMLTableModel(CalendarSetup::$calendar_events_table, 'table', $columns, new HTMLTableSortingRule('start_date', HTMLTableSortingRule::DESC));
 		
 		$table_model->set_caption($this->lang['calendar.config.events.management']);
 		$table_model->add_permanent_filter('parent_id = 0');
+		
+		$table = new HTMLTable($table_model);
 		
 		$results = array();
 		$result = $table_model->get_sql_results('event
@@ -87,7 +94,7 @@ class CalendarManageEventsController extends AdminModuleController
 			
 			$br = new BrHTMLElement();
 			
-			$results[] = new HTMLTableRow(array(
+			$row = array(
 				new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()), $event->get_content()->get_title()), 'left'),
 				new HTMLTableRowCell(new SpanHTMLElement($category->get_name(), array('style' => $category->get_id() != Category::ROOT_CATEGORY && $category->get_color() ? 'color:' . $category->get_color() : ''))),
 				new HTMLTableRowCell($author),
@@ -95,7 +102,12 @@ class CalendarManageEventsController extends AdminModuleController
 				new HTMLTableRowCell($event->belongs_to_a_serie() ? $this->lang['calendar.labels.repeat.' . $event->get_content()->get_repeat_type()] . ' - ' . $event->get_content()->get_repeat_number() . ' ' . $this->lang['calendar.labels.repeat_times'] : LangLoader::get_message('no', 'common')),
 				new HTMLTableRowCell($event->get_content()->is_approved() ? LangLoader::get_message('yes', 'common') : LangLoader::get_message('no', 'common')),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display())
-			));
+			);
+		
+			if (!$display_categories)
+				unset($row[1]);
+			
+			$results[] = new HTMLTableRow($row);
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 

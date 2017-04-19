@@ -53,18 +53,25 @@ class FaqManageController extends AdminModuleController
 	
 	private function build_table()
 	{
-		$table_model = new SQLHTMLTableModel(FaqSetup::$faq_table, 'table', array(
+		$display_categories = FaqService::get_categories_manager()->get_categories_cache()->has_categories();
+		
+		$columns = array(
 			new HTMLTableColumn($this->lang['faq.form.question'], 'question'),
 			new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
 			new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),
 			new HTMLTableColumn(LangLoader::get_message('form.date.creation', 'common'), 'creation_date'),
 			new HTMLTableColumn(LangLoader::get_message('status.approved', 'common'), 'approved'),
 			new HTMLTableColumn('')
-		), new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
+		);
 		
-		$table = new HTMLTable($table_model);
+		if (!$display_categories)
+			unset($columns[1]);
+		
+		$table_model = new SQLHTMLTableModel(FaqSetup::$faq_table, 'table', $columns, new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
 		
 		$table_model->set_caption($this->lang['faq.management']);
+		
+		$table = new HTMLTable($table_model);
 		
 		$results = array();
 		$result = $table_model->get_sql_results('faq LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = faq.author_user_id');
@@ -81,14 +88,19 @@ class FaqManageController extends AdminModuleController
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
 
-			$results[] = new HTMLTableRow(array(
+			$row = array(
 				new HTMLTableRowCell(new LinkHTMLElement(FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $faq_question->get_id()), $faq_question->get_question()), 'left'),
 				new HTMLTableRowCell(new LinkHTMLElement(FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), $category->get_name())),
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell($faq_question->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
 				new HTMLTableRowCell($faq_question->is_approved() ? LangLoader::get_message('yes', 'common') : LangLoader::get_message('no', 'common')),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display())
-			));
+			);
+		
+			if (!$display_categories)
+				unset($row[1]);
+			
+			$results[] = new HTMLTableRow($row);
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 
