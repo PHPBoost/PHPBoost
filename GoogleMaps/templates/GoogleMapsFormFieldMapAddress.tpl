@@ -4,7 +4,7 @@
 	<input type="hidden" id="longitude-${escape(HTML_ID)}" name="longitude-${escape(HTML_ID)}" value="${escape(LONGITUDE)}" />
 	<input type="hidden" id="zoom-${escape(HTML_ID)}" name="zoom-${escape(HTML_ID)}" value="${escape(ZOOM)}" />
 </div>
-<div class="map-canvas" id="map_${escape(HTML_ID)}"></div>
+<div class="map-canvas" id="map-${escape(HTML_ID)}"></div>
 
 <script>
 <!--
@@ -26,7 +26,7 @@ jQuery(function(){
 	# ENDIF #
 	
 	jQuery("#${escape(HTML_ID)}").geocomplete({
-		map: "#map_${escape(HTML_ID)}",
+		map: "#map-${escape(HTML_ID)}",
 		location: # IF C_COORDONATES #[{LATITUDE}, {LONGITUDE}]# ELSE #address# ENDIF #,
 		types: ["geocode", "establishment"],
 		markerOptions: {
