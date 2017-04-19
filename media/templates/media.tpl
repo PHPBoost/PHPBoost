@@ -74,8 +74,8 @@
 							</h2>
 						</header>
 						<div class="content">
+						# IF file.C_HAS_PICTURE #<a href="{file.U_MEDIA_LINK}"><img itemprop="thumbnailUrl" src="{file.PICTURE}" class="media-picture" alt="{file.NAME}" /></a># ENDIF #
 						# IF file.C_DESCRIPTION #
-							# IF file.C_HAS_PICTURE #<a href="{file.U_MEDIA_LINK}"><img itemprop="thumbnailUrl" src="{file.PICTURE}" class="media-picture" alt="{file.NAME}" /></a># ENDIF #
 							<div class="media-desc">
 							{file.DESCRIPTION}
 							</div>
