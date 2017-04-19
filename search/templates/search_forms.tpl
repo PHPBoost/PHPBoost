@@ -51,7 +51,7 @@
 							<a id="specialize-form-link-{forms.MODULE_NAME}" href="javascript:ChangeForm('{forms.MODULE_NAME}');" # IF forms.C_SELECTED # class="SFL-current" # ENDIF #>{forms.L_MODULE_NAME}</a>
 						# END forms #
 					</div>
-					<div id="form-all" class="SpecializedForm" # IF NOT C_SIMPLE_SEARCH # style="display:none" # ENDIF #>
+					<div id="form-all" class="SpecializedForm" # IF NOT C_SIMPLE_SEARCH # style="display: none;" # ENDIF #>
 						<fieldset class="searchFieldset">
 							<div class="form-element">
 								<label>{L_SEARCH_IN_MODULES}<br /><span>{L_SEARCH_IN_MODULES_EXPLAIN}</span></label>
@@ -66,7 +66,7 @@
 						</fieldset>
 					</div>
 					# START forms #
-					<div id="form-{forms.MODULE_NAME}" class="SpecializedForm" # IF NOT forms.C_SELECTED # style="display:none" # ENDIF #>
+					<div id="form-{forms.MODULE_NAME}" class="SpecializedForm" # IF NOT forms.C_SELECTED # style="display: none;" # ENDIF #>
 						<fieldset class="searchFieldset">
 						# IF forms.C_SEARCH_FORM #{forms.SEARCH_FORM}# ELSE #<p class="center">{forms.SEARCH_FORM}</p># ENDIF #
 						</fieldset>

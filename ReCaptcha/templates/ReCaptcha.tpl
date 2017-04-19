@@ -10,8 +10,8 @@ jQuery(document).ready(function() {
 </script>
 # ENDIF #
 <div id="recaptcha-widget-container">
-	<div id="recaptcha-widget" style="display:none">
-		<div id="recaptcha_response_field" style="display:none;"></div>
+	<div id="recaptcha-widget" style="display: none;">
+		<div id="recaptcha_response_field" style="display: none;"></div>
 		<div id="recaptcha-container">
 			<div id="recaptcha_image"></div>
 			<div class="recaptcha_only_if_incorrect_sol color-alert">{@incorrect_sol}</div>

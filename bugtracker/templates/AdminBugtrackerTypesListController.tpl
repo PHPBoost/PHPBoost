@@ -80,7 +80,7 @@ var BugtrackerFormFieldTypes = new BugtrackerFormFieldTypes();
 		</tr>
 	</tfoot>
 	<tbody id="types_list">
-		<tr id="no-type"# IF C_TYPES # style="display:none;"# ENDIF #>
+		<tr id="no-type"# IF C_TYPES # style="display: none;"# ENDIF #>
 			<td colspan="3">
 				${LangLoader::get_message('no_item_now', 'common')}
 			</td>

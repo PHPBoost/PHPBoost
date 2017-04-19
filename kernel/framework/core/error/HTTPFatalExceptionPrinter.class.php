@@ -152,7 +152,7 @@ class HTTPFatalExceptionPrinter
 			$stack .= '</tr>';
 			if ($has_args)
 			{
-				$stack .= '<tr id="' . $id . '" style="display:none;" class="' . $row_class . '">
+				$stack .= '<tr id="' . $id . '" style="display: none;" class="' . $row_class . '">
 				<td colspan="4" class="argsDetails">' . ExceptionUtils::get_args($call) . '</td></tr>';
 			}
 			$i++;

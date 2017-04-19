@@ -128,7 +128,7 @@
 									<select name="img" id="img_group" onchange="img_change(this.options[selectedIndex].value)">
 										{IMG_GROUPS}
 									</select>
-									<img src="{PATH_TO_ROOT}/images/group/{IMG}" id="img_group_change" alt="{IMG}" class="valign-middle" style="display:none" />
+									<img src="{PATH_TO_ROOT}/images/group/{IMG}" id="img_group_change" alt="{IMG}" class="valign-middle" style="display: none;" />
 								</label>
 							</div>
 						</div>
@@ -158,7 +158,7 @@
 							<div class="form-field">
 								<input type="text" maxlength="25" id="login" value="{LOGIN}" name="login_mbr"> 
 								<button onclick="XMLHttpRequest_search();" type="button">{L_SEARCH}</button>
-								<div id="xmlhttprequest-result-search" style="display:none;" class="xmlhttprequest-result-search"></div>
+								<div id="xmlhttprequest-result-search" style="display: none;" class="xmlhttprequest-result-search"></div>
 							</div>
 						</div>
 					</div>
@@ -283,7 +283,7 @@
 								<select name="img" id="img_group" onchange="img_change(this.options[selectedIndex].value)">
 									{IMG_GROUPS}
 								</select>
-								<img src="{PATH_TO_ROOT}/images/group/{IMG}" id="img_group_change" alt="{IMG}" class="valign-middle" style="display:none" />
+								<img src="{PATH_TO_ROOT}/images/group/{IMG}" id="img_group_change" alt="{IMG}" class="valign-middle" style="display: none;" />
 							</label></div>
 						</div>
 					</div>

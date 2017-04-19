@@ -304,7 +304,7 @@
 										document.write('<button onclick="XMLHttpRequest_search();" type="button">{L_SEARCH}</button>');
 									-->
 									</script>
-									<div id="xmlhttprequest-result-search" style="display:none;" class="xmlhttprequest-result-search"></div>
+									<div id="xmlhttprequest-result-search" style="display: none;" class="xmlhttprequest-result-search"></div>
 								</span>
 							</td>
 						</tr>

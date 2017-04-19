@@ -1,4 +1,4 @@
-<div id="${escape(HTML_ID)}_field" class="form-element form-element-upload-file# IF C_REQUIRED_AND_HAS_VALUE # constraint-status-right# ENDIF ## IF C_HAS_FIELD_CLASS # {FIELD_CLASS}# ENDIF #"# IF C_HIDDEN # style="display:none;"# ENDIF #>
+<div id="${escape(HTML_ID)}_field" class="form-element form-element-upload-file# IF C_REQUIRED_AND_HAS_VALUE # constraint-status-right# ENDIF ## IF C_HAS_FIELD_CLASS # {FIELD_CLASS}# ENDIF #"# IF C_HIDDEN # style="display: none;"# ENDIF #>
 	# IF C_HAS_LABEL #
 		<label for="${escape(HTML_ID)}">
 			{LABEL}
@@ -13,10 +13,10 @@
 		# IF C_AUTH_UPLOAD #
 			<a title="${LangLoader::get_message('files_management', 'main')}" href="" class="fa fa-cloud-upload fa-2x" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=${escape(NAME)}&amp;parse=true&amp;no_path=true', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"></a>
 		# ENDIF #
-		<span class="text-status-constraint" style="display:none" id="onblurMessageResponse${escape(HTML_ID)}"></span>
+		<span class="text-status-constraint" style="display: none;" id="onblurMessageResponse${escape(HTML_ID)}"></span>
 	</div>
 </div>
-<div id="${escape(HTML_ID)}_preview"# IF C_PREVIEW_HIDDEN # style="display:none;"# ENDIF # class="form-element # IF C_HAS_FIELD_CLASS #{FIELD_CLASS}# ENDIF #">
+<div id="${escape(HTML_ID)}_preview"# IF C_PREVIEW_HIDDEN # style="display: none;"# ENDIF # class="form-element # IF C_HAS_FIELD_CLASS #{FIELD_CLASS}# ENDIF #">
 	<label for="${escape(HTML_ID)}_preview">
 		${LangLoader::get_message('form.picture.preview', 'common')}
 	</label>

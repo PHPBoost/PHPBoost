@@ -180,7 +180,7 @@
 		   <header>
 				<h1>{L_SEARCH_RESULTS}</h1>
 				# IF C_SIMPLE_SEARCH #
-					<div id="results_choices" class="resultsChoices" style="display:none">
+					<div id="results_choices" class="resultsChoices" style="display: none;">
 						<span>{L_PRINT}</span>
 						<select id="results_choice" name="ResultsSelection" onchange="ChangeResults();">
 							<option value="all">{L_TITLE_ALL_RESULTS}</option>
@@ -207,7 +207,7 @@
 				</div>
 				# IF C_SIMPLE_SEARCH #
 					# START results #
-						<div id="results_{results.MODULE_NAME}" class="results" style="display:none">
+						<div id="results_{results.MODULE_NAME}" class="results" style="display: none;">
 							<span id="results_title_{results.MODULE_NAME}" class="title">{results.L_MODULE_NAME}</span><br />
 							<div id="infos_results_{results.MODULE_NAME}" class="infosResults">
 								# IF NB_RESULTS #

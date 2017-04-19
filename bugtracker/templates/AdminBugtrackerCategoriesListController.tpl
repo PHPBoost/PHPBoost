@@ -78,7 +78,7 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 		</tr>
 	</tfoot>
 	<tbody id="categories_list">
-		<tr id="no-category"# IF C_CATEGORIES # style="display:none;"# ENDIF #>
+		<tr id="no-category"# IF C_CATEGORIES # style="display: none;"# ENDIF #>
 			<td colspan="3">
 				${LangLoader::get_message('no_item_now', 'common')}
 			</td>

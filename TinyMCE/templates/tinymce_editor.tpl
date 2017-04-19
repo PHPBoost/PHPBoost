@@ -58,12 +58,12 @@ function setTinyMceContent(content)
 
 -->
 </script>
-<div id="loading-preview-{FIELD}" class="loading-preview-container" style="display:none;">
+<div id="loading-preview-{FIELD}" class="loading-preview-container" style="display: none;">
 	<div class="loading-preview">
 		<i class="fa fa-spinner fa-2x fa-spin"></i>
 	</div>
 </div>
-<div id="xmlhttprequest-preview{FIELD}" class="xmlhttprequest-preview" style="display:none;"></div>
+<div id="xmlhttprequest-preview{FIELD}" class="xmlhttprequest-preview" style="display: none;"></div>
 
 # IF NOT C_NOT_JS_INCLUDED #
 	<script src="{PATH_TO_ROOT}/TinyMCE/templates/js/tinymce/tinymce.min.js"></script>

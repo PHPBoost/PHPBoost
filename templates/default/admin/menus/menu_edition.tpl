@@ -35,7 +35,7 @@
 			</div>
 		</div>
 		<div class="spacer"></div>
-		<fieldset id="menu_element_{ID}_properties"# IF C_AUTH_MENU_HIDDEN # style="display:none;"# ENDIF #>
+		<fieldset id="menu_element_{ID}_properties"# IF C_AUTH_MENU_HIDDEN # style="display: none;"# ENDIF #>
 			<legend>{L_PROPERTIES}</legend>
 			<div class="form-element">
 				<label>{L_AUTHORIZATIONS}</label>
@@ -77,7 +77,7 @@
 			</div>
 		</div>
 		<div class="spacer"></div>
-		<fieldset id="menu_element_{ID}_properties"# IF C_AUTH_MENU_HIDDEN # style="display:none;"# ENDIF #>
+		<fieldset id="menu_element_{ID}_properties"# IF C_AUTH_MENU_HIDDEN # style="display: none;"# ENDIF #>
 			<legend>{L_PROPERTIES}</legend>
 			<div class="form-element">
 				<label>{L_AUTHORIZATIONS}</label>

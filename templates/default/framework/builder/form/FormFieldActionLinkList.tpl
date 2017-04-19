@@ -1,4 +1,4 @@
-<div id="${escape(HTML_ID)}" class="form-field-action-link"# IF C_HIDDEN # style="display:none;"# ENDIF #>
+<div id="${escape(HTML_ID)}" class="form-field-action-link"# IF C_HIDDEN # style="display: none;"# ENDIF #>
 	<ul>
 		# START action #
 		<li>

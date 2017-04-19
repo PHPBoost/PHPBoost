@@ -23,7 +23,7 @@ function toggle_filters_table() {
 <div class="cssmenu-group">
 	<a href="" onclick="toggle_filters_table(); return false;" class="cssmenu-title"><i class="fa fa-filter"></i> {L_FILTERS}</a> 
 </div>
-<table id="table_filters"# IF NOT C_HAS_SELECTED_FILTERS # style="display:none;"# ENDIF #>
+<table id="table_filters"# IF NOT C_HAS_SELECTED_FILTERS # style="display: none;"# ENDIF #>
 	<thead>
 		<tr>
 			# IF C_DISPLAY_TYPES #

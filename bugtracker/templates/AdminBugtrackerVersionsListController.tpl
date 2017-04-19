@@ -157,7 +157,7 @@ function display_default_version_radio(version_id)
 		</tr>
 	</tfoot>
 	<tbody id="versions_list">
-		<tr id="no-version"# IF C_VERSIONS # style="display:none;"# ENDIF #>
+		<tr id="no-version"# IF C_VERSIONS # style="display: none;"# ENDIF #>
 			<td colspan="5">
 				${LangLoader::get_message('no_item_now', 'common')}
 			</td>
@@ -165,7 +165,7 @@ function display_default_version_radio(version_id)
 		# START versions #
 		<tr>
 			<td>
-				<div id="versions_radio_{versions.ID}" class="form-field-radio"# IF NOT versions.C_DETECTED_IN # style="display:none"# ENDIF #>
+				<div id="versions_radio_{versions.ID}" class="form-field-radio"# IF NOT versions.C_DETECTED_IN # style="display: none;"# ENDIF #>
 					<input type="radio" id="default_version{versions.ID}" name="default_version" value="{versions.ID}"# IF versions.C_IS_DEFAULT # checked="checked"# ENDIF #>
 					<label for="default_version{versions.ID}"></label>
 				</div>
@@ -178,7 +178,7 @@ function display_default_version_radio(version_id)
 				<input type="text" size="11" maxlength="10" id="release_date{versions.ID}" class="input-date" name="release_date{versions.ID}" value="{versions.RELEASE_DATE}" onclick="xmlhttprequest_calendar('release_date{versions.ID}_date', 'release_date{versions.ID}', ${escapejs(versions.YEAR)}, ${escapejs(versions.MONTH)}, ${escapejs(versions.DAY)}, ${escapejs(versions.ID)});return false;" placeholder="${LangLoader::get_message('date_format', 'date-common')}">
 				<div class="calendar-container">
 					<a id="release_date{versions.ID}_link" href="" onclick="xmlhttprequest_calendar('release_date{versions.ID}_date', 'release_date{versions.ID}', ${escapejs(versions.YEAR)}, ${escapejs(versions.MONTH)}, ${escapejs(versions.DAY)}, ${escapejs(versions.ID)}, 1);return false;"><i class="fa fa-calendar"></i></a>
-					<div id="calendar{versions.ID}" class="calendar-block-container" style="display:none;">
+					<div id="calendar{versions.ID}" class="calendar-block-container" style="display: none;">
 						<div id="release_date{versions.ID}_date" class="calendar-block"></div>
 					</div>
 				</div>
