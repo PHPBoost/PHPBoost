@@ -169,6 +169,24 @@ class CalendarEvent
 		$registration_days_left = $this->content->get_last_registration_date() && time() < $this->content->get_last_registration_date()->get_timestamp() ? (int)(($this->content->get_last_registration_date()->get_timestamp() - time()) /3600 /24) : 0;
 		
 		$new_content = new CalendarNewContent();
+		
+		$unserialized_value = @unserialize($this->content->get_location());
+		$location_value = $unserialized_value !== false ? $unserialized_value : $this->content->get_location();
+		
+		$location = '';
+		if (is_array($location_value) && isset($location_value['address']))
+			$location = $location_value['address'];
+		else if (!is_array($location_value))
+			$location = $location_value;
+			
+		$location_map = '';
+		$has_location_map = false;
+		if (CalendarConfig::load()->is_googlemaps_available())
+		{
+			$map = new GoogleMapsDisplayMap($this->content->get_location(), 'location', $this->content->get_title());
+			$location_map = $map->display();
+			$has_location_map = $this->content->is_map_displayed();
+		}
 
 		return array_merge(
 			Date::get_array_tpl_vars($this->start_date, 'start_date'),
@@ -178,7 +196,8 @@ class CalendarEvent
 			'C_EDIT' => $this->is_authorized_to_edit(),
 			'C_DELETE' => $this->is_authorized_to_delete(),
 			'C_HAS_PICTURE' => $this->content->has_picture(),
-			'C_LOCATION' => $this->content->get_location(),
+			'C_LOCATION' => !empty($location),
+			'C_LOCATION_MAP' => $has_location_map,
 			'C_BELONGS_TO_A_SERIE' => $this->belongs_to_a_serie(),
 			'C_PARTICIPATION_ENABLED' => $this->content->is_registration_authorized(),
 			'C_DISPLAY_PARTICIPANTS' => $this->content->is_authorized_to_display_registered_users(),
@@ -198,7 +217,8 @@ class CalendarEvent
 			'TITLE' => $this->content->get_title(),
 			'CONTENTS' => FormatingHelper::second_parse($this->content->get_contents()),
 			'PICTURE' => $this->content->get_picture()->rel(),
-			'LOCATION' => $this->content->get_location(),
+			'LOCATION' => $location,
+			'LOCATION_MAP' => $location_map,
 			'NUMBER_COMMENTS' => CommentsService::get_number_comments('calendar', $this->id),
 			'L_COMMENTS' => CommentsService::get_number_and_lang_comments('calendar', $this->id),
 			'REPEAT_NUMBER' => $this->content->get_repeat_number(),

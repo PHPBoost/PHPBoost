@@ -35,6 +35,7 @@ class CalendarEventContent
 	private $picture_url;
 	
 	private $location;
+	private $map_displayed;
 	
 	private $approved;
 	
@@ -138,6 +139,21 @@ class CalendarEventContent
 	public function get_location()
 	{
 		return $this->location;
+	}
+	
+	public function display_map()
+	{
+		$this->map_displayed = true;
+	}
+	
+	public function hide_map()
+	{
+		$this->map_displayed = false;
+	}
+	
+	public function is_map_displayed()
+	{
+		return $this->map_displayed;
 	}
 	
 	public function approve()
@@ -281,6 +297,7 @@ class CalendarEventContent
 			'picture_url' => $this->get_picture()->relative(),
 			'location' => $this->get_location(),
 			'approved' => (int)$this->is_approved(),
+			'map_displayed' => (int)$this->is_map_displayed(),
 			'creation_date' => (int)$this->get_creation_date()->get_timestamp(),
 			'author_id' => $this->get_author_user()->get_id(),
 			'registration_authorized' => (int)$this->is_registration_authorized(),
@@ -301,6 +318,11 @@ class CalendarEventContent
 		$this->contents = $properties['contents'];
 		$this->set_picture(new Url($properties['picture_url']));
 		$this->location = $properties['location'];
+		
+		if ($properties['map_displayed'])
+			$this->display_map();
+		else
+			$this->hide_map();
 		
 		if ($properties['approved'])
 			$this->approve();
@@ -342,6 +364,8 @@ class CalendarEventContent
 		$this->max_registered_members = 0;
 		$this->last_registration_date_enabled = false;
 		$this->register_authorizations = array('r0' => 3, 'r1' => 3);
+		
+		$this->hide_map();
 		
 		if (CalendarAuthorizationsService::check_authorizations()->write())
 			$this->approve();

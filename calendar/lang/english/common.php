@@ -55,6 +55,7 @@ $lang['calendar.events_list'] = 'Events list';
 
 //Labels
 $lang['calendar.labels.location'] = 'Location';
+$lang['calendar.labels.map_displayed'] = 'Display address on a map';
 $lang['calendar.labels.created_by'] = 'Created by';
 $lang['calendar.labels.picture'] = 'Add a picture';
 $lang['calendar.labels.registration_authorized'] = 'Active members registration for the event';

@@ -40,6 +40,7 @@ class CalendarFormController extends ModuleController
 	private $submit_button;
 	
 	private $lang;
+	private $config;
 	
 	private $event;
 	private $is_new_event;
@@ -69,6 +70,7 @@ class CalendarFormController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'calendar');
+		$this->config = CalendarConfig::load();
 	}
 	
 	private function build_form(HTTPRequestCustom $request)
@@ -123,7 +125,23 @@ class CalendarFormController extends ModuleController
 			array(new FormFieldConstraintIntegerRange(1, 150))
 		));
 		
-		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('location', $this->lang['calendar.labels.location'], $event_content->get_location()));
+		$unserialized_value = @unserialize($event_content->get_location());
+		$location_value = $unserialized_value !== false ? $unserialized_value : $event_content->get_location();
+		
+		$location = '';
+		if (is_array($location_value) && isset($location_value['address']))
+			$location = $location_value['address'];
+		else if (!is_array($location_value))
+			$location = $location_value;
+		
+		if ($this->config->is_googlemaps_available())
+		{
+			$fieldset->add_field(new GoogleMapsFormFieldMapAddress('location', $this->lang['calendar.labels.location'], $location));
+			
+			$fieldset->add_field(new FormFieldCheckbox('map_displayed', $this->lang['calendar.labels.map_displayed'], $event_content->is_map_displayed()));
+		}
+		else
+			$fieldset->add_field(new FormFieldShortMultiLineTextEditor('location', $this->lang['calendar.labels.location'], $location));
 		
 		$fieldset->add_field(new FormFieldCheckbox('registration_authorized', $this->lang['calendar.labels.registration_authorized'], $event_content->is_registration_authorized(),array(
 			'events' => array('click' => '
@@ -268,6 +286,14 @@ class CalendarFormController extends ModuleController
 		$event_content->set_contents($this->form->get_value('contents'));
 		$event_content->set_picture(new Url($this->form->get_value('picture')));
 		$event_content->set_location($this->form->get_value('location'));
+		
+		if ($this->config->is_googlemaps_available())
+		{
+			if ($this->form->get_value('map_displayed'))
+				$event_content->display_map();
+			else
+				$event_content->hide_map();
+		}
 		
 		if (CalendarAuthorizationsService::check_authorizations($event_content->get_category_id())->moderation() && $this->form->get_value('approved'))
 			$event_content->approve();

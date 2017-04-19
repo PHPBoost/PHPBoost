@@ -40,6 +40,7 @@
 					<div itemprop="location" itemscope itemtype="http://schema.org/Place">
 						<span class="text-strong">{@calendar.labels.location}</span> :
 						<span itemprop="name">{LOCATION}</span>
+						# IF C_LOCATION_MAP #<div class="location-map">{LOCATION_MAP}</div># ENDIF #
 					</div>
 					# ENDIF #
 					# IF C_PARTICIPATION_ENABLED #

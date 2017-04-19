@@ -82,6 +82,11 @@ class CalendarConfig extends AbstractConfigData
 		$this->set_property(self::BIRTHDAY_COLOR, $value);
 	}
 	
+	public function is_googlemaps_available()
+	{
+		return ModulesManager::is_module_installed('GoogleMaps') && ModulesManager::is_module_activated('GoogleMaps') && GoogleMapsConfig::load()->get_api_key();
+	}
+	
 	 /**
 	 * @method Get authorizations
 	 */
