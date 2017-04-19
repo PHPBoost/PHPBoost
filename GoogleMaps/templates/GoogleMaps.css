@@ -5,7 +5,7 @@
 	padding-bottom: 56.25%;
 }
 
-div[id*="marker_"] {
+div[id*="marker-"] {
 	margin-bottom: 5px;
 	width: 100%;
 }
