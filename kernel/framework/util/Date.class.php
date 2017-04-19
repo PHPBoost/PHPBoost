@@ -290,7 +290,8 @@ class Date
 	public function get_day($timezone = Timezone::USER_TIMEZONE)
 	{
 		$this->compute_server_user_difference($timezone);
-		return (int)$this->date_time->format('d');
+		$day = (int)$this->date_time->format('d')
+		return $day < 10 ? '0' . $day : $day;
 	}
 
 	public function set_day($day, $referential_timezone = Timezone::USER_TIMEZONE)
