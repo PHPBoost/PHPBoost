@@ -160,15 +160,15 @@ elseif (!empty($id))
 	$calendar_current_date = new MiniCalendar('current_date', !empty($row['timestamp']) ? new Date($row['timestamp'], Timezone::SERVER_TIMEZONE) : new Date());
 	
 	$tpl->put_all(array(
+		'C_TYPE_UNIQUE' => ($row['type'] == '1'),
+		'C_TYPE_MULTIPLE' => ($row['type'] == '0'),
+		'C_ARCHIVES_ENABLED' => ($row['archive'] == '1'),
+		'C_ARCHIVES_DISABLED' => ($row['archive'] == '0'),
+		'C_VISIBLE_WAITING' => ($row['visible'] == 2 || !empty($row['end'])),
+		'C_VISIBLE_ENABLED' => ($row['visible'] == 1 && empty($row['end'])),
+		'C_VISIBLE_UNAPROB' => ($row['visible'] == 0),
 		'IDPOLL' => $row['id'],
 		'QUESTIONS' => stripslashes($row['question']),
-		'TYPE_UNIQUE' => ($row['type'] == '1') ? 'checked="checked"' : '',
-		'TYPE_MULTIPLE' => ($row['type'] == '0') ? 'checked="checked"' : '',
-		'ARCHIVES_ENABLED' => ($row['archive'] == '1') ? 'checked="checked"' : '',
-		'ARCHIVES_DISABLED' => ($row['archive'] == '0') ? 'checked="checked"' : '',
-		'VISIBLE_WAITING' => (($row['visible'] == 2 || !empty($row['end'])) ? 'checked="checked"' : ''),
-		'VISIBLE_ENABLED' => (($row['visible'] == 1 && empty($row['end'])) ? 'checked="checked"' : ''),
-		'VISIBLE_UNAPROB' => (($row['visible'] == 0) ? 'checked="checked"' : ''),
 		'CALENDAR_START' => $calendar_start->display(),
 		'CALENDAR_END' => $calendar_end->display(),
 		'CALENDAR_CURRENT_DATE' => $calendar_current_date->display(),
