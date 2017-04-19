@@ -66,7 +66,7 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 			);
 
 			$array_preg_replace = array(
-				'<h1 class="formatter-title wiki-paragraph-1" id="paragraph-$1">$2</h1>',
+				'<h2 class="formatter-title wiki-paragraph-2" id="paragraph-$1">$2</h2>',
 				'<h2 class="formatter-title wiki-paragraph-2" id="paragraph-$1">$2</h2>',
 				'<h3 class="formatter-title wiki-paragraph-3" id="paragraph-$1">$2</h3>',
 				'<h4 class="formatter-title wiki-paragraph-4" id="paragraph-$1">$2</h4>',
