@@ -6,7 +6,7 @@
 		<li id="p-slide-pub" class="p-slide-element">
 			<img src="{PATH_TO_ROOT}/PHPBoostOfficial/templates/images/pub.png" alt="PHPBoost CMS" class="p-slide-img" width="400" height="256"/>
 			<div class="p-slide-txt">
-				<a href="#" class="p-slide-title">PHPBoost CMS</a>
+				<h1><a href="#" class="p-slide-title">PHPBoost CMS</a></h1>
 				<p class="p-slide-content">
 					{@site_slide_description}
 				</p>
