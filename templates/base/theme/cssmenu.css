@@ -307,12 +307,20 @@ div.cssmenu-group .cssmenu-title {
 	padding: 8px 20px 8px 10px;
 }
 
+@media (min-width: 769px) {
+	.cssmenu-vertical > ul > li > .cssmenu-title {
+		padding: 6px 20px 6px 10px;
+	}
+}
+
 .cssmenu > ul > li.has-sub > .cssmenu-title:after 			{ top: 22px; right: 11px; }
 .cssmenu > ul > li.has-sub > .cssmenu-title:before 			{ top: 19px; right: 14px; }
 .cssmenu > ul > li.has-sub:hover > .cssmenu-title:before 	{ top: 23px; }
 
-.cssmenu-vertical > ul > li.has-sub > .cssmenu-title:after  { top: 13px; }
-.cssmenu-vertical > ul > li.has-sub > .cssmenu-title:before { top: 10px;  }
+@media (min-width: 769px) {
+	.cssmenu-vertical > ul > li.has-sub > .cssmenu-title:after  { top: 11px; }
+	.cssmenu-vertical > ul > li.has-sub > .cssmenu-title:before { top: 8px;  }
+}
 
 /* --- Position des sous menu --- */
 .cssmenu li:hover > ul 								{ left: auto ;				}
@@ -464,6 +472,12 @@ footer .cssmenu.cssmenu-static > ul > li:last-child,
 	white-space: nowrap;
 }
 
+@media (min-width: 769px) {
+	.cssmenu ul ul li .cssmenu-title {
+		padding: 6px 20px 6px 10px;
+	}
+}
+
 /* --- Indicateur de sous menu --- */
 .cssmenu ul ul li:last-child > .cssmenu-title,
 .cssmenu ul ul li.last-item > .cssmenu-title {
@@ -490,6 +504,11 @@ footer .cssmenu.cssmenu-static > ul > li:last-child,
 
 .cssmenu ul ul li.has-sub > .cssmenu-title:after 	{ top: 13px; right: 11px; }
 .cssmenu ul ul li.has-sub > .cssmenu-title:before 	{ top: 10px; right: 14px; }
+
+@media (min-width: 769px) {
+	.cssmenu.cssmenu-vertical ul ul li.has-sub > .cssmenu-title:after 	{ top: 11px; right: 11px; }
+	.cssmenu.cssmenu-vertical ul ul li.has-sub > .cssmenu-title:before 	{ top: 8px; right: 14px; }
+}
 
 .cssmenu ul ul > li.has-sub:hover > .cssmenu-title:before  {
 	top: 17px;
