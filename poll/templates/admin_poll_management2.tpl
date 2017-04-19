@@ -65,12 +65,12 @@
 							<label for="type">* {L_ANSWER_TYPE}</label>
 							<div class="form-field">
 								<div class="form-field-radio">
-									<input type="radio" name="type" id="type1" value="1" checked="checked">
+									<input type="radio" name="type" id="type1" value="1"# IF C_TYPE_UNIQUE # checked="checked"# ENDIF # />
 									<label for="type1"></label> 
 								</div>
 								<span class="form-field-radio-span">{L_SINGLE}</span>
 								<div class="form-field-radio">
-									<input type="radio" name="type" id="type2" value="0">
+									<input type="radio" name="type" id="type2" value="0"# IF C_TYPE_MULTIPLE # checked="checked"# ENDIF # />
 									<label for="type2"></label> 
 								</div>
 								<span class="form-field-radio-span">{L_MULTIPLE}</span>
@@ -80,12 +80,12 @@
 							<label for="archive">* ${LangLoader::get_message('hidden', 'common')}</label>
 							<div class="form-field">
 								<div class="form-field-radio">
-									<input type="radio" name="archive" {ARCHIVES_ENABLED} id="archive1" value="1">
+									<input type="radio" name="archive" id="archive1" value="1"# IF C_ARCHIVES_ENABLED # checked="checked"# ENDIF # />
 									<label for="archive1"></label> 
 								</div>
 								<span class="form-field-radio-span">{L_YES}</span>
 								<div class="form-field-radio">
-									<input type="radio" name="archive" {ARCHIVES_DISABLED} id="archive2" value="0">
+									<input type="radio" name="archive" id="archive2" value="0"# IF C_ARCHIVES_DISABLED # checked="checked"# ENDIF # />
 									<label for="archive2"></label> 
 								</div>
 								<span class="form-field-radio-span">{L_NO}</span>
@@ -145,7 +145,7 @@
 								<div onclick="document.getElementById('start_end_date').checked = true;">
 									<label>
 										<div class="form-field-radio">
-											<input type="radio" value="2" name="visible" id="start_end_date" {VISIBLE_WAITING} />
+											<input type="radio" value="2" name="visible" id="start_end_date"# IF C_VISIBLE_WAITING # checked="checked"# ENDIF # />
 											<label for="start_end_date"></label> 
 										</div>
 										{CALENDAR_START}
@@ -157,13 +157,13 @@
 								</div>
 								<br />
 								<div class="form-field-radio">
-									<input type="radio" value="1" id="release_date" name="visible" {VISIBLE_ENABLED} />
+									<input type="radio" value="1" id="release_date" name="visible"# IF C_VISIBLE_ENABLED # checked="checked"# ENDIF # />
 									<label for="release_date"></label>
 								</div>
 								<span class="form-field-radio-span">{L_IMMEDIATE}</span>
 								<br />
 								<div class="form-field-radio">
-									<input type="radio" value="0" id="unaprob" name="visible" {VISIBLE_UNAPROB} />
+									<input type="radio" value="0" id="unaprob" name="visible"# IF C_VISIBLE_UNAPROB # checked="checked"# ENDIF # />
 									<label for="unaprob"></label>
 								</div>
 								<span class="form-field-radio-span">{L_UNAPROB}</span>
