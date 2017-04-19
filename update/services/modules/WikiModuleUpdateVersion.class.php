@@ -57,13 +57,19 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 		
 		while($row = $result->fetch())
 		{
+			$unparser->set_content($row['content']);
+			$unparser->parse();
+			$parser->set_content($unparser->get_content());
+			$parser->parse();
+			
 			$array_preg = array(
 				'`<h1 class="wiki_paragraph1" id="paragraph_([^"]+)">(.*)</h1>`isuU',
 				'`<h2 class="wiki_paragraph2" id="paragraph_([^"]+)">(.*)</h2>`isuU',
 				'`<h3 class="wiki_paragraph3" id="paragraph_([^"]+)">(.*)</h3>`isuU',
 				'`<h4 class="wiki_paragraph4" id="paragraph_([^"]+)">(.*)</h4>`isuU',
 				'`<h5 class="wiki_paragraph5" id="paragraph_([^"]+)">(.*)</h5>`isuU',
-				'`<ol class="wiki_list_([^"]+)"><li>`isuU'
+				'`<ol class="wiki_list_([^"]+)"><li>`isuU',
+				'`<a href="paragraph_`isuU'
 			);
 
 			$array_preg_replace = array(
@@ -72,19 +78,15 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 				'<h4 class="formatter-title wiki-paragraph-4" id="paragraph-$1">$2</h4>',
 				'<h5 class="formatter-title wiki-paragraph-5" id="paragraph-$1">$2</h5>',
 				'<h6 class="formatter-title wiki-paragraph-6" id="paragraph-$1">$2</h6>',
-				'<ol class="wiki-list wiki-list-$1"><li>'
+				'<ol class="wiki-list wiki-list-$1"><li>',
+				'<a href="paragraph-'
 			);
 			
-			$row['content'] = preg_replace($array_preg, $array_preg_replace, $row['content']);
+			$content = preg_replace($array_preg, $array_preg_replace, $parser->get_content());
 			
-			$unparser->set_content($row['content']);
-			$unparser->parse();
-			$parser->set_content($unparser->get_content());
-			$parser->parse();
-			
-			if ($parser->get_content() != $row['content'])
+			if ($content != $row['content'])
 			{
-				$this->querier->update(PREFIX . 'wiki_contents', array('content' => $parser->get_content()), 'WHERE id_contents=:id', array('id' => $row['id_contents']));
+				$this->querier->update(PREFIX . 'wiki_contents', array('content' => $content), 'WHERE id_contents=:id', array('id' => $row['id_contents']));
 				$updated_content++;
 			}
 		}
