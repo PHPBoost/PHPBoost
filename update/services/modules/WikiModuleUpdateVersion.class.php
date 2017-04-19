@@ -62,15 +62,17 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 				'`<h2 class="wiki_paragraph2" id="paragraph_([^"]+)">(.*)</h2>`isuU',
 				'`<h3 class="wiki_paragraph3" id="paragraph_([^"]+)">(.*)</h3>`isuU',
 				'`<h4 class="wiki_paragraph4" id="paragraph_([^"]+)">(.*)</h4>`isuU',
-				'`<h5 class="wiki_paragraph5" id="paragraph_([^"]+)">(.*)</h5>`isuU'
+				'`<h5 class="wiki_paragraph5" id="paragraph_([^"]+)">(.*)</h5>`isuU',
+				'`<ol class="wiki_list_([^"]+)"><li>`isuU'
 			);
 
 			$array_preg_replace = array(
 				'<h2 class="formatter-title wiki-paragraph-2" id="paragraph-$1">$2</h2>',
-				'<h2 class="formatter-title wiki-paragraph-2" id="paragraph-$1">$2</h2>',
 				'<h3 class="formatter-title wiki-paragraph-3" id="paragraph-$1">$2</h3>',
 				'<h4 class="formatter-title wiki-paragraph-4" id="paragraph-$1">$2</h4>',
-				'<h5 class="formatter-title wiki-paragraph-5" id="paragraph-$1">$2</h5>'
+				'<h5 class="formatter-title wiki-paragraph-5" id="paragraph-$1">$2</h5>',
+				'<h6 class="formatter-title wiki-paragraph-6" id="paragraph-$1">$2</h6>',
+				'<ol class="wiki-list wiki-list-$1"><li>'
 			);
 			
 			$row['content'] = preg_replace($array_preg, $array_preg_replace, $row['content']);
