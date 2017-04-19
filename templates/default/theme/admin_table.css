@@ -2,10 +2,10 @@
 /* --- ###################################################################### ---*/
 
 /*                            admin_table.css
- *                            
+ *
  *            Contient les css de mise en forme des tableaux
- *            
- * 
+ *
+ *
  * --- ###################################################################### ---*/
 
 
@@ -72,7 +72,7 @@ table tbody tr td:last-child {
 }
 
 table tbody tr.no-separator td {
-	border-top: none; 
+	border-top: none;
 }
 
 table tbody tr td.no-separator {
@@ -147,7 +147,7 @@ table.formatter-table th.formatter-table-head p {
 	.col-large {
 		width: 100%
 	}
-	
+
 	table tbody td	{
 		border-right: 1px solid #D1D2D4;
 	}
@@ -187,6 +187,7 @@ td.input-radio {
 
 td.input-radio .form-field-radio-span {
 	padding: 0;
+	display: inline-block;
 }
 
 /* --- images dans une table --- */
