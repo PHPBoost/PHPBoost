@@ -190,7 +190,8 @@ div.cssmenu-group .cssmenu-title {
 
 .cssmenu.cssmenu-actionslinks.small-screen ul li .cssmenu-title,
 .cssmenu.cssmenu-actionslinks.small-screen ul li ul li .cssmenu-title {
-	padding: 10px 5px;
+	padding: 15px 5px;
+	cursor: pointer;
 }
 
 /* --- Autres variantes --- */
@@ -303,22 +304,15 @@ div.cssmenu-group .cssmenu-title {
 }
 
 .cssmenu-vertical > ul > li > .cssmenu-title {
-	padding: 5px 20px 5px 6px;
+	padding: 8px 20px 8px 10px;
 }
-
-@media (min-width: 769px){
-	.cssmenu-vertical.cssmenu-with-submenu > ul > li > .cssmenu-title {
-		padding: 10px 20px 10px 6px;
-	}	
-}
-
 
 .cssmenu > ul > li.has-sub > .cssmenu-title:after 			{ top: 22px; right: 11px; }
 .cssmenu > ul > li.has-sub > .cssmenu-title:before 			{ top: 19px; right: 14px; }
 .cssmenu > ul > li.has-sub:hover > .cssmenu-title:before 	{ top: 23px; }
 
-.cssmenu-vertical > ul > li.has-sub > .cssmenu-title:after  { top: 15px; }
-.cssmenu-vertical > ul > li.has-sub > .cssmenu-title:before { top: 12px;  }
+.cssmenu-vertical > ul > li.has-sub > .cssmenu-title:after  { top: 13px; }
+.cssmenu-vertical > ul > li.has-sub > .cssmenu-title:before { top: 10px;  }
 
 /* --- Position des sous menu --- */
 .cssmenu li:hover > ul 								{ left: auto ;				}
@@ -465,7 +459,7 @@ footer .cssmenu.cssmenu-static > ul > li:last-child,
 }
 
 .cssmenu ul ul li .cssmenu-title {
-	padding: 10px 20px 10px 15px;
+	padding: 8px 20px 8px 10px;
 	border-bottom: 1px solid rgba(150, 150, 150, 0.15);
 	white-space: nowrap;
 }
@@ -494,8 +488,8 @@ footer .cssmenu.cssmenu-static > ul > li:last-child,
 	transition: all .25s ease;
 }
 
-.cssmenu ul ul li.has-sub > .cssmenu-title:after 	{ top: 15px; right: 11px; }
-.cssmenu ul ul li.has-sub > .cssmenu-title:before 	{ top: 12px; right: 14px; }
+.cssmenu ul ul li.has-sub > .cssmenu-title:after 	{ top: 13px; right: 11px; }
+.cssmenu ul ul li.has-sub > .cssmenu-title:before 	{ top: 10px; right: 14px; }
 
 .cssmenu ul ul > li.has-sub:hover > .cssmenu-title:before  {
 	top: 17px;
