@@ -57,6 +57,24 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 		
 		while($row = $result->fetch())
 		{
+			$array_preg = array(
+				'`<h1 class="wiki_paragraph1" id="paragraph_([^"]+)">(.*)</h1>`isuU',
+				'`<h2 class="wiki_paragraph2" id="paragraph_([^"]+)">(.*)</h2>`isuU',
+				'`<h3 class="wiki_paragraph3" id="paragraph_([^"]+)">(.*)</h3>`isuU',
+				'`<h4 class="wiki_paragraph4" id="paragraph_([^"]+)">(.*)</h4>`isuU',
+				'`<h5 class="wiki_paragraph5" id="paragraph_([^"]+)">(.*)</h5>`isuU'
+			);
+
+			$array_preg_replace = array(
+				'<h1 class="formatter-title wiki-paragraph-1" id="paragraph-$1">$2</h1>',
+				'<h2 class="formatter-title wiki-paragraph-2" id="paragraph-$1">$2</h2>',
+				'<h3 class="formatter-title wiki-paragraph-3" id="paragraph-$1">$2</h3>',
+				'<h4 class="formatter-title wiki-paragraph-4" id="paragraph-$1">$2</h4>',
+				'<h5 class="formatter-title wiki-paragraph-5" id="paragraph-$1">$2</h5>'
+			);
+			
+			$row['content'] = preg_replace($array_preg, $array_preg_replace, $row['content']);
+			
 			$unparser->set_content($row['content']);
 			$unparser->parse();
 			$parser->set_content($unparser->get_content());
