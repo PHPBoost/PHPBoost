@@ -54,27 +54,24 @@ class AdminLangsNotInstalledListController extends AdminController
 	private function build_view()
 	{
 		$not_installed_langs = $this->get_not_installed_langs();
-		foreach($not_installed_langs as $id)
+		foreach($not_installed_langs as $lang)
 		{
-			try {
-				$configuration = LangConfigurationManager::get($id);
-				$author_email = $configuration->get_author_mail();
-				$author_website = $configuration->get_author_link();
-				
-				$this->view->assign_block_vars('langs_not_installed', array(
-					'C_AUTHOR_EMAIL' => !empty($author_email),
-					'C_AUTHOR_WEBSITE' => !empty($author_website),
-					'ID' => $id,
-					'NAME' => $configuration->get_name(),
-					'VERSION' => $configuration->get_version(),
-					'AUTHOR' => $configuration->get_author_name(),
-					'AUTHOR_EMAIL' => $author_email,
-					'AUTHOR_WEBSITE' => $author_website,
-					'COMPATIBILITY' => $configuration->get_compatibility(),
-					'AUTHORIZATIONS' => Authorizations::generate_select(Lang::ACCES_LANG, array('r-1' => 1, 'r0' => 1, 'r1' => 1), array(2 => true), $id)
-				));
-			} catch (IOException $e) {
-			}
+			$configuration = $lang->get_configuration();
+			$author_email = $configuration->get_author_mail();
+			$author_website = $configuration->get_author_link();
+			
+			$this->view->assign_block_vars('langs_not_installed', array(
+				'C_AUTHOR_EMAIL' => !empty($author_email),
+				'C_AUTHOR_WEBSITE' => !empty($author_website),
+				'ID' => $lang->get_id(),
+				'NAME' => $configuration->get_name(),
+				'VERSION' => $configuration->get_version(),
+				'AUTHOR' => $configuration->get_author_name(),
+				'AUTHOR_EMAIL' => $author_email,
+				'AUTHOR_WEBSITE' => $author_website,
+				'COMPATIBILITY' => $configuration->get_compatibility(),
+				'AUTHORIZATIONS' => Authorizations::generate_select(Lang::ACCES_LANG, array('r-1' => 1, 'r0' => 1, 'r1' => 1), array(2 => true), $lang->get_id())
+			));
 		}
 		$this->view->put_all(array(
 			'C_LANG_INSTALL' => count($not_installed_langs) > 0,
@@ -93,33 +90,46 @@ class AdminLangsNotInstalledListController extends AdminController
 	{
 		$langs_not_installed = array();
 		$folder_containing_phpboost_langs = new Folder(PATH_TO_ROOT .'/lang/');
-		foreach($folder_containing_phpboost_langs->get_folders() as $lang)
+		foreach($folder_containing_phpboost_langs->get_folders() as $folder)
 		{
-			$name = $lang->get_name();
-			if (!LangsManager::get_lang_existed($name))
+			$folder_name = $folder->get_name();
+			if (!LangsManager::get_lang_existed($folder_name))
 			{
-				$langs_not_installed[] = $name;
+				try
+				{
+					$langs_not_installed[$folder_name] = new Lang($folder_name);
+				}
+				catch (IOException $ex)
+				{
+					continue;
+				}
 			}
 		}
 		
-		try {
-			usort($langs_not_installed, array(LangsManager, 'callback_sort_langs_by_name'));
-		} catch (IOException $ex) {
-		}
+		usort($langs_not_installed, array(__CLASS__, 'callback_sort_langs_by_name'));
 		
 		return $langs_not_installed;
 	}
 	
+	private static function callback_sort_langs_by_name(Lang $lang1, Lang $lang2)
+	{
+		if ($lang1->get_configuration()->get_name() > $lang2->get_configuration()->get_name())
+		{
+			return 1;
+		}
+		return -1;
+	}
+	
 	private function save(HTTPRequestCustom $request)
 	{
-		foreach ($this->get_not_installed_langs() as $id)
+		foreach ($this->get_not_installed_langs() as $lang)
 		{
 			try {
-				if ($request->get_string('add-' . $id))
+				if ($request->get_string('add-' . $lang->get_id()))
 				{
-					$activated = $request->get_bool('activated-' . $id, false);
-					$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $id);
-					LangsManager::install($id, $authorizations, $activated);
+					$activated = $request->get_bool('activated-' . $lang->get_id(), false);
+					$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $lang->get_id());
+					LangsManager::install($lang->get_id(), $authorizations, $activated);
 					$error = LangsManager::get_error();
 					if ($error !== null)
 					{

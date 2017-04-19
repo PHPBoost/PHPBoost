@@ -36,14 +36,14 @@ class AdminThemesNotInstalledListController extends AdminController
 	{
 		$this->init();
 		
-		foreach ($this->get_not_installed_themes() as $id_theme)
+		foreach ($this->get_not_installed_themes() as $theme)
 		{
 			try {
-				if ($request->get_string('add-' . $id_theme))
+				if ($request->get_string('add-' . $theme->get_id()))
 				{
-					$activated = $request->get_bool('activated-' . $id_theme, false);
-					$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $id_theme);
-					$this->install_theme($id_theme, $authorizations, $activated);
+					$activated = $request->get_bool('activated-' . $theme->get_id(), false);
+					$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $theme->get_id());
+					$this->install_theme($theme->get_id(), $authorizations, $activated);
 				}
 			} catch (UnexistingHTTPParameterException $e) {
 			}
@@ -66,47 +66,42 @@ class AdminThemesNotInstalledListController extends AdminController
 	private function build_view()
 	{
 		$not_installed_themes = $this->get_not_installed_themes();
-		foreach($not_installed_themes as $key => $name)
+		foreach($not_installed_themes as $theme)
 		{
-			try {
-				$configuration = ThemeConfigurationManager::get($name);
-				$author_email = $configuration->get_author_mail();
-				$author_website = $configuration->get_author_link();
-				$pictures = $configuration->get_pictures();
-				$id_theme = $name;
-				
-				$this->view->assign_block_vars('themes_not_installed', array(
-					'C_AUTHOR_EMAIL' => !empty($author_email),
-					'C_AUTHOR_WEBSITE' => !empty($author_website),
-					'C_PICTURES' => count($pictures) > 0,
-					'ID' => $id_theme,
-					'NAME' => $configuration->get_name(),
-					'VERSION' => $configuration->get_version(),
-					'MAIN_PICTURE' => count($pictures) > 0 ? Url::to_rel('/templates/' . $id_theme . '/' . current($pictures)) : '',
-					'AUTHOR' => $configuration->get_author_name(),
-					'AUTHOR_EMAIL' => $author_email,
-					'AUTHOR_WEBSITE' => $author_website,
-					'DESCRIPTION' => $configuration->get_description() !== '' ? $configuration->get_description() : $this->lang['themes.bot_informed'],
-					'COMPATIBILITY' => $configuration->get_compatibility(),
-					'AUTHORIZATIONS' => Authorizations::generate_select(Theme::ACCES_THEME, array('r-1' => 1, 'r0' => 1, 'r1' => 1), array(2 => true), $id_theme),
-					'HTML_VERSION' => $configuration->get_html_version() !== '' ? $configuration->get_html_version() : $this->lang['themes.bot_informed'],
-					'CSS_VERSION' => $configuration->get_css_version() !== '' ? $configuration->get_css_version() : $this->lang['themes.bot_informed'],
-					'MAIN_COLOR' => $configuration->get_main_color() !== '' ? $configuration->get_main_color() : $this->lang['themes.bot_informed'],
-					'WIDTH' => $configuration->get_variable_width() ? $this->lang['themes.variable-width'] : $configuration->get_width(),
-				));
-				
-				if (count($pictures) > 0)
+			$configuration = $theme->get_configuration();
+			$author_email = $configuration->get_author_mail();
+			$author_website = $configuration->get_author_link();
+			$pictures = $configuration->get_pictures();
+			
+			$this->view->assign_block_vars('themes_not_installed', array(
+				'C_AUTHOR_EMAIL' => !empty($author_email),
+				'C_AUTHOR_WEBSITE' => !empty($author_website),
+				'C_PICTURES' => count($pictures) > 0,
+				'ID' => $theme->get_id(),
+				'NAME' => $configuration->get_name(),
+				'VERSION' => $configuration->get_version(),
+				'MAIN_PICTURE' => count($pictures) > 0 ? Url::to_rel('/templates/' . $theme->get_id() . '/' . current($pictures)) : '',
+				'AUTHOR' => $configuration->get_author_name(),
+				'AUTHOR_EMAIL' => $author_email,
+				'AUTHOR_WEBSITE' => $author_website,
+				'DESCRIPTION' => $configuration->get_description() !== '' ? $configuration->get_description() : $this->lang['themes.bot_informed'],
+				'COMPATIBILITY' => $configuration->get_compatibility(),
+				'AUTHORIZATIONS' => Authorizations::generate_select(Theme::ACCES_THEME, array('r-1' => 1, 'r0' => 1, 'r1' => 1), array(2 => true), $theme->get_id()),
+				'HTML_VERSION' => $configuration->get_html_version() !== '' ? $configuration->get_html_version() : $this->lang['themes.bot_informed'],
+				'CSS_VERSION' => $configuration->get_css_version() !== '' ? $configuration->get_css_version() : $this->lang['themes.bot_informed'],
+				'MAIN_COLOR' => $configuration->get_main_color() !== '' ? $configuration->get_main_color() : $this->lang['themes.bot_informed'],
+				'WIDTH' => $configuration->get_variable_width() ? $this->lang['themes.variable-width'] : $configuration->get_width(),
+			));
+			
+			if (count($pictures) > 0)
+			{
+				unset($pictures[0]);
+				foreach ($pictures as $picture)
 				{
-					unset($pictures[0]);
-					foreach ($pictures as $picture)
-					{
-						$this->view->assign_block_vars('themes_not_installed.pictures', array(
-							'URL' => Url::to_rel('/templates/' . $id_theme . '/' . $picture)
-						));
-					}
+					$this->view->assign_block_vars('themes_not_installed.pictures', array(
+						'URL' => Url::to_rel('/templates/' . $theme->get_id() . '/' . $picture)
+					));
 				}
-			} catch (IOException $e) {
-				unset($not_installed_themes[$key]);
 			}
 		}
 		$this->view->put_all(array(
@@ -126,21 +121,34 @@ class AdminThemesNotInstalledListController extends AdminController
 	{
 		$themes_not_installed = array();
 		$folder_containing_phpboost_themes = new Folder(PATH_TO_ROOT .'/templates/');
-		foreach($folder_containing_phpboost_themes->get_folders() as $theme)
+		foreach ($folder_containing_phpboost_themes->get_folders() as $folder)
 		{
-			$name = $theme->get_name();
-			if ($name !== 'default' && !ThemesManager::get_theme_existed($name))
+			$folder_name = $folder->get_name();
+			if ($folder_name != 'default' && !ThemesManager::get_theme_existed($folder_name))
 			{
-				$themes_not_installed[] = $name;
+				try
+				{
+					$themes_not_installed[$folder_name] = new Theme($folder_name);
+				}
+				catch (IOException $ex)
+				{
+					continue;
+				}
 			}
 		}
 		
-		try {
-			usort($themes_not_installed, array(ThemesManager, 'callback_sort_themes_by_name'));
-		} catch (IOException $ex) {
-		}
+		usort($themes_not_installed, array(__CLASS__, 'callback_sort_themes_by_name'));
 		
 		return $themes_not_installed;
+	}
+	
+	private static function callback_sort_themes_by_name(Theme $theme1, Theme $theme2)
+	{
+		if ($theme1->get_configuration()->get_name() > $theme2->get_configuration()->get_name())
+		{
+			return 1;
+		}
+		return -1;
 	}
 
 	private function install_theme($id_theme, $authorizations = array(), $activate = true)

@@ -45,7 +45,7 @@ class AdminModuleAddController extends AdminController
 					$this->install_module($module->get_id(), $activate);
 				}
 			}
-			catch (UnexistingHTTPParameterException $e)	{}
+			catch (UnexistingHTTPParameterException $e) {}
 		}
 		
 		$this->upload_form();
@@ -132,9 +132,7 @@ class AdminModuleAddController extends AdminController
 			{
 				try
 				{
-					$module = new Module($folder_name);
-					$module_configuration = $module->get_configuration();
-					$modules_not_installed[$folder_name] = $module;
+					$modules_not_installed[$folder_name] = new Module($folder_name);
 				}
 				catch (IOException $ex)
 				{
@@ -143,12 +141,18 @@ class AdminModuleAddController extends AdminController
 			}
 		}
 		
-		try {
-			usort($modules_not_installed, array(ModulesManager, 'callback_sort_modules_by_name'));
-		} catch (IOException $ex) {
-		}
+		usort($modules_not_installed, array(__CLASS__, 'callback_sort_modules_by_name'));
 		
 		return $modules_not_installed;
+	}
+	
+	private static function callback_sort_modules_by_name(Module $module1, Module $module2)
+	{
+		if ($module1->get_configuration()->get_name() > $module2->get_configuration()->get_name())
+		{
+			return 1;
+		}
+		return -1;
 	}
 	
 	private function install_module($module_id, $activate)
