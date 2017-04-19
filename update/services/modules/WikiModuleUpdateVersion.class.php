@@ -63,13 +63,13 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 			$parser->parse();
 			
 			$array_preg = array(
-				'`<h1 class="wiki_paragraph1" id="paragraph_([^"]+)">(.*)</h1>`isuU',
-				'`<h2 class="wiki_paragraph2" id="paragraph_([^"]+)">(.*)</h2>`isuU',
-				'`<h3 class="wiki_paragraph3" id="paragraph_([^"]+)">(.*)</h3>`isuU',
-				'`<h4 class="wiki_paragraph4" id="paragraph_([^"]+)">(.*)</h4>`isuU',
-				'`<h5 class="wiki_paragraph5" id="paragraph_([^"]+)">(.*)</h5>`isuU',
-				'`<ol class="wiki_list_([^"]+)"><li>`isuU',
-				'`<a href="paragraph_`isuU'
+				'`&lt;h1 class="wiki_paragraph1" id="paragraph_([^"]+)"&gt;(.*)&lt;/h1&gt;`isuU',
+				'`&lt;h2 class="wiki_paragraph2" id="paragraph_([^"]+)"&gt;(.*)&lt;/h2&gt;`isuU',
+				'`&lt;h3 class="wiki_paragraph3" id="paragraph_([^"]+)"&gt;(.*)&lt;/h3&gt;`isuU',
+				'`&lt;h4 class="wiki_paragraph4" id="paragraph_([^"]+)"&gt;(.*)&lt;/h4&gt;`isuU',
+				'`&lt;h5 class="wiki_paragraph5" id="paragraph_([^"]+)"&gt;(.*)&lt;/h5&gt;`isuU',
+				'`&lt;ol class="wiki_list_([^"]+)"&gt;&lt;li&gt;`isuU',
+				'`&lt;a href="#paragraph_`isuU'
 			);
 
 			$array_preg_replace = array(
@@ -79,7 +79,7 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 				'<h5 class="formatter-title wiki-paragraph-5" id="paragraph-$1">$2</h5>',
 				'<h6 class="formatter-title wiki-paragraph-6" id="paragraph-$1">$2</h6>',
 				'<ol class="wiki-list wiki-list-$1"><li>',
-				'<a href="paragraph-'
+				'<a href="#paragraph-'
 			);
 			
 			$content = preg_replace($array_preg, $array_preg_replace, $parser->get_content());
