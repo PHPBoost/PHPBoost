@@ -69,7 +69,7 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 				'`&lt;h4 class="wiki_paragraph4" id="paragraph_([^"]+)"&gt;(.*)&lt;/h4&gt;`isuU',
 				'`&lt;h5 class="wiki_paragraph5" id="paragraph_([^"]+)"&gt;(.*)&lt;/h5&gt;`isuU',
 				'`&lt;ol class="wiki_list_([^"]+)"&gt;&lt;li&gt;`isuU',
-				'`&lt;a href="#paragraph_`isuU'
+				'`<a href="#paragraph_`isuU'
 			);
 
 			$array_preg_replace = array(
