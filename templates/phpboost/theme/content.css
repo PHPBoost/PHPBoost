@@ -142,9 +142,7 @@ a.read-more {
 }
 
 /* --- Block --- */
-.block,
-.medium-block,
-.small-block {
+.block {
 	border-style: solid;
 	border-width: 2px 1px 1px 1px;
 	border-color: #366393 #CCCCCC #99B1CB #CCCCCC;
@@ -152,20 +150,17 @@ a.read-more {
 	padding: 0.8em;
 }
 
-.block .content,
-.medium-block .content,
-.small-block .content {
+.no-style .block {
+	background-color: transparent!important;
+	border: none!important;
+}
+
+.block .content {
 	margin: 0;
 }
 
-.block h1,
-.medium-block h1,
-.small-block h1 {
+.block h1 {
 	border: none;
-}
-
-.block {
-	width: auto;
 }
 
 .block header {
@@ -176,37 +171,55 @@ a.read-more {
 	margin: 0;
 }
 
-.medium-block,
-.small-block {
-	float: left;
-	margin: 1% 0.5%;
+.elements-container {
+	display: flex;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	flex-direction: column;
+	-ms-flex-direction: column;
+	-webkit-flex-direction: column;
+	flex-wrap: wrap;
+	align-content: flex-start;
 }
 
-/* ---- Affiche 2 blocs cote a cote ---- */
-.medium-block {
-	width: 49.00%;
+.elements-container > .block {
+	flex: 0 1 auto;
+	-ms-flex: 0 1 auto;
+	-webkit-flex: 0 1 auto;
 }
 
-/* ---- Affiche 3 blocs cote a cote ---- */
-.small-block {
-	width: 32.33%;
-}
-
-/* ---- Affiche des blocs en vertical ---- */
-@media (max-width: 480px) {
-	.small-block,
-	.medium-block {
-		width: 100%;
-		margin: 1% 0%;
+/* Gestion en colonnes pour ecran large*/
+@media (min-width: 769px) {
+	.elements-container {
+		flex-direction: row;
+		-ms-flex-direction: row;
+		-webkit-flex-direction: row;
+		margin-left: -5px; /* @{gutter} */ 
 	}
+
+	.block { 
+		margin-left: 5px; /* @{gutter} */ 
+		width: 100%;
+	} 
+	
+	.columns-2 .block { width: calc(100% / 2 - 5px); } /* calc(100% / @{number} - @{gutter}); */ 
+	.columns-3 .block { width: calc(100% / 3 - 5px); }
+	.columns-4 .block { width: calc(100% / 4 - 5px); }
+	.columns-5 .block { width: calc(100% / 5 - 5px); }
+	.columns-6 .block { width: calc(100% / 6 - 5px); }
+	.columns-7 .block { width: calc(100% / 7 - 5px); }
+	
+	.block-xlarge { width: 100%!important; } /* Extension du bloc sur une ligne complète */
 }
 
+/* Gestion en ligne pour petit ecran */
 @media (max-width: 768px) {
 	.block {
+		margin-bottom: 5px;
 		width: 100%;
-		margin: 1em 0;
-	}
+	}	
 }
+
 
 /* ---- Friends content ---- */
 .content-friends {
