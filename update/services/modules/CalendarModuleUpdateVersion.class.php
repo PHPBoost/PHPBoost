@@ -56,8 +56,14 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		$columns = $this->db_utils->desc_table(PREFIX . 'calendar_events_content');
 		
+		if (isset($columns['location']))
+			$this->querier->inject('ALTER TABLE ' . PREFIX . 'calendar_events_content CHANGE location location TEXT');
+		
 		if (!isset($columns['picture_url']))
 			$this->db_utils->add_column(PREFIX . 'calendar_events_content', 'picture_url', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"));
+		
+		if (!isset($columns['map_displayed']))
+			$this->db_utils->add_column(PREFIX . 'calendar_events_content', 'map_displayed', array('type' => 'boolean', 'notnull' => 1, 'default' => 0));
 	}
 	
 	public function update_content()
