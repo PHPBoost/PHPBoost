@@ -1,0 +1,13 @@
+.web-picture,
+.web-partner-picture {
+	display: block;
+	padding-bottom: 10px;
+}
+
+@media (min-width: 769px) {
+	.article-several .web-picture {
+		float: right;
+		padding: 0 0 0 10px;
+		max-width: 500px;
+	}
+}
