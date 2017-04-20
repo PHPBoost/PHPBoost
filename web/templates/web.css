@@ -8,5 +8,6 @@
 	.article-several .web-picture {
 		float: right;
 		padding: 0 0 0 10px;
+		max-width: 500px;
 	}
 }
