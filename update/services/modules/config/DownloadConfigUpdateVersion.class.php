@@ -38,6 +38,7 @@ class DownloadConfigUpdateVersion extends ConfigUpdateVersion
 		
 		$config = DownloadConfig::load();
 		$config->set_property('authorizations', $old_config->get_property('authorizations'));
+		$config->set_property('root_category_description', $old_config->get_property('root_category_description'));
 		$this->save_new_config('download-config', $config);
 		
 		if (!$old_config->get_property('comments_enabled'))

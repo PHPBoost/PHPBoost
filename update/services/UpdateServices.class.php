@@ -206,9 +206,6 @@ class UpdateServices
 		
 		Environment::try_to_increase_max_execution_time();
 		
-		// Mise en maintenance du site s'il ne l'est pas déjà
-		$this->put_site_under_maintenance();
-		
 		// Suppression des fichiers qui ne sont plus présent dans la nouvelle version pour éviter les conflits
 		$this->delete_old_files();
 		
@@ -224,6 +221,9 @@ class UpdateServices
 		
 		// Mise à jour des tables du noyau
 		$this->update_kernel_tables();
+		
+		// Mise en maintenance du site s'il ne l'est pas déjà
+		$this->put_site_under_maintenance();
 		
 		// Mise à jour de la version du noyau
 		$this->update_kernel_version();
@@ -268,9 +268,19 @@ class UpdateServices
 		
 		if (!$maintenance_config->is_under_maintenance())
 		{
-			$maintenance_config->enable_maintenance();
-			$maintenance_config->set_unlimited_maintenance(true);
-			MaintenanceConfig::save();
+			foreach ($this->get_class(PATH_TO_ROOT . self::$directory . '/kernel/config/', self::$configuration_pattern, 'config') as $class)
+			{
+				try {
+					$object = new $class['name']();
+					$object->execute();
+					$success = true;
+					$message = '';
+				} catch (Exception $e) {
+					$success = false;
+					$message = $e->getMessage();
+				}
+				$this->add_error_to_file('enabling maintenance', $success, $message);
+			}
 		}
 	}
 	
@@ -297,10 +307,8 @@ class UpdateServices
 	private function update_configurations()
 	{
 		$configs_module_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/modules/config/', self::$configuration_pattern, 'config');
-		$configs_kernel_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/kernel/config/', self::$configuration_pattern, 'config');
 		
-		$configs_class = array_merge($configs_module_class, $configs_kernel_class);
-		foreach ($configs_class as $class)
+		foreach ($configs_module_class as $class)
 		{
 			try {
 				$object = new $class['name']();
