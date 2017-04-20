@@ -107,10 +107,10 @@ class GoogleMapsFormFieldSimpleMarker extends AbstractFormField
 		$field_address_id = $this->get_html_id();
 		if ($request->has_postparameter($field_address_id))
 		{
-			$field_name_id = 'name_' . $this->get_html_id();
-			$field_latitude_id = 'latitude_' . $this->get_html_id();
-			$field_longitude_id = 'longitude_' . $this->get_html_id();
-			$field_zoom_id = 'zoom_' . $this->get_html_id();
+			$field_name_id = 'name-' . $this->get_html_id();
+			$field_latitude_id = 'latitude-' . $this->get_html_id();
+			$field_longitude_id = 'longitude-' . $this->get_html_id();
+			$field_zoom_id = 'zoom-' . $this->get_html_id();
 			
 			$marker->set_properties(array(
 				'name' => $request->get_poststring($field_name_id), 

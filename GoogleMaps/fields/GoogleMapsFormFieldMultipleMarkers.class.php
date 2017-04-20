@@ -167,13 +167,13 @@ class GoogleMapsFormFieldMultipleMarkers extends AbstractFormField
 		$values = array();
 		for ($i = 0; $i <= $this->max_input; $i++)
 		{
-			$field_address_id = $this->get_html_id() . '_' . $i;
+			$field_address_id = $this->get_html_id() . '-' . $i;
 			if ($request->has_postparameter($field_address_id))
 			{
-				$field_name_id = 'name_' . $this->get_html_id() . '_' . $i;
-				$field_latitude_id = 'latitude_' . $this->get_html_id() . '_' . $i;
-				$field_longitude_id = 'longitude_' . $this->get_html_id() . '_' . $i;
-				$field_zoom_id = 'zoom_' . $this->get_html_id() . '_' . $i;
+				$field_name_id = 'name-' . $this->get_html_id() . '-' . $i;
+				$field_latitude_id = 'latitude-' . $this->get_html_id() . '-' . $i;
+				$field_longitude_id = 'longitude-' . $this->get_html_id() . '-' . $i;
+				$field_zoom_id = 'zoom-' . $this->get_html_id() . '-' . $i;
 				
 				$marker = new GoogleMapsMarker($request->get_poststring($field_address_id), $request->get_poststring($field_latitude_id), $request->get_poststring($field_longitude_id), $request->get_poststring($field_name_id), $request->get_poststring($field_zoom_id));
 				
