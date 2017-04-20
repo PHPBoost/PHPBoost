@@ -154,7 +154,7 @@ class ContactController extends ModuleController
 
 			$tracking_number = $this->config->get_last_tracking_number();
 			$tracking_number++;
-			$message .= $this->lang['contact.tracking_number'] . ' : ' . ($this->config->is_date_in_tracking_number_enabled() ? $now->get_year() . $now->get_month() . $now->get_day() . '-' : '') . $tracking_number . '
+			$message .= $this->lang['contact.tracking_number'] . ' : ' . ($this->config->is_date_in_tracking_number_enabled() ? $now->get_year() . $now->get_month() . $now->get_day_two_digits() . '-' : '') . $tracking_number . '
 
 ';
 			$this->config->set_last_tracking_number($tracking_number);
