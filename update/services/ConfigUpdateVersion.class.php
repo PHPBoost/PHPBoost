@@ -61,8 +61,8 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 	{
 		if ($serialize)
 		{
-			mb_internal_encoding('iso-8859-1');
-			return unserialize(utf8_encode($this->querier->get_column_value(DB_TABLE_CONFIGS, 'value', 'WHERE name = :config_name', array('config_name' => $this->get_config_name()))));
+			mb_internal_encoding('utf-8');
+			return unserialize($this->querier->get_column_value(DB_TABLE_CONFIGS, 'value', 'WHERE name = :config_name', array('config_name' => $this->get_config_name())));
 		}
 		return $this->querier->get_column_value(DB_TABLE_CONFIGS, 'value', 'WHERE name = :config_name', array('config_name' => $this->get_config_name()));
 	}
