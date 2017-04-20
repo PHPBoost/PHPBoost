@@ -50,7 +50,7 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 		$unparser = new OldBBCodeUnparser();
 		$parser = new BBCodeParser();
 		
-		$result = $this->querier->select('SELECT id_contents, content FROM ' . PREFIX . 'wiki_contents');
+		$result = $this->querier->select('SELECT id_contents, menu, content FROM ' . PREFIX . 'wiki_contents');
 		
 		$selected_rows = $result->get_rows_count();
 		$updated_content = 0;
@@ -67,9 +67,7 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 				'`&lt;h2 class="wiki_paragraph2" id="paragraph_([^"]+)"&gt;(.*)&lt;/h2&gt;`isuU',
 				'`&lt;h3 class="wiki_paragraph3" id="paragraph_([^"]+)"&gt;(.*)&lt;/h3&gt;`isuU',
 				'`&lt;h4 class="wiki_paragraph4" id="paragraph_([^"]+)"&gt;(.*)&lt;/h4&gt;`isuU',
-				'`&lt;h5 class="wiki_paragraph5" id="paragraph_([^"]+)"&gt;(.*)&lt;/h5&gt;`isuU',
-				'`&lt;ol class="wiki_list_([^"]+)"&gt;&lt;li&gt;`isuU',
-				'`<a href="#paragraph_`isuU'
+				'`&lt;h5 class="wiki_paragraph5" id="paragraph_([^"]+)"&gt;(.*)&lt;/h5&gt;`isuU'
 			);
 
 			$array_preg_replace = array(
@@ -77,16 +75,26 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 				'<h3 class="formatter-title wiki-paragraph-3" id="paragraph-$1">$2</h3>',
 				'<h4 class="formatter-title wiki-paragraph-4" id="paragraph-$1">$2</h4>',
 				'<h5 class="formatter-title wiki-paragraph-5" id="paragraph-$1">$2</h5>',
-				'<h6 class="formatter-title wiki-paragraph-6" id="paragraph-$1">$2</h6>',
-				'<ol class="wiki-list wiki-list-$1"><li>',
-				'<a href="#paragraph-'
+				'<h6 class="formatter-title wiki-paragraph-6" id="paragraph-$1">$2</h6>'
 			);
 			
 			$content = preg_replace($array_preg, $array_preg_replace, $parser->get_content());
 			
-			if ($content != $row['content'])
+			$array_preg = array(
+				'`<ol class="wiki_list_([^"]+)"><li>`isuU',
+				'`a href="#paragraph_`isuU'
+			);
+
+			$array_preg_replace = array(
+				'<ol class="wiki-list wiki-list-$1"><li>',
+				'a href="#paragraph-'
+			);
+			
+			$menu = preg_replace($array_preg, $array_preg_replace, $row['menu']);
+			
+			if ($content != $row['content'] || $menu != $row['menu'])
 			{
-				$this->querier->update(PREFIX . 'wiki_contents', array('content' => $content), 'WHERE id_contents=:id', array('id' => $row['id_contents']));
+				$this->querier->update(PREFIX . 'wiki_contents', array('content' => $content, 'menu' => $menu), 'WHERE id_contents=:id', array('id' => $row['id_contents']));
 				$updated_content++;
 			}
 		}
