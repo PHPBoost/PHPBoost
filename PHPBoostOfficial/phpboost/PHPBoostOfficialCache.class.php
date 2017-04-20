@@ -45,7 +45,7 @@ class PHPBoostOfficialCache implements CacheData
 		while ($versions_number > 0)
 		{
 			$this->last_version = end($versions);
-			$last_version_rewrited_major_version_number = Url::encode_rewrite($this->last_version['major_version_number']);
+			$last_version_rewrited_major_version_number = str_replace('.', '-', $this->last_version['major_version_number']);
 			try {
 				$phpboost_download_id = PersistenceContext::get_querier()->get_column_value(DownloadSetup::$download_table, 'id', 'WHERE rewrited_name = :rewrited_name', array('rewrited_name' => 'phpboost-' . $last_version_rewrited_major_version_number));
 			} catch (RowNotFoundException $e) {
@@ -65,7 +65,7 @@ class PHPBoostOfficialCache implements CacheData
 			}
 			
 			$this->previous_version = prev($versions);
-			$previous_version_rewrited_major_version_number = Url::encode_rewrite($this->previous_version['major_version_number']);
+			$previous_version_rewrited_major_version_number = str_replace('.', '-', $this->previous_version['major_version_number']);
 			try {
 				$phpboost_download_id = PersistenceContext::get_querier()->get_column_value(DownloadSetup::$download_table, 'id', 'WHERE rewrited_name = :rewrited_name', array('rewrited_name' => 'phpboost-' . $previous_version_rewrited_major_version_number));
 			} catch (RowNotFoundException $e) {
