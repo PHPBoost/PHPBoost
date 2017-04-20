@@ -290,6 +290,12 @@ class Date
 	public function get_day($timezone = Timezone::USER_TIMEZONE)
 	{
 		$this->compute_server_user_difference($timezone);
+		return $this->date_time->format('d');
+	}
+	
+	public function get_day_two_digits($timezone = Timezone::USER_TIMEZONE)
+	{
+		$this->compute_server_user_difference($timezone);
 		$day = (int)$this->date_time->format('d');
 		return $day < 10 ? '0' . $day : $day;
 	}
