@@ -114,7 +114,7 @@ class GoogleMapsFormFieldMapAddress extends AbstractFormField
 		if ($request->has_postparameter($field_address_id))
 		{
 			$field_latitude_id = 'latitude-' . $this->get_html_id();
-			$field_longitude_id = 'longitud-' . $this->get_html_id();
+			$field_longitude_id = 'longitude-' . $this->get_html_id();
 			$field_zoom_id = 'zoom-' . $this->get_html_id();
 			
 			$marker->set_properties(array(
