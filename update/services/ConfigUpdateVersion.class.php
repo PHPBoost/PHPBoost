@@ -68,7 +68,7 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 	
 	protected function save_new_config($name, ConfigData $data)
 	{
-		$serialized_data = TextHelper::serialize($data);
+		$serialized_data = serialize($data);
 		return $this->querier->inject('UPDATE ' . DB_TABLE_CONFIGS . ' SET value = :value WHERE name = :config_name', array('value' => $serialized_data, 'config_name' => $name));
 	}
 	
