@@ -38,7 +38,7 @@ class ArticlesConfigUpdateVersion extends ConfigUpdateVersion
 
 		$articles_config = ArticlesConfig::load();
 		$articles_config->set_property('number_cols_display_per_line', $old_config->get_property('number_cols_display_cats'));
-		ArticlesConfig::save();
+		$this->save_new_config('articles-config', $articles_config);
 		
 		if (!$old_config->get_property('comments_enable'))
 		{
