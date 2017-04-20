@@ -67,7 +67,8 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 				'`&lt;h2 class="wiki_paragraph2" id="paragraph_([^"]+)"&gt;(.*)&lt;/h2&gt;`isuU',
 				'`&lt;h3 class="wiki_paragraph3" id="paragraph_([^"]+)"&gt;(.*)&lt;/h3&gt;`isuU',
 				'`&lt;h4 class="wiki_paragraph4" id="paragraph_([^"]+)"&gt;(.*)&lt;/h4&gt;`isuU',
-				'`&lt;h5 class="wiki_paragraph5" id="paragraph_([^"]+)"&gt;(.*)&lt;/h5&gt;`isuU'
+				'`&lt;h5 class="wiki_paragraph5" id="paragraph_([^"]+)"&gt;(.*)&lt;/h5&gt;`isuU',
+				'`<br ?/>\s*<br ?/>`isuU'
 			);
 
 			$array_preg_replace = array(
@@ -75,7 +76,8 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 				'<h3 class="formatter-title wiki-paragraph-3" id="paragraph-$1">$2</h3>',
 				'<h4 class="formatter-title wiki-paragraph-4" id="paragraph-$1">$2</h4>',
 				'<h5 class="formatter-title wiki-paragraph-5" id="paragraph-$1">$2</h5>',
-				'<h6 class="formatter-title wiki-paragraph-6" id="paragraph-$1">$2</h6>'
+				'<h6 class="formatter-title wiki-paragraph-6" id="paragraph-$1">$2</h6>',
+				'<br />'
 			);
 			
 			$content = preg_replace($array_preg, $array_preg_replace, $parser->get_content());
