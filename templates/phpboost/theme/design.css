@@ -555,3 +555,96 @@ img.pbt-header-img {
 	color: rgba(255, 255, 255, 1);
 	transition: 0.5s;
 }
+
+
+/* --   Cookie Bar  -- */ 
+/* ------------------- */
+.cookiebar-container {
+	z-index: 100;
+	left: 0;
+	right: 0;
+	top: 0;
+	padding: 7px 20px;
+	background-color: #F2F2F2;
+	border-bottom: 1px solid #E2E2E2;
+	font-size: 0.9em;
+	text-align: center;
+}
+
+.cookiebar-container.fixed {
+	position: fixed;
+}
+
+.cookiebar-content {
+	text-align: justify;
+}
+
+@media (min-width: 769px) {
+	.cookiebar-content {
+		display: inline-block;
+		max-width: calc(100% - 250px);
+		vertical-align: middle;
+	}
+
+	.cookiebar-actions {
+		display: inline-block;
+		width: 250px;
+	}
+}
+
+@media (max-width: 768px) {
+	.cookiebar-content {
+		margin-bottom: 5px;
+	}
+
+	.cookiebar-actions {
+		margin: 15px 0 5px 0;
+	}
+}
+
+.cookiebar-button {
+	margin: 0 5px 0 5px;
+	border-radius: 4px;
+	color: #FEFEFE;
+}
+
+@media (max-width: 768px) {
+	.cookiebar-button {
+		margin: 0 10px 0 10px;
+	}
+}
+
+.cookiebar-button-understand 		{ background-color: #337AB7; border-color: #2E6DA4; }
+.cookiebar-button-understand:hover 	{ background-color: #2E6DA4; }
+
+.cookiebar-button-allowed 			{ background-color: #5CB85C; border-color: #4CAE4C; }
+.cookiebar-button-allowed:hover 	{ background-color: #4CAE4C; }
+
+.cookiebar-button-declined 			{ background-color: #E84E40; border-color: #CE271A; }
+.cookiebar-button-declined:hover 	{ background-color: #CE271A; }
+
+@media (max-width: 468px) {
+	.cookiebar-more {
+		display: block;
+		margin: 10px 0 5px 0;
+	}
+}
+
+.aboutcookie-title {
+	font-size: 1.3em;
+	line-height: 1.3em;
+	font-weight: bold
+}
+
+.aboutcookie-title + p {
+	margin: 0px 0 20px 0px;
+}
+
+footer#cookiebar-change-choice {
+	margin-top: 10px;
+	text-align: center;
+}
+
+.cookiebar-change-choice-link {
+	text-align: center;
+}
