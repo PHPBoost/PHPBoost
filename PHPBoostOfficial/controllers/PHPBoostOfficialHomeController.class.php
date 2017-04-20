@@ -45,7 +45,7 @@ class PHPBoostOfficialHomeController extends ModuleController
 		$id_cats = array('37', '38', '42', '43', '46', '47');
 		
 		$querier = PersistenceContext::get_querier();
-		$results = $querier->select('SELECT file.id, file.id_category, file.name, file.rewrited_name, file.short_contents, file.creation_date, file.picture_url, file.author_display_name, user.display_name
+		$results = $querier->select('SELECT file.id, file.id_category, file.name, file.rewrited_name, file.short_contents, file.creation_date, file.picture_url, file.author_custom_name, user.display_name
 			FROM ' . PREFIX . 'download file
 			LEFT JOIN ' . DB_TABLE_MEMBER . ' user ON user.user_id = file.author_user_id
 			WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND id_category IN :children
@@ -88,8 +88,8 @@ class PHPBoostOfficialHomeController extends ModuleController
 				$category = DownloadService::get_categories_manager()->get_categories_cache()->get_category($row['id_category']);
 				
 				$pseudo = "";
-				if ($row['author_display_name'] != "")
-					$pseudo = $row['author_display_name'];
+				if ($row['author_custom_name'] != "")
+					$pseudo = $row['author_custom_name'];
 				else
 					$pseudo = $row['display_name'];
 				
@@ -123,8 +123,8 @@ class PHPBoostOfficialHomeController extends ModuleController
 				$category = DownloadService::get_categories_manager()->get_categories_cache()->get_category($row['id_category']);
 
 				$pseudo = "";
-				if ($row['author_display_name'] != "")
-					$pseudo = $row['author_display_name'];
+				if ($row['author_custom_name'] != "")
+					$pseudo = $row['author_custom_name'];
 				else
 					$pseudo = $row['display_name'];
 				
