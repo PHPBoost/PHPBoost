@@ -213,11 +213,14 @@ class UpdateServices
 		if (ModulesManager::is_module_installed('UrlUpdater'))
 			ModulesManager::uninstall_module('UrlUpdater');
 		
-		// Mise à jour du contenu serialisé pour le passage en UTF-8
-		$this->update_serialized_data();
-		
-		// Mise à jour des configurations
-		$this->update_configurations();
+		if (GeneralConfig::load()->get_phpboost_major_version() != self::NEW_KERNEL_VERSION)
+		{
+			// Mise à jour du contenu serialisé pour le passage en UTF-8
+			$this->update_serialized_data();
+
+			// Mise à jour des configurations
+			$this->update_configurations();
+		}
 		
 		// Mise à jour des tables du noyau
 		$this->update_kernel_tables();
