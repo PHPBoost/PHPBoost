@@ -975,6 +975,7 @@ div#message-maintain {
 	position: absolute;
 	opacity: 0.98;
 	text-align: center;
+	z-index: 10;
 }
 
 div#message-maintain > div {

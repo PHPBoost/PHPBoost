@@ -393,6 +393,24 @@ nav#breadcrumb ol li:not(.current):after {
 
 /* Boutons */
 
+@media (max-width: 768px) {
+	#module-news .p-link {
+		text-align: center;
+	}
+
+	#module-news .p-link-btn {
+		display: block;
+		margin: 0 auto 10px auto;
+	}
+	
+	#module-news .btn-ddl { width: 215px; }
+	#module-news .btn-try { width: 188px; }
+
+	#module-news .btn-try a {
+		width: 180px;
+	}
+}
+
 .pbt-button-container { 
 	margin: auto;
 	text-align: center;

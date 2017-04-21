@@ -35,12 +35,6 @@
 	text-decoration: none;
 }
 
-@media (min-width: 769px) {
-	#connect-menu a {
-		color: #DEDEDE;
-	}
-}
-
 i.alert {
 	color: #9F3F0E;
 }
