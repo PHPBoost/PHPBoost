@@ -47,7 +47,31 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 	
 	public function update_content()
 	{
-		UpdateServices::update_table_content(PREFIX . 'pages');
+		$unparser = new OldBBCodeUnparser();
+		$parser = new BBCodeParser();
+		
+		$result = $this->querier->select('SELECT id, contents FROM ' . PREFIX . 'pages');
+		
+		$selected_rows = $result->get_rows_count();
+		$updated_content = 0;
+		
+		while($row = $result->fetch())
+		{
+			$unparser->set_content(stripslashes($row['contents']));
+			$unparser->parse();
+			$parser->set_content($unparser->get_content());
+			$parser->parse();
+			
+			if ($parser->get_content() != $row['contents'])
+			{
+				$this->querier->update(PREFIX . 'pages', array('contents' => $parser->get_content()), 'WHERE id=:id', array('id' => $row['id']));
+				$updated_content++;
+			}
+		}
+		$result->dispose();
+		
+		$object = new UpdateServices('', false);
+		$object->add_information_to_file('table ' . PREFIX . 'pages', ': ' . $updated_content . ' contents updated');
 	}
 	
 	private function delete_old_files()
