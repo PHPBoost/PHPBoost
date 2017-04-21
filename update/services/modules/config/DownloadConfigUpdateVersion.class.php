@@ -37,7 +37,7 @@ class DownloadConfigUpdateVersion extends ConfigUpdateVersion
 		$old_config = $this->get_old_config();
 		
 		$config = DownloadConfig::load();
-		$config->set_property('authorizations', $old_config->get_property('authorizations'));
+		$config->set_property('authorizations', $this->build_authorizations($old_config->get_property('authorizations')));
 		$config->set_property('root_category_description', $old_config->get_property('root_category_description'));
 		$this->save_new_config('download-config', $config);
 		
