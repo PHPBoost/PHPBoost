@@ -595,7 +595,7 @@ function sendCookie(name, value, delai)
 	var delai = (typeof delai !== 'undefined') ? delai : 1; //1 mois de validité par défaut.
 	var date = new Date();
 	date.setMonth(date.getMonth() + delai); 
-	document.cookie = name + '=' + value + '; expires = ' + date.toGMTString() + '; path = "/"';
+	document.cookie = name + '=' + value + '; Expires=' + date.toGMTString() + '; Path=/; HttpOnly';
 }
 
 //Récupère la valeur du cookie.
