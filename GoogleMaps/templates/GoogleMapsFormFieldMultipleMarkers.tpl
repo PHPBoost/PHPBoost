@@ -54,7 +54,7 @@ var GoogleMapsFormFieldMultipleMarkers = new GoogleMapsFormFieldMultipleMarkers(
 	<div id="marker-${escape(HTML_ID)}-{fieldelements.ID}">
 		<div id="field-${escape(HTML_ID)}-{fieldelements.ID}">
 			<input type="text" name="${escape(HTML_ID)}-{fieldelements.ID}" id="${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.ADDRESS}" placeholder="{@form.marker.address}" class="multiple-markers# IF C_READONLY # low-opacity# ENDIF ## IF C_CLASS # ${escape(CLASS)}# ENDIF #" # IF C_DISABLED # disabled="disabled" # ENDIF # />
-			<input type="text" name="name-${escape(HTML_ID)}-{fieldelements.ID}" id="name-${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.marker-NAME}" placeholder="{@form.marker.name}" class="multiple-markers marker-name# IF C_READONLY # low-opacity# ENDIF ## IF C_CLASS # ${escape(CLASS)}# ENDIF #" # IF C_DISABLED # disabled="disabled" # ENDIF # />
+			<input type="text" name="name-${escape(HTML_ID)}-{fieldelements.ID}" id="name-${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.MARKER_NAME}" placeholder="{@form.marker.name}" class="multiple-markers marker-name# IF C_READONLY # low-opacity# ENDIF ## IF C_CLASS # ${escape(CLASS)}# ENDIF #" # IF C_DISABLED # disabled="disabled" # ENDIF # />
 			<input type="hidden" id="latitude-${escape(HTML_ID)}-{fieldelements.ID}" name="latitude-${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.LATITUDE}" />
 			<input type="hidden" id="longitude-${escape(HTML_ID)}-{fieldelements.ID}" name="longitude-${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.LONGITUDE}" />
 			<input type="hidden" id="zoom-${escape(HTML_ID)}-{fieldelements.ID}" name="zoom-${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.ZOOM}" />
