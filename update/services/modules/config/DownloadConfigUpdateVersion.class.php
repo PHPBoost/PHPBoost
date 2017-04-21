@@ -68,20 +68,7 @@ class DownloadConfigUpdateVersion extends ConfigUpdateVersion
 		
 		foreach ($old_auth as $level => $auth)
 		{
-			switch ($level) {
-				case 'r-1':
-					$new_auth[$level] = ($auth == 17 ? 33 : $auth);
-				break;
-				case 'r0':
-					$new_auth[$level] = ($auth == 21 ? 53 : ($auth == 23 ? 55 : $auth));
-				break;
-				case 'r1':
-					$new_auth[$level] = ($auth == 29 ? 61 : ($auth == 31 ? 63 : ($auth == 17 ? 33 : $auth)));
-				break;
-				default:
-					$new_auth[$level] = ($auth == 21 ? 53 : ($auth == 23 ? 55 : $auth));
-				break;
-			}
+			$new_auth[$level] = $auth + 16;
 		}
 		
 		if (!isset($new_auth['r-1']))
