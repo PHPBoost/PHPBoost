@@ -36,7 +36,7 @@
 				</fieldset>
 				<fieldset>
 						<legend>{L_DB_RESTORE}</legend>
-						<div class="fieldset-inset elements-container columns-2">
+						<div class="fieldset-inset elements-container columns-2 no-style">
 								<div class="db-restore block">
 									{L_RESTORE_FROM_SERVER}
 										<br /><br />
@@ -146,12 +146,11 @@
 				
 				<div class="spacer"></div>
 				
-				<div class="block">
 						<fieldset>
 								<legend>{ACTION_FOR_SELECTION}</legend>
 								<div class="fieldset-inset">
 										<input type="hidden" name="token" value="{TOKEN}">
-										<ul class="elements-container columns-3 center">
+										<ul class="elements-container columns-3 center no-list no-style">
 											<li class="block">
 												<i class="fa fa-bar-chart fa-2x"></i> 
 												<button type="submit" name="optimize" value="true" class="submit">{L_OPTIMIZE}</button>
@@ -167,7 +166,6 @@
 										</ul>
 								</div>
 						</fieldset>
-				</div>
 				
 				<script>
 				<!--
