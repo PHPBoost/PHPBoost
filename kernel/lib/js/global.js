@@ -323,7 +323,7 @@ function strpos(haystack, needle)
 jQuery(document).ready(function(){
 	var IDCODE = 1;
 	jQuery('.formatter-hide').each( function(){
-		if ( jQuery(this).hasClass(no-js) )
+		if ( jQuery(this).hasClass('no-js') )
 		{
 			jQuery(this).attr('id','formatter-hide-container-' + IDCODE);
 			jQuery(this).removeClass('no-js');
@@ -358,9 +358,13 @@ function bb_hide(idcode, show, event)
 jQuery(document).ready(function(){
 	var IDCODE = 1;
 	jQuery('.formatter-code').each( function(){
-		jQuery(this).prepend('<span id="copy-code-' + IDCODE + '" class="copy-code" title="' + L_COPYTOCLIPBOARD + '" onclick="copy_code_clipboard(' + IDCODE + ')"><i class="fa fa-clipboard"><span class="copy-code-txt">' + L_COPYTOCLIPBOARD + '</span></i></span>');
-		jQuery(this).children('.formatter-content').attr("id", 'copy-code-' + IDCODE + '-content');
-		IDCODE = IDCODE + 1;
+		if ( !jQuery(this).children('.formatter-content').hasClass('copy-code-content') )
+		{
+			jQuery(this).prepend('<span id="copy-code-' + IDCODE + '" class="copy-code" title="' + L_COPYTOCLIPBOARD + '" onclick="copy_code_clipboard(' + IDCODE + ')"><i class="fa fa-clipboard"><span class="copy-code-txt">' + L_COPYTOCLIPBOARD + '</span></i></span>');
+			jQuery(this).children('.formatter-content').attr("id", 'copy-code-' + IDCODE + '-content');
+			jQuery(this).children('.formatter-content').addClass('copy-code-content');
+			IDCODE = IDCODE + 1;	
+		}
 	} );
 } );	
 
