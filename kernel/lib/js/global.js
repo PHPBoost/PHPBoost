@@ -323,12 +323,15 @@ function strpos(haystack, needle)
 jQuery(document).ready(function(){
 	var IDCODE = 1;
 	jQuery('.formatter-hide').each( function(){
-		jQuery(this).attr('id','formatter-hide-container-' + IDCODE);
-		jQuery(this).removeClass('no-js');
-		jQuery(this).attr('onClick', 'bb_hide(' + IDCODE + ', 1, event);');
-		jQuery(this).children('.formatter-content').before('<span id="formatter-hide-message-' + IDCODE + '" class="formatter-hide-message">' + L_HIDE_MESSAGE + '</span>');
-		jQuery(this).children('.formatter-content').before('<span id="formatter-hide-close-button-' + IDCODE + '" class="formatter-hide-close-button" "title="' + L_HIDE_HIDEBLOCK + '" onclick="bb_hide(' + IDCODE + ', 0, event);"><i class="fa fa-close"></i><span class="formatter-hide-close-button-txt">' + L_HIDE_HIDEBLOCK + '</span></span>');
-		IDCODE = IDCODE + 1;
+		if ( jQuery(this).hasClass(no-js) )
+		{
+			jQuery(this).attr('id','formatter-hide-container-' + IDCODE);
+			jQuery(this).removeClass('no-js');
+			jQuery(this).attr('onClick', 'bb_hide(' + IDCODE + ', 1, event);');
+			jQuery(this).children('.formatter-content').before('<span id="formatter-hide-message-' + IDCODE + '" class="formatter-hide-message">' + L_HIDE_MESSAGE + '</span>');
+			jQuery(this).children('.formatter-content').before('<span id="formatter-hide-close-button-' + IDCODE + '" class="formatter-hide-close-button" "title="' + L_HIDE_HIDEBLOCK + '" onclick="bb_hide(' + IDCODE + ', 0, event);"><i class="fa fa-close"></i><span class="formatter-hide-close-button-txt">' + L_HIDE_HIDEBLOCK + '</span></span>');
+			IDCODE = IDCODE + 1;
+		}
 	} );
 } );	
 
