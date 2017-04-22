@@ -287,8 +287,8 @@ elseif ($submit)
 		'idcat' => MediaService::get_categories_manager()->get_categories_cache()->has_categories() ? retrieve(POST, 'idcat', 0, TINTEGER) : Category::ROOT_CATEGORY,
 		'width' => min(retrieve(POST, 'width', $config->get_max_video_width(), TINTEGER), $config->get_max_video_width()),
 		'height' => min(retrieve(POST, 'height', $config->get_max_video_height(), TINTEGER), $config->get_max_video_height()),
-		'url' => retrieve(POST, 'u_media', '', TSTRING),
-		'poster' => retrieve(POST, 'poster', '', TSTRING),
+		'url' => new Url(retrieve(POST, 'u_media', '', TSTRING)),
+		'poster' => new Url(retrieve(POST, 'poster', '', TSTRING)),
 		'contents' => retrieve(POST, 'contents', '', TSTRING_PARSE),
 		'approved' => (bool)retrieve(POST, 'approved', false, TBOOL),
 		'contrib' => (bool)retrieve(POST, 'contrib', false, TBOOL),
@@ -330,7 +330,7 @@ elseif ($submit)
 			$host_ok = array_merge($host_ok['audio'], $host_ok['video']);
 		}
 
-		$url_media = preg_replace('`\?.*`u', '', $media['url']);
+		$url_media = preg_replace('`\?.*`u', '', $media['url']->relative());
 		
 		if (($pathinfo = pathinfo($url_media)) && !empty($pathinfo['extension']))
 		{
@@ -344,7 +344,7 @@ elseif ($submit)
 				DispatchManager::redirect($controller);
 			}
 		}
-		elseif (function_exists('get_headers') && ($headers = get_headers($media['url'], 1)) && !empty($headers['Content-Type']))
+		elseif (function_exists('get_headers') && ($headers = get_headers($media['url']->relative(), 1)) && !empty($headers['Content-Type']))
 		{
 			if (!is_array($headers['Content-Type']) && in_array($headers['Content-Type'], $mime_type))
 			{
@@ -372,7 +372,7 @@ elseif ($submit)
 				DispatchManager::redirect($controller);
 			}
 		}
-		elseif (($url_parsed = parse_url($media['url'])) && in_array($url_parsed['host'], $host_ok) && in_array('application/x-shockwave-flash', $mime_type))
+		elseif (($url_parsed = parse_url($media['url']->relative())) && in_array($url_parsed['host'], $host_ok) && in_array('application/x-shockwave-flash', $mime_type))
 		{
 			$media['mime_type'] = 'application/x-shockwave-flash';
 		}
@@ -391,7 +391,7 @@ elseif ($submit)
 	// Édition
 	if ($media['idedit'] && MediaAuthorizationsService::check_authorizations($media['idcat'])->moderation())
 	{
-		PersistenceContext::get_querier()->update(PREFIX . "media", array('idcat' => $media['idcat'], 'name' => $media['name'], 'url' => $media['url'], 'poster' => $media['poster'], 'mime_type' => $media['mime_type'], 'contents' => $media['contents'], 'infos' => (MediaAuthorizationsService::check_authorizations($media['idcat'])->write() ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']), 'WHERE id = :id', array('id' => $media['idedit']));
+		PersistenceContext::get_querier()->update(PREFIX . "media", array('idcat' => $media['idcat'], 'name' => $media['name'], 'url' => $media['url']->relative(), 'poster' => $media['poster']->relative(), 'mime_type' => $media['mime_type'], 'contents' => $media['contents'], 'infos' => (MediaAuthorizationsService::check_authorizations($media['idcat'])->write() ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']), 'WHERE id = :id', array('id' => $media['idedit']));
 
 		if ($media['approved'])
 		{
@@ -417,7 +417,7 @@ elseif ($submit)
 	// Ajout
 	elseif (!$media['idedit'] && (($auth_write = MediaAuthorizationsService::check_authorizations($media['idcat'])->write()) || MediaAuthorizationsService::check_authorizations($media['idcat'])->contribution()))
 	{
-		$result = PersistenceContext::get_querier()->insert(PREFIX . "media", array('idcat' => $media['idcat'], 'iduser' => AppContext::get_current_user()->get_id(), 'timestamp' => time(), 'name' => $media['name'], 'contents' => $media['contents'], 'url' => $media['url'], 'poster' => $media['poster'], 'mime_type' => $media['mime_type'], 'infos' => (MediaAuthorizationsService::check_authorizations($media['idcat'])->write() ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']));
+		$result = PersistenceContext::get_querier()->insert(PREFIX . "media", array('idcat' => $media['idcat'], 'iduser' => AppContext::get_current_user()->get_id(), 'timestamp' => time(), 'name' => $media['name'], 'contents' => $media['contents'], 'url' => $media['url']->relative(), 'poster' => $media['poster']->relative(), 'mime_type' => $media['mime_type'], 'infos' => (MediaAuthorizationsService::check_authorizations($media['idcat'])->write() ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']));
 
 		$new_id_media = $result->get_last_inserted_id();
 		// Feeds Regeneration

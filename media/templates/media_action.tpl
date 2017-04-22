@@ -87,15 +87,20 @@
 					</div>
 					<div class="form-element">
 						<label for="u_media">* {L_U_MEDIA}</label>
-						<div class="form-field"><input type="text" maxlength="500" class="field-large" id="u_media" name="u_media" value="{U_MEDIA}" placeholder="http://" /></div>
+						<div class="form-field">
+							<input type="text" maxlength="255" class="field-large" id="u_media" name="u_media" value="{U_MEDIA}" />
+							# IF C_AUTH_UPLOAD #
+								<a title="${LangLoader::get_message('files_management', 'main')}" href="" class="fa fa-cloud-upload fa-2x" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=u_media&amp;parse=true&amp;no_path=true', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"></a>
+							# ENDIF #
+						</div>
 					</div>
 					<div class="form-element">
 						<label for="poster">{L_POSTER}</label>
 						<div class="form-field# IF C_AUTH_UPLOAD # form-field-upload-file# ENDIF #">
-						<input type="text" maxlength="255" class="field-large" id="poster" name="poster" value="{POSTER}" />
-						# IF C_AUTH_UPLOAD #
-							<a title="${LangLoader::get_message('files_management', 'main')}" href="" class="fa fa-cloud-upload fa-2x" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=poster&amp;parse=true&amp;no_path=true', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"></a>
-						# ENDIF #
+							<input type="text" maxlength="255" class="field-large" id="poster" name="poster" value="{POSTER}" />
+							# IF C_AUTH_UPLOAD #
+								<a title="${LangLoader::get_message('files_management', 'main')}" href="" class="fa fa-cloud-upload fa-2x" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=poster&amp;parse=true&amp;no_path=true', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"></a>
+							# ENDIF #
 						</div>
 					</div>
 					<div class="form-element-textarea">
