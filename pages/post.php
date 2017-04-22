@@ -42,6 +42,7 @@ $id_edit_post = (int)retrieve(POST, 'id_edit', 0);
 $id_edit = $id_edit > 0 ? $id_edit : $id_edit_post;
 $title = retrieve(POST, 'title', '');
 $contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+$contents_preview = retrieve(POST, 'contents', '', TSTRING_PARSE);
 $count_hits = (int)($request->has_postparameter('count_hits') && $request->get_value('count_hits') == 'on');
 $enable_com = (int)($request->has_postparameter('comments_activated') && $request->get_value('comments_activated') == 'on');
 $own_auth = retrieve(POST, 'own_auth', '');
@@ -252,7 +253,7 @@ if ($id_edit > 0)
 	$cat_list = display_pages_cat_explorer($id_cat_display, $cats, 1);
 	
 	$tpl->put_all(array(
-		'CONTENTS' => !empty($error) ? stripslashes($contents) : pages_unparse($page_infos['contents']),
+		'CONTENTS' => !empty($error) ? pages_unparse(stripslashes($contents_preview)) : pages_unparse($page_infos['contents']),
 		'COUNT_HITS_CHECKED' => !empty($error) ? ($count_hits == 1 ? 'checked="checked"' : '') : ($page_infos['count_hits'] == 1 ? 'checked="checked"' : ''),
 		'COMMENTS_ACTIVATED_CHECKED' => !empty($error) ? ($enable_com == 1 ? 'checked="checked"' : '') : ($page_infos['activ_com'] == 1 ? 'checked="checked"' : ''),
 		'DISPLAY_PRINT_LINK_CHECKED' => !empty($error) ? ($display_print_link == 1 ? 'checked="checked"' : '') : ($page_infos['display_print_link'] == 1 ? 'checked="checked"' : ''),
@@ -283,7 +284,7 @@ else
 	}
 	if (!empty($error))
 		$tpl->put_all(array(
-			'CONTENTS' => stripslashes($contents),
+			'CONTENTS' => pages_unparse(stripslashes($contents_preview)),
 			'PAGE_TITLE' => stripslashes($title)
 		));
 	
