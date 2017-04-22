@@ -242,7 +242,7 @@ i.alert {
 		padding: 2px 0;
 	}
 
-	ul.connect-connected a {
+	#connect-menu ul.connect-connected a {
 		color: #FFFFFF;
 	}
 
