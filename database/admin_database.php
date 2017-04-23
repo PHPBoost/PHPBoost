@@ -99,60 +99,63 @@ if (!empty($query))
 		$tpl->put_all(array(
 			'C_QUERY_RESULT' => true
 		));
-	
-		$lower_query = TextHelper::strtolower($query);
-		if (TextHelper::strtolower(TextHelper::substr($query, 0, 6)) == 'select') //il s'agit d'une requête de sélection
+		
+		foreach (explode(';', $query) as $q)
 		{
-			//On éxécute la requête
-			try {
-				$result = PersistenceContext::get_querier()->select(str_replace('phpboost_', PREFIX, $query));
-				$i = 1;
-				while ($row = $result->fetch())
-				{
-					$tpl->assign_block_vars('line', array());
-					//Premier passage: on liste le nom des champs sélectionnés
-					if ($i == 1)
+			$lower_query = TextHelper::strtolower($q);
+			if (TextHelper::strtolower(TextHelper::substr($q, 0, 6)) == 'select') //il s'agit d'une requête de sélection
+			{
+				//On éxécute la requête
+				try {
+					$result = PersistenceContext::get_querier()->select(str_replace('phpboost_', PREFIX, $q));
+					$i = 1;
+					while ($row = $result->fetch())
 					{
-						$tpl->put('C_HEAD', true);
-						
+						$tpl->assign_block_vars('line', array());
+						//Premier passage: on liste le nom des champs sélectionnés
+						if ($i == 1)
+						{
+							$tpl->put('C_HEAD', true);
+							
+							foreach ($row as $field_name => $field_value)
+								$tpl->assign_block_vars('head', array(
+									'FIELD_NAME' => $field_name
+								));
+						}
+						//On parse les valeurs de sortie
 						foreach ($row as $field_name => $field_value)
-							$tpl->assign_block_vars('head', array(
-								'FIELD_NAME' => $field_name
-							));
+						$tpl->assign_block_vars('line.field', array(
+							'FIELD_NAME' => TextHelper::strprotect($field_value),
+							'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
+						));
+						
+						$i++;
 					}
-					//On parse les valeurs de sortie
-					foreach ($row as $field_name => $field_value)
+					$result->dispose();
+				} catch (MySQLQuerierException $e) {
+					$tpl->assign_block_vars('line', array());
 					$tpl->assign_block_vars('line.field', array(
-						'FIELD_NAME' => TextHelper::strprotect($field_value),
-						'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
+						'FIELD_NAME' => $e->GetMessage(),
+						'STYLE' => ''
 					));
-					
-					$i++;
 				}
-				$result->dispose();
-			} catch (MySQLQuerierException $e) {
-				$tpl->assign_block_vars('line', array());
-				$tpl->assign_block_vars('line.field', array(
-					'FIELD_NAME' => $e->GetMessage(),
-					'STYLE' => ''
-				));
+				
 			}
-			
-		}
-		elseif (TextHelper::substr($lower_query, 0, 11) == 'insert into' || TextHelper::substr($lower_query, 0, 6) == 'update' || TextHelper::substr($lower_query, 0, 11) == 'delete from' || TextHelper::substr($lower_query, 0, 11) == 'alter table'  || TextHelper::substr($lower_query, 0, 8) == 'truncate' || TextHelper::substr($lower_query, 0, 10) == 'drop table') //Requêtes d'autres types
-		{
-			try {
-				$result = PersistenceContext::get_querier()->inject(str_replace('phpboost_', PREFIX, $query));
-				$affected_rows = $result->get_affected_rows();
-			} catch (MySQLQuerierException $e) {
-				$tpl->assign_block_vars('line', array());
-				$tpl->assign_block_vars('line.field', array(
-					'FIELD_NAME' => $e->GetMessage(),
-					'STYLE' => ''
-				));
+			elseif (TextHelper::substr($lower_query, 0, 11) == 'insert into' || TextHelper::substr($lower_query, 0, 6) == 'update' || TextHelper::substr($lower_query, 0, 11) == 'delete from' || TextHelper::substr($lower_query, 0, 11) == 'alter table'  || TextHelper::substr($lower_query, 0, 8) == 'truncate' || TextHelper::substr($lower_query, 0, 10) == 'drop table') //Requêtes d'autres types
+			{
+				try {
+					$result = PersistenceContext::get_querier()->inject(str_replace('phpboost_', PREFIX, $q));
+					$affected_rows = $result->get_affected_rows();
+				} catch (MySQLQuerierException $e) {
+					$tpl->assign_block_vars('line', array());
+					$tpl->assign_block_vars('line.field', array(
+						'FIELD_NAME' => $e->GetMessage(),
+						'STYLE' => ''
+					));
+				}
 			}
 		}
-	}	
+	}
 	
 	$tpl->put_all(array(
 		'QUERY' => DatabaseService::indent_query($query),
