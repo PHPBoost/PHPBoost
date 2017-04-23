@@ -268,7 +268,7 @@ td.calendar-week {
 .formatter-hide-close-button {
 	position: absolute;
 	display: none;
-	top: 2em;
+	top: 1em;
 	right: 0;
 	color: #BBBBBB;
 	font-size: 0.8em;
