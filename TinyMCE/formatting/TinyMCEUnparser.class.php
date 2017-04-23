@@ -452,9 +452,9 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 
 	private function unparse_fa($matches)
 	{
-		$icon2 = !empty($matches[2]) ? '=' . str_replace(' fa-', '', $matches[2]) : '';
-		$icon3 = !empty($matches[3]) ? (!empty($matches[2]) ? ',' : '=') . str_replace(' fa-', '', $matches[3]) : '';
-		$icon4 = !empty($matches[4]) ? (!empty($matches[2]) || !empty($matches[3]) ? ',' : '=') . str_replace(' fa-', '', $matches[4]) : '';
+		$icon2 = !empty($matches[2]) ? '=' . $matches[2] : '';
+		$icon3 = !empty($matches[3]) ? (!empty($matches[2]) ? ',' : '=') $matches[3] : '';
+		$icon4 = !empty($matches[4]) ? (!empty($matches[2]) || !empty($matches[3]) ? ',' : '=') . $matches[4] : '';
 		
 		return '[fa' . $icon2 . $icon3 . $icon4 . ']' . $matches[1] . '[/fa]';
 	}

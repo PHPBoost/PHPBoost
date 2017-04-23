@@ -531,9 +531,9 @@ class BBCodeParser extends ContentFormattingParser
 
 	protected function parse_fa($matches)
 	{
-		$icon2 = !empty($matches[1]) ? ' fa-' . str_replace('=', '', $matches[1]) : '';
-		$icon3 = !empty($matches[2]) ? ' fa-' . str_replace(',', '', $matches[2]) : '';
-		$icon4 = !empty($matches[3]) ? ' fa-' . str_replace(',', '', $matches[3]) : '';
+		$icon2 = !empty($matches[1]) ? str_replace('=', '', $matches[1]) : '';
+		$icon3 = !empty($matches[2]) ? str_replace(',', '', $matches[2]) : '';
+		$icon4 = !empty($matches[3]) ? str_replace(',', '', $matches[3]) : '';
 		
 		return '<i class="fa fa-' . $matches[4] . $icon2 . $icon3 . $icon4 . '"></i>';
 	}

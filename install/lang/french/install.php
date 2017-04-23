@@ -226,8 +226,9 @@ Cordialement l\'équipe PHPBoost.',
 									<li><a href="http://jquery.com">jQuery</a> : Framework Javascript et <acronym title="Asynchronous Javascript And XML">AJAX</acronym></li>
 									<li><a href="http://flowplayer.org">Flowplayer</a> : lecteur vidéo au format flash</li>
 									<li><a href="http://fontawesome.io">Font Awesome</a> : librairie d\'icônes</li>
+									<li><a href="http://l-lin.github.io/font-awesome-animation/">Font Awesome Animation</a> : Animation pour la librairie Font Awesome</li>
 									<li><a href="http://cornel.bopp-art.com/lightcase/">Lightcase.js</a> : Lightbox responsive</li>
-									<li><a href="https://github.com/cssmenumaker/jQuery-Plugin-Responsive-Drop-Down">CssMenuMaker.js</a> : Menus responsive</li>
+									<li><a href="https://github.com/cssmenumaker/jQuery-Plugin-Responsive-Drop-Down">CssMenuMaker</a> : Menus responsive</li>
 									<li><a href="http://www.jerrylow.com/basictable/">BasicTable.js</a> : Tables responsive</li>
 								</ul>
 							</div>
