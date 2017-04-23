@@ -397,6 +397,7 @@ elseif ($del_article > 0) //Suppression d'un article
 	
 	//On rippe l'article
 	$db_querier->delete(PREFIX . 'wiki_articles', 'WHERE id=:id', array('id' => $del_article));
+	$db_querier->delete(PREFIX . 'wiki_articles', 'WHERE redirect=:id', array('id' => $del_article));
 	$db_querier->delete(PREFIX . 'wiki_contents', 'WHERE id_article=:id', array('id' => $del_article));
 	$db_querier->delete(PREFIX . 'wiki_favorites', 'WHERE id_article=:id', array('id' => $del_article));
 	
