@@ -86,7 +86,7 @@ $tpl->put_all(array(
 
 if (!empty($query))
 {
-	$query = retrieve(POST, 'query', '', TSTRING_UNCHANGE);
+	$query = TextHelper::html_entity_decode(retrieve(POST, 'query', '', TSTRING_UNCHANGE));
 
 	$tpl->put_all(array(
 		'C_DATABASE_QUERY' => true
