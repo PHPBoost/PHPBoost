@@ -114,6 +114,6 @@ var GoogleMapsFormFieldMultipleMarkers = new GoogleMapsFormFieldMultipleMarkers(
 <a href="javascript:GoogleMapsFormFieldMultipleMarkers.add();" id="add-${escape(HTML_ID)}" class="form-field-checkbox-more" title="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus"></i></a>
 
 # IF C_INCLUDE_API #
-<script src="http://maps.googleapis.com/maps/api/js?key={API_KEY}&amp;libraries=places"></script>
+<script src="//maps.googleapis.com/maps/api/js?key={API_KEY}&amp;libraries=places"></script>
 <script src="{PATH_TO_ROOT}/GoogleMaps/templates/js/jquery.geocomplete.js"></script>
 # ENDIF #
