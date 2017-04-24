@@ -698,7 +698,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//FA tag
 		if (!in_array('fa', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`\[fa(=[a-z0-9-]+)?(,[a-z0-9-]+)?(,[a-z0-9-]+)?\]([a-z0-9-]+)\[/fa\]`iuU', array($this, 'parse_fa'), $this->content);
+			$this->content = preg_replace_callback('`\[fa(= ?[a-z0-9-, ]+)?\]([a-z0-9-]+)\[/fa\]`iuU', array($this, 'parse_fa'), $this->content);
 		}
 
 		##Nested tags
@@ -978,11 +978,14 @@ class TinyMCEParser extends ContentFormattingParser
 
 	protected function parse_fa($matches)
 	{
-		$icon2 = !empty($matches[1]) ? ' ' . str_replace('=', '', $matches[1]) : '';
-		$icon3 = !empty($matches[2]) ? ' ' . str_replace(',', '', $matches[2]) : '';
-		$icon4 = !empty($matches[3]) ? ' ' . str_replace(',', '', $matches[3]) : '';
-		
-		return '<i class="fa fa-' . $matches[4] . $icon2 . $icon3 . $icon4 . '"></i>';
+		$fa_code = "";
+		if ( !empty($matches[1]) ) { 
+			$options = str_replace('=', '', explode(',', $matches[1]));
+			foreach ($options as $option) {
+				$fa_code = $fa_code . ' ' . ltrim($option);
+			}
+		}
+		return '<i class="fa fa-' . $matches[2] . $fa_code . '"></i>';
 	}
 
 	/**
