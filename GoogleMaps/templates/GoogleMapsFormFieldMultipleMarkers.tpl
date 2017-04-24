@@ -15,10 +15,10 @@ GoogleMapsFormFieldMultipleMarkers.prototype = {
 			
 			jQuery('<div/>', {id : 'field-' + id}).appendTo('#marker-' + id);
 			
-			jQuery('<input/> ', {type : 'text', id : id, name : id, required : "required", placeholder : '{@form.marker.address}', class: 'multiple-markers# IF C_CLASS # ${escape(CLASS)}# ENDIF #'}).appendTo('#field-' + id);
+			jQuery('<input/> ', {type : 'text', id : id, name : id, required : "required", placeholder : '{@form.marker.address}', class: 'marker-address-input# IF C_CLASS # ${escape(CLASS)}# ENDIF #'}).appendTo('#field-' + id);
 			jQuery('#field-' + id).append(' ');
 			
-			jQuery('<input/> ', {type : 'text', id : 'name-' + id, name : 'name-' + id, placeholder : '{@form.marker.name}', class: 'multiple-markers marker-name# IF C_CLASS # ${escape(CLASS)}# ENDIF #'}).appendTo('#field-' + id);
+			jQuery('<input/> ', {type : 'text', id : 'name-' + id, name : 'name-' + id, placeholder : '{@form.marker.name}', class: 'marker-desc-input# IF C_CLASS # ${escape(CLASS)}# ENDIF #'}).appendTo('#field-' + id);
 			jQuery('#field-' + id).append(' ');
 			
 			jQuery('<input/> ', {type : 'hidden', id : 'latitude-' + id, name : 'latitude-' + id}).appendTo('#field-' + id);
@@ -49,12 +49,12 @@ var GoogleMapsFormFieldMultipleMarkers = new GoogleMapsFormFieldMultipleMarkers(
 -->
 </script>
 
-<div id="input-fields-${escape(HTML_ID)}">
+<div id="input-fields-${escape(HTML_ID)}" class="multiple-markers">
 # START fieldelements #
 	<div id="marker-${escape(HTML_ID)}-{fieldelements.ID}">
 		<div id="field-${escape(HTML_ID)}-{fieldelements.ID}">
-			<input type="text" name="${escape(HTML_ID)}-{fieldelements.ID}" id="${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.ADDRESS}" placeholder="{@form.marker.address}" class="multiple-markers# IF C_READONLY # low-opacity# ENDIF ## IF C_CLASS # ${escape(CLASS)}# ENDIF #" # IF C_DISABLED # disabled="disabled" # ENDIF # />
-			<input type="text" name="name-${escape(HTML_ID)}-{fieldelements.ID}" id="name-${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.MARKER_NAME}" placeholder="{@form.marker.name}" class="multiple-markers marker-name# IF C_READONLY # low-opacity# ENDIF ## IF C_CLASS # ${escape(CLASS)}# ENDIF #" # IF C_DISABLED # disabled="disabled" # ENDIF # />
+			<input type="text" name="${escape(HTML_ID)}-{fieldelements.ID}" id="${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.ADDRESS}" placeholder="{@form.marker.address}" class="marker-address-input# IF C_READONLY # low-opacity# ENDIF ## IF C_CLASS # ${escape(CLASS)}# ENDIF #" # IF C_DISABLED # disabled="disabled" # ENDIF # />
+			<input type="text" name="name-${escape(HTML_ID)}-{fieldelements.ID}" id="name-${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.MARKER_NAME}" placeholder="{@form.marker.name}" class="marker-desc-input# IF C_READONLY # low-opacity# ENDIF ## IF C_CLASS # ${escape(CLASS)}# ENDIF #" # IF C_DISABLED # disabled="disabled" # ENDIF # />
 			<input type="hidden" id="latitude-${escape(HTML_ID)}-{fieldelements.ID}" name="latitude-${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.LATITUDE}" />
 			<input type="hidden" id="longitude-${escape(HTML_ID)}-{fieldelements.ID}" name="longitude-${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.LONGITUDE}" />
 			<input type="hidden" id="zoom-${escape(HTML_ID)}-{fieldelements.ID}" name="zoom-${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.ZOOM}" />
