@@ -12,5 +12,5 @@ div[id*="marker-"] {
 
 @media (min-width: 769px) {
 	.multiple-markers { max-width: 50%; }
-	.marker-name { max-width: 47%; }
+	.marker-name { max-width: 46%; }
 }
