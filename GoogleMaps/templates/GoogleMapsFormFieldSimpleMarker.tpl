@@ -56,6 +56,6 @@ jQuery(function(){
 </script>
 
 # IF C_INCLUDE_API #
-<script src="http://maps.googleapis.com/maps/api/js?key={API_KEY}&amp;libraries=places"></script>
+<script src="//maps.googleapis.com/maps/api/js?key={API_KEY}&amp;libraries=places"></script>
 <script src="{PATH_TO_ROOT}/GoogleMaps/templates/js/jquery.geocomplete.js"></script>
 # ENDIF #
