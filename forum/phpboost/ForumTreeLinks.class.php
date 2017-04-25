@@ -49,7 +49,7 @@ class ForumTreeLinks implements ModuleTreeLinksExtensionPoint
 		
 		$tree->add_link(new ModuleLink(LangLoader::get_message('moderation_panel', 'main'), ForumUrlBuilder::moderation_panel(), ForumAuthorizationsService::check_authorizations()->moderation()));
 
-		$tree->add_link(new ModuleLink($lang['forum.no_answer'], ForumUrlBuilder::show_no_answer(), ForumAuthorizationsService::check_authorizations()->moderation()));
+		$tree->add_link(new ModuleLink($lang['forum.no_answer'], ForumUrlBuilder::show_no_answer(), ForumAuthorizationsService::check_authorizations()->read()));
 		
 		$tree->add_link(new ModuleLink(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('forum')->get_configuration()->get_documentation(), ForumAuthorizationsService::check_authorizations()->moderation()));
 	
