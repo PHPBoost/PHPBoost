@@ -94,12 +94,6 @@ if (ForumAuthorizationsService::check_authorizations()->read())
 			
 		//Vérifications des topics Lu/non Lus.
 		$img_announce = 'fa-announce';
-		$blink = false;
-		if ($row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg) //Nouveau message (non lu).
-		{
-			$img_announce = $img_announce . '-new'; //Image affiché aux visiteurs.
-			$blink = true;
-		}
 		$img_announce .= ($row['type'] == '1') ? '-post' : '';
 		$img_announce .= ($row['type'] == '2') ? '-top' : '';
 		$img_announce .= ($row['status'] == '0' && $row['type'] == '0') ? '-lock' : '';
@@ -143,7 +137,6 @@ if (ForumAuthorizationsService::check_authorizations()->read())
 			'C_IMG_TRACK' => !empty($row['idtrack']),
 			'C_DISPLAY_MSG' => ($config->is_message_before_topic_title_displayed() && $config->is_message_before_topic_title_icon_displayed() && $row['display_msg']),
 			'C_HOT_TOPIC' => ($row['type'] == '0' && $row['status'] != '0' && ($row['nbr_msg'] > $config->get_number_messages_per_page())),
-			'C_BLINK' => $blink,
 			'IMG_ANNOUNCE' => $img_announce,
 			'ANCRE' => $new_ancre,
 			'TYPE' => $type[$row['type']],
