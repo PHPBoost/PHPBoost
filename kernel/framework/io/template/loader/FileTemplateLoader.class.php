@@ -201,7 +201,7 @@ class FileTemplateLoader implements TemplateLoader
 	private function get_kernel_paths()
 	{
 		$this->get_template_real_filepaths_and_data_path(array(
-			$this->theme_templates_folder . 'default/' . $this->filepath,
+			$this->theme_templates_folder . 'default/' . str_replace('default/', '', $this->filepath),
 			($this->module == 'default' ? $this->templates_folder : $this->default_templates_folder) . $this->filepath
 		));
 	}
