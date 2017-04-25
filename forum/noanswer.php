@@ -47,10 +47,7 @@ if (!empty($change_cat))
 	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . ($new_cat && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . $new_cat->get_rewrited_name() : '') . '.php', '&'));
 }
 
-if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Réservé aux membres.
-	AppContext::get_response()->redirect(UserUrlBuilder::connect()->rel()); 
-
-if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage des message()s non lu(s) du membre.
+if (ForumAuthorizationsService::check_authorizations()->read())
 {
 	$tpl = new FileTemplate('forum/forum_forum.tpl');
 		
@@ -234,7 +231,10 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 	$tpl->display();
 }
 else
-	AppContext::get_response()->redirect('/forum/index.php');
+{
+	$error_controller = PHPBoostErrors::user_not_authorized();
+	DispatchManager::redirect($error_controller);
+}
 
 include('../kernel/footer.php');
 
