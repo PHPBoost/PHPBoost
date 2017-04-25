@@ -15,8 +15,8 @@ input.marker-address-input {
 	width: calc(100% - 183px);
 }
 
-.multiple-markers input.marker-address-input {
-	width: calc(100% - 199px);
+.markers-container input.marker-address-input {
+	width: calc(100% - 200px);
 }
 
 input.marker-desc-input {
@@ -34,8 +34,8 @@ input.marker-desc-input {
 		width: calc(100% - 154px);
 	}
 
-	.multiple-markers input.marker-address-input {
-		width: calc(100% - 171px);
+	.markers-container input.marker-address-input {
+		width: calc(100% - 175px);
 	}
 
 	input.marker-desc-input {

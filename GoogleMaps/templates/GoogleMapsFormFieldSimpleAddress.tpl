@@ -1,4 +1,4 @@
-<div class="field-${escape(HTML_ID)}">
+<div class="field-${escape(HTML_ID)} map-input-container">
 	<input type="text" name="${escape(NAME)}" id="${escape(HTML_ID)}" class="map-address-input" value="${escape(ADDRESS)}" placeholder="{@form.marker.address}" class="# IF C_READONLY #low-opacity # ENDIF ## IF C_CLASS #${escape(CLASS)}# ENDIF #" # IF C_DISABLED # disabled="disabled" # ENDIF # />
 </div>
 
