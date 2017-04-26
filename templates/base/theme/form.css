@@ -718,16 +718,18 @@ div.field-required:after {
 	float: right;
 }
 
-.html-table-header-sortable .fa-caret-up 	{ margin-bottom: -4px; }
-.html-table-header-sortable .fa-caret-down 	{ margin-top: -12px; }
-
-/* --- HTML Table--- */
-.html-table-header-sortable {
-	float: right;
+@media (max-width: 768px) {
+	.html-table-header-sortable {
+		display: none;
+	}
 }
 
 .html-table-header-sortable .fa-caret-up 	{ margin-bottom: -4px; }
 .html-table-header-sortable .fa-caret-down 	{ margin-top: -12px; }
+
+.html-table-header-sortable .sort-active {
+	color: #AAAAAA;
+}
 
 /* --- Auto-completion --- */
 .autocomplete-suggestions {

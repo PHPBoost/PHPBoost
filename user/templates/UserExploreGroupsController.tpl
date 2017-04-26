@@ -4,7 +4,7 @@
 	</header>
 	<div class="content">
 		
-		<div class="options">
+		<div class="options user-group-select">
 			# INCLUDE SELECT_GROUP #
 		</div>
 
