@@ -7,46 +7,43 @@
 	padding-bottom: 56.25%;
 }
 
-input.map-address-input {
-	width: 100%;
-}
-
-input.marker-address-input {
-	width: calc(100% - 183px);
-}
-
-.markers-container input.marker-address-input {
-	width: calc(100% - 200px);
-}
-
-input.marker-desc-input {
-	width: 179px;
+.marker-container {
+	margin-bottom: 5px;
 }
 
 @media (max-width: 768px) {
-	div[id*="address_field"] > .form-field,
-	div[id*="marker_field"] > .form-field,
-	div[id*="markers_field"] > .form-field {
+	.form-field-map {
 		display: block;
 	}
 
-	input.marker-address-input {
-		width: calc(100% - 154px);
+	.form-field-map input {
+		width: 100%;
 	}
 
-	.markers-container input.marker-address-input {
-		width: calc(100% - 175px);
+	.form-field-map .marker-desc-input {
+		margin-top: 2px;
 	}
 
-	input.marker-desc-input {
-		width: 150px;
+	.form-field-map.multiple-markers .marker-desc-input {
+		width: calc(100% - 20px);
 	}
+
 }
 
 @media (min-width: 769px) {
-	div[id*="address_field"] > .form-field,
-	div[id*="marker_field"] > .form-field,
-	div[id*="markers_field"] > .form-field {
+	.form-field-map {
 		width: 59%;
+	}
+
+	.marker-container input.marker-address-input {
+		width: calc(100% - 200px);
+	}
+
+	input.marker-desc-input {
+		width: 179px;
+	}
+
+	input.marker-address-input {
+		width: calc(100% - 183px);
 	}
 }
