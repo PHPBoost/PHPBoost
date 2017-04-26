@@ -35,6 +35,19 @@ ul#profile-container li {
 	overflow-y: auto !important;
 }
 
+.user-group-select {
+	margin-bottom: 20px;
+}
+
+.user-group-select fieldset {
+	margin: 0;
+}
+
+.user-group-select label {
+	width: auto;
+	vertical-align: middle;
+}
+
 
 /* -- Contribution -- */ 
 /* ------------------ */

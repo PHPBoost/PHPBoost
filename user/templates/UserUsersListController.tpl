@@ -4,7 +4,7 @@
 	</header>
 	<div class="content">
 		# IF C_ARE_GROUPS #
-		<div class="options">
+		<div class="options user-group-select">
 			# INCLUDE SELECT_GROUP #
 		</div>
 		# ENDIF #

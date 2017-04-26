@@ -713,6 +713,22 @@ div.field-required:after {
 	display: inline-block;
 }
 
+/* --- HTML Table--- */
+.html-table-header-sortable {
+	float: right;
+}
+
+.html-table-header-sortable .fa-caret-up 	{ margin-bottom: -4px; }
+.html-table-header-sortable .fa-caret-down 	{ margin-top: -12px; }
+
+/* --- HTML Table--- */
+.html-table-header-sortable {
+	float: right;
+}
+
+.html-table-header-sortable .fa-caret-up 	{ margin-bottom: -4px; }
+.html-table-header-sortable .fa-caret-down 	{ margin-top: -12px; }
+
 /* --- Auto-completion --- */
 .autocomplete-suggestions {
 	background-color: #FFFFFF;

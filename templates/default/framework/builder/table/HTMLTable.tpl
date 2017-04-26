@@ -19,14 +19,13 @@
 			<th
 			# IF header_column.C_CSS_CLASSES # class="{header_column.CSS_CLASSES}"# ENDIF #
 			# IF header_column.C_CSS_STYLE # style="{header_column.CSS_STYLE}"# ENDIF #>
-				
 				# IF header_column.C_SORTABLE #
-				<a href="{header_column.U_SORT_DESC}" title="{EL_DESCENDING}" class="fa fa-arrow-circle-up# IF header_column.C_SORT_DESC_SELECTED # table-arrow-color# ENDIF #"></a>
+				<span class="html-table-header-sortable">
+					<a href="{header_column.U_SORT_DESC}" title="${LangLoader::get_message('sort.desc', 'common')}" class="fa fa-caret-up# IF header_column.C_SORT_DESC_SELECTED # table-arrow-color# ENDIF #"></a><br />
+					<a href="{header_column.U_SORT_ASC}" title="${LangLoader::get_message('sort.asc', 'common')}" class="fa fa-caret-down# IF header_column.C_SORT_ASC_SELECTED # table-arrow-color# ENDIF #"></a>
+				</span>
 				# ENDIF #
-				{header_column.NAME}
-				# IF header_column.C_SORTABLE #
-				<a href="{header_column.U_SORT_ASC}" title="{EL_ASCENDING}" class="fa fa-arrow-circle-down# IF header_column.C_SORT_ASC_SELECTED # table-arrow-color# ENDIF #"></a>
-				# ENDIF #
+				<span class="html-table-header-name">{header_column.NAME}</span>
 			</th>
 			# END header_column #
 		</tr>
