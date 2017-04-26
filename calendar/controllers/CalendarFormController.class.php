@@ -136,14 +136,23 @@ class CalendarFormController extends ModuleController
 		
 		if ($this->config->is_googlemaps_available())
 		{
-			$fieldset->add_field(new GoogleMapsFormFieldMapAddress('location', $this->lang['calendar.labels.location'], $location));
+			$fieldset->add_field(new GoogleMapsFormFieldMapAddress('location', $this->lang['calendar.labels.location'], $location, array(
+				'events' => array('blur' => '
+				if (HTMLForms.getField("location").getValue()) {
+					HTMLForms.getField("map_displayed").enable();
+				} else {
+					HTMLForms.getField("map_displayed").disable();
+				}'
+			))));
 			
-			$fieldset->add_field(new FormFieldCheckbox('map_displayed', $this->lang['calendar.labels.map_displayed'], $event_content->is_map_displayed()));
+			$fieldset->add_field(new FormFieldCheckbox('map_displayed', $this->lang['calendar.labels.map_displayed'], $event_content->is_map_displayed(),
+				array('hidden' => !$location)
+			));
 		}
 		else
 			$fieldset->add_field(new FormFieldShortMultiLineTextEditor('location', $this->lang['calendar.labels.location'], $location));
 		
-		$fieldset->add_field(new FormFieldCheckbox('registration_authorized', $this->lang['calendar.labels.registration_authorized'], $event_content->is_registration_authorized(),array(
+		$fieldset->add_field(new FormFieldCheckbox('registration_authorized', $this->lang['calendar.labels.registration_authorized'], $event_content->is_registration_authorized(), array(
 			'events' => array('click' => '
 			if (HTMLForms.getField("registration_authorized").getValue()) {
 				HTMLForms.getField("max_registered_members").enable();
