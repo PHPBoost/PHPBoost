@@ -52,6 +52,7 @@ class GoogleMapsFormFieldMapAddress extends AbstractFormField
 	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
+		$this->set_css_form_field_class('form-field-map map-adress');
 	}
 	
 	/**
