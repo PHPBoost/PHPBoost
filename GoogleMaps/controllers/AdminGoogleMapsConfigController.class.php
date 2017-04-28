@@ -55,6 +55,15 @@ class AdminGoogleMapsConfigController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
+			
+			if ($this->config->get_api_key())
+			{
+				$this->form->get_field_by_id('default_position')->set_hidden(false);
+				$this->form->get_field_by_id('default_position')->enable();
+			}
+			else
+				$this->form->get_field_by_id('default_position')->set_hidden(true);
+			
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 		
@@ -81,7 +90,7 @@ class AdminGoogleMapsConfigController extends AdminModuleController
 		));
 
 		$fieldset->add_field(new GoogleMapsFormFieldMapAddress('default_position', $this->lang['config.default_marker.position'], new GoogleMapsMarker($this->config->get_default_marker_address(), $this->config->get_default_marker_latitude(), $this->config->get_default_marker_longitude(), '', $this->config->get_default_zoom()),
-			array('description' => $this->lang['config.default_marker.position.description'], 'always_display_marker' => true)
+			array('description' => $this->lang['config.default_marker.position.description'], 'always_display_marker' => true, 'hidden' => !$this->config->get_api_key())
 		));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -95,13 +104,16 @@ class AdminGoogleMapsConfigController extends AdminModuleController
 	{
 		$this->config->set_api_key($this->form->get_value('api_key'));
 		
-		$default_marker = new GoogleMapsMarker();
-		$default_marker->set_properties(TextHelper::unserialize($this->form->get_value('default_position')));
-		
-		$this->config->set_default_marker_address($default_marker->get_address());
-		$this->config->set_default_marker_latitude($default_marker->get_latitude());
-		$this->config->set_default_marker_longitude($default_marker->get_longitude());
-		$this->config->set_default_zoom($default_marker->get_zoom());
+		if ($this->form->get_value('api_key') && !$this->form->get_field_by_id('default_position')->is_hidden())
+		{
+			$default_marker = new GoogleMapsMarker();
+			$default_marker->set_properties(TextHelper::unserialize($this->form->get_value('default_position')));
+			
+			$this->config->set_default_marker_address($default_marker->get_address());
+			$this->config->set_default_marker_latitude($default_marker->get_latitude());
+			$this->config->set_default_marker_longitude($default_marker->get_longitude());
+			$this->config->set_default_zoom($default_marker->get_zoom());
+		}
 		
 		GoogleMapsConfig::save();
 	}
