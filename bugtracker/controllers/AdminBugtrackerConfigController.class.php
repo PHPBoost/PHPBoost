@@ -480,7 +480,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 				'ID'				=> $key,
 				'NAME'				=> stripslashes($version['name']),
 				'RELEASE_DATE'		=> !empty($release_date) ? $release_date->format(Date::FORMAT_ISO_DAY_MONTH_YEAR) : '',
-				'DAY'				=> !empty($release_date) ? $release_date->get_day() : date('d'),
+				'DAY'				=> !empty($release_date) ? $release_date->get_day() : date('j'),
 				'MONTH'				=> !empty($release_date) ? $release_date->get_month() : date('n'),
 				'YEAR'				=> !empty($release_date) ? $release_date->get_year() : date('Y'),
 				'LINK_DELETE'		=> BugtrackerUrlBuilder::delete_parameter('version', $key)->rel()
@@ -491,7 +491,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			'C_VERSIONS'						=> !empty($versions),
 			'MAX_INPUT'							=> $this->max_input,
 		 	'NEXT_ID'							=> $key + 1,
-			'DAY'								=> date('d'),
+			'DAY'								=> date('j'),
 			'MONTH'								=> date('n'),
 			'YEAR'								=> date('Y'),
 			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> $this->config->get_default_version(),
