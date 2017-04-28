@@ -98,9 +98,9 @@ class CalendarFormController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldUploadPictureFile('picture', $this->lang['calendar.labels.picture'], $event_content->get_picture()->relative()));
 		
-		$fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->lang['calendar.labels.start_date'], $this->get_event()->get_start_date(), array('required' => true)));
+		$fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->lang['calendar.labels.start_date'], $this->get_event()->get_start_date(), array('required' => true, 'five_minutes_step' => true)));
 		
-		$fieldset->add_field($end_date = new FormFieldDateTime('end_date', $this->lang['calendar.labels.end_date'], $this->get_event()->get_end_date(), array('required' => true)));
+		$fieldset->add_field($end_date = new FormFieldDateTime('end_date', $this->lang['calendar.labels.end_date'], $this->get_event()->get_end_date(), array('required' => true, 'five_minutes_step' => true)));
 		
 		$form->add_constraint(new FormConstraintFieldsDifferenceSuperior($start_date, $end_date));
 		

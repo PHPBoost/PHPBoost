@@ -31,6 +31,11 @@
  */
 class FormFieldDateTime extends FormFieldDate
 {
+	/**
+	 * @var boolean
+	 */
+	private $five_minutes_step = false;
+	
 	public function __construct($id, $label, Date $value = null, $field_options = array(), array $constraints = array())
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
@@ -46,6 +51,7 @@ class FormFieldDateTime extends FormFieldDate
 
 		$template->put_all(array(
 			'C_HOUR' => true,
+			'C_FIVE_MINUTES_STEP' => $this->five_minutes_step,
 			'HOURS' => $this->get_value() ? $this->get_value()->get_hours() : '0',
 			'MINUTES' => $this->get_value() ? $this->get_value()->get_minutes() : '00',
 			'L_AT' => LangLoader::get_message('at', 'main'),
@@ -72,6 +78,22 @@ class FormFieldDateTime extends FormFieldDate
 		}
 		
 		$this->set_value($date);
+	}
+	
+	protected function compute_options(array &$field_options)
+	{
+		foreach ($field_options as $attribute => $value)
+		{
+			$attribute = TextHelper::strtolower($attribute);
+			switch ($attribute)
+			{
+				case 'five_minutes_step':
+					$this->five_minutes_step = (bool)$value;
+					unset($field_options['five_minutes_step']);
+					break;
+			}
+		}
+		parent::compute_options($field_options);
 	}
 }
 ?>
