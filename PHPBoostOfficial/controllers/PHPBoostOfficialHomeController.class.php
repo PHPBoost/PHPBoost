@@ -41,105 +41,65 @@ class PHPBoostOfficialHomeController extends ModuleController
 	
 	private function build_view()
 	{
-		$now = new Date();
-		$id_cats = array('37', '38', '42', '43', '46', '47');
-		
-		$querier = PersistenceContext::get_querier();
-		$results = $querier->select('SELECT file.id, file.id_category, file.name, file.rewrited_name, file.short_contents, file.creation_date, file.picture_url, file.author_custom_name, user.display_name
-			FROM ' . PREFIX . 'download file
-			LEFT JOIN ' . DB_TABLE_MEMBER . ' user ON user.user_id = file.author_user_id
-			WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND id_category IN :children
-			ORDER BY file.creation_date DESC', array(
-			'timestamp_now' => $now->get_timestamp(),
-				'children' => $id_cats
-		));
-		
-		$this->build_modules_view($results);
-		$this->build_themes_view($results);
+		$this->build_modules_and_themes_view();
 		
 		$this->build_feed_news_view();
+		
 		$this->build_last_news_view();
 		
 		$this->build_partners_view();
 		
-		if (ModulesManager::is_module_installed('GoogleAnalytics') && ModulesManager::is_module_activated('GoogleAnalytics'))
-		{
-			$identifier = GoogleAnalyticsConfig::load()->get_identifier();
-			$this->view->put_all(array(
-				'C_GOOGLEANALYTICS_IDENTIFIER' => !empty($identifier),
-				'GOOGLEANALYTICS_IDENTIFIER' => $identifier
-			));
-		}
+		$this->add_google_analytics_identifier();
 	}
 	
-	private function build_modules_view(SelectQueryResult $results)
+	private function build_modules_and_themes_view()
 	{
-		$tpl = new FileTemplate('PHPBoostOfficial/modules.tpl');
-		$i = 0;
+		$now = new Date();
+		
+		$modules_tpl = new FileTemplate('PHPBoostOfficial/modules.tpl');
+		$themes_tpl = new FileTemplate('PHPBoostOfficial/themes.tpl');
+		$modules_number = $themes_number = 0;
+		
+		$results = PersistenceContext::get_querier()->select('SELECT cats.rewrited_name as cat_rewrited_name, file.id, file.id_category, file.name, file.rewrited_name, file.short_contents, file.creation_date, file.picture_url, file.author_custom_name, user.display_name
+			FROM ' . PREFIX . 'download file
+			LEFT JOIN ' . PREFIX . 'download_cats cats ON cats.id = file.id_category
+			LEFT JOIN ' . DB_TABLE_MEMBER . ' user ON user.user_id = file.author_user_id
+			WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND (cats.rewrited_name LIKE "modules-phpboost-%" OR cats.rewrited_name LIKE "themes-phpboost-%")
+			ORDER BY file.creation_date DESC', array(
+			'timestamp_now' => $now->get_timestamp()
+		));
+		
 		foreach ($results as $row)
 		{
-			if ($row['id_category'] == '38' || $row['id_category'] == '43' || $row['id_category'] == '47')
+			if ($modules_number == 3 && $themes_number == 3)
+				break;
+			
+			$item = array(
+				'U_LINK' => DownloadUrlBuilder::display($row['id_category'], $row['cat_rewrited_name'], $row['id'], $row['rewrited_name'])->rel(),
+				'U_IMG' => Url::to_rel($row['picture_url']),
+				'C_IMG' => !empty($row['picture_url']),
+				'TITLE' => $row['name'],
+				'DESC' => $row['short_contents'],
+				'PSEUDO' => !empty($row['author_custom_name']) ? $row['author_custom_name'] : $row['display_name']
+			);
+			
+			if (strstr($row['cat_rewrited_name'], 'modules') && $modules_number < 3)
 			{
-				if ($i >= 3)
-				{
-					break; 
-				}
-				
-				$category = DownloadService::get_categories_manager()->get_categories_cache()->get_category($row['id_category']);
-				
-				$pseudo = "";
-				if ($row['author_custom_name'] != "")
-					$pseudo = $row['author_custom_name'];
-				else
-					$pseudo = $row['display_name'];
-				
-				$tpl->assign_block_vars('item', array(
-					'U_LINK' => DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $row['id'], $row['rewrited_name'])->rel(),
-					'U_IMG' => Url::to_rel($row['picture_url']),
-					'C_IMG' => !empty($row['picture_url']),
-					'TITLE' => $row['name'],
-					'DESC' => $row['short_contents'],
-					'PSEUDO' => $pseudo
-				));
-				$i++;
+				$modules_tpl->assign_block_vars('item', $item);
+				$modules_number++;
+			}
+			else if (strstr($row['cat_rewrited_name'], 'themes') && $themes_number < 3)
+			{
+				$themes_tpl->assign_block_vars('item', $item);
+				$themes_number++;
 			}
 		}
-		$this->view->put('MODULES', $tpl);
-	}
-	
-	private function build_themes_view(SelectQueryResult $results)
-	{
-		$tpl = new FileTemplate('PHPBoostOfficial/themes.tpl');
-		$i = 0;
-		foreach ($results as $row)
-		{
-			if ($row['id_category'] == '37' || $row['id_category'] == '42' || $row['id_category'] == '46')
-			{
-				if ($i >= 3)
-				{
-					break; 
-				}
-				
-				$category = DownloadService::get_categories_manager()->get_categories_cache()->get_category($row['id_category']);
-
-				$pseudo = "";
-				if ($row['author_custom_name'] != "")
-					$pseudo = $row['author_custom_name'];
-				else
-					$pseudo = $row['display_name'];
-				
-				$tpl->assign_block_vars('item', array(
-					'U_LINK' => DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $row['id'], $row['rewrited_name'])->rel(),
-					'U_IMG' => Url::to_rel($row['picture_url']),
-					'C_IMG' => !empty($row['picture_url']),
-					'TITLE' => $row['name'],
-					'DESC' => $row['short_contents'],
-					'PSEUDO' => $pseudo
-				));
-				$i++;
-			}
-		}
-		$this->view->put('THEMES', $tpl);
+		$results->dispose();
+		
+		$this->view->put_all(array(
+			'MODULES' => $modules_tpl,
+			'THEMES' => $themes_tpl,
+		));
 	}
 	
 	private function build_feed_news_view()
@@ -183,6 +143,19 @@ class PHPBoostOfficialHomeController extends ModuleController
 		}
 		
 		$this->view->put('PARTNERS', $tpl);
+	}
+	
+	private function add_google_analytics_identifier()
+	{
+		if (ModulesManager::is_module_installed('GoogleAnalytics') && ModulesManager::is_module_activated('GoogleAnalytics'))
+		{
+			$cookiebar_config = CookieBarConfig::load();
+			$identifier = GoogleAnalyticsConfig::load()->get_identifier();
+			$this->view->put_all(array(
+				'C_GOOGLEANALYTICS_IDENTIFIER' => !empty($identifier) && $cookiebar_config->is_cookiebar_enabled() && $cookiebar_config->get_cookiebar_tracking_mode() == CookieBarConfig::TRACKING_COOKIE && AppContext::get_request()->get_cookie('pbt-cookiebar-choice', 0) == 1,
+				'GOOGLEANALYTICS_IDENTIFIER' => $identifier
+			));
+		}
 	}
 	
 	private function init()
