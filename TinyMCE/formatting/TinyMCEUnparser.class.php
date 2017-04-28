@@ -256,7 +256,10 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	private function unparse_bbcode_tags()
 	{
 		$array_preg = array(
-			'`<abbr title="([^"]+)">(.*)</abbr>`isuU',
+			'`<acronym class="formatter-acronym">(.*)</acronym>`isuU',
+			'`<acronym title="([^"]+)?" class="formatter-acronym">(.*)</acronym>`isuU',
+			'`<abbr class="formatter-abbr">(.*)</abbr>`isuU',
+			'`<abbr title="([^"]+)?" class="formatter-abbr">(.*)</abbr>`isuU',
 			'`<a href="mailto:(.*)">(.*)</a>`isuU',
 			'`<audio controls><source src="(.*)" /></audio>`isuU',
 			'`\[\[MEDIA\]\]insertSoundPlayer\(\'([^\']+)\'\);\[\[/MEDIA\]\]`suU',
@@ -286,7 +289,10 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		);
 
 		$array_preg_replace = array(
+			"[acronym]$1[/acronym]",
 			"[acronym=$1]$2[/acronym]",
+			"[abbr]$1[/abbr]",
+			"[abbr=$1]$2[/abbr]",
 			"[mail=$1]$2[/mail]",
 			"[sound]$1[/sound]",
 			"[sound]$1[/sound]",

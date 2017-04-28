@@ -100,7 +100,14 @@ pre {
 	white-space: pre-wrap;
 }
 
-abbr, a.wikipedia-link {
+abbr, acronym {
+	cursor: help;
+	font-variant: none;
+	text-decoration: none;
+	border-bottom: 1px dotted #CCCCCC;
+}
+
+a.wikipedia-link {
 	position: relative;
 	border-bottom: 1px dotted #CCCCCC;
 	cursor: help;

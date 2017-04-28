@@ -195,6 +195,8 @@ function XMLHttpRequest_preview(field)
 						<li><a href="" onclick="{DISABLED_B}insertbbcode('[p]', '[/p]', '{FIELD}');bb_hide_block('3', '{FIELD}', 0);return false;" title="{L_CONTAINER} {L_PARAGRAPH}"> {L_PARAGRAPH} </a></li>
 						<li><a href="" onclick="{DISABLED_B}insertbbcode('[block]', '[/block]', '{FIELD}');bb_hide_block('3', '{FIELD}', 0);return false;" title="{L_CONTAINER} {L_BLOCK}"> {L_BLOCK} </a></li>
 						<li><a href="" onclick="{DISABLED_B}insertbbcode('[fieldset]', '[/fieldset]', '{FIELD}');bb_hide_block('3', '{FIELD}', 0);return false;" title="{L_CONTAINER} {L_FIELDSET}"> {L_FIELDSET} </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[acronym=]', '[/acronym]', '{FIELD}');bb_hide_block('3', '{FIELD}', 0);return false;" title="{L_CONTAINER} {L_ACRONYM}"> {L_ACRONYM} </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[abbr=]', '[/abbr]', '{FIELD}');bb_hide_block('3', '{FIELD}', 0);return false;" title="{L_CONTAINER} {L_ABBR}"> {L_ABBR} </a></li>
 					</ul>
 				</div>
 			</li>

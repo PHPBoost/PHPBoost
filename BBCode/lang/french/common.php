@@ -56,6 +56,8 @@ $lang['bb_container'] = 'Conteneur';
 $lang['bb_block'] = 'Bloc';
 $lang['bb_fieldset'] = 'Bloc champs';
 $lang['bb_paragraph'] = 'Paragraphe';
+$lang['bb_acronym'] = 'Acronyme';
+$lang['bb_abbr'] = 'Abréviation';
 $lang['bb_style'] = 'Style [style=x]texte[/style]';
 $lang['bb_hide'] = 'Texte Caché';
 $lang['bb_member'] = 'Membre';
