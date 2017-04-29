@@ -202,7 +202,7 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('		# Turn on IE8-IE9 XSS prevention tools');
 		$this->add_line('		Header set X-XSS-Protection "1; mode=block"');
 		$this->add_line('		# Prevent mime based attacks');
-		$this->add_line('		Header set X-Content-Type-Options "nosniff"');
+		$this->add_line('		Header always set X-Content-Type-Options "nosniff"');
 		$this->add_line('		# Use this to force IE to hide that annoying browser compatibility button in the address bar.');
 		$this->add_line('		# IE=edge means IE should use the latest (edge) version of its rendering engine.');
 		$this->add_line('		# chrome=1 means IE should use the Chrome rendering engine if installed.');
