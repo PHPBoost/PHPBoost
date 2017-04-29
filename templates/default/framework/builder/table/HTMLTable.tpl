@@ -34,7 +34,7 @@
 	# IF C_DISPLAY_FOOTER #
 	<tfoot>
 		<tr>
-			<th colspan="{NUMBER_OF_COLUMNS}">
+			<th colspan="{NUMBER_OF_COLUMNS}" class="html-table-footer# IF C_FOOTER_CSS_CLASSES # {FOOTER_CSS_CLASSES}# ENDIF #">
 				<div class="html-table-nbr-elements">
 					<span>
 						{NUMBER_OF_ELEMENTS}

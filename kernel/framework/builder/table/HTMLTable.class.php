@@ -177,7 +177,9 @@ class HTMLTable extends AbstractHTMLElement
 			'U_TABLE_DEFAULT_OPIONS' => $this->parameters->get_default_table_url(),
 			'C_NB_ROWS_OPTIONS' => $has_nb_rows_options,
 			'C_HAS_ROWS' => !empty($this->rows),
-			'C_DISPLAY_FOOTER' => $this->model->is_footer_displayed() && !empty($this->rows)
+			'C_DISPLAY_FOOTER' => $this->model->is_footer_displayed() && !empty($this->rows),
+			'C_FOOTER_CSS_CLASSES' => $this->model->has_footer_css_class(),
+			'FOOTER_CSS_CLASSES' => $this->model->get_footer_css_class()
 		));
 
 		if ($has_nb_rows_options)

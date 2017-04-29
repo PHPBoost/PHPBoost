@@ -66,6 +66,7 @@ class AdminErrorsController404List extends AdminController
 		$table = new HTMLTable($table_model, 'table-fixed error-list404');
 		
 		$table_model->set_caption($this->lang['404_list']);
+		$table_model->set_footer_css_class('footer-error-list404');
 		
 		$results = array();
 		$result = $table_model->get_sql_results();

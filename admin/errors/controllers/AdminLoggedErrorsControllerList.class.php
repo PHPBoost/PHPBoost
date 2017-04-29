@@ -69,6 +69,7 @@ class AdminLoggedErrorsControllerList extends AdminController
 		$table = new HTMLTable($table_model, 'table-fixed error-list');
 		
 		$table_model->set_caption($this->lang['logged_errors_list']);
+		$table_model->set_footer_css_class('footer-error-list');
 		
 		$br = new BrHTMLElement();
 		

@@ -48,6 +48,7 @@ class HTMLTableModel
 	private $filters = array();
 	private $permanent_filters = array();
 	private $display_footer = true;
+	private $footer_css_class = '';
 
 	/**
 	 * @var HTMLTableColumn[]
@@ -226,6 +227,26 @@ class HTMLTableModel
 	public function hide_footer()
 	{
 		$this->display_footer = false;
+	}
+	
+	public function has_footer_css_class()
+	{
+		return !empty($this->footer_css_class);
+	}
+	
+	public function get_footer_css_class()
+	{
+		return $this->footer_css_class;
+	}
+	
+	public function set_footer_css_class($class)
+	{
+		$this->footer_css_class = $class;
+	}
+
+	public function add_footer_css_class($class)
+	{
+		$this->footer_css_class .= ' ' . $class;
 	}
 
 	public function set_nb_rows_options(array $nb_rows_options)
