@@ -232,7 +232,7 @@ class BBCodeParser extends ContentFormattingParser
 			'sub' => '<sub>$1</sub>',
 			'color' => "<span style=\"color:$1;\">$2</span>",
 			'bgcolor' => "<span style=\"background-color:$1;\">$2</span>",
-			'size' => "<span style=\"font-size: $1;\">$2</span>",
+			'size' => "<span style=\"font-size: $1px;\">$2</span>",
 			'font' => "<span style=\"font-family: $1;\">$2</span>",
 			'pre' => "<pre>$1</pre>",
 			'align' => "<p style=\"text-align: $1;\">$2</p>",
