@@ -124,7 +124,7 @@ elseif ($delete > 0)
 	define('TITLE', $MEDIA_LANG['delete_media']);
 	require_once('../kernel/header.php');
 
-	AppContext::get_response()->redirect('media' . url('.php?cat=' . $media['idcat'], '-' . $media['idcat'] . '.php'));
+	AppContext::get_response()->redirect('media' . url('.php?cat=' . $media['idcat'], '-0-' . $media['idcat'] . '.php'));
 }
 // Formulaire d'ajout ou d'édition.
 elseif ($add >= 0 && !$submit || $edit > 0)
