@@ -125,6 +125,7 @@ class AdminGoogleMapsConfigController extends AdminModuleController
 		$response = new AdminMenuDisplayResponse($tpl);
 		$response->set_title($title);
 		$response->add_link($this->lang['config.title'], GoogleMapsUrlBuilder::configuration());
+		$response->add_link(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('GoogleMaps')->get_configuration()->get_documentation());
 		$env = $response->get_graphical_environment();
 		$env->set_page_title($title);
 		
