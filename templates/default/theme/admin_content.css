@@ -456,10 +456,6 @@ ul.pagination-block-bis li a.next-page:hover {
 	font-style: italic;
 }
 
-.sortable-block .sortable-title img {
-	cursor: move;
-}
-
 .sortable-block fieldset {
 	padding: 0 30px;
 }
