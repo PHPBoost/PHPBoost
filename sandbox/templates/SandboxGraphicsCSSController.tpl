@@ -356,13 +356,14 @@
 	</header>
 	<article class="content">
 		<h4>{@css.blocks.large}</h4>
-		<article class="block">
-			<header><h3>{@css.block.title}</h3></header>			
-			<div class="content">
-				{@framework.lorem.medium}
-			</div>			
-		</article>
-
+		<div class="elements-container columns-1" style="overflow: hidden;">
+			<article class="block">
+				<header><h3>{@css.block.title}</h3></header>			
+				<div class="content">
+					{@framework.lorem.medium}
+				</div>			
+			</article>
+		</div>
 		<h4>{@css.blocks.medium}</h4>
 		<div class="elements-container columns-2" style="overflow: hidden;">
 			<article class="block">
