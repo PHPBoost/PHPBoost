@@ -108,7 +108,7 @@ class ModulesManager
 	
 	public static function callback_sort_modules_by_name(Module $module1, Module $module2)
 	{
-		if ($module1->get_configuration()->get_name() > $module2->get_configuration()->get_name())
+		if (TextHelper::strtolower($module1->get_configuration()->get_name()) > TextHelper::strtolower($module2->get_configuration()->get_name()))
 		{
 			return 1;
 		}

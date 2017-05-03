@@ -144,7 +144,7 @@ class AdminThemesNotInstalledListController extends AdminController
 	
 	private static function callback_sort_themes_by_name(Theme $theme1, Theme $theme2)
 	{
-		if ($theme1->get_configuration()->get_name() > $theme2->get_configuration()->get_name())
+		if (TextHelper::strtolower($theme1->get_configuration()->get_name()) > TextHelper::strtolower($theme2->get_configuration()->get_name()))
 		{
 			return 1;
 		}

@@ -105,7 +105,7 @@ class LangsManager
 	
 	public static function callback_sort_langs_by_name(Lang $lang1, Lang $lang2)
 	{
-		if ($lang1->get_configuration()->get_name() > $lang2->get_configuration()->get_name())
+		if (TextHelper::strtolower($lang1->get_configuration()->get_name()) > TextHelper::strtolower($lang2->get_configuration()->get_name()))
 		{
 			return 1;
 		}
