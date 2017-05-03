@@ -289,22 +289,49 @@ function bbcode_list(field)
 function bbcode_url(field, prompt_text)
 {
 	var url = prompt(prompt_text, '');
-	if( url != null)
+	if( url != "")
 		insertbbcode('[url=' + url + ']', '[/url]', field);
 }
 
 function bbcode_lightbox(field, prompt_text)
 {
 	var url = prompt(prompt_text, '');
-	if( url != null)
-		insertbbcode('[lightbox=' + url + '][img style="max-width:150px;"]' + url, '[/img][/lightbox]', field);
+	if( url != "")
+		insertbbcode('[lightbox=' + url + '][img style="max-width: 150px;"]' + url, '[/img][/lightbox]', field);
 }
 
 function bbcode_anchor(field, prompt_text)
 {
 	var anchor = prompt(prompt_text, '');
-	if( anchor != null)
+	if( anchor != "")
 		insertbbcode('[anchor=' + url_encode_rewrite(anchor) + ']', '[/anchor]', field);
 	else
 		insertbbcode('[anchor]', '[/anchor]', field);
+}
+
+function bbcode_abbr(field, prompt_text)
+{
+	var desc = prompt(prompt_text, '');
+	if( desc != "") 
+		insertbbcode('[abbr=' + desc + ']', '[/abbr]', field);
+	else
+		insertbbcode('[abbr]', '[/abbr]', field);
+}
+
+function bbcode_acronym(field, prompt_text)
+{
+	var desc = prompt(prompt_text, '');
+	if( desc != "") 
+		insertbbcode('[acronym=' + desc + ']', '[/acronym]', field);
+	else
+		insertbbcode('[acronym]', '[/acronym]', field);
+}
+
+function bbcode_fieldset(field, prompt_text)
+{
+	var legend = prompt(prompt_text, '');
+	if( legend != "")
+		insertbbcode('[fieldset legend=' + legend + ']', '[/fieldset]', field);
+	else
+		insertbbcode('[fieldset]', '[/fieldset]', field);
 }
