@@ -152,7 +152,7 @@
 		</div>
 		
 		<div class="pbt-box-largest">
-			<div class="formatter-container formatter-hide" onclick="bb_hide(this)">
+			<div class="formatter-container formatter-hide no-js" onclick="bb_hide(this)">
 				<span class="formatter-title title-perso">{@bbcode.hidden} :</span>
 				<div class="formatter-content">
 					{@framework.lorem.medium}
