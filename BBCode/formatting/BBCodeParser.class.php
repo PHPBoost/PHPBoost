@@ -256,7 +256,7 @@ class BBCodeParser extends ContentFormattingParser
 			'url4' => '$1<a href="$2">$2</a>$3',
 			'youtube1' => '[[MEDIA]]insertYoutubePlayer(\'$3\', $1, $2);[[/MEDIA]]',
 			'youtube2' => '[[MEDIA]]insertYoutubePlayer(\'$1\', 560, 315);[[/MEDIA]]',
-			'lightbox' => '<a href="$1" data-lightbox="formatter">$2</a>',
+			'lightbox' => '<a href="$1" data-lightbox="formatter" class="formatter-lightbox">$2</a>',
 			'member' => '[[MEMBER]]$1[[/MEMBER]]',
 			'moderator' => '[[MODERATOR]]$1[[/MODERATOR]]',
 		);

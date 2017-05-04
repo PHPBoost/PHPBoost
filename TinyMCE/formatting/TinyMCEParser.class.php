@@ -666,7 +666,7 @@ class TinyMCEParser extends ContentFormattingParser
 			'url' => "$1<a href=\"$2\">$2</a>$3",
 			'url2' => "$1<a href=\"http://$2\">$2</a>$3",
 			'mail' => "$1<a href=\"mailto:$2\">$2</a>$3",
-			'lightbox' => '<a href="$1" data-lightbox="formatter">$2</a>',
+			'lightbox' => '<a href="$1" data-lightbox="formatter" class="formatter-lightbox">$2</a>',
 			'member' => '[[MEMBER]]$1[[/MEMBER]]',
 			'moderator' => '[[MODERATOR]]$1[[/MODERATOR]]',
 		);

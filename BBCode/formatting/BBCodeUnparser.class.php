@@ -156,8 +156,8 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			'`\[\[MEDIA\]\]insertSwfPlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`suU',
 			'`\[\[MEDIA\]\]insertYoutubePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`suU',
 			'`\[\[MATH\]\](.+)\[\[/MATH\]\]`suU',
-			'`<a href="([^"]+)" rel="lightbox\[2\]">(.*)</a>`isuU',
-			'`<a href="([^"]+)" data-lightbox="formatter">(.*)</a>`isuU',
+			'`<a href="([^"]+)" rel="lightbox\[2\]" class="formatter-lightbox">(.*)</a>`isuU',
+			'`<a href="([^"]+)" data-lightbox="formatter" class="formatter-lightbox">(.*)</a>`isuU',
 			'`\[\[MEMBER\]\](.+)\[\[/MEMBER\]\]`suU',
 			'`\[\[MODERATOR\]\](.+)\[\[/MODERATOR\]\]`suU',
 		);
