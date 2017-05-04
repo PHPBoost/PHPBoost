@@ -282,8 +282,8 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			'`<!-- START HTML -->' . "\n" . '(.+)' . "\n" . '<!-- END HTML -->`isuU',
 			'`\[\[MATH\]\](.+)\[\[/MATH\]\]`suU',
 			'`<p class="float-(left|right)">(.*)</p>`isuU',
-			'`<a href="([^"]+)" rel="lightbox\[2\]" class="formatter-lightbox">(.*)</a>`isuU',
-			'`<a href="([^"]+)" data-lightbox="formatter" class="formatter-lightbox">(.*)</a>`isuU',
+			'`<a href="([^"]+)" rel="lightbox\[2\]"(?: class="formatter-lightbox")?>(.*)</a>`isuU',
+			'`<a href="([^"]+)" data-lightbox="formatter"(?: class="formatter-lightbox")?>(.*)</a>`isuU',
 			'`\[\[MEMBER\]\](.+)\[\[/MEMBER\]\]`suU',
 			'`\[\[MODERATOR\]\](.+)\[\[/MODERATOR\]\]`suU',
 		);
