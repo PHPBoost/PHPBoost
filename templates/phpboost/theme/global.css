@@ -76,12 +76,6 @@ h3.formatter-title { margin-left: 1.5rem; }
 h4.formatter-title { margin-left: 3rem; }
 h5.formatter-title { margin-left: 5rem; }
 
-h4.formatter-title,
-h5.formatter-title {
-	border-bottom: 1px solid #366393;
-}
-
-
 /* -- Mise en forme du contenu -- */
 /* ------------------------------ */
 
