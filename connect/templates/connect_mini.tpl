@@ -43,11 +43,11 @@
 				<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();" class="form-element">
 					<label for="login">
 						<span>{L_PSEUDO}</span>
-						<input type="text" id="login" name="login" title="{L_PSEUDO}" placeholder="{L_PSEUDO}" maxlength="25">
+						<input type="text" id="login" name="login" title="{L_PSEUDO}" placeholder="{L_PSEUDO}">
 					</label>
 					<label for="password">
 						<span>{L_PASSWORD}</span>
-						<input type="password" id="password" name="password" title="{L_PASSWORD}" placeholder="{L_PASSWORD}" maxlength="30">
+						<input type="password" id="password" name="password" title="{L_PASSWORD}" placeholder="{L_PASSWORD}">
 					</label>
 					<label for="autoconnect">
 						<span>{L_AUTOCONNECT}</span>
