@@ -176,7 +176,7 @@ function sendCookie(name, value)
 {
 	var date = new Date();
 	date.setMonth(date.getMonth() + 1); //1 mois de validité.
-	document.cookie = name + '=' + value + '; expires = ' + date.toGMTString() + '; path = "/"';
+	document.cookie = name + '=' + value + '; Expires=' + date.toGMTString() + '; Path=/';
 }
 
 //Récupère la valeur du cookie.
