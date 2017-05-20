@@ -515,8 +515,8 @@ class UpdateServices
 	
 	public static function recount_serialized_bytes($text)
 	{
-		mb_internal_encoding("UTF-8");
-		mb_regex_encoding("UTF-8");
+		if (function_exists('mb_internal_encoding')) { mb_internal_encoding('UTF-8'); }
+		if (function_exists('mb_regex_encoding')) { mb_regex_encoding('UTF-8'); }
 
 		mb_ereg_search_init($text, 's:[0-9]+:"');
 
