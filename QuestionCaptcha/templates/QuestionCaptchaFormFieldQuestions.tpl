@@ -1,9 +1,9 @@
 <script>
 <!--
 var QuestionCaptchaFormFieldQuestions = function(){
-	this.integer = ${escapejs(NBR_QUESTIONS)};
-	this.id_input = ${escapejs(HTML_ID)};
-	this.max_input = ${escapejs(MAX_INPUT)};
+	this.integer = {NBR_FIELDS};
+	this.id_input = ${escapejs(ID)};
+	this.max_input = {MAX_INPUT};
 };
 
 QuestionCaptchaFormFieldQuestions.prototype = {

@@ -2,7 +2,7 @@
 function MultipleFilePicker(){
 	this.integer = 2;
 	this.id_input = ${escapejs(HTML_ID)};
-	this.max_input = ${escapejs(MAX_INPUT)};
+	this.max_input = {MAX_INPUT};
 };
 MultipleFilePicker.prototype = {
 	add_file_input : function () {
