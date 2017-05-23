@@ -30,16 +30,16 @@ body {
 /* -- Gestion de la taille du site -- */
 /* ---------------------------------- */
 
-header#header,
-div#global,
-footer#footer {
+#header,
+#global,
+#footer {
 	width: 100%;
 }
 
 @media (min-width: 768px) {
-	header#header,
-	div#global,
-	footer#footer {
+	#header,
+	#global,
+	#footer {
 		max-width: 1024px;
 	}
 }
@@ -56,31 +56,31 @@ footer#footer {
 	Purple => #080437; #2E278B; #47409D; #645CB1; #8F8ACF;
 */
 
-body 						{ background-color: #F1F1F1; }
-header#header, div#global 	{ background-color: #FAFAFA; }
-div#sub-header 				{ background-color: #366493; }
-footer#footer 				{ background-color: #81A4C8; }
+body 					{ background-color: #F1F1F1; }
+#header, #global 		{ background-color: #FAFAFA; }
+#sub-header 			{ background-color: #366493; }
+#footer 				{ background-color: #81A4C8; }
 
-div#top-header, div#global 	{ border-color: #E1E1E1; }
-footer#footer 				{ border-color: #366493; }
+#top-header, #global 	{ border-color: #E1E1E1; }
+#footer 				{ border-color: #366493; }
+.footer-infos			{ border-color: #366493; }
 
-
-body 						{ color: #021B34; }
-a#site-name 				{ color: #366493; }
-span#site-slogan 			{ color: #81A4C8; }
-div#sub-header,
-div#sub-header a 			{ color: #FFFFFF; }
-footer .footer-infos span 	{ color: #366493; }
-footer .footer-infos span a { color: #021B34; }
+body 					{ color: #021B34; }
+#site-name 				{ color: #366493; }
+#site-slogan 			{ color: #81A4C8; }
+#sub-header,
+#sub-header a 			{ color: #FFFFFF; }
+.footer-infos span 		{ color: #366493; }
+.footer-infos span a 	{ color: #021B34; }
 
 /* -- En-tete de page - Header -- */
 /* ------------------------------ */
-header#header {
+#header {
 	margin: auto;
 }
 
 /* --- Partie superieure du header --- */
-div#top-header {
+#top-header {
 	position: relative;
 	display: flex;
 	display: -ms-flexbox;
@@ -94,20 +94,20 @@ div#top-header {
 	border-style: solid;
 }
 
-div#top-header-content {
+#top-header-content {
 	flex: 1 1 auto;
 	-ms-flex: 1 1 auto;
 	-webkit-flex: 1 1 auto;
 }
 
 @media (max-width: 768px) {
-	div#top-header {
+	#top-header {
 		flex-direction: column;
 		-ms-flex-direction: column;
 		-webkit-flex-direction: column;
 	}
 	
-	div#top-header-content {
+	#top-header-content {
 		align-self: flex-end;
 		-ms-align-self: flex-end;
 		-webkit-align-self: flex-end;
@@ -115,16 +115,16 @@ div#top-header-content {
 }
 
 /* --- Partie inferieur du header --- */
-div#sub-header {
+#sub-header {
 	min-height: 35px;
 }
 
-div#sub-header-content{
+#sub-header-content{
 	margin: auto;
 }
 
 /* --- Logo et Nom du site web --- */
-div#site-infos {
+#site-infos {
 	display: flex;
 	display: -ms-flexbox;
 	display: -webkit-flex;
@@ -133,7 +133,7 @@ div#site-infos {
 	flex: 1 1 auto;
 }
 
-div#site-logo {
+#site-logo {
 	margin: 0 1em 0 0;
 	width: 60px;
 	height: 60px;
@@ -146,11 +146,11 @@ div#site-logo {
 	-webkit-flex: 0 0 auto;
 }
 
-div#site-name-container {
+#site-name-container {
 	margin: 0.4em 0 0 0;
 }
 
-a#site-name {
+#site-name {
 	font-size: 3em;
 	font-weight: bold;
 	line-height: 1em;
@@ -158,7 +158,7 @@ a#site-name {
 	text-decoration: none;
 }
 
-span#site-slogan {
+#site-slogan {
 	display: block;
 	padding: 0.1em 0 0 0.1em;
 	font-size: 1em;
@@ -166,16 +166,16 @@ span#site-slogan {
 }
 
 @media (min-width: 769px) {
-	div#site-logo {
+	#site-logo {
 		width: 90px;
 		height: 90px;
 	}
 
-	div#site-name-container {
+	#site-name-container {
 		margin: 1em 0 0 0;
 	}
 
-	a#site-name {
+	#site-name {
 		font-size: 4em;
 	}
 	
@@ -183,7 +183,7 @@ span#site-slogan {
 
 /* -- Conteneur global du site -- */
 /* ------------------------------ */
-div#global {
+#global {
 	display: flex;
 	display: -ms-flexbox;
 	display: -webkit-flex;
@@ -196,7 +196,7 @@ div#global {
 	border-style: solid;
 }
 
-div#main {
+#main {
 	padding: 0 0 10px 0;
 	max-width: 100%;
 	order : 1;
@@ -204,31 +204,31 @@ div#main {
 	-webkit-flex-order: 1;
 }
 
-aside#menu-left,
-aside#menu-right {
+#menu-left,
+#menu-right {
 	width: 100%;
 }
 
-aside#menu-left  {
+#menu-left  {
 	order : 2;
 	-ms-flex-order: 2;
 	-webkit-flex-order: 2;
 }
-aside#menu-right {
+#menu-right {
 	order : 3;
 	-ms-flex-order: 3;
 	-webkit-flex-order: 3;
 }
 
 @media (min-width: 769px) {
-	div#global {
+	#global {
 		min-height: 100vh;
 		flex-direction: row;
 		-ms-flex-direction: row;
 		-webkit-flex-direction: row;
 	}
 
-	div#main {
+	#main {
 		padding: 0 10px;
 		order : 2;
 		-ms-flex-order: 2;
@@ -237,17 +237,17 @@ aside#menu-right {
 		-ms-flex: 1 0 100%;
 	}
 
-	aside#menu-left,
-	aside#menu-right {
+	#menu-left,
+	#menu-right {
 		width: 200px;
 	}
 
-	aside#menu-left  { 
+	#menu-left  { 
 		order : 1;
 		-ms-flex-order: 1;
 		-webkit-flex-order: 1;
 	}
-	aside#menu-right { 
+	#menu-right { 
 		order : 3;
 		-ms-flex-order: 3;
 		-webkit-flex-order: 3;
@@ -265,7 +265,7 @@ aside#menu-right {
 	}
 }
 
-div#top-footer {
+#top-footer {
 	padding: 0.5em 0;
 }
 
@@ -274,22 +274,22 @@ div#top-footer {
 /* ------------------------ */
 
 /* --- Contenu central --- */
-div#main-content {
+#main-content {
 	padding: 1.5em 0.8em;
 }
 
-div.block-container {
+.block-container {
 	margin-top: 15px;
 }
 
 /* --- Emplacement au dessus et en dessous du contenu de la page --- */
-div#top-content {
+#top-content {
 	margin: 0 0 2% 0;
 	padding: 0.1em 0.8em;
 }
 
 /* --- Emplacement au dessus du pied de page --- */
-div#bottom-content {
+#bottom-content {
 	margin: 2% 0 0 0;
 	padding: 0.1em 0.8em;
 }
@@ -297,26 +297,29 @@ div#bottom-content {
 
 /* -- Pied de page - Footer -- */
 /* --------------------------- */
-footer#footer {
+#footer {
 	margin: auto;
 	clear: both;
 	border-width: 4px 0 0 0;
 	border-style: solid;
 }
 
-footer#footer .footer-content {
+.footer-content {
 	margin: 0 auto 0 auto;
 	padding: 1.5em 0;
-	border-bottom: 2px groove #444444;
 }
 
-footer#footer .footer-infos {
+.footer-infos {
+	margin: auto;
 	padding-top: 10px;
 	min-height: 40px;
+	width: 400px;
+	border-width: 1px 0 0 0;
+	border-style: solid;
 	text-align: center;
 }
 
-footer#footer .footer-infos span {
+.footer-infos span {
 	font-size: 0.8em;
 }
 
@@ -325,7 +328,7 @@ footer#footer .footer-infos span {
 /* ----------------------------------- */
 
 /* --- Compteur de visites --- */
-div#visit-counter {
+#visit-counter {
 	position: absolute;
 	right: 0;
 	bottom : 1em;
@@ -335,21 +338,21 @@ div#visit-counter {
 }
 
 /* --- Barre de lien rapide --- */
-nav#breadcrumb {
+#breadcrumb {
 	margin: 0 0 20px 10px;
 	text-indent: 10px;
 }
 
-nav#breadcrumb ol {
+#breadcrumb ol {
 	margin: 0;
 	list-style: none;
 }
 
-nav#breadcrumb ol li {
+#breadcrumb li {
 	display: inline;
 }
 
-nav#breadcrumb ol li:not(.current):after {
+#breadcrumb li:not(.current):after {
 	content: '/';
 	color: #616161;
 }
@@ -480,7 +483,7 @@ nav#breadcrumb ol li:not(.current):after {
 	margin: 0px 0 20px 0px;
 }
 
-footer#cookiebar-change-choice {
+#cookiebar-change-choice {
 	margin-top: 10px;
 	text-align: center;
 }
