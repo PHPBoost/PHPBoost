@@ -48,14 +48,16 @@
 			multiTg();
 
 			resizeFix = function() {
-				if ($(window).width() > settings.breakpoint) {
+				$smallscreen = window.matchMedia('(max-width: ' + settings.breakpoint + 'px)').matches;
+
+				if (!$smallscreen) {
 					cssmenu.find('ul').removeClass('close');
 					cssmenu.find('ul').removeClass('open');
 					cssmenu.removeClass('small-screen');
 					cssmenu.find('#menu-button-' + menu_title).removeClass('menu-opened');
 				}
 	
-				if ($(window).width() <= settings.breakpoint && !cssmenu.hasClass('small-screen')) {
+				if ($smallscreen && !cssmenu.hasClass('small-screen')) {
 
 					if (settings.static) {
 						cssmenu.find('ul').addClass('open');
