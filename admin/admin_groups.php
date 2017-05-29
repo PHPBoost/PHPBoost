@@ -225,7 +225,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 		$array_group = unserialize(stripslashes($group['auth']));
 			
 		$template->put_all(array(
-			'NAME' => $group['name'],
+			'NAME' => stripslashes($group['name']),
 			'IMG' => $group['img'],
 			'GROUP_ID' => $idgroup,
 			'IMG_GROUPS' => $img_groups,
@@ -390,9 +390,9 @@ else //Liste des groupes.
 			'C_GROUP_COLOR' => !empty($row['color']),
 			'U_USER_GROUP' => UserUrlBuilder::group($row['id'])->rel(),
 			'ID' => $row['id'],
-			'NAME' => $row['name'],
+			'NAME' => stripslashes($row['name']),
 			'GROUP_COLOR' => '#' . $row['color'],
-			'IMAGE' => !empty($row['img']) ? '<img src="'. PATH_TO_ROOT .'/images/group/' . $row['img'] . '" alt="' . $row['name'] . '" />' : ''
+			'IMAGE' => !empty($row['img']) ? '<img src="'. PATH_TO_ROOT .'/images/group/' . $row['img'] . '" alt="' . stripslashes($row['name']) . '" />' : ''
 		));
 	}
 	$result->dispose();
