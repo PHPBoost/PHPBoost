@@ -47,7 +47,7 @@ class GroupsCache implements CacheData
 		while ($row = $result->fetch())
 		{
 			$this->groups[$row['id']] = array(
-				'name' => $row['name'],
+				'name' => stripslashes($row['name']),
 				'img' => $row['img'],
 				'color' => $row['color'],
 				'auth' => TextHelper::unserialize(stripslashes($row['auth'])),
