@@ -91,6 +91,8 @@ class Pagination
 		$this->tpl->put_all(array(
 			'C_LIGHT' => $type == self::LIGHT_PAGINATION,
 			'C_FULL' => $type == self::FULL_PAGINATION,
+			'L_PREVIOUS_PAGE' => LangLoader::get_message('pagination.previous', 'common'),
+			'L_NEXT_PAGE'     => LangLoader::get_message('pagination.next', 'common')
 		));
 	}
 
@@ -127,11 +129,12 @@ class Pagination
 	private function add_pagination_page($name, $page_number, $is_current_page = false)
 	{
 		$this->tpl->assign_block_vars('page', array(
-			'URL' => $this->get_url($page_number),
-			'NAME' => $name == self::PREV_LINK || $name == self::NEXT_LINK ? '' : $name,
-			'C_CURRENT_PAGE' => $is_current_page,
-			'C_PREVIOUS' => $name == self::PREV_LINK,
-			'C_NEXT' => $name == self::NEXT_LINK,
+			'URL'             => $this->get_url($page_number),
+			'NAME'            => $name == self::PREV_LINK || $name == self::NEXT_LINK ? '' : $name,
+			'C_CURRENT_PAGE'  => $is_current_page,
+			'L_PAGE'  		  => $is_current_page ? LangLoader::get_message('pagination.current', 'common') : LangLoader::get_message('pagination.page', 'common') . " " . $page_number,
+			'C_PREVIOUS'      => $name == self::PREV_LINK,
+			'C_NEXT'          => $name == self::NEXT_LINK
 		));
 	}
 

@@ -2,15 +2,15 @@
 	# START page #
 	<li>
 		# IF page.C_PREVIOUS #
-		<a href="{page.URL}" rel="prev" title="" class="prev-page">&laquo;</a>
+		<a href="{page.URL}" rel="prev" title="{L_PREVIOUS_PAGE}" class="prev-page">&laquo;</a>
 		# ENDIF #
 		
 		# IF page.NAME #
-		<a href="{page.URL}" title="" class="# IF page.C_CURRENT_PAGE #current-page# ENDIF #">{page.NAME}</a>
+		<a href="{page.URL}" title="{page.L_PAGE}"# IF page.C_CURRENT_PAGE # class="current-page"# ENDIF #>{page.NAME}</a>
 		# ENDIF #
 		
 		# IF page.C_NEXT #
-		<a href="{page.URL}" rel="next" title="" class="next-page">&raquo;</a>
+		<a href="{page.URL}" rel="next" title="{L_NEXT_PAGE}" class="next-page">&raquo;</a>
 		# ENDIF #
 	</li>
 	# END page #

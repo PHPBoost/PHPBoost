@@ -172,4 +172,10 @@ $lang['authorizations.write'] = 'Write permission';
 $lang['authorizations.contribution'] = 'Contribution permission';
 $lang['authorizations.moderation'] = 'Moderation permission';
 $lang['authorizations.categories_management'] = 'Categories management permission';
+
+//Pagination
+$lang['pagination.previous'] = 'To previous page';
+$lang['pagination.next'] = 'To next page';
+$lang['pagination.current'] = 'The Current page';
+$lang['pagination.page'] = 'To Page';
 ?>
