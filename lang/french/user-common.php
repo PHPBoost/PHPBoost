@@ -270,8 +270,11 @@ Vous avez la possibilité de supprimer tous les cookies déjà stockés sur votr
 $lang['cookiebar.understand']  = 'J\'ai compris';
 $lang['cookiebar.allowed']  = 'Autoriser';
 $lang['cookiebar.declined']  = 'Bloquer';
+$lang['cookiebar.more-title']  = 'Explications sur la gestion des cookies et de la "cookie-bar" (En savoir plus)';
 $lang['cookiebar.more']  = 'En savoir plus';
-
 $lang['cookiebar.cookies'] = 'Cookies';
 $lang['cookiebar.change-choice'] = 'Modifier vos préférences';
+
+//Menu
+$lang['menu.link-to'] = 'Lien vers la page ';
 ?>

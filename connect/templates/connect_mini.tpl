@@ -36,7 +36,7 @@
 	<div class="module-mini-contents connect-contents">
 	# ELSE #
 	<div class="connect-contents">
-		<a href="" class="js-menu-button" onclick="open_submenu('module-connect');return false;" title="{L_CONNECT}"><i class="fa fa-sign-in"></i><span>{L_CONNECT}</span></a>
+		<a href="" class="js-menu-button" onclick="open_submenu('module-connect');return false;"><i class="fa fa-sign-in"></i><span>{L_CONNECT}</span></a>
 	# ENDIF #
 		<div class="connect-containers">
 			<div class="connect-input-container# IF C_VERTICAL # vertical-fieldset# ELSE # horizontal-fieldset# ENDIF #" >
@@ -72,12 +72,12 @@
 				</form>
 				# ENDIF #
 				# IF C_FB_AUTH_ENABLED #
-				<a class="social-connect fb" href="${relative_url(UserUrlBuilder::connect('fb'))}" title="${LangLoader::get_message('facebook-connect', 'user-common')}">
+				<a class="social-connect fb" href="${relative_url(UserUrlBuilder::connect('fb'))}">
 					<i class="fa fa-facebook"></i><span>${LangLoader::get_message('facebook-connect', 'user-common')}</span>
 				</a>
 				# ENDIF #
 				# IF C_GOOGLE_AUTH_ENABLED #
-				<a class="social-connect google" href="${relative_url(UserUrlBuilder::connect('google'))}" title="${LangLoader::get_message('google-connect', 'user-common')}">
+				<a class="social-connect google" href="${relative_url(UserUrlBuilder::connect('google'))}">
 					<i class="fa fa-google-plus"></i><span>${LangLoader::get_message('google-connect', 'user-common')}</span>
 				</a>
 				# ENDIF #

@@ -269,8 +269,11 @@ You can delete all cookies that are already on your computer and you can set mos
 $lang['cookiebar.understand']  = 'Ok';
 $lang['cookiebar.allowed']  = 'Allowed';
 $lang['cookiebar.declined']  = 'Declined';
+$lang['cookiebar.more-title']  = 'Explanations on the management of cookies and the "cookie-bar" (Learn more)';
 $lang['cookiebar.more']  = 'Learn more';
-
 $lang['cookiebar.cookies'] = 'Cookies';
 $lang['cookiebar.change-choice'] = 'Change your preferences';
+
+//Menu
+$lang['menu.link-to'] = 'Link to page ';
 ?>

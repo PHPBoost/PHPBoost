@@ -7,7 +7,7 @@
 			<div class="module-mini-top hidden-small-screens">
 				<h5 class="menu-vertical-{DEPTH}">
 					# IF RELATIVE_URL #
-						<a href="{REL_URL}" title="{TITLE}" class="cssmenu-title">
+						<a href="{REL_URL}" title="{L_TITLE}" class="cssmenu-title">
 						# IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF #{TITLE}</a>
 					# ELSE #
 						# IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF #{TITLE}
@@ -20,7 +20,7 @@
 			<nav id="cssmenu-{ID}" class="cssmenu# IF C_MENU_HORIZONTAL # cssmenu-horizontal# ENDIF ## IF C_MENU_VERTICAL # cssmenu-vertical# ENDIF ## IF C_MENU_STATIC # cssmenu-static# ENDIF ## IF C_MENU_LEFT # cssmenu-left# ENDIF ## IF C_MENU_RIGHT # cssmenu-right# ENDIF ## IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF ## IF C_MENU_WITH_SUBMENU # cssmenu-with-submenu# ENDIF #">
 				# IF NOT C_MENU_CONTAINER #
 					# IF RELATIVE_URL #
-						<a href="{REL_URL}" title="{TITLE}" class="cssmenu-img cssmenu-img-level-{DEPTH}">
+						<a href="{REL_URL}" title="{L_TITLE}" class="cssmenu-img cssmenu-img-level-{DEPTH}">
 						# IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF #</a>
 					# ELSE #
 						# IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" class="cssmenu-img cssmenu-img-level-{DEPTH}" /># ENDIF #
@@ -42,7 +42,7 @@
 	# IF C_NEXT_MENU # <!-- Sub Element for Menu -->
 	<li # IF C_HAS_CHILD #class="has-sub" # ENDIF #>
 		# IF C_URL #
-			<a href="{REL_URL}" title="{TITLE}" class="cssmenu-title"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF #{TITLE}</a>
+			<a href="{REL_URL}" title="{L_TITLE}" class="cssmenu-title"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF #{TITLE}</a>
 		# ELSE #
 			<span class="cssmenu-title"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF#{TITLE}</span>
 		# ENDIF #
@@ -55,7 +55,7 @@
 # ELSE # <!-- Menu Element -->
 	<li>
 		# IF C_URL #
-			<a href="{REL_URL}" title="{TITLE}" class="cssmenu-title"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF #{TITLE}</a>
+			<a href="{REL_URL}" title="{L_TITLE}" class="cssmenu-title"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF #{TITLE}</a>
 		# ELSE #
 			<span class="cssmenu-title"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF#{TITLE}</span>
 		# ENDIF #

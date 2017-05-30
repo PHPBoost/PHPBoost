@@ -102,9 +102,10 @@ class ModuleLink
 		
 		$tpl->put_all(array(
 			'C_HAS_SUB_LINK' => $this->has_sub_link(),
-			'C_IS_ACTIVE' => $this->is_active(),
-			'NAME' => $this->get_name(),
-			'U_LINK' => $this->get_url()->rel(),
+			'C_IS_ACTIVE'    => $this->is_active(),
+			'NAME'           => $this->get_name(),
+			'FULLNAME'       => LangLoader::get_message('menu.link-to', 'user-common') . $this->get_name(),
+			'U_LINK'         => $this->get_url()->rel(),
 		));
 		
 		foreach ($this->get_sub_link() as $element)

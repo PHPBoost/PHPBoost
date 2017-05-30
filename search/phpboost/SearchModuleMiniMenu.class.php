@@ -65,12 +65,13 @@ class SearchModuleMiniMenu extends ModuleMiniMenu
 		MenuService::assign_positions_conditions($tpl, $this->get_block());
 		
 		$tpl->put_all(Array(
-			'TEXT_SEARCHED' => !empty($search) ? stripslashes($search) : '',
+			'TEXT_SEARCHED'                => !empty($search) ? stripslashes($search) : '',
 			'WARNING_LENGTH_STRING_SEARCH' => addslashes($LANG['warning_length_string_searched']),
-			'L_SEARCH' => $LANG['search'],
-			'U_FORM_VALID' => url(TPL_PATH_TO_ROOT . '/search/search.php#results'),
-			'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
-			'U_ADVANCED_SEARCH' => url(TPL_PATH_TO_ROOT . '/search/search.php')
+			'L_SEARCH'                     => $LANG['search'],
+			'L_SEARCH_TITLE'               => $LANG['your_search'],
+			'U_FORM_VALID'                 => url(TPL_PATH_TO_ROOT . '/search/search.php#results'),
+			'L_ADVANCED_SEARCH'            => $LANG['advanced_search'],
+			'U_ADVANCED_SEARCH'            => url(TPL_PATH_TO_ROOT . '/search/search.php')
 		));
 		
 		return $tpl->render();

@@ -32,6 +32,7 @@
 
 //Généralités
 $LANG['title_search'] = 'Recherche';
+$LANG['your_search'] = 'Votre recherche';
 $LANG['search_results'] = 'Résultats de la recherche';
 $LANG['warning_length_string_searched'] = 'La chaine recherchée doit faire au moins 4 caractères !';
 $LANG['search_keywords'] = 'Mots clés';

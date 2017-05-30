@@ -123,6 +123,7 @@ abstract class LinksMenuElement extends Menu
 			'C_MENU' => false,
 			'C_DISPLAY_AUTH' => AppContext::get_current_user()->check_auth($this->get_auth(), Menu::MENU_AUTH_BIT),
 			'TITLE' => $this->title,
+			'L_TITLE' => LangLoader::get_message('menu.link-to', 'user-common') . $this->title,
 			'DEPTH' => $this->depth,
 			'PARENT_DEPTH' => $this->depth - 1,
 			'C_URL' => $this->url,
