@@ -60,9 +60,6 @@ $lang['bb_fieldset_title'] = 'Fieldset : [fieldset legend=title]text[/fieldset]'
 $lang['bb_fieldset_prompt'] = 'Legend of fieldset ?';
 $lang['bb_paragraph'] = 'Paragraph';
 $lang['bb_paragraph_title'] = 'Paragraph : [p]text[/p]';
-$lang['bb_acronym'] = 'Acronyme';
-$lang['bb_acronym_title'] = 'Acronyme : [acronym=description]text[/acronym]';
-$lang['bb_acronym_prompt'] = 'Definition of acronyme ?';
 $lang['bb_abbr'] = 'Abbreviation';
 $lang['bb_abbr_title'] = 'Abbreviation : [abbr=description]text[/abbr]';
 $lang['bb_abbr_prompt'] = 'Definition of abbreviation ?';

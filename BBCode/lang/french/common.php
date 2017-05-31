@@ -60,9 +60,6 @@ $lang['bb_fieldset_title'] = 'Bloc champs : [fieldset legend=titre]texte[/fields
 $lang['bb_fieldset_prompt'] = 'Titre du bloc champs ?';
 $lang['bb_paragraph'] = 'Paragraphe';
 $lang['bb_paragraph_title'] = 'Paragraphe : [p]texte[/p]';
-$lang['bb_acronym'] = 'Acronyme';
-$lang['bb_acronym_title'] = 'Acronyme : [acronym=description]texte[/acronym]';
-$lang['bb_acronym_prompt'] = 'Définition de l\'acronyme ?';
 $lang['bb_abbr'] = 'Abréviation';
 $lang['bb_abbr_title'] = 'Abréviation : [abbr=description]texte[/abbr]';
 $lang['bb_abbr_prompt'] = 'Définition de l\'abréviation ?';

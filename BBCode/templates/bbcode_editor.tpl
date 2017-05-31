@@ -195,7 +195,6 @@ function XMLHttpRequest_preview(field)
 						<li><a href="" onclick="{DISABLED_BLOCK}insertbbcode('[p]', '[/p]', '{FIELD}');bb_hide_block('3', '{FIELD}', 0);return false;" title="{L_BB_CONTAINER} {L_BB_PARAGRAPH_TITLE}"> {L_BB_PARAGRAPH} </a></li>
 						<li><a href="" onclick="{DISABLED_BLOCK}insertbbcode('[block]', '[/block]', '{FIELD}');bb_hide_block('3', '{FIELD}', 0);return false;" title="{L_BB_CONTAINER} {L_BB_BLOCK_TITLE}"> {L_BB_BLOCK} </a></li>
 						<li><a href="" onclick="{DISABLED_BLOCK}bbcode_fieldset('{FIELD}', ${escapejs(L_BB_FIELDSET_PROMPT)});return false;" title="{L_BB_CONTAINER} {L_BB_FIELDSET_TITLE}"> {L_BB_FIELDSET} </a></li>
-						<li><a href="" onclick="{DISABLED_BLOCK}bbcode_acronym('{FIELD}', ${escapejs(L_BB_ACRONYM_PROMPT)});return false;" title="{L_BB_CONTAINER} {L_BB_ACRONYM_TITLE}"> {L_BB_ACRONYM} </a></li>
 						<li><a href="" onclick="{DISABLED_BLOCK}bbcode_abbr('{FIELD}', ${escapejs(L_BB_ABBR_PROMPT)});return false;" title="{L_BB_CONTAINER} {L_BB_ABBR_TITLE}"> {L_BB_ABBR} </a></li>
 					</ul>
 				</div>
