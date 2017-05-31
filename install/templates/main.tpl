@@ -47,14 +47,14 @@ ${resources('install/install')}
 							{@language.change}
 						</h3>
 						<form class="center" action="{U_CHANGE_LANG}" method="post">
-							<p>
+							<label for="change_lang">
 								<select name="new_language" id="change_lang" onchange="document.location='index.php?lang=' + document.getElementById('change_lang').value;">
 									# START lang #
 									<option value="{lang.LANG}" {lang.SELECTED}>{lang.LANG_NAME}</option>
 									# END lang #
 								</select>
 								&nbsp;&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/images/stats/countries/{LANG_IDENTIFIER}.png" alt="{LANG_NAME}" class="valign-middle" />
-							</p>
+							</label>
 							<p id="button_change_lang">
 								<button type="submit" value="true" class="submit">{@change}</button>
 								<input type="hidden" name="token" value="{TOKEN}">
@@ -129,7 +129,7 @@ ${resources('install/install')}
 					# INCLUDE installStep #
 				</article>
 				<footer>
-					{@poweredBy} <a href="http://www.phpboost.com" title="PHPBoost">PHPBoost</a> {@phpboost.rights}
+					{@poweredBy} <a href="http://www.phpboost.com" title="{@phpboost.link}">PHPBoost</a> {@phpboost.rights}
 				</footer>
 			</section>
 	</body>

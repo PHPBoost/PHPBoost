@@ -67,13 +67,13 @@
 			<nav id="breadcrumb" itemprop="breadcrumb">
 				<ol>
 					<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-						<a href="{START_PAGE}" title="{L_INDEX}" itemprop="url">
+						<a href="{START_PAGE}" itemprop="url">
 							<span itemprop="title">{L_INDEX}</span>
 						</a>
 					</li>
 					# START link_bread_crumb #
 					<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb" # IF link_bread_crumb.C_CURRENT # class="current" # ENDIF #>
-						<a href="{link_bread_crumb.URL}" title="{link_bread_crumb.TITLE}" itemprop="url">
+						<a href="{link_bread_crumb.URL}" itemprop="url">
 							<span itemprop="title">{link_bread_crumb.TITLE}</span>
 						</a>
 					</li>
@@ -125,7 +125,7 @@
 
 	<div class="footer-infos">
 		<span>
-			{L_POWERED_BY} <a href="http://www.phpboost.com" title="PHPBoost">PHPBoost</a> {L_PHPBOOST_RIGHT}
+			{L_POWERED_BY} <a href="http://www.phpboost.com" title="{L_PHPBOOST_LINK}">PHPBoost</a> {L_PHPBOOST_RIGHT}
 		</span>
 		# IF C_DISPLAY_BENCH #
 		<span>

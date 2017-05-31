@@ -34,6 +34,7 @@ $lang['module_title'] = 'Shoutbox';
 $lang['module_config_title'] = 'Shoutbox configuration';
 
 $lang['archives'] = 'Archives';
+$lang['archives.link'] = 'Link to shoutbox archives';
 $lang['shoutbox.add'] = 'Add a message';
 $lang['shoutbox.edit'] = 'Message edition';
 

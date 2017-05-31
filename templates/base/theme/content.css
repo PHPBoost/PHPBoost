@@ -608,8 +608,13 @@ body.dragging * {
 	text-align: center;
 }
 
-.module-mini-container h5 {
+.module-mini-container .sub-title {
+	margin-top: 5px;
+	display: block;
+	font-weight: bold;
 	color: #366493;
+	font-size: 1.6rem;
+	font-weight: bold;
 }
 
 .module-mini-contents {

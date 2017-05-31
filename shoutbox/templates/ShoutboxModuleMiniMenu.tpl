@@ -164,4 +164,4 @@ function shoutbox_refresh_messages_box() {
 	</p>
 	# ENDIF #
 # ENDIF #
-<a class="small" href="${relative_url(ShoutboxUrlBuilder::home())}" title="">{@archives}</a>
+<a class="small" href="${relative_url(ShoutboxUrlBuilder::home())}" title="{@archives.link}">{@archives}</a>

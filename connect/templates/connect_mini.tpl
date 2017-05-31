@@ -31,7 +31,7 @@
 
 	# IF C_VERTICAL #
 	<div class="module-mini-top">
-		<h5 class="sub-title">{L_CONNECT}</h5>
+		<div class="sub-title">{L_CONNECT}</div>
 	</div>
 	<div class="module-mini-contents connect-contents">
 	# ELSE #
@@ -100,7 +100,7 @@
 
 	# IF C_VERTICAL #
 	<div class="module-mini-top">
-		<h5 class="sub-title">{L_PRIVATE_PROFIL}</h5>
+		<div class="sub-title">{L_PRIVATE_PROFIL}</div>
 	</div>
 	<div class="module-mini-contents connect-contents">
 	# ELSE # 

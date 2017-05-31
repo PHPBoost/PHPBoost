@@ -34,6 +34,7 @@ $lang['module_title'] = 'Discussion';
 $lang['module_config_title'] = 'Configuration du module discussion';
 
 $lang['archives'] = 'Archives';
+$lang['archives.link'] = 'Lien vers les archives du module discussion';
 $lang['shoutbox.add'] = 'Ajouter un message';
 $lang['shoutbox.edit'] = 'Edition d\'un message';
 

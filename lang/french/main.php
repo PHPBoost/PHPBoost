@@ -351,6 +351,7 @@ $LANG['no_module_to_contribute'] = 'Aucun module supportant la contribution n\'e
 //Footer
 $LANG['powered_by'] = 'Boosté par';
 $LANG['phpboost_right'] = '';
+$LANG['phpboost_link'] = 'Lien vers le site officiel de PHPBoost CMS';
 $LANG['sql_req'] = 'Requêtes';
 $LANG['achieved'] = 'Exécuté en';
 

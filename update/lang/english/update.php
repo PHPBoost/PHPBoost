@@ -52,6 +52,7 @@ $lang = array(
 	'unknown' => 'Unknown',
 	'generatedBy' => 'Powered by %s',
 	'poweredBy' => 'Powered by',
+	'phpboost.link' => 'Link to PHPBoost CMS official website',
 	'phpboost.rights' => '',
 	'phpboost.slogan' => 'Create your website easily and for free!',
 	'phpboost.logo' => 'PHPBoost logo',

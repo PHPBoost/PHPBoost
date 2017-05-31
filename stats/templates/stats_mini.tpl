@@ -6,4 +6,4 @@
 	<br /> 
 	{U_LINK_LAST_USER}
 </p>
-<a href="{PATH_TO_ROOT}/stats/stats.php" title="{L_MORE_STAT}" class="small">{L_MORE_STAT}</a>
+<a href="{PATH_TO_ROOT}/stats/stats.php" class="small">{L_MORE_STAT}</a>

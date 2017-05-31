@@ -78,6 +78,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'ACTIONS_MENU'     => ModuleTreeLinksService::display_actions_menu(),
 			'L_POWERED_BY'     => self::$main_lang['powered_by'],
 			'L_PHPBOOST_RIGHT' => self::$main_lang['phpboost_right'],
+			'L_PHPBOOST_LINK'  => self::$main_lang['phpboost_link'],
 		));
 		
 		$this->display_kernel_message($template);
