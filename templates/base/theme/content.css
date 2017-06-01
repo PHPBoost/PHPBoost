@@ -609,9 +609,8 @@ body.dragging * {
 }
 
 .module-mini-container .sub-title {
-	margin-top: 5px;
 	display: block;
-	font-weight: bold;
+	margin-top: 5px;
 	color: #366493;
 	font-size: 1.6rem;
 	font-weight: bold;
