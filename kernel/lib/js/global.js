@@ -570,20 +570,26 @@ function bb_hide_block(bbfield, field, stop)
 }
 
 // Gestion de la position du scroll (scroll-to-top + cookie-bar)
-jQuery(document).ready(function(){
-	jQuery(window).scroll(function(){
-		if ($(this).scrollTop() > 800) {
-			jQuery('#scroll-to-top').fadeIn();
-		} else {
-			jQuery('#scroll-to-top').fadeOut();
-		}
+function scroll_to( $position ) {
+	if ( $position > 800) {
+		jQuery('#scroll-to-top').fadeIn();
+	} else {
+		jQuery('#scroll-to-top').fadeOut();
+	}
 
-		if ($(this).scrollTop() > 1) {
-			jQuery('#cookie-bar-container').addClass('fixed');
-		} 
-		else {
-			jQuery('#cookie-bar-container').removeClass('fixed');
-		}
+	if ( $position > 1) {
+		jQuery('#cookie-bar-container').addClass('fixed');
+	} 
+	else {
+		jQuery('#cookie-bar-container').removeClass('fixed');
+	}
+}
+
+jQuery(document).ready(function(){
+	scroll_to($(this).scrollTop());
+
+	jQuery(window).scroll(function(){
+		scroll_to($(this).scrollTop());
 	});
 
 	//Scroll to Top or Bottom
