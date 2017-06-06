@@ -38,7 +38,17 @@
 							</div>
 							
 							<div class="msg-info-mbr">
-								<p class="center">{list.USER_GROUP}</p>
+								# IF list.C_USER_GROUPS #
+								<p class="center">
+									# START list.usergroups #
+										# IF list.usergroups.C_IMG_USERGROUP # 
+										{list.usergroups.L_USER_GROUP} : <a href="{list.usergroups.U_USERGROUP}" class="user-group group-{list.usergroups.USERGROUP_ID}"# IF list.usergroups.C_USERGROUP_COLOR # style="color: {list.usergroups.USERGROUP_COLOR}"# ENDIF #>{list.usergroups.USERGROUP_NAME}</a><br />
+										# ELSE #
+										<a href="{list.usergroups.U_USERGROUP}" class="user-group user-group-img group-{list.usergroups.USERGROUP_ID} "# IF list.usergroups.C_USERGROUP_COLOR # style="color: {list.usergroups.USERGROUP_COLOR}"# ENDIF #><img src="{PATH_TO_ROOT}/images/group/{list.usergroups.U_IMG_USERGROUP}" alt="{list.usergroups.USERGROUP_NAME}" title="{list.usergroups.USERGROUP_NAME}"/></a><br/>
+										# ENDIF #
+									# END list.usergroups #
+								</p>
+								# ENDIF #
 								<p class="left">{list.USER_DATE}</p>
 								<p class="left">{list.USER_MSG}</p>
 							</div>

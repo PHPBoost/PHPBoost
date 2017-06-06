@@ -74,7 +74,7 @@ class ShoutboxHomeController extends ModuleController
 			
 			$this->view->assign_block_vars('messages', array_merge($message->get_array_tpl_vars($page), array(
 				'C_AVATAR' => $row['user_avatar'] || ($user_accounts_config->is_default_avatar_enabled()),
-				'C_USER_GROUPS' => !empty($row['groups']),
+				'C_USER_GROUPS' => $message->get_author_user()->get_groups(),
 				'U_AVATAR' => $user_avatar
 			)));
 			
@@ -91,7 +91,8 @@ class ShoutboxHomeController extends ModuleController
 						$this->view->assign_block_vars('messages.user_groups', array(
 							'C_GROUP_PICTURE' => !empty($group['img']),
 							'GROUP_PICTURE' => $group['img'],
-							'GROUP_NAME' => $group['name']
+							'GROUP_NAME' => $group['name'],
+							'GROUP_ID' => $user_group_id
 						));
 					}
 				}

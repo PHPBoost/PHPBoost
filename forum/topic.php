@@ -370,22 +370,6 @@ while ( $row = $result->fetch() )
 	}
 	$user_assoc_img = !empty($user_rank_icon) ? '<img src="' . $rank_img . '" alt="' . $user_rank_icon . '" />' : '';
 	
-	//Affichage des groupes du membre.
-	if (!empty($row['groups'])) 
-	{	
-		$user_groups = '';
-		$array_user_groups = explode('|', $row['groups']);
-		foreach (GroupsService::get_groups() as $idgroup => $array_group_info)
-		{
-			$group_color = User::get_group_color($idgroup);
-			
-			if (is_numeric(array_search($idgroup, $array_user_groups)))
-				$user_groups .= !empty($array_group_info['img']) ? '<a href="' . UserUrlBuilder::group($idgroup)->rel() . '"' . ($group_color ? ' style="color:' . $group_color . '"' : '') . '><img src="../images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/></a><br />' : $LANG['group'] . ': <a href="' . UserUrlBuilder::group($idgroup)->rel() . '"' . ($group_color ? ' style="color:' . $group_color . '"' : '') . '>' . $array_group_info['name'] . '</a><br />';
-		}
-	}
-	else
-		$user_groups = $LANG['group'] . ': ' . $user_group;
-
 	$user_accounts_config = UserAccountsConfig::load();
 	
 	//Avatar
@@ -422,7 +406,7 @@ while ( $row = $result->fetch() )
 		'USER_RANK' => ($row['warning_percentage'] < '100' || (time() - $row['delay_banned']) < 0) ? $user_rank : LangLoader::get_message('banned', 'user-common'),
 		'USER_IMG_ASSOC' => $user_assoc_img,
 		'USER_AVATAR' => $user_avatar,
-		'USER_GROUP' => $user_groups,
+		'C_USER_GROUPS' => $row['groups'],
 		'USER_DATE' => (!$is_guest) ? $LANG['registered_on'] . ': ' . Date::to_format($row['registered'], Date::FORMAT_DAY_MONTH_YEAR) : '',
 		'USER_MSG' => (!$is_guest) ? $posted_msg : '',
 		'USER_MAIL' => ( !empty($row['email']) && ($row['show_email'] == '1' ) ) ? '<a href="mailto:' . $row['email'] . '" class="basic-button smaller">Mail</a>' : '',
@@ -450,7 +434,32 @@ while ( $row = $result->fetch() )
 		'USER_PM' => !$is_guest && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? '<a href="'. UserUrlBuilder::personnal_message($row['user_id'])->rel() . '" class="basic-button smaller">MP</a>' : '',
 		)
 	));
-	
+
+	//Affichage des groupes du membre.
+	if (!empty($row['groups'])) 
+	{	
+		$user_groups = '';
+		$array_user_groups = explode('|', $row['groups']);
+		foreach (GroupsService::get_groups() as $idgroup => $array_group_info)
+		{
+			$group_color = User::get_group_color($idgroup);
+			
+			if (is_numeric(array_search($idgroup, $array_user_groups)))
+			{
+				$tpl->assign_block_vars('msg.usergroups', array(
+					'C_IMG_USERGROUP' => empty($array_group_info['img']),
+					'U_IMG_USERGROUP' => $array_group_info['img'],
+					'U_USERGROUP' => UserUrlBuilder::group($idgroup)->rel(),
+					'C_USERGROUP_COLOR' => !empty($group_color),
+					'L_USER_GROUP' => $LANG['group'],
+					'USERGROUP_COLOR' => $group_color,
+					'USERGROUP_NAME' => $array_group_info['name'],
+					'USERGROUP_ID' => $idgroup
+				));
+			}
+		}
+	}
+
 	foreach ($displayed_extended_fields as $field_type)
 	{
 		$field = $extended_fields_cache->get_extended_field_by_field_name($field_type);

@@ -221,8 +221,18 @@
 								{msg.USER_AVATAR}
 							</div>
 							
-							<div class="msg-info-mbr">
-								<p class="center">{msg.USER_GROUP}</p>
+							<div class="msg-info-mbr">{msg.C_USER_GROUPS}
+								# IF msg.C_USER_GROUPS #
+								<p class="center">
+									# START msg.usergroups #
+										# IF msg.usergroups.C_IMG_USERGROUP # 
+										{msg.usergroups.L_USER_GROUP} : <a href="{msg.usergroups.U_USERGROUP}" class="user-group group-{msg.usergroups.USERGROUP_ID}"# IF msg.usergroups.C_USERGROUP_COLOR # style="color: {msg.usergroups.USERGROUP_COLOR}"# ENDIF #>{msg.usergroups.USERGROUP_NAME}</a><br />
+										# ELSE #
+										<a href="{msg.usergroups.U_USERGROUP}" class="user-group user-group-img group-{msg.usergroups.USERGROUP_ID} "# IF msg.usergroups.C_USERGROUP_COLOR # style="color: {msg.usergroups.USERGROUP_COLOR}"# ENDIF #><img src="{PATH_TO_ROOT}/images/group/{msg.usergroups.U_IMG_USERGROUP}" alt="{msg.usergroups.USERGROUP_NAME}" title="{msg.usergroups.USERGROUP_NAME}"/></a><br/>
+										# ENDIF #
+									# END msg.usergroups #
+								</p>
+								# ENDIF #
 								<p class="left">{msg.USER_DATE}</p>
 								<p class="left">{msg.USER_MSG}</p>
 							</div>
