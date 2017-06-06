@@ -37,9 +37,22 @@ $lang['site_description'] = 'Créez votre site Internet facilement en moins de 5
 $lang['site_slide_description'] = 'PHPBoost est un système de gestion de contenu (CMS) français et libre, qui existe depuis 2005, vous permettant de créer facilement votre site Internet. Très complet en terme de fonctionnalités il est cependant simple à utiliser. A l\'usage il s\'avère être un CMS fiable et robuste, optimisé pour le référencement et personnalisable à souhait.';
 $lang['versions'] = 'Versions successives de PHPBoost';
 $lang['versions.explain'] = 'Permet de mettre à jour automatiquement la page de téléchargements du site';
+$lang['mini_menu_fieldset'] = 'Configuration du mini menu';
+$lang['last_modules_number'] = 'Nombre de modules affichés';
+$lang['last_themes_number'] = 'Nombre de thèmes affichés';
+$lang['most_recent_displayed'] = 'Les contributions les plus récentes sont affichées';
+$lang['new_modules_fieldset'] = 'Copie de modules entre versions';
+$lang['new_modules'] = 'Sélectionnez les modules à copier dans la dernière version';
+$lang['new_modules_approved'] = 'Approuver les nouveaux modules';
+$lang['new_modules_approved.explain'] = 'Si non coché les nouveaux modules seront créés en brouillon';
+$lang['new_themes_fieldset'] = 'Copie de thèmes entre versions';
+$lang['new_themes'] = 'Sélectionnez les thèmes à copier dans la dernière version';
+$lang['new_themes_approved'] = 'Approuver les nouveaux thèmes';
+$lang['new_themes_approved.explain'] = 'Si non coché les nouveaux thèmes seront créés en brouillon';
 $lang['major_version_number'] = 'Numéro de version majeure';
 $lang['minor_version_number'] = 'Numéro de version mineure';
 $lang['minimal_php_version'] = 'Version PHP minimale';
+$lang['menu_title'] = 'Derniers éléments';
 
 $lang['phpboost_features'] = 'Fonctionnalités de PHPBoost';
 $lang['phpboost_features.explain'] = 'Découvrir les fonctionnalités de PHPBoost';
@@ -111,4 +124,8 @@ $lang['news.category.description'] = 'Toutes les news concernant PHPBoost';
 
 $lang['partners.title'] = 'Nos partenaires';
 
+$lang['success.add_new_module'] = 'Le module sélectionné a été copié';
+$lang['success.add_new_modules'] = 'Les :number_modules modules sélectionnés ont été copiés';
+$lang['success.add_new_theme'] = 'Le thème sélectionné a été copié';
+$lang['success.add_new_themes'] = 'Les :number_themes thèmes sélectionnés ont été copiés';
 ?>

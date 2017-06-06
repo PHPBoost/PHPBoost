@@ -44,6 +44,16 @@ class PHPBoostOfficialExtensionPointProvider extends ExtensionPointProvider
 		return new PHPBoostOfficialHomePageExtensionPoint();
 	}
 	
+	public function menus()
+	{
+		return new ModuleMenus(array(new PHPBoostOfficialModuleMiniMenu()));
+	}
+	
+	public function scheduled_jobs()
+	{
+		return new PHPBoostOfficialScheduledJobs();
+	}
+	
 	public function tree_links()
 	{
 		return new PHPBoostOfficialTreeLinks();

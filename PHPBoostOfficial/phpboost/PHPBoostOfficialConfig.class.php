@@ -31,6 +31,8 @@
 class PHPBoostOfficialConfig extends AbstractConfigData
 {
 	const VERSIONS = 'versions';
+	const LAST_MODULES_NUMBER = 'last_modules_number';
+	const LAST_THEMES_NUMBER = 'last_themes_number';
 	
 	public function get_versions()
 	{
@@ -42,10 +44,32 @@ class PHPBoostOfficialConfig extends AbstractConfigData
 		$this->set_property(self::VERSIONS, $array);
 	}
 	
+	public function get_last_modules_number()
+	{
+		return $this->get_property(self::LAST_MODULES_NUMBER);
+	}
+	
+	public function set_last_modules_number($value)
+	{
+		$this->set_property(self::LAST_MODULES_NUMBER, $value);
+	}
+	
+	public function get_last_themes_number()
+	{
+		return $this->get_property(self::LAST_THEMES_NUMBER);
+	}
+	
+	public function set_last_themes_number($value)
+	{
+		$this->set_property(self::LAST_THEMES_NUMBER, $value);
+	}
+	
 	public function get_default_values()
 	{
 		return array(
-			self::VERSIONS => array()
+			self::VERSIONS => array(),
+			self::LAST_MODULES_NUMBER => 3,
+			self::LAST_THEMES_NUMBER => 3
 		);
 	}
 	

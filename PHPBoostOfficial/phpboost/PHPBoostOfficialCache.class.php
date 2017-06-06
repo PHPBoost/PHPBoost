@@ -33,14 +33,21 @@ class PHPBoostOfficialCache implements CacheData
 {
 	private $last_version = array();
 	private $previous_version = array();
+	private $last_modules = array();
+	private $last_themes = array();
+	private $last_news = array();
 	
 	/**
 	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
-		$versions = PHPBoostOfficialConfig::load()->get_versions();
+		$now = new Date();
+		$config = PHPBoostOfficialConfig::load();
+		
+		$versions = $config->get_versions();
 		$versions_number = count($versions);
+		$modules_number = $themes_number = 0;
 		
 		while ($versions_number > 0)
 		{
@@ -94,6 +101,51 @@ class PHPBoostOfficialCache implements CacheData
 				$versions_number--;
 			}
 		}
+		
+		$results = PersistenceContext::get_querier()->select('SELECT cats.rewrited_name as cat_rewrited_name, cats.name as cat_name, file.id, file.id_category, file.name, file.rewrited_name, file.short_contents, file.creation_date, file.picture_url, file.author_custom_name, user.display_name
+			FROM ' . PREFIX . 'download file
+			LEFT JOIN ' . PREFIX . 'download_cats cats ON cats.id = file.id_category
+			LEFT JOIN ' . DB_TABLE_MEMBER . ' user ON user.user_id = file.author_user_id
+			WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND (cats.rewrited_name LIKE "modules-phpboost-%" OR cats.rewrited_name LIKE "themes-phpboost-%")
+			ORDER BY file.creation_date DESC', array(
+			'timestamp_now' => $now->get_timestamp()
+		));
+		
+		foreach ($results as $row)
+		{
+			if ($modules_number == $config->get_last_modules_number() && $themes_number == $config->get_last_themes_number())
+				break;
+			
+			$exploded_cat_name = explode(' ', $row['cat_rewrited_name']);
+			$phpboost_version = isset($exploded_cat_name[2]) ? $exploded_cat_name[2] : '';
+			
+			$item = array(
+				'link' => DownloadUrlBuilder::display($row['id_category'], $row['cat_rewrited_name'], $row['id'], $row['rewrited_name'])->rel(),
+				'picture' => Url::to_rel($row['picture_url']),
+				'title' => $row['name'],
+				'description' => $row['short_contents'],
+				'version' => $phpboost_version,
+				'author' => !empty($row['author_custom_name']) ? $row['author_custom_name'] : $row['display_name']
+			);
+			
+			if (strstr($row['cat_rewrited_name'], 'modules') && $modules_number < $config->get_last_modules_number())
+			{
+				$this->last_modules[] = $item;
+				$modules_number++;
+			}
+			else if (strstr($row['cat_rewrited_name'], 'themes') && $themes_number < $config->get_last_themes_number())
+			{
+				$this->last_themes[] = $item;
+				$themes_number++;
+			}
+		}
+		$results->dispose();
+		
+		$news = NewsService::get_news('WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) ORDER BY creation_date DESC LIMIT 0,1', array(
+			'timestamp_now' => $now->get_timestamp()
+		));
+		
+		$this->last_news = $news->get_array_tpl_vars();
 	}
 	
 	public function get_last_version()
@@ -212,6 +264,21 @@ class PHPBoostOfficialCache implements CacheData
 	{
 		$version = $this->previous_version;
 		return !empty($version) && isset($version['themes_cat_link']) ? $version['themes_cat_link'] : '';
+	}
+	
+	public function get_last_modules()
+	{
+		return $this->last_modules;
+	}
+	
+	public function get_last_themes()
+	{
+		return $this->last_themes;
+	}
+	
+	public function get_last_news()
+	{
+		return $this->last_news;
 	}
 	
 	/**

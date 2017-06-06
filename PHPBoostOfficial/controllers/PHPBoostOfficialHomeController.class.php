@@ -29,6 +29,7 @@ class PHPBoostOfficialHomeController extends ModuleController
 {
 	private $view;
 	private $lang;
+	private $cache;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -54,47 +55,35 @@ class PHPBoostOfficialHomeController extends ModuleController
 	
 	private function build_modules_and_themes_view()
 	{
-		$now = new Date();
-		
 		$modules_tpl = new FileTemplate('PHPBoostOfficial/modules.tpl');
-		$themes_tpl = new FileTemplate('PHPBoostOfficial/themes.tpl');
-		$modules_number = $themes_number = 0;
 		
-		$results = PersistenceContext::get_querier()->select('SELECT cats.rewrited_name as cat_rewrited_name, file.id, file.id_category, file.name, file.rewrited_name, file.short_contents, file.creation_date, file.picture_url, file.author_custom_name, user.display_name
-			FROM ' . PREFIX . 'download file
-			LEFT JOIN ' . PREFIX . 'download_cats cats ON cats.id = file.id_category
-			LEFT JOIN ' . DB_TABLE_MEMBER . ' user ON user.user_id = file.author_user_id
-			WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND (cats.rewrited_name LIKE "modules-phpboost-%" OR cats.rewrited_name LIKE "themes-phpboost-%")
-			ORDER BY file.creation_date DESC', array(
-			'timestamp_now' => $now->get_timestamp()
-		));
-		
-		foreach ($results as $row)
+		foreach ($this->cache->get_last_modules() as $module)
 		{
-			if ($modules_number == 3 && $themes_number == 3)
-				break;
-			
-			$item = array(
-				'U_LINK' => DownloadUrlBuilder::display($row['id_category'], $row['cat_rewrited_name'], $row['id'], $row['rewrited_name'])->rel(),
-				'U_IMG' => Url::to_rel($row['picture_url']),
-				'C_IMG' => !empty($row['picture_url']),
-				'TITLE' => $row['name'],
-				'DESC' => $row['short_contents'],
-				'PSEUDO' => !empty($row['author_custom_name']) ? $row['author_custom_name'] : $row['display_name']
-			);
-			
-			if (strstr($row['cat_rewrited_name'], 'modules') && $modules_number < 3)
-			{
-				$modules_tpl->assign_block_vars('item', $item);
-				$modules_number++;
-			}
-			else if (strstr($row['cat_rewrited_name'], 'themes') && $themes_number < 3)
-			{
-				$themes_tpl->assign_block_vars('item', $item);
-				$themes_number++;
-			}
+			$modules_tpl->assign_block_vars('item', array(
+				'U_LINK' => $module['link'],
+				'U_IMG' => $module['picture'],
+				'C_IMG' => !empty($module['picture']),
+				'TITLE' => $module['title'],
+				'DESC' => $module['description'],
+				'VERSION' => $module['version'],
+				'PSEUDO' => $module['author']
+			));
 		}
-		$results->dispose();
+		
+		$themes_tpl = new FileTemplate('PHPBoostOfficial/themes.tpl');
+		
+		foreach ($this->cache->get_last_themes() as $theme)
+		{
+			$themes_tpl->assign_block_vars('item', array(
+				'U_LINK' => $theme['link'],
+				'U_IMG' => $theme['picture'],
+				'C_IMG' => !empty($theme['picture']),
+				'TITLE' => $theme['title'],
+				'DESC' => $theme['description'],
+				'VERSION' => $theme['version'],
+				'PSEUDO' => $theme['author']
+			));
+		}
 		
 		$this->view->put_all(array(
 			'MODULES' => $modules_tpl,
@@ -110,13 +99,9 @@ class PHPBoostOfficialHomeController extends ModuleController
 	
 	private function build_last_news_view()
 	{
-		$now = new Date();
-		$news = NewsService::get_news('WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) ORDER BY creation_date DESC LIMIT 0,1', array(
-			'timestamp_now' => $now->get_timestamp()
-		));
 		$tpl = new FileTemplate('PHPBoostOfficial/last_news.tpl');
 		
-		$tpl->put_all($news->get_array_tpl_vars());
+		$tpl->put_all($this->cache->get_last_news());
 		
 		$this->view->put('LAST_NEWS', $tpl);
 	}
@@ -163,6 +148,7 @@ class PHPBoostOfficialHomeController extends ModuleController
 		$this->lang = LangLoader::get('common', 'PHPBoostOfficial');
 		$this->view = new FileTemplate('PHPBoostOfficial/home.tpl');
 		$this->view->add_lang($this->lang);
+		$this->cache = PHPBoostOfficialCache::load();
 	}
 	
 	private function generate_response()
