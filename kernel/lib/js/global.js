@@ -570,8 +570,8 @@ function bb_hide_block(bbfield, field, stop)
 }
 
 // Gestion de la position du scroll (scroll-to-top + cookie-bar)
-function scroll_to( $position ) {
-	if ( $position > 800) {
+function scroll_to( position ) {
+	if ( position > 800) {
 		jQuery('#scroll-to-top').fadeIn();
 	} else {
 		jQuery('#scroll-to-top').fadeOut();
