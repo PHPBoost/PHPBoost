@@ -128,4 +128,45 @@ $lang['success.add_new_module'] = 'Le module sélectionné a été copié';
 $lang['success.add_new_modules'] = 'Les :number_modules modules sélectionnés ont été copiés';
 $lang['success.add_new_theme'] = 'Le thème sélectionné a été copié';
 $lang['success.add_new_themes'] = 'Les :number_themes thèmes sélectionnés ont été copiés';
+
+
+/* -- Page d'Accueil -- */
+
+/* Section Title */
+$lang['section_title.desc_container'] = 'PHPBoost est un système de gestion de contenu (CMS) français et libre, qui existe depuis 2005, vous permettant de créer facilement votre site Internet. Très complet en terme de fonctionnalités il est cependant simple à utiliser. A l\'usage il s\'avère être un CMS fiable et robuste, optimisé pour le référencement et personnalisable à souhait.';
+
+/* Section Programming */
+$lang['section_programming.languages'] = 'PHPBoost CMS utilise plusieurs languages de programmation afin de rendre son utilisation la plus simple et la plus esthétique possible.';
+$lang['section_programming.responsive'] = 'Les dernières versions du CMS sont compatibles avec tous les types d\'appareils et adaptés au différents formats grace à un design "responsive".';
+$lang['section_programming.language.php'] = 'php';
+$lang['section_programming.language.php_detail'] = 'Le language de programmation web éprouvé. Combiner à une <abbr title="Programmation Orienté Objet">POO</abbr> et un système de <abbr title="Model View Controler">MVC</abbr> il permet d\'avoir un code performant et une structure simple à faire evoluer.';
+$lang['section_programming.language.css'] = 'CSS3';
+$lang['section_programming.language.css_detail'] = 'Le design web par exellence';
+$lang['section_programming.language.html'] = 'HTML5';
+$lang['section_programming.language.html_detail'] = 'Le language texte du web dans sa dernière version';
+$lang['section_programming.language.js'] = 'JS';
+$lang['section_programming.language.js_detail'] = 'L\'aspect dynamique de votre siteweb';
+$lang['section_programming.language.mysql'] = 'MySQL';
+$lang['section_programming.language.mysql_detail'] = 'L\'un des meilleurs système de gestion de données pour le web';
+
+/* Section Modules */
+$lang['section_modules.intro'] = 'PHPBoost est un CMS qui propose de nombreux modules afin de permettre à chaque webmaster de faire le suite qui lui convient le mieux (<a href="">Toute la liste des modules disponibles</a>)';
+$lang['section_modules.blog'] = 'Pour un Blog';
+$lang['section_modules.community'] = 'Pour une communauté';
+
+
+/* Section Templates */
+$lang['section_templates.intro'] = 'PHPBoost est personnalisable de manière très simple (<a href="">Liens vers le templates</a>)';
+$lang['section_templates.modules-graph'] = 'Une personnalisation à portée de tous';
+
+/* Section Community */
+$lang['section_community.intro'] = 'Un support rapide, conviviable et adapté à tous les niveaux.';
+$lang['section_community.forum'] = 'Le Forum';
+$lang['section_community.wiki'] = 'La documentation';
+$lang['section_community.faq'] = 'La Foire Aux Questions';
+
+/* Section Pub */
+$lang['section_pub.try'] = 'Vous avez envie d\'essayer PHPBoost ?';
+$lang['section_pub.help'] = 'Vous souhaitez soutenir le projet et rejoindre notre communauté ?';
+
 ?>
