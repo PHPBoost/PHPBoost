@@ -216,8 +216,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 					if (is_numeric(array_search($idgroup, $array_user_groups)))
 					{
 						$tpl->assign_block_vars('list.usergroups', array(
-
-							'C_IMG_USERGROUP' => empty($array_group_info['img']),
+							'C_IMG_USERGROUP' => !empty($array_group_info['img']),
 							'U_IMG_USERGROUP' => $array_group_info['img'],
 							'U_USERGROUP' => UserUrlBuilder::group($idgroup)->rel(),
 							'C_USERGROUP_COLOR' => !empty($group_color),
