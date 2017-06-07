@@ -577,7 +577,7 @@ function scroll_to( position ) {
 		jQuery('#scroll-to-top').fadeOut();
 	}
 
-	if ( $position > 1) {
+	if ( position > 1) {
 		jQuery('#cookie-bar-container').addClass('fixed');
 	} 
 	else {
