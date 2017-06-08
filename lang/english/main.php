@@ -226,7 +226,7 @@ $LANG['select_group'] = 'Select a group';
 $LANG['search_member'] = 'Search a member';
 $LANG['date_of_birth'] = 'Date of birth';
 $LANG['site_config_msg_mbr'] = 'Welcome on the website. You are member of the site and you can access all parts of the website requiring a member account.';
-$LANG['register_agreement'] = 'You are just going to register yourself on the site. We ask you yo be polite and respectful.
+$LANG['register_agreement'] = 'You are just going to register yourself on the site. We ask you to be polite and respectful.
 Thanks, the site team.';
 
 //Mp
