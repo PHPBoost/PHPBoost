@@ -151,7 +151,8 @@ class UserEditProfileController extends AbstractController
 			$manage_fieldset = new FormFieldsetHTML('member_management', $this->lang['member-management']);
 			$form->add_fieldset($manage_fieldset);
 			
-			$manage_fieldset->add_field(new FormFieldCheckbox('approbation', $this->lang['approbation'], $this->internal_auth_infos['approved']));
+			if ($this->internal_auth_infos)
+				$manage_fieldset->add_field(new FormFieldCheckbox('approbation', $this->lang['approbation'], $this->internal_auth_infos['approved']));
 			
 			$manage_fieldset->add_field(new FormFieldRanksSelect('rank', $this->lang['rank'], $this->user->get_level()));
 			
@@ -179,15 +180,16 @@ class UserEditProfileController extends AbstractController
 		}
 
 		$connect_fieldset->add_field(new FormFieldCheckbox('custom_login', $this->lang['login.custom'], $has_custom_login,
-			array(	'description'=> $this->lang['login.custom.explain'], 
-					'hidden' => !$internal_auth_connected,
-					'events' => array('click' => '
-						if (HTMLForms.getField("custom_login").getValue()) {
-							HTMLForms.getField("login").enable();
-						} else {
-							HTMLForms.getField("login").disable();
-						}'
-					)
+			array(
+				'description'=> $this->lang['login.custom.explain'], 
+				'hidden' => !$internal_auth_connected,
+				'events' => array('click' => '
+					if (HTMLForms.getField("custom_login").getValue()) {
+						HTMLForms.getField("login").enable();
+					} else {
+						HTMLForms.getField("login").disable();
+					}'
+				)
 			)
 		));
 
@@ -305,11 +307,12 @@ class UserEditProfileController extends AbstractController
 		}
 		else
 		{
-			$approbation = $this->internal_auth_infos['approved'];
+			$approbation = $this->internal_auth_infos ? $this->internal_auth_infos['approved'] : true;
 			if (AppContext::get_current_user()->is_admin())
 			{
 				$old_approbation = $approbation;
-				$approbation = $this->form->get_value('approbation');
+				if ($this->internal_auth_infos)
+					$approbation = $this->form->get_value('approbation');
 
 				$groups = array();
 				foreach ($this->form->get_value('groups') as $field => $option)
