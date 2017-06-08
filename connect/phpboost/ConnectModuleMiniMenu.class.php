@@ -39,6 +39,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 		if (!Url::is_current_url('/user/login'))
 		{
 			$tpl = new FileTemplate('connect/connect_mini.tpl');
+			$tpl->add_lang(LangLoader::get('user-common'));
 			$user = AppContext::get_current_user();
 			MenuService::assign_positions_conditions($tpl, $this->get_block());
 			if ($user->check_level(User::MEMBER_LEVEL)) //Connecté.
@@ -113,12 +114,10 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 					'U_AVATAR_IMG' => Url::to_rel($user_avatar),
 					'L_NBR_PM'  => $user->get_unread_pm() > 0 ? ($user->get_unread_pm() . ' ' . ($user->get_unread_pm() > 1 ? $LANG['message_s'] : $LANG['message'])) : $LANG['private_messaging'],
 					'L_MESSAGE' => $user->get_unread_pm() > 1 ? $LANG['message_s'] : $LANG['message'],
-					'L_PROFIL' => LangLoader::get_message('dashboard', 'user-common'),
 					'L_PM_PANEL' => $LANG['private_messaging'],
 					'L_ADMIN_PANEL' => $LANG['admin_panel'],
 					'L_MODO_PANEL' => $LANG['modo_panel'],
 					'L_PRIVATE_PROFIL' => $LANG['my_private_profile'],
-					'L_DISCONNECT' => LangLoader::get_message('disconnect', 'user-common'),
 					'L_CONTRIBUTION_PANEL' => $LANG['contribution_panel']
 				));
 			}
@@ -133,12 +132,6 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 					'C_GOOGLE_AUTH_ENABLED' => $authentication_config->is_google_auth_available(),
 					'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
 					'L_REQUIRE_PASSWORD' => $LANG['require_password'],
-					'L_CONNECT' => LangLoader::get_message('connection', 'user-common'),
-					'L_PSEUDO' => LangLoader::get_message('login', 'user-common'),
-					'L_PASSWORD' => LangLoader::get_message('password', 'user-common'),
-					'L_AUTOCONNECT' => LangLoader::get_message('autoconnect', 'user-common'),
-					'L_FORGOT_PASS' => LangLoader::get_message('forget-password', 'user-common'),
-					'L_REGISTER' => LangLoader::get_message('register', 'user-common'),
 					'U_CONNECT' => UserUrlBuilder::connect()->rel(),
 					'SITE_REWRITED_SCRIPT' => TextHelper::substr(REWRITED_SCRIPT, TextHelper::strlen(GeneralConfig::load()->get_site_path()))
 				));
