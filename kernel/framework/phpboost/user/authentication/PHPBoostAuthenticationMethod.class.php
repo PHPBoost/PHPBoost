@@ -172,13 +172,14 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 		
 		$auth_infos = array();
 		try {
-			$auth_infos = PHPBoostAuthenticationMethod::get_auth_infos($user_id);
+			$auth_infos = self::get_auth_infos($user_id);
 		} catch (RowNotFoundException $e) {
 		}
 		
 		if (!empty($auth_infos) && !$auth_infos['approved'])
 			$this->error_msg = LangLoader::get_message('registration.not-approved', 'user-common');
-		else
+		
+		if (!$match)
 		{
 			$remaining_attempts = $this->get_remaining_attemps();
 			if ($remaining_attempts > 0)
@@ -191,8 +192,13 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 			}
 		}
 		
-		if ($match)
+		$this->check_user_bannishment($user_id);
+		
+		if ($match && !$this->error_msg)
+		{
+			$this->update_user_last_connection_date($user_id);
 			return $user_id;
+		}
 	}
 
 	private function find_user_id_by_username()
@@ -250,11 +256,10 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 		$condition = 'WHERE user_id=:user_id';
 		$parameters = array('user_id' => $user_id);
 		$this->querier->update(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
-		$this->querier->update(DB_TABLE_MEMBER, array('last_connection_date' => time()), $condition, $parameters);
 	}
 	
 	public static function get_auth_infos($user_id)
-	{	
+	{
 		$columns = array('login', 'password', 'approved');
 		$condition = 'WHERE user_id=:user_id';
 		$parameters = array('user_id' => $user_id);
