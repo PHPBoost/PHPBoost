@@ -132,8 +132,13 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 				$this->error_msg = LangLoader::get_message('external-auth.email-not-found', 'user-common');
 		}
 		
-		$this->update_user_info($user_id);
-		return $user_id;
+		$this->check_user_bannishment($user_id);
+		
+		if (!$this->error_msg)
+		{
+			$this->update_user_last_connection_date($user_id);
+			return $user_id;
+		}
 	}
 
 	private function get_fb_user_data()
@@ -144,11 +149,6 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 			AppContext::get_response()->redirect($this->facebook->getLoginUrl(array('scope' => 'email', 'redirect_uri'  => UserUrlBuilder::connect('fb')->absolute())));
 		}
 		return $this->facebook->api('/me', array('fields' => 'id,name,email'));
-	}
-
-	private function update_user_info($user_id)
-	{
-		$this->querier->update(DB_TABLE_MEMBER, array('last_connection_date' => time()), 'WHERE user_id=:user_id', array('user_id' => $user_id));
 	}
 }
 ?>

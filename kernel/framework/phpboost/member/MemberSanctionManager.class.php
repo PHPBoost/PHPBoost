@@ -159,7 +159,7 @@ class MemberSanctionManager
 	
 	private static function send_mail($user_id, $title, $content)
 	{
-		AppContext::get_mail_service()->send_from_properties(self::get_member_mail($user_id), addslashes($title), sprintf(addslashes($content), GeneralConfig::load()->get_site_name(), addslashes(MailServiceConfig::load()->get_mail_signature())));
+		AppContext::get_mail_service()->send_from_properties(self::get_member_mail($user_id), $title, sprintf($content, GeneralConfig::load()->get_site_name(), MailServiceConfig::load()->get_mail_signature()));
 	}
 	
 	private static function verificate_user_id($user_id)
