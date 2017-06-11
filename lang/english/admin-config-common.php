@@ -96,6 +96,8 @@ $lang = array(
 	'advanced-config.hsts_security.explain' => 'HTTP Strict Transport Security (HSTS) is a web security policy mechanism which allows web servers to declare that web browsers should only interact with it using secure HTTPS connections, and never via the insecure HTTP protocol.<br /><span class="text-strong color-notavailable">It is strongly recommended that you do not enable this option if your switching to HTTPS is temporary.</span>',
 	'advanced-config.hsts_security_duration' => 'HSTS Security renewal time',
 	'advanced-config.hsts_security_duration.explain' =>  'In days. 30 days recommended.',
+	'advanced-config.hsts_security_subdomain' => 'Include subdomain',
+	'advanced-config.hsts_security_subdomain.explain' => 'Set HSTS on subdomain',
 	'advanced-config.url-rewriting' => 'Enable URL rewriting',
 	'advanced-config.url-rewriting.explain' => 'Activation of URL rewriting makes URLs much simpler and clearer on your website. 
 		Your referencing will be largely optimized with this option.<br /><br />
