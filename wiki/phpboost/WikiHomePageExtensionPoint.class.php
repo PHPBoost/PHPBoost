@@ -74,7 +74,7 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 			while ($row = $result->fetch())
 			{
 				$tpl->assign_block_vars('last_articles.list', array(
-					'ARTICLE' => $row['title'],
+					'ARTICLE' => stripslashes($row['title']),
 					'TR' => ($i > 0 && ($i%2 == 0)) ? '</tr><tr>' : '',
 					'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
 				));
