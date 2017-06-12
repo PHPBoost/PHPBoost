@@ -313,14 +313,33 @@ body 					{ color: #021B34; }
 	margin: auto;
 	padding-top: 10px;
 	min-height: 40px;
-	width: 400px;
 	border-width: 1px 0 0 0;
 	border-style: solid;
 	text-align: center;
 }
 
+@media (min-width: 769px) {
+	.footer-infos {
+		width: 400px;
+	}
+}
+
 .footer-infos span {
 	font-size: 0.8em;
+}
+
+@media (max-width: 768px) {
+	.footer-infos span {
+		display: block
+	}
+
+	.footer-infos span.footer-infos-separator {
+		display: none;
+	}
+
+	.footer-infos {
+		padding: 10px;
+	}
 }
 
 
