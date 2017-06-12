@@ -37,6 +37,7 @@ class ServerEnvironmentConfig extends AbstractConfigData
 	const REDIRECTION_WWW_WITHOUT_WWW = 'without_www';
 	const REDIRECTION_HTTPS_ENABLED   = 'redirection_https_enabled';
 	const HSTS_SECURITY_ENABLED       = 'hsts_security_enabled';
+	const HSTS_SECURITY_SUBDOMAIN_ENABLED	= 'hsts_security_subdomain_enabled';
 	const HSTS_SECURITY_DURATION      = 'hsts_security_duration';
 	const HTACCESS_MANUAL_CONTENT     = 'htaccess_manual_content';
 	const OUTPUT_GZIPING_ENABLED      = 'output_gziping_enabled';
@@ -125,6 +126,21 @@ class ServerEnvironmentConfig extends AbstractConfigData
 	{
 		return ($this->get_property(self::HSTS_SECURITY_DURATION) / (24 * 60 * 60));
 	}
+	
+	public function is_hsts_security_subdomain_enabled()
+	{
+		return $this->get_property(self::HSTS_SECURITY_SUBDOMAIN_ENABLED);
+	}
+	
+	public function enable_hsts_subdomain_security()
+	{
+		return $this->set_property(self::HSTS_SECURITY_SUBDOMAIN_ENABLED, true);
+	}
+
+	public function disable_hsts_subdomain_security()
+	{
+		return $this->set_property(self::HSTS_SECURITY_SUBDOMAIN_ENABLED, false);
+	}
 
 	private function htaccess_exists()
 	{
@@ -160,6 +176,7 @@ class ServerEnvironmentConfig extends AbstractConfigData
 			self::REDIRECTION_WWW_MODE      => self::REDIRECTION_WWW_WITH_WWW,
 			self::REDIRECTION_HTTPS_ENABLED => false,
 			self::HSTS_SECURITY_ENABLED     => false,
+			self::HSTS_SECURITY_SUBDOMAIN_ENABLED	=> false,
 			self::HSTS_SECURITY_DURATION    => 2592000, // 30 days per default
 			self::HTACCESS_MANUAL_CONTENT   => '',
 			self::OUTPUT_GZIPING_ENABLED    => false

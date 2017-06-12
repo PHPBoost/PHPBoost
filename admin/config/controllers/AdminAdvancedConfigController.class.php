@@ -53,6 +53,7 @@ class AdminAdvancedConfigController extends AdminController
 			$this->form->get_field_by_id('redirection_www_mode')->set_hidden(!$this->server_environment_config->is_redirection_www_enabled());
 			$this->form->get_field_by_id('hsts_security_enabled')->set_hidden(!$this->server_environment_config->is_redirection_https_enabled());
 			$this->form->get_field_by_id('hsts_security_duration')->set_hidden(!$this->server_environment_config->is_hsts_security_enabled());
+			$this->form->get_field_by_id('hsts_security_subdomain')->set_hidden(!$this->server_environment_config->is_hsts_security_enabled());
 			$this->form->get_field_by_id('cookiebar_duration')->set_hidden(!$this->cookiebar_config->is_cookiebar_enabled());
 			$this->form->get_field_by_id('cookiebar_tracking_mode')->set_hidden(!$this->cookiebar_config->is_cookiebar_enabled());
 			$this->form->get_field_by_id('cookiebar_content')->set_hidden(!$this->cookiebar_config->is_cookiebar_enabled());
@@ -152,6 +153,7 @@ class AdminAdvancedConfigController extends AdminController
 					HTMLForms.getField("hsts_security_enabled").disable();
 					HTMLForms.getField("hsts_security_enabled").setValue(false);
 					HTMLForms.getField("hsts_security_duration").disable();
+					HTMLForms.getField("hsts_security_subdomain").disable();
 				}')
 			)
 		));
@@ -162,21 +164,28 @@ class AdminAdvancedConfigController extends AdminController
 			'events' => array('click' => '
 				if (HTMLForms.getField("hsts_security_enabled").getValue()) {
 					HTMLForms.getField("hsts_security_duration").enable();
+					HTMLForms.getField("hsts_security_subdomain").enable();
 				} else {
 					HTMLForms.getField("hsts_security_duration").disable();
+					HTMLForms.getField("hsts_security_subdomain").disable();
 				}')
 			)
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('hsts_security_duration', $this->lang['advanced-config.hsts_security_duration'], $this->server_environment_config->get_config_hsts_security_duration(), array(
 			'min' => 1,
-			'max' => 30,
+			'max' => 365,
 			'required' => true,
 			'description' => $this->lang['advanced-config.hsts_security_duration.explain'],
 			'required' => true,
 			'hidden' => !$this->server_environment_config->is_hsts_security_enabled()),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu', '', $this->lang['advanced-config.integer-required']))
 		));
+		
+		$fieldset->add_field(new FormFieldCheckbox('hsts_security_subdomain', $this->lang['advanced-config.hsts_security_subdomain'], $this->server_environment_config->is_hsts_security_subdomain_enabled(), array(
+			'description' => $this->lang['advanced-config.hsts_security_subdomain.explain'],
+			'hidden' => !$this->server_environment_config->is_hsts_security_enabled())
+			));
 		
 		$fieldset->add_field(new FormFieldTimezone('site_timezone', $this->lang['advanced-config.site_timezone'], $this->general_config->get_site_timezone(),
 			array('description' => $this->lang['advanced-config.site_timezone-explain'])
@@ -364,6 +373,12 @@ class AdminAdvancedConfigController extends AdminController
 			{
 				$this->server_environment_config->enable_hsts_security();
 				$this->server_environment_config->set_hsts_security_duration($this->form->get_value('hsts_security_duration'));
+				if ($this->form->get_value('hsts_security_subdomain'))
+				{
+					$this->server_environment_config->enable_hsts_subdomain_security();
+				}
+				else 
+					$this->server_environment_config->disable_hsts_subdomain_security();
 			}
 			else
 				$this->server_environment_config->disable_hsts_security();

@@ -50,11 +50,7 @@ class HtaccessFileCache implements CacheData
 		
 		$this->add_free_php56();
 		
-		$this->add_disable_signatures_protection();
-		
 		$this->add_hide_directory_listings();
-		
-		$this->add_server_protections();
 		
 		$this->add_http_headers();
 		
@@ -62,14 +58,14 @@ class HtaccessFileCache implements CacheData
 		{
 			$this->enable_rewrite_rules();
 			
+			$this->force_redirection_if_available();
+			
 			$this->add_core_rules();
 			$this->add_modules_rules();
 			
 			$this->add_php_and_http_protections();
 			
 			$this->add_file_and_sql_injections_protections();
-			
-			$this->force_redirection_if_available();
 			
 			$this->add_bandwidth_protection();
 			
@@ -121,24 +117,10 @@ class HtaccessFileCache implements CacheData
 		}
 	}
 	
-	private function add_disable_signatures_protection()
-	{
-		$this->add_section('Disable signatures protection');
-		$this->add_line('# Disable your Apache version number from showing up in HTTP headers for added security');
-		$this->add_line('<IfDefine !Free>');
-		$this->add_line('	<IfModule ModSecurity.c>');
-		$this->add_line('		ServerSignature Off');
-		$this->add_line('		SecServerSignature \'\'');
-		$this->add_line('	</IfModule>');
-		$this->add_line('</IfDefine>');
-	}
-	
 	private function add_hide_directory_listings()
 	{
 		$this->add_section('Hide directory listings');
 		$this->add_line('Options -Indexes');
-		$this->add_line('Options +FollowSymLinks');
-		$this->add_line('Options -Multiviews');
 		$this->add_section('Prevent viewing of .htaccess file');
 		if (AppContext::get_request()->get_domain_name() == 'free.fr')
 		{
@@ -150,7 +132,7 @@ class HtaccessFileCache implements CacheData
 		else
 		{
 			$this->add_line('<Files .htaccess>');
-			$this->add_line('    # Apache ??? 2.3');
+			$this->add_line('    # Apache <= 2.3');
 			$this->add_line('    <IfModule mod_authz_core.c>');
 			$this->add_line('        Require all denied');
 			$this->add_line('    </IfModule>');
@@ -163,36 +145,16 @@ class HtaccessFileCache implements CacheData
 		}
 	}
 	
-	private function add_server_protections()
-	{
-		$this->add_section('Server protection');
-		$this->add_line('<IfDefine !Free>');
-		$this->add_line('	<IfModule mod_access.c>');
-		$this->add_line('		# Do Not Track: Universal Third-Party Web Tracking Opt Out');
-		$this->add_line('		# http://datatracker.ietf.org/doc/draft-mayer-do-not-track/');
-		$this->add_line('		SetEnvIfNoCase DNT 1 DO_NOT_TRACK');
-		$this->add_empty_line();
-		$this->add_line('		# Protect against Apache HTTP Server Denial Of Service Vulnerability.  CVE-2011-3192');
-		$this->add_line('		SetEnvIf Range (,.*?){5,} bad-range=1');
-		$this->add_line('		RequestHeader unset Range env=bad-range');
-		$this->add_line('	</IfModule>');
-		$this->add_line('</IfDefine>');
-	}
-	
 	private function add_http_headers()
 	{
 		$this->add_section('HTTP Headers');
 		$this->add_line('<IfDefine !Free>');
 		$this->add_line('	<IfModule mod_headers.c>');
-		$this->add_line('		# Enable keep-alive');
-		$this->add_line('		Header set Connection keep-alive');
-		$this->add_line('		# Disable your PHP version number from showing up in HTTP headers for added security.');
-		$this->add_line('		Header unset X-Powered-By');
 		
 		if ($this->server_environment_config->is_redirection_https_enabled() && $this->server_environment_config->is_hsts_security_enabled())
 		{
 			$this->add_line('		# Tell the browser to attempt the HTTPS version first');
-			$this->add_line('		Header set Strict-Transport-Security "max-age=' . $this->server_environment_config->get_hsts_security_duration() . '; includeSubDomains"');
+			$this->add_line('		Header always set Strict-Transport-Security "max-age=' . $this->server_environment_config->get_hsts_security_duration() . '; ' . ($this->server_environment_config->is_hsts_security_subdomain_enabled() ? 'includeSubDomains;' : '') . '"');
 		}
 		
 		$this->add_line('		# Don\'t allow any pages to be framed externally - Defends against CSRF');
@@ -208,9 +170,6 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('		# chrome=1 means IE should use the Chrome rendering engine if installed.');
 		$this->add_line('		BrowserMatch MSIE ie');
 		$this->add_line('		Header set X-UA-Compatible "IE=Edge"');
-		$this->add_line('		# Disable server signature');
-		$this->add_line('		Header set ServerSignature "Off"');
-		$this->add_line('		Header set ServerTokens "Prod"');
 		$this->add_line('	</IfModule>');
 		$this->add_line('</IfDefine>');
 	}
@@ -285,24 +244,12 @@ class HtaccessFileCache implements CacheData
 	private function add_php_and_http_protections()
 	{
 		$this->add_section('PHP and HTTP protections');
-		$this->add_line('# Disable the HTTP TRACE Method');
-		$this->add_line('RewriteCond %{REQUEST_METHOD} ^TRACE');
-		$this->add_line('RewriteRule .* - [F]');
-		$this->add_empty_line();
 		$this->add_line('# Block out use of illegal or unsafe characters in the HTTP Request');
 		$this->add_line('RewriteCond %{THE_REQUEST} ^.*(\\r|\\n|%0A|%0D).* [NC,OR]');
 		$this->add_line('# Block out use of illegal or unsafe characters in the Referer Variable of the HTTP Request');
 		$this->add_line('RewriteCond %{HTTP_REFERER} ^(.*)(<|>|\'|%0A|%0D|%27|%3C|%3E|%00).* [NC]');
 		$this->add_line('RewriteRule .* - [F,L]');
 		$this->add_empty_line();
-		$this->add_line('# Protect against PHP-CGI Remote Code Execution Bug. CVE-2012-1823');
-		$this->add_line('RewriteCond %{QUERY_STRING} ^(%2d|\-)[^=]+$ [NC]');
-		$this->add_line('RewriteRule .* - [F,L]');
-		$this->add_empty_line();
-		$this->add_line('# Stop \'PHP Easter Eggs\' from working, http://perishablepress.com/expose-php/');
-		$this->add_line('RewriteCond %{QUERY_STRING} \=PHP[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12} [NC,OR]');
-		$this->add_line('# Stop proc/self/environ?');
-		$this->add_line('RewriteCond %{QUERY_STRING} proc/self/environ [OR]');
 		$this->add_line('# Block out any script trying to set a mosConfig value through the URL');
 		$this->add_line('RewriteCond %{QUERY_STRING} mosConfig_[a-zA-Z_]{1,21}(=|\%3D) [OR]');
 		$this->add_line('# Block out any script trying to base64_encode/decode content via URL');
@@ -375,12 +322,6 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('RewriteCond %{HTTP_USER_AGENT} ^E?Mail.?(Collect|Harvest|Magnet|Reaper|Siphon|Sweeper|Wolf) [NC,OR]');
 		$this->add_line('RewriteCond %{HTTP_USER_AGENT} (DTS.?Agent|Email.?Extrac) [NC,OR]');
 		$this->add_line('RewriteCond %{HTTP_REFERER} iaea\.org [NC,OR]');
-		$this->add_line('# Download managers');
-		$this->add_line('RewriteCond %{HTTP_USER_AGENT} ^(Alligator|DA.?[0-9]|DC\-Sakura|Download.?(Demon|Express|Master|Wonder)|FileHound) [NC,OR]');
-		$this->add_line('RewriteCond %{HTTP_USER_AGENT} ^(Flash|Leech)Get [NC,OR]');
-		$this->add_line('RewriteCond %{HTTP_USER_AGENT} ^(Fresh|Lightning|Mass|Real|Smart|Speed|Star).?Download(er)? [NC,OR]');
-		$this->add_line('RewriteCond %{HTTP_USER_AGENT} ^(Gamespy|Go!Zilla|iGetter|JetCar|Net(Ants|Pumper)|SiteSnagger|Teleport.?Pro|WebReaper) [NC,OR]');
-		$this->add_line('RewriteCond %{HTTP_USER_AGENT} ^(My)?GetRight [NC,OR]');
 		$this->add_line('# Image-grabbers');
 		$this->add_line('RewriteCond %{HTTP_USER_AGENT} ^(AcoiRobot|FlickBot|webcollage) [NC,OR]');
 		$this->add_line('RewriteCond %{HTTP_USER_AGENT} ^(Express|Mister|Web).?(Web|Pix|Image).?(Pictures|Collector)? [NC,OR]');
@@ -400,7 +341,7 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('# Tools');
 		$this->add_line('RewriteCond %{HTTP_USER_AGENT} ^(Dart.?Communications|Enfish|htdig|Java|larbin) [NC,OR]');
 		$this->add_line('RewriteCond %{HTTP_USER_AGENT} (FrontPage|Indy.?Library|RPT\-HTTPClient) [NC,OR]');
-		$this->add_line('RewriteCond %{HTTP_USER_AGENT} ^(libwww|lwp|libwww-perl.*|PHP|Python|www\.thatrobotsite\.com|webbandit|Zeus) [NC,OR]');
+		$this->add_line('RewriteCond %{HTTP_USER_AGENT} ^(lwp|www\.thatrobotsite\.com|webbandit|Zeus) [NC,OR]');
 		$this->add_line('RewriteCond %{HTTP_USER_AGENT} ^(Microsoft|MFC).(Data|Internet|URL|WebDAV|Foundation).(Access|Explorer|Control|MiniRedir|Class) [NC,OR]');
 		$this->add_line('# Unknown');
 		$this->add_line('RewriteCond %{HTTP_USER_AGENT} ^(Crawl_Application|Lachesis|Nutscrape) [NC,OR]');
@@ -480,6 +421,14 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('		ExpiresByType text/x-javascript "access plus 1 week"');
 		$this->add_line('		ExpiresByType application/javascript "access plus 1 week"');
 		$this->add_line('		ExpiresByType application/x-javascript "access plus 1 week"');
+		$this->add_empty_line();
+		$this->add_line('		# Fonts expiration: 1 week after request');
+		$this->add_line('		<IfModule mod_mime.c>');
+		$this->add_line('			AddType application/font-woff .woff');
+		$this->add_line('			AddType application/font-woff2 .woff2');
+		$this->add_line('		</IfModule>');
+		$this->add_line('		ExpiresByType   application/font-woff   "access plus 1 month"');
+		$this->add_line('		ExpiresByType   application/font-woff2   "access plus 1 month"');
 		$this->add_empty_line();
 		$this->add_line('		# Image files expiration: 1 month after request');
 		$this->add_line('		ExpiresByType image/bmp "access plus 1 month"');
