@@ -124,20 +124,14 @@
 	# ENDIF #
 
 	<div class="footer-infos">
-		<span>
-			{L_POWERED_BY} <a href="http://www.phpboost.com" title="{L_PHPBOOST_LINK}">PHPBoost</a> {L_PHPBOOST_RIGHT}
-		</span>
+		<span class="footer-infos-powered-by">{L_POWERED_BY} <a href="http://www.phpboost.com" title="{L_PHPBOOST_LINK}">PHPBoost</a> {L_PHPBOOST_RIGHT}</span>
 		# IF C_DISPLAY_BENCH #
-		<span>
-			&nbsp;|&nbsp;
-			{L_ACHIEVED} {BENCH}{L_UNIT_SECOND} - {REQ} {L_REQ} - {MEMORY_USED}
-		</span>
+		<span class="footer-infos-separator"> | </span>
+		<span class="footer-infos-benchmark">{L_ACHIEVED} {BENCH}{L_UNIT_SECOND} - {REQ} {L_REQ} - {MEMORY_USED}</span>
 		# ENDIF #
 		# IF C_DISPLAY_AUTHOR_THEME #
-		<span>
-			| {L_THEME} {L_THEME_NAME} {L_BY}
-			<a href="{U_THEME_AUTHOR_LINK}">{L_THEME_AUTHOR}</a>
-		</span>
+		<span class="footer-infos-separator"> | </span>
+		<span class="footer-infos-template-author">{L_THEME} {L_THEME_NAME} {L_BY} <a href="{U_THEME_AUTHOR_LINK}">{L_THEME_AUTHOR}</a></span>
 		# ENDIF #
 	</div>
 </footer>
