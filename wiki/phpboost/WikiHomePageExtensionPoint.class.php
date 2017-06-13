@@ -75,7 +75,6 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 			{
 				$tpl->assign_block_vars('last_articles.list', array(
 					'ARTICLE' => stripslashes($row['title']),
-					'TR' => ($i > 0 && ($i%2 == 0)) ? '</tr><tr>' : '',
 					'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
 				));
 				$i++;
@@ -85,7 +84,7 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 			if ($i == 0)
 			{
 				$tpl->put_all(array(
-					'L_NO_ARTICLE' => '<td class="center" colspan="2">' . $LANG['wiki_no_article'] . '</td>',
+					'L_NO_ARTICLE' => $LANG['wiki_no_article'],
 				));
 			}
 		}

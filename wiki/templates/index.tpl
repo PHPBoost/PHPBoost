@@ -29,26 +29,18 @@
 				<br />
 				# START last_articles #
 				<hr /><br />
-				<table id="table">
-					<thead>
-						<tr> 
-							<th colspan="2">
-								# IF last_articles.C_ARTICLES #<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a> # ENDIF #<strong><em>{last_articles.L_ARTICLES}</em></strong>
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
+				<div class="last-articles-container">
+					<div class="last-articles-top"># IF last_articles.C_ARTICLES #<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a> # ENDIF #<strong><em>{last_articles.L_ARTICLES}</em></strong></div>
+					<div class="last-articles-content last-articles-elements-container">
 							# START last_articles.list #
-							{last_articles.list.TR}
-								<td class="left" style="width:50%;">
-									<i class="fa fa-file-text"></i> <a href="{PATH_TO_ROOT}/wiki/{last_articles.list.U_ARTICLE}">{last_articles.list.ARTICLE}</a>
-								</td>
+								<div class="last-articles-element-container">
+									<a href="{PATH_TO_ROOT}/wiki/{last_articles.list.U_ARTICLE}" class="last-articles-element"><i class="fa fa-file-text"></i>{last_articles.list.ARTICLE}</a>
+								</div>
 							# END last_articles.list #
 							{L_NO_ARTICLE}
-						</tr>
-					</tbody>
-				</table>
+					</div>
+					<div class="last-articles-bottom"></div>
+				</div>
 				# END last_articles #
 			</div>
 			<footer></footer>
