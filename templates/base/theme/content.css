@@ -153,7 +153,14 @@ header span.actions a {
 	-ms-flex-direction: column;
 	-webkit-flex-direction: column;
 	flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	-webkit-flex-wrap: wrap;
 	align-content: flex-start;
+	-ms-flex-line-pack: start;
+	-webkit-align-content: flex-start;
+	justify-content: space-around;
+	-ms-flex-pack: distribute;
+	-webkit-justify-content: space-around;
 }
 
 .elements-container > .block {
