@@ -756,6 +756,7 @@ header .cssmenu ul ul li .cssmenu-title							{ background-color: #333333;	}
 		background-image: none;
 		border-width: 1px 1px 0 1px;
 		border-color: #AAAAAA;
+		margin-bottom: 1px;
 	}
 
 }
