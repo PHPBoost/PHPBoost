@@ -24,7 +24,8 @@ table caption {
 	text-align: left;
 }
 
-table thead th {
+table thead th,
+.table-head {
 	padding: 8px;
 	background-color: #366493;
 	color: #F1F1F1;
@@ -37,13 +38,19 @@ table thead th a 		{ color: #EEEEEE; }
 table thead th a:hover 	{ color: #FFFFFF; }
 
 /* --- Contenu du tableau --- */
-table tbody td {
+table tbody td,
+.table-element-container {
 	padding: 8px;
 	background-color: #F1F1F1;
-	border-top: 1px solid #DDDDDD;
-	border-left: 1px solid #DDDDDD;
+	border-style: solid;
+	border-color: #DDDDDD;
+	border-width: 1px 0 0 1px;
 	color: #777777;
 	text-align: center;
+}
+
+.table-element-container a {
+	color: #777777;
 }
 
 tr:nth-child(even) td {

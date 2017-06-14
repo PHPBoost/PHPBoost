@@ -102,30 +102,14 @@ ul.no-list a i.fa {
 }
 
 /* Last articles */
-.last-articles-top {
-	padding: 8px;
-    background-color: #366493;
-    color: #F1F1F1;
-    font-size: 1.1em;
-    text-align: center;
-    font-weight: normal;
-}
-
 .last-articles-element-container {
 	padding: 8px 8px 8px 10px;
-	background-color: #F1F1F1;
-	border-style: solid;
-	border-color: #DDDDDD;
 	border-width: 1px 1px 0 1px;
 	text-align: left;
 }
 
 .last-articles-element-container:last-child {
 	border-width: 1px 1px 1px 1px;
-}
-
-.last-articles-element {
-	color: #777777;
 }
 
 .last-articles-element i {

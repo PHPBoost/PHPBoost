@@ -29,17 +29,17 @@
 				<br />
 				# START last_articles #
 				<hr /><br />
-				<div class="last-articles-container">
-					<div class="last-articles-top"># IF last_articles.C_ARTICLES #<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a> # ENDIF #<strong><em>{last_articles.L_ARTICLES}</em></strong></div>
-					<div class="last-articles-content last-articles-elements-container">
+				<div class="table-container last-articles-container">
+					<div class="table-head last-articles-top"># IF last_articles.C_ARTICLES #<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a> # ENDIF #<strong><em>{last_articles.L_ARTICLES}</em></strong></div>
+					<div class="table-content last-articles-content">
 							# START last_articles.list #
-								<div class="last-articles-element-container">
+								<div class="table-element-container last-articles-element-container">
 									<a href="{PATH_TO_ROOT}/wiki/{last_articles.list.U_ARTICLE}" class="last-articles-element"><i class="fa fa-file-text"></i>{last_articles.list.ARTICLE}</a>
 								</div>
 							# END last_articles.list #
 							{L_NO_ARTICLE}
 					</div>
-					<div class="last-articles-bottom"></div>
+					<div class="table-footer last-articles-bottom"></div>
 				</div>
 				# END last_articles #
 			</div>
