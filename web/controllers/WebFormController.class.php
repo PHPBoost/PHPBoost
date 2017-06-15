@@ -290,8 +290,10 @@ class WebFormController extends ModuleController
 			if ($weblink->get_id() === null )
 				$weblink->set_creation_date(new Date());
 			
-			$weblink->set_approbation_type(WebLink::NOT_APPROVAL);
 			$weblink->clean_start_and_end_date();
+			
+			if (WebAuthorizationsService::check_authorizations($weblink->get_id_category())->contribution() && !WebAuthorizationsService::check_authorizations($weblink->get_id_category())->write())
+				$weblink->set_approbation_type(WebLink::NOT_APPROVAL);
 		}
 		else
 		{

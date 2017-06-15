@@ -356,8 +356,10 @@ class ArticlesFormController extends ModuleController
 				$article->set_date_created(new Date());
 			
 			$article->set_rewrited_title(Url::encode_rewrite($article->get_title()));
-			$article->set_publishing_state(ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->write() ? Article::PUBLISHED_NOW : Article::NOT_PUBLISHED);
 			$article->clean_publishing_start_and_end_date();
+			
+			if (ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->contribution() && !ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->write())
+				$article->set_publishing_state(Article::NOT_PUBLISHED);
 		}
 		else
 		{

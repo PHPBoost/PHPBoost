@@ -304,9 +304,14 @@ class CalendarFormController extends ModuleController
 				$event_content->hide_map();
 		}
 		
-		if (CalendarAuthorizationsService::check_authorizations($event_content->get_category_id())->moderation() && $this->form->get_value('approved'))
-			$event_content->approve();
-		else
+		if (CalendarAuthorizationsService::check_authorizations($event_content->get_category_id())->moderation())
+		{
+			if ($this->form->get_value('approved'))
+				$event_content->approve();
+			else
+				$event_content->unapprove();
+		}
+		else if (CalendarAuthorizationsService::check_authorizations($event_content->get_id_category())->contribution() && !CalendarAuthorizationsService::check_authorizations($event_content->get_id_category())->write())
 			$event_content->unapprove();
 		
 		if ($this->form->get_value('registration_authorized'))

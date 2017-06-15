@@ -294,8 +294,10 @@ class DownloadFormController extends ModuleController
 		
 		if (!DownloadAuthorizationsService::check_authorizations($downloadfile->get_id_category())->moderation())
 		{
-			$downloadfile->set_approbation_type(DownloadFile::NOT_APPROVAL);
 			$downloadfile->clean_start_and_end_date();
+			
+			if (DownloadAuthorizationsService::check_authorizations($downloadfile->get_id_category())->contribution() && !DownloadAuthorizationsService::check_authorizations($downloadfile->get_id_category())->write())
+				$downloadfile->set_approbation_type(DownloadFile::NOT_APPROVAL);
 		}
 		else
 		{

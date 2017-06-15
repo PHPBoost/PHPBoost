@@ -297,8 +297,10 @@ class NewsFormController extends ModuleController
 				$news->set_creation_date(new Date());
 			
 			$news->set_rewrited_name(Url::encode_rewrite($news->get_name()));
-			$news->set_approbation_type(News::NOT_APPROVAL);
 			$news->clean_start_and_end_date();
+			
+			if (NewsAuthorizationsService::check_authorizations($news->get_id_cat())->contribution() && !NewsAuthorizationsService::check_authorizations($news->get_id_cat())->write())
+				$news->set_approbation_type(News::NOT_APPROVAL);
 		}
 		else
 		{

@@ -195,9 +195,14 @@ class FaqFormController extends ModuleController
 			$faq_question->set_q_order($number_questions_in_category + 1);
 		}
 		
-		if (FaqAuthorizationsService::check_authorizations($faq_question->get_id_category())->moderation() && $this->form->get_value('approved'))
-			$faq_question->approve();
-		else
+		if (FaqAuthorizationsService::check_authorizations($faq_question->get_id_category())->moderation())
+		{
+			if ($this->form->get_value('approved'))
+				$faq_question->approve();
+			else
+				$faq_question->unapprove();
+		}
+		else if (FaqAuthorizationsService::check_authorizations($faq_question->get_id_category())->contribution() && !FaqAuthorizationsService::check_authorizations($faq_question->get_id_category())->write())
 			$faq_question->unapprove();
 		
 		if ($faq_question->get_id() === null)
