@@ -271,7 +271,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 				}
 			break;
 			case Article::PUBLISHED_DATE:
-				if (!$article->is_published() && !ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->read())
+				if (!$article->is_published() && ($not_authorized || ($current_user->get_id() == User::VISITOR_LEVEL)))
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 		   			DispatchManager::redirect($error_controller);
