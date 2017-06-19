@@ -50,7 +50,7 @@ if (!empty($change_cat))
 if (ForumAuthorizationsService::check_authorizations()->read())
 {
 	$tpl = new FileTemplate('forum/forum_forum.tpl');
-		
+	
 	$nbr_topics = 0;
 	
 	try {
@@ -70,7 +70,7 @@ if (ForumAuthorizationsService::check_authorizations()->read())
 		DispatchManager::redirect($error_controller);
 	}
 	
-	$result = PersistenceContext::get_querier()->select("SELECT m1.display_name AS login, m1.level AS user_level, m1.groups AS groups, m2.display_name AS last_login, m2.level AS last_user_level, m2.groups AS last_user_groups, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id, t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question
+	$result = PersistenceContext::get_querier()->select("SELECT DISINCT t.id, m1.display_name AS login, m1.level AS user_level, m1.groups AS groups, m2.display_name AS last_login, m2.level AS last_user_level, m2.groups AS last_user_groups, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id, t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question
 	FROM " . PREFIX . "forum_topics t
 	LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id
 	LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat 
@@ -111,11 +111,11 @@ if (ForumAuthorizationsService::check_authorizations()->read())
 			$last_page = ceil( $row['nbr_msg'] / $config->get_number_messages_per_page() );
 			$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 			$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';
-		}	
+		}
 		
 		//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
 		$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['title']) : '';
-				
+		
 		//Ancre ajoutée aux messages non lus.
 		$new_ancre = '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><i class="fa fa-hand-o-right"></i></a>';
 		
@@ -155,7 +155,7 @@ if (ForumAuthorizationsService::check_authorizations()->read())
 			'LAST_MSG_USER_LEVEL' => " " . UserService::get_level_class($row['last_user_level']),
 			'LAST_MSG_USER_GROUP_COLOR' => (!empty($last_group_color) ? ' style="color:' . $last_group_color . '"' : '')
 			)
-		));	
+		));
 	}
 	$result->dispose();
 	
@@ -217,10 +217,10 @@ if (ForumAuthorizationsService::check_authorizations()->read())
 	$tpl->put_all($vars_tpl);
 	$tpl_top->put_all($vars_tpl);
 	$tpl_bottom->put_all($vars_tpl);
-		
+	
 	$tpl->put('forum_top', $tpl_top);
 	$tpl->put('forum_bottom', $tpl_bottom);
-		
+	
 	$tpl->display();
 }
 else
