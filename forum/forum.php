@@ -168,15 +168,10 @@ if (!empty($id_get))
 					$last_topic_title = (($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '') . ' ' . $row['title'];
 					
 					$group_color = User::get_group_color($row['groups'], $row['user_level']);
-					
-					$last = '<a href="topic' . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title'])  . '.php') . '" class="small">' . $last_topic_title . '</a><br />
-					<a href="topic' . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id . '" title=""><i class="fa fa-hand-o-right"></i></a> ' . $LANG['on'] . ' ' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />
-					' . $LANG['by'] . (!empty($row['display_name']) ? ' <a href="'. UserUrlBuilder::profile($row['last_user_id'])->rel() .'" class="small '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : ' ' . $LANG['guest']);
 				}
 				else
 				{
 					$row['last_timestamp'] = '';
-					$last = '<br />' . $LANG['no_message'] . '<br /><br />';
 				}
 
 				//Vérirication de l'existance de sous forums.
@@ -209,7 +204,10 @@ if (!empty($id_get))
 				}
 				$img_announce .= ($row['cat_status'] == ForumCategory::STATUS_LOCKED) ? '-lock' : '';
 				
-				$tpl->assign_block_vars('subcats', array(
+				$last_msg_date = new Date($row['last_timestamp'], Timezone::SERVER_TIMEZONE);
+
+				$tpl->assign_block_vars('subcats', array_merge(
+					Date::get_array_tpl_vars($last_msg_date, 'LAST_MSG_DATE'), array(
 					'C_BLINK' => $blink,
 					'IMG_ANNOUNCE' => $img_announce,
 					'NAME' => stripslashes($row['name']),
@@ -219,8 +217,17 @@ if (!empty($id_get))
 					'NBR_MSG' => $row['nbr_msg'],
 					'U_FORUM_URL' => $row['url'],
 					'U_FORUM_VARS' => url('.php?id=' . $row['cid'], '-' . $row['cid'] . '+' . $row['rewrited_name'] . '.php'),
-					'U_LAST_TOPIC' => $last
-				));
+					'C_LAST_TOPIC_MSG' => (int)$row['nbr_msg'] > 0,
+					'LAST_TOPIC_TITLE' => $last_topic_title,
+					'U_LAST_TOPIC' => "topic" . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title'])  . '.php'),
+					'U_LAST_MSG' => "topic" . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id,
+					'C_LAST_MSG_GUEST' => !empty($row['display_name']),
+					'U_LAST_MSG_USER_PROFIL' => UserUrlBuilder::profile($row['last_user_id'])->rel(),
+					'LAST_MSG_USER_LOGIN' => $row['display_name'],
+					'LAST_MSG_USER_LEVEL' => " " . UserService::get_level_class($row['last_user_level']),
+					'LAST_MSG_USER_GROUP_COLOR' => !empty($last_group_color) ? ' style="color:' . $last_group_color . '"' : '',
+					'L_NO_MSG' => $LANG['no_message']
+				)));
 			}
 		}
 	}

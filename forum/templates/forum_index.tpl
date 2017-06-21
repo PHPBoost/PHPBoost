@@ -78,7 +78,23 @@
 								{forums_list.subcats.NBR_MSG}
 							</td>
 							<td class="forum-last-topic">
-								{forums_list.subcats.U_LAST_TOPIC}
+							# IF forums_list.subcats.C_LAST_TOPIC_MSG #
+								<span class="last-topic-date"><a href="{forums_list.subcats.U_LAST_TOPIC}" class="last-topic-title small">{forums_list.subcats.LAST_TOPIC_TITLE}</a>
+								</span><br />
+								<span class="last-topic-date">
+									<a href="{forums_list.subcats.U_LAST_MSG}" title=""><i class="fa fa-hand-o-right"></i></a> ${LangLoader::get_message('on', 'main')} {forums_list.subcats.LAST_MSG_DATE_FULL}
+								</span><br />
+								<span class="last-topic-user">
+									${LangLoader::get_message('by', 'main')}
+									# IF forums_list.subcats.C_LAST_MSG_GUEST #
+									<a href="{forums_list.subcats.U_LAST_MSG_USER_PROFIL}" class=" small {forums_list.subcats.LAST_MSG_USER_LEVEL}" {forums_list.subcats.LAST_MSG_USER_GROUP_COLOR}>{forums_list.subcats.LAST_MSG_USER_LOGIN}</a>
+									# ELSE #
+									${LangLoader::get_message('guest', 'main')}
+									# ENDIF #
+								</span>
+							# ELSE #
+								<br /><em>{forums_list.subcats.L_NO_MSG}</em><br /><br />
+							# ENDIF #
 							</td>
 							# ENDIF #
 						</tr>

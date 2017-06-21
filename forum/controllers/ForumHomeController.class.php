@@ -185,14 +185,10 @@ class ForumHomeController extends ModuleController
 						$last_topic_title = (($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '') . ' ' . $row['title'];
 						$row['login'] = !empty($row['login']) ? $row['login'] : $LANG['guest'];
 						$group_color = User::get_group_color($row['groups'], $row['user_level']);
-						
-						$last = '<a href="'. PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title'])  . '.php') . '" class="small">' . $last_topic_title . '</a><br />
-						<a href="'. PATH_TO_ROOT . '/forum/topic' . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id . '"><i class="fa fa-hand-o-right"></i></a> ' . $LANG['on'] . ' ' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />' . $LANG['by'] . ' ' . ($row['last_user_id'] != '-1' ? '<a href="'. UserUrlBuilder::profile($row['last_user_id'])->rel() . '" class="small '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>');
 					}
 					else
 					{
 						$row['last_timestamp'] = '';
-						$last = '<br />' . $LANG['no_message'] . '<br /><br />';
 					}
 	
 					//Vérifications des topics Lu/non Lus.
@@ -211,8 +207,10 @@ class ForumHomeController extends ModuleController
 					$total_topic += $row['nbr_topic'];
 					$total_msg += $row['nbr_msg'];
 					
-	
-					$this->view->assign_block_vars('forums_list.subcats', array(
+					$last_msg_date = new Date($row['last_timestamp'], Timezone::SERVER_TIMEZONE);
+
+					$this->view->assign_block_vars('forums_list.subcats', array_merge(
+						Date::get_array_tpl_vars($last_msg_date, 'LAST_MSG_DATE'), array(
 						'C_BLINK' => $blink,
 						'IMG_ANNOUNCE' => $img_announce,
 						'NAME' => $row['name'],
@@ -222,8 +220,17 @@ class ForumHomeController extends ModuleController
 						'NBR_MSG' => $row['nbr_msg'],
 						'U_FORUM_URL' => $row['url'],
 						'U_FORUM_VARS' => ForumUrlBuilder::display_forum($row['cid'], $row['rewrited_name'])->rel(),
-						'U_LAST_TOPIC' => $last
-					));
+						'C_LAST_TOPIC_MSG' => !empty($row['last_topic_id']),
+						'LAST_TOPIC_TITLE' => $last_topic_title,
+						'U_LAST_TOPIC' => PATH_TO_ROOT . "/forum/topic" . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title'])  . '.php'),
+						'U_LAST_MSG' => PATH_TO_ROOT . "/forum/topic" . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id,
+						'C_LAST_MSG_GUEST' => ($row['last_user_id']) != '-1',
+						'U_LAST_MSG_USER_PROFIL' => UserUrlBuilder::profile($row['last_user_id'])->rel(),
+						'LAST_MSG_USER_LOGIN' => $row['login'],
+						'LAST_MSG_USER_LEVEL' => UserService::get_level_class($row['user_level']),
+						'LAST_MSG_USER_GROUP_COLOR' => !empty($group_color) ? ' style="color:' . $group_color . '"' : '',
+						'L_NO_MSG' => $LANG['no_message']
+					)));
 				}
 			}
 		}

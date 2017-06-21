@@ -61,7 +61,18 @@
 									{subcats.NBR_MSG}
 								</td>
 								<td class="forum-last-topic">
-									{subcats.U_LAST_TOPIC}
+									# IF subcats.C_LAST_TOPIC_MSG #
+										<a href="{subcats.U_LAST_TOPIC}" class="last-topic-title small">{subcats.LAST_TOPIC_TITLE}</a><br />
+										<a href="{subcats.U_LAST_MSG}" title="" class="last-topic-date"><i class="fa fa-hand-o-right"></i></a> {subcats.L_ON} {subcats.LAST_MSG_DATE_FULL}<br />
+										{subcats.L_BY}
+										# IF subcats.C_LAST_MSG_GUEST #
+										<a href="{subcats.U_LAST_MSG_USER_PROFIL}" class="last-topic-user small {subcats.LAST_MSG_USER_LEVEL}" {subcats.LAST_MSG_USER_GROUP_COLOR}>{subcats.LAST_MSG_USER_LOGIN}</a>
+										# ELSE #
+										{subcats.L_GUEST}
+										# ENDIF #
+									# ELSE #
+										<br /><em>{subcats.L_NO_MSG}</em><br /><br />
+									# ENDIF #
 								</td>
 								# ENDIF #
 							</tr>
@@ -156,14 +167,15 @@
 							{topics.VUS}
 						</td>
 						<td class="forum-last-topic">
-							<a href={topics.LAST_MSG_URL} title="{topics.TITLE}"><i class="fa fa-hand-o-right"></i></a> ${LangLoader::get_message('on', 'main')} {topics.LAST_MSG_DATE_FULL}
-							<br />
-							${LangLoader::get_message('by', 'main')}
+							<span class="last-topic-title"><a href={topics.LAST_MSG_URL} title="{topics.TITLE}"><i class="fa fa-hand-o-right"></i></a></span>
+							<span class="last-topic-date">${LangLoader::get_message('on', 'main')} {topics.LAST_MSG_DATE_FULL}</span><br />
+							<span class="last-topic-user"> ${LangLoader::get_message('by', 'main')}
 							# IF topics.C_LAST_MSG_GUEST #
-							<a href="{topics.LAST_MSG_USER_PROFIL}" class="small{topics.LAST_MSG_USER_LEVEL}"{topics.LAST_MSG_USER_GROUP_COLOR} >{topics.LAST_MSG_USER_LOGIN}</a>
+							<a href="{topics.LAST_MSG_USER_PROFIL}" class="small{topics.LAST_MSG_USER_LEVEL}"{topics.LAST_MSG_USER_GROUP_COLOR}>{topics.LAST_MSG_USER_LOGIN}</a>
 							# ELSE #
 								<em>${LangLoader::get_message('guest', 'main')}</em>
 							# ENDIF #
+							</span>
 						</td>
 					</tr>
 					# END topics #
