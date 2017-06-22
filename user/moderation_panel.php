@@ -75,7 +75,7 @@ $moderation_panel_template->put_all(array(
 
 $editor = AppContext::get_content_formatting_service()->get_default_editor();
 $editor->set_identifier('action_contents');
-	
+
 if ($action == 'punish')
 {
 	//Gestion des utilisateurs
@@ -95,7 +95,7 @@ if ($action == 'punish')
 		{
 			MemberSanctionManager::remove_write_permissions($id_get, $readonly, MemberSanctionManager::NO_SEND_CONFIRMATION, str_replace('%date', Date::to_format($readonly, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE), $readonly_contents));
 		}
-		SessionData::recheck_cached_data_from_user_id($user_id);
+		SessionData::recheck_cached_data_from_user_id($id_get);
 		
 		AppContext::get_response()->redirect(HOST . DIR . url('/user/moderation_panel.php?action=punish', '', '&'));
 	}
@@ -193,10 +193,10 @@ if ($action == 'punish')
 		{
 			//Retourne la sanction la plus proche correspondant au temp de bannissement. 
 			for ($i = 11; $i > 0; $i--)
-			{					
+			{
 				$avg = ceil(($array_time[$i] + $array_time[$i-1])/2);
 				if (($diff - $array_time[$i]) > $avg) 
-				{	
+				{
 					$key_sanction = $i + 1;
 					break;
 				}
@@ -420,7 +420,7 @@ else
 		{
 			MemberSanctionManager::remove_write_permissions($id_get, 90, MemberSanctionManager::NO_SEND_CONFIRMATION);
 		}
-		SessionData::recheck_cached_data_from_user_id($user_id);
+		SessionData::recheck_cached_data_from_user_id($id_get);
 		
 		AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('ban'));
 	}
