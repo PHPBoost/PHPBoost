@@ -63,12 +63,12 @@
 								<td class="forum-last-topic">
 									# IF subcats.C_LAST_TOPIC_MSG #
 										<a href="{subcats.U_LAST_TOPIC}" class="last-topic-title small">{subcats.LAST_TOPIC_TITLE}</a><br />
-										<a href="{subcats.U_LAST_MSG}" title="" class="last-topic-date"><i class="fa fa-hand-o-right"></i></a> {subcats.L_ON} {subcats.LAST_MSG_DATE_FULL}<br />
-										{subcats.L_BY}
+										<a href="{subcats.U_LAST_MSG}" title="" class="last-topic-date"><i class="fa fa-hand-o-right"></i></a> ${LangLoader::get_message('on', 'main')} {subcats.LAST_MSG_DATE_FULL}<br />
+										${LangLoader::get_message('by', 'main')}
 										# IF subcats.C_LAST_MSG_GUEST #
 										<a href="{subcats.U_LAST_MSG_USER_PROFIL}" class="last-topic-user small {subcats.LAST_MSG_USER_LEVEL}" {subcats.LAST_MSG_USER_GROUP_COLOR}>{subcats.LAST_MSG_USER_LOGIN}</a>
 										# ELSE #
-										{subcats.L_GUEST}
+										${LangLoader::get_message('guest', 'main')}
 										# ENDIF #
 									# ELSE #
 										<br /><em>{subcats.L_NO_MSG}</em><br /><br />
