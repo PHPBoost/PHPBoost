@@ -1,7 +1,7 @@
 	# IF C_POLL_MAIN #
 		<section id="module-poll-main">
 			<header>
-				<h1>{L_POLL} <span class="actions">{EDIT}</span></h1>
+				<h1>{L_POLL}# IF C_IS_ADMIN # <span class="actions"><a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a></span># ENDIF #</h1>
 			</header>
 
 			<div class="content center">
@@ -26,21 +26,23 @@
 		<form method="post" action="{PATH_TO_ROOT}/poll/poll{U_POLL_ACTION}">
 			<section id="module-poll">
 				<header>
-					<h2>
-						{QUESTION}
-						# IF C_IS_ADMIN #
-						<span class="actions">
-							<a href="{PATH_TO_ROOT}/poll/admin_poll.php?id={IDPOLL}" title="{L_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
-							<a href="{PATH_TO_ROOT}/poll/admin_poll.php?delete=1&amp;id={IDPOLL}&amp;token={TOKEN}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
-						</span>
-						# ENDIF #
-					</h2>
+					<h1>{L_MINI_POLL}</h1>
 				</header>
 				<div class="content">
 					# INCLUDE message_helper #
 					
 					<article id="article-poll-{IDPOLL}" class="article-poll block">
-						<header><h2>{QUESTION}</h2></header>
+						<header>
+							<h2>
+							{QUESTION}
+							# IF C_IS_ADMIN #
+							<span class="actions">
+								<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+								<a href="{U_DEL}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
+							</span>
+							# ENDIF #
+							</h2>
+						</header>
 						<div class="content">
 							# IF C_POLL_QUESTION #
 							<div>
@@ -77,7 +79,7 @@
 									# END result #
 									<div>
 										<span class="smaller left">{VOTES} {L_VOTE}</span>
-										<span class="smaller right">{L_ON} : {DATE} </span>
+										<span class="smaller right">${LangLoader::get_message('on', 'main')} : {DATE} </span>
 										&nbsp;
 									</div>
 								# ELSE #
@@ -108,8 +110,8 @@
 							{list.QUESTION}
 							<span class="actions">
 								# IF C_IS_ADMIN #
-								<a href="{PATH_TO_ROOT}/poll/admin_poll.php?id={list.ID}" title="{L_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
-								<a href="{PATH_TO_ROOT}/poll/admin_poll.php?delete=1&amp;id={list.ID}&amp;token={TOKEN}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+								<a href="{list.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+								<a href="{list.U_DEL}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
 								# ENDIF #
 							</span>
 						</h2>
@@ -127,7 +129,7 @@
 						# END list.result #
 						<div>
 							<span class="smaller left">{list.VOTE} {list.L_VOTE}</span>
-							<span class="smaller right">{L_ON} : {list.DATE} </span>
+							<span class="smaller right">${LangLoader::get_message('on', 'main')} : {list.DATE} </span>
 							&nbsp;
 						</div>
 					</div>

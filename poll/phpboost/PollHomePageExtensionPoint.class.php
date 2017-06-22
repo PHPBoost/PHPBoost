@@ -58,13 +58,14 @@ class PollHomePageExtensionPoint implements HomePageExtensionPoint
 	
 		$edit = '';	
 		if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
-			$edit = '<a href="' . PATH_TO_ROOT . '/poll/admin_poll.php" title="' . LangLoader::get_message('edit', 'common') . '" class="fa fa-edit"></a>';
+			$edit = PATH_TO_ROOT . "/poll/admin_poll.php";
 	
 		$tpl->put_all(array(
 			'C_POLL_MAIN' => true,
-			'EDIT' => $edit,
-			'U_ARCHIVE' => $show_archives,
-			'L_POLL' => $LANG['poll'],
+			'C_IS_ADMIN'  => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
+			'U_EDIT'      => $edit,
+			'U_ARCHIVE'   => $show_archives,
+			'L_POLL'      => $LANG['poll'],
 			'L_POLL_MAIN' => $LANG['poll_main']
 		));
 	
@@ -78,7 +79,7 @@ class PollHomePageExtensionPoint implements HomePageExtensionPoint
 		{
 			$tpl->assign_block_vars('list', array(
 				'U_POLL_ID' => url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
-				'QUESTION' => stripslashes($row['question'])
+				'QUESTION'  => stripslashes($row['question'])
 			));
 		}
 		$result->dispose();	

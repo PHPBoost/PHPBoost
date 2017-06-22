@@ -33,10 +33,10 @@ require_once('../admin/admin_header.php');
 $request = AppContext::get_request();
 
 //On recupère les variables.
-$id = $request->get_getint('id', 0);
+$id      = $request->get_getint('id', 0);
 $id_post = $request->get_postint('id', 0);
-$del = $request->get_getint('delete', 0);
-$valid = $request->get_postvalue('valid', false);
+$del     = $request->get_getint('delete', 0);
+$valid   = $request->get_postvalue('valid', false);
 
 $poll_config = PollConfig::load();
 
@@ -68,15 +68,15 @@ elseif ($valid && !empty($id_post)) //inject
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
-	$question = retrieve(POST, 'question', '');
-	$type = (int)retrieve(POST, 'type', 0);
-	$archive = (int)retrieve(POST, 'archive', 0);
+	$question     = retrieve(POST, 'question', '');
+	$type         = (int)retrieve(POST, 'type', 0);
+	$archive      = (int)retrieve(POST, 'archive', 0);
 	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNCHANGE);
-	$start = retrieve(POST, 'start', '', TSTRING_UNCHANGE);
-	$end = retrieve(POST, 'end', '', TSTRING_UNCHANGE);
-	$hour = retrieve(POST, 'hour', '', TSTRING_UNCHANGE);
-	$min = retrieve(POST, 'min', '', TSTRING_UNCHANGE);
-	$get_visible = (int)retrieve(POST, 'visible', 0);
+	$start        = retrieve(POST, 'start', '', TSTRING_UNCHANGE);
+	$end          = retrieve(POST, 'end', '', TSTRING_UNCHANGE);
+	$hour         = retrieve(POST, 'hour', '', TSTRING_UNCHANGE);
+	$min          = retrieve(POST, 'min', '', TSTRING_UNCHANGE);
+	$get_visible  = (int)retrieve(POST, 'visible', 0);
 	
 	//On verifie les conditions!
 	if (!empty($question) && !empty($id_post))
@@ -160,45 +160,43 @@ elseif (!empty($id))
 	$calendar_current_date = new MiniCalendar('current_date', !empty($row['timestamp']) ? new Date($row['timestamp'], Timezone::SERVER_TIMEZONE) : new Date());
 	
 	$tpl->put_all(array(
-		'C_TYPE_UNIQUE' => ($row['type'] == '1'),
-		'C_TYPE_MULTIPLE' => ($row['type'] == '0'),
-		'C_ARCHIVES_ENABLED' => ($row['archive'] == '1'),
-		'C_ARCHIVES_DISABLED' => ($row['archive'] == '0'),
-		'C_VISIBLE_WAITING' => ($row['visible'] == 2 || !empty($row['end'])),
-		'C_VISIBLE_ENABLED' => ($row['visible'] == 1 && empty($row['end'])),
-		'C_VISIBLE_UNAPROB' => ($row['visible'] == 0),
-		'IDPOLL' => $row['id'],
-		'QUESTIONS' => stripslashes($row['question']),
-		'CALENDAR_START' => $calendar_start->display(),
-		'CALENDAR_END' => $calendar_end->display(),
+		'C_TYPE_UNIQUE'         => ($row['type'] == '1'),
+		'C_TYPE_MULTIPLE'       => ($row['type'] == '0'),
+		'C_ARCHIVES_ENABLED'    => ($row['archive'] == '1'),
+		'C_ARCHIVES_DISABLED'   => ($row['archive'] == '0'),
+		'C_VISIBLE_WAITING'     => ($row['visible'] == 2 || !empty($row['end'])),
+		'C_VISIBLE_ENABLED'     => ($row['visible'] == 1 && empty($row['end'])),
+		'C_VISIBLE_UNAPROB'     => ($row['visible'] == 0),
+		'IDPOLL'                => $row['id'],
+		'QUESTIONS'             => stripslashes($row['question']),
+		'CALENDAR_START'        => $calendar_start->display(),
+		'CALENDAR_END'          => $calendar_end->display(),
 		'CALENDAR_CURRENT_DATE' => $calendar_current_date->display(),
-		'HOUR' => Date::to_format($row['timestamp'], 'H'),
-		'MIN' => Date::to_format($row['timestamp'], 'i'),
-		'DATE' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR),
-		'L_REQUIRE_QUESTION' => $LANG['require_question'],
-		'L_REQUIRE_ANSWER' => $LANG['require_answer'],
+		'HOUR'                  => Date::to_format($row['timestamp'], 'H'),
+		'MIN'                   => Date::to_format($row['timestamp'], 'i'),
+		'DATE'                  => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR),
+		'L_REQUIRE_QUESTION'    => $LANG['require_question'],
+		'L_REQUIRE_ANSWER'      => $LANG['require_answer'],
 		'L_REQUIRE_ANSWER_TYPE' => $LANG['require_answer_type'],
-		'L_POLL_MANAGEMENT' => $LANG['poll_management'],
-		'L_POLL_ADD' => $LANG['poll_add'],
-		'L_POLL_CONFIG' => $LANG['poll_config'],
-		'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
-		'L_QUESTION' => $LANG['question'],
-		'L_ANSWER_TYPE' => $LANG['answer_type'],
-		'L_ANSWERS' => $LANG['answers'],
-		'L_SINGLE' => $LANG['single'],
-		'L_MULTIPLE' => $LANG['multiple'],
-		'L_YES' => LangLoader::get_message('yes', 'common'),
-		'L_NO' => LangLoader::get_message('no', 'common'),
-		'L_NUMBER_VOTE' => $LANG['number_vote'],
-		'L_DATE' => LangLoader::get_message('date', 'date-common'),
-		'L_POLL_DATE' => $LANG['poll_date'],
-		'L_RELEASE_DATE' => $LANG['release_date'],
-		'L_IMMEDIATE' => $LANG['immediate'],
-		'L_UNAPROB' => $LANG['unaprob'],
-		'L_UNTIL' => $LANG['until'],
-		'L_UPDATE' => $LANG['update'],
-		'L_RESET' => $LANG['reset'],
-		'L_DELETE' => LangLoader::get_message('delete', 'common'),
+		'L_POLL_MANAGEMENT'     => $LANG['poll_management'],
+		'L_POLL_ADD'            => $LANG['poll_add'],
+		'L_POLL_CONFIG'         => $LANG['poll_config'],
+		'L_REQUIRE'             => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
+		'L_QUESTION'            => $LANG['question'],
+		'L_ANSWER_TYPE'         => $LANG['answer_type'],
+		'L_ANSWERS'             => $LANG['answers'],
+		'L_ARCHIVES'            => $LANG['archives'],
+		'L_SINGLE'              => $LANG['single'],
+		'L_MULTIPLE'            => $LANG['multiple'],
+		'L_NUMBER_VOTE'         => $LANG['number_vote'],
+		'L_DATE'                => LangLoader::get_message('date', 'date-common'),
+		'L_POLL_DATE'           => $LANG['poll_date'],
+		'L_RELEASE_DATE'        => $LANG['release_date'],
+		'L_IMMEDIATE'           => $LANG['immediate'],
+		'L_UNAPROB'             => $LANG['unaprob'],
+		'L_UNTIL'               => $LANG['until'],
+		'L_UPDATE'              => $LANG['update'],
+		'L_RESET'               => $LANG['reset']
 	));
 	
 	//Gestion erreur.
@@ -219,12 +217,12 @@ elseif (!empty($id))
 	{
 		$percent = NumberHelper::round(($nbrvote * 100 / $sum_vote), 1);
 		$tpl->assign_block_vars('answers', array(
-			'ID' => $i,
+			'ID'     => $i,
 			'ANSWER' => !empty($answer) ? $answer : ''
 		));
 		$tpl->assign_block_vars('votes', array(
-			'ID' => $i,
-			'VOTES' => isset($nbrvote) ? $nbrvote : '',
+			'ID'      => $i,
+			'VOTES'   => isset($nbrvote) ? $nbrvote : '',
 			'PERCENT' => isset($percent) ? $percent . '%' : ''
 		));
 		$i++;
@@ -256,18 +254,18 @@ else
 	}
 	
 	$tpl->put_all(array(
-		'C_PAGINATION' => $pagination->has_several_pages(),
-		'PAGINATION' => $pagination->display(),
+		'C_PAGINATION'      => $pagination->has_several_pages(),
+		'PAGINATION'        => $pagination->display(),
 		'L_POLL_MANAGEMENT' => $LANG['poll_management'],
-		'L_POLL_ADD' => $LANG['poll_add'],
-		'L_POLL_CONFIG' => $LANG['poll_config'],
-		'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
-		'L_QUESTION' => $LANG['question'],
-		'L_POLLS' => $LANG['polls'],
-		'L_DATE' => LangLoader::get_message('date', 'date-common'),
-		'L_PSEUDO' => LangLoader::get_message('author', 'common'),
-		'L_APROB' => $LANG['aprob'],
-		'L_UPDATE' => $LANG['update']
+		'L_POLL_ADD'        => $LANG['poll_add'],
+		'L_POLL_CONFIG'     => $LANG['poll_config'],
+		'L_REQUIRE'         => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
+		'L_QUESTION'        => $LANG['question'],
+		'L_POLLS'           => $LANG['polls'],
+		'L_DATE'            => LangLoader::get_message('date', 'date-common'),
+		'L_PSEUDO'          => LangLoader::get_message('author', 'common'),
+		'L_APROB'           => $LANG['aprob'],
+		'L_UPDATE'          => $LANG['update']
 	));
 	
 	$result = PersistenceContext::get_querier()->select("SELECT p.id, p.question, p.archive, p.timestamp, p.visible, p.start, p.end, p.user_id, m.display_name, m.groups, m.level
@@ -304,19 +302,25 @@ else
 		
 		$group_color = User::get_group_color($row['groups'], $row['level']);
 		
-		$tpl->assign_block_vars('questions', array(
+		$date = new Date($row['timestamp'], Timezone::SERVER_TIMEZONE);
+
+		$tpl->assign_block_vars('questions', array_merge(
+			Date::get_array_tpl_vars($date,'date'), 
+			array(
 			'C_USER_GROUP_COLOR' => !empty($group_color),
-			'QUESTIONS' => $question,
-			'IDPOLL' => $row['id'],
-			'PSEUDO' => $row['display_name'],
-			'USER_GROUP_COLOR' => $group_color,
-			'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
-			'DATE' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR),
-			'ARCHIVES' => $archive,
-			'APROBATION' => $aprob,
-			'VISIBLE' => ((!empty($visible)) ? '(' . $visible . ')' : ''),
-			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel()
-		));
+			'QUESTIONS'          => $question,
+			'IDPOLL'             => $row['id'],
+			'U_POLL'             => PATH_TO_ROOT . "/poll/poll" . (( $row['archive'] == 1) ? url('.php?archives=' . $row['id']) : url('.php?id=' . $row['id'])),
+			'U_EDIT'             => PATH_TO_ROOT . "/poll/admin_poll" . url('.php?id=' . $row['id']),
+			'U_DELETE'           => PATH_TO_ROOT . "/poll/admin_poll" . url('.php?delete=1&amp;id=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
+			'PSEUDO'             => $row['display_name'],
+			'USER_GROUP_COLOR'   => $group_color,
+			'USER_LEVEL_CLASS'   => UserService::get_level_class($row['level']),
+			'ARCHIVES'           => $archive,
+			'APROBATION'         => $aprob,
+			'VISIBLE'            => ((!empty($visible)) ? '(' . $visible . ')' : ''),
+			'U_AUTHOR_PROFILE'   => UserUrlBuilder::profile($row['user_id'])->rel()
+		)));
 	}
 	$result->dispose();	
 	

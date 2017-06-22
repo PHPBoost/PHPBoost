@@ -77,18 +77,18 @@
 							</div>
 						</div>
 						<div class="form-element">
-							<label for="archive">* ${LangLoader::get_message('hidden', 'common')}</label>
+							<label for="archive">* {L_ARCHIVES}</label>
 							<div class="form-field">
 								<div class="form-field-radio">
 									<input type="radio" name="archive" id="archive1" value="1"# IF C_ARCHIVES_ENABLED # checked="checked"# ENDIF # />
 									<label for="archive1"></label> 
 								</div>
-								<span class="form-field-radio-span">{L_YES}</span>
+								<span class="form-field-radio-span">${LangLoader::get_message('yes', 'common')}</span>
 								<div class="form-field-radio">
 									<input type="radio" name="archive" id="archive2" value="0"# IF C_ARCHIVES_DISABLED # checked="checked"# ENDIF # />
 									<label for="archive2"></label> 
 								</div>
-								<span class="form-field-radio-span">{L_NO}</span>
+								<span class="form-field-radio-span">${LangLoader::get_message('no', 'common')}</span>
 							</div>
 						</div>
 						<div class="form-element">

@@ -221,22 +221,19 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 		$tpl->put_all(array_merge(
 			Date::get_array_tpl_vars($poll_creation_date,'date'),
 			array(
-			'C_POLL_VIEW' => true,
-			'C_POLL_RESULTS' => true,
-			'C_IS_ADMIN' => $is_admin,
-			'C_DISPLAY_RESULTS' => $is_admin || ($results_displayed && (!empty($nbr_votes) || !empty($ip))),
-			'C_NO_VOTE' => !$is_admin && (empty($nbr_votes) && empty($ip)),
-			'IDPOLL' => $poll['id'],
-			'QUESTION' => stripslashes($poll['question']),
-			'VOTES' => $sum_vote,
-			'L_POLL' => $LANG['poll'],
-			'L_BACK_POLL' => $LANG['poll_back'],
-			'L_VOTE' => (($sum_vote > 1 ) ? $LANG['poll_vote_s'] : $LANG['poll_vote']),
-			'L_ON' => $LANG['on'],
-			'L_NO_VOTE' => $LANG['e_no_vote'],
-			'L_RESULTS_NOT_DISPLAYED_YET' => StringVars::replace_vars($LANG['e_results_not_displayed_yet'], array('end_date' => $poll_end_date->format(Date::FORMAT_DAY_MONTH_YEAR))),
-			'L_EDIT' => LangLoader::get_message('edit', 'common'),
-			'L_DELETE' => LangLoader::get_message('delete', 'common')
+			'C_POLL_VIEW'                 => true,
+			'C_POLL_RESULTS'              => true,
+			'C_IS_ADMIN'                  => $is_admin,
+			'C_DISPLAY_RESULTS'           => $is_admin || ($results_displayed && (!empty($nbr_votes) || !empty($ip))),
+			'C_NO_VOTE'                   => !$is_admin && (empty($nbr_votes) && empty($ip)),
+			'IDPOLL'                      => $poll['id'],
+			'QUESTION'                    => stripslashes($poll['question']),
+			'VOTES'                       => $sum_vote,
+			'L_POLL'                      => $LANG['poll'],
+			'L_BACK_POLL'                 => $LANG['poll_back'],
+			'L_VOTE'                      => (($sum_vote > 1 ) ? $LANG['poll_vote_s'] : $LANG['poll_vote']),
+			'L_NO_VOTE'                   => $LANG['e_no_vote'],
+			'L_RESULTS_NOT_DISPLAYED_YET' => StringVars::replace_vars($LANG['e_results_not_displayed_yet'], array('end_date' => $poll_end_date->format(Date::FORMAT_DAY_MONTH_YEAR)))
 			)
 		));
 		
@@ -247,7 +244,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 			$tpl->assign_block_vars('result', array(
 				'ANSWERS' => $answer, 
 				'NBRVOTE' => (int)$nbrvote,
-				'WIDTH' => NumberHelper::round(($nbrvote * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.
+				'WIDTH'   => NumberHelper::round(($nbrvote * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.
 				'PERCENT' => NumberHelper::round(($nbrvote * 100 / $sum_vote), 1)
 			));
 		}
@@ -261,23 +258,23 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 		$tpl->put_all(array_merge(
 			Date::get_array_tpl_vars($date,'date'), 
 			array(
-			'C_POLL_VIEW' => true,
+			'C_POLL_VIEW'     => true,
 			'C_POLL_QUESTION' => true,
-			'C_IS_ADMIN' => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
-			'IDPOLL' => $poll['id'],
-			'QUESTION' => stripslashes($poll['question']),
-			'VOTES' => 0,
-			'ID_R' => url('.php?id=' . $poll['id'] . '&amp;r=1', '-' . $poll['id'] . '-1.php'),
-			'QUESTION' => stripslashes($poll['question']),
-			'U_POLL_ACTION' => url('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'),
-			'U_POLL_RESULT' => url('.php?id=' . $poll['id'] . '&amp;r=1', '-' . $poll['id'] . '-1.php'),
-			'L_POLL' => $LANG['poll'],
-			'L_BACK_POLL' => $LANG['poll_back'],
-			'L_VOTE' => $LANG['poll_vote'],
-			'L_RESULT' => $LANG['poll_result'],
-			'L_EDIT' => LangLoader::get_message('edit', 'common'),
-			'L_DELETE' => LangLoader::get_message('delete', 'common'),
-			'L_ON' => $LANG['on']
+			'C_IS_ADMIN'      => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
+			'IDPOLL'          => $poll['id'],
+			'U_EDIT'          => PATH_TO_ROOT . "/poll/admin_poll" . url('.php?id=' . $poll['id']),
+			'U_DEL'           => PATH_TO_ROOT . "/poll/admin_poll" . url('.php?delete=1&amp;id=' . $poll['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
+			'QUESTION'        => stripslashes($poll['question']),
+			'VOTES'           => 0,
+			'ID_R'            => url('.php?id=' . $poll['id'] . '&amp;r=1', '-' . $poll['id'] . '-1.php'),
+			'QUESTION'        => stripslashes($poll['question']),
+			'U_POLL_ACTION'   => url('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'),
+			'U_POLL_RESULT'   => url('.php?id=' . $poll['id'] . '&amp;r=1', '-' . $poll['id'] . '-1.php'),
+			'L_POLL'          => $LANG['poll'],
+			'L_MINI_POLL'     => $LANG['mini_poll'],
+			'L_BACK_POLL'     => $LANG['poll_back'],
+			'L_VOTE'          => $LANG['poll_vote'],
+			'L_RESULT'        => $LANG['poll_result']
 			)
 		));
 	
@@ -300,8 +297,8 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 			foreach ($array_answer as $answer)
 			{
 				$tpl->assign_block_vars('checkbox', array(
-					'NAME' => $z,
-					'TYPE' => 'checkbox',
+					'NAME'    => $z,
+					'TYPE'    => 'checkbox',
 					'ANSWERS' => $answer
 				));
 				$z++;
@@ -331,14 +328,11 @@ elseif ($archives) //Archives.
 	
 	$tpl->put_all(array(
 		'C_POLL_ARCHIVES' => true,
-		'C_IS_ADMIN' => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
-		'C_PAGINATION' => $pagination->has_several_pages(),
-		'PAGINATION' => $pagination->display(),
-		'L_ARCHIVE' => $LANG['archives'],
-		'L_BACK_POLL' => $LANG['poll_back'],
-		'L_ON' => $LANG['on'],
-		'L_EDIT' => LangLoader::get_message('edit', 'common'),
-		'L_DELETE' => LangLoader::get_message('delete', 'common')
+		'C_IS_ADMIN'      => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
+		'C_PAGINATION'    => $pagination->has_several_pages(),
+		'PAGINATION'      => $pagination->display(),
+		'L_ARCHIVE'       => $LANG['archives'],
+		'L_BACK_POLL'     => $LANG['poll_back']
 	));	
 	
 	//On recupère les sondages archivés.
@@ -363,12 +357,12 @@ elseif ($archives) //Archives.
 		$tpl->assign_block_vars('list', array_merge(
 			Date::get_array_tpl_vars(Date::DATE_NOW, 'date'),
 			array(
-			'ID' => $row['id'],
+			'ID'       => $row['id'],
 			'QUESTION' => stripslashes($row['question']),
-			'EDIT' => '<a href="' . PATH_TO_ROOT . '/poll/admin_poll' . url('.php?id=' . $row['id']) . '" title="' . LangLoader::get_message('edit', 'common') . '" class="fa fa-edit"></a>',
-			'DEL' => '&nbsp;&nbsp;<a href="' . PATH_TO_ROOT . '/poll/admin_poll' . url('.php?delete=1&amp;id=' . $row['id']) . '" title="' . LangLoader::get_message('delete', 'common') . '" class="fa fa-delete" data-confirmation="delete-element"></a>',
-			'VOTE' => $sum_vote,		
-			'L_VOTE' => (($sum_vote > 1 ) ? $LANG['poll_vote_s'] : $LANG['poll_vote'])
+			'U_EDIT'   => PATH_TO_ROOT . "/poll/admin_poll" . url('.php?id=' . $row['id']),
+			'U_DEL'    => PATH_TO_ROOT . "/poll/admin_poll" . url('.php?delete=1&amp;id=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
+			'VOTE'     => $sum_vote,		
+			'L_VOTE'   => (($sum_vote > 1 ) ? $LANG['poll_vote_s'] : $LANG['poll_vote'])
 			)
 		));		
 
@@ -378,9 +372,9 @@ elseif ($archives) //Archives.
 			$tpl->assign_block_vars('list.result', array(
 				'ANSWERS' => $answer, 
 				'NBRVOTE' => $nbrvote,
-				'WIDTH' => NumberHelper::round(($nbrvote * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.					
+				'WIDTH'   => NumberHelper::round(($nbrvote * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.
 				'PERCENT' => NumberHelper::round(($nbrvote * 100 / $sum_vote), 1),
-				'L_VOTE' => (($nbrvote > 1 ) ? $LANG['poll_vote_s'] : $LANG['poll_vote'])
+				'L_VOTE'  => (($nbrvote > 1 ) ? $LANG['poll_vote_s'] : $LANG['poll_vote'])
 			));
 		}
 	}

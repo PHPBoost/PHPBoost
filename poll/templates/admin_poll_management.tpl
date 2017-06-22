@@ -60,7 +60,7 @@
 							{questions.QUESTIONS}
 						</td>
 						<td>
-							<a href="{PATH_TO_ROOT}/poll/poll.php?id={questions.IDPOLL}">${LangLoader::get_message('display', 'common')}</a>
+							<a href="{questions.U_POLL}">${LangLoader::get_message('display', 'common')}</a>
 						</td>
 						<td> 
 							# IF questions.PSEUDO #<a href="{questions.U_AUTHOR_PROFILE}" class="small {questions.USER_LEVEL_CLASS}" # IF questions.C_USER_GROUP_COLOR # style="color:{questions.USER_GROUP_COLOR}" # ENDIF #>{questions.PSEUDO}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF # 
@@ -77,8 +77,8 @@
 							<span class="smaller">{questions.VISIBLE}</span>
 						</td>
 						<td> 
-							<a href="admin_poll.php?id={questions.IDPOLL}" title="{L_UPDATE}" class="fa fa-edit"></a>
-							<a href="admin_poll.php?delete=1&amp;id={questions.IDPOLL}&amp;token={TOKEN}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+							<a href="{questions.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+							<a href="{questions.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
 						</td>
 					</tr>
 					# END questions #
