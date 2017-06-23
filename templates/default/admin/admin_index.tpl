@@ -98,11 +98,12 @@
 						<div class="fieldset-inset">
 							<div class="form-element">
 								# START comments_list #
-										<a href="{comments_list.U_LINK}">
-											<i class="fa fa-hand-o-right"></i>
-										</a>
-										<span class="smaller">{L_BY} {comments_list.U_PSEUDO}</span> : {comments_list.CONTENT}
-										<br /><br />
+									<a href="{comments_list.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+									<a href="{comments_list.U_LINK}">
+										<i class="fa fa-hand-o-right"></i>
+									</a>
+									<span class="smaller">{L_BY} {comments_list.U_PSEUDO}</span> : {comments_list.CONTENT}
+									<br /><br />
 								# END comments_list #
 								# IF C_NO_COM #
 								<p class="center"><em>{L_NO_COMMENT}</em></p>

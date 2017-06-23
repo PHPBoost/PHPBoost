@@ -42,9 +42,9 @@ class CommentsUrlBuilder
 	 * @param integer $id
 	 * @return Url
 	 */
-	public static function delete($comment_path, $id)
+	public static function delete($comment_path, $id, $return_path = '')
 	{
-		return self::build_url($comment_path, 'delete_comment=' . $id . '#comments-list');
+		return self::build_url($comment_path, 'delete_comment=' . $id . ($return_path ? '&return_path=' . $return_path : '#comments-list'));
 	}
 	
 	/**

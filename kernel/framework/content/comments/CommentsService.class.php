@@ -61,7 +61,7 @@ class CommentsService
 		$id_in_module = $topic->get_id_in_module();
 		$topic_identifier = $topic->get_topic_identifier();
 		$authorizations = $topic->get_authorizations();
-				
+		
 		if (!$authorizations->is_authorized_read())
 		{
 			self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comments.not-authorized.read'], MessageHelper::NOTICE));
@@ -70,6 +70,7 @@ class CommentsService
 		{
 			$edit_comment_id = AppContext::get_request()->get_getint('edit_comment', 0);
 			$delete_comment_id = AppContext::get_request()->get_getint('delete_comment', 0);
+			$return_path = AppContext::get_request()->get_getstring('return_path', '');
 			
 			try {
 				$lock = AppContext::get_request()->get_getbool('lock');
@@ -97,7 +98,7 @@ class CommentsService
 				self::verificate_authorized_edit_or_delete_comment($authorizations, $delete_comment_id);
 
 				CommentsManager::delete_comment($delete_comment_id);
-				AppContext::get_response()->redirect($topic->get_path());
+				AppContext::get_response()->redirect($return_path ? $return_path : $topic->get_path());
 			}
 			elseif (!empty($edit_comment_id))
 			{
@@ -137,7 +138,7 @@ class CommentsService
 					self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comments.not-authorized.post'], MessageHelper::NOTICE));
 				}
 			}
-				
+			
 			$number_comments_display = $topic->get_number_comments_display();
 			$number_comments = self::$comments_cache->get_count_comments_by_module($module_id, $id_in_module, $topic_identifier);
 			
