@@ -122,7 +122,7 @@ class UserCommentsController extends AbstractController
 				
 				'U_TOPIC' => Url::to_rel($path),
 				'U_EDIT' => CommentsUrlBuilder::edit($path, $id)->rel(),
-				'U_DELETE' => CommentsUrlBuilder::delete($path, $id)->rel(),
+				'U_DELETE' => CommentsUrlBuilder::delete($path, $id, REWRITED_SCRIPT)->rel(),
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_AVATAR' => $user_avatar,
 				
