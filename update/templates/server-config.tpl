@@ -37,6 +37,16 @@
 		</div>
 	</div>
 	<div class="form-element">
+		<label>{@php.extensions.check.mbstringLibrary} <span class="field-description">{@php.extensions.check.mbstringLibrary.explanation}</span></label>
+		<div class="form-field">
+		# IF HAS_MBSTRING_LIBRARY #
+			<i class="fa fa-success fa-2x" title="{@yes}"></i>
+		# ELSE #
+			<i class="fa fa-error fa-2x" title="{@no}"></i>
+		# ENDIF #
+		</div>
+	</div>
+	<div class="form-element">
 		<label>{@server.urlRewriting} <span class="field-description">{@server.urlRewriting.explanation}</span></label>
 		<div class="form-field">
 		# IF URL_REWRITING_KNOWN #
@@ -76,8 +86,11 @@
 	</div>
 </fieldset>
 
-# IF ERROR #
-<fieldset id="error"><div class="error">{ERROR}</div></fieldset>
+# IF C_MBSTRING_ERROR #
+<fieldset id="mbstring-error"><div class="error">{@php.extensions.check.mbstringLibrary.error}</div></fieldset>
+# END #
+# IF C_FOLDERS_ERROR #
+<fieldset id="folders-error"><div class="error">{@folders.chmod.error}</div></fieldset>
 # END #
 		
 	</div>

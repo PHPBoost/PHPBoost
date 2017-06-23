@@ -55,7 +55,7 @@ class ServerConfiguration
 	}
 
 	/**
-	 * @return true if GD libray is available, else false.
+	 * @return true if GD library is available, else false.
 	 */
 	public function has_gd_library()
 	{
@@ -63,11 +63,19 @@ class ServerConfiguration
 	}
 
 	/**
-	 * @return true if curl libray is available, else false.
+	 * @return true if curl library is available, else false.
 	 */
 	public function has_curl_library()
 	{
 		return @extension_loaded('curl');
+	}
+
+	/**
+	 * @return true if MBstring (UTF-8) library is available, else false.
+	 */
+	public function has_mbstring_library()
+	{
+		return @extension_loaded('mbstring');
 	}
 
 	/**

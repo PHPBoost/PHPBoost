@@ -77,7 +77,7 @@ class UpdateServerConfigController extends UpdateController
 
 	private function handle_form()
 	{
-		if ($this->server_conf->is_php_compatible() && PHPBoostFoldersPermissions::validate())
+		if ($this->server_conf->is_php_compatible() && PHPBoostFoldersPermissions::validate() && $this->server_conf->has_mbstring_library())
 		{
 			if (UpdateServices::database_config_file_checked())
 			{
@@ -86,20 +86,25 @@ class UpdateServerConfigController extends UpdateController
 				AppContext::get_response()->redirect(UpdateUrlBuilder::update());
 			}
 			AppContext::get_response()->redirect(UpdateUrlBuilder::database());
-		}	
+		}
 	}
 
 	private function build_view()
 	{
 		$this->view = new FileTemplate('update/server-config.tpl');
 		$this->view->put_all(array(
-            'MIN_PHP_VERSION' => ServerConfiguration::MIN_PHP_VERSION,
-            'PHP_VERSION_OK' => $this->server_conf->is_php_compatible(),
-            'HAS_GD_LIBRARY'=> $this->server_conf->has_gd_library()
+			'MIN_PHP_VERSION' => ServerConfiguration::MIN_PHP_VERSION,
+			'PHP_VERSION_OK' => $this->server_conf->is_php_compatible(),
+			'HAS_GD_LIBRARY'=> $this->server_conf->has_gd_library(),
+			'HAS_MBSTRING_LIBRARY'=> $this->server_conf->has_mbstring_library()
 		));
+		if (!$this->server_conf->has_mbstring_library())
+		{
+			$this->view->put('C_MBSTRING_ERROR', true);
+		}
 		if (!PHPBoostFoldersPermissions::validate())
 		{
-			$this->view->put('ERROR', $this->lang['folders.chmod.error']);
+			$this->view->put('C_FOLDERS_ERROR', true);
 		}
 		try
 		{
@@ -120,9 +125,9 @@ class UpdateServerConfigController extends UpdateController
 		foreach (PHPBoostFoldersPermissions::get_permissions() as $folder_name => $folder)
 		{
 			$folders[] = array(
-               'NAME' => $folder_name,
-               'EXISTS' => $folder->exists(),
-               'IS_WRITABLE' => $folder->is_writable(),
+			   'NAME' => $folder_name,
+			   'EXISTS' => $folder->exists(),
+			   'IS_WRITABLE' => $folder->is_writable(),
 			);
 		}
 		$this->view->put('folder', $folders);

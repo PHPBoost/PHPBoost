@@ -77,7 +77,7 @@ class InstallServerConfigController extends InstallController
 
 	private function handle_form()
 	{
-		if ($this->server_conf->is_php_compatible() && PHPBoostFoldersPermissions::validate())
+		if ($this->server_conf->is_php_compatible() && PHPBoostFoldersPermissions::validate() && $this->server_conf->has_mbstring_library())
 		{
 			AppContext::get_response()->redirect(InstallUrlBuilder::database());
 		}
@@ -87,13 +87,18 @@ class InstallServerConfigController extends InstallController
 	{
 		$this->view = new FileTemplate('install/server-config.tpl');
 		$this->view->put_all(array(
-            'MIN_PHP_VERSION' => ServerConfiguration::MIN_PHP_VERSION,
-            'PHP_VERSION_OK' => $this->server_conf->is_php_compatible(),
-            'HAS_GD_LIBRARY'=> $this->server_conf->has_gd_library()
+			'MIN_PHP_VERSION' => ServerConfiguration::MIN_PHP_VERSION,
+			'PHP_VERSION_OK' => $this->server_conf->is_php_compatible(),
+			'HAS_GD_LIBRARY'=> $this->server_conf->has_gd_library(),
+			'HAS_MBSTRING_LIBRARY'=> $this->server_conf->has_mbstring_library()
 		));
+		if (!$this->server_conf->has_mbstring_library())
+		{
+			$this->view->put('C_MBSTRING_ERROR', true);
+		}
 		if (!PHPBoostFoldersPermissions::validate())
 		{
-			$this->view->put('ERROR', $this->lang['folders.chmod.error']);
+			$this->view->put('C_FOLDERS_ERROR', true);
 		}
 		try
 		{
@@ -114,9 +119,9 @@ class InstallServerConfigController extends InstallController
 		foreach (PHPBoostFoldersPermissions::get_permissions() as $folder_name => $folder)
 		{
 			$folders[] = array(
-               'NAME' => $folder_name,
-               'EXISTS' => $folder->exists(),
-               'IS_WRITABLE' => $folder->is_writable(),
+			   'NAME' => $folder_name,
+			   'EXISTS' => $folder->exists(),
+			   'IS_WRITABLE' => $folder->is_writable(),
 			);
 		}
 		$this->view->put('folder', $folders);
