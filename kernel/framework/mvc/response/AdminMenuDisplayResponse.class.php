@@ -45,6 +45,23 @@ class AdminMenuDisplayResponse extends AbstractResponse
 		$this->full_view->put('content', $view);
 		$env->display_kernel_message($this->full_view);
 		parent::__construct($env , $this->full_view);
+		
+		$module_name = Environment::get_running_module_name();
+		if (!empty($module_name))
+		{
+			$module = ModulesManager::get_module($module_name);
+			if (!empty($module))
+			{
+				$home_page = $module->get_configuration()->get_home_page();
+				if (!empty($home_page))
+				{
+					$this->links[] = array(
+						'LINK' => LangLoader::get_message('home', 'main'),
+						'U_LINK' => Url::to_rel('/' . $module->get_id() . '/' . $home_page)
+					);
+				}
+			}
+		}
 	}
 
 	public function set_title($title)
