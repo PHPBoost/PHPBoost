@@ -23,6 +23,12 @@ ul#profile-container li {
 	}
 }
 
+@media (max-width: 768px) {
+	.profile-element-title {
+		padding-left: 7px;
+	}
+}
+
 .preview-img {
 	max-height: 180px;
 	vertical-align: top;
