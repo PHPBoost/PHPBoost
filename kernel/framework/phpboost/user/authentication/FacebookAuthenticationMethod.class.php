@@ -119,7 +119,16 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 				else
 				{
 					$user = new User();
-					$user->set_display_name(utf8_decode($data['name']));
+					
+					if (empty($data['name']))
+					{
+						$mail_split = explode('@', $data['email']);
+						$name = $mail_split[0];
+						$user->set_display_name(utf8_decode($name));
+					}
+					else
+						$user->set_display_name(utf8_decode($data['name']));
+					
 					$user->set_level(User::MEMBER_LEVEL);
 					$user->set_email($data['email']);
 					
