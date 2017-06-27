@@ -84,6 +84,8 @@ SERVER CONFIGURATION-----------------------------------------------------------
 php version			: " . ServerConfiguration::get_phpversion() . "
 dbms version			: " . PersistenceContext::get_dbms_utils()->get_dbms_version() . "
 gd library			: " . (int)$server_configuration->has_gd_library() . "
+curl extension		: " . (int)$server_configuration->has_curl_library() . "
+mbstring extension		: " . (int)$server_configuration->has_mbstring_library() . "
 url rewriting			: " . ($url_rewriting_known ? (int)$url_rewriting_available : 'N/A') . "
 apcu cache			: " . (int)DataStoreFactory::is_apc_available() . "
 PHPBOOST CONFIGURATION---------------------------------------------------------
@@ -113,6 +115,8 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 		$fieldset->add_field(new FormFieldFree('php_version', $this->admin_lang['php_version'], ServerConfiguration::get_phpversion()));
 		$fieldset->add_field(new FormFieldFree('dbms_version', $this->admin_lang['dbms_version'], PersistenceContext::get_dbms_utils()->get_dbms_version()));
 		$fieldset->add_field(new FormFieldFree('gd_library', $this->admin_lang['gd_library'], $server_configuration->has_gd_library() ? $picture_yes : $picture_no));
+		$fieldset->add_field(new FormFieldFree('curl_library', $this->admin_lang['curl_library'], $server_configuration->has_curl_library() ? $picture_yes : $picture_no));
+		$fieldset->add_field(new FormFieldFree('mbstring_library', $this->admin_lang['mbstring_library'], $server_configuration->has_mbstring_library() ? $picture_yes : $picture_no));
 		$fieldset->add_field(new FormFieldFree('url_rewriting', $this->admin_lang['url_rewriting'], $url_rewriting_known ? ($url_rewriting_available ? $picture_yes : $picture_no) : $picture_unknown));
 		$fieldset->add_field(new FormFieldFree('apcu_cache', LangLoader::get_message('apcu_cache', 'admin-cache-common'), DataStoreFactory::is_apc_available() ? $picture_yes : $picture_no));
 
