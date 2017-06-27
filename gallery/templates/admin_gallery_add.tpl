@@ -28,6 +28,9 @@
 			</a>
 			<ul>
 				<li>
+					<a href="${Url::to_rel('/gallery')}" class="quick-link">${LangLoader::get_message('home', 'main')}</a>
+				</li>
+				<li>
 					<a href="admin_gallery.php" class="quick-link">{L_GALLERY_MANAGEMENT}</a>
 				</li>
 				<li>
