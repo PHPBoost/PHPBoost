@@ -4,6 +4,9 @@
 			</a>
 			<ul>
 				<li>
+					<a href="${Url::to_rel('/poll')}" class="quick-link">${LangLoader::get_message('home', 'main')}</a>
+				</li>
+				<li>
 					<a href="admin_poll.php" class="quick-link">{L_POLL_MANAGEMENT}</a>
 				</li>
 				<li>
@@ -16,8 +19,8 @@
 					<a href="${relative_url(PollUrlBuilder::documentation())}" class="quick-link">${LangLoader::get_message('module.documentation', 'admin-modules-common')}</a>
 				</li>
 			</ul>
-		</nav> 
-		
+		</nav>
+
 		<div class="admin-module-poll" id="admin-contents">
 			<table id="table">
 				<caption>{L_POLL_MANAGEMENT}</caption>
@@ -55,28 +58,28 @@
 				# ENDIF #
 				<tbody>
 					# START questions #
-					<tr> 
-						<td class="left"> 
+					<tr>
+						<td class="left">
 							{questions.QUESTIONS}
 						</td>
 						<td>
 							<a href="{questions.U_POLL}">${LangLoader::get_message('display', 'common')}</a>
 						</td>
-						<td> 
-							# IF questions.PSEUDO #<a href="{questions.U_AUTHOR_PROFILE}" class="small {questions.USER_LEVEL_CLASS}" # IF questions.C_USER_GROUP_COLOR # style="color:{questions.USER_GROUP_COLOR}" # ENDIF #>{questions.PSEUDO}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF # 
+						<td>
+							# IF questions.PSEUDO #<a href="{questions.U_AUTHOR_PROFILE}" class="small {questions.USER_LEVEL_CLASS}" # IF questions.C_USER_GROUP_COLOR # style="color:{questions.USER_GROUP_COLOR}" # ENDIF #>{questions.PSEUDO}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #
 						</td>
 						<td>
 							{questions.DATE}
 						</td>
 						<td>
 							{questions.ARCHIVES}
-						</td>	
+						</td>
 						<td>
-							{questions.APROBATION} 
+							{questions.APROBATION}
 							<br />
 							<span class="smaller">{questions.VISIBLE}</span>
 						</td>
-						<td> 
+						<td>
 							<a href="{questions.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
 							<a href="{questions.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
 						</td>

@@ -17,7 +17,7 @@
 			return true;
 		}
 
-		function add_field(i, i_max) 
+		function add_field(i, i_max)
 		{
 			var i2 = i + 1;
 
@@ -28,7 +28,7 @@
 			if( document.getElementById('s'+i) )
 				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<span id="s'+i2+'"><a href="javascript:add_field('+i2+', '+i_max+')" title="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus"></i></a></span>' : '';
 		}
-		
+
 		-->
 		</script>
 
@@ -37,6 +37,9 @@
 				<i class="fa fa-bars"></i> {L_POLL_MANAGEMENT}
 			</a>
 			<ul>
+				<li>
+					<a href="${Url::to_rel('/poll')}" class="quick-link">${LangLoader::get_message('home', 'main')}</a>
+				</li>
 				<li>
 					<a href="admin_poll.php" class="quick-link">{L_POLL_MANAGEMENT}</a>
 				</li>
@@ -47,11 +50,11 @@
 					<a href="admin_poll_config.php" class="quick-link">{L_POLL_CONFIG}</a>
 				</li>
 			</ul>
-		</nav> 
-		
+		</nav>
+
 		<div class="admin-module-poll" id="admin-contents">
 			# INCLUDE message_helper #
-			
+
 			<form action="admin_poll.php" method="post" onsubmit="return check_form();" class="fieldset-content">
 				<p class="center">{L_REQUIRE}</p>
 				<fieldset>
@@ -66,12 +69,12 @@
 							<div class="form-field">
 								<div class="form-field-radio">
 									<input type="radio" name="type" id="type1" value="1"# IF C_TYPE_UNIQUE # checked="checked"# ENDIF # />
-									<label for="type1"></label> 
+									<label for="type1"></label>
 								</div>
 								<span class="form-field-radio-span">{L_SINGLE}</span>
 								<div class="form-field-radio">
 									<input type="radio" name="type" id="type2" value="0"# IF C_TYPE_MULTIPLE # checked="checked"# ENDIF # />
-									<label for="type2"></label> 
+									<label for="type2"></label>
 								</div>
 								<span class="form-field-radio-span">{L_MULTIPLE}</span>
 							</div>
@@ -81,12 +84,12 @@
 							<div class="form-field">
 								<div class="form-field-radio">
 									<input type="radio" name="archive" id="archive1" value="1"# IF C_ARCHIVES_ENABLED # checked="checked"# ENDIF # />
-									<label for="archive1"></label> 
+									<label for="archive1"></label>
 								</div>
 								<span class="form-field-radio-span">${LangLoader::get_message('yes', 'common')}</span>
 								<div class="form-field-radio">
 									<input type="radio" name="archive" id="archive2" value="0"# IF C_ARCHIVES_DISABLED # checked="checked"# ENDIF # />
-									<label for="archive2"></label> 
+									<label for="archive2"></label>
 								</div>
 								<span class="form-field-radio-span">${LangLoader::get_message('no', 'common')}</span>
 							</div>
@@ -126,14 +129,14 @@
 														document.write('<span id="s{MAX_ID}"><a href="javascript:add_field({MAX_ID}, 19)" title="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus"></i></a></span>');
 												-->
 												</script>
-												
+
 											</td>
 										</tr>
 									</tbody>
 								</table>
 							</div>
 						</div>
-					</div>	
+					</div>
 				</fieldset>
 
 				<fieldset>
@@ -146,12 +149,12 @@
 									<label>
 										<div class="form-field-radio">
 											<input type="radio" value="2" name="visible" id="start_end_date"# IF C_VISIBLE_WAITING # checked="checked"# ENDIF # />
-											<label for="start_end_date"></label> 
+											<label for="start_end_date"></label>
 										</div>
 										{CALENDAR_START}
-										
+
 										{L_UNTIL}&nbsp;
-										
+
 										{CALENDAR_END}
 									</label>
 								</div>
@@ -179,7 +182,7 @@
 						</div>
 					</div>
 				</fieldset>
-				
+
 				<fieldset class="fieldset-submit">
 					<legend>{L_UPDATE}</legend>
 					<div class="fieldset-inset">

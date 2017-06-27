@@ -15,7 +15,7 @@
 			function select_displayed_polls_in_mini(id, status)
 			{
 				var i;
-				
+
 				for(i = 0; i < {NBR_POLL}; i++)
 				{
 					if( document.getElementById(id + i) )
@@ -24,12 +24,15 @@
 			}
 			-->
 			</script>
-			
+
 		<nav id="admin-quick-menu">
 			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_POLL_MANAGEMENT}">
 				<i class="fa fa-bars"></i> {L_POLL_MANAGEMENT}
 			</a>
 			<ul>
+				<li>
+					<a href="${Url::to_rel('/poll')}" class="quick-link">${LangLoader::get_message('home', 'main')}</a>
+				</li>
 				<li>
 					<a href="admin_poll.php" class="quick-link">{L_POLL_MANAGEMENT}</a>
 				</li>
@@ -43,12 +46,12 @@
 					<a href="${relative_url(PollUrlBuilder::documentation())}" class="quick-link">${LangLoader::get_message('module.documentation', 'admin-modules-common')}</a>
 				</li>
 			</ul>
-		</nav> 
-		
+		</nav>
+
 		<div class="admin-module-poll" id="admin-contents">
 			<form action="admin_poll_config.php" method="post" class="fieldset-content" onsubmit="check_form_conf()">
 				<p class="center">{L_REQUIRE}</p>
-				
+
 				<fieldset>
 					<legend>{L_POLL_CONFIG_MINI}</legend>
 					<div class="fieldset-inset">
@@ -66,7 +69,7 @@
 						</div>
 					</div>
 				</fieldset>
-				
+
 				<fieldset>
 					<legend>{L_POLL_CONFIG_ADVANCED}</legend>
 					<div class="fieldset-inset">
@@ -87,7 +90,7 @@
 						</div>
 					</div>
 				</fieldset>
-				
+
 				<fieldset>
 					<legend>{L_AUTHORIZATIONS}</legend>
 					<div class="fieldset-inset">
@@ -109,7 +112,7 @@
 						</div>
 					</div>
 				</fieldset>
-				
+
 				<fieldset class="fieldset-submit">
 					<legend>{L_UPDATE}</legend>
 					<div class="fieldset-inset">
@@ -120,4 +123,3 @@
 				</fieldset>
 			</form>
 		</div>
-		

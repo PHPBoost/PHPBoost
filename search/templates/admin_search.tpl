@@ -24,6 +24,9 @@
 			</a>
 			<ul>
 				<li>
+					<a href="${Url::to_rel('/search')}" class="quick-link">${LangLoader::get_message('home', 'main')}</a>
+				</li>
+				<li>
 					<a href="admin_search.php" class="quick-link">{L_SEARCH_CONFIG}</a>
 				</li>
 				<li>
@@ -58,7 +61,7 @@
 						</div>
 					</div>
 				</fieldset>
-				
+
 				<fieldset>
 					<legend>{L_SEARCH_CACHE}</legend>
 					<div class="fieldset-inset">
@@ -72,7 +75,7 @@
 						</div>
 					</div>
 				</fieldset>
-				
+
 				<fieldset>
 					<legend>{L_AUTHORIZATIONS}</legend>
 					<div class="fieldset-inset">
@@ -86,7 +89,7 @@
 						</div>
 					</div>
 				</fieldset>
-				
+
 				<fieldset class="fieldset-submit">
 					<legend>{L_UPDATE}</legend>
 					<div class="fieldset-inset">
@@ -131,11 +134,11 @@
 						</table>
 					</div>
 				</fieldset>
-				
+
 				<fieldset class="fieldset-submit">
 					<legend>{L_UPDATE}</legend>
 					<div class="fieldset-inset">
-						<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button> 
+						<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button>
 						<button type="reset" value="true">{L_RESET}</button>
 						<input type="hidden" name="token" value="{TOKEN}">
 					</div>
@@ -143,4 +146,3 @@
 			</form>
 			# ENDIF #
 		</div>
-		

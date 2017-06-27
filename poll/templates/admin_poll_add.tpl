@@ -12,8 +12,8 @@
 
 			return true;
 		}
-		
-		function add_field(i, i_max) 
+
+		function add_field(i, i_max)
 		{
 			var i2 = i + 1;
 
@@ -33,6 +33,9 @@
 			</a>
 			<ul>
 				<li>
+					<a href="${Url::to_rel('/poll')}" class="quick-link">${LangLoader::get_message('home', 'main')}</a>
+				</li>
+				<li>
 					<a href="admin_poll.php" class="quick-link">{L_POLL_MANAGEMENT}</a>
 				</li>
 				<li>
@@ -45,12 +48,12 @@
 					<a href="${relative_url(PollUrlBuilder::documentation())}" class="quick-link">${LangLoader::get_message('module.documentation', 'admin-modules-common')}</a>
 				</li>
 			</ul>
-		</nav> 
-		
+		</nav>
+
 		<div class="admin-module-poll" id="admin-contents">
-			
+
 			# INCLUDE message_helper #
-			
+
 			<form action="admin_poll_add.php" method="post" onsubmit="return check_form();" class="fieldset-content">
 				<p class="center">{L_REQUIRE}</p>
 				<fieldset>
@@ -65,12 +68,12 @@
 							<div class="form-field">
 								<div class="form-field-radio">
 									<input type="radio" name="type" id="type1" value="1" checked="checked">
-									<label for="type1"></label> 
+									<label for="type1"></label>
 								</div>
 								<span class="form-field-radio-span">{L_SINGLE}</span>
 								<div class="form-field-radio">
 									<input type="radio" name="type" id="type2" value="0">
-									<label for="type2"></label> 
+									<label for="type2"></label>
 								</div>
 								<span class="form-field-radio-span">{L_MULTIPLE}</span>
 							</div>
@@ -80,12 +83,12 @@
 							<div class="form-field">
 								<div class="form-field-radio">
 									<input type="radio" name="archive" id="archive1" value="1">
-									<label for="archive1"></label> 
+									<label for="archive1"></label>
 								</div>
 								<span class="form-field-radio-span">{L_YES}</span>
 								<div class="form-field-radio">
 									<input type="radio" name="archive" id="archive2" value="0" checked="checked">
-									<label for="archive2"></label> 
+									<label for="archive2"></label>
 								</div>
 								<span class="form-field-radio-span">{L_NO}</span>
 							</div>
@@ -141,9 +144,9 @@
 										<label for"start_end_date"></label>
 									</div>
 									{CALENDAR_START}
-									
+
 									{L_UNTIL}&nbsp;
-									
+
 									{CALENDAR_END}
 								</div>
 								<br />
@@ -170,7 +173,7 @@
 						</div>
 					</div>
 				</fieldset>
-				
+
 				<fieldset class="fieldset-submit">
 					<legend>{L_SUBMIT}</legend>
 					<div class="fieldset-inset">
