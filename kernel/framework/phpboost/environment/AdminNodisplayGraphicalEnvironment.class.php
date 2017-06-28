@@ -37,11 +37,11 @@ class AdminNodisplayGraphicalEnvironment extends AbstractGraphicalEnvironment
 	 */
 	function display($content)
 	{
-		self::set_page_localization('');
+		self::no_session_location();
 
 		$this->process_site_maintenance();
 		$this->check_admin_auth();
-				
+		
 		echo $content;
 	}
 
