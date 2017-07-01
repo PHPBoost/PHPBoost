@@ -92,7 +92,7 @@ $lang['approbation'] = 'Approbation';
 
 $lang['registration_date'] = 'Date d\'inscription';
 $lang['last_connection'] = 'Dernière connexion';
-$lang['number-messages'] = 'Nombre de messages';
+$lang['number_messages'] = 'Nombre de messages';
 $lang['private_message'] = 'Message privé';
 $lang['delete-account'] = 'Supprimer le compte';
 $lang['avatar'] = 'Avatar';

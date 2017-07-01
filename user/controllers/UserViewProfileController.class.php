@@ -45,7 +45,7 @@ class UserViewProfileController extends AbstractController
 			DispatchManager::redirect($error_controller);
 		}
 		
-		$this->build_form($this->user_infos['user_id']);
+		$this->build_view($this->user_infos['user_id']);
 
 		$this->tpl->put('FORM', $this->form->display());
 
@@ -55,50 +55,39 @@ class UserViewProfileController extends AbstractController
 	private function init()
 	{
 		$this->lang = LangLoader::get('user-common');
-		$this->tpl = new StringTemplate('# INCLUDE FORM #');
+		$this->tpl = new FileTemplate('user/UserViewProfileController.tpl');
 		$this->tpl->add_lang($this->lang);
 		$this->user = AppContext::get_current_user();
 	}
 
-	private function build_form($user_id)
+	private function build_view($user_id)
 	{
-		$form = new HTMLForm('member-view-profile', '', false);
-
-		$fieldset = new FormFieldsetHTML('profile', $this->lang['profile']);
-		$form->add_fieldset($fieldset);
-
-		if ($this->user_infos['user_id'] == AppContext::get_current_user()->get_id() || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
-		{
-			$link_edit = '<a href="'. UserUrlBuilder::edit_profile($user_id)->rel() .'" title="'.$this->lang['profile.edit'].'" class="fa fa-edit"></a>';
-			$fieldset->add_field(new FormFieldFree('profile_edit', $this->lang['profile.edit'], $link_edit));
-		}
-
-		$fieldset->add_field(new FormFieldFree('display_name', $this->lang['display_name'], $this->user_infos['display_name']));
-
-		$fieldset->add_field(new FormFieldFree('level', $this->lang['level'], '<a class="' . UserService::get_level_class($this->user_infos['level']) . '">' . $this->get_level_lang() . '</a>'));
-
-		$fieldset->add_field(new FormFieldFree('groups', $this->lang['groups'], $this->build_groups($this->user_infos['groups'])));
-		
-		$registration_date = new Date($this->user_infos['registration_date']);
-		$fieldset->add_field(new FormFieldFree('registered_on', $this->lang['registration_date'], $registration_date ? $registration_date->format(Date::FORMAT_DAY_MONTH_YEAR) : ''));
-		
-		$fieldset->add_field(new FormFieldFree('nbr_msg', $this->lang['number-messages'], $this->user_infos['posted_msg'] . '<br />' . '<a href="' . UserUrlBuilder::messages($user_id)->rel() . '">'. $this->lang['messages'] .'</a>'));
-		
+		$registration_date = !empty($this->user_infos['registration_date']) ? Date::to_format($this->user_infos['registration_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('unknown', 'main');
 		$last_connection_date = !empty($this->user_infos['last_connection_date']) ? Date::to_format($this->user_infos['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('never', 'main');
-		$fieldset->add_field(new FormFieldFree('last_connect', $this->lang['last_connection'], $last_connection_date));
-
-		if (AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT) && $this->user_infos['show_email'])
-		{
-			$link_email = '<a href="mailto:'. $this->user_infos['email'] .'" class="basic-button smaller">Mail</a>';
-			$fieldset->add_field(new FormFieldFree('email', $this->lang['email'], $link_email));
-		}
-
-		if (!$this->same_user_view_profile($user_id) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
-		{
-			$link_mp = '<a href="'. UserUrlBuilder::personnal_message($user_id)->rel() .'" class="basic-button smaller">MP</a>';
-			$fieldset->add_field(new FormFieldFree('private_message', $this->lang['private_message'], $link_mp));
-		}
-
+		$has_groups = $this->build_groups(explode('|', $this->user_infos['groups']));
+		
+		$this->tpl->put_all(array(
+			'C_DISPLAY_EDIT_LINK' => $this->user_infos['user_id'] == AppContext::get_current_user()->get_id() || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
+			'C_IS_BANNED' => $this->user->is_banned(),
+			'C_GROUPS' => $has_groups,
+			'C_DISPLAY_MAIL_LINK' => AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT) && $this->user_infos['show_email'],
+			'C_DISPLAY_PM_LINK' => !$this->same_user_view_profile($user_id) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
+			'DISPLAY_NAME' => $this->user_infos['display_name'],
+			'LEVEL' => UserService::get_level_lang($this->user_infos['level']),
+			'LEVEL_CLASS' => UserService::get_level_class($this->user_infos['level']),
+			'REGISTRATION_DATE' => $registration_date,
+			'MESSAGES_NUMBER' => $this->user_infos['posted_msg'],
+			'LAST_CONNECTION_DATE' => $last_connection_date,
+			'EMAIL' => $this->user_infos['email'],
+			'U_EDIT_PROFILE' => UserUrlBuilder::edit_profile($user_id)->rel(),
+			'U_DISPLAY_USER_MESSAGES' => UserUrlBuilder::messages($user_id)->rel(),
+			'U_DISPLAY_USER_PM' => UserUrlBuilder::personnal_message($user_id)->rel()
+		));
+		
+		
+		
+		$form = new HTMLForm('member-view-profile-extended-fields', '', false);
+		
 		MemberExtendedFieldsService::display_profile_fields($form, $user_id);
 
 		$this->form = $form;
@@ -109,33 +98,27 @@ class UserViewProfileController extends AbstractController
 		return $user_id == AppContext::get_current_user()->get_id();
 	}
 
-	private function get_level_lang()
-	{
-		if (!$this->user->is_banned())
-		{
-			return UserService::get_level_lang($this->user_infos['level']);
-		}
-		return $this->lang['banned'];
-	}
-
 	private function build_groups($user_groups)
 	{
 		$groups_cache = GroupsCache::load();
-		$user_groups_html = '';
-		$user_groups = explode('|', $user_groups);
+		$has_groups = false;
 		foreach ($user_groups as $key => $group_id)
 		{
-			if ($group_id > 0)
+			if ($group_id > 0 && $groups_cache->group_exists($group_id))
 			{
-				if ($groups_cache->group_exists($group_id))
-				{
-					$group = $groups_cache->get_group($group_id);
-					$group_image = !empty($group['img']) ? '<img src="'. TPL_PATH_TO_ROOT .'/images/group/' . $group['img'] . '" alt="' . $group['name'] . '" title="' . $group['name'] . '" class="valign-middle" />' : $group['name'];
-					$user_groups_html .= '<li><a href="' . UserUrlBuilder::group($group_id)->rel() . '" class="user-group '. (!empty($group['img']) ? 'user-group-img ' :'') . 'user-group-'. $group_id .'">' . $group_image . '</a></li>';
-				}
+				$group = $groups_cache->get_group($group_id);
+				$this->tpl->assign_block_vars('groups', array(
+					'ID' => $group_id,
+					'C_PICTURE' => !empty($group['img']),
+					'NAME' => $group['name'],
+					'U_GROUP_PICTURE' => TPL_PATH_TO_ROOT .'/images/group/' . $group['img'],
+					'U_GROUP' => UserUrlBuilder::group($group_id)->rel()
+				));
+				$has_groups = true;
 			}
 		}
-		return !empty($user_groups_html) ? '<ul class="no-list">' . $user_groups_html . '</ul>' : $this->lang['user'];
+		
+		return $has_groups;
 	}
 
 	private function build_response(View $view, $user_id)

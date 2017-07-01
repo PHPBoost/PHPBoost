@@ -41,7 +41,7 @@ $lang['welcome'] = 'Welcome';
 
 $lang['members-list'] = 'Members list';
 $lang['member-management'] = 'Member management';
-$lang['punishment-management'] = 'Pnishments management';
+$lang['punishment-management'] = 'Punishments management';
 
 $lang['profile.edit.password.error'] = 'The new password is not correct';
 $lang['external-auth.account-exists'] = 'To associate your account with external connection you must connect to the site and go to edit your profile';
@@ -93,7 +93,7 @@ $lang['approbation'] = 'Approbation';
 
 $lang['registration_date'] = 'Registration date';
 $lang['last_connection'] = 'Last connection';
-$lang['number-messages'] = 'Messages number';
+$lang['number_messages'] = 'Messages number';
 $lang['private_message'] = 'Private message';
 $lang['delete-account'] = 'Delete account';
 $lang['avatar'] = 'Avatar';
