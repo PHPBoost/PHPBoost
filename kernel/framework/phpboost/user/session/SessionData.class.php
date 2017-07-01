@@ -49,12 +49,6 @@ class SessionData
 	protected $cached_data_modified = false;
 	protected $data_modified = false;
 	
-	/**
-	 * True for not updating the location where the user is located
-	 * @var bool
-	 */
-	protected $no_session_location = false;
-
 	protected function __construct($user_id, $session_id)
 	{
 		$this->user_id = $user_id;
@@ -242,7 +236,12 @@ class SessionData
 
 	public function no_session_location()
 	{
-		$this->no_session_location = true;
+		$data = AppContext::get_session();
+		
+		$columns = array('timestamp' => $data->timestamp);
+		$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
+		$parameters = array('user_id' => $data->user_id, 'session_id' => $data->session_id);
+		PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
 	}
 
 	public static function admin_session()
@@ -319,11 +318,7 @@ class SessionData
 	{
 		$data = AppContext::get_session();
 		
-		if ($data->no_session_location)
-			$columns = array('timestamp' => $data->timestamp);
-		else
-			$columns = array('timestamp' => $data->timestamp, 'location_title' => $title_page, 'location_script' => REWRITED_SCRIPT);
-			
+		$columns = array('timestamp' => $data->timestamp, 'location_title' => $title_page, 'location_script' => REWRITED_SCRIPT);
 		$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
 		$parameters = array('user_id' => $data->user_id, 'session_id' => $data->session_id);
 		PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);

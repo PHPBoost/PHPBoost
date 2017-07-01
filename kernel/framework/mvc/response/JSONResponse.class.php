@@ -37,9 +37,7 @@ class JSONResponse implements Response
 
 	public function __construct(array $json_object)
 	{
-		$session = AppContext::get_session();
-		$session->no_session_location();
-		$session->update_location('');
+		AppContext::get_session()->no_session_location();
 
 		$this->json = json_encode($json_object);
 	}

@@ -64,9 +64,7 @@ abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment
 	
 	protected static function no_session_location()
 	{
-		$session = AppContext::get_session();
-		$session->no_session_location();
-		$session->update_location('');
+		AppContext::get_session()->no_session_location();
 	}
 }
 ?>
