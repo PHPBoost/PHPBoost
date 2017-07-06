@@ -74,8 +74,6 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 	
 	public function display_field_profile(MemberExtendedField $member_extended_field)
 	{
-		$fieldset = $member_extended_field->get_fieldset();
-		
 		$user_accounts_config = UserAccountsConfig::load();
 		$value = $member_extended_field->get_value();
 		if (empty($value) && $user_accounts_config->is_default_avatar_enabled())
@@ -93,7 +91,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		
 		if (!empty($avatar))
 		{
-			$fieldset->add_field(new FormFieldFree($member_extended_field->get_field_name(), $member_extended_field->get_name(), $avatar));
+			return array('name' => $member_extended_field->get_name(), 'value' => $avatar);
 		}
 	}
 	

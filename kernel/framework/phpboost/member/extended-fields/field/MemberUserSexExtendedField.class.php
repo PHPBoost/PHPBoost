@@ -66,11 +66,9 @@ class MemberUserSexExtendedField extends AbstractMemberExtendedField
 	
 	public function display_field_profile(MemberExtendedField $member_extended_field)
 	{
-		$fieldset = $member_extended_field->get_fieldset();
-		$value = $member_extended_field->get_value();
-		if ($value !== null)
+		if ($member_extended_field->get_value())
 		{
-			$fieldset->add_field(new FormFieldFree($member_extended_field->get_field_name(), $member_extended_field->get_name(), $this->get_picture_sex($value)));
+			return array('name' => $member_extended_field->get_name(), 'value' => $this->get_picture_sex($member_extended_field->get_value()));
 		}
 	}
 	
@@ -92,7 +90,7 @@ class MemberUserSexExtendedField extends AbstractMemberExtendedField
 				break;
 			case 2:
 				return '<i class="fa fa-female"></i>';
-				break;		
+				break;
 			default:
 				return '';
 		}

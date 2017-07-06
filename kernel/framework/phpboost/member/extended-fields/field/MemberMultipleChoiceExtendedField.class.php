@@ -70,11 +70,10 @@ class MemberMultipleChoiceExtendedField extends AbstractMemberExtendedField
 	
 	public function display_field_profile(MemberExtendedField $member_extended_field)
 	{
-		$fieldset = $member_extended_field->get_fieldset();
 		$value = implode(', ', $this->unserialise_value($member_extended_field->get_value()));
 		if (!empty($value))
 		{
-			$fieldset->add_field(new FormFieldFree($member_extended_field->get_field_name(), $member_extended_field->get_name(), $value));
+			return array('name' => $member_extended_field->get_name(), 'value' => $value);
 		}
 	}
 	

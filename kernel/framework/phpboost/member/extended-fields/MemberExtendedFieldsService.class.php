@@ -66,14 +66,12 @@ class MemberExtendedFieldsService
 	 * @desc This function displayed fields profile
 	 * @param object $member_extended_field MemberExtendedField containing user_id, Template and field_type.
 	 */
-	public static function display_profile_fields(HTMLForm $form, $user_id)
+	public static function display_profile_fields($user_id)
 	{
+		$fields = array();
 		$extended_fields_displayed = PersistenceContext::get_querier()->row_exists(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, 'WHERE display=1');
-        if ($extended_fields_displayed)
+		if ($extended_fields_displayed)
 		{
-			$fieldset = new FormFieldsetHTML('other', LangLoader::get_message('other', 'main'));
-			
-			$nbr_field = 0;
 			$result = PersistenceContext::get_querier()->select("SELECT exc.name, exc.description, exc.field_type, exc.required, exc.field_name, exc.possible_values, exc.default_value, exc.auth, exc.regex, ex.*
 			FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " exc
 			LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = :user_id
@@ -90,21 +88,16 @@ class MemberExtendedFieldsService
 				
 					$member_extended_field = new MemberExtendedField();
 					$member_extended_field->set_user_id($user_id);
-					$member_extended_field->set_fieldset($fieldset);
 					$member_extended_field->set_properties($extended_field);
 
-					$member_extended_field->get_instance()->display_field_profile($member_extended_field);
-					$nbr_field++;
+					$display_field_profile = $member_extended_field->get_instance()->display_field_profile($member_extended_field);
+					if ($display_field_profile)
+						$fields[] = $display_field_profile;
 				}
 			}
-			
-			if ($nbr_field > 0)
-			{
-				$form->add_fieldset($fieldset);
-			}
-			
 			$result->dispose();
 		}
+		return $fields;
 	}
 
 	/**

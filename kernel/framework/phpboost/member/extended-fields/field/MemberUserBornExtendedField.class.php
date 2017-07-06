@@ -57,13 +57,10 @@ class MemberUserBornExtendedField extends AbstractMemberExtendedField
 	
 	public function display_field_profile(MemberExtendedField $member_extended_field)
 	{
-		$fieldset = $member_extended_field->get_fieldset();
-		
-		$value = $member_extended_field->get_value();
-		if (!empty($value))
+		if ($member_extended_field->get_value())
 		{
-			$date = new Date($value);
-			$fieldset->add_field(new FormFieldFree($member_extended_field->get_field_name(), $member_extended_field->get_name(), $date->format(Date::FORMAT_DAY_MONTH_YEAR)));
+			$date = new Date($member_extended_field->get_value());
+			return array('name' => $member_extended_field->get_name(), 'value' => $date->format(Date::FORMAT_DAY_MONTH_YEAR));
 		}
 	}
 	

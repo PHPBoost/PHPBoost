@@ -74,6 +74,18 @@
 		# ENDIF #
 	</div>
 </fieldset>
-<div class="member-view-extand-fieldset">
-# INCLUDE FORM #
-</div>
+# IF C_EXTENDED_FIELDS #
+<fieldset class="member-view-extand-fieldset">
+	<legend>${LangLoader::get_message('other', 'main')}</legend>
+	<div class="fieldset-inset">
+		# START extended_fields #
+		<div class="form-element user-profil-{extended_fields.REWRITED_NAME}">
+			<label>{extended_fields.NAME}</label>
+			<div class="form-field form-field-free">
+				{extended_fields.VALUE}
+			</div>
+		</div>
+		# END extended_fields #
+	</div>
+</fieldset>
+# ENDIF #

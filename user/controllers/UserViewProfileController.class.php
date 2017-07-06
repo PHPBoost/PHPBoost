@@ -28,7 +28,6 @@
 class UserViewProfileController extends AbstractController
 {
 	private $lang;
-	private $form;
 	private $user_infos;
 	private $tpl;
 
@@ -47,8 +46,6 @@ class UserViewProfileController extends AbstractController
 		
 		$this->build_view($this->user_infos['user_id']);
 
-		$this->tpl->put('FORM', $this->form->display());
-
 		return $this->build_response($this->tpl, $user_id);
 	}
 
@@ -65,6 +62,17 @@ class UserViewProfileController extends AbstractController
 		$registration_date = !empty($this->user_infos['registration_date']) ? Date::to_format($this->user_infos['registration_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('unknown', 'main');
 		$last_connection_date = !empty($this->user_infos['last_connection_date']) ? Date::to_format($this->user_infos['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('never', 'main');
 		$has_groups = $this->build_groups(explode('|', $this->user_infos['groups']));
+		$extended_fields_number = 0;
+		
+		foreach (MemberExtendedFieldsService::display_profile_fields($user_id) as $field)
+		{
+			$this->tpl->assign_block_vars('extended_fields', array(
+				'NAME' => $field['name'],
+				'REWRITED_NAME' => Url::encode_rewrite($field['name']),
+				'VALUE' => $field['value']
+			));
+			$extended_fields_number++;
+		}
 		
 		$this->tpl->put_all(array(
 			'C_DISPLAY_EDIT_LINK' => $this->user_infos['user_id'] == AppContext::get_current_user()->get_id() || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
@@ -72,6 +80,7 @@ class UserViewProfileController extends AbstractController
 			'C_GROUPS' => $has_groups,
 			'C_DISPLAY_MAIL_LINK' => AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT) && $this->user_infos['show_email'],
 			'C_DISPLAY_PM_LINK' => !$this->same_user_view_profile($user_id) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
+			'C_EXTENDED_FIELDS' => $extended_fields_number,
 			'DISPLAY_NAME' => $this->user_infos['display_name'],
 			'LEVEL' => UserService::get_level_lang($this->user_infos['level']),
 			'LEVEL_CLASS' => UserService::get_level_class($this->user_infos['level']),
@@ -83,14 +92,6 @@ class UserViewProfileController extends AbstractController
 			'U_DISPLAY_USER_MESSAGES' => UserUrlBuilder::messages($user_id)->rel(),
 			'U_DISPLAY_USER_PM' => UserUrlBuilder::personnal_message($user_id)->rel()
 		));
-		
-		
-		
-		$form = new HTMLForm('member-view-profile-extended-fields', '', false);
-		
-		MemberExtendedFieldsService::display_profile_fields($form, $user_id);
-
-		$this->form = $form;
 	}
 
 	private function same_user_view_profile($user_id)
