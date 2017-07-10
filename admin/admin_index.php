@@ -66,7 +66,7 @@ while ($row = $result->fetch())
 	$tpl->assign_block_vars('comments_list', array(
 		'CONTENT' => FormatingHelper::second_parse($row['message']),
 		'U_PSEUDO' => $com_pseudo,
-		'U_DELETE' => CommentsUrlBuilder::delete($row['path'], $row['id'], REWRITED_SCRIPT)->rel(),
+		'U_DELETE' => CommentsUrlBuilder::delete($row['path'], $row['id'], HOST . REWRITED_SCRIPT)->rel(),
 		'U_LINK' => Url::to_rel($row['path']) . '#com' . $row['id'],
 	));
 	$i++;
