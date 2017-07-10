@@ -1,5 +1,5 @@
 <div class="field-${escape(HTML_ID)} map-input-container">
-	<input type="text" name="${escape(NAME)}" id="${escape(HTML_ID)}" value="${escape(ADDRESS)}" placeholder="{@form.marker.address}" class="map-address-input # IF C_READONLY # low-opacity# ENDIF ## IF C_CLASS # ${escape(CLASS)}# ENDIF #" # IF C_DISABLED # disabled="disabled" # ENDIF # />
+	<input type="text" name="${escape(NAME)}" id="${escape(HTML_ID)}" value="${escape(ADDRESS)}" placeholder="{@form.marker.address}" class="map-address-input# IF C_READONLY # low-opacity# ENDIF ## IF C_CLASS # ${escape(CLASS)}# ENDIF #" # IF C_DISABLED # disabled="disabled" # ENDIF # />
 	<input type="hidden" id="latitude-${escape(HTML_ID)}" name="latitude-${escape(HTML_ID)}" value="${escape(LATITUDE)}" />
 	<input type="hidden" id="longitude-${escape(HTML_ID)}" name="longitude-${escape(HTML_ID)}" value="${escape(LONGITUDE)}" />
 	<input type="hidden" id="zoom-${escape(HTML_ID)}" name="zoom-${escape(HTML_ID)}" value="${escape(ZOOM)}" />
@@ -24,7 +24,7 @@ jQuery(function(){
 	# ELSE #
 	var address = [{DEFAULT_LATITUDE}, {DEFAULT_LONGITUDE}];
 	# ENDIF #
-	
+
 	jQuery("#${escape(HTML_ID)}").geocomplete({
 		map: "#map-${escape(HTML_ID)}",
 		location: # IF C_COORDONATES #[{LATITUDE}, {LONGITUDE}]# ELSE #address# ENDIF #,
@@ -38,17 +38,17 @@ jQuery(function(){
 			zoom: {ZOOM}# ENDIF #
 		}
 	});
-	
+
 	jQuery("#${escape(HTML_ID)}").bind("geocode:dragged", function(event, latLng){
 		jQuery("input[name=latitude-${escape(HTML_ID)}]").val(latLng.lat());
 		jQuery("input[name=longitude-${escape(HTML_ID)}]").val(latLng.lng());
 	});
-	
+
 	jQuery("#${escape(HTML_ID)}").bind("geocode:idle", function(event, latLng){
 		jQuery("input[name=latitude-${escape(HTML_ID)}]").val(latLng.lat());
 		jQuery("input[name=longitude-${escape(HTML_ID)}]").val(latLng.lng());
 	});
-	
+
 	jQuery("#${escape(HTML_ID)}").bind("geocode:zoom", function(event, value){
 		jQuery("input[name=zoom-${escape(HTML_ID)}]").val(value);
 	});

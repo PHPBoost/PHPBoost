@@ -35,12 +35,12 @@ class GoogleMapsFormFieldMapAddress extends AbstractFormField
 	 * @var Usefull to know if we have to include all the necessary JS includes
 	 */
 	private $include_api = true;
-	
+
 	/**
 	 * @var Always display marker on the map or not
 	 */
 	private $always_display_marker = false;
-	
+
 	/**
 	 * @desc Constructs a GoogleMapsFormFieldSimpleAddress.
 	 * @param string $id Field identifier
@@ -52,9 +52,9 @@ class GoogleMapsFormFieldMapAddress extends AbstractFormField
 	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
-		$this->set_css_form_field_class('form-field-map map-adress');
+		$this->set_css_form_field_class('form-field-map map-address');
 	}
-	
+
 	/**
 	 * @return string The html code for the input.
 	 */
@@ -62,15 +62,15 @@ class GoogleMapsFormFieldMapAddress extends AbstractFormField
 	{
 		$template = $this->get_template_to_use();
 		$config   = GoogleMapsConfig::load();
-		
+
 		$field_tpl = new FileTemplate('GoogleMaps/GoogleMapsFormFieldMapAddress.tpl');
 		$field_tpl->add_lang(LangLoader::get('common', 'GoogleMaps'));
-		
+
 		$this->assign_common_template_variables($template);
-		
+
 		$unserialized_value = @unserialize($this->get_value());
 		$value = $unserialized_value !== false ? $unserialized_value : $this->get_value();
-		
+
 		if (!($value instanceof GoogleMapsMarker))
 		{
 			$marker = new GoogleMapsMarker();
@@ -83,7 +83,7 @@ class GoogleMapsFormFieldMapAddress extends AbstractFormField
 		}
 		else
 			$marker = $value;
-		
+
 		$field_tpl->put_all(array_merge($marker->get_array_tpl_vars(), array(
 			'C_INCLUDE_API' => $this->include_api,
 			'C_ALWAYS_DISPLAY_MARKER' => $this->always_display_marker,
@@ -99,14 +99,14 @@ class GoogleMapsFormFieldMapAddress extends AbstractFormField
 			'C_READONLY' => $this->is_readonly(),
 			'C_DISABLED' => $this->is_disabled()
 		)));
-		
+
 		$template->assign_block_vars('fieldelements', array(
 			'ELEMENT' => $field_tpl->render()
 		));
-		
+
 		return $template;
 	}
-	
+
 	public function retrieve_value()
 	{
 		$request = AppContext::get_request();
@@ -117,18 +117,18 @@ class GoogleMapsFormFieldMapAddress extends AbstractFormField
 			$field_latitude_id = 'latitude-' . $this->get_html_id();
 			$field_longitude_id = 'longitude-' . $this->get_html_id();
 			$field_zoom_id = 'zoom-' . $this->get_html_id();
-			
+
 			$marker->set_properties(array(
-				'address' => $request->get_poststring($field_address_id), 
+				'address' => $request->get_poststring($field_address_id),
 				'latitude' => $request->get_poststring($field_latitude_id),
 				'longitude' => $request->get_poststring($field_longitude_id),
 				'zoom' => $request->get_poststring($field_zoom_id)
 			));
 		}
-		
+
 		$this->set_value(TextHelper::serialize($marker->get_properties()));
 	}
-	
+
 	protected function compute_options(array &$field_options)
 	{
 		foreach($field_options as $attribute => $value)
@@ -148,7 +148,7 @@ class GoogleMapsFormFieldMapAddress extends AbstractFormField
 		}
 		parent::compute_options($field_options);
 	}
-	
+
 	protected function get_default_template()
 	{
 		return new FileTemplate('framework/builder/form/FormField.tpl');
