@@ -36,6 +36,7 @@ class BBCodeEditor extends ContentEditor
 	 * @var Usefull to know if we have to include all the necessary JS includes
 	 */
 	private static $editor_already_included = false;
+	private $forbidden_positions = 0;
 	private $icon_fa = array( "arrow-down",  "arrow-up", "arrow-left", "arrow-right", "arrows", "ban", "unban", "bar-chart", "bars", "bell", "book", "calendar", "caret-left", "caret-right", "clipboard", "clock-o", "cloud-upload", "download", "code", "code-fork", "cog", "cogs", "comment", "comment-o", "comments-o", "cube", "cubes", "delete", "edit", "remove", "envelope", "envelope-o", "eraser", "check", "success", "error", "warning", "question", "forbidden", "info-circle", "eye", "eye-slash", "facebook", "fast-forward",  "filter", "flag", "flag-o", "folder", "folder-open", "gavel", "gears", "globe", "google-plus", "hand-o-right", "heart", "home", "key", "legal", "lightbulb-o", "list-ul", "lock", "magic", "minus", "plus", "move", "picture-o", "print", "profil", "quote-right", "refresh", "save", "search", "share-square-o", "sign-in", "sign-out", "smile-o", "sort", "sort-alpha-asc", "sort-amount-asc", "sort-amount-desc", "spinner", "star", "star-half-empty", "star-o", "syndication", "tag", "tags", "tasks", "th", "ticket", "undo", "unlink", "file", "file-o", "file-text", "file-text-o", "user", "users", "offline", "online", "male", "female",  "volume-up", "wrench");
 
 	function __construct()
@@ -98,15 +99,24 @@ class BBCodeEditor extends ContentEditor
 			'L_BB_FONT'                     => $bbcode_lang['bb_font'],
 			'L_BB_SMALL'                    => $bbcode_lang['bb_small'],
 			'L_BB_LARGE'                    => $bbcode_lang['bb_large'],
+			'L_BB_ALIGN'                    => $bbcode_lang['bb_align'],			
 			'L_BB_LEFT'                     => $bbcode_lang['bb_left'],
+			'L_BB_LEFT_TITLE'               => $bbcode_lang['bb_left_title'],
 			'L_BB_CENTER'                   => $bbcode_lang['bb_center'],
+			'L_BB_CENTER_TITLE'             => $bbcode_lang['bb_center_title'],
 			'L_BB_RIGHT'                    => $bbcode_lang['bb_right'],
+			'L_BB_RIGHT_TITLE'              => $bbcode_lang['bb_right_title'],
 			'L_BB_JUSTIFY'                  => $bbcode_lang['bb_justify'],
+			'L_BB_JUSTIFY_TITLE'            => $bbcode_lang['bb_justify_title'],
+			'L_BB_POSITIONS'                => $bbcode_lang['bb_float_positions'],
 			'L_BB_FLOAT_LEFT'               => $bbcode_lang['bb_float_left'],
+			'L_BB_FLOAT_LEFT_TITLE'         => $bbcode_lang['bb_float_left_title'],
 			'L_BB_FLOAT_RIGHT'              => $bbcode_lang['bb_float_right'],
+			'L_BB_FLOAT_RIGHT_TITLE'        => $bbcode_lang['bb_float_right_title'],
 			'L_BB_SUP'                      => $bbcode_lang['bb_sup'],
 			'L_BB_SUB'                      => $bbcode_lang['bb_sub'],
 			'L_BB_INDENT'                   => $bbcode_lang['bb_indent'],
+			'L_BB_INDENT_TITLE'             => $bbcode_lang['bb_indent_title'],
 			'L_BB_LIST'                     => $bbcode_lang['bb_list'],
 			'L_BB_TABLE'                    => $bbcode_lang['bb_table'],
 			'L_BB_SWF'                      => $bbcode_lang['bb_swf'],
@@ -137,6 +147,10 @@ class BBCodeEditor extends ContentEditor
 			'L_BB_SCRIPT'                   => $bbcode_lang['bb_script'],
 			'L_BB_WEB'                      => $bbcode_lang['bb_web'],
 			'L_BB_PROG'                     => $bbcode_lang['bb_prog'],
+			'L_BB_MAIL'                     => $bbcode_lang['bb_mail'],
+			'L_BB_MAIL_PROMPT'              => $bbcode_lang['bb_mail_prompt'],
+			'L_BB_FEED'                     => $bbcode_lang['bb_feed'],
+			'L_BB_FEED_PROMPT'              => $bbcode_lang['bb_feed_prompt'],
 			'L_STYLE'                       => $LANG['style'],
 			'L_QUESTION'                    => $LANG['question'],
 			'L_NOTICE'                      => $LANG['notice'],
@@ -160,6 +174,17 @@ class BBCodeEditor extends ContentEditor
 		{
 			if ($forbidden_tag == 'fieldset')
 				$forbidden_tag = 'block';
+
+			if ($forbidden_tag == 'float' || $forbidden_tag == 'indent')
+				$this->forbidden_positions = $this->forbidden_positions + 1 ;
+
+			if ($this->forbidden_positions == 2)
+			{
+				$template->put_all(array(
+					'AUTH_POSITIONS' => ' bbcode-forbidden',
+					'DISABLED_POSITIONS' => 'return false;'
+				));
+			}
 
 			$template->put_all(array(
 				'AUTH_' . TextHelper::strtoupper($forbidden_tag) => ' bbcode-forbidden',

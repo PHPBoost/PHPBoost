@@ -278,37 +278,32 @@ function XMLHttpRequest_preview(field)
 			</li>
 		</ul>
 
-		<ul id="bbcode-container-aligns" class="bbcode-container bbcode-container-more">
-			<li class="bbcode-elements">
-				<a href="" class="fa bbcode-icon-left{AUTH_ALIGN}" onclick="{DISABLED_ALIGN}insertbbcode('[align=left]', '[/align]', '{FIELD}');return false;" title="{L_BB_LEFT}"></a>
-			</li>
-
-			<li class="bbcode-elements">
-				<a href="" class="fa bbcode-icon-center{AUTH_ALIGN}" onclick="{DISABLED_ALIGN}insertbbcode('[align=center]', '[/align]', '{FIELD}');return false;" title="{L_BB_CENTER}"></a>
-			</li>
-
-			<li class="bbcode-elements">
-				<a href="" class="fa bbcode-icon-right{AUTH_ALIGN}" onclick="{DISABLED_ALIGN}insertbbcode('[align=right]', '[/align]', '{FIELD}');return false;" title="{L_BB_RIGHT}"></a>
-			</li>
-
-			<li class="bbcode-elements">
-				<a href="" class="fa bbcode-icon-justify{AUTH_ALIGN}" onclick="{DISABLED_ALIGN}insertbbcode('[align=justify]', '[/align]', '{FIELD}');return false;" title="{L_BB_JUSTIFY}"></a>
-			</li>
-		</ul>
-
 		<ul id="bbcode-container-positions" class="bbcode-container bbcode-container-more">
 			<li class="bbcode-elements">
-				<a href="" class="fa bbcode-icon-float-left{AUTH_FLOAT}" onclick="{DISABLED_FLOAT}insertbbcode('[float=left]', '[/float]', '{FIELD}');return false;" title="{L_BB_FLOAT_LEFT}"></a>
+				<a href="" onclick="{DISABLED_ALIGN}bb_display_block('13', '{FIELD}');return false;" onmouseover="{DISABLED_ALIGN}bb_hide_block('13', '{FIELD}', 1);" onmouseout="bb_hide_block('13', '{FIELD}', 0);" class="bbcode-hover{AUTH_ALIGN}" title="{L_BB_ALIGN}">
+					<i class="fa bbcode-icon-left"></i>
+				</a>
+				<div class="bbcode-block-container" style="display: none;" id="bb-block13{FIELD}">
+					<ul class="bbcode-block bbcode-block-list bbcode-block-aligns" onmouseover="bb_hide_block('13', '{FIELD}', 1);" onmouseout="bb_hide_block('13', '{FIELD}', 0);">
+						<li><a href="" onclick="{DISABLED_ALIGN}insertbbcode('[align=left]', '[/align]', '{FIELD}');return false;" title="{L_BB_LEFT_TITLE}"> {L_BB_LEFT} </a></li>
+						<li><a href="" onclick="{DISABLED_ALIGN}insertbbcode('[align=center]', '[/align]', '{FIELD}');return false;" title="{L_BB_CENTER_TITLE}"> {L_BB_CENTER} </a></li>
+						<li><a href="" onclick="{DISABLED_ALIGN}insertbbcode('[align=right]', '[/align]', '{FIELD}');return false;" title="{L_BB_LEFT_TITLE}"> {L_BB_RIGHT} </a></li>
+						<li><a href="" onclick="{DISABLED_ALIGN}insertbbcode('[align=justify]', '[/align]', '{FIELD}');return false;" title="{L_BB_JUSTIFY_TITLE}"> {L_BB_JUSTIFY} </a></li>
+					</ul>
+				</div>
 			</li>
-
 			<li class="bbcode-elements">
-				<a href="" class="fa bbcode-icon-float-right{AUTH_FLOAT}" onclick="{DISABLED_FLOAT}insertbbcode('[float=right]', '[/float]', '{FIELD}');return false;" title="{L_BB_FLOAT_RIGHT}"></a>
+				<a href="" onclick="{DISABLED_POSITIONS}bb_display_block('14', '{FIELD}');return false;" onmouseover="{DISABLED_POSITIONS}bb_hide_block('14', '{FIELD}', 1);" onmouseout="bb_hide_block('14', '{FIELD}', 0);" class="bbcode-hover{AUTH_POSITIONS}" title="{L_BB_POSITIONS}">
+					<i class="fa bbcode-icon-indent"></i>
+				</a>
+				<div class="bbcode-block-container" style="display: none;" id="bb-block14{FIELD}">
+					<ul class="bbcode-block bbcode-block-list bbcode-block-positions" onmouseover="bb_hide_block('14', '{FIELD}', 1);" onmouseout="bb_hide_block('14', '{FIELD}', 0);">
+						<li><a href="" onclick="{DISABLED_FLOAT}insertbbcode('[float=left]', '[/float]', '{FIELD}');return false;" title="{L_BB_FLOAT_LEFT_TITLE}" class="{AUTH_ALIGN}"> {L_BB_FLOAT_LEFT} </a></li>
+						<li><a href="" onclick="{DISABLED_FLOAT}insertbbcode('[float=right]', '[/float]', '{FIELD}');return false;" title="{L_BB_FLOAT_RIGHT_TITLE}" class="{AUTH_ALIGN}"> {L_BB_FLOAT_RIGHT} </a></li>
+						<li><a href="" onclick="{DISABLED_INDENT}insertbbcode('[indent]', '[/indent]', '{FIELD}');return false;" title="{L_BB_INDENT_TITLE}" class="{AUTH_INDENT}"> {L_BB_INDENT} </a></li>
+					</ul>
+				</div>
 			</li>
-
-			<li class="bbcode-elements">
-				<a href="" class="fa bbcode-icon-indent{AUTH_INDENT}" onclick="{DISABLED_INDENT}insertbbcode('[indent]', '[/indent]', '{FIELD}');return false;" title="{L_BB_INDENT}"></a>
-			</li>
-
 			<li class="bbcode-elements">
 				<a href="" onclick="{DISABLED_TABLE}bb_display_block('7', '{FIELD}');return false;" onmouseover="{DISABLED_TABLE}bb_hide_block('7', '{FIELD}', 1);" class="bbcode-hover{AUTH_TABLE}" title="{L_BB_TABLE}">
 					<i class="fa bbcode-icon-table"></i>
@@ -425,6 +420,18 @@ function XMLHttpRequest_preview(field)
 			</li>
 			<li class="bbcode-elements">
 				<a href="" class="fa bbcode-icon-html{AUTH_HTML}" onclick="{DISABLED_HTML}insertbbcode('[html]', '[/html]', '{FIELD}');return false;" title="{L_BB_HTML}"></a>
+			</li>
+		</ul>
+
+		<ul id="bbcode-container-mail" class="bbcode-container bbcode-container-more">
+			<li class="bbcode-elements">
+				<a href="" class="fa bbcode-icon-mail{AUTH_MAIL}" onclick="{DISABLED_MAIL}bbcode_mail('{FIELD}', ${escapejs(L_BB_MAIL_PROMPT)});return false;" title="{L_BB_MAIL}"></a>
+			</li>
+		</ul>
+
+		<ul id="bbcode-container-feed" class="bbcode-container bbcode-container-more">
+			<li class="bbcode-elements">
+				<a href="" class="fa bbcode-icon-feed{AUTH_FEED}" onclick="{DISABLED_FEED}bbcode_feed('{FIELD}', ${escapejs(L_BB_FEED_PROMPT)});return false;" title="{L_BB_FEED}"></a>
 			</li>
 		</ul>
 

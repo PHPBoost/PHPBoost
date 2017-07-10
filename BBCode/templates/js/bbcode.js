@@ -335,3 +335,21 @@ function bbcode_fieldset(field, prompt_text)
 	else
 		insertbbcode('[fieldset]', '[/fieldset]', field);
 }
+
+function bbcode_mail(field, prompt_text)
+{
+	var mail = prompt(prompt_text, '');
+	if( mail != "")
+		insertbbcode('[mail=' + mail + ']', '[/mail]', field);
+	else
+		insertbbcode('[mail]', '[/mail]', field);
+}
+
+function bbcode_feed(field, prompt_text)
+{
+	var feed = prompt(prompt_text, '');
+	if( feed != "")
+		insertbbcode('[feed=' + feed + ']', '[/feed]', field);
+	else
+		insertbbcode('[feed]', '[/feed]', field);
+}
