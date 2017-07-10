@@ -324,7 +324,7 @@ elseif (!empty($restore)) //on restaure un ancien article
 		$general_auth = empty($article_infos['auth']) ? true : false;
 		$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 	
-		if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_DELETE_ARCHIVE)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_DELETE_ARCHIVE))))
+		if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_RESTORE_ARCHIVE)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_RESTORE_ARCHIVE))))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
