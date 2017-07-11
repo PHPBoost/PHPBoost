@@ -432,17 +432,16 @@ textarea {
 	resize: vertical;
 }
 
-.form-element-textarea {
-	width: 98%;
-	margin: 0 1% 1em;
-}
-
 .form-element-textarea textarea {
 	width: 100%;
 }
 
 .form-element-textarea .form-field-textarea {
 	display: block;
+}
+
+.form-element .form-field-textarea {
+	display: inline-block;
 }
 
 .form-element-textarea .form-field-textarea div {
@@ -515,6 +514,10 @@ textarea {
 @media (min-width: 769px) {
 	.form-element-textarea-small {
 		width: 49%;
+	}
+
+	.form-element .form-field-textarea {
+		width: 59%;
 	}
 }
 
