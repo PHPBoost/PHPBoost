@@ -71,6 +71,7 @@ class CommentsService
 			$edit_comment_id = AppContext::get_request()->get_getint('edit_comment', 0);
 			$delete_comment_id = AppContext::get_request()->get_getint('delete_comment', 0);
 			$return_path = AppContext::get_request()->get_getstring('return_path', '');
+			$return_path = $return_path ? HOST . Url::to_relative($return_path) : '';
 			
 			try {
 				$lock = AppContext::get_request()->get_getbool('lock');
