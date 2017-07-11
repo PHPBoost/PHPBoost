@@ -33,7 +33,7 @@ function XMLHttpRequest_preview(field)
 		});
 	}
 	else
-		alert("{L_REQUIRE_TEXT}");
+		alert("${LangLoader::get_message('require_text', 'main')}");
 }
 -->
 </script>
@@ -85,11 +85,11 @@ function XMLHttpRequest_preview(field)
 			</li>
 
 			<li class="bbcode-elements">
-				<a href="" onclick="{DISABLED_COLOR}bbcode_color('5', '{FIELD}');bb_display_block('5', '{FIELD}');return false;" onmouseout="{DISABLED_COLOR}bb_hide_block('5', '{FIELD}', 0);" title="{@bb_color}" class="{AUTH_COLOR}">
+				<a href="" onclick="{DISABLED_COLOR}bbcode_color('5', '{FIELD}', 'color');bb_display_block('5', '{FIELD}');return false;" onmouseout="{DISABLED_COLOR}bb_hide_block('5', '{FIELD}', 0);" title="{@bb_color}" class="{AUTH_COLOR}">
 					<i class="fa bbcode-icon-color"></i>
 				</a>
 				<div id="bb-block5{FIELD}" class="bbcode-block-container color-picker" style="display: none;">
-					<div id="bbcolor{FIELD}" class="bbcode-block" onmouseover="bb_hide_block('5', '{FIELD}', 1);" onmouseout="bb_hide_block('5', '{FIELD}', 0);">
+					<div id="bb-color{FIELD}" class="bbcode-block" onmouseover="bb_hide_block('5', '{FIELD}', 1);" onmouseout="bb_hide_block('5', '{FIELD}', 0);">
 					</div>
 				</div>
 			</li>
@@ -100,15 +100,15 @@ function XMLHttpRequest_preview(field)
 				</a>
 				<div id="bb-block6{FIELD}" class="bbcode-block-container" style="display: none;">
 					<ul class="bbcode-block bbcode-block-list bbcode-block-size" onmouseover="bb_hide_block('6', '{FIELD}', 1);" onmouseout="bb_hide_block('6', '{FIELD}', 0);">
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=5]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;" title="{L_SIZE} 05"> 05 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=10]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;" title="{L_SIZE} 10"> 10 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=15]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;" title="{L_SIZE} 15"> 15 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=20]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;" title="{L_SIZE} 20"> 20 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=25]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;" title="{L_SIZE} 25"> 25 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=30]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;" title="{L_SIZE} 30"> 30 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=35]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;" title="{L_SIZE} 35"> 35 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=40]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;" title="{L_SIZE} 40"> 40 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=45]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;" title="{L_SIZE} 45"> 45 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=5]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_size', 'editor-common')} 05"> 05 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=10]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_size', 'editor-common')} 10"> 10 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=15]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_size', 'editor-common')} 15"> 15 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=20]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_size', 'editor-common')} 20"> 20 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=25]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_size', 'editor-common')} 25"> 25 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=30]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_size', 'editor-common')} 30"> 30 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=35]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_size', 'editor-common')} 35"> 35 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=40]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_size', 'editor-common')} 40"> 40 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=45]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_size', 'editor-common')} 45"> 45 </a></li>
 					</ul>
 				</div>
 			</li>
@@ -119,23 +119,23 @@ function XMLHttpRequest_preview(field)
 				</a>
 				<div id="bb-block10{FIELD}" class="bbcode-block-container" style="display: none;">
 					<ul class="bbcode-block bbcode-block-list bbcode-block-fonts" onmouseover="bb_hide_block('10', '{FIELD}', 1);" onmouseout="bb_hide_block('10', '{FIELD}', 0);">
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=andale mono]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="{L_FONT} Andale Mono"> <span style="font-family: andale mono;">Andale Mono</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=arial]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="{L_FONT} Arial"> <span style="font-family: arial;">Arial</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=arial black]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="{L_FONT} Arial Black"> <span style="font-family: arial black;">Arial Black</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=book antiqua]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="{L_FONT} Book Antiqua"> <span style="font-family: book antiqua;">Book Antiqua</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=comic sans ms]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="{L_FONT} Comic Sans MS"> <span style="font-family: comic sans ms;">Comic Sans MS</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=courier new]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="{L_FONT} Courier New"> <span style="font-family: courier new;">Courier New</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=georgia]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="{L_FONT} Georgia"> <span style="font-family: georgia;">Georgia</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=helvetica]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="{L_FONT} Helvetica"> <span style="font-family: helvetica;">Helvetica</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=impact]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="{L_FONT} Impact"> <span style="font-family: impact;">Impact</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=symbol]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="{L_FONT} Symbol"> <span style="font-family: symbol;">Symbol</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=tahoma]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="{L_FONT} Tahoma"> <span style="font-family: tahoma;">Tahoma</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=terminal]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="{L_FONT} Terminal"> <span style="font-family: terminal;">Terminal</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=times new roman]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="{L_FONT} Times New Roman"> <span style="font-family: times new roman;">Times New Roman</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=trebuchet ms]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="{L_FONT} Trebuchet MS"> <span style="font-family: trebuchet ms;">Trebuchet MS</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=verdana]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="{L_FONT} Verdana"> <span style="font-family: verdana;">Verdana</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=webdings]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="{L_FONT} Webdings"> Webdings </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=wingdings]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="{L_FONT} Wingdings"> Wingdings </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=andale mono]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_font', 'editor-common')} Andale Mono"> <span style="font-family: andale mono;">Andale Mono</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=arial]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_font', 'editor-common')} Arial"> <span style="font-family: arial;">Arial</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=arial black]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_font', 'editor-common')} Arial Black"> <span style="font-family: arial black;">Arial Black</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=book antiqua]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_font', 'editor-common')} Book Antiqua"> <span style="font-family: book antiqua;">Book Antiqua</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=comic sans ms]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_font', 'editor-common')} Comic Sans MS"> <span style="font-family: comic sans ms;">Comic Sans MS</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=courier new]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_font', 'editor-common')} Courier New"> <span style="font-family: courier new;">Courier New</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=georgia]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_font', 'editor-common')} Georgia"> <span style="font-family: georgia;">Georgia</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=helvetica]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_font', 'editor-common')} Helvetica"> <span style="font-family: helvetica;">Helvetica</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=impact]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_font', 'editor-common')} Impact"> <span style="font-family: impact;">Impact</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=symbol]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_font', 'editor-common')} Symbol"> <span style="font-family: symbol;">Symbol</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=tahoma]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_font', 'editor-common')} Tahoma"> <span style="font-family: tahoma;">Tahoma</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=terminal]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_font', 'editor-common')} Terminal"> <span style="font-family: terminal;">Terminal</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=times new roman]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_font', 'editor-common')} Times New Roman"> <span style="font-family: times new roman;">Times New Roman</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=trebuchet ms]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_font', 'editor-common')} Trebuchet MS"> <span style="font-family: trebuchet ms;">Trebuchet MS</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=verdana]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_font', 'editor-common')} Verdana"> <span style="font-family: verdana;">Verdana</span> </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=webdings]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_font', 'editor-common')} Webdings"> Webdings </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=wingdings]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_font', 'editor-common')} Wingdings"> Wingdings </a></li>
 					</ul>
 				</div>
 			</li>
@@ -148,11 +148,11 @@ function XMLHttpRequest_preview(field)
 				</a>
 				<div id="bb-block2{FIELD}" class="bbcode-block-container" style="display: none;">
 					<ul class="bbcode-block bbcode-block-list bbcode-block-title" onmouseover="bb_hide_block('2', '{FIELD}', 1);" onmouseout="bb_hide_block('2', '{FIELD}', 0);">
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=1]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;" title="{L_TITLE} 1"> {L_TITLE} 1 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=2]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;" title="{L_TITLE} 2"> {L_TITLE} 2 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=3]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;" title="{L_TITLE} 3"> {L_TITLE} 3 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=4]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;" title="{L_TITLE} 4"> {L_TITLE} 4 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=5]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;" title="{L_TITLE} 5"> {L_TITLE} 5 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=1]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_title', 'editor-common')} 1"> ${LangLoader::get_message('format_title', 'editor-common')} 1 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=2]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_title', 'editor-common')} 2"> ${LangLoader::get_message('format_title', 'editor-common')} 2 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=3]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_title', 'editor-common')} 3"> ${LangLoader::get_message('format_title', 'editor-common')} 3 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=4]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_title', 'editor-common')} 4"> ${LangLoader::get_message('format_title', 'editor-common')} 4 </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=5]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;" title="${LangLoader::get_message('format_title', 'editor-common')} 5"> ${LangLoader::get_message('format_title', 'editor-common')} 5 </a></li>
 					</ul>
 				</div>
 			</li>
@@ -223,11 +223,11 @@ function XMLHttpRequest_preview(field)
 				</a>
 				<div class="bbcode-block-container" style="display: none;" id="bb-block4{FIELD}">
 					<ul class="bbcode-block bbcode-block-list bbcode-block-message" onmouseover="bb_hide_block('4', '{FIELD}', 1);" onmouseout="bb_hide_block('4', '{FIELD}', 0);">
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=success]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;" title="{L_SUCCESS}"> {L_SUCCESS} </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=question]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;" title="{L_QUESTION}"> {L_QUESTION} </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=notice]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;" title="{L_NOTICE}"> {L_NOTICE} </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=warning]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;" title="{L_WARNING}"> {L_WARNING} </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=error]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;" title="{L_ERROR}"> {L_ERROR} </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=success]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;" title="${LangLoader::get_message('style', 'main')} ${LangLoader::get_message('success', 'main')}"> ${LangLoader::get_message('success', 'main')} </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=question]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;" title="${LangLoader::get_message('style', 'main')} ${LangLoader::get_message('question', 'main')}"> ${LangLoader::get_message('question', 'main')} </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=notice]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;" title="${LangLoader::get_message('style', 'main')} ${LangLoader::get_message('notice', 'main')}"> ${LangLoader::get_message('notice', 'main')} </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=warning]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;" title="${LangLoader::get_message('style', 'main')} ${LangLoader::get_message('warning', 'main')}"> ${LangLoader::get_message('warning', 'main')} </a></li>
+						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=error]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;" title="${LangLoader::get_message('style', 'main')} ${LangLoader::get_message('error', 'main')}"> ${LangLoader::get_message('error', 'main')} </a></li>
 					</ul>
 				</div>
 			</li>
@@ -344,6 +344,15 @@ function XMLHttpRequest_preview(field)
 			</li>
 			<li class="bbcode-elements">
 				<a href="" class="fa bbcode-icon-sub{AUTH_SUB}" onclick="{DISABLED_SUB}insertbbcode('[sub]', '[/sub]', '{FIELD}');return false;" title="{@bb_sub}"></a>
+			</li>
+			<li class="bbcode-elements">
+				<a href="" onclick="{DISABLED_BGCOLOR}bbcode_color('15', '{FIELD}', 'bgcolor');bb_display_block('15', '{FIELD}');return false;" onmouseout="{DISABLED_BGCOLOR}bb_hide_block('15', '{FIELD}', 0);" title="{@bb_bgcolor}" class="{AUTH_BGCOLOR}">
+					<i class="fa bbcode-icon-bgcolor"></i>
+				</a>
+				<div id="bb-block15{FIELD}" class="bbcode-block-container color-picker" style="display: none;">
+					<div id="bb-bgcolor{FIELD}" class="bbcode-block" onmouseover="bb_hide_block('15', '{FIELD}', 1);" onmouseout="bb_hide_block('5', '{FIELD}', 0);">
+					</div>
+				</div>
 			</li>
 		</ul>
 

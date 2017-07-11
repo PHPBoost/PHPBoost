@@ -71,17 +71,7 @@ class BBCodeEditor extends ContentEditor
 			'C_EDITOR_NOT_ALREADY_INCLUDED' => !self::$editor_already_included,
 			'FIELD'                         => $this->identifier,
 			'FORBIDDEN_TAGS'                => !empty($this->forbidden_tags) ? implode(',', $this->forbidden_tags) : '',
-			'C_UPLOAD_MANAGEMENT'           => AppContext::get_current_user()->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), FileUploadConfig::AUTH_FILES_BIT),
-			'L_REQUIRE_TEXT'                => LangLoader::get_message('require_text', 'main'),
-			'L_STYLE'                       => LangLoader::get_message('style', 'main'),
-			'L_QUESTION'                    => LangLoader::get_message('question', 'main'),
-			'L_NOTICE'                      => LangLoader::get_message('notice', 'main'),
-			'L_WARNING'                     => LangLoader::get_message('warning', 'main'),
-			'L_SUCCESS'                     => LangLoader::get_message('success', 'main'),
-			'L_ERROR'                       => LangLoader::get_message('error', 'main'),
-			'L_TITLE'                       => LangLoader::get_message('format_title', 'editor-common'),
-			'L_SIZE'                        => LangLoader::get_message('format_size', 'editor-common'),
-			'L_FONT'                        => LangLoader::get_message('format_font', 'editor-common')
+			'C_UPLOAD_MANAGEMENT'           => AppContext::get_current_user()->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), FileUploadConfig::AUTH_FILES_BIT)
 		));
 
 		foreach ($this->forbidden_tags as $forbidden_tag) //Balises interdite.

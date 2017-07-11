@@ -222,7 +222,7 @@ function show_bbcode_div(divID)
 	}
 }
 
-function bbcode_color(divID, field)
+function bbcode_color(divID, field, type)
 {
 	var i;
 	var br;
@@ -233,15 +233,15 @@ function bbcode_color(divID, field)
 	'#F04343', '#FF9900', '#99CC00', '#339966', '#33CCCC', '#3366FF', '#800080', '#ACA899',
 	'#FFC0CB', '#FFCC00', '#FFFF00', '#00FF00', '#00FFFF', '#00CCFF', '#993366', '#C0C0C0',
 	'#FF99CC', '#FFCC99', '#FFFF99', '#CCFFCC', '#CCFFFF', '#CC99FF', '#E3007B', '#FFFFFF');
-	
+
 	contents = '<table><tr>';
 	for(i = 0; i < 40; i++)
 	{
 		br = (i+1) % 8;
 		br = (br == 0 && i != 0 && i < 39) ? '</tr><tr>' : '';
-		contents += '<td><a href="" style="background:' + color[i] + ';" onclick="insertbbcode(\'[color=' + color[i] + ']\', \'[/color]\', \'' + field + '\');bb_hide_block(\'' + divID + '\', \'' + field + '\', 0);return false;"></a></td>' + br;
+		contents += '<td><a href="" style="background:' + color[i] + ';" onclick="insertbbcode(\'[' + type + '=' + color[i] + ']\', \'[/' + type + ']\', \'' + field + '\');bb_hide_block(\'' + divID + '\', \'' + field + '\', 0);return false;"></a></td>' + br;
 	}
-	document.getElementById("bbcolor" + field).innerHTML = contents + '</tr></table>';
+	document.getElementById("bb-"+ type + field).innerHTML = contents + '</tr></table>';
 }
 
 function bbcode_table(field, head_name)

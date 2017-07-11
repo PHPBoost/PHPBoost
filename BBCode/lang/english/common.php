@@ -40,6 +40,7 @@ $lang['bb_lightbox'] = 'Add a picture with lightbox effect: [lightbox=url pictur
 $lang['bb_size'] = 'Text size (X between 0 - 49): [size=X]text on size X[/size]';
 $lang['bb_font'] = 'Text font : [font=X]text in font X[/font]';
 $lang['bb_color'] = 'Text color: [color=X]text on X color[/color]';
+$lang['bb_bgcolor'] = 'Background color: [bgcolor=X]text on X color[/bgcolor]';
 $lang['bb_quote'] = 'Quote [quote=pseudo]text[/quote]';
 $lang['bb_align'] = 'Align';
 $lang['bb_left'] = 'Align left';
