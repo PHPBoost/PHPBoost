@@ -289,21 +289,21 @@ function bbcode_list(field)
 function bbcode_url(field, prompt_text)
 {
 	var url = prompt(prompt_text, '');
-	if( url != "")
+	if(url != '' && url != null)
 		insertbbcode('[url=' + url + ']', '[/url]', field);
 }
 
 function bbcode_lightbox(field, prompt_text)
 {
 	var url = prompt(prompt_text, '');
-	if( url != "")
+	if(url != '' && url != null)
 		insertbbcode('[lightbox=' + url + '][img style="max-width: 150px;"]' + url, '[/img][/lightbox]', field);
 }
 
 function bbcode_anchor(field, prompt_text)
 {
 	var anchor = prompt(prompt_text, '');
-	if( anchor != "")
+	if(anchor != '' && anchor != null)
 		insertbbcode('[anchor=' + url_encode_rewrite(anchor) + ']', '[/anchor]', field);
 	else
 		insertbbcode('[anchor]', '[/anchor]', field);
@@ -312,7 +312,7 @@ function bbcode_anchor(field, prompt_text)
 function bbcode_abbr(field, prompt_text)
 {
 	var desc = prompt(prompt_text, '');
-	if( desc != "") 
+	if(desc != '' && desc != null) 
 		insertbbcode('[abbr=' + desc + ']', '[/abbr]', field);
 	else
 		insertbbcode('[abbr]', '[/abbr]', field);
@@ -321,7 +321,7 @@ function bbcode_abbr(field, prompt_text)
 function bbcode_acronym(field, prompt_text)
 {
 	var desc = prompt(prompt_text, '');
-	if( desc != "") 
+	if(desc != '' && desc != null) 
 		insertbbcode('[acronym=' + desc + ']', '[/acronym]', field);
 	else
 		insertbbcode('[acronym]', '[/acronym]', field);
@@ -330,7 +330,7 @@ function bbcode_acronym(field, prompt_text)
 function bbcode_fieldset(field, prompt_text)
 {
 	var legend = prompt(prompt_text, '');
-	if( legend != "")
+	if(legend != '' && legend != null)
 		insertbbcode('[fieldset legend=' + legend + ']', '[/fieldset]', field);
 	else
 		insertbbcode('[fieldset]', '[/fieldset]', field);
@@ -339,7 +339,7 @@ function bbcode_fieldset(field, prompt_text)
 function bbcode_mail(field, prompt_text)
 {
 	var mail = prompt(prompt_text, '');
-	if( mail != "")
+	if(mail != '' && mail != null)
 		insertbbcode('[mail=' + mail + ']', '[/mail]', field);
 	else
 		insertbbcode('[mail]', '[/mail]', field);
@@ -348,7 +348,7 @@ function bbcode_mail(field, prompt_text)
 function bbcode_feed(field, prompt_text)
 {
 	var feed = prompt(prompt_text, '');
-	if( feed != "")
+	if(feed != '' && feed != null)
 		insertbbcode('[feed=' + feed + ']', '[/feed]', field);
 	else
 		insertbbcode('[feed]', '[/feed]', field);
