@@ -164,6 +164,7 @@ $LANG['question'] = 'Question';
 $LANG['notice'] = 'Remarque';
 $LANG['warning'] = 'Attention';
 $LANG['success'] = 'Succès';
+$LANG['error'] = 'Erreur';
 $LANG['vote'] = 'Vote';
 $LANG['votes'] = 'Votes';
 $LANG['already_vote'] = 'Vous avez déjà voté';

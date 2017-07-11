@@ -59,13 +59,12 @@ class BBCodeEditor extends ContentEditor
 	 */
 	public function display()
 	{
-		global $LANG;
-
 		$template = $this->get_template();
 
 		$smileys_cache = SmileysCache::load();
 
 		$bbcode_lang = LangLoader::get('common', 'BBCode');
+		$template->add_lang($bbcode_lang);
 		
 		$template->put_all(array(
 			'PAGE_PATH'                     => $_SERVER['PHP_SELF'],
@@ -73,101 +72,16 @@ class BBCodeEditor extends ContentEditor
 			'FIELD'                         => $this->identifier,
 			'FORBIDDEN_TAGS'                => !empty($this->forbidden_tags) ? implode(',', $this->forbidden_tags) : '',
 			'C_UPLOAD_MANAGEMENT'           => AppContext::get_current_user()->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), FileUploadConfig::AUTH_FILES_BIT),
-			'L_REQUIRE_TEXT'                => $LANG['require_text'],
-			'L_BB_UPLOAD'                   => $bbcode_lang['bb_upload'],
-			'L_BB_SMILEYS'                  => $bbcode_lang['bb_smileys'],
-			'L_BB_BOLD'                     => $bbcode_lang['bb_bold'],
-			'L_BB_ITALIC'                   => $bbcode_lang['bb_italic'],
-			'L_BB_UNDERLINE'                => $bbcode_lang['bb_underline'],
-			'L_BB_STRIKE'                   => $bbcode_lang['bb_strike'],
-			'L_BB_TITLE'                    => $bbcode_lang['bb_title'],
-			'L_BB_CONTAINER'                => $bbcode_lang['bb_container'],
-			'L_BB_HTML'                     => $bbcode_lang['bb_html'],
-			'L_BB_STYLE'                    => $bbcode_lang['bb_style'],
-			'L_BB_URL'                      => $bbcode_lang['bb_link'],
-			'L_BB_IMAGE'                    => $bbcode_lang['bb_picture'],
-			'L_BB_LIGHTBOX'                 => $bbcode_lang['bb_lightbox'],
-			'L_BB_QUOTE'                    => $bbcode_lang['bb_quote'],
-			'L_BB_HIDE'                     => $bbcode_lang['bb_hide'],
-			'L_BB_MEMBER'                   => $bbcode_lang['bb_member'],
-			'L_BB_MODERATOR'                => $bbcode_lang['bb_moderator'],
-			'L_BB_HIDE_ALL'                 => $bbcode_lang['bb_hide_all'],
-			'L_BB_VIEW_MEMBER'              => $bbcode_lang['bb_hide_view_member'],
-			'L_BB_VIEW_MODERATOR'           => $bbcode_lang['bb_hide_view_moderator'],
-			'L_BB_COLOR'                    => $bbcode_lang['bb_color'],
-			'L_BB_SIZE'                     => $bbcode_lang['bb_size'],
-			'L_BB_FONT'                     => $bbcode_lang['bb_font'],
-			'L_BB_SMALL'                    => $bbcode_lang['bb_small'],
-			'L_BB_LARGE'                    => $bbcode_lang['bb_large'],
-			'L_BB_ALIGN'                    => $bbcode_lang['bb_align'],
-			'L_BB_LEFT'                     => $bbcode_lang['bb_left'],
-			'L_BB_LEFT_TITLE'               => $bbcode_lang['bb_left_title'],
-			'L_BB_CENTER'                   => $bbcode_lang['bb_center'],
-			'L_BB_CENTER_TITLE'             => $bbcode_lang['bb_center_title'],
-			'L_BB_RIGHT'                    => $bbcode_lang['bb_right'],
-			'L_BB_RIGHT_TITLE'              => $bbcode_lang['bb_right_title'],
-			'L_BB_JUSTIFY'                  => $bbcode_lang['bb_justify'],
-			'L_BB_JUSTIFY_TITLE'            => $bbcode_lang['bb_justify_title'],
-			'L_BB_POSITIONS'                => $bbcode_lang['bb_float_positions'],
-			'L_BB_FLOAT_LEFT'               => $bbcode_lang['bb_float_left'],
-			'L_BB_FLOAT_LEFT_TITLE'         => $bbcode_lang['bb_float_left_title'],
-			'L_BB_FLOAT_RIGHT'              => $bbcode_lang['bb_float_right'],
-			'L_BB_FLOAT_RIGHT_TITLE'        => $bbcode_lang['bb_float_right_title'],
-			'L_BB_SUP'                      => $bbcode_lang['bb_sup'],
-			'L_BB_SUB'                      => $bbcode_lang['bb_sub'],
-			'L_BB_INDENT'                   => $bbcode_lang['bb_indent'],
-			'L_BB_INDENT_TITLE'             => $bbcode_lang['bb_indent_title'],
-			'L_BB_LIST'                     => $bbcode_lang['bb_list'],
-			'L_BB_TABLE'                    => $bbcode_lang['bb_table'],
-			'L_BB_SWF'                      => $bbcode_lang['bb_swf'],
-			'L_BB_YOUTUBE'                  => $bbcode_lang['bb_youtube'],
-			'L_BB_FLASH'                    => $bbcode_lang['bb_swf'],
-			'L_BB_MOVIE'                    => $bbcode_lang['bb_movie'],
-			'L_BB_SOUND'                    => $bbcode_lang['bb_sound'],
-			'L_BB_CODE'                     => $bbcode_lang['bb_code'],
-			'L_BB_MATH'                     => $bbcode_lang['bb_math'],
-			'L_BB_ANCHOR'                   => $bbcode_lang['bb_anchor'],
-			'L_BB_FA'                       => $bbcode_lang['bb_fa'],
-			'L_BB_HELP'                     => $bbcode_lang['bb_help'],
-			'L_BB_MORE'                     => $bbcode_lang['bb_more'],
-			'L_BB_URL_PROMPT'               => $bbcode_lang['bb_url_prompt'],
-			'L_BB_ANCHOR_PROMPT'            => $bbcode_lang['bb_anchor_prompt'],
-			'L_BB_CONTAINER'                => $bbcode_lang['bb_container'],
-			'L_BB_BLOCK'                    => $bbcode_lang['bb_block'],
-			'L_BB_BLOCK_TITLE'              => $bbcode_lang['bb_block_title'],
-			'L_BB_FIELDSET'                 => $bbcode_lang['bb_fieldset'],
-			'L_BB_FIELDSET_TITLE'           => $bbcode_lang['bb_fieldset_title'],
-			'L_BB_FIELDSET_PROMPT'          => $bbcode_lang['bb_fieldset_prompt'],
-			'L_BB_PARAGRAPH'                => $bbcode_lang['bb_paragraph'],
-			'L_BB_PARAGRAPH_TITLE'          => $bbcode_lang['bb_paragraph_title'],
-			'L_BB_ABBR'                     => $bbcode_lang['bb_abbr'],
-			'L_BB_ABBR_TITLE'               => $bbcode_lang['bb_abbr_title'],
-			'L_BB_ABBR_PROMPT'              => $bbcode_lang['bb_abbr_prompt'],
-			'L_BB_TEXT'                     => $bbcode_lang['bb_text'],
-			'L_BB_SCRIPT'                   => $bbcode_lang['bb_script'],
-			'L_BB_WEB'                      => $bbcode_lang['bb_web'],
-			'L_BB_PROG'                     => $bbcode_lang['bb_prog'],
-			'L_BB_MAIL'                     => $bbcode_lang['bb_mail'],
-			'L_BB_MAIL_PROMPT'              => $bbcode_lang['bb_mail_prompt'],
-			'L_BB_FEED'                     => $bbcode_lang['bb_feed'],
-			'L_BB_FEED_PROMPT'              => $bbcode_lang['bb_feed_prompt'],
-			'L_STYLE'                       => $LANG['style'],
-			'L_QUESTION'                    => $LANG['question'],
-			'L_NOTICE'                      => $LANG['notice'],
-			'L_WARNING'                     => $LANG['warning'],
-			'L_SUCCESS'                     => $LANG['success'],
-			'L_ERROR'                       => LangLoader::get_message('error', 'status-messages-common'),
+			'L_REQUIRE_TEXT'                => LangLoader::get_message('require_text', 'main'),
+			'L_STYLE'                       => LangLoader::get_message('style', 'main'),
+			'L_QUESTION'                    => LangLoader::get_message('question', 'main'),
+			'L_NOTICE'                      => LangLoader::get_message('notice', 'main'),
+			'L_WARNING'                     => LangLoader::get_message('warning', 'main'),
+			'L_SUCCESS'                     => LangLoader::get_message('success', 'main'),
+			'L_ERROR'                       => LangLoader::get_message('error', 'main'),
 			'L_TITLE'                       => LangLoader::get_message('format_title', 'editor-common'),
 			'L_SIZE'                        => LangLoader::get_message('format_size', 'editor-common'),
-			'L_FONT'                        => LangLoader::get_message('format_font', 'editor-common'),
-			'L_TABLE_HEAD'                  => $bbcode_lang['head_table'],
-			'L_ADD_HEAD'                    => $bbcode_lang['head_add'],
-			'L_LINES'                       => $bbcode_lang['lines'],
-			'L_COLS'                        => $bbcode_lang['cols'],
-			'L_ORDERED_LIST'                => $bbcode_lang['ordered_list'],
-			'L_INSERT_LIST'                 => $bbcode_lang['insert_list'],
-			'L_INSERT_TABLE'                => $bbcode_lang['insert_table'],
-			'L_PHPBOOST_LANGUAGES'          => $bbcode_lang['phpboost_languages']
+			'L_FONT'                        => LangLoader::get_message('format_font', 'editor-common')
 		));
 
 		foreach ($this->forbidden_tags as $forbidden_tag) //Balises interdite.
@@ -208,7 +122,7 @@ class BBCodeEditor extends ContentEditor
 		}
 
 		$template->put_all(array(
-			'L_SMILEY' => $LANG['smiley']
+			'L_SMILEY' => LangLoader::get_message('smiley', 'main'),
 		));
 
 		if (!self::$editor_already_included)
