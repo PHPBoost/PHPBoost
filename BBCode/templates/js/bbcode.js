@@ -349,7 +349,7 @@ function bbcode_feed(field, prompt_text)
 {
 	var feed = prompt(prompt_text, '');
 	if(feed != '' && feed != null)
-		insertbbcode('[feed=' + feed + ']', '[/feed]', field);
+		insertbbcode('[feed cat="0" number="5"]' + feed.toLowerCase(), '[/feed]', field);
 	else
-		insertbbcode('[feed]', '[/feed]', field);
+		insertbbcode('[feed cat="0" number="5"]', '[/feed]', field);
 }
