@@ -517,7 +517,7 @@ class UpdateServices
 	{
 		if (function_exists('mb_internal_encoding')) { mb_internal_encoding('UTF-8'); }
 		if (function_exists('mb_regex_encoding')) { mb_regex_encoding('UTF-8'); }
-		if (function_exists('mb_ereg_search_init')) { mb_ereg_search_init($text, 's:[0-9]+:"'); }
+		
 
 		$offset = 0;
 
