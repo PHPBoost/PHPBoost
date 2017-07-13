@@ -518,7 +518,6 @@ class UpdateServices
 		if (function_exists('mb_internal_encoding')) { mb_internal_encoding('UTF-8'); }
 		if (function_exists('mb_regex_encoding')) { mb_regex_encoding('UTF-8'); }
 		
-
 		$offset = 0;
 
 		while (preg_match('/s:([0-9]+):"/u', $text, $matches, PREG_OFFSET_CAPTURE, $offset) || preg_match('/s:([0-9]+):"/u', $text, $matches, PREG_OFFSET_CAPTURE, ++$offset))

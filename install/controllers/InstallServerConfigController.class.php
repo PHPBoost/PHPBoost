@@ -90,6 +90,7 @@ class InstallServerConfigController extends InstallController
 			'MIN_PHP_VERSION' => ServerConfiguration::MIN_PHP_VERSION,
 			'PHP_VERSION_OK' => $this->server_conf->is_php_compatible(),
 			'HAS_GD_LIBRARY'=> $this->server_conf->has_gd_library(),
+			'HAS_CURL_LIBRARY'=> $this->server_conf->has_curl_library(),
 			'HAS_MBSTRING_LIBRARY'=> $this->server_conf->has_mbstring_library()
 		));
 		if (!$this->server_conf->has_mbstring_library())

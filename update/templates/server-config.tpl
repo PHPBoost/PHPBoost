@@ -37,6 +37,16 @@
 		</div>
 	</div>
 	<div class="form-element">
+		<label>{@php.extensions.check.curlLibrary} <span class="field-description">{@php.extensions.check.curlLibrary.explanation}</span></label>
+		<div class="form-field">
+		# IF HAS_CURL_LIBRARY #
+			<i class="fa fa-success fa-2x" title="{@yes}"></i>
+		# ELSE #
+			<i class="fa fa-error fa-2x" title="{@no}"></i>
+		# ENDIF #
+		</div>
+	</div>
+	<div class="form-element">
 		<label>{@php.extensions.check.mbstringLibrary} <span class="field-description">{@php.extensions.check.mbstringLibrary.explanation}</span></label>
 		<div class="form-field">
 		# IF HAS_MBSTRING_LIBRARY #
