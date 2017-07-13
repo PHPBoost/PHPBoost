@@ -341,8 +341,6 @@ function bbcode_mail(field, prompt_text)
 	var mail = prompt(prompt_text, '');
 	if(mail != '' && mail != null)
 		insertbbcode('[mail=' + mail + ']', '[/mail]', field);
-	else
-		insertbbcode('[mail]', '[/mail]', field);
 }
 
 function bbcode_feed(field, prompt_text)
@@ -350,6 +348,4 @@ function bbcode_feed(field, prompt_text)
 	var feed = prompt(prompt_text, '');
 	if(feed != '' && feed != null)
 		insertbbcode('[feed cat="0" number="5"]' + feed.toLowerCase(), '[/feed]', field);
-	else
-		insertbbcode('[feed cat="0" number="5"]', '[/feed]', field);
 }
