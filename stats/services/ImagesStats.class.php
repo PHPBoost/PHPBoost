@@ -204,7 +204,7 @@ class ImagesStats
 						imagefilledrectangle($image, $x_legend_extend + 7, $y_legend_extend + (16*$i) + 8, $x_legend_extend + 17, $y_legend_extend + (16*$i) + 18, $get_color);
 
 						//Texte
-						$text = ucfirst(TextHelper::substr($name_value, 0, 14)) . ' (' . (($angle_value != 360) ? NumberHelper::round(($angle_value/3.6), 1) . '%' : '100%') . ')';
+						$text = TextHelper::ucfirst(TextHelper::substr($name_value, 0, 14)) . ' (' . (($angle_value != 360) ? NumberHelper::round(($angle_value/3.6), 1) . '%' : '100%') . ')';
 
 						imagettftext($image, $font_size, 0, $x_legend_extend + 24, $y_legend_extend + (16*$i) + 17, $black, $font, $text);
 						$i++;
