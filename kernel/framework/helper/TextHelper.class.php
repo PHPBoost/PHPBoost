@@ -191,16 +191,14 @@ class TextHelper
 	
 	public static function lcfirst($string)
 	{
-		$first_letter = self::strtolower(self::substr($string, 0, 1));
-		$string_end = self::substr($string, 1, self::strlen($string));
-		return $first_letter . $string_end;
+		$fc = mb_strtolower(mb_substr($string, 0, 1));
+		return $fc . mb_substr($string, 1);
 	}
 	
 	public static function ucfirst($string)
 	{
-		$first_letter = self::strtoupper(self::substr($string, 0, 1));
-		$string_end = self::substr($string, 1, self::strlen($string));
-		return $first_letter . $string_end;
+		$fc = mb_strtoupper(mb_substr($string, 0, 1));
+		return $fc . mb_substr($string, 1);
 	}
 	
 	public static function strlen($string)
