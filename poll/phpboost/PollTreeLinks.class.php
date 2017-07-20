@@ -44,7 +44,7 @@ class PollTreeLinks implements ModuleTreeLinksExtensionPoint
 		
 		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), new Url('/poll/admin_poll_config.php')));
 		
-		$tree->add_link(new ModuleLink(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('poll')->get_configuration()->get_documentation()));
+		$tree->add_link(new AdminModuleLink(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('poll')->get_configuration()->get_documentation()));
 		
 		return $tree;
 	}
