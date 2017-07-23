@@ -20,8 +20,7 @@
  */
 @font-face {
 	font-family: 'lightcase';
-	src: url("../fonts/lightcase.woff?55356177") format("woff"), 
-		 url("../fonts/lightcase.ttf?55356177") format("truetype");
+	src: url("../fonts/lightcase.woff?55356177") format("woff"), url("../fonts/lightcase.ttf?55356177") format("truetype");
 	font-weight: normal;
 	font-style: normal;
 }
