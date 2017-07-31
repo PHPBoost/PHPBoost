@@ -511,6 +511,8 @@ class UpdateServices
 			self::$db_querier->update(PREFIX . 'menus', array('object' => self::recount_serialized_bytes($row['object'])), 'WHERE id=:id', array('id' => $row['id']));
 		}
 		$result->dispose();
+		
+		AppContext::get_cache_service()->clear_cache();
 	}
 	
 	public static function recount_serialized_bytes($text)
