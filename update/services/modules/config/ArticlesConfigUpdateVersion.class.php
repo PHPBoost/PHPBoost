@@ -35,31 +35,35 @@ class ArticlesConfigUpdateVersion extends ConfigUpdateVersion
 	protected function build_new_config()
 	{
 		$old_config = $this->get_old_config();
-
-		$articles_config = ArticlesConfig::load();
-		$articles_config->set_property('number_cols_display_per_line', $old_config->get_property('number_cols_display_cats'));
-		$articles_config->set_property('root_category_description', $old_config->get_property('root_category_description'));
-		$this->save_new_config('articles-config', $articles_config);
 		
-		if (!$old_config->get_property('comments_enable'))
+		if ($old_config)
 		{
-			$comments_config = CommentsConfig::load();
-			$unauthorized_modules = $comments_config->get_comments_unauthorized_modules();
-			$unauthorized_modules[] = 'articles';
-			$comments_config->set_comments_unauthorized_modules($unauthorized_modules);
-			CommentsConfig::save();
+			$articles_config = ArticlesConfig::load();
+			$articles_config->set_property('number_cols_display_per_line', $old_config->get_property('number_cols_display_cats'));
+			$articles_config->set_property('root_category_description', $old_config->get_property('root_category_description'));
+			$this->save_new_config('articles-config', $articles_config);
+			
+			if (!$old_config->get_property('comments_enable'))
+			{
+				$comments_config = CommentsConfig::load();
+				$unauthorized_modules = $comments_config->get_comments_unauthorized_modules();
+				$unauthorized_modules[] = 'articles';
+				$comments_config->set_comments_unauthorized_modules($unauthorized_modules);
+				CommentsConfig::save();
+			}
+			
+			if (!$old_config->get_property('notation_enabled'))
+			{
+				$content_management_config = ContentManagementConfig::load();
+				$unauthorized_modules = $content_management_config->get_notation_unauthorized_modules();
+				$unauthorized_modules[] = 'articles';
+				$content_management_config->set_notation_unauthorized_modules($unauthorized_modules);
+				ContentManagementConfig::save();
+			}
+			
+			return true;
 		}
-		
-		if (!$old_config->get_property('notation_enabled'))
-		{
-			$content_management_config = ContentManagementConfig::load();
-			$unauthorized_modules = $content_management_config->get_notation_unauthorized_modules();
-			$unauthorized_modules[] = 'articles';
-			$content_management_config->set_notation_unauthorized_modules($unauthorized_modules);
-			ContentManagementConfig::save();
-		}
-		
-		return true;
+		return false;
 	}
 }
 ?>
