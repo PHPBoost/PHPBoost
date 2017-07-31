@@ -149,7 +149,7 @@ else
 		$result = $db_querier->select("SELECT member.user_id, count(ext_field.user_sex) as compt, ext_field.user_sex
 		FROM " . PREFIX . "member member
 		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = member.user_id
-		GROUP BY ext_field.user_sex
+		GROUP BY ext_field.user_sex, member.user_id
 		ORDER BY compt");
 		while ($row = $result->fetch())
 		{
@@ -1034,7 +1034,7 @@ else
 		$result = $db_querier->select("SELECT id, count(*) as count, url, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
 		FROM " . PREFIX . "stats_referer
 		WHERE type = 0
-		GROUP BY url
+		GROUP BY url, id, relative_url, nbr_day
 		ORDER BY total_visit DESC
 		LIMIT :number_items_per_page OFFSET :display_from",
 			array(
@@ -1090,7 +1090,7 @@ else
 		$result = $db_querier->select("SELECT id, count(*) as count, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
 		FROM " . PREFIX . "stats_referer
 		WHERE type = 1
-		GROUP BY relative_url
+		GROUP BY relative_url, id, nbr_day
 		ORDER BY total_visit DESC
 		LIMIT :number_items_per_page OFFSET :display_from",
 			array(

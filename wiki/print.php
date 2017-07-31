@@ -45,7 +45,7 @@ if ($article_id > 0) //Si on connait son titre
 	LEFT JOIN " . PREFIX . "wiki_favorites f ON f.id_article = a.id
 	LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com_topic ON a.id = com_topic.id_in_module AND com_topic.module_id = 'wiki'
 	WHERE a.id = :id
-	GROUP BY a.id", array(
+	GROUP BY a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, a.defined_status, com_topic.number_comments, id_favorite, a.undefined_status, a.auth, c.menu, c.content", array(
 		'id' => $article_id
 	));
 	$article_infos = $result->fetch();
@@ -61,7 +61,7 @@ if ($article_id > 0) //Si on connait son titre
 		LEFT JOIN " . PREFIX . "wiki_favorites f ON f.id_article = a.id
 		LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com_topic ON a.id = com_topic.id_in_module AND com_topic.module_id = 'wiki'
 		WHERE a.id = :id
-		GROUP BY a.id", array(
+		GROUP BY a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, com_topic.number_comments, a.defined_status, id_favorite, a.undefined_status, a.auth, c.menu, c.content", array(
 			'id' => $article_infos['redirect']
 		));
 		$article_infos = $result->fetch();
