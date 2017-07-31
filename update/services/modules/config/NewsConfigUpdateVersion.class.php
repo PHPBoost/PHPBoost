@@ -36,16 +36,20 @@ class NewsConfigUpdateVersion extends ConfigUpdateVersion
 	{
 		$old_config = $this->get_old_config();
 		
-		if (!$old_config->get_property('comments_enabled'))
+		if ($old_config)
 		{
-			$comments_config = CommentsConfig::load();
-			$unauthorized_modules = $comments_config->get_comments_unauthorized_modules();
-			$unauthorized_modules[] = 'news';
-			$comments_config->set_comments_unauthorized_modules($unauthorized_modules);
-			CommentsConfig::save();
+			if (!$old_config->get_property('comments_enabled'))
+			{
+				$comments_config = CommentsConfig::load();
+				$unauthorized_modules = $comments_config->get_comments_unauthorized_modules();
+				$unauthorized_modules[] = 'news';
+				$comments_config->set_comments_unauthorized_modules($unauthorized_modules);
+				CommentsConfig::save();
+			}
+			
+			return true;
 		}
-		
-		return true;
+		return false;
 	}
 }
 ?>

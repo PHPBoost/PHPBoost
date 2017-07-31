@@ -36,30 +36,34 @@ class DownloadConfigUpdateVersion extends ConfigUpdateVersion
 	{
 		$old_config = $this->get_old_config();
 		
-		$config = DownloadConfig::load();
-		$config->set_property('authorizations', $this->build_authorizations($old_config->get_property('authorizations')));
-		$config->set_property('root_category_description', $old_config->get_property('root_category_description'));
-		$this->save_new_config('download-config', $config);
-		
-		if (!$old_config->get_property('comments_enabled'))
+		if ($old_config)
 		{
-			$comments_config = CommentsConfig::load();
-			$unauthorized_modules = $comments_config->get_comments_unauthorized_modules();
-			$unauthorized_modules[] = 'download';
-			$comments_config->set_comments_unauthorized_modules($unauthorized_modules);
-			CommentsConfig::save();
+			$config = DownloadConfig::load();
+			$config->set_property('authorizations', $this->build_authorizations($old_config->get_property('authorizations')));
+			$config->set_property('root_category_description', $old_config->get_property('root_category_description'));
+			$this->save_new_config('download-config', $config);
+			
+			if (!$old_config->get_property('comments_enabled'))
+			{
+				$comments_config = CommentsConfig::load();
+				$unauthorized_modules = $comments_config->get_comments_unauthorized_modules();
+				$unauthorized_modules[] = 'download';
+				$comments_config->set_comments_unauthorized_modules($unauthorized_modules);
+				CommentsConfig::save();
+			}
+			
+			if (!$old_config->get_property('notation_enabled'))
+			{
+				$content_management_config = ContentManagementConfig::load();
+				$unauthorized_modules = $content_management_config->get_notation_unauthorized_modules();
+				$unauthorized_modules[] = 'download';
+				$content_management_config->set_notation_unauthorized_modules($unauthorized_modules);
+				ContentManagementConfig::save();
+			}
+			
+			return true;
 		}
-		
-		if (!$old_config->get_property('notation_enabled'))
-		{
-			$content_management_config = ContentManagementConfig::load();
-			$unauthorized_modules = $content_management_config->get_notation_unauthorized_modules();
-			$unauthorized_modules[] = 'download';
-			$content_management_config->set_notation_unauthorized_modules($unauthorized_modules);
-			ContentManagementConfig::save();
-		}
-		
-		return true;
+		return false;
 	}
 	
 	private function build_authorizations($old_auth)
