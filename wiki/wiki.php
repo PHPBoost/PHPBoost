@@ -49,7 +49,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 		LEFT JOIN " . PREFIX . "wiki_favorites f ON f.id_article = a.id
 		LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com_topic ON a.id = com_topic.id_in_module AND com_topic.module_id = 'wiki'
 		WHERE a.encoded_title = :encoded_title
-		GROUP BY a.id", array(
+		GROUP BY a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, a.defined_status, com_topic.number_comments, id_favorite, a.undefined_status, a.auth, c.menu, c.content, c.timestamp", array(
 			'encoded_title' => $encoded_title
 		));
 	} catch (RowNotFoundException $e) {

@@ -135,8 +135,8 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			JOIN " . PREFIX . "forum_cats c ON c.id_parent != 0 AND c.id = t.idcat
 			WHERE ( FT_SEARCH(t.title, '" . $search."') OR FT_SEARCH(msg.contents, '" . $search."') ) AND msg.timestamp > '" . (time() - $time) . "'
 			" . ($idcat > 0 ? " AND c.id = " . $idcat : '') . " AND c.id IN (" . implode(',', $authorized_categories) . ")
-			GROUP BY t.id
-			ORDER BY relevance DESC
+			GROUP BY t.id, id_search, title, link
+			ORDER BY msg.timestamp DESC, relevance DESC
 			LIMIT " . FORUM_MAX_SEARCH_RESULTS;
 
 		if ($where == 'contents')    // Contents
@@ -151,7 +151,8 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			JOIN " . PREFIX . "forum_cats c ON c.id_parent != 0 AND c.id = t.idcat
 			WHERE FT_SEARCH(msg.contents, '" . $search."') AND msg.timestamp > '" . (time() - $time) . "'
 			" . ($idcat > 0 ? " AND c.id = " . $idcat : '') . " AND c.id IN (" . implode(',', $authorized_categories) . ")
-			GROUP BY t.id
+			GROUP BY t.id, id_search, title, link
+			ORDER BY msg.timestamp DESC, relevance DESC
 			LIMIT " . FORUM_MAX_SEARCH_RESULTS;
 		else                                         // Title only
 		return "SELECT ".
@@ -165,7 +166,8 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			JOIN " . PREFIX . "forum_cats c ON c.id_parent != 0 AND c.id = t.idcat
 			WHERE FT_SEARCH(t.title, '" . $search."') AND msg.timestamp > '" . (time() - $time) . "'
 			" . ($idcat > 0 ? " AND c.id = " . $idcat : '') . " AND c.id IN (" . implode(',', $authorized_categories) . ")
-			GROUP BY t.id
+			GROUP BY t.id, id_search, id_content, title, link
+			ORDER BY msg.timestamp DESC, relevance DESC
 			LIMIT " . FORUM_MAX_SEARCH_RESULTS;
 	}
 
@@ -189,6 +191,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 
 		$request = "
 		SELECT
+			t.id AS t_id,
 			msg.id AS msg_id,
 			msg.user_id AS user_id,
 			msg.idtopic AS topic_id,
@@ -204,7 +207,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = msg.user_id
 		JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
 		WHERE msg.id IN (".implode(',', $ids).")
-		GROUP BY t.id";
+		GROUP BY t_id, msg_id, user_id, topic_id, date, title, display_name, avatar, connect, contents";
 
 		$result = $this->db_querier->select($request);
 		while ($row = $result->fetch())

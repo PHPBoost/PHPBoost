@@ -312,7 +312,7 @@ elseif ($get_sex)
 	$result = PersistenceContext::get_querier()->select("SELECT member.user_id, count(ext_field.user_sex) as compt, ext_field.user_sex
 	FROM " . PREFIX . "member member
 	LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = member.user_id
-	GROUP BY ext_field.user_sex
+	GROUP BY ext_field.user_sex, member.user_id
 	ORDER BY compt");
 	while ($row = $result->fetch())
 	{

@@ -57,7 +57,7 @@ class GuestbookMessagesCache implements CacheData
 		$result = PersistenceContext::get_querier()->select("SELECT g.id, g.login, g.contents, g.timestamp, m.user_id, m.display_name, m.level, m.groups
 		FROM " . GuestbookSetup::$guestbook_table . " g
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
-		GROUP BY g.id
+		GROUP BY g.id, g.login, g.contents, g.timestamp, m.user_id, m.display_name, m.level, m.groups
 		ORDER BY RAND()
 		LIMIT 50");
 		

@@ -446,7 +446,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$result = $this->db_querier->select("SELECT nbr, stats_day AS day
 						FROM " . StatsSetup::$stats_table . "
 						WHERE stats_year = :year AND stats_month = :month
-						GROUP BY stats_day", array(
+						GROUP BY stats_day, nbr", array(
 							'year' => $year,
 							'month' => $month
 					));
@@ -832,7 +832,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				$result = $this->db_querier->select("SELECT pages, stats_day, stats_month, stats_year
 					FROM " . StatsSetup::$stats_table . "
 					WHERE stats_year = :stats_year AND stats_month = :stats_month
-					GROUP BY stats_day", array(
+					GROUP BY stats_day, pages, stats_month, stats_year", array(
 						'stats_year' => $year,
 						'stats_month' => $month,
 				));
@@ -911,7 +911,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$result = $this->db_querier->select("SELECT pages, stats_day, stats_month, stats_year
 						FROM " . StatsSetup::$stats_table . "
 						WHERE stats_year = :stats_year AND stats_month = :stats_month
-						GROUP BY stats_day", array(
+						GROUP BY stats_day, pages, stats_month, stats_year", array(
 							'stats_year' => $year,
 							'stats_month' => $month,
 					));
@@ -945,7 +945,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						$result = $this->db_querier->select("SELECT pages, stats_day AS day, stats_month, stats_year
 							FROM " . StatsSetup::$stats_table . "
 							WHERE stats_year = :stats_year AND stats_month = :stats_month
-							GROUP BY stats_day", array(
+							GROUP BY stats_day, pages, stats_month, stats_year", array(
 								'stats_year' => $year,
 								'stats_month' => $month,
 						));
@@ -1038,7 +1038,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			$result = $this->db_querier->select("SELECT id, COUNT(*) as count, url, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
 				FROM " . PREFIX . "stats_referer
 				WHERE type = 0
-				GROUP BY url
+				GROUP BY url, id, relative_url, nbr_day
 				ORDER BY total_visit DESC
 				LIMIT :number_items_per_page OFFSET :display_from", array(
 					'number_items_per_page' => $pagination->get_number_items_per_page(),
@@ -1092,7 +1092,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			$result = $this->db_querier->select("SELECT id, count(*) as count, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
 				FROM " . PREFIX . "stats_referer
 				WHERE type = 1
-				GROUP BY relative_url
+				GROUP BY relative_url, id, nbr_day
 				ORDER BY total_visit DESC
 				LIMIT :number_items_per_page OFFSET :display_from", array(
 					'number_items_per_page' => $pagination->get_number_items_per_page(),
