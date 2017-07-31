@@ -47,7 +47,7 @@ $lang['default.article.contents'] = 'Ce bref article va vous donner quelques con
 <li class="formatter-li">Pour mettre en page vos articles, vous pouvez utiliser le langage bbcode ou l\'éditeur WYSIWYG (cf cet <a href="http://www.phpboost.com/wiki/bbcode">article</a>)<br /> 
 </li></ul><br /> 
 <br /> 
-Pour en savoir plus, n\'hésitez pas à consulter la documentation du module sur le site de <a href="http://www.phpboost.com">PHPBoost</a>.<br /> 
+Pour en savoir plus, n\'hésitez pas à consulter la documentation du module sur le site de <a href="https://www.phpboost.com/wiki/articles">PHPBoost</a>.<br /> 
 <br /> 
 <br /> 
 Bonne utilisation de ce module.';
