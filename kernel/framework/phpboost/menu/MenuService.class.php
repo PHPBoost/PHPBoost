@@ -595,11 +595,7 @@ class MenuService
 		}
 		else 
 		{
-			$fixed_object = preg_replace_callback( '!s:(\d+):"(.*?)";!u', function($match) {
-				return ($match[1] == mb_strlen($match[2])) ? $match[0] : 's:' . mb_strlen($match[2]) . ':"' . $match[2] . '";';
-			}, $db_result['object']);
-			
-			$menu = TextHelper::unserialize($fixed_object);
+			$menu = TextHelper::unserialize($db_result['object']);
 		}
 		
 		// Synchronize the object and the database
