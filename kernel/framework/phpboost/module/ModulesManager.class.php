@@ -197,7 +197,7 @@ class ModulesManager
 		}
 		
 		$phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
-		if (version_compare($phpboost_version, $configuration->get_compatibility(), '>'))
+		if (version_compare($phpboost_version, $configuration->get_compatibility(), '!='))
 		{
 			return self::PHPBOOST_VERSION_CONFLICT;
 		}
