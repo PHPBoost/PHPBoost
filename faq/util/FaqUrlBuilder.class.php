@@ -98,6 +98,15 @@ class FaqUrlBuilder
 	/**
 	 * @return Url
 	 */
+	public static function reorder_questions($id_category, $rewrited_name)
+	{
+		$category = $id_category > 0 ? $id_category . '-' . $rewrited_name . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/reorder/' . $category);
+	}
+	
+	/**
+	 * @return Url
+	 */
 	public static function display_pending($sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE)
 	{
 		$sort_field = $sort_field !== self::DEFAULT_SORT_FIELD ? $sort_field . '/' : '';

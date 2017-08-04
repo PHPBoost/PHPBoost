@@ -42,12 +42,6 @@ class FaqDisplayCategoryController extends ModuleController
 		
 		$this->init();
 		
-		if ($request->get_value('submit', false))
-		{
-			$this->update_position($request);
-			$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.position.update', 'status-messages-common'), MessageHelper::SUCCESS, 5));
-		}
-		
 		$this->build_view($request);
 		
 		return $this->generate_response();
@@ -112,7 +106,7 @@ class FaqDisplayCategoryController extends ModuleController
 			'C_QUESTIONS' => $result->get_rows_count() > 0,
 			'C_MORE_THAN_ONE_QUESTION' => $result->get_rows_count() > 1,
 			'C_DISPLAY_TYPE_ANSWERS_HIDDEN' => $config->is_display_type_answers_hidden(),
-			'C_MODERATION' => FaqAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
+			'C_DISPLAY_REORDER_LINK' => $result->get_rows_count() > 1 && FaqAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
 			'C_SEVERAL_CATS_COLUMNS' => $nbr_column_cats_per_line > 1,
@@ -122,6 +116,7 @@ class FaqDisplayCategoryController extends ModuleController
 			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),
 			'CATEGORY_DESCRIPTION' => $category_description,
 			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? FaqUrlBuilder::configuration()->rel() : FaqUrlBuilder::edit_category($this->get_category()->get_id())->rel(),
+			'U_REORDER_QUESTIONS' => FaqUrlBuilder::reorder_questions($this->get_category()->get_id(), $this->get_category()->get_rewrited_name())->rel(),
 			'QUESTIONS_NUMBER' => $result->get_rows_count()
 		));
 		
@@ -178,15 +173,6 @@ class FaqDisplayCategoryController extends ModuleController
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
-		}
-	}
-	
-	private function update_position(HTTPRequestCustom $request)
-	{
-		$questions_list = json_decode(TextHelper::html_entity_decode($request->get_value('tree')));
-		foreach($questions_list as $position => $tree)
-		{
-			FaqService::update_position($tree->id, $position);
 		}
 	}
 	

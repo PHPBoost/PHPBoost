@@ -40,6 +40,8 @@ $lang['faq.pending'] = 'Pending questions';
 $lang['faq.manage'] = 'Manage questions';
 $lang['faq.management'] = 'FAQ management';
 
+$lang['faq.reorder_questions'] = 'Reorder questions';
+$lang['faq.questions_order_management'] = 'Questions order management';
 $lang['faq.random_question'] = 'Random question';
 $lang['faq.questions'] = 'Questions';
 
