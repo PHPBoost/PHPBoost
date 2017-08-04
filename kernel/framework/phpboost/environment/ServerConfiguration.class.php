@@ -32,7 +32,7 @@
  */
 class ServerConfiguration
 {
-	const MIN_PHP_VERSION = '5.4';
+	const MIN_PHP_VERSION = '5.6';
 	private static $mod_rewrite = 'mod_rewrite';
 
 	public static function get_phpversion()
