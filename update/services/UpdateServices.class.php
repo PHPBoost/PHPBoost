@@ -260,6 +260,9 @@ class UpdateServices
 		else
 			$this->add_information_to_file('module GoogleMaps', 'has not been installed because it was not on the FTP');
 		
+		// Vérification de la date d'installation du site et correction si besoin
+		$this->check_installation_date();
+		
 		// Fin de la mise à jour : régénération du cache
 		$this->delete_update_token();
 		$this->generate_cache();
@@ -593,6 +596,21 @@ class UpdateServices
 		
 		$object = new self('', false);
 		$object->add_information_to_file('table ' . PREFIX . 'menus', ': ' . $updated_content . ' content menus updated');
+	}
+	
+	private function check_installation_date()
+	{
+		$general_config = GeneralConfig::load();
+		$first_member_registration_date = '';
+		try {
+			$first_member_registration_date = PersistenceContext::get_querier()->get_column_value(PREFIX . 'member m', 'registration_date', 'JOIN (SELECT min(user_id) AS minid FROM ' . PREFIX . 'member) b ON m.user_id IN (b.minid)');
+		} catch (RowNotFoundException $e) {}
+		
+		if ($first_member_registration_date && $first_member_registration_date < $general_config->get_site_install_date()->get_timestamp())
+		{
+			$general_config->set_site_install_date(new Date($first_member_registration_date, Timezone::SERVER_TIMEZONE));
+			GeneralConfig::save();
+		}
 	}
 	
 	private function get_class($directory, $pattern, $type)
