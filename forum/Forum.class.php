@@ -114,14 +114,14 @@ class Forum
 					AppContext::get_mail_service()->send_from_properties(
 						$row['email'], 
 						$LANG['forum_mail_title_new_post'], 
-						nl2br(sprintf($LANG['forum_mail_new_post'], $row['display_name'], $title_subject, AppContext::get_current_user()->get_display_name(), $mail_contents, HOST . DIR . $next_msg_link, HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=1', 1))
+						nl2br(sprintf($LANG['forum_mail_new_post'], $row['display_name'], $title_subject, AppContext::get_current_user()->get_display_name(), $mail_contents, '<a href="' . HOST . DIR . $next_msg_link . '">' . $next_msg_link . '</a>', '<a href="' . HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=1">' . HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=1</a>', 1))
 					);
 				}
 				
 				//Envoi un MP à ceux dont le last_view_id est le message précedent.
 				if ($row['last_view_id'] == $previous_msg_id && $row['pm'] == '1')
 				{
-					$content = sprintf($LANG['forum_mail_new_post'], $row['display_name'], $title_subject_pm, AppContext::get_current_user()->get_display_name(), $preview_contents, '<a href="'.$next_msg_link.'">'.$next_msg_link.'</a>', '<a href="/forum/action.php?ut=' . $idtopic . '&trt=2">/forum/action.php?ut=' . $idtopic . '&trt=2</a>'); 
+					$content = sprintf($LANG['forum_mail_new_post'], $row['display_name'], $title_subject_pm, AppContext::get_current_user()->get_display_name(), $preview_contents, '<a href="' . $next_msg_link . '">' . $next_msg_link . '</a>', '<a href="/forum/action.php?ut=' . $idtopic . '&trt=2">/forum/action.php?ut=' . $idtopic . '&trt=2</a>'); 
 					
 					PrivateMsg::start_conversation(
 						$row['user_id'], 
