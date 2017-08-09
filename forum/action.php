@@ -247,14 +247,14 @@ elseif (!empty($track) && AppContext::get_current_user()->check_level(User::MEMB
 {
 	$Forumfct->Track_topic($track); //Ajout du sujet aux sujets suivis.
 
-	AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $track, '-' . $track . '.php', '&') . '#go_bottom');
+	AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $track, '-' . $track . '.php', '&') . '#go-bottom');
 }
 elseif (!empty($untrack) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Retrait du sujet, aux sujets suivis.
 {
 	$tracking_type = (int)retrieve(GET, 'trt', 0);
 	$Forumfct->Untrack_topic($untrack, $tracking_type); //Retrait du sujet aux sujets suivis.
 
-	AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $untrack, '-' . $untrack . '.php', '&') . '#go_bottom');
+	AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $untrack, '-' . $untrack . '.php', '&') . '#go-bottom');
 }
 elseif (!empty($track_pm) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Ajout du sujet aux sujets suivis.
 {
@@ -262,7 +262,7 @@ elseif (!empty($track_pm) && AppContext::get_current_user()->check_level(User::M
 	$Forumfct = new Forum();
 
 	$Forumfct->Track_topic($track_pm, FORUM_PM_TRACKING); //Ajout du sujet aux sujets suivis.
-	AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $track_pm, '-' . $track_pm . '.php', '&') . '#go_bottom');
+	AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $track_pm, '-' . $track_pm . '.php', '&') . '#go-bottom');
 }
 elseif (!empty($untrack_pm) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Retrait du sujet, aux sujets suivis.
 {
@@ -270,7 +270,7 @@ elseif (!empty($untrack_pm) && AppContext::get_current_user()->check_level(User:
 	$Forumfct = new Forum();
 
 	$Forumfct->Untrack_topic($untrack_pm, FORUM_PM_TRACKING); //Retrait du sujet aux sujets suivis.
-	AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $untrack_pm, '-' . $untrack_pm . '.php', '&') . '#go_bottom');
+	AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $untrack_pm, '-' . $untrack_pm . '.php', '&') . '#go-bottom');
 }
 elseif (!empty($track_mail) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Ajout du sujet aux sujets suivis.
 {
@@ -278,7 +278,7 @@ elseif (!empty($track_mail) && AppContext::get_current_user()->check_level(User:
 	$Forumfct = new Forum();
 
 	$Forumfct->Track_topic($track_mail, FORUM_EMAIL_TRACKING); //Ajout du sujet aux sujets suivis.
-	AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $track_mail, '-' . $track_mail . '.php', '&') . '#go_bottom');
+	AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $track_mail, '-' . $track_mail . '.php', '&') . '#go-bottom');
 }
 elseif (!empty($untrack_mail) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Retrait du sujet, aux sujets suivis.
 {
@@ -286,7 +286,7 @@ elseif (!empty($untrack_mail) && AppContext::get_current_user()->check_level(Use
 	$Forumfct = new Forum();
 
 	$Forumfct->Untrack_topic($untrack_mail, FORUM_EMAIL_TRACKING); //Retrait du sujet aux sujets suivis.
-	AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $untrack_mail, '-' . $untrack_mail . '.php', '&') . '#go_bottom');
+	AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $untrack_mail, '-' . $untrack_mail . '.php', '&') . '#go-bottom');
 }
 elseif ($read) //Marquer comme lu.
 {
