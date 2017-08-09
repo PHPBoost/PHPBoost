@@ -99,4 +99,6 @@ $lang['month']     = 'month';
 $lang['months']    = 'months';
 $lang['year']      = 'year';
 $lang['years']     = 'years';
+
+$lang['ago']       = 'ago';
 ?>

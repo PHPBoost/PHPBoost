@@ -100,4 +100,5 @@ $lang['months']    = 'mois';
 $lang['year']      = 'année';
 $lang['years']     = 'années';
 
+$lang['ago']       = 'il y a';
 ?>
