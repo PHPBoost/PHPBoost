@@ -52,6 +52,7 @@ class Date
 	const FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT = 8;
 	const FORMAT_RELATIVE = 9;
 	const FORMAT_ISO_DAY_MONTH_YEAR = 10;
+	const FORMAT_DIFF_NOW = 11;
 
 	/**
 	 * @var DateTime Representation of date and time.
@@ -103,6 +104,7 @@ class Date
 	 * 	<li>Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT</li>
 	 * 	<li>Date::FORMAT_RELATIVE</li>
 	 * 	<li>Date::FORMAT_ISO_DAY_MONTH_YEAR</li>
+	 * 	<li>Date::FORMAT_DIFF_NOW</li>
 	 * </ul>
 	 * @param int $referencial_timezone One of the following enumeration:
 	 * <ul>
@@ -158,48 +160,72 @@ class Date
 			case self::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT:
 				return self::transform_date($this->date_time->format(LangLoader::get_message('date_format_day_month_year_hour_minute_text', 'date-common')));
 				break;
-				
-			case self::FORMAT_RELATIVE:
-				$now = new Date(Date::DATE_NOW, $referencial_timezone);
-				
-				if ($now->get_timestamp() > $this->get_timestamp())
-					$time_diff = $now->get_timestamp() - $this->get_timestamp();
-				else 
-					$time_diff = $this->get_timestamp() - $now->get_timestamp();
-				
-				$secondes = $time_diff;
-				$minutes = round($time_diff/60);
-				$hours = round($time_diff/3600);
-				$days = round($time_diff/86400);
-				$weeks = round($time_diff/604800);
-				$months = round($time_diff/2419200);
-				$years = round($time_diff/29030400);
 
-				if ($secondes == 1)
-					return LangLoader::get_message('instantly', 'date-common');
-				elseif ($secondes < 60)
-					return $secondes . ' ' . LangLoader::get_message('seconds', 'date-common');
-				elseif ($minutes < 60)
-					return $minutes . ' ' . ($minutes > 1 ? LangLoader::get_message('minutes', 'date-common') : LangLoader::get_message('minute', 'date-common'));
-				elseif ($hours < 24)
-					return $hours . ' ' . ($hours > 1 ? LangLoader::get_message('hours', 'date-common') : LangLoader::get_message('hour', 'date-common'));
-				elseif ($days < 7)
-					return $days . ' ' . ($days > 1 ? LangLoader::get_message('days', 'date-common') : LangLoader::get_message('day', 'date-common'));
-				elseif ($weeks < 4)
-					return $weeks . ' ' . ($weeks > 1 ? LangLoader::get_message('weeks', 'date-common') : LangLoader::get_message('week', 'date-common'));
-				elseif ($months < 12)
-					return $months . ' ' . LangLoader::get_message('months', 'date-common');
-				else
-					return $years . ' ' . ($years > 1 ? LangLoader::get_message('years', 'date-common') : LangLoader::get_message('year', 'date-common'));
-					
+			case self::FORMAT_RELATIVE:
+				return self::get_date_relative($this->get_timestamp(), $referencial_timezone);
 				break;
+				
 			case self::FORMAT_ISO_DAY_MONTH_YEAR:
 				return $this->date_time->format('Y-m-d');
+				break;
+
+			case self::FORMAT_DIFF_NOW:
+				$time = self::get_date_relative($this->get_timestamp(), $referencial_timezone);			
+				if ($time !== LangLoader::get_message('instantly', 'date-common'))
+				{
+					$current_user = AppContext::get_current_user();
+					if ($current_user->get_locale() == "english" )
+						$time = $time . ' ' . LangLoader::get_message('ago', 'date-common');
+					else
+						$time = LangLoader::get_message('ago', 'date-common') . ' ' . $time  ;
+				}
+				return $time;
 				break;
 
 			default:
 				return '';
 		}
+	}
+
+	/**
+	 * @desc Returns the relative time associated to the date
+	 * @param int $timestamp
+	 * @param int $referencial_timezone
+	 * @return string The relative time
+	 */
+	public function get_date_relative($timestamp, $referencial_timezone)
+	{
+		$now = new Date(Date::DATE_NOW, $referencial_timezone);
+				
+		if ($now->get_timestamp() > $timestamp)
+			$time_diff = $now->get_timestamp() - $timestamp;
+		else 
+			$time_diff = $timestamp - $now->get_timestamp();
+				
+		$secondes = $time_diff;
+		$minutes  = round($time_diff/60);
+		$hours    = round($time_diff/3600);
+		$days     = round($time_diff/86400);
+		$weeks    = round($time_diff/604800);
+		$months   = round($time_diff/2419200);
+		$years    = round($time_diff/29030400);
+
+		if ($secondes == 1)
+			return LangLoader::get_message('instantly', 'date-common');
+		elseif ($secondes < 60)
+			return $secondes . ' ' . LangLoader::get_message('seconds', 'date-common');
+		elseif ($minutes < 60)
+			return $minutes . ' ' . ($minutes > 1 ? LangLoader::get_message('minutes', 'date-common') : LangLoader::get_message('minute', 'date-common'));
+		elseif ($hours < 24)
+			return $hours . ' ' . ($hours > 1 ? LangLoader::get_message('hours', 'date-common') : LangLoader::get_message('hour', 'date-common'));
+		elseif ($days < 7)
+			return $days . ' ' . ($days > 1 ? LangLoader::get_message('days', 'date-common') : LangLoader::get_message('day', 'date-common'));
+		elseif ($weeks < 4)
+			return $weeks . ' ' . ($weeks > 1 ? LangLoader::get_message('weeks', 'date-common') : LangLoader::get_message('week', 'date-common'));
+		elseif ($months < 12)
+			return $months . ' ' . ($months > 1 ? LangLoader::get_message('months', 'date-common') : LangLoader::get_message('month', 'date-common'));
+		else
+			return $years . ' ' . ($years > 1 ? LangLoader::get_message('years', 'date-common') : LangLoader::get_message('year', 'date-common'));
 	}
 
 	/**
@@ -494,20 +520,22 @@ class Date
 		
 		$date_label = TextHelper::strtoupper($date_label);
 		return array(
-			$date_label					=> $date->format(Date::FORMAT_DAY_MONTH_YEAR),
-			$date_label . '_TIMESTAMP'	=> $date->get_timestamp(),
-			$date_label . '_SHORT'		=> $date->format(Date::FORMAT_DAY_MONTH_YEAR),
-			$date_label . '_SHORT_TEXT'	=> $date->format(Date::FORMAT_DAY_MONTH_YEAR_TEXT),
-			$date_label . '_FULL'		=> $date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-			$date_label . '_DAY'		=> $date->get_day(),
-			$date_label . '_DAY_TEXT'	=> $date->get_day_text(), // 3 first characters of day name
-			$date_label . '_MONTH'		=> $date->get_month(),
-			$date_label . '_MONTH_TEXT'	=> $date->get_month_text(), // 3 first characters of month name
-			$date_label . '_YEAR'		=> $date->get_year(),
-			$date_label . '_DAY_MONTH'	=> $date->format(Date::FORMAT_DAY_MONTH),
-			$date_label . '_HOUR'		=> $date->get_hours(),
-			$date_label . '_MINUTE'		=> $date->get_minutes(),
-			$date_label . '_ISO8601'	=> $date->format(Date::FORMAT_ISO8601)
+			$date_label                 => $date->format(Date::FORMAT_DAY_MONTH_YEAR),
+			$date_label . '_TIMESTAMP'  => $date->get_timestamp(),
+			$date_label . '_SHORT'      => $date->format(Date::FORMAT_DAY_MONTH_YEAR),
+			$date_label . '_SHORT_TEXT' => $date->format(Date::FORMAT_DAY_MONTH_YEAR_TEXT),
+			$date_label . '_FULL'       => $date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
+			$date_label . '_DAY'        => $date->get_day(),
+			$date_label . '_DAY_TEXT'   => $date->get_day_text(), // 3 first characters of day name
+			$date_label . '_MONTH'      => $date->get_month(),
+			$date_label . '_MONTH_TEXT' => $date->get_month_text(), // 3 first characters of month name
+			$date_label . '_YEAR'       => $date->get_year(),
+			$date_label . '_DAY_MONTH'  => $date->format(Date::FORMAT_DAY_MONTH),
+			$date_label . '_HOUR'       => $date->get_hours(),
+			$date_label . '_MINUTE'     => $date->get_minutes(),
+			$date_label . '_ISO8601'    => $date->format(Date::FORMAT_ISO8601),
+			$date_label . '_DIFF_NOW'   => $date->format(Date::FORMAT_DIFF_NOW),
+			$date_label . '_RELATIVE'   => $date->format(Date::FORMAT_RELATIVE)
 		);
 	}
 
