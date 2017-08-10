@@ -170,15 +170,9 @@ class Date
 				break;
 
 			case self::FORMAT_DIFF_NOW:
-				$time = self::get_date_relative($this->get_timestamp(), $referencial_timezone);			
+				$time = self::get_date_relative($this->get_timestamp(), $referencial_timezone);
 				if ($time !== LangLoader::get_message('instantly', 'date-common'))
-				{
-					$current_user = AppContext::get_current_user();
-					if ($current_user->get_locale() == "english" )
-						$time = $time . ' ' . LangLoader::get_message('ago', 'date-common');
-					else
-						$time = LangLoader::get_message('ago', 'date-common') . ' ' . $time  ;
-				}
+					$time = StringVars::replace_vars(LangLoader::get_message('ago', 'date-common'), array('time' => $time));
 				return $time;
 				break;
 
@@ -196,12 +190,12 @@ class Date
 	public function get_date_relative($timestamp, $referencial_timezone)
 	{
 		$now = new Date(Date::DATE_NOW, $referencial_timezone);
-				
+		
 		if ($now->get_timestamp() > $timestamp)
 			$time_diff = $now->get_timestamp() - $timestamp;
 		else 
 			$time_diff = $timestamp - $now->get_timestamp();
-				
+		
 		$secondes = $time_diff;
 		$minutes  = round($time_diff/60);
 		$hours    = round($time_diff/3600);
