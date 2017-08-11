@@ -358,7 +358,17 @@ class HTTPRequestCustom
 
 	public function get_is_https()
 	{
-		return isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) && TextHelper::strtolower($_SERVER['HTTPS']) != 'off';
+		if((!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') || (!empty($_SERVER['HTTP_X_FORWARDED_PORT']) && $_SERVER['HTTP_X_FORWARDED_PORT'] == '443' ))
+		{
+			return true;
+		}
+		elseif((isset ($_SERVER['HTTPS'] ) || isset($_SERVER['HTTP_HTTPS']) || isset($_SERVER['HTTP_X_SECURE'])) && (!empty ($_SERVER['HTTPS'] ) || !empty($_SERVER['HTTP_HTTPS']) || !empty($_SERVER['HTTP_X_SECURE'])) && ((TextHelper::strtolower($_SERVER['HTTPS']) || TextHelper::strtolower($_SERVER['HTTP_HTTPS']) || TextHelper::strtolower($_SERVER['HTTP_X_SECURE'])) !== 'off'))
+		{
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public function get_is_localhost()
