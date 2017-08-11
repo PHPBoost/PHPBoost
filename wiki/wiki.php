@@ -30,6 +30,13 @@ load_module_lang('wiki');
 $config = WikiConfig::load();
 
 include('../wiki/wiki_functions.php');
+require_once('../wiki/wiki_auth.php');
+
+if (!AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_READ))
+{
+	$error_controller = PHPBoostErrors::user_not_authorized();
+	DispatchManager::redirect($error_controller);
+}
 
 //Titre de l'article
 $encoded_title = retrieve(GET, 'title', '');

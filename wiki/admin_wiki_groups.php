@@ -41,7 +41,7 @@ $valid = $request->get_postvalue('valid', false);
 if ($valid)
 {
 	//Génération du tableau des droits.
-	$config->set_authorizations(Authorizations::build_auth_array_from_form(WIKI_CREATE_ARTICLE, WIKI_CREATE_CAT, WIKI_RESTORE_ARCHIVE, WIKI_DELETE_ARCHIVE, WIKI_EDIT, WIKI_DELETE, WIKI_RENAME, WIKI_REDIRECT, WIKI_MOVE, WIKI_STATUS, WIKI_COM, WIKI_RESTRICTION));
+	$config->set_authorizations(Authorizations::build_auth_array_from_form(WIKI_CREATE_ARTICLE, WIKI_CREATE_CAT, WIKI_RESTORE_ARCHIVE, WIKI_DELETE_ARCHIVE, WIKI_EDIT, WIKI_DELETE, WIKI_RENAME, WIKI_REDIRECT, WIKI_MOVE, WIKI_STATUS, WIKI_COM, WIKI_RESTRICTION, WIKI_READ));
 	
 	WikiConfig::save();
 	
@@ -67,6 +67,7 @@ else
 		'SELECT_STATUS' => Authorizations::generate_select(WIKI_STATUS, $config->get_authorizations()),
 		'SELECT_COM' => Authorizations::generate_select(WIKI_COM, $config->get_authorizations()),
 		'SELECT_RESTRICTION' => Authorizations::generate_select(WIKI_RESTRICTION, $config->get_authorizations()),
+		'SELECT_READ' => Authorizations::generate_select(WIKI_READ, $config->get_authorizations()),
 		'L_WIKI_MANAGEMENT' => $LANG['wiki_management'],
 		'L_WIKI_GROUPS' => $LANG['wiki_groups_config'],
 		'L_CONFIG_WIKI' => $LANG['wiki_config'],
@@ -85,6 +86,7 @@ else
 		'L_STATUS' => $LANG['wiki_auth_status'],
 		'L_COM' => $LANG['wiki_auth_com'],
 		'L_RESTRICTION' => $LANG['wiki_auth_restriction'],
+		'L_READ' => $LANG['wiki_auth_read']
 	));
 
 	$tpl->display();

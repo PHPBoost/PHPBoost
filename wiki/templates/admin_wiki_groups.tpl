@@ -1,6 +1,6 @@
 <nav id="admin-quick-menu">
 		<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_WIKI_MANAGEMENT}">
-				<i class="fa fa-bars"></i> {L_WIKI_MANAGEMENT}
+			<i class="fa fa-bars"></i> {L_WIKI_MANAGEMENT}
 		</a>
 		<ul>
 			<li>
@@ -25,6 +25,13 @@
 			<div class="fieldset-inset">
 				{EXPLAIN_WIKI_GROUPS}
 
+				<div class="form-element">
+					<label>{L_READ}</label>
+
+					<div class="form-field">
+						{SELECT_READ}
+					</div>
+				</div>
 				<div class="form-element">
 					<label>{L_CREATE_ARTICLE}</label>
 

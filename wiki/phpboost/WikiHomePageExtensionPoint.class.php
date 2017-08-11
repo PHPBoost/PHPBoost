@@ -49,8 +49,15 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 		include_once(PATH_TO_ROOT . '/wiki/wiki_functions.php');
 		$bread_crumb_key = 'wiki';
 		require_once(PATH_TO_ROOT . '/wiki/wiki_bread_crumb.php');
+		require_once('../wiki/wiki_auth.php');
 		
 		$config = WikiConfig::load();
+		
+		if (!AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_READ))
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
 		
 		$tpl = new FileTemplate('wiki/index.tpl');
 
