@@ -204,17 +204,17 @@ class UserEditProfileController extends AbstractController
 		if ($this->user->get_id() == AppContext::get_current_user()->get_id())
 		{
 			$connect_fieldset->add_field(new FormFieldPasswordEditor('old_password', $this->lang['password.old'], '', array(
-				'description' => $this->lang['password.old.explain'], 'hidden' => !$internal_auth_connected))
+				'description' => $this->lang['password.old.explain'], 'autocomplete' => false, 'hidden' => !$internal_auth_connected))
 			);
 		}
 		
 		$connect_fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '',
-			array('description' => StringVars::replace_vars($this->lang['password.explain'], array('number' => $security_config->get_internal_password_min_length())), 'hidden' => !$internal_auth_connected),
+			array('description' => StringVars::replace_vars($this->lang['password.explain'], array('number' => $security_config->get_internal_password_min_length())), 'autocomplete' => false, 'hidden' => !$internal_auth_connected),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));
 		
 		$connect_fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '',
-			array('hidden' => !$internal_auth_connected),
+			array('autocomplete' => false, 'hidden' => !$internal_auth_connected),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));
 

@@ -33,6 +33,7 @@ class FormFieldPasswordEditor extends AbstractFormField
 {
 	private $size = 30;
 	private $maxlength = 255;
+	private $autocomplete = true;
 	
 	/**
 	 * @desc Constructs a FormFieldPasswordEditor.
@@ -72,7 +73,8 @@ class FormFieldPasswordEditor extends AbstractFormField
 			'HTML_ID' => $this->get_html_id(),
 			'VALUE' => $this->get_value(),
 			'CLASS' => $this->get_css_class(),
-			'C_DISABLED' => $this->is_disabled()
+			'C_DISABLED' => $this->is_disabled(),
+			'C_AUTOCOMPLETE' => $this->autocomplete
 		));
 
 		$template->assign_block_vars('fieldelements', array(
@@ -96,6 +98,10 @@ class FormFieldPasswordEditor extends AbstractFormField
 				case 'maxlength' :
 					$this->maxlength = $value;
 					unset($field_options['maxlength']);
+					break;
+				case 'autocomplete' :
+					$this->autocomplete = (bool)$value;
+					unset($field_options['autocomplete']);
 					break;
 			}
 		}
