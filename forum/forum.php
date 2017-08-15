@@ -224,7 +224,7 @@ if (!empty($id_get))
 					'C_LAST_MSG_GUEST' => !empty($row['display_name']),
 					'U_LAST_MSG_USER_PROFIL' => UserUrlBuilder::profile($row['last_user_id'])->rel(),
 					'LAST_MSG_USER_LOGIN' => $row['display_name'],
-					'LAST_MSG_USER_LEVEL' => " " . UserService::get_level_class($row['last_user_level']),
+					'LAST_MSG_USER_LEVEL' => " " . UserService::get_level_class($row['user_level']),
 					'LAST_MSG_USER_GROUP_COLOR' => !empty($last_group_color) ? ' style="color:' . $last_group_color . '"' : '',
 					'L_NO_MSG' => $LANG['no_message']
 				)));
