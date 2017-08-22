@@ -81,7 +81,7 @@ abstract class AbstractCategoriesManageController extends ModuleController
 				if (method_exists($category, 'get_description'))
 				{
 					$description = FormatingHelper::second_parse($category->get_description());
-					$description = TextHelper::strlen($description) > 250 ? TextHelper::substr(@strip_tags($description, '<br><br/>'), 0, 250) . '...' : $description;
+					$description = TextHelper::strlen($description) > 250 ? TextHelper::cut_string(@strip_tags($description, '<br><br/>'), 250) . '...' : $description;
 				}
 				
 				$description_exists = method_exists($category, 'get_description');
