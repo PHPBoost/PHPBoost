@@ -409,7 +409,7 @@ while ( $row = $result->fetch() )
 		'C_USER_GROUPS' => $row['groups'],
 		'USER_DATE' => (!$is_guest) ? $LANG['registered_on'] . ': ' . Date::to_format($row['registered'], Date::FORMAT_DAY_MONTH_YEAR) : '',
 		'USER_MSG' => (!$is_guest) ? $posted_msg : '',
-		'USER_MAIL' => ( !empty($row['email']) && ($row['show_email'] == '1' ) ) ? '<a href="mailto:' . $row['email'] . '" class="basic-button smaller">' . LangLoader::get_message('mail', 'main') . '</a>' : '',
+		'USER_MAIL' => ( !empty($row['email']) && ($row['show_email'] == '1' ) ) ? '<a href="mailto:' . $row['email'] . '" class="basic-button smaller user-mail" title="' . LangLoader::get_message('mail', 'main') . '">' . LangLoader::get_message('mail', 'main') . '</a>' : '',
 		'USER_SIGN' => (!empty($row['user_sign']) && !empty($user_sign_field) && $user_sign_field['display']) ? '<hr /><br />' . FormatingHelper::second_parse($row['user_sign']) : '',
 		'USER_WARNING' => $row['warning_percentage'],
 		'L_FORUM_QUOTE_LAST_MSG' => ($quote_last_msg == 1 && $i == 0) ? $LANG['forum_quote_last_msg'] : '', //Reprise du dernier message de la page précédente.
@@ -431,7 +431,7 @@ while ( $row = $result->fetch() )
 		'U_FORUM_MSG_CUT' => url('.php?idm=' . $row['id']),
 		'U_VARS_ANCRE' => url('.php?id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '') . $rewrited_title . '.php'),
 		'U_VARS_QUOTE' => url('.php?quote=' . $row['id'] . '&amp;id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '-0') . '-0-' . $row['id'] . $rewrited_title . '.php'),
-		'USER_PM' => !$is_guest && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? '<a href="'. UserUrlBuilder::personnal_message($row['user_id'])->rel() . '" class="basic-button smaller">' . LangLoader::get_message('pm', 'main') . '</a>' : '',
+		'USER_PM' => !$is_guest && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? '<a href="'. UserUrlBuilder::personnal_message($row['user_id'])->rel() . '" class="basic-button smaller user-pm" title="' . LangLoader::get_message('pm', 'main') . '">' . LangLoader::get_message('pm', 'main') . '</a>' : '',
 		)
 	));
 
@@ -478,7 +478,7 @@ while ( $row = $result->fetch() )
 			}
 			else if ($field['regex'] == 5)
 			{
-				$button = '<a href="' . $row[$field_type] . '" class="basic-button smaller">' . LangLoader::get_message('regex.website', 'admin-user-common') . '</a>';
+				$button = '<a href="' . $row[$field_type] . '" class="basic-button smaller user-website" title="' . LangLoader::get_message('regex.website', 'admin-user-common') . '">' . LangLoader::get_message('regex.website', 'admin-user-common') . '</a>';
 				
 				foreach (MemberShortTextExtendedField::$brands_pictures_list as $id => $parameters)
 				{
