@@ -118,9 +118,9 @@ class AdminForumConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldCheckbox('connexion_form_displayed', $this->lang['config.connexion_form_displayed'], $this->config->is_connexion_form_displayed()));
 		
-		$fieldset->add_field(new FormFieldCheckbox('left_column_disabled', $this->lang['config.left_column_disabled'], $this->config->is_left_column_disabled()));
+		$fieldset->add_field(new FormFieldCheckbox('left_column_disabled', StringVars::replace_vars(LangLoader::get_message('config.hide_left_column', 'admin-common'), array('module' => "forum")), $this->config->is_left_column_disabled()));
 		
-		$fieldset->add_field(new FormFieldCheckbox('right_column_disabled', $this->lang['config.right_column_disabled'], $this->config->is_right_column_disabled()));
+		$fieldset->add_field(new FormFieldCheckbox('right_column_disabled', StringVars::replace_vars(LangLoader::get_message('config.hide_right_column', 'admin-common'), array('module' => "forum")), $this->config->is_right_column_disabled()));
 		
 		$fieldset->add_field(new FormFieldCheckbox('message_before_topic_title_displayed', $this->lang['config.message_before_topic_title_displayed'], $this->config->is_message_before_topic_title_displayed(), array(
 			'events' => array('click' => '

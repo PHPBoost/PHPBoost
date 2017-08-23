@@ -33,7 +33,7 @@ load_module_lang('forum'); //Chargement de la langue du module.
 $config = ForumConfig::load();
 require_once(PATH_TO_ROOT . '/forum/forum_defines.php');
 
-//Supprime les menus suivant configuration du site.
+//Supprime les menus de gauche et/ou droite suivant la configuration du module.
 $columns_disabled = ThemesManager::get_theme(AppContext::get_current_user()->get_theme())->get_columns_disabled();
 if ($config->is_left_column_disabled()) 
 	$columns_disabled->set_disable_left_columns(true);
