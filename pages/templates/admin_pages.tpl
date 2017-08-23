@@ -47,6 +47,28 @@
 								</div>
 							</div>
 						</div>
+						<div class="form-element">
+							<label for="left_column_disabled">
+								{L_HIDE_LEFT_COLUMN}
+							</label>
+							<div class="form-field">
+								<div class="form-field-checkbox">
+									<input id="left-checked" type="checkbox" name="left_column_disabled" {HIDE_LEFT_COLUMN_CHECKED} />
+									<label for="left-checked"></label>
+								</div>
+							</div>
+						</div>
+						<div class="form-element">
+							<label for="right_column_disabled">
+								{L_HIDE_RIGHT_COLUMN}
+							</label>
+							<div class="form-field">
+								<div class="form-field-checkbox">
+									<input id="right-checked" type="checkbox" name="right_column_disabled" {HIDE_RIGHT_COLUMN_CHECKED} />
+									<label for="right-checked"></label>
+								</div>
+							</div>
+						</div>
 					</div>
 				</fieldset>
 				<fieldset>

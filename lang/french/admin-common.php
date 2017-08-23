@@ -51,4 +51,6 @@ $lang['config.forbidden-module'] = 'Modules interdits';
 $lang['config.comments.forbidden-module-explain'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer les commentaires';
 $lang['config.notation.forbidden-module-explain'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer la notation';
 $lang['config.new-content.forbidden-module-explain'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer les tags de nouveau contenu';
+$lang['config.hide_left_column'] = "Masquer les blocs de gauche du site sur le module :module";
+$lang['config.hide_right_column'] = "Masquer les blocs de droite du site sur le module :module";
 ?>
