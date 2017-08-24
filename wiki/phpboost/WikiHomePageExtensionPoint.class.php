@@ -49,7 +49,7 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 		include_once(PATH_TO_ROOT . '/wiki/wiki_functions.php');
 		$bread_crumb_key = 'wiki';
 		require_once(PATH_TO_ROOT . '/wiki/wiki_bread_crumb.php');
-		require_once('../wiki/wiki_auth.php');
+		require_once(PATH_TO_ROOT . '/wiki/wiki_auth.php');
 		
 		$config = WikiConfig::load();
 		
