@@ -23,6 +23,10 @@ a:hover {
 	text-decoration: underline;
 }
 
+a i.fa {
+	padding-right: 5px
+}
+
 /* --- Couleur des liens --- */
 a.admin  { color: #E27B47; }
 a.modo   { color: #2F9674; }
@@ -257,7 +261,7 @@ td.calendar-week {
 	color: #444444;
 }
 
-.formatter-content-title {
+.formatter-container .formatter-title {
 	font-weight: bold;
 }
 
