@@ -210,6 +210,7 @@ if (!empty($id_get))
 					Date::get_array_tpl_vars($last_msg_date, 'LAST_MSG_DATE'), array(
 					'C_BLINK' => $blink,
 					'IMG_ANNOUNCE' => $img_announce,
+					'IDCAT' => $row['cid'],
 					'NAME' => stripslashes($row['name']),
 					'DESC' => stripslashes($row['subname']),
 					'SUBFORUMS' => !empty($subforums) && !empty($row['subname']) ? '<br />' . $subforums : $subforums,
@@ -315,12 +316,13 @@ if (!empty($id_get))
 	);
 
 	$nbr_topics_display = 0;
-	$result = PersistenceContext::get_querier()->select("SELECT m1.display_name AS login, m1.level AS user_level, m1.groups AS user_groups, m2.display_name AS last_login, m2.level AS last_user_level, m2.groups AS last_user_groups, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id , t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
+	$result = PersistenceContext::get_querier()->select("SELECT m1.display_name AS login, m1.level AS user_level, m1.groups AS user_groups, m2.display_name AS last_login, m2.level AS last_user_level, m2.groups AS last_user_groups, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id , t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack, msg.timestamp AS first_timestamp
 	FROM " . PREFIX . "forum_topics t
 	LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = :user_id AND v.idtopic = t.id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m1 ON m1.user_id = t.user_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = t.last_user_id
 	LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = t.id
+	LEFT JOIN " . PREFIX . "forum_msg msg ON msg.id = t.first_msg_id
 	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id AND tr.user_id = :user_id
 	WHERE t.idcat = :idcat
 	ORDER BY t.type DESC , t.last_timestamp DESC
@@ -383,8 +385,10 @@ if (!empty($id_get))
 		$last_group_color = User::get_group_color($row['last_user_groups'], $row['last_user_level']);
 		
 		$last_msg_date = new Date($row['last_timestamp'], Timezone::SERVER_TIMEZONE);
+		$first_msg_date = new Date($row['first_timestamp'], Timezone::SERVER_TIMEZONE);
 
 		$tpl->assign_block_vars('topics', array_merge(
+			Date::get_array_tpl_vars($last_msg_date, 'first_msg_date'),
 			Date::get_array_tpl_vars($last_msg_date, 'last_msg_date'),
 			array(
 			'C_PAGINATION' => $topic_pagination->has_several_pages(),
