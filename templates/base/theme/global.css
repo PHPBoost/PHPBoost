@@ -257,7 +257,7 @@ td.calendar-week {
 	color: #444444;
 }
 
-.formatter-content-title {
+.formatter-container .formatter-title {
 	font-weight: bold;
 }
 
