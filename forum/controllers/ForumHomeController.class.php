@@ -213,6 +213,7 @@ class ForumHomeController extends ModuleController
 						Date::get_array_tpl_vars($last_msg_date, 'LAST_MSG_DATE'), array(
 						'C_BLINK' => $blink,
 						'IMG_ANNOUNCE' => $img_announce,
+						'IDCAT' => $row['cid'],
 						'NAME' => $row['name'],
 						'DESC' => FormatingHelper::second_parse($row['subname']),
 						'SUBFORUMS' => !empty($subforums) && !empty($row['subname']) ? '<br />' . $subforums : $subforums,
