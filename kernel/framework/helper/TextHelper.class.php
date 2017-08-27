@@ -275,12 +275,10 @@ class TextHelper
 			return mb_strstr($string, $needle);
 	}
 	
-	public static function substr_count($string, $needle, $offset = '', $length = '')
+	public static function substr_count($string, $needle, $encoding = '')
 	{
-		if (is_int($offset) && is_int($length))
-			return mb_substr_count($string, $needle, $offset, $length);
-		else if (is_int($offset))
-			return mb_substr_count($string, $needle, $offset);
+		if ($encoding != '')
+			return mb_substr_count($string, $needle, $encoding);
 		else
 			return mb_substr_count($string, $needle);
 	}
