@@ -410,6 +410,7 @@ while ( $row = $result->fetch() )
 		'USER_DATE' => (!$is_guest) ? $LANG['registered_on'] . ': ' . Date::to_format($row['registered'], Date::FORMAT_DAY_MONTH_YEAR) : '',
 		'USER_MSG' => (!$is_guest) ? $posted_msg : '',
 		'USER_MAIL' => ( !empty($row['email']) && ($row['show_email'] == '1' ) ) ? '<a href="mailto:' . $row['email'] . '" class="basic-button smaller user-mail" title="' . LangLoader::get_message('mail', 'main') . '">' . LangLoader::get_message('mail', 'main') . '</a>' : '',
+		'U_USER_MAIL' => ( !empty($row['email']) && ($row['show_email'] == '1' ) ) ? $row['email'] : '',
 		'USER_SIGN' => (!empty($row['user_sign']) && !empty($user_sign_field) && $user_sign_field['display']) ? '<hr /><br />' . FormatingHelper::second_parse($row['user_sign']) : '',
 		'USER_WARNING' => $row['warning_percentage'],
 		'L_FORUM_QUOTE_LAST_MSG' => ($quote_last_msg == 1 && $i == 0) ? $LANG['forum_quote_last_msg'] : '', //Reprise du dernier message de la page précédente.
@@ -432,6 +433,7 @@ while ( $row = $result->fetch() )
 		'U_VARS_ANCRE' => url('.php?id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '') . $rewrited_title . '.php'),
 		'U_VARS_QUOTE' => url('.php?quote=' . $row['id'] . '&amp;id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '-0') . '-0-' . $row['id'] . $rewrited_title . '.php'),
 		'USER_PM' => !$is_guest && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? '<a href="'. UserUrlBuilder::personnal_message($row['user_id'])->rel() . '" class="basic-button smaller user-pm" title="' . LangLoader::get_message('pm', 'main') . '">' . LangLoader::get_message('pm', 'main') . '</a>' : '',
+		'U_USER_PM' => !$is_guest && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? UserUrlBuilder::personnal_message($row['user_id'])->rel() : ''
 		)
 	));
 
@@ -467,28 +469,58 @@ while ( $row = $result->fetch() )
 		if (!empty($row[$field_type]) && !empty($field) && $field['display'])
 		{
 			$button = '';
+			$icon_fa = '';
+			$title = '';
+			$unknown_field = true;
 			
 			if ($field['regex'] == 4)
 			{
 				foreach (MemberShortTextExtendedField::$brands_pictures_list as $id => $parameters)
 				{
 					if (TextHelper::strstr($row[$field_type], $id))
+					{
 						$button = '<a href="mailto:' . $row[$field_type] . '" class="basic-button smaller"><i class="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
+						$title = $parameters['title'];
+						$icon_fa = $parameters['picture'];
+						$unknown_field = false;
+					}
+				}
+				if ($title == '')
+				{
+					$title = LangLoader::get_message('regex.mail', 'admin-user-common');
+					$icon_fa = 'fa-mail';
 				}
 			}
 			else if ($field['regex'] == 5)
 			{
 				$button = '<a href="' . $row[$field_type] . '" class="basic-button smaller user-website" title="' . LangLoader::get_message('regex.website', 'admin-user-common') . '">' . LangLoader::get_message('regex.website', 'admin-user-common') . '</a>';
-				
+
 				foreach (MemberShortTextExtendedField::$brands_pictures_list as $id => $parameters)
 				{
 					if (TextHelper::strstr($row[$field_type], $id))
+					{
 						$button = '<a href="' . $row[$field_type] . '" class="basic-button smaller"><i class="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
+						$title = $parameters['title'];
+						$icon_fa = $parameters['picture'];
+						$unknown_field = false;
+					}
+				}
+				if ($title == '')
+				{
+					$title = LangLoader::get_message('regex.website', 'admin-user-common');
+					$icon_fa = 'fa-website';
 				}
 			}
 			
 			$tpl->assign_block_vars('msg.ext_fields', array(
-				'BUTTON' => $button
+				'BUTTON' => $button,
+				'U_URL' => $row[$field_type],
+				'NAME' => $field['name'],
+				'ID' => str_replace('_', '-', $field['field_name']),
+				'IS_MAIL' => ($field['regex'] == 4) ? true : false,
+				'IS_UNKNOWN' => $unknown_field,
+				'TITLE' => $title,
+				'ICON_FA' => $icon_fa
 			));
 		}
 	}
