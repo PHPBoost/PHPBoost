@@ -47,7 +47,7 @@
 			<label>{@number_messages}</label>
 			<div class="form-field form-field-free">
 				{MESSAGES_NUMBER}<br />
-				<a href="{U_DISPLAY_USER_MESSAGES}">{messages}</a>
+				<a href="{U_DISPLAY_USER_MESSAGES}">{@messages}</a>
 			</div>
 		</div>
 		<div class="form-element user-profil-lastconnect">
