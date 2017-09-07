@@ -121,8 +121,6 @@ class HtaccessFileCache implements CacheData
 	{
 		$this->add_section('Hide directory listings');
 		$this->add_line('Options -Indexes');
-		$this->add_line('Options +FollowSymLinks');
-		$this->add_line('Options -Multiviews');
 		$this->add_section('Prevent viewing of .htaccess file');
 		if (AppContext::get_request()->get_domain_name() == 'free.fr')
 		{
