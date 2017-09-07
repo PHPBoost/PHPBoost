@@ -166,7 +166,7 @@ class DownloadUrlBuilder
 	 */
 	public static function download($id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/download/' . $id);
+		return DispatchManager::get_url(self::$dispatcher, '/file/' . $id);
 	}
 	
 	/**
