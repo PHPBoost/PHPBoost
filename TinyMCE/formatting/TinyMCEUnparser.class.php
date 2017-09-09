@@ -241,7 +241,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			$this->content = preg_replace('`(?:<p>\s*</p>)?\s*<p>\s*<div class="indent">(.+)</div>\s*</p>`isuU', "\n" . '<p style="padding-left: 30px;">$1</p>', $this->content);
 
 			//Police
-			$this->content = preg_replace_callback('`<span style="font-family: ([ a-z0-9,_-]+);">(.*)</span>`isuU', array($this, 'unparse_font'), $this->content );
+			$this->content = preg_replace_callback('`<span style="font-family: ?([a-z0-9,_-]+);">(.*)</span>`isuU', array($this, 'unparse_font'), $this->content );
 			
 			//Image
 			$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)")?(?: style="([^"]*)")? />`isuU', array($this, 'unparse_img'), $this->content );
