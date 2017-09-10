@@ -56,6 +56,7 @@ $lang['themes.themes_available'] = 'Thèmes disponibles';
 
 //Themes management
 $lang['themes.install_theme'] = 'Installer';
+$lang['themes.install_all_selected_themes'] = 'Installer les thèmes sélectionnés';
 
 //Avertissements
 $lang['themes.warning_before_install'] = '<span class="warning">Un thème doit être activé, désactivé, installé ou supprimé uniquement 
