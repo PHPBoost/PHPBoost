@@ -35,9 +35,31 @@ class AdminModuleUpdateController extends AdminController
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
-		$this->upload_form();
 		
-		$this->upgrade_module($request);
+		$module_number = 1;
+		foreach (ModulesManager::get_installed_modules_map() as $name => $module)
+		{
+			$upgrade_module = false;
+			
+			try {
+				if ($request->get_string('upgrade-' . $module->get_id()))
+					$upgrade_module = true;
+			} catch (UnexistingHTTPParameterException $e) {}
+			
+			try {
+				if ($request->get_string('add-selected-modules') && $request->get_string('upgrade-selected-modules') && $request->get_string('upgrade-checkbox-' . $module_number) == 'on')
+					$upgrade_module = true;
+			} catch (UnexistingHTTPParameterException $e) {}
+			
+			if ($upgrade_module)
+			{
+				$this->upgrade_module($module->get_id());
+			}
+			
+			$module_number++;
+		}
+		
+		$this->upload_form();
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -52,15 +74,10 @@ class AdminModuleUpdateController extends AdminController
 	}
 	
 	private function init()
-	{	
-		$this->load_lang();
-		$this->view = new FileTemplate('admin/modules/AdminModuleUpdateController.tpl');
-		$this->view->add_lang($this->lang);
-	}
-	
-	private function load_lang()
 	{
 		$this->lang = LangLoader::get('admin-modules-common');
+		$this->view = new FileTemplate('admin/modules/AdminModuleUpdateController.tpl');
+		$this->view->add_lang($this->lang);
 	}
 	
 	private function upload_form()
@@ -82,6 +99,7 @@ class AdminModuleUpdateController extends AdminController
 	private function build_view()
 	{
 		$modules_upgradable = 0;
+		$module_number = 1;
 		foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as $module)
 		{
 			if (ModulesManager::module_is_upgradable($module->get_id()))
@@ -93,6 +111,7 @@ class AdminModuleUpdateController extends AdminController
 				$this->view->assign_block_vars('modules_upgradable', array(
 					'C_AUTHOR_EMAIL' => !empty($author_email),
 					'C_AUTHOR_WEBSITE' => !empty($author_website),
+					'MODULE_NUMBER' => $module_number,
 					'ID' => $module->get_id(),
 					'NAME' => TextHelper::ucfirst($configuration->get_name()),
 					'ICON' => $module->get_id(),
@@ -107,49 +126,37 @@ class AdminModuleUpdateController extends AdminController
 				));
 				
 				$modules_upgradable++;
+				$module_number++;
 			}
 		}
 		
+		$upgradable_modules_number = count($modules_upgradable);
 		$this->view->put_all(array(
-			'C_UPDATES' => !empty($modules_upgradable)
+			'C_MORE_THAN_ONE_MODULE_AVAILABLE' => $upgradable_modules_number > 1,
+			'C_UPDATES' => $upgradable_modules_number > 0,
+			'MODULES_NUMBER' => $upgradable_modules_number
 		));
 	}
 	
-	private function upgrade_module(HTTPRequestCustom $request, $module_id = '')
+	private function upgrade_module($module_id)
 	{
-		if (empty($module_id))
+		switch (ModulesManager::upgrade_module($module_id))
 		{
-			$installed_modules = ModulesManager::get_installed_modules_map();
-			
-			foreach ($installed_modules as $module)
-			{
-				if ($request->get_string('upgrade-' . $module->get_id(), ''))
-				{
-					$module_id = $module->get_id();
-				}
-			}
-		}
-		
-		if (!empty($module_id))
-		{
-			switch (ModulesManager::upgrade_module($module_id))
-			{
-				case ModulesManager::UPGRADE_FAILED:
-					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), MessageHelper::WARNING, 10));
-					break;
-				case ModulesManager::MODULE_NOT_UPGRADABLE:
-					$this->view->put('MSG', MessageHelper::display($this->lang['modules.module_not_upgradable'], MessageHelper::WARNING, 10));
-					break;
-				case ModulesManager::NOT_INSTALLED_MODULE:
-					$this->view->put('MSG', MessageHelper::display($this->lang['modules.not_installed_module'], MessageHelper::WARNING, 10));
-					break;
-				case ModulesManager::UNEXISTING_MODULE:
-					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('element.unexist', 'status-messages-common'), MessageHelper::WARNING, 10));
-					break;
-				case ModulesManager::MODULE_UPDATED:
-					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 10));
-					break;
-			}
+			case ModulesManager::UPGRADE_FAILED:
+				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), MessageHelper::WARNING, 10));
+				break;
+			case ModulesManager::MODULE_NOT_UPGRADABLE:
+				$this->view->put('MSG', MessageHelper::display($this->lang['modules.module_not_upgradable'], MessageHelper::WARNING, 10));
+				break;
+			case ModulesManager::NOT_INSTALLED_MODULE:
+				$this->view->put('MSG', MessageHelper::display($this->lang['modules.not_installed_module'], MessageHelper::WARNING, 10));
+				break;
+			case ModulesManager::UNEXISTING_MODULE:
+				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('element.unexist', 'status-messages-common'), MessageHelper::WARNING, 10));
+				break;
+			case ModulesManager::MODULE_UPDATED:
+				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 10));
+				break;
 		}
 	}
 	

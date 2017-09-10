@@ -62,6 +62,7 @@ $lang['module.documentation'] = 'Documentation';
 
 //Module management
 $lang['modules.install_module'] = 'Install';
+$lang['modules.install_all_selected_modules'] = 'Install selected modules';
 $lang['modules.authorization'] = 'Authorizations';
 
 //Messages
@@ -80,4 +81,5 @@ $lang['modules.drop_files'] = 'Delete all the module\'s files';
 
 //Update
 $lang['modules.upgrade_module'] = 'Update';
+$lang['modules.upgrade_all_selected_modules'] = 'Update selected modules';
 ?>

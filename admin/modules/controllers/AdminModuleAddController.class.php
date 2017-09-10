@@ -36,16 +36,28 @@ class AdminModuleAddController extends AdminController
 	{
 		$this->init();
 
+		$module_number = 1;
 		foreach ($this->get_modules_not_installed() as $name => $module)
 		{
+			$install_module = false;
+			
 			try {
 				if ($request->get_string('add-' . $module->get_id()))
-				{
-					$activate = $request->get_bool('activated-' . $module->get_id(), false);
-					$this->install_module($module->get_id(), $activate);
-				}
+					$install_module = true;
+			} catch (UnexistingHTTPParameterException $e) {}
+			
+			try {
+				if ($request->get_string('add-selected-modules') && $request->get_string('add-checkbox-' . $module_number) == 'on')
+					$install_module = true;
+			} catch (UnexistingHTTPParameterException $e) {}
+			
+			if ($install_module)
+			{
+				$activate = $request->get_bool('activated-' . $module->get_id(), false);
+				$this->install_module($module->get_id(), $activate);
 			}
-			catch (UnexistingHTTPParameterException $e) {}
+			
+			$module_number++;
 		}
 		
 		$this->upload_form();
@@ -63,15 +75,10 @@ class AdminModuleAddController extends AdminController
 	}
 	
 	private function init()
-	{	
-		$this->load_lang();
-		$this->view = new FileTemplate('admin/modules/AdminModuleAddController.tpl');
-		$this->view->add_lang($this->lang);
-	}
-	
-	private function load_lang()
 	{
 		$this->lang = LangLoader::get('admin-modules-common');
+		$this->view = new FileTemplate('admin/modules/AdminModuleAddController.tpl');
+		$this->view->add_lang($this->lang);
 	}
 	
 	private function upload_form()
@@ -93,6 +100,7 @@ class AdminModuleAddController extends AdminController
 	private function build_view()
 	{
 		$modules_not_installed = $this->get_modules_not_installed();
+		$module_number = 1;
 		foreach ($modules_not_installed as $id => $module)
 		{
 			$configuration = $module->get_configuration();
@@ -102,6 +110,7 @@ class AdminModuleAddController extends AdminController
 			$this->view->assign_block_vars('available', array(
 				'C_AUTHOR_EMAIL' => !empty($author_email),
 				'C_AUTHOR_WEBSITE' => !empty($author_website),
+				'MODULE_NUMBER' => $module_number,
 				'ID' => $module->get_id(),
 				'NAME' => TextHelper::ucfirst($configuration->get_name()),
 				'ICON' => $module->get_id(),
@@ -114,10 +123,14 @@ class AdminModuleAddController extends AdminController
 				'PHP_VERSION' => $configuration->get_php_version(),
 				'URL_REWRITE_RULES' => $configuration->get_url_rewrite_rules()
 			));
+			$module_number++;
 		}
 		
+		$not_installed_modules_number = count($modules_not_installed);
 		$this->view->put_all(array(
-			'C_MODULES_AVAILABLE' => count($modules_not_installed) > 0,
+			'C_MORE_THAN_ONE_MODULE_AVAILABLE' => $not_installed_modules_number > 1,
+			'C_MODULES_AVAILABLE' => $not_installed_modules_number > 0,
+			'MODULES_NUMBER' => $not_installed_modules_number
 		));
 	}
 	
