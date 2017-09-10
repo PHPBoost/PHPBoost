@@ -227,8 +227,10 @@ class AdminModuleAddController extends AdminController
 						$archive_content = $zip->listContent();
 					}
 					
+					$valid_archive = true;
 					$archive_root_content = array();
 					$required_files = array('/config.ini');
+					$forbidden_files = $required_files = array('/body.tpl', '/frame.tpl', '/theme/content.css', '/theme/design.css', '/theme/global.css');
 					foreach ($archive_content as $element)
 					{
 						if (TextHelper::substr($element['filename'], -1) == '/')
@@ -243,10 +245,15 @@ class AdminModuleAddController extends AdminController
 							{
 								unset($required_files[array_search($name_in_archive, $required_files)]);
 							}
+							
+							if (in_array($name_in_archive, $forbidden_files))
+							{
+								$valid_archive = false;
+							}
 						}
 					}
 					
-					if (count($archive_root_content) == 1 && $archive_root_content[0]['folder'] && empty($required_files))
+					if (count($archive_root_content) == 1 && $archive_root_content[0]['folder'] && empty($required_files) && $valid_archive)
 					{
 						$module_id = $archive_root_content[0]['filename'];
 						if (!ModulesManager::is_module_installed($module_id))
