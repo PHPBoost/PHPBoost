@@ -54,6 +54,7 @@ class AdminLangsNotInstalledListController extends AdminController
 	private function build_view()
 	{
 		$not_installed_langs = $this->get_not_installed_langs();
+		$lang_number = 1;
 		foreach($not_installed_langs as $lang)
 		{
 			$configuration = $lang->get_configuration();
@@ -63,6 +64,7 @@ class AdminLangsNotInstalledListController extends AdminController
 			$this->view->assign_block_vars('langs_not_installed', array(
 				'C_AUTHOR_EMAIL' => !empty($author_email),
 				'C_AUTHOR_WEBSITE' => !empty($author_website),
+				'LANG_NUMBER' => $lang_number,
 				'ID' => $lang->get_id(),
 				'NAME' => $configuration->get_name(),
 				'VERSION' => $configuration->get_version(),
@@ -72,10 +74,13 @@ class AdminLangsNotInstalledListController extends AdminController
 				'COMPATIBILITY' => $configuration->get_compatibility(),
 				'AUTHORIZATIONS' => Authorizations::generate_select(Lang::ACCES_LANG, array('r-1' => 1, 'r0' => 1, 'r1' => 1), array(2 => true), $lang->get_id())
 			));
+			$theme_number++;
 		}
+		$not_installed_langs_number = count($not_installed_langs);
 		$this->view->put_all(array(
-			'C_LANG_INSTALL' => count($not_installed_langs) > 0,
-			'L_ADD' => $this->lang['langs.add_lang']
+			'C_MORE_THAN_ONE_LANG_AVAILABLE' => $not_installed_langs_number > 1,
+			'C_LANG_INSTALL' => $not_installed_langs_number > 0,
+			'LANGS_NUMBER' => $not_installed_langs_number
 		));
 	}
 	
@@ -122,10 +127,23 @@ class AdminLangsNotInstalledListController extends AdminController
 	
 	private function save(HTTPRequestCustom $request)
 	{
+		$lang_number = 1;
 		foreach ($this->get_not_installed_langs() as $lang)
 		{
+			$install_lang = false;
+			
 			try {
 				if ($request->get_string('add-' . $lang->get_id()))
+					$install_lang = true;
+			} catch (UnexistingHTTPParameterException $e) {}
+			
+			try {
+				if ($request->get_string('add-selected-langs') && $request->get_value('add-checkbox-' . $lang_number) == 'on')
+					$install_lang = true;
+			} catch (UnexistingHTTPParameterException $e) {}
+			
+			if ($install_lang)
+			{
 				{
 					$activated = $request->get_bool('activated-' . $lang->get_id(), false);
 					$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $lang->get_id());
@@ -140,8 +158,8 @@ class AdminLangsNotInstalledListController extends AdminController
 						$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 10));
 					}
 				}
-			} catch (Exception $e) {
 			}
+			$lang_number++;			
 		}
 	}
 	

@@ -39,8 +39,9 @@ $lang['langs.update_lang'] = 'Mettre à jour une langue';
 $lang['langs.delete_lang'] = 'Suppression ou désactivation d\'une langue';
 $lang['langs.installed_langs'] = 'Langues installées';
 
-//Themes management
+//Langs management
 $lang['langs.install_lang'] = 'Installer';
+$lang['langs.install_all_selected_langs'] = 'Installer les langues sélectionnées';
 
 //Uninstall
 $lang['langs.drop_files'] = 'Supprimer tous les fichiers de la langue';
