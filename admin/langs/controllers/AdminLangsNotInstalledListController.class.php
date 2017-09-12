@@ -74,7 +74,7 @@ class AdminLangsNotInstalledListController extends AdminController
 				'COMPATIBILITY' => $configuration->get_compatibility(),
 				'AUTHORIZATIONS' => Authorizations::generate_select(Lang::ACCES_LANG, array('r-1' => 1, 'r0' => 1, 'r1' => 1), array(2 => true), $lang->get_id())
 			));
-			$theme_number++;
+			$lang_number++;
 		}
 		$not_installed_langs_number = count($not_installed_langs);
 		$this->view->put_all(array(
