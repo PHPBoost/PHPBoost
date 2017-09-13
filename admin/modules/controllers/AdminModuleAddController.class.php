@@ -39,19 +39,7 @@ class AdminModuleAddController extends AdminController
 		$module_number = 1;
 		foreach ($this->get_modules_not_installed() as $name => $module)
 		{
-			$install_module = false;
-			
-			try {
-				if ($request->get_string('add-' . $module->get_id()))
-					$install_module = true;
-			} catch (UnexistingHTTPParameterException $e) {}
-			
-			try {
-				if ($request->get_string('add-selected-modules') && $request->get_string('add-checkbox-' . $module_number) == 'on')
-					$install_module = true;
-			} catch (UnexistingHTTPParameterException $e) {}
-			
-			if ($install_module)
+			if ($request->get_string('add-' . $module->get_id(), false) || ($request->get_string('add-selected-modules', false) && $request->get_value('add-checkbox-' . $module_number, 'off') == 'on'))
 			{
 				$activate = $request->get_bool('activated-' . $module->get_id(), false);
 				$this->install_module($module->get_id(), $activate);

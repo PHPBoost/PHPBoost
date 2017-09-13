@@ -39,19 +39,7 @@ class AdminModuleUpdateController extends AdminController
 		$module_number = 1;
 		foreach (ModulesManager::get_installed_modules_map() as $name => $module)
 		{
-			$upgrade_module = false;
-			
-			try {
-				if ($request->get_string('upgrade-' . $module->get_id()))
-					$upgrade_module = true;
-			} catch (UnexistingHTTPParameterException $e) {}
-			
-			try {
-				if ($request->get_string('add-selected-modules') && $request->get_string('upgrade-selected-modules') && $request->get_string('upgrade-checkbox-' . $module_number) == 'on')
-					$upgrade_module = true;
-			} catch (UnexistingHTTPParameterException $e) {}
-			
-			if ($upgrade_module)
+			if ($request->get_string('upgrade-' . $module->get_id(), false) || ($request->get_string('upgrade-selected-modules', false) && $request->get_value('upgrade-checkbox-' . $module_number, 'off') == 'on'))
 			{
 				$this->upgrade_module($module->get_id());
 			}

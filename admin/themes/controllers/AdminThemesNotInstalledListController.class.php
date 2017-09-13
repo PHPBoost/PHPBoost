@@ -39,19 +39,7 @@ class AdminThemesNotInstalledListController extends AdminController
 		$theme_number = 1;
 		foreach ($this->get_not_installed_themes() as $theme)
 		{
-			$install_theme = false;
-			
-			try {
-				if ($request->get_string('add-' . $theme->get_id()))
-					$install_theme = true;
-			} catch (UnexistingHTTPParameterException $e) {}
-			
-			try {
-				if ($request->get_string('add-selected-themes') && $request->get_value('add-checkbox-' . $theme_number) == 'on')
-					$install_theme = true;
-			} catch (UnexistingHTTPParameterException $e) {}
-			
-			if ($install_theme)
+			if ($request->get_string('add-' . $theme->get_id(), false) || ($request->get_string('add-selected-themes', false) && $request->get_value('add-checkbox-' . $theme_number, 'off') == 'on'))
 			{
 				$activated = $request->get_bool('activated-' . $theme->get_id(), false);
 				$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $theme->get_id());
