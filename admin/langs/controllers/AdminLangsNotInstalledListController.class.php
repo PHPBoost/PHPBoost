@@ -130,20 +130,7 @@ class AdminLangsNotInstalledListController extends AdminController
 		$lang_number = 1;
 		foreach ($this->get_not_installed_langs() as $lang)
 		{
-			$install_lang = false;
-			
-			try {
-				if ($request->get_string('add-' . $lang->get_id()))
-					$install_lang = true;
-			} catch (UnexistingHTTPParameterException $e) {}
-			
-			try {
-				if ($request->get_string('add-selected-langs') && $request->get_value('add-checkbox-' . $lang_number) == 'on')
-					$install_lang = true;
-			} catch (UnexistingHTTPParameterException $e) {}
-			
-			if ($install_lang)
-			{
+			if ($request->get_string('add-' . $lang->get_id(), false) || ($request->get_string('add-selected-modules', false) && $request->get_value('add-checkbox-' . $lang_number, 'off') == 'on'))
 				{
 					$activated = $request->get_bool('activated-' . $lang->get_id(), false);
 					$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $lang->get_id());
