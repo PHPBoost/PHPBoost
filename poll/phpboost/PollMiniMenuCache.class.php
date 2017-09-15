@@ -60,7 +60,10 @@ class PollMiniMenuCache implements CacheData
 
 				$array_votes = array_combine($row['answers'], $row['votes']);
 				foreach ($array_votes as $answer => $nbrvote)
+				{
+					$nbrvote = intval($nbrvote);
 					$array_votes[$answer] = NumberHelper::round(($nbrvote * 100 / $number_votes), 1);
+				}
 				
 				$row['votes'] = $array_votes;
 				$row['total'] = $number_votes;
