@@ -241,11 +241,14 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 		$array_poll = array_combine($array_answer, $array_vote);
 		foreach ($array_poll as $answer => $nbrvote)
 		{
+			$nbrvote = intval($nbrvote);
+			$percent = NumberHelper::round(($nbrvote * 100 / $sum_vote), 1);
+			
 			$tpl->assign_block_vars('result', array(
 				'ANSWERS' => $answer, 
-				'NBRVOTE' => (int)$nbrvote,
-				'WIDTH'   => NumberHelper::round(($nbrvote * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.
-				'PERCENT' => NumberHelper::round(($nbrvote * 100 / $sum_vote), 1)
+				'NBRVOTE' => $nbrvote,
+				'WIDTH'   => $percent * 4, //x 4 Pour agrandir la barre de vote.
+				'PERCENT' => $percent
 			));
 		}
 
@@ -361,19 +364,23 @@ elseif ($archives) //Archives.
 			'QUESTION' => stripslashes($row['question']),
 			'U_EDIT'   => PATH_TO_ROOT . "/poll/admin_poll" . url('.php?id=' . $row['id']),
 			'U_DEL'    => PATH_TO_ROOT . "/poll/admin_poll" . url('.php?delete=1&amp;id=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
-			'VOTE'     => $sum_vote,		
+			'VOTE'     => $sum_vote,
 			'L_VOTE'   => (($sum_vote > 1 ) ? $LANG['poll_vote_s'] : $LANG['poll_vote'])
 			)
-		));		
+		));
 
+		$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //Empêche la division par 0.
 		$array_poll = array_combine($array_answer, $array_vote);
 		foreach ($array_poll as $answer => $nbrvote)
 		{
+			$nbrvote = intval($nbrvote);
+			$percent = NumberHelper::round(($nbrvote * 100 / $sum_vote), 1);
+			
 			$tpl->assign_block_vars('list.result', array(
 				'ANSWERS' => $answer, 
 				'NBRVOTE' => $nbrvote,
-				'WIDTH'   => NumberHelper::round(($nbrvote * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.
-				'PERCENT' => NumberHelper::round(($nbrvote * 100 / $sum_vote), 1),
+				'WIDTH'   => $percent * 4, //x 4 Pour agrandir la barre de vote.
+				'PERCENT' => $percent,
 				'L_VOTE'  => (($nbrvote > 1 ) ? $LANG['poll_vote_s'] : $LANG['poll_vote'])
 			));
 		}

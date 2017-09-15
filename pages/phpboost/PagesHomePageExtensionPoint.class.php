@@ -55,7 +55,7 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 		$tpl = new FileTemplate('pages/index.tpl');
         
 		$num_pages = PersistenceContext::get_querier()->count(PREFIX . "pages", 'WHERE redirect = 0');
-		$num_coms = CommentsService::get_number_and_lang_comments('pages', $pages['id']);
+		$num_coms = (int)CommentsService::get_number_and_lang_comments('pages', $pages['id']);
 		
 		$tpl->put_all(array(
 			'NUM_PAGES' => sprintf($LANG['pages_num_pages'], $num_pages),
@@ -117,11 +117,11 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 		while ($row = $result->fetch())
 		{
 			$sub_cats_number = PersistenceContext::get_querier()->count(PREFIX . "pages_cats", 'WHERE id_parent=:id_parent', array('id_parent' => $row['id']));
-            $tpl->assign_block_vars('list', array(
-                'ID' => $row['id'],
-                'TITLE' => stripslashes($row['title']),
-                'C_SUB_CAT' => $sub_cats_number > 0 ? true : false
-            ));
+			$tpl->assign_block_vars('list', array(
+				'ID' => $row['id'],
+				'TITLE' => stripslashes($row['title']),
+				'C_SUB_CAT' => $sub_cats_number > 0
+			));
 		}
 		$result->dispose();
 
