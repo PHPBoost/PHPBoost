@@ -222,7 +222,7 @@ class ForumHomeController extends ModuleController
 						'U_FORUM_URL' => $row['url'],
 						'U_FORUM_VARS' => ForumUrlBuilder::display_forum($row['cid'], $row['rewrited_name'])->rel(),
 						'C_LAST_TOPIC_MSG' => !empty($row['last_topic_id']),
-						'LAST_TOPIC_TITLE' => $last_topic_title,
+						'LAST_TOPIC_TITLE' => stripslashes($last_topic_title),
 						'U_LAST_TOPIC' => PATH_TO_ROOT . "/forum/topic" . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title'])  . '.php'),
 						'U_LAST_MSG' => PATH_TO_ROOT . "/forum/topic" . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id,
 						'C_LAST_MSG_GUEST' => ($row['last_user_id']) != '-1',
