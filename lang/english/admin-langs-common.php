@@ -36,15 +36,19 @@ $lang['langs'] = 'Languages';
 $lang['langs.langs_management'] = 'Languages Management';
 $lang['langs.add_lang'] = 'Add languages';
 $lang['langs.update_lang'] = 'Update languages';
-$lang['langs.delete_lang'] = 'Delete or Deactivate languages';
+$lang['langs.delete_lang'] = 'Delete or Deactivate language';
+$lang['langs.delete_lang_multiple'] = 'Delete or Deactivate languages';
 $lang['langs.installed_langs'] = 'Installed Languages';
 
 //Langs management
 $lang['langs.install_lang'] = 'Installed';
-$lang['langs.install_all_selected_langs'] = 'Install all selected langs';
+$lang['langs.uninstall_langs'] = 'Uninstall';
+$lang['langs.install_all_selected_langs'] = 'Install all selected languages';
+$lang['langs.uninstall_all_selected_langs'] = 'Uninstall all selected languages';
 
 //Uninstall
 $lang['langs.drop_files'] = 'Delete all the language\'s files';
+$lang['langs.drop_files_multiple'] = 'Delete all the languages\'s files';
 $lang['langs.default_lang_explain'] = 'The default language can not be uninstalled, disabled or reserved';
 
 $lang['langs.upload_lang'] = 'Upload a language';
@@ -57,4 +61,8 @@ $lang['langs.activated'] = 'Activated';
 $lang['langs.compatibility'] = 'Compatibility';
 $lang['langs.author'] = 'Author';
 $lang['langs.description'] = 'Description';
+
+//Warnings
+$lang['langs.warning_before_install'] = '<span class="warning">A language must be enabled, disabled, installed, or deleted only
+      from this page. <br />Don\'t remove it directly from the FTP &/or the database.</span>';
 ?>

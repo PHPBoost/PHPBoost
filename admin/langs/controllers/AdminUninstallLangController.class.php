@@ -31,21 +31,30 @@ class AdminUninstallLangController extends AdminController
 	private $lang;
 	private $submit_button;
 	private $id;
+	private $multiple = false;
 	private $tpl;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
-		$this->id = $request->get_value('id', null);
+		$ids = explode('---', $request->get_value('id', null));
 		
-		if ($this->exists())
+		if (count($ids) > 1)
+		{
+			$this->lang_id = $ids;
+			$this->multiple = true;
+		}
+		else
+			$this->lang_id = $request->get_value('id', null);
+		
+		if ($this->lang_exists())
 		{
 			$this->build_form();
 			if ($this->submit_button->has_been_submited() && $this->form->validate())
 			{
 				$this->uninstall($this->form->get_value('drop_files')->get_raw_value());
 
-				AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs());
+				AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('process.success', 'status-messages-common'));
 			}
 			
 			$this->tpl->put('FORM', $this->form->display());
@@ -70,10 +79,10 @@ class AdminUninstallLangController extends AdminController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('uninstall_lang', $this->lang['langs.delete_lang']);
+		$fieldset = new FormFieldsetHTML('uninstall_lang', $this->multiple ? $this->lang['langs.uninstall_lang_multiple'] : $this->lang['langs.delete_lang']);
 		$form->add_fieldset($fieldset);
 	
-		$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->lang['langs.drop_files'], '0',
+		$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->multiple ? $this->lang['langs.drop_files_multiple'] : $this->lang['langs.drop_files'], '0',
 			array(
 				new FormFieldRadioChoiceOption(LangLoader::get_message('yes', 'common'), '1'),
 				new FormFieldRadioChoiceOption(LangLoader::get_message('no', 'common'), '0')
@@ -88,16 +97,38 @@ class AdminUninstallLangController extends AdminController
 	
 	private function uninstall($drop_files)
 	{
-		LangsManager::uninstall($this->id, $drop_files);
+		if ($this->multiple)
+		{
+			foreach ($this->lang_id as $id)
+			{
+				LangsManager::uninstall($id, $drop_files);
+			}
+		}
+		else
+			LangsManager::uninstall($this->lang_id, $drop_files);
 	}
 	
-	private function exists()
+	private function lang_exists()
 	{
-		if ($this->id == null)
+		if ($this->lang_id == null)
 		{
 			return false;
 		}
-		return LangsManager::get_lang_existed($this->id);
+		if ($this->multiple)
+		{
+			$lang_exists = false;
+			foreach ($this->lang_id as $id)
+			{
+				if (LangsManager::get_lang_existed($id))
+				{
+					$lang_exists = true;
+					break;
+				}
+			}
+			return $lang_exists;
+		}
+		else
+			return LangsManager::get_lang_existed($this->lang_id);
 	}
 }
 

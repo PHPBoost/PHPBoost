@@ -42,6 +42,8 @@ class AdminLangsInstalledListController extends AdminController
 	private function build_view()
 	{
 		$installed_langs = LangsManager::get_installed_langs_map_sorted_by_localized_name();
+		$selected_lang_number = 0;
+		$theme_lang = 1;
 		foreach($installed_langs as $lang)
 		{
 			$configuration = $lang->get_configuration();
@@ -54,6 +56,7 @@ class AdminLangsInstalledListController extends AdminController
 				'C_AUTHOR_WEBSITE' => !empty($author_website),
 				'C_IS_DEFAULT_LANG' => $lang->get_id() == LangsManager::get_default_lang(),
 				'C_IS_ACTIVATED' => $lang->is_activated(),
+				'LANG_NUMBER' => $lang_number,
 				'ID' => $lang->get_id(),
 				'NAME' => $configuration->get_name(),
 				'VERSION' => $configuration->get_version(),
@@ -63,12 +66,16 @@ class AdminLangsInstalledListController extends AdminController
 				'COMPATIBILITY' => $configuration->get_compatibility(),
 				'AUTHORIZATIONS' => Authorizations::generate_select(Lang::ACCES_LANG, $authorizations, array(2 => true), $lang->get_id())
 			));
+			if ($lang->get_id() == LangsManager::get_default_lang())
+				$selected_lang_number = $lang_number;
+			
+			$lang_number++;
 		}
-		
+		$installed_langs_number = count($installed_langs);
 		$this->view->put_all(array(
-			'L_DELETE' => LangLoader::get_message('delete','common'),
-			'L_RESET' => LangLoader::get_message('reset','main'),
-			'L_UPDATE' => LangLoader::get_message('update','main')
+			'C_MORE_THAN_ONE_LANG_INSTALLED' => $installed_langs_number > 1,
+			'LANGS_NUMBER' => $installed_langs_number,
+			'SELECTED_LANG_NUMBER' => $selected_lang_number
 		));
 	}
 	
@@ -76,11 +83,28 @@ class AdminLangsInstalledListController extends AdminController
 	{
 		$installed_langs = LangsManager::get_installed_langs_map();
 		
-		foreach($installed_langs as $lang)
+		if ($request->get_string('add-selected-langs', false))
 		{
-			if ($request->get_string('delete-' . $lang->get_id(), ''))
+			$lang_ids = array();
+			$lang_number = 1;
+			foreach ($installed_langs as $lang)
 			{
-				AppContext::get_response()->redirect(AdminLangsUrlBuilder::uninstall($lang->get_id()));
+				if ($request->get_value('delete-checkbox-' . $lang_number, 'off') == 'on')
+				{
+					$lang_ids[] = $lang->get_id();
+				}
+				$lang_number++;
+			}
+			AppContext::get_response()->redirect(AdminLangsUrlBuilder::uninstall(implode('---', $lang_ids)));
+		}
+		else
+		{
+			foreach($installed_langs as $lang)
+			{
+				if ($request->get_string('delete-' . $lang->get_id(), ''))
+				{
+					AppContext::get_response()->redirect(AdminLangsUrlBuilder::uninstall($lang->get_id()));
+				}
 			}
 		}
 		

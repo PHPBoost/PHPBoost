@@ -1,24 +1,74 @@
+# IF C_MORE_THAN_ONE_LANG_INSTALLED #
+<script>
+<!--
+	function select_all(status)
+	{
+		var i;
+		for(i = 1; i <= {LANG_NUMBER}; i++)
+		{
+			if(document.getElementById('delete-checkbox-' + i) && i != {SELECTED_LANG_NUMBER}) 
+				document.getElementById('delete-checkbox-' + i).checked = status;
+		}
+		document.getElementById('check-all-top').checked = status;
+		document.getElementById('check-all-bottom').checked = status;
+	}
+-->
+</script>
+# ENDIF #
+
 <form action="{REWRITED_SCRIPT}" method="post">
+	${LangLoader::get_message('langs.warning_before_install', 'admin-themes-common')}
 	<table id="table">
 		<caption>{@langs.installed_langs}</caption>
 		<thead>
 			<tr> 
+				# IF C_MORE_THAN_ONE_LANG_INSTALLED #
+				<th>
+					<div class="form-field-checkbox">
+						<input type="checkbox" id="check-all-top" onclick="select_all(this.checked);" title="${LangLoader::get_message('select_all', 'main')}" />
+						<label for="check-all-top"></label>
+					</div>
+				</th>
+				# ENDIF #
 				<th>{@langs.name}</th>
 				<th>{@langs.description}</th>
 				<th>{@langs.authorizations}</th>
 				<th>${LangLoader::get_message('enabled', 'common')}</th>
-				<th>${LangLoader::get_message('delete', 'common')}</th>
+				<th>{@langs.uninstall_lang}</th>
 			</tr>
 		</thead>
+		# IF C_MORE_THAN_ONE_LANG_INSTALLED #
+		<tfoot>
+			<tr>
+				<th colspan="6">
+					<div class="left">
+						<div class="form-field-checkbox">
+							<input type="checkbox" id="check-all-bottom" onclick="select_all(this.checked);" title="${LangLoader::get_message('select_all', 'main')}" />
+							<label for="check-all-bottom"></label>
+						</div>
+						<button type="submit" name="add-selected-themes" value="true" class="submit">{@langs.uninstall_all_selected_langs}</button>
+					</div>
+				</th>
+			</tr>
+		</tfoot>
+		# ENDIF #
 		<tbody>
 			<tr> 
-				<td colspan="5">
+				<td colspan="# IF C_MORE_THAN_ONE_LANG_INSTALLED #6# ELSE #5# ENDIF #">
 					# INCLUDE MSG #
 					<span class="text-strong">{@langs.default_lang_explain}</span>
 				</td>
 			</tr>
 			# START langs_installed #
 				<tr>
+					# IF C_MORE_THAN_ONE_LANG_INSTALLED #
+					<td>
+						<div class="form-field-checkbox">
+							<input type="checkbox" id="delete-checkbox-{langs_installed.LANG_NUMBER}" name="delete-checkbox-{langs_installed.LANG_NUMBER}"# IF langs_installed.C_IS_DEFAULT_LANG # disabled="disabled"# ENDIF # />
+							<label for="delete-checkbox-{langs_installed.LANG_NUMBER}"></label>
+						</div>
+					</td>
+					# ENDIF #
 					<td>
 						<span id="lang-{langs_installed.ID}"></span>
 						<span class="text-strong">{langs_installed.NAME}</span> <span class="text-italic">({langs_installed.VERSION})</span>
@@ -51,7 +101,7 @@
 						<span class="form-field-radio-span">${LangLoader::get_message('no', 'common')}</span>
 					</td>
 					<td>
-						<button type="submit" class="submit" name="delete-{langs_installed.ID}" value="true">${LangLoader::get_message('delete', 'common')}</button>
+						<button type="submit" class="submit" name="delete-{langs_installed.ID}" value="true">{@langs.uninstall_lang}</button>
 					</td>
 					# ELSE #
 					<td>
