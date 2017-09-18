@@ -42,6 +42,8 @@ class AdminThemesInstalledListController extends AdminController
 	private function build_view()
 	{
 		$installed_themes = ThemesManager::get_installed_themes_map_sorted_by_localized_name();
+		$selected_theme_number = 0;
+		$theme_number = 1;
 		foreach($installed_themes as $theme)
 		{
 			$configuration = $theme->get_configuration();
@@ -56,6 +58,7 @@ class AdminThemesInstalledListController extends AdminController
 				'C_IS_DEFAULT_THEME' => $theme->get_id() == ThemesManager::get_default_theme(),
 				'C_IS_ACTIVATED' => $theme->is_activated(),
 				'C_PICTURES' => count($pictures) > 0,
+				'THEME_NUMBER' => $theme_number,
 				'ID' => $theme->get_id(),
 				'NAME' => $configuration->get_name(),
 				'VERSION' => $configuration->get_version(),
@@ -82,12 +85,18 @@ class AdminThemesInstalledListController extends AdminController
 					));
 				}
 			}
+			
+			if ($theme->get_id() == ThemesManager::get_default_theme())
+				$selected_theme_number = $theme_number;
+			
+			$theme_number++;
 		}
 		
+		$installed_themes_number = count($installed_themes);
 		$this->view->put_all(array(
-			'L_DELETE' => LangLoader::get_message('delete','common'),
-			'L_RESET' => LangLoader::get_message('reset','main'),
-			'L_UPDATE' => LangLoader::get_message('update','main')
+			'C_MORE_THAN_ONE_THEME_INSTALLED' => $installed_themes_number > 1,
+			'THEMES_NUMBER' => $installed_themes_number,
+			'SELECTED_THEME_NUMBER' => $selected_theme_number
 		));
 	}
 	
@@ -95,11 +104,28 @@ class AdminThemesInstalledListController extends AdminController
 	{
 		$installed_themes = ThemesManager::get_installed_themes_map();
 		
-		foreach ($installed_themes as $theme)
+		if ($request->get_string('add-selected-themes', false))
 		{
-			if ($request->get_string('delete-' . $theme->get_id(), ''))
+			$theme_ids = array();
+			$theme_number = 1;
+			foreach ($installed_themes as $theme)
 			{
-				AppContext::get_response()->redirect(AdminThemeUrlBuilder::delete_theme($theme->get_id()));
+				if ($request->get_value('delete-checkbox-' . $theme_number, 'off') == 'on')
+				{
+					$theme_ids[] = $theme->get_id();
+				}
+				$theme_number++;
+			}
+			AppContext::get_response()->redirect(AdminThemeUrlBuilder::delete_theme(implode('---', $theme_ids)));
+		}
+		else
+		{
+			foreach ($installed_themes as $theme)
+			{
+				if ($request->get_string('delete-' . $theme->get_id(), ''))
+				{
+					AppContext::get_response()->redirect(AdminThemeUrlBuilder::delete_theme($theme->get_id()));
+				}
 			}
 		}
 		

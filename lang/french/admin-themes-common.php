@@ -36,6 +36,7 @@ $lang['themes.theme_management'] = 'Gestion des thèmes';
 $lang['themes.add_theme'] = 'Ajouter un thème';
 $lang['themes.update_theme'] = 'Mettre à jour un thème';
 $lang['themes.delete_theme'] = 'Suppression ou désactivation d\'un thème';
+$lang['themes.delete_theme_multiple'] = 'Suppression ou désactivation de thèmes';
 $lang['themes.installed_theme'] = 'Thèmes installés';
 
 //Theme
@@ -56,7 +57,9 @@ $lang['themes.themes_available'] = 'Thèmes disponibles';
 
 //Themes management
 $lang['themes.install_theme'] = 'Installer';
+$lang['themes.uninstall_theme'] = 'Désinstaller';
 $lang['themes.install_all_selected_themes'] = 'Installer les thèmes sélectionnés';
+$lang['themes.uninstall_all_selected_themes'] = 'Désinstaller les thèmes sélectionnés';
 
 //Avertissements
 $lang['themes.warning_before_install'] = '<span class="warning">Un thème doit être activé, désactivé, installé ou supprimé uniquement 
@@ -72,4 +75,5 @@ $lang['themes.upload_error'] = 'Erreur avec l\'upload du fichier';
 
 //Delete theme
 $lang['themes.drop_files'] = 'Supprimer tous les fichiers du thème';
+$lang['themes.drop_files_multiple'] = 'Supprimer tous les fichiers des thèmes';
 ?>
