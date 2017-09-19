@@ -28,9 +28,8 @@
  ####################################################
  #                     English                      #
  ####################################################
-$lang = array();
 
-$lang['module'] = 'Module';
+ $lang['module'] = 'Module';
 
 //Title
 $lang['modules.module_management'] = 'Module management';
@@ -41,7 +40,7 @@ $lang['modules.installed_modules'] = 'Installed modules';
 
 //Warnings
 $lang['modules.warning_before_install'] = '<span class="warning">A module must be enabled, disabled, installed, or deleted only
-      from this page. <br />Don\'t remove it directly from the FTP &/or the database.</span>';
+      from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span>';
 
 //Upload
 $lang['modules.upload_module'] = 'Install a module';

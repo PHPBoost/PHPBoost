@@ -29,8 +29,6 @@
  #                     French                       #
  ####################################################
  
-$lang = array();
-
 //Title
 $lang['langs'] = 'Langues';
 $lang['langs.langs_management'] = 'Gestion des langues';
@@ -65,5 +63,4 @@ $lang['langs.description'] = 'Description';
 //Avertissements
 $lang['langs.warning_before_install'] = '<span class="warning">Une langue doit être activée, désactivée, installée ou supprimée uniquement 
        depuis cette page.<br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span>';
-
 ?>
