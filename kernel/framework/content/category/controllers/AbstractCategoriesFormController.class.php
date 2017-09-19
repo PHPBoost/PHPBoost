@@ -233,6 +233,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 			new ActionAuthorization($this->common_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
 			new ActionAuthorization($this->common_lang['authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
 			new ActionAuthorization($this->common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
+			new ActionAuthorization($this->common_lang['authorizations.categories_management'], Category::CATEGORIES_MANAGEMENT_AUTHORIZATIONS),
 		));
 	}
 	
