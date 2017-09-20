@@ -12,7 +12,7 @@ Visit the project page [PHPBoost CMS](https://www.phpboost.com "link to PHPBoost
 To download PHPBoost CMS, please follow this link : [Download](https://www.phpboost.com/download "link to PHPBoost CMS Download").
 You will find the latest official package, and several modules and templates, to customize your website.
 
-# How it work ?
+# How it works ?
 It requires a web server with a remote access. Then you install, configure and use it with your web browser.
 
 It's composed of a kernel and modules which can use the little PHPBoost development framework. The structure is like a personal computer's one, with operating system which corresponds to PHPBoost's kernel and different software using the kernel that are modules. It works with a database. Currently, MySQL or MariaDB are required but we wish to be able to implement it also for SQLite, PostGreSQL and other DBMS.
