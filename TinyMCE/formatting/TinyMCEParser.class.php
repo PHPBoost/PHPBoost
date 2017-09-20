@@ -38,22 +38,36 @@ class TinyMCEParser extends ContentFormattingParser
 {
 	private static $fonts_array = array(
 	'\'andale mono\', monospace' => 'andale mono',
+	'andale mono,monospace' => 'andale mono',
 	'arial, helvetica, sans-serif' => 'arial',
+	'arial,helvetica,sans-serif' => 'arial',
 	'\'arial black\', sans-serif' => 'arial black',
+	'arial black,sans-serif' => 'arial black',
 	'\'book antiqua\', palatino, serif' => 'book antiqua',
+	'book antiqua,palatino,serif' => 'book antiqua',
 	'\'comic sans ms\', sans-serif' => 'comic sans ms',
+	'comic sans ms,sans-serif' => 'comic sans ms',
 	'\'courier new\', courier, monospace' => 'courier new',
+	'courier new,courier,monospace' => 'courier new',
 	'georgia, palatino, serif' => 'georgia',
+	'georgia,palatino,serif' => 'georgia',
 	'helvetica, arial, sans-serif' => 'helvetica',
+	'helvetica,arial,sans-serif' => 'helvetica',
 	'impact, sans-serif' => 'impact',
+	'impact,sans-serif' => 'impact',
 	'symbol' => 'symbol',
 	'tahoma, arial, helvetica, sans-serif' => 'tahoma',
+	'tahoma,arial,helvetica,sans-serif' => 'tahoma',
 	'terminal, monaco, monospace' => 'terminal',
 	'\'times new roman\', times, serif' => 'times new roman',
+	'times new roman,times,serif' => 'times new roman',
 	'\'trebuchet ms\', geneva, sans-serif' => 'trebuchet ms',
+	'trebuchet ms,geneva,sans-serif' => 'trebuchet ms',
 	'verdana, geneva, sans-serif' => 'verdana',
+	'verdana,geneva,sans-serif' => 'verdana',
 	'webdings' => 'webdings',
-	'wingdings, \'zapf dingbats\'' => 'wingdings'
+	'wingdings, \'zapf dingbats\'' => 'wingdings',
+	'wingdings,zapf dingbats' => 'wingdings'
 	);
 
 	/**
