@@ -30,7 +30,7 @@ class AdminUninstallLangController extends AdminController
 	private $form;
 	private $lang;
 	private $submit_button;
-	private $id;
+	private $lang_id;
 	private $multiple = false;
 	private $tpl;
 	

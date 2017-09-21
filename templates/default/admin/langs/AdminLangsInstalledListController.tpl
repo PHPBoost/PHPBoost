@@ -17,7 +17,7 @@
 # ENDIF #
 
 <form action="{REWRITED_SCRIPT}" method="post">
-	${LangLoader::get_message('langs.warning_before_install', 'admin-themes-common')}
+	{@langs.warning_before_install}
 	<table id="table">
 		<caption>{@langs.installed_langs}</caption>
 		<thead>

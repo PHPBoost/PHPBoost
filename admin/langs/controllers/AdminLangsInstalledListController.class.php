@@ -43,7 +43,7 @@ class AdminLangsInstalledListController extends AdminController
 	{
 		$installed_langs = LangsManager::get_installed_langs_map_sorted_by_localized_name();
 		$selected_lang_number = 0;
-		$theme_lang = 1;
+		$lang_number = 1;
 		foreach($installed_langs as $lang)
 		{
 			$configuration = $lang->get_configuration();
