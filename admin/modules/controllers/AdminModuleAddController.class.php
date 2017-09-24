@@ -218,7 +218,7 @@ class AdminModuleAddController extends AdminController
 					$valid_archive = true;
 					$archive_root_content = array();
 					$required_files = array('/config.ini');
-					$forbidden_files = $required_files = array('/body.tpl', '/frame.tpl', '/theme/content.css', '/theme/design.css', '/theme/global.css');
+					$forbidden_files = array('/body.tpl', '/frame.tpl', '/theme/content.css', '/theme/design.css', '/theme/global.css');
 					foreach ($archive_content as $element)
 					{
 						if (TextHelper::substr($element['filename'], -1) == '/')
