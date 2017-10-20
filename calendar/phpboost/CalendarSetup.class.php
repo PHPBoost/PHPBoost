@@ -98,7 +98,7 @@ class CalendarSetup extends DefaultModuleSetup
 			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'author_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'approved' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'registration_authorized' => array('type' => 'boolean', 'notnull' => 1, 'notnull' => 1, 'default' => 0),
+			'registration_authorized' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'max_registered_members' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => -1),
 			'last_registration_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'register_authorizations' => array('type' => 'text', 'length' => 65000),

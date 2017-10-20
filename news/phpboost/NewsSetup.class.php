@@ -84,7 +84,7 @@ class NewsSetup extends DefaultModuleSetup
 			'start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'number_view' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'top_list_enabled' => array('type' => 'boolean', 'notnull' => 1, 'notnull' => 1, 'default' => 0),
+			'top_list_enabled' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'picture_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'author_custom_name' => array('type' =>  'string', 'length' => 255, 'default' => "''"),
 			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
