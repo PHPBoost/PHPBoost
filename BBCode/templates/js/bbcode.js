@@ -331,7 +331,7 @@ function bbcode_fieldset(field, prompt_text)
 {
 	var legend = prompt(prompt_text, '');
 	if(legend != '' && legend != null)
-		insertbbcode('[fieldset legend=' + legend + ']', '[/fieldset]', field);
+		insertbbcode('[fieldset legend="' + legend + '"]', '[/fieldset]', field);
 	else
 		insertbbcode('[fieldset]', '[/fieldset]', field);
 }
