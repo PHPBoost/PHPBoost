@@ -131,22 +131,21 @@ class AdminLangsNotInstalledListController extends AdminController
 		foreach ($this->get_not_installed_langs() as $lang)
 		{
 			if ($request->get_string('add-' . $lang->get_id(), false) || ($request->get_string('add-selected-modules', false) && $request->get_value('add-checkbox-' . $lang_number, 'off') == 'on'))
+			{
+				$activated = $request->get_bool('activated-' . $lang->get_id(), false);
+				$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $lang->get_id());
+				LangsManager::install($lang->get_id(), $authorizations, $activated);
+				$error = LangsManager::get_error();
+				if ($error !== null)
 				{
-					$activated = $request->get_bool('activated-' . $lang->get_id(), false);
-					$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $lang->get_id());
-					LangsManager::install($lang->get_id(), $authorizations, $activated);
-					$error = LangsManager::get_error();
-					if ($error !== null)
-					{
-						$this->view->put('MSG', MessageHelper::display($error, MessageHelper::NOTICE, 10));
-					}
-					else
-					{
-						$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 10));
-					}
+					$this->view->put('MSG', MessageHelper::display($error, MessageHelper::NOTICE, 10));
+				}
+				else
+				{
+					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 10));
 				}
 			}
-			$lang_number++;			
+			$lang_number++;
 		}
 	}
 	
