@@ -78,7 +78,7 @@ class MessageHelper
 				$image     = 'error_modo_only';
 			break;
 			case self::ADMIN_ONLY:
-				$css_class = 'admin_only';
+				$css_class = 'admin-only';
 				$image     = 'error_admin_only';
 			break;
 			default:
