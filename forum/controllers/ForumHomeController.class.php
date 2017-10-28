@@ -29,46 +29,46 @@ class ForumHomeController extends ModuleController
 {
 	private $view;
 	private $category;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->build_view();
-		
+
 		return $this->generate_response();
 	}
-	
+
 	private function build_view()
 	{
 		global $LANG, $config, $nbr_msg_not_read, $tpl_top, $tpl_bottom;
-		
+
 		$id_get = (int)retrieve(GET, 'id', 0);
 		$categories_cache = ForumService::get_categories_manager()->get_categories_cache();
-		
+
 		try {
 			$this->category = $categories_cache->get_category($id_get);
 		} catch (CategoryNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		//Vérification des autorisations d'accès.
 		if (!ForumAuthorizationsService::check_authorizations($id_get)->read())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		require_once(PATH_TO_ROOT . '/forum/forum_begin.php');
 		require_once(PATH_TO_ROOT . '/forum/forum_tools.php');
 
 		$this->view = new FileTemplate('forum/forum_index.tpl');
-		
+
 		//Affichage des sous-catégories de la catégorie.
 		$display_cat = !empty($id_get);
-		
+
 		//Vérification des autorisations.
 		$authorized_categories = ForumService::get_authorized_categories($id_get);
-		
+
 		//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
 		$max_time_msg = forum_limit_time_msg();
 
@@ -89,22 +89,22 @@ class ForumHomeController extends ModuleController
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'authorized_categories' => $authorized_categories
 		));
-		
+
 		$categories = array();
 		while ($row = $result->fetch())
 		{
 			$category = $categories_cache->get_category($row['cid']);
 			$elements_number = $category->get_elements_number();
-			
+
 			$categories[$row['cid']] = $row;
 			$categories[$row['cid']]['nbr_topic'] = $elements_number['topics_number'];
 			$categories[$row['cid']]['nbr_msg'] = $elements_number['messages_number'];
 		}
 		$result->dispose();
-		
+
 		if (!$display_cat)
 			$categories = parentChildSort_r('cid', 'id_parent', $categories);
-		
+
 		$display_sub_cats = false;
 		$is_sub_forum = array();
 		foreach ($categories as $row)
@@ -130,7 +130,7 @@ class ForumHomeController extends ModuleController
 			{
 				if (in_array($row['id_parent'], $is_sub_forum))
 					$is_sub_forum[] = $row['cid'];
-				
+
 				if (($display_sub_cats || !empty($id_get)) && !in_array($row['cid'], $is_sub_forum))
 				{
 					if ($display_cat) //Affichage des forums d'une catégorie, ajout de la catégorie.
@@ -142,14 +142,14 @@ class ForumHomeController extends ModuleController
 						));
 						$display_cat = false;
 					}
-	
+
 					$subforums = '';
 					$this->view->put_all(array(
 						'C_FORUM_ROOT_CAT' => false,
 						'C_FORUM_CHILD_CAT' => true,
 						'C_END_S_CATS' => false
 					));
-					
+
 					$children = ForumService::get_categories_manager()->get_categories_cache()->get_children($row['cid']);
 					if ($children)
 					{
@@ -158,13 +158,13 @@ class ForumHomeController extends ModuleController
 							if ($child->get_id_parent() == $row['cid'] && ForumAuthorizationsService::check_authorizations($child->get_id())->read()) //Sous forum distant d'un niveau au plus.
 							{
 								$is_sub_forum[] = $child->get_id();
-								$link = $child->get_url() ? '<a href="' . $child->get_url() . '" class="small">' : '<a href="forum' . url('.php?id=' . $child->get_id(), '-' . $child->get_id() . '+' . $child->get_rewrited_name() . '.php') . '" class="small">';
+								$link = $child->get_url() ? '<a href="' . $child->get_url() . '">' : '<a href="forum' . url('.php?id=' . $child->get_id(), '-' . $child->get_id() . '+' . $child->get_rewrited_name() . '.php') . '">';
 								$subforums .= !empty($subforums) ? ', ' . $link . $child->get_name() . '</a>' : $link . $child->get_name() . '</a>';
 							}
 						}
 						$subforums = '<strong>' . $LANG['subforum_s'] . '</strong>: ' . $subforums;
 					}
-	
+
 					if (!empty($row['last_topic_id']))
 					{
 						//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
@@ -181,7 +181,7 @@ class ForumHomeController extends ModuleController
 							$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 							$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';
 						}
-	
+
 						$last_topic_title = (($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '') . ' ' . $row['title'];
 						$row['login'] = !empty($row['login']) ? $row['login'] : $LANG['guest'];
 						$group_color = User::get_group_color($row['groups'], $row['user_level']);
@@ -190,7 +190,7 @@ class ForumHomeController extends ModuleController
 					{
 						$row['last_timestamp'] = '';
 					}
-	
+
 					//Vérifications des topics Lu/non Lus.
 					$img_announce = 'fa-announce';
 					$blink = false;
@@ -203,10 +203,10 @@ class ForumHomeController extends ModuleController
 						}
 					}
 					$img_announce .= ($row['cat_status'] == ForumCategory::STATUS_LOCKED) ? '-lock' : '';
-	
+
 					$total_topic += $row['nbr_topic'];
 					$total_msg += $row['nbr_msg'];
-					
+
 					$last_msg_date = new Date($row['last_timestamp'], Timezone::SERVER_TIMEZONE);
 
 					$this->view->assign_block_vars('forums_list.subcats', array_merge(
@@ -216,15 +216,15 @@ class ForumHomeController extends ModuleController
 						'IDCAT' => $row['cid'],
 						'NAME' => $row['name'],
 						'DESC' => FormatingHelper::second_parse($row['subname']),
-						'SUBFORUMS' => !empty($subforums) && !empty($row['subname']) ? '<br />' . $subforums : $subforums,
+						'SUBFORUMS' => !empty($subforums) && !empty($row['subname']) ? $subforums : $subforums,
 						'NBR_TOPIC' => $row['nbr_topic'],
 						'NBR_MSG' => $row['nbr_msg'],
 						'U_FORUM_URL' => $row['url'],
 						'U_FORUM_VARS' => ForumUrlBuilder::display_forum($row['cid'], $row['rewrited_name'])->rel(),
 						'C_LAST_TOPIC_MSG' => !empty($row['last_topic_id']),
-						'LAST_TOPIC_TITLE' => !empty($row['last_topic_id']) ? stripslashes($last_topic_title) : '',
+						'LAST_TOPIC_TITLE' => stripslashes($last_topic_title),
 						'U_LAST_TOPIC' => PATH_TO_ROOT . "/forum/topic" . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title'])  . '.php'),
-						'U_LAST_MSG' => !empty($row['last_topic_id']) ? PATH_TO_ROOT . "/forum/topic" . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id : '',
+						'U_LAST_MSG' => PATH_TO_ROOT . "/forum/topic" . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id,
 						'C_LAST_MSG_GUEST' => ($row['last_user_id']) != '-1',
 						'U_LAST_MSG_USER_PROFIL' => UserUrlBuilder::profile($row['last_user_id'])->rel(),
 						'LAST_MSG_USER_LOGIN' => $row['login'],
@@ -235,7 +235,7 @@ class ForumHomeController extends ModuleController
 				}
 			}
 		}
-		
+
 		if ($i > 0) //Fermeture de la catégorie racine.
 		{
 			$this->view->assign_block_vars('forums_list', array(
@@ -243,7 +243,7 @@ class ForumHomeController extends ModuleController
 			$this->view->assign_block_vars('forums_list.endcats', array(
 			));
 		}
-		
+
 		$site_path = GeneralConfig::get_default_site_path();
 		if (GeneralConfig::load()->get_module_home_page() == 'forum')
 		{
@@ -258,7 +258,7 @@ class ForumHomeController extends ModuleController
 			}
 			list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online($where);
 		}
-		
+
 		//Liste des catégories.
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
@@ -276,7 +276,7 @@ class ForumHomeController extends ModuleController
 					$cat_list .= $option->display()->render();
 			}
 		}
-		
+
 		$vars_tpl = array(
 			'FORUM_NAME' => $config->get_forum_name(),
 			'NBR_MSG' => $total_msg,
@@ -311,36 +311,36 @@ class ForumHomeController extends ModuleController
 			'L_AND' => $LANG['and'],
 			'L_ONLINE' => TextHelper::strtolower($LANG['online'])
 		);
-		
+
 		$this->view->put_all($vars_tpl);
 		$tpl_top->put_all($vars_tpl);
 		$tpl_bottom->put_all($vars_tpl);
-		
+
 		$this->view->put('forum_top', $tpl_top);
 		$this->view->put('forum_bottom', $tpl_bottom);
 
 		return $this->view;
 	}
-	
+
 	private function generate_response()
 	{
 		global $LANG;
 		load_module_lang('forum');
-		
+
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($LANG['title_forum']);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ForumUrlBuilder::home());
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($LANG['title_forum'], ForumUrlBuilder::home());
-		
+
 		if ($this->category !== false && $this->category->get_id() != Category::ROOT_CATEGORY)
 			$breadcrumb->add($this->category->get_name(), url('/forum/index.php?id=' . $this->category->get_id(), '/forum/cat-' . $this->category->get_id() . '+' . $this->category->get_rewrited_name() . '.php'));
-		
+
 		return $response;
 	}
-	
+
 	public static function get_view()
 	{
 		$object = new self();

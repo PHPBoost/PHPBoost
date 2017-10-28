@@ -6,14 +6,14 @@
  *   copyright            : (C) 2005 Viarre Régis / Sautel Benoît
  *   email                : crowkait@phpboost.com / ben.popeye@phpboost.com
  *
- *  
+ *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -81,7 +81,7 @@ if (!empty($id_get))
 	define('TITLE', $category->get_name());
 else
 	define('TITLE', $LANG['title_forum']);
-require_once('../kernel/header.php'); 
+require_once('../kernel/header.php');
 
 //Redirection changement de catégorie.
 $change_cat = $request->get_postint('change_cat', 0);
@@ -100,20 +100,20 @@ if (!empty($id_get))
 
 	//Invité?
 	$is_guest = AppContext::get_current_user()->get_id() == -1;
-	
+
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
 	$max_time_msg = forum_limit_time_msg();
-	
+
 	//Affichage des sous forums s'il y en a.
 	if (ForumService::get_categories_manager()->get_categories_cache()->get_children($id_get))
 	{
 		$tpl->put_all(array(
 			'C_FORUM_SUB_CATS' => true
 		));
-		
+
 		//Vérification des autorisations.
 		$authorized_categories = ForumService::get_authorized_categories($id_get);
-		
+
 		//On liste les sous-catégories.
 		$result = PersistenceContext::get_querier()->select('SELECT c.id AS cid, c.id_parent, c.name, c.rewrited_name, c.description as subname, c.url, c.last_topic_id, c.status AS cat_status, t.id AS tid, t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, t.status, m.user_id, m.display_name, m.level AS user_level, m.groups, v.last_view_id
 		FROM ' . ForumSetup::$forum_cats_table . ' c
@@ -126,26 +126,26 @@ if (!empty($id_get))
 			'id_cat' => $category->get_id(),
 			'authorized_categories' => $authorized_categories
 		));
-		
+
 		$categories = array();
 		while ($row = $result->fetch())
 		{
 			$cat = $categories_cache->get_category($row['cid']);
 			$elements_number = $cat->get_elements_number();
-			
+
 			$categories[$row['cid']] = $row;
 			$categories[$row['cid']]['nbr_topic'] = $elements_number['topics_number'];
 			$categories[$row['cid']]['nbr_msg'] = $elements_number['messages_number'];
 		}
 		$result->dispose();
-		
+
 		$display_sub_cats = false;
 		$is_sub_forum = array();
 		foreach ($categories as $row)
 		{
 			if (in_array($row['id_parent'], $is_sub_forum))
 				$is_sub_forum[] = $row['cid'];
-			
+
 			if (!in_array($row['cid'], $is_sub_forum))
 			{
 				if ((int)$row['nbr_msg'] > 0)
@@ -153,20 +153,20 @@ if (!empty($id_get))
 					//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
 					if (!empty($row['last_view_id'])) //Calcul de la page du last_view_id réalisé dans topic.php
 					{
-						$last_msg_id = $row['last_view_id']; 
+						$last_msg_id = $row['last_view_id'];
 						$last_page = 'idm=' . $row['last_view_id'] . '&amp;';
 						$last_page_rewrite = '-0-' . $row['last_view_id'];
 					}
 					else
 					{
-						$last_msg_id = $row['last_msg_id']; 
+						$last_msg_id = $row['last_msg_id'];
 						$last_page = ceil($row['t_nbr_msg'] / $config->get_number_messages_per_page());
 						$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 						$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';
 					}
-					
+
 					$last_topic_title = (($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '') . ' ' . $row['title'];
-					
+
 					$group_color = User::get_group_color($row['groups'], $row['user_level']);
 				}
 				else
@@ -190,7 +190,7 @@ if (!empty($id_get))
 					}
 					$subforums = '<strong>' . $LANG['subforum_s'] . '</strong>: ' . $subforums;
 				}
-				
+
 				//Vérifications des topics Lu/non Lus.
 				$img_announce = 'fa-announce';
 				$blink = false;
@@ -203,7 +203,7 @@ if (!empty($id_get))
 					}
 				}
 				$img_announce .= ($row['cat_status'] == ForumCategory::STATUS_LOCKED) ? '-lock' : '';
-				
+
 				$last_msg_date = new Date($row['last_timestamp'], Timezone::SERVER_TIMEZONE);
 
 				$tpl->assign_block_vars('subcats', array_merge(
@@ -213,7 +213,7 @@ if (!empty($id_get))
 					'IDCAT' => $row['cid'],
 					'NAME' => stripslashes($row['name']),
 					'DESC' => stripslashes($row['subname']),
-					'SUBFORUMS' => !empty($subforums) && !empty($row['subname']) ? '<br />' . $subforums : $subforums,
+					'SUBFORUMS' => !empty($subforums) && !empty($row['subname']) ? $subforums : $subforums,
 					'NBR_TOPIC' => $row['nbr_topic'],
 					'NBR_MSG' => $row['nbr_msg'],
 					'U_FORUM_URL' => $row['url'],
@@ -232,7 +232,7 @@ if (!empty($id_get))
 			}
 		}
 	}
-	
+
 	//On vérifie si l'utilisateur a les droits d'écritures.
 	$check_group_write_auth = ForumAuthorizationsService::check_authorizations($id_get)->write();
 	$locked_cat = ($category->get_status() == ForumCategory::STATUS_LOCKED);
@@ -250,9 +250,9 @@ if (!empty($id_get))
 			'L_ERROR_AUTH_WRITE' => $LANG['e_cat_lock_forum']
 		));
 	}
-	
+
 	$nbr_topic = PersistenceContext::get_querier()->count(PREFIX . 'forum_topics', 'WHERE idcat=:idcat', array('idcat' => $id_get));
-	
+
 	//On crée une pagination (si activé) si le nombre de forum est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbr_topic, $config->get_number_topics_per_page(), Pagination::LIGHT_PAGINATION);
@@ -275,7 +275,7 @@ if (!empty($id_get))
 			$forum_cats .= ' &raquo; <a href="' . $array[1] . '">' . $array[0] . '</a>';
 		$i++;
 	}
-	
+
 	//Si l'utilisateur a les droits d'édition.
 	$check_group_edit_auth = ForumAuthorizationsService::check_authorizations($id_get)->moderation();
 
@@ -336,7 +336,7 @@ if (!empty($id_get))
 	{
 		//On définit un array pour l'appellation correspondant au type de champ
 		$type = array('2' => $LANG['forum_announce'] . ':', '1' => $LANG['forum_postit'] . ':', '0' => '');
-		
+
 		//Vérifications des topics Lu/non Lus.
 		$img_announce = 'fa-announce';
 		$new_msg = false;
@@ -356,34 +356,34 @@ if (!empty($id_get))
 
 		//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
 		//Puis calcul de la page du last_msg_id ou du last_view_id.
-		if (!empty($row['last_view_id'])) 
+		if (!empty($row['last_view_id']))
 		{
-			$last_msg_id = $row['last_view_id']; 
+			$last_msg_id = $row['last_view_id'];
 			$last_page = 'idm=' . $row['last_view_id'] . '&amp;';
 			$last_page_rewrite = '-0-' . $row['last_view_id'];
 		}
 		else
 		{
-			$last_msg_id = $row['last_msg_id']; 
+			$last_msg_id = $row['last_msg_id'];
 			$last_page = ceil( $row['nbr_msg'] / $config->get_number_messages_per_page() );
 			$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 			$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';
 		}
-		
+
 		//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
 		$rewrited_title_topic = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['title']) : '';
-		
-		//Ancre ajoutée aux messages non lus.	
+
+		//Ancre ajoutée aux messages non lus.
 		$new_ancre = ($new_msg === true && !$is_guest) ? '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title_topic . '.php') . '#m' . $last_msg_id . '" title=""><i class="fa fa-hand-o-right"></i></a>' : '';
-		
+
 		//On crée une pagination (si activé) si le nombre de topics est trop important.
 		$page = AppContext::get_request()->get_getint('pt', 1);
 		$topic_pagination = new ModulePagination($page, $row['nbr_msg'], $config->get_number_messages_per_page(), Pagination::LIGHT_PAGINATION);
 		$topic_pagination->set_url(new Url('/forum/topic' . url('.php?id=' . $row['id'] . '&amp;pt=%d', '-' . $row['id'] . '-%d' . $rewrited_title_topic . '.php')));
-		
+
 		$group_color      = User::get_group_color($row['user_groups'], $row['user_level']);
 		$last_group_color = User::get_group_color($row['last_user_groups'], $row['last_user_level']);
-		
+
 		$last_msg_date = new Date($row['last_timestamp'], Timezone::SERVER_TIMEZONE);
 		$first_msg_date = new Date($row['first_timestamp'], Timezone::SERVER_TIMEZONE);
 
@@ -406,7 +406,7 @@ if (!empty($id_get))
 			'PAGINATION' => $topic_pagination->display(),
 			'MSG' => ($row['nbr_msg'] - 1),
 			'VUS' => $row['nbr_views'],
-			'L_DISPLAY_MSG' => ($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '', 
+			'L_DISPLAY_MSG' => ($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '',
 			'U_TOPIC_VARS' => url('.php?id=' . $row['id'], '-' . $row['id'] . $rewrited_title_topic . '.php'),
 			'LAST_MSG_URL' => "topic" . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title_topic . '.php') . '#m' . $last_msg_id,
 			'C_LAST_MSG_GUEST' => !empty($row['last_login']),
@@ -467,14 +467,14 @@ if (!empty($id_get))
 		'L_AND' => $LANG['and'],
 		'L_ONLINE' => TextHelper::strtolower($LANG['online'])
 	));
-	
+
 	$tpl->put_all($vars_tpl);
 	$tpl_top->put_all($vars_tpl);
 	$tpl_bottom->put_all($vars_tpl);
-		
+
 	$tpl->put('forum_top', $tpl_top);
 	$tpl->put('forum_bottom', $tpl_bottom);
-		
+
 	$tpl->display();
 }
 else
