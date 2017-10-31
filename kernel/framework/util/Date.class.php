@@ -280,7 +280,7 @@ class Date
 	 * @param $timezone The timezone in which you want this value
 	 * @return string The first letters of the month name
 	 */
-	public function get_month_text($characters_number = 3, $timezone = Timezone::USER_TIMEZONE)
+	public function get_month_text($characters_number = '', $timezone = Timezone::USER_TIMEZONE)
 	{
 		$this->compute_server_user_difference($timezone);
 		return Texthelper::ucfirst(TextHelper::substr(self::transform_date($this->date_time->format('F')), 0, $characters_number));
@@ -331,7 +331,7 @@ class Date
 	 * @param $timezone The timezone in which you want this value
 	 * @return string The first letters of the day name
 	 */
-	public function get_day_text($characters_number = 3, $timezone = Timezone::USER_TIMEZONE)
+	public function get_day_text($characters_number = '', $timezone = Timezone::USER_TIMEZONE)
 	{
 		$this->compute_server_user_difference($timezone);
 		return Texthelper::ucfirst(TextHelper::substr(self::transform_date($this->date_time->format('l')), 0, $characters_number));
@@ -514,22 +514,25 @@ class Date
 		
 		$date_label = TextHelper::strtoupper($date_label);
 		return array(
-			$date_label                 => $date->format(Date::FORMAT_DAY_MONTH_YEAR),
-			$date_label . '_TIMESTAMP'  => $date->get_timestamp(),
-			$date_label . '_SHORT'      => $date->format(Date::FORMAT_DAY_MONTH_YEAR),
-			$date_label . '_SHORT_TEXT' => $date->format(Date::FORMAT_DAY_MONTH_YEAR_TEXT),
-			$date_label . '_FULL'       => $date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-			$date_label . '_DAY'        => $date->get_day(),
-			$date_label . '_DAY_TEXT'   => $date->get_day_text(), // 3 first characters of day name
-			$date_label . '_MONTH'      => $date->get_month(),
-			$date_label . '_MONTH_TEXT' => $date->get_month_text(), // 3 first characters of month name
-			$date_label . '_YEAR'       => $date->get_year(),
-			$date_label . '_DAY_MONTH'  => $date->format(Date::FORMAT_DAY_MONTH),
-			$date_label . '_HOUR'       => $date->get_hours(),
-			$date_label . '_MINUTE'     => $date->get_minutes(),
-			$date_label . '_ISO8601'    => $date->format(Date::FORMAT_ISO8601),
-			$date_label . '_DIFF_NOW'   => $date->format(Date::FORMAT_DIFF_NOW),
-			$date_label . '_RELATIVE'   => $date->format(Date::FORMAT_RELATIVE)
+			$date_label                     => $date->format(Date::FORMAT_DAY_MONTH_YEAR),
+			$date_label . '_TIMESTAMP'      => $date->get_timestamp(),
+			$date_label . '_SHORT'          => $date->format(Date::FORMAT_DAY_MONTH_YEAR),
+			$date_label . '_SHORT_TEXT'     => $date->format(Date::FORMAT_DAY_MONTH_YEAR_TEXT),
+			$date_label . '_FULL'           => $date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
+			$date_label . '_DAY'            => $date->get_day(), // The number of day
+			$date_label . '_DAY_TEXT'       => $date->get_day_text(3), // 3 first characters of day name
+			$date_label . '_DAY_FULLTEXT'   => $date->get_day_text(), // All characters of day name
+			$date_label . '_MONTH'          => $date->get_month(), // The number of month
+			$date_label . '_MONTH_TEXT'     => $date->get_month_text(3), // 3 first characters of month name
+			$date_label . '_MONTH_FULLTEXT' => $date->get_month_text(), // All characters of month name
+			$date_label . '_YEAR'           => $date->get_year(),
+			$date_label . '_DAY_MONTH'      => $date->format(Date::FORMAT_DAY_MONTH),
+			$date_label . '_HOUR'           => $date->get_hours(),
+			$date_label . '_MINUTE'         => $date->get_minutes(),
+			$date_label . '_SECONDS'        => $date->get_seconds(),
+			$date_label . '_ISO8601'        => $date->format(Date::FORMAT_ISO8601),
+			$date_label . '_DIFF_NOW'       => $date->format(Date::FORMAT_DIFF_NOW),
+			$date_label . '_RELATIVE'       => $date->format(Date::FORMAT_RELATIVE)
 		);
 	}
 
