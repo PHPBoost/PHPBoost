@@ -327,7 +327,7 @@ table.bt tbody tr:last-child td:last-child {
 	text-align: center;
 }
 
-/* Les des categories de niveau 0 */
+/* Les liens des categories de niveau 0 */
 a.forum-link-cat {
 	font-weight: bold;
 }
