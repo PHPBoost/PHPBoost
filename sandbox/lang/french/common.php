@@ -6,14 +6,14 @@
  *   copyright            : (C) 2013 Julien BRISWALTER
  *   email                : j1.seth@phpboost.com
  *
- *  
+ *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -31,11 +31,64 @@
  ####################################################
 
 // --- Titre du module
-
 $lang['module.title'] = 'Bac à sable';
+$lang['config.authorizations.read']  = 'Autorisation d\'afficher le compte à rebours';
+
+// --- Mini module
+$lang['mini.module.title'] = 'Bac à sable';
+$lang['mini.config.title'] = 'Configuration du mini-module bac à sable';
+$lang['mini.superadmin.enabled'] = 'Limiter l\'acces au menu à un seul administrateur';
+$lang['mini.superadmin.id'] = 'Choix de l\'administrateur';
+$lang['mini.open.menu'] = 'Ouvrir le menu sur le côté :';
+$lang['mini.open.menu.left'] = 'gauche';
+$lang['mini.open.menu.right'] = 'droit';
+$lang['is.not.admin'] = 'Le membre choisi n\'est pas un administrateur ou n\'existe pas';
+
+$lang['mini.close'] = 'Fermer le menu';
+$lang['mini.version.pbt'] = 'Version de PHPBoost';
+$lang['mini.version.php'] = 'Version du serveur PHP';
+$lang['mini.version.sql'] = 'Version de MySql';
+$lang['mini.version.date'] = 'Date d\'installation du site';
+$lang['mini.viewport.v'] = 'Hauteur de la fenêtre';
+$lang['mini.viewport.h'] = 'Largeur de la fenêtre';
+$lang['mini.tools'] = 'Outils';
+$lang['mini.errors'] = 'Erreurs archivées';
+$lang['mini.404'] = 'Erreurs 404';
+$lang['mini.coms'] = 'Commentaires';
+$lang['mini.database'] = 'Base de données';
+$lang['mini.enable.css.cache'] = 'Activer le cache css';
+$lang['mini.disable.css.cache'] = 'Désactiver le cache css';
+$lang['mini.clean.css.cache'] = 'Vider le cache css';
+$lang['mini.clean.tpl.cache'] = 'Vider le cache du site';
+$lang['mini.clean.rss.cache'] = 'Vider le cache syndication';
+
+$lang['mini.personalization'] = 'Personnalisation';
+$lang['mini.menus'] = 'Menus';
+$lang['mini.enable.left.col'] = 'Activer la colonne gauche';
+$lang['mini.disable.left.col'] = 'Désactiver la colonne gauche';
+$lang['mini.enable.right.col'] = 'Activer la colonne droite';
+$lang['mini.disable.right.col'] = 'Désactiver la colonne droite';
+$lang['mini.active.left.col'] = 'Activer la colonne gauche';
+$lang['mini.active.right.col'] = 'Activer la colonne droite';
+$lang['mini.general.config'] = 'Générale';
+$lang['mini.advanced.config'] = 'Avancée';
+$lang['mini.user'] = 'Utilisateurs';
+$lang['mini.theme'] = 'Thèmes';
+$lang['mini.mod'] = 'Modules';
+
+$lang['mini.sandbox.mod'] = 'Bac à sable';
+$lang['mini.sandbox.form'] = 'Formulaire';
+$lang['mini.sandbox.css'] = 'Framework Css';
+$lang['mini.sandbox.bbcode'] = 'Framework BBCode';
+$lang['mini.sandbox.table'] = 'Tableaux';
+$lang['mini.sandbox.menu'] = 'CssMenu';
+
+$lang['mini.config'] = 'Configuration';
+$lang['mini.manage'] = 'Gestion';
+$lang['mini.add'] = 'Ajouter';
 
 // --- Page d'accueil
-
+$lang['title.config'] = 'Configuration';
 $lang['title.form.builder'] = 'Formulaires';
 $lang['title.css'] = 'CSS';
 $lang['title.bbcode'] = 'BBCode';
@@ -76,10 +129,22 @@ sed viverra tortor diam pretium metus. In hac habitasse platea dictumst. Ut veli
 Integer elementum faucibus finibus. Nullam et felis sit amet felis blandit iaculis. Vestibulum massa arcu, finibus id enim ac, commodo aliquam metus.
 Vestibulum feugiat urna nunc, et eleifend velit posuere ac. Vestibulum sagittis tempus nunc, sit amet dignissim ipsum sollicitudin eget.';
 
+//
+$lang['sandbox.summary'] = 'Sommaire';
+$lang['sandbox.source.code'] = 'Voir le code source';
 
 // --- Formulaires
 
 $lang['form.title'] = 'Formulaire';
+$lang['form.title.inputs'] = 'Champs texte';
+$lang['form.title.textarea'] = 'Textarea';
+$lang['form.title.radio'] = 'Radio / checkbox';
+$lang['form.title.upload'] = 'Upload';
+$lang['form.title.gmap'] = 'Google Maps';
+$lang['form.title.select'] = 'Select';
+$lang['form.title.date'] = 'Date';
+$lang['form.title.authorization'] = 'Autorisation';
+$lang['form.title.orientation'] = 'Orientation';
 $lang['form.desc'] = 'Ceci est une description';
 $lang['form.input.text'] = 'Champ texte';
 $lang['form.input.text.desc'] = 'Contraintes: lettres, chiffres et tiret bas';
@@ -173,18 +238,25 @@ $lang['css.page.title'] = 'Titre de la page';
 $lang['css.more'] = 'Auteur | Date de création | Nombre de commentaires ...';
 $lang['css.picture'] = 'Image';
 
-$lang['css.options'] = 'Options';
+$lang['css.class'] = 'class';
+$lang['css.form'] = 'form';
+$lang['css.options.file.title'] = 'Informations sur le fichier';
+$lang['css.options'] = '.options';
 $lang['css.options.sort_by'] = 'Trier selon';
 $lang['css.options.sort_by.alphabetical'] = 'Alphabétique';
 $lang['css.options.sort_by.size'] = 'Taille';
 $lang['css.options.sort_by.date'] = 'Date';
 $lang['css.options.sort_by.popularity'] = 'Vues';
 $lang['css.options.sort_by.note'] = 'Note';
+$lang['css.options.link'] = 'Lien';
+$lang['css.options.option.title'] = 'Option du module';
+$lang['css.options.option.com'] = 'Aucun commentaire';
 $lang['css.modules_menus.direction.up'] = 'Croissant';
 $lang['css.modules_menus.direction.down'] = 'Décroissant';
 
 
 // Typogrphie
+$lang['css.title.framework'] = 'Mise en page';
 $lang['css.title.typography'] = 'Typographie';
 $lang['css.titles'] = 'Titres';
 $lang['css.title'] = 'Titre';
@@ -235,9 +307,11 @@ $lang['css.file'] = 'Fichier';
 $lang['css.button'] = 'Boutons';
 $lang['css.button.other'] = 'Autres boutons';
 
+$lang['css.notation'] = 'Notation';
+
 $lang['css.sortable'] = 'Sortable Drag & Drop';
 $lang['css.static.sortable'] = 'Sortable positionné';
-$lang['css.moved.sortable'] = 'Sortable en mouvement';
+$lang['css.moving.sortable'] = 'Sortable en mouvement';
 $lang['css.dropzone'] = 'déplacer ici';
 $lang['css.sortable.move'] = 'Déplacer';
 
@@ -251,7 +325,7 @@ $lang['css.hidden'] = 'Texte caché';
 $lang['css.pagination'] = 'Pagination';
 
 //Tables
-$lang['css.table'] = 'Tableau';
+$lang['css.table'] = 'Tableaux';
 $lang['css.table.description'] = 'Description du tableau';
 $lang['css.table.name'] = 'Nom';
 $lang['css.table.description'] = 'Description';
@@ -274,13 +348,14 @@ $lang['css.message.notice'] = 'Ceci est un message d\'information';
 $lang['css.message.warning'] = 'Ceci est un message d\'avertissement';
 $lang['css.message.error'] = 'Ceci est un message d\'erreur';
 $lang['css.message.question'] = 'Ceci est une question:<br /> est-ce que l\'affichage sur deux lignes fonctionne correctement ?';
+$lang['css.message.member'] = 'Ceci est un message dont l\'affichage est limité aux membres';
+$lang['css.message.modo'] = 'Ceci est un message dont l\'affichage est limité aux modérateurs';
+$lang['css.message.admin'] = 'Ceci est un message dont l\'affichage est limité aux administrateurs';
 
 //Blocs
 $lang['css.blocks'] = 'Blocs';
 $lang['css.block.title'] = 'Titre de l\'article';
-$lang['css.blocks.large'] = '1 par ligne (.columns-1)';
-$lang['css.blocks.medium'] = '2 par ligne (.columns-2)';
-$lang['css.blocks.small'] = '3 par ligne (.columns-3)';
+$lang['css.blocks.per.line'] = 'par ligne';
 
 // --- Styles spécifiques du BBCode
 
@@ -291,6 +366,7 @@ $lang['bbcode.title_1'] = 'Titre 1';
 $lang['bbcode.title_2'] = 'Titre 2';
 $lang['bbcode.title_3'] = 'Titre 3';
 $lang['bbcode.title_4'] = 'Titre 4';
+$lang['bbcode.title_5'] = 'Titre 5';
 
 $lang['bbcode.title.lists'] = 'Listes';
 $lang['bbcode.element'] = 'Elément';
@@ -324,6 +400,7 @@ $lang['bbcode.table.name'] = 'Nom';
 $lang['bbcode.table.description'] = 'Description';
 
 // --- Wiki
+$lang['wiki.not'] = 'Le module Wiki n\'est pas installé et/ou activé';
 $lang['wiki.conditions'] = 'Vous devez porter le module wiki dans votre thème pour que cette visualisation soit active.';
 $lang['wiki.module'] = 'Module Wiki';
 $lang['wiki.table.of.contents'] = 'Table des matières';
@@ -364,7 +441,7 @@ $lang['iconfa.howto.variants.spinner'] = 'Nous donnera l\'icone "spinner", défi
 
 // --- Cssmenu
 
-$lang['cssmenu.site.title'] = 'Menus de navigation Cssmenu';
+$lang['cssmenu.h1'] = 'Menus de navigation';
 $lang['cssmenu.site.slogan'] = 'Bac à sable - le design des cssmenu';
 $lang['cssmenu.breadcrumb.index'] = 'Accueil';
 $lang['cssmenu.breadcrumb.sandbox'] = 'Bac à sable';
@@ -372,9 +449,9 @@ $lang['cssmenu.breadcrumb.cssmenu'] = 'cssmenu';
 $lang['cssmenu.h2'] = 'Les différents menus cssmenu';
 $lang['cssmenu.element'] = 'Item du menu';
 $lang['cssmenu.sub.element'] = 'Sous menu';
+$lang['cssmenu.horizontal.top'] = 'Menu horizontal entête';
 $lang['cssmenu.horizontal.sub.header'] = 'Menu de sous-entête';
 $lang['cssmenu.sub.admin'] = 'Administration';
-$lang['cssmenu.horizontal.top'] = 'Menu horizontal Header';
 $lang['cssmenu.horizontal.scrolling'] = 'Menu horizontal déroulant';
 $lang['cssmenu.vertical.scrolling'] = 'Menu vertical déroulant';
 $lang['cssmenu.vertical.img'] = 'Menu avec images';
@@ -395,7 +472,7 @@ $lang['cssmenu.group'] = 'Menu groupes';
 $lang['cssmenu.static'] = 'Menu statique';
 $lang['cssmenu.static.footer'] = 'Menu statique pied de page';
 
-$lang['cssmenu.warning'] = 'Cette page a un design spécifique de manière à afficher tous les types de menus en fonction des emplacements potentiels susceptibles d\'être utilisés.
+$lang['cssmenu.warning'] = 'Cette page a une structure spécifique de manière à afficher tous les types de menus en fonction des emplacements potentiels susceptibles d\'être utilisés.
 Il peut être mal adapté si votre design ne respecte pas l\'arborescence et les noms des classes/id du thème Base.';
 
 

@@ -29,23 +29,25 @@ class SandboxIconsController extends ModuleController
 {
 	private $view;
 	private $lang;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
+		$this->check_authorizations();
+
 		$this->init();
-		
+
 		$this->build_view();
-		
+
 		return $this->generate_response();
 	}
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'sandbox');
 		$this->view = new FileTemplate('sandbox/SandboxIconsController.tpl');
 		$this->view->add_lang($this->lang);
 	}
-	
+
 	private function build_view()
 	{
 		//Social
@@ -55,22 +57,22 @@ class SandboxIconsController extends ModuleController
 			'twitter',
 			'hashtag'
 		);
-		
+
 		$code = array(
 			'\f09a',
 			'\f1a0',
 			'\f099',
 			'\f292'
-			
+
 		);
-		
+
 		$icon = array_combine($icons, $code);
-		
+
 		foreach ($icon as $fa=> $before)
 		{
 			$this->view->assign_block_vars('social', array('FA' => $fa, 'BEFORE' => $before));
 		}
-		
+
 		//Responsive
 		$icons = array(
 			'television',
@@ -79,7 +81,7 @@ class SandboxIconsController extends ModuleController
 			'tablet',
 			'mobile'
 		);
-		
+
 		$code = array(
 			'\f26c',
 			'\f108',
@@ -87,25 +89,34 @@ class SandboxIconsController extends ModuleController
 			'\f10a',
 			'\f10b'
 		);
-		
+
 		$icon = array_combine($icons, $code);
-		
+
 		foreach ($icon as $fa=> $before)
 		{
 			$this->view->assign_block_vars('responsive', array('FA' => $fa, 'BEFORE' => $before));
 		}
 	}
-	
+
+	private function check_authorizations()
+	{
+		if (!SandboxAuthorizationsService::check_authorizations()->read())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
+	}
+
 	private function generate_response()
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['title.icons'], $this->lang['module.title']);
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], SandboxUrlBuilder::home()->rel());
 		$breadcrumb->add($this->lang['title.icons'], SandboxUrlBuilder::icons()->rel());
-		
+
 		return $response;
 	}
 }

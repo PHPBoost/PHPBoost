@@ -29,26 +29,29 @@ class SandboxTableController extends ModuleController
 {
 	private $view;
 	private $lang;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
+		$this->check_authorizations();
+
 		$this->init();
-		
+
 		$table = $this->build_table();
 		$this->view->put('table', $table->display());
-		
+
 		return $this->generate_response();
 	}
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'sandbox');
-		$this->view = new StringTemplate('# INCLUDE table #');
+		$this->view = new FileTemplate('sandbox/SandboxTableController.tpl');
+		$this->view->add_lang($this->lang);
 	}
-	
+
 	private function build_table()
 	{
-		$table = new SQLHTMLTableModel(DB_TABLE_MEMBER, __CLASS__, array(
+		$table = new SQLHTMLTableModel(DB_TABLE_MEMBER, 'table', array(
 			new HTMLTableColumn('pseudo', 'display_name'),
 			new HTMLTableColumn('email'),
 			new HTMLTableColumn('inscrit le', 'registration_date'),
@@ -57,8 +60,9 @@ class SandboxTableController extends ModuleController
 			new HTMLTableColumn('messagerie')
 		), new HTMLTableSortingRule('user_id', HTMLTableSortingRule::ASC));
 
+
 		$table->set_caption('Liste des membres');
-		
+
 		$options = array('horn' => 'Horn', 'coucou' => 'Coucou', 'teston' => 'teston');
 		$table->add_filter(new HTMLTableEqualsFromListSQLFilter('display_name', 'filter1', 'login Equals', $options));
         $table->add_filter(new HTMLTableBeginsWithTextSQLFilter('display_name', 'filter2', 'login Begins with (regex)', '`^(?!%).+$`u'));
@@ -75,7 +79,7 @@ class SandboxTableController extends ModuleController
         $table->add_filter(new HTMLTableGreaterThanOrEqualsToSQLFilter('user_id', 'filter13', 'id >='));
         $table->add_filter(new HTMLTableLessThanOrEqualsToSQLFilter('user_id', 'filter14', 'id <='));
         $table->add_filter(new HTMLTableEqualsToSQLFilter('user_id', 'filter15', 'id ='));
-		
+
 		$html_table = new HTMLTable($table);
 
         $results = array();
@@ -95,17 +99,26 @@ class SandboxTableController extends ModuleController
 
 		return $html_table;
 	}
-	
+
+	private function check_authorizations()
+	{
+		if (!SandboxAuthorizationsService::check_authorizations()->read())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
+	}
+
 	private function generate_response()
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['title.table.builder'], $this->lang['module.title']);
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], SandboxUrlBuilder::home()->rel());
 		$breadcrumb->add($this->lang['title.table.builder'], SandboxUrlBuilder::table()->rel());
-		
+
 		return $response;
 	}
 }

@@ -6,14 +6,14 @@
  *   copyright            : (C) 2013 Julien BRISWALTER
  *   email                : j1.seth@phpboost.com
  *
- *  
+ *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -33,9 +33,61 @@
 // --- Titre du module
 
 $lang['module.title'] = 'Sandbox';
+$lang['config.authorizations.read']  = 'Read authorizations';
+
+// --- Mini module
+$lang['mini.module.title'] = 'Sandbox';
+$lang['mini.config.title'] = 'Configuration of the mini module';
+$lang['mini.superadmin.enabled'] = 'Limit the access to only one administrator';
+$lang['mini.superadmin.id'] = 'Choose the administrator';
+$lang['mini.open.menu'] = 'Open the menu on the :';
+$lang['mini.open.menu.left'] = 'left';
+$lang['mini.open.menu.right'] = 'right';
+$lang['is.not.admin'] = 'The member is not an administrator or don\'t exists';
+
+$lang['mini.close'] = 'Close the menu';
+$lang['mini.version.pbt'] = 'PHPBoost version';
+$lang['mini.version.php'] = 'PHP server version';
+$lang['mini.version.sql'] = 'MySql version';
+$lang['mini.version.date'] = 'Installation date of the site';
+$lang['mini.viewport.v'] = 'Height of viewport';
+$lang['mini.viewport.h'] = 'Width of viewport';
+$lang['mini.tools'] = 'Tools';
+$lang['mini.errors'] = 'Archived errors';
+$lang['mini.404'] = '404 errors';
+$lang['mini.coms'] = 'Comments';
+$lang['mini.database'] = 'Database';
+$lang['mini.enable.css.cache'] = 'Enable the css cache';
+$lang['mini.disable.css.cache'] = 'Disable the css cache';
+$lang['mini.clean.css.cache'] = 'Refresh the css cache';
+$lang['mini.clean.tpl.cache'] = 'Refresh the site cache';
+$lang['mini.clean.rss.cache'] = 'Refresh the syndication cache';
+
+$lang['mini.personalization'] = 'Personnalization';
+$lang['mini.menus'] = 'Menus';
+$lang['mini.enable.left.col'] = 'Enable the left column';
+$lang['mini.disable.left.col'] = 'Disable the left column';
+$lang['mini.enable.right.col'] = 'Enable the right column';
+$lang['mini.disable.right.col'] = 'Disable the right column';
+$lang['mini.general.config'] = 'General';
+$lang['mini.advanced.config'] = 'Advanced';
+$lang['mini.user'] = 'Users';
+$lang['mini.theme'] = 'Themes';
+$lang['mini.mod'] = 'Modules';
+
+$lang['mini.sandbox.mod'] = 'Sandbox';
+$lang['mini.sandbox.form'] = 'Forms';
+$lang['mini.sandbox.css'] = 'Css framework';
+$lang['mini.sandbox.bbcode'] = 'BBCode framework';
+$lang['mini.sandbox.table'] = 'Tables';
+$lang['mini.sandbox.menu'] = 'CssMenu';
+
+$lang['mini.config'] = 'Configuration';
+$lang['mini.manage'] = 'Management';
+$lang['mini.add'] = 'Add';
 
 // --- Page d'accueil
-
+$lang['title.config'] = 'Configuration';
 $lang['title.form.builder'] = 'Form builder';
 $lang['title.css'] = 'CSS';
 $lang['title.bbcode'] = 'BBCode';
@@ -76,10 +128,22 @@ sed viverra tortor diam pretium metus. In hac habitasse platea dictumst. Ut veli
 Integer elementum faucibus finibus. Nullam et felis sit amet felis blandit iaculis. Vestibulum massa arcu, finibus id enim ac, commodo aliquam metus.
 Vestibulum feugiat urna nunc, et eleifend velit posuere ac. Vestibulum sagittis tempus nunc, sit amet dignissim ipsum sollicitudin eget.';
 
+//
+$lang['sandbox.summary'] = 'Summary';
+$lang['sandbox.source.code'] = 'See the source code';
 
 // --- Formulaires
 
 $lang['form.title'] = 'Form';
+$lang['form.title.inputs'] = 'Text fields';
+$lang['form.title.textarea'] = 'Textarea';
+$lang['form.title.radio'] = 'Radio / checkbox';
+$lang['form.title.upload'] = 'Upload';
+$lang['form.title.gmap'] = 'Google Maps';
+$lang['form.title.select'] = 'Select';
+$lang['form.title.date'] = 'Date';
+$lang['form.title.authorization'] = 'Authorization';
+$lang['form.title.orientation'] = 'Orientation';
 $lang['form.desc'] = 'This is a description';
 $lang['form.input.text'] = 'Text field';
 $lang['form.input.text.desc'] = 'Constraints: letters, numbers and underscore';
@@ -173,7 +237,10 @@ $lang['css.page.title'] = 'Page title';
 $lang['css.more'] = 'Author | Creation date | Number of comments ...';
 $lang['css.picture'] = 'Picture';
 
-$lang['css.options'] = 'Options';
+$lang['css.class'] = 'class';
+$lang['css.form'] = 'form';
+$lang['css.options.file.title'] = 'Informations on files';
+$lang['css.options'] = '.options';
 $lang['css.options.sort_by'] = 'Order by';
 $lang['css.options.sort_by.alphabetical'] = 'Alphabetical';
 $lang['css.options.sort_by.size'] = 'Size';
@@ -185,6 +252,7 @@ $lang['css.modules_menus.direction.down'] = 'Down';
 
 
 // Typogrphie
+$lang['css.title.framework'] = 'Layout';
 $lang['css.title.typography'] = 'Typography';
 $lang['css.titles'] = 'Titles';
 $lang['css.title'] = 'Title';
@@ -235,9 +303,11 @@ $lang['css.file'] = 'File';
 $lang['css.button'] = 'Buttons';
 $lang['css.button.other'] = 'Other buttons';
 
+$lang['css.notation'] = 'Notation';
+
 $lang['css.sortable'] = 'Drag & Drop Sortable';
 $lang['css.static.sortable'] = 'Spoted sortable';
-$lang['css.moved.sortable'] = 'Moving sortable';
+$lang['css.moving.sortable'] = 'Moving sortable';
 $lang['css.dropzone'] = 'Spot here';
 $lang['css.sortable.move'] = 'Moving';
 
@@ -251,7 +321,7 @@ $lang['css.hidden'] = 'Hidden text';
 $lang['css.pagination'] = 'Pagination';
 
 //Tables
-$lang['css.table'] = 'Table';
+$lang['css.table'] = 'Tables';
 $lang['css.table.description'] = 'Table description';
 $lang['css.table.name'] = 'Name';
 $lang['css.table.description'] = 'Description';
@@ -274,13 +344,14 @@ $lang['css.message.notice'] = 'This is a notice message';
 $lang['css.message.warning'] = 'This is a warning message';
 $lang['css.message.error'] = 'This is a error message';
 $lang['css.message.question'] = 'This is a question:<br /> is the two-lines display working correctly?';
+$lang['css.message.member'] = 'This is a message limited to members';
+$lang['css.message.modo'] = 'This is a message limited to moderators';
+$lang['css.message.admin'] = 'This is a message limited to administrators';
 
 //Blocs
 $lang['css.blocks'] = 'Blocks';
 $lang['css.block.title'] = 'Article title';
-$lang['css.blocks.large'] = '1 on one row (.columns-1)';
-$lang['css.blocks.medium'] = '2 on one row (.columns-2)';
-$lang['css.blocks.small'] = '3 on one row (.columns-3)';
+$lang['css.blocks.per.line'] = 'per row';
 
 // --- Styles spécifiques du BBCode
 
@@ -291,6 +362,7 @@ $lang['bbcode.title_1'] = 'Title 1';
 $lang['bbcode.title_2'] = 'Title 2';
 $lang['bbcode.title_3'] = 'Title 3';
 $lang['bbcode.title_4'] = 'Title 4';
+$lang['bbcode.title_5'] = 'Title 5';
 
 $lang['bbcode.title.lists'] = 'Lists';
 $lang['bbcode.element'] = 'Element';
@@ -324,6 +396,7 @@ $lang['bbcode.table.name'] = 'Name';
 $lang['bbcode.table.description'] = 'Description';
 
 // --- Wiki
+$lang['wiki.not'] = 'The Wiki is not installed and/or activated';
 $lang['wiki.conditions'] = 'You must set the wiki in your template to get this view active.';
 $lang['wiki.module'] = 'Wiki module';
 $lang['wiki.table.of.contents'] = 'Summary';
@@ -364,7 +437,7 @@ $lang['iconfa.howto.variants.spinner'] = 'That gives the "spinner" icon, setted 
 
 // --- Cssmenu
 
-$lang['cssmenu.site.title'] = 'Cssmenu Navigation Menu';
+$lang['cssmenu.h1'] = 'Navigation menu';
 $lang['cssmenu.site.slogan'] = 'Sandbox - Cssmenu Design';
 $lang['cssmenu.breadcrumb.index'] = 'Home';
 $lang['cssmenu.breadcrumb.sandbox'] = 'Sandbox';
@@ -395,7 +468,7 @@ $lang['cssmenu.group'] = 'Group menu';
 $lang['cssmenu.static'] = 'Static menu';
 $lang['cssmenu.static.footer'] = 'Footer static menu';
 
-$lang['cssmenu.warning'] = 'This page has a specific design to display all kind of menus regarding to all places they can be setted. It could be ugly if you don\'t use the rules of the Base template.';
+$lang['cssmenu.warning'] = 'This page has a specific structure to display all kind of menus regarding to all places they can be setted. It could be ugly if you don\'t use the rules of the Base template.';
 
 
 // --- Mail

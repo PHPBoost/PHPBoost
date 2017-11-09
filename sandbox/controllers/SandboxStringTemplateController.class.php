@@ -29,7 +29,7 @@ class SandboxStringTemplateController extends ModuleController
 {
 	private $view;
 	private $lang;
-	
+
 	private $test = 'This is a list of {CONTENT}
 <ul>
 # START elements #
@@ -41,24 +41,26 @@ class SandboxStringTemplateController extends ModuleController
 
 	public function execute(HTTPRequestCustom $request)
 	{
+		$this->check_authorizations();
+
 		$this->init();
-		
+
 		$this->test = str_repeat($this->test, 1);
-		
+
 		$bench_non_cached = new Bench();
 		$bench_non_cached->start();
 		$this->run_non_cached_parsing();
 		$bench_non_cached->stop();
-		
+
 		$bench_cached = new Bench();
 		$bench_cached->start();
 		$this->run_cached_parsing();
 		$bench_cached->stop();
-		
+
 		$this->view->put_all(array(
 			'RESULT' => StringVars::replace_vars($this->lang['string_template.result'], array('non_cached_time' => $bench_non_cached->to_string(5), 'cached_time' => $bench_cached->to_string(5), 'string_length' => TextHelper::strlen($this->test)))
 		));
-		
+
 		return $this->generate_response();
 	}
 
@@ -98,17 +100,26 @@ class SandboxStringTemplateController extends ModuleController
 			$tpl->render();
 		}
 	}
-	
+
+	private function check_authorizations()
+	{
+		if (!SandboxAuthorizationsService::check_authorizations()->read())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
+	}
+
 	private function generate_response()
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['title.string.template'], $this->lang['module.title']);
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], SandboxUrlBuilder::home()->rel());
 		$breadcrumb->add($this->lang['title.string.template'], SandboxUrlBuilder::mail()->rel());
-		
+
 		return $response;
 	}
 }

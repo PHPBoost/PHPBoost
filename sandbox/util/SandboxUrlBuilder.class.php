@@ -32,7 +32,7 @@
 class SandboxUrlBuilder
 {
 	private static $dispatcher = '/sandbox';
-	
+
 	/**
 	 * @return Url
 	 */
@@ -40,7 +40,16 @@ class SandboxUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/');
 	}
-	
+
+	/**
+	 * @return Url
+	 */
+
+	public static function config()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/admin/config/');
+	}
+
 	/**
 	 * @return Url
 	 */
@@ -48,7 +57,7 @@ class SandboxUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/form');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -56,7 +65,7 @@ class SandboxUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/css');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -64,7 +73,7 @@ class SandboxUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/bbcode');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -72,7 +81,7 @@ class SandboxUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/icons');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -80,7 +89,7 @@ class SandboxUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/menu');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -88,7 +97,7 @@ class SandboxUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/table');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -96,7 +105,7 @@ class SandboxUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/mail');
 	}
-	
+
 	/**
 	 * @return Url
 	 */

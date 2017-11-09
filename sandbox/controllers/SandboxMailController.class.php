@@ -29,7 +29,7 @@ class SandboxMailController extends ModuleController
 {
 	private $view;
 	private $lang;
-	
+
 	/**
 	 * @var HTMLForm
 	 */
@@ -41,10 +41,12 @@ class SandboxMailController extends ModuleController
 
 	public function execute(HTTPRequestCustom $request)
 	{
+		$this->check_authorizations();
+
 		$this->init();
-		
+
 		$this->build_form();
-		
+
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$result = $this->send_mail();
@@ -54,19 +56,19 @@ class SandboxMailController extends ModuleController
 				'ERROR' => $result
 			));
 		}
-		
+
 		$this->view->put('SMTP_FORM', $this->form->display());
-		
+
 		return $this->generate_response();
 	}
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'sandbox');
 		$this->view = new FileTemplate('sandbox/SandboxMailController.tpl');
 		$this->view->add_lang($this->lang);
 	}
-	
+
 	private function build_form()
 	{
 		$this->form = new HTMLForm('smtp_config');
@@ -133,17 +135,26 @@ class SandboxMailController extends ModuleController
 
 		return $mailer->send($mail);
 	}
-	
+
+	private function check_authorizations()
+	{
+		if (!SandboxAuthorizationsService::check_authorizations()->read())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
+	}
+
 	private function generate_response()
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['title.mail.sender'], $this->lang['module.title']);
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], SandboxUrlBuilder::home()->rel());
 		$breadcrumb->add($this->lang['title.mail.sender'], SandboxUrlBuilder::mail()->rel());
-		
+
 		return $response;
 	}
 }

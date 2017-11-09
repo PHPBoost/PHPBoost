@@ -29,7 +29,7 @@ class SandboxFormController extends ModuleController
 {
 	private $view;
 	private $lang;
-	
+
 	/**
 	 * @var FormButtonSubmit
 	 */
@@ -41,10 +41,19 @@ class SandboxFormController extends ModuleController
 
 	public function execute(HTTPRequestCustom $request)
 	{
+		$this->check_authorizations();
+
 		$this->init();
-		
+
 		$form = $this->build_form();
-		
+
+		if (ModulesManager::is_module_installed('GoogleMaps') && ModulesManager::is_module_activated('GoogleMaps') && GoogleMapsConfig::load()->get_api_key())
+			$c_gmap = true;
+		else
+			$c_gmap = false;
+
+		$this->view->put_all(array('C_GMAP' => $c_gmap));
+
 		if ($this->submit_button->has_been_submited() || $this->preview_button->has_been_submited())
 		{
 			if ($form->validate())
@@ -64,9 +73,9 @@ class SandboxFormController extends ModuleController
 					'DATE' => $form->get_value('date')->format(Date::FORMAT_DAY_MONTH_YEAR),
 					'DATE_TIME' => $form->get_value('date_time')->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 					'H_T_TEXT_FIELD' => $form->get_value('alone'),
-					'C_PREVIEW' => $this->preview_button->has_been_submited()                
+					'C_PREVIEW' => $this->preview_button->has_been_submited()
 				));
-				
+
 				$file = $form->get_value('file');
 				if ( $file !== null)
 				{
@@ -74,20 +83,20 @@ class SandboxFormController extends ModuleController
 				}
 			}
 		}
-		
+
 		$this->view->put('form', $form->display());
 		$this->view->add_lang($this->lang);
-		
+
 		return $this->generate_response();
 	}
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'sandbox');
 		$this->view = new FileTemplate('sandbox/SandboxFormController.tpl');
 		$this->view->add_lang($this->lang);
 	}
-	
+
 	private function build_form()
 	{
 		$security_config = SecurityConfig::load();
@@ -98,7 +107,7 @@ class SandboxFormController extends ModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->set_description($this->lang['form.desc']);
-		
+
 		// SINGLE LINE TEXT
 		$fieldset->add_field(new FormFieldTextEditor('text', $this->lang['form.input.text'], $this->lang['form.input.text.lorem'], array(
 			'maxlength' => 25, 'description' => $this->lang['form.input.text.desc']),
@@ -147,12 +156,12 @@ class SandboxFormController extends ModuleController
 			'description' => $security_config->get_internal_password_min_length() . $this->lang['form.input.password.desc']),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
 		));
-	   
+
 		// SHORT MULTI LINE TEXT
 		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('short_multi_line_text', $this->lang['form.input.multiline.medium'], $this->lang['form.input.multiline.lorem'],
 			array('rows' => 3, 'required' => true)
 		));
-		
+
 		// MULTI LINE TEXT
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('multi_line_text', $this->lang['form.input.multiline'], $this->lang['form.input.multiline.lorem'],
 				array('rows' => 6, 'cols' => 47, 'description' => $this->lang['form.input.multiline.desc'], 'required' => true)
@@ -167,14 +176,14 @@ class SandboxFormController extends ModuleController
 		$fieldset->add_field(new FormFieldCheckbox('checkbox', $this->lang['form.input.checkbox'], FormFieldCheckbox::CHECKED));
 
 		// MULTIPLE CHECKBOXES
-		$fieldset->add_field(new FormFieldMultipleCheckbox('multiple_check_box', $this->lang['form.input.multiple.checkbox'], array('1'), 
+		$fieldset->add_field(new FormFieldMultipleCheckbox('multiple_check_box', $this->lang['form.input.multiple.checkbox'], array('1'),
 			array(
-				new FormFieldMultipleCheckboxOption('1', $this->lang['form.input.choice.1']), 
+				new FormFieldMultipleCheckboxOption('1', $this->lang['form.input.choice.1']),
 				new FormFieldMultipleCheckboxOption('2', $this->lang['form.input.choice.2'])
 			),
 			array('required' => true)
 		));
-		
+
 		// RADIO
 		$default_option = new FormFieldRadioChoiceOption($this->lang['form.input.choice.1'], '1');
 		$fieldset->add_field(new FormFieldRadioChoice('radio', $this->lang['form.input.radio'], '',
@@ -203,7 +212,7 @@ class SandboxFormController extends ModuleController
 			),
 			array('required' => true)
 		));
-		
+
 		// SELECT MULTIPLE
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('multiple_select', $this->lang['form.input.multiple.select'], array('1', '2'),
 			array(
@@ -213,11 +222,11 @@ class SandboxFormController extends ModuleController
 			),
 			array('required' => true)
 		));
-		
+
 		$fieldset->add_field(new FormFieldTimezone('timezone', $this->lang['form.input.timezone'], 'UTC+0'));
-		
+
 		$fieldset->add_field(new FormFieldAjaxSearchUserAutoComplete('user_completition', $this->lang['form.input.user.completion'], ''));
-		
+
 		$fieldset->add_element(new FormButtonButton($this->lang['form.send.button']));
 
 		$fieldset2 = new FormFieldsetHTML('fieldset2', $this->lang['form.title.2']);
@@ -247,35 +256,35 @@ class SandboxFormController extends ModuleController
 
 		// SEARCH
 		$fieldset2->add_field(new FormFieldSearch('search', $this->lang['form.search'], ''));
-		
+
 		// FILE PICKER
 		$fieldset2->add_field(new FormFieldFilePicker('file', $this->lang['form.file.picker']));
-		
+
 		// MULTIPLE FILE PICKER
 		$fieldset2->add_field(new FormFieldMultipleFilePicker('multiple_files', $this->lang['form.multiple.file.picker']));
-		
+
 		// UPLOAD FILE
 		$fieldset2->add_field(new FormFieldUploadFile('upload_file', $this->lang['form.file.upload'], '', array('required' => true)));
-		
+
 		// GOOGLE MAPS
 		if (ModulesManager::is_module_installed('GoogleMaps') && ModulesManager::is_module_activated('GoogleMaps') && GoogleMapsConfig::load()->get_api_key())
 		{
 			$fieldset_maps = new FormFieldsetHTML('fieldset_maps', $this->lang['form.googlemap']);
 			$form->add_fieldset($fieldset_maps);
-			
+
 			// SIMPLE ADDRESS
 			$fieldset_maps->add_field(new GoogleMapsFormFieldSimpleAddress('simple_address', $this->lang['form.googlemap.simple_address'], ''));
-			
+
 			// MAP ADDRESS
 			$fieldset_maps->add_field(new GoogleMapsFormFieldMapAddress('map_address', $this->lang['form.googlemap.map_address'], '', array('include_api' => false)));
-			
+
 			// SIMPLE MARKER
 			$fieldset_maps->add_field(new GoogleMapsFormFieldSimpleMarker('simple_marker', $this->lang['form.googlemap.simple_marker'], '', array('include_api' => false)));
-			
+
 			// MULTIPLE MARKERS
 			$fieldset_maps->add_field(new GoogleMapsFormFieldMultipleMarkers('multiple_markers', $this->lang['form.googlemap.multiple_markers'], '', array('include_api' => false)));
 		}
-		
+
 		// AUTH
 		$fieldset3 = new FormFieldsetHTML('fieldset3', $this->lang['form.authorization']);
 		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization($this->lang['form.authorization.1'], 1, $this->lang['form.authorization.1.desc']), new ActionAuthorization($this->lang['form.authorization.2'], 2)));
@@ -313,17 +322,26 @@ class SandboxFormController extends ModuleController
 
 		return $form;
 	}
-	
+
+	private function check_authorizations()
+	{
+		if (!SandboxAuthorizationsService::check_authorizations()->read())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
+	}
+
 	private function generate_response()
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['title.form.builder'], $this->lang['module.title']);
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], SandboxUrlBuilder::home()->rel());
 		$breadcrumb->add($this->lang['title.form.builder'], SandboxUrlBuilder::form()->rel());
-		
+
 		return $response;
 	}
 }
