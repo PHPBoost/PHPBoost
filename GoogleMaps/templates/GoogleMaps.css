@@ -7,43 +7,24 @@
 	padding-bottom: 56.25%;
 }
 
-.marker-container {
-	margin-bottom: 5px;
+.form-field-map {
+	display: block;
 }
 
-@media (max-width: 768px) {
-	.form-field-map {
-		display: block;
-	}
+.map-address-input,
+.marker-address-input,
+.marker-container,
+.marker-desc-input.field-large {
+	width: 100%;
+}
 
-	.form-field-map input {
-		width: 100%;
-	}
-
-	.form-field-map .marker-desc-input {
-		margin-top: 2px;
-	}
-
-	.form-field-map.multiple-markers .marker-desc-input {
-		width: calc(100% - 20px);
-	}
-
+.marker-desc-input {
+	width: calc(100% - 1.618em);
 }
 
 @media (min-width: 769px) {
 	.form-field-map {
 		width: 59%;
-	}
-
-	.marker-container input.marker-address-input {
-		width: calc(100% - 200px);
-	}
-
-	input.marker-desc-input {
-		width: 179px;
-	}
-
-	input.marker-address-input {
-		width: calc(100% - 183px);
+		display: inline-block;
 	}
 }

@@ -1,15 +1,11 @@
 .faq-answer-container {
-	padding: 10px 5px 10px 0;
+	padding: 0.618em 0.309em 0.618em 0;
 	height: auto;
-}
-
-.faq-answer-container > div {
-	line-height: 1.32em;
 }
 
 .article-faq {
 	display: table;
-	margin: 0 0 6px 0;
+	margin: 0 0 0.309em 0;
 	padding: 0;
 	width: 100%;
 	transition: all 0.2s;
@@ -17,7 +13,7 @@
 
 .faq-question-element {
 	margin: 0;
-	padding: 8px 5px 5px 10px;
+	padding: 0.456em 0.309em 0.309em 0.618em;
 }
 
 .question-title {
@@ -26,7 +22,7 @@
 }
 
 .faq-question-element .question-title {
-	margin-left: 5px;
+	margin-left: 0.309em;
 }
 
 .sortable-title .question-title span {
@@ -35,8 +31,8 @@
 
 /* hack pour l'ancre */
 .question-anchor {
-	margin-top: -10px;
-	padding-top: 10px;
+	margin-top: -0.618em;
+	padding-top: 0.618em;
 }
 
 .article-faq footer {
@@ -45,5 +41,5 @@
 }
 
 #questions-titles-list hr {
-	margin: 20px 0;
+	margin: 0 1.309em 0;
 }

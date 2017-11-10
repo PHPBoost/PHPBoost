@@ -7,20 +7,20 @@
 			{@module_title}
 		</h1>
 	</header>
-	
-	<div class="content">
+
+	<div class="elements-container">
 		# IF NOT C_PENDING_PAGE #
 		<div id="calendar">
 			# INCLUDE CALENDAR #
 		</div>
-		
+
 		<div class="spacer"></div>
 		# ENDIF #
-		
+
 		<div id="events">
 			# INCLUDE EVENTS #
 		</div>
 	</div>
-	
+
 	<footer></footer>
 </section>

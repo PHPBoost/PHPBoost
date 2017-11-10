@@ -4,12 +4,10 @@
 				<legend>{auth.L_TITLE}</legend>
 				<p style="text-align:center">
 					{L_EXPLAIN_DEFAULT}
-					<br />
+					<span class="spacer"></span>
 					<button type="submit" name="default" value="true" class="submit">{L_DEFAULT}</button>
 				</p>
-				<br />
 				<hr />
-				<br />
 				<p class="center">
 					{EXPLAIN_WIKI_GROUPS}
 				</p>
@@ -50,7 +48,7 @@
 					<div class="form-field"><label>{SELECT_COM}</label></div>
 				</div>
 			</fieldset>
-			
+
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button>
@@ -61,7 +59,7 @@
 		</form>
 		# END auth #
 
-		
+
 		# START status #
 		<script>
 		<!--
@@ -69,12 +67,12 @@
 			# START status.status_array #
 			status[{status.status_array.ID}] = "{status.status_array.TEXT}";
 			# END status.status_array #
-			
+
 			function show_status()
 			{
 				if( document.getElementById('radio_undefined').checked )
 					change_type(-1);
-					
+
 				//Si il s'agit d'un statut pr�d�fini
 				if( document.getElementById('id_status').value > 0 && status[document.getElementById('id_status').value] != "" )
 				{
@@ -112,11 +110,10 @@
 		<form action="action.php" method="post" class="fieldset-content">
 			<fieldset>
 				<legend>{status.L_TITLE}</legend>
-				
+
 				<span class="formatter-blockquote">{L_CURRENT_STATUS} :</span>
 				<div id="current_status" class="blockquote">{status.CURRENT_STATUS}</div>
 
-				<br />
 				<div class="form-element">
 					<label>{L_STATUS}</label>
 					<div class="form-field">
@@ -126,9 +123,8 @@
 							<option value="{status.list.ID_STATUS}" {status.list.SELECTED}>{status.list.L_STATUS}</option>
 						# END status.list #
 						</select>
-						<br /><br />
-						<label><input type="radio" name="status" id="radio_undefined" value="radio_undefined" {status.UNDEFINED} onclick="javascript: change_type(-1);" {status.SELECTED_UNDEFINED}> {L_UNDEFINED_STATUS}</label> 
-						
+						<label class="infos-options"><input type="radio" name="status" id="radio_undefined" value="radio_undefined" {status.UNDEFINED} onclick="javascript: change_type(-1);" {status.SELECTED_UNDEFINED}> {L_UNDEFINED_STATUS}</label>
+
 					</div>
 				</div>
 				<div class="form-element-textarea">
@@ -149,7 +145,7 @@
 		</form>
 		# END status #
 
-		
+
 		# START move #
 
 		<script>
@@ -161,7 +157,7 @@
 		<script src="{PICTURES_DATA_PATH}/js/wiki.js"></script>
 
 		# INCLUDE message_helper #
-		
+
 		<form action="action.php" method="post" onsubmit="return check_form_post();" class="fieldset-content">
 			<fieldset>
 				<legend>{move.L_TITLE}</legend>
@@ -184,7 +180,7 @@
 					</div>
 				</div>
 			</fieldset>
-			
+
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_to_move" value="{move.ID_ARTICLE}">
@@ -194,7 +190,7 @@
 		</form>
 		# END move #
 
-		
+
 		# START rename #
 		<script>
 		<!--
@@ -208,14 +204,13 @@
 		-->
 		</script>
 		# INCLUDE message_helper #
-		
+
 		<form action="action.php" method="post" onsubmit="return check_form_post();" class="fieldset-content">
 			<fieldset>
 				<legend>{rename.L_TITLE}</legend>
 				<p class="center">
 					{rename.L_RENAMING_ARTICLE}
 				</p>
-				<br />
 				<div class="form-element">
 					<label for="new_title">{L_NEW_TITLE}</label>
 					<div class="form-field"><input type="text" name="new_title" id="new_title" maxlength="250" class="field-large" value="{rename.FORMER_NAME}"></div>
@@ -225,7 +220,7 @@
 					<div class="form-field"><label><input type="checkbox" name="create_redirection_while_renaming" id="create_redirection_while_renaming" checked="checked"></label></div>
 				</div>
 			</fieldset>
-			
+
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_to_rename" value="{rename.ID_ARTICLE}">
@@ -235,7 +230,7 @@
 		</form>
 		# END rename #
 
-		
+
 		# START redirect #
 		{redirect.L_TITLE}
 		<table id="table">
@@ -278,7 +273,7 @@
 		</table>
 		# END redirect #
 
-		
+
 		# START create #
 		<script>
 		<!--
@@ -292,7 +287,7 @@
 		-->
 		</script>
 		# INCLUDE message_helper #
-		
+
 		<form action="action.php" method="post" onsubmit="return check_form_post();" class="fieldset-content">
 			<fieldset>
 				<legend>{create.L_TITLE}</legend>
@@ -301,7 +296,7 @@
 					<div class="form-field"><label><input type="text" name="redirection_title" id="redirection_title" maxlength="250" class="field-large" value=""></label></div>
 				</div>
 			</fieldset>
-			
+
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="create_redirection" value="{create.ID_ARTICLE}">
@@ -321,7 +316,7 @@
 		<script src="{PICTURES_DATA_PATH}/js/wiki.js"></script>
 
 		# INCLUDE message_helper #
-				
+
 		<form action="action.php" method="post" onsubmit="return confirm('{L_ALERT_REMOVING_CAT}');" class="fieldset-content">
 			<fieldset>
 				<legend>{remove.L_TITLE}</legend>
@@ -343,12 +338,12 @@
 					<label>{L_SELECT_CAT}</label>
 					<div class="form-field">
 						<span class="futur-cat-pages"><a href="javascript:select_cat(0);"><i class="fa fa-folder"></i> <span id="class-0" class="{remove.CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
-						<br />
+						<div class="spacer"></div>
 						{remove.CATS}
 					</div>
 				</div>
 			</fieldset>
-			
+
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_to_remove" value="{remove.ID_ARTICLE}">
@@ -361,4 +356,3 @@
 		# IF C_COMMENTS #
 		{COMMENTS}
 		# ENDIF #
-		

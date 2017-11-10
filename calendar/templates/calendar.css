@@ -1,10 +1,11 @@
-.calendar-content {
-	padding: 6px;
+/* Affichage du mois en cours */
+#calendar {
+	width: 100%;
+	padding: 0.809em
 }
 
-/* Affichage du mois en cours */
 .calendar-top-container {
-	padding: 4px;
+	padding: 0.228em;
 }
 
 .calendar-top-content {
@@ -14,50 +15,30 @@
 .calendar-top-container a,
 .calendar-top-container a:hover {
 	cursor: pointer;
+	padding: 0.456em
 }
 
 .calendar-top-l {
 	float: left;
-	padding: 1px 0 0 25px;
 }
 
 .calendar-top-r {
 	float: right;
-	padding: 1px 25px 0 0;
 }
 
-/* Affichage des evenements */
-.event-display-author {
-	float: left;
-	padding-top: 4px;
-	padding-bottom: 4px;
-	font-size: 0.8em;
+tbody td.calendar-today	{
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
 }
 
-.event-display-dates {
-	float: right;
-	padding: 4px;
-	width: 180px;
-	font-size: 0.8em;
-	font-weight: normal;
+.location-map {
+	margin: 0.618em 0;
 }
 
-.event-display-dates + hr {
-	margin: 0 auto 40px auto;
+hr {
 	width: 70%;
 	clear: both;
-}
-
-/* Particularite du tableau du calendrier */
-
-@media ( min-width: 769px ) {
-	#module-calendar table.calendar-table tbody tr td {
-		height: 40px;
-	}
-}
-
-#module-calendar table tbody tr td.calendar-week {
-	width: 8%;
 }
 
 /* Affichage de du titre de l'evenement dans le tableau de l'administration */
@@ -66,24 +47,20 @@ table tbody tr th.column-title {
 }
 
 /* Affichage du mini calendrier dans une colonne */
-#module-mini-calendar .calendar-top-container {
-	padding: 2px;
-}
-
 #module-mini-calendar .calendar-top-content h5 {
-	padding-top: 1px;
-	font-size: 0.9em;
+	padding-top: 0.309em;
+	font-size: 0.809em;
 }
 
-#module-mini-calendar .calendar-top-l { padding: 0 0 0 7px; }
-#module-mini-calendar .calendar-top-r { padding: 0 7px 0 0; }
+#module-mini-calendar .calendar-top-l { padding: 0 0 0 0.456em; }
+#module-mini-calendar .calendar-top-r { padding: 0 0.456em 0 0; }
 
 #module-mini-calendar #date_select_form form.fieldset-content {
 	margin-top: 0;
 }
 
 #module-mini-calendar #CalendarAjaxCalendarController_choose-date {
-	margin: 5px 0 10px 0;
+	margin:  0 0 0.309em;
 }
 
 #module-mini-calendar #CalendarAjaxCalendarController_choose-date .form-element {
@@ -91,7 +68,7 @@ table tbody tr th.column-title {
 }
 
 #module-mini-calendar .form-field select {
-	padding: 4px;
+	padding: 0.228em;
 }
 
 #CalendarAjaxCalendarController_month_field,
@@ -99,15 +76,75 @@ table tbody tr th.column-title {
 	display: inline-block;
 }
 
-.legend-line {
-	padding: 0 0 8px 0;
-}
-
 .legend-color {
-	font-size: 2em;
-	vertical-align: -1px;
+	font-size: 1.618em;
 }
 
 .legend {
-	padding-right: 20px;
+	padding-right: 1.309em;
+}
+
+.calendar-table th,
+.calendar-table td {
+    width: 12.5%;
+}
+
+/* --- mini tableaux --- */
+.calendar-table.mini td {
+	border: none;
+}
+
+.calendar-table.mini th,
+.calendar-table.mini .calendar-week,
+.calendar-table.mini td a {
+	padding: 0.809em;
+	font-size: 0.809em;
+}
+
+.calendar-table.mini td a {
+    display: block;
+}
+
+@media (min-width: 481px) {
+	.calendar-table.mini th,
+	.calendar-table.mini .calendar-week,
+	.calendar-table.mini td a {
+		padding: 0.809em 0.1618em;
+	}
+}
+
+@media (min-width: 769px) {
+	.calendar-table.mini th,
+	.calendar-table.mini .calendar-week,
+	.calendar-table.mini td a {
+		padding: 0.309em 0;
+		font-size: 0.618em;
+	}
+}
+
+@media (min-width: 1025px) {
+	.calendar-table.mini th,
+	.calendar-table.mini .calendar-week,
+	.calendar-table.mini td a {
+		font-size: 0.809em;
+	}
+}
+
+.calendar-table td {
+	padding: 0;
+	border-width: 2px;
+	border-style: solid;
+	border-color: transparent;
+}
+
+.calendar-table td a {
+    padding: 0.456em;
+    display: block;
+}
+
+td.calendar-week{
+	border-width: 0 1px 0 0;
+	border-style: solid;
+	border-color: transparent;
+	padding: 0.456em;
 }

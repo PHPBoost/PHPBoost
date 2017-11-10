@@ -76,7 +76,7 @@
 						</td>
 						<td>
 							{questions.APROBATION}
-							<br />
+							<div class="spacer"></div>
 							<span class="smaller">{questions.VISIBLE}</span>
 						</td>
 						<td>

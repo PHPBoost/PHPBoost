@@ -79,39 +79,33 @@
 <section id="module-forum">
 	<header id="forum-top">
 
-		<h1>{FORUM_NAME}</h1>
-
 		<div class="forum-links">
-			<nav itemscope itemtype="http://schema.org/SiteNavigationElement" class="cssmenu cssmenu-group float-left forum-index">
-				<ul>
-					<li>
-						<span class="cssmenu-title">
-							<i class="fa fa-globe"></i> <a class="small" href="index.php" title="{L_FORUM_INDEX}">{L_FORUM_INDEX}</a>
-						</span>
-					</li>
-				</ul>
-			</nav>
 			# IF C_USER_CONNECTED #
 			<nav itemscope itemtype="http://schema.org/SiteNavigationElement" class="cssmenu cssmenu-group float-right" id="cssmenu-forum-top-link">
 				<ul>
 					<li>
 						<span class="cssmenu-title">
-							<i class="fa fa-showmymsg"></i> <a class="small" title="{L_SHOW_MY_MSG}" href="{U_SHOW_MY_MSG}">{L_SHOW_MY_MSG}</a>
+							<a href="index.php" title="{L_FORUM_INDEX}"><i class="fa fa-home"></i> <span class="hidden-large-screens">{L_FORUM_INDEX}</span></a>
 						</span>
 					</li>
 					<li>
 						<span class="cssmenu-title">
-						<i class="fa fa-msg-track"></i> <a class="small" href="{U_TOPIC_TRACK}" title="{L_SHOW_TOPIC_TRACK}">{L_SHOW_TOPIC_TRACK}</a>
+							<a title="{L_SHOW_MY_MSG}" href="{U_SHOW_MY_MSG}"><i class="fa fa-showmymsg"></i> <span class="hidden-large-screens">{L_SHOW_MY_MSG}</span></a>
+						</span>
+					</li>
+					<li>
+						<span class="cssmenu-title">
+						<a href="{U_TOPIC_TRACK}" title="{L_SHOW_TOPIC_TRACK}"><i class="fa fa-msg-track"></i> <span class="hidden-large-screens">{L_SHOW_TOPIC_TRACK}</span></a>
 						</span>
 					</li>
 					<li class="forum-index">
 						<span class="cssmenu-title">
-							<i class="fa fa-lastview"></i> <a class="small" href="{U_LAST_MSG_READ}" title="{L_SHOW_LAST_READ}">{L_SHOW_LAST_READ}</a>
+							<a href="{U_LAST_MSG_READ}" title="{L_SHOW_LAST_READ}"><i class="fa fa-lastview"></i> <span class="hidden-large-screens">{L_SHOW_LAST_READ}</span></a>
 						</span>
 					</li>
 					<li>
 						<span class="cssmenu-title">
-							<i class="fa fa-notread"></i> <a class="small" href="{U_MSG_NOT_READ}" title="{L_SHOW_NOT_READS}">{L_SHOW_NOT_READS} # IF C_IS_GUEST # ({NBR_MSG_NOT_READ})# ENDIF #</a>
+							<a href="{U_MSG_NOT_READ}" title="{L_SHOW_NOT_READS}"><i class="fa fa-notread"></i> <span class="hidden-large-screens">{L_SHOW_NOT_READS}</span> # IF C_IS_GUEST # ({NBR_MSG_NOT_READ})# ENDIF #</a>
 							<div class="forum-refresh">
 								<div id="forum_blockforum_unread" style="display: none;"></div>
 							</div>
@@ -120,13 +114,13 @@
 					</li>
 					<li>
 						<span class="cssmenu-title">
-							<i class="fa fa-eraser"></i> <a class="small" href="{U_MSG_SET_VIEW}" title="{L_MARK_AS_READ}" onclick="javascript:return Confirm_read_topics();">{L_MARK_AS_READ}</a>
+							<a href="{U_MSG_SET_VIEW}" title="{L_MARK_AS_READ}" onclick="javascript:return Confirm_read_topics();"><i class="fa fa-eraser"></i> <span class="hidden-large-screens">{L_MARK_AS_READ}</span></a>
 						</span>
 					</li>
 					# IF C_FORUM_CONNEXION #
 					<li>
 						<span class="cssmenu-title">
-							<i class="fa fa-sign-out"></i> <a title="{L_DISCONNECT}" class="small" href="${relative_url(UserUrlBuilder::disconnect())}">{L_DISCONNECT}</a>
+							<a title="{L_DISCONNECT}" href="${relative_url(UserUrlBuilder::disconnect())}"><i class="fa fa-sign-out"></i> <span class="hidden-large-screens">{L_DISCONNECT}</span></a>
 						</span>
 					</li>
 					# ENDIF #
@@ -134,28 +128,31 @@
 			</nav>
 			# ELSE #
 			# IF C_FORUM_CONNEXION #
-			<nav itemscope itemtype="http://schema.org/SiteNavigationElement" class="cssmenu cssmenu-group float-right" id="cssmenu-forum-top-link">
+			<nav itemscope itemtype="http://schema.org/SiteNavigationElement" class="cssmenu cssmenu-group float-right" id="cssmenu-sign-in-top-link">
 				<ul>
 					<li>
 						<span class="cssmenu-title">
-							<i class="fa fa-sign-in"></i> <a title="{L_CONNECT}" class="small" href="${relative_url(UserUrlBuilder::connect())}">{L_CONNECT}</a>
+							<a title="{L_CONNECT}" href="${relative_url(UserUrlBuilder::connect())}"><i class="fa fa-sign-in"></i> <span class="hidden-large-screens">{L_CONNECT}</span></a>
 						</span>
 					</li>
 					<li>
 						<span class="cssmenu-title">
-							<i class="fa fa-ticket"></i> <a title="{L_REGISTER}" class="small" href="${relative_url(UserUrlBuilder::registration())}">{L_REGISTER}</a>
+							<a title="{L_REGISTER}" href="${relative_url(UserUrlBuilder::registration())}"><i class="fa fa-ticket"></i> <span class="hidden-large-screens">{L_REGISTER}</span></a>
 						</span>
 					</li>
 				</ul>
 			</nav>
 			# ENDIF #
 			# ENDIF #
-
-			<div class="spacer"></div>
 		</div>
 		<script>
 			<!--
 			jQuery("#cssmenu-forum-top-link").menumaker({title: " ${LangLoader::get_message('forum.links', 'common', 'forum')} ", format: "multitoggle", breakpoint: 768, menu_static: false});
+			# IF C_FORUM_CONNEXION #jQuery("#cssmenu-sign-in-top-link").menumaker({title: " ${LangLoader::get_message('forum.links', 'common', 'forum')} ", format: "multitoggle", breakpoint: 768, menu_static: false});# ENDIF #
 			-->
 		</script>
+
+		<h1>{FORUM_NAME}</h1>
+
+			<div class="spacer"></div>
 	</header>

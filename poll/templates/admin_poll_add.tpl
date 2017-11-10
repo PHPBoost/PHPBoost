@@ -18,9 +18,9 @@
 			var i2 = i + 1;
 
 			if( document.getElementById('a'+i) )
-				document.getElementById('a'+i).innerHTML = '<label><input type="text" name="a'+i+'" value="" /></label><br /><span id="a'+i2+'"></span>';
+				document.getElementById('a'+i).innerHTML = '<label class="infos-options"><input type="text" name="a'+i+'" value="" /></label><span id="a'+i2+'"></span>';
 			if( document.getElementById('v'+i) )
-				document.getElementById('v'+i).innerHTML = '<label><input class="poll-vote" type="text" name="v'+i+'" value="" /></label><br /><span id="v'+i2+'"></span>';
+				document.getElementById('v'+i).innerHTML = '<label class="infos-options"><input class="poll-vote" type="text" name="v'+i+'" value="" /></label><span id="v'+i2+'"></span>';
 			if( document.getElementById('s'+i) )
 				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<span id="s'+i2+'"><a href="javascript:add_field('+i2+', '+i_max+')" title="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus"></i></a></span>' : '';
 		}
@@ -108,15 +108,15 @@
 										</tr>
 										<tr>
 											<td class="no-separator">
-												<label><input type="text" name="a0" id="a0" value="{ANSWER0}" /></label><br />
-												<label><input type="text" name="a1" value="{ANSWER1}" /></label><br />
-												<label><input type="text" name="a2" value="{ANSWER2}" /></label><br />
+												<label class="infos-options"><input type="text" name="a0" id="a0" value="{ANSWER0}" /></label>
+												<label class="infos-options"><input type="text" name="a1" value="{ANSWER1}" /></label>
+												<label class="infos-options"><input type="text" name="a2" value="{ANSWER2}" /></label>
 												<span id="a3"></span>
 											</td>
 											<td class="no-separator">
-												<label><input class="poll-vote" type="text" name="v0" value="{VOTES0}" /> {PERCENT0}</label><br />
-												<label><input class="poll-vote" type="text" name="v1" value="{VOTES1}" /> {PERCENT1}</label><br />
-												<label><input class="poll-vote" type="text" name="v2" value="{VOTES2}" /> {PERCENT2}</label><br />
+												<label class="infos-options"><input class="poll-vote" type="text" name="v0" value="{VOTES0}" /> {PERCENT0}</label>
+												<label class="infos-options"><input class="poll-vote" type="text" name="v1" value="{VOTES1}" /> {PERCENT1}</label>
+												<label class="infos-options"><input class="poll-vote" type="text" name="v2" value="{VOTES2}" /> {PERCENT2}</label>
 												<span id="v3"></span>
 											</td>
 										</tr>
@@ -149,13 +149,13 @@
 
 									{CALENDAR_END}
 								</div>
-								<br />
+								<div class="spacer"></div>
 								<div class="form-field-radio">
 									<input type="radio" value="1" id="release_date" name="visible" {VISIBLE_ENABLED} />
 									<label for="release_date"></label>
 								</div>
 								<span class="form-field-radio-span">{L_IMMEDIATE}</span>
-								<br />
+								<div class="spacer"></div>
 								<div class="form-field-radio">
 									<input type="radio" value="0" id="unaprob" name="visible" {VISIBLE_UNAPROB} />
 									<label for="unaprob"></label>

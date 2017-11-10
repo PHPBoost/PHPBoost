@@ -1,4 +1,4 @@
-		
+
 		# INCLUDE forum_top #
 
 		# START error_auth_write #
@@ -8,7 +8,7 @@
 		# END error_auth_write #
 
 		# IF C_FORUM_SUB_CATS #
-			<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-subforum">
+			<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-subforum" class="forum-contents">
 				<header>
 					<h2>
 						<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
@@ -21,9 +21,9 @@
 							<tr>
 								<th class="forum-announce-topic"><i class="fa fa-eye"></i></th>
 								<th class="forum-topic">{L_FORUM}</th>
-								<th class="forum-subject-nb">{L_TOPIC}</th>
-								<th class="forum-message-nb">{L_MESSAGE}</th>
-								<th class="forum-last-topic">{L_LAST_MESSAGE}</th>
+								<th class="forum-subject-nb"><i class="fa fa-com fa-fw" title="{L_TOPIC}"></i></th>
+								<th class="forum-message-nb"><i class="fa fa-coms fa-fw" title="{L_MESSAGE}"></i></th>
+								<th class="forum-last-topic"><i class="fa fa-clock fa-fw" title="{L_LAST_MESSAGE}"></i></th>
 							</tr>
 						</thead>
 						<tfoot>
@@ -41,7 +41,6 @@
 								</td>
 								<td class="forum-topic" colspan="4">
 									<a href="{subcats.U_FORUM_URL}" title="{subcats.NAME}">{subcats.NAME}</a>
-									<br />
 									<span class="smaller">{subcats.DESC}</span>
 								</td>
 								# ELSE #
@@ -50,7 +49,6 @@
 								</td>
 								<td class="forum-topic">
 									<a href="forum{subcats.U_FORUM_VARS}" title="{subcats.NAME}">{subcats.NAME}</a>
-									<br />
 									<span class="smaller">{subcats.DESC}</span>
 									<span class="smaller">{subcats.SUBFORUMS}</span>
 								</td>
@@ -62,8 +60,8 @@
 								</td>
 								<td class="forum-last-topic">
 									# IF subcats.C_LAST_TOPIC_MSG #
-										<a href="{subcats.U_LAST_TOPIC}" class="last-topic-title small">{subcats.LAST_TOPIC_TITLE}</a><br />
-										<a href="{subcats.U_LAST_MSG}" title="" class="last-topic-date"><i class="fa fa-hand-o-right"></i></a> ${LangLoader::get_message('on', 'main')} {subcats.LAST_MSG_DATE_FULL}<br />
+										<span class="last-topic-title"><a href="{subcats.U_LAST_TOPIC}" class="last-topic-title">{subcats.LAST_TOPIC_TITLE}</a></span>
+										<span class="last-topic-user"><i class="fa fa-hand-o-right"></i><a href="{subcats.U_LAST_MSG}" title="" class="last-topic-date"></a> ${LangLoader::get_message('on', 'main')} {subcats.LAST_MSG_DATE_FULL}</span>
 										${LangLoader::get_message('by', 'main')}
 										# IF subcats.C_LAST_MSG_GUEST #
 										<a href="{subcats.U_LAST_MSG_USER_PROFIL}" class="last-topic-user small {subcats.LAST_MSG_USER_LEVEL}" {subcats.LAST_MSG_USER_GROUP_COLOR}>{subcats.LAST_MSG_USER_LOGIN}</a>
@@ -71,7 +69,7 @@
 										${LangLoader::get_message('guest', 'main')}
 										# ENDIF #
 									# ELSE #
-										<br /><em>{subcats.L_NO_MSG}</em><br /><br />
+										<em>{subcats.L_NO_MSG}</em>
 									# ENDIF #
 								</td>
 								# ENDIF #
@@ -83,14 +81,14 @@
 			</article>
 		# ENDIF #
 
-		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-forum">
+		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-forum" class="forum-contents">
 			<header>
 				<h2>
 					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a> {U_FORUM_CAT}
 					# IF C_POST_NEW_SUBJECT #
-						&raquo; <a href="{U_POST_NEW_SUBJECT}" class="basic-button">{L_POST_NEW_SUBJECT}</a>
+						<i class="fa fa-chevron-circle-right"></i> <a href="{U_POST_NEW_SUBJECT}" class="basic-button">{L_POST_NEW_SUBJECT}</a>
 					# ENDIF #
-					<span class="float-right">
+					<span class="actions">
 						# IF IDCAT #
 						<a href="unread.php?cat={IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><i class="fa fa-notread"></i></a>
 						# ENDIF #
@@ -104,20 +102,20 @@
 						<tr>
 							<th class="forum-announce-topic"><i class="fa fa-eye"></i></th>
 							<th class="forum-fixed-topic"><i class="fa fa-check"></i></th>
-							<th class="forum-topic">{L_TOPIC}</th>
-							<th class="forum-author">{L_AUTHOR}</th>
-							<th class="forum-message-nb">{L_ANSWERS}</th>
-							<th class="forum-view">{L_VIEW}</th>
-							<th class="forum-last-topic">{L_LAST_MESSAGE}</th>
+							<th class="forum-topic" title="{L_TOPIC}"><i class="fa fa-file-o hidden-small-screens"></i><span class="hidden-large-screens">{L_TOPIC}</span></th>
+							<th class="forum-author"><i class="fa fa-user-o fa-fw hidden-small-screens" title="{L_AUTHOR}"></i><span class="hidden-large-screens">{L_AUTHOR}</span></th>
+							<th class="forum-message-nb"><i class="fa fa-comments-o fa-fw hidden-small-screens" title="{L_ANSWERS}"></i><span class="hidden-large-screens">{L_ANSWERS}</span></th>
+							<th class="forum-view"><i class="fa fa-eye fa-fw hidden-small-screens" title="{L_VIEW}"></i><span class="hidden-large-screens">{L_VIEW}</span></th>
+							<th class="forum-last-topic"><i class="fa fa-clock-o fa-fw hidden-small-screens" title="{L_LAST_MESSAGE}"></i><span class="hidden-large-screens">{L_LAST_MESSAGE}</span></th>
 						</tr>
 					</thead>
 					<tfoot>
 						<tr>
 							<th colspan="7">
 								<div class="float-left">
-									<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a> &bull; {U_FORUM_CAT}
+									<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a> {U_FORUM_CAT}
 									# IF C_POST_NEW_SUBJECT #
-										&raquo; <a href="{U_POST_NEW_SUBJECT}" class="basic-button" title="{L_POST_NEW_SUBJECT}">{L_POST_NEW_SUBJECT}</a>
+										<i class="fa fa-chevron-circle-right"></i> <a href="{U_POST_NEW_SUBJECT}" class="basic-button" title="{L_POST_NEW_SUBJECT}">{L_POST_NEW_SUBJECT}</a>
 									# ENDIF #
 								</div>
 								# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #
@@ -154,7 +152,6 @@
 						<td class="forum-topic">
 							# IF topics.C_PAGINATION #<span class="pagin-forum"># INCLUDE topics.PAGINATION #</span># ENDIF #
 							{topics.ANCRE} # IF topics.TYPE # <strong>{topics.TYPE}</strong> # ENDIF # <a href="topic{topics.U_TOPIC_VARS}" title="{topics.TITLE}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
-							<br />
 							<span class="smaller">{topics.DESC}</span>
 						</td>
 						<td class="forum-author">
@@ -167,11 +164,10 @@
 							{topics.VUS}
 						</td>
 						<td class="forum-last-topic">
-							<span class="last-topic-title"><a href={topics.LAST_MSG_URL} title="{topics.TITLE}"><i class="fa fa-hand-o-right"></i></a></span>
-							<span class="last-topic-date">${LangLoader::get_message('on', 'main')} {topics.LAST_MSG_DATE_FULL}</span><br />
-							<span class="last-topic-user"> ${LangLoader::get_message('by', 'main')}
+							<span class="last-topic-title"><i class="fa fa-hand-o-right fa-fw"></i> <a href={topics.LAST_MSG_URL} title="{topics.TITLE}">{topics.LAST_MSG_DATE_FULL}</a></span>
+							<span class="last-topic-user"> <i class="fa fa-user-o fa-fw"></i>
 							# IF topics.C_LAST_MSG_GUEST #
-							<a href="{topics.LAST_MSG_USER_PROFIL}" class="small{topics.LAST_MSG_USER_LEVEL}"{topics.LAST_MSG_USER_GROUP_COLOR}>{topics.LAST_MSG_USER_LOGIN}</a>
+							<a href="{topics.LAST_MSG_USER_PROFIL}" class="{topics.LAST_MSG_USER_LEVEL}"{topics.LAST_MSG_USER_GROUP_COLOR}>{topics.LAST_MSG_USER_LOGIN}</a>
 							# ELSE #
 								<em>${LangLoader::get_message('guest', 'main')}</em>
 							# ENDIF #

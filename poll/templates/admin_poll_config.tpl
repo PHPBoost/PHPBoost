@@ -62,7 +62,7 @@
 								<select id="displayed_in_mini_module_list" name="displayed_in_mini_module_list[]" multiple="multiple">
 									{POLL_LIST}
 								</select>
-								<br />
+								<span class="spacer"></span>
 								<a class="small" href="javascript:select_displayed_polls_in_mini('displayed_in_mini_module_list', true);">{L_SELECT_ALL}</a>/<a class="small" href="javascript:select_displayed_polls_in_mini('displayed_in_mini_module_list', false);">{L_SELECT_NONE}</a>
 								</label>
 							</div>

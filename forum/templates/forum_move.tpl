@@ -1,5 +1,5 @@
 		# INCLUDE forum_top #
-		
+
 		<script>
 		<!--
 		function check_form_move(){
@@ -11,12 +11,12 @@
 		}
 		-->
 		</script>
-		
-		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-move">
+
+		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-move" class="forum-contents">
 			<header>
-				<h2>&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T}</h2>
+				<h2>{U_FORUM_CAT} <i class="fa fa-chevron-circle-right"></i> {U_TITLE_T}</h2>
 			</header>
-			
+
 			<div class="content">
 				<form method="post" action="move.php" onsubmit="javascript:return check_form_move();" class="fieldset-content">
 					<fieldset>
@@ -30,7 +30,7 @@
 							</label></div>
 						</div>
 					</fieldset>
-					
+
 					<fieldset class="fieldset-submit">
 						<legend>{L_SUBMIT}</legend>
 						<input type="hidden" name="id" value="{ID}">
@@ -39,7 +39,7 @@
 					</fieldset>
 				</form>
 			</div>
-			<footer>&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T}</footer>
+			<footer>{U_FORUM_CAT} <i class="fa fa-chevron-circle-right"></i> {U_TITLE_T}</footer>
 		</article>
-		
+
 		# INCLUDE forum_bottom #

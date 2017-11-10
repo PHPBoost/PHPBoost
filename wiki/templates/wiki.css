@@ -5,7 +5,7 @@
 .wiki-paragraph-5 {}
 
 .wiki-list {
-	margin: 0.5em 0 0 2.6em;
+	margin: 0.456em 0 0 2.618em;
 }
 
 .wiki-list-1 > li {
@@ -18,11 +18,11 @@
 .wiki-list-4 { list-style-type: lower-alpha; 	}
 .wiki-list-5 { list-style-type: lower-greek; 	}
 
-.wiki-button {
-	margin-left: 10px;
-	padding: 4px 2px;
+/*.wiki-button {
+	margin-left: 0.618em;
+	padding: 0.228em 0.1618em;
 	width: 145px;
-	height: 20px;
+	height: 1.309em;
 	background: #A7C7DF;
 	border: 1px solid #6D93B4;
 	color: #EDFFF0;
@@ -30,28 +30,35 @@
 	text-align: center;
 	text-decoration: none;
 	cursor: pointer;
-}
+}*/
 
 ul.no-list {
-	margin: 0 0 0 20px;
+	margin: 0 0 0 1.309em;
 }
 
 ul.no-list a i.fa {
-	width: 18px;
+	width: 1.228em;
 }
 
 #module-wiki .content .options {
 	float: none;
 	text-align: center;
+	margin: 2.618em 0 0;
+}
+
+#module-wiki hr {
+	margin: 0 auto 1.618em;
 }
 
 .wiki-summary {
 	display: inline-block;
-	padding: 6px 12px;
-	max-width: 100%;
-	background-color: #EEEEEE;
-	border: 1px solid #DDDDDD;
-	border-radius: 3px;
+	padding: 0.382em 0.809em;
+	width: 100%;
+	background-color: rgba(54, 100, 147, 0.1);
+	border-width: 1px;
+	border-style: solid;
+	border-color: rgba(54, 100, 147, 0.4);
+	margin-bottom: 2.618em;
 }
 
 .wiki-summary-title {
@@ -59,11 +66,11 @@ ul.no-list a i.fa {
 }
 
 .futur-cat-pages {
-	padding-left: 17px;
+	padding-left: 1em;
 }
 
 #article-wiki .content {
-	margin-bottom: 30px;
+	margin-bottom: 1.618em;
 }
 
 #article-wiki .content .options {
@@ -72,16 +79,15 @@ ul.no-list a i.fa {
 }
 
 .wiki-hits {
-	margin: 8px auto 10px auto;
+	margin: 0.456em auto 0.618em auto;
 	text-align: center;
 }
 
 .wiki-bbcode {
-	margin-bottom: -6px;
+	margin-bottom: -0.382em;
 }
 
 .wiki-bbcode .bbcode-containers {
-	border-radius: 0;
 	border-top: none;
 }
 
@@ -94,24 +100,25 @@ ul.no-list a i.fa {
 }
 
 .wiki-tools-container {
-	margin-bottom: 25px;
+	margin-bottom: 1.482em;
 }
 
 #wiki-link-container li {
-	margin: 0 3px 0 0;
+	margin: 0 0.228em 0 0;
 }
 
-/* Last articles */
-.last-articles-element-container {
-	padding: 8px 8px 8px 10px;
-	border-width: 1px 1px 0 1px;
-	text-align: left;
+/* Main categories - Last articles */
+
+.wiki-list-top {
+	padding: 0.382em;
+	background-color: rgba(54, 100, 147, 0.1);
+	font-weight: bold;
 }
 
-.last-articles-element-container:last-child {
-	border-width: 1px 1px 1px 1px;
+.wiki-list-item {
+	padding: 0.1618em 0.309em;
 }
 
-.last-articles-element i {
-	margin: 0 5px 0 0;	
+.wiki-list-item i {
+	font-size: 0.809em;
 }

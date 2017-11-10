@@ -28,7 +28,7 @@
 		-->
 		</script>
 
-		
+
 		# START convers #
 		<script>
 		<!--
@@ -36,17 +36,17 @@
 			{
 				var i;
 				for(i = 0; i < {convers.NBR_PM}; i++)
-				{	
-					if( document.getElementById(id + i) ) 
+				{
+					if( document.getElementById(id + i) )
 						document.getElementById(id + i).checked = status;
 				}
 				document.getElementById('checkall').checked = status;
 				document.getElementById('validc').checked = status;
-			}	 
+			}
 		-->
 		</script>
 		# INCLUDE message_helper #
-		
+
 		<form action="pm{convers.U_USER_ACTION_PM}" method="post" onsubmit="javascript:return Confirm_pm();">
 			<section id="module-user-convers">
 				<header>
@@ -54,7 +54,7 @@
 				</header>
 				<div class="content">
 					<div class="right">{L_PRIVATE_MSG}: {convers.PM_POURCENT}</div>
-					<br /><br />
+					<div class="spacer"></div>
 					<menu id="cssmenu-pmactions" class="cssmenu cssmenu-group">
 						<ul>
 							<li>
@@ -72,7 +72,6 @@
 							breakpoint: 768
 						});
 					</script>
-					<br /><br />
 					<table id="table">
 						<thead>
 							<tr>
@@ -125,7 +124,7 @@
 								</td>
 							</tr>
 							# END convers.list #
-									
+
 							# START convers.no_pm #
 							<tr>
 								<td colspan="6">
@@ -135,16 +134,16 @@
 							# END convers.no_pm #
 						</tbody>
 					</table>
-					<br />
+					
 					<table class="announce-legend">
 						<tr>
-							<td> 
-								<i class="fa fa-envelope message-announce"></i> {L_READ} 
+							<td>
+								<i class="fa fa-envelope message-announce"></i> {L_READ}
 							</td>
-							<td class="no-separator">  
+							<td class="no-separator">
 								<i class="fa fa-envelope message-announce-track"></i> {L_TRACK}
 							</td>
-							<td class="no-separator">  
+							<td class="no-separator">
 								<i class="fa fa-envelope message-announce-new"></i> {L_NOT_READ}
 							</td>
 						</tr>
@@ -154,16 +153,16 @@
 			</section>
 		</form>
 		# END convers #
-		
+
 		# START pm #
 		<section id="module-user-pm">
 			<header>
 				<h1>{pm.U_PM_BOX} : {pm.U_TITLE_CONVERS}</h1>
 			</header>
-			
+
 			<div class="content">
 				# IF pm.C_PAGINATION #<div class="float-right"># INCLUDE pm.PAGINATION #</div># ENDIF #
-			
+
 			# START pm.msg #
 				<article id="article-pm-{pm.msg.ID}" class="article-pm article-several message">
 					<div id="m{pm.msg.ID}" class="message-container">
@@ -177,8 +176,8 @@
 										{pm.msg.PSEUDO}
 									</a>
 								# ENDIF #
+								<div class="message-level">{pm.msg.L_LEVEL}</div>
 							</div>
-							<div class="message-level">{pm.msg.L_LEVEL}</div>
 							# IF pm.msg.C_AVATAR #<img src="{pm.msg.USER_AVATAR}" title="{pm.msg.USER_PSEUDO}" alt="{pm.msg.USER_PSEUDO}" class="message-avatar" /># ENDIF #
 						</div>
 
@@ -196,7 +195,7 @@
 						<div class="message-message">
 							<div class="message-content">{pm.msg.CONTENTS}</div>
 						</div>
-						
+
 					</div>
 				</article>
 			# END pm.msg #
@@ -253,7 +252,7 @@
 								</div>
 							</div>
 						</fieldset>
-						
+
 						<div class="center">
 							<input type="hidden" name="token" value="{TOKEN}">
 							<button type="submit" name="{SUBMIT_NAME}" value="{L_SUBMIT}" class="submit">{L_SUBMIT}</button>
@@ -276,7 +275,7 @@
 				</header>
 				<div class="content">
 					# INCLUDE message_helper #
-					
+
 					<div class="fieldset-content">
 						<p class="center">{L_REQUIRE}</p>
 						<fieldset>
@@ -309,7 +308,7 @@
 								</div>
 							</div>
 						</fieldset>
-						
+
 						<div class="center">
 							<input type="hidden" name="token" value="{TOKEN}">
 							<button type="submit" name="convers" value="true" class="submit">{L_SUBMIT}</button>

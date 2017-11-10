@@ -2,30 +2,33 @@
 			<header>
 				<h1>{L_MODERATION_PANEL}</h1>
 			</header>
-			<div class="content">	
+			<div class="content">
 			# IF C_MODO_PANEL_USER #
 				<table id="table">
 					<tbody>
 						<tr>
 							<td class="no-separator">
-								<a href="{U_WARNING}" title="{L_USERS_WARNING}" class="fa fa-warning fa-2x"></a>
-								<br />
+								<a class="infos-options" href="{U_WARNING}" title="{L_USERS_WARNING}">
+									<i class="fa fa-warning fa-2x"></i>
+								</a>
 								<a href="{U_WARNING}" title="{L_USERS_WARNING}">{L_USERS_WARNING}</a>
 							</td>
 							<td class="no-separator">
-								<a href="{U_PUNISH}" title="{L_USERS_PUNISHMENT}" class="fa fa-error fa-2x"></a>
-								<br />
+								<a class="infos-options" href="{U_PUNISH}" title="{L_USERS_PUNISHMENT}">
+									<i class="fa fa-error fa-2x"></i>
+								</a>
 								<a href="{U_PUNISH}" title="{L_USERS_PUNISHMENT}">{L_USERS_PUNISHMENT}</a>
 							</td>
 							<td class="no-separator">
-								<a href="{U_BAN}" title="{L_USERS_BAN}" class="fa fa-forbidden fa-2x"></a>
-								<br />
+								<a class="infos-options" href="{U_BAN}" title="{L_USERS_BAN}">
+									<i class="fa fa-forbidden fa-2x"></i>
+								</a>
 								<a href="{U_BAN}" title="{L_USERS_BAN}">{L_USERS_BAN}</a>
 							</td>
 						</tr>
 					</tbody>
 				</table>
-				
+
 				# IF C_MODO_PANEL_USER_LIST #
 				<script>
 				<!--
@@ -50,7 +53,7 @@
 					}
 					-->
 				</script>
-				
+
 				<form action="{U_ACTION}" method="post" class="fieldset-content">
 					<fieldset>
 						<legend>{L_SEARCH_USER}</legend>
@@ -65,7 +68,7 @@
 						</div>
 					</fieldset>
 				</form>
-				
+
 				<table id="table2">
 					<thead>
 						<tr>
@@ -92,19 +95,19 @@
 							</td>
 						</tr>
 						# END member_list #
-						
+
 						# IF C_EMPTY_LIST #
 						<tr>
 							<td colspan="4">
 								{L_NO_USER}
 							</td>
-						</tr>		
+						</tr>
 						# ENDIF #
 					</tbody>
 				</table>
 				# ENDIF #
 
-				
+
 
 				# IF C_MODO_PANEL_USER_INFO #
 				<script>
@@ -114,7 +117,7 @@
 					var contents = document.getElementById('action_contents').value;
 					{REPLACE_VALUE}
 					document.getElementById('action_contents').value = contents;
-					
+
 					# IF C_TINYMCE_EDITOR # setTinyMceContent(contents); # ENDIF #
 				}
 				-->
@@ -123,7 +126,7 @@
 				<form action="{U_ACTION_INFO}" method="post">
 					<fieldset>
 						<legend>{L_ACTION_INFO}</legend>
-						
+
 						<div class="form-element">
 							<label>{L_LOGIN}</label>
 							<div class="form-field">
@@ -151,7 +154,7 @@
 							</div>
 						</div>
 					</fieldset>
-					
+
 					<fieldset class="fieldset-submit">
 						<legend></legend>
 						<input type="hidden" name="token" value="{TOKEN}">
@@ -159,12 +162,12 @@
 					</fieldset>
 				</form>
 				# ENDIF #
-				
+
 				# IF C_MODO_PANEL_USER_BAN #
 				<form action="{U_ACTION_INFO}" method="post">
 					<fieldset>
 						<legend>{L_ACTION_INFO}</legend>
-						
+
 						<div class="form-element">
 							<label>{L_LOGIN}</label>
 							<div class="form-field">
@@ -187,8 +190,8 @@
 								</select>
 							</div>
 						</div>
-					</fieldset>	
-					
+					</fieldset>
+
 					<fieldset class="fieldset-submit">
 						<legend></legend>
 						<input type="hidden" name="token" value="{TOKEN}">

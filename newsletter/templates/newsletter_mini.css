@@ -1,35 +1,29 @@
+#newsletter {
+	float: right;
+}
+
+.newsletter-link {
+	margin: 0.618em 0 0 0;
+}
+
 .newsletter-form {
-	margin: 20px 25px 10px 0;
 	white-space: nowrap;
 	vertical-align: middle;
 }
 
 .newsletter-title {
-	padding: 5px 10px 0 0;
-	font-size: 12px;
+	padding: 0.309em 0.618em 0.309em 0;
 	vertical-align: middle;
-}
- 
-#newsletter { 
-	float: right;
-	margin: 10px;
+	display: block;
 }
 
-#newsletter button,
-#newsletter .button {
-	margin-top: 0;
-}
- 
-.newsletter-link { 
-	margin: 10px 0 0 0;
+@media (min-width: 769px) {
+	.newsletter-title {
+		display: inline-block;
+	}
 }
 
-#newsletter .input-element-button input {
-	width: 120px;
-	font-size: 12px;
-}
-
-#newsletter .input-element-button button {
-	margin-left: -5px;
-	font-size: 12px;
+#newsletter .newsletter-submit {
+	margin: 0 0 0.1618em -0.228em;
+	padding: 0.309em 0.618em;
 }

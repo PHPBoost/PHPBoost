@@ -17,11 +17,13 @@
 					# START sub_categories_list #
 					<div class="subcat-element block">
 						<div class="subcat-content">
-							# IF sub_categories_list.C_CATEGORY_IMAGE #<a itemprop="about" href="{sub_categories_list.U_CATEGORY}"><img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" /></a># ENDIF #
-							<br />
-							<a itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
-							<br />
-							<span class="small">{sub_categories_list.MEDIAFILES_NUMBER}</span>
+							# IF sub_categories_list.C_CATEGORY_IMAGE #
+								<a class="subcat-thumbnail" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
+									<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
+								</a>
+							# ENDIF #
+							<a class="subcat-title" itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
+							<span class="subcat-options" class="small">{sub_categories_list.MEDIAFILES_NUMBER}</span>
 						</div>
 					</div>
 					# END sub_categories_list #
@@ -32,7 +34,7 @@
 					<div class="spacer"></div>
 				# ENDIF #
 
-				
+
 				# IF C_FILES #
 				<div class="options" id="form">
 					<script>
@@ -57,7 +59,7 @@
 					</select>
 				</div>
 				<div class="spacer"></div>
-					
+
 				<div class="content elements-container">
 					# START file #
 					<article id="article-media-{file.ID}" class="article-media article-several# IF file.C_NEW_CONTENT # new-content# ENDIF #">
@@ -73,27 +75,24 @@
 								# ENDIF #
 							</h2>
 						</header>
+
+						<div class="more">
+								<i class="fa fa-user-o"></i> {file.AUTHOR} |
+								<i class="fa fa-eye"></i> {file.COUNT}
+								# IF C_DISPLAY_COMMENTS #
+									 | <i class="fa fa-comments-o"></i> {file.U_COM_LINK}
+								# ENDIF #
+								# IF C_DISPLAY_NOTATION #
+									 | {L_NOTE} {file.NOTE}
+								# ENDIF #
+						</div>
 						<div class="content">
-						# IF file.C_HAS_PICTURE #<a href="{file.U_MEDIA_LINK}"><img itemprop="thumbnailUrl" src="{file.PICTURE}" class="media-picture" alt="{file.NAME}" /></a># ENDIF #
+						# IF file.C_HAS_PICTURE #<a href="{file.U_MEDIA_LINK}"><img itemprop="thumbnailUrl" src="{file.PICTURE}" class="thumbnail-item" alt="{file.NAME}" /></a># ENDIF #
 						# IF file.C_DESCRIPTION #
-							<div class="media-desc">
+							<div itemprop="text">
 							{file.DESCRIPTION}
 							</div>
 						# ENDIF #
-							<div class="spacer"></div>
-							<div class="smaller">
-								{L_BY} {file.AUTHOR}
-								<br />
-								{file.COUNT}
-								<br />
-								# IF C_DISPLAY_COMMENTS #
-								{file.U_COM_LINK}
-								<br />
-								# ENDIF #
-								# IF C_DISPLAY_NOTATION #
-								{L_NOTE} {file.NOTE}
-								# ENDIF #
-							</div>
 						</div>
 						<footer></footer>
 					</article>
@@ -106,7 +105,7 @@
 					<div class="notice">${LangLoader::get_message('no_item_now', 'common')}</div>
 				</div>
 				# ENDIF #
-				
+
 				<footer># IF C_PAGINATION #<span class="center"># INCLUDE PAGINATION #</span># ENDIF #</footer>
 			</section>
 		# ENDIF #
@@ -139,15 +138,15 @@
 
 						<div class="options infos">
 							<h6>{L_MEDIA_INFOS}</h6>
-								<span class="text-strong">{L_DATE} : </span><span>{DATE}</span><br/>
-								<span class="text-strong">{L_BY} : </span><span>{BY}</span><br/>
-								<span class="text-strong">{L_VIEWED} : </span><span>{HITS}</span><br/>
+								<span class="infos-options"><span class="text-strong">{L_DATE} : </span>{DATE}</span>
+								<span class="infos-options"><span class="text-strong">{L_BY} : </span>{BY}</span>
+								<span class="infos-options"><span class="text-strong">{L_VIEWED} : </span>{HITS}</span>
 							# IF C_DISPLAY_NOTATION #
 							<div class="center text-strong">{KERNEL_NOTATION}</div>
 							# ENDIF #
 						</div>
 
-						<div class="media-desc">
+						<div itemprop="text">
 							{CONTENTS}
 						</div>
 						<div class="spacer"></div>

@@ -3,12 +3,12 @@
 	margin: 0;
 }
 
-#sub-header #module-connect {
-	min-height: 35px;
+#module-connect .horizontal-fieldset label {
+	padding: 0;
 }
 
-#sub-header #module-connect .connect-contents {
-	padding-top: 3px;
+#module-connect .horizontal-fieldset button {
+	margin: 0.309em;
 }
 
 .connect-register a > i,
@@ -18,36 +18,27 @@
 }
 
 #module-connect a > span {
-	margin: 0 0 0 5px;
+	margin: 0 0 0 0.309em;
 }
 
 .js-menu-button {
-	display: none;
+	display: inline-block;
+	padding: 0.309em 0.809em;
 }
 
-@media (max-width: 768px) {
-	.js-menu-button {
-		display: inline-block;
-		padding: 5px 10px 5px 12px;
-	}
+.js-menu-button span {
+	padding: 0 0 0 0.456em;
+}
 
-	.js-menu-button span {
-		padding: 0 0 0 7px;
+@media (min-width: 768px) {
+	.js-menu-button {
+		display: none;
 	}
 }
 
 /* -- not-connected --*/
 .connect-register-container form {
 	display: inline-block;
-}
-
-.connect-register a.fb {
-	padding: 6px 0 0 4px;
-}
-
-a.social-connect {
-	margin: -2px 0;
-	vertical-align: middle;
 }
 
 @media (max-width: 768px) {
@@ -58,7 +49,7 @@ a.social-connect {
 	}
 
 	.connect-register-container {
-		margin: 0.5em 0.6em 0.5em 0.6em;
+		margin: 0 0 0.618em 0;
 	}
 
 	.forget-pass-container {
@@ -66,23 +57,21 @@ a.social-connect {
 	}
 
 	.connect-input-container button {
-		margin: 5px 0 0 0;
+		margin: 0.309em 0 0 0;
 	}
 
-	.active.not-connected.horizontal .connect-containers {
-		height: 300px;
+	.active-connect.not-connected.horizontal .connect-containers {
+		height: 320px;
 	}
 
 	.module-mini-contents.connect-contents,
 	.connect-contents label,
 	.connect-contents button {
 		text-align: center;
-		margin: 0 0 5px 0;
 	}
 
 	.connect-contents button {
 		display: inline-block;
-		margin: 10px 0 10px 0;
 	}
 }
 
@@ -98,23 +87,23 @@ a.social-connect {
 	}
 
 	.vertical-fieldset form label {
-		margin-bottom: 10px;
+		margin-bottom: 0.618em;
 	}
 
 	.module-mini-contents .connect-register-container a {
 		display: inline-block;
 	}
 	.module-mini-contents .connect-register {
-		padding: 5px 0 0 0;
+		padding: 0.309em 0 0 0;
 	}
 
 	.module-mini-contents .forget-pass-container {
 		display: block;
-		margin: 10px;
+		margin: 0.618em;
 	}
 
 	.connect-register a.fb {
-		padding: 7px 0 0 4px;
+		padding: 0.456em 0 0 0.228em;
 	}
 
 }
@@ -125,17 +114,29 @@ a.social-connect {
 	padding: 0;
 }
 
+.module-mini-contents.connect-contents .connect-elements-container {
+	text-align: left;
+	display: table;
+	margin: auto;
+}
+
+@media (min-width: 769px) {
+	.module-mini-contents.connect-contents .connect-elements-container {
+		margin: 0;
+	}
+}
+
 .connect-element {
 	list-style-type: none;
 }
 
 .connect-element a {
 	display: block;
-	margin: 0 10px 0 0;
+	font-size: 1em;
 }
 
-.horizontal .connect-element a 	{ padding: 7px 0 7px 0; }
-.vertical .connect-element a 	{ padding: 5px 0 5px 0; }
+.horizontal .connect-element a 	{ padding: 0.456em 0 0.456em 0.456em; }
+.vertical .connect-element a 	{ padding: 0.309em 0; }
 
 @media (min-width: 769px) {
 	.horizontal .connect-contents {
@@ -148,6 +149,10 @@ a.social-connect {
 
 	.horizontal .connect-element {
 		display: inline-block;
+	}
+
+	.horizontal .connect-element .small {
+		font-size: 0.8em;
 	}
 }
 
@@ -166,23 +171,18 @@ a.social-connect {
 		height: 0;
 		overflow: hidden;
 		transition: height 0.3s;
-		padding: 0 0 0 12px;
+		padding: 0 0 0 0.809em;
 	}
 
-	.active.horizontal .connect-elements-container,
-	.active.horizontal .connect-containers {
+	.active-connect.horizontal .connect-elements-container,
+	.active-connect.horizontal .connect-containers {
 		position: relative;
 		z-index: 200;
 		width: 100%;
 		transition: height 0.3s;
 	}
 
-	.active.horizontal .connect-elements-container {
-		height: 190px;
-	}
-
-	.vertical .connect-element a {
-		padding: 9px 0 9px 0;
-		margin: 3px 0 3px 0;
+	.active-connect.horizontal .connect-elements-container {
+		height: 210px;
 	}
 }

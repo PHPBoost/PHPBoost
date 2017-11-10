@@ -1,17 +1,23 @@
-		<article id="article-wiki-{ID}" class="article-wiki# IF C_NEW_CONTENT # new-content# ENDIF #">
-			<header>
-				<h1>
-					<a href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}" class="fa fa-syndication"></a>
-					{TITLE}
-				</h1>
-			</header>
+<section id="module-wiki">
+	<header>
+		<h1>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}" class="fa fa-syndication smaller"></a>
+			${LangLoader::get_message('category', 'main')} {ID_CAT}
+		</h1>
+	</header>
+	<article id="article-wiki-{ID}" class="article-wiki# IF C_NEW_CONTENT # new-content# ENDIF #">
+		<header>
+			<h2>
+				{TITLE}
+			</h2>
+		</header>
+		# INCLUDE wiki_tools #
+		<article>
 			<div class="content">
-				# INCLUDE wiki_tools #
-				
 				# START warning #
 				<div id="id-message-helper" class="warning">{warning.UPDATED_ARTICLE}</div>
 				# END warning #
-				
+
 				# START redirect #
 					<div style="width:30%;">
 					{redirect.REDIRECTED}
@@ -21,50 +27,79 @@
 					</div>
 					<div class="spacer"></div>
 				# END redirect #
-				
+
 				# START status #
 					<div class="spacer"></div>
 					<div class="blockquote">{status.ARTICLE_STATUS}</div>
 					<div class="spacer"></div>
 				# END status #
-				
+
 				# START menu #
 					<div class="wiki-summary">
 						<div class="wiki-summary-title">{L_TABLE_OF_CONTENTS}</div>
 						{menu.MENU}
 					</div>
 				# END menu #
-				<div class="spacer"></div>
+
 				{CONTENTS}
-				<div class="spacer"></div>
-				# START cat #
-					<hr />
-					# IF cat.list_cats #
-					<br />
-					<strong>{L_SUB_CATS}</strong>
-					<br /><br />
-					# START cat.list_cats #
-						<i class="fa fa-folder"></i> <a href="{cat.list_cats.U_CAT}">{cat.list_cats.NAME}</a><br />
-					# END cat.list_cats #
-					# START cat.no_sub_cat #
-					{cat.no_sub_cat.NO_SUB_CAT}<br />
-					# END cat.no_sub_cat #
-					# END IF #
-					<br />
-					<strong>{L_SUB_ARTICLES}</strong> &nbsp; <a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
-					<br /><br />
-					# START cat.list_art #
-						<i class="fa fa-file"></i> <a href="{cat.list_art.U_ARTICLE}">{cat.list_art.TITLE}</a><br />
-					# END cat.list_art #
-					
-					# START cat.no_sub_article #
-					{cat.no_sub_article.NO_SUB_ARTICLE}
-					# END cat.no_sub_article #
-					
-				# END cat #
-				<div class="spacer"></div>
 			</div>
-			<footer>
-				<div class="wiki-hits">{HITS}</div>
-			</footer>
 		</article>
+
+		<div class="elements-container columns-2">
+			# START cat #
+				# IF cat.list_cats #
+					<aside class="block">
+						<div class="wiki-list-container">
+							<div class="wiki-list-top">{L_SUB_CATS}</div>
+							<div class="wiki-list-content">
+								# START cat.list_cats #
+									<div class="wiki-list-item">
+										<i class="fa fa-folder-o"></i> <a href="{cat.list_cats.U_CAT}">{cat.list_cats.NAME}</a>
+									</div>
+								# END cat.list_cats #
+								# START cat.no_sub_cat #
+									<div class="wiki-list-item">{cat.no_sub_cat.NO_SUB_CAT}</div>
+								# END cat.no_sub_cat #
+							</div>
+						</div>
+					</aside>
+				# ENDIF #
+				<aside class="block">
+					<div class="wiki-list-container">
+						<div class="wiki-list-top">{L_SUB_ARTICLES}</div>
+						<div class="wiki-list-content">
+							# START cat.list_art #
+								<div class="wiki-list-item">
+									<i class="fa fa-file-o"></i> <a href="{cat.list_art.U_ARTICLE}">{cat.list_art.TITLE}</a>
+								</div>
+							# END cat.list_art #
+							# START cat.no_sub_article #
+								<div class="wiki-list-item">{cat.no_sub_article.NO_SUB_ARTICLE}</div>
+							# END cat.no_sub_article #
+						</div>
+					</div>
+				</aside>
+
+
+			# END cat #
+			<div class="spacer"></div>
+		</div>
+		<footer>
+			<div class="wiki-hits">{HITS}</div>
+		</footer>
+	</article>
+	<footer></footer>
+</section>
+
+<script>
+	<!--
+	jQuery('a[href^="#paragraph"]').click(function() {
+		var the_id = $(this).attr("href");
+
+		$('html, body').animate({
+			scrollTop:$(the_id).offset().top
+		}, 'slow');
+		return false;
+	})
+	-->
+</script>

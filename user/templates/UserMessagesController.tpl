@@ -4,7 +4,7 @@
 	</header>
 	<div class="content">
 		# START available_modules_msg #
-		<p class="available-modules-msg"> 
+		<p class="available-modules-msg">
 			<a href="{available_modules_msg.U_LINK_USER_MSG}">
 			# IF available_modules_msg.C_IMG_USER_MSG #
 			{available_modules_msg.IMG_USER_MSG}
@@ -12,7 +12,6 @@
 			{available_modules_msg.NAME_USER_MSG}</a>
 		</p>
 		# END available_modules_msg #
-		<br /><br />
 	</div>
 	<footer></footer>
 </section>

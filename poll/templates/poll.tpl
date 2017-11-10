@@ -9,19 +9,19 @@
 				# START list #
 				<div class="poll-question-container">
 					<a id="poll-question-{list.U_POLL_ID}" class="poll-question" href="{PATH_TO_ROOT}/poll/poll{list.U_POLL_ID}">
-						{list.QUESTION}<br />
+						<span class="infos-options">{list.QUESTION}</span>
 						<img src="{PATH_TO_ROOT}/poll/poll.png" alt="{list.QUESTION}" title="{list.QUESTION}"/>
-					</a> 
+					</a>
 				</div>
 				# END list #
-				
+
 				<p class="center">{U_ARCHIVE}</p>
 			</div>
 			<footer></footer>
 		</section>
 	# ENDIF #
-		
-		
+
+
 	# IF C_POLL_VIEW #
 		<form method="post" action="{PATH_TO_ROOT}/poll/poll{U_POLL_ACTION}">
 			<section id="module-poll">
@@ -30,7 +30,7 @@
 				</header>
 				<div class="content">
 					# INCLUDE message_helper #
-					
+
 					<article id="article-poll-{IDPOLL}" class="article-poll block">
 						<header>
 							<h2>
@@ -49,11 +49,11 @@
 								# START radio #
 								<p class="poll-question-select"><label><input type="{radio.TYPE}" name="radio" value="{radio.NAME}"> {radio.ANSWERS}</label></p>
 								# END radio #
-							
+
 								# START checkbox #
 								<p class="poll-question-select"><label><input type="{checkbox.TYPE}" name="{checkbox.NAME}" value="{checkbox.NAME}"> {checkbox.ANSWERS}</label></p>
 								# END checkbox #
-								
+
 								<p class="center">
 									<button name="valid_poll" type="submit" value="{L_VOTE}">{L_VOTE}</button>
 									<input type="hidden" name="token" value="{TOKEN}">
@@ -63,7 +63,7 @@
 								</p>
 							</div>
 							# ENDIF #
-							
+
 							# IF C_POLL_RESULTS #
 								# IF C_DISPLAY_RESULTS #
 									# START result #
@@ -72,9 +72,7 @@
 										<div class="progressbar-container" title="{result.PERCENT}%">
 											<div class="progressbar-infos">{result.PERCENT}%</div>
 											<div class="progressbar" style="width:{result.PERCENT}%;"></div>
-											
 										</div>
-										<br/>
 									</div>
 									# END result #
 									<div>
@@ -94,8 +92,8 @@
 			</section>
 		</form>
 	# ENDIF #
-	
-	
+
+
 	# IF C_POLL_ARCHIVES #
 		<section id="module-poll-archives">
 			<header>
@@ -124,7 +122,6 @@
 									<div class="progressbar-infos">{list.result.PERCENT}%</div>
 									<div class="progressbar" style="width:{list.result.PERCENT}%"></div>
 								</div>
-								<br/>
 							</div>
 						# END list.result #
 						<div>

@@ -1,16 +1,16 @@
 
-[class*="map-location_"] { margin: 5px 0; }
-[class*="location-datas_"] label  { margin: 5px; }
-[class*="location-datas_"] input  { margin-bottom: 5px; }
+/*[class*="map-location_"] { margin: 0.309em 0; }
+[class*="location-datas_"] label  { margin: 0.309em; }
+[class*="location-datas_"] input  { margin-bottom: 0.309em; }
 
 @media (min-width: 769px) {
 	.input-location-latlng { width: 48% !important; }
 	.input-location-number { width: 30% !important; }
 	.input-location-text   { width: 68% !important; }
-}
+}*/
 
 .informations-side {
-	margin: 69px 0;
+	margin: 4.236em 0;
 	width: 38%;
 }
 
@@ -19,11 +19,11 @@
 }
 
 .per-default {
-	margin: 0 13px 0 15px;
+	margin: 0 0.809em 0 1em;
 }
 
 .is-default-title {
-	margin-right: 30px;
+	margin-right: 2em;
 }
 
 .name-title {
@@ -31,7 +31,7 @@
 }
 
 div[id*="AdminContactFieldFormController_possible_values_"] {
-	margin: 10px 0 0 0;
+	margin: 0.618em 0 0 0;
 	clear: both;
 }
 
@@ -42,46 +42,48 @@ div[id*="AdminContactFieldFormController_possible_values_"] {
 	}
 
 	div[id*="AdminContactFieldFormController_possible_values_"] > .form-field-checkbox {
-		margin: 10px 0 20px 0; 
+		margin: 0.618em 0 1.309em 0;
 	}
 
 	div[id*="AdminContactFieldFormController_possible_values_"] > input {
-		margin: 0 0 5px 0; 
+		margin: 0 0 0.309em 0;
 	}
 
 	.form-field-checkbox .is-default-title {
-		margin: 0 0 0 40px;
+		margin: 0 0 0 2.618em;
 	}
 
 	.form-field-radio .is-default-title {
-		margin: 0 0 0 20px;
+		margin: 0 0 0 1.309em;
 	}
 
 	div[id*="AdminContactFieldFormController_possible_values_"] .form-field-radio {
 		vertical-align: middle;
-		margin: 10px 0 10px 0;
+		margin: 0.618em 0;
 	}
 
 }
 
 @media (min-width: 769px) {
 	input[id*="field_name_AdminContactFieldFormController_possible_values_"] {
-		margin-bottom: 5px;
+		margin-bottom: 0.309em;
 		width: 45%;
 	}
 
 	input[id*="field_email_AdminContactFieldFormController_possible_values_"] {
-		margin-bottom: 5px;
+		margin-bottom: 0.309em;
 		width: 40%;
 	}
 
-	select[id*="field_recipient_"] {
+	/*select[id*="field_recipient_"] {
 		width: 40%;
 		height: 37px;
-		margin-bottom: 4px;
-	}
+		margin-bottom: 0.228em;
+	}*/
 }
 
 #add-AdminContactFieldFormController_possible_values i[class*="fa-plus"] {
 	float: right;
 }
+
+.form-field-radio-button option[value=""] {display: none;}

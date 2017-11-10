@@ -236,6 +236,19 @@
 
 		<section id="module-gallery">
 			<header>
+				<h1>
+					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
+					{GALLERY} # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit smaller"></i></a># ENDIF #
+				</h1>
+
+				# IF C_CATEGORY_DESCRIPTION #
+					<div class="cat-description">
+						{CATEGORY_DESCRIPTION}
+					</div>
+				# ENDIF #
+			</header>
+
+			<div class="gallery-tools-container">
 				<menu id="cssmenu-galleryfilter" class="cssmenu cssmenu-right cssmenu-actionslinks cssmenu-tools">
 					<ul class="level-0 hidden">
 						<li><a class="cssmenu-title"><i class="fa fa-eye"></i> {L_DISPLAY}</a>
@@ -274,28 +287,21 @@
 						jQuery("#cssmenu-galleryfilter ul").removeClass('hidden');
 					});
 				</script>
-				<h1>
-					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
-					{GALLERY} # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit smaller"></i></a># ENDIF #
-				</h1>
-
-				# IF C_CATEGORY_DESCRIPTION #
-					<div class="cat-description">
-						{CATEGORY_DESCRIPTION}
-					</div>
-				# ENDIF #
-			</header>
+				<div class="spacer"></div>
+			</div>
 
 			# IF C_SUB_CATEGORIES #
 			<div class="subcat-container elements-container# IF C_SEVERAL_CATS_COLUMNS # columns-{COLUMNS_NUMBER}# ENDIF #">
 				# START sub_categories_list #
 				<div class="subcat-element block">
 					<div class="subcat-content">
-						# IF sub_categories_list.C_CATEGORY_IMAGE #<a itemprop="about" href="{sub_categories_list.U_CATEGORY}"><img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" /></a># ENDIF #
-						<br />
-						<a itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
-						<br />
-						<span class="small">{sub_categories_list.PICTURES_NUMBER}</span>
+						# IF sub_categories_list.C_CATEGORY_IMAGE #
+							<a class="subcat-thumbnail" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
+								<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
+							</a>
+						# ENDIF #
+						<a class="subcat-title" itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
+						<span class="subcat-options">{sub_categories_list.PICTURES_NUMBER}</span>
 					</div>
 				</div>
 				# END sub_categories_list #
@@ -320,23 +326,23 @@
 							<div class="options">
 								<h6>{L_INFORMATIONS}</h6>
 								# IF C_TITLE_ENABLED #
-									<span class="text-strong">{L_NAME} : </span><span><span id="fi_{ID}">{NAME}</span> <span id="fi{ID}"></span></span><br/>
+									<span class="infos-options"><span class="text-strong">{L_NAME} : </span><span id="fi_{ID}">{NAME}</span> <span id="fi{ID}"></span></span>
 								# ENDIF #
 								# IF C_AUTHOR_DISPLAYED #
-									<span class="text-strong">{L_POSTOR} : </span><span># IF C_POSTOR_EXIST #<a class="small {POSTOR_LEVEL_CLASS}"# IF C_POSTOR_GROUP_COLOR # style="color:{POSTOR_GROUP_COLOR}"# ENDIF # href="{U_POSTOR_PROFILE}">{POSTOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #</span><br/>
+									<span class="infos-options"><span class="text-strong">{L_POSTOR} : </span># IF C_POSTOR_EXIST #<a class="small {POSTOR_LEVEL_CLASS}"# IF C_POSTOR_GROUP_COLOR # style="color:{POSTOR_GROUP_COLOR}"# ENDIF # href="{U_POSTOR_PROFILE}">{POSTOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #</span>
 								# ENDIF #
 								# IF C_VIEWS_COUNTER_ENABLED #
-									<span class="text-strong">{L_VIEWS} : </span><span>{VIEWS}</span><br/>
+									<span class="infos-options"><span class="text-strong">{L_VIEWS} : </span>{VIEWS}</span>
 								# ENDIF #
-								<span class="text-strong">{L_ADD_ON} : </span><span>{DATE}</span><br/>
-								<span class="text-strong">{L_DIMENSION} : </span><span>{DIMENSION}</span><br/>
-								<span class="text-strong">{L_SIZE} : </span><span>{SIZE} {L_KB}</span><br/>
+								<span class="infos-options"><span class="text-strong">{L_ADD_ON} : </span>{DATE}</span>
+								<span class="infos-options"><span class="text-strong">{L_DIMENSION} : </span>{DIMENSION}</span>
+								<span class="infos-options"><span class="text-strong">{L_SIZE} : </span>{SIZE} {L_KB}</span>
 								# IF C_COMMENTS_ENABLED #
-									<a href="{U_COMMENTS}">{L_COMMENTS}</a><br />
+									<a class="infos-options" href="{U_COMMENTS}">{L_COMMENTS}</a>
 								# ENDIF #
 								<div class="center">
 									# IF C_NOTATION_ENABLED #
-										<div class="text-strong">{KERNEL_NOTATION}</div><br/>
+										<div class="text-strong">{KERNEL_NOTATION}</div>
 									# ENDIF #
 									# IF C_GALLERY_PICS_MODO #
 									<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');" class="basic-button" title="{L_EDIT}"><i class="fa fa-edit"></i></a></span>
@@ -361,7 +367,6 @@
 								<span class="float-left">&nbsp;&nbsp;&nbsp;<a href="{U_PREVIOUS}#pics_max" title =""><i class="fa fa-arrow-left fa-2x"></i> ${LangLoader::get_message('previous', 'main')}</a></span>
 								<span class="float-right"><a href="{U_NEXT}#pics_max" title="">${LangLoader::get_message('next', 'main')} <i class="fa fa-arrow-right fa-2x"></i></a>&nbsp;&nbsp;&nbsp;</span>
 							</div>
-							<br /><br />
 							<table class="pics-max-thumbnails">
 								<thead>
 									<tr>
@@ -409,23 +414,31 @@
 
 									<div class="spacer"></div>
 
-									<div class="smaller">
-										# IF C_PICTURE_NAME_DISPLAYED #<a class="small" href="{pics_list.U_PICTURE_LINK}"><span id="fi_{pics_list.ID}">{pics_list.NAME}</span></a># ELSE #<span id="fi_{pics_list.ID}"></span># ENDIF # <span id="fi{pics_list.ID}"></span>
+									<div class="small">
+										# IF C_PICTURE_NAME_DISPLAYED #
+											<a class="infos-options" href="{pics_list.U_PICTURE_LINK}">
+												<span id="fi_{pics_list.ID}">{pics_list.NAME}</span>
+											</a>
+										# ELSE #
+											<span class="infos-options" id="fi_{pics_list.ID}"></span>
+										# ENDIF # <span id="fi{pics_list.ID}"></span>
 										# IF C_AUTHOR_DISPLAYED #
-										<br />
-										{L_BY} # IF pics_list.C_POSTOR_EXIST #<a class="small {pics_list.POSTOR_LEVEL_CLASS}"# IF pics_list.C_POSTOR_GROUP_COLOR # style="color:{pics_list.POSTOR_GROUP_COLOR}"# ENDIF # href="{pics_list.U_POSTOR_PROFILE}">{pics_list.POSTOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #
+											# IF pics_list.C_POSTOR_EXIST #
+												<a class="infos-options {pics_list.POSTOR_LEVEL_CLASS}"# IF pics_list.C_POSTOR_GROUP_COLOR # style="color:{pics_list.POSTOR_GROUP_COLOR}"# ENDIF # href="{pics_list.U_POSTOR_PROFILE}">
+													{L_BY} {pics_list.POSTOR}
+												</a>
+											# ELSE #
+												<span class="infos-options">{L_BY} ${LangLoader::get_message('guest', 'main')}</span>
+											# ENDIF #
 										# ENDIF #
 										# IF C_VIEWS_COUNTER_ENABLED #
-										<br />
-										<span id="gv{pics_list.ID}">{pics_list.VIEWS}</span> <span id="gvl{pics_list.ID}">{pics_list.L_VIEWS}</span>
+											<span class="infos-options"><span id="gv{pics_list.ID}">{pics_list.VIEWS}</span> <span id="gvl{pics_list.ID}">{pics_list.L_VIEWS}</span></span>
 										# ENDIF #
 										# IF C_COMMENTS_ENABLED #
-										<br />
-										<a href="{pics_list.U_COMMENTS}">{pics_list.L_COMMENTS}</a>
+											<a class="infos-options" href="{pics_list.U_COMMENTS}">{pics_list.L_COMMENTS}</a>
 										# ENDIF #
 										# IF C_NOTATION_ENABLED #
-										<br />
-										{pics_list.KERNEL_NOTATION}
+											<span class="infos-options">{pics_list.KERNEL_NOTATION}</span>
 										# ENDIF #
 									</div>
 

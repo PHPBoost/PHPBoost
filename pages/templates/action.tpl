@@ -125,7 +125,7 @@
 		</div>
 		<input type="hidden" name="id_new" value="{ID_NEW}">
 	</fieldset>
-	
+
 	<fieldset class="fieldset-submit">
 		<legend>{L_SUBMIT}</legend>
 		<input type="hidden" name="token" value="{TOKEN}">
@@ -160,12 +160,12 @@
 			<div class="form-field">
 				<input type="hidden" name="report_cat" value="{remove.ID_CAT}" id="id_cat">
 				<span class="futur-cat-pages"><a href="javascript:select_cat(0);"><img src="{PICTURES_DATA_PATH}/images/cat_root.png" alt="cat-root" /> <span id="class-0" class="{remove.CAT_0}">{L_ROOT}</span></a></span>
-				<br />
+				<div class="spacer"></div>
 				{remove.CATS}
 			</div>
 		</div>
 	</fieldset>
-	
+
 	<fieldset class="fieldset-submit">
 		<legend>{L_SUBMIT}</legend>
 		<input type="hidden" name="token" value="{TOKEN}">

@@ -3,7 +3,7 @@
 			var path = '{PICTURES_DATA_PATH}';
 			var selected_cat = {SELECTED_CAT};
 			function check_form_post(){
-				
+
 				if(document.getElementById('title').value == "") {
 					alert("{L_ALERT_TITLE}");
 					return false;
@@ -29,15 +29,14 @@
 						{preview.menu.MENU}
 					</div>
 				# END preview.menu #
-				<br /><br />
 				{preview.CONTENTS}
 			</div>
 			<footer></footer>
 		</article>
 		# END preview #
-		
+
 		# INCLUDE message_helper #
-		
+
 		<form action="{TARGET}" method="post" onsubmit="return check_form_post();" class="fieldset-content wiki-edit">
 			<p class="center">{L_REQUIRE}</p>
 			<fieldset>
@@ -114,7 +113,7 @@
 				-->
 				</script>
 				# ENDIF #
-				
+
 			</fieldset>
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>

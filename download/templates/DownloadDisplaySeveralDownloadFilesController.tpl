@@ -10,17 +10,19 @@
 			</div>
 		# ENDIF #
 	</header>
-	
+
 	# IF C_SUB_CATEGORIES #
 	<div class="subcat-container elements-container# IF C_SEVERAL_CATS_COLUMNS # columns-{NUMBER_CATS_COLUMNS}# ENDIF #">
 		# START sub_categories_list #
 		<div class="subcat-element block">
 			<div class="subcat-content">
-				# IF sub_categories_list.C_CATEGORY_IMAGE #<a itemprop="about" href="{sub_categories_list.U_CATEGORY}"><img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" /></a># ENDIF #
-				<br />
-				<a itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
-				<br />
-				<span class="small">{sub_categories_list.DOWNLOADFILES_NUMBER} # IF sub_categories_list.C_MORE_THAN_ONE_DOWNLOADFILE #${TextHelper::lcfirst(LangLoader::get_message('files', 'common', 'download'))}# ELSE #${TextHelper::lcfirst(LangLoader::get_message('file', 'common', 'download'))}# ENDIF #</span>
+				# IF sub_categories_list.C_CATEGORY_IMAGE #
+					<a class="subcat-thumbnail" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
+						<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
+					</a>
+				# ENDIF #
+				<a class="subcat-title" itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
+				<span class="subcat-options">{sub_categories_list.DOWNLOADFILES_NUMBER} # IF sub_categories_list.C_MORE_THAN_ONE_DOWNLOADFILE #${TextHelper::lcfirst(LangLoader::get_message('files', 'common', 'download'))}# ELSE #${TextHelper::lcfirst(LangLoader::get_message('file', 'common', 'download'))}# ENDIF #</span>
 			</div>
 		</div>
 		# END sub_categories_list #
@@ -30,8 +32,8 @@
 	# ELSE #
 		# IF NOT C_CATEGORY_DISPLAYED_TABLE #<div class="spacer"></div># ENDIF #
 	# ENDIF #
-	
-	<div class="content elements-container">
+
+	<div class="elements-container">
 	# IF C_FILES #
 		# IF C_MORE_THAN_ONE_FILE #
 			# INCLUDE SORT_FORM #
@@ -75,7 +77,7 @@
 						# IF C_NB_VIEW_ENABLED #
 						<td>
 							{downloadfiles.NUMBER_VIEW}
-						</td>							
+						</td>
 						# ENDIF #
 						# IF C_NOTATION_ENABLED #
 						<td>
@@ -112,7 +114,7 @@
 						</span>
 						<a href="{downloadfiles.U_LINK}" itemprop="name">{downloadfiles.NAME}</a>
 					</h2>
-					
+
 					<meta itemprop="url" content="{downloadfiles.U_LINK}">
 					<meta itemprop="description" content="${escape(downloadfiles.DESCRIPTION)}"/>
 					# IF C_COMMENTS_ENABLED #
@@ -127,11 +129,11 @@
 						<span title="{downloadfiles.L_DOWNLOADED_TIMES}">{downloadfiles.NUMBER_DOWNLOADS}</span>
 						# IF C_NB_VIEW_ENABLED # | <span title="{downloadfiles.NUMBER_VIEW} {@download.view}"><i class="fa fa-eye"></i> {downloadfiles.NUMBER_VIEW}</span># ENDIF #
 						# IF C_COMMENTS_ENABLED #
-							| <i class="fa fa-comment" title="${LangLoader::get_message('comments', 'comments-common')}"></i>
+							| <i class="fa fa-comments-o" title="${LangLoader::get_message('comments', 'comments-common')}"></i>
 							# IF downloadfiles.C_COMMENTS # {downloadfiles.NUMBER_COMMENTS} # ENDIF # {downloadfiles.L_COMMENTS}
 						# ENDIF #
 						# IF downloadfiles.C_KEYWORDS #
-							| <i class="fa fa-tags" title="${LangLoader::get_message('form.keywords', 'common')}"></i> 
+							| <i class="fa fa-tags" title="${LangLoader::get_message('form.keywords', 'common')}"></i>
 							# START downloadfiles.keywords #
 								<a itemprop="keywords" href="{downloadfiles.keywords.URL}">{downloadfiles.keywords.NAME}</a>
 								# IF downloadfiles.keywords.C_SEPARATOR #, # ENDIF #
@@ -144,9 +146,9 @@
 					</div>
 					<div class="content">
 						# IF downloadfiles.C_PICTURE #
-						<span class="download-picture">
+						<a href="{downloadfiles.U_LINK}" class="thumbnail-item">
 							<img src="{downloadfiles.U_PICTURE}" alt="{downloadfiles.NAME}" itemprop="image" />
-						</span>
+						</a>
 						# ENDIF #
 						{downloadfiles.DESCRIPTION}# IF downloadfiles.C_READ_MORE #... <a href="{downloadfiles.U_LINK}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
 						<div class="spacer"></div>
@@ -171,45 +173,44 @@
 								# ENDIF #
 							</div>
 							<h6>{@file_infos}</h6>
-							<span class="text-strong">${LangLoader::get_message('size', 'common')} : </span><span># IF downloadfiles.C_SIZE #{downloadfiles.SIZE}# ELSE #${LangLoader::get_message('unknown_size', 'common')}# ENDIF #</span><br/>
-							<span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} : </span><span><time datetime="# IF NOT downloadfiles.C_DIFFERED #{downloadfiles.DATE_ISO8601}# ELSE #{downloadfiles.DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT downloadfiles.C_DIFFERED #{downloadfiles.DATE}# ELSE #{downloadfiles.DIFFERED_START_DATE}# ENDIF #</time></span><br/>
-							# IF downloadfiles.C_UPDATED_DATE #<span class="text-strong">${LangLoader::get_message('form.date.update', 'common')} : </span><span><time datetime="{downloadfiles.UPDATED_DATE_ISO8601}" itemprop="dateModified">{downloadfiles.UPDATED_DATE}</time></span><br/># ENDIF #
-							<span class="text-strong">{@downloads_number} : </span><span>{downloadfiles.NUMBER_DOWNLOADS}</span><br/>
-							# IF C_NB_VIEW_ENABLED #<span class="text-strong">{@download.number.view} : </span><span title="{downloadfiles.NUMBER_VIEW} {@download.view}">{downloadfiles.NUMBER_VIEW}</span><br/># ENDIF #
-							# IF NOT C_CATEGORY #<span class="text-strong">${LangLoader::get_message('category', 'categories-common')} : </span><span><a itemprop="about" class="small" href="{downloadfiles.U_CATEGORY}">{downloadfiles.CATEGORY_NAME}</a></span><br/># ENDIF #
+							<span class="infos-options"><span class="text-strong">${LangLoader::get_message('size', 'common')} : </span># IF downloadfiles.C_SIZE #{downloadfiles.SIZE}# ELSE #${LangLoader::get_message('unknown_size', 'common')}# ENDIF #</span>
+							<span class="infos-options"><span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} : </span><time datetime="# IF NOT downloadfiles.C_DIFFERED #{downloadfiles.DATE_ISO8601}# ELSE #{downloadfiles.DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT downloadfiles.C_DIFFERED #{downloadfiles.DATE}# ELSE #{downloadfiles.DIFFERED_START_DATE}# ENDIF #</time></span>
+							# IF downloadfiles.C_UPDATED_DATE #<span class="infos-options"><span class="text-strong">${LangLoader::get_message('form.date.update', 'common')} : </span><time datetime="{downloadfiles.UPDATED_DATE_ISO8601}" itemprop="dateModified">{downloadfiles.UPDATED_DATE}</time></span># ENDIF #
+							<span class="infos-options"><span class="text-strong">{@downloads_number} : </span>{downloadfiles.NUMBER_DOWNLOADS}</span>
+							# IF C_NB_VIEW_ENABLED #<span class="infos-options" title="{downloadfiles.NUMBER_VIEW} {@download.view}"><span class="text-strong">{@download.number.view} : </span>{downloadfiles.NUMBER_VIEW}</span># ENDIF #
+							# IF NOT C_CATEGORY #<span class="infos-options"><span class="text-strong">${LangLoader::get_message('category', 'categories-common')} : </span><a itemprop="about" href="{downloadfiles.U_CATEGORY}">{downloadfiles.CATEGORY_NAME}</a></span># ENDIF #
 							# IF downloadfiles.C_KEYWORDS #
-								<span class="text-strong">${LangLoader::get_message('form.keywords', 'common')} : </span>
-								<span>
+								<span class="infos-options">
+									<span class="text-strong">${LangLoader::get_message('form.keywords', 'common')} : </span>
 									# START downloadfiles.keywords #
-										<a itemprop="keywords" class="small" href="{downloadfiles.keywords.URL}">{downloadfiles.keywords.NAME}</a># IF downloadfiles.keywords.C_SEPARATOR #, # ENDIF #
+										<a itemprop="keywords" href="{downloadfiles.keywords.URL}">{downloadfiles.keywords.NAME}</a># IF downloadfiles.keywords.C_SEPARATOR #, # ENDIF #
 									# END downloadfiles.keywords #
-								</span><br/>
+								</span>
 							# ENDIF #
 							# IF C_AUTHOR_DISPLAYED #
-								<span class="text-strong">${LangLoader::get_message('author', 'common')} : </span>
-								<span>
+								<span class="infos-options">
+									<span class="text-strong">${LangLoader::get_message('author', 'common')} : </span>
 									# IF downloadfiles.C_AUTHOR_CUSTOM_NAME #
 										{downloadfiles.AUTHOR_CUSTOM_NAME}
 									# ELSE #
-										# IF downloadfiles.C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="small {downloadfiles.USER_LEVEL_CLASS}" href="{downloadfiles.U_AUTHOR_PROFILE}" # IF downloadfiles.C_USER_GROUP_COLOR # style="color:{downloadfiles.USER_GROUP_COLOR}" # ENDIF #>{downloadfiles.PSEUDO}</a># ELSE #{downloadfiles.PSEUDO}# ENDIF #  
+										# IF downloadfiles.C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{downloadfiles.USER_LEVEL_CLASS}" href="{downloadfiles.U_AUTHOR_PROFILE}" # IF downloadfiles.C_USER_GROUP_COLOR # style="color:{downloadfiles.USER_GROUP_COLOR}" # ENDIF #>{downloadfiles.PSEUDO}</a># ELSE #{downloadfiles.PSEUDO}# ENDIF #
 									# ENDIF #
-								</span><br/>
+								</span>
 							# ENDIF #
 							# IF C_COMMENTS_ENABLED #
-								<span># IF downloadfiles.C_COMMENTS # {downloadfiles.NUMBER_COMMENTS} # ENDIF # {downloadfiles.L_COMMENTS}</span>
+								<span class="infos-options"># IF downloadfiles.C_COMMENTS # {downloadfiles.NUMBER_COMMENTS} # ENDIF # {downloadfiles.L_COMMENTS}</span>
 							# ENDIF #
 							# IF downloadfiles.C_VISIBLE #
 								# IF C_NOTATION_ENABLED #
-									<div class="spacer"></div>
 									<div class="center">{downloadfiles.NOTATION}</div>
 								# ENDIF #
 							# ENDIF #
 						</div>
-						
+
 						<div itemprop="text">{downloadfiles.CONTENTS}</div>
 					</div>
 				# ENDIF #
-				
+
 				<footer></footer>
 			</article>
 			# END downloadfiles #

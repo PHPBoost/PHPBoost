@@ -10,27 +10,36 @@
 			</div>
 		# ENDIF #
 	</header>
-	
+
 	# IF C_SUB_CATEGORIES #
-	<div class="subcat-container elements-container# IF C_SEVERAL_CATS_COLUMNS # columns-{NUMBER_CATS_COLUMNS}# ENDIF #">
+	<div class="subcat-container elements-container no-style# IF C_SEVERAL_CATS_COLUMNS # columns-{NUMBER_CATS_COLUMNS}# ENDIF #">
 		# START sub_categories_list #
 		<div class="subcat-element block">
 			<div class="subcat-content">
 				# IF C_DISPLAY_CATS_ICON #
-				# IF sub_categories_list.C_CATEGORY_IMAGE #<a itemprop="about" href="{sub_categories_list.U_CATEGORY}"><img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" /></a># ENDIF #
-				<br />
+					# IF sub_categories_list.C_CATEGORY_IMAGE #
+						<a class="subcat-thumbnail" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
+							<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
+						</a>
+					# ENDIF #
 				# ENDIF #
-				<a itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
-				<br />
-				<span class="small">{sub_categories_list.ARTICLES_NUMBER} # IF sub_categories_list.C_MORE_THAN_ONE_ARTICLE #${TextHelper::lcfirst(LangLoader::get_message('articles', 'common', 'articles'))}# ELSE #${TextHelper::lcfirst(LangLoader::get_message('article', 'common', 'articles'))}# ENDIF #</span>
+				<a class="subcat-title" itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
+				<span class="subcat-options">
+					{sub_categories_list.ARTICLES_NUMBER}
+					# IF sub_categories_list.C_MORE_THAN_ONE_ARTICLE #
+						${TextHelper::lcfirst(LangLoader::get_message('articles', 'common', 'articles'))}
+					# ELSE #
+						${TextHelper::lcfirst(LangLoader::get_message('article', 'common', 'articles'))}
+					# ENDIF #
+				</span>
 			</div>
 		</div>
 		# END sub_categories_list #
 	</div>
 	# IF C_SUBCATEGORIES_PAGINATION #<span class="center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
 	# ENDIF #
-	
-	
+
+
 	# IF C_NO_ARTICLE_AVAILABLE #
 		# IF NOT C_HIDE_NO_ITEM_MESSAGE #
 		<div class="center">
@@ -57,29 +66,29 @@
 								# ENDIF #
 							</span>
 						</h2>
-						
+
 						<div class="more">
 							# IF articles.C_AUTHOR_DISPLAYED #
-								${LangLoader::get_message('by', 'common')}
+								<i class="fa fa-user-o"></i>
 								# IF articles.C_AUTHOR_CUSTOM_NAME #
 									{articles.AUTHOR_CUSTOM_NAME}
 								# ELSE #
-									# IF articles.C_AUTHOR_EXIST #<a itemprop="author" href="{articles.U_AUTHOR}" class="{articles.USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>{articles.PSEUDO}</a># ELSE #{articles.PSEUDO}# ENDIF #,
+									# IF articles.C_AUTHOR_EXIST #<a itemprop="author" href="{articles.U_AUTHOR}" class="{articles.USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>{articles.PSEUDO}</a> | # ELSE #{articles.PSEUDO} | # ENDIF #
 								# ENDIF #
-							# ENDIF # 
-							${LangLoader::get_message('the', 'common')} <time datetime="# IF NOT articles.C_DIFFERED #{articles.DATE_ISO8601}# ELSE #{articles.PUBLISHING_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT articles.C_DIFFERED #{articles.DATE}# ELSE #{articles.PUBLISHING_START_DATE}# ENDIF #</time>
-							${TextHelper::lcfirst(LangLoader::get_message('in', 'common'))} <a itemprop="about" href="{articles.U_CATEGORY}">{articles.CATEGORY_NAME}</a>
+							# ENDIF #
+							<i class="fa fa-calendar"></i> <time datetime="# IF NOT articles.C_DIFFERED #{articles.DATE_ISO8601}# ELSE #{articles.PUBLISHING_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT articles.C_DIFFERED #{articles.DATE} | # ELSE #{articles.PUBLISHING_START_DATE} | # ENDIF #</time>
+							<i class="fa fa-folder-o"></i> <a itemprop="about" href="{articles.U_CATEGORY}">{articles.CATEGORY_NAME}</a>
 						</div>
-						
+
 						<meta itemprop="url" content="{articles.U_ARTICLE}">
 						<meta itemprop="description" content="${escape(articles.DESCRIPTION)}"/>
 						<meta itemprop="discussionUrl" content="{articles.U_COMMENTS}">
 						<meta itemprop="interactionCount" content="{articles.NUMBER_COMMENTS} UserComments">
-						
+
 					</header>
 
 					<div class="content">
-						# IF articles.C_HAS_PICTURE #<a href="{articles.U_ARTICLE}"><img itemprop="thumbnailUrl" src="{articles.PICTURE}" alt="{articles.TITLE}" /></a># ENDIF #
+						# IF articles.C_HAS_PICTURE #<a href="{articles.U_ARTICLE}" class="thumbnail-item"><img itemprop="thumbnailUrl" src="{articles.PICTURE}" alt="{articles.TITLE}" /></a># ENDIF #
 						<div itemprop="text">{articles.DESCRIPTION}# IF articles.C_READ_MORE #... <a href="{articles.U_ARTICLE}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #</div>
 					</div>
 
@@ -89,12 +98,12 @@
 					<div id="articles-sources-container">
 						<span>${LangLoader::get_message('form.sources', 'common')}</span> :
 						# START articles.sources #
-						<a itemprop="isBasedOnUrl" href="{articles.sources.URL}" class="small">{articles.sources.NAME}</a># IF articles.sources.C_SEPARATOR #, # ENDIF #
+						<a itemprop="isBasedOnUrl" href="{articles.sources.URL}" class="small" rel="nofollow">{articles.sources.NAME}</a># IF articles.sources.C_SEPARATOR #, # ENDIF #
 						# END articles.sources #
 					</div>
 					</aside>
 					# ENDIF #
-					
+
 					<footer></footer>
 				</article>
 			# END articles #
