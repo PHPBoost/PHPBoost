@@ -37,6 +37,8 @@
 	 */
 	private $seo_meta_data = null;
 
+	private $location_id = '';
+
 	public function __construct()
 	{
 		$this->seo_meta_data = new SEOMetaData();
@@ -60,6 +62,16 @@
 		}
 		return $html_code;
 	}
+
+	public function get_location_id()
+	{
+		return $this->location_id;
+	}
+	
+	public function set_location_id($location_id)
+	{
+		$this->location_id = $location_id;
+	}
 	
 	public function get_seo_meta_data()
 	{
@@ -82,7 +94,7 @@
 			
 		defined('TITLE') or define('TITLE', $title);
 		
-		self::set_page_localization($this->get_page_title());
+		self::set_page_localization($this->get_page_title(), $this->get_location_id());
 	}
 	
 	protected function retrieve_kernel_message()

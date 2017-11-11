@@ -487,7 +487,8 @@ class KernelSetup
 			'location_script' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
 			'location_title' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
 			'cached_data' => array('type' => 'text', 'length' => 65000),
-			'data' => array('type' => 'text', 'length' => 65000)
+			'data' => array('type' => 'text', 'length' => 65000),
+			'location_id' => array('type' => 'string', 'length' => 64, 'default' => "''"),
 		);
 		$options = array(
 			'primary' => array('session_id'),

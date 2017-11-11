@@ -314,11 +314,13 @@ class SessionData
 		}
 	}
 
-	public static function update_location($title_page)
+	public static function update_location($title_page, $location_id = '')
 	{
 		$data = AppContext::get_session();
 		
-		$columns = array('timestamp' => $data->timestamp, 'location_title' => $title_page, 'location_script' => REWRITED_SCRIPT);
+		$columns = array(
+			'timestamp' => $data->timestamp, 'location_title' => $title_page, 'location_script' => REWRITED_SCRIPT, 
+			'location_id' => $location_id);
 		$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
 		$parameters = array('user_id' => $data->user_id, 'session_id' => $data->session_id);
 		PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
