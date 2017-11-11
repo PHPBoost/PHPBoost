@@ -1,8 +1,8 @@
 		<span id="go-top"></span>
 
 		# INCLUDE forum_top #
-		
-		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-membermsg">
+
+		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-membermsg" class="forum-contents">
 			<header>
 				<h2>
 					<span class="forum-cat-title">
@@ -16,9 +16,9 @@
 				# START list #
 				<div class="msg-position">
 					<div class="msg-title">
-						{list.U_FORUM_CAT} &raquo; {list.U_TITLE_T}
+						{list.U_FORUM_CAT} <i class="fa fa-chevron-circle-right"></i> {list.U_TITLE_T}
 						<span class="float-right">
-							<a href="#go-top" title="go top"><i class="fa fa-arrow-up"></i></a> 
+							<a href="#go-top" title="go top"><i class="fa fa-arrow-up"></i></a>
 							<a href="#go-bottom" title="go bottom"><i class="fa fa-arrow-down"></i></a>
 						</span>
 					</div>
@@ -28,23 +28,29 @@
 								<div class="msg-pseudo-mbr">
 									{list.USER_ONLINE} # IF NOT list.C_GUEST #<a class="forum-link-pseudo {list.LEVEL_CLASS}" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}" # ENDIF # href="{list.U_USER_PROFILE}" title="{list.USER_PSEUDO}">{list.USER_PSEUDO}</a># ELSE # {list.USER_PSEUDO} # ENDIF #
 								</div>
-								
+
 								<p class="center">{list.USER_RANK}</p>
 								<p class="center">{list.USER_IMG_ASSOC}</p>
-							</div>							
-							
+							</div>
+
 							<div class="msg-avatar-mbr center">
 								{list.USER_AVATAR}
 							</div>
-							
+
 							<div class="msg-info-mbr">
 								# IF list.C_USER_GROUPS #
 								<p class="center">
 									# START list.usergroups #
-										# IF list.usergroups.C_IMG_USERGROUP # 
-										<a href="{list.usergroups.U_USERGROUP}" class="user-group user-group-img group-{list.usergroups.USERGROUP_ID} "# IF list.usergroups.C_USERGROUP_COLOR # style="color: {list.usergroups.USERGROUP_COLOR}"# ENDIF #><img src="{PATH_TO_ROOT}/images/group/{list.usergroups.U_IMG_USERGROUP}" alt="{list.usergroups.USERGROUP_NAME}" title="{list.usergroups.USERGROUP_NAME}"/></a><br/>
+										# IF list.usergroups.C_IMG_USERGROUP #
+										<span class="user-group">
+											<a href="{list.usergroups.U_USERGROUP}" class="user-group user-group-img group-{list.usergroups.USERGROUP_ID} "# IF list.usergroups.C_USERGROUP_COLOR # style="color: {list.usergroups.USERGROUP_COLOR}"# ENDIF #>
+												<img src="{PATH_TO_ROOT}/images/group/{list.usergroups.U_IMG_USERGROUP}" alt="{list.usergroups.USERGROUP_NAME}" title="{list.usergroups.USERGROUP_NAME}"/>
+											</a>
+										</span>
 										# ELSE #
-										{list.usergroups.L_USER_GROUP} : <a href="{list.usergroups.U_USERGROUP}" class="user-group group-{list.usergroups.USERGROUP_ID}"# IF list.usergroups.C_USERGROUP_COLOR # style="color: {list.usergroups.USERGROUP_COLOR}"# ENDIF #>{list.usergroups.USERGROUP_NAME}</a><br />
+										<span class="user-group">
+											{list.usergroups.L_USER_GROUP} : <a href="{list.usergroups.U_USERGROUP}" class="user-group group-{list.usergroups.USERGROUP_ID}"# IF list.usergroups.C_USERGROUP_COLOR # style="color: {list.usergroups.USERGROUP_COLOR}"# ENDIF #>{list.usergroups.USERGROUP_NAME}</a>
+										</span>										
 										# ENDIF #
 									# END list.usergroups #
 								</p>
@@ -52,9 +58,9 @@
 								<p class="left">{list.USER_DATE}</p>
 								<p class="left">{list.USER_MSG}</p>
 							</div>
-							
+
 						</div>
-						
+
 						<div class="msg-contents-container">
 							<div class="msg-contents-info">
 								<span class="float-left">
@@ -83,7 +89,7 @@
 					</div>
 				</div>
 				# END list #
-				
+
 			</div>
 			<footer>
 				<span class="forum-cat-title">
@@ -92,8 +98,7 @@
 				# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span><div class="spacer"></div># ENDIF #
 			</footer>
 		</article>
-		
+
 		<span id="go-bottom"></span>
-		
+
 		# INCLUDE forum_bottom #
-		

@@ -1,21 +1,21 @@
 /* -- Profile User -- */
 /* ------------------ */
 ul#profile-container {
-	margin: 30px auto;
+	margin: 2em auto;
 	width: 99%;
 	list-style-type: none;
-	margin-left: -7px;
+	margin-left: -0.456em;
 }
 
 ul#profile-container li {
-	margin: 10px 0 0 7px;
-	padding: 10px;
+	margin: 0.618em 0 0 0.456em;
+	padding: 0.618em;
 	text-align: center;
 }
 
 @media (min-width: 769px) {
 	ul#profile-container li {
-		width: calc(100% / 3 - 7px);
+		width: calc(100% / 3 - 0.456em);
 	}
 
 	.profile-element-title {
@@ -25,7 +25,7 @@ ul#profile-container li {
 
 @media (max-width: 768px) {
 	.profile-element-title {
-		padding-left: 7px;
+		padding-left: 0.456em;
 	}
 }
 
@@ -42,7 +42,7 @@ ul#profile-container li {
 }
 
 .user-group-select {
-	margin-bottom: 20px;
+	margin-bottom: 1.309em;
 }
 
 .user-group-select fieldset {
@@ -55,15 +55,15 @@ ul#profile-container li {
 }
 
 
-/* -- Contribution -- */ 
+/* -- Contribution -- */
 /* ------------------ */
 #module-user-contribution-list hr {
-	margin: 20px 0;
+	margin: 1.309em 0;
 }
 
 .module-contribution-element {
 	float: left;
-	margin: 20px 0;
+	margin: 1.309em 0;
 	text-align: center;
 }
 
@@ -95,7 +95,7 @@ ul#profile-container li {
 
 .contribution-module-container {
 	float: left;
-	margin: 20px 0;
+	margin: 1.309em 0;
 	text-align: center;
 }
 
@@ -112,45 +112,38 @@ table.announce-legend td {
 	width: 33%;
 }
 
-@media (min-width: 769px) {
-	.post-pm {
-		margin: auto;
-		width: 80%;
-	}
-}
-
 .available-modules-msg {
-	margin-bottom: 15px;
+	margin-bottom: 1em;
 	text-align: center;
 }
 
 
-/* -- Error 403/404 -- */ 
+/* -- Error 403/404 -- */
 /* ------------------- */
 #module-user-error-403 .content,
 #module-user-error-404 .content {
 	text-align: center;
-	font-size: 1.5em;
+	font-size: 1.482em;
 }
 
 #module-user-error-403 .fa-warning:before,
 #module-user-error-404 .fa-warning:before {
-	content: "\f071"; 
+	content: "\f071";
 }
 
 #module-user-error-403 .fa-warning,
 #module-user-error-404 .fa-warning {
 	display: block;
-	margin: 40px auto 20px auto;
+	margin: 0.618em auto 0.309em auto;
 	color: #C19954;
 }
 
 #module-user-error-403 .message-error,
 #module-user-error-404 .message-error {
-	padding: 20px 0;
+	padding: 1.309em 0;
 }
 
 #module-user-error-403 .type-error,
 #module-user-error-404 .type-error {
-	padding: 10px 0;
+	padding: 0.618em 0;
 }

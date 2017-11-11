@@ -1,6 +1,6 @@
 
 	# INCLUDE forum_top #
-		
+
 	# START forums_list #
 		# START forums_list.endcats #
 					</tbody>
@@ -9,15 +9,15 @@
 		</article>
 
 		# END forums_list.endcats #
-			
+
 		# START forums_list.cats #
 		<script>
 			<!--
 			jQuery('#table-{forums_list.cats.IDCAT}').basictable();
 			-->
 		</script>
-			
-		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-{forums_list.cats.IDCAT}">
+
+		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-{forums_list.cats.IDCAT}" class="forum-contents">
 			<header>
 				<h2>
 					<span class="forum-cat-title">
@@ -31,15 +31,15 @@
 					# ENDIF #
 				</h2>
 			</header>
-			<div class="module-contents forum-contents">
+			<div class="content">
 				<table id="table-{forums_list.cats.IDCAT}" class="forum-table">
 					<thead>
 						<tr>
 							<th class="forum-announce-topic"><i class="fa fa-eye"></i></th>
-							<th class="forum-topic">{L_FORUM}</th>
-							<th class="forum-subject-nb">{L_TOPIC}</th>
-							<th class="forum-message-nb">{L_MESSAGE}</th>
-							<th class="forum-last-topic">{L_LAST_MESSAGE}</th>
+							<th class="forum-topic" title="{L_FORUM}"><i class="fa fa-file-o hidden-small-screens"></i><span class="hidden-large-screens">{L_FORUM}</span></th>
+							<th class="forum-topic" title="{L_TOPIC}"><i class="fa fa-files-o hidden-small-screens"></i><span class="hidden-large-screens">{L_TOPIC}</span></th>
+							<th class="forum-message-nb"><i class="fa fa-comments-o fa-fw hidden-small-screens" title="{L_MESSAGE}"></i><span class="hidden-large-screens">{L_MESSAGE}</span></th>
+							<th class="forum-last-topic"><i class="fa fa-clock-o fa-fw hidden-small-screens" title="{L_LAST_MESSAGE}"></i><span class="hidden-large-screens">{L_LAST_MESSAGE}</span></th>
 						</tr>
 					</thead>
 					<tfoot>
@@ -58,8 +58,7 @@
 							</td>
 							<td class="forum-topic" colspan="4">
 								<a href="{forums_list.subcats.U_FORUM_URL}" title="{forums_list.subcats.NAME}">{forums_list.subcats.NAME}</a>
-								<br />
-								<span class="smaller">{forums_list.subcats.DESC}</span>
+								<span class="smaller hidden-small-screens">{forums_list.subcats.DESC}</span>
 							</td>
 							# ELSE #
 							<td class="forum-announce-topic">
@@ -67,8 +66,7 @@
 							</td>
 							<td class="forum-topic">
 								<a href="{forums_list.subcats.U_FORUM_VARS}" title="{forums_list.subcats.NAME}">{forums_list.subcats.NAME}</a>
-								<br />
-								<span class="smaller">{forums_list.subcats.DESC}</span>
+								<span class="smaller hidden-small-screens">{forums_list.subcats.DESC}</span>
 								<span class="small">{forums_list.subcats.SUBFORUMS}</span>
 							</td>
 							<td class="forum-subject-nb">
@@ -79,28 +77,32 @@
 							</td>
 							<td class="forum-last-topic">
 							# IF forums_list.subcats.C_LAST_TOPIC_MSG #
-								<span class="last-topic-date"><a href="{forums_list.subcats.U_LAST_TOPIC}" class="last-topic-title small">{forums_list.subcats.LAST_TOPIC_TITLE}</a>
-								</span><br />
-								<span class="last-topic-date">
-									<a href="{forums_list.subcats.U_LAST_MSG}" title=""><i class="fa fa-hand-o-right"></i></a> ${LangLoader::get_message('on', 'main')} {forums_list.subcats.LAST_MSG_DATE_FULL}
-								</span><br />
-								<span class="last-topic-user">
-									${LangLoader::get_message('by', 'main')}
+								<span class="last-topic-title small">
+									<i class="fa fa-file-o fa-fw"></i> <a href="{forums_list.subcats.U_LAST_TOPIC}">
+										{forums_list.subcats.LAST_TOPIC_TITLE}
+									</a>
+								</span>
+								<span class="last-topic-date small">
+									<i class="fa fa-hand-o-right fa-fw"></i> <a href="{forums_list.subcats.U_LAST_MSG}" title="">
+										{forums_list.subcats.LAST_MSG_DATE_FULL}
+									</a>
+								</span>
+								<span class="last-topic-user small">
+									<i class="fa fa-user-o fa-fw"></i>
 									# IF forums_list.subcats.C_LAST_MSG_GUEST #
-									<a href="{forums_list.subcats.U_LAST_MSG_USER_PROFIL}" class=" small {forums_list.subcats.LAST_MSG_USER_LEVEL}" {forums_list.subcats.LAST_MSG_USER_GROUP_COLOR}>{forums_list.subcats.LAST_MSG_USER_LOGIN}</a>
+										<a href="{forums_list.subcats.U_LAST_MSG_USER_PROFIL}" class="{forums_list.subcats.LAST_MSG_USER_LEVEL}" {forums_list.subcats.LAST_MSG_USER_GROUP_COLOR}>{forums_list.subcats.LAST_MSG_USER_LOGIN}</a>
 									# ELSE #
-									${LangLoader::get_message('guest', 'main')}
+										${LangLoader::get_message('guest', 'main')}
 									# ENDIF #
 								</span>
 							# ELSE #
-								<br /><em>{forums_list.subcats.L_NO_MSG}</em><br /><br />
+								<em>{forums_list.subcats.L_NO_MSG}</em>
 							# ENDIF #
 							</td>
 							# ENDIF #
 						</tr>
 		# END forums_list.subcats #
-		
+
 	# END forums_list #
-		
-	# INCLUDE forum_bottom #	
-		
+
+	# INCLUDE forum_bottom #

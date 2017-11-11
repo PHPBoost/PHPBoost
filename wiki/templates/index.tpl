@@ -1,48 +1,64 @@
-		<section id="module-wiki">					
-			<header>
-				<h1>
-					<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" title="${LangLoader::get_message('syndication', 'common')}" class="fa fa-syndication"></a>
-					{TITLE}
-				</h1>
-			</header>
-			<div class="content">
-				# INCLUDE wiki_tools #
-				<br /><br />
-				{INDEX_TEXT}
-				<br />
-				# START cat_list #
-					<hr /><br />
-					<strong><em>{cat_list.L_CATS}</em></strong>
-					<br /><br />
-					# START cat_list.list #
-						<i class="fa fa-folder"></i> <a href="{PATH_TO_ROOT}/wiki/{cat_list.list.U_CAT}">{cat_list.list.CAT}</a><br />
-					# END cat_list.list #
-					{L_NO_CAT}
-				# END cat_list #
-				<br /><br />
-				<div class="options">
-					<a href="{PATH_TO_ROOT}/wiki/{U_EXPLORER}" title="{L_EXPLORER}">
-						<i class="fa fa-folder-open"></i>
-						{L_EXPLORER}
-					</a>
-				</div>
-				<br />
-				# START last_articles #
-				<hr /><br />
-				<div class="table-container last-articles-container">
-					<div class="table-head last-articles-top"># IF last_articles.C_ARTICLES #<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a> # ENDIF #<strong><em>{last_articles.L_ARTICLES}</em></strong></div>
-					<div class="table-content last-articles-content">
-							# START last_articles.list #
-								<div class="table-element-container last-articles-element-container">
-									<a href="{PATH_TO_ROOT}/wiki/{last_articles.list.U_ARTICLE}" class="last-articles-element"><i class="fa fa-file-text"></i>{last_articles.list.ARTICLE}</a>
-								</div>
-							# END last_articles.list #
-							{L_NO_ARTICLE}
-					</div>
-					<div class="table-footer last-articles-bottom"></div>
-				</div>
-				# END last_articles #
+<section id="module-wiki">
+	<header>
+		<h1>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" title="${LangLoader::get_message('syndication', 'common')}" class="fa fa-syndication"></a>
+			{TITLE}
+		</h1>
+	</header>
+	# INCLUDE wiki_tools #
+
+	<article>
+		<div class="content">
+			{INDEX_TEXT}
+			<div class="options">
+				<a href="{PATH_TO_ROOT}/wiki/{U_EXPLORER}" title="{L_EXPLORER}">
+					<i class="fa fa-folder-open"></i>
+					{L_EXPLORER}
+				</a>
 			</div>
-			<footer></footer>
-		</section>
-		
+		</div>
+	</article>
+
+	<div class="elements-container columns-2">
+		# START cat_list #
+			<aside class="block">
+				<div class="wiki-list-container">
+					<div class="wiki-list-top">{cat_list.L_CATS}</div>
+					<div class="wiki-list-content">
+						# START cat_list.list #
+							<div class="wiki-list-item">
+								<i class="fa fa-folder-o small"></i> <a href="{PATH_TO_ROOT}/wiki/{cat_list.list.U_CAT}">{cat_list.list.CAT}</a>
+							</div>
+						# END cat_list.list #
+					</div>
+					{L_NO_CAT}
+				</div>
+			</aside>
+		# END cat_list #
+		# START last_articles #
+			<aside class="block">
+				<div class="wiki-list-container">
+					<div class="wiki-list-top">
+						# IF last_articles.C_ARTICLES #
+							<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" title="${LangLoader::get_message('syndication', 'common')}">
+								<i class="fa fa-syndication small"></i>
+							</a>
+						# ENDIF #
+						{last_articles.L_ARTICLES}
+					</div>
+					<div class="wiki-list-content">
+						# START last_articles.list #
+							<div class="wiki-list-item">
+								<i class="fa fa-file-text-o small"></i> <a href="{PATH_TO_ROOT}/wiki/{last_articles.list.U_ARTICLE}" class="wiki-list-element">{last_articles.list.ARTICLE}</a>
+							</div>
+						# END last_articles.list #
+						{L_NO_ARTICLE}
+					</div>
+					<div class="table-footer wiki-list-bottom"></div>
+				</div>
+			</aside>
+		# END last_articles #
+
+	</div>
+	<footer></footer>
+</section>

@@ -37,7 +37,7 @@
 				alert("{L_REQUIRE_IMG_P}");
 				return false;
 			}
-			
+
 			return true;
 		}
 		-->
@@ -65,7 +65,7 @@
 				</li>
 			</ul>
 		</nav>
-		
+
 		<div id="admin-contents">
 			<form action="admin_gallery_config.php" method="post" onsubmit="return check_form();" class="fieldset-content">
 				<p class="center">{L_REQUIRE}</p>
@@ -110,7 +110,7 @@
 						</div>
 					</div>
 				</fieldset>
-				
+
 				<fieldset>
 					<legend>{L_DISPLAY_OPTION}</legend>
 					<div class="fieldset-inset">
@@ -122,19 +122,19 @@
 									<label for="pics_enlargement_mode"></label>
 								</div>
 								<span class="form-field-radio-span">{L_NEW_PAGE}</span>
-								<br />
+								<div class="spacer"></div>
 								<div class="form-field-radio">
 									<input type="radio" # IF C_DISPLAY_PICS_RESIZE #checked="checked" # ENDIF #name="pics_enlargement_mode" id="pics_enlargement_mode_2" value="{RESIZE}" />
 									<label for="pics_enlargement_mode_2"></label>
 								</div>
 								<span class="form-field-radio-span">{L_RESIZE}</span>
-								<br />
+								<div class="spacer"></div>
 								<div class="form-field-radio">
 									<input type="radio" # IF C_DISPLAY_PICS_POPUP #checked="checked" # ENDIF #name="pics_enlargement_mode" id="pics_enlargement_mode_3" value="{POPUP}" />
 									<label for="pics_enlargement_mode_3"></label>
 								</div>
 								<span class="form-field-radio-span">{L_POPUP}</span>
-								<br />
+								<div class="spacer"></div>
 								<div class="form-field-radio">
 									<input type="radio" # IF C_DISPLAY_PICS_FULL_SCREEN #checked="checked" # ENDIF #name="pics_enlargement_mode" id="pics_enlargement_mode_4" value="{FULL_SCREEN}">
 									<label for="pics_enlargement_mode_4"></label>
@@ -204,7 +204,7 @@
 						</div>
 					</div>
 				</fieldset>
-				
+
 				<fieldset>
 					<legend>{L_THUMBNAILS_SCROLLING}</legend>
 					<div class="fieldset-inset">
@@ -233,7 +233,7 @@
 						</div>
 					</div>
 				</fieldset>
-				
+
 				<fieldset>
 					<legend>{L_IMG_PROTECT}</legend>
 					<div class="fieldset-inset">
@@ -270,7 +270,7 @@
 						</div>
 					</div>
 				</fieldset>
-				
+
 				<fieldset>
 					<legend>{L_UPLOAD_PICS}</legend>
 					<div class="fieldset-inset">
@@ -284,7 +284,7 @@
 						</div>
 					</div>
 				</fieldset>
-				
+
 				<fieldset>
 					<legend>${LangLoader::get_message('authorizations', 'common')}</legend>
 					<div class="fieldset-inset">
@@ -307,7 +307,7 @@
 						</div>
 					</div>
 				</fieldset>
-				
+
 				<fieldset class="fieldset-submit">
 					<legend>{L_UPDATE}</legend>
 					<div class="fieldset-inset">
@@ -325,7 +325,7 @@
 						{L_EXPLAIN_GALLERY_CACHE}
 					</div>
 				</fieldset>
-				
+
 				<fieldset class="fieldset-submit">
 					<legend>{L_EMPTY}</legend>
 					<div class="fieldset-inset">

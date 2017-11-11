@@ -22,24 +22,30 @@
 						# ENDIF #
 					</span>
 				</h2>
-				
+
 				<meta itemprop="url" content="{U_LINK}">
 				<meta itemprop="description" content="${escape(DESCRIPTION)}" />
 				# IF C_COMMENTS_ENABLED #
 				<meta itemprop="discussionUrl" content="{U_COMMENTS}">
 				<meta itemprop="interactionCount" content="{NUMBER_COMMENTS} UserComments">
 				# ENDIF #
-				
+
 			</header>
 			<div class="content">
 				<div class="options infos">
 					<div class="center">
 						# IF C_IS_PARTNER #
 							# IF C_HAS_PARTNER_PICTURE #
-							<span class="web-partner-picture">
 								<img src="{U_PARTNER_PICTURE}" alt="{NAME}" itemprop="image" />
-							</span>
+							# ELSE #
+								# IF C_PICTURE #
+									<img src="{U_PICTURE}" alt="{NAME}" itemprop="image" />
+								# ENDIF #
+							# ENDIF #
 							<div class="spacer"></div>
+						# ELSE #
+							# IF C_PICTURE #
+								<img src="{U_PICTURE}" alt="{NAME}" itemprop="image" />
 							# ENDIF #
 						# ENDIF #
 						# IF C_VISIBLE #
@@ -54,33 +60,25 @@
 						# ENDIF #
 					</div>
 					<h6>{@link_infos}</h6>
-					<span class="text-strong">{@visits_number} : </span><span>{NUMBER_VIEWS}</span><br/>
-					<span class="text-strong">${LangLoader::get_message('category', 'categories-common')} : </span><span><a itemprop="about" class="small" href="{U_CATEGORY}">{CATEGORY_NAME}</a></span><br/>
+					<span class="infos-options"><span class="text-strong">{@visits_number} : </span>{NUMBER_VIEWS}</span>
+					<span class="infos-options"><span class="text-strong">${LangLoader::get_message('category', 'categories-common')} : </span><a itemprop="about" class="small" href="{U_CATEGORY}">{CATEGORY_NAME}</a></span>
 					# IF C_KEYWORDS #
-						<span class="text-strong">${LangLoader::get_message('form.keywords', 'common')} : </span>
-						<span>
+						<span class="infos-options">
+							<span class="text-strong">${LangLoader::get_message('form.keywords', 'common')} : </span>
 							# START keywords #
 								<a itemprop="keywords" class="small" href="{keywords.URL}">{keywords.NAME}</a># IF keywords.C_SEPARATOR #, # ENDIF #
 							# END keywords #
-						</span><br/>
+						</span>
 					# ENDIF #
 					# IF C_COMMENTS_ENABLED #
-						<span># IF C_COMMENTS # {NUMBER_COMMENTS} # ENDIF # {L_COMMENTS}</span>
+						<span class="infos-options"># IF C_COMMENTS # {NUMBER_COMMENTS} # ENDIF # {L_COMMENTS}</span>
 					# ENDIF #
 					# IF C_VISIBLE #
 						# IF C_NOTATION_ENABLED #
-							<div class="spacer"></div>
 							<div class="center">{NOTATION}</div>
 						# ENDIF #
 					# ENDIF #
 				</div>
-				
-				# IF C_PICTURE #
-				<span class="web-picture">
-					<img src="{U_PICTURE}" alt="{NAME}" itemprop="image" />
-				</span>
-				# ENDIF #
-				
 				<div itemprop="text">{CONTENTS}</div>
 			</div>
 			<aside>
@@ -89,5 +87,5 @@
 			<footer></footer>
 		</article>
 	</div>
-	<footer></footer>	
+	<footer></footer>
 </section>

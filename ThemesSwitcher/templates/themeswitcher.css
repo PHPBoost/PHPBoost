@@ -1,11 +1,8 @@
 .themes-switcher {
-	padding: 5px 0;
-}
-
-.themes-switcher select {
-	margin: 0 auto 5px auto;
+	padding: 0.809em;
 }
 
 .themes-switcher-vertical select {
 	display: block;
+	margin: 0 auto 0.309em auto;
 }

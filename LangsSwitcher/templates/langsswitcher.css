@@ -1,12 +1,16 @@
 .langs-switcher {
-	padding: 5px 0;
+	padding: 0.809em;
 }
 
-.langs-switcher select {
-	margin: 0 auto 5px auto;
+.selected-lang {
+	display: inline-block;
+}
+
+.langs-switcher-vertical {
+	display: block;
+	margin: 0 auto 0.309em auto;
 }
 
 .langs-switcher img {
-	margin-top: 2px;
-	vertical-align: top;
+	vertical-align: middle;
 }

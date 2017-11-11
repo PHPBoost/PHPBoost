@@ -1,14 +1,18 @@
 /* --- admin --- */
 .admin-poll input[type="text"] {
-	border: 1px solid #D4D4D4;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #D4D4D4;
 }
 
 .admin-poll tbody tr:first-child td {
-	border-top: 1px solid #D4D4D4;
+	border-width: 1px 0 0;
+	border-style: solid;
+	border-color: #D4D4D4;
 }
 
-.admin-module-poll #calendar1 .calendar-block, 
-.admin-module-poll #calendar2 .calendar-block, 
+.admin-module-poll #calendar1 .calendar-block,
+.admin-module-poll #calendar2 .calendar-block,
 .admin-module-poll #calendar3 .calendar-block {
 	position: absolute;
 	z-index: 100;
@@ -39,10 +43,10 @@
 
 /* --- modules --- */
 .poll-question-select {
-	margin-top: 15px;
-	padding-left: 25px;
+	margin-top: 1em;
+	padding-left: 1.482em;
 }
 
 .poll-question-container {
-	margin: 1.5em 0 1em 0;
+	margin: 1.618em 0 1em 0;
 }

@@ -1,13 +1,13 @@
 textarea {
 	float: left;
-	height: 70px;
+	height: 4.236em;
 	width: 47%;
 }
 
 textarea.answers {
-	margin-left: 5px;
+	margin-left: 0.309em;
 }
 
 .fa-delete {
-	margin: 25px 0 0 5px;
+	margin: 1.482em 0 0 0.309em;
 }

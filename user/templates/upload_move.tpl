@@ -22,7 +22,7 @@
 							<i class="fa fa-folder"></i> {folder.NAME}
 						</div>
 					# END folder #
-							
+
 					# START file #
 						<div class="upload-elements-move-file">
 							# IF file.C_DISPLAY_REAL_IMG #
@@ -30,15 +30,14 @@
 							# ELSE #
 								<i class="fa {file.FILE_ICON}"></i>
 							# ENDIF #
-							<br />{file.NAME}<br />
-							<span class="smaller">{file.FILETYPE}</span><br />
-							<span class="smaller">{file.SIZE}</span><br />
+							<span class="infos-options">{file.NAME}</span>
+							<span class="infos-options smaller">{file.FILETYPE}</span>
+							<span class="infos-options smaller">{file.SIZE}</span>
 						</div>
 					# END file #
-					
+
 					<div class="upload-elements-move-to">
-						<strong>{L_MOVE_TO}</strong>
-						<br />
+						<strong class="infos-options">{L_MOVE_TO}</strong>
 						<i class="fa fa-arrow-right"></i>
 					</div>
 					<div class="upload-elements-move-to-cat">
@@ -49,8 +48,7 @@
 								var selected_cat = {SELECTED_CAT};
 							-->
 							</script>
-							<span class="upload-root-cat"><a href="javascript:select_cat(0);"><i class="fa fa-home"></i> <span id="class-0" class="{CAT_0}">{L_ROOT}</span></a></span>
-							<br />
+							<span class="infos-options upload-root-cat"><a href="javascript:select_cat(0);"><i class="fa fa-home"></i> <span id="class-0" class="{CAT_0}">{L_ROOT}</span></a></span>
 							{FOLDERS}
 					</div>
 				</div>

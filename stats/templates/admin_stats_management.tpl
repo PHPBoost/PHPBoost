@@ -7,7 +7,7 @@
 					<a href="${relative_url(StatsUrlBuilder::documentation())}" class="quick-link">${LangLoader::get_message('module.documentation', 'admin-modules-common')}</a>
 					</li>
 				</ul>
-			</nav> 	
+			</nav>
 	<div id="admin-contents" style="margin-left:0;padding:10px">
 		<fieldset>
 			<legend>{L_STATS}</legend>
@@ -69,9 +69,9 @@
 						</li>
 					</ul>
 				</nav>
-			</div>	
+			</div>
 		</fieldset>
-		
+
 		# IF C_STATS_SITE #
 		<table>
 			<thead>
@@ -95,8 +95,8 @@
 			</tbody>
 		</table>
 		# ENDIF #
-		
-		
+
+
 		# IF C_STATS_USERS #
 		<table id="table">
 			<thead>
@@ -120,7 +120,6 @@
 				</tr>
 			</tbody>
 		</table>
-		<br /><br />
 		<fieldset>
 			<legend>{L_TEMPLATES}</legend>
 			<div class="fieldset-inset elements-container columns-2">
@@ -132,7 +131,7 @@
 						<thead>
 							<tr>
 								<th>
-									{L_TEMPLATES} 
+									{L_TEMPLATES}
 								</th>
 								<th>
 									{L_COLORS}
@@ -173,7 +172,7 @@
 						<thead>
 							<tr>
 								<th>
-									{L_SEX} 
+									{L_SEX}
 								</th>
 								<th>
 									{L_COLORS}
@@ -237,8 +236,8 @@
 			</tbody>
 		</table>
 		# ENDIF #
-		
-		
+
+
 		# IF C_STATS_VISIT #
 		<form action="admin_stats.php#stats" method="get">
 			<fieldset>
@@ -265,8 +264,6 @@
 							{STATS_YEAR}
 						</select>
 						# ENDIF #
-						<br />
-						<br />
 						<input type="hidden" name="{TYPE}" value="1">
 						<button type="submit" name="date" value="true" class="submit">{L_SUBMIT}</button>
 						<input type="hidden" name="token" value="{TOKEN}">
@@ -281,7 +278,7 @@
 										<td>
 											{MAX_NBR}
 										</td>
-		
+
 										# START values #
 										<td>
 											<table>
@@ -300,7 +297,7 @@
 											</table>
 										</td>
 										# END values #
-		
+
 										# START end_td #
 											{end_td.END_TD}
 										# END end_td #
@@ -322,7 +319,6 @@
 								</tbody>
 							</table>
 						# ENDIF #
-						<br />
 						<div class="bargraph">{GRAPH_RESULT}</div>
 						<p class="block center">
 							{L_TOTAL}: {SUM_NBR}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{L_AVERAGE}: {MOY_NBR}
@@ -334,9 +330,7 @@
 				</div>
 			</fieldset>
 		</form>
-		
-		<br /><br />
-		
+
 		<table id="table">
 			<thead>
 				<tr>
@@ -439,7 +433,7 @@
 		</fieldset>
 		# ENDIF #
 
-		
+
 		# IF C_STATS_LANG #
 		<fieldset>
 			<legend>{L_LANG}</legend>
@@ -476,7 +470,7 @@
 			</div>
 		</fieldset>
 		# ENDIF #
-		
+
 
 		# IF C_STATS_REFERER #
 		<script>
@@ -493,18 +487,18 @@
 				var xhr_object = null;
 				var filename = '{PATH_TO_ROOT}/stats/ajax/stats_xmlhttprequest.php?token={TOKEN}&stats_referer=1&id=' + divid;
 				var data = null;
-				
+
 				if(window.XMLHttpRequest) // Firefox
 				   xhr_object = new XMLHttpRequest();
 				else if(window.ActiveXObject) // Internet Explorer
 				   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
 				else // XMLHttpRequest non support� par le navigateur
 					return;
-				
+
 				document.getElementById('load' + divid).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
-				
+
 				xhr_object.open("POST", filename, true);
-				xhr_object.onreadystatechange = function() 
+				xhr_object.onreadystatechange = function()
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
 					{
@@ -521,7 +515,7 @@
 		}
 		-->
 		</script>
-		
+
 		<table id="table">
 			<thead>
 				<tr>
@@ -587,8 +581,8 @@
 			</tbody>
 		</table>
 		# ENDIF #
-		
-		
+
+
 		# IF C_STATS_KEYWORD #
 		<script>
 		<!--
@@ -603,7 +597,7 @@
 			{
 				document.getElementById('load' + divid).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/stats/ajax/stats_xmlhttprequest.php?token={TOKEN}&stats_keyword=1&id=' + divid);
-				xhr_object.onreadystatechange = function() 
+				xhr_object.onreadystatechange = function()
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
 					{
@@ -620,7 +614,7 @@
 		}
 		-->
 		</script>
-		
+
 		<table id="table">
 			<thead>
 				<tr>
@@ -685,8 +679,8 @@
 			</tbody>
 		</table>
 		# ENDIF #
-		
-		
+
+
 		# IF C_STATS_ROBOTS #
 		<form action="admin_stats.php?bot=1#stats" name="form" method="post" style="margin:auto;" onsubmit="return check_form();">
 			<fieldset>
@@ -736,7 +730,6 @@
 							</tbody>
 						</table>
 						# IF C_ROBOTS_DATA #
-						<br /><br />
 						<fieldset class="fieldset-submit">
 							<legend>{L_ERASE_RAPPORT}</legend>
 							<div class="fieldset-inset">
@@ -751,7 +744,6 @@
 		</form>
 		# ENDIF #
 		
-		<br /><br />
 		<form action="admin_stats.php" method="post" class="fieldset-content">
 				<fieldset>
 					<legend>{L_AUTHORIZATIONS}</legend>
@@ -762,7 +754,7 @@
 						</div>
 					</div>
 				</fieldset>
-				
+
 				<fieldset class="fieldset-submit">
 					<div class="fieldset-inset">
 						<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button>
@@ -772,4 +764,3 @@
 				</fieldset>
 			</form>
 	</div>
-	

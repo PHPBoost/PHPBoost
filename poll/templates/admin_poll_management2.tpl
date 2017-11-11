@@ -22,9 +22,9 @@
 			var i2 = i + 1;
 
 			if( document.getElementById('a'+i) )
-				document.getElementById('a'+i).innerHTML = '<label><input type="text" name="a'+i+'" value="" /></label><br /><span id="a'+i2+'"></span>';
+				document.getElementById('a'+i).innerHTML = '<label class="infos-options"><input type="text" name="a'+i+'" value="" /></label><span id="a'+i2+'"></span>';
 			if( document.getElementById('v'+i) )
-				document.getElementById('v'+i).innerHTML = '<label><input class="poll-vote" type="text" name="v'+i+'" value="" /> 0.0%</label><br /><span id="v'+i2+'"></span>';
+				document.getElementById('v'+i).innerHTML = '<label class="infos-options"><input class="poll-vote" type="text" name="v'+i+'" value="" /> 0.0%</label><span id="v'+i2+'"></span>';
 			if( document.getElementById('s'+i) )
 				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<span id="s'+i2+'"><a href="javascript:add_field('+i2+', '+i_max+')" title="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus"></i></a></span>' : '';
 		}
@@ -110,13 +110,13 @@
 										<tr>
 											<td class="no-separator">
 												# START answers #
-												<label><input type="text" name="a{answers.ID}" value="{answers.ANSWER}" /></label><br />
+												<label class="infos-options"><input type="text" name="a{answers.ID}" value="{answers.ANSWER}" /></label>
 												# END answers #
 												<span id="a{MAX_ID}"></span>
 											</td>
 											<td class="no-separator">
 												# START votes #
-												<label><input class="poll-vote" type="text" name="v{votes.ID}" value="{votes.VOTES}" /> {votes.PERCENT}</label><br />
+												<label class="infos-options"><input class="poll-vote" type="text" name="v{votes.ID}" value="{votes.VOTES}" /> {votes.PERCENT}</label>
 												# END votes #
 												<span id="v{MAX_ID}"></span>
 											</td>
@@ -158,13 +158,13 @@
 										{CALENDAR_END}
 									</label>
 								</div>
-								<br />
+								<div class="spacer"></div>
 								<div class="form-field-radio">
 									<input type="radio" value="1" id="release_date" name="visible"# IF C_VISIBLE_ENABLED # checked="checked"# ENDIF # />
 									<label for="release_date"></label>
 								</div>
 								<span class="form-field-radio-span">{L_IMMEDIATE}</span>
-								<br />
+								<div class="spacer"></div>
 								<div class="form-field-radio">
 									<input type="radio" value="0" id="unaprob" name="visible"# IF C_VISIBLE_UNAPROB # checked="checked"# ENDIF # />
 									<label for="unaprob"></label>

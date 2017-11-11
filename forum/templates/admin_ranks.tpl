@@ -7,12 +7,15 @@
 			}
 		-->
 		</script>
-		
+
 		<nav id="admin-quick-menu">
 			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_FORUM_MANAGEMENT}">
 				<i class="fa fa-bars"></i> {L_FORUM_MANAGEMENT}
 			</a>
 			<ul>
+				<li>
+					<a href="{PATH_TO_ROOT}/forum" class="quick-link">${LangLoader::get_message('home', 'main')}</a>
+				</li>
 				<li>
 					<a href="admin_ranks.php" class="quick-link">{L_FORUM_RANKS_MANAGEMENT}</a>
 				</li>
@@ -22,9 +25,9 @@
 				<li>
 					<a href="${relative_url(ForumUrlBuilder::configuration())}" class="quick-link">${LangLoader::get_message('configuration', 'admin-common')}</a>
 				</li>
-			</ul>	
+			</ul>
 		</nav>
-		
+
 		<div id="admin-contents">
 			<form action="admin_ranks.php" method="post">
 				<fieldset>
@@ -32,7 +35,7 @@
 					<div class="fieldset-inset">
 						<table id="table">
 							<thead>
-								<tr> 
+								<tr>
 									<th>
 										{L_RANK_NAME}
 									</th>
@@ -50,7 +53,7 @@
 							<tbody>
 								# START rank #
 								<tr>
-									<td> 
+									<td>
 										<input type="text" maxlength="30" name="{rank.ID}name" value="{rank.RANK}">
 									</td>
 									<td>
@@ -60,8 +63,11 @@
 										<select name="{rank.ID}icon" onchange="img_change('icon{rank.ID}', this.options[selectedIndex].value)">
 											{rank.RANK_OPTIONS}
 										</select>
-										<br />
-										# IF rank.IMG_RANK # <img src="{PATH_TO_ROOT}/forum/templates/images/ranks/{rank.IMG_RANK}" id="icon{rank.ID}" alt="{rank.IMG_RANK}" /> # ENDIF #
+										# IF rank.IMG_RANK #
+											<span class="field-description">
+												<img src="{PATH_TO_ROOT}/forum/templates/images/ranks/{rank.IMG_RANK}" id="icon{rank.ID}" alt="{rank.IMG_RANK}" />
+											</span>
+										# ENDIF #
 									</td>
 									<td>
 										{rank.DELETE}
@@ -82,4 +88,3 @@
 				</fieldset>
 			</form>
 		</div>
-		

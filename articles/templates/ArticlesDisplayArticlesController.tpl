@@ -5,7 +5,7 @@
 			{@articles}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit smaller"></i></a># ENDIF #
 		</h1>
 	</header>
-	<div class="content">
+	<div class="elements-container">
 		# INCLUDE NOT_VISIBLE_MESSAGE #
 		<article itemscope="itemscope" itemtype="http://schema.org/Article" id="article-articles-{ID}" class="article-articles# IF C_NEW_CONTENT # new-content# ENDIF #">
 			<header>
@@ -21,30 +21,30 @@
 							<a href="{U_PRINT_ARTICLE}" title="${LangLoader::get_message('printable_version', 'main')}" target="blank"><i class="fa fa-print"></i></a>
 					</span>
 				</h2>
-				
+
 				<div class="more">
 					# IF C_AUTHOR_DISPLAYED #
-					<i class="fa fa-user" title="${LangLoader::get_message('author', 'common')}"></i>
+					<i class="fa fa-user-o" title="${LangLoader::get_message('author', 'common')}"></i>
 						# IF C_AUTHOR_CUSTOM_NAME #
 							{AUTHOR_CUSTOM_NAME}
-						# ELSE #							
+						# ELSE #
 							# IF C_AUTHOR_EXIST #<a itemprop="author" href="{U_AUTHOR}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>&nbsp;{PSEUDO}&nbsp;</a># ELSE #{PSEUDO}# ENDIF #|&nbsp;
 						# ENDIF #
 					# ENDIF #
 					<i class="fa fa-calendar" title="${LangLoader::get_message('date', 'date-common')}"></i>&nbsp;<time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{PUBLISHING_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE}# ELSE #{PUBLISHING_START_DATE}# ENDIF #</time>&nbsp;|
 					&nbsp;<i class="fa fa-eye" title="{NUMBER_VIEW} {@articles.sort_field.views}"></i>&nbsp;<span title="{NUMBER_VIEW} {@articles.sort_field.views}">{NUMBER_VIEW}</span>
 					# IF C_COMMENTS_ENABLED #
-						&nbsp;|&nbsp;<i class="fa fa-comment" title="${LangLoader::get_message('comments', 'comments-common')}"></i><a itemprop="discussionUrl" class="small" href="{U_COMMENTS}">&nbsp;{L_COMMENTS}</a>
+						&nbsp;|&nbsp;<i class="fa fa-comments-o" title="${LangLoader::get_message('comments', 'comments-common')}"></i><a itemprop="discussionUrl" class="small" href="{U_COMMENTS}">&nbsp;{L_COMMENTS}</a>
 					# ENDIF #
-					&nbsp;|&nbsp;<i class="fa fa-folder" title="${LangLoader::get_message('category', 'categories-common')}"></i>&nbsp;<a itemprop="about" class="small" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
+					&nbsp;|&nbsp;<i class="fa fa-folder-o" title="${LangLoader::get_message('category', 'categories-common')}"></i>&nbsp;<a itemprop="about" class="small" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
 					# IF C_KEYWORDS #
-					&nbsp;|&nbsp;<i title="${LangLoader::get_message('form.keywords', 'common')}" class="fa fa-tags"></i> 
+					&nbsp;|&nbsp;<i title="${LangLoader::get_message('form.keywords', 'common')}" class="fa fa-tags"></i>
 						# START keywords #
 							<a itemprop="keywords" href="{keywords.URL}">{keywords.NAME}</a># IF keywords.C_SEPARATOR #, # ENDIF #
 						# END keywords #
 					# ENDIF #
 				</div>
-				
+
 				<meta itemprop="url" content="{U_ARTICLE}">
 				<meta itemprop="description" content="${escape(DESCRIPTION)}">
 				<meta itemprop="datePublished" content="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{PUBLISHING_START_DATE_ISO8601}# ENDIF #">
@@ -52,6 +52,7 @@
 				# IF C_HAS_PICTURE #<meta itemprop="thumbnailUrl" content="{PICTURE}"># ENDIF #
 				<meta itemprop="interactionCount" content="{NUMBER_COMMENTS} UserComments">
 			</header>
+			
 			<div class="content">
 				# IF C_PAGINATION #
 					# INCLUDE FORM #
@@ -61,9 +62,9 @@
 					<h2 class="title page_name">{PAGE_NAME}</h2>
 				# ENDIF #
 					<div itemprop="text">{CONTENTS}</div>
-	
+
 				<hr />
-	
+
 				# IF C_PAGINATION #
 					<div class="pages-pagination right">
 						# IF C_NEXT_PAGE #
@@ -86,7 +87,7 @@
 				<div id="articles-sources-container">
 					<span>${LangLoader::get_message('form.sources', 'common')}</span> :
 					# START sources #
-					<a itemprop="isBasedOnUrl" href="{sources.URL}" class="small">{sources.NAME}</a># IF sources.C_SEPARATOR #, # ENDIF #
+					<a itemprop="isBasedOnUrl" href="{sources.URL}" class="small" rel="nofollow">{sources.NAME}</a># IF sources.C_SEPARATOR #, # ENDIF #
 					# END sources #
 				</div>
 				# ENDIF #

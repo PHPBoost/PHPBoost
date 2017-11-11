@@ -1,14 +1,14 @@
 		# INCLUDE forum_top #
-		
-		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-stats">					
+
+		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-stats">
 			<header>
-				<h2>&bull; {L_STATS}</h2>
+				<h2>{L_STATS}</h2>
 			</header>
 			<div class="content">
 				<table>
 					<thead>
 						<tr>
-							<th>	
+							<th>
 								{L_STATS}
 							</th>
 						</tr>
@@ -19,24 +19,22 @@
 								<p class="forum-stats">
 									<span>{L_NBR_TOPICS}: <strong>{NBR_TOPICS}</strong></span>
 									<span>{L_NBR_MSG}: <strong>{NBR_MSG}</strong></span>
-								</p>								
+								</p>
 								<p class="forum-stats">
 									<span>{L_NBR_TOPICS_DAY}: <strong>{NBR_TOPICS_DAY}</strong></span>
 									<span>{L_NBR_MSG_DAY}: <strong>{NBR_MSG_DAY}</strong></span>
 									<span>{L_NBR_TOPICS_TODAY}: <strong>{NBR_TOPICS_TODAY}</strong></span>
 									<span>{L_NBR_MSG_TODAY}: <strong>{NBR_MSG_TODAY}</strong></span>
-								</p>								
+								</p>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 
-				<br /><br />
-				
 				<table>
 					<thead>
 						<tr>
-							<th>	
+							<th>
 								{L_LAST_MSG}
 							</th>
 						</tr>
@@ -52,12 +50,10 @@
 					</tbody>
 				</table>
 
-				<br /><br />
-
 				<table>
 					<thead>
 						<tr>
-							<th>	
+							<th>
 								{L_POPULAR}
 							</th>
 						</tr>
@@ -73,12 +69,10 @@
 					</tbody>
 				</table>
 
-				<br /><br />
-
 				<table>
 					<thead>
 						<tr>
-							<th>	
+							<th>
 								{L_ANSWERS}
 							</th>
 						</tr>
@@ -94,7 +88,7 @@
 					</tbody>
 				</table>
 			</div>
-			<footer>&bull; {L_STATS}</footer>
+			<footer>{L_STATS}</footer>
 		</article>
-				
+
 		# INCLUDE forum_bottom #

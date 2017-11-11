@@ -14,8 +14,8 @@
 							{comments.PSEUDO}
 						</a>
 					# ENDIF #
+					<div class="message-level">{comments.L_LEVEL}</div>
 				</div>
-				<div class="message-level">{comments.L_LEVEL}</div>
 				# IF comments.C_AVATAR #<img src="{comments.U_AVATAR}" alt="${LangLoader::get_message('avatar', 'user-common')}" class="message-avatar" /># ENDIF #
 			</div>
 
@@ -31,7 +31,7 @@
 			</div>
 
 			<div class="message-message">
-				<div itemprop="text" class="message-content content">{comments.MESSAGE}</div>
+				<div itemprop="text" class="message-content">{comments.MESSAGE}</div>
 				# IF comments.C_VIEW_TOPIC #
 					<div class="view-topic">
 						<a href="{comments.U_TOPIC}\#com{comments.ID_COMMENT}">
@@ -40,14 +40,14 @@
 					</a>
 					</div>
 				# ENDIF #
-				<!-- 
+				<!--
 				<div id="message-rating">
 					<div class="positive_vote_button">+</div>
 					<div class="negative_vote_button">-</div>
 				</div>
 				 -->
 			</div>
-			
+
 		</div>
 		<footer></footer>
 	</article>

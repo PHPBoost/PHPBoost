@@ -1,5 +1,5 @@
 		# INCLUDE forum_top #
-		
+
 		<script>
 		<!--
 		function check_form_post(){
@@ -10,17 +10,17 @@
 		}
 		-->
 		</script>
-		
-		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-edit-message">
+
+		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-edit-message" class="forum-contents">
 			<header>
 				<h2>
-					&bull; <a href="index.php" title="{L_FORUM_INDEX}">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span><em>{DESC}</em></span>
+					<a href="index.php" title="{L_FORUM_INDEX}">{L_FORUM_INDEX}</a> <i class="fa fa-chevron-circle-right"></i> {U_FORUM_CAT} <i class="fa fa-chevron-circle-right"></i> {U_TITLE_T} <span><em>{DESC}</em></span>
 				</h2>
 			</header>
 			<div class="content">
 				<form action="{U_ACTION}" method="post" onsubmit="return check_form_post();">
 					# INCLUDE message_helper #
-					
+
 					<div class="fieldset-content">
 						<p class="center">{L_REQUIRE}</p>
 						<fieldset>
@@ -33,7 +33,7 @@
 								</div>
 							</div>
 						</fieldset>
-						
+
 						<fieldset class="fieldset-submit">
 						<legend>{L_SUBMIT}</legend>
 							<input type="hidden" name="p_update" value="{P_UPDATE}">
@@ -46,9 +46,8 @@
 				</form>
 			</div>
 			<footer>
-				&bull; <a href="index.php" title="{L_FORUM_INDEX}">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span><em>{DESC}</em></span>
+				<a href="index.php" title="{L_FORUM_INDEX}">{L_FORUM_INDEX}</a> <i class="fa fa-chevron-circle-right"></i> {U_FORUM_CAT} <i class="fa fa-chevron-circle-right"></i> {U_TITLE_T} <span><em>{DESC}</em></span>
 			</footer>
 		</article>
-		
+
 		# INCLUDE forum_bottom #
-		

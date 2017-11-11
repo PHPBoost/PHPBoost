@@ -1,7 +1,7 @@
 		<script>
 		<!--
 			function check_form_rank_add()
-			{	
+			{
 				if(document.getElementById('name').value == "") {
 					alert("{L_REQUIRE_RANK_NAME}");
 					return false;
@@ -31,6 +31,10 @@
 				<i class="fa fa-bars"></i> {L_FORUM_MANAGEMENT}
 			</a>
 			<ul>
+				<li>
+					<a href="{PATH_TO_ROOT}/forum" class="quick-link">${LangLoader::get_message('home', 'main')}</a>
+				</li>
+				<li>
 					<a href="admin_ranks.php" class="quick-link">{L_FORUM_RANKS_MANAGEMENT}</a>
 				</li>
 				<li>
@@ -39,19 +43,22 @@
 				<li>
 					<a href="${relative_url(ForumUrlBuilder::configuration())}" class="quick-link">${LangLoader::get_message('configuration', 'admin-common')}</a>
 				</li>
-			</ul>	
+			</ul>
 		</nav>
-		
+
 		<div id="admin-contents">
-		
+
 			# INCLUDE message_helper #
-			
+
 			<form action="admin_ranks_add.php" method="post" enctype="multipart/form-data" class="fieldset-content">
 				<fieldset>
 					<legend>{L_UPLOAD_RANKS}</legend>
 					<div class="fieldset-inset">
 						<div class="form-element">
-							<label for="upload_ranks">{L_UPLOAD_RANKS}<br />{L_UPLOAD_FORMAT}</label>
+							<label for="upload_ranks">
+								{L_UPLOAD_RANKS}
+								<span class="field-description">{L_UPLOAD_FORMAT}</span>
+							</label>
 							<div class="form-field">
 								<input type="hidden" name="max_file_size" value="2000000">
 								<input type="file" id="upload_ranks" name="upload_ranks" class="file">
@@ -67,7 +74,7 @@
 					</div>
 				</fieldset>
 				</form>
-	
+
 				<form action="admin_ranks_add.php" method="post" onsubmit="return check_form_rank_add();" class="fieldset-content">
 					<p class="center">{L_REQUIRE}</p>
 					<fieldset>
@@ -92,7 +99,7 @@
 							</div>
 						</div>
 				</fieldset>
-				
+
 				<fieldset class="fieldset-submit">
 					<legend>{L_UPDATE}</legend>
 					<div class="fieldset-inset">
@@ -104,4 +111,3 @@
 				</fieldset>
 			</form>
 		</div>
-			

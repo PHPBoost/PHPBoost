@@ -28,7 +28,7 @@
 				</ul>
 				<ul id="wiki-help-container" class="bbcode-container">
 					<li class="bbcode-elements">
-						<a href="http://www.phpboost.com/wiki/" title="{L_HELP_WIKI_TAGS}"><i class="fa bbcode-icon-help"></i></a>
+						<a href="http://www.phpboost.com/wiki/" title="{L_HELP_WIKI_TAGS}"><i class="fa fa-fw bbcode-icon-help"></i></a>
 					</li>
 				</ul>
 			</div>

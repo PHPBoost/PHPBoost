@@ -4,7 +4,7 @@
 				</header>
 
 				# IF C_EVENTS #
-				<div class="content elements-container">
+				<div class="elements-container">
 					# START event #
 					<article itemscope="itemscope" itemtype="http://schema.org/Event" id="article-calendar-{event.ID}" class="article-calendar article-several# IF event.C_NEW_CONTENT # new-content# ENDIF #">
 						<header>
@@ -22,71 +22,78 @@
 								</span>
 							</h2>
 
+							<div class="more">
+									<div class="fa fa-user"></div> # IF event.C_AUTHOR_EXIST #<a itemprop="author" href="{event.U_AUTHOR_PROFILE}" class="{event.AUTHOR_LEVEL_CLASS}" # IF event.C_AUTHOR_GROUP_COLOR # style="color:{event.AUTHOR_GROUP_COLOR}" # ENDIF #>{event.AUTHOR}</a># ELSE #{event.AUTHOR}# ENDIF #
+							</div>
+
 							<a itemprop="url" href="{event.U_LINK}"></a>
 						</header>
 						<div class="content">
 							<div itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+
 								<meta itemprop="about" content="{event.CATEGORY_NAME}">
 								# IF C_COMMENTS_ENABLED #
 								<meta itemprop="discussionUrl" content="{event.U_COMMENTS}">
 								<meta itemprop="interactionCount" content="{event.NUMBER_COMMENTS} UserComments">
 								# ENDIF #
-								# IF event.C_HAS_PICTURE #<img itemprop="thumbnailUrl" src="{event.PICTURE}" alt="{event.TITLE}" /># ENDIF #
+
+								<div class="options infos">
+									<p class="event-display-dates">
+										<span class="infos-options"><span class="text-strong">{@calendar.labels.start_date}</span> : <time datetime="{event.START_DATE_ISO8601}" itemprop="startDate">{event.START_DATE}</time></span>
+										<span class="infos-options"><span class="text-strong">{@calendar.labels.end_date}</span> : <time datetime="{event.END_DATE_ISO8601}" itemprop="endDate">{event.END_DATE}</time></span>
+									</p>
+
+									# IF event.C_HAS_PICTURE #
+										<img itemprop="thumbnailUrl" src="{event.PICTURE}" alt="{event.TITLE}" />
+									# ENDIF #
+									# IF event.C_LOCATION #
+										<div class="spacer"></div>
+										<div itemscope="itemscope" itemtype="http://schema.org/Place">
+											<p itemprop="location">
+												<span class="text-strong">{@calendar.labels.location}</span> :
+												<span itemprop="name">{event.LOCATION}</span>
+											</p>
+										</div>
+									# ENDIF #
+									# IF event.C_PARTICIPATION_ENABLED #
+										<div class="spacer"></div>
+										# IF event.C_DISPLAY_PARTICIPANTS #
+											<div>
+												<span class="text-strong">{@calendar.labels.participants}</span> :
+												<span>
+													# IF event.C_PARTICIPANTS #
+														# START event.participant #
+															<a href="{event.participant.U_PROFILE}" class="{event.participant.LEVEL_CLASS}" # IF event.participant.C_GROUP_COLOR # style="color:{event.participant.GROUP_COLOR}" # ENDIF #>{event.participant.DISPLAY_NAME}</a># IF NOT event.participant.C_LAST_PARTICIPANT #,# ENDIF #
+														# END event.participant #
+													# ELSE #
+														{@calendar.labels.no_one}
+													# ENDIF #
+												</span>
+											</div>
+										# ENDIF #
+										# IF event.C_PARTICIPATE #
+										<a href="{event.U_SUSCRIBE}" class="basic-button">{@calendar.labels.suscribe}</a>
+											# IF event.C_MISSING_PARTICIPANTS #
+											<span class="small text-italic">({event.L_MISSING_PARTICIPANTS})</span>
+											# ENDIF #
+											# IF event.C_REGISTRATION_DAYS_LEFT #
+											<div class="spacer"></div>
+											<span class="small text-italic">{event.L_REGISTRATION_DAYS_LEFT}</span>
+											# ENDIF #
+										# ENDIF #
+										# IF event.C_IS_PARTICIPANT #
+										<a href="{event.U_UNSUSCRIBE}" class="basic-button">{@calendar.labels.unsuscribe}</a>
+										# ELSE #
+											# IF event.C_MAX_PARTICIPANTS_REACHED #<span class="small text-italic">{@calendar.labels.max_participants_reached}</span># ENDIF #
+										# ENDIF #
+										# IF event.C_REGISTRATION_CLOSED #<span class="small text-italic">{@calendar.labels.registration_closed}</span># ENDIF #
+									# ENDIF #
+								</div>
+
 								<div itemprop="text">{event.CONTENTS}</div>
 
-								# IF event.C_LOCATION #
-								<div class="spacer"></div>
-								<div itemscope="itemscope" itemtype="http://schema.org/Place">
-									<p itemprop="location">
-										<span class="text-strong">{@calendar.labels.location}</span> :
-										<span itemprop="name">{event.LOCATION}</span>
-									</p>
-								</div>
-								# ENDIF #
-								# IF event.C_PARTICIPATION_ENABLED #
-									<div class="spacer"></div>
-									# IF event.C_DISPLAY_PARTICIPANTS #
-									<div>
-										<span class="text-strong">{@calendar.labels.participants}</span> :
-										<span>
-											# IF event.C_PARTICIPANTS #
-												# START event.participant #
-													<a href="{event.participant.U_PROFILE}" class="{event.participant.LEVEL_CLASS}" # IF event.participant.C_GROUP_COLOR # style="color:{event.participant.GROUP_COLOR}" # ENDIF #>{event.participant.DISPLAY_NAME}</a># IF NOT event.participant.C_LAST_PARTICIPANT #,# ENDIF #
-												# END event.participant #
-											# ELSE #
-												{@calendar.labels.no_one}
-											# ENDIF #
-										</span>
-									</div>
-									# ENDIF #
-									# IF event.C_PARTICIPATE #
-									<a href="{event.U_SUSCRIBE}" class="basic-button">{@calendar.labels.suscribe}</a>
-										# IF event.C_MISSING_PARTICIPANTS #
-										<span class="small text-italic">({event.L_MISSING_PARTICIPANTS})</span>
-										# ENDIF #
-										# IF event.C_REGISTRATION_DAYS_LEFT #
-										<div class="spacer"></div>
-										<span class="small text-italic">{event.L_REGISTRATION_DAYS_LEFT}</span>
-										# ENDIF #
-									# ENDIF #
-									# IF event.C_IS_PARTICIPANT #
-									<a href="{event.U_UNSUSCRIBE}" class="basic-button">{@calendar.labels.unsuscribe}</a>
-									# ELSE #
-										# IF event.C_MAX_PARTICIPANTS_REACHED #<span class="small text-italic">{@calendar.labels.max_participants_reached}</span># ENDIF #
-									# ENDIF #
-									# IF event.C_REGISTRATION_CLOSED #<span class="small text-italic">{@calendar.labels.registration_closed}</span># ENDIF #
-								# ENDIF #
+							</div>
 
-								<div class="spacer"></div>
-								<div class="event-display-author">
-									{@calendar.labels.created_by} : # IF event.C_AUTHOR_EXIST #<a itemprop="author" href="{event.U_AUTHOR_PROFILE}" class="{event.AUTHOR_LEVEL_CLASS}" # IF event.C_AUTHOR_GROUP_COLOR # style="color:{event.AUTHOR_GROUP_COLOR}" # ENDIF #>{event.AUTHOR}</a># ELSE #{event.AUTHOR}# ENDIF #
-								</div>
-							</div>
-							<div class="event-display-dates">
-								{@calendar.labels.start_date} : <span class="float-right"><time datetime="{event.START_DATE_ISO8601}" itemprop="startDate">{event.START_DATE}</time></span>
-								<div class="spacer"></div>
-								{@calendar.labels.end_date} : <span class="float-right"><time datetime="{event.END_DATE_ISO8601}" itemprop="endDate">{event.END_DATE}</time></span>
-							</div>
 						</div>
 						<footer></footer>
 					</article>
