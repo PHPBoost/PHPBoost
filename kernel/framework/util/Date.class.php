@@ -275,7 +275,7 @@ class Date
 	}
 	
 	/**
-	 * @desc Returns first charaters (3 per default) of the month name
+	 * @desc Returns first charaters (all per default) of the month name
 	 * @param $characters_number The characters number requested (usually 2 or 3)
 	 * @param $timezone The timezone in which you want this value
 	 * @return string The first letters of the month name
@@ -326,7 +326,7 @@ class Date
 	}
 	
 	/**
-	 * @desc Returns first charaters (3 per default) of the day of week name
+	 * @desc Returns first charaters (all per default) of the day of week name
 	 * @param $characters_number The characters number requested (usually 2 or 3)
 	 * @param $timezone The timezone in which you want this value
 	 * @return string The first letters of the day name
@@ -522,6 +522,7 @@ class Date
 			$date_label . '_DAY'            => $date->get_day(), // The number of day
 			$date_label . '_DAY_TEXT'       => $date->get_day_text(3), // 3 first characters of day name
 			$date_label . '_DAY_FULLTEXT'   => $date->get_day_text(), // All characters of day name
+			$date_label . '_WEEK'           => $date->get_week_number(),
 			$date_label . '_MONTH'          => $date->get_month(), // The number of month
 			$date_label . '_MONTH_TEXT'     => $date->get_month_text(3), // 3 first characters of month name
 			$date_label . '_MONTH_FULLTEXT' => $date->get_month_text(), // All characters of month name
