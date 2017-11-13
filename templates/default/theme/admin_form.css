@@ -458,11 +458,9 @@ input[type=color] {
 	padding-right: 15px;
 }
 
-@media (min-width: 769px) {
-	.form-field-radio {
-		display: inline-block;
-		margin: 10px 0 10px 0;
-	}
+.form-field-radio {
+	display: inline-block;
+	margin: 10px 0 10px 0 !important;
 }
 
 @media (max-width: 768px) {
@@ -479,6 +477,7 @@ input[type=color] {
 .form-field-radio [type="radio"]:not(:checked),
 .form-field-radio [type="radio"]:checked {
 	position: absolute;
+	opacity: 0;
 }
 
 .form-field-radio [type="radio"]:not(:checked) + label,
