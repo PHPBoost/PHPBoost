@@ -2,7 +2,7 @@
 	<header>
 		<h1>
 			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
-			{@articles}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit smaller"></i></a># ENDIF #
+			{@articles}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small"></i></a># ENDIF #
 		</h1>
 	</header>
 	<div class="elements-container">
@@ -52,7 +52,7 @@
 				# IF C_HAS_PICTURE #<meta itemprop="thumbnailUrl" content="{PICTURE}"># ENDIF #
 				<meta itemprop="interactionCount" content="{NUMBER_COMMENTS} UserComments">
 			</header>
-			
+
 			<div class="content">
 				# IF C_PAGINATION #
 					# INCLUDE FORM #

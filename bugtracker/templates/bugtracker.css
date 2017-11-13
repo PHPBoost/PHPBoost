@@ -1,3 +1,8 @@
+/*
+* Surchargez ce fichier dans votre thème pour personnaliser le module
+* https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
+*/
+
 #cssmenu-bugtrackerpageslist {
 	margin-bottom: 10px;
 }
@@ -31,7 +36,7 @@ table.categories-list tfoot tr th {
 }
 
 table.version-list input[id*="release_date"] {
-	width: 80%;    
+	width: 80%;
 }
 
 table.bt tbody td .bt-content {
@@ -53,7 +58,7 @@ td .form-field-checkbox {
 
 @media (min-width: 981px) {
 	.cw25 {
-		width: calc(100% / 4);        
+		width: calc(100% / 4);
 	}
 }
 
@@ -66,7 +71,7 @@ div[id*="calendar"] {
 	table.version-list div[id*="calendar"] {
 		display: none !important;
 	}
-	
+
 	table.version-list .fa-calendar {
 		display: none !important;
 	}

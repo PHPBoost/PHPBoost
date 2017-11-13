@@ -1,13 +1,7 @@
-
-/*[class*="map-location_"] { margin: 0.309em 0; }
-[class*="location-datas_"] label  { margin: 0.309em; }
-[class*="location-datas_"] input  { margin-bottom: 0.309em; }
-
-@media (min-width: 769px) {
-	.input-location-latlng { width: 48% !important; }
-	.input-location-number { width: 30% !important; }
-	.input-location-text   { width: 68% !important; }
-}*/
+/*
+* Surchargez ce fichier dans votre thème pour personnaliser le module
+* https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
+*/
 
 .informations-side {
 	margin: 4.236em 0;

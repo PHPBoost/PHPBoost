@@ -1,3 +1,8 @@
+/*
+* Surchargez ce fichier dans votre thème pour personnaliser le module
+* https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
+*/
+
 .faq-answer-container {
 	padding: 0.618em 0.309em 0.618em 0;
 	height: auto;

@@ -1,10 +1,15 @@
+/*
+* Surchargez ce fichier dans votre thème pour personnaliser le module
+* https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
+*/
+
 /* -- Zone de saisie de la recherche
 -------------------------------------------*/
 div.search-field {
 	text-align: center;
 }
 
-div#forms-selection { 
+div#forms-selection {
 	padding: 5px 0;
 }
 
@@ -33,7 +38,7 @@ div.SpecializedForm {
 	#module-search #form-all .form-element label {
 		text-align: center;
 	}
-	
+
 	#module-search #form-all .form-element label span {
 		font-size: 0.8em;
 	}

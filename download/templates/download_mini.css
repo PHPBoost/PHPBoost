@@ -1,3 +1,8 @@
+/*
+* Surchargez ce fichier dans votre thème pour personnaliser le module
+* https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
+*/
+
 .mini-download-table-name {
 	max-width: 5.236em;
 }

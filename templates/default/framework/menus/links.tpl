@@ -6,10 +6,13 @@
 		<div class="module-mini-container cssmenu-content# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF #">
 			<div class="module-mini-top menu-vertical-{DEPTH} hidden-small-screens">
 				# IF RELATIVE_URL #
-				<a href="{REL_URL}" title="{L_TITLE}" class="cssmenu-title sub-title">
-					# IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF #{TITLE}</a>
+					<a href="{REL_URL}" title="{L_TITLE}" class="sub-title">
+						# IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF # {TITLE}
+					</a>
 				# ELSE #
-				# IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF #{TITLE}
+					<span class="sub-title">
+						# IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF # {TITLE}
+					</span>
 				# ENDIF #
 			</div>
 			<div class="module-mini-contents">

@@ -29,7 +29,7 @@
 					jQuery("#move-up-" + sequence[i].id).hide();
 				else
 					jQuery("#move-up-" + sequence[i].id).show();
-				
+
 				if (jQuery('#list-' + sequence[i].id).is(':last-child'))
 					jQuery("#move-down-" + sequence[i].id).hide();
 				else
@@ -41,11 +41,11 @@
 	var FaqQuestion = function(id, faq_questions){
 		this.id = id;
 		this.FaqQuestions = faq_questions;
-		
+
 		if (FaqQuestions.questions_number > 1)
 			FaqQuestions.change_reposition_pictures();
 	};
-	
+
 	FaqQuestion.prototype = {
 		delete : function() {
 			if (confirm(${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))}))
@@ -61,10 +61,10 @@
 							# IF NOT C_DISPLAY_TYPE_ANSWERS_HIDDEN #
 							jQuery("#title-question-" + returnData.code).remove();
 							# ENDIF #
-							
+
 							FaqQuestions.init_sortable();
 							FaqQuestions.questions_number--;
-							
+
 							FaqQuestions.change_reposition_pictures();
 							if (FaqQuestions.questions_number == 1) {
 								jQuery("#position-update-button").hide();
@@ -81,7 +81,7 @@
 			}
 		}
 	};
-	
+
 	var FaqQuestions = new FaqQuestions('questions-list');
 	jQuery(document).ready(function() {
 		FaqQuestions.init_sortable();
@@ -89,7 +89,7 @@
 			FaqQuestions.change_reposition_pictures();
 		});
 	});
-	
+
 	# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
 	function show_answer(id_question)
 	{
@@ -108,11 +108,11 @@
 			}
 		}
 	}
-	
+
 	jQuery(document).ready(function() {
 		var anchor = window.location.hash;
 		var id_question;
-		 
+
 		id_question = anchor.substring(9,anchor.length);
 		if (anchor.substring(0,9) == "#question" && id_question.match(/^[0-9]+$/))
 			show_answer(id_question);
@@ -126,7 +126,7 @@
 	<header>
 		<h1>
 			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
-			{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit smaller"></i></a># ENDIF #
+			{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small"></i></a># ENDIF #
 		</h1>
 		# IF C_CATEGORY_DESCRIPTION #
 			<div class="cat-description">
@@ -134,7 +134,7 @@
 			</div>
 		# ENDIF #
 	</header>
-	
+
 	# IF C_QUESTIONS #
 		# IF NOT C_DISPLAY_TYPE_ANSWERS_HIDDEN #
 		<div id="questions-titles-list">
@@ -183,11 +183,11 @@
 							<!--
 							jQuery(document).ready(function() {
 								var faq_question = new FaqQuestion({questions.ID}, FaqQuestions);
-								
+
 								jQuery('#delete-{questions.ID}').on('click',function(){
 									faq_question.delete();
 								});
-								
+
 								if (FaqQuestions.questions_number > 1) {
 									jQuery('#move-up-{questions.ID}').on('click',function(){
 										var li = jQuery(this).closest('li');
@@ -224,6 +224,6 @@
 			</div>
 		</div>
 	# ENDIF #
-	
+
 	<footer></footer>
 </section>

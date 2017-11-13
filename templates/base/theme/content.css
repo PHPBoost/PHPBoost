@@ -35,7 +35,6 @@ article header {
 }
 
 @media (min-width: 769px) {
-	section header,
 	article header {
 		margin: 0 0 0.809em 0;
 	}
@@ -69,7 +68,7 @@ header .actions {
 
 header h2 .actions {
 	font-size: 0.456em;
-	margin-top: 1.309em;
+	margin-top: 1em;
 }
 
 header h2 .actions a {

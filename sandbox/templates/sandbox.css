@@ -1,13 +1,6 @@
-/* --- Colors --- */
 /*
-	Blue   => #103B67  #1E5083  #366493  #517BA6  #81A4C8	main: #355493; rgba(54, 100, 147, 1);
-	Green  => #11810B  #22A31B  #40b73a  #62CF5D  #8FE18B	main: #40b73a; rgba(67, 182, 73, 1);
-	red    => #9D0D11  #C72125  #E0464A  #FD7074  #FE9B9D	main: #E0464A; rgba(224, 70, 74, 1);
-	Orange => #9F3E0D  #C95A21  #E27B47  #FFA172  #FFBD9C	main: #E27B47; rgba(226, 123, 70, 1);
-	Yellow => #929000  #B9B70B  #e8e51d  #F4F24A  #FFFD75	main: #e8e51d; rgba(232, 229, 30, 1);
-	Purple => #33136C  #472289  #5D3B9A  #7657AE  #9F86CD	main: #5D3B9A; rgba(93, 60, 151, 1);
-	Black  => #000000  #212121  #353535  #464646  #7f7f7f	main: #353535; rgba(53, 53, 53, 1);
-	White  => #BBBBBB  #CCCCCC  #DDDDDD  #EEEEEE  #FFFFFF	main: #DDDDDD; rgba(221, 221, 221, 1);
+* Surchargez ce fichier dans votre thème pour personnaliser le module
+* https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
 .color-box {
@@ -17,54 +10,6 @@
 	margin: 5px;
 	border: 1px solid rgb(127, 127, 127);
 }
-
-.darker-blue { background-color   : #103b67; }
-.dark-blue { background-color     : #1E5083; }
-.blue { background-color          : #366493; }
-.light-blue { background-color    : #517BA6; }
-.lighter-blue { background-color  : #81A4C8; }
-
-.darker-green { background-color  : #11810B; }
-.dark-green { background-color    : #22A31B; }
-.green { background-color         : #40b73a; }
-.light-green { background-color   : #62CF5D; }
-.lighter-green { background-color : #8FE18B; }
-
-.darker-red { background-color    : #9D0D11; }
-.dark-red { background-color      : #C72125; }
-.red { background-color           : #E0464A; }
-.light-red { background-color     : #FD7074; }
-.lighter-red { background-color   : #FE9B9D; }
-
-.darker-orange { background-color : #9F3E0D; }
-.dark-orange { background-color   : #C95A21; }
-.orange { background-color        : #E27B47; }
-.light-orange { background-color  : #FFA172; }
-.lighter-orange { background-color: #FFBD9C; }
-
-.darker-yellow { background-color : #929000; }
-.dark-yellow { background-color   : #B9B70B; }
-.yellow { background-color        : #e8e51d; }
-.light-yellow { background-color  : #F4F24A; }
-.lighter-yellow { background-color: #FFFD75; }
-
-.darker-purple { background-color : #33136C; }
-.dark-purple { background-color   : #472289; }
-.purple { background-color        : #5D3B9A; }
-.light-purple { background-color  : #7657AE; }
-.lighter-purple { background-color: #9F86CD; }
-
-.darker-black { background-color  : #000000; }
-.dark-black { background-color    : #212121; }
-.black { background-color         : #353535; }
-.light-black { background-color   : #464646; }
-.lighter-black { background-color : #7f7f7f; }
-
-.darker-white { background-color  : #BBBBBB; }
-.dark-white { background-color    : #CCCCCC; }
-.white { background-color         : #DDDDDD; }
-.light-white { background-color   : #EEEEEE; }
-.lighter-white { background-color : #FFFFFF; }
 
 /* --- Summary --- */
 

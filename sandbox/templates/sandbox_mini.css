@@ -1,6 +1,10 @@
+/*
+* Surchargez ce fichier dans votre thème pour personnaliser le module
+* https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
+*/
+
 /* --- Design
 ----------------------------------------------------------------------------- */
-
 
 #mini-sandbox-left a,
 #mini-sandbox-right a{ text-decoration: none;}

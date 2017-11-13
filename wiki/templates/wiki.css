@@ -1,3 +1,8 @@
+/*
+* Surchargez ce fichier dans votre thème pour personnaliser le module
+* https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
+*/
+
 .wiki-paragraph-1 {}
 .wiki-paragraph-2 {}
 .wiki-paragraph-3 {}
@@ -17,20 +22,6 @@
 .wiki-list-3 { list-style-type: upper-alpha; 	}
 .wiki-list-4 { list-style-type: lower-alpha; 	}
 .wiki-list-5 { list-style-type: lower-greek; 	}
-
-/*.wiki-button {
-	margin-left: 0.618em;
-	padding: 0.228em 0.1618em;
-	width: 145px;
-	height: 1.309em;
-	background: #A7C7DF;
-	border: 1px solid #6D93B4;
-	color: #EDFFF0;
-	font-weight: bold;
-	text-align: center;
-	text-decoration: none;
-	cursor: pointer;
-}*/
 
 ul.no-list {
 	margin: 0 0 0 1.309em;
