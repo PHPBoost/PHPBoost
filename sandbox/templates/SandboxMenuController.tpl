@@ -310,7 +310,7 @@
 
 			<div id="main-content">
 
-				<menu id="sandbox-actionslinks" class="cssmenu cssmenu-right cssmenu-actionslinks">
+				<nav id="sandbox-actionslinks" class="cssmenu cssmenu-right cssmenu-actionslinks">
 					<ul class="level-0">
 						<li class="has-sub">
 							<span class="cssmenu-title" href="#" title="{@cssmenu.actionslinks.sandbox}">{@cssmenu.actionslinks.sandbox}</span>
@@ -356,7 +356,7 @@
 							<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
 						</li>
 					</ul>
-				</menu>
+				</nav>
 				<script>jQuery("#sandbox-actionslinks").menumaker({ title: "{@cssmenu.actionslinks}", format: "multitoggle", breakpoint: 768 }); </script>
 
 				<nav id="breadcrumb" itemprop="breadcrumb">

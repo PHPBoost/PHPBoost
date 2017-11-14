@@ -1,4 +1,4 @@
-<menu id="cssmenu-bugtrackeractions" class="cssmenu cssmenu-group">
+<nav id="cssmenu-bugtrackeractions" class="cssmenu cssmenu-group">
 	<ul>
 		# IF C_CHANGE_STATUS #
 			<li><a href="{U_CHANGE_STATUS}" title="{@actions.change_status}" class="cssmenu-title"><i class="fa fa-gears"></i> {@actions.change_status}</a></li>
@@ -11,7 +11,7 @@
 			<li><a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="cssmenu-title"><i class="fa fa-delete"></i></a></li>
 		# ENDIF #
 	</ul>
-</menu>
+</nav>
 <script>
 	jQuery("#cssmenu-bugtrackeractions").menumaker({
 		title: "${LangLoader::get_message('form.options', 'common')}",

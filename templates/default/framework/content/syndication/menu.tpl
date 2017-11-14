@@ -1,4 +1,4 @@
-<menu class="dynamic-menu">
+<nav class="dynamic-menu">
 	<ul>
 		<li><a>${LangLoader::get_message('syndication', 'common')}</a>
 			<ul>
@@ -14,4 +14,4 @@
 			</ul>
 		</li>
 	</ul>
-</menu>
+</nav>

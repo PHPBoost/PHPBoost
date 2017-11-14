@@ -55,7 +55,7 @@
 				<div class="content">
 					<div class="right">{L_PRIVATE_MSG}: {convers.PM_POURCENT}</div>
 					<div class="spacer"></div>
-					<menu id="cssmenu-pmactions" class="cssmenu cssmenu-group">
+					<nav id="cssmenu-pmactions" class="cssmenu cssmenu-group">
 						<ul>
 							<li>
 								<a href="{convers.U_POST_NEW_CONVERS}" class="cssmenu-title"><i class="fa fa-plus"></i> {convers.L_POST_NEW_CONVERS}</a>
@@ -64,7 +64,7 @@
 								<a href="{convers.U_MARK_AS_READ}" class="cssmenu-title"><i class="fa fa-eraser"></i> {convers.L_MARK_AS_READ}</a>
 							</li>
 						</ul>
-					</menu>
+					</nav>
 					<script>
 						jQuery("#cssmenu-pmactions").menumaker({
 							title: "${LangLoader::get_message('form.options', 'common')}",
@@ -134,7 +134,7 @@
 							# END convers.no_pm #
 						</tbody>
 					</table>
-					
+
 					<table class="announce-legend">
 						<tr>
 							<td>

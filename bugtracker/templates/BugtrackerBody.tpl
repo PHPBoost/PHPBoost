@@ -8,10 +8,10 @@
 	</header>
 	<div class="content">
 		# IF C_DISPLAY_MENU #
-		<menu id="cssmenu-bugtrackerpageslist" class="cssmenu cssmenu-group">
+		<nav id="cssmenu-bugtrackerpageslist" class="cssmenu cssmenu-group">
 			<ul>
 				<li# IF C_UNSOLVED # class="current"# ENDIF #>
-					<a href="${relative_url(BugtrackerUrlBuilder::unsolved())}" class="cssmenu-title">{@titles.unsolved}</a> 
+					<a href="${relative_url(BugtrackerUrlBuilder::unsolved())}" class="cssmenu-title">{@titles.unsolved}</a>
 				</li>
 				<li# IF C_SOLVED # class="current"# ENDIF #>
 					<a href="${relative_url(BugtrackerUrlBuilder::solved())}" class="cssmenu-title">{@titles.solved}</a>
@@ -27,7 +27,7 @@
 				</li>
 				# ENDIF #
 			</ul>
-		</menu>
+		</nav>
 		<script>
 			jQuery("#cssmenu-bugtrackerpageslist").menumaker({
 				title: "${LangLoader::get_message('form.options', 'common')}",
@@ -36,7 +36,7 @@
 			});
 		</script>
 		# ENDIF #
-		
+
 		# INCLUDE TEMPLATE #
 	</div>
 	<footer></footer>
