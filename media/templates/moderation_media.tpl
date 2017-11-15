@@ -27,7 +27,7 @@
 			function check_all (type)
 			{
 				var item = new Array({JS_ARRAY});
-				
+
 				if (type == "delete")
 				{
 					if (confirm ('{L_CONFIRM_DELETE_ALL}'))
@@ -42,7 +42,7 @@
 						document.getElementById(type + item[i]).checked = 'checked';
 				}
 			}
-			
+
 			function pointer (id)
 			{
 				document.getElementById(id).style.cursor = 'pointer';
@@ -78,9 +78,9 @@
 					# IF C_PAGINATION #
 					<tfoot>
 						<tr>
-							<th colspan="6">
+							<td colspan="6">
 								# INCLUDE PAGINATION #
-							</th>
+							</td>
 						</tr>
 					</tfoot>
 					# ENDIF #

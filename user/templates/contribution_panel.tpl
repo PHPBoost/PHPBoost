@@ -80,7 +80,7 @@
 					# IF C_PAGINATION #
 					<tfoot>
 						<tr>
-							<th colspan="7">
+							<td colspan="7">
 								# INCLUDE PAGINATION #
 							</td>
 						</tr>

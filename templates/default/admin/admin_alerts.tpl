@@ -14,7 +14,7 @@
 function change_alert_status(id, status)
 {
 	document.getElementById("status_" + id).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
-	
+
 	var xhr_object = null;
 	var data = null;
 	var filename = PATH_TO_ROOT + '/kernel/framework/ajax/admin_alerts.php?change_status=' + id + '&token={TOKEN}';
@@ -25,11 +25,11 @@ function change_alert_status(id, status)
 		xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
 	else // XMLHttpRequest non supporté par le navigateur
 		return;
-	
+
 	xhr_object.open('GET', filename, true);
-	xhr_object.onreadystatechange = function() 
+	xhr_object.onreadystatechange = function()
 	{
-		if( xhr_object.readyState == 4 && xhr_object.responseText == "1" ) 
+		if( xhr_object.readyState == 4 && xhr_object.responseText == "1" )
 		{
 			if( status == 0 )
 			{
@@ -54,9 +54,9 @@ function delete_alert(id)
 {
 	if( !confirm("{L_CONFIRM_DELETE_ALERT}") )
 		return;
-	
+
 	document.getElementById("status_" + id).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
-	
+
 	var xhr_object = null;
 	var data = null;
 	var filename = PATH_TO_ROOT + '/kernel/framework/ajax/admin_alerts.php?delete=' + id + '&token={TOKEN}';
@@ -67,11 +67,11 @@ function delete_alert(id)
 	   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
 	else // XMLHttpRequest non support� par le navigateur
 		return;
-	
+
 	xhr_object.open('GET', filename, true);
-	xhr_object.onreadystatechange = function() 
+	xhr_object.onreadystatechange = function()
 	{
-		if( xhr_object.readyState == 4 && xhr_object.responseText == "1" ) 
+		if( xhr_object.readyState == 4 && xhr_object.responseText == "1" )
 		{
 			document.getElementById("delete_" + id).style.display = "none";
 		}
@@ -91,7 +91,7 @@ function delete_alert(id)
 		<table id="table">
 			<caption>{L_ADMIN_ALERTS}</caption>
 			<thead>
-				<tr> 
+				<tr>
 					<th>
 						# IF NOT C_ORDER_ENTITLED_ASC #
 							<a href="{U_ORDER_ENTITLED_ASC}" class="fa fa-table-sort-up"></a>
@@ -132,16 +132,16 @@ function delete_alert(id)
 			</thead>
 			# IF C_PAGINATION #
 			<tfoot>
-				<tr> 
-					<th colspan="4">
+				<tr>
+					<td colspan="4">
 						# INCLUDE PAGINATION #
-					</th>
+					</td>
 				</tr>
 			</tfoot>
 			# ENDIF #
 			<tbody>
 				# START alerts #
-				<tr id="delete_{alerts.ID}"> 
+				<tr id="delete_{alerts.ID}">
 					<td>
 						{alerts.IMG} <a href="{alerts.FIXING_URL}">{alerts.NAME}</a>
 					</td>
@@ -149,7 +149,7 @@ function delete_alert(id)
 						{alerts.DATE}
 					</td>
 					<td style="{alerts.STYLE}">
-						{alerts.PRIORITY} 
+						{alerts.PRIORITY}
 					</td>
 					<td>
 						{alerts.ACTIONS}

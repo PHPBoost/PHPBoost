@@ -19,7 +19,7 @@
 		# IF C_PAGINATION #
 		<tfoot>
 			<tr>
-				<th colspan="3"># INCLUDE PAGINATION #</th>
+				<td colspan="3"># INCLUDE PAGINATION #</td>
 			</tr>
 		</tfoot>
 		# ENDIF #
@@ -40,7 +40,7 @@
 			</tr>
 			# END users #
 			# IF NOT C_USERS #
-			<tr> 
+			<tr>
 				<td colspan="3">
 					${LangLoader::get_message('no_item_now', 'common')}
 				</td>

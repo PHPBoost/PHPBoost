@@ -8,7 +8,7 @@
 		var i;
 		for(i = 1; i <= {THEMES_NUMBER}; i++)
 		{
-			if(document.getElementById('add-checkbox-' + i)) 
+			if(document.getElementById('add-checkbox-' + i))
 				document.getElementById('add-checkbox-' + i).checked = status;
 		}
 		document.getElementById('check-all-top').checked = status;
@@ -47,7 +47,7 @@
 				# IF C_MORE_THAN_ONE_THEME_AVAILABLE #
 				<tfoot>
 					<tr>
-						<th colspan="6">
+						<td colspan="6">
 							<div class="left">
 								<div class="form-field-checkbox">
 									<input type="checkbox" id="check-all-bottom" onclick="select_all(this.checked);" title="${LangLoader::get_message('select_all', 'main')}" />
@@ -55,7 +55,7 @@
 								</div>
 								<button type="submit" name="add-selected-themes" value="true" class="submit">{@themes.install_all_selected_themes}</button>
 							</div>
-						</th>
+						</td>
 					</tr>
 				</tfoot>
 				# ENDIF #

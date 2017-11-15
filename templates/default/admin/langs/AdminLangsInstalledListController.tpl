@@ -6,7 +6,7 @@
 		var i;
 		for(i = 1; i <= {LANG_NUMBER}; i++)
 		{
-			if(document.getElementById('delete-checkbox-' + i) && i != {SELECTED_LANG_NUMBER}) 
+			if(document.getElementById('delete-checkbox-' + i) && i != {SELECTED_LANG_NUMBER})
 				document.getElementById('delete-checkbox-' + i).checked = status;
 		}
 		document.getElementById('check-all-top').checked = status;
@@ -21,7 +21,7 @@
 	<table id="table">
 		<caption>{@langs.installed_langs}</caption>
 		<thead>
-			<tr> 
+			<tr>
 				# IF C_MORE_THAN_ONE_LANG_INSTALLED #
 				<th>
 					<div class="form-field-checkbox">
@@ -40,7 +40,7 @@
 		# IF C_MORE_THAN_ONE_LANG_INSTALLED #
 		<tfoot>
 			<tr>
-				<th colspan="6">
+				<td colspan="6">
 					<div class="left">
 						<div class="form-field-checkbox">
 							<input type="checkbox" id="check-all-bottom" onclick="select_all(this.checked);" title="${LangLoader::get_message('select_all', 'main')}" />
@@ -48,12 +48,12 @@
 						</div>
 						<button type="submit" name="add-selected-themes" value="true" class="submit">{@langs.uninstall_all_selected_langs}</button>
 					</div>
-				</th>
+				</td>
 			</tr>
 		</tfoot>
 		# ENDIF #
 		<tbody>
-			<tr> 
+			<tr>
 				<td colspan="# IF C_MORE_THAN_ONE_LANG_INSTALLED #6# ELSE #5# ENDIF #">
 					# INCLUDE MSG #
 					<span class="text-strong">{@langs.default_lang_explain}</span>
@@ -110,13 +110,13 @@
 					<td>
 					</td>
 					# ENDIF #
-					
+
 
 				</tr>
 			# END langs_installed #
 		</tbody>
 	</table>
-	
+
 	<fieldset class="fieldset-submit">
 		<legend>{L_SUBMIT}</legend>
 		<div class="fieldset-inset">

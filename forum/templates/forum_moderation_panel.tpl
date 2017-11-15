@@ -66,14 +66,14 @@
 						</thead>
 						<tfoot>
 							<tr>
-								<th colspan="4">
+								<td colspan="4">
 									# IF C_FORUM_ADMIN #
 									<span class="float-left"><button type="submit" name="valid" value="true" class="submit">{L_DELETE}</button></span>
 									# ENDIF #
 									# IF C_DISPLAY_LINK_MORE_ACTION #
 									<a href="moderation_forum{U_MORE_ACTION}" title="{L_MORE_ACTION}">{L_MORE_ACTION}</a>
 									# ENDIF #
-								</th>
+								</td>
 							</tr>
 						</tfoot>
 						<tbody>
@@ -132,9 +132,9 @@
 						</thead>
 						<tfoot>
 							<tr>
-								<th colspan="6">
+								<td colspan="6">
 									<button type="submit" name="" value="true" class="submit">{L_DELETE}</button>
-								</th>
+								</td>
 							</tr>
 						</tfoot>
 						<tbody>

@@ -28,8 +28,8 @@
 						</thead>
 						<tfoot>
 							<tr>
-								<th colspan="6">
-								</th>
+								<td colspan="6">
+								</td>
 							</tr>
 						</tfoot>
 						<tbody>

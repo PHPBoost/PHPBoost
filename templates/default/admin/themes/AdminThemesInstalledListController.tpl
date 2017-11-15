@@ -6,7 +6,7 @@
 		var i;
 		for(i = 1; i <= {THEMES_NUMBER}; i++)
 		{
-			if(document.getElementById('delete-checkbox-' + i) && i != {SELECTED_THEME_NUMBER}) 
+			if(document.getElementById('delete-checkbox-' + i) && i != {SELECTED_THEME_NUMBER})
 				document.getElementById('delete-checkbox-' + i).checked = status;
 		}
 		document.getElementById('check-all-top').checked = status;
@@ -21,7 +21,7 @@
 	<table id="table">
 		<caption>{@themes.installed_theme}</caption>
 		<thead>
-			<tr> 
+			<tr>
 				# IF C_MORE_THAN_ONE_THEME_INSTALLED #
 				<th>
 					<div class="form-field-checkbox">
@@ -40,7 +40,7 @@
 		# IF C_MORE_THAN_ONE_THEME_INSTALLED #
 		<tfoot>
 			<tr>
-				<th colspan="6">
+				<td colspan="6">
 					<div class="left">
 						<div class="form-field-checkbox">
 							<input type="checkbox" id="check-all-bottom" onclick="select_all(this.checked);" title="${LangLoader::get_message('select_all', 'main')}" />
@@ -48,12 +48,12 @@
 						</div>
 						<button type="submit" name="add-selected-themes" value="true" class="submit">{@themes.uninstall_all_selected_themes}</button>
 					</div>
-				</th>
+				</td>
 			</tr>
 		</tfoot>
 		# ENDIF #
 		<tbody>
-			<tr> 
+			<tr>
 				<td colspan="# IF C_MORE_THAN_ONE_THEME_INSTALLED #6# ELSE #5# ENDIF #">
 					# INCLUDE MSG #
 					<span class="text-strong">{@themes.default_theme_explain}</span>
@@ -83,7 +83,7 @@
 								<a href="{themes_installed.pictures.URL}" data-lightbox="{themes_installed.ID}" data-rel="lightcase:collection" title="{themes_installed.NAME}"></a>
 							# END themes_installed.pictures #
 						# ENDIF #
-						
+
 					</td>
 					<td class="left">
 						<div id="desc_explain{themes_installed.ID}">
@@ -103,7 +103,7 @@
 							${LangLoader::get_message('visitor', 'user-common')}
 						# ENDIF #
 					</td>
-					
+
 					# IF NOT themes_installed.C_IS_DEFAULT_THEME #
 					<td class="input-radio">
 						<div class="form-field-radio">
@@ -135,7 +135,7 @@
 			# END themes_installed #
 		</tbody>
 	</table>
-	
+
 	<fieldset class="fieldset-submit">
 		<legend>{L_SUBMIT}</legend>
 		<button type="submit" class="submit" name="update_themes_configuration" value="true">${LangLoader::get_message('update', 'main')}</button>

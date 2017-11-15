@@ -539,9 +539,9 @@
 			# IF C_PAGINATION #
 			<tfoot>
 				<tr>
-					<th colspan="5">
+					<td colspan="5">
 						# INCLUDE PAGINATION #
-					</th>
+					</td>
 				</tr>
 			</tfoot>
 			# ENDIF #
@@ -638,9 +638,9 @@
 			# IF C_PAGINATION #
 			<tfoot>
 				<tr>
-					<th colspan="5">
+					<td colspan="5">
 						# INCLUDE PAGINATION #
-					</th>
+					</td>
 				</tr>
 			</tfoot>
 			# ENDIF #
@@ -743,7 +743,7 @@
 			</fieldset>
 		</form>
 		# ENDIF #
-		
+
 		<form action="admin_stats.php" method="post" class="fieldset-content">
 				<fieldset>
 					<legend>{L_AUTHORIZATIONS}</legend>

@@ -44,8 +44,8 @@
 					</thead>
 					<tfoot>
 						<tr>
-							<th colspan="5">
-							</th>
+							<td colspan="5">
+							</td>
 						</tr>
 					</tfoot>
 					<tbody>

@@ -470,7 +470,7 @@ input[type=color] {
 }
 
 .bt-content .form-field-radio {
-	margin: 3px 10px 0 0 !important;
+	margin: 3px 10px 0 0;
 	display: inline-block;
 }
 

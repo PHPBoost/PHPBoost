@@ -8,7 +8,7 @@
 		var i;
 		for(i = 1; i <= {MODULES_NUMBER}; i++)
 		{
-			if(document.getElementById('add-checkbox-' + i)) 
+			if(document.getElementById('add-checkbox-' + i))
 				document.getElementById('add-checkbox-' + i).checked = status;
 		}
 		document.getElementById('check-all-top').checked = status;
@@ -28,7 +28,7 @@
 			<table id="table">
 				<caption>{@modules.modules_available}</caption>
 				<thead>
-					<tr> 
+					<tr>
 						# IF C_MORE_THAN_ONE_MODULE_AVAILABLE #
 						<th>
 							<div class="form-field-checkbox">
@@ -46,7 +46,7 @@
 				# IF C_MORE_THAN_ONE_MODULE_AVAILABLE #
 				<tfoot>
 					<tr>
-						<th colspan="5">
+						<td colspan="5">
 							<div class="left">
 								<div class="form-field-checkbox">
 									<input type="checkbox" id="check-all-bottom" onclick="select_all(this.checked);" title="${LangLoader::get_message('select_all', 'main')}" />
@@ -54,7 +54,7 @@
 								</div>
 								<button type="submit" name="add-selected-modules" value="true" class="submit">{@modules.install_all_selected_modules}</button>
 							</div>
-						</th>
+						</td>
 					</tr>
 				</tfoot>
 				# ENDIF #

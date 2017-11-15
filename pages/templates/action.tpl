@@ -57,9 +57,9 @@
 		</thead>
 		<tfoot>
 			<tr>
-				<th colspan="2">
+				<td colspan="2">
 					<a href="{U_CREATE_REDIRECTION}">{L_CREATE_REDIRECTION}</a>
-				</th>
+				</td>
 			</tr>
 		</tfoot>
 		<tbody>

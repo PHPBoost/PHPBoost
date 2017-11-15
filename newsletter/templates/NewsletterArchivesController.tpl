@@ -1,7 +1,7 @@
 <table id="table">
 	# IF C_ARCHIVES #
 	<thead>
-		<tr> 
+		<tr>
 			# IF NOT C_SPECIFIC_STREAM #
 			<th>
 				<a href="{SORT_STREAM_TOP}" class="fa fa-table-sort-up"></a>
@@ -11,17 +11,17 @@
 			# ENDIF #
 			<th>
 				<a href="{SORT_SUBJECT_TOP}" class="fa fa-table-sort-up"></a>
-				{@archives.name} 
+				{@archives.name}
 				<a href="{SORT_SUBJECT_BOTTOM}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th>
 				<a href="{SORT_DATE_TOP}" class="fa fa-table-sort-up"></a>
-				{@archives.date} 
+				{@archives.date}
 				<a href="{SORT_DATE_BOTTOM}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th>
 				<a href="{SORT_SUBSCRIBERS_TOP}" class="fa fa-table-sort-up"></a>
-				{@archives.nbr_subscribers} 
+				{@archives.nbr_subscribers}
 				<a href="{SORT_SUBSCRIBERS_BOTTOM}" class="fa fa-table-sort-down"></a>
 			</th>
 			# IF C_MODERATE #
@@ -32,9 +32,9 @@
 	# IF C_PAGINATION #
 	<tfoot>
 		<tr>
-			<th colspan="{NUMBER_COLUMN}">
+			<td colspan="{NUMBER_COLUMN}">
 				# INCLUDE PAGINATION #
-			</th>
+			</td>
 		</tr>
 	</tfoot>
 	# ENDIF #

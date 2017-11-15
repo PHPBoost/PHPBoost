@@ -57,15 +57,15 @@
 		# IF C_PAGINATION #
 		<tfoot>
 			<tr>
-				<th colspan="{BUGS_COLSPAN}">
+				<td colspan="{BUGS_COLSPAN}">
 					# INCLUDE PAGINATION #
-				</th>
+				</td>
 			</tr>
 		</tfoot>
 		# ENDIF #
 		<tbody>
 			# START bug #
-			<tr> 
+			<tr>
 				<td # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
 					<a href="{bug.U_LINK}" title="{bug.STATUS}"># IF bug.C_FIXED #<s>\#{bug.ID}</s># ELSE #\#{bug.ID}# ENDIF #</a>
 				</td>
@@ -92,7 +92,7 @@
 					{bug.DETECTED_IN}
 				</td>
 				# ENDIF #
-				<td class="left"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #> 
+				<td class="left"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
 					<span>{@labels.fields.status} : {bug.STATUS}</span>
 					<div class="spacer"></div>
 					# IF bug.C_PROGRESS #

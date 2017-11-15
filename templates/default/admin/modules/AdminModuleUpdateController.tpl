@@ -8,7 +8,7 @@
 		var i;
 		for(i = 1; i <= {MODULES_NUMBER}; i++)
 		{
-			if(document.getElementById('upgrade-checkbox-' + i)) 
+			if(document.getElementById('upgrade-checkbox-' + i))
 				document.getElementById('upgrade-checkbox-' + i).checked = status;
 		}
 		document.getElementById('check-all-top').checked = status;
@@ -45,7 +45,7 @@
 				# IF C_MORE_THAN_ONE_MODULE_AVAILABLE #
 				<tfoot>
 					<tr>
-						<th colspan="4">
+						<td colspan="4">
 							<div class="left">
 								<div class="form-field-checkbox">
 									<input type="checkbox" id="check-all-bottom" onclick="select_all(this.checked);" title="${LangLoader::get_message('select_all', 'main')}" />
@@ -53,7 +53,7 @@
 								</div>
 								<button type="submit" name="upgrade-selected-modules" value="true" class="submit">{@modules.upgrade_all_selected_modules}</button>
 							</div>
-						</th>
+						</td>
 					</tr>
 				</tfoot>
 				# ENDIF #

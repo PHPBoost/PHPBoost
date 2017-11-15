@@ -21,7 +21,7 @@ function toggle_filters_table() {
 -->
 </script>
 <div class="cssmenu-group">
-	<a href="" onclick="toggle_filters_table(); return false;" class="cssmenu-title"><i class="fa fa-filter"></i> {L_FILTERS}</a> 
+	<a href="" onclick="toggle_filters_table(); return false;" class="cssmenu-title"><i class="fa fa-filter"></i> {L_FILTERS}</a>
 </div>
 <table id="table_filters"# IF NOT C_HAS_SELECTED_FILTERS # style="display: none;"# ENDIF #>
 	<thead>
@@ -57,7 +57,7 @@ function toggle_filters_table() {
 	</thead>
 	<tfoot>
 		<tr>
-			<th colspan="{FILTERS_NUMBER}">${LangLoader::get_message('items_number', 'common')} : {BUGS_NUMBER}</th>
+			<td colspan="{FILTERS_NUMBER}">${LangLoader::get_message('items_number', 'common')} : {BUGS_NUMBER}</td>
 		</tr>
 	</tfoot>
 	<tbody>

@@ -486,7 +486,7 @@
 					</thead>
 					<tfoot>
 						<tr>
-							<th colspan="5"># INCLUDE PAGINATION #</th>
+							<td colspan="5"># INCLUDE PAGINATION #</td>
 						</tr>
 					</tfoot>
 					<tbody>

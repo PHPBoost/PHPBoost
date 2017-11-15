@@ -318,7 +318,7 @@
 							</tbody>
 						</table>
 						# ENDIF #
-						
+
 						{GRAPH_RESULT}
 						<p class="center">{L_TOTAL}: {SUM_NBR}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{L_AVERAGE}: {MOY_NBR}</p>
 						<p class="center">{U_VISITS_MORE}</p>
@@ -548,9 +548,9 @@
 				# IF C_PAGINATION #
 				<tfoot>
 					<tr>
-						<th colspan="5">
+						<td colspan="5">
 							# INCLUDE PAGINATION #
-						</th>
+						</td>
 					</tr>
 				</tfoot>
 				# ENDIF #
@@ -650,9 +650,9 @@
 				# IF C_PAGINATION #
 				<tfoot>
 					<tr>
-						<th colspan="5">
+						<td colspan="5">
 							# INCLUDE PAGINATION #
-						</th>
+						</td>
 					</tr>
 				</tfoot>
 				# ENDIF #
