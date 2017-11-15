@@ -1,14 +1,14 @@
 # IF C_SUSCRIBE #
-<menu id="cssmenu-newsletter-actions" class="cssmenu cssmenu-group">
+<nav id="cssmenu-newsletter-actions" class="cssmenu cssmenu-group">
 	<ul>
 		<li>
-			<a href="${relative_url(NewsletterUrlBuilder::subscribe())}" class="cssmenu-title">{@newsletter.subscribe_newsletters}</a> 
+			<a href="${relative_url(NewsletterUrlBuilder::subscribe())}" class="cssmenu-title">{@newsletter.subscribe_newsletters}</a>
 		</li>
 		<li>
 			<a href="${relative_url(NewsletterUrlBuilder::unsubscribe())}" class="cssmenu-title">{@newsletter.unsubscribe_newsletters}</a>
 		</li>
 	</ul>
-</menu>
+</nav>
 <script>
 	jQuery("#cssmenu-newsletter-actions").menumaker({
 		title: "${LangLoader::get_message('form.options', 'common')}",
@@ -21,7 +21,7 @@
 
 <table id="table">
 	<thead>
-		<tr> 
+		<tr>
 			<th>
 				${LangLoader::get_message('form.name', 'common')}
 			</th>
@@ -63,7 +63,7 @@
 			<td>
 				# IF streams_list.C_VIEW_SUBSCRIBERS #<a href="{streams_list.U_VIEW_SUBSCRIBERS}">{@newsletter.view_subscribers}</a> ({streams_list.SUBSCRIBERS_NUMBER})# ELSE #${LangLoader::get_message('error.auth', 'status-messages-common')}# ENDIF #
 			</td>
-			<td> 
+			<td>
 				<img src="{streams_list.IMAGE}" alt="{streams_list.NAME}" />
 			</td>
 		</tr>

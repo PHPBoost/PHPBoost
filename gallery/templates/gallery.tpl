@@ -236,7 +236,7 @@
 
 		<section id="module-gallery">
 			<header>
-				<menu id="cssmenu-galleryfilter" class="cssmenu cssmenu-right cssmenu-actionslinks cssmenu-tools">
+				<nav id="cssmenu-galleryfilter" class="cssmenu cssmenu-right cssmenu-actionslinks cssmenu-tools">
 					<ul class="level-0 hidden">
 						<li><a class="cssmenu-title"><i class="fa fa-eye"></i> {L_DISPLAY}</a>
 							<ul class="level-1">
@@ -263,7 +263,7 @@
 							</ul>
 						</li>
 					</ul>
-				</menu>
+				</nav>
 				<script>
 					jQuery("#cssmenu-galleryfilter").menumaker({
 						title: "${LangLoader::get_message('sort_options', 'common')}",

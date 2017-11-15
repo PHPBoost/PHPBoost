@@ -28,7 +28,7 @@
 		-->
 		</script>
 
-		
+
 		# START convers #
 		<script>
 		<!--
@@ -36,17 +36,17 @@
 			{
 				var i;
 				for(i = 0; i < {convers.NBR_PM}; i++)
-				{	
-					if( document.getElementById(id + i) ) 
+				{
+					if( document.getElementById(id + i) )
 						document.getElementById(id + i).checked = status;
 				}
 				document.getElementById('checkall').checked = status;
 				document.getElementById('validc').checked = status;
-			}	 
+			}
 		-->
 		</script>
 		# INCLUDE message_helper #
-		
+
 		<form action="pm{convers.U_USER_ACTION_PM}" method="post" onsubmit="javascript:return Confirm_pm();">
 			<section id="module-user-convers">
 				<header>
@@ -55,7 +55,7 @@
 				<div class="content">
 					<div class="right">{L_PRIVATE_MSG}: {convers.PM_POURCENT}</div>
 					<br /><br />
-					<menu id="cssmenu-pmactions" class="cssmenu cssmenu-group">
+					<nav id="cssmenu-pmactions" class="cssmenu cssmenu-group">
 						<ul>
 							<li>
 								<a href="{convers.U_POST_NEW_CONVERS}" class="cssmenu-title"><i class="fa fa-plus"></i> {convers.L_POST_NEW_CONVERS}</a>
@@ -64,7 +64,7 @@
 								<a href="{convers.U_MARK_AS_READ}" class="cssmenu-title"><i class="fa fa-eraser"></i> {convers.L_MARK_AS_READ}</a>
 							</li>
 						</ul>
-					</menu>
+					</nav>
 					<script>
 						jQuery("#cssmenu-pmactions").menumaker({
 							title: "${LangLoader::get_message('form.options', 'common')}",
@@ -125,7 +125,7 @@
 								</td>
 							</tr>
 							# END convers.list #
-									
+
 							# START convers.no_pm #
 							<tr>
 								<td colspan="6">
@@ -138,13 +138,13 @@
 					<br />
 					<table class="announce-legend">
 						<tr>
-							<td> 
-								<i class="fa fa-envelope message-announce"></i> {L_READ} 
+							<td>
+								<i class="fa fa-envelope message-announce"></i> {L_READ}
 							</td>
-							<td class="no-separator">  
+							<td class="no-separator">
 								<i class="fa fa-envelope message-announce-track"></i> {L_TRACK}
 							</td>
-							<td class="no-separator">  
+							<td class="no-separator">
 								<i class="fa fa-envelope message-announce-new"></i> {L_NOT_READ}
 							</td>
 						</tr>
@@ -154,16 +154,16 @@
 			</section>
 		</form>
 		# END convers #
-		
+
 		# START pm #
 		<section id="module-user-pm">
 			<header>
 				<h1>{pm.U_PM_BOX} : {pm.U_TITLE_CONVERS}</h1>
 			</header>
-			
+
 			<div class="content">
 				# IF pm.C_PAGINATION #<div class="float-right"># INCLUDE pm.PAGINATION #</div># ENDIF #
-			
+
 			# START pm.msg #
 				<article id="article-pm-{pm.msg.ID}" class="article-pm article-several message">
 					<div id="m{pm.msg.ID}" class="message-container">
@@ -196,7 +196,7 @@
 						<div class="message-message">
 							<div class="message-content">{pm.msg.CONTENTS}</div>
 						</div>
-						
+
 					</div>
 				</article>
 			# END pm.msg #
@@ -253,7 +253,7 @@
 								</div>
 							</div>
 						</fieldset>
-						
+
 						<div class="center">
 							<input type="hidden" name="token" value="{TOKEN}">
 							<button type="submit" name="{SUBMIT_NAME}" value="{L_SUBMIT}" class="submit">{L_SUBMIT}</button>
@@ -276,7 +276,7 @@
 				</header>
 				<div class="content">
 					# INCLUDE message_helper #
-					
+
 					<div class="fieldset-content">
 						<p class="center">{L_REQUIRE}</p>
 						<fieldset>
@@ -309,7 +309,7 @@
 								</div>
 							</div>
 						</fieldset>
-						
+
 						<div class="center">
 							<input type="hidden" name="token" value="{TOKEN}">
 							<button type="submit" name="convers" value="true" class="submit">{L_SUBMIT}</button>

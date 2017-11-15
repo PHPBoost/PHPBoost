@@ -1,11 +1,11 @@
 # IF C_DISPLAY #
-<menu id="cssmenu-module-{ID}" class="cssmenu cssmenu-right cssmenu-actionslinks">
+<nav id="cssmenu-module-{ID}" class="cssmenu cssmenu-right cssmenu-actionslinks">
 	<ul class="level-0 hidden">
 		# START element #
 			# INCLUDE element.ELEMENT #
 		# END element #
 	</ul>
-</menu>
+</nav>
 <script>
 	jQuery("#cssmenu-module-${escape(ID)}").menumaker({
 		title: "${LangLoader::get_message('content.menus.actions', 'admin-links-common')} {MODULE_NAME}",

@@ -1,5 +1,5 @@
 		<div class="wiki-tools-container">
-			<menu id="cssmenu-wikitools" class="cssmenu cssmenu-right cssmenu-actionslinks cssmenu-tools">
+			<nav id="cssmenu-wikitools" class="cssmenu cssmenu-right cssmenu-actionslinks cssmenu-tools">
 				<ul class="level-0 hidden">
 					# IF C_ACTIV_COM #
 						<li>
@@ -69,7 +69,7 @@
 						</a></li>
 					# ENDIF #
 				</ul>
-			</menu>
+			</nav>
 			<script>
 				jQuery("#cssmenu-wikitools").menumaker({
 					title: "{L_OTHER_TOOLS}",
