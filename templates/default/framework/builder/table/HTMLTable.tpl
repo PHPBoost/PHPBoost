@@ -30,11 +30,11 @@
 			# END header_column #
 		</tr>
 	</thead>
-	
+
 	# IF C_DISPLAY_FOOTER #
 	<tfoot>
 		<tr>
-			<th colspan="{NUMBER_OF_COLUMNS}" class="html-table-footer# IF C_FOOTER_CSS_CLASSES # {FOOTER_CSS_CLASSES}# ENDIF #">
+			<td colspan="{NUMBER_OF_COLUMNS}" class="html-table-footer# IF C_FOOTER_CSS_CLASSES # {FOOTER_CSS_CLASSES}# ENDIF #">
 				<div class="html-table-nbr-elements">
 					<span>
 						{NUMBER_OF_ELEMENTS}
@@ -57,11 +57,11 @@
 						# INCLUDE pagination #
 					</div>
 				# ENDIF #
-			</th>
+			</td>
 		</tr>
 	</tfoot>
 	# ENDIF #
-	
+
 	<tbody>
 		# START row #
 		<tr
@@ -80,7 +80,7 @@
 		</tr>
 		# END row #
 		# IF NOT C_HAS_ROWS #
-		<tr> 
+		<tr>
 			<td colspan="{NUMBER_OF_COLUMNS}">
 				${LangLoader::get_message('no_item_now', 'common')}
 			</td>

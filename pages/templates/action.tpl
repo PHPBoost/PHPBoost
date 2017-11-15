@@ -57,9 +57,9 @@
 		</thead>
 		<tfoot>
 			<tr>
-				<th colspan="2">
+				<td colspan="2">
 					<a href="{U_CREATE_REDIRECTION}">{L_CREATE_REDIRECTION}</a>
-				</th>
+				</td>
 			</tr>
 		</tfoot>
 		<tbody>
@@ -125,7 +125,7 @@
 		</div>
 		<input type="hidden" name="id_new" value="{ID_NEW}">
 	</fieldset>
-	
+
 	<fieldset class="fieldset-submit">
 		<legend>{L_SUBMIT}</legend>
 		<input type="hidden" name="token" value="{TOKEN}">
@@ -165,7 +165,7 @@
 			</div>
 		</div>
 	</fieldset>
-	
+
 	<fieldset class="fieldset-submit">
 		<legend>{L_SUBMIT}</legend>
 		<input type="hidden" name="token" value="{TOKEN}">

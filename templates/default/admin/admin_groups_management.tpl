@@ -11,7 +11,7 @@
 				</li>
 			</ul>
 		</nav>
-		
+
 		<div id="admin-contents">
 			<fieldset class="fieldset-content">
 				<legend>{L_GROUPS_MANAGEMENT}</legend>
@@ -35,21 +35,21 @@
 						</thead>
 						<tfoot>
 							<tr>
-								<th colspan="4">
+								<td colspan="4">
 									<span><a href="admin_groups.php?add=1" title="{L_ADD_GROUPS}">{L_ADD_GROUPS}</a></span>
-								</th>
+								</td>
 							</tr>
 						</tfoot>
 						<tbody>
 							# START group #
-							<tr> 
+							<tr>
 								<td>
 									<a href="{group.U_USER_GROUP}"# IF group.C_GROUP_COLOR # style="color:{group.GROUP_COLOR}"# ENDIF #>{group.NAME}</a>
 								</td>
 								<td>
 									{group.IMAGE}
 								</td>
-								<td> 
+								<td>
 									<a href="admin_groups.php?id={group.ID}" title="{L_UPDATE}" class="fa fa-edit"></a>
 								</td>
 								<td>
@@ -62,4 +62,3 @@
 				</div>
 			</fieldset>
 		</div>
-		

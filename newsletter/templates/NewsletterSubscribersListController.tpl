@@ -4,7 +4,7 @@
 		<tr>
 			<th>
 				<a href="{SORT_PSEUDO_TOP}" class="fa fa-table-sort-up"></a>
-				{@subscribers.pseudo} 
+				{@subscribers.pseudo}
 				<a href="{SORT_PSEUDO_BOTTOM}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th>
@@ -16,9 +16,9 @@
 	# IF C_PAGINATION #
 	<tfoot>
 		<tr>
-			<th colspan="3">
+			<td colspan="3">
 				# INCLUDE PAGINATION #
-			</th>
+			</td>
 		</tr>
 	</tfoot>
 	# ENDIF #
@@ -31,7 +31,7 @@
 			<td>
 				{subscribers_list.MAIL}
 			</td>
-			<td> 
+			<td>
 				# IF subscribers_list.C_AUTH_MODO #
 					# IF subscribers_list.C_EDIT #
 					<a href="{subscribers_list.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>

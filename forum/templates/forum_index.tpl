@@ -1,6 +1,6 @@
 
 	# INCLUDE forum_top #
-		
+
 	# START forums_list #
 		# START forums_list.endcats #
 					</tbody>
@@ -9,14 +9,14 @@
 		</article>
 
 		# END forums_list.endcats #
-			
+
 		# START forums_list.cats #
 		<script>
 			<!--
 			jQuery('#table-{forums_list.cats.IDCAT}').basictable();
 			-->
 		</script>
-			
+
 		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-{forums_list.cats.IDCAT}">
 			<header>
 				<h2>
@@ -44,8 +44,8 @@
 					</thead>
 					<tfoot>
 						<tr>
-							<th colspan="5">
-							</th>
+							<td colspan="5">
+							</td>
 						</tr>
 					</tfoot>
 					<tbody>
@@ -99,8 +99,7 @@
 							# ENDIF #
 						</tr>
 		# END forums_list.subcats #
-		
+
 	# END forums_list #
-		
-	# INCLUDE forum_bottom #	
-		
+
+	# INCLUDE forum_bottom #

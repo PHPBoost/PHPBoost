@@ -50,7 +50,7 @@
 					<div class="form-field"><label>{SELECT_COM}</label></div>
 				</div>
 			</fieldset>
-			
+
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button>
@@ -61,7 +61,7 @@
 		</form>
 		# END auth #
 
-		
+
 		# START status #
 		<script>
 		<!--
@@ -69,12 +69,12 @@
 			# START status.status_array #
 			status[{status.status_array.ID}] = "{status.status_array.TEXT}";
 			# END status.status_array #
-			
+
 			function show_status()
 			{
 				if( document.getElementById('radio_undefined').checked )
 					change_type(-1);
-					
+
 				//Si il s'agit d'un statut pr�d�fini
 				if( document.getElementById('id_status').value > 0 && status[document.getElementById('id_status').value] != "" )
 				{
@@ -112,7 +112,7 @@
 		<form action="action.php" method="post" class="fieldset-content">
 			<fieldset>
 				<legend>{status.L_TITLE}</legend>
-				
+
 				<span class="formatter-blockquote">{L_CURRENT_STATUS} :</span>
 				<div id="current_status" class="blockquote">{status.CURRENT_STATUS}</div>
 
@@ -127,8 +127,8 @@
 						# END status.list #
 						</select>
 						<br /><br />
-						<label><input type="radio" name="status" id="radio_undefined" value="radio_undefined" {status.UNDEFINED} onclick="javascript: change_type(-1);" {status.SELECTED_UNDEFINED}> {L_UNDEFINED_STATUS}</label> 
-						
+						<label><input type="radio" name="status" id="radio_undefined" value="radio_undefined" {status.UNDEFINED} onclick="javascript: change_type(-1);" {status.SELECTED_UNDEFINED}> {L_UNDEFINED_STATUS}</label>
+
 					</div>
 				</div>
 				<div class="form-element-textarea">
@@ -149,7 +149,7 @@
 		</form>
 		# END status #
 
-		
+
 		# START move #
 
 		<script>
@@ -161,7 +161,7 @@
 		<script src="{PICTURES_DATA_PATH}/js/wiki.js"></script>
 
 		# INCLUDE message_helper #
-		
+
 		<form action="action.php" method="post" onsubmit="return check_form_post();" class="fieldset-content">
 			<fieldset>
 				<legend>{move.L_TITLE}</legend>
@@ -184,7 +184,7 @@
 					</div>
 				</div>
 			</fieldset>
-			
+
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_to_move" value="{move.ID_ARTICLE}">
@@ -194,7 +194,7 @@
 		</form>
 		# END move #
 
-		
+
 		# START rename #
 		<script>
 		<!--
@@ -208,7 +208,7 @@
 		-->
 		</script>
 		# INCLUDE message_helper #
-		
+
 		<form action="action.php" method="post" onsubmit="return check_form_post();" class="fieldset-content">
 			<fieldset>
 				<legend>{rename.L_TITLE}</legend>
@@ -225,7 +225,7 @@
 					<div class="form-field"><label><input type="checkbox" name="create_redirection_while_renaming" id="create_redirection_while_renaming" checked="checked"></label></div>
 				</div>
 			</fieldset>
-			
+
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_to_rename" value="{rename.ID_ARTICLE}">
@@ -235,7 +235,7 @@
 		</form>
 		# END rename #
 
-		
+
 		# START redirect #
 		{redirect.L_TITLE}
 		<table id="table">
@@ -251,9 +251,9 @@
 			</thead>
 			<tfoot>
 				<tr>
-					<th colspan="2">
+					<td colspan="2">
 						<a href="{U_CREATE_REDIRECTION}" title="{L_CREATE_REDIRECTION}"><i class="fa fa-fast-forward"></i> {L_CREATE_REDIRECTION}</a>
-					</th>
+					</td>
 				</tr>
 			</tfoot>
 			<tbody>
@@ -278,7 +278,7 @@
 		</table>
 		# END redirect #
 
-		
+
 		# START create #
 		<script>
 		<!--
@@ -292,7 +292,7 @@
 		-->
 		</script>
 		# INCLUDE message_helper #
-		
+
 		<form action="action.php" method="post" onsubmit="return check_form_post();" class="fieldset-content">
 			<fieldset>
 				<legend>{create.L_TITLE}</legend>
@@ -301,7 +301,7 @@
 					<div class="form-field"><label><input type="text" name="redirection_title" id="redirection_title" maxlength="250" class="field-large" value=""></label></div>
 				</div>
 			</fieldset>
-			
+
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="create_redirection" value="{create.ID_ARTICLE}">
@@ -321,7 +321,7 @@
 		<script src="{PICTURES_DATA_PATH}/js/wiki.js"></script>
 
 		# INCLUDE message_helper #
-				
+
 		<form action="action.php" method="post" onsubmit="return confirm('{L_ALERT_REMOVING_CAT}');" class="fieldset-content">
 			<fieldset>
 				<legend>{remove.L_TITLE}</legend>
@@ -348,7 +348,7 @@
 					</div>
 				</div>
 			</fieldset>
-			
+
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_to_remove" value="{remove.ID_ARTICLE}">
@@ -361,4 +361,3 @@
 		# IF C_COMMENTS #
 		{COMMENTS}
 		# ENDIF #
-		

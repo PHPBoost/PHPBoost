@@ -53,7 +53,7 @@
 	<header>
 		<h2>{@css.title.typography}</h2>
 	</header>
-	
+
 	<article class="content">
 		<div class="pbt-box-smallest">
 			<h4>{@css.titles}</h4>
@@ -63,29 +63,29 @@
 			<h4>h4. {@css.title} 4</h4>
 			<h5>h5. {@css.title} 5</h5>
 			<h6>h6. {@css.title} 6</h6>
-		</div>	
-		<div class="pbt-box-smallest">	
+		</div>
+		<div class="pbt-box-smallest">
 			<h4>{@css.title.sizes}</h4>
 			<span href="#" class="smaller">{@css.text.smaller}</span> <br />
 			<span href="#" class="small">{@css.text.small}</span> <br />
 			<span href="#" class="big">{@css.text.big}</span> <br />
 			<span href="#" class="bigger">{@css.text.bigger}</span> <br />
 			<span href="#" class="biggest">{@css.text.biggest}</span>
-		</div>	
+		</div>
 		<div class="pbt-box-smallest">
 			<h4>{@css.styles}</h4>
 			<strong>{@css.text_bold}</strong><br />
 			<em>{@css.text_italic}</em><br />
 			<span style="text-decoration: underline;">{@css.text_underline}</span><br />
 			<strike>{@css.text_strike}</strike><br />
-			<a href="#" title="{@css.link}">{@css.link}</a> 
-		</div>	
-		<div class="pbt-box-smallest">	
+			<a href="#" title="{@css.link}">{@css.link}</a>
+		</div>
+		<div class="pbt-box-smallest">
 			<h4>{@css.rank_color}</h4>
 			<a href="#" class="admin" title="{@css.admin}">{@css.admin}</a> <br />
 			<a href="#" class="modo" title="{@css.modo}">{@css.modo}</a> <br />
 			<a href="#" class="member" title="{@css.member}">{@css.member}</a> <br />
-		</div>	
+		</div>
 	</article>
 	<footer></footer>
 </section>
@@ -123,7 +123,7 @@
 				<div class="progressbar" style="width:100%"></div>
 			</div>
 		</div>
-		
+
 		<div class="pbt-box-small">
 		<h4>{@css.main_actions_icons}</h4>
 			<ul>
@@ -159,7 +159,7 @@
 				<li>{@css.element} 3</li>
 			</ol>
 		</div>
-		
+
 		<div class="pbt-box-large">
 			<h4>{@css.explorer}</h4>
 			<div class="explorer">
@@ -195,8 +195,8 @@
 				</div>
 			</div>
 		</div>
-		
-		
+
+
 		<div class="pbt-box-small center">
 			<h4>{@css.button}</h4>
 			<button type="submit" class="button">{@css.button}</button>
@@ -215,7 +215,7 @@
 			<button type="submit" class="basic-button">.basic-button</button>
 			<button type="submit" class="basic-button alt">.basic-button.alt</button>
 		</div>
-		
+
 		<div class="pbt-box-largest">
 			<h4>{@css.sortable}</h4>
 			<ul class="sortable-block">
@@ -255,7 +255,7 @@
 		<h2>{@css.table}</h2>
 	</header>
 	<article class="content">
-		<div class="pbt-box-largest">			
+		<div class="pbt-box-largest">
 			<table id="table">
 				<caption>
 					{@css.table.description}
@@ -273,7 +273,7 @@
 				</thead>
 				<tfoot>
 					<tr>
-						<th colspan="5"># INCLUDE PAGINATION #</th>
+						<td colspan="5"># INCLUDE PAGINATION #</td>
 					</tr>
 				</tfoot>
 				<tbody>
@@ -307,7 +307,7 @@
 		<div class="pbt-box-largest">
 			<div id="com2" class="message" itemscope="itemscope" itemtype="http://schema.org/Comment">
 				<div class="message-container">
-	
+
 					<div class="message-user-infos">
 						<div class="message-pseudo">
 								<a itemprop="author" href="{PATH_TO_ROOT}/user/?url=/profile/1" class="admin" title="{@css.messages.login}">{@css.messages.login}</a>
@@ -315,7 +315,7 @@
 						<div class="message-level">{@css.messages.level}</div>
 						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" class="message-avatar" alt="${LangLoader::get_message('avatar', 'user-common')}" />
 					</div>
-	
+
 					<div class="message-date">
 						<span class="actions">
 							<a itemprop="url" href="#com2" title="#2">#2</a>
@@ -324,11 +324,11 @@
 						</span>
 						<span itemprop="datePublished" content="2013-09-05T15:37:01+00:00">{@css.messages.date}</span>
 					</div>
-	
+
 					<div class="message-message">
 						<div itemprop="text" class="message-content" class="content">{@css.messages.content}</div>
 					</div>
-	
+
 				</div>
 			</div>
 		</div>
@@ -345,7 +345,7 @@
 		<div class="pbt-box-largest">
 			# START messages # # INCLUDE messages.VIEW # # END messages #
 		</div>
-		
+
 	</article>
 	<footer></footer>
 </section>
@@ -358,10 +358,10 @@
 		<h4>{@css.blocks.large}</h4>
 		<div class="elements-container columns-1" style="overflow: hidden;">
 			<article class="block">
-				<header><h3>{@css.block.title}</h3></header>			
+				<header><h3>{@css.block.title}</h3></header>
 				<div class="content">
 					{@framework.lorem.medium}
-				</div>			
+				</div>
 			</article>
 		</div>
 		<h4>{@css.blocks.medium}</h4>
@@ -419,6 +419,3 @@
 	</article>
 	<footer></footer>
 </section>
-
-
-

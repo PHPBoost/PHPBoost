@@ -25,23 +25,23 @@
 	# IF C_PAGINATION #
 	<tfoot>
 		<tr>
-			<th colspan="6"># INCLUDE PAGINATION #</th>
+			<td colspan="6"># INCLUDE PAGINATION #</td>
 		</tr>
 	</tfoot>
 	# ENDIF #
 	<tbody>
 		# START history #
-		<tr> 
-			<td> 
+		<tr>
+			<td>
 				# IF history.C_UPDATER_EXIST #<a href="{history.U_UPDATER_PROFILE}" class="{history.UPDATER_LEVEL_CLASS}" # IF history.C_UPDATER_GROUP_COLOR # style="color:{history.UPDATER_GROUP_COLOR}" # ENDIF #>{history.UPDATER}</a># ELSE #{history.UPDATER}# ENDIF #
 			</td>
-			<td> 
+			<td>
 				{history.UPDATED_FIELD}
 			</td>
-			<td> 
+			<td>
 				{history.OLD_VALUE}
 			</td>
-			<td> 
+			<td>
 				{history.NEW_VALUE}
 			</td>
 			<td>

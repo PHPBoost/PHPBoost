@@ -1,5 +1,5 @@
 		# INCLUDE forum_top #
-		
+
 		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-moderation-panel">
 			<header>
 				<h2>
@@ -32,8 +32,8 @@
 					</tbody>
 				</table>
 				<br /><br />
-				
-				
+
+
 				# IF C_FORUM_MODO_MAIN #
 				<script>
 				<!--
@@ -67,18 +67,18 @@
 						</thead>
 						<tfoot>
 							<tr>
-								<th colspan="4">
+								<td colspan="4">
 									# IF C_FORUM_ADMIN #
-									<span class="float-left"><button type="submit" name="valid" value="true" class="submit">{L_DELETE}</button></span> 
+									<span class="float-left"><button type="submit" name="valid" value="true" class="submit">{L_DELETE}</button></span>
 									# ENDIF #
 									# IF C_DISPLAY_LINK_MORE_ACTION #
 									<a href="moderation_forum{U_MORE_ACTION}" title="{L_MORE_ACTION}">{L_MORE_ACTION}</a>
 									# ENDIF #
-								</th>
+								</td>
 							</tr>
 						</tfoot>
 						<tbody>
-						# START action_list # 
+						# START action_list #
 						<tr>
 							<td class="forum-last-topic">
 								<a href="{action_list.U_USER_PROFILE}" class="{action_list.LEVEL_CLASS}" # IF action_list.C_GROUP_COLOR # style="color:{action_list.GROUP_COLOR}" # ENDIF # title="{action_list.LOGIN}">{action_list.LOGIN}</a>
@@ -118,7 +118,7 @@
 				}
 				-->
 				</script>
-		
+
 				<form name="alert" action="moderation_forum{U_ACTION_ALERT}" method="post" onsubmit="javascript:return Confirm_alert();">
 					<table id="table2">
 						<thead>
@@ -133,9 +133,9 @@
 						</thead>
 						<tfoot>
 							<tr>
-								<th colspan="6">
+								<td colspan="6">
 									<button type="submit" name="" value="true" class="submit">{L_DELETE}</button>
-								</th>
+								</td>
 							</tr>
 						</tfoot>
 						<tbody>
@@ -161,7 +161,7 @@
 								</td>
 							</tr>
 							# END alert_list #
-							
+
 							# IF C_FORUM_NO_ALERT #
 							<tr>
 								<td colspan="6">
@@ -174,7 +174,7 @@
 					<input type="hidden" name="token" value="{TOKEN}">
 				</form>
 				# ENDIF #
-				
+
 
 				# IF C_FORUM_ALERT_LIST #
 				<table id="table2">
@@ -231,7 +231,7 @@
 					<thead>
 						<tr>
 							<th colspan="2">
-								{L_MODERATION_FORUM} : {L_ALERT_MANAGEMENT} 
+								{L_MODERATION_FORUM} : {L_ALERT_MANAGEMENT}
 							</th>
 						</tr>
 					</thead>
@@ -246,7 +246,7 @@
 				# ENDIF #
 
 
-				
+
 				# IF C_FORUM_USER_LIST #
 				<script>
 				<!--
@@ -259,16 +259,16 @@
 								document.getElementById('search_img').innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 							data = 'login=' + login;
 							var xhr_object = xmlhttprequest_init('xmlhttprequest.php?token={TOKEN}&{U_XMLHTTPREQUEST}=1');
-							xhr_object.onreadystatechange = function() 
+							xhr_object.onreadystatechange = function()
 							{
-								if( xhr_object.readyState == 4 && xhr_object.status == 200 ) 
+								if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 								{
 									document.getElementById('xmlhttprequest-result-search').innerHTML = xhr_object.responseText;
 									hide_div('xmlhttprequest-result-search');
 									if( document.getElementById('search_img') )
 										document.getElementById('search_img').innerHTML = '';
 								}
-								else if( xhr_object.readyState == 4 ) 
+								else if( xhr_object.readyState == 4 )
 								{
 									if( document.getElementById('search_img') )
 										document.getElementById('search_img').innerHTML = '';
@@ -279,7 +279,7 @@
 						else
 							alert("{L_REQUIRE_LOGIN}");
 					}
-					
+
 					function hide_div(divID)
 					{
 						if( document.getElementById(divID) )
@@ -309,7 +309,7 @@
 							</td>
 						</tr>
 					</table>
-					
+
 					<table id="table2">
 						<thead>
 							<tr>
@@ -336,7 +336,7 @@
 								</td>
 							</tr>
 							# END user_list #
-							
+
 							# IF C_FORUM_NO_USER #
 							<tr>
 								<td colspan="4">
@@ -359,7 +359,7 @@
 					var contents = document.getElementById('action_contents').value;
 					{REPLACE_VALUE}
 					document.getElementById('action_contents').value = contents;
-					
+
 					# IF C_TINYMCE_EDITOR # setTinyMceContent(contents); # ENDIF #
 				}
 				-->
@@ -426,6 +426,5 @@
 			</footer>
 		</article>
 
-		
+
 		# INCLUDE forum_bottom #
-		

@@ -96,10 +96,10 @@
 						</thead>
 						<tfoot>
 							<tr>
-								<th colspan="6">
+								<td colspan="6">
 									<div class="left">&nbsp;<input type="checkbox" id="validc" onclick="check_convers(this.checked, 'd');" title="{L_SELECT_ALL_MESSAGES}" /> &nbsp;<input type="hidden" name="token" value="{TOKEN}"><button type="submit" name="valid" value="true" class="submit">{L_DELETE}</button></div>
 									# IF convers.C_PAGINATION #<div class="float-right"># INCLUDE convers.PAGINATION #</div># ENDIF #
-								</th>
+								</td>
 							</tr>
 						</tfoot>
 						<tbody>

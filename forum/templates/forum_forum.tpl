@@ -1,4 +1,4 @@
-		
+
 		# INCLUDE forum_top #
 
 		# START error_auth_write #
@@ -28,8 +28,8 @@
 						</thead>
 						<tfoot>
 							<tr>
-								<th colspan="6">
-								</th>
+								<td colspan="6">
+								</td>
 							</tr>
 						</tfoot>
 						<tbody>
@@ -113,7 +113,7 @@
 					</thead>
 					<tfoot>
 						<tr>
-							<th colspan="7">
+							<td colspan="7">
 								<div class="float-left">
 									<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a> &bull; {U_FORUM_CAT}
 									# IF C_POST_NEW_SUBJECT #
@@ -121,7 +121,7 @@
 									# ENDIF #
 								</div>
 								# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #
-							</th>
+							</td>
 						</tr>
 					</tfoot>
 					# IF C_NO_MSG_NOT_READ #

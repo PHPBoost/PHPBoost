@@ -80,7 +80,7 @@
 				# IF C_PAGINATION #
 				<tfoot>
 					<tr>
-						<th colspan="7">
+						<td colspan="7">
 							# INCLUDE PAGINATION #
 						</td>
 					</tr>
@@ -130,19 +130,19 @@
 							-
 							# ENDIF #
 						</td>
-					</tr>	
+					</tr>
 					# END contributions #
 				</tbody>
 			</table>
 			# ENDIF #
-			
+
 				<hr>
-				
+
 				<h1>{L_CONTRIBUTE}</h1>
 				<br />
 				# IF NOT C_NO_MODULE_IN_WHICH_CONTRIBUTE #
 					<p>{L_CONTRIBUTE_EXPLAIN}</p>
-					
+
 					# START row #
 						# START row.module #
 							<div class="contribution-module-container" style="width:{row.module.WIDTH}%;">
@@ -194,7 +194,7 @@
 				</div>
 				# ENDIF #
 			# ENDIF #
-			
+
 			<fieldset>
 				<legend>{L_CONTRIBUTION}</legend>
 				<div class="form-element">
@@ -234,13 +234,13 @@
 					<div class="form-field">{MODULE}</div>
 				</div>
 			</fieldset>
-			
+
 			{COMMENTS}
 		</div>
 		<footer></footer>
 	</section>
 	# ENDIF #
-	
+
 	# IF C_EDIT_CONTRIBUTION #
 	<section id="module-user-edit-contribution">
 		<header>

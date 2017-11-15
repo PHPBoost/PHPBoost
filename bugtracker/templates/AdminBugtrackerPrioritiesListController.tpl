@@ -12,9 +12,9 @@
 	# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
 	<tfoot>
 		<tr>
-			<th colspan="2">
+			<td colspan="2">
 				<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i> {@labels.del_default_value}</a>
-			</th>
+			</td>
 		</tr>
 	</tfoot>
 	# ENDIF #

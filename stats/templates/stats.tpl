@@ -1,9 +1,9 @@
 	<section id="module-stats">
-		
+
 		<header>
 			<h1>{L_STATS}</h1>
 		</header>
-		
+
 		<nav id="menustats">
 			<a href="" class="js-menu-button" onclick="open_submenu('menustats');return false;" title="${LangLoader::get_message('categories', 'categories-common')}">
 				<i class="fa fa-bars"></i> ${LangLoader::get_message('categories', 'categories-common')}
@@ -56,7 +56,7 @@
 				</li>
 			</ul>
 		</nav>
-				
+
 		# IF C_STATS_SITE #
 		<table id="table">
 			<thead>
@@ -80,13 +80,13 @@
 			</tbody>
 		</table>
 		# ENDIF #
-			
+
 		# IF C_STATS_USERS #
 		<article>
 			<header>
 				<h2>{L_USERS}</h2>
 			</header>
-			
+
 			<table id="table">
 				<thead>
 					<tr>
@@ -109,7 +109,7 @@
 					 </tr>
 				</tbody>
 			</table>
-			
+
 			<div class="elements-container">
 				<h3>{L_TEMPLATES}</h3>
 				<div class="block">
@@ -120,7 +120,7 @@
 						<thead>
 							<tr>
 								<th>
-									{L_TEMPLATES} 
+									{L_TEMPLATES}
 								</th>
 								<th>
 									{L_COLORS}
@@ -150,7 +150,7 @@
 			</div>
 			# IF C_DISPLAY_SEX #
 			<div class="spacer"></div>
-			
+
 			<div class="elements-container"
 				<h3>{L_SEX}</h3>
 				<div class="block">
@@ -161,7 +161,7 @@
 						<thead>
 							<tr>
 								<th>
-									{L_SEX} 
+									{L_SEX}
 								</th>
 								<th>
 									{L_COLORS}
@@ -190,9 +190,9 @@
 				</div>
 			</div>
 			# ENDIF #
-			
+
 			<div class="spacer"></div>
-			
+
 			<table id="table4">
 				<thead>
 					<tr>
@@ -230,7 +230,7 @@
 			</table>
 		</article>
 		# ENDIF #
-				
+
 		# IF C_STATS_VISIT #
 		<form action="stats.php#stats" method="get">
 			<article>
@@ -258,7 +258,7 @@
 								{STATS_YEAR}
 							</select>
 							# ENDIF #
-							
+
 							&nbsp;&nbsp;&nbsp;&nbsp;
 							<a class="fa fa-arrow-right" href="stats{U_NEXT_LINK}#stats"></a>
 							<br /><br />
@@ -353,7 +353,7 @@
 				</div>
 				<div class="spacer"></div>
 			</article>
-		</form>	
+		</form>
 		# ENDIF #
 
 		# IF C_STATS_BROWSERS #
@@ -435,9 +435,9 @@
 			</div>
 			<div class="spacer"></div>
 		</article>
-		
+
 		# ENDIF #
-		
+
 		# IF C_STATS_LANG #
 		<article>
 			<header>
@@ -477,7 +477,7 @@
 			<div class="spacer"></div>
 		</article>
 		# ENDIF #
-		
+
 		# IF C_STATS_REFERER #
 		<script>
 		<!--
@@ -493,18 +493,18 @@
 				var xhr_object = null;
 				var filename = '{PATH_TO_ROOT}/stats/ajax/stats_xmlhttprequest.php?token={TOKEN}&stats_referer=1&id=' + divid;
 				var data = null;
-				
+
 				if (window.XMLHttpRequest) // Firefox
 				   xhr_object = new XMLHttpRequest();
 				else if (window.ActiveXObject) // Internet Explorer
 				   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
 				else // XMLHttpRequest non support? par le navigateur
 					return;
-				
+
 				document.getElementById('load' + divid).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
-				
+
 				xhr_object.open("POST", filename, true);
-				xhr_object.onreadystatechange = function() 
+				xhr_object.onreadystatechange = function()
 				{
 					if ( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
 					{
@@ -521,7 +521,7 @@
 		}
 		-->
 		</script>
-		
+
 		<article>
 			<header>
 				<h2>{L_REFERER}</h2>
@@ -549,9 +549,9 @@
 				# IF C_PAGINATION #
 				<tfoot>
 					<tr>
-						<th colspan="5">
+						<td colspan="5">
 							# INCLUDE PAGINATION #
-						</th>
+						</td>
 					</tr>
 				</tfoot>
 				# ENDIF #
@@ -591,7 +591,7 @@
 			</table>
 		</article>
 		# ENDIF #
-				
+
 		# IF C_STATS_KEYWORD #
 		<script>
 		<!--
@@ -606,7 +606,7 @@
 			{
 				document.getElementById('load' + divid).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/stats/ajax/stats_xmlhttprequest.php?token={TOKEN}&stats_keyword=1&id=' + divid);
-				xhr_object.onreadystatechange = function() 
+				xhr_object.onreadystatechange = function()
 				{
 					if ( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
 					{
@@ -623,7 +623,7 @@
 		}
 		-->
 		</script>
-		
+
 		<article>
 			<header>
 				<h2>{L_KEYWORD}</h2>
@@ -651,9 +651,9 @@
 				# IF C_PAGINATION #
 				<tfoot>
 					<tr>
-						<th colspan="5">
+						<td colspan="5">
 							# INCLUDE PAGINATION #
-						</th>
+						</td>
 					</tr>
 				</tfoot>
 				# ENDIF #
@@ -702,5 +702,3 @@
 			}
 		-->
 	</script>
-	
-		
