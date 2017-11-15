@@ -1,82 +1,158 @@
-.sandbox-home-list {
+/*
+* Surchargez ce fichier dans votre thème pour personnaliser le module
+* https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
+*/
+
+.color-box {
+	float: left;
+	width: 50px;
+	height: 50px;
+	margin: 5px;
+	border: 1px solid rgb(127, 127, 127);
+}
+
+/* --- Summary --- */
+
+body {
+	overflow: hidden;
+	overflow-y: auto;
+	left: 0;
+}
+
+.close-summary {
+	text-align: right;
+	padding: 0.618em 0.809em;
+}
+
+.open-summary {
+	position: fixed;
+	top: 0.1em;
+	left: 50%;
+	transform: translateX(-50%);
+	padding: 0.1em 0.809em;
+}
+
+@media (min-width: 769px) {
+	.open-summary {
+		padding: 0.618em 0.809em;
+		top:3.236em;
+		left: 0;
+		transform: translateX(0);
+		opacity: 0.3;
+	}
+
+	.open-summary:hover {
+		opacity: 1;
+	}
+}
+
+.open-summary,
+.close-summary {
+	cursor: pointer;
+	z-index: 400;
+}
+
+.sandbox-summary {
+  	left: -285px;
+	top: 2.618em;
+  	bottom: 0;
+  	position: fixed;
+  	width: 285px;
+  	overflow-y: auto;
+}
+
+@media (min-width: 769px) {
+	.sandbox-summary {
+		top: 5.618em;
+	}
+}
+
+.sandbox-summary ul {
 	list-style-type: none;
+	margin: 0;
 }
 
-.sandbox-home-list li {
-	padding: 5px 0 0;
+.close-summary:hover,
+.sandbox-summary a:hover {
+background-color: rgba(0, 0, 0, 0.05);
 }
 
-section header,
-article header {
-    margin: 0 0 1rem 0;
+.sandbox-summary > ul > li > a {
+	padding: 0.1618em 0.809em;
+	display: block;
+	text-transform: uppercase;
+	background-color: rgba(0, 0, 0, 0.05);
 }
 
-article.content {
-	padding: 10px 0;
-	text-align: left;
+.sandbox-summary > ul > li > ul > li > a {
+	padding: 0.1618em 0 0.1618em 1.618em;
+	display: block;
 }
 
-[class*="pbt-box-"] {
-	display: inline-block;
-	padding: 0 10px 10px 0;
-	vertical-align: top;
-	width: 100%;
-	margin-bottom: 30px;
+
+/* --- Content --- */
+.sandbox-title {
+	padding: 0 0.809em;
+	border-bottom: 1px solid #366493;
+	margin-bottom: 1.618em
 }
 
-div[class*="pbt-box-"] h4:first-child {
-	padding: 5px 5px 5px 10px;
-    margin: 1rem 0;
-	text-align: left;
-}
-	
-.pbt-box-large 	{ padding: 0 0 10px 0; }
+/* --- Summary
+----------------------------------------------------------------------------- */
 
+ .cssmenu-fixed {
+ 	position: fixed;
+	float: none;
+ 	top: 10%;
+ 	right: 1.618em;
+ 	z-index: 400;
+ }
 
-@media (min-width: 481px){
-	.pbt-box-smallest { width: calc(100% / 2 - 2%); }
-	.pbt-box-small { width: calc(100% / 2 - 2%); }	
-	.pbt-box-medium { width: calc(100% / 2 - 2%); }
-	.pbt-box-large { width: 100%; }
-	.pbt-box-largest { width: 100%; }
-}
+ /* --- Source code
+ ----------------------------------------------------------------------------- */
+ .tpl {margin-bottom: 2.618em;}
 
-@media (min-width: 769px){
+ /* --- PBT 5.2
+ ----------------------------------------------------------------------------- */
 
-	.pbt-box-smallest { width: calc(100% / 4 - 2%); }
-	.pbt-box-small { width: calc(100% / 3 - 2%); }	
-	.pbt-box-medium { width: calc(100% / 2 - 2%); }
-	.pbt-box-large { width: calc(100% / 3 * 2 - 2%); }
-	.pbt-box-largest { width: 100%; }
-	.main-with-left.main-with-right .pbt-box-smallest { width: calc(100% / 2 - 2%); }
-	.main-with-left.main-with-right .pbt-box-small { width: calc(100% / 2 - 2%); }	
-	.main-with-left.main-with-right .pbt-box-medium { width: calc(100% / 2 - 2%); }
-	.main-with-left.main-with-right .pbt-box-large { width: 100%; }
-	.main-with-left.main-with-right .pbt-box-largest { width: 100%; }
+ /* --- Gestion des media --- */
+
+.thumbnail-item {
+	padding: 0.382em 0;
+	display: block;
 }
 
-@media (min-width: 981px){
-	
-	.main-with-left.main-with-right .pbt-box-33P { width: calc(100% / 3 - 2%); }
-	
-	.main-with-left.main-with-right .pbt-box-66P { width: calc(100% / 3 * 2 - 2%); }
+@media (min-width: 769px) {
+	.thumbnail-item {
+		max-width: 38%;
+		float: left;
+		padding: 0.382em 0.618em 0.382em 0;
+	}
+
+	.columns-3 .thumbnail-item,
+	.columns-4 .thumbnail-item,
+	.columns-5 .thumbnail-item,
+	.columns-6 .thumbnail-item,
+	.columns-7 .thumbnail-item {
+		float: none;
+		max-width: 100%;
+		padding: 0.382em 0;
+	}
 }
 
-/* Content
- * ---------*/
-.explorer .cats {
-    min-width: auto;
-}
+.media-content {
+ 	position: relative;
+ 	padding-bottom: 52.76%;
+ 	height: 0;
+ }
 
-/* Form 
- * ---------*/
-button.submit-hover {
-    background-color: #517BA6;
-    border-color: #366493;
-    color: #FFFFFF;
-}
-button.submit-active {
-    background-color: #dee7ef;
-    border-color: #a5bdd3;
-    color: #FFFFFF;
-}
+.media-content object,
+.media-content embed,
+.media-content video,
+.media-content iframe {
+ 	position: absolute;
+ 	top: 0;
+ 	left: 0;
+ 	width: 100%;
+ 	height: 100%;
+ }

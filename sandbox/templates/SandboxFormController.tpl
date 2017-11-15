@@ -1,35 +1,92 @@
-# IF C_PREVIEW #
-<div class="notice">Prévisualisation</div>
-# ENDIF #
+<section>
+	<header>
+		<h1>
+			{@module.title} - {@title.form.builder}
+		</h1>
+	</header>
 
-# IF C_RESULT #
-	<strong>TEXT :</strong> {TEXT}
-	<br />
-	<strong>MAIL :</strong> {MAIL}
-	<br />
-	<strong>WEB :</strong> {WEB}
-	<br />
-	<strong>AGE :</strong> {AGE}
-	<br />
-	<strong>MULTI_LINE_TEXT :</strong> {MULTI_LINE_TEXT}
-	<br />
-	<strong>RICH_TEXT :</strong> {RICH_TEXT}
-	<br />
-	<strong>RADIO :</strong> {RADIO}
-	<br />
-	<strong>CHECKBOX :</strong> {CHECKBOX}
-	<br />
-	<strong>SELECT :</strong> {SELECT}
-	<br />
-	<strong>HIDDEN :</strong> {HIDDEN}
-	<br />
-	<strong>DATE :</strong> {DATE}
-	<br />
-	<strong>DATE_TIME :</strong> {DATE_TIME}
-	<br />
-	<strong>FILE :</strong> {FILE}
-	<br />
-	<strong>HIDDEN TEXT AREA TEXT FIELD :</strong> {H_T_TEXT_FIELD}
-# ENDIF #
+	<div class="sandbox-summary">
+	  <div class="close-summary">
+		<i class="fa fa-arrow-circle-left"></i>
+	  </div>
+	  <ul>
+		  <li>
+		  	<ul>
+				<li>
+					<a class="summary-link" href="#sandboxForm_fieldset_1">{@form.title.inputs}</a>
+				</li>
+				<li>
+					<a class="summary-link" href="#sandboxForm_short_multi_line_text_field">{@form.title.textarea}</a>
+				</li>
+				<li>
+					<a class="summary-link" href="#sandboxForm_checkbox_field">{@form.title.radio}</a>
+				</li>
+				<li>
+					<a class="summary-link" href="#sandboxForm_select_field">{@form.title.select}</a>
+				</li>
+				<li>
+					<a class="summary-link" href="#sandboxForm_date_field">{@form.title.date}</a>
+				</li>
+				<li>
+					<a class="summary-link" href="#sandboxForm_file_field">{@form.title.upload}</a>
+				</li>
+				# IF C_GMAP #
+				<li>
+					<a class="summary-link" href="#sandboxForm_fieldset_maps">{@form.title.gmap}</a>
+				</li>
+				# ENDIF #
+				<li>
+					<a class="summary-link" href="#sandboxForm_fieldset3">{@form.title.authorization}</a>
+				</li>
+				<li>
+					<a class="summary-link" href="#sandboxForm_fieldset4">{@form.title.orientation}</a>
+				</li>
+		  	</ul>
+		  </li>
+	  </ul>
+	</div>
+	<div class="open-summary">
+		<i class="fa fa-arrow-circle-right"></i> {@sandbox.summary}
+	</div>
 
-# INCLUDE form #
+	<article class="content">
+		# IF C_PREVIEW #
+		<div class="notice">Prévisualisation</div>
+		# ENDIF #
+
+		# IF C_RESULT #
+			<strong>TEXT :</strong> {TEXT}
+			<div class="spacer"></div>
+			<strong>MAIL :</strong> {MAIL}
+			<div class="spacer"></div>
+			<strong>WEB :</strong> {WEB}
+			<div class="spacer"></div>
+			<strong>AGE :</strong> {AGE}
+			<div class="spacer"></div>
+			<strong>MULTI_LINE_TEXT :</strong> {MULTI_LINE_TEXT}
+			<div class="spacer"></div>
+			<strong>RICH_TEXT :</strong> {RICH_TEXT}
+			<div class="spacer"></div>
+			<strong>RADIO :</strong> {RADIO}
+			<div class="spacer"></div>
+			<strong>CHECKBOX :</strong> {CHECKBOX}
+			<div class="spacer"></div>
+			<strong>SELECT :</strong> {SELECT}
+			<div class="spacer"></div>
+			<strong>HIDDEN :</strong> {HIDDEN}
+			<div class="spacer"></div>
+			<strong>DATE :</strong> {DATE}
+			<div class="spacer"></div>
+			<strong>DATE_TIME :</strong> {DATE_TIME}
+			<div class="spacer"></div>
+			<strong>FILE :</strong> {FILE}
+			<div class="spacer"></div>
+			<strong>HIDDEN TEXT AREA TEXT FIELD :</strong> {H_T_TEXT_FIELD}
+		# ENDIF #
+
+		# INCLUDE form #
+
+	</article>
+	<footer></footer>
+</section>
+<script src="{PATH_TO_ROOT}/sandbox/templates/js/sandbox.js"></script>

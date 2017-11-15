@@ -29,29 +29,40 @@ class SandboxHomeController extends ModuleController
 {
 	private $view;
 	private $lang;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
+		$this->check_authorizations();
+
 		$this->init();
-		
+
 		$this->view->put('WELCOME_MESSAGE', FormatingHelper::second_parse($this->lang['welcome.message']));
-		
+
 		return $this->generate_response();
 	}
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'sandbox');
 		$this->view = new FileTemplate('sandbox/SandboxHomeController.tpl');
 		$this->view->add_lang($this->lang);
 	}
-	
+
+	private function check_authorizations()
+	{
+		if (!SandboxAuthorizationsService::check_authorizations()->read())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
+	}
+
 	private function generate_response()
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['module.title']);
-		
+
 		return $response;
 	}
 }
