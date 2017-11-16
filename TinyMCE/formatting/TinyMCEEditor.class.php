@@ -35,7 +35,7 @@ class TinyMCEEditor extends ContentEditor
 	private static $js_included = false;
 	private $array_tags = array('align1' => 'alignleft', 'align2' => 'aligncenter', 'align3' => 'alignright', 'align4' => 'alignjustify', '|1' => '|', '_fullscreen' => 'fullscreen', '|2' => '|', 'title' => 'formatselect', 'style' => 'styleselect', '|3' => '|', 'list1' => 'bullist', 'list2' => 'numlist', '|4' => '|', 'indent1' => 'outdent', 'indent2' => 'indent', 'quote' => 'blockquote', '_search' => 'searchreplace', '|5' => '|', 'cut' => 'cut', 'copy' => 'copy', 'paste' => 'paste',
 	'|6' => '|', 'undo' => 'undo', 'redo' => 'redo', '|7' => '|', 'b' => 'bold', 'i' => 'italic', 'u' => 'underline', 's' => 'strikethrough', '|8' => '|', 'color1' => 'forecolor', 'color2' => 'backcolor', '|9' => '|', 'size' => 'fontsizeselect', 'font' => 'fontselect', '|10' => '|', 'emotions' => 'smileys', 'table' => 'table', 'insertdatetime' => 'insertdatetime', '|11' => '|', 'sub' => 'subscript', 'sup' => 'superscript', 'line' => 'hr',
-	'|12' => '|', 'url1' => 'link', 'url2' => 'unlink', '|13' => '|', 'img' => 'image', 'movie' => 'media', 'insertfile' => 'insertfile', '|14' => '|', 'nanospell' => 'nanospell', '|15' => '|', 'anchor' => 'anchor', 'charmap' => 'charmap', '16|' => '|', 'removeformat' => 'removeformat', '|17' => '|', 'visualchars' => 'visualchars', 'visualblocks' => 'visualblocks');
+	'|12' => '|', 'url1' => 'link', 'url2' => 'unlink', '|13' => '|', 'img' => 'image', 'movie' => 'media', 'insertfile' => 'insertfile', '|14' => '|', 'anchor' => 'anchor', 'charmap' => 'charmap', '15|' => '|', 'removeformat' => 'removeformat', '|16' => '|', 'visualchars' => 'visualchars', 'visualblocks' => 'visualblocks');
 	
 	public function __construct()
 	{
