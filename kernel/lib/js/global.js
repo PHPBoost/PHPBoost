@@ -370,27 +370,60 @@ jQuery(document).ready(function(){
 	} );
 } );	
 
-//Copy to clipboard
+//Function copy_code_clipboard
+//
+// Description : 
+// This function copy the content of your specific selection to clipboard.
+//
+// parameters : one
+// {idcode} correspond to the ID selector you want to select.
+//  - if it's a number : ID selector is 'copy-code-{idcode}-content'
+//  - if it's a string : ID selector is '{idcode}'
+//
+// Return : -
+//
+// Comments : 
+// if container is an HTMLTextAreaElement, we use select() function of TextArea element instead of specific SelectElement function
+//
 function copy_code_clipboard(idcode)
 {
-	var idcode = (typeof idcode !== 'undefined') ? idcode : 0; //if undefined, idcode forced to 0
-
-	if ( Number.isNaN(idcode) ) //Check if idcode is number to complete id selector
+	if ( Number.isInteger(idcode) )
 		idcode = 'copy-code-' + idcode + '-content';
 	
-	var ElementtoCopy = document.getElementById( idcode ); // select element to copy with id	
-	var range = document.createRange();
-	range.selectNodeContents(ElementtoCopy); // set range to encompass desired element text
-	var selection = window.getSelection(); // get Selection object from currently user selected text
-	selection.removeAllRanges(); // unselect any user selected text (if any)
-	selection.addRange(range); // add range to Selection object to select it
+	var ElementtoCopy = document.getElementById( idcode );
+	
+	if (ElementtoCopy instanceof HTMLTextAreaElement)
+		ElementtoCopy.select();
+	else
+		SelectElement(ElementtoCopy);
 
 	try { 
 		var successful = document.execCommand('copy');
 	} 
 	catch(err) {
-		console.log('Oops, unable to copy');
+		alert('Your browser do not authorize this operation');
 	}	
+}
+
+//Function SelectElement
+//
+// Description : 
+// The content will be selected on your page as if you had selected it with your mouse
+//
+// parameters : one
+// {element} correspond to the element you want to select
+//
+// Return : -
+//
+// Comments : -
+//
+function SelectElement(element) {
+	var range = document.createRange();
+	range.selectNodeContents(element); 
+
+	var selection = window.getSelection();
+	selection.removeAllRanges();
+	selection.addRange(range); 
 }
 
 //Barre de progression, 
