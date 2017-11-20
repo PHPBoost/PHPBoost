@@ -373,13 +373,17 @@ jQuery(document).ready(function(){
 //Copy to clipboard
 function copy_code_clipboard(idcode)
 {
-	var ElementtoCopy = document.querySelector('#copy-code-' + idcode + '-content');  
+	var idcode = (typeof idcode !== 'undefined') ? idcode : 0; //if undefined, idcode forced to 0
 
-	var range = document.createRange() // create new range object
-	range.selectNodeContents(ElementtoCopy) // set range to encompass desired element text
-	var selection = window.getSelection() // get Selection object from currently user selected text
-	selection.removeAllRanges() // unselect any user selected text (if any)
-	selection.addRange(range) // add range to Selection object to select it
+	if ( Number.isNaN(idcode) ) //Check if idcode is number to complete id selector
+		idcode = 'copy-code-' + idcode + '-content';
+	
+	var ElementtoCopy = document.getElementById( idcode ); // select element to copy with id	
+	var range = document.createRange();
+	range.selectNodeContents(ElementtoCopy); // set range to encompass desired element text
+	var selection = window.getSelection(); // get Selection object from currently user selected text
+	selection.removeAllRanges(); // unselect any user selected text (if any)
+	selection.addRange(range); // add range to Selection object to select it
 
 	try { 
 		var successful = document.execCommand('copy');
