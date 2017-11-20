@@ -84,7 +84,7 @@ SERVER CONFIGURATION-----------------------------------------------------------
 php version			: " . ServerConfiguration::get_phpversion() . "
 dbms version			: " . PersistenceContext::get_dbms_utils()->get_dbms_version() . "
 gd library			: " . (int)$server_configuration->has_gd_library() . "
-curl extension		: " . (int)$server_configuration->has_curl_library() . "
+curl extension			: " . (int)$server_configuration->has_curl_library() . "
 mbstring extension		: " . (int)$server_configuration->has_mbstring_library() . "
 url rewriting			: " . ($url_rewriting_known ? (int)$url_rewriting_available : 'N/A') . "
 apcu cache			: " . (int)DataStoreFactory::is_apc_available() . "
@@ -109,7 +109,7 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 
 		$this->get_advises($form);
 
-		$fieldset = new FormFieldsetHTML('report', $this->admin_lang['server']);
+		$fieldset = new FormFieldsetHTML('server-report', $this->admin_lang['server']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldFree('php_version', $this->admin_lang['php_version'], ServerConfiguration::get_phpversion()));
@@ -120,7 +120,7 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 		$fieldset->add_field(new FormFieldFree('url_rewriting', $this->admin_lang['url_rewriting'], $url_rewriting_known ? ($url_rewriting_available ? $picture_yes : $picture_no) : $picture_unknown));
 		$fieldset->add_field(new FormFieldFree('apcu_cache', LangLoader::get_message('apcu_cache', 'admin-cache-common'), DataStoreFactory::is_apc_available() ? $picture_yes : $picture_no));
 
-		$fieldset = new FormFieldsetHTML('report', $this->admin_lang['phpboost_config']);
+		$fieldset = new FormFieldsetHTML('phpboost-config-report', $this->admin_lang['phpboost_config']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldFree('kernel_version', $this->admin_lang['kernel_version'], Environment::get_phpboost_version()));
@@ -152,7 +152,7 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldLabel($this->admin_lang['system_report_summerization_explain']));
-		$fieldset->add_field(new FormFieldMultiLineTextEditor('summerization', '', $summerization . $directories_summerization, array('rows' => 20, 'cols' => 15, 'class' => 'system-report')
+		$fieldset->add_field(new FormFieldMultiLineTextEditor('report-content', '', $summerization . $directories_summerization, array('rows' => 20, 'cols' => 15, 'class' => 'system-report')
 		));
 
 		$this->form = $form;
