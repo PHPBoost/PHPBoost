@@ -129,7 +129,8 @@ $LANG['kernel_version'] = 'Version du noyau';
 $LANG['output_gz'] = 'Compression des pages';
 $LANG['directories_auth'] = 'Autorisation des répertoires';
 $LANG['system_report_summerization'] = 'Récapitulatif';
-$LANG['system_report_summerization_explain'] = 'Ceci est le récapitulatif du rapport. Cela vous sera particulièrement utile lorsqu\'on vous demandera la configuration de votre système pour du support';
+$LANG['system_report_summerization_explain'] = 'Ceci est le récapitulatif du rapport. Cela vous sera particulièrement utile lorsqu\'on vous demandera la configuration de votre système pour du support.';
+$LANG['copy_report'] = 'Copier le rapport';
 
 //Gestion de l'upload
 $LANG['explain_upload_img'] = 'L\'image uploadée doit être au format jpg, gif, png ou bmp';

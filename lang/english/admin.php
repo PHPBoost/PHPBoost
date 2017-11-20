@@ -130,6 +130,7 @@ $LANG['output_gz'] = 'Output pages compression';
 $LANG['directories_auth'] = 'Directories authorization';
 $LANG['system_report_summerization'] = 'Summary';
 $LANG['system_report_summerization_explain'] = 'This is a summary of the report, it will be useful for support, when you will be asked about your configuration.';
+$LANG['copy_report'] = 'Copy report';
 
 //Gestion de l'upload
 $LANG['explain_upload_img'] = 'Image format must be JPG, GIF, PNG or BMP format';
