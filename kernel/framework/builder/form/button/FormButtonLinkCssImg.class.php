@@ -31,12 +31,12 @@
  */
 class FormButtonLinkCssImg extends AbstractFormButton
 {
-    public function __construct($label, $link, $css_class_image = '')
+    public function __construct($label, $link, $css_class_image = '', $text_button = '')
     {
     	$full_label = '';
     	if (!empty($css_class_image))
     	{
-    		$full_label = '<i class="' . $css_class_image . '" title="' . $label . '"></i>';
+    		$full_label = '<i class="' . $css_class_image . '" title="' . $label . '"></i>' . $text_button;
     	}
     	else
     	{
