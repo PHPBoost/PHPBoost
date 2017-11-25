@@ -43,6 +43,7 @@ class SessionData
 	protected $ip;
 	protected $location_script;
 	protected $location_title;
+	protected $location_id;
 	protected $cached_data = array();
 	protected $data = array();
 
@@ -93,6 +94,11 @@ class SessionData
 	public function get_location_title()
 	{
 		return $this->location_title;
+	}
+
+	public function get_location_id()
+	{
+		return $this->location_id;
 	}
 
 	public function get_all_cached_data()
@@ -244,6 +250,15 @@ class SessionData
 		PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
 	}
 
+	public function location_id_already_exists($location_id)
+	{
+		$condition = 'WHERE location_id=:location_id AND user_id!=:user_id';
+		$parameters = array('location_id' => $location_id, 'user_id' => $this->user_id);
+		$value = PersistenceContext::get_querier()->count(DB_TABLE_SESSIONS, $condition, $parameters);
+				
+		return $value > 0;
+	}
+
 	public static function admin_session()
 	{
 		return new SessionData(1, null);
@@ -377,7 +392,7 @@ class SessionData
 	{
 		$parameters = array('user_id' => $user_id);
 		$condition = 'WHERE user_id=:user_id';
-		$columns = array('session_id', 'token', 'timestamp', 'ip', 'location_script', 'location_title', 'data', 'cached_data');
+		$columns = array('session_id', 'token', 'timestamp', 'ip', 'location_script', 'location_title', 'location_id', 'data', 'cached_data');
 		
 		try {
 			$row = PersistenceContext::get_querier()->select_single_row(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
@@ -420,7 +435,7 @@ class SessionData
 		{
 			$user_id = $values[self::$KEY_USER_ID];
 			$session_id = $values[self::$KEY_SESSION_ID];
-			$columns = array('token', 'timestamp', 'ip', 'location_script', 'location_title', 'data', 'cached_data');
+			$columns = array('token', 'timestamp', 'ip', 'location_script', 'location_title', 'location_id', 'data', 'cached_data');
 			$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
 			$parameters = array('user_id' => $user_id, 'session_id' => $session_id);
 			$row = PersistenceContext::get_querier()->select_single_row(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
@@ -446,6 +461,7 @@ class SessionData
 		$data->ip = $row['ip'];
 		$data->location_script = $row['location_script'];
 		$data->location_title = $row['location_title'];
+		$data->location_id = $row['location_id'];
 		$data->cached_data = TextHelper::unserialize($fixed_cached_data);
 		$data->data = TextHelper::unserialize($row['data']);
 		return $data;

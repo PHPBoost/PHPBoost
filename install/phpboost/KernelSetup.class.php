@@ -488,7 +488,7 @@ class KernelSetup
 			'location_title' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
 			'cached_data' => array('type' => 'text', 'length' => 65000),
 			'data' => array('type' => 'text', 'length' => 65000),
-			'location_id' => array('type' => 'string', 'length' => 64, 'default' => "''"),
+			'location_id' => array('type' => 'string', 'length' => 64, 'default' => "''")
 		);
 		$options = array(
 			'primary' => array('session_id'),
@@ -527,7 +527,7 @@ class KernelSetup
 			'session_id' => array('type' => 'string', 'length' => 64, 'default' => "''"),
 			'login' => array('type' => 'string', 'length' => 255, 'default' => "''"),
 			'connection_attemps' => array('type' => 'boolean', 'length' => 4, 'notnull' => 1, 'default' => 0),
-			'last_connection' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'last_connection' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
 			'primary' => array('id'),
@@ -600,7 +600,6 @@ class KernelSetup
 
 	private function insert_data()
 	{
-		$this->messages = LangLoader::get('install', 'install');
 		$this->insert_visit_counter_data();
 		$this->insert_smileys_data();
 	}
