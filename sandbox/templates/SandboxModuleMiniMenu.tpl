@@ -1,11 +1,11 @@
 
 	# IF C_IS_SUPERADMIN #
-	<div id="# IF C_SLIDE_RIGHT #mini-sandbox-right# ELSE #mini-sandbox-left# ENDIF #">
-		<a href="" class="sandbox-toggle-btn# IF C_HORIZONTAL # toggle-hor# IF C_SLIDE_RIGHT # toggle-right# ELSE # toggle-left# ENDIF ## ENDIF #" onclick="openSandboxMenu('# IF C_SLIDE_RIGHT #mini-sandbox-right# ELSE #mini-sandbox-left# ENDIF #');return false;">
+	<div id="module-mini-sandbox" class="# IF C_SLIDE_RIGHT #mini-sandbox-right# ELSE #mini-sandbox-left# ENDIF #">
+		<a href="" class="sandbox-toggle-btn# IF C_HORIZONTAL # toggle-hor# IF C_SLIDE_RIGHT # toggle-right# ELSE # toggle-left# ENDIF ## ENDIF #" onclick="openSandboxMenu('module-mini-sandbox');return false;">
 			<i class="fa fa-wrench"></i> {@module.title}
 		</a>
 		<div class="sandbox-menu">
-			<a href="" class="close-btn" onclick="openSandboxMenu('# IF C_SLIDE_RIGHT #mini-sandbox-right# ELSE #mini-sandbox-left# ENDIF #');return false;"><i class="fa fa-window-close-o"></i> {@mini.close}</a>
+			<a href="" class="close-btn" onclick="openSandboxMenu('module-mini-sandbox');return false;"><i class="fa fa-window-close-o"></i> {@mini.close}</a>
 			<div class="sandbox-inset">
 				<div class="item-menu sandbox-text">
 					<div class="item-2x small" title="{@mini.version.pbt}">
