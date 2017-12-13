@@ -60,7 +60,7 @@
 					# IF C_UPDATED_DATE #<span class="infos-options"><span class="text-strong">${LangLoader::get_message('form.date.update', 'common')} : </span><time datetime="{UPDATED_DATE_ISO8601}" itemprop="dateModified">{UPDATED_DATE}</time></span># ENDIF #
 					<span class="infos-options"><span class="text-strong">{@downloads_number} : </span>{NUMBER_DOWNLOADS}</span>
 					# IF C_NB_VIEW_ENABLED #<span class="infos-options"><span class="text-strong">{@download.number.view} : </span>{NUMBER_VIEW}</span># ENDIF #
-					<span class="text-strong"><span class="infos-options">${LangLoader::get_message('category', 'categories-common')} : </span><a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a></span>
+					<span class="infos-options"><span class="text-strong">${LangLoader::get_message('category', 'categories-common')} : </span><a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a></span>
 					# IF C_KEYWORDS #
 						<span class="infos-options">
 							<span class="text-strong">${LangLoader::get_message('form.keywords', 'common')} : </span>
