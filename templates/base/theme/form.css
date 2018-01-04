@@ -593,6 +593,10 @@ textarea {
 	display: inline-block;
 }
 
+.required-fields-text {
+	text-align: center;
+}
+
 /* --- HTML Table--- */
 .html-table-header-sortable {
 	display: none;
