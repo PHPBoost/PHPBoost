@@ -266,7 +266,9 @@ class CommentsService
 				$timestamp = new Date($row['comment_timestamp'], Timezone::SERVER_TIMEZONE);
 				$group_color = User::get_group_color($row['groups'], $row['level']);
 				
-				$template->assign_block_vars('comments', array(
+				$template->assign_block_vars('comments', array_merge(
+					Date::get_array_tpl_vars($timestamp,'date'),
+					array(
 					'C_MODERATOR' => self::is_authorized_edit_or_delete_comment($authorizations, $id),
 					'C_VISITOR' => empty($row['display_name']),
 					'C_GROUP_COLOR' => !empty($group_color),
@@ -276,15 +278,13 @@ class CommentsService
 					'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 					'U_AVATAR' => $user_avatar,
 					'ID_COMMENT' => $id,
-					'DATE' => $timestamp->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-					'DATE_ISO8601' => $timestamp->format(Date::FORMAT_ISO8601),
 					'MESSAGE' => FormatingHelper::second_parse($row['message']),
 					'USER_ID' => $row['user_id'],
 					'PSEUDO' => empty($row['display_name']) ? $row['pseudo'] : $row['display_name'],
 					'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 					'GROUP_COLOR' => $group_color,
 					'L_LEVEL' => UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1'),
-				));
+				)));
 				
 				$template->put_all(array(
 					'L_UPDATE' => self::$common_lang['edit'],
