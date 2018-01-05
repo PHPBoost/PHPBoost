@@ -27,7 +27,7 @@
 						<a href="{comments.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 					# ENDIF #
 				</span>
-				<time itemprop="datePublished" datetime="{comments.DATE_ISO8601}">{comments.DATE}</time>
+				<time itemprop="datePublished" datetime="{comments.DATE_ISO8601}">{comments.DATE_FULL}</time>
 			</div>
 
 			<div class="message-message">
