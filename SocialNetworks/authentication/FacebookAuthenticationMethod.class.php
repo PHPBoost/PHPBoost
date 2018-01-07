@@ -35,7 +35,7 @@
  * @package {@package}
  */
 
-require_once PATH_TO_ROOT . '/kernel/lib/php/facebook/facebook.php';
+require_once PATH_TO_ROOT . '/SocialNetworks/lib/facebook/facebook.php';
 
 class FacebookAuthenticationMethod extends AuthenticationMethod
 {

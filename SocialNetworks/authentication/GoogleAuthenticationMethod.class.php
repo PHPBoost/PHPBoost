@@ -37,8 +37,8 @@
 
 session_start();
 
-require_once PATH_TO_ROOT . '/kernel/lib/php/google/Google_Client.php';
-require_once PATH_TO_ROOT . '/kernel/lib/php/google/contrib/Google_Oauth2Service.php';
+require_once PATH_TO_ROOT . '/SocialNetworks/lib/google/Google_Client.php';
+require_once PATH_TO_ROOT . '/SocialNetworks/lib/google/contrib/Google_Oauth2Service.php';
 
 class GoogleAuthenticationMethod extends AuthenticationMethod
 {

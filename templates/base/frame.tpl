@@ -9,12 +9,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		# IF C_OPENGRAPH #
-		<meta property="og:site_name" content="{SITE_NAME}" />
-		<meta property="og:locale" content="{L_XML_LANGUAGE}" />
-		<meta property="og:title" content="{PAGE_TITLE}" />
-		<meta property="og:type" content="{PAGE_TYPE}" />
-		# IF C_CANONICAL_URL #<meta property="og:url" content="{U_CANONICAL}" /># ENDIF #
-		# IF C_PICTURE_URL #<meta property="og:image" content="{U_PICTURE}" /># ENDIF #
+			<meta property="og:site_name" content="{SITE_NAME}" />
+			<meta property="og:locale" content="{L_XML_LANGUAGE}" />
+			<meta property="og:title" content="{PAGE_TITLE}" />
+			<meta property="og:type" content="{PAGE_TYPE}" />
+			# IF C_CANONICAL_URL #<meta property="og:url" content="{U_CANONICAL}" /># ENDIF #
+			# IF C_PICTURE_URL #<meta property="og:image" content="{U_PICTURE}" /># ENDIF #
 		# ENDIF #
 
 		<!-- Theme CSS -->
