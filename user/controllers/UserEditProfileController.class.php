@@ -36,6 +36,10 @@ class UserEditProfileController extends AbstractController
 	 * @var FormButtonDefaultSubmit
 	 */
 	private $submit_button;
+	/**
+	 * @var FormButtonSubmit
+	 */
+	private $delete_account_button;
 	
 	private $user;
 	private $internal_auth_infos;
@@ -93,6 +97,12 @@ class UserEditProfileController extends AbstractController
 		
 		$this->build_form();
 
+		if ($this->user->get_level() != User::ADMIN_LEVEL || ($this->user->get_level() == User::ADMIN_LEVEL && $this->user->get_id() != AppContext::get_current_user()->get_id()) || ($this->user->get_level() == User::ADMIN_LEVEL && $this->user->get_id() == AppContext::get_current_user()->get_id() && UserService::count_admin_members() > 1))
+		{
+			if ($this->delete_account_button->has_been_submited())
+				$this->delete_account();
+		}
+		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save($request);
@@ -143,8 +153,6 @@ class UserEditProfileController extends AbstractController
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('user_hide_mail', $this->lang['email.hide'], !$this->user->get_show_email()));
-
-		$fieldset->add_field(new FormFieldCheckbox('delete_account', $this->lang['delete-account'], FormFieldCheckbox::UNCHECKED));
 		
 		if (AppContext::get_current_user()->is_admin())
 		{
@@ -286,8 +294,27 @@ class UserEditProfileController extends AbstractController
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
+		
+		if ($this->user->get_level() != User::ADMIN_LEVEL || ($this->user->get_level() == User::ADMIN_LEVEL && $this->user->get_id() != AppContext::get_current_user()->get_id()) || ($this->user->get_level() == User::ADMIN_LEVEL && $this->user->get_id() == AppContext::get_current_user()->get_id() && UserService::count_admin_members() > 1))
+		{
+			$this->delete_account_button = new FormButtonSubmit($this->lang['delete-account'], 'delete_account', 'return confirm(\'' . ($this->user->get_id() != AppContext::get_current_user()->get_id() ? $this->lang['delete-account.confirmation.admin'] : $this->lang['delete-account.confirmation.member']) . '\');return false;', 'btn-warning');
+			$form->add_button($this->delete_account_button);
+		}
 
 		$this->form = $form;
+	}
+	
+	private function delete_account()
+	{
+		if ($this->user->get_level() != User::ADMIN_LEVEL || ($this->user->get_level() == User::ADMIN_LEVEL && $this->user->get_id() != AppContext::get_current_user()->get_id()) || ($this->user->get_level() == User::ADMIN_LEVEL && $this->user->get_id() == AppContext::get_current_user()->get_id() && UserService::count_admin_members() > 1))
+		{
+			UserService::delete_by_id($this->user->get_id());
+		}
+		
+		if ($this->user->get_id() == AppContext::get_current_user()->get_id())
+			AppContext::get_response()->redirect(Environment::get_home_page(), $this->lang['user.message.success.delete.member']);
+		else
+			AppContext::get_response()->redirect(UserUrlBuilder::home(), StringVars::replace_vars($this->lang['user.message.success.delete'], array('name' => $this->user->get_display_name())));
 	}
 	
 	private function save(HTTPRequestCustom $request)
@@ -296,156 +323,144 @@ class UserEditProfileController extends AbstractController
 		
 		$user_id = $this->user->get_id();
 		
-		if ($this->form->get_value('delete_account'))
+		$approbation = $this->internal_auth_infos ? $this->internal_auth_infos['approved'] : true;
+		if (AppContext::get_current_user()->is_admin())
 		{
-			UserService::delete_by_id($user_id);
+			$old_approbation = $approbation;
+			if ($this->internal_auth_infos)
+				$approbation = $this->form->get_value('approbation');
+
+			$groups = array();
+			foreach ($this->form->get_value('groups') as $field => $option)
+			{
+				$groups[] = $option->get_raw_value();
+			}
 			
-			if ($user_id == AppContext::get_current_user()->get_id())
-				AppContext::get_response()->redirect(Environment::get_home_page());
-			else
-				AppContext::get_response()->redirect(UserUrlBuilder::home(), StringVars::replace_vars(LangLoader::get_message('user.message.success.delete', 'user-common'), array('name' => $this->user->get_display_name())));
+			GroupsService::edit_member($user_id, $groups);
+			$this->user->set_groups($groups);
+			$this->user->set_level($this->form->get_value('rank')->get_raw_value());
+		}
+
+		if ($this->form->has_field('theme'))
+		{
+			$this->user->set_theme($this->form->get_value('theme')->get_raw_value());
+		}
+		
+		$this->user->set_locale($this->form->get_value('lang')->get_raw_value());
+		$this->form->get_field_by_id('display_name')->enable();
+		$this->user->set_display_name($this->form->get_value('display_name'));
+		$this->form->get_field_by_id('email')->enable();
+		$this->user->set_email($this->form->get_value('email'));
+		$this->user->set_locale($this->form->get_value('lang')->get_raw_value());
+		$this->user->set_editor($this->form->get_value('text-editor')->get_raw_value());
+		$this->user->set_show_email(!$this->form->get_value('user_hide_mail'));
+		$this->user->set_timezone($this->form->get_value('timezone')->get_raw_value());
+		
+		try {
+			UserService::update($this->user, $this->member_extended_fields_service);
+		} catch (MemberExtendedFieldErrorsMessageException $e) {
+			$has_error = true;
+			$this->tpl->put('MSG', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
+		}
+
+		$login = $this->form->get_value('email');
+		$custom_login_hidden = $this->form->get_field_by_id('custom_login')->is_hidden();
+		
+		if ($custom_login_hidden)
+			$this->form->get_field_by_id('custom_login')->set_hidden(false);
+		
+		if ($this->form->get_value('custom_login', false))
+			$login = $this->form->get_value('login');
+		
+		if ($custom_login_hidden)
+			$this->form->get_field_by_id('custom_login')->set_hidden(true);
+
+		$password = $this->form->get_value('password');
+		if ($this->internal_auth_infos === null && !empty($password))
+		{
+			$authentication_method = new PHPBoostAuthenticationMethod($login, $password);
+			AuthenticationService::associate($authentication_method, $user_id);
+		}
+		elseif (!empty($password))
+		{
+			$old_password = $this->form->get_value('old_password');
+			if (!empty($old_password) || (AppContext::get_current_user()->is_admin() && $user_id != AppContext::get_current_user()->get_id()))
+			{
+				$old_password_hashed = KeyGenerator::string_hash($old_password);
+
+				if ($old_password_hashed == $this->internal_auth_infos['password'] || (AppContext::get_current_user()->is_admin() && $user_id != AppContext::get_current_user()->get_id()))
+				{
+					PHPBoostAuthenticationMethod::update_auth_infos($user_id, $login, $approbation, KeyGenerator::string_hash($password));
+					$has_error = false;
+				}
+				else
+				{
+					$has_error = true;
+					$this->tpl->put('MSG', MessageHelper::display($this->lang['profile.edit.password.error'], MessageHelper::NOTICE));
+				}
+			}
 		}
 		else
 		{
-			$approbation = $this->internal_auth_infos ? $this->internal_auth_infos['approved'] : true;
-			if (AppContext::get_current_user()->is_admin())
-			{
-				$old_approbation = $approbation;
-				if ($this->internal_auth_infos)
-					$approbation = $this->form->get_value('approbation');
-
-				$groups = array();
-				foreach ($this->form->get_value('groups') as $field => $option)
-				{
-					$groups[] = $option->get_raw_value();
-				}
-				
-				GroupsService::edit_member($user_id, $groups);
-				$this->user->set_groups($groups);
-				$this->user->set_level($this->form->get_value('rank')->get_raw_value());
-			}
-
-			if ($this->form->has_field('theme'))
-			{
-				$this->user->set_theme($this->form->get_value('theme')->get_raw_value());
-			}
-			
-			$this->user->set_locale($this->form->get_value('lang')->get_raw_value());
-			$this->form->get_field_by_id('display_name')->enable();
-			$this->user->set_display_name($this->form->get_value('display_name'));
-			$this->form->get_field_by_id('email')->enable();
-			$this->user->set_email($this->form->get_value('email'));
-			$this->user->set_locale($this->form->get_value('lang')->get_raw_value());
-			$this->user->set_editor($this->form->get_value('text-editor')->get_raw_value());
-			$this->user->set_show_email(!$this->form->get_value('user_hide_mail'));
-			$this->user->set_timezone($this->form->get_value('timezone')->get_raw_value());
-			
-			try {
-				UserService::update($this->user, $this->member_extended_fields_service);
-			} catch (MemberExtendedFieldErrorsMessageException $e) {
-				$has_error = true;
-				$this->tpl->put('MSG', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
-			}
-
-			$login = $this->form->get_value('email');
-			$custom_login_hidden = $this->form->get_field_by_id('custom_login')->is_hidden();
-			
-			if ($custom_login_hidden)
-				$this->form->get_field_by_id('custom_login')->set_hidden(false);
-			
-			if ($this->form->get_value('custom_login', false))
-				$login = $this->form->get_value('login');
-			
-			if ($custom_login_hidden)
-				$this->form->get_field_by_id('custom_login')->set_hidden(true);
-
-			$password = $this->form->get_value('password');
-			if ($this->internal_auth_infos === null && !empty($password))
-			{
-				$authentication_method = new PHPBoostAuthenticationMethod($login, $password);
-				AuthenticationService::associate($authentication_method, $user_id);
-			}
-			elseif (!empty($password))
-			{
-				$old_password = $this->form->get_value('old_password');
-				if (!empty($old_password) || (AppContext::get_current_user()->is_admin() && $user_id != AppContext::get_current_user()->get_id()))
-				{
-					$old_password_hashed = KeyGenerator::string_hash($old_password);
-
-					if ($old_password_hashed == $this->internal_auth_infos['password'] || (AppContext::get_current_user()->is_admin() && $user_id != AppContext::get_current_user()->get_id()))
-					{
-						PHPBoostAuthenticationMethod::update_auth_infos($user_id, $login, $approbation, KeyGenerator::string_hash($password));
-						$has_error = false;
-					}
-					else
-					{
-						$has_error = true;
-						$this->tpl->put('MSG', MessageHelper::display($this->lang['profile.edit.password.error'], MessageHelper::NOTICE));
-					}
-				}
-			}
-			else
-			{
-				PHPBoostAuthenticationMethod::update_auth_infos($user_id, $login, $approbation);
-			}
-
-			if (AppContext::get_current_user()->is_admin())
-			{
-				if ($old_approbation != $approbation && $old_approbation == 0)
-				{
-					//Recherche de l'alerte correspondante
-					$matching_alerts = AdministratorAlertService::find_by_criteria($user_id, 'member_account_to_approbate');
-				
-					//L'alerte a été trouvée
-					if (count($matching_alerts) == 1)
-					{
-						$alert = $matching_alerts[0];
-						$alert->set_status(AdministratorAlert::ADMIN_ALERT_STATUS_PROCESSED);
-						AdministratorAlertService::save_alert($alert);
-						
-						$site_name = GeneralConfig::load()->get_site_name();
-						$subject = StringVars::replace_vars($this->lang['registration.subject-mail'], array('site_name' => $site_name));
-						$content = StringVars::replace_vars($this->lang['registration.email.mail-administrator-validation'], array(
-							'pseudo' => $this->user->get_display_name(),
-							'site_name' => $site_name,
-							'signature' => MailServiceConfig::load()->get_mail_signature()
-						));
-						AppContext::get_mail_service()->send_from_properties($this->user->get_email(), $subject, $content);
-					}
-				}
-
-				$user_warning = $this->form->get_value('user_warning')->get_raw_value();
-				if (!empty($user_warning) && $user_warning != $this->user->get_warning_percentage())
-				{
-					MemberSanctionManager::caution($user_id, $user_warning, MemberSanctionManager::SEND_MP, str_replace('%level%', $user_warning, LangLoader::get_message('user_warning_level_changed', 'main')));
-				}
-				elseif (empty($user_warning))
-				{
-					MemberSanctionManager::cancel_caution($user_id);
-				}
-				
-				$user_readonly = $this->form->get_value('user_readonly')->get_raw_value();
-				if (!empty($user_readonly) && $user_readonly != $this->user->get_delay_readonly())
-				{
-					MemberSanctionManager::remove_write_permissions($user_id, time() + $user_readonly, MemberSanctionManager::SEND_MP, str_replace('%date%', $this->form->get_value('user_readonly')->get_label(), LangLoader::get_message('user_readonly_changed', 'main')));
-				}
-				elseif (empty($user_readonly))
-				{
-					MemberSanctionManager::restore_write_permissions($user_id);
-				}
-				
-				$user_ban = $this->form->get_value('user_ban')->get_raw_value();
-				if (!empty($user_ban) && $user_ban != $this->user->get_delay_banned())
-				{
-					MemberSanctionManager::banish($user_id, time() + $user_ban, MemberSanctionManager::SEND_MAIL);
-				}
-				elseif ($user_ban != $this->user->get_delay_banned())
-				{
-					MemberSanctionManager::cancel_banishment($user_id);
-				}
-			}
-			SessionData::recheck_cached_data_from_user_id($user_id);
+			PHPBoostAuthenticationMethod::update_auth_infos($user_id, $login, $approbation);
 		}
+
+		if (AppContext::get_current_user()->is_admin())
+		{
+			if ($old_approbation != $approbation && $old_approbation == 0)
+			{
+				//Recherche de l'alerte correspondante
+				$matching_alerts = AdministratorAlertService::find_by_criteria($user_id, 'member_account_to_approbate');
+			
+				//L'alerte a été trouvée
+				if (count($matching_alerts) == 1)
+				{
+					$alert = $matching_alerts[0];
+					$alert->set_status(AdministratorAlert::ADMIN_ALERT_STATUS_PROCESSED);
+					AdministratorAlertService::save_alert($alert);
+					
+					$site_name = GeneralConfig::load()->get_site_name();
+					$subject = StringVars::replace_vars($this->lang['registration.subject-mail'], array('site_name' => $site_name));
+					$content = StringVars::replace_vars($this->lang['registration.email.mail-administrator-validation'], array(
+						'pseudo' => $this->user->get_display_name(),
+						'site_name' => $site_name,
+						'signature' => MailServiceConfig::load()->get_mail_signature()
+					));
+					AppContext::get_mail_service()->send_from_properties($this->user->get_email(), $subject, $content);
+				}
+			}
+
+			$user_warning = $this->form->get_value('user_warning')->get_raw_value();
+			if (!empty($user_warning) && $user_warning != $this->user->get_warning_percentage())
+			{
+				MemberSanctionManager::caution($user_id, $user_warning, MemberSanctionManager::SEND_MP, str_replace('%level%', $user_warning, LangLoader::get_message('user_warning_level_changed', 'main')));
+			}
+			elseif (empty($user_warning))
+			{
+				MemberSanctionManager::cancel_caution($user_id);
+			}
+			
+			$user_readonly = $this->form->get_value('user_readonly')->get_raw_value();
+			if (!empty($user_readonly) && $user_readonly != $this->user->get_delay_readonly())
+			{
+				MemberSanctionManager::remove_write_permissions($user_id, time() + $user_readonly, MemberSanctionManager::SEND_MP, str_replace('%date%', $this->form->get_value('user_readonly')->get_label(), LangLoader::get_message('user_readonly_changed', 'main')));
+			}
+			elseif (empty($user_readonly))
+			{
+				MemberSanctionManager::restore_write_permissions($user_id);
+			}
+			
+			$user_ban = $this->form->get_value('user_ban')->get_raw_value();
+			if (!empty($user_ban) && $user_ban != $this->user->get_delay_banned())
+			{
+				MemberSanctionManager::banish($user_id, time() + $user_ban, MemberSanctionManager::SEND_MAIL);
+			}
+			elseif ($user_ban != $this->user->get_delay_banned())
+			{
+				MemberSanctionManager::cancel_banishment($user_id);
+			}
+		}
+		SessionData::recheck_cached_data_from_user_id($user_id);
 		
 		if (!$has_error)
 		{

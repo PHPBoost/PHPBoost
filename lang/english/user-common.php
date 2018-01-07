@@ -96,6 +96,8 @@ $lang['last_connection'] = 'Last connection';
 $lang['number_messages'] = 'Messages number';
 $lang['private_message'] = 'Private message';
 $lang['delete-account'] = 'Delete account';
+$lang['delete-account.confirmation.member'] = 'Are you sure you want to delete your account?';
+$lang['delete-account.confirmation.admin'] = 'Are you sure you want to delete the account?';
 $lang['avatar'] = 'Avatar';
 
 //Groups
@@ -203,6 +205,7 @@ $lang['agreement.agree.required'] = 'You must agree for registration';
 $lang['user.message.success.add'] = 'The user <b>:name</b> has been added';
 $lang['user.message.success.edit'] = 'The profile has been modified';
 $lang['user.message.success.delete'] = 'The user <b>:name</b> has been deleted';
+$lang['user.message.success.delete.member'] = 'Your account has been deleted';
 
 ############## Extended Field ##############
 

@@ -95,6 +95,8 @@ $lang['last_connection'] = 'Dernière connexion';
 $lang['number_messages'] = 'Nombre de messages';
 $lang['private_message'] = 'Message privé';
 $lang['delete-account'] = 'Supprimer le compte';
+$lang['delete-account.confirmation.member'] = 'Etes-vous sûr de vouloir supprimer votre compte ?';
+$lang['delete-account.confirmation.admin'] = 'Etes-vous sûr de vouloir supprimer le compte ?';
 $lang['avatar'] = 'Avatar';
 
 //Groups
@@ -202,6 +204,7 @@ $lang['agreement.agree.required'] = 'Vous devez accepter le règlement pour vous
 $lang['user.message.success.add'] = 'L\'utilisateur <b>:name</b> a été ajouté';
 $lang['user.message.success.edit'] = 'Le profil a été modifié';
 $lang['user.message.success.delete'] = 'L\'utilisateur <b>:name</b> a été supprimé';
+$lang['user.message.success.delete.member'] = 'Votre compte a été supprimé';
 
 ############## Extended Field ##############
 
