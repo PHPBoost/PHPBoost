@@ -8,6 +8,15 @@
 		# IF C_CANONICAL_URL #<link rel="canonical" href="{U_CANONICAL}" /># ENDIF #
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+		# IF C_OPENGRAPH #
+		<meta property="og:site_name" content="{SITE_NAME}" />
+		<meta property="og:locale" content="{L_XML_LANGUAGE}" />
+		<meta property="og:title" content="{PAGE_TITLE}" />
+		<meta property="og:type" content="{PAGE_TYPE}" />
+		# IF C_CANONICAL_URL #<meta property="og:url" content="{U_CANONICAL}" /># ENDIF #
+		# IF C_PICTURE_URL #<meta property="og:image" content="{U_PICTURE}" /># ENDIF #
+		# ENDIF #
+
 		<!-- Theme CSS -->
 		# IF C_CSS_CACHE_ENABLED #
 		<link rel="stylesheet" href="${CSSCacheManager::get_css_path('/templates/default/theme/default.css;/kernel/lib/css/font-awesome/css/font-awesome.css;/kernel/lib/css/font-awesome-animation/css/font-awesome-animation.css;/kernel/lib/js/lightcase/css/lightcase.css;/templates/{THEME}/theme/shape.css;/templates/{THEME}/theme/design.css;/templates/{THEME}/theme/content.css;/templates/{THEME}/theme/table.css;/templates/{THEME}/theme/form.css;/templates/{THEME}/theme/global.css;/templates/{THEME}/theme/cssmenu.css;/templates/{THEME}/theme/colors.css')}" type="text/css" media="screen, print" />

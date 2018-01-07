@@ -35,9 +35,16 @@ class SEOMetaData
 	private $title;
 	private $full_title;
 	private $description;
-	private $keywords = array();
 	private $canonical_url;
-		
+	private $picture_url;
+	private $page_type = 'website';
+	
+
+	public function opengraph_actived()
+	{
+		return true;
+	}
+
 	public function set_title($title, $section = '')
 	{
 		$this->title = $title;
@@ -102,6 +109,34 @@ class SEOMetaData
 		{
 			return $this->canonical_url->absolute();
 		}
+	}
+
+	public function set_picture_url(Url $picture_url)
+	{
+		$this->picture_url = $picture_url;	
+	}
+	
+	public function picture_url_exists()
+	{
+		return $this->picture_url !== null;
+	}
+	
+	public function get_picture_url()
+	{
+		if ($this->picture_url !== null)
+		{
+			return $this->picture_url->absolute();
+		}
+	}
+
+	public function set_page_type($page_type)
+	{
+		$this->page_type = $page_type;	
+	}
+	
+	public function get_page_type()
+	{
+		return $this->page_type;
 	}
 }
 ?>

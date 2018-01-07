@@ -78,7 +78,7 @@
 		return $this->seo_meta_data;
 	}
 	
-	public function set_seo_meta_data($seo_meta_data)
+	public function set_seo_meta_data(SEOMetaData $seo_meta_data)
 	{
 		$this->seo_meta_data = $seo_meta_data;
 	}
