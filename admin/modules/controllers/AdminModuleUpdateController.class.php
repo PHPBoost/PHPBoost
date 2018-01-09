@@ -118,11 +118,10 @@ class AdminModuleUpdateController extends AdminController
 			}
 		}
 		
-		$upgradable_modules_number = count($modules_upgradable);
 		$this->view->put_all(array(
-			'C_MORE_THAN_ONE_MODULE_AVAILABLE' => $upgradable_modules_number > 1,
-			'C_UPDATES' => $upgradable_modules_number > 0,
-			'MODULES_NUMBER' => $upgradable_modules_number
+			'C_MORE_THAN_ONE_MODULE_AVAILABLE' => $modules_upgradable > 1,
+			'C_UPDATES' => $modules_upgradable > 0,
+			'MODULES_NUMBER' => $modules_upgradable
 		));
 	}
 	
