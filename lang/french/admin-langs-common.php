@@ -33,7 +33,6 @@
 $lang['langs'] = 'Langues';
 $lang['langs.langs_management'] = 'Gestion des langues';
 $lang['langs.add_lang'] = 'Ajouter une langue';
-$lang['langs.update_lang'] = 'Mettre à jour une langue';
 $lang['langs.delete_lang'] = 'Suppression ou désactivation d\'une langue';
 $lang['langs.delete_lang_multiple'] = 'Suppression ou désactivation de langues';
 $lang['langs.installed_langs'] = 'Langues installées';
@@ -61,6 +60,5 @@ $lang['langs.author'] = 'Auteur';
 $lang['langs.description'] = 'Description';
 
 //Avertissements
-$lang['langs.warning_before_install'] = '<span class="warning">Une langue doit être activée, désactivée, installée ou supprimée uniquement 
-       depuis cette page.<br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span>';
+$lang['langs.warning_before_install'] = '<span class="warning">Une langue doit être activée, désactivée, installée ou supprimée uniquement depuis cette page.<br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span>';
 ?>

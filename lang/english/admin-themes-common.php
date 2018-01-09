@@ -30,11 +30,10 @@
  ####################################################
 
 // Title 
-$lang['themes.theme_management'] = 'Theme management';
-$lang['themes.add_theme'] = 'Add themes';
-$lang['themes.update_theme'] = 'Update themes';
-$lang['themes.delete_theme'] = 'Delete or Deactivate a theme';
-$lang['themes.delete_theme_multiple'] = 'Delete or Deactivate themes';
+$lang['themes.theme_management'] = 'Themes management';
+$lang['themes.add_theme'] = 'Add theme';
+$lang['themes.delete_theme'] = 'Delete or deactivate a theme';
+$lang['themes.delete_theme_multiple'] = 'Delete or deactivate themes';
 $lang['themes.installed_theme'] = 'Installed themes';
 
 //Theme
@@ -60,8 +59,7 @@ $lang['themes.install_all_selected_themes'] = 'Install all selected themes';
 $lang['themes.uninstall_all_selected_themes'] = 'Uninstall all selected themes';
 
 //Warnings
-$lang['themes.warning_before_install'] = '<span class="warning">A theme must be enabled, disabled, installed, or deleted only
-      from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span>';
+$lang['themes.warning_before_install'] = '<span class="warning">A theme must be enabled, disabled, installed, or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span>';
 
 //Upload
 $lang['themes.upload_theme'] = 'Upload theme';

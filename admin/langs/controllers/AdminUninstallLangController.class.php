@@ -59,7 +59,7 @@ class AdminUninstallLangController extends AdminController
 			
 			$this->tpl->put('FORM', $this->form->display());
 
-			return new AdminLangsDisplayResponse($this->tpl, $this->lang['langs.delete_lang']);
+			return new AdminLangsDisplayResponse($this->tpl, $this->multiple ? $this->lang['langs.uninstall_lang_multiple'] : $this->lang['langs.delete_lang']);
 		}
 		else
 		{

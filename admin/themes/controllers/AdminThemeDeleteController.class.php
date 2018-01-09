@@ -61,7 +61,7 @@ class AdminThemeDeleteController extends AdminController
 			
 			$this->tpl->put('FORM', $this->form->display());
 
-			return new AdminThemesDisplayResponse($this->tpl, $this->lang['themes.delete_theme']);
+			return new AdminThemesDisplayResponse($this->tpl, $this->multiple ? $this->lang['themes.delete_theme_multiple'] : $this->lang['themes.delete_theme']);
 		}
 		else
 		{

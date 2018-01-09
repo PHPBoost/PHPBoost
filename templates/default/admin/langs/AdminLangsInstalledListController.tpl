@@ -4,7 +4,7 @@
 	function select_all(status)
 	{
 		var i;
-		for(i = 1; i <= {LANG_NUMBER}; i++)
+		for(i = 1; i <= {LANGS_NUMBER}; i++)
 		{
 			if(document.getElementById('delete-checkbox-' + i) && i != {SELECTED_LANG_NUMBER})
 				document.getElementById('delete-checkbox-' + i).checked = status;
@@ -17,7 +17,7 @@
 # ENDIF #
 
 <form action="{REWRITED_SCRIPT}" method="post">
-	{@langs.warning_before_install}
+	${LangLoader::get_message('langs.warning_before_install', 'admin-langs-common')}
 	<table id="table">
 		<caption>{@langs.installed_langs}</caption>
 		<thead>
@@ -120,10 +120,10 @@
 	<fieldset class="fieldset-submit">
 		<legend>{L_SUBMIT}</legend>
 		<div class="fieldset-inset">
-			<button type="submit" class="submit" name="update_langs_configuration" value="true">{L_UPDATE}</button>
+			<button type="submit" class="submit" name="update_langs_configuration" value="true">${LangLoader::get_message('update', 'main')}</button>
 			<input type="hidden" name="token" value="{TOKEN}">
 			<input type="hidden" name="update" value="true">
-			<button type="reset" value="true">{L_RESET}</button>
+			<button type="reset" value="true">${LangLoader::get_message('reset', 'main')}</button>
 		</div>
 	</fieldset>
 </form>

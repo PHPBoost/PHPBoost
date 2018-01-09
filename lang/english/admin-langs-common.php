@@ -31,12 +31,11 @@
  
 //Title
 $lang['langs'] = 'Languages';
-$lang['langs.langs_management'] = 'Languages Management';
-$lang['langs.add_lang'] = 'Add languages';
-$lang['langs.update_lang'] = 'Update languages';
-$lang['langs.delete_lang'] = 'Delete or Deactivate a language';
-$lang['langs.delete_lang_multiple'] = 'Delete or Deactivate languages';
-$lang['langs.installed_langs'] = 'Installed Languages';
+$lang['langs.langs_management'] = 'Languages management';
+$lang['langs.add_lang'] = 'Add language';
+$lang['langs.delete_lang'] = 'Delete or deactivate a language';
+$lang['langs.delete_lang_multiple'] = 'Delete or deactivate languages';
+$lang['langs.installed_langs'] = 'Installed languages';
 
 //Langs management
 $lang['langs.install_lang'] = 'Install';
@@ -61,6 +60,5 @@ $lang['langs.author'] = 'Author';
 $lang['langs.description'] = 'Description';
 
 //Warnings
-$lang['langs.warning_before_install'] = '<span class="warning">A language must be enabled, disabled, installed, or deleted only
-      from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span>';
+$lang['langs.warning_before_install'] = '<span class="warning">A language must be enabled, disabled, installed, or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span>';
 ?>

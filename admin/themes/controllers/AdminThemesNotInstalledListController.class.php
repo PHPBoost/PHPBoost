@@ -178,7 +178,7 @@ class AdminThemesNotInstalledListController extends AdminController
 		$form->add_fieldset($fieldset);
 	
 		$fieldset->add_field(new FormFieldFree('warnings', '', $this->lang['themes.warning_before_install']));
-        $fieldset->add_field(new FormFieldFilePicker('file', $this->lang['themes.upload_description']));
+		$fieldset->add_field(new FormFieldFilePicker('file', $this->lang['themes.upload_description']));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
