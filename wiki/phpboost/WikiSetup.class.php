@@ -112,7 +112,8 @@ class WikiSetup extends DefaultModuleSetup
 			'activ' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'user_ip' => array('type' => 'string', 'length' => 50, 'default' => "''"),
-			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
+			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'change_reason' => array('type' => 'text', 'length' => 100, 'notnull' => 0)
 		);
 		$options = array(
 			'primary' => array('id_contents'),

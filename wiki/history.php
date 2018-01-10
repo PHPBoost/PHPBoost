@@ -67,7 +67,7 @@ if (!empty($id_article))
 	$delete_auth = (!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_DELETE_ARCHIVE)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_DELETE_ARCHIVE)) ? true : false;
 	
 	//on va chercher le contenu de la page
-	$result = PersistenceContext::get_querier()->select("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents, c.user_id, c.user_ip, m.display_name, m.groups, m.level, c.id_article, c.activ
+	$result = PersistenceContext::get_querier()->select("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents, c.user_id, c.user_ip, c.change_reason, m.display_name, m.groups, m.level, c.id_article, c.activ
 		FROM " . PREFIX . "wiki_contents c
 		LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.id_article
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = c.user_id
@@ -92,7 +92,8 @@ if (!empty($id_article))
 			'DATE' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 			'U_ARTICLE' => $row['activ'] == 1 ? url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) : url('wiki.php?id_contents=' . $row['id_contents']),
 			'CURRENT_RELEASE' => $row['activ'] == 1 ? '(' . $LANG['wiki_current_version'] . ')' : '',
-			'ACTIONS' => !empty($actions) ? $actions : $LANG['wiki_no_possible_action']
+			'ACTIONS' => !empty($actions) ? $actions : $LANG['wiki_no_possible_action'],
+            'CHANGE_REASON' => $row['change_reason']
 		));
 	}
 	$result->dispose();
@@ -102,6 +103,7 @@ if (!empty($id_article))
 		'L_DATE' => LangLoader::get_message('date', 'date-common'),
 		'L_AUTHOR' => $LANG['wiki_author'],
 		'L_ACTIONS' => $LANG['wiki_possible_actions'],
+        'L_CHANGE_REASON' => $LANG['wiki_change_reason']
 		));
 	
 	$tpl->display();

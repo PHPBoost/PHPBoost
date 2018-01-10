@@ -110,6 +110,6 @@ ul.no-list a i.fa {
 	padding: 0.1618em 0.309em;
 }
 
-.wiki-list-item i {
-	font-size: 0.809em;
+.col-max{
+    max-width: 200px;
 }

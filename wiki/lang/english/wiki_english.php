@@ -123,6 +123,9 @@ $LANG['wiki_undefined_status'] = 'Personalized status';
 $LANG['wiki_no_status'] = 'No status';
 $LANG['wiki_status_explain'] = 'Here you can select the status of this article. Several different status permit you to order your articles and to show a particular point for each article.<br />You can assign as well defined status to you articles or personalized one. To use a defined status let the personalized field empty.';
 $LANG['wiki_current_status'] = 'Current status';
+$LANG['wiki_article_init'] = 'Initialization';
+$LANG['wiki_change_reason_label'] = 'Reason for the change (optional 100 car max)';
+$LANG['wiki_change_reason'] = 'Reason for the change';
 
 $LANG['wiki_status_list'] = array(
 	array('Quality article', '<span class="notice">This article is very good.</span>'),

@@ -29,6 +29,7 @@
 						{preview.menu.MENU}
 					</div>
 				# END preview.menu #
+				<br /><br />
 				{preview.CONTENTS}
 			</div>
 			<footer></footer>
@@ -92,6 +93,15 @@
 						<textarea rows="25" id="contents" name="contents">{CONTENTS}</textarea>
 					</div>
 				</div>
+    
+                # IF C_ID_EDIT #
+                    <br />
+                <div class="form-element-textarea">
+                    <label>{L_CHANGE_REASON_LABEL}</label>
+                    <textarea maxlength="100" rows="2" id="change_reason" name="change_reason"></textarea>
+                </div>
+                # ENDIF #                
+	
 				# IF C_VERIF_CODE #
 				<div class="form-element">
 					<label for="captcha">* ${LangLoader::get_message('form.captcha', 'common')}</label>
@@ -113,7 +123,7 @@
 				-->
 				</script>
 				# ENDIF #
-
+				
 			</fieldset>
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>

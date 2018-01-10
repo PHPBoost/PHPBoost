@@ -114,6 +114,9 @@ $LANG['wiki_restore_version'] = 'Restaurer';
 $LANG['wiki_possible_actions'] = 'Actions possibles';
 $LANG['wiki_no_possible_action'] = 'Aucune action possible';
 $LANG['wiki_current_version'] = 'Version courante';
+$LANG['wiki_article_init'] = 'Initialisation';
+$LANG['wiki_change_reason_label'] = 'Nature de la modification (facultatif 100 car. max)';
+$LANG['wiki_change_reason'] = 'Nature de la modification';
 
 //Statut de l'article
 $LANG['wiki_status_management'] = 'Gestion des statuts des articles';

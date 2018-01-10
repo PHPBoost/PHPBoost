@@ -48,6 +48,7 @@ $id_edit = (int)retrieve(POST, 'id_edit', 0);
 $title = retrieve(POST, 'title', '');
 $encoded_title = retrieve(GET, 'title', '');
 $contents = wiki_parse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED));
+$change_reason = $id_edit == 0 ? $change_reason = $LANG['wiki_article_init'] : wiki_parse(retrieve(POST, 'change_reason', '', TSTRING_AS_RECEIVED));
 $contents_preview = retrieve(POST, 'contents', '', TSTRING_PARSE);
 $id_cat = (int)retrieve(GET, 'id_parent', 0);
 $new_id_cat = (int)retrieve(POST, 'id_cat', 0);
@@ -118,7 +119,7 @@ if (!empty($contents)) //On enregistre un article
 			//On met à jour l'ancien contenu (comme archive)
 			PersistenceContext::get_querier()->update(PREFIX . "wiki_contents", array('activ' => 0), 'WHERE id_contents = :id', array('id' => $previous_id_contents));
 			//On insère le contenu
-			$result = PersistenceContext::get_querier()->insert(PREFIX . "wiki_contents", array('id_article' => $id_edit, 'menu' => $menu, 'content' => $contents, 'activ' => 1, 'user_id' => AppContext::get_current_user()->get_id(), 'user_ip' => AppContext::get_request()->get_ip_address(), 'timestamp' => time()));
+			$result = PersistenceContext::get_querier()->insert(PREFIX . "wiki_contents", array('id_article' => $id_edit, 'menu' => $menu, 'content' => $contents, 'activ' => 1, 'user_id' => AppContext::get_current_user()->get_id(), 'user_ip' => AppContext::get_request()->get_ip_address(), 'timestamp' => time(), 'change_reason' => $change_reason));
 			//Dernier id enregistré
 			$id_contents = $result->get_last_inserted_id();
             
@@ -168,7 +169,7 @@ if (!empty($contents)) //On enregistre un article
 				//On récupère le numéro de l'article créé
 				$id_article = $result->get_last_inserted_id();
 				//On insère le contenu
-				$result = PersistenceContext::get_querier()->insert(PREFIX . "wiki_contents", array('id_article' => $id_article, 'menu' => $menu, 'content' => $contents, 'activ' => 1, 'user_id' => AppContext::get_current_user()->get_id(), 'user_ip' => AppContext::get_request()->get_ip_address(), 'timestamp' => time()));
+				$result = PersistenceContext::get_querier()->insert(PREFIX . "wiki_contents", array('id_article' => $id_article, 'menu' => $menu, 'content' => $contents, 'activ' => 1, 'user_id' => AppContext::get_current_user()->get_id(), 'user_ip' => AppContext::get_request()->get_ip_address(), 'timestamp' => time(), 'change_reason' => $change_reason));
 				//On met à jour le numéro du contenu dans la table articles
 				$id_contents = $result->get_last_inserted_id();
 				if ($is_cat == 1)//si c'est une catégorie, on la crée
@@ -320,6 +321,7 @@ $tpl->put_all(array(
 	'ID_CAT' => $id_edit ? $article_infos['id_cat'] : '',
 	'CONTENTS' => ($id_edit && $contents_preview) || !$id_edit ? wiki_unparse(stripslashes($contents_preview)) : wiki_unparse($contents),
 	'ID_EDIT' => $id_edit,
+	'C_ID_EDIT' => $id_edit > 0,
 	'IS_CAT' => $is_cat,
 	'ID_CAT' => $id_cat,
 	'VERIF_CODE' => $captcha->display(),
@@ -338,6 +340,8 @@ $tpl->put_all(array(
 	'L_DO_NOT_SELECT_ANY_CAT' => $LANG['wiki_do_not_select_any_cat'],
 	'L_PREVIEWING' => $LANG['wiki_previewing'],
 	'L_TABLE_OF_CONTENTS' => $LANG['wiki_table_of_contents'],
+    'L_CHANGE_REASON_LABEL' => $LANG['wiki_change_reason_label'],
+    'L_CHANGE_REASON' => $LANG['wiki_change_reason'],
 ));
 
 //outils BBcode en javascript

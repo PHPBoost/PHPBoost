@@ -10,6 +10,9 @@
 						{L_DATE}
 					</th>
 					<th>
+						{L_CHANGE_REASON}
+					</th>
+					<th>
 						{L_AUTHOR}
 					</th>
 					<th>
@@ -21,10 +24,14 @@
 				# START list #
 				<tr>
 					<td>
-						<a href="{list.U_ARTICLE}">{list.TITLE}</a> {list.CURRENT_RELEASE}
+						<a href="{list.U_ARTICLE}">{list.TITLE}</a>
+                        <span class="infos-options">{list.CURRENT_RELEASE}</span>
 					</td>
 					<td>
 						{list.DATE}
+					</td>
+					<td class="col-max">
+						{list.CHANGE_REASON}
 					</td>
 					<td>
 						{list.AUTHOR}
@@ -82,3 +89,4 @@
 			</tbody>
 		</table>
 		# END IF #
+		
