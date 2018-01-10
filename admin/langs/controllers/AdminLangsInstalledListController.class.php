@@ -35,8 +35,15 @@ class AdminLangsInstalledListController extends AdminController
 		$this->init();
 		$this->build_view();
 		$this->save($request);
-
+		
 		return new AdminLangsDisplayResponse($this->view, $this->lang['langs.installed_langs']);
+	}
+	
+	private function init()
+	{
+		$this->lang = LangLoader::get('admin-langs-common');
+		$this->view = new FileTemplate('admin/langs/AdminLangsInstalledListController.tpl');
+		$this->view->add_lang($this->lang);
 	}
 	
 	private function build_view()
@@ -71,6 +78,7 @@ class AdminLangsInstalledListController extends AdminController
 			
 			$lang_number++;
 		}
+		
 		$installed_langs_number = count($installed_langs);
 		$this->view->put_all(array(
 			'C_MORE_THAN_ONE_LANG_INSTALLED' => $installed_langs_number > 1,
@@ -83,7 +91,7 @@ class AdminLangsInstalledListController extends AdminController
 	{
 		$installed_langs = LangsManager::get_installed_langs_map();
 		
-		if ($request->get_string('add-selected-langs', false))
+		if ($request->get_string('delete-selected-langs', false))
 		{
 			$lang_ids = array();
 			$lang_number = 1;
@@ -114,21 +122,13 @@ class AdminLangsInstalledListController extends AdminController
 			{
 				if ($lang->get_id() !== LangsManager::get_default_lang())
 				{
-					$id = $lang->get_id();
-					$activated = $request->get_bool('activated-' . $id, false);
-					$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $id);
-					LangsManager::change_informations($id, $activated, $authorizations);
+					$activated = $request->get_bool('activated-' . $lang->get_id(), false);
+					$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $lang->get_id());
+					LangsManager::change_informations($lang->get_id(), $activated, $authorizations);
 				}
 			}
-			AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs());
+			AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('process.success', 'status-messages-common'));
 		}
-	}
-	
-	private function init()
-	{
-		$this->lang = LangLoader::get('admin-langs-common');
-		$this->view = new FileTemplate('admin/langs/AdminLangsInstalledListController.tpl');
-		$this->view->add_lang($this->lang);
 	}
 }
 ?>

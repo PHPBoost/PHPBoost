@@ -35,8 +35,15 @@ class AdminThemesInstalledListController extends AdminController
 		$this->init();
 		$this->build_view();
 		$this->save($request);
-
+		
 		return new AdminThemesDisplayResponse($this->view, $this->lang['themes.installed_theme']);
+	}
+	
+	private function init()
+	{
+		$this->lang = LangLoader::get('admin-themes-common');
+		$this->view = new FileTemplate('admin/themes/AdminThemesInstalledListController.tpl');
+		$this->view->add_lang($this->lang);
 	}
 	
 	private function build_view()
@@ -104,7 +111,7 @@ class AdminThemesInstalledListController extends AdminController
 	{
 		$installed_themes = ThemesManager::get_installed_themes_map();
 		
-		if ($request->get_string('add-selected-themes', false))
+		if ($request->get_string('delete-selected-themes', false))
 		{
 			$theme_ids = array();
 			$theme_number = 1;
@@ -135,21 +142,13 @@ class AdminThemesInstalledListController extends AdminController
 			{
 				if ($theme->get_id() !== ThemesManager::get_default_theme())
 				{
-					$id_theme = $theme->get_id();
-					$activated = $request->get_bool('activated-' . $id_theme, false);
-					$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $id_theme);
-					ThemesManager::change_informations($id_theme, $activated, $authorizations);
+					$activated = $request->get_bool('activated-' . $theme->get_id(), false);
+					$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $theme->get_id());
+					ThemesManager::change_informations($theme->get_id(), $activated, $authorizations);
 				}
 			}
-			AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme());
+			AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), LangLoader::get_message('process.success', 'status-messages-common'));
 		}
-	}
-	
-	private function init()
-	{
-		$this->lang = LangLoader::get('admin-themes-common');
-		$this->view = new FileTemplate('admin/themes/AdminThemesInstalledListController.tpl');
-		$this->view->add_lang($this->lang);
 	}
 }
 ?>

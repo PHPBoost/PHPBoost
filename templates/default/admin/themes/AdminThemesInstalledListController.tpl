@@ -46,7 +46,7 @@
 							<input type="checkbox" id="check-all-bottom" onclick="select_all(this.checked);" title="${LangLoader::get_message('select_all', 'main')}" />
 							<label for="check-all-bottom"></label>
 						</div>
-						<button type="submit" name="add-selected-themes" value="true" class="submit">{@themes.uninstall_all_selected_themes}</button>
+						<button type="submit" name="delete-selected-themes" value="true" class="submit">{@themes.uninstall_all_selected_themes}</button>
 					</div>
 				</td>
 			</tr>
@@ -117,8 +117,6 @@
 							<label for="activated-{themes_installed.ID}2"></label>
 						</div>
 						<span class="form-field-radio-span">${LangLoader::get_message('no', 'common')}</span>
-						<label> </label>
-						<label> </label>
 					</td>
 					<td>
 						<button type="submit" class="submit" name="delete-{themes_installed.ID}" value="true">{@themes.uninstall_theme}</button>

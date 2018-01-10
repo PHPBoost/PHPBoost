@@ -46,7 +46,7 @@
 							<input type="checkbox" id="check-all-bottom" onclick="select_all(this.checked);" title="${LangLoader::get_message('select_all', 'main')}" />
 							<label for="check-all-bottom"></label>
 						</div>
-						<button type="submit" name="add-selected-themes" value="true" class="submit">{@langs.uninstall_all_selected_langs}</button>
+						<button type="submit" name="delete-selected-themes" value="true" class="submit">{@langs.uninstall_all_selected_langs}</button>
 					</div>
 				</td>
 			</tr>
@@ -110,8 +110,6 @@
 					<td>
 					</td>
 					# ENDIF #
-
-
 				</tr>
 			# END langs_installed #
 		</tbody>
