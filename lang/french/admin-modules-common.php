@@ -36,11 +36,11 @@ $lang['modules.module_management'] = 'Gestion des modules';
 $lang['modules.add_module'] = 'Ajouter un module';
 $lang['modules.update_module'] = 'Mettre à jour un module';
 $lang['modules.delete_module'] = 'Suppression ou désactivation d\'un module';
+$lang['modules.delete_module_multiple'] = 'Suppression ou désactivation de modules';
 $lang['modules.installed_modules'] = 'Modules installés';
 
 //Warnings
-$lang['modules.warning_before_install'] = '<span class="warning">Un module doit être activé, désactivé, installé ou supprimé uniquement 
-       depuis cette page. <br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span>';
+$lang['modules.warning_before_install'] = '<span class="warning">Un module doit être activé, désactivé, installé ou supprimé uniquement depuis cette page. <br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span>';
 
 //Upload
 $lang['modules.upload_module'] = 'Uploader un module';
@@ -55,13 +55,13 @@ $lang['modules.php_version'] = 'Version PHP';
 $lang['modules.url_rewrite_rules'] = 'Règles de réécriture d\'URL';
 $lang['modules.page_admin'] = 'Administration';
 $lang['modules.modules_available'] = 'Modules disponibles';
-$lang['modules.installed_activated_modules'] = 'Modules installés et activés';
-$lang['modules.installed_not_activated_modules'] = 'Modules désactivés';
 $lang['module.documentation'] = 'Documentation';
 
 //Module management
 $lang['modules.install_module'] = 'Installer';
+$lang['modules.uninstall_module'] = 'Désinstaller';
 $lang['modules.install_all_selected_modules'] = 'Installer les modules sélectionnés';
+$lang['modules.uninstall_all_selected_modules'] = 'Désinstaller les modules sélectionnés';
 $lang['modules.authorization'] = 'Autorisation d\'accès';
 
 //Messages
@@ -77,6 +77,7 @@ $lang['modules.not_compatible'] = 'Ce module n\'est pas compatible avec la versi
 
 //Delete module
 $lang['modules.drop_files'] = 'Supprimer tous les fichiers du module';
+$lang['modules.drop_files_multiple'] = 'Supprimer tous les fichiers des modules';
 
 //Update
 $lang['modules.upgrade_module'] = 'Mettre à jour';

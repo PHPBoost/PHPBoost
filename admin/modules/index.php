@@ -33,7 +33,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('AdminModulesManagementController', '`^/(?:installed/?)?$`'),
 	new UrlControllerMapper('AdminModuleAddController', '`^/add/?$`'),
 	new UrlControllerMapper('AdminModuleUpdateController', '`^/update(?:/([A-Za-z0-9_-]+))?/?$`', array('id_module')),
-	new UrlControllerMapper('AdminModuleDeleteController', '`^/delete(?:/([A-Za-z0-9_-]+))?/?$`', array('id_module'))
+	new UrlControllerMapper('AdminModuleDeleteController', '`^/([A-Za-z0-9-_]+)/delete/?$`', array('id')),
 );
 DispatchManager::dispatch($url_controller_mappers);
 ?>

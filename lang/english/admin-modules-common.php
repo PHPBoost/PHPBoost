@@ -36,11 +36,11 @@ $lang['modules.module_management'] = 'Module management';
 $lang['modules.add_module'] = 'Add a module';
 $lang['modules.update_module'] = 'Update a module';
 $lang['modules.delete_module'] = 'Delete or deactivate a module';
+$lang['modules.delete_module_multiple'] = 'Delete or deactivate modules';
 $lang['modules.installed_modules'] = 'Installed modules';
 
 //Warnings
-$lang['modules.warning_before_install'] = '<span class="warning">A module must be enabled, disabled, installed, or deleted only
-      from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span>';
+$lang['modules.warning_before_install'] = '<span class="warning">A module must be enabled, disabled, installed, or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span>';
 
 //Upload
 $lang['modules.upload_module'] = 'Install a module';
@@ -61,7 +61,9 @@ $lang['module.documentation'] = 'Documentation';
 
 //Module management
 $lang['modules.install_module'] = 'Install';
+$lang['modules.uninstall_module'] = 'Uninstall';
 $lang['modules.install_all_selected_modules'] = 'Install selected modules';
+$lang['modules.uninstall_all_selected_modules'] = 'Uninstall all selected modules';
 $lang['modules.authorization'] = 'Authorizations';
 
 //Messages
@@ -77,6 +79,7 @@ $lang['modules.not_compatible'] = 'This module is not compatible with the actual
 
 //Delete module
 $lang['modules.drop_files'] = 'Delete all the module\'s files';
+$lang['modules.drop_files_multiple'] = 'Delete all modules\'s files';
 
 //Update
 $lang['modules.upgrade_module'] = 'Update';

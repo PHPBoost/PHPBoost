@@ -41,85 +41,77 @@ class AdminModulesManagementController extends AdminController
 	
 	private function init()
 	{
-		$this->load_lang();
+		$this->lang = LangLoader::get('admin-modules-common');
 		$this->view = new FileTemplate('admin/modules/AdminModulesManagementController.tpl');
 		$this->view->add_lang($this->lang);
 	}
 	
-	private function load_lang()
-	{
-		$this->lang = LangLoader::get('admin-modules-common');
-	}
-	
 	private function build_view()
 	{
-		$modules_activated = ModulesManager::get_activated_modules_map_sorted_by_localized_name();
-		$modules_installed = ModulesManager::get_installed_modules_map_sorted_by_localized_name();
-
-		foreach ($modules_installed as $module)
+		$installed_modules = ModulesManager::get_installed_modules_map_sorted_by_localized_name();
+		$module_number = 1;
+		foreach ($installed_modules as $module)
 		{
 			$configuration = $module->get_configuration();
 			$author_email = $configuration->get_author_email();
 			$author_website = $configuration->get_author_website();
 			$documentation = $configuration->get_documentation();
 			
-			if (!in_array($module, $modules_activated))
-			{
-				$this->view->assign_block_vars('modules_not_activated', array(
-					'C_AUTHOR_EMAIL' => !empty($author_email),
-					'C_AUTHOR_WEBSITE' => !empty($author_website),
-					'ID' => $module->get_id(),
-					'NAME' => TextHelper::ucfirst($configuration->get_name()),
-					'ICON' => $module->get_id(),
-					'VERSION' => $module->get_installed_version(),
-					'AUTHOR' => $configuration->get_author(),
-					'AUTHOR_EMAIL' => $author_email,
-					'AUTHOR_WEBSITE' => $author_website,
-					'DESCRIPTION' => $configuration->get_description(),
-					'COMPATIBILITY' => $configuration->get_compatibility(),
-					'PHP_VERSION' => $configuration->get_php_version(),
-					'C_MODULE_ACTIVE' => $module->is_activated(),
-					'C_DOCUMENTATION' => !empty($documentation),
-					'L_DOCUMENTATION' => $documentation
-				));
-			}
-			else 
-			{
-				$this->view->assign_block_vars('modules_activated', array(
-					'C_AUTHOR_EMAIL' => !empty($author_email),
-					'C_AUTHOR_WEBSITE' => !empty($author_website),
-					'ID' => $module->get_id(),
-					'NAME' => TextHelper::ucfirst($configuration->get_name()),
-					'ICON' => $module->get_id(),
-					'VERSION' => $module->get_installed_version(),
-					'AUTHOR' => $configuration->get_author(),
-					'AUTHOR_EMAIL' => $author_email,
-					'AUTHOR_WEBSITE' => $author_website,
-					'DESCRIPTION' => $configuration->get_description(),
-					'COMPATIBILITY' => $configuration->get_compatibility(),
-					'PHP_VERSION' => $configuration->get_php_version(),
-					'C_MODULE_ACTIVE' => $module->is_activated(),
-					'C_DOCUMENTATION' => !empty($documentation),
-					'L_DOCUMENTATION' => $documentation
-				));
-			}
+			$this->view->assign_block_vars('modules_installed', array(
+				'C_AUTHOR_EMAIL' => !empty($author_email),
+				'C_AUTHOR_WEBSITE' => !empty($author_website),
+				'C_IS_ACTIVATED' => $module->is_activated(),
+				'MODULE_NUMBER' => $module_number,
+				'ID' => $module->get_id(),
+				'NAME' => TextHelper::ucfirst($configuration->get_name()),
+				'ICON' => $module->get_id(),
+				'VERSION' => $module->get_installed_version(),
+				'AUTHOR' => $configuration->get_author(),
+				'AUTHOR_EMAIL' => $author_email,
+				'AUTHOR_WEBSITE' => $author_website,
+				'DESCRIPTION' => $configuration->get_description(),
+				'COMPATIBILITY' => $configuration->get_compatibility(),
+				'PHP_VERSION' => $configuration->get_php_version(),
+				'C_DOCUMENTATION' => !empty($documentation),
+				'L_DOCUMENTATION' => $documentation
+			));
+			
+			$module_number++;
 		}
 		
+		$installed_modules_number = count($installed_modules);
 		$this->view->put_all(array(
-			'C_MODULES_ACTIVATED' => count($modules_activated) > 0,
-			'C_MODULES_NOT_ACTIVATED' => (count($modules_installed) - count($modules_activated)) > 0
+			'C_MORE_THAN_ONE_MODULE_INSTALLED' => $installed_modules_number > 1,
+			'MODULES_NUMBER' => $installed_modules_number
 		));
 	}
 	
 	private function save(HTTPRequestCustom $request)
 	{
-		$installed_modules = ModulesManager::get_installed_modules_map();
+		$installed_modules = ModulesManager::get_installed_modules_map_sorted_by_localized_name();
 		
-		foreach ($installed_modules as $module)
+		if ($request->get_string('delete-selected-modules', false))
 		{
-			if ($request->get_string('delete-' . $module->get_id(), ''))
+			$module_ids = array();
+			$module_number = 1;
+			foreach ($installed_modules as $module)
 			{
-				AppContext::get_response()->redirect(AdminModulesUrlBuilder::delete_module($module->get_id()));
+				if ($request->get_value('delete-checkbox-' . $module_number, 'off') == 'on')
+				{
+					$module_ids[] = $module->get_id();
+				}
+				$module_number++;
+			}
+			AppContext::get_response()->redirect(AdminModulesUrlBuilder::delete_module(implode('---', $module_ids)));
+		}
+		else
+		{
+			foreach($installed_modules as $module)
+			{
+				if ($request->get_string('delete-' . $module->get_id(), ''))
+				{
+					AppContext::get_response()->redirect(AdminModulesUrlBuilder::delete_module($module->get_id()));
+				}
 			}
 		}
 		
@@ -128,9 +120,8 @@ class AdminModulesManagementController extends AdminController
 			$errors = array();
 			foreach ($installed_modules as $module)
 			{
-				$module_id = $module->get_id();
-				$activated = $request->get_bool('activated-' . $module_id, false);
-				$error = ModulesManager::update_module($module_id, $activated);
+				$activated = $request->get_bool('activated-' . $module->get_id(), false);
+				$error = ModulesManager::update_module($module->get_id(), $activated);
 				
 				if (!empty($error))
 					$errors[$module->get_configuration()->get_name()] = $error;
@@ -138,7 +129,7 @@ class AdminModulesManagementController extends AdminController
 			
 			if (empty($errors))
 			{
-				AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules());
+				AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), LangLoader::get_message('process.success', 'status-messages-common'));
 			}
 			else
 			{
