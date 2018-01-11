@@ -109,7 +109,7 @@ class AdminThemesInstalledListController extends AdminController
 	
 	public function save(HTTPRequestCustom $request)
 	{
-		$installed_themes = ThemesManager::get_installed_themes_map();
+		$installed_themes = ThemesManager::get_installed_themes_map_sorted_by_localized_name();
 		
 		if ($request->get_string('delete-selected-themes', false))
 		{

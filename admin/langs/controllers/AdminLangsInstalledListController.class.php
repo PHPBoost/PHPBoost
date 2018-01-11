@@ -89,7 +89,7 @@ class AdminLangsInstalledListController extends AdminController
 	
 	public function save(HTTPRequestCustom $request)
 	{
-		$installed_langs = LangsManager::get_installed_langs_map();
+		$installed_langs = LangsManager::get_installed_langs_map_sorted_by_localized_name();
 		
 		if ($request->get_string('delete-selected-langs', false))
 		{
