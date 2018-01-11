@@ -48,7 +48,7 @@ $id_edit = (int)retrieve(POST, 'id_edit', 0);
 $title = retrieve(POST, 'title', '');
 $encoded_title = retrieve(GET, 'title', '');
 $contents = wiki_parse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED));
-$change_reason = $id_edit == 0 ? $change_reason = $LANG['wiki_article_init'] : wiki_parse(retrieve(POST, 'change_reason', '', TSTRING_AS_RECEIVED));
+$change_reason = $id_edit > 0 ? wiki_parse(retrieve(POST, 'change_reason', '', TSTRING_AS_RECEIVED)) : $LANG['wiki_article_init'];
 $contents_preview = retrieve(POST, 'contents', '', TSTRING_PARSE);
 $id_cat = (int)retrieve(GET, 'id_parent', 0);
 $new_id_cat = (int)retrieve(POST, 'id_cat', 0);
@@ -321,7 +321,7 @@ $tpl->put_all(array(
 	'ID_CAT' => $id_edit ? $article_infos['id_cat'] : '',
 	'CONTENTS' => ($id_edit && $contents_preview) || !$id_edit ? wiki_unparse(stripslashes($contents_preview)) : wiki_unparse($contents),
 	'ID_EDIT' => $id_edit,
-	'C_ID_EDIT' => $id_edit > 0,
+	'C_EDIT' => $id_edit > 0,
 	'IS_CAT' => $is_cat,
 	'ID_CAT' => $id_cat,
 	'VERIF_CODE' => $captcha->display(),
@@ -340,8 +340,8 @@ $tpl->put_all(array(
 	'L_DO_NOT_SELECT_ANY_CAT' => $LANG['wiki_do_not_select_any_cat'],
 	'L_PREVIEWING' => $LANG['wiki_previewing'],
 	'L_TABLE_OF_CONTENTS' => $LANG['wiki_table_of_contents'],
-    'L_CHANGE_REASON_LABEL' => $LANG['wiki_change_reason_label'],
-    'L_CHANGE_REASON' => $LANG['wiki_change_reason'],
+	'L_CHANGE_REASON_LABEL' => $LANG['wiki_change_reason_label'],
+	'L_CHANGE_REASON' => $LANG['wiki_change_reason'],
 ));
 
 //outils BBcode en javascript

@@ -93,7 +93,7 @@ if (!empty($id_article))
 			'U_ARTICLE' => $row['activ'] == 1 ? url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) : url('wiki.php?id_contents=' . $row['id_contents']),
 			'CURRENT_RELEASE' => $row['activ'] == 1 ? '(' . $LANG['wiki_current_version'] . ')' : '',
 			'ACTIONS' => !empty($actions) ? $actions : $LANG['wiki_no_possible_action'],
-            'CHANGE_REASON' => $row['change_reason']
+			'CHANGE_REASON' => $row['change_reason']
 		));
 	}
 	$result->dispose();
@@ -103,7 +103,7 @@ if (!empty($id_article))
 		'L_DATE' => LangLoader::get_message('date', 'date-common'),
 		'L_AUTHOR' => $LANG['wiki_author'],
 		'L_ACTIONS' => $LANG['wiki_possible_actions'],
-        'L_CHANGE_REASON' => $LANG['wiki_change_reason']
+		'L_CHANGE_REASON' => $LANG['wiki_change_reason']
 		));
 	
 	$tpl->display();

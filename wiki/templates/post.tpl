@@ -94,14 +94,14 @@
 					</div>
 				</div>
     
-                # IF C_ID_EDIT #
-                    <br />
-                <div class="form-element-textarea">
-                    <label>{L_CHANGE_REASON_LABEL}</label>
-                    <textarea maxlength="100" rows="2" id="change_reason" name="change_reason"></textarea>
-                </div>
-                # ENDIF #                
-	
+				# IF C_EDIT #
+				<br />
+				<div class="form-element-textarea">
+					<label>{L_CHANGE_REASON_LABEL}</label>
+					<textarea maxlength="100" rows="2" id="change_reason" name="change_reason"></textarea>
+				</div>
+				# ENDIF #
+
 				# IF C_VERIF_CODE #
 				<div class="form-element">
 					<label for="captcha">* ${LangLoader::get_message('form.captcha', 'common')}</label>

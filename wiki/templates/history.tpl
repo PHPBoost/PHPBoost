@@ -25,7 +25,7 @@
 				<tr>
 					<td>
 						<a href="{list.U_ARTICLE}">{list.TITLE}</a>
-                        <span class="infos-options">{list.CURRENT_RELEASE}</span>
+						<span class="infos-options">{list.CURRENT_RELEASE}</span>
 					</td>
 					<td>
 						{list.DATE}
