@@ -151,7 +151,7 @@
 			# IF C_DISPLAY_SEX #
 			<div class="spacer"></div>
 
-			<div class="elements-container"
+			<div class="elements-container">
 				<h3>{L_SEX}</h3>
 				<div class="block">
 					{GRAPH_RESULT_SEX}
