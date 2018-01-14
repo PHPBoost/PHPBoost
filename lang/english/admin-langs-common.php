@@ -38,10 +38,12 @@ $lang['langs.delete_lang_multiple'] = 'Delete or deactivate languages';
 $lang['langs.installed_langs'] = 'Installed languages';
 
 //Langs management
+$lang['langs.actions'] = 'Actions';
 $lang['langs.install_lang'] = 'Install';
 $lang['langs.uninstall_lang'] = 'Uninstall';
 $lang['langs.install_all_selected_langs'] = 'Install all selected languages';
 $lang['langs.uninstall_all_selected_langs'] = 'Uninstall all selected languages';
+$lang['langs.set_to_default'] = 'Set to default';
 
 //Uninstall
 $lang['langs.drop_files'] = 'Delete all the language\'s files';

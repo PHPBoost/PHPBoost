@@ -34,7 +34,7 @@
 				<th>{@themes.description}</th>
 				<th>{@themes.authorization}</th>
 				<th>${LangLoader::get_message('enabled', 'common')}</th>
-				<th>{@themes.uninstall_theme}</th>
+				# IF C_MORE_THAN_ONE_THEME_INSTALLED #<th>{@themes.actions}</th># ENDIF #
 			</tr>
 		</thead>
 		# IF C_MORE_THAN_ONE_THEME_INSTALLED #
@@ -54,7 +54,7 @@
 		# ENDIF #
 		<tbody>
 			<tr>
-				<td colspan="# IF C_MORE_THAN_ONE_THEME_INSTALLED #6# ELSE #5# ENDIF #">
+				<td colspan="# IF C_MORE_THAN_ONE_THEME_INSTALLED #6# ELSE #4# ENDIF #">
 					# INCLUDE MSG #
 					<span class="text-strong">{@themes.default_theme_explain}</span>
 				</td>
@@ -119,14 +119,14 @@
 						<span class="form-field-radio-span">${LangLoader::get_message('no', 'common')}</span>
 					</td>
 					<td>
+						<button type="submit" class="submit" name="default-{themes_installed.ID}" value="true">{@themes.set_to_default}</button>
 						<button type="submit" class="submit" name="delete-{themes_installed.ID}" value="true">{@themes.uninstall_theme}</button>
 					</td>
 					# ELSE #
 					<td>
 						${LangLoader::get_message('yes', 'common')}
 					</td>
-					<td>
-					</td>
+					# IF C_MORE_THAN_ONE_THEME_INSTALLED #<td></td># ENDIF #
 					# ENDIF #
 
 				</tr>

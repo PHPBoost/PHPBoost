@@ -34,7 +34,7 @@
 				<th>{@langs.description}</th>
 				<th>{@langs.authorizations}</th>
 				<th>${LangLoader::get_message('enabled', 'common')}</th>
-				<th>{@langs.uninstall_lang}</th>
+				# IF C_MORE_THAN_ONE_LANG_INSTALLED #<th>{@langs.actions}</th># ENDIF #
 			</tr>
 		</thead>
 		# IF C_MORE_THAN_ONE_LANG_INSTALLED #
@@ -54,7 +54,7 @@
 		# ENDIF #
 		<tbody>
 			<tr>
-				<td colspan="# IF C_MORE_THAN_ONE_LANG_INSTALLED #6# ELSE #5# ENDIF #">
+				<td colspan="# IF C_MORE_THAN_ONE_LANG_INSTALLED #6# ELSE #4# ENDIF #">
 					# INCLUDE MSG #
 					<span class="text-strong">{@langs.default_lang_explain}</span>
 				</td>
@@ -104,14 +104,14 @@
 						<span class="form-field-radio-span">${LangLoader::get_message('no', 'common')}</span>
 					</td>
 					<td>
+						<button type="submit" class="submit" name="default-{langs_installed.ID}" value="true">{@langs.set_to_default}</button>
 						<button type="submit" class="submit" name="delete-{langs_installed.ID}" value="true">{@langs.uninstall_lang}</button>
 					</td>
 					# ELSE #
 					<td>
 						${LangLoader::get_message('yes', 'common')}
 					</td>
-					<td>
-					</td>
+					# IF C_MORE_THAN_ONE_LANG_INSTALLED #<td></td># ENDIF #
 					# ENDIF #
 				</tr>
 			# END langs_installed #

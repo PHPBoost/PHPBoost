@@ -129,7 +129,15 @@ class AdminThemesInstalledListController extends AdminController
 		{
 			foreach ($installed_themes as $theme)
 			{
-				if ($request->get_string('delete-' . $theme->get_id(), ''))
+				if ($request->get_string('default-' . $theme->get_id(), ''))
+				{
+					$user_accounts_config = UserAccountsConfig::load();
+					$user_accounts_config->set_default_theme($theme->get_id());
+					UserAccountsConfig::save();
+					
+					AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), LangLoader::get_message('process.success', 'status-messages-common'));
+				}
+				else if ($request->get_string('delete-' . $theme->get_id(), ''))
 				{
 					AppContext::get_response()->redirect(AdminThemeUrlBuilder::delete_theme($theme->get_id()));
 				}

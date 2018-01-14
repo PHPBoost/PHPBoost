@@ -53,10 +53,12 @@ $lang['themes.default_theme_explain'] = 'The default theme can not be uninstalle
 $lang['themes.themes_available'] = 'Available themes';
 
 //Themes management
+$lang['themes.actions'] = 'Actions';
 $lang['themes.install_theme'] = 'Install';
 $lang['themes.uninstall_theme'] = 'Uninstall';
 $lang['themes.install_all_selected_themes'] = 'Install all selected themes';
 $lang['themes.uninstall_all_selected_themes'] = 'Uninstall all selected themes';
+$lang['themes.set_to_default'] = 'Set to default';
 
 //Warnings
 $lang['themes.warning_before_install'] = '<span class="warning">A theme must be enabled, disabled, installed, or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span>';

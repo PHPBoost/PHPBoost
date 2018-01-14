@@ -111,7 +111,15 @@ class AdminLangsInstalledListController extends AdminController
 		{
 			foreach($installed_langs as $lang)
 			{
-				if ($request->get_string('delete-' . $lang->get_id(), ''))
+				if ($request->get_string('default-' . $lang->get_id(), ''))
+				{
+					$user_accounts_config = UserAccountsConfig::load();
+					$user_accounts_config->set_default_lang($lang->get_id());
+					UserAccountsConfig::save();
+					
+					AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('process.success', 'status-messages-common'));
+				}
+				else if ($request->get_string('delete-' . $lang->get_id(), ''))
 				{
 					AppContext::get_response()->redirect(AdminLangsUrlBuilder::uninstall($lang->get_id()));
 				}
