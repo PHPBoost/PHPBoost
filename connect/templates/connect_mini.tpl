@@ -66,16 +66,16 @@
 						<button type="submit" name="register" value="true" class="submit">{@register}</button>
 						<input type="hidden" name="token" value="{TOKEN}">
 					</form>
-
+					# IF C_FB_AUTH_ENABLED #
 					<a class="social-connect fb" rel="nofollow" href="${relative_url(UserUrlBuilder::connect('fb'))}">
 						<i class="fa fa-facebook"></i><span>${LangLoader::get_message('facebook-connect', 'user-common')}</span>
 					</a>
-
-
+					# ENDIF #
+					# IF C_GOOGLE_AUTH_ENABLED #
 					<a class="social-connect google" rel="nofollow" href="${relative_url(UserUrlBuilder::connect('google'))}">
 						<i class="fa fa-google-plus"></i><span>${LangLoader::get_message('google-connect', 'user-common')}</span>
 					</a>
-
+					# ENDIF #
 				</div>
 				# ENDIF #
 				<div class="forget-pass-container">
