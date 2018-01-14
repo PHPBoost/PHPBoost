@@ -39,7 +39,7 @@ $lang['langs.installed_langs'] = 'Installed languages';
 
 //Langs management
 $lang['langs.install_lang'] = 'Install';
-$lang['langs.uninstall_langs'] = 'Uninstall';
+$lang['langs.uninstall_lang'] = 'Uninstall';
 $lang['langs.install_all_selected_langs'] = 'Install all selected languages';
 $lang['langs.uninstall_all_selected_langs'] = 'Uninstall all selected languages';
 

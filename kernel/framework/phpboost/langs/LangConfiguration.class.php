@@ -39,6 +39,8 @@ class LangConfiguration
 	private $date;
 	private $version;
 	private $compatibility;
+	private $identifier;
+	private $picture_url;
 	
 	public function __construct($config_ini_file)
 	{
@@ -73,13 +75,28 @@ class LangConfiguration
 	public function get_version()
 	{
 		return $this->version;
-	}	
+	}
 	
 	public function get_compatibility()
 	{
 		return $this->compatibility;
 	}
 	
+	public function get_identifier()
+	{
+		return $this->identifier;
+	}
+	
+	public function get_picture_url()
+	{
+		return $this->picture_url;
+	}
+	
+	public function has_picture()
+	{
+		$picture = $this->picture_url->rel();
+		return !empty($picture);
+	}
 	
 	private function load_configuration($config_ini_file)
 	{
@@ -93,6 +110,14 @@ class LangConfiguration
 		$this->date = $config['date'];
 		$this->version = $config['version'];
 		$this->compatibility = $config['compatibility'];
+		$this->identifier = $config['identifier'];
+		
+		$url = PATH_TO_ROOT . '/images/stats/countries/' . $this->identifier . '.png';
+		$picture = new File($url);
+		if (!$picture->exists())
+			$url = '';
+		
+		$this->picture_url = new Url($url);
 	}
 
 	private function check_parse_ini_file($parse_result, $ini_file)

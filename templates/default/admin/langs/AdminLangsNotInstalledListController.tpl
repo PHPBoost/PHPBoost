@@ -72,6 +72,9 @@
 						# ENDIF #
 						<td>
 							<span id="lang-{langs_not_installed.ID}"></span>
+							# IF langs_not_installed.C_HAS_PICTURE #
+							<img src="{langs_not_installed.PICTURE_URL}" alt="{langs_not_installed.NAME}" class="valign-middle" />
+							# ENDIF #
 							<span class="text-strong">{langs_not_installed.NAME}</span> <em>({langs_not_installed.VERSION})</em>
 						</td>
 						<td class="left">

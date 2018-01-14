@@ -8,7 +8,7 @@
 				# END langs #
 				</select>
 			</label>
-			<img src="{PATH_TO_ROOT}/images/stats/countries/{LANG_IDENTIFIER}.png" alt="{LANG_NAME}" />
+			# IF C_HAS_PICTURE #<img src="{LANG_PICTURE_URL}" alt="{LANG_NAME}" class="valign-middle" /># ENDIF #
 		</div>
 
 		<a href="?switchlang={DEFAULT_LANG}">{@default_lang}</a>

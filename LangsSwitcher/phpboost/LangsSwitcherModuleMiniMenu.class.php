@@ -70,10 +70,19 @@ class LangsSwitcherModuleMiniMenu extends ModuleMiniMenu
 			$query_string = preg_replace('`switchlang=[^&]+`u', '', QUERY_STRING);
 			AppContext::get_response()->redirect(trim(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : '')));
 		}
+		else
+			$lang = LangsManager::get_lang($user->get_locale());
 
 		$tpl = new FileTemplate('LangsSwitcher/langswitcher.tpl');
 		$tpl->add_lang(LangLoader::get('langswitcher_common', 'LangsSwitcher'));
 		MenuService::assign_positions_conditions($tpl, $this->get_block());
+		
+		$tpl->put_all(array(
+			'C_HAS_PICTURE' => $lang->get_configuration()->has_picture(),
+			'DEFAULT_LANG' => UserAccountsConfig::load()->get_default_lang(),
+			'LANG_NAME' => $lang->get_configuration()->get_name(),
+			'LANG_PICTURE_URL' => $lang->get_configuration()->get_picture_url()->rel()
+		));
 		
 		foreach(LangsManager::get_activated_and_authorized_langs_map_sorted_by_localized_name() as $lang)
 		{
@@ -83,13 +92,6 @@ class LangsSwitcherModuleMiniMenu extends ModuleMiniMenu
 				'IDNAME' => $lang->get_id()
 			));
 		}
-		
-		$lang_identifier = str_replace('en', 'uk', LangLoader::get_message('xml_lang', 'main'));
-		$tpl->put_all(array(
-			'DEFAULT_LANG' => UserAccountsConfig::load()->get_default_lang(),
-			'LANG_IDENTIFIER' => $lang_identifier,
-			'LANG_NAME' => $lang->get_configuration()->get_name()
-		));
 		
 		return $tpl->render();
 	}

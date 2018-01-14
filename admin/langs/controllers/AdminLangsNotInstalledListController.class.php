@@ -64,8 +64,10 @@ class AdminLangsNotInstalledListController extends AdminController
 			$this->view->assign_block_vars('langs_not_installed', array(
 				'C_AUTHOR_EMAIL' => !empty($author_email),
 				'C_AUTHOR_WEBSITE' => !empty($author_website),
+				'C_HAS_PICTURE' => $configuration->has_picture(),
 				'LANG_NUMBER' => $lang_number,
 				'ID' => $lang->get_id(),
+				'PICTURE_URL' => $configuration->get_picture_url()->rel(),
 				'NAME' => $configuration->get_name(),
 				'VERSION' => $configuration->get_version(),
 				'AUTHOR' => $configuration->get_author_name(),
