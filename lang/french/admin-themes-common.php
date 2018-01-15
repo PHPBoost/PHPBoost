@@ -61,7 +61,7 @@ $lang['themes.uninstall_all_selected_themes'] = 'Désinstaller les thèmes séle
 $lang['themes.set_to_default'] = 'Mettre par défaut';
 
 //Avertissements
-$lang['themes.warning_before_install'] = '<span class="warning">Un thème doit être activé, désactivé, installé ou supprimé uniquement depuis cette page.<br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span>';
+$lang['themes.warning_before_install'] = '<span class="message-helper warning">Un thème doit être activé, désactivé, installé ou supprimé uniquement depuis cette page.<br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span>';
 
 //Upload
 $lang['themes.upload_theme'] = 'Uploader un thème';

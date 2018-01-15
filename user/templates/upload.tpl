@@ -352,7 +352,7 @@
 			<div class="upload-elements-container">
 
 				# IF C_EMPTY_FOLDER #
-					<div id="empty-folder" class="notice">{L_EMPTY_FOLDER}</div>
+					<div id="empty-folder" class="message-helper notice">{L_EMPTY_FOLDER}</div>
 					<span id="new-folder"></span>
 				# ELSE #
 					# START folder #

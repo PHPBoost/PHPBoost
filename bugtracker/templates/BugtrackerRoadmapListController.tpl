@@ -115,8 +115,8 @@
 	</table>
 
 	# ELSE #
-	<div class="notice"># IF C_STATUS_IN_PROGRESS #{@notice.no_bug_in_progress}# ELSE #{@notice.no_bug_fixed}# ENDIF #</div>
+	<div class="message-helper notice"># IF C_STATUS_IN_PROGRESS #{@notice.no_bug_in_progress}# ELSE #{@notice.no_bug_fixed}# ENDIF #</div>
 	# ENDIF #
 # ELSE #
-<div class="notice">{@notice.no_version_roadmap}</div>
+<div class="message-helper notice">{@notice.no_version_roadmap}</div>
 # ENDIF #

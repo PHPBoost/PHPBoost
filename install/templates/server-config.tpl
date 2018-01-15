@@ -86,12 +86,12 @@
                         <label>{folder.NAME}</label>
                         <div class="form-field">
                             # IF folder.EXISTS #
-                                <div class="success-block">{@folder.exists}</div>
+                                <div class="message-helper success-block">{@folder.exists}</div>
                             # ELSE #
                                 <div class="failure-block">{@folder.doesNotExist}</div>
                             # ENDIF #
                             # IF folder.IS_WRITABLE #
-                                <div class="success-block">{@folder.isWritable}</div>
+                                <div class="message-helper success-block">{@folder.isWritable}</div>
                             # ELSE #
                                 <div class="failure-block">{@folder.isNotWritable}</div>
                             # ENDIF #
@@ -103,10 +103,10 @@
         </fieldset>
         
 		# IF C_MBSTRING_ERROR #
-		<fieldset id="mbstring-error"><div class="error">{@php.extensions.check.mbstringLibrary.error}</div></fieldset>
+		<fieldset id="mbstring-error"><div class="message-helper error">{@php.extensions.check.mbstringLibrary.error}</div></fieldset>
 		# END #
 		# IF C_FOLDERS_ERROR #
-		<fieldset id="folders-error"><div class="error">{@folders.chmod.error}</div></fieldset>
+		<fieldset id="folders-error"><div class="message-helper error">{@folders.chmod.error}</div></fieldset>
 		# END #
     </div>
 

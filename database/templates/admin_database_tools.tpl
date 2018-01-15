@@ -331,7 +331,7 @@
 						<div class="fieldset-inset">
 								<div class="content">
 									<span id="errorh"></span>
-									<div class="warning">{L_EXPLAIN_QUERY}</div>
+									<div class="message-helper warning">{L_EXPLAIN_QUERY}</div>
 									<fieldset>
 										<label for="query">* {L_EXECUTED_QUERY}</label>
 										<textarea rows="12" id="query" name="query">{QUERY}</textarea>

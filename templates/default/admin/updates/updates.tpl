@@ -23,12 +23,12 @@
 		<legend>{L_WEBSITE_UPDATES}</legend>
 		<div class="fieldset-inset">
 		# IF C_INCOMPATIBLE_PHP_VERSION #
-			<div class="warning message-helper-small">{L_INCOMPATIBLE_PHP_VERSION}</div>
+			<div class="message-helper warning message-helper-small">{L_INCOMPATIBLE_PHP_VERSION}</div>
 		# ELSE #
 			# IF C_UPDATES #
 			<table id="table">
 				<caption>{L_WEBSITE_UPDATES}</caption>
-				<div class="warning message-helper-small">{L_UPDATES_ARE_AVAILABLE}</div>
+				<div class="message-helper warning message-helper-small">{L_UPDATES_ARE_AVAILABLE}</div>
 				<thead>
 					<tr>
 						# IF C_ALL #
@@ -63,7 +63,7 @@
 				</tbody>
 			</table>
 			# ELSE #
-				<div class="success message-helper-small">{L_NO_AVAILABLES_UPDATES}</div>
+				<div class="message-helper success message-helper-small">{L_NO_AVAILABLES_UPDATES}</div>
 			# ENDIF #
 			<p class="center">
 				<a href="{U_CHECK}"><i class="fa fa-download"></i></a> <a href="{U_CHECK}">{L_CHECK_FOR_UPDATES_NOW}</a>

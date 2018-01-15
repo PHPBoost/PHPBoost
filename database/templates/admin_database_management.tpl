@@ -31,7 +31,7 @@
 						<div class="fieldset-inset">
 								{L_EXPLAIN_ACTIONS}
 								<div class="spacer"></div>
-								<div class="question">{L_EXPLAIN_ACTIONS_QUESTION}</div>
+								<div class="message-helper question">{L_EXPLAIN_ACTIONS_QUESTION}</div>
 						</div>
 				</fieldset>
 				<fieldset>
@@ -345,7 +345,7 @@
 											<header></header>
 											<div class="content">
 												<span id="errorh"></span>
-												<div class="warning">{L_EXPLAIN_QUERY}</div>
+												<div class="message-helper warning">{L_EXPLAIN_QUERY}</div>
 												<fieldset>
 													<label for="query">* {L_EXECUTED_QUERY}</label>
 													<textarea rows="12" id="query" name="query">{QUERY}</textarea>

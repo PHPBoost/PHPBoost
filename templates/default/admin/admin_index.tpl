@@ -81,9 +81,9 @@
 						<div class="fieldset-inset">
 							<div class="form-element">
 								# IF C_UNREAD_ALERTS #
-									<div class="warning">{L_UNREAD_ALERT}</div>
+									<div class="message-helper warning">{L_UNREAD_ALERT}</div>
 								# ELSE #
-									<div class="success">{L_NO_UNREAD_ALERT}</div>
+									<div class="message-helper success">{L_NO_UNREAD_ALERT}</div>
 								# ENDIF #
 							</div>
 							# IF C_UNREAD_ALERTS #

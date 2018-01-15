@@ -102,7 +102,7 @@
 
 		# IF C_DISPLAY_NO_FILE_MSG #
 		<div class="content">
-			<div class="notice">${LangLoader::get_message('no_item_now', 'common')}</div>
+			<div class="message-helper notice">${LangLoader::get_message('no_item_now', 'common')}</div>
 		</div>
 		# ENDIF #
 

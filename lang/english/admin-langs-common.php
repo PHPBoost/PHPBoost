@@ -62,5 +62,5 @@ $lang['langs.author'] = 'Author';
 $lang['langs.description'] = 'Description';
 
 //Warnings
-$lang['langs.warning_before_install'] = '<span class="warning">A language must be enabled, disabled, installed, or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span>';
+$lang['langs.warning_before_install'] = '<span class="message-helper warning">A language must be enabled, disabled, installed, or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span>';
 ?>

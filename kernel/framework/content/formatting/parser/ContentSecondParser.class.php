@@ -213,7 +213,7 @@ class ContentSecondParser extends AbstractParser
 
 		if (TextHelper::strlen($content_to_highlight) > self::MAX_CODE_LENGTH)
 		{
-			return '<div class="error">' . LangLoader::get_message('code_too_long_error', 'editor-common') . '</div>';
+			return '<div class="message-helper error">' . LangLoader::get_message('code_too_long_error', 'editor-common') . '</div>';
 		}
 
 		if (!empty($matches[1])) {
@@ -439,7 +439,7 @@ class ContentSecondParser extends AbstractParser
 		else
 		{
 			$error = StringVars::replace_vars(LangLoader::get_message('feed_tag_error', 'editor-common'), array('module' => $module));
-			return '<div class="error">' . $error . '</div>';
+			return '<div class="message-helper error">' . $error . '</div>';
 		}
 	}
 	

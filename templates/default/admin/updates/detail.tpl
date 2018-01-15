@@ -24,7 +24,7 @@
 		<div class="fieldset-inset">
 			<div style="clear:right;"></div>
 			# IF C_UNEXISTING_UPDATE #
-				<div class="warning message-helper-small">{L_UNEXISTING_UPDATE}</div>
+				<div class="message-helper warning message-helper-small">{L_UNEXISTING_UPDATE}</div>
 			# ELSE #
 				<table id="table">
 					<caption>{L_APP_UPDATE_MESSAGE}</caption>

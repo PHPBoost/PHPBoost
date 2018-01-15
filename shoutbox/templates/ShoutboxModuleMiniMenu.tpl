@@ -158,7 +158,7 @@ function shoutbox_refresh_messages_box() {
 # ELSE #
 	# IF C_DISPLAY_NO_WRITE_AUTHORIZATION_MESSAGE #
 	<div class="spacer"></div>
-	<span class="warning">{@error.post.unauthorized}</span>
+	<span class="message-helper warning">{@error.post.unauthorized}</span>
 	<p class="shout-spacing">
 		<a href="" onclick="shoutbox_refresh_messages_box();return false;" id="shoutbox-refresh" title="${LangLoader::get_message('refresh', 'main')}"><i class="fa fa-refresh"></i></a>
 	</p>

@@ -405,7 +405,7 @@
 							</nav>
 							<div class="content">
 								<script>jQuery("#sandbox-group").menumaker({ title: "{@cssmenu.group}", format: "multitoggle", breakpoint: 768 }); </script>
-								<div class="warning">
+								<div class="message-helper warning">
 									{@cssmenu.warning}
 								</div>
 								<p>{@framework.lorem.large}</p>

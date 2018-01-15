@@ -1,7 +1,7 @@
 # IF C_MAINTAIN_DELAY #
 	# IF C_ALERT_MAINTAIN #
 	<div id="message-maintain">
-		<div class="warning message-helper-small">
+		<div class="message-helper warning message-helper-small">
 			{L_MAINTAIN_DELAY}
 			<div id="release">{L_LOADING}...</div>	
 		</div>

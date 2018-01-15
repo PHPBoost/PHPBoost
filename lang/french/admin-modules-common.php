@@ -40,7 +40,7 @@ $lang['modules.delete_module_multiple'] = 'Suppression ou désactivation de modu
 $lang['modules.installed_modules'] = 'Modules installés';
 
 //Warnings
-$lang['modules.warning_before_install'] = '<span class="warning">Un module doit être activé, désactivé, installé ou supprimé uniquement depuis cette page. <br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span>';
+$lang['modules.warning_before_install'] = '<span class="message-helper warning">Un module doit être activé, désactivé, installé ou supprimé uniquement depuis cette page. <br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span>';
 
 //Upload
 $lang['modules.upload_module'] = 'Uploader un module';

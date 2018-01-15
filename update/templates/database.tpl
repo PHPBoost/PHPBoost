@@ -9,7 +9,7 @@
         <span class="spacer">&nbsp;</span>
         {@H|db.parameters.config.explanation}
         # IF ERROR #
-            <div class="error">{ERROR}</div>
+            <div class="message-helper error">{ERROR}</div>
         # END #
 	</div>
 	

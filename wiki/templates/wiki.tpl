@@ -15,7 +15,7 @@
 		<article>
 			<div class="content">
 				# START warning #
-				<div id="id-message-helper" class="warning">{warning.UPDATED_ARTICLE}</div>
+				<div class="message-helper warning">{warning.UPDATED_ARTICLE}</div>
 				# END warning #
 
 				# START redirect #

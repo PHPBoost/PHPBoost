@@ -85,7 +85,7 @@
 				</tbody>
 			</table>
 		# ELSE #
-			<div class="success message-helper-small">${LangLoader::get_message('no_item_now', 'common')}</div>
+			<div class="message-helper success message-helper-small">${LangLoader::get_message('no_item_now', 'common')}</div>
 		# ENDIF #
 		</div>
 	</fieldset>

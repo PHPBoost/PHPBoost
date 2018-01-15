@@ -122,5 +122,5 @@
 		</tbody>
 	</table>
 # ELSE #
-<div class="notice">{L_NO_BUG}</div>
+<div class="message-helper notice">{L_NO_BUG}</div>
 # ENDIF #

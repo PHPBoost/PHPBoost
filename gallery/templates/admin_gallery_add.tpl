@@ -185,7 +185,7 @@
 						<input type="hidden" name="token" value="{TOKEN}">
 						<button type="submit" name="valid" value="true" class="submit">{L_SUBMIT}</button>
 					# ELSE #
-						<div class="notice">{L_NO_IMG}</div>
+						<div class="message-helper notice">{L_NO_IMG}</div>
 					# ENDIF #
 					</div>
 				</fieldset>

@@ -161,7 +161,7 @@ function delete_alert(id)
 			</tbody>
 		</table>
 		# ELSE #
-		<div class="question message-helper-small">{L_NO_ALERT}</div>
+		<div class="message-helper question message-helper-small">{L_NO_ALERT}</div>
 		# ENDIF #
 		</div>
 	</fieldset>

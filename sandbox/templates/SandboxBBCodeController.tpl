@@ -341,7 +341,7 @@
 	# IF C_WIKI #
 	<div class="no-style">
 		<article class="block">
-				<p class="notice">{@wiki.conditions}</p>
+				<p class="message-helper notice">{@wiki.conditions}</p>
 			<div class="content">
 				# START wikimenu #
 					<div class="wiki-summary">

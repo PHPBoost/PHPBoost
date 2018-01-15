@@ -61,7 +61,7 @@ $lang['themes.uninstall_all_selected_themes'] = 'Uninstall all selected themes';
 $lang['themes.set_to_default'] = 'Set to default';
 
 //Warnings
-$lang['themes.warning_before_install'] = '<span class="warning">A theme must be enabled, disabled, installed, or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span>';
+$lang['themes.warning_before_install'] = '<span class="message-helper warning">A theme must be enabled, disabled, installed, or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span>';
 
 //Upload
 $lang['themes.upload_theme'] = 'Upload theme';

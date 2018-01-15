@@ -4,7 +4,7 @@
     
     <div class="content">
         # IF ERROR #
-            <div class="error">{ERROR}</div>
+            <div class="message-helper error">{ERROR}</div>
         # END #
         <a href="http://www.mysql.com/">
             <img src="templates/images/mysql.png" alt="MySQL" class="float-right" />

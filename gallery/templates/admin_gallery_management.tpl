@@ -458,7 +458,7 @@
 
 						# IF C_DISPLAY_NO_PICTURES_MESSAGE #
 							# IF NOT C_PICTURES #
-							<div class="notice">
+							<div class="message-helper notice">
 								{L_TOTAL_IMG}
 							</div>
 							# ELSE #

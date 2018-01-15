@@ -128,11 +128,11 @@ $LANG['wiki_status_explain'] = 'Vous pouvez ici sélectionner le type d\'article
 $LANG['wiki_current_status'] = 'Statut courant';
 
 $LANG['wiki_status_list'] = array(
-	array('Article de qualité', '<span class="notice">Cet article est de grande qualité il est complet et fiable.</span>'),
-	array('Article incomplet', '<span class="question">Cet article manque de sources.<br />Vos connaissances sont les bienvenues afin de le compléter.</span>'),
-	array('Article en cours de travaux', '<span class="notice">Cet article est en cours de travaux, des modifications sont en cours de réalisation, revenez plus tard le reconsulter. Merci.</span>'),
-	array('Article à refaire', '<span class="warning">Cet article est à refaire, son contenu n\'est pas très fiable.</span>'),
-	array('Article remis en cause', '<span class="error">Cet article a été discuté et son contenu ne paraît pas correct. Vous pouvez éventuellement consulter les discussions à ce propos et peut-être y apporter vos connaissances.</span>')
+	array('Article de qualité', '<span class="message-helper notice">Cet article est de grande qualité il est complet et fiable.</span>'),
+	array('Article incomplet', '<span class="message-helper question">Cet article manque de sources.<br />Vos connaissances sont les bienvenues afin de le compléter.</span>'),
+	array('Article en cours de travaux', '<span class="message-helper notice">Cet article est en cours de travaux, des modifications sont en cours de réalisation, revenez plus tard le reconsulter. Merci.</span>'),
+	array('Article à refaire', '<span class="message-helper warning">Cet article est à refaire, son contenu n\'est pas très fiable.</span>'),
+	array('Article remis en cause', '<span class="message-helper error">Cet article a été discuté et son contenu ne paraît pas correct. Vous pouvez éventuellement consulter les discussions à ce propos et peut-être y apporter vos connaissances.</span>')
 );
 
 //Déplacement de l'article
