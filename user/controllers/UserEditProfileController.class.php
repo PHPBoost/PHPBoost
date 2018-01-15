@@ -297,7 +297,7 @@ class UserEditProfileController extends AbstractController
 		
 		if ($this->user->get_level() != User::ADMIN_LEVEL || ($this->user->get_level() == User::ADMIN_LEVEL && $this->user->get_id() != AppContext::get_current_user()->get_id()) || ($this->user->get_level() == User::ADMIN_LEVEL && $this->user->get_id() == AppContext::get_current_user()->get_id() && UserService::count_admin_members() > 1))
 		{
-			$this->delete_account_button = new FormButtonSubmit($this->lang['delete-account'], 'delete_account', 'return confirm(\'' . ($this->user->get_id() != AppContext::get_current_user()->get_id() ? $this->lang['delete-account.confirmation.admin'] : $this->lang['delete-account.confirmation.member']) . '\');return false;', 'btn-warning');
+			$this->delete_account_button = new FormButtonSubmit($this->lang['delete-account'], 'delete_account', 'return confirm(\'' . ($this->user->get_id() != AppContext::get_current_user()->get_id() ? $this->lang['delete-account.confirmation.admin'] : $this->lang['delete-account.confirmation.member']) . '\');return false;', 'delete-account warning');
 			$form->add_button($this->delete_account_button);
 		}
 
