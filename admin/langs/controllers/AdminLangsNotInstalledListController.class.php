@@ -147,7 +147,7 @@ class AdminLangsNotInstalledListController extends AdminController
 	
 	private function install_lang($id_lang, $authorizations = array(), $activate = true)
 	{
-		LangsManager::install($id_theme, $authorizations, $activate);
+		LangsManager::install($id_lang, $authorizations, $activate);
 		$error = LangsManager::get_error();
 		if ($error !== null)
 		{
