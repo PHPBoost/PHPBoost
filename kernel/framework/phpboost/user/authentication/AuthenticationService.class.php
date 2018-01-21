@@ -90,41 +90,46 @@ class AuthenticationService
 		return $types;
 	}
 
-	public static function get_activated_types_authentication()
+
+	private static $external_authentications_actived;
+	
+	public static function get_external_auth_activated($identifier)
 	{
-		$authentication_config = AuthenticationConfig::load();
-		
-		$types = array(PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD); 
-		
-		if ($authentication_config->is_fb_auth_available())
-			$types[] = FacebookAuthenticationMethod::AUTHENTICATION_METHOD;
-		
-		if ($authentication_config->is_google_auth_available())
-			$types[] = GoogleAuthenticationMethod::AUTHENTICATION_METHOD;
-		
-		return $types;
-	}
-
-	public static function get_authentication_method($method_identifier)
-	{
-		switch ($method_identifier) {
-			case PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD:
-				return new PHPBoostAuthenticationMethod();
-				break;
-			
-			case FacebookAuthenticationMethod::AUTHENTICATION_METHOD:
-				return new FacebookAuthenticationMethod();
-				break;
-
-			case GoogleAuthenticationMethod::AUTHENTICATION_METHOD:
-				return new GoogleAuthenticationMethod();
-				break;
-
-			default:
-				throw new IllegalArgumentException('Method ' . $method_identifier .	' not exists');
-				break;
+		$external_auths_activated = self::get_external_auths_activated();
+		if (self::external_auth_is_activated($identifier))
+		{
+			return $external_auths_activated[$identifier];
 		}
 	}
-}
 
+	public static function external_auth_is_activated($id)
+	{
+		return array_key_exists($id, self::get_external_auths_activated());
+	}
+
+	public static function get_external_auths_activated()
+	{
+		if (self::$external_authentications_actived == null)
+		{
+			$extension_point = AppContext::get_extension_provider_service()->get_extension_point(ExternalAuthenticationsExtensionPoint::EXTENSION_POINT);
+
+			foreach ($extension_point as $id => $provider)
+			{
+				$external_authentications = $provider->get_external_authentications();
+
+				foreach ($external_authentications as $external_authentication)
+				{
+					/* TODO for test
+					if ($external_authentication->authentication_actived())
+					{
+						self::$authentication_actived[$external_authentication->get_authentication_id()] = $external_authentication;
+					}
+					*/
+					self::$external_authentications_actived[$external_authentication->get_authentication_id()] = $external_authentication;
+				}
+			}
+		}
+		return self::$external_authentications_actived;
+	}
+}
 ?>

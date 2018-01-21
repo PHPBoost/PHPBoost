@@ -53,16 +53,9 @@ class AdminMemberConfigController extends AdminController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
+			
 			$this->form->get_field_by_id('type_activation_members')->set_hidden(!$this->user_accounts_config->is_registration_enabled());
 			$this->form->get_field_by_id('unactivated_accounts_timeout')->set_hidden(!$this->user_accounts_config->is_registration_enabled() || $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION);
-			
-			if ($this->server_configuration->has_curl_library())
-			{
-				$this->form->get_field_by_id('fb_app_id')->set_hidden(!$this->authentication_config->is_fb_auth_enabled());
-				$this->form->get_field_by_id('fb_app_key')->set_hidden(!$this->authentication_config->is_fb_auth_enabled());
-				$this->form->get_field_by_id('google_client_id')->set_hidden(!$this->authentication_config->is_google_auth_enabled());
-				$this->form->get_field_by_id('google_client_secret')->set_hidden(!$this->authentication_config->is_google_auth_enabled());
-			}
 			
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
@@ -77,7 +70,6 @@ class AdminMemberConfigController extends AdminController
 		$this->lang = LangLoader::get('admin-user-common');
 		$this->user_accounts_config = UserAccountsConfig::load();
 		$this->security_config = SecurityConfig::load();
-		$this->authentication_config = AuthenticationConfig::load();
 		$this->server_configuration = new ServerConfiguration();
 	}
 
@@ -143,56 +135,6 @@ class AdminMemberConfigController extends AdminController
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('login_and_email_forbidden_in_password', $this->lang['security.config.login-and-email-forbidden-in-password'], $this->security_config->are_login_and_email_forbidden_in_password()));
-
-		$fieldset = new FormFieldsetHTML('authentication_config', $this->lang['members.config-authentication']);
-		$form->add_fieldset($fieldset);
-		
-		if ($this->server_configuration->has_curl_library())
-		{
-			$fieldset->add_field(new FormFieldCheckbox('fb_auth_enabled', $this->lang['authentication.config.fb-auth-enabled'], $this->authentication_config->is_fb_auth_enabled(),
-				array('description' => $this->lang['authentication.config.fb-auth-enabled-explain'], 'events' => array('click' => '
-					if (HTMLForms.getField("fb_auth_enabled").getValue()) { 
-						HTMLForms.getField("fb_app_id").enable(); 
-						HTMLForms.getField("fb_app_key").enable(); 
-					} else { 
-						HTMLForms.getField("fb_app_id").disable(); 
-						HTMLForms.getField("fb_app_key").disable(); 
-					}'
-				)
-			)));
-			
-			$fieldset->add_field(new FormFieldTextEditor('fb_app_id', $this->lang['authentication.config.fb-app-id'], $this->authentication_config->get_fb_app_id(), 
-				array('required' => true, 'hidden' => !$this->authentication_config->is_fb_auth_enabled())
-			));
-			
-			$fieldset->add_field(new FormFieldPasswordEditor('fb_app_key', $this->lang['authentication.config.fb-app-key'], $this->authentication_config->get_fb_app_key(), 
-				array('required' => true, 'hidden' => !$this->authentication_config->is_fb_auth_enabled())
-			));
-			
-			$fieldset->add_field(new FormFieldCheckbox('google_auth_enabled', $this->lang['authentication.config.google-auth-enabled'], $this->authentication_config->is_google_auth_enabled(),
-				array('description' => $this->lang['authentication.config.google-auth-enabled-explain'], 'events' => array('click' => '
-					if (HTMLForms.getField("google_auth_enabled").getValue()) { 
-						HTMLForms.getField("google_client_id").enable(); 
-						HTMLForms.getField("google_client_secret").enable(); 
-					} else { 
-						HTMLForms.getField("google_client_id").disable(); 
-						HTMLForms.getField("google_client_secret").disable(); 
-					}'
-				)
-			)));
-			
-			$fieldset->add_field(new FormFieldTextEditor('google_client_id', $this->lang['authentication.config.google-client-id'], $this->authentication_config->get_google_client_id(), 
-				array('required' => true, 'hidden' => !$this->authentication_config->is_google_auth_enabled())
-			));
-			
-			$fieldset->add_field(new FormFieldPasswordEditor('google_client_secret', $this->lang['authentication.config.google-client-secret'], $this->authentication_config->get_google_client_secret(), 
-				array('required' => true, 'hidden' => !$this->authentication_config->is_google_auth_enabled())
-			));
-		}
-		else
-		{
-			$fieldset->add_field(new FormFieldFree('', '', MessageHelper::display($this->lang['authentication.config.curl_extension_disabled'], MessageHelper::WARNING)->render()));
-		}
 		
 		$fieldset = new FormFieldsetHTML('avatar_management', $this->lang['members.config.avatars-management']);
 		$form->add_fieldset($fieldset);

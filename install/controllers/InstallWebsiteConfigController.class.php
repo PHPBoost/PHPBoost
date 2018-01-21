@@ -113,52 +113,6 @@ class InstallWebsiteConfigController extends InstallController
 		
 		$fieldset->add_field(new FormFieldCheckbox('login_and_email_forbidden_in_password', $admin_user_lang['security.config.login-and-email-forbidden-in-password'], $this->security_config->are_login_and_email_forbidden_in_password()));
 
-		if ($this->server_configuration->has_curl_library())
-		{
-			$fieldset = new FormFieldsetHTML('authentication_config', $admin_user_lang['members.config-authentication']);
-			$this->form->add_fieldset($fieldset);
-			
-			$fieldset->add_field(new FormFieldCheckbox('fb_auth_enabled', $admin_user_lang['authentication.config.fb-auth-enabled'], $this->authentication_config->is_fb_auth_enabled(),
-				array('description' => $admin_user_lang['authentication.config.fb-auth-enabled-explain'], 'events' => array('click' => '
-					if (HTMLForms.getField("fb_auth_enabled").getValue()) { 
-						HTMLForms.getField("fb_app_id").enable(); 
-						HTMLForms.getField("fb_app_key").enable(); 
-					} else { 
-						HTMLForms.getField("fb_app_id").disable(); 
-						HTMLForms.getField("fb_app_key").disable(); 
-					}'
-				)
-			)));
-			
-			$fieldset->add_field(new FormFieldTextEditor('fb_app_id', $admin_user_lang['authentication.config.fb-app-id'], $this->authentication_config->get_fb_app_id(), 
-				array('required' => true, 'hidden' => !$this->authentication_config->is_fb_auth_enabled())
-			));
-			
-			$fieldset->add_field(new FormFieldPasswordEditor('fb_app_key', $admin_user_lang['authentication.config.fb-app-key'], $this->authentication_config->get_fb_app_key(), 
-				array('required' => true, 'hidden' => !$this->authentication_config->is_fb_auth_enabled())
-			));
-			
-			$fieldset->add_field(new FormFieldCheckbox('google_auth_enabled', $admin_user_lang['authentication.config.google-auth-enabled'], $this->authentication_config->is_google_auth_enabled(),
-				array('description' => $admin_user_lang['authentication.config.google-auth-enabled-explain'], 'events' => array('click' => '
-					if (HTMLForms.getField("google_auth_enabled").getValue()) { 
-						HTMLForms.getField("google_client_id").enable(); 
-						HTMLForms.getField("google_client_secret").enable(); 
-					} else { 
-						HTMLForms.getField("google_client_id").disable(); 
-						HTMLForms.getField("google_client_secret").disable(); 
-					}'
-				)
-			)));
-			
-			$fieldset->add_field(new FormFieldTextEditor('google_client_id', $admin_user_lang['authentication.config.google-client-id'], $this->authentication_config->get_google_client_id(), 
-				array('required' => true, 'hidden' => !$this->authentication_config->is_google_auth_enabled())
-			));
-			
-			$fieldset->add_field(new FormFieldPasswordEditor('google_client_secret', $admin_user_lang['authentication.config.google-client-secret'], $this->authentication_config->get_google_client_secret(), 
-				array('required' => true, 'hidden' => !$this->authentication_config->is_google_auth_enabled())
-			));
-		}
-
 		$action_fieldset = new FormFieldsetSubmit('actions');
 		$back = new FormButtonLinkCssImg($this->lang['step.previous'], InstallUrlBuilder::database(), 'fa fa-arrow-left');
 		$action_fieldset->add_element($back);
@@ -184,29 +138,6 @@ class InstallWebsiteConfigController extends InstallController
 			$this->security_config->allow_login_and_email_in_password();
 		
 		SecurityConfig::save();
-		
-		if ($this->server_configuration->has_curl_library())
-		{
-			if ($this->form->get_value('fb_auth_enabled'))
-			{
-				$this->authentication_config->enable_fb_auth();
-				$this->authentication_config->set_fb_app_id($this->form->get_value('fb_app_id'));
-				$this->authentication_config->set_fb_app_key($this->form->get_value('fb_app_key'));
-			}
-			else
-				$this->authentication_config->disable_fb_auth();
-			
-			if ($this->form->get_value('google_auth_enabled'))
-			{
-				$this->authentication_config->enable_google_auth();
-				$this->authentication_config->set_google_client_id($this->form->get_value('google_client_id'));
-				$this->authentication_config->set_google_client_secret($this->form->get_value('google_client_secret'));
-			}
-			else
-				$this->authentication_config->disable_google_auth();
-			
-			AuthenticationConfig::save();
-		}
 		
 		AppContext::get_response()->redirect(InstallUrlBuilder::admin());
 	}

@@ -122,19 +122,26 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 				));
 			}
 			else
-			{
-				$authentication_config = AuthenticationConfig::load();
-				
+			{				
 				$tpl->put_all(array(
 					'C_USER_NOTCONNECTED' => true,
 					'C_USER_REGISTER' => UserAccountsConfig::load()->is_registration_enabled(),
-					'C_FB_AUTH_ENABLED' => $authentication_config->is_fb_auth_available(),
-					'C_GOOGLE_AUTH_ENABLED' => $authentication_config->is_google_auth_available(),
 					'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
 					'L_REQUIRE_PASSWORD' => $LANG['require_password'],
 					'U_CONNECT' => UserUrlBuilder::connect()->rel(),
 					'SITE_REWRITED_SCRIPT' => TextHelper::substr(REWRITED_SCRIPT, TextHelper::strlen(GeneralConfig::load()->get_site_path()))
 				));
+
+				$activated_external_authentication = AuthenticationService::get_external_auths_activated();
+				foreach ($activated_external_authentication as $id => $authentication)
+				{
+					$tpl->assign_block_vars('external_auth', array(
+						'U_CONNECT' => UserUrlBuilder::connect($id)->rel(),
+						'ID' => $id,
+						'NAME' => $authentication->get_authentication_name(),
+						'IMAGE_HTML' => $authentication->get_image_renderer_html()
+					));
+				}
 			}
 		
 			return $tpl->render();

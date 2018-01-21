@@ -54,7 +54,7 @@ class GoogleAuthenticationMethod extends AuthenticationMethod
 	public function __construct()
 	{
 		$this->querier = PersistenceContext::get_querier();
-		$auth_config = AuthenticationConfig::load();
+		$auth_config = SocialNetworksConfig::load();
 
 		$this->google_client = new Google_Client();
 		$this->google_client->setClientId($auth_config->get_google_client_id());

@@ -50,7 +50,7 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 	public function __construct()
 	{
 		$this->querier = PersistenceContext::get_querier();
-		$config = AuthenticationConfig::load();
+		$config = SocialNetworksConfig::load();
 		
 		$this->facebook = new Facebook(array(
 			'appId'  => $config->get_fb_app_id(),

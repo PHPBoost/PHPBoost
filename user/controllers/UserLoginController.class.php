@@ -42,6 +42,7 @@ class UserLoginController extends AbstractController
 
 	private $has_error;
 	private $maintain_config;
+
 	
 	public function __construct($login_type = self::USER_LOGIN, $redirect = '')
 	{
@@ -87,14 +88,13 @@ class UserLoginController extends AbstractController
 			}
 			else
 			{
-				try {
-					$authentication = AuthenticationService::get_authentication_method($authenticate_type);
-				} catch (Exception $e) {
+				if (!AuthenticationService::external_auth_is_activated($authenticate_type))
+				{
 					$error_controller = PHPBoostErrors::unexisting_page();
 					DispatchManager::redirect($error_controller);
 				}
-				
-				$this->authenticate($authentication, true);
+
+				$this->authenticate(AuthenticationService::get_external_auth_activated($authenticate_type)->get_authentication(), true);
 			}
 		}
 		
@@ -122,12 +122,8 @@ class UserLoginController extends AbstractController
 	
 	private function init_vars_template()
 	{
-		$authentication_config = AuthenticationConfig::load();
-		
 		$this->view->put_all(array(
 			'C_REGISTRATION_ENABLED' => UserAccountsConfig::load()->is_registration_enabled(),
-			'C_FB_AUTH_ENABLED' => $authentication_config->is_fb_auth_available(),
-			'C_GOOGLE_AUTH_ENABLED' => $authentication_config->is_google_auth_available(),
 			'C_USER_LOGIN' => $this->login_type == self::USER_LOGIN && !$this->maintain_config->is_under_maintenance(),
 			'C_ADMIN_LOGIN' => $this->login_type == self::ADMIN_LOGIN,
 			'C_HAS_ERROR' => $this->has_error,
@@ -136,6 +132,17 @@ class UserLoginController extends AbstractController
 			'L_FORGET_PASSWORD' => $this->lang['forget-password'],
 			'LOGIN_FORM' => $this->form->display(),
 		));
+
+		$activated_external_authentication = AuthenticationService::get_external_auths_activated();
+		foreach ($activated_external_authentication as $id => $authentication)
+		{
+			$this->view->assign_block_vars('external_auth', array(
+				'U_CONNECT' => UserUrlBuilder::connect($id)->rel(),
+				'ID' => $id,
+				'NAME' => $authentication->get_authentication_name(),
+				'IMAGE_HTML' => $authentication->get_image_renderer_html()
+			));
+		}
 		
 		if ($this->maintain_config->is_under_maintenance())
 		{
