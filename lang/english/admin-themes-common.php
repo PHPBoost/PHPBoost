@@ -68,7 +68,7 @@ $lang['themes.upload_theme'] = 'Upload theme';
 $lang['themes.upload_description'] = 'The archive should be uploaded as zip or gzip';
 
 //Messages
-$lang['themes.upload_invalid_format'] = 'The format of the archive is not valid';
+$lang['themes.upload_invalid_format'] = 'The archive format is invalid';
 $lang['themes.upload_error'] = 'Error with the upload file';
 
 //Delete theme

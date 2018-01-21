@@ -61,6 +61,10 @@ $lang['langs.compatibility'] = 'Compatibilité';
 $lang['langs.author'] = 'Auteur';
 $lang['langs.description'] = 'Description';
 
+//Messages
+$lang['langs.upload_invalid_format'] = 'Le format de l\'archive n\'est pas valide';
+$lang['langs.upload_error'] = 'Erreur avec l\'upload du fichier';
+
 //Avertissements
 $lang['langs.warning_before_install'] = '<span class="message-helper warning">Une langue doit être activée, désactivée, installée ou supprimée uniquement depuis cette page.<br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span>';
 ?>
