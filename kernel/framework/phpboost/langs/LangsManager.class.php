@@ -149,9 +149,13 @@ class LangsManager
 				LangsConfig::save();
 			}
 		}
-		else
+		else if (self::get_lang_existed($id))
 		{
 			self::$error = LangLoader::get_message('element.already_exists', 'status-messages-common');
+		}
+		else
+		{
+			self::$error = LangLoader::get_message('process.error', 'status-messages-common');
 		}
 	}
 	
@@ -211,7 +215,7 @@ class LangsManager
 			{
 				$lang->set_authorizations($authorizations);
 			}
-						
+			
 			LangsConfig::load()->update($lang);
 			LangsConfig::save();
 		}

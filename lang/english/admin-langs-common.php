@@ -56,4 +56,8 @@ $lang['langs.activated'] = 'Activated';
 $lang['langs.compatibility'] = 'Compatibility';
 $lang['langs.author'] = 'Author';
 $lang['langs.description'] = 'Description';
+
+//Messages
+$lang['langs.upload_invalid_format'] = 'The archive format is invalid';
+$lang['langs.upload_error'] = 'Error with the upload file';
 ?>

@@ -57,4 +57,8 @@ $lang['langs.compatibility'] = 'Compatibilité';
 $lang['langs.author'] = 'Auteur';
 $lang['langs.description'] = 'Description';
 
+//Messages
+$lang['langs.upload_invalid_format'] = 'Le format de l\'archive n\'est pas valide';
+$lang['langs.upload_error'] = 'Erreur avec l\'upload du fichier';
+
 ?>

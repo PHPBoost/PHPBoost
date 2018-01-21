@@ -254,7 +254,7 @@ class AdminLangsNotInstalledListController extends AdminController
 				}
 				else
 				{
-					$this->view->put('MSG', MessageHelper::display($this->lang['langs.upload.invalid_format'], MessageHelper::NOTICE));
+					$this->view->put('MSG', MessageHelper::display($this->lang['langs.upload_invalid_format'], MessageHelper::NOTICE));
 				}
 			}
 			else
