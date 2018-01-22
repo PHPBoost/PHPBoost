@@ -34,6 +34,8 @@ class FaqConfig extends AbstractConfigData
 	const CATEGORIES_NUMBER_PER_PAGE = 'categories_number_per_page';
 	const COLUMNS_NUMBER_PER_LINE = 'columns_number_per_line';
 	const DISPLAY_TYPE = 'display_type';
+	const ITEMS_DEFAULT_SORT_FIELD = 'items_default_sort_field';
+	const ITEMS_DEFAULT_SORT_MODE = 'items_default_sort_mode';
 	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
 	const AUTHORIZATIONS = 'authorizations';
 	
@@ -75,6 +77,26 @@ class FaqConfig extends AbstractConfigData
 		return $this->get_property(self::DISPLAY_TYPE) == self::DISPLAY_TYPE_ANSWERS_HIDDEN;
 	}
 	
+	public function get_items_default_sort_field()
+	{
+		return $this->get_property(self::ITEMS_DEFAULT_SORT_FIELD);
+	}
+	
+	public function set_items_default_sort_field($value)
+	{
+		$this->set_property(self::ITEMS_DEFAULT_SORT_FIELD, $value);
+	}
+	
+	public function get_items_default_sort_mode()
+	{
+		return $this->get_property(self::ITEMS_DEFAULT_SORT_MODE);
+	}
+	
+	public function set_items_default_sort_mode($value)
+	{
+		$this->set_property(self::ITEMS_DEFAULT_SORT_MODE, $value);
+	}
+	
 	public function get_root_category_description()
 	{
 		return $this->get_property(self::ROOT_CATEGORY_DESCRIPTION);
@@ -104,6 +126,8 @@ class FaqConfig extends AbstractConfigData
 			self::CATEGORIES_NUMBER_PER_PAGE => 10,
 			self::COLUMNS_NUMBER_PER_LINE => 4,
 			self::DISPLAY_TYPE => self::DISPLAY_TYPE_ANSWERS_HIDDEN,
+			self::ITEMS_DEFAULT_SORT_FIELD => FaqQuestion::SORT_ALPHABETIC,
+			self::ITEMS_DEFAULT_SORT_MODE => FaqQuestion::ASC,
 			self::ROOT_CATEGORY_DESCRIPTION => LangLoader::get_message('root_category_description', 'config', 'faq'),
 			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13)
 		);

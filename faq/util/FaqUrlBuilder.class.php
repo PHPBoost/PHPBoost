@@ -31,9 +31,6 @@
 
 class FaqUrlBuilder
 {
-	const DEFAULT_SORT_FIELD = 'date';
-	const DEFAULT_SORT_MODE = 'desc';
-	
 	private static $dispatcher = '/faq';
 	
 	/**
@@ -107,10 +104,11 @@ class FaqUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function display_pending($sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE)
+	public static function display_pending($sort_field = '', $sort_mode = '')
 	{
-		$sort_field = $sort_field !== self::DEFAULT_SORT_FIELD ? $sort_field . '/' : '';
-		$sort_mode = $sort_mode !== self::DEFAULT_SORT_MODE ? $sort_mode . '/' : '';
+		$config = FaqConfig::load();
+		$sort_field = $sort_field !== $config->get_items_default_sort_field() ? $sort_field . '/' : '';
+		$sort_mode = $sort_mode !== $config->get_items_default_sort_mode() ? $sort_mode . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/pending/' . $sort_field . $sort_mode);
 	}
 	
