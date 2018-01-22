@@ -95,8 +95,8 @@ class DownloadDisplayDownloadFileController extends ModuleController
 	private function build_view()
 	{
 		$config = DownloadConfig::load();
-		$comments_config = new DownloadComments();
-		$notation_config = new DownloadNotation();
+		$comments_config = CommentsConfig::load();
+		$content_management_config = ContentManagementConfig::load();
 		$downloadfile = $this->get_downloadfile();
 		$category = $downloadfile->get_category();
 		
@@ -105,15 +105,15 @@ class DownloadDisplayDownloadFileController extends ModuleController
 		
 		$this->tpl->put_all(array_merge($downloadfile->get_array_tpl_vars(), array(
 			'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),
-			'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
-			'C_NOTATION_ENABLED' => $notation_config->is_notation_enabled(),
+			'C_COMMENTS_ENABLED' => $comments_config->module_comments_is_enabled('download'),
+			'C_NOTATION_ENABLED' => $content_management_config->module_notation_is_enabled('download'),
 			'C_KEYWORDS' => $has_keywords,
 			'C_DISPLAY_DOWNLOAD_LINK' => DownloadAuthorizationsService::check_authorizations()->display_download_link(),
 			'NOT_VISIBLE_MESSAGE' => MessageHelper::display(LangLoader::get_message('element.not_visible', 'status-messages-common'), MessageHelper::WARNING),
 			'UNAUTHORIZED_TO_DOWNLOAD_MESSAGE' => MessageHelper::display($this->lang['download.message.warning.unauthorized_to_download_file'], MessageHelper::WARNING)
 		)));
 		
-		if ($comments_config->are_comments_enabled())
+		if ($comments_config->module_comments_is_enabled('download'))
 		{
 			$comments_topic = new DownloadCommentsTopic($downloadfile);
 			$comments_topic->set_id_in_module($downloadfile->get_id());

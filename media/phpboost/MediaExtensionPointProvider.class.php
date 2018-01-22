@@ -59,16 +59,6 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 		return new MediaHomePageExtensionPoint();
 	}
 	
-	public function newcontent()
-	{
-		return new MediaNewContent();
-	}
-
-	public function notation()
-	{
-		return new MediaNotation();
-	}
-	
 	public function search()
 	{
 		return new MediaSearchable();

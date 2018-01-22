@@ -146,7 +146,7 @@ class AdminContentConfigController extends AdminController
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'), new FormFieldConstraintIntegerRange(1, 9999))
 		));
 
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('new_content_unauthorized_modules', $this->admin_common_lang['config.forbidden-module'], $this->content_management_config->get_new_content_unauthorized_modules(), $this->generate_unauthorized_module_option(NewContentExtensionPoint::EXTENSION_POINT),
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('new_content_unauthorized_modules', $this->admin_common_lang['config.forbidden-module'], $this->content_management_config->get_new_content_unauthorized_modules(), $this->generate_unauthorized_module_option('newcontent'),
 			array('size' => 12, 'description' => $this->admin_common_lang['config.new-content.forbidden-module-explain'], 'hidden' => !$this->content_management_config->is_new_content_enabled())
 		));
 
@@ -170,7 +170,7 @@ class AdminContentConfigController extends AdminController
 			array(new FormFieldConstraintIntegerRange(3, 20))
 		));
 
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('notation_unauthorized_modules', $this->admin_common_lang['config.forbidden-module'], $this->content_management_config->get_notation_unauthorized_modules(), $this->generate_unauthorized_module_option(NotationExtensionPoint::EXTENSION_POINT),
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('notation_unauthorized_modules', $this->admin_common_lang['config.forbidden-module'], $this->content_management_config->get_notation_unauthorized_modules(), $this->generate_unauthorized_module_option('notation'),
 			array('size' => 6, 'description' => $this->admin_common_lang['config.notation.forbidden-module-explain'], 'hidden' => !$this->content_management_config->is_notation_enabled())
 		));
 
@@ -224,7 +224,7 @@ class AdminContentConfigController extends AdminController
 			{
 				foreach (AppContext::get_extension_provider_service()->get_extension_point(NotationExtensionPoint::EXTENSION_POINT) as $module_id => $module_notation)
 				{
-					$module_notation->update_notation_scale($module_id, $this->content_management_config->get_notation_scale(), $this->form->get_value('notation_scale'));
+					NotationService::update_notation_scale($module_id, $this->content_management_config->get_notation_scale(), $this->form->get_value('notation_scale'));
 				}
 				$this->content_management_config->set_notation_scale($this->form->get_value('notation_scale'));
 			}
@@ -260,15 +260,10 @@ class AdminContentConfigController extends AdminController
 	{
 		$options = array();
 
-		$provider_service = AppContext::get_extension_provider_service();
-		$extensions_point_modules = array_keys($provider_service->get_extension_point($type));
-
-		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $id => $module)
+		$modules = ModulesManager::get_activated_feature_modules($type);
+		foreach ($modules as $id => $module)
 		{
-			if (in_array($module->get_id(), $extensions_point_modules))
-			{
-				$options[] = new FormFieldSelectChoiceOption($module->get_configuration()->get_name(), $module->get_id());
-			}
+			$options[] = new FormFieldSelectChoiceOption($module->get_configuration()->get_name(), $module->get_id());
 		}
 		return $options;
 	}

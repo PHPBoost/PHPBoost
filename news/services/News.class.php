@@ -425,7 +425,6 @@ class News
 		$number_comments = CommentsService::get_number_comments('news', $this->id);
 		$sources = $this->get_sources();
 		$nbr_sources = count($sources);
-		$new_content = new NewsNewContent();
 		
 		return array_merge(
 			Date::get_array_tpl_vars($this->creation_date,'date'),
@@ -443,7 +442,7 @@ class News
 			'C_SOURCES' => $nbr_sources > 0,
 			'C_DIFFERED' => $this->approbation_type == self::APPROVAL_DATE,
 			'C_TOP_LIST' => $this->top_list_enabled(),
-			'C_NEW_CONTENT' => $new_content->check_if_is_new_content($this->get_start_date() != null ? $this->get_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_visible(),
+			'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('news', $this->get_start_date() != null ? $this->get_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_visible(),
 			
 			//News
 			'ID' => $this->id,

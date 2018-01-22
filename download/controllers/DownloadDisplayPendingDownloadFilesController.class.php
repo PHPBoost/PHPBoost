@@ -56,8 +56,8 @@ class DownloadDisplayPendingDownloadFilesController extends ModuleController
 	{
 		$now = new Date();
 		$config = DownloadConfig::load();
-		$comments_config = new DownloadComments();
-		$notation_config = new DownloadNotation();
+		$comments_config = CommentsConfig::load();
+		$content_management_config = ContentManagementConfig::load();
 		$authorized_categories = DownloadService::get_authorized_categories(Category::ROOT_CATEGORY);
 		$mode = $request->get_getstring('sort', DownloadUrlBuilder::DEFAULT_SORT_MODE);
 		$field = $request->get_getstring('field', DownloadUrlBuilder::DEFAULT_SORT_FIELD);
@@ -111,12 +111,12 @@ class DownloadDisplayPendingDownloadFilesController extends ModuleController
 			'C_CATEGORY_DISPLAYED_TABLE' => $config->is_category_displayed_table(),
 			'C_SEVERAL_COLUMNS' => $number_columns_display_per_line > 1,
 			'NUMBER_COLUMNS' => $number_columns_display_per_line,
-			'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
-			'C_NOTATION_ENABLED' => $notation_config->is_notation_enabled(),
+			'C_COMMENTS_ENABLED' => $comments_config->module_comments_is_enabled('download'),
+			'C_NOTATION_ENABLED' => $content_management_config->module_notation_is_enabled('download'),
 			'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
-			'TABLE_COLSPAN' => 4 + (int)$comments_config->are_comments_enabled() + (int)$notation_config->is_notation_enabled()
+			'TABLE_COLSPAN' => 4 + (int)$comments_config->module_comments_is_enabled('download') + (int)$content_management_config->module_notation_is_enabled('download')
 		));
 		
 		while ($row = $result->fetch())

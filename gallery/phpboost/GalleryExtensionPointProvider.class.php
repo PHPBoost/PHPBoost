@@ -61,16 +61,6 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 		return new ModuleMenus(array(new GalleryModuleMiniMenu()));
 	}
 	
-	public function newcontent()
-	{
-		return new GalleryNewContent();
-	}
-
-	public function notation()
-	{
-		return new GalleryNotation();
-	}
-	
 	public function sitemap()
 	{
 		return new GallerySitemapExtensionPoint();

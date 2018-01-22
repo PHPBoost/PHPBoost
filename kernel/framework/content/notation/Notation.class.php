@@ -44,7 +44,7 @@ class Notation
 	private $user_already_noted;
 	
 	private $infos;
-	
+
 	public function set_id($id)
 	{
 		$this->id = $id;
@@ -102,7 +102,11 @@ class Notation
 	
 	public function get_notation_scale()
 	{
-		return $this->notation_scale;
+		if (!empty($this->notation_scale))
+		{
+			return $this->notation_scale;
+		}
+		return ContentManagementConfig::load()->get_notation_scale();
 	}
 	
 	public function set_average_notes($average_notes)

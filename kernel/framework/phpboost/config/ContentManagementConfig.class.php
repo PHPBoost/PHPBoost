@@ -131,6 +131,26 @@ class ContentManagementConfig extends AbstractConfigData
 		$this->set_property(self::NOTATION_UNAUTHORIZED_MODULES, $modules);
 	}
 
+	public function module_new_content_is_enabled($module_id)
+	{
+		return $this->is_new_content_enabled() && !in_array($module_id, $this->get_new_content_unauthorized_modules());
+	}
+
+	public function module_new_content_is_enabled_and_check_date($module_id, $date)
+	{
+		return $this->module_new_content_is_enabled($module_id) && $this->check_date($date);
+	}
+
+	private function check_date($date)
+	{
+		return (time() - $date) <= $this->get_new_content_duration()*86400;
+	}
+	
+	public function module_notation_is_enabled($module_id)
+	{
+		return $this->is_notation_enabled() && !in_array($module_id, $this->get_notation_unauthorized_modules());
+	}
+
 	protected function get_default_values()
 	{
 		return array(

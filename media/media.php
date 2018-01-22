@@ -51,8 +51,8 @@ elseif ($id_media > 0)
 {
 	$tpl = new FileTemplate('media/media.tpl');
 	$config = MediaConfig::load();
-	$comments_config = new MediaComments();
-	$notation_config = new MediaNotation();
+	$comments_config = CommentsConfig::load();
+	$content_management_config = ContentManagementConfig::load();
 	
 	try {
 		$media = PersistenceContext::get_querier()->select_single_row_query("SELECT v.*, mb.display_name, mb.groups, mb.level, notes.average_notes, notes.number_notes, note.note
@@ -92,7 +92,6 @@ elseif ($id_media > 0)
 
 	$notation = new Notation();
 	$notation->set_module_name('media');
-	$notation->set_notation_scale($notation_config->get_notation_scale());
 	$notation->set_id_in_module($id_media);
 	$notation->set_number_notes($media['number_notes']);
 	$notation->set_average_notes($media['average_notes']);
@@ -101,8 +100,6 @@ elseif ($id_media > 0)
 	
 	$group_color = User::get_group_color($media['groups'], $media['level']);
 
-	$new_content = new MediaNewContent();
-	
 	$date = new Date($media['timestamp'], Timezone::SERVER_TIMEZONE);
 
 	$tpl->put_all(array_merge(Date::get_array_tpl_vars($date, 'date'), array(
@@ -110,9 +107,9 @@ elseif ($id_media > 0)
 		'C_DISPLAY_MEDIA' => true,
 		'C_ROOT_CATEGORY' => $media['idcat'] == Category::ROOT_CATEGORY,
 		'C_MODO' => MediaAuthorizationsService::check_authorizations($media['idcat'])->moderation(),
-		'C_DISPLAY_NOTATION' => $notation_config->is_notation_enabled(),
-		'C_DISPLAY_COMMENTS' => $comments_config->are_comments_enabled(),
-		'C_NEW_CONTENT' => $new_content->check_if_is_new_content($media['timestamp']),
+		'C_DISPLAY_NOTATION' => $content_management_config->module_notation_is_enabled('media'),
+		'C_DISPLAY_COMMENTS' => $comments_config->module_comments_is_enabled('media'),
+		'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('media', $media['timestamp']),
 		'ID_MEDIA' => $id_media,
 		'NAME' => $media['name'],
 		'CONTENTS' => FormatingHelper::second_parse(stripslashes($media['contents'])),

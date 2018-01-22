@@ -56,8 +56,8 @@ class WebDisplayPendingWebLinksController extends ModuleController
 	{
 		$now = new Date();
 		$config = WebConfig::load();
-		$comments_config = new WebComments();
-		$notation_config = new WebNotation();
+		$comments_config = CommentsConfig::load();
+		$content_management_config = ContentManagementConfig::load();
 		$authorized_categories = WebService::get_authorized_categories(Category::ROOT_CATEGORY);
 		$mode = $request->get_getstring('sort', WebUrlBuilder::DEFAULT_SORT_MODE);
 		$field = $request->get_getstring('field', WebUrlBuilder::DEFAULT_SORT_FIELD);
@@ -108,11 +108,11 @@ class WebDisplayPendingWebLinksController extends ModuleController
 			'C_CATEGORY_DISPLAYED_TABLE' => $config->is_category_displayed_table(),
 			'C_SEVERAL_COLUMNS' => $number_columns_display_per_line > 1,
 			'NUMBER_COLUMNS' => $number_columns_display_per_line,
-			'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
-			'C_NOTATION_ENABLED' => $notation_config->is_notation_enabled(),
+			'C_COMMENTS_ENABLED' => $comments_config->module_comments_is_enabled('web'),
+			'C_NOTATION_ENABLED' => $content_management_config->module_notation_is_enabled('web'),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
-			'TABLE_COLSPAN' => 3 + (int)$comments_config->are_comments_enabled() + (int)$notation_config->is_notation_enabled()
+			'TABLE_COLSPAN' => 3 + (int)$comments_config->module_comments_is_enabled('web') + (int)$content_management_config->module_notation_is_enabled('web')
 		));
 		
 		while ($row = $result->fetch())

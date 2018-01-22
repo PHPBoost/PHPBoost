@@ -57,16 +57,6 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 		return new ArticlesHomePageExtensionPoint();
 	}
 	
-	public function newcontent()
-	{
-		return new ArticlesNewContent();
-	}
-
-	public function notation()
-	{
-		return new ArticlesNotation();
-	}
-	
 	public function scheduled_jobs()
 	{
 		return new ArticlesScheduledJobs();

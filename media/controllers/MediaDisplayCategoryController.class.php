@@ -50,8 +50,8 @@ class MediaDisplayCategoryController extends ModuleController
 		require_once(PATH_TO_ROOT . '/media/media_constant.php');
 		load_module_lang('media');
 		$config = MediaConfig::load();
-		$comments_config = new MediaComments();
-		$notation_config = new MediaNotation();
+		$comments_config = CommentsConfig::load();
+		$content_management_config = ContentManagementConfig::load();
 		
 		//Contenu de la catégorie
 		$page = AppContext::get_request()->get_getint('p', 1);
@@ -152,8 +152,8 @@ class MediaDisplayCategoryController extends ModuleController
 		}
 
 		$this->tpl->put_all(array(
-			'C_DISPLAY_NOTATION' => $notation_config->is_notation_enabled(),
-			'C_DISPLAY_COMMENTS' => $comments_config->are_comments_enabled(),
+			'C_DISPLAY_NOTATION' => $content_management_config->module_notation_is_enabled('media'),
+			'C_DISPLAY_COMMENTS' => $comments_config->module_comments_is_enabled('media'),
 			'L_ALPHA' => $MEDIA_LANG['sort_title'],
 			'L_DATE' => LangLoader::get_message('date', 'date-common'),
 			'L_NBR' => $MEDIA_LANG['sort_popularity'],
@@ -216,13 +216,10 @@ class MediaDisplayCategoryController extends ModuleController
 		{
 			$notation = new Notation();
 			$notation->set_module_name('media');
-			$notation->set_notation_scale($notation_config->get_notation_scale());
 			$notation->set_id_in_module($row['id']);
 			
 			$group_color = User::get_group_color($row['groups'], $row['level']);
 
-			$new_content = new MediaNewContent();
-			
 			$poster_infos = array();
 			if (!empty($row['poster']))
 			{
@@ -239,7 +236,7 @@ class MediaDisplayCategoryController extends ModuleController
 				'ID' => $row['id'],
 				'NAME' => $row['name'],
 				'IMG_NAME' => str_replace('"', '\"', $row['name']),
-				'C_NEW_CONTENT' => $new_content->check_if_is_new_content($row['timestamp']),
+				'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('media', $row['timestamp']),
 				'C_DESCRIPTION' => !empty($row['contents']),
 				'DESCRIPTION' => FormatingHelper::second_parse(stripslashes($row['contents'])),
 				'AUTHOR' => $MEDIA_LANG['media_added_by'] . ' : ' . !empty($row['display_name']) ? '<a href="' . UserUrlBuilder::profile($row['iduser'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : $LANG['guest'],

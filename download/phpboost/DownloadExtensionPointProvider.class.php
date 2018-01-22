@@ -64,16 +64,6 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 		return new ModuleMenus(array(new DownloadModuleMiniMenu()));
 	}
 	
-	public function newcontent()
-	{
-		return new DownloadNewContent();
-	}
-
-	public function notation()
-	{
-		return new DownloadNotation();
-	}
-	
 	public function scheduled_jobs()
 	{
 		return new DownloadScheduledJobs();

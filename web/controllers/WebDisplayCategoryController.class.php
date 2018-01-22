@@ -35,7 +35,7 @@ class WebDisplayCategoryController extends ModuleController
 	private $tpl;
 	private $config;
 	private $comments_config;
-	private $notation_config;
+	private $content_management_config;
 	
 	private $category;
 	
@@ -56,9 +56,8 @@ class WebDisplayCategoryController extends ModuleController
 		$this->tpl = new FileTemplate('web/WebDisplaySeveralWebLinksController.tpl');
 		$this->tpl->add_lang($this->lang);
 		$this->config = WebConfig::load();
-		$this->comments_config = new WebComments();
-		$this->notation_config = new WebNotation();
-
+		$this->comments_config = CommentsConfig::load();
+		$this->content_management_config = ContentManagementConfig::load();
 	}
 	
 	private function build_view(HTTPRequestCustom $request)
@@ -152,8 +151,8 @@ class WebDisplayCategoryController extends ModuleController
 			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
 			'C_SEVERAL_COLUMNS' => $number_columns_display_per_line > 1,
 			'NUMBER_COLUMNS' => $number_columns_display_per_line,
-			'C_COMMENTS_ENABLED' => $this->comments_config->are_comments_enabled(),
-			'C_NOTATION_ENABLED' => $this->notation_config->is_notation_enabled(),
+			'C_COMMENTS_ENABLED' => $this->comments_config->module_comments_is_enabled('web'),
+			'C_NOTATION_ENABLED' => $this->content_management_config->module_notation_is_enabled('web'),
 			'C_MODERATE' => WebAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_CATEGORY' => true,
@@ -165,7 +164,7 @@ class WebDisplayCategoryController extends ModuleController
 			'C_SEVERAL_CATS_COLUMNS' => $nbr_column_cats_per_line > 1,
 			'NUMBER_CATS_COLUMNS' => $nbr_column_cats_per_line,
 			'PAGINATION' => $pagination->display(),
-			'TABLE_COLSPAN' => 3 + (int)$this->comments_config->are_comments_enabled() + (int)$this->notation_config->is_notation_enabled(),
+			'TABLE_COLSPAN' => 3 + (int)$this->comments_config->module_comments_is_enabled('web') + (int)$this->content_management_config->module_notation_is_enabled('web'),
 			'ID_CAT' => $this->get_category()->get_id(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),
@@ -208,10 +207,10 @@ class WebDisplayCategoryController extends ModuleController
 			new FormFieldSelectChoiceOption($this->lang['config.sort_type.visits'], 'visits')
 		);
 
-		if ($this->comments_config->are_comments_enabled())
+		if ($this->comments_config->module_comments_is_enabled('web'))
 			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'], 'com');
 	
-		if ($this->notation_config->is_notation_enabled())
+		if ($this->content_management_config->module_notation_is_enabled('web'))
 			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'], 'note');
 	
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_options, 

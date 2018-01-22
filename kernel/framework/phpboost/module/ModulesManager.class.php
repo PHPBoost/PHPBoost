@@ -132,6 +132,23 @@ class ModulesManager
 	}
 
 	/**
+	 * @return string[] 
+	 */
+	public static function get_activated_feature_modules($feature_id)
+	{
+		$activated_feature_modules = array();
+		foreach (ModulesConfig::load()->get_modules() as $module) {
+			if ($module->is_activated()) {
+				if ($module->get_configuration()->feature_is_enabled($feature_id))
+				{
+					$activated_feature_modules[$module->get_id()] = $module;
+				}
+			}
+		}
+		return $activated_feature_modules;
+	}
+
+	/**
 	 * @desc Returns the requested module
 	 * @param $module_id the id of the module
 	 * @return Module the requested module

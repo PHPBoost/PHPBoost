@@ -398,10 +398,7 @@ class Article
 		$this->author_custom_name_enabled = !empty($properties['author_custom_name']);
 		
 		$notation = new Notation();
-		$notation_config = new ArticlesNotation();
-
 		$notation->set_module_name('articles');
-		$notation->set_notation_scale($notation_config->get_notation_scale());
 		$notation->set_id_in_module($properties['id']);
 		$notation->set_number_notes($properties['number_notes']);
 		$notation->set_average_notes($properties['average_notes']);
@@ -447,8 +444,6 @@ class Article
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		$sources          = $this->get_sources();
 		$nbr_sources      = count($sources);
-		$new_content      = new ArticlesNewContent();
-		$notation_config  = new ArticlesNotation();
 		
 		return array_merge(
 			Date::get_array_tpl_vars($this->date_created, 'date'),
@@ -468,11 +463,11 @@ class Article
 			'C_DATE_UPDATED'                  => $this->date_updated != null,
 			'C_AUTHOR_DISPLAYED'              => $this->get_author_name_displayed(),
 			'C_AUTHOR_CUSTOM_NAME' 			  => $this->is_author_custom_name_enabled(),
-			'C_NOTATION_ENABLED'              => $notation_config->is_notation_enabled(),
+			'C_NOTATION_ENABLED'              => ContentManagementConfig::load()->module_notation_is_enabled('articles'),
 			'C_READ_MORE'                     => !$this->get_description_enabled() && TextHelper::strlen($contents) > ArticlesConfig::load()->get_number_character_to_cut() && $description != @strip_tags($contents, '<br><br/>'),
 			'C_SOURCES'                       => $nbr_sources > 0,
 			'C_DIFFERED'                      => $this->published == self::PUBLISHED_DATE,
-			'C_NEW_CONTENT'                   => $new_content->check_if_is_new_content($this->publishing_start_date != null ? $this->publishing_start_date->get_timestamp() : $this->get_date_created()->get_timestamp()) && $this->is_published(),
+			'C_NEW_CONTENT'                   => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('articles', $this->publishing_start_date != null ? $this->publishing_start_date->get_timestamp() : $this->get_date_created()->get_timestamp()) && $this->is_published(),
 
 			//Articles
 			'ID'                            => $this->get_id(),

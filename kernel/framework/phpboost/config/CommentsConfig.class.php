@@ -61,6 +61,11 @@ class CommentsConfig extends AbstractConfigData
 		$this->set_property(self::COMMENTS_UNAUTHORIZED_MODULE, $modules);
 	}
 
+	public function module_comments_is_enabled($module_id)
+	{
+		return $this->are_comments_enabled() && !in_array($module_id, $this->get_comments_unauthorized_modules());
+	}
+
 	public function get_authorizations()
 	{
 		return $this->get_property(self::AUTHORIZATIONS);

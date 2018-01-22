@@ -166,8 +166,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 	$tpl->assign_block_vars('menu', array(
 		'MENU' => $article_infos['menu']
 	));
-	
-	$new_content = new WikiNewContent();
+
 	$date = new Date($article_infos['timestamp'], Timezone::SERVER_TIMEZONE);
 
 	$tpl->put_all(array_merge(
@@ -181,7 +180,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 		'L_SUB_CATS' => $LANG['wiki_subcats'],
 		'L_SUB_ARTICLES' => $LANG['wiki_subarticles'],
 		'L_TABLE_OF_CONTENTS' => $LANG['wiki_table_of_contents'],
-		'C_NEW_CONTENT' => $new_content->check_if_is_new_content($article_infos['timestamp'])
+		'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('wiki', $article_infos['timestamp'])
 		)
 	));
 	

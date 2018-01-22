@@ -60,7 +60,7 @@ class NewsDisplayCategoryController extends ModuleController
 		$now = new Date();
 		$authorized_categories = NewsService::get_authorized_categories($this->get_category()->get_id());
 		
-		$comments_config = new NewsComments();
+		$comments_config = CommentsConfig::load();
 
 		$condition = 'WHERE id_category IN :authorized_categories
 		AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))';
@@ -88,7 +88,7 @@ class NewsDisplayCategoryController extends ModuleController
 			'C_DISPLAY_BLOCK_TYPE' => $this->config->get_display_type() == NewsConfig::DISPLAY_BLOCK,
 			'C_DISPLAY_LIST_TYPE' => $this->config->get_display_type() == NewsConfig::DISPLAY_LIST,
 			'C_DISPLAY_CONDENSED_CONTENT' => $this->config->get_display_condensed_enabled(),
-			'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
+			'C_COMMENTS_ENABLED' => $comments_config->module_comments_is_enabled('news'),
 			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
 			'ID_CAT' => $this->get_category()->get_id(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),

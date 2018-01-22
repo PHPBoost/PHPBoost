@@ -64,16 +64,6 @@ class WebExtensionPointProvider extends ExtensionPointProvider
 		return new ModuleMenus(array(new WebModuleMiniMenu()));
 	}
 	
-	public function newcontent()
-	{
-		return new WebNewContent();
-	}
-	
-	public function notation()
-	{
-		return new WebNotation();
-	}
-	
 	public function scheduled_jobs()
 	{
 		return new WebScheduledJobs();

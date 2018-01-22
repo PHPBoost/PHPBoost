@@ -92,8 +92,8 @@ class CalendarDisplayEventController extends ModuleController
 			)));
 		}
 
-		$comments_config = new CalendarComments();
-		if ($comments_config->are_comments_enabled())
+		$comments_config = CommentsConfig::load();
+		if ($comments_config->module_comments_is_enabled('calendar'))
 		{
 			$comments_topic = new CalendarCommentsTopic($event);
 			$comments_topic->set_id_in_module($event->get_id());

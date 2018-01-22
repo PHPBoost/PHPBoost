@@ -50,6 +50,7 @@ class ModuleConfiguration
 	private $contribution_interface;
 	private $url_rewrite_rules;
 	private $documentation;
+	private $enabled_features;
 
 	public function __construct($config_ini_file, $desc_ini_file)
 	{
@@ -144,7 +145,21 @@ class ModuleConfiguration
 	
 	public function get_documentation()
 	{
-	return $this->documentation;
+		return $this->documentation;
+	}
+
+	public function get_enabled_features()
+	{
+		return $this->enabled_features;
+	}
+
+	public function feature_is_enabled($feature_id)
+	{
+		if (in_array($feature_id, $this->enabled_features))
+		{
+			return true;
+		}
+		return false;
 	}
 
 	private function load_configuration($config_ini_file)
@@ -165,6 +180,7 @@ class ModuleConfiguration
 		$this->home_page = !empty($config['home_page']) ? $config['home_page'] : '';
 		$this->contribution_interface = !empty($config['contribution_interface']) ? $config['contribution_interface'] : '';
 		$this->url_rewrite_rules = !empty($config['rewrite_rules']) ? $config['rewrite_rules'] : array();
+		$this->enabled_features = !empty($config['enabled_features']) ? explode(',', $config['enabled_features']) : array();
 	}
 
 	private function load_description($desc_ini_file)

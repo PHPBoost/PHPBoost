@@ -48,7 +48,7 @@ class AdminDownloadConfigController extends AdminModuleController
 	 */
 	private $config;
 	private $comments_config;
-	private $notation_config;
+	private $content_management_config;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -75,8 +75,8 @@ class AdminDownloadConfigController extends AdminModuleController
 	private function init()
 	{
 		$this->config = DownloadConfig::load();
-		$this->comments_config = new DownloadComments();
-		$this->notation_config = new DownloadNotation();
+		$this->comments_config = CommentsConfig::load();
+		$this->content_management_config = ContentManagementConfig::load();
 		$this->lang = LangLoader::get('common', 'download');
 		$this->admin_common_lang = LangLoader::get('admin-common');
 	}
@@ -142,10 +142,10 @@ class AdminDownloadConfigController extends AdminModuleController
 			new FormFieldSelectChoiceOption(LangLoader::get_message('author', 'common'), DownloadFile::SORT_AUTHOR)
 		);
 
-		if ($this->comments_config->are_comments_enabled())
+		if ($this->comments_config->module_comments_is_enabled('download'))
 			$sort_options[] = new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.number_comments', 'common'), DownloadFile::SORT_NUMBER_COMMENTS);
 	
-		if ($this->notation_config->is_notation_enabled())
+		if ($this->content_management_config->module_notation_is_enabled('download'))
 			$sort_options[] = new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.best_note', 'common'), DownloadFile::SORT_NOTATION);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_type', $this->lang['config.sort_type'], $this->config->get_sort_type(), $sort_options,

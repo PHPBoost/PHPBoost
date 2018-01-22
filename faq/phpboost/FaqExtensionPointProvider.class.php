@@ -58,11 +58,6 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new ModuleMenus(array(new FaqModuleMiniMenu()));
 	}
-	
-	public function newcontent()
-	{
-		return new FaqNewContent();
-	}
         
 	public function search()
 	{

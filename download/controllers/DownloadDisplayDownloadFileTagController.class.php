@@ -38,7 +38,7 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 
 	private $config;
 	private $comments_config;
-	private $notation_config;
+	private $content_management_config;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -57,8 +57,8 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 		$this->tpl = new FileTemplate('download/DownloadDisplaySeveralDownloadFilesController.tpl');
 		$this->tpl->add_lang($this->lang);
 		$this->config = DownloadConfig::load();
-		$this->notation_config = new DownloadNotation();
-		$this->comments_config = new DownloadComments();
+		$this->comments_config = CommentsConfig::load();
+		$this->content_management_config = ContentManagementConfig::load();
 	}
 	
 	public function build_view(HTTPRequestCustom $request)
@@ -131,12 +131,12 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 			'C_CATEGORY_DISPLAYED_TABLE' => $this->config->is_category_displayed_table(),
 			'C_SEVERAL_COLUMNS' => $number_columns_display_per_line > 1,
 			'NUMBER_COLUMNS' => $number_columns_display_per_line,
-			'C_COMMENTS_ENABLED' => $this->comments_config->are_comments_enabled(),
-			'C_NOTATION_ENABLED' => $this->notation_config->is_notation_enabled(),
+			'C_COMMENTS_ENABLED' => $this->comments_config->module_comments_is_enabled('download'),
+			'C_NOTATION_ENABLED' => $this->content_management_config->module_notation_is_enabled('download'),
 			'C_AUTHOR_DISPLAYED' => $this->config->is_author_displayed(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
-			'TABLE_COLSPAN' => 4 + (int)$this->comments_config->are_comments_enabled() + (int)$this->notation_config->is_notation_enabled(),
+			'TABLE_COLSPAN' => 4 + (int)$this->comments_config->module_comments_is_enabled('download') + (int)$this->content_management_config->module_notation_is_enabled('download'),
 			'CATEGORY_NAME' => $this->get_keyword()->get_name()
 		));
 		
@@ -177,10 +177,10 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 			new FormFieldSelectChoiceOption($common_lang['author'], 'author')
 		);
 
-		if ($this->comments_config->are_comments_enabled())
+		if ($this->comments_config->module_comments_is_enabled('download'))
 			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'], 'com');
 		
-		if ($this->notation_config->is_notation_enabled())
+		if ($this->content_management_config->module_notation_is_enabled('download'))
 			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'], 'note');
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_options, 

@@ -81,10 +81,5 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/news/index.php')));
 	}
-
-	public function newcontent()
-	{
-		return new NewsNewContent();
-	}
 }
 ?>

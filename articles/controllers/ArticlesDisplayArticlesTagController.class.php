@@ -32,8 +32,8 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 	private $keyword;
 
 	private $config;
-	private $notation_config;
 	private $comments_config;
+	private $content_management_config;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -52,9 +52,9 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		$this->view = new FileTemplate('articles/ArticlesDisplaySeveralArticlesController.tpl');
 		$this->view->add_lang($this->lang);
 		$this->config = ArticlesConfig::load();
-		$this->notation_config = new ArticlesNotation();
-		$this->comments_config = new ArticlesComments();
 
+		$this->comments_config = CommentsConfig::load();
+		$this->content_management_config = ContentManagementConfig::load();
 	}
 	
 	private function get_keyword()
@@ -148,8 +148,8 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			'C_NO_ARTICLE_AVAILABLE' => $result->get_rows_count() == 0,
 			'C_MOSAIC' => $this->config->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
 			'C_ARTICLES_CAT' => false,
-			'C_COMMENTS_ENABLED' => $this->comments_config->are_comments_enabled(),
-			'C_NOTATION_ENABLED' => $this->notation_config->is_notation_enabled(),
+			'C_COMMENTS_ENABLED' => $this->comments_config->module_comments_is_enabled('articles'),
+			'C_NOTATION_ENABLED' => $this->content_management_config->module_notation_is_enabled('articles'),
 			'C_ARTICLES_FILTERS' => true,
 			'CATEGORY_NAME' => $this->get_keyword()->get_name(),
 			'C_SEVERAL_COLUMNS' => $number_columns_display_per_line > 1,
@@ -225,10 +225,10 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			new FormFieldSelectChoiceOption($common_lang['author'], 'author')
 		);
 
-		if ($this->comments_config->are_comments_enabled())
+		if ($this->comments_config->module_comments_is_enabled('articles'))
 			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'], 'com');
 
-		if ($this->notation_config->is_notation_enabled())
+		if ($this->content_management_config->module_notation_is_enabled('articles'))
 			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'], 'note');
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_options,

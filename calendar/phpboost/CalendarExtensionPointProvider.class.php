@@ -58,11 +58,6 @@ class CalendarExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new ModuleMenus(array(new CalendarModuleMiniMenu()));
 	}
-
-	public function newcontent()
-	{
-		return new CalendarNewContent();
-	}
 	
 	public function scheduled_jobs()
 	{

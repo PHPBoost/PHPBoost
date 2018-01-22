@@ -168,8 +168,6 @@ class CalendarEvent
 		
 		$registration_days_left = $this->content->get_last_registration_date() && time() < $this->content->get_last_registration_date()->get_timestamp() ? (int)(($this->content->get_last_registration_date()->get_timestamp() - time()) /3600 /24) : 0;
 		
-		$new_content = new CalendarNewContent();
-		
 		$unserialized_value = @unserialize($this->content->get_location());
 		$location_value = $unserialized_value !== false ? $unserialized_value : $this->content->get_location();
 		
@@ -227,7 +225,7 @@ class CalendarEvent
 			'AUTHOR_GROUP_COLOR' => $author_group_color,
 			'L_MISSING_PARTICIPANTS' => $missing_participants_number > 1 ? StringVars::replace_vars($lang['calendar.labels.remaining_places'], array('missing_number' => $missing_participants_number)) : $lang['calendar.labels.remaining_place'],
 			'L_REGISTRATION_DAYS_LEFT' => $registration_days_left > 1 ? StringVars::replace_vars($lang['calendar.labels.remaining_days'], array('days_left' => $registration_days_left)) : $lang['calendar.labels.remaining_day'],
-			'C_NEW_CONTENT' => $new_content->check_if_is_new_content($this->content->get_creation_date()->get_timestamp()),
+			'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('calendar', $this->content->get_creation_date()->get_timestamp()),
 			
 			//Category
 			'C_ROOT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY,

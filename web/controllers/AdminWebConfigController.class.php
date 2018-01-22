@@ -48,7 +48,7 @@ class AdminWebConfigController extends AdminModuleController
 	 */
 	private $config;
 	private $comments_config;
-	private $notation_config;
+	private $content_management_config;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -74,8 +74,8 @@ class AdminWebConfigController extends AdminModuleController
 	private function init()
 	{
 		$this->config = WebConfig::load();
-		$this->comments_config = new WebComments();
-		$this->notation_config = new WebNotation();
+		$this->comments_config = CommentsConfig::load();
+		$this->content_management_config = ContentManagementConfig::load();
 		$this->lang = LangLoader::get('common', 'web');
 		$this->admin_common_lang = LangLoader::get('admin-common');
 	}
@@ -134,10 +134,10 @@ class AdminWebConfigController extends AdminModuleController
 			new FormFieldSelectChoiceOption($this->lang['config.sort_type.visits'], WebLink::SORT_NUMBER_VISITS)
 		);
 
-		if ($this->comments_config->are_comments_enabled())
+		if ($this->comments_config->module_comments_is_enabled('web'))
 			$sort_options[] = new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.number_comments', 'common'), WebLink::SORT_NUMBER_COMMENTS);
 	
-		if ($this->notation_config->is_notation_enabled())
+		if ($this->content_management_config->module_notation_is_enabled('web'))
 			$sort_options[] = new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.best_note', 'common'), WebLink::SORT_NOTATION);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_type', $this->lang['config.sort_type'], $this->config->get_sort_type(), $sort_options,

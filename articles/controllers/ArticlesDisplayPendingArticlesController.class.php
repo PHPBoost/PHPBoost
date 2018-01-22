@@ -85,8 +85,8 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$now = new Date();
 		$authorized_categories = ArticlesService::get_authorized_categories(Category::ROOT_CATEGORY);
 		$config = ArticlesConfig::load();
-		$comments_config = new ArticlesComments();
-		$notation_config = new ArticlesNotation();
+		$comments_config = CommentsConfig::load();
+		$content_management_config = ContentManagementConfig::load();
 		
 		$mode = $request->get_getstring('sort', 'desc');
 		$field = $request->get_getstring('field', 'date');
@@ -147,8 +147,8 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 			
 			$this->view->put_all(array(
 				'C_ARTICLES_FILTERS' => true,
-				'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
-				'C_NOTATION_ENABLED' => $notation_config->is_notation_enabled(),
+				'C_COMMENTS_ENABLED' => $comments_config->module_comments_is_enabled('articles'),
+				'C_NOTATION_ENABLED' => $content_management_config->module_notation_is_enabled('articles'),
 				'C_PAGINATION' => $pagination->has_several_pages(),
 				'PAGINATION' => $pagination->display(),
 				'C_SEVERAL_COLUMNS' => $number_columns_display_per_line > 1,

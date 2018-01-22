@@ -416,9 +416,7 @@ class DownloadFile
 		$this->author_custom_name_enabled = !empty($properties['author_custom_name']);
 		
 		$notation = new Notation();
-		$notation_config = new DownloadNotation();
 		$notation->set_module_name('download');
-		$notation->set_notation_scale($notation_config->get_notation_scale());
 		$notation->set_id_in_module($properties['id']);
 		$notation->set_number_notes($properties['number_notes']);
 		$notation->set_average_notes($properties['average_notes']);
@@ -469,7 +467,6 @@ class DownloadFile
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		$number_comments = CommentsService::get_number_comments('download', $this->id);
-		$new_content = new DownloadNewContent();
 		$config = DownloadConfig::load();
 		
 		return array_merge(
@@ -488,7 +485,7 @@ class DownloadFile
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			'C_UPDATED_DATE' => $this->has_updated_date(),
 			'C_DIFFERED' => $this->approbation_type == self::APPROVAL_DATE,
-			'C_NEW_CONTENT' => $new_content->check_if_is_new_content($this->get_start_date() != null ? $this->get_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_visible(),
+			'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('download', $this->get_start_date() != null ? $this->get_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_visible(),
 			
 			//Downloadlink
 			'ID' => $this->id,

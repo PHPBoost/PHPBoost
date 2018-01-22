@@ -54,11 +54,6 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 		return new WikiHomePageExtensionPoint();
 	}
 	
-	public function newcontent()
-	{
-		return new WikiNewContent();
-	}
-	
 	public function search()
 	{
 		return new WikiSearchable();

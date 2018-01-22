@@ -119,7 +119,7 @@ class AdminCommentsConfigController extends AdminController
 			array('size' => 10, 'hidden' => !$this->configuration->are_comments_enabled())
 		));
 
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('comments_unauthorized_modules', $this->admin_common_lang['config.forbidden-module'], $this->configuration->get_comments_unauthorized_modules(), $this->generate_unauthorized_module_option(CommentsExtensionPoint::EXTENSION_POINT),
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('comments_unauthorized_modules', $this->admin_common_lang['config.forbidden-module'], $this->configuration->get_comments_unauthorized_modules(), $this->generate_unauthorized_module_option('comments'),
 			array('size' => 12, 'description' => $this->admin_common_lang['config.comments.forbidden-module-explain'], 'hidden' => !$this->configuration->are_comments_enabled())
 		));
 
@@ -187,16 +187,11 @@ class AdminCommentsConfigController extends AdminController
 	private function generate_unauthorized_module_option($type)
 	{
 		$options = array();
-		
-		$provider_service = AppContext::get_extension_provider_service();
-		$extensions_point_modules = array_keys($provider_service->get_extension_point($type));
-		
-		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $id => $module)
+
+		$modules = ModulesManager::get_activated_feature_modules($type);
+		foreach ($modules as $id => $module)
 		{
-			if (class_exists(TextHelper::ucfirst($module->get_id()) . 'Comments') && in_array($module->get_id(), $extensions_point_modules))
-			{
-				$options[] = new FormFieldSelectChoiceOption($module->get_configuration()->get_name(), $module->get_id());
-			}
+			$options[] = new FormFieldSelectChoiceOption($module->get_configuration()->get_name(), $module->get_id());
 		}
 		return $options;
 	}

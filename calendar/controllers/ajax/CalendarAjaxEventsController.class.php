@@ -63,7 +63,7 @@ class CalendarAjaxEventsController extends AbstractController
 		$events_list = $participants = array();
 		
 		$config = CalendarConfig::load();
-		$comments_config = new CalendarComments();
+		$comments_config = CommentsConfig::load();
 		
 		$year = $this->year ? $this->year : $request->get_int('calendar_ajax_year', date('Y'));
 		$month = $this->month ? $this->month : $request->get_int('calendar_ajax_month', date('n'));
@@ -98,7 +98,7 @@ class CalendarAjaxEventsController extends AbstractController
 		$result->dispose();
 		
 		$this->view->put_all(array(
-			'C_COMMENTS_ENABLED' => $comments_config->are_comments_enabled(),
+			'C_COMMENTS_ENABLED' => $comments_config->module_comments_is_enabled('calendar'),
 			'C_EVENTS' => $events_number > 0,
 			'DATE' => $day . ' ' . $array_l_month[$month - 1] . ' ' . $year,
 			'L_EVENTS_NUMBER' => $events_number > 1 ? StringVars::replace_vars($this->lang['calendar.labels.events_number'], array('events_number' => $events_number)) : $this->lang['calendar.labels.one_event'],
