@@ -46,6 +46,11 @@ class FaqQuestion
 	const SORT_ALPHABETIC = 'question';
 	const SORT_DATE = 'creation_date';
 	
+	const SORT_FIELDS_URL_VALUES = array(
+		self::SORT_ALPHABETIC => 'question',
+		self::SORT_DATE => 'date'
+	);
+	
 	const ASC = 'ASC';
 	const DESC = 'DESC';
 	

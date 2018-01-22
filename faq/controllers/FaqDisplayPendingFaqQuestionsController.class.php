@@ -54,20 +54,18 @@ class FaqDisplayPendingFaqQuestionsController extends ModuleController
 	
 	public function build_view(HTTPRequestCustom $request)
 	{
+		$config = FaqConfig::load();
 		$authorized_categories = FaqService::get_authorized_categories(Category::ROOT_CATEGORY);
-		$mode = $request->get_getstring('sort', FaqUrlBuilder::DEFAULT_SORT_MODE);
-		$field = $request->get_getstring('field', FaqUrlBuilder::DEFAULT_SORT_FIELD);
+		$mode = $request->get_getstring('sort', $config->get_items_default_sort_mode());
+		$field = $request->get_getstring('field', FaqQuestion::SORT_FIELDS_URL_VALUES[$config->get_items_default_sort_field()]);
 		
-		$sort_mode = ($mode == 'asc') ? 'ASC' : 'DESC';
-		switch ($field)
-		{
-			case 'question':
-				$sort_field = FaqQuestion::SORT_ALPHABETIC;
-				break;
-			default:
-				$sort_field = FaqQuestion::SORT_DATE;
-				break;
-		}
+		$sort_mode = TextHelper::strtoupper($mode);
+		$sort_mode = (in_array($sort_mode, array(FaqQuestion::ASC, FaqQuestion::DESC)) ? $sort_mode : $config->get_items_default_sort_mode());
+		
+		if (in_array($field, FaqQuestion::SORT_FIELDS_URL_VALUES))
+			$sort_field = array_search($field, FaqQuestion::SORT_FIELDS_URL_VALUES);
+		else
+			$sort_field = FaqQuestion::SORT_DATE;
 		
 		$result = PersistenceContext::get_querier()->select('SELECT *
 		FROM '. FaqSetup::$faq_table .' faq
@@ -96,7 +94,7 @@ class FaqDisplayPendingFaqQuestionsController extends ModuleController
 			$this->tpl->assign_block_vars('questions', $faq_question->get_array_tpl_vars());
 		}
 		$result->dispose();
-		$this->build_sorting_form($field, $mode);
+		$this->build_sorting_form($field, TextHelper::strtolower($sort_mode));
 	}
 	
 	private function build_sorting_form($field, $mode)
@@ -111,8 +109,8 @@ class FaqDisplayPendingFaqQuestionsController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, 
 			array(
-				new FormFieldSelectChoiceOption($common_lang['form.date.creation'], 'date'),
-				new FormFieldSelectChoiceOption($this->lang['faq.form.question'], 'question')
+				new FormFieldSelectChoiceOption($common_lang['form.date.creation'], FaqQuestion::SORT_FIELDS_URL_VALUES[FaqQuestion::SORT_DATE]),
+				new FormFieldSelectChoiceOption($this->lang['faq.form.question'], FaqQuestion::SORT_FIELDS_URL_VALUES[FaqQuestion::SORT_ALPHABETIC])
 			), 
 			array('events' => array('change' => 'document.location = "'. FaqUrlBuilder::display_pending()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
