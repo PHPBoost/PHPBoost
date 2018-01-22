@@ -156,7 +156,7 @@
 							# ENDIF #
 						# ENDIF #
 						# IF weblinks.C_VISIBLE #
-							<a href="{weblinks.U_VISIT}" class="basic-button">
+							<a href="{weblinks.U_VISIT}" rel="nofollow" class="basic-button">
 								<i class="fa fa-globe"></i> {@visit}
 							</a>
 							# IF IS_USER_CONNECTED #
