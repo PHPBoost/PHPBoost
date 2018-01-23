@@ -48,6 +48,7 @@ $lang['faq.questions'] = 'Questions';
 //config
 $lang['config.display_type.answers_hidden'] = 'Cliquer sur les questions pour afficher les réponses';
 $lang['config.display_type.display_all_answers'] = 'Afficher toutes les réponses';
+$lang['config.items_default_sort.explain'] = 'Sur la page "Questions en attente"';
 
 //SEO
 $lang['faq.seo.description.pending'] = 'Toutes les questions en attente.';

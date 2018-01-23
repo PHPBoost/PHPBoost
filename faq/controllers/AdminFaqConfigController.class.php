@@ -99,7 +99,9 @@ class AdminFaqConfigController extends AdminModuleController
 			)
 		));
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort', LangLoader::get_message('config.items_default_sort', 'admin-common'), $this->config->get_items_default_sort_field() . '-' . $this->config->get_items_default_sort_mode(), $this->get_sort_options()));
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort', LangLoader::get_message('config.items_default_sort', 'admin-common'), $this->config->get_items_default_sort_field() . '-' . $this->config->get_items_default_sort_mode(), $this->get_sort_options(),
+			array('description' => $this->lang['config.items_default_sort.explain'])
+		));
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->admin_common_lang['config.root_category_description'], $this->config->get_root_category_description(), 
 			array('rows' => 8, 'cols' => 47)
@@ -131,11 +133,13 @@ class AdminFaqConfigController extends AdminModuleController
 	
 	private function get_sort_options()
 	{
+		$common_lang = LangLoader::get('common');
+		
 		$sort_options = array(
-			new FormFieldSelectChoiceOption(LangLoader::get_message('form.date.creation', 'common') . ' - ' . LangLoader::get_message('sort.asc', 'common'), FaqQuestion::SORT_DATE . '-' . FaqQuestion::ASC),
-			new FormFieldSelectChoiceOption(LangLoader::get_message('form.date.creation', 'common') . ' - ' . LangLoader::get_message('sort.desc', 'common'), FaqQuestion::SORT_DATE . '-' . FaqQuestion::DESC),
-			new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.alphabetic', 'common') . ' - ' . LangLoader::get_message('sort.asc', 'common'), FaqQuestion::SORT_ALPHABETIC . '-' . FaqQuestion::ASC),
-			new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.alphabetic', 'common') . ' - ' . LangLoader::get_message('sort.desc', 'common'), FaqQuestion::SORT_ALPHABETIC . '-' . FaqQuestion::DESC)
+			new FormFieldSelectChoiceOption($common_lang['form.date.creation'] . ' - ' . $common_lang['sort.asc'], FaqQuestion::SORT_DATE . '-' . FaqQuestion::ASC),
+			new FormFieldSelectChoiceOption($common_lang['form.date.creation'] . ' - ' . $common_lang['sort.desc'], FaqQuestion::SORT_DATE . '-' . FaqQuestion::DESC),
+			new FormFieldSelectChoiceOption($common_lang['sort_by.alphabetic'] . ' - ' . $common_lang['sort.asc'], FaqQuestion::SORT_ALPHABETIC . '-' . FaqQuestion::ASC),
+			new FormFieldSelectChoiceOption($common_lang['sort_by.alphabetic'] . ' - ' . $common_lang['sort.desc'], FaqQuestion::SORT_ALPHABETIC . '-' . FaqQuestion::DESC)
 		);
 		
 		return $sort_options;

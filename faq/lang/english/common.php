@@ -48,6 +48,7 @@ $lang['faq.questions'] = 'Questions';
 //config
 $lang['config.display_type.answers_hidden'] = 'Clic on questions to display answers';
 $lang['config.display_type.display_all_answers'] = 'Display all answers';
+$lang['config.items_default_sort.explain'] = 'On page "Pending questions"';
 
 //SEO
 $lang['faq.seo.description.pending'] = 'All pending questions.';

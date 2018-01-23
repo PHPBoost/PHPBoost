@@ -100,20 +100,6 @@ class FaqReorderCategoryQuestionsController extends ModuleController
 		$result->dispose();
 	}
 	
-	private function get_subcategories_pagination($subcategories_number, $categories_number_per_page, $subcategories_page)
-	{
-		$pagination = new ModulePagination($subcategories_page, $subcategories_number, (int)$categories_number_per_page);
-		$pagination->set_url(FaqUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), '%d'));
-		
-		if ($pagination->current_page_is_empty() && $subcategories_page > 1)
-		{
-			$error_controller = PHPBoostErrors::unexisting_page();
-			DispatchManager::redirect($error_controller);
-		}
-		
-		return $pagination;
-	}
-	
 	private function get_category()
 	{
 		if ($this->category === null)
@@ -167,7 +153,7 @@ class FaqReorderCategoryQuestionsController extends ModuleController
 			$graphical_environment->set_page_title($this->lang['module_title']);
 		
 		$graphical_environment->get_seo_meta_data()->set_description($this->get_category()->get_description());
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), AppContext::get_request()->get_getint('page', 1)));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name()));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], FaqUrlBuilder::home());
