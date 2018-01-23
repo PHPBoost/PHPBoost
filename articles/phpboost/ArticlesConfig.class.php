@@ -34,18 +34,21 @@ class ArticlesConfig extends AbstractConfigData
 	const NUMBER_CATEGORIES_PER_PAGE = 'number_categories_per_page';
 	const NUMBER_COLS_DISPLAY_PER_LINE = 'number_cols_display_per_line';
 	const NUMBER_CHARACTER_TO_CUT = 'number_character_to_cut';
+	
+	const ITEMS_DEFAULT_SORT_FIELD = 'items_default_sort_field';
+	const ITEMS_DEFAULT_SORT_MODE = 'items_default_sort_mode';
 
 	const CATS_ICON_ENABLED = 'cats_icon_enabled';
 	const DESCRIPTIONS_DISPLAYED_TO_GUESTS = 'descriptions_displayed_to_guests';
 	const DATE_UPDATED_DISPLAYED = 'date_updated_displayed';
 	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
-        
+	
 	const DISPLAY_TYPE = 'display_type';
 	const DISPLAY_MOSAIC = 'mosaic';
 	const DISPLAY_LIST = 'list';
 	
 	const DEFERRED_OPERATIONS = 'deferred_operations';
-        
+	
 	const AUTHORIZATIONS = 'authorizations';
 	
 	public function get_number_articles_per_page()
@@ -86,6 +89,26 @@ class ArticlesConfig extends AbstractConfigData
 	public function set_number_character_to_cut($number)
 	{
 		$this->set_property(self::NUMBER_CHARACTER_TO_CUT, $number);
+	}
+	
+	public function get_items_default_sort_field()
+	{
+		return $this->get_property(self::ITEMS_DEFAULT_SORT_FIELD);
+	}
+	
+	public function set_items_default_sort_field($value)
+	{
+		$this->set_property(self::ITEMS_DEFAULT_SORT_FIELD, $value);
+	}
+	
+	public function get_items_default_sort_mode()
+	{
+		return $this->get_property(self::ITEMS_DEFAULT_SORT_MODE);
+	}
+	
+	public function set_items_default_sort_mode($value)
+	{
+		$this->set_property(self::ITEMS_DEFAULT_SORT_MODE, $value);
 	}
 	
 	public function get_display_type()
@@ -174,6 +197,8 @@ class ArticlesConfig extends AbstractConfigData
 			self::NUMBER_CATEGORIES_PER_PAGE => 10,
 			self::NUMBER_COLS_DISPLAY_PER_LINE => 2,
 			self::NUMBER_CHARACTER_TO_CUT => 128,
+			self::ITEMS_DEFAULT_SORT_FIELD => Article::SORT_DATE,
+			self::ITEMS_DEFAULT_SORT_MODE => Article::DESC,
 			self::CATS_ICON_ENABLED => false,
 			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,
 			self::DATE_UPDATED_DISPLAYED => false,

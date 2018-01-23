@@ -52,7 +52,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$this->view->add_lang($this->lang);
 	}
 	
-	private function build_form($field, $mode)
+	private function build_sorting_form($field, $mode)
 	{
 		$common_lang = LangLoader::get('common');
 		
@@ -63,9 +63,9 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, array(
-				new FormFieldSelectChoiceOption($common_lang['form.date.creation'], 'date'),
-				new FormFieldSelectChoiceOption($common_lang['form.title'], 'title'),
-				new FormFieldSelectChoiceOption($common_lang['author'], 'author')
+				new FormFieldSelectChoiceOption($common_lang['form.date.creation'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_DATE]),
+				new FormFieldSelectChoiceOption($common_lang['form.title'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_ALPHABETIC]),
+				new FormFieldSelectChoiceOption($common_lang['author'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_AUTHOR])
 			), array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_pending_articles()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 		
@@ -88,23 +88,16 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$comments_config = CommentsConfig::load();
 		$content_management_config = ContentManagementConfig::load();
 		
-		$mode = $request->get_getstring('sort', 'desc');
-		$field = $request->get_getstring('field', 'date');
+		$mode = $request->get_getstring('sort', $config->get_items_default_sort_mode());
+		$field = $request->get_getstring('field', Article::SORT_FIELDS_URL_VALUES[$config->get_items_default_sort_field()]);
 		
-		$sort_mode = ($mode == 'asc') ? 'ASC' : 'DESC';
-
-		switch ($field)
-		{
-			case 'title':
-				$sort_field = 'title';
-				break;
-			case 'author':
-				$sort_field = 'display_name';
-				break;
-			default:
-				$sort_field = 'date_created';
-				break;
-		}
+		$sort_mode = TextHelper::strtoupper($mode);
+		$sort_mode = (in_array($sort_mode, array(Article::ASC, Article::DESC)) ? $sort_mode : $config->get_items_default_sort_mode());
+		
+		if (in_array($field, array(Article::SORT_FIELDS_URL_VALUES[Article::SORT_ALPHABETIC], Article::SORT_FIELDS_URL_VALUES[Article::SORT_AUTHOR], Article::SORT_FIELDS_URL_VALUES[Article::SORT_DATE])))
+			$sort_field = array_search($field, Article::SORT_FIELDS_URL_VALUES);
+		else
+			$sort_field = Article::SORT_DATE;
 		
 		$condition = 'WHERE id_category IN :authorized_categories
 		' . (!ArticlesAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
@@ -116,7 +109,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		);
 		
 		$page = AppContext::get_request()->get_getint('page', 1);
-		$pagination = $this->get_pagination($condition, $parameters, $field, $mode, $page);
+		$pagination = $this->get_pagination($condition, $parameters, $field, TextHelper::strtolower($sort_mode), $page);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, com.number_comments, notes.number_notes, notes.average_notes, note.note 
 		FROM '. ArticlesSetup::$articles_table .' articles
@@ -133,7 +126,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		
 		$nbr_articles_pending = $result->get_rows_count();
 
-		$this->build_form($field, $mode);
+		$this->build_sorting_form($field, TextHelper::strtolower($sort_mode));
 		
 		$this->view->put_all(array(
 			'C_PENDING' => true,

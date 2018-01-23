@@ -62,40 +62,25 @@ class ArticlesDisplayCategoryController extends ModuleController
 	{
 		$now = new Date();
 		$request = AppContext::get_request();
-		$mode = $request->get_getstring('sort', ArticlesUrlBuilder::DEFAULT_SORT_MODE);
-		$field = $request->get_getstring('field', ArticlesUrlBuilder::DEFAULT_SORT_FIELD);
+		$mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
+		$field = $request->get_getstring('field', Article::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
 		$page = AppContext::get_request()->get_getint('page', 1);
 		$subcategories_page = AppContext::get_request()->get_getint('subcategories_page', 1);
 		
-		$this->build_categories_listing_view($now, $field, $mode, $page, $subcategories_page);
-		$this->build_articles_listing_view($now, $field, $mode, $page, $subcategories_page);
-		$this->build_sorting_form($field, $mode);
+		$sort_mode = TextHelper::strtoupper($mode);
+		$sort_mode = (in_array($sort_mode, array(Article::ASC, Article::DESC)) ? $sort_mode : $this->config->get_items_default_sort_mode());
+		
+		$this->build_categories_listing_view($now, $field, TextHelper::strtolower($sort_mode), $page, $subcategories_page);
+		$this->build_articles_listing_view($now, $field, TextHelper::strtolower($sort_mode), $page, $subcategories_page);
+		$this->build_sorting_form($field, TextHelper::strtolower($sort_mode));
 	}
 	
-	private function build_articles_listing_view(Date $now, $field, $mode, $page, $subcategories_page)
+	private function build_articles_listing_view(Date $now, $field, $sort_mode, $page, $subcategories_page)
 	{
-		$sort_mode = ($mode == 'asc') ? 'ASC' : 'DESC';
-		switch ($field)
-		{
-			case 'title':
-				$sort_field = 'title';
-				break;
-			case 'view':
-				$sort_field = 'number_view';
-				break;
-			case 'com':
-				$sort_field = 'number_comments';
-				break;
-			case 'note':
-				$sort_field = 'average_notes';
-				break;
-			case 'author':
-				$sort_field = 'display_name';
-				break;
-			default:
-				$sort_field = 'date_created';
-				break;
-		}
+		if (in_array($field, Article::SORT_FIELDS_URL_VALUES))
+			$sort_field = array_search($field, Article::SORT_FIELDS_URL_VALUES);
+		else
+			$sort_field = $this->config->get_items_default_sort_field();
 		
 		$condition = 'WHERE id_category = :id_category 
 		AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))';
@@ -104,7 +89,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 			'timestamp_now' => $now->get_timestamp()
 		);
 		
-		$pagination = $this->get_pagination($condition, $parameters, $field, $mode, $page, $subcategories_page);
+		$pagination = $this->get_pagination($condition, $parameters, $field, $sort_mode, $page, $subcategories_page);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, com.number_comments, notes.average_notes, notes.number_notes, note.note
 		FROM ' . ArticlesSetup::$articles_table . ' articles
@@ -162,7 +147,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 			
 			$i = 1;
 			foreach ($sources as $name => $url)
-			{       
+			{
 				$this->view->assign_block_vars('articles.sources', array(
 					'C_SEPARATOR' => $i < $nbr_sources,
 					'NAME' => $name,
@@ -231,18 +216,18 @@ class ArticlesDisplayCategoryController extends ModuleController
 		$form->add_fieldset($fieldset);
 
 		$sort_options = array(
-			new FormFieldSelectChoiceOption($common_lang['form.date.creation'], 'date'),
-			new FormFieldSelectChoiceOption($common_lang['form.title'], 'title'),
-			new FormFieldSelectChoiceOption($common_lang['sort_by.number_views'], 'view'),
-			new FormFieldSelectChoiceOption($common_lang['author'], 'author')
+			new FormFieldSelectChoiceOption($common_lang['form.date.creation'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_DATE]),
+			new FormFieldSelectChoiceOption($common_lang['form.title'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_ALPHABETIC]),
+			new FormFieldSelectChoiceOption($common_lang['sort_by.number_views'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_NUMBER_VIEWS]),
+			new FormFieldSelectChoiceOption($common_lang['author'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_AUTHOR])
 		);
 
 		if ($this->comments_config->module_comments_is_enabled('articles'))
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'], 'com');
-
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_NUMBER_COMMENTS]);
+		
 		if ($this->content_management_config->module_notation_is_enabled('articles'))
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'], 'note');
-
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_NOTATION]);
+		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_options, 
 			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));

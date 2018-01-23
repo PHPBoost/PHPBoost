@@ -54,6 +54,25 @@ class Article
 
 	private $sources;
 	private $keywords;
+	
+	const SORT_ALPHABETIC = 'title';
+	const SORT_DATE = 'date_created';
+	const SORT_AUTHOR = 'display_name';
+	const SORT_NUMBER_VIEWS = 'number_view';
+	const SORT_NOTATION = 'average_notes';
+	const SORT_NUMBER_COMMENTS = 'number_comments';
+	
+	const SORT_FIELDS_URL_VALUES = array(
+		self::SORT_ALPHABETIC => 'title',
+		self::SORT_DATE => 'date',
+		self::SORT_AUTHOR => 'author',
+		self::SORT_NUMBER_VIEWS => 'views',
+		self::SORT_NOTATION => 'notes',
+		self::SORT_NUMBER_COMMENTS => 'comments'
+	);
+	
+	const ASC = 'ASC';
+	const DESC = 'DESC';
 
 	const NOT_PUBLISHED = 0;
 	const PUBLISHED_NOW = 1;

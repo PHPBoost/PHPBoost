@@ -83,32 +83,17 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 	private function build_view($request)
 	{
 		$now = new Date();
-
-		$mode = $request->get_getstring('sort', 'desc');
-		$field = $request->get_getstring('field', 'date');
 		
-		$sort_mode = ($mode == 'asc') ? 'ASC' : 'DESC';
-		switch ($field)
-		{
-			case 'title':
-				$sort_field = 'title';
-				break;
-			case 'view':
-				$sort_field = 'number_view';
-				break;
-			case 'com':
-				$sort_field = 'number_comments';
-				break;
-			case 'note':
-				$sort_field = 'average_notes';
-				break;
-			case 'author':
-				$sort_field = 'display_name';
-				break;
-			default:
-				$sort_field = 'date_created';
-				break;
-		}
+		$mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
+		$field = $request->get_getstring('field', Article::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
+		
+		$sort_mode = TextHelper::strtoupper($mode);
+		$sort_mode = (in_array($sort_mode, array(Article::ASC, Article::DESC)) ? $sort_mode : $this->config->get_items_default_sort_mode());
+		
+		if (in_array($field, Article::SORT_FIELDS_URL_VALUES))
+			$sort_field = array_search($field, Article::SORT_FIELDS_URL_VALUES);
+		else
+			$sort_field = $this->config->get_items_default_sort_field();
 		
 		$authorized_categories = ArticlesService::get_authorized_categories(Category::ROOT_CATEGORY);
 		
@@ -122,7 +107,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		);
 		
 		$page = AppContext::get_request()->get_getint('page', 1);
-		$pagination = $this->get_pagination($condition, $parameters, $field, $mode, $page);
+		$pagination = $this->get_pagination($condition, $parameters, $field, TextHelper::strtolower($sort_mode), $page);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, com.number_comments, notes.number_notes, notes.average_notes, note.note 
 		FROM ' . ArticlesSetup::$articles_table . ' articles
@@ -138,7 +123,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			'display_from' => $pagination->get_display_from()
 		)));
 
-		$this->build_sorting_form($field, $mode);
+		$this->build_sorting_form($field, TextHelper::strtolower($sort_mode));
 
 		$number_columns_display_per_line = $this->config->get_number_cols_display_per_line();
 
@@ -219,17 +204,17 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		$form->add_fieldset($fieldset);
 
 		$sort_options = array(
-			new FormFieldSelectChoiceOption($common_lang['form.date.creation'], 'date'),
-			new FormFieldSelectChoiceOption($common_lang['form.title'], 'title'),
-			new FormFieldSelectChoiceOption($common_lang['sort_by.number_views'], 'view'),
-			new FormFieldSelectChoiceOption($common_lang['author'], 'author')
+			new FormFieldSelectChoiceOption($common_lang['form.date.creation'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_DATE]),
+			new FormFieldSelectChoiceOption($common_lang['form.title'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_ALPHABETIC]),
+			new FormFieldSelectChoiceOption($common_lang['sort_by.number_views'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_NUMBER_VIEWS]),
+			new FormFieldSelectChoiceOption($common_lang['author'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_AUTHOR])
 		);
 
 		if ($this->comments_config->module_comments_is_enabled('articles'))
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'], 'com');
-
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_NUMBER_COMMENTS]);
+		
 		if ($this->content_management_config->module_notation_is_enabled('articles'))
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'], 'note');
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_NOTATION]);
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_options,
 			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
