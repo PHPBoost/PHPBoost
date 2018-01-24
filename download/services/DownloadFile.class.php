@@ -67,6 +67,17 @@ class DownloadFile
 	const SORT_NUMBER_DOWNLOADS = 'number_downloads';
 	const SORT_NUMBER_VIEWS 	= 'number_view';
 	
+	const SORT_FIELDS_URL_VALUES = array(
+		self::SORT_ALPHABETIC => 'name',
+		self::SORT_AUTHOR => 'author',
+		self::SORT_DATE => 'date',
+		self::SORT_UPDATED_DATE => 'updated',
+		self::SORT_NUMBER_DOWNLOADS => 'download',
+		self::SORT_NUMBER_VIEWS => 'views',
+		self::SORT_NOTATION => 'notes',
+		self::SORT_NUMBER_COMMENTS => 'comments'
+	);
+	
 	const ASC  = 'ASC';
 	const DESC = 'DESC';
 	

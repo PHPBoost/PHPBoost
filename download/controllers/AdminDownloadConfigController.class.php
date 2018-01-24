@@ -118,6 +118,8 @@ class AdminDownloadConfigController extends AdminModuleController
 			))
 		));
 		
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort', $this->admin_common_lang['config.items_default_sort'], $this->config->get_items_default_sort_field() . '-' . $this->config->get_items_default_sort_mode(), $this->get_sort_options()));
+		
 		$fieldset->add_field(new FormFieldCheckbox('display_descriptions_to_guests', $this->lang['config.display_descriptions_to_guests'], $this->config->are_descriptions_displayed_to_guests(),
 			array('hidden' => $this->config->get_category_display_type() == DownloadConfig::DISPLAY_ALL_CONTENT)
 		));
@@ -197,12 +199,51 @@ class AdminDownloadConfigController extends AdminModuleController
 		$this->form = $form;
 	}
 	
+	private function get_sort_options()
+	{
+		$common_lang = LangLoader::get('common');
+		
+		$sort_options = array(
+			new FormFieldSelectChoiceOption($common_lang['form.date.update'] . ' - ' . $common_lang['sort.asc'], DownloadFile::SORT_UPDATED_DATE . '-' . DownloadFile::ASC),
+			new FormFieldSelectChoiceOption($common_lang['form.date.update'] . ' - ' . $common_lang['sort.desc'], DownloadFile::SORT_UPDATED_DATE . '-' . DownloadFile::DESC),
+			new FormFieldSelectChoiceOption($common_lang['form.date.creation'] . ' - ' . $common_lang['sort.asc'], DownloadFile::SORT_DATE . '-' . DownloadFile::ASC),
+			new FormFieldSelectChoiceOption($common_lang['form.date.creation'] . ' - ' . $common_lang['sort.desc'], DownloadFile::SORT_DATE . '-' . DownloadFile::DESC),
+			new FormFieldSelectChoiceOption($common_lang['sort_by.alphabetic'] . ' - ' . $common_lang['sort.asc'], DownloadFile::SORT_ALPHABETIC . '-' . DownloadFile::ASC),
+			new FormFieldSelectChoiceOption($common_lang['sort_by.alphabetic'] . ' - ' . $common_lang['sort.desc'], DownloadFile::SORT_ALPHABETIC . '-' . DownloadFile::DESC),
+			new FormFieldSelectChoiceOption($common_lang['author'] . ' - ' . $common_lang['sort.asc'], DownloadFile::SORT_AUTHOR . '-' . DownloadFile::ASC),
+			new FormFieldSelectChoiceOption($common_lang['author'] . ' - ' . $common_lang['sort.desc'], DownloadFile::SORT_AUTHOR . '-' . DownloadFile::DESC),
+			new FormFieldSelectChoiceOption($this->lang['downloads_number'] . ' - ' . $common_lang['sort.asc'], DownloadFile::SORT_NUMBER_DOWNLOADS . '-' . DownloadFile::ASC),
+			new FormFieldSelectChoiceOption($this->lang['downloads_number'] . ' - ' . $common_lang['sort.desc'], DownloadFile::SORT_NUMBER_DOWNLOADS . '-' . DownloadFile::DESC),
+			new FormFieldSelectChoiceOption($common_lang['sort_by.number_views'] . ' - ' . $common_lang['sort.asc'], DownloadFile::SORT_NUMBER_VIEWS . '-' . DownloadFile::ASC),
+			new FormFieldSelectChoiceOption($common_lang['sort_by.number_views'] . ' - ' . $common_lang['sort.desc'], DownloadFile::SORT_NUMBER_VIEWS . '-' . DownloadFile::DESC)
+		);
+		
+		if ($this->comments_config->module_comments_is_enabled('download'))
+		{
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'] . ' - ' . $common_lang['sort.asc'], DownloadFile::SORT_NUMBER_COMMENTS . '-' . DownloadFile::ASC);
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'] . ' - ' . $common_lang['sort.desc'], DownloadFile::SORT_NUMBER_COMMENTS . '-' . DownloadFile::DESC);
+		}
+		
+		if ($this->content_management_config->module_notation_is_enabled('download'))
+		{
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'] . ' - ' . $common_lang['sort.asc'], DownloadFile::SORT_NOTATION . '-' . DownloadFile::ASC);
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'] . ' - ' . $common_lang['sort.desc'], DownloadFile::SORT_NOTATION . '-' . DownloadFile::DESC);
+		}
+		
+		return $sort_options;
+	}
+	
 	private function save()
 	{
 		$this->config->set_items_number_per_page($this->form->get_value('items_number_per_page'));
 		$this->config->set_categories_number_per_page($this->form->get_value('categories_number_per_page'));
 		$this->config->set_columns_number_per_line($this->form->get_value('columns_number_per_line'));
 		$this->config->set_category_display_type($this->form->get_value('category_display_type')->get_raw_value());
+		
+		$items_default_sort = $this->form->get_value('items_default_sort')->get_raw_value();
+		$items_default_sort = explode('-', $items_default_sort);
+		$this->config->set_items_default_sort_field($items_default_sort[0]);
+		$this->config->set_items_default_sort_mode(TextHelper::strtolower($items_default_sort[1]));
 		
 		if ($this->config->get_category_display_type() != DownloadConfig::DISPLAY_ALL_CONTENT)
 		{
@@ -220,12 +261,11 @@ class AdminDownloadConfigController extends AdminModuleController
 			$this->config->display_author();
 		else
 			$this->config->hide_author();
-						
+		
 		$this->config->set_nb_view_enabled($this->form->get_value('nb_view_enabled'));
 		$this->config->set_root_category_description($this->form->get_value('root_category_description'));
 		$this->config->set_sort_type($this->form->get_value('sort_type')->get_raw_value());
 		$this->config->set_files_number_in_menu($this->form->get_value('files_number_in_menu'));
-		
 		
 		if ($this->form->get_value('limit_oldest_file_day_in_menu'))
 		{

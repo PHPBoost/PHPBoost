@@ -35,6 +35,8 @@ class DownloadConfig extends AbstractConfigData
 	const CATEGORIES_NUMBER_PER_PAGE = 'categories_number_per_page';
 	const COLUMNS_NUMBER_PER_LINE = 'columns_number_per_line';
 	const CATEGORY_DISPLAY_TYPE = 'category_display_type';
+	const ITEMS_DEFAULT_SORT_FIELD = 'items_default_sort_field';
+	const ITEMS_DEFAULT_SORT_MODE = 'items_default_sort_mode';
 	const DESCRIPTIONS_DISPLAYED_TO_GUESTS = 'descriptions_displayed_to_guests';
 	const AUTHOR_DISPLAYED = 'author_displayed';
 	const NB_VIEW_ENABLED = 'nb_view_enabled';
@@ -101,6 +103,26 @@ class DownloadConfig extends AbstractConfigData
 	public function is_category_displayed_table()
 	{
 		return $this->get_property(self::CATEGORY_DISPLAY_TYPE) == self::DISPLAY_TABLE;
+	}
+	
+	public function get_items_default_sort_field()
+	{
+		return $this->get_property(self::ITEMS_DEFAULT_SORT_FIELD);
+	}
+	
+	public function set_items_default_sort_field($value)
+	{
+		$this->set_property(self::ITEMS_DEFAULT_SORT_FIELD, $value);
+	}
+	
+	public function get_items_default_sort_mode()
+	{
+		return $this->get_property(self::ITEMS_DEFAULT_SORT_MODE);
+	}
+	
+	public function set_items_default_sort_mode($value)
+	{
+		$this->set_property(self::ITEMS_DEFAULT_SORT_MODE, $value);
 	}
 	
 	public function display_descriptions_to_guests()
@@ -248,6 +270,8 @@ class DownloadConfig extends AbstractConfigData
 			self::CATEGORIES_NUMBER_PER_PAGE => 10,
 			self::COLUMNS_NUMBER_PER_LINE => 3,
 			self::CATEGORY_DISPLAY_TYPE => self::DISPLAY_SUMMARY,
+			self::ITEMS_DEFAULT_SORT_FIELD => DownloadFile::SORT_UPDATED_DATE,
+			self::ITEMS_DEFAULT_SORT_MODE => DownloadFile::DESC,
 			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,
 			self::AUTHOR_DISPLAYED => true,
 			self::NB_VIEW_ENABLED => false,
