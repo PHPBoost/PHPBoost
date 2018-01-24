@@ -47,10 +47,12 @@
 		</div>
 		# ENDIF #
 	# ELSE #
-		# IF C_ARTICLES_FILTERS #
+		# IF C_MORE_THAN_ONE_ARTICLE #
+			# IF C_ARTICLES_FILTERS #
 			# INCLUDE FORM #
+			<div class="spacer"></div>
+			# ENDIF #
 		# ENDIF #
-		<div class="spacer"></div>
 		<div class="content elements-container# IF C_SEVERAL_COLUMNS # columns-{NUMBER_COLUMNS}# ENDIF#">
 			# START articles #
 				<article id="article-articles-{articles.ID}" class="article-articles article-several# IF C_MOSAIC # block# ENDIF ## IF articles.C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">

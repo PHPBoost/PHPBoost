@@ -129,6 +129,8 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$this->build_sorting_form($field, TextHelper::strtolower($sort_mode));
 		
 		$this->view->put_all(array(
+			'C_ARTICLES' => $result->get_rows_count() > 0,
+			'C_MORE_THAN_ONE_ARTICLE' => $result->get_rows_count() > 1,
 			'C_PENDING' => true,
 			'C_MOSAIC' => $config->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
 			'C_NO_ARTICLE_AVAILABLE' => $nbr_articles_pending == 0

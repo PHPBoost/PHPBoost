@@ -128,6 +128,8 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		$number_columns_display_per_line = $this->config->get_number_cols_display_per_line();
 
 		$this->view->put_all(array(
+			'C_ARTICLES' => $result->get_rows_count() > 0,
+			'C_MORE_THAN_ONE_ARTICLE' => $result->get_rows_count() > 1,
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
 			'C_NO_ARTICLE_AVAILABLE' => $result->get_rows_count() == 0,

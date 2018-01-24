@@ -108,6 +108,8 @@ class ArticlesDisplayCategoryController extends ModuleController
 		$number_columns_display_per_line = $this->config->get_number_cols_display_per_line();
 
 		$this->view->put_all(array(
+			'C_ARTICLES' => $result->get_rows_count() > 0,
+			'C_MORE_THAN_ONE_ARTICLE' => $result->get_rows_count() > 1,
 			'C_MOSAIC' => $this->config->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
 			'C_COMMENTS_ENABLED' => $this->comments_config->module_comments_is_enabled('articles'),
 			'C_NOTATION_ENABLED' => $this->content_management_config->module_notation_is_enabled('articles'),

@@ -99,7 +99,7 @@ class AdminFaqConfigController extends AdminModuleController
 			)
 		));
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort', LangLoader::get_message('config.items_default_sort', 'admin-common'), $this->config->get_items_default_sort_field() . '-' . $this->config->get_items_default_sort_mode(), $this->get_sort_options(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort', $this->admin_common_lang['config.items_default_sort'], $this->config->get_items_default_sort_field() . '-' . $this->config->get_items_default_sort_mode(), $this->get_sort_options(),
 			array('description' => $this->lang['config.items_default_sort.explain'])
 		));
 		
