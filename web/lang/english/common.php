@@ -55,10 +55,9 @@ $lang['config.category_display_type.display_all_content'] = 'All content';
 $lang['config.category_display_type.display_table'] = 'Table';
 $lang['config.display_descriptions_to_guests'] = 'Display summary to guests if they don\'t have read authorization';
 $lang['config.partners_menu'] = 'Partners menu';
-$lang['config.sort_type'] = 'Partners display order';
-$lang['config.sort_type.explain'] = 'Privileged partners are always displayed on top';
+$lang['config.partners_sort'] = 'Partners display order';
+$lang['config.partners_sort.explain'] = 'Privileged partners are always displayed on top';
 $lang['config.sort_type.visits'] = 'Visits number';
-$lang['config.sort_mode'] = 'Mode';
 $lang['config.partners_number_in_menu'] = 'Max partners displayed number';
 
 //SEO

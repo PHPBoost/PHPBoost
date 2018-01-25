@@ -117,6 +117,8 @@ class AdminWebConfigController extends AdminModuleController
 			))
 		));
 		
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort', $this->admin_common_lang['config.items_default_sort'], $this->config->get_items_default_sort_field() . '-' . $this->config->get_items_default_sort_mode(), $this->get_sort_options()));
+		
 		$fieldset->add_field(new FormFieldCheckbox('display_descriptions_to_guests', $this->lang['config.display_descriptions_to_guests'], $this->config->are_descriptions_displayed_to_guests(),
 			array('hidden' => $this->config->get_category_display_type() == WebConfig::DISPLAY_ALL_CONTENT)
 		));
@@ -128,27 +130,8 @@ class AdminWebConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTML('menu', $this->lang['config.partners_menu']);
 		$form->add_fieldset($fieldset);
 
-		$sort_options = array(
-			new FormFieldSelectChoiceOption(LangLoader::get_message('form.date.creation', 'common'), WebLink::SORT_DATE),
-			new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.alphabetic', 'common'), WebLink::SORT_ALPHABETIC),
-			new FormFieldSelectChoiceOption($this->lang['config.sort_type.visits'], WebLink::SORT_NUMBER_VISITS)
-		);
-
-		if ($this->comments_config->module_comments_is_enabled('web'))
-			$sort_options[] = new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.number_comments', 'common'), WebLink::SORT_NUMBER_COMMENTS);
-	
-		if ($this->content_management_config->module_notation_is_enabled('web'))
-			$sort_options[] = new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.best_note', 'common'), WebLink::SORT_NOTATION);
-
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_type', $this->lang['config.sort_type'], $this->config->get_sort_type(), $sort_options,
-			array('description' => $this->lang['config.sort_type.explain'])
-		));
-		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', $this->lang['config.sort_mode'], $this->config->get_sort_mode(),
-			array(
-				new FormFieldSelectChoiceOption(LangLoader::get_message('sort.asc', 'common'), WebLink::ASC),
-				new FormFieldSelectChoiceOption(LangLoader::get_message('sort.desc', 'common'), WebLink::DESC)
-			)
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('partners_sort', $this->lang['config.partners_sort'], $this->config->get_partners_sort_field() . '-' . $this->config->get_partners_sort_mode(), $this->get_sort_options(),
+			array('description' => $this->lang['config.partners_sort.explain'])
 		));
 		
 		$fieldset->add_field(new FormFieldNumberEditor('partners_number_in_menu', $this->lang['config.partners_number_in_menu'], $this->config->get_partners_number_in_menu(), 
@@ -180,12 +163,45 @@ class AdminWebConfigController extends AdminModuleController
 		$this->form = $form;
 	}
 	
+	private function get_sort_options()
+	{
+		$common_lang = LangLoader::get('common');
+		
+		$sort_options = array(
+			new FormFieldSelectChoiceOption($common_lang['form.date.creation'] . ' - ' . $common_lang['sort.asc'], WebLink::SORT_DATE . '-' . WebLink::ASC),
+			new FormFieldSelectChoiceOption($common_lang['form.date.creation'] . ' - ' . $common_lang['sort.desc'], WebLink::SORT_DATE . '-' . WebLink::DESC),
+			new FormFieldSelectChoiceOption($common_lang['sort_by.alphabetic'] . ' - ' . $common_lang['sort.asc'], WebLink::SORT_ALPHABETIC . '-' . WebLink::ASC),
+			new FormFieldSelectChoiceOption($common_lang['sort_by.alphabetic'] . ' - ' . $common_lang['sort.desc'], WebLink::SORT_ALPHABETIC . '-' . WebLink::DESC),
+			new FormFieldSelectChoiceOption($this->lang['config.sort_type.visits'] . ' - ' . $common_lang['sort.asc'], WebLink::SORT_NUMBER_VISITS . '-' . WebLink::ASC),
+			new FormFieldSelectChoiceOption($this->lang['config.sort_type.visits'] . ' - ' . $common_lang['sort.desc'], WebLink::SORT_NUMBER_VISITS . '-' . WebLink::DESC)
+		);
+		
+		if ($this->comments_config->module_comments_is_enabled('web'))
+		{
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'] . ' - ' . $common_lang['sort.asc'], WebLink::SORT_NUMBER_COMMENTS . '-' . WebLink::ASC);
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'] . ' - ' . $common_lang['sort.desc'], WebLink::SORT_NUMBER_COMMENTS . '-' . WebLink::DESC);
+		}
+		
+		if ($this->content_management_config->module_notation_is_enabled('web'))
+		{
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'] . ' - ' . $common_lang['sort.asc'], WebLink::SORT_NOTATION . '-' . WebLink::ASC);
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'] . ' - ' . $common_lang['sort.desc'], WebLink::SORT_NOTATION . '-' . WebLink::DESC);
+		}
+		
+		return $sort_options;
+	}
+	
 	private function save()
 	{
 		$this->config->set_items_number_per_page($this->form->get_value('items_number_per_page'));
 		$this->config->set_categories_number_per_page($this->form->get_value('categories_number_per_page'));
 		$this->config->set_columns_number_per_line($this->form->get_value('columns_number_per_line'));
 		$this->config->set_category_display_type($this->form->get_value('category_display_type')->get_raw_value());
+		
+		$items_default_sort = $this->form->get_value('items_default_sort')->get_raw_value();
+		$items_default_sort = explode('-', $items_default_sort);
+		$this->config->set_items_default_sort_field($items_default_sort[0]);
+		$this->config->set_items_default_sort_mode(TextHelper::strtolower($items_default_sort[1]));
 		
 		if ($this->config->get_category_display_type() != WebConfig::DISPLAY_ALL_CONTENT)
 		{
@@ -200,8 +216,11 @@ class AdminWebConfigController extends AdminModuleController
 		}
 		
 		$this->config->set_root_category_description($this->form->get_value('root_category_description'));
-		$this->config->set_sort_type($this->form->get_value('sort_type')->get_raw_value());
-		$this->config->set_sort_mode($this->form->get_value('sort_mode')->get_raw_value());
+		
+		$partners_sort = $this->form->get_value('partners_sort')->get_raw_value();
+		$partners_sort = explode('-', $partners_sort);
+		$this->config->set_partners_sort_field($partners_sort[0]);
+		$this->config->set_partners_sort_mode($partners_sort[1]);
 		$this->config->set_partners_number_in_menu($this->form->get_value('partners_number_in_menu'));
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		

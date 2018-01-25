@@ -62,6 +62,14 @@ class WebLink
 	const SORT_NUMBER_VISITS = 'number_views';
 	const SORT_NUMBER_COMMENTS = 'number_comments';
 	
+	const SORT_FIELDS_URL_VALUES = array(
+		self::SORT_ALPHABETIC => 'name',
+		self::SORT_DATE => 'date',
+		self::SORT_NOTATION => 'notes',
+		self::SORT_NUMBER_VISITS => 'visits',
+		self::SORT_NUMBER_COMMENTS => 'comments'
+	);
+	
 	const ASC = 'ASC';
 	const DESC = 'DESC';
 	

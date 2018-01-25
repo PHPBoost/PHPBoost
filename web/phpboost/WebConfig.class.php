@@ -35,10 +35,12 @@ class WebConfig extends AbstractConfigData
 	const CATEGORIES_NUMBER_PER_PAGE = 'categories_number_per_page';
 	const COLUMNS_NUMBER_PER_LINE = 'columns_number_per_line';
 	const CATEGORY_DISPLAY_TYPE = 'category_display_type';
+	const ITEMS_DEFAULT_SORT_FIELD = 'items_default_sort_field';
+	const ITEMS_DEFAULT_SORT_MODE = 'items_default_sort_mode';
 	const DESCRIPTIONS_DISPLAYED_TO_GUESTS = 'descriptions_displayed_to_guests';
 	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
-	const SORT_TYPE = 'sort_type';
-	const SORT_MODE = 'sort_mode';
+	const PARTNERS_SORT_FIELD = 'partners_sort_field';
+	const PARTNERS_SORT_MODE = 'partners_sort_mode';
 	const PARTNERS_NUMBER_IN_MENU = 'partners_number_in_menu';
 	const AUTHORIZATIONS = 'authorizations';
 	
@@ -100,6 +102,26 @@ class WebConfig extends AbstractConfigData
 		return $this->get_property(self::CATEGORY_DISPLAY_TYPE) == self::DISPLAY_TABLE;
 	}
 	
+	public function get_items_default_sort_field()
+	{
+		return $this->get_property(self::ITEMS_DEFAULT_SORT_FIELD);
+	}
+	
+	public function set_items_default_sort_field($value)
+	{
+		$this->set_property(self::ITEMS_DEFAULT_SORT_FIELD, $value);
+	}
+	
+	public function get_items_default_sort_mode()
+	{
+		return $this->get_property(self::ITEMS_DEFAULT_SORT_MODE);
+	}
+	
+	public function set_items_default_sort_mode($value)
+	{
+		$this->set_property(self::ITEMS_DEFAULT_SORT_MODE, $value);
+	}
+	
 	public function display_descriptions_to_guests()
 	{
 		$this->set_property(self::DESCRIPTIONS_DISPLAYED_TO_GUESTS, true);
@@ -125,24 +147,24 @@ class WebConfig extends AbstractConfigData
 		$this->set_property(self::ROOT_CATEGORY_DESCRIPTION, $value);
 	}
 	
-	public function get_sort_type()
+	public function get_partners_sort_field()
 	{
-		return $this->get_property(self::SORT_TYPE);
+		return $this->get_property(self::PARTNERS_SORT_FIELD);
 	}
 	
-	public function set_sort_type($value)
+	public function set_partners_sort_field($value)
 	{
-		$this->set_property(self::SORT_TYPE, $value);
+		$this->set_property(self::PARTNERS_SORT_FIELD, $value);
 	}
 	
-	public function get_sort_mode()
+	public function get_partners_sort_mode()
 	{
-		return $this->get_property(self::SORT_MODE);
+		return $this->get_property(self::PARTNERS_SORT_MODE);
 	}
 	
-	public function set_sort_mode($value)
+	public function set_partners_sort_mode($value)
 	{
-		$this->set_property(self::SORT_MODE, $value);
+		$this->set_property(self::PARTNERS_SORT_MODE, $value);
 	}
 	
 	public function get_partners_number_in_menu()
@@ -185,10 +207,12 @@ class WebConfig extends AbstractConfigData
 			self::CATEGORIES_NUMBER_PER_PAGE => 10,
 			self::COLUMNS_NUMBER_PER_LINE => 3,
 			self::CATEGORY_DISPLAY_TYPE => self::DISPLAY_SUMMARY,
+			self::ITEMS_DEFAULT_SORT_FIELD => WebLink::SORT_ALPHABETIC,
+			self::ITEMS_DEFAULT_SORT_MODE => WebLink::ASC,
 			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,
 			self::ROOT_CATEGORY_DESCRIPTION => LangLoader::get_message('root_category_description', 'config', 'web'),
-			self::SORT_TYPE => WebLink::SORT_ALPHABETIC,
-			self::SORT_MODE => WebLink::ASC,
+			self::PARTNERS_SORT_FIELD => WebLink::SORT_ALPHABETIC,
+			self::PARTNERS_SORT_MODE => WebLink::ASC,
 			self::PARTNERS_NUMBER_IN_MENU => 5,
 			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13),
 			self::DEFERRED_OPERATIONS => array()

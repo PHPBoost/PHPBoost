@@ -64,10 +64,10 @@ class WebDisplayWebLinkTagController extends ModuleController
 	public function build_view(HTTPRequestCustom $request)
 	{
 		$now = new Date();
-
+		
 		$authorized_categories = WebService::get_authorized_categories(Category::ROOT_CATEGORY);
-		$mode = $request->get_getstring('sort', WebUrlBuilder::DEFAULT_SORT_MODE);
-		$field = $request->get_getstring('field', WebUrlBuilder::DEFAULT_SORT_FIELD);
+		$mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
+		$field = $request->get_getstring('field', WebLink::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
 		
 		$condition = 'WHERE relation.id_keyword = :id_keyword
 		AND id_category IN :authorized_categories
@@ -79,27 +79,15 @@ class WebDisplayWebLinkTagController extends ModuleController
 		);
 		
 		$page = AppContext::get_request()->get_getint('page', 1);
-		$pagination = $this->get_pagination($condition, $parameters, $field, $mode, $page);
+		$pagination = $this->get_pagination($condition, $parameters, $field, TextHelper::strtolower($mode), $page);
 		
-		$sort_mode = ($mode == 'asc') ? 'ASC' : 'DESC';
-		switch ($field)
-		{
-			case 'name':
-				$sort_field = WebLink::SORT_ALPHABETIC;
-				break;
-			case 'visits':
-				$sort_field = WebLink::SORT_NUMBER_VISITS;
-				break;
-			case 'com':
-				$sort_field = WebLink::SORT_NUMBER_COMMENTS;
-				break;
-			case 'note':
-				$sort_field = WebLink::SORT_NOTATION;
-				break;
-			default:
-				$sort_field = WebLink::SORT_DATE;
-				break;
-		}
+		$sort_mode = TextHelper::strtoupper($mode);
+		$sort_mode = (in_array($sort_mode, array(WebLink::ASC, WebLink::DESC)) ? $sort_mode : $this->config->get_items_default_sort_mode());
+		
+		if (in_array($field, WebLink::SORT_FIELDS_URL_VALUES))
+			$sort_field = array_search($field, WebLink::SORT_FIELDS_URL_VALUES);
+		else
+			$sort_field = $this->config->get_items_default_sort_field();
 		
 		$result = PersistenceContext::get_querier()->select('SELECT web.*, member.*, com.number_comments, notes.average_notes, notes.number_notes, note.note
 		FROM ' . WebSetup::$web_table . ' web
@@ -149,7 +137,7 @@ class WebDisplayWebLinkTagController extends ModuleController
 				$this->build_keywords_view($keywords);
 		}
 		$result->dispose();
-		$this->build_sorting_form($field, $mode);
+		$this->build_sorting_form($field, TextHelper::strtolower($sort_mode));
 	}
 	
 	private function build_sorting_form($field, $mode)
@@ -163,16 +151,16 @@ class WebDisplayWebLinkTagController extends ModuleController
 		$form->add_fieldset($fieldset);
 
 		$sort_options = array(
-			new FormFieldSelectChoiceOption($common_lang['form.date.creation'], 'date'),
-			new FormFieldSelectChoiceOption($common_lang['form.name'], 'name'),
-			new FormFieldSelectChoiceOption($this->lang['config.sort_type.visits'], 'visits')
+			new FormFieldSelectChoiceOption($common_lang['form.date.creation'], WebLink::SORT_FIELDS_URL_VALUES[WebLink::SORT_DATE]),
+			new FormFieldSelectChoiceOption($common_lang['form.name'], WebLink::SORT_FIELDS_URL_VALUES[WebLink::SORT_ALPHABETIC]),
+			new FormFieldSelectChoiceOption($this->lang['config.sort_type.visits'], WebLink::SORT_FIELDS_URL_VALUES[WebLink::SORT_NUMBER_VISITS])
 		);
 
 		if ($this->comments_config->module_comments_is_enabled('web'))
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'], 'com');
-	
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'], WebLink::SORT_FIELDS_URL_VALUES[WebLink::SORT_NUMBER_COMMENTS]);
+		
 		if ($this->content_management_config->module_notation_is_enabled('web'))
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'], 'note');
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'], WebLink::SORT_FIELDS_URL_VALUES[WebLink::SORT_NOTATION]);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_options, 
 			array('events' => array('change' => 'document.location = "'. WebUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))

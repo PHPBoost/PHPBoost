@@ -59,8 +59,8 @@ class WebDisplayPendingWebLinksController extends ModuleController
 		$comments_config = CommentsConfig::load();
 		$content_management_config = ContentManagementConfig::load();
 		$authorized_categories = WebService::get_authorized_categories(Category::ROOT_CATEGORY);
-		$mode = $request->get_getstring('sort', WebUrlBuilder::DEFAULT_SORT_MODE);
-		$field = $request->get_getstring('field', WebUrlBuilder::DEFAULT_SORT_FIELD);
+		$mode = $request->get_getstring('sort', $config->get_items_default_sort_mode());
+		$field = $request->get_getstring('field', WebLink::SORT_FIELDS_URL_VALUES[$config->get_items_default_sort_field()]);
 		
 		$condition = 'WHERE id_category IN :authorized_categories
 		' . (!WebAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
@@ -72,18 +72,15 @@ class WebDisplayPendingWebLinksController extends ModuleController
 		);
 		
 		$page = AppContext::get_request()->get_getint('page', 1);
-		$pagination = $this->get_pagination($condition, $parameters, $field, $mode, $page);
+		$pagination = $this->get_pagination($condition, $parameters, $field, TextHelper::strtolower($mode), $page);
 		
-		$sort_mode = ($mode == 'asc') ? 'ASC' : 'DESC';
-		switch ($field)
-		{
-			case 'name':
-				$sort_field = WebLink::SORT_ALPHABETIC;
-				break;
-			default:
-				$sort_field = WebLink::SORT_DATE;
-				break;
-		}
+		$sort_mode = TextHelper::strtoupper($mode);
+		$sort_mode = (in_array($sort_mode, array(WebLink::ASC, WebLink::DESC)) ? $sort_mode : $config->get_items_default_sort_mode());
+		
+		if (in_array($field, array(WebLink::SORT_FIELDS_URL_VALUES[WebLink::SORT_ALPHABETIC], WebLink::SORT_FIELDS_URL_VALUES[WebLink::SORT_DATE])))
+			$sort_field = array_search($field, WebLink::SORT_FIELDS_URL_VALUES);
+		else
+			$sort_field = WebLink::SORT_DATE;
 		
 		$result = PersistenceContext::get_querier()->select('SELECT web.*, member.*, com.number_comments, notes.average_notes, notes.number_notes, note.note
 		FROM '. WebSetup::$web_table .' web
@@ -131,7 +128,7 @@ class WebDisplayPendingWebLinksController extends ModuleController
 				$this->build_keywords_view($keywords);
 		}
 		$result->dispose();
-		$this->build_sorting_form($field, $mode);
+		$this->build_sorting_form($field, TextHelper::strtolower($sort_mode));
 	}
 	
 	private function build_sorting_form($field, $mode)
@@ -146,8 +143,8 @@ class WebDisplayPendingWebLinksController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, 
 			array(
-				new FormFieldSelectChoiceOption($common_lang['form.date.creation'], 'date'),
-				new FormFieldSelectChoiceOption($common_lang['form.name'], 'name')
+				new FormFieldSelectChoiceOption($common_lang['form.date.creation'], WebLink::SORT_FIELDS_URL_VALUES[WebLink::SORT_DATE]),
+				new FormFieldSelectChoiceOption($common_lang['form.name'], WebLink::SORT_FIELDS_URL_VALUES[WebLink::SORT_ALPHABETIC])
 			), 
 			array('events' => array('change' => 'document.location = "'. WebUrlBuilder::display_pending()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
