@@ -90,7 +90,6 @@ class AuthenticationService
 		return $types;
 	}
 
-
 	private static $external_authentications_actived;
 	
 	public static function get_external_auth_activated($identifier)

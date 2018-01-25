@@ -65,20 +65,20 @@ class UserEditProfileController extends AbstractController
 		} catch (RowNotFoundException $e) {
 		}
 
-		$this->user_auth_types = AuthenticationService::get_user_types_authentication($user_id);
-		
 		if (!$this->check_authorizations($user_id))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
 
+		$this->user_auth_types = AuthenticationService::get_user_types_authentication($user_id);
+
 		$associate_type = $request->get_getvalue('associate', false);
 		if ($associate_type)
 		{
-			if (!in_array($associate_type, $this->user_auth_types))
+			if (AuthenticationService::external_auth_is_activated($associate_type))
 			{
-				$authentication_method = AuthenticationService::get_authentication_method($associate_type);
+				$authentication_method = AuthenticationService::get_external_auth_activated($associate_type)->get_authentication();
 				AuthenticationService::associate($authentication_method, $user_id);
 				AppContext::get_response()->redirect(UserUrlBuilder::edit_profile($user_id));
 			}
@@ -87,9 +87,9 @@ class UserEditProfileController extends AbstractController
 		$dissociate_type = $request->get_getvalue('dissociate', false);
 		if ($dissociate_type)
 		{
-			if (in_array($dissociate_type, $this->user_auth_types) && count($this->user_auth_types) > 1)
+			if (AuthenticationService::external_auth_is_activated($dissociate_type) && count(AuthenticationService::get_external_auths_activated()) > 1)
 			{
-				$authentication_method = AuthenticationService::get_authentication_method($dissociate_type);
+				$authentication_method = AuthenticationService::get_external_auth_activated($dissociate_type)->get_authentication();
 				AuthenticationService::dissociate($authentication_method, $user_id);
 				AppContext::get_response()->redirect(UserUrlBuilder::edit_profile($user_id));
 			}
@@ -129,9 +129,7 @@ class UserEditProfileController extends AbstractController
 	private function build_form()
 	{
 		$security_config = SecurityConfig::load();
-		
-		$activated_auth_types = AuthenticationService::get_activated_types_authentication();
-		
+
 		$form = new HTMLForm(__CLASS__);
 		$this->member_extended_fields_service = new MemberExtendedFieldsService($form);
 		
@@ -170,7 +168,8 @@ class UserEditProfileController extends AbstractController
 		$connect_fieldset = new FormFieldsetHTML('connect', $this->lang['connection']);
 		$form->add_fieldset($connect_fieldset);
 		
-		$more_than_one_authentication_type = count($activated_auth_types) > 1;
+		$activated_external_authentication = AuthenticationService::get_external_auths_activated();
+		$more_than_one_authentication_type = count($activated_external_authentication) >= 1;
 		$internal_auth_connected = in_array(PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD, $this->user_auth_types);
 
 		$has_custom_login = $this->internal_auth_infos['login'] && $this->user->get_email() !== $this->internal_auth_infos['login'];
@@ -234,27 +233,15 @@ class UserEditProfileController extends AbstractController
 			$form->add_constraint(new FormConstraintFieldsInequality($login, $password));
 		}
 
-		if (in_array('fb', $activated_auth_types))
+		foreach ($activated_external_authentication as $id => $authentication)
 		{
-			if (in_array(FacebookAuthenticationMethod::AUTHENTICATION_METHOD, $this->user_auth_types))
+			if (in_array($id, $this->user_auth_types))
 			{
-				$connect_fieldset->add_field(new FormFieldFree('fb_auth', $this->lang['fb_connection'] . ' <i class="fa fa-success"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), 'dissociate', 'fb')->absolute() . '">' . $this->lang['dissociate_account'] . '</a>'));
+				$connect_fieldset->add_field(new FormFieldFree($id .'_auth', $authentication->get_authentication_name() . ' <i class="fa fa-success"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), 'dissociate', $id)->absolute() . '">' . $this->lang['dissociate_account'] . '</a>'));
 			}
 			else
 			{
-				$connect_fieldset->add_field(new FormFieldFree('fb_auth', $this->lang['fb_connection'] . ' <i class="fa fa-error"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), 'associate', 'fb')->absolute() . '">' . $this->lang['associate_account'] . '</a>'));
-			}
-		}
-		
-		if (in_array('google', $activated_auth_types))
-		{
-			if (in_array(GoogleAuthenticationMethod::AUTHENTICATION_METHOD, $this->user_auth_types))
-			{
-				$connect_fieldset->add_field(new FormFieldFree('google_auth', $this->lang['google_connection'] . ' <i class="fa fa-success"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), 'dissociate', 'google')->absolute() . '">' . $this->lang['dissociate_account'] . '</a>'));
-			}
-			else
-			{
-				$connect_fieldset->add_field(new FormFieldFree('google_auth', $this->lang['google_connection'] . ' <i class="fa fa-error"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), 'associate', 'google')->absolute() . '">' . $this->lang['associate_account'] . '</a>'));
+				$connect_fieldset->add_field(new FormFieldFree($id .'_auth', $authentication->get_authentication_name() . ' <i class="fa fa-error"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), 'associate', $id)->absolute() . '">' . $this->lang['associate_account'] . '</a>'));
 			}
 		}
 
