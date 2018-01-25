@@ -127,7 +127,7 @@ class AdminCustomizeEditorCSSFilesController extends AdminModuleController
 				
 				if ($css_file->exists())
 				{
-					$file_editor_fieldset->add_field(new FormFieldMultiLineTextEditor('css_file', $this->lang['customization.editor.files.content'], $css_file->read(),
+					$file_editor_fieldset->add_field(new FormFieldMultiLineTextEditor('css_file', $this->lang['customization.editor.files.content'], TextHelper::htmlspecialchars($css_file->read()),
 						array('rows' => 30, 'class' => "lined")
 					));
 				}
