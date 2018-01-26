@@ -1,9 +1,13 @@
-body {
-  background-color :#fff;
-  font-family :Serif;
-  font-size :15pt;
-}
+@media print {
+	
+	body {
+		background-color :#fff;
+		font-family :Serif;
+		font-size :15pt;
+	}
 
-#top-header-content, #visit-counter, #footer, #sub-header, #menu-left, #top-content, #bottom-content, #menu-right, #footer, nav.cssmenu, form {
-  display :none;
+
+	#top-header-content, #visit-counter, #footer, #sub-header, #menu-left, #top-content, #bottom-content, #menu-right, #footer, nav.cssmenu, form {
+		display :none;
+	}
 }
