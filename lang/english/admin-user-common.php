@@ -71,17 +71,7 @@ $lang['security.config.internal-password-strength.strong'] = 'Strong (lower case
 $lang['security.config.internal-password-strength.very-strong'] = 'Very strong (lower case, upper case, digits and special characters)';
 $lang['security.config.login-and-email-forbidden-in-password'] = 'Forbid email and login in password';
 
-//Authentication Configuration
 $lang['members.config-authentication'] = 'Authentication configuration';
-$lang['authentication.config.curl_extension_disabled'] = '<b>php_curl</b> extension is disabled on this server. Enable it to use Facebook and Google authentication methods.';
-$lang['authentication.config.fb-auth-enabled'] = 'Enable Facebook authentication';
-$lang['authentication.config.fb-auth-enabled-explain'] = 'Go to <a href="https://developers.facebook.com">https://developers.facebook.com</a> to create your id';
-$lang['authentication.config.fb-app-id'] = 'Facebook App ID';
-$lang['authentication.config.fb-app-key'] = 'Facebook App Secret';
-$lang['authentication.config.google-auth-enabled'] = 'Enable Google authentication';
-$lang['authentication.config.google-auth-enabled-explain'] = 'Go to <a href="https://console.developers.google.com/project">https://console.developers.google.com/project</a> to create your id';
-$lang['authentication.config.google-client-id'] = 'Google Client ID';
-$lang['authentication.config.google-client-secret'] = 'Google Client Secret';
 
 //Other fieldset configuration title
 $lang['members.config.avatars-management'] = 'Avatars management';
