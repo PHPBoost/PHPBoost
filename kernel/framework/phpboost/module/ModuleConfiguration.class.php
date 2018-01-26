@@ -45,7 +45,6 @@ class ModuleConfiguration
 	private $repository;
 	private $admin_main_page;
 	private $admin_menu;
-	private $admin_links;
 	private $home_page;
 	private $contribution_interface;
 	private $url_rewrite_rules;
@@ -118,11 +117,6 @@ class ModuleConfiguration
 		return $this->admin_menu;
 	}
 
-	public function get_admin_links()
-	{
-		return $this->admin_links;
-	}
-
 	public function get_home_page()
 	{
 		return $this->home_page;
@@ -189,7 +183,6 @@ class ModuleConfiguration
 		$this->check_parse_ini_file($desc, $desc_ini_file);
 		$this->name = $desc['name'];
 		$this->description = $desc['desc'];
-		$this->admin_links = !empty($desc['admin_links']) ? $this->parse_ini_array($desc['admin_links']) : array();
 		$this->documentation = !empty($desc['documentation']) ? $desc['documentation'] : '';
 	}
 
@@ -199,67 +192,6 @@ class ModuleConfiguration
 		{
 			throw new IOException('Parse ini file ' . $ini_file . ' failed');
 		}
-	}
-
-	/**
-	 * @desc Parses a table written in a special syntax which is user-friendly and can be inserted in a ini file (PHP serialized arrays cannot be inserted because they contain the " character).
-	 * The syntax is very easy, it really looks like the PHP array declaration: key => value, key2 => value2
-	 * You can nest some elements: key => (key1 => value1, key2 => value2), key2 => value2
-	 * @param string $links_format Serialized array
-	 * @return string[] The unserialized array.
-	 */
-	private function parse_ini_array($links_format)
-	{
-		$links_format = preg_replace('` ?=> ?`', '=', $links_format);
-		$links_format = preg_replace(' ?, ?', ',', $links_format) . ' ';
-		list($key, $value, $open, $cursor, $check_value, $admin_links) = array('', '', '', 0, false, array());
-		$string_length = TextHelper::strlen($links_format);
-		while ($cursor < $string_length) //Parcours linéaire.
-		{
-			$char = TextHelper::substr($links_format, $cursor, 1);
-			if (!$check_value) //On récupère la clé.
-			{
-				if ($char != '=')
-				{
-					$key .= $char;
-				}
-				else
-				{
-					$check_value =  true;
-				}
-			}
-			else //On récupère la valeur associé à la clé, une fois celle-ci récupérée.
-			{
-				if ($char == '(') //On marque l'ouverture de la parenthèse.
-				{
-					$open = $key;
-				}
-
-				if ($char != ',' && $char != '(' && $char != ')' && ($cursor+1) < $string_length) //Si ce n'est pas un caractère délimiteur, on la fin => on concatène.
-				{
-					$value .= $char;
-				}
-				else
-				{
-					if (!empty($open) && !empty($value)) //On insère dans la clé marqué précédemment à l'ouveture de la parenthèse.
-					{
-						$admin_links[$open][$key] = $value;
-					}
-					else
-					{
-						$admin_links[$key] = $value; //Ajout simple.
-					}
-					list($key, $value, $check_value) = array('', '', false);
-				}
-				if ($char == ')')
-				{
-					$open = ''; //On supprime le marqueur.
-					$cursor++; //On avance le curseur pour faire sauter la virugle après la parenthèse.
-				}
-			}
-			$cursor++;
-		}
-		return $admin_links;
 	}
 }
 ?>
