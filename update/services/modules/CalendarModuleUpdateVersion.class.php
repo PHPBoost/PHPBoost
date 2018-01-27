@@ -27,53 +27,19 @@
 
 class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 {
-	private $querier;
-	private $db_utils;
-	
 	public function __construct()
 	{
 		parent::__construct('calendar');
-		$this->querier = PersistenceContext::get_querier();
-		$this->db_utils = PersistenceContext::get_dbms_utils();
 	}
 	
 	public function execute()
 	{
-		if (ModulesManager::is_module_installed('calendar'))
-		{
-			$tables = $this->db_utils->list_tables(true);
-			
-			if (in_array(PREFIX . 'calendar_events_content', $tables))
-				$this->update_events_content_table();
-			
-			$this->update_content();
-		}
-		
 		$this->delete_old_files();
-	}
-	
-	private function update_events_content_table()
-	{
-		$columns = $this->db_utils->desc_table(PREFIX . 'calendar_events_content');
-		
-		if (isset($columns['location']))
-			$this->querier->inject('ALTER TABLE ' . PREFIX . 'calendar_events_content CHANGE location location TEXT');
-		
-		if (!isset($columns['picture_url']))
-			$this->db_utils->add_column(PREFIX . 'calendar_events_content', 'picture_url', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"));
-		
-		if (!isset($columns['map_displayed']))
-			$this->db_utils->add_column(PREFIX . 'calendar_events_content', 'map_displayed', array('type' => 'boolean', 'notnull' => 1, 'default' => 0));
-	}
-	
-	public function update_content()
-	{
-		UpdateServices::update_table_content(PREFIX . 'calendar_events_content');
 	}
 	
 	private function delete_old_files()
 	{
-		$file = new File(Url::to_rel('/' . $this->module_id . '/controllers/AdminCalendarManageEventsController.class.php'));
+		$file = new File(Url::to_rel('/' . $this->module_id . '/phpboost/CalendarNewContent.class.php'));
 		$file->delete();
 	}
 }

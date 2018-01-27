@@ -28,92 +28,39 @@
 class WikiModuleUpdateVersion extends ModuleUpdateVersion
 {
 	private $querier;
+	private $db_utils;
 	
 	public function __construct()
 	{
 		parent::__construct('wiki');
 		$this->querier = PersistenceContext::get_querier();
+		$this->db_utils = PersistenceContext::get_dbms_utils();
 	}
 	
 	public function execute()
 	{
 		if (ModulesManager::is_module_installed('wiki'))
 		{
-			$this->update_content();
+			$tables = $this->db_utils->list_tables(true);
+			
+			if (in_array(PREFIX . 'wiki_contents', $tables))
+				$this->update_wiki_contents_table();
 		}
 		
 		$this->delete_old_files();
-	}
 	
-	public function update_content()
+	private function update_wiki_contents_table()
 	{
-		$unparser = new OldBBCodeUnparser();
-		$parser = new BBCodeParser();
+		$columns = $this->db_utils->desc_table(PREFIX . 'wiki_contents');
 		
-		$result = $this->querier->select('SELECT id_contents, menu, content FROM ' . PREFIX . 'wiki_contents');
-		
-		$selected_rows = $result->get_rows_count();
-		$updated_content = 0;
-		
-		while($row = $result->fetch())
-		{
-			$unparser->set_content($row['content']);
-			$unparser->parse();
-			$parser->set_content($unparser->get_content());
-			$parser->parse();
-			
-			$array_preg = array(
-				'`&lt;h1 class="wiki_paragraph1" id="paragraph_([^"]+)"&gt;(.*)&lt;/h1&gt;`isuU',
-				'`&lt;h2 class="wiki_paragraph2" id="paragraph_([^"]+)"&gt;(.*)&lt;/h2&gt;`isuU',
-				'`&lt;h3 class="wiki_paragraph3" id="paragraph_([^"]+)"&gt;(.*)&lt;/h3&gt;`isuU',
-				'`&lt;h4 class="wiki_paragraph4" id="paragraph_([^"]+)"&gt;(.*)&lt;/h4&gt;`isuU',
-				'`&lt;h5 class="wiki_paragraph5" id="paragraph_([^"]+)"&gt;(.*)&lt;/h5&gt;`isuU',
-				'`<br ?/>\s*<br ?/>`isuU'
-			);
-
-			$array_preg_replace = array(
-				'<h2 class="formatter-title wiki-paragraph-2" id="paragraph-$1">$2</h2>',
-				'<h3 class="formatter-title wiki-paragraph-3" id="paragraph-$1">$2</h3>',
-				'<h4 class="formatter-title wiki-paragraph-4" id="paragraph-$1">$2</h4>',
-				'<h5 class="formatter-title wiki-paragraph-5" id="paragraph-$1">$2</h5>',
-				'<h6 class="formatter-title wiki-paragraph-6" id="paragraph-$1">$2</h6>',
-				'<br />'
-			);
-			
-			$content = preg_replace($array_preg, $array_preg_replace, $parser->get_content());
-			
-			$array_preg = array(
-				'`<ol class="wiki_list_([^"]+)"><li>`isuU',
-				'`a href="#paragraph_`isuU'
-			);
-
-			$array_preg_replace = array(
-				'<ol class="wiki-list wiki-list-$1"><li>',
-				'a href="#paragraph-'
-			);
-			
-			$menu = preg_replace($array_preg, $array_preg_replace, $row['menu']);
-			
-			if ($content != $row['content'] || $menu != $row['menu'])
-			{
-				$this->querier->update(PREFIX . 'wiki_contents', array('content' => $content, 'menu' => $menu), 'WHERE id_contents=:id', array('id' => $row['id_contents']));
-				$updated_content++;
-			}
-		}
-		$result->dispose();
-		
-		$object = new UpdateServices('', false);
-		$object->add_information_to_file('table ' . PREFIX . 'wiki_contents', ': ' . $updated_content . ' contents updated');
+		if (!isset($columns['change_reason']))
+			$this->db_utils->add_column(PREFIX . 'wiki_contents', 'change_reason', array('type' => 'text', 'length' => 100, 'notnull' => 0));
 	}
 	
 	private function delete_old_files()
 	{
-		$file = new File(Url::to_rel('/' . $this->module_id . '/formatting/WikiBBCodeParser.class.php'));
+		$file = new File(Url::to_rel('/' . $this->module_id . '/phpboost/WikiNewContent.class.php'));
 		$file->delete();
-		
-		$folder = new Folder(Url::to_rel('/' . $this->module_id . '/formatting'));
-		if ($folder->exists())
-			$folder->delete();
 	}
 }
 ?>

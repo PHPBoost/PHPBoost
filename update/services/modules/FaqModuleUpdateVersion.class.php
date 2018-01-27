@@ -27,32 +27,19 @@
 
 class FaqModuleUpdateVersion extends ModuleUpdateVersion
 {
-	private $querier;
-	
 	public function __construct()
 	{
 		parent::__construct('faq');
-		$this->querier = PersistenceContext::get_querier();
 	}
 	
 	public function execute()
 	{
-		if (ModulesManager::is_module_installed('faq'))
-		{
-			$this->update_content();
-		}
-		
 		$this->delete_old_files();
-	}
-	
-	public function update_content()
-	{
-		UpdateServices::update_table_content(PREFIX . 'faq', 'answer');
 	}
 	
 	private function delete_old_files()
 	{
-		$file = new File(Url::to_rel('/' . $this->module_id . '/controllers/AdminFaqManageController.class.php'));
+		$file = new File(Url::to_rel('/' . $this->module_id . '/phpboost/FaqNewContent.class.php'));
 		$file->delete();
 	}
 }

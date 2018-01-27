@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                       BugtrackerModuleUpdateVersion.class.php
+ *                       GalleryModuleUpdateVersion.class.php
  *                            -------------------
- *   begin                : April 21, 2017
+ *   begin                : January 27, 2018
  *   copyright            : (C) 2017 Julien BRISWALTER
  *   email                : j1.seth@phpboost.com
  *
@@ -25,27 +25,25 @@
  *
  ###################################################*/
 
-class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
+class GalleryModuleUpdateVersion extends ModuleUpdateVersion
 {
 	public function __construct()
 	{
-		parent::__construct('bugtracker');
+		parent::__construct('gallery');
 	}
 	
 	public function execute()
 	{
-		if (ModulesManager::is_module_installed('bugtracker'))
-		{
-			$this->update_content();
-		}
+		$this->delete_old_files();
 	}
 	
-	public function update_content()
+	private function delete_old_files()
 	{
-		UpdateServices::update_table_content(PREFIX . 'bugtracker');
-		UpdateServices::update_table_content(PREFIX . 'bugtracker', 'reproduction_method');
-		UpdateServices::update_table_content(PREFIX . 'bugtracker_history', 'old_value');
-		UpdateServices::update_table_content(PREFIX . 'bugtracker_history', 'new_value');
+		$file = new File(Url::to_rel('/' . $this->module_id . '/phpboost/GalleryNewContent.class.php'));
+		$file->delete();
+		
+		$file = new File(Url::to_rel('/' . $this->module_id . '/phpboost/GalleryNotation.class.php'));
+		$file->delete();
 	}
 }
 ?>

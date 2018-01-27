@@ -215,9 +215,6 @@ class UpdateServices
 		
 		if (GeneralConfig::load()->get_phpboost_major_version() != self::NEW_KERNEL_VERSION)
 		{
-			// Mise à jour du contenu serialisé pour le passage en UTF-8
-			$this->update_serialized_data();
-
 			// Mise à jour des configurations
 			$this->update_configurations();
 		}
@@ -243,22 +240,12 @@ class UpdateServices
 		// Mise à jour du contenu
 		$this->update_content();
 		
-		// Mise à jour du contenu des menus de contenu
-		$this->update_content_menus();
-		
 		// Installation du module UrlUpdater pour la réécriture des Url des modules mis à jour
 		$folder = new Folder(PATH_TO_ROOT . '/UrlUpdater');
 		if ($folder->exists())
 			ModulesManager::install_module('UrlUpdater');
 		else
 			$this->add_information_to_file('module UrlUpdater', 'has not been installed because it was not on the FTP');
-		
-		// Installation du nouveau module GoogleMaps pour bénéficier des cartes et adresses dans les modules contact et calendrier
-		$folder = new Folder(PATH_TO_ROOT . '/GoogleMaps');
-		if ($folder->exists())
-			ModulesManager::install_module('GoogleMaps');
-		else
-			$this->add_information_to_file('module GoogleMaps', 'has not been installed because it was not on the FTP');
 		
 		// Vérification de la date d'installation du site et correction si besoin
 		$this->check_installation_date();
@@ -292,15 +279,10 @@ class UpdateServices
 	
 	private function update_kernel_tables()
 	{ 
-		// Mise à jour des tables du noyau - conversion en utf8
-		foreach (self::$db_utils->list_tables(true) as $table_name)
-		{
-			if (!in_array($table_name, array(PREFIX . 'errors_404', PREFIX . 'stats_referer')))
-			{
-				self::$db_querier->inject('ALTER TABLE `' . $table_name . '` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci');
-				self::$db_querier->inject('ALTER TABLE `' . $table_name . '` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci');
-			}
-		}
+		$columns = $this->db_utils->desc_table(PREFIX . 'sessions');
+		
+		if (!isset($columns['location_id']))
+			self::$db_utils->add_column(PREFIX . 'sessions', 'location_id', array('type' => 'string', 'length' => 64, 'default' => "''"));
 	}
 	
 	private function update_kernel_version()
@@ -489,115 +471,6 @@ class UpdateServices
 		$object->add_information_to_file('table ' . $table, ': ' . $updated_content . ' contents updated');
 	}
 	
-	public function update_serialized_data()
-	{
-		// Update configs table
-		$result = self::$db_querier->select('SELECT id, value FROM ' . PREFIX . 'configs');
-		while($row = $result->fetch())
-		{
-			self::$db_querier->update(PREFIX . 'configs', array('value' => self::recount_serialized_bytes($row['value'])), 'WHERE id=:id', array('id' => $row['id']));
-		}
-		$result->dispose();
-		
-		// Update member_extended_fields_list table
-		$result = self::$db_querier->select('SELECT id, possible_values FROM ' . PREFIX . 'member_extended_fields_list');
-		while($row = $result->fetch())
-		{
-			self::$db_querier->update(PREFIX . 'member_extended_fields_list', array('possible_values' => self::recount_serialized_bytes($row['possible_values'])), 'WHERE id=:id', array('id' => $row['id']));
-		}
-		$result->dispose();
-		
-		// Update menus table
-		$result = self::$db_querier->select('SELECT id, object FROM ' . PREFIX . 'menus');
-		while($row = $result->fetch())
-		{
-			self::$db_querier->update(PREFIX . 'menus', array('object' => self::recount_serialized_bytes($row['object'])), 'WHERE id=:id', array('id' => $row['id']));
-		}
-		$result->dispose();
-		
-		AppContext::get_cache_service()->clear_cache();
-	}
-	
-	public static function recount_serialized_bytes($text)
-	{
-		if (function_exists('mb_internal_encoding')) { mb_internal_encoding('UTF-8'); }
-		if (function_exists('mb_regex_encoding')) { mb_regex_encoding('UTF-8'); }
-		
-		$offset = 0;
-
-		while (preg_match('/s:([0-9]+):"/u', $text, $matches, PREG_OFFSET_CAPTURE, $offset) || preg_match('/s:([0-9]+):"/u', $text, $matches, PREG_OFFSET_CAPTURE, ++$offset))
-		{
-			$number = $matches[1][0];
-			$pos = $matches[1][1];
-			
-			$digits = strlen("$number");
-			$pos_chars = mb_strlen(substr($text, 0, $pos)) + 2 + $digits;
-			
-			$str = mb_substr($text, $pos_chars, $number);
-			
-			if (preg_match('/s:([0-9]+):"/u', $str))
-			{
-				$fixed_str = self::recount_serialized_bytes($str);
-				
-				if ($str != $fixed_str)
-					$text = str_replace($str, $fixed_str, $text);
-			}
-			
-			$new_number = strlen($str);
-			$new_digits = strlen($new_number);
-			
-			if ($number < $new_number)
-			{
-				// Change stored number
-				$text = substr_replace($text, $new_number, $pos, $digits);
-				$pos += $new_digits - $digits;
-			}
-
-			$offset = $pos + 2 + $new_number;
-		}
-
-		return $text;
-	}
-	
-	public static function update_content_menus()
-	{
-		$unparser = new OldBBCodeUnparser();
-		$parser = new BBCodeParser();
-		
-		$result = self::$db_querier->select('SELECT id
-			FROM ' . PREFIX . 'menus
-			WHERE class = \'ContentMenu\''
-		);
-		
-		$selected_rows = $result->get_rows_count();
-		$updated_content = 0;
-		
-		while($row = $result->fetch())
-		{
-			$menu = MenuService::load($row['id']);
-			$content = $menu->get_content();
-			
-			$unparser->set_content($content);
-			$unparser->parse();
-			$parser->set_content($unparser->get_content());
-			$parser->parse();
-			
-			if ($parser->get_content() != $content)
-			{
-				$menu->set_content(str_replace('<br />', '', $parser->get_content()));
-				MenuService::save($menu);
-				$updated_content++;
-			}
-		}
-		$result->dispose();
-		
-		if ($updated_content)
-			MenuService::generate_cache();
-		
-		$object = new self('', false);
-		$object->add_information_to_file('table ' . PREFIX . 'menus', ': ' . $updated_content . ' content menus updated');
-	}
-	
 	private function check_installation_date()
 	{
 		$general_config = GeneralConfig::load();
@@ -719,11 +592,28 @@ class UpdateServices
 	
 	private function delete_old_files_kernel()
 	{
-		$file = new File(Url::to_rel('/kernel/lib/css/font-awesome/fonts/fontawesome-webfont.eot'));
+		$folder = new Folder(Url::to_rel('/kernel/framework/content/newcontent'));
+		if ($folder->exists())
+			$folder->delete();
+		
+		$folder = new Folder(Url::to_rel('/kernel/lib/php/facebook'));
+		if ($folder->exists())
+			$folder->delete();
+		
+		$folder = new Folder(Url::to_rel('/kernel/lib/php/google'));
+		if ($folder->exists())
+			$folder->delete();
+		
+		$file = new File(Url::to_rel('/kernel/framework/phpboost/user/authentication/FacebookAuthenticationMethod.class.php'));
 		$file->delete();
-		$file = new File(Url::to_rel('/kernel/lib/css/font-awesome/fonts/fontawesome-webfont.svg'));
+		
+		$file = new File(Url::to_rel('/kernel/framework/phpboost/user/authentication/GoogleAuthenticationMethod.class.php'));
 		$file->delete();
-		$file = new File(Url::to_rel('/kernel/lib/css/font-awesome/fonts/fontawesome.otf'));
+		
+		$file = new File(Url::to_rel('/kernel/framework/content/notation/extension-point/AbstractNotationExtensionPoint.class.php'));
+		$file->delete();
+		
+		$file = new File(Url::to_rel('/kernel/framework/content/notation/extension-point/NotationExtensionPoint.class.php'));
 		$file->delete();
 	}
 	

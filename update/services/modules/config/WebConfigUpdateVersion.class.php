@@ -38,23 +38,10 @@ class WebConfigUpdateVersion extends ConfigUpdateVersion
 		
 		if ($old_config)
 		{
-			if (!$old_config->get_property('comments_enabled'))
-			{
-				$comments_config = CommentsConfig::load();
-				$unauthorized_modules = $comments_config->get_comments_unauthorized_modules();
-				$unauthorized_modules[] = 'web';
-				$comments_config->set_comments_unauthorized_modules($unauthorized_modules);
-				CommentsConfig::save();
-			}
-			
-			if (!$old_config->get_property('notation_enabled'))
-			{
-				$content_management_config = ContentManagementConfig::load();
-				$unauthorized_modules = $content_management_config->get_notation_unauthorized_modules();
-				$unauthorized_modules[] = 'web';
-				$content_management_config->set_notation_unauthorized_modules($unauthorized_modules);
-				ContentManagementConfig::save();
-			}
+			$config = WebConfig::load();
+			$config->set_partners_sort_field($old_config->get_property('sort_type'));
+			$config->set_partners_sort_mode($old_config->get_property('sort_mode'));
+			WebConfig::save();
 			
 			return true;
 		}
