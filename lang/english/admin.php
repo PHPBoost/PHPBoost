@@ -3,32 +3,31 @@
  *                                admin.php
  *                            -------------------
  *   begin                : November 20, 2005
- *   last modified		: October 3rd, 2009 - JMNaylor
+ *   last modified		  : January 27, 2017
  *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  ###################################################
  *
- *   This program is a free software. You can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ *	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 3 of the License, or
+ *	(at your option) any later version.
  *
- * This program is distributed in hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *	You should have received a copy of the GNU General Public License
+ *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  ###################################################*/
 
 
- ####################################################
+####################################################
 #                     English                      #
- ####################################################
+####################################################
 
 $LANG['administration'] = 'Administration';
 
@@ -45,6 +44,7 @@ $LANG['require_items_number'] = 'Please enter an items number!';
 //Common
 $LANG['user_ip'] = 'IP address';
 $LANG['registered'] = 'Registered';
+$LANG['link'] = 'Link';
 $LANG['configuration'] = 'Configuration';
 $LANG['stats'] = 'Statistics';
 $LANG['cat_management'] = 'Category management';
@@ -95,7 +95,6 @@ $LANG['last_comments'] = 'Last comments';
 $LANG['view_all_comments'] = 'View all comments';
 $LANG['writing_pad'] = 'Writing pad';
 $LANG['writing_pad_explain'] = 'This form is provided to enter your personal notes.';
-
 
 //Administrator alerts
 $LANG['administrator_alerts'] = 'Alerts';
@@ -178,8 +177,6 @@ $LANG['location'] = 'Location';
 $LANG['use_tpl'] = 'Use templates structure';
 $LANG['add_sub_element'] = 'Add item';
 $LANG['add_sub_menu'] = 'Add submenu';
-$LANG['add_sub_element'] = 'New item';
-$LANG['add_sub_menu'] = 'New submenu';
 $LANG['display_title'] = 'Display title';
 $LANG['choose_feed_in_list'] = 'Choose a feed in the list';
 $LANG['feed'] = 'feed';
@@ -265,7 +262,6 @@ $LANG['more_details'] = 'More details';
 $LANG['download_the_complete_pack'] = 'Download the complete pack';
 $LANG['download_the_update_pack'] = 'Download the update pack';
 $LANG['no_available_update'] = 'No update is available for the moment.';
-$LANG['incompatible_php_version'] = 'Incompatible PHP Version, please upgrade to %s or above';
 $LANG['incompatible_php_version'] = 'Can\'t check for updates.
 Please upgrade to PHP version %s or above.<br />If you can\'t use PHP5,
 check for updates on our <a href="http://www.phpboost.com">official website</a>.';
