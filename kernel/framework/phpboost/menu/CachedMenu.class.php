@@ -41,7 +41,7 @@ class CachedMenu
 	
 	private function build_cached_string()
 	{
-		if (self::need_cached_string($this->menu))
+		if (!self::need_cached_string($this->menu))
 		{
 			$this->cached_string = $this->menu->display();
 		}

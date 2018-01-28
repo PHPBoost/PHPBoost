@@ -114,4 +114,10 @@ $lang['extended_field.avatar_upload_max_dimension'] = 'Dimensions maximales du f
 //BBcode
 $lang['bbcode_member'] = 'Message destiné aux membres';
 $lang['bbcode_moderator'] = 'Message destiné aux modérateurs';
+
+//Locked content
+$lang['content.is_locked'] = 'Contenu bloqué';
+$lang['content.is_locked.description'] = 'L\'élement est actuellement ouvert par un autre utilisateur, vous ne pouvez pas y accéder';
+$lang['content.lock.open.description'] = 'L\'élement est actuellement ouvert par un autre utilisateur.';
+
 ?>
