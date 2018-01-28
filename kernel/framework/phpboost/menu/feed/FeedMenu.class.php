@@ -141,6 +141,10 @@ class FeedMenu extends Menu
 		}
 		return '';
 	}
-
+	
+	public function need_cached_string()
+	{
+		return true;
+	}
 }
 ?>
