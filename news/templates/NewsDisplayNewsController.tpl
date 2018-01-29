@@ -1,12 +1,3 @@
-<script>
-	<!--
-	function open_social_elements_menu(myid)
-	{
-		jQuery('#' + myid).toggleClass('opened');
-	}
-	-->
-</script>
-
 <section id="module-news">
 	<header>
 		<h1>
@@ -54,7 +45,7 @@
 					</span>
 					<div id="social-elements-container-01" class="social-elements-container">
 						<div id="social-element-button-01" class="social-element-button">
-							<a href="#" Title="Menu des liens pour les réseaux sociaux" onclick="open_social_elements_menu('social-elements-container-01');return false;"><i class="fa fa-share-alt"></i></a>
+							<a href="#" Title="Menu des liens pour les réseaux sociaux" onclick="open_submenu('social-elements-container-01', 'opened');return false;"><i class="fa fa-share-alt"></i></a>
 						</div>
 						<ul class="social-elements-list">
 							# IF C_COMMENTS_ENABLED #

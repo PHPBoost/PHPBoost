@@ -1,10 +1,4 @@
-/* Social Network  Normal */
-.more {
-	display: inline-block;
-	padding: 0;
-	border-bottom: 1px solid #666666;
-}
-
+/* Social Network general */
 .more-element {
 	padding: 2px 0;
 	vertical-align: middle;
@@ -53,38 +47,45 @@
 .social-element-view     { background-color: #F2F2F2; }
 .social-element-print    { background-color: #D6D6D6; }
 
-.social-elements-menu .social-element-button {
+
+/* You can customize the code as you wish or simply add any following CSS class for quick customization */
+/* Add CSS class to "social-elements-container" */
+
+/* Submenu view with class "socialnetwork-submenu" */
+.socialnetwork-submenu .social-element-button {
 	display: block;
 }
 
-.social-elements-menu .social-elements-list {
+.socialnetwork-submenu .social-elements-list {
 	position: absolute;
 	left: -9999px;
-	bottom: -35px;
-	flex-direction: column;
+	bottom: -5px;
 }
 
-.social-elements-menu.opened .social-elements-list {
+.socialnetwork-submenu.socialnetwork-vertical .social-elements-list {
+	bottom: -35px;
+}
+
+.socialnetwork-submenu.opened .social-elements-list {
 	left: 150%;
 }
 
-.social-elements-menu .social-element {
-	margin: 2px 0;
+/* Diplay elements in vertical with class "socialnetwork-vertical" */
+.socialnetwork-vertical .social-elements-list {
+	flex-direction: column;
+}
+
+/* Rounded effect with class "socialnetwork-round" */
+.socialnetwork-round .social-element {
+	margin: 0 2px;
 	border-radius: 40px;
-	border: 1px solid transparent;
-	transition: 0.3s;
 }
 
-.social-elements-menu .social-element:hover {
-	border-color: #FFEFD5;
-	transition: 0.3s;
-}
-
-.social-elements-menu .social-element a {
+.socialnetwork-round .social-element a {
 	padding: 10px 3px;
 	height: 40px;
 }
 
-.social-elements-container.vertical {
-	flex-direction: column;
+.socialnetwork-round.socialnetwork-vertical .social-element {
+	margin: 2px 0;
 }
