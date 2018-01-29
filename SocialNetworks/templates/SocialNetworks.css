@@ -1,0 +1,90 @@
+/* Social Network  Normal */
+.more {
+	display: inline-block;
+	padding: 0;
+	border-bottom: 1px solid #666666;
+}
+
+.more-element {
+	padding: 2px 0;
+	vertical-align: middle;
+}
+
+.social-elements-container {
+	position: relative;
+	display: inline-block;
+	margin: 0 0 0 5px;
+	padding: 0;
+}
+
+.social-element-button {
+	display: none;
+}
+
+.social-elements-list {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: row;
+	text-align: center;
+}
+
+.social-element {
+	display: inline-block;
+	flex: 0 0 auto;
+}
+
+.social-element a {
+	display: inline-block;
+	padding: 4px 3px;
+	width: 40px;
+	height: 30px;
+	color: #000000;
+}
+
+.social-element.fb a,
+.social-element.google a,
+.social-element.twitter a {
+	color: #FFFFFF;
+}
+
+.social-element-comments { background-color: #CDCDCD; }
+.social-element-view     { background-color: #F2F2F2; }
+.social-element-print    { background-color: #D6D6D6; }
+
+.social-elements-menu .social-element-button {
+	display: block;
+}
+
+.social-elements-menu .social-elements-list {
+	position: absolute;
+	left: -9999px;
+	bottom: -35px;
+	flex-direction: column;
+}
+
+.social-elements-menu.opened .social-elements-list {
+	left: 150%;
+}
+
+.social-elements-menu .social-element {
+	margin: 2px 0;
+	border-radius: 40px;
+	border: 1px solid transparent;
+	transition: 0.3s;
+}
+
+.social-elements-menu .social-element:hover {
+	border-color: #FFEFD5;
+	transition: 0.3s;
+}
+
+.social-elements-menu .social-element a {
+	padding: 10px 3px;
+	height: 40px;
+}
+
+.social-elements-container.vertical {
+	flex-direction: column;
+}

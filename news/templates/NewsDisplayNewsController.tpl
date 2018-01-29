@@ -1,3 +1,12 @@
+<script>
+	<!--
+	function open_social_elements_menu(myid)
+	{
+		jQuery('#' + myid).toggleClass('opened');
+	}
+	-->
+</script>
+
 <section id="module-news">
 	<header>
 		<h1>
@@ -27,17 +36,48 @@
 
 				<div class="more">
 					# IF C_AUTHOR_DISPLAYED #
+					<span class="more-element content-author">
 						<i class="fa fa-user-o"></i>
 						# IF C_AUTHOR_CUSTOM_NAME #
 							{AUTHOR_CUSTOM_NAME}
 						# ELSE #
-							# IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a> | # ELSE #{PSEUDO} | # ENDIF #
+							# IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #{PSEUDO}# ENDIF #
 						# ENDIF #
+						 | 
+					</span>
 					# ENDIF #
-					<i class="fa fa-calendar"></i> <time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE} | # ELSE #{DIFFERED_START_DATE} | # ENDIF #</time>
-					<i class="fa fa-folder-o"></i> <a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
-					# IF C_COMMENTS_ENABLED #| # IF C_COMMENTS #<i class="fa fa-comments-o"></i> {NUMBER_COMMENTS} # ENDIF # {L_COMMENTS}# ENDIF #
-					# IF C_NB_VIEW_ENABLED #| <span title="{NUMBER_VIEW} {@news.view}"><i class="fa fa-eye"></i> {NUMBER_VIEW}</span># ENDIF #
+					<span class="more-element content-date">
+						<i class="fa fa-calendar"></i> <time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE}# ELSE #{DIFFERED_START_DATE}# ENDIF #</time>
+					</span> | 
+					<span class="more-element content-category">
+						<i class="fa fa-folder-o"></i> <a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
+					</span>
+					<div id="social-elements-container-01" class="social-elements-container">
+						<div id="social-element-button-01" class="social-element-button">
+							<a href="#" Title="Menu des liens pour les réseaux sociaux" onclick="open_social_elements_menu('social-elements-container-01');return false;"><i class="fa fa-share-alt"></i></a>
+						</div>
+						<ul class="social-elements-list">
+							# IF C_COMMENTS_ENABLED #
+							<li class="social-element social-element-comments">
+								<a href="#" title="{NUMBER_COMMENTS} commentaires"><i class="fa fa-comments-o"></i> {NUMBER_COMMENTS}</a> <!--mettre une ancre-->
+							</li>
+							# ENDIF #
+							# IF C_NB_VIEW_ENABLED #
+							<li class="social-element social-element-view">
+								<span title="{NUMBER_VIEW} {@news.view}"><i class="fa fa-eye"></i> {NUMBER_VIEW}</span>
+							</li>
+							# ENDIF #
+							<li class="social-element fb">
+								<a href="#" title="Partager sur Facebook"><i class="fa fa-facebook"></i></a>
+							</li>
+							<li class="social-element google">
+								<a href="#" title="Partager sur Google +"><i class="fa fa-google-plus"></i></a>
+							</li>
+							<li class="social-element twitter">
+								<a href="#" title="Partager sur Twitter"><i class="fa fa-twitter"></i></a>
+							</li>
+						</ul>
+					</div>
 				</div>
 
 				<meta itemprop="url" content="{U_LINK}">
