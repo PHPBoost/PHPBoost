@@ -5,7 +5,6 @@
  - Mise en forme du contenu
  - Les Icones specifiques PHPBoost de FontAwesome
  - Systeme d upload
- - social connect
 --------------------------------------*/
 
 
@@ -675,38 +674,4 @@ li.small-block .fa-stack {
 
 .upload-root-cat {
 	padding: 0 0 0 1em;
-}
-
-
-/* -- social connect -- */
-/* -------------------- */
-a.social-connect {
-	display: inline-block;
-	vertical-align: middle;
-	padding: 0.309em;
-	text-align: center;
-	font-size: 0.618em;
-}
-
-.horizontal-fieldset a.social-connect {
-	margin: 0;
-	vertical-align: middle;
-}
-
-a.social-connect i:before {
-	transition: 0.2s ease-out;
-}
-
-a.social-connect:hover i:before {
-	transition: 0.2s ease-out;
-}
-
-a.fb i:before,
-a.google i:before 	{ font-size: 1.618em; }
-
-a.fb 		{ padding: 1em 1.618em; }
-a.google 	{ padding: 1em; }
-
-a.social-connect span {
-	display: none;
 }

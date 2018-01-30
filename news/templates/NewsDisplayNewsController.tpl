@@ -27,7 +27,7 @@
 
 				<div class="more">
 					# IF C_AUTHOR_DISPLAYED #
-					<span class="more-element content-author">
+					<span class="more-element more-element-author">
 						<i class="fa fa-user-o"></i>
 						# IF C_AUTHOR_CUSTOM_NAME #
 							{AUTHOR_CUSTOM_NAME}
@@ -37,15 +37,15 @@
 						 | 
 					</span>
 					# ENDIF #
-					<span class="more-element content-date">
+					<span class="more-element more-element-date">
 						<i class="fa fa-calendar"></i> <time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE}# ELSE #{DIFFERED_START_DATE}# ENDIF #</time>
 					</span> | 
-					<span class="more-element content-category">
+					<span class="more-element more-element-category">
 						<i class="fa fa-folder-o"></i> <a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
 					</span>
-					<div id="social-elements-container-01" class="social-elements-container">
-						<div id="social-element-button-01" class="social-element-button">
-							<a href="#" Title="Menu des liens pour les réseaux sociaux" onclick="open_submenu('social-elements-container-01', 'opened');return false;"><i class="fa fa-share-alt"></i></a>
+					<div id="more-element-social-container" class="more-element more-element-social">
+						<div class="social-button">
+							<a href="#" Title="Menu des liens pour les réseaux sociaux" onclick="open_submenu('more-element-social-container');return false;"><i class="fa fa-share-alt"></i></a>
 						</div>
 						<ul class="social-elements-list">
 							# IF C_COMMENTS_ENABLED #
@@ -58,14 +58,14 @@
 								<span title="{NUMBER_VIEW} {@news.view}"><i class="fa fa-eye"></i> {NUMBER_VIEW}</span>
 							</li>
 							# ENDIF #
-							<li class="social-element fb">
-								<a href="#" title="Partager sur Facebook"><i class="fa fa-facebook"></i></a>
+							<li class="social-element social-element-facebook">
+								<a href="#" title="Partager sur Facebook" class="fb"><i class="fa fa-facebook"></i></a>
 							</li>
-							<li class="social-element google">
-								<a href="#" title="Partager sur Google +"><i class="fa fa-google-plus"></i></a>
+							<li class="social-element social-element-google">
+								<a href="#" title="Partager sur Google +" class="google"><i class="fa fa-google-plus"></i></a>
 							</li>
-							<li class="social-element twitter">
-								<a href="#" title="Partager sur Twitter"><i class="fa fa-twitter"></i></a>
+							<li class="social-element social-element-twitter">
+								<a href="#" title="Partager sur Twitter" class="twitter"><i class="fa fa-twitter"></i></a>
 							</li>
 						</ul>
 					</div>

@@ -75,20 +75,6 @@ header h2 .actions a {
 	margin-left: 0.618em;
 }
 
-.more {
-	padding: 0.618em 0.618em 1.618em;
-	font-size: 0.809em;
-	font-size: 0.809em;
-	font-style: italic;
-}
-
-/*@media (min-width: 769px) {
-	.more {
-		margin: 0 0.228em 0.618em 1em;
-		padding: 0;
-	}
-}*/
-
 /* --- Contenu --- */
 .content {
 	text-align: justify;
@@ -726,4 +712,113 @@ div#message-maintain > div {
 
 div#release {
 	margin-top: 1.309em;
+}
+
+/* -- Elements .more d'un contenu -- */
+/* --------------------------------- */
+
+/* General */
+.more {
+	padding: 0.618em 0.618em 1.618em;
+	font-size: 0.809em;
+	font-size: 0.809em;
+	font-style: italic;
+}
+
+/*@media (min-width: 769px) {
+	.more {
+		margin: 0 0.228em 0.618em 1em;
+		padding: 0;
+	}
+}*/
+
+span.more-element {
+	padding: 2px 0;
+	vertical-align: middle;
+}
+
+.more-element-social {
+	position: relative;
+	display: inline-block;
+	margin: 0 0 0 5px;
+	padding: 0;
+}
+
+.social-button {
+	display: none;
+}
+
+.social-elements-list {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: row;
+	text-align: center;
+}
+
+.social-element {
+	display: inline-block;
+	flex: 0 0 auto;
+}
+
+.social-element a {
+	display: inline-block;
+	padding: 4px 3px;
+	width: 40px;
+	height: 30px;
+	color: #000000;
+}
+
+.social-element > a.fb,
+.social-element > a.google,
+.social-element > a.twitter {
+	color: #FFFFFF;
+}
+
+.social-element-comments a { background-color: #CDCDCD; }
+.social-element-view a     { background-color: #F2F2F2; }
+.social-element-print a    { background-color: #D6D6D6; }
+
+
+/* You can customize the code as you wish or simply add any following CSS class for quick customization */
+/* Add CSS class to "more-element-social" */
+
+/* Submenu view with class "social-submenu" */
+.social-submenu .social-button {
+	display: block;
+}
+
+.social-submenu .social-elements-list {
+	position: absolute;
+	left: -9999px;
+	bottom: -5px;
+}
+
+.social-submenu.social-vertical .social-elements-list {
+	bottom: -35px;
+}
+
+.social-submenu.opened .social-elements-list {
+	left: 150%;
+}
+
+/* Diplay elements in vertical with class "social-vertical" */
+.social-vertical .social-elements-list {
+	flex-direction: column;
+}
+
+/* Rounded effect with class "social-round" */
+.social-round .social-element {
+	margin: 0 2px;
+}
+
+.social-round .social-element a {
+	padding: 10px 3px;
+	height: 40px;
+	border-radius: 40px;
+}
+
+.social-round.social-vertical .social-element {
+	margin: 2px 0;
 }

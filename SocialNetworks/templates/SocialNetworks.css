@@ -1,91 +1,32 @@
-/* Social Network general */
-.more-element {
-	padding: 2px 0;
+/* -- social connect -- */
+/* -------------------- */
+a.social-connect {
+	display: inline-block;
+	vertical-align: middle;
+	padding: 0.309em;
+	text-align: center;
+	font-size: 0.618em;
+}
+
+.horizontal-fieldset a.social-connect {
+	margin: 0;
 	vertical-align: middle;
 }
 
-.social-elements-container {
-	position: relative;
-	display: inline-block;
-	margin: 0 0 0 5px;
-	padding: 0;
+a.social-connect i:before {
+	transition: 0.2s ease-out;
 }
 
-.social-element-button {
+a.social-connect:hover i:before {
+	transition: 0.2s ease-out;
+}
+
+a.social-connect.fb i:before,
+a.social-connect.google i:before 	{ font-size: 1.618em; }
+
+a.social-connect.fb 		{ padding: 1em 1.618em; }
+a.social-connect.google 	{ padding: 1em; }
+
+a.social-connect span {
 	display: none;
-}
-
-.social-elements-list {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	display: flex;
-	flex-direction: row;
-	text-align: center;
-}
-
-.social-element {
-	display: inline-block;
-	flex: 0 0 auto;
-}
-
-.social-element a {
-	display: inline-block;
-	padding: 4px 3px;
-	width: 40px;
-	height: 30px;
-	color: #000000;
-}
-
-.social-element.fb a,
-.social-element.google a,
-.social-element.twitter a {
-	color: #FFFFFF;
-}
-
-.social-element-comments { background-color: #CDCDCD; }
-.social-element-view     { background-color: #F2F2F2; }
-.social-element-print    { background-color: #D6D6D6; }
-
-
-/* You can customize the code as you wish or simply add any following CSS class for quick customization */
-/* Add CSS class to "social-elements-container" */
-
-/* Submenu view with class "socialnetwork-submenu" */
-.socialnetwork-submenu .social-element-button {
-	display: block;
-}
-
-.socialnetwork-submenu .social-elements-list {
-	position: absolute;
-	left: -9999px;
-	bottom: -5px;
-}
-
-.socialnetwork-submenu.socialnetwork-vertical .social-elements-list {
-	bottom: -35px;
-}
-
-.socialnetwork-submenu.opened .social-elements-list {
-	left: 150%;
-}
-
-/* Diplay elements in vertical with class "socialnetwork-vertical" */
-.socialnetwork-vertical .social-elements-list {
-	flex-direction: column;
-}
-
-/* Rounded effect with class "socialnetwork-round" */
-.socialnetwork-round .social-element {
-	margin: 0 2px;
-	border-radius: 40px;
-}
-
-.socialnetwork-round .social-element a {
-	padding: 10px 3px;
-	height: 40px;
-}
-
-.socialnetwork-round.socialnetwork-vertical .social-element {
-	margin: 2px 0;
 }
