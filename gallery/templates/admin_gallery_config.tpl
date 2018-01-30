@@ -121,25 +121,25 @@
 									<input type="radio" # IF C_DISPLAY_PICS_NEW_PAGE #checked="checked" # ENDIF #name="pics_enlargement_mode" id="pics_enlargement_mode" value="{NEW_PAGE}" />
 									<label for="pics_enlargement_mode"></label>
 								</div>
-								<span class="form-field-radio-span">{L_NEW_PAGE}</span>
+								<span class="form-field-radio-span gallery-display">{L_NEW_PAGE}</span>
 								<div class="spacer"></div>
 								<div class="form-field-radio">
 									<input type="radio" # IF C_DISPLAY_PICS_RESIZE #checked="checked" # ENDIF #name="pics_enlargement_mode" id="pics_enlargement_mode_2" value="{RESIZE}" />
 									<label for="pics_enlargement_mode_2"></label>
 								</div>
-								<span class="form-field-radio-span">{L_RESIZE}</span>
+								<span class="form-field-radio-span gallery-display">{L_RESIZE}</span>
 								<div class="spacer"></div>
 								<div class="form-field-radio">
 									<input type="radio" # IF C_DISPLAY_PICS_POPUP #checked="checked" # ENDIF #name="pics_enlargement_mode" id="pics_enlargement_mode_3" value="{POPUP}" />
 									<label for="pics_enlargement_mode_3"></label>
 								</div>
-								<span class="form-field-radio-span">{L_POPUP}</span>
+								<span class="form-field-radio-span gallery-display">{L_POPUP}</span>
 								<div class="spacer"></div>
 								<div class="form-field-radio">
 									<input type="radio" # IF C_DISPLAY_PICS_FULL_SCREEN #checked="checked" # ENDIF #name="pics_enlargement_mode" id="pics_enlargement_mode_4" value="{FULL_SCREEN}">
 									<label for="pics_enlargement_mode_4"></label>
 								</div>
-								<span class="form-field-radio-span">{L_POPUP_FULL}</span>
+								<span class="form-field-radio-span gallery-display">{L_POPUP_FULL}</span>
 							</div>
 						</div>
 						<div class="form-element">
@@ -149,12 +149,12 @@
 									<input type="radio" # IF C_TITLE_ENABLED #checked="checked" # ENDIF #name="title_enabled" id="activ_title" value="1">
 									<label for="activ_title"></label>
 								</div>
-								<span class="form-field-radio-span">{L_ENABLED}</span>
+								<span class="form-field-radio-span gallery-display">{L_ENABLED}</span>
 								<div class="form-field-radio">
 									<input type="radio" # IF NOT C_TITLE_ENABLED #checked="checked" # ENDIF #name="title_enabled" id="activ_title_2" value="0">
 									<label for="activ_title_2"></label>
 								</div>
-								<span class="form-field-radio-span">{L_DISABLED}</span>
+								<span class="form-field-radio-span gallery-display">{L_DISABLED}</span>
 							</div>
 						</div>
 						<div class="form-element">
@@ -164,12 +164,12 @@
 									<input type="radio" # IF C_AUTHOR_DISPLAYED #checked="checked" # ENDIF #name="author_displayed" id="author_displayed" value="1">
 									<label for="author_displayed"></label>
 								</div>
-								<span class="form-field-radio-span">{L_ENABLED}</span>
+								<span class="form-field-radio-span gallery-display">{L_ENABLED}</span>
 								<div class="form-field-radio">
 									<input type="radio" # IF NOT C_AUTHOR_DISPLAYED #checked="checked" # ENDIF #name="author_displayed" id="author_displayed_2" value="0">
 									<label for="author_displayed_2"></label>
 								</div>
-								<span class="form-field-radio-span">{L_DISABLED}</span>
+								<span class="form-field-radio-span gallery-display">{L_DISABLED}</span>
 							</div>
 						</div>
 						<div class="form-element">
@@ -179,12 +179,12 @@
 									<input type="radio" # IF C_VIEWS_COUNTER_ENABLED #checked="checked" # ENDIF #name="views_counter_enabled" id="views_counter_enabled" value="1">
 									<label for="views_counter_enabled"></label>
 								</div>
-								<span class="form-field-radio-span">{L_ENABLED}</span>
+								<span class="form-field-radio-span gallery-display">{L_ENABLED}</span>
 								<div class="form-field-radio">
 									<input type="radio" # IF NOT C_VIEWS_COUNTER_ENABLED #checked="checked" # ENDIF #name="views_counter_enabled" id="views_counter_enabled_2" value="0">
 									<label for="views_counter_enabled_2"></label>
 								</div>
-								<span class="form-field-radio-span">{L_DISABLED}</span>
+								<span class="form-field-radio-span gallery-display">{L_DISABLED}</span>
 							</div>
 						</div>
 						<div class="form-element">
@@ -194,12 +194,12 @@
 									<input type="radio" # IF C_NOTES_NUMBER_DISPLAYED #checked="checked" # ENDIF #name="notes_number_displayed" id="notes_number_displayed" value="1" />
 									<label for="notes_number_displayed"></label>
 								</div>
-								<span class="form-field-radio-span">{L_YES}</span>
+								<span class="form-field-radio-span gallery-display">{L_YES}</span>
 								<div class="form-field-radio">
 									<input type="radio" # IF NOT C_NOTES_NUMBER_DISPLAYED #checked="checked" # ENDIF #name="notes_number_displayed" id="notes_number_displayed_2" value="0" />
 									<label for="notes_number_displayed_2"></label>
 								</div>
-								<span class="form-field-radio-span">{L_NO}</span>
+								<span class="form-field-radio-span gallery-display">{L_NO}</span>
 							</div>
 						</div>
 					</div>
@@ -244,12 +244,12 @@
 									<input type="radio" # IF C_LOGO_ENABLED #checked="checked" # ENDIF #name="logo_enabled" id="logo_ENABLED" value="1" />
 									<label for="logo_ENABLED"></label>
 								</div>
-								<span class="form-field-radio-span">{L_ENABLED}</span>
+								<span class="form-field-radio-span gallery-display">{L_ENABLED}</span>
 								<div class="form-field-radio">
 									<input type="radio" # IF NOT C_LOGO_ENABLED #checked="checked" # ENDIF #name="logo_enabled" id="logo_ENABLED_2" value="0" />
 									<label for="logo_ENABLED_2"></label>
 								</div>
-								<span class="form-field-radio-span">{L_DISABLED}</span>
+								<span class="form-field-radio-span gallery-display">{L_DISABLED}</span>
 							</div>
 						</div>
 						<div class="form-element">

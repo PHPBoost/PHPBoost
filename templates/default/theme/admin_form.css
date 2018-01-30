@@ -460,7 +460,8 @@ input[type=color] {
 
 .form-field-radio {
 	display: inline-block;
-	margin: 10px 0 10px 0 !important;
+	vertical-align: top;
+	margin: 3px 0 0 0;
 }
 
 @media (max-width: 768px) {
@@ -471,7 +472,6 @@ input[type=color] {
 
 .bt-content .form-field-radio {
 	margin: 3px 10px 0 0;
-	display: inline-block;
 }
 
 .form-field-radio [type="radio"]:not(:checked),
