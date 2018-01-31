@@ -83,7 +83,7 @@ class AdminLoggedErrorsControllerList extends AdminController
 			
 			$results[] = new HTMLTableRow(array(
 				new HTMLTableRowCell($error['errdate']),
-				new HTMLTableRowCell(new DivHTMLElement($error_message, array(), $error['errclass']))
+				new HTMLTableRowCell(new DivHTMLElement($error_message, array(), 'message-helper ' . $error['errclass']))
 			));
 		}
 		$results_number = count($results);
