@@ -6,10 +6,10 @@
 /* --- Design
 ----------------------------------------------------------------------------- */
 
-.mini-sandbox-left a,
-.mini-sandbox-right a{ text-decoration: none;}
+.mini-sbx-left a,
+.mini-sbx-right a{ text-decoration: none;}
 
-.sandbox-menu {
+.sbx-menu {
     width: 100%;
 	max-width: 320px;
 	overflow: hidden;
@@ -23,32 +23,32 @@
     box-shadow: 0 0 10px rgba(54, 100, 147, 0.5);
 }
 
-.mini-sandbox-left .sandbox-menu { left: 0; }
-.mini-sandbox-right .sandbox-menu { right: 0; }
+.mini-sbx-left .sbx-menu { left: 0; }
+.mini-sbx-right .sbx-menu { right: 0; }
 
-#module-mini-sandbox .toggle .sandbox-menu {
+#module-mini-sandbox .toggle .sbx-menu {
 	overflow-y: auto;
 	transition: transform .3s;
 }
 
-.mini-sandbox-right.toggle .sandbox-menu,
-.mini-sandbox-left.toggle .sandbox-menu {
+.mini-sbx-right.toggle .sbx-menu,
+.mini-sbx-left.toggle .sbx-menu {
     transform: translateY(0);
 }
 
-#menu-left .sandbox-toggle-btn,
-#menu-right .sandbox-toggle-btn {
+#menu-left .sbx-toggle-btn,
+#menu-right .sbx-toggle-btn {
     display: block;
 }
 
-.sandbox-toggle-btn {
+.sbx-toggle-btn {
     padding: 0.1em 0.618em;
     text-align: center;
     z-index: 399;
 }
 
-.sandbox-toggle-btn:hover,
-#module-mini-sandbox .item-menu a:hover { text-decoration: none; }
+.sbx-toggle-btn:hover,
+#module-mini-sandbox .sbx-menu-item a:hover { text-decoration: none; }
 
 #module-mini-sandbox .toggle-hor {
     position: fixed;
@@ -59,11 +59,11 @@
 #module-mini-sandbox .toggle-right { right: 0.1em; }
 
 @media (min-width: 769px) {
-	.sandbox-toggle-btn {
+	.sbx-toggle-btn {
     	padding: 0.5em 1.618em;
 		opacity: 0.3;
 	}
-	.sandbox-toggle-btn:hover { opacity: 1; }
+	.sbx-toggle-btn:hover { opacity: 1; }
 
 	#module-mini-sandbox .toggle-hor { top: 0.618em; }
 	#module-mini-sandbox .toggle-left { left: 0.618em; }
@@ -77,7 +77,7 @@
 }
 
 
-#module-mini-sandbox .item-menu {
+#module-mini-sandbox .sbx-menu-item {
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
@@ -110,11 +110,11 @@
     text-align: center;
 }
 
-.sandbox-text div{
+.sbx-text div{
     padding: 0.1618em 0;
 }
 
-#module-mini-sandbox .item-title {
+#module-mini-sandbox .sbx-item-title {
     width: 100%;
     padding: 0.618em;
     text-align: center;
@@ -184,48 +184,48 @@
 ----------------------------------------------------------------------------- */
 
 /* --- Bleu --- */
-/*.sandbox-menu { background-color: #366493; }
-.sandbox-toggle-btn { background-color: #366493; color: #81A4C8 }
-.sandbox-toggle-btn:hover { color: #FFFFFF; }
+/*.sbx-menu { background-color: #366493; }
+.sbx-toggle-btn { background-color: #366493; color: #81A4C8 }
+.sbx-toggle-btn:hover { color: #FFFFFF; }
 #module-mini-sandbox .close-btn { color: #81A4C8;}
 
-.sandbox-text { color: #81A4C8}
+.sbx-text { color: #81A4C8}
 
 #module-mini-sandbox .item-form .submit,
 #module-mini-sandbox .item-2x a,
 #module-mini-sandbox .item-3x a,
 #module-mini-sandbox .item-4x a {color: #103B67;}
 
-#module-mini-sandbox .item-title,
+#module-mini-sandbox .sbx-item-title,
 #module-mini-sandbox .item-form .submit:hover,
-#module-mini-sandbox .item-menu a:hover {
+#module-mini-sandbox .sbx-menu-item a:hover {
     color: #81A4C8;
     background-color: #1E5083;
  }
 #module-mini-sandbox .icon-sup { color: #ffffff;}
 #module-mini-sandbox .item-form .submit:hover .icon-sup,
-#module-mini-sandbox .item-menu a:hover .icon-sup { color: #afceed;}*/
+#module-mini-sandbox .sbx-menu-item a:hover .icon-sup { color: #afceed;}*/
 
 /* --- Blanc --- */
-.sandbox-menu { background-color: #FFFFFF; }
-.sandbox-toggle-btn { background-color: #366493; color: #81A4C8 }
-.sandbox-toggle-btn:hover { color: #FFFFFF; }
+.sbx-menu { background-color: #FFFFFF; }
+.sbx-toggle-btn { background-color: #366493; color: #81A4C8 }
+.sbx-toggle-btn:hover { color: #FFFFFF; }
 #module-mini-sandbox .close-btn { color: #81A4C8;}
 
-.sandbox-text { color: #81A4C8}
+.sbx-text { color: #81A4C8}
 
 #module-mini-sandbox .item-form .submit,
 #module-mini-sandbox .item-2x a,
 #module-mini-sandbox .item-3x a,
 #module-mini-sandbox .item-4x a {color: #81A4C8;}
 
-#module-mini-sandbox .item-title,
+#module-mini-sandbox .sbx-item-title,
 #module-mini-sandbox .item-form .submit:hover,
-#module-mini-sandbox .item-menu a:hover {
+#module-mini-sandbox .sbx-menu-item a:hover {
     color: #366493;
     background-color: #afceed;
  }
 
 #module-mini-sandbox .icon-sup { color: #1E5083; text-shadow: 0 0 1px rgba(0, 0, 0, 0.5);}
 #module-mini-sandbox .item-form .submit:hover .icon-sup,
-#module-mini-sandbox .item-menu a:hover .icon-sup { color: #FFFFFF;}
+#module-mini-sandbox .sbx-menu-item a:hover .icon-sup { color: #FFFFFF;}

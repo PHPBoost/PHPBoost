@@ -286,7 +286,7 @@
 			</header>
 			<div class="content">
 				<audio class="audio-player" controls>
-					<source src="http://data.babsoweb.com/private/soundofyou.mp3" type="video/mpeg" />
+					<source src="http://data.babsoweb.com/private/soundofyou.mp3" />
 				</audio>
 			</div>
 		</article>
