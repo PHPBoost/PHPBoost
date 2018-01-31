@@ -41,7 +41,7 @@
 						<th>{@themes.description}</th>
 						<th>{@themes.authorization}</th>
 						<th>${LangLoader::get_message('enable', 'common')}</th>
-						<th>{@themes.install_theme}</th>
+						<th>${LangLoader::get_message('install', 'admin-common')}</th>
 					</tr>
 				</thead>
 				# IF C_MORE_THAN_ONE_THEME_AVAILABLE #
@@ -115,7 +115,7 @@
 							<span class="form-field-radio-span">${LangLoader::get_message('no', 'common')}</span>
 						</td>
 						<td>
-							<button type="submit" class="submit" name="add-{themes_not_installed.ID}" value="true">{@themes.install_theme}</button>
+							<button type="submit" class="submit" name="add-{themes_not_installed.ID}" value="true">${LangLoader::get_message('install', 'admin-common')}</button>
 						</td>
 					</tr>
 					# END themes_not_installed #

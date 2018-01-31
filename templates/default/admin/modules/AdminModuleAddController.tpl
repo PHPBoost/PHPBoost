@@ -40,7 +40,7 @@
 						<th>{@modules.name}</th>
 						<th>{@modules.description}</th>
 						<th>${LangLoader::get_message('enable', 'common')}</th>
-						<th>{@modules.install_module}</th>
+						<th>${LangLoader::get_message('install', 'admin-common')}</th>
 					</tr>
 				</thead>
 				# IF C_MORE_THAN_ONE_MODULE_AVAILABLE #
@@ -93,7 +93,7 @@
 							<span class="form-field-radio-span">${LangLoader::get_message('no', 'common')}</span>
 						</td>
 						<td>
-							<button type="submit" class="submit" name="add-{available.ID}" value="true">{@modules.install_module}</button>
+							<button type="submit" class="submit" name="add-{available.ID}" value="true">${LangLoader::get_message('install', 'admin-common')}</button>
 						</td>
 					</tr>
 					# END available #

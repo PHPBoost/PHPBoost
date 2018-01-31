@@ -58,17 +58,12 @@ $lang['modules.modules_available'] = 'Modules disponibles';
 $lang['module.documentation'] = 'Documentation';
 
 //Module management
-$lang['modules.install_module'] = 'Installer';
-$lang['modules.uninstall_module'] = 'Désinstaller';
 $lang['modules.install_all_selected_modules'] = 'Installer les modules sélectionnés';
 $lang['modules.uninstall_all_selected_modules'] = 'Désinstaller les modules sélectionnés';
 $lang['modules.authorization'] = 'Autorisation d\'accès';
 
 //Messages
-$lang['modules.upload_success'] = 'L\'archive a été uploadée avec succès';
-$lang['modules.upload_invalid_format'] = 'Le format de l\'archive n\'est pas valide';
 $lang['modules.already_installed'] = 'Ce module est déjà installé';
-$lang['modules.upload_error'] = 'Il y a eu une erreur lors de l\'upload';
 $lang['modules.module_not_upgradable'] = 'Ce module ne peut pas être mis à jour';
 $lang['modules.not_installed_module'] = 'Ce module n\'est pas installé !';
 $lang['modules.updates_available'] = 'Mises à jour disponibles';

@@ -30,6 +30,11 @@
  ####################################################
 
 $lang['configuration'] = 'Configuration';
+$lang['install'] = 'Install';
+$lang['uninstall'] = 'Uninstall';
+$lang['actions'] = 'Actions';
+$lang['set_to_default'] = 'Set to default';
+
 $lang['config.items_number_per_page'] = 'Items number per page';
 $lang['config.categories_number_per_page'] = 'Categories number per page';
 $lang['config.columns_number_per_line'] = 'Columns number per line';
@@ -52,6 +57,6 @@ $lang['config.forbidden-module'] = 'Forbidden modules';
 $lang['config.comments.forbidden-module-explain'] = 'Select modules in which you do not want to enable comments';
 $lang['config.notation.forbidden-module-explain'] = 'Select modules in which you do not want to enable notation';
 $lang['config.new-content.forbidden-module-explain'] = 'Select modules in which you do not want to enable new-content tag';
-$lang['config.hide_left_column'] = "Hide left column in module :module";
-$lang['config.hide_right_column'] = "Hide right column in module :module";
+$lang['config.hide_left_column'] = 'Hide left column in module :module';
+$lang['config.hide_right_column'] = 'Hide right column in module :module';
 ?>

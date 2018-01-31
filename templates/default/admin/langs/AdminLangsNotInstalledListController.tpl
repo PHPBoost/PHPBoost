@@ -41,7 +41,7 @@
 						<th>{@langs.description}</th>
 						<th>{@langs.authorizations}</th>
 						<th>${LangLoader::get_message('enable', 'common')}</th>
-						<th>{@langs.install_lang}</th>
+						<th>${LangLoader::get_message('install', 'admin-common')}</th>
 					</tr>
 				</thead>
 				# IF C_MORE_THAN_ONE_LANG_AVAILABLE #
@@ -100,7 +100,7 @@
 							<span class="form-field-radio-span">${LangLoader::get_message('no', 'common')}</span>
 						</td>
 						<td>
-							<button type="submit" class="submit" name="add-{langs_not_installed.ID}" value="true">{@langs.install_lang}</button>
+							<button type="submit" class="submit" name="add-{langs_not_installed.ID}" value="true">${LangLoader::get_message('install', 'admin-common')}</button>
 						</td>
 					</tr>
 				# END themes_not_installed #

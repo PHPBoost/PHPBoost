@@ -34,7 +34,7 @@
 				<th>{@langs.description}</th>
 				<th>{@langs.authorizations}</th>
 				<th>${LangLoader::get_message('enabled', 'common')}</th>
-				# IF C_MORE_THAN_ONE_LANG_INSTALLED #<th>{@langs.actions}</th># ENDIF #
+				# IF C_MORE_THAN_ONE_LANG_INSTALLED #<th>${LangLoader::get_message('actions', 'admin-common')}</th># ENDIF #
 			</tr>
 		</thead>
 		# IF C_MORE_THAN_ONE_LANG_INSTALLED #
@@ -104,8 +104,8 @@
 						<span class="form-field-radio-span">${LangLoader::get_message('no', 'common')}</span>
 					</td>
 					<td>
-						<button type="submit" class="submit" name="default-{langs_installed.ID}" value="true">{@langs.set_to_default}</button>
-						<button type="submit" class="submit" name="delete-{langs_installed.ID}" value="true">{@langs.uninstall_lang}</button>
+						<button type="submit" class="submit" name="default-{langs_installed.ID}" value="true">${LangLoader::get_message('set_to_default', 'admin-common')}</button>
+						<button type="submit" class="submit" name="delete-{langs_installed.ID}" value="true">${LangLoader::get_message('uninstall', 'admin-common')}</button>
 					</td>
 					# ELSE #
 					<td>

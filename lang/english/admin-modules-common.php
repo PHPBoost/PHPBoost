@@ -60,17 +60,12 @@ $lang['modules.installed_not_activated_modules'] = 'Deactivated modules';
 $lang['module.documentation'] = 'Documentation';
 
 //Module management
-$lang['modules.install_module'] = 'Install';
-$lang['modules.uninstall_module'] = 'Uninstall';
 $lang['modules.install_all_selected_modules'] = 'Install selected modules';
 $lang['modules.uninstall_all_selected_modules'] = 'Uninstall all selected modules';
 $lang['modules.authorization'] = 'Authorizations';
 
 //Messages
-$lang['modules.upload_success'] = 'The archive has successfully been uploaded';
-$lang['modules.upload_invalid_format'] = 'The archive format is invalid';
 $lang['modules.already_installed'] = 'The module is already installed';
-$lang['modules.upload_error'] = 'An error occured in the upload';
 $lang['modules.module_not_upgradable'] = 'The module cannot be updated';
 $lang['modules.not_installed_module'] = 'The module is not installed!';
 $lang['modules.updates_available'] = 'Module updates available';

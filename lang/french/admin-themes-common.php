@@ -53,12 +53,8 @@ $lang['themes.default_theme_explain'] = 'Le thème par défaut ne peut pas être
 $lang['themes.themes_available'] = 'Thèmes disponibles';
 
 //Themes management
-$lang['themes.actions'] = 'Actions';
-$lang['themes.install_theme'] = 'Installer';
-$lang['themes.uninstall_theme'] = 'Désinstaller';
 $lang['themes.install_all_selected_themes'] = 'Installer les thèmes sélectionnés';
 $lang['themes.uninstall_all_selected_themes'] = 'Désinstaller les thèmes sélectionnés';
-$lang['themes.set_to_default'] = 'Mettre par défaut';
 
 //Avertissements
 $lang['themes.warning_before_install'] = '<span class="message-helper warning">Un thème doit être activé, désactivé, installé ou supprimé uniquement depuis cette page.<br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span>';
@@ -66,10 +62,6 @@ $lang['themes.warning_before_install'] = '<span class="message-helper warning">U
 //Upload
 $lang['themes.upload_theme'] = 'Uploader un thème';
 $lang['themes.upload_description'] = 'L\'archive uploadée doit être au format zip ou gzip';
-
-//Messages
-$lang['themes.upload_invalid_format'] = 'Le format de l\'archive n\'est pas valide';
-$lang['themes.upload_error'] = 'Erreur avec l\'upload du fichier';
 
 //Delete theme
 $lang['themes.drop_files'] = 'Supprimer tous les fichiers du thème';
