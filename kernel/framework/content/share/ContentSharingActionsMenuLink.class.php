@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                    SocialNetworksExtensionPointProvider.class.php
+ *		                        ContentSharingActionsMenuLink.class.php
  *                            -------------------
- *   begin                : January 08, 2018
+ *   begin                : January 30, 2018
  *   copyright            : (C) 2018 Kévin MASSY
  *   email                : kevin.massy@phpboost.com
  *
@@ -28,32 +28,59 @@
 /**
  * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
-class SocialNetworksExtensionPointProvider extends ExtensionPointProvider
+class ContentSharingActionsMenuLink
 {
-	public function __construct()
+	private $name;
+	private $url;
+	private $tpl;
+
+	public function __construct($name, Url $url, Template $tpl = null)
 	{
-		parent::__construct('socialnetworks');
+		$this->name = $name;
+		$this->url = $url;
+
+		if ($this->tpl instanceof Template)
+		{
+			$this->tpl = $tpl;
+		}
+		else
+		{
+			$this->tpl = new FileTemplate('framework/content/share/ContentSharingActionsMenuLink.tpl');
+		}
+	}
+
+	public function set_name($name)
+	{
+		$this->name = $name;
 	}
 	
-	public function url_mappings()
+	public function get_name()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/socialnetworks/index.php')));
+		return $this->name;
 	}
 
-	public function external_authentications()
+	public function set_url($url)
 	{
-		return new ExternalAuthenticationsExtensionPoint(array(
-			new GoogleExternalAuthentication(), 
-			new FacebookExternalAuthentication()
-		));
+		if (!($url instanceof Url))
+        {
+            $url = new Url($url);
+        }
+        $this->url = $url;
+	}
+	
+	public function get_url()
+	{
+		return $this->url;
 	}
 
-	public function content_sharing_actions_menu()
+	public function export()
 	{
-		return new ContentSharingActionsMenu(array(
-			new ContentSharingActionsMenuLink('Google+', new Url('http://www.facebook.com/share.php?u=' . HOST . REWRITED_SCRIPT)),
-			new ContentSharingActionsMenuLink('Facebook', new Url('https://plus.google.com/share?url=' . HOST . REWRITED_SCRIPT)),
+		$this->tpl->put_all(array(
+			'NAME'           => $this->get_name(),
+			'U_LINK'         => $this->get_url()->rel(),
 		));
+
+		return $this->tpl;
 	}
 }
 ?>

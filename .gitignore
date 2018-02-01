@@ -26,3 +26,5 @@ templates/*
 !templates/default
 !templates/phpboost
 
+*.sublime-project
+*.sublime-workspace

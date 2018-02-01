@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                    SocialNetworksExtensionPointProvider.class.php
+ *		                        ContentSharingActionsMenu.class.php
  *                            -------------------
- *   begin                : January 08, 2018
+ *   begin                : January 30, 2018
  *   copyright            : (C) 2018 Kévin MASSY
  *   email                : kevin.massy@phpboost.com
  *
@@ -28,32 +28,32 @@
 /**
  * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
-class SocialNetworksExtensionPointProvider extends ExtensionPointProvider
+class ContentSharingActionsMenu
 {
-	public function __construct()
+	private $content_sharing_actions_menu_links = array();
+
+	public function __construct($content_sharing_actions_menu_links)
 	{
-		parent::__construct('socialnetworks');
-	}
-	
-	public function url_mappings()
-	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/socialnetworks/index.php')));
+		$this->content_sharing_actions_menu_links = $content_sharing_actions_menu_links;
 	}
 
-	public function external_authentications()
+	public function get_content_sharing_actions_menu_links()
 	{
-		return new ExternalAuthenticationsExtensionPoint(array(
-			new GoogleExternalAuthentication(), 
-			new FacebookExternalAuthentication()
-		));
+		$this->content_sharing_actions_menu_links;
 	}
 
-	public function content_sharing_actions_menu()
+	public function export()
 	{
-		return new ContentSharingActionsMenu(array(
-			new ContentSharingActionsMenuLink('Google+', new Url('http://www.facebook.com/share.php?u=' . HOST . REWRITED_SCRIPT)),
-			new ContentSharingActionsMenuLink('Facebook', new Url('https://plus.google.com/share?url=' . HOST . REWRITED_SCRIPT)),
-		));
+		$tpl = new FileTemplate('framework/content/share/ContentSharingActionsMenu.tpl');
+
+		foreach ($this->content_sharing_actions_menu_links as $element)
+		{
+			$tpl->assign_block_vars('element', array(
+				'ELEMENT' => $element->export()
+			));
+		}
+
+		return $tpl;
 	}
 }
 ?>

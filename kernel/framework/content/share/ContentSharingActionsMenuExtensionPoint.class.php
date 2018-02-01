@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                    SocialNetworksExtensionPointProvider.class.php
+ *		                        ContentSharingActionsMenuExtensionPoint.class.php
  *                            -------------------
- *   begin                : January 08, 2018
+ *   begin                : January 30, 2018
  *   copyright            : (C) 2018 Kévin MASSY
  *   email                : kevin.massy@phpboost.com
  *
@@ -28,32 +28,20 @@
 /**
  * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
-class SocialNetworksExtensionPointProvider extends ExtensionPointProvider
+class ContentSharingActionsMenuExtensionPoint implements ExtensionPoint
 {
-	public function __construct()
+	const EXTENSION_POINT = 'content_sharing_actions_menu';
+
+	private $content_sharing_actions_menu
+
+	public function __construct(ContentSharingActionsMenu $content_sharing_actions_menu)
 	{
-		parent::__construct('socialnetworks');
-	}
-	
-	public function url_mappings()
-	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/socialnetworks/index.php')));
+		$this->content_sharing_actions_menu = $content_sharing_actions_menu;
 	}
 
-	public function external_authentications()
+	public function get_content_sharing_actions_menu()
 	{
-		return new ExternalAuthenticationsExtensionPoint(array(
-			new GoogleExternalAuthentication(), 
-			new FacebookExternalAuthentication()
-		));
-	}
-
-	public function content_sharing_actions_menu()
-	{
-		return new ContentSharingActionsMenu(array(
-			new ContentSharingActionsMenuLink('Google+', new Url('http://www.facebook.com/share.php?u=' . HOST . REWRITED_SCRIPT)),
-			new ContentSharingActionsMenuLink('Facebook', new Url('https://plus.google.com/share?url=' . HOST . REWRITED_SCRIPT)),
-		));
+		return $this->content_sharing_actions_menu;
 	}
 }
 ?>
