@@ -52,7 +52,7 @@
 				<th>{@modules.name}</th>
 				<th>{@modules.description}</th>
 				<th>${LangLoader::get_message('enabled', 'common')}</th>
-				<th>{@modules.uninstall_module}</th>
+				<th>${LangLoader::get_message('uninstall', 'admin-common')}</th>
 			</tr>
 		</thead>
 		# IF C_MORE_THAN_ONE_MODULE_INSTALLED #
@@ -110,7 +110,7 @@
 					<span class="form-field-radio-span">${LangLoader::get_message('no', 'common')}</span>
 				</td>
 				<td>
-					<button type="submit" class="submit" name="delete-{modules_installed.ID}" value="true">{@modules.uninstall_module}</button>
+					<button type="submit" class="submit" name="delete-{modules_installed.ID}" value="true">${LangLoader::get_message('uninstall', 'admin-common')}</button>
 				</td>
 			</tr>
 			# END modules_installed #

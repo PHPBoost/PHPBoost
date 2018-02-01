@@ -38,12 +38,8 @@ $lang['langs.delete_lang_multiple'] = 'Suppression ou désactivation de langues'
 $lang['langs.installed_langs'] = 'Langues installées';
 
 //Langs management
-$lang['langs.actions'] = 'Actions';
-$lang['langs.install_lang'] = 'Installer';
-$lang['langs.uninstall_lang'] = 'Désinstaller';
 $lang['langs.install_all_selected_langs'] = 'Installer les langues sélectionnées';
 $lang['langs.uninstall_all_selected_langs'] = 'Désinstaller les langues sélectionnées';
-$lang['langs.set_to_default'] = 'Mettre par défaut';
 
 //Uninstall
 $lang['langs.drop_files'] = 'Supprimer tous les fichiers de la langue';
@@ -60,10 +56,6 @@ $lang['langs.activated'] = 'Activé';
 $lang['langs.compatibility'] = 'Compatibilité';
 $lang['langs.author'] = 'Auteur';
 $lang['langs.description'] = 'Description';
-
-//Messages
-$lang['langs.upload_invalid_format'] = 'Le format de l\'archive n\'est pas valide';
-$lang['langs.upload_error'] = 'Erreur avec l\'upload du fichier';
 
 //Avertissements
 $lang['langs.warning_before_install'] = '<span class="message-helper warning">Une langue doit être activée, désactivée, installée ou supprimée uniquement depuis cette page.<br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span>';

@@ -1,13 +1,13 @@
 
 	# IF C_IS_SUPERADMIN #
-	<div id="module-mini-sandbox" class="# IF C_SLIDE_RIGHT #mini-sandbox-right# ELSE #mini-sandbox-left# ENDIF #">
-		<a href="" class="sandbox-toggle-btn# IF C_HORIZONTAL # toggle-hor# IF C_SLIDE_RIGHT # toggle-right# ELSE # toggle-left# ENDIF ## ENDIF #" onclick="openSandboxMenu('module-mini-sandbox');return false;">
+	<div id="module-mini-sandbox" class="# IF C_SLIDE_RIGHT #mini-sbx-right# ELSE #mini-sbx-left# ENDIF #">
+		<a href="" class="sbx-toggle-btn# IF C_HORIZONTAL # toggle-hor# IF C_SLIDE_RIGHT # toggle-right# ELSE # toggle-left# ENDIF ## ENDIF #" onclick="openSandboxMenu('module-mini-sandbox');return false;">
 			<i class="fa fa-wrench"></i> {@module.title}
 		</a>
-		<div class="sandbox-menu">
+		<div class="sbx-menu">
 			<a href="" class="close-btn" onclick="openSandboxMenu('module-mini-sandbox');return false;"><i class="fa fa-window-close-o"></i> {@mini.close}</a>
-			<div class="sandbox-inset">
-				<div class="item-menu sandbox-text">
+			<div class="sbx-inset">
+				<div class="sbx-menu-item sbx-text">
 					<div class="item-2x small" title="{@mini.version.pbt}">
 						{PBT_VERSION}
 					</div>
@@ -39,8 +39,8 @@
 						</span>
 					</div>
 				</div>
-				<div class="item-menu">
-					<div class="item-title">{@mini.tools}</div>
+				<div class="sbx-menu-item">
+					<div class="sbx-item-title">{@mini.tools}</div>
 					# IF C_CSS_CACHE_ENABLED #
 						<div class="item-form item-2x" title="{@mini.disable.css.cache}"># INCLUDE DISABLE_CSS_CACHE #</div>
 					# ELSE #
@@ -91,8 +91,8 @@
 						</a>
 					</div>
 				</div>
-				<div class="item-menu">
-					<div class="item-title">{@mini.personalization}</div>
+				<div class="sbx-menu-item">
+					<div class="sbx-item-title">{@mini.personalization}</div>
 					<div class="item-3x" title="{@mini.menus}/{@mini.config}">
 						<a href="{PATH_TO_ROOT}/admin/menus/menus.php">
 							<span class="icon-stack">
@@ -180,8 +180,8 @@
 						</a>
 					</div>
 				</div>
-				<div class="item-menu">
-					<div class="item-title">{@mini.sandbox.mod}</div>
+				<div class="sbx-menu-item">
+					<div class="sbx-item-title">{@mini.sandbox.mod}</div>
 					<div class="item-3x"><a href="{PATH_TO_ROOT}/sandbox/form" title="{@mini.sandbox.form}"><i class="fa fa-square-o fa-2x"></i></a></div>
 					<div class="item-3x"><a href="{PATH_TO_ROOT}/sandbox/css" title="{@mini.sandbox.css}"><i class="fa fa-css3 fa-2x"></i></a></div>
 					<div class="item-3x"><a href="{PATH_TO_ROOT}/sandbox/bbcode" title="{@mini.sandbox.bbcode}"><i class="fa fa-code fa-2x"></i></a></div>

@@ -58,8 +58,6 @@ $lang['articles.form.description_enabled'] = 'Activer le condensé de l\'article
 $lang['articles.form.description_enabled.description'] = 'ou laissez PHPBoost couper le contenu à :number caractères';
 $lang['articles.form.add_page'] = 'Insérer une page';
 $lang['articles.form.add_page.title'] = 'Titre de la nouvelle page';
-$lang['articles.form.author_custom_name_enabled'] = 'Personnaliser le nom de l\'auteur';
-$lang['articles.form.author_custom_name'] = 'Nom de l\'auteur';
 
 //Sort fields title and mode
 $lang['articles.sort_field.views'] = 'Vues';

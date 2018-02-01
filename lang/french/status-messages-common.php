@@ -120,4 +120,9 @@ $lang['content.is_locked'] = 'Contenu bloqué';
 $lang['content.is_locked.description'] = 'L\'élement est actuellement ouvert par un autre utilisateur, vous ne pouvez pas y accéder';
 $lang['content.lock.open.description'] = 'L\'élement est actuellement ouvert par un autre utilisateur.';
 
+//Upload
+$lang['upload.success'] = 'L\'archive a été uploadée avec succès';
+$lang['upload.invalid_format'] = 'Le format de l\'archive n\'est pas valide';
+$lang['upload.error'] = 'Erreur lors de l\'upload du fichier';
+
 ?>

@@ -397,7 +397,7 @@ $lang['bbcode.table.description'] = 'Description';
 
 // --- Wiki
 $lang['wiki.not'] = 'The Wiki is not installed and/or activated';
-$lang['wiki.conditions'] = 'You must set the wiki in your template to get this view active.';
+$lang['wiki.conditions'] = 'You must set the wiki in your template to get your modifications active.';
 $lang['wiki.module'] = 'Wiki module';
 $lang['wiki.table.of.contents'] = 'Summary';
 $lang['wiki.contents'] = 'Wiki content';

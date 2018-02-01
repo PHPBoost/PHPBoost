@@ -31,11 +31,11 @@
 class SocialNetworksConfig extends AbstractConfigData
 {
 	const FB_AUTH_ENABLED = 'fb_auth_enabled';
-	const FB_APP_ID = 'fb_app_id';
-	const FB_APP_KEY = 'fb_app_key';
+	const FB_APP_ID       = 'fb_app_id';
+	const FB_APP_KEY      = 'fb_app_key';
 
-	const GOOGLE_AUTH_ENABLED = 'google_auth_enabled';
-	const GOOGLE_CLIENT_ID = 'google_client_id';
+	const GOOGLE_AUTH_ENABLED  = 'google_auth_enabled';
+	const GOOGLE_CLIENT_ID     = 'google_client_id';
 	const GOOGLE_CLIENT_SECRET = 'google_client_secret';
 	
 	public function enable_fb_auth()
@@ -124,11 +124,11 @@ class SocialNetworksConfig extends AbstractConfigData
 	{
 		return array(
 			self::FB_AUTH_ENABLED => false,
-			self::FB_APP_ID => '',
-			self::FB_APP_KEY => '',
+			self::FB_APP_ID       => '',
+			self::FB_APP_KEY      => '',
 
-			self::GOOGLE_AUTH_ENABLED => false,
-			self::GOOGLE_CLIENT_ID => '',
+			self::GOOGLE_AUTH_ENABLED  => false,
+			self::GOOGLE_CLIENT_ID     => '',
 			self::GOOGLE_CLIENT_SECRET => '',
 		);
 	}

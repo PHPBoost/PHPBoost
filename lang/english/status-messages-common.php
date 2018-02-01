@@ -119,4 +119,10 @@ $lang['bbcode_moderator'] = 'Message for moderators';
 $lang['content.is_locked'] = 'Content is locked';
 $lang['content.is_locked.description'] = 'The item is currently open by another user, you can not access it.';
 $lang['content.lock.open.description'] = 'The item is currently open by another user.';
+
+//Upload
+$lang['upload.success'] = 'The archive has successfully been uploaded';
+$lang['upload.invalid_format'] = 'The archive format is invalid';
+$lang['upload.error'] = 'Error whle uploading file';
+
 ?>

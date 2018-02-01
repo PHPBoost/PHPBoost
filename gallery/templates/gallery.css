@@ -136,3 +136,8 @@
 .article-gallery > header {
 	display: none;
 }
+
+.gallery-display {
+	display: inline-block;
+	margin: 0 10px 4px 0;
+}

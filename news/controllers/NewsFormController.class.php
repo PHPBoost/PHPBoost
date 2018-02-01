@@ -123,7 +123,7 @@ class NewsFormController extends ModuleController
 		
 		if ($this->config->get_author_displayed() == true)
 		{
-			$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->lang['news.form.author_custom_name_enabled'], $this->get_news()->is_author_custom_name_enabled(), 
+			$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->common_lang['form.author_custom_name_enabled'], $this->get_news()->is_author_custom_name_enabled(), 
 				array('events' => array('click' => '
 				if (HTMLForms.getField("author_custom_name_enabled").getValue()) {
 					HTMLForms.getField("author_custom_name").enable();
@@ -132,7 +132,7 @@ class NewsFormController extends ModuleController
 				}'))
 			));
 			
-			$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->lang['news.form.author_custom_name'], $this->get_news()->get_author_custom_name(), array(
+			$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->common_lang['form.author_custom_name'], $this->get_news()->get_author_custom_name(), array(
 				'hidden' => !$this->get_news()->is_author_custom_name_enabled(),
 			)));
 		}

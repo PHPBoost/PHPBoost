@@ -34,7 +34,7 @@
 				<th>{@themes.description}</th>
 				<th>{@themes.authorization}</th>
 				<th>${LangLoader::get_message('enabled', 'common')}</th>
-				# IF C_MORE_THAN_ONE_THEME_INSTALLED #<th>{@themes.actions}</th># ENDIF #
+				# IF C_MORE_THAN_ONE_THEME_INSTALLED #<th>${LangLoader::get_message('actions', 'admin-common')}</th># ENDIF #
 			</tr>
 		</thead>
 		# IF C_MORE_THAN_ONE_THEME_INSTALLED #
@@ -119,8 +119,8 @@
 						<span class="form-field-radio-span">${LangLoader::get_message('no', 'common')}</span>
 					</td>
 					<td>
-						<button type="submit" class="submit" name="default-{themes_installed.ID}" value="true">{@themes.set_to_default}</button>
-						<button type="submit" class="submit" name="delete-{themes_installed.ID}" value="true">{@themes.uninstall_theme}</button>
+						<button type="submit" class="submit" name="default-{themes_installed.ID}" value="true">${LangLoader::get_message('set_to_default', 'admin-common')}</button>
+						<button type="submit" class="submit" name="delete-{themes_installed.ID}" value="true">${LangLoader::get_message('uninstall', 'admin-common')}</button>
 					</td>
 					# ELSE #
 					<td>

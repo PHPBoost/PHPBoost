@@ -401,7 +401,7 @@ $lang['bbcode.table.description'] = 'Description';
 
 // --- Wiki
 $lang['wiki.not'] = 'Le module Wiki n\'est pas installé et/ou activé';
-$lang['wiki.conditions'] = 'Vous devez porter le module wiki dans votre thème pour que cette visualisation soit active.';
+$lang['wiki.conditions'] = 'Vous devez porter le module wiki dans votre thème pour que vos modifications soient actives.';
 $lang['wiki.module'] = 'Module Wiki';
 $lang['wiki.table.of.contents'] = 'Table des matières';
 $lang['wiki.contents'] = 'Contenu du wiki';

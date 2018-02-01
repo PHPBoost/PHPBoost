@@ -426,6 +426,26 @@ function SelectElement(element) {
 	selection.addRange(range); 
 }
 
+//Function open_submenu
+//
+// Description : 
+// This function add CSS Class to the specified CSS ID
+//
+// parameters : two
+// {myid} correspond to the specific element you want to add your CSS class
+// {myclass} correspond to the name of CSS class you want to add to your specific element.
+//
+// Return : -
+//
+// Comments : if {myclass} is missing, we use CSS class "opened"
+//
+function open_submenu(myid, myclass)
+{
+	var myclass = (typeof myclass !== 'undefined') ? myclass : "opened";
+	jQuery('#' + myid).toggleClass(myclass);
+}
+
+
 //Barre de progression, 
 function change_progressbar(id_element, value, informations) {
 	var progress_bar_el = jQuery('#' + id_element).children('.progressbar').css('width', value + '%');

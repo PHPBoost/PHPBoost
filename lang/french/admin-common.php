@@ -30,6 +30,11 @@
  ####################################################
 
 $lang['configuration'] = 'Configuration';
+$lang['install'] = 'Installer';
+$lang['uninstall'] = 'Désinstaller';
+$lang['actions'] = 'Actions';
+$lang['set_to_default'] = 'Mettre par défaut';
+
 $lang['config.items_number_per_page'] = 'Nombre d\'éléments affichés par page';
 $lang['config.categories_number_per_page'] = 'Nombre de catégories maximum affichées par page';
 $lang['config.columns_number_per_line'] = 'Nombre de colonnes d\'affichage par ligne';
@@ -52,6 +57,6 @@ $lang['config.forbidden-module'] = 'Modules interdits';
 $lang['config.comments.forbidden-module-explain'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer les commentaires';
 $lang['config.notation.forbidden-module-explain'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer la notation';
 $lang['config.new-content.forbidden-module-explain'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer les tags de nouveau contenu';
-$lang['config.hide_left_column'] = "Masquer les blocs de gauche du site sur le module :module";
-$lang['config.hide_right_column'] = "Masquer les blocs de droite du site sur le module :module";
+$lang['config.hide_left_column'] = 'Masquer les blocs de gauche du site sur le module :module';
+$lang['config.hide_right_column'] = 'Masquer les blocs de droite du site sur le module :module';
 ?>

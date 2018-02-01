@@ -75,14 +75,14 @@ class ErrorHandler
 
 	private function prepare($errno, $errstr, $errfile, $errline)
 	{
-		$this->exception = new Exception($errstr);
-		$this->errno = $errno;
-		$this->errfile = $errfile;
-		$this->errline = $errline;
+		$this->exception  = new Exception($errstr);
+		$this->errno      = $errno;
+		$this->errfile    = $errfile;
+		$this->errline    = $errline;
 		$this->stacktrace = '';
-		$this->errdesc = '';
-		$this->errclass = '';
-		$this->fatal = false;
+		$this->errdesc    = '';
+		$this->errclass   = '';
+		$this->fatal      = false;
 
 	}
 
@@ -167,9 +167,10 @@ class ErrorHandler
 
 	protected function display_debug()
 	{
-		echo '<div id="error-handler" class="' . $this->errclass . '">
+		echo '<div class="message-helper ' . $this->errclass . ' error-handler">
                 <strong>' . $this->errdesc . ' : </strong>' . $this->exception->getMessage() . '<br /><br /><br />
-                <em>' . $this->get_stackstrace_as_string(6) . '</em></div>';
+                <em>' . $this->get_stackstrace_as_string(6) . '</em>
+              </div>';
 	}
 
 	protected function display_fatal()

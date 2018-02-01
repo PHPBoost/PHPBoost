@@ -32,9 +32,16 @@ class SocialNetworksExtensionPointProvider extends ExtensionPointProvider
 {
 	public function __construct()
 	{
-		parent::__construct('socialnetworks');
+		parent::__construct('SocialNetworks');
 	}
-	
+
+	public function css_files()
+	{
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->adding_always_displayed_file('SocialNetworks.css');
+		return $module_css_files;
+	}
+
 	public function url_mappings()
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/socialnetworks/index.php')));

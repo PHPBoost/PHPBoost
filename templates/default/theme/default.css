@@ -259,7 +259,7 @@ ul.pagination .current-page {
 	outline: 3px solid #FF4500 !important;
 }
 
-#error-handler {
+.error-handler {
 	width: auto;
 	max-width: 750px;
 	margin: 1em auto;

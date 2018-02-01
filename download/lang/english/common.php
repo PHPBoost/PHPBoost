@@ -78,8 +78,6 @@ $lang['download.form.contribution.explain'] = 'You are not authorized to post a 
 
 //Form
 $lang['download.form.reset_number_downloads'] = 'Reset downloads number';
-$lang['news.form.author_custom_name_enabled'] = 'Personalize author name';
-$lang['news.form.author_custom_name'] = 'Author name';
 
 //Messages
 $lang['download.message.success.add'] = 'The file <b>:name</b> has been added';

@@ -24,6 +24,6 @@
 
 <em>// Sound</em>
 <span><</span>audio class="audio-player" controls>
-    <span><</span>source src="link-to-audio-file.ext" type="video/mpeg" /> <em>// Change the type to your audio extension</em>
+    <span><</span>source src="link-to-audio-file.ext" /> <em>// Change the type to your audio extension</em>
 <span><</span>/audio><br />
 </pre>

@@ -185,11 +185,6 @@ td.input-radio {
 	width: 80px;
 }
 
-td.input-radio .form-field-radio-span {
-	padding: 0;
-	display: inline-block;
-}
-
 /* --- images dans une table --- */
 .picture-table {
 	vertical-align: top;

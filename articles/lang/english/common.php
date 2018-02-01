@@ -58,8 +58,6 @@ $lang['articles.form.description_enabled'] = 'Enable article description';
 $lang['articles.form.description_enabled.description'] = 'or let PHPBoost cut the content at :number characters';
 $lang['articles.form.add_page'] = 'Insert a page';
 $lang['articles.form.add_page.title'] = 'New page title';
-$lang['articles.form.author_custom_name_enabled'] = 'Personalize author name';
-$lang['articles.form.author_custom_name'] = 'Author name';
 
 //Sort fields title and mode
 $lang['articles.sort_field.views'] = 'Views';

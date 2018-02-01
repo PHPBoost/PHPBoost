@@ -62,10 +62,6 @@ $lang['admin.config.news_number_view_enabled'] = 'Activer l\'affichage du nombre
 //Feed name
 $lang['feed.name'] = 'Actualités';
 
-//Form
-$lang['news.form.author_custom_name_enabled'] = 'Personnaliser le nom de l\'auteur';
-$lang['news.form.author_custom_name'] = 'Nom de l\'auteur';
-
 //Messages
 $lang['news.message.success.add'] = 'La news <b>:name</b> a été ajoutée';
 $lang['news.message.success.edit'] = 'La news <b>:name</b> a été modifiée';
