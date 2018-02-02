@@ -42,7 +42,6 @@ class InstallWebsiteConfigController extends InstallController
 	private $submit_button;
 	
 	private $security_config;
-	private $authentication_config;
 	private $server_configuration;
 
 	public function execute(HTTPRequestCustom $request)
@@ -60,7 +59,6 @@ class InstallWebsiteConfigController extends InstallController
 	private function init()
 	{
 		$this->security_config = SecurityConfig::load();
-		$this->authentication_config = AuthenticationConfig::load();
 		$this->server_configuration = new ServerConfiguration();
 	}
 

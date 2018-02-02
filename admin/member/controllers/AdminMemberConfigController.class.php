@@ -229,29 +229,6 @@ class AdminMemberConfigController extends AdminController
 		
 		SecurityConfig::save();
 		
-		if ($this->server_configuration->has_curl_library())
-		{
-			if ($this->form->get_value('fb_auth_enabled'))
-			{
-				$this->authentication_config->enable_fb_auth();
-				$this->authentication_config->set_fb_app_id($this->form->get_value('fb_app_id'));
-				$this->authentication_config->set_fb_app_key($this->form->get_value('fb_app_key'));
-			}
-			else
-				$this->authentication_config->disable_fb_auth();
-			
-			if ($this->form->get_value('google_auth_enabled'))
-			{
-				$this->authentication_config->enable_google_auth();
-				$this->authentication_config->set_google_client_id($this->form->get_value('google_client_id'));
-				$this->authentication_config->set_google_client_secret($this->form->get_value('google_client_secret'));
-			}
-			else
-				$this->authentication_config->disable_google_auth();
-			
-			AuthenticationConfig::save();
-		}
-		
 		$this->user_accounts_config->set_avatar_upload_enabled($this->form->get_value('upload_avatar_server'));
 		$this->user_accounts_config->set_default_avatar_name_enabled($this->form->get_value('default_avatar_activation'));
 		$this->user_accounts_config->set_avatar_auto_resizing_enabled($this->form->get_value('activation_resize_avatar'));
