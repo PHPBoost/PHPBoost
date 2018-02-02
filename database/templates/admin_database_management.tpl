@@ -17,15 +17,15 @@
 					</li>
 				</ul>
 		</nav>
-		
+
 		<div id="admin-contents">
 			# IF C_DATABASE_INDEX #
-			
+
 			# INCLUDE message_helper #
 
 			<form method="post" action="admin_database.php?action=restore&amp;token={TOKEN}" enctype="multipart/form-data" name="upload_file">
-			
-				
+
+
 				<fieldset>
 						<legend>{L_DATABASE_MANAGEMENT}</legend>
 						<div class="fieldset-inset">
@@ -114,10 +114,10 @@
 							</td>
 						</tr>
 						# END table_list #
-						<tr class="center"> 
+						<tr class="center">
 							<td>
 								<div class="form-field-checkbox" style="display: inline-block">
-										<input type="checkbox" id="check-all" onclick="check_all(this.checked, 'id');" class="valign-middle"> 
+										<input type="checkbox" id="check-all" onclick="check_all(this.checked, 'id');" class="valign-middle">
 										<label for="check-all"></label>
 								</div>
 								<span class="valign-bottom">{L_ALL}</span>
@@ -143,30 +143,30 @@
 						</tr>
 					</tbody>
 				</table>
-				
+
 				<div class="spacer"></div>
-				
+
 						<fieldset>
 								<legend>{ACTION_FOR_SELECTION}</legend>
 								<div class="fieldset-inset">
 										<input type="hidden" name="token" value="{TOKEN}">
 										<ul class="elements-container columns-3 center no-list no-style">
 											<li class="block">
-												<i class="fa fa-bar-chart fa-2x"></i> 
+												<i class="fa fa-bar-chart fa-2x"></i>
 												<button type="submit" name="optimize" value="true" class="submit">{L_OPTIMIZE}</button>
 											</li>
 											<li class="block">
-												<i class="fa fa-cogs fa-2x"></i> 
+												<i class="fa fa-cogs fa-2x"></i>
 												<button type="submit" name="repair" value="true" class="submit">{L_REPAIR}</button>
 											</li>
 											<li class="block">
-												<i class="fa fa-save fa-2x"></i> 
+												<i class="fa fa-save fa-2x"></i>
 												<button type="submit" name="backup" value="true" class="submit">{L_BACKUP}</button>
 											</li>
 										</ul>
 								</div>
 						</fieldset>
-				
+
 				<script>
 				<!--
 				function check_all(status, id)
@@ -174,14 +174,14 @@
 					var i;
 					for(i = 0; i < {NBR_TABLES}; i++)
 						document.getElementById(id + i).checked = status;
-				}	
+				}
 				-->
 				</script>
 			</form>
 
 			# ENDIF #
-			
-			
+
+
 			# IF C_DATABASE_BACKUP #
 			# IF TABLE_NAME #
 			<div>
@@ -237,7 +237,7 @@
 			</div>
 			<div class="spacer"></div>
 			# ENDIF #
-			
+
 			<form action="admin_database.php?action=backup&amp;token={TOKEN}" method="post" name="table_list">
 				<script>
 					<!--
@@ -251,7 +251,7 @@
 						}
 					-->
 				</script>
-				
+
 				<table id="table">
 					<caption>{L_BACKUP_DATABASE}</caption>
 					<thead>
@@ -303,7 +303,7 @@
 			</form>
 			# ENDIF #
 
-			
+
 			# IF C_DATABASE_QUERY #
 				<script>
 				<!--
@@ -312,12 +312,12 @@
 					var query_lowercase = query.toLowerCase();
 					var check_query = false;
 					var keyword = new Array('delete', 'drop', 'truncate');
-					
+
 					if( query == "" ) {
 						alert("{L_REQUIRE}");
 						return false;
 				    }
-					
+
 					//V�rification de la requ�te => alerte si elle contient un des mots cl�s DELETE, DROP ou TRUNCATE.
 					for(i = 0; i < keyword.length; i++)
 					{
@@ -333,9 +333,9 @@
 					}
 					return true;
 				}
-				-->	
+				-->
 				</script>
-				
+
 				<form action="admin_database.php?query=1&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
 				<fieldset>
 						<legend>{L_QUERY}</legend>
@@ -361,7 +361,7 @@
 						</div>
 				</fieldset>
 				</form>
-				
+
 				# IF C_QUERY_RESULT #
 				<fieldset>
 						<legend>{L_RESULT}</legend>
@@ -373,9 +373,9 @@
 												<fieldset class="db-executed-query">
 													<p>{QUERY_HIGHLIGHT}</p>
 												</fieldset>
-												
+
 												<div class="db-query-result">
-													<table id="table" class="table-fixed">
+													<table id="table" class="large-table">
 														# IF C_HEAD #
 														<thead>
 															<tr>
@@ -436,7 +436,7 @@
 						<tr>
 							<td>
 								<a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" title="{L_RESTORE}" data-confirmation="{L_CONFIRM_RESTORE}">
-									<i class="fa fa-server"></i> 
+									<i class="fa fa-server"></i>
 									{file.FILE_NAME}
 								</a>
 							</td>
@@ -456,4 +456,3 @@
 
 			# ENDIF #
 		</div>
-		
