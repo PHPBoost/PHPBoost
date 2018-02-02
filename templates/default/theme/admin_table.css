@@ -271,3 +271,16 @@ table.bt tbody td .bt-content {
 	overflow: auto;
 	-webkit-overflow-scrolling: touch;
 }
+
+.large-table th {
+	white-space: nowrap;
+}
+
+.large-table .bt-content,
+.bt.large-table .bt-content {
+	display: inline-block;
+	max-width: 400px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}

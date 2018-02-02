@@ -14,7 +14,7 @@
 					</li>
 				</ul>
 		</nav>
-		
+
 		<div id="admin-contents">
 			<div>
 				<div class="block-contents1">
@@ -68,7 +68,7 @@
 				</script>
 			</div>
 			<div class="spacer"></div>
-			
+
 			# IF C_DATABASE_TABLE_STRUCTURE #
 			<table id="table">
 				<caption>{TABLE_NAME}</caption>
@@ -107,7 +107,7 @@
 					# END field #
 				</tbody>
 			</table>
-			
+
 				<table id="table2">
 					<caption>{L_TABLE_INDEX}</caption>
 					<thead>
@@ -133,7 +133,7 @@
 						# END index #
 					</tbody>
 				</table>
-				
+
 				<table id="table3">
 					<caption>{L_SIZE}</caption>
 					<thead>
@@ -172,7 +172,7 @@
 							</td>
 						# IF TABLE_FREE #
 							<td>
-								
+
 								<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=optimize">
 										<i class="fa fa-bar-chart"></i> {L_OPTIMIZE}
 								</a>
@@ -181,7 +181,7 @@
 						# ENDIF #
 					</tbody>
 				</table>
-				
+
 				<table id="table4">
 					<caption>{L_STATISTICS}</caption>
 					<thead>
@@ -246,8 +246,8 @@
 					</tbody>
 				</table>
 			# ENDIF #
-			
-			
+
+
 			# IF C_DATABASE_TABLE_DATA #
 			<section>
 					<header></header>
@@ -258,11 +258,11 @@
 								<fieldset class="db-executed-query">
 									<p>{QUERY_HIGHLIGHT}</p>
 								</fieldset>
-								
+
 								<div class="spacer"></div>
 								# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
 								<div class="db-query-result">
-									<table id="table" class="table-fixed">
+									<table id="table" class="large-table">
 										<thead>
 											<tr>
 												<th>&nbsp;</th>
@@ -291,8 +291,8 @@
 					<footer></footer>
 				</section>
 			# ENDIF #
-			
-			
+
+
 			# IF C_DATABASE_TABLE_QUERY #
 			<script>
 			<!--
@@ -301,12 +301,12 @@
 				var query_lowercase = query.toLowerCase();
 				var check_query = false;
 				var keyword = new Array('delete', 'drop', 'truncate');
-				
+
 				if( query == "" ) {
 					alert("{L_REQUIRE}");
 					return false;
 				}
-				
+
 				//V�rification de la requ�te => alerte si elle contient un des mots cl�s DELETE, DROP ou TRUNCATE.
 				for(i = 0; i < keyword.length; i++)
 				{
@@ -324,7 +324,7 @@
 			}
 			-->
 			</script>
-			
+
 			<form action="admin_database_tools.php?table={TABLE_NAME}&action=query&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
 				<fieldset>
 						<legend>{L_QUERY}</legend>
@@ -344,7 +344,7 @@
 						</div>
 				</fieldset>
 			</form>
-			
+
 				# IF C_QUERY_RESULT #
 				<fieldset>
 						<legend>{L_RESULT}</legend>
@@ -356,7 +356,7 @@
 																<fieldset class="db-executed-query">
 																	<p>{QUERY_HIGHLIGHT}</p>
 																</fieldset>
-												
+
 																<div class="db-query-result">
 																	<table id="table" class="table-fixed">
 																		<thead>
@@ -387,7 +387,7 @@
 				</fieldset>
 				# ENDIF #
 			# ENDIF #
-			
+
 			# IF C_DATABASE_UPDATE_FORM #
 			<form action="admin_database_tools.php?table={TABLE_NAME}&amp;field={FIELD_NAME}&amp;value={FIELD_VALUE}&amp;action={ACTION}&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
 				<table id="table">
@@ -438,4 +438,3 @@
 			</form>
 			# ENDIF #
 		</div>
-		
