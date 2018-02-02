@@ -34,7 +34,8 @@ class CurrentUser extends User
 {
 	public static function from_session()
 	{
-		return new self(AppContext::get_session());
+		$session = AppContext::get_session();
+		return new self($session);
 	}
 	
 	private $groups_auth = array();
