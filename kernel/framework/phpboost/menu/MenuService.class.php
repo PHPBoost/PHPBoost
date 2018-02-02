@@ -406,6 +406,7 @@ class MenuService
 			$default_block = $mini_module->get_default_block();
 			$mini_module->set_title($menu['module_id'] . '/' . $title);
 			$mini_module->set_block($default_block);
+			$mini_module->enabled($mini_module->default_is_enabled());
 			self::save($mini_module);
 		}
 		
