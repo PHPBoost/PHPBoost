@@ -47,7 +47,7 @@ class FacebookExternalAuthentication implements ExternalAuthentication
 
 	public function get_image_renderer_html()
 	{
-		return (new FileTemplate('SocialNetworks/facebook_image_render.tpl'))->render();
+		return (new FileTemplate('SocialNetworks/auth_facebook_image_render.tpl'))->render();
 	}
 
 	public function get_authentication()

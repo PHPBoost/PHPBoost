@@ -30,16 +30,20 @@
  */
 class ContentSharingActionsMenuLink
 {
+	private $id;
 	private $name;
 	private $url;
+	private $image_render_html;
 	private $tpl;
 
-	public function __construct($name, Url $url, Template $tpl = null)
+	public function __construct($id, $name, Url $url, $image_render_html, Template $tpl = null)
 	{
+		$this->id = $id;
 		$this->name = $name;
 		$this->url = $url;
+		$this->image_render_html = $image_render_html;
 
-		if ($this->tpl instanceof Template)
+		if ($tpl instanceof Template)
 		{
 			$this->tpl = $tpl;
 		}
@@ -48,24 +52,15 @@ class ContentSharingActionsMenuLink
 			$this->tpl = new FileTemplate('framework/content/share/ContentSharingActionsMenuLink.tpl');
 		}
 	}
-
-	public function set_name($name)
-	{
-		$this->name = $name;
-	}
 	
+	public function get_id()
+	{
+		return $this->id;
+	}
+
 	public function get_name()
 	{
 		return $this->name;
-	}
-
-	public function set_url($url)
-	{
-		if (!($url instanceof Url))
-        {
-            $url = new Url($url);
-        }
-        $this->url = $url;
 	}
 	
 	public function get_url()
@@ -73,11 +68,18 @@ class ContentSharingActionsMenuLink
 		return $this->url;
 	}
 
+	public function get_image_render_html()
+	{
+		return $this->image_render_html;
+	}
+
 	public function export()
 	{
 		$this->tpl->put_all(array(
-			'NAME'           => $this->get_name(),
+			'ID'           => $this->id,
 			'U_LINK'         => $this->get_url()->rel(),
+			'NAME'           => $this->name,
+			'IMG_RENDER_HTML'         => $this->image_render_html,
 		));
 
 		return $this->tpl;

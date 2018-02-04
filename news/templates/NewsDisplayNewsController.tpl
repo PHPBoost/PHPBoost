@@ -43,14 +43,16 @@
 					<span class="more-element more-element-category">
 						<i class="fa fa-folder-o"></i> <a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
 					</span>
-					<div id="more-element-social-container" class="more-element more-element-social">
+					${ContentSharingActionsMenuService::display()}
+					<!--
+						<div id="more-element-social-container" class="more-element more-element-social">
 						<div class="social-button">
 							<a href="#" Title="Menu des liens pour les réseaux sociaux" onclick="open_submenu('more-element-social-container');return false;"><i class="fa fa-share-alt"></i></a>
 						</div>
 						<ul class="social-elements-list">
 							# IF C_COMMENTS_ENABLED #
 							<li class="social-element social-element-comments">
-								<a href="#" title="{NUMBER_COMMENTS} commentaires"><i class="fa fa-comments-o"></i> {NUMBER_COMMENTS}</a> <!--mettre une ancre-->
+								<a href="#" title="{NUMBER_COMMENTS} commentaires"><i class="fa fa-comments-o"></i> {NUMBER_COMMENTS}</a>
 							</li>
 							# ENDIF #
 							# IF C_NB_VIEW_ENABLED #
@@ -69,6 +71,7 @@
 							</li>
 						</ul>
 					</div>
+				-->
 				</div>
 
 				<meta itemprop="url" content="{U_LINK}">

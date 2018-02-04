@@ -110,6 +110,8 @@ class AuthenticationService
 	{
 		if (self::$external_authentications_actived == null)
 		{
+			self::$external_authentications_actived = array();
+
 			$extension_point = AppContext::get_extension_provider_service()->get_extension_point(ExternalAuthenticationsExtensionPoint::EXTENSION_POINT);
 
 			foreach ($extension_point as $id => $provider)
@@ -118,13 +120,10 @@ class AuthenticationService
 
 				foreach ($external_authentications as $external_authentication)
 				{
-					/* TODO for test
 					if ($external_authentication->authentication_actived())
 					{
 						self::$authentication_actived[$external_authentication->get_authentication_id()] = $external_authentication;
 					}
-					*/
-					self::$external_authentications_actived[$external_authentication->get_authentication_id()] = $external_authentication;
 				}
 			}
 		}

@@ -55,12 +55,13 @@ class SocialNetworksExtensionPointProvider extends ExtensionPointProvider
 		));
 	}
 
-	public function content_sharing_actions_menu()
+	public function content_sharing_actions_menu_links()
 	{
-		return new ContentSharingActionsMenu(array(
-			new ContentSharingActionsMenuLink('Google+', new Url('http://www.facebook.com/share.php?u=' . HOST . REWRITED_SCRIPT)),
-			new ContentSharingActionsMenuLink('Facebook', new Url('https://plus.google.com/share?url=' . HOST . REWRITED_SCRIPT)),
-		));
+		return array(
+			new ContentSharingActionsMenuLink('google+', 'Google+', new Url('https://plus.google.com/share?url=' . HOST . REWRITED_SCRIPT), (new FileTemplate('SocialNetworks/share_google_image_render.tpl'))->render()),
+			new ContentSharingActionsMenuLink('facebook', 'Facebook', new Url('http://www.facebook.com/share.php?u=' . HOST . REWRITED_SCRIPT), (new FileTemplate('SocialNetworks/share_facebook_image_render.tpl'))->render()),
+			new ContentSharingActionsMenuLink('twitter', 'Twitter', new Url('https://twitter.com/share?url=' . HOST . REWRITED_SCRIPT), (new FileTemplate('SocialNetworks/share_twitter_image_render.tpl'))->render()),
+		);
 	}
 }
 ?>

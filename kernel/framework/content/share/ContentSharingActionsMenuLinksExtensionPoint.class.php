@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *		                        ContentSharingActionsMenu.class.php
+ *		                        ContentSharingActionsMenuLinksExtensionPoint.class.php
  *                            -------------------
  *   begin                : January 30, 2018
  *   copyright            : (C) 2018 Kévin MASSY
@@ -28,8 +28,10 @@
 /**
  * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
-class ContentSharingActionsMenu
+class ContentSharingActionsMenuLinksExtensionPoint implements ExtensionPoint
 {
+	const EXTENSION_POINT = 'content_sharing_actions_menu_links';
+
 	private $content_sharing_actions_menu_links = array();
 
 	public function __construct($content_sharing_actions_menu_links)
@@ -40,20 +42,6 @@ class ContentSharingActionsMenu
 	public function get_content_sharing_actions_menu_links()
 	{
 		$this->content_sharing_actions_menu_links;
-	}
-
-	public function export()
-	{
-		$tpl = new FileTemplate('framework/content/share/ContentSharingActionsMenu.tpl');
-
-		foreach ($this->content_sharing_actions_menu_links as $element)
-		{
-			$tpl->assign_block_vars('element', array(
-				'ELEMENT' => $element->export()
-			));
-		}
-
-		return $tpl;
 	}
 }
 ?>

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *		                        ContentSharingActionsMenuExtensionPoint.class.php
+ *		                        ContentSharingActionsMenuService.class.php
  *                            -------------------
  *   begin                : January 30, 2018
  *   copyright            : (C) 2018 Kévin MASSY
@@ -28,20 +28,49 @@
 /**
  * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
-class ContentSharingActionsMenuExtensionPoint implements ExtensionPoint
+class ContentSharingActionsMenuService
 {
-	const EXTENSION_POINT = 'content_sharing_actions_menu';
-
-	private $content_sharing_actions_menu
-
-	public function __construct(ContentSharingActionsMenu $content_sharing_actions_menu)
+	private static $tpl;
+	
+	public static function get_content_sharing_actions_links()
 	{
-		$this->content_sharing_actions_menu = $content_sharing_actions_menu;
+		$content_sharing_actions_menu_links = array();
+		$extension_point = AppContext::get_extension_provider_service()->get_extension_point(ContentSharingActionsMenuLinksExtensionPoint::EXTENSION_POINT);
+
+		foreach ($extension_point as $id => $provider)
+		{
+			foreach ($provider as $link)
+			{
+				$content_sharing_actions_menu_links[] = $link;
+			}
+		}
+		return $content_sharing_actions_menu_links;
 	}
 
-	public function get_content_sharing_actions_menu()
+	public static function display($tpl = null)
 	{
-		return $this->content_sharing_actions_menu;
+		if ($tpl instanceof Template)
+		{
+			self::$tpl = $tpl;
+		}
+		else if (!empty($tpl))
+		{
+			self::$tpl = new FileTemplate($tpl);
+		}
+		else
+		{
+			self::$tpl = new FileTemplate('framework/content/share/ContentSharingActionsMenu.tpl');
+		}
+
+		$content_sharing_actions_menu_links = self::get_content_sharing_actions_links();
+		foreach ($content_sharing_actions_menu_links as $link)
+		{
+			self::$tpl->assign_block_vars('element', array(
+				'ELEMENT' => $link->export()->render()
+			));
+		}
+
+		return self::$tpl->render();
 	}
 }
 ?>
