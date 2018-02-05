@@ -13,14 +13,15 @@
     width: 100%;
 	max-width: 320px;
 	overflow: hidden;
+    overflow-y: auto;
     position: fixed;
     top: 0;
+    height: 100vh;
 	transition: transform .3s;
     height: 100vh;
     text-align: left;
     transform: translateY(-110%);
     z-index: 400;
-    box-shadow: 0 0 10px rgba(54, 100, 147, 0.5);
 }
 
 .mini-sbx-left .sbx-menu { left: 0; }
@@ -182,32 +183,10 @@
 
 /* --- Colors
 ----------------------------------------------------------------------------- */
-
-/* --- Bleu --- */
-/*.sbx-menu { background-color: #366493; }
-.sbx-toggle-btn { background-color: #366493; color: #81A4C8 }
-.sbx-toggle-btn:hover { color: #FFFFFF; }
-#module-mini-sandbox .close-btn { color: #81A4C8;}
-
-.sbx-text { color: #81A4C8}
-
-#module-mini-sandbox .item-form .submit,
-#module-mini-sandbox .item-2x a,
-#module-mini-sandbox .item-3x a,
-#module-mini-sandbox .item-4x a {color: #103B67;}
-
-#module-mini-sandbox .sbx-item-title,
-#module-mini-sandbox .item-form .submit:hover,
-#module-mini-sandbox .sbx-menu-item a:hover {
-    color: #81A4C8;
-    background-color: #1E5083;
- }
-#module-mini-sandbox .icon-sup { color: #ffffff;}
-#module-mini-sandbox .item-form .submit:hover .icon-sup,
-#module-mini-sandbox .sbx-menu-item a:hover .icon-sup { color: #afceed;}*/
-
-/* --- Blanc --- */
-.sbx-menu { background-color: #FFFFFF; }
+.sbx-menu {
+    background-color: #FFFFFF;
+    box-shadow: 0 0 10px rgba(54, 100, 147, 0.5);
+}
 .sbx-toggle-btn { background-color: #366493; color: #81A4C8 }
 .sbx-toggle-btn:hover { color: #FFFFFF; }
 #module-mini-sandbox .close-btn { color: #81A4C8;}
