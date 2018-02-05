@@ -21,11 +21,11 @@ a.social-connect:hover i:before {
 	transition: 0.2s ease-out;
 }
 
-a.social-connect.fb i:before,
-a.social-connect.google i:before 	{ font-size: 1.618em; }
+a.social-connect.facebook i:before,
+a.social-connect.google i:before { font-size: 1.618em; }
 
-a.social-connect.fb 		{ padding: 1em 1.618em; }
-a.social-connect.google 	{ padding: 1em; }
+a.social-connect.facebook { padding: 1em 1.618em; }
+a.social-connect.google { padding: 1em; }
 
 a.social-connect span {
 	display: none;

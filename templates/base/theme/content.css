@@ -739,9 +739,16 @@ span.more-element {
 
 .more-element-social {
 	position: relative;
-	display: inline-block;
-	margin: 0 0 0 5px;
+	
+	margin: 5px 0 0 0;
 	padding: 0;
+}
+
+@media (min-width: 769px) {
+	.more-element-social {
+		display: inline-block;
+		margin: 0 0 0 5px;
+	}
 }
 
 .social-button {
@@ -759,18 +766,32 @@ span.more-element {
 
 .social-element {
 	display: inline-block;
-	flex: 0 0 auto;
+	flex: 1 0 30px;
+}
+
+@media (min-width: 769px) {
+	.social-element {
+		flex: 0 0 auto;
+	}
 }
 
 .social-element a {
 	display: inline-block;
 	padding: 4px 3px;
-	width: 40px;
-	height: 30px;
+		width: 40px;
+		height: 30px;
 	color: #000000;
 }
 
-.social-element > a.fb,
+@media (max-width: 768px) {
+	.social-element a {
+		width: 100%;
+		height: 35px;
+		font-size: 1.2em;
+	}
+}
+
+.social-element > a.facebook,
 .social-element > a.google,
 .social-element > a.twitter {
 	color: #FFFFFF;

@@ -124,6 +124,10 @@ $lang['google_connection'] = 'Google connection';
 $lang['associate_account'] = 'Associate your account';
 $lang['dissociate_account'] = 'Dissociate your account';
 
+$lang['share'] = 'Share';
+$lang['share_on'] = 'Share on';
+$lang['share.menu'] = 'Social network menu';
+
 // Ranks
 $lang['rank'] = 'Rank';
 $lang['visitor'] = 'Visitor';

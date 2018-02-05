@@ -43,35 +43,10 @@
 					<span class="more-element more-element-category">
 						<i class="fa fa-folder-o"></i> <a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
 					</span>
+					# IF C_COMMENTS_ENABLED # | <span class="more-element more-element-comments"># IF C_COMMENTS #{NUMBER_COMMENTS}# ENDIF # {L_COMMENTS}</span># ENDIF # <!-- mettre une ancre pour aller jusqu'a la partie commentaire ? <a href="#" title="{NUMBER_COMMENTS} commentaires"><i class="fa fa-comments-o"></i> {NUMBER_COMMENTS}</a> -->
+					# IF C_NB_VIEW_ENABLED # | <span title="{NUMBER_VIEW} {@news.view}" class="more-element more-element-view"><i class="fa fa-eye"></i> {NUMBER_VIEW}</span># ENDIF #
+
 					${ContentSharingActionsMenuService::display()}
-					<!--
-						<div id="more-element-social-container" class="more-element more-element-social">
-						<div class="social-button">
-							<a href="#" Title="Menu des liens pour les réseaux sociaux" onclick="open_submenu('more-element-social-container');return false;"><i class="fa fa-share-alt"></i></a>
-						</div>
-						<ul class="social-elements-list">
-							# IF C_COMMENTS_ENABLED #
-							<li class="social-element social-element-comments">
-								<a href="#" title="{NUMBER_COMMENTS} commentaires"><i class="fa fa-comments-o"></i> {NUMBER_COMMENTS}</a>
-							</li>
-							# ENDIF #
-							# IF C_NB_VIEW_ENABLED #
-							<li class="social-element social-element-view">
-								<span title="{NUMBER_VIEW} {@news.view}"><i class="fa fa-eye"></i> {NUMBER_VIEW}</span>
-							</li>
-							# ENDIF #
-							<li class="social-element social-element-facebook">
-								<a href="#" title="Partager sur Facebook" class="fb"><i class="fa fa-facebook"></i></a>
-							</li>
-							<li class="social-element social-element-google">
-								<a href="#" title="Partager sur Google +" class="google"><i class="fa fa-google-plus"></i></a>
-							</li>
-							<li class="social-element social-element-twitter">
-								<a href="#" title="Partager sur Twitter" class="twitter"><i class="fa fa-twitter"></i></a>
-							</li>
-						</ul>
-					</div>
-				-->
 				</div>
 
 				<meta itemprop="url" content="{U_LINK}">

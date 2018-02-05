@@ -123,6 +123,10 @@ $lang['google_connection'] = 'Connexion par Google';
 $lang['associate_account'] = 'Associer votre compte';
 $lang['dissociate_account'] = 'Dissocier votre compte';
 
+$lang['share'] = 'Partager';
+$lang['share_on'] = 'Partager sur';
+$lang['share.menu'] = 'Menu réseaux sociaux';
+
 // Ranks
 $lang['rank'] = 'Rang';
 $lang['visitor'] = 'Visiteur';

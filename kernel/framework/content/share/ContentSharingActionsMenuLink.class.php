@@ -76,10 +76,10 @@ class ContentSharingActionsMenuLink
 	public function export()
 	{
 		$this->tpl->put_all(array(
-			'ID'           => $this->id,
-			'U_LINK'         => $this->get_url()->rel(),
-			'NAME'           => $this->name,
-			'IMG_RENDER_HTML'         => $this->image_render_html,
+			'ID'              => $this->id,
+			'U_LINK'          => $this->get_url()->rel(),
+			'NAME'            => LangLoader::get_message('share_on', 'user-common') . " " . $this->name,
+			'IMG_RENDER_HTML' => $this->image_render_html,
 		));
 
 		return $this->tpl;
