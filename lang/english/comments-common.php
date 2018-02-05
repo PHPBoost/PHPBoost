@@ -38,6 +38,7 @@ $lang['comment.locked'] = 'Comments blocked, you can not post comments';
 
 $lang['comment.add'] = 'Add a comment';
 $lang['comment.edit'] = 'Edit a comment';
+$lang['comments.link'] = 'Link to comments';
 
 $lang['lock'] = 'Lock';
 $lang['unlock'] = 'Unlock';

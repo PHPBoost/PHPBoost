@@ -43,9 +43,8 @@
 					<span class="more-element more-element-category">
 						<i class="fa fa-folder-o"></i> <a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
 					</span>
-					# IF C_COMMENTS_ENABLED # | <span class="more-element more-element-comments"># IF C_COMMENTS #{NUMBER_COMMENTS}# ENDIF # {L_COMMENTS}</span># ENDIF # <!-- mettre une ancre pour aller jusqu'a la partie commentaire ? <a href="#" title="{NUMBER_COMMENTS} commentaires"><i class="fa fa-comments-o"></i> {NUMBER_COMMENTS}</a> -->
+					# IF C_COMMENTS_ENABLED # | <span class="more-element more-element-comments"><a href="#comments-list" title="${LangLoader::get_message('comments.link','comments-common')}"># IF C_COMMENTS #{NUMBER_COMMENTS}# ENDIF # {L_COMMENTS}</a></span># ENDIF #
 					# IF C_NB_VIEW_ENABLED # | <span title="{NUMBER_VIEW} {@news.view}" class="more-element more-element-view"><i class="fa fa-eye"></i> {NUMBER_VIEW}</span># ENDIF #
-
 					${ContentSharingActionsMenuService::display()}
 				</div>
 
