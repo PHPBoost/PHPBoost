@@ -24,20 +24,13 @@ body {
 	margin: 0;
 	padding: 0;
 	height: auto;
-	background-color: #E8EDF3;
 }
 
 div#global {
-	padding: 20px;
+	padding: 2.618em;
 	min-height: 0;
 	width: 100%;
-	background-color: #FFFFFF;
 	border-spacing: 1px;
-	border: 1px #bebebe solid;
-}
-
-#connect {
-	margin-bottom: 40px;
 }
 
 .cookiebar-container {
