@@ -73,5 +73,12 @@ class KernelExtensionPointProvider extends ExtensionPointProvider
 			new MemberUserSexExtendedField()
 		));
 	}
+
+	public function content_sharing_actions_menu_links()
+	{
+		return array(
+			new ContentSharingActionsMenuLink('mail', LangLoader::get_message('email', 'user-common'), new Url('mailto:?subject='. TITLE . '&body=' . HOST . REWRITED_SCRIPT), (new FileTemplate('framework/content/share/share_email_image_render.tpl'))->render()),
+		);
+	}
 }
 ?>
