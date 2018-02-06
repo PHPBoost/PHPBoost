@@ -793,6 +793,7 @@ span.more-element {
 
 .social-element > a.facebook,
 .social-element > a.google,
+.social-element > a.linkedin,
 .social-element > a.twitter {
 	color: #FFFFFF;
 }
