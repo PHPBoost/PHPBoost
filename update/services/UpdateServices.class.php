@@ -283,6 +283,8 @@ class UpdateServices
 		
 		if (!isset($columns['location_id']))
 			self::$db_utils->add_column(PREFIX . 'sessions', 'location_id', array('type' => 'string', 'length' => 64, 'default' => "''"));
+		
+		self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'sessions CHANGE location_script location_script VARCHAR(200) NOT NULL DEFAULT ''');
 	}
 	
 	private function update_kernel_version()
