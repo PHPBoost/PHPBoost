@@ -244,8 +244,8 @@ $lang['scroll-to.bottom'] = 'Scroll to Bottom';
 //Cookies Bar
 $lang['cookiebar.cookie'] = 'Cookie';
 $lang['cookiebar.cookie.management'] = 'Cookies management';
-$lang['cookiebar-message.notracking']  = 'If you continuing your visit to this website, you agree to use Cookies to manage your connection, your preferences, and to save anonymous visits statistics.';
-$lang['cookiebar-message.tracking']  = 'If you continuing your visit to this website, you agree to use cookies or other tracers to offer a suitable navigation (targeted advertising, social media sharing , more ...).';
+$lang['cookiebar-message.notracking']  = 'If you continue your visit to this website, you agree to use Cookies to manage your connection, your preferences, and to save anonymous visits statistics.';
+$lang['cookiebar-message.tracking']  = 'If you continue your visit to this website, you agree to use cookies or other tracers to offer a suitable navigation (targeted advertising, social media sharing , more ...).';
 $lang['cookiebar-message.aboutcookie.title']  = 'About Cookies';
 $lang['cookiebar-message.aboutcookie']  = 'To make this site work properly, we sometimes place small data files called cookies on your device.<br />Most big websites do this too.
 
