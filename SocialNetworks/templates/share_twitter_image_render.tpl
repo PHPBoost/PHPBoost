@@ -1,1 +1,1 @@
-<i class="fa fa-twitter"></i>
+<i class="fa fa-fw fa-twitter"></i>

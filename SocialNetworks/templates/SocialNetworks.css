@@ -1,4 +1,4 @@
-/* -- social connect -- */
+/* -- Social Connect -- */
 /* -------------------- */
 a.social-connect {
 	display: inline-block;
@@ -30,3 +30,55 @@ a.social-connect.google { padding: 1em; }
 a.social-connect span {
 	display: none;
 }
+
+.social-connect { color: #DEDEDE; }
+
+.social-connect i:before       { color: #DFDFDF; }
+.social-connect:hover i:before { color: #EFEFEF; }
+
+
+/* -- Social Share -- */
+/* ------------------ */
+.social-element > a {
+	color: #000000;
+}
+
+.social-element > a.mail,
+.social-element > a.facebook,
+.social-element > a.google,
+.social-element > a.linkedin,
+.social-element > a.twitter {
+	color: #FFFFFF;
+}
+
+.social-element-comments a { background-color: #CDCDCD; }
+.social-element-mail a     { background-color: #CDCDCD; }
+.social-element-print a    { background-color: #D6D6D6; }
+
+
+/* -- Color Social network -- */
+/* -------------------------- */
+.discord    { background: #7289DA; }
+.facebook   { background: #3B5998; }
+.flickr     { background: #FF0084; }
+.github     { background: #24292E; }
+.google     { background: #DD4b39; }
+.instagram  { background: #517FA4; }
+.line       { background: #00b900; }
+.linkedin   { background: #0077B6; }
+.pinterest  { background: #BD081C; }
+.reddit     { background: #FF4500; }
+.skype      { background: #00AFF0; }
+.slack      { background: #E01563; }
+.snapchat   { background: #FFFC00; }
+.soundcloud { background: #FF8800; }
+.spotify    { background: #1DB954; }
+.steam      { background: #00ADEE; }
+.telegram   { background: #0088CC; }
+.tumblr     { background: #32506D; }
+.twitch     { background: #6441A4; }
+.twitter    { background: #00ACED; }
+.viber      { background: #675CA8; }
+.wechat     { background: #7BB32E; }
+.whatsapp   { background: #25D366; }
+.youtube    { background: #BB0000; }

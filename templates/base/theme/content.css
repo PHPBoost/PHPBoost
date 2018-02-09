@@ -739,15 +739,13 @@ span.more-element {
 
 .more-element-social {
 	position: relative;
-	
 	margin: 5px 0 0 0;
 	padding: 0;
 }
 
 @media (min-width: 769px) {
 	.more-element-social {
-		display: inline-block;
-		margin: 0 0 0 5px;
+		margin: 20px 0 5px 0;
 	}
 }
 
@@ -762,85 +760,26 @@ span.more-element {
 	display: flex;
 	flex-direction: row;
 	text-align: center;
+	justify-content: flex-start;
 }
 
 .social-element {
-	display: inline-block;
-	flex: 1 0 30px;
+	flex: 1 0 auto;
 }
 
 @media (min-width: 769px) {
 	.social-element {
-		flex: 0 0 auto;
+		flex: 0 1 auto;
+		margin: 0 3px;
 	}
 }
 
 .social-element a {
-	display: inline-block;
-	padding: 4px 3px;
-		width: 40px;
-		height: 30px;
-	color: #000000;
+	padding: 6px 20px 10px 20px;
 }
 
 @media (max-width: 768px) {
 	.social-element a {
-		width: 100%;
-		height: 35px;
 		font-size: 1.2em;
 	}
-}
-
-.social-element > a.facebook,
-.social-element > a.google,
-.social-element > a.linkedin,
-.social-element > a.twitter {
-	color: #FFFFFF;
-}
-
-.social-element-comments a { background-color: #CDCDCD; }
-.social-element-view a     { background-color: #F2F2F2; }
-.social-element-print a    { background-color: #D6D6D6; }
-
-
-/* You can customize the code as you wish or simply add any following CSS class for quick customization */
-/* Add CSS class to "more-element-social" */
-
-/* Submenu view with class "social-submenu" */
-.social-submenu .social-button {
-	display: block;
-}
-
-.social-submenu .social-elements-list {
-	position: absolute;
-	left: -9999px;
-	bottom: -5px;
-}
-
-.social-submenu.social-vertical .social-elements-list {
-	bottom: -35px;
-}
-
-.social-submenu.opened .social-elements-list {
-	left: 150%;
-}
-
-/* Diplay elements in vertical with class "social-vertical" */
-.social-vertical .social-elements-list {
-	flex-direction: column;
-}
-
-/* Rounded effect with class "social-round" */
-.social-round .social-element {
-	margin: 0 2px;
-}
-
-.social-round .social-element a {
-	padding: 10px 3px;
-	height: 40px;
-	border-radius: 40px;
-}
-
-.social-round.social-vertical .social-element {
-	margin: 2px 0;
 }

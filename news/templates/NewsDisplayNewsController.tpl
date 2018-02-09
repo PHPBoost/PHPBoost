@@ -45,7 +45,7 @@
 					</span>
 					# IF C_COMMENTS_ENABLED # | <span class="more-element more-element-comments"><a href="#comments-list" title="${LangLoader::get_message('comments.link','comments-common')}"># IF C_COMMENTS #{NUMBER_COMMENTS}# ENDIF # {L_COMMENTS}</a></span># ENDIF #
 					# IF C_NB_VIEW_ENABLED # | <span title="{NUMBER_VIEW} {@news.view}" class="more-element more-element-view"><i class="fa fa-eye"></i> {NUMBER_VIEW}</span># ENDIF #
-					${ContentSharingActionsMenuService::display()}
+					
 				</div>
 
 				<meta itemprop="url" content="{U_LINK}">
@@ -60,6 +60,8 @@
 				# IF C_PICTURE #<img itemprop="thumbnailUrl" src="{U_PICTURE}" alt="{NAME}" title="{NAME}" class="thumbnail-item" /># ENDIF #
 
 				<div itemprop="text">{CONTENTS}</div>
+				<div class="spacer"></div>
+				${ContentSharingActionsMenuService::display()}
 			</div>
 			<aside>
 				# IF C_SOURCES #

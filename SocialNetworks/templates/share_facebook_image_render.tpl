@@ -1,1 +1,1 @@
-<i class="fa fa-facebook"></i>
+<i class="fa fa-fw fa-facebook"></i>

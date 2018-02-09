@@ -1,1 +1,1 @@
-<i class="fa fa-envelope"></i>
+<i class="fa fa-fw fa-envelope"></i>

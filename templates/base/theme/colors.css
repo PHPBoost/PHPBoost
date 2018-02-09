@@ -551,22 +551,6 @@ h3.formatter-title {
 	border-color: #2C5169;
 }
 
-.social-connect {
-	color: #DEDEDE;
-}
-
-.social-connect i:before {
-	color: #DFDFDF;
-}
-
-.social-connect:hover i:before {
-	color: #EFEFEF;
-}
-
-.facebook { background: #3B5998; }
-.google   { background: #D8432E; }
-.linkedin   { background: #1C86BC; }
-.twitter  { background: #5EA9DD; }
 
 /* -- CssMenu
     #####  #####  #####  #   #  #####  #   #  #   #
