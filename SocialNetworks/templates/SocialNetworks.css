@@ -43,10 +43,6 @@ a.social-connect span {
 	color: #FFFFFF;
 }
 
-.social-element > a.snapchat {
-	color: #000000;
-}
-
 .social-element-comments > a { background-color: #CDCDCD; }
 .social-element-mail > a     { background-color: #CDCDCD; }
 .social-element-print > a    { background-color: #D6D6D6; }
