@@ -370,7 +370,7 @@ class HtaccessFileCache implements CacheData
 	
 	private function add_expires_headers()
 	{
-		if($domain != 'free.fr')
+		if(AppContext::get_request()->get_domain_name() != 'free.fr')
 		{
 			$this->add_section('Expires Headers');
 			$this->add_line('<IfModule mod_expires.c>');
@@ -442,7 +442,7 @@ class HtaccessFileCache implements CacheData
 	
 	private function disable_file_etags()
 	{
-		if($domain != 'free.fr')
+		if(AppContext::get_request()->get_domain_name() != 'free.fr')
 		{
 			$this->add_section('Disable file etags');
 			$this->add_line('FileETag none');
