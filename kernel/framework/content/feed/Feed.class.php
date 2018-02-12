@@ -121,7 +121,8 @@ class Feed
 				'DATE_RFC3339' => $this->data->get_date_iso8601(),
 				'DATE_TEXT' => $this->data->get_date_text(),
 				'THIS_YEAR' => date('Y'),
-				'TITLE' => TextHelper::htmlspecialchars($this->data->get_title()),
+				'TITLE' => $this->data->get_title(),
+				'RAW_TITLE' => TextHelper::htmlspecialchars($this->data->get_title()),
 				'U_LINK' => $this->data->get_link(),
 				'HOST' => $this->data->get_host(),
 				'DESC' => ContentSecondParser::export_html_text($this->data->get_desc()),
@@ -134,7 +135,8 @@ class Feed
 			{
 				$enclosure = $item->get_enclosure();
 				$tpl->assign_block_vars('item', array(
-					'TITLE' => TextHelper::htmlspecialchars($item->get_title()),
+					'TITLE' => $item->get_title(),
+					'RAW_TITLE' => TextHelper::htmlspecialchars($item->get_title()),
 					'U_LINK' => $item->get_link(),
 					'U_GUID' => $item->get_guid(),
 					'DESC' => ContentSecondParser::export_html_text($item->get_desc()),

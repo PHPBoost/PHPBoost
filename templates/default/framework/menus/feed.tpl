@@ -3,13 +3,13 @@
 	<div class="module-mini-top">
 		<div class="sub-title">
 			<a href="{U_LINK}" class="fa fa-syndication"></a>
-			# IF C_NAME #{NAME}# ELSE #{TITLE}# ENDIF #
+			# IF C_NAME #{NAME}# ELSE #{RAW_TITLE}# ENDIF #
 		</div>
 	</div>
 	<div class="module-mini-contents">
 		<ul class="feed-list">
 			# START item #
-			<li><span class="smaller">{item.DATE}</span> <a href="{item.U_LINK} ">{item.TITLE} </a></li>
+			<li><span class="smaller">{item.DATE}</span> <a href="{item.U_LINK} ">{item.RAW_TITLE} </a></li>
 			# END item #
 		</ul>
 	</div>
@@ -21,11 +21,11 @@
 	<div class="block-contents">
 		<div class="sub-title">
 			<a href="{U_LINK}" class="fa fa-syndication"></a>
-			# IF C_NAME #{NAME}# ELSE #{TITLE}# ENDIF #
+			# IF C_NAME #{NAME}# ELSE #{RAW_TITLE}# ENDIF #
 		</div>
 		<ul class="feed-list">
 			# START item #
-			<li><span class="smaller">{item.DATE}</span> <a href="{item.U_LINK} ">{item.TITLE}</a></li>
+			<li><span class="smaller">{item.DATE}</span> <a href="{item.U_LINK} ">{item.RAW_TITLE}</a></li>
 			# END item #
 		</ul>
 	</div>
