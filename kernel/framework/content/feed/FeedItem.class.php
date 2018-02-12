@@ -101,7 +101,7 @@ class FeedItem
     }
     
     ## Getters ##
-    public function get_title() { return str_replace('&', '&amp;', TextHelper::htmlspecialchars_decode($this->title)); }
+    public function get_title() { return TextHelper::htmlspecialchars_decode($this->title); }
     public function get_link() { return $this->link; }
     public function get_guid() { return $this->guid; }
     public function get_date() { return $this->date->format(Date::FORMAT_DAY_MONTH, Timezone::USER_TIMEZONE); }
@@ -110,7 +110,7 @@ class FeedItem
 	public function get_hours() { return $this->date->get_hours(); }
 	public function get_minutes() { return $this->date->get_minutes(); }
 	public function get_date_text() { return $this->date->format(Date::FORMAT_DAY_MONTH_YEAR_LONG, Timezone::USER_TIMEZONE); }
-    public function get_desc() { return str_replace('&', '&amp;', TextHelper::htmlspecialchars_decode($this->desc)); }
+    public function get_desc() { return TextHelper::htmlspecialchars_decode($this->desc); }
     public function get_image_url() { return $this->image_url; }
 	public function get_enclosure() { return $this->enclosure; }
     public function get_auth() { return $this->auth; }
