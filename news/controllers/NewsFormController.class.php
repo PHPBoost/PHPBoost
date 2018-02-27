@@ -50,7 +50,7 @@ class NewsFormController extends ModuleController
 		
 		$this->build_form($request);
 		
-		$tpl = new StringTemplate('# INCLUDE FORM #');
+		$tpl = new StringTemplate('# INCLUDE MESSAGE ## INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
@@ -449,9 +449,18 @@ class NewsFormController extends ModuleController
 	{
 		$news = $this->get_news();
 		
+		if (!empty($this->get_news()->get_id()))
+		{
+			$location_id = 'news-edit-'. $this->get_news()->get_id();
+			if (AppContext::get_session()->location_id_already_exists($location_id))
+			{
+				$tpl->put('MESSAGE', MessageHelper::display(LangLoader::get_message('content.lock.open.description', 'status-messages-common'), MessageHelper::NOTICE));
+			}
+		}
+		
 		$response = new SiteDisplayResponse($tpl);
 		$graphical_environment = $response->get_graphical_environment();
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['news'], NewsUrlBuilder::home());
 		
@@ -477,6 +486,8 @@ class NewsFormController extends ModuleController
 			$category = $news->get_category();
 			$breadcrumb->add($news->get_name(), NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name()));
 			$breadcrumb->add($this->lang['news.edit'], NewsUrlBuilder::edit_news($news->get_id()));
+
+			$graphical_environment->set_location_id($location_id);
 		}
 		
 		return $response;
