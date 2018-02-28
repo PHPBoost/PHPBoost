@@ -38,7 +38,7 @@ table tbody td.calendar-today	{
 	margin: 0.618em 0;
 }
 
-hr {
+#module-calendar hr {
 	width: 70%;
 	clear: both;
 }
