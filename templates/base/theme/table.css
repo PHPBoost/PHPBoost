@@ -47,9 +47,9 @@ table tbody td,
 	border-color: transparent;
 }
 
-table tbody tr:last-child td {
+/* table tbody tr:last-child td {
 	border-width: 0;
-}
+} */
 
 table.bt tbody tr td {
 	border-bottom-width: 0;
@@ -60,27 +60,27 @@ table.bt tbody tr td:last-child {
 }
 
 /* --- Pied de tableau --- */
-table tfoot tr th {
+table tfoot tr td {
 	padding: 0.228em;
 	font-size: 0.9em;
 }
 
-table tfoot tr th:only-child {
+table tfoot tr td:only-child {
 	text-align: right;
 }
 
-table tfoot tr th * {
+table tfoot tr td * {
 	vertical-align: middle;
 }
 
-table tfoot tr th select {
+table tfoot tr td select {
 	padding: 0.1618 0.309em;
 }
 
 @media (min-width: 769px) {
 	table thead th,
 	table tbody td,
-	table tfoot tr th {
+	table tfoot tr td {
 		padding: 0.309em;
 		font-size: 1em;
 	}

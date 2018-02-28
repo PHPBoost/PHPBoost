@@ -30,10 +30,9 @@
 	float: right;
 }
 
-tbody td.calendar-today	{
+table tbody td.calendar-today	{
 	border-width: 1px;
 	border-style: solid;
-	border-color: transparent;
 }
 
 .location-map {
@@ -94,9 +93,9 @@ table tbody tr th.column-title {
 }
 
 /* --- mini tableaux --- */
-.calendar-table.mini td {
+/* .calendar-table.mini td {
 	border: none;
-}
+} */
 
 .calendar-table.mini th,
 .calendar-table.mini .calendar-week,

@@ -193,13 +193,13 @@ select:focus {
 
 .input-date 	{ width: calc(100% - 1.618em); }
 .input-hours,
-.input-minutes 	{ width: 2.618em;  }
+.input-minutes 	{ width: 3.618em;  }
 @media (min-width:769px) {
 	.input-date { width: 110px; }
 }
 
 [name$="_hours"],
-[name$="_minutes"] { width: 2.618em;  }
+[name$="_minutes"] { width: 3.618em; }
 
 /* --- Cache le generateur de mot de passe sur chrome --- */
 .cip-icon-key-small {
