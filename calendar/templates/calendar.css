@@ -5,7 +5,6 @@
 
 #calendar {
 	width: 100%;
-	padding: 0.809em
 }
 
 .calendar-top-container {
@@ -92,11 +91,6 @@ table tbody tr th.column-title {
     width: 12.5%;
 }
 
-/* --- mini tableaux --- */
-/* .calendar-table.mini td {
-	border: none;
-} */
-
 .calendar-table.mini th,
 .calendar-table.mini .calendar-week,
 .calendar-table.mini td a {
@@ -135,7 +129,7 @@ table tbody tr th.column-title {
 
 .calendar-table td {
 	padding: 0;
-	border-width: 2px;
+	border-width: 1px;
 	border-style: solid;
 	border-color: transparent;
 }
