@@ -90,7 +90,7 @@ $lang = array(
 <div class="message-helper notice">Veillez à ce que chaque condition obligatoire soit vérifiée sans quoi vous risquez d\'avoir des problèmes en utilisant le logiciel.</div>
 <p>En cas de problème n\'hésitez pas à poser vos questions sur le <a href="http://www.phpboost.com/forum/">forum de support</a>.</p>',
 	'php.version' => 'Version de PHP',
-	'php.version.check' => 'PHP supérieur à :min_php_version',
+	'php.version.check' => 'PHP version minimum :min_php_version',
 	'php.version.check.explanation' => '<span style="font-weight:bold;color:red;">Obligatoire :</span> Pour faire fonctionner PHPBoost, votre serveur doit être équipé d\'une version supérieure ou égale à PHP :min_php_version. Sans cela il vous sera impossible de le faire fonctionner correctement, contactez votre hébergeur ou migrez vers un serveur plus récent.',
 	'php.extensions' => 'Extensions',
 	'php.extensions.check' => 'L\'activation de ces extensions permet d\'apporter des fonctionnalités supplémentaires mais n\'est en aucun cas indispensable (sauf la librairie MBstring).',

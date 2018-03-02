@@ -89,7 +89,7 @@ $lang = array(
 	'step.server.explanation' => '<p>Before starting installation, we need to establish the compatibility between PHPBoost and your server. If you have any problems, feel free to ask your questions in our <a href="http://www.phpboost.com/forum/">Support Forums</a>.</p>
 <div class="message-helper notice">It is very important that each required fields are checked, otherwise you might have trouble using the software.</div>',
 	'php.version' => 'PHP version',
-	'php.version.check' => 'PHP higher than :min_php_version',
+	'php.version.check' => 'PHP minimum version :min_php_version',
 	'php.version.check.explanation' => '<span style="font-weight: bold;color: red;">Required:</span> To run PHPBoost, your server must run PHP :min_php_version or higher. Below that, you might have issues with some modules.',
 	'php.extensions' => 'Extensions',
 	'php.extensions.check' => 'The activation of these extensions will provide additional features but it is not essential to its operation except Mbstring library.',
