@@ -55,7 +55,7 @@ if (ServerConfiguration::get_phpversion() > Updates::PHP_MIN_VERSION_UPDATES)
 	{
 		// Builds the asked updates (kernel updates, module updates, theme updates or all of them)
 		$update = TextHelper::unserialize($update_alert->get_properties());
-		if ($update_type == '' || $update->get_type() == $update_type)
+		if (($update instanceof Application) && ($update_type == '' || $update->get_type() == $update_type))
 		{
 			if ($update->check_compatibility() && $update_alert->get_status() != Event::EVENT_STATUS_PROCESSED)
 			{
