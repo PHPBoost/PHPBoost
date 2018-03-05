@@ -55,7 +55,7 @@ if (isset($_FILES['gallery']) && $idcat_post) //Upload
 		$Upload->disableContentCheck();
 
 		$idpic = 0;
-		if (!$Upload->file('gallery', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`iu', Upload::UNIQ_NAME, $config->get_max_weight()))
+		if (!$Upload->file('gallery', '`\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`iu', Upload::UNIQ_NAME, $config->get_max_weight()))
 			$error = $Upload->get_error();
 	}
 	else
