@@ -30,11 +30,11 @@
 				</li>
 				<li>
 					<span class="cssmenu-title">
-						<i class="fa fa-notread"></i> <a class="small" href="{U_MSG_NOT_READ}" title="{L_SHOW_NOT_READS}">{L_SHOW_NOT_READS} # IF C_IS_GUEST # ({NBR_MSG_NOT_READ})# ENDIF #</a>
+						<i class="fa fa-notread"></i> <a class="small" href="{U_MSG_NOT_READ}" title="{L_SHOW_NOT_READS}">{L_SHOW_NOT_READS} ({NBR_MSG_NOT_READ})</a>
 						<div class="forum-refresh">
-							<div id="forum_blockforum_unread" style="display: none;"></div>
+							<div id="forum_blockforum_unread_bottom" style="display: none;"></div>
 						</div>
-						<a href="" onclick="XMLHttpRequest_unread_topics('');return false;" onmouseover="forum_hide_block('forum_unread', 1);" onmouseout="forum_hide_block('forum_unread', 0);"><i class="fa fa-refresh" id="refresh_unread"></i></a>
+						<a href="" onclick="XMLHttpRequest_unread_topics('bottom');return false;" onmouseover="forum_hide_block('forum_unread', 1);" onmouseout="forum_hide_block('forum_unread', 0);"><i class="fa fa-refresh" id="refresh_unread_bottom"></i></a>
 					</span>
 				</li>
 				<li>
