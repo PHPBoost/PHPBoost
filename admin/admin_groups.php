@@ -175,7 +175,7 @@ elseif (!empty($_FILES['upload_groups']['name'])) //Upload
 		{
 			$Upload = new Upload($dir);
 			$Upload->disableContentCheck();
-			if (!$Upload->file('upload_groups', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`iu'))
+			if (!$Upload->file('upload_groups', '`\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`iu'))
 			{
 				$error = $Upload->get_error();
 			}
