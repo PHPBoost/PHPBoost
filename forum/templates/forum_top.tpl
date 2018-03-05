@@ -7,16 +7,16 @@
 //Rafraissiement des topics non lus.
 	function XMLHttpRequest_unread_topics(divID)
 	{
-		if (document.getElementById('refresh_unread' + divID))
-			document.getElementById('refresh_unread' + divID).className = 'fa fa-spinner fa-spin';
+		if (document.getElementById('refresh_unread_' + divID))
+			document.getElementById('refresh_unread_' + divID).className = 'fa fa-spinner fa-spin';
 
 		var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/forum/xmlhttprequest.php?token={TOKEN}&refresh_unread=1');
 		xhr_object.onreadystatechange = function()
 		{
 			if (xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '')
 			{
-				if (document.getElementById('refresh_unread' + divID))
-					document.getElementById('refresh_unread' + divID).className = 'fa fa-refresh';
+				if (document.getElementById('refresh_unread_' + divID))
+					document.getElementById('refresh_unread_' + divID).className = 'fa fa-refresh';
 
 				var array_unread_topics = new Array('', '');
 				eval(xhr_object.responseText);
@@ -24,15 +24,15 @@
 				if (array_unread_topics[0] > 0)
 					forum_display_block('forum_unread' + divID);
 
-				document.getElementById('nbr_unread_topics').innerHTML = array_unread_topics[1];
-				document.getElementById('nbr_unread_topics2').innerHTML = array_unread_topics[1];
-				document.getElementById('forum_blockforum_unread').innerHTML = array_unread_topics[2];
-				document.getElementById('forum_blockforum_unread2').innerHTML = array_unread_topics[2];
+				document.getElementById('nbr_unread_topics_top').innerHTML = array_unread_topics[0];
+				document.getElementById('nbr_unread_topics_bottom').innerHTML = array_unread_topics[0];
+				document.getElementById('forum_blockforum_unread_top').innerHTML = array_unread_topics[2];
+				document.getElementById('forum_blockforum_unread_bottom').innerHTML = array_unread_topics[2];
 			} else if (xhr_object.readyState == 4 && xhr_object.responseText == '')
 			{
 				alert("{L_AUTH_ERROR}");
-				if (document.getElementById('refresh_unread' + divID))
-					document.getElementById('refresh_unread' + divID).className = 'fa fa-refresh';
+				if (document.getElementById('refresh_unread_' + divID))
+					document.getElementById('refresh_unread_' + divID).className = 'fa fa-refresh';
 			}
 		}
 		xmlhttprequest_sender(xhr_object, null);
@@ -105,11 +105,11 @@
 					</li>
 					<li>
 						<span class="cssmenu-title">
-							<a href="{U_MSG_NOT_READ}" title="{L_SHOW_NOT_READS}"><i class="fa fa-notread"></i> <span class="hidden-large-screens">{L_SHOW_NOT_READS}</span> # IF C_IS_GUEST # ({NBR_MSG_NOT_READ})# ENDIF #</a>
+							<a href="{U_MSG_NOT_READ}" title="{L_SHOW_NOT_READS}"><i class="fa fa-notread"></i> <span class="hidden-large-screens">{L_SHOW_NOT_READS}</span> <span id="nbr_unread_topics_top">{NBR_MSG_NOT_READ}</span></a>
 							<div class="forum-refresh">
-								<div id="forum_blockforum_unread" style="display: none;"></div>
+								<div id="forum_blockforum_unread_top" style="display: none;"></div>
 							</div>
-							<a href="" onclick="XMLHttpRequest_unread_topics('');return false;" onmouseover="forum_hide_block('forum_unread', 1);" onmouseout="forum_hide_block('forum_unread', 0);"><i class="fa fa-refresh" id="refresh_unread"></i></a>
+							<a href="" onclick="XMLHttpRequest_unread_topics('top');return false;" onmouseover="forum_hide_block('forum_unread', 1);" onmouseout="forum_hide_block('forum_unread', 0);"><i class="fa fa-refresh" id="refresh_unread_top"></i></a>
 						</span>
 					</li>
 					<li>
