@@ -210,8 +210,8 @@ a.forum-link-pseudo {
 	float: left;
 }
 
-.forum-refresh #forum_blockforum_unread,
-.forum-refresh #forum_blockforum_unread2 {
+.forum-refresh #forum_block_forum_unread_top,
+.forum-refresh #forum_block_forum_unread_bottom {
 	position: absolute;
 	z-index: 100;
 	top: 100%;
@@ -224,15 +224,15 @@ a.forum-link-pseudo {
 }
 
 @media (max-width: 768px) {
-	.forum-refresh #forum_blockforum_unread,
-	.forum-refresh #forum_blockforum_unread2 {
+	.forum-refresh #forum_block_forum_unread_top,
+	.forum-refresh #forum_block_forum_unread_bottom {
 		left: -34px;
 		right: auto;
 		top: 20px;
 	}
 
-	.forum-refresh #forum_blockforum_unread > div,
-	.forum-refresh #forum_blockforum_unread2 > div {
+	.forum-refresh #forum_block_forum_unread_top > div,
+	.forum-refresh #forum_block_forum_unread_bottom > div {
 		width: 300px !important;
 		overflow: visible !important;
 	}
