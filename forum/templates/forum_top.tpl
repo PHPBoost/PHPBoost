@@ -22,7 +22,7 @@
 				eval(xhr_object.responseText);
 
 				if (array_unread_topics[0] > 0)
-					forum_display_block('forum_unread' + divID);
+					forum_display_block(divID);
 
 				document.getElementById('nbr_unread_topics_top').innerHTML = array_unread_topics[0];
 				document.getElementById('nbr_unread_topics_bottom').innerHTML = array_unread_topics[0];
