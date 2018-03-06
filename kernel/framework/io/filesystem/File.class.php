@@ -73,7 +73,7 @@ class File extends FileSystemElement
 	public function get_name_without_extension()
 	{
 		$name = $this->get_name();
-		return TextHelper::substr($name, 0, TextHelper::strpos($name, '.'));
+		return mb_substr($name, 0, mb_strpos($name, '.'));
 	}
 	
 	/**
@@ -83,7 +83,7 @@ class File extends FileSystemElement
 	public function get_extension()
 	{
 		$name = $this->get_name();
-		return TextHelper::substr(TextHelper::strrchr($name,'.'), 1);
+		return mb_substr(mb_strrchr($name,'.'), 1);
 	}
 	
 	/**
