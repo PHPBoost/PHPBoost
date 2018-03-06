@@ -1,51 +1,47 @@
-		
+
 <footer id="forum-bottom">
 	<div class="forum-links">
-		<nav class="cssmenu cssmenu-group float-left forum-index">
-			<ul>
-				<li>
-					<span class="cssmenu-title">
-						<i class="fa fa-globe"></i> <a class="small" href="index.php" title="{L_FORUM_INDEX}">{L_FORUM_INDEX}</a>
-					</span>
-				</li>
-			</ul>
-		</nav>
 		# IF C_USER_CONNECTED #
 		<nav class="cssmenu cssmenu-group float-right" id="cssmenu-forum-bottom-link">
 			<ul>
 				<li>
 					<span class="cssmenu-title">
-						<i class="fa fa-showmymsg"></i> <a class="small" title="{L_SHOW_MY_MSG}" href="{U_SHOW_MY_MSG}">{L_SHOW_MY_MSG}</a>
+						<a href="index.php" title="{L_FORUM_INDEX}"><i class="fa fa-home"></i> <span class="hidden-large-screens">{L_FORUM_INDEX}</span></a>
 					</span>
 				</li>
 				<li>
 					<span class="cssmenu-title">
-						<i class="fa fa-msg-track"></i> <a class="small" href="{U_TOPIC_TRACK}" title="{L_SHOW_TOPIC_TRACK}">{L_SHOW_TOPIC_TRACK}</a>
+						<a title="{L_SHOW_MY_MSG}" href="{U_SHOW_MY_MSG}"><i class="fa fa-showmymsg"></i> <span class="hidden-large-screens">{L_SHOW_MY_MSG}</span></a>
+					</span>
+				</li>
+				<li>
+					<span class="cssmenu-title">
+						<a href="{U_TOPIC_TRACK}" title="{L_SHOW_TOPIC_TRACK}"><i class="fa fa-msg-track"></i> <span class="hidden-large-screens">{L_SHOW_TOPIC_TRACK}</span></a>
 					</span>
 				</li>
 				<li class="forum-index">
 					<span class="cssmenu-title">
-						<i class="fa fa-lastview"></i> <a class="small" href="{U_LAST_MSG_READ}" title="{L_SHOW_LAST_READ}">{L_SHOW_LAST_READ}</a>
+						<a href="{U_LAST_MSG_READ}" title="{L_SHOW_LAST_READ}"><i class="fa fa-lastview"></i> <span class="hidden-large-screens">{L_SHOW_LAST_READ}</span></a>
 					</span>
 				</li>
 				<li>
 					<span class="cssmenu-title">
-						<i class="fa fa-notread"></i> <a class="small" href="{U_MSG_NOT_READ}" title="{L_SHOW_NOT_READS}">{L_SHOW_NOT_READS} ({NBR_MSG_NOT_READ})</a>
+						<a href="{U_MSG_NOT_READ}" title="{L_SHOW_NOT_READS}"><i class="fa fa-notread"></i> <span class="hidden-large-screens">{L_SHOW_NOT_READS}</span> <span id="nbr_unread_topics_bottom">{NBR_MSG_NOT_READ}</span></a>
 						<div class="forum-refresh">
-							<div id="forum_blockforum_unread_bottom" style="display: none;"></div>
+							<div id="forum_block_forum_unread_bottom" style="display: none;"></div>
 						</div>
-						<a href="" onclick="XMLHttpRequest_unread_topics('bottom');return false;" onmouseover="forum_hide_block('forum_unread', 1);" onmouseout="forum_hide_block('forum_unread', 0);"><i class="fa fa-refresh" id="refresh_unread_bottom"></i></a>
+						<a href="" onclick="XMLHttpRequest_unread_topics('forum_unread_bottom');return false;" onmouseover="forum_hide_block('forum_unread_bottom', 1);" onmouseout="forum_hide_block('forum_unread_bottom', 0);"><i class="fa fa-refresh" id="refresh_forum_unread_bottom"></i></a>
 					</span>
 				</li>
 				<li>
 					<span class="cssmenu-title">
-						<i class="fa fa-eraser"></i> <a class="small" href="{U_MSG_SET_VIEW}" title="{L_MARK_AS_READ}" onclick="javascript:return Confirm_read_topics();">{L_MARK_AS_READ}</a>
+						<a href="{U_MSG_SET_VIEW}" title="{L_MARK_AS_READ}" onclick="javascript:return Confirm_read_topics();"><i class="fa fa-eraser"></i> <span class="hidden-large-screens">{L_MARK_AS_READ}</span></a>
 					</span>
 				</li>
 				# IF C_FORUM_CONNEXION #
 				<li>
 					<span class="cssmenu-title">
-						<i class="fa fa-sign-out"></i> <a title="{L_DISCONNECT}" class="small" href="${relative_url(UserUrlBuilder::disconnect())}" title="{L_DISCONNECT}">{L_DISCONNECT}</a>
+						<a title="{L_DISCONNECT}" href="${relative_url(UserUrlBuilder::disconnect())}"><i class="fa fa-sign-out"></i> <span class="hidden-large-screens">{L_DISCONNECT}</span></a>
 					</span>
 				</li>
 				# ENDIF #
@@ -53,16 +49,16 @@
 		</nav>
 		# ELSE #
 		# IF C_FORUM_CONNEXION #
-		<nav class="cssmenu cssmenu-group float-right" id="cssmenu-forum-top-link">
+		<nav class="cssmenu cssmenu-group float-right" id="cssmenu-sign-in-bottom-link">
 			<ul>
 				<li>
 					<span class="cssmenu-title">
-						<i class="fa fa-sign-in"></i> <a title="{L_CONNECT}" class="small" href="${relative_url(UserUrlBuilder::connect())}" title="{L_CONNECT}">{L_CONNECT}</a>
+						<a title="{L_CONNECT}" href="${relative_url(UserUrlBuilder::connect())}"><i class="fa fa-sign-in"></i> <span class="hidden-large-screens">{L_CONNECT}</span></a>
 					</span>
 				</li>
 				<li>
 					<span class="cssmenu-title">
-						<i class="fa fa-ticket"></i> <a title="{L_REGISTER}" class="small" href="${relative_url(UserUrlBuilder::registration())}" title="{L_REGISTER}">{L_REGISTER}</a>
+						<a title="{L_REGISTER}" href="${relative_url(UserUrlBuilder::registration())}"><i class="fa fa-ticket"></i> <span class="hidden-large-screens">{L_REGISTER}</span></a>
 					</span>
 				</li>
 			</ul>
@@ -75,6 +71,7 @@
 	<script>
 		<!--
 		jQuery("#cssmenu-forum-bottom-link").menumaker({ title: " ${LangLoader::get_message('forum.links', 'common', 'forum')} ", format: "multitoggle", breakpoint: 768, menu_static: false });
+		# IF C_FORUM_CONNEXION #jQuery("#cssmenu-sign-in-bottom-link").menumaker({ title: " ${LangLoader::get_message('forum.links', 'common', 'forum')} ", format: "multitoggle", breakpoint: 768, menu_static: false });# ENDIF #
 		-->
 	</script>
 
@@ -82,7 +79,7 @@
 		# IF USERS_ONLINE #
 		<span class="float-left">
 			{TOTAL_ONLINE} {L_USER} {L_ONLINE} : {ADMIN} {L_ADMIN}, {MODO} {L_MODO}, {MEMBER} {L_MEMBER} {L_AND} {GUEST} {L_GUEST}
-			<br />
+			<span class="spacer"></span>
 			{L_USER} {L_ONLINE} : {USERS_ONLINE}
 		</span>
 
@@ -101,7 +98,7 @@
 			# IF C_MASS_MODO_CHECK #
 			<form action="action.php">
 				<div>
-					{L_FOR_SELECTION}: 
+					{L_FOR_SELECTION}:
 					<select name="massive_action_type">
 						<option value="change">{L_CHANGE_STATUT_TO}</option>
 						<option value="changebis">{L_CHANGE_STATUT_TO_DEFAULT}</option>
@@ -124,7 +121,7 @@
 			<span class="float-left">
 				{L_TOTAL_POST}: <strong>{NBR_MSG}</strong> {L_MESSAGE} {L_DISTRIBUTED} <strong>{NBR_TOPIC}</strong> {L_TOPIC}
 			</span>
-			<span class="float-right">
+			<span class="float-right forum-stats">
 				<a href="{PATH_TO_ROOT}/forum/stats.php" title="{L_STATS}"><i class="fa fa-bar-chart-o"></i> {L_STATS}</a>
 			</span>
 			<div class="spacer"></div>
