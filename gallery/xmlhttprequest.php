@@ -77,7 +77,7 @@ else
 			include_once(PATH_TO_ROOT .'/gallery/Gallery.class.php');
 			$Gallery = new Gallery;
 			
-			$name = TextHelper::strprotect(utf8_decode($request->get_postvalue('name', '')));
+			$name = $request->get_postvalue('name', '');
 			$previous_name = TextHelper::strprotect(utf8_decode($request->get_postvalue('previous_name', '')));
 			
 			if (!empty($id_file))
