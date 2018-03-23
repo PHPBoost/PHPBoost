@@ -48,6 +48,7 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 		}
 		
 		$this->delete_old_files();
+	}
 	
 	private function update_wiki_contents_table()
 	{

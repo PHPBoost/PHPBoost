@@ -204,7 +204,7 @@ class Upload
 		$this->extension = TextHelper::strtolower(TextHelper::substr(TextHelper::strrchr($filename, '.'), 1));
 		if (TextHelper::strrpos($filename, '.') !== FALSE)
 		{
-			$filename = TextHelper::substr($filename, 0, TextHelper::strrpos($filename, '.'));
+			$filename = TextHelper::mb_substr($filename, 0, TextHelper::strrpos($filename, '.'));
 		}
 		$filename = str_replace('.', '_', $filename);
 		$filename = self::clean_filename($filename);

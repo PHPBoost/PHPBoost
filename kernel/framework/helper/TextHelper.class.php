@@ -35,8 +35,8 @@ class TextHelper
 	const HTML_NO_PROTECT = false;
 	const HTML_PROTECT = true;
 
-	const ADDSLASHES_FORCE = 1; //Force l'échappement des caractères critique
-	const ADDSLASHES_NONE = 2; //Aucun échappement
+const ADDSLASHES_FORCE=1;
+const ADDSLASHES_NONE=2;
 
 	/**
 	 * @desc Protects an input variable. Never trust user input!
@@ -103,11 +103,11 @@ class TextHelper
 	{
 		if ($end == '')
 		{
-			return self::htmlspecialchars(self::substr(self::html_entity_decode($str), $start), ENT_NOQUOTES);
+return self::htmlspecialchars(TextHelper::substr(self::html_entity_decode($str),$start),ENT_NOQUOTES);
 		}
 		else
 		{
-			return self::htmlspecialchars(self::substr(self::html_entity_decode($str), $start, $end), ENT_NOQUOTES);
+return self::htmlspecialchars(TextHelper::substr(self::html_entity_decode($str),$start,$end),ENT_NOQUOTES);
 		}
 	}
 	
@@ -122,7 +122,7 @@ class TextHelper
 		if (strlen($string) <= $length)
 			return $string;
 		
-		$str = self::substr(str_replace('<br />', '<br/>', $string), 0, $length + 1, 'UTF-8');
+$str=mb_substr(str_replace('<br />','<br/>',$string),0,$length+1,'UTF-8');
 		return substr($str, 0, strrpos($str, ' '));
 	}
 
@@ -191,19 +191,19 @@ class TextHelper
 	
 	public static function lcfirst($string)
 	{
-		$fc = self::strtolower(self::substr($string, 0, 1));
-		return $fc . self::substr($string, 1);
+$fc=mb_strtolower(mb_substr($string,0,1));
+return $fc.mb_substr($string,1);
 	}
 	
 	public static function ucfirst($string)
 	{
-		$fc = self::strtoupper(self::substr($string, 0, 1));
-		return $fc . self::substr($string, 1);
+$fc=mb_strtoupper(mb_substr($string,0,1));
+return $fc.mb_substr($string,1);
 	}
 	
 	public static function strlen($string)
 	{
-		return mb_strlen($string);
+return strlen($string);
 	}
 	
 	public static function strpos($string, $substring, $offset ='')
@@ -233,6 +233,14 @@ class TextHelper
 	public static function substr($string, $start, $length = '')
 	{
 		if (is_int($length))
+return substr($string,$start,$length);
+else
+return substr($string,$start);
+}
+
+public static function mb_substr($string,$start,$length='')
+{
+if(is_int($length))
 			return mb_substr($string, $start, $length);
 		else
 			return mb_substr($string, $start);
@@ -343,15 +351,15 @@ class TextHelper
 			{
 				// Add this line to the output
 				$lines[] = $matches[1];
-				// Trim it off the input ready for the next go
-				$string = self::substr($string, self::strlen($matches[0]));
+
+$string=TextHelper::substr($string,self::strlen($matches[0]));
 			}
 			// Just take the next $width characters
 			else
 			{
-				$lines[] = self::substr($string, 0, $width);
-				// Trim it off the input ready for the next go
-				$string = self::substr($string, $width);
+$lines[]=TextHelper::substr($string,0,$width);
+
+$string=TextHelper::substr($string,$width);
 			}
 		}
 		return implode($break, $lines);

@@ -55,8 +55,6 @@ $lang['modules.php_version'] = 'PHP version';
 $lang['modules.url_rewrite_rules'] = 'URL rewrite rules';
 $lang['modules.page_admin'] = 'Administration';
 $lang['modules.modules_available'] = 'Available modules';
-$lang['modules.installed_activated_modules'] = 'Installed and activated modules';
-$lang['modules.installed_not_activated_modules'] = 'Deactivated modules';
 $lang['module.documentation'] = 'Documentation';
 
 //Module management
