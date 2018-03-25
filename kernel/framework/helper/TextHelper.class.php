@@ -277,6 +277,16 @@ class TextHelper
 		return unserialize($string);
 	}
 
+	public static function mb_unserialize($string)
+	{
+		$string = preg_replace_callback(
+		  '!s:(\d+):"(.*?)";!s', function ($matches) {
+			if (isset($matches[2])) return 's:' . strlen($matches[2]) . ':"' . $matches[2] . '";';
+		}, $string
+		);
+		return unserialize($string);
+	}
+
 	/**
 	 * @desc Checks if a string contains less than a defined number of links (used to prevent SPAM).
 	 * @param string $contents String in which you want to count the number of links
