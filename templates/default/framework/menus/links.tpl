@@ -3,7 +3,7 @@
 	# IF C_FIRST_MENU # <!-- Menu container NAV -->
 
 		# IF C_MENU_CONTAINER # <!-- Open mini-module-container -->
-		<div class="module-mini-container cssmenu-content# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF #">
+		<div id="links-menu-{ID}" class="module-mini-container cssmenu-content# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF #">
 			<div class="module-mini-top menu-vertical-{DEPTH} hidden-small-screens">
 				# IF RELATIVE_URL #
 					<a href="{REL_URL}" title="{L_TITLE}" class="sub-title">
