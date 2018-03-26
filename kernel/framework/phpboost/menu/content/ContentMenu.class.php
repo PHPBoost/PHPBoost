@@ -73,6 +73,7 @@ class ContentMenu extends Menu
 			$tpl->put_all(array(
 				'C_DISPLAY_TITLE' => $this->display_title,
 				'C_VERTICAL_BLOCK' => ($this->get_block() == Menu::BLOCK_POSITION__LEFT || $this->get_block() == Menu::BLOCK_POSITION__RIGHT),
+				'ID' => $this->id,
 				'TITLE' => $this->title,
 				'CONTENT' => FormatingHelper::second_parse(TextHelper::htmlspecialchars_decode($this->content)),
 				'C_HIDDEN_WITH_SMALL_SCREENS' => $this->hidden_with_small_screens
