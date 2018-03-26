@@ -56,6 +56,7 @@ class FeedMenu extends Menu
 
 	/**
 	 * @desc Returns the tpl to parse a feed
+	 * @param string $id The feed id 
 	 * @param string $name The feed name
 	 * @param string $block_position The indentifier block position defined in the inherit class menu
 	 * @return the tpl to parse a feed
