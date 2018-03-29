@@ -165,7 +165,7 @@ abstract class ContentFormattingParser extends AbstractParser
 			// Calcul de la sous-chaîne pour l'expression régulière
 			if ($i == ($size - 1))
 			{
-				$sub_str = substr($content, $current_index);
+				$sub_str = TextHelper::substr($content, $current_index);
 			}
 			else
 			{

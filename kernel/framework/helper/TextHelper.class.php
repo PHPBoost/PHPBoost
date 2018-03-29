@@ -51,13 +51,14 @@ class TextHelper
 
 		//Protection contre les balises html.
 		if ($html_protect)
-			{
+		{
 			$var = self::htmlspecialchars($var);
 			//While we aren't in UTF8 encoding, we have to use HTML entities to display some special chars, we accept them.
 			$var = preg_replace('`&amp;((?:#[0-9]{2,5})|(?:[a-z0-9]{2,8}));`iu', "&$1;", $var);
-			}
+		}
 
-		switch ($addslashes) {
+		switch ($addslashes)
+		{
 			case self::ADDSLASHES_FORCE:
 			default:
 				//On force l'échappement de caractères
@@ -100,12 +101,9 @@ class TextHelper
 	public static function substr_html($str, $start, $end = '')
 	{
 		if ($end == '')
-			{
-			return self::htmlspecialchars(TextHelper::substr(self::html_entity_decode($str), $start), ENT_NOQUOTES);
-			} else
-			{
-			return self::htmlspecialchars(TextHelper::substr(self::html_entity_decode($str), $start, $end), ENT_NOQUOTES);
-			}
+			return self::htmlspecialchars(self::substr(self::html_entity_decode($str), $start), ENT_NOQUOTES);
+		else
+			return self::htmlspecialchars(self::substr(self::html_entity_decode($str), $start, $end), ENT_NOQUOTES);
 	}
 
 	/**
@@ -116,7 +114,8 @@ class TextHelper
 	 */
 	public static function cut_string($string, $length)
 	{
-		if (strlen($string) <= $length) return $string;
+		if (strlen($string) <= $length)
+			return $string;
 
 		$str = mb_substr(str_replace('<br />', '<br/>', $string), 0, $length + 1, 'UTF-8');
 		return substr($str, 0, strrpos($str, ' '));
@@ -149,27 +148,24 @@ class TextHelper
 	public static function htmlspecialchars($string, $flags = null, $encoding = 'UTF-8', $double_encode = true)
 	{
 		if ($flags === null)
-			{
 			$flags = ENT_COMPAT;
-			}
+		
 		return str_replace('&amp;', '&', htmlspecialchars($string, $flags, $encoding, $double_encode));
 	}
 
 	public static function htmlspecialchars_decode($string, $flags = null)
 	{
 		if ($flags === null)
-			{
 			$flags = ENT_COMPAT;
-			}
+		
 		return htmlspecialchars_decode($string, $flags);
 	}
 
 	public static function html_entity_decode($string, $flags = null, $encoding = 'UTF-8')
 	{
 		if ($flags === null)
-			{
 			$flags = ENT_COMPAT;
-			}
+		
 		return html_entity_decode($string, $flags, $encoding);
 	}
 
@@ -202,34 +198,42 @@ class TextHelper
 
 	public static function strpos($string, $substring, $offset = '')
 	{
-		if ( ! empty($substring))
-			{
-			if (is_int($offset)) return mb_strpos($string, $substring, $offset);
-			else return mb_strpos($string, $substring);
-			}
+		if (!empty($substring))
+		{
+			if (is_int($offset))
+				return mb_strpos($string, $substring, $offset);
+			else
+				return mb_strpos($string, $substring);
+		}
 		return false;
 	}
 
 	public static function stripos($string, $substring, $offset = '')
 	{
-		if ( ! empty($substring))
-			{
-			if (is_int($offset)) return mb_stripos($string, $substring, $offset);
-			else return mb_stripos($string, $substring);
-			}
+		if (!empty($substring))
+		{
+			if (is_int($offset))
+				return mb_stripos($string, $substring, $offset);
+			else
+				return mb_stripos($string, $substring);
+		}
 		return false;
 	}
 
 	public static function substr($string, $start, $length = '')
 	{
-		if (is_int($length)) return substr($string, $start, $length);
-		else return substr($string, $start);
+		if (is_int($length))
+			return substr($string, $start, $length);
+		else
+			return substr($string, $start);
 	}
 
 	public static function mb_substr($string, $start, $length = '')
 	{
-		if (is_int($length)) return mb_substr($string, $start, $length);
-		else return mb_substr($string, $start);
+		if (is_int($length))
+			return mb_substr($string, $start, $length);
+		else
+			return mb_substr($string, $start);
 	}
 
 	public static function strrchr($string, $needle)
@@ -239,32 +243,42 @@ class TextHelper
 
 	public static function strripos($string, $needle, $offset = '')
 	{
-		if (is_int($offset)) return mb_strripos($string, $needle, $offset);
-		else return mb_strripos($string, $needle);
+		if (is_int($offset))
+			return mb_strripos($string, $needle, $offset);
+		else
+			return mb_strripos($string, $needle);
 	}
 
 	public static function strrpos($string, $needle, $offset = '')
 	{
-		if (is_int($offset)) return mb_strrpos($string, $needle, $offset);
-		else return mb_strrpos($string, $needle);
+		if (is_int($offset))
+			return mb_strrpos($string, $needle, $offset);
+		else
+			return mb_strrpos($string, $needle);
 	}
 
 	public static function strstr($string, $needle, $before_needle = '')
 	{
-		if (is_int($before_needle)) return mb_strstr($string, $needle, $before_needle);
-		else return mb_strstr($string, $needle);
+		if (is_int($before_needle))
+			return mb_strstr($string, $needle, $before_needle);
+		else
+			return mb_strstr($string, $needle);
 	}
 
 	public static function substr_count($string, $needle, $encoding = '')
 	{
-		if ($encoding != '') return mb_substr_count($string, $needle, $encoding);
-		else return mb_substr_count($string, $needle);
+		if ($encoding != '')
+			return mb_substr_count($string, $needle, $encoding);
+		else
+			return mb_substr_count($string, $needle);
 	}
 
 	public static function convert_case($string, $mode, $encoding = '')
 	{
-		if ($encoding != '') return mb_convert_case($string, $mode, $encoding);
-		else return mb_convert_case($string, $mode);
+		if ($encoding != '')
+			return mb_convert_case($string, $mode, $encoding);
+		else
+			return mb_convert_case($string, $mode);
 	}
 
 	public static function serialize($string)
@@ -279,8 +293,7 @@ class TextHelper
 
 	public static function mb_unserialize($string)
 	{
-		$string = preg_replace_callback(
-		  '!s:(\d+):"(.*?)";!s', function ($matches) {
+		$string = preg_replace_callback('!s:(\d+):"(.*?)";!s', function ($matches) {
 			if (isset($matches[2])) return 's:' . strlen($matches[2]) . ':"' . $matches[2] . '";';
 		}, $string
 		);
@@ -297,22 +310,15 @@ class TextHelper
 	public static function check_nbr_links($contents, $max_nbr, $has_html_links = false)
 	{
 		if ($max_nbr == -1)
-			{
 			return true;
-			}
 
 		if ($has_html_links)
-			{
 			$nbr_link = preg_match_all('`<a href="(?:ftp|https?)://`u', $contents, $array);
-			} else
-			{
+		else
 			$nbr_link = preg_match_all('`(?:ftp|https?)://`u', $contents, $array);
-			}
 
 		if ($nbr_link !== false && $nbr_link > $max_nbr)
-			{
 			return false;
-			}
 
 		return true;
 	}
@@ -329,26 +335,24 @@ class TextHelper
 	public static function utf8_wordwrap($string, $width = 75, $break = "\n", $cut = true)
 	{
 		$lines = array();
-		while ( ! empty($string)) {
+		while (!empty($string))
+		{
 			// We got a line with a break in it somewhere before the end
 			if (preg_match('%^(.{1,' . $width . '})(?:\s|$)%u', $string, $matches))
-				{
+			{
 				// Add this line to the output
 				$lines[] = $matches[1];
-
-				$string = TextHelper::substr($string, self::strlen($matches[0]));
-				}
+				$string = self::substr($string, self::strlen($matches[0]));
+			}
 			// Just take the next $width characters
 			else
-				{
-				$lines[] = TextHelper::substr($string, 0, $width);
-
-				$string = TextHelper::substr($string, $width);
-				}
+			{
+				$lines[] = self::substr($string, 0, $width);
+				$string = self::substr($string, $width);
+			}
 		}
 		return implode($break, $lines);
 	}
-
 }
 
 ?>
