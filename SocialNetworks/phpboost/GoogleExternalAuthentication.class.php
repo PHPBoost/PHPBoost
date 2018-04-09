@@ -47,7 +47,8 @@ class GoogleExternalAuthentication implements ExternalAuthentication
 
 	public function get_image_renderer_html()
 	{
-		return (new FileTemplate('SocialNetworks/auth_google_image_render.tpl'))->render();
+		$tpl = new FileTemplate('SocialNetworks/auth_google_image_render.tpl');
+		return $tpl->render();
 	}
 
 	public function get_authentication()

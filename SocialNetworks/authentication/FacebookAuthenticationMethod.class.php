@@ -35,7 +35,7 @@
  * @package {@package}
  */
 
-require_once PATH_TO_ROOT . '/SocialNetworks/lib/facebook/Facebook.php';
+require_once PATH_TO_ROOT . '/SocialNetworks/lib/facebook/autoload.php';
 
 class FacebookAuthenticationMethod extends AuthenticationMethod
 {
@@ -52,10 +52,11 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 		$this->querier = PersistenceContext::get_querier();
 		$config = SocialNetworksConfig::load();
 		
-		$this->facebook = new Facebook\Facebook([
+		$this->facebook = new Facebook\Facebook(array(
 			'app_id'  => $config->get_fb_app_id(),
-			'app_secret' => $config->get_fb_app_key()
-		]);
+			'app_secret' => $config->get_fb_app_key(),
+			'persistent_data_handler' => 'session'
+		));
 	}
 	
 	/**
@@ -65,7 +66,7 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 	{
 		$data = $this->get_fb_user_data();
 
-		if ($fb_id)
+		if ($data)
 		{
 			$authentication_method_columns = array(
 				'user_id' => $user_id,
@@ -107,12 +108,11 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 	{
 		$user_id = 0;
 		$data = $this->get_fb_user_data();
-		$fb_id = $data['id'];
 		
-		if ($fb_id)
+		if ($data)
 		{
 			try {
-				$user_id = $this->querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', 'WHERE method=:method AND identifier=:identifier',  array('method' => self::AUTHENTICATION_METHOD, 'identifier' => $fb_id));
+				$user_id = $this->querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', 'WHERE method=:method AND identifier=:identifier',  array('method' => self::AUTHENTICATION_METHOD, 'identifier' => $data['id']));
 			} catch (RowNotFoundException $e) {
 				
 				if (!empty($data['email']))
@@ -139,7 +139,7 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 						$user->set_email($data['email']);
 						
 						$auth_method = new FacebookAuthenticationMethod();
-						$fields_data = array('user_avatar' => 'https://graph.facebook.com/'. $fb_id .'/picture');
+						$fields_data = array('user_avatar' => 'https://graph.facebook.com/'. $data['id'] .'/picture');
 						return UserService::create($user, $auth_method, $fields_data);
 					}
 				}
@@ -162,13 +162,15 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 	private function get_fb_user_data()
 	{
 		$helper = $this->facebook->getRedirectLoginHelper();
+		$_SESSION['FBRLH_state'] = $_GET['state'];
+		$helper->getPersistentDataHandler()->set('state', $_GET['state']);
 		
-		try {
-			$accessToken = $helper->getAccessToken();
-		} catch(Exception $e) {
-			// Display connection Url if user not logged
-			AppContext::get_response()->redirect($helper->getLoginUrl(UserUrlBuilder::connect('fb')->absolute(), ['email']));
-		}
+		$accessToken = $helper->getAccessToken();
+		
+		if (!$accessToken)
+			AppContext::get_response()->redirect($helper->getLoginUrl(UserUrlBuilder::connect('fb')->absolute(), array('email')));
+		else
+			$_SESSION['facebook_access_token'] = (string)$accessToken;
 		
 		$data = array (
 			'id'	=> '',
@@ -178,14 +180,9 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 		
 		try {
 			// Returns a `Facebook\FacebookResponse` object
-			$response = $this->facebook->get('/me?fields=id,name,email', '{access-token}');
-		} catch(Facebook\Exceptions\FacebookResponseException $e) {
-			echo 'Graph returned an error: ' . $e->getMessage();
-			exit;
-		} catch(Facebook\Exceptions\FacebookSDKException $e) {
-			echo 'Facebook SDK returned an error: ' . $e->getMessage();
-			exit;
-		}
+			$response = $this->facebook->get('/me?fields=id,name,email', $accessToken);
+		} catch(Facebook\Exceptions\FacebookResponseException $e) {}
+		  catch(Facebook\Exceptions\FacebookSDKException $e) {}
 		
 		$user = $response->getGraphUser();
 		

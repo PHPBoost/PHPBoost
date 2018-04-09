@@ -122,7 +122,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 				));
 			}
 			else
-			{				
+			{
 				$tpl->put_all(array(
 					'C_USER_NOTCONNECTED' => true,
 					'C_USER_REGISTER' => UserAccountsConfig::load()->is_registration_enabled(),

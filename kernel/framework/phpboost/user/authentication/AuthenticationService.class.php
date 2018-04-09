@@ -122,7 +122,7 @@ class AuthenticationService
 				{
 					if ($external_authentication->authentication_actived())
 					{
-						self::$authentication_actived[$external_authentication->get_authentication_id()] = $external_authentication;
+						self::$external_authentications_actived[$external_authentication->get_authentication_id()] = $external_authentication;
 					}
 				}
 			}
