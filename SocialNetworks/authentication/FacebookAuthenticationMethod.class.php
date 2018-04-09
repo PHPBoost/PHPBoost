@@ -35,7 +35,7 @@
  * @package {@package}
  */
 
-require_once PATH_TO_ROOT . '/SocialNetworks/lib/facebook/facebook.php';
+require_once PATH_TO_ROOT . '/SocialNetworks/lib/facebook/Facebook.php';
 
 class FacebookAuthenticationMethod extends AuthenticationMethod
 {
@@ -52,11 +52,10 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 		$this->querier = PersistenceContext::get_querier();
 		$config = SocialNetworksConfig::load();
 		
-		$this->facebook = new Facebook(array(
-			'appId'  => $config->get_fb_app_id(),
-			'secret' => $config->get_fb_app_key(),
-			'cookie' => true
-		));
+		$this->facebook = new Facebook\Facebook([
+			'app_id'  => $config->get_fb_app_id(),
+			'app_secret' => $config->get_fb_app_key()
+		]);
 	}
 	
 	/**
@@ -66,18 +65,23 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 	{
 		$data = $this->get_fb_user_data();
 
-		$authentication_method_columns = array(
-			'user_id' => $user_id,
-			'method' => self::AUTHENTICATION_METHOD,
-			'identifier' => $data['id'],
-			'data' => TextHelper::serialize($data)
-		);
-		try {
-			$this->querier->insert(DB_TABLE_AUTHENTICATION_METHOD, $authentication_method_columns);
-		} catch (SQLQuerierException $ex) {
-			throw new IllegalArgumentException('User Id ' . $user_id .
-				' is already associated with an authentication method [' . $ex->getMessage() . ']');
+		if ($fb_id)
+		{
+			$authentication_method_columns = array(
+				'user_id' => $user_id,
+				'method' => self::AUTHENTICATION_METHOD,
+				'identifier' => $data['id'],
+				'data' => TextHelper::serialize($data)
+			);
+			try {
+				$this->querier->insert(DB_TABLE_AUTHENTICATION_METHOD, $authentication_method_columns);
+			} catch (SQLQuerierException $ex) {
+				throw new IllegalArgumentException('User Id ' . $user_id .
+					' is already associated with an authentication method [' . $ex->getMessage() . ']');
+			}
 		}
+		else
+			$this->error_msg = LangLoader::get_message('external-auth.email-not-found', 'user-common');
 	}
 
 	/**
@@ -104,42 +108,47 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 		$user_id = 0;
 		$data = $this->get_fb_user_data();
 		$fb_id = $data['id'];
-
-		try {
-			$user_id = $this->querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', 'WHERE method=:method AND identifier=:identifier',  array('method' => self::AUTHENTICATION_METHOD, 'identifier' => $fb_id));
-		} catch (RowNotFoundException $e) {
-			
-			if (!empty($data['email']))
-			{
-				$email_exists = $this->querier->row_exists(DB_TABLE_MEMBER, 'WHERE email=:email', array('email' => $data['email']));
-				if ($email_exists)
+		
+		if ($fb_id)
+		{
+			try {
+				$user_id = $this->querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', 'WHERE method=:method AND identifier=:identifier',  array('method' => self::AUTHENTICATION_METHOD, 'identifier' => $fb_id));
+			} catch (RowNotFoundException $e) {
+				
+				if (!empty($data['email']))
 				{
-					$this->error_msg = LangLoader::get_message('external-auth.account-exists', 'user-common');
-				}
-				else
-				{
-					$user = new User();
-					
-					if (empty($data['name']))
+					$email_exists = $this->querier->row_exists(DB_TABLE_MEMBER, 'WHERE email=:email', array('email' => $data['email']));
+					if ($email_exists)
 					{
-						$mail_split = explode('@', $data['email']);
-						$name = $mail_split[0];
-						$user->set_display_name(utf8_decode($name));
+						$this->error_msg = LangLoader::get_message('external-auth.account-exists', 'user-common');
 					}
 					else
-						$user->set_display_name(utf8_decode($data['name']));
-					
-					$user->set_level(User::MEMBER_LEVEL);
-					$user->set_email($data['email']);
-					
-					$auth_method = new FacebookAuthenticationMethod();
-					$fields_data = array('user_avatar' => 'https://graph.facebook.com/'. $fb_id .'/picture');
-					return UserService::create($user, $auth_method, $fields_data);
+					{
+						$user = new User();
+						
+						if (empty($data['name']))
+						{
+							$mail_split = explode('@', $data['email']);
+							$name = $mail_split[0];
+							$user->set_display_name(utf8_decode($name));
+						}
+						else
+							$user->set_display_name(utf8_decode($data['name']));
+						
+						$user->set_level(User::MEMBER_LEVEL);
+						$user->set_email($data['email']);
+						
+						$auth_method = new FacebookAuthenticationMethod();
+						$fields_data = array('user_avatar' => 'https://graph.facebook.com/'. $fb_id .'/picture');
+						return UserService::create($user, $auth_method, $fields_data);
+					}
 				}
+				else
+					$this->error_msg = LangLoader::get_message('external-auth.email-not-found', 'user-common');
 			}
-			else
-				$this->error_msg = LangLoader::get_message('external-auth.email-not-found', 'user-common');
 		}
+		else
+			$this->error_msg = LangLoader::get_message('external-auth.email-not-found', 'user-common');
 		
 		$this->check_user_bannishment($user_id);
 		
@@ -152,12 +161,42 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 
 	private function get_fb_user_data()
 	{
-		$fb_id = $this->facebook->getUser();
-		if (!$fb_id)
-		{
-			AppContext::get_response()->redirect($this->facebook->getLoginUrl(array('scope' => 'email', 'redirect_uri'  => UserUrlBuilder::connect('fb')->absolute())));
+		$helper = $this->facebook->getRedirectLoginHelper();
+		
+		try {
+			$accessToken = $helper->getAccessToken();
+		} catch(Exception $e) {
+			// Display connection Url if user not logged
+			AppContext::get_response()->redirect($helper->getLoginUrl(UserUrlBuilder::connect('fb')->absolute(), ['email']));
 		}
-		return $this->facebook->api('/me', array('fields' => 'id,name,email'));
+		
+		$data = array (
+			'id'	=> '',
+			'name'	=> '',
+			'email'	=> ''
+		);
+		
+		try {
+			// Returns a `Facebook\FacebookResponse` object
+			$response = $this->facebook->get('/me?fields=id,name,email', '{access-token}');
+		} catch(Facebook\Exceptions\FacebookResponseException $e) {
+			echo 'Graph returned an error: ' . $e->getMessage();
+			exit;
+		} catch(Facebook\Exceptions\FacebookSDKException $e) {
+			echo 'Facebook SDK returned an error: ' . $e->getMessage();
+			exit;
+		}
+		
+		$user = $response->getGraphUser();
+		
+		if ($user)
+		{
+			$data['id'] = $user->getId();
+			$data['name'] = $user->getName();
+			$data['email'] = $user->getEmail();
+		}
+		
+		return $data;
 	}
 }
 ?>
