@@ -142,7 +142,7 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 						
 						$auth_method = new FacebookAuthenticationMethod();
 						$fields_data = array('user_avatar' => 'https://graph.facebook.com/'. $data['id'] .'/picture');
-						return UserService::create($user, $auth_method, $fields_data);
+						return UserService::create($user, $auth_method, $fields_data, $data);
 					}
 				}
 				else

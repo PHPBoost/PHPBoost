@@ -151,7 +151,7 @@ class GoogleAuthenticationMethod extends AuthenticationMethod
 						
 						$auth_method = new GoogleAuthenticationMethod();
 						$fields_data = array('user_avatar' => $data['picture']);
-						return UserService::create($user, $auth_method, $fields_data);
+						return UserService::create($user, $auth_method, $fields_data, $data);
 					}
 				}
 				else
