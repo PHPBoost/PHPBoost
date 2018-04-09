@@ -147,7 +147,7 @@ class SocialNetworksConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('kernel', self::load(), 'config');
+		ConfigManager::save('social_networks', self::load(), 'config');
 	}
 }
 ?>
