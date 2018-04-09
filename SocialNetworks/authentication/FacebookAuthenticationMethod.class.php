@@ -52,6 +52,7 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 		$this->querier = PersistenceContext::get_querier();
 		$config = SocialNetworksConfig::load();
 		
+		session_start();
 		$this->facebook = new Facebook\Facebook(array(
 			'app_id'  => $config->get_fb_app_id(),
 			'app_secret' => $config->get_fb_app_key(),
@@ -62,9 +63,10 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 	/**
 	 * {@inheritDoc}
 	 */
-	public function associate($user_id)
+	public function associate($user_id, $data = array())
 	{
-		$data = $this->get_fb_user_data();
+		if (!$data)
+			$data = $this->get_fb_user_data();
 
 		if ($data)
 		{
@@ -167,10 +169,10 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 		
 		$accessToken = $helper->getAccessToken();
 		
-		if (!$accessToken)
-			AppContext::get_response()->redirect($helper->getLoginUrl(UserUrlBuilder::connect('fb')->absolute(), array('email')));
-		else
+		if ($accessToken)
 			$_SESSION['facebook_access_token'] = (string)$accessToken;
+		else
+			AppContext::get_response()->redirect($helper->getLoginUrl(UserUrlBuilder::connect('fb')->absolute(), array('email')));
 		
 		$data = array (
 			'id'	=> '',

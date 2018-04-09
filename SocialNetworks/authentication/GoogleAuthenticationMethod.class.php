@@ -70,22 +70,28 @@ class GoogleAuthenticationMethod extends AuthenticationMethod
 	/**
 	 * {@inheritDoc}
 	 */
-	public function associate($user_id)
+	public function associate($user_id, $data = array())
 	{
-		$data = $this->get_google_user_data();
+		if (!$data)
+			$data = $this->get_fb_user_data();
 
-		$authentication_method_columns = array(
-			'user_id' => $user_id,
-			'method' => self::AUTHENTICATION_METHOD,
-			'identifier' => $data['id'],
-			'data' => TextHelper::serialize($data)
-		);
-		try {
-			$this->querier->insert(DB_TABLE_AUTHENTICATION_METHOD, $authentication_method_columns);
-		} catch (SQLQuerierException $ex) {
-			throw new IllegalArgumentException('User Id ' . $user_id .
-				' is already associated with an authentication method [' . $ex->getMessage() . ']');
+		if ($data)
+		{
+			$authentication_method_columns = array(
+				'user_id' => $user_id,
+				'method' => self::AUTHENTICATION_METHOD,
+				'identifier' => $data['id'],
+				'data' => TextHelper::serialize($data)
+			);
+			try {
+				$this->querier->insert(DB_TABLE_AUTHENTICATION_METHOD, $authentication_method_columns);
+			} catch (SQLQuerierException $ex) {
+				throw new IllegalArgumentException('User Id ' . $user_id .
+					' is already associated with an authentication method [' . $ex->getMessage() . ']');
+			}
 		}
+		else
+			$this->error_msg = LangLoader::get_message('external-auth.email-not-found', 'user-common');
 	}
 
 	/**
@@ -114,41 +120,46 @@ class GoogleAuthenticationMethod extends AuthenticationMethod
 		$data = $this->get_google_user_data();
 		$google_id = $data['id'];
 
-		try {
-			$user_id = $this->querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', 'WHERE method=:method AND identifier=:identifier',  array('method' => self::AUTHENTICATION_METHOD, 'identifier' => $google_id));
-		} catch (RowNotFoundException $e) {
-			
-			if (!empty($data['email']))
-			{
-				$email_exists = $this->querier->row_exists(DB_TABLE_MEMBER, 'WHERE email=:email', array('email' => $data['email']));
-				if ($email_exists)
+		if ($data)
+		{
+			try {
+				$user_id = $this->querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', 'WHERE method=:method AND identifier=:identifier',  array('method' => self::AUTHENTICATION_METHOD, 'identifier' => $google_id));
+			} catch (RowNotFoundException $e) {
+				
+				if (!empty($data['email']))
 				{
-					$this->error_msg = LangLoader::get_message('external-auth.account-exists', 'user-common');
-				}
-				else
-				{
-					$user = new User();
-					
-					if (empty($data['name']))
+					$email_exists = $this->querier->row_exists(DB_TABLE_MEMBER, 'WHERE email=:email', array('email' => $data['email']));
+					if ($email_exists)
 					{
-						$mail_split = explode('@', $data['email']);
-						$name = $mail_split[0];
-						$user->set_display_name(utf8_decode($name));
+						$this->error_msg = LangLoader::get_message('external-auth.account-exists', 'user-common');
 					}
 					else
-						$user->set_display_name(utf8_decode($data['name']));
-					
-					$user->set_level(User::MEMBER_LEVEL);
-					$user->set_email($data['email']);
-					
-					$auth_method = new GoogleAuthenticationMethod();
-					$fields_data = array('user_avatar' => $data['picture']);
-					return UserService::create($user, $auth_method, $fields_data);
+					{
+						$user = new User();
+						
+						if (empty($data['name']))
+						{
+							$mail_split = explode('@', $data['email']);
+							$name = $mail_split[0];
+							$user->set_display_name(utf8_decode($name));
+						}
+						else
+							$user->set_display_name(utf8_decode($data['name']));
+						
+						$user->set_level(User::MEMBER_LEVEL);
+						$user->set_email($data['email']);
+						
+						$auth_method = new GoogleAuthenticationMethod();
+						$fields_data = array('user_avatar' => $data['picture']);
+						return UserService::create($user, $auth_method, $fields_data);
+					}
 				}
+				else
+					$this->error_msg = LangLoader::get_message('external-auth.email-not-found', 'user-common');
 			}
-			else
-				$this->error_msg = LangLoader::get_message('external-auth.email-not-found', 'user-common');
 		}
+		else
+			$this->error_msg = LangLoader::get_message('external-auth.email-not-found', 'user-common');
 		
 		$this->check_user_bannishment($user_id);
 		

@@ -43,7 +43,7 @@ abstract class AuthenticationMethod
 	 * @param int $user_id
 	 * @throws IllegalArgumentException if the user_id is already associate with an authentication method
 	 */
-	abstract public function associate($user_id);
+	abstract public function associate($user_id, $data = array());
 
 	/**
 	 * @desc dissociate the current authentication method with the given user_id.

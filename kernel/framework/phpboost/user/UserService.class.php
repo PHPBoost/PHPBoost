@@ -45,7 +45,7 @@ class UserService
 	 * @param User $user
 	 * @return InjectQueryResult
 	 */
-	public static function create(User $user, AuthenticationMethod $auth_method, $extended_fields = array())
+	public static function create(User $user, AuthenticationMethod $auth_method, $extended_fields = array(), $auth_method_data = array())
 	{
 		if (!self::user_exists('WHERE display_name = :display_name', array('display_name' => TextHelper::htmlspecialchars($user->get_display_name()))))
 		{
@@ -82,7 +82,7 @@ class UserService
 				$fields_data = $extended_fields;
 			}
 			
-			$auth_method->associate($user_id);
+			$auth_method->associate($user_id, $auth_method_data);
 			$fields_data['user_id'] = $user_id;
 			self::$querier->insert(DB_TABLE_MEMBER_EXTENDED_FIELDS, $fields_data);
 			
