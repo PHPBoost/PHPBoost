@@ -203,6 +203,7 @@ function XMLHttpRequest_preview(field)
 				<div id="bb-block3{FIELD}" class="bbcode-block-container" style="display: none;">
 					<ul class="bbcode-block bbcode-block-list bbcode-block-block" onmouseover="bb_hide_block('3', '{FIELD}', 1);" onmouseout="bb_hide_block('3', '{FIELD}', 0);">
 						<li><a href="" onclick="{DISABLED_BLOCK}insertbbcode('[p]', '[/p]', '{FIELD}');bb_hide_block('3', '{FIELD}', 0);return false;" title="{@bb_container} {@bb_paragraph_title}"> {@bb_paragraph} </a></li>
+						<li><a href="" onclick="{DISABLED_BLOCK}insertbbcode('[div]', '[/div]', '{FIELD}');bb_hide_block('3', '{FIELD}', 0);return false;" title="{@bb_custom_div_title}"> {@bb_custom_div} </a></li>
 						<li><a href="" onclick="{DISABLED_BLOCK}insertbbcode('[block]', '[/block]', '{FIELD}');bb_hide_block('3', '{FIELD}', 0);return false;" title="{@bb_container} {@bb_block_title}"> {@bb_block} </a></li>
 						<li><a href="" onclick="{DISABLED_BLOCK}bbcode_fieldset('{FIELD}', ${escapejs(@bb_fieldset_prompt)});return false;" title="{@bb_container} {@bb_fieldset_title}"> {@bb_fieldset} </a></li>
 						<li><a href="" onclick="{DISABLED_BLOCK}bbcode_abbr('{FIELD}', ${escapejs(@bb_abbr_prompt)});return false;" title="{@bb_container} {@bb_abbr_title}"> {@bb_abbr} </a></li>

@@ -56,7 +56,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		'webdings' => 'webdings',
 		'wingdings' => 'wingdings, \'zapf dingbats\''
 	);
-	
+
 	/**
 	 * @desc Builds a TinyMCEUnparser object
 	 */
@@ -73,14 +73,14 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	{
 		//The URL must be absolute otherwise TinyMCE won't be able to display images for instance.
 		$this->content = Url::html_convert_root_relative2absolute($this->content, $this->path_to_root);
-		
+
 		//Extracting HTML and code tags
 		$this->unparse_html(self::PICK_UP);
 		$this->unparse_code(self::PICK_UP);
-		
+
 		//Smilies
 		$this->unparse_smilies();
-		
+
 		//Remplacement des caractères de word
 		$array_str = array(
 			"\t", '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '€', '‚', 'ƒ',
@@ -116,7 +116,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 
 		//Module eventual special tags replacement
 		$this->unparse_module_special_tags();
-		
+
 		//Unparsing tags unsupported by TinyMCE, those are in BBCode
 		$this->unparse_bbcode_tags();
 		//Unparsing tags supported by TinyMCE
@@ -136,7 +136,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		$this->unparse_code(self::REIMPLANT);
 		$this->unparse_html(self::REIMPLANT);
 	}
-	
+
 	/**
 	 * @desc Replaces the image code for smilies by the text code
 	 */
@@ -144,11 +144,11 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	{
 		$this->content = preg_replace('`<img src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" class="smiley" />`iu',
 		'<img title="$2" src="' . PATH_TO_ROOT . '/images/smileys/$1" alt="$2" border="0" />', $this->content);
-		
+
 		$this->content = preg_replace('`<img src="[\./]*/images/smileys/([^"]+)" title="([^"]+)" alt="([^"]+)" class="smiley" />`iu',
 		'<img title="$2" src="' . PATH_TO_ROOT . '/images/smileys/$1" alt="$3" border="0" />', $this->content);
 	}
-	
+
 	/**
 	 * @desc Unparsed module special tags if any.
 	 * The special tags are [link] for module pages or wiki for example.
@@ -225,7 +225,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			{
 				$this->content = preg_replace('`<li( style="[^"]+")? class="formatter-li">`iu', "<li$1>", $this->content);
 			}
-			
+
 			//Trait horizontal
 			$this->content = preg_replace('`<hr(?: class="([^"]+)?")? />`iu', '<hr />', $this->content);
 
@@ -242,10 +242,10 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 
 			//Police
 			$this->content = preg_replace_callback('`<span style="font-family: ([ a-z0-9,_-]+);">(.*)</span>`isuU', array($this, 'unparse_font'), $this->content );
-			
+
 			//Image
 			$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)")?(?: style="([^"]*)")? />`isuU', array($this, 'unparse_img'), $this->content );
-			
+
 			// Feed
 			$this->content = preg_replace('`\[\[FEED([^\]]*)\]\](.+)\[\[/FEED\]\]`uU', '[feed$1]$2[/feed]', $this->content);
 	}
@@ -322,11 +322,11 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		);
 
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
-		
+
 		##Callbacks
 		//FA Icon
 		$this->content = preg_replace_callback('`<i class="fa fa-([a-z0-9-]+)( [a-z0-9- ]+)?"></i>`iuU', array($this, 'unparse_fa'), $this->content);
-		
+
 		##Remplacement des balises imbriquées
 
 		//Texte caché
@@ -406,7 +406,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		{
 			$lang = $matches[1];
 		}
-			
+
 		//L'intitulé du lien est différent du nom de l'article
 		if ($matches[2] != $matches[3])
 		{
@@ -419,7 +419,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 
 		return '[wikipedia' . (!empty($page_name) ? ' page="' . $page_name . '"' : '') . (!empty($lang) ? ' lang="' . $lang . '"' : '') . ']' . $matches[3] . '[/wikipedia]';
 	}
-	
+
 	private function unparse_img($matches)
 	{
 		$alt = !empty($matches[2]) ? $matches[2] : '';
@@ -447,7 +447,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 						break;
 				}
 			}
-			
+
 			if (!empty($style))
 			{
 				$style = ' style="' . $style . '"';
@@ -541,6 +541,43 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		return '<span style="font-size: ' . $size . ';">' . $matches[2] . '</span>';
 		else
 		return $matches[2];
+	}
+
+	/**
+	 * @desc Unparses the div tag to BBCode syntax (it doesn't exist
+	 * in TinyMCE).
+	 * @param string[] $matches The matched elements
+	 * @return string The corresponding BBCode syntax
+	 */
+	private function unparse_div($matches)
+	{
+		$id = '';
+		$class = '';
+		$style = '';
+
+		if (!empty($matches[1]))
+		{
+			$id = ' id="' . $matches[1] . '"';
+		}
+
+		if (!empty($matches[2]))
+		{
+			$class = ' class="' . $matches[2] . '"';
+		}
+
+		if (!empty($matches[3]))
+		{
+			$style = ' style="' . $matches[3] . '"';
+		}
+
+		if (!empty($id) || !empty($class) || !empty($style))
+		{
+			return '[div' . $id . $class . $style . ']' . $matches[4] . '[/div]';
+		}
+		else
+		{
+			return '[div]' . $matches[3] . '[/div]';
+		}
 	}
 }
 ?>

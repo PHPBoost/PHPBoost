@@ -51,9 +51,9 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		//Isolement du code source et du code HTML qui ne sera pas protégé
 		$this->unparse_html(self::PICK_UP);
 		$this->unparse_code(self::PICK_UP);
-		
+
 		$this->content = TextHelper::html_entity_decode($this->content);
-		
+
 		//Smilies
 		$this->unparse_smilies();
 
@@ -62,7 +62,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 
 		//Remplacement des balises simples
 		$this->unparse_simple_tags();
-		
+
 		//Unparsage de la balise table.
 		if (TextHelper::strpos($this->content, '<table class="formatter-table"') !== false)
 		{
@@ -74,7 +74,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		{
 			$this->unparse_list();
 		}
-		
+
 		$this->unparse_code(self::REIMPLANT);
 		$this->unparse_html(self::REIMPLANT);
 	}
@@ -104,7 +104,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			$this->content = preg_replace($smiley_img_url, $smiley_code, $this->content);
 		}
 	}
-	
+
 	/**
 	 * @desc Unparsed module special tags if any.
 	 * The special tags are [link] for module pages or wiki for example.
@@ -203,7 +203,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			"[moderator]$1[/moderator]",
 		);
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
-		
+
 		$array_str = array(
 			'<br />', '<strong>', '</strong>', '<em>', '</em>', '<strike>', '</strike>', '<s>', '</s>', '<p>', '</p>', '<sup>', '</sup>',
 			'<sub>', '</sub>', '<pre>', '</pre>'
@@ -212,7 +212,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			'&#13;', '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '[s]', '[/s]',  '[p]', '[/p]', '[sup]', '[/sup]', '[sub]', '[/sub]', '[pre]', '[/pre]'
 		);
 		$this->content = str_replace($array_str, $array_str_replace, $this->content);
-		
+
 		##Nested tags
 		//Quotes
 		$this->_parse_imbricated('<div class="formatter-container formatter-blockquote"><span class="formatter-title">', '`<div class="formatter-container formatter-blockquote"><span class="formatter-title">(.*) :</span><div class="formatter-content">(.*)</div></div>`isuU', '[quote]$2[/quote]', $this->content);
@@ -225,11 +225,11 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		//Block
 		$this->_parse_imbricated('<div class="formatter-container formatter-block"', '`<div class="formatter-container formatter-block">(.+)</div>`suU', '[block]$1[/block]', $this->content);
 		$this->_parse_imbricated('<div class="formatter-container formatter-block" style=', '`<div class="formatter-container formatter-block" style="([^"]+)">(.+)</div>`suU', '[block style="$1"]$2[/block]', $this->content);
-		
+
 		##Callbacks
 		//Image
 		$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)?")?(?: title="([^"]+)?")?(?: style="([^"]+)?")?(?: class="([^"]+)?")? />`iuU', array($this, 'unparse_img'), $this->content);
-		
+
 		//FA Icon
 		$this->content = preg_replace_callback('`<i class="fa fa-([a-z0-9-]+)( [a-z0-9- ]+)?"></i>`iuU', array($this, 'unparse_fa'), $this->content);
 
@@ -244,7 +244,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 
 		//Indentation
 		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`suU', '[indent]$1[/indent]', $this->content);
-		
+
 		// Feed
 		$this->content = preg_replace('`\[\[FEED([^\]]*)\]\](.+)\[\[/FEED\]\]`uU', '[feed$1]$2[/feed]', $this->content);
 	}
@@ -366,7 +366,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		{
 			$lang = $matches[1];
 		}
-			
+
 		//L'intitulé du lien est différent du nom de l'article
 		if ($matches[2] != $matches[3])
 		{
@@ -378,6 +378,42 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		}
 
 		return '[wikipedia' . (!empty($page_name) ? ' page="' . $page_name . '"' : '') . (!empty($lang) ? ' lang="' . $lang . '"' : '') . ']' . $matches[3] . '[/wikipedia]';
+	}
+
+	/**
+	 * @desc Callback which allows to unparse the div tag
+	 * @param string[] $matches Content matched by a regular expression
+	 * @return string The string in which the fieldset tag are parsed
+	 */
+	protected function unparse_div($matches)
+	{
+		$id = '';
+		$class = '';
+		$style = '';
+
+		if (!empty($matches[1]))
+		{
+			$id = ' id="' . $matches[1] . '"';
+		}
+
+		if (!empty($matches[2]))
+		{
+			$class = ' class="' . $matches[2] . '"';
+		}
+
+		if (!empty($matches[3]))
+		{
+			$style = ' style="' . $matches[3] . '"';
+		}
+
+		if (!empty($id) || !empty($class) || !empty($style))
+		{
+			return '[div' . $id . $class . $style . ']' . $matches[4] . '[/div]';
+		}
+		else
+		{
+			return '[div]' . $matches[4] . '[/div]';
+		}
 	}
 }
 ?>

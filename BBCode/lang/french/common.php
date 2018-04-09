@@ -28,7 +28,7 @@
  ####################################################
  #                     French                       #
  ####################################################
- 
+
 $lang['bb_smileys'] = 'Smileys';
 $lang['bb_bold'] = 'Texte en gras : [b]texte[/b]';
 $lang['bb_italic'] = 'Texte en italique : [i]texte[/i]';
@@ -62,10 +62,12 @@ $lang['bb_container'] = 'Conteneur';
 $lang['bb_block'] = 'Bloc';
 $lang['bb_block_title'] = 'Bloc : [block]texte[/block]';
 $lang['bb_fieldset'] = 'Bloc champs';
-$lang['bb_fieldset_title'] = 'Bloc champs : [fieldset legend=titre]texte[/fieldset]';
+$lang['bb_fieldset_title'] = 'Bloc champs : [fieldset legend="titre"]texte[/fieldset]';
 $lang['bb_fieldset_prompt'] = 'Titre du bloc champs ?';
 $lang['bb_paragraph'] = 'Paragraphe';
 $lang['bb_paragraph_title'] = 'Paragraphe : [p]texte[/p]';
+$lang['bb_custom_div'] = 'Conteneur';
+$lang['bb_custom_div_title'] = 'Conteneur personnalisable : [div id="" class="" style=""]contenu[/div]';
 $lang['bb_abbr'] = 'Abréviation';
 $lang['bb_abbr_title'] = 'Abréviation : [abbr=description]texte[/abbr]';
 $lang['bb_abbr_prompt'] = 'Définition de l\'abréviation ?';

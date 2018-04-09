@@ -186,6 +186,10 @@
 
 .bbcode-block-list li {
 	display: block;
+}
+
+.bbcode-block-list li a {
+	display: block;
 	padding: 0.228em;
 	text-align: center;
 }

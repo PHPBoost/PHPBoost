@@ -50,7 +50,7 @@ class BBCodeParser extends ContentFormattingParser
 	{
 		//On remplace les tabulations par des espaces
 		$this->content = preg_replace('`\t`suU', '    ', $this->content);
-		
+
 		//On supprime d'abord toutes les occurences de balises CODE que nous réinjecterons à la fin pour ne pas y toucher
 		if (!in_array('code', $this->forbidden_tags))
 		{
@@ -59,7 +59,7 @@ class BBCodeParser extends ContentFormattingParser
 
 		//On decode le contenu
 		$this->content = TextHelper::html_entity_decode($this->content);
-		
+
 		//On prélève tout le code HTML afin de ne pas l'altérer
 		if (!in_array('html', $this->forbidden_tags) && AppContext::get_current_user()->check_auth($this->html_auth, 1))
 		{
@@ -78,13 +78,13 @@ class BBCodeParser extends ContentFormattingParser
 		//Interprétation des sauts de ligne
 		$this->content = nl2br($this->content);
 		$this->content = str_replace(array(' <br />', ' <br>', ' <br/>'), '<br />', $this->content);
-		
+
 		//Module eventual special tags replacement
 		$this->parse_module_special_tags();
 
 		// BBCode simple tags
 		$this->parse_simple_tags();
-		
+
 		//Tableaux
 		if (!in_array('table', $this->forbidden_tags) && TextHelper::strpos($this->content, '[table') !== false)
 		{
@@ -105,7 +105,7 @@ class BBCodeParser extends ContentFormattingParser
 			$this->array_tags['html'] = array_map(create_function('$string', 'return str_replace("[html]", "<!-- START HTML -->\n", str_replace("[/html]", "\n<!-- END HTML -->", $string));'), $this->array_tags['html']);
 			$this->reimplant_tag('html');
 		}
-		
+
 		//On réinsère les fragments de code qui ont été prévelevés pour ne pas les considérer
 		if (!empty($this->array_tags['code']))
 		{
@@ -163,7 +163,7 @@ class BBCodeParser extends ContentFormattingParser
 			$this->content = preg_replace($smiley_code, $smiley_img_url, $this->content);
 		}
 	}
-	
+
 	/**
 	 * @desc Parses module special tags if any.
 	 * The special tags are [link] for module pages or wiki for example.
@@ -365,6 +365,13 @@ class BBCodeParser extends ContentFormattingParser
 			{
 				$this->parse_feed_tag();
 			}
+
+			//Div tag
+			if (!in_array('div', $this->forbidden_tags))
+			{
+				$this->_parse_imbricated('[div]', '`\[div\](.+)\[/div\]`suU', '<div>$1</div>');
+				$this->_parse_imbricated('[div', '`\[div(?: id="([^"]*)")?(?: class="([^"]*)")?(?: style="([^"]*)")?\](.+)\[/div\]`suU', '<div id="$1" class="$2" style="$3">$4</div>');
+			}
 	}
 
 	/**
@@ -530,7 +537,7 @@ class BBCodeParser extends ContentFormattingParser
 		$class = !empty($matches[4]) ? ' class="' . $matches[4] . '"' : '';
 		if (preg_match('`^image/(jpg|jpeg|bmp|gif|png|tiff|svg);base`su', $matches[5]))
 			$matches[5] = 'data:' . $matches[5];
-		
+
 		return '<img src="' . $matches[5] . '" alt="' . $alt . '"' . $class . $title . $style .' />';
 	}
 
@@ -538,7 +545,7 @@ class BBCodeParser extends ContentFormattingParser
 	protected function parse_fa($matches)
 	{
 		$fa_code = "";
-		if ( !empty($matches[1]) ) { 
+		if ( !empty($matches[1]) ) {
 			$options = str_replace('=', '', explode(',', $matches[1]));
 			foreach ($options as $option) {
 				$fa_code = $fa_code . ' ' . ltrim($option);
