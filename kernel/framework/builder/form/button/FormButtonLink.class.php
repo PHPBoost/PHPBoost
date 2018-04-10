@@ -31,18 +31,24 @@
  */
 class FormButtonLink extends AbstractFormButton
 {
-    public function __construct($label, $link, $img = '')
-    {
-    	$full_label = '';
-    	if (!empty($img))
-    	{
-    		$full_label = '<img src="' . $img . '" alt="' . $label . '" title="' . $label . '" />';
-    	}
-    	else
-    	{
-    		$full_label = $label;
-    	}
-        parent::__construct('button', $full_label, '', 'window.location=' . TextHelper::to_js_string(Url::to_rel($link)), !empty($img) ? 'image' : '');
-    }
+	public function __construct($label, $link, $img = '', $css_class = '', $data_confirmation = '')
+	{
+		$full_label = $action = '';
+		if (!empty($img))
+		{
+			$full_label = '<img src="' . $img . '" alt="' . $label . '" title="' . $label . '" />';
+		}
+		else
+		{
+			$full_label = $label;
+		}
+		
+		if ($data_confirmation)
+			$action = 'javascript:if(confirm(\'' . $data_confirmation . '\')){window.location=' . TextHelper::to_js_string(Url::to_rel($link)) . ';return false;}';
+		else
+			$action = 'window.location=' . TextHelper::to_js_string(Url::to_rel($link));
+		
+		parent::__construct('button', $full_label, '', $action, !empty($img) ? 'image' : $css_class);
+	}
 }
 ?>

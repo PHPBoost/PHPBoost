@@ -101,7 +101,7 @@ class UserUrlBuilder
 		{
 			$user_id = AppContext::get_current_user()->get_id();
 		}
-		$action = $action !== null && $authentication_method !== null ? '?' . $action . '=' . $authentication_method : '';
+		$action = $action !== null && $authentication_method !== null ? '?' . $action . '=' . $authentication_method : ($action == 'delete-account' ? '?delete-account=1' : '');
 		
 		return DispatchManager::get_url(self::$dispatcher, '/profile/'. $user_id .'/edit/' . $action);
 	}

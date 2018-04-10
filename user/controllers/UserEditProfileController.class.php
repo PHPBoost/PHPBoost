@@ -36,10 +36,6 @@ class UserEditProfileController extends AbstractController
 	 * @var FormButtonDefaultSubmit
 	 */
 	private $submit_button;
-	/**
-	 * @var FormButtonSubmit
-	 */
-	private $delete_account_button;
 	
 	private $user;
 	private $internal_auth_infos;
@@ -99,7 +95,7 @@ class UserEditProfileController extends AbstractController
 
 		if ($this->user->get_level() != User::ADMIN_LEVEL || ($this->user->get_level() == User::ADMIN_LEVEL && $this->user->get_id() != AppContext::get_current_user()->get_id()) || ($this->user->get_level() == User::ADMIN_LEVEL && $this->user->get_id() == AppContext::get_current_user()->get_id() && UserService::count_admin_members() > 1))
 		{
-			if ($this->delete_account_button->has_been_submited())
+			if ($request->has_getparameter('delete-account') && $request->get_getvalue('delete-account'))
 				$this->delete_account();
 		}
 		
@@ -284,8 +280,7 @@ class UserEditProfileController extends AbstractController
 		
 		if ($this->user->get_level() != User::ADMIN_LEVEL || ($this->user->get_level() == User::ADMIN_LEVEL && $this->user->get_id() != AppContext::get_current_user()->get_id()) || ($this->user->get_level() == User::ADMIN_LEVEL && $this->user->get_id() == AppContext::get_current_user()->get_id() && UserService::count_admin_members() > 1))
 		{
-			$this->delete_account_button = new FormButtonSubmit($this->lang['delete-account'], 'delete_account', 'return confirm(\'' . ($this->user->get_id() != AppContext::get_current_user()->get_id() ? $this->lang['delete-account.confirmation.admin'] : $this->lang['delete-account.confirmation.member']) . '\');return false;', 'delete-account warning');
-			$form->add_button($this->delete_account_button);
+			$form->add_button(new FormButtonLink($this->lang['delete-account'], UserUrlBuilder::edit_profile($this->user->get_id(), 'delete-account')->rel(), '', 'delete-account warning', ($this->user->get_id() != AppContext::get_current_user()->get_id() ? $this->lang['delete-account.confirmation.admin'] : $this->lang['delete-account.confirmation.member'])));
 		}
 
 		$this->form = $form;
