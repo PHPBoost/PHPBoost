@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                            GoogleAuthenticationMethod.class.php
+ *                            LinkedInAuthenticationMethod.class.php
  *                            -------------------
- *   begin                : November 28, 2014
- *   copyright            : (C) 2014 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
+ *   begin                : April 10, 2018
+ *   copyright            : (C) 2018 Julien BRISWALTER
+ *   email                : j1.seth@phpboost.com
  *
  ###################################################
  *
@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author Kevin MASSY <kevin.massy@phpboost.com>
+ * @author Julien BRISWALTER <j1.seth@phpboost.com>
  * @desc The AuthenticationMethod interface could be implemented in different ways to enable specifics
  * authentication mecanisms.
  * PHPBoost comes with a PHPBoostAuthenticationMethod which will be performed on the internal member
@@ -35,36 +35,28 @@
  * @package {@package}
  */
 
-session_start();
+require_once PATH_TO_ROOT . '/SocialNetworks/lib/linkedin/LinkedIn.php';
 
-require_once PATH_TO_ROOT . '/SocialNetworks/lib/google/Google_Client.php';
-require_once PATH_TO_ROOT . '/SocialNetworks/lib/google/contrib/Google_Oauth2Service.php';
-
-class GoogleAuthenticationMethod extends AuthenticationMethod
+class LinkedInAuthenticationMethod extends AuthenticationMethod
 {
-	const AUTHENTICATION_METHOD = 'google';
+	const AUTHENTICATION_METHOD = 'linkedin';
 	
 	/**
 	 * @var DBQuerier
 	 */
 	private $querier;
-	private $google_client;
-	private $google_auth;
+	private $linkedin;
 	
 	public function __construct()
 	{
 		$this->querier = PersistenceContext::get_querier();
-		$auth_config = SocialNetworksConfig::load();
-
-		$this->google_client = new Google_Client();
-		$this->google_client->setClientId($auth_config->get_google_client_id());
-		$this->google_client->setClientSecret($auth_config->get_google_client_secret());
-		$this->google_client->setRedirectUri(UserUrlBuilder::connect(self::AUTHENTICATION_METHOD)->absolute());
-		$this->google_client->setScopes(array(
-			  'https://www.googleapis.com/auth/userinfo.profile',
-			  'https://www.googleapis.com/auth/userinfo.email',
-		  ));
-		$this->google_auth = new Google_Oauth2Service($this->google_client);
+		$config = SocialNetworksConfig::load();
+		
+		$this->linkedin = new LinkedIn\LinkedIn(array(
+			'api_key'  => $config->get_linkedin_client_id(),
+			'api_secret' => $config->get_linkedin_client_secret(),
+			'callback_url' => UserUrlBuilder::connect(self::AUTHENTICATION_METHOD)->absolute()
+		));
 	}
 	
 	/**
@@ -113,7 +105,6 @@ class GoogleAuthenticationMethod extends AuthenticationMethod
 		}
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -121,7 +112,7 @@ class GoogleAuthenticationMethod extends AuthenticationMethod
 	{
 		$user_id = 0;
 		$data = $this->get_user_data();
-
+		
 		if ($data)
 		{
 			try {
@@ -151,8 +142,11 @@ class GoogleAuthenticationMethod extends AuthenticationMethod
 						$user->set_level(User::MEMBER_LEVEL);
 						$user->set_email($data['email']);
 						
-						$auth_method = new GoogleAuthenticationMethod();
-						$fields_data = array('user_avatar' => $data['picture']);
+						$auth_method = new LinkedInAuthenticationMethod();
+						if (!empty($data['picture_url']))
+							$fields_data = array('user_avatar' => $data['picture_url']);
+						else
+							$fields_data = array();
 						return UserService::create($user, $auth_method, $fields_data, $data);
 					}
 				}
@@ -174,37 +168,34 @@ class GoogleAuthenticationMethod extends AuthenticationMethod
 
 	private function get_user_data()
 	{
+		$now = new Date();
+		
+		$scope = array(
+			LinkedIn\LinkedIn::SCOPE_BASIC_PROFILE, 
+			LinkedIn\LinkedIn::SCOPE_EMAIL_ADDRESS
+		);
+		
 		$request = AppContext::get_request();
 		
-		if ($request->has_parameter('reset')) 
-		{
-			unset($_SESSION['google_token']);
-			$this->google_client->revokeToken();
-			AppContext::get_response()->redirect($this->google_client->getRedirectUri());
-		}
-
 		if ($request->has_getparameter('code')) 
-		{
-			$this->google_client->authenticate($request->get_getvalue('code'));
-			$_SESSION['google_token'] = $this->google_client->getAccessToken();
-			AppContext::get_response()->redirect($this->google_client->getRedirectUri());
-		}
+			$_SESSION['linkedin_token'] = $this->linkedin->getAccessToken($request->get_getvalue('code'));
 
-		if (isset($_SESSION['google_token'])) 
-		{
-			$this->google_client->setAccessToken($_SESSION['google_token']);
-		}
+		if (isset($_SESSION['linkedin_token'])) 
+			$this->linkedin->setAccessToken($_SESSION['linkedin_token']);
 
-		if ($this->google_client->getAccessToken()) 
+		if ($this->linkedin->hasAccessToken())
 		{
-			$user 				= $this->google_auth->userinfo->get();
-			$_SESSION['google_token'] 	= $this->google_client->getAccessToken();
-			return $user;
+			$user = $this->linkedin->get('/people/~:(id,email-address,first-name,last-name,picture-url)');
+			
+			return array(
+				'id' => $user['id'],
+				'email' => $user['emailAddress'],
+				'name' => $user['firstName'] . ' ' . $user['lastName'],
+				'picture_url' => isset($user['pictureUrl']) ? $user['pictureUrl'] : ''
+			);
 		}
 		else 
-		{
-			AppContext::get_response()->redirect($this->google_client->createAuthUrl());
-		}
+			AppContext::get_response()->redirect($this->linkedin->getLoginUrl($scope));
 	}
 }
 ?>

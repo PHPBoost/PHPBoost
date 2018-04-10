@@ -37,12 +37,12 @@ class FacebookExternalAuthentication implements ExternalAuthentication
 
 	public function get_authentication_name()
 	{
-		return LangLoader::get_message('facebook-connect', 'user-common');
+		return LangLoader::get_message('facebook-connect', 'common', 'SocialNetworks');
 	}
 
 	public function authentication_actived()
 	{
-		return SocialNetworksConfig::load()->is_fb_auth_available();
+		return SocialNetworksConfig::load()->is_facebook_auth_available();
 	}
 
 	public function get_image_renderer_html()

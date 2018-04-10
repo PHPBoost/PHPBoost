@@ -39,7 +39,7 @@ require_once PATH_TO_ROOT . '/SocialNetworks/lib/facebook/autoload.php';
 
 class FacebookAuthenticationMethod extends AuthenticationMethod
 {
-	const AUTHENTICATION_METHOD = 'fb';
+	const AUTHENTICATION_METHOD = 'facebook';
 	
 	/**
 	 * @var DBQuerier
@@ -54,8 +54,8 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 		
 		session_start();
 		$this->facebook = new Facebook\Facebook(array(
-			'app_id'  => $config->get_fb_app_id(),
-			'app_secret' => $config->get_fb_app_key(),
+			'app_id'  => $config->get_facebook_app_id(),
+			'app_secret' => $config->get_facebook_app_key(),
 			'persistent_data_handler' => 'session'
 		));
 	}
@@ -66,7 +66,7 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 	public function associate($user_id, $data = array())
 	{
 		if (!$data)
-			$data = $this->get_fb_user_data();
+			$data = $this->get_user_data();
 
 		if ($data)
 		{
@@ -92,14 +92,17 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 	 */
 	public function dissociate($user_id)
 	{
-		try {
-			$this->querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id AND method=:method', array(
-				'user_id' => $user_id,
-				'method' => self::AUTHENTICATION_METHOD
-			));
-		} catch (SQLQuerierException $ex) {
-			throw new IllegalArgumentException('User Id ' . $user_id .
-				' is already dissociated with an authentication method [' . $ex->getMessage() . ']');
+		if ($this->querier->count(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id', array('user_id' => $user_id)) > 1)
+		{
+			try {
+				$this->querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id AND method=:method', array(
+					'user_id' => $user_id,
+					'method' => self::AUTHENTICATION_METHOD
+				));
+			} catch (SQLQuerierException $ex) {
+				throw new IllegalArgumentException('User Id ' . $user_id .
+					' is already dissociated with an authentication method [' . $ex->getMessage() . ']');
+			}
 		}
 	}
 
@@ -109,7 +112,7 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 	public function authenticate()
 	{
 		$user_id = 0;
-		$data = $this->get_fb_user_data();
+		$data = $this->get_user_data();
 		
 		if ($data)
 		{
@@ -161,18 +164,24 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 		}
 	}
 
-	private function get_fb_user_data()
+	private function get_user_data()
 	{
+		$request = AppContext::get_request();
+		
 		$helper = $this->facebook->getRedirectLoginHelper();
-		$_SESSION['FBRLH_state'] = $_GET['state'];
-		$helper->getPersistentDataHandler()->set('state', $_GET['state']);
+		
+		if (!$request->has_getparameter('state'))
+			AppContext::get_response()->redirect($helper->getLoginUrl(UserUrlBuilder::connect(self::AUTHENTICATION_METHOD)->absolute(), array('email')));
+		
+		$_SESSION['FBRLH_state'] = $request->get_getvalue('state');
+		$helper->getPersistentDataHandler()->set('state', $request->get_getvalue('state'));
 		
 		$accessToken = $helper->getAccessToken();
 		
 		if ($accessToken)
 			$_SESSION['facebook_access_token'] = (string)$accessToken;
 		else
-			AppContext::get_response()->redirect($helper->getLoginUrl(UserUrlBuilder::connect('fb')->absolute(), array('email')));
+			AppContext::get_response()->redirect($helper->getLoginUrl(UserUrlBuilder::connect(self::AUTHENTICATION_METHOD)->absolute(), array('email')));
 		
 		$data = array (
 			'id'	=> '',

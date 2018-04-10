@@ -111,15 +111,10 @@ $lang['banned'] = 'Banni';
 $lang['connection'] = 'Connexion';
 $lang['autoconnect'] = 'Connexion auto';
 $lang['disconnect'] = 'Se déconnecter';
-$lang['facebook-connect'] = 'Connexion Facebook';
-$lang['google-connect'] = 'Connexion Google+';
-$lang['twitter-connect'] = 'Connexion Twitter';
 
 $lang['internal_connection'] = 'Connexion interne';
 $lang['create_internal_connection'] = 'Créer un compte interne';
 $lang['edit_internal_connection'] = 'Editer votre compte interne';
-$lang['fb_connection'] = 'Connexion par Facebook';
-$lang['google_connection'] = 'Connexion par Google';
 $lang['associate_account'] = 'Associer votre compte';
 $lang['dissociate_account'] = 'Dissocier votre compte';
 

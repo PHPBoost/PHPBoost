@@ -37,7 +37,7 @@ class GoogleExternalAuthentication implements ExternalAuthentication
 
 	public function get_authentication_name()
 	{
-		return LangLoader::get_message('google-connect', 'user-common');
+		return LangLoader::get_message('google-connect', 'common', 'SocialNetworks');
 	}
 
 	public function authentication_actived()

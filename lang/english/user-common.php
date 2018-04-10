@@ -112,15 +112,10 @@ $lang['banned'] = 'Banned';
 $lang['connection'] = 'Sign in';
 $lang['autoconnect'] = 'Auto connect';
 $lang['disconnect'] = 'Sign out';
-$lang['facebook-connect'] = 'Sign in with Facebook';
-$lang['google-connect'] = 'Sign in with Google+';
-$lang['twitter-connect'] = 'Sign in with Twitter';
 
 $lang['internal_connection'] = 'Internal connection';
 $lang['create_internal_connection'] = 'Create internal connection';
 $lang['edit_internal_connection'] = 'Edit your internal connection';
-$lang['fb_connection'] = 'Facebook connection';
-$lang['google_connection'] = 'Google connection';
 $lang['associate_account'] = 'Associate your account';
 $lang['dissociate_account'] = 'Dissociate your account';
 

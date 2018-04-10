@@ -30,53 +30,57 @@
  */
 class SocialNetworksConfig extends AbstractConfigData
 {
-	const FB_AUTH_ENABLED = 'fb_auth_enabled';
-	const FB_APP_ID       = 'fb_app_id';
-	const FB_APP_KEY      = 'fb_app_key';
+	const FACEBOOK_AUTH_ENABLED = 'facebook_auth_enabled';
+	const FACEBOOK_APP_ID       = 'facebook_app_id';
+	const FACEBOOK_APP_KEY      = 'facebook_app_key';
 
 	const GOOGLE_AUTH_ENABLED  = 'google_auth_enabled';
 	const GOOGLE_CLIENT_ID     = 'google_client_id';
 	const GOOGLE_CLIENT_SECRET = 'google_client_secret';
+
+	const LINKEDIN_AUTH_ENABLED  = 'linkedin_auth_enabled';
+	const LINKEDIN_CLIENT_ID     = 'linkedin_client_id';
+	const LINKEDIN_CLIENT_SECRET = 'linkedin_client_secret';
 	
-	public function enable_fb_auth()
+	public function enable_facebook_auth()
 	{
-		$this->set_property(self::FB_AUTH_ENABLED, true);
+		$this->set_property(self::FACEBOOK_AUTH_ENABLED, true);
 	}
 	
-	public function disable_fb_auth()
+	public function disable_facebook_auth()
 	{
-		$this->set_property(self::FB_AUTH_ENABLED, false);
+		$this->set_property(self::FACEBOOK_AUTH_ENABLED, false);
 	}
 	
-	public function is_fb_auth_enabled()
+	public function is_facebook_auth_enabled()
 	{
-		return $this->get_property(self::FB_AUTH_ENABLED);
+		return $this->get_property(self::FACEBOOK_AUTH_ENABLED);
 	}
 	
-	public function is_fb_auth_available()
+	public function is_facebook_auth_available()
 	{
 		$server_configuration = new ServerConfiguration();
-		return $this->get_property(self::FB_AUTH_ENABLED) && $server_configuration->has_curl_library();
+		return $this->get_property(self::FACEBOOK_AUTH_ENABLED) && $server_configuration->has_curl_library();
 	}
 	
-	public function get_fb_app_id()
+	public function get_facebook_app_id()
 	{
-		return $this->get_property(self::FB_APP_ID);
+		return $this->get_property(self::FACEBOOK_APP_ID);
 	}
 	
-	public function set_fb_app_id($fb_app_id)
+	public function set_facebook_app_id($facebook_app_id)
 	{
-		$this->set_property(self::FB_APP_ID, $fb_app_id);
+		$this->set_property(self::FACEBOOK_APP_ID, $facebook_app_id);
 	}
 	
-	public function get_fb_app_key()
+	public function get_facebook_app_key()
 	{
-		return $this->get_property(self::FB_APP_KEY);
+		return $this->get_property(self::FACEBOOK_APP_KEY);
 	}
 	
-	public function set_fb_app_key($fb_app_key)
+	public function set_facebook_app_key($facebook_app_key)
 	{
-		$this->set_property(self::FB_APP_KEY, $fb_app_key);
+		$this->set_property(self::FACEBOOK_APP_KEY, $facebook_app_key);
 	}
 	
 	public function enable_google_auth()
@@ -120,16 +124,61 @@ class SocialNetworksConfig extends AbstractConfigData
 		$this->set_property(self::GOOGLE_CLIENT_SECRET, $google_client_secret);
 	}
 	
+	public function enable_linkedin_auth()
+	{
+		$this->set_property(self::LINKEDIN_AUTH_ENABLED, true);
+	}
+	
+	public function disable_linkedin_auth()
+	{
+		$this->set_property(self::LINKEDIN_AUTH_ENABLED, false);
+	}
+	
+	public function is_linkedin_auth_enabled()
+	{
+		return $this->get_property(self::LINKEDIN_AUTH_ENABLED);
+	}
+	
+	public function is_linkedin_auth_available()
+	{
+		$server_configuration = new ServerConfiguration();
+		return $this->get_property(self::LINKEDIN_AUTH_ENABLED) && $server_configuration->has_curl_library();
+	}
+
+	public function get_linkedin_client_id()
+	{
+		return $this->get_property(self::LINKEDIN_CLIENT_ID);
+	}
+
+	public function set_linkedin_client_id($linkedin_client_id)
+	{
+		$this->set_property(self::LINKEDIN_CLIENT_ID, $linkedin_client_id);
+	}
+
+	public function get_linkedin_client_secret()
+	{
+		return $this->get_property(self::LINKEDIN_CLIENT_SECRET);
+	}
+
+	public function set_linkedin_client_secret($linkedin_client_secret)
+	{
+		$this->set_property(self::LINKEDIN_CLIENT_SECRET, $linkedin_client_secret);
+	}
+	
 	public function get_default_values()
 	{
 		return array(
-			self::FB_AUTH_ENABLED => false,
-			self::FB_APP_ID       => '',
-			self::FB_APP_KEY      => '',
+			self::FACEBOOK_AUTH_ENABLED => false,
+			self::FACEBOOK_APP_ID       => '',
+			self::FACEBOOK_APP_KEY      => '',
 
 			self::GOOGLE_AUTH_ENABLED  => false,
 			self::GOOGLE_CLIENT_ID     => '',
 			self::GOOGLE_CLIENT_SECRET => '',
+
+			self::LINKEDIN_AUTH_ENABLED  => false,
+			self::LINKEDIN_CLIENT_ID     => '',
+			self::LINKEDIN_CLIENT_SECRET => '',
 		);
 	}
 
