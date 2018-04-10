@@ -345,6 +345,12 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 
 		//Liens Wikipédia
 		$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link">(.*)</a>`suU', array($this, 'unparse_wikipedia_link'), $this->content);
+
+		//Div
+		while (preg_match('`<div id="([^"]*)" class="([^"]*)" style="([^"]*)">(.+)</div>`suU', $this->content))
+		{
+			$this->content = preg_replace_callback('`<div id="([^"]*)" class="([^"]*)" style="([^"]*)">(.+)</div>`suU', array($this, 'unparse_container'), $this->content);
+		}
 	}
 
 	/**
@@ -549,7 +555,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	 * @param string[] $matches The matched elements
 	 * @return string The corresponding BBCode syntax
 	 */
-	private function unparse_div($matches)
+	private function unparse_container($matches)
 	{
 		$id = '';
 		$class = '';
@@ -572,11 +578,11 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 
 		if (!empty($id) || !empty($class) || !empty($style))
 		{
-			return '[div' . $id . $class . $style . ']' . $matches[4] . '[/div]';
+			return '[container' . $id . $class . $style . ']' . $matches[4] . '[/container]';
 		}
 		else
 		{
-			return '[div]' . $matches[3] . '[/div]';
+			return '[container]' . $matches[3] . '[/container]';
 		}
 	}
 }

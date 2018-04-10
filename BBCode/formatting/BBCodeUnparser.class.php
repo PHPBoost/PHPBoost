@@ -226,6 +226,12 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		$this->_parse_imbricated('<div class="formatter-container formatter-block"', '`<div class="formatter-container formatter-block">(.+)</div>`suU', '[block]$1[/block]', $this->content);
 		$this->_parse_imbricated('<div class="formatter-container formatter-block" style=', '`<div class="formatter-container formatter-block" style="([^"]+)">(.+)</div>`suU', '[block style="$1"]$2[/block]', $this->content);
 
+		//Container
+		while (preg_match('`<div id="([^"]*)" class="([^"]*)" style="([^"]*)">(.+)</div>`suU', $this->content))
+		{
+			$this->content = preg_replace_callback('`<div id="([^"]*)" class="([^"]*)" style="([^"]*)">(.+)</div>`suU', array($this, 'unparse_container'), $this->content);
+		}
+
 		##Callbacks
 		//Image
 		$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)?")?(?: title="([^"]+)?")?(?: style="([^"]+)?")?(?: class="([^"]+)?")? />`iuU', array($this, 'unparse_img'), $this->content);
@@ -385,7 +391,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	 * @param string[] $matches Content matched by a regular expression
 	 * @return string The string in which the fieldset tag are parsed
 	 */
-	protected function unparse_div($matches)
+	protected function unparse_container($matches)
 	{
 		$id = '';
 		$class = '';
@@ -408,11 +414,11 @@ class BBCodeUnparser extends ContentFormattingUnparser
 
 		if (!empty($id) || !empty($class) || !empty($style))
 		{
-			return '[div' . $id . $class . $style . ']' . $matches[4] . '[/div]';
+			return '[container' . $id . $class . $style . ']' . $matches[4] . '[/container]';
 		}
 		else
 		{
-			return '[div]' . $matches[4] . '[/div]';
+			return '[container]' . $matches[4] . '[/container]';
 		}
 	}
 }

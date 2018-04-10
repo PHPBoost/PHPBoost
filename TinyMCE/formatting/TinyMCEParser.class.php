@@ -743,9 +743,9 @@ class TinyMCEParser extends ContentFormattingParser
 		}
 
 		//Div tag
-		if (!in_array('div', $this->forbidden_tags))
+		if (!in_array('container', $this->forbidden_tags))
 		{
-			$this->_parse_imbricated('[div', '`\[div(?: id="(.*)")?(?: class="(.*)")?(?: style="([^"]*)")?\](.+)\[/div\]`suU', '<div id="$1" class="$2" style="$3">$4</div>', $this->content);
+			$this->_parse_imbricated('[container', '`\[container(?: id="(.*)")?(?: class="(.*)")?(?: style="([^"]*)")?\](.+)\[/container\]`suU', '<div id="$1" class="$2" style="$3">$4</div>', $this->content);
 		}
 
 		//Wikipedia tag

@@ -66,8 +66,8 @@ $lang['bb_fieldset_title'] = 'Bloc champs : [fieldset legend="titre"]texte[/fiel
 $lang['bb_fieldset_prompt'] = 'Titre du bloc champs ?';
 $lang['bb_paragraph'] = 'Paragraphe';
 $lang['bb_paragraph_title'] = 'Paragraphe : [p]texte[/p]';
-$lang['bb_custom_div'] = 'Conteneur';
-$lang['bb_custom_div_title'] = 'Conteneur personnalisable : [div id="" class="" style=""]contenu[/div]';
+$lang['bb_container'] = 'Conteneur';
+$lang['bb_container_title'] = 'Conteneur personnalisable : [container id="" class="" style=""]contenu[/container]';
 $lang['bb_abbr'] = 'Abréviation';
 $lang['bb_abbr_title'] = 'Abréviation : [abbr=description]texte[/abbr]';
 $lang['bb_abbr_prompt'] = 'Définition de l\'abréviation ?';

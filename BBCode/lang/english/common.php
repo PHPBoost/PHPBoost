@@ -66,8 +66,8 @@ $lang['bb_fieldset_title'] = 'Fieldset : [fieldset legend="title"]text[/fieldset
 $lang['bb_fieldset_prompt'] = 'Legend of fieldset ?';
 $lang['bb_paragraph'] = 'Paragraph';
 $lang['bb_paragraph_title'] = 'Paragraph : [p]text[/p]';
-$lang['bb_custom_div'] = 'Container';
-$lang['bb_custom_div_title'] = 'Customizable container : [div id="" class="" style=""]contenu[/div]';
+$lang['bb_container'] = 'Container';
+$lang['bb_container_title'] = 'Customizable container : [container id="" class="" style=""]contenu[/container]';
 $lang['bb_abbr'] = 'Abbreviation';
 $lang['bb_abbr_title'] = 'Abbreviation : [abbr=description]text[/abbr]';
 $lang['bb_abbr_prompt'] = 'Definition of abbreviation ?';
