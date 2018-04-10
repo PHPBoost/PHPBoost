@@ -94,7 +94,7 @@ class AdminViewAllMembersController extends AdminController
 				new HTMLTableRowCell(UserService::get_level_lang($user->get_level())),
 				new HTMLTableRowCell(new LinkHTMLElement('mailto:' . $user->get_email(), $this->lang['email'], array(), 'basic-button smaller')),
 				new HTMLTableRowCell(Date::to_format($row['registration_date'], Date::FORMAT_DAY_MONTH_YEAR)),
-				new HTMLTableRowCell(!empty($row['last_connection_date']) && $row['approved'] ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('never', 'main')),
+				new HTMLTableRowCell(!empty($row['last_connection_date']) && (empty($row['login']) || $row['approved']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('never', 'main')),
 				new HTMLTableRowCell(empty($row['login']) || $row['approved'] ? LangLoader::get_message('yes', 'common') : LangLoader::get_message('no', 'common')),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display())
 			));
