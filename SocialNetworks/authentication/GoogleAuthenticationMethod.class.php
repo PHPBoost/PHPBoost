@@ -110,6 +110,8 @@ class GoogleAuthenticationMethod extends AuthenticationMethod
 				throw new IllegalArgumentException('User Id ' . $user_id .
 					' is already dissociated with an authentication method [' . $ex->getMessage() . ']');
 			}
+			if (isset($_SESSION['google_token']))
+				unset($_SESSION['google_token']);
 		}
 	}
 

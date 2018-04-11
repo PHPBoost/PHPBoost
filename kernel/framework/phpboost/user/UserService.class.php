@@ -97,6 +97,14 @@ class UserService
 	{
 		MemberExtendedFieldsService::delete_user_fields($user_id);
 		
+		$user_auth_types = AuthenticationService::get_user_types_authentication($user_id);
+		$activated_external_authentication = AuthenticationService::get_external_auths_activated();
+		foreach ($activated_external_authentication as $id => $authentication)
+		{
+			if (in_array($id, $user_auth_types))
+				$authentication->delete_session_token();
+		}
+		
 		$condition = 'WHERE user_id=:user_id';
 		$parameters = array('user_id' => $user_id);
 		self::$querier->delete(DB_TABLE_MEMBER, $condition, $parameters);

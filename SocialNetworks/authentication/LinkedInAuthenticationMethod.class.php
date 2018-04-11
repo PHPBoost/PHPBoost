@@ -102,6 +102,8 @@ class LinkedInAuthenticationMethod extends AuthenticationMethod
 				throw new IllegalArgumentException('User Id ' . $user_id .
 					' is already dissociated with an authentication method [' . $ex->getMessage() . ']');
 			}
+			if (isset($_SESSION['linkedin_token']))
+				unset($_SESSION['linkedin_token']);
 		}
 	}
 
@@ -171,8 +173,6 @@ class LinkedInAuthenticationMethod extends AuthenticationMethod
 
 	private function get_user_data()
 	{
-		$now = new Date();
-		
 		$scope = array(
 			LinkedIn\LinkedIn::SCOPE_BASIC_PROFILE, 
 			LinkedIn\LinkedIn::SCOPE_EMAIL_ADDRESS

@@ -52,7 +52,8 @@ class SocialNetworksExtensionPointProvider extends ExtensionPointProvider
 		return new ExternalAuthenticationsExtensionPoint(array(
 			new GoogleExternalAuthentication(), 
 			new FacebookExternalAuthentication(),
-			new LinkedInExternalAuthentication()
+			new LinkedInExternalAuthentication(),
+			new TwitterExternalAuthentication()
 		));
 	}
 

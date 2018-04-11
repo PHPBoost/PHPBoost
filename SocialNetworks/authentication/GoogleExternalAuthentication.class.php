@@ -55,5 +55,11 @@ class GoogleExternalAuthentication implements ExternalAuthentication
 	{
 		return new GoogleAuthenticationMethod();
 	}
+
+	public function delete_session_token()
+	{
+		if (isset($_SESSION['google_token']))
+			unset($_SESSION['google_token']);
+	}
 }
 ?>

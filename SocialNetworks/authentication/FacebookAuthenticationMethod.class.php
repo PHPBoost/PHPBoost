@@ -103,6 +103,8 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 				throw new IllegalArgumentException('User Id ' . $user_id .
 					' is already dissociated with an authentication method [' . $ex->getMessage() . ']');
 			}
+			if (isset($_SESSION['facebook_access_token']))
+				unset($_SESSION['facebook_access_token']);
 		}
 	}
 

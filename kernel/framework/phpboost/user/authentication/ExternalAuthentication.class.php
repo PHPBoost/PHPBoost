@@ -54,5 +54,7 @@ interface ExternalAuthentication
 	 * @return AuthenticationMethod class
 	 */
 	function get_authentication();
+
+	function delete_session_token();
 }
 ?>

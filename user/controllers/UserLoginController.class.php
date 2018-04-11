@@ -42,7 +42,6 @@ class UserLoginController extends AbstractController
 
 	private $has_error;
 	private $maintain_config;
-
 	
 	public function __construct($login_type = self::USER_LOGIN, $redirect = '')
 	{
@@ -66,18 +65,8 @@ class UserLoginController extends AbstractController
 		}
 		
 		$authenticate_type = $this->request->get_value('authenticate', false);
+		$was_already_authenticated = $authenticate_type && $authenticate_type != PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL);
 		
-		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) && (!$authenticate_type || ($authenticate_type && $authenticate_type == PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD)))
-		{
-			if (!$this->maintain_config->is_under_maintenance() || ($this->maintain_config->is_under_maintenance() && $this->maintain_config->is_authorized_in_maintenance()))
-			{
-				if ($this->request->get_value('redirect', '') || $this->redirect !== null)
-					AppContext::get_response()->redirect($this->get_redirect_url());
-				else
-					AppContext::get_response()->redirect(Environment::get_home_page());
-			}
-		}
-
 		if ($authenticate_type)
 		{
 			if ($authenticate_type == PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD)
@@ -96,6 +85,19 @@ class UserLoginController extends AbstractController
 				}
 
 				$this->authenticate(AuthenticationService::get_external_auth_activated($authenticate_type)->get_authentication(), true);
+			}
+		}
+		
+		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
+		{
+			if (!$this->maintain_config->is_under_maintenance() || ($this->maintain_config->is_under_maintenance() && $this->maintain_config->is_authorized_in_maintenance()))
+			{
+				if ($this->request->get_value('redirect', '') || $this->redirect !== null)
+					AppContext::get_response()->redirect($this->get_redirect_url());
+				else if ($was_already_authenticated)
+					AppContext::get_response()->redirect(UserUrlBuilder::edit_profile(AppContext::get_current_user()->get_id())->rel());
+				else
+					AppContext::get_response()->redirect(Environment::get_home_page());
 			}
 		}
 		
@@ -238,7 +240,7 @@ class UserLoginController extends AbstractController
 	{
 		$redirect_url = $this->request->get_value('redirect', '/');
 		$redirect = $redirect_url !== '/' ? '?redirect=' . str_replace('%2F', '/', urlencode($redirect_url)) : '';
-
+		
 		if ($this->login_type == self::ADMIN_LOGIN)
 		{
 			if ($this->redirect !== null && $this->redirect)

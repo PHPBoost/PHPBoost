@@ -55,5 +55,11 @@ class FacebookExternalAuthentication implements ExternalAuthentication
 	{
 		return new FacebookAuthenticationMethod();
 	}
+
+	public function delete_session_token()
+	{
+		if (isset($_SESSION['facebook_access_token']))
+			unset($_SESSION['facebook_access_token']);
+	}
 }
 ?>
