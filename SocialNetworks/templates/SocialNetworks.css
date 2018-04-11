@@ -26,6 +26,7 @@ a.social-connect i:before { font-size: 1.618em; }
 a.social-connect.facebook { padding: 1em 1.618em; }
 a.social-connect.google { padding: 1em; }
 a.social-connect.linkedin { padding: 1em 1.618em; }
+a.social-connect.twitter { padding: 1em 1.618em; }
 
 a.social-connect span {
 	display: none;

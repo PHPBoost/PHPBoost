@@ -148,6 +148,26 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 			$fieldset->add_field(new FormFieldPasswordEditor('linkedin_client_secret', $this->lang['authentication.config.linkedin-client-secret'], $this->config->get_linkedin_client_secret(), 
 				array('required' => true, 'hidden' => !$this->config->is_linkedin_auth_enabled())
 			));
+			
+			$fieldset->add_field(new FormFieldCheckbox('twitter_auth_enabled', $this->lang['authentication.config.twitter-auth-enabled'], $this->config->is_twitter_auth_enabled(),
+				array('description' => $this->lang['authentication.config.twitter-auth-enabled-explain'], 'events' => array('click' => '
+					if (HTMLForms.getField("twitter_auth_enabled").getValue()) { 
+						HTMLForms.getField("twitter_consumer_key").enable(); 
+						HTMLForms.getField("twitter_consumer_secret").enable(); 
+					} else { 
+						HTMLForms.getField("twitter_consumer_key").disable(); 
+						HTMLForms.getField("twitter_consumer_secret").disable(); 
+					}'
+				)
+			)));
+			
+			$fieldset->add_field(new FormFieldTextEditor('twitter_consumer_key', $this->lang['authentication.config.twitter-consumer-key'], $this->config->get_twitter_consumer_key(), 
+				array('required' => true, 'hidden' => !$this->config->is_twitter_auth_enabled())
+			));
+			
+			$fieldset->add_field(new FormFieldPasswordEditor('twitter_consumer_secret', $this->lang['authentication.config.twitter-consumer-secret'], $this->config->get_twitter_consumer_secret(), 
+				array('required' => true, 'hidden' => !$this->config->is_twitter_auth_enabled())
+			));
 		}
 		else
 		{
@@ -192,6 +212,15 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 			else
 				$this->config->disable_linkedin_auth();
 			
+			if ($this->form->get_value('twitter_auth_enabled'))
+			{
+				$this->config->enable_twitter_auth();
+				$this->config->set_twitter_consumer_key($this->form->get_value('twitter_consumer_key'));
+				$this->config->set_twitter_consumer_secret($this->form->get_value('twitter_consumer_secret'));
+			}
+			else
+				$this->config->disable_twitter_auth();
+			
 			SocialNetworksConfig::save();
 
 			$this->form->get_field_by_id('facebook_app_id')->set_hidden(!$this->config->is_facebook_auth_enabled());
@@ -200,6 +229,8 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 			$this->form->get_field_by_id('google_client_secret')->set_hidden(!$this->config->is_google_auth_enabled());
 			$this->form->get_field_by_id('linkedin_client_id')->set_hidden(!$this->config->is_linkedin_auth_enabled());
 			$this->form->get_field_by_id('linkedin_client_secret')->set_hidden(!$this->config->is_linkedin_auth_enabled());
+			$this->form->get_field_by_id('twitter_consumer_key')->set_hidden(!$this->config->is_twitter_auth_enabled());
+			$this->form->get_field_by_id('twitter_consumer_secret')->set_hidden(!$this->config->is_twitter_auth_enabled());
 		}
 	}
 }

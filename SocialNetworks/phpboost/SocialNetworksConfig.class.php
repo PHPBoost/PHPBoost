@@ -41,6 +41,10 @@ class SocialNetworksConfig extends AbstractConfigData
 	const LINKEDIN_AUTH_ENABLED  = 'linkedin_auth_enabled';
 	const LINKEDIN_CLIENT_ID     = 'linkedin_client_id';
 	const LINKEDIN_CLIENT_SECRET = 'linkedin_client_secret';
+
+	const TWITTER_AUTH_ENABLED    = 'twitter_auth_enabled';
+	const TWITTER_CONSUMER_KEY    = 'twitter_consumer_key';
+	const TWITTER_CONSUMER_SECRET = 'twitter_consumer_secret';
 	
 	public function enable_facebook_auth()
 	{
@@ -165,6 +169,47 @@ class SocialNetworksConfig extends AbstractConfigData
 		$this->set_property(self::LINKEDIN_CLIENT_SECRET, $linkedin_client_secret);
 	}
 	
+	public function enable_twitter_auth()
+	{
+		$this->set_property(self::TWITTER_AUTH_ENABLED, true);
+	}
+	
+	public function disable_twitter_auth()
+	{
+		$this->set_property(self::TWITTER_AUTH_ENABLED, false);
+	}
+	
+	public function is_twitter_auth_enabled()
+	{
+		return $this->get_property(self::TWITTER_AUTH_ENABLED);
+	}
+	
+	public function is_twitter_auth_available()
+	{
+		$server_configuration = new ServerConfiguration();
+		return $this->get_property(self::TWITTER_AUTH_ENABLED) && $server_configuration->has_curl_library();
+	}
+
+	public function get_twitter_consumer_key()
+	{
+		return $this->get_property(self::TWITTER_CONSUMER_KEY);
+	}
+
+	public function set_twitter_consumer_key($twitter_consumer_key)
+	{
+		$this->set_property(self::TWITTER_CONSUMER_KEY, $twitter_consumer_key);
+	}
+
+	public function get_twitter_consumer_secret()
+	{
+		return $this->get_property(self::TWITTER_CONSUMER_SECRET);
+	}
+
+	public function set_twitter_consumer_secret($twitter_consumer_secret)
+	{
+		$this->set_property(self::TWITTER_CONSUMER_SECRET, $twitter_consumer_secret);
+	}
+	
 	public function get_default_values()
 	{
 		return array(
@@ -179,6 +224,10 @@ class SocialNetworksConfig extends AbstractConfigData
 			self::LINKEDIN_AUTH_ENABLED  => false,
 			self::LINKEDIN_CLIENT_ID     => '',
 			self::LINKEDIN_CLIENT_SECRET => '',
+
+			self::TWITTER_AUTH_ENABLED    => false,
+			self::TWITTER_CONSUMER_KEY    => '',
+			self::TWITTER_CONSUMER_SECRET => '',
 		);
 	}
 
