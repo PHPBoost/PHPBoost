@@ -125,7 +125,13 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 					$email_exists = $this->querier->row_exists(DB_TABLE_MEMBER, 'WHERE email=:email', array('email' => $data['email']));
 					if ($email_exists)
 					{
-						$this->error_msg = LangLoader::get_message('external-auth.account-exists', 'user-common');
+						if (!AppContext::get_current_user()->is_guest())
+						{
+							$user_id = $this->querier->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE email=:email',  array('email' => $data['email']));
+							$this->associate($user_id, $data);
+						}
+						else
+							$this->error_msg = LangLoader::get_message('external-auth.account-exists', 'user-common');
 					}
 					else
 					{

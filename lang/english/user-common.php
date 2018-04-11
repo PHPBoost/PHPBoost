@@ -44,7 +44,7 @@ $lang['member-management'] = 'Member management';
 $lang['punishment-management'] = 'Punishments management';
 
 $lang['profile.edit.password.error'] = 'The new password is not correct';
-$lang['external-auth.account-exists'] = 'To associate your account with external connection you must connect to the site and go to edit your profile';
+$lang['external-auth.account-exists'] = 'You already have an account. To use this connection method please connect to the site and go to edit your profile';
 $lang['external-auth.email-not-found'] = 'The email address of your account could not be recovered, your account can not be associated.';
 
 //Contribution

@@ -65,7 +65,9 @@ class UserLoginController extends AbstractController
 			AppContext::get_response()->redirect($this->get_redirect_url());
 		}
 		
-		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
+		$authenticate_type = $this->request->get_value('authenticate', false);
+		
+		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) && (!$authenticate_type || ($authenticate_type && $authenticate_type == PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD)))
 		{
 			if (!$this->maintain_config->is_under_maintenance() || ($this->maintain_config->is_under_maintenance() && $this->maintain_config->is_authorized_in_maintenance()))
 			{
@@ -76,7 +78,6 @@ class UserLoginController extends AbstractController
 			}
 		}
 
-		$authenticate_type = $this->request->get_value('authenticate', false);
 		if ($authenticate_type)
 		{
 			if ($authenticate_type == PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD)
