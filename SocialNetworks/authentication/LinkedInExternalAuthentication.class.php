@@ -55,5 +55,11 @@ class LinkedInExternalAuthentication implements ExternalAuthentication
 	{
 		return new LinkedInAuthenticationMethod();
 	}
+
+	public function delete_session_token()
+	{
+		if (isset($_SESSION['linkedin_token']))
+			unset($_SESSION['linkedin_token']);
+	}
 }
 ?>
