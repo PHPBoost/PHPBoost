@@ -116,7 +116,9 @@ $lang['internal_connection'] = 'Connexion interne';
 $lang['create_internal_connection'] = 'Créer un compte interne';
 $lang['edit_internal_connection'] = 'Editer votre compte interne';
 $lang['associate_account'] = 'Associer votre compte';
+$lang['associate_account_admin'] = 'Associer un compte';
 $lang['dissociate_account'] = 'Dissocier votre compte';
+$lang['dissociate_account_admin'] = 'Dissocier le compte';
 
 $lang['share'] = 'Partager';
 $lang['share_on'] = 'Partager sur';
