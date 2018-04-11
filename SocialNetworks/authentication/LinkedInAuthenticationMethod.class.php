@@ -102,8 +102,6 @@ class LinkedInAuthenticationMethod extends AuthenticationMethod
 				throw new IllegalArgumentException('User Id ' . $user_id .
 					' is already dissociated with an authentication method [' . $ex->getMessage() . ']');
 			}
-			if (isset($_SESSION['linkedin_token']))
-				unset($_SESSION['linkedin_token']);
 		}
 	}
 
@@ -181,10 +179,7 @@ class LinkedInAuthenticationMethod extends AuthenticationMethod
 		$request = AppContext::get_request();
 		
 		if ($request->has_getparameter('code')) 
-			$_SESSION['linkedin_token'] = $this->linkedin->getAccessToken($request->get_getvalue('code'));
-
-		if (isset($_SESSION['linkedin_token'])) 
-			$this->linkedin->setAccessToken($_SESSION['linkedin_token']);
+			$this->linkedin->setAccessToken($this->linkedin->getAccessToken($request->get_getvalue('code')));
 
 		if ($this->linkedin->hasAccessToken())
 		{
