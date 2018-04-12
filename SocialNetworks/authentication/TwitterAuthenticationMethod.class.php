@@ -172,12 +172,11 @@ class TwitterAuthenticationMethod extends AuthenticationMethod
 		if (!isset($_SESSION['twitter_oauth_token']) || empty($_SESSION['twitter_oauth_token']))
 		{
 			$connection = new TwitterOAuth($config->get_twitter_consumer_key(), $config->get_twitter_consumer_secret());
-			$request_token = $this->twitter->getRequestToken(UserUrlBuilder::connect(self::AUTHENTICATION_METHOD)->absolute());
+			$request_token = $connection->oauth("oauth/request_token", array("oauth_callback" => UserUrlBuilder::connect(self::AUTHENTICATION_METHOD)->absolute()));
 			$_SESSION['twitter_oauth_token'] = $token = $request_token['oauth_token'];
 			$_SESSION['twitter_oauth_token_secret'] = $request_token['oauth_token_secret'];
 			
-			if ($connection->http_code == 200)
-				AppContext::get_response()->redirect($connection->getAuthorizeURL($token));
+			AppContext::get_response()->redirect($connection->url("oauth/authorize", array("oauth_token" => $request_token['oauth_token'])));
 		}
 		else
 		{
@@ -189,8 +188,8 @@ class TwitterAuthenticationMethod extends AuthenticationMethod
 			else if ($request->has_getparameter('oauth_token') && $_SESSION['twitter_oauth_token'] === $request->get_getvalue('oauth_token'))
 			{
 				$connection = new TwitterOAuth($config->get_twitter_consumer_key(), $config->get_twitter_consumer_secret(), $_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
-			
-				$_SESSION['twitter_token'] = $connection->getAccessToken($request->get_getvalue('oauth_verifier'));
+				
+				$_SESSION['twitter_token'] = $connection->oauth("oauth/access_token", array("oauth_verifier" => $request->get_getvalue('oauth_verifier')));
 				unset($_SESSION['twitter_oauth_token']);
 				unset($_SESSION['twitter_oauth_token_secret']);
 			}

@@ -66,5 +66,6 @@ $lang['authentication.config.twitter-consumer-secret'] = 'Twitter Consumer Secre
 $lang['facebook-connect'] = 'Sign in with Facebook';
 $lang['google-connect'] = 'Sign in with Google+';
 $lang['linkedin-connect'] = 'Sign in with LinkedIn';
+$lang['twitter-connect'] = 'Sign in with Twitter';
 
 ?>
