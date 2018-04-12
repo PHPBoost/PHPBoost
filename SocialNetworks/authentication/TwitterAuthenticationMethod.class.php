@@ -169,44 +169,42 @@ class TwitterAuthenticationMethod extends AuthenticationMethod
 		$request = AppContext::get_request();
 		$config = SocialNetworksConfig::load();
 		
-		if (!isset($_SESSION['twitter_oauth_token']) || empty($_SESSION['twitter_oauth_token']))
+		if (!empty($_SESSION['twitter_token']) && !empty($_SESSION['twitter_token']['oauth_token']) && !empty($_SESSION['twitter_token']['oauth_token_secret']))
 		{
-			$connection = new TwitterOAuth($config->get_twitter_consumer_key(), $config->get_twitter_consumer_secret());
-			$request_token = $connection->oauth("oauth/request_token", array("oauth_callback" => UserUrlBuilder::connect(self::AUTHENTICATION_METHOD)->absolute()));
-			$_SESSION['twitter_oauth_token'] = $token = $request_token['oauth_token'];
-			$_SESSION['twitter_oauth_token_secret'] = $request_token['oauth_token_secret'];
-			
-			AppContext::get_response()->redirect($connection->url("oauth/authorize", array("oauth_token" => $request_token['oauth_token'])));
+			$access_token = $_SESSION['twitter_token'];
+			$connection = new TwitterOAuth($config->get_twitter_consumer_key(), $config->get_twitter_consumer_secret(), $access_token['oauth_token'], $access_token['oauth_token_secret']);
 		}
 		else
 		{
-			if (!empty($_SESSION['twitter_token']) && !empty($_SESSION['twitter_token']['oauth_token']) && !empty($_SESSION['twitter_token']['oauth_token_secret']))
+			if ($request->has_getparameter('oauth_token') && $_SESSION['twitter_oauth_token'] === $request->get_getvalue('oauth_token'))
 			{
-				$access_token = $_SESSION['twitter_token'];
-				$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token['oauth_token'], $access_token['oauth_token_secret']);
-			}
-			else if ($request->has_getparameter('oauth_token') && $_SESSION['twitter_oauth_token'] === $request->get_getvalue('oauth_token'))
-			{
-				$connection = new TwitterOAuth($config->get_twitter_consumer_key(), $config->get_twitter_consumer_secret(), $_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
+				$connection = new TwitterOAuth($config->get_twitter_consumer_key(), $config->get_twitter_consumer_secret(), $_SESSION['twitter_oauth_token'], $_SESSION['twitter_oauth_token_secret']);
 				
-				$_SESSION['twitter_token'] = $connection->oauth("oauth/access_token", array("oauth_verifier" => $request->get_getvalue('oauth_verifier')));
 				unset($_SESSION['twitter_oauth_token']);
 				unset($_SESSION['twitter_oauth_token_secret']);
-			}
-			
-			if (!empty($_SESSION['twitter_token']))
-			{
-				$user = $connection->get('account/verify_credentials', array('include_email' => 'true'));
+				$_SESSION['twitter_token'] = $access_token = $connection->oauth('oauth/access_token', array('oauth_verifier' => $request->get_getvalue('oauth_verifier')));
 				
-				return array(
-					'id' => $user->id,
-					'email' => $user->email,
-					'name' => $user->name,
-					'picture_url' => $user->profile_image_url_https
-				);
+				$connection = new TwitterOAuth($config->get_twitter_consumer_key(), $config->get_twitter_consumer_secret(), $access_token['oauth_token'], $access_token['oauth_token_secret']);
 			}
-			return array();
+			else
+			{
+				$connection = new TwitterOAuth($config->get_twitter_consumer_key(), $config->get_twitter_consumer_secret());
+				$request_token = $connection->oauth('oauth/request_token', array('oauth_callback' => UserUrlBuilder::connect(self::AUTHENTICATION_METHOD)->absolute()));
+				$_SESSION['twitter_oauth_token'] = $request_token['oauth_token'];
+				$_SESSION['twitter_oauth_token_secret'] = $request_token['oauth_token_secret'];
+				
+				AppContext::get_response()->redirect($connection->url('oauth/authorize', array('oauth_token' => $request_token['oauth_token'])));
+			}
 		}
+		
+		$user = $connection->get('account/verify_credentials', array('include_email' => 'true'));
+		
+		return array(
+			'id' => $user->id,
+			'email' => $user->email,
+			'name' => $user->name,
+			'picture_url' => $user->profile_image_url_https
+		);
 	}
 }
 ?>
