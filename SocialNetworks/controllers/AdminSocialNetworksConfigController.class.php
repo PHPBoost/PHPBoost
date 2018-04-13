@@ -46,6 +46,7 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 	 */
 	private $config;
 	private $server_configuration;
+	private $social_networks;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -78,6 +79,9 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 		$this->lang = LangLoader::get('common', 'SocialNetworks');
 		$this->config = SocialNetworksConfig::load();
 		$this->server_configuration = new ServerConfiguration();
+		
+		$social_networks_list = new SocialNetworksList();
+		$this->social_networks = $social_networks_list->get_social_networks_list();
 	}
 	
 	private function build_form()
@@ -89,85 +93,33 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 		
 		if ($this->server_configuration->has_curl_library())
 		{
-			$fieldset->add_field(new FormFieldCheckbox('facebook_auth_enabled', $this->lang['authentication.config.facebook-auth-enabled'], $this->config->is_facebook_auth_enabled(),
-				array('description' => $this->lang['authentication.config.facebook-auth-enabled-explain'], 'events' => array('click' => '
-					if (HTMLForms.getField("facebook_auth_enabled").getValue()) { 
-						HTMLForms.getField("facebook_app_id").enable(); 
-						HTMLForms.getField("facebook_app_key").enable(); 
-					} else { 
-						HTMLForms.getField("facebook_app_id").disable(); 
-						HTMLForms.getField("facebook_app_key").disable(); 
-					}'
-				)
-			)));
-			
-			$fieldset->add_field(new FormFieldTextEditor('facebook_app_id', $this->lang['authentication.config.facebook-app-id'], $this->config->get_facebook_app_id(), 
-				array('required' => true, 'hidden' => !$this->config->is_facebook_auth_enabled())
-			));
-			
-			$fieldset->add_field(new FormFieldPasswordEditor('facebook_app_key', $this->lang['authentication.config.facebook-app-key'], $this->config->get_facebook_app_key(), 
-				array('required' => true, 'hidden' => !$this->config->is_facebook_auth_enabled())
-			));
-			
-			$fieldset->add_field(new FormFieldCheckbox('google_auth_enabled', $this->lang['authentication.config.google-auth-enabled'], $this->config->is_google_auth_enabled(),
-				array('description' => $this->lang['authentication.config.google-auth-enabled-explain'], 'events' => array('click' => '
-					if (HTMLForms.getField("google_auth_enabled").getValue()) { 
-						HTMLForms.getField("google_client_id").enable(); 
-						HTMLForms.getField("google_client_secret").enable(); 
-					} else { 
-						HTMLForms.getField("google_client_id").disable(); 
-						HTMLForms.getField("google_client_secret").disable(); 
-					}'
-				)
-			)));
-			
-			$fieldset->add_field(new FormFieldTextEditor('google_client_id', $this->lang['authentication.config.google-client-id'], $this->config->get_google_client_id(), 
-				array('required' => true, 'hidden' => !$this->config->is_google_auth_enabled())
-			));
-			
-			$fieldset->add_field(new FormFieldPasswordEditor('google_client_secret', $this->lang['authentication.config.google-client-secret'], $this->config->get_google_client_secret(), 
-				array('required' => true, 'hidden' => !$this->config->is_google_auth_enabled())
-			));
-			
-			$fieldset->add_field(new FormFieldCheckbox('linkedin_auth_enabled', $this->lang['authentication.config.linkedin-auth-enabled'], $this->config->is_linkedin_auth_enabled(),
-				array('description' => $this->lang['authentication.config.linkedin-auth-enabled-explain'], 'events' => array('click' => '
-					if (HTMLForms.getField("linkedin_auth_enabled").getValue()) { 
-						HTMLForms.getField("linkedin_client_id").enable(); 
-						HTMLForms.getField("linkedin_client_secret").enable(); 
-					} else { 
-						HTMLForms.getField("linkedin_client_id").disable(); 
-						HTMLForms.getField("linkedin_client_secret").disable(); 
-					}'
-				)
-			)));
-			
-			$fieldset->add_field(new FormFieldTextEditor('linkedin_client_id', $this->lang['authentication.config.linkedin-client-id'], $this->config->get_linkedin_client_id(), 
-				array('required' => true, 'hidden' => !$this->config->is_linkedin_auth_enabled())
-			));
-			
-			$fieldset->add_field(new FormFieldPasswordEditor('linkedin_client_secret', $this->lang['authentication.config.linkedin-client-secret'], $this->config->get_linkedin_client_secret(), 
-				array('required' => true, 'hidden' => !$this->config->is_linkedin_auth_enabled())
-			));
-			
-			$fieldset->add_field(new FormFieldCheckbox('twitter_auth_enabled', $this->lang['authentication.config.twitter-auth-enabled'], $this->config->is_twitter_auth_enabled(),
-				array('description' => $this->lang['authentication.config.twitter-auth-enabled-explain'], 'events' => array('click' => '
-					if (HTMLForms.getField("twitter_auth_enabled").getValue()) { 
-						HTMLForms.getField("twitter_consumer_key").enable(); 
-						HTMLForms.getField("twitter_consumer_secret").enable(); 
-					} else { 
-						HTMLForms.getField("twitter_consumer_key").disable(); 
-						HTMLForms.getField("twitter_consumer_secret").disable(); 
-					}'
-				)
-			)));
-			
-			$fieldset->add_field(new FormFieldTextEditor('twitter_consumer_key', $this->lang['authentication.config.twitter-consumer-key'], $this->config->get_twitter_consumer_key(), 
-				array('required' => true, 'hidden' => !$this->config->is_twitter_auth_enabled())
-			));
-			
-			$fieldset->add_field(new FormFieldPasswordEditor('twitter_consumer_secret', $this->lang['authentication.config.twitter-consumer-secret'], $this->config->get_twitter_consumer_secret(), 
-				array('required' => true, 'hidden' => !$this->config->is_twitter_auth_enabled())
-			));
+			foreach ($this->social_networks as $id => $social_network)
+			{
+				$sn = new $social_network();
+				
+				if ($sn->has_authentication())
+				{
+					$fieldset->add_field(new FormFieldCheckbox($id . '_authentication_enabled', StringVars::replace_vars($this->lang['authentication.config.authentication-enabled'], array('name' => $sn->get_name())), $this->config->is_authentication_enabled($id),
+						array('description' => StringVars::replace_vars($this->lang['authentication.config.authentication-enabled-explain'], array('identifiers_creation_url' => $sn->get_identifiers_creation_url(), 'callback_url' => UserUrlBuilder::connect($id)->absolute())), 'events' => array('click' => '
+							if (HTMLForms.getField("' . $id . '_authentication_enabled").getValue()) { 
+								HTMLForms.getField("' . $id . '_client_id").enable(); 
+								HTMLForms.getField("' . $id . '_client_secret").enable(); 
+							} else { 
+								HTMLForms.getField("' . $id . '_client_id").disable(); 
+								HTMLForms.getField("' . $id . '_client_secret").disable(); 
+							}'
+						)
+					)));
+					
+					$fieldset->add_field(new FormFieldTextEditor($id . '_client_id', StringVars::replace_vars($this->lang['authentication.config.client-id'], array('name' => $sn->get_name())), $this->config->get_client_id($id), 
+						array('required' => true, 'hidden' => !$this->config->is_authentication_enabled($id))
+					));
+					
+					$fieldset->add_field(new FormFieldPasswordEditor($id . '_client_secret', StringVars::replace_vars($this->lang['authentication.config.client-secret'], array('name' => $sn->get_name())), $this->config->get_client_secret($id), 
+						array('required' => true, 'hidden' => !$this->config->is_authentication_enabled($id))
+					));
+				}
+			}
 		}
 		else
 		{
@@ -185,52 +137,41 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 	{
 		if ($this->server_configuration->has_curl_library())
 		{
-			if ($this->form->get_value('facebook_auth_enabled'))
-			{
-				$this->config->enable_facebook_auth();
-				$this->config->set_facebook_app_id($this->form->get_value('facebook_app_id'));
-				$this->config->set_facebook_app_key($this->form->get_value('facebook_app_key'));
-			}
-			else
-				$this->config->disable_facebook_auth();
+			$authentications_enabled = array();
+			$client_ids = array();
+			$client_secrets = array();
 			
-			if ($this->form->get_value('google_auth_enabled'))
+			foreach ($this->social_networks as $id => $social_network)
 			{
-				$this->config->enable_google_auth();
-				$this->config->set_google_client_id($this->form->get_value('google_client_id'));
-				$this->config->set_google_client_secret($this->form->get_value('google_client_secret'));
+				$sn = new $social_network();
+				
+				if ($sn->has_authentication())
+				{
+					if ($this->form->get_value($id . '_authentication_enabled'))
+					{
+						$authentications_enabled[] = $id;
+						$client_ids[$id] = $this->form->get_value($id . '_client_id');
+						$client_secrets[$id] = $this->form->get_value($id . '_client_secret');
+					}
+				}
 			}
-			else
-				$this->config->disable_google_auth();
 			
-			if ($this->form->get_value('linkedin_auth_enabled'))
-			{
-				$this->config->enable_linkedin_auth();
-				$this->config->set_linkedin_client_id($this->form->get_value('linkedin_client_id'));
-				$this->config->set_linkedin_client_secret($this->form->get_value('linkedin_client_secret'));
-			}
-			else
-				$this->config->disable_linkedin_auth();
-			
-			if ($this->form->get_value('twitter_auth_enabled'))
-			{
-				$this->config->enable_twitter_auth();
-				$this->config->set_twitter_consumer_key($this->form->get_value('twitter_consumer_key'));
-				$this->config->set_twitter_consumer_secret($this->form->get_value('twitter_consumer_secret'));
-			}
-			else
-				$this->config->disable_twitter_auth();
+			$this->config->set_enabled_authentications($authentications_enabled);
+			$this->config->set_client_ids($client_ids);
+			$this->config->set_client_secrets($client_secrets);
 			
 			SocialNetworksConfig::save();
-
-			$this->form->get_field_by_id('facebook_app_id')->set_hidden(!$this->config->is_facebook_auth_enabled());
-			$this->form->get_field_by_id('facebook_app_key')->set_hidden(!$this->config->is_facebook_auth_enabled());
-			$this->form->get_field_by_id('google_client_id')->set_hidden(!$this->config->is_google_auth_enabled());
-			$this->form->get_field_by_id('google_client_secret')->set_hidden(!$this->config->is_google_auth_enabled());
-			$this->form->get_field_by_id('linkedin_client_id')->set_hidden(!$this->config->is_linkedin_auth_enabled());
-			$this->form->get_field_by_id('linkedin_client_secret')->set_hidden(!$this->config->is_linkedin_auth_enabled());
-			$this->form->get_field_by_id('twitter_consumer_key')->set_hidden(!$this->config->is_twitter_auth_enabled());
-			$this->form->get_field_by_id('twitter_consumer_secret')->set_hidden(!$this->config->is_twitter_auth_enabled());
+			
+			foreach ($this->social_networks as $id => $social_network)
+			{
+				$sn = new $social_network();
+				
+				if ($sn->has_authentication())
+				{
+					$this->form->get_field_by_id($id . '_client_id')->set_hidden(!$this->config->is_authentication_enabled($id));
+					$this->form->get_field_by_id($id . '_client_secret')->set_hidden(!$this->config->is_authentication_enabled($id));
+				}
+			}
 		}
 	}
 }

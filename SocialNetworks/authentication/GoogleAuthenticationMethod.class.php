@@ -42,8 +42,6 @@ require_once PATH_TO_ROOT . '/SocialNetworks/lib/google/contrib/Google_Oauth2Ser
 
 class GoogleAuthenticationMethod extends AuthenticationMethod
 {
-	const AUTHENTICATION_METHOD = 'google';
-	
 	/**
 	 * @var DBQuerier
 	 */
@@ -54,12 +52,12 @@ class GoogleAuthenticationMethod extends AuthenticationMethod
 	public function __construct()
 	{
 		$this->querier = PersistenceContext::get_querier();
-		$auth_config = SocialNetworksConfig::load();
+		$config = SocialNetworksConfig::load();
 
 		$this->google_client = new Google_Client();
-		$this->google_client->setClientId($auth_config->get_google_client_id());
-		$this->google_client->setClientSecret($auth_config->get_google_client_secret());
-		$this->google_client->setRedirectUri(UserUrlBuilder::connect(self::AUTHENTICATION_METHOD)->absolute());
+		$this->google_client->setClientId($config->get_client_id(GoogleSocialNetwork::SOCIAL_NETWORK_ID));
+		$this->google_client->setClientSecret($config->get_client_secret(GoogleSocialNetwork::SOCIAL_NETWORK_ID));
+		$this->google_client->setRedirectUri(UserUrlBuilder::connect(GoogleSocialNetwork::SOCIAL_NETWORK_ID)->absolute());
 		$this->google_client->setScopes(array(
 			  'https://www.googleapis.com/auth/userinfo.profile',
 			  'https://www.googleapis.com/auth/userinfo.email',
@@ -79,7 +77,7 @@ class GoogleAuthenticationMethod extends AuthenticationMethod
 		{
 			$authentication_method_columns = array(
 				'user_id' => $user_id,
-				'method' => self::AUTHENTICATION_METHOD,
+				'method' => GoogleSocialNetwork::SOCIAL_NETWORK_ID,
 				'identifier' => $data['id'],
 				'data' => TextHelper::serialize($data)
 			);
@@ -104,7 +102,7 @@ class GoogleAuthenticationMethod extends AuthenticationMethod
 			try {
 				$this->querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id AND method=:method', array(
 					'user_id' => $user_id,
-					'method' => self::AUTHENTICATION_METHOD
+					'method' => GoogleSocialNetwork::SOCIAL_NETWORK_ID
 				));
 			} catch (SQLQuerierException $ex) {
 				throw new IllegalArgumentException('User Id ' . $user_id .
@@ -127,7 +125,7 @@ class GoogleAuthenticationMethod extends AuthenticationMethod
 		if ($data)
 		{
 			try {
-				$user_id = $this->querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', 'WHERE method=:method AND identifier=:identifier',  array('method' => self::AUTHENTICATION_METHOD, 'identifier' => $data['id']));
+				$user_id = $this->querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', 'WHERE method=:method AND identifier=:identifier',  array('method' => GoogleSocialNetwork::SOCIAL_NETWORK_ID, 'identifier' => $data['id']));
 			} catch (RowNotFoundException $e) {
 				
 				if (!empty($data['email']))

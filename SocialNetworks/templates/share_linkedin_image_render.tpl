@@ -1,1 +1,0 @@
-<i class="fa fa-fw fa-linkedin"></i>

@@ -40,8 +40,6 @@ use Twitter\TwitterOAuth;
 
 class TwitterAuthenticationMethod extends AuthenticationMethod
 {
-	const AUTHENTICATION_METHOD = 'twitter';
-	
 	/**
 	 * @var DBQuerier
 	 */
@@ -64,7 +62,7 @@ class TwitterAuthenticationMethod extends AuthenticationMethod
 		{
 			$authentication_method_columns = array(
 				'user_id' => $user_id,
-				'method' => self::AUTHENTICATION_METHOD,
+				'method' => TwitterSocialNetwork::SOCIAL_NETWORK_ID,
 				'identifier' => $data['id'],
 				'data' => TextHelper::serialize($data)
 			);
@@ -89,7 +87,7 @@ class TwitterAuthenticationMethod extends AuthenticationMethod
 			try {
 				$this->querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id AND method=:method', array(
 					'user_id' => $user_id,
-					'method' => self::AUTHENTICATION_METHOD
+					'method' => TwitterSocialNetwork::SOCIAL_NETWORK_ID
 				));
 			} catch (SQLQuerierException $ex) {
 				throw new IllegalArgumentException('User Id ' . $user_id .
@@ -111,7 +109,7 @@ class TwitterAuthenticationMethod extends AuthenticationMethod
 		if ($data)
 		{
 			try {
-				$user_id = $this->querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', 'WHERE method=:method AND identifier=:identifier',  array('method' => self::AUTHENTICATION_METHOD, 'identifier' => $data['id']));
+				$user_id = $this->querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', 'WHERE method=:method AND identifier=:identifier',  array('method' => TwitterSocialNetwork::SOCIAL_NETWORK_ID, 'identifier' => $data['id']));
 			} catch (RowNotFoundException $e) {
 				
 				if (!empty($data['email']))
@@ -172,24 +170,24 @@ class TwitterAuthenticationMethod extends AuthenticationMethod
 		if (!empty($_SESSION['twitter_token']) && !empty($_SESSION['twitter_token']['oauth_token']) && !empty($_SESSION['twitter_token']['oauth_token_secret']))
 		{
 			$access_token = $_SESSION['twitter_token'];
-			$connection = new TwitterOAuth($config->get_twitter_consumer_key(), $config->get_twitter_consumer_secret(), $access_token['oauth_token'], $access_token['oauth_token_secret']);
+			$connection = new TwitterOAuth($config->get_client_id(TwitterSocialNetwork::SOCIAL_NETWORK_ID), $config->get_client_secret(TwitterSocialNetwork::SOCIAL_NETWORK_ID), $access_token['oauth_token'], $access_token['oauth_token_secret']);
 		}
 		else
 		{
 			if ($request->has_getparameter('oauth_token') && $_SESSION['twitter_oauth_token'] === $request->get_getvalue('oauth_token'))
 			{
-				$connection = new TwitterOAuth($config->get_twitter_consumer_key(), $config->get_twitter_consumer_secret(), $_SESSION['twitter_oauth_token'], $_SESSION['twitter_oauth_token_secret']);
+				$connection = new TwitterOAuth($config->get_client_id(TwitterSocialNetwork::SOCIAL_NETWORK_ID), $config->get_client_secret(TwitterSocialNetwork::SOCIAL_NETWORK_ID), $_SESSION['twitter_oauth_token'], $_SESSION['twitter_oauth_token_secret']);
 				
 				unset($_SESSION['twitter_oauth_token']);
 				unset($_SESSION['twitter_oauth_token_secret']);
 				$_SESSION['twitter_token'] = $access_token = $connection->oauth('oauth/access_token', array('oauth_verifier' => $request->get_getvalue('oauth_verifier')));
 				
-				$connection = new TwitterOAuth($config->get_twitter_consumer_key(), $config->get_twitter_consumer_secret(), $access_token['oauth_token'], $access_token['oauth_token_secret']);
+				$connection = new TwitterOAuth($config->get_client_id(TwitterSocialNetwork::SOCIAL_NETWORK_ID), $config->get_client_secret(TwitterSocialNetwork::SOCIAL_NETWORK_ID), $access_token['oauth_token'], $access_token['oauth_token_secret']);
 			}
 			else
 			{
-				$connection = new TwitterOAuth($config->get_twitter_consumer_key(), $config->get_twitter_consumer_secret());
-				$request_token = $connection->oauth('oauth/request_token', array('oauth_callback' => UserUrlBuilder::connect(self::AUTHENTICATION_METHOD)->absolute()));
+				$connection = new TwitterOAuth($config->get_client_id(TwitterSocialNetwork::SOCIAL_NETWORK_ID), $config->get_client_secret(TwitterSocialNetwork::SOCIAL_NETWORK_ID));
+				$request_token = $connection->oauth('oauth/request_token', array('oauth_callback' => UserUrlBuilder::connect(TwitterSocialNetwork::SOCIAL_NETWORK_ID)->absolute()));
 				$_SESSION['twitter_oauth_token'] = $request_token['oauth_token'];
 				$_SESSION['twitter_oauth_token_secret'] = $request_token['oauth_token_secret'];
 				

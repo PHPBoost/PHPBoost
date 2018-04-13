@@ -33,40 +33,16 @@ $lang['module_name'] = 'Réseaux Sociaux';
 $lang['module_config_title'] = 'Configuration du module Réseaux sociaux';
 
 //Authentication Configuration
-$lang['authentication.config.curl_extension_disabled'] = 'L\'extension <b>php_curl</b> est désactivée sur ce serveur. Veuillez l\'activez pour utiliser les authentifications Facebook et Google.';
-$lang['authentication.config.facebook-auth-enabled'] = 'Activer l\'authentification via Facebook';
-$lang['authentication.config.facebook-auth-enabled-explain'] = 'Rendez-vous sur <a href="https://developers.facebook.com">https://developers.facebook.com</a> pour créer vos identifiants.<br/>
-Indiquez l\'URL de redirection suivante lors de la configuration :<br/>
-<b>' . UserUrlBuilder::connect(FacebookAuthenticationMethod::AUTHENTICATION_METHOD)->absolute() . '</b>';
-$lang['authentication.config.facebook-app-id'] = 'Facebook App ID';
-$lang['authentication.config.facebook-app-key'] = 'Facebook App Secret';
+$lang['authentication.config.curl_extension_disabled'] = 'L\'extension <b>php_curl</b> est désactivée sur ce serveur. Veuillez l\'activez pour utiliser les authentifications des réseaux sociaux.';
 
-$lang['authentication.config.google-auth-enabled'] = 'Activer l\'authentification via Google';
-$lang['authentication.config.google-auth-enabled-explain'] = 'Rendez-vous sur <a href="https://console.developers.google.com/project">https://console.developers.google.com/project</a> pour créer vos identifiants.<br/>
+$lang['authentication.config.authentication-enabled'] = 'Activer l\'authentification via :name';
+$lang['authentication.config.authentication-enabled-explain'] = 'Rendez-vous sur <a href=":identifiers_creation_url">:identifiers_creation_url</a> pour créer vos identifiants.<br/>
 Indiquez l\'URL de redirection suivante lors de la configuration :<br/>
-<b>' . UserUrlBuilder::connect(GoogleAuthenticationMethod::AUTHENTICATION_METHOD)->absolute() . '</b>';
-$lang['authentication.config.google-client-id'] = 'Google Client ID';
-$lang['authentication.config.google-client-secret'] = 'Google Client Secret';
-
-$lang['authentication.config.linkedin-auth-enabled'] = 'Activer l\'authentification via LinkedIn';
-$lang['authentication.config.linkedin-auth-enabled-explain'] = 'Rendez-vous sur <a href="https://www.linkedin.com/secure/developer">https://www.linkedin.com/secure/developer</a> pour créer vos identifiants.<br/>
-Indiquez l\'URL de redirection suivante lors de la configuration :<br/>
-<b>' . UserUrlBuilder::connect(LinkedInAuthenticationMethod::AUTHENTICATION_METHOD)->absolute() . '</b>';
-$lang['authentication.config.linkedin-client-id'] = 'LinkedIn Client ID';
-$lang['authentication.config.linkedin-client-secret'] = 'LinkedIn Client Secret';
-
-$lang['authentication.config.twitter-auth-enabled'] = 'Activer l\'authentification via Twitter';
-$lang['authentication.config.twitter-auth-enabled-explain'] = 'Rendez-vous sur <a href="http://twitter.com/apps">http://twitter.com/apps</a> pour créer vos identifiants.<br/>
-Indiquez l\'URL de redirection suivante lors de la configuration :<br/>
-<b>' . UserUrlBuilder::connect(TwitterAuthenticationMethod::AUTHENTICATION_METHOD)->absolute() . '</b>';
-$lang['authentication.config.twitter-consumer-key'] = 'Twitter Consumer Key';
-$lang['authentication.config.twitter-consumer-secret'] = 'Twitter Consumer Secret';
+<b>:callback_url</b>';
+$lang['authentication.config.client-id'] = ':name Id ou Key';
+$lang['authentication.config.client-secret'] = ':name Secret';
 
 //Sign in label
-
-$lang['facebook-connect'] = 'Connexion Facebook';
-$lang['google-connect'] = 'Connexion Google+';
-$lang['linkedin-connect'] = 'Connexion LinkedIn';
-$lang['twitter-connect'] = 'Connexion Twitter';
+$lang['sign-in-label'] = 'Connexion :name';
 
 ?>

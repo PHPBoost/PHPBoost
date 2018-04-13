@@ -1,19 +1,19 @@
 <?php
 /*##################################################
- *		                        LinkedInExternalAuthentication.class.php
+ *                        GoogleSocialNetwork.class.php
  *                            -------------------
  *   begin                : April 10, 2018
  *   copyright            : (C) 2018 Julien BRISWALTER
  *   email                : j1.seth@phpboost.com
  *
- *
+ *  
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,50 +25,43 @@
  *
  ###################################################*/
 
-/**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- */
-class LinkedInExternalAuthentication implements ExternalAuthentication
+class GoogleSocialNetwork implements SocialNetwork
 {
-	public function get_authentication_id()
-	{
-		return LinkedInSocialNetwork::SOCIAL_NETWORK_ID;
-	}
+	const SOCIAL_NETWORK_ID = 'google';
 	
-	public function get_social_network()
+	public function get_name()
 	{
-		return new LinkedInSocialNetwork();
+		return 'Google+';
 	}
 
-	public function get_authentication_name()
+	public function get_content_sharing_url()
 	{
-		return StringVars::replace_vars(LangLoader::get_message('sign-in-label', 'common', 'SocialNetworks'), array('name' => $this->get_social_network()->get_name()));
+		return 'https://plus.google.com/share?url=' . HOST . REWRITED_SCRIPT;
 	}
 
-	public function authentication_actived()
+	public function get_identifiers_creation_url()
 	{
-		return SocialNetworksConfig::load()->is_authentication_available(LinkedInSocialNetwork::SOCIAL_NETWORK_ID);
+		return 'https://console.developers.google.com/project';
 	}
 
-	public function get_image_renderer_html()
+	public function get_share_image_renderer_html()
 	{
-		$tpl = new FileTemplate('SocialNetworks/auth_image_render.tpl');
+		$tpl = new FileTemplate('SocialNetworks/share_image_render.tpl');
 		$tpl->put_all(array(
-			'ID' => LinkedInSocialNetwork::SOCIAL_NETWORK_ID,
-			'NAME' => $this->get_social_network()->get_name()
+			'ID' => 'google-plus',
+			'NAME' => $this->get_name()
 		));
 		return $tpl->render();
 	}
 
-	public function get_authentication()
+	public function has_authentication()
 	{
-		return new LinkedInAuthenticationMethod();
+		return true;
 	}
 
-	public function delete_session_token()
+	public function get_external_authentication()
 	{
-		if (isset($_SESSION['linkedin_token']))
-			unset($_SESSION['linkedin_token']);
+		return new GoogleExternalAuthentication();
 	}
 }
 ?>

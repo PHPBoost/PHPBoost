@@ -23,10 +23,30 @@ a.social-connect:hover i:before {
 
 a.social-connect i:before { font-size: 1.618em; }
 
+a.social-connect.discord { padding: 1em 1.618em; }
 a.social-connect.facebook { padding: 1em 1.618em; }
+a.social-connect.flickr { padding: 1em 1.618em; }
+a.social-connect.github { padding: 1em 1.618em; }
 a.social-connect.google { padding: 1em; }
+a.social-connect.instagram { padding: 1em1.618em; }
+a.social-connect.line { padding: 1em1.618em; }
 a.social-connect.linkedin { padding: 1em 1.618em; }
+a.social-connect.pinterest { padding: 1em 1.618em; }
+a.social-connect.reddit { padding: 1em 1.618em; }
+a.social-connect.skype { padding: 1em 1.618em; }
+a.social-connect.slack { padding: 1em 1.618em; }
+a.social-connect.snapchat { padding: 1em 1.618em; }
+a.social-connect.soundcloud { padding: 1em 1.618em; }
+a.social-connect.spotify { padding: 1em 1.618em; }
+a.social-connect.steam { padding: 1em 1.618em; }
+a.social-connect.telegram { padding: 1em 1.618em; }
+a.social-connect.tumblr { padding: 1em 1.618em; }
+a.social-connect.twitch { padding: 1em 1.618em; }
 a.social-connect.twitter { padding: 1em 1.618em; }
+a.social-connect.viber { padding: 1em 1.618em; }
+a.social-connect.wechat { padding: 1em 1.618em; }
+a.social-connect.whatsapp { padding: 1em 1.618em; }
+a.social-connect.youtube { padding: 1em 1.618em; }
 
 a.social-connect span {
 	display: none;

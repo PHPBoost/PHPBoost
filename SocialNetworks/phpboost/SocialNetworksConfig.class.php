@@ -30,204 +30,137 @@
  */
 class SocialNetworksConfig extends AbstractConfigData
 {
-	const FACEBOOK_AUTH_ENABLED = 'facebook_auth_enabled';
-	const FACEBOOK_APP_ID       = 'facebook_app_id';
-	const FACEBOOK_APP_KEY      = 'facebook_app_key';
-
-	const GOOGLE_AUTH_ENABLED  = 'google_auth_enabled';
-	const GOOGLE_CLIENT_ID     = 'google_client_id';
-	const GOOGLE_CLIENT_SECRET = 'google_client_secret';
-
-	const LINKEDIN_AUTH_ENABLED  = 'linkedin_auth_enabled';
-	const LINKEDIN_CLIENT_ID     = 'linkedin_client_id';
-	const LINKEDIN_CLIENT_SECRET = 'linkedin_client_secret';
-
-	const TWITTER_AUTH_ENABLED    = 'twitter_auth_enabled';
-	const TWITTER_CONSUMER_KEY    = 'twitter_consumer_key';
-	const TWITTER_CONSUMER_SECRET = 'twitter_consumer_secret';
+	const AUTHENTICATIONS_ENABLED = 'authentications_enabled';
+	const CLIENT_IDS              = 'client_ids';
+	const CLIENT_SECRETS          = 'client_secrets';
+	const CONTENT_SHARING_ENABLED = 'content_sharing_enabled';
 	
-	public function enable_facebook_auth()
+	 /**
+	 * @method Get enabled authentications
+	 */
+	public function get_enabled_authentications()
 	{
-		$this->set_property(self::FACEBOOK_AUTH_ENABLED, true);
+		return $this->get_property(self::AUTHENTICATIONS_ENABLED);
 	}
 	
-	public function disable_facebook_auth()
+	 /**
+	 * @method Set enabled authentications
+	 * @params string[] $array Array of enabled authentications
+	 */
+	public function set_enabled_authentications(Array $array)
 	{
-		$this->set_property(self::FACEBOOK_AUTH_ENABLED, false);
+		$this->set_property(self::AUTHENTICATIONS_ENABLED, $array);
 	}
 	
-	public function is_facebook_auth_enabled()
+	 /**
+	 * @method Get check if social network authentication is enabled
+	 */
+	public function is_authentication_enabled($social_network_id)
 	{
-		return $this->get_property(self::FACEBOOK_AUTH_ENABLED);
+		return in_array($social_network_id, $this->get_enabled_authentications());
 	}
 	
-	public function is_facebook_auth_available()
+	 /**
+	 * @method Get check if social network authentication is available
+	 */
+	public function is_authentication_available($social_network_id)
 	{
 		$server_configuration = new ServerConfiguration();
-		return $this->get_property(self::FACEBOOK_AUTH_ENABLED) && $server_configuration->has_curl_library();
+		return in_array($social_network_id, $this->get_enabled_authentications()) && $server_configuration->has_curl_library();
 	}
 	
-	public function get_facebook_app_id()
+	 /**
+	 * @method Get client ids
+	 */
+	public function get_client_ids()
 	{
-		return $this->get_property(self::FACEBOOK_APP_ID);
+		return $this->get_property(self::CLIENT_IDS);
 	}
 	
-	public function set_facebook_app_id($facebook_app_id)
+	 /**
+	 * @method Set client ids
+	 * @params string[] $array Array of client ids
+	 */
+	public function set_client_ids(Array $array)
 	{
-		$this->set_property(self::FACEBOOK_APP_ID, $facebook_app_id);
+		$this->set_property(self::CLIENT_IDS, $array);
 	}
 	
-	public function get_facebook_app_key()
+	 /**
+	 * @method Get the client id of a social network
+	 */
+	public function get_client_id($social_network_id)
 	{
-		return $this->get_property(self::FACEBOOK_APP_KEY);
+		$client_ids = $this->get_property(self::CLIENT_IDS);
+		return isset($client_ids[$social_network_id]) ? $client_ids[$social_network_id] : '';
 	}
 	
-	public function set_facebook_app_key($facebook_app_key)
+	 /**
+	 * @method Get client secrets
+	 */
+	public function get_client_secrets()
 	{
-		$this->set_property(self::FACEBOOK_APP_KEY, $facebook_app_key);
+		return $this->get_property(self::CLIENT_SECRETS);
 	}
 	
-	public function enable_google_auth()
+	 /**
+	 * @method Set client secrets
+	 * @params string[] $array Array of client secrets
+	 */
+	public function set_client_secrets(Array $array)
 	{
-		$this->set_property(self::GOOGLE_AUTH_ENABLED, true);
+		$this->set_property(self::CLIENT_SECRETS, $array);
 	}
 	
-	public function disable_google_auth()
+	 /**
+	 * @method Get the client secret of a social network
+	 */
+	public function get_client_secret($social_network_id)
 	{
-		$this->set_property(self::GOOGLE_AUTH_ENABLED, false);
+		$client_secrets = $this->get_property(self::CLIENT_SECRETS);
+		return isset($client_secrets[$social_network_id]) ? $client_secrets[$social_network_id] : '';
 	}
 	
-	public function is_google_auth_enabled()
+	 /**
+	 * @method Get enabled content sharing
+	 */
+	public function get_enabled_content_sharing()
 	{
-		return $this->get_property(self::GOOGLE_AUTH_ENABLED);
+		return $this->get_property(self::CONTENT_SHARING_ENABLED);
 	}
 	
-	public function is_google_auth_available()
+	 /**
+	 * @method Set enabled content sharing
+	 * @params string[] $array Array of enabled content sharing
+	 */
+	public function set_enabled_content_sharing(Array $array)
 	{
-		$server_configuration = new ServerConfiguration();
-		return $this->get_property(self::GOOGLE_AUTH_ENABLED) && $server_configuration->has_curl_library();
-	}
-
-	public function get_google_client_id()
-	{
-		return $this->get_property(self::GOOGLE_CLIENT_ID);
-	}
-
-	public function set_google_client_id($google_client_id)
-	{
-		$this->set_property(self::GOOGLE_CLIENT_ID, $google_client_id);
-	}
-
-	public function get_google_client_secret()
-	{
-		return $this->get_property(self::GOOGLE_CLIENT_SECRET);
-	}
-
-	public function set_google_client_secret($google_client_secret)
-	{
-		$this->set_property(self::GOOGLE_CLIENT_SECRET, $google_client_secret);
+		$this->set_property(self::CONTENT_SHARING_ENABLED, $array);
 	}
 	
-	public function enable_linkedin_auth()
+	 /**
+	 * @method Get check if social network content sharing is enabled
+	 */
+	public function is_content_sharing_enabled($social_network_id)
 	{
-		$this->set_property(self::LINKEDIN_AUTH_ENABLED, true);
+		return in_array($social_network_id, $this->get_enabled_content_sharing());
 	}
 	
-	public function disable_linkedin_auth()
+	 /**
+	 * @method Get social networks order
+	 */
+	public function get_social_networks_order()
 	{
-		$this->set_property(self::LINKEDIN_AUTH_ENABLED, false);
-	}
-	
-	public function is_linkedin_auth_enabled()
-	{
-		return $this->get_property(self::LINKEDIN_AUTH_ENABLED);
-	}
-	
-	public function is_linkedin_auth_available()
-	{
-		$server_configuration = new ServerConfiguration();
-		return $this->get_property(self::LINKEDIN_AUTH_ENABLED) && $server_configuration->has_curl_library();
-	}
-
-	public function get_linkedin_client_id()
-	{
-		return $this->get_property(self::LINKEDIN_CLIENT_ID);
-	}
-
-	public function set_linkedin_client_id($linkedin_client_id)
-	{
-		$this->set_property(self::LINKEDIN_CLIENT_ID, $linkedin_client_id);
-	}
-
-	public function get_linkedin_client_secret()
-	{
-		return $this->get_property(self::LINKEDIN_CLIENT_SECRET);
-	}
-
-	public function set_linkedin_client_secret($linkedin_client_secret)
-	{
-		$this->set_property(self::LINKEDIN_CLIENT_SECRET, $linkedin_client_secret);
-	}
-	
-	public function enable_twitter_auth()
-	{
-		$this->set_property(self::TWITTER_AUTH_ENABLED, true);
-	}
-	
-	public function disable_twitter_auth()
-	{
-		$this->set_property(self::TWITTER_AUTH_ENABLED, false);
-	}
-	
-	public function is_twitter_auth_enabled()
-	{
-		return $this->get_property(self::TWITTER_AUTH_ENABLED);
-	}
-	
-	public function is_twitter_auth_available()
-	{
-		$server_configuration = new ServerConfiguration();
-		return $this->get_property(self::TWITTER_AUTH_ENABLED) && $server_configuration->has_curl_library();
-	}
-
-	public function get_twitter_consumer_key()
-	{
-		return $this->get_property(self::TWITTER_CONSUMER_KEY);
-	}
-
-	public function set_twitter_consumer_key($twitter_consumer_key)
-	{
-		$this->set_property(self::TWITTER_CONSUMER_KEY, $twitter_consumer_key);
-	}
-
-	public function get_twitter_consumer_secret()
-	{
-		return $this->get_property(self::TWITTER_CONSUMER_SECRET);
-	}
-
-	public function set_twitter_consumer_secret($twitter_consumer_secret)
-	{
-		$this->set_property(self::TWITTER_CONSUMER_SECRET, $twitter_consumer_secret);
+		return array(FacebookSocialNetwork::SOCIAL_NETWORK_ID, GoogleSocialNetwork::SOCIAL_NETWORK_ID, LinkedInSocialNetwork::SOCIAL_NETWORK_ID, TwitterSocialNetwork::SOCIAL_NETWORK_ID);
 	}
 	
 	public function get_default_values()
 	{
 		return array(
-			self::FACEBOOK_AUTH_ENABLED => false,
-			self::FACEBOOK_APP_ID       => '',
-			self::FACEBOOK_APP_KEY      => '',
-
-			self::GOOGLE_AUTH_ENABLED  => false,
-			self::GOOGLE_CLIENT_ID     => '',
-			self::GOOGLE_CLIENT_SECRET => '',
-
-			self::LINKEDIN_AUTH_ENABLED  => false,
-			self::LINKEDIN_CLIENT_ID     => '',
-			self::LINKEDIN_CLIENT_SECRET => '',
-
-			self::TWITTER_AUTH_ENABLED    => false,
-			self::TWITTER_CONSUMER_KEY    => '',
-			self::TWITTER_CONSUMER_SECRET => '',
+			self::AUTHENTICATIONS_ENABLED => array(),
+			self::CLIENT_IDS              => array(),
+			self::CLIENT_SECRETS          => array(),
+			self::CONTENT_SHARING_ENABLED => array(FacebookSocialNetwork::SOCIAL_NETWORK_ID, GoogleSocialNetwork::SOCIAL_NETWORK_ID, TwitterSocialNetwork::SOCIAL_NETWORK_ID)
 		);
 	}
 

@@ -32,22 +32,31 @@ class TwitterExternalAuthentication implements ExternalAuthentication
 {
 	public function get_authentication_id()
 	{
-		return TwitterAuthenticationMethod::AUTHENTICATION_METHOD;
+		return TwitterSocialNetwork::SOCIAL_NETWORK_ID;
+	}
+	
+	public function get_social_network()
+	{
+		return new TwitterSocialNetwork();
 	}
 
 	public function get_authentication_name()
 	{
-		return LangLoader::get_message('twitter-connect', 'common', 'SocialNetworks');
+		return StringVars::replace_vars(LangLoader::get_message('sign-in-label', 'common', 'SocialNetworks'), array('name' => $this->get_social_network()->get_name()));
 	}
 
 	public function authentication_actived()
 	{
-		return SocialNetworksConfig::load()->is_twitter_auth_available();
+		return SocialNetworksConfig::load()->is_authentication_available(TwitterSocialNetwork::SOCIAL_NETWORK_ID);
 	}
 
 	public function get_image_renderer_html()
 	{
-		$tpl = new FileTemplate('SocialNetworks/auth_twitter_image_render.tpl');
+		$tpl = new FileTemplate('SocialNetworks/auth_image_render.tpl');
+		$tpl->put_all(array(
+			'ID' => TwitterSocialNetwork::SOCIAL_NETWORK_ID,
+			'NAME' => $this->get_social_network()->get_name()
+		));
 		return $tpl->render();
 	}
 

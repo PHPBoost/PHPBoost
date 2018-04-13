@@ -39,8 +39,6 @@ require_once PATH_TO_ROOT . '/SocialNetworks/lib/linkedin/LinkedIn.php';
 
 class LinkedInAuthenticationMethod extends AuthenticationMethod
 {
-	const AUTHENTICATION_METHOD = 'linkedin';
-	
 	/**
 	 * @var DBQuerier
 	 */
@@ -53,9 +51,9 @@ class LinkedInAuthenticationMethod extends AuthenticationMethod
 		$config = SocialNetworksConfig::load();
 		
 		$this->linkedin = new LinkedIn\LinkedIn(array(
-			'api_key'  => $config->get_linkedin_client_id(),
-			'api_secret' => $config->get_linkedin_client_secret(),
-			'callback_url' => UserUrlBuilder::connect(self::AUTHENTICATION_METHOD)->absolute()
+			'api_key'  => $config->get_client_id(LinkedInSocialNetwork::SOCIAL_NETWORK_ID),
+			'api_secret' => $config->get_client_secret(LinkedInSocialNetwork::SOCIAL_NETWORK_ID),
+			'callback_url' => UserUrlBuilder::connect(LinkedInSocialNetwork::SOCIAL_NETWORK_ID)->absolute()
 		));
 	}
 	
@@ -71,7 +69,7 @@ class LinkedInAuthenticationMethod extends AuthenticationMethod
 		{
 			$authentication_method_columns = array(
 				'user_id' => $user_id,
-				'method' => self::AUTHENTICATION_METHOD,
+				'method' => LinkedInSocialNetwork::SOCIAL_NETWORK_ID,
 				'identifier' => $data['id'],
 				'data' => TextHelper::serialize($data)
 			);
@@ -96,7 +94,7 @@ class LinkedInAuthenticationMethod extends AuthenticationMethod
 			try {
 				$this->querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id AND method=:method', array(
 					'user_id' => $user_id,
-					'method' => self::AUTHENTICATION_METHOD
+					'method' => LinkedInSocialNetwork::SOCIAL_NETWORK_ID
 				));
 			} catch (SQLQuerierException $ex) {
 				throw new IllegalArgumentException('User Id ' . $user_id .
@@ -118,7 +116,7 @@ class LinkedInAuthenticationMethod extends AuthenticationMethod
 		if ($data)
 		{
 			try {
-				$user_id = $this->querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', 'WHERE method=:method AND identifier=:identifier',  array('method' => self::AUTHENTICATION_METHOD, 'identifier' => $data['id']));
+				$user_id = $this->querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', 'WHERE method=:method AND identifier=:identifier',  array('method' => LinkedInSocialNetwork::SOCIAL_NETWORK_ID, 'identifier' => $data['id']));
 			} catch (RowNotFoundException $e) {
 				
 				if (!empty($data['email']))

@@ -39,8 +39,6 @@ require_once PATH_TO_ROOT . '/SocialNetworks/lib/facebook/autoload.php';
 
 class FacebookAuthenticationMethod extends AuthenticationMethod
 {
-	const AUTHENTICATION_METHOD = 'facebook';
-	
 	/**
 	 * @var DBQuerier
 	 */
@@ -54,8 +52,8 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 		
 		session_start();
 		$this->facebook = new Facebook\Facebook(array(
-			'app_id'  => $config->get_facebook_app_id(),
-			'app_secret' => $config->get_facebook_app_key(),
+			'app_id'  => $config->get_client_id(FacebookSocialNetwork::SOCIAL_NETWORK_ID),
+			'app_secret' => $config->get_client_secret(FacebookSocialNetwork::SOCIAL_NETWORK_ID),
 			'persistent_data_handler' => 'session'
 		));
 	}
@@ -72,7 +70,7 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 		{
 			$authentication_method_columns = array(
 				'user_id' => $user_id,
-				'method' => self::AUTHENTICATION_METHOD,
+				'method' => FacebookSocialNetwork::SOCIAL_NETWORK_ID,
 				'identifier' => $data['id'],
 				'data' => TextHelper::serialize($data)
 			);
@@ -97,7 +95,7 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 			try {
 				$this->querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id AND method=:method', array(
 					'user_id' => $user_id,
-					'method' => self::AUTHENTICATION_METHOD
+					'method' => FacebookSocialNetwork::SOCIAL_NETWORK_ID
 				));
 			} catch (SQLQuerierException $ex) {
 				throw new IllegalArgumentException('User Id ' . $user_id .
@@ -119,7 +117,7 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 		if ($data)
 		{
 			try {
-				$user_id = $this->querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', 'WHERE method=:method AND identifier=:identifier',  array('method' => self::AUTHENTICATION_METHOD, 'identifier' => $data['id']));
+				$user_id = $this->querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', 'WHERE method=:method AND identifier=:identifier',  array('method' => FacebookSocialNetwork::SOCIAL_NETWORK_ID, 'identifier' => $data['id']));
 			} catch (RowNotFoundException $e) {
 				
 				if (!empty($data['email']))
@@ -176,7 +174,7 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 		$helper = $this->facebook->getRedirectLoginHelper();
 		
 		if (!$request->has_getparameter('state'))
-			AppContext::get_response()->redirect($helper->getLoginUrl(UserUrlBuilder::connect(self::AUTHENTICATION_METHOD)->absolute(), array('email')));
+			AppContext::get_response()->redirect($helper->getLoginUrl(UserUrlBuilder::connect(FacebookSocialNetwork::SOCIAL_NETWORK_ID)->absolute(), array('email')));
 		
 		$_SESSION['FBRLH_state'] = $request->get_getvalue('state');
 		$helper->getPersistentDataHandler()->set('state', $request->get_getvalue('state'));
@@ -186,7 +184,7 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 		if ($accessToken)
 			$_SESSION['facebook_access_token'] = (string)$accessToken;
 		else
-			AppContext::get_response()->redirect($helper->getLoginUrl(UserUrlBuilder::connect(self::AUTHENTICATION_METHOD)->absolute(), array('email')));
+			AppContext::get_response()->redirect($helper->getLoginUrl(UserUrlBuilder::connect(FacebookSocialNetwork::SOCIAL_NETWORK_ID)->absolute(), array('email')));
 		
 		$data = array (
 			'id'	=> '',

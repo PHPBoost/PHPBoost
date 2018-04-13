@@ -49,22 +49,14 @@ class SocialNetworksExtensionPointProvider extends ExtensionPointProvider
 
 	public function external_authentications()
 	{
-		return new ExternalAuthenticationsExtensionPoint(array(
-			new FacebookExternalAuthentication(),
-			new GoogleExternalAuthentication(),
-			new LinkedInExternalAuthentication(),
-			new TwitterExternalAuthentication(),
-		));
+		$social_networks_list = new SocialNetworksList();
+		return new ExternalAuthenticationsExtensionPoint($social_networks_list->get_external_authentications_list());
 	}
 
 	public function content_sharing_actions_menu_links()
 	{
-		return array(
-			new ContentSharingActionsMenuLink('google', 'Google+', new Url('https://plus.google.com/share?url=' . HOST . REWRITED_SCRIPT), (new FileTemplate('SocialNetworks/share_google_image_render.tpl'))->render()),
-			new ContentSharingActionsMenuLink('facebook', 'Facebook', new Url('http://www.facebook.com/share.php?u=' . HOST . REWRITED_SCRIPT), (new FileTemplate('SocialNetworks/share_facebook_image_render.tpl'))->render()),
-			new ContentSharingActionsMenuLink('linkedin', 'Linkedin', new Url('https://www.linkedin.com/shareArticle?mini=true&url=' . HOST . REWRITED_SCRIPT), (new FileTemplate('SocialNetworks/share_linkedin_image_render.tpl'))->render()),
-			new ContentSharingActionsMenuLink('twitter', 'Twitter', new Url('https://twitter.com/share?url=' . HOST . REWRITED_SCRIPT), (new FileTemplate('SocialNetworks/share_twitter_image_render.tpl'))->render()),
-		);
+		$social_networks_list = new SocialNetworksList();
+		return $social_networks_list->get_sharing_links_list();
 	}
 }
 ?>
