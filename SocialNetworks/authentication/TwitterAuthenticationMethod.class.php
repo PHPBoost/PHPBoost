@@ -48,6 +48,7 @@ class TwitterAuthenticationMethod extends AuthenticationMethod
 	public function __construct()
 	{
 		$this->querier = PersistenceContext::get_querier();
+		session_start();
 	}
 	
 	/**
