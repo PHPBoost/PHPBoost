@@ -21,6 +21,9 @@ a.social-connect:hover i:before {
 	transition: 0.2s ease-out;
 }
 
+span.social-connect i:before { font-size: 1.618em; }
+span.social-connect { padding: 1em 1.618em; }
+
 a.social-connect i:before { font-size: 1.618em; }
 
 a.social-connect.discord { padding: 1em 1.618em; }
@@ -95,3 +98,9 @@ a.social-connect span {
 .wechat     { background-color: #7BB32E; }
 .whatsapp   { background-color: #25D366; }
 .youtube    { background-color: #BB0000; }
+
+
+/* -- Configuration -- */
+/* -------------------------- */
+.sortable-block .sortable-title { padding: 8px 5px 10px 10px; }
+.sortable-block .sortable-title > span { font-size: .6em; }

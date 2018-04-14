@@ -34,7 +34,7 @@ class SocialNetworksList
 	 */
 	function get_implementing_classes($interface_name)
 	{
-		$folder = new Folder(PATH_TO_ROOT . '/SocialNetworks/services');
+		$folder = new Folder(PATH_TO_ROOT . '/SocialNetworks/social_networks');
 		$classes_files = $folder->get_files();
 		$classes = array();
 		foreach ($classes_files as $class)
@@ -80,8 +80,11 @@ class SocialNetworksList
 		
 		foreach (SocialNetworksConfig::load()->get_social_networks_order() as $social_network_id)
 		{
-			$sorted_social_networks[$social_network_id] = $social_networks[$social_network_id];
-			unset($social_networks[$social_network_id]);
+			if (isset($social_networks[$social_network_id]))
+			{
+				$sorted_social_networks[$social_network_id] = $social_networks[$social_network_id];
+				unset($social_networks[$social_network_id]);
+			}
 		}
 		
 		return array_merge($sorted_social_networks, $social_networks);

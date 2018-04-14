@@ -42,6 +42,9 @@ Specify the following callback URL during configuration:<br/>
 $lang['authentication.config.client-id'] = ':name Id or Key';
 $lang['authentication.config.client-secret'] = ':name Secret';
 
+//Configuration
+$lang['admin.order.manage'] = 'Social networks display order';
+
 //Sign in label
 $lang['sign-in-label'] = 'Sign in with :name';
 

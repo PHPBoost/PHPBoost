@@ -31,6 +31,7 @@ require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
 	new UrlControllerMapper('AdminSocialNetworksConfigController', '`^(?:/config)?/?$`'),
+	new UrlControllerMapper('SocialNetworksAjaxChangeSharingContentDisplayController', '`^/config/change_display/?$`'),
 );
 
 DispatchManager::dispatch($url_controller_mappers);

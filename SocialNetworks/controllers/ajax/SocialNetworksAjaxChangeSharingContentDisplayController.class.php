@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *		                        SocialNetwork.class.php
+ *                          SocialNetworksAjaxChangeSharingContentDisplayController.class.php
  *                            -------------------
- *   begin                : April 10, 2018
+ *   begin                : April 11, 2018
  *   copyright            : (C) 2018 Julien BRISWALTER
  *   email                : j1.seth@phpboost.com
  *
@@ -25,49 +25,33 @@
  *
  ###################################################*/
 
-/**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- */
-interface SocialNetwork
+class SocialNetworksAjaxChangeSharingContentDisplayController extends AbstractController
 {
-	/**
-	 * @return string Name of the social network
-	 */
-	function get_name();
-	
-	/**
-	 * @return string Icon of the social network
-	 */
-	function get_icon_name();
-
-	/**
-	 * @return bool true if the social network has a content sharing url
-	 */
-	function has_content_sharing_url();
-
-	/**
-	 * @return string Content sharing url
-	 */
-	function get_content_sharing_url();
-
-	/**
-	 * @return string Identifiers creation url
-	 */
-	function get_identifiers_creation_url();
-
-	/**
-	 * @return string contains HTML share tag image rendering
-	 */
-	function get_share_image_renderer_html();
-
-	/**
-	 * @return bool true if the social network has an authentication method
-	 */
-	function has_authentication();
-
-	/**
-	 * @return ExternalAuthentication class
-	 */
-	function get_external_authentication();
+	public function execute(HTTPRequestCustom $request)
+	{
+		$id = $request->get_value('id', '');
+		
+		$display = -1;
+		if ($id !== '')
+		{
+			$config = SocialNetworksConfig::load();
+			$enabled_content_sharing = $config->get_enabled_content_sharing();
+			if (in_array($id, $enabled_content_sharing))
+			{
+				unset($enabled_content_sharing[array_search($id, $enabled_content_sharing)]);
+				$display = 0;
+			}
+			else
+			{
+				$enabled_content_sharing[] = $id;
+				$display = 1;
+			}
+			$config->set_enabled_content_sharing($enabled_content_sharing);
+			
+			SocialNetworksConfig::save();
+		}
+		
+		return new JSONResponse(array('id' => $id, 'display' => $display));
+	}
 }
 ?>

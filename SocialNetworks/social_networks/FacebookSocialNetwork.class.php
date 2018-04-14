@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                        GoogleSocialNetwork.class.php
+ *                        FacebookSocialNetwork.class.php
  *                            -------------------
  *   begin                : April 10, 2018
  *   copyright            : (C) 2018 Julien BRISWALTER
@@ -25,43 +25,28 @@
  *
  ###################################################*/
 
-class GoogleSocialNetwork implements SocialNetwork
+class FacebookSocialNetwork extends AbstractSocialNetwork
 {
-	const SOCIAL_NETWORK_ID = 'google';
+	const SOCIAL_NETWORK_ID = 'facebook';
 	
 	public function get_name()
 	{
-		return 'Google+';
+		return 'Facebook';
 	}
-
+	
 	public function get_content_sharing_url()
 	{
-		return 'https://plus.google.com/share?url=' . HOST . REWRITED_SCRIPT;
+		return 'http://www.facebook.com/share.php?u=' . HOST . REWRITED_SCRIPT;
 	}
-
+	
 	public function get_identifiers_creation_url()
 	{
-		return 'https://console.developers.google.com/project';
+		return 'https://developers.facebook.com';
 	}
-
-	public function get_share_image_renderer_html()
-	{
-		$tpl = new FileTemplate('SocialNetworks/share_image_render.tpl');
-		$tpl->put_all(array(
-			'ID' => 'google-plus',
-			'NAME' => $this->get_name()
-		));
-		return $tpl->render();
-	}
-
-	public function has_authentication()
-	{
-		return true;
-	}
-
+	
 	public function get_external_authentication()
 	{
-		return new GoogleExternalAuthentication();
+		return new FacebookExternalAuthentication();
 	}
 }
 ?>

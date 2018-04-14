@@ -44,7 +44,7 @@ class SocialNetworksExtensionPointProvider extends ExtensionPointProvider
 
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/socialnetworks/index.php')));
+		return new UrlMappings(array(new DispatcherUrlMapping('/SocialNetworks/index.php')));
 	}
 
 	public function external_authentications()

@@ -42,6 +42,9 @@ Indiquez l\'URL de redirection suivante lors de la configuration :<br/>
 $lang['authentication.config.client-id'] = ':name Id ou Key';
 $lang['authentication.config.client-secret'] = ':name Secret';
 
+//Configuration
+$lang['admin.order.manage'] = 'Ordre d\'affichage des réseaux sociaux';
+
 //Sign in label
 $lang['sign-in-label'] = 'Connexion :name';
 

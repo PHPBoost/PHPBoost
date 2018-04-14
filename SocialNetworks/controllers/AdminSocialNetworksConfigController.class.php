@@ -40,6 +40,7 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 	private $submit_button;
 	
 	private $lang;
+	private $view;
 	
 	/**
 	 * @var SocialNetworksConfig
@@ -52,20 +53,43 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 	{
 		$this->init();
 		
-		$this->build_form();
+		$this->update_social_networks_order($request);
 		
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$this->build_form();
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 		
-		$tpl->put('FORM', $this->form->display());
+		$social_networks_number = 0;
+		$social_networks_order = array_unique(array_merge($this->config->get_social_networks_order(), array_keys($this->social_networks)));
+		foreach ($social_networks_order as $id)
+		{
+			if (isset($this->social_networks[$id]))
+			{
+				$sn = new $this->social_networks[$id]();
+				
+				if ($sn->has_content_sharing_url())
+				{
+					$this->view->assign_block_vars('social_networks_list', array(
+						'C_DISPLAY' => $this->config->is_content_sharing_enabled($id),
+						'ID' => $id,
+						'NAME' => $sn->get_name(),
+						'ICON_NAME' => $sn->get_icon_name()
+					));
+					$social_networks_number++;
+				}
+			}
+		}
 		
-		$response = new AdminMenuDisplayResponse($tpl);
+		$this->view->put_all(array(
+			'C_MORE_THAN_ONE_SOCIAL_NETWORK' => $social_networks_number > 1,
+			'FORM' => $this->form->display()
+		));
+		
+		$response = new AdminMenuDisplayResponse($this->view);
 		$response->set_title($this->lang['module_name']);
 		$response->add_link(LangLoader::get_message('configuration', 'admin-common'), DispatchManager::get_url('/SocialNetworks', '/config/'));
 		$env = $response->get_graphical_environment();
@@ -79,6 +103,8 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 		$this->lang = LangLoader::get('common', 'SocialNetworks');
 		$this->config = SocialNetworksConfig::load();
 		$this->server_configuration = new ServerConfiguration();
+		$this->view = new FileTemplate('SocialNetworks/AdminSocialNetworksConfigController.tpl');
+		$this->view->add_lang(LangLoader::get('admin-user-common'));
 		
 		$social_networks_list = new SocialNetworksList();
 		$this->social_networks = $social_networks_list->get_social_networks_list();
@@ -173,6 +199,30 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 				}
 			}
 		}
+	}
+	
+	private function update_social_networks_order(HTTPRequestCustom $request)
+	{
+		if ($request->get_value('order_manage_submit', false))
+		{
+			$this->update_position($request);
+			$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.position.update', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+		}
+	}
+	
+	private function update_position(HTTPRequestCustom $request)
+	{
+		$sorted_social_networks = array();
+		
+		$social_networks_list = json_decode(TextHelper::html_entity_decode($request->get_value('tree')));
+		foreach($social_networks_list as $position => $tree)
+		{
+			$sorted_social_networks[] = $tree->id;
+		}
+		
+		$this->config->set_social_networks_order($sorted_social_networks);
+		
+		SocialNetworksConfig::save();
 	}
 }
 ?>

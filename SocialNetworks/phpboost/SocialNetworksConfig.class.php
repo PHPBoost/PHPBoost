@@ -34,6 +34,7 @@ class SocialNetworksConfig extends AbstractConfigData
 	const CLIENT_IDS              = 'client_ids';
 	const CLIENT_SECRETS          = 'client_secrets';
 	const CONTENT_SHARING_ENABLED = 'content_sharing_enabled';
+	const SOCIAL_NETWORKS_ORDER   = 'social_networks_order';
 	
 	 /**
 	 * @method Get enabled authentications
@@ -151,7 +152,16 @@ class SocialNetworksConfig extends AbstractConfigData
 	 */
 	public function get_social_networks_order()
 	{
-		return array(FacebookSocialNetwork::SOCIAL_NETWORK_ID, GoogleSocialNetwork::SOCIAL_NETWORK_ID, LinkedInSocialNetwork::SOCIAL_NETWORK_ID, TwitterSocialNetwork::SOCIAL_NETWORK_ID);
+		return $this->get_property(self::SOCIAL_NETWORKS_ORDER);
+	}
+	
+	 /**
+	 * @method Set social networks order
+	 * @params string[] $array Array of social networks ids
+	 */
+	public function set_social_networks_order(Array $array)
+	{
+		$this->set_property(self::SOCIAL_NETWORKS_ORDER, $array);
 	}
 	
 	public function get_default_values()
@@ -160,7 +170,8 @@ class SocialNetworksConfig extends AbstractConfigData
 			self::AUTHENTICATIONS_ENABLED => array(),
 			self::CLIENT_IDS              => array(),
 			self::CLIENT_SECRETS          => array(),
-			self::CONTENT_SHARING_ENABLED => array(FacebookSocialNetwork::SOCIAL_NETWORK_ID, GoogleSocialNetwork::SOCIAL_NETWORK_ID, TwitterSocialNetwork::SOCIAL_NETWORK_ID)
+			self::CONTENT_SHARING_ENABLED => array(FacebookSocialNetwork::SOCIAL_NETWORK_ID, GoogleSocialNetwork::SOCIAL_NETWORK_ID, TwitterSocialNetwork::SOCIAL_NETWORK_ID),
+			self::SOCIAL_NETWORKS_ORDER   => array()
 		);
 	}
 
@@ -170,7 +181,7 @@ class SocialNetworksConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'social_networks', 'config');
+		return ConfigManager::load(__CLASS__, 'social-networks', 'config');
 	}
 
 	/**
@@ -178,7 +189,7 @@ class SocialNetworksConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('social_networks', self::load(), 'config');
+		ConfigManager::save('social-networks', self::load(), 'config');
 	}
 }
 ?>

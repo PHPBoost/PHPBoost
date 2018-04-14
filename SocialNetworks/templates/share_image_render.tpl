@@ -1,1 +1,1 @@
-<i class="fa fa-fw fa-{ID}"></i>
+<i class="fa fa-fw fa-{ICON_NAME}"></i>

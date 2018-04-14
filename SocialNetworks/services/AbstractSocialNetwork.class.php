@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                        FacebookSocialNetwork.class.php
+ *                        AbstractSocialNetwork.class.php
  *                            -------------------
- *   begin                : April 10, 2018
+ *   begin                : April 13, 2018
  *   copyright            : (C) 2018 Julien BRISWALTER
  *   email                : j1.seth@phpboost.com
  *
@@ -25,43 +25,77 @@
  *
  ###################################################*/
 
-class FacebookSocialNetwork implements SocialNetwork
+abstract class AbstractSocialNetwork implements SocialNetwork
 {
-	const SOCIAL_NETWORK_ID = 'facebook';
+	const SOCIAL_NETWORK_ID = '';
 	
+	/**
+	 * {@inheritdoc}
+	 */
 	public function get_name()
 	{
-		return 'Facebook';
+		return '';
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_icon_name()
+	{
+		return static::SOCIAL_NETWORK_ID;
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function has_content_sharing_url()
+	{
+		return $this->get_content_sharing_url() != '';
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
 	public function get_content_sharing_url()
 	{
-		return 'http://www.facebook.com/share.php?u=' . HOST . REWRITED_SCRIPT;
+		return '';
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function get_identifiers_creation_url()
 	{
-		return 'https://developers.facebook.com';
+		return '';
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function get_share_image_renderer_html()
 	{
 		$tpl = new FileTemplate('SocialNetworks/share_image_render.tpl');
 		$tpl->put_all(array(
-			'ID' => self::SOCIAL_NETWORK_ID,
+			'ICON_NAME' => $this->get_icon_name(),
 			'NAME' => $this->get_name()
 		));
 		return $tpl->render();
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function has_authentication()
 	{
-		return true;
+		return $this->get_external_authentication() !== false && $this->get_external_authentication() instanceof ExternalAuthentication;
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function get_external_authentication()
 	{
-		return new FacebookExternalAuthentication();
+		return false;
 	}
 }
 ?>

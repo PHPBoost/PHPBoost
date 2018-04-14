@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class TwitterSocialNetwork implements SocialNetwork
+class TwitterSocialNetwork extends AbstractSocialNetwork
 {
 	const SOCIAL_NETWORK_ID = 'twitter';
 	
@@ -33,30 +33,15 @@ class TwitterSocialNetwork implements SocialNetwork
 	{
 		return 'Twitter';
 	}
-
+	
 	public function get_content_sharing_url()
 	{
 		return 'https://twitter.com/share?url=' . HOST . REWRITED_SCRIPT;
 	}
-
+	
 	public function get_identifiers_creation_url()
 	{
 		return 'http://twitter.com/apps';
-	}
-
-	public function get_share_image_renderer_html()
-	{
-		$tpl = new FileTemplate('SocialNetworks/share_image_render.tpl');
-		$tpl->put_all(array(
-			'ID' => self::SOCIAL_NETWORK_ID,
-			'NAME' => $this->get_name()
-		));
-		return $tpl->render();
-	}
-
-	public function has_authentication()
-	{
-		return true;
 	}
 
 	public function get_external_authentication()

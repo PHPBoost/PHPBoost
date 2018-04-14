@@ -54,7 +54,7 @@ class TwitterExternalAuthentication implements ExternalAuthentication
 	{
 		$tpl = new FileTemplate('SocialNetworks/auth_image_render.tpl');
 		$tpl->put_all(array(
-			'ID' => TwitterSocialNetwork::SOCIAL_NETWORK_ID,
+			'ICON_NAME' => $this->get_social_network()->get_icon_name(),
 			'NAME' => $this->get_social_network()->get_name()
 		));
 		return $tpl->render();

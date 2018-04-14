@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class LinkedInSocialNetwork implements SocialNetwork
+class LinkedInSocialNetwork extends AbstractSocialNetwork
 {
 	const SOCIAL_NETWORK_ID = 'linkedin';
 	
@@ -33,32 +33,17 @@ class LinkedInSocialNetwork implements SocialNetwork
 	{
 		return 'LinkedIn';
 	}
-
+	
 	public function get_content_sharing_url()
 	{
 		return 'https://www.linkedin.com/shareArticle?mini=true&url=' . HOST . REWRITED_SCRIPT;
 	}
-
+	
 	public function get_identifiers_creation_url()
 	{
 		return 'https://www.linkedin.com/secure/developer';
 	}
-
-	public function get_share_image_renderer_html()
-	{
-		$tpl = new FileTemplate('SocialNetworks/share_image_render.tpl');
-		$tpl->put_all(array(
-			'ID' => self::SOCIAL_NETWORK_ID,
-			'NAME' => $this->get_name()
-		));
-		return $tpl->render();
-	}
-
-	public function has_authentication()
-	{
-		return true;
-	}
-
+	
 	public function get_external_authentication()
 	{
 		return new LinkedInExternalAuthentication();
