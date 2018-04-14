@@ -123,6 +123,7 @@ $lang['dissociate_account_admin'] = 'Dissociate the account';
 
 $lang['share'] = 'Share';
 $lang['share_on'] = 'Share on';
+$lang['share_by'] = 'Share by';
 $lang['share.menu'] = 'Social network menu';
 
 // Ranks

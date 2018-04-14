@@ -36,14 +36,16 @@ class ContentSharingActionsMenuLink
 	private $image_render_html;
 	private $tpl;
 	private $onclick_tag;
+	private $kernel_element;
 
-	public function __construct($id, $name, Url $url, $image_render_html, Template $tpl = null, $onclick_tag = 'javascript:window.open(this.href, \'\', \'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=700\');return false;')
+	public function __construct($id, $name, Url $url, $image_render_html, Template $tpl = null, $onclick_tag = 'javascript:window.open(this.href, \'\', \'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=700\');return false;', $kernel_element = false)
 	{
 		$this->id = $id;
 		$this->name = $name;
 		$this->url = $url;
 		$this->image_render_html = $image_render_html;
 		$this->onclick_tag = $onclick_tag;
+		$this->kernel_element = $kernel_element;
 
 		if ($tpl instanceof Template)
 		{
@@ -86,7 +88,7 @@ class ContentSharingActionsMenuLink
 			'C_ONCLICK_TAG'   	=> !empty($this->onclick_tag),
 			'ID'              	=> $this->id,
 			'U_LINK'          	=> $this->get_url()->rel(),
-			'NAME'            	=> LangLoader::get_message('share_on', 'user-common') . " " . $this->name,
+			'NAME'            	=> (!$this->kernel_element ? LangLoader::get_message('share_on', 'user-common') . ' ' : '') . $this->name,
 			'IMG_RENDER_HTML' 	=> $this->image_render_html,
 			'ONCLICK_TAG' 		=> $this->onclick_tag,
 		));

@@ -77,8 +77,8 @@ class KernelExtensionPointProvider extends ExtensionPointProvider
 	public function content_sharing_actions_menu_links()
 	{
 		return array(
-			new ContentSharingActionsMenuLink('mail', LangLoader::get_message('email', 'user-common'), new Url('mailto:?subject='. TITLE . '&body=' . HOST . REWRITED_SCRIPT), (new FileTemplate('framework/content/share/share_email_image_render.tpl'))->render(), null, ''),
-			new ContentSharingActionsMenuLink('print', LangLoader::get_message('printable_version', 'main'), new Url('#'), (new FileTemplate('framework/content/share/share_print_image_render.tpl'))->render(), null, 'javascript:window.print()')
+			new ContentSharingActionsMenuLink('mail', LangLoader::get_message('share_by', 'user-common') . ' ' . LangLoader::get_message('email', 'user-common'), new Url('mailto:?subject='. TITLE . '&body=' . HOST . REWRITED_SCRIPT), (new FileTemplate('framework/content/share/share_email_image_render.tpl'))->render(), null, '', true),
+			new ContentSharingActionsMenuLink('print', LangLoader::get_message('printable_version', 'main'), new Url('#'), (new FileTemplate('framework/content/share/share_print_image_render.tpl'))->render(), null, 'javascript:window.print()', true)
 		);
 	}
 }

@@ -122,6 +122,7 @@ $lang['dissociate_account_admin'] = 'Dissocier le compte';
 
 $lang['share'] = 'Partager';
 $lang['share_on'] = 'Partager sur';
+$lang['share_by'] = 'Partager par';
 $lang['share.menu'] = 'Menu réseaux sociaux';
 
 // Ranks
