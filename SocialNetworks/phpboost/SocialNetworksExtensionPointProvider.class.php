@@ -34,29 +34,34 @@ class SocialNetworksExtensionPointProvider extends ExtensionPointProvider
 	{
 		parent::__construct('SocialNetworks');
 	}
-
+	
+	public function content_sharing_actions_menu_links()
+	{
+		$social_networks_list = new SocialNetworksList();
+		return $social_networks_list->get_sharing_links_list();
+	}
+	
 	public function css_files()
 	{
 		$module_css_files = new ModuleCssFiles();
 		$module_css_files->adding_always_displayed_file('SocialNetworks.css');
 		return $module_css_files;
 	}
-
-	public function url_mappings()
-	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/SocialNetworks/index.php')));
-	}
-
+	
 	public function external_authentications()
 	{
 		$social_networks_list = new SocialNetworksList();
 		return new ExternalAuthenticationsExtensionPoint($social_networks_list->get_external_authentications_list());
 	}
-
-	public function content_sharing_actions_menu_links()
+	
+	public function menus()
 	{
-		$social_networks_list = new SocialNetworksList();
-		return $social_networks_list->get_sharing_links_list();
+		return new ModuleMenus(array(new SocialNetworksModuleMiniMenu()));
+	}
+	
+	public function url_mappings()
+	{
+		return new UrlMappings(array(new DispatcherUrlMapping('/SocialNetworks/index.php')));
 	}
 }
 ?>
