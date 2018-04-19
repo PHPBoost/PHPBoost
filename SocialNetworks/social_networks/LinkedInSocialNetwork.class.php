@@ -36,7 +36,7 @@ class LinkedInSocialNetwork extends AbstractSocialNetwork
 	
 	public function get_content_sharing_url()
 	{
-		return 'https://www.linkedin.com/shareArticle?mini=true&url=' . HOST . REWRITED_SCRIPT;
+		return 'https://www.linkedin.com/shareArticle?mini=true&url=' . HOST . REWRITED_SCRIPT . (defined('TITLE') ? '&title='. TITLE : '') . '&source='. HOST;
 	}
 	
 	public function get_identifiers_creation_url()

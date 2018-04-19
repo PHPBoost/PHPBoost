@@ -40,18 +40,13 @@ session_start();
 require_once PATH_TO_ROOT . '/SocialNetworks/lib/google/Google_Client.php';
 require_once PATH_TO_ROOT . '/SocialNetworks/lib/google/contrib/Google_Oauth2Service.php';
 
-class GoogleAuthenticationMethod extends AuthenticationMethod
+class GoogleAuthenticationMethod extends AbstractSocialNetworkAuthenticationMethod
 {
-	/**
-	 * @var DBQuerier
-	 */
-	private $querier;
 	private $google_client;
 	private $google_auth;
 	
 	public function __construct()
 	{
-		$this->querier = PersistenceContext::get_querier();
 		$config = SocialNetworksConfig::load();
 
 		$this->google_client = new Google_Client();
@@ -65,117 +60,12 @@ class GoogleAuthenticationMethod extends AuthenticationMethod
 		$this->google_auth = new Google_Oauth2Service($this->google_client);
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	public function associate($user_id, $data = array())
+	protected function get_external_authentication()
 	{
-		if (!$data)
-			$data = $this->get_user_data();
-
-		if ($data)
-		{
-			$authentication_method_columns = array(
-				'user_id' => $user_id,
-				'method' => GoogleSocialNetwork::SOCIAL_NETWORK_ID,
-				'identifier' => $data['id'],
-				'data' => TextHelper::serialize($data)
-			);
-			try {
-				$this->querier->insert(DB_TABLE_AUTHENTICATION_METHOD, $authentication_method_columns);
-			} catch (SQLQuerierException $ex) {
-				throw new IllegalArgumentException('User Id ' . $user_id .
-					' is already associated with an authentication method [' . $ex->getMessage() . ']');
-			}
-		}
-		else
-			$this->error_msg = LangLoader::get_message('external-auth.email-not-found', 'user-common');
+		return new GoogleExternalAuthentication();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function dissociate($user_id)
-	{
-		if ($this->querier->count(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id', array('user_id' => $user_id)) > 1)
-		{
-			try {
-				$this->querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id AND method=:method', array(
-					'user_id' => $user_id,
-					'method' => GoogleSocialNetwork::SOCIAL_NETWORK_ID
-				));
-			} catch (SQLQuerierException $ex) {
-				throw new IllegalArgumentException('User Id ' . $user_id .
-					' is already dissociated with an authentication method [' . $ex->getMessage() . ']');
-			}
-			if (isset($_SESSION['google_token']))
-				unset($_SESSION['google_token']);
-		}
-	}
-
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function authenticate()
-	{
-		$user_id = 0;
-		$data = $this->get_user_data();
-
-		if ($data)
-		{
-			try {
-				$user_id = $this->querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', 'WHERE method=:method AND identifier=:identifier',  array('method' => GoogleSocialNetwork::SOCIAL_NETWORK_ID, 'identifier' => $data['id']));
-			} catch (RowNotFoundException $e) {
-				
-				if (!empty($data['email']))
-				{
-					$email_exists = $this->querier->row_exists(DB_TABLE_MEMBER, 'WHERE email=:email', array('email' => $data['email']));
-					if ($email_exists || !AppContext::get_current_user()->is_guest())
-					{
-						if (!AppContext::get_current_user()->is_guest())
-							$this->associate(AppContext::get_current_user()->get_id(), $data);
-						else
-							$this->error_msg = LangLoader::get_message('external-auth.account-exists', 'user-common');
-					}
-					else
-					{
-						$user = new User();
-						
-						if (empty($data['name']))
-						{
-							$mail_split = explode('@', $data['email']);
-							$name = $mail_split[0];
-							$user->set_display_name(utf8_decode($name));
-						}
-						else
-							$user->set_display_name(utf8_decode($data['name']));
-						
-						$user->set_level(User::MEMBER_LEVEL);
-						$user->set_email($data['email']);
-						
-						$auth_method = new GoogleAuthenticationMethod();
-						$fields_data = array('user_avatar' => $data['picture']);
-						return UserService::create($user, $auth_method, $fields_data, $data);
-					}
-				}
-				else
-					$this->error_msg = LangLoader::get_message('external-auth.email-not-found', 'user-common');
-			}
-		}
-		else
-			$this->error_msg = LangLoader::get_message('external-auth.email-not-found', 'user-common');
-		
-		$this->check_user_bannishment($user_id);
-		
-		if (!$this->error_msg)
-		{
-			$this->update_user_last_connection_date($user_id);
-			return $user_id;
-		}
-	}
-
-	private function get_user_data()
+	protected function get_user_data()
 	{
 		$request = AppContext::get_request();
 		
@@ -185,29 +75,32 @@ class GoogleAuthenticationMethod extends AuthenticationMethod
 			$this->google_client->revokeToken();
 			AppContext::get_response()->redirect($this->google_client->getRedirectUri());
 		}
-
+		
 		if ($request->has_getparameter('code')) 
 		{
 			$this->google_client->authenticate($request->get_getvalue('code'));
 			$_SESSION['google_token'] = $this->google_client->getAccessToken();
 			AppContext::get_response()->redirect($this->google_client->getRedirectUri());
 		}
-
+		
 		if (isset($_SESSION['google_token'])) 
-		{
 			$this->google_client->setAccessToken($_SESSION['google_token']);
-		}
-
+		
 		if ($this->google_client->getAccessToken()) 
 		{
-			$user 				= $this->google_auth->userinfo->get();
-			$_SESSION['google_token'] 	= $this->google_client->getAccessToken();
-			return $user;
+			$user = $this->google_auth->userinfo->get();
+			return array_merge($user, array('picture_url' => $user['picture']));
+		}
+		else if ($request->has_getparameter('error') && ($request->get_getvalue('error') == 'access_denied'))
+		{
+			$authenticate_type = $request->get_value('authenticate', false);
+			if ($authenticate_type && $authenticate_type != PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
+				AppContext::get_response()->redirect(UserUrlBuilder::edit_profile(AppContext::get_current_user()->get_id())->rel());
+			else
+				AppContext::get_response()->redirect(Environment::get_home_page());
 		}
 		else 
-		{
 			AppContext::get_response()->redirect($this->google_client->createAuthUrl());
-		}
 	}
 }
 ?>

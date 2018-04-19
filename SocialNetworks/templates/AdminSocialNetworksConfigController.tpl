@@ -56,9 +56,9 @@ SocialNetwork.prototype = {
 			success: function(returnData){
 				if (returnData.id != '') {
 					if (returnData.display) {
-						jQuery("#change-display-" + returnData.id).html('<i class="fa fa-eye" title="{@field.display}"></i>');
+						jQuery("#change-display-" + returnData.id).html('<i class="fa fa-eye" title="{@admin.display_share_link}"></i>');
 					} else {
-						jQuery("#change-display-" + returnData.id).html('<i class="fa fa-eye-slash" title="{@field.not_display}"></i>');
+						jQuery("#change-display-" + returnData.id).html('<i class="fa fa-eye-slash" title="{@admin.hide_share_link}"></i>');
 					}
 				}
 			}
@@ -77,7 +77,7 @@ jQuery(document).ready(function() {
 </script>
 <form action="{REWRITED_SCRIPT}" method="post" onsubmit="SocialNetworks.serialize_sortable();">
 	<fieldset id="social_networks_management">
-	<legend>${LangLoader::get_message('admin.order.manage', 'common', 'SocialNetworks')}</legend>
+	<legend>{@admin.order.manage}</legend>
 		<ul id="social_networks_list" class="sortable-block">
 			# START social_networks_list #
 				<li class="sortable-element" id="list-{social_networks_list.ID}" data-id="{social_networks_list.ID}">
@@ -88,7 +88,7 @@ jQuery(document).ready(function() {
 						<div class="sortable-actions">
 							<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{social_networks_list.ID}" onclick="return false;"><i class="fa fa-arrow-up"></i></a>
 							<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{social_networks_list.ID}" onclick="return false;"><i class="fa fa-arrow-down"></i></a>
-							<a href="" onclick="return false;" id="change-display-{social_networks_list.ID}"><i # IF social_networks_list.C_DISPLAY #class="fa fa-eye" title="{@field.display}"# ELSE #class="fa fa-eye-slash" title="{@field.not_display}"# ENDIF #></i></a>
+							<a href="" onclick="return false;" id="change-display-{social_networks_list.ID}"><i # IF social_networks_list.C_DISPLAY #class="fa fa-eye" title="{@admin.display_share_link}"# ELSE #class="fa fa-eye-slash" title="{@admin.hide_share_link}"# ENDIF #></i></a>
 						</div>
 					</div>
 					<div class="spacer"></div>

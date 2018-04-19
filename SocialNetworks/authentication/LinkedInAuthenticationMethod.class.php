@@ -35,19 +35,16 @@
  * @package {@package}
  */
 
+session_start();
+
 require_once PATH_TO_ROOT . '/SocialNetworks/lib/linkedin/LinkedIn.php';
 
-class LinkedInAuthenticationMethod extends AuthenticationMethod
+class LinkedInAuthenticationMethod extends AbstractSocialNetworkAuthenticationMethod
 {
-	/**
-	 * @var DBQuerier
-	 */
-	private $querier;
 	private $linkedin;
 	
 	public function __construct()
 	{
-		$this->querier = PersistenceContext::get_querier();
 		$config = SocialNetworksConfig::load();
 		
 		$this->linkedin = new LinkedIn\LinkedIn(array(
@@ -57,119 +54,12 @@ class LinkedInAuthenticationMethod extends AuthenticationMethod
 		));
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	public function associate($user_id, $data = array())
+	protected function get_external_authentication()
 	{
-		if (!$data)
-			$data = $this->get_user_data();
-
-		if ($data)
-		{
-			$authentication_method_columns = array(
-				'user_id' => $user_id,
-				'method' => LinkedInSocialNetwork::SOCIAL_NETWORK_ID,
-				'identifier' => $data['id'],
-				'data' => TextHelper::serialize($data)
-			);
-			try {
-				$this->querier->insert(DB_TABLE_AUTHENTICATION_METHOD, $authentication_method_columns);
-			} catch (SQLQuerierException $ex) {
-				throw new IllegalArgumentException('User Id ' . $user_id .
-					' is already associated with an authentication method [' . $ex->getMessage() . ']');
-			}
-		}
-		else
-			$this->error_msg = LangLoader::get_message('external-auth.email-not-found', 'user-common');
+		return new LinkedInExternalAuthentication();
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function dissociate($user_id)
-	{
-		if ($this->querier->count(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id', array('user_id' => $user_id)) > 1)
-		{
-			try {
-				$this->querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id AND method=:method', array(
-					'user_id' => $user_id,
-					'method' => LinkedInSocialNetwork::SOCIAL_NETWORK_ID
-				));
-			} catch (SQLQuerierException $ex) {
-				throw new IllegalArgumentException('User Id ' . $user_id .
-					' is already dissociated with an authentication method [' . $ex->getMessage() . ']');
-			}
-			if (isset($_SESSION['linkedin_token']))
-				unset($_SESSION['linkedin_token']);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function authenticate()
-	{
-		$user_id = 0;
-		$data = $this->get_user_data();
-		
-		if ($data)
-		{
-			try {
-				$user_id = $this->querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', 'WHERE method=:method AND identifier=:identifier',  array('method' => LinkedInSocialNetwork::SOCIAL_NETWORK_ID, 'identifier' => $data['id']));
-			} catch (RowNotFoundException $e) {
-				
-				if (!empty($data['email']))
-				{
-					$email_exists = $this->querier->row_exists(DB_TABLE_MEMBER, 'WHERE email=:email', array('email' => $data['email']));
-					if ($email_exists || !AppContext::get_current_user()->is_guest())
-					{
-						if (!AppContext::get_current_user()->is_guest())
-							$this->associate(AppContext::get_current_user()->get_id(), $data);
-						else
-							$this->error_msg = LangLoader::get_message('external-auth.account-exists', 'user-common');
-					}
-					else
-					{
-						$user = new User();
-						
-						if (empty($data['name']))
-						{
-							$mail_split = explode('@', $data['email']);
-							$name = $mail_split[0];
-							$user->set_display_name(utf8_decode($name));
-						}
-						else
-							$user->set_display_name(utf8_decode($data['name']));
-						
-						$user->set_level(User::MEMBER_LEVEL);
-						$user->set_email($data['email']);
-						
-						$auth_method = new LinkedInAuthenticationMethod();
-						if (!empty($data['picture_url']))
-							$fields_data = array('user_avatar' => $data['picture_url']);
-						else
-							$fields_data = array();
-						return UserService::create($user, $auth_method, $fields_data, $data);
-					}
-				}
-				else
-					$this->error_msg = LangLoader::get_message('external-auth.email-not-found', 'user-common');
-			}
-		}
-		else
-			$this->error_msg = LangLoader::get_message('external-auth.email-not-found', 'user-common');
-		
-		$this->check_user_bannishment($user_id);
-		
-		if (!$this->error_msg)
-		{
-			$this->update_user_last_connection_date($user_id);
-			return $user_id;
-		}
-	}
-
-	private function get_user_data()
+	
+	protected function get_user_data()
 	{
 		$scope = array(
 			LinkedIn\LinkedIn::SCOPE_BASIC_PROFILE, 
@@ -178,11 +68,11 @@ class LinkedInAuthenticationMethod extends AuthenticationMethod
 		
 		$request = AppContext::get_request();
 		
-		if ($request->has_getparameter('code')) 
-			$_SESSION['linkedin_token'] = $this->linkedin->getAccessToken($request->get_getvalue('code'));
+		if ($request->has_getparameter('code'))
+			$_SESSION[LinkedInSocialNetwork::SOCIAL_NETWORK_ID . '_token'] = $this->linkedin->getAccessToken($request->get_getvalue('code'));
 		
-		if (isset($_SESSION['linkedin_token']))
-			$this->linkedin->setAccessToken($_SESSION['linkedin_token']);
+		if (isset($_SESSION[LinkedInSocialNetwork::SOCIAL_NETWORK_ID . '_token']))
+			$this->linkedin->setAccessToken($_SESSION[LinkedInSocialNetwork::SOCIAL_NETWORK_ID . '_token']);
 
 		if ($this->linkedin->hasAccessToken())
 		{
@@ -194,6 +84,14 @@ class LinkedInAuthenticationMethod extends AuthenticationMethod
 				'name' => $user['firstName'] . ' ' . $user['lastName'],
 				'picture_url' => isset($user['pictureUrl']) ? $user['pictureUrl'] : ''
 			);
+		}
+		else if ($request->has_getparameter('error') && ($request->get_getvalue('error') == 'access_denied'))
+		{
+			$authenticate_type = $request->get_value('authenticate', false);
+			if ($authenticate_type && $authenticate_type != PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
+				AppContext::get_response()->redirect(UserUrlBuilder::edit_profile(AppContext::get_current_user()->get_id())->rel());
+			else
+				AppContext::get_response()->redirect(Environment::get_home_page());
 		}
 		else 
 			AppContext::get_response()->redirect($this->linkedin->getLoginUrl($scope));

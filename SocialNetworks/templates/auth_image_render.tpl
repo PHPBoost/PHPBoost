@@ -1,1 +1,1 @@
-<i class="fa fa-{ICON_NAME}"></i>
+<i class="fa fa-fw fa-{ICON_NAME}"></i># IF C_DISPLAY_NAME # {NAME}# ENDIF #

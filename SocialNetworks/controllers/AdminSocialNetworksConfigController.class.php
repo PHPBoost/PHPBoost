@@ -104,7 +104,7 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 		$this->config = SocialNetworksConfig::load();
 		$this->server_configuration = new ServerConfiguration();
 		$this->view = new FileTemplate('SocialNetworks/AdminSocialNetworksConfigController.tpl');
-		$this->view->add_lang(LangLoader::get('admin-user-common'));
+		$this->view->add_lang($this->lang);
 		
 		$social_networks_list = new SocialNetworksList();
 		$this->social_networks = $social_networks_list->get_social_networks_list();

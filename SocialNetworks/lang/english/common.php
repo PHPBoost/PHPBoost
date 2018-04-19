@@ -44,6 +44,8 @@ $lang['authentication.config.client-secret'] = ':name Secret';
 
 //Configuration
 $lang['admin.order.manage'] = 'Social networks display order';
+$lang['admin.display_share_link'] = 'Display share link';
+$lang['admin.hide_share_link'] = 'Hide share link';
 
 //Sign in label
 $lang['sign-in-label'] = 'Sign in with :name';

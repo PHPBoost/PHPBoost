@@ -28,47 +28,21 @@
 /**
  * @author Julien BRISWALTER <j1.seth@phpboost.com>
  */
-class LinkedInExternalAuthentication implements ExternalAuthentication
+class LinkedInExternalAuthentication extends AbstractSocialNetworkExternalAuthentication
 {
 	public function get_authentication_id()
 	{
 		return LinkedInSocialNetwork::SOCIAL_NETWORK_ID;
 	}
 	
-	public function get_social_network()
+	protected function get_social_network()
 	{
 		return new LinkedInSocialNetwork();
 	}
-
-	public function get_authentication_name()
-	{
-		return StringVars::replace_vars(LangLoader::get_message('sign-in-label', 'common', 'SocialNetworks'), array('name' => $this->get_social_network()->get_name()));
-	}
-
-	public function authentication_actived()
-	{
-		return SocialNetworksConfig::load()->is_authentication_available(LinkedInSocialNetwork::SOCIAL_NETWORK_ID);
-	}
-
-	public function get_image_renderer_html()
-	{
-		$tpl = new FileTemplate('SocialNetworks/auth_image_render.tpl');
-		$tpl->put_all(array(
-			'ICON_NAME' => $this->get_social_network()->get_icon_name(),
-			'NAME' => $this->get_social_network()->get_name()
-		));
-		return $tpl->render();
-	}
-
+	
 	public function get_authentication()
 	{
 		return new LinkedInAuthenticationMethod();
-	}
-
-	public function delete_session_token()
-	{
-		if (isset($_SESSION['linkedin_token']))
-			unset($_SESSION['linkedin_token']);
 	}
 }
 ?>
