@@ -64,14 +64,6 @@ abstract class AbstractSocialNetwork implements SocialNetwork
 	/**
 	 * {@inheritdoc}
 	 */
-	public function get_identifiers_creation_url()
-	{
-		return '';
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
 	public function get_share_image_renderer_html()
 	{
 		$tpl = new FileTemplate('SocialNetworks/share_image_render.tpl');
@@ -93,6 +85,22 @@ abstract class AbstractSocialNetwork implements SocialNetwork
 	public function get_external_authentication()
 	{
 		return false;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function authentication_identifiers_needed()
+	{
+		return true;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_identifiers_creation_url()
+	{
+		return '';
 	}
 }
 ?>

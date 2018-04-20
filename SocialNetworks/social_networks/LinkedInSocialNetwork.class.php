@@ -39,14 +39,14 @@ class LinkedInSocialNetwork extends AbstractSocialNetwork
 		return 'https://www.linkedin.com/shareArticle?mini=true&url=' . HOST . REWRITED_SCRIPT . (defined('TITLE') ? '&title='. TITLE : '') . '&source='. HOST;
 	}
 	
-	public function get_identifiers_creation_url()
-	{
-		return 'https://www.linkedin.com/secure/developer';
-	}
-	
 	public function get_external_authentication()
 	{
 		return new LinkedInExternalAuthentication();
+	}
+	
+	public function get_identifiers_creation_url()
+	{
+		return 'https://www.linkedin.com/secure/developer';
 	}
 }
 ?>

@@ -71,16 +71,14 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 			{
 				$sn = new $this->social_networks[$id]();
 				
-				if ($sn->has_content_sharing_url())
-				{
-					$this->view->assign_block_vars('social_networks_list', array(
-						'C_DISPLAY' => $this->config->is_content_sharing_enabled($id),
-						'ID' => $id,
-						'NAME' => $sn->get_name(),
-						'ICON_NAME' => $sn->get_icon_name()
-					));
-					$social_networks_number++;
-				}
+				$this->view->assign_block_vars('social_networks_list', array(
+					'C_SHARING_CONTENT' => $sn->has_content_sharing_url(),
+					'C_DISPLAY' => $this->config->is_content_sharing_enabled($id),
+					'ID' => $id,
+					'NAME' => $sn->get_name(),
+					'ICON_NAME' => $sn->get_icon_name()
+				));
+				$social_networks_number++;
 			}
 		}
 		
@@ -125,25 +123,34 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 				
 				if ($sn->has_authentication())
 				{
-					$fieldset->add_field(new FormFieldCheckbox($id . '_authentication_enabled', StringVars::replace_vars($this->lang['authentication.config.authentication-enabled'], array('name' => $sn->get_name())), $this->config->is_authentication_enabled($id),
-						array('description' => StringVars::replace_vars($this->lang['authentication.config.authentication-enabled-explain'], array('identifiers_creation_url' => $sn->get_identifiers_creation_url(), 'callback_url' => UserUrlBuilder::connect($id)->absolute())), 'events' => array('click' => '
-							if (HTMLForms.getField("' . $id . '_authentication_enabled").getValue()) { 
-								HTMLForms.getField("' . $id . '_client_id").enable(); 
-								HTMLForms.getField("' . $id . '_client_secret").enable(); 
-							} else { 
-								HTMLForms.getField("' . $id . '_client_id").disable(); 
-								HTMLForms.getField("' . $id . '_client_secret").disable(); 
-							}'
-						)
-					)));
-					
-					$fieldset->add_field(new FormFieldTextEditor($id . '_client_id', StringVars::replace_vars($this->lang['authentication.config.client-id'], array('name' => $sn->get_name())), $this->config->get_client_id($id), 
-						array('required' => true, 'hidden' => !$this->config->is_authentication_enabled($id))
-					));
-					
-					$fieldset->add_field(new FormFieldPasswordEditor($id . '_client_secret', StringVars::replace_vars($this->lang['authentication.config.client-secret'], array('name' => $sn->get_name())), $this->config->get_client_secret($id), 
-						array('required' => true, 'hidden' => !$this->config->is_authentication_enabled($id))
-					));
+					if ($sn->authentication_identifiers_needed())
+					{
+						$fieldset->add_field(new FormFieldCheckbox($id . '_authentication_enabled', StringVars::replace_vars($this->lang['authentication.config.authentication-enabled'], array('name' => $sn->get_name())), $this->config->is_authentication_enabled($id),
+							array('description' => StringVars::replace_vars($this->lang['authentication.config.authentication-enabled-explain'], array('identifiers_creation_url' => $sn->get_identifiers_creation_url(), 'callback_url' => UserUrlBuilder::connect($id)->absolute())), 'events' => array('click' => '
+								if (HTMLForms.getField("' . $id . '_authentication_enabled").getValue()) { 
+									HTMLForms.getField("' . $id . '_client_id").enable(); 
+									HTMLForms.getField("' . $id . '_client_secret").enable(); 
+								} else { 
+									HTMLForms.getField("' . $id . '_client_id").disable(); 
+									HTMLForms.getField("' . $id . '_client_secret").disable(); 
+								}'
+							)
+						)));
+						
+						$fieldset->add_field(new FormFieldTextEditor($id . '_client_id', StringVars::replace_vars($this->lang['authentication.config.client-id'], array('name' => $sn->get_name())), $this->config->get_client_id($id), 
+							array('required' => true, 'hidden' => !$this->config->is_authentication_enabled($id))
+						));
+						
+						$fieldset->add_field(new FormFieldPasswordEditor($id . '_client_secret', StringVars::replace_vars($this->lang['authentication.config.client-secret'], array('name' => $sn->get_name())), $this->config->get_client_secret($id), 
+							array('required' => true, 'hidden' => !$this->config->is_authentication_enabled($id))
+						));
+					}
+					else
+					{
+						$fieldset->add_field(new FormFieldCheckbox($id . '_authentication_enabled', StringVars::replace_vars($this->lang['authentication.config.authentication-enabled'], array('name' => $sn->get_name())), $this->config->is_authentication_enabled($id),
+							array('description' => $this->lang['authentication.config.no-identifier-needed'])
+						));
+					}
 				}
 			}
 		}
@@ -176,8 +183,11 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 					if ($this->form->get_value($id . '_authentication_enabled'))
 					{
 						$authentications_enabled[] = $id;
-						$client_ids[$id] = $this->form->get_value($id . '_client_id');
-						$client_secrets[$id] = $this->form->get_value($id . '_client_secret');
+						if ($sn->authentication_identifiers_needed())
+						{
+							$client_ids[$id] = $this->form->get_value($id . '_client_id');
+							$client_secrets[$id] = $this->form->get_value($id . '_client_secret');
+						}
 					}
 				}
 			}
@@ -192,7 +202,7 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 			{
 				$sn = new $social_network();
 				
-				if ($sn->has_authentication())
+				if ($sn->has_authentication() && $sn->authentication_identifiers_needed())
 				{
 					$this->form->get_field_by_id($id . '_client_id')->set_hidden(!$this->config->is_authentication_enabled($id));
 					$this->form->get_field_by_id($id . '_client_secret')->set_hidden(!$this->config->is_authentication_enabled($id));

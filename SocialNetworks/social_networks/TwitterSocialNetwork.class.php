@@ -39,14 +39,14 @@ class TwitterSocialNetwork extends AbstractSocialNetwork
 		return 'https://twitter.com/share?url=' . HOST . REWRITED_SCRIPT . (defined('TITLE') ? '&text='. TITLE : '');
 	}
 	
-	public function get_identifiers_creation_url()
-	{
-		return 'http://twitter.com/apps';
-	}
-
 	public function get_external_authentication()
 	{
 		return new TwitterExternalAuthentication();
+	}
+	
+	public function get_identifiers_creation_url()
+	{
+		return 'http://twitter.com/apps';
 	}
 }
 ?>

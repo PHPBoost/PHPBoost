@@ -44,14 +44,14 @@ class GoogleSocialNetwork extends AbstractSocialNetwork
 		return 'https://plus.google.com/share?url=' . HOST . REWRITED_SCRIPT;
 	}
 	
-	public function get_identifiers_creation_url()
-	{
-		return 'https://console.developers.google.com/project';
-	}
-	
 	public function get_external_authentication()
 	{
 		return new GoogleExternalAuthentication();
+	}
+	
+	public function get_identifiers_creation_url()
+	{
+		return 'https://console.developers.google.com/project';
 	}
 }
 ?>

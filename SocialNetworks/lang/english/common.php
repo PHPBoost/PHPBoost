@@ -41,11 +41,13 @@ Specify the following callback URL during configuration:<br/>
 <b>:callback_url</b>';
 $lang['authentication.config.client-id'] = ':name Id or Key';
 $lang['authentication.config.client-secret'] = ':name Secret';
+$lang['authentication.config.no-identifier-needed'] = 'No identifier needed for this social network';
 
 //Configuration
 $lang['admin.order.manage'] = 'Social networks display order';
 $lang['admin.display_share_link'] = 'Display share link';
 $lang['admin.hide_share_link'] = 'Hide share link';
+$lang['admin.no_sharing_content_url'] = 'This social network does not have share content link, it will not be displayed in content sharing list but only in authentication methods list if it is enabled.';
 
 //Sign in label
 $lang['sign-in-label'] = 'Sign in with :name';

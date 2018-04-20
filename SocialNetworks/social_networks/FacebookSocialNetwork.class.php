@@ -39,14 +39,14 @@ class FacebookSocialNetwork extends AbstractSocialNetwork
 		return 'http://www.facebook.com/share.php?u=' . HOST . REWRITED_SCRIPT;
 	}
 	
-	public function get_identifiers_creation_url()
-	{
-		return 'https://developers.facebook.com';
-	}
-	
 	public function get_external_authentication()
 	{
 		return new FacebookExternalAuthentication();
+	}
+	
+	public function get_identifiers_creation_url()
+	{
+		return 'https://developers.facebook.com';
 	}
 }
 ?>

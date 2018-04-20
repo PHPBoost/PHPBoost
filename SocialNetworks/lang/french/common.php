@@ -41,11 +41,13 @@ Indiquez l\'URL de redirection suivante lors de la configuration :<br/>
 <b>:callback_url</b>';
 $lang['authentication.config.client-id'] = ':name Id ou Key';
 $lang['authentication.config.client-secret'] = ':name Secret';
+$lang['authentication.config.no-identifier-needed'] = 'Aucun identifiant n\'est nécessaire pour ce réseau social';
 
 //Configuration
 $lang['admin.order.manage'] = 'Ordre d\'affichage des réseaux sociaux';
 $lang['admin.display_share_link'] = 'Afficher le lien de partage';
 $lang['admin.hide_share_link'] = 'Cacher le lien de partage';
+$lang['admin.no_sharing_content_url'] = 'Ce réseau social n\'a pas de lien de partage, il n\'apparaîtra pas dans la liste des liens de partage mais uniquement dans la liste des modes de connexion si celle-ci est activée.';
 
 //Sign in label
 $lang['sign-in-label'] = 'Connexion :name';

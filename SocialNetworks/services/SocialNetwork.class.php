@@ -51,11 +51,6 @@ interface SocialNetwork
 	function get_content_sharing_url();
 
 	/**
-	 * @return string Identifiers creation url
-	 */
-	function get_identifiers_creation_url();
-
-	/**
 	 * @return string contains HTML share tag image rendering
 	 */
 	function get_share_image_renderer_html();
@@ -69,5 +64,15 @@ interface SocialNetwork
 	 * @return ExternalAuthentication class
 	 */
 	function get_external_authentication();
+
+	/**
+	 * @return bool true if the social network needs identifiers (API keys) to be configured
+	 */
+	function authentication_identifiers_needed();
+
+	/**
+	 * @return string Identifiers creation url
+	 */
+	function get_identifiers_creation_url();
 }
 ?>
