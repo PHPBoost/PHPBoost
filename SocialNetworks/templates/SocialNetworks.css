@@ -46,29 +46,31 @@ a.social-connect span {
 /* -- Color Social network -- */
 /* -------------------------- */
 .discord    { background-color: #7289DA; }
-.facebook   { background-color: #3B5998; }
-.flickr     { background-color: #FF0084; }
+.facebook   { background-color: #3b5998; }
+.flickr     { background-color: #f40083; }
 .github     { background-color: #24292E; }
-.google     { background-color: #DD4b39; }
-.instagram  { background-color: #517FA4; }
+.googleplus { background-color: #DD4b39; }
+.google     { background-color: #4285f4; }
+.instagram  { background-color: #c32aa3; }
 .line       { background-color: #00b900; }
-.linkedin   { background-color: #0077B6; }
+.linkedin   { background-color: #0077B5; }
 .pinterest  { background-color: #BD081C; }
 .reddit     { background-color: #FF4500; }
 .skype      { background-color: #00AFF0; }
-.slack      { background-color: #E01563; }
+.slack      { background-color: #4d394b; }
 .snapchat   { background-color: #FFFC00; }
 .soundcloud { background-color: #FF8800; }
-.spotify    { background-color: #1DB954; }
-.steam      { background-color: #00ADEE; }
+.spotify    { background-color: #1ed760; }
+.steam      { background-color: #171A21; }
 .telegram   { background-color: #0088CC; }
-.tumblr     { background-color: #32506D; }
+.tumblr     { background-color: #35465d; }
 .twitch     { background-color: #6441A4; }
-.twitter    { background-color: #00ACED; }
+.twitter    { background-color: #1da1f2; }
 .viber      { background-color: #675CA8; }
 .wechat     { background-color: #7BB32E; }
 .whatsapp   { background-color: #25D366; }
-.youtube    { background-color: #BB0000; }
+.yahoo      { background-color: #430297; }
+.youtube    { background-color: #ff0000; }
 
 
 /* -- Configuration -- */
