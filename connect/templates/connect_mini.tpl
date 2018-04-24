@@ -59,7 +59,7 @@
 						<input type="hidden" name="token" value="{TOKEN}">
 					</form>
 					# START external_auth #
-						<a class="social-connect {external_auth.ID}" href="{external_auth.U_CONNECT}" title="{external_auth.NAME}">{external_auth.IMAGE_HTML}</a>
+						<a class="{external_auth.CSS_CLASS}" href="{external_auth.U_CONNECT}" title="{external_auth.NAME}">{external_auth.IMAGE_HTML}</a>
 					# END external_auth #
 				</div>
 				# ENDIF #

@@ -35,13 +35,23 @@ class SocialNetworksList
 	function get_implementing_classes($interface_name)
 	{
 		$folder = new Folder(PATH_TO_ROOT . '/SocialNetworks/social_networks');
-		$classes_files = $folder->get_files();
 		$classes = array();
-		foreach ($classes_files as $class)
+		
+		foreach ($folder->get_files() as $class)
 		{
 			$name = str_replace('.class.php', '', $class->get_name());
-			if (in_array($interface_name, class_implements($name)))
+			if (ClassLoader::is_class_registered_and_valid($name) && in_array($interface_name, class_implements($name)))
 				$classes[] = $name;
+		}
+		
+		$additional_social_networks = SocialNetworksConfig::load()->get_additional_social_networks();
+		if (is_array($additional_social_networks))
+		{
+			foreach (SocialNetworksConfig::load()->get_additional_social_networks() as $class)
+			{
+				if (ClassLoader::is_class_registered_and_valid($class) && in_array($interface_name, class_implements($class)))
+					$classes[] = $class;
+			}
 		}
 		
 		return $classes;
@@ -121,7 +131,7 @@ class SocialNetworksList
 			if (in_array($id, $enabled_content_sharing))
 			{
 				$sn = new $social_network();
-				$sharing_links[] = new ContentSharingActionsMenuLink($id, $sn->get_name(), new Url($sn->get_content_sharing_url()), $sn->get_share_image_renderer_html());
+				$sharing_links[] = new ContentSharingActionsMenuLink($sn->get_css_class(), $sn->get_name(), new Url($sn->get_content_sharing_url()), $sn->get_share_image_renderer_html());
 			}
 		}
 		

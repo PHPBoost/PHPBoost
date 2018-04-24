@@ -36,9 +36,14 @@ interface SocialNetwork
 	function get_name();
 	
 	/**
-	 * @return string Icon of the social network
+	 * @return string Icon of the social network (usually its id)
 	 */
 	function get_icon_name();
+	
+	/**
+	 * @return string CSS class name of the social network (usually its id)
+	 */
+	function get_css_class();
 
 	/**
 	 * @return bool true if the social network has a content sharing url
@@ -69,6 +74,11 @@ interface SocialNetwork
 	 * @return bool true if the social network needs identifiers (API keys) to be configured
 	 */
 	function authentication_identifiers_needed();
+
+	/**
+	 * @return bool true if the social network needs API secret with the API Key / ID to be configured
+	 */
+	function authentication_client_secret_needed();
 
 	/**
 	 * @return string Identifiers creation url

@@ -44,7 +44,15 @@ abstract class AbstractSocialNetwork implements SocialNetwork
 	{
 		return static::SOCIAL_NETWORK_ID;
 	}
-
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_css_class()
+	{
+		return static::SOCIAL_NETWORK_ID;
+	}
+	
 	/**
 	 * {@inheritdoc}
 	 */
@@ -52,7 +60,7 @@ abstract class AbstractSocialNetwork implements SocialNetwork
 	{
 		return $this->get_content_sharing_url() != '';
 	}
-
+	
 	/**
 	 * {@inheritdoc}
 	 */
@@ -60,7 +68,7 @@ abstract class AbstractSocialNetwork implements SocialNetwork
 	{
 		return '';
 	}
-
+	
 	/**
 	 * {@inheritdoc}
 	 */
@@ -70,7 +78,7 @@ abstract class AbstractSocialNetwork implements SocialNetwork
 		$tpl->put('ICON_NAME', $this->get_icon_name());
 		return $tpl->render();
 	}
-
+	
 	/**
 	 * {@inheritdoc}
 	 */
@@ -78,7 +86,7 @@ abstract class AbstractSocialNetwork implements SocialNetwork
 	{
 		return $this->get_external_authentication() !== false && $this->get_external_authentication() instanceof ExternalAuthentication;
 	}
-
+	
 	/**
 	 * {@inheritdoc}
 	 */
@@ -86,7 +94,7 @@ abstract class AbstractSocialNetwork implements SocialNetwork
 	{
 		return false;
 	}
-
+	
 	/**
 	 * {@inheritdoc}
 	 */
@@ -95,6 +103,14 @@ abstract class AbstractSocialNetwork implements SocialNetwork
 		return true;
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function authentication_client_secret_needed()
+	{
+		return true;
+	}
+	
 	/**
 	 * {@inheritdoc}
 	 */

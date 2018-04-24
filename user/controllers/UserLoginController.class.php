@@ -143,7 +143,8 @@ class UserLoginController extends AbstractController
 				'U_CONNECT' => UserUrlBuilder::connect($id)->rel(),
 				'ID' => $id,
 				'NAME' => $authentication->get_authentication_name(),
-				'IMAGE_HTML' => $authentication->get_image_renderer_html()
+				'IMAGE_HTML' => $authentication->get_image_renderer_html(),
+				'CSS_CLASS' => $authentication->get_css_class()
 			));
 		}
 		

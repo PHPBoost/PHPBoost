@@ -70,6 +70,14 @@ abstract class AbstractSocialNetworkExternalAuthentication implements ExternalAu
 	/**
 	 * {@inheritdoc}
 	 */
+	public function get_css_class()
+	{
+		return 'social-connect ' . $this->get_social_network()->get_css_class();
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
 	abstract public function get_authentication();
 	
 	/**

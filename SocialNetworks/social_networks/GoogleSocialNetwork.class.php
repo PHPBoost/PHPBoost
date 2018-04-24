@@ -39,6 +39,11 @@ class GoogleSocialNetwork extends AbstractSocialNetwork
 		return self::SOCIAL_NETWORK_ID . '-plus';
 	}
 	
+	public function get_css_class()
+	{
+		return self::SOCIAL_NETWORK_ID . 'plus';
+	}
+	
 	public function get_content_sharing_url()
 	{
 		return 'https://plus.google.com/share?url=' . HOST . REWRITED_SCRIPT;

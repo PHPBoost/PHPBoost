@@ -30,11 +30,12 @@
  */
 class SocialNetworksConfig extends AbstractConfigData
 {
-	const AUTHENTICATIONS_ENABLED = 'authentications_enabled';
-	const CLIENT_IDS              = 'client_ids';
-	const CLIENT_SECRETS          = 'client_secrets';
-	const CONTENT_SHARING_ENABLED = 'content_sharing_enabled';
-	const SOCIAL_NETWORKS_ORDER   = 'social_networks_order';
+	const AUTHENTICATIONS_ENABLED      = 'authentications_enabled';
+	const CLIENT_IDS                   = 'client_ids';
+	const CLIENT_SECRETS               = 'client_secrets';
+	const CONTENT_SHARING_ENABLED      = 'content_sharing_enabled';
+	const SOCIAL_NETWORKS_ORDER        = 'social_networks_order';
+	const ADDITIONAL_SOCIAL_NETWORKS   = 'additional_social_networks';
 	
 	 /**
 	 * @method Get enabled authentications
@@ -164,14 +165,48 @@ class SocialNetworksConfig extends AbstractConfigData
 		$this->set_property(self::SOCIAL_NETWORKS_ORDER, $array);
 	}
 	
+	 /**
+	 * @method Get additional social networks (from other modules)
+	 */
+	public function get_additional_social_networks()
+	{
+		return $this->get_property(self::ADDITIONAL_SOCIAL_NETWORKS);
+	}
+	
+	 /**
+	 * @method Add additional social network
+	 * @params string $value additional social network
+	 */
+	public function add_additional_social_networks($value)
+	{
+		$additional_social_networks = $this->get_property(self::ADDITIONAL_SOCIAL_NETWORKS);
+		$additional_social_networks[] = $value;
+		$this->set_property(self::ADDITIONAL_SOCIAL_NETWORKS, $additional_social_networks);
+	}
+	
+	 /**
+	 * @method Remove additional social network
+	 * @params string $value additional social network
+	 */
+	public function remove_additional_social_networks($value)
+	{
+		$key = array_search($value, $additional_social_networks);
+		if ($key !== false)
+		{
+			unset($additional_social_networks[$key]);
+			$this->set_property(self::ADDITIONAL_SOCIAL_NETWORKS, $additional_social_networks);
+		}
+	}
+	
 	public function get_default_values()
 	{
 		return array(
-			self::AUTHENTICATIONS_ENABLED => array(),
-			self::CLIENT_IDS              => array(),
-			self::CLIENT_SECRETS          => array(),
-			self::CONTENT_SHARING_ENABLED => array(FacebookSocialNetwork::SOCIAL_NETWORK_ID, GoogleSocialNetwork::SOCIAL_NETWORK_ID, TwitterSocialNetwork::SOCIAL_NETWORK_ID),
-			self::SOCIAL_NETWORKS_ORDER   => array()
+			self::AUTHENTICATIONS_ENABLED    => array(),
+			self::CLIENT_IDS                 => array(),
+			self::CLIENT_SECRETS             => array(),
+			self::CONTENT_SHARING_ENABLED    => array(FacebookSocialNetwork::SOCIAL_NETWORK_ID, GoogleSocialNetwork::SOCIAL_NETWORK_ID, TwitterSocialNetwork::SOCIAL_NETWORK_ID),
+			self::SOCIAL_NETWORKS_ORDER      => array(),
+			self::ADDITIONAL_SOCIAL_NETWORKS => array()
 		);
 	}
 

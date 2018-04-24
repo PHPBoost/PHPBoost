@@ -83,7 +83,7 @@ jQuery(document).ready(function() {
 				<li class="sortable-element" id="list-{social_networks_list.ID}" data-id="{social_networks_list.ID}">
 					<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
 					<div class="sortable-title">
-						<span class="social-connect {social_networks_list.ID}"><i class="fa fa-fw fa-{social_networks_list.ICON_NAME}"></i></span>
+						<span class="social-connect {social_networks_list.CSS_CLASS}"><i class="fa fa-fw fa-{social_networks_list.ICON_NAME}"></i></span>
 						{social_networks_list.NAME}
 						<div class="sortable-actions">
 							<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{social_networks_list.ID}" onclick="return false;"><i class="fa fa-arrow-up"></i></a>

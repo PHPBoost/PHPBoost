@@ -51,6 +51,11 @@ interface ExternalAuthentication
 	function get_image_renderer_html();
 
 	/**
+	 * @return string contains css class for button rendering
+	 */
+	function get_css_class();
+
+	/**
 	 * @return AuthenticationMethod class
 	 */
 	function get_authentication();
