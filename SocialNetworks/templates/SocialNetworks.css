@@ -1,11 +1,86 @@
 /* -- Social Connect -- */
 /* -------------------- */
+.more-element-social {
+	position: relative;
+	margin: 5px 0 0 0;
+	padding: 0;
+}
+
+@media (min-width: 769px) {
+	.more-element-social {
+		margin: 20px 0 5px 0;
+	}
+}
+
+.social-button {
+	display: none;
+}
+
+.social-elements-list {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	flex-direction: row;
+	-ms-flex-direction: row;
+	-webkit-flex-direction: row;
+	text-align: center;
+	justify-content: center;
+	-ms-flex-pack: center;
+	-webkit-justify-content: center;
+	flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	-webkit-flex-wrap: wrap;
+}
+
+@media (min-width: 769px) {
+	.social-elements-list {
+		justify-content: flex-start;
+		-ms-flex-pack: flex-start;
+		-webkit-justify-content: flex-start;
+	}
+}
+
+.social-element {
+	flex: 0 0 auto;
+	-ms-flex: 0 0 auto;
+	-webkit-flex: 0 0 auto;
+}
+
+@media (min-width: 769px) {
+	.social-element {
+	margin: 0 0.309em 0.309em 0;
+	}
+}
+
+.social-element a {
+	display: block;
+	padding: 6px 20px 10px 20px;
+}
+
+@media (max-width: 768px) {
+	.social-element a {
+		font-size: 1.2em;
+		width: 90%;
+		display: block;
+		margin: 20px 0 0 0;
+		padding: 6px 30px 10px 23px;
+	}
+}
+
 a.social-connect {
 	display: inline-block;
 	vertical-align: middle;
 	padding: 0.309em;
 	text-align: center;
 	font-size: 0.618em;
+}
+
+a.social-connect.login-page {
+	display: block;
+	margin: 0.809em 0;
 }
 
 .horizontal-fieldset a.social-connect {
@@ -77,3 +152,7 @@ a.social-connect span {
 /* -------------------------- */
 .sortable-block .sortable-title { padding: 8px 5px 10px 10px; }
 .sortable-block .sortable-title > span { font-size: .6em; }
+
+/* --- Mini Module
+--------------------------------- */
+#module-mini-social-networks {}
