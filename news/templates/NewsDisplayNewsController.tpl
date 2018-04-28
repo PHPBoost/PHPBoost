@@ -2,7 +2,7 @@
 	<header>
 		<h1>
 			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
-			{@news}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small"></i></a># ENDIF #
+			{@news}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit small"></i></a># ENDIF #
 		</h1>
 	</header>
 	<div class="elements-container">
@@ -17,10 +17,10 @@
 					<span itemprop="name">{NAME}</span>
 					<span class="actions">
 						# IF C_EDIT #
-							<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+							<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit"></i></a>
 						# ENDIF #
 						# IF C_DELETE #
-							<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
+							<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-delete"></i></a>
 						# ENDIF #
 					</span>
 				</h2>
@@ -28,7 +28,7 @@
 				<div class="more">
 					# IF C_AUTHOR_DISPLAYED #
 					<span class="more-element more-element-author">
-						<i class="fa fa-user-o"></i>
+						<i class="fas fa-user-o"></i>
 						# IF C_AUTHOR_CUSTOM_NAME #
 							{AUTHOR_CUSTOM_NAME}
 						# ELSE #
@@ -41,7 +41,7 @@
 						<i class="fa fa-calendar"></i> <time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE}# ELSE #{DIFFERED_START_DATE}# ENDIF #</time>
 					</span> | 
 					<span class="more-element more-element-category">
-						<i class="fa fa-folder-o"></i> <a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
+						<i class="far fa-folder"></i> <a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
 					</span>
 					# IF C_COMMENTS_ENABLED # | <span class="more-element more-element-comments"><a href="#comments-list" title="${LangLoader::get_message('comments.link','comments-common')}"># IF C_COMMENTS #{NUMBER_COMMENTS}# ENDIF # {L_COMMENTS}</a></span># ENDIF #
 					# IF C_NB_VIEW_ENABLED # | <span title="{NUMBER_VIEW} {@news.view}" class="more-element more-element-view"><i class="fa fa-eye"></i> {NUMBER_VIEW}</span># ENDIF #

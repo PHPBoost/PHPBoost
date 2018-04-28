@@ -12,7 +12,7 @@
 			{INDEX_TEXT}
 			<div class="options">
 				<a href="{PATH_TO_ROOT}/wiki/{U_EXPLORER}" title="{L_EXPLORER}">
-					<i class="fa fa-folder-open"></i>
+					<i class="far fa-folder-open"></i>
 					{L_EXPLORER}
 				</a>
 			</div>
@@ -27,7 +27,7 @@
 					<div class="wiki-list-content">
 						# START cat_list.list #
 							<div class="wiki-list-item">
-								<i class="fa fa-folder-o small"></i> <a href="{PATH_TO_ROOT}/wiki/{cat_list.list.U_CAT}">{cat_list.list.CAT}</a>
+								<i class="far fa-folder small"></i> <a href="{PATH_TO_ROOT}/wiki/{cat_list.list.U_CAT}">{cat_list.list.CAT}</a>
 							</div>
 						# END cat_list.list #
 					</div>
@@ -49,7 +49,7 @@
 					<div class="wiki-list-content">
 						# START last_articles.list #
 							<div class="wiki-list-item">
-								<i class="fa fa-file-text-o small"></i> <a href="{PATH_TO_ROOT}/wiki/{last_articles.list.U_ARTICLE}" class="wiki-list-element">{last_articles.list.ARTICLE}</a>
+								<i class="far fa-file-alt small"></i> <a href="{PATH_TO_ROOT}/wiki/{last_articles.list.U_ARTICLE}" class="wiki-list-element">{last_articles.list.ARTICLE}</a>
 							</div>
 						# END last_articles.list #
 						{L_NO_ARTICLE}

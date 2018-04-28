@@ -8,8 +8,8 @@
 					# ENDIF #
 					# IF C_TOOLS_AUTH #
 						<a href="{U_RENAME}" title="{L_RENAME}" class="fa fa-magic"></a>
-						<a href="{U_EDIT}" title="{L_EDIT}" class="fa fa-edit"></a>
-						<a href="{U_DELETE}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
+						<a href="{U_EDIT}" title="{L_EDIT}" class="far fa-edit"></a>
+						<a href="{U_DELETE}" title="{L_DELETE}" class="far fa-delete" data-confirmation="delete-element"></a>
 					# ENDIF #
 					# IF C_PRINT #
 						<a href="{U_PRINT}" title="{L_PRINT}" class="fa fa-print"></a>

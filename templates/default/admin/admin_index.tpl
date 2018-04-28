@@ -38,7 +38,7 @@
 			</div>
 			
 			<div class="quick-access">
-				<h2><i class="fa fa-angle-double-right"></i> {L_QUICK_ACCESS}</h2>
+				<h2><i class="fas fa-angle-double-right"></i> {L_QUICK_ACCESS}</h2>
 				<div class="fieldset-inset elements-container columns-3 no-style">
 					<div class="block">
 						<h3><i class="fa fa-fw fa-cogs"></i> {L_SITE_MANAGEMENT}</h3>
@@ -98,7 +98,7 @@
 						<div class="fieldset-inset">
 							<div class="form-element">
 								# START comments_list #
-									<a href="{comments_list.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+									<a href="{comments_list.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="far fa-delete" data-confirmation="delete-element"></a>
 									<a href="{comments_list.U_LINK}">
 										<i class="fa fa-hand-o-right"></i>
 									</a>
@@ -115,7 +115,7 @@
 					
 					<form action="admin_index.php" method="post">
 						<div class="admin-index-user-online">
-							<h2><i class="fa fa-user"></i> {L_USER_ONLINE}</h2>
+							<h2><i class="fas fa-user"></i> {L_USER_ONLINE}</h2>
 							<div class="fieldset-inset-user">
 								<div class="form-element">
 									<table id="table">
@@ -166,7 +166,7 @@
 					
 					<form action="admin_index.php" method="post">
 						<div class="admin-index-writting-pad">
-							<h2><i class="fa fa-edit"></i> {L_WRITING_PAD}</h2>
+							<h2><i class="far fa-edit"></i> {L_WRITING_PAD}</h2>
 							<div class="fieldset-inset">
 								<div class="form-element">
 									<textarea id="writing_pad_content" name="writing_pad_content">{WRITING_PAD_CONTENT}</textarea> 

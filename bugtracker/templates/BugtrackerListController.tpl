@@ -110,8 +110,8 @@
 				<td # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
 					<a href="{bug.U_CHANGE_STATUS}" title="{@actions.change_status}"><i class="fa fa-gears"></i></a>
 					<a href="{bug.U_HISTORY}" title="{@actions.history}"><i class="fa fa-history"></i></a>
-					<a href="{bug.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
-					<a href="{bug.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-delete"></i></a>
+					<a href="{bug.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit"></i></a>
+					<a href="{bug.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}"><i class="far fa-delete"></i></a>
 				</td>
 				# ENDIF #
 			</tr>

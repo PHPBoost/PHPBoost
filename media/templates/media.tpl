@@ -3,7 +3,7 @@
 		<header>
 			<h1>
 				<a href="${relative_url(SyndicationUrlBuilder::rss('media', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
-				${LangLoader::get_message('module_title', 'common', 'media')}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small"></i></a># ENDIF #
+				${LangLoader::get_message('module_title', 'common', 'media')}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit small"></i></a># ENDIF #
 			</h1>
 			# IF C_CATEGORY_DESCRIPTION #
 				<div class="cat-description">
@@ -69,15 +69,15 @@
 						# IF C_MODO #
 							<span class="actions">
 								<a href="{file.U_ADMIN_UNVISIBLE_MEDIA}" class="fa fa-eye-slash" title="{L_UNAPROBED}"></a>
-								<a href="{file.U_ADMIN_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
-								<a href="{file.U_ADMIN_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+								<a href="{file.U_ADMIN_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'common')}" class="far fa-edit"></a>
+								<a href="{file.U_ADMIN_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'common')}" class="far fa-delete" data-confirmation="delete-element"></a>
 							</span>
 						# ENDIF #
 					</h2>
 				</header>
 
 				<div class="more">
-						<i class="fa fa-user-o"></i> {file.AUTHOR} |
+						<i class="fas fa-user-o"></i> {file.AUTHOR} |
 						<i class="fa fa-eye"></i> {file.COUNT}
 						# IF C_DISPLAY_COMMENTS #
 							 | <i class="fa fa-comments-o"></i> {file.U_COM_LINK}
@@ -114,7 +114,7 @@
 <section id="module-media">
 	<header>
 		<h1>
-			${LangLoader::get_message('module_title', 'common', 'media')}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small"></i></a># ENDIF #
+			${LangLoader::get_message('module_title', 'common', 'media')}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit small"></i></a># ENDIF #
 		</h1>
 	</header>
 	<div class="content">
@@ -128,8 +128,8 @@
 						# ENDIF #
 						# IF C_MODO #
 							<a href="{U_UNVISIBLE_MEDIA}" class="fa fa-eye-slash" title="{L_UNAPROBED}"></a>
-							<a href="{U_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
-							<a href="{U_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+							<a href="{U_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'common')}" class="far fa-edit"></a>
+							<a href="{U_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'common')}" class="far fa-delete" data-confirmation="delete-element"></a>
 						# ENDIF #
 					</span>
 				</h2>

@@ -4,7 +4,7 @@
         <span><</span>h2>
             <span><</span>span>Lorem Ipsum<span><</span>/span>
             <span><</span>span class="actions">
-                <span><</span>a href="#" class="fa fa-edit" title="edit"><span><</span>/a>
+                <span><</span>a href="#" class="far fa-edit" title="edit"><span><</span>/a>
                 <span><</span>a href="#" class="fa fa-trash" title="delete"><span><</span>/a>
             <span><</span>/span>
         <span><</span>/h2>

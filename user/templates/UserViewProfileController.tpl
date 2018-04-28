@@ -5,7 +5,7 @@
 		<div class="form-element user-profile-edit">
 			<label>{@profile.edit}</label>
 			<div class="form-field form-field-free">
-				<a href="{U_EDIT_PROFILE}" title="{@profile.edit}"><i class="fa fa-edit"></i></a>
+				<a href="{U_EDIT_PROFILE}" title="{@profile.edit}"><i class="far fa-edit"></i></a>
 			</div>
 		</div>
 		# ENDIF #

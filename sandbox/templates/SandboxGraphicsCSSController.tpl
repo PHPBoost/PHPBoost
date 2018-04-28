@@ -62,7 +62,7 @@
 				<h2>
 					<span>{@css.page.title}</span>
 					<span class="actions">
-						<a href="#" class="fa fa-edit" title="{@css.edit}"></a>
+						<a href="#" class="far fa-edit" title="{@css.edit}"></a>
 						<a href="#" class="fa fa-trash" title="{@css.delete}"></a>
 					</span>
 				</h2>
@@ -284,10 +284,10 @@
 			<div class="content">
 				<ul>
 					<li>{@css.rss_feed} : <a href="#" class="fa fa-syndication" title="{@css.rss_feed}"></a></li>
-					<li>{@css.edit} : <a href="#" class="fa fa-edit" title="{@css.edit}"></a></li>
-					<li>{@css.delete} : <a href="#" class="fa fa-delete" title="{@css.delete}"></a></li>
-					<li>{@css.delete.confirm} : <a href="#" class="fa fa-delete" data-confirmation="delete-element" title="{@css.delete.confirm}"></a></li>
-					<li>{@css.delete.confirm.custom} : <a href="#" class="fa fa-delete" data-confirmation="{@css.delete.custom_message}" title="{@css.delete.confirm.custom}"></a></li>
+					<li>{@css.edit} : <a href="#" class="far fa-edit" title="{@css.edit}"></a></li>
+					<li>{@css.delete} : <a href="#" class="far fa-delete" title="{@css.delete}"></a></li>
+					<li>{@css.delete.confirm} : <a href="#" class="far fa-delete" data-confirmation="delete-element" title="{@css.delete.confirm}"></a></li>
+					<li>{@css.delete.confirm.custom} : <a href="#" class="far fa-delete" data-confirmation="{@css.delete.custom_message}" title="{@css.delete.confirm.custom}"></a></li>
 				</ul>
 			</div>
 		</article>
@@ -316,7 +316,7 @@
 										<li class="sub"><a id="class_1" href="#" title="{@css.cat} 1"><i class="fa fa-folder"></i>{@css.cat} 1</a><span id="cat_1"></span></li>
 										<li class="sub">
 											<a class="parent" href="javascript:show_cat_contents(2, 0);" title="{@css.cat} 2">
-												<span class="fa fa-minus-square-o" id="img2_2"></span><span class="fa fa-folder-open" id ="img_2"></span>
+												<span class="far fa-minus-square" id="img2_2"></span><span class="far fa-folder-open" id ="img_2"></span>
 											</a>
 											<a class="selected" id="class_2" href="#" title="{@css.cat} 2">{@css.cat} 2</a>
 											<span id="cat_2">
@@ -538,8 +538,8 @@
 						<div class="message-date">
 							<span class="actions">
 								<a itemprop="url" href="#com2" title="#2">#2</a>
-								<a href="#" class="fa fa-edit" title="{@css.edit}"></a>
-								<a href="#" class="fa fa-delete" data-confirmation="delete-element" title="{@css.delete.confirm}"></a>
+								<a href="#" class="far fa-edit" title="{@css.edit}"></a>
+								<a href="#" class="far fa-delete" data-confirmation="delete-element" title="{@css.delete.confirm}"></a>
 							</span>
 							<span itemprop="datePublished" content="2013-09-05T15:37:01+00:00">{@css.messages.date}</span>
 						</div>

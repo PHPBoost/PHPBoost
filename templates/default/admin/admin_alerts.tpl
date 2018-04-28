@@ -154,7 +154,7 @@ function delete_alert(id)
 					<td>
 						{alerts.ACTIONS}
 						<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" title="# IF alerts.C_PROCESSED #{L_UNFIX}# ELSE #{L_FIX}# ENDIF #" id="status_{alerts.ID}"><i class="fa # IF alerts.C_PROCESSED #fa-success# ELSE #fa-error# ENDIF #"></i></a>
-						<a href="javascript:delete_alert('{alerts.ID}');" title="{L_DELETE}" class="fa fa-delete"></a>
+						<a href="javascript:delete_alert('{alerts.ID}');" title="{L_DELETE}" class="far fa-delete"></a>
 					</td>
 				</tr>
 				# END alerts #

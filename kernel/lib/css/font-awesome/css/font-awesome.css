@@ -2361,7 +2361,7 @@
 .fa-syndication:before { /* copie RSS */
   content: "\f09e";
 }
-.fa-delete:before { /* copie Trash */
+.far fa-delete:before { /* copie Trash */
   content: "\f014";
 }
 .fa-forbidden:before { /* copie minus-circle */

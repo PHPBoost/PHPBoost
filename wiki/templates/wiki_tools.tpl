@@ -24,7 +24,7 @@
 						# ENDIF #
 						# IF C_DELETE #
 						<li><a href="{U_DELETE}" title="{L_DELETE}" data-confirmation="delete-element" class="cssmenu-title">
-							<i class="fa fa-fw fa-delete"></i> {L_DELETE}
+							<i class="fa fa-fw far fa-delete"></i> {L_DELETE}
 						</a></li>
 						# ENDIF #
 						# IF C_RENAME #

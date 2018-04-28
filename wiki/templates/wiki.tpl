@@ -22,7 +22,7 @@
 					<div style="width:30%;">
 					{redirect.REDIRECTED}
 						# START redirect.remove_redirection #
-							<a href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" title="{redirect.remove_redirection.L_REMOVE_REDIRECTION}" class="fa fa-delete" data-confirmation="{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}"></a>
+							<a href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" title="{redirect.remove_redirection.L_REMOVE_REDIRECTION}" class="far fa-delete" data-confirmation="{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}"></a>
 						# END redirect.remove_redirection #
 					</div>
 					<div class="spacer"></div>
@@ -54,7 +54,7 @@
 							<div class="wiki-list-content">
 								# START cat.list_cats #
 									<div class="wiki-list-item">
-										<i class="fa fa-folder-o"></i> <a href="{cat.list_cats.U_CAT}">{cat.list_cats.NAME}</a>
+										<i class="far fa-folder"></i> <a href="{cat.list_cats.U_CAT}">{cat.list_cats.NAME}</a>
 									</div>
 								# END cat.list_cats #
 								# START cat.no_sub_cat #

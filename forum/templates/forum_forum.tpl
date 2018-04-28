@@ -103,7 +103,7 @@
 							<th class="forum-announce-topic"><i class="fa fa-eye"></i></th>
 							<th class="forum-fixed-topic"><i class="fa fa-check"></i></th>
 							<th class="forum-topic" title="{L_TOPIC}"><i class="fa fa-file-o hidden-small-screens"></i><span class="hidden-large-screens">{L_TOPIC}</span></th>
-							<th class="forum-author"><i class="fa fa-user-o fa-fw hidden-small-screens" title="{L_AUTHOR}"></i><span class="hidden-large-screens">{L_AUTHOR}</span></th>
+							<th class="forum-author"><i class="fas fa-user-o fa-fw hidden-small-screens" title="{L_AUTHOR}"></i><span class="hidden-large-screens">{L_AUTHOR}</span></th>
 							<th class="forum-message-nb"><i class="fa fa-comments-o fa-fw hidden-small-screens" title="{L_ANSWERS}"></i><span class="hidden-large-screens">{L_ANSWERS}</span></th>
 							<th class="forum-view"><i class="fa fa-eye fa-fw hidden-small-screens" title="{L_VIEW}"></i><span class="hidden-large-screens">{L_VIEW}</span></th>
 							<th class="forum-last-topic"><i class="fa fa-clock-o fa-fw hidden-small-screens" title="{L_LAST_MESSAGE}"></i><span class="hidden-large-screens">{L_LAST_MESSAGE}</span></th>
@@ -165,7 +165,7 @@
 						</td>
 						<td class="forum-last-topic">
 							<span class="last-topic-title"><i class="fa fa-hand-o-right fa-fw"></i> <a href={topics.LAST_MSG_URL} title="{topics.TITLE}">{topics.LAST_MSG_DATE_FULL}</a></span>
-							<span class="last-topic-user"> <i class="fa fa-user-o fa-fw"></i>
+							<span class="last-topic-user"> <i class="fas fa-user-o fa-fw"></i>
 							# IF topics.C_LAST_MSG_GUEST #
 							<a href="{topics.LAST_MSG_USER_PROFIL}" class="{topics.LAST_MSG_USER_LEVEL}"{topics.LAST_MSG_USER_GROUP_COLOR}>{topics.LAST_MSG_USER_LOGIN}</a>
 							# ELSE #

@@ -9,7 +9,7 @@
 	</p>
 	<p>
 		<input type="hidden" name="token" value="{TOKEN}">
-		<button type="submit" name="" value="true"><i class="fa fa-envelope-o"></i></button>
+		<button type="submit" name="" value="true"><i class="far fa-envelope"></i></button>
 	</p>
 	<p class="newsletter-link">
 		<a href="${relative_url(NewsletterUrlBuilder::archives())}" class="small">{@newsletter.archives}</a>
@@ -23,7 +23,7 @@
 			<input type="text" name="mail_newsletter" maxlength="50" value="{USER_MAIL}" placeholder="${LangLoader::get_message('email', 'user-common')}">
 			<input type="hidden" name="subscribe" value="subscribe">
 			<input type="hidden" name="token" value="{TOKEN}">
-			<button type="submit" class="newsletter-submit submit"><i class="fa fa-envelope-o"></i></button>
+			<button type="submit" class="newsletter-submit submit"><i class="far fa-envelope"></i></button>
 		</div>
 	</form>
 </div>

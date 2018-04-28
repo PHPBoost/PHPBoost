@@ -2,7 +2,7 @@
 	<header>
 		<h1>
 			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
-			{@articles}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small"></i></a># ENDIF #
+			{@articles}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit small"></i></a># ENDIF #
 		</h1>
 	</header>
 	<div class="elements-container">
@@ -13,10 +13,10 @@
 					<span itemprop="name">{TITLE}</span>
 					<span class="actions">
 						# IF C_EDIT #
-							<a href="{U_EDIT_ARTICLE}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+							<a href="{U_EDIT_ARTICLE}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit"></i></a>
 						# ENDIF #
 						# IF C_DELETE #
-							<a href="{U_DELETE_ARTICLE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
+							<a href="{U_DELETE_ARTICLE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-delete"></i></a>
 						# ENDIF #
 							<a href="{U_PRINT_ARTICLE}" title="${LangLoader::get_message('printable_version', 'main')}" target="blank"><i class="fa fa-print"></i></a>
 					</span>
@@ -24,7 +24,7 @@
 
 				<div class="more">
 					# IF C_AUTHOR_DISPLAYED #
-					<i class="fa fa-user-o" title="${LangLoader::get_message('author', 'common')}"></i>
+					<i class="fas fa-user-o" title="${LangLoader::get_message('author', 'common')}"></i>
 						# IF C_AUTHOR_CUSTOM_NAME #
 							{AUTHOR_CUSTOM_NAME}
 						# ELSE #
@@ -36,7 +36,7 @@
 					# IF C_COMMENTS_ENABLED #
 						&nbsp;|&nbsp;<i class="fa fa-comments-o" title="${LangLoader::get_message('comments', 'comments-common')}"></i><a itemprop="discussionUrl" class="small" href="{U_COMMENTS}">&nbsp;{L_COMMENTS}</a>
 					# ENDIF #
-					&nbsp;|&nbsp;<i class="fa fa-folder-o" title="${LangLoader::get_message('category', 'categories-common')}"></i>&nbsp;<a itemprop="about" class="small" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
+					&nbsp;|&nbsp;<i class="far fa-folder" title="${LangLoader::get_message('category', 'categories-common')}"></i>&nbsp;<a itemprop="about" class="small" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
 					# IF C_KEYWORDS #
 					&nbsp;|&nbsp;<i title="${LangLoader::get_message('form.keywords', 'common')}" class="fa fa-tags"></i>
 						# START keywords #

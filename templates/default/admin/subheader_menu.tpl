@@ -20,7 +20,7 @@
 						<ul class="level-2">
 							<li><a href="${relative_url(AdminConfigUrlBuilder::general_config())}" title="{L_CONFIG_GENERAL}"><i class="fa fa-fw fa-cog"></i>{L_CONFIG_GENERAL}</a></li>
 							<li><a href="${relative_url(AdminConfigUrlBuilder::advanced_config())}" title="{L_CONFIG_ADVANCED}"><i class="fa fa-fw fa-cogs"></i>{L_CONFIG_ADVANCED}</a></li>
-							<li><a href="${relative_url(AdminConfigUrlBuilder::mail_config())}" title="{L_MAIL_CONFIG}"><i class="fa fa-fw fa-envelope-o"></i>{L_MAIL_CONFIG}</a></li>
+							<li><a href="${relative_url(AdminConfigUrlBuilder::mail_config())}" title="{L_MAIL_CONFIG}"><i class="far fa-envelope fa-fw"></i>{L_MAIL_CONFIG}</a></li>
 						</ul>
 					</li>
 					<li>

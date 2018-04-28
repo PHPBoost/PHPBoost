@@ -185,8 +185,8 @@
 							<span class="actions">
 								<a href="#article-pm-{pm.msg.ID}">\#{pm.msg.ID}</a>
 								# IF pm.msg.C_MODERATION_TOOLS #
-								<a href="pm.php?edit={pm.msg.ID}" title="{L_EDIT}" class="fa fa-edit"></a>
-								<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
+								<a href="pm.php?edit={pm.msg.ID}" title="{L_EDIT}" class="far fa-edit"></a>
+								<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" title="{L_DELETE}" class="far fa-delete" data-confirmation="delete-element"></a>
 								# ENDIF #
 							</span>
 							<span>${LangLoader::get_message('on', 'main')} {pm.msg.DATE_FULL}</span>

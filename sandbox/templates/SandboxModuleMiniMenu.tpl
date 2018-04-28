@@ -2,7 +2,7 @@
 	# IF C_IS_SUPERADMIN #
 	<div id="module-mini-sandbox" class="# IF C_SLIDE_RIGHT #mini-sbx-right# ELSE #mini-sbx-left# ENDIF #">
 		<a href="" class="sbx-toggle-btn# IF C_HORIZONTAL # toggle-hor# IF C_SLIDE_RIGHT # toggle-right# ELSE # toggle-left# ENDIF ## ENDIF #" onclick="openSandboxMenu('module-mini-sandbox');return false;">
-			<i class="fa fa-wrench"></i> {@module.title}
+			<i class="fas fa-wrench"></i> {@module.title}
 		</a>
 		<div class="sbx-menu">
 			<a href="" class="close-btn" onclick="openSandboxMenu('module-mini-sandbox');return false;"><i class="fa fa-window-close-o"></i> {@mini.close}</a>
@@ -150,7 +150,7 @@
 					<div class="item-4x" title="{@mini.user}/{@mini.manage}">
 						<a href="${relative_url(AdminMembersUrlBuilder::management())}">
 							<span class="icon-stack">
-								<i class="fa fa-user-o icon-main"></i>
+								<i class="fas fa-user-o icon-main"></i>
 								<i class="fa fa-list icon-sup"></i>
 							</span>
 						</a>
@@ -158,7 +158,7 @@
 					<div class="item-4x" title="{@mini.user}/{@mini.add}">
 						<a href="${relative_url(AdminMembersUrlBuilder::add())}">
 							<span class="icon-stack">
-								<i class="fa fa-user-o icon-main"></i>
+								<i class="fas fa-user-o icon-main"></i>
 								<i class="fa fa-plus icon-sup"></i>
 							</span>
 						</a>

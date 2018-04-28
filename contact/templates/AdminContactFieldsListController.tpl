@@ -108,8 +108,8 @@ jQuery(document).ready(function() {
 							<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{fields_list.ID}" onclick="return false;"><i class="fa fa-arrow-up"></i></a>
 							<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{fields_list.ID}" onclick="return false;"><i class="fa fa-arrow-down"></i></a>
 							# ENDIF #
-							<a href="{fields_list.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
-							# IF fields_list.C_DELETE #<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete-{fields_list.ID}"><i class="fa fa-delete"></i></a># ELSE #&nbsp;# ENDIF #
+							<a href="{fields_list.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit"></i></a>
+							# IF fields_list.C_DELETE #<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete-{fields_list.ID}"><i class="far fa-delete"></i></a># ELSE #&nbsp;# ENDIF #
 							# IF NOT fields_list.C_READONLY #<a href="" onclick="return false;" id="change-display-{fields_list.ID}"><i # IF fields_list.C_DISPLAY #class="fa fa-eye" title="{@field.display}"# ELSE #class="fa fa-eye-slash" title="{@field.not_display}"# ENDIF #></i></a># ELSE #&nbsp;# ENDIF #
 						</div>
 					</div>

@@ -169,8 +169,8 @@
 			{ENTITLED}
 			# IF C_WRITE_AUTH #
 			<span class="actions">
-				<a href="{U_UPDATE}" title="{L_UPDATE}" class="fa fa-edit"></a>
-				<a href="{U_DELETE}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
+				<a href="{U_UPDATE}" title="{L_UPDATE}" class="far fa-edit"></a>
+				<a href="{U_DELETE}" title="{L_DELETE}" class="far fa-delete" data-confirmation="delete-element"></a>
 			</span>
 			# ENDIF #
 			</h1>
@@ -181,7 +181,7 @@
 				<div class="unprocessed-contribution">
 					<div>
 						<a class="infos-options" href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}">
-							<i class="fa fa-wrench fa-2x"></i>
+							<i class="fas fa-wrench fa-2x"></i>
 						</a>
 						<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}">{L_PROCESS_CONTRIBUTION}</a>
 					</div>

@@ -57,7 +57,7 @@
 						html_protected_name = name.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 						html_protected_name2 = xhr_object.responseText.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 
-						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');" title="{L_EDIT}" class="fa fa-edit"></a>';
+						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');" title="{L_EDIT}" class="far fa-edit"></a>';
 						document.getElementById('img' + id_file).innerHTML = '';
 					}
 					else if( xhr_object.readyState == 4 && xhr_object.responseText == '0' )
@@ -228,7 +228,7 @@
 			# START pics #
 			<fieldset>
 				<legend>
-					{GALLERY} # IF pics.C_EDIT #<a href="{pics.U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a># ENDIF #
+					{GALLERY} # IF pics.C_EDIT #<a href="{pics.U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}" class="far fa-edit"></a># ENDIF #
 					# IF C_PAGINATION #
 					<p class="center">
 						# INCLUDE PAGINATION #
@@ -345,9 +345,9 @@
 								</tr>
 								<tr>
 									<td colspan="2" class="small">
-										&nbsp;&nbsp;&nbsp;<span id="fihref{pics.pics_max.ID}"><a href="javascript:display_rename_file('{pics.pics_max.ID}', '{pics.pics_max.RENAME}', '{pics.pics_max.RENAME_CUT}');" title="{L_EDIT}" class="fa fa-edit"></a>
+										&nbsp;&nbsp;&nbsp;<span id="fihref{pics.pics_max.ID}"><a href="javascript:display_rename_file('{pics.pics_max.ID}', '{pics.pics_max.RENAME}', '{pics.pics_max.RENAME_CUT}');" title="{L_EDIT}" class="far fa-edit"></a>
 
-										<a href="gallery.php?del={pics.pics_max.ID}&amp;cat={pics.pics_max.ID_CATEGORY}&amp;token={pics.pics_max.TOKEN}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
+										<a href="gallery.php?del={pics.pics_max.ID}&amp;cat={pics.pics_max.ID_CATEGORY}&amp;token={pics.pics_max.TOKEN}" title="{L_DELETE}" class="far fa-delete" data-confirmation="delete-element"></a>
 
 										<div id="move{pics.pics_max.ID}" class="move-pics-container">
 											<div class="bbcode-block move-pics-block" onmouseover="pics_hide_block({pics.pics_max.ID}, 1);" onmouseout="pics_hide_block({pics.pics_max.ID}, 0);">
@@ -409,7 +409,7 @@
 							<thead>
 								<tr>
 									<th colspan="{COLSPAN}">
-										{GALLERY} # IF pics.C_EDIT #<a href="{pics.U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a># ENDIF #
+										{GALLERY} # IF pics.C_EDIT #<a href="{pics.U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}" class="far fa-edit"></a># ENDIF #
 									</th>
 								</tr>
 							</thead>
@@ -426,9 +426,9 @@
 										</div>
 
 										<div class="actions-container">
-											<span id="fihref{pics.list.ID}"><a href="javascript:display_rename_file('{pics.list.ID}', '{pics.list.PROTECTED_TITLE}', '{pics.list.PROTECTED_NAME}');" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a></span>
+											<span id="fihref{pics.list.ID}"><a href="javascript:display_rename_file('{pics.list.ID}', '{pics.list.PROTECTED_TITLE}', '{pics.list.PROTECTED_NAME}');" title="${LangLoader::get_message('edit', 'common')}" class="far fa-edit"></a></span>
 
-											<a href="admin_gallery.php?del={pics.list.ID}&amp;token={TOKEN}&amp;cat={CAT_ID}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
+											<a href="admin_gallery.php?del={pics.list.ID}&amp;token={TOKEN}&amp;cat={CAT_ID}" title="{L_DELETE}" class="far fa-delete" data-confirmation="delete-element"></a>
 
 											<div id="move{pics.list.ID}" class="move-pics-container">
 												<div class="bbcode-block move-pics-block" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);">

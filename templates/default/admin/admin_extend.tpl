@@ -78,13 +78,13 @@
 					</li>
 					<li>
 						<a href="${relative_url(AdminMembersUrlBuilder::management())}">
-							<i class="fa fa-user fa-2x"></i>
+							<i class="fas fa-user fa-2x"></i>
 							<p>{@users}</p>
 						</a>
 					</li>
 					<li>
 						<a href="{PATH_TO_ROOT}/admin/admin_groups.php">
-							<i class="fa fa-users fa-2x"></i>
+							<i class="fas fa-users fa-2x"></i>
 							<p>{@users.groups}</p>
 						</a>
 					</li>

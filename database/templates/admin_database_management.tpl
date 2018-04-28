@@ -222,7 +222,7 @@
 						</li>
 						<li>
 							<a class="cssmenu-title" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp;token={TOKEN}" data-confirmation="delete-element">
-								<i class="fa fa-fw fa-delete"></i> {L_DELETE}
+								<i class="fa fa-fw far fa-delete"></i> {L_DELETE}
 							</a>
 						</li>
 					</ul>
@@ -447,7 +447,7 @@
 								{file.FILE_DATE}
 							</td>
 							<td>
-								<a href="admin_database.php?read_file={file.FILE_NAME}&amp;token={TOKEN}" title="{L_DOWNLOAD}" class="fa fa-download"></a> <a href="admin_database.php?action=restore&amp;del={file.FILE_NAME}&amp;token={TOKEN}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
+								<a href="admin_database.php?read_file={file.FILE_NAME}&amp;token={TOKEN}" title="{L_DOWNLOAD}" class="fa fa-download"></a> <a href="admin_database.php?action=restore&amp;del={file.FILE_NAME}&amp;token={TOKEN}" title="{L_DELETE}" class="far fa-delete" data-confirmation="delete-element"></a>
 							</td>
 						</tr>
 						# END file #

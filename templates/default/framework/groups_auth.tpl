@@ -43,9 +43,9 @@
 <div class="spacer"></div>
 <a class="small" href="javascript:open_advanced_auth('{IDSELECT}');">
 	# IF C_ADVANCED_AUTH_OPEN #
-	<i id="advanced_auth_plus{IDSELECT}" class="fa fa-minus-square-o"></i>
+	<i id="advanced_auth_plus{IDSELECT}" class="far fa-minus-square"></i>
 	# ELSE #
-	<i id="advanced_auth_plus{IDSELECT}" class="fa fa-plus-square-o"></i>
+	<i id="advanced_auth_plus{IDSELECT}" class="far fa-plus-square"></i>
 	# ENDIF #
 	{L_ADVANCED_AUTHORIZATION}
 </a>
@@ -109,10 +109,10 @@ function XMLHttpRequest_add_member_auth(searchid, user_id, login, alert_already_
 function open_advanced_auth(id) {
 	jQuery('#advanced_auth' + id).fadeToggle(300, function(){
 		if (jQuery(this).css('display') == 'block'){
-			jQuery('#advanced_auth_plus' + id)[0].className = 'fa fa-minus-square-o';
+			jQuery('#advanced_auth_plus' + id)[0].className = 'far fa-minus-square';
 		}
 		else{
-			jQuery('#advanced_auth_plus' + id)[0].className = 'fa fa-plus-square-o';
+			jQuery('#advanced_auth_plus' + id)[0].className = 'far fa-plus-square';
 			
 		}
 	});

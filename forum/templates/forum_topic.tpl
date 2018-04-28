@@ -252,13 +252,13 @@
 								<span class="float-right">
 									# IF C_AUTH_POST #<a href="topic{msg.U_VARS_QUOTE}#go-bottom" title="{L_QUOTE}"><i class="fa fa-quote-right"></i></a># ENDIF #
 									# IF msg.C_FORUM_MSG_EDIT #
-									<a href="post{msg.U_FORUM_MSG_EDIT}" title="{L_EDIT}"><i class="fa fa-edit"></i></a>
+									<a href="post{msg.U_FORUM_MSG_EDIT}" title="{L_EDIT}"><i class="far fa-edit"></i></a>
 									# ENDIF #
 
 									# IF msg.C_FORUM_MSG_DEL #
 										# IF msg.C_FORUM_MSG_DEL_MSG #
-									<a href="action{msg.U_FORUM_MSG_DEL}" title="{L_DELETE}" id="dimgnojs{msg.ID}"><i class="fa fa-delete"></i></a>
-									<a onclick="del_msg('{msg.ID}');" id="dimg{msg.ID}" title="{L_DELETE}"><i class="fa fa-delete del-msg"></i></a>
+									<a href="action{msg.U_FORUM_MSG_DEL}" title="{L_DELETE}" id="dimgnojs{msg.ID}"><i class="far fa-delete"></i></a>
+									<a onclick="del_msg('{msg.ID}');" id="dimg{msg.ID}" title="{L_DELETE}"><i class="far fa-delete del-msg"></i></a>
 									<script>
 									<!--
 										document.getElementById('dimgnojs{msg.ID}').style.display = 'none';
@@ -266,7 +266,7 @@
 									-->
 									</script>
 										# ELSE #
-									<a href="action{msg.U_FORUM_MSG_DEL}" title="{L_DELETE}" data-confirmation="{L_ALERT_DELETE_TOPIC}"><i class="fa fa-delete"></i></a>
+									<a href="action{msg.U_FORUM_MSG_DEL}" title="{L_DELETE}" data-confirmation="{L_ALERT_DELETE_TOPIC}"><i class="far fa-delete"></i></a>
 										# ENDIF #
 									# ENDIF #
 

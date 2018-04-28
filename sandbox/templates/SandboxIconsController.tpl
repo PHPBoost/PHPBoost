@@ -70,9 +70,9 @@
 			<h3>{@iconfa.howto.html}</h3>
 			<p>{@iconfa.howto.html.class}</p>
 			<div class="code">
-				<pre><span><</span><span>i class="fa fa-edit"><</span>/i> Edition</pre>
+				<pre><span><</span><span>i class="far fa-edit"><</span>/i> Edition</pre>
 			</div>			
-			<p>{@iconfa.howto.html.class.result.i}<i class="fa fa-edit"></i> Edition</p>
+			<p>{@iconfa.howto.html.class.result.i}<i class="far fa-edit"></i> Edition</p>
 			<div class="code">
 				<pre><span><</span>a class="fa fa-globe" href="http://www.phpboost.com">PHPBoost<<span>/a></span></pre>
 			</div>

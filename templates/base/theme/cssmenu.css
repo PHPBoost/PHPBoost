@@ -93,7 +93,8 @@ Contient les elements associes aux menus
 	position: absolute;
 	display: inline-block;
 	content: '';
-	font-family: fontawesome;
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 400;
 	font-size: 1rem;
 	top: 50%;
 	transform: translateY(-40%);
@@ -219,7 +220,8 @@ Contient les elements associes aux menus
 	padding: 0.618em;
 	display: inline-block;
 	content: '\f0c9';
-	font-family: fontawesome;
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 400;
 	font-size: 1.482rem;
 	right: 0;
 	top: 0;
@@ -248,7 +250,8 @@ Contient les elements associes aux menus
 	position: absolute;
 	display: block;
 	content: '\f0d7';
-	font-family: fontawesome;
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 400;
 	font-size: 1.482rem;
 	right: 0;
 	top: 0;
@@ -275,7 +278,8 @@ Contient les elements associes aux menus
 .cssmenu-actionslinks .menu-button:after {
 	position: absolute;
 	display: block;
-	font-family: fontawesome;
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 400;
 	font-size: 1.482rem;
 	content: "\f013";
 	top: 0;
